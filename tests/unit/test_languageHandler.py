@@ -1,14 +1,14 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2017-2021 NV Access Limited
+# Copyright (C) 2017-2022 NV Access Limited, Łukasz Golonka
 
 """Unit tests for the languageHandler module.
 """
 
 import unittest
 import languageHandler
-from languageHandler import LCID_NONE, windowsPrimaryLCIDsToLocaleNames
+from languageHandler import LCID_NONE, LCIDS_TO_TRANSLATED_LOCALES
 from localesData import LANG_NAMES_TO_LOCALIZED_DESCS
 import locale
 import ctypes
@@ -29,7 +29,7 @@ def generateUnsupportedWindowsLocales():
 LCID_ENGLISH_US = 0x0409
 UNSUPPORTED_WIN_LANGUAGES = generateUnsupportedWindowsLocales()
 TRANSLATABLE_LANGS = set(l[0] for l in languageHandler.getAvailableLanguages()) - {"Windows"}
-WINDOWS_LANGS = set(locale.windows_locale.values()).union(windowsPrimaryLCIDsToLocaleNames.values())
+WINDOWS_LANGS = set(locale.windows_locale.values()).union(LCIDS_TO_TRANSLATED_LOCALES.values())
 
 
 class TestLocaleNameToWindowsLCID(unittest.TestCase):
@@ -51,7 +51,7 @@ class TestLocaleNameToWindowsLCID(unittest.TestCase):
 		self.assertEqual(lcid, LCID_NONE)
 
 
-class Test_Normalization(unittest.TestCase):
+class Test_Normalization_For_Win32(unittest.TestCase):
 
 	def test_isNormalizedWin32LocaleNormalizedLocale(self):
 		self.assertTrue(languageHandler.isNormalizedWin32Locale("en"))
@@ -159,18 +159,18 @@ class Test_languageHandler_setLocale(unittest.TestCase):
 
 	def setUp(self):
 		"""
-		`setLocale` doesn't change `languageHandler.curLang`, so reset the locale using `setLanguage` to
+		`setLocale` doesn't change current NVDA language, so reset the locale using `setLanguage` to
 		the current language for each test.
 		"""
-		languageHandler.setLanguage(languageHandler.curLang)
+		languageHandler.setLanguage(languageHandler.getLanguage())
 
 	@classmethod
 	def tearDownClass(cls):
 		"""
-		`setLocale` doesn't change `languageHandler.curLang`, so reset the locale using `setLanguage` to
+		`setLocale` doesn't change current NVDA language, so reset the locale using `setLanguage` to
 		the current language so the tests can continue normally.
 		"""
-		languageHandler.setLanguage(languageHandler.curLang)
+		languageHandler.setLanguage(languageHandler.getLanguage())
 
 	def test_SupportedLocale_LocaleIsSet(self):
 		"""
@@ -262,7 +262,7 @@ class Test_LanguageHandler_SetLanguage(unittest.TestCase):
 	def test_NVDASupportedLanguages_LanguageIsSetCorrectly(self):
 		"""
 		Tests languageHandler.setLanguage, using all NVDA supported languages, which should do the following:
-		- set the translation service and languageHandler.curLang
+		- set the translation service and current NVDA language
 		- set the windows locale for the thread (fallback to system default)
 		- set the python locale for the thread (match the translation service, fallback to system default)
 		"""
@@ -270,8 +270,8 @@ class Test_LanguageHandler_SetLanguage(unittest.TestCase):
 			with self.subTest(localeName=localeName):
 				langOnly = localeName.split("_")[0]
 				languageHandler.setLanguage(localeName)
-				# check curLang/translation service is set
-				self.assertEqual(languageHandler.curLang, localeName)
+				# check current NVDA language/translation service is set
+				self.assertEqual(languageHandler.getLanguage(), localeName)
 
 				# check Windows thread is set
 				threadLocale = ctypes.windll.kernel32.GetThreadLocale()
@@ -322,3 +322,73 @@ class Test_LanguageHandler_SetLanguage(unittest.TestCase):
 		for localeName in WINDOWS_LANGS:
 			with self.subTest(localeName=localeName):
 				languageHandler.setLanguage(localeName)
+
+
+class Test_language_Normalization_for_NVDA(unittest.TestCase):
+	"""Set of unit tests for `languageHandler.normalizeLanguage`."""
+
+	def test_normalization_no_country_info(self):
+		"""Makes sure that if no country info is provided language is normalized to lower case."""
+		self.assertEqual("en", languageHandler.normalizeLanguage("en"))
+		self.assertEqual("en", languageHandler.normalizeLanguage("EN"))
+		self.assertEqual("kmr", languageHandler.normalizeLanguage("kmr"))
+
+	def test_underscore_used_as_separator_after_normalization(self):
+		"""Ensures that underscore is used to separate country info from language.
+		Also implicitly test the fact that country code is converted to upper case."""
+		self.assertEqual("pt_BR", languageHandler.normalizeLanguage("pt_BR"))
+		self.assertEqual("pt_BR", languageHandler.normalizeLanguage("pt-BR"))
+
+	def test_meta_languages_no_normalization(self):
+		"""Ensures that for meta languages such as x-western `None` is returned."""
+		self.assertIsNone(languageHandler.normalizeLanguage("x-western"))
+
+
+class test_getAvailableLanguages(unittest.TestCase):
+	"""Set of unit tests for `languageHandler.getAvailableLanguages`"""
+
+	def test_langsListExpectedFormat(self):
+		"""Ensures that for all languages except user default each element of the returned list consists of
+		language code, and language  description containing language code
+		(necessary since lang descriptions are localized to the default Windows language)."""
+		for langCode, langDesc in languageHandler.getAvailableLanguages()[1:]:
+			self.assertIn(langCode, langDesc)
+			self.assertIn(languageHandler.getLanguageDescription(langCode), langDesc)
+
+	def test_knownLanguageCodesInList(self):
+		"""Ensure that expected languages are in the list."""
+		langCodes = [lang[0] for lang in languageHandler.getAvailableLanguages()]
+		self.assertIn("pl", langCodes)
+		self.assertIn("ru", langCodes)
+		self.assertIn("zh_TW", langCodes)
+		self.assertIn("kmr", langCodes)
+
+	def test_langsWithOutTranslationsNotInList(self):
+		"""Ensure that languages which do  not have a translations
+		(i.e. only symbol  files are present) are excluded ."""
+		langCodes = [lang[0] for lang in languageHandler.getAvailableLanguages()]
+		self.assertNotIn("be", langCodes)
+		self.assertNotIn("te", langCodes)
+		self.assertNotIn("zh", langCodes)
+		self.assertNotIn("kok", langCodes)
+
+	def test_manuallyAddedLocalesPresentInList(self):
+		"""Some locales do not have translations, yet they should be  present in the list."""
+		langCodes = [lang[0] for lang in languageHandler.getAvailableLanguages()]
+		self.assertEqual("Windows", langCodes[0])
+		self.assertIn("en", langCodes)
+
+	def test_noDuplicates(self):
+		seenLangCodes = set()
+		seenLangDescs = set()
+		for langCode, langDesc in languageHandler.getAvailableLanguages():
+			self.assertNotIn(langCode, seenLangCodes)
+			seenLangCodes.add(langCode)
+			self.assertNotIn(langDesc, seenLangDescs)
+			seenLangDescs.add(langDesc)
+
+	def test_userDefaultDescriptionIsCorrect(self):
+		"""Description for the 'user default' should not contain a language code."""
+		userDefaultLangCode, userDefaultLangDesc = languageHandler.getAvailableLanguages()[0]
+		self.assertEqual(userDefaultLangCode, "Windows")
+		self.assertNotIn(userDefaultLangCode, userDefaultLangDesc)

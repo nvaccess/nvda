@@ -13,7 +13,7 @@ from comtypes import (
 	GUID,
 	byref,
 )
-from _UIAConstants import (
+from .constants import (
 	UIAutomationType,
 )
 
@@ -87,4 +87,12 @@ class CustomPropertiesCommon:
 			guid=GUID("{ABBF5C45-5CCC-47b7-BB4E-87CB87BBD162}"),
 			programmaticName="ItemCount",
 			uiaType=UIAutomationType.INT,
+		)
+
+		# A property for fetching raw MathML from an equation node in Microsoft Word.
+		# Available in MS Word build 14326 and higher.
+		self.word_mathml = CustomPropertyInfo(
+			guid=GUID("{FA170AB3-3229-4E7C-827F-DD05EE0481D9}"),
+			programmaticName="Word.MathML",
+			uiaType=UIAutomationType.STRING,
 		)

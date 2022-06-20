@@ -50,16 +50,13 @@ import globalVars
 globalVars.appDir = SOURCE_DIR
 
 # Set options normally taken from the command line.
-class AppArgs:
-	# The path from which to load a configuration file.
-	# Ideally, this would be an in-memory, default configuration.
-	# However, config currently requires a path.
-	# We use the unit test directory, since we want a clean config.
-	configPath = UNIT_DIR
-	secure = False
-	disableAddons = True
-	launcher = False
-globalVars.appArgs = AppArgs()
+# The path from which to load a configuration file.
+# Ideally, this would be an in-memory, default configuration.
+# However, config currently requires a path.
+# We use the unit test directory, since we want a clean config.
+globalVars.appArgs.configPath = UNIT_DIR
+globalVars.appArgs.disableAddons = True
+
 
 # We depend on the current directory to load some files;
 # e.g. braille imports louis which loads liblouis.dll using a relative path.

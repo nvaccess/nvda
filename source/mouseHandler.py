@@ -260,6 +260,10 @@ def pumpAll():
 
 def terminate():
 	global scrBmpObj, _shapeTimer
+	if isLeftMouseButtonLocked():
+		unlockLeftMouseButton()
+	if isRightMouseButtonLocked():
+		unlockRightMouseButton()
 	scrBmpObj=None
 	winInputHook.terminate()
 	_shapeTimer.Stop()
@@ -336,3 +340,41 @@ def doSecondaryClick(releaseDelay: Optional[float] = None):
 	"""
 	buttonFlags = getLogicalButtonFlags()
 	_doClick(buttonFlags.secondaryDown, buttonFlags.secondaryUp, releaseDelay)
+
+
+def isLeftMouseButtonLocked():
+	""" Tests if the left mouse button is locked """
+	return winUser.getKeyState(winUser.VK_LBUTTON) & 1 << 15
+
+
+def lockLeftMouseButton():
+	""" Locks the left mouse button """
+	# Translators: This is presented when the left mouse button is locked down (used for drag and drop).
+	ui.message(_("Left mouse button lock"))
+	executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN, 0, 0)
+
+
+def unlockLeftMouseButton():
+	""" Unlocks the left mouse button """
+	# Translators: This is presented when the left mouse button lock is released (used for drag and drop).
+	ui.message(_("Left mouse button unlock"))
+	executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP, 0, 0)
+
+
+def isRightMouseButtonLocked():
+	""" Tests if the right mouse button is locked """
+	return winUser.getKeyState(winUser.VK_RBUTTON) & 1 << 15
+
+
+def lockRightMouseButton():
+	""" Locks the right mouse button """
+	# Translators: This is presented when the right mouse button is locked down (used for drag and drop).
+	ui.message(_("Right mouse button lock"))
+	executeMouseEvent(winUser.MOUSEEVENTF_RIGHTDOWN, 0, 0)
+
+
+def unlockRightMouseButton():
+	""" Unlocks the right mouse button """
+	# Translators: This is presented when the right mouse button lock is released (used for drag and drop).
+	ui.message(_("Right mouse button unlock"))
+	executeMouseEvent(winUser.MOUSEEVENTF_RIGHTUP, 0, 0)

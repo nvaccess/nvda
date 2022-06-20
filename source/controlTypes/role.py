@@ -3,16 +3,26 @@
 # See the file COPYING for more details.
 # Copyright (C) 2007-2021 NV Access Limited, Babbage B.V.
 
+from enum import (
+	auto,
+	unique,
+)
 from typing import Dict, Set
 
 from utils.displayString import DisplayStringIntEnum
 
 
+@unique
 class Role(DisplayStringIntEnum):
 	@property
 	def _displayStringLabels(self):
 		return _roleLabels
 
+	# To maintain backwards compatibility, these Roles must maintain their values.
+	# Add-on authors are recommended not to depend on values, instead
+	# use role.name, and construct from string with controlTypes.Role[nameOfRole] eg. Role["CHECKBOX"]
+	# Although unlikely to change, if names/values changing represents a significant risk for your add-on, then
+	# consider decoupling, and maintain an internal mapping of Roles to add-on internal Roles.
 	UNKNOWN = 0
 	WINDOW = 1
 	TITLEBAR = 2
@@ -93,6 +103,7 @@ class Role(DisplayStringIntEnum):
 	REDUNDANTOBJECT = 78
 	ROOTPANE = 79
 	EDITBAR = 80
+	# note 81 is missing
 	TERMINAL = 82
 	RICHEDIT = 83
 	RULER = 84
@@ -164,6 +175,8 @@ class Role(DisplayStringIntEnum):
 	REGION = 151
 	FIGURE = 152
 	MARKED_CONTENT = 153
+	BUSY_INDICATOR = 154  # Used for progress bars with indeterminate state
+	# To maintain backwards compatibility, above Roles must maintain their values.
 
 
 _roleLabels: Dict[Role, str] = {
@@ -483,6 +496,8 @@ _roleLabels: Dict[Role, str] = {
 	Role.FIGURE: _("figure"),
 	# Translators: Identifies marked (highlighted) content
 	Role.MARKED_CONTENT: _("highlighted"),
+	# Translators: Identifies a progress bar with indeterminate state, I.E. progress can not be determined.
+	Role.BUSY_INDICATOR: _("busy indicator"),
 }
 
 
@@ -508,6 +523,7 @@ silentValuesForRoles: Set[Role] = {
 	Role.LINK,
 	Role.MENUITEM,
 	Role.APPLICATION,
+	Role.BUSY_INDICATOR,
 }
 
 

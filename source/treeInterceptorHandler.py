@@ -232,7 +232,7 @@ class RootProxyTextInfo(textInfos.TextInfo):
 	def _get_boundingRects(self):
 		return self.innerTextInfo.boundingRects
 
-	def getTextWithFields(self,formatConfig=None):
+	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
 		return self.innerTextInfo.getTextWithFields(formatConfig=formatConfig)
 
 	def expand(self,unit):
@@ -271,3 +271,11 @@ class RootProxyTextInfo(textInfos.TextInfo):
 
 	def _get_pointAtStart(self):
 		return self.innerTextInfo.pointAtStart
+
+	def __eq__(self, other):
+		if isinstance(other, RootProxyTextInfo):
+			other = other.innerTextInfo
+		return self.innerTextInfo.__eq__(other)
+
+	def __hash__(self):
+		return super().__hash__()

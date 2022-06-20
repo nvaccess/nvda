@@ -315,7 +315,7 @@ Przydatne skróty klawiszowe do nawigacji za pomocą fokusa:
 | Odczytuje aktualny fokus | NVDA+Tab | NVDA+Tab | Odczytuje obiekt posiadający aktualnie fokus. Dwukrotne naciśnięcie literuje informacje  |
 | Odczytuje tytuł okna | NVDA+t | NVDA+t | Odczytuje tytuł aktualnej aplikacji lub okna. Dwukrotne naciśnięcie literuje tytuł. Trzykrotne naciśnięcie kopiuje tytuł do schowka. |
 | Odczytuje aktywne okno | NVDA+b | NVDA+b | Odczytuje zawartość obiektu na pierwszym planie (aktualnie aktywnego okna). Funkcja przydatna zwłaszcza w przypadku okna dialogowego lub komunikatu, którego pojawienie się nie zostało zauważone. |
-| Odczytaj pasek stanu | NVDA+End | NVDA+Shift+End | Odczytuje pasek statusu jeśli go znajdzie, przenosi tam także obiekt nawigatora. Dwukrotne naciśnięcie przeliteruje informację. Trzykrotne naciśnięcie kopiuje ją do schowka. |
+| Odczytaj pasek stanu | NVDA+End | NVDA+Shift+End | Odczytuje pasek stanu jeśli go znajdzie. Dwukrotne naciśnięcie przeliteruje informację. Trzykrotne naciśnięcie kopiuje ją do schowka. |
 %kc:endInclude
 
 ++ Nawigacja kursorem systemowym ++
@@ -381,6 +381,7 @@ Poniżej znajdują się skróty klawiszowe do nawigacji w hierarchii obiektów:
 | Aktywuje aktualny obiekt | NVDA+Numeryczny enter | NVDA+Enter | Podwójne stuknięcie | Aktywuje bieżący obiekt (podobnie jak kliknięcie myszą lub naciśnięcie klawisza spacji, gdy ma fokus) |
 | Przenosi fokus lub kursor na aktualną pozycję przeglądania | NVDA+Shift+Numeryczny minus | NVDA+Shift+Backspace | Brak | Naciśnięty raz przenosi fokus do aktualnego obiektu nawigatora, naciśnięty dwukrotnie przenosi kursor systemowy do aktualnej pozycji kursora przeglądania |
 | Odczytuje położenie kursora przeglądu | NVDA+Numeryczne delete | NVDA+delete | Brak | Zgłasza położenie tekstu lub obiektu pod kursorem przeglądu. Może to być wyrażone w procentach w obrębie dokumentu, jako odległość od krawędzi strony lub jako dokładna pozycja na ekranie. Dwukrotne naciśnięcie odczyta dalsze informacje.|
+| Przenieś kursor przeglądu do paska stanu | brak | brak | brak | Odczytuje pasek stanu, jeżeli NVDA go znajdzie. Objekt nawigatora będzie przeniesiony do tej lokalizacji. |
 %kc:endInclude
 
 UWAGA: Aby skróty na klawiaturze numerycznej działały poprawnie, należy wyłączyć klawisz NumLock.
@@ -1401,6 +1402,10 @@ Ta lista rozwijana nie pojawi się, jeśli twój monitor brajlowski obsługuje w
 
 Możesz zajrzeć do sekcji omawiającej twój monitor brajlowski w rozdziale [Obsługiwane monitory brajlowskie #SupportedBrailleDisplays] aby poznać więcej szczegółów na temat wspieranych rodzajów komunikacji i dostępnych portów.
 
+Miej na uwadze, że jeżeli podłączasz więcej monitorów brajlowskich w tym samym momencie używających tego samego sterownika Np. podłączenie tych samych monitorów brajlowskich seika,
+że teraz jest niemożliwie dokładnie ustawić w NVDA, który monitor brajlowski ma być używany.
+Czyli zaleca się podłączać monitor brajlowski określonego typu/producenta na raz.
+
 +++ Ustawienia widoczności +++[VisionSettings]
 ustawienia widoczności programu NVDA pozwalają na włączanie, wyłączanie i konfigurowanie poszczególnych [ustawień pomocy wizualnych #Vision].
 
@@ -1575,7 +1580,8 @@ Aby przełączać ten tryb z każdego miejsca, proszę przypisać własne zdarze
 
 +++ Prezentacja obiektów (NVDA+Ctrl+O) +++[ObjectPresentationSettings]
 Ta kategoria ustawień NVDA  pozwala określić ilość informacji prezentowanych przez NVDA na temat kontrolek takich jak opis, informacje o położeniu itd.
-Zawiera następujące ustawienia:
+Te opcje typowo nie są stosowane  do trybu czytania.
+Te opcje zazwyczas są zastosowane do czytania fokusu i obiektową nawigację NVDA, ale nie i do czytania tekstowej treści na przykład tryb czytania na stronach webowych.
 
 ==== Czytaj dymki podpowiedzi ====[ObjectPresentationReportToolTips]
 Jeśli zaznaczysz to pole, NVDA będzie czytać pojawiające się dymki podpowiedzi (tooltip).
@@ -1739,7 +1745,7 @@ Możemy w ten sposób skonfigurować odczytywanie:
  - Rozmiaru czcionki
  - Atrybutów czcionki
  - Podkreślenia
- - Oznaczonego (Podświetlonego tekstu)
+ - Podkreślonego, (zaznaczonego tekstu)
  - Stylu tekstu
  - Kolorów
 - Informacji o dokumencie
@@ -1853,12 +1859,21 @@ Pole wyboru zawiera następujące opcje:
 - Nie: Nie Używa UIA, nawet gdy NVDA nie może wejść w interakcję z procesem przeglądarki. Ta opcja moze być użyteczna dla deweloperów debugujących problemy z UIA, upewniając się, że interfejs UIA nie będzie używany.
 -
 
-====  Włącz eksperymentalne wsparcie dla adnotacji Aria ====[Annotations]
-Ta opcja jest używana do włączania funkcji służącej do wymawiania adnotacji Aria.
+==== Adnotacje ====[Annotations]
+Ta grupa opcji jest używana do włączania funkcji, które dodają eksperymentalne wsparcie dla adnotacji aria.
 Niektóre z tych funkcji mogą być niedopracowane.
 Istnieją następujące opcje: 
 - "Ogłaszaj szczeguły w trybie czytania": włącza zgłaszanie szczegółów w trybie czytania.
 streszczenie tych szczegułów może być włączone przydzielając skrót używając okno dialogowe  [zdarzenia wejścia #InputGestures].
+- "Zawsze odczytuj aria-description":
+ Gdy źródłem ``accDescription`` jest aria- description, opis jest odczytywany.
+ Jest to użyteczne dla adnotacji na stronach www.
+  Uwaga:
+ - Istnieje wielu źródeł dla ``accDescription`` niektóe z nich posiadają mieszaną lub nieprzewidywalną semantykę.
+  Historycznie, technologie wspomagające nie mogły to rozróźniać źródła ``accDescription``i typowo nie były one wymawiane z powodu mieszanej  semantyki.
+ - Ta opcja jest w bardzo wczesnym stadium rozwoju, i polega na opcjach przeglądarek, które nie są szeroko dostępne.
+ - Oczekiwane jest, że ta funkcja będzie działać z Chromium 92.0.4479.0 i nowszymi wersjami.
+ -
 -
 
 ==== Użyj interfejsu UI Automation dla dostępu do kontrolek arkuszy kalkulacyjnych w programie Microsoft Excel, gdy jest to możliwe ====[UseUiaForExcel]
@@ -1898,10 +1913,21 @@ Jest to funkcja domyślna od wersji NVDA 2021.1.
 Pozwala skonfigurować ilość milisekund, którą  NVDA będzie czekało przed przesunięciem kursora w polach edycji.
 Jeśli zauważysz, że NVDA nieprawidłowo śledzi kursor, np.  jest zawsze znak za kursorem lub powtarza linie, możesz próbować zwiększyć tę wartość.
 
+==== Odczytuj przejrzystość kolorów ====[ReportTransparentColors]
+Ta opcja pozwala odczytywać przejrzystość kolorów, co jest ważne dla deweloperów dodatków oraz modułów aplikacji, którzy zbierają informacje w celu ulepszenia doświatczenia użytkownika.
+Niektóre aplikacje GDI będą podkreślać tekst kolorem tłą, NVDA (za pomocą modelu wyświetlania) spróbuje zgłośić ten kolor.
+W niektórych sytuacjach, tło tekstowe może być całkowicie przejrzyste, z tekstem pokazanym nad innym elementem okna.
+Z niektórymi historycznie popularnymi API do wyświetlania okien, tekst może być pokazywany za pomocą przejrzystego tła, ale wizualnie kolor jest dokładny.
+
 ==== Włączone logowanie kategorii debugowania ====[AdvancedSettingsDebugLoggingCategories]
 Pola wyboru na tej liście pozwalają włączyć konkretne kategorie informacji debugowania w dzienniku NVDA.
 Zapisywanie tych informacji może zmniejszyć wydajność i zwiększyć rozmiar pliku logu.
 Włącz określone kategorie tylko, gdy zostaniesz poinstruowany przez programistę NVDA np. w trakcie badania, dlaczego sterownik linijki brajlowskiej nie pracuje prawidłowo.
+
+==== Odtwarzaj dźwięk dla logowanych błędów ====[PlayErrorSound]
+Ta opcja pozwala określić możliwość odtwarzania dźwięku błędu przez NVDA w przypadku zapisanego błędu.
+Wybierając "tylko w wersjach testowych" (domyślnie) spowoduje, że błędy będą odtwarzane tylko w wersjach testowych (alpha, beta lub z wersji uruchomionych z kodu źródłowego).
+Wybierając "tak" umożliwia odtwarzanie dźwięku błędu niezależnie od wersji NVDA.
 
 ++ Różne ustawienia ++[MiscSettings]
 Oprócz okna [ustawień NVDA #NVDASettings], podmenu opcje w menu NVDA zawiera kilka innych elementów, omówionych poniżej.
@@ -2329,6 +2355,7 @@ Poniższe linijki brajlowskie mogą być automatycznie wykrywane.
 - HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille
 - Eurobraille Esys/Esytime/Iris
 - Monitory brajlowskie Nattiq nBraille
+- Jakikolwiek monitor brajlowski wspierający standardowy HID protokół brajlowski
 -
 
 ++ Freedom Scientific Focus/PAC Mate Series ++[FreedomScientificFocus]
@@ -3151,6 +3178,37 @@ Zobacz [tabele klawiszy w dokumentacji brltty http://mielke.cc/brltty/doc/KeyBin
 | Przenieś monitor do poprzedniej linii | lnup (go up one line) |
 | Przenieś monitor do następnej linii | lndn (go down one line) |
 | Przywołaj do komórki brajla | route (przenieś kursor do znaku) |
+%kc:endInclude
+
+++ Standardowe monitory brajlowskei HID ++[HIDBraille]
+Jest to eksperymentalny sterownik dla monitorów brajlowskich zrobionych według specyfikacji HID, którą przyjeli w roku 2018 Microsoft, Google, Apple i niektóre inne firmy produkujące technologie wspomagające włączając w to NV Access. 
+Mamy nadzieję, że przyszłe monitory brajlowskie stworzone przez jakiegokolwiek producenta będą wspierane będą używali ten protokół co wyeliminuje potrzebę dla specyficznych sterowników.
+
+Wykrywanie automatyczne brajlowskich monitorów NVDA będzie automatycznie wykrywało monitory brajlowskie według tego standartu.
+ 
+Oto skróty klawiszowe przydzielone dla tego monitora brajlowskiego.
+%kc:beginInclude
+|| nazwanie | klawisz |
+| przejście brajlowskiego monitoru wstecz | pan left lub rocker up|
+| przejście brajlowskiego monitoru w przód | pan right lub rocker down|
+| przemieszczanie monitoru brajlowskiego do poprzedniego wiersza | spacja + kropka1 |
+| przenieś monitor brajlowski do następnego wiersza | spacja + kropka4 |
+| przemieszczenie do brajlowskiej komórki | routing set 1|
+| przełączanie przywiązania brajla do | up+down |
+| strzałka w górę | joystick up |
+| strzałka w dół | joystick down |
+| strzałka w lewo | space+dot3 or joystick left |
+| strzałka w prawo | space+dot6 or joystick right |
+| shift+tab | spacja+kropka1+kropka3 |
+| tab | spacja+kropka4+kropka6 |
+| alt | spacja+kropka1+kropka3+kropka4 (spaja+m) |
+| escape | spacja+kropka1+kropka5 (spacja+e) |
+| enter | kropka8 lub joystick center |
+| window | spacja+kropka3+kropka4 |
+| alt+tab | spacja+kropka2+kropka3+kropka4+kropka5 (spacja+t) |
+| NVDA Menu | spacja+kropka1+kropka3+kropka4+kropka5 (spacja+n) |
+| windows+d (minimalizuje wszystkie aplikacje) | spacja+kropka1+kropka4+kropka5 (spacja+d) |
+| czytaj wszystko | spacja+kropka1+kropka2+kropka3+kropka4+kropka5+kropka6 |
 %kc:endInclude
 
 + Dla zaawansowanych +[AdvancedTopics]

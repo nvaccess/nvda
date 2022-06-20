@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2019-2021 Bill Dengler
+# Copyright (C) 2019-2022 Bill Dengler
 
 import ctypes
 import NVDAHelper
@@ -10,9 +10,10 @@ import textUtils
 import UIAHandler
 
 from comtypes import COMError
+from diffHandler import prefer_difflib
 from logHandler import log
-from UIAUtils import _getConhostAPILevel
-from _UIAConstants import WinConsoleAPILevel
+from UIAHandler.utils import _getConhostAPILevel
+from UIAHandler.constants import WinConsoleAPILevel
 from . import UIATextInfo
 from ..behaviors import EnhancedTermTypedCharSupport, KeyboardHandlerBasedTypedCharSupport
 from ..window import Window
@@ -379,6 +380,14 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 		info.append(f"API level: {self.apiLevel} ({self.apiLevel.name})")
 		return info
 
+	def _get_diffAlgo(self):
+		if self.apiLevel < WinConsoleAPILevel.FORMATTED:
+			# #12974: These consoles are constrained to onscreen text.
+			# Use Difflib to reduce choppiness in reading.
+			return prefer_difflib()
+		else:
+			return super().diffAlgo
+
 	def detectPossibleSelectionChange(self):
 		try:
 			return super().detectPossibleSelectionChange()
@@ -391,13 +400,33 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 				"probably due to a switch to/from the alt buffer."
 			), exc_info=True)
 
+	def event_UIA_notification(self, **kwargs):
+		"""
+		In Windows Sun Valley 2 (SV2 M2), UIA notification events will be sent
+		to announce new text. Block these for now to avoid double-reporting of
+		text changes.
+		@note: In the longer term, NVDA should leverage these events in place
+		of the current LiveText strategy, as performance will likely be
+		significantly improved and #11002 can be completely mitigated.
+		"""
+		log.debugWarning(f"Notification event blocked to avoid double-report: {kwargs}")
+
 
 def findExtraOverlayClasses(obj, clsList):
-	if obj.UIAElement.cachedAutomationId == "Text Area":
+	if obj.UIAAutomationId == "Text Area":
 		clsList.append(WinConsoleUIA)
-	elif obj.UIAElement.cachedAutomationId == "Console Window":
+	elif obj.UIAAutomationId == "Console Window":
 		clsList.append(consoleUIAWindow)
 
 
 class WinTerminalUIA(EnhancedTermTypedCharSupport):
-	pass
+	def event_UIA_notification(self, **kwargs):
+		"""
+		In an upcoming terminal release, UIA notification events will be sent
+		to announce new text. Block these for now to avoid double-reporting of
+		text changes.
+		@note: In the longer term, NVDA should leverage these events in place
+		of the current LiveText strategy, as performance will likely be
+		significantly improved and #11002 can be completely mitigated.
+		"""
+		log.debugWarning(f"Notification event blocked to avoid double-report: {kwargs}")

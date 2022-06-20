@@ -27,7 +27,7 @@ Tärkeimpiä ominaisuuksia ovat:
 - Helppokäyttöinen puhuva asennusohjelma
 - Käännökset 54 kielelle
 - Tuki moderneille Windows-käyttöjärjestelmille, sekä 32- että 64-bittiset versiot mukaan lukien
-- Mahdollisuus käyttää Windowsin sisäänkirjautumisen aikana sekä suojatuissa ruuduissa
+- Mahdollisuus käyttää Windowsin sisäänkirjautumisen aikana sekä [muissa suojatuissa ruuduissa #SecureScreens].
 - Säätimien ja tekstin puhuminen kosketuseleitä käytettäessä
 - Tuki yleisille esteettömyysrajapinnoille, kuten Microsoft Active Accessibility, Java Access Bridge, IAccessible2 sekä UI Automation
 - Tuki Windowsin komentokehotteelle ja konsolisovelluksille
@@ -81,7 +81,7 @@ Ladatun tiedoston suorittaminen käynnistää NVDA:n tilapäisversion.
 Seuraavaksi kysytään, halutaanko se asentaa, luoda massamuistiversio tai jatkaa tilapäisversion käyttämistä.
 
 Kannattaa valita asennusvaihtoehto, jos NVDA:ta aiotaan käyttää aina samalla tietokoneella.
-Asentaminen mahdollistaa sellaiset lisätoiminnot kuin automaattinen käynnistys sisäänkirjautumisen jälkeen, Windowsin kirjautumisikkunan ja suojattujen ruutujen lukeminen (tämä ei ole mahdollista massamuisti- tai tilapäisversioissa) sekä pikakuvakkeen luomisen Käynnistä-valikkoon ja työpöydälle.
+Asentaminen mahdollistaa sellaiset lisätoiminnot kuin automaattinen käynnistys sisäänkirjautumisen jälkeen, Windowsin kirjautumisikkunan ja [suojattujen ruutujen #SecureScreens] lukeminen (tämä ei ole mahdollista massamuisti- tai tilapäisversioissa) sekä pikakuvakkeen luomisen Käynnistä-valikkoon ja työpöydälle.
 Asennetusta versiosta on mahdollista tehdä milloin tahansa myös massamuistiversio.
 
 Massamuistiversion luominen kannattaa valita, jos NVDA halutaan mukana kuljetettavaksi USB-muistitikulle tai muulle kirjoitettavalle tietovälineelle.
@@ -118,7 +118,7 @@ Lisätietoja tästä painikkeesta on [Yhteensopimattomien lisäosien valintaikku
 
 +++ Käytä sisäänkirjautumisen aikana +++[StartAtWindowsLogon]
 Tällä asetuksella voit valita, käynnistyykö NVDA automaattisesti Windowsin kirjautumisikkunassa ennen kuin olet syöttänyt salasanan.
-Asetus vaikuttaa myös käyttäjätilien valvontaan sekä muihin suojattuihin ruutuihin.
+Asetus vaikuttaa myös käyttäjätilien valvontaan sekä [muihin suojattuihin ruutuihin #SecureScreens].
 Se on oletusarvoisesti käytössä uusissa asennuksissa.
 
 +++ Luo pikakuvake työpöydälle (Ctrl+Alt+N) +++[CreateDesktopShortcut]
@@ -127,7 +127,7 @@ Jos kuvake luodaan, siihen liitetään myös pikanäppäin Ctrl+Alt+N, jolla NVD
 
 +++ Kopioi massamuistiversion asetukset nykyiseen käyttäjätiliin +++[CopyPortableConfigurationToCurrentUserAccount]
 Tällä asetuksella voit valita, kopioidaanko käynnissä olevan NVDA:n asetukset asennettuun versioon nykyiselle kirjautuneelle käyttäjälle. 
-Asetuksia ei kopioida tietokoneen muille käyttäjille eikä Windowsin sisäänkirjautumisen aikana ja suojatuissa ruuduissa käytettäväksi.
+Asetuksia ei kopioida tietokoneen muille käyttäjille eikä Windowsin sisäänkirjautumisen aikana tai [muissa suojatuissa ruuduissa #SecureScreens] käytettäväksi.
 Tämä vaihtoehto on käytettävissä vain massamuistiversiosta asennettaessa.
  
 ++ Massamuistiversion luominen ++[CreatingAPortableCopy]
@@ -256,13 +256,13 @@ Kosketusnäppäimistö piilotetaan kaksoisnapauttamalla kosketusnäppäimistöku
 Kun kosketusnäppäimistö on aktiivisena, halutut näppäimet etsitään siirtämällä sormi kosketusnäppäimistön sijaintipaikkaan (tyypillisesti näytön alareunassa), ja liikkumalla sitten näppäimistössä yhdellä sormella.
 Kun haluttu näppäin on löytynyt, kaksoisnapautetaan sitä tai nostetaan sormi näytöltä, riippuen NVDA:n asetusten [Kosketusvuorovaikutus-kategoriassa #TouchInteraction] valituista asetuksista.
 
-++ Syöteohjetila ++[InputHelpMode]
-Tässä käyttöoppaassa mainitaan useita näppäinkomentoja ja kosketuseleitä, mutta helpoin tapa tutkia niitä kaikkia on käyttää syöteohjetta.
+++ Näppäinohjetila ++[InputHelpMode]
+Tässä käyttöoppaassa mainitaan useita näppäinkomentoja ja kosketuseleitä, mutta helpoin tapa tutkia niitä kaikkia on käyttää näppäinohjetta.
 
-Syöteohje otetaan käyttöön painamalla NVDA+1.
+Näppäinohje otetaan käyttöön painamalla NVDA+1.
 Se poistetaan käytöstä painamalla uudelleen NVDA+1.
-Kun syöteohje on käytössä, NVDA kertoo mitä tahansa syötekomentoa suoritettaessa, kuten näppäintä painettaessa tai kosketuselettä käytettäessä sen suorittaman toiminnon, mikäli kyseiseen komentoon on sellainen määritelty.
-Komentojen toimintoja ei suoriteta syöteohjetilassa.
+Kun näppäinohje on käytössä, NVDA kertoo mitä tahansa näppäinkomentoa suoritettaessa, kuten näppäintä painettaessa tai kosketuselettä käytettäessä sen suorittaman toiminnon, mikäli kyseiseen komentoon on sellainen määritelty.
+Komentojen toimintoja ei suoriteta näppäinohjetilassa.
 
 ++ NVDA-valikko ++[TheNVDAMenu]
 NVDA-valikosta voidaan säätää NVDA:n asetuksia, lukea ohjetta, tallentaa ja palauttaa asetukset, muokata puhesanastoja, käyttää lisätyökaluja sekä sulkea NVDA.
@@ -275,12 +275,12 @@ Kun valikko tulee näkyviin, siinä voidaan liikkua nuolinäppäimillä ja valit
 ++ Peruskomennot ++[BasicNVDACommands]
 %kc:beginInclude
 || Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kosketusele | Kuvaus |
-| Käynnistää tai käynnistää uudelleen NVDA:n | Ctrl+Alt+N | Ctrl+Alt+N | Ei mitään | Käynnistää tai käynnistää uudelleen NVDA:n työpöydältä, mikäli tämä pikanäppäin on otettu käyttöön NVDA:n asennuksen aikana. Tämä on Windowsin pikanäppäin, eikä sitä siksi voida uudelleenmäärittää Syötekomennot-valintaikkunassa. |
+| Käynnistää tai käynnistää uudelleen NVDA:n | Ctrl+Alt+N | Ctrl+Alt+N | Ei mitään | Käynnistää tai käynnistää uudelleen NVDA:n työpöydältä, mikäli tämä pikanäppäin on otettu käyttöön NVDA:n asennuksen aikana. Tämä on Windowsin pikanäppäin, eikä sitä siksi voida uudelleenmäärittää Näppäinkomennot-valintaikkunassa. |
 | Keskeytä puhe | Ctrl | Ctrl | Napautus kahdella sormella | Keskeyttää puheen välittömästi. |
 | Tauota puhe | Vaihto | Vaihto | Ei mitään | Tauottaa puheen välittömästi. Uudelleen painaminen jatkaa puhetta kohdasta, johon jäätiin (mikäli käytössä oleva puhesyntetisaattori tukee puheen tauottamista). |
 | NVDA-valikko | NVDA+N | NVDA+N | Kaksoisnapautus kahdella sormella | Avaa NVDA-valikon, josta voidaan säätää asetuksia, käyttää työkaluja ja lukea ohjetta jne. |
 | Vaihda puhetilaa | NVDA+S | NVDA+S | Ei mitään | Vaihtaa puhetilojen "puhe käytössä", "äänimerkit" ja "ei puhetta" välillä. |
-| Ota syöteohjetila käyttöön tai poista se käytöstä | NVDA+1 | NVDA+1 | Ei mitään | Tässä tilassa minkä tahansa näppäimen painaminen kertoo kyseisen näppäimen nimen ja kaikki siihen määritellyt NVDA-komennot. |
+| Ota näppäinohjetila käyttöön tai poista se käytöstä | NVDA+1 | NVDA+1 | Ei mitään | Tässä tilassa minkä tahansa näppäimen painaminen kertoo kyseisen näppäimen nimen ja kaikki siihen määritellyt NVDA-komennot. |
 | Sulje NVDA | NVDA+Q | NVDA+Q | Ei mitään | Sulkee NVDA:n. |
 | Ohita seuraava näppäinpainallus | NVDA+F2 | NVDA+F2 | Ei mitään | Välittää seuraavan näppäinpainalluksen suoraan aktiiviselle sovellukselle suorittamatta sen mahdollista NVDA-komentoa. |
 | Ota lepotila käyttöön tai poista se käytöstä | NVDA+Vaihto+S | NVDA+Vaihto+Z | Ei mitään | Lepotila poistaa käytöstä kaikki NVDA:n komennot sekä puheen ja pistekirjoituksen tuottamisen nykyisessä sovelluksessa. Tästä on eniten hyötyä sovelluksissa, joissa on omat puhe- tai ruudunlukutoimintonsa. Lepotila poistetaan käytöstä painamalla uudelleen tätä näppäinyhdistelmää. Huom: Asetus säilyy vain seuraavaan NVDA:n uudelleenkäynnistykseen saakka. |
@@ -289,7 +289,7 @@ Kun valikko tulee näkyviin, siinä voidaan liikkua nuolinäppäimillä ja valit
 ++ Järjestelmätietojen lukeminen ++[ReportingSystemInformation]
 %kc:beginInclude
 || Nimi | Näppäinkomento | Kuvaus |
-| Lue päiväys/aika | NVDA+F12 | Lukee kerran painettaessa kellonajan, kahdesti painettaessa päiväyksen. |
+| Lue päivämäärä/kellonaika | NVDA+F12 | Lukee kerran painettaessa kellonajan, kahdesti painettaessa päivämäärän. |
 | Lue akun tila | NVDA+Vaihto+B | Lukee akun tilan, ts. onko verkkovirta käytössä, tai kertoo nykyisen varauksen tason prosentteina. |
 | Lue leikepöydällä oleva teksti | NVDA+C | Lukee leikepöydällä mahdollisesti olevan tekstin. |
 %kc:endInclude
@@ -332,6 +332,7 @@ NVDA:ssa on seuraavat järjestelmäkohdistimeen liittyvät näppäinkomennot:
 | Lue nykyinen rivi | NVDA+Nuoli ylös | NVDA+L | Lukee järjestelmäkohdistimen kohdalla olevan rivin. Kahdesti painettaessa se tavataan normaalisti ja kolmesti painettaessa merkkikuvauksia käyttäen. |
 | Lue valittu teksti | NVDA+Vaihto+Nuoli ylös | NVDA+Vaihto+S | Lukee kaiken valittuna olevan tekstin. |
 | Lue tekstin muotoilutiedot | NVDA+F | NVDA+F | Lukee kohdistimen kohdalla olevan tekstin muotoilutiedot. Kahdesti painettaessa tiedot näytetään selaustilassa. |
+| Lue kohdistimen sijainti | NVDA+Laskimen Del | NVDA+Del | Ei mitään | Lukee järjestelmäkohdistimen kohdalla olevan tekstin tai objektin sijaintitiedot. Näitä tietoja voivat olla esim.  asiakirjan luettu osuus prosentteina, etäisyys sivun reunasta tai tarkka paikka ruudulla. Kahdesti painaminen saattaa antaa lisätietoja. |
 | Seuraava virke | Alt+Nuoli alas | Alt+Nuoli alas | Siirtää kohdistimen seuraavaan virkkeeseen ja lukee sen. (tuetaan vain Microsoft Wordissa ja Outlookissa) |
 | Edellinen virke | Alt+Nuoli ylös | Alt+Nuoli ylös | Siirtää kohdistimen edelliseen virkkeeseen ja lukee sen. (tuetaan vain Microsoft Wordissa ja Outlookissa) |
 
@@ -341,6 +342,10 @@ Taulukoissa ovat käytettävissä lisäksi seuraavat näppäinkomennot:
 | Siirrä seuraavaan sarakkeeseen | Ctrl+Alt+Nuoli oikealle | Siirtää järjestelmäkohdistimen seuraavaan sarakkeeseen pysyen samalla rivillä. |
 | Siirrä edelliselle riville | Ctrl+Alt+Nuoli ylös | Siirtää järjestelmäkohdistimen edelliselle riville pysyen samassa sarakkeessa. |
 | Siirrä seuraavalle riville | Ctrl+Alt+Nuoli alas | Siirtää järjestelmäkohdistimen seuraavalle riville pysyen samassa sarakkeessa. |
+| Siirrä ensimmäiseen sarakkeeseen | Ctrl+Alt+Home | Siirtää järjestelmäkohdistimen ensimmäiseen sarakkeeseen pysyen samalla rivillä. |
+| Siirrä viimeiseen sarakkeeseen | Ctrl+Alt+End | Siirtää järjestelmäkohdistimen viimeiseen sarakkeeseen pysyen samalla rivillä. |
+| Siirrä ensimmäiselle riville | Ctrl+Alt+Page up | Siirtää järjestelmäkohdistimen ensimmäiselle riville pysyen samassa sarakkeessa. |
+| Siirrä viimeiselle riville | Ctrl+Alt+Page down | Siirtää järjestelmäkohdistimen viimeiselle riville pysyen samassa sarakkeessa. |
 %kc:endInclude
 
 ++ Objektinavigointi ++[ObjectNavigation]
@@ -380,7 +385,7 @@ Seuraavia komentoja käytetään objekteittain liikkumiseen:
 | Siirrä aktiiviseen objektiin | NVDA+laskinnäppäimistön miinus | NVDA+Askelpalautin | Ei mitään | Siirtää objektiin, jossa järjestelmän kohdistus on tällä hetkellä ja sijoittaa tarkastelukohdistimen järjestelmäkohdistimen kohdalle, mikäli se on näkyvissä. |
 | Aktivoi nykyinen navigointiobjekti | NVDA+laskinnäppäimistön Enter | NVDA+Enter | Kaksoisnapautus | Aktivoi nykyisen navigointiobjektin (vastaa hiiren napsauttamista tai Välilyönnin painamista, kun järjestelmän kohdistus on siinä). |
 | Siirrä järjestelmän kohdistus tai -kohdistin tarkastelukohtaan | NVDA+Vaihto+laskinnäppäimistön miinus | NVDA+Vaihto+Askelpalautin | Ei mitään | Siirtää kerran painettaessa järjestelmän kohdistuksen nykyiseen navigointiobjektiin tai kahdesti painettaessa järjestelmäkohdistimen tarkastelukohdistimen kohdalle. |
-| Lue tarkastelukohdistimen sijainti | NVDA+laskinnäppäimistön Del | NVDA+Del | Ei mitään | Kertoo tietoja tarkastelukohdistimen kohdalla olevan tekstin tai objektin sijainnista. Näitä tietoja voivat olla esim. prosenttimäärä asiakirjasta, etäisyys sivun reunasta tai tarkka sijainti ruudulla. Kahdesti painettaessa kerrotaan lisätietoja. |
+| Lue tarkastelukohdistimen sijainti | NVDA+Vaihto+laskinnäppäimistön Del | NVDA+Vaihto+Del | Ei mitään | Lukee tarkastelukohdistimen kohdalla olevan tekstin tai objektin sijaintitiedot. Näitä tietoja voivat olla esim. asiakirjan luettu osuus prosentteina, etäisyys sivun reunasta tai tarkka paikka ruudulla. Kahdesti painaminen saattaa antaa lisätietoja. |
 | Siirrä tarkastelukohdistin tilariville | Ei mitään | Ei mitään | Ei mitään | Lukee tilarivin, mikäli sellainen löytyy. Lisäksi navigointiobjekti siirretään sen kohdalle. |
 %kc:endInclude
 
@@ -526,7 +531,6 @@ Vuorovaikutustila voidaan lisäksi pakottaa käyttöön manuaalisesti, jolloin s
 | Etsi | NVDA+Ctrl+F | Avaa valintaikkunan, jossa voidaan etsiä tekstiä nykyisestä asiakirjasta. Katso lisätietoja [Tekstin etsiminen #SearchingForText] -kappaleesta. |
 | Etsi seuraava | NVDA+F3 | Etsii asiakirjasta aiemmin haetun tekstin seuraavan esiintymän. |
 | Etsi edellinen | NVDA+Vaihto+F3 | Etsii asiakirjasta aiemmin haetun tekstin edellisen esiintymän. |
-| Avaa pitkä kuvaus | NVDA+D | Avaa kohdalla olevan elementin mahdollisen pitkän kuvauksen uuteen ikkunaan. | 
 %kc:endInclude
 
 ++ Pikaselausnäppäimet ++[SingleLetterNavigation]
@@ -610,17 +614,27 @@ Seuraavalla näppäinkomennolla voidaan palata alkuperäiselle upotetun objektin
 + Matemaattisen sisällön lukeminen +[ReadingMath]
 NVDA:lla on mahdollista lukea ja liikkua vuorovaikutteisesti tuetussa matemaattisessa sisällössä Design Sciencen MathPlayer 4:ää käyttäen.
 Tämä edellyttää, että MathPlayer 4 on asennettu tietokoneelle.
-Se on ladattavissa ilmaiseksi osoitteesta https://www.dessci.com/en/products/mathplayer/
+Se on ladattavissa ilmaiseksi osoitteesta https://www.dessci.com/en/products/mathplayer/.
+Käynnistä NVDA uudelleen MathPlayerin asennuksen jälkeen.
 
 NVDA tukee seuraavia matemaattisia sisältöjä:
-- MathML Mozilla Firefoxissa, Microsoft Internet Explorerissa ja Google Chromessa.
-- Design Science MathType Microsoft Wordissa ja PowerPointissa.
+- MathML Mozilla Firefoxissa, Internet Explorerissa ja Google Chromessa.
+- Microsoft Word 365:n uudet matemaattiset yhtälöt UI Automationin välityksellä:
+NVDA pystyy lukemaan ja olemaan vuorovaikutuksessa matemaattisten yhtälöiden kanssa Microsoft Word 365:n/2016:n koontikäännösversiossa 14326 ja uudemmissa.
+Huomaa kuitenkin, että kaikki aiemmin luodut MathType-yhtälöt on ensin muunnettava Office Mathiksi.
+Tämä tehdään valitsemalla muunnettavat yhtälöt ja valitsemalla sitten pikavalikosta Yhtälön asetukset -> Muunna Office Mathiksi.
+Varmista ennen muunnoksen suorittamista, että käytössäsi on viimeisin MathType-versio.
+Microsoft Word tarjoaa nyt myös lineaarisen, symbolipohjaisen yhtälöissä liikkumisen, ja tukee matemaattisten merkkien syöttämistä useita syntakseja käyttäen, LateX mukaan lukien.
+Katso lisätietoja artikkelista [Lineaarisen muodon kaavat UnicodeMathin ja LaTeXin avulla Wordissa https://support.microsoft.com/fi-fi/office/lineaarisen-muodon-kaavat-unicodemathin-ja-latexin-avulla-wordissa-2e00618d-b1fd-49d8-8cb4-8d17f25754f8].
+- Microsoft Powerpoint ja vanhemmat Microsoft Wordin versiot:
+NVDA voi lukea MathType-yhtälöitä ja liikkua niissä sekä Microsoft Powerpointissa että Microsoft Wordissa.
 MathTypen on oltava asennettuna.
 Kokeiluversio riittää.
 Sen voi ladata osoitteesta https://www.dessci.com/en/products/mathtype/
-- MathML Adobe Readerissa.
+- Adobe Reader:
 Huom: Tämä ei ole vielä virallinen standardi, joten sisältöä tuottavaa ohjelmistoa ei ole julkisesti saatavilla.
-- Math Kindle for PC:ssä kirjoille, joissa on esteetöntä matemaattista sisältöä.
+- Kindle Reader for PC:
+NVDA voi lukea kirjojen esteetöntä matemaattista sisältöä Kindle for PC:ssä.
 -
 
 NVDA puhuu aina asiakirjaa luettaessa kaiken siinä mahdollisesti olevan tuetun matemaattisen sisällön.
@@ -697,6 +711,7 @@ Jotta pistenäytölle mahtuisi mahdollisimman paljon tietoa, seuraavat lyhenteet
 | vkokhde | valikkokohde |
 | pnl | paneeli |
 | edplk | edistymispalkki |
+| vrtilm | varattu-ilmaisin |
 | vpnk | valintapainike |
 | vrtsplk | vierityspalkki |
 | osa | osa |
@@ -766,6 +781,27 @@ Pisteen 7 painaminen poistaa viimeksi syötetyn pistesolun tai -merkin.
 Piste 8 kääntää minkä tahansa pistekirjoitussyötteen ja painaa Enter-näppäintä.
 Pisteiden 7 ja 8 painaminen kääntää minkä tahansa pistekirjoitussyötteen lisäämättä välilyöntiä tai painamatta Enteriä.
 %kc:endInclude
+
++++ Pikanäppäinten syöttäminen +++[BrailleKeyboardShortcuts]
+NVDA tukee pikanäppäinten syöttämistä ja näppäinpainallusten jäljittelyä pistenäyttöä käyttäen.
+Tätä jäljittelyä on kahdessa muodossa: pistesyötteen liittäminen suoraan johonkin näppäinpainallukseen ja virtuaalisten muuntonäppäinten käyttäminen.
+
+Yleisesti käytetyt näppäimet, kuten nuolinäppäimet tai Alt-näppäimen painaminen valikoiden avaamiseksi, voidaan liittää suoraan pistesyötteisiin.
+Kunkin pistenäytön ajuri on valmiiksi varustettu joillakin näistä määrityksistä.
+Voit muuttaa niitä tai lisätä uusia jäljiteltyjä näppäimiä [Näppäinkomennot-valintaikkunasta. #InputGestures]
+
+Vaikka tämä lähestymistapa on hyödyllinen usein painetuille tai yksilöllisille näppäimille (kuten Sarkain), et ehkä halua määrittää yksilöllistä näppäinsarjaa kullekin pikanäppäimelle.
+NVDA tarjoaa komennot Ctrl-, Alt-, Vaihto-, Win- ja NVDA-näppäinten tilan vaihtamiseen sekä komennot joillekin näiden näppäinten yhdistelmille, mikä mahdollistaa sellaisten näppäinpainallusten jäljittelyn, joissa muuntonäppäimiä pidetään alhaalla.
+Käytä näitä tilanvaihtokomentoja painamalla ensin haluamiesi muuntonäppäinten komentoa (tai komentosarjaa).
+Syötä sitten merkki, joka on osa pikanäppäintä, jonka haluat suorittaa.
+Tuota esim. Ctrl+F-pikanäppäin käyttämällä "Vaihda Ctrl-näppäimen tilaa" -komentoa ja kirjoittamalla F,
+ja syötä Ctrl+Alt+T käyttäen joko "Vaihda Ctrl-näppäimen tilaa"- ja "Vaihda Alt-näppäimen tilaa" -komentoja kummassa tahansa järjestyksessä tai "Vaihda Ctrl- ja Alt-näppäinten tilaa" -komentoa ja kirjoittamalla T.
+
+Jos vaihdat vahingossa muuntonäppäinten tilaa, tilanvaihtokomennon uudelleen suorittaminen poistaa ne käytöstä.
+
+Lyhennepistekirjoitusta syötettäessä muuntonäppäinten tilanvaihtonäppäimien käyttäminen aiheuttaa syötteesi kääntämisen ikään kuin olisit painanut pisteitä 7 ja 8.
+Lisäksi jäljitelty näppäinpainallus ei voi tuottaa pistekirjoitusta, joka on kirjoitettu ennen muuntonäppäimen painamista.
+Tämä tarkoittaa, että jos haluat antaa Alt+2-näppäinkomennon pistekirjoitusmerkistöllä, jossa käytetään numeromerkkiä, sinun on ensin vaihdettava Altin tilaa ja kirjoitettava sen jälkeen numeromerkki.
 
 + Näkö +[Vision]
 Vaikka NVDA on suunnattu ensisijaisesti sokeille tai heikkonäköisille, jotka käyttävät tietokonetta puheen/pistenäytön avulla, se tarjoaa myös sisäänrakennettuja palveluja ruudun sisällön muuttamiseen.
@@ -914,7 +950,7 @@ NVDA korvaa natiivin MS Excelin muistiinpanojen muokkausalueen esteettömyysrajo
 Voit lisätä tai muokata muistiinpanoa kohdistetussa solussa painamalla Vaihto+F2.
 %kc:endInclude
 
-Tämä komento ei näy eikä sitä voi muuttaa NVDA:n syötekomentojen valintaikkunassa.
+Tämä komento ei näy eikä sitä voi muuttaa NVDA:n Näppäinkomennot-valintaikkunassa.
 
 Huom: Muistiinpanojen muokkausalue on mahdollista avata Excelissä myös laskentataulukon solun pikavalikosta.
 Tämä avaa kuitenkin esteellisen muokkausalueen eikä NVDA-kohtaista muokkausvalintaikkunaa.
@@ -1046,7 +1082,7 @@ Paina OK-painiketta, jos haluat tallentaa asetukset ja sulkea valintaikkunan.
 Joillakin asetuskategorioilla on oma pikanäppäin.
 Kun sitä painetaan, Asetukset-valintaikkuna avataan kyseisen kategorian kohdalta.
 Kaikkiin kategorioihin ei oletusarvoisesti pääse näppäinkomennoilla.
-Jos haluat päästä kategorioihin, joilla ei ole omia pikanäppäimiä, käytä [Syötekomennot-valintaikkunaa #InputGestures] lisätäksesi niille syötekomennon, kuten näppäinkomennon tai kosketuseleen.
+Jos haluat päästä kategorioihin, joilla ei ole omia pikanäppäimiä, käytä [Näppäinkomennot-valintaikkunaa #InputGestures] lisätäksesi niille näppäinkomennon tai kosketuseleen.
 
 Valintaikkunan asetuskategoriat on kuvailtu alla.
  
@@ -1098,7 +1134,7 @@ Jos kirjaudut Windowsiin käyttäjänimellä ja salasanalla, tämä asetus saa N
 Asetus on käytettävissä vain NVDA:n asennetuissa versioissa.
 
 ==== Käytä tallennettuja asetuksia sisäänkirjautumisen aikana ja suojatuissa ruuduissa (edellyttää järjestelmänvalvojan oikeuksia) ====[GeneralSettingsCopySettings]
-Tämän painikkeen painaminen kopioi nykyiset tallennetut asetukset NVDA:n järjestelmäasetusten hakemistoon, jotta niitä käytetään sisäänkirjautumisen aikana ja käyttäjätilien valvonnan sekä muissa suojatuissa ruuduissa.
+Tämän painikkeen painaminen kopioi nykyiset tallennetut asetukset NVDA:n järjestelmäasetusten hakemistoon, jotta niitä käytetään sisäänkirjautumisen aikana ja käyttäjätilien valvonnassa sekä muissa [suojatuissa ruuduissa #SecureScreens].
 Voit varmistaa asetusten siirtämisen tallentamalla ne ensin painamalla Ctrl+NVDA+C tai valitsemalla NVDA-valikosta Tallenna asetukset.
 Tämä painike on käytettävissä vain NVDA:n asennetuissa versioissa.
 
@@ -1199,7 +1235,7 @@ Huom: Manuaalisesti lisätyt tai muokatut merkkikuvaukset tallennetaan osana kä
 Mikäli siis jonkin emojin kuvausta muutetaan, kyseiselle emojille käytetään muokattua kuvausta riippumatta siitä, onko tämä asetus käytössä vai ei.
 Symboleiden kuvauksia on mahdollista lisätä, muokata ja poistaa NVDA:n [Välimerkkien ja symboleiden puhuminen -valintaikkunassa. #SymbolPronunciation]
 
-Unicode-konsortion datan sisällyttämistä voi vaihtaa mistä tahansa lisäämällä mukautettu syötekomento [Syötekomennot-valintaikkunaa #InputGestures] käyttäen.
+Unicode-konsortion datan sisällyttämistä voi vaihtaa mistä tahansa lisäämällä mukautettu näppäinkomento [Näppäinkomennot-valintaikkunaa #InputGestures] käyttäen.
 
 ==== Äänenkorkeuden muutos prosentteina isoille kirjaimille ====[SpeechSettingsCapPitchChange]
 Tähän muokkauskenttään syötetään prosenttiluku, jonka verran puheäänen korkeus muuttuu isoja kirjaimia luettaessa.
@@ -1372,7 +1408,7 @@ Kun kohdistuskontekstin näyttäminen -asetus on määritetty näyttämään kon
 Joten NVDA näyttää edellä olevassa esimerkissä, että kohdistus on luettelon kohteessa.
 Konteksti voidaan lukea (ts. että ollaan luettelossa ja että se on osa valintaikkunaa) vierittämällä pistenäyttöä taaksepäin.
 
-Kohdistuskontekstin näyttäminen -asetusta voidaan vaihtaa mistä tahansa liittämällä siihen oma syötekomento [Syötekomennot-valintaikkunaa #InputGestures] käyttäen.
+Kohdistuskontekstin näyttäminen -asetusta voidaan vaihtaa mistä tahansa liittämällä siihen oma näppäinkomento [Näppäinkomennot-valintaikkunaa #InputGestures] käyttäen.
 
 +++ Valitse pistenäyttö (NVDA+Ctrl+A) +++[SelectBrailleDisplay]
 Valitse pistenäyttö -valintaikkunasta, joka voidaan avata painamalla Muuta...-painiketta Asetukset-valintaikkunan Pistekirjoitus-kategoriassa, valitaan, mitä pistenäyttöä NVDA käyttää pistekirjoituksen tulostamiseen.
@@ -1434,7 +1470,7 @@ Mikäli olet varma, voit ottaa näyttöverhon käyttöön valitsemalla Kyllä-pa
 Jos et halua enää nähdä tätä varoitusta, voit poistaa sen käytöstä samassa valintaikkunassa.
 Voit milloin tahansa palauttaa varoituksen käyttöön valitsemalla "Näytä varoitus aina, kun näyttöverho otetaan käyttöön" -valintaruudun.
 
-Muuta näyttöverhon tilaa mistä tahansa määrittämällä mukautettu syötekomento [Syötekomennot-valintaikkunaa #InputGestures] käyttäen.
+Muuta näyttöverhon tilaa mistä tahansa määrittämällä mukautettu näppäinkomento [Näppäinkomennot-valintaikkunaa #InputGestures] käyttäen.
 
 Oletusarvoisesti toistetaan ääni, kun näyttöverho otetaan käyttöön tai poistetaan käytöstä.
  Jos haluat muuttaa tätä, voit poistaa valinnan "Toista ääni, kun näyttöverho otetaan käyttöön tai poistetaan käytöstä" -valintaruudusta.
@@ -1520,7 +1556,7 @@ Kun tämä valintaruutu on valittuna, NVDA lukee hiiriosoittimen alla olevan tek
 Jos NVDA on asetettu lukemaan hiiren alla oleva teksti, Tämän asetuksen avulla voidaan määrittää tarkasti, minkä verran tekstiä luetaan.
 Vaihtoehtoina ovat merkki, sana, rivi ja kappale.
 
-Tekstiyksikön tarkkuutta voidaan muuttaa mistä tahansa liittämällä toimintoon syötekomento [Syötekomennot-valintaikkunassa. #InputGestures].
+Tekstiyksikön tarkkuutta voidaan muuttaa mistä tahansa liittämällä toimintoon näppäinkomento [Näppäinkomennot-valintaikkunassa. #InputGestures].
 
 ==== Lue hiiren alla olevan objektin rooli ====[MouseSettingsRole]
 Jos tämä valintaruutu on valittuna, NVDA kertoo objektin roolin (tyypin) hiiren siirtyessä siihen.
@@ -1576,11 +1612,12 @@ Kun tämä asetus on käytössä, tarkastelukohdistin seuraa hiirtä sen liikkue
 ==== Yksinkertainen objektinavigointi ====[ReviewCursorSimple]
 Kun tämä asetus on käytössä, NVDA suodattaa objektihierarkiasta pois sellaiset objektit, joilla ei ole merkitystä käyttäjälle, esim. näkymättömät tai asettelutarkoituksiin käytettävät.
 
-Yksinkertainen tarkastelutila otetaan käyttöön tai poistetaan käytöstä mistä tahansa määrittämällä sille oma syötekomento [Syötekomennot-valintaikkunaa #InputGestures] käyttäen.
+Yksinkertainen tarkastelutila otetaan käyttöön tai poistetaan käytöstä mistä tahansa määrittämällä sille oma näppäinkomento [Näppäinkomennot-valintaikkunaa #InputGestures] käyttäen.
 
 +++ Objektien lukeminen (NVDA+Ctrl+O) +++[ObjectPresentationSettings]
 Objektien lukeminen -kategoriaa käytetään määrittämään, kuinka paljon säädinten tietoja, kuten kuvaus, sijaintitiedot jne., NVDA lukee.
-Kategoria sisältää seuraavat asetukset:
+Nämä asetukset eivät yleensä koske selaustilaa.
+Ne koskevat tyypillisesti kohdistuksen ilmaisemista ja NVDA:n objektinavigointia, mutta ei tekstin lukemista esim. selaustilassa.
 
 ==== Lue työkaluvihjeet ====[ObjectPresentationReportToolTips]
 Kun tämä valintaruutu on valittuna, NVDA lukee työkaluvihjeet niiden tullessa näkyviin.
@@ -1588,7 +1625,7 @@ Monet ikkunat ja säätimet näyttävät pienen ilmoituksen (tai työkaluvihjeen
 
 ==== Lue ilmoitukset ====[ObjectPresentationReportNotifications]
 Kun tämä valintaruutu on valittuna, NVDA lukee ohjeselitteet ja ilmoitusruudut niiden tullessa näkyviin.
-- Ohjeselitteet ovat työkaluvihjeiden kaltaisia, mutta ovat yleensä suurempia ja liittyvät järjestelmätapahtumiin, kuten verkkokaapelin irrottamiseen tai ilmoituksiin Windowsin suojausongelmista.
+- Ohjeselitteet ovat työkaluvihjeiden kaltaisia, mutta yleensä suurempia ja liittyvät järjestelmätapahtumiin, kuten verkkokaapelin irrottamiseen tai ilmoituksiin Windowsin suojausongelmista.
 - Ilmoitusruudut on esitelty Windows 10:ssä, ja ne ilmestyvät toimintokeskukseen ilmaisinalueella ilmoittaen useista eri tapahtumista (esim. ladatusta päivityksestä, Saapuneet-kansioosi tulleesta uudesta sähköpostiviestistä jne.).
 -
 
@@ -1681,8 +1718,12 @@ Tämä asettaa rivimäärän, joka selaustilassa siirrytään painettaessa Page 
 ==== Käytä ruutuasettelua ====[BrowseModeSettingsScreenLayout]
 Pikanäppäin: NVDA+V
 
-Tällä asetuksella määritetään, sijoitetaanko esim. linkit ja muut elementit selaustilassa omille riveilleen, vai säilytetäänkö ne sellaisina kuin ne ovat ruudulla.
-Jos asetus on käytössä, elementit näytetään sellaisinaan, mutta jos asetus poistetaan käytöstä, elementit sijoitetaan omille riveilleen.
+Tällä asetuksella voidaan määrittää, sijoitetaanko napsautettava sisältö (linkit, painikkeet ja kentät) selaustilassa omille riveilleen vai säilytetäänkö ne sellaisina kuin ne ruudulla näytetään.
+Huomaa, että tämä asetus ei koske Microsoft Office -sovelluksia kuten Outlookia tai Wordia, joissa käytetään aina ruutuasettelua.
+Kun ruutuasettelu on käytössä, sivun elementit pysyvät sellaisina kuin ne visuaalisesti näytetään.
+Esimerkiksi useita linkkejä sisältävä visuaalinen rivi puhutaan ja näytetään pistenäytöllä samalla rivillä olevina useina linkkeinä.
+Jos asetus ei ole käytössä, sivun elementit sijoitetaan omille riveilleen.
+Lisäksi sitä voi olla helpompi ymmärtää sivua riveittäin selattaessa, ja vuorovaikutus kohteiden kanssa saattaa olla joillekin käyttäjille helpompaa.
 
 ==== Ota selaustila käyttöön sivua ladattaessa ====[BrowseModeSettingsEnableOnPageLoad]
 Tällä valintaruudulla voidaan määrittää, otetaanko selaustila käyttöön automaattisesti sivua ladattaessa.
@@ -1702,7 +1743,7 @@ Kun asetus on poistettu käytöstä, asettelutaulukoita ei lueta eikä löydetä
 Taulukoiden sisältö näytetään kuitenkin tavallisena tekstinä.
 Asetus on oletusarvoisesti poissa käytöstä.
 
-Asettelutaulukoiden ilmaiseminen otetaan käyttöön tai poistetaan käytöstä mistä tahansa määrittämällä syötekomento [Syötekomennot-valintaikkunaa #InputGestures] käyttäen.
+Asettelutaulukoiden ilmaiseminen otetaan käyttöön tai poistetaan käytöstä mistä tahansa määrittämällä näppäinkomento [Näppäinkomennot-valintaikkunaa #InputGestures] käyttäen.
 
 ==== Elementtien ilmaisemisen määrittäminen ====[BrowseModeLinksAndHeadings]
 Ilmaistavat elementit, kuten linkit, otsikot ja taulukot, määritetään [Asetukset #NVDASettings]-valintaikkunan [Asiakirjojen muotoilu -kategoriassa #DocumentFormattingSettings] olevia asetuksia käyttäen.
@@ -1719,11 +1760,12 @@ Jos esim. verkkosivua nuolinäppäimillä selattaessa tullaan muokkauskentän ko
 ==== Ilmaise vuorovaikutus- ja selaustilat äänimerkillä ====[BrowseModeSettingsPassThroughAudioIndication]
 Jos tämä asetus on käytössä, NVDA toistaa äänimerkin vaihtaessaan selaus- ja vuorovaikutustilojen välillä sen sijaan, että siitä ilmoitettaisiin puheella.
 
-==== Estä muiden kuin syötekomentojen pääsy asiakirjaan ====[BrowseModeSettingsTrapNonCommandGestures]
-Tällä oletusarvoisesti käytössä olevalla asetuksella voidaan valita, estetäänkö syötekomentojen (kuten näppäinpainallusten), jotka eivät suorita NVDA-komentoa tai joita ei pidetä yleisinä komentonäppäiminä, pääsy aktiivisena olevaan asiakirjaan.
+==== Estä muiden kuin näppäinkomentojen pääsy asiakirjaan ====[BrowseModeSettingsTrapNonCommandGestures]
+Tällä oletusarvoisesti käytössä olevalla asetuksella voidaan valita, estetäänkö näppäinkomentojen (kuten näppäinpainallusten), jotka eivät suorita NVDA-komentoa tai joita ei pidetä yleisinä komentonäppäiminä, pääsy aktiivisena olevaan asiakirjaan.
 Esim. jos asetuksen ollessa käytössä painetaan J-kirjainta, sen tulostuminen asiakirjaan estetään, sillä se ei ole pikaselausnäppäin, tai koska on epätodennäköistä, että se olisi sovelluksen käytössä oleva näppäinkomento.
 NVDA käskee Windowsia toistamaan oletusäänen, kun estettyä näppäintä painetaan.
 
+%kc:setting
 ==== Siirrä kohdistus automaattisesti kohdistettaviin elementteihin ====[BrowseModeSettingsAutoFocusFocusableElements]
 Näppäin: NVDA+8
 
@@ -1750,6 +1792,7 @@ Seuraavien tietojen lukeminen voidaan määrittää:
  - Värit
 - Asiakirjan tiedot
  - Kommentit
+ - Kirjanmerkit
  - Muokkaajan merkinnät
  - Kirjoitusvirheet
 - Sivut ja välit
@@ -1778,7 +1821,7 @@ Seuraavien tietojen lukeminen voidaan määrittää:
  -
 -
 
-Nämä asetukset voidaan ottaa käyttöön tai poistaa käytöstä mistä tahansa Määrittämällä niille omat syötekomennot [Syötekomennot-valintaikkunaa käyttäen. #InputGestures]
+Nämä asetukset voidaan ottaa käyttöön tai poistaa käytöstä mistä tahansa Määrittämällä niille omat näppäinkomennot [Näppäinkomennot-valintaikkunaa käyttäen. #InputGestures]
 
 ==== Ilmoita kohdistimen jälkeiset muotoilumuutokset ====[DocumentFormattingDetectFormatAfterCursor]
 Jos tämä asetus on käytössä, NVDA yrittää havaita kaikki rivillä olevat muotoilumuutokset sitä lukiessaan, vaikka se voikin hidastaa NVDA:n suorituskykyä.
@@ -1835,18 +1878,18 @@ Tällä on suuri kielteinen vaikutus suorituskykyyn, etenkin sellaisissa sovellu
 Tämän takia NVDA rajoittaa tapahtumien rekisteröinnin useimmissa tapauksissa järjestelmän kohdistukseen tämän asetuksen ollessa käytössä.
 Mikäli sinulla on suorituskykyongelmia yhdessä tai useammassa sovelluksessa, suosittelemme, että kokeilet tätä toimintoa nähdäksesi, paraneeko suorituskyky.
 
-==== Käytä aina UI automation -rajapintaa Microsoft Wordin asiakirjasäätimissä, kun käytettävissä ====[AdvancedSettingsUseUiaForWord]
-Kun tämä asetus on käytössä, NVDA yrittää aina käyttää UI Automation -saavutettavuusrajapintaa tietojen saamiseen Microsoft Wordin asiakirjasäätimistä, myös vanhemmissa Office 2016:n/365:n koontiversioissa.
-Tällaisia ovat muun muassa itse Microsoft Word sekä lisäksi Microsoft Outlookin viestinluku- ja kirjoitusikkuna.
-Officen koontiversiossa 16.0.13901 tai uudemmissa NVDA käyttää aina UI Automation -rajapintaa Word-asiakirjoissa riippumatta siitä, miten tämä asetus on määritetty.
-Uusimpien Microsoft Office 2016/365 -versioiden UI Automation -tuki on windows 10:ssä ja uudemmissa käytettäessä riittävän kattava tarjotakseen lähes nykyisen kaltaisen tuen Microsoft Word -asiakirjoille, jossa on lisäetuna huomattavasti lisääntynyt reagoivuus.
-Joissakin vanhemmissa Officen koontiversioissa ei ehkä kuitenkaan ole saatavilla kaikkea tietoa tai ne ilmaistaan väärin, minkä vuoksi UI automation -tukeen ei voi aina luottaa.
+==== Käytä UI automation -rajapintaa Microsoft Wordin asiakirjasäätimissä ====[MSWordUIA]
+Määrittää, käyttääkö NVDA UI Automation -esteettömyysrajapintaa Microsoft Word -asiakirjoille vanhemman objektimallin asemesta.
+Tämä koskee itsensä Microsoft wordin asiakirjojen lisäksi Microsoft Outlookin viestejä.
+Asetus sisältää seuraavat arvot:
+- Oletus (kun käytettävissä)
+- Vain tarvittaessa: Kun Microsoft Wordin objektimalli ei ole käytettävissä.
+- Kun käytettävissä: Microsoft Wordin versio 16.0.15000 tai uudempi, tai kun Wordin objektimalli ei ole käytettävissä.
+- Aina: Aina kun UI automation -rajapinta on käytettävissä Microsoft wordissa (riippumatta siitä, miten valmis se on).
+-
 
 ==== Käytä UI Automation -rajapintaa Windows-konsolissa, kun käytettävissä ====[AdvancedSettingsConsoleUIA]
 Kun tämä asetus on käytössä, NVDA käyttää uutta, työn alla olevaa versiota Windows-konsolin tuesta, joka hyödyntää [Microsoftin tekemiä saavutettavuusparannuksia. https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/] Ominaisuus on vielä kokeellinen ja keskeneräinen, joten sen käyttöä ei vielä suositella. Valmistuttuaan uuden tuen odotetaan kuitenkin tulevan oletukseksi, mikä parantaa NVDA:n suorituskykyä ja vakautta Windowsin komentokonsoleissa.
-
-==== Puhu salasanat UIA-konsoleissa ====[AdvancedSettingsWinConsoleSpeakPasswords]
-Tämä asetus säätää, puhutaanko merkit [Puhu kirjoitetut merkit- #KeyboardSettingsSpeakTypedCharacters] tai [Puhu kirjoitetut sanat #KeyboardSettingsSpeakTypedWords] -asetusta käytettäessä tilanteissa, joissa ruutu ei päivity (kuten salasanaa syötettäessä) Windows-konsolissa UI automation -tuen ollessa käytössä. Turvallisuussyistä tämä asetus tulisi pitää poissa käytöstä. Voit kuitenkin halutessasi ottaa sen käyttöön, mikäli sinulla on suorituskykyongelmia tai epävakautta kirjoitettujen merkkien ja/tai sanojen puhumisessa NVDA:n uutta konsolitukea käytettäessä.
 
 ==== Käytä UIA:ta Microsoft Edgessä ja muissa Chromium-pohjaisissa selaimissa, kun käytettävissä ====[ChromiumUIA]
 Tämän asetuksen avulla voit määrittää, milloin UIA:ta käytetään (mikäli se on käytettävissä) Chromium-pohjaisissa selaimissa, kuten Microsoft Edgessä.
@@ -1861,10 +1904,14 @@ Yhdistelmäruudussa on seuraavat vaihtoehdot:
 ==== Merkinnät ====[Annotations]
 Näillä asetuksilla otetaan käyttöön ominaisuudet, jotka lisäävät kokeellisen tuen ARIA-merkinnöille.
 Jotkin näistä ominaisuuksista voivat olla keskeneräisiä.
+
+%kc:beginInclude
+Ilmoita järjestelmäkohdistimen kohdalla olevan merkinnän kaikkien tietojen yhteenveto painamalla NVDA+D.
+%kc:endInclude
+
 Seuraavat vaihtoehdot ovat käytettävissä:
-- Ilmoita lisätiedot selaustilassa: ilmoittaa, mikäli objektilla on selaustilassa lisätietoja.
-Lisätietojen yhteenvedon ilmoittaminen on mahdollista liittämällä kyseiseen toimintoon syötekomento [Syötekomennot-valintaikkunaa #InputGestures] käyttäen.
-- "Puhu aina ARIA-kuvaukset":
+- Ilmoita rakenteellisten merkintöjen lisätiedoista: ilmoittaa, mikäli tekstillä tai säätimellä on lisätietoja.
+- Puhu aina ARIA-kuvaukset:
   Kuvaus puhutaan, kun ``accDescription``-attribuutin lähteenä on aria-description.
   Tästä on hyötyä verkkosivuilla olevissa merkinnöissä.
   Huom:
@@ -1883,8 +1930,13 @@ Alkeelliseen laskentataulukossa liikkumiseen/muokkaamiseen tämä asetus voi kui
 Emme vielä suosittele tämän asetuksen oletusarvoista käyttöön ottoa suurimmalle osalle käyttäjistä, mutta Excel 16.0.13522.10000 tai uudemman käyttäjiltä palaute on tervetullutta.
 Excelin UI automation -rajapinnan toteutus muuttuu jatkuvasti, eikä Microsoft Officen vanhemmat versiot kuin 16.0.13522.10000 anna välttämättä tarpeeksi tietoja, jotta tästä asetuksesta olisi mitään hyötyä.
 
-==== Käytä uutta kirjoitettujen merkkien tukea Windows-konsolissa, kun käytettävissä ====[AdvancedSettingsKeyboardSupportInLegacy]
-Tämä asetus ottaa käyttöön vaihtoehtoisen menetelmän kirjoitettujen merkkien tunnistamiseen Windowsin komentokonsoleissa.
+==== Puhu salasanat kaikissa laajennetuissa päätteissä ====[AdvancedSettingsWinConsoleSpeakPasswords]
+Tämä asetus säätää, puhutaanko merkit [Puhu kirjoitetut merkit- #KeyboardSettingsSpeakTypedCharacters] tai [Puhu kirjoitetut sanat #KeyboardSettingsSpeakTypedWords] -asetusta käytettäessä tilanteissa, joissa ruutu ei päivity (kuten salasanaa syötettäessä) Windows-konsolissa UI automation -tuen ollessa käytössä ja Mintty:ssä.
+Turvallisuussyistä tämä asetus tulisi pitää poissa käytöstä.
+Voit kuitenkin halutessasi ottaa sen käyttöön, mikäli sinulla on konsoleissa suorituskykyongelmia tai epävakautta kirjoitettujen merkkien ja/tai sanojen puhumisessa, tai työskentelet luotetuissa ympäristöissä ja haluat, että salasanat puhutaan.
+
+==== Käytä laajennettua kirjoitettujen merkkien tukea vanhassa Windows-konsolissa, kun käytettävissä ====[AdvancedSettingsKeyboardSupportInLegacy]
+Tämä asetus ottaa käyttöön vaihtoehtoisen menetelmän kirjoitettujen merkkien tunnistamiseen vanhoissa Windows-konsoleissa.
 Vaikka se parantaa suorituskykyä ja estää konsolitulosteen tavaamista, se ei ehkä ole yhteensopiva joidenkin pääteohjelmien kanssa.
 Tämä ominaisuus on käytettävissä ja käytössä oletusarvoisesti Windows 10:n versiossa 1607 ja sitä uudemmissa, kun UI Automation -rajapinta ei ole käytettävissä tai se on poistettu käytöstä.
 Varoitus: Kun tämä asetus on käytössä, ruudulla näkymättömät kirjoitetut merkit, kuten salasanat, puhutaan.
@@ -1893,14 +1945,14 @@ Epäluotettavissa ympäristöissä voit salasanoja kirjoittaessasi poistaa väli
 ==== Muutosten havaitsemismenetelmä ====[DiffAlgo]
 Tämä asetus määrittää, miten NVDA havaitsee uuden puhuttavan tekstin päätteissä.
 Tässä yhdistelmäruudussa on kolme vaihtoehtoa:
-- Automaattinen: NVDA 2021.2:sta lähtien tämä asetus on sama kuin "Salli Diff Match Patch".
-- Salli Diff Match Patch: Tätä asetusta käytettäessä NVDA laskee päätteen tekstimuutokset merkeittäin.
-Tämä saattaa parantaa suorituskykyä, kun konsolille kirjoitetaan suuria tekstimääriä, ja mahdollistaa rivien keskellä tehtyjen muutosten tarkemman ilmoittamisen.
-Tämä voi kuitenkin olla yhteensopimaton joidenkin sovellusten kanssa, joten Diff Match Patchia ei aina käytetä.
-Tätä ominaisuutta tuetaan Windows-konsolissa Windows 10:n versioissa 1607 ja uudemmissa.
-Se voi olla käytettävissä myös muissa päätteissä aiemmissa Windows-versioissa.
-- Pakota Difflib: Tätä asetusta käytettäessä NVDA laskee päätteen tekstimuutokset riveittäin.
+- Automaattinen: Tämä saa NVDA:n suosimaan Diff Match Patchia useimmissa tilanteissa, mutta palaa takaisin Difflibiin ongelmallisissa sovelluksissa, kuten Windows-konsolin ja Mintty:n vanhemmissa versioissa.
+- Diff Match Patch: Tätä asetusta käytettäessä NVDA laskee päätteen tekstimuutokset merkeittäin, jopa sellaisissa tilanteissa, joissa sitä ei suositella.
+Tämä saattaa parantaa suorituskykyä, kun konsoliin kirjoitetaan suuria tekstimääriä, sekä mahdollistaa rivien keskellä tehtyjen muutosten tarkemman ilmoittamisen.
+Joissakin sovelluksissa uuden tekstin lukeminen voi kuitenkin olla nykivää tai epäjohdonmukaista.
+- Difflib: Tätä asetusta käytettäessä NVDA laskee päätteen tekstimuutokset riveittäin, jopa sellaisissa tilanteissa, joissa sitä ei suositella.
 Tämä vastaa NVDA:n toiminnallisuutta versiossa 2020.4 ja sitä vanhemmissa.
+Tämä asetus saattaa vakauttaa saapuvan tekstin lukemista joissakin sovelluksissa.
+Kohdistimen jälkeinen teksti kuitenkin luetaan päätteissä, kun rivin keskelle lisätään tai siitä poistetaan merkki.
 -
 
 ==== Yritä perua vanhentuneiden kohdistustapahtumien puhe ====[CancelExpiredFocusSpeech]
@@ -1940,10 +1992,10 @@ Ne ovat:
 - Tilapäinen: tämän sanaston säännöt vaikuttavat kaikkeen NVDA:n puhumaan tekstiin, mutta vain nykyisessä istunnossa. Säännöt ovat tilapäisiä ja ne menetetään, jos NVDA käynnistetään uudelleen.
 -
 
-Mikäli jokin näistä sanastovalintaikkunoista halutaan avata mistä tahansa, niille on määritettävä omat syötekomennot [Syötekomennot-valintaikkunaa käyttäen. #InputGestures]
+Mikäli jokin näistä sanastovalintaikkunoista halutaan avata mistä tahansa, niille on määritettävä omat näppäinkomennot [Näppäinkomennot-valintaikkunaa käyttäen. #InputGestures]
 
 Kaikissa sanastovalintaikkunoissa on luettelo säännöistä, joita käytetään puhutun tekstin käsittelyyn.
-Valintaikkunoissa on myös Lisää-, Muokkaa- ja Poista-painikkeet.
+Valintaikkunoissa on myös Lisää-, Muokkaa-, Poista- ja Poista kaikki -painikkeet.
 
 Sanastoon lisätään uusi sääntö painamalla Lisää-painiketta, täyttämällä esiin tulevan valintaikkunan kentät ja painamalla OK.
 Lisätty sääntö näkyy tämän jälkeen sääntöluettelossa.
@@ -2000,34 +2052,34 @@ Kun olet valmis, tallenna muutokset painamalla OK-painiketta tai kumoa ne painam
 Monimutkaisten symbolien tapauksessa Korvaava-kentässä on ehkä oltava joitakin ryhmäviittauksia täsmättävään tekstiin. Esim. koko päivämäärää vastaavan korvattavan tekstin \1, \2 ja \3 tulisi näkyä kentässä, jotta ne korvataan päivämäärän vastaavilla osilla.
 Korvaava teksti -kentässä olevat normaalit kenoviivat tulisi siis kahdentaa (esim. kirjoita "a\\b" saadaksesi aikaan korvauksen "a\b".
 
-+++ Syötekomennot +++[InputGestures]
-Tässä valintaikkunassa voit mukauttaa NVDA-komennoissa käytettäviä syötekomentoja (näppäimistön näppäimiä, pistenäytön painikkeita jne.).
++++ Näppäinkomennot +++[InputGestures]
+Tässä valintaikkunassa voit mukauttaa NVDA-komennoissa käytettäviä näppäinkomentoja (näppäimistön näppäimiä, pistenäytön painikkeita jne.).
 
 Vain sellaiset komennot näytetään, jotka ovat käytettävissä valintaikkunaa avattaessa.
-Jos esim. haluat mukauttaa selaustilan komentoja, sinun on avattava Syötekomennot-valintaikkuna selaustilassa ollessasi.
+Jos esim. haluat mukauttaa selaustilan komentoja, sinun on avattava Näppäinkomennot-valintaikkuna selaustilassa ollessasi.
 
 Tämän valintaikkunan puunäkymässä näytetään kaikki käytettävissä olevat NVDA-komennot omiin kategorioihinsa ryhmiteltyinä.
 Voit suodattaa komentoja kirjoittamalla Suodata-muokkauskenttään komennon nimestä yhden tai useamman sanan missä tahansa järjestyksessä.
-Kaikki komentoon liitetyt syötekomennot näytetään kyseisen komennon alapuolella.
+Kaikki komentoon liitetyt näppäinkomennot näytetään kyseisen komennon alapuolella.
 
-Lisää komentoon syötekomento valitsemalla se luettelosta ja painamalla Lisää-painiketta.
-Suorita tämän jälkeen haluamasi syötekomento (ts. paina näppäimistön näppäimiä tai pistenäytön painikkeita).
-Syötekomento voidaan usein tulkita useammalla kuin yhdellä tavalla.
+Lisää komentoon näppäinkomento valitsemalla se luettelosta ja painamalla Lisää-painiketta.
+Suorita tämän jälkeen haluamasi näppäinkomento (ts. paina näppäimistön tai pistenäytön näppäimiä).
+Näppäinkomento voidaan usein tulkita useammalla kuin yhdellä tavalla.
 Jos esim. painoit näppäimistön näppäimiä, saatat haluta niiden toimivan jossain tietyssä näppäimistöasettelussa (esim. pöytäkone tai kannettava) tai kaikissa asetteluissa.
 Tällöin näkyviin tulee valikko, josta voit valita haluamasi vaihtoehdon.
 
-Poista syötekomento komennosta valitsemalla se ja painamalla Poista-painiketta.
+Poista näppäinkomento komennosta valitsemalla se ja painamalla Poista-painiketta.
 
 Jäljiteltävät järjestelmänäppäimistön näppäimet -kategoria sisältää NVDA-komentoja, jotka jäljittelevät järjestelmänäppäimistön näppäimiä.
 Näitä näppäimiä voidaan käyttää järjestelmänäppäimistön ohjaamiseen suoraan pistenäytöltä.
-Lisää jäljiteltävä syötekomento valitsemalla Jäljiteltävät järjestelmänäppäimistön näppäimet -kategoria ja painamalla Lisää-painiketta.
+Lisää jäljiteltävä näppäinkomento valitsemalla Jäljiteltävät järjestelmänäppäimistön näppäimet -kategoria ja painamalla Lisää-painiketta.
 Paina sitten näppäimistöltä sitä näppäintä, jota haluat jäljitellä.
-Tämän jälkeen näppäin näkyy Jäljiteltävät järjestelmänäppäimistön näppäimet -kategoriassa, ja voit määrittää sille syötekomennon yllä kuvatulla tavalla.
+Tämän jälkeen näppäin näkyy Jäljiteltävät järjestelmänäppäimistön näppäimet -kategoriassa, ja voit määrittää sille näppäinkomennon yllä kuvatulla tavalla.
 
 Huom:
- - Jäljiteltävillä näppäimillä täytyy olla syötekomennot määritettyinä, jotta ne säilyvät tallennettaessa/valintaikkunaa suljettaessa.
- - Syötekomentoa, jolla on muuntonäppäimiä, ei välttämättä voi liittää jäljiteltävään syötekomentoon, jolla ei muunto
- näppäimiä ole. Kun esim. jäljiteltäväksi syötteeksi määritetään "a" ja syötekomennoksi Ctrl+M, voi siitä seurata,
+ - Jäljiteltävillä näppäimillä täytyy olla näppäinkomennot määritettyinä, jotta ne säilyvät tallennettaessa/valintaikkunaa suljettaessa.
+ - Näppäinkomentoa, jossa käytetään muuntonäppäimiä, ei välttämättä voi liittää jäljiteltävään näppäinkomentoon, jossa ei muunto
+ näppäimiä ole. Kun esim. jäljiteltäväksi syötteeksi määritetään "a" ja näppäinkomennoksi Ctrl+M, voi siitä seurata,
  että sovellus vastaanottaa näppäinyhdistelmän Ctrl+A.
  -
 
@@ -2056,7 +2108,7 @@ Tämä on mahdollista NVDA:n asetusprofiileja käyttäen.
 Asetusprofiili sisältää vain ne asetukset, joita profiilia muokattaessa muutetaan.
 Useimpien asetusten muuttaminen on profiileissa mahdollista, paitsi [Asetukset #NVDASettings]-valintaikkunan Yleiset-kategoriassa olevien, joita käytetään kaikkialla.
 
-Asetusprofiilit voidaan ottaa käyttöön manuaalisesti joko valintaikkunasta tai itse määritetyillä syötekomennoilla.
+Asetusprofiilit voidaan ottaa käyttöön manuaalisesti joko valintaikkunasta tai itse määritetyillä näppäinkomennoilla.
 Ne voidaan ottaa käyttöön myös automaattisesti käynnistimien avulla, kuten tiettyyn sovellukseen siirryttäessä.
 
 +++ Perushallinta +++[ProfilesBasicManagement]
@@ -2121,22 +2173,22 @@ Kaikkien käynnistimien käytöstä poistaminen voi joskus olla tarpeen.
 Saatat esim. haluta muokata manuaalisesti käyttöönotettua profiilia tai normaaleja asetuksiasi ilman, että käynnistimillä käyttöönotettavat profiilit häiritsevät.
 Voit tehdä tämän valitsemalla Asetusprofiilit-valintaikkunassa Poista kaikki käynnistimet käytöstä tilapäisesti -valintaruudun.
 
-Poista käynnistimet käytöstä tai ota ne uudelleen käyttöön mistä tahansa liittämällä asetukseen oma syötekomento [Syötekomennot-valintaikkunaa #InputGestures] käyttäen.
+Poista käynnistimet käytöstä tai ota ne uudelleen käyttöön mistä tahansa liittämällä asetukseen oma näppäinkomento [Näppäinkomennot-valintaikkunaa #InputGestures] käyttäen.
 
-+++ Profiilin käyttöönotto syötekomentoja käyttäen +++[ConfigProfileGestures]
-Voit liittää jokaiseen lisäämääsi profiiliin sen käyttöön ottamiseksi yhden tai useamman syötekomennon.
-Asetusprofiileilla ei oletusarvoisesti ole syötekomentoja.
-Lisää syötekomennot [Syötekomennot-valintaikkunaa #InputGestures] käyttäen.
++++ Profiilin käyttöönotto näppäinkomentoja käyttäen +++[ConfigProfileGestures]
+Voit liittää jokaiseen lisäämääsi profiiliin sen käyttöön ottamiseksi yhden tai useamman näppäinkomennon.
+Asetusprofiileilla ei oletusarvoisesti ole näppäinkomentoja.
+Lisää näppäinkomennot [Näppäinkomennot-valintaikkunaa #InputGestures] käyttäen.
 Kullakin profiililla on oma kohtansa Asetusprofiilit-kategoriassa.
-Kun uudelleennimeät profiilin, kaikki aiemmin lisäämäsi syötekomennot ovat edelleen käytettävissä.
-Profiilin poistaminen poistaa automaattisesti myös siihen liitetyt syötekomennot.
+Kun uudelleennimeät profiilin, kaikki aiemmin lisäämäsi näppäinkomennot ovat edelleen käytettävissä.
+Profiilin poistaminen poistaa automaattisesti myös siihen liitetyt näppäinkomennot.
 
 ++ Asetustiedostojen sijainti ++[LocationOfConfigurationFiles]
 NVDA:n massamuistiversio tallentaa kaikki asetukset ja lisäosat hakemistossaan olevaan userConfig-nimiseen alihakemistoon.
 
 Asennettu NVDA:n versio tallentaa asetukset ja lisäosat erityiseen Windowsin käyttäjäprofiilissasi olevaan NVDA-hakemistoon.
 Tämä tarkoittaa, että jokaisella järjestelmän käyttäjällä voi olla omat NVDA-asetukset.
-Voit avata asetushakemistosi mistä tahansa lisäämällä oman syötekomennon [Syötekomennot-valintaikkunaa #InputGestures] käyttäen.
+Voit avata asetushakemistosi mistä tahansa lisäämällä oman näppäinkomennon [Näppäinkomennot-valintaikkunaa #InputGestures] käyttäen.
 Asennetussa NVDA:ssa pääset asetushakemistoon lisäksi valitsemalla Käynnistä-valikosta Ohjelmat -> NVDA -> Selaa käyttäjän asetushakemistoa.
 
 Sisäänkirjautumisen aikana ja käyttäjätilien valvonnan ruuduissa käytettävät asetukset tallennetaan NVDA:n asennushakemistossa olevaan systemConfig-hakemistoon.
@@ -2165,7 +2217,7 @@ Ikkuna yrittää aina avautua uudelleen samoilla mitoilla ja samassa sijainnissa
 Kun Puheen tarkastelu -toiminto on käytössä, sen ikkuna päivittyy ajoittain näyttääkseen uusimman puhutun tekstin.
 Jos ikkunaa kuitenkin napsautetaan hiirellä tai kohdistus siirretään siihen, NVDA keskeyttää tilapäisesti tekstin päivittämisen, jotta olemassa olevaa sisältöä voidaan helposti valita ja kopioida.
 
-Puheen tarkastelu -toiminto otetaan käyttöön mistä tahansa määrittämällä sille oma syötekomento [Syötekomennot-valintaikkunaa käyttäen. #InputGestures]
+Puheen tarkastelu -toiminto otetaan käyttöön mistä tahansa määrittämällä sille oma näppäinkomento [Näppäinkomennot-valintaikkunaa käyttäen. #InputGestures]
 
 ++ Pistekirjoituksen tarkastelu ++[BrailleViewer]
 Näkeville ohjelmistokehittäjille tai NVDA:ta näkevälle yleisölle esitteleville henkilöille on käytettävissä kelluva ikkuna, jonka avulla voidaan tarkastella pistekirjoitustulostetta sekä pistekirjoitusmerkkejä vastaavaa tekstiä.
@@ -2175,7 +2227,7 @@ Kun pistekirjoituksen tarkastelu on käytössä, se päivittyy jatkuvasti näytt
 Ota pistekirjoituksen tarkastelu käyttöön valitsemalla "Pistekirjoituksen tarkastelu" -vaihtoehto, joka löytyy NVDA-valikon Työkalut-alivalikosta.
 Poista toiminto käytöstä poistamalla valikkokohteen valinta.
 
-Fyysisissä pistenäytöissä on tyypillisesti painikkeita, jotka vierittävät näyttöä eteen- tai taaksepäin. Ota vierittäminen käyttöön pistekirjoituksen tarkastelu -työkalussa määrittämällä [Syötekomennot-valintaikkunaa #InputGestures] käyttäen pikanäppäimet, jotka vierittävät pistenäyttöä eteen- ja taaksepäin.
+Fyysisissä pistenäytöissä on tyypillisesti painikkeita, jotka vierittävät näyttöä eteen- tai taaksepäin. Ota vierittäminen käyttöön pistekirjoituksen tarkastelu -työkalussa määrittämällä [Näppäinkomennot-valintaikkunaa #InputGestures] käyttäen pikanäppäimet, jotka vierittävät pistenäyttöä eteen- ja taaksepäin.
 
 Pistekirjoituksen tarkastelu -ikkunassa on "Näytä pistekirjoituksen tarkastelu käynnistettäessä" -valintaruutu.
 Mikäli se on valittuna, pistekirjoituksen tarkastelu -ikkuna avautuu, kun NVDA käynnistetään.
@@ -2189,6 +2241,8 @@ Komentoa viivästetään, jotta tahaton soluihin siirtäminen estetään.
 Hiiren on oltava solun päällä kunnes se muuttuu vihreäksi.
 Solu on aluksi vaaleankeltainen, muuttuu sitten oranssiksi ja äkkiä vihreäksi.
 
+Ota pistekirjoituksen tarkastelu käyttöön tai poista se käytöstä mistä tahansa määrittämällä sille oma näppäinkomento [Näppäinkomennot-valintaikkunaa #InputGestures] käyttäen.
+
 ++ Python-konsoli ++[PythonConsole]
 NVDA:n Python-konsoli, joka löytyy NVDA-valikon Työkalut-alivalikosta, on kehitystyökalu, joka on hyödyllinen virheiden etsinnässä, yleisessä NVDA:n sisäisen toiminnan tai sovelluksen esteettömyyshierarkian tutkimisessa.
 Lisätietoja on [NVDA-kehittäjän oppaassa. https://www.nvaccess.org/files/nvda/documentation/developerGuide.html]
@@ -2199,7 +2253,7 @@ Lisäosat, jotka ovat NVDA-yhteisön toimittamia, saattavat lisätä tai muuttaa
 
 Lisäosien hallinnassa on luettelo, jossa näkyvät kaikki nykyisen käyttäjän asentamat lisäosat.
 Jokaisesta lisäosasta näytetään nimi, tila, versio sekä tekijä, ja lisätietoja kuten kuvausta ja URL-osoitetta voidaan tarkastella valitsemalla haluttu lisäosa ja painamalla Tietoja lisäosasta -painiketta.
-Jos valitulle lisäosalle on saatavana ohje, se voidaan avata painamalla Ohje-painiketta.
+Jos valitulle lisäosalle on saatavana ohje, se voidaan avata painamalla Lisäosan ohje -painiketta.
 
 Verkossa saatavilla olevia lisäosia on mahdollista selata ja ladata painamalla Hae lisäosia -painiketta.
 Tämä painike avaa [NVDA:n lisäosasivun. https://addons.nvda-project.org/]
@@ -2224,8 +2278,8 @@ Lisäosa poistetaan käytöstä painamalla Poista käytöstä -painiketta.
 Aiemmin käytöstä poistettu lisäosa otetaan käyttöön painamalla Ota käyttöön -painiketta.
 Lisäosa voidaan poistaa käytöstä, mikäli sen tilana on "Käytössä" tai ottaa käyttöön, mikäli tilana on "Ei käytössä".
 Jokainen Ota käyttöön/Poista käytöstä -painikkeen painallus muuttaa lisäosan tilaa, joka ilmaisee, mitä NVDA:n uudelleenkäynnistyessä tapahtuu.
-Jos lisäosa ei ollut aiemmin käytössä, tilana näkyy "käytössä uudelleenkäynnistyksen jälkeen".
-Jos se oli käytössä, tilana näkyy "ei käytössä uudelleenkäynnistyksen jälkeen"
+Jos lisäosa ei ollut aiemmin käytössä, tilana näkyy "Otetaan käyttöön uudelleenkäynnistyksen jälkeen".
+Jos se oli käytössä, tilana näkyy "Poistetaan käytöstä uudelleenkäynnistyksen jälkeen"
 NVDA on käynnistettävä uudelleen, jotta muutokset tulevat voimaan, aivan kuten lisäosia asennettaessa ja poistettaessa.
 
 Valintaikkunassa on myös Sulje-painike, josta lisäosien hallinta voidaan sulkea.
@@ -2236,7 +2290,7 @@ Vanhempaa NVDA:n versiota käytettäessä myös uudet lisäosat voivat olla yhte
 Yhteensopimattoman lisäosan asennusta yritettäessä näytetään virheilmoitus, joka kertoo, miksi kyseinen lisäosa ei ole yhteensopiva.
 Tällaisia lisäosia on mahdollista tarkastella yhteensopimattomien lisäosien hallinnassa painamalla "Näytä yhteensopimattomat lisäosat" -painiketta.
 
-Lisäosien hallinta voidaan avata mistä tahansa määrittämällä sille oma syötekomento [Syötekomennot-valintaikkunaa käyttäen. #InputGestures]
+Lisäosien hallinta voidaan avata mistä tahansa määrittämällä sille oma näppäinkomento [Näppäinkomennot-valintaikkunaa käyttäen. #InputGestures]
 
 +++ Yhteensopimattomien lisäosien hallinta +++[incompatibleAddonsManager]
 Yhteensopimattomien lisäosien hallinnan, johon pääsee painamalla Lisäosien hallinnassa "Näytä yhteensopimattomat lisäosat" -painiketta, avulla voit tarkastella kaikkia yhteensopimattomia lisäosia sekä niiden yhteensopimattomuuden syytä.
@@ -2263,7 +2317,7 @@ Tässä valintaikkunassa voit ottaa käyttöön tai poistaa käytöstä seuraava
 -
 
 ++ Suorita COM-rekisteröintien korjaustyökalu... ++[RunCOMRegistrationFixingTool]
-Ohjelmien asentaminen ja poistaminen voi tietyissä tapauksissa aiheuttaa COM DLL -tiedostojen rekisteröintien poistamista.
+Ohjelmien asentaminen ja poistaminen voi tietyissä tapauksissa aiheuttaa COM DLL -tiedostojen rekisteröintien poistamisen.
 Koska COM-liitännät, kuten IAccessible, ovat riippuvaisia oikeista COM DLL -rekisteröinneistä, ongelmia saattaa ilmetä, mikäli oikea rekisteröinti puuttuu.
 
 Näin voi käydä esim. Adobe Readerin, Math Playerin ja muiden ohjelmien asennuksen ja poiston jälkeen.
@@ -2333,7 +2387,6 @@ Etsi ensin laajempaa kieltä (kuten englanti tai ranska) ja etsi sitten muunnelm
 Valitse kaikki haluamasi kielet ja lisää ne painamalla "Lisää"-painiketta.
 Kun kielet on lisätty, käynnistä NVDA uudelleen.
 
-
 Katso luettelo saatavilla olevista äänistä tästä Microsoftin artikkelista: https://support.microsoft.com/fi-fi/windows/liite-a-tuetut-kielet-ja-%C3%A4%C3%A4net-4486e345-7730-53da-fcfe-55cc64300f01
 
 + Tuetut pistenäytöt +[SupportedBrailleDisplays]
@@ -2354,7 +2407,8 @@ Seuraavat näytöt tukevat automaattista tunnistusta.
 - HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille
 - Eurobraille Esys/Esytime/Iris
 - Nattiq nBraille
-- Mikä tahansa standardinmukaista HID Braille -protokollaa tukeva näyttö
+- Seika Notetaker: MiniSeika (16 tai 24 solua), V6 ja V6Pro (40 solua)
+- Mikä tahansa HID Braille -protokollaa tukeva näyttö
 -
 
 ++ Freedom Scientific Focus/PAC Mate ++[FreedomScientificFocus]
@@ -2403,6 +2457,17 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 | Esc-näppäin | väli+pisteet 1 ja 5 |
 | Windows-näppäin | väli+pisteet 2, 4, 5 ja 6 |
 | Väli | väli |
+| Vaihda Ctrl-näppäimen tilaa | väli+pisteet 3 ja 8 |
+| Vaihda Alt-näppäimen tilaa | väli+pisteet 6 ja 8 |
+| Vaihda Win-näppäimen tilaa | väli+pisteet 4 ja 8 |
+| Vaihda NVDA-näppäimen tilaa | väli+pisteet 5 ja 8 |
+| Vaihda Vaihto-näppäimen tilaa | väli+pisteet 7 ja 8 |
+| Vaihda Ctrl- ja Vaihto-näppäinten tilaa | väli+pisteet 3, 7 ja 8 |
+| Vaihda Alt- ja Vaihto-näppäinten tilaa | väli+pisteet 6, 7 ja 8 |
+| Vaihda Win- ja Vaihto-näppäinten tilaa | väli+pisteet 4, 7 ja 8 |
+| Vaihda NVDA- ja Vaihto-näppäinten tilaa | väli+pisteet 5, 7 ja 8 |
+| Vaihda Ctrl- ja Alt-näppäinten tilaa | väli+pisteet 3, 6 ja 8 |
+| Vaihda Ctrl-, Alt- ja Vaihto-näppäinten tilaa | väli+pisteet 3, 6, 7 ja 8 |
 | Windows+D-näppäinyhdistelmä (pienennä kaikki sovellukset) | väli+pisteet 1, 2, 3, 4, 5 ja 6 |
 | Lue nykyinen rivi | väli+pisteet 1 ja 4 |
 | NVDA-valikko | väli+pisteet 1, 3, 4 ja 5 |
@@ -2429,7 +2494,7 @@ Kun pariliitos on luotu tätä apuohjelmaa käyttäen ja NVDA ei tunnista laitet
 
 Vaikka joissakin näistä pistenäytöistä onkin pistenäppäimistö, ne huolehtivat itse pistekirjoituksen kääntämisestä tekstiksi.
 Tämä tarkoittaa, että oletusarvoisesti NVDA:n pistekirjoituksen syöttöjärjestelmää ei käytetä (ts. pistesyöttötaulukkoasetuksella ei ole vaikutusta).
-HID-näppäimistöemulointi on mahdollista poistaa käytöstä syötekomennolla ALVA-näytöissä, joissa on viimeisin laiteohjelmisto.
+HID-näppäimistöemulointi on mahdollista poistaa käytöstä näppäinkomennolla ALVA-näytöissä, joissa on viimeisin laiteohjelmisto.
 
 Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
 Katso laitteen käyttöohjeesta kuvaukset näppäinten paikoista.
@@ -2536,7 +2601,7 @@ Näitä ovat:
 -
 Muutkin Baumin valmistamat pistenäytöt voivat toimia, vaikkei niitä olekaan testattu.
 
-Mikäli sellainen pistenäyttö, joka ei käytä HID:tä, yhdistetään tietokoneeseen USB:llä, sinun on ensin asennettava valmistajan toimittamat ajurit.
+Mikäli tietokoneeseen yhdistetään USB:llä pistenäyttö, joka ei käytä HID:tä, valmistajan toimittamat ajurit on asennettava ensin.
 VarioUltra ja Pronto! käyttävät HID:tä.
 Refreshabraille ja Orbit Reader 20 voivat käyttää HID:tä, mikäli ne on siten määritelty.
 
@@ -2730,13 +2795,21 @@ Katso laitteen käyttöohjeesta kuvaukset näppäinten paikoista.
 %kc:endInclude
 
 ++ Seika ++[Seika]
-[Nippon Telesoftin https://www.nippontelesoft.com/] 40 merkin Seika-versioita 3, 4 ja 5 sekä 80 merkin Seika80-versiota tuetaan.
-Lisätietoja näistä pistenäytöistä sekä niiden tarvitsemista ajureista löytyy osoitteesta https://en.seika-braille.com/down/index.html.
-Tietokoneelle on asennettava valmistajan toimittamat USB-ajurit.
+Seuraavia Nippon Telesoftin Seika-pistenäyttöjä tuetaan kahdessa ryhmässä eri toiminnallisuuksilla:
+- [Seika-versiot 3, 4 ja 5 (40 solua), Seika80 (80 solua) #SeikaBrailleDisplays]
+- [MiniSeika (16 tai 24 solua), V6 ja V6Pro (40 solua) #SeikaNotetaker]
+-
+Lisätietoa näytöistä löytyy osoitteesta https://en.seika-braille.com/down/index.html.
 
-Nämä näytöt eivät vielä tue NVDA:n automaattista pistenäytön tunnistusta.
 
-Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
++++ Seika-versiot 3, 4 ja 5 (40 solua), Seika80 (80 solua) +++[SeikaBrailleDisplays]
+- Nämä näytöt eivät vielä tue NVDA:n automaattista pistenäytön tunnistusta.
+- Määritä manuaalisesti valitsemalla "Seika"
+- Laiteajurit on asennettava ennen Seika v3/4/5/80-näyttöjen käyttämistä.
+Ajurit toimittaa [valmistaja. https://en.seika-braille.com/down/index.html]
+	-
+
+Seuraavassa ovat näiden pistenäyttöjen näppäinmääritykset.
 Katso laitteen käyttöohjeesta kuvaukset näppäinten paikoista.
 %kc:beginInclude
 || Nimi | Näppäinkomento |
@@ -2753,6 +2826,48 @@ Katso laitteen käyttöohjeesta kuvaukset näppäinten paikoista.
 | Siirrä pistesoluun | kosketuskohdistinnäppäin |
 %kc:endInclude
 
+
++++ MiniSeika (16 tai 24 solua), V6 ja V6Pro (40 solua) +++[SeikaNotetaker]
+- NVDA:n automaattista pistenäytön tunnistusta tuetaan USB- ja Bluetooth-yhteydellä.
+- Määritä valitsemalla "Seika Notetaker" tai "Automaattinen".
+- Seika Notetaker -pistenäytön käyttämiseen ei tarvita ylimääräisiä ajureita.
+-
+
+Seuraavassa ovat näiden näyttöjen näppäinmääritykset.
+Katso laitteen käyttöohjeesta kuvaukset näppäinten paikoista.
+%kc:beginInclude
+|| Nimi | Näppäin |
+| Vieritä taaksepäin | vasen |
+| Vieritä eteenpäin | oikea |
+| Jatkuva luku | väli+askelpalautin |
+| NVDA-valikko | vasen+oikea |
+| Siirrä edelliselle riville | LJ ylös |
+| Siirrä seuraavalle riville | LJ alas |
+| Vaihda Pistenäyttö seuraa -asetusta | LJ keskikohta |
+| Sarkain | LJ oikea |
+| Vaihto+Sarkain | LJ vasen |
+| Nuoli ylös -näppäin | RJ ylös |
+| Nuoli alas -näppäin | RJ alas |
+| Nuoli vasemmalle -näppäin | RJ vasen |
+| Nuoli oikealle -näppäin | RJ oikea |
+| Siirrä pistesoluun | kosketuskohdistinnäppäin |
+| Vaihto+Nuoli ylös -näppäinyhdistelmä | väli+RJ ylös, askelpalautin+RJ ylös |
+| Vaihto+Nuoli alas -näppäinyhdistelmä | väli+RJ alas, askelpalautin+RJ alas |
+| Vaihto+Nuoli vasemmalle -näppäinyhdistelmä | väli+RJ vasen, askelpalautin+RJ vasen |
+| Vaihto+Nuoli oikealle -näppäinyhdistelmä | väli+RJ oikea, askelpalautin+RJ oikea |
+| Enter-näppäin | RJ keskikohta, piste 8 |
+| Esc-näppäin | väli+RJ keskikohta |
+| Win-näppäin | askelpalautin+RJ keskikohta |
+| Väli-näppäin | väli, askelpalautin |
+| Askelpalautin-näppäin | piste 7 |
+| Page up -näppäin | väli+LJ oikea |
+| Page down -näppäin | väli+LJ vasen |
+| Home-näppäin | väli+LJ ylös |
+| End-näppäin | väli+LJ alas |
+| Ctrl+Home-näppäinyhdistelmä | askelpalautin+LJ ylös |
+| Ctrl+End-näppäinyhdistelmä | askelpalautin+LJ alas |
+
+
 ++ Papenmeier BRAILLEX (uudet mallit) ++[Papenmeier]
 Seuraavia pistenäyttöjä tuetaan:
 - BRAILLEX EL 40c, EL 80c, EL 20c, EL 60c (USB)
@@ -2762,10 +2877,6 @@ Seuraavia pistenäyttöjä tuetaan:
 -
 
 Nämä näytöt eivät tue NVDA:n automaattista pistenäytön tunnistusta.
-
-NVDA käyttää BrxComia, mikäli se on asennettu.
-BrxCom on työkalu, joka mahdollistaa pistenäytön näppäimistösyötteen toimimisen itsenäisesti ruudunlukuohjelmasta riippumatta.
-Pistekirjoituksen syöttäminen on mahdollista Trio- ja BRAILLEX Live -malleissa.
 
 Useimmissa laitteissa on intuitiivisen ja nopean käytön mahdollistava helppokäyttönäppäin (EAB).
 Sitä voidaan siirtää neljään suuntaan, joissa kussakin on yleensä kaksi kytkintä.
@@ -2975,7 +3086,7 @@ Katso laitteen käyttöohjeesta tarkat kuvaukset näppäinten paikoista.
 | Vaihto+Sarkain-näppäinyhdistelmä | väli+piste1+piste2+piste5+piste6 |
 | Windows-näppäin | väli+piste2+piste4+piste5+piste6 (väli+w) |
 | Alt-näppäin | väli+piste1+piste3+piste4 (väli+m) |
-| Ota syöteohje käyttöön tai poista se käytöstä | väli+piste2+piste3+piste6 (väli+alempi h) |
+| Ota näppäinohje käyttöön tai poista se käytöstä | väli+piste2+piste3+piste6 (väli+alempi h) |
 
 Seuraavassa on BrailleNote QT:lle määritellyt komennot, kun se ei ole pistekirjoituksen syöttötilassa.
 
@@ -2997,7 +3108,7 @@ Seuraavassa on BrailleNote QT:lle määritellyt komennot, kun se ei ole pistekir
 | Vaihto+Sarkain-näppäinyhdistelmä | shift+tab |
 | Win-näppäin | read+w |
 | Alt-näppäin | read+m |
-| Ota syöteohje käyttöön tai poista se käytöstä | read+1 |
+| Ota näppäinohje käyttöön tai poista se käytöstä | read+1 |
 
 Seuraavassa on vieritysrullaan määritellyt komennot:
 
@@ -3179,17 +3290,17 @@ Katso [BRLTTY:n näppäinsidosluetteloista http://mielke.cc/brltty/doc/KeyBindin
 | siirrä pistesoluun | kosketuskohdistinnäppäin (siirrä kohdistin merkin kohdalle) |
 %kc:endInclude
 
-++ Standardinmukaiset HID-pistenäytöt ++[HIDBraille]
-Tämä on kokeellinen ajuri uudelle standardinmukaiselle HID Braille -määritykselle, josta Microsoft, Google, Apple ja useat avustavan teknologian yritykset, mukaan lukien NV Access, sopivat vuonna 2018.
-Toiveissa on, että kaikkien valmistajien tulevat pistenäyttömallit käyttävät tätä vakioprotokollaa, joka poistaa valmistajakohtaisten pistenäyttöajureiden tarpeen.
+++ HID Braille -pistenäytöt ++[HIDBraille]
+Tämä on kokeellinen ajuri uudelle HID Braille -protokollalle, josta Microsoft, Google, Apple ja useat avustavan teknologian yritykset, mukaan lukien NV Access, sopivat vuonna 2018.
+Toiveissa on, että kaikkien valmistajien tulevat pistenäyttömallit käyttäisivät tätä vakioprotokollaa, joka poistaisi valmistajakohtaisten pistenäyttöajureiden tarpeen.
 
 NVDA:n automaattinen pistenäytön tunnistus tunnistaa myös kaikki tätä protokollaa tukevat näytöt.
  
-Seuraavassa ovat näiden näyttöjen näppäinkomennot NVDA:lle.
+Seuraavassa ovat näiden näyttöjen näppäinkomennot NVDA:ta käytettäessä.
 %kc:beginInclude
 || Nimi | Näppäinkomento |
-| Vieritä taaksepäin | panoroi vasemmalle |
-| Vieritä eteenpäin | panoroi oikealle |
+| Vieritä taaksepäin | panoroi vasemmalle tai keinunäppäin ylös |
+| Vieritä eteenpäin | panoroi oikealle tai keinunäppäin alas |
 | Siirrä edelliselle riville | väli+piste 1 |
 | Siirrä seuraavalle riville | väli+piste 4 |
 | Siirrä pistesoluun | kohdistimensiirtonäppäinsarja 1 |
@@ -3211,6 +3322,34 @@ Seuraavassa ovat näiden näyttöjen näppäinkomennot NVDA:lle.
 %kc:endInclude
  
 + Edistyneet aiheet +[AdvancedTopics]
+
+++ Suojattu tila ++[SecureMode]
+NVDA voidaan käynnistää suojatussa tilassa ``-s``-[komentorivivalitsimella #CommandLineOptions].
+NVDA on käynnissä suojatussa tilassa, kun se suoritetaan [suojatuissa ruuduissa #SecureScreens], ellei [järjestelmänlaajuista parametria #SystemWideParameters] ``serviceDebug`` ole otettu käyttöön.
+
+Suojattu tila poistaa käytöstä:
+
+- NVDA:n omien ja muiden asetusten tallentamisen levylle
+- Näppäinkomentokartan tallentamisen levylle
+- [Asetusprofiilien #ConfigurationProfiles] ominaisuudet, kuten luonnin, poiston, profiilin uudelleennimeämisen jne.
+- NVDA:n päivittämisen ja massamuistiversion luonnin
+- [Python-konsolin #PythonConsole]
+- [Lokintarkastelun #LogViewer] ja lokiin tallentamisen
+-
+
+++ Suojatut ruudut ++[SecureScreens]
+NVDA on käynnissä [suojatussa tilassa #SecureMode], kun se suoritetaan suojatuissa ruuduissa, ellei [järjestelmänlaajuista parametria #SystemWideParameters] ``serviceDebug`` ole otettu käyttöön.
+
+NVDA käyttää järjestelmäprofiilia asetuksia varten ollessaan käynnissä suojatussa ruudussa.
+NVDA:n käyttäjäasetukset voidaan kopioida [suojatuissa ruuduissa käytettäväksi #GeneralSettingsCopySettings].
+
+Suojattuja ruutuja ovat:
+
+- Windowsin kirjautumisruutu
+- Käyttäjätilien valvonnan valintaikkuna, (aktiivinen suoritettaessa toimintoa järjestelmänvalvojana)
+  - Tämä sisältää ohjelmien asentamisen
+  -
+-
 
 ++ Komentorivivalitsimet ++[CommandLineOptions]
 NVDA hyväksyy käynnistyessään yhden tai useamman toimintaansa vaikuttavan komentorivivalitsimen.
@@ -3243,18 +3382,19 @@ Seuraavassa on luettelo NVDA:n komentorivivalitsimista:
 | -f LOKITIEDOSTO | --log-file=LOKITIEDOSTO | Tiedosto, johon lokiviestit tallennetaan. |
 | -l LOKITASO | --log-level=LOKITASO | Alin taso, jonka ilmoitukset tallennetaan lokiin (virheenkorjaus = 10, syöttö/tulostus = 12, virheenkorjausvaroitus = 15, tiedot = 20, varoitus = 30, virhe = 40, kriittinen = 50, ei käytössä = 100). Oletustaso on "varoitus". |
 | -c ASETUSPOLKU | --config-path=ASETUSPOLKU | Hakemistopolku, johon kaikki NVDA:n asetukset tallennetaan. |
+| Ei mitään | --lang=KIELI | Ohita NVDA:n asetuksissa määritetty kieli. Määritä kieleksi "Windows" käyttääksesi nykyistä käyttäjän oletusarvoa, "en" englantia jne. |
 | -m | --minimal | Ei ääniä, käyttöliittymää tai käynnistysilmoitusta jne. |
-| -s | --secure | Suojattu tila: poistaa käytöstä Python-konsolin, profiilitoiminnot, kuten luonnin, poiston, uudelleennimeämisen jne., päivitystarkistuksen, jotkin Tervetuloa-valintaikkunan ja yleisten asetusten kategorian valintaruudut (esim. Käytä sisäänkirjautumisen aikana, Tallenna asetukset suljettaessa jne.) sekä lokin tarkastelun ja lokin tallennuksen (käytetään usein suojatuissa ruuduissa). Huomaa myös, että tämä komento poistaa käytöstä järjestelmäasetuksiin tallentamisen sekä syötekomentokartan tallentamisen levylle. |
+| -s | --secure | Käynnistää NVDA:n [suojatussa tilassa #SecureMode]. |
 | Ei mitään | --disable-addons | Poistaa lisäosat käytöstä. |
 | Ei mitään | --debug-logging | Ottaa käyttöön virheenkorjaus-lokitason vain nykyisessä istunnossa. Tämä asetus korvaa minkä tahansa muun annetun lokitason (""--loglevel"", -l) argumentin, lokin käytöstä poistava valitsin mukaan lukien. |
-| Ei mitään | --no-logging | Poistaa lokin kokonaan käytöstä NVDA:ta käytettäessä. Tämä asetus voidaan korvata, mikäli lokitaso (""--loglevel"", -l) määritetään komentoriviparametrilla tai jos virheenkorjauslokin tallennus otetaan käyttöön. |
+| Ei mitään | --no-logging | Poistaa lokin kokonaan käytöstä NVDA:ta käytettäessä. Tämä asetus voidaan ohittaa, mikäli lokitaso (""--loglevel"", -l) määritetään komentoriviparametrilla tai jos virheenkorjauslokin tallennus otetaan käyttöön. |
 | Ei mitään | --no-sr-flag | Ei muuta järjestelmänlaajuista ruudunlukijalippua. |
 | Ei mitään | --install | Asentaa NVDA:n ja käynnistää asennetun kopion. |
 | Ei mitään | --install-silent | Asentaa NVDA:n ilman kehotteita ja asennetun kopion käynnistämistä. |
 | Ei mitään | --enable-start-on-logon=True|False | Ottaa asennettaessa käyttöön NVDA:n [Käytä sisäänkirjautumisen aikana -asetuksen. #StartAtWindowsLogon] |
 | Ei mitään | --copy-portable-config | Kopioi asennettaessa massamuistiversion asetukset annetusta hakemistopolusta (--config-path, -c) nykyiseen käyttäjätiliin. |
 | Ei mitään | --create-portable | Luo ja käynnistää NVDA:n massamuistiversion. Parametri --portable-path on myös määritettävä. |
-| Ei mitään | --create-portable-silent | Luo NVDA:n massamuistiversion, eikä käynnistä sitä luonnin jälkeen. Parametri --portable-path on myös määritettävä. |
+| Ei mitään | --create-portable-silent | Luo NVDA:n massamuistiversion eikä käynnistä sitä luonnin jälkeen. Parametri --portable-path on myös määritettävä. |
 | Ei mitään | --portable-path=POLKU | Hakemistopolku, jonne massamuistiversio luodaan. |
 
 ++ Järjestelmänlaajuiset parametrit ++[SystemWideParameters]
@@ -3267,7 +3407,7 @@ Arvot tallennetaan johonkin seuraavista rekisteriavaimista:
 Seuraavien rekisteriavainten määrittäminen on mahdollista:
 || Nimi | Tyyppi | Mahdolliset arvot | Kuvaus |
 | configInLocalAppData | DWORD | 0 (oletus) poistaa käytöstä, 1 ottaa käyttöön | Jos tämä asetus otetaan käyttöön, NVDA:n asetukset tallennetaan paikallisten sovellustietojen kansioon. |
-| serviceDebug | DWORD | 0 (oletus) poistaa käytöstä, 1 ottaa käyttöön | Jos tämä asetus otetaan käyttöön, suojattu tila poistetaan käytöstä Windowsin suojatuilla työpöydillä, mikä mahdollistaa Python-konsolin ja lokintarkastelun käytön. Tämän asetuksen käyttöä ei suositella tietoturvan merkittävän heikkenemisen takia. |
+| serviceDebug | DWORD | 0 (oletus) poistaa käytöstä, 1 ottaa käyttöön | Jos tämä asetus otetaan käyttöön, [suojattu tila #SecureMode] poistetaan käytöstä [suojatuissa ruuduissa #SecureScreens]. Tämän asetuksen käyttöä ei suositella tietoturvan merkittävän heikkenemisen takia. |
 
 + Lisätietoja +[FurtherInformation]
 Mikäli tarvitset lisätietoja tai neuvoja NVDA:han liittyen, käy sen verkkosivustolla osoitteessa NVDA_URL.

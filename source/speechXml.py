@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2016-2021 NV Access Limited
+# Copyright (C) 2016-2022 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -14,7 +14,7 @@ from collections import namedtuple, OrderedDict
 import re
 import speech
 import textUtils
-from speech.commands import SpeechCommand
+from speech.commands import LangChangeCommand, SpeechCommand
 from logHandler import log
 
 XML_ESCAPES = {
@@ -49,7 +49,8 @@ def _buildInvalidXmlRegexp():
 RE_INVALID_XML_CHARS = _buildInvalidXmlRegexp()
 REPLACEMENT_CHAR = textUtils.REPLACEMENT_CHAR
 
-def toXmlLang(nvdaLang):
+
+def toXmlLang(nvdaLang: str) -> str:
 	"""Convert an NVDA language to an XML language.
 	"""
 	return nvdaLang.replace("_", "-")
@@ -153,7 +154,7 @@ class XmlBalancer(object):
 			self._openTags.append(tag)
 		self._tagsChanged = False
 
-	def generateXml(self, commands):
+	def generateXml(self, commands) -> str:
 		"""Generate XML from a sequence of balancer commands and text.
 		"""
 		for command in commands:
@@ -235,7 +236,7 @@ class SsmlConverter(SpeechXmlConverter):
 	"""Converts an NVDA speech sequence to SSML.
 	"""
 
-	def __init__(self, defaultLanguage):
+	def __init__(self, defaultLanguage: str):
 		self.defaultLanguage = toXmlLang(defaultLanguage)
 
 	def generateBalancerCommands(self, speechSequence):
@@ -254,7 +255,7 @@ class SsmlConverter(SpeechXmlConverter):
 		else:
 			return StopEnclosingTextCommand()
 
-	def convertLangChangeCommand(self, command):
+	def convertLangChangeCommand(self, command: LangChangeCommand) -> SetAttrCommand:
 		lang = command.lang or self.defaultLanguage
 		lang = toXmlLang(lang)
 		return SetAttrCommand("voice", "xml:lang", lang)

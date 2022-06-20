@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2020 NV Access Limited
+# Copyright (C) 2020-2022 NV Access Limited, Łukasz Golonka
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,28 +15,33 @@ from SystemTestSpy import (
 	_getLib,
 	_blockUntilConditionMet,
 )
-from SystemTestSpy.windows import waitUntilWindowFocused
+from SystemTestSpy.windows import getWindowHandle, waitUntilWindowFocused, windowWithHandleExists
 
 # Imported for type information
-from robot.libraries.Process import Process as _ProcessLib
 from robot.libraries.OperatingSystem import OperatingSystem as _OpSysLib
 
 from AssertsLib import AssertsLib as _AssertsLib
 
 import NvdaLib as _nvdaLib
 from NvdaLib import NvdaLib as _nvdaRobotLib
-_nvdaProcessAlias = _nvdaRobotLib.nvdaProcessAlias
 
 _nvdaRobot: _nvdaRobotLib = _getLib("NvdaLib")
 _opSys: _OpSysLib = _getLib('OperatingSystem')
 _builtIn: BuiltIn = BuiltIn()
-_process: _ProcessLib = _getLib("Process")
 _asserts: _AssertsLib = _getLib("AssertsLib")
+
+
+def _getNvdaMessageWindowhandle() -> int:
+	return getWindowHandle(windowClassName='wxWindowClassNR', windowName='NVDA')
+
+
+def _nvdaIsRunning() -> bool:
+	return bool(_getNvdaMessageWindowhandle())
 
 
 def NVDA_Starts():
 	""" Test that NVDA can start"""
-	_process.process_should_be_running(_nvdaProcessAlias)
+	_builtIn.should_be_true(_nvdaIsRunning(), msg="NVDA is not running")
 
 
 def open_welcome_dialog_from_menu():
@@ -77,8 +82,12 @@ def quits_from_menu(showExitDialog=True):
 		_builtIn.sleep(1)  # the dialog is not always receiving the enter keypress, wait a little for it
 		spy.emulateKeyPress("enter", blockUntilProcessed=False)  # don't block so NVDA can exit
 
-	_process.wait_for_process(_nvdaProcessAlias, timeout="3 sec")
-	_process.process_should_be_stopped(_nvdaProcessAlias)
+	_blockUntilConditionMet(
+		getValue=lambda: not _nvdaIsRunning(),
+		giveUpAfterSeconds=3,
+		errorMessage="NVDA failed to exit in the specified timeout"
+	)
+	_builtIn.should_not_be_true(_nvdaIsRunning(), msg="NVDA is still running")
 
 
 def quits_from_keyboard():
@@ -100,10 +109,14 @@ def quits_from_keyboard():
 		])
 	)
 	_builtIn.sleep(1)  # the dialog is not always receiving the enter keypress, wait a little longer for it
-	_process.process_should_be_running(_nvdaProcessAlias)
+	_builtIn.should_be_true(_nvdaIsRunning(), msg="NVDA is not running")
 	spy.emulateKeyPress("enter", blockUntilProcessed=False)  # don't block so NVDA can exit
-	_process.wait_for_process(_nvdaProcessAlias, timeout="3 sec")
-	_process.process_should_be_stopped(_nvdaProcessAlias)
+	_blockUntilConditionMet(
+		getValue=lambda: not _nvdaIsRunning(),
+		giveUpAfterSeconds=3,
+		errorMessage="NVDA failed to exit in the specified timeout"
+	)
+	_builtIn.should_not_be_true(_nvdaIsRunning(), msg="NVDA is still running")
 
 
 def test_desktop_shortcut():
@@ -142,7 +155,8 @@ def NVDA_restarts():
 	spy = _nvdaLib.getSpyLib()
 	spy.wait_for_specific_speech("Welcome to NVDA")  # ensure the dialog is present.
 	spy.wait_for_speech_to_finish()
-
+	# Get handle of the message window for the currently running NVDA
+	oldMsgWindowHandle = _getNvdaMessageWindowhandle()
 	spy.emulateKeyPress("NVDA+q")
 	spy.wait_for_specific_speech("Exit NVDA")
 
@@ -150,8 +164,15 @@ def NVDA_restarts():
 	spy.emulateKeyPress("downArrow")
 	spy.wait_for_specific_speech("Restart")
 	spy.emulateKeyPress("enter", blockUntilProcessed=False)  # don't block so NVDA can exit
-	_process.wait_for_process(_nvdaProcessAlias, timeout="10 sec")
-	_process.process_should_be_stopped(_nvdaProcessAlias)
+	_blockUntilConditionMet(
+		getValue=lambda: windowWithHandleExists(oldMsgWindowHandle) is False,
+		giveUpAfterSeconds=10,
+		errorMessage="Old NVDA is still running"
+	)
+	_builtIn.should_not_be_true(
+		windowWithHandleExists(oldMsgWindowHandle),
+		msg="Old NVDA process is stil running"
+	)
 	waitUntilWindowFocused("Welcome to NVDA")
 
 
@@ -168,9 +189,18 @@ def _ensureRestartWithCrashDump(crashFunction: _Callable[[], None]):
 	spy = _nvdaLib.getSpyLib()
 	spy.wait_for_specific_speech("Welcome to NVDA")  # ensure the dialog is present
 	spy.emulateKeyPress("enter")  # close the dialog so we can check for it after the crash
+	oldMsgWindowHandle = _getNvdaMessageWindowhandle()
+
 	crashFunction()
-	_process.wait_for_process(_nvdaProcessAlias, timeout="3 sec")
-	_process.process_should_be_stopped(_nvdaProcessAlias)
+	_blockUntilConditionMet(
+		getValue=lambda: windowWithHandleExists(oldMsgWindowHandle) is False,
+		giveUpAfterSeconds=3,
+		errorMessage="Old NVDA is still running"
+	)
+	_builtIn.should_not_be_true(
+		windowWithHandleExists(oldMsgWindowHandle),
+		msg="Old NVDA process is stil running"
+	)
 	crashOccurred, crashPath = _blockUntilConditionMet(
 		getValue=lambda: _nvdaRobot.check_for_crash_dump(startTime),
 		giveUpAfterSeconds=3,
