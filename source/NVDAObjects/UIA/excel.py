@@ -414,7 +414,8 @@ class ExcelCell(ExcelObject):
 					states.add(controlTypes.State.HASNOTE)
 		return states
 
-	def _getColumnRepresentationForNumber(self, n: int) -> str:
+	@staticmethod
+	def _getColumnRepresentationForNumber(n: int) -> str:
 		"""
 		Convert a decimal number to its base alphabet representation.
 		See https://codereview.stackexchange.com/questions/182733/base-26-letters-and-base-10-using-recursion
@@ -435,7 +436,8 @@ class ExcelCell(ExcelObject):
 			for i in modGenerator(n)
 		)[::-1]
 
-	def _getNumberRepresentationForColumn(self, column):
+	@staticmethod
+	def _getNumberRepresentationForColumn(column: str) -> int:
 		"""
 		Convert an alphabet number to its decimal representation.
 		See https://codereview.stackexchange.com/questions/182733/base-26-letters-and-base-10-using-recursion
