@@ -17,7 +17,6 @@ import typing
 import globalVars
 import ctypes
 from ctypes import wintypes
-from systemUtils import getProcessTokenOrigin
 import monkeyPatches
 
 monkeyPatches.applyMonkeyPatches()
@@ -78,6 +77,9 @@ import logHandler
 from logHandler import log
 import winUser
 import winKernel
+# Avoid a E402 'module level import not at top of file' warning,
+# because monkeypatches need to be applied first first
+from systemUtils import getProcessTokenOrigin  # noqa: E402
 
 try:
 	globalVars.appLogonSessionID = getProcessTokenOrigin(winKernel.GetCurrentProcess())
