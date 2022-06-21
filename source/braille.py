@@ -2752,7 +2752,7 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 		"""
 		return self.id.split("+")
 	
-	def _get_speechEffectWhenExecuted(self):
+	def _get_speechEffectWhenExecuted(self) -> Optional[str]:
 		if (
 			not config.conf["braille"]["interruptSpeechWhileScrolling"]
 			and self.script and self.script.tag == scriptHandler.Tag.BRAILLE_SCROLL
