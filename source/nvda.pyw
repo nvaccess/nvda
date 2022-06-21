@@ -77,6 +77,13 @@ import logHandler
 from logHandler import log
 import winUser
 import winKernel
+from systemUtils import getProcessTokenOrigin
+
+try:
+	globalVars.appLogonSessionID = getProcessTokenOrigin(winKernel.GetCurrentProcess())
+except WindowsError:
+	log.error("Couldn't get NVDAProcessLogonSessionID", exc_info=True)
+
 
 # Find out if NVDA is running as a Windows Store application
 bufLen=ctypes.c_int()
