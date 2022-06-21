@@ -53,6 +53,7 @@ def _processPositiveStates(
 	positiveStates.discard(State.FOCUSED)
 	positiveStates.discard(State.OFFSCREEN)
 	positiveStates.discard(State.INVISIBLE)
+	positiveStates.discard(State.INDETERMINATE)
 	if reason != OutputReason.CHANGE:
 		positiveStates.discard(State.LINKED)
 		if role in (
@@ -73,9 +74,6 @@ def _processPositiveStates(
 		positiveStates.discard(State.EXPANDED)
 	if State.FOCUSABLE not in states:
 		positiveStates.discard(State.EDITABLE)
-	if not config.conf["annotations"]["reportDetails"]:
-		# reading aria-details is an experimental feature still and should not always be reported.
-		positiveStates.discard(State.HAS_ARIA_DETAILS)
 	return positiveStates
 
 

@@ -353,10 +353,22 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		if not obj.isFocusable and controlTypes.State.FOCUSED not in states and role != controlTypes.Role.POPUPMENU:
 			return False
 		# many controls that are read-only should not switch to passThrough. 
-		# However, certain controls such as combo boxes and readonly edits are read-only but still interactive.
-		# #5118: read-only ARIA grids should also be allowed (focusable table cells, rows and headers).
-		if controlTypes.State.READONLY in states and role not in (controlTypes.Role.EDITABLETEXT, controlTypes.Role.COMBOBOX, controlTypes.Role.TABLEROW, controlTypes.Role.TABLECELL, controlTypes.Role.TABLEROWHEADER, controlTypes.Role.TABLECOLUMNHEADER):
-			return False
+		# However, there are exceptions.
+		if controlTypes.State.READONLY in states:
+			# #13221: For Slack message lists, and the MS Edge downloads window, switch to passthrough
+			# even though the list item and list are read-only, but focusable.
+			if (
+				role == controlTypes.Role.LISTITEM and controlTypes.State.FOCUSED in states
+				and obj.parent.role == controlTypes.Role.LIST and controlTypes.State.FOCUSABLE in obj.parent.states
+			):
+				return True
+			# Certain controls such as combo boxes and readonly edits are read-only but still interactive.
+			# #5118: read-only ARIA grids should also be allowed (focusable table cells, rows and headers).
+			if role not in (
+				controlTypes.Role.EDITABLETEXT, controlTypes.Role.COMBOBOX, controlTypes.Role.TABLEROW,
+				controlTypes.Role.TABLECELL, controlTypes.Role.TABLEROWHEADER, controlTypes.Role.TABLECOLUMNHEADER
+			):
+				return False
 		# Any roles or states for which we always switch to passThrough
 		if role in self.ALWAYS_SWITCH_TO_PASS_THROUGH_ROLES or controlTypes.State.EDITABLE in states:
 			return True
@@ -1245,7 +1257,9 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 	def __init__(self,obj):
 		super(BrowseModeDocumentTreeInterceptor,self).__init__(obj)
 		self._lastProgrammaticScrollTime = None
-		self.documentConstantIdentifier = self.documentConstantIdentifier
+		# Cache the document constant identifier so it can be saved with the last caret position on termination.
+		# As the original property may not be available as the document will be already dead.
+		self._lastCachedDocumentConstantIdentifier: Optional[str] = self.documentConstantIdentifier
 		self._lastFocusObj = None
 		self._objPendingFocusBeforeActivate = None
 		self._hadFirstGainFocus = False
@@ -1259,8 +1273,11 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 
 	def terminate(self):
 		if self.shouldRememberCaretPositionAcrossLoads and self._lastCaretPosition:
+			docID = self._lastCachedDocumentConstantIdentifier
+			lastCaretPos = self._lastCaretPosition
+			log.debug(f"Saving caret position {lastCaretPos} for document at {docID}")
 			try:
-				self.rootNVDAObject.appModule._browseModeRememberedCaretPositions[self.documentConstantIdentifier] = self._lastCaretPosition
+				self.rootNVDAObject.appModule._browseModeRememberedCaretPositions[docID] = lastCaretPos
 			except AttributeError:
 				# The app module died.
 				pass
@@ -1280,6 +1297,12 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				# We only set the caret position if in browse mode.
 				# If in focus mode, the document must have forced the focus somewhere,
 				# so we don't want to override it.
+				# Update the cached document constant identifier
+				# so it can be saved with the last caret position on termination.
+				# As the original property may not be available as the document will be already dead.
+				# Updating here is necessary as the identifier could have dynamically changed since initial load,
+				# such as with  a SPA (single page app)
+				self._lastCachedDocumentConstantIdentifier = self.documentConstantIdentifier
 				initialPos = self._getInitialCaretPos()
 				if initialPos:
 					self.selection = self.makeTextInfo(initialPos)
@@ -1346,6 +1369,14 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		caret = info.copy()
 		caret.collapse()
 		self._lastCaretPosition = caret.bookmark
+		docID = self.documentConstantIdentifier
+		if docID:
+			# Update the cached document constant identifier
+			# so it can be saved with the last caret position on termination.
+			# As the original property may not be available as the document will be already dead.
+			# Updating here is necessary as the identifier could have dynamically changed since initial load,
+			# such as with  a SPA (single page app)
+			self._lastCachedDocumentConstantIdentifier = self.documentConstantIdentifier
 		review.handleCaretMove(caret)
 		if reason == OutputReason.FOCUS:
 			self._lastCaretMoveWasFocus = True
@@ -1400,26 +1431,6 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			ui.message(_("No long description"))
 	# Translators: the description for the activateLongDescription script on browseMode documents.
 	script_activateLongDesc.__doc__=_("Shows the long description at this position if one is found.")
-
-	@script(
-		description=_(
-			# Translators: the description for the activateAriaDetailsSummary script on browseMode documents.
-			"Shows a summary of the details at this position if found."
-		)
-	)
-	def script_activateAriaDetailsSummary(self, gesture):
-		info = self.makeTextInfo(textInfos.POSITION_CARET)
-		info.expand("character")
-		for field in reversed(info.getTextWithFields()):
-			if isinstance(field, textInfos.FieldCommand) and field.command == "controlStart":
-				states = field.field.get('states')
-				if states and controlTypes.State.HAS_ARIA_DETAILS in states:
-					ui.message(field.field['detailsSummary'])
-					return
-
-		# Translators: the message presented when the activateAriaDetailsSummary script cannot locate a
-		# set of details to read.
-		ui.message(_("No additional details"))
 
 	def event_caretMovementFailed(self, obj, nextHandler, gesture=None):
 		if not self.passThrough or not gesture or not config.conf["virtualBuffers"]["autoPassThroughOnCaretMove"]:
@@ -1786,10 +1797,19 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			obj = container
 		return doResult(False)
 
-	def _get_documentConstantIdentifier(self):
+	documentConstantIdentifier: Optional[str]
+	""" Typing information for auto-property: _get_documentConstantIdentifier"""
+
+	# Mark documentConstantIdentifier property for caching during the current core cycle
+	_cache_documentConstantIdentifier = True
+
+	def _get_documentConstantIdentifier(self) -> Optional[str]:
 		"""Get the constant identifier for this document.
 		This identifier should uniquely identify all instances (not just one instance) of a document for at least the current session of the hosting application.
 		Generally, the document URL should be used.
+		Although the name of this property suggests that the identifier will be constant,
+		With the introduction of SPAs (single page apps) the URL of a page may dynamically change over time.
+		this property should reflect the most up to date URL.
 		@return: The constant identifier for this document, C{None} if there is none.
 		"""
 		return None
@@ -1802,7 +1822,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		@return: C{True} if the caret position should be remembered, C{False} if not.
 		@rtype: bool
 		"""
-		docConstId = self.documentConstantIdentifier
+		docConstId = self._lastCachedDocumentConstantIdentifier
 		# Return True if the URL indicates that this is probably a web browser document.
 		# We do this check because we don't want to remember caret positions for email messages, etc.
 		if isinstance(docConstId, str):
@@ -1820,10 +1840,14 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		@rtype: TextInfo position
 		"""
 		if self.shouldRememberCaretPositionAcrossLoads:
+			docID = self._lastCachedDocumentConstantIdentifier
 			try:
-				return self.rootNVDAObject.appModule._browseModeRememberedCaretPositions[self.documentConstantIdentifier]
+				caretPos = self.rootNVDAObject.appModule._browseModeRememberedCaretPositions[docID]
 			except KeyError:
-				pass
+				log.debug(f"No saved caret position for {docID}")
+				return None
+			log.debug(f"Found saved caret pos {caretPos} for document {docID}")
+			return caretPos
 		return None
 
 	def getEnclosingContainerRange(self, textRange):
@@ -1906,7 +1930,6 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			item1=item2
 
 	__gestures={
-		"kb:NVDA+d": "activateLongDesc",
 		"kb:alt+upArrow": "collapseOrExpandControl",
 		"kb:alt+downArrow": "collapseOrExpandControl",
 		"kb:tab": "tab",

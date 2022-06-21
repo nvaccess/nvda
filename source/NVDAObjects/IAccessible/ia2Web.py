@@ -8,6 +8,7 @@
 import typing
 from ctypes import c_short
 from comtypes import COMError, BSTR
+
 import oleacc
 from comInterfaces import IAccessible2Lib as IA2
 import controlTypes
@@ -19,6 +20,7 @@ from .ia2TextMozilla import MozillaCompoundTextInfo
 import aria
 import api
 import speech
+import config
 
 class Ia2Web(IAccessible):
 	IAccessibleTableUsesTableCellIndexAttrib=True
@@ -41,6 +43,24 @@ class Ia2Web(IAccessible):
 			if ia2attrDescriptionFrom:
 				log.debugWarning(f"Unknown 'description-from' IA2Attribute value: {ia2attrDescriptionFrom}")
 			return controlTypes.DescriptionFrom.UNKNOWN
+
+	def _get_detailsSummary(self) -> typing.Optional[str]:
+		if not self.hasDetails:
+			# optimisation that avoids having to fetch details relations which may be a more costly procedure.
+			if config.conf["debugLog"]["annotations"]:
+				log.debug("no details-roles")
+			return None
+		detailsRelations = self.detailsRelations
+		if not detailsRelations:
+			log.error("should be able to fetch detailsRelations")
+			return None
+		for target in detailsRelations:
+			# just take the first for now.
+			return target.summarizeInProcess()
+
+	@property
+	def hasDetails(self) -> bool:
+		return bool(self.IA2Attributes.get("details-roles"))
 
 	def _get_isCurrent(self) -> controlTypes.IsCurrent:
 		ia2attrCurrent: str = self.IA2Attributes.get("current", "false")

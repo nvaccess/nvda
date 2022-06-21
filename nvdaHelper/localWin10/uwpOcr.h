@@ -14,19 +14,25 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
 #pragma once
-#define export __declspec(dllexport) 
+#define export __declspec(dllexport)
 
-typedef void (*uwpOcr_Callback)(const char16* result);
-typedef struct {
-	Windows::Media::Ocr::OcrEngine^ engine;
+typedef void (*uwpOcr_Callback)(const wchar_t* result);
+
+class UwpOcr {
+private:
+	winrt::Windows::Media::Ocr::OcrEngine engine{ nullptr };
 	uwpOcr_Callback callback;
-} UwpOcr;
+
+public:
+	UwpOcr(winrt::Windows::Media::Ocr::OcrEngine const& engine, uwpOcr_Callback callback);
+	winrt::fire_and_forget recognize(winrt::Windows::Graphics::Imaging::SoftwareBitmap bitmap);
+};
 
 extern "C" {
-export UwpOcr* __stdcall uwpOcr_initialize(const char16* language, uwpOcr_Callback callback);
-export void __stdcall uwpOcr_terminate(UwpOcr* instance);
-export void __stdcall uwpOcr_recognize(UwpOcr* instance, const RGBQUAD* image, unsigned int width, unsigned int height);
-// Returns a BSTR of language codes terminated by semi-colons;
-// e.g. "de-de;en-us;".
-export BSTR __stdcall uwpOcr_getLanguages();
+	export UwpOcr* __stdcall uwpOcr_initialize(const wchar_t* language, uwpOcr_Callback callback);
+	export void __stdcall uwpOcr_terminate(UwpOcr* instance);
+	export void __stdcall uwpOcr_recognize(UwpOcr* instance, const RGBQUAD* image, unsigned int width, unsigned int height);
+	// Returns a BSTR of language codes terminated by semi-colons;
+	// e.g. "de-de;en-us;".
+	export BSTR __stdcall uwpOcr_getLanguages();
 }

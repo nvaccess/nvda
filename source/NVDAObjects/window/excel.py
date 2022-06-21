@@ -1,10 +1,15 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2020 NV Access Limited, Dinesh Kaushal, Siddhartha Gupta, Accessolutions, Julien Cochuyt
+# Copyright (C) 2006-2022 NV Access Limited, Dinesh Kaushal, Siddhartha Gupta, Accessolutions, Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 import abc
 import ctypes
+import enum
+from typing import (
+	Optional, Dict,
+)
+
 from comtypes import COMError, BSTR
 import comtypes.automation
 import wx
@@ -30,6 +35,7 @@ import winUser
 import mouseHandler
 from displayModel import DisplayModelTextInfo
 import controlTypes
+from controlTypes import TextPosition
 from . import Window
 from .. import NVDAObjectTextInfo
 import scriptHandler
@@ -716,16 +722,16 @@ class ExcelWorksheet(ExcelBase):
 		# Sheet1!
 		# ''Sheet2 (4)'!
 		# 'profit and loss'!
-		u'^((?P<sheet>(\'[^\']+\'|[^!]+))!)?'
+		r"^((?P<sheet>('[^']+'|[^!]+))!)?"
 		# followed by a unique name (not containing spaces). Example:
 		# rowtitle_ab12-cd34-de45
-		u'(?P<name>\w+)'
+		r'(?P<name>\w+)'
 		# Optionally followed by minimum and maximum addresses, starting with a period (.). Example:
 		# .a1.c3
 		# .ab34
-		u'(\.(?P<minAddress>[a-zA-Z]+[0-9]+)?(\.(?P<maxAddress>[a-zA-Z]+[0-9]+)?'
+		r'(\.(?P<minAddress>[a-zA-Z]+[0-9]+)?(\.(?P<maxAddress>[a-zA-Z]+[0-9]+)?'
 		# Optionally followed by a period (.) and extra random data (sometimes produced by other screen readers)
-		u'(\..*)*)?)?$'
+		r'(\..*)*)?)?$'
 	)
 
 	def populateHeaderCellTrackerFromNames(self,headerCellTracker):
@@ -988,7 +994,8 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 		if formatConfig['reportFontName']:
 			formatField['font-name']=fontObj.name
 		if formatConfig['reportFontSize']:
-			formatField['font-size']=str(fontObj.size)
+			# Translators: Abbreviation for points, a measurement of font size.
+			formatField['font-size'] = pgettext("font size", "%s pt") % fontObj.size
 		if formatConfig['reportFontAttributes']:
 			formatField['bold']=fontObj.bold
 			formatField['italic']=fontObj.italic
@@ -996,10 +1003,16 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 			formatField['underline']=False if underline is None or underline==xlUnderlineStyleNone else True
 			formatField['strikethrough'] = fontObj.strikethrough
 		if formatConfig['reportSuperscriptsAndSubscripts']:
-			if fontObj.superscript:
-				formatField['text-position'] = 'super'
-			elif fontObj.subscript:
-				formatField['text-position'] = 'sub'
+			# For cells, in addition to True and False, fontObj.superscript or fontObj.subscript may have the value
+			# None in case of mixed text position, e.g. characters on baseline and in superscript in the same cell.
+			if fontObj.superscript is True:
+				formatField['text-position'] = TextPosition.SUPERSCRIPT
+			elif fontObj.subscript is True:
+				formatField['text-position'] = TextPosition.SUBSCRIPT
+			elif fontObj.superscript is False and fontObj.subscript is False:
+				formatField['text-position'] = TextPosition.BASELINE
+			else:
+				formatField['text-position'] = TextPosition.UNDEFINED
 		if formatConfig['reportStyle']:
 			try:
 				styleName=self.obj.excelCellObject.style.nameLocal
@@ -1052,13 +1065,42 @@ NVCELLINFOFLAG_COMMENTS=0x40
 NVCELLINFOFLAG_FORMULA=0x80
 NVCELLINFOFLAG_ALL=0xffff
 
+
+class NvCellState(enum.IntEnum):
+	# These values must match NvCellState in `nvdaHelper/remote/excel/constants.h`
+	EXPANDED = 1 << 1,
+	COLLAPSED = 1 << 2,
+	LINKED = 1 << 3,
+	HASPOPUP = 1 << 4,
+	PROTECTED = 1 << 5,
+	HASFORMULA = 1 << 6,
+	HASCOMMENT = 1 << 7,
+	CROPPED = 1 << 8,
+	OVERFLOWING = 1 << 9,
+	UNLOCKED = 1 << 10,
+
+
+_nvCellStatesToStates: Dict[NvCellState, controlTypes.State] = {
+	NvCellState.EXPANDED: controlTypes.State.EXPANDED,
+	NvCellState.COLLAPSED: controlTypes.State.COLLAPSED,
+	NvCellState.LINKED: controlTypes.State.LINKED,
+	NvCellState.HASPOPUP: controlTypes.State.HASPOPUP,
+	NvCellState.PROTECTED: controlTypes.State.PROTECTED,
+	NvCellState.HASFORMULA: controlTypes.State.HASFORMULA,
+	NvCellState.HASCOMMENT: controlTypes.State.HASCOMMENT,
+	NvCellState.CROPPED: controlTypes.State.CROPPED,
+	NvCellState.OVERFLOWING: controlTypes.State.OVERFLOWING,
+	NvCellState.UNLOCKED: controlTypes.State.UNLOCKED,
+}
+
+
 class ExcelCellInfo(ctypes.Structure):
 		_fields_=[
 			('text',comtypes.BSTR),
 			('address',comtypes.BSTR),
 			('inputTitle',comtypes.BSTR),
 			('inputMessage',comtypes.BSTR),
-			('states',ctypes.c_longlong),
+			('nvCellStates', ctypes.c_longlong),  # bitwise OR of the NvCellState enum values.
 			('rowNumber',ctypes.c_long),
 			('rowSpan',ctypes.c_long),
 			('columnNumber',ctypes.c_long),
@@ -1067,6 +1109,7 @@ class ExcelCellInfo(ctypes.Structure):
 			('comments',comtypes.BSTR),
 			('formula',comtypes.BSTR),
 		]
+
 
 class ExcelCellInfoQuickNavItem(browseMode.QuickNavItem):
 
@@ -1174,7 +1217,10 @@ class FormulaExcelCellInfoQuicknavIterator(ExcelCellInfoQuicknavIterator):
 
 class ExcelCell(ExcelBase):
 
-	def _get_excelCellInfo(self):
+	excelCellInfo: Optional[ExcelCellInfo]
+	"""Type info for auto property: _get_excelCellInfo"""
+
+	def _get_excelCellInfo(self) -> Optional[ExcelCellInfo]:
 		if not self.appModule.helperLocalBindingHandle:
 			return None
 		ci=ExcelCellInfo()
@@ -1375,10 +1421,14 @@ class ExcelCell(ExcelBase):
 		cellInfo=self.excelCellInfo
 		if not cellInfo:
 			return states
-		stateBits=cellInfo.states
-		for state in controlTypes.State:
-			if stateBits & state.value:
-				states.add(state)
+		nvCellStates = cellInfo.nvCellStates
+
+		for possibleCellState in NvCellState:
+			if nvCellStates & possibleCellState.value:
+				states.add(
+					# intentionally use indexing operator so an error is raised for a missing key
+					_nvCellStatesToStates[possibleCellState]
+				)
 		return states
 
 	def event_typedCharacter(self,ch):

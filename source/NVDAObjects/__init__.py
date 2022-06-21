@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2021 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Babbage B.V.,
+# Copyright (C) 2006-2022 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Babbage B.V.,
 # Davy Kager
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -8,12 +8,9 @@
 """Module that contains the base NVDA object type with dynamic class creation support,
 as well as the associated TextInfo class."""
 
-import os
 import time
-import re
 import typing
 import weakref
-import core
 import textUtils
 from logHandler import log
 import review
@@ -35,7 +32,6 @@ import globalPluginHandler
 import brailleInput
 import locationHelper
 import aria
-import globalVars
 
 
 class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
@@ -404,10 +400,13 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		else: #We can't point a weakref to None, so just set the private variable to None, it can handle that
 			self._treeInterceptor=None
 
-	def _get_appModule(self):
-		"""Retrieves the appModule representing the application this object is a part of by asking L{appModuleHandler}.
+	#: Type definition for auto prop '_get_appModule'
+	appModule: "appModuleHandler.AppModule"
+
+	def _get_appModule(self) -> "appModuleHandler.AppModule":
+		"""Retrieves the appModule representing the application this object is a part of by
+		asking L{appModuleHandler}.
 		@return: the appModule
-		@rtype: L{appModuleHandler.AppModule}
 		"""
 		if not hasattr(self,'_appModuleRef'):
 			a=appModuleHandler.getAppModuleForNVDAObject(self)
@@ -478,6 +477,21 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 
 	def _get_descriptionFrom(self) -> controlTypes.DescriptionFrom:
 		return controlTypes.DescriptionFrom.UNKNOWN
+
+	#: Typing information for auto property _get_detailsSummary
+	detailsSummary: typing.Optional[str]
+
+	def _get_detailsSummary(self) -> typing.Optional[str]:
+		if config.conf["debugLog"]["annotations"]:
+			log.debugWarning(f"Fetching details summary not supported on: {self.__class__.__qualname__}")
+		return None
+
+	@property
+	def hasDetails(self) -> bool:
+		"""Default implementation is based on the result of _get_detailsSummary
+		In most instances this should be optimised.
+		"""
+		return bool(self.detailsSummary)
 
 	def _get_controllerFor(self):
 		"""Retrieves the object/s that this object controls."""
@@ -552,6 +566,7 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 
 	#: Typing information for auto-property: _get_parent
 	parent: typing.Optional['NVDAObject']
+	"This object's parent (the object that contains this object)."
 
 	def _get_parent(self) -> typing.Optional['NVDAObject']:
 		"""Retrieves this object's parent (the object that contains this object).
@@ -568,17 +583,23 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		self.parent = parent
 		return parent
 
-	def _get_next(self):
+	#: Typing information for auto-property: _get_next
+	next: typing.Optional['NVDAObject']
+	"The object directly after this object with the same parent."
+
+	def _get_next(self) -> typing.Optional['NVDAObject']:
 		"""Retrieves the object directly after this object with the same parent.
 		@return: the next object if it exists else None.
-		@rtype: L{NVDAObject} or None
 		"""
 		return None
 
-	def _get_previous(self):
+	#: Typing information for auto-property: _get_previous
+	previous: typing.Optional['NVDAObject']
+	"The object directly before this object with the same parent."
+
+	def _get_previous(self) -> typing.Optional['NVDAObject']:
 		"""Retrieves the object directly before this object with the same parent.
 		@return: the previous object if it exists else None.
-		@rtype: L{NVDAObject} or None
 		"""
 		return None
 
@@ -1039,51 +1060,15 @@ Tries to force this object to take the focus.
 		log.debug("Potential unimplemented child class: %r" %self)
 		return None
 
-	def _get_landmark(self):
+	landmark: typing.Optional[str]
+	"""Typing information for auto property _get_landmark
+	"""
+
+	def _get_landmark(self) -> typing.Optional[str]:
 		"""If this object represents an ARIA landmark, fetches the ARIA landmark role.
 		@return: ARIA landmark role else None
-		@rtype: String or None
 		"""
 		return None
-
-	def _reportErrorInPreviousWord(self):
-		try:
-			# self might be a descendant of the text control; e.g. Symphony.
-			# We want to deal with the entire text, so use the caret object.
-			info = api.getCaretObject().makeTextInfo(textInfos.POSITION_CARET)
-			# This gets called for characters which might end a word; e.g. space.
-			# The character before the caret is the word end.
-			# The one before that is the last of the word, which is what we want.
-			info.move(textInfos.UNIT_CHARACTER, -2)
-			info.expand(textInfos.UNIT_CHARACTER)
-		except Exception:
-			# Focus probably moved.
-			log.debugWarning("Error fetching last character of previous word", exc_info=True)
-			return
-
-		# Fetch the formatting for the last word to see if it is marked as a spelling error,
-		# However perform the fetch and check in a future core cycle
-		# To give the content control more time to detect and mark the error itself.
-		# #12161: MS Word's UIA implementation certainly requires this delay.
-		def _delayedDetection():
-			try:
-				fields = info.getTextWithFields()
-			except Exception:
-				log.debugWarning("Error fetching formatting for last character of previous word", exc_info=True)
-				return
-			for command in fields:
-				if (
-					isinstance(command, textInfos.FieldCommand)
-					and command.command == "formatChange"
-					and command.field.get("invalid-spelling")
-				):
-					break
-			else:
-				# No error.
-				return
-			import nvwave
-			nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "textError.wav"))
-		core.callLater(50, _delayedDetection)
 
 	def _get_liveRegionPoliteness(self) -> aria.AriaLivePoliteness:
 		""" Retrieves the priority with which  updates to live regions should be treated.
@@ -1112,12 +1097,6 @@ Tries to force this object to take the focus.
 			)
 
 	def event_typedCharacter(self,ch):
-		if config.conf["documentFormatting"]["reportSpellingErrors"] and config.conf["keyboard"]["alertForSpellingErrors"] and (
-			# Not alpha, apostrophe or control.
-			ch.isspace() or (ch >= u" " and ch not in u"'\x7f" and not ch.isalpha())
-		):
-			# Reporting of spelling errors is enabled and this character ends a word.
-			self._reportErrorInPreviousWord()
 		speech.speakTypedCharacters(ch)
 		import winUser
 		if config.conf["keyboard"]["beepForLowercaseWithCapslock"] and ch.islower() and winUser.getKeyState(winUser.VK_CAPITAL)&1:
@@ -1283,11 +1262,16 @@ This code is executed if a gain focus event is received by this object.
 			return "%r (truncated)" % string[:truncateLen]
 		return repr(string)
 
-	def _get_devInfo(self):
+	devInfo: typing.List[str]
+	"""Information about this object useful to developers."""
+
+	# C901 '_get_devInfo' is too complex
+	# Note: when working on _get_devInfo, look for opportunities to simplify
+	# and move logic out into smaller helper functions.
+	def _get_devInfo(self) -> typing.List[str]:  # noqa: C901
 		"""Information about this object useful to developers.
 		Subclasses may extend this, calling the superclass property first.
 		@return: A list of text strings providing information about this object useful to developers.
-		@rtype: list of str
 		"""
 		info = []
 		try:
@@ -1344,25 +1328,11 @@ This code is executed if a gain focus event is received by this object.
 			ret = "exception: %s" % e
 		info.append("value: %s" % ret)
 		try:
-			ret = repr(self.appModule)
-		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("appModule: %s" % ret)
-		try:
-			ret = repr(self.appModule.productName)
-		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("appModule.productName: %s" % ret)
-		try:
-			ret = repr(self.appModule.productVersion)
-		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("appModule.productVersion: %s" % ret)
-		try:
 			ret = repr(self.TextInfo)
 		except Exception as e:
 			ret = "exception: %s" % e
 		info.append("TextInfo: %s" % ret)
+		info.extend(self.appModule.devInfo)
 		return info
 
 	def _get_sleepMode(self):

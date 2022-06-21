@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2021 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
+# Copyright (C) 2006-2022 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
 # Julien Cochuyt
 
 """High-level functions to speak information.
@@ -15,7 +15,7 @@ import time
 import colors
 import api
 import controlTypes
-from controlTypes import OutputReason
+from controlTypes import OutputReason, TextPosition
 import tones
 from synthDriverHandler import getSynth
 import re
@@ -388,7 +388,7 @@ def getCharDescListFromText(text,locale):
 	return charDescList
 
 
-def speakObjectProperties(  # noqa: C901
+def speakObjectProperties(
 		obj,
 		reason: OutputReason = OutputReason.QUERY,
 		_prefixSpeechCommand: Optional[SpeechCommand] = None,
@@ -428,6 +428,9 @@ def getObjectPropertiesSpeech(  # noqa: C901
 			# getPropertiesSpeech names this "current", but the NVDAObject property is
 			# named "isCurrent", it's type should always be controltypes.IsCurrent
 			newPropertyValues['current'] = obj.isCurrent
+
+		elif value and name == "hasDetails":
+			newPropertyValues['hasDetails'] = obj.hasDetails
 		elif value and name == "descriptionFrom" and (
 			obj.descriptionFrom == controlTypes.DescriptionFrom.ARIA_DESCRIPTION
 		):
@@ -484,8 +487,11 @@ def getObjectPropertiesSpeech(  # noqa: C901
 				newStates=newPropertyValues[name]
 				newPropertyValues['states']=newStates-oldStates
 				newPropertyValues['negativeStates']=oldStates-newStates
-	#properties such as states need to know the role to speak properly, give it as a _ name
-	newPropertyValues['_role']=newPropertyValues.get('role',obj.role)
+
+	# properties such as states or value need to know the role to speak properly,
+	# give it as a _ name
+	newPropertyValues['_role'] = newPropertyValues.get('role', obj.role)
+
 	# The real states are needed also, as the states entry might be filtered.
 	newPropertyValues['_states']=obj.states
 	if "rowNumber" in newPropertyValues or "columnNumber" in newPropertyValues:
@@ -621,7 +627,6 @@ def getObjectSpeech(  # noqa: C901
 			sequence.extend(_flattenNestedSequences(speechGen))
 	elif role == controlTypes.Role.MATH:
 		import mathPres
-		mathPres.ensureInit()
 		if mathPres.speechProvider:
 			try:
 				sequence.extend(
@@ -640,6 +645,7 @@ def _objectSpeech_calculateAllowedProps(reason, shouldReportTextContent):
 		'states': True,
 		'value': True,
 		'description': True,
+		'hasDetails': config.conf["annotations"]["reportDetails"],
 		'descriptionFrom': config.conf["annotations"]["reportAriaDescription"],
 		'keyboardShortcut': True,
 		'positionInfo_level': True,
@@ -1111,7 +1117,6 @@ def _extendSpeechSequence_addMathForTextInfo(
 		speechSequence: SpeechSequence, info: textInfos.TextInfo, field: textInfos.Field
 ) -> None:
 	import mathPres
-	mathPres.ensureInit()
 	if not mathPres.speechProvider:
 		return
 	try:
@@ -1529,11 +1534,11 @@ def getPropertiesSpeech(  # noqa: C901
 	if name:
 		textList.append(name)
 	if 'role' in propertyValues:
-		role=propertyValues['role']
+		role: controlTypes.Role = propertyValues['role']
 		speakRole=True
 	elif '_role' in propertyValues:
 		speakRole=False
-		role: int = propertyValues['_role']
+		role: controlTypes.Role = propertyValues['_role']
 	else:
 		speakRole=False
 		role=controlTypes.Role.UNKNOWN
@@ -1680,6 +1685,14 @@ def getPropertiesSpeech(  # noqa: C901
 	if isCurrent != controlTypes.IsCurrent.NO:
 		textList.append(isCurrent.displayString)
 
+	# are there further details
+	hasDetails = propertyValues.get('hasDetails', False)
+	if hasDetails:
+		textList.append(
+			# Translators: Speaks when there a further details/annotations that can be fetched manually.
+			_("has details")
+		)
+
 	placeholder: Optional[str] = propertyValues.get('placeholder', None)
 	if placeholder:
 		textList.append(placeholder)
@@ -1779,6 +1792,7 @@ def getControlFieldSpeech(  # noqa: C901
 	states=attrs.get('states',set())
 	keyboardShortcut=attrs.get('keyboardShortcut', "")
 	isCurrent = attrs.get('current', controlTypes.IsCurrent.NO)
+	hasDetails = attrs.get('hasDetails', False)
 	placeholderValue=attrs.get('placeholder', None)
 	value=attrs.get('value',"")
 
@@ -1838,9 +1852,10 @@ def getControlFieldSpeech(  # noqa: C901
 			reason=reason, keyboardShortcut=keyboardShortcut
 		)
 	isCurrentSequence = getPropertiesSpeech(reason=reason, current=isCurrent)
+	hasDetailsSequence = getPropertiesSpeech(reason=reason, hasDetails=hasDetails)
 	placeholderSequence = getPropertiesSpeech(reason=reason, placeholder=placeholderValue)
 	nameSequence = getPropertiesSpeech(reason=reason, name=name)
-	valueSequence = getPropertiesSpeech(reason=reason, value=value)
+	valueSequence = getPropertiesSpeech(reason=reason, value=value, _role=role)
 	descriptionSequence = []
 	if description is not None:
 		descriptionSequence = getPropertiesSpeech(
@@ -1942,6 +1957,7 @@ def getControlFieldSpeech(  # noqa: C901
 		tableCellSequence = getPropertiesSpeech(_tableID=tableID, **getProps)
 		tableCellSequence.extend(stateTextSequence)
 		tableCellSequence.extend(isCurrentSequence)
+		tableCellSequence.extend(hasDetailsSequence)
 		types.logBadSequenceTypes(tableCellSequence)
 		return tableCellSequence
 
@@ -1991,6 +2007,7 @@ def getControlFieldSpeech(  # noqa: C901
 		out.extend(roleTextSequence if speakStatesFirst else stateTextSequence)
 		out.append(containerContainsText)
 		out.extend(isCurrentSequence)
+		out.extend(hasDetailsSequence)
 		out.extend(valueSequence)
 		out.extend(descriptionSequence)
 		out.extend(levelSequence)
@@ -2027,6 +2044,8 @@ def getControlFieldSpeech(  # noqa: C901
 		out = []
 		if isCurrent != controlTypes.IsCurrent.NO:
 			out.extend(isCurrentSequence)
+		if hasDetails:
+			out.extend(hasDetailsSequence)
 		if descriptionSequence and _reportDescriptionAsAnnotation:
 			out.extend(descriptionSequence)
 		# Speak expanded / collapsed / level for treeview items (in ARIA treegrids)
@@ -2111,6 +2130,10 @@ def getFormatFieldSpeech(  # noqa: C901
 				# %s will be replaced with the number of text columns.
 				text=_("%s columns")%(textColumnCount)
 				textList.append(text)
+			elif textColumnNumber:
+				# Translators: Indicates the text column number in a document.
+				text = _("column {columnNumber}").format(columnNumber=textColumnNumber)
+				textList.append(text)
 
 	sectionBreakType=attrs.get("section-break")
 	if sectionBreakType:
@@ -2183,9 +2206,9 @@ def getFormatFieldSpeech(  # noqa: C901
 		if fontName and fontName!=oldFontName:
 			textList.append(fontName)
 	if  formatConfig["reportFontSize"]:
-		fontSize=attrs.get("font-size")
-		oldFontSize=attrsCache.get("font-size") if attrsCache is not None else None
-		if fontSize and fontSize!=oldFontSize:
+		fontSize = attrs.get("font-size")
+		oldFontSize = attrsCache.get("font-size") if attrsCache is not None else None
+		if fontSize and fontSize != oldFontSize:
 			textList.append(fontSize)
 	if  formatConfig["reportColor"]:
 		color=attrs.get("color")
@@ -2338,21 +2361,20 @@ def getFormatFieldSpeech(  # noqa: C901
 			)
 			textList.append(text)
 	if formatConfig["reportSuperscriptsAndSubscripts"]:
-		textPosition=attrs.get("text-position")
-		oldTextPosition=attrsCache.get("text-position") if attrsCache is not None else None
-		if (textPosition or oldTextPosition is not None) and textPosition!=oldTextPosition:
-			textPosition=textPosition.lower() if textPosition else textPosition
-			if textPosition=="super":
-				# Translators: Reported for superscript text.
-				text=_("superscript")
-			elif textPosition=="sub":
-				# Translators: Reported for subscript text.
-				text=_("subscript")
-			else:
-				# Translators: Reported for text which is at the baseline position;
-				# i.e. not superscript or subscript.
-				text=_("baseline")
-			textList.append(text)
+		textPosition = attrs.get("text-position", TextPosition.UNDEFINED)
+		attrs["text-position"] = textPosition
+		oldTextPosition = attrsCache.get("text-position") if attrsCache is not None else None
+		if (
+			textPosition != oldTextPosition
+			and (
+				textPosition in [TextPosition.SUPERSCRIPT, TextPosition.SUBSCRIPT]
+				or (
+					textPosition == TextPosition.BASELINE
+					and (oldTextPosition is not None and oldTextPosition != TextPosition.UNDEFINED)
+				)
+			)
+		):
+			textList.append(textPosition.displayString)
 	if formatConfig["reportAlignment"]:
 		textAlign=attrs.get("text-align")
 		oldTextAlign=attrsCache.get("text-align") if attrsCache is not None else None

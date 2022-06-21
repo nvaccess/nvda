@@ -9,7 +9,9 @@ Please initially open PRs as a draft. See https://github.com/nvaccess/nvda/wiki/
 
 ### Summary of the issue:
 
-### Description of how this pull request fixes the issue:
+### Description of user facing changes
+
+### Description of development approach
 
 ### Testing strategy:
 

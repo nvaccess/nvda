@@ -30,8 +30,13 @@ import speech
 import ui
 from NVDAObjects.IAccessible import IAccessible
 from NVDAObjects.window import Window
-from NVDAObjects.window.winword import WordDocument as BaseWordDocument
-from NVDAObjects.IAccessible.winword import WordDocument, WordDocumentTreeInterceptor, BrowseModeWordDocumentTextInfo, WordDocumentTextInfo
+from NVDAObjects.window.winword import (
+	WordDocument as BaseWordDocument,
+	WordDocumentTreeInterceptor,
+	BrowseModeWordDocumentTextInfo,
+	WordDocumentTextInfo,
+)
+from NVDAObjects.IAccessible.winword import WordDocument
 from NVDAObjects.IAccessible.MSHTML import MSHTML
 from NVDAObjects.behaviors import RowWithFakeNavigation, Dialog
 from NVDAObjects.UIA import UIA
