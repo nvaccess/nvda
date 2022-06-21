@@ -11,6 +11,8 @@ import tones
 from NVDAObjects.IAccessible.winword import WordDocument as IAccessibleWordDocument
 from NVDAObjects.UIA.wordDocument import WordDocument as UIAWordDocument
 
+MAX_LINES = 250  # give up after searching this many lines
+
 
 def getTextInfoAtCaret():
 	# returns None if not editable text or if in Microsoft Word document
@@ -37,17 +39,18 @@ def isLastLineOfParagraph(line):
 def speakParagraph(ti):
 	# ti is TextInfo object
 	paragraph = ""
+	lines = 0
 	tempTi = ti.copy()
-	while True:
+	while lines < MAX_LINES:
 		tempTi.expand(textInfos.UNIT_LINE)
 		line = tempTi.text.strip()
 		if len(line) > 0:
 			paragraph += line + " "
 		if isLastLineOfParagraph(tempTi.text):
 			break
-		tempTi.collapse()
 		if not tempTi.move(textInfos.UNIT_LINE, 1):
 			break
+		lines += 1
 
 	if len(paragraph.strip()) > 0:
 		speech.speakMessage(paragraph)
@@ -58,7 +61,6 @@ def speakParagraph(ti):
 
 def moveToParagraph(next: bool, speakNew: bool) -> bool:
 	# moves to previous or next regular paragraph, delineated by a single line break
-	MAX_LINES = 250  # give up after searching this many lines
 	ti = getTextInfoAtCaret()
 	if ti is None:
 		return False
@@ -111,22 +113,22 @@ def moveToParagraph(next: bool, speakNew: bool) -> bool:
 def speakBlockParagraph(ti):
 	# ti is TextInfo object
 	paragraph = ""
+	lines = 0
 	tempTi = ti.copy()
-	while True:
+	while lines < MAX_LINES:
 		tempTi.expand(textInfos.UNIT_LINE)
 		line = tempTi.text.strip()
-		tempTi.collapse()
 		if not len(line):
 			break
 		paragraph += line + "\r\n"
 		if not tempTi.move(textInfos.UNIT_LINE, 1):
 			break
+		lines += 1
 
 	speech.speakMessage(paragraph)
 
 
 def moveToBlockParagraph(next: bool, speakNew: bool) -> bool:
-	MAX_LINES = 250  # give up after searching this many lines
 	ti = getTextInfoAtCaret()
 	if ti is None:
 		return False
