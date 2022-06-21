@@ -17,6 +17,7 @@ import typing
 import globalVars
 import ctypes
 from ctypes import wintypes
+from systemUtils import getProcessTokenOrigin
 import monkeyPatches
 
 monkeyPatches.applyMonkeyPatches()
@@ -77,7 +78,6 @@ import logHandler
 from logHandler import log
 import winUser
 import winKernel
-from systemUtils import getProcessTokenOrigin
 
 try:
 	globalVars.appLogonSessionID = getProcessTokenOrigin(winKernel.GetCurrentProcess())
