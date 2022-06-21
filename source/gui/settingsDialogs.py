@@ -2680,15 +2680,42 @@ class AdvancedPanelControls(
 		self.bindHelpEvent("UseUiaForExcel", self.UIAInMSExcelCheckBox)
 		self.UIAInMSExcelCheckBox.SetValue(config.conf["UIA"]["useInMSExcelWhenAvailable"])
 		self.UIAInMSExcelCheckBox.defaultValue = self._getDefaultValue(["UIA", "useInMSExcelWhenAvailable"])
-
-		# Translators: This is the label for a checkbox in the
-		#  Advanced settings panel.
-		label = _("Use UI Automation to access the Windows C&onsole when available")
-		consoleUIADevMap = True if config.conf['UIA']['winConsoleImplementation'] == 'UIA' else False
-		self.ConsoleUIACheckBox = UIAGroup.addItem(wx.CheckBox(UIABox, label=label))
-		self.bindHelpEvent("AdvancedSettingsConsoleUIA", self.ConsoleUIACheckBox)
-		self.ConsoleUIACheckBox.SetValue(consoleUIADevMap)
-		self.ConsoleUIACheckBox.defaultValue = self._getDefaultValue(["UIA", "winConsoleImplementation"])
+		# Translators: This is the label for a combo box for selecting the
+		# active console implementation in the advanced settings panel.
+		# Choices are automatic, UIA when available, and legacy.
+		consoleComboText = _("Windows C&onsole support:")
+		consoleChoices = [
+			# Translators: A choice in a combo box in the advanced settings
+			# panel to have NVDA determine its Windows Console implementation
+			# automatically.
+			# This option is currently equivalent to "legacy", but in a future
+			# version of NVDA, UIA will be used in known good implementations
+			# when this option is selected.
+			_("Automatic (legacy)"),
+			# Translators: A choice in a combo box in the advanced settings
+			# panel to have NVDA use UIA in the Windows Console when available.
+			_("UIA when available"),
+			# Translators: A choice in a combo box in the advanced settings
+			# panel to have NVDA use its legacy Windows Console support
+			# in all cases.
+			_("Legacy")
+		]
+		#: The possible console config values, in the order they appear
+		#: in the combo box.
+		self.consoleVals = (
+			"auto",
+			"UIA",
+			"legacy"
+		)
+		self.consoleCombo = UIAGroup.addLabeledControl(consoleComboText, wx.Choice, choices=consoleChoices)
+		self.bindHelpEvent("AdvancedSettingsConsoleUIA", self.consoleCombo)
+		curChoice = self.consoleVals.index(
+			config.conf['UIA']['winConsoleImplementation']
+		)
+		self.consoleCombo.SetSelection(curChoice)
+		self.consoleCombo.defaultValue = self.consoleVals.index(
+			self._getDefaultValue(["UIA", "winConsoleImplementation"])
+		)
 
 		label = pgettext(
 			"advanced.uiaWithChromium",
@@ -2980,7 +3007,7 @@ class AdvancedPanelControls(
 			)
 			and self.UIAInMSWordCombo.GetSelection() == self.UIAInMSWordCombo.defaultValue
 			and self.UIAInMSExcelCheckBox.IsChecked() == self.UIAInMSExcelCheckBox.defaultValue
-			and self.ConsoleUIACheckBox.IsChecked() == (self.ConsoleUIACheckBox.defaultValue == 'UIA')
+			and self.consoleCombo.GetSelection() == self.consoleCombo.defaultValue
 			and self.cancelExpiredFocusSpeechCombo.GetSelection() == self.cancelExpiredFocusSpeechCombo.defaultValue
 			and self.UIAInChromiumCombo.GetSelection() == self.UIAInChromiumCombo.defaultValue
 			and self.winConsoleSpeakPasswordsCheckBox.IsChecked() == self.winConsoleSpeakPasswordsCheckBox.defaultValue
@@ -3000,7 +3027,7 @@ class AdvancedPanelControls(
 		self.selectiveUIAEventRegistrationCheckBox.SetValue(self.selectiveUIAEventRegistrationCheckBox.defaultValue)
 		self.UIAInMSWordCombo.SetSelection(self.UIAInMSWordCombo.defaultValue)
 		self.UIAInMSExcelCheckBox.SetValue(self.UIAInMSExcelCheckBox.defaultValue)
-		self.ConsoleUIACheckBox.SetValue(self.ConsoleUIACheckBox.defaultValue == 'UIA')
+		self.consoleCombo.SetSelection(self.consoleCombo.defaultValue == 'auto')
 		self.UIAInChromiumCombo.SetSelection(self.UIAInChromiumCombo.defaultValue)
 		self.cancelExpiredFocusSpeechCombo.SetSelection(self.cancelExpiredFocusSpeechCombo.defaultValue)
 		self.winConsoleSpeakPasswordsCheckBox.SetValue(self.winConsoleSpeakPasswordsCheckBox.defaultValue)
@@ -3020,10 +3047,10 @@ class AdvancedPanelControls(
 		config.conf["UIA"]["selectiveEventRegistration"] = self.selectiveUIAEventRegistrationCheckBox.IsChecked()
 		config.conf["UIA"]["allowInMSWord"] = self.UIAInMSWordCombo.GetSelection()
 		config.conf["UIA"]["useInMSExcelWhenAvailable"] = self.UIAInMSExcelCheckBox.IsChecked()
-		if self.ConsoleUIACheckBox.IsChecked():
-			config.conf['UIA']['winConsoleImplementation'] = "UIA"
-		else:
-			config.conf['UIA']['winConsoleImplementation'] = "auto"
+		consoleChoice = self.consoleCombo.GetSelection()
+		config.conf['UIA']['winConsoleImplementation'] = (
+			self.consoleVals[consoleChoice]
+		)
 		config.conf["featureFlag"]["cancelExpiredFocusSpeech"] = self.cancelExpiredFocusSpeechCombo.GetSelection()
 		config.conf["UIA"]["allowInChromium"] = self.UIAInChromiumCombo.GetSelection()
 		config.conf["terminals"]["speakPasswords"] = self.winConsoleSpeakPasswordsCheckBox.IsChecked()
