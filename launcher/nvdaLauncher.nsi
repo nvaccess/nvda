@@ -9,8 +9,8 @@ SilentInstall silent
 RequestExecutionLevel user
 CRCCheck on
 
-ReserveFile "${NSISDIR}\Plugins\system.dll"
-ReserveFile "${NSISDIR}\Plugins\banner.dll"
+ReserveFile "${NSISDIR}\Plugins\x86-unicode\system.dll"
+ReserveFile "${NSISDIR}\Plugins\x86-unicode\banner.dll"
 ReserveFile "..\miscDeps\launcher\nvda_logo.wav"
 
 Name "NVDA"
@@ -27,12 +27,16 @@ Function .onInit
 ; Get the locale language ID from kernel32.dll and dynamically change language of the installer
 System::Call 'kernel32::GetUserDefaultUILanguage() i .r0'
 ;Force zh-HK to zh-TW as zh-HK uses wrong encoding on Vista/7 #1596 
+; zh-HK is no longer used in Windows 10+
+; https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/available-language-packs-for-windows?view=windows-11#language-packs
 StrCmp $0 "3076" 0 +2
 StrCpy $0 "1028"
 StrCpy $LANGUAGE $0
 FunctionEnd
 
 page instfiles
+
+!insertmacro MUI_PAGE_INSTFILES
 
 ;Include modern user interface language files
 !insertmacro MUI_LANGUAGE "English" ; default language
@@ -64,7 +68,7 @@ page instfiles
 !insertmacro MUI_LANGUAGE "Albanian"
 !insertmacro MUI_LANGUAGE "Bulgarian"
 !insertmacro MUI_LANGUAGE "Norwegian"
-  !insertmacro MUI_LANGUAGE "NorwegianNynorsk"
+!insertmacro MUI_LANGUAGE "NorwegianNynorsk"
 
 section "install"
 SetAutoClose true
@@ -104,7 +108,7 @@ FunctionEnd
 Function PlaySound
 ; Retrieve the file to play
 pop $9
-; The code below is derived from the code example at http://nsis.sourceforge.net/WinAPI:winmm:PlaySound
+; The code below is derived from the code example at http://nsis.sourceforge.io/WinAPI:winmm:PlaySound
 IntOp $0 "SND_ASYNC" || 1
 System::Call 'winmm::PlaySound(t r9, i 0, i r0) b'
 FunctionEnd

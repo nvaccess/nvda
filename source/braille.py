@@ -100,6 +100,9 @@ roleLabels = {
 	# Translators: Displayed in braille for an object which is a
 	# progress bar.
 	controlTypes.Role.PROGRESSBAR: _("prgbar"),
+	# Translators: Displayed in braille for an object which is an
+	# indeterminate progress bar, aka busy indicator.
+	controlTypes.Role.BUSY_INDICATOR: _("bsyind"),
 	# Translators: Displayed in braille for an object which is a
 	# scroll bar.
 	controlTypes.Role.SCROLLBAR: _("scrlbar"),
@@ -654,7 +657,6 @@ class NVDAObjectRegion(Region):
 		)
 		if role == controlTypes.Role.MATH:
 			import mathPres
-			mathPres.ensureInit()
 			if mathPres.brailleProvider:
 				try:
 					text += TEXT_SEPARATOR + mathPres.brailleProvider.getBrailleForMathMl(
@@ -786,7 +788,6 @@ def getControlFieldBraille(  # noqa: C901
 			text += content
 		elif role == controlTypes.Role.MATH:
 			import mathPres
-			mathPres.ensureInit()
 			if mathPres.brailleProvider:
 				try:
 					if text:
@@ -2426,13 +2427,13 @@ class BrailleDisplayDriver(driverHandler.Driver):
 		Subclasses should call the superclass method first.
 		@postcondition: This instance can no longer be used unless it is constructed again.
 		"""
-		super(BrailleDisplayDriver,self).terminate()
+		super().terminate()
 		# Clear the display.
 		try:
 			self.display([0] * self.numCells)
-		except:
+		except Exception:
 			# The display driver seems to be failing, but we're terminating anyway, so just ignore it.
-			pass
+			log.error(f"Display driver {self} failed to display while terminating.", exc_info=True)
 
 	#: typing information for autoproperty _get_numCells
 	numCells: int

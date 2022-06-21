@@ -221,8 +221,9 @@ class UIATextInfo(textInfos.TextInfo):
 				formatField["font-name"]=val
 		if formatConfig["reportFontSize"]:
 			val=fetcher.getValue(UIAHandler.UIA_FontSizeAttributeId,ignoreMixedValues=ignoreMixedValues)
-			if isinstance(val,numbers.Number):
-				formatField['font-size']="%g pt"%float(val)
+			if isinstance(val, numbers.Number):
+				# Translators: Abbreviation for points, a measurement of font size.
+				formatField['font-size'] = pgettext("font size", "%s pt") % float(val)
 		if formatConfig["reportFontAttributes"]:
 			val=fetcher.getValue(UIAHandler.UIA_FontWeightAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if isinstance(val,int):
@@ -592,7 +593,7 @@ class UIATextInfo(textInfos.TextInfo):
 		rangeIter=iterUIARangeByUnit(textRange,unit) if unit is not None else [textRange]
 		for tempRange in rangeIter:
 			text=self._getTextFromUIARange(tempRange) or ""
-			if text:
+			if text is not None:
 				if debug:
 					log.debug("Chunk has text. Fetching formatting")
 				try:
@@ -607,7 +608,9 @@ class UIATextInfo(textInfos.TextInfo):
 					continue
 				if debug:
 					log.debug("Yielding formatting and text")
-				yield field
+					log.debug(f"field: {field}, text: {text}")
+				if field:
+					yield field
 				yield text
 		if debug:
 			log.debug("Done _getTextWithFields_text")

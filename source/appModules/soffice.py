@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2021 NV Access Limited, Bill Dengler, Leonard de Ruijter
+# Copyright (C) 2006-2022 NV Access Limited, Bill Dengler, Leonard de Ruijter
 
 from comtypes import COMError
 from IAccessibleHandler import IA2, splitIA2Attribs
@@ -53,7 +53,8 @@ class SymphonyTextInfo(IA2TextTextInfo):
 		except KeyError:
 			pass
 		try:
-			formatField["font-size"] = "%spt" % formatField["CharHeight"]
+			# Translators: Abbreviation for points, a measurement of font size.
+			formatField["font-size"] = pgettext("font size", "%s pt") % formatField["CharHeight"]
 		except KeyError:
 			pass
 		try:

@@ -5,3 +5,5 @@
 
 # An alias for hxoutlook appModule
 from .hxoutlook import *  # NOQA: F401, F403
+from appModuleHandler import _warnDeprecatedAliasAppModule
+_warnDeprecatedAliasAppModule()
