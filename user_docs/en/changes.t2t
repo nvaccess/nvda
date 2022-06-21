@@ -12,7 +12,7 @@ What's New in NVDA
   - Reporting of typed text that does not appear onscreen (such as passwords) is disabled by default.
 It can be re-enabled in NVDA's advanced settings panel. (#11554)
   - Text that has scrolled offscreen can be reviewed without scrolling the console window. (#12669)
-  - More detailed text formatting information is available. (microsoft/terminal#10336)
+  - More detailed text formatting information is available.
   -
 -
 
@@ -28,6 +28,7 @@ It can be re-enabled in NVDA's advanced settings panel. (#11554)
 
 
 == Changes for Developers ==
+- Updated Comtypes to version 1.1.11. (#12953)
 - In builds of Windows Console (``conhost.exe``) with an NVDA API level of 2 (``FORMATTED``) or greater, such as those included with Windows 11 version 22H2 (Sun Valley 2), UI Automation is now used by default. (#10964)
   - This can be overridden by changing the "Windows Console support" setting in NVDA's advanced settings panel.
   -
