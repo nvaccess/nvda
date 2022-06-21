@@ -1052,10 +1052,11 @@ When in the table view of added books:
 NVDA provides support for the Windows command console used by Command Prompt, PowerShell, and the Windows Subsystem for Linux.
 The console window is of fixed size, typically much smaller than the buffer that holds the output.
 As new text is written, the content scroll upwards and previous text is no longer visible. 
-Text that is not visibly displayed in the window is not accessible with NVDA's text review commands.
+On Windows versions before Windows 11 22H2, text in the console that is not visibly displayed in the window is not accessible with NVDA's text review commands.
 Therefore, it is necessary to scroll the console window to read earlier text.
+In newer versions of the console and in Windows Terminal, it is possible to review the entire text buffer freely without the need to scroll the window.
 %kc:beginInclude
-The following built-in Windows Console keyboard shortcuts may be useful when [reviewing text #ReviewingText] with NVDA:
+The following built-in Windows Console keyboard shortcuts may be useful when [reviewing text #ReviewingText] with NVDA in older versions of Windows Console:
 || Name | Key | Description |
 | Scroll up | control+upArrow | Scrolls the console window up, so earlier text can be read. |
 | Scroll down | control+downArrow | Scrolls the console window down, so later text can be read. |
@@ -1894,11 +1895,10 @@ It does not affect the modern Windows Terminal.
 In Windows 10 version 1709, Microsoft [added support for its UI Automation API to the console https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/], bringing vastly improved performance and stability for screen readers that support it.
 In situations where UI Automation is unavailable or known to result in an inferior user experience, NVDA's legacy console support is available as a fallback.
 The Windows Console support combo box has three options:
-- Automatic: This option is currently equivalent to "legacy".
-However, with this option selected, NVDA will begin using UI Automation in consoles automatically in a future version once it has become stable and suitable for wider use.
-- UIA when available: Uses UI Automation in consoles if available.
-This will include Console versions which have incomplete or buggy UI Automation implementations.
-Though not yet fully stable, UI Automation may provide a superior user experience in some scenarios, especially in the Windows 11 Sun Valley 2 (22H2) update.
+- Automatic: Uses UI Automation in the version of Windows Console included with Windows 11 version 22H2 and later.
+This option is recommended and set by default.
+- UIA when available: Uses UI Automation in consoles if available, even for versions with incomplete or buggy implementations.
+While this limited functionality may be useful (and even sufficient for your usage), use of this option is entirely at your own risk and no support for it will be provided.
 - Legacy: UI Automation in the Windows Console will be completely disabled.
 The legacy fallback will always be used even in situations where UI Automation would provide a superior user experience.
 Therefore, selecting this option is not recommended unless you know what you are doing.
