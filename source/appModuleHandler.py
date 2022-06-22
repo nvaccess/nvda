@@ -44,7 +44,7 @@ import exceptions
 import extensionPoints
 from fileUtils import getFileVersionInfo
 import globalVars
-from systemUtils import getProcessTokenOrigin
+from systemUtils import getCurrentProcessLogonSessionId, getProcessLogonSessionId
 
 
 _KNOWN_IMPORTERS_T = Union[importlib.machinery.FileFinder, zipimport.zipimporter]
@@ -674,11 +674,10 @@ class AppModule(baseObject.ScriptableObject):
 		"""
 		try:
 			self.isRunningUnderDifferentLogonSession = (
-				globalVars.appLogonSessionID != 0
-				and globalVars.appLogonSessionID != getProcessTokenOrigin(self.processHandle)
+				getCurrentProcessLogonSessionId() != getProcessLogonSessionId(self.processHandle)
 			)
 		except WindowsError:
-			log.error(f"Couldn't get logon session ID for {self}", exc_info=True)
+			log.error(f"Couldn't compare logon session ID for {self}", exc_info=True)
 			self.isRunningUnderDifferentLogonSession = False
 		return self.isRunningUnderDifferentLogonSession
 

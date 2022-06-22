@@ -77,15 +77,6 @@ import logHandler
 from logHandler import log
 import winUser
 import winKernel
-# Avoid a E402 'module level import not at top of file' warning,
-# because monkeypatches need to be applied first first
-from systemUtils import getProcessTokenOrigin  # noqa: E402
-
-try:
-	globalVars.appLogonSessionID = getProcessTokenOrigin(winKernel.GetCurrentProcess())
-except WindowsError:
-	log.error("Couldn't get NVDAProcessLogonSessionID", exc_info=True)
-
 
 # Find out if NVDA is running as a Windows Store application
 bufLen=ctypes.c_int()

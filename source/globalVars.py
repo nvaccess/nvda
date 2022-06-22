@@ -70,10 +70,6 @@ appPid: int = 0
 """The process ID of NVDA itself.
 """
 
-appLogonSessionID: int = 0
-"""The logon session ID under which NVDA was started.
-"""
-
 _allowDeprecatedAPI: bool = True
 """
 Used for marking code as deprecated.

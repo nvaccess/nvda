@@ -70,7 +70,7 @@ class TOKEN_ORIGIN(ctypes.Structure):
 	_fields_ = [("OriginatingLogonSession", ctypes.c_ulonglong)]
 
 
-def getProcessTokenOrigin(processHandle):
+def getProcessTokenOrigin(processHandle: int) -> TOKEN_ORIGIN:
 	token = ctypes.wintypes.HANDLE()
 	if not ctypes.windll.advapi32.OpenProcessToken(
 		processHandle,
@@ -88,9 +88,18 @@ def getProcessTokenOrigin(processHandle):
 			ctypes.byref(ctypes.wintypes.DWORD())
 		):
 			raise ctypes.WinError()
-		return val.OriginatingLogonSession
+		return val
 	finally:
 		ctypes.windll.kernel32.CloseHandle(token)
+
+
+def getProcessLogonSessionId(processHandle: int) -> int:
+	return getProcessTokenOrigin(processHandle).OriginatingLogonSession
+
+
+@functools.lru_cache(maxsize=1)
+def getCurrentProcessLogonSessionId() -> int:
+	return getProcessLogonSessionId(winKernel.GetCurrentProcess())
 
 
 def execElevated(path, params=None, wait=False, handleAlreadyElevated=False):
