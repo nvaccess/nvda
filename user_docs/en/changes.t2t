@@ -28,6 +28,7 @@ It can be re-enabled in NVDA's advanced settings panel. (#11554)
 
 
 == Changes for Developers ==
+- Updated Comtypes to version 1.1.11. (#12953)
 - In builds of Windows Console (``conhost.exe``) with an NVDA API level of 2 (``FORMATTED``) or greater, such as those included with Windows 11 version 22H2 (Sun Valley 2), UI Automation is now used by default. (#10964)
   - This can be overridden by changing the "Windows Console support" setting in NVDA's advanced settings panel.
   - To find your Windows Console's NVDA API level, set "Windows Console support" to "UIA when available", then check the NVDA+F1 log opened from a running Windows Console instance.
