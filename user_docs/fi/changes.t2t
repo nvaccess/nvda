@@ -4,6 +4,12 @@
 %!includeconf: ../changes.t2tconf
 
 = 2022.2 =
+Tämä julkaisu sisältää useita bugikorjauksia.
+Erityisesti Java-pohjaisiin sovelluksiin, pistenäyttöihin ja Windows-ominaisuuksiin on tehty merkittäviä parannuksia.
+
+Uusia taulukkonavigointikomentoja on otettu käyttöön.
+Unicode-CLDR on päivitetty.
+LibLouis on päivitetty, joka sisältää uuden pistetaulukon.
 
 == Uudet ominaisuudet ==
 - Tuki vuorovaikutukselle Microsoftin silmukkakomponenttien kanssa Office-tuotteissa. (#13617)
@@ -16,7 +22,10 @@
 
 == Muutokset ==
 - NSIS on päivitetty versioksi 3.08. (#9134)
-- CLDR on päivitetty versioksi 41.0. (#13582)
+- Yhteinen Unicode-kielitietovarasto (CLDR) on päivitetty versioksi 41.0. (#13582)
+- Päivitetty liblouis-pistekirjoituskääntäjä versioksi [3.22.0 https://github.com/liblouis/liblouis/releases/tag/v3.22.0]. (#13775)
+  - Uusi pistetaulukko: saksa, taso 2 (yksityiskohtainen)
+  -
 - Lisätty uusi rooli "varattu"-ilmaisinsäätimille. (#10644)
 - NVDA ilmoittaa nyt, kun sen omaa toimintoa ei voi suorittaa. (#13500)
   - Tällaisia tilanteita ovat:
@@ -29,6 +38,21 @@
 
 
 == Bugikorjaukset ==
+- Korjauksia Java-pohjaisille sovelluksille:
+  - NVDA ilmoittaa nyt vain luku -tyyppisen tilan. (#13692)
+  - NVDA ilmoittaa nyt oikein ei käytössä/käytössä-tilan. (#10993)
+  - NVDA ilmoittaa nyt funktionäppäimiä sisältävät pikanäppäimet. (#13643)
+  - NVDA voi nyt ilmaista edistymispalkkien päivitykset äänimerkillä tai puhumalla. (#13594)
+  - NVDA ei enää virheellisesti poista tekstiä widgeteistä näyttäessään niitä käyttäjälle. (#13102)
+  - NVDA ilmoittaa nyt tilanvaihtopainikkeiden tilan. (#9728)
+  - NVDA tunnistaa nyt ikkunan Java-sovelluksessa, jossa on useita ikkunoita. (#9184)
+  - NVDA ilmoittaa nyt välilehtisäädinten sijaintitiedot. (#13744)
+  -
+- Korjauksia pistekirjoitukseen:
+  - Korjattu pistekirjoituksen tulostus liikuttaessa tietyssä tekstissä Mozillan monipuolisissa muokkaussäätimissä, kuten Thunderbirdin viestinkirjoitusikkunassa. (#12542)
+  - Tekstintarkastelukomennot päivittävät nyt pistenäyttöä puhutulla sisällöllä, kun Pistenäyttö seuraa -asetukseksi on määritetty "automaattinen" ja hiirtä siirretään hiiren seurannan ollessa käytössä. (#11519)
+  - Pistenäytöllä on nyt mahdollista siirtyä sisällössä tekstintarkastelukomentojen käytön jälkeen. (#8682)
+  -
 - NVDA:n asennusohjelma toimii nyt erikoismerkkejä sisältävistä hakemistoista käynnistettynä. (#13270)
 - Verkkosivujen kohteiden puhuminen ei enää epäonnistu Firefoxissa, kun aria-rowindex-, aria-colindex-, aria-rowcount- tai aria-colcount-attribuutit ovat virheellisiä. (#13405)
 - Kohdistin ei enää vaihda riviä tai saraketta, kun käytetään taulukkonavigointia yhdistetyissä soluissa liikkumiseen. (#7278)
@@ -39,19 +63,15 @@
   - Huomaa, että ilmoittamisen toimimiseksi  rivinumeroiden näyttäminen on otettava käyttöön Visual Studiossa ja NVDA:ssa.
   -
 - Visual Studio ilmoittaa nyt oikein rivien sisennyksen. (#13574)
-- Korjauksia Java-pohjaisille sovelluksille:
-  - NVDA ilmoittaa nyt vain luku -tyyppisen tilan. (#13692)
-  - NVDA ilmoittaa nyt oikein ei käytössä/käytössä-tilan. (#10993)
-  - NVDA ilmoittaa nyt funktionäppäinpikanäppäimet. (#13643)
-  - NVDA voi nyt ilmaista edistymispalkkien päivitykset äänimerkillä tai puhumalla. (#13594)
-  - NVDA ei enää virheellisesti poista tekstiä widgeteistä näyttäessään niitä käyttäjälle. (#13102)
-  -
 - NVDA ilmoittaa taas Käynnistä-valikon hakutuloksen tiedot uusimmissa Windows 10:n ja 11:n versioissa. (#13544)
 - Windows 10:n ja 11:n Laskimen versiossa 10.1908 ja uudemmissa NVDA ilmoittaa tulokset useampia komentoja painettaessa, kuten esim. funktiotilassa. (#13386)
-- Korjattu pistekirjoituksen tulostus liikuttaessa tietyssä tekstissä Mozillan monipuolisissa muokkaussäätimissä, kuten Thunderbirdin viestinkirjoitusikkunassa. (#12542)
 - Windows 11:ssä on taas mahdollista liikkua käyttöliittymäelementeissä, kuten Tehtäväpalkissa ja Tehtävänäkymässä, ja olla vuorovaikutuksessa niiden kanssa hiirtä ja kosketusvuorovaikutusta käyttäen. (#13508)
 - Piilotettua tekstiä ei enää ilmoiteta WordPadissa ja muissa monipuolisissa muokkaussäätimissä. (#13618)
 - NVDA ilmoittaa tilarivin sisällön Windows 11:n Muistiossa. (#13386)
+- Navigointiobjektin korostus näkyy nyt heti ominaisuuden käyttöönoton jälkeen. (#13641)
+- Korjattu yksisarakkeisten luettelonäkymäkohteiden lukeminen. (#13659, #13735)
+- Korjattu ongelma, joka aiheutti sen, että eSpeakin automaattinen kielenvaihto otti käyttöön englantia ja ranskaa käytettäessä brittienglannin ja Ranskassa puhuttavan ranskan. (#13727)
+- Korjattu OneCoren automaattinen kielenvaihto yritettäessä vaihtaa aiemmin asennettuun kieleen. (#13732)
 -
 
 
@@ -107,7 +127,7 @@ Huomaa:
   - Lisätty katalonialainen tason 1 pistetaulukko. (#13408)
   -
 - NVDA ilmoittaa valinnan ja yhdistetyt solut LibreOffice Calc 7.3:ssa ja uudemmissa. (#9310, #6897)
-- Unicode Common Locale Data Repository -tietokanta (CLDR) päivitetty versioksi 40.0. (#12999)
+- Yhteinen Unicode-kielitietovarasto (CLDR) päivitetty versioksi 40.0. (#12999)
 - ``NVDA+Laskimen Del`` -näppäinkomento ilmoittaa oletusarvoisesti järjestelmäkohdistimen tai aktiivisen objektin sijainnin. (#13060)
 - ``NVDA+Vaihto+Laskimen Del`` ilmoittaa tarkastelukohdistimen sijainnin. (#13060)
 - Lisätty  Freedom Scientificin pistenäytöille oletusnäppäinkomennot muokkausnäppäimien käyttöönottoon ja käytöstä poistamiseen. (#13152)
@@ -379,7 +399,7 @@ Huom:
 == Muutokset ==
 - Säätimiä on nyt mahdollista aktivoida niiden kuvauksen kohdalta (esim. "lnk" linkillä) selaustilassa pistenäytön kosketuskohdistinnäppäimillä. Tämä on erityisen hyödyllistä esim. nimettömiä valintaruutuja aktivoitaessa. (#7447)
 - NVDA estää nyt käyttäjää suorittamasta Windows 10:n tekstintunnistusta, jos näyttöverho on käytössä. (#11911)
-- Päivitetty Unicode Common Locale Data -tietokanta (CLDR) versioksi 39.0. (#11943, #12314)
+- Päivitetty Yhteinen Unicode-kielitietovarasto (CLDR) versioksi 39.0. (#11943, #12314)
 - Matemaattisia merkkejä lisätty symbolisanastoon. (#11467)
 - Käyttöoppaan, mitä uutta -dokumentin ja näppäinkomentojen pikaoppaan ulkoasu on päivitetty. (#12027)
 - "Ei tueta" ilmoitetaan nyt yritettäessä vaihtaa ruutuasettelun tilaa sovelluksissa (kuten Microsoft Word), jotka eivät tue sitä. (#7297)
@@ -527,7 +547,7 @@ Merkitty (korostettu) sisältö voidaan ilmoittaa selaimissa, ja on myös uusia 
 == Muutokset ==
 - Lue muotoilutiedot -skripti (NVDA+F) on nyt muutettu ilmoittamaan muotoilutiedot järjestelmäkohdistimen kohdalta tarkastelukohdistimen sijainnin asemesta. Käytä muotoilutietojen lukemiseen tarkastelukohdistimen sijainnista näppäinkomentoa NVDA+Vaihto+F. (#9505)
 - NVDA ei oletusarvoisesti enää siirrä kohdistusta automaattisesti selaustilassa kohdistettaviin elementteihin, mikä parantaa suorituskykyä ja vakautta. (#11190)
-- CLDR päivitetty versiosta 36.1 versioksi 37. (#11303)
+- Yhteinen Unicode-kielitietovarasto (CLDR) päivitetty versiosta 36.1 versioksi 37. (#11303)
 - Päivitetty eSpeak-NG versioksi 1.51-dev, muutos 1fb68ffffea4.
 - Taulukkonavigointia voidaan nyt hyödyntää listaruuduissa, joissa on valittavia kohteita, kun kyseinen lista sisältää useita sarakkeita. (#8857)
 - Ei-vaihtoehto on nyt oletusarvoisesti valittuna, kun lisäosien hallinnassa pyydetään vahvistusta lisäosan poistolle. (#10015)

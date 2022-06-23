@@ -4,6 +4,12 @@ Was ist neu in NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2022.2 =
+Diese Version enthält viele Fehlerbehebungen.
+Vor allem für Java-basierte Anwendungen, Braillezeilen und Windows-Funktionen gibt es erhebliche Verbesserungen.
+
+Neue Befehle für die Tabellennavigation wurden eingeführt.
+Unicode CLDR wurde aktualisiert.
+LibLouis wurde aktualisiert und enthält eine neue deutsche Braille-Tabelle.
 
 == Neue Features ==
 - Unterstützung für die Interaktion mit Microsoft Loop-Komponenten in Microsoft Office-Produkten. (#13617)
@@ -17,6 +23,9 @@ Was ist neu in NVDA
 == Änderungen ==
 - NSIS wurde auf Version 3.08 aktualisiert. (#9134)
 - CLDR wurde auf Version 41.0 aktualisiert. (#13582)
+- LibLouis-Braille-Übersetzer wurde auf Version [3.22.0 https://github.com/liblouis/liblouis/releases/tag/v3.22.0] aktualisiert. (#13775)
+  - Neue Braille-Tabelle: Deutsche Kurzschrift (detailliert)
+  -
 - Neue Rolle für Steuerelemente "Beschäftigt-Status" hinzugefügt. (#10644)
 - NVDA teilt nun mit, sobald eine Aktion in NVDA nicht ausgeführt werden konnte. (#13500)
   - Dies gilt auch, beim:
@@ -29,7 +38,23 @@ Was ist neu in NVDA
 
 
 == Fehlerbehebungen ==
-- Das NVDA-Installationsprogramm kann jetzt von Verzeichnissen mit Sonderzeichen aus gestartet werden. (#13270)
+- Für Java-basierte Anwendungen:
+  - NVDA teilt nun den schreibgeschützten Zustand mit. (#13692)
+  - NVDA teilt nun den deaktivierten oder aktivierten Status korrekt mit. (#10993)
+  - NVDA zeigt nun Kombinationen beim Drücken von F-Tasten an. (#13643)
+  - NVDA teilt nun die Fortschrittsbalken entweder durch Signaltöne oder über die Sprachausgabe mit. (#13594)
+  - NVDA entfernt nicht mehr fälschlicherweise Text aus Widgets, wenn diese dem Benutzer angezeigt werden. (#13102)
+  - NVDA teilt nun den Zustand von Umschalt-Tasten mit. (#9728)
+  - NVDA erkennt nun das Fenster in einer Java-Anwendung mit mehreren Fenstern. (#9184)
+  - NVDA zeigt nun Informationen der Position für Registerkarten an. (#13744)
+  -
+- Braille:
+  - Braille-Ausgabe beim Navigieren in bestimmten Texten in Mozilla-RichEdit-Steuerelementen behoben, z. B. beim Verfassen einer Nachricht in Thunderbird. (#12542)
+  - Wenn die Braillezeile automatisch verbunden wird und die Maus bei aktivierter Mausverfolgung bewegt wird,
+  Befehle für die Textanzeige aktualisieren nun die Ausgabe auf der Braillezeile mit dem vorgelesenen Inhalt. (#11519)
+  - Es ist nun möglich, die Braillezeile durch den Inhalt zu navigieren, nachdem die Befehle für die Textanzeige verwendet wurden. (#8682)
+  -
+- Das NVDA-Installationsprogramm kann fortan von Verzeichnissen mit Sonderzeichen aus gestartet werden. (#13270)
 - In Firefox teilt NVDA keine Elemente auf Webseiten mehr mit, wenn die Attribute aria-rowindex, aria-colindex, aria-rowcount oder aria-colcount ungültig sind. (#13405)
 - Der Cursor wechselt nicht mehr die Zeile oder Spalte, wenn Sie die Tabellennavigation verwenden, um durch zusammengeführte Zellen zu navigieren. (#7278)
 - Beim Lesen nicht-interaktiver PDFs in Adobe Reader werden nun Typ und Zustand von Formularfeldern (z. B. Kontrollkästchen und Optionsfelder) mitgeteilt. (#13285)
@@ -39,25 +64,25 @@ Was ist neu in NVDA
   - Beachten Sie, dass die Anzeige von Zeilennummern in Visual Studio und NVDA aktiviert sein muss, damit die Zeilennummernanzeige funktioniert.
   -
 - In Visual Studio werden die Zeileneinrückung nun korrekt mitgeteilt. (#13574)
-- Korrekturen für Java-basierte Anwendungen:
-  - NVDA teilt nun den schreibgeschützten Zustand mit. (#13692)
-  - NVDA teilt nun den deaktivierten/aktivierten Status korrekt mit. (#10993)
-  - NVDA zeigt nun Funktionstastenkombinationen an. (#13643)
-  - NVDA teilt nun die Fortschrittsbalken entweder durch Signaltöne oder über die Sprachausgabe mit. (#13594)
-  - NVDA entfernt nicht mehr fälschlicherweise Text aus Widgets, wenn diese dem Benutzer angezeigt werden. (#13102)
-  -
 - NVDA teilt in den neuen Versionen von Windows 10 und 11 erneut Details zu den Suchergebnissen im Startmenü mit. (#13544)
-- Im Taschenrechner Version 10.1908 und neuer in Windows 10 und 11 teilt NVDA Ergebnisse mit, wenn weitere Befehle gedrückt werden, wie z. B. Befehle aus dem wissenschaftlichen Modus. (#13386)
-- Korrektur der Braille-Ausgabe beim Navigieren in bestimmten Texten in Mozilla Rich Edit Controls, z. B. beim Verfassen einer Nachricht in Thunderbird. (#12542)
-- In Windows 11 ist es wieder möglich, mit Elementen der Benutzeroberfläche wie der Taskleiste und der Task-Ansicht zu navigieren und zu interagieren, indem man die Maus und die Touch-Interaktion nutzt. (#13508)
+- Im Rechner in Windows 10 und 11 Version 10.1908 und neuer,
+NVDA teilt die Ergebnisse mit, wenn weitere Befehle gedrückt werden, z. B. Befehle aus dem wissenschaftlichen Modus. (#13386)
+- In Windows 11 ist es wieder möglich, mit Elementen der Benutzeroberfläche zu navigieren und zu interagieren,
+wie z. B. die Taskleiste und die Task-Ansicht mit Hilfe von Maus- und Touch-Interaktion. (#13508)
 - Ausgeblendeter Text wird in Wordpad und anderen Steuerelementen (``richEdit``) nicht mehr angezeigt. (#13618)
-- NVDA zeigt den Inhalt der Statusleiste in Windows 11 Notepad an. (#13386)
+- NVDA zeigt nun den Inhalt der Statusleiste in Windows 11 Notepad an. (#13386)
+- Die Hervorhebung von Navigationsobjekten wird nun sofort nach Aktivierung der Funktion angezeigt. (#13641)
+- Das Auslesen einspaltiger Elemente in Listenansichten wurde behoben. (#13659, #13735)
+- Automatische Sprachumschaltung von eSpeak für Englisch und Französisch wurde behoben, falls nicht möglich auf britisches Englisch und Französisch (Frankreich). (#13727)
+- Automatische Sprachumschaltung in OneCore wurde behoben, wenn versucht wird, zu einer zuvor installierten Sprache zu wechseln. (#13732)
 -
 
 
 == Änderungen für Entwickler ==
-- Die Kompilierung von NVDA-Abhängigkeiten mit Visual Studio 2022 (17.0) wird nun unterstützt. Für Entwicklungs- und Release-Builds wird weiterhin Visual Studio 2019 verwendet. (#13033)
-- Wenn die Anzahl der ausgewählten Kinder über accSelection abgerufen wird, wird der Fall, dass eine negative Kind-ID oder ein IDispatch von IAccessible::get_accSelection zurückgegeben wird, nun korrekt behandelt. (#13276)
+- Die Kompilierung von NVDA-Abhängigkeiten mit Visual Studio 2022 (17.0) wird jetzt unterstützt.
+Für Entwicklungs- und Release-Builds wird weiterhin Visual Studio 2019 verwendet. (#13033)
+- Beim Abrufen der Anzahl der ausgewählten untergeordneten Elemente über accSelection,
+der Fall, dass eine negative ID des untergeorneten Elements oder ein IDispatch von ``IAccessible::get_accSelection`` zurückgegeben wird, wird nun korrekt behandelt. (#13276)
 - Neue praktische Funktionen ``registerExecutableWithAppModule`` und ``unregisterExecutable`` wurden dem Modul ``appModuleHandler`` hinzugefügt.
 Sie können verwendet werden, um ein einzelnes App-Modul mit mehreren ausführbaren Dateien zu verwenden. (#13366)
 -
@@ -70,12 +95,11 @@ Beachten Sie, dass die Roadmap für Umzüge nach bestem Wissen und Gewissen erst
 Bitte testen Sie die neue API und geben Sie uns Feedback.
 Autoren von Erweiterungen sollten bitte einen Problem auf GitHub einreichen, falls diese Änderungen dazu führen, dass die API nicht mehr Ihren Anforderungen entspricht.
 
-
-- ``gui.quit`` ist veraltet und wird in 2023.1 entfernt. (#13498)
-  - Verwenden Sie stattdessen direkt ``wx.CallAfter(mainFrame.onExitCommand, None)``.
+- ``appModuleHandler.NVDAProcessID`` ist veraltet, verwenden Sie stattdessen ``globalVars.appPid``. (#13646)
+- ``gui.quit`` ist veraltet, verwenden Sie stattdessen ``wx.CallAfter(mainFrame.onExitCommand, None)``. (#13498)
   -
 % Insert new list items here as the alias appModule table should be kept at the bottom of this list
-- Einige alias appModules sind als veraltet gekennzeichnet und werden in 2023.1 entfernt.
+- Einige Alias-AppModule sind als veraltet gekennzeichnet.
 Code, der von einem dieser Module importiert, sollte stattdessen von dem Ersatzmodul importiert werden. (#13366)
 -
 
