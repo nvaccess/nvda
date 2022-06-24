@@ -4,6 +4,12 @@ Qué hay de Nuevo en NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2022.2 =
+Esta versión incluye muchas correcciones de fallos.
+En particular, hay mejoras significativas para aplicaciones basadas en Java, para pantallas braille y para características de Windows.
+
+Se han introducido nuevas órdenes de navegación de tablas.
+Se ha actualizado Unicode CLDR.
+Se ha actualizado LibLouis, lo que incluye una tabla braille alemana nueva .
 
 == Nuevas Características ==
 - Soporte para interactuar con Microsoft Loop Components en productos de Microsoft Office. (#13617)
@@ -17,6 +23,9 @@ Qué hay de Nuevo en NVDA
 == Cambios ==
 - NSIS se ha actualizado a la versión 3.08. (#9134)
 - CLDR se ha actualizado a la versión 41.0. (#13582)
+- Actualizado el transcriptor braille libLouis a [3.22.0 https://github.com/liblouis/liblouis/releases/tag/v3.22.0]. (#13775)
+  - Nueva tabla braille: alemán grado 2 (detallada)
+  -
 - Se añadió un nuevo rol para controles "indicador ocupado". (#10644)
 - NVDA ahora anuncia cuando no se pueda realizar una acción. (#13500)
   - Esto incluye cuando:
@@ -29,6 +38,22 @@ Qué hay de Nuevo en NVDA
 
 
 == Corrección de Fallos ==
+- Correcciones para aplicaciones basadas en Java:
+  - NVDA ahora anunciará el estado de sólo lectura. (#13692)
+  - NVDA ahora anunciará los estados deshabilitado/habilitado correctamente. (#10993)
+  - NVDA ahora anunciará los atajos de teclas de función. (#13643)
+  - NVDA ahora puede pitar o hablar en barras de progreso. (#13594)
+  - NVDA ya no eliminará incorrectamente texto de los widgets cuando se presenten al usuario. (#13102)
+  - NVDA ahora anunciará el estado de los botones conmutables. (#9728)
+  - NVDA ahora identificará la ventana en una aplicación Java con varias ventanas. (#9184)
+  - NVDA ahora anunciará información de la posición para controles de pestaña. (#13744)
+  -
+- Corecciones de braille:
+  - Corregida la salida braille al navegar por cierto texto en conroles de edición enriquecidos de Mozilla, como redactar un mensaje en Thunderbird. (#12542)
+  - Cuando se sigue al braille automáticamente y el ratón se mueve con el seguimiento del ratón habilitado,
+   las órdenes de revisión de texto ahora actualizan la pantalla braille con el contenido verbalizado. (#11519)
+  - Ahora es posible desplazar la pantalla braille por el contenido al utilizar las órdenes de revisión de texto. (#8682)
+  -
 - El instalador de NVDA ahora puede ejecutarse desde directorios con caracteres especiales. (#13270)
 - En Firefox, NVDA ya no falla al anunciar elementos en páginas web donde los atributos aria-rowindex, aria-colindex, aria-rowcount o aria-colcount sean inválidos. (#13405)
 - El cursor ya no cambia de fila o de columna al utilizar la navegación de tablas para navegar por las celdas fusionadas. (#7278)
@@ -39,43 +64,44 @@ Qué hay de Nuevo en NVDA
   - Ten en cuenta que para que funcione el anunciado de números de línea, debe estar habilitado el mostrado de números de línea en Visual Studio y en NVDA.
   -
 - Visual Studio ahora anuncia correctamente la sangría de líneas. (#13574)
-- Correcciones para aplicaciones basadas en Java:
-  - NVDA ahora anunciará el estado de sólo lectura. (#13692)
-  - NVDA ahora anunciará el estado deshabilitado/habilitado correctamente. (#10993)
-  - NVDA ahora anunciará atajos de teclado de teclas de función. (#13643)
-  - NVDA ahora puede pitar o hablar en barras de progreso. (#13594)
-  - NVDA ya no eliminará texto incorrectamente de widgets al mostrarlos al usuario. (#13102)
-  -
 - NVDA anunciará de nuevo una vez los detalles de los resultados de la búsqueda del menú Inicio en versiones recientes de Windows 10 y 11. (#13544)
-- En la versión 10.1908 y superior de la calculadora en Windows 10 y 11, NVDA anunciará resultados cuando se pulsen más órdenes, tales como órdenes del modo científico. (#13386)
-- Corregida la salida braille al navegar por cierto texto en controles de edición enriquecidos de Mozilla, tales como redactar un mensaje en Thunderbird. (#12542)
-- En Windows 11, es posible de nuevo navegar e interactuar con elementos de la interface de usuario tales como Barra de tareas y visualizador de Tareas utilizando interacción de ratón y táctil. (#13508)
+- En la versión 10.1908 y superior de la calculadora en Windows 10 y 11, 
+NVDA anunciará resultados cuando se pulsen más órdenes, tales como órdenes del modo científico. (#13386)
+- En Windows 11, es posible de nuevo navegar e interactuar con elementos de la interface de usuario 
+tales como Barra de tareas y visualizador de Tareas utilizando interacción de ratón y táctil. (#13508)
 - El texto oculto ya no se anuncia en Wordpad y otros controles ``enriquecidos``. (#13618)
 - NVDA anunciará el contenido de la barra de estado en Notepad en Windows 11. (#13386)
+- El resaltado del navegador de objetos ahora aparece inmediatamente tras la activación de la característica. (#13641)
+- Se corrige la lectura de los elementos de la vista de lista de una sola columna. (#13659, #13735)
+- Se corrige el cambio automático de idioma de eSpeak para inglés y francés volviendo a ser inglés británico y francés (Francia). (#13727)
+- Se corrige el cambio automático de idioma de OneCore cuando se intenta cambiar a un idioma ya instalado. (#13732)
 -
 
 
 == Cambios para Desarrolladores ==
-- Ahora se admite compilar las dependencias de NVDA con Visual Studio 2022 (17.0). Todavía se utiliza Visual Studio 2019 para compilaciones de desarrollo y de lanzamiento. (#13033)
-- Cuando se recupera la cuenta de los hijos seleccionados a través de accSelection, el caso si un ID de hijo negativo o si devuelve un IDispatch por IAccessible::get_accSelection ahora se maneja apropiadamente. (#13276)
+- Ahora se admite compilar las dependencias de NVDA con Visual Studio 2022 (17.0). 
+Todavía se utiliza Visual Studio 2019 para compilaciones de desarrollo y de lanzamiento. (#13033)
+- Cuando se recupera la cuenta de los hijos seleccionados a través de accSelection, 
+el caso si un ID de hijo negativo o si devuelve un IDispatch por IAccessible::get_accSelection ahora se maneja apropiadamente. (#13276)
 - Nuevas funciones convenientes ``registerExecutableWithAppModule`` y ``unregisterExecutable`` se añadieron al módulo ``appModuleHandler``.
 Pueden utilizarse para usar un solo App Module con varios ejecutables. (#13366)
 -
 
 === Obsolescencias ===
-Estos son los cambios de ruptura de API propuestos.
+Estos son los cambios propuestos que rompen la API.
 La parte obsoleta de la API continuará estando disponible hasta la versión especificada.
 Si no se especifica una versión, el plan para la eliminación no ha sido determinado.
-Nota, la hoja de ruta para la eliminación es 'el mayor de los esfuerzos' y puede estar sujeto a cambios.
+Nota, la hoja de ruta para la eliminación es 'un esfuerzo muy grande' y puede estar sujeta a cambios.
 Por favor prueba la nueva API y proporciona retroalimentación.
-Para autores de complementos, por favor abre un comentario de GitHub si estos cambios alejan la API de tus necesidades.
+Para autores de complementos, por favor abre un comentario de GitHub si estos cambios hacen que la API no cumpla tus necesidades.
 
 
+- Se puso como obsoleto ``appModuleHandler.NVDAProcessID`` - utiliza ``globalVars.appPid`` en su lugar. (#13646)
 - ``gui.quit`` ha sido puesto como obsoleto para eliminarlo en 2023.1. (#13498)
   - Utiliza ``wx.CallAfter(mainFrame.onExitCommand, None)`` directamente en su lugar.
   -
 % Inserta nuevos elementos de lista aquí como el alias appModule la tabla debería permanecer en la parte inferior de esta lista
-- Algunos alias appModules se marcan como obsoletos y se eliminarán en 2023.1.
+- Algunos alias appModules se marcan como obsoletos.
 El código que se importe desde uno de ellos, debería importarse desde el m´`módulo reemplazado en su lugar.  (#13366)
 -
 
