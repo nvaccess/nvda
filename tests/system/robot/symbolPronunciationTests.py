@@ -30,6 +30,7 @@ By line symbol expectations:
 # imported methods start with underscore (_) so they don't get imported into robot files as keywords
 import enum as _enum
 import typing as _typing
+from time import perf_counter as _timer
 
 from SystemTestSpy import (
 	_getLib,
@@ -123,14 +124,8 @@ def _getMoveByLineTestSample() -> str:
 	return '\n'.join(testData)
 
 
-def _getMoveByCharTestSample() -> str:
-	# Intentionally concat the following strings, there should be no trailing commas
-	return (
-		'T'  # An initial character, that isn't spoken (because it isn't traversed during nav).
-		'S ()"'
-		"'e,➔👕\t"
-		'\na'  # Note: The 'a' character will be on the next line, thus won't be spoken
-	)
+def _getDelayedDescriptionsTestSample() -> str:
+	return ("abcdefghijklmnopqrstuvwxyz",)
 
 
 def test_moveByWord():
@@ -274,6 +269,158 @@ def test_moveByChar():
 			'line feed',  # on Windows/notepad newline is \r\n
 		],
 	)
+
+
+_CHARACTER_DESCRIPTIONS = {
+	# english character descriptions.
+	'a': 'Alfa',
+	'b': 'Bravo',
+	'c': 'Charlie',
+	'd': 'Delta',
+	'e': 'Echo',
+	'f': 'Foxtrot',
+	'g': 'Golf',
+	'h': 'Hotel',
+	'i': 'India',
+	'j': 'Juliet',
+	'k': 'Kilo',
+	'l': 'Lima',
+	'm': 'Mike',
+	'n': 'November',
+	'o': 'Oscar',
+	'p': 'Papa',
+	'q': 'Quebec',
+	'r': 'Romeo',
+	's': 'Sierra',
+	't': 'Tango',
+	'u': 'Uniform',
+	'v': 'Victor',
+	'w': 'Whiskey',
+	'x': 'Xray',
+	'y': 'Yankee',
+	'z': 'Zulu'
+}
+
+
+def _pressKeyAndWaitDelaiedDescription(key: str, maxWait: int):
+	""" Press the specified key, captures the read character, and wait until the delaied description is spoken.
+	the delaied description will be compared with the corresponding entry in a dictionary,
+	if an entry is found for the read character.
+	@return: the time since the key was pressed, until the delayed description was spoken.
+	None if no character description was found for the read character.
+	"""
+	spy = _NvdaLib.getSpyLib()
+	s = _timer()
+	spoken = _NvdaLib.getSpeechAfterKey(key).lower()
+	if spoken not in _CHARACTER_DESCRIPTIONS:
+		return None
+	spy.wait_for_specific_speech(_CHARACTER_DESCRIPTIONS[spoken], maxWaitSeconds=maxWait)
+	return _timer() - s
+
+
+def _testDelayedDescription(
+	key: str,
+	delay: int = 1000,
+	repeatCount: int = 1,
+	threshold: int = 40
+) -> bool:
+	""" perform delayed character descriptions tests with with the specified parameters:
+	@param key: the key used to read the character.
+	@param delay: the time to wait until the description is spoken.
+	@param repeatCount: number of times to do the test.
+	@param threshold: error tolerance of the time delay.
+	@return: True if all tests are in the allowed range delay, it means all tests passed.
+	raises an AssertionError if one of the tests are not in that range.
+	"""
+	spy = _NvdaLib.getSpyLib()
+	spy.set_configValue(['speech', 'SpeechSpySynthDriver', 'delayedCharacterDescriptionsTimeoutMs'], delay)
+	for i in range(repeatCount):
+		# add 0.5 secs to wait the from specified delay
+		s = _pressKeyAndWaitDelaiedDescription(key, delay / 1000 + 0.5)
+		if not s:
+			continue
+		s = int(s * 1000)
+		if abs(delay - s) > threshold:
+			raise AssertionError(
+				f"test character description: expected delay {delay}, registered delay: {s}, threshold {threshold}"
+			)
+	return True
+
+
+def _testDelayedDescriptionAfterGesture(key: str, gesture: str):
+	""" test that the delayed description is cancelled when sending another command after read one character.
+	@param key: the key used to navigate the text.
+	@param gesture: the gesture used after read the character.
+	@return: True if no delay is executed after sending gesture.
+	raises an AssertionError if the delayed description is spoken after sending the gesture.
+	"""
+	spy = _NvdaLib.getSpyLib()
+	# try ten times max, if for some reason the read character has not an asociated description.
+	failed = False
+	spoken = ""
+	i = 1
+	for i in range(10):
+		spoken = _NvdaLib.getSpeechAfterKey(Move.CARET_CHAR).lower()
+		if spoken not in _CHARACTER_DESCRIPTIONS:
+			continue
+		else:
+			# reset i to ensure that the description was found.
+			i = 1
+			break
+	if i != 1:
+		_builtIn.log(message="the characters tested don't have an associated description")
+		return False
+	# send the gesture.
+	spy.emulateKeyPress(gesture, False)
+	try:
+		spy.wait_for_specific_speech(_CHARACTER_DESCRIPTIONS[spoken], maxWaitSeconds=1.5)
+		# if this line is executed, this test failed.
+		failed = True
+	except AssertionError:
+		failed = False
+	if failed:
+		raise AssertionError(f"a delayed character description was spoken after send {gesture} command.")
+	return True
+
+
+def test_delayedDescriptions():
+	_notepad.prepareNotepad(_getDelayedDescriptionsTestSample())
+	# test this feature is by default disabled.
+	failed = False
+	i = 1
+	try:
+		# try it max ten times, in case the read character has not an associated description.
+		for i in range(10):
+			if _testDelayedDescription(Move.CARET_CHAR) is None:
+				continue
+		# if this line is executed, feature is working.
+		failed = True
+	except AssertionError:
+		failed = False
+		# reset i, so it ensures that at least one character had an associated description.
+		i = 1 
+	if failed:
+		raise AssertionError("Delayed character descriptions feature is working by default")
+	elif i != 1:
+		_builtIn.log(message="the characters tested don't have an associated description")
+
+	# activate delayed descriptions feature to do the next tests.
+	spy = _NvdaLib.getSpyLib()
+	spy.set_configValue(['speech', 'SpeechSpySynthDriver', 'delayedCharacterDescriptions'], True)
+
+	# test if a delay description is spoken after control key.
+	_testDelayedDescriptionAfterGesture(Move.CARET_CHAR, "control")
+	# test if a delay description is spoken after NVDA reads another thing, the app title in this case.
+	_testDelayedDescriptionAfterGesture(Move.CARET_CHAR, "nvda+t")
+
+	# test with minimum delay, default delay and max delay.
+	delays = [50, 1000, 5000]
+	for k in delays:
+		threshold = 40
+		# set less tolerance if the delay is less than 100 ms.
+		if k < 100:
+			threshold = 15
+		_testDelayedDescription(Move.CARET_CHAR, k, 3, threshold)
 
 
 def test_selByWord():

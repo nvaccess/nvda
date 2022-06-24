@@ -41,6 +41,9 @@ moveByLine
 moveByCharacter
 	[Documentation]	Ensure symbols announced as expected when navigating by character (numpad 3).
 	test_moveByChar
+delayedCharacterDescriptions
+	[Documentation]	Ensure delayed character descriptions are announced as expected when navigating by character or cancelled if the control key is pressed.
+	test_delayedDescriptions
 
 selectionByWord
 	[Documentation]	Ensure symbols announced as expected when selecting by word (shift+control+right arrow).
