@@ -24,7 +24,7 @@ LibLouis wurde aktualisiert und enthält eine neue deutsche Braille-Tabelle.
 - NSIS wurde auf Version 3.08 aktualisiert. (#9134)
 - CLDR wurde auf Version 41.0 aktualisiert. (#13582)
 - LibLouis-Braille-Übersetzer wurde auf Version [3.22.0 https://github.com/liblouis/liblouis/releases/tag/v3.22.0] aktualisiert. (#13775)
-  - Neue Braille-Tabelle: Deutsche Kurzschrift (detailliert)
+  - Neue Braille-Tabelle: Deutsche Kurzschrift (ausführlich)
   -
 - Neue Rolle für Steuerelemente "Beschäftigt-Status" hinzugefügt. (#10644)
 - NVDA teilt nun mit, sobald eine Aktion in NVDA nicht ausgeführt werden konnte. (#13500)
@@ -557,7 +557,7 @@ Hinweis:
 - Im Dialog "Elementliste" wurde in einigen Sprachumgebungen die Beschleunigungstaste auf der Schaltfläche "Aktivieren" entfernt, um Konflikte mit der Beschriftung eines Optionsfeldes für den Elementtyp zu vermeiden. Sofern vorhanden, ist die Schaltfläche immer noch der Standard des Dialogs und kann als solcher weiterhin durch einfaches Drücken der Eingabetaste in der Elementliste selbst aufgerufen werden. (#6167)
 
 
-== Fehlerkorrekturen ==
+== Fehlerbehebungen ==
 - Die Liste der Nachrichten in Microsoft Outlook 2010 ist wieder auslesbar. (#12241)
 - In Terminalprogrammen unter Windows 10 ab Version 1607 werden beim Einfügen oder Löschen von Zeichen in der Mitte einer Zeile die Zeichen rechts vom Cursor nicht mehr mit vorgelesen. (#3200)
   - Diese experimentelle Korrektur kann manuell in den erweiterten Einstellungen von NVDA aktiviert werden, indem der Diff-Algorithmus auf "Diff-Match-Patch zulassen" geändert wird.
@@ -681,7 +681,7 @@ Fehlerbehebungen und Verbesserungen für Mail, Outlook, Teams, Visual Studio, Az
 Im Web gibt es Verbesserungen an Google Text & Tabellen und eine bessere Unterstützung für ARIA.
 Diverse weitere Fehlerbehebungen und Verbesserungen.
 
-== Neue Funktionen ==
+== Neue Features ==
 - Durch Drücken von F1 in NVDA-Dialogfeldern wird nun die Hilfedatei für den relevantesten Abschnitt geöffnet. (#7757)
 - Unterstützung für Vorschläge zur automatischen Vervollständigung (IntelliSense) in Microsoft SQL Server Management Studio sowie Visual Studio 2017 und neuer. (#7504)
 - Aussprache von Symbolen: Unterstützung für die Gruppierung in einer komplexen Symboldefinition und Unterstützung von Gruppenreferenzen in einer Ersetzungsregel, um sie einfacher und leistungsfähiger zu machen. (#11107)
@@ -786,7 +786,7 @@ Markierte (hervorgehobenene) Inhalte kann man in Browsern sich ansagen lassen. A
 - Im Lesemodus angezeigte Informationen, wie z. B. die Informationen zur Textformatierung mit NVDA+F, werden nun in einem etwas größeren Fenster zentriert auf dem Bildschirm angezeigt. (#9910)
 
 
-== Fehlerkorrekturen ==
+== Fehlerbehebungen ==
 - NVDA spricht nun immer, wenn man nach Wörtern navigiert und auf einem einzelnen Symbol, gefolgt von einem Leerzeichen, landet, unabhängig von den Ausführlichkeitseinstellungen. (#5133)
 - Bei Anwendungen, die QT 5.11 oder neuer verwenden, werden wieder Objekt-Beschreibungen mitgeteilt. (#8604)
 - Wenn ein Wort mit Strg+Entf gelöscht wird, schweigt NVDA nicht mehr. (#3298, #11029)
@@ -1087,7 +1087,7 @@ Dies ist eine kleinere Version, um mehrere Abstürze in 2019.2 zu beheben, darun
 = 2019.2 =
 Zu den Highlights dieser Version gehören die automatische Erkennung von braillezeilen von Freedom Scientific, eine experimentelle Einstellung in DEN erweiterten Einstellungen, um die automatische Bewegung des systemfokus beim Verwenden des Lesemodus zu deaktivieren (was unter Umständen zu Leistungsverbesserungen führen kann), eine Option zur Erhöhung der Geschwindigkeit für die Windows OneCore-Sprachausgabe, um sehr schnelle Geschwindigkeiten zu erzielen und viele andere Fehlerbehebungen.
 
-== Neue Funktionen ==
+== Neue Features ==
 - NVDA unterstützt nun auch neuere Client-Versionen des Miranda NG. (#9053)
 - Sie können den Lesemodus nun standardmäßig deaktivieren, wenn eine Webseite geladen wird. Deaktivieren Sie dazu die neue Option "Lesemodus beim Laden von Webseiten verwenden" in den Lesemodus-Einstellungen im Einstellunfsfenster von NVDA. (#8716)
  - Beachten Sie, dass Sie den Lesemodus mit NVDA+Leertaste manuell aktivieren können, auch wenn diese Option deaktiviert ist.
@@ -1175,7 +1175,7 @@ Vielmehr sollten diese als Teil einer NVDA-Erweiterung installiert werden. Für 
 Diese Änderungen sind notwendig, um die Kompatibilität von benutzerdefiniertem Code besser zu gewährleisten, sodass NVDA stabil bleibt, wenn dieser Code mit neueren Versionen inkompatibel wird.
 Bitte beachten Sie die unten folgende Liste der Änderungen für weitere Details dazu und wie Erweiterungen nun versioniert werden.
 
-== Neue Funktionen ==
+== Neue Features ==
 - Neue Braille-Tabellen: Afrikaans, Arabisches 8-Punkt-Computerbraille, Arabische Kurzschrift, Spanische Kurzschrift. (#4435)
 - Den Maus-Einstellungen von NVDA wurde eine Option hinzugefügt, womit NVDA nun auch die Maus erkennen kann, selbst wenn diese von einer anderen Anwendung gesteuert wird. (#8452)
  - Dies ermöglicht die Mausverfolgung in NVDA, wenn ein System durch Teamviewer oder ähnliche Software ferngesteuert wird.
@@ -1207,7 +1207,7 @@ Bitte beachten Sie die unten folgende Liste der Änderungen für weitere Details
 
 == Fehlerbehebungen ==
 - Bei der Verwendung des OneCore-Sprachsynthesizers unter Windows 10 April 2018 Update und später werden keine langen Pausen mehr zwischen den Sprachäußerungen eingefügt. (#8985)
-- Wenn Sie sich in Klartext-Steuerelementen bewegen (z. B. Notepad) oder im Lesemodus navigieren, werden 32-Bit-Emoji-Zeichen, die aus zwei UTF-16-Codepunkten bestehen (z.B. 🤦) nun korrekt gelesen. (#8782)
+- Wenn Sie sich in Klartext-Steuerelementen bewegen (z. B. Notepad) oder im Lesemodus navigieren, werden 32-Bit-Emoji-Zeichen, die aus zwei UTF-16-Codepunkten bestehen (z. B. 🤦) nun korrekt gelesen. (#8782)
 - Der Bestätigungsdialog für den Neustart nach dem Ändern der Oberflächensprache von NVDA wurde verbessert. Der Text und die Beschriftungen der Schaltflächen sind nun prägnanter und weniger verwirrend. (#6416)
 - Wenn ein Sprachsynthesizer von Drittanbietern nicht geladen werden kann, greift NVDA unter Windows 10 auf den Windows OneCore-Sprachsynthesizer zurück, anstatt eSpeak. (#9025)
 - Der Eintrag für den Willkommensdialog im NVDA-Menü wird in geschützten Bildschirmen nicht mehr angezeigt. (#8520)
@@ -1253,7 +1253,7 @@ Diese Version behebt einen Absturz beim Start, wenn die Sprache der Benutzerober
 = 2018.4 =
 Zu den Highlights dieser Version gehören Leistungsverbesserungen in den neuesten Versionen von Mozilla Firefox, die Ankündigung von Emojis mit allen Sprachausgaben, die Meldung des Status Beantwortet/Weitergeleitet in Microsoft Outlook, die Meldung der Entfernung des Cursors zum Rand einer Seite im Microsoft Word-Dokument und viele Fehlerbehebungen.
 
-== Neue Funktionen ==
+== Neue Features ==
 - Neue Braille-Tabellen: Chinesische Voll- und Kurzschrift (Mandarin). (#5553)
 - In der Nachrichtenansicht in Microsoft Outlook meldet NVDA nun den Status "Beantwortet" und "Weitergeleitet" für jede Nachricht. (#6911)
 - NVDA kann jetzt Beschreibungen für Emoji und andere Zeichen vorlesen, welche Teil der gemeinsamen Unicode-Gebietsschemata sind. (#6523)
@@ -1282,7 +1282,7 @@ Zu den Highlights dieser Version gehören Leistungsverbesserungen in den neueste
 - Die Warnmeldung über die erforderliche Windows-Version wird nunauch auf Windows XP und Vista mit japanischer Anzeigesprache richtig angezeigt. (#8771)
 - Verbesserung der Leistung in Mozilla Firefox auf komplexen Webseiten mit verschiedenen dynamischen Inhalten. (#8678)
 - Format-Atribute (Überschrift, Link etc.) werden in Braille nicht mehr angezeigt, wenn die entsprechenden Einträge in den Einstellungen für Dokumentformatierung deaktiviert wurden. (#7615)
-- Im Windows-Explorer und anderen Anwendungen bei Verwendung von UIA wird der Fokus zuverlässig von NVDA verfolgt, wenn eine andere Anwendung lädt (z.B. während der Batch-Ausführung bei der Audio-bearbeitung). (#7345)
+- Im Windows-Explorer und anderen Anwendungen bei Verwendung von UIA wird der Fokus zuverlässig von NVDA verfolgt, wenn eine andere Anwendung lädt (z. B. während der Batch-Ausführung bei der Audio-bearbeitung). (#7345)
 - In ARIA-Menüs im Web wird die Escape-Taste nun an das menü weitergereicht, sodass das Fokus-Modus nicht mehr unterbrochen wird. (#3215)
 - Während der Navigation mit den Schnellnavigationstasten in Nachrichten im neuen Gmail, liest NVDA nun nicht mehr den ganzen Text der Nachricht vor, sobald man ein entsprechendes Element fokusiert. (#8887)
 - Browser wie Mozilla Firefox und Google Chrome dürften nicht mehr abstürzen, nachdem NVDA aktualisiert wurde. Das Lesemodus müsste nun weiterhin Aktualisierungen in aktuell geladenen Dokumenten richtig reflektieren. (#7641)
@@ -1309,7 +1309,7 @@ Dies ist ein kleineres Update, in dem ein kritischer Fehler in NVDA behoben wurd
 = 2018.3 =
 Zu den Highlights dieser Version gehören die automatische Erkennung vieler Braillezeilen, die Unterstützung neuer Windows 10-Funktionen, einschließlich des Windows 10 Emoji-Eingabebereichs und viele andere Fehlerbehebungen.
 
-== Neue Funktionen ==
+== Neue Features ==
 - NVDA meldet Grammatikfehler, wenn sie von Webseiten in Mozilla Firefox und Google Chrome angemessen dargestellt werden. (#8280)
 - Inhalte, die in Webseiten als eingefügt oder gelöscht gekennzeichnet sind, werden nun in Google Chrome angezeigt. (#8558)
 - Unterstützung für BrailleNote QT und das Scrollrad von Apex BT wurde hinzugefügt, wenn BrailleNote als Braillezeile mit NVDA verwendet wird. (#5992, #5993)
@@ -1386,7 +1386,7 @@ Diese Version enthält Übersetzungsaktualisierungen, da eine Funktion, die Prob
 = 2018.2 =
 Zu den Highlights dieser Version gehören die Unterstützung von Tabellen in Kindle für PC, Unterstützung für BrailleNote Touch- und BI14 Braillezeilen von Humanware, Verbesserungen für Onecore- und Sapi5-Sprachausgaben, Verbesserungen in Microsoft Outlook und vieles mehr.
 
-== Neue Funktionen ==
+== Neue Features ==
 - Zeilen- und Spaltenausdehnungen bei verbundenen Zellen werden nun per Sprache und Braille deutlich ausgegeben. (#2642)
 - Die Tabellennavigationsbefehle funktionieren jetzt auch in Google Docs-Dokumenten mit aktiviertem Braille-Modus. (#7946)
 - Unterstützung für Tabellen in Amazons Kindle für PC (#7977)
@@ -1452,7 +1452,7 @@ Dies ist eine spezielle NVDA-Version, die einen Fehler im Windows-OneCore-Sprach
 = 2018.1 =
 Zu den Highlights dieser Version gehören die Unterstützung für Diagramme in Microsoft Word und Microsoft PowerPoint, neu unterstützte Braillezeilen einschließlich Eurobraille und dem Optelec Protokollkonverter, verbesserte Unterstützung für Hims und Optelec Braillezeilen, Leistungsverbesserungen für Mozilla Firefox 58 und neuer und vieles mehr.
 
-== Neue Funktionen ==
+== Neue Features ==
 - In Microsoft Word und Microsoft PowerPoint ist es nun möglich mit Diagrammen zu interagieren, ähnlich der Unterstützung für Diagramme in Microsoft Excel. (#7046)
  - In Microsoft Word: Wenn Sie sich im Lesemodus befinden, stellen Sie sich auf ein eingebettetes Diagramm und drücken Eingabe, um damit zu interagieren.
  - In Microsoft PowerPoint, während Sie eine Folie bearbeiten: Springen Sie mit der Tabulatortaste auf ein diagramm-Objekt und drücken Sie die Eingabe- oder Leertaste, um damit zu interagieren.
@@ -1511,7 +1511,7 @@ Schwerpunkt dieser Version sind zahlreiche Verbesserungen und Fehlerbehebungen i
 Bitte beachten Sie, dass diese NVDA-Version unter Windows XP und Windows Vista nicht mehr läuft. Sie benötigen mindestens Windows 7 mit Service pack 1.
 
 
-== Neue Funktionen ==
+== Neue Features ==
 - Im Lesemodus können die Tasten Komma und Umschalt+Komma verwendet werden, um vor oder hinter Sprungmarken zu navigieren. (#5482)
 - Im Lesemodus können Sie mit den Schnellnavigationstasten für Eingabefelder und Formularfelder nun auch zu Rich-Text-Eingabefeldern navigieren. (#5534)
 - In Web-Browsern enthält die Elementliste nun auch Formularfelder und Schalter. (#588)
@@ -1575,7 +1575,7 @@ Bitte beachten Sie, dass diese NVDA-Version unter Windows XP und Windows Vista n
 = 2017.3 =
 Schwerpunkte dieser Version sind u. a. die eingabe von voll- und Kurzschrift über eine Braillezeile, die Unterstützung von Windows OneCore-Stimmen, die Unterstützung von OCR unter Windows 10 sowie viele Verbesserungen bei der Braille-ausgabe.
 
-== Neue Funktionen ==
+== Neue Features ==
 - In den Braille-Einstellungen gibt es eine neue Option, die die dauerhafte Anzeige von Meldungen ermöglicht. (#6669)
 - In der Nachrichtenliste von Microsoft Outlook werden markierte Nachrichten als solche angezeigt. (#6374)
 - In Microsoft PowerPoint wird beim Bearbeiten einer Folie eine Form genau beschrieben, wenn Sie sie bearbeiten (Beispiele sind z. B. Dreieck, Kreis, Video oder Pfeil). Zuvor wurde eine Form lediglich als "Form" angezeigt. (#7111)
@@ -1658,7 +1658,7 @@ Schwerpunkte dieser Version sind u. a. die eingabe von voll- und Kurzschrift üb
 = 2017.2 =
 Schwerpunkte dieser Version sind u. a. eine volle Unterstützung von Audio-Ducking unter Windows 10 Creators Update; Fehlerbehebungen beim Markieren von Text im Lesemodus; Verbesserungen in der Unterstützung von Microsoft Edge; sowie Verbesserungen bei der Anzeige von Webdokumenten, die das Aria-Current-Attribut verwenden.
 
-== Neue Funktionen ==
+== Neue Features ==
 - In Microsoft Excel können nun Informationen über Zellrahmen mittels NVDA+F abgefragt werden. (#3044)
 - Unterstützung für ARIA-Current-Attribute hinzugefügt. (#6358)
 - Microsoft Edge unterstützt jetzt auch den automatischen Sprachenwechsel. (#6852)
@@ -1717,7 +1717,7 @@ Schwerpunkte dieser Version sind u. a. eine volle Unterstützung von Audio-Ducki
 = 2017.1 =
 Schwerpunkte dieser Version sind u. a. die Ansage von Abschnitten und Spalten in Microsoft Word; Unterstützung beim Navigieren in, Lesen von und Einfügen von Anmerkungen in Kindle-Büchern sowie verbesserte Unterstützung von Microsoft Edge.
 
-== Neue Funktionen ==
+== Neue Features ==
 - Mit der neuen Option "Seitenzahlen ansagen" in den Einstellungen für Dokumentformatierungen können Sie sich nun Abschnittswechsel und -Nummern ansagen lassen. (#5946)
 - Diese Option aktiviert des Weiteren eine Ansage von Spalten in mehrspaltigen Texten in Microsoft Word. (#5946)
 - Der automatische Sprachenwechsel wird nun auch in WordPad unterstützt. (#6555)
@@ -1761,7 +1761,7 @@ Schwerpunkte dieser Version sind u. a. die Ansage von Abschnitten und Spalten in
 = 2016.4 =
 Zu den Schwerpunkten dieser Version gehören Verbesserungen in der Unterstützung von Microsoft Edge; der Lesemodus in der Mail-App in Windows 10 sowie Verbesserungen in Dialogfeldern von NVDA.
 
-== Neue Funktionen ==
+== Neue Features ==
 - NVDA kann Zeileneinrückungen nun auch mit Hilfe von Signaltönen ausgeben. Um dies einzustellen, können Sie die neue Option "Zeileneinrückungen ausgeben durch..." in den Einstellungen für Dokumentformatierung verwenden. (#5906)
 - Unterstützung für die Braillezeile Orbit Reader 20. (#6007)
 - Eine neue Option zum Anzeigen des Sprachbetrachters beim Start von NVDA wurde hinzugefügt. Dies kann mittels eines Kontrollkästchens im Sprachbetrachter eingeschaltet werden. (#5050)
@@ -1819,7 +1819,7 @@ Zu den Schwerpunkten dieser Version gehören Verbesserungen in der Unterstützun
 = 2016.3 =
 Schwerpunkte dieser Version sind u. a. eine Möglichkeit zum Deaktivieren einzelner Erweiterungen; die Unterstützung von Formularfeldern in Microsoft Excel, Verbesserungen bei der Ansage von Farben und Fehlerbehebungen bzgl. einiger Braillezeilen sowie Fehlerbehebungen und Verbesserungen an der Unterstützung für Microsoft Word.
 
-== Neue Funktionen ==
+== Neue Features ==
 - Der Lesemodus kann nun verwendet werden, um in Microsoft Edge PDF-Dokumente zu lesen, sofern Sie das Windows 10 Anniversary Update installiert haben. (#5740)
 - In Microsoft Word wird durchgestrichener und doppelt durchgestrichener Text erkannt. (#5800)
 - In Microsoft Word wird der Titel einer Tabelle korrekt erkannt. Wenn außerdem eine Beschreibung vorhanden ist, kann diese im Lesemodus mit dem Befehl Ausführliche Beschreibung öffnen (NVDA+D) angezeigt werden. (#5943)
@@ -1882,7 +1882,7 @@ Diese Version behebt einige Fehler in Microsoft Word:
 = 2016.2 =
 Schwerpunkte sind u. a. die Ausgabe von Rechtschreibfehlern beim schreiben, die Ausgabe von Grammatikfehlern in Microsoft Word; sowie Verbesserungen und Fehlerbehebungen in der Unterstützung von Microsoft Office.
 
-== Neue Funktionen ==
+== Neue Features ==
 - Wenn Sie im Internet Explorer und anderen MSHTML-Dokumenten mit den Schnellnavigationstasten A und Umschalt+A zur nächsten oder vorherigen Anmerkung springen, wird auch eingefügter oder gelöschter Text angesprungen. (#5691)
 - In Microsoft Excel wird bei Zellengruppen sowohl die Verschachtelungsebene als auch der Status (erweitert/reduziert) angezeigt. (#5690)
 - Beim zweimaligen Drücken der Tastenkombination für die Ansage der Textformatierungen werden nun die Informationen im Lesemodus angezeigt. (#4908)
@@ -1927,7 +1927,7 @@ Schwerpunkte sind u. a. die Ausgabe von Rechtschreibfehlern beim schreiben, die 
 = 2016.1 =
 Schwerpunkte dieser Version sind u. a. eine Option zum Reduzieren der Lautstärke anderer Anwendungen zugunsten von NVDA; Verbesserungen bei der Brailleausgabe und der Unterstützung von Braillezeilen; mehrere herausragende Neuerungen in der Unterstützung von Microsoft Office sowie Fehlerbehebungen im Lesemodus von iTunes.
 
-== Neue Funktionen ==
+== Neue Features ==
 - Neue Braille-Übersetzungstabellen: Polnisches 8-Punkt-Computerbraille, Mongolisch. (#5537 #5574)
 - Mit Hilfe zweier neuer Optionen im Braille-Einstellungsdialog kann nun die Form des Cursors auf der Braillezeile geändert oder die Anzeige des Cursors gänzlich abgeschaltet werden. (#5198)
 - NVDA kann nun mittels Bluetooth mit HIMS Smart Beetle Braillezeilen kommunizieren. (#5607)
@@ -1996,7 +1996,7 @@ Schwerpunkte dieser Version sind u. a. eine Option zum Reduzieren der Lautstärk
 = 2015.4 =
 Schwerpunkte dieser Version sind u. a. Leistungsverbesserungen in Windows 10; Unterstützung für das Center für erleichterte Bedienungen in Windows 8 und neuer; Verbesserungen an Microsoft Excel wie z. B. das Auflisten und umbenennen von Tabellenblättern und der Zugriff auf gesperrte zellen in geschützten Arbeitsblättern; sowie die Unterstützung erweiterter Eingabefelder in Mozilla Firefox, Google Chrome und Mozilla Thunderbird.
 
-== Neue Funktionen ==
+== Neue Features ==
 - Unter Windows 8 und neuer taucht NVDA nun im Center für erleichterte Bedienungen auf. (#308)
 - Beim Navigieren zwischen Zellen in Excel werden Änderungen an Textformatierungen ausgegeben, sofern die entsprechenden Optionen in den Einstellungen für Textformatierungen aktiviert sind. (#4878)
 - Eine neue Option zum Ansagen von betontem Text hinzugefügt. Dies betrifft momentan nur die html-Tags em und strong im Internet Explorer und anderen MSHTML-Elementen. (#4920)
@@ -2051,7 +2051,7 @@ Schwerpunkte dieser Version sind u. a. Leistungsverbesserungen in Windows 10; Un
 Schwerpunkte dieser Version sind anfängliche Unterstützung von Windows 10, die Möglichkeit Schnellnavigationstasten des Lesemodus zu deaktivieren (sinnvoll in bestimmten Internet-Anwendungen), Verbesserungen für den Internet Explorer sowie die Behebung von Fehlern, die beim schreiben in bestimmten Programmen zu verfälschtem Text geführt haben, wenn eine Braillezeile in Betrieb war.
 
 
-== Neue Funktionen ==
+== Neue Features ==
 - In Eingabefeldern in Internet Explorer und anderen MSHTML-Dokumenten werden Rechtschreibfehler korrekt erkannt. (#4174)
 - Verbesserte Erkennung von mathematischen Unicode-Sonderzeichen. (#3805)
 - Suchvorschläge im Startbildschirm von Windows 10 werden automatisch ausgegeben. (#5049)
@@ -2090,7 +2090,7 @@ Schwerpunkte dieser Version sind anfängliche Unterstützung von Windows 10, die
 == Änderungen für Entwickler ==
 - Nun können auch Tastenanschläge von Tastaturen verarbeitet werden, die nicht vom Betriebssystem erkannt werden (wie z. B. Tastaturen von Braillezeilen). Verwenden Sie hierzu die neue Funktion keyboardHandler.injectRawKeyboardInput. (#4576)
 - Mit der neuen Funktion "eventHandler.requestEvents" können nun Ereignisse abgearbeitet werden, die standardmäßig blockiert werden Hierzu zählen Ereignisse von bestimmten Steuerelementen oder Ereignisse, die im Hintergrund ausgelöst werden. (#3831)
-- Anstelle eines einfachen i18name-Attributs enthält synthDriverHandler.SynthSetting nun sowohl displayNameWithAccelerator als auch displayName-Attribute. Hiermit wird verhindert, dass die Namen von Einstellungen im Sprachausgaben-Einstellungsring in einigen Sprachen mitsamt ihren hervorgehobenen Buchstaben angesagt werden (z. B. &Stimme, Ton&höhe, &Lautstärke usw).
+- Anstelle eines einfachen Attributs für i18name enthält synthDriverHandler.SynthSetting nun sowohl displayNameWithAccelerator als auch displayName-Attribute. Hiermit wird verhindert, dass die Namen von Einstellungen im Sprachausgaben-Einstellungsring in einigen Sprachen mitsamt ihren hervorgehobenen Buchstaben angesagt werden (z. B. &Stimme, Ton&höhe, &Lautstärke, etc.).
  - Aus Gründen der Abwärtskompatibilität ist "displayname" optional und wird von "displaynamewithaccelerator" abgeleitet. Wenn Sie jedoch planen, eine Einstellung sowohl in den Stimmen-Einstellungen als auch im Sprachausgaben-Einstellungsring anzubieten, sollten Sie beide Attribute verwenden.
  - Das Attribut i18name ist veraltet und wird in einer der nächsten Versionen entfernt.
 
@@ -2098,7 +2098,7 @@ Schwerpunkte dieser Version sind anfängliche Unterstützung von Windows 10, die
 = 2015.2 =
 Schwerpunkte dieser Version sind: Diagramme können in Microsoft Excel gelesen werden, Unterstützung für das Lesen und interaktive navigieren in mathematischem Text.
 
-== Neue Funktionen ==
+== Neue Features ==
 - In Microsoft Word und Outlook kann man nun mittels Alt+Pfeiltaste nach oben bzw. nach unten Satzweise rück- bzw. vorwärts springen. (#3288)
 - Neue Braillezeichensätze für mehrere indische Sprachen. (#4778)
 - NVDA meldet in Excel überstehende oder abgeschnittene Zelleninhalte. (#3040)
@@ -2138,7 +2138,7 @@ Schwerpunkte dieser Version sind: Diagramme können in Microsoft Excel gelesen w
 = 2015.1 =
 Schwerpunkte dieser Version sind: LeseModus für Microsoft Word- und Outlook-Dokumente, wesentliche Verbesserungen für die Unterstützung von Skype für Desktop sowie bedeutende Fehlerbehebungen für Internet Explorer
 
-== Neue Funktionen ==
+== Neue Features ==
 - Im Dialogfeld "Aussprache von Symbolen und Sonderzeichen" können Sie nun neue Symbole hinzufügen. (#4354)
 - Im Dialogfeld "Eingaben" können Sie über das Eingabefeld "Filtern nach" nur diejenigen Eingaben anzeigen, die in ihrer Beschreibung bestimmte Wörter enthalten. (#4458)
 - In Mintty gibt NVDA nun neuen Text aus. (#4588)
@@ -2198,7 +2198,7 @@ Schwerpunkte dieser Version sind: LeseModus für Microsoft Word- und Outlook-Dok
 
 = 2014.4 =
 
-== Neue Funktionen ==
+== Neue Features ==
 - Neue Sprachen: Spanisch (Kolumbien) und Pandschabi.
 - Sie können NVDA nun auch über den Dialogfeld "Beenden" aus (wahlweise mit deaktivierten Erweiterungen) neu starten. (#4057)
  - Sie können NVDA auch mit deaktivierten Erweiterungen neu starten, indem Sie die Kommandozeilenoption --disable-addons verwenden.
@@ -2241,7 +2241,7 @@ Schwerpunkte dieser Version sind: LeseModus für Microsoft Word- und Outlook-Dok
 
 = 2014.3 =
 
-== Neue Funktionen ==
+== Neue Features ==
 - Die Klänge beim Starten und Beenden von NVDA können mit einer neuen Option in den allgemeinen Einstellungen ein- und ausgeschaltet werden. (#834)
 - Im Dialogfeld "Erweiterungen verwalten" können Sie eine Hilfeseite zu einer Erweiterung aufrufen, sofern es dies unterstützt. (#2694)
 - Unterstützung für den Kalender in Outlook 2007 und neuer (#2943):
@@ -2250,7 +2250,7 @@ Schwerpunkte dieser Version sind: LeseModus für Microsoft Word- und Outlook-Dok
  - Der gewählte Termin wird ausgegeben, wenn Sie Tab drücken
  - Das Datum wird nur noch ausgegeben, wenn sich der neu gewählte Termin/Zeitpunkt auf einen anderen Tag bezieht
 - Verbesserte Unterstützung für den Posteingang und andere Nachrichtenlisten in Outlook 2010 und neuer. (#3834)
- - Sie können die Anzeige der Spaltenüberschriften (Absender, Betreff, usw.) unterdrücken, indem Sie die Option "Spalten- und Reihenüberschriften von Tabellen ansagen" in den Einstellungen für Dokumentformatierungen deaktivieren.
+ - Sie können die Anzeige der Spaltenüberschriften (Absender, Betreff, etc.) unterdrücken, indem Sie die Option "Spalten- und Reihenüberschriften von Tabellen ansagen" in den Einstellungen für Dokumentformatierungen deaktivieren.
  - Sie können die Tabellennavigationsbefehle (Alt+Strg+Pfeiltasten) verwenden, um zwischen den Spalten zu navigieren
 - Microsoft Word: Wenn eine eingebundene Grafik keinen Alternativtext besitzt, wird stattdessen der Titel angezeigt, sofern vorhanden. (#4193)
 - Microsoft Word: Sie können die Einrückung eines Absatzes automatisch ausgeben lassen, indem Sie die Option "Absatzeinrückungen anzeigen" in den Einstellungen für Dokumentformatierungen aktivieren. Des weiteren werden Absatzeinrückungen auch mit dem Befehl Dokumentformatierung ansagen (NVDA+F) ausgegeben. (#4165).
@@ -2264,7 +2264,7 @@ Schwerpunkte dieser Version sind: LeseModus für Microsoft Word- und Outlook-Dok
  - Es werden (JAWS-kompatible) Word-Lesezeichen verwendet, um Reihen- und Spaltenüberschriften zu identifizieren
  - Wenn Sie sich in der ersten Zeile/Spalte einer Tabelle befinden, können Sie diese mit NVDA+Umschalt+C und NVDA+Umschalt+R als Spalten-/Zeilenbeschriftung festlegen. Diese Beschriftungen werden im Word-Dokument gespeichert und stehen allen Bildschirmlesern zur Verfügung, die derartige Lesezeichen unterstützen.
 - Microsoft Word: Wenn Sie Tab drücken, wird der Abstand zum linken Seitenrand ausgegeben. (#1353)
-- Für die meisten Befehle, die die Formatierungen in einem Word-Dokument verändern (Fett, Kursiv, unterstrichen; Gliederungsebenen usw.) meldet NVDA die Änderung der Formatierung per Sprache und Braille. (#1353)
+- Für die meisten Befehle, die die Formatierungen in einem Word-Dokument verändern (Fett, Kursiv, unterstrichen; Gliederungsebenen, etc.) meldet NVDA die Änderung der Formatierung per Sprache und Braille. (#1353)
 - Wenn in einem Arbeitsblatt von Microsoft Excel die aktuelle Zelle einen Kommentar besitzt, können Sie diesen über die Tastenkombination NVDA+Alt+C sich anzeigen lassen. (#2920)
 - Wenn Sie in Microsoft Excel den Modus zum Bearbeiten von Kommentaren mit der Tastenkombination Umschalt+F2 einschalten, wird ein NVDA-eigenes Dialogfeld zur Eingabe eines Kommentars angezeigt. (#2920)
 - Microsoft Excel: Für etliche Tastenkombinationen, die sich auf das Verschieben von Markierungen beziehen, wurde die Ausgabe in Sprache und Braille verbessert. (#4211)
@@ -2329,7 +2329,7 @@ Schwerpunkte dieser Version sind: LeseModus für Microsoft Word- und Outlook-Dok
 
 = 2014.2 =
 
-== Neue Funktionen ==
+== Neue Features ==
 - Der markierte Text in Eingabefeldern wird korrekt erkannt, wenn der angezeigte Text (über die API DisplayModel) benutzt werden muss. (#770)
 - In zugänglichen Java-Anwendungen werden Positionsinformationen (z. B. in Auswahlschaltern) korrekt angezeigt. (#3754)
 - In zugänglichen Java-Anwendungen werden Tastenkombinationen korrekt erkannt. (#3881)
@@ -2363,7 +2363,7 @@ Schwerpunkte dieser Version sind: LeseModus für Microsoft Word- und Outlook-Dok
 
 = 2014.1 =
 
-== Neue Funktionen ==
+== Neue Features ==
 - Unterstützung für Microsoft PowerPoint 2013. die geschützte ansicht wird nicht unterstützt. (#3578)
 - Wenn Sie in Microsoft Word oder Excel das Dialogfeld zum Einfügen von Sonderzeichen verwenden, kann NVDA nun das ausgewählte Symbol erkennen. (#3538)
 - In den Einstellungen zur Dokumentformatierung können Sie nun festlegen, ob anklickbare Elemente als solche erkannt werden sollen. Diese Option ist standardmäßig aktiviert. Dies entspricht dem Verhalten älterer NVDA-Versionen. (#3556)
@@ -2433,7 +2433,7 @@ Schwerpunkte dieser Version sind: LeseModus für Microsoft Word- und Outlook-Dok
 
 = 2013.3 =
 
-== Neue Funktionen ==
+== Neue Features ==
 - In Microsoft Word werden Formularfelder erkannt. (#2295)
 - Wenn in Microsoft Word die Funktion "Änderungen verfolgen" aktiviert ist, werden Revisionen angezeigt. Bedenken Sie, dass Sie im Dialogfeld für die Dokumentformatierungen die Anzeige von Editor-Revisionen aktivieren müssen, damit diese Änderung wirksam wird. Diese Option ist standardmäßig deaktiviert. (#1670)
 - Beim Navigieren in und Bearbeiten von Microsoft Excel-Dokumenten werden Kombinationsfelder angezeigt. (#3382)
@@ -2476,7 +2476,7 @@ Schwerpunkte dieser Version sind: LeseModus für Microsoft Word- und Outlook-Dok
 
 = 2013.2 =
 
-== Neue Funktionen ==
+== Neue Features ==
 - Unterstützung für das eingebettete Chromium-Framework, das in einigen Anwendungen zum Einsatz kommt. (#3108)
 - Neue eSpeak-Variante: Iven3.
 - Wenn sich ein Skype-Chat-Fenster im Vordergrund befindet, werden ankommende Nachrichten automatisch ausgegeben. (#2298)
@@ -2509,7 +2509,7 @@ Schwerpunkte dieser Version sind: LeseModus für Microsoft Word- und Outlook-Dok
 == Fehlerbehebungen ==
 - Beim Ausführen der Standardaktion mit einem Objekt wird der Name der Standardaktion (wie z. B. "erweitern" oder "reduzieren" bei Einträgen einer Baumstruktur) angegeben, noch bevor die Aktion ausgeführt wird. (#2982)
 - Präzise Cursorverfolgung in diversen Eingabefeldern innerhalb von Skype (wie z. B. Unterhaltungen, Suchfelder, etc.). (#1601, #3036)
-- Sofern relevant, wird in der Liste der Konversationen in skype die Anzahl der anstehenden Ereignisse (Neue Nachrichten, etc) angegeben. (#1446)
+- Sofern relevant, wird in der Liste der Konversationen in skype die Anzahl der anstehenden Ereignisse (Neue Nachrichten, etc.) angegeben. (#1446)
 - Verbesserte Cursorverfolgung für Sprachen mit Rechts-Links-Ausrichtung (wie z. B. Arabisch) in Microsoft Excel. (#1601)
 - Bei der Schnellnavigation für Formularfelder und Schalter werden nun auch Links angesprungen, die aus Gründen der Zugänglichkeit als Schalter ausgewiesen wurden. (#2750)
 - Im Lesemodus werden nun keine Baumstrukturen mehr verarbeitet, da dies nicht sinnvoll ist. Drücken Sie auf einer Baumstruktur die Eingabetaste, um in den Fokusmodus zu wechseln und mit der Baumstruktur zu interagieren. (#3023)
@@ -2576,7 +2576,7 @@ Zudem wurden die Befehle für die objektnavigation, zum Betrachten von Text, fü
 Für weitere Informationen sehen Sie in der [Befehlsreferenz keyCommands.html] nach.
 
 
-== Neue Funktionen ==
+== Neue Features ==
 - Grundlegende Unterstützung für das Lesen und Bearbeiten von Microsoft PowerPoint-Präsentationen. (#501)
 - Unterstützung für den automatischen Sprachenwechsel beim Lesen von Dokumenten in Microsoft Word. (#2047)
 - Grundlegende Unterstützung beim Lesen und Schreiben von Nachrichten in Lotus Notes 8.5. (#543)
@@ -2619,7 +2619,7 @@ Für weitere Informationen sehen Sie in der [Befehlsreferenz keyCommands.html] n
 - Der Braillezeilentreiber für die HumanWare Brailliant BI/B serie kann nun ausgewählt werden, wenn die Braillezeile mittels Bluetooth verbunden wurde, aber noch nie über USB verbunden wurde.
 - Wenn beim Eingeben eines Filterbegriffs in die Elementliste im lesemodus Großbuchstaben verwendet werden, wird nun ohne Berücksichtigung von Groß-/Kleinschreibung gefiltert (wie beim Eingeben von Kleinbuchstaben) (#2951)
 - In Mozilla-Browsern kann nun wieder der Lesemodus verwendet werden, wenn Flash-Inhalte den Fokus haben. (#2546)
-- Wenn Sie eine Kurzschrift-Übersetzungstabelle verwenden und die Option zum Ausschreiben des aktuellen Wortes in Computerbraille aktiviert ist, wird der Braille-Cursor nun korrekt gesetzt, wenn er hinter einem Wort steht, das ein Zeichen enthält, das durch mehrere Braille-Zeichen dargestellt wird. (z. B. Großbuchstaben, Zahlenzeichen usw.). (#2947)
+- Wenn Sie eine Kurzschrift-Übersetzungstabelle verwenden und die Option zum Ausschreiben des aktuellen Wortes in Computerbraille aktiviert ist, wird der Braille-Cursor nun korrekt gesetzt, wenn er hinter einem Wort steht, das ein Zeichen enthält, das durch mehrere Braille-Zeichen dargestellt wird. (z. B. Großbuchstaben, Zahlenzeichen, etc.). (#2947)
 - In Microsoft Word und im Internet Explorer wird markierter Text nun korrekt in Braille angezeigt.
 - Wenn Sie eine Braillezeile benutzen, können Sie nun wieder Text rückwärts markieren, wenn Sie sich in Microsoft Word befinden.
 - Wenn Sie in Scintilla-Eingabefeldern die Befehle zum Betrachten von Text verwenden oder Zeichen löschen, wird NVDA Multibyte-Zeichen korrekt ausgeben. (#2855)
@@ -2651,7 +2651,7 @@ Für weitere Informationen sehen Sie in der [Befehlsreferenz keyCommands.html] n
 = 2012.3 =
 Schwerpunkte in dieser Version sind: Unterstützung für asiatische Eingabemetoden, experimentelle Unterstützung für Touchscreens unter Windows 8, Ansage der Seitenzahlen sowie verbesserte Unterstützung von Tabellen in Adobe Reader, Befehle zur Navigation in Tabellen und Listenansichten im Explorer sowie Unterstützung zahlreicher weiterer Braillezeilen und das Lesen von Zeilen- bzw. Spaltenüberschriften in Microsoft Excel.
 
-== Neue Funktionen ==
+== Neue Features ==
 - NVDA unterstützt nun asiatische Zeichen eingabe mittels IME und Eingabemethoden im Textdienst in allen Anwendungen, einschließlich:
  - Ansagen und Navigation der Liste der zeichensätze
  - Ansagen und Navigation der Eingabeketten
@@ -2776,7 +2776,7 @@ Diese Version behebt einige potenzielle Sicherheitsprobleme (in dem Python auf d
 = 2012.2 =
 Schwerpunkte dieser Version sind u. a. eine eingebaute Installationsroutine sowie eine Funktion zum einfachen Erstellen portabler Versionen, eine automatische Aktualisierungsfunktion, die einfache Verwaltung neuer Erweiterungen für NVDA, die Erkennung von Grafiken in Microsoft Word, Die unterstützung von Windows-8-Metro-Anwendungen, sowie einige wichtige Fehlerbehebungen.
 
-== Neue Funktionen ==
+== Neue Features ==
 - NVDA kann nun nach Aktualisierungen suchen, diese herunterladen und installieren. (#73)
 - Der Umgang mit eigenen Treibern und Plug-ins wurde durch die Einführung eines Erweiterungs-Managers stark vereinfacht. Der Erweiterungs-Manager erlaubt das einfache Installieren und deinstallieren von Erweiterungen (Dateien mit der Erweiterung ".nvda-addon"). Sie finden ihn im Menü Extras im NVDA-Menü. Ältere im Benutzer-Konfigurationsverzeichnis abgelegte Plug-ins und Treiber werden im Erweiterungs-Manager jedoch nicht angezeigt. (#213)
 - Viele gebräuchliche Funktionen seitens NVDA funktionieren nun in den Metro-Anwendungen von Windows 8, in sofern sie eine installierte NVDA-Version nutzen. Dies schließt das Sprechen von eingegebenen Zeichen sowie den Lesemodus in der Metro-Version Internet Explorer 10 ein. Portable Versionen können nicht auf Metro-Anwendungen zugreifen. (#1801)
@@ -2815,7 +2815,7 @@ Schwerpunkte dieser Version sind u. a. eine eingebaute Installationsroutine sowi
 = 2012.1 =
 Die wichtigsten Neuerungen für diese Version beinhalten Funktionen, um Braille flüssiger lesen zu können; Kennzeichnungen für Dokumentformatierungen in Braille; Zugriff auf viel mehr Formatierungsinformationen und verbesserte Geschwindigkeit in Microsoft Word; und Unterstützung für den iTunes Store.
 
-== Neue Funktionen ==
+== Neue Features ==
 - NVDA kann nun die Anzahl führender Tabs und Leerzeichen in der aktuellen Zeile in der Reihenfolge angeben, in der sie eingegeben wurden. Dies kann in den Einstellungen zur Dokumentformatierung mit der Option "Zeileneinrückungen ansagen" eingestellt werden. (#373)
 - NVDA kann nun Tastendrücke erkennen, die mittels Eingabeemulationen wie etwa bildschirmtastaturen oder Spracherkennungssoftware erzeugt wurden.
 - Farben in Konsolenanwendungen werden nun korrekt erkannt.
@@ -2897,7 +2897,7 @@ Die wichtigsten Neuerungen für diese Version beinhalten Funktionen, um Braille 
 = 2011.3 =
 Die wichtigsten neuerungen sind u. a. das automatische Wechseln der Synthesizersprache passend zur Dokumentsprache; Unterstützung für 64-Bit-Java-Laufzeitumgebungen; Angabe von Textformatierungen im Lesemodus in Mozilla-Gecko-Anwendungen; Bessere Behandlung von Programmabstürzen; sowie anfängliche Unterstützung für Windows 8.
 
-== Neue Funktionen ==
+== Neue Features ==
 - NVDA kann nun die Stimmen von eSpeak passend zur Dokumentsprache einstellen. Dies gilt für Web- und Pdf-Dokumente. Die Automatische Umschaltung von Sprachen und Dialekten kann über das Dialogfeld für die Stimmen-Einstellungen konfiguriert werden. (#845)
 - Java Access Bridge 2.0.2 wird unterstützt, dies betrifft auch 64-Versionen der Java-Laufzeitumgebung.
 - Wenn Sie in Mozilla-Gecko-Anwendungen (wie z. B. Firefox) die Objektnavigation verwenden, werden nun auch die Überschriftsebenen angegeben.
@@ -2963,7 +2963,7 @@ Die wichtigsten neuerungen sind u. a. das automatische Wechseln der Synthesizers
 Die wichtigsten Neuerungen in dieser Version beinhalten umfangreiche Verbesserungen im Bereich der Satzzeichen und Symbole, einschließlich einstellbarer Ebenen, selbstwählbare Bezeichnungen und phonetisches Buchstabieren; keine Pausen am Zeilenende während Alles Lesen; verbesserte Unterstützung für ARIA im Internet Explorer; verbesserte Unterstützung für XFA/LiveCycle PDF dokumente in Adobe REader; Zugriff auf Text, der auf den Bildschirm geschriben wurde in mehr Anwendungen; und Zugriff auf Farb- und Formatierungsinformationen für text, der auf den Bildschirm geschrieben wurde.
 
 
-== Neue Funktionen ==
+== Neue Features ==
 - Sie können sich nun jedes Zeichen phonetisch buchstabieren lassen, indem sie die Tastenkombination zum Ansagen des aktuellen Zeichens zweimal schnell hintereinander drücken. Für den deutschsprachigen Raum wird hierbei das deutsche Buchstabieralphabet nach DIN 5009 verwendet. (55)
 - In Anwendungen wie Mozilla Thunderbird, die ihre Ausgaben direkt auf den Bildschirm schreiben, wird nun im Flächenmodus mehr Text angezeigt.
 - Sie können nun zwischen mehreren Ausführlichkeitsstufen für Satzzeichen und Sonderzeichen wählen. (#332)
@@ -3079,7 +3079,7 @@ Die wichtigsten Neuerungen in dieser Version beinhalten umfangreiche Verbesserun
 - In den einzelnen Sprachräumen können nun Regeln für die aussprache von Satzzeichen und anderen Symbolen bereitgestellt werden. Sehen Sie sich den Abschnitt "Aussprache von Symbolen" im NVDA-Entwicklerhandbuch an. (#332)
 - Der NVDAHelper kann nun so erstellt werden, dass er zahlreiche Informationen zur Fehlerbehebung enthält. Verwenden Sie hierfür die SCons-variable nvdaHelperDebugFlags. Weitere Informationen hierzu finden Sie in der Datei readme.txt im Stammverzeichnis des Quellcodes (#1390).
 - Sprachausgabentreiber übergeben den sprachausgaben nun eine Folge von Befehlen, um die sprachausgabe zusteuern, anstatt einen einfachen Index zu übergeben.
- - Dies erlaubt eingebettete Indizes, Änderungen von Stimmenparametern usw.
+ - Dies erlaubt eingebettete Indizes, Änderungen von Stimmenparametern, etc.
  - Treiber sollten nun SynthDriver.speak() anstelle von SynthDriver.speakText() und SynthDriver.speakCharacter() implementieren.
  - Die alten Methoden werden zwar im Moment noch unterstützt, werden jedoch in zukünftigen Versionen entfernt.
 - gui.execute() wurde entfernt. stattdessen sollte wx.CallAfter() verwendet werden.
@@ -3108,7 +3108,7 @@ Dieses Release behebt wichtige Fehler und Sicherheitsprobleme, welche in NVDA 20
 Zu den wichtigsten Neuerungen gehören das Anzeigen von Farben, sowie die automatische Anzeige von neu erscheinendem Text in mIRC, PuTTY, Tera Term und SecureCRT;
 Unterstützung globaler Erweiterungen; die korrekte Anzeige von Aufzählungen und Numerierungen in Microsoft Word; zusätzliche Tastenzuweisungen für Braillezeilen, einschließlich Tasten zum Bewegen zur nächsten/vorigen Zeile; sowie Unterstützung von Braillezeilen von Baum, HumanWare und APH.
 
-== Neue Funktionen ==
+== Neue Features ==
 - Die Ausgabe von Farben bei der Angabe der Textformatierung wird nun unterstützt (sowohl automatisch, einstellbar in den Einstellungen zur Dokumentformatierung) als auch manuell (über die Tastenkombination NVDA+F. Dies betrifft IAccesible-Eingabefelder (wie z. B. in Mozilla-Anwendungen), Richedit-Eingabefelder (wie z. B. in Wordpad) soie Eingabefelder in IBM Lotus Symphony.
 - Nun kann in virtuellen Ansichten seitenweise (Umschalt+Seite nach oben/Seite nach unten) oder absatzweise (Umschalt+Strg+Pfeil nach oben/Pfeil nach unten) markiert werden. (#639)
 - NVDA zeigt nun neu erscheinenden Text in Terminalfenstern korrekt an. Dies betrifft u. a. mIRC, PuTTY, Tera Term und SecureCRT. (#936)
@@ -3215,7 +3215,7 @@ Unterstützung globaler Erweiterungen; die korrekte Anzeige von Aufzählungen un
 = 2010.2 =
 Besondere Änderungen in dieser Version beinhalten eine sehr vereinfachte Objektnavigation; virtuelle Ansichten für Flash-Inhalte von Adobe; Zugänglichkeit für viele zuvor nicht auslesbare Anwendungen, indem auf dem Bildschirm angezeigten Texte zugegriffen wird; Unterstützung von IBM Lotus Symphony-Dokumenten; Ansage der Reihen- und Spaltenüberschriften für Tabellen in Mozilla Firefox; Verbesserte Dokumentation.
 
-== Neue Funktionen ==
+== Neue Features ==
 - Die Navigation durch Objekte mit dem NVDA-Cursor wurde enorm vereinfacht. Der NVDA-Cursor lässt Objekte aus, die dem Anwender nichts bringen. So werden Objekte, die zu Strukturierungszwecken verwendet werden oder nicht verfügbar sind, ausgeblendet.
 - In Programmen, in welchen die JAVA Access Bridge Verwendung findet, OpenOffice eingeschlossen, können Formatierungen jetzt in Textfeldern angesagt werden. (#358, #463)
 - Wenn Sie die Maus über Zellen in Microsoft Excel bewegen, wird NVDA diese nun ansagen.
@@ -3293,7 +3293,7 @@ Besondere Änderungen in dieser Version beinhalten eine sehr vereinfachte Objekt
 = 2010.1 =
 Diese Version enthält überwiegend Fehlerbehebungen und Verbesserungen
 
-== Neue Funktionen ==
+== Neue Features ==
 - Auf Systemen ohne jegliche Audio-Ausgabe schlägt der Start von NVDA jetzt nicht mehr fehl. In solchen Fällen benötigen Sie entweder eine Braillezeile oder den Dummy-Synthesizer "Keine Sprachausgabe" im Zusammenspiel mit dem Sprachbetrachter, um NVDA effektiv nutzen zu können. (#425)
 - Die Option "Sprungmarken anzeigen" wurde im Dialogfeld für die Dokumentformatierungen hinzugefügt, um Sprungmarken auf Webseiten anzukündigen. Aus Kompatibilitätsgründen ist die option standardmäßig aktiviert.
 - Wenn die Ansage von Funktionstasten aktiviert ist, erkennt NVDA jetzt auch Multimedia-Tasten wie Abspielen, Anhalten, Nächster bzw. Vorheriger Track, etc. (#472)
@@ -3378,7 +3378,7 @@ Die wichtigsten Neuerungen dieser Version sind u. a. die Unterstützung von 64-B
 - In der Eingabeaufforderung kann NVDA nun den Text unter dem Mauszeiger ansagen.
 - Unterstützung der UIA in Windows 7.
 - NVDA kann nun so konfiguriert werden, dass NVDA nach der Anmeldung automatisch startet. Die entsprechende Option befindet sich im Einstellungsdialog "Allgemein".
-- NVDA kann nun auch geschützte Desktops auslesen (Anmeldebildschirm, Benutzerkontensteuerung usw). Die Optionen zum Aktivieren von NVDA für die Anmeldung sind im Einstellungsdialog "Allgemein" zu finden. (#97)
+- NVDA kann nun auch geschützte Desktops auslesen (Anmeldebildschirm, Benutzerkontensteuerung, etc.). Die Optionen zum Aktivieren von NVDA für die Anmeldung sind im Einstellungsdialog "Allgemein" zu finden. (#97)
 - Treiber für Optelec ALVA BC6 Braillezeilen hinzugefügt.
 - Auf Internetseiten kann nun mit N und Umschalt+N vor bzw. hinter einen Block aus Links gesprungen werden.
 - In Dokumenten kann nun mit D und Umschalt+D vorwärts bzw. rückwärts zwischen ARIA-Sprungmarken navigiert werden. (#192)
@@ -3481,7 +3481,7 @@ Die wichtigsten Neuerungen dieser Version sind u. a. die Unterstützung von 64-B
 == Fehlerbehebungen ==
 - Wenn NVDA auf einem Remote desktop-Server benutzt wird, wird das Ende der Audioausgabe nun nicht mehr abgeschnitten.
 - Probleme beim Speichern von Stimmenwörterbüchern behoben.
-- Probleme beim Navigieren in Mozilla-Gecko-Dokumenten in größeren Texteinheiten (wortweise, zeilenweise usw). behoben. (#155)
+- Probleme beim Navigieren in Mozilla-Gecko-Dokumenten in größeren Texteinheiten (wortweise, zeilenweise, etc.) behoben. (#155)
 - Wenn die aussprache von Wörtern aktiviert ist, greift diese Funktion nun auch beim Drücken der Eingabetaste (beim Zeilenwechsel).
 - Zeichensatzspezifische Probleme in RichEdit-Dokumenten behoben.
 - Der NVDA-Protokollbetrachter benutzt nun ein RichEdit-Eingabefeld anstelle eines normalen Eingabefeldes. dies erleichtert das wortweise lesen.
