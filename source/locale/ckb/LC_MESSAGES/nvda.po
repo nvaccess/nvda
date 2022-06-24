@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA source-master-4ccb2ab\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-10 00:02+0000\n"
-"PO-Revision-Date: 2022-06-12 09:45+0300\n"
+"POT-Creation-Date: 2022-06-17 00:02+0000\n"
+"PO-Revision-Date: 2022-06-20 14:43+0300\n"
 "Last-Translator: silva.matti <silva.hm88@gmail.com>\n"
 "Language-Team: \n"
 "Language: ckb\n"
@@ -823,6 +823,11 @@ msgstr "ئەڵمانی پلە ١ (بە وردی)"
 #. braille settings dialog.
 msgid "German grade 2"
 msgstr "ئەڵمانی پلە ٢"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "German grade 2 (detailed)"
+msgstr "ئەڵمانی پلە ٢ (بە وردی)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -3570,42 +3575,44 @@ msgstr ""
 
 #. Translators: Reported when there is no status line for the current program or window.
 msgid "No status line found"
-msgstr "هیچ هێڵێکی دۆخ نەدۆزرایەوە"
+msgstr "هیچ هێڵێکی ڕەوش نەدۆزرایەوە"
 
 #. Translators: Input help mode message for command which reads content of the status bar.
 msgid "Reads the current application status bar."
-msgstr "خوێندنەوەی شریتی دۆخی بەرنامۆچکەی ئێستا."
+msgstr "خوێندنەوەی شریتی ڕەوشی بەرنامۆچکەی ئێستا."
 
 #. Translators: Reported when status line exist, but is empty.
 msgid "no status bar information"
-msgstr "هیچ زانیاریەکی شریتی دۆخ نییە"
+msgstr "هیچ زانیاریەکی شریتی ڕەوش نییە"
 
 #. Translators: Input help mode message for command which spells content of the status bar.
 msgid "Spells the current application status bar."
-msgstr "حونجەکردنی شریتی دۆخی بەرنامۆچکەی ئێستا."
+msgstr "حونجەکردنی شریتی ڕەوشی بەرنامۆچکەی ئێستا."
 
 #. Translators: Input help mode message for command which copies status bar content to the clipboard.
 msgid ""
 "Copies content of the status bar  of current application to the clipboard."
-msgstr "لەبەرگرتنەوەی ناوەڕۆکی شریتی دۆخی بەرنامۆچکەی ئێستا بۆ لەبەرگیراوەکان."
+msgstr ""
+"لەبەرگرتنەوەی ناوەڕۆکی شریتی ڕەوشی بەرنامۆچکەی ئێستا بۆ لەبەرگیراوەکان."
 
 #. Translators: Reported when user attempts to copy content of the empty status line.
 msgid "Unable to copy status bar content to clipboard"
-msgstr "ڕێگەپێنەدان بە لەبەرگرتنەوەی ناوەڕۆکی شریتی دۆخ بۆ لەبەرگیراوەکان"
+msgstr "ڕێگەپێنەدان بە لەبەرگرتنەوەی ناوەڕۆکی شریتی ڕەوش بۆ لەبەرگیراوەکان"
 
 #. Translators: Input help mode message for Command which moves review cursor to the status bar.
 msgid ""
 "Reads the current application status bar and moves navigator object into it."
 msgstr ""
-"خوێندنەوەی شریتی دۆخی بەرنامۆچکەی ئێستا و گوازتنەوەی ئامرازی ڕێبەری بۆ ناوی."
+"خوێندنەوەی شریتی ڕەوشی بەرنامۆچکەی ئێستا و گوازتنەوەی ئامرازی ڕێبەری بۆ ناوی."
 
 #. Translators: Input help mode message for report status line text command.
 msgid ""
 "Reads the current application status bar. If pressed twice, spells the "
 "information. If pressed three times, copies the status bar to the clipboard"
 msgstr ""
-"خوێندنەوەی شریتی دۆخی بەرنامۆچکەی ئێستا. ئەگەر دووجار داگیرا، زانیاریەکان "
-"حونجە دەکرێت. ئەگەر سێجار داگیرا، شریتی دۆخ لەبەردەگیرێتەوە بۆ لەبەرگیراوەکان"
+"خوێندنەوەی شریتی ڕەوشی بەرنامۆچکەی ئێستا. ئەگەر دووجار داگیرا، زانیاریەکان "
+"حونجە دەکرێت. ئەگەر سێجار داگیرا، شریتی ڕەوش لەبەردەگیرێتەوە بۆ "
+"لەبەرگیراوەکان"
 
 #. Translators: Input help mode message for toggle mouse tracking command.
 msgid "Toggles the reporting of information as the mouse moves"
@@ -3796,7 +3803,7 @@ msgstr ""
 
 #. Translators: Input help mode message for report battery status command.
 msgid "Reports battery status and time remaining if AC is not plugged in"
-msgstr "ڕاگەیاندنی دۆخی پاتری و کاتی ماوە ئەگەر کارەبای پێوەنەکرابێت"
+msgstr "ڕاگەیاندنی ڕەوشی پاتری و کاتی ماوە ئەگەر کارەبای پێوەنەکرابێت"
 
 #. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
 msgid "No system battery"
@@ -6449,12 +6456,12 @@ msgid "Moves the navigator object to the last column"
 msgstr "ئامرازی ڕێبەری دەگوازێتەوە بۆ کۆتا ستوون"
 
 #. Translators: The description of an NVDA command.
-msgid "Moves the navigator object to the first row"
-msgstr "ئامرازی ڕێبەری دەگوازێتەوە بۆ یەکەم ڕیز"
+msgid "Moves the navigator object and focus to the first row"
+msgstr "ئامرازی ڕێبەری و تیشکۆ دەگوازێتەوە بۆ ڕیزی سەرەتا"
 
 #. Translators: The description of an NVDA command.
-msgid "Moves the navigator object to the last row"
-msgstr "ئامرازی ڕێبەری دەگوازێتەوە بۆ کۆتا ڕیز"
+msgid "Moves the navigator object and focus to the last row"
+msgstr "ئامرازی ڕێبەری و تیشکۆ دەگوازێتەوە بۆ کۆتا ڕیز"
 
 #. Translators: Announced in braille when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
 msgid "Suggestions"
@@ -7405,7 +7412,7 @@ msgstr "میلی کێشان"
 #. Translators: Identifies a status bar (text at the bottom bar of the screen such as cursor position in a
 #. document).
 msgid "status bar"
-msgstr "میلی بار"
+msgstr "میلی ڕەوش"
 
 #. Translators: Identifies a table such as ones used in various websites.
 msgid "table"
@@ -12924,6 +12931,12 @@ msgstr "بۆشایی دوو ئەوەندەی نێوان ڕیزەکان"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5 بۆشایی نێوان ڕیزەکان"
+
+#~ msgid "Moves the navigator object to the first row"
+#~ msgstr "ئامرازی ڕێبەری دەگوازێتەوە بۆ یەکەم ڕیز"
+
+#~ msgid "Moves the navigator object to the last row"
+#~ msgstr "ئامرازی ڕێبەری دەگوازێتەوە بۆ کۆتا ڕیز"
 
 #~ msgid "Chinese (China, Mandarin) grade 2"
 #~ msgstr "چینی (چین، ماندەرین) پلە ٢"
