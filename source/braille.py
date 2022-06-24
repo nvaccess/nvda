@@ -2294,7 +2294,12 @@ class _BgThread:
 	@classmethod
 	def func(cls):
 		while True:
-			ctypes.windll.kernel32.SleepEx(winKernel.INFINITE, True)
+			# Ensuring with try except that occasional OS errors with SleepEx
+			# do not break loop
+			try:
+				ctypes.windll.kernel32.SleepEx(winKernel.INFINITE, True)
+			except OSError:
+				log.debug("", exc_info=True)
 			if cls.exit:
 				break
 

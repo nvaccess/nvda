@@ -3,35 +3,44 @@
 # See the file COPYING for more details.
 # Copyright (C) 2021 NV Access Limited, Burman's Computer and Education Ltd.
 
-import inspect
+import ctypes
+import serial
 import time
 
+from collections import deque
+from ctypes import byref
+from ctypes.wintypes import DWORD
 from logHandler import log
-from threading import Lock, Timer
-from typing import List
+from serial.win32 import PURGE_RXABORT, PURGE_TXABORT
+from serial.win32 import PURGE_RXCLEAR, PURGE_TXCLEAR
+from serial.win32 import EV_RXCHAR
+from serial.win32 import PurgeComm, WaitForSingleObject, SetCommMask
+from serial.win32 import INFINITE
+from threading import Event, Lock, Timer, Thread
+from typing import List, Optional, Tuple
+from winKernel import WAIT_OBJECT_0
 
 import braille
-import hwIo
 import inputCore
-import serial
 
-from hwIo import intToByte
-
-# Port settings
 BAUD_RATE = 19200
 TIMEOUT = 0.2
-WRITE_TIMEOUT = None
-# Display should send initial packet within 2 seconds, but it may take
-# time before it is read.
-WAIT_FOR_INIT_TIMEOUT = 6
-# For _clearInput function
-# Timeout for giving up clearing input buffer
-CLEAR_INPUT_BUFFER_TIMEOUT = 1
-# Some sleep time so that in_waiting would show correct value of remaining
-# bytes of input buffer in function _clearInputBuffer.
-IN_WAITING_SLEEP = 0.02
-# Keys are key codes sent by display.
-MAX_KEY_CODE_VALUE = 216
+WRITE_TIMEOUT = 0
+# How many times initial connection is waited by sleeping TIMEOUT.
+# It sounds big value but users should appreciate that braille starts.
+# It should not harm other devices with same PID&VID because this device
+# is last one.
+MAX_INIT_SLEEPS = 20
+# Maybe due to writings of other drivers with same PID&VID, device seems
+# to send init packets it should not. Although reset do not work well,
+# hopefully at least strange packets would be discarded.
+# How many times to try to reset I/O buffers
+RESET_COUNT = 10
+# How long to sleep between I/O buffer resets
+RESET_SLEEP = 0.05
+# In rare cases loop might be practically infinite (see _somethingToRead).
+MAX_READ_COUNT = 10
+WRITE_QUEUE_LENGTH = 20
 KEY_NAMES = {
 	1: "attribute1",
 	42: "attribute2",
@@ -78,8 +87,9 @@ KEY_NAMES = {
 	215: "rWheelUp",
 	216: "rWheelDown",
 }
-# These are ctrl-keys which may start key combination.
+# Maximum number of keys in key combination.
 MAX_COMBINATION_KEYS = 4
+# These are ctrl keys which may start key combination.
 CONTROL_KEY_CODES: List[int] = [
 	1,  # attribute1
 	42,  # attribute2
@@ -112,11 +122,64 @@ START_BYTE = b"\xfb"
 END_BYTE = b"\xfc"
 # To keep connected these both above bytes must be sent periodically.
 BOTH_BYTES = b"\xfb\xfc"
-# How often BOTH_BYTES should be sent or to try to reconnect if connection lost.
-TIMER_INTERVAL = 1
+# Display requires at least START_BYTE and END_BYTE combination within
+# approximately 2 seconds from previous appropriate data packet.
+# Otherwise it falls back to "wait for connection" state. This behavior
+# is built-in feature of the firmware of device.
+# How often BOTH_BYTES should be sent and reconnection tried
+KC_INTERVAL = 1.5
 
 
-# Timer is used for that purpose and to reconnect with display (copied from
+# Controls most of read operations and tries to reconnect when needed
+# Suspended most of time.
+class ReadThread(Thread):
+	def __init__(self, function, event, dev, readQueue, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+		self._function = function
+		self._event = event
+		self._dev = dev
+		self._readQueue = readQueue
+
+	def run(self):
+		while not self._event.isSet():
+			# Try to reconnect if port is not open
+			if not self._dev.is_open or not self._flushReadQueue:
+				log.debug(
+					f"Calling {self._function.__name__}, port {self._dev.name} not open")
+				self._function()
+				if not self._dev.is_open:
+					log.debug(
+						f"Sleepin {KC_INTERVAL} seconds, port {self._dev.name} not open")
+					time.sleep(KC_INTERVAL)
+					continue
+			try:
+				SetCommMask(self._dev._port_handle, EV_RXCHAR)
+				dwEvtMask = DWORD()
+				ctypes.windll.kernel32.WaitCommEvent(
+					self._dev._port_handle, byref(dwEvtMask),
+					byref(self._dev._overlapped_read))
+				result = WaitForSingleObject(self._dev._overlapped_read.hEvent, INFINITE)
+				if result == WAIT_OBJECT_0:
+					log.debug(f"Calling function {self._function.__name__} for read")
+					self._function()
+			except OSError:
+				log.debug("", exc_info=True)
+
+	# _handleKeyPresses handles at most one key/key combination at a time.
+	# Ensuring that pressing and handling get synchronized.
+	def _flushReadQueue(self) -> bool:
+		while len(self._readQueue):
+			self._function()
+			if not self._dev.is_open:
+				return False
+			log.debug(
+				f"Calling {self._function.__name__}, _readQueue length "
+				f"{len(self._readQueue)}")
+		return True
+
+
+# Timer is used to send BOTH_BYTES regularly to keep connection
+# (copied from
 # https://stackoverflow.com/questions/474528/what-is-the-best-way-to-repeatedly-execute-a-function-every-x-seconds)
 class RepeatedTimer(object):
 	def __init__(self, interval, function, *args, **kwargs):
@@ -155,346 +218,467 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		return braille.getSerialPorts()
 
 	def __init__(self, port="Auto"):
-		log.debug(f"{inspect.stack()[0][3]} started, called by {inspect.stack()[1][3]}")
 		super().__init__()
-		# Lock for proper i/o functionality.
-		self._readWriteLock = Lock()
 		# Number of cells is received when initializing connection.
 		self.numCells = 0
-		# Keep old display data.
+		# Keep old display data, only changed content is sent.
 		self._oldCells: List[int] = []
 		# After reconnection and when user exits from device menu, display may not
 		# update automatically. Keep current cell content for this.
 		self._currentCells: List[int] = []
-		# Clear input buffer when connected because there is likely data
-		# which may cause fake key presses or triggering _exitInternalMenu.
-		self._justConnected = False
-		# Try to reconnect if needed.
-		self._tryReconnect = False
-		# Timer to keep connection. Display requires at least START_BYTE
-		# and END_BYTE combination within approximately 2 seconds from previous
-		# appropriate data packet. Otherwise it falls back to "wait for connection"
-		# state. This behavior is built-in feature of the firmware of device.
-		# Timer is also used to check if port is available when
-		# reconnection is needed.
-		self._rt = None
-		# How many times _initConnection is called. This is for debugging.
-		self._counter = 0
+		# Set to True if settings byte is INIT_START_BYTE
+		self._invalidSettingsByte = False
+		# Set to True when filtering redundant init packets when init byte
+		# received but not yet settings byte.
+		self._initByteReceived = False
+		# Set to True if settings byte has not been dequeued yet in
+		# _handleInitPackets.
+		self._waitingSettingsByte = False
+		# Set to True if ctrl key combination is partially dequeued.
+		self._waitingCtrlPacket = False
+		# Port object
+		self._dev = None
+		# Try to connect or reconnect
+		self._tryToConnect = False
+		self._readQueue = deque()
+		self._writeQueue = deque(maxlen=WRITE_QUEUE_LENGTH)
+		self._exitEvent = Event()
+		# Thread for read
+		self._handleRead = None
+		self._writeLock = Lock()
+		# Timer to keep connection (see KC_INTERVAL).
+		self._kc = None
+		# When previous write was done (see KC_INTERVAL).
+		self._writeTime = 0.0
 		# Search ports where display can be connected.
 		for portType, portId, port, portInfo in self._getTryPorts(port):
-			self._readWriteLock.acquire()
-			if not self._chkPort(port):
-				self._readWriteLock.release()
-				continue
-			log.debug(
-				f"{inspect.stack()[0][3]}: waiting for connection on port {port} "
-				f"at most {WAIT_FOR_INIT_TIMEOUT} seconds")
-			startTime = time.time()
-			while not self.numCells and time.time() - startTime < WAIT_FOR_INIT_TIMEOUT:
-				if self._tryReconnect:
-					if not self._chkPort(port):
-						continue
-				self._initConnection(b"\x00")
-			self._readWriteLock.release()
-			log.debug(
-				f"{inspect.stack()[0][3]}: waited for connection on port {port} "
-				f"{(time.time() - startTime):.2f} seconds")
-			# If numCells > 0, there is working connection.
-			if self.numCells:
+			# For reconnection
+			self._currentPort = port
+			self._tryToConnect = True
+			if self._initConnection():
 				# Prepare _oldCells to store last displayed content.
 				while len(self._oldCells) < self.numCells:
 					self._oldCells.append(0)
-				# We may need current connection port to reconnect.
-				self._currentPort = port
-				log.debug(f"{inspect.stack()[0][3]}: starting timer")
-				self._rt = RepeatedTimer(
-					TIMER_INTERVAL, self._lockedReadWrite, self._keepConnected)
+				self._kc = RepeatedTimer(
+					KC_INTERVAL, self._keepConnected)
+				self._handleRead = ReadThread(
+					self._readHandling, self._exitEvent, self._dev,
+					self._readQueue, name="albatross_read")
+				self._handleRead.start()
 				log.info(
-					f"{inspect.stack()[0][3]}: connected to Caiku Albatross {self.numCells} on {portType} port {port} "
+					f"Connected to Caiku Albatross {self.numCells} on {portType} port {port} "
 					f"at {BAUD_RATE} bps.")
 				break
 			# This device initialization failed.
-			self._dev.close()
-			self._dev = None
+			if self._dev:
+				if self._dev.is_open:
+					self._dev.close()
+				self._dev = None
+			if self._invalidSettingsByte:
+				log.info(
+					"After checking internal settings, switch display off and on, "
+					"and if needed restart NVDA")
 			log.info(
-				f"{inspect.stack()[0][3]}: connection to Caiku Albatross display on {portType} port {port} "
-				f"at {BAUD_RATE} bps failed. Nothing to read in {WAIT_FOR_INIT_TIMEOUT} seconds "
-				"or not appropriate init packet received.")
+				f"Connection to Caiku Albatross display on {portType} port {port} "
+				f"at {BAUD_RATE} bps failed.")
 		else:
 			raise RuntimeError("No Albatross found")
-		log.debug(f"Leaving {inspect.stack()[0][3]}")
 
 	def terminate(self):
-		log.debug(f"{inspect.stack()[0][3]} started, called by {inspect.stack()[1][3]}")
 		try:
 			super().terminate()
-			if self._rt:
-				self._rt.stop()
-				self._rt = None
-			# Possibly already closed.
-			if self._dev:
-				self._dev.close()
-				self._dev = None
-		finally:
 			self.numCells = 0
-		log.debug(f"Leaving {inspect.stack()[0][3]}")
-
-	def _chkPort(self, port: bytes) -> bool:
-		log.debug(f"{inspect.stack()[0][3]} started, called by {inspect.stack()[1][3]}")
-		try:
-			self._dev = hwIo.Serial(
-				port, baudrate=BAUD_RATE, stopbits=serial.STOPBITS_ONE, parity=serial.PARITY_NONE,
-				timeout=TIMEOUT, writeTimeout=WRITE_TIMEOUT, onReceive=self._onReceive)
-			log.debug(f"Leaving {inspect.stack()[0][3]}")
-			return True
-		except EnvironmentError:
-			log.debugWarning("", exc_info=True)
-			return False
-
-	# Whole display should be updated at next time.
-	def _clearOldCells(self):
-		log.debug(f"{inspect.stack()[0][3]} started, called by {inspect.stack()[1][3]}")
-		for i in range(len(self._oldCells)):
-			self._oldCells[i] = 0
-		log.debug(f"Leaving {inspect.stack()[0][3]}")
-
-	# All write operations are done here.
-	def _sendToDisplay(self, data: bytes, fromKeepConnected: bool = False) -> bool:
-		log.debug(f"{inspect.stack()[0][3]} started, called by {inspect.stack()[1][3]}")
-		if not self.numCells and data != ESTABLISHED:
-			log.debug(
-				f"{inspect.stack()[0][3]}: numCells is {self._numCells} and data is "
-				f"{data}, leaving {inspect.stack()[0][3]}")
-			return True
-		try:
-			self._dev.write(data)
-			self._dev._ser.flush()
-		except serial.serialutil.SerialException:
-			# Assuming that connection is lost.
-			self._disableConnection()
-			log.debug(
-				f"{inspect.stack()[0][3]}: data write failed {data}, trying to reconnect, "
-				f"leaving {inspect.stack()[0][3]}", exc_info=True)
-			return False
-		# No timer reset if BOTH_BYTES sent from _keepConnected.
-		if fromKeepConnected:
-			log.debug(
-				f"{inspect.stack()[0][3]}: BOTH_BYTES {BOTH_BYTES} sent, "
-				f"leaving {inspect.stack()[0][3]}")
-			return True
-		# Timer may have not yet started.
-		if self._rt:
-			# Reset timer to avoid sending reduntant BOTH_BYTES packets.
-			self._rt.stop()
-			self._rt.start()
-			log.debug(
-				f"{inspect.stack()[0][3]}: data {data} sent and timer reseted, "
-				f"leaving {inspect.stack()[0][3]}")
-		else:
-			log.debug(
-				f"{inspect.stack()[0][3]}: data {data} sent, timer not yet started, "
-				f"leaving {inspect.stack()[0][3]}")
-		return True
-
-	def _clearInputBuffer(self) -> bool:
-		log.debug(f"{inspect.stack()[0][3]} started, called by {inspect.stack()[1][3]}")
-		log.debug(
-			f"{inspect.stack()[0][3]}: before reset_input_buffer waiting input bytes "
-			f"{self._dev._ser.in_waiting}")
-		try:
-			startTime = time.time()
-			while self._dev._ser.in_waiting and time.time() - startTime < CLEAR_INPUT_BUFFER_TIMEOUT:
-				self._dev._ser.reset_input_buffer()
-				time.sleep(IN_WAITING_SLEEP)
-				log.debug(
-					f"{inspect.stack()[0][3]}: after reset waiting input bytes "
-					f"{self._dev._ser.in_waiting}")
-			if self._dev._ser.in_waiting:
-				self._justConnected = False
-				self._disableConnection()
-				log.debug(
-					f"{inspect.stack()[0][3]}: clear timed out, "
-					f"bytes waiting; trying to reconnect, leaving {inspect.stack()[0][3]}")
-				return False
-		except serial.serialutil.SerialException:
-			self._disableConnection()
-			log.debug(
-				f"{inspect.stack()[0][3]}: input buffer reset failed, trying to reconnect, "
-				f"leaving {inspect.stack()[0][3]}", exc_info=True)
-			return False
-		self._justConnected = False
-		log.debug(f"Leaving {inspect.stack()[0][3]}")
-		return True
-
-	def _keepConnected(self):
-		log.debug(f"{inspect.stack()[0][3]} started, called by {inspect.stack()[1][3]}")
-		# Trying to reconnect.
-		if self._tryReconnect:
-			# Can disappeared port be found again?
-			if not self._chkPort(self._currentPort):
-				if self._dev:
+			if self._kc:
+				self._kc.stop()
+				self._kc = None
+			if self._readQueue:
+				self._readQueue.clear()
+			if self._writeQueue:
+				self._writeQueue.clear()
+			if self._handleRead:
+				self._exitEvent.set()
+				self._handleRead.join()
+				# self._handleRead = None
+			if self._dev:
+				if self._dev.is_open:
 					self._dev.close()
-					self._dev = None
-				log.debug(
-					f"{inspect.stack()[0][3]}: port {self._currentPort} not found, "
-					f"leaving {inspect.stack()[0][3]}")
-				return
-			# Port found.
-			self._tryReconnect = False
-			log.debug(
-				f"{inspect.stack()[0][3]}: port {self._currentPort} found, "
-				f"leaving {inspect.stack()[0][3]}")
-			return
-		# Connected if numCells > 0.
-		if self.numCells:
-			# Display needs this to keep connection.
-			self._sendToDisplay(BOTH_BYTES, True)
-		log.debug(f"Leaving {inspect.stack()[0][3]}")
+				self._dev = None
+			self._readQueue = None
+			self._writeQueue = None
+		except Exception:
+			# Terminating anyway
+			pass
 
-	def _onReceive(self, data: bytes):
-		log.debug(f"{inspect.stack()[0][3]} started, called by {inspect.stack()[1][3]}")
-		# Clear input buffer to avoid fake key presses and redundant
-		# _initConnection calls.
-		if self._justConnected:
-			self._lockedReadWrite(self._clearInputBuffer)
-			log.debug(
-				f"Returned from _clearInputBuffer, leaving {inspect.stack()[0][3]}")
-			return
-		# Initial connection, reconnection, exit from internal menu of display or
-		# delay in sending data to display causing its fall back to
-		# "wait for connection" state.
-		if not self.numCells or data == INIT_START_BYTE:
-			self._lockedReadWrite(self._initConnection, data)
-			log.debug(f"Returned from _initConnection, leaving {inspect.stack()[0][3]}")
-			return
-		# Read display key presses.
-		# Blocking most obvious key code values which are not key presses.
-		if not len(data) or ord(data) == 0 or ord(data) > MAX_KEY_CODE_VALUE:
-			log.debug(
-				f"Undefined value {data} for key press, leaving {inspect.stack()[0][3]}")
-			return
-		self._lockedReadWrite(self._handleKeyPresses, data)
-		log.debug(f"Returned from _handleKeyPresses, leaving {inspect.stack()[0][3]}")
-
-	def _initConnection(self, data: bytes):
-		log.debug(f"{inspect.stack()[0][3]} started, called by {inspect.stack()[1][3]}")
-		self._counter += 1
-		log.debug(f"{inspect.stack()[0][3]}: call {self._counter}")
-		# If no connection, Albatross sends continuously byte \xff
-		# followed by byte containing various settings like number of cells.
-		# This happens also when exited internal menu of display or if delay
-		# in sending data to display causing its fallback to "wait for connection"
-		# state.
-		# There may be garbage before INIT_START_BYTE when initial start or
-		# reconnection occurs.
-		if data != INIT_START_BYTE:
-			try:
-				while data != INIT_START_BYTE and len(data):
-					data = self._dev.read(1)
-			except serial.serialutil.SerialException:
-				self._disableConnection()
+	# _initConnection, _readInitByte and _readSettingsByte are helper functions
+	# to establish connection.
+	# If no connection, Albatross sends continuously INIT_START_BYTE
+	# followed by byte containing various settings like number of cells.
+	def _initConnection(self) -> bool:
+		for i in range(MAX_INIT_SLEEPS):
+			if self._tryToConnect:
+				if not self._dev:
+					try:
+						self._dev = serial.Serial(
+							self._currentPort, baudrate=BAUD_RATE, stopbits=serial.STOPBITS_ONE,
+							parity=serial.PARITY_NONE, timeout=TIMEOUT, writeTimeout=WRITE_TIMEOUT)
+						log.debug(f"Port {self._currentPort} initialized")
+						if not self._resetBuffers():
+							log(
+								f"sleeping {TIMEOUT} seconds before try {i + 1} / {MAX_INIT_SLEEPS}",
+								exc_info=True)
+							time.sleep(TIMEOUT)
+							continue
+					except IOError:
+						log.debug(
+							f"Port {self._currentPort} not initialized, sleeping {TIMEOUT} seconds "
+							f"before try {i + 1} / {MAX_INIT_SLEEPS}")
+						time.sleep(TIMEOUT)
+						continue
+				# Port is already opened when _initConnection is called from _readHandling
+				elif not self._dev.is_open:
+					try:
+						self._dev.open()
+						log.debug(f"Port {self._currentPort} opened")
+						if not self._resetBuffers():
+							log(
+								f"sleeping {TIMEOUT} seconds before try {i + 1} / {MAX_INIT_SLEEPS}")
+							time.sleep(TIMEOUT)
+							continue
+					except IOError:
+						log.debug(
+							f"Port {self._currentPort} not opened, sleeping {TIMEOUT} seconds "
+							f"before try {i + 1} / {MAX_INIT_SLEEPS}")
+						time.sleep(TIMEOUT)
+						continue
+			if self._tryToConnect:
+				self._tryToConnect = False
+			else:
 				log.debug(
-					f"{inspect.stack()[0][3]}: init byte read failed, trying to reconnect "
-					f"leaving {inspect.stack()[0][3]}", exc_info=True)
-				return
-		if not len(data):
+					f"Sleeping {TIMEOUT} seconds before try {i + 1} / {MAX_INIT_SLEEPS}")
+				time.sleep(TIMEOUT)
+			if not self._readInitByte():
+				if self._invalidSettingsByte:
+					return False
+				else:
+					continue
+			if not self._tryToConnect and self.numCells:
+				return True
+		return False
+
+	def _readInitByte(self) -> bool:
+		# Strange but very rarely in_waiting causes exception.
+		try:
+			if not self._dev.in_waiting:
+				log.debug("Read: no data")
+				return False
+		except IOError:
+			self._disableConnection()
+			log.debug("Trying to reconnect", exc_info=True)
+			return False
+		if self._waitingSettingsByte and self._readSettingsByte():
+			self._waitingSettingsByte = False
+			return True
+		try:
+			data = self._dev.read_until(INIT_START_BYTE)
+			log.debug(f"Read: {data}")
+			if INIT_START_BYTE in data:
+				return self._readSettingsByte()
+			else:
+				log.debug(f"Read: INIT_START_BYTE not in {data}")
+				return False
+		except IOError:
+			self._disableConnection()
 			log.debug(
-				f"{inspect.stack()[0][3]}: no init byte, leaving {inspect.stack()[0][3]}")
-			return
+				f"INIT_START_BYTE {INIT_START_BYTE} read failed, "
+				"trying to reconnect", exc_info=True)
+			return False
+
+	def _readSettingsByte(self) -> bool:
+		try:
+			if not self._dev.in_waiting:
+				self._waitingSettingsByte = True
+				log.debug("Read: no data")
+				return False
+		except IOError:
+			self._disableConnection()
+			log.debug("Trying to reconnect", exc_info=True)
+			return False
 		try:
 			data = self._dev.read(1)
-		except serial.serialutil.SerialException:
+			log.debug(f"Read: {data}")
+			if data != INIT_START_BYTE:
+				self._writeQueue.append(ESTABLISHED)
+				self._somethingToWrite()
+				if self._tryToConnect:
+					return False
+				else:
+					self._setNumCellCount(data)
+					if self._invalidSettingsByte:
+						self._invalidSettingsByte = False
+					return True
+			else:
+				# Likely better chance to avoid switching display off and on
+				self._writeQueue.append(ESTABLISHED)
+				self._somethingToWrite()
+				if not self._invalidSettingsByte:
+					self._invalidSettingsByte = True
+					log.info(
+						f"Settings byte cannot be {data}, check display internal settings")
+				self._disableConnection()
+				return False
+		except IOError:
 			self._disableConnection()
+			log.debug("Settings byte read failed, trying to reconnect", exc_info=True)
+			return False
+
+	def _resetBuffers(self) -> bool:
+		try:
+			for j in range(RESET_COUNT):
+				PurgeComm(
+					self._dev._port_handle,
+					PURGE_RXCLEAR | PURGE_RXABORT | PURGE_TXCLEAR | PURGE_TXABORT)
+				time.sleep(RESET_SLEEP)
+			log.debug("I/O buffers reset done")
+			return True
+		except IOError:
 			log.debug(
-				f"{inspect.stack()[0][3]}: value byte read failed, trying to reconnect "
-				f"leaving {inspect.stack()[0][3]}", exc_info=True)
-			return
-		if not len(data):
-			log.debug(
-				f"{inspect.stack()[0][3]}: no value byte, leaving "
-				f"{inspect.stack()[0][3]}")
-			return
-		log.debug(f"{inspect.stack()[0][3]}: value byte {data}")
-		# This is safe because read/write lock is locked.
-		if not self._sendToDisplay(ESTABLISHED):
-			log.debug(
-				f"{inspect.stack()[0][3]}: connection establishment failed, "
-				f"leaving {inspect.stack()[0][3]}")
-			return
-		self._justConnected = True
-		# If bit 7 (LSB 0 scheme) is 1, there is 80 cells model, else 46 cells model.
-		# Other display settings are currently ignored so skipping separate function
-		# definition this time.
-		self.numCells = 80 if ord(data) >> 7 == 1 else 46
-		log.debug(f"{inspect.stack()[0][3]}: numcells {self.numCells}")
-		# Reconnected if length of _oldCells is numCells. Show last known content.
-		if len(self._oldCells) == self.numCells:
-			self._clearOldCells()
-			log.debug(f"{inspect.stack()[0][3]}: about to show _currentCells")
-			# ReadWriteLock is locked, and _prepareCells is called only from
-			# display, and it requires acquiring that same lock.
-			self._prepareCells(self._currentCells)
-		log.debug(f"Leaving {inspect.stack()[0][3]}")
+				f"I/O buffer reset failed on port {self._currentPort}", exc_info=True)
+			if self._dev.is_open:
+				self._dev.close()
+			return False
 
 	def _disableConnection(self):
-		log.debug(f"{inspect.stack()[0][3]} started, called by {inspect.stack()[1][3]}")
 		self.numCells = 0
-		self._dev.close()
-		self._dev = None
+		if self._dev.is_open:
+			self._dev.close()
 		if len(self._oldCells):
 			self._clearOldCells()
-		self._tryReconnect = True
-		log.debug(f"Leaving {inspect.stack()[0][3]}")
+		self._waitingCtrlPacket = False
+		self._partialCtrlPacket = None
+		self._initByteReceived = False
+		self._waitingSettingsByte = False
+		self._readQueue.clear()
+		self._writeQueue.clear()
+		self._tryToConnect = True
+
+	def _readHandling(self):
+		if self._tryToConnect:
+			# Faster reconnection if port opened and reset here.
+			try:
+				self._dev.open()
+				log.debug(f"Port {self._currentPort} opened")
+				if not self._resetBuffers():
+					return
+			except IOError:
+				log.debug("", exc_info=True)
+				return
+			if not self._initConnection():
+				self._disableConnection()
+				return
+		data = self._somethingToRead()
+		if data:
+			if not self._skipRedundantInitPackets(data):
+				return
+		if len(self._readQueue):
+			log.debug(
+				f"_ReadQueue is: {self._readQueue}, length {len(self._readQueue)}")
+			try:
+				data = self._readQueue.popleft()
+				log.debug(f"Read: dequeued {data}, {len(self._readQueue)} items left")
+			except IndexError:
+				log.debug("Read: _readQueue is empty", exc_info=True)
+			else:
+				if (
+					not self.numCells or data == INIT_START_BYTE or self._waitingSettingsByte
+				):
+					self._handleInitPackets(data)
+				else:
+					self._handleKeyPresses(data)
+
+	# All but connecting/reconnecting related read operations
+	def _somethingToRead(self):
+		try:
+			data = b""
+			i = 0
+			while self._dev.in_waiting:
+				data += self._dev.read(self._dev.in_waiting)
+				i += 1
+				if i > MAX_READ_COUNT:
+					self._disableConnection()
+					log.debug(
+						f"Read: MAX_READ_COUNT {MAX_READ_COUNT} exceeded, "
+						" trying to reconnect")
+					return None
+			if len(data):
+				log.debug(f"Read: {data}, length {len(data)}, in_waiting {self._dev.in_waiting}")
+				return data
+			return None
+		except IOError:
+			self._disableConnection()
+			log.debug("Read failed, trying to reconnect", exc_info=True)
+			return None
+
+	def _skipRedundantInitPackets(self, data: bytes) -> bool:
+		settingsByte = None
+		for i in data:
+			if not self._initByteReceived:
+				if i.to_bytes(1, 'big') == INIT_START_BYTE:
+					self._initByteReceived = True
+					continue
+			else:
+				if i.to_bytes(1, 'big') != INIT_START_BYTE:
+					settingsByte = i.to_bytes(1, 'big')
+					self._initByteReceived = False
+					continue
+				else:
+					self._initByteReceived = False
+					self._writeQueue.append(ESTABLISHED)
+					self._somethingToWrite()
+					self._invalidSettingsByte = True
+					log.info(
+						f"Settings byte cannot be {INIT_START_BYTE}, check display internal "
+						"settings")
+					self._disableConnection()
+					return False
+			self._readQueue.append(i.to_bytes(1, 'big'))
+			log.debug(f"Read: enqueued {i.to_bytes(1, 'big')}")
+		if settingsByte is not None:
+			# Ensuring connection is established also after exit internal menu.
+			if not len(self._readQueue):
+				self._readQueue.append(INIT_START_BYTE)
+				self._readQueue.append(settingsByte)
+		return True
+
+	# All write operations are done here
+	def _somethingToWrite(self):
+		with self._writeLock:
+			data = b""
+			while len(self._writeQueue):
+				try:
+					data += self._writeQueue.popleft()
+				except IndexError:
+					log.debug("Write: _writeQueue is empty", exc_info=True)
+					return
+			log.debug(f"Write: dequeued {data}, {len(self._writeQueue)} items left")
+			try:
+				self._dev.write(data)
+				self._writeTime = time.time()
+				# Reset timer
+				if self._kc:
+					self._kc.stop()
+					self._kc.start()
+				log.debug(f"Written: {data}")
+			except IOError:
+				self._disableConnection()
+				log.debug(f"Write failed: {data}, trying to reconnect", exc_info=True)
+
+	# Display also starts to send init packets when exited internal menu or when
+	# delay sending data to display causes its fallback to "wait for connection"
+	# state.
+	def _handleInitPackets(self, data: bytes):
+		if not self._waitingSettingsByte:
+			if data != INIT_START_BYTE:
+				try:
+					while data != INIT_START_BYTE and len(self._readQueue):
+						data = self._readQueue.popleft()
+						log.debug(f"Read: dequeued {data}, {len(self._readQueue)} items left")
+				except IndexError:
+					log.debug("Read: _readQueue is empty", exc_info=True)
+					return
+			# Settings byte
+			try:
+				data = self._readQueue.popleft()
+				log.debug(f"Read: dequeued {data}, {len(self._readQueue)} items left")
+			except IndexError:
+				self._waitingSettingsByte = True
+				log.debug(
+					"Read: _readQueue is empty, waiting for settings byte", exc_info=True)
+				return
+			self._writeQueue.appendleft(ESTABLISHED)
+		self._setNumCellCount(data)
+		# Reconnected or exited device menu if length of _oldCells is numCells.
+		# Also checking that _currentCells has sometimes updated.
+		# Show last known content.
+		if (
+			len(self._oldCells) == self.numCells
+			and len(self._oldCells) == len(self._currentCells)
+		):
+			self._clearOldCells()
+			with braille._BgThread.queuedWriteLock:
+				braille._BgThread.queuedWrite = self._currentCells
+			# Queue a call to the background thread.
+			braille._BgThread.queueApc(braille._BgThread.executor)
+		if self._waitingSettingsByte:
+			self._waitingSettingsByte = False
+
+	# If bit 7 (LSB 0 scheme) is 1, there is 80 cells model, else 46 cells model.
+	# Other display settings are currently ignored.
+	def _setNumCellCount(self, data: bytes):
+		self.numCells = 80 if ord(data) >> 7 == 1 else 46
 
 	def _handleKeyPresses(self, data: bytes):
-		log.debug(f"{inspect.stack()[0][3]} started, called by {inspect.stack()[1][3]}")
-		# If Ctrl-key is pressed, then there is at least one byte to read;
-		# in single ctrl-key presses and key combinations the first key is resent as last one.
-		if ord(data) in CONTROL_KEY_CODES:
-			# at most 4 keys.
-			try:
-				data += self._dev._ser.read_until(data)
-			except serial.serialutil.SerialException:
-				# Assuming that connection is lost.
-				self._disableConnection()
-				log.debug(
-					f"{inspect.stack()[0][3]}: ctrl key/key combination read failed, "
-					f"trying to reconnect, leaving {inspect.stack()[0][3]}", exc_info=True)
-				return
-			# Ensuring ctrl key packet is appropriate.
+		# in single ctrl-key presses and ctrl-key combinations the first key is
+		# resent as last one.
+		if ord(data) in CONTROL_KEY_CODES or self._waitingCtrlPacket:
+			# at most MAX_COMBINATION_KEYS keys.
+			if self._waitingCtrlPacket:
+				data = self._partialCtrlPacket + data
+			if len(data) > 1 and data[0] == data[len(data) - 1]:
+				pass  # enclosed ctrl packet
 			else:
-				if len(data) < 2 or len(data) > MAX_COMBINATION_KEYS + 1 or data[0] != data[len(data) - 1]:
-					self._clearInputBuffer()
+				log.debug(f"Partial ctrl packet {data}")
+				try:
+					while len(data) <= MAX_COMBINATION_KEYS:
+						oneKey = self._readQueue.popleft()
+						log.debug(f"Read: dequeued key {oneKey}, {len(self._readQueue)} items left")
+						# Encloses ctrl packet
+						if ord(oneKey) == data[0]:
+							# No reason but easier debugging to add oneKey to data
+							data += oneKey
+							break
+						data += oneKey
+				except IndexError:
+					self._waitingCtrlPacket = True
+					self._partialCtrlPacket = data
 					log.debug(
-						f"{inspect.stack()[0][3]}: no appropriate ctrl key/key combination "
-						f"{data}, leaving {inspect.stack()[0][3]}")
+						f"Read: Ctrl key packet {data} dequeued partially, "
+						"_readQueue is empty", exc_info=True)
 					return
-		if not self._clearInputBuffer():
-			log.debug(
-				f"{inspect.stack()[0][3]}: input buffer reset failed, leaving "
-				f"{inspect.stack()[0][3]}")
-			return
+				if len(data) > MAX_COMBINATION_KEYS and data[len(data) - 1] != data[0]:
+					self._waitingCtrlPacket = False
+					self._partialCtrlPacket = None
+					log.debug(f"Not valid key combination, ignoring {data}")
+					return
+		log.debug(f"Keys for key press: {data}")
 		pressedKeys = set(data)
-		log.debug(f"{inspect.stack()[0][3]}: pressedKeys {pressedKeys}")
 		try:
 			inputCore.manager.executeGesture(InputGestureKeys(pressedKeys))
 		# Attribute error which rarely occurs here is something strange.
 		except (inputCore.NoInputGestureAction, AttributeError):
-			pass
-		log.debug(f"Leaving {inspect.stack()[0][3]}")
+			log.debug("", exc_info=True)
+		if self._waitingCtrlPacket:
+			self._waitingCtrlPacket = False
+			self._partialCtrlPacket = None
+
+	# Keep display connected if nothing is sent for a while
+	def _keepConnected(self):
+		if self._tryToConnect:
+			return
+		if time.time() - self._writeTime >= KC_INTERVAL:
+			self._writeQueue.append(BOTH_BYTES)
+			self._somethingToWrite()
+
+	# Whole display should be updated at next time.
+	def _clearOldCells(self):
+		for i in range(len(self._oldCells)):
+			self._oldCells[i] = 0
 
 	def display(self, cells: List[int]):
-		log.debug(f"{inspect.stack()[0][3]} started, called by {inspect.stack()[1][3]}")
-		self._lockedReadWrite(self._prepareCells, cells)
-		log.debug(f"Leaving {inspect.stack()[0][3]}")
-
-	def _prepareCells(self, cells):
-		log.debug(f"{inspect.stack()[0][3]} started, called by {inspect.stack()[1][3]}")
-		# Keep _currentCells up to date.
+		# Keep _currentCells up to date for reconnection regardless
+		# of driver may set it to 0.
 		self._currentCells = cells.copy()
-		# Connection is lost.
+		# Connected when numCells > 0
 		if not self.numCells:
-			log.debug(f"{inspect.stack()[0][3]}: no connection, leaving {inspect.stack()[0][3]}")
 			return
 		writeBytes: List[bytes] = [START_BYTE, ]
 		# Only changed content is sent (cell index and data).
@@ -502,27 +686,14 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			if cell != self._oldCells[i]:
 				self._oldCells[i] = cell
 				# display indexing starts from 1
-				writeBytes.append(intToByte(i + 1))
+				writeBytes.append((i + 1).to_bytes(1, 'big'))
 				# Bits have to be reversed.
 				# Source: https://stackoverflow.com/questions/12681945/reversing-bits-of-python-integer
-				writeBytes.append(intToByte(int('{:08b}'.format(cell)[::-1], 2)))
+				writeBytes.append((int('{:08b}'.format(cell)[::-1], 2).to_bytes(1, 'big')))
 		writeBytes.append(END_BYTE)
-		self._sendToDisplay(b"".join(writeBytes))
-		log.debug(f"Leaving {inspect.stack()[0][3]}")
-
-	# To avoid i/o conflicts all functions which read or write go
-	# directly or indirectly through this.
-	def _lockedReadWrite(self, function, *args, **kwargs):
-		self._readWriteLock.acquire()
-		try:
-			log.debug(f"{inspect.stack()[0][3]} started, called by {inspect.stack()[1][3]}")
-			log.debug(
-				f"{inspect.stack()[0][3]}: about to call function {function.__name__}; args {args}, kwargs {kwargs}")
-			res = function(*args, **kwargs)
-			log.debug(f"Leaving {inspect.stack()[0][3]}, about to return {res}")
-			return res
-		finally:
-			self._readWriteLock.release()
+		self._writeQueue.append(b"".join(writeBytes))
+		log.debug(f"Write: enqueued {b''.join(writeBytes)}")
+		self._somethingToWrite()
 
 	gestureMap = inputCore.GlobalGestureMap({
 		"globalCommands.GlobalCommands": {
@@ -577,15 +748,22 @@ class InputGestureKeys(braille.BrailleDisplayGesture):
 
 	def __init__(self, keys):
 		super().__init__()
+		# Dictionary keys contain routing and second routing value ranges,
+		# and values subtraction required to get actual routing index
+		# and corresponding routing name.
+		self._routingRanges = {  # range values are inclusive
+			(2, 41): (2, "routing"),
+			(43, 82): (43, "secondRouting"),
+			(111, 150): (71, "routing"),
+			(152, 191): (112, "secondRouting"),
+		}
 		self.keyCodes = set(keys)
 		names = []
 		for key in self.keyCodes:
-			if 2 <= key <= 41 or 111 <= key <= 150:
-				names.append("routing")
-				self.routingIndex = self._getRoutingIndex(key)
-			elif 43 <= key <= 82 or 152 <= key <= 191:
-				names.append("secondRouting")
-				self.routingIndex = self._getRoutingIndex(key)
+			routingTuple = self._getRoutingIndex(key)
+			if routingTuple:
+				names.append(routingTuple[0])
+				self.routingIndex = routingTuple[1]
 			else:
 				try:
 					names.append(KEY_NAMES[key])
@@ -593,17 +771,15 @@ class InputGestureKeys(braille.BrailleDisplayGesture):
 					log.debugWarning("Unknown key with id %d" % key)
 		self.id = "+".join(names)
 
-	def _getRoutingIndex(self, key) -> int:
-		# Indexes start from 0.
-		# First 40 routing keys.
-		if key <= 41:
-			return key - 2
-		# First 40 secondRouting keys.
-		if key <= 82:
-			return key - 43
-		# Rest routing keys.
-		if key <= 150:
-			return key - 71
-		# Rest secondRouting keys.
-		if key <= 191:
-			return key - 112
+	def _getRoutingIndex(self, key: int) -> Optional[Tuple[str, int]]:
+		""" Get the routing index, if the key is in a routing index range, returns the name of the range and the
+		index within that range.
+		See _routingRanges
+		"""
+		for rangeStart, rangeEnd in self._routingRanges:
+			value = self._routingRanges[(rangeStart, rangeEnd)]
+			indexOffset = value[0]
+			routingName = value[1]
+			if rangeStart <= key <= rangeEnd:
+				return routingName, key - indexOffset
+		return None
