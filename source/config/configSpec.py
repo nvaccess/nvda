@@ -51,8 +51,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 		sayCapForCapitals = boolean(default=false)
 		beepForCapitals = boolean(default=false)
 		useSpellingFunctionality = boolean(default=true)
-		delayedPhoneticDescriptions = boolean(default=false)
-		delayedPhoneticDescriptionsTimeoutMs = integer(default=1000,min=50,max=5000)
+		delayedCharacterDescriptions = boolean(default=false)
+		delayedCharacterDescriptionsTimeoutMs = integer(default=1000,min=50,max=5000)
 
 
 # Audio settings

@@ -1252,18 +1252,18 @@ This option should generally be enabled.
 However, some Microsoft Speech API synthesizers do not implement this correctly and behave strangely when it is enabled.
 If you are having problems with the pronunciation of individual characters, try disabling this option.
 
-==== Delayed phonetic descriptions for characters on cursor movement ====[delayedPhoneticDescriptions]
-When this setting is checked, NVDA will say the phonetic description when you move by characters, after an user defined pause.
+==== Delayed descriptions for characters on cursor movement ====[delayedCharacterDescriptions]
+When this setting is checked, NVDA will say the character description when you move by characters, after an user defined pause.
 Default delay setting is 1000 ms (1 sec).
 
 For example, if you review this line by characters, when you read the letter "b", NVDA will say "Bravo" after the defined pause.
 This can be useful if it is hard to distinguish between pronunciation of symbols, or for hearing impaired users.
 
-The phonetic description will be cancelled if other text is spoken during that time, or if you press the control key.
+The delayed character description will be cancelled if other text is spoken during that time, or if you press the control key.
 
-==== Time for delayed phonetic descriptions (ms) ====[delayedPhoneticDescriptionsTimeoutMs]
-Specify the delay time in milliseconds (ms) to say the phonetic description when you move by characters.
-Used when delayed phonetic descriptions is enabled.
+==== Time for delayed character descriptions (ms) ====[delayedCharacterDescriptionsTimeoutMs]
+Specify the delay time in milliseconds (ms) to say the character description when you move by characters.
+Used when delayed character descriptions is enabled.
 
 +++ Select Synthesizer (NVDA+control+s) +++[SelectSynthesizer]
 The Synthesizer dialog, which can be opened by activating the Change... button in the speech category of the NVDA settings dialog, allows you to select which Synthesizer NVDA should use to speak with.

@@ -1620,47 +1620,47 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 
 		# Translators: This is the label for a checkbox in the
 		# voice settings panel.
-		delayedPhoneticDescriptionsText = _("&Delayed phonetic descriptions for characters on cursor movement")
-		self.delayedPhoneticDescriptionsCheckBox = settingsSizerHelper.addItem(
-			wx.CheckBox(self, label=delayedPhoneticDescriptionsText)
+		delayedCharacterDescriptionsText = _("&Delayed descriptions for characters on cursor movement")
+		self.delayedCharacterDescriptionsCheckBox = settingsSizerHelper.addItem(
+			wx.CheckBox(self, label=delayedCharacterDescriptionsText)
 		)
-		self.bindHelpEvent("delayedPhoneticDescriptions", self.delayedPhoneticDescriptionsCheckBox)
-		self.delayedPhoneticDescriptionsCheckBox.SetValue(
-			config.conf["speech"][self.driver.name]["delayedPhoneticDescriptions"]
+		self.bindHelpEvent("delayedCharacterDescriptions", self.delayedCharacterDescriptionsCheckBox)
+		self.delayedCharacterDescriptionsCheckBox.SetValue(
+			config.conf["speech"][self.driver.name]["delayedCharacterDescriptions"]
 		)
-		self.delayedPhoneticDescriptionsCheckBox .Bind(
+		self.delayedCharacterDescriptionsCheckBox .Bind(
 			wx.EVT_CHECKBOX,
 			self.onToggleDelayDescriptions
 		)
 
 		minDelay = int(config.conf.getConfigValidation(
-			("speech", self.driver.name, "delayedPhoneticDescriptionsTimeoutMs")
+			("speech", self.driver.name, "delayedCharacterDescriptionsTimeoutMs")
 		).kwargs["min"])
 		maxDelay = int(config.conf.getConfigValidation(
-			("speech", self.driver.name, "delayedPhoneticDescriptionsTimeoutMs")
+			("speech", self.driver.name, "delayedCharacterDescriptionsTimeoutMs")
 		).kwargs["max"])
 
 		# Translators: This is a label for a setting in voice settings (an edit box to change
-		# Time for the delayed phonetic descriptions in ms;
-		delayedPhoneticDescriptionsTimeoutMsLabel = _("&Time for delayed phonetic descriptions (ms)")
-		self.delayedPhoneticDescriptionsTimeoutMsEdit = settingsSizerHelper.addLabeledControl(
-			delayedPhoneticDescriptionsTimeoutMsLabel,
+		# Time for the delayed character descriptions in ms;
+		delayedCharacterDescriptionsTimeoutMsLabel = _("&Time for delayed character descriptions (ms)")
+		self.delayedCharacterDescriptionsTimeoutMsEdit = settingsSizerHelper.addLabeledControl(
+			delayedCharacterDescriptionsTimeoutMsLabel,
 			nvdaControls.SelectOnFocusSpinCtrl,
 			min=minDelay,
 			max=maxDelay,
-			initial=config.conf["speech"][self.driver.name]["delayedPhoneticDescriptionsTimeoutMs"])
+			initial=config.conf["speech"][self.driver.name]["delayedCharacterDescriptionsTimeoutMs"])
 		self.bindHelpEvent(
-			"delayedPhoneticDescriptionsTimeoutMs",
-			self.delayedPhoneticDescriptionsTimeoutMsEdit
+			"delayedCharacterDescriptionsTimeoutMs",
+			self.delayedCharacterDescriptionsTimeoutMsEdit
 		)
-		if not config.conf["speech"][self.driver.name]["delayedPhoneticDescriptions"]:
-			self.delayedPhoneticDescriptionsTimeoutMsEdit.Hide()
+		if not config.conf["speech"][self.driver.name]["delayedCharacterDescriptions"]:
+			self.delayedCharacterDescriptionsTimeoutMsEdit.Hide()
 
 	def onToggleDelayDescriptions(self, evt):
 		if evt.IsChecked():
-			self.delayedPhoneticDescriptionsTimeoutMsEdit.Show()
+			self.delayedCharacterDescriptionsTimeoutMsEdit.Show()
 		else:
-			self.delayedPhoneticDescriptionsTimeoutMsEdit.Hide()
+			self.delayedCharacterDescriptionsTimeoutMsEdit.Hide()
 
 	def onSave(self):
 		AutoSettingsMixin.onSave(self)
@@ -1680,10 +1680,10 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		config.conf["speech"][self.driver.name]["sayCapForCapitals"]=self.sayCapForCapsCheckBox.IsChecked()
 		config.conf["speech"][self.driver.name]["beepForCapitals"]=self.beepForCapsCheckBox.IsChecked()
 		config.conf["speech"][self.driver.name]["useSpellingFunctionality"]=self.useSpellingFunctionalityCheckBox.IsChecked()
-		delayedDescriptions = self.delayedPhoneticDescriptionsCheckBox.IsChecked()
-		config.conf["speech"][self.driver.name]["delayedPhoneticDescriptions"] = delayedDescriptions
-		delayedDescriptionsMs = self.delayedPhoneticDescriptionsTimeoutMsEdit.Value
-		config.conf["speech"][self.driver.name]["delayedPhoneticDescriptionsTimeoutMs"] = delayedDescriptionsMs
+		delayedDescriptions = self.delayedCharacterDescriptionsCheckBox.IsChecked()
+		config.conf["speech"][self.driver.name]["delayedCharacterDescriptions"] = delayedDescriptions
+		delayedDescriptionsMs = self.delayedCharacterDescriptionsTimeoutMsEdit.Value
+		config.conf["speech"][self.driver.name]["delayedCharacterDescriptionsTimeoutMs"] = delayedDescriptionsMs
 
 class KeyboardSettingsPanel(SettingsPanel):
 	# Translators: This is the label for the keyboard settings panel.
