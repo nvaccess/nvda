@@ -81,7 +81,7 @@ Chạy tập tin vừa tải về sẽ khởi động chương trình NVDA tạm
 Tiếp theo, bạn sẽ được hỏi là muốn cài đặt NVDA vào máy, tạo bản chạy trực tiếp hay tiếp tục sử dụng phiên bản tạm thời đó.
 
 Nếu bạn có dự định dùng NVDA luôn trên máy này, bạn nên chọn cài đặt vào máy.
-Việc cài đặt NVDA vào máy sẽ cho phép bạn sử dụng một số tính năng như khởi động sau khi đăng nhập, khả năng đọc ở màn hình đăng nhập Windows và [các màn hình bảo vệ #SecureScreens] (không được hỗ trợ cho bản chạy tạm thời và  bản chạy trực tiếp) và tạo biểu tượng trên Start Menu và desktop.
+Việc cài đặt NVDA vào máy sẽ cho phép bạn sử dụng một số tính năng như khởi động sau khi đăng nhập, khả năng đọc ở màn hình đăng nhập Windows và [các màn hình bảo vệ #SecureScreens] (không được hỗ trợ cho bản chạy tạm thời và  bản chạy trực tiếp) cũng như tạo biểu tượng trên Start Menu và desktop.
 Bạn có thể tạo bản chạy trực tiếp sau khi cài đặt NVDA vào máy.
 
 Nếu muốn dùng NVDA từ ổ USB hay các phương tiện lưu trữ khác, bạn có thể chọn chức năng tạo bản chạy trực tiếp.
@@ -1724,7 +1724,6 @@ Khi bật tùy chọn trình bày theo màn hình, các thành phần của tran
 Ví dụ, một dòng có nhiều liên kết   sẽ được thể hiện trong cả tiếng nói và chữ nổi ở dạng nhiều liên kết trên cùng một dòng.
 Nếu tắt tùy chọn, các thành phần của trang sẽ thể hiện trên từng dòng riêng biệt.
 Điều này có thể giúp dễ hiểu hơn khi di chuyển từng dòng trên trang và giúp một số người dùng dễ tương tác hơn với các thành phần.
-Khi bật tùy chọn này, các thành phần của trang sẽ thể hiện như nó đang hiển thị một cách trực quan. Ví dụ, một dòng có nhiều liên kết đang hiển thị trực quan cũng sẽ được thể hiện trong tiếng nói và chữ nổi là dòng có nhiều liên kết. Khi tắt tùy chọn này, các thành phần của trang sẽ được thể hiện trên từng dòng riêng biệt, có thể dễ hiểu hơn khi điều hướng qua từng dòng, và cũng khiến việc tương tác với các thành phần trở nên dễ hơn với một số người dùng.
 
 ==== Bật chế độ duyệt khi tải trang ====[BrowseModeSettingsEnableOnPageLoad]
 Hộp kiểm này bật tắt tính năng cho phép chế độ duyệt tự động bật khi tải một trang.
@@ -3108,7 +3107,7 @@ Sau đây là các phím được gán cho BrailleNote QT khi không ở trong c
 | Phím Tab | tab |
 | Phím Shift+tab | shift+tab |
 | Phím Windows | read+w |
-| Phím Alt | read+mj |
+| Phím Alt | read+m |
 | Bật tắt trợ giúp nhập | read+1 |
 
 Sau đây là các lệnh được gán cho bánh xe cuộn:
@@ -3324,9 +3323,9 @@ Sau đây là các phím hiện được gán cho những màn hình nổi nói 
 + 
 + Chủ Đề Nâng Cao +[AdvancedTopics]
 
-++ Chế độ an toàn ++[SecureMode]
-Có thể chạy NVDA ở chế độ an toàn với [tùy chọn dòng lệnh #CommandLineOptions] ``-s``.
-NVDA chạy ở chế độ bảo vệ khi được gọi chạy ở [các màn hình bảo vệ #SecureScreens], cho đến khi [tham số hệ thống #SystemWideParameters] ``serviceDebug`` được bật.
+++ Chế độ bảo vệ ++[SecureMode]
+Có thể chạy NVDA ở chế độ bảo vệ với [tùy chọn dòng lệnh #CommandLineOptions] ``-s``.
+NVDA chạy ở chế độ bảo vệ khi được gọi chạy ở [các màn hình bảo vệ #SecureScreens], cho đến khi [tham số hệ thống mở rộng #SystemWideParameters] ``serviceDebug`` được bật.
 
 Chế độ bảo vệ sẽ vô hiệu:
 
@@ -3339,10 +3338,10 @@ Chế độ bảo vệ sẽ vô hiệu:
 -
 
 ++ Các Màn Hình Bảo Vệ ++[SecureScreens]
-NVDA chạy ở chế độ bảo vệ khi được gọi chạy ở các màn hình bảo vệ, cho đến khi [tham số hệ thống #SystemWideParameters] ``serviceDebug`` được bật.
+NVDA chạy ở chế độ bảo vệ khi được gọi chạy ở các màn hình bảo vệ, cho đến khi [tham số hệ thống mở rộng #SystemWideParameters] ``serviceDebug`` được bật.
 
 Khi chạy ở một màn hình bảo vệ, NVDA sử dụng một hồ sơ hệ thống cho các tùy chọn.
-Có thể chép các tùy chọn của người dùng cho NVDA để [dùng trong các màn hình bảo vẹ #GeneralSettingsCopySettings].
+Có thể chép các tùy chọn của người dùng cho NVDA để [dùng trong các màn hình bảo vệ #GeneralSettingsCopySettings].
 
 Màn hình bảo vệ bao gồm:
 

@@ -4,7 +4,7 @@
 %!includeconf: ../changes.t2tconf
 
 = 2022.2 =
-Bản phát hành này bao gồm nhiều lỗi dược sửa.
+Bản phát hành này bao gồm nhiều lỗi được sửa.
 Đáng chú ý, có những cải tiến đáng kể cho các ứng dụng trên nền Java, màn hình nổi và các tính năng của Windows.
 
 Đã trình làng những lệnh điều hướng mới trong bảng.
@@ -17,7 +17,7 @@ Bản phát hành này bao gồm nhiều lỗi dược sửa.
  - ``control+alt+home/end`` chuyển tới cột đầu / cuối.
  - ``control+alt+pageUp/pageDown`` chuyển đến dòng đầu / cuối.
  -
-- Đã thêm một kịch bản chưa gán lệnh để chuyển qua lại giữa các chế độ ngôn ngữ và vùng miền. (#10253)
+- Đã thêm một kịch bản chưa gán lệnh để chuyển qua lại giữa các chế độ ngôn ngữ và giọng theo vùng miền. (#10253)
 -
 
 == Các thay đổi ==
@@ -50,7 +50,7 @@ Bản phát hành này bao gồm nhiều lỗi dược sửa.
   -
 - Sửa lỗi cho chữ nổi:
   - Sửa lỗi đầu ra chữ nổi khi điều hướng qua một số văn bản nhất định trong các điều khiển rich edit của Mozilla, như là soạn thư nháp trong Thunderbird chẳng hạn. (#12542)
-  - Khi chữ nổi tự đi theo và  chuột cũng di chuyển với chế độ theo dõi chuột được bật, các lệnh duyệt văn bản giờ đây cập nhật trên màn hình chữ nổi với nổi dung được đọc. (#11519)
+  - Khi chữ nổi tự đi theo và  chuột cũng di chuyển với chế độ theo dõi chuột được bật, các lệnh duyệt văn bản giờ đây cập nhật trên màn hình chữ nổi với nội dung được đọc. (#11519)
   - Giờ đây đã có thể kéo màn hình chữ nổi qua nội dung sau khi dùng các lệnh duyệt văn bản. (#8682)
   -
 - Bộ cài NVDA giờ đây đã có thể gọi chạy từ một thư mục với các kí tự đặc biệt. (#13270)
@@ -70,7 +70,7 @@ Bản phát hành này bao gồm nhiều lỗi dược sửa.
 - NVDA sẽ thông báo nội dung thanh trạng thái trong Notepad của Windows 11. (#13386)
 - Làm nổi đối tượng điều hướng giờ đây đã hiển thị ngay khi kích hoạt tính năng. (#13641)
 - Sửa lỗi đọc các thành phần trong danh sách trong các cột đơn. (#13659, #13735)
-- Sửa lỗi tự chuyển ngôn ngữ  của eSpeak cho tiếng Anh và Pháp quay trở lại tiếng Anh của người Anh và tiếng Pháp của ngừi Pháp. (#13727)
+- Sửa lỗi tự chuyển ngôn ngữ  của eSpeak cho tiếng Anh và Pháp quay trở lại tiếng Anh của người Anh và tiếng Pháp của người Pháp. (#13727)
 - Sửa lỗi tự chuyển ngôn ngữ của  OneCore khi nỗ lực chuyển qua một ngôn ngữ được cài trước đây. (#13732)
 -
 
