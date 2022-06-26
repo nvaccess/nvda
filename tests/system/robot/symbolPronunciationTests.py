@@ -125,7 +125,7 @@ def _getMoveByLineTestSample() -> str:
 
 
 def _getDelayedDescriptionsTestSample() -> str:
-	return ("abcdefghijklmnopqrstuvwxyz",)
+	return "abcdefghijklmnopqrstuvwxyz"
 
 
 def test_moveByWord():
@@ -302,7 +302,7 @@ _CHARACTER_DESCRIPTIONS = {
 }
 
 
-def _pressKeyAndWaitDelaiedDescription(key: str, maxWait: int):
+def _pressKeyAndWaitDelaiedDescription(key: Move, maxWait: int):
 	""" Press the specified key, captures the read character, and wait until the delaied description is spoken.
 	the delaied description will be compared with the corresponding entry in a dictionary,
 	if an entry is found for the read character.
@@ -311,7 +311,7 @@ def _pressKeyAndWaitDelaiedDescription(key: str, maxWait: int):
 	"""
 	spy = _NvdaLib.getSpyLib()
 	s = _timer()
-	spoken = _NvdaLib.getSpeechAfterKey(key).lower()
+	spoken = _NvdaLib.getSpeechAfterKey(key.value).lower()
 	if spoken not in _CHARACTER_DESCRIPTIONS:
 		return None
 	spy.wait_for_specific_speech(_CHARACTER_DESCRIPTIONS[spoken], maxWaitSeconds=maxWait)
@@ -319,7 +319,7 @@ def _pressKeyAndWaitDelaiedDescription(key: str, maxWait: int):
 
 
 def _testDelayedDescription(
-	key: str,
+	key: Move,
 	delay: int = 1000,
 	repeatCount: int = 1,
 	threshold: int = 40
@@ -347,7 +347,7 @@ def _testDelayedDescription(
 	return True
 
 
-def _testDelayedDescriptionAfterGesture(key: str, gesture: str):
+def _testDelayedDescriptionAfterGesture(key: Move, gesture: str):
 	""" test that the delayed description is cancelled when sending another command after read one character.
 	@param key: the key used to navigate the text.
 	@param gesture: the gesture used after read the character.
@@ -360,7 +360,7 @@ def _testDelayedDescriptionAfterGesture(key: str, gesture: str):
 	spoken = ""
 	i = 1
 	for i in range(10):
-		spoken = _NvdaLib.getSpeechAfterKey(Move.CARET_CHAR).lower()
+		spoken = _NvdaLib.getSpeechAfterKey(key.value).lower()
 		if spoken not in _CHARACTER_DESCRIPTIONS:
 			continue
 		else:
