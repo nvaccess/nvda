@@ -24,6 +24,8 @@ It can be re-enabled in NVDA's advanced settings panel. (#11554)
 
 == Bug Fixes ==
 - Font size measurements are now translatable in NVDA. (#13573)
+- Ignore Java Access Bridge events where no window handle can be found for Java applications.
+This will improve performance for some Java applications including IntelliJ IDEA. (#13039)
 -
 
 
