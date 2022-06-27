@@ -7,7 +7,7 @@ NVDA has a custom build of eSpeak because not all components are required.
 
 ### Background
 The main authority on build requirements should be [`include/espeak/Makefile.am`](./espeak/Makefile.am).
-The `*.vcxproj` files in [`/include/espeak/src/windows/`](./espeak/src/windows/) can also be considered,
+The `*.vcxproj` files in [`include/espeak/src/windows/`](./espeak/src/windows/) can also be considered,
 however these are not always kept up to date.
 
 We don't use the auto make files or the visual studio files, we maintain our own method of building eSpeak.
@@ -32,7 +32,7 @@ Modifications will need to be made in [`nvdaHelper/espeak`](../nvdaHelper/espeak
    1. Changes to Dictionary compilation should be reflected in `espeakDictionaryCompileList`
    1. Some modules are intentionally excluded from the build.
       If unsure, err on the side of including it and raise it as a question when submitting a PR.
-   1. Modify the [`/nvdaHelper/espeak/config.h`](../nvdaHelper/espeak/config.h) file as required.
+   1. Modify the [`nvdaHelper/espeak/config.h`](../nvdaHelper/espeak/config.h) file as required.
 1. Update our record of the version number and build.
    1. Change back to the NVDA repo root
    1. Update the `/DPACKAGE_VERSION` in [`espeak/sconscript`](../nvdaHelper/espeak/sconscript)
@@ -48,7 +48,7 @@ Modifications will need to be made in [`nvdaHelper/espeak`](../nvdaHelper/espeak
 
 If python crashes while building, check the log.
 If the last thing is compiling some dictionary try excluding it.
-This can be done in [`/nvdaHelper/espeak/sconscript`](../nvdaHelper/espeak/sconscript).
+This can be done in [`nvdaHelper/espeak/sconscript`](../nvdaHelper/espeak/sconscript).
 Remember to report this to the eSpeak-ng project.
 
 If the build fails, take note of the error, compare the diff of the `Makefile.am` file and mirror 
