@@ -5,6 +5,7 @@
 
 import ctypes
 import serial
+import threading
 import time
 
 from collections import deque
@@ -38,8 +39,6 @@ MAX_INIT_SLEEPS = 20
 RESET_COUNT = 10
 # How long to sleep between I/O buffer resets
 RESET_SLEEP = 0.05
-# In rare cases loop might be practically infinite (see _somethingToRead).
-MAX_READ_COUNT = 10
 WRITE_QUEUE_LENGTH = 20
 KEY_NAMES = {
 	1: "attribute1",
@@ -143,7 +142,7 @@ class ReadThread(Thread):
 	def run(self):
 		while not self._event.isSet():
 			# Try to reconnect if port is not open
-			if not self._dev.is_open or not self._flushReadQueue:
+			if not self._dev.is_open:
 				log.debug(
 					f"Calling {self._function.__name__}, port {self._dev.name} not open")
 				self._function()
@@ -164,18 +163,6 @@ class ReadThread(Thread):
 					self._function()
 			except OSError:
 				log.debug("", exc_info=True)
-
-	# _handleKeyPresses handles at most one key/key combination at a time.
-	# Ensuring that pressing and handling get synchronized.
-	def _flushReadQueue(self) -> bool:
-		while len(self._readQueue):
-			self._function()
-			if not self._dev.is_open:
-				return False
-			log.debug(
-				f"Calling {self._function.__name__}, _readQueue length "
-				f"{len(self._readQueue)}")
-		return True
 
 
 # Timer is used to send BOTH_BYTES regularly to keep connection
@@ -255,7 +242,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			# For reconnection
 			self._currentPort = port
 			self._tryToConnect = True
-			if self._initConnection():
+			self._readHandling()
+			if self.numCells:
 				# Prepare _oldCells to store last displayed content.
 				while len(self._oldCells) < self.numCells:
 					self._oldCells.append(0)
@@ -309,47 +297,18 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			# Terminating anyway
 			pass
 
-	# _initConnection, _readInitByte and _readSettingsByte are helper functions
-	# to establish connection.
+	# _initConnection, _initPort, _openPort, _readInitByte and _readSettingsByte
+	# are helper functions to establish connection.
 	# If no connection, Albatross sends continuously INIT_START_BYTE
 	# followed by byte containing various settings like number of cells.
 	def _initConnection(self) -> bool:
 		for i in range(MAX_INIT_SLEEPS):
-			if self._tryToConnect:
-				if not self._dev:
-					try:
-						self._dev = serial.Serial(
-							self._currentPort, baudrate=BAUD_RATE, stopbits=serial.STOPBITS_ONE,
-							parity=serial.PARITY_NONE, timeout=TIMEOUT, writeTimeout=WRITE_TIMEOUT)
-						log.debug(f"Port {self._currentPort} initialized")
-						if not self._resetBuffers():
-							log(
-								f"sleeping {TIMEOUT} seconds before try {i + 1} / {MAX_INIT_SLEEPS}",
-								exc_info=True)
-							time.sleep(TIMEOUT)
-							continue
-					except IOError:
-						log.debug(
-							f"Port {self._currentPort} not initialized, sleeping {TIMEOUT} seconds "
-							f"before try {i + 1} / {MAX_INIT_SLEEPS}")
-						time.sleep(TIMEOUT)
-						continue
-				# Port is already opened when _initConnection is called from _readHandling
-				elif not self._dev.is_open:
-					try:
-						self._dev.open()
-						log.debug(f"Port {self._currentPort} opened")
-						if not self._resetBuffers():
-							log(
-								f"sleeping {TIMEOUT} seconds before try {i + 1} / {MAX_INIT_SLEEPS}")
-							time.sleep(TIMEOUT)
-							continue
-					except IOError:
-						log.debug(
-							f"Port {self._currentPort} not opened, sleeping {TIMEOUT} seconds "
-							f"before try {i + 1} / {MAX_INIT_SLEEPS}")
-						time.sleep(TIMEOUT)
-						continue
+			if not self._dev:
+				if not self._initPort(i):
+					continue
+			elif not self._dev.is_open:
+				if not self._openPort(i):
+					continue
 			if self._tryToConnect:
 				self._tryToConnect = False
 			else:
@@ -364,6 +323,54 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			if not self._tryToConnect and self.numCells:
 				return True
 		return False
+
+	# Parameter i is just for loggint retries
+	def _initPort(self, i) -> bool:
+		try:
+			self._dev = serial.Serial(
+				self._currentPort, baudrate=BAUD_RATE, stopbits=serial.STOPBITS_ONE,
+				parity=serial.PARITY_NONE, timeout=TIMEOUT, writeTimeout=WRITE_TIMEOUT)
+			log.debug(f"Port {self._currentPort} initialized")
+			if not self._resetBuffers():
+				if i == MAX_INIT_SLEEPS - 1:
+					return False
+				log(
+					f"sleeping {TIMEOUT} seconds before try {i + 2} / {MAX_INIT_SLEEPS}")
+				time.sleep(TIMEOUT)
+				return False
+			return True
+		except IOError:
+			if i == MAX_INIT_SLEEPS - 1:
+				log.debug(f"Port {self._currentPort} not initialized", exc_info=True)
+				return False
+			log.debug(
+				f"Port {self._currentPort} not initialized, sleeping {TIMEOUT} seconds "
+				f"before try {i + 2} / {MAX_INIT_SLEEPS}", exc_info=True)
+			time.sleep(TIMEOUT)
+			return False
+
+	# Parameter i is just for loggint retries
+	def _openPort(self, i) -> bool:
+		try:
+			self._dev.open()
+			log.debug(f"Port {self._currentPort} opened")
+			if not self._resetBuffers():
+				if i == MAX_INIT_SLEEPS - 1:
+					return False
+				log(
+					f"sleeping {TIMEOUT} seconds before try {i + 2} / {MAX_INIT_SLEEPS}")
+				time.sleep(TIMEOUT)
+				return False
+			return True
+		except IOError:
+			if i == MAX_INIT_SLEEPS - 1:
+				log.debug(f"Port {self._currentPort} not opened", exc_info=True)
+				return False
+			log.debug(
+				f"Port {self._currentPort} not opened, sleeping {TIMEOUT} seconds "
+				f"before try {i + 2} / {MAX_INIT_SLEEPS}", exc_info=True)
+			time.sleep(TIMEOUT)
+			return False
 
 	def _readInitByte(self) -> bool:
 		# Strange but very rarely in_waiting causes exception.
@@ -408,6 +415,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			log.debug(f"Read: {data}")
 			if data != INIT_START_BYTE:
 				self._writeQueue.append(ESTABLISHED)
+				log.debug(f"Write: enqueued {ESTABLISHED}")
 				self._somethingToWrite()
 				if self._tryToConnect:
 					return False
@@ -419,6 +427,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			else:
 				# Likely better chance to avoid switching display off and on
 				self._writeQueue.append(ESTABLISHED)
+				log.debug(f"Write: enqueued {ESTABLISHED}")
 				self._somethingToWrite()
 				if not self._invalidSettingsByte:
 					self._invalidSettingsByte = True
@@ -449,7 +458,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	def _disableConnection(self):
 		self.numCells = 0
-		if self._dev.is_open:
+		if self._dev and self._dev.is_open:
 			self._dev.close()
 		if len(self._oldCells):
 			self._clearOldCells()
@@ -464,55 +473,30 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def _readHandling(self):
 		if self._tryToConnect:
 			# Faster reconnection if port opened and reset here.
-			try:
-				self._dev.open()
-				log.debug(f"Port {self._currentPort} opened")
-				if not self._resetBuffers():
+			if threading.current_thread().name == "albatross_read":
+				try:
+					self._dev.open()
+					log.debug(f"Port {self._currentPort} opened")
+					if not self._resetBuffers():
+						return
+				except IOError:
+					log.debug("", exc_info=True)
 					return
-			except IOError:
-				log.debug("", exc_info=True)
-				return
 			if not self._initConnection():
 				self._disableConnection()
 				return
 		data = self._somethingToRead()
-		if data:
-			if not self._skipRedundantInitPackets(data):
-				return
-		if len(self._readQueue):
-			log.debug(
-				f"_ReadQueue is: {self._readQueue}, length {len(self._readQueue)}")
-			try:
-				data = self._readQueue.popleft()
-				log.debug(f"Read: dequeued {data}, {len(self._readQueue)} items left")
-			except IndexError:
-				log.debug("Read: _readQueue is empty", exc_info=True)
-			else:
-				if (
-					not self.numCells or data == INIT_START_BYTE or self._waitingSettingsByte
-				):
-					self._handleInitPackets(data)
-				else:
-					self._handleKeyPresses(data)
+		if not data or not self._skipRedundantInitPackets(data):
+			return
+		self._handleReadQueue()
 
 	# All but connecting/reconnecting related read operations
 	def _somethingToRead(self):
 		try:
-			data = b""
-			i = 0
-			while self._dev.in_waiting:
-				data += self._dev.read(self._dev.in_waiting)
-				i += 1
-				if i > MAX_READ_COUNT:
-					self._disableConnection()
-					log.debug(
-						f"Read: MAX_READ_COUNT {MAX_READ_COUNT} exceeded, "
-						" trying to reconnect")
-					return None
-			if len(data):
-				log.debug(f"Read: {data}, length {len(data)}, in_waiting {self._dev.in_waiting}")
-				return data
-			return None
+			data = self._dev.read(self._dev.in_waiting)
+			log.debug(
+				f"Read: {data}, length {len(data)}, in_waiting {self._dev.in_waiting}")
+			return data
 		except IOError:
 			self._disableConnection()
 			log.debug("Read failed, trying to reconnect", exc_info=True)
@@ -533,6 +517,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				else:
 					self._initByteReceived = False
 					self._writeQueue.append(ESTABLISHED)
+					log.debug(f"Write: enqueued {ESTABLISHED}")
 					self._somethingToWrite()
 					self._invalidSettingsByte = True
 					log.info(
@@ -572,6 +557,23 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				self._disableConnection()
 				log.debug(f"Write failed: {data}, trying to reconnect", exc_info=True)
 
+	def _handleReadQueue(self):
+		log.debug(
+			f"_ReadQueue is: {self._readQueue}, length {len(self._readQueue)}")
+		while len(self._readQueue):
+			try:
+				data = self._readQueue.popleft()
+				log.debug(f"Read: dequeued {data}, {len(self._readQueue)} items left")
+			except IndexError:
+				log.debug("Read: _readQueue is empty", exc_info=True)
+			else:
+				if (
+					not self.numCells or data == INIT_START_BYTE or self._waitingSettingsByte
+				):
+					self._handleInitPackets(data)
+				else:
+					self._handleKeyPresses(data)
+
 	# Display also starts to send init packets when exited internal menu or when
 	# delay sending data to display causes its fallback to "wait for connection"
 	# state.
@@ -595,6 +597,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					"Read: _readQueue is empty, waiting for settings byte", exc_info=True)
 				return
 			self._writeQueue.appendleft(ESTABLISHED)
+			log.debug(f"Write: enqueued {ESTABLISHED}")
 		self._setNumCellCount(data)
 		# Reconnected or exited device menu if length of _oldCells is numCells.
 		# Also checking that _currentCells has sometimes updated.
@@ -662,7 +665,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	# Keep display connected if nothing is sent for a while
 	def _keepConnected(self):
-		if self._tryToConnect:
+		if self._tryToConnect or not self.numCells:
 			return
 		if time.time() - self._writeTime >= KC_INTERVAL:
 			self._writeQueue.append(BOTH_BYTES)
@@ -675,10 +678,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	def display(self, cells: List[int]):
 		# Keep _currentCells up to date for reconnection regardless
-		# of driver may set it to 0.
+		# connection state of driver.
 		self._currentCells = cells.copy()
-		# Connected when numCells > 0
-		if not self.numCells:
+		# No connection
+		if self._tryToConnect or not self.numCells:
 			return
 		writeBytes: List[bytes] = [START_BYTE, ]
 		# Only changed content is sent (cell index and data).
