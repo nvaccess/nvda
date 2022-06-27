@@ -30,7 +30,11 @@ build_script:
  - scons source %sconsArgs%
  - scons %sconsOutTargets% %sconsArgs%
  - ps: appveyor\scripts\buildSymbolStore.ps1
- - 7z a -tzip -r output\symbols.zip symbols\*.dl_ symbols\*.ex_ symbols\*.pd_
+ # The server expects the symbols archive to be structured as ./*.ex_ not ./symbols/*.ex_.
+ # Change directory to package, as 7z will structure the archive using the relative path.
+ - cd symbols
+ - 7z a -tzip -r ..\output\symbols.zip *.dl_ *.ex_ *.pd_
+ - cd ..
 
 before_test:
  - ps: appveyor\scripts\tests\beforeTests.ps1

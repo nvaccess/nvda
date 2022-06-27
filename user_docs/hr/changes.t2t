@@ -3,6 +3,63 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2022.2 =
+
+== Nove značajke ==
+- Podrška za interakciju s Microsoft Loop komponentama u proizvodima Microsoft Officea. (#13617)
+- Support for interacting with Microsoft Loop Components in Microsoft Office products. (#13617)
+- Dodane su nove naredbe za navigaciju u tablicama. (#957)
+ - ``control+alt+home/end`` za skakanje na prvi/zadnji stupac.
+ - ``control+alt+pageUp/pageDown`` za skakanje na prvi/zadnji redak.
+ -
+- Dodana je nedodijeljena skripta za mijenjanje jezika i dijalekta. (#10253)
+-
+
+== Izmjene ==
+- NSIS je aktualiziran na verziju 3.08. (#9134)
+- CLDR je aktualiziran na verziju 41.0. (#13582)
+- Dodana je nova uloga za kontrole "indikatora zauzetosti". (#10644)
+- NVDA sada najavljuje kad se NVDA radnja ne može izvesti. (#13500)
+   - Ovo uključuje sljedeće:
+     - kad se koristi NVDA Windows Store verzija.
+     - kad se računalo nalazi u sigurnom kontekstu.
+     - kad se čeka na odgovor u dijaloškom okviru modala.
+    -
+  -
+-
+
+
+== Ispravke grešaka ==
+- NVDA instalacijski program se sada može pokrenuti iz direktorija s posebnim znakovima. (#13270)
+- U Firefoxu, NVDA sada uspijeva prijaviti stavke na web stranicama kad su atributi aria-rowindex, aria-colindex, aria-rowcount ili aria-colcount nevažeći. (#13405)
+- Kursor više ne mijenja redak ili stupac kad se koristi tablična navigacija za kretanje kroz spojene ćelije. (#7278)
+- Prilikom čitanja neinteraktivnih PDF-ova u Adobe Readeru, sada se izvještavaju vrsta i stanje polja obrasca (kao što su potvrdni okviri i izborni gumbi). (#13285)
+- "Resetiraj konfiguraciju na tvorničke vrijednosti" sada je dostupno u NVDA izborniku tijekom sigurnog načina rada. (#13547)
+- Sve zaključane tipke miša otključat će se kad se NVDA čitač zatvori. Prije je tipka miša ostala zaključana. (#13410)
+- Visual Studio sada izvještava o brojevima redaka. (#13604)
+   - Da bi izvještavanje o brojevima redaka funkcioniralo, prikazivanje brojeva redaka mora biti aktivirano u Visual Studiju i NVDA-u.
+  -
+- Visual Studio sada ispravno izvještava o uvlačenju retka. (#13574)
+- Ispravci za aplikacije temeljene na Javi:
+   - NVDA će sada najaviti stanje samo za čitanje. (#13692)
+   - NVDA će sada ispravno najaviti deaktivirano/aktivirano stanje. (#10993)
+   - NVDA će sada najaviti prečace funkcijskih tipki. (#13643)
+   - NVDA sada može odsvirati zvučni signal ili govoriti u trakama napretka. (#13594)
+   - NVDA više neće neispravno uklanjati tekst iz widgeta kad se tekst prikazuje korisniku. (#13102)
+  -
+- NVDA će još jednom najaviti detalje rezultata pretraživanja izbornika Start u nedavnim izdanjima sustava Windows 10 i 11. (#13544)
+- U Kalkulatoru verzije 10.1908 i novije sustava Windows 10 i 11, NVDA će najaviti rezultate kad se pritisne više naredbi, kao što su naredbe iz znanstvenog modusa. (#13386)
+- Ispravljen pregled brajice prilikom kretanja po tekstu u Mozillinim kontrolama za formatiranje teksta, kao što je pisanje poruke u Thunderbirdu. (#12542)
+- U sustavu Windows 11 ponovno je moguće navigirati i komunicirati s elementima korisničkog sučelja kao što su traka zadataka i prikaz zadataka pomoću interakcije miša i dodira. (#13508)
+- Skriveni tekst se više ne najavljuje u Wordpadu i drugim ``richEdit`` kontrolama za formatiranje teksta. (#13618)
+- NVDA će najaviti sadržaj trake stanja u Notepadu sustava Windows 11. (#13386)
+-
+
+
+== Izmjene za razvojne programere ==
+Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
+
+
 = 2022.1 =
 This release includes major improvements to UIA support with MS Office.
 For Microsoft Office 16.0.15000 and higher on Windows 11, NVDA will use UI Automation to access Microsoft Word documents by default.
@@ -88,9 +145,11 @@ Note:
 - Adobe Reader no longer crashes on startup if Adobe Reader's protected mode is enabled. (#11568)
 - Fixed a bug where selecting the Papenmeier Braille Display Driver caused NVDA to crash. (#13348)
 - In Microsoft word with UIA: page number and other formatting is no longer inappropriately announced when moving from a blank table cell to a cell with content, or from the end of the document into existing content. (#13458, #13459)
+- NVDA will no longer fail to report the page title and start automatically reading, when a page loads in Google chrome 100. (#13571)
+- NVDA no longer crashes when resetting the NVDA configuration to factory defaults while speak command keys is on. (#13634)
 -
 
-== Changes for Developers ==
+== Izmjene za razvojne programere ==
 Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
 
 

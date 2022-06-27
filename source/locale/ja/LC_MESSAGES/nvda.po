@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-22 00:03+0000\n"
-"PO-Revision-Date: 2022-04-25 11:15+0900\n"
+"POT-Creation-Date: 2022-06-17 00:02+0000\n"
+"PO-Revision-Date: 2022-06-19 11:28+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.1\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 msgid "Native input"
@@ -237,6 +237,11 @@ msgstr "タブコントロール"
 #. progress bar.
 msgid "prgbar"
 msgstr "プログレスバー"
+
+#. Translators: Displayed in braille for an object which is an
+#. indeterminate progress bar, aka busy indicator.
+msgid "bsyind"
+msgstr "ビジーインジケーター"
 
 #. Translators: Displayed in braille for an object which is a
 #. scroll bar.
@@ -804,7 +809,7 @@ msgstr "ドイツ語0級点字"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "German grade 0 (detailed)"
-msgstr "ドイツ語0級点字（詳細）"
+msgstr "ドイツ語0級点字(詳細)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -814,12 +819,17 @@ msgstr "ドイツ語1級点字"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "German grade 1 (detailed)"
-msgstr "ドイツ語1級点字（詳細）"
+msgstr "ドイツ語1級点字(詳細)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "German grade 2"
 msgstr "ドイツ語2級点字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "German grade 2 (detailed)"
+msgstr "ドイツ語2級点字(詳細)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1383,13 +1393,15 @@ msgstr "ショサ語2級点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Chinese (China, Mandarin) grade 1"
-msgstr "中国語点字(中国、標準中国語)1級"
+#. This should be translated to '中文中国汉语现行盲文' in Mandarin.
+msgid "Chinese (China, Mandarin) Current Braille System"
+msgstr "中国語(中国、北京語) 従来方式の点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Chinese (China, Mandarin) grade 2"
-msgstr "中国語点字(中国、標準中国語)2級"
+#. This should be translated to '中文中国汉语双拼盲文' in Mandarin.
+msgid "Chinese (China, Mandarin) Double-phonic Braille System"
+msgstr "中国語(中国、北京語) 2重綴り方式の点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2415,6 +2427,22 @@ msgstr "次のテーブル列へ移動"
 msgid "moves to the previous table column"
 msgstr "前のテーブル列へ移動"
 
+#. Translators: the description for the first table row script on browseMode documents.
+msgid "moves to the first table row"
+msgstr "テーブルの最初の行に移動"
+
+#. Translators: the description for the last table row script on browseMode documents.
+msgid "moves to the last table row"
+msgstr "テーブルの最後の行に移動"
+
+#. Translators: the description for the first table column script on browseMode documents.
+msgid "moves to the first table column"
+msgstr "テーブルの最初の列に移動"
+
+#. Translators: the description for the last table column script on browseMode documents.
+msgid "moves to the last table column"
+msgstr "テーブルの最後の列に移動"
+
 #. Translators: The message announced when toggling the include layout tables browse mode setting.
 msgid "layout tables off"
 msgstr "レイアウトテーブルを報告しない"
@@ -2563,25 +2591,9 @@ msgstr "右クリック"
 msgid "Locks or unlocks the left mouse button"
 msgstr "左マウスボタンをロックまたはロック解除"
 
-#. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
-msgid "Left mouse button unlock"
-msgstr "左マウスボタンをロック解除"
-
-#. Translators: This is presented when the left mouse button is locked down (used for drag and drop).
-msgid "Left mouse button lock"
-msgstr "左マウスボタンをロック"
-
 #. Translators: Input help mode message for right mouse lock/unlock command.
 msgid "Locks or unlocks the right mouse button"
 msgstr "右マウスボタンをロックまたはロック解除"
-
-#. Translators: This is presented when the right mouse button lock is released (used for drag and drop).
-msgid "Right mouse button unlock"
-msgstr "右マウスボタンをロック解除"
-
-#. Translators: This is presented when the right mouse button is locked down (used for drag and drop).
-msgid "Right mouse button lock"
-msgstr "右マウスボタンをロック"
 
 #. Translators: Input help mode message for report current selection command.
 msgid ""
@@ -3040,6 +3052,24 @@ msgstr "クリック可能を報告しない"
 #. Translators: The message announced when toggling the report if clickable document formatting setting.
 msgid "report if clickable on"
 msgstr "クリック可能を報告する"
+
+#. Translators: Input help mode message for cycle through automatic language switching mode command.
+msgid ""
+"Cycles through speech modes for automatic language switching: off, language "
+"only and language and dialect."
+msgstr "言語の切り替え: なし、言語、言語と方言"
+
+#. Translators: A message reported when executing the cycle automatic language switching mode command.
+msgid "Automatic language switching off"
+msgstr "自動的に言語を切り替えない"
+
+#. Translators: A message reported when executing the cycle automatic language switching mode command.
+msgid "Automatic language and dialect switching on"
+msgstr "言語と方言を自動的に切り替え"
+
+#. Translators: A message reported when executing the cycle automatic language switching mode command.
+msgid "Automatic language switching on"
+msgstr "言語を自動的に切り替え"
 
 #. Translators: Input help mode message for cycle speech symbol level command.
 msgid ""
@@ -4761,6 +4791,22 @@ msgstr "ソマリア語"
 msgid "%s cursor"
 msgstr "%sカーソル"
 
+#. Translators: This is presented when the left mouse button is locked down (used for drag and drop).
+msgid "Left mouse button lock"
+msgstr "左マウスボタンをロック"
+
+#. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
+msgid "Left mouse button unlock"
+msgstr "左マウスボタンをロック解除"
+
+#. Translators: This is presented when the right mouse button is locked down (used for drag and drop).
+msgid "Right mouse button lock"
+msgstr "右マウスボタンをロック"
+
+#. Translators: This is presented when the right mouse button lock is released (used for drag and drop).
+msgid "Right mouse button unlock"
+msgstr "右マウスボタンをロック解除"
+
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
@@ -6337,6 +6383,22 @@ msgstr "ナビゲーターオブジェクトとフォーカスを次の行に移
 msgid "Moves the navigator object and focus to the previous row"
 msgstr "ナビゲーターオブジェクトとフォーカスを前の行に移動"
 
+#. Translators: The description of an NVDA command.
+msgid "Moves the navigator object to the first column"
+msgstr "ナビゲーターオブジェクトを最初の列に移動"
+
+#. Translators: The description of an NVDA command.
+msgid "Moves the navigator object to the last column"
+msgstr "ナビゲーターオブジェクトを最後の列に移動"
+
+#. Translators: The description of an NVDA command.
+msgid "Moves the navigator object and focus to the first row"
+msgstr "ナビゲーターオブジェクトとフォーカスを最初の行に移動"
+
+#. Translators: The description of an NVDA command.
+msgid "Moves the navigator object and focus to the last row"
+msgstr "ナビゲーターオブジェクトとフォーカスを最後の行に移動"
+
 #. Translators: Announced in braille when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
 msgid "Suggestions"
 msgstr "候補"
@@ -7778,6 +7840,10 @@ msgstr "図"
 msgid "highlighted"
 msgstr "ハイライトあり"
 
+#. Translators: Identifies a progress bar with indeterminate state, I.E. progress can not be determined.
+msgid "busy indicator"
+msgstr "ビジーインジケーター"
+
 #. Translators: Indicates that a particular state of an object is negated.
 #. Separate strings have now been defined for commonly negated states (e.g. not selected and not
 #. checked), but this still might be used in some other cases.
@@ -7952,7 +8018,7 @@ msgstr "オーバーフロー"
 msgid "unlocked"
 msgstr "ロック解除"
 
-#. Translators: a state that denotes the existance of a note.
+#. Translators: a state that denotes the existence of a note.
 msgid "has note"
 msgstr "メモあり"
 
@@ -7980,10 +8046,6 @@ msgstr "設定が適用されました"
 #. Translators: Reported when configuration has been restored to defaults by using restore configuration to factory defaults item in NVDA menu.
 msgid "Configuration restored to factory defaults"
 msgstr "設定情報を初期値に戻しました"
-
-#. Translators: Reported when current configuration cannot be saved while NVDA is running in secure mode such as in Windows login screen.
-msgid "Cannot save configuration - NVDA in secure mode"
-msgstr "設定情報は保存できません - NVDAはセキュアモードで実行中です"
 
 #. Translators: Reported when current configuration has been saved.
 msgid "Configuration saved"
@@ -8047,37 +8109,6 @@ msgstr "設定(&S)..."
 #. Translators: The description for the menu item to open NVDA Settings dialog.
 msgid "NVDA settings"
 msgstr "NVDAの設定"
-
-#. Translators: The label for the menu item to open Default speech dictionary dialog.
-msgid "&Default dictionary..."
-msgstr "既定の辞書(&D)..."
-
-#. Translators: The help text for the menu item to open Default speech dictionary dialog.
-msgid ""
-"A dialog where you can set default dictionary by adding dictionary entries "
-"to the list"
-msgstr "既定の辞書に項目を追加するためのダイアログ"
-
-#. Translators: The label for the menu item to open Voice specific speech dictionary dialog.
-msgid "&Voice dictionary..."
-msgstr "音声辞書(&V)..."
-
-#. Translators: The help text for the menu item
-#. to open Voice specific speech dictionary dialog.
-msgid ""
-"A dialog where you can set voice-specific dictionary by adding dictionary "
-"entries to the list"
-msgstr "読み上げ辞書に項目を追加するためのダイアログ"
-
-#. Translators: The label for the menu item to open Temporary speech dictionary dialog.
-msgid "&Temporary dictionary..."
-msgstr "一時辞書(&T)..."
-
-#. Translators: The help text for the menu item to open Temporary speech dictionary dialog.
-msgid ""
-"A dialog where you can set temporary dictionary by adding dictionary entries "
-"to the edit box"
-msgstr "一時辞書に項目を追加するためのダイアログ"
 
 #. Translators: The label for a submenu under NvDA Preferences menu to select speech dictionaries.
 msgid "Speech &dictionaries"
@@ -8174,32 +8205,6 @@ msgstr "NVDAについて(&A)..."
 msgid "&Help"
 msgstr "ヘルプ(&H)"
 
-#. Translators: The label for the menu item to open the Configuration Profiles dialog.
-msgid "&Configuration profiles..."
-msgstr "設定プロファイル(&C)..."
-
-#. Translators: The label for the menu item to revert to saved configuration.
-msgid "&Revert to saved configuration"
-msgstr "前回保存された設定に戻す(&R)"
-
-msgid "Reset all settings to saved state"
-msgstr "前回保存された設定に戻す"
-
-#. Translators: The label for the menu item to reset settings to default settings.
-#. Here, default settings means settings that were there when the user first used NVDA.
-msgid "&Reset configuration to factory defaults"
-msgstr "設定のリセット"
-
-msgid "Reset all settings to default state"
-msgstr "設定をリセットして初期値に戻す"
-
-#. Translators: The label for the menu item to save current settings.
-msgid "&Save configuration"
-msgstr "設定情報の保存(&S)"
-
-msgid "Write the current configuration to nvda.ini"
-msgstr "設定情報を保存する"
-
 #. Translators: The label for the menu item to open donate page.
 msgid "Donate"
 msgstr "寄付(&D)"
@@ -8219,46 +8224,66 @@ msgstr "終了(&X)"
 msgid "Exit NVDA"
 msgstr "NVDAの終了"
 
-#. Translators: An option in the combo box to choose exit action.
-msgid "Exit"
-msgstr "終了"
+#. Translators: The label for the menu item to open Default speech dictionary dialog.
+msgid "&Default dictionary..."
+msgstr "既定の辞書(&D)..."
 
-#. Translators: An option in the combo box to choose exit action.
-msgid "Restart"
-msgstr "再起動"
-
-#. Translators: An option in the combo box to choose exit action.
-msgid "Restart with add-ons disabled"
-msgstr "アドオンを無効化して再起動"
-
-#. Translators: An option in the combo box to choose exit action.
-msgid "Restart with debug logging enabled"
-msgstr "デバッグログを有効化して再起動"
-
-#. Translators: An option in the combo box to choose exit action.
-msgid "Install pending update"
-msgstr "保留中の更新を実行"
-
-#. Translators: A message in the exit Dialog shown when all add-ons are disabled.
+#. Translators: The help text for the menu item to open Default speech dictionary dialog.
 msgid ""
-"All add-ons are now disabled. They will be re-enabled on the next restart "
-"unless you choose to disable them again."
-msgstr ""
-"すべてのアドオンが無効です。アドオンを無効化しないでNVDAを再起動すれば、アド"
-"オンは有効化されます。"
+"A dialog where you can set default dictionary by adding dictionary entries "
+"to the list"
+msgstr "既定の辞書に項目を追加するためのダイアログ"
 
-#. Translators: A message in the exit Dialog shown when NVDA language has been
-#. overwritten from the command line.
+#. Translators: The label for the menu item to open Voice specific speech dictionary dialog.
+msgid "&Voice dictionary..."
+msgstr "音声辞書(&V)..."
+
+#. Translators: The help text for the menu item
+#. to open Voice specific speech dictionary dialog.
 msgid ""
-"NVDA's interface language is now forced from the command line. On the next "
-"restart, the language  saved in NVDA's configuration will be used instead."
-msgstr ""
-"NVDAのインターフェイス言語がコマンドラインから指定されています。次回の再起動"
-"時には、NVDAの設定で保存された言語を使用します。"
+"A dialog where you can set voice-specific dictionary by adding dictionary "
+"entries to the list"
+msgstr "読み上げ辞書に項目を追加するためのダイアログ"
 
-#. Translators: The label for actions list in the Exit dialog.
-msgid "What would you like to &do?"
-msgstr "終了オプション(&D)"
+#. Translators: The label for the menu item to open Temporary speech dictionary dialog.
+msgid "&Temporary dictionary..."
+msgstr "一時辞書(&T)..."
+
+#. Translators: The help text for the menu item to open Temporary speech dictionary dialog.
+msgid ""
+"A dialog where you can set temporary dictionary by adding dictionary entries "
+"to the edit box"
+msgstr "一時辞書に項目を追加するためのダイアログ"
+
+#. Translators: The label for the menu item to open the Configuration Profiles dialog.
+msgid "&Configuration profiles..."
+msgstr "設定プロファイル(&C)..."
+
+#. Translators: The label for the menu item to revert to saved configuration.
+msgid "&Revert to saved configuration"
+msgstr "前回保存された設定に戻す(&R)"
+
+#. Translators: The help text for the menu item to revert to saved configuration.
+msgid "Reset all settings to saved state"
+msgstr "前回保存された設定に戻す"
+
+#. Translators: The label for the menu item to reset settings to default settings.
+#. Here, default settings means settings that were there when the user first used NVDA.
+msgid "&Reset configuration to factory defaults"
+msgstr "設定のリセット"
+
+#. Translators: The help text for the menu item to reset settings to default settings.
+#. Here, default settings means settings that were there when the user first used NVDA.
+msgid "Reset all settings to default state"
+msgstr "設定をリセットして初期値に戻す"
+
+#. Translators: The label for the menu item to save current settings.
+msgid "&Save configuration"
+msgstr "設定情報の保存(&S)"
+
+#. Translators: The help text for the menu item to save current settings.
+msgid "Write the current configuration to nvda.ini"
+msgstr "設定情報を保存する"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -8592,6 +8617,20 @@ msgstr ""
 "このアドオンの新しいバージョンへの更新が必要です。\n"
 "サポートされている最小 API バージョンが {} になりました。"
 
+#. Translators: Reported when an action cannot be performed because NVDA is in a secure screen
+msgid "Action unavailable in secure context"
+msgstr "セキュアモードでは使用できません"
+
+#. Translators: Reported when an action cannot be performed because NVDA has been installed
+#. from the Windows Store.
+msgid "Action unavailable in NVDA Windows Store version"
+msgstr "Microsoft Store版NVDAでは使用できません"
+
+#. Translators: Reported when an action cannot be performed because NVDA is waiting
+#. for a response from a modal dialog
+msgid "Action unavailable while a dialog requires a response"
+msgstr "ダイアログが開いている間は使用できません"
+
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
 msgstr "設定プロファイル"
@@ -8783,6 +8822,47 @@ msgstr "利用できるヘルプはありません"
 #. indicating that	the user guide could not be found.
 msgid "No user guide found."
 msgstr "ユーザーガイドが見つかりません"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Exit"
+msgstr "終了"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart"
+msgstr "再起動"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with add-ons disabled"
+msgstr "アドオンを無効化して再起動"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with debug logging enabled"
+msgstr "デバッグログを有効化して再起動"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Install pending update"
+msgstr "保留中の更新を実行"
+
+#. Translators: A message in the exit Dialog shown when all add-ons are disabled.
+msgid ""
+"All add-ons are now disabled. They will be re-enabled on the next restart "
+"unless you choose to disable them again."
+msgstr ""
+"すべてのアドオンが無効です。アドオンを無効化しないでNVDAを再起動すれば、アド"
+"オンは有効化されます。"
+
+#. Translators: A message in the exit Dialog shown when NVDA language has been
+#. overwritten from the command line.
+msgid ""
+"NVDA's interface language is now forced from the command line. On the next "
+"restart, the language  saved in NVDA's configuration will be used instead."
+msgstr ""
+"NVDAのインターフェイス言語がコマンドラインから指定されています。次回の再起動"
+"時には、NVDAの設定で保存された言語を使用します。"
+
+#. Translators: The label for actions list in the Exit dialog.
+msgid "What would you like to &do?"
+msgstr "終了オプション(&D)"
 
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.

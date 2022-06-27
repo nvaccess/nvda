@@ -89,7 +89,7 @@ def __getattr__(attrName: str) -> Any:
 	since add-ons are initialized before `appModuleHandler`
 	and when `appModuleHandler` was not yet initialized the variable was set to `None`.
 	"""
-	if attrName == "NVDAProcessID":
+	if attrName == "NVDAProcessID" and globalVars._allowDeprecatedAPI:
 		log.warning("appModuleHandler.NVDAProcessID is deprecated, use globalVars.appPid instead.")
 		if initialize._alreadyInitialized:
 			return globalVars.appPid
@@ -112,12 +112,13 @@ def _warnDeprecatedAliasAppModule() -> None:
 	except KeyError:
 		raise RuntimeError("This function can be executed only inside an alias App Module.") from None
 	else:
-		log.warning(
-			(
-				f"Importing from appModules.{currModName} is deprecated,"
-				f" you should import from appModules.{replacementModName}."
-			)
+		deprecatedImportWarning = (
+			f"Importing appModules.{currModName} is deprecated,"
+			f" instead import appModules.{replacementModName}."
 		)
+		log.warning(deprecatedImportWarning)
+		if not globalVars._allowDeprecatedAPI:
+			raise ModuleNotFoundError(deprecatedImportWarning)
 
 
 def registerExecutableWithAppModule(executableName: str, appModName: str) -> None:
@@ -155,7 +156,12 @@ def _getPossibleAppModuleNamesForExecutable(executableName: str) -> Tuple[str, .
 	return tuple(
 		aliasName for aliasName in (
 			_executableNamesToAppModsAddons.get(executableName),
-			executableName,
+			# #5323: Certain executables contain dots as part of their file names.
+			# Since Python threats dot as a package separator we replace it with undescore
+			# in the name of the Python module.
+			# For new App Modules consider adding an alias to `appModule.EXECUTABLE_NAMES_TO_APP_MODS`
+			# rather than rely on the fact that dots are replaced.
+			executableName.replace(".", "_"),
 			appModules.EXECUTABLE_NAMES_TO_APP_MODS.get(executableName)
 		) if aliasName is not None
 	)
@@ -253,8 +259,7 @@ def getAppModuleFromProcessID(processID: int) -> AppModule:
 	with _getAppModuleLock:
 		mod=runningTable.get(processID)
 		if not mod:
-			# #5323: Certain executables contain dots as part of their file names.
-			appName=getAppNameFromProcessID(processID).replace(".","_")
+			appName = getAppNameFromProcessID(processID)
 			mod=fetchAppModule(processID,appName)
 			if not mod:
 				raise RuntimeError("error fetching default appModule")

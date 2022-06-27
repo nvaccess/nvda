@@ -1,7 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2021 NV Access Limited, Babbage B.V.
+# Copyright (C) 2006-2022 NV Access Limited, Babbage B.V.
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
+
 import typing
 from typing import (
 	Optional,
@@ -46,6 +47,7 @@ import api
 import config
 import controlTypes
 from controlTypes import TextPosition
+from controlTypes.formatFields import FontSize
 from NVDAObjects.window import Window
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo, InvalidNVDAObject
 import NVDAObjects.JAB
@@ -140,6 +142,10 @@ def normalizeIA2TextFormatField(formatField):
 		formatField["text-position"] = TextPosition(formatField.pop("text-position"))
 	except KeyError:
 		formatField["text-position"] = TextPosition.BASELINE
+
+	fontSize = formatField.get("font-size")
+	if fontSize is not None:
+		formatField["font-size"] = FontSize.translateFromAttribute(fontSize)
 
 class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 
@@ -502,7 +508,7 @@ the NVDAObject for IAccessible
 				from .winword import SpellCheckErrorField
 				clsList.append(SpellCheckErrorField)
 			else:
-				from .winword import WordDocument_WwN
+				from NVDAObjects.window.winword import WordDocument_WwN
 				clsList.append(WordDocument_WwN)
 		elif windowClassName=="DirectUIHWND" and role==oleacc.ROLE_SYSTEM_TOOLBAR:
 			parentWindow=winUser.getAncestor(self.windowHandle,winUser.GA_PARENT)
