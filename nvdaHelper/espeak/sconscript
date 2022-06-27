@@ -136,6 +136,18 @@ def espeak_compilePhonemeData_buildAction(target,source,env):
 	espeak.espeak_ng_CompilePhonemeData(22050,None,None)
 	espeak.espeak_Terminate()
 
+
+# refer to CLEANFILES in include\espeak\Makefile.am 
+for f in (
+		os.path.join(espeakRepo.abspath, "dictsource", "ru_listx"),
+		os.path.join(espeakRepo.abspath, "dictsource", "cmn_listx"),
+		os.path.join(espeakRepo.abspath, "dictsource", "yue_listx"),
+	):
+	if os.path.exists(f):
+		print(f"Removing listx file: {f}")
+		os.remove(f)
+
+
 env['BUILDERS']['espeak_compilePhonemeData']=Builder(action=env.Action(espeak_compilePhonemeData_buildAction,"Compiling phoneme data"),emitter=espeak_compilePhonemeData_buildEmitter)
 
 #: See dictionaries section of /include/espeak/Makefile.am
@@ -150,6 +162,7 @@ espeakDictionaryCompileList: typing.Dict[
 	"as_dict": ("as", ["as_list", "as_rules", ]),
 	"az_dict": ("az", ["az_list", "az_rules", ]),
 	"ba_dict": ("ba", ["ba_list", "ba_rules", ]),
+	"be_dict": ("be", ["be_list", "be_rules", ]),
 	"bg_dict": ("bg", ["bg_listx", "bg_list", "bg_rules"]),
 	"bn_dict": ("bn", ["bn_list", "bn_rules", ]),
 	"bpy_dict": ("bpy", ["bpy_list", "bpy_rules", ]),
@@ -200,6 +213,7 @@ espeakDictionaryCompileList: typing.Dict[
 	"ku_dict": ("ku", ["ku_list", "ku_rules", ]),
 	"ky_dict": ("ky", ["ky_list", "ky_rules", ]),
 	"la_dict": ("la", ["la_list", "la_rules", ]),
+	"lb_dict": ("lb", ["lb_list", "lb_rules", ]),
 	"lfn_dict": ("lfn", ["lfn_list", "lfn_rules", ]),
 	"lt_dict": ("lt", ["lt_list", "lt_rules", ]),
 	"lv_dict": ("lv", ["lv_list", "lv_rules", ]),
@@ -209,6 +223,7 @@ espeakDictionaryCompileList: typing.Dict[
 	"mr_dict": ("mr", ["mr_list", "mr_rules", ]),
 	"ms_dict": ("ms", ["ms_list", "ms_rules", ]),
 	"mt_dict": ("mt", ["mt_list", "mt_rules", ]),
+	"mto_dict": ("mto", ["mto_list", "mto_rules", ]),
 	"my_dict": ("my", ["my_list", "my_rules", ]),
 	"nci_dict": ("nci", ["nci_list", "nci_rules", ]),
 	"ne_dict": ("ne", ["ne_list", "ne_rules", ]),
@@ -316,7 +331,7 @@ def espeak_compileDict_buildAction(
 		# returns: espeak_ng_STATUS
 		compileDictResult = espeak.espeak_ng_CompileDictionary(
 			rulesPathEncoded,  # const char *dsource
-			None,  # const char *dict_name
+			bytes(lang, encoding="ascii"),  # const char *dict_name
 			None,  # FILE *log
 			0,  # int flags
 			None,  # espeak_ng_ERROR_CONTEXT *context
@@ -417,8 +432,12 @@ env.Install(
 	env.Glob(os.path.join(espeakRepo.abspath, 'dictsource', 'extra', '*'))
 )
 
-#Compile all dictionaries
-excludeLangs: typing.List[str] = [] # Use to exclude languages which don't compile.
+excludeLangs: typing.List[str] = [
+]
+"""Used to exclude languages which don't compile.
+"""
+
+# Compile all dictionaries
 dictSourcePath: SCons.Node.FS.Dir = espeakRepo.Dir('dictsource')
 
 # Remove emoji files before compiling dictionaries.
