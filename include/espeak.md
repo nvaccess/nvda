@@ -35,7 +35,7 @@ Modifications will need to be made in [`nvdaHelper/espeak`](../nvdaHelper/espeak
    1. Modify the [`nvdaHelper/espeak/config.h`](../nvdaHelper/espeak/config.h) file as required.
 1. Update our record of the version number and build.
    1. Change back to the NVDA repo root
-   1. Update the `/DPACKAGE_VERSION` in [`espeak/sconscript`](../nvdaHelper/espeak/sconscript)
+   1. Update the `/DPACKAGE_VERSION` in [`nvdaHelper/espeak/sconscript`](../nvdaHelper/espeak/sconscript)
       - The preprocessor definition is used to supply these definitions instead of [`nvdaHelper/espeak/config.h`](../nvdaHelper/espeak/config.h)
       - [`nvdaHelper/espeak/config.h`](../nvdaHelper/espeak/config.h) must exist (despite being empty) since a "config.h" is included within eSpeak.
       - Compare to espeak source info: [`include/espeak/src/windows/config.h`](./espeak/src/windows/config.h).
