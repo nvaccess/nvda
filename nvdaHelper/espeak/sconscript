@@ -31,7 +31,8 @@ class espeak_ERROR(enum.IntEnum):
 	EE_BUFFER_FULL = 1
 	EE_NOT_FOUND = 2
 
-class espeak_ng_STATUS(enum.IntEnum):
+
+class espeak_ng_STATUS(enum.IntFlag):
 	ENS_GROUP_MASK = 0x70000000
 	ENS_GROUP_ERRNO = 0x00000000  # Values 0 - 255 map to errno error codes.
 	ENS_GROUP_ESPEAK_NG = 0x10000000  # eSpeak NG error codes.
