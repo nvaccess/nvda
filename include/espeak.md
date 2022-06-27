@@ -38,7 +38,8 @@ Modifications will need to be made in [`nvdaHelper/espeak`](../nvdaHelper/espeak
    1. Update the `/DPACKAGE_VERSION` in [`nvdaHelper/espeak/sconscript`](../nvdaHelper/espeak/sconscript)
       - The preprocessor definition is used to supply these definitions instead of [`nvdaHelper/espeak/config.h`](../nvdaHelper/espeak/config.h)
       - [`nvdaHelper/espeak/config.h`](../nvdaHelper/espeak/config.h) must exist (despite being empty) since a "config.h" is included within eSpeak.
-      - Compare to espeak source info: [`include/espeak/src/windows/config.h`](./espeak/src/windows/config.h).
+      - Compare to eSpeak source config: [`include/espeak/src/windows/config.h`](./espeak/src/windows/config.h).
+      - Diff `src/windows/config.h` with the previous commit.
    1. Update NVDA [`readme.md`](../readme.md) with eSpeak version and commit.
    1. Build NVDA: `scons source`
 1. Run NVDA (set eSpeak-ng as the synthesizer) and test.
