@@ -399,7 +399,11 @@ espeakLib=env.SharedLibrary(
 	LIBS=['advapi32'],
 )
 
-phonemeData=env.espeak_compilePhonemeData(espeakRepo.Dir('espeak-ng-data'),espeakRepo.Dir('phsource'))
+
+phonemeData = env.espeak_compilePhonemeData(
+	espeakRepo.Dir('espeak-ng-data'),
+	espeakRepo.Dir('phsource')
+)
 env.Depends(phonemeData,espeakLib)
 for i in phonemeData:
 	iDir = espeakRepo.Dir('espeak-ng-data').abspath
@@ -408,7 +412,10 @@ for i in phonemeData:
 	env.InstallAs(os.path.join(synthDriversDir.Dir('espeak-ng-data').abspath, fileName), i)
 
 # Move any extra dictionaries into dictsource for compilation
-env.Install(espeakRepo.Dir('dictsource'),env.Glob(os.path.join(espeakRepo.abspath,'dictsource','extra','*_*')))
+env.Install(
+	espeakRepo.Dir('dictsource'),
+	env.Glob(os.path.join(espeakRepo.abspath, 'dictsource', 'extra', '*'))
+)
 
 #Compile all dictionaries
 excludeLangs: typing.List[str] = [] # Use to exclude languages which don't compile.
@@ -419,7 +426,7 @@ dictSourcePath: SCons.Node.FS.Dir = espeakRepo.Dir('dictsource')
 # Also, our own emoji processing using CLDR data is preferred.
 emojiGlob = os.path.join(espeakRepo.abspath,'dictsource','*_emoji')
 for f in glob(emojiGlob):
-	print("Removing emoji file: %s"%f)
+	print(f"Removing emoji file: {f}")
 	os.remove(f)
 
 # Create compile commands for all languages
