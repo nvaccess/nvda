@@ -14,7 +14,7 @@ from NVDAObjects.UIA.wordDocument import WordDocument as UIAWordDocument
 MAX_LINES = 250  # give up after searching this many lines
 
 
-def getTextInfoAtCaret():
+def getTextInfoAtCaret() -> textInfos.TextInfo:
 	# returns None if not editable text or if in Microsoft Word document
 	ti = None
 	focus = api.getFocusObject()
@@ -31,13 +31,12 @@ def getTextInfoAtCaret():
 	return ti
 
 
-def isLastLineOfParagraph(line):
+def isLastLineOfParagraph(line: str):
 	stripped = line.strip(' \t')
 	return stripped.endswith('\r') or stripped.endswith('\n')
 
 
-def speakParagraph(ti):
-	# ti is TextInfo object
+def speakParagraph(ti: textInfos.TextInfo):
 	paragraph = ""
 	lines = 0
 	tempTi = ti.copy()
@@ -59,14 +58,14 @@ def speakParagraph(ti):
 		speech.speakMessage(_("blank"))
 
 
-def moveToParagraph(next: bool, speakNew: bool) -> bool:
+def moveToParagraph(nextParagraph: bool, speakNew: bool) -> bool:
 	# moves to previous or next regular paragraph, delineated by a single line break
 	ti = getTextInfoAtCaret()
 	if ti is None:
 		return False
 	ti.expand(textInfos.UNIT_LINE)
 	ti.collapse()  # move to start of line
-	moveOffset = 1 if next else -1
+	moveOffset = 1 if nextParagraph else -1
 	moved = False
 	lines = 0
 	tempTi = ti.copy()
@@ -77,7 +76,7 @@ def moveToParagraph(next: bool, speakNew: bool) -> bool:
 		tempTi = ti.copy()
 		tempTi.expand(textInfos.UNIT_LINE)
 		if isLastLineOfParagraph(tempTi.text):
-			if not next:
+			if not nextParagraph:
 				if not moveBackTwice:
 					while lines < MAX_LINES:
 						if not ti.move(textInfos.UNIT_LINE, -1):
@@ -94,7 +93,7 @@ def moveToParagraph(next: bool, speakNew: bool) -> bool:
 					break  # break out of outer while loop
 				else:
 					moveBackTwice = False
-			else:  # moving to next
+			else:  # moving to next paragraph
 				if ti.move(textInfos.UNIT_LINE, 1):
 					moved = True
 				break
@@ -110,7 +109,7 @@ def moveToParagraph(next: bool, speakNew: bool) -> bool:
 	return moved
 
 
-def speakBlockParagraph(ti):
+def speakBlockParagraph(ti: textInfos.TextInfo):
 	# ti is TextInfo object
 	paragraph = ""
 	lines = 0
@@ -128,13 +127,13 @@ def speakBlockParagraph(ti):
 	speech.speakMessage(paragraph)
 
 
-def moveToBlockParagraph(next: bool, speakNew: bool) -> bool:
+def moveToBlockParagraph(nextParagraph: bool, speakNew: bool) -> bool:
 	ti = getTextInfoAtCaret()
 	if ti is None:
 		return False
 	moved = False
 	lookingForBlank = True
-	moveOffset = 1 if next else -1
+	moveOffset = 1 if nextParagraph else -1
 	lines = 0
 	while lines < MAX_LINES:
 		tempTi = ti.copy()
@@ -150,7 +149,7 @@ def moveToBlockParagraph(next: bool, speakNew: bool) -> bool:
 		lines += 1
 
 	# exception: if moving backwards, need to move to top of now current paragraph
-	if moved and not next:
+	if moved and not nextParagraph:
 		while lines < MAX_LINES:
 			if not ti.move(textInfos.UNIT_LINE, -1):
 				break  # leave at top

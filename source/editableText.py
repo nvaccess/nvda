@@ -294,17 +294,17 @@ class EditableText(TextContainerObject,ScriptableObject):
 	def script_caret_deleteWord(self, gesture):
 		self._deleteScriptHelper(textInfos.UNIT_WORD, gesture)
 
-	def _handleParagraphNavigation(self, gesture, next):
+	def _handleParagraphNavigation(self, gesture, nextParagraph: bool):
 		setting = config.conf["paragraphNavigation"]["paragraphStyle"]
 		if setting == "application":
 			self.script_caret_moveByParagraph(gesture)
 		elif setting == "normal":
-			from paragraphHelper import moveToParagraph
-			if not moveToParagraph(next=next, speakNew=not willSayAllResume(gesture)):
+			from utils.paragraphHelper import moveToParagraph
+			if not moveToParagraph(nextParagraph=nextParagraph, speakNew=not willSayAllResume(gesture)):
 				self.script_caret_moveByParagraph(gesture)
 		elif setting == "block":
-			from paragraphHelper import moveToBlockParagraph
-			if not moveToBlockParagraph(next=next, speakNew=not willSayAllResume(gesture)):
+			from utils.paragraphHelper import moveToBlockParagraph
+			if not moveToBlockParagraph(nextParagraph=nextParagraph, speakNew=not willSayAllResume(gesture)):
 				self.script_caret_moveByParagraph(gesture)
 
 	def script_caret_previousParagraph(self, gesture):
