@@ -81,7 +81,17 @@ class TokenOrigin(ctypes.Structure):
 	]
 
 
-def getProcessTokenOrigin(processHandle: int) -> TokenOrigin:
+def getProcessLogonSessionId(processHandle: int) -> int:
+	"""
+	Retrieves the ID of the logon session that created the process that the given processHandle belongs to.
+	The function calls several Win32 functions:
+	* OpenProcessToken: opens the access token associated with a process.
+	* GetTokenInformation: retrieves a specified type of information about an access token.
+	  The calling process must have appropriate access rights to obtain the information.
+	  GetTokenInformation is called with the TokenOrigin Value from the TOKEN_INFORMATION_CLASS enumeration.
+	  The resulting structure contains the session ID of the logon session that will be returned.
+	* CloseHandle: To close the token handle.
+	"""
 	token = ctypes.wintypes.HANDLE()
 	if not ctypes.windll.advapi32.OpenProcessToken(
 		processHandle,
@@ -99,13 +109,9 @@ def getProcessTokenOrigin(processHandle: int) -> TokenOrigin:
 			ctypes.byref(ctypes.wintypes.DWORD())
 		):
 			raise ctypes.WinError()
-		return val
+		return val.originatingLogonSession
 	finally:
 		ctypes.windll.kernel32.CloseHandle(token)
-
-
-def getProcessLogonSessionId(processHandle: int) -> int:
-	return getProcessTokenOrigin(processHandle).originatingLogonSession
 
 
 @functools.lru_cache(maxsize=1)
