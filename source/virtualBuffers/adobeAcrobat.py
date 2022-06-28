@@ -1,8 +1,7 @@
-#virtualBuffers/adobeAcrobat.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2009-2012 NV Access Limited, Aleksey Sadovoy
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2009-2022 NV Access Limited, Aleksey Sadovoy
 
 from . import VirtualBuffer, VirtualBufferTextInfo
 import browseMode
@@ -80,6 +79,10 @@ class AdobeAcrobat_TextInfo(VirtualBufferTextInfo):
 			attrs["_indexInParent"] = int(attrs["_indexInParent"])
 		except KeyError:
 			pass
+		fontSize = attrs.get("font-size")
+		if fontSize is not None:
+			# Translators: Abbreviation for points, a measurement of font size.
+			attrs["font-size"] = pgettext("font size", "%s pt") % fontSize
 		return attrs
 
 class AdobeAcrobat(VirtualBuffer):

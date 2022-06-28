@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2021 NV Access Limited, Leonard de Ruijter, Joseph Lee, Renaud Paquay, pvagner
+# Copyright (C) 2006-2022 NV Access Limited, Leonard de Ruijter, Joseph Lee, Renaud Paquay, pvagner
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -177,10 +177,12 @@ class JABTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return self._getLineOffsets(offset)
 
 	def _getFormatFieldAndOffsets(self, offset, formatConfig, calculateOffsets=True):
+		attribs: JABHandler.AccessibleTextAttributesInfo
 		attribs, length = self.obj.jabContext.getTextAttributesInRange(offset, self._endOffset - 1)
 		field = textInfos.FormatField()
 		field["font-family"] = attribs.fontFamily
-		field["font-size"] = "%dpt" % attribs.fontSize
+		# Translators: Abbreviation for points, a measurement of font size.
+		field["font-size"] = pgettext("font size", "%s pt") % str(attribs.fontSize)
 		field["bold"] = bool(attribs.bold)
 		field["italic"] = bool(attribs.italic)
 		field["strikethrough"] = bool(attribs.strikethrough)
