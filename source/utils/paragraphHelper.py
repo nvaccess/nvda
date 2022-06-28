@@ -106,7 +106,7 @@ def moveToParagraph(nextParagraph: bool, speakNew: bool) -> bool:
 		speakParagraph(ti)
 	else:
 		tones.beep(1000, 30)
-	return moved
+	return True
 
 
 def speakBlockParagraph(ti: textInfos.TextInfo):
