@@ -62,15 +62,26 @@ def hasUiAccess():
 	finally:
 		ctypes.windll.kernel32.CloseHandle(token)
 
+#: Value from the TOKEN_INFORMATION_CLASS enumeration:
+#: https://docs.microsoft.com/en-us/windows/win32/api/winnt/ne-winnt-token_information_class
+#: When calling The Win32 GetTokenInformation function, the buffer receives a TOKEN_ORIGIN value.
+#: If the token resulted from a logon that used explicit credentials, such as passing a name, domain,
+#: and password to the LogonUser function, then the TOKEN_ORIGIN structure will contain the ID of
+#: the logon session that created it.
+#: If the token resulted from network authentication, then this value will be zero.
+tokenOrigin = 17  # TokenOrigin in winnt.h
 
-TokenOrigin = 17
+
+class TokenOrigin(ctypes.Structure):
+	"""TOKEN_ORIGIN structure: https://docs.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-token_origin
+	This structure is used in calls to the Win32 GetTokenInformation function.
+	"""
+	_fields_ = [
+		("originatingLogonSession", ctypes.c_ulonglong)  # OriginatingLogonSession in C structure
+	]
 
 
-class TOKEN_ORIGIN(ctypes.Structure):
-	_fields_ = [("OriginatingLogonSession", ctypes.c_ulonglong)]
-
-
-def getProcessTokenOrigin(processHandle: int) -> TOKEN_ORIGIN:
+def getProcessTokenOrigin(processHandle: int) -> TokenOrigin:
 	token = ctypes.wintypes.HANDLE()
 	if not ctypes.windll.advapi32.OpenProcessToken(
 		processHandle,
@@ -79,10 +90,10 @@ def getProcessTokenOrigin(processHandle: int) -> TOKEN_ORIGIN:
 	):
 		raise ctypes.WinError()
 	try:
-		val = TOKEN_ORIGIN()
+		val = TokenOrigin()
 		if not ctypes.windll.advapi32.GetTokenInformation(
 			token,
-			TokenOrigin,
+			tokenOrigin,
 			ctypes.byref(val),
 			ctypes.sizeof(val),
 			ctypes.byref(ctypes.wintypes.DWORD())
@@ -94,7 +105,7 @@ def getProcessTokenOrigin(processHandle: int) -> TOKEN_ORIGIN:
 
 
 def getProcessLogonSessionId(processHandle: int) -> int:
-	return getProcessTokenOrigin(processHandle).OriginatingLogonSession
+	return getProcessTokenOrigin(processHandle).originatingLogonSession
 
 
 @functools.lru_cache(maxsize=1)
