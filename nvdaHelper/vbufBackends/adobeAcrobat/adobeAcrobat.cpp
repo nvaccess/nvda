@@ -47,7 +47,6 @@ IAccessible* IAccessibleFromIdentifier(int docHandle, int ID) {
 long getAccID(IServiceProvider* servprov) {
 	int res;
 	IAccID* paccID = NULL;
-	long ID;
 
 	LOG_DEBUG(L"calling IServiceProvider::QueryService for IAccID");
 	if((res=servprov->QueryService(SID_AccID,IID_IAccID,(void**)(&paccID)))!=S_OK) {
@@ -56,8 +55,12 @@ long getAccID(IServiceProvider* servprov) {
 	} 
 	LOG_DEBUG(L"IAccID at "<<paccID);
 
+	// IAccID::get_accID takes a longlong on 64 bit and a long on 32 bit.
+	// However, Acrobat will internally only place a 32 bit value into ID.
+	// Thus we call it with a LONG_PTR* and can safely static cast it to a long.
+	LONG_PTR ID = 0;
 	LOG_DEBUG(L"Calling get_accID");
-	if((res=paccID->get_accID((long*)(&ID)))!=S_OK) {
+	if((res=paccID->get_accID(&ID))!=S_OK) {
 		LOG_DEBUG(L"paccID->get_accID returned "<<res);
 		ID = 0;
 	}
@@ -65,7 +68,7 @@ long getAccID(IServiceProvider* servprov) {
 	LOG_DEBUG("Releasing IAccID");
 	paccID->Release();
 
-	return ID;
+	return static_cast<long>(ID);
 }
 
 IPDDomNode* getPDDomNode(VARIANT& varChild, IServiceProvider* servprov) {
