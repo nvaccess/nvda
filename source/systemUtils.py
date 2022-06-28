@@ -69,7 +69,7 @@ def hasUiAccess():
 #: and password to the LogonUser function, then the TOKEN_ORIGIN structure will contain the ID of
 #: the logon session that created it.
 #: If the token resulted from network authentication, then this value will be zero.
-tokenOrigin = 17  # TokenOrigin in winnt.h
+TOKEN_ORIGIN = 17  # TokenOrigin in winnt.h
 
 
 class TokenOrigin(ctypes.Structure):
@@ -93,7 +93,7 @@ def getProcessTokenOrigin(processHandle: int) -> TokenOrigin:
 		val = TokenOrigin()
 		if not ctypes.windll.advapi32.GetTokenInformation(
 			token,
-			tokenOrigin,
+			TOKEN_ORIGIN,
 			ctypes.byref(val),
 			ctypes.sizeof(val),
 			ctypes.byref(ctypes.wintypes.DWORD())
