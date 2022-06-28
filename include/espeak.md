@@ -42,6 +42,18 @@ Modifications will need to be made in [`nvdaHelper/espeak`](../nvdaHelper/espeak
       - Diff `src/windows/config.h` with the previous commit.
    1. Update NVDA [`readme.md`](../readme.md) with eSpeak version and commit.
    1. Build NVDA: `scons source`
+      - Expected warnings from eSpeak compilation:
+         - On the first build after changes, all languages may show this warning.
+         Our build intentionally compiles using the `phonemetable`.
+         ```log
+         espeak_compileDict_buildAction(["include\espeak\espeak-ng-data\uz_dict"], ["include\espeak\dictsource\uz_list", "include\espeak\dictsource\uz_rules"])
+         Can't read dictionary file: 'C:\Users\sean\projects\nvda\include\espeak/espeak-ng-data\uz_dict'
+         Using phonemetable: 'uz'
+         Compiling: 'C:\Users\sean\projects\nvda\include\espeak\dictsource/uz_list'
+               121 entries
+         Compiling: 'C:\Users\sean\projects\nvda\include\espeak\dictsource/uz_rules'
+               35 rules, 26 groups (0)
+         ```
 1. Run NVDA (set eSpeak-ng as the synthesizer) and test.
 1. Ensure that the log file contains the new version number for eSpeak-NG
 
