@@ -157,7 +157,12 @@ def _getPossibleAppModuleNamesForExecutable(executableName: str) -> Tuple[str, .
 	return tuple(
 		aliasName for aliasName in (
 			_executableNamesToAppModsAddons.get(executableName),
-			executableName,
+			# #5323: Certain executables contain dots as part of their file names.
+			# Since Python threats dot as a package separator we replace it with undescore
+			# in the name of the Python module.
+			# For new App Modules consider adding an alias to `appModule.EXECUTABLE_NAMES_TO_APP_MODS`
+			# rather than rely on the fact that dots are replaced.
+			executableName.replace(".", "_"),
 			appModules.EXECUTABLE_NAMES_TO_APP_MODS.get(executableName)
 		) if aliasName is not None
 	)
@@ -255,8 +260,7 @@ def getAppModuleFromProcessID(processID: int) -> AppModule:
 	with _getAppModuleLock:
 		mod=runningTable.get(processID)
 		if not mod:
-			# #5323: Certain executables contain dots as part of their file names.
-			appName=getAppNameFromProcessID(processID).replace(".","_")
+			appName = getAppNameFromProcessID(processID)
 			mod=fetchAppModule(processID,appName)
 			if not mod:
 				raise RuntimeError("error fetching default appModule")

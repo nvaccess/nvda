@@ -6,17 +6,36 @@ What's New in NVDA
 = 2022.3 =
 
 == New Features ==
+- In the Windows Console Host used by Command Prompt, PowerShell, and the Windows Subsystem for Linux on Windows 11 version 22H2 (Sun Valley 2) and later:
+  - Vastly improved performance and stability. (#10964)
+  - When pressing ``ctrl+f`` to find text, the review cursor position is updated to follow the found term. (#11172)
+  - Reporting of typed text that does not appear onscreen (such as passwords) is disabled by default.
+It can be re-enabled in NVDA's advanced settings panel. (#11554)
+  - Text that has scrolled offscreen can be reviewed without scrolling the console window. (#12669)
+  - More detailed text formatting information is available. ([microsoft/terminal PR 10336 https://github.com/microsoft/terminal/pull/10336])
+  -
+-
 
 
 == Changes ==
+- When using UI Automation to access Microsoft Excel spreadsheet controls, NVDA is now able to report when a cell is merged. (#12843)
+-
 
 
 == Bug Fixes ==
 - Font size measurements are now translatable in NVDA. (#13573)
+- Ignore Java Access Bridge events where no window handle can be found for Java applications.
+This will improve performance for some Java applications including IntelliJ IDEA. (#13039)
 -
 
 
 == Changes for Developers ==
+- Updated Comtypes to version 1.1.11. (#12953)
+- In builds of Windows Console (``conhost.exe``) with an NVDA API level of 2 (``FORMATTED``) or greater, such as those included with Windows 11 version 22H2 (Sun Valley 2), UI Automation is now used by default. (#10964)
+  - This can be overridden by changing the "Windows Console support" setting in NVDA's advanced settings panel.
+  - To find your Windows Console's NVDA API level, set "Windows Console support" to "UIA when available", then check the NVDA+F1 log opened from a running Windows Console instance.
+  -
+-
 
 
 === Deprecations ===
@@ -64,7 +83,7 @@ LibLouis has been updated, which includes a new German braille table.
 
 == Bug Fixes ==
 - Fixes for Java based applications:
-  - NVDA will now announce readonly state. (#13692)
+  - NVDA will now announce read-only state. (#13692)
   - NVDA will now announce disabled/enabled state correctly. (#10993)
   - NVDA will now announce function key shortcuts. (#13643)
   - NVDA can now beep or speak on progress bars. (#13594)
@@ -77,7 +96,7 @@ LibLouis has been updated, which includes a new German braille table.
   - Fix braille output when navigating certain text in Mozilla rich edit controls, such as drafting a message in Thunderbird. (#12542)
   - When braille is tethered automatically and the mouse is moved with mouse tracking enabled,
    text review commands now update the braille display with the spoken content. (#11519)
-  - It is now possible to pan the braille display through content after use of the text review commands. (#8682)
+  - It is now possible to pan the braille display through content after use of text review commands. (#8682)
   -
 - The NVDA installer can now run from directories with special characters. (#13270)
 - In Firefox, NVDA no longer fails to report items in web pages when aria-rowindex, aria-colindex, aria-rowcount or aria-colcount attributes are invalid. (#13405)
@@ -91,11 +110,11 @@ LibLouis has been updated, which includes a new German braille table.
 - Visual Studio now correctly reports line indentation. (#13574)
 - NVDA will once again announce Start menu search result details in recent Windows 10 and 11 releases. (#13544)
 - In Windows 10 and 11 Calculator version 10.1908 and later,
-NVDA will announce results when more commands are pressed, such as commands from scientific mode. (#13386)
+NVDA will announce results when more commands are pressed, such as commands from scientific mode. (#13383)
 - In Windows 11, it is again possible to navigate and interact with user interface elements,
-such as Taskbar and Task View using mouse and touch interaction. (#13508)
+such as Taskbar and Task View using mouse and touch interaction. (#13506)
 - Hidden text is no longer announced in Wordpad and other ``richEdit`` controls. (#13618)
-- NVDA will announce status bar content in Windows 11 Notepad. (#13386)
+- NVDA will announce status bar content in Windows 11 Notepad. (#13688)
 - Navigator object highlighting now shows up immediately upon activation of the feature. (#13641)
 - Fix reading single column list view items. (#13659, #13735)
 - Fix eSpeak automatic language switching for English and French falling back to British English and French (France). (#13727)
@@ -107,7 +126,7 @@ such as Taskbar and Task View using mouse and touch interaction. (#13508)
 - Compiling NVDA dependencies with Visual Studio 2022 (17.0) is now supported.
 For development and release builds, Visual Studio 2019 is still used. (#13033)
 - When retrieving the count of selected children via accSelection,
-the case where a negative child ID or an IDispatch is returned by ``IAccessible::get_accSelection`` is now handled properly. (#13276)
+the case where a negative child ID or an IDispatch is returned by ``IAccessible::get_accSelection`` is now handled properly. (#13277)
 - New convenience functions ``registerExecutableWithAppModule`` and ``unregisterExecutable`` were added to the ``appModuleHandler`` module.
 They can be used to use a single App Module with multiple executables. (#13366)
 -
