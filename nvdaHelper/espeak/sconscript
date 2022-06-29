@@ -137,15 +137,35 @@ def espeak_compilePhonemeData_buildAction(target,source,env):
 	espeak.espeak_Terminate()
 
 
-# refer to CLEANFILES in include\espeak\Makefile.am 
-for f in (
-		os.path.join(espeakRepo.abspath, "dictsource", "ru_listx"),
-		os.path.join(espeakRepo.abspath, "dictsource", "cmn_listx"),
-		os.path.join(espeakRepo.abspath, "dictsource", "yue_listx"),
-	):
-	if os.path.exists(f):
-		print(f"Removing listx file: {f}")
+def removeEmoji():
+	"""
+	Remove emoji files before compiling dictionaries.
+	Currently many of these simply crash eSpeak at runtime.
+	Also, our own emoji processing using CLDR data is preferred.
+	"""
+	emojiGlob = os.path.join(espeakRepo.abspath, 'dictsource', '*_emoji')
+	for f in glob(emojiGlob):
+		print(f"Removing emoji file: {f}")
 		os.remove(f)
+
+
+def cleanFiles_preBuildAction(target, source, env):
+	"""
+	Before compiling eSpeak, removes:
+	 - emoji files
+	 - dictionary artifacts listed in CLEANFILES
+	"""
+	removeEmoji()
+	# refer to CLEANFILES in include\espeak\Makefile.am 
+	for f in (
+			# These files are created when we moved them from espeak/dictsource/extra/*_*.
+			os.path.join(espeakRepo.abspath, "dictsource", "ru_listx"),
+			os.path.join(espeakRepo.abspath, "dictsource", "cmn_listx"),
+			os.path.join(espeakRepo.abspath, "dictsource", "yue_listx"),
+		):
+		if os.path.exists(f):
+			print(f"Removing listx file: {f}")
+			os.remove(f)
 
 
 env['BUILDERS']['espeak_compilePhonemeData']=Builder(action=env.Action(espeak_compilePhonemeData_buildAction,"Compiling phoneme data"),emitter=espeak_compilePhonemeData_buildEmitter)
@@ -426,10 +446,14 @@ for i in phonemeData:
 	fileName = i.abspath[l:]
 	env.InstallAs(os.path.join(synthDriversDir.Dir('espeak-ng-data').abspath, fileName), i)
 
+
+# Removes files that are created when installing from dictsource/extra/*_* to dictsource.
+# Also removes emoji files from dictsource compilation, refer to cleanEmoji for justification.
+env.AddPreAction(espeakLib, env.Action(cleanFiles_preBuildAction))
 # Move any extra dictionaries into dictsource for compilation
 env.Install(
 	espeakRepo.Dir('dictsource'),
-	env.Glob(os.path.join(espeakRepo.abspath, 'dictsource', 'extra', '*'))
+	env.Glob(os.path.join(espeakRepo.abspath, 'dictsource', 'extra', '*_*'))
 )
 
 excludeLangs: typing.List[str] = [
@@ -440,13 +464,6 @@ excludeLangs: typing.List[str] = [
 # Compile all dictionaries
 dictSourcePath: SCons.Node.FS.Dir = espeakRepo.Dir('dictsource')
 
-# Remove emoji files before compiling dictionaries.
-# Currently many of these simply crash eSpeak at runtime.
-# Also, our own emoji processing using CLDR data is preferred.
-emojiGlob = os.path.join(espeakRepo.abspath,'dictsource','*_emoji')
-for f in glob(emojiGlob):
-	print(f"Removing emoji file: {f}")
-	os.remove(f)
 
 # Create compile commands for all languages
 for dictFileName, (langCode, inputFiles) in espeakDictionaryCompileList.items():
