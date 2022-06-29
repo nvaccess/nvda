@@ -60,7 +60,7 @@ long getAccID(IServiceProvider* servprov) {
 	// Thus we call it with a LONG_PTR* and can safely static cast it to a long.
 	LONG_PTR ID = 0;
 	LOG_DEBUG(L"Calling get_accID");
-	if((res=paccID->get_accID(&ID))!=S_OK) {
+	if ((res = paccID->get_accID(&ID)) != S_OK) {
 		LOG_DEBUG(L"paccID->get_accID returned "<<res);
 		ID = 0;
 	}
