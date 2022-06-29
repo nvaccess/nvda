@@ -159,14 +159,27 @@ def test_mark_aria_details_role():
 				<div id="endnote-details" role="doc-endnote">details with role doc-endnote</div>
 				<div id="footnote-details" role="doc-footnote">details with role doc-footnote</div>
 				<div id="comment-details" role="comment">details with role comment</div>
-				<!-- aria-details maps to the term, not the definition. -->
+				<!--
+					When using the following syntax, the dfn tag holds the role "term",
+					and the accompanying text becomes the "definition".
+					Authors may expected the aria-details to target the definition.
+					It is uncertain as to which element aria-details
+					should point towards, but we assume the dfn tag in this case,
+					as the accompanying definition text is not specifically captured by an HTML element.
+				-->
 				<p>
 					<dfn id="definition-details-as-tag">definition</dfn>:
 					details with tag definition
 				</p>
+				<!--
+					Authors may expected the aria-details to target the definition.
+					As the definition text is specifically captured by an HTML element with role "definition",
+					we map to that element.
+					This is inconsistent with previous example, using the dfn tag.
+				-->
 				<p>
-					<span id="definition-details-as-role" role="term">definition</span>:
-					<span role="definition">details with role definition</span>
+					<span role="term">definition</span>:
+					<span id="definition-details-as-role" role="definition">details with role definition</span>
 				</p>
 				<!-- Included as "form" is not supported by Chrome attribute details-roles -->
 				<div id="unknown-details" role="form">details with role form</div>
