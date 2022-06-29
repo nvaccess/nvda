@@ -3,6 +3,10 @@
 # See the file COPYING for more details.
 # Copyright (C) 2006-2022 NV Access Limited, Bill Dengler, Leonard de Ruijter
 
+from typing import (
+	Union
+)
+
 from comtypes import COMError
 import comtypes.client
 import oleacc
