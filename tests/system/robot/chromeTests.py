@@ -148,6 +148,7 @@ def test_mark_aria_details_role():
 				<span aria-details="endnote-details">doc-endnote,</span>
 				<span aria-details="footnote-details">doc-footnote,</span>
 				<span aria-details="comment-details">comment,</span>
+				<span aria-details="definition-details-as-tag" role="term">definition,</span>
 				<span aria-details="definition-details-as-role" role="term">definition,</span>
 				<span aria-details="unknown-details">form</span>
 			</p>
@@ -158,10 +159,14 @@ def test_mark_aria_details_role():
 				<div id="endnote-details" role="doc-endnote">details with role doc-endnote</div>
 				<div id="footnote-details" role="doc-footnote">details with role doc-footnote</div>
 				<div id="comment-details" role="comment">details with role comment</div>
-				<div id="definition-details-as-role" role="definition">details with role definition</div>
+				<!-- aria-details maps to the term, not the definition. -->
 				<p>
-					<span role="term">definition</span>:
-					<span id="definition-details-as-role" role="definition">details with role definition</span>
+					<dfn id="definition-details-as-tag">definition</dfn>:
+					details with tag definition
+				</p>
+				<p>
+					<span id="definition-details-as-role" role="term">definition</span>:
+					<span role="definition">details with role definition</span>
 				</p>
 				<!-- Included as "form" is not supported by Chrome attribute details-roles -->
 				<div id="unknown-details" role="form">details with role form</div>
@@ -173,7 +178,7 @@ def test_mark_aria_details_role():
 		"edit",
 		"multi line",
 		# the role doc-endnote is unsupported as an IA2 role
-		# The role "list item" is used instead
+		# The role "ROLE_LIST_ITEM" is used instead
 		"has details",
 		"doc endnote,",
 		"",  # space between spans
@@ -183,8 +188,11 @@ def test_mark_aria_details_role():
 		"has comment",
 		"comment,",
 		"",  # space between spans
-		# the role doc-endnote is unsupported as an IA2 role
-		# The role "generic" is used instead
+		# the role definition is unsupported as an IA2 role
+		# The role "ROLE_PARAGRAPH" is used instead
+		"has details",
+		"definition,",
+		"",  # space between spans
 		"has details",
 		"definition,",
 		"",  # space between spans
@@ -198,15 +206,17 @@ def test_mark_aria_details_role():
 		"mln",
 		"edit",
 		# the role doc-endnote is unsupported as an IA2 role
-		# The role "list item" is used instead
+		# The role "ROLE_LIST_ITEM" is used instead
 		"details",
 		"doc endnote,",
 		"has fnote",
 		"doc footnote,",
 		"has cmnt",
 		"comment,",
-		# the role doc-endnote is unsupported as an IA2 role
-		# The role "generic" is used instead
+		# the role definition is unsupported as an IA2 role
+		# The role "ROLE_PARAGRAPH" is used instead
+		"details",
+		"definition,",
 		"details",
 		"definition,",
 		# The role "form" is deliberately unsupported
@@ -226,7 +236,7 @@ def test_mark_aria_details_role():
 		actualBraille,
 		# TODO: fix known bug with braille not announcing details #13815
 		# expectedBraille,
-		"mln edt doc-endnote, doc-footnote, comment, definition, form edt end",
+		"mln edt doc-endnote, doc-footnote, comment, definition, definition, form edt end",
 		message="Browse mode braille: Read line with different aria details roles.",
 	)
 	
@@ -260,7 +270,7 @@ def test_mark_aria_details_role():
 		actualBraille,
 		# TODO: fix known bug with braille not announcing details #13815
 		# expectedBraille,
-		"doc-endnote, doc-footnote, comment, definition, form",
+		"doc-endnote, doc-footnote, comment, definition, definition, form",
 		message="Focus mode braille: Read line with different aria details roles",
 	)
 
