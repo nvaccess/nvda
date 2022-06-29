@@ -21,9 +21,8 @@ class Role(DisplayStringIntEnum):
 
 	As add-on authors may still rely on the values, new members of `Role` should continue
 	the previous pattern of incrementing.
-	Using `enum.auto` may backfill role values. For example, creating a new role with auto value
-	68 would cause it to be included in an add-on which checks roles as follows:
-	`(66 < role) and (role < 70)`.
+	Using `enum.auto` may backfill role values and should be avoided.
+	Refer to `test_controlTypes.TestBackCompat.test_rolesValues` for compatibility requirements.
 
 	Some behaviour of treating roles as their integer values is already unsupported.
 	```
