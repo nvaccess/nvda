@@ -4,6 +4,7 @@
 # Copyright (C) 2006-2021 NV Access Limited, Bill Dengler, Leonard de Ruijter
 
 from comtypes import COMError
+import comtypes.client
 import oleacc
 from IAccessibleHandler import IA2, splitIA2Attribs
 import appModuleHandler
@@ -222,9 +223,11 @@ class SymphonyIATableCell(SymphonyTableCell):
 				tableAccessible = self.table.IAccessibleTable2Object.QueryInterface(IA2.IAccessible2)
 				firstAccessible = tableAccessible.accChild(firstChild).QueryInterface(IA2.IAccessible2)
 				lastAccessible = tableAccessible.accChild(lastChild).QueryInterface(IA2.IAccessible2)
-			else:
+			elif isinstance(firstChild, comtypes.client.dynamic._Dispatch):
 				firstAccessible = firstChild.QueryInterface(IA2.IAccessible2)
 				lastAccessible = lastChild.QueryInterface(IA2.IAccessible2)
+			else:
+				raise RuntimeError(f"Unexpected LibreOffice object {firstChild}, type: {type(firstChild)}")
 			firstAddress = firstAccessible.accName(0)
 			firstValue = firstAccessible.accValue(0) or ''
 			lastAddress = lastAccessible.accName(0)
