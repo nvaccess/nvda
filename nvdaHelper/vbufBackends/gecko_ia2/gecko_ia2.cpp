@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2007-2017 NV Access Limited, Mozilla Corporation
+Copyright 2007-2022 NV Access Limited, Mozilla Corporation
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -87,6 +87,9 @@ CComPtr<IAccessible2> GeckoVBufBackend_t::getRelationElement(
 }
 
 const wchar_t EMBEDDED_OBJ_CHAR = 0xFFFC;
+// Always render a space for "empty" / metadata only
+// text leaf nodes so the user can access them.
+constexpr wchar_t* EMPTY_TEXT_NODE {L" "};
 
 static IAccessible2* IAccessible2FromIdentifier(int docHandle, int ID) {
 	IAccessible* pacc=NULL;
@@ -358,8 +361,63 @@ CComPtr<IAccessible2> getTextBoxInComboBox(
 	return child;
 }
 
+
+std::tuple<long, CComBSTR> getRoleLongRoleString(CComPtr<IAccessible2> pacc, CComVariant varChild) {
+	long role = 0;
+	CComBSTR roleString;
+	CComVariant varRole;
+	if (pacc->role(&role) != S_OK) {
+		role = IA2_ROLE_UNKNOWN;
+	}
+	if (role == 0) {
+		if (pacc->get_accRole(varChild, &varRole) != S_OK) {
+			LOG_DEBUG(L"accRole failed");
+		}
+		if (varRole.vt == VT_I4) {
+			role = varRole.lVal;
+		}
+		else if (varRole.vt == VT_BSTR) {
+			roleString = varRole.bstrVal;
+		}
+	}
+	return std::make_tuple(role, roleString);
+}
+
+
 const vector<wstring>ATTRLIST_ROLES(1, L"IAccessible2::attribute_xml-roles");
 const wregex REGEX_PRESENTATION_ROLE(L"IAccessible2\\\\:\\\\:attribute_xml-roles:.*\\bpresentation\\b.*;");
+
+
+void GeckoVBufBackend_t::fillVBufAriaDetails(
+	int docHandle,
+	CComPtr<IAccessible2> pacc,
+	VBufStorage_buffer_t& buffer,
+	VBufStorage_controlFieldNode_t& parentNode,
+	const std::wstring& roleAttr
+){
+	/* Set the details role by checking for both IA2_RELATION_DETAILS and IA2_RELATION_DETAILS_FOR as one
+	of the nodes in the relationship will not be in the buffer yet */
+	std::optional<int> detailsId = getRelationId(IA2_RELATION_DETAILS, pacc);
+	std::optional<int> detailsForId = getRelationId(IA2_RELATION_DETAILS_FOR, pacc);
+	VBufStorage_controlFieldNode_t* detailsParentNode = nullptr;
+	std::optional<std::wstring> detailsRole;
+	if (detailsId.has_value()) {
+		parentNode.addAttribute(L"hasDetails", L"true");
+		detailsParentNode = &parentNode;
+		auto detailsChildNode = buffer.getControlFieldNodeWithIdentifier(docHandle, detailsId.value());
+		if (detailsChildNode != nullptr) {
+			detailsRole = detailsChildNode->getAttribute(L"role");
+		}
+	}
+	if (detailsForId.has_value()) {
+		detailsParentNode = buffer.getControlFieldNodeWithIdentifier(docHandle, detailsForId.value());
+		detailsRole = roleAttr;
+	}
+	if (detailsParentNode != nullptr && detailsRole.has_value()) {
+		detailsParentNode->addAttribute(L"detailsRole", detailsRole.value());
+	}
+}
+
 
 VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 	IAccessible2* pacc,
@@ -380,6 +438,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 	varChild.vt=VT_I4;
 	varChild.lVal=0;
 	wostringstream s;
+	std::wstring roleAttr;
 
 	//get docHandle -- IAccessible2 windowHandle
 	HWND docHwnd;
@@ -433,21 +492,10 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 	}
 
 	//Get role -- IAccessible2 role
-	long role=0;
-	BSTR roleString=NULL;
-	if(pacc->role(&role)!=S_OK)
-		role=IA2_ROLE_UNKNOWN;
-	VARIANT varRole;
-	VariantInit(&varRole);
-	if(role==0) {
-		if(pacc->get_accRole(varChild,&varRole)!=S_OK) {
-			LOG_DEBUG(L"accRole failed");
-		}
-		if(varRole.vt==VT_I4)
-			role=varRole.lVal;
-		else if(varRole.vt==VT_BSTR)
-			roleString=varRole.bstrVal;
-	}
+	long role = 0;
+	CComBSTR roleString;
+	CComPtr<IAccessible2> smartPacc = CComQIPtr<IAccessible2>(pacc);
+	std::tie(role, roleString) = getRoleLongRoleString(smartPacc, CComVariant(&varChild));
 
 	// Specifically force the role of ARIA treegrids from outline to table.
 	// We do this very early on in the rendering so that all our table logic applies.
@@ -457,14 +505,13 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 		}
 	}
 
-	//Add role as an attrib
-	if(roleString)
-		s<<roleString;
-	else
-		s<<role;
-	parentNode->addAttribute(L"IAccessible::role",s.str());
-	s.str(L"");
-	VariantClear(&varRole);
+	if (roleString) {
+		roleAttr = roleString;
+	} else {
+		roleAttr = std::to_wstring(role);
+	}
+
+	parentNode->addAttribute(L"IAccessible::role", roleAttr);
 
 	//get states -- IAccessible accState
 	VARIANT varState;
@@ -950,25 +997,47 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 
 		} else if (renderChildren && childCount > 0) {
 			// The object has no text, but we do want to render its children.
-			VARIANT* varChildren;
-			if(!(varChildren=(VARIANT*)malloc(sizeof(VARIANT)*childCount))) {
-				LOG_DEBUG(L"Error allocating varChildren memory");
-				return NULL;
+			auto [varChildren, accChildRes] = getAccessibleChildren(pacc, 0, childCount);
+			if (S_OK != accChildRes || varChildren.size() == 0) {
+				std::wstringstream msg;
+				msg << L"AccessibleChildren failed (count: " << childCount << L"), res: " << accChildRes;
+				switch (accChildRes) {
+				case E_NOINTERFACE:
+					msg << L" (E_NOINTERFACE, No such interface supported)";
+					LOG_ERROR(msg.str());  // Indicates a bug in the IA2 provider.
+					break;
+				case RPC_E_DISCONNECTED:
+					msg << L" (RPC_E_DISCONNECTED, object invoked has disconnected from its clients.)";
+					// RPC_E_DISCONNECTED indicates that the parent died since the query to accChildCount.
+					LOG_DEBUG(msg.str());  // This is expected to occur in dynamic content.
+					break;
+				case CO_E_OBJNOTCONNECTED:
+					msg << L" (CO_E_OBJNOTCONNECTED, Object is not connected to server)";
+					LOG_DEBUG(msg.str());
+					break;
+				case S_FALSE:  // Success, but unexpeced number of children were returned.
+					msg << L" (S_FALSE, expected childcount, got "
+						<< varChildren.size()
+						<< L". Children may have been removed from document.)";
+					// Returning no children indicates that all children died since the call to accChildCount.
+					// Even if the children had been rendered, they were removed immediately thereafter.
+					LOG_DEBUG(msg.str());  // This is expected to occur in dynamic content.
+					break;
+				default:
+					// Other unknown failures, log at error.
+					LOG_ERROR(msg.str());
+				}
 			}
-			long accessibleChildrenCount = 0;
-			if(AccessibleChildren(pacc,0,childCount,varChildren,&accessibleChildrenCount)!=S_OK) {
-				LOG_DEBUG(L"AccessibleChildren failed");
-				accessibleChildrenCount=0;
-			}
-			for(long i=0;i<accessibleChildrenCount;++i) {
-				if (varChildren[i].vt != VT_DISPATCH) {
-					VariantClear(&(varChildren[i]));
+			LOG_DEBUG(L"got " << varChildren.size() << L" children");
+
+			for(CComVariant& child : varChildren) {
+				if (child.vt != VT_DISPATCH || !child.pdispVal) {
+					child.Clear();
 					continue;
 				}
-				IAccessible2* childPacc=NULL;
-				if(varChildren[i].pdispVal) varChildren[i].pdispVal->QueryInterface(IID_IAccessible2,(void**)&childPacc);
+				CComQIPtr< IAccessible2, &IID_IAccessible2> childPacc(child.pdispVal);
 				if (!childPacc) {
-					VariantClear(&(varChildren[i]));
+					child.Clear();
 					continue;
 				}
 				tempNode = this->fillVBuf(
@@ -986,11 +1055,8 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 				}
 				else
 					LOG_DEBUG(L"Error in calling fillVBuf");
-				childPacc->Release();
-				VariantClear(&(varChildren[i]));
+				child.Clear();
 			}
-			free(varChildren);
-
 		} else if (renderSelectedItemOnly) {
 			CComPtr<IAccessible2> item = this->getSelectedItem(pacc, IA2AttribsMap);
 			if (item) {
@@ -1041,31 +1107,37 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 					previousNode->addAttribute(L"language", locale);
 				}
 			}
-
-		} else {
-			// There were no children to render.
-			if(role==ROLE_SYSTEM_GRAPHIC) {
-				if (name && name[0]) {
-					// The graphic has a label, so use it.
-					previousNode=buffer->addTextFieldNode(parentNode,previousNode,name);
-					if(previousNode&&!locale.empty()) previousNode->addAttribute(L"language",locale);
-				} else if ((name && !name[0]) || ignoreInteractiveUnlabelledGraphics) {
-					// alt="" or we've determined that all unlabelled graphics should be ignored,
-					// so don't render the graphic at all.
-					isInteractive = false;
-				} else if (isInteractive) {
-					// The graphic is unlabelled, but we should try to derive a name for it.
-					if (inLink && value) {
-						// derive the label from the link URL.
-						previousNode = buffer->addTextFieldNode(parentNode, previousNode, getNameForURL(value));
-					} else if ((IA2AttribsMapIt = IA2AttribsMap.find(L"src")) != IA2AttribsMap.end()) {
-						// Derive the label from the graphic URL.
-						previousNode = buffer->addTextFieldNode(parentNode, previousNode, getNameForURL(IA2AttribsMap[L"src"]));
-					}
-				}
-			} else if (!nameIsContent && value) {
-				previousNode=buffer->addTextFieldNode(parentNode,previousNode,value);
+		} else if(role == ROLE_SYSTEM_GRAPHIC) {
+			if (name && name[0]) {
+				// The graphic has a label, so use it.
+				previousNode=buffer->addTextFieldNode(parentNode,previousNode,name);
 				if(previousNode&&!locale.empty()) previousNode->addAttribute(L"language",locale);
+			} else if ((name && !name[0]) || ignoreInteractiveUnlabelledGraphics) {
+				// alt="" or we've determined that all unlabelled graphics should be ignored,
+				// so don't render the graphic at all.
+				isInteractive = false;
+			} else if (isInteractive) {
+				// The graphic is unlabelled, but we should try to derive a name for it.
+				if (inLink && value) {
+					// derive the label from the link URL.
+					previousNode = buffer->addTextFieldNode(parentNode, previousNode, getNameForURL(value));
+				} else if ((IA2AttribsMapIt = IA2AttribsMap.find(L"src")) != IA2AttribsMap.end()) {
+					// Derive the label from the graphic URL.
+					previousNode = buffer->addTextFieldNode(parentNode, previousNode, getNameForURL(IA2AttribsMap[L"src"]));
+				}
+			}
+		} else if (role == ROLE_SYSTEM_PROGRESSBAR && states & STATE_SYSTEM_INDETERMINATE){
+			// ROLE_SYSTEM_PROGRESSBAR with STATE_SYSTEM_INDETERMINATE is an
+			// indeterminate progress bar (maps to NVDA Role BUSY_INDICATOR).
+			// Value is meaningless (always zero), don't use it as the text node, use space instead.
+			previousNode=buffer->addTextFieldNode(parentNode,previousNode, EMPTY_TEXT_NODE);
+			if (previousNode && !locale.empty()) {
+				previousNode->addAttribute(L"language", locale);
+			}
+		} else if (!nameIsContent && value) {
+			previousNode = buffer->addTextFieldNode(parentNode, previousNode, value);
+			if (previousNode && !locale.empty()) {
+				previousNode->addAttribute(L"language", locale);
 			}
 		}
 
@@ -1083,7 +1155,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 
 		if ((role == ROLE_SYSTEM_CELL || role == ROLE_SYSTEM_ROWHEADER || role == ROLE_SYSTEM_COLUMNHEADER||role==IA2_ROLE_UNKNOWN) && parentNode->getLength() == 0) {
 			// Always render a space for empty table cells and unknowns.
-			previousNode=buffer->addTextFieldNode(parentNode,previousNode,L" ");
+			previousNode = buffer->addTextFieldNode( parentNode, previousNode, EMPTY_TEXT_NODE);
 			if(previousNode&&!locale.empty()) previousNode->addAttribute(L"language",locale);
 			parentNode->isBlock=false;
 		}
@@ -1091,7 +1163,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 		if ((isInteractive || role == ROLE_SYSTEM_SEPARATOR) && parentNode->getLength() == 0) {
 			// If the node is interactive or otherwise relevant even when empty
 			// and it still has no content, render a space so the user can access the node.
-			previousNode=buffer->addTextFieldNode(parentNode,previousNode,L" ");
+			previousNode = buffer->addTextFieldNode(parentNode, previousNode, EMPTY_TEXT_NODE);
 			if(previousNode&&!locale.empty()) previousNode->addAttribute(L"language",locale);
 		}
 	}
@@ -1125,13 +1197,13 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 		parentNode->addAttribute(L"descriptionIsContent", L"true");
 	}
 
-
-	/* Set the details summary by checking for both IA2_RELATION_DETAILS and IA2_RELATION_DETAILS_FOR as one
-	of the nodes in the relationship will not be in the buffer yet */
-	std::optional<int> detailsId = getRelationId(IA2_RELATION_DETAILS, pacc);
-	if (detailsId) {
-		parentNode->addAttribute(L"hasDetails", L"true");
-	}
+	fillVBufAriaDetails(
+		docHandle,
+		smartPacc,
+		*buffer,
+		*parentNode,
+		roleAttr
+	);
 
 	// Clean up.
 	if(name)
@@ -1152,6 +1224,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 void CALLBACK GeckoVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) {
 	switch(eventID) {
 		case EVENT_OBJECT_FOCUS:
+		case IA2_EVENT_DOCUMENT_LOAD_COMPLETE:
 		case EVENT_SYSTEM_ALERT:
 		case IA2_EVENT_TEXT_UPDATED:
 		case IA2_EVENT_TEXT_INSERTED:
@@ -1189,8 +1262,12 @@ void CALLBACK GeckoVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK ho
 			continue;
 		LOG_DEBUG(L"found active backend for this window at "<<backend);
 
-		//For focus and alert events, force any invalid nodes to be updated right now
-		if(eventID==EVENT_OBJECT_FOCUS||eventID==EVENT_SYSTEM_ALERT) {
+		//For focus, documentLoadComplete and alert events, force any nodes already marked as invalid  to be updated right now,
+		if(
+			eventID == EVENT_OBJECT_FOCUS
+			|| eventID == IA2_EVENT_DOCUMENT_LOAD_COMPLETE
+			|| eventID==EVENT_SYSTEM_ALERT
+		) {
 			backend->forceUpdate();
 			continue;
 		}

@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2021 NV Access Limited, Bill Dengler, Leonard de Ruijter
+# Copyright (C) 2006-2022 NV Access Limited, Bill Dengler, Leonard de Ruijter
 
 from comtypes import COMError
 import comtypes.client
@@ -9,6 +9,7 @@ import oleacc
 from IAccessibleHandler import IA2, splitIA2Attribs
 import appModuleHandler
 import controlTypes
+from controlTypes import TextPosition
 import textInfos
 import colors
 from compoundDocuments import CompoundDocument
@@ -42,12 +43,11 @@ class SymphonyTextInfo(IA2TextTextInfo):
 		try:
 			escapement = int(formatField["CharEscapement"])
 			if escapement < 0:
-				textPos = "sub"
+				formatField["text-position"] = TextPosition.SUBSCRIPT
 			elif escapement > 0:
-				textPos = "super"
+				formatField["text-position"] = TextPosition.SUPERSCRIPT
 			else:
-				textPos = "baseline"
-			formatField["text-position"] = textPos
+				formatField["text-position"] = TextPosition.BASELINE
 		except KeyError:
 			pass
 		try:
@@ -55,7 +55,8 @@ class SymphonyTextInfo(IA2TextTextInfo):
 		except KeyError:
 			pass
 		try:
-			formatField["font-size"] = "%spt" % formatField["CharHeight"]
+			# Translators: Abbreviation for points, a measurement of font size.
+			formatField["font-size"] = pgettext("font size", "%s pt") % formatField["CharHeight"]
 		except KeyError:
 			pass
 		try:

@@ -195,8 +195,9 @@ The following few sections will talk separately about App Modules and Global Plu
 After this point, discussion is again more general.
 
 ++ Basics of an App Module ++
-App Module files have a .py extension, and are named the same as either the main executable of the application for which you wish them to be used or the package inside a host executable.
+App Module files have a .py extension, and in most cases should be named the same as either the main executable of the application for which you wish them to be used or the package inside a host executable.
 For example, an App Module for notepad would be called notepad.py, as notepad's main executable is called notepad.exe.
+To map a single App Module for multiple executables, or handle when an executable name violates the Python import rules, refer to [Associating App Modules with an executable #AssociatingAppModule].
 For apps hosted inside host executables, see the section on app modules for hosted apps.
 
 App Module files must be placed in the appModules subdirectory of an add-on, or of the scratchpad directory of the NVDA user configuration directory.
@@ -207,6 +208,30 @@ This will all be covered in depth later.
 
 NVDA loads an App Module for an application as soon as it notices the application is running.
 The App Module is unloaded once the application is closed or when NVDA is exiting.
+
+++ Associating App Modules with an executable ++[AssociatingAppModule]
+As explained above, sometimes the default way of associating an App Module with an application is not flexible enough. Examples include:
+- You want to use a single App Module for various binaries (perhaps both stable and preview versions of the application should have the same accessibility enhancements)
+- The executable file is named in a way which conflicts with the Python naming rules. i.e. for an application named "time", naming the App Module "time.py" would conflict with the built-in module from the standard library
+-
+
+In such cases you can distribute a small global plugin along with your App Module which maps it to the executable.
+For example to map the App Module named "time_app_mod" to the "time" executable the plugin may be written as follows:
+```
+import appModuleHandler
+import globalPluginHandler
+
+
+class GlobalPlugin(globalPluginHandler.GlobalPlugin):
+
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+		appModuleHandler.registerExecutableWithAppModule("time", "time_app_mod")
+
+	def terminate(self, *args, **kwargs):
+		super().terminate(*args, **kwargs)
+		appModuleHandler.unregisterExecutable("time")
+```
 
 ++ Example 1: An App Module that Beeps on Focus Change Events ++[Example1]
 The following example App Module makes NVDA beep each time the focus changes within the notepad application.
@@ -387,7 +412,7 @@ Plugins make use of NVDA Objects in three particular ways:
 - Most events that plugins receive take an argument which is the NVDA Object on which the event occurred.
 For example, event_gainFocus takes the NVDA Object that represents the control gaining focus.
 - Scripts, events or other code may fetch objects of interest such as the NVDA Object with focus, NVDA's current navigator object, or perhaps the Desktop NVDA Object.
-The code may then retreave information from that object or perhaps even retreave another object related to it (e.g. its parent, first child, etc.).
+The code may then retrieve information from that object or perhaps even retrieve another object related to it (e.g. its parent, first child, etc.).
 - the Plugin may define its own custom NVDA Object classes which will be used to wrap a specific control to give it extra functionality, mutate its properties, etc.
 -
 
@@ -424,7 +449,7 @@ Currently, the input sources in NVDA are:
 -
 
 When NVDA receives input, it looks for a matching gesture binding in a particular order.
-Once a gesture binding is found, the script is executed and no further bindings are used, nore is that particular gesture passed on automatically to the Operating System.
+Once a gesture binding is found, the script is executed and no further bindings are used, nor is that particular gesture passed on automatically to the Operating System.
 
 The order for gesture binding lookup is:
 - The user specific gesture map
@@ -626,7 +651,7 @@ Similarly, if you match on MSAA's accRole property, you would probably need to i
 You should also consider what properties you are going to override on the custom NVDA Object.
 For instance, if you are going to override an IAccessible specific property, such as shouldAllowIAccessibleFocusEvent, then you need to inherit from NVDAObjects.IAccessible.IAccessible.
 
-the chooseNVDAObjectOverlayClasses method can be implemented on app modules or global plugin classes.
+The chooseNVDAObjectOverlayClasses method can be implemented on app modules or global plugin classes.
 It takes 3 arguments:
 + self: the app module or global plugin instance.
 + obj: the NVDAObject for which classes are being chosen.
@@ -815,7 +840,7 @@ All other fields will be ignored.
 +++ Locale-specific Messages +++
 Each language directory can also contain gettext information, which is the system used to translate the rest of NVDA's user interface and reported messages.
 As with the rest of NVDA, an nvda.mo compiled gettext database file should be placed in the LC_MESSAGES directory within this directory.
-to allow plugins in your add-on to access gettext message information via calls to _(), you must initialize translations at the top of each Python module by calling addonHandler.initTranslation().
+To allow plugins in your add-on to access gettext message information via calls to _(), you must initialize translations at the top of each Python module by calling addonHandler.initTranslation().
 For more information about gettext and NVDA translation in general, please read
 https://github.com/nvaccess/nvda/wiki/Translating
 

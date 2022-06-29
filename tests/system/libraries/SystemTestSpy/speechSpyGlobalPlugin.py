@@ -8,6 +8,7 @@ It allows tests to get information out of NVDA.
 It is copied into the (system test specific) NVDA profile directory. It becomes the '__init__.py' file as part
 of a package.
 """
+import gettext
 import typing
 from typing import Optional
 
@@ -116,6 +117,41 @@ class NVDASpyLib:
 			penultimateConf = penultimateConf[key]
 		ultimateKey = keyPath[-1]
 		penultimateConf[ultimateKey] = val
+
+	fakeTranslations: typing.Optional[gettext.NullTranslations] = None
+
+	def override_translationString(self, invariantString: str, replacementString: str):
+		import languageHandler
+		if not self.fakeTranslations:
+			class Translation_Fake(gettext.NullTranslations):
+				originalTranslationFunction: Optional
+				translationResults: typing.Dict[str, str]
+
+				def __init__(
+						self,
+						originalTranslationFunction: Optional
+				):
+					self.originalTranslationFunction = originalTranslationFunction
+					self.translationResults = {}
+					super().__init__()
+					self.install()
+
+				def gettext(self, msg: str) -> str:
+					if msg in self.translationResults:
+						return self.translationResults[msg]
+					if self.originalTranslationFunction:
+						return self.originalTranslationFunction.gettext(msg)
+					return msg
+
+				def restore(self) -> None:
+					self.translationResults.clear()
+					if self.originalTranslationFunction:
+						self.originalTranslationFunction.install()
+
+			self.fakeTranslations = Translation_Fake(
+				languageHandler.installedTranslation() if languageHandler.installedTranslation else None
+			)
+		self.fakeTranslations.translationResults[invariantString] = replacementString
 
 	def queueNVDAMainThreadCrash(self):
 		from queueHandler import queueFunction, eventQueue

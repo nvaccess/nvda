@@ -13,6 +13,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #include "textFromIAccessible.h"
 #include <string>
+#include <vector>
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <atlcomcli.h>
@@ -20,6 +21,45 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <common/ia2utils.h>
 
 using namespace std;
+auto constexpr OBJ_REPLACEMENT_CHAR = L'\xfffc';
+
+
+bool isEmpty(CComBSTR& val) {
+	if (!val) {
+		return true;
+	}
+	for (int i = 0; val[i] != L'\0'; ++i) {
+		if (val[i] != OBJ_REPLACEMENT_CHAR && !iswspace(val[i])) {
+			return false;
+		}
+	}
+	return true;
+}
+
+bool appendNameDescription(CComPtr<IAccessible> pacc, wstring& textBuf) {
+	bool gotText = false;
+	CComVariant varChild;
+	varChild.vt = VT_I4;
+	varChild.lVal = 0;
+
+	CComBSTR val;
+	pacc->get_accName(varChild, &val);
+	bool valEmpty = isEmpty(val);
+	if (!valEmpty) {
+		gotText = true;
+		textBuf.append(val);
+		textBuf.append(L" ");
+	}
+
+	val = nullptr;
+	pacc->get_accDescription(varChild, &val);
+	valEmpty = isEmpty(val);
+	if (!valEmpty) {
+		gotText = true;
+		textBuf.append(val);
+	}
+	return gotText;
+}
 
 
 bool getTextFromIAccessible(
@@ -29,45 +69,47 @@ bool getTextFromIAccessible(
 	bool recurse,
 	bool includeTopLevelText
 ) {
-	bool gotText = false;
-	IAccessibleText* paccText = NULL;
-	if (pacc2->QueryInterface(IID_IAccessibleText, (void**)&paccText) != S_OK) {
-		paccText = NULL;
+	if (!pacc2) {
+		return false;
 	}
+
+	bool gotText = false;
+	CComQIPtr<IAccessibleText> paccText(pacc2);
+
 	if (!paccText && recurse && !useNewText) {
 		//no IAccessibleText interface, so try children instead
 		long childCount = 0;
 		if (!useNewText && pacc2->get_accChildCount(&childCount) == S_OK && childCount > 0) {
-			VARIANT* varChildren = new VARIANT[childCount];
-			AccessibleChildren(pacc2, 0, childCount, varChildren, &childCount);
-			for (int i = 0; i < childCount; ++i) {
-				if (varChildren[i].vt == VT_DISPATCH) {
-					IAccessible2* pacc2Child = NULL;
-					if (varChildren[i].pdispVal && varChildren[i].pdispVal->QueryInterface(IID_IAccessible2, (void**)&pacc2Child) == S_OK) {
+			auto[varChildren, accChildRes] = getAccessibleChildren(pacc2, 0, childCount);
+			for(auto& child : varChildren){
+				if (child.vt == VT_DISPATCH && child.pdispVal) {
+					CComQIPtr<IAccessible2> pacc2Child(child.pdispVal);
+					if (pacc2Child) {
 						map<wstring, wstring> childAttribsMap;
 						fetchIA2Attributes(pacc2Child, childAttribsMap);
 						auto liveItr = childAttribsMap.find(L"live");
 						if (liveItr == childAttribsMap.end() || liveItr->second.compare(L"off") != 0) {
-							if (getTextFromIAccessible(textBuf, pacc2Child)) {
-								gotText = true;
-							}
+							gotText |= getTextFromIAccessible(
+								textBuf,
+								pacc2Child,
+								false, // useNewText
+								true, // recurse
+								true // includeTopLevelText
+							);
 						}
-						pacc2Child->Release();
 					}
 				}
-				VariantClear(varChildren + i);
 			}
-			delete[] varChildren;
 		}
 	}
 	else if (paccText) {
 		//We can use IAccessibleText because it exists
-		BSTR bstrText = NULL;
+		CComBSTR bstrText;
 		long startOffset = 0;
 		//If requested, get the text from IAccessibleText::newText rather than just IAccessibleText::text.
 		if (useNewText) {
-			IA2TextSegment newSeg = { 0 };
-			if (paccText->get_newText(&newSeg) == S_OK && newSeg.text) {
+			IA2TextSegment newSeg {};
+			if (S_OK == paccText->get_newText(&newSeg) && newSeg.text) {
 				bstrText = newSeg.text;
 				startOffset = newSeg.start;
 			}
@@ -78,85 +120,48 @@ bool getTextFromIAccessible(
 		//If we got text, add it to  the string provided, however if there are embedded objects in the text, recurse in to these
 		if (bstrText) {
 			long textLength = SysStringLen(bstrText);
-			IAccessibleHypertext* paccHypertext = NULL;
-			if (!recurse || pacc2->QueryInterface(IID_IAccessibleHypertext, (void**)&paccHypertext) != S_OK) paccHypertext = NULL;
+			CComQIPtr<IAccessibleHypertext> paccHypertext;
+			if (recurse) {
+				paccHypertext = pacc2;
+			}
 			for (long index = 0; index < textLength; ++index) {
 				wchar_t realChar = bstrText[index];
 				bool charAdded = false;
-				if (realChar == L'\xfffc') {
-					long hyperlinkIndex;
-					if (paccHypertext && paccHypertext->get_hyperlinkIndex(startOffset + index, &hyperlinkIndex) == S_OK) {
-						IAccessibleHyperlink* paccHyperlink = NULL;
-						if (paccHypertext->get_hyperlink(hyperlinkIndex, &paccHyperlink) == S_OK) {
-							IAccessible2* pacc2Child = NULL;
-							if (paccHyperlink->QueryInterface(IID_IAccessible2, (void**)&pacc2Child) == S_OK) {
+				if (realChar == OBJ_REPLACEMENT_CHAR) {
+					const long charIndex = startOffset + index;
+					long hyperlinkIndex = 0;
+					if (paccHypertext && paccHypertext->get_hyperlinkIndex(charIndex, &hyperlinkIndex) == S_OK) {
+						CComPtr<IAccessibleHyperlink> paccHyperlink;
+						if (S_OK == paccHypertext->get_hyperlink(hyperlinkIndex, &paccHyperlink)) {
+							CComQIPtr <IAccessible2> pacc2Child(paccHyperlink);
+							if (pacc2Child) {
 								map<wstring, wstring> childAttribsMap;
 								fetchIA2Attributes(pacc2Child, childAttribsMap);
 								auto liveItr = childAttribsMap.find(L"live");
-								if (liveItr == childAttribsMap.end() || liveItr->second.compare(L"off") != 0) {
+								if (liveItr == childAttribsMap.end() || liveItr->second != L"off") {
 									if (getTextFromIAccessible(textBuf, pacc2Child)) {
 										gotText = true;
 									}
 								}
 								charAdded = true;
-								pacc2Child->Release();
 							}
-							paccHyperlink->Release();
 						}
 					}
 				}
 				if (!charAdded && includeTopLevelText) {
 					textBuf.append(1, realChar);
 					charAdded = true;
-					if (realChar != L'\xfffc' && !iswspace(realChar)) {
+					if (realChar != OBJ_REPLACEMENT_CHAR && !iswspace(realChar)) {
 						gotText = true;
 					}
 				}
 			}
-			if (paccHypertext) paccHypertext->Release();
-			SysFreeString(bstrText);
 			textBuf.append(1, L' ');
 		}
-		paccText->Release();
 	}
 	if (!gotText && !useNewText) {
 		//We got no text from IAccessibleText interface or children, so try name and/or description
-		BSTR val = NULL;
-		bool valEmpty = true;
-		VARIANT varChild;
-		varChild.vt = VT_I4;
-		varChild.lVal = 0;
-		pacc2->get_accName(varChild, &val);
-		if (val) {
-			for (int i = 0; val[i] != L'\0'; ++i) {
-				if (val[i] != L'\xfffc' && !iswspace(val[i])) {
-					valEmpty = false;
-					break;
-				}
-			}
-			if (!valEmpty) {
-				gotText = true;
-				textBuf.append(val);
-				textBuf.append(L" ");
-			}
-			SysFreeString(val);
-			val = NULL;
-		}
-		valEmpty = true;
-		pacc2->get_accDescription(varChild, &val);
-		if (val) {
-			for (int i = 0; val[i] != L'\0'; ++i) {
-				if (val[i] != L'\xfffc' && !iswspace(val[i])) {
-					valEmpty = false;
-					break;
-				}
-			}
-			if (!valEmpty) {
-				gotText = true;
-				textBuf.append(val);
-			}
-			SysFreeString(val);
-		}
+		gotText = appendNameDescription(pacc2, textBuf);
 	}
 	return gotText;
 }

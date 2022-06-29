@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2020 NV Access Limited, Manish Agrawal, Derek Riemer, Babbage B.V.
+# Copyright (C) 2006-2022 NV Access Limited, Manish Agrawal, Derek Riemer, Babbage B.V.
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -14,10 +14,6 @@ from typing import (
 from comtypes import COMError, GUID, BSTR
 import comtypes.client
 import comtypes.automation
-import uuid
-import operator
-import locale
-import collections
 import colorsys
 import eventHandler
 import braille
@@ -29,13 +25,13 @@ import XMLFormatting
 from logHandler import log
 import winUser
 import oleacc
-import globalVars
 import speech
 import config
 import textInfos
 import textInfos.offsets
 import colors
 import controlTypes
+from controlTypes import TextPosition
 import treeInterceptorHandler
 import browseMode
 import review
@@ -875,6 +871,8 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			revisionLabel=wdRevisionTypeLabels.get(revisionType,None)
 			if revisionLabel:
 				field['revision']=revisionLabel
+		textPosition = field.pop('text-position', TextPosition.BASELINE)
+		field['text-position'] = TextPosition(textPosition)
 		color=field.pop('color',None)
 		if color is not None:
 			field['color']=self.obj.winwordColorToNVDAColor(int(color))
@@ -897,6 +895,10 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		bullet=field.get('line-prefix')
 		if bullet and len(bullet)==1:
 			field['line-prefix']=mapPUAToUnicode.get(bullet,bullet)
+		fontSize = field.get("font-size")
+		if fontSize is not None:
+			# Translators: Abbreviation for points, a measurement of font size.
+			field["font-size"] = pgettext("font size", "%s pt") % fontSize
 		return field
 
 	def expand(self,unit):
@@ -1473,8 +1475,8 @@ class WordDocument(Window):
 				# Translators: a measurement in Microsoft Word
 				return _("{offset:.3g} millimeters").format(offset=offset)
 			elif unit==wdPoints:
-				# Translators: a measurement in Microsoft Word
-				return _("{offset:.3g} points").format(offset=offset)
+				# Translators: a measurement in Microsoft Word (points)
+				return _("{offset:.3g} pt").format(offset=offset)
 			elif unit==wdPicas:
 				offset=offset/12.0
 				# Translators: a measurement in Microsoft Word

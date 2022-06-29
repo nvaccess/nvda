@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2021 NV Access Limited
+# Copyright (C) 2006-2022 NV Access Limited
 
 """Base classes with common support for browsers exposing IAccessible2.
 """
@@ -20,6 +20,7 @@ from .ia2TextMozilla import MozillaCompoundTextInfo
 import aria
 import api
 import speech
+import config
 
 class Ia2Web(IAccessible):
 	IAccessibleTableUsesTableCellIndexAttrib=True
@@ -45,6 +46,9 @@ class Ia2Web(IAccessible):
 
 	def _get_detailsSummary(self) -> typing.Optional[str]:
 		if not self.hasDetails:
+			# optimisation that avoids having to fetch details relations which may be a more costly procedure.
+			if config.conf["debugLog"]["annotations"]:
+				log.debug("no details-roles")
 			return None
 		detailsRelations = self.detailsRelations
 		if not detailsRelations:
@@ -57,6 +61,25 @@ class Ia2Web(IAccessible):
 	@property
 	def hasDetails(self) -> bool:
 		return bool(self.IA2Attributes.get("details-roles"))
+
+	def _get_detailsRole(self) -> typing.Optional[controlTypes.Role]:
+		from .chromium import supportedAriaDetailsRoles
+		# Currently only defined in Chrome as of May 2022
+		# Refer to ComputeDetailsRoles
+		# https://chromium.googlesource.com/chromium/src/+/main/ui/accessibility/platform/ax_platform_node_base.cc#2419
+		detailsRoles = self.IA2Attributes.get("details-roles")
+		if not detailsRoles:
+			if config.conf["debugLog"]["annotations"]:
+				log.debug("details-roles not found")
+			return None
+		
+		firstDetailsRole = detailsRoles.split(" ")[0]
+		# return a supported details role
+		detailsRole = supportedAriaDetailsRoles.get(firstDetailsRole)
+		if config.conf["debugLog"]["annotations"]:
+			log.debug(f"detailsRole: {repr(detailsRole)}")
+		return detailsRole
+
 
 	def _get_isCurrent(self) -> controlTypes.IsCurrent:
 		ia2attrCurrent: str = self.IA2Attributes.get("current", "false")

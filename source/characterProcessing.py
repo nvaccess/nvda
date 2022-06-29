@@ -4,7 +4,6 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from versionInfo import version_year
 from enum import IntEnum
 import os
 import codecs
@@ -135,15 +134,6 @@ class SymbolLevel(IntEnum):
 	CHAR = 1000
 	UNCHANGED = -1
 
-
-# The following SYMLVL_ constants are deprecated in #11856 but remain to maintain backwards compatibility.
-# Remove these in 2022.1 and replace instances using them with the SymbolLevel IntEnum.
-if version_year < 2022:
-	SYMLVL_NONE = SymbolLevel.NONE
-	SYMLVL_SOME = SymbolLevel.SOME
-	SYMLVL_MOST = SymbolLevel.MOST
-	SYMLVL_ALL = SymbolLevel.ALL
-	SYMLVL_CHAR = SymbolLevel.CHAR
 
 SPEECH_SYMBOL_LEVEL_LABELS = {
 	# Translators: The level at which the given symbol will be spoken.

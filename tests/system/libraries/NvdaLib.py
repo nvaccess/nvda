@@ -28,6 +28,7 @@ from typing import (
 )
 from urllib.parse import quote as _quoteStr
 
+import typing
 from robotremoteserver import (
 	test_remote_server as _testRemoteServer,
 	stop_remote_server as _stopRemoteServer,
@@ -38,6 +39,9 @@ from SystemTestSpy import (
 	_nvdaSpyAlias,
 	configManager
 )
+
+if typing.TYPE_CHECKING:
+	from SystemTestSpy.speechSpyGlobalPlugin import NVDASpyLib
 
 # Imported for type information
 from robot.libraries.BuiltIn import BuiltIn
@@ -383,11 +387,10 @@ class NvdaLib:
 		return saveToPath
 
 
-def getSpyLib():
+def getSpyLib() -> "NVDASpyLib":
 	""" Gets the spy library instance. This has been augmented with methods for all supported keywords.
 	Requires NvdaLib and nvdaSpy (remote library - see speechSpyGlobalPlugin) to be initialised.
 	On failure check order of keywords in Robot log and NVDA log for failures.
-	@rtype: SystemTestSpy.speechSpyGlobalPlugin.NVDASpyLib
 	@return: Remote NVDA spy Robot Framework library.
 	"""
 	nvdaLib = _getLib("NvdaLib")
