@@ -159,6 +159,10 @@ def test_mark_aria_details_role():
 				<div id="footnote-details" role="doc-footnote">details with role doc-footnote</div>
 				<div id="comment-details" role="comment">details with role comment</div>
 				<div id="definition-details-as-role" role="definition">details with role definition</div>
+				<p>
+					<span role="term">definition</span>:
+					<span id="definition-details-as-role" role="definition">details with role definition</span>
+				</p>
 				<!-- Included as "form" is not supported by Chrome attribute details-roles -->
 				<div id="unknown-details" role="form">details with role form</div>
 			</p>
