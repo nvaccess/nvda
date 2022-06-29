@@ -143,7 +143,7 @@ def _getPossibleAppModuleNamesForExecutable(executableName: str) -> Tuple[str, .
 		aliasName for aliasName in (
 			_executableNamesToAppModsAddons.get(executableName),
 			# #5323: Certain executables contain dots as part of their file names.
-			# Since Python threats dot as a package separator we replace it with undescore
+			# Since Python treats dot as a package separator we replace it with an underscore
 			# in the name of the Python module.
 			# For new App Modules consider adding an alias to `appModule.EXECUTABLE_NAMES_TO_APP_MODS`
 			# rather than rely on the fact that dots are replaced.
@@ -164,9 +164,9 @@ def doesAppModuleExist(name: str, ignoreDeprecatedAliases: bool = False) -> bool
 		modSpec = None
 	if modSpec is None:
 		return False
-	# While the module has been found it is possible tis is just a deprecated alias.
+	# While the module has been found it is possible this is a deprecated alias.
 	# Before PR #13366 the only possibility to map a single app module to multiple executables
-	# was to create a alias app module and import everything from the main module into it.
+	# was to create an alias app module and import everything from the main module into it.
 	# Now the preferred solution is to add an entry into `appModules.EXECUTABLE_NAMES_TO_APP_MODS`,
 	# but old alias modules have to stay to preserve backwards compatibility.
 	# We cannot import the alias module since they show a deprecation warning on import.
