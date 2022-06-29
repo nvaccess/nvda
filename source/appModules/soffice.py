@@ -213,9 +213,11 @@ class SymphonyIATableCell(SymphonyTableCell):
 			count = self.table.IAccessibleTable2Object.nSelectedCells
 			selection = self.table.IAccessibleObject.accSelection
 			enumObj = selection.QueryInterface(oleacc.IEnumVARIANT)
+			firstChild: Union[int, comtypes.client.dynamic._Dispatch]
 			firstChild, _retrievedCount = enumObj.Next(1)
 			# skip over all except the last element
 			enumObj.Skip(count - 2)
+			lastChild: Union[int, comtypes.client.dynamic._Dispatch]
 			lastChild, _retrieveCount = enumObj.Next(1)
 			# in LibreOffice 7.3.0, the IEnumVARIANT returns a child ID,
 			# in LibreOffice >= 7.4, it returns an IDispatch
