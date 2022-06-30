@@ -355,14 +355,15 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 
 	focusRedirect=None #: Another object which should be treeted as the focus if focus is ever given to this object.
 
-	treeInterceptorClass: typing.Optional[typing.Type[TreeInterceptor]]
+	treeInterceptorClass: typing.Type[TreeInterceptor]
 	"""Type definition for auto prop '_get_treeInterceptorClass'"""
 
-	def _get_treeInterceptorClass(self) -> typing.Optional[typing.Type[TreeInterceptor]]:
+	def _get_treeInterceptorClass(self) -> typing.Type[TreeInterceptor]:
 		"""
 		If this NVDAObject should use a treeInterceptor, then this property
 		provides the L{treeInterceptorHandler.TreeInterceptor} class it should use.
 		If not then it should be not implemented.
+		@raises NotImplementedError when no TreeInterceptor class is available.
 		"""
 		raise NotImplementedError
 
