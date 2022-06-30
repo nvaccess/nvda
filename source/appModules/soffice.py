@@ -3,7 +3,13 @@
 # See the file COPYING for more details.
 # Copyright (C) 2006-2022 NV Access Limited, Bill Dengler, Leonard de Ruijter
 
+from typing import (
+	Union
+)
+
 from comtypes import COMError
+import comtypes.client
+import oleacc
 from IAccessibleHandler import IA2, splitIA2Attribs
 import appModuleHandler
 import controlTypes
@@ -209,11 +215,28 @@ class SymphonyIATableCell(SymphonyTableCell):
 
 	def _get_cellCoordsText(self):
 		if self.hasSelection and controlTypes.State.FOCUSED in self.states:
-			selected, count = self.table.IAccessibleTable2Object.selectedCells
-			firstAccessible = selected[0].QueryInterface(IA2.IAccessible2)
+			count = self.table.IAccessibleTable2Object.nSelectedCells
+			selection = self.table.IAccessibleObject.accSelection
+			enumObj = selection.QueryInterface(oleacc.IEnumVARIANT)
+			firstChild: Union[int, comtypes.client.dynamic._Dispatch]
+			firstChild, _retrievedCount = enumObj.Next(1)
+			# skip over all except the last element
+			enumObj.Skip(count - 2)
+			lastChild: Union[int, comtypes.client.dynamic._Dispatch]
+			lastChild, _retrieveCount = enumObj.Next(1)
+			# in LibreOffice 7.3.0, the IEnumVARIANT returns a child ID,
+			# in LibreOffice >= 7.4, it returns an IDispatch
+			if isinstance(firstChild, int):
+				tableAccessible = self.table.IAccessibleTable2Object.QueryInterface(IA2.IAccessible2)
+				firstAccessible = tableAccessible.accChild(firstChild).QueryInterface(IA2.IAccessible2)
+				lastAccessible = tableAccessible.accChild(lastChild).QueryInterface(IA2.IAccessible2)
+			elif isinstance(firstChild, comtypes.client.dynamic._Dispatch):
+				firstAccessible = firstChild.QueryInterface(IA2.IAccessible2)
+				lastAccessible = lastChild.QueryInterface(IA2.IAccessible2)
+			else:
+				raise RuntimeError(f"Unexpected LibreOffice object {firstChild}, type: {type(firstChild)}")
 			firstAddress = firstAccessible.accName(0)
 			firstValue = firstAccessible.accValue(0) or ''
-			lastAccessible = selected[count - 1].QueryInterface(IA2.IAccessible2)
 			lastAddress = lastAccessible.accName(0)
 			lastValue = lastAccessible.accValue(0) or ''
 			# Translators: LibreOffice, report selected range of cell coordinates with their values
