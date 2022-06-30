@@ -174,6 +174,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	trapNonCommandGestures = boolean(default=true)
 	enableOnPageLoad = boolean(default=true)
 	autoFocusFocusableElements = boolean(default=False)
+	loadChromiumVbufOnBusyState = boolean(default=False)
 
 [touch]
 	enabled = boolean(default=true)
