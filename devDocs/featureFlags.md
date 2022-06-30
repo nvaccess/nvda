@@ -17,7 +17,7 @@ This allows a choice between the following use-cases to be made at any point in 
 An early adopter may choose to do this to test the feature and provide feedback.
 - **Explicitly opt-out** of the feature, regardless of the default behavior.
 A user may find the pre-existing behavior acceptable, and wants the maximum delay to adopt the new feature.
-They may be prioritising stability, or anticipating this featureFlag receives a permanent home in NVDA settings.
+They may be prioritising stability, or anticipating this feature flag receives a permanent home in NVDA settings.
 - **Explicitly choose the default** (NVDA developer recommended) behavior.
 Noting, that in this case it is important that the user must be able to select one of the other options first,
 and return to the default behavior at any point in time.

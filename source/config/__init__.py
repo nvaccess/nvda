@@ -9,6 +9,7 @@ The heart of NVDA's configuration is Configuration Manager, which records curren
 In addition, this module provides three actions: profile switch notifier, an action to be performed when NVDA saves settings, and action to be performed when NVDA is asked to reload configuration from disk or reset settings to factory defaults.
 For the latter two actions, one can perform actions prior to and/or after they take place.
 """
+
 from enum import Enum
 import globalVars
 import winreg
@@ -504,7 +505,6 @@ def _transformSpec(spec: ConfigObj):
 	"""To make the spec less verbose, transform the spec:
 	- Add default="default" to all featureFlag items. This is required so that the key can be read,
 	even if it is missing from the config.
-	-
 	"""
 	spec.configspec = spec
 	spec.validate(

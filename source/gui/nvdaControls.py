@@ -15,7 +15,7 @@ from wx.lib.mixins import listctrl as listmix
 
 from config.featureFlag import (
 	FeatureFlag,
-	FeatureFlagValues,
+	FeatureFlagValue,
 )
 from .dpiScalingHelper import DpiScalingHelperMixin
 from . import guiHelper
@@ -411,7 +411,7 @@ class FeatureFlagCombo(wx.Choice):
 			parent: wx.Window,
 			keyPath: List[str],
 			conf,
-			translatedOptions: OrderedDict[FeatureFlagValues, str],
+			translatedOptions: OrderedDict[FeatureFlagValue, str],
 			pos=wx.DefaultPosition,
 			size=wx.DefaultSize,
 			style=0,
@@ -423,7 +423,7 @@ class FeatureFlagCombo(wx.Choice):
 		:param keyPath: The list of keys required to get to the config value.
 		:param conf: The config.conf object.
 		:param translatedOptions: A dictionary of translated options, for each feature flag value. Note, the
-		FeatureFlagValues.default value should not be included in this dictionary. See L{
+		L{FeatureFlagValue.DEFAULT} value should not be included in this dictionary. See L{
 		FeatureFlagCombo._setDefaultOptionLabel}.
 		:param pos: The position of the control. Forwarded to wx.Choice
 		:param size: The size of the control. Forwarded to wx.Choice
@@ -433,9 +433,9 @@ class FeatureFlagCombo(wx.Choice):
 		"""
 		self._confPath = keyPath
 		self._conf = conf
-		if FeatureFlagValues.DEFAULT in translatedOptions:
+		if FeatureFlagValue.DEFAULT in translatedOptions:
 			raise ValueError(
-				f"The translatedOptions dictionary should not contain the key {FeatureFlagValues.DEFAULT!r}"
+				f"The translatedOptions dictionary should not contain the key {FeatureFlagValue.DEFAULT!r}"
 				" It will be added automatically. See _setDefaultOptionLabel"
 			)
 		self._translatedOptions = self._createOptionsDict(translatedOptions)
@@ -443,11 +443,11 @@ class FeatureFlagCombo(wx.Choice):
 		super(FeatureFlagCombo, self).__init__(
 			parent,
 			choices=choices,
-			pos=wx.DefaultPosition,
-			size=wx.DefaultSize,
-			style=0,
-			validator=wx.DefaultValidator,
-			name=wx.ChoiceNameStr,
+			pos=pos,
+			size=size,
+			style=style,
+			validator=validator,
+			name=name,
 		)
 
 		self.SetSelection(self._getChoiceIndex(self._getConfigValue().value))
@@ -457,13 +457,13 @@ class FeatureFlagCombo(wx.Choice):
 		advanced settings dialog.
 		"""
 
-	def _getChoiceIndex(self, value: FeatureFlagValues) -> int:
+	def _getChoiceIndex(self, value: FeatureFlagValue) -> int:
 		return list(self._translatedOptions.keys()).index(value)
 
-	def _getConfSpecDefaultValue(self) -> FeatureFlagValues:
+	def _getConfSpecDefaultValue(self) -> FeatureFlagValue:
 		defaultValueFromSpec = self._conf.getConfigValidation(self._confPath).default
 		if not isinstance(defaultValueFromSpec, FeatureFlag):
-			raise ValueError(f"Default spec value is not a str, but {type(defaultValueFromSpec)}")
+			raise ValueError(f"Default spec value is not a FeatureFlag, but {type(defaultValueFromSpec)}")
 		return defaultValueFromSpec.value
 
 	def _getConfigValue(self) -> FeatureFlag:
@@ -493,7 +493,7 @@ class FeatureFlagCombo(wx.Choice):
 	def saveCurrentValueToConf(self) -> None:
 		""" Set the config value to the current value of the control.
 		"""
-		flagValue: FeatureFlagValues = list(self._translatedOptions.keys())[self.GetSelection()]
+		flagValue: FeatureFlagValue = list(self._translatedOptions.keys())[self.GetSelection()]
 		keyPath = self._confPath
 		if not keyPath or len(keyPath) < 1:
 			raise ValueError("Key path not provided")
@@ -509,8 +509,8 @@ class FeatureFlagCombo(wx.Choice):
 
 	def _createOptionsDict(
 			self,
-			translatedOptions: OrderedDict[FeatureFlagValues, str]
-	) -> OrderedDict[FeatureFlagValues, str]:
+			translatedOptions: OrderedDict[FeatureFlagValue, str]
+	) -> OrderedDict[FeatureFlagValue, str]:
 		behaviorOfDefault = self._getConfigValue().behaviorOfDefault
 		translatedStringForBehaviorOfDefault = translatedOptions[behaviorOfDefault]
 		# Translators: Label for option in the 'Load Chromium virtual buffer when document busy.'
@@ -520,6 +520,6 @@ class FeatureFlagCombo(wx.Choice):
 			translatedStringForBehaviorOfDefault
 		)
 		return collections.OrderedDict({
-			FeatureFlagValues.DEFAULT: defaultOptionLabel,  # make sure default is the first option.
+			FeatureFlagValue.DEFAULT: defaultOptionLabel,  # make sure default is the first option.
 			**translatedOptions
 		})

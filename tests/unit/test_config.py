@@ -1,3 +1,8 @@
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2022 NV Access Limited
+
 import unittest
 
 import configobj
@@ -6,7 +11,7 @@ import configobj.validate
 from config import featureFlag
 from config.featureFlag import (
 	FeatureFlag,
-	FeatureFlagValues,
+	FeatureFlagValue,
 )
 
 
@@ -64,16 +69,21 @@ class Config_FeatureFlag_validateFeatureFlag(unittest.TestCase):
 	def assertFeatureFlagState(
 			self,
 			flag: FeatureFlag,
-			value: FeatureFlagValues,
-			behaviorOfDefault: FeatureFlagValues,
+			value: FeatureFlagValue,
+			behaviorOfDefault: FeatureFlagValue,
 			calculatedValue: bool
 	):
-		self.assertEqual(bool(flag), calculatedValue)
-		self.assertEqual(flag.value, value)
-		self.assertEqual(flag.behaviorOfDefault, behaviorOfDefault)
+		self.assertEqual(bool(flag), calculatedValue, msg="Calculated value for behaviour is unexpected")
+		self.assertEqual(flag.value, value, msg="Flag value is unexpected")
+		self.assertEqual(
+			flag.behaviorOfDefault,
+			behaviorOfDefault,
+			msg="Flag behaviorOfDefault value is unexpected"
+		)
 		self.assertEqual(
 			str(flag),  # conversion to string required to save to config.
-			value.name.upper()
+			value.name.upper(),
+			msg="Flag string conversion not as expected"
 		)
 
 	def test_enabled_lower(self):
@@ -83,8 +93,8 @@ class Config_FeatureFlag_validateFeatureFlag(unittest.TestCase):
 		)
 		self.assertFeatureFlagState(
 			flag,
-			value=FeatureFlagValues.ENABLED,
-			behaviorOfDefault=FeatureFlagValues.DISABLED,
+			value=FeatureFlagValue.ENABLED,
+			behaviorOfDefault=FeatureFlagValue.DISABLED,
 			calculatedValue=True
 		)
 
@@ -95,8 +105,8 @@ class Config_FeatureFlag_validateFeatureFlag(unittest.TestCase):
 		)
 		self.assertFeatureFlagState(
 			flag,
-			value=FeatureFlagValues.ENABLED,
-			behaviorOfDefault=FeatureFlagValues.DISABLED,
+			value=FeatureFlagValue.ENABLED,
+			behaviorOfDefault=FeatureFlagValue.DISABLED,
 			calculatedValue=True
 		)
 
@@ -107,8 +117,8 @@ class Config_FeatureFlag_validateFeatureFlag(unittest.TestCase):
 		)
 		self.assertFeatureFlagState(
 			flag,
-			value=FeatureFlagValues.DISABLED,
-			behaviorOfDefault=FeatureFlagValues.ENABLED,
+			value=FeatureFlagValue.DISABLED,
+			behaviorOfDefault=FeatureFlagValue.ENABLED,
 			calculatedValue=False
 		)
 
@@ -119,8 +129,8 @@ class Config_FeatureFlag_validateFeatureFlag(unittest.TestCase):
 		)
 		self.assertFeatureFlagState(
 			flag,
-			value=FeatureFlagValues.DISABLED,
-			behaviorOfDefault=FeatureFlagValues.ENABLED,
+			value=FeatureFlagValue.DISABLED,
+			behaviorOfDefault=FeatureFlagValue.ENABLED,
 			calculatedValue=False
 		)
 
@@ -131,8 +141,8 @@ class Config_FeatureFlag_validateFeatureFlag(unittest.TestCase):
 		)
 		self.assertFeatureFlagState(
 			flag,
-			value=FeatureFlagValues.DEFAULT,
-			behaviorOfDefault=FeatureFlagValues.ENABLED,
+			value=FeatureFlagValue.DEFAULT,
+			behaviorOfDefault=FeatureFlagValue.ENABLED,
 			calculatedValue=True
 		)
 
@@ -143,19 +153,19 @@ class Config_FeatureFlag_validateFeatureFlag(unittest.TestCase):
 		)
 		self.assertFeatureFlagState(
 			flag,
-			value=FeatureFlagValues.DEFAULT,
-			behaviorOfDefault=FeatureFlagValues.ENABLED,
+			value=FeatureFlagValue.DEFAULT,
+			behaviorOfDefault=FeatureFlagValue.ENABLED,
 			calculatedValue=True
 		)
 
-	def test_empty_defaultsToDisabled(self):
+	def test_empty_raises(self):
 		with self.assertRaises(configobj.validate.ValidateError):
 			featureFlag._validateConfig_featureFlag(
 				"",  # Given our usage of ConfigObj, this situation is unexpected.
 				behaviorOfDefault="disabled"
 			)
 
-	def test_None_defaultsToDisabled(self):
+	def test_None_raises(self):
 		with self.assertRaises(configobj.validate.ValidateError):
 			featureFlag._validateConfig_featureFlag(
 				None,  # Given our usage of ConfigObj, this situation is unexpected.

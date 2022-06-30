@@ -11,17 +11,20 @@ import enum
 from typing import (
 	Optional,
 )
-import configobj.validate
+from configobj.validate import (
+	ValidateError,
+	VdtParamError,
+)
 from logHandler import log
 
 
-class FeatureFlagValues(enum.Enum):
+class FeatureFlagValue(enum.Enum):
 	""" The explicit DEFAULT option allows developers to differentiate between a value set that happens to be
 	the current default, and a value that has been returned to the "default" explicitly.
 	"""
-	DEFAULT = 0
-	DISABLED = 1
-	ENABLED = 2
+	DEFAULT = enum.auto()
+	DISABLED = enum.auto()
+	ENABLED = enum.auto()
 
 
 class FeatureFlag:
@@ -31,17 +34,17 @@ class FeatureFlag:
 	This allows for the default behaviour to change, without affecting a users explicit choice to enable, or
 	disable.
 	"""
-	def __init__(self, value: FeatureFlagValues, behaviorOfDefault: FeatureFlagValues):
+	def __init__(self, value: FeatureFlagValue, behaviorOfDefault: FeatureFlagValue):
 		self.value = value
-		assert behaviorOfDefault != FeatureFlagValues.DEFAULT
+		assert behaviorOfDefault != FeatureFlagValue.DEFAULT
 		self.behaviorOfDefault = behaviorOfDefault
 
 	def __bool__(self) -> bool:
 		return (
-			self.value == FeatureFlagValues.ENABLED
+			self.value == FeatureFlagValue.ENABLED
 			or (
-				self.value == FeatureFlagValues.DEFAULT
-				and self.behaviorOfDefault == FeatureFlagValues.ENABLED
+				self.value == FeatureFlagValue.DEFAULT
+				and self.behaviorOfDefault == FeatureFlagValue.ENABLED
 			)
 		)
 
@@ -57,20 +60,19 @@ def _validateConfig_featureFlag(value: Optional[str], behaviorOfDefault: str) ->
 	param behaviorOfDefault: Required, the default behavior of the flag, should be "enabled" or "disabled".
 	"""
 	log.debug(f"Validating feature flag: {value}, behaviorOfDefault: {behaviorOfDefault}")
-	from configobj.validate import ValidateError
 	if not isinstance(behaviorOfDefault, str):
 		raise ValidateError(
-			'Spec Error: behaviorOfDefault must be specified as a valid FeatureFlagValues string'
+			'Spec Error: behaviorOfDefault must be specified as a valid FeatureFlagValue string'
 			f" (got type {type(behaviorOfDefault)} with value: {behaviorOfDefault})"
 		)
 	try:
-		behaviorOfDefault = FeatureFlagValues[behaviorOfDefault.upper()]
+		behaviorOfDefault = FeatureFlagValue[behaviorOfDefault.upper()]
 	except KeyError:
 		raise ValidateError(
-			"Spec Error: behaviorOfDefault must be specified as a valid FeatureFlagValues string"
+			"Spec Error: behaviorOfDefault must be specified as a valid FeatureFlagValue string"
 			f" (got {behaviorOfDefault})"
 		)
-	if behaviorOfDefault == FeatureFlagValues.DEFAULT:
+	if behaviorOfDefault == FeatureFlagValue.DEFAULT:
 		raise ValidateError("Spec Error: behaviorOfDefault must not be 'default'")
 
 	if not isinstance(value, str):
@@ -79,10 +81,10 @@ def _validateConfig_featureFlag(value: Optional[str], behaviorOfDefault: str) ->
 			f" Got {type(value)} with value: {value} instead."
 		)
 	try:
-		value = FeatureFlagValues[value.upper()]
+		value = FeatureFlagValue[value.upper()]
 	except KeyError:
 		raise ValidateError(
-			"FeatureFlag value must be specified as a valid FeatureFlagValues value string."
+			"FeatureFlag value must be specified as a valid FeatureFlagValue value string."
 			f" (got value: {value})"
 		)
 	return FeatureFlag(value, behaviorOfDefault)
@@ -91,28 +93,28 @@ def _validateConfig_featureFlag(value: Optional[str], behaviorOfDefault: str) ->
 def _transformSpec_AddFeatureFlagDefault(specString: str, **kwargs) -> str:
 	""" Ensure that default is specified for featureFlag used in configSpec.
 	Param examples based on the following spec string in configSpec:
-		loadChromiumVbufOnBusyState = featureFlag(behaviorOfDefault="enabled")
+		loadChromiumVBufOnBusyState = featureFlag(behaviorOfDefault="enabled")
 	@param specString: EG 'featureFlag(behaviorOfDefault="enabled")'
 	@param kwargs: EG {'behaviorOfDefault': 'enabled'}
-	@return 'featureFlag(behaviorOfDefault="enabled", default="disabled")'
+	@return 'featureFlag(behaviorOfDefault="enabled", default="default")'
 	@remarks Manually specifying 'default' in the configSpec string (for featureFlag) will result in a
 		VdtParamError. Param 'behaviorOfDefault' must be supplied.
 	"""
-	usage = 'Usage: featureFlag(behaviorOfDefault="enabled"|"disabled"'
+	usage = 'Usage: featureFlag(behaviorOfDefault="enabled"|"disabled")'
 	if "default=" in specString:
-		raise configobj.validate.VdtParamError(
+		raise VdtParamError(
 			name_or_msg=f"Param 'default' not expected. {usage}",
 			value=specString
 		)
 	behaviorOfDefaultKey = "behaviorOfDefault"
 	if behaviorOfDefaultKey not in kwargs:
-		raise configobj.validate.VdtParamError(
+		raise VdtParamError(
 			name_or_msg=f"Param '{behaviorOfDefaultKey}' missing. {usage}",
 			value=specString
 		)
 	behaviorOfDefaultVal = kwargs[behaviorOfDefaultKey]
 	if not isinstance(behaviorOfDefaultVal, str):
-		raise configobj.validate.VdtParamError(
+		raise VdtParamError(
 			name_or_msg=(
 				f"Param '{behaviorOfDefaultKey}' should have a string value"
 				f" but got {type(behaviorOfDefaultVal)}. {usage}"),
@@ -120,7 +122,7 @@ def _transformSpec_AddFeatureFlagDefault(specString: str, **kwargs) -> str:
 		)
 	behaviorOfDefaultVal = behaviorOfDefaultVal.lower()
 	if behaviorOfDefaultVal not in ['enabled', 'disabled']:
-		raise configobj.validate.VdtParamError(
+		raise VdtParamError(
 			name_or_msg=(
 				f"Param '{behaviorOfDefaultKey}' should be either 'enabled' or 'disabled'"
 				f" but was {behaviorOfDefaultVal}. {usage}"
@@ -128,7 +130,7 @@ def _transformSpec_AddFeatureFlagDefault(specString: str, **kwargs) -> str:
 			value=specString
 		)
 	if len(kwargs) != 1:
-		raise configobj.validate.VdtParamError(
+		raise VdtParamError(
 			name_or_msg=(
 				f"Unexpected number of params."
 				f" Got {kwargs}. {usage}"
