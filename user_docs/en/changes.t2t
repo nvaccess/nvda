@@ -18,7 +18,6 @@ It can be re-enabled in NVDA's advanced settings panel. (#11554)
 
 
 == Changes ==
-- When using UI Automation to access Microsoft Excel spreadsheet controls, NVDA is now able to report when a cell is merged. (#12843)
 - eSpeak NG has been updated to 1.52-dev commit ``dc153592``. (#13295)
   - Added languages:
     - Belarusian
@@ -26,11 +25,16 @@ It can be re-enabled in NVDA's advanced settings panel. (#11554)
     - Totontepec Mixe
     -
   -
+- When using UI Automation to access Microsoft Excel spreadsheet controls, NVDA is now able to report when a cell is merged. (#12843)
+- Instead of reporting "has details" the purpose of details is included where possible, for example "has comment". (#13649)
 -
 
 
 == Bug Fixes ==
 - Font size measurements are now translatable in NVDA. (#13573)
+- Ignore Java Access Bridge events where no window handle can be found for Java applications.
+This will improve performance for some Java applications including IntelliJ IDEA. (#13039)
+- Announcement of selected cells for LibreOffice Calc is more efficient and no longer results in a Calc freeze when many cells are selected. (#13232)
 -
 
 

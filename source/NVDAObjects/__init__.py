@@ -493,6 +493,14 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		"""
 		return bool(self.detailsSummary)
 
+	#: Typing information for auto property _get_detailsRole
+	detailsRole: typing.Optional[controlTypes.Role]
+
+	def _get_detailsRole(self) -> typing.Optional[controlTypes.Role]:
+		if config.conf["debugLog"]["annotations"]:
+			log.debugWarning(f"Fetching details summary not supported on: {self.__class__.__qualname__}")
+		return None
+
 	def _get_controllerFor(self):
 		"""Retrieves the object/s that this object controls."""
 		return []
