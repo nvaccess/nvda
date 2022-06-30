@@ -44,6 +44,7 @@ This will improve performance for some Java applications including IntelliJ IDEA
   - This can be overridden by changing the "Windows Console support" setting in NVDA's advanced settings panel.
   - To find your Windows Console's NVDA API level, set "Windows Console support" to "UIA when available", then check the NVDA+F1 log opened from a running Windows Console instance.
   -
+- The Chromium virtual buffer is now loaded even when the document object has the MSAA ``STATE_SYSTEM_BUSY`` exposed via IA2. (#13306)
 -
 
 
