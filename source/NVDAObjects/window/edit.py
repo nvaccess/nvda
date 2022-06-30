@@ -686,13 +686,21 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		textRange.collapse(True)
 		if not formatConfig["detectFormatAfterCursor"]:
 			textRange.expand(comInterfaces.tom.tomCharacter)
-			return [textInfos.FieldCommand("formatChange",self._getFormatFieldAtRange(textRange, formatConfig)),
-				self._getTextAtRange(self._rangeObj)]
+			return [
+				textInfos.FieldCommand(
+					"formatChange",
+					self._getFormatFieldAtRange(textRange, formatConfig)
+				),
+				self._getTextAtRange(self._rangeObj)
+			]
 		commandList=[]
 		endLimit=self._rangeObj.end
 		while textRange.end<endLimit:
 			self._expandFormatRange(textRange, formatConfig)
-			commandList.append(textInfos.FieldCommand("formatChange",self._getFormatFieldAtRange(textRange, formatConfig)))
+			commandList.append(textInfos.FieldCommand(
+				"formatChange",
+				self._getFormatFieldAtRange(textRange, formatConfig)
+			))
 			commandList.append(self._getTextAtRange(textRange))
 			end = textRange.end
 			textRange.start = end
