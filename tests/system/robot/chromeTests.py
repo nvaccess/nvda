@@ -1755,14 +1755,14 @@ def test_tableSayAll():
 		_chrome.getSpeechAfterKey("Control+Alt+PageUp")
 		_chrome.getSpeechAfterKey("Control+Alt+Home")
 		_chrome.getSpeechAfterKey("Control+Alt+RightArrow")
-		actualSpeech  = _chrome.getSpeechAfterKey("Control+Alt+DownArrow")
+		actualSpeech = _chrome.getSpeechAfterKey("Control+Alt+DownArrow")
 		_asserts.strings_match(actualSpeech, "row 2  B 2")
 
 	def jumpToA3():
 		_chrome.getSpeechAfterKey("Control+Alt+PageUp")
 		_chrome.getSpeechAfterKey("Control+Alt+Home")
 		_chrome.getSpeechAfterKey("Control+Alt+DownArrow")
-		actualSpeech  = _chrome.getSpeechAfterKey("Control+Alt+DownArrow")
+		actualSpeech = _chrome.getSpeechAfterKey("Control+Alt+DownArrow")
 		_asserts.strings_match(actualSpeech, "row 3  column 1  through 2  A 3 plus B 3")
 
 	def jumpToD5():
@@ -1771,14 +1771,20 @@ def test_tableSayAll():
 		_chrome.getSpeechAfterKey("Control+Alt+LeftArrow")
 		_chrome.getSpeechAfterKey("Control+Alt+DownArrow")
 		_chrome.getSpeechAfterKey("Control+Alt+DownArrow")
-		actualSpeech  = _chrome.getSpeechAfterKey("Control+Alt+DownArrow")
-		_asserts.strings_match(actualSpeech, "row 4  column 3  through row 5 column 4  C 4 plus D 4 plus  C 5 plus D 5")
+		actualSpeech = _chrome.getSpeechAfterKey("Control+Alt+DownArrow")
+		_asserts.strings_match(
+			actualSpeech,
+			"row 4  column 3  through row 5 column 4  C 4 plus D 4 plus  C 5 plus D 5"
+		)
 
 	if True:
 		jumpToB2()
 		# sayAll column
 		actualSpeech = _chrome.getSpeechAfterKey("NVDA+Control+Alt+DownArrow")
-		_asserts.strings_match(actualSpeech, "B 2\nrow 3  column 1  through 2  A 3 plus B 3\nrow 4  column 2  B 4\nrow 5  B 5")
+		_asserts.strings_match(
+			actualSpeech,
+			"B 2\nrow 3  column 1  through 2  A 3 plus B 3\nrow 4  column 2  B 4\nrow 5  B 5"
+		)
 
 		# Check that cursor has moved to B5
 		actualSpeech = _chrome.getSpeechAfterKey("NVDA+UpArrow")
@@ -1787,7 +1793,10 @@ def test_tableSayAll():
 		jumpToB2()
 		# sayAll row
 		actualSpeech = _chrome.getSpeechAfterKey("NVDA+Control+Alt+RightArrow")
-		_asserts.strings_match(actualSpeech, "B 2\nrow 1  through 2  column 3  C 1 plus C 2\nrow 2  D 2\ncolumn 4  E 2")
+		_asserts.strings_match(
+			actualSpeech,
+			"B 2\nrow 1  through 2  column 3  C 1 plus C 2\nrow 2  D 2\ncolumn 4  E 2"
+		)
 
 		# Check that cursor has moved to E2
 		actualSpeech = _chrome.getSpeechAfterKey("NVDA+UpArrow")
@@ -1796,7 +1805,10 @@ def test_tableSayAll():
 		jumpToB2()
 		# Speak current column
 		actualSpeech = _chrome.getSpeechAfterKey("NVDA+Control+Alt+UpArrow")
-		_asserts.strings_match(actualSpeech, "row 1  B 1\nrow 2  B 2\nrow 3  column 1  through 2  A 3 plus B 3\nrow 4  column 2  B 4\nrow 5  B 5")
+		_asserts.strings_match(
+			actualSpeech,
+			"row 1  B 1\nrow 2  B 2\nrow 3  column 1  through 2  A 3 plus B 3\nrow 4  column 2  B 4\nrow 5  B 5"
+		)
 
 		# Check that cursor Still stays at B2
 		actualSpeech = _chrome.getSpeechAfterKey("NVDA+UpArrow")
@@ -1804,7 +1816,10 @@ def test_tableSayAll():
 
 		# Speak current row
 		actualSpeech = _chrome.getSpeechAfterKey("NVDA+Control+Alt+LeftArrow")
-		_asserts.strings_match(actualSpeech, "column 1  A 2\ncolumn 2  B 2\nrow 1  through 2  column 3  C 1 plus C 2\nrow 2  D 2\ncolumn 4  E 2")
+		_asserts.strings_match(
+			actualSpeech,
+			"column 1  A 2\ncolumn 2  B 2\nrow 1  through 2  column 3  C 1 plus C 2\nrow 2  D 2\ncolumn 4  E 2"
+		)
 
 		# Check that cursor stays at B2
 		actualSpeech = _chrome.getSpeechAfterKey("NVDA+UpArrow")
@@ -1824,8 +1839,11 @@ def test_tableSayAll():
 		jumpToD5()
 		# Speak current column - should reuse cached column
 		actualSpeech = _chrome.getSpeechAfterKey("NVDA+Control+Alt+UpArrow")
-		#print(f"'{actualSpeech}'", file=f)
-		_asserts.strings_match(actualSpeech, "row 1  column 4  D 1\nrow 2  column 3  D 2\nrow 3  column 4  through 5  D 3 plus E 3\nrow 4  column 3  through row 5 column 4  C 4 plus D 4 plus  C 5 plus D 5")
+		_asserts.strings_match(
+			actualSpeech,
+			"row 1  column 4  D 1\nrow 2  column 3  D 2\nrow 3  column 4  through 5  D 3 plus E 3\n"
+			+ "row 4  column 3  through row 5 column 4  C 4 plus D 4 plus  C 5 plus D 5"
+		)
 
 
 def test_focus_mode_on_focusable_read_only_lists():

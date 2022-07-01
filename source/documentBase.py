@@ -53,7 +53,7 @@ class _TableSelection:
 class _TableCell:
 	"""
 	Contains information about current cell in the table.
-	""""""
+	"""
 	tableID: _TableID
 	row: int
 	col: int
