@@ -7,6 +7,81 @@
 Da biste pročitali promene koje su bitne za programere, molimo pogledajte [Englesku verziju ovog dokumenta ../en/changes.html].
 
 
+= 2022.2 =
+Mnoge greške su ispravljene u ovoj verziji.
+Od važnijih, dodata su brojna poboljšanja u Java aplikacijama, za brajeve redove i Windows opcije.
+
+Dodate su nove komande za navigaciju kroz tabele.
+Unicode CLDR je ažuriran.
+LibLouis je ažuriran, što uključuje novu Nemačku brajevu tabelu.
+
+== Nove karakteristike ==
+- Podrška za interakciju sa Microsoft Loop komponentama u Microsoft Office proizvodima. (#13617)
+- Dodate su nove komande za navigaciju kroz tabele. (#957)
+ - ``kontrol+alt+home/end`` da biste se prebacili na prvu/poslednju kolonu.
+ - ``kontrol+alt+pageUp/pageDown`` da biste se prebacili na prvi/poslednji red.
+ -
+- Dodata je skripta bez podrazumevane komande za prebacivanje između različitih nivoa automatskog menanja jezika i dijalekta. (#10253)
+-
+
+== Promene ==
+- NSIS je ažuriran na verziju 3.08. (#9134)
+- CLDR je ažuriran na verziju 41.0. (#13582)
+- Ažuriran LibLouis brajev prevodilac na [3.22.0 https://github.com/liblouis/liblouis/releases/tag/v3.22.0]. (#13775)
+  - Nova brajeva tabela: Nemački stepen 2 (detailed)
+  -
+- Dodato novo ime za kontrole "Zauzet pokazivač". (#10644)
+- NVDA sada izgovara kada neka NVDA radnja ne može biti izvršena. (#13500)
+  - Ovo uključuje sledeće:
+    - Korišćenje NVDA verzije iz Windows prodavnice.
+    - Na bezbednim ekranima.
+    - Kada dijalog čeka odgovor.
+    -
+  -
+-
+
+
+== Ispravljene greške ==
+- Ispravljene greške u Java aplikacijama:
+  - NVDA će sada izgovoriti ako je kontrola samo za čitanje. (#13692)
+  - NVDA će sada ispravno izgovoriti ako je kontrola onemogućena/omogućena. (#10993)
+  - NVDA će sada izgovoriti prečice funkcijskih tastera. (#13643)
+  - NVDA sada može da pišti i izgovara trake napredovanja. (#13594)
+  - NVDA više neće neispravno uklanjati tekst iz vidžeta kada se oni prikazuju korisnicima. (#13102)
+    - NVDA će sada izgovoriti stanje za dugme prekidača. (#9728)
+  - NVDA će sada prepoznati prozor u Java aplikaciji sa više prozora. (#9184)
+  - NVDA će sada izgovoriti informacije o poziciji za kontrole kartica. (#13744)
+-
+- Ispravljene greške za brajeve redove:
+  - Ispravljen brajev izlaz kada se krećete kroz određene tekstove u Mozilla obogaćenim kontrolama za pisanje, kao što su čuvanje poruke kao nacrt u programu Thunderbird. (#12542)
+  - Kada je vezivanje brajevog reda podešeno na automatski i miš se pomera uz omogućeno praćenje miša,
+  komande pregleda teksta sada ažuriraju brajev red sa izgovorenim sadržajem. (#11519)
+  - Sada je moguće pomerati brajev red kroz sadržaja nakon korišćenja komandi za pregled teksta. (#8682)
+  -
+- NVDA instalacija se sada može pokrenuti iz foldera koji imaju posebne znakove. (#13270)
+- U pretraživaču Firefox, NVDA više ne greši u čitanju stavki na Web stranicama kada su aria-rowindex, aria-colindex, aria-rowcount ili aria-colcount atributi neispravni. (#13405)
+- Kursor više ne menja red ili kolonu kada se koriste komande za navigaciju kroz tabele kako biste se kretali kroz spojene ćelije. (#7278)
+- Kada se čitaju PDF datoteke sa kojima nije moguća interakcija u programu Adobe Reader, vrsta i stanje polja za unos (kao što su izborna polja i radio dugmad) sada se prijavljuju. (#13285)
+- Sada je moguće pristupiti opciji "Vrati podešavanja na fabričke vrednosti" u bezbednom načinu rada. (#13547)
+- Bilo koji zaključani tasteri miša će biti otključani kada se izađe iz programa NVDA, ranije je taster na mišu ostao zaključan. (#13410)
+- Visual Studio sada prijavljuje brojeve redova. (#13604)
+  - Napomena da kako bi prijavljivanje broja redova radilo, prikazivanje brojeva redova mora biti omogućeno u programu Visual Studio kao i u programu  NVDA.
+  -
+- Visual Studio sada ispravno prijavljuje uvlačenje redova. (#13574)
+- NVDA će ponovo izgovarati detalje rezultata pretrage u start meniju na novijim Windows 10 i 11 verzijama. (#13544)
+- U Windows 10 i 11 Kalkulatoru verziji 10.1908 i novijim,
+NVDA će izgovarati rezultate kada se koristi više komandi, kao što su komande iz naučnog režima. (#13383)
+- Na Windowsu 11, ponovo je moguće kretati se i vršiti interakciju sa elementima korisničkog interfejsa,
+kao što su programska traka ili prikaz zadataka korišćenjem miša ili ekrana osetljivog na dodir. (#13506)
+- Skriven tekst se više ne izgovara u programu Wordpad i drugim ``kontrolama obogaćenog teksta``. (#13618)
+- NVDA će izgovarati sadržaj statusne trake u Windows 11 verziji programa Notepad. (#13688)
+- Označavanje navigacionog objekta se sada prikazuje odmah nakon aktiviranja ove opcije. (#13641)
+- Ispravljeno čitanje stavki liste koje imaju samo jednu kolonu. (#13659, #13735)
+- Ispravljena eSpeak automatska promena jezika za Engleski i Francuski vraćanjem na Britanski Engleski i Francuski (Francuska). (#13727)
+- Ispravljena OneCore automatska promena jezika pri pokušaju promene na jezik koji je ranije bio instaliran. (#13732)
+-
+
+
 = 2022.1 =
 Ova verzija uključuje veća poboljšanja za UIA podršku u paketu MS Office.
 Za Microsoft Office 16.0.15000 i novije verzije na Windowsu 11, NVDA će podrazumevano koristiti UI Automation za pristup dokumentima programa Microsoft Word.

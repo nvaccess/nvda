@@ -64,10 +64,10 @@ LibLouis a été mis à jour, ce qui inclut une nouvelle table Braille allemande
   -
 - Visual Studio reporte maintenant correctement l'indentation des lignes. (#13574)
 - NVDA annoncera à nouveau le détail des résultats de recherche dans le menu démarrer des versions récentes de Windows 10 et 11. (#13544)
-- Dans la calculatrice de Windows 10 et 11 version 10.1908 et supérieur, NVDA annoncera les résultats lorsque davantage de commandes seront pressées, telles que des commandes en mode scientifique. (#13386)
-- Sous Windows 11, il est à nouveau possible de naviguer et d'interagir avec certains éléments de l'interface utilisateur comme la barre des tâches en utilisant la souris ou l'interaction tactile. (#13508)
+- Dans la calculatrice de Windows 10 et 11 version 10.1908 et supérieur, NVDA annoncera les résultats lorsque davantage de commandes seront pressées, telles que des commandes en mode scientifique. (#13383)
+- Sous Windows 11, il est à nouveau possible de naviguer et d'interagir avec certains éléments de l'interface utilisateur comme la barre des tâches en utilisant la souris ou l'interaction tactile. (#13506)
 - Le texte masqué n'est plus annoncé dans WordPad et les autres contrôles ``richEdit``. (#13618)
-- NVDA annoncera le contenu de la barre d'état dans le bloc-notes de Windows 11. (#13386)
+- NVDA annoncera le contenu de la barre d'état dans le bloc-notes de Windows 11. (#13688)
 - Le soulignement de l'objet navigateur s'affiche maintenant tout de suite après l'activation de la fonctionnalité. (#13641)
 - Correction de la lecture des éléments de liste avec une seule colonne. (#13659, #13735)
 - Correction du changement automatique de langue d'eSpeak pour l'anglais et le français revenus à Anglais britanique et Français (France). (#13727)
@@ -78,7 +78,7 @@ LibLouis a été mis à jour, ce qui inclut une nouvelle table Braille allemande
 == Changements pour les développeurs ==
 - La compilation des dépendances de NVDA avec Visual Studio 2022 (17.0) est maintenant supportée.
 Pour le développement et les versions de production, Visual Studio 2019 est toujours utilisé. (#13033)
-- Lors de la récupération du nombre d'enfants sélectionnés via accSelection, le cas où un ID d'enfant négatif ou un IDispatch est renvoyé par IAccessible::get_accSelection est désormais correctement géré. (#13276)
+- Lors de la récupération du nombre d'enfants sélectionnés via accSelection, le cas où un ID d'enfant négatif ou un IDispatch est renvoyé par IAccessible::get_accSelection est désormais correctement géré. (#13277)
 - De nouvelles fonctions pratiques ``registerExecutableWithAppModule`` et ``unregisterExecutable`` ont été ajoutées au module ``appModuleHandler``.
 Elles peuvent être utilisées pour utiliser un seul module d'application avec plusieurs exécutables. (#13366)
 -
