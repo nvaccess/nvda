@@ -2903,7 +2903,7 @@ class AdvancedPanelControls(
 
 		self.loadChromeVbufWhenBusyCombo: nvdaControls.FeatureFlagCombo = vbufGroup.addLabeledControl(
 			labelText=_(
-				# Translators: This is the label for a checkbox in the Advanced settings panel.
+				# Translators: This is the label for a combo-box in the Advanced settings panel.
 				"Load Chromium virtual buffer when document busy."
 			),
 			wxCtrlClass=nvdaControls.FeatureFlagCombo,
