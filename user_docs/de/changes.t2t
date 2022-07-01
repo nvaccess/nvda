@@ -52,7 +52,7 @@ LibLouis wurde aktualisiert und enthält eine neue deutsche Braille-Tabelle.
   - Braille-Ausgabe beim Navigieren in bestimmten Texten in Mozilla-RichEdit-Steuerelementen behoben, z. B. beim Verfassen einer Nachricht in Thunderbird. (#12542)
   - Wenn die Braillezeile automatisch verbunden wird und die Maus bei aktivierter Mausverfolgung bewegt wird,
   Befehle für die Textanzeige aktualisieren nun die Ausgabe auf der Braillezeile mit dem vorgelesenen Inhalt. (#11519)
-  - Es ist nun möglich, die Braillezeile durch den Inhalt zu navigieren, nachdem die Befehle für die Textanzeige verwendet wurden. (#8682)
+  - Es ist nun möglich, die Braillezeile nach der Verwendung von Befehlen für die Textanzeige durch den Inhalt zu navigieren. (#8682)
   -
 - Das NVDA-Installationsprogramm kann fortan von Verzeichnissen mit Sonderzeichen aus gestartet werden. (#13270)
 - In Firefox teilt NVDA keine Elemente auf Webseiten mehr mit, wenn die Attribute aria-rowindex, aria-colindex, aria-rowcount oder aria-colcount ungültig sind. (#13405)
@@ -66,11 +66,11 @@ LibLouis wurde aktualisiert und enthält eine neue deutsche Braille-Tabelle.
 - In Visual Studio werden die Zeileneinrückung nun korrekt mitgeteilt. (#13574)
 - NVDA teilt in den neuen Versionen von Windows 10 und 11 erneut Details zu den Suchergebnissen im Startmenü mit. (#13544)
 - Im Rechner in Windows 10 und 11 Version 10.1908 und neuer,
-NVDA teilt die Ergebnisse mit, wenn weitere Befehle gedrückt werden, z. B. Befehle aus dem wissenschaftlichen Modus. (#13386)
+NVDA teilt die Ergebnisse mit, wenn weitere Befehle gedrückt werden, z. B. Befehle aus dem wissenschaftlichen Modus. (#13383)
 - In Windows 11 ist es wieder möglich, mit Elementen der Benutzeroberfläche zu navigieren und zu interagieren,
-wie z. B. die Taskleiste und die Task-Ansicht mit Hilfe von Maus- und Touch-Interaktion. (#13508)
+wie z. B. die Taskleiste und die Task-Ansicht mit Hilfe von Maus- und Touch-Interaktion. (#13506)
 - Ausgeblendeter Text wird in Wordpad und anderen Steuerelementen (``richEdit``) nicht mehr angezeigt. (#13618)
-- NVDA zeigt nun den Inhalt der Statusleiste in Windows 11 Notepad an. (#13386)
+- NVDA zeigt nun den Inhalt der Statusleiste in Windows 11 Notepad an. (#13388)
 - Die Hervorhebung von Navigationsobjekten wird nun sofort nach Aktivierung der Funktion angezeigt. (#13641)
 - Das Auslesen einspaltiger Elemente in Listenansichten wurde behoben. (#13659, #13735)
 - Automatische Sprachumschaltung von eSpeak für Englisch und Französisch wurde behoben, falls nicht möglich auf britisches Englisch und Französisch (Frankreich). (#13727)
@@ -82,7 +82,7 @@ wie z. B. die Taskleiste und die Task-Ansicht mit Hilfe von Maus- und Touch-Inte
 - Die Kompilierung von NVDA-Abhängigkeiten mit Visual Studio 2022 (17.0) wird jetzt unterstützt.
 Für Entwicklungs- und Release-Builds wird weiterhin Visual Studio 2019 verwendet. (#13033)
 - Beim Abrufen der Anzahl der ausgewählten untergeordneten Elemente über accSelection,
-der Fall, dass eine negative ID des untergeorneten Elements oder ein IDispatch von ``IAccessible::get_accSelection`` zurückgegeben wird, wird nun korrekt behandelt. (#13276)
+der Fall, dass eine negative ID des untergeorneten Elements oder ein IDispatch von ``IAccessible::get_accSelection`` zurückgegeben wird, wird nun korrekt behandelt. (#13277)
 - Neue praktische Funktionen ``registerExecutableWithAppModule`` und ``unregisterExecutable`` wurden dem Modul ``appModuleHandler`` hinzugefügt.
 Sie können verwendet werden, um ein einzelnes App-Modul mit mehreren ausführbaren Dateien zu verwenden. (#13366)
 -
@@ -199,7 +199,7 @@ Hinweis:
 - In Windows 8 und höher kann die Statusleiste des Datei-Explorers nun mit dem Standard-Tastenbefehl NVDA+Ende (Desktop) bzw. NVDA+Umschalt+Ende (Laptop) abgefragt  werden. (#12845)
 - Eingehende Nachrichten im Chat von Skype for Business werden wieder mitgeteilt. (#9295)
 - NVDA kann bei Verwendung des SAPI5-Synthesizers unter Windows 11 wieder Audio ausblenden. (#12913)
-- Im Taschenrechner von Windows 10 zeigt NVDA Beschriftungen für Verlaufs- und Speicherlistenelemente an. (#11858)
+- Im Rechner von Windows 10 zeigt NVDA Beschriftungen für Verlaufs- und Speicherlistenelemente an. (#11858)
 - Tastenbefehle und Gesten wie Scrollen und Weiterleiten funktionieren wieder mit HID-Braille-Geräten. (#13228)
 - Windows 11 Mail: Nach dem Umschalten des Fokus zwischen Anwendungen beim Lesen einer langen E-Mail bleibt NVDA nicht mehr in einer Zeile der E-Mail hängen. (#13050)
 - HID-Braille: Tastenkombinationen (z. B. ``Leertaste+Punkt4``) können erfolgreich über die Braillezeile ausgeführt werden. (#13326)
@@ -455,7 +455,7 @@ Während Windows 11 noch veröffentlicht werden muss, wurde diese Version auf Vo
 Dies beinhaltet eine wichtige Korrektur für den Bildschirmvorhang (siehe Wichtige Hinweise).
 Das Behebungs-Tool für die COM-Registrierung kann nun mehr Probleme beim Ausführen von NVDA beheben.
 Außerdem gibt es Updates für die Sprachausgabe eSpeak und den Liblouis-Braille-Übersetzer.
-Ferner sind auch verschiedene Fehlerbehebungen und Verbesserungen, insbesondere für Braille-Unterstützung und Windows-Terminals, Taschenrechner, Emoji-Panel und Zwischenablageverlauf mit dabei.
+Ferner sind auch verschiedene Fehlerbehebungen und Verbesserungen, insbesondere für Braille-Unterstützung und Windows-Terminals, Rechner, Emoji-Panel und Zwischenablageverlauf mit dabei.
 
 
 == Wichtige Hinweise ==
