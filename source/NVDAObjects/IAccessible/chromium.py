@@ -89,24 +89,24 @@ class ChromeVBuf(GeckoVBuf):
 class Document(ia2Web.Document):
 
 	def _get_treeInterceptorClass(self) -> typing.Type["TreeInterceptor"]:
-		shouldLoadVbufOnBusyFeatureFlag = bool(
+		shouldLoadVBufOnBusyFeatureFlag = bool(
 			config.conf["virtualBuffers"]["loadChromiumVbufOnBusyState"]
 		)
-		vbufUnavailableStates = {  # if any of these are in states, don't return ChromeVbuf
+		vBufUnavailableStates = {  # if any of these are in states, don't return ChromeVBuf
 			controlTypes.State.EDITABLE,
 		}
-		if not shouldLoadVbufOnBusyFeatureFlag:
+		if not shouldLoadVBufOnBusyFeatureFlag:
 			log.debug(
-				f"loadChromiumVbufOnBusyState feature flag is {shouldLoadVbufOnBusyFeatureFlag},"
+				f"loadChromiumVBufOnBusyState feature flag is {shouldLoadVBufOnBusyFeatureFlag},"
 				" vbuf WILL NOT be loaded when state of the document is busy."
 			)
-			vbufUnavailableStates.add(controlTypes.State.BUSY)
+			vBufUnavailableStates.add(controlTypes.State.BUSY)
 		else:
 			log.debug(
-				f"loadChromiumVbufOnBusyState feature flag is {shouldLoadVbufOnBusyFeatureFlag},"
+				f"loadChromiumVBufOnBusyState feature flag is {shouldLoadVBufOnBusyFeatureFlag},"
 				" vbuf WILL be loaded when state of the document is busy."
 			)
-		if self.states.intersection(vbufUnavailableStates):
+		if self.states.intersection(vBufUnavailableStates):
 			return super().treeInterceptorClass
 		return ChromeVBuf
 
