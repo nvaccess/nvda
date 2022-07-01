@@ -86,11 +86,11 @@ self.newOptionForUsersCombo: nvdaControls.FeatureFlagCombo = vbufGroup.addLabele
     wxCtrlClass=nvdaControls.FeatureFlagCombo,
     keyPath=["virtualBuffers", "newOptionForUsers"], # The path of keys, see config spec.
     conf=config.conf, # The configObj instance, allows getting / setting the value
-    translatedOptions=collections.OrderedDict({ # OrderedDict to communicate that order of items will be preseverd.
+    translatedOptions=collections.OrderedDict({ # OrderedDict to communicate that order of items will be preserved.
         # Translators: Explanation of yes option
-        config.FeatureFlagValues.ENABLED: _("Yes"),
+        config.FeatureFlagValue.ENABLED: _("Yes"),
         # Translators: Explanation of no option
-        config.FeatureFlagValues.DISABLED: _("No"),
+        config.FeatureFlagValue.DISABLED: _("No"),
     })
 )
 ...
