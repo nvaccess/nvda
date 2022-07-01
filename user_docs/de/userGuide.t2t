@@ -1117,7 +1117,7 @@ Wenn Sie jedoch Informationen in einem Fehlerbericht bereitstellen oder die Prot
 Die verfügbaren Protokollierungsstufen sind:
 - Ausgeschaltet: Neben einer kurzen Startmeldung protokolliert NVDA während der Ausführung keine weiteren Meldungen.
 - Informationen: NVDA protokolliert grundlegende Informationen wie Startmeldungen und Informationen, die für Entwickler nützlich sind.
-- Debug-Warnungen: Warnmeldungen, die nicht durch schwere Fehler verursacht werden, werden protokolliert.
+- Debug-Warnmeldungen: Warnmeldungen, die nicht durch schwere Fehler verursacht werden, werden protokolliert.
 - Ein- und Ausgaben: Mit dieser Option werden Eingaben via Tastatur und Braillezeile sowie Ausgaben via Sprachausgabe und Braillezeile protokolliert.
  - Wenn Sie sich Sorgen um den Datenschutz machen, verwenden Sie diese Option nicht.
 - Nur Debug-Meldungen: Zusätzlich zu den Informationen, Warn- und Ein-/Ausgabemeldungen werden weitere Debug-Meldungen protokolliert.
@@ -3368,19 +3368,19 @@ Die Kurzformen mehrerer Optionen können beispielsweise wie folgt kombiniert wer
 
 Einige Optionen akzeptieren zusätzliche Parameter, mit denen Sie z. B. den Umfang der Protokollierung oder den Namen einer Konfigurationsdatei angeben können.
 Die Parameter müssen durch ein Leerzeichen von der Option getrennt angegeben werden, wenn Sie die Kurzform verwenden. Wenn Sie die Langform benutzen, müssen Sie den Parameter mit einem Gleichheitszeichen von der Option trennen. Beispiele:
-| nvda -l 10 | Startet NVDA mit der Protokollierungsstufe "Fehlerkorrektur". |
-| nvda --log-file=C:\nvda.log | Speichert das Protokoll in der Datei "C:\nvda.log". |
-| nvda --log-level=20 -f C:\nvda.log | Legt die Protokollierungsstufe "Informationen" fest und speichert das Protokoll in der Datei C:\nvda.log. |
+| nvda -l 10 | Startet NVDA mit der Protokollierungsstufe "Debug". |
+| nvda --log-file=C:\NVDA.log | Speichert das Protokoll in der Datei "C:\NVDA.log". |
+| nvda --log-level=20 -f C:\NVDA.log | Legt die Protokollierungsstufe "Informationen" fest und speichert das Protokoll in der Datei C:\nvda.log. |
 
-Folgende Kommandozeilenoptionen gibt es:
+Folgende Kommandozeilenoptionen stehen zur Verfügung:
 || Kurzform | Langform | Beschreibung |
 | -h | --help | Zeigt eine Hilfe zur Befehlszeile an und beendet NVDA. |
 | -q | --quit | Beendet eine laufende Instanz von NVDA. |
 | -k | --check-running | Prüft, ob NVDA bereits ausgeführt wird. Falls ja, wird ein Fehlercode 0 zurückgegeben, anderenfalls wird 1 zurückgegeben. |
-| -f Protokolldateiname | --log-file=Protokolldateiname | Legt die Datei fest, in der die Protokollierung stattfinden soll. |
-| -l Protokollierungsstufe | --log-level=Protokollierungsstufe | Die niedrigste Stufe der protokollierten Nachricht (Debug 10, Input/Output 12, Debug-Warnung 15, Info 20, Warnung 30, Fehler 40, kritisch 50, deaktiviert 100), Standard ist Warnung. |
-| -c Konfigurationspfad | --config-path=KonfigurationsPfad | Gibt den Ordner an, in dem alle NVDA-Einstellungen gespeichert werden sollen. |
-| Keine | --lang=SPRACHE | Setzen Sie die konfigurierte NVDA-Sprache außer Kraft. Setzen Sie "Windows" als Standard für den aktuellen Benutzer, "de" für Deutsch, etc. |
+| -f <Protokolldateiname> | --log-file=<Protokolldateiname> | Legt die Datei fest, in der die Protokollierung stattfinden soll. |
+| -l <Protokollierungsstufe> | --log-level=<Protokollierungsstufe> | Die niedrigste Stufe der protokollierten Meldungen (10 = Debug, 12 = Ein-/Ausgaben, 15 = Debug-Warnmeldungen, 20 = Informationen, 30 = Warnungen, 40 = Fehlermeldungen, 50 = Kritische Meldungen, 100 = Deaktiviert), Standard ist Warnungen. |
+| -c <Konfigurationspfad> | --config-path=<KonfigurationsPfad> | Gibt den Ordner an, in dem alle NVDA-Einstellungen gespeichert werden sollen. |
+| Keine | --lang=<Sprache> | Setzen Sie die konfigurierte NVDA-Sprache außer Kraft. Setzen Sie "Windows" als Standard für den aktuellen Benutzer, "de" für Deutsch, etc. |
 | -m | --minimal | Startet NVDA minimalistisch (keine Klänge, keine Benutzeroberfläche). |
 | -s | --secure | Startet NVDA im [geschützten Modus #SecureMode] |
 | Keine | --disable-addons | Deaktiviert alle Erweiterungen. |
