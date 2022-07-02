@@ -151,6 +151,7 @@ class TestStateOrder(unittest.TestCase):
 
 
 class TestBackCompat(unittest.TestCase):
+	MISSING_ROLE_VALUES = {68, 81, 114}
 
 	def test_statesValues(self):
 		class oldStates(enum.IntEnum):
@@ -208,6 +209,48 @@ class TestBackCompat(unittest.TestCase):
 				old.value,
 				msg=f"Can't construct from integer value: {new.name}"
 			)
+
+	def test_rolesValues(self):
+		for i in range(max(controlTypes.Role)):
+			if i in self.MISSING_ROLE_VALUES:
+				with self.assertRaises(
+					ValueError,
+					msg=f"Role with value {i} expected to not exist."
+				):
+					controlTypes.Role(i)
+			else:
+				self.assertEqual(
+					i,
+					controlTypes.Role(i),
+					msg=f"Role with value {i} expected to exist."
+				)
+
+		for role in controlTypes.Role:
+			self.assertTrue(
+				isinstance(role, int),
+				msg="Role expected to subclass int"
+			)
+			self.assertEqual(
+				type(role.value),
+				int,
+				msg="Role value expected to be of type int"
+			)
+			self.assertEqual(
+				role,
+				role.value,
+				msg="Role (enum member) and role value (int) expected to be considered equal"
+			)
+			self.assertLess(
+				role,
+				role.value + 1,
+				msg="Role (enum member) expected to be compared as int"
+			)
+			self.assertGreater(
+				role,
+				role.value - 1,
+				msg="Role (enum member) expected to be compared as int"
+			)
+
 
 
 class Test_FontSize(unittest.TestCase):
