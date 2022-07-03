@@ -35,6 +35,7 @@ _BUILDS_TO_RELEASE_NAMES = {
 	19045: "Windows 10 22H2",
 	20348: "Windows Server 2022",
 	22000: "Windows 11 21H2",
+	22621: "Windows 11 22H2",
 }
 
 
@@ -156,6 +157,7 @@ WIN10_21H2 = WinVersion(major=10, minor=0, build=19044)
 WIN10_22H2 = WinVersion(major=10, minor=0, build=19045)
 WINSERVER_2022 = WinVersion(major=10, minor=0, build=20348)
 WIN11 = WIN11_21H2 = WinVersion(major=10, minor=0, build=22000)
+WIN11_22H2 = WinVersion(major=10, minor=0, build=22621)
 
 
 @functools.lru_cache(maxsize=1)
