@@ -5,21 +5,18 @@
 
 import ctypes
 import serial
-import threading
 import time
 
 from collections import deque
 from ctypes import byref
 from ctypes.wintypes import DWORD
 from logHandler import log
+from serial.win32 import ERROR_IO_PENDING, EV_RXCHAR
 from serial.win32 import PURGE_RXABORT, PURGE_TXABORT
 from serial.win32 import PURGE_RXCLEAR, PURGE_TXCLEAR
-from serial.win32 import EV_RXCHAR
-from serial.win32 import PurgeComm, WaitForSingleObject, SetCommMask
-from serial.win32 import INFINITE
+from serial.win32 import GetLastError, PurgeComm, SetCommMask
 from threading import Event, Lock, Timer, Thread
 from typing import List, Optional, Tuple
-from winKernel import WAIT_OBJECT_0
 
 import braille
 import inputCore
@@ -132,37 +129,62 @@ KC_INTERVAL = 1.5
 # Controls most of read operations and tries to reconnect when needed
 # Suspended most of time.
 class ReadThread(Thread):
-	def __init__(self, function, event, dev, readQueue, *args, **kwargs):
+	def __init__(
+			self, readFunction, disableFunction, event, dev, *args, **kwargs):
 		super().__init__(*args, **kwargs)
-		self._function = function
+		self._readFunction = readFunction
+		self._disableFunction = disableFunction
 		self._event = event
 		self._dev = dev
-		self._readQueue = readQueue
 
 	def run(self):
+		data = dwEvtMask = DWORD()
+		log.debug(f"{self.name} started")
 		while not self._event.isSet():
 			# Try to reconnect if port is not open
 			if not self._dev.is_open:
 				log.debug(
-					f"Calling {self._function.__name__}, port {self._dev.name} not open")
-				self._function()
+					f"Calling {self._readFunction.__name__}, port {self._dev.name} not open")
+				self._readFunction()
 				if not self._dev.is_open:
 					log.debug(
 						f"Sleepin {KC_INTERVAL} seconds, port {self._dev.name} not open")
-					time.sleep(KC_INTERVAL)
+					self._event.wait(KC_INTERVAL)
 					continue
 			try:
-				SetCommMask(self._dev._port_handle, EV_RXCHAR)
-				dwEvtMask = DWORD()
-				ctypes.windll.kernel32.WaitCommEvent(
+				if not SetCommMask(self._dev._port_handle, EV_RXCHAR):
+					# Exiting
+					if self._event.isSet():
+						break
+					log.debug("SetCommMask failed")
+					raise(ctypes.WinError())
+				result = ctypes.windll.kernel32.WaitCommEvent(
 					self._dev._port_handle, byref(dwEvtMask),
 					byref(self._dev._overlapped_read))
-				result = WaitForSingleObject(self._dev._overlapped_read.hEvent, INFINITE)
-				if result == WAIT_OBJECT_0:
-					log.debug(f"Calling function {self._function.__name__} for read")
-					self._function()
-			except OSError:
-				log.debug("", exc_info=True)
+				if not result and GetLastError() != ERROR_IO_PENDING:
+					if self._event.isSet():
+						break
+					log.debug("WaitCommEvent failed")
+					raise ctypes.WinError()
+				result = ctypes.windll.kernel32.GetOverlappedResult(
+					self._dev._port_handle, byref(self._dev._overlapped_read),
+					byref(data), True)
+				if result:
+					log.debug(f"Calling function {self._readFunction.__name__} for read")
+					self._readFunction()
+				else:
+					if self._event.isSet():
+						break
+					log.debug("GetOverLappedResult failed")
+					raise(ctypes.WinError())
+			# See comment in _somethingToRead
+			except (OSError, AttributeError):
+				if self._event.isSet():
+					break
+				else:
+					self._disableFunction()
+					log.debug("", exc_info=True)
+		log.debug(f"Exiting {self.name}")
 
 
 # Timer is used to send BOTH_BYTES regularly to keep connection
@@ -250,8 +272,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				self._kc = RepeatedTimer(
 					KC_INTERVAL, self._keepConnected)
 				self._handleRead = ReadThread(
-					self._readHandling, self._exitEvent, self._dev,
-					self._readQueue, name="albatross_read")
+					self._readHandling, self._disableConnection, self._exitEvent,
+					self._dev, name="albatross_read", daemon=True)
 				self._handleRead.start()
 				log.info(
 					f"Connected to Caiku Albatross {self.numCells} on {portType} port {port} "
@@ -274,8 +296,14 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	def terminate(self):
 		try:
+			if self._handleRead:
+				self._exitEvent.set()
 			super().terminate()
 			self.numCells = 0
+			if self._dev:
+				if self._dev.is_open:
+					self._dev.close()
+				self._dev = None
 			if self._kc:
 				self._kc.stop()
 				self._kc = None
@@ -283,16 +311,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				self._readQueue.clear()
 			if self._writeQueue:
 				self._writeQueue.clear()
-			if self._handleRead:
-				self._exitEvent.set()
-				self._handleRead.join()
-				# self._handleRead = None
-			if self._dev:
-				if self._dev.is_open:
-					self._dev.close()
-				self._dev = None
 			self._readQueue = None
 			self._writeQueue = None
+			self._handleRead = None
 		except Exception:
 			# Terminating anyway
 			pass
@@ -325,7 +346,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		return False
 
 	# Parameter i is just for loggint retries
-	def _initPort(self, i) -> bool:
+	def _initPort(self, i=MAX_INIT_SLEEPS - 1) -> bool:
 		try:
 			self._dev = serial.Serial(
 				self._currentPort, baudrate=BAUD_RATE, stopbits=serial.STOPBITS_ONE,
@@ -350,7 +371,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			return False
 
 	# Parameter i is just for loggint retries
-	def _openPort(self, i) -> bool:
+	def _openPort(self, i=MAX_INIT_SLEEPS - 1) -> bool:
 		try:
 			self._dev.open()
 			log.debug(f"Port {self._currentPort} opened")
@@ -378,7 +399,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			if not self._dev.in_waiting:
 				log.debug("Read: no data")
 				return False
-		except IOError:
+		# See comment in _somethingToRead
+		except (IOError, AttributeError):
 			self._disableConnection()
 			log.debug("Trying to reconnect", exc_info=True)
 			return False
@@ -393,7 +415,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			else:
 				log.debug(f"Read: INIT_START_BYTE not in {data}")
 				return False
-		except IOError:
+		except (IOError, AttributeError):
 			self._disableConnection()
 			log.debug(
 				f"INIT_START_BYTE {INIT_START_BYTE} read failed, "
@@ -406,7 +428,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				self._waitingSettingsByte = True
 				log.debug("Read: no data")
 				return False
-		except IOError:
+		# See comment in _readInitByte
+		except (IOError, AttributeError):
 			self._disableConnection()
 			log.debug("Trying to reconnect", exc_info=True)
 			return False
@@ -435,7 +458,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 						f"Settings byte cannot be {data}, check display internal settings")
 				self._disableConnection()
 				return False
-		except IOError:
+		except (IOError, AttributeError):
 			self._disableConnection()
 			log.debug("Settings byte read failed, trying to reconnect", exc_info=True)
 			return False
@@ -449,7 +472,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				time.sleep(RESET_SLEEP)
 			log.debug("I/O buffers reset done")
 			return True
-		except IOError:
+		# See comment in _somethingToRead
+		except (IOError, AttributeError):
 			log.debug(
 				f"I/O buffer reset failed on port {self._currentPort}", exc_info=True)
 			if self._dev.is_open:
@@ -472,15 +496,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	def _readHandling(self):
 		if self._tryToConnect:
-			# Faster reconnection if port opened and reset here.
-			if threading.current_thread().name == "albatross_read":
-				try:
-					self._dev.open()
-					log.debug(f"Port {self._currentPort} opened")
-					if not self._resetBuffers():
-						return
-				except IOError:
-					log.debug("", exc_info=True)
+			# Only one try to open port when called from "albatross_read" thread.
+			# This is indicated by _dev is not None.
+			# ReadThread run function calls _readHandling again if needed.
+			if self._dev:
+				if not self._openPort():
 					return
 			if not self._initConnection():
 				self._disableConnection()
@@ -491,13 +511,18 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self._handleReadQueue()
 
 	# All but connecting/reconnecting related read operations
-	def _somethingToRead(self):
+	def _somethingToRead(self) -> Optional[bytes]:
 		try:
+			if not self._dev.in_waiting:
+				return None
 			data = self._dev.read(self._dev.in_waiting)
 			log.debug(
 				f"Read: {data}, length {len(data)}, in_waiting {self._dev.in_waiting}")
 			return data
-		except IOError:
+		# Considering situation where "albatross_read" thread is about to read
+		# but writing to display fails during it - or vice versa - AttributeError
+		# might raise.
+		except (IOError, AttributeError):
 			self._disableConnection()
 			log.debug("Read failed, trying to reconnect", exc_info=True)
 			return None
@@ -543,7 +568,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					data += self._writeQueue.popleft()
 				except IndexError:
 					log.debug("Write: _writeQueue is empty", exc_info=True)
-					return
+					if not len(data):
+						return
 			log.debug(f"Write: dequeued {data}, {len(self._writeQueue)} items left")
 			try:
 				self._dev.write(data)
@@ -553,7 +579,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					self._kc.stop()
 					self._kc.start()
 				log.debug(f"Written: {data}")
-			except IOError:
+			# see comment in _somethingToRead
+			except (IOError, AttributeError):
 				self._disableConnection()
 				log.debug(f"Write failed: {data}, trying to reconnect", exc_info=True)
 
@@ -598,6 +625,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				return
 			self._writeQueue.appendleft(ESTABLISHED)
 			log.debug(f"Write: enqueued {ESTABLISHED}")
+			self._somethingToWrite()
+			if self._tryToConnect:
+				return
 		self._setNumCellCount(data)
 		# Reconnected or exited device menu if length of _oldCells is numCells.
 		# Also checking that _currentCells has sometimes updated.
@@ -611,13 +641,16 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				braille._BgThread.queuedWrite = self._currentCells
 			# Queue a call to the background thread.
 			braille._BgThread.queueApc(braille._BgThread.executor)
+			log.debug(
+				"Updating display content after reconnection or display menu exit")
 		if self._waitingSettingsByte:
 			self._waitingSettingsByte = False
 
 	# If bit 7 (LSB 0 scheme) is 1, there is 80 cells model, else 46 cells model.
 	# Other display settings are currently ignored.
+	# And one should be able to change between 46 and 80 models on the fly.
 	def _setNumCellCount(self, data: bytes):
-		self.numCells = 80 if ord(data) >> 7 == 1 else 46
+		braille.handler.displaySize = self.numCells = 80 if ord(data) >> 7 == 1 else 46
 
 	def _handleKeyPresses(self, data: bytes):
 		# in single ctrl-key presses and ctrl-key combinations the first key is
@@ -678,7 +711,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	def display(self, cells: List[int]):
 		# Keep _currentCells up to date for reconnection regardless
-		# connection state of driver.
+		# of connection state of driver.
 		self._currentCells = cells.copy()
 		# No connection
 		if self._tryToConnect or not self.numCells:
@@ -694,6 +727,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				# Source: https://stackoverflow.com/questions/12681945/reversing-bits-of-python-integer
 				writeBytes.append((int('{:08b}'.format(cell)[::-1], 2).to_bytes(1, 'big')))
 		writeBytes.append(END_BYTE)
+		if len(writeBytes) < 3:  # Only START_BYTE and END_BYTE
+			return
 		self._writeQueue.append(b"".join(writeBytes))
 		log.debug(f"Write: enqueued {b''.join(writeBytes)}")
 		self._somethingToWrite()
