@@ -52,7 +52,7 @@ class _TableSelection:
 @dataclass
 class _TableCell:
 	"""
-	Contains information about current cell in the table.
+	Contains information about a cell in the table with matching tableID
 	"""
 	tableID: _TableID
 	row: int
