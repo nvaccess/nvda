@@ -153,9 +153,17 @@ class LauncherDialog(
 		groupLabel = _("License Agreement")
 		sizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=groupLabel)
 		sHelper.addItem(sizer)
-		licenseTextCtrl = wx.TextCtrl(self, size=(500, 400), style=wx.TE_MULTILINE | wx.TE_READONLY | wx.TE_RICH)
+		licenseTextCtrl = wx.TextCtrl(
+			self,
+			size=(-1, 500),  # -1 uses default width
+			style=wx.TE_MULTILINE | wx.TE_READONLY | wx.TE_RICH,
+		)
 		licenseTextCtrl.Value = open(getDocFilePath("copying.txt", False), "r", encoding="UTF-8").read()
-		sizer.Add(licenseTextCtrl)
+		sizer.Add(
+			licenseTextCtrl,
+			flag=wx.EXPAND,
+			proportion=1,
+		)
 
 		# Translators: The label for a checkbox in NvDA installation program to agree to the license agreement.
 		agreeText = _("I &agree")
