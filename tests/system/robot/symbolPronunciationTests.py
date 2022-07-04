@@ -125,6 +125,16 @@ def _getMoveByLineTestSample() -> str:
 	return '\n'.join(testData)
 
 
+def _getMoveByCharTestSample() -> str:
+	# Intentionally concat the following strings, there should be no trailing commas
+	return (
+		'T'  # An initial character, that isn't spoken (because it isn't traversed during nav).
+		'S ()"'
+		"'e,➔👕\t"
+		'\na'  # Note: The 'a' character will be on the next line, thus won't be spoken
+	)
+
+
 def _getDelayedDescriptionsTestSample() -> str:
 	return "abcdeghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
 
@@ -383,12 +393,7 @@ def _pressKeyAndWaitDelaiedDescription(key: Move, maxWait: int):
 	return -1
 
 
-def _testDelayedDescription(
-	key: Move,
-	delay: int = 1000,
-	repeatCount: int = 1,
-	threshold: int = 70,
-) -> bool:
+def _testDelayedDescription(key: Move, delay: int = 1000, repeatCount: int = 1, threshold: int = 70,) -> bool:
 	""" perform delayed character descriptions tests with with the specified parameters:
 	@param key: the key used to read the character.
 	@param delay: the time to wait until the description is spoken.
