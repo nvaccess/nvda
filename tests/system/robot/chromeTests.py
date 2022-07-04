@@ -1828,7 +1828,7 @@ def test_tableSayAll():
 	if True:
 		jumpToA3()
 		# sayAll row
-		actualSpeech = _chrome.getSpeechAfterKey("NVDA+Control+Alt+RightArrow")
+		actualSpeech = _chrome.getSpeechAfterKey("NVDA+control+alt+rightArrow")
 		_asserts.strings_match(actualSpeech, "A 3 plus B 3\ncolumn 3  C 3\ncolumn 4  through 5  D 3 plus E 3")
 
 		# Check that cursor has moved to E3
