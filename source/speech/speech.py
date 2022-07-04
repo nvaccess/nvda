@@ -33,7 +33,7 @@ from .commands import (
 	EndUtteranceCommand,
 	CharacterModeCommand,
 )
-
+from . import delayedCharacterDescriptions
 from . import types
 from .types import (
 	SpeechSequence,
@@ -61,7 +61,7 @@ from dataclasses import dataclass
 from copy import copy
 if typing.TYPE_CHECKING:
 	import NVDAObjects
-from . import delayedCharacterDescriptions
+
 
 _speechState: Optional['SpeechState'] = None
 _curWordChars: List[str] = []
@@ -2603,4 +2603,3 @@ def clearTypedWordBuffer() -> None:
 	complete the word (such as a focus change or choosing to move the caret).
 	"""
 	_curWordChars.clear()
-

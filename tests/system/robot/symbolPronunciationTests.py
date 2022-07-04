@@ -272,7 +272,7 @@ def test_moveByChar():
 	)
 
 
-""" _CHARACTER_DESCRIPTIONS = {
+_CHARACTER_DESCRIPTIONS = {
 	# english character descriptions.
 	'a': 'Alfa',
 	'b': 'Bravo',
@@ -300,36 +300,6 @@ def test_moveByChar():
 	'x': 'Xray',
 	'y': 'Yankee',
 	'z': 'Zulu'
-}"""
-
-_CHARACTER_DESCRIPTIONS = {
-	'a': 'Alfa',
-	'b': 'Bravo',
-	'c': 'Charlie',
-	'd': 'Delta',
-	'e': 'Eco',
-	'f': 'FoxTrot',
-	'g': 'Golf',
-	'h': 'Hotel',
-	'i': 'India',
-	'j': 'Julieta',
-	'k': 'Kilo',
-	'l': 'Lima',
-	'm': 'Micro',
-	'n': 'Noviembre',
-	'ñ': 'Ñoño',
-	'o': 'Óscar',
-	'p': 'Papa',
-	'q': 'Quebec',
-	'r': 'Romeo',
-	's': 'Sierra',
-	't': 'Tango',
-	'u': 'Uniforme',
-	'v': 'Víctor',
-	'w': 'Wisky',
-	'x': 'Xilófono',
-	'y': 'Yanki',
-	'z': 'Zulú'
 }
 
 
@@ -338,7 +308,8 @@ def _wait_for_specific_speech(speech: str, maxWaitSeconds: int) -> bool:
 	@param speech: The speech to expect.
 	@param maxWaitSeconds: The amount of time to wait in seconds.
 	@return: True if the speech was found before the specified timeout.
-	this function was copied from SpyLib because the original function raises an exception if the condition is not met. Also shorter intervals between checking are required.
+	this function was copied from SpyLib because the original function raises an exception
+	if the condition is not met. Also shorter intervals between checking are required.
 	"""
 	spy = _NvdaLib.getSpyLib()
 	result, _ = _blockUntilConditionMet._blockUntilConditionMet(
@@ -353,7 +324,8 @@ def _wait_for_specific_speech(speech: str, maxWaitSeconds: int) -> bool:
 def _getCharAfterKey(key, maxWait=0.1) -> str:
 	"""Ensure speech has stopped, press key, and get speech.
 	@return: The speech after key press.
-	this function was copied from SpyLib because the original function join phrases if a speech is near from another. Also shorter intervals between checking are required.
+	this function was copied from SpyLib because the original function join phrases
+	if a speech is near from another. Also shorter intervals between checking are required.
 	lastIndex should be used, but the function to get the speech for a specific index, is private in spyLib.
 	"""
 	spy = _NvdaLib.getSpyLib()
@@ -366,7 +338,8 @@ def _getCharAfterKey(key, maxWait=0.1) -> str:
 		lambda newSpoken: newSpoken != lastSpoken,
 		0.01
 	)
-	if result: return spoken
+	if result:
+		return spoken
 	raise AssertionError(f"No character spoken after pressing key {key}")
 
 
@@ -427,7 +400,7 @@ def _testDelayedDescription(
 	spy = _NvdaLib.getSpyLib()
 	spy.set_configValue(['speech', 'SpeechSpySynthDriver', 'delayedCharacterDescriptionsTimeoutMs'], delay)
 	for i in range(repeatCount):
-		# add 0.5 secs to wait the from specified delay
+		# add 1 sec to wait the from specified delay
 		s = _pressKeyAndWaitDelaiedDescription(key, delay / 1000 + 1)
 		if s == -1:
 			raise AssertionError(
