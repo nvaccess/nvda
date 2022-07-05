@@ -154,28 +154,7 @@ class LauncherDialog(
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = gui.guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 
-		# Translators: The label of the license text which will be shown when NVDA installation program starts.
-		groupLabel = _("License Agreement")
-		sizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=groupLabel)
-		sHelper.addItem(sizer)
-		# Create a fake text control to determine appropriate width of license text box
-		_fakeTextCtrl = wx.StaticText(
-			self,
-			label="a" * 80,  # The GPL2 text of copying.txt wraps sentences at 80 characters
-		)
-		widthOfLicenseText = _fakeTextCtrl.Size[0]
-		_fakeTextCtrl.Destroy()
-		licenseTextCtrl = wx.TextCtrl(
-			self,
-			size=(widthOfLicenseText, self.scaleSize(300)),
-			style=wx.TE_MULTILINE | wx.TE_READONLY | wx.TE_RICH,
-		)
-		licenseTextCtrl.Value = open(getDocFilePath("copying.txt", False), "r", encoding="UTF-8").read()
-		sizer.Add(
-			licenseTextCtrl,
-			flag=wx.EXPAND,
-			proportion=1,
-		)
+		sHelper.addItem(self._createLicenseAgreementGroup())
 
 		# Translators: The label for a checkbox in NvDA installation program to agree to the license agreement.
 		agreeText = _("I &agree")
@@ -212,6 +191,30 @@ class LauncherDialog(
 		self.Sizer = mainSizer
 		mainSizer.Fit(self)
 		self.CentreOnScreen()
+
+	def _createLicenseAgreementGroup(self) -> wx.StaticBoxSizer:
+		# Translators: The label of the license text which will be shown when NVDA installation program starts.
+		groupLabel = _("License Agreement")
+		sizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=groupLabel)
+		# Create a fake text control to determine appropriate width of license text box
+		_fakeTextCtrl = wx.StaticText(
+			self,
+			label="a" * 80,  # The GPL2 text of copying.txt wraps sentences at 80 characters
+		)
+		widthOfLicenseText = _fakeTextCtrl.Size[0]
+		_fakeTextCtrl.Destroy()
+		licenseTextCtrl = wx.TextCtrl(
+			self,
+			size=(widthOfLicenseText, self.scaleSize(300)),
+			style=wx.TE_MULTILINE | wx.TE_READONLY | wx.TE_RICH,
+		)
+		licenseTextCtrl.Value = open(getDocFilePath("copying.txt", False), "r", encoding="UTF-8").read()
+		sizer.Add(
+			licenseTextCtrl,
+			flag=wx.EXPAND,
+			proportion=1,
+		)
+		return sizer
 
 	def onLicenseAgree(self, evt):
 		for ctrl in self.actionButtons:
