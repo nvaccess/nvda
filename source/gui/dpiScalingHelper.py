@@ -1,12 +1,12 @@
 # -*- coding: UTF-8 -*-
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2018-2022 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2018-2022 NV Access Limited
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 from typing import Optional, Any, Callable, Tuple, Union
 
 
-_FloatInt = Union[int, float] 
+_FloatInt = Union[int, float]
 _Size = Union[Tuple[_FloatInt, _FloatInt], _FloatInt]
 _ScaledSize = Union[Tuple[float, float], float]
 
