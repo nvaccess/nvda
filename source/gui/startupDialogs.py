@@ -13,6 +13,7 @@ import core
 from documentationUtils import getDocFilePath
 import globalVars
 import gui
+from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 import keyboardHandler
 from logHandler import log
 import versionInfo
@@ -135,8 +136,9 @@ class WelcomeDialog(
 
 
 class LauncherDialog(
+		DpiScalingHelperMixinWithoutInit, 
 		gui.contextHelp.ContextHelpMixin,
-		wx.Dialog   # wxPython does not seem to call base class initializer, put last in MRO
+		wx.Dialog  # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	"""The dialog that is displayed when NVDA is started from the launcher.
 	This displays the license and allows the user to install or create a portable copy of NVDA.
@@ -144,7 +146,10 @@ class LauncherDialog(
 	helpId = "InstallingNVDA"
 
 	def __init__(self, parent):
-		super().__init__(parent, title=f"{versionInfo.name} {_('Launcher')}")
+		super().__init__(
+			parent,
+			title=f"{versionInfo.name} {_('Launcher')}",
+		)
 
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = gui.guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
@@ -153,9 +158,16 @@ class LauncherDialog(
 		groupLabel = _("License Agreement")
 		sizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=groupLabel)
 		sHelper.addItem(sizer)
+		# Create a fake text control to determine appropriate width of license text box
+		_fakeTextCtrl = wx.StaticText(
+			self,
+			label="a" * 80,  # The GPL2 text of copying.txt wraps sentences at 80 characters
+		)
+		widthOfLicenseText = _fakeTextCtrl.Size[0]
+		_fakeTextCtrl.Destroy()
 		licenseTextCtrl = wx.TextCtrl(
 			self,
-			size=(-1, 500),  # -1 uses default width
+			size=(widthOfLicenseText, self.scaleSize(300)),
 			style=wx.TE_MULTILINE | wx.TE_READONLY | wx.TE_RICH,
 		)
 		licenseTextCtrl.Value = open(getDocFilePath("copying.txt", False), "r", encoding="UTF-8").read()
