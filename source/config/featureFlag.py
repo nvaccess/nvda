@@ -27,11 +27,17 @@ FlagValueEnum = typing.TypeVar('FlagValueEnum', bound=FeatureFlagEnumProtocol)
 
 
 class FeatureFlag(typing.Generic[FlagValueEnum]):
-	"""A FeatureFlag is a boolean flag that can be enabled, disabled or left at its default state.
-	NVDA logic only cares about the effective Enabled/Disabled dichotomy.
-	The default option allows users to explicitly enable, disable, or defer to the NVDA default behaviour.
-	This allows for the default behaviour to change, without affecting a users explicit choice to enable, or
-	disable.
+	"""A FeatureFlag allows the selection of a preference for behavior or its default state.
+	It's typically used to introduce a feature that isn't expected to handle all use-cases well
+	when initially introduced.
+	The feature can be disabled initially, some users can manually enable and try the feature
+	giving feedback.
+	Once developers have confidence in the feature, the default behavior is changed.
+	This change in default behavior should not have any impact on users who have already tried the feature,
+	and perhaps disagreed in principle with it (I.E. wished to disable the feature, not because it is buggy,
+	but because even if it works perfectly it is not their preference).
+	The default option allows users to explicitly defer to the NVDA default behaviour.
+	The default behaviour can change, without affecting a user's preference.
 	"""
 	def __init__(
 			self,
@@ -47,9 +53,24 @@ class FeatureFlag(typing.Generic[FlagValueEnum]):
 			raise NotImplemented(
 				"Only BoolFlag supported. For other types use explicit checks"
 			)
-		if self.value == self.value.DEFAULT:
+		if self.isDefault():
 			return bool(self.behaviorOfDefault)
 		return bool(self.value)
+
+	def isDefault(self):
+		return self.value == self.value.DEFAULT
+
+	def calculated(self) -> FlagValueEnum:
+		if self.isDefault():
+			return self.behaviorOfDefault
+		return self.value
+
+	def __eq__(self, other: typing.Union["FeatureFlag", FlagValueEnum]):
+		if isinstance(other, type(self.value)):
+			other = FeatureFlag(other, behaviorOfDefault=self.behaviorOfDefault)
+		if not isinstance(other, FeatureFlag):
+			raise NotImplementedError()
+		return self.calculated() == other.calculated()
 
 	def __str__(self):
 		"""So that the value can be saved to the ini file.
