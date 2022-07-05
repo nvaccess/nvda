@@ -30,9 +30,14 @@ CO_E_OBJNOTCONNECTED = -2147220995
 EVENT_E_ALL_SUBSCRIBERS_FAILED = -2147220991
 LOAD_WITH_ALTERED_SEARCH_PATH=0x8
 
-def isPathExternalToNVDA(path):
+
+def isPathExternalToNVDA(path: str) -> bool:
 	""" Checks if the given path is external to NVDA (I.e. not pointing to built-in code). """
-	if path[0] != "<" and os.path.isabs(path) and not path.startswith(sys.path[0] + "\\"):
+	if(
+		path[0] != "<"
+		and os.path.isabs(path)
+		and not os.path.normpath(path).startswith(sys.path[0] + "\\")
+	):
 		# This module is external because:
 		# the code comes from a file (fn doesn't begin with "<");
 		# it has an absolute file path (code bundled in binary builds reports relative paths); and
@@ -293,7 +298,7 @@ class RemoteHandler(logging.Handler):
 	def emit(self, record):
 		msg = self.format(record)
 		try:
-			self._remoteLib.nvdaControllerInternal_logMessage(record.levelno, ctypes.windll.kernel32.GetCurrentProcessId(), msg)
+			self._remoteLib.nvdaControllerInternal_logMessage(record.levelno, globalVars.appPid, msg)
 		except WindowsError:
 			pass
 

@@ -2,7 +2,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2008-2021 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau
+# Copyright (C) 2008-2022 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau
 
 import itertools
 import os
@@ -42,7 +42,7 @@ import brailleViewer
 from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting
 
 
-roleLabels = {
+roleLabels: typing.Dict[controlTypes.Role, str] = {
 	# Translators: Displayed in braille for an object which is a
 	# window.
 	controlTypes.Role.WINDOW: _("wnd"),
@@ -189,6 +189,12 @@ roleLabels = {
 	controlTypes.Role.FIGURE: _("fig"),
 	# Translators: Displayed in braille for an object which represents marked (highlighted) content
 	controlTypes.Role.MARKED_CONTENT: _("hlght"),
+	# Translators: Displayed in braille when an object is a comment.
+	controlTypes.Role.COMMENT: _("cmnt"),
+	# Translators: Displayed in braille when an object is a suggestion.
+	controlTypes.Role.SUGGESTION: _("sggstn"),
+	# Translators: Displayed in braille when an object is a definition.
+	controlTypes.Role.DEFINITION: _("definition"),
 }
 
 positiveStateLabels = {
@@ -546,7 +552,17 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 		textList.append(description)
 	hasDetails = propertyValues.get("hasDetails")
 	if hasDetails:
-		textList.append("details")
+		detailsRole: Optional[controlTypes.Role] = propertyValues.get("detailsRole")
+		if detailsRole is not None:
+			detailsRoleLabel = roleLabels.get(detailsRole, detailsRole.displayString)
+			# Translators: Braille when there are further details/annotations that can be fetched manually.
+			# %s specifies the type of details (e.g. comment, suggestion)
+			textList.append(_("has %s") % detailsRoleLabel)
+		else:
+			textList.append(
+				# Translators: Braille when there are further details/annotations that can be fetched manually.
+				_("details")
+			)
 	keyboardShortcut = propertyValues.get("keyboardShortcut")
 	if keyboardShortcut:
 		textList.append(keyboardShortcut)
@@ -648,6 +664,7 @@ class NVDAObjectRegion(Region):
 			current=obj.isCurrent,
 			placeholder=placeholderValue,
 			hasDetails=obj.hasDetails,
+			detailsRole=obj.detailsRole,
 			value=obj.value if not NVDAObjectHasUsefulText(obj) else None ,
 			states=obj.states,
 			description=description,
@@ -721,6 +738,11 @@ def getControlFieldBraille(  # noqa: C901
 	current = field.get('current', controlTypes.IsCurrent.NO)
 	placeholder=field.get('placeholder', None)
 	hasDetails = field.get('hasDetails', False) and config.conf["annotations"]["reportDetails"]
+	if config.conf["annotations"]["reportDetails"]:
+		detailsRole: Optional[controlTypes.Role] = field.get('detailsRole')
+	else:
+		detailsRole = None
+
 	roleText = field.get('roleTextBraille', field.get('roleText'))
 	landmark = field.get("landmark")
 	if not roleText and role == controlTypes.Role.LANDMARK and landmark:
@@ -751,6 +773,8 @@ def getControlFieldBraille(  # noqa: C901
 			"includeTableCellCoords": reportTableCellCoords,
 			"current": current,
 			"description": description,
+			"hasDetails": hasDetails,
+			"detailsRole": detailsRole,
 		}
 		if reportTableHeaders:
 			props["columnHeaderText"] = field.get("table-columnheadertext")
@@ -768,6 +792,7 @@ def getControlFieldBraille(  # noqa: C901
 			"roleText": roleText,
 			"description": description,
 			"hasDetails": hasDetails,
+			"detailsRole": detailsRole,
 		}
 		if field.get('alwaysReportName', False):
 			# Ensure that the name of the field gets presented even if normally it wouldn't.
@@ -2427,13 +2452,13 @@ class BrailleDisplayDriver(driverHandler.Driver):
 		Subclasses should call the superclass method first.
 		@postcondition: This instance can no longer be used unless it is constructed again.
 		"""
-		super(BrailleDisplayDriver,self).terminate()
+		super().terminate()
 		# Clear the display.
 		try:
 			self.display([0] * self.numCells)
-		except:
+		except Exception:
 			# The display driver seems to be failing, but we're terminating anyway, so just ignore it.
-			pass
+			log.error(f"Display driver {self} failed to display while terminating.", exc_info=True)
 
 	#: typing information for autoproperty _get_numCells
 	numCells: int

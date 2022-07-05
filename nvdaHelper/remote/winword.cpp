@@ -621,7 +621,7 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 			}
 			float fVal=0.0;
 			if((formatConfig&formatConfig_reportFontSize)&&(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_SIZE,VT_R4,&fVal)==S_OK)) {
-				formatAttribsStream<<L"font-size=\""<<fVal<<L"pt\" ";
+				formatAttribsStream<<L"font-size=\""<<fVal<<L"\" ";
 			}
 			if((formatConfig&formatConfig_reportColor)&&(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_COLOR,VT_I4,&iVal)==S_OK)) {
 				formatAttribsStream<<L"color=\""<<iVal<<L"\" ";

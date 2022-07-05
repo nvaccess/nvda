@@ -493,6 +493,14 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		"""
 		return bool(self.detailsSummary)
 
+	#: Typing information for auto property _get_detailsRole
+	detailsRole: typing.Optional[controlTypes.Role]
+
+	def _get_detailsRole(self) -> typing.Optional[controlTypes.Role]:
+		if config.conf["debugLog"]["annotations"]:
+			log.debugWarning(f"Fetching details summary not supported on: {self.__class__.__qualname__}")
+		return None
+
 	def _get_controllerFor(self):
 		"""Retrieves the object/s that this object controls."""
 		return []
@@ -1328,25 +1336,11 @@ This code is executed if a gain focus event is received by this object.
 			ret = "exception: %s" % e
 		info.append("value: %s" % ret)
 		try:
-			ret = repr(self.appModule)
-		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("appModule: %s" % ret)
-		try:
-			ret = repr(self.appModule.productName)
-		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("appModule.productName: %s" % ret)
-		try:
-			ret = repr(self.appModule.productVersion)
-		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("appModule.productVersion: %s" % ret)
-		try:
 			ret = repr(self.TextInfo)
 		except Exception as e:
 			ret = "exception: %s" % e
 		info.append("TextInfo: %s" % ret)
+		info.extend(self.appModule.devInfo)
 		return info
 
 	def _get_sleepMode(self):

@@ -70,10 +70,10 @@ Tasks that can be performed include moving/clicking the mouse and sending key pr
 ### Logging
 
 #### Logging in secure mode
-`logHandler.initialize` prevents logging in secure mode.
-This is because it is a security concern to log during secure mode (e.g. passwords are logged).
-To change this for testing, patch the source build.
-`nvda.log` files are then generated in the System profile's `%TEMP%` directory.
+`logHandler.initialize` prevents logging in [secure mode](https://www.nvaccess.org/files/nvda/documentation/userGuide.html#SecureMode).
+This is because it is a security concern to log during secure mode (e.g. passwords are logged on [secure screens](https://www.nvaccess.org/files/nvda/documentation/userGuide.html#SecureScreens).
+To change this for testing, use the [serviceDebug](https://www.nvaccess.org/files/nvda/documentation/userGuide.html#SystemWideParameters) system wide parameter to prevent secure mode on secure screens.
+When logging from a secure screen, `nvda.log` files are generated in the System profile's `%TEMP%` directory.
 
 ## NVDA Components
 NVDA is built with an extensible, modular, object oriented, abstract design.
@@ -181,6 +181,8 @@ An app module provides support specific to an application for these cases.
 An app module is derived from the `appModuleHandler.AppModule` base class.
 App modules receive events for all [NVDA objects](#nvda-objects) in the application and can bind scripts which can be executed anywhere in that application.
 They can also implement their own NVDA objects for use within the application.
+Usually the App Module should be named the same as the executable for which it should be loaded.
+In cases where this is problematic (one App Module should support multiple applications, the binary is named in a way which conflicts with the Python import system) you can add an entry to the `appModules.EXECUTABLE_NAMES_TO_APP_MODS` where the binary name is the key and the name of the App Module is the value.
 
 #### Global Plugins
 Aside from application specific customisation using [app modules](#app-modules), it is also possible to extend NVDA on a global level.

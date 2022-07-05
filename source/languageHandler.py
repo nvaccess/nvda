@@ -501,3 +501,11 @@ def useImperialMeasurements() -> bool:
 	return buf.value == '1'
 
 
+def stripLocaleFromLangCode(langWithOptionalLocale: str) -> str:
+	"""
+	Get the lang code eg "en" for "en-au" or "chr" for "chr-US-Qaaa-x-west".
+	@param langWithOptionalLocale: may already be language only, or include locale specifier
+	(e.g. "en" or "en-au").
+	@return The language only part, before the first dash.
+	"""
+	return langWithOptionalLocale.split("-")[0]
