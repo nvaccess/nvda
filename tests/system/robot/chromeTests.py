@@ -140,6 +140,154 @@ def test_mark_aria_details_FreeReviewCursor():
 	exercise_mark_aria_details()
 
 
+def test_mark_aria_details_role():
+	_chrome.prepareChrome(
+		"""
+		<div class="editor" contenteditable spellcheck="false" role="textbox" aria-multiline="true">
+			<p>
+				<span aria-details="endnote-details">doc-endnote,</span>
+				<span aria-details="footnote-details">doc-footnote,</span>
+				<span aria-details="comment-details">comment,</span>
+				<span aria-details="definition-details-as-tag" role="term">definition,</span>
+				<span aria-details="definition-details-as-role" role="term">definition,</span>
+				<span aria-details="unknown-details">form</span>
+			</p>
+		</div>
+		<div>
+			<p>
+				<!-- Supported by Chrome attribute details-roles -->
+				<div id="endnote-details" role="doc-endnote">details with role doc-endnote</div>
+				<div id="footnote-details" role="doc-footnote">details with role doc-footnote</div>
+				<div id="comment-details" role="comment">details with role comment</div>
+				<!--
+					When using the following syntax, the dfn tag holds the role "term",
+					and the accompanying text becomes the "definition".
+					Authors may expected the aria-details to target the definition.
+					It is uncertain as to which element aria-details
+					should point towards, but we assume the dfn tag in this case,
+					as the accompanying definition text is not specifically captured by an HTML element.
+				-->
+				<p>
+					<dfn id="definition-details-as-tag">definition</dfn>:
+					details with tag definition
+				</p>
+				<!--
+					Authors may expected the aria-details to target the definition.
+					As the definition text is specifically captured by an HTML element with role "definition",
+					we map to that element.
+					This is inconsistent with previous example, using the dfn tag.
+				-->
+				<p>
+					<span role="term">definition</span>:
+					<span id="definition-details-as-role" role="definition">details with role definition</span>
+				</p>
+				<!-- Included as "form" is not supported by Chrome attribute details-roles -->
+				<div id="unknown-details" role="form">details with role form</div>
+			</p>
+		</div>
+		"""
+	)
+	expectedSpeech = SPEECH_SEP.join([
+		"edit",
+		"multi line",
+		# the role doc-endnote is unsupported as an IA2 role
+		# The role "ROLE_LIST_ITEM" is used instead
+		"has details",
+		"doc endnote,",
+		"",  # space between spans
+		"has foot note",
+		"doc footnote,",
+		"",  # space between spans
+		"has comment",
+		"comment,",
+		"",  # space between spans
+		# the role definition is unsupported as an IA2 role
+		# The role "ROLE_PARAGRAPH" is used instead
+		"has details",
+		"definition,",
+		"",  # space between spans
+		"has details",
+		"definition,",
+		"",  # space between spans
+		# The role "form" is deliberately unsupported
+		"has details",
+		"form",
+	])
+
+	# TODO: fix known bug with braille not announcing details #13815
+	expectedBraille = " ".join([  # noqa: F841
+		"mln",
+		"edit",
+		# the role doc-endnote is unsupported as an IA2 role
+		# The role "ROLE_LIST_ITEM" is used instead
+		"details",
+		"doc endnote,",
+		"has fnote",
+		"doc footnote,",
+		"has cmnt",
+		"comment,",
+		# the role definition is unsupported as an IA2 role
+		# The role "ROLE_PARAGRAPH" is used instead
+		"details",
+		"definition,",
+		"details",
+		"definition,",
+		# The role "form" is deliberately unsupported
+		"details",
+		"form",
+		"edt end",
+	])
+
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey('downArrow')
+
+	_asserts.speech_matches(
+		actualSpeech,
+		expectedSpeech,
+		message="Browse mode speech: Read line with different aria details roles."
+	)
+	_asserts.braille_matches(
+		actualBraille,
+		# TODO: fix known bug with braille not announcing details #13815
+		# expectedBraille,
+		"mln edt doc-endnote, doc-footnote, comment, definition, definition, form edt end",
+		message="Browse mode braille: Read line with different aria details roles.",
+	)
+	
+	# Reset caret
+	actualSpeech = _NvdaLib.getSpeechAfterKey("upArrow")
+	_asserts.speech_matches(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"out of edit",
+			"Test page load complete",
+		]),
+		message="reset caret",
+	)
+
+	# Force focus mode
+	actualSpeech = _NvdaLib.getSpeechAfterKey("NVDA+space")
+	_asserts.speech_matches(
+		actualSpeech,
+		"Focus mode",
+		message="force focus mode",
+	)
+
+	# Tab into the contenteditable
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("tab")
+	_asserts.speech_matches(
+		actualSpeech,
+		expectedSpeech,
+		message="Focus mode speech: Read line with different aria details roles"
+	)
+	_asserts.braille_matches(
+		actualBraille,
+		# TODO: fix known bug with braille not announcing details #13815
+		# expectedBraille,
+		"doc-endnote, doc-footnote, comment, definition, definition, form",
+		message="Focus mode braille: Read line with different aria details roles",
+	)
+
+
 def exercise_mark_aria_details():
 	_chrome.prepareChrome(
 		"""
@@ -172,7 +320,7 @@ def exercise_mark_aria_details():
 			"multi line",
 			"The word",  # content
 			"highlighted",
-			"has details",
+			"has comment",
 			"cat",  # highlighted content
 			"out of highlighted",
 			"has a comment tied to it.",  # content
@@ -181,7 +329,7 @@ def exercise_mark_aria_details():
 	)
 	_asserts.braille_matches(
 		actualBraille,
-		"mln edt The word  hlght details cat hlght end  has a comment tied to it. edt end",
+		"mln edt The word  hlght has cmnt cat hlght end  has a comment tied to it. edt end",
 		message="Browse mode: Read line with details.",
 	)
 	# this word has no details attached
@@ -193,7 +341,7 @@ def exercise_mark_aria_details():
 	)
 	_asserts.braille_matches(
 		actualBraille,
-		"mln edt The word  hlght details cat hlght end  has a comment tied to it. edt end",
+		"mln edt The word  hlght has cmnt cat hlght end  has a comment tied to it. edt end",
 		message="Browse mode: Move by word to word without details",
 	)
 
@@ -209,16 +357,16 @@ def exercise_mark_aria_details():
 		"No additional details",
 		message="Browse mode: Report details on word without details",
 	)
-	# this word has details attached to it
+	# this word has a comment attached to it
 	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("control+rightArrow")
 	_asserts.speech_matches(
 		actualSpeech,
-		"highlighted  has details  cat  out of highlighted",
+		"highlighted  has comment  cat  out of highlighted",
 		message="Browse mode: Move by word to word with details",
 	)
 	_asserts.braille_matches(
 		actualBraille,
-		"mln edt The word  hlght details cat hlght end  has a comment tied to it. edt end",
+		"mln edt The word  hlght has cmnt cat hlght end  has a comment tied to it. edt end",
 		message="Browse mode: Move by word to word with details",
 	)
 	# read the details summary
@@ -269,7 +417,7 @@ def exercise_mark_aria_details():
 			"multi line",
 			"The word",  # content
 			"highlighted",
-			"has details",
+			"has comment",
 			"cat",  # highlighted content
 			"out of highlighted",
 			"has a comment tied to it.",  # content
@@ -329,7 +477,7 @@ def exercise_mark_aria_details():
 			"multi line",
 			"The word",  # content
 			"highlighted",
-			"has details",
+			"has comment",
 			"cat",  # highlighted content
 			"out of highlighted",
 			"has a comment tied to it.",  # content
@@ -338,7 +486,7 @@ def exercise_mark_aria_details():
 	)
 	_asserts.braille_matches(
 		actualBraille,
-		"The word  hlght details cat hlght end  has a comment tied to it.",
+		"The word  hlght has cmnt cat hlght end  has a comment tied to it.",
 		message="Focus mode: report content editable with details",
 	)
 
@@ -364,7 +512,7 @@ def exercise_mark_aria_details():
 		actualSpeech,
 		SPEECH_SEP.join([
 			"highlighted",
-			"has details",
+			"has comment",
 			"cat",  # highlighted content
 			"out of highlighted",
 		]),
@@ -372,7 +520,7 @@ def exercise_mark_aria_details():
 	)
 	_asserts.braille_matches(
 		actualBraille,
-		expected="The word  hlght details cat hlght end  has a comment tied to it.",
+		expected="The word  hlght has cmnt cat hlght end  has a comment tied to it.",
 		message="Focus mode: Move by word to word with details",
 	)
 

@@ -3,6 +3,133 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2022.2 =
+У цій версії виправлено багато проблем.
+Зокрема, є значні покращення у роботі з програмами на базі Java, брайлівськими дисплеями й функціями Windows.
+
+Додано нові команди для навігації в таблицях.
+Оновлено Загальний репозиторій мовних даних Юнікоду (CLDR).
+LibLouis також оновлено, він включає нову німецьку брайлівську таблицю.
+
+== Нові можливості ==
+- Підтримка взаємодії з компонентами Microsoft Loop у продуктах Microsoft Office. (#13617)
+- Додано нові команди навігації в таблицях. (#957)
+ - ``control+alt+на початок/в кінець`` для переходу до першого/останнього стовпця.
+ - ``control+alt+сторінка вгору/сторінка вниз`` для переходу до першого/останнього рядка.
+ -
+- Додано скрипт без призначеного жесту для циклічного перемикання режимів автоматичного перемикання між мовами й діалектами. (#10253)
+-
+
+== Зміни ==
+- NSIS оновлено до версії 3.08. (#9134)
+- CLDR оновлено до версії 41.0. (#13582)
+- Оновлено бібліотеку брайлівського введення/виведення LibLouis до [3.22.0 https://github.com/liblouis/liblouis/releases/tag/v3.22.0]. (#13775)
+  - Нова брайлівська таблиця: German grade 2 (detailed)
+  -
+- Додано нову роль для елемента керування  «індикатор зайнятості». (#10644)
+- NVDA тепер повідомляє, коли виконання дії неможливе. (#13500)
+  - Це стосується:
+    - Використання NVDA з Microsoft Store.
+    - Безпечного режиму (захищений контекст).
+    - Очікування відповіді модальних діалогів.
+    -
+  -
+-
+
+
+== Виправлення ==
+- Виправлення для застосунків на базі Java:
+  - NVDA тепер промовляє стан readonly (лише читання). (#13692)
+  - NVDA тепер коректно повідомляє про стан вимкнено/увімкнено. (#10993)
+  - NVDA тепер промовляє функціональні комбінації клавіш. (#13643)
+  - NVDA тепер може подавати звукові сигнали чи промовляти індикатори виконання. (#13594)
+  - NVDA більше не видаляє некоректно текст із віджетів під час представлення їх користувачеві. (#13102)
+  - NVDA тепер повідомляє стан кнопок-перемикачів. (#9728)
+  - NVDA тепер виявляє вікно в Java-застосунку із кількома вікнами. (#9184)
+  - NVDA тепер повідомляє позицію вкладок. (#13744)
+  -
+- Виправлення помилок з Брайлем:
+  - Виправлено помилку брайлівського виведення під час переміщення у межах певного тексту в елементах керування редагуванням Mozilla, таких як чернетки повідомлень у Thunderbird. (#12542)
+  - При автоматичній прив’язці Брайля й переміщенні мишки з увімкненим відстеженням мишки,
+   команди текстового перегляду оновлюють брайлівський дисплей із промовленим вмістом. (#11519)
+  - Тепер можливо панорамувати вміст на брайлівському дисплеї після використання команд текстового перегляду. (#8682)
+  -
+- Встановлювач NVDA тепер можна запускати із папки, в імені якої є спеціальні символи. (#13270)
+- У Firefox NVDA більше не помиляється під час промовляння елементів на веб-сторінках, коли атрибути aria-rowindex, aria-colindex, aria-rowcount або aria-colcount є недійсними. (#13405)
+- Курсор більше не перемикає рядок чи стовпець під час використання навігації в таблиці для навігації по об’єднаних комірках. (#7278)
+- Під час читання неінтерактивних PDF-документів у Adobe Reader промовляються тип і стан полів форм (таких як прапорці чи радіокнопки). (#13285)
+- Елемент «Повернути конфігурацію до початкових налаштувань» знову доступний у меню NVDA у безпечному режимі. (#13547)
+- Будь-які заблоковані кнопки мишки буде розблоковано в разі виходу з NVDA, раніше кнопка мишки залишалася заблокованою. (#13410)
+- Visual Studio тепер повідомляє номери рядків. (#13604)
+  - Зауважте, аби промовляння номерів рядків працювало, показ номерів рядків має бути увімкнено у Visual Studio та NVDA.
+  -
+- Visual Studio тепер коректно повідомляє відступ рядка. (#13574)
+- NVDA знову оголошує подробиці результатів пошуку в меню «Пуск» у останніх версіях Windows 10 і 11. (#13544)
+- У Калькуляторі версії 10.1908 і новіших у Windows 10 та 11,
+NVDA оголосить результати, коли буде натиснуто більше команд, наприклад, команди з інженерного режиму. (#13386)
+- У Windows 11 знову є можливість навігації та взаємодії з елементами інтерфейсу користувача,
+наприклад, з панеллю завдань і переглядом завдань за допомогою взаємодії миші та дотику. (#13508)
+- Прихований текст більше не оголошується у Wordpad та інших елементах керування ``richEdit``. (#13618)
+- NVDA тепер оголошує вміст рядка стану у «Блокноті» Windows 11. (#13386)
+- Підсвічування об’єктного навігатора тепер з’являється відразу після активації функції. (#13641)
+- Виправлено читання елементів перегляду списку з одним стовпцем. (#13659, #13735)
+- Fix eSpeak automatic language switching for English and French falling back to British English and French (France). (#13727)
+- Виправлено автоматичне перемикання мови OneCore під час спроби перейти на раніше встановлену мову. (#13732)
+-
+
+
+== Changes for Developers ==
+- Compiling NVDA dependencies with Visual Studio 2022 (17.0) is now supported.
+For development and release builds, Visual Studio 2019 is still used. (#13033)
+- When retrieving the count of selected children via accSelection,
+the case where a negative child ID or an IDispatch is returned by ``IAccessible::get_accSelection`` is now handled properly. (#13276)
+- New convenience functions ``registerExecutableWithAppModule`` and ``unregisterExecutable`` were added to the ``appModuleHandler`` module.
+They can be used to use a single App Module with multiple executables. (#13366)
+-
+
+=== Deprecations ===
+These are proposed API breaking changes.
+The deprecated part of the API will continue to be available until the specified release.
+If no release is specified, the plan for removal has not been determined.
+Note, the roadmap for removals is 'best effort' and may be subject to change.
+Please test the new API and provide feedback.
+For add-on authors, please open a GitHub issue if these changes stop the API from meeting your needs.
+
+
+- ``appModuleHandler.NVDAProcessID`` is deprecated, use ``globalVars.appPid`` instead. (#13646)
+- ``gui.quit`` is deprecated, use ``wx.CallAfter(mainFrame.onExitCommand, None)`` instead. (#13498)
+  -
+% Insert new list items here as the alias appModule table should be kept at the bottom of this list
+- Some alias appModules are marked as deprecated.
+Code which imports from one of them, should instead import from the replacement module.  (#13366)
+-
+
+|| Removed module name | Replacement module |
+| azuredatastudio | code |
+| azuredatastudio-insiders | code |
+| calculatorapp | calculator |
+| code - insiders | code |
+| commsapps | hxmail |
+| dbeaver | eclipse |
+| digitaleditionspreview | digitaleditions |
+| esybraille | esysuite |
+| hxoutlook | hxmail |
+| miranda64 | miranda32 |
+| mpc-hc | mplayerc |
+| mpc-hc64 | mplayerc |
+| notepad++ | notepadPlusPlus |
+| searchapp | searchui |
+| searchhost | searchui |
+| springtoolsuite4 | eclipse |
+| sts | eclipse |
+| teamtalk3 | teamtalk4classic |
+| textinputhost | windowsinternal_composableshell_experiences_textinput_inputapp |
+| totalcmd64 | totalcmd |
+| win32calc | calc |
+| winmail | msimn |
+| zend-eclipse-php | eclipse |
+| zendstudio | eclipse |
+
 = 2022.1 =
 Ця версія містить серйозні поліпшення підтримки UIA з MS Office.
 У Windows 11 для Microsoft Office 16.0.15000 і новіших версій NVDA початково використовуватиме UI Automation для доступу до документів Microsoft Word.

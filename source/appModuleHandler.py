@@ -17,17 +17,16 @@ import os
 import sys
 from types import ModuleType
 from typing import (
+	Any,
 	Dict,
 	List,
 	Optional,
 	Tuple,
-	Union,
 )
-import zipimport
 
 import winVersion
-import pkgutil
 import importlib
+import importlib.util
 import threading
 import tempfile
 import comtypes.client
@@ -42,14 +41,12 @@ import appModules
 import exceptions
 import extensionPoints
 from fileUtils import getFileVersionInfo
+import globalVars
 
-_KNOWN_IMPORTERS_T = Union[importlib.machinery.FileFinder, zipimport.zipimporter]
+
 # Dictionary of processID:appModule pairs used to hold the currently running modules
 runningTable: Dict[int, AppModule] = {}
-#: The process ID of NVDA itself.
-NVDAProcessID=None
 _CORE_APP_MODULES_PATH: os.PathLike = appModules.__path__[0]
-_importers: Optional[List[_KNOWN_IMPORTERS_T]] = None
 _getAppModuleLock=threading.RLock()
 #: Notifies when another application is taking foreground.
 #: This allows components to react upon application switches.
@@ -80,6 +77,22 @@ class processEntry32W(ctypes.Structure):
 	]
 
 
+def __getattr__(attrName: str) -> Any:
+	"""Module level `__getattr__` used to preserve backward compatibility.
+	The module level variable `NVDAProcessID` is deprecated
+	and usages should be replaced with `globalVars.appPid`.
+	We cannot simply assign the value from `globalVars` to the old attribute
+	since add-ons are initialized before `appModuleHandler`
+	and when `appModuleHandler` was not yet initialized the variable was set to `None`.
+	"""
+	if attrName == "NVDAProcessID" and globalVars._allowDeprecatedAPI:
+		log.warning("appModuleHandler.NVDAProcessID is deprecated, use globalVars.appPid instead.")
+		if initialize._alreadyInitialized:
+			return globalVars.appPid
+		return None
+	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+
+
 def _warnDeprecatedAliasAppModule() -> None:
 	"""This function should be executed at the top level of an alias App Module,
 	to log a deprecation warning when the module is imported.
@@ -95,12 +108,13 @@ def _warnDeprecatedAliasAppModule() -> None:
 	except KeyError:
 		raise RuntimeError("This function can be executed only inside an alias App Module.") from None
 	else:
-		log.warning(
-			(
-				f"Importing from appModules.{currModName} is deprecated,"
-				f" you should import from appModules.{replacementModName}."
-			)
+		deprecatedImportWarning = (
+			f"Importing appModules.{currModName} is deprecated,"
+			f" instead import appModules.{replacementModName}."
 		)
+		log.warning(deprecatedImportWarning)
+		if not globalVars._allowDeprecatedAPI:
+			raise ModuleNotFoundError(deprecatedImportWarning)
 
 
 def registerExecutableWithAppModule(executableName: str, appModName: str) -> None:
@@ -118,16 +132,6 @@ def unregisterExecutable(executableName: str) -> None:
 		log.error(f"Executable {executableName} was not previously registered.")
 
 
-def _getPathFromImporter(importer: _KNOWN_IMPORTERS_T) -> os.PathLike:
-	try:  # Standard `FileFinder` instance
-		return importer.path
-	except AttributeError:
-		try:  # Special case for `zipimporter`
-			return os.path.normpath(os.path.join(importer.archive, importer.prefix))
-		except AttributeError:
-			raise TypeError(f"Cannot retrieve path from {repr(importer)}") from None
-
-
 def _getPossibleAppModuleNamesForExecutable(executableName: str) -> Tuple[str, ...]:
 	"""Returns list of the appModule names for a given executable.
 	The names in the tuple are placed in order in which import of these aliases should be attempted that is:
@@ -138,7 +142,12 @@ def _getPossibleAppModuleNamesForExecutable(executableName: str) -> Tuple[str, .
 	return tuple(
 		aliasName for aliasName in (
 			_executableNamesToAppModsAddons.get(executableName),
-			executableName,
+			# #5323: Certain executables contain dots as part of their file names.
+			# Since Python treats dot as a package separator we replace it with an underscore
+			# in the name of the Python module.
+			# For new App Modules consider adding an alias to `appModule.EXECUTABLE_NAMES_TO_APP_MODS`
+			# rather than rely on the fact that dots are replaced.
+			executableName.replace(".", "_"),
 			appModules.EXECUTABLE_NAMES_TO_APP_MODS.get(executableName)
 		) if aliasName is not None
 	)
@@ -149,27 +158,29 @@ def doesAppModuleExist(name: str, ignoreDeprecatedAliases: bool = False) -> bool
 	:param ignoreDeprecatedAliases: used for backward compatibility, so that by default alias modules
 	are not excluded.
 	"""
-	for importer in _importers:
-		modExists = importer.find_module(f"appModules.{name}")
-		if modExists:
-			# While the module has been found it is possible tis is just a deprecated alias.
-			# Before PR #13366 the only possibility to map a single app module to multiple executables
-			# was to create a alias app module and import everything from the main module into it.
-			# Now the preferred solution is to add an entry into `appModules.EXECUTABLE_NAMES_TO_APP_MODS`,
-			# but old alias modules have to stay to preserve backwards compatibility.
-			# We cannot import the alias module since they show a deprecation warning on import.
-			# To determine if the module should be imported or not we check if:
-			# - it is placed in the core appModules package, and
-			# - it has an alias defined in `appModules.EXECUTABLE_NAMES_TO_APP_MODS`.
-			# If both of these are true the module should not be imported in core.
-			if (
-				ignoreDeprecatedAliases
-				and name in appModules.EXECUTABLE_NAMES_TO_APP_MODS
-				and _getPathFromImporter(importer) == _CORE_APP_MODULES_PATH
-			):
-				continue
-			return True
-	return False  # None of the aliases exists
+	try:
+		modSpec = importlib.util.find_spec(f"appModules.{name}", package=appModules)
+	except ImportError:
+		modSpec = None
+	if modSpec is None:
+		return False
+	# While the module has been found it is possible this is a deprecated alias.
+	# Before PR #13366 the only possibility to map a single app module to multiple executables
+	# was to create an alias app module and import everything from the main module into it.
+	# Now the preferred solution is to add an entry into `appModules.EXECUTABLE_NAMES_TO_APP_MODS`,
+	# but old alias modules have to stay to preserve backwards compatibility.
+	# We cannot import the alias module since they show a deprecation warning on import.
+	# To determine if the module should be imported or not we check if:
+	# - it is placed in the core appModules package, and
+	# - it has an alias defined in `appModules.EXECUTABLE_NAMES_TO_APP_MODS`.
+	# If both of these are true the module should not be imported in core.
+	if (
+		ignoreDeprecatedAliases
+		and name in appModules.EXECUTABLE_NAMES_TO_APP_MODS
+		and os.path.dirname(modSpec.origin) == _CORE_APP_MODULES_PATH
+	):
+		return False
+	return True
 
 
 def _importAppModuleForExecutable(executableName: str) -> Optional[ModuleType]:
@@ -195,7 +206,7 @@ def getAppNameFromProcessID(processID: int, includeExt: bool = False) -> str:
 	C{False} to exclude it.
 	@returns: application name
 	"""
-	if processID==NVDAProcessID:
+	if processID == globalVars.appPid:
 		return "nvda.exe" if includeExt else "nvda"
 	FSnapshotHandle = winKernel.kernel32.CreateToolhelp32Snapshot (2,0)
 	FProcessEntry32 = processEntry32W()
@@ -236,8 +247,7 @@ def getAppModuleFromProcessID(processID: int) -> AppModule:
 	with _getAppModuleLock:
 		mod=runningTable.get(processID)
 		if not mod:
-			# #5323: Certain executables contain dots as part of their file names.
-			appName=getAppNameFromProcessID(processID).replace(".","_")
+			appName = getAppNameFromProcessID(processID)
 			mod=fetchAppModule(processID,appName)
 			if not mod:
 				raise RuntimeError("error fetching default appModule")
@@ -345,13 +355,17 @@ def reloadAppModules():
 		# Fetch and cache right away; the process could die any time.
 		obj.appModule
 
+
 def initialize():
 	"""Initializes the appModule subsystem. 
 	"""
-	global NVDAProcessID,_importers
-	NVDAProcessID=os.getpid()
 	config.addConfigDirsToPythonPackagePath(appModules)
-	_importers=list(pkgutil.iter_importers("appModules.__init__"))
+	if not initialize._alreadyInitialized:
+		initialize._alreadyInitialized = True
+
+
+initialize._alreadyInitialized = False
+
 
 def terminate():
 	for processID, app in runningTable.items():

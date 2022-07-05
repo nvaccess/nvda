@@ -27,7 +27,7 @@ Glavne karakteristike su:
 - Govorna instalacija koja je laka za korišćenje
 - Preveden na 54 jezika
 - Podrška za moderne Windows operativne sisteme uključujući 32 bitne i 64 bitne verzije
-- Sposobnost da se pokrene na Windows ekranu za prijavljivanje i drugim bezbednim ekranima
+- Sposobnost da se pokrene na Windows ekranu za prijavljivanje i [drugim bezbednim ekranima #SecureScreens].
 - Izgovaranje teksta i kontrola prilikom korišćenja ekrana osetljivog na dodir
 - Podrška za standardne interfejse pristupačnosti kao što su Microsoft Active Accessibility, Java Access Bridge, IAccessible2 i UI Automation
 - Podrška za Windows komandnu liniju i druge konzolne aplikacije
@@ -81,7 +81,7 @@ Pokretanje datoteke koja je preuzeta započeće privremenu kopiju programa NVDA.
 Zatim ćete biti upitani da li želite da instalirate NVDA, napravite prenosnu kopiju ili da samo nastavite korišćenje privremene kopije.
 
 Ako planirate da uvek koristite NVDA na ovom računaru, izabraćete instalaciju programa NVDA.
-Instaliranje programa NVDA pruža dodatne funkcije kao što su automatsko pokretanje nakon prijavljivanja u Windows, sposobnost da čitate Windows ekran za prijavu i druge sigurnosne ekrane(što nije moguće sa prenosivom i privremenom kopijom) i pravljenje prečice na radnoj površini i u start meniju.
+Instaliranje programa NVDA pruža dodatne funkcije kao što su automatsko pokretanje nakon prijavljivanja u Windows, sposobnost da čitate Windows ekran za prijavu i [bezbedne ekrane #SecureScreens] (što nije moguće sa prenosivom i privremenom kopijom) i pravljenje prečice na radnoj površini i u start meniju.
 Instalirana kopija takođe može napraviti prenosivu kopiju u bilo kom trenutku.
 
 Ako želite da nosite NVDA sa sobom na USB-u ili drugim prenosivim medijima, u tom slučaju trebate izabrati opciju pravljenja prenosive kopije.
@@ -118,7 +118,7 @@ Pogledajte deo [dijalog sa nekompatibilnim dodacima #incompatibleAddonsManager] 
 
 +++ Pokreni na Windows ekranu za prijavu +++[StartAtWindowsLogon]
 Ova opcija odlučuje da li NVDA treba biti pokrenut na Windows ekranu za prijavljivanje, pre nego što unesete vašu lozinku.
-Ovo takođe uključuje kontrolu korisničkog naloga i druge bezbednosne ekrane.
+Ovo takođe uključuje kontrolu korisničkog naloga i [druge bezbedne ekrane #SecureScreens].
 Ova opcija je podrazumevano omogućena za nove instalacije.
 
 +++ Napravi prečicu na radnoj površini (ctrl+alt+n) +++[CreateDesktopShortcut]
@@ -127,7 +127,7 @@ Ako je napravljena, ona takođe dobija prečicu sa tastature control+alt+n, kako
 
 +++ Kopiraj podešavanja prenosne kopije u trenutni nalog+++[CopyPortableConfigurationToCurrentUserAccount]
 Ova opcija bira da li konfiguracija trenutno pokrenute kopije NVDA treba da se kopira za korisnika koji je trenutno prijavljen, za instaliranu kopiju NVDA. 
-Ovo neće kopirati podešavanja za druge korisnike ni za korišćenje na Windows ekranu za prijavljivanje i drugim bezbednosnim ekranima.
+Ovo neće kopirati podešavanja za druge korisnike ni za korišćenje na Windows ekranu za prijavljivanje i [drugim bezbednim ekranima #SecureScreens].
 Ova opcija je dostupna samo kada se instalira iz prenosive kopije, ne i kada se instalira iz preuzete datoteke.
 
 ++ Pravljenje prenosive kopije ++[CreatingAPortableCopy]
@@ -274,24 +274,24 @@ Kada se meni pojavi, možete koristiti strelice da se krećete kroz meni, i tast
 
 ++ Osnovne NVDA komande ++[BasicNVDACommands]
 %kc:beginInclude
- || Ime | Desktop komanda | Laptop komanda | Ekran osetljiv na dodir | Opis |
- | Pokreće ili restartuje NVDA | Control+alt+n | Control+alt+n | Nema | Pokreće ili restartuje NVDA sa radne površine, ako je ova Windows prečica omogućena u procesu instalacije programa NVDA. Ovo je Windows prečica i zato se ne može promeniti u dijalogu ulazne komande. |
- | Zaustavi govor | Kontrol | Kontrol | dodir sa dva prsta | govor prestaje |
- | Pauziraj govor | Šift | Šift | Nema komande | pauzira govor. Ako se pritisne ponovo govor se nastavlja gde je stao(ako trenutni sintetizator podržava pauziranje) |
- | NVDA meni | NVDA+n | NVDA+n | dvostruki dodir sa dva prsta | otvara NVDA meni kako biste pristupili podešavanjima, alatima, dobili pomoć, i tako dalje. |
- | Prebaci režim govora | NVDA+s | NVDA+s | Nema komande | Prebacuje režime govora između govor, pištanja i isključen. |
- | Uključuje i isključuje pomoć za unos | NVDA+1 | NVDA+1 | Nema komande | pritiskanje bilo kog tastera u ovom režimu prijavljuje ime tastera, i opis komande koju NVDA koristi |
- | Izlaz iz NVDA | NVDA+q | NVDA+q | Nema komande | izlazi iz NVDA |
- | Ignoriši sledeći taster | NVDA+f2 | NVDA+f2 | Nema komande | govori NVDA-u da sledeći taster pošalje kroz aplikaciju, čak i ako je to NVDA komanda |
- | Uključuje i isključuje režim spavanja za trenutnu aplikaciju | NVDA+šift+s | NVDA+šift+z | Nema komande | Režim spavanja isključuje sav govor ili brajev izlaz za trenutnu aplikaciju. Ovo je najviše korisno u aplikacijama koje već imaju karakteristike čitanja ekrana. Ponovo pritisnite ovu komandu da isključite režim spavanja. |
+|| Ime | Desktop komanda | Laptop komanda | Ekran osetljiv na dodir | Opis |
+| Pokreće ili restartuje NVDA | Control+alt+n | Control+alt+n | Nema | Pokreće ili restartuje NVDA sa radne površine, ako je ova Windows prečica omogućena u procesu instalacije programa NVDA. Ovo je Windows prečica i zato se ne može promeniti u dijalogu ulazne komande. |
+| Zaustavi govor | Kontrol | Kontrol | dodir sa dva prsta | govor prestaje |
+| Pauziraj govor | Šift | Šift | Nema komande | pauzira govor. Ako se pritisne ponovo govor se nastavlja gde je stao(ako trenutni sintetizator podržava pauziranje) |
+| NVDA meni | NVDA+n | NVDA+n | dvostruki dodir sa dva prsta | otvara NVDA meni kako biste pristupili podešavanjima, alatima, dobili pomoć, i tako dalje. |
+| Prebaci režim govora | NVDA+s | NVDA+s | Nema komande | Prebacuje režime govora između govor, pištanja i isključen. |
+| Uključuje i isključuje pomoć za unos | NVDA+1 | NVDA+1 | Nema komande | pritiskanje bilo kog tastera u ovom režimu prijavljuje ime tastera, i opis komande koju NVDA koristi |
+| Izlaz iz NVDA | NVDA+q | NVDA+q | Nema komande | izlazi iz NVDA |
+| Ignoriši sledeći taster | NVDA+f2 | NVDA+f2 | Nema komande | govori NVDA-u da sledeći taster pošalje kroz aplikaciju, čak i ako je to NVDA komanda |
+| Uključuje i isključuje režim spavanja za trenutnu aplikaciju | NVDA+šift+s | NVDA+šift+z | Nema komande | Režim spavanja isključuje sav govor ili brajev izlaz za trenutnu aplikaciju. Ovo je najviše korisno u aplikacijama koje već imaju karakteristike čitanja ekrana. Ponovo pritisnite ovu komandu da isključite režim spavanja. |
 %kc:endInclude
 
 ++ Prijavljivanje sistemskih informacija++[ReportingSystemInformation]
 %kc:beginInclude
- || Ime | Komanda | Opis |
- | Prijavi datum/vreme | NVDA+f12 | Ako se pritisne jednom prijavljuje trenutni datum, ako se pritisne dva puta prijavljuje trenutno vreme |
- | Prijavi stanje baterije | NVDA+šift+b | prijavljuje stanje baterije da li je punjač uključen i trenutni procenat. |
- | Prijavi tekst privremene memorije | NVDA+c | prijavljuje tekst privremene memorije ako ima teksta. |
+|| Ime | Komanda | Opis |
+| Prijavi datum/vreme | NVDA+f12 | Ako se pritisne jednom prijavljuje trenutni datum, ako se pritisne dva puta prijavljuje trenutno vreme |
+| Prijavi stanje baterije | NVDA+šift+b | prijavljuje stanje baterije da li je punjač uključen i trenutni procenat. |
+| Prijavi tekst privremene memorije | NVDA+c | prijavljuje tekst privremene memorije ako ima teksta. |
 %kc:endInclude
 
 + Navigacija sa NVDA-om +[NavigatingWithNVDA]
@@ -311,8 +311,8 @@ Kada je [Vizuelno označavanje  #VisionFocusHighlight] omogućeno, lokacija sist
 
 Postoje određene komande koje mogu biti korisne u navigaciji sa sistemskim fokusom:
 %kc:beginInclude
- || Ime | Desktop komanda | Laptop komanda | Opis |
- | Prijavi trenutni fokus | NVDA+tab | NVDA+tab | Izgovara trenutni objekat ili kontrolu koja ima sistemski fokus. Ako se pritisne dva puta informacija se sriče |
+|| Ime | Desktop komanda | Laptop komanda | Opis |
+| Prijavi trenutni fokus | NVDA+tab | NVDA+tab | Izgovara trenutni objekat ili kontrolu koja ima sistemski fokus. Ako se pritisne dva puta informacija se sriče |
  | Prijavi naslov | NVDA+t | NVDA+t | Prijavi naslov trenutno aktivnog prozora. Ako se pritisne dva puta informacija se sriče. Ako se pritisne tri puta informacija se kopira u privremenu memoriju |
  | Čitaj aktivan prozor | NVDA+b | NVDA+b | Čita sve kontrole u trenutnom prozoru(korisno za dijaloge) |
  | Prijavi statusnu traku | NVDA+end | NVDA+Šift+end | Prijavljuje statusnu traku ako je NVDA pronađe. Ako se pritisne dva puta informacija se sriče. Ako se pritisne tri puta  kopira se u privremenu memoriju |
@@ -342,6 +342,10 @@ Kada ste u tabeli, Sledeće komande su takođe dostupne:
  | Pomeri na sledeću kolonu | Kontrol+alt+strelica desno | Pomera sistemski kursor na sledeću kolonu(ostajete u istom redu) |
  | Pomeri na prethodni red | control+alt+strelica gore | Pomera sistemski kursor na prethodni red(ostajete u istoj koloni) |
  | Pomeri na sledeći red | control+alt+strelica dole | Pomera sistemski kursor na sledeći red(ostajete u istoj koloni) |
+| Pomeri na prvu kolonu | kontrol+alt+home | Pomera sistemski kursor na prvu kolonu (ostajete u istom redu) |
+| Pomeri na poslednju kolonu | kontrol+alt+end | Pomera sistemski kursor na poslednju kolonu (ostajete u istom redu) |
+| Pomeri na prvi red | kontrol+alt+pageUp | Pomera sistemski kursor na prvi red (ostajete u istoj koloni) |
+| Pomeri na poslednji red | kontrol+alt+pageDown | Pomera sistemski kursor na poslednji red (ostajete u istoj koloni) |
 %kc:endInclude
 
 ++ Navigacija objekata ++[ObjectNavigation]
@@ -617,8 +621,11 @@ NVDA podržava sledeće vrste matematičkog sadržaja:
 - MathML u programima Mozilla Firefox, Microsoft Internet Explorer i  Google Chrome.
 - Microsoft Word 365 moderne matematičke jednačine uz UI automation:
 NVDA može da čita i vrši interakciju sa matematičkim zadacima u programu Microsoft Word 365/2016 verziji 14326 i novijim.
-Međutim imajte na umu da sve prethodno napravljene MathType jednačine prvo moraju biti pretvorene u Office Math izborom svake a zatim izborom stavke opcije jednačina -> pretvori u Office math u kontekstnom meniju. Uverite se da je vaša verzija programa MathType najnovija pre nego što ovo uradite.
-Microsoft Word takođe sada pruža linearnu navigaciju simbola jednačine, i podržava unos matematike putem nekoliko različitih sintaksi, uključujući LateX. Za dodatne detalje, molimo pogledajte [Jednačine linearnog formata pomoću UnicodeMath-a i LaTeX-a u programu Word https://support.microsoft.com/sr-latn-rs/office/jedna%C4%8Dine-linearnog-formata-pomo%C4%87u-unicodemath-a-i-latex-a-u-programu-word-2e00618d-b1fd-49d8-8cb4-8d17f25754f8]
+Međutim imajte na umu da sve prethodno napravljene MathType jednačine prvo moraju biti pretvorene u Office Math.
+Ovo se može uraditi izborom svake a zatim izborom stavke "opcije jednačina", a zatim "pretvori u Office math" u kontekstnom meniju.
+Uverite se da je vaša verzija programa MathType najnovija pre nego što ovo uradite.
+Microsoft Word takođe sada pruža linearnu navigaciju simbola jednačine, i podržava unos matematike putem nekoliko različitih sintaksi, uključujući LateX.
+Za dodatne detalje, molimo pogledajte [Jednačine linearnog formata pomoću UnicodeMath-a i LaTeX-a u programu Word https://support.microsoft.com/sr-latn-rs/office/jedna%C4%8Dine-linearnog-formata-pomo%C4%87u-unicodemath-a-i-latex-a-u-programu-word-2e00618d-b1fd-49d8-8cb4-8d17f25754f8]
 - Microsoft Powerpoint, i starije verzije programa Microsoft Word: 
 NVDA može da čita i da se kreće kroz MathType jednačine i u Microsoft Powerpoint-u kao i Microsoft word-u.
 MathType mora prvo da bude instaliran da bi ovo radilo.
@@ -704,7 +711,8 @@ Kako bi što je više informacija moguće stalo na brajev red, sledeće skraćen
  | mnuitem | Stavka menija |
  | pnl | panel |
  | prgbar | Traka napredovanja |
- | rbtn | radio dugme |
+ | bsyind | Zauzet pokazivač |
+| rbtn | radio dugme |
  | scrlbar | Klizna traka |
  | sect | Sekcija |
  | stbar | Statusna traka |
@@ -784,7 +792,8 @@ Možete promeniti ove komande ili dodati nove emulacije iz  [dijaloga ulaznih ko
 
 Iako je ovaj način koristan za tastere koji se često koriste (kao što je tab), možda ne želite da pridružite jedinstvenu kombinaciju tastera za svaku prečicu na tastaturi.
 Da bi se dozvolilo emuliranje pritiskanje prečica u kojima se neki tasteri drže, NVDA pruža komande za zaključavanje tastera kontrol, alt, šift, windows, i tastera NVDA, kao i komande za kombinaciju nekih od ovih tastera.
-Da biste koristili ova zaključavanja tastera, prvo pritisnite komandu  (ili niz komandi) za modifikatorske tastere koje želite da pritisnete, a zatim tastere koji su deo kombinacije koju želite da izvršite.
+Da biste koristili ova zaključavanja tastera, prvo pritisnite komandu  (ili niz komandi) za modifikatorske tastere koje želite da pritisnete.
+Zatim pritisnite tastere koji su deo kombinacije koju želite da izvršite.
 Na primer, da biste izvršili kombinaciju kontrol + f, koristite komandu  "Virtuelno uključuje ili isključuje taster kontrol" a zatim upišite f,
 A da biste upisali kontrol+alt+t, koristite ili komandu "virtuelno uključuje i isključuje taster kontrol" i  "virtuelno uključuje ili isključuje taster alt", u bilo kom redosledu, ili komandu  "virtuelno uključuje ili isključuje tastere kontrol i alt",  a nakon toga upišite t.
 
@@ -1125,7 +1134,7 @@ Ako se prijavljujete u Windows upisivanjem korisničkog imena i lozinke, omoguć
 Ova opcija je dostupna samo za instalirane kopije programa NVDA.
 
 ==== Koristi trenutno sačuvana podešavanja na ekranu za prijavljivanje i drugim bezbednosnim ekranima (zahteva administratorske privilegije ) ====[GeneralSettingsCopySettings]
-Pritiskanje ovog dugmeta kopira trenutno sačuvana podešavanja programa NVDA u folder sistemskih podešavanja, tako da NVDA može da ih koristi kada je pokrenut na ekranu za prijavljivanje, ekranu kontrole korisničkog naloga(UAC) i drugim bezbednim Windows ekranima.
+Pritiskanje ovog dugmeta kopira trenutno sačuvana podešavanja programa NVDA u folder sistemskih podešavanja, tako da NVDA može da ih koristi kada je pokrenut na ekranu za prijavljivanje, ekranu kontrole korisničkog naloga(UAC) i drugim [bezbednim ekranima #SecureScreens].
 Da se uverite da su sva vaša podešavanja uspešno prebačena, prvo sačuvajte vaša podešavanja prečicom kontrol+NVDA+c ili opciom sačuvaj podešavanja u NVDA meniju.
 Ova opcija je dostupna samo za instalirane kopije programa NVDA.
 
@@ -1709,8 +1718,12 @@ Ovo polje podešava za koliko redova ćete se pomeriti tasterima page up i page 
 ==== Koristi izgled ekrana  ====[BrowseModeSettingsScreenLayout]
 Komanda: NVDA+v
 
-Ova opcija vam dozvoljava da odredite da li će režim pretraživanja staviti klikabilne elemente  (linkove, dugmad i polja za unos) na posebnom redu, ili da ostanu u tekstu kako su vizuelno prikazani. Napomena da se  ova opcija ne primenjuje na Microsoft Office aplikacije kao što su Outlook i Word, koje uvek koriste izgled ekrana.
-Kada je izgled ekrana omogućen, elementi stranice će ostati onakvi kakvi su vizuelno prikazani. Na primer, Vizuelni red sa više linkova će se izgovarati i biti prikazan na brajevom redu kao red sa više linkova. Ako se onemogući, elementi stranice će biti na posebnim redovima, što može biti lakše za razumevanje kada se kroz stranicu krećete red po red, i može učiniti interakciju sa stavkama lakšom za neke korisnike.
+Ova opcija vam dozvoljava da odredite da li će režim pretraživanja staviti klikabilne elemente  (linkove, dugmad i polja za unos) na posebnom redu, ili da ostanu u tekstu kako su vizuelno prikazani.
+Napomena da se  ova opcija ne primenjuje na Microsoft Office aplikacije kao što su Outlook i Word, koje uvek koriste izgled ekrana.
+Kada je izgled ekrana omogućen, elementi stranice će ostati onakvi kakvi su vizuelno prikazani.
+Na primer, Vizuelni red sa više linkova će se izgovarati i biti prikazan na brajevom redu kao red sa više linkova.
+Ako se onemogući, elementi stranice će biti na posebnim redovima.
+Ovo može biti lakše za razumevanje kada se kroz stranicu krećete red po red i može učiniti interakciju sa stavkama lakšom za neke korisnike.
 
 ==== Omogući režim pretraživanja kada se stranica učita ====[BrowseModeSettingsEnableOnPageLoad]
 Ovo izborno polje kontroliše da li će se režim pretraživanja aktivirati učitavanjem stranica.
@@ -3310,6 +3323,34 @@ Slede trenutne tasterske prečice za ove redove.
  
 + Napredne teme +[AdvancedTopics]
 
+++ Bezbedan način rada ++[SecureMode]
+NVDA se može pokrenuti u bezbednom načinu rada korišćenjem  ``-s`` [opcije komandne linije #CommandLineOptions].
+NVDA se pokreće u bezbednom načinu rada na [bezbednim ekranima #SecureScreens], osim ako se ne omogući ``serviceDebug`` [sistemski parametar #SystemWideParameters].
+
+Bezbedan način rada će onemogućiti:
+
+- Čuvanje konfiguracije i drugih podešavanja na disku
+- Čuvanje mape komandi na disku
+- Opcije [profila podešavanja #ConfigurationProfiles] kao što su pravljenje, brisanje, preimenovanje profila i slično.
+- Ažuriranje programa NVDA i pravljenje prenosivih kopija
+- [Python konzolu #PythonConsole]
+- [Preglednik dnevnika #LogViewer] i evidentiranje u dnevniku
+-
+
+++ Bezbedni ekrani ++[SecureScreens]
+NVDA se pokreće u [bezbednom načinu rada #SecureMode] kada je pokrenut na bezbednim ekranima osim ako je omogućen ``serviceDebug`` [sistemski parametar #SystemWideParameters].
+
+Kada je pokrenut sa bezbednog ekrana, NVDA koristi sistemski profil za podešavanja.
+NVDA korisnička podešavanja se mogu kopirati [za korišćenje na bezbednim ekranima #GeneralSettingsCopySettings].
+
+Bezbedni ekrani uključuju:
+
+- Windows ekran za prijavljivanje
+- Dijalog kontrole korisničkog naloga, koji je aktivan kada se izvršava neka radnja kao administrator
+  - Ovo uključuje instalaciju programa
+  -
+-
+
 ++ Opcije komandne linije ++[CommandLineOptions]
 NVDA može prihvatiti jednu ili više opcija kada se pokreće koje menjaju njegovo ponašanje.
 Možete proslediti onoliko opcija koliko vam je potrebno.
@@ -3343,8 +3384,8 @@ Slede opcije komandne linije za NVDA:
  | -c CONFIGPATH | --config-path=CONFIGPATH | Adresa na kojoj podešavanja za NVDA trebaju biti sačuvana |
 | Nema | --lang=Jezik | Promena podešenog NVDA jezika. Kada je podešen na "Windows" koristi se trenutni korisnički podrazumevani, "en" za Engleski, i slično. |
  | -m | --minimal | Nema zvukova, nema interfejsa, nema poruka pokretanja i tako dalje |
- | -s | --secure | Bezbednosni režim: Onemogućena Python konzola, opcije profila kao što su stvaranje, brisanje, preimenovanje profila i slično., Provera ažuriranja, neke opcije u dijalogu dobrodošlice i kategoriji opštih podešavanja (na primer pokretanje programa NVDA nakon prijavljivanja, čuvanje podešavanja pri izlazu i slično.), preglednik dnevnika i opcije evidentiranja (koje se često koriste na sigurnim ekranima). Napomena da ova komanda takođe sprečava čuvanje podešavanja na sistem i da se prilagođene komande neće čuvati. |
- | Nema | --disable-addons | Dodaci neće imati efekta |
+ | -s | --secure | Pokreće NVDA u [bezbednom načinu rada #SecureMode] |
+| Nema | --disable-addons | Dodaci neće imati efekta |
  | Nema | --debug-logging | Omogući evidenciju otklanjanja grešaka za ovo pokretanje. Ovo podešavanje će promeniti ostale nivoe evidencije( ""--loglevel"", -l) uključujući kada je evidentiranje onemogućeno. |
  | Nema | --no-logging | Onemogući evidentiranje dok se NVDA koristi. Ovo podešavanje se može zameniti ako nivo evidentiranja ( ""--loglevel"", -l) bude određen iz komandne linije ili se dnevnici za otklanjanje grešaka uključe. |
  | Nema | --no-sr-flag  | Ne menjaj globalnu oznaku čitača ekrana na sistemu |
@@ -3365,8 +3406,8 @@ Ove vrednosti se čuvaju u registry bazi u jednom od sledećih ključeva:
 
 Sledeće vrednosti se mogu podesiti u ovom registry ključu:
  || Ime | Vrsta | Moguće vrednosti | Opis |
- | configInLocalAppData | DWORD | 0 (Podrazumevano) da onemogućite, 1 da omogućite | Ako je omogućeno, Čuva NVDA podešavanja u local folderu foldera app data umesto roaming foldera |
- | serviceDebug | DWORD | 0 (Podrazumevano) da onemogućite, 1 da omogućite | Ako je omogućeno, onemogućava bezbedni režim na Windows secure računarima, dozvoljavajući korišćenje Python konzole i pregleda dnevnika. Zbog nekoliko velikih bezbednosnih rizika, korišćenje ove opcije nije preporučeno |
+| configInLocalAppData | DWORD | 0 (Podrazumevano) da onemogućite, 1 da omogućite | Ako je omogućeno, Čuva NVDA podešavanja u local folderu foldera app data umesto roaming foldera |
+| serviceDebug | DWORD | 0 (podrazumevano) da onemogućite, 1 da omogućite | Ako je omogućen, biće onemogućen [bezbedan način rada #SecureMode] na [bezbednim ekranima #SecureScreens]. Zbog nekoliko ogromnih bezbednosnih rizika, korišćenje ove opcije se ne preporučuje |
 
 + Dodatne informacije +[FurtherInformation]
 Ako vam trebaju dodatne informacije ili pomoć za program NVDA, molimo posetite NVDA sajt na lokaciji NVDA_URL.

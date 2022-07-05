@@ -46,14 +46,12 @@ from . import logViewer
 import speechViewer
 import winUser
 import api
-from buildVersion import version_year
 
 
-if version_year < 2023:
+if globalVars._allowDeprecatedAPI:
 	def quit():
 		"""
-		Deprecated, for removal in 2023.1.
-		Use `wx.CallAfter(mainFrame.onExitCommand, None)` directly instead.
+		Deprecated, use `wx.CallAfter(mainFrame.onExitCommand, None)` directly instead.
 		"""
 		log.debugWarning("Deprecated function called: gui.quit", stack_info=True)
 		wx.CallAfter(mainFrame.onExitCommand, None)
@@ -107,17 +105,17 @@ class MainFrame(wx.Frame):
 		L{postPopup} should be called after the dialog or menu has been shown.
 		@postcondition: A dialog or menu may be shown.
 		"""
-		nvdaPid = os.getpid()
 		focus = api.getFocusObject()
 		# Do not set prevFocus if the focus is on a control rendered by NVDA itself, such as the NVDA menu.
 		# This allows to refer to the control that had focus before opening the menu while still using NVDA
-		# on its own controls. The L{nvdaPid} check can be bypassed by setting the optional attribute
+		# on its own controls.
+		# The check for NVDA process ID can be bypassed by setting the optional attribute
 		# L{isPrevFocusOnNvdaPopup} to L{True} when a NVDA dialog offers customizable bound gestures,
 		# eg. the NVDA Python Console.
-		if focus.processID != nvdaPid or getattr(focus, "isPrevFocusOnNvdaPopup", False):
+		if focus.processID != globalVars.appPid or getattr(focus, "isPrevFocusOnNvdaPopup", False):
 			self.prevFocus = focus
 			self.prevFocusAncestors = api.getFocusAncestors()
-		if winUser.getWindowThreadProcessID(winUser.getForegroundWindow())[0] != nvdaPid:
+		if winUser.getWindowThreadProcessID(winUser.getForegroundWindow())[0] != globalVars.appPid:
 			# This process is not the foreground process, so bring it to the foreground.
 			self.Raise()
 
