@@ -543,7 +543,7 @@ class ConfigManager(object):
 		#: Whether profile triggers are enabled (read-only).
 		self.profileTriggersEnabled: bool = True
 		self.validator: Validator = Validator({
-			"featureFlag": _validateConfig_featureFlag
+			"_featureFlag": _validateConfig_featureFlag
 		})
 		self.rootSection: Optional[AggregatedSection] = None
 		self._shouldHandleProfileSwitch: bool = True

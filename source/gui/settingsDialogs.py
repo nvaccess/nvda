@@ -27,7 +27,7 @@ import installer
 from synthDriverHandler import changeVoice, getSynth, getSynthList, setSynth, SynthDriver
 import config
 from config.featureFlag import (
-	FeatureFlagValue,
+	BoolFlag,
 )
 import languageHandler
 import speech
@@ -2909,13 +2909,14 @@ class AdvancedPanelControls(
 			wxCtrlClass=nvdaControls.FeatureFlagCombo,
 			keyPath=["virtualBuffers", "loadChromiumVBufOnBusyState"],
 			conf=config.conf,
+			optionsEnumClass=BoolFlag,
 			translatedOptions=collections.OrderedDict({
 				# Translators: Label for option in the 'Load Chromium virtual buffer when document busy.'
 				# combobox in the Advanced settings panel.
-				FeatureFlagValue.ENABLED: _("Yes"),
+				BoolFlag.ENABLED: _("Yes"),
 				# Translators: Label for option in the 'Load Chromium virtual buffer when document busy.'
 				# combobox in the Advanced settings panel.
-				FeatureFlagValue.DISABLED: _("No"),
+				BoolFlag.DISABLED: _("No"),
 			})
 		)
 

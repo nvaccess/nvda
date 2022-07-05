@@ -4,6 +4,8 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 import collections
+import enum
+import typing
 from typing import (
 	List,
 	OrderedDict,
@@ -15,7 +17,10 @@ from wx.lib.mixins import listctrl as listmix
 
 from config.featureFlag import (
 	FeatureFlag,
-	FeatureFlagValue,
+)
+from config.featureFlagEnums import (
+	BoolFlag,
+	FeatureFlagEnumProtocol
 )
 from .dpiScalingHelper import DpiScalingHelperMixin
 from . import guiHelper
@@ -403,7 +408,10 @@ class TabbableScrolledPanel(scrolledpanel.ScrolledPanel):
 			child.GetRect = oldChildGetRectFunction
 
 
-class FeatureFlagCombo(wx.Choice):
+FeatureFlagEnumT = typing.TypeVar("FeatureFlagEnumT", bound=FeatureFlagEnumProtocol)
+
+
+class FeatureFlagCombo(wx.Choice, typing.Generic[FeatureFlagEnumT]):
 	"""Creates a combobox (wx.Choice) with a list of feature flags.
 	"""
 	def __init__(
@@ -411,7 +419,8 @@ class FeatureFlagCombo(wx.Choice):
 			parent: wx.Window,
 			keyPath: List[str],
 			conf,
-			translatedOptions: OrderedDict[FeatureFlagValue, str],
+			optionsEnumClass: typing.Type[FeatureFlagEnumT],
+			translatedOptions: OrderedDict[FeatureFlagEnumT, str],
 			pos=wx.DefaultPosition,
 			size=wx.DefaultSize,
 			style=0,
@@ -419,23 +428,26 @@ class FeatureFlagCombo(wx.Choice):
 			name=wx.ChoiceNameStr,
 	):
 		"""
-		:param parent: The parent window.
-		:param keyPath: The list of keys required to get to the config value.
-		:param conf: The config.conf object.
-		:param translatedOptions: A dictionary of translated options, for each feature flag value. Note, the
-		L{FeatureFlagValue.DEFAULT} value should not be included in this dictionary. See L{
+		@param parent: The parent window.
+		@param keyPath: The list of keys required to get to the config value.
+		@param conf: The config.conf object.
+		@optionsEnumClass: The enum class for this featureFlag
+		@param translatedOptions: A dictionary of translated options, for each feature flag value. Note, the
+		L{BoolFlag.DEFAULT} value should not be included in this dictionary. See L{
 		FeatureFlagCombo._setDefaultOptionLabel}.
-		:param pos: The position of the control. Forwarded to wx.Choice
-		:param size: The size of the control. Forwarded to wx.Choice
-		:param style: The style of the control. Forwarded to wx.Choice
-		:param validator: The validator for the control. Forwarded to wx.Choice
-		:param name: The name of the control. Forwarded to wx.Choice
+		@param pos: The position of the control. Forwarded to wx.Choice
+		@param size: The size of the control. Forwarded to wx.Choice
+		@param style: The style of the control. Forwarded to wx.Choice
+		@param validator: The validator for the control. Forwarded to wx.Choice
+		@param name: The name of the control. Forwarded to wx.Choice
 		"""
 		self._confPath = keyPath
 		self._conf = conf
-		if FeatureFlagValue.DEFAULT in translatedOptions:
+		self._optionsEnumClass = optionsEnumClass
+
+		if optionsEnumClass.DEFAULT in translatedOptions:
 			raise ValueError(
-				f"The translatedOptions dictionary should not contain the key {FeatureFlagValue.DEFAULT!r}"
+				f"The translatedOptions dictionary should not contain the key {optionsEnumClass.DEFAULT!r}"
 				" It will be added automatically. See _setDefaultOptionLabel"
 			)
 		self._translatedOptions = self._createOptionsDict(translatedOptions)
@@ -457,10 +469,10 @@ class FeatureFlagCombo(wx.Choice):
 		advanced settings dialog.
 		"""
 
-	def _getChoiceIndex(self, value: FeatureFlagValue) -> int:
+	def _getChoiceIndex(self, value: FeatureFlagEnumT) -> int:
 		return list(self._translatedOptions.keys()).index(value)
 
-	def _getConfSpecDefaultValue(self) -> FeatureFlagValue:
+	def _getConfSpecDefaultValue(self) -> FeatureFlagEnumT:
 		defaultValueFromSpec = self._conf.getConfigValidation(self._confPath).default
 		if not isinstance(defaultValueFromSpec, FeatureFlag):
 			raise ValueError(f"Default spec value is not a FeatureFlag, but {type(defaultValueFromSpec)}")
@@ -493,7 +505,7 @@ class FeatureFlagCombo(wx.Choice):
 	def saveCurrentValueToConf(self) -> None:
 		""" Set the config value to the current value of the control.
 		"""
-		flagValue: FeatureFlagValue = list(self._translatedOptions.keys())[self.GetSelection()]
+		flagValue: enum.Enum = list(self._translatedOptions.keys())[self.GetSelection()]
 		keyPath = self._confPath
 		if not keyPath or len(keyPath) < 1:
 			raise ValueError("Key path not provided")
@@ -509,8 +521,8 @@ class FeatureFlagCombo(wx.Choice):
 
 	def _createOptionsDict(
 			self,
-			translatedOptions: OrderedDict[FeatureFlagValue, str]
-	) -> OrderedDict[FeatureFlagValue, str]:
+			translatedOptions: OrderedDict[enum.Enum, str]
+	) -> OrderedDict[enum.Enum, str]:
 		behaviorOfDefault = self._getConfigValue().behaviorOfDefault
 		translatedStringForBehaviorOfDefault = translatedOptions[behaviorOfDefault]
 		# Translators: Label for the default option for some feature-flag combo boxes
@@ -521,6 +533,6 @@ class FeatureFlagCombo(wx.Choice):
 			translatedStringForBehaviorOfDefault
 		)
 		return collections.OrderedDict({
-			FeatureFlagValue.DEFAULT: defaultOptionLabel,  # make sure default is the first option.
+			self._optionsEnumClass.DEFAULT: defaultOptionLabel,  # make sure default is the first option.
 			**translatedOptions
 		})
