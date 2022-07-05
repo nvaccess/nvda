@@ -59,6 +59,7 @@ from .priorities import Spri
 from enum import IntEnum
 from dataclasses import dataclass
 from copy import copy
+
 if typing.TYPE_CHECKING:
 	import NVDAObjects
 
@@ -201,12 +202,22 @@ def getCurrentLanguage() -> str:
 	return language
 
 
-def spellTextInfo(
-		info: textInfos.TextInfo,
+def _spellTextWithFields(
+		info: textInfos._SupportsGetTextWithFields,
 		useCharacterDescriptions: bool = False,
 		priority: Optional[Spri] = None
 ) -> None:
-	"""Spells the text from the given TextInfo, honouring any LangChangeCommand objects it finds if autoLanguageSwitching is enabled."""
+	"""
+	Spells the text from a given object (TextInfo or similar),
+	honouring any LangChangeCommand objects it finds if autoLanguageSwitching is enabled.
+
+	Uses a limited subset of the textInfos.TextInfo API to allow for simpler TextInfo-like objects
+	such as _DelayedCharacterDescriptionTextInfo.
+
+	The `_spellTextWithFields/_SupportsGetTextWithFields` API is unstable.
+	Add-on API consumers should use `spellTextInfo`.
+	NVDA core should prefer `spellTextInfo` where possible.
+	"""
 	if not config.conf['speech']['autoLanguageSwitching']:
 		speakSpelling(info.text,useCharacterDescriptions=useCharacterDescriptions)
 		return
@@ -216,6 +227,25 @@ def spellTextInfo(
 			speakSpelling(field,curLanguage,useCharacterDescriptions=useCharacterDescriptions,priority=priority)
 		elif isinstance(field,textInfos.FieldCommand) and field.command=="formatChange":
 			curLanguage=field.field.get('language')
+
+
+def spellTextInfo(
+		info: textInfos.TextInfo,
+		useCharacterDescriptions: bool = False,
+		priority: Optional[Spri] = None
+) -> None:
+	"""
+	Spells the text from the given TextInfo,
+	honouring any LangChangeCommand objects it finds if autoLanguageSwitching is enabled.
+
+	In NVDA core this is an alias for `_spellTextWithFields`,
+	however the `_spellTextWithFields/_SupportsGetTextWithFields` API is unstable.
+	Add-on API consumers should use `spellTextInfo`.
+	NVDA core should prefer `spellTextInfo` where possible.
+	"""
+	_spellTextWithFields(info, useCharacterDescriptions, priority)
+	# Before changing this function, consider if `_spellTextWithFields/_SupportsGetTextWithFields` and its consumers
+	# can adapt to the changes.
 
 
 def speakSpelling(

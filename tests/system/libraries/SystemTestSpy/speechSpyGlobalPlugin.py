@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2018 NV Access Limited
+# Copyright (C) 2018-2022 NV Access Limited
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -321,21 +321,26 @@ class NVDASpyLib:
 			speech: str,
 			afterIndex: Optional[int] = None,
 			maxWaitSeconds: int = 5,
+			intervalBetweenSeconds: float = 0.1,
+			failureExpected: bool = False,
 	) -> int:
 		"""
 		@param speech: The speech to expect.
 		@param afterIndex: The speech should come after this index. The index is exclusive.
 		@param maxWaitSeconds: The amount of time to wait in seconds.
+		@param intervalBetweenSeconds: The amount of time to wait between checking speech, in seconds.
+		@param failureExpected: If the wait condition is expected to fail.
 		@return: the index of the speech.
 		"""
 		success, speechIndex = _blockUntilConditionMet(
 			getValue=lambda: self._getIndexOfSpeech(speech, afterIndex),
 			giveUpAfterSeconds=self._minTimeout(maxWaitSeconds),
 			shouldStopEvaluator=lambda indexFound: indexFound >= (afterIndex if afterIndex else 0),
-			intervalBetweenSeconds=0.1,
+			intervalBetweenSeconds=intervalBetweenSeconds,
 			errorMessage=None
 		)
-		if not success:
+		if success == failureExpected:
+			# Robot framework prevents you from catching AssertionErrors, so a failureExpected flag is required
 			self.dump_speech_to_log()
 			raise AssertionError(
 				"Specific speech did not occur before timeout: {}\n"

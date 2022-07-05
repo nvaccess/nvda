@@ -11,28 +11,25 @@ from synthDriverHandler import getSynth
 characterDescriptionTimer = None
 
 
-class _DelayedCharacterDescriptionTextInfo():
+class _DelayedCharacterDescriptionTextInfo(textInfos._SupportsGetTextWithFields):
 	"""
-	this class is used to preserve the information of the old object that contain the text.
-	It's useful to use with delayed descriptions.
+	Used to preserve data from a TextInfo object.
 	"""
 
-	def __init__(self, origTextInfo: textInfos.TextInfo):
+	def __init__(self, origTextInfo: textInfos._SupportsGetTextWithFields):
 		self.text = origTextInfo.text
-		self.fields = origTextInfo.getTextWithFields({})
+		self._fields = origTextInfo.getTextWithFields({})
 
-	def getTextWithFields(self, _=None):
-		return self.fields
+	def getTextWithFields(self, formatConfig=None):
+		return self._fields
 
 
 def cancelDelayedCharacterDescription() -> None:
 	"""
 	Stops the timer used for delayed character descriptions.
-	This should be called when a new sentence is sent or the user cancels the speech.
+	Should be called when a new sentence is sent or the user cancels the speech,
 	e.g, by pressing control key.
-	if a timer was set for a delayed description and it's running,
-	this function will stop the timer and set it to None.
-	if this function is called and no delayed character description is pending, it will have no effect.
+	If this function is called and no delayed character description is pending, it will have no effect.
 	"""
 	global characterDescriptionTimer
 	if characterDescriptionTimer and characterDescriptionTimer.IsRunning():
@@ -42,29 +39,27 @@ def cancelDelayedCharacterDescription() -> None:
 
 def _speakDelayedCharacterDescription(info: _DelayedCharacterDescriptionTextInfo) -> None:
 	"""
-	this is the function that will be called from the timer after N milliseconds.
-	This function will check if a character description is available and then,
-	speak it by using "spellTextInfo(..., useCharacterDescriptions=True)"
+	Should be called from a timer after a delay.
+	Will check if a character description is available for a locale, then speak it.
 	"""
 	if info.text.strip() == "":
 		return
-	from .speech import getCharDescListFromText, spellTextInfo, getCurrentLanguage
+	from .speech import getCharDescListFromText, _spellTextWithFields, getCurrentLanguage
 	curLang = getCurrentLanguage()
 	if config.conf['speech']['autoLanguageSwitching']:
-		for k in info.fields:
-			if isinstance(k, textInfos.FieldCommand) and k.command == "formatChange":
-				curLang = k.field.get('language', curLang)
+		for command in info.getTextWithFields():
+			if isinstance(command, textInfos.FieldCommand) and command.command == "formatChange":
+				curLang = command.field.get('language', curLang)
 	_, description = getCharDescListFromText(info.text, locale=curLang)[0]
-	# We can't call spellTextInfo directly because we need to check if the description is available first.
 	if description:
-		spellTextInfo(info, useCharacterDescriptions=True)
+		_spellTextWithFields(info, useCharacterDescriptions=True)
 
 
 def startDelayedCharacterDescriptionSpeaking(info: textInfos.TextInfo) -> None:
 	"""
-	this function will set the timer to speak the delaied character description.
-	this will keep a copy of the needed fiels by spellTextInfo function, from the provided TextInfo.
-	this function will check if the delayed character descriptions are enabled first.
+	Will set the timer to speak a delayed character description.
+	Creates a copy of required information from the TextInfo.
+	Requires delayed character descriptions being enabled.
 	"""
 	global characterDescriptionTimer
 	if config.conf["speech"][getSynth().name]["delayedCharacterDescriptions"]:

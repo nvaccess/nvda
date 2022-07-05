@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2021 NV Access Limited, Babbage B.V., Accessolutions, Julien Cochuyt
+# Copyright (C) 2006-2022 NV Access Limited, Babbage B.V., Accessolutions, Julien Cochuyt
 
 """Framework for accessing text content in widgets.
 The core component of this framework is the L{TextInfo} class.
@@ -22,6 +22,7 @@ from typing import (
 	Dict,
 	Tuple,
 )
+from typing_extensions import Protocol
 
 import baseObject
 import config
@@ -287,7 +288,32 @@ def _logBadSequenceTypes(sequence: SpeechSequence, shouldRaise: bool = True):
 	return speech.types.logBadSequenceTypes(sequence, raiseExceptionOnError=shouldRaise)
 
 
-class TextInfo(baseObject.AutoPropertyObject):
+class _SupportsGetTextWithFields(Protocol):
+	"""
+	Simple interface protocol used primarily for TextInfo,
+	also used when spoofing TextInfos for cases that do not require extensive TextInfo functionality.
+	"""
+	text: str
+
+	@abstractmethod
+	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> "TextInfo.TextWithFieldsT":
+		...
+
+
+class _TextInfoMeta(type(baseObject.AutoPropertyObject), type(Protocol)):
+	"""
+	When resolving inherited behaviour,
+	`baseObject.AutoPropertyObject` is resolved first,
+	then the `_SupportsGetTextWithFields` protocol.
+	"""
+	pass
+
+
+class TextInfo(
+		baseObject.AutoPropertyObject,
+		_SupportsGetTextWithFields,
+		metaclass=_TextInfoMeta
+):
 	"""Provides information about a range of text in an object and facilitates access to all text in the widget.
 	A TextInfo represents a specific range of text, providing access to the text itself, as well as information about the text such as its formatting and any associated controls.
 	This range can be moved within the object's text relative to the initial position.
@@ -380,10 +406,9 @@ class TextInfo(baseObject.AutoPropertyObject):
 		# Translators: the current position's screen coordinates in pixels
 		return _("Positioned at {x}, {y}").format(x=curPoint.x,y=curPoint.y)
 
-	def _get_boundingRects(self):
+	def _get_boundingRects(self) -> locationHelper.RectLTWH:
 		"""Per line bounding rectangles for the visible text in this range.
 		Implementations should ensure that the bounding rectangles don't contain off screen coordinates.
-		@rtype: [L{locationHelper.RectLTWH}]
 		@raise NotImplementedError: If not supported.
 		@raise LookupError: If not available (i.e. off screen, hidden, etc.)
 		"""
@@ -524,10 +549,9 @@ class TextInfo(baseObject.AutoPropertyObject):
 		"""
 		return self.obj
 
-	def _get_pointAtStart(self):
+	def _get_pointAtStart(self) -> locationHelper.Point:
 		"""Retrieves x and y coordinates corresponding with the textInfo start. It should return Point.
 		The base implementation uses L{boundingRects}.
-		@rtype: L{locationHelper.Point}
 		"""
 		if self.isCollapsed:
 			copy = self.copy()

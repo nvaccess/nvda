@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2021 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
+# Copyright (C) 2006-2022 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
 # Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter,
 # Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Bill Dengler, Thomas Stivers,
 # Julien Cochuyt, Peter Vágner, Cyrille Bougot, Mesar Hameed, Łukasz Golonka, Aaron Cannon,
@@ -1618,8 +1618,10 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 			config.conf["speech"][self.driver.name]["useSpellingFunctionality"]
 		)
 
-		# Translators: This is the label for a checkbox in the
-		# voice settings panel.
+		self._appendDelayedCharacterDescriptions(settingsSizerHelper)
+
+	def _appendDelayedCharacterDescriptions(self, settingsSizerHelper: guiHelper.BoxSizerHelper) -> None:
+		# Translators: This is the label for a checkbox in the voice settings panel.
 		delayedCharacterDescriptionsText = _("&Delayed descriptions for characters on cursor movement")
 		self.delayedCharacterDescriptionsCheckBox = settingsSizerHelper.addItem(
 			wx.CheckBox(self, label=delayedCharacterDescriptionsText)
@@ -1628,7 +1630,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		self.delayedCharacterDescriptionsCheckBox.SetValue(
 			config.conf["speech"][self.driver.name]["delayedCharacterDescriptions"]
 		)
-		self.delayedCharacterDescriptionsCheckBox .Bind(
+		self.delayedCharacterDescriptionsCheckBox.Bind(
 			wx.EVT_CHECKBOX,
 			self.onToggleDelayDescriptions
 		)
@@ -1640,27 +1642,28 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 			("speech", self.driver.name, "delayedCharacterDescriptionsTimeoutMs")
 		).kwargs["max"])
 
-		# Translators: This is a label for a setting in voice settings (an edit box to change
-		# Time for the delayed character descriptions in ms;
+		# Translators: This is a label for a setting in voice settings,
+		# an edit box to change the time for the delayed character descriptions in milliseconds.
 		delayedCharacterDescriptionsTimeoutMsLabel = _("&Time for delayed character descriptions (ms)")
 		self.delayedCharacterDescriptionsTimeoutMsEdit = settingsSizerHelper.addLabeledControl(
 			delayedCharacterDescriptionsTimeoutMsLabel,
 			nvdaControls.SelectOnFocusSpinCtrl,
 			min=minDelay,
 			max=maxDelay,
-			initial=config.conf["speech"][self.driver.name]["delayedCharacterDescriptionsTimeoutMs"])
+			initial=config.conf["speech"][self.driver.name]["delayedCharacterDescriptionsTimeoutMs"],
+		)
 		self.bindHelpEvent(
 			"delayedCharacterDescriptionsTimeoutMs",
 			self.delayedCharacterDescriptionsTimeoutMsEdit
 		)
 		if not config.conf["speech"][self.driver.name]["delayedCharacterDescriptions"]:
-			self.delayedCharacterDescriptionsTimeoutMsEdit.Hide()
+			self.delayedCharacterDescriptionsTimeoutMsEdit.Disable()
 
-	def onToggleDelayDescriptions(self, evt):
+	def onToggleDelayDescriptions(self, evt: wx.CommandEvent) -> None:
 		if evt.IsChecked():
-			self.delayedCharacterDescriptionsTimeoutMsEdit.Show()
+			self.delayedCharacterDescriptionsTimeoutMsEdit.Enable()
 		else:
-			self.delayedCharacterDescriptionsTimeoutMsEdit.Hide()
+			self.delayedCharacterDescriptionsTimeoutMsEdit.Disable()
 
 	def onSave(self):
 		AutoSettingsMixin.onSave(self)
