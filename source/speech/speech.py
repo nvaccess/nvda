@@ -244,7 +244,8 @@ def spellTextInfo(
 	NVDA core should prefer `spellTextInfo` where possible.
 	"""
 	_spellTextWithFields(info, useCharacterDescriptions, priority)
-	# Before changing this function, consider if `_spellTextWithFields/_SupportsGetTextWithFields` and its consumers
+	# Before changing this function, consider if `_spellTextWithFields/_SupportsGetTextWithFields`
+	# and its consumers
 	# can adapt to the changes.
 
 

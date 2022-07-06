@@ -422,7 +422,7 @@ def _testNoDelayedDescriptionAfterGesture(key: Move, gesture: _typing.Optional[s
 
 def test_delayedDescriptions():
 	_notepad.prepareNotepad(_getDelayedDescriptionsTestSample())
-	# Ensure this feature is by default disabled.
+	# Ensure this feature is disabled by default.
 	_testNoDelayedDescriptionAfterGesture(Move.CARET_CHAR, gesture=None)
 
 	# activate delayed descriptions feature to do the next tests.
