@@ -30,12 +30,10 @@ By line symbol expectations:
 # imported methods start with underscore (_) so they don't get imported into robot files as keywords
 import enum as _enum
 import typing as _typing
-from time import perf_counter as _timer
 
 from SystemTestSpy import (
-	_getLib
+	_getLib,
 )
-from SystemTestSpy.blockUntilConditionMet import _blockUntilConditionMet
 
 # Imported for type information
 from NotepadLib import NotepadLib as _NotepadLib
@@ -283,29 +281,6 @@ _CHARACTER_DESCRIPTIONS = {
 	'a': 'Alfa',
 	'b': 'Bravo',
 	'c': 'Charlie',
-	'd': 'Delta',
-	'e': 'Echo',
-	'f': 'Foxtrot',
-	'g': 'Golf',
-	'h': 'Hotel',
-	'i': 'India',
-	'j': 'Juliet',
-	'k': 'Kilo',
-	'l': 'Lima',
-	'm': 'Mike',
-	'n': 'November',
-	'o': 'Oscar',
-	'p': 'Papa',
-	'q': 'Quebec',
-	'r': 'Romeo',
-	's': 'Sierra',
-	't': 'Tango',
-	'u': 'Uniform',
-	'v': 'Victor',
-	'w': 'Whiskey',
-	'x': 'Xray',
-	'y': 'Yankee',
-	'z': 'Zulu'
 }
 
 
@@ -313,128 +288,41 @@ def _getDelayedDescriptionsTestSample() -> str:
 	return "".join(_CHARACTER_DESCRIPTIONS.keys())
 
 
-def _getCharAfterKey(key: str, maxWaitSeconds: float = 1.0) -> str:
-	"""Ensure speech has stopped, press key, and get speech.
-	@return: The speech after key press.
-	"""
-	spy = _NvdaLib.getSpyLib()
-	spy.wait_for_speech_to_finish()
-	lastSpoken = spy.get_last_speech()
-	spy.emulateKeyPress(key, False)
-	result, spoken = _blockUntilConditionMet(
-		spy.get_last_speech,
-		maxWaitSeconds,
-		lambda newSpoken: newSpoken != lastSpoken,
-		0.01
-	)
-	if result:
-		return spoken
-	raise AssertionError(f"No character spoken after pressing key {key}")
-
-
-def _pressKeyAndGetCharDescription(key: Move) -> _typing.Tuple[str, str, float]:
-	"""
-	Press the specified key and returns a tuple of the read char, the associated description,
-	and the time when the key was pressed.
-	If no char description is found, it will raise an AssertionError.
-	The key should cause a unit character movement to read a single character.
-	@return: a tuple of the read char, the associated description, and the time when the key was pressed.
-	"""
-	readChars = []
-	startTime = _timer()
-	spoken = _getCharAfterKey(key.value, maxWaitSeconds=0.1).lower()
-	readChars.append(spoken)
-	if spoken in _CHARACTER_DESCRIPTIONS:
-		return (spoken, _CHARACTER_DESCRIPTIONS[spoken], startTime)
-	raise AssertionError(
-		f"No associated descriptions were found; read characters: {readChars}"
-	)
-
-
-def _pressKeyAndWaitDelayedDescription(key: Move, maxWaitSeconds: float) -> float:
-	"""
-	Press the specified key, captures the read character, and wait until the delayed description is spoken.
-	The delayed description will be compared with the corresponding entry in a dictionary,
-	if an entry is found for the read character.
-	@return: the time since the key was pressed, until the delayed description was spoken.
-	"""
-	spy = _NvdaLib.getSpyLib()
-	_, characterDescription, startTime = _pressKeyAndGetCharDescription(key)
-	spy.wait_for_specific_speech(
-		characterDescription,
-		maxWaitSeconds=maxWaitSeconds,
-		intervalBetweenSeconds=0.01
-	)
-	return _timer() - startTime
-
-
-def _testDelayedDescription(key: Move, expectedDelaySeconds: float, thresholdSeconds: float = 1.0) -> None:
+def _testDelayedDescription(expectDescription: bool = True) -> None:
 	"""
 	Perform delayed character descriptions tests with with the specified parameters:
-	@param key: the key used to read the character.
-	@param expectedDelaySeconds: the time to wait until the description is spoken.
-	@param thresholdSeconds: error tolerance of the time delay.
-	raises an AssertionError if the test does not pass.
+	@param expectDescription: whether or not a delayed description should be announced
 	"""
-	spy = _NvdaLib.getSpyLib()
-	expectedDelayMs = int(expectedDelaySeconds * 1000)
-	spy.set_configValue(
-		['speech', 'SpeechSpySynthDriver', 'delayedCharacterDescriptionsTimeoutMs'],
-		expectedDelayMs
-	)
-	registeredDelaySeconds = _pressKeyAndWaitDelayedDescription(
-		key,
-		expectedDelaySeconds + thresholdSeconds,
-	)
-	infoStr = (
-		f"Expected delay {expectedDelaySeconds}s, "
-		f"threshold {thresholdSeconds}s, "
-		f"registered delay {registeredDelaySeconds}s"
-	)
-	_builtIn.log(message=infoStr)
-	if abs(expectedDelaySeconds - registeredDelaySeconds) > thresholdSeconds:
+	spoken = _NvdaLib.getSpeechAfterKey(Move.CARET_CHAR.value).split("\n")
+	if not spoken:
+		raise AssertionError(f"Nothing spoken after character press")
+	if spoken[0] not in _CHARACTER_DESCRIPTIONS:
 		raise AssertionError(
-			f"Delay description is unreliable. {infoStr}"
+			f"First piece of speech not an expected character; got: '{spoken[0]}'"
 		)
-
-
-def _testNoDelayedDescriptionAfterGesture(key: Move, gesture: _typing.Optional[str] = None) -> None:
-	"""
-	Test that the delayed description is cancelled when sending another command after read one character.
-	@param key: the key used to navigate the text.
-	@param gesture: the gesture used after the character movement is performed.
-	raises an AssertionError if the delayed description is spoken after sending the gesture.
-	"""
-	spy = _NvdaLib.getSpyLib()
-	_, characterDescription, _ = _pressKeyAndGetCharDescription(key)
-	if gesture is not None:
-		spy.emulateKeyPress(gesture, False)
-	spy.wait_for_specific_speech(
-		characterDescription,
-		maxWaitSeconds=2,
-		intervalBetweenSeconds=0.01,
-		failureExpected=True,
-	)
+	if expectDescription:
+		if len(spoken) != 2:
+			raise AssertionError(
+				f"Expected character with description; got: '{spoken}'"
+			)
+		_asserts.strings_match(spoken[1], _CHARACTER_DESCRIPTIONS[spoken[0]])
+	else:
+		if len(spoken) != 1:
+			raise AssertionError(
+				f"Expected single character; got: '{spoken}'"
+			)
 
 
 def test_delayedDescriptions():
 	_notepad.prepareNotepad(_getDelayedDescriptionsTestSample())
 	# Ensure this feature is disabled by default.
-	_testNoDelayedDescriptionAfterGesture(Move.CARET_CHAR, gesture=None)
+	_testDelayedDescription(expectDescription=False)
 
-	# activate delayed descriptions feature to do the next tests.
+	# Activate delayed descriptions feature to do the next test.
 	spy = _NvdaLib.getSpyLib()
 	spy.set_configValue(['speech', 'SpeechSpySynthDriver', 'delayedCharacterDescriptions'], True)
 
-	# Ensure a delayed description is not spoken after control key.
-	_testNoDelayedDescriptionAfterGesture(Move.CARET_CHAR, "control")
-	# Ensure a delayed description is not spoken after NVDA reads something else, the app title in this case.
-	_testNoDelayedDescriptionAfterGesture(Move.CARET_CHAR, "NVDA+t")
-
-	# test with minimum delay, default delay and max delay.
-	delaysInSeconds = [0.05, 1, 5]
-	for delay in delaysInSeconds:
-		_testDelayedDescription(Move.CARET_CHAR, delay)
+	_testDelayedDescription()
 
 
 def test_selByWord():

@@ -322,14 +322,14 @@ class NVDASpyLib:
 			afterIndex: Optional[int] = None,
 			maxWaitSeconds: int = 5,
 			intervalBetweenSeconds: float = 0.1,
-			failureExpected: bool = False,
+			expectedFailure: bool = False,
 	) -> int:
 		"""
 		@param speech: The speech to expect.
 		@param afterIndex: The speech should come after this index. The index is exclusive.
 		@param maxWaitSeconds: The amount of time to wait in seconds.
 		@param intervalBetweenSeconds: The amount of time to wait between checking speech, in seconds.
-		@param failureExpected: If the wait condition is expected to fail.
+		@param expectedFailure: If the wait condition is expected to fail.
 		@return: the index of the speech.
 		"""
 		success, speechIndex = _blockUntilConditionMet(
@@ -339,7 +339,7 @@ class NVDASpyLib:
 			intervalBetweenSeconds=intervalBetweenSeconds,
 			errorMessage=None
 		)
-		if success == failureExpected:
+		if success == expectedFailure:
 			# Robot framework prevents you from catching AssertionErrors, so a failureExpected flag is required
 			self.dump_speech_to_log()
 			problemMsg = "occurred unexpectedly" if success else "did not occur"
