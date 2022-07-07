@@ -9,6 +9,7 @@ import os
 import codecs
 import collections
 import re
+from typing import List
 from logHandler import log
 import globalVars
 import config
@@ -103,15 +104,13 @@ class CharacterDescriptions(object):
 
 _charDescLocaleDataMap=LocaleDataMap(CharacterDescriptions)
 
-def getCharacterDescription(locale,character):
+
+def getCharacterDescription(locale: str, character: str) -> List[str]:
 	"""
-	Finds a description or examples for the given character, which makes sence in the given locale.
+	Finds a description or examples for the given character, which makes sense in the given locale.
 	@param locale: the locale (language[_COUNTRY]) the description should be for.
-	@type locale: string
-	@param character: the character  who's description should be retreaved.
-	@type character: string
-	@return:  the found description for the given character
-	@rtype: list of strings
+	@param character: the character to fetch the description for.
+	@return: the found description for the given character
 	"""
 	try:
 		l=_charDescLocaleDataMap.fetchLocaleData(locale)
