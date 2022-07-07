@@ -1244,7 +1244,7 @@ def getTextInfoSpeech(  # noqa: C901
 			pass
 
 	# Make a new controlFieldStack and formatField from the textInfo's initialFields
-	newControlFieldStack: List[textInfos.ControlField] =[]
+	newControlFieldStack: List[textInfos.ControlField] = []
 	newFormatField=textInfos.FormatField()
 	initialFields=[]
 	for field in textWithFields:
@@ -1563,12 +1563,12 @@ def _isControlEndFieldCommand(command: Union[str, textInfos.FieldCommand]):
 
 
 def _getTextInfoSpeech_considerSpelling(
-	unit: Optional[textInfos.TextInfo],
-	onlyInitialFields: bool,
-	textWithFields: textInfos.TextInfo.TextWithFieldsT,
-	reason: OutputReason,
-	speechSequence: SpeechSequence,
-	language: str,
+		unit: Optional[textInfos.TextInfo],
+		onlyInitialFields: bool,
+		textWithFields: textInfos.TextInfo.TextWithFieldsT,
+		reason: OutputReason,
+		speechSequence: SpeechSequence,
+		language: str,
 ) -> Generator[SpeechSequence, None, None]:
 	if onlyInitialFields or any(isinstance(x, str) for x in speechSequence):
 		yield speechSequence
@@ -1592,10 +1592,10 @@ def _getTextInfoSpeech_considerSpelling(
 
 
 def _getTextInfoSpeech_updateCache(
-	useCache: Union[bool, SpeakTextInfoState],
-	speakTextInfoState: SpeakTextInfoState,
-	newControlFieldStack: List[textInfos.ControlField],
-	formatFieldAttributesCache: textInfos.Field,
+		useCache: Union[bool, SpeakTextInfoState],
+		speakTextInfoState: SpeakTextInfoState,
+		newControlFieldStack: List[textInfos.ControlField],
+		formatFieldAttributesCache: textInfos.Field,
 ):
 	speakTextInfoState.controlFieldStackCache = newControlFieldStack
 	speakTextInfoState.formatFieldAttributesCache = formatFieldAttributesCache
