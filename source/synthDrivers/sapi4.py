@@ -38,8 +38,13 @@ import config
 import nvwave
 import weakref
 
-from speech.commands import PitchCommand
-from speech.commands import IndexCommand, SpeechCommand, CharacterModeCommand
+from speech.commands import (
+	IndexCommand,
+	SpeechCommand,
+	CharacterModeCommand,
+	BreakCommand,
+	PitchCommand,
+)
 
 class SynthDriverBufSink(COMObject):
 	_com_interfaces_ = [ITTSBufNotifySink]
@@ -129,6 +134,8 @@ class SynthDriver(SynthDriver):
 			elif isinstance(item, CharacterModeCommand):
 				textList.append("\\RmS=1\\" if item.state else "\\RmS=0\\")
 				charMode=item.state
+			elif isinstance(item, BreakCommand):
+				textList.append(f"\\Pau={item.time}\\")
 			elif isinstance(item, PitchCommand):
 				offset = int(config.conf["speech"]['sapi4']["capPitchChange"])
 				offset = int((self._maxPitch - self._minPitch) * offset / 100)

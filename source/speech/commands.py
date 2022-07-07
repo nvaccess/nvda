@@ -157,15 +157,15 @@ class BreakCommand(SynthCommand):
 	"""Insert a break between words.
 	"""
 
-	def __init__(self, time=0):
+	def __init__(self, time: int = 0):
 		"""
 		@param time: The duration of the pause to be inserted in milliseconds.
-		@param time: int
 		"""
 		self.time = time
+		"""Time in milliseconds"""
 
 	def __repr__(self):
-		return "BreakCommand(time=%d)" % self.time
+		return f"BreakCommand(time={self.time})"
 
 class EndUtteranceCommand(SpeechCommand):
 	"""End the current utterance at this point in the speech.
