@@ -358,7 +358,7 @@ def getSingleCharDescription(
 		and locale.split('_')[0] == defaultLanguage.split('_')[0]
 	):
 		locale = defaultLanguage
-	# ask getCharacterDescriptions. If the second item of the tuple is None, we yield nothing.
+	# If the description for the locale is unknown, we yield nothing.
 	char, description = getCharDescListFromText(text, locale=locale)[0]
 	uppercase = char.isupper()
 	if description is None:
