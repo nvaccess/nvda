@@ -2994,8 +2994,7 @@ class GlobalCommands(ScriptableObject):
 		# Translators: Input help mode message for a braille command.
 		description=_("Scrolls the braille display back"),
 		category=SCRCAT_BRAILLE,
-		bypassInputHelp=True,
-		tags=scriptHandler.Tag.BRAILLE_SCROLL,
+		bypassInputHelp=True
 	)
 	def script_braille_scrollBack(self, gesture):
 		braille.handler.scrollBack()
@@ -3004,8 +3003,7 @@ class GlobalCommands(ScriptableObject):
 		# Translators: Input help mode message for a braille command.
 		description=_("Scrolls the braille display forward"),
 		category=SCRCAT_BRAILLE,
-		bypassInputHelp=True,
-		tags=scriptHandler.Tag.BRAILLE_SCROLL,
+		bypassInputHelp=True
 	)
 	def script_braille_scrollForward(self, gesture):
 		braille.handler.scrollForward()

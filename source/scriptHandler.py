@@ -3,12 +3,10 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from enum import Enum, auto, unique
 from typing import (
 	Optional,
 	Iterator,
 	List,
-	Set,
 )
 import time
 import weakref
@@ -31,12 +29,6 @@ _lastScriptTime=0 #Time in MS of when the last script was executed
 _lastScriptRef=None #Holds a weakref to the last script that was executed
 _lastScriptCount=0 #The amount of times the last script was repeated
 _isScriptRunning=False
-
-
-@unique
-class Tag(Enum):
-	BRAILLE_SCROLL = auto()
-
 
 def _makeKbEmulateScript(scriptName):
 	import keyboardHandler
@@ -264,8 +256,7 @@ def script(
 		canPropagate: bool = False,
 		bypassInputHelp: bool = False,
 		allowInSleepMode: bool = False,
-		resumeSayAllMode: Optional[int] = None,
-		tags: Set[Tag] = {},
+		resumeSayAllMode: Optional[int] = None
 ):
 	"""Define metadata for a script.
 	This function is to be used as a decorator to set metadata used by the scripting system and gesture editor.
@@ -278,7 +269,6 @@ def script(
 	@param bypassInputHelp: Whether this script should run when input help is active.
 	@param allowInSleepMode: Whether this script should run when NVDA is in sleep mode.
 	@param resumeSayAllMode: The say all mode that should be resumed when active before executing this script.
-	@param tags: tags to set for the script, to allow for filtering scripts in event handling
 	One of the C{sayAll.CURSOR_*} constants.
 	"""
 	if gestures is None:
@@ -315,6 +305,5 @@ def script(
 		if resumeSayAllMode is not None:
 			decoratedScript.resumeSayAllMode = resumeSayAllMode
 		decoratedScript.allowInSleepMode = allowInSleepMode
-		decoratedScript.tags = tags
 		return decoratedScript
 	return script_decorator
