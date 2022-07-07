@@ -4,7 +4,6 @@
 # Copyright (C) 2007-2021 NV Access Limited, Babbage B.V.
 
 from enum import (
-	auto,
 	unique,
 )
 from typing import Dict
@@ -18,6 +17,16 @@ def setBit(bitPos: int) -> int:
 
 @unique
 class State(DisplayStringIntEnum):
+	"""
+	Add-on authors are recommended not to depend on values and use a `State` directly.
+	From a string, this can be done as `controlTypes.State[nameOfState]` e.g. `State["CHECKED"]`.
+	Although unlikely to change, if names/values changing represents a significant risk for your add-on,
+	then consider decoupling, and maintain an internal mapping of `State` to add-on internal states.
+
+	As add-on authors may still rely on the values, new members of State should continue
+	the pattern of incrementing.
+	"""
+
 	@property
 	def _displayStringLabels(self):
 		return _stateLabels

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-03 00:02+0000\n"
+"POT-Creation-Date: 2022-06-27 01:08+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: René Linke <rene.linke@hamburg.de>\n"
 "Language-Team: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.1\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 msgid "Native input"
@@ -821,6 +821,11 @@ msgstr "Deutsche Vollschrift (ausführlich)"
 #. braille settings dialog.
 msgid "German grade 2"
 msgstr "Deutsche Kurzschrift"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "German grade 2 (detailed)"
+msgstr "Deutsche Kurzschrift (ausführlich)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -3102,7 +3107,7 @@ msgstr ""
 #. %s will be replaced with the symbol level; e.g. none, some, most and all.
 #, python-format
 msgid "Symbol level %s"
-msgstr "Symbolebene: %s"
+msgstr "Ausführlichkeitsstufe: %s"
 
 #. Translators: Input help mode message for move mouse to navigator object command.
 msgid "Moves the mouse pointer to the current navigator object"
@@ -4035,7 +4040,7 @@ msgstr ""
 #. (braille can be tethered automatically or to either focus or review position).
 #, python-format
 msgid "Braille tethered %s"
-msgstr "Braillezeile gekoppelt: %s"
+msgstr "Braille-Darstellung gekoppelt: %s"
 
 #. Translators: Input help mode message for toggle braille focus context presentation command.
 msgid "Toggle the way context information is presented in braille"
@@ -4323,7 +4328,7 @@ msgstr "Touch-Interaktion ausgeschaltet"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid "Cycles between available touch modes"
-msgstr "Wechselt zwischen verfügbaren Modi für die Touchscreen-Bedienung"
+msgstr "Wechselt zwischen den verfügbaren Touch-Modi"
 
 #. Translators: Cycles through available touch modes (a group of related touch gestures; example output: "object mode"; see the user guide for more information on touch modes).
 #, python-format
@@ -4355,7 +4360,7 @@ msgstr ""
 
 #. Translators: Reported when the object has no location for the mouse to move to it.
 msgid "object has no location"
-msgstr "Das Objekt enthält keine Positionskoordinaten"
+msgstr "Das Objekt enthält keine Angaben zur Position"
 
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
@@ -4394,7 +4399,7 @@ msgstr ""
 
 #. Translators: Reported when Windows OCR is not available.
 msgid "Windows OCR not available"
-msgstr "Die Windows-Texterkennung nicht verfügbar"
+msgstr "Die Windows-Texterkennung ist nicht verfügbar"
 
 #. Translators: Reported when screen curtain is enabled.
 msgid "Please disable screen curtain before using Windows OCR."
@@ -4404,15 +4409,16 @@ msgstr ""
 
 #. Translators: Input help mode message for toggle report CLDR command.
 msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
-msgstr "Schaltet die Ansage von CLDR-Zeichen, wie z. B. Emojis, ein und aus"
+msgstr ""
+"Schaltet die Mitteilung von CLDR-Zeichen, wie z. B. Emojis, ein oder aus"
 
 #. Translators: presented when the report CLDR is toggled.
 msgid "report CLDR characters off"
-msgstr "CLDR-Zeichen ansagen ausgeschaltet"
+msgstr "CLDR-Zeichen mitteilen ausgeschaltet"
 
 #. Translators: presented when the report CLDR is toggled.
 msgid "report CLDR characters on"
-msgstr "CLDR-Zeichen ansagen eingeschaltet"
+msgstr "CLDR-Zeichen mitteilen eingeschaltet"
 
 #. Translators: Describes a command.
 msgid ""
@@ -4437,7 +4443,7 @@ msgstr "Der Bildschirmvorhang konnte nicht deaktiviert werden"
 
 #. Translators: Reported when the screen curtain is not available.
 msgid "Screen curtain not available"
-msgstr "Bildschirmvorhang nicht verfügbar"
+msgstr "Der Bildschirmvorhang ist nicht verfügbar"
 
 #. Translators: Reported when the screen curtain is enabled.
 msgid "Screen curtain enabled"
@@ -4456,20 +4462,20 @@ msgstr "Der Bildschirmvorhang konnte nicht aktiviert werden"
 #. due to profile activation being suspended.
 msgid "Can't change the active profile while an NVDA dialog is open"
 msgstr ""
-"Das aktive Profil kann nicht geändert werden, solange ein NVDA-Dialog noch "
-"geöffnet ist"
+"Das aktive Profil konnte nicht geändert werden, solange ein Dialogfeld von "
+"NVDA noch geöffnet ist"
 
 #. Translators: a message when a configuration profile is manually deactivated.
 #. {profile} is replaced with the profile's name.
 #, python-brace-format
 msgid "{profile} profile deactivated"
-msgstr "Profil {profile} deaktiviert"
+msgstr "Profil für {profile} ist ausgeschaltet"
 
 #. Translators: a message when a configuration profile is manually activated.
 #. {profile} is replaced with the profile's name.
 #, python-brace-format
 msgid "{profile} profile activated"
-msgstr "Profil {profile} aktiviert"
+msgstr "Profil für {profile} ist eingeschaltet"
 
 #. Translators: The description shown in input help for a script that
 #. activates or deactivates a config profile.
@@ -6522,12 +6528,12 @@ msgid "Moves the navigator object to the last column"
 msgstr "Zieht das Navigator-Objekt in die letzte Spalte"
 
 #. Translators: The description of an NVDA command.
-msgid "Moves the navigator object to the first row"
-msgstr "Zieht das Navigator-Objekt in die erste Zeile"
+msgid "Moves the navigator object and focus to the first row"
+msgstr "Zieht das Navigationsobjekt und den Fokus in die erste Zeile"
 
 #. Translators: The description of an NVDA command.
-msgid "Moves the navigator object to the last row"
-msgstr "Zieht das Navigator-Objekt in die letzte Zeile"
+msgid "Moves the navigator object and focus to the last row"
+msgstr "Zieht das Navigationsobjekt und den Fokus in die letzte Zeile"
 
 #. Translators: Announced in braille when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
 msgid "Suggestions"
@@ -9376,7 +9382,7 @@ msgstr "Informationen"
 
 #. Translators: One of the log levels of NVDA (the debug warning shows debugging messages and warnings as NVDA runs).
 msgid "debug warning"
-msgstr "Debug-Warnungen"
+msgstr "Debug-Warnmeldungen"
 
 #. Translators: One of the log levels of NVDA (the input/output shows keyboard commands and/or braille commands as well as speech and/or braille output of NVDA).
 msgid "input/output"
@@ -13078,6 +13084,12 @@ msgstr "Doppelter Zeilenabstand"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1,5 Zeilenabstand"
+
+#~ msgid "Moves the navigator object to the first row"
+#~ msgstr "Zieht das Navigator-Objekt in die erste Zeile"
+
+#~ msgid "Moves the navigator object to the last row"
+#~ msgstr "Zieht das Navigator-Objekt in die letzte Zeile"
 
 #~ msgid "Chinese (China, Mandarin) grade 2"
 #~ msgstr "Chinesische Kurzschrift (Mandarin)"
