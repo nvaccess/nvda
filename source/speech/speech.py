@@ -26,6 +26,7 @@ import languageHandler
 from . import manager
 from .commands import (
 	# Commands that are used in this file.
+	BreakCommand,
 	SpeechCommand,
 	PitchCommand,
 	LangChangeCommand,
@@ -33,7 +34,7 @@ from .commands import (
 	EndUtteranceCommand,
 	CharacterModeCommand,
 )
-from . import delayedCharacterDescriptions
+
 from . import types
 from .types import (
 	SpeechSequence,
@@ -62,7 +63,6 @@ from copy import copy
 
 if typing.TYPE_CHECKING:
 	import NVDAObjects
-
 
 _speechState: Optional['SpeechState'] = None
 _curWordChars: List[str] = []
@@ -147,7 +147,6 @@ def cancelSpeech():
 		return
 	elif _speechState.speechMode == SpeechMode.beeps:
 		return
-	delayedCharacterDescriptions.cancelDelayedCharacterDescription()
 	_manager.cancel()
 	_speechState.beenCanceled = True
 	_speechState.isPaused = False
@@ -202,22 +201,12 @@ def getCurrentLanguage() -> str:
 	return language
 
 
-def _spellTextWithFields(
-		info: textInfos._SupportsGetTextWithFields,
+def spellTextInfo(
+		info: textInfos.TextInfo,
 		useCharacterDescriptions: bool = False,
 		priority: Optional[Spri] = None
 ) -> None:
-	"""
-	Spells the text from a given object (TextInfo or similar),
-	honouring any LangChangeCommand objects it finds if autoLanguageSwitching is enabled.
-
-	Uses a limited subset of the textInfos.TextInfo API to allow for simpler TextInfo-like objects
-	such as _DelayedCharacterDescriptionTextInfo.
-
-	The `_spellTextWithFields/_SupportsGetTextWithFields` API is unstable.
-	Add-on API consumers should use `spellTextInfo`.
-	NVDA core should prefer `spellTextInfo` where possible.
-	"""
+	"""Spells the text from the given TextInfo, honouring any LangChangeCommand objects it finds if autoLanguageSwitching is enabled."""
 	if not config.conf['speech']['autoLanguageSwitching']:
 		speakSpelling(info.text,useCharacterDescriptions=useCharacterDescriptions)
 		return
@@ -227,26 +216,6 @@ def _spellTextWithFields(
 			speakSpelling(field,curLanguage,useCharacterDescriptions=useCharacterDescriptions,priority=priority)
 		elif isinstance(field,textInfos.FieldCommand) and field.command=="formatChange":
 			curLanguage=field.field.get('language')
-
-
-def spellTextInfo(
-		info: textInfos.TextInfo,
-		useCharacterDescriptions: bool = False,
-		priority: Optional[Spri] = None
-) -> None:
-	"""
-	Spells the text from the given TextInfo,
-	honouring any LangChangeCommand objects it finds if autoLanguageSwitching is enabled.
-
-	In NVDA core this is an alias for `_spellTextWithFields`,
-	however the `_spellTextWithFields/_SupportsGetTextWithFields` API is unstable.
-	Add-on API consumers should use `spellTextInfo`.
-	NVDA core should prefer `spellTextInfo` where possible.
-	"""
-	_spellTextWithFields(info, useCharacterDescriptions, priority)
-	# Before changing this function, consider if `_spellTextWithFields/_SupportsGetTextWithFields`
-	# and its consumers
-	# can adapt to the changes.
 
 
 def speakSpelling(
@@ -368,6 +337,40 @@ def _getSpellingSpeechWithoutCharMode(
 			uppercase and beepForCapitals,
 		)
 		yield EndUtteranceCommand()
+
+
+def getSingleCharDescription(
+		text: str,
+		locale: Optional[str] = None,
+) -> Generator[SequenceItemT, None, None]:
+	# This should only be used for single chars.
+	if not len(text) == 1:
+		return
+	synth = getSynth()
+	synthConfig = config.conf["speech"][synth.name]
+	if synth.isSupported("pitch"):
+		capPitchChange = synthConfig["capPitchChange"]
+	else:
+		capPitchChange = 0
+	defaultLanguage = getCurrentLanguage()
+	if not locale or (
+		not config.conf['speech']['autoDialectSwitching']
+		and locale.split('_')[0] == defaultLanguage.split('_')[0]
+	):
+		locale = defaultLanguage
+	# ask getCharacterDescriptions. If the second item of the tuple is None, we yield nothing.
+	char, description = getCharDescListFromText(text, locale=locale)[0]
+	uppercase = char.isupper()
+	if description is None:
+		return
+	delayTimeMs = config.conf["speech"][getSynth().name]["delayedCharacterDescriptionsTimeoutMs"]
+	yield BreakCommand(delayTimeMs)
+	yield from _getSpellingCharAddCapNotification(
+		description[0],
+		sayCapForCapitals=uppercase and synthConfig["sayCapForCapitals"],
+		capPitchChange=(capPitchChange if uppercase else 0),
+		beepForCapitals=uppercase and synthConfig["beepForCapitals"],
+	)
 
 
 def getSpellingSpeech(
@@ -845,7 +848,6 @@ def speak(  # noqa: C901
 
 	if not speechSequence:  # Pointless - nothing to speak
 		return
-	delayedCharacterDescriptions.cancelDelayedCharacterDescription()
 	import speechViewer
 	if speechViewer.isActive:
 		speechViewer.appendSpeechSequence(speechSequence)
@@ -1186,12 +1188,6 @@ def speakTextInfo(
 	speechGen = GeneratorWithReturn(speechGen)
 	for seq in speechGen:
 		speak(seq, priority=priority)
-	if (
-		reason == OutputReason.CARET
-		and unit == textInfos.UNIT_CHARACTER
-	):
-		delayedCharacterDescriptions.startDelayedCharacterDescriptionSpeaking(info)
-
 	return speechGen.returnValue
 
 
@@ -1208,7 +1204,6 @@ def getTextInfoSpeech(  # noqa: C901
 		onlyInitialFields: bool = False,
 		suppressBlanks: bool = False
 ) -> Generator[SpeechSequence, None, bool]:
-	onlyCache = reason == OutputReason.ONLYCACHE
 	if isinstance(useCache,SpeakTextInfoState):
 		speakTextInfoState=useCache
 	elif useCache:
@@ -1248,8 +1243,8 @@ def getTextInfoSpeech(  # noqa: C901
 		except KeyError:
 			pass
 
-	#Make a new controlFieldStack and formatField from the textInfo's initialFields
-	newControlFieldStack=[]
+	# Make a new controlFieldStack and formatField from the textInfo's initialFields
+	newControlFieldStack: List[textInfos.ControlField] =[]
 	newFormatField=textInfos.FormatField()
 	initialFields=[]
 	for field in textWithFields:
@@ -1379,32 +1374,29 @@ def getTextInfoSpeech(  # noqa: C901
 		language=newFormatField.get('language')
 		speechSequence.append(LangChangeCommand(language))
 		lastLanguage=language
-
-	def isControlEndFieldCommand(x):
-		return isinstance(x, textInfos.FieldCommand) and x.command == "controlEnd"
-
 	isWordOrCharUnit = unit in (textInfos.UNIT_CHARACTER, textInfos.UNIT_WORD)
 	if onlyInitialFields or (
 		isWordOrCharUnit
 		and len(textWithFields) > 0
 		and len(textWithFields[0].strip() if not textWithFields[0].isspace() else textWithFields[0]) == 1
-		and all(isControlEndFieldCommand(x) for x in itertools.islice(textWithFields, 1, None))
+		and all(_isControlEndFieldCommand(x) for x in itertools.islice(textWithFields, 1, None))
 	):
-		if not onlyCache:
-			if onlyInitialFields or any(isinstance(x, str) for x in speechSequence):
-				yield speechSequence
-			if not onlyInitialFields:
-				spellingSequence = list(getSpellingSpeech(
-					textWithFields[0],
-					locale=language
-				))
-				logBadSequenceTypes(spellingSequence)
-				yield spellingSequence
+		if reason != OutputReason.ONLYCACHE:
+			yield from list(_getTextInfoSpeech_considerSpelling(
+				unit,
+				onlyInitialFields,
+				textWithFields,
+				reason,
+				speechSequence,
+				language,
+			))
 		if useCache:
-			speakTextInfoState.controlFieldStackCache=newControlFieldStack
-			speakTextInfoState.formatFieldAttributesCache=formatFieldAttributesCache
-			if not isinstance(useCache,SpeakTextInfoState):
-				speakTextInfoState.updateObj()
+			_getTextInfoSpeech_updateCache(
+				useCache,
+				speakTextInfoState,
+				newControlFieldStack,
+				formatFieldAttributesCache,
+			)
 		return False
 
 	# Similar to before, but If the most inner clickable is exited, then we allow announcing clickable for the next lot of clickable fields entered.
@@ -1550,18 +1542,65 @@ def getTextInfoSpeech(  # noqa: C901
 		# Translators: This is spoken when the line is considered blank.
 		speechSequence.append(_("blank"))
 
-	#Cache a copy of the new controlFieldStack for future use
+	# Cache a copy of the new controlFieldStack for future use
 	if useCache:
-		speakTextInfoState.controlFieldStackCache=list(newControlFieldStack)
-		speakTextInfoState.formatFieldAttributesCache=formatFieldAttributesCache
-		if not isinstance(useCache,SpeakTextInfoState):
-			speakTextInfoState.updateObj()
+		_getTextInfoSpeech_updateCache(
+			useCache,
+			speakTextInfoState,
+			newControlFieldStack,
+			formatFieldAttributesCache,
+		)
 
 	if reason == OutputReason.ONLYCACHE or not speechSequence:
 		return False
 
 	yield speechSequence
 	return True
+
+
+def _isControlEndFieldCommand(command: Union[str, textInfos.FieldCommand]):
+	return isinstance(command, textInfos.FieldCommand) and command.command == "controlEnd"
+
+
+def _getTextInfoSpeech_considerSpelling(
+	unit: Optional[textInfos.TextInfo],
+	onlyInitialFields: bool,
+	textWithFields: textInfos.TextInfo.TextWithFieldsT,
+	reason: OutputReason,
+	speechSequence: SpeechSequence,
+	language: str,
+) -> Generator[SpeechSequence, None, None]:
+	if onlyInitialFields or any(isinstance(x, str) for x in speechSequence):
+		yield speechSequence
+	if not onlyInitialFields:
+		spellingSequence = list(getSpellingSpeech(
+			textWithFields[0],
+			locale=language
+		))
+		logBadSequenceTypes(spellingSequence)
+		yield spellingSequence
+		if (
+			reason == OutputReason.CARET
+			and unit == textInfos.UNIT_CHARACTER
+			and config.conf["speech"][getSynth().name]["delayedCharacterDescriptions"]
+		):
+			descriptionSequence = list(getSingleCharDescription(
+				textWithFields[0],
+				locale=language,
+			))
+			yield descriptionSequence
+
+
+def _getTextInfoSpeech_updateCache(
+	useCache: Union[bool, SpeakTextInfoState],
+	speakTextInfoState: SpeakTextInfoState,
+	newControlFieldStack: List[textInfos.ControlField],
+	formatFieldAttributesCache: textInfos.Field,
+):
+	speakTextInfoState.controlFieldStackCache = newControlFieldStack
+	speakTextInfoState.formatFieldAttributesCache = formatFieldAttributesCache
+	if not isinstance(useCache, SpeakTextInfoState):
+		speakTextInfoState.updateObj()
 
 
 # C901 'getPropertiesSpeech' is too complex

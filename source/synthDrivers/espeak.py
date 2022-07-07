@@ -6,7 +6,7 @@
 
 import os
 from collections import OrderedDict
-from typing import Optional, Set
+from typing import Dict, List, Optional, Set
 
 from . import _espeak
 from languageHandler import (
@@ -311,9 +311,9 @@ class SynthDriver(SynthDriver):
 	# Note: when working on speak, look for opportunities to simplify
 	# and move logic out into smaller helper functions.
 	def speak(self, speechSequence: SpeechSequence):  # noqa: C901
-		textList=[]
-		langChanged=False
-		prosody={}
+		textList: List[str] = []
+		langChanged = False
+		prosody: Dict[str, int] = {}
 		# We output malformed XML, as we might close an outer tag after opening an inner one; e.g.
 		# <voice><prosody></voice></prosody>.
 		# However, eSpeak doesn't seem to mind.
@@ -329,7 +329,9 @@ class SynthDriver(SynthDriver):
 				textList.append(langChangeXML)
 				langChanged = True
 			elif isinstance(item, BreakCommand):
-				textList.append('<break time="%dms" />' % item.time)
+				# Break commands are ignored at the start of speech unless strength is specified.
+				# Refer to eSpeak issue: https://github.com/espeak-ng/espeak-ng/issues/1232
+				textList.append(f'<break time="{item.time}ms" strength="1" />')
 			elif type(item) in self.PROSODY_ATTRS:
 				if prosody:
 					# Close previous prosody tag.

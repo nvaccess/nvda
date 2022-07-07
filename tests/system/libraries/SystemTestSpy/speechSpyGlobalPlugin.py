@@ -342,9 +342,10 @@ class NVDASpyLib:
 		if success == failureExpected:
 			# Robot framework prevents you from catching AssertionErrors, so a failureExpected flag is required
 			self.dump_speech_to_log()
+			problemMsg = "occurred unexpectedly" if success else "did not occur"
 			raise AssertionError(
-				"Specific speech did not occur before timeout: {}\n"
-				"See NVDA log for dump of all speech.".format(speech)
+				f"Specific speech {problemMsg} before timeout: {speech}\n"
+				"See NVDA log for dump of all speech."
 			)
 		return speechIndex
 

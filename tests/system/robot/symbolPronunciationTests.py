@@ -316,9 +316,6 @@ def _getDelayedDescriptionsTestSample() -> str:
 def _getCharAfterKey(key: str, maxWaitSeconds: float = 1.0) -> str:
 	"""Ensure speech has stopped, press key, and get speech.
 	@return: The speech after key press.
-	this function was copied from SpyLib because the original function join phrases
-	if a speech is near from another. Also shorter intervals between checking are required.
-	lastIndex should be used, but the function to get the speech for a specific index, is private in spyLib.
 	"""
 	spy = _NvdaLib.getSpyLib()
 	spy.wait_for_speech_to_finish()
@@ -371,7 +368,7 @@ def _pressKeyAndWaitDelayedDescription(key: Move, maxWaitSeconds: float) -> floa
 	return _timer() - startTime
 
 
-def _testDelayedDescription(key: Move, expectedDelaySeconds: float, thresholdSeconds: float = 1) -> None:
+def _testDelayedDescription(key: Move, expectedDelaySeconds: float, thresholdSeconds: float = 1.0) -> None:
 	"""
 	Perform delayed character descriptions tests with with the specified parameters:
 	@param key: the key used to read the character.
@@ -380,19 +377,19 @@ def _testDelayedDescription(key: Move, expectedDelaySeconds: float, thresholdSec
 	raises an AssertionError if the test does not pass.
 	"""
 	spy = _NvdaLib.getSpyLib()
-	expectedDelayMS = int(expectedDelaySeconds * 1000)
+	expectedDelayMs = int(expectedDelaySeconds * 1000)
 	spy.set_configValue(
 		['speech', 'SpeechSpySynthDriver', 'delayedCharacterDescriptionsTimeoutMs'],
-		expectedDelayMS
+		expectedDelayMs
 	)
 	registeredDelaySeconds = _pressKeyAndWaitDelayedDescription(
 		key,
 		expectedDelaySeconds + thresholdSeconds,
 	)
 	infoStr = (
-		f"Expected delay {expectedDelaySeconds}, "
-		f"threshold {thresholdSeconds}, "
-		f"registered delay {registeredDelaySeconds}"
+		f"Expected delay {expectedDelaySeconds}s, "
+		f"threshold {thresholdSeconds}s, "
+		f"registered delay {registeredDelaySeconds}s"
 	)
 	_builtIn.log(message=infoStr)
 	if abs(expectedDelaySeconds - registeredDelaySeconds) > thresholdSeconds:
