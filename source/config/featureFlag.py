@@ -45,6 +45,8 @@ class FeatureFlag(typing.Generic[FlagValueEnum]):
 			behaviorOfDefault: FlagValueEnum
 	):
 		self.value = value
+		self.enumClassType: typing.Type[FlagValueEnum] = type(value)
+		assert self.enumClassType == type(behaviorOfDefault)
 		assert behaviorOfDefault != value.DEFAULT
 		self.behaviorOfDefault = behaviorOfDefault
 
@@ -68,9 +70,9 @@ class FeatureFlag(typing.Generic[FlagValueEnum]):
 	def __eq__(self, other: typing.Union["FeatureFlag", FlagValueEnum]):
 		if isinstance(other, type(self.value)):
 			other = FeatureFlag(other, behaviorOfDefault=self.behaviorOfDefault)
-		if not isinstance(other, FeatureFlag):
-			raise NotImplementedError()
-		return self.calculated() == other.calculated()
+		if isinstance(other, FeatureFlag):
+			return self.calculated() == other.calculated()
+		return super().__eq__(other)
 
 	def __str__(self):
 		"""So that the value can be saved to the ini file.

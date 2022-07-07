@@ -2909,15 +2909,6 @@ class AdvancedPanelControls(
 			wxCtrlClass=nvdaControls.FeatureFlagCombo,
 			keyPath=["virtualBuffers", "loadChromiumVBufOnBusyState"],
 			conf=config.conf,
-			optionsEnumClass=BoolFlag,
-			translatedOptions=collections.OrderedDict({
-				# Translators: Label for option in the 'Load Chromium virtual buffer when document busy.'
-				# combobox in the Advanced settings panel.
-				BoolFlag.ENABLED: _("Yes"),
-				# Translators: Label for option in the 'Load Chromium virtual buffer when document busy.'
-				# combobox in the Advanced settings panel.
-				BoolFlag.DISABLED: _("No"),
-			})
 		)
 
 		# Translators: This is the label for a group of advanced options in the

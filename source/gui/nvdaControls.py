@@ -9,12 +9,17 @@ import typing
 from typing import (
 	List,
 	OrderedDict,
+	Type,
+	Union,
 )
 
 import wx
 from wx.lib import scrolledpanel
 from wx.lib.mixins import listctrl as listmix
 
+from utils.displayString import (
+	DisplayStringEnum
+)
 from config.featureFlag import (
 	FeatureFlag,
 )
@@ -419,8 +424,6 @@ class FeatureFlagCombo(wx.Choice, typing.Generic[FeatureFlagEnumT]):
 			parent: wx.Window,
 			keyPath: List[str],
 			conf,
-			optionsEnumClass: typing.Type[FeatureFlagEnumT],
-			translatedOptions: OrderedDict[FeatureFlagEnumT, str],
 			pos=wx.DefaultPosition,
 			size=wx.DefaultSize,
 			style=0,
@@ -431,10 +434,6 @@ class FeatureFlagCombo(wx.Choice, typing.Generic[FeatureFlagEnumT]):
 		@param parent: The parent window.
 		@param keyPath: The list of keys required to get to the config value.
 		@param conf: The config.conf object.
-		@optionsEnumClass: The enum class for this featureFlag
-		@param translatedOptions: A dictionary of translated options, for each feature flag value. Note, the
-		L{BoolFlag.DEFAULT} value should not be included in this dictionary. See L{
-		FeatureFlagCombo._setDefaultOptionLabel}.
 		@param pos: The position of the control. Forwarded to wx.Choice
 		@param size: The size of the control. Forwarded to wx.Choice
 		@param style: The style of the control. Forwarded to wx.Choice
@@ -443,11 +442,16 @@ class FeatureFlagCombo(wx.Choice, typing.Generic[FeatureFlagEnumT]):
 		"""
 		self._confPath = keyPath
 		self._conf = conf
-		self._optionsEnumClass = optionsEnumClass
-
-		if optionsEnumClass.DEFAULT in translatedOptions:
+		configValue = self._getConfigValue()
+		self._optionsEnumClass: Type[FeatureFlagEnumT] = configValue.enumClassType
+		translatedOptions: typing.OrderedDict[FeatureFlagEnumT, str] = collections.OrderedDict({
+			value: value.displayString
+			for value in self._optionsEnumClass
+			if value != self._optionsEnumClass.DEFAULT
+		})
+		if self._optionsEnumClass.DEFAULT in translatedOptions:
 			raise ValueError(
-				f"The translatedOptions dictionary should not contain the key {optionsEnumClass.DEFAULT!r}"
+				f"The translatedOptions dictionary should not contain the key {self._optionsEnumClass.DEFAULT!r}"
 				" It will be added automatically. See _setDefaultOptionLabel"
 			)
 		self._translatedOptions = self._createOptionsDict(translatedOptions)
@@ -521,7 +525,7 @@ class FeatureFlagCombo(wx.Choice, typing.Generic[FeatureFlagEnumT]):
 
 	def _createOptionsDict(
 			self,
-			translatedOptions: OrderedDict[enum.Enum, str]
+			translatedOptions: OrderedDict[FeatureFlagEnumT, str]
 	) -> OrderedDict[enum.Enum, str]:
 		behaviorOfDefault = self._getConfigValue().behaviorOfDefault
 		translatedStringForBehaviorOfDefault = translatedOptions[behaviorOfDefault]
