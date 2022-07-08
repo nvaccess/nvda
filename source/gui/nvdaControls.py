@@ -10,21 +10,16 @@ from typing import (
 	List,
 	OrderedDict,
 	Type,
-	Union,
 )
 
 import wx
 from wx.lib import scrolledpanel
 from wx.lib.mixins import listctrl as listmix
 
-from utils.displayString import (
-	DisplayStringEnum
-)
 from config.featureFlag import (
 	FeatureFlag,
 )
 from config.featureFlagEnums import (
-	BoolFlag,
 	FeatureFlagEnumProtocol
 )
 from .dpiScalingHelper import DpiScalingHelperMixin

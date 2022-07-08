@@ -8,7 +8,6 @@
 # jakubl7545, mltony
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-import collections
 import logging
 from abc import ABCMeta, abstractmethod
 import copy
@@ -26,9 +25,6 @@ import logHandler
 import installer
 from synthDriverHandler import changeVoice, getSynth, getSynthList, setSynth, SynthDriver
 import config
-from config.featureFlag import (
-	BoolFlag,
-)
 import languageHandler
 import speech
 import gui

@@ -11,7 +11,6 @@ All feature flags enums should
 - have a 'DEFAULT' member.
 """
 import enum
-import logging
 import typing
 
 from utils.displayString import (

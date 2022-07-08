@@ -52,7 +52,7 @@ class FeatureFlag(typing.Generic[FlagValueEnum]):
 
 	def __bool__(self) -> bool:
 		if not isinstance(self.value, BoolFlag):
-			raise NotImplemented(
+			raise NotImplementedError(
 				"Only BoolFlag supported. For other types use explicit checks"
 			)
 		if self.isDefault():
