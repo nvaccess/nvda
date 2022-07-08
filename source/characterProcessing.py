@@ -23,7 +23,7 @@ class LocaleDataMap(Generic[_LocaleDataT], object):
 
 	def __init__(
 			self,
-			localeDataFactory: Callable[[str], Generic[_LocaleDataT]]
+			localeDataFactory: Callable[[str], _LocaleDataT]
 	):
 		"""
 		@param localeDataFactory: the factory to create data objects for the requested locale.
