@@ -61,6 +61,5 @@ class BoolFlag(DisplayStringEnum):
 
 def getAvailableEnums() -> typing.Generator[typing.Tuple[str, enum.EnumMeta], None, None]:
 	for name, value in globals().items():
-		logging.debug(f"Found Enum class: {name}:{value}")
 		if isinstance(value, enum.EnumMeta) and hasattr(value, "DEFAULT"):
 			yield name, value
