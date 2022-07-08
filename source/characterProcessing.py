@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2010-2021 NV Access Limited, World Light Information Limited,
+# Copyright (C) 2010-2022 NV Access Limited, World Light Information Limited,
 # Hong Kong Blind Union, Babbage B.V., Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -9,29 +9,35 @@ import os
 import codecs
 import collections
 import re
+from typing import Callable, Dict, Generic, List, Optional, Tuple, TypeVar
 from logHandler import log
 import globalVars
 import config
 
-class LocaleDataMap(object):
+
+LocaleData = TypeVar("LocaleData")
+
+
+class LocaleDataMap(Generic[LocaleData], object):
 	"""Allows access to locale-specific data objects, dynamically loading them if needed on request"""
 
-	def __init__(self,localeDataFactory):
+	def __init__(
+			self,
+			localeDataFactory: Callable[[str], Generic[LocaleData]]
+	):
 		"""
 		@param localeDataFactory: the factory to create data objects for the requested locale.
 		""" 
-		self._localeDataFactory=localeDataFactory
-		self._dataMap={}
+		self._localeDataFactory: Callable[[str], LocaleData] = localeDataFactory
+		self._dataMap: Dict[str, LocaleData] = {}
 
-	def fetchLocaleData(self,locale,fallback=True):
+	def fetchLocaleData(self, locale: str, fallback: bool = True) -> LocaleData:
 		"""
 		Fetches a data object for the given locale. 
 		This may mean that the data object is first created and stored if it does not yet exist in the map.
 		The locale is also simplified (country is dropped) if the fallback argument is True and the full locale can not be used to create a data object.
 		@param locale: the locale of the data object requested
-		@type locale: string
 		@param fallback: if true and there is no data for the locale, then the country (if it exists) is stripped and just the language is tried.
-		@type fallback: boolean
 		@return: the data object for the given locale
 		"""
 		localeList=[locale]
@@ -49,11 +55,10 @@ class LocaleDataMap(object):
 			return data
 		raise LookupError(locale)
 
-	def invalidateLocaleData(self, locale):
+	def invalidateLocaleData(self, locale: str) -> None:
 		"""Invalidate the data object (if any) for the given locale.
 		This will cause a new data object to be created when this locale is next requested.
 		@param locale: The locale for which the data object should be invalidated.
-		@type locale: str
 		"""
 		try:
 			del self._dataMap[locale]
@@ -72,12 +77,11 @@ class CharacterDescriptions(object):
 	The data is loaded from a file from the requested locale.
 	"""
 
-	def __init__(self,locale):
+	def __init__(self, locale: str):
 		"""
 		@param locale: The characterDescriptions.dic file will be found by using this locale.
-		@type locale: string
 		"""
-		self._entries = {}
+		self._entries: Dict[str, List[str]] = {}
 		fileName = os.path.join(globalVars.appDir, 'locale', locale, 'characterDescriptions.dic')
 		if not os.path.isfile(fileName): 
 			raise LookupError(fileName)
@@ -95,23 +99,22 @@ class CharacterDescriptions(object):
 		log.debug("Loaded %d entries." % len(self._entries))
 		f.close()
 
-	def getCharacterDescription(self, character):
+	def getCharacterDescription(self, character: str) -> Optional[List[str]]:
 		"""
 		Looks up the given character and returns a list containing all the description strings found.
 		"""
 		return self._entries.get(character)
 
-_charDescLocaleDataMap=LocaleDataMap(CharacterDescriptions)
 
-def getCharacterDescription(locale,character):
+_charDescLocaleDataMap: LocaleDataMap[CharacterDescriptions] = LocaleDataMap(CharacterDescriptions)
+
+
+def getCharacterDescription(locale: str, character: str) -> Optional[List[str]]:
 	"""
-	Finds a description or examples for the given character, which makes sence in the given locale.
+	Finds a description or examples for the given character, which makes sense in the given locale.
 	@param locale: the locale (language[_COUNTRY]) the description should be for.
-	@type locale: string
-	@param character: the character  who's description should be retreaved.
-	@type character: string
-	@return:  the found description for the given character
-	@rtype: list of strings
+	@param character: the character to fetch the description for.
+	@return: the found description for the given character
 	"""
 	try:
 		l=_charDescLocaleDataMap.fetchLocaleData(locale)
@@ -363,7 +366,9 @@ class SpeechSymbols(object):
 		return u"\t".join(fields)
 
 _noSymbolLocalesCache = set()
-def _getSpeechSymbolsForLocale(locale):
+
+
+def _getSpeechSymbolsForLocale(locale: str) -> Tuple[SpeechSymbols, SpeechSymbols]:
 	if locale in _noSymbolLocalesCache:
 		raise LookupError
 	builtin = SpeechSymbols()
@@ -401,7 +406,7 @@ class SpeechSymbolProcessor(object):
 	"""
 
 	#: Caches symbol data for locales.
-	localeSymbols = LocaleDataMap(_getSpeechSymbolsForLocale)
+	localeSymbols: LocaleDataMap[Tuple[SpeechSymbols, SpeechSymbols]] = LocaleDataMap(_getSpeechSymbolsForLocale)
 
 	def __init__(self, locale):
 		"""Constructor.
@@ -653,17 +658,16 @@ class SpeechSymbolProcessor(object):
 		except KeyError:
 			pass
 
-	def isBuiltin(self, symbolIdentifier):
+	def isBuiltin(self, symbolIdentifier: str) -> bool:
 		"""Determine whether a symbol is built in.
 		@param symbolIdentifier: The identifier of the symbol in question.
-		@type symbolIdentifier: str
 		@return: C{True} if the symbol is built in,
 			C{False} if it was added by the user.
-		@rtype: bool
 		"""
 		return any(symbolIdentifier in source.symbols for source in self.builtinSources)
 
-_localeSpeechSymbolProcessors = LocaleDataMap(SpeechSymbolProcessor)
+
+_localeSpeechSymbolProcessors: LocaleDataMap[SpeechSymbolProcessor] = LocaleDataMap(SpeechSymbolProcessor)
 
 
 def processSpeechSymbols(locale: str, text: str, level: SymbolLevel):
