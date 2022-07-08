@@ -27,7 +27,7 @@ NVDA 讓全盲及視覺障礙的人能夠操作 Windows 作業系統及許多第
 - 易於使用具備語音功能的安裝程式
 - 已翻譯成 54 種語言
 - 支援現今的 Windows 作業系統包含 32 及 64 位元的版本
-- 可在 Windows 登入畫面及其他安全畫面執行
+- 可在 Windows 登入畫面及[其他安全畫面 #SecureScreens]執行
 - 使用觸控手勢時可讀出控制項和文字
 - 支援常見的無障礙介面例如 Microsoft Active Accessibility, Java Access Bridge, IAccessible2 及 UI Automation
 - 支援 Windows 命令提示字元和終端應用程式
@@ -81,7 +81,7 @@ NVDA 同時也包含並使用了那些受其他不同免費且開放程式碼授
 將會詢問您是要安裝 NVDA、建立可攜式版或繼續使用暫時性版本。
 
 若您打算固定在這台電腦上使用 NVDA 則應該選擇安裝 NVDA，
-安裝 NVDA 允許一些額外功能，例如登入後自動啟動、可讀取 Windows 登入及安全畫面、建立開始功能表的項目及桌面捷徑，這些在可攜式及暫時性版本均無法做到，
+安裝 NVDA 允許一些額外功能，例如登入後自動啟動、可讀取 Windows 登入及[安全畫面 #SecureScreens]、建立開始功能表的項目及桌面捷徑，這些在可攜式及暫時性版本均無法做到，
 已安裝的 NVDA 還能夠隨時自行建立可攜式版。
 
 如果您要將 NVDA 存入 USB 隨身碟或其他可寫入的儲存媒體以便隨身攜帶，您憗該選擇建立可攜式版，
@@ -118,7 +118,7 @@ NVDA 同時也包含並使用了那些受其他不同免費且開放程式碼授
 
 +++ 在登入畫面使用 NVDA +++[StartAtWindowsLogon]
 此選項允許您選擇是否在 Windows 登入畫面於輸入密碼前啟動 NVDA，
-這也包括使用者帳戶控制和其他安全畫面，
+這也包括使用者帳戶控制和[其他安全畫面 #SecureScreens]，
 此選項在初次安裝時預設是啟用的。
 
 +++ 建立桌面捷徑 (ctrl+alt+n) +++[CreateDesktopShortcut]
@@ -127,7 +127,7 @@ NVDA 同時也包含並使用了那些受其他不同免費且開放程式碼授
 
 +++ 複製可攜式版組態到目前的使用者帳戶 +++[CopyPortableConfigurationToCurrentUserAccount]
 此選項允許您選擇是否為 NVDA 的安裝版本從目前正在執行的 NVDA 複製使用者組態到目前登入使用者的組態，
-這不會複製電腦上其他使用者的組態，也不會將組態複製到用於 Windows 登入及其他安全畫面的 NVDA 系統組態目錄中，
+這不會複製電腦上其他使用者的組態，也不會將組態複製到用於 Windows 登入及[其他安全畫面 #SecureScreens]的 NVDA 系統組態目錄中，
 此選項只有從可攜式版安裝時才有，若是從安裝程式進行安裝則無此選項。
 
 ++ 建立可攜式版 ++[CreatingAPortableCopy]
@@ -145,8 +145,8 @@ NVDA 同時也包含並使用了那些受其他不同免費且開放程式碼授
 + 開始使用 NVDA +[GettingStartedWithNVDA]
 
 ++ 啟動 NVDA ++[LaunchingNVDA]
-如果您已經安裝了 NVDA，最簡單啟動的方式是利用按快速鍵 Ctrl+Alt+N，或從「開始」的「所有應用程式」清單找到 NVDA 資料夾並展開後選擇「NVDA」，
-此外您也可以從「開始」的搜尋方塊輸入「nvda」後按 Enter，
+如果您已經安裝了 NVDA，最簡單啟動的方式是利用按快速鍵 Ctrl+Alt+N，或從「開始」功能表的「所有應用程式」清單找到 NVDA 資料夾並展開後選擇「NVDA」，
+此外您也可以從「開始」功能表的搜尋方塊輸入「nvda」後按 Enter，
 若 NVDA 已經在執行會重新啟動。
 您也可以使用一些「[命令列選項 #CommandLineOptions]」以結束 (-q)、停用附加元件 (--disable-addons) 等等。
 
@@ -342,6 +342,10 @@ NVDA 允許您以不同的方式探索及導覽 Windows 系統，包括一般性
 | 移到右一欄 | Ctrl+Alt+向右鍵 | 移動游標到右一欄 (仍在同一列中) |
 | 移到上一列 | Ctrl+Alt+向上鍵 | 移動游標到上一列 (仍在同一欄中) |
 | 移到下一列 | Ctrl+Alt+向下鍵 | 移動游標到下一列 (仍在同一欄中) |
+| 移到第一欄 | Ctrl+Alt+Home | 移動游標到第一欄 (仍在同一列中) |
+| 移到最後一欄 | Ctrl+Alt+End | 移動游標到最後一欄 (仍在同一列中) |
+| 移到第一列 | Ctrl+Alt+PageUp | 移動游標到第一列 (仍在同一欄中) |
+| 移到最後一列 | Ctrl+Alt+PageDown | 移動游標到最後一列 (仍在同一欄中) |
 %kc:endInclude
 
 ++ 物件導覽 ++[ObjectNavigation]
@@ -617,8 +621,11 @@ NVDA 支援下列類型的數學內容：
 - Mozilla Firefox、Microsoft Internet Explorer 及 Google Chrome 中的 MathML。
 - 透過 UI automation 的 Microsoft Word 365 Modern Math Equations：
 NVDA 能夠讀取 Microsoft Word 365/2016 build 14326 及以上版本中的數學方程式並與之互動，
-不過先前所建立的 MathType 方程式必須先轉換為 Office Math，選取每一個方程式後在快顯功能表中選擇 Equation Options -> Convert to Office Math，執行此操作之前請確保您的 MathType 為最新版本。
-Microsoft Word 現在也提供以線性符號方式導覽方程式，並支援使用包括 LateX 在內的一些語法來輸入數學，更詳細的內容請參見 [Linear format equations using UnicodeMath and LaTeX in Word https://support.microsoft.com/en-us/office/linear-format-equations-using-unicodemath-and-latex-in-word-2e00618d-b1fd-49d8-8cb4-8d17f25754f8]
+不過先前所建立的 MathType 方程式必須先轉換為 Office Math，
+選取每一個方程式後在快顯功能表中選擇 Equation Options -> Convert to Office Math。
+執行此操作之前請確保您的 MathType 為最新版本。
+Microsoft Word 現在也提供以線性符號方式導覽方程式，並支援使用包括 LateX 在內的一些語法來輸入數學。
+更詳細的內容請參見 [Linear format equations using UnicodeMath and LaTeX in Word https://support.microsoft.com/en-us/office/linear-format-equations-using-unicodemath-and-latex-in-word-2e00618d-b1fd-49d8-8cb4-8d17f25754f8]
 - Microsoft Powerpoint 與較舊版本的 Microsoft Word：
 NVDA 在 Microsoft Powerpoint 與 Microsoft word 中能夠讀取並導覽 MathType 方程式，
 這需要安裝 MathType 且
@@ -704,6 +711,7 @@ NVDA 讀取文件時可讀出其中任何支援的數學內容，
 | mnuitem | 功能表項目 |
 | pnl | 面板 |
 | prgbar | 進度列 |
+| bsyind | 忙碌指示器 |
 | rbtn | 選擇鈕 |
 | scrlbar | 捲軸 |
 | sect | 區塊 |
@@ -784,7 +792,8 @@ NVDA 支援使用點顯器來輸入鍵盤快速鍵與模擬按下鍵盤按鍵，
 
 雖然這種方法對於常按或單一的按鍵 (如 Tab) 很實用，但您可能不想要為每一個鍵盤快速鍵都指派一個按鍵組合，
 要模擬按下需要按住組合鍵的按鍵，NVDA 提供了切換 Ctrl、Alt、Shift、Windows 與 NVDA 鍵等的指令，以及一些組合了前述按鍵的指令。
-要使用這些切換指令，首先按下你想要按的組合鍵所對應的指令 (或一系列指令)，接著按下你想要按的快速鍵中其餘的字母，
+要使用這些切換指令，首先按下你想要按的組合鍵所對應的指令 (或一系列指令)，
+接著按下你想要按的快速鍵中其餘的字母，
 例如要完成 Ctrl+F，先使用「切換 Ctrl 鍵」的指令，接著再鍵入一個 f，
 要輸入 Ctrl+Alt+T，先後使用「切換 Ctrl 鍵」及「切換 Alt 鍵」的指令 (沒有順序)，或使用「切換 Ctrl 與 Alt 鍵」的指令，然後鍵入一個 t。
 
@@ -846,7 +855,7 @@ Windows 10 以上具有多種語言的 OCR 功能，
 NVDA 可利用這個功能從圖像或某些不可及的應用程式來辨識出文字。
 
 您可以在 [NVDA 設定 #NVDASettings]對話框中的 [Windows OCR 類別 #Win10OcrSettings]設定文字辨識的語言，
-要新增辨識語言可利用開啟「開始」，選擇「設定」，接著選「時間與語言」，再到「語言」，最後選擇「新增語言」來安裝。
+要新增辨識語言可利用開啟「開始」功能表，選擇「設定」，接著選「時間與語言」，再到「語言」，最後選擇「新增語言」來安裝。
 
 Windows OCR 可能部分或完全無法與 [NVDA 視覺加強器 #Vision]或其他外部視覺輔助工具相容，若要進行辨識前需先停用這些輔助工具。
 
@@ -1125,7 +1134,7 @@ NVDA 設定對話框中的「一般」類別可以設定 NVDA 的整體行為，
 只有 NVDA 的安裝版本才有此選項。
 
 ==== 在登入或安全畫面使用目前儲存的設定 (需要系統管理員權限) ====[GeneralSettingsCopySettings]
-按下這個按鈕將複製目前儲存的 NVDA 使用者組態到 NVDA 系統組態目錄中。如此在登錄畫面、使用者帳戶控制 (UAC) 畫面與其他安全視窗畫面，NVDA 將可使用這些設定，
+按下這個按鈕複製目前儲存的 NVDA 使用者組態到 NVDA 系統組態目錄中，如此在登錄畫面、使用者帳戶控制 (UAC) 畫面與其他[安全畫面 #SecureScreens] NVDA 將會使用這些設定，
 為確保這些設定能夠順利複製，在此之前請先按 Ctrl+NVDA+C 儲存組態或選擇 NVDA 功能表的「儲存組態」，
 只有 NVDA 的安裝版本才有此選項。
 
@@ -1154,7 +1163,7 @@ NVDA 設定對話框中的「一般」類別可以設定 NVDA 的整體行為，
 
 ==== 啟動時通知有擱置的更新 ====[GeneralSettingsNotifyPendingUpdates]
 當啟用此選項，NVDA 啟動時若有擱置的更新將會通知您並提供安裝的機會，
-也可以從 NVDA 功能表選擇「結束」時出現的「結束 NVDA」對話框 (如果有啟用)，或從「說明」功能表中執行「檢查更新」，來手動安裝擱置的更新。
+也可以從「結束 NVDA」對話框 (如果有啟用)、從 NVDA 功能表，或從「說明」子功能表中執行「檢查更新」來手動安裝擱置的更新。
 
 +++ 語音設定 (NVDA+control+v) +++[SpeechSettings]
 NVDA 設定對話框中的「語音」類別包含變更語音合成器及所選合成器的語音特性選項，
@@ -1709,8 +1718,12 @@ NVDA 設定對話框中的「瀏覽模式」類別用於設定當您閱讀和導
 ==== 使用畫面版面配置 ====[BrowseModeSettingsScreenLayout]
 快速鍵: NVDA+v
 
-此選項允許您指定瀏覽模式下的內容是否應將可點擊的內容 (如：連結、按鈕及欄位) 單獨放在一行，或是保持在如同視覺上顯示的文字走向中。注意此選項不適用於 Microsoft Office 應用程式如 Outlook 和 Word，它們始終使用畫面版面配置。
-當啟用畫面版面配置，內容將保持畫面直觀顯示的狀態，例如在視覺上排成一行的多個連結，在語音和點字上的呈現也會將多個連結排在同一行。若停用則元素本身將自成一行，這或許在逐行的頁面導覽時更容易理解，也可能對一些使用者在與項目互動時更容易。
+此選項允許您指定瀏覽模式下的內容是否應將可點擊的內容 (如：連結、按鈕及欄位) 單獨放在一行，或是保持在如同視覺上顯示的文字走向中。
+注意此選項不適用於 Microsoft Office 應用程式如 Outlook 和 Word，它們始終使用畫面版面配置。
+當啟用畫面版面配置，內容將保持畫面直觀顯示的狀態。
+例如在視覺上排成一行的多個連結，在語音和點字上的呈現也會將多個連結排在同一行。
+若停用則元素本身將自成一行，
+這或許在逐行的頁面導覽時更容易理解，也可能對一些使用者在與項目互動時更容易。
 
 ==== 頁面載入時啟用瀏覽模式 ====[BrowseModeSettingsEnableOnPageLoad]
 此核取方塊切換在頁面載入後是否自動啟用瀏覽模式，
@@ -2176,7 +2189,7 @@ NVDA 的可攜式版本將所有的設定、附加元件均儲存在 NVDA 目錄
 NVDA 的安裝版本將所有設定及附加元件儲存在 Windows 使用者設定檔中一個特殊的 NVDA 目錄，
 這表示在 Windows 系統中每一個使用者都可以擁有自己的 NVDA 設定。
 要在任何地方開啟您的設定目錄，可以使用[輸入手勢對話框 #InputGestures]來指派手勢，
-此外對於 NVDA 的安裝版本，您可以從「開始」進到「所有應用程式」清單的「NVDA」中找到「開啟 NVDA 使用者組態目錄」來開啟。
+此外對於 NVDA 的安裝版本，您可以從「開始」功能表進到「所有應用程式」清單的「NVDA」中找到「開啟 NVDA 使用者組態目錄」來開啟。
 
 關於登入或使用者帳戶控制 (UAC) 畫面中的 NVDA 設定是儲存在 NVDA 安裝目錄中的 systemConfig 目錄下，
 通常不應該直接觸碰這裡的組態，
@@ -2813,6 +2826,7 @@ NVDA 支援 Nippon Telesoft 的 Seika 點顯器，依照不同功能分為以下
 | Route to braille cell | routing |
 %kc:endInclude
 
+
 +++ MiniSeika (16, 24 方), V6, 及 V6Pro (40 方) +++[SeikaNotetaker]
 - NVDA 點顯器背景自動偵側的功能支援 USB 及藍牙。
 - 選擇「Seika 點顯器」或「自動偵測」來設定。
@@ -3309,10 +3323,38 @@ NVDA 的自動點顯器偵測也會辨識支援此通訊協定的任何點顯器
 
 + 進階主題 +[AdvancedTopics]
 
+++ 安全模式 ++[SecureMode]
+NVDA 可以使用 ``-s`` [命令列選項 #CommandLineOptions]以安全模式啟動，
+當 NVDA 在[安全畫面 #SecureScreens]會以安全模式執行，除非啟用了 ``serviceDebug`` [全系統參數 #SystemWideParameters]。
+
+安全模式停用項目：
+
+- 儲存組態及其他設定至磁碟
+- 儲存手勢對應表至磁碟
+- [組態設定檔 #ConfigurationProfiles]功能，例如新增、刪除、重新命名設定檔等。
+- 更新 NVDA 與建立可攜式版
+- [Python 主控台 #PythonConsole]
+- [事件紀錄檢視器 #LogViewer]與事件紀錄
+-
+
+++ 安全畫面 ++[SecureScreens]
+當 NVDA 在[安全畫面 #SecureScreens]會以安全模式執行，除非啟用了 ``serviceDebug`` [全系統參數 #SystemWideParameters]。
+
+當從安全畫面執行時，NVDA 使用系統設定檔作為偏好設定，
+NVDA 使用者偏好設定可以[複製到安全畫面使用 #GeneralSettingsCopySettings]。
+
+安全畫面包括：
+
+- Windows 登入畫面
+- 使用者存取控制對話框，當以系統管理員身分執行動作時會出現
+  - 這包括安裝程式
+  -
+-
+
 ++ 命令列選項 ++[CommandLineOptions]
 當 NVDA 啟動時可以接受一個或多個附加選項從而改變其行為，
 您有多少需求就可以附加多少選項。
-這些選項可以從不同的啟動方式附加，包括從捷徑 (在捷徑的「內容」對話框)、從「執行」對話框 (「開始」 → Windows 系統 → 「執行」，或按 Windows+R) 以及從 Windows 命令主控台，
+這些選項可以從不同的啟動方式附加，包括從捷徑 (在捷徑的「內容」對話框)、從「執行」對話框 (「開始」功能表 → Windows 系統 → 「執行」，或按 Windows+R) 以及從 Windows 命令主控台，
 選項應與 NVDA 的執行檔名稱及其他選項之間以空格隔開。
 舉例，一個好用的選項是「--disable-addons」，告訴 NVDA 暫停所有執行中的附加元件，
 這可讓您確認問題是否由附加元件所引起，並從由附加元件引起的嚴重問題中複原。
@@ -3342,7 +3384,7 @@ nvda -q
 | None | --lang=LANGUAGE | 覆寫所設定的 NVDA 語言，設為「Windows」來使用目前使用者預設、設為「en」來使用英文等。 |
 | -c CONFIGPATH | --config-path=CONFIGPATH | 儲存 NVDA 所有設定的路徑 |
 | -m | --minimal | 沒有音效、沒有介面、沒有啟動資訊等 |
-| -s | --secure | 安全模式：會停用以下項目，包括 Python 主控台、設定檔功能 (新增、刪除、重新命名設定檔等)、檢查更新、一些歡迎對話框及設定對話框中的「一般」類別的核取方塊 (如「在登入畫面使用 NVDA」、「結束時儲存組態」等)，以及事件紀錄和登入功能 (通常用於安全模式)。注意此命令也會讓您無法將設定儲存在系統設定中以及將自訂的輸入手勢儲存下來。 |
+| -s | --secure | 以[安全模式 #SecureMode]啟動 NVDA |
 | None | --disable-addons | 附加元件將不起作用 |
 | None | --debug-logging | 僅對本次執行啟用偵錯等級的事件紀錄，這個設定會覆蓋其他事件紀錄的指定等級之內容。( ""--loglevel"", -l) |
 | None | --no-logging | 在使用 NVDA 時完全停用記錄功能。如果從命令列指定了事件記錄等級 ( ""--loglevel"", -l) 或者偵錯事件記錄為開啟，本設定將被覆寫掉。 |
@@ -3365,7 +3407,7 @@ NVDA 允許在 Windows 系統登錄檔設定一些數值，這些數值會改變
 可以在此登錄機碼底下設定以下的數值：
 || 名稱 | 類型 | 可能數值 | 說明 |
 | configInLocalAppData | DWORD | 0 (預設) 停用，1 啟用 | 若啟用，NVDA 使用者組態將儲存於本機應用程式資料夾內，而非使用者的應用程式資料的 roaming 資料夾內。 |
-| serviceDebug | DWORD | 0 (預設) 停用，1 啟用 | 若啟用，在 Windows 安全桌面會停用安全模式，允許使用 Python 主控台及事件紀錄檢視器。由於若干重大的安全性問題，強烈建議不使用此選項。 |
+| serviceDebug | DWORD | 0 (預設) 停用，1 啟用 | 若啟用，在[安全畫面 #SecureScreens]會停用[安全模式 #SecureMode]，允許使用 Python 主控台及事件紀錄檢視器。由於若干重大的安全性問題，強烈建議不使用此選項。 |
 
 + 進一步資訊 +[FurtherInformation]
 如果您需要 NVDA 進一步的資訊或協助，請瀏覽 NVDA 網站 NVDA_URL，
