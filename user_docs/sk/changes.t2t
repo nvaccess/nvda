@@ -3,6 +3,76 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2022.2 =
+Táto verzia obsahuje viacero opráv.
+Konkrétne ide o opravy v prístupnosti Java aplikácií, brailové riadky a aplikácie Windows.
+
+Pridali sme nové klávesové skratky pre navigáciu v tabuľkách.
+Aktualizovali sme databázu symbolov CLDR.
+Aktualizovali sme brailovú prekladovú tabuľku LibLouis. Aktuálne obsahuje novú Nemeckú tabuľku.
+
+== Nové vlastnosti ==
+- Pridaná podpora pre interakciu s komponentom Microsoft Loop v produktoch MS Office. (#13617)
+- Pridané nové klávesové skratky pre navigáciu v tabuľkách. (#957)
+  - ``ctrl+alt+home/end`` na prechod do prvého a posledného stĺpca.
+  - ``ctrl+alt+pageUp/pageDown`` na prechod do prvého a posledného riadka.
+  -
+- Pridaná možnosť pomocou skratiek zapínať prepínanie jazyka a dialektu. Skratka nie je predvolene definovaná. (#10253)
+-
+
+== zmeny ==
+- NSIS aktualizované na verziu 3.08. (#9134)
+- Databáza symbolov CLDR aktualizovaná na verziu 41.0. (#13582)
+- Brailová prekladová tabuľka LibLouis aktualizovaná na verziu [3.22.0 https://github.com/liblouis/liblouis/releases/tag/v3.22.0]. (#13775)
+  - Nová brailová tabuľka: Nemčina grade 2 (detailný)
+  -
+- Pridaná nová rola pre indikátory priebehu typu "zaneprázdnené". (#10644)
+- NVDA odteraz upozorní, ak nie je možné vykonať požadovanú akciu. (#13500)
+  - Toto zahŕňa:
+    - Použitie funkcie, ktorá nie je podporovaná v NVDA z Windows obchodu.
+    - Použitie funkcie, ktorá nie je dostupná v bezpečnom režime.
+    - Použitie funkcie, ktorá vyžaduje zatvorenie dialógu NVDA.
+    -
+  -
+-
+
+== opravy ==
+- Opravy pre java aplikácie:
+  - NVDA oznamuje odteraz stav iba na čítanie. (#13692)
+  - NVDA odteraz správne oznamuje stav zapnuté, vypnuté. (#10993)
+  - NVDA odteraz oznamuje klávesové skratky. (#13643)
+  - NVDA dokáže pípať alebo hlasom oznamovať indikátor priebehu. (#13594)
+  - NVDA viac neodstraňuje text z vidgetov. (#13102)
+  - NVDA správne oznamuje stav prepínacích tlačidiel. (#9728)
+  - NVDA odteraz správne dokáže identifikovať okná, ak má Java aplikácia viac okien. (#9184)
+  - NVDA odteraz správne oznamuje pozíciu záložiek. (#13744)
+  -
+- Opravy pre brailovo písmo:
+  - Opravené problémy pri navigácii v niektorých textových poliach v prvku Mozilla rich edit, napríklad písanie správy v Mozilla Thunderbird. (#12542)
+  - Ak je brailový kurzor zviazaný automaticky a súčasne je presunutý kurzor myšy pri aktívnom sledovaní myšy, skratky na prezeranie textu aktualizujú obsah na brailovom riadku. (#11519)
+  - Odteraz je možné použiť príkazy na prezeranie obsahu na brailovom riadku po tom, čo boli použité skratky na prezeranie textu. (#8682)
+  -
+- Inštalátor NVDA je odteraz možné spustiť aj z adresárov, v ktorých názvoch sú špeciálne znaky. (#13270)
+- NVDA odteraz oznamuje položky na webových stránkach otvorených v Mozilla Firefox aj v prípade, že sú atribúty aria-rowindex, aria-colindex, aria-rowcount alebo aria-colcount nesprávne. (#13405)
+- Kurzor viac nepreskakuje medzi riadkami a stĺpcami pri navigácii v tabuľke, ak sú stĺpce zlúčené. (#7278)
+- Pri čítaní neinteraktívnych pdf dokumentov v aplikácii Adobe Reader, NVDA oznamuje typ a stav formulárových prvkov (napríklad prepínačov a začiarkávacích polí). (#13285)
+- V bezpečnom režime je možné z menu resetovať nastavenia NVDA na predvolené hodnoty. (#13547)
+- Zamknuté tlačidlá myšy sú automaticky odomknuté po ukončení NVDA. Doteraz ostávali zamknuté. (#13410)
+- Odteraz je podporované oznamovanie čísel riadkov vo Visual Studio. (#13604)
+  - Aby toto správne fungovalo, zapnite oznamovanie čísel riadkov v zobrazení Visual studio a tiež v nastaveniach čítania textu v NVDA.
+  - 
+- Odteraz je správne oznamované odsadenie riadka vo Visual Studio. (#13574)
+- NVDA opäť správne oznamuje detaily o výsledkoch hľadania v ponuke štart v aktuálnych verziách systémov Windows 10 a 11. (#13544)
+- Vo vstavanej kalkulačke V systéme Windows 10 a 11, od verzie 10.1908, NVDA oznamuje výsledky aj v prípade, že je použitých viacero príkazov, napríklad príkazy vo vedeckom režime. (#13383)
+- V systéme Windows 11 je opäť možné pracovať s panelom úloh a zobrazením úloh pomocou myšy a dotyku. (#13506)
+- NVDA dokáže oznamovať stavový riadok poznámkového bloku vo Windows 11. (#13688)
+- Vizuálna prezentácia navigačného objektu sa objaví na obrazovke okamžite po aktivovaní funkcie. (#13641)
+- Opravené čítanie zoznamov s jednobunkovými položkami. (#13659, #13735)
+- Opravená chyba, ktorá spôsobovala nesprávne prepínanie jazykov a dialektov v eSpeaku pre angličtinu a Francúzštinu. (#13727)
+- Opravené prepínanie jazykov a dialektov pri používaní hlasov Onecore. (#13732)
+-
+
+
 = 2022.1 =
 Táto verzia zahŕňa vylepšenú podporu pre sprístupnenie prvkov v dokumentoch MS Word cez rozhranie UI Automation.
 NVDA predvolene používa rozhranie UI Automation pre MS Office od verzie 16.0.15000 v systéme Windows 11.
