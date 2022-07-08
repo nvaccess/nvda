@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master-9280,3350d74\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-29 00:02+0000\n"
-"PO-Revision-Date: 2022-04-29 13:29+0330\n"
+"POT-Creation-Date: 2022-07-01 05:41+0000\n"
+"PO-Revision-Date: 2022-07-07 15:19+0330\n"
 "Last-Translator: Mohammadreza Rashad <mohammadreza5712@gmail.com>\n"
 "Language-Team: NVDA Translation Team <nvda-translations@groups.io>\n"
 "Language: fa\n"
@@ -234,6 +234,11 @@ msgstr "برگ"
 #. progress bar.
 msgid "prgbar"
 msgstr "نپیش"
+
+#. Translators: Displayed in braille for an object which is an
+#. indeterminate progress bar, aka busy indicator.
+msgid "bsyind"
+msgstr "شغل"
 
 #. Translators: Displayed in braille for an object which is a
 #. scroll bar.
@@ -820,6 +825,11 @@ msgstr "آلمانی درجه‌ی 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "German grade 2 (detailed)"
+msgstr "آلمانی درجه‌ی ۲ (مُفَصّل)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Greek (Greece)"
 msgstr "یونانی (یونان)"
 
@@ -1380,13 +1390,15 @@ msgstr "خوسا درجه‌ی 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Chinese (China, Mandarin) grade 1"
-msgstr "چینی (چین، ماندارین) درجه ۱"
+#. This should be translated to '中文中国汉语现行盲文' in Mandarin.
+msgid "Chinese (China, Mandarin) Current Braille System"
+msgstr "چینی (چین، ماندارین) سیستمِ فعلیِ بریل"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Chinese (China, Mandarin) grade 2"
-msgstr "چینی (چین، ماندارین) درجه ۲"
+#. This should be translated to '中文中国汉语双拼盲文' in Mandarin.
+msgid "Chinese (China, Mandarin) Double-phonic Braille System"
+msgstr "چینی (چین، ماندارین) سیستمِ بریلِ دوآوایی"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2416,6 +2428,22 @@ msgstr "به ستونِ بَعدیِ جدول میبَرَد"
 msgid "moves to the previous table column"
 msgstr "به ستونِ قبلیِ جدول میبَرَد."
 
+#. Translators: the description for the first table row script on browseMode documents.
+msgid "moves to the first table row"
+msgstr "به اولین سطرِ جدول میبَرَد."
+
+#. Translators: the description for the last table row script on browseMode documents.
+msgid "moves to the last table row"
+msgstr "به آخرین سطرِ جدول میبَرَد."
+
+#. Translators: the description for the first table column script on browseMode documents.
+msgid "moves to the first table column"
+msgstr "به اولین ستونِ جدول میبَرَد"
+
+#. Translators: the description for the last table column script on browseMode documents.
+msgid "moves to the last table column"
+msgstr "به آخرین ستونِ جدول میبَرَد"
+
 #. Translators: The message announced when toggling the include layout tables browse mode setting.
 msgid "layout tables off"
 msgstr "جدول‌های طرحبندی اعلام نمیشوند."
@@ -2566,25 +2594,9 @@ msgstr "راست‌کلیک"
 msgid "Locks or unlocks the left mouse button"
 msgstr "دکمه‌ی چپِ موس را پایین نگه‌میدارد یا رها میکند"
 
-#. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
-msgid "Left mouse button unlock"
-msgstr "دکمه‌ی چپِ موس رها شد"
-
-#. Translators: This is presented when the left mouse button is locked down (used for drag and drop).
-msgid "Left mouse button lock"
-msgstr "دکمه‌ی چپِ موس پایین نگهداشته شد"
-
 #. Translators: Input help mode message for right mouse lock/unlock command.
 msgid "Locks or unlocks the right mouse button"
 msgstr "دکمه‌ی راستِ موس را پایین نگه‌میدارد یا رها میکند"
-
-#. Translators: This is presented when the right mouse button lock is released (used for drag and drop).
-msgid "Right mouse button unlock"
-msgstr "دکمه‌ی راستِ موس رها شد"
-
-#. Translators: This is presented when the right mouse button is locked down (used for drag and drop).
-msgid "Right mouse button lock"
-msgstr "دکمه‌ی راستِ موس پایین نگهداشته شد"
 
 #. Translators: Input help mode message for report current selection command.
 msgid ""
@@ -3048,6 +3060,26 @@ msgstr "کلیک‌شدنی‌ها اعلام نمیشوند."
 #. Translators: The message announced when toggling the report if clickable document formatting setting.
 msgid "report if clickable on"
 msgstr "کلیک‌شدنی‌ها اعلام میشوند."
+
+#. Translators: Input help mode message for cycle through automatic language switching mode command.
+msgid ""
+"Cycles through speech modes for automatic language switching: off, language "
+"only and language and dialect."
+msgstr ""
+"حالت‌های گفتار را برای تعویضِ زبانِ خودکار، بینِ خاموش، تنها زبان، و زبان و لهجه "
+"تغییر میدهد."
+
+#. Translators: A message reported when executing the cycle automatic language switching mode command.
+msgid "Automatic language switching off"
+msgstr "تعویضِ خودکارِ زبان غیرفعال شد"
+
+#. Translators: A message reported when executing the cycle automatic language switching mode command.
+msgid "Automatic language and dialect switching on"
+msgstr "تعویضِ خودکارِ زبان و لهجه فعال شد"
+
+#. Translators: A message reported when executing the cycle automatic language switching mode command.
+msgid "Automatic language switching on"
+msgstr "تعویضِ خودکارِ زبان فعال شد"
 
 #. Translators: Input help mode message for cycle speech symbol level command.
 msgid ""
@@ -4814,6 +4846,22 @@ msgstr "سومالیایی"
 msgid "%s cursor"
 msgstr "مکان‌نمای %s"
 
+#. Translators: This is presented when the left mouse button is locked down (used for drag and drop).
+msgid "Left mouse button lock"
+msgstr "دکمه‌ی چپِ موس پایین نگهداشته شد"
+
+#. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
+msgid "Left mouse button unlock"
+msgstr "دکمه‌ی چپِ موس رها شد"
+
+#. Translators: This is presented when the right mouse button is locked down (used for drag and drop).
+msgid "Right mouse button lock"
+msgstr "دکمه‌ی راستِ موس پایین نگهداشته شد"
+
+#. Translators: This is presented when the right mouse button lock is released (used for drag and drop).
+msgid "Right mouse button unlock"
+msgstr "دکمه‌ی راستِ موس رها شد"
+
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
@@ -6382,6 +6430,22 @@ msgstr "پِیمایِشگر و فکوس را به سطرِ بعدی میبَر�
 msgid "Moves the navigator object and focus to the previous row"
 msgstr "پِیمایِشگر و فکوس را به سطرِ قبلی میبَرَد"
 
+#. Translators: The description of an NVDA command.
+msgid "Moves the navigator object to the first column"
+msgstr "پِیمایِشگر را به اولین ستون میبَرَد."
+
+#. Translators: The description of an NVDA command.
+msgid "Moves the navigator object to the last column"
+msgstr "پِیمایِشگر را به آخرین ستون میبَرَد."
+
+#. Translators: The description of an NVDA command.
+msgid "Moves the navigator object and focus to the first row"
+msgstr "پِیمایِشگر و فکوس را به اولین سطر میبَرَد"
+
+#. Translators: The description of an NVDA command.
+msgid "Moves the navigator object and focus to the last row"
+msgstr "پِیمایِشگر و فکوس را به آخرین سطر میبَرَد"
+
 #. Translators: Announced in braille when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
 msgid "Suggestions"
 msgstr "پیشنهادها"
@@ -7829,6 +7893,10 @@ msgstr "فیگور"
 msgid "highlighted"
 msgstr "برجسته"
 
+#. Translators: Identifies a progress bar with indeterminate state, I.E. progress can not be determined.
+msgid "busy indicator"
+msgstr "مشغول"
+
 #. Translators: Indicates that a particular state of an object is negated.
 #. Separate strings have now been defined for commonly negated states (e.g. not selected and not
 #. checked), but this still might be used in some other cases.
@@ -8003,7 +8071,7 @@ msgstr "اضافی"
 msgid "unlocked"
 msgstr "قفل‌نشده"
 
-#. Translators: a state that denotes the existance of a note.
+#. Translators: a state that denotes the existence of a note.
 msgid "has note"
 msgstr "یادداشت دارد"
 
@@ -8031,10 +8099,6 @@ msgstr "پیکره‌بندی اِعمال شد."
 #. Translators: Reported when configuration has been restored to defaults by using restore configuration to factory defaults item in NVDA menu.
 msgid "Configuration restored to factory defaults"
 msgstr "پیکره‌بندی به پیشفرضِ تولیدکننده بازگشت."
-
-#. Translators: Reported when current configuration cannot be saved while NVDA is running in secure mode such as in Windows login screen.
-msgid "Cannot save configuration - NVDA in secure mode"
-msgstr "پیکره‌بندی را نمیتوانم ذخیره کنم. NVDA در حالتِ محافظت‌شده قرار دارد."
 
 #. Translators: Reported when current configuration has been saved.
 msgid "Configuration saved"
@@ -8098,43 +8162,6 @@ msgstr "&تنظیمات..."
 #. Translators: The description for the menu item to open NVDA Settings dialog.
 msgid "NVDA settings"
 msgstr "تنظیماتِ NVDA"
-
-#. Translators: The label for the menu item to open Default speech dictionary dialog.
-msgid "&Default dictionary..."
-msgstr "دیکشنریِ &پیش‌فرض..."
-
-#. Translators: The help text for the menu item to open Default speech dictionary dialog.
-msgid ""
-"A dialog where you can set default dictionary by adding dictionary entries "
-"to the list"
-msgstr ""
-"پنجره‌ای محاوره‌ایست که میتوانید در آن کلمات و تلفظهای جدید به دیکشنریِ پیش‌فرض "
-"اضافه کنید."
-
-#. Translators: The label for the menu item to open Voice specific speech dictionary dialog.
-msgid "&Voice dictionary..."
-msgstr "دیکشنریِ &صدا..."
-
-#. Translators: The help text for the menu item
-#. to open Voice specific speech dictionary dialog.
-msgid ""
-"A dialog where you can set voice-specific dictionary by adding dictionary "
-"entries to the list"
-msgstr ""
-"پنجره‌ای محاوره‌ایست که میتوانید با استفاده از آن ورودیهای دیکشنری را به "
-"دیکشنری مخصوص یک صدا اضافه کنید."
-
-#. Translators: The label for the menu item to open Temporary speech dictionary dialog.
-msgid "&Temporary dictionary..."
-msgstr "دیکشنریِ &موقت..."
-
-#. Translators: The help text for the menu item to open Temporary speech dictionary dialog.
-msgid ""
-"A dialog where you can set temporary dictionary by adding dictionary entries "
-"to the edit box"
-msgstr ""
-"پنجره‌ای محاوره‌ایست که میتوانید در آن با وارد کردن واژه و تلفظِ جدید، یک "
-"دیکشنریِ موقت ایجاد کنید."
 
 #. Translators: The label for a submenu under NvDA Preferences menu to select speech dictionaries.
 msgid "Speech &dictionaries"
@@ -8231,32 +8258,6 @@ msgstr "درباره..."
 msgid "&Help"
 msgstr "&راهنما"
 
-#. Translators: The label for the menu item to open the Configuration Profiles dialog.
-msgid "&Configuration profiles..."
-msgstr "&پروفایل‌های پیکره‌بندی..."
-
-#. Translators: The label for the menu item to revert to saved configuration.
-msgid "&Revert to saved configuration"
-msgstr "&بازگشت به پیکره‌بَندیِ ذخیره شده"
-
-msgid "Reset all settings to saved state"
-msgstr "تمامِ تنظیمات را به حالتِ از پیش ذخیره شده برمیگردانَد."
-
-#. Translators: The label for the menu item to reset settings to default settings.
-#. Here, default settings means settings that were there when the user first used NVDA.
-msgid "&Reset configuration to factory defaults"
-msgstr "برگرداندنِ تنظیمات به &پیش‌فرضِ تولید کننده"
-
-msgid "Reset all settings to default state"
-msgstr "تمامِ تنظیمات را به وضعیتِ اولیه بازمیگردانَد."
-
-#. Translators: The label for the menu item to save current settings.
-msgid "&Save configuration"
-msgstr "&ذخیره‌ی پیکره‌بندی"
-
-msgid "Write the current configuration to nvda.ini"
-msgstr "پیکره‌بَندیِ جاری را در nvda.ini مینویسد."
-
 #. Translators: The label for the menu item to open donate page.
 msgid "Donate"
 msgstr "کمکِ مالی"
@@ -8276,46 +8277,72 @@ msgstr "&خروج"
 msgid "Exit NVDA"
 msgstr "خروج از NVDA"
 
-#. Translators: An option in the combo box to choose exit action.
-msgid "Exit"
-msgstr "خروج"
+#. Translators: The label for the menu item to open Default speech dictionary dialog.
+msgid "&Default dictionary..."
+msgstr "دیکشنریِ &پیش‌فرض..."
 
-#. Translators: An option in the combo box to choose exit action.
-msgid "Restart"
-msgstr "راه‌اندازیِ مجدد"
-
-#. Translators: An option in the combo box to choose exit action.
-msgid "Restart with add-ons disabled"
-msgstr "راه‌اندازیِ مجدد با افزونه های غیرفعال"
-
-#. Translators: An option in the combo box to choose exit action.
-msgid "Restart with debug logging enabled"
-msgstr "راه‌اندازیِ مجدد با ثبتِ وقایع در سطحِ آسیب‌یابی"
-
-#. Translators: An option in the combo box to choose exit action.
-msgid "Install pending update"
-msgstr "نصبِ به‌روزرسانیِ به‌تعویق‌افتاده"
-
-#. Translators: A message in the exit Dialog shown when all add-ons are disabled.
+#. Translators: The help text for the menu item to open Default speech dictionary dialog.
 msgid ""
-"All add-ons are now disabled. They will be re-enabled on the next restart "
-"unless you choose to disable them again."
+"A dialog where you can set default dictionary by adding dictionary entries "
+"to the list"
 msgstr ""
-"همه‌ی افزونه‌ها در حالِ حاضر غیرفعال شده‌اند. آن‌ها هنگامِ آغاز به کارِ بَعدیِ NVDA "
-"دوباره فعال خواهند شد؛ مگر این‌که بخواهید دوباره غیرفعالشان کنید."
+"پنجره‌ای محاوره‌ایست که میتوانید در آن کلمات و تلفظهای جدید به دیکشنریِ پیش‌فرض "
+"اضافه کنید."
 
-#. Translators: A message in the exit Dialog shown when NVDA language has been
-#. overwritten from the command line.
+#. Translators: The label for the menu item to open Voice specific speech dictionary dialog.
+msgid "&Voice dictionary..."
+msgstr "دیکشنریِ &صدا..."
+
+#. Translators: The help text for the menu item
+#. to open Voice specific speech dictionary dialog.
 msgid ""
-"NVDA's interface language is now forced from the command line. On the next "
-"restart, the language  saved in NVDA's configuration will be used instead."
+"A dialog where you can set voice-specific dictionary by adding dictionary "
+"entries to the list"
 msgstr ""
-"زبانِ رابطِ کاربریِ NVDA حالا از خطِّ فرمان تعیین شده است. در راه‌اندازیِ بعدی، "
-"زبانِ ذخیره‌شده در پیکره‌بَندیِ NVDA به جایش استفاده خواهد شد."
+"پنجره‌ای محاوره‌ایست که میتوانید با استفاده از آن ورودیهای دیکشنری را به "
+"دیکشنری مخصوص یک صدا اضافه کنید."
 
-#. Translators: The label for actions list in the Exit dialog.
-msgid "What would you like to &do?"
-msgstr "چه کار می&کنید؟"
+#. Translators: The label for the menu item to open Temporary speech dictionary dialog.
+msgid "&Temporary dictionary..."
+msgstr "دیکشنریِ &موقت..."
+
+#. Translators: The help text for the menu item to open Temporary speech dictionary dialog.
+msgid ""
+"A dialog where you can set temporary dictionary by adding dictionary entries "
+"to the edit box"
+msgstr ""
+"پنجره‌ای محاوره‌ایست که میتوانید در آن با وارد کردن واژه و تلفظِ جدید، یک "
+"دیکشنریِ موقت ایجاد کنید."
+
+#. Translators: The label for the menu item to open the Configuration Profiles dialog.
+msgid "&Configuration profiles..."
+msgstr "&پروفایل‌های پیکره‌بندی..."
+
+#. Translators: The label for the menu item to revert to saved configuration.
+msgid "&Revert to saved configuration"
+msgstr "&بازگشت به پیکره‌بَندیِ ذخیره شده"
+
+#. Translators: The help text for the menu item to revert to saved configuration.
+msgid "Reset all settings to saved state"
+msgstr "تمامِ تنظیمات را به حالتِ از پیش ذخیره شده برمیگردانَد."
+
+#. Translators: The label for the menu item to reset settings to default settings.
+#. Here, default settings means settings that were there when the user first used NVDA.
+msgid "&Reset configuration to factory defaults"
+msgstr "برگرداندنِ تنظیمات به &پیش‌فرضِ تولید کننده"
+
+#. Translators: The help text for the menu item to reset settings to default settings.
+#. Here, default settings means settings that were there when the user first used NVDA.
+msgid "Reset all settings to default state"
+msgstr "تمامِ تنظیمات را به وضعیتِ اولیه بازمیگردانَد."
+
+#. Translators: The label for the menu item to save current settings.
+msgid "&Save configuration"
+msgstr "&ذخیره‌ی پیکره‌بندی"
+
+#. Translators: The help text for the menu item to save current settings.
+msgid "Write the current configuration to nvda.ini"
+msgstr "پیکره‌بَندیِ جاری را در nvda.ini مینویسد."
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -8646,6 +8673,20 @@ msgid ""
 "version is now {}"
 msgstr "یک نسخه‌ی به‌روز از افزونه نیاز است. حداقل نسخه‌ی پشتیبانی‌شده {} است."
 
+#. Translators: Reported when an action cannot be performed because NVDA is in a secure screen
+msgid "Action unavailable in secure context"
+msgstr "این کنش در محتوای محافظت‌شده در دسترس نیست."
+
+#. Translators: Reported when an action cannot be performed because NVDA has been installed
+#. from the Windows Store.
+msgid "Action unavailable in NVDA Windows Store version"
+msgstr "این کنش در نسخه‌ی فروشگاهیِ NVDA در دسترس نیست."
+
+#. Translators: Reported when an action cannot be performed because NVDA is waiting
+#. for a response from a modal dialog
+msgid "Action unavailable while a dialog requires a response"
+msgstr "این کنش در حالی که پنجره‌ای نیازمندِ پاسخ است در دسترس نیست."
+
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
 msgstr "پروفایل‌های پیکره‌بندی"
@@ -8835,6 +8876,47 @@ msgstr "هیچ راهنمایی اینجا موجود نیست."
 #. indicating that	the user guide could not be found.
 msgid "No user guide found."
 msgstr "هیچ راهنمای کاربری یافت نشد"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Exit"
+msgstr "خروج"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart"
+msgstr "راه‌اندازیِ مجدد"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with add-ons disabled"
+msgstr "راه‌اندازیِ مجدد با افزونه های غیرفعال"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with debug logging enabled"
+msgstr "راه‌اندازیِ مجدد با ثبتِ وقایع در سطحِ آسیب‌یابی"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Install pending update"
+msgstr "نصبِ به‌روزرسانیِ به‌تعویق‌افتاده"
+
+#. Translators: A message in the exit Dialog shown when all add-ons are disabled.
+msgid ""
+"All add-ons are now disabled. They will be re-enabled on the next restart "
+"unless you choose to disable them again."
+msgstr ""
+"همه‌ی افزونه‌ها در حالِ حاضر غیرفعال شده‌اند. آن‌ها هنگامِ آغاز به کارِ بَعدیِ NVDA "
+"دوباره فعال خواهند شد؛ مگر این‌که بخواهید دوباره غیرفعالشان کنید."
+
+#. Translators: A message in the exit Dialog shown when NVDA language has been
+#. overwritten from the command line.
+msgid ""
+"NVDA's interface language is now forced from the command line. On the next "
+"restart, the language  saved in NVDA's configuration will be used instead."
+msgstr ""
+"زبانِ رابطِ کاربریِ NVDA حالا از خطِّ فرمان تعیین شده است. در راه‌اندازیِ بعدی، "
+"زبانِ ذخیره‌شده در پیکره‌بَندیِ NVDA به جایش استفاده خواهد شد."
+
+#. Translators: The label for actions list in the Exit dialog.
+msgid "What would you like to &do?"
+msgstr "چه کار می&کنید؟"
 
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
@@ -12794,6 +12876,20 @@ msgstr "فاصله‌ی خطّیِ دوبرابر"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "فاصله‌ی یِکُنیم خطّی"
+
+#, fuzzy
+#~ msgid "Moves the navigator object to the first row"
+#~ msgstr "پِیمایِشگر را به شیءِ بعدی میبَرَد."
+
+#, fuzzy
+#~ msgid "Moves the navigator object to the last row"
+#~ msgstr "پِیمایِشگر را به شیءِ بعدی میبَرَد."
+
+#~ msgid "Chinese (China, Mandarin) grade 2"
+#~ msgstr "چینی (چین، ماندارین) درجه ۲"
+
+#~ msgid "Cannot save configuration - NVDA in secure mode"
+#~ msgstr "پیکره‌بندی را نمیتوانم ذخیره کنم. NVDA در حالتِ محافظت‌شده قرار دارد."
 
 #~ msgid "details"
 #~ msgstr "جزئیات"

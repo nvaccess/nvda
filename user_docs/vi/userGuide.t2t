@@ -81,7 +81,7 @@ Chạy tập tin vừa tải về sẽ khởi động chương trình NVDA tạm
 Tiếp theo, bạn sẽ được hỏi là muốn cài đặt NVDA vào máy, tạo bản chạy trực tiếp hay tiếp tục sử dụng phiên bản tạm thời đó.
 
 Nếu bạn có dự định dùng NVDA luôn trên máy này, bạn nên chọn cài đặt vào máy.
-Việc cài đặt NVDA vào máy sẽ cho phép bạn sử dụng một số tính năng như khởi động sau khi đăng nhập, khả năng đọc ở màn hình đăng nhập Windows và [các màn hình bảo vệ #SecureScreens] (không được hỗ trợ cho bản chạy tạm thời và  bản chạy trực tiếp) cũng như tạo biểu tượng trên Start Menu và desktop.
+Việc cài đặt NVDA vào máy sẽ cho phép bạn sử dụng một số tính năng như khởi động sau khi đăng nhập, khả năng đọc ở màn hình đăng nhập Windows và [các màn hình bảo vệ #SecureScreens] (vốn không được hỗ trợ cho bản chạy tạm thời và  bản chạy trực tiếp) cũng như tạo biểu tượng trên Start Menu và desktop.
 Bạn có thể tạo bản chạy trực tiếp sau khi cài đặt NVDA vào máy.
 
 Nếu muốn dùng NVDA từ ổ USB hay các phương tiện lưu trữ khác, bạn có thể chọn chức năng tạo bản chạy trực tiếp.
@@ -1718,9 +1718,9 @@ Phân loại này có các tùy chọn sau:
 ==== Sử dụng kiểu trình bày theo màn hình ====[BrowseModeSettingsScreenLayout]
 Phím bật/tắt: NVDA+v
 
-Tùy chọn này cho phép bạn thiết lập nội dung dạng có thể kích hoạt (liên kết, nút bấm và biểu mẫu) ở chế độ duyệt trên một dòng riêng biệt, hoặc trình bày như nó hiển thị trên màn hình.
+Tùy chọn này cho phép bạn thiết lập   để các nội dung có thể kích hoạt (liên kết, nút bấm và biểu mẫu) ở chế độ duyệt trên một dòng riêng biệt, hoặc trình bày trực quan như nó được hiển thị trên màn hình.
 Lưu ý là tùy chọn này không dùng cho các ứng dụng trong bộ Microsoft Office như Outlook và Word, vốn dĩ luôn dùng kiểu trình bày theo màn hình.
-Khi bật tùy chọn trình bày theo màn hình, các thành phần của trang sẽ vẫn hiển thị trực quan như đã thiết kế.
+Khi bật tùy chọn trình bày theo màn hình, các thành phần của trang sẽ vẫn hiển thị trực quan như đã được thiết kế.
 Ví dụ, một dòng có nhiều liên kết   sẽ được thể hiện trong cả tiếng nói và chữ nổi ở dạng nhiều liên kết trên cùng một dòng.
 Nếu tắt tùy chọn, các thành phần của trang sẽ thể hiện trên từng dòng riêng biệt.
 Điều này có thể giúp dễ hiểu hơn khi di chuyển từng dòng trên trang và giúp một số người dùng dễ tương tác hơn với các thành phần.
@@ -3384,7 +3384,7 @@ Sau đây là các tùy chọn dòng lệnh cho NVDA:
 | -c CONFIGPATH | --config-path=CONFIGPATH | Đường dẫn để lưu tất cả cấu hình của NVDA |
 | Không có | --lang=LANGUAGE | Bỏ qua ngôn ngữ đã cấu hình của NVDA. Thiết lập là "Windows" cho ngôn ngữ mặc định của người dùng hiện tại, "en" là tiếng Anh, v...v.... |
 | -m | --minimal | Không âm thanh, không giao diện, không thông báo bắt đầu, v...v... |
-| -s | --secure | Khởi động NVDA trong [Chế Độ An Toàn #SecureMode] |
+| -s | --secure | Khởi động NVDA trong [Chế Độ bảo vệ #SecureMode] |
 | Không có | --disable-addons | Các add-on không có hiệu lực |
 | Không có | --debug-logging | Bật cấp độ bản ghi dò lỗi cho lần chạy này. Thiết lập này được ghi đè lên các cấp độ bản ghi khác ( ""--loglevel"", -l) tham số được cung cấp, bao gồm tùy chọn tắt log. |
 | Không có | --no-logging | Tắt log hoàn toàn khi dùng NVDA. Thiết lập này có thể bị ghi đè nếu một cấp độ log ( ""--loglevel"", -l) được chỉ định từ dòng lệnh hoặc bản ghi dò lỗi đã được bật. |
@@ -3398,7 +3398,7 @@ Sau đây là các tùy chọn dòng lệnh cho NVDA:
 | Không có | --portable-path=PORTABLEPATH | đường dẫn để tạo bản chạy trực tiếp |
 
 ++ Các Tham Số Mở Rộng Hệ Thống ++[SystemWideParameters]
-NVDA cho phép thiết lập một số giá trị trong registry hệ thống để thay thế cách hoạt động ở mức hệ thống của NVDA.
+NVDA cho phép thiết lập một số giá trị trong hệ thống registry để thay thế cách hoạt động ở mức hệ thống của NVDA.
 Những khóa chứa các giá trị này trong registry bao gồm:
 - Hệ thống 32-bit: "HKEY_LOCAL_MACHINE\SOFTWARE\nvda"
 - Hệ thống 64-bit: "HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\nvda"

@@ -794,8 +794,8 @@ Bien que cette approche soit utile pour les touches fréquemment pressées ou un
 Pour permettre l'émulation de pression de touches lorsque les touches de modification sont maintenues enfoncées, NVDA fournit des commandes pour basculer entre les touches contrôle, alt, majuscule, windows et NVDA, ainsi que des commandes pour certaines combinaisons de ces touches.
 Pour utiliser ces bascules, appuyez d'abord sur la commande (ou la séquence de commandes) des touches de modification sur lesquelles vous souhaitez appuyer.
 Saisissez ensuite le caractère faisant partie du raccourci clavier que vous souhaitez saisir.
-Par exemple, pour produire control+f, utilisez la commande "bascule de touche contrôle" puis tapez un f,
-et pour saisir control+alt+t, utilisez soit les commandes "bascule de touche contrôle" et "bascule de touche alt", dans n'importe quel ordre, soit la commande "bascule de touches Contrôle et alt", suivie de la saisie d'un t.
+Par exemple, pour produire contrôle+f, utilisez la commande "bascule de touche contrôle" puis tapez un f,
+et pour saisir contrôle+alt+t, utilisez soit les commandes "bascule de touche contrôle" et "bascule de touche alt", dans n'importe quel ordre, soit la commande "bascule de touches Contrôle et alt", suivie de la saisie d'un t.
 
 Si vous basculez accidentellement les touches de modification, exécuter à nouveau la commande bascule supprimera le modificateur.
 
@@ -1086,7 +1086,7 @@ Si vous voulez accéder à une catégorie qui n'a pas de raccourci dédié, util
 
 Les catégories de paramètres du dialogue Paramètres sont décrite ci-dessous.
  
-+++ Général (NVDA+control+g) +++[GeneralSettings]
++++ Général (NVDA+contrôle+g) +++[GeneralSettings]
 La catégorie Général du dialogue Paramètres définit le comportement global de NVDA tel que la langue de l'interface et la vérification des mises à jour.
 Elle contient les options suivantes :
 
@@ -1136,7 +1136,6 @@ Cette option n'existe que dans les versions installées de NVDA.
 ==== Utiliser les paramètres actuellement sauvegardés sur l'écran de connexion et les autres écrans sécurisés ====[GeneralSettingsCopySettings]
 L'appui sur ce bouton copie votre configuration utilisateur actuellement sauvegardée dans le répertoire système de NVDA, ainsi, NVDA peut l'utiliser quand il s'exécute sur l'écran de connexion et les [autres écrans sécurisés #SecureScreens].
 Pour vous assurer que tous vos paramètres sont transférés, enregistrez d'abord votre configuration avec contrôle+NVDA+c ou Enregistrer la configuration dans le menu NVDA.
-To make sure that all your settings are transferred, make sure to save your configuration first with control+NVDA+c or Save configuration in the NVDA menu.
 Cette option n'existe que dans les versions installées de NVDA.
 
 ==== Vérifier automatiquement les mises à jour de NVDA ====[GeneralSettingsCheckForUpdates]
@@ -1261,7 +1260,7 @@ En général, cette option devrait être activée.
 Cependant, certains synthétiseurs utilisant les API de parole Microsoft se comportent bizarrement quand cette option est activée.
 Si vous rencontrez des problèmes à l'épellation de caractères, essayez de désactiver cette option.
 
-+++ Choix du Synthétiseur (NVDA+control+s) +++[SelectSynthesizer]
++++ Choix du Synthétiseur (NVDA+contrôle+s) +++[SelectSynthesizer]
 Le dialogue Synthétiseur, qui s'ouvre en activant le bouton Changer dans la catégorie Parole du dialogue Paramètres, permet de choisir le synthétiseur de parole qui sera utilisé par NVDA.
 Une fois que vous aurez choisi votre synthétiseur, appuyez sur "OK" et NVDA chargera le synthétiseur choisi.
 S'il y a une erreur au chargement du synthétiseur, NVDA vous en informera par un message, puis continuera à utiliser le synthétiseur précédent.
@@ -2533,7 +2532,7 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 | Touche contrôle+fin | t3+spDown |
 | Touche début | t3+spLeft |
 | Touche fin | t3+spRight |
-| touche contrôle | control |
+| touche contrôle | contrôle |
 %kc:endInclude
 
 ++ Les Terminaux Handy Tech ++[HandyTech]
