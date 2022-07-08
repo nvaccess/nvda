@@ -34,6 +34,41 @@ Only those who maybe haven't tried the feature, because they were using the prio
 those who have tried and found the feature to be unstable and decided they would wait for it to become
 stable.
 
+## Feature Flag Enum
+To aid static typing in NVDA, `enum` classes are used.
+`BoolFlag` is provided, the majority of feature flags are expected to use this.
+However, if more values are required (E.G. `AllowUiaInMSWord` has options `WHEN_NECESSARY`, `WHERE_SUITABLE`, `ALWAYS`, in addition to `DEFAULT`), then a new `enum` class can be defined.
+Adding the enum class to the `featureFlagEnums.py` file will automatically expose it for use in the config spec (see the next section).
+Example new `enum` class:
+
+```python
+
+class AllowUiaInMSWordFlag(DisplayStringEnum):
+	"""Feature flag for UIA in MS Word.
+	The explicit DEFAULT option allows developers to differentiate between a value set that happens to be
+	the current default, and a value that has been returned to the "default" explicitly.
+	"""
+
+	@property
+	def _displayStringLabels(self):
+		""" These labels will be used in the GUI when displaying the options.
+		"""
+		# To prevent duplication, self.DEFAULT is not included here.
+		return {
+			# Translators: Label for an option in NVDA settings.
+			self.WHEN_NECESSARY: _("Only when necessary"),
+			# Translators: Label for an option in NVDA settings.
+			self.WHERE_SUITABLE: _("Where suitable"),
+			# Translators: Label for an option in NVDA settings.
+			self.ALWAYS: _("ALWAYS"),
+		}
+
+	DEFAULT = enum.auto()
+	WHEN_NECESSARY = enum.auto()
+	WHERE_SUITABLE = enum.auto()
+	ALWAYS = enum.auto()
+```
+
 ## Config Spec
 In `configSpec.py` specify the new config key, ideally in the category that is most relevant to the feature.
 Placing it in a category rather than a catch-all feature flags category, allows for the option to become
@@ -41,22 +76,31 @@ permanent without having to write config upgrade code to move it from section to
 
 ```ini
 [virtualBuffers]
-    newOptionForUsers= featureFlag(behaviourOfDefault=disabled)
+    newOptionForUsers= featureFlag(optionsEnum="BoolFlag", behaviourOfDefault="disabled")
+    anotherOptionForUsers= featureFlag(optionsEnum="AllowUiaInMSWordFlag", behaviourOfDefault="WHERE_SUITABLE")
 ```
 
 The `featureFlag` type is a custom spec type.
 It will produce a `config.FeatureFlag` class instance when the key is accessed.
 ```python
-flagValue: config.FeatureFlag = config.conf["virtualBuffers"]["newOptionForUsers"]
-if flagValue:  # converts to bool automatically, taking into account 'behaviorOfDefault'
+newFlagValue: config.FeatureFlag = config.conf["virtualBuffers"]["newOptionForUsers"]
+
+# BoolFlag converts to bool automatically, taking into account 'behaviorOfDefault'
+if newFlagValue:
     print("The new option is enabled")
+
+anotherFlagValue: config.FeatureFlag = config.conf["virtualBuffers"]["anotherOptionForUsers"]
+
+# Other "optionsEnum" types can compare with the value, the 'behaviorOfDefault' is taken into account.
+if flagValue == AllowUiaInMSWordFlag.ALWAYS:
+    print("Another option is enabled")
 ```
 
 ## GUI
 A control (`gui.nvdaControls.FeatureFlagCombo`) is provided to simplify exposing the feature flag to the user.
 
 ### Usage:
-Note comments:
+Note the comments in the example:
 - `creation`
 - `is default`
 - `reset to default value`
@@ -86,12 +130,6 @@ self.newOptionForUsersCombo: nvdaControls.FeatureFlagCombo = vbufGroup.addLabele
     wxCtrlClass=nvdaControls.FeatureFlagCombo,
     keyPath=["virtualBuffers", "newOptionForUsers"], # The path of keys, see config spec.
     conf=config.conf, # The configObj instance, allows getting / setting the value
-    translatedOptions=collections.OrderedDict({ # OrderedDict to communicate that order of items will be preserved.
-        # Translators: Explanation of yes option
-        config.FeatureFlagValue.ENABLED: _("Yes"),
-        # Translators: Explanation of no option
-        config.FeatureFlagValue.DISABLED: _("No"),
-    })
 )
 ...
 # is default
