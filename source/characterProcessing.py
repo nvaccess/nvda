@@ -15,23 +15,23 @@ import globalVars
 import config
 
 
-LocaleData = TypeVar("LocaleData")
+_LocaleDataT = TypeVar("_LocaleDataT")
 
 
-class LocaleDataMap(Generic[LocaleData], object):
+class LocaleDataMap(Generic[_LocaleDataT], object):
 	"""Allows access to locale-specific data objects, dynamically loading them if needed on request"""
 
 	def __init__(
 			self,
-			localeDataFactory: Callable[[str], Generic[LocaleData]]
+			localeDataFactory: Callable[[str], Generic[_LocaleDataT]]
 	):
 		"""
 		@param localeDataFactory: the factory to create data objects for the requested locale.
 		""" 
-		self._localeDataFactory: Callable[[str], LocaleData] = localeDataFactory
-		self._dataMap: Dict[str, LocaleData] = {}
+		self._localeDataFactory: Callable[[str], _LocaleDataT] = localeDataFactory
+		self._dataMap: Dict[str, _LocaleDataT] = {}
 
-	def fetchLocaleData(self, locale: str, fallback: bool = True) -> LocaleData:
+	def fetchLocaleData(self, locale: str, fallback: bool = True) -> _LocaleDataT:
 		"""
 		Fetches a data object for the given locale. 
 		This may mean that the data object is first created and stored if it does not yet exist in the map.
