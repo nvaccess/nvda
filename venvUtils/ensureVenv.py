@@ -19,15 +19,20 @@ venv_path: str = os.path.join(top_dir, ".venv")
 requirements_path: str = os.path.join(top_dir, "requirements.txt")
 venv_orig_requirements_path: str = os.path.join(venv_path, "_requirements.txt")
 venv_python_version_path: str = os.path.join(venv_path, "python_version")
+#: Whether this script is run interactively,
+#: i.e. whether user input is possible to answer questions.
+#: Value is True if interactive (i.e. stdout is attached to a terminal), False otherwise.
+isInteractive = hasattr(sys.stdout, "isatty") and sys.stdout.isatty()
 
 
-def askYesNoQuestion(message: str) -> bool:
+def askYesNoQuestion(message: str, default: bool = True) -> bool:
 	"""
 	Displays the given message to the user and accepts y or n as input.
 	Any other input causes the question to be asked again.
-	@returns: True for y and n for False.
+	If isInteractive is False, the default is always returned.
+	@returns: True for y and False for n.
 	"""
-	while True:
+	while isInteractive:
 		answer = input(
 			message + " [y/n]: "
 		)
@@ -37,6 +42,7 @@ def askYesNoQuestion(message: str) -> bool:
 			return True
 		else:
 			continue  # ask again
+	return default
 
 
 def fetchRequirementsSet(path: str) -> Set[str]:
