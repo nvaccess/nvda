@@ -18,9 +18,7 @@ from wx.lib.mixins import listctrl as listmix
 
 from config.featureFlag import (
 	FeatureFlag,
-)
-from config.featureFlagEnums import (
-	FeatureFlagEnumProtocol
+	FlagValueEnum as FeatureFlagEnumT,
 )
 from .dpiScalingHelper import DpiScalingHelperMixin
 from . import guiHelper
@@ -408,10 +406,7 @@ class TabbableScrolledPanel(scrolledpanel.ScrolledPanel):
 			child.GetRect = oldChildGetRectFunction
 
 
-FeatureFlagEnumT = typing.TypeVar("FeatureFlagEnumT", bound=FeatureFlagEnumProtocol)
-
-
-class FeatureFlagCombo(wx.Choice, typing.Generic[FeatureFlagEnumT]):
+class FeatureFlagCombo(wx.Choice):
 	"""Creates a combobox (wx.Choice) with a list of feature flags.
 	"""
 	def __init__(

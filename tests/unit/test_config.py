@@ -17,17 +17,26 @@ from config.featureFlagEnums import (
 	getAvailableEnums,
 	BoolFlag,
 )
+from utils.displayString import (
+	DisplayStringEnum
+)
 
 
 class Config_FeatureFlagEnums_getAvailableEnums(unittest.TestCase):
 
 	def test_knownEnumsReturned(self):
-		self.assertEqual(
-			dict(getAvailableEnums()),
-			{
-				"BoolFlag": BoolFlag,
+		self.assertTrue(
+			set(getAvailableEnums()).issuperset({
+				("BoolFlag", BoolFlag),
 			}
-		)
+		))
+
+	def test_allEnumsHaveDefault(self):
+		noDefault = []
+		for name, klass in getAvailableEnums():
+			if not hasattr(klass, "DEFAULT"):
+				noDefault.append((name, klass))
+		self.assertEqual(noDefault, [])
 
 
 class Config_FeatureFlag_specTransform(unittest.TestCase):
@@ -247,3 +256,89 @@ class Config_FeatureFlag_validateFeatureFlag(unittest.TestCase):
 				behaviorOfDefault="disabled",
 				optionsEnum=BoolFlag.__name__
 			)
+
+
+class Config_FeatureFlag_with_BoolFlag(unittest.TestCase):
+
+	def test_Enabled_DisabledByDefault(self):
+		f = FeatureFlag(value=BoolFlag.ENABLED, behaviorOfDefault=BoolFlag.DISABLED)
+		self.assertEqual(True, bool(f))
+		self.assertEqual(BoolFlag.ENABLED, f.calculated())
+		self.assertTrue(f == BoolFlag.ENABLED)  # overloaded operator ==
+		self.assertEqual(f.enumClassType, BoolFlag)
+
+	def test_Enabled_EnabledByDefault(self):
+		f = FeatureFlag(value=BoolFlag.ENABLED, behaviorOfDefault=BoolFlag.ENABLED)
+		self.assertEqual(True, bool(f))
+		self.assertEqual(BoolFlag.ENABLED, f.calculated())
+		self.assertTrue(f == BoolFlag.ENABLED)  # overloaded operator ==
+		self.assertEqual(f.enumClassType, BoolFlag)
+
+	def test_Disabled_DisabledByDefault(self):
+		f = FeatureFlag(value=BoolFlag.DISABLED, behaviorOfDefault=BoolFlag.DISABLED)
+		self.assertEqual(False, bool(f))
+		self.assertEqual(BoolFlag.DISABLED, f.calculated())
+		self.assertTrue(f == BoolFlag.DISABLED)  # overloaded operator ==
+		self.assertEqual(f.enumClassType, BoolFlag)
+
+	def test_Disabled_EnabledByDefault(self):
+		f = FeatureFlag(value=BoolFlag.DISABLED, behaviorOfDefault=BoolFlag.ENABLED)
+		self.assertEqual(False, bool(f))
+		self.assertEqual(BoolFlag.DISABLED, f.calculated())
+		self.assertTrue(f == BoolFlag.DISABLED)  # overloaded operator ==
+		self.assertEqual(f.enumClassType, BoolFlag)
+
+	def test_Default_EnabledByDefault(self):
+		f = FeatureFlag(value=BoolFlag.DEFAULT, behaviorOfDefault=BoolFlag.ENABLED)
+		self.assertEqual(True, bool(f))
+		self.assertEqual(BoolFlag.ENABLED, f.calculated())
+		self.assertTrue(f == BoolFlag.ENABLED)  # overloaded operator ==
+		self.assertEqual(f.enumClassType, BoolFlag)
+
+	def test_Default_DisabledByDefault(self):
+		f = FeatureFlag(value=BoolFlag.DEFAULT, behaviorOfDefault=BoolFlag.DISABLED)
+		self.assertEqual(False, bool(f))
+		self.assertEqual(BoolFlag.DISABLED, f.calculated())
+		self.assertTrue(f == BoolFlag.DISABLED)  # overloaded operator ==
+		self.assertEqual(f.enumClassType, BoolFlag)
+
+	def test_DefaultBehaviorOfDefault_Raises(self):
+		with self.assertRaises(AssertionError):
+			FeatureFlag(value=BoolFlag.DEFAULT, behaviorOfDefault=BoolFlag.DEFAULT)
+
+
+class CustomEnum(DisplayStringEnum):
+	DEFAULT = enum.auto()
+	ALWAYS = enum.auto()
+	WHEN_REQUIRED = enum.auto()
+	NEVER = enum.auto()
+
+	def _displayStringLabels(self) -> typing.Dict[enum.Enum, str]:
+		return {}
+
+
+class Config_FeatureFlag_with_CustomEnum(unittest.TestCase):
+	def test_CustomEnum_boolRaises(self):
+		f = FeatureFlag(value=CustomEnum.ALWAYS, behaviorOfDefault=CustomEnum.NEVER)
+		with self.assertRaises(NotImplementedError):
+			bool(f)
+
+	def test_CustomEnum_equalsOp(self):
+		always = FeatureFlag(value=CustomEnum.ALWAYS, behaviorOfDefault=CustomEnum.NEVER)
+
+		alsoAlways = FeatureFlag(value=CustomEnum.ALWAYS, behaviorOfDefault=CustomEnum.NEVER)
+		whenRequired = FeatureFlag(value=CustomEnum.WHEN_REQUIRED, behaviorOfDefault=CustomEnum.NEVER)
+		defaultAlways = FeatureFlag(value=CustomEnum.DEFAULT, behaviorOfDefault=CustomEnum.ALWAYS)
+		defaultNever = FeatureFlag(value=CustomEnum.DEFAULT, behaviorOfDefault=CustomEnum.NEVER)
+
+		self.assertFalse(always.isDefault())
+		self.assertTrue(defaultAlways.isDefault())
+
+		# overloaded operator == accepts enum or featureFlag
+		self.assertTrue(always == CustomEnum.ALWAYS)
+		self.assertTrue(always == alsoAlways)
+		self.assertTrue(whenRequired == CustomEnum.WHEN_REQUIRED)
+		self.assertTrue(whenRequired != alsoAlways)
+		self.assertTrue(defaultAlways == CustomEnum.ALWAYS)
+		self.assertTrue(defaultAlways == always)
+		self.assertTrue(defaultNever == CustomEnum.NEVER)

@@ -11,8 +11,8 @@ import typing
 
 from . import featureFlagEnums
 from .featureFlagEnums import (
-	FeatureFlagEnumProtocol,
 	BoolFlag,
+	FlagValueEnum,
 )
 from typing import (
 	Optional,
@@ -23,10 +23,8 @@ from configobj.validate import (
 )
 from logHandler import log
 
-FlagValueEnum = typing.TypeVar('FlagValueEnum', bound=FeatureFlagEnumProtocol)
 
-
-class FeatureFlag(typing.Generic[FlagValueEnum]):
+class FeatureFlag:
 	"""A FeatureFlag allows the selection of a preference for behavior or its default state.
 	It's typically used to introduce a feature that isn't expected to handle all use-cases well
 	when initially introduced.

@@ -19,14 +19,16 @@ from utils.displayString import (
 
 from typing_extensions import Protocol  # Python 3.8 adds native support
 
+_displayString = typing.TypeVar("_displayString", bound=DisplayStringEnum)
+
 
 class FeatureFlagEnumProtocol(Protocol):
 	""" All feature flags are expected to have a "DEFAULT" value.
 	"""
 	DEFAULT: enum.Enum  # Required enum member
-	name: str  # from Enum
-	value: typing.Type  # from Enum
-	displayString: str  # from utils.displayString._DisplayStringEnumMixin
+
+
+FlagValueEnum = typing.Union[FeatureFlagEnumProtocol, _displayString]
 
 
 class BoolFlag(DisplayStringEnum):
@@ -58,7 +60,11 @@ class BoolFlag(DisplayStringEnum):
 		return self == BoolFlag.ENABLED
 
 
-def getAvailableEnums() -> typing.Generator[typing.Tuple[str, enum.EnumMeta], None, None]:
+def getAvailableEnums() -> typing.Generator[typing.Tuple[str, DisplayStringEnum], None, None]:
 	for name, value in globals().items():
-		if isinstance(value, enum.EnumMeta) and hasattr(value, "DEFAULT"):
+		if (
+			isinstance(value, type)  # is a class
+			and issubclass(value, DisplayStringEnum)  # inherits from DisplayStringEnum
+			and value != DisplayStringEnum  # but isn't DisplayStringEnum
+		):
 			yield name, value
