@@ -556,7 +556,6 @@ class Gecko_ia2(VirtualBuffer):
 			movement: documentBase._Movement,
 			axis: documentBase._Axis,
 	) -> textInfos.TextInfo:
-
 		# Skip the VirtualBuffer implementation as the base BrowseMode implementation is good enough for us here.
 		return super(VirtualBuffer, self)._getNearestTableCell(startPos, cell, movement, axis)
 
