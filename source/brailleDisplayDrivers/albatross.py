@@ -648,9 +648,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	# If bit 7 (LSB 0 scheme) is 1, there is 80 cells model, else 46 cells model.
 	# Other display settings are currently ignored.
-	# And one should be able to change between 46 and 80 models on the fly.
 	def _setNumCellCount(self, data: bytes):
-		braille.handler.displaySize = self.numCells = 80 if ord(data) >> 7 == 1 else 46
+		self.numCells = 80 if ord(data) >> 7 == 1 else 46
 
 	def _handleKeyPresses(self, data: bytes):
 		# in single ctrl-key presses and ctrl-key combinations the first key is
