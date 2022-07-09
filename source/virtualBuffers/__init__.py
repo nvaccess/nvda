@@ -40,6 +40,8 @@ import treeInterceptorHandler
 import watchdog
 from abc import abstractmethod
 import documentBase
+
+
 VBufStorage_findDirection_forward=0
 VBufStorage_findDirection_back=1
 VBufStorage_findDirection_up=2
