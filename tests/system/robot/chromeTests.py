@@ -2001,8 +2001,12 @@ def test_tableSayAllAxisCachingForMergedCells():
 	actualSpeech = _chrome.getSpeechAfterKey("NVDA+control+alt+upArrow")
 	_asserts.strings_match(
 		actualSpeech,
-		"row 1  column 4  D 1\nrow 2  column 3  D 2\nrow 3  column 4  through 5  D 3 plus E 3\n"
-		+ "row 4  column 3  through row 5 column 4  C 4 plus D 4 plus  C 5 plus D 5"
+		"\n".join(
+			"row 1  column 4  D 1",
+			"row 2  column 3  D 2",
+			"row 3  column 4  through 5  D 3 plus E 3",
+			"row 4  column 3  through row 5 column 4  C 4 plus D 4 plus  C 5 plus D 5",
+		)
 	)
 
 
