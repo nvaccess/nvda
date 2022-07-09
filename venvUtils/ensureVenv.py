@@ -25,24 +25,26 @@ venv_python_version_path: str = os.path.join(venv_path, "python_version")
 isInteractive = hasattr(sys.stdout, "isatty") and sys.stdout.isatty()
 
 
-def askYesNoQuestion(message: str, default: bool = True) -> bool:
+def askYesNoQuestion(message: str) -> bool:
 	"""
 	Displays the given message to the user and accepts y or n as input.
 	Any other input causes the question to be asked again.
-	If isInteractive is False, the default is always returned.
+	If isInteractive is False, y is assumed and True is returned.
 	@returns: True for y and False for n.
 	"""
-	while isInteractive:
-		answer = input(
-			message + " [y/n]: "
-		)
+	question: str = f"{message} [y/n]: "
+	while True:
+		if isInteractive:
+			answer = input(question)
+		else:
+			answer = "y"
+			print(f"{question}{answer} (answered non-interactively)")
 		if answer == 'n':
 			return False
 		elif answer == 'y':
 			return True
 		else:
 			continue  # ask again
-	return default
 
 
 def fetchRequirementsSet(path: str) -> Set[str]:
