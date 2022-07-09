@@ -4,6 +4,7 @@
 # Copyright (C) 2006-2021 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
 # Julien Cochuyt
 
+from abc import ABCMeta, abstractmethod
 from enum import IntEnum
 from typing import Callable, TYPE_CHECKING, Optional
 import weakref
@@ -23,7 +24,6 @@ from .types import (
 	SpeechSequence,
 	_flattenNestedSequences,
 )
-from abc import abstractmethod
 
 if TYPE_CHECKING:
 	import NVDAObjects
@@ -160,7 +160,7 @@ class _ObjectsReader(garbageHandler.TrackedObject):
 		self.walker = None
 
 
-class _TextReader(garbageHandler.TrackedObject):
+class _TextReader(garbageHandler.TrackedObject, metaclass=ABCMeta):
 	"""Manages continuous reading of text.
 	This is intended for internal use only.
 
@@ -204,6 +204,10 @@ class _TextReader(garbageHandler.TrackedObject):
 		return False
 
 	def nextLineImpl(self) -> bool:
+		"""
+		Advances cursor to the next reading chunk (e.g. paragraph).
+		@return: C{True} if advanced successfully, C{False} otherwise.
+		"""
 		# Collapse to the end of this line, ready to read the next.
 		try:
 			self.reader.collapse(end=True)

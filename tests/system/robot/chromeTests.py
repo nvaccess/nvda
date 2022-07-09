@@ -1806,25 +1806,35 @@ def test_tableSpeakAllCommands():
 	Key bindings: NVDA+control+alt+upArrow/leftArrow
 	Refer to #13469.
 	"""
+	f = open(r"H:\od\1.txt", "a", encoding="utf-8")
+	print("Starting", file=f)
 	prepareChromeForTableSayAllTests()
 	tableSayAllJumpToB2()
 	# Speak current column
-	actualSpeech = _chrome.getSpeechAfterKey("NVDA+control+alt+upArrow")
+	actualSpeech, actualBraille = _chrome.getSpeechAndBrailleAfterKey("NVDA+control+alt+upArrow")
 	_asserts.strings_match(
 		actualSpeech,
 		"row 1  B 1\nrow 2  B 2\nrow 3  column 1  through 2  A 3 plus B 3\nrow 4  column 2  B 4\nrow 5  B 5"
 	)
+	_asserts.braille_matches(
+		actualBraille,
+		"r2 c2 B2",
+		message="Speak entire column",
+	)
 
-	# Check that cursor Still stays at B2
+	print(f"'{actualBraille }'", file=f)
+
+	# Check that cursor still stays at B2
 	actualSpeech = _chrome.getSpeechAfterKey("NVDA+upArrow")
 	_asserts.strings_match(actualSpeech, "row 2  B 2")
 
 	# Speak current row
-	actualSpeech = _chrome.getSpeechAfterKey("NVDA+control+alt+leftArrow")
+	actualSpeech, actualBraille = _chrome.getSpeechAndBrailleAfterKey("NVDA+control+alt+leftArrow")
 	_asserts.strings_match(
 		actualSpeech,
 		"column 1  A 2\ncolumn 2  B 2\nrow 1  through 2  column 3  C 1 plus C 2\nrow 2  D 2\ncolumn 4  E 2"
 	)
+	print(f"'{actualBraille }'", file=f)
 
 	# Check that cursor stays at B2
 	actualSpeech = _chrome.getSpeechAfterKey("NVDA+upArrow")

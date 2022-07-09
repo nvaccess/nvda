@@ -10,7 +10,10 @@ Google Chrome with a HTML sample and assert NVDA interacts with it in the expect
 # imported methods start with underscore (_) so they don't get imported into robot files as keywords
 from os.path import join as _pJoin
 import tempfile as _tempfile
-from typing import Optional as _Optional
+from typing import (
+	Optional as _Optional,
+	Tuple as _Tuple,
+)
 from SystemTestSpy import (
 	_blockUntilConditionMet,
 	_getLib,
@@ -193,6 +196,10 @@ class ChromeLib:
 		@return: The speech after key press.
 		"""
 		return _NvdaLib.getSpeechAfterKey(key)
+
+	@staticmethod
+	def getSpeechAndBrailleAfterKey(key) -> _Tuple[str, str]:
+		return _NvdaLib.getSpeechAndBrailleAfterKey(key)
 
 	@staticmethod
 	def getSpeechAfterTab() -> str:
