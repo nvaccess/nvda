@@ -1974,7 +1974,7 @@ def test_tableSpeakAllCommands():
 	prepareChromeForTableSayAllTests()
 	tableSayAllJumpToB2()
 	# Speak current column
-	actualSpeech, actualBraille = _chrome.getSpeechAndBrailleAfterKey("NVDA+control+alt+upArrow")
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("NVDA+control+alt+upArrow")
 	_asserts.strings_match(
 		actualSpeech,
 		"\n".join([
@@ -1996,7 +1996,7 @@ def test_tableSpeakAllCommands():
 	_asserts.strings_match(actualSpeech, "row 2  B 2")
 
 	# Speak current row
-	actualSpeech, actualBraille = _chrome.getSpeechAndBrailleAfterKey("NVDA+control+alt+leftArrow")
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+control+alt+leftArrow")
 	_asserts.strings_match(
 		actualSpeech,
 		"\n".join([
