@@ -202,12 +202,10 @@ class SpeechSymbols(object):
 		self.symbols = collections.OrderedDict()
 		self.fileName = None
 
-	def load(self, fileName, allowComplexSymbols=True):
+	def load(self, fileName: str, allowComplexSymbols: bool = True) -> None:
 		"""Load symbol information from a file.
 		@param fileName: The name of the file from which to load symbol information.
-		@type fileName: str
 		@param allowComplexSymbols: Whether to allow complex symbols.
-		@type allowComplexSymbols: bool
 		@raise IOError: If the file cannot be read.
 		"""
 		self.fileName = fileName
@@ -232,7 +230,7 @@ class SpeechSymbols(object):
 					log.warning(u"Invalid line in file {file}: {line}".format(
 						file=fileName, line=line))
 
-	def _loadComplexSymbol(self, line):
+	def _loadComplexSymbol(self, line: str) -> None:
 		try:
 			identifier, pattern = line.split("\t")
 		except TypeError:
