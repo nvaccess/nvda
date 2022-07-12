@@ -28,7 +28,7 @@ _numBytesPushed = 0
 
 #Parameter bounds
 minRate=80
-maxRate=450
+maxRate=449
 minPitch=0
 maxPitch=99
 
