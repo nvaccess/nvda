@@ -7,14 +7,14 @@ Nyheder i NVDA
  Denne version indeholder mange fejlrettelser.
  Der er markante forbedringer, når du bruger Java-baserede programmer, punktdisplays og nogle Windows-funktioner.
  
- Der er ny kommandoer til navigation i tabeller.
+ Der er nye kommandoer til navigation i tabeller.
  Unicode CLDR er blevet opdateret.
  LibLouis er blevet opdateret med en ny punkttabel på tysk.
 
 
 == Nye funktioner ==
 - Understøttelse for brug af Microsoft Loop Components i Microsoft Office. (#13617)
-- Ny kommandoer til navigation i tabeller. (#957)
+- Nye kommandoer til navigation i tabeller. (#957)
  - Ctrl+alt+hjem/end går til første eller sidste kolonne.
  - Ctrl+alt+side op/ned går til første og sidste række.
  -
@@ -28,7 +28,7 @@ Nyheder i NVDA
 - Opdateret LibLouis punktoversættelse til [3.22.0 https://github.com/liblouis/liblouis/releases/tag/v3.22.0]. (#13775)
   - Ny tysk punkttabel: Tysk niveau 2 (detaljeret).
   -
-- Tilføjet ny rolle til optagede behandlingslinjer. (#10644)
+- Tilføjet ny rolle for optagede behandlingslinjer. (#10644)
 - Skærmlæseren vil nu meddele, når en NVDA-handling ikke kan udføres. (#13500)
   - Dette er tilfældet, når:
     - Du bruger NVDA fra Microsoft Store.
@@ -42,10 +42,10 @@ Nyheder i NVDA
 == Fejlrettelser ==
 - Rettelser for Java-baserede programmer:
   - NVDA vil nu meddele skrivebeskyttet status for de pågældende kontrolelementer. (#13692)
-  - NVDA vil nu korrekt meddele aktiveret&deaktiveret status. (#10993)
-  - NVDA vil nu meddele tastaturgenveje. (#13643)
+  - NVDA vil nu korrekt meddele aktiveret/deaktiveret status. (#10993)
+  - NVDA vil nu oplyse tastaturgenveje. (#13643)
   - NVDA kan nu oplyse status for behandlingslinjer med bip eller tale. (#13594)
-  - NVDA vil ikke længere fejlagtigt fjerne tekst fra widgets, når disse bliver oplyst. (#13102)
+  - NVDA vil ikke længere fejlagtigt fjerne tekst fra widgets, når disse bliver oplæst. (#13102)
   - NVDA vil nu meddele status for skifteknapper. (#9728)
   - NVDA vil nu identificerer vinduet i et Java-program, der har flere vinduer. (#9184)
   - NVDA vil nu meddele position for elementer, der kan tabbes til. (#13744)
@@ -63,7 +63,7 @@ Nyheder i NVDA
 - Menupunktet "Gendan konfiguration til fabriksindstillingerne" i NVDA-menuen kan nu benyttes, når NVDA kører i sikker tilstand. (#13547)
 - Alle museknapper bliver låst op, når NVDA afslutter. Tidligere var dette ikke tilfældet, og museknapperne ville forblive låst. (#13410)
 - Visual Studio oplyser nu linjenumre. (#13604)
-  - Bemærk: Før denne funktion kan virke, skkal linjenumre være slået til i Visual Studio og NVDA.
+  - Bemærk: Før denne funktion kan virke, skal linjenumre være slået til i Visual Studio og NVDA.
   -
 - Visual Studio oplyser nu den korrekte linjeindrykning. (#13574)
 - NVDA kan nu igen oplyse søgeresultater i Windows start-menuen i Windows 10 og 11. (#13544)
