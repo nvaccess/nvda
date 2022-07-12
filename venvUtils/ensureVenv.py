@@ -24,7 +24,10 @@ venv_python_version_path: str = os.path.join(venv_path, "python_version")
 #: Value is True if interactive (i.e. stdout is attached to a terminal), False otherwise.
 isInteractive = hasattr(sys.stdout, "isatty") and sys.stdout.isatty()
 if not isInteractive:
-	print("Warning: Running in non-interactive mode. Defaults are assumed for prompts, if applicable", flush=True)
+	print(
+		"Warning: Running in non-interactive mode. Defaults are assumed for prompts, if applicable",
+		flush=True
+	)
 
 
 def askYesNoQuestion(message: str, default: bool) -> bool:
