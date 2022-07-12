@@ -10,7 +10,9 @@ Commands that can be embedded in a speech sequence for changing synth parameters
 """
  
 from abc import ABCMeta, abstractmethod
-from typing import Optional, Callable
+from typing import (
+	Optional,
+)
 
 import config
 from synthDriverHandler import getSynth
