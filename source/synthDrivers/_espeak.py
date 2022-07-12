@@ -27,10 +27,10 @@ espeakDLL=None
 _numBytesPushed = 0
 
 #Parameter bounds
-minRate=80
-maxRate=449
-minPitch=0
-maxPitch=99
+minRate = 80
+maxRate = 449
+minPitch = 0
+maxPitch = 99
 
 #event types
 espeakEVENT_LIST_TERMINATED=0
