@@ -27,7 +27,7 @@ NVDA可供盲人和低视力人群使用 Windows 操作系统，以及与众多�
 - 便捷易用的语音安装程序。
 - 已翻译为54种语言。
 - 支持现代的 Windows 操作系统，包括32位和64位和其他衍生版本。
-- 能够在 Windows 登录界面和其他安全界面运行
+- 能够在 Windows 登录界面和[其他安全界面 #SecureScreens]运行
 - 支持使用触摸手势浏览屏幕时朗读控件和文本信息
 - 支持常见的辅助功能接口，如Microsoft Active Accessibility(MSAA)、Java Access Bridge、IAccessible2和UI automation
 - 能够以视觉突出显示各种焦点
@@ -78,10 +78,10 @@ NVDA 还使用了其他协议的开源免费软件。
 转到下载区域，您将发现一个可下载最新版本 NVDA 的链接。
 
 运行您刚刚下载的文件，会打开一个临时的 NVDA 副本。
-您将被询问，是否要安装 NVDA、创建便携版本或者仅仅是运行临时的版本。
+您将被询问，是否要安装 NVDA、创建便携版本或者仅运行临时副本。
 
-如果您只打算在这个电脑上使用 NVDA，您将希望选择“安装NVDA”。
-只有安装 NVDA 之后，您才能使用以下功能  在 Windows 登录时自动启动 NVDA ，朗读 Windows 的登录界面或者其他安全界面 在开始菜单或桌面创建快捷方式。(这些功能无法在便携版和临时的 NVDA 副本中启用)
+如果您打算一直在这台计算机上使用 NVDA，您需要选择“安装NVDA”。
+只有安装 NVDA 后，才能使用以下功能： 在 Windows 登录时自动启动 NVDA ，朗读 Windows 的登录界面或者其他[安全界面 #SecureScreens]在开始菜单或桌面创建快捷方式(以上功能无法在便携版和临时副本中启用)
 安装版本的 NVDA 允许您在任何时候创建便携版本。
 
 如果您希望让 NVDA 运行在U盘或其他可擦写的存储设备上，您应该选择“创建便携版本”。
@@ -117,8 +117,8 @@ NVDA 还使用了其他协议的开源免费软件。
 请看 [管理不兼容的插件 #incompatibleAddonsManager] 这一节了解详细情况。
 
 +++ 在Windows启动时运行NVDA +++[StartAtWindowsLogon]
-此选项将允许您选择是否在 Windows 欢迎屏幕(即在输入密码以前)启动 NVDA。
-此选项还可应用于用户账户控制（UAC）和其他安全界面。
+此选项将允许您选择是否在 Windows 欢迎屏幕(即在输入密码之前)启动 NVDA。
+此选项还可应用于用户账户控制（UAC）和[其他安全界面 #SecureScreens]。
 全新安装时默认启用这个选项。
 
 +++ 创建桌面快捷方式 (control+alt+n) +++[CreateDesktopShortcut]
@@ -127,7 +127,7 @@ NVDA 还使用了其他协议的开源免费软件。
 
 +++ 复制便携版配置到当前用户账户 +++[CopyPortableConfigurationToCurrentUserAccount]
 此选项将允许您选择，是否允许为 NVDA 的安装版从正在运行的 NVDA 的用户配置中拷贝配置到当前登录用户的用户配置。
-此选项将不会为在此系统上的其他用户拷贝配置，也不会应用于 Windows 欢迎屏幕和其他安全界面。
+此选项将不会为在此系统上的其他用户拷贝配置，也不会应用于 Windows 欢迎屏幕和[其他安全界面 #SecureScreens]。
  此选项仅在从便携版本的 NVDA 安装时才可用，不会在从下载的安装程序包中安装时出现。
 
 ++ 创建一个便携版 ++[CreatingAPortableCopy]
@@ -152,7 +152,7 @@ NVDA 还使用了其他协议的开源免费软件。
 
 NVDA安装版的配置在“漫游”应用程序配置文件夹 (比如 "C:\Users\<用户名>\AppData\Roaming")。
 可以更改注册表把安装版的配置存放在“本地”应用程序配置文件夹(比如 "C:\Users\<用户名>\AppData\Local")。
-请查看[系统层面的配置 #SystemWideParameters]这一节，了解更多信息。
+请查看[系统范围参数 #SystemWideParameters]这一节，了解更多信息。
 
 如果想启动便携版本的NVDA，您可以找到您的便携版本所在的文件夹，按“回车键”选择或双击 nvda.exe 即可。
 如果NVDA已经在运行，它将在启动便携版之前自动停止。
@@ -342,6 +342,10 @@ NVDA 提供下列与系统输入焦点相关的快捷命令：
 | 移动到下一列 | control+alt+右光标 | 移动输入焦点到下一列(仍在同一行内)。 |
 | 移动到上一行 | control+alt+上光标 | 移动输入焦点到上一行(仍在同一列内)。 |
 | 移动到下一行 | control+alt+下光标 | 移动输入焦点到下一行(仍在同一列内)。 |
+| 移动到第一列 | control+alt+行首 | 移动输入焦点到第一列(仍在同一行内)。 |
+| 移动到最后一列 | control+alt+行尾 | 移动输入焦点到最后一列(仍在同一行内)。 |
+| 移动到第一行 | control+alt+上翻页 | 移动输入焦点到第一行(仍在同一列内)。 |
+| 移动到最后一行 | control+alt+下翻页 | 移动输入焦点到最后一行(仍在同一列内)。 |
 %kc:endInclude
 
 ++ 对象导航 ++[ObjectNavigation]
@@ -617,8 +621,11 @@ NVDA 支持以下数学内容：
 - Mozilla Firefox, Microsoft Internet Explorer 和 Google Chrome内的MathML 内容。
 - UIA 模式下 Microsoft Word 中的新版数学公式：
 NVDA 能够阅读 Microsoft Word 365/2016 build 14326 及更高版本软件中的数学公式并与之交互。
-但请注意，必须将先前创建的 MathType 公式转换为 Office Math，方法是选中相应的公式并在上下文菜单中选择 “Equation” 对象 -> 转换为 Office Math。在执行该操作之前，请确保您的 MathType 已更新到最新版本。
- Microsoft Word 本身还提供基于线性格式的数学公式导航支持， 同时支持使用包括 LateX 在内的多种语法输入数学公式。有关详细信息，请参考 [在 Word 中使用 UnicodeMath 和 LaTeX 的线性格式公式 https://support.microsoft.com/zh-cn/office/word-%E4%B8%AD%E4%BD%BF%E7%94%A8-unicodemath-%E5%92%8C-latex-%E7%9A%84%E7%BA%BF%E6%80%A7%E6%A0%BC%E5%BC%8F%E5%85%AC%E5%BC%8F-2e00618d-b1fd-49d8-8cb4-8d17f25754f8]
+但请注意，必须将先前创建的 MathType 公式转换为 Office Math。
+方法是选中每个要转换的公式并在上下文菜单中选择 “Equation” 对象 -> 转换为 Office Math。
+在执行该操作之前，请确保您的 MathType 已更新到最新版本。
+Microsoft Word 提供了基于线性格式的数学公式导航支持， 同时支持使用包括 LateX 在内的多种语法输入数学公式。
+有关详细信息，请参考 [在 Word 中使用 UnicodeMath 和 LaTeX 的线性格式公式 https://support.microsoft.com/zh-cn/office/word-%E4%B8%AD%E4%BD%BF%E7%94%A8-unicodemath-%E5%92%8C-latex-%E7%9A%84%E7%BA%BF%E6%80%A7%E6%A0%BC%E5%BC%8F%E5%85%AC%E5%BC%8F-2e00618d-b1fd-49d8-8cb4-8d17f25754f8]
 - Microsoft Powerpoint 和旧版 Microsoft Word 中的数学公式：
 NVDA 支持在 Microsoft Powerpoint 和 Microsoft word 中阅读和导航 MathType 公式。
 您必须先安装 MathType 软件才可以使用该功能。
@@ -704,6 +711,7 @@ NVDA 支持在 Kindle for PC 中阅读和导航包含可访问性数学内容的
 | mnuitem | 菜单项目 |
 | pnl | 面板 |
 | prgbar | 进度栏 |
+| bsyind | 忙碌指示器 |
 | rbtn | 单选按钮 |
 | scrlbar | 滚动条 |
 | sect | 区域 |
@@ -785,7 +793,8 @@ NVDA 支持使用盲文点显器按下键盘上的快捷键和模拟按键。
 虽然这种方法对于常用键或唯一键（例如 Tab）很有用，
 但您可能不会为每个键盘快捷键都分配一组模拟按键。
 为了可以模拟修饰键，NVDA 提供了按下或放开Control、alt、shift、windows 和 NVDA ，以及这些键的个别组合的功能。
-要使用 该功能，首先执行相应的修饰键（或修饰键组合）命令，然后键入您想要按下的字母。
+要使用 该功能，首先按下相应的修饰键（或修饰键组合）。
+然后键入您想要按下的字母。
 例如，要按 control+f ，请使用“模拟按下货放开 control”命令，然后键入 f，
 要按 control+alt+t，请按任意顺序执行“模拟按下货放开 control”、“模拟按下货放开 Alt”或“模拟按下货放开 control +alt”然后键入字母 “T”。
 如果您不小心按下了修饰键，只需再按一次即可恢复。
@@ -1128,7 +1137,7 @@ NVDA的文本审阅命令无法访问未在窗口中显示的文本。
 此选项仅可用于 NVDA 的安装版。
 
 ==== 应用当前配置到欢迎界面和其他安全界面 ====[GeneralSettingsCopySettings]
-按下此按钮，NVDA 会将您当前保存的用户配置拷贝到 NVDA 的系统配置目录，他们会应用在 Windows 欢迎屏幕、UAC 账户控制和其他的安全界面。
+按下此按钮，NVDA 会将您当前保存的用户配置拷贝到 NVDA 的系统配置目录，这将应用于 Windows 欢迎屏幕、UAC 账户控制和其他[安全界面 #SecureScreens]。
 想确认您所有的配置都会被传送，请先使用“NVDA加control加c”或者 NVDA 菜单下的“保存设置”事先保存您的当前配置。
 此选项仅可用于 NVDA 的安装版。
 
@@ -1714,7 +1723,9 @@ NVDA设置对话框中的“鼠标设置”分类允许NVDA跟踪鼠标，用嘟
 按键: NVDA+v
 
 此选项可以让您定义在浏览模式下是否将可点击的内容（链接、按钮和字段）在单独的行中呈现，或者将其保留在文本流中，就像视觉上实际呈现的那样。请注意，此选项不适用于始终以屏幕布局呈现的 Microsoft Office 应用程序，例如 Outlook 和 Word。
-如果打开了屏幕布局，页面元素会保持与视觉呈现效果一致。例如，视觉上由多个链接组成的一行也将在语音和盲文中呈现为包含多个链接的同一行内容。如果关闭屏幕布局，那么页面元素会呈现为独立的一行，这种布局在逐行浏览页面时可能更容易理解，并可能使某些用户更容易与元素交互。
+如果打开了屏幕布局，页面元素会保持与视觉呈现效果一致。例如，视觉上由多个链接组成的一行也将在语音和盲文中呈现为包含多个链接的同一行内容。
+如果关闭屏幕布局，那么页面元素会呈现为独立的一行。
+这种布局在逐行浏览页面时可能更容易理解，并可能使某些用户更容易与元素交互。
 
 ==== 页面加载完成后启用浏览模式 ====[BrowseModeSettingsEnableOnPageLoad]
 此复选框用于切换加载页面时是否应自动启用浏览模式。
@@ -3322,6 +3333,34 @@ NVDA 的点显器自动检测功能也可以识别任何使用该协议的点显
 
 + 进阶内容 +[AdvancedTopics]
 
+++ 安全模式 ++[SecureMode]
+NVDA 可以使用[命令行选项 #CommandLineOptions] ``-s`` 以安全模式运行。
+在[安全界面 #SecureScreens] 时，除非启用了``serviceDebug`` [系统范围参数 #SystemWideParameters]，否则 NVDA 默认将以安全模式运行，。
+
+在安全模式下禁用以下功能：
+
+- 将配置和其他设置信息保存到磁盘。
+- 将按键与手势设置保存到磁盘。
+- [配置文件 #ConfigurationProfiles] 功能，例如创建、删除、重命名配置文件等。
+- 更新 NVDA 以及创建便携版。
+-  [NVDA Python 控制台 #PythonConsole]。
+- [日志查看器 #LogViewer] 和日志记录。
+-
+
+++ 安全界面 ++[SecureScreens]
+在安全界面，除非启用了``serviceDebug`` [系统范围参数 #SystemWideParameters]，否则 NVDA 默认将以[安全模式 #SecureMode]运行。
+
+NVDA 在安全界面使用系统配置文件作为首选项。
+可以将用户配置[应用到安全界面 #GeneralSettingsCopySettings]。
+
+安全界面包括：
+
+- Windows 登录界面。
+- 用户访问控制对话框，在以管理员权限执行程序时显示。
+  - 包括安装程序
+  -
+-
+
 ++ 命令行选项 ++[CommandLineOptions]
 在 NVDA启动时，它可以接收一个或多个附加选项以改变它启动时的行为。
 选项数量不限。
@@ -3355,7 +3394,7 @@ nvda -q
 | -c CONFIGPATH | --config-path=CONFIGPATH | 所有 NVDA 设置存储的路径。 |
 | 无 | --lang=LANGUAGE | 覆盖设置中的 NVDA 语言。比如用户默认传入 “Windows”，英语传入“en”等。 |
 | -m | --minimal | 无声、无界面、无启动通知等。 |
-| -s | --secure | 安全模式 禁用 Python 控制台并且停用以下功能 创建删除重命名配置、检查更新、欢迎对话框、开机启动NVDA、退出时保存设置、日志查看器、日志记录功能。在安全模式下，无法保存当前配置到系统配置、按键和手势同样无法保存。 |
+| -s | --secure | 以[安全模式 #SecureMode] 启动 NVDA |
 | 无 | --disable-addons | 禁用插件。 |
 | 无 | --debug-logging | 开启调试日志 覆盖之前的日志记录级别设置(""--loglevel"", -l) 包括已禁用日志。 |
 | 无 | --no-logging | 禁用 NVDA 日志功能 注意 --debug-logging 和 --loglevel 会覆盖这个参数 |
@@ -3368,8 +3407,8 @@ nvda -q
 | 无 | --create-portable-silent | 创建一个便携版（但不启动该便携版）。 必须和 --portable-path 一起使用。 |
 | 无 | --portable-path=PORTABLEPATH | 创建便携版的目录 |
 
-++ 系统层面的配置 ++[SystemWideParameters]
-某些NVDA配置对整个系统的所有用户生效
+++ 系统范围参数 ++[SystemWideParameters]
+某些NVDA配置对整个系统的所有用户生效。
 配置信息保存在注册表的这些键值内:
 - 32位系统: "HKEY_LOCAL_MACHINE\SOFTWARE\nvda"
 - 64位系统: "HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\nvda"
@@ -3377,8 +3416,9 @@ nvda -q
 
 注册表接受下面这些配置:
 || 名称 | 类型 | 数值 | 描述 |
-| configInLocalAppData | DWORD | 设为0 表示关闭此选项,设为 1 表示启用此选项 默认值为0 | 启用这个选项会让NVDA把配置保存到“本地”应用程序配置文件夹(比如 "C:\Users\<用户名>\AppData\Local") |
-| serviceDebug | DWORD | 设为0 表示关闭此选项,设为 1 表示启用此选项 默认值为0 | 启用这个选项，会让NVDA在Windows安全桌面下关闭安全模式，这意味着可以在安全桌面启用Python控制台和日志查看器。这会带来严重的安全隐患，不建议启用。 |
+| configInLocalAppData | DWORD | 0（默认）禁用，1 启用 | 启用这个选项会让NVDA把配置保存到“本地”应用程序配置文件夹(比如 "C:\Users\<用户名>\AppData\Local") |
+| serviceDebug | DWORD | 0（默认）禁用，1 启用 | 启用这个选项，会让 NVDA 在 [安全界面 #SecureScreens]禁用[安全模式 #SecureMode]。由于存在一些严重的安全隐患，强烈建议不要使用该选项。 |
+
 
 + 更多信息 +[FurtherInformation]
  如果您希望获得更多信息或关于 NVDA 的帮助，可通过 NVDA_URL 访问 NVDA 官方网站。
