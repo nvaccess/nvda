@@ -9,7 +9,16 @@ import os
 import codecs
 import collections
 import re
-from typing import Callable, Dict, Generic, List, Optional, Tuple, TypeVar
+from typing import (
+	Callable,
+	Dict,
+	Generic,
+	List,
+	Optional,
+	Tuple,
+	TypeVar,
+)
+
 from logHandler import log
 import globalVars
 import config
