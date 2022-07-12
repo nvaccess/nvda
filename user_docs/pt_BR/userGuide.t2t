@@ -27,7 +27,7 @@ Suas características mais notáveis incluem:
 - Instalação com voz e fácil de usar
 - Traduzido para 54 idiomas
 - Suporte para as modernas versões do sistema operacional Windows incluindo variantes de 32 e 64 bit
-- Capacidade de executar durante a entrada ""[credenciais]"" do Windows e em telas seguras
+- Capacidade de executar durante a entrada ""[credenciais]"" do Windows e [outras telas seguras #SecureScreens].
 - Anunciando controles e texto enquanto usa gestos de toque
 - Suporte para interfaces comuns de acessibilidade tais como Microsoft Active Accessibility, Java Access Bridge, IAccessible2 e UI Automation ""[Automação da Interface do Usuário]""
 - Suporte para o Prompt de Comando do Windows e aplicações de console
@@ -81,7 +81,7 @@ Ao executar o arquivo baixado, será iniciada uma cópia temporária do NVDA.
 Você será questionado se deseja instalá-lo, criar uma cópia portátil ou apenas continuar usando a cópia temporária.
 
 Caso pretenda usar constantemente o NVDA neste computador, deverá então optar por instalá-lo.
-O NVDA instalado lhe permitirá ter recursos adicionais, tais como inicialização automática após ingressar ""[login]"", a capacidade de ler as telas de credenciais e segurança do Windows (que não podem ser feitas com cópias portáteis e temporárias) e a criação de atalhos no menu iniciar e na área de trabalho.
+O NVDA instalado lhe permitirá ter recursos adicionais, tais como inicialização automática após ingressar ""[login]"", a capacidade de ler as credenciais ""[login]"" do Windows e as [telas seguras #SecureScreens] (que não podem ser feitas com cópias portáteis e temporárias) e a criação de atalhos no menu iniciar e na área de trabalho.
 As cópias instaladas também permitem elas próprias criar uma cópia portátil a qualquer momento.
 
 Se você deseja levar o NVDA com você em um dispositivo USB ou em outros dispositivos de mídia portáteis, então deverá escolher criar uma cópia portátil.
@@ -118,7 +118,7 @@ Consulte a [seção de diálogo de complementos incompatíveis #incompatibleAddo
 
 +++ Usar o NVDA nas credenciais [tela de login] +++[StartAtWindowsLogon]
 Esta opção lhe permite escolher se o NVDA deverá ou não iniciar automaticamente enquanto estiver na tela de credenciais ""[login]"" do Windows, antes de você inserir sua senha.
-Isso também inclui o Controle de Conta de Usuário e outras telas seguras.
+Isso também inclui o Controle de Conta de Usuário e [outras telas seguras #SecureScreens].
 Essa opção está habilitada por padrão para instalações novas.
 
 +++ Criar Atalho na Área de Trabalho (ctrl+alt+n) +++[CreateDesktopShortcut]
@@ -127,7 +127,7 @@ O atalho, se criado, também será atribuído uma tecla de atalho control+alt+n,
 
 +++ Copiar Configuração Portátil para a Conta de Usuário Atual +++[CopyPortableConfigurationToCurrentUserAccount]
 Essa opção lhe permite escolher se o NVDA deve ou não copiar as configurações do usuário oriundas da versão atualmente em execução para as configurações do usuário atualmente logado no Windows, no caso das cópias instaladas do NVDA.
-Isso não copiará a configuração para nenhum outro usuário deste sistema nem para a configuração do sistema para uso nas credenciais ""[entrada]"" do Windows e outras telas seguras.
+Isso não copiará a configuração para nenhum outro usuário deste sistema nem para a configuração do sistema para uso nas credenciais ""[entrada]"" do Windows e [outras telas seguras #SecureScreens].
 Essa opção está disponível apenas quando se instala a partir de uma cópia portátil, não sendo possível ao instalar diretamente do pacote executável baixado.
 
 ++ Criando uma Cópia Portátil ++[CreatingAPortableCopy]
@@ -342,6 +342,10 @@ Quando estiver numa tabela, as seguintes teclas de atalho também estarão dispo
 | Mover para a próxima coluna | control+alt+seta a direita | Move o cursor do sistema para a próxima coluna (permanecendo na mesma linha) |
 | Mover para a linha anterior | control+alt+seta para cima | Move o cursor do sistema para a linha anterior (permanecendo na mesma coluna) |
 | Mover para a próxima linha | control+alt+seta para baixo | Move o cursor do sistema para a linha seguinte (permanecendo na mesma coluna) |
+| Mover para a primeira coluna | control+alt+home | Move o cursor do sistema para a primeira coluna (permanecendo na mesma linha) |
+| Mover para a última coluna | control+alt+end | Move o cursor do sistema para a última coluna (permanecendo na mesma linha).
+| Mover para a primeira linha | control+alt+pageUp | Move o cursor do sistema para a primeira linha (permanecendo na mesma coluna) |
+| Mover para a última linha | control+alt+pageDown | Move o cursor do sistema para a última linha (permanecendo na mesma coluna) |
 %kc:endInclude
 
 ++ Navegação de Objetos ++[ObjectNavigation]
@@ -617,8 +621,11 @@ O NVDA suporta os seguintes tipos de conteúdo matemático:
 - MathML no Mozilla Firefox, Microsoft Internet Explorer e Google Chrome.
 - Equações Matemáticas Modernas do Microsoft Word 365 via UI automation ""[automação de interface do usuário]"":
 O NVDA é capaz de ler e interagir com equações matemáticas no Microsoft Word 365/2016 compilação 14326 ou superior.
-Observe, no entanto, que quaisquer equações MathType criadas anteriormente devem ser primeiro convertidas para Matemática do Office selecionando cada uma e escolhendo Opções de Equação -> Converter para Matemática do Office no menu de contexto. Certifique-se de que sua versão do MathType é a versão mais recente antes de fazer isso.
-O Microsoft Word agora também fornece navegação linear baseada em símbolo através das próprias equações e suporta a inserção de matemática usando várias sintaxes, incluindo LaTeX. Para mais detalhes, consulte [Equações de formato linear usando o UnicodeMath e o LaTeX no Word https://support.microsoft.com/pt-br/office/equa%C3%A7%C3%B5es-de-formato-linear-usando-o-unicodemath-e-o-latex-no-word-2e00618d-b1fd-49d8-8cb4-8d17f25754f8]
+Observe, no entanto, que quaisquer equações MathType criadas anteriormente devem ser primeiro convertidas para Matemática do Office.
+Isso pode ser feito selecionando cada uma e escolhendo "Opções de Equação", em seguida, "Converter para Matemática do Office" no menu de contexto.
+Certifique-se de que sua versão do MathType é a versão mais recente antes de fazer isso.
+O Microsoft Word fornece navegação linear baseada em símbolo através das próprias equações e suporta a inserção de matemática usando várias sintaxes, incluindo LaTeX.
+Para mais detalhes, consulte [Equações de formato linear usando o UnicodeMath e o LaTeX no Word https://support.microsoft.com/pt-br/office/equa%C3%A7%C3%B5es-de-formato-linear-usando-o-unicodemath-e-o-latex-no-word-2e00618d-b1fd-49d8-8cb4-8d17f25754f8]
 - Microsoft Powerpoint e versões mais antigas do Microsoft Word:
 O NVDA pode ler e navegar pelas equações MathType tanto no Microsoft Powerpoint quanto no Microsoft Word.
 O MathType precisa estar instalado para que tal seja possível.
@@ -704,6 +711,7 @@ Com vistas a fornecer tanta informação quanto possível numa linha braille, as
 | itmnu | item de menu |
 | pnl | painel |
 | barprg | barra de progresso |
+| indocu | indicador de ocupado |
 | btopç | botão de opção |
 | barrlg | barra de rolagem |
 | seç | seção |
@@ -784,7 +792,8 @@ Você pode alterar essas atribuições ou adicionar novas teclas emuladas no [di
 
 Embora essa abordagem seja útil para teclas exclusivas ou pressionadas com frequência (como Tab), talvez você não queira atribuir um conjunto exclusivo de teclas a cada atalho de teclado.
 Para permitir a emulação de pressionamentos de tecla onde as teclas modificadoras são pressionadas, o NVDA fornece comandos para alternar as teclas control, alt, shift, windows e NVDA, juntamente com comandos para algumas combinações dessas teclas.
-Para usar essas alternâncias, primeiro pressione o comando (ou sequência de comandos) para as teclas modificadoras que deseja pressionar, depois insira o caractere que faz parte do atalho de teclado que deseja inserir.
+Para usar essas alternâncias, primeiro pressione o comando (ou sequência de comandos) para as teclas modificadoras que deseja pressionar.
+Depois insira o caractere que faz parte do atalho de teclado que deseja inserir.
 Por exemplo, para produzir control+f, use o comando "Alternar tecla control" e digite um f,
 e para inserir control+alt+t, use os comandos "Alternar tecla control" e "Alternar tecla alt", em qualquer ordem, ou o comando "Alternar teclas control e alt", seguido de digitação de um t.
 
@@ -1125,7 +1134,7 @@ Se você entra no Windows fornecendo um nome de usuário e senha, habilitar essa
 Esta opção só estará disponível para as cópias instaladas do NVDA.
 
 ==== Usar as configurações salvas atualmente nas credenciais e em telas seguras (requer privilégios administrativos) ====[GeneralSettingsCopySettings]
-Ao pressionar este botão, copiará as configurações atualmente salvas do usuário do NVDA para a pasta das configurações de sistema deste leitor de telas, de modo que o NVDA irá usá-las durante o login e quando executando no Controle de Conta de Usuário (UAC) e em outras telas de segurança do Windows.
+Ao pressionar este botão, copiará as configurações atualmente salvas do usuário do NVDA para a pasta das configurações de sistema deste leitor de telas, de modo que o NVDA irá usá-las durante o login e quando executando no Controle de Conta de Usuário (UAC) e em outras [telas seguras #SecureScreens].
 Para certificar-se de que todas as suas opções serão transferidas, verifique em primeiro lugar se salvou suas configurações com control+NVDA+c ou através do item respectivo do Menu do NVDA.
 Essa opção só estará disponível para as cópias instaladas do NVDA.
 
@@ -1709,8 +1718,12 @@ Este campo define a quantidade de linhas a mover-se quando pressionar Page Up ou
 ==== Usar Apresentação da Tela ====[BrowseModeSettingsScreenLayout]
 Tecla: NVDA+v
 
-Esta opção permite especificar se o modo de navegação deve posicionar o conteúdo clicável (links, botões e campos) em linha individual, ou se deve mantê-lo no fluxo de texto conforme é mostrado visualmente. Observe que essa opção não se aplica aos aplicativos do Microsoft Office, como Outlook e Word, que sempre usam a apresentação da tela.
-Quando a apresentação da tela estiver habilitada, os elementos da página ficarão como são mostrados visualmente. Por exemplo, uma linha visual com múltiplos links será apresentada em fala e braille como vários links na mesma linha. Se estiver desabilitada, os elementos da página serão colocados em linhas separadamente, o que pode ser mais fácil de entender durante a navegação da página linha por linha e pode tornar os itens mais fáceis de interagir para alguns usuários.
+Esta opção permite especificar se o modo de navegação deve posicionar o conteúdo clicável (links, botões e campos) em linha individual, ou se deve mantê-lo no fluxo de texto conforme é mostrado visualmente.
+Observe que essa opção não se aplica aos aplicativos do Microsoft Office, como Outlook e Word, que sempre usam a apresentação da tela.
+Quando a apresentação da tela estiver habilitada, os elementos da página ficarão como são mostrados visualmente.
+Por exemplo, uma linha visual com múltiplos links será apresentada em fala e braille como vários links na mesma linha.
+Se estiver desabilitada, os elementos da página serão colocados em linhas separadamente.
+Isso pode ser mais fácil de entender durante a navegação na página linha por linha e tornar os itens mais fáceis de interagir para alguns usuários.
 
 ==== Habilitar o modo de navegação no carregamento da página ====[BrowseModeSettingsEnableOnPageLoad]
 Essa caixa de seleção define se o modo de navegação deve ser habilitado automaticamente ao carregar uma página.
@@ -3310,6 +3323,34 @@ A seguir estão as teclas de comando atuais para essas linhas.
 
 + Tópicos Avançados +[AdvancedTopics]
 
+++ Modo Seguro ++[SecureMode]
+O NVDA pode ser iniciado em modo seguro com a [opção de linha de comando #CommandLineOptions] ``-s``.
+O NVDA é executado em modo seguro quando executado em [telas seguras #SecureScreens], a menos que o [parâmetro de todo o sistema #SystemWideParameters] ``serviceDebug`` esteja habilitado.
+
+O modo seguro desabilita:
+
+- Salvamento de configuração e outras configurações no disco
+- Salvamento do mapa de gestos ""[comandos]"" no disco
+- Recursos de [perfil de configuração #ConfigurationProfiles], como criação, exclusão, renomeação de perfis etc.
+- Atualização do NVDA e criação de cópias portáteis
+- O [console Python #PythonConsole]
+- O [Visualizador de Log #LogViewer] e registro
+-
+
+++ Telas Seguras ++[SecureScreens]
+O NVDA é executado no [modo seguro #SecureMode] quando executado em telas seguras, a menos que o [parâmetro de todo o sistema #SystemWideParameters] ``serviceDebug`` esteja habilitado.
+
+Ao executar a partir de uma tela segura, o NVDA usa um perfil de sistema para preferências.
+As preferências do usuário do NVDA podem ser copiadas [para uso em telas seguras #GeneralSettingsCopySettings].
+
+As telas seguras incluem:
+
+- A tela de credenciais ""[login]"" do Windows
+- O diálogo Controle de acesso do usuário, ativa ao executar uma ação como administrador
+  - Isso inclui a instalação de programas
+  -
+-
+
 ++ Opções de Linha de Comando ++[CommandLineOptions]
 O NVDA pode aceitar uma ou mais opções adicionais quando inicia, alterando seu comportamento.
 É possível passar tantas opções quanto você precisar.
@@ -3343,7 +3384,7 @@ A seguir estão as opções de linha de comando para o NVDA:
 | -c CAMINHODASCONFIGURAÇÕES | --config-path=CAMINHODASCONFIGURAÇÕES | O caminho onde todas as configurações do NVDA são armazenadas |
 | Nenhuma | --lang=IDIOMA | Suplanta o idioma configurado do NVDA. Defina como "Windows" para o padrão do usuário atual, "en" para inglês, etc. |
 | -m | --minimal | Sem sons, sem interface, sem mensagem de início, etc. |
-| -s | --secure | Modo seguro: desabilita o console Python, recursos de perfil como criação, exclusão, renomeação de perfis etc., verificação de atualização, algumas caixas de diálogo no diálogo de boas-vindas e na categoria de configurações gerais (por exemplo, usar o NVDA durante o login, salvar a configuração após a saída etc.), bem como os recursos de visualizador de log e registração de eventos (geralmente usados em telas seguras). Observe também que esse comando desabilitará a possibilidade de salvar as definições ""[configurações]"" na configuração do sistema e o mapa de comandos ""[gestos]"" não serão salvos no disco. |
+| -s | --secure | Inicia o NVDA em [Modo Seguro #SecureMode] |
 | Nenhuma | --disable-addons | Complementos não funcionarão |
 | Nenhuma | --debug-logging | Habilita o log de nível de depuração apenas para esta execução. Esta configuração substituirá qualquer outro argumento de nível de log ( ""--loglevel"", -l) fornecido, incluindo nenhuma opção de log. |
 | Nenhuma | --no-logging | Desabilita completamente o registro ""[log]"" enquanto estiver usando o NVDA. Essa configuração pode ser substituída se um nível de log ( ""--loglevel"", -l) for especificado na linha de comando ou se o log de depuração estiver ativado. |
@@ -3366,7 +3407,7 @@ Esses valores são armazenados no registro em uma das seguintes chaves:
 Os seguintes valores podem ser definidos sob essa chave do Registro:
 || Nome | Tipo | Valores possíveis | Descrição |
 | configInLocalAppData | DWORD | 0 (padrão) para desabilitar, 1 para habilitar | Se habilitado, armazena a configuração do usuário do NVDA em local dos dados de aplicativos, em vez de roaming dos dados de aplicativos |
-| serviceDebug | DWORD | 0 (padrão) para desabilitar, 1 para habilitar | Se habilitado, desabilita o modo de segurança nos desktops seguros do Windows, permitindo o uso do console Python e do visualizador de log. Devido a várias implicações importantes de segurança, o uso desta opção é fortemente desencorajada |
+| serviceDebug | DWORD | 0 (padrão) para desabilitar, 1 para habilitar | Se habilitado, desabilita o [Modo Seguro #SecureMode] em [telas seguras #SecureScreens]. Devido a várias implicações importantes de segurança, o uso desta opção é fortemente desencorajada |
 
 + Informação Adicional +[FurtherInformation]
 Se você precisar de mais informações ou assistência referente ao NVDA, visite o site do NVDA em NVDA_URL.
