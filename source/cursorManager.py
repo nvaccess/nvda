@@ -264,12 +264,22 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 		self._caretMovementScriptHelper(gesture,textInfos.UNIT_SENTENCE,1)
 	script_moveBySentence_forward.resumeSayAllMode = sayAll.CURSOR.CARET
 
+	def _handleParagraphNavigation(self, gesture, nextParagraph: bool):
+		setting = config.conf["paragraphNavigation"]["paragraphStyle"]
+		if setting == "application" or setting == "normal":
+			self._caretMovementScriptHelper(gesture,textInfos.UNIT_PARAGRAPH, 1 if nextParagraph else -1)
+		elif setting == "block":
+			from utils.paragraphHelper import moveToBlockParagraph
+			if not moveToBlockParagraph(nextParagraph=nextParagraph, speakNew=not willSayAllResume(gesture)):
+				# fail over to default behavior
+				self._caretMovementScriptHelper(gesture,textInfos.UNIT_PARAGRAPH, 1 if nextParagraph else -1)
+
 	def script_moveByParagraph_back(self,gesture):
-		self._caretMovementScriptHelper(gesture,textInfos.UNIT_PARAGRAPH,-1)
+		self._handleParagraphNavigation(gesture, False)
 	script_moveByParagraph_back.resumeSayAllMode = sayAll.CURSOR.CARET
 
 	def script_moveByParagraph_forward(self,gesture):
-		self._caretMovementScriptHelper(gesture,textInfos.UNIT_PARAGRAPH,1)
+		self._handleParagraphNavigation(gesture, True)
 	script_moveByParagraph_forward.resumeSayAllMode = sayAll.CURSOR.CARET
 
 	def script_startOfLine(self,gesture):

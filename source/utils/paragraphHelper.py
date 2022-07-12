@@ -15,22 +15,31 @@ MAX_LINES = 250  # give up after searching this many lines
 
 
 def getTextInfoAtCaret() -> textInfos.TextInfo:
-	# returns None if not editable text or if in Microsoft Word document
+	# returns None if not editable text or document
 	ti = None
 	focus = api.getFocusObject()
-	if isinstance(focus, IAccessibleWordDocument) or isinstance(focus, UIAWordDocument):
-		return ti
 	if controlTypes.State.MULTILINE not in focus.states:
 		return ti
-	if focus.role == controlTypes.Role.EDITABLETEXT:
+	if focus.role == controlTypes.Role.EDITABLETEXT or focus.role == controlTypes.Role.DOCUMENT:
 		try:
 			ti = focus.makeTextInfo(textInfos.POSITION_CARET)
 		except (NotImplementedError, RuntimeError):
 			pass
-
 	return ti
 
 
+def move(ti, unit,direction):
+	if isinstance(ti, IAccessibleWordDocument.TextInfo) or isinstance(ti, UIAWordDocument.TextInfo):
+		bookmark = ti.bookmark
+		res = ti.move(unit, direction)
+		# correct bug where word documents always return 1 when moving by line, even when didn't actually move
+		if bookmark == ti.bookmark:
+			res = 0
+	else:
+		res = ti.move(unit, direction)
+	return res
+	
+	
 def isLastLineOfParagraph(line: str):
 	stripped = line.strip(' \t')
 	return stripped.endswith('\r') or stripped.endswith('\n')
@@ -47,7 +56,7 @@ def speakParagraph(ti: textInfos.TextInfo):
 			paragraph += line + " "
 		if isLastLineOfParagraph(tempTi.text):
 			break
-		if not tempTi.move(textInfos.UNIT_LINE, 1):
+		if not move(tempTi, textInfos.UNIT_LINE, 1):
 			break
 		lines += 1
 
@@ -79,13 +88,13 @@ def moveToParagraph(nextParagraph: bool, speakNew: bool) -> bool:
 			if not nextParagraph:
 				if not moveBackTwice:
 					while lines < MAX_LINES:
-						if not ti.move(textInfos.UNIT_LINE, -1):
+						if not move(ti, textInfos.UNIT_LINE, -1):
 							moved = True  # pin to beginning
 							break
 						tempTi = ti.copy()
 						tempTi.expand(textInfos.UNIT_LINE)
 						if isLastLineOfParagraph(tempTi.text):
-							ti.move(textInfos.UNIT_LINE, 1)
+							move(ti, textInfos.UNIT_LINE, 1)
 							moved = True
 							break
 						lines += 1
@@ -94,10 +103,10 @@ def moveToParagraph(nextParagraph: bool, speakNew: bool) -> bool:
 				else:
 					moveBackTwice = False
 			else:  # moving to next paragraph
-				if ti.move(textInfos.UNIT_LINE, 1):
+				if move(ti, textInfos.UNIT_LINE, 1):
 					moved = True
 				break
-		if not ti.move(textInfos.UNIT_LINE, moveOffset):
+		if not move(ti, textInfos.UNIT_LINE, moveOffset):
 			break
 		lines += 1
 
@@ -120,7 +129,7 @@ def speakBlockParagraph(ti: textInfos.TextInfo):
 		if not len(line):
 			break
 		paragraph += line + "\r\n"
-		if not tempTi.move(textInfos.UNIT_LINE, 1):
+		if not move(tempTi, textInfos.UNIT_LINE, 1):
 			break
 		lines += 1
 
@@ -144,20 +153,20 @@ def moveToBlockParagraph(nextParagraph: bool, speakNew: bool) -> bool:
 		if not lookingForBlank and not isBlank:
 			moved = True
 			break
-		if not ti.move(textInfos.UNIT_LINE, moveOffset):
+		if not move(ti, textInfos.UNIT_LINE, moveOffset):
 			break
 		lines += 1
 
 	# exception: if moving backwards, need to move to top of now current paragraph
 	if moved and not nextParagraph:
 		while lines < MAX_LINES:
-			if not ti.move(textInfos.UNIT_LINE, -1):
+			if not move(ti, textInfos.UNIT_LINE, -1):
 				break  # leave at top
 			tempTi = ti.copy()
 			tempTi.expand(textInfos.UNIT_LINE)
 			if not len(tempTi.text.strip()):
 				# found blank line before desired paragraph
-				ti.move(textInfos.UNIT_LINE, 1)  # first line of paragraph
+				move(ti, textInfos.UNIT_LINE, 1)  # first line of paragraph
 				break
 			lines += 1
 
