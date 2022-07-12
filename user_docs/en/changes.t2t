@@ -18,7 +18,15 @@ It can be re-enabled in NVDA's advanced settings panel. (#11554)
 
 
 == Changes ==
+- eSpeak NG has been updated to 1.52-dev commit ``9de65fcb``. (#13295)
+  - Added languages:
+    - Belarusian
+    - Luxembourgish
+    - Totontepec Mixe
+    -
+  -
 - When using UI Automation to access Microsoft Excel spreadsheet controls, NVDA is now able to report when a cell is merged. (#12843)
+- Instead of reporting "has details" the purpose of details is included where possible, for example "has comment". (#13649)
 -
 
 
@@ -26,6 +34,7 @@ It can be re-enabled in NVDA's advanced settings panel. (#11554)
 - Font size measurements are now translatable in NVDA. (#13573)
 - Ignore Java Access Bridge events where no window handle can be found for Java applications.
 This will improve performance for some Java applications including IntelliJ IDEA. (#13039)
+- Announcement of selected cells for LibreOffice Calc is more efficient and no longer results in a Calc freeze when many cells are selected. (#13232)
 -
 
 
@@ -113,7 +122,6 @@ LibLouis has been updated, which includes a new German braille table.
 NVDA will announce results when more commands are pressed, such as commands from scientific mode. (#13383)
 - In Windows 11, it is again possible to navigate and interact with user interface elements,
 such as Taskbar and Task View using mouse and touch interaction. (#13506)
-- Hidden text is no longer announced in Wordpad and other ``richEdit`` controls. (#13618)
 - NVDA will announce status bar content in Windows 11 Notepad. (#13688)
 - Navigator object highlighting now shows up immediately upon activation of the feature. (#13641)
 - Fix reading single column list view items. (#13659, #13735)
