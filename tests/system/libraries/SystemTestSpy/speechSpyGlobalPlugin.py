@@ -10,7 +10,10 @@ of a package.
 """
 import gettext
 import typing
-from typing import Optional
+from typing import (
+	Optional,
+	Tuple,
+)
 
 import extensionPoints
 import globalPluginHandler
@@ -316,38 +319,81 @@ class NVDASpyLib:
 		"""
 		return self.get_last_speech_index() + 1
 
-	def wait_for_specific_speech(
+	def _has_speech_occurred_before_timeout(
 			self,
 			speech: str,
-			afterIndex: Optional[int] = None,
-			maxWaitSeconds: int = 5,
-			intervalBetweenSeconds: float = 0.1,
-			expectedFailure: bool = False,
-	) -> int:
+			afterIndex: Optional[int],
+			maxWaitSeconds: float,
+			intervalBetweenSeconds: float,
+	) -> Tuple[bool, Optional[int]]:
 		"""
 		@param speech: The speech to expect.
 		@param afterIndex: The speech should come after this index. The index is exclusive.
 		@param maxWaitSeconds: The amount of time to wait in seconds.
 		@param intervalBetweenSeconds: The amount of time to wait between checking speech, in seconds.
-		@param expectedFailure: If the wait condition is expected to fail.
-		@return: the index of the speech.
+		@return: True if the speech occurred and the index of the speech.
 		"""
-		success, speechIndex = _blockUntilConditionMet(
+		return _blockUntilConditionMet(
 			getValue=lambda: self._getIndexOfSpeech(speech, afterIndex),
 			giveUpAfterSeconds=self._minTimeout(maxWaitSeconds),
 			shouldStopEvaluator=lambda indexFound: indexFound >= (afterIndex if afterIndex else 0),
 			intervalBetweenSeconds=intervalBetweenSeconds,
 			errorMessage=None
 		)
-		if success == expectedFailure:
-			# Robot framework prevents you from catching AssertionErrors, so a failureExpected flag is required
+
+	def wait_for_specific_speech(
+			self,
+			speech: str,
+			afterIndex: Optional[int] = None,
+			maxWaitSeconds: float = 5.0,
+			intervalBetweenSeconds: float = 0.1,
+	) -> int:
+		"""
+		@param speech: The speech to expect.
+		@param afterIndex: The speech should come after this index. The index is exclusive.
+		@param maxWaitSeconds: The amount of time to wait in seconds.
+		@param intervalBetweenSeconds: The amount of time to wait between checking speech, in seconds.
+		@return: the index of the speech.
+		"""
+		success, speechIndex = self._has_speech_occurred_before_timeout(
+			speech,
+			afterIndex,
+			maxWaitSeconds,
+			intervalBetweenSeconds
+		)
+		if not success:
 			self.dump_speech_to_log()
-			problemMsg = "occurred unexpectedly" if success else "did not occur"
 			raise AssertionError(
-				f"Specific speech {problemMsg} before timeout: {speech}\n"
+				f"Specific speech did not occur before timeout: {speech}\n"
 				"See NVDA log for dump of all speech."
 			)
 		return speechIndex
+
+	def ensure_speech_did_not_occur(
+			self,
+			speech: str,
+			afterIndex: Optional[int] = None,
+			maxWaitSeconds: float = 5.0,
+			intervalBetweenSeconds: float = 0.1,
+	) -> None:
+		"""
+		@param speech: The speech to check for.
+		@param afterIndex: Check for speech after this index. The index is exclusive.
+		@param maxWaitSeconds: The amount of time to wait in seconds.
+		@param intervalBetweenSeconds: The amount of time to wait between checking speech, in seconds.
+		"""
+		success, _speechIndex = self._has_speech_occurred_before_timeout(
+			speech,
+			afterIndex,
+			maxWaitSeconds,
+			intervalBetweenSeconds
+		)
+		if success:
+			self.dump_speech_to_log()
+			raise AssertionError(
+				f"Specific speech occurred unexpectedly before timeout: {speech}\n"
+				"See NVDA log for dump of all speech."
+			)
 
 	def wait_for_speech_to_finish(
 			self,
