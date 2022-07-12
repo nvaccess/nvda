@@ -62,6 +62,7 @@ def hasUiAccess():
 	finally:
 		ctypes.windll.kernel32.CloseHandle(token)
 
+
 #: Value from the TOKEN_INFORMATION_CLASS enumeration:
 #: https://docs.microsoft.com/en-us/windows/win32/api/winnt/ne-winnt-token_information_class
 #: When calling The Win32 GetTokenInformation function, the buffer receives a TOKEN_ORIGIN value.
