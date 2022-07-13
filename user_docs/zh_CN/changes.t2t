@@ -54,57 +54,50 @@ NVDA 更新日志
   - 当盲文自动连接并在启用鼠标导航的情况下移动鼠标时，文本导航命令会使用语音朗读的内容更新盲文显示。 (#11519)
   - 支持在使用文本查看命令后正常滚动盲文显示。 (#8682)
   -
-- The NVDA installer can now run from directories with special characters. (#13270)
-- In Firefox, NVDA no longer fails to report items in web pages when aria-rowindex, aria-colindex, aria-rowcount or aria-colcount attributes are invalid. (#13405)
-- The cursor does not switch row or column anymore when using table navigation to navigate through merged cells. (#7278)
-- When reading non-interactive PDFs in Adobe Reader, the type and state of form fields (such as checkboxes and radio buttons) are now reported. (#13285)
-- "Reset configuration to factory defaults" is now accessible in the NVDA menu during secure mode. (#13547)
-- Any locked mouse keys will be unlocked when NVDA exits, previously the mouse button would remain locked. (#13410)
-- Visual Studio now reports line numbers. (#13604)
-  - Note that for line number reporting to work, showing line numbers must be enabled in Visual Studio and NVDA.
+- NVDA 安装程序支持在包含特殊字符的目录中运行。 (#13270)
+- 在 Firefox 中，当 aria-rowindex、aria-colindex、aria-rowcount 或 aria-colcount 属性无效时，NVDA 支持读出网页中的项目。 (#13405)
+- 使用表格导航在合并的单元格中导航时，光标不会再切换行或列。 (#7278)
+- 在 Adobe Reader 中阅读非交互式 PDF 时，现在会读出表单（例如复选框和单选按钮）的类型和状态。 (#13285)
+- 支持在安全模式下使用 NVDA 菜单中的“重置设置为默认值”。 (#13547)
+- 当 NVDA 退出时，会释放所有已锁定的鼠标键，在以前鼠标键将保持锁定状态。 (#13410)
+- 支持在 Visual Studio 中读出行号。 (#13604)
+  - 请注意，如果要读出行号，必须在 Visual Studio 和 NVDA 中启用行号。
   -
-- Visual Studio now correctly reports line indentation. (#13574)
-- NVDA will once again announce Start menu search result details in recent Windows 10 and 11 releases. (#13544)
-- In Windows 10 and 11 Calculator version 10.1908 and later,
-NVDA will announce results when more commands are pressed, such as commands from scientific mode. (#13383)
-- In Windows 11, it is again possible to navigate and interact with user interface elements,
-such as Taskbar and Task View using mouse and touch interaction. (#13506)
-- Hidden text is no longer announced in Wordpad and other ``richEdit`` controls. (#13618)
-- NVDA will announce status bar content in Windows 11 Notepad. (#13688)
-- Navigator object highlighting now shows up immediately upon activation of the feature. (#13641)
-- Fix reading single column list view items. (#13659, #13735)
-- Fix eSpeak automatic language switching for English and French falling back to British English and French (France). (#13727)
-- Fix OneCore automatic language switching when trying to switch to a formerly installed language. (#13732)
+- 支持在 Visual Studio 中正确读出行缩进。 (#13574)
+- 支持在最新的 Windows 10 和 11 中读出开始菜单搜索结果的详细信息。 (#13544)
+- 在 Windows 10 和 11 计算器版本 10.1908 及更高版本中，NVDA 会在按下更多命令时读出结果，例如科学计算器模式下的相关命令。 (#13383)
+- 在 Windows 11 中，支持导航某些用户界面元素并与之交互，例如使用鼠标和触摸交互的任务栏和任务视图。 (#13506)
+- 在 Windows 11 的记事本中支持读出状态栏的内容。 (#13688)
+- “高亮显示导航对象”在启用后可以立即生效。 (#13641)
+- 修复了无法朗读某些单列列表视图中的列表项的问题。 (#13659, #13735)
+- 修复了英语和法语的 eSpeak 自动语言切换回退到英国英语和法语（法国）。 (#13727)
+- 在尝试切换到之前安装的语言时修复 OneCore 自动语言切换。 (#13732)
 -
 
 
-== Changes for Developers ==
-- Compiling NVDA dependencies with Visual Studio 2022 (17.0) is now supported.
-For development and release builds, Visual Studio 2019 is still used. (#13033)
-- When retrieving the count of selected children via accSelection,
-the case where a negative child ID or an IDispatch is returned by ``IAccessible::get_accSelection`` is now handled properly. (#13277)
-- New convenience functions ``registerExecutableWithAppModule`` and ``unregisterExecutable`` were added to the ``appModuleHandler`` module.
-They can be used to use a single App Module with multiple executables. (#13366)
+== 插件以及 NVDA 核心开发者需要了解的变动 ==
+- 支持使用 Visual Studio 2022 (17.0) 编译 NVDA 依赖项。对于开发和发布版本，仍使用 Visual Studio 2019 进行编译。 (#13033)
+- 通过 accSelection 检索选定子项的数量时，可以正确处理由“IAccessible::get accSelection”返回负子 ID 或 IDispatch 的情况。 (#13277)
+- 新的便利函数 “registerExecutableWithAppModule” 和 “unregisterExecutable” 已添加到 “appModuleHandler” 模块中。该特性可用于使用多个可执行文件的单个 App Module。 (#13366)
 -
 
-=== Deprecations ===
-These are proposed API breaking changes.
-The deprecated part of the API will continue to be available until the specified release.
-If no release is specified, the plan for removal has not been determined.
-Note, the roadmap for removals is 'best effort' and may be subject to change.
-Please test the new API and provide feedback.
-For add-on authors, please open a GitHub issue if these changes stop the API from meeting your needs.
+=== 弃用 ===
+这些是提议的重大 API 更改。
+弃用的 API 在指定版本发布前仍然可用。
+如果未明确指定版本，则表明尚未确定移除计划。
+注意，会尽可能遵循删除路线图，但也可能会发生变化。
+请测试新的 API 并提供反馈。
+对于插件作者，如果这些更改使 API 无法满足您的需求，请打开一个 GitHub Issue。
 
 
-- ``appModuleHandler.NVDAProcessID`` is deprecated, use ``globalVars.appPid`` instead. (#13646)
-- ``gui.quit`` is deprecated, use ``wx.CallAfter(mainFrame.onExitCommand, None)`` instead. (#13498)
+- ``appModuleHandler.NVDAProcessID`` 已弃用，请改用 ``globalVars.appPid``。 (#13646)
+- ``gui.quit`` 已弃用，请改用 ``wx.CallAfter(mainFrame.onExitCommand, None)``。 (#13498)
   -
 % Insert new list items here as the alias appModule table should be kept at the bottom of this list
-- Some alias appModules are marked as deprecated.
-Code which imports from one of them, should instead import from the replacement module.  (#13366)
+- 以下 appModules 已被标记为已弃用。要导入其中任意一项请从替代模块中导入。 (#13366)
 -
 
-|| Removed module name | Replacement module |
+|| 弃用模块 | 替代模块 |
 | azuredatastudio | code |
 | azuredatastudio-insiders | code |
 | calculatorapp | calculator |

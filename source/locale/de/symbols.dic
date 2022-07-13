@@ -1,6 +1,6 @@
 #locale/de/symbols.dic
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2011-2022 NVDA Contributors
+#Copyright (c) 2011-2021 NVDA Contributors
 #This file is covered by the GNU General Public License.
 
 complexSymbols:
@@ -10,29 +10,15 @@ complexSymbols:
 ! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
 ? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
 # Phrasenenden
-; phrase ending	(?<=[^\s;])\;(?=\s|$)
-: phrase ending	(?<=[^\s:])\:(?=\s|$)
-# Sonstiges
-Dezimaltrennzeichen	(?<![^\d -])\,(?=(\d*))
-' im Wort	(?<=[^\W_])[\']
-’ im Wort	(?<=[^\W_])[\’]
-- im Wort	(?<=[^\W_])[\-]
-– im Wort	(?<=[^\W_])[\–]
-­ im Wort	(?<=[^\W_])[\­]
-* im Wort	(?<=[^\W_])[\*](?!\d)
-: im Wort	(?<=[^\W_])[\:](?!\d)
-/ im Wort	(?<=[^\W_])[\/](?!\d)
-Negative Ziffer	(?<!\w)[-−]{1}(?=[$£€¥.]?(\d+))
-Prozentzeichen	(?<=\d)\ ?\%(?!\w)
-Langer Trennstrich	(?<=\s)[ ?– ?](?=\s)
-Kurzer Trennstrich	(?<=\s)[-](?=\s)
-Wärungseinheit	^(0|(([1-9]{1}|[1-9]{1}[0-9]{1}|[1-9]{1}[0-9]{2}){1}(\ [0-9]{3}){0,})),(([0-9]{2})|\-\-)([\ ]{1})([ƒ₹¥¢€£$]){1}$
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
+# Andere
+Dezimaltrennzeichen	(?<![^\d -])\,(?=\d)
+' im Wort	(?<=[^\W_])['’]
+- im Wort	(?<=[^\W_])[-]
+Negative Ziffer	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
 Tausendertrennzeichen	(?<![^\d -])\.(?=\d{3}(\D|$))
-Datumstrennzeichen	((?<=\b\d{2})\.(?=\d{2})\.(\d{2,4})\b)
-Gradzeichen	(?<=\d)°(?!\w)
-Grad-Celsius	(?<=\d)°C(?!\w)
-Grad-Fahrenheit	(?<=\d)°F(?!\w)
-Grad-Kelvin	(?<=\d)°K(?!\w)
+Datumstrennzeichen	(?<=\d\d)\.(?=\d\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -43,25 +29,14 @@ symbols:
 ? sentence ending	Fragezeichen	all	always
 ; phrase ending	Semikolon	most	always
 : phrase ending	Doppelpunkt	most	always
-Dezimalpunkt		none	always
+Dezimaltrennzeichen		none	always
 ' im Wort	Apostroph	all	norep
-* im Wort		none	norep
-: im Wort		none	norep
-/ im Wort		none	norep
 Negative Ziffer	Minus	none	norep
 - im Wort	Bindestrich	all	norep
 ... sentence ending	Auslassungspunkte	all	always
 … sentence ending	Auslassungspunkte	all	always
-Tausendertrennzeichen	Punkt	none	norep
-Prozentzeichen	Prozent	none	norep
+Tausendertrennzeichen	
 Datumstrennzeichen	Punkt	none	norep
-Währungseinheit		all	norep
-Langer Trennstrich	Gedankenstrich	all	norep
-Kurzer Trennstrich	Bindestrich	all	norep
-Gradzeichen	Grad	none	norep
-Grad-Celsius	Grad Celsius	none	norep
-Grad-Fahrenheit	Grad Fahrenheit	none	norep
-Grad-Kelvin	Grad Kelvin	none	norep
 
 # Leerzeichen
 \0	Leer	char	# null
@@ -72,7 +47,7 @@ Grad-Kelvin	Grad Kelvin	none	norep
  	Leerzeichen	char
  	Geschütztes Leerzeichen	char
 
-# Standardzeichensetzung / -symbole
+# Standardzeichensetzung/-symbole
 !	Ausrufezeichen	all
 "	Anführungszeichen	most
 \#	Nummernzeichen	some
@@ -120,7 +95,7 @@ _	Unterstrich	most
 ‴	dreifache Primzahl	some
 ⁗	Vierstrich	some
 
-# Weitere Zeichen
+# Andere Zeichen
 •	Aufzählungszeichen	some
 …	Punkt Punkt Punkt	all	always
 ...	Punkt Punkt Punkt	all	always
@@ -128,8 +103,8 @@ _	Unterstrich	most
 ”	Anführungszeichen rechts	most
 ‘	Apostroph links	most
 ’	Apostroph rechts	most
--	Bindestrich	most	always
-–	Gedankenstrich	most
+–	Bindestrich	most	always
+—	Gedankenstrich	most
 ­	Silbentrennzeichen	most
 ⁃	Bindestrich-Aufzählungszeichen	none
 ●	Kreis	most
@@ -247,7 +222,7 @@ _	Unterstrich	most
 ↺	Kreisförmiger Pfeil gegen den Uhrzeigersinn
 ⇅	Nach oben und nach unten weisende Pfeile
 
-# Arithmetische Operatoren
+# Arithmetic Operators
 +	plus	some
 −	minus	some
 ×	mal	some
@@ -259,7 +234,7 @@ _	Unterstrich	most
 ∓	minus oder plus	some
 ±	plus oder minus	some
 
-# Mengen-Operationen
+# Set Operations
 ∖	Differenzmenge	none
 ⊍	Multimengen-Multiplikation	none
 𝒫	Mathematischer Großbuchstabe Schreibschrift-P	none
@@ -267,7 +242,7 @@ _	Unterstrich	most
 ℘	Großbuchstabe Schreibschrift-P	none
 ∁	Komplement der Menge	none
 
-# Mengenrelationen und Konstruktionen
+# Set Relations and Constructions
 ∅	Leere Menge	none
 ⊂	ist Teilmenge von	none
 ⊄	Keine Teilmenge von	none
@@ -344,7 +319,7 @@ _	Unterstrich	most
 ⇏	impliziert nicht	none
 ⇐	wird impliziert durch	none
 
-# Weitere mathematische Operatoren
+# Andere mathematische Operatoren
 ∈	Element von	none
 ∉	kein Element von	none
 ∊	kleines Element von	none
@@ -393,7 +368,7 @@ _	Unterstrich	most
 ⊀	geht nicht voran	none
 ⊁	gelingt nicht	none
 
-# Mathematische Brüche (U+2150 bis U+215E)
+# Brüche U+2150 to U+215E
 ¼	ein Viertel	none
 ½	einhalb	none
 ¾	dreiviertel	none
@@ -413,7 +388,7 @@ _	Unterstrich	most
 ⅝	fünf Achtel	none
 ⅞	sieben Achtel	none
 
-# Zahlenmengen
+# Number Sets
 𝔸	Mathematischer Großbuchstabe A mit Doppelstrich	none
 ℂ	Großbuchstabe C mit Doppelstrich	none
 ℑ	Großbuchstabe Fraktur-I	none
@@ -427,264 +402,263 @@ _	Unterstrich	most
 ℵ	Alef-Symbol	none
 ℶ	Bet-Symbol	none
 
-# Sonstiges, technisch
+# Sonstiges Technisch
 ⌘	Mac-Befehlstaste	none
 
-# Unicode Braille-Zeichen
-
+# Unicode braille
 ⠀	Braille-Leerzeichen	none
-⠁	Braille-Punkt 1	none
-⠂	Braille-Punkt 2	none
-⠃	Braille-Punkte 1 2	none
-⠄	Braille-Punkt 3	none
-⠅	Braille-Punkte 1 3	none
-⠆	Braille-Punkte 2 3	none
-⠇	Braille-Punkte 1 2 3	none
-⠈	Braille-Punkt 4	none
-⠉	Braille-Punkte 1 4	none
-⠊	Braille-Punkte 2 4	none
-⠋	Braille-Punkte 1 2 4	none
-⠌	Braille-Punkte 3 4	none
-⠍	Braille-Punkte 1 3 4	none
-⠎	Braille-Punkte 2 3 4	none
-⠏	Braille-Punkte 1 2 3 4	none
-⠐	Braille-Punkt 5	none
-⠑	Braille-Punkte 1 5	none
-⠒	Braille-Punkte 2 5	none
-⠓	Braille-Punkte 1 2 5	none
-⠔	Braille-Punkte 3 5	none
-⠕	Braille-Punkte 1 3 5	none
-⠖	Braille-Punkte 2 3 5	none
-⠗	Braille-Punkte 1 2 3 5	none
-⠘	Braille-Punkte 4 5	none
-⠙	Braille-Punkte 1 4 5	none
-⠚	Braille-Punkte 2 4 5	none
-⠛	Braille-Punkte 1 2 4 5	none
-⠜	Braille-Punkte 3 4 5	none
-⠝	Braille-Punkte 1 3 4 5	none
-⠞	Braille-Punkte 2 3 4 5	none
-⠟	Braille-Punkte 1 2 3 4 5	none
-⠠	Braille-Punkt 6	none
-⠡	Braille-Punkte 1 6	none
-⠢	Braille-Punkte 2 6	none
-⠣	Braille-Punkte 1 2 6	none
-⠤	Braille-Punkte 3 6	none
-⠥	Braille-Punkte 1 3 6	none
-⠦	Braille-Punkte 2 3 6	none
-⠧	Braille-Punkte 1 2 3 6	none
-⠨	Braille-Punkte 4 6	none
-⠩	Braille-Punkte 1 4 6	none
-⠪	Braille-Punkte 2 4 6	none
-⠫	Braille-Punkte 1 2 4 6	none
-⠬	Braille-Punkte 3 4 6	none
-⠭	Braille-Punkte 1 3 4 6	none
-⠮	Braille-Punkte 2 3 4 6	none
-⠯	Braille-Punkte 1 2 3 4 6	none
-⠰	Braille-Punkte 5 6	none
-⠱	Braille-Punkte 1 5 6	none
-⠲	Braille-Punkte 2 5 6	none
-⠳	Braille-Punkte 1 2 5 6	none
-⠴	Braille-Punkte 3 5 6	none
-⠵	Braille-Punkte 1 3 5 6	none
-⠶	Braille-Punkte 2 3 5 6	none
-⠷	Braille-Punkte 1 2 3 5 6	none
-⠸	Braille-Punkte 4 5 6	none
-⠹	Braille-Punkte 1 4 5 6	none
-⠺	Braille-Punkte 2 4 5 6	none
-⠻	Braille-Punkte 1 2 4 5 6	none
-⠼	Braille-Punkte 3 4 5 6	none
-⠽	Braille-Punkte 1 3 4 5 6	none
-⠾	Braille-Punkte 2 3 4 5 6	none
-⠿	Alle 6 Braille-Punkte	none
-⡀	Braille-Punkt 7	none
-⡁	Braille-Punkte 1 7	none
-⡂	Braille-Punkte 2 7	none
-⡃	Braille-Punkte 1 2 7	none
-⡄	Braille-Punkte 3 7	none
-⡅	Braille-Punkte 1 3 7	none
-⡆	Braille-Punkte 2 3 7	none
-⡇	Braille-Punkte 1 2 3 7	none
-⡈	Braille-Punkte 4 7	none
-⡉	Braille-Punkte 1 4 7	none
-⡊	Braille-Punkte 2 4 7	none
-⡋	Braille-Punkte 1 2 4 7	none
-⡌	Braille-Punkte 3 4 7	none
-⡍	Braille-Punkte 1 3 4 7	none
-⡎	Braille-Punkte 2 3 4 7	none
-⡏	Braille-Punkte 1 2 3 4 7	none
-⡐	Braille-Punkte 5 7	none
-⡑	Braille-Punkte 1 5 7	none
-⡒	Braille-Punkte 2 5 7	none
-⡓	Braille-Punkte 1 2 5 7	none
-⡔	Braille-Punkte 3 5 7	none
-⡕	Braille-Punkte 1 3 5 7	none
-⡖	Braille-Punkte 2 3 5 7	none
-⡗	Braille-Punkte 1 2 3 5 7	none
-⡘	Braille-Punkte 4 5 7	none
-⡙	Braille-Punkte 1 4 5 7	none
-⡚	Braille-Punkte 2 4 5 7	none
-⡛	Braille-Punkte 1 2 4 5 7	none
-⡜	Braille-Punkte 3 4 5 7	none
-⡝	Braille-Punkte 1 3 4 5 7	none
-⡞	Braille-Punkte 2 3 4 5 7	none
-⡟	Braille-Punkte 1 2 3 4 5 7	none
-⡠	Braille-Punkte 6 7	none
-⡡	Braille-Punkte 1 6 7	none
-⡢	Braille-Punkte 2 6 7	none
-⡣	Braille-Punkte 1 2 6 7	none
-⡤	Braille-Punkte 3 6 7	none
-⡥	Braille-Punkte 1 3 6 7	none
-⡦	Braille-Punkte 2 3 6 7	none
-⡧	Braille-Punkte 1 2 3 6 7	none
-⡨	Braille-Punkte 4 6 7	none
-⡩	Braille-Punkte 1 4 6 7	none
-⡪	Braille-Punkte 2 4 6 7	none
-⡫	Braille-Punkte 1 2 4 6 7	none
-⡬	Braille-Punkte 3 4 6 7	none
-⡭	Braille-Punkte 1 3 4 6 7	none
-⡮	Braille-Punkte 2 3 4 6 7	none
-⡯	Braille-Punkte 1 2 3 4 6 7	none
-⡰	Braille-Punkte 5 6 7	none
-⡱	Braille-Punkte 1 5 6 7	none
-⡲	Braille-Punkte 2 5 6 7	none
-⡳	Braille-Punkte 1 2 5 6 7	none
-⡴	Braille-Punkte 3 5 6 7	none
-⡵	Braille-Punkte 1 3 5 6 7	none
-⡶	Braille-Punkte 2 3 5 6 7	none
-⡷	Braille-Punkte 1 2 3 5 6 7	none
-⡸	Braille-Punkte 4 5 6 7	none
-⡹	Braille-Punkte 1 4 5 6 7	none
-⡺	Braille-Punkte 2 4 5 6 7	none
-⡻	Braille-Punkte 1 2 4 5 6 7	none
-⡼	Braille-Punkte 3 4 5 6 7	none
-⡽	Braille-Punkte 1 3 4 5 6 7	none
-⡾	Braille-Punkte 2 3 4 5 6 7	none
-⡿	Braille-Punkte 1 2 3 4 5 6 7	none
-⢀	Braille-Punkt 8	none
-⢁	Braille-Punkte 1 8	none
-⢂	Braille-Punkte 2 8	none
-⢃	Braille-Punkte 1 2 8	none
-⢄	Braille-Punkte 3 8	none
-⢅	Braille-Punkte 1 3 8	none
-⢆	Braille-Punkte 2 3 8	none
-⢇	Braille-Punkte 1 2 3 8	none
-⢈	Braille-Punkte 4 8	none
-⢉	Braille-Punkte 1 4 8	none
-⢊	Braille-Punkte 2 4 8	none
-⢋	Braille-Punkte 1 2 4 8	none
-⢌	Braille-Punkte 3 4 8	none
-⢍	Braille-Punkte 1 3 4 8	none
-⢎	Braille-Punkte 2 3 4 8	none
-⢏	Braille-Punkte 1 2 3 4 8	none
-⢐	Braille-Punkte 5 8	none
-⢑	Braille-Punkte 1 5 8	none
-⢒	Braille-Punkte 2 5 8	none
-⢓	Braille-Punkte 1 2 5 8	none
-⢔	Braille-Punkte 3 5 8	none
-⢕	Braille-Punkte 1 3 5 8	none
-⢖	Braille-Punkte 2 3 5 8	none
-⢗	Braille-Punkte 1 2 3 5 8	none
-⢘	Braille-Punkte 4 5 8	none
-⢙	Braille-Punkte 1 4 5 8	none
-⢚	Braille-Punkte 2 4 5 8	none
-⢛	Braille-Punkte 1 2 4 5 8	none
-⢜	Braille-Punkte 3 4 5 8	none
-⢝	Braille-Punkte 1 3 4 5 8	none
-⢞	Braille-Punkte 2 3 4 5 8	none
-⢟	Braille-Punkte 1 2 3 4 5 8	none
-⢠	Braille-Punkte 6 8	none
-⢡	Braille-Punkte 1 6 8	none
-⢢	Braille-Punkte 2 6 8	none
-⢣	Braille-Punkte 1 2 6 8	none
-⢤	Braille-Punkte 3 6 8	none
-⢥	Braille-Punkte 1 3 6 8	none
-⢦	Braille-Punkte 2 3 6 8	none
-⢧	Braille-Punkte 1 2 3 6 8	none
-⢨	Braille-Punkte 4 6 8	none
-⢩	Braille-Punkte 1 4 6 8	none
-⢪	Braille-Punkte 2 4 6 8	none
-⢫	Braille-Punkte 1 2 4 6 8	none
-⢬	Braille-Punkte 3 4 6 8	none
-⢭	Braille-Punkte 1 3 4 6 8	none
-⢮	Braille-Punkte 2 3 4 6 8	none
-⢯	Braille-Punkte 1 2 3 4 6 8	none
-⢰	Braille-Punkte 5 6 8	none
-⢱	Braille-Punkte 1 5 6 8	none
-⢲	Braille-Punkte 2 5 6 8	none
-⢳	Braille-Punkte 1 2 5 6 8	none
-⢴	Braille-Punkte 3 5 6 8	none
-⢵	Braille-Punkte 1 3 5 6 8	none
-⢶	Braille-Punkte 2 3 5 6 8	none
-⢷	Braille-Punkte 1 2 3 5 6 8	none
-⢸	Braille-Punkte 4 5 6 8	none
-⢹	Braille-Punkte 1 4 5 6 8	none
-⢺	Braille-Punkte 2 4 5 6 8	none
-⢻	Braille-Punkte 1 2 4 5 6 8	none
-⢼	Braille-Punkte 3 4 5 6 8	none
-⢽	Braille-Punkte 1 3 4 5 6 8	none
-⢾	Braille-Punkte 2 3 4 5 6 8	none
-⢿	Braille-Punkte 1 2 3 4 5 6 8	none
-⣀	Braille-Punkte 7 8	none
-⣁	Braille-Punkte 1 7 8	none
-⣂	Braille-Punkte 2 7 8	none
-⣃	Braille-Punkte 1 2 7 8	none
-⣄	Braille-Punkte 3 7 8	none
-⣅	Braille-Punkte 1 3 7 8	none
-⣆	Braille-Punkte 2 3 7 8	none
-⣇	Braille-Punkte 1 2 3 7 8	none
-⣈	Braille-Punkte 4 7 8	none
-⣉	Braille-Punkte 1 4 7 8	none
-⣊	Braille-Punkte 2 4 7 8	none
-⣋	Braille-Punkte 1 2 4 7 8	none
-⣌	Braille-Punkte 3 4 7 8	none
-⣍	Braille-Punkte 1 3 4 7 8	none
-⣎	Braille-Punkte 2 3 4 7 8	none
-⣏	Braille-Punkte 1 2 3 4 7 8	none
-⣐	Braille-Punkte 5 7 8	none
-⣑	Braille-Punkte 1 5 7 8	none
-⣒	Braille-Punkte 2 5 7 8	none
-⣓	Braille-Punkte 1 2 5 7 8	none
-⣔	Braille-Punkte 3 5 7 8	none
-⣕	Braille-Punkte 1 3 5 7 8	none
-⣖	Braille-Punkte 2 3 5 7 8	none
-⣗	Braille-Punkte 1 2 3 5 7 8	none
-⣘	Braille-Punkte 4 5 7 8	none
-⣙	Braille-Punkte 1 4 5 7 8	none
-⣚	Braille-Punkte 2 4 5 7 8	none
-⣛	Braille-Punkte 1 2 4 5 7 8	none
-⣜	Braille-Punkte 3 4 5 7 8	none
-⣝	Braille-Punkte 1 3 4 5 7 8	none
-⣞	Braille-Punkte 2 3 4 5 7 8	none
-⣟	Braille-Punkte 1 2 3 4 5 7 8	none
-⣠	Braille-Punkte 6 7 8	none
-⣡	Braille-Punkte 1 6 7 8	none
-⣢	Braille-Punkte 2 6 7 8	none
-⣣	Braille-Punkte 1 2 6 7 8	none
-⣤	Braille-Punkte 3 6 7 8	none
-⣥	Braille-Punkte 1 3 6 7 8	none
-⣦	Braille-Punkte 2 3 6 7 8	none
-⣧	Braille-Punkte 1 2 3 6 7 8	none
-⣨	Braille-Punkte 4 6 7 8	none
-⣩	Braille-Punkte 1 4 6 7 8	none
-⣪	Braille-Punkte 2 4 6 7 8	none
-⣫	Braille-Punkte 1 2 4 6 7 8	none
-⣬	Braille-Punkte 3 4 6 7 8	none
-⣭	Braille-Punkte 1 3 4 6 7 8	none
-⣮	Braille-Punkte 2 3 4 6 7 8	none
-⣯	Braille-Punkte 1 2 3 4 6 7 8	none
-⣰	Braille-Punkte 5 6 7 8	none
-⣱	Braille-Punkte 1 5 6 7 8	none
-⣲	Braille-Punkte 2 5 6 7 8	none
-⣳	Braille-Punkte 1 2 5 6 7 8	none
-⣴	Braille-Punkte 3 5 6 7 8	none
-⣵	Braille-Punkte 1 3 5 6 7 8	none
-⣶	Braille-Punkte 2 3 5 6 7 8	none
-⣷	Braille-Punkte 1 2 3 5 6 7 8	none
-⣸	Braille-Punkte 4 5 6 7 8	none
-⣹	Braille-Punkte 1 4 5 6 7 8	none
-⣺	Braille-Punkte 2 4 5 6 7 8	none
-⣻	Braille-Punkte 1 2 4 5 6 7 8	none
-⣼	Braille-Punkte 3 4 5 6 7 8	none
-⣽	Braille-Punkte 1 3 4 5 6 7 8	none
-⣾	Braille-Punkte 2 3 4 5 6 7 8	none
-⣿	Alle 8 Braille-Punkte	none
+⠁	Braillepunkt 1	none
+⠂	Braillepunkt 2	none
+⠃	Braillepunkte 1 2	none
+⠄	Braillepunkt 3	none
+⠅	Braillepunkte 1 3	none
+⠆	Braillepunkte 2 3	none
+⠇	Braillepunkte 1 2 3	none
+⠈	Braillepunkt 4	none
+⠉	Braillepunkte 1 4	none
+⠊	Braillepunkte 2 4	none
+⠋	Braillepunkte 1 2 4	none
+⠌	Braillepunkte 3 4	none
+⠍	Braillepunkte 1 3 4	none
+⠎	Braillepunkte 2 3 4	none
+⠏	Braillepunkte 1 2 3 4	none
+⠐	Braillepunkt 5	none
+⠑	Braillepunkte 1 5	none
+⠒	Braillepunkte 2 5	none
+⠓	Braillepunkte 1 2 5	none
+⠔	Braillepunkte 3 5	none
+⠕	Braillepunkte 1 3 5	none
+⠖	Braillepunkte 2 3 5	none
+⠗	Braillepunkte 1 2 3 5	none
+⠘	Braillepunkte 4 5	none
+⠙	Braillepunkte 1 4 5	none
+⠚	Braillepunkte 2 4 5	none
+⠛	Braillepunkte 1 2 4 5	none
+⠜	Braillepunkte 3 4 5	none
+⠝	Braillepunkte 1 3 4 5	none
+⠞	Braillepunkte 2 3 4 5	none
+⠟	Braillepunkte 1 2 3 4 5	none
+⠠	Braillepunkt 6	none
+⠡	Braillepunkte 1 6	none
+⠢	Braillepunkte 2 6	none
+⠣	Braillepunkte 1 2 6	none
+⠤	Braillepunkte 3 6	none
+⠥	Braillepunkte 1 3 6	none
+⠦	Braillepunkte 2 3 6	none
+⠧	Braillepunkte 1 2 3 6	none
+⠨	Braillepunkte 4 6	none
+⠩	Braillepunkte 1 4 6	none
+⠪	Braillepunkte 2 4 6	none
+⠫	Braillepunkte 1 2 4 6	none
+⠬	Braillepunkte 3 4 6	none
+⠭	Braillepunkte 1 3 4 6	none
+⠮	Braillepunkte 2 3 4 6	none
+⠯	Braillepunkte 1 2 3 4 6	none
+⠰	Braillepunkte 5 6	none
+⠱	Braillepunkte 1 5 6	none
+⠲	Braillepunkte 2 5 6	none
+⠳	Braillepunkte 1 2 5 6	none
+⠴	Braillepunkte 3 5 6	none
+⠵	Braillepunkte 1 3 5 6	none
+⠶	Braillepunkte 2 3 5 6	none
+⠷	Braillepunkte 1 2 3 5 6	none
+⠸	Braillepunkte 4 5 6	none
+⠹	Braillepunkte 1 4 5 6	none
+⠺	Braillepunkte 2 4 5 6	none
+⠻	Braillepunkte 1 2 4 5 6	none
+⠼	Braillepunkte 3 4 5 6	none
+⠽	Braillepunkte 1 3 4 5 6	none
+⠾	Braillepunkte 2 3 4 5 6	none
+⠿	Alle 6 Braillepunkte	none
+⡀	Braillepunkt 7	none
+⡁	Braillepunkte 1 7	none
+⡂	Braillepunkte 2 7	none
+⡃	Braillepunkte 1 2 7	none
+⡄	Braillepunkte 3 7	none
+⡅	Braillepunkte 1 3 7	none
+⡆	Braillepunkte 2 3 7	none
+⡇	Braillepunkte 1 2 3 7	none
+⡈	Braillepunkte 4 7	none
+⡉	Braillepunkte 1 4 7	none
+⡊	Braillepunkte 2 4 7	none
+⡋	Braillepunkte 1 2 4 7	none
+⡌	Braillepunkte 3 4 7	none
+⡍	Braillepunkte 1 3 4 7	none
+⡎	Braillepunkte 2 3 4 7	none
+⡏	Braillepunkte 1 2 3 4 7	none
+⡐	Braillepunkte 5 7	none
+⡑	Braillepunkte 1 5 7	none
+⡒	Braillepunkte 2 5 7	none
+⡓	Braillepunkte 1 2 5 7	none
+⡔	Braillepunkte 3 5 7	none
+⡕	Braillepunkte 1 3 5 7	none
+⡖	Braillepunkte 2 3 5 7	none
+⡗	Braillepunkte 1 2 3 5 7	none
+⡘	Braillepunkte 4 5 7	none
+⡙	Braillepunkte 1 4 5 7	none
+⡚	Braillepunkte 2 4 5 7	none
+⡛	Braillepunkte 1 2 4 5 7	none
+⡜	Braillepunkte 3 4 5 7	none
+⡝	Braillepunkte 1 3 4 5 7	none
+⡞	Braillepunkte 2 3 4 5 7	none
+⡟	Braillepunkte 1 2 3 4 5 7	none
+⡠	Braillepunkte 6 7	none
+⡡	Braillepunkte 1 6 7	none
+⡢	Braillepunkte 2 6 7	none
+⡣	Braillepunkte 1 2 6 7	none
+⡤	Braillepunkte 3 6 7	none
+⡥	Braillepunkte 1 3 6 7	none
+⡦	Braillepunkte 2 3 6 7	none
+⡧	Braillepunkte 1 2 3 6 7	none
+⡨	Braillepunkte 4 6 7	none
+⡩	Braillepunkte 1 4 6 7	none
+⡪	Braillepunkte 2 4 6 7	none
+⡫	Braillepunkte 1 2 4 6 7	none
+⡬	Braillepunkte 3 4 6 7	none
+⡭	Braillepunkte 1 3 4 6 7	none
+⡮	Braillepunkte 2 3 4 6 7	none
+⡯	Braillepunkte 1 2 3 4 6 7	none
+⡰	Braillepunkte 5 6 7	none
+⡱	Braillepunkte 1 5 6 7	none
+⡲	Braillepunkte 2 5 6 7	none
+⡳	Braillepunkte 1 2 5 6 7	none
+⡴	Braillepunkte 3 5 6 7	none
+⡵	Braillepunkte 1 3 5 6 7	none
+⡶	Braillepunkte 2 3 5 6 7	none
+⡷	Braillepunkte 1 2 3 5 6 7	none
+⡸	Braillepunkte 4 5 6 7	none
+⡹	Braillepunkte 1 4 5 6 7	none
+⡺	Braillepunkte 2 4 5 6 7	none
+⡻	Braillepunkte 1 2 4 5 6 7	none
+⡼	Braillepunkte 3 4 5 6 7	none
+⡽	Braillepunkte 1 3 4 5 6 7	none
+⡾	Braillepunkte 2 3 4 5 6 7	none
+⡿	Braillepunkte 1 2 3 4 5 6 7	none
+⢀	Braillepunkt 8	none
+⢁	Braillepunkte 1 8	none
+⢂	Braillepunkte 2 8	none
+⢃	Braillepunkte 1 2 8	none
+⢄	Braillepunkte 3 8	none
+⢅	Braillepunkte 1 3 8	none
+⢆	Braillepunkte 2 3 8	none
+⢇	Braillepunkte 1 2 3 8	none
+⢈	Braillepunkte 4 8	none
+⢉	Braillepunkte 1 4 8	none
+⢊	Braillepunkte 2 4 8	none
+⢋	Braillepunkte 1 2 4 8	none
+⢌	Braillepunkte 3 4 8	none
+⢍	Braillepunkte 1 3 4 8	none
+⢎	Braillepunkte 2 3 4 8	none
+⢏	Braillepunkte 1 2 3 4 8	none
+⢐	Braillepunkte 5 8	none
+⢑	Braillepunkte 1 5 8	none
+⢒	Braillepunkte 2 5 8	none
+⢓	Braillepunkte 1 2 5 8	none
+⢔	Braillepunkte 3 5 8	none
+⢕	Braillepunkte 1 3 5 8	none
+⢖	Braillepunkte 2 3 5 8	none
+⢗	Braillepunkte 1 2 3 5 8	none
+⢘	Braillepunkte 4 5 8	none
+⢙	Braillepunkte 1 4 5 8	none
+⢚	Braillepunkte 2 4 5 8	none
+⢛	Braillepunkte 1 2 4 5 8	none
+⢜	Braillepunkte 3 4 5 8	none
+⢝	Braillepunkte 1 3 4 5 8	none
+⢞	Braillepunkte 2 3 4 5 8	none
+⢟	Braillepunkte 1 2 3 4 5 8	none
+⢠	Braillepunkte 6 8	none
+⢡	Braillepunkte 1 6 8	none
+⢢	Braillepunkte 2 6 8	none
+⢣	Braillepunkte 1 2 6 8	none
+⢤	Braillepunkte 3 6 8	none
+⢥	Braillepunkte 1 3 6 8	none
+⢦	Braillepunkte 2 3 6 8	none
+⢧	Braillepunkte 1 2 3 6 8	none
+⢨	Braillepunkte 4 6 8	none
+⢩	Braillepunkte 1 4 6 8	none
+⢪	Braillepunkte 2 4 6 8	none
+⢫	Braillepunkte 1 2 4 6 8	none
+⢬	Braillepunkte 3 4 6 8	none
+⢭	Braillepunkte 1 3 4 6 8	none
+⢮	Braillepunkte 2 3 4 6 8	none
+⢯	Braillepunkte 1 2 3 4 6 8	none
+⢰	Braillepunkte 5 6 8	none
+⢱	Braillepunkte 1 5 6 8	none
+⢲	Braillepunkte 2 5 6 8	none
+⢳	Braillepunkte 1 2 5 6 8	none
+⢴	Braillepunkte 3 5 6 8	none
+⢵	Braillepunkte 1 3 5 6 8	none
+⢶	Braillepunkte 2 3 5 6 8	none
+⢷	Braillepunkte 1 2 3 5 6 8	none
+⢸	Braillepunkte 4 5 6 8	none
+⢹	Braillepunkte 1 4 5 6 8	none
+⢺	Braillepunkte 2 4 5 6 8	none
+⢻	Braillepunkte 1 2 4 5 6 8	none
+⢼	Braillepunkte 3 4 5 6 8	none
+⢽	Braillepunkte 1 3 4 5 6 8	none
+⢾	Braillepunkte 2 3 4 5 6 8	none
+⢿	Braillepunkte 1 2 3 4 5 6 8	none
+⣀	Braillepunkte 7 8	none
+⣁	Braillepunkte 1 7 8	none
+⣂	Braillepunkte 2 7 8	none
+⣃	Braillepunkte 1 2 7 8	none
+⣄	Braillepunkte 3 7 8	none
+⣅	Braillepunkte 1 3 7 8	none
+⣆	Braillepunkte 2 3 7 8	none
+⣇	Braillepunkte 1 2 3 7 8	none
+⣈	Braillepunkte 4 7 8	none
+⣉	Braillepunkte 1 4 7 8	none
+⣊	Braillepunkte 2 4 7 8	none
+⣋	Braillepunkte 1 2 4 7 8	none
+⣌	Braillepunkte 3 4 7 8	none
+⣍	Braillepunkte 1 3 4 7 8	none
+⣎	Braillepunkte 2 3 4 7 8	none
+⣏	Braillepunkte 1 2 3 4 7 8	none
+⣐	Braillepunkte 5 7 8	none
+⣑	Braillepunkte 1 5 7 8	none
+⣒	Braillepunkte 2 5 7 8	none
+⣓	Braillepunkte 1 2 5 7 8	none
+⣔	Braillepunkte 3 5 7 8	none
+⣕	Braillepunkte 1 3 5 7 8	none
+⣖	Braillepunkte 2 3 5 7 8	none
+⣗	Braillepunkte 1 2 3 5 7 8	none
+⣘	Braillepunkte 4 5 7 8	none
+⣙	Braillepunkte 1 4 5 7 8	none
+⣚	Braillepunkte 2 4 5 7 8	none
+⣛	Braillepunkte 1 2 4 5 7 8	none
+⣜	Braillepunkte 3 4 5 7 8	none
+⣝	Braillepunkte 1 3 4 5 7 8	none
+⣞	Braillepunkte 2 3 4 5 7 8	none
+⣟	Braillepunkte 1 2 3 4 5 7 8	none
+⣠	Braillepunkte 6 7 8	none
+⣡	Braillepunkte 1 6 7 8	none
+⣢	Braillepunkte 2 6 7 8	none
+⣣	Braillepunkte 1 2 6 7 8	none
+⣤	Braillepunkte 3 6 7 8	none
+⣥	Braillepunkte 1 3 6 7 8	none
+⣦	Braillepunkte 2 3 6 7 8	none
+⣧	Braillepunkte 1 2 3 6 7 8	none
+⣨	Braillepunkte 4 6 7 8	none
+⣩	Braillepunkte 1 4 6 7 8	none
+⣪	Braillepunkte 2 4 6 7 8	none
+⣫	Braillepunkte 1 2 4 6 7 8	none
+⣬	Braillepunkte 3 4 6 7 8	none
+⣭	Braillepunkte 1 3 4 6 7 8	none
+⣮	Braillepunkte 2 3 4 6 7 8	none
+⣯	Braillepunkte 1 2 3 4 6 7 8	none
+⣰	Braillepunkte 5 6 7 8	none
+⣱	Braillepunkte 1 5 6 7 8	none
+⣲	Braillepunkte 2 5 6 7 8	none
+⣳	Braillepunkte 1 2 5 6 7 8	none
+⣴	Braillepunkte 3 5 6 7 8	none
+⣵	Braillepunkte 1 3 5 6 7 8	none
+⣶	Braillepunkte 2 3 5 6 7 8	none
+⣷	Braillepunkte 1 2 3 5 6 7 8	none
+⣸	Braillepunkte 4 5 6 7 8	none
+⣹	Braillepunkte 1 4 5 6 7 8	none
+⣺	Braillepunkte 2 4 5 6 7 8	none
+⣻	Braillepunkte 1 2 4 5 6 7 8	none
+⣼	Braillepunkte 3 4 5 6 7 8	none
+⣽	Braillepunkte 1 3 4 5 6 7 8	none
+⣾	Braillepunkte 2 3 4 5 6 7 8	none
+⣿	Alle 8 Braillepunkte	none
