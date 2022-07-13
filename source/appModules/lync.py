@@ -50,7 +50,6 @@ class NetUIRicherLabel(UIA):
 				priority = match['priority']
 				content = match['content']
 				status = match['status']
-				timestamp = match['timestamp']
 				if priority:
 					content = priority + ', ' + content
 				if status:
