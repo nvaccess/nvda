@@ -523,12 +523,18 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 	def script_speakRow(self, gesture):
 		self._tableSayAll(_Movement.FIRST, _Axis.COLUMN, updateCaret=False)
 	# Translators: the description for the speak row command
-	script_speakRow.__doc__ = _("Reads the current row horizontally from left to right without moving the system caret.")
+	script_speakRow.__doc__ = _(
+		"Reads the current row horizontally from left to right "
+		"without moving the system caret."
+	)
 
 	def script_speakColumn(self, gesture):
 		self._tableSayAll(_Movement.FIRST, _Axis.ROW, updateCaret=False)
 	# Translators: the description for the speak column command
-	script_speakColumn.__doc__ = _("Reads the current column vertically from top to bottom without moving the system caret.")
+	script_speakColumn.__doc__ = _(
+		"Reads the current column vertically from top to bottom "
+		"without moving the system caret."
+	)
 
 	def script_toggleIncludeLayoutTables(self,gesture):
 		# documentBase is a core module and should not depend on UI, so it is imported at run-time. (#12404)
