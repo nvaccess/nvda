@@ -2,10 +2,11 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2021 NV Access Limited, Peter Vágner
+# Copyright (C) 2006-2022 NV Access Limited, Peter Vágner
 
 import IAccessibleHandler
 from comInterfaces import IAccessible2Lib as IA2
+import config
 import oleacc
 import winUser
 import controlTypes
@@ -64,7 +65,7 @@ class Mozilla(ia2Web.Ia2Web):
 
 	def _get_detailsSummary(self) -> Optional[str]:
 		# Unlike base Ia2Web implementation, the details-roles
-		# IA2 attribute is not exposed in FireFox.
+		# IA2 attribute is not exposed in Firefox.
 		# Although slower, we have to fetch the details relations instead.
 		detailsRelations = self.detailsRelations
 		if not detailsRelations:
@@ -73,10 +74,30 @@ class Mozilla(ia2Web.Ia2Web):
 			# just take the first for now.
 			return target.summarizeInProcess()
 
+	def _get_detailsRole(self) -> Optional[controlTypes.Role]:
+		# Unlike base Ia2Web implementation, the details-roles
+		# IA2 attribute is not exposed in Firefox.
+		# Although slower, we have to fetch the details relations instead.
+		detailsRelations = self.detailsRelations
+		if not detailsRelations:
+			return None
+		for target in detailsRelations:
+			# just take the first target for now.
+			# details-roles is currently only defined in Chromium
+			# this may diverge in Firefox in future.
+			from .chromium import supportedAriaDetailsRoles
+			detailsRole = IAccessibleHandler.IAccessibleRolesToNVDARoles.get(target.IAccessibleRole)
+			# return a supported details role
+			if config.conf["debugLog"]["annotations"]:
+				log.debug(f"detailsRole: {repr(detailsRole)}")
+			if detailsRole in supportedAriaDetailsRoles.values():
+				return detailsRole
+			return None
+
 	@property
 	def hasDetails(self) -> bool:
 		# Unlike base Ia2Web implementation, the details-roles
-		# IA2 attribute is not exposed in FireFox.
+		# IA2 attribute is not exposed in Firefox.
 		# Although slower, we have to fetch the details relations instead.
 		return bool(self.detailsRelations)
 

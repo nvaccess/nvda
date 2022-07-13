@@ -216,14 +216,10 @@ class GlobalCommands(ScriptableObject):
 		gestures=("kb:shift+numpadDivide", "kb(laptop):NVDA+control+[")
 	)
 	def script_toggleLeftMouseButton(self,gesture):
-		if winUser.getKeyState(winUser.VK_LBUTTON)&32768:
-			# Translators: This is presented when the left mouse button lock is released (used for drag and drop).
-			ui.message(_("Left mouse button unlock"))
-			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP,0,0)
+		if mouseHandler.isLeftMouseButtonLocked():
+			mouseHandler.unlockLeftMouseButton()
 		else:
-			# Translators: This is presented when the left mouse button is locked down (used for drag and drop).
-			ui.message(_("Left mouse button lock"))
-			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN,0,0)
+			mouseHandler.lockLeftMouseButton()
 
 	@script(
 		# Translators: Input help mode message for right mouse lock/unlock command.
@@ -232,14 +228,10 @@ class GlobalCommands(ScriptableObject):
 		gestures=("kb:shift+numpadMultiply", "kb(laptop):NVDA+control+]")
 	)
 	def script_toggleRightMouseButton(self,gesture):
-		if winUser.getKeyState(winUser.VK_RBUTTON)&32768:
-			# Translators: This is presented when the right mouse button lock is released (used for drag and drop).
-			ui.message(_("Right mouse button unlock"))
-			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_RIGHTUP,0,0)
+		if mouseHandler.isRightMouseButtonLocked():
+			mouseHandler.unlockRightMouseButton()
 		else:
-			# Translators: This is presented when the right mouse button is locked down (used for drag and drop).
-			ui.message(_("Right mouse button lock"))
-			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_RIGHTDOWN,0,0)
+			mouseHandler.lockRightMouseButton()
 
 	@script(
 		description=_(
@@ -907,6 +899,32 @@ class GlobalCommands(ScriptableObject):
 		ui.message(state)
 
 	@script(
+		description=_(
+			# Translators: Input help mode message for cycle through automatic language switching mode command.
+			"Cycles through speech modes for automatic language switching: "
+			"off, language only and language and dialect."
+		),
+		category=SCRCAT_SPEECH,
+	)
+	def script_cycleSpeechAutomaticLanguageSwitching(self, gesture):
+		if config.conf["speech"]["autoLanguageSwitching"]:
+			if config.conf["speech"]["autoDialectSwitching"]:
+				# Translators: A message reported when executing the cycle automatic language switching mode command.
+				state = _("Automatic language switching off")
+				config.conf["speech"]["autoLanguageSwitching"] = False
+				config.conf["speech"]["autoDialectSwitching"] = False
+			else:
+				# Translators: A message reported when executing the cycle automatic language switching mode command.
+				state = _("Automatic language and dialect switching on")
+				config.conf["speech"]["autoDialectSwitching"] = True
+		else:
+			# Translators: A message reported when executing the cycle automatic language switching mode command.
+			state = _("Automatic language switching on")
+			config.conf["speech"]["autoLanguageSwitching"] = True
+			config.conf["speech"]["autoDialectSwitching"] = False
+		ui.message(state)
+
+	@script(
 		# Translators: Input help mode message for cycle speech symbol level command.
 		description=_("Cycles through speech symbol levels which determine what symbols are spoken"),
 		category=SCRCAT_SPEECH,
@@ -1383,7 +1401,7 @@ class GlobalCommands(ScriptableObject):
 		info=api.getReviewPosition().copy()
 		info.expand(textInfos.UNIT_LINE)
 		# Explicitly tether here
-		braille.handler.setTether(braille.handler.TETHER_REVIEW, auto=True)
+		braille.handler.handleReviewMove(shouldAutoTether=True)
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
 		if scriptCount==0:
 			speech.speakTextInfo(info, unit=textInfos.UNIT_LINE, reason=controlTypes.OutputReason.CARET)
@@ -1460,7 +1478,7 @@ class GlobalCommands(ScriptableObject):
 		info=api.getReviewPosition().copy()
 		info.expand(textInfos.UNIT_WORD)
 		# Explicitly tether here
-		braille.handler.setTether(braille.handler.TETHER_REVIEW, auto=True)
+		braille.handler.handleReviewMove(shouldAutoTether=True)
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
 		if scriptCount==0:
 			speech.speakTextInfo(info, reason=controlTypes.OutputReason.CARET, unit=textInfos.UNIT_WORD)
@@ -1548,7 +1566,7 @@ class GlobalCommands(ScriptableObject):
 		info=api.getReviewPosition().copy()
 		info.expand(textInfos.UNIT_CHARACTER)
 		# Explicitly tether here
-		braille.handler.setTether(braille.handler.TETHER_REVIEW, auto=True)
+		braille.handler.handleReviewMove(shouldAutoTether=True)
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
 		if scriptCount==0:
 			speech.speakTextInfo(info, unit=textInfos.UNIT_CHARACTER, reason=controlTypes.OutputReason.CARET)

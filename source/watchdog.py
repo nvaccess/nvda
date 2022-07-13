@@ -194,8 +194,8 @@ def _crashHandler(exceptionInfo):
 			mdExc = MINIDUMP_EXCEPTION_INFORMATION(ThreadId=threadId,
 				ExceptionPointers=exceptionInfo, ClientPointers=False)
 			if not ctypes.windll.DbgHelp.MiniDumpWriteDump(
-				ctypes.windll.kernel32.GetCurrentProcess(),
-				os.getpid(),
+				winKernel.kernel32.GetCurrentProcess(),
+				globalVars.appPid,
 				msvcrt.get_osfhandle(mdf.fileno()),
 				0, # MiniDumpNormal
 				ctypes.byref(mdExc),

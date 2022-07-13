@@ -46,14 +46,12 @@ from . import logViewer
 import speechViewer
 import winUser
 import api
-from buildVersion import version_year
 
 
-if version_year < 2023:
+if globalVars._allowDeprecatedAPI:
 	def quit():
 		"""
-		Deprecated, for removal in 2023.1.
-		Use `wx.CallAfter(mainFrame.onExitCommand, None)` directly instead.
+		Deprecated, use `wx.CallAfter(mainFrame.onExitCommand, None)` directly instead.
 		"""
 		log.debugWarning("Deprecated function called: gui.quit", stack_info=True)
 		wx.CallAfter(mainFrame.onExitCommand, None)
@@ -107,17 +105,17 @@ class MainFrame(wx.Frame):
 		L{postPopup} should be called after the dialog or menu has been shown.
 		@postcondition: A dialog or menu may be shown.
 		"""
-		nvdaPid = os.getpid()
 		focus = api.getFocusObject()
 		# Do not set prevFocus if the focus is on a control rendered by NVDA itself, such as the NVDA menu.
 		# This allows to refer to the control that had focus before opening the menu while still using NVDA
-		# on its own controls. The L{nvdaPid} check can be bypassed by setting the optional attribute
+		# on its own controls.
+		# The check for NVDA process ID can be bypassed by setting the optional attribute
 		# L{isPrevFocusOnNvdaPopup} to L{True} when a NVDA dialog offers customizable bound gestures,
 		# eg. the NVDA Python Console.
-		if focus.processID != nvdaPid or getattr(focus, "isPrevFocusOnNvdaPopup", False):
+		if focus.processID != globalVars.appPid or getattr(focus, "isPrevFocusOnNvdaPopup", False):
 			self.prevFocus = focus
 			self.prevFocusAncestors = api.getFocusAncestors()
-		if winUser.getWindowThreadProcessID(winUser.getForegroundWindow())[0] != nvdaPid:
+		if winUser.getWindowThreadProcessID(winUser.getForegroundWindow())[0] != globalVars.appPid:
 			# This process is not the foreground process, so bring it to the foreground.
 			self.Raise()
 
@@ -151,11 +149,8 @@ class MainFrame(wx.Frame):
 		# Translators: Reported when configuration has been restored to defaults by using restore configuration to factory defaults item in NVDA menu.
 		queueHandler.queueFunction(queueHandler.eventQueue,ui.message,_("Configuration restored to factory defaults"))
 
+	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onSaveConfigurationCommand(self,evt):
-		if globalVars.appArgs.secure:
-			# Translators: Reported when an action cannot be performed because NVDA is in a secure screen
-			queueHandler.queueFunction(queueHandler.eventQueue, ui.message, _("Not available in secure context"))
-			return
 		try:
 			config.conf.save()
 			# Translators: Reported when current configuration has been saved.
@@ -285,6 +280,7 @@ class MainFrame(wx.Frame):
 		# Translators: The title of the dialog to show about info for NVDA.
 		messageBox(versionInfo.aboutMessage, _("About NVDA"), wx.OK)
 
+	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onCheckForUpdateCommand(self, evt):
 		updateCheck.UpdateChecker().check()
 
@@ -340,8 +336,8 @@ class MainFrame(wx.Frame):
 		NVDAObject.clearDynamicClassCache()
 
 	@blockAction.when(
-		blockAction.Context.MODAL_DIALOG_OPEN,
 		blockAction.Context.SECURE_MODE,
+		blockAction.Context.MODAL_DIALOG_OPEN,
 	)
 	def onCreatePortableCopyCommand(self,evt):
 		self.prePopup()
@@ -351,16 +347,16 @@ class MainFrame(wx.Frame):
 		self.postPopup()
 
 	@blockAction.when(
+		blockAction.Context.SECURE_MODE,
 		blockAction.Context.MODAL_DIALOG_OPEN,
-		blockAction.Context.SECURE_MODE
 	)
 	def onInstallCommand(self, evt):
 		from gui import installerGui
 		installerGui.showInstallGui()
 
 	@blockAction.when(
+		blockAction.Context.SECURE_MODE,
 		blockAction.Context.MODAL_DIALOG_OPEN,
-		blockAction.Context.SECURE_MODE
 	)
 	def onRunCOMRegistrationFixesCommand(self, evt):
 		if messageBox(

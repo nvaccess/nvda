@@ -63,6 +63,63 @@ def hasUiAccess():
 		ctypes.windll.kernel32.CloseHandle(token)
 
 
+#: Value from the TOKEN_INFORMATION_CLASS enumeration:
+#: https://docs.microsoft.com/en-us/windows/win32/api/winnt/ne-winnt-token_information_class
+#: When calling The Win32 GetTokenInformation function, the buffer receives a TOKEN_ORIGIN value.
+#: If the token resulted from a logon that used explicit credentials, such as passing a name, domain,
+#: and password to the LogonUser function, then the TOKEN_ORIGIN structure will contain the ID of
+#: the logon session that created it.
+#: If the token resulted from network authentication, then this value will be zero.
+TOKEN_ORIGIN = 17  # TokenOrigin in winnt.h
+
+
+class TokenOrigin(ctypes.Structure):
+	"""TOKEN_ORIGIN structure: https://docs.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-token_origin
+	This structure is used in calls to the Win32 GetTokenInformation function.
+	"""
+	_fields_ = [
+		("originatingLogonSession", ctypes.c_ulonglong)  # OriginatingLogonSession in C structure
+	]
+
+
+def getProcessLogonSessionId(processHandle: int) -> int:
+	"""
+	Retrieves the ID of the logon session that created the process that the given processHandle belongs to.
+	The function calls several Win32 functions:
+	* OpenProcessToken: opens the access token associated with a process.
+	* GetTokenInformation: retrieves a specified type of information about an access token.
+	  The calling process must have appropriate access rights to obtain the information.
+	  GetTokenInformation is called with the TokenOrigin Value from the TOKEN_INFORMATION_CLASS enumeration.
+	  The resulting structure contains the session ID of the logon session that will be returned.
+	* CloseHandle: To close the token handle.
+	"""
+	token = ctypes.wintypes.HANDLE()
+	if not ctypes.windll.advapi32.OpenProcessToken(
+		processHandle,
+		winKernel.MAXIMUM_ALLOWED,
+		ctypes.byref(token)
+	):
+		raise ctypes.WinError()
+	try:
+		val = TokenOrigin()
+		if not ctypes.windll.advapi32.GetTokenInformation(
+			token,
+			TOKEN_ORIGIN,
+			ctypes.byref(val),
+			ctypes.sizeof(val),
+			ctypes.byref(ctypes.wintypes.DWORD())
+		):
+			raise ctypes.WinError()
+		return val.originatingLogonSession
+	finally:
+		ctypes.windll.kernel32.CloseHandle(token)
+
+
+@functools.lru_cache(maxsize=1)
+def getCurrentProcessLogonSessionId() -> int:
+	return getProcessLogonSessionId(winKernel.GetCurrentProcess())
+
+
 def execElevated(path, params=None, wait=False, handleAlreadyElevated=False):
 	import subprocess
 	if params is not None:

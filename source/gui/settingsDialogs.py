@@ -8,7 +8,6 @@
 # jakubl7545, mltony
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-
 import logging
 from abc import ABCMeta, abstractmethod
 import copy
@@ -17,6 +16,7 @@ from enum import IntEnum
 
 import typing
 import wx
+
 from vision.providerBase import VisionEnhancementProviderSettings
 from wx.lib.expando import ExpandoTextCtrl
 import wx.lib.newevent
@@ -2655,7 +2655,7 @@ class AdvancedPanelControls(
 		label = pgettext(
 			"advanced.uiaWithMSWord",
 			# Translators: Label for the Use UIA with MS Word combobox, in the Advanced settings panel.
-			"Use UI Automation to access Microsoft Word document controls"
+			"Use UI Automation to access Microsoft &Word document controls"
 		)
 		wordChoices = (
 			# Translators: Label for the default value of the Use UIA with MS Word combobox,
@@ -2680,15 +2680,39 @@ class AdvancedPanelControls(
 		self.bindHelpEvent("UseUiaForExcel", self.UIAInMSExcelCheckBox)
 		self.UIAInMSExcelCheckBox.SetValue(config.conf["UIA"]["useInMSExcelWhenAvailable"])
 		self.UIAInMSExcelCheckBox.defaultValue = self._getDefaultValue(["UIA", "useInMSExcelWhenAvailable"])
-
-		# Translators: This is the label for a checkbox in the
-		#  Advanced settings panel.
-		label = _("Use UI Automation to access the Windows C&onsole when available")
-		consoleUIADevMap = True if config.conf['UIA']['winConsoleImplementation'] == 'UIA' else False
-		self.ConsoleUIACheckBox = UIAGroup.addItem(wx.CheckBox(UIABox, label=label))
-		self.bindHelpEvent("AdvancedSettingsConsoleUIA", self.ConsoleUIACheckBox)
-		self.ConsoleUIACheckBox.SetValue(consoleUIADevMap)
-		self.ConsoleUIACheckBox.defaultValue = self._getDefaultValue(["UIA", "winConsoleImplementation"])
+		# Translators: This is the label for a combo box for selecting the
+		# active console implementation in the advanced settings panel.
+		# Choices are automatic, UIA when available, and legacy.
+		consoleComboText = _("Windows C&onsole support:")
+		consoleChoices = [
+			# Translators: A choice in a combo box in the advanced settings
+			# panel to have NVDA determine its Windows Console implementation
+			# automatically.
+			_("Automatic (prefer UIA)"),
+			# Translators: A choice in a combo box in the advanced settings
+			# panel to have NVDA use UIA in the Windows Console when available.
+			_("UIA when available"),
+			# Translators: A choice in a combo box in the advanced settings
+			# panel to have NVDA use its legacy Windows Console support
+			# in all cases.
+			_("Legacy")
+		]
+		#: The possible console config values, in the order they appear
+		#: in the combo box.
+		self.consoleVals = (
+			"auto",
+			"UIA",
+			"legacy"
+		)
+		self.consoleCombo = UIAGroup.addLabeledControl(consoleComboText, wx.Choice, choices=consoleChoices)
+		self.bindHelpEvent("AdvancedSettingsConsoleUIA", self.consoleCombo)
+		curChoice = self.consoleVals.index(
+			config.conf['UIA']['winConsoleImplementation']
+		)
+		self.consoleCombo.SetSelection(curChoice)
+		self.consoleCombo.defaultValue = self.consoleVals.index(
+			self._getDefaultValue(["UIA", "winConsoleImplementation"])
+		)
 
 		label = pgettext(
 			"advanced.uiaWithChromium",
@@ -2868,6 +2892,23 @@ class AdvancedPanelControls(
 
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
+		label = _("Virtual Buffers")
+		vBufSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=label)
+		vBufGroup = guiHelper.BoxSizerHelper(vBufSizer, sizer=vBufSizer)
+		sHelper.addItem(vBufGroup)
+
+		self.loadChromeVBufWhenBusyCombo: nvdaControls.FeatureFlagCombo = vBufGroup.addLabeledControl(
+			labelText=_(
+				# Translators: This is the label for a combo-box in the Advanced settings panel.
+				"Load Chromium virtual buffer when document busy."
+			),
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["virtualBuffers", "loadChromiumVBufOnBusyState"],
+			conf=config.conf,
+		)
+
+		# Translators: This is the label for a group of advanced options in the
+		#  Advanced settings panel
 		label = _("Editable Text")
 		editableSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=label)
 		editableTextGroup = guiHelper.BoxSizerHelper(editableSizer, sizer=editableSizer)
@@ -2980,7 +3021,7 @@ class AdvancedPanelControls(
 			)
 			and self.UIAInMSWordCombo.GetSelection() == self.UIAInMSWordCombo.defaultValue
 			and self.UIAInMSExcelCheckBox.IsChecked() == self.UIAInMSExcelCheckBox.defaultValue
-			and self.ConsoleUIACheckBox.IsChecked() == (self.ConsoleUIACheckBox.defaultValue == 'UIA')
+			and self.consoleCombo.GetSelection() == self.consoleCombo.defaultValue
 			and self.cancelExpiredFocusSpeechCombo.GetSelection() == self.cancelExpiredFocusSpeechCombo.defaultValue
 			and self.UIAInChromiumCombo.GetSelection() == self.UIAInChromiumCombo.defaultValue
 			and self.winConsoleSpeakPasswordsCheckBox.IsChecked() == self.winConsoleSpeakPasswordsCheckBox.defaultValue
@@ -2992,6 +3033,7 @@ class AdvancedPanelControls(
 			and self.annotationsDetailsCheckBox.IsChecked() == self.annotationsDetailsCheckBox.defaultValue
 			and self.ariaDescCheckBox.IsChecked() == self.ariaDescCheckBox.defaultValue
 			and self.supportHidBrailleCombo.GetSelection() == self.supportHidBrailleCombo.defaultValue
+			and self.loadChromeVBufWhenBusyCombo.isValueConfigSpecDefault()
 			and True  # reduce noise in diff when the list is extended.
 		)
 
@@ -3000,7 +3042,7 @@ class AdvancedPanelControls(
 		self.selectiveUIAEventRegistrationCheckBox.SetValue(self.selectiveUIAEventRegistrationCheckBox.defaultValue)
 		self.UIAInMSWordCombo.SetSelection(self.UIAInMSWordCombo.defaultValue)
 		self.UIAInMSExcelCheckBox.SetValue(self.UIAInMSExcelCheckBox.defaultValue)
-		self.ConsoleUIACheckBox.SetValue(self.ConsoleUIACheckBox.defaultValue == 'UIA')
+		self.consoleCombo.SetSelection(self.consoleCombo.defaultValue == 'auto')
 		self.UIAInChromiumCombo.SetSelection(self.UIAInChromiumCombo.defaultValue)
 		self.cancelExpiredFocusSpeechCombo.SetSelection(self.cancelExpiredFocusSpeechCombo.defaultValue)
 		self.winConsoleSpeakPasswordsCheckBox.SetValue(self.winConsoleSpeakPasswordsCheckBox.defaultValue)
@@ -3012,6 +3054,7 @@ class AdvancedPanelControls(
 		self.supportHidBrailleCombo.SetSelection(self.supportHidBrailleCombo.defaultValue)
 		self.reportTransparentColorCheckBox.SetValue(self.reportTransparentColorCheckBox.defaultValue)
 		self.logCategoriesList.CheckedItems = self.logCategoriesList.defaultCheckedItems
+		self.loadChromeVBufWhenBusyCombo.resetToConfigSpecDefault()
 		self._defaultsRestored = True
 
 	def onSave(self):
@@ -3020,10 +3063,10 @@ class AdvancedPanelControls(
 		config.conf["UIA"]["selectiveEventRegistration"] = self.selectiveUIAEventRegistrationCheckBox.IsChecked()
 		config.conf["UIA"]["allowInMSWord"] = self.UIAInMSWordCombo.GetSelection()
 		config.conf["UIA"]["useInMSExcelWhenAvailable"] = self.UIAInMSExcelCheckBox.IsChecked()
-		if self.ConsoleUIACheckBox.IsChecked():
-			config.conf['UIA']['winConsoleImplementation'] = "UIA"
-		else:
-			config.conf['UIA']['winConsoleImplementation'] = "auto"
+		consoleChoice = self.consoleCombo.GetSelection()
+		config.conf['UIA']['winConsoleImplementation'] = (
+			self.consoleVals[consoleChoice]
+		)
 		config.conf["featureFlag"]["cancelExpiredFocusSpeech"] = self.cancelExpiredFocusSpeechCombo.GetSelection()
 		config.conf["UIA"]["allowInChromium"] = self.UIAInChromiumCombo.GetSelection()
 		config.conf["terminals"]["speakPasswords"] = self.winConsoleSpeakPasswordsCheckBox.IsChecked()
@@ -3039,6 +3082,7 @@ class AdvancedPanelControls(
 		config.conf["annotations"]["reportDetails"] = self.annotationsDetailsCheckBox.IsChecked()
 		config.conf["annotations"]["reportAriaDescription"] = self.ariaDescCheckBox.IsChecked()
 		config.conf["braille"]["enableHidBrailleSupport"] = self.supportHidBrailleCombo.GetSelection()
+		self.loadChromeVBufWhenBusyCombo.saveCurrentValueToConf()
 
 		for index,key in enumerate(self.logCategories):
 			config.conf['debugLog'][key]=self.logCategoriesList.IsChecked(index)

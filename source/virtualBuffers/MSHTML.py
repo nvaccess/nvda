@@ -1,14 +1,14 @@
-# virtualBuffers/MSHTML.py
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2009-2020 NV Access Limited, Babbage B.V., Accessolutions, Julien Cochuyt
+# Copyright (C) 2009-2022 NV Access Limited, Babbage B.V., Accessolutions, Julien Cochuyt
 
 from comtypes import COMError
 import eventHandler
 from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word, VBufStorage_findMatch_notEmpty
 import controlTypes
 from controlTypes import TextPosition
+from controlTypes.formatFields import FontSize
 import NVDAObjects.IAccessible.MSHTML
 import winUser
 import NVDAHelper
@@ -56,6 +56,9 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 		textPosition = attrs.get('textPosition')
 		textPosition = self._getTextPositionAttribute(attrs)
 		attrs['text-position'] = textPosition
+		fontSize = attrs.get("font-size")
+		if fontSize is not None:
+			attrs["font-size"] = FontSize.translateFromAttribute(fontSize)
 		return attrs
 
 	def _getIsCurrentAttribute(self, attrs: dict) -> controlTypes.IsCurrent:

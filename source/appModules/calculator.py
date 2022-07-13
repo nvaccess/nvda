@@ -3,7 +3,8 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-"""App module for Windows 10 Calculator"""
+"""App module for Windows 10 Calculator.
+This is also the base app module for Windows 11 Calculator."""
 
 import appModuleHandler
 import api
@@ -39,6 +40,8 @@ class AppModule(appModuleHandler.AppModule):
 	_shouldAnnounceResult = False
 	# Name change says the same thing multiple times for some items.
 	_resultsCache = ""
+	# #13383: for some commands (such as number row keys), NVDA should not announce calculator results.
+	_noCalculatorResultsGesturePressed = False
 
 	def event_NVDAObject_init(self, obj):
 		if not isinstance(obj, UIA):
@@ -75,6 +78,12 @@ class AppModule(appModuleHandler.AppModule):
 		nextHandler()
 
 	def event_UIA_notification(self, obj, nextHandler, displayString=None, activityId=None, **kwargs):
+		# When no results shortcuts such as number row keys are pressed, display content will be announced.
+		# #13383: it might be possible that the next command is a calculation shortcut such as S for sine.
+		# Therefore, clear no result gestures flag from the app module while storing a copy of the flag here.
+		# The event handler copy is used to handle the overall notification announcement later.
+		doNotAnnounceCalculatorResults = self._noCalculatorResultsGesturePressed
+		self._noCalculatorResultsGesturePressed = False
 		calculatorVersion = int(self.productVersion.split(".")[0])
 		# #12268: for "DisplayUpdated", announce display strings in braille  no matter what they are.
 		# There are other activity Id's such as "MemorySlotAdded" and "MemoryCleared"
@@ -94,6 +103,7 @@ class AppModule(appModuleHandler.AppModule):
 				resultElement
 				and resultElement.firstChild
 				and resultElement.firstChild.UIAAutomationId in noCalculatorEntryAnnouncements
+				and doNotAnnounceCalculatorResults
 			):
 				return
 		nextHandler()
@@ -112,6 +122,12 @@ class AppModule(appModuleHandler.AppModule):
 		# To prevent double focus announcement, check where we are.
 		focus = api.getFocusObject()
 		gesture.send()
+		# #13383: later Calculator releases use UIA notification event to announce results.
+		# While the exact version that introduced UIA notification event cannot be found easily,
+		# it is definitely used in version 10.1908 and later.
+		calculatorVersion = [int(version) for version in self.productVersion.split(".")[:2]]
+		if calculatorVersion >= [10, 1908]:
+			return
 		# In redstone, calculator result keeps firing name change,
 		# so tell it to do so if and only if enter has been pressed.
 		self._shouldAnnounceResult = True
@@ -125,3 +141,12 @@ class AppModule(appModuleHandler.AppModule):
 				if isinstance(resultsScreen, UIA) and resultsScreen.UIAElement.cachedClassName == "LandmarkTarget":
 					# And no, do not allow focus to move.
 					queueHandler.queueFunction(queueHandler.eventQueue, ui.message, resultsScreen.firstChild.name)
+
+	# Handle both number row and numpad with num lock on.
+	@scriptHandler.script(
+		gestures=[f"kb:{i}" for i in range(10)]
+		+ [f"kb:numLockNumpad{i}" for i in range(10)]
+	)
+	def script_doNotAnnounceCalculatorResults(self, gesture):
+		gesture.send()
+		self._noCalculatorResultsGesturePressed = True

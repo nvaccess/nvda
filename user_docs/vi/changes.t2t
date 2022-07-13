@@ -3,10 +3,226 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2022.2 =
+Bản phát hành này bao gồm nhiều lỗi được sửa.
+Đáng chú ý, có những cải tiến đáng kể cho các ứng dụng trên nền Java, màn hình nổi và các tính năng của Windows.
+
+Đã trình làng những lệnh điều hướng mới trong bảng.
+Đã cập nhật Unicode CLDR.
+Đã cập nhật LibLouis, bao gồm thêm bảng chữ nổi tiếng Đức.
+
+== Tính năng mới ==
+- Hỗ trợ tương tác với Microsoft Loop Components trong Microsoft Office products. (#13617)
+- Đã thêm các lệnh mới để điều hướng trong bảng. (#957)
+ - ``control+alt+home/end`` chuyển tới cột đầu / cuối.
+ - ``control+alt+pageUp/pageDown`` chuyển đến dòng đầu / cuối.
+ -
+- Đã thêm một kịch bản chưa gán lệnh để chuyển qua lại giữa các chế độ ngôn ngữ và giọng theo vùng miền. (#10253)
+-
+
+== Các thay đổi ==
+- Đã cập nhật NSIS lên phiên bản 3.08. (#9134)
+- Đã cập nhật CLDR lên phiên bản 41.0. (#13582)
+- Đã cập nhật thư viện phiên dịch chữ nổi liblouis lên [3.22.0 https://github.com/liblouis/liblouis/releases/tag/v3.22.0]. (#13775)
+  - Bảng chữ nổi mới: tiếng Đức cấp 2 (chi tiết)
+  -
+- Thêm vai trò mới cho điều khiển "busy indicator". (#10644)
+- NVDA giờ đây sẽ thông báo khi không thể thực hiện một hành động của NVDA. (#13500)
+  - Điều này bao gồm khi:
+    - Sử dụng bản NVDA trên Windows Store.
+    - Trong một ngữ cảnh bảo vệ.
+    - Chờ phản hồi đến một hộp thoại.
+    -
+  -
+-
+
+
+== Sửa lỗi ==
+- Sửa lỗi cho các ứng dụng trên nền Java:
+  - NVDA giờ đây sẽ thông báo trạng thái chỉ đọc (read-only). (#13692)
+  - NVDA sẽ thông báo trạng thái tắt (disabled)/bật (enabled) một cách chính xác. (#10993)
+  - NVDA giờ đây sẽ thông báo phím tắt cho các tính năng. (#13643)
+  - NVDA giờ đây đã có thể phát tiếng beep hoặc đọc thông tin trên thanh trạng thái. (#13594)
+  - NVDA sẽ không còn gỡ bỏ văn bản từ widgets một cách không chính xác khi  trình bày đến người dùng. (#13102)
+  - NVDA giờ đây sẽ thông báo trạng thái của các nút bật / tắt. (#9728)
+  - NVDA giờ đây sẽ nhận dạng cửa sổ trong một ứng dụng Java  với nhiều cửa sổ. (#9184)
+  - NVDA giờ đây sẽ thông báo thông tin vị trí cho các điều khiển tab. (#13744)
+  -
+- Sửa lỗi cho chữ nổi:
+  - Sửa lỗi đầu ra chữ nổi khi điều hướng qua một số văn bản nhất định trong các điều khiển rich edit của Mozilla, như là soạn thư nháp trong Thunderbird chẳng hạn. (#12542)
+  - Khi chữ nổi tự đi theo và  chuột cũng di chuyển với chế độ theo dõi chuột được bật, các lệnh duyệt văn bản giờ đây cập nhật trên màn hình chữ nổi với nội dung được đọc. (#11519)
+  - Giờ đây đã có thể kéo màn hình chữ nổi qua nội dung sau khi dùng các lệnh duyệt văn bản. (#8682)
+  -
+- Bộ cài NVDA giờ đây đã có thể gọi chạy từ một thư mục với các kí tự đặc biệt. (#13270)
+- Trong Firefox, NVDA không còn bị lỗi không thông báo được thành phần trong các trang web khi các thuộc tính aria-rowindex, aria-colindex, aria-rowcount hoặc aria-colcount không hợp lệ. (#13405)
+- Con trỏ không còn chuyển dòng hay cột khi dùng các lệnh di  chuyển trong bảng để điều hướng tới các ô được trộn. (#7278)
+- Khi đọc các tập tin PDF không tương tác được trong Adobe Reader, loại và trạng thái trong biểu mẫu (hộp kiểm và nút radio chẳng hạn) giờ đây được thông báo. (#13285)
+- "Khôi phục về cấu hình mặc định" giờ đây đã tiếp cận được trong trình đơn NVDA trong chế độ bảo vệ. (#13547)
+- Mọi phím khóa chuột sẽ được mở khi thoát NVDA. Trước đây thì các nút bấm chuột vẫn bị khóa. (#13410)
+- Visual Studio giờ đây đã thông báo số dòng. (#13604)
+  - Lưu ý là để tính năng này hoạt động, tùy chọn hiển thị dòng phải được bật trong Visual Studio và NVDA.
+  -
+- Visual Studio giờ đây đã đọc chính xác thụt lề dòng. (#13574)
+- NVDA sẽ lại một lần nữa thông báo các chi tiết kết quả tìm kiếm của Start menu trong các bản phát hành gần đây của Windows 10 và 11. (#13544)
+- Trong Calculator ở Windows 10 và 11 phiên bản 10.1908 trở lên, NVDA sẽ thông báo kết quả nhiều lệnh được bấm, lệnh từ chế độ chế độ khoa học (scientific) chẳng hạn. (#13383)
+- Trong Windows 11, lại có thể điều hướng và tương tác với các thành phần trên giao diện người dùng như  Taskbar và Task View, sử dụng chuột và tương tác cảm ứng. (#13506)
+- NVDA sẽ thông báo nội dung thanh trạng thái trong Notepad của Windows 11. (#13688)
+- Làm nổi đối tượng điều hướng giờ đây đã hiển thị ngay khi kích hoạt tính năng. (#13641)
+- Sửa lỗi đọc các thành phần trong danh sách trong các cột đơn. (#13659, #13735)
+- Sửa lỗi tự chuyển ngôn ngữ  của eSpeak cho tiếng Anh và Pháp quay trở lại tiếng Anh của người Anh và tiếng Pháp của người Pháp. (#13727)
+- Sửa lỗi tự chuyển ngôn ngữ của  OneCore khi nỗ lực chuyển qua một ngôn ngữ được cài trước đây. (#13732)
+-
+
+
+== Các thay đổi cho nhà phát triển ==
+Phần này không được dịch. Vui lòng xem bản tiếng Anh changes.t2t để biết thêm thông tin.
+
+
+= 2022.1 =
+Bản phát hành này bao gồm các cải tiến quan trọng cho hỗ trợ UIA với MS Office.
+Với Microsoft Office 16.0.15000 và cao hơn trên Windows 11, NVDA mặc định sẽ dùng UI Automation để truy cập các tài liệu Microsoft Word.
+Điều này cung cấp một cải thiện hiệu suất vận hành đáng kể so với kiểu truy cập mẫu đối tượng cũ.
+
+Cải tiến cho các trình điều khiển màn hình chữ nổi, bao gồm Seika Notetaker, Papenmeier và HID Braille. 
+Nhiều lỗi trên Windows 11 cũng được khắc phục cho các ứng dụng như Calculator, Console, Terminal, Mail và bản biểu tượng cảm xúc (Emoji Panel).
+
+eSpeak-NG và LibLouis đã được cập nhật, thêm các bản chữ nổi mới cho tiếng Nhật, Đức và Catalan.
+
+Lưu ý:
+ - Bản phát hành này không tương thích với các add-on hiện tại.
+ -
+
+ 
+== Tính năng mới ==
+- Hỗ trợ đọc chú thích trong MS Excel với UI Automation được bật trên Windows 11. (#12861)
+- Trong các bản dựng gần đây của Microsoft Word thông qua UI Automation trên Windows 11, việc tồn tại các dấu trang, chú thích chính thức và không chính thức giờ đây đã được thông báo bằng tiếng nói và chữ nổi. (#12861)
+- Tham số dòng lệnh mới --lang  cho phép bỏ qua ngôn ngữ đã được cấu hình của NVDA. (#10044)
+- NVDA giờ đây sẽ cảnh báo về các tham số dòng lệnh không xác định và không được dùng bởi bất cứ add-on nào. (#12795)
+- Trong Microsoft Word truy cập qua UI Automation, NVDA giờ đây sẽ dùng mathPlayer để đọc và điều hướng qua các công thức toán của Office. (#12946)
+  - Để tính năng này hoạt động, bạn phải dùng Microsoft Word 365/2016 build 14326 trở lên. 
+  - Công thức của MathType cũng phải được chuyển thủ công thành công thức toán của Office Math bằng cách chọn mỗi công thức và chọn Equation options -> Convert to Office Math trong trình đơn ngữ cảnh.
+  -
+- Việc thông báo "có chi tiết" và phím lệnh được tích hợp để tóm lược các chi tiết liên quan đã được cập nhật để hoạt động trong chế độ focus. (#13106)
+- Seika Notetaker giờ đây đã có thể tự nhận khi được kết nối qua USB và Bluetooth. (#13191, #13142)
+  - Điều này có tác động đến các thiết bị: MiniSeika (16, 24 ô), V6 và V6Pro (40 ô)
+  - Cũng đã hỗ trợ chọn thủ công cổng bluetooth COM.
+  -
+- Thêm lệnh để bật / tắt trình xem chữ nổi; chưa gán thao tác mặc định. (#13258)
+- Thêm lệnh để bật / tắt đồng thời nhiều phím bổ trợ với một màn hình chữ nổi. (#13152)
+- Hộp thoại từ điển phát âm giờ đây có thêm nút "Xóa tất cả" giúp xóa toàn bộ từ điển. (#11802)
+- Thêm hỗ trợ cho Windows 11 Calculator. (#13212)
+- Trong Microsoft Word với UI Automation được bật trên Windows 11,  số dòng và số phần giờ đây có thể được đọc lên. (#13283)
+- Với Microsoft Office 16.0.15000 và cao hơn trên Windows 11, NVDA mặc định sẽ dùng UI Automation để truy cập tài liệu Microsoft Word, cung cấp một cải thiện hiệu suất vận hành đáng kể so với kiểu truy cập mẫu đối tượng cũ. (#13437)
+ - Điều này bao gồm các tài liệu trong chính Microsoft Word, cũng như áp dụng cho việc đọc và soạn thư trong Microsoft Outlook. 
+ -
+-
+
+
+== Các thay đổi ==
+- Espeak-ng đã được cập nhật lên 1.51-dev commit ``7e5457f91e10``. (#12950)
+- Cập nhật thư viện phiên dịch chữ nổi liblouis lên [3.21.0 https://github.com/liblouis/liblouis/releases/tag/v3.21.0]. (#13141, #13438)
+  - Thêm bản chữ nổi mới: tiếng Nhật (Kantenji) chữ nổi văn học.
+  - Thêm bản chữ nổi máy tính tiếng Đức 6 chấm mới.
+  - Thêm bản chữ nổi tiếng Catalan cấp 1. (#13408)
+  - 
+- NVDA sẽ thông báo các ô được chọn và trộn trong LibreOffice Calc 7.3 và cao hơn. (#9310, #6897)
+- Cập nhật Unicode Common Locale Data Repository (CLDR) lên 40.0. (#12999)
+- ``NVDA+Delete bàn phím số`` mặc định sẽ thông báo vị trí của con trỏ nháy hoặc đối tượng có focus. (#13060)
+- ``NVDA+Shift+Delete bàn phím số`` thông báo vị trí con trỏ duyệt. (#13060)
+- Đã thêm các lệnh mặc định để bật / tắt các phím bổ trợ cho các màn hình của Freedom Scientific (#13152)
+- 'Hàng ngang' không còn được thông báo qua lệnh thông báo định dạng văn bản (NVDA+F). (#11815)
+- Sẽ không còn thao tác mặc định cho lệnh kích hoạt mô tả dài. (#13380)
+- Lệnh thông báo tóm lược chi tiết giờ đã có thao tác mặc định, ``NVDA+d``. (#13380)
+- NVDA cần được khởi động lại sau khi cài MathPlayer. (#13486)
+-
+
+== Sửa lỗi ==
+- Cửa sổ quản lý bộ nhớ tạm (Clipboard manager pane) sẽ không còn chiếm focus ngoài ý muốn khi mở một vài ứng dụng trong bộ Office. (#12736)
+- Trên hệ thống đã được  người dùng hoán đổi hai nút chuột trái phải, NVDA sẽ không còn mở trình đơn ngữ cảnh thay vì kích hoạt một thành phần trong các ứng dụng như trình duyệt web. (#12642)
+- Khi di chuyển con trỏ duyệt qua phần cuối của một điều khiển dạng văn bản, như trong Microsoft Word với UI Automation, "bottom"(ở cuối) được thông báo một cách chính xác trong nhiều trường hợp. (#12808)
+- NVDA có thể thông báo tên và phiên bản của ứng dụng dạng nhị phân được thiết lập cho system32 khi chạy trên các phiên bản 64-bit của Windows. (#12943)
+- Cải thiện tính nhất quán của việc đọc thông tin đầu ra trong các chương trình terminal. (#12974)
+  - Lưu ý rằng trong vài trường hợp, khi chèn hay xóa kí tự ở giữa một dòng, kí tự phía sau dấu nháy có thể  bị đọc lại.
+  -
+- MS word với UIA: việc di chuyển nhanh theo tiêu đề trong chế độ duyệt không còn bị kẹt ở tiêu đề cuối cùng của tài liệu, và cũng không còn tình trạng một tiêu đề được hiển thị hai lần trong cửa sổ danh sách các thành phần. (#9540)
+- Trong Windows 8 trở lên, có thể lấy thông tin thanh trạng thái của File Explorer  bằng thao tác chuẩn NVDA+end (desktop) / NVDA+shift+end (laptop). (#12845)
+- Các tin nhắn mới trong cửa sổ trò chuyện  của Skype for Business lại được đọc lên. (#9295)
+- NVDA lại có thể giảm âm thanh khi dùng các bộ đọc SAPI5 trên Windows 11. (#12913)
+- Trong Calculator của Windows 10, NVDA sẽ đọc nhãn cho thành phần trong lịch sử (history) và bộ nhớ (memory). (#11858)
+- Các thao tác như cuộn (scrolling) và đưa theo (routing) lại hoạt động với các thiết bị của HID Braille. (#13228)
+- Windows 11 Mail: sau khi chuyển focus giữa các ứng dụng, khi đọc một thư điện tử dài, NVDA bị kẹt lại ở một dòng trong thư. (#13050)
+- HID braille: các thao tác kết hợp (ví dụ: khoảng trắng+chấm4) có thể thực hiện được trên màn hình chữ nổi. (#13326)
+- Sửa lỗi nhiều hộp thoại cài đặt có thể được mở cùng lúc. (#12818)
+- Sửa lỗi của vài màn hình chữ nổi Focus Blue Braille bị ngưng hoạt động sau khi bật lại máy tính từ chế độ ngủ. (#9830)
+- 'Hàng ngang' không còn bị đọc lên khi tùy chọn 'đọc chỉ số trên và chỉ số dưới' được bật. (#11078)
+- Trong Windows 11, NVDA sẽ không bị lỗi chặn không cho di chuyển trong bản biểu tượng cảm xúc (emoji panel) khi chọn chúng. (#13104)
+- Khắc phục một lỗi làm cho NVDA đọc hai lần khi dùng Windows Console và Terminal. (#13261)
+- Sửa lỗi  trong vài trường hợp, không đọc được thành phần danh sách trong các ứng dụng 64 bit như REAPER. (#8175)
+- Trong trình quản lí tải về của Microsoft Edge, NVDA giờ đây sẽ tự chuyển sang chế độ focus khi thành phần trong danh sách với tập tin tải về gần nhất có focus. (#13221)
+- NVDA không còn làm cho các phiên bản 64-bit  của Notepad++ 8.3 trở lên bị lỗi. (#13311)
+- Adobe Reader không còn bị lỗi khi khởi động nếu đã bật chế độ bảo vệ của Adobe Reader. (#11568)
+- Sửa lỗi khi chọn trình điều khiển của  Papenmeier Braille Display làm cho NVDA bị lỗi. (#13348)
+- Trong Microsoft word với UIA: số trang và các thông tin định dạng khác không còn bị đọc lên ngoài ý muốn khi di chuyển từ một bảng trống đến một ô có nội dung, hoặc từ cuối tài liệu vào nội dung có sẵn. (#13458, #13459)
+- NVDA sẽ không còn bị lỗi không đọc được tên trang và tự đọc khi một trang web được mở trong Google chrome 100. (#13571)
+- NVDA không còn bị treo khi khôi phục cấu hình NVDA về mặc định của nhà sản xuất mà chế độ đọc phím lệnh đang bật. (#13634)
+-
+
+== Các thay đổi cho nhà phát triển ==
+Phần này không được dịch. Vui lòng xem bản tiếng Anh changes.t2t để biết thêm thông tin.
+
+
+= 2021.3.5 =
+Đây là bản phát hành phụ để sửa vài lỗi bảo mật.
+Vui lòng báo cáo các vấn đề về bảo mật cho info@nvaccess.org.
+
+== Sửa các lỗi bảo mật ==
+- Khặc phục lỗi bảo mật được tham mưu ``GHSA-xc5m-v23f-pgr7``.
+  - Hộp thoại phát âm ký hiệu dấu câu giờ đây bị vô hiệu trong chế độ bảo mật.
+  -
+-
+
+
+= 2021.3.4 =
+Đây là bản phát hành phụ để sửa vài lỗi bảo mật.
+Vui lòng báo cáo các vấn đề về bảo mật cho info@nvaccess.org.
+
+== Sửa các lỗi bảo mật ==
+- Khặc phục lỗi bảo mật được tham mưu ``GHSA-354r-wr4v-cx28``. (#13488)
+  - Gỡ bỏ tính năng khởi động NVDA với bản ghi dò lỗi được bật khi NVDA chạy ở chế độ bảo mật.
+  - Gỡ bỏ tính năng cập nhật NVDA khi nó chạy ở chế độ bảo mật.
+  -
+- Khặc phục lỗi bảo mật được tham mưu ``GHSA-wg65-7r23-h6p9``. (#13489)
+  - Gỡ bỏ tính năng mở hộp thoại quản lí các thao tác trong chế độ bảo mật.
+  - Gỡ bỏ tính năng mở  các hộp thoại từ điển mặc định, từ điển giọng đọc và từ điển tạm  trong chế độ bảo mật.
+  -
+- Khặc phục lỗi bảo mật được tham mưu ``GHSA-mvc8-5rv9-w3hx``. (#13487)
+  - Công cụ wx GUI inspection giờ được vô hiệu trong chế độ bảo mật.
+  -
+-
+
+= 2021.3.3 =
+Bản phát hành này tương đương với 2021.3.2.
+Một lỗi tồn tại trong NVDA 2021.3.2 khi đã được xác định sai ở 2021.3.1.
+Bản phát hành này xác định chính xác bản thân nó như 2021.3.3.
+
+
+= 2021.3.2 =
+Đây là bản phát hành phụ để sửa vài lỗi bảo mật.
+Vui lòng báo cáo các vấn đề về bảo mật cho info@nvaccess.org.
+
+
+== Sửa lỗi ==
+- Sửa lỗi bảo mật: chặn phương thức điều hướng đối tượng bên ngoài màn hình khóa trên Windows 10 và Windows 11. (#13328)
+- Sửa lỗi bảo mật: hộp thoại quản lí các add-on giờ đây bị vô hiệu trong màn hình bảo vệ. (#13059)
+- Sửa lỗi bảo mật: trợ giúp theo ngữ cảnh của NVDA không còn hoạt động trên màn hình bảo vệ. (#13353)
+-
+
+
+
 = 2021.3.1 =
 Đây là bản phát hành phụ, nhằm sửa vài lỗi trong phiên bản 2021.3.
 
-+
+
 == Các thay đổi ==
 - Giao thức chữ nổi (HID) mới không còn được ưu tiên khi có thể sử dụng một trình điều khiển màn hình nổi khác. (#13153)
 - Có thể vô hiệu giao thức chữ nổi (HID) mới thông qua một cài đặt trong bảng cài đặt nâng cao. (#13180)
@@ -320,8 +536,8 @@ Có thể đọc được nội dung có tồn tại các điểm đánh dấu (
 - NVDA giờ đã nhận được văn bản có thuộc tính chỉ đọc với các điều khiển UIA. (#10494)
 - Nội dung có tồn tại các điểm đánh dấu (được làm nổi) đã được thể hiện ở cả tiếng nói và chữ nổi trên tất cả các trình duyệt. (#11436)
  - Có thể bật / tắt tính năng này bởi một tùy chọn định dạng mới về làm nổi của NVDA.
-- Có thể thêm các phím giả lập bàn phím hệ thống từ hộp thoại Quản lý các thao tác của NVDA. (#6060)
-  - Để làm điều này, hãy bấm nút thêm sau khi chọn phân loại phím giả lập bàn phím hệ thống.
+- Có thể thêm các phím mô phỏng bàn phím hệ thống từ hộp thoại Quản lý các thao tác của NVDA. (#6060)
+  - Để làm điều này, hãy bấm nút thêm sau khi chọn phân loại phím mô phỏng bàn phím hệ thống.
 - Đã hỗ trợ cho màn hình nổi Handy Tech Active Braille với cần điều khiển. (#11655)
 - Thiết lập "Tự chuyển sang chế độ focus khi di chuyển con trỏ nháy" giờ đã tương thích với việc vô hiệu hóa "Tắt tự đưa con trỏ hệ thống đến các thành phần có thể có focus". (#11663)
    
