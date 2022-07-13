@@ -43,16 +43,20 @@ class NetUIRicherLabel(UIA):
 		else:
 			# For other versions of Lync / Skype for Business, self.value is just None.
 			# So we just look at self.name formatting to split content from person and timestamp (less robust).
-			pattern = r'^(?P<name>.+?): (?P<priority>.*?), , (?P<content>.+),(?!, , ) , (?P<timestamp>.+)'
+			pattern = r'^(?P<name>.+?): (?P<priority>.*?), , (?P<content>.+), (?P<status>.*?), (?P<timestamp>.+?)$'
 			match = re.match(pattern, self.name, flags=re.DOTALL)
 			if match:
 				pretext = match['name']
 				priority = match['priority']
 				content = match['content']
+				status = match['status']
+				timestamp = match['timestamp']
 				if priority:
 					content = priority + ', ' + content
+				if status:
+					content = content + ', ' + status
 			else:
-				# Some messages may not follow the person+content+timestamp pattern.
+				# Some messages may not follow the person+priority+content+status+timestamp pattern.
 				# E.g. call start, call end or first message which is a privacy warning.
 				# The match may also fail if an unexpected conversation pattern exists in some versions or uses of Skype.
 				# In all these cases, return the whole message.
