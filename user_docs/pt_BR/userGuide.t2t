@@ -3325,20 +3325,20 @@ A seguir estão as teclas de comando atuais para essas linhas.
 
 ++ Modo Seguro ++[SecureMode]
 O NVDA pode ser iniciado em modo seguro com a [opção de linha de comando #CommandLineOptions] ``-s``.
-O NVDA é executado em modo seguro quando executado em [telas seguras #SecureScreens], a menos que o [parâmetro de todo o sistema #SystemWideParameters] ``serviceDebug`` esteja habilitado.
+O NVDA é executado em modo seguro quando executado em [telas seguras #SecureScreens], a menos que o [parâmetro do sistema #SystemWideParameters] ``serviceDebug`` esteja habilitado.
 
 O modo seguro desabilita:
 
 - Salvamento de configuração e outras configurações no disco
-- Salvamento do mapa de gestos ""[comandos]"" no disco
+- Salvamento do mapa de comandos ""[gestos]"" no disco
 - Recursos de [perfil de configuração #ConfigurationProfiles], como criação, exclusão, renomeação de perfis etc.
 - Atualização do NVDA e criação de cópias portáteis
 - O [console Python #PythonConsole]
-- O [Visualizador de Log #LogViewer] e registro
+- O [Visualizador de Log #LogViewer] e registro de eventos
 -
 
 ++ Telas Seguras ++[SecureScreens]
-O NVDA é executado no [modo seguro #SecureMode] quando executado em telas seguras, a menos que o [parâmetro de todo o sistema #SystemWideParameters] ``serviceDebug`` esteja habilitado.
+O NVDA é executado no [modo seguro #SecureMode] quando executado em telas seguras, a menos que o [parâmetro do sistema #SystemWideParameters] ``serviceDebug`` esteja habilitado.
 
 Ao executar a partir de uma tela segura, o NVDA usa um perfil de sistema para preferências.
 As preferências do usuário do NVDA podem ser copiadas [para uso em telas seguras #GeneralSettingsCopySettings].
@@ -3346,7 +3346,7 @@ As preferências do usuário do NVDA podem ser copiadas [para uso em telas segur
 As telas seguras incluem:
 
 - A tela de credenciais ""[login]"" do Windows
-- O diálogo Controle de acesso do usuário, ativa ao executar uma ação como administrador
+- O diálogo Controle de conta do usuário, ativo ao executar uma ação como administrador
   - Isso inclui a instalação de programas
   -
 -
