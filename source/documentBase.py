@@ -522,16 +522,16 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 
 	def script_speakRow(self, gesture):
 		self._tableSayAll(_Movement.FIRST, _Axis.COLUMN, updateCaret=False)
-	# Translators: the description for the speak row command
 	script_speakRow.__doc__ = _(
+		# Translators: the description for the speak row command
 		"Reads the current row horizontally from left to right "
 		"without moving the system caret."
 	)
 
 	def script_speakColumn(self, gesture):
 		self._tableSayAll(_Movement.FIRST, _Axis.ROW, updateCaret=False)
-	# Translators: the description for the speak column command
 	script_speakColumn.__doc__ = _(
+		# Translators: the description for the speak column command
 		"Reads the current column vertically from top to bottom "
 		"without moving the system caret."
 	)
