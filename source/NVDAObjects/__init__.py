@@ -26,6 +26,9 @@ import config
 import controlTypes
 import appModuleHandler
 import treeInterceptorHandler
+from treeInterceptorHandler import (
+	TreeInterceptor,
+)
 import braille
 import vision
 import globalPluginHandler
@@ -352,10 +355,15 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 
 	focusRedirect=None #: Another object which should be treeted as the focus if focus is ever given to this object.
 
-	def _get_treeInterceptorClass(self):
+	treeInterceptorClass: typing.Type[TreeInterceptor]
+	"""Type definition for auto prop '_get_treeInterceptorClass'"""
+
+	def _get_treeInterceptorClass(self) -> typing.Type[TreeInterceptor]:
 		"""
-		If this NVDAObject should use a treeInterceptor, then this property provides the L{treeInterceptorHandler.TreeInterceptor} class it should use. 
+		If this NVDAObject should use a treeInterceptor, then this property
+		provides the L{treeInterceptorHandler.TreeInterceptor} class it should use.
 		If not then it should be not implemented.
+		@raises NotImplementedError when no TreeInterceptor class is available.
 		"""
 		raise NotImplementedError
 
@@ -368,10 +376,10 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 	#: @type: bool
 	shouldCreateTreeInterceptor = True
 
-	#: Type definition for auto prop '_get_treeInterceptor'
-	treeInterceptor: treeInterceptorHandler.TreeInterceptor
+	treeInterceptor: typing.Optional[TreeInterceptor]
+	"""Type definition for auto prop '_get_treeInterceptor'"""
 
-	def _get_treeInterceptor(self) -> treeInterceptorHandler.TreeInterceptor:
+	def _get_treeInterceptor(self) -> typing.Optional[TreeInterceptor]:
 		"""Retrieves the treeInterceptor associated with this object.
 		If a treeInterceptor has not been specifically set,
 		the L{treeInterceptorHandler} is asked if it can find a treeInterceptor containing this object.
@@ -392,7 +400,7 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 				self._treeInterceptor=weakref.ref(ti)
 			return ti
 
-	def _set_treeInterceptor(self,obj):
+	def _set_treeInterceptor(self, obj: typing.Optional[TreeInterceptor]):
 		"""Specifically sets a treeInterceptor to be associated with this object.
 		"""
 		if obj:
