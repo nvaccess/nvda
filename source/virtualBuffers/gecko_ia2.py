@@ -26,8 +26,6 @@ from NVDAObjects.IAccessible import normalizeIA2TextFormatField, IA2TextTextInfo
 import documentBase
 
 
-
-
 def _getNormalizedCurrentAttrs(attrs: textInfos.ControlField) -> typing.Dict[str, typing.Any]:
 	valForCurrent = attrs.get("IAccessible2::attribute_current", "false")
 	try:

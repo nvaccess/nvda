@@ -187,10 +187,6 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 				)
 		return cell
 
-
-
-
-
 	def _getTableDimensions(self, info: textInfos.TextInfo) -> Tuple[int, int]:
 		"""
 		Fetches information about the deepest table dimension.
@@ -353,7 +349,7 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 			cell = self._getTableCellCoordsCached(selection, axis)
 		except LookupError as e:
 			# Translators: The message reported when a user attempts to use a table movement command
-			# Translators: when the cursor is not within a table.
+			# when the cursor is not within a table.
 			ui.message(_("Not in a table cell"))
 			raise e
 
@@ -412,10 +408,11 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 
 		if isScriptWaiting():
 			return
+
 		formatConfig = config.conf["documentFormatting"].copy()
 		formatConfig["reportTables"] = True
 		try:
-			cell, info, tableSelection = self._tableFindNewCell(
+			_cell, info, tableSelection = self._tableFindNewCell(
 				movement,
 				axis,
 			)
@@ -435,7 +432,7 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 			updateCaret: bool = True,
 	) -> None:
 		try:
-			cell, info, tableSelection = self._tableFindNewCell(
+			cell, info, _tableSelection = self._tableFindNewCell(
 				movement if movement == _Movement.FIRST else None,
 				axis,
 			)
@@ -445,7 +442,7 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 
 		def nextLineFunc(info: textInfos.TextInfo) -> textInfos.TextInfo:
 			try:
-				cell, newInfo, tableSelection = self._tableFindNewCell(
+				_cell, newInfo, tableSelection = self._tableFindNewCell(
 					_Movement.NEXT,
 					axis,
 					selection=info,
@@ -513,25 +510,25 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 		self._tableSayAll(_Movement.NEXT, _Axis.COLUMN)
 	script_sayAllRow.__doc__ = _(
 		# Translators: the description for the sayAll row command
-		"Reads row horizontally from current table cell up untill the last cell in the row."
+		"Reads the row horizontally from the current cell rightwards to the last cell in the row."
 	)
 
 	def script_sayAllColumn(self, gesture):
 		self._tableSayAll(_Movement.NEXT, _Axis.ROW)
 	script_sayAllColumn.__doc__ = _(
 		# Translators: the description for the sayAll row command
-		"Reads column vertically from current table cell down to the last cell in the column."
+		"Reads the column vertically from the current cell downwards to the last cell in the column."
 	)
 
 	def script_speakRow(self, gesture):
 		self._tableSayAll(_Movement.FIRST, _Axis.COLUMN, updateCaret=False)
 	# Translators: the description for the speak row command
-	script_speakRow.__doc__ = _("Reads row horizontally from left to right without moving system caret.")
+	script_speakRow.__doc__ = _("Reads the current row horizontally from left to right without moving the system caret.")
 
 	def script_speakColumn(self, gesture):
 		self._tableSayAll(_Movement.FIRST, _Axis.ROW, updateCaret=False)
 	# Translators: the description for the speak column command
-	script_speakColumn.__doc__ = _("Reads column vertically from top to bottom without moving system caret.")
+	script_speakColumn.__doc__ = _("Reads the current column vertically from top to bottom without moving the system caret.")
 
 	def script_toggleIncludeLayoutTables(self,gesture):
 		# documentBase is a core module and should not depend on UI, so it is imported at run-time. (#12404)
@@ -555,10 +552,10 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 		"kb:control+alt+leftArrow": "previousColumn",
 		"kb:control+alt+pageUp": "firstRow",
 		"kb:control+alt+pageDown": "lastRow",
-		"kb:control+alt+Home": "firstColumn",
-		"kb:control+alt+End": "lastColumn",
-		"kb:NVDA+control+alt+RightArrow": "sayAllRow",
-		"kb:NVDA+control+alt+DownArrow": "sayAllColumn",
-		"kb:NVDA+control+alt+LeftArrow": "speakRow",
-		"kb:NVDA+control+alt+UpArrow": "speakColumn",
+		"kb:control+alt+home": "firstColumn",
+		"kb:control+alt+end": "lastColumn",
+		"kb:NVDA+control+alt+rightArrow": "sayAllRow",
+		"kb:NVDA+control+alt+downArrow": "sayAllColumn",
+		"kb:NVDA+control+alt+leftArrow": "speakRow",
+		"kb:NVDA+control+alt+upArrow": "speakColumn",
 	}

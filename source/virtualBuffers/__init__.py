@@ -1,9 +1,8 @@
 # -*- coding: UTF-8 -*-
-#virtualBuffers/__init__.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2007-2017 NV Access Limited, Peter Vágner
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2007-2022 NV Access Limited, Peter Vágner
 
 import time
 import threading
