@@ -5,15 +5,21 @@
 
 """NVDAObjects for the Chromium browser project
 """
-
+import typing
 from typing import Dict, Optional
 from comtypes import COMError
+
+import config
 import controlTypes
 from NVDAObjects.IAccessible import IAccessible
 from virtualBuffers.gecko_ia2 import Gecko_ia2 as GeckoVBuf, Gecko_ia2_TextInfo as GeckoVBufTextInfo
 from . import ia2Web
 from logHandler import log
 
+if typing.TYPE_CHECKING:
+	# F401 imported but unused, actually used as a string within type annotation (to avoid having to import
+	# at run time)
+	from treeInterceptorHandler import TreeInterceptor  # noqa: F401
 
 supportedAriaDetailsRoles: Dict[str, Optional[controlTypes.Role]] = {
 	"comment": controlTypes.Role.COMMENT,
@@ -82,11 +88,28 @@ class ChromeVBuf(GeckoVBuf):
 
 class Document(ia2Web.Document):
 
-	def _get_treeInterceptorClass(self):
-		states = self.states
-		if controlTypes.State.EDITABLE not in states and controlTypes.State.BUSY not in states:
-			return ChromeVBuf
-		return super(Document, self).treeInterceptorClass
+	def _get_treeInterceptorClass(self) -> typing.Type["TreeInterceptor"]:
+		shouldLoadVBufOnBusyFeatureFlag = bool(
+			config.conf["virtualBuffers"]["loadChromiumVBufOnBusyState"]
+		)
+		vBufUnavailableStates = {  # if any of these are in states, don't return ChromeVBuf
+			controlTypes.State.EDITABLE,
+		}
+		if not shouldLoadVBufOnBusyFeatureFlag:
+			log.debug(
+				f"loadChromiumVBufOnBusyState feature flag is {shouldLoadVBufOnBusyFeatureFlag},"
+				" vBuf WILL NOT be loaded when state of the document is busy."
+			)
+			vBufUnavailableStates.add(controlTypes.State.BUSY)
+		else:
+			log.debug(
+				f"loadChromiumVBufOnBusyState feature flag is {shouldLoadVBufOnBusyFeatureFlag},"
+				" vBuf WILL be loaded when state of the document is busy."
+			)
+		if self.states.intersection(vBufUnavailableStates):
+			return super().treeInterceptorClass
+		return ChromeVBuf
+
 
 class ComboboxListItem(IAccessible):
 	"""
