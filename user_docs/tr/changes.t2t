@@ -3,6 +3,132 @@ NVDA'daki Yenilikler
 
 %!includeconf: ../changes.t2tconf
 
+= 2022.2 =
+Bu sürüm, birçok hata düzeltmesi içerir.
+Özellikle Java tabanlı uygulamalar, braille ekranlar ve Windows özellikleri için önemli iyileştirmeler yapılmıştır.
+
+Yeni tablo gezinme komutları eklendi.
+Unicode CLDR güncellendi.
+LibLouis'in güncellenmesiyle yeni bir Almanca braille tablo desteği eklendi.
+
+== Yeni Özellikler ==
+- Microsoft Office ürünlerinde bulunan Microsoft Döngü Bileşenleriyle etkileşim desteği eklendi. (#13617)
+- Yeni tablo gezinme komutları eklendi. (#957)
+ - ``control+alt+Home/End`` ilk/son sütuna atlar.
+ - ``control+alt+SayfaAşağı/SayfaYukarı`` ilk/son satıra atlar.
+ -
+- Dil ve lehçe değiştirme modları arasında geçiş yapmak için varsayılan olarak atanmamış bir komut eklendi. (#10253)
+-
+
+== Değişiklikler ==
+- NSIS 3.08 sürümüne güncellendi. (#9134)
+- CLDR 41.0 sürümüne güncellendi. (#13582)
+- LibLouis braille translator [3.22.0 https://github.com/liblouis/liblouis/releases/tag/v3.22.0]. sürümüne güncellendi. (#13775)
+  - Yeni Almanca Braille tablosu: Almanca 2. derece detaylı)
+  -
+- "Meşgul göstergesi" kontrolleri için yeni bir bildirge eklendi. (#10644)
+- Artık NVDA bir NVDAişlemi gerçekleştirilemiyorsa bildirir. (#13500)
+  - - Buna şu durumlar dahildir:
+    - NVDA Windows Mağazası sürümünü kullanırken.
+    - NVDA'yı güvenli ekranlarda kullanırken.
+    - Modal bir iletişim kutusuna yanıt beklerken.
+    -
+  -
+-
+
+
+== Hata düzeltmeleri ==
+- Java tabanlı uygulamalar için düzeltmeler:
+  - NVDA Artık salt okunur durumunu bildirecek. (#13692)
+  - NVDA artık devre dışı/etkin durumunu doğru şekilde bildirecek. (#10993)
+  - NVDA artık fonksiyon tuşu kısayollarını bildirecek. (#13643)
+  - NVDA artık ilerleme çubuklarında bip sesi çıkarabilir veya konuşabilir. (#13594)
+  - NVDA, artık widget'larda yanlış bir şekilde metinleri kaldırmayacak. (#13102)
+  - NVDA artık geçiş düğmelerinin durumunu bildirecek. (#9728)
+  - NVDA artık pencereyi birden çok pencereli bir Java uygulamasında tanıyacaktır. (#9184)
+  - NVDA artık sekme kontrolleri için konum bilgilerini bildirecek. (#13744)
+  -
+- Braille düzeltmeleri:
+  - Thunderbird'de mesaj taslağı hazırlamak gibi Mozilla zengin düzenleme kontrollerinde belirli metinlerde gezinirken karşıılaşılabilecek braille çıktı sorunları düzeltildi. (#12542)
+  - vBraille otomatik olarak bağlandığında ve fare, fare izleme etkinken hareket ettirildiğinde,
+   Artık metin inceleme komutları braille ekranını konuşulan içerikle eş olarak günceller. (#11519)
+  - Artık metin inceleme komutlarını kullandıktan sonra braille ekranı içerik üzerinden kaydırmak mümkün. (#8682)
+  -
+- NVDA yükleyicisi artık özel karakterlere sahip dizinlerden çalıştırılabilir. (#13270)
+- Firefox'ta NVDA, aria-rowindex, aria-colindex, aria-rowcount veya aria-colcount öznitelikleri geçersiz olduğunda artık web sayfalarındaki öğeleri yanlış bildirmeyecek. (#13405)
+- Birleştirilmiş hücreler arasında gezinirken tablo gezinme kullanılırken imleç artık satır veya sütun değiştirmiyor. (#7278)
+- Adobe Reader'da etkileşimli olmayan PDF'leri okurken, form alanlarının türü ve durumu (onay kutuları ve seçim düğmeleri gibi) bildirilecek. (#13285)
+- Artık güvenli ekranlarda "Fabrika Ayarlarına Dön" seçeneğine NVDA menüsünden erişilebilir. (#13547)
+- Artık NVDA'dan çıkış yapıldıktan sonra önceden kilitlenmiş Fare düğmelerinin kilidi açılacaktır. (#13410)
+- Visual Studio artık satır numaralarını bildirecek. (#13604)
+  - Not: Satır numaralarının raporlanmasının çalışması için Visual Studio ve NVDA'da satır numaralarının gösterilmesinin etkinleştirilmesi gerektiğini unutmayın.
+  -
+- Visual Studio artık satır girintilerini doğru şekilde bildirecek. (#13574)
+- Artık NVDA, son Windows 10 ve 11 sürümlerinde Başlat menüsü arama sonucu ayrıntılarını bildirecek. (#13544)
+- Windows 10 ve 11 Hesap Makinesi sürüm 10.1908 ve sonrasında,
+NVDA, bilimsel moddaki komutlar gibi daha fazla komuta basıldığında sonuçları bildirir. (#13383)
+- Windows 11'de gezinmek ve kullanıcı arayüz öğeleriyle etkileşimde bulunulabilir,
+Fare ve dokunma etkileşimini kullanarak Görev Çubuğu ve Görev Görünümü gibi. (#13506)
+- NVDA Artık Windows 11 Not Defteri'nde durum çubuğu içeriğini bildirecek. (#13688)
+- Navigator object highlighting now shows up immediately upon activation of the feature. (#13641) seçildi)
+- Tek sütunlu liste görünümü öğelerinin okunması düzeltildi. (#13659, #13735)
+- İngilizce ve Fransızca dilleri arasında oluşabilecek eSpeak otomatik dil değiştirmenin İngiliz İngilizcesi ve Fransızca'ya (Fransa)'ya çevrilme hatası düzeltildi. (#13727)
+- Onecore'da Önceden yüklenmiş bir dile geçiş yapmaya çalışıırken oluşabilecek bir sorun düzeltildi. (#13732)
+-
+
+
+== Changes for Developers ==
+- Compiling NVDA dependencies with Visual Studio 2022 (17.0) is now supported.
+For development and release builds, Visual Studio 2019 is still used. (#13033)
+- When retrieving the count of selected children via accSelection,
+the case where a negative child ID or an IDispatch is returned by ``IAccessible::get_accSelection`` is now handled properly. (#13277)
+- New convenience functions ``registerExecutableWithAppModule`` and ``unregisterExecutable`` were added to the ``appModuleHandler`` module.
+They can be used to use a single App Module with multiple executables. (#13366)
+-
+
+=== Deprecations ===
+These are proposed API breaking changes.
+The deprecated part of the API will continue to be available until the specified release.
+If no release is specified, the plan for removal has not been determined.
+Note, the roadmap for removals is 'best effort' and may be subject to change.
+Please test the new API and provide feedback.
+For add-on authors, please open a GitHub issue if these changes stop the API from meeting your needs.
+
+
+- ``appModuleHandler.NVDAProcessID`` is deprecated, use ``globalVars.appPid`` instead. (#13646)
+- ``gui.quit`` is deprecated, use ``wx.CallAfter(mainFrame.onExitCommand, None)`` instead. (#13498)
+  -
+% Insert new list items here as the alias appModule table should be kept at the bottom of this list
+- Some alias appModules are marked as deprecated.
+Code which imports from one of them, should instead import from the replacement module.  (#13366)
+-
+
+|| Removed module name | Replacement module |
+| azuredatastudio | code |
+| azuredatastudio-insiders | code |
+| calculatorapp | calculator |
+| code - insiders | code |
+| commsapps | hxmail |
+| dbeaver | eclipse |
+| digitaleditionspreview | digitaleditions |
+| esybraille | esysuite |
+| hxoutlook | hxmail |
+| miranda64 | miranda32 |
+| mpc-hc | mplayerc |
+| mpc-hc64 | mplayerc |
+| notepad++ | notepadPlusPlus |
+| searchapp | searchui |
+| searchhost | searchui |
+| springtoolsuite4 | eclipse |
+| sts | eclipse |
+| teamtalk3 | teamtalk4classic |
+| textinputhost | windowsinternal_composableshell_experiences_textinput_inputapp |
+| totalcmd64 | totalcmd |
+| win32calc | calc |
+| winmail | msimn |
+| zend-eclipse-php | eclipse |
+| zendstudio | eclipse |
+
 = 2022.1 =
 Bu sürüm, MS Office için önemli UIA geliştirmeleri içerir.
 Artık NVDA Windows 11'de Microsoft Office 16.0.15000 ve sonrası sürümleri için Word belgelerinde varsayılan olarak UI Otomasyonunu kullanıyor.
@@ -447,7 +573,7 @@ Bu sürüm ayrıca Adobe Flash desteğini de kaldırmaktadır.
 - TextInfo.getTextInChunks, NVDA günlük görüntüleyici gibi Zengin Düzenleme kontrollerinde çağrıldığında artık donmaz. (#11613)
 - NVDA'yı Windows 10 1803 ve 1809'da de_CH gibi yerel ayar adında alt çizgi içeren dillerde kullanmak bir kez daha mümkündür. (#12250)
 - WordPad'de, üst simge / alt simge bildirimi ayarı beklendiği gibi çalışır. (#12262)
-- NVDA, eski odak kaybolursa ve aynı konumdaki yeni odakla değiştirilirse, bir web sayfasındaki yeni odaklanmış içeriği bildirmekte artık başarısız olmaz. (#12147)
+- NVDA, eski odak kaybolursa ve aynı konumdaki yeni odakla değiştirilirse, bir web safyfasındaki yeni odaklanmış içeriği bildirmekte artık başarısız olmaz. (#12147)
 - Karşılık gelen seçenek etkinleştirilirse, tüm Excel hücreleri için üstü çizili, üst simge ve alt simge biçimlendirmesi artık rapor edilmektedir. (#12264)
 - Hedefteki yapılandırma dizini boşken taşınabilir kopya konfigürasyonunun kurulum sırasında kopyalanmaması sorunu düzeltildi. (#12071, #12205)
 - 'Büyük harflerden önce büyük de' seçeneği işaretlendiğinde aksanlı veya şapkalı  bazı harflerin yanlış bildirimi  düzeltildi. (#11948)

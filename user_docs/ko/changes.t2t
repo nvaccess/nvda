@@ -32,6 +32,7 @@ Liblouis가 새로운 독일어 점자표를 포함하여 업데이트되었습�
     - 모달 대화상자가 응답을 기다릴 때.
     -
   -
+- (한국어 번역 변경사항) 테이블 요소가 음역인 "테이블"에서 "표"로 번경되었습니다.
 -
 
 
@@ -47,15 +48,13 @@ Liblouis가 새로운 독일어 점자표를 포함하여 업데이트되었습�
   - NVDA는 이제 탭 컨트롤에 대한 위치 정보를 알립니다. (#13744)
   -
 - 점자 버그 수정:
-  - Fix braille output when navigating certain text in Mozilla rich edit controls, such as drafting a message in Thunderbird. (#12542)
   - Mozilla ThunderBird에서 초안을 작성하는 것과 같이 특정 텍스트를 Mozilla 리치텍스트 편집창에서 탐색할 때의 점자 출력을 수정합니다. (#12542)
   - 점자 디스플레이가 자동으로 연결되고 마우스 추적을 활성화한 상태에서 마우스를 움직이면,
   텍스트 리뷰 커서 명령은 이제 점자 디스플레이에 발화된 콘텐츠로 업데이트합니다. (#11519)
   - 이제 텍스트 리뷰 명령을 사용한 후 콘텐츠를 점자 디스플레이가 따라갈 수 있습니다. (#8682)
   -
-- The NVDA installer can now run from directories with special characters.
-- 이제 NVDA 설치관리자를 특별한 문자로 된 디렉토리에서 실행 가능합니다. (#13270)
-- Firefox에서 aria-rowindex, aria-colindex, aria-rowcount 또는 aria-colcount 속성이 설정됐을 때 NVDA는 더 이상 항목을 알리는 데에 실패하지 않습니다. (#13405)
+- 이제 NVDA 설치관리자를 특수한 문자로 된 디렉토리에서 실행 가능합니다. (#13270)
+- Firefox에서 aria-rowindex, aria-colindex, aria-rowcount 또는 aria-colcount 속성이 잘못 설정됐을 때 NVDA는 더 이상 항목을 알리는 데에 실패하지 않습니다. (#13405)
 - 표 탐색을 사용하여 병합된 셀을 탐색할 때 커서가 행 또는 열을 더 이상 전환하지 않습니다. (#7278)
 - 이제 Adobe Reader에서 상호작용할 수 없는 PDF들을 읽을 때, 서식의 유형과 상태(체크상자나 라디오버튼 같은 서식)을 읽습니다. (#13285)
 - 이제 "기본 환경설정으로 초기화" 메뉴를 보안 데스크탑에서 접근 가능합니다.. (#13547)
