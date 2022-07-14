@@ -16,19 +16,12 @@ from comInterfaces.UIAutomationClient import IUIAutomationTextRange
 class _IUIAutomationTextRangeT(Protocol):
 	# Based on IUIAutomationTextRange
 	# https://docs.microsoft.com/en-us/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationtextrange
-
-	def findText(self) -> "IUIAutomationTextRangeT":
-		...
+	# Currently incomplete.
 
 	def clone(self) -> "IUIAutomationTextRangeT":
 		...
 
-	def MoveEndpointByRange(
-			self,
-			source: int,
-			rangeObject: "IUIAutomationTextRangeT",
-			target: int
-	) -> None:
+	def compare(self, other: "IUIAutomationTextRangeT") -> bool:
 		...
 
 	def CompareEndpoints(
@@ -39,25 +32,33 @@ class _IUIAutomationTextRangeT(Protocol):
 	) -> int:
 		...
 
-	def compare(self, other: "IUIAutomationTextRangeT") -> bool:
+	def ExpandToEnclosingUnit(self, unit: int) -> None:
+		...
+
+	def findText(self) -> "IUIAutomationTextRangeT":
+		...
+
+	def GetBoundingRectangles(self) -> List:
 		...
 
 	def getText(self, index: int) -> str:
 		...
 
-	def Select(self) -> None:
+	def Move(self, unit: int, direction: int) -> None:
+		...
+
+	def MoveEndpointByRange(
+			self,
+			source: int,
+			rangeObject: "IUIAutomationTextRangeT",
+			target: int
+	) -> None:
 		...
 
 	def MoveEndpointByUnit(self, endPoint: int, unit: int, direction: int) -> None:
 		...
 
-	def Move(self, unit: int, direction: int) -> None:
-		...
-
-	def ExpandToEnclosingUnit(self, unit: int) -> None:
-		...
-
-	def GetBoundingRectangles(self) -> List:
+	def Select(self) -> None:
 		...
 
 
