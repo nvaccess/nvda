@@ -14,6 +14,9 @@ from comInterfaces.UIAutomationClient import IUIAutomationTextRange
 
 
 class _IUIAutomationTextRangeT(Protocol):
+	# Based on IUIAutomationTextRange
+	# https://docs.microsoft.com/en-us/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationtextrange
+
 	def findText(self) -> "IUIAutomationTextRangeT":
 		...
 
