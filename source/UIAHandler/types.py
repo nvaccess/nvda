@@ -4,7 +4,7 @@
 # See the file COPYING for more details.
 
 from typing import (
-	Any,
+	List,
 )
 from typing_extensions import (
 	Protocol,
@@ -36,10 +36,10 @@ class _IUIAutomationTextRangeT(Protocol):
 			source: int,
 			rangeObject: "IUIAutomationTextRangeT",
 			target: int
-	) -> Any:
+	) -> int:
 		...
 
-	def compare(self, other: "IUIAutomationTextRangeT") -> Any:
+	def compare(self, other: "IUIAutomationTextRangeT") -> bool:
 		...
 
 	def getText(self, index: int) -> str:
@@ -57,7 +57,7 @@ class _IUIAutomationTextRangeT(Protocol):
 	def ExpandToEnclosingUnit(self, unit: int) -> None:
 		...
 
-	def GetBoundingRectangles(self) -> Any:
+	def GetBoundingRectangles(self) -> List:
 		...
 
 
