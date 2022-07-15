@@ -372,18 +372,16 @@ class NVDASpyLib:
 	def ensure_speech_did_not_occur(
 			self,
 			speech: str,
-			maxWaitSeconds: float,
 			afterIndex: Optional[int] = None,
+			maxWaitSeconds: float = SPEECH_HAS_FINISHED_SECONDS,
 			intervalBetweenSeconds: float = 0.1,
 	) -> None:
 		"""
 		@param speech: The speech to check for.
+		@param afterIndex: Check for speech after this index. The index is exclusive.
 		@param maxWaitSeconds: The amount of time to wait in seconds.
 		As this is the expected path, this will cause a successful test run to be delayed the time provided.
-		The default for the converse, `wait_for_specific_speech`, is 5s,
-		to make sure the application / OS is working fine.
-		It can be longer as it will only occur when a test fails.
-		@param afterIndex: Check for speech after this index. The index is exclusive.
+		The default is SPEECH_HAS_FINISHED_SECONDS to allow for delays from the application / OS.
 		@param intervalBetweenSeconds: The amount of time to wait between checking speech, in seconds.
 		"""
 		success, _speechIndex = self._has_speech_occurred_before_timeout(
