@@ -8,7 +8,6 @@
 # jakubl7545, mltony
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-
 import logging
 from abc import ABCMeta, abstractmethod
 import copy
@@ -17,6 +16,7 @@ from enum import IntEnum
 
 import typing
 import wx
+
 from vision.providerBase import VisionEnhancementProviderSettings
 from wx.lib.expando import ExpandoTextCtrl
 import wx.lib.newevent
@@ -2892,6 +2892,23 @@ class AdvancedPanelControls(
 
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
+		label = _("Virtual Buffers")
+		vBufSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=label)
+		vBufGroup = guiHelper.BoxSizerHelper(vBufSizer, sizer=vBufSizer)
+		sHelper.addItem(vBufGroup)
+
+		self.loadChromeVBufWhenBusyCombo: nvdaControls.FeatureFlagCombo = vBufGroup.addLabeledControl(
+			labelText=_(
+				# Translators: This is the label for a combo-box in the Advanced settings panel.
+				"Load Chromium virtual buffer when document busy."
+			),
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["virtualBuffers", "loadChromiumVBufOnBusyState"],
+			conf=config.conf,
+		)
+
+		# Translators: This is the label for a group of advanced options in the
+		#  Advanced settings panel
 		label = _("Editable Text")
 		editableSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=label)
 		editableTextGroup = guiHelper.BoxSizerHelper(editableSizer, sizer=editableSizer)
@@ -3016,6 +3033,7 @@ class AdvancedPanelControls(
 			and self.annotationsDetailsCheckBox.IsChecked() == self.annotationsDetailsCheckBox.defaultValue
 			and self.ariaDescCheckBox.IsChecked() == self.ariaDescCheckBox.defaultValue
 			and self.supportHidBrailleCombo.GetSelection() == self.supportHidBrailleCombo.defaultValue
+			and self.loadChromeVBufWhenBusyCombo.isValueConfigSpecDefault()
 			and True  # reduce noise in diff when the list is extended.
 		)
 
@@ -3036,6 +3054,7 @@ class AdvancedPanelControls(
 		self.supportHidBrailleCombo.SetSelection(self.supportHidBrailleCombo.defaultValue)
 		self.reportTransparentColorCheckBox.SetValue(self.reportTransparentColorCheckBox.defaultValue)
 		self.logCategoriesList.CheckedItems = self.logCategoriesList.defaultCheckedItems
+		self.loadChromeVBufWhenBusyCombo.resetToConfigSpecDefault()
 		self._defaultsRestored = True
 
 	def onSave(self):
@@ -3063,6 +3082,7 @@ class AdvancedPanelControls(
 		config.conf["annotations"]["reportDetails"] = self.annotationsDetailsCheckBox.IsChecked()
 		config.conf["annotations"]["reportAriaDescription"] = self.ariaDescCheckBox.IsChecked()
 		config.conf["braille"]["enableHidBrailleSupport"] = self.supportHidBrailleCombo.GetSelection()
+		self.loadChromeVBufWhenBusyCombo.saveCurrentValueToConf()
 
 		for index,key in enumerate(self.logCategories):
 			config.conf['debugLog'][key]=self.logCategoriesList.IsChecked(index)

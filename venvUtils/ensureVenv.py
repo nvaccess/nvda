@@ -19,18 +19,33 @@ venv_path: str = os.path.join(top_dir, ".venv")
 requirements_path: str = os.path.join(top_dir, "requirements.txt")
 venv_orig_requirements_path: str = os.path.join(venv_path, "_requirements.txt")
 venv_python_version_path: str = os.path.join(venv_path, "python_version")
+#: Whether this script is run interactively,
+#: i.e. whether user input is possible to answer questions.
+#: Value is True if interactive (i.e. stdout is attached to a terminal), False otherwise.
+isInteractive = hasattr(sys.stdout, "isatty") and sys.stdout.isatty()
+if not isInteractive:
+	print(
+		"Warning: Running in non-interactive mode. Defaults are assumed for prompts, if applicable",
+		flush=True
+	)
 
 
-def askYesNoQuestion(message: str) -> bool:
+def askYesNoQuestion(message: str, default: bool) -> bool:
 	"""
 	Displays the given message to the user and accepts y or n as input.
 	Any other input causes the question to be asked again.
-	@returns: True for y and n for False.
+	If isInteractive is False, the default is always returned, the question and outcome
+	will still be sent to stdout for inspection of the build.
+	@param default: the return value when the user can not be prompted.
+	@returns: True for y and False for n.
 	"""
+	question: str = f"{message} [y/n]: "
 	while True:
-		answer = input(
-			message + " [y/n]: "
-		)
+		if isInteractive:
+			answer = input(question)
+		else:
+			answer = "y" if default else "n"
+			print(f"{question}{answer} (answered non-interactively)")
 		if answer == 'n':
 			return False
 		elif answer == 'y':
@@ -121,7 +136,8 @@ def ensureVenvAndRequirements():
 	):
 		if askYesNoQuestion(
 			f"Virtual environment at {venv_path} probably not created by NVDA. "
-			"This directory must be removed before continuing. Should it be removed?"
+			"This directory must be removed before continuing. Should it be removed?",
+			default=True
 		):
 			return createVenvAndPopulate()
 		else:
@@ -141,7 +157,8 @@ def ensureVenvAndRequirements():
 			"If you choose no, the new requirements will be installed without recreating. "
 			"This means that transitive dependencies can get out of sync "
 			"with those used in automated builds. "
-			"Would you like to continue recreating the environment?"
+			"Would you like to continue recreating the environment?",
+			default=True
 		):
 			return createVenvAndPopulate()
 		return populate()
