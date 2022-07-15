@@ -21,6 +21,7 @@ import addonHandler
 import easeOfAccess
 import COMRegistrationFixes
 import winKernel
+from typing import Dict
 
 _wsh=None
 def _getWSH():
@@ -227,15 +228,15 @@ def removeOldProgramFiles(destPath):
 					log.warning(f"Couldn't remove file: {path!r}")
 
 
-uninstallerRegInfo={
-	"DisplayName":versionInfo.name,
-	"DisplayVersion":versionInfo.version,
-	"DisplayIcon":u"{installDir}\\images\\nvda.ico",
-	"InstallDir":u"{installDir}",
-	"Publisher":versionInfo.publisher,
-	"UninstallDirectory":u"{installDir}",
-	"UninstallString":u"{installDir}\\uninstall.exe",
-	"URLInfoAbout":versionInfo.url,
+uninstallerRegInfo: Dict[str, str] = {
+	"DisplayName": f"{versionInfo.name} {versionInfo.version}",
+	"DisplayVersion": versionInfo.version_detailed,
+	"DisplayIcon": r"{installDir}\images\nvda.ico",
+	"InstallDir": "{installDir}",
+	"Publisher": versionInfo.publisher,
+	"UninstallDirectory": "{installDir}",
+	"UninstallString": r"{installDir}\uninstall.exe",
+	"URLInfoAbout": versionInfo.url,
 }
 
 
