@@ -17,7 +17,13 @@ Each of the questions and sections below start with multiple hash symbols (#). P
 
 ### Actual behavior:
 
+#### Actual NVDA speech/braille sample:
+
 ### Expected behavior:
+
+#### Expected NVDA speech/braille sample:
+
+### NVDA logs and other attachments:
 
 ### System configuration
 #### NVDA installed/portable/running from source:
