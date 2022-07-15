@@ -923,7 +923,11 @@ class UIATextInfo(textInfos.TextInfo):
 	def updateSelection(self):
 		self._rangeObj.Select()
 
-	updateCaret = updateSelection
+	def updateCaret(self) -> None:
+		copyTextInfo = self.copy()
+		copyTextInfo.collapse()
+		copyTextInfo.updateSelection()
+
 
 class UIA(Window):
 	_UIACustomProps = UIAHandler.customProps.CustomPropertiesCommon.get()
