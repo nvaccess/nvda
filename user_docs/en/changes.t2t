@@ -8,8 +8,9 @@ What's New in NVDA
 == New Features ==
 - In the Windows Console Host used by Command Prompt, PowerShell, and the Windows Subsystem for Linux on Windows 11 version 22H2 (Sun Valley 2) and later:
   - Vastly improved performance and stability. (#10964)
-  - When pressing ``ctrl+f`` to find text, the review cursor position is updated to follow the found term. (#11172)
+  - When pressing ``control+f`` to find text, the review cursor position is updated to follow the found term. (#11172)
   - Reporting of typed text that does not appear onscreen (such as passwords) is disabled by default.
+  -
 It can be re-enabled in NVDA's advanced settings panel. (#11554)
   - Text that has scrolled offscreen can be reviewed without scrolling the console window. (#12669)
   - More detailed text formatting information is available. ([microsoft/terminal PR 10336 https://github.com/microsoft/terminal/pull/10336])
@@ -37,6 +38,9 @@ It can be re-enabled in NVDA's advanced settings panel. (#11554)
 
 
 == Bug Fixes ==
+- Adobe Acrobat / Reader 64 bit will no longer crash when reading a PDF document. (#12920)
+  - Note that the most up to date version of Adobe Acrobat / Reader is also required to avoid the crash.
+  -
 - Font size measurements are now translatable in NVDA. (#13573)
 - Ignore Java Access Bridge events where no window handle can be found for Java applications.
 This will improve performance for some Java applications including IntelliJ IDEA. (#13039)
