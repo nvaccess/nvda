@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2018 NV Access Limited
+# Copyright (C) 2018-2022 NV Access Limited
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -10,7 +10,10 @@ of a package.
 """
 import gettext
 import typing
-from typing import Optional
+from typing import (
+	Optional,
+	Tuple,
+)
 
 import extensionPoints
 import globalPluginHandler
@@ -316,32 +319,83 @@ class NVDASpyLib:
 		"""
 		return self.get_last_speech_index() + 1
 
+	def _has_speech_occurred_before_timeout(
+			self,
+			speech: str,
+			afterIndex: Optional[int],
+			maxWaitSeconds: float,
+			intervalBetweenSeconds: float,
+	) -> Tuple[bool, Optional[int]]:
+		"""
+		@param speech: The speech to expect.
+		@param afterIndex: The speech should come after this index. The index is exclusive.
+		@param maxWaitSeconds: The amount of time to wait in seconds.
+		@param intervalBetweenSeconds: The amount of time to wait between checking speech, in seconds.
+		@return: True if the speech occurred and the index of the speech.
+		"""
+		return _blockUntilConditionMet(
+			getValue=lambda: self._getIndexOfSpeech(speech, afterIndex),
+			giveUpAfterSeconds=self._minTimeout(maxWaitSeconds),
+			shouldStopEvaluator=lambda indexFound: indexFound >= (afterIndex if afterIndex else 0),
+			intervalBetweenSeconds=intervalBetweenSeconds,
+			errorMessage=None
+		)
+
 	def wait_for_specific_speech(
 			self,
 			speech: str,
 			afterIndex: Optional[int] = None,
-			maxWaitSeconds: int = 5,
+			maxWaitSeconds: float = 5.0,
+			intervalBetweenSeconds: float = 0.1,
 	) -> int:
 		"""
 		@param speech: The speech to expect.
 		@param afterIndex: The speech should come after this index. The index is exclusive.
 		@param maxWaitSeconds: The amount of time to wait in seconds.
+		@param intervalBetweenSeconds: The amount of time to wait between checking speech, in seconds.
 		@return: the index of the speech.
 		"""
-		success, speechIndex = _blockUntilConditionMet(
-			getValue=lambda: self._getIndexOfSpeech(speech, afterIndex),
-			giveUpAfterSeconds=self._minTimeout(maxWaitSeconds),
-			shouldStopEvaluator=lambda indexFound: indexFound >= (afterIndex if afterIndex else 0),
-			intervalBetweenSeconds=0.1,
-			errorMessage=None
+		success, speechIndex = self._has_speech_occurred_before_timeout(
+			speech,
+			afterIndex,
+			maxWaitSeconds,
+			intervalBetweenSeconds
 		)
 		if not success:
 			self.dump_speech_to_log()
 			raise AssertionError(
-				"Specific speech did not occur before timeout: {}\n"
-				"See NVDA log for dump of all speech.".format(speech)
+				f"Specific speech did not occur before timeout: {speech}\n"
+				"See NVDA log for dump of all speech."
 			)
 		return speechIndex
+
+	def ensure_speech_did_not_occur(
+			self,
+			speech: str,
+			afterIndex: Optional[int] = None,
+			maxWaitSeconds: float = SPEECH_HAS_FINISHED_SECONDS,
+			intervalBetweenSeconds: float = 0.1,
+	) -> None:
+		"""
+		@param speech: The speech to check for.
+		@param afterIndex: Check for speech after this index. The index is exclusive.
+		@param maxWaitSeconds: The amount of time to wait in seconds.
+		As this is the expected path, this will cause a successful test run to be delayed the time provided.
+		The default is SPEECH_HAS_FINISHED_SECONDS to allow for delays from the application / OS.
+		@param intervalBetweenSeconds: The amount of time to wait between checking speech, in seconds.
+		"""
+		success, _speechIndex = self._has_speech_occurred_before_timeout(
+			speech,
+			afterIndex,
+			maxWaitSeconds,
+			intervalBetweenSeconds
+		)
+		if success:
+			self.dump_speech_to_log()
+			raise AssertionError(
+				f"Specific speech occurred unexpectedly before timeout: {speech}\n"
+				"See NVDA log for dump of all speech."
+			)
 
 	def wait_for_speech_to_finish(
 			self,
