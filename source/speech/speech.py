@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2021 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
+# Copyright (C) 2006-2022 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
 # Julien Cochuyt
 
 """High-level functions to speak information.
@@ -431,6 +431,8 @@ def getObjectPropertiesSpeech(  # noqa: C901
 
 		elif value and name == "hasDetails":
 			newPropertyValues['hasDetails'] = obj.hasDetails
+		elif value and name == "detailsRole":
+			newPropertyValues["detailsRole"] = obj.detailsRole
 		elif value and name == "descriptionFrom" and (
 			obj.descriptionFrom == controlTypes.DescriptionFrom.ARIA_DESCRIPTION
 		):
@@ -487,8 +489,11 @@ def getObjectPropertiesSpeech(  # noqa: C901
 				newStates=newPropertyValues[name]
 				newPropertyValues['states']=newStates-oldStates
 				newPropertyValues['negativeStates']=oldStates-newStates
-	#properties such as states need to know the role to speak properly, give it as a _ name
-	newPropertyValues['_role']=newPropertyValues.get('role',obj.role)
+
+	# properties such as states or value need to know the role to speak properly,
+	# give it as a _ name
+	newPropertyValues['_role'] = newPropertyValues.get('role', obj.role)
+
 	# The real states are needed also, as the states entry might be filtered.
 	newPropertyValues['_states']=obj.states
 	if "rowNumber" in newPropertyValues or "columnNumber" in newPropertyValues:
@@ -624,7 +629,6 @@ def getObjectSpeech(  # noqa: C901
 			sequence.extend(_flattenNestedSequences(speechGen))
 	elif role == controlTypes.Role.MATH:
 		import mathPres
-		mathPres.ensureInit()
 		if mathPres.speechProvider:
 			try:
 				sequence.extend(
@@ -644,6 +648,7 @@ def _objectSpeech_calculateAllowedProps(reason, shouldReportTextContent):
 		'value': True,
 		'description': True,
 		'hasDetails': config.conf["annotations"]["reportDetails"],
+		"detailsRole": config.conf["annotations"]["reportDetails"],
 		'descriptionFrom': config.conf["annotations"]["reportAriaDescription"],
 		'keyboardShortcut': True,
 		'positionInfo_level': True,
@@ -1115,7 +1120,6 @@ def _extendSpeechSequence_addMathForTextInfo(
 		speechSequence: SpeechSequence, info: textInfos.TextInfo, field: textInfos.Field
 ) -> None:
 	import mathPres
-	mathPres.ensureInit()
 	if not mathPres.speechProvider:
 		return
 	try:
@@ -1533,11 +1537,11 @@ def getPropertiesSpeech(  # noqa: C901
 	if name:
 		textList.append(name)
 	if 'role' in propertyValues:
-		role=propertyValues['role']
+		role: controlTypes.Role = propertyValues['role']
 		speakRole=True
 	elif '_role' in propertyValues:
 		speakRole=False
-		role: int = propertyValues['_role']
+		role: controlTypes.Role = propertyValues['_role']
 	else:
 		speakRole=False
 		role=controlTypes.Role.UNKNOWN
@@ -1687,10 +1691,18 @@ def getPropertiesSpeech(  # noqa: C901
 	# are there further details
 	hasDetails = propertyValues.get('hasDetails', False)
 	if hasDetails:
-		textList.append(
-			# Translators: Speaks when there a further details/annotations that can be fetched manually.
-			_("has details")
-		)
+		detailsRole: Optional[controlTypes.Role] = propertyValues.get("detailsRole")
+		if detailsRole is not None:
+			textList.append(
+				# Translators: Speaks when there are further details/annotations that can be fetched manually.
+				# %s specifies the type of details (e.g. comment, suggestion)
+				_("has %s" % detailsRole.displayString)
+			)
+		else:
+			textList.append(
+				# Translators: Speaks when there are further details/annotations that can be fetched manually.
+				_("has details")
+			)
 
 	placeholder: Optional[str] = propertyValues.get('placeholder', None)
 	if placeholder:
@@ -1792,6 +1804,7 @@ def getControlFieldSpeech(  # noqa: C901
 	keyboardShortcut=attrs.get('keyboardShortcut', "")
 	isCurrent = attrs.get('current', controlTypes.IsCurrent.NO)
 	hasDetails = attrs.get('hasDetails', False)
+	detailsRole: Optional[controlTypes.Role] = attrs.get("detailsRole")
 	placeholderValue=attrs.get('placeholder', None)
 	value=attrs.get('value',"")
 
@@ -1851,10 +1864,10 @@ def getControlFieldSpeech(  # noqa: C901
 			reason=reason, keyboardShortcut=keyboardShortcut
 		)
 	isCurrentSequence = getPropertiesSpeech(reason=reason, current=isCurrent)
-	hasDetailsSequence = getPropertiesSpeech(reason=reason, hasDetails=hasDetails)
+	hasDetailsSequence = getPropertiesSpeech(reason=reason, hasDetails=hasDetails, detailsRole=detailsRole)
 	placeholderSequence = getPropertiesSpeech(reason=reason, placeholder=placeholderValue)
 	nameSequence = getPropertiesSpeech(reason=reason, name=name)
-	valueSequence = getPropertiesSpeech(reason=reason, value=value)
+	valueSequence = getPropertiesSpeech(reason=reason, value=value, _role=role)
 	descriptionSequence = []
 	if description is not None:
 		descriptionSequence = getPropertiesSpeech(
@@ -2129,6 +2142,10 @@ def getFormatFieldSpeech(  # noqa: C901
 				# %s will be replaced with the number of text columns.
 				text=_("%s columns")%(textColumnCount)
 				textList.append(text)
+			elif textColumnNumber:
+				# Translators: Indicates the text column number in a document.
+				text = _("column {columnNumber}").format(columnNumber=textColumnNumber)
+				textList.append(text)
 
 	sectionBreakType=attrs.get("section-break")
 	if sectionBreakType:
@@ -2201,9 +2218,9 @@ def getFormatFieldSpeech(  # noqa: C901
 		if fontName and fontName!=oldFontName:
 			textList.append(fontName)
 	if  formatConfig["reportFontSize"]:
-		fontSize=attrs.get("font-size")
-		oldFontSize=attrsCache.get("font-size") if attrsCache is not None else None
-		if fontSize and fontSize!=oldFontSize:
+		fontSize = attrs.get("font-size")
+		oldFontSize = attrsCache.get("font-size") if attrsCache is not None else None
+		if fontSize and fontSize != oldFontSize:
 			textList.append(fontSize)
 	if  formatConfig["reportColor"]:
 		color=attrs.get("color")

@@ -8,20 +8,20 @@ from typing import (
 	Dict,
 )
 
+import enum
 from comtypes import COMError
-from collections import defaultdict
+import winVersion
 import mathPres
 from scriptHandler import isScriptWaiting
 import textInfos
-import eventHandler
 import UIAHandler
+import UIAHandler.remote as UIARemote
 from logHandler import log
 import controlTypes
 import ui
 import speech
 import review
 import braille
-import api
 import browseMode
 from UIAHandler.browseMode import (
 	UIABrowseModeDocument,
@@ -39,6 +39,15 @@ from scriptHandler import script
 
 
 """Support for Microsoft Word via UI Automation."""
+
+
+class UIACustomAttributeID(enum.IntEnum):
+	LINE_NUMBER = 0
+	PAGE_NUMBER = 1
+	COLUMN_NUMBER = 2
+	SECTION_NUMBER = 3
+	BOOKMARK_NAME = 4
+
 
 #: the non-printable unicode character that represents the end of cell or end of row mark in Microsoft Word
 END_OF_ROW_MARK = '\x07'
@@ -313,7 +322,6 @@ class WordDocumentTextInfo(UIATextInfo):
 		# But, we therefore need to remove the inner math content if reading by line
 		if not formatConfig or not formatConfig.get('extraDetail'):
 			# We really only want to remove content if we can guarantee that mathPlayer is available.
-			mathPres.ensureInit()
 			if mathPres.speechProvider or mathPres.brailleProvider:
 				curLevel = 0
 				mathLevel = None
@@ -411,6 +419,36 @@ class WordDocumentTextInfo(UIATextInfo):
 			else:
 				index+=1
 		return fields
+
+	def _getFormatFieldAtRange(self, textRange, formatConfig, ignoreMixedValues=False):
+		formatField = super()._getFormatFieldAtRange(textRange, formatConfig, ignoreMixedValues=ignoreMixedValues)
+		if not formatField:
+			return formatField
+		if winVersion.getWinVer() >= winVersion.WIN11:
+			docElement = self.obj.UIAElement
+			if formatConfig['reportLineNumber']:
+				lineNumber = UIARemote.msWord_getCustomAttributeValue(
+					docElement, textRange, UIACustomAttributeID.LINE_NUMBER
+				)
+				if isinstance(lineNumber, int):
+					formatField.field['line-number'] = lineNumber
+			if formatConfig['reportPage']:
+				sectionNumber = UIARemote.msWord_getCustomAttributeValue(
+					docElement, textRange, UIACustomAttributeID.SECTION_NUMBER
+				)
+				if isinstance(sectionNumber, int):
+					formatField.field['section-number'] = sectionNumber
+				if False:
+					# #13511: Fetching of text-column-number is disabled
+					# as it causes Microsoft Word 16.0.1493 and newer to crash!!
+					# This should only be reenabled for versions identified not to crash.
+					textColumnNumber = UIARemote.msWord_getCustomAttributeValue(
+						docElement, textRange, UIACustomAttributeID.COLUMN_NUMBER
+					)
+					if isinstance(textColumnNumber, int):
+						formatField.field['text-column-number'] = textColumnNumber
+		return formatField
+
 
 class WordBrowseModeDocument(UIABrowseModeDocument):
 

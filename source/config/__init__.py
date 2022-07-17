@@ -10,8 +10,6 @@ In addition, this module provides three actions: profile switch notifier, an act
 For the latter two actions, one can perform actions prior to and/or after they take place.
 """
 
-
-from buildVersion import version_year
 from enum import Enum
 import globalVars
 import winreg
@@ -36,6 +34,10 @@ from fileUtils import FaultTolerantFile
 import extensionPoints
 from . import profileUpgrader
 from .configSpec import confspec
+from .featureFlag import (
+	_transformSpec_AddFeatureFlagDefault,
+	_validateConfig_featureFlag,
+)
 from typing import Any, Dict, List, Optional, Set
 
 #: True if NVDA is running as a Windows Store Desktop Bridge application
@@ -61,6 +63,18 @@ post_configSave = extensionPoints.Action()
 pre_configReset = extensionPoints.Action()
 post_configReset = extensionPoints.Action()
 
+
+def __getattr__(attrName: str) -> Any:
+	"""Module level `__getattr__` used to preserve backward compatibility."""
+	if attrName == "NVDA_REGKEY" and globalVars._allowDeprecatedAPI:
+		log.warning("NVDA_REGKEY is deprecated, use RegistryKey.NVDA instead.")
+		return RegistryKey.NVDA.value
+	if attrName == "RUN_REGKEY" and globalVars._allowDeprecatedAPI:
+		log.warning("RUN_REGKEY is deprecated, use RegistryKey.RUN instead.")
+		return RegistryKey.RUN.value
+	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+
+
 def initialize():
 	global conf
 	conf = ConfigManager()
@@ -85,20 +99,6 @@ class RegistryKey(str, Enum):
 	The name of the registry key stored under HKEY_LOCAL_MACHINE where system wide NVDA settings are stored.
 	Note that NVDA is a 32-bit application, so on X64 systems,
 	this will evaluate to `r"SOFTWARE\WOW6432Node\nvda"`
-	"""
-
-
-if version_year < 2023:
-	RUN_REGKEY = RegistryKey.RUN.value
-	"""
-	Deprecated, for removal in 2023.
-	Use L{RegistryKey.RUN} instead.
-	"""
-
-	NVDA_REGKEY = RegistryKey.NVDA.value
-	"""
-	Deprecated, for removal in 2023.
-	Use L{RegistryKey.NVDA} instead.
 	"""
 
 
@@ -387,14 +387,16 @@ def getStartOnLogonScreen() -> bool:
 		log.debugWarning(f"Could not find NVDA reg key {RegistryKey.NVDA}", exc_info=True)
 	except WindowsError:
 		log.error(f"Failed to open NVDA reg key {RegistryKey.NVDA}", exc_info=True)
-	try:
-		return bool(winreg.QueryValueEx(k, "startOnLogonScreen")[0])
-	except FileNotFoundError:
-		log.debug(f"Could not find startOnLogonScreen value for {RegistryKey.NVDA} - likely unset.")
-		return False
-	except WindowsError:
-		log.error(f"Failed to query startOnLogonScreen value for {RegistryKey.NVDA}", exc_info=True)
-		return False
+	else:
+		try:
+			return bool(winreg.QueryValueEx(k, "startOnLogonScreen")[0])
+		except FileNotFoundError:
+			log.debug(f"Could not find startOnLogonScreen value for {RegistryKey.NVDA} - likely unset.")
+			return False
+		except WindowsError:
+			log.error(f"Failed to query startOnLogonScreen value for {RegistryKey.NVDA}", exc_info=True)
+			return False
+	return False
 
 
 def _setStartOnLogonScreen(enable: bool) -> None:
@@ -498,6 +500,20 @@ def addConfigDirsToPythonPackagePath(module, subdir=None):
 	pathList.extend(module.__path__)
 	module.__path__=pathList
 
+
+def _transformSpec(spec: ConfigObj):
+	"""To make the spec less verbose, transform the spec:
+	- Add default="default" to all featureFlag items. This is required so that the key can be read,
+	even if it is missing from the config.
+	"""
+	spec.configspec = spec
+	spec.validate(
+		Validator({
+			"featureFlag": _transformSpec_AddFeatureFlagDefault,
+		}), preserve_errors=True,
+	)
+
+
 class ConfigManager(object):
 	"""Manages and provides access to configuration.
 	In addition to the base configuration, there can be multiple active configuration profiles.
@@ -519,13 +535,16 @@ class ConfigManager(object):
 
 	def __init__(self):
 		self.spec = confspec
+		_transformSpec(self.spec)
 		#: All loaded profiles by name.
 		self._profileCache: Optional[Dict[Optional[str], ConfigObj]] = {}
 		#: The active profiles.
 		self.profiles: List[ConfigObj] = []
 		#: Whether profile triggers are enabled (read-only).
 		self.profileTriggersEnabled: bool = True
-		self.validator: Validator = Validator()
+		self.validator: Validator = Validator({
+			"_featureFlag": _validateConfig_featureFlag
+		})
 		self.rootSection: Optional[AggregatedSection] = None
 		self._shouldHandleProfileSwitch: bool = True
 		self._pendingHandleProfileSwitch: bool = False
@@ -1325,3 +1344,31 @@ class ProfileTrigger(object):
 
 	def __exit__(self, excType, excVal, traceback):
 		self.exit()
+
+
+class AllowUiaInChromium(Enum):
+	_DEFAULT = 0  # maps to 'when necessary'
+	WHEN_NECESSARY = 1  # the current default
+	YES = 2
+	NO = 3
+
+	@staticmethod
+	def getConfig() -> 'AllowUiaInChromium':
+		allow = AllowUiaInChromium(conf['UIA']['allowInChromium'])
+		if allow == AllowUiaInChromium._DEFAULT:
+			return AllowUiaInChromium.WHEN_NECESSARY
+		return allow
+
+
+class AllowUiaInMSWord(Enum):
+	_DEFAULT = 0  # maps to 'where suitable'
+	WHEN_NECESSARY = 1
+	WHERE_SUITABLE = 2
+	ALWAYS = 3
+
+	@staticmethod
+	def getConfig() -> 'AllowUiaInMSWord':
+		allow = AllowUiaInMSWord(conf['UIA']['allowInMSWord'])
+		if allow == AllowUiaInMSWord._DEFAULT:
+			return AllowUiaInMSWord.WHERE_SUITABLE
+		return allow

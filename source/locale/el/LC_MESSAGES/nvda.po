@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-26 00:02+0000\n"
-"PO-Revision-Date: 2021-11-29 22:30+0200\n"
+"POT-Creation-Date: 2022-07-01 05:41+0000\n"
+"PO-Revision-Date: 2022-07-07 13:46+0200\n"
 "Last-Translator: Irene Nakas <irnakas@gmail.com>\n"
 "Language-Team: Gerasimos Xydas, Irene Nakas, Nikos Demetriou <access@e-"
 "rhetor.com, irnakas@gmail.com, nikosdemetriou@googlemail.com>\n"
@@ -83,49 +83,6 @@ msgstr "άγνωστη γλώσσα"
 #. Translators: The label for an unknown input method when switching input methods.
 msgid "unknown input method"
 msgstr "άγνωστη μέθοδος εισόδου"
-
-#. Translators: The label shown for a spelling and grammar error in the NVDA Elements List dialog in Microsoft Word.
-#. {text} will be replaced with the text of the spelling error.
-#, python-brace-format
-msgid "spelling and grammar: {text}"
-msgstr "ορθογραφικός και γραμματικός έλεγχος: {text}"
-
-#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
-#. {text} will be replaced with the text of the spelling error.
-#, python-brace-format
-msgid "spelling: {text}"
-msgstr "Ορθογραφικός έλεγχος: {text}"
-
-#. Translators: The label shown for a grammar error in the NVDA Elements List dialog in Microsoft Word.
-#. {text} will be replaced with the text of the spelling error.
-#, python-brace-format
-msgid "grammar: {text}"
-msgstr "γραμματική: {text}"
-
-#. Translators: a style of fill type (to color the inside of a control or text)
-msgctxt "UIAHandler.FillType"
-msgid "none"
-msgstr "χωρίς γέμισμα"
-
-#. Translators: a style of fill type (to color the inside of a control or text)
-msgctxt "UIAHandler.FillType"
-msgid "color"
-msgstr "χρώμα"
-
-#. Translators: a style of fill type (to color the inside of a control or text)
-msgctxt "UIAHandler.FillType"
-msgid "gradient"
-msgstr "διαβάθμιση"
-
-#. Translators: a style of fill type (to color the inside of a control or text)
-msgctxt "UIAHandler.FillType"
-msgid "picture"
-msgstr "εικόνα"
-
-#. Translators: a style of fill type (to color the inside of a control or text)
-msgctxt "UIAHandler.FillType"
-msgid "pattern"
-msgstr "μοτίβο"
 
 #. Translators: shown when an addon API version string is unknown
 #. Translators: The word for an unknown control type.
@@ -283,6 +240,11 @@ msgstr "tabctl"
 #. progress bar.
 msgid "prgbar"
 msgstr "prgbar"
+
+#. Translators: Displayed in braille for an object which is an
+#. indeterminate progress bar, aka busy indicator.
+msgid "bsyind"
+msgstr "bsyind"
 
 #. Translators: Displayed in braille for an object which is a
 #. scroll bar.
@@ -474,10 +436,6 @@ msgstr "sorted asc"
 msgid "sorted desc"
 msgstr "sorted desc"
 
-#. Translators: Displayed in braille when an object has additional details (such as a comment section).
-msgid "details"
-msgstr "πληροφορίες"
-
 #. Translators: Displayed in braille when an object (usually a graphic) has a long description.
 msgid "ldesc"
 msgstr "ldesc"
@@ -487,6 +445,7 @@ msgid "frml"
 msgstr "frml"
 
 #. Translators: Displayed in braille when there is a comment for a spreadsheet cell or piece of text in a document.
+#. Translators: Brailled when text contains a generic comment.
 msgid "cmnt"
 msgstr "cmnt"
 
@@ -626,6 +585,18 @@ msgstr "στ{columnNumber}"
 msgid "%s end"
 msgstr "τέλος %s"
 
+#. Translators: Brailled when text contains a draft comment.
+msgid "drft cmnt"
+msgstr "drft cmnt"
+
+#. Translators: Brailled when text contains a resolved comment.
+msgid "rslvd cmnt"
+msgstr "rslvd cmnt"
+
+#. Translators: brailled when text contains a bookmark
+msgid "bkmk"
+msgstr "bkmk"
+
 #. Translators: The label for a braille setting indicating that braille should be
 #. tethered to focus or review cursor automatically.
 msgid "automatically"
@@ -674,11 +645,6 @@ msgstr "Μη υποστηριζόμενη μορφή παραμέτρου εισ
 #, python-brace-format
 msgid "{modifier} released"
 msgstr "{modifier} εκδόθηκε"
-
-#. Translators: Reported when a braille input modifier is pressed.
-#, python-brace-format
-msgid "{modifier} pressed"
-msgstr "{modifier} πατήθηκε"
 
 #. Translators: Used when reporting braille dots to the user.
 #. Translators: Reported when braille dots are pressed in input help mode.
@@ -770,6 +736,11 @@ msgstr "Βουλγαρικά βαθμού 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Catalan grade 1"
+msgstr "Καταλανικά βαθμού 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Central Kurdish grade 1"
 msgstr "Κεντρικά Κουρδικά βαθμού 1"
 
@@ -825,6 +796,11 @@ msgstr "Δανικό οκτάστιγμο βαθμού 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "German 6 dot computer braille"
+msgstr "Γερμανικό εξάστιγμο braille υπολογιστών "
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "German 8 dot computer braille"
 msgstr "Γερμανικό οκτάστιγμο braille"
 
@@ -852,6 +828,11 @@ msgstr "Γερμανικά βαθμού 1 (λεπτομερή)"
 #. braille settings dialog.
 msgid "German grade 2"
 msgstr "Γερμανικά βαθμού 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "German grade 2 (detailed)"
+msgstr "Γερμανικά βαθμού 2 (λεπτομερή)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1050,6 +1031,11 @@ msgstr "Ιταλικό οκτάστιγμο braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Japanese (Kantenji) literary braille"
+msgstr "Ιαπωνεζικό (Kantenji) φιλολογικό braile"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Kannada grade 1"
 msgstr "Κάναντα βαθμού 1"
 
@@ -1150,13 +1136,8 @@ msgstr "Βιρμανικά βαθμού 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Belgium) 6 dot"
-msgstr "Ολλανδικά (Βέλγιο) εξάστιγμο"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "Dutch (Netherlands) 6 dot"
-msgstr "Ολλανδικά (Ολλανδία) εξάστιγμο"
+msgid "Dutch 6 dot"
+msgstr "Ολλανδικό εξάστιγμο"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1215,8 +1196,8 @@ msgstr "Πολωνικό οκτάστιγμο braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Polish grade 1"
-msgstr "Πολωνικά βαθμού 1"
+msgid "Polish literary braille"
+msgstr "Πολωνικό φιλολογικό braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1415,13 +1396,15 @@ msgstr "Ξόσα βαθμού 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Chinese (China, Mandarin) grade 1"
-msgstr "Κινεζικά (Κίνα, Μανταρινικά) βαθμού 1"
+#. This should be translated to '中文中国汉语现行盲文' in Mandarin.
+msgid "Chinese (China, Mandarin) Current Braille System"
+msgstr "Κινεζικά (Κίνα, Μανταρινικά) Τρέχον Σύστημα Braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Chinese (China, Mandarin) grade 2"
-msgstr "Κινεζικά (Κίνα, Μανταρινικά) βαθμού 2"
+#. This should be translated to '中文中国汉语双拼盲文' in Mandarin.
+msgid "Chinese (China, Mandarin) Double-phonic Braille System"
+msgstr "Κινεζικά (Κίνα, Μανταρινικά) Σύστημα Braille Double-phonic"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2038,15 +2021,6 @@ msgstr "Καμία εκτενής περιγραφή"
 msgid "Shows the long description at this position if one is found."
 msgstr "Εμφανίζει την εκτενή περιγραφή σε αυτή τη θέση, αν υπάρχει."
 
-#. Translators: the description for the activateAriaDetailsSummary script on browseMode documents.
-msgid "Shows a summary of the details at this position if found."
-msgstr "Εμφανίζει μια σύνοψη των πληροφοριών για αυτή τη θέση, αν υπάρχουν."
-
-#. Translators: the message presented when the activateAriaDetailsSummary script cannot locate a
-#. set of details to read.
-msgid "No additional details"
-msgstr "Δεν υπάρχουν επιπλέον πληροφορίες"
-
 #. Translators: Reported when the user attempts to move to the start or end of a container
 #. (list, table, etc.) but there is no container.
 msgid "Not in a container"
@@ -2339,6 +2313,17 @@ msgctxt "color hue"
 msgid "brown-yellow"
 msgstr "καφέ-κίτρινο"
 
+#. Translators: Shown when NVDA has been started with unknown command line parameters.
+#, python-brace-format
+msgid "The following command line parameters are unknown to NVDA: {params}"
+msgstr ""
+"Οι ακόλουθες παράμετροι της γραμμής εντολών είναι άγνωστες στο NVDA: {params}"
+
+#. Translators: Title of the dialog letting user know
+#. that command line parameters they provided are unknown.
+msgid "Unknown command line parameters"
+msgstr "Άγνωστες παράμετροι γραμμής εντολών"
+
 #. Translators: A message informing the user that there are errors in the configuration file.
 msgid ""
 "Your configuration file contains errors. Your configuration has been reset "
@@ -2462,6 +2447,22 @@ msgstr "μετακινείται στην επόμενη στήλη του πί�
 #. Translators: the description for the previous table column script on browseMode documents.
 msgid "moves to the previous table column"
 msgstr "μετακινείται στην προηγούμενη στήλη του πίνακα"
+
+#. Translators: the description for the first table row script on browseMode documents.
+msgid "moves to the first table row"
+msgstr "μετακινείται στην πρώτη γραμμή του πίνακα"
+
+#. Translators: the description for the last table row script on browseMode documents.
+msgid "moves to the last table row"
+msgstr "μετακινείται στην τελευταία γραμμή του πίνακα"
+
+#. Translators: the description for the first table column script on browseMode documents.
+msgid "moves to the first table column"
+msgstr "μετακινείται στην πρώτη στήλη του πίνακα"
+
+#. Translators: the description for the last table column script on browseMode documents.
+msgid "moves to the last table column"
+msgstr "μετακινείται στην τελευταία στήλη του πίνακα"
 
 #. Translators: The message announced when toggling the include layout tables browse mode setting.
 msgid "layout tables off"
@@ -2620,25 +2621,9 @@ msgstr "Δεξί κλικ"
 msgid "Locks or unlocks the left mouse button"
 msgstr "Κλειδώνει ή ξεκλειδώνει το αριστερό πλήκτρο του ποντικιού"
 
-#. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
-msgid "Left mouse button unlock"
-msgstr "Ξεκλείδωμα αριστερού πλήκτρου ποντικιού"
-
-#. Translators: This is presented when the left mouse button is locked down (used for drag and drop).
-msgid "Left mouse button lock"
-msgstr "Κλείδωμα αριστερού πλήκτρου ποντικιού"
-
 #. Translators: Input help mode message for right mouse lock/unlock command.
 msgid "Locks or unlocks the right mouse button"
 msgstr "Κλειδώνει ή ξεκλειδώνει το δεξί πλήκτρο του ποντικιού"
-
-#. Translators: This is presented when the right mouse button lock is released (used for drag and drop).
-msgid "Right mouse button unlock"
-msgstr "Ξεκλείδωμα δεξιού πλήκτρου ποντικιού"
-
-#. Translators: This is presented when the right mouse button is locked down (used for drag and drop).
-msgid "Right mouse button lock"
-msgstr "Κλείδωμα δεξιού πλήκτρου ποντικιού"
 
 #. Translators: Input help mode message for report current selection command.
 msgid ""
@@ -3172,6 +3157,26 @@ msgstr "απενεργοποίηση αναφοράς της δυνατότητ�
 msgid "report if clickable on"
 msgstr "ενεργοποίηση αναφοράς της δυνατότητας κλικ"
 
+#. Translators: Input help mode message for cycle through automatic language switching mode command.
+msgid ""
+"Cycles through speech modes for automatic language switching: off, language "
+"only and language and dialect."
+msgstr ""
+"Πραγματοποιεί εναλλαγή μεταξύ των λειτουργιών εκφώνησης για αυτόματη "
+"εναλλαγή γλώσσας: όχι, μόνο γλώσσα και μόνο διάλεκτο."
+
+#. Translators: A message reported when executing the cycle automatic language switching mode command.
+msgid "Automatic language switching off"
+msgstr "Αυτόματη εναλλαγή γλώσσας ανενεργή"
+
+#. Translators: A message reported when executing the cycle automatic language switching mode command.
+msgid "Automatic language and dialect switching on"
+msgstr "Αυτόματη εναλλαγή γλώσσας και διαλέκτου ενεργή"
+
+#. Translators: A message reported when executing the cycle automatic language switching mode command.
+msgid "Automatic language switching on"
+msgstr "Αυτόματη εναλλαγή γλώσσας ενεργή"
+
 #. Translators: Input help mode message for cycle speech symbol level command.
 msgid ""
 "Cycles through speech symbol levels which determine what symbols are spoken"
@@ -3261,6 +3266,39 @@ msgstr ""
 msgid "No navigator object"
 msgstr "Δεν υπάρχει αντικείμενο πλοήγησης"
 
+#. Translators: message when there is no location information
+msgid "No location information"
+msgstr "Δεν υπάρχουν πληροφορίες θέσης"
+
+#. Translators: Description for a keyboard command which reports location of the
+#. review cursor, falling back to the location of navigator object if needed.
+msgid ""
+"Reports information about the location of the text at the review cursor, or "
+"location of the navigator object if there is no text under review cursor."
+msgstr ""
+"Αναφέρει πληροφορίες σχετικά με τη θέση του κειμένου στο δρομέα επιθεώρησης "
+"ή στη θέση του αντικειμένου πλοήγησης, αν δεν υπάρχει κείμενο στο δρομέα "
+"επιθεώρησης."
+
+#. Translators: Description for a keyboard command which reports location of the navigator object.
+msgid "Reports information about the location of the current navigator object."
+msgstr ""
+"Αναφέρει πληροφορίες σχετικά με τη θέση του τρέχοντος αντικειμένου πλοήγησης."
+
+#. Translators: Description for a keyboard command which reports location of the
+#. current caret position falling back to the location of focused object if needed.
+msgid ""
+"Reports information about the location of the text at the caret, or location "
+"of the currently focused object if there is no caret."
+msgstr ""
+"Αναφέρει πληροφορίες σχετικά με το κείμενο στο κέρσορα ή τη θέση του "
+"αντικειμένου με εστίαση, αν δεν υπάρχει κέρσορας."
+
+#. Translators: Description for a keyboard command which reports location of the
+#. currently focused object.
+msgid "Reports information about the location of the currently focused object."
+msgstr "Αναφέρει πληροφορίες σχετικά με τη θέση του αντικειμένου με εστίαση."
+
 #. Translators: Description for report review cursor location command.
 msgid ""
 "Reports information about the location of the text or object at the review "
@@ -3269,9 +3307,16 @@ msgstr ""
 "Αναφέρει πληροφορείες για τη θέση του κειμένου ή του αντικειμένου στο δρομέα "
 "επισκόπησης. Πατώντας δύο φορές ίσως δώσει περισσότερες πληροφορίες."
 
-#. Translators: message when there is no location information for the review cursor
-msgid "No location information"
-msgstr "Δεν υπάρχουν πληροφορίες θέσης"
+#. Translators: Description for a keyboard command
+#. which reports location of the text at the caret position
+#. or object with focus if there is no caret.
+msgid ""
+"Reports information about the location of the text or object at the position "
+"of system caret. Pressing twice may provide further detail."
+msgstr ""
+"Αναφέρει πληροφορίες σχετικά με τη θέση του κειμένου ή του αντικειμένου στο "
+"κέρσορα συστήματος. Πατώντας δυο φορές, ίσως αναφέρει περισσότερες "
+"πληροφορίες."
 
 #. Translators: Input help mode message for move navigator object to current focus command.
 msgid ""
@@ -3534,10 +3579,12 @@ msgstr "Εκφώνηση ενεργοποιημένη"
 
 #. Translators: Input help mode message for move to next document with focus command,
 #. mostly used in web browsing to move from embedded object to the webpage document.
-msgid "Moves the focus to the next closest document that contains the focus"
+msgid ""
+"Moves the focus out of the current embedded object and into the document "
+"that contains it"
 msgstr ""
-"Μετακινεί την εστίαση στο επόμενο κοντινότερο έγγραφο που περιέχει την "
-"εστίαση"
+"Μετακινεί την εστίαση εκτός του ενσωματομένου αντικειμένου και εντός του "
+"εγγράφου που το περιέχει"
 
 #. Translators: Input help mode message for toggle focus and browse mode command
 #. in web browsing and other situations.
@@ -3630,6 +3677,14 @@ msgid ""
 msgstr ""
 "Αναφέρει πληροφορίες μορφοποίησης για το κείμενο κάτω από τον κέρσορα. Αν "
 "πατηθεί δύο φορές, παρουσιάζει τις πληροφορίες σε λειτουργία περιήγησης."
+
+#. Translators: the description for the reportDetailsSummary script.
+msgid "Report summary of any annotation details at the system caret."
+msgstr "Αναφορά σύνοψης σχολίων στο κέρσορα συστήματος. "
+
+#. Translators: message given when there is no annotation details for the reportDetailsSummary script.
+msgid "No additional details"
+msgstr "Δεν υπάρχουν επιπλέον πληροφορίες"
 
 #. Translators: Input help mode message for report current focus command.
 msgid "Reports the object with focus. If pressed twice, spells the information"
@@ -4066,6 +4121,23 @@ msgstr "απενεργοποίηση προβολέα εκφώνησης"
 msgid "speech viewer enabled"
 msgstr "ενεργοποίηση προβολέα εκφώνησης"
 
+#. Translators: Input help mode message for toggle Braille viewer command.
+msgid ""
+"Toggles the NVDA Braille viewer, a floating window that allows you to view "
+"braille output, and the text equivalent for each braille character"
+msgstr ""
+"Πραγματοποιεί εναλλαγή μεταξύ της εμφάνισης και της απόκρυψης της προβολής "
+"braile ενός αναδυόμενου παραθύρου, το οποίο σας επιτρέπει να δείτε τους "
+"χαρακτήρες braile και τους αντίστοιχους χαρακτήρες κειμένου"
+
+#. Translators: The message announced when disabling braille viewer.
+msgid "Braille viewer disabled"
+msgstr "Απενεργοποιημένη προβολή braile"
+
+#. Translators: The message announced when enabling Braille viewer.
+msgid "Braille viewer enabled"
+msgstr "Ενεργοποιημένη προβολή braile"
+
 #. Translators: Input help mode message for toggle braille tether to command
 #. (tethered means connected to or follows).
 msgid "Toggle tethering of braille between the focus and the review position"
@@ -4269,6 +4341,54 @@ msgid ""
 msgstr ""
 "Πραγματοποιεί εικονική εναλλαγή του πλήκτρο NVDA ώστε να μιμηθεί μια "
 "συντόμευση πληκτρολογίου για είσοδο braille"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the control and shift keys to emulate a keyboard shortcut "
+"with braille input"
+msgstr ""
+"Πραγματοποιεί εικονική εναλλαγή των πλήκτρων control και shift για να "
+"μιμηθεί συντόμευση πληκτρολογίου κατά την είσοδο braile"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the alt and shift keys to emulate a keyboard shortcut with "
+"braille input"
+msgstr ""
+"Πραγματοποιεί εικονική εναλλαγή των πλήκτρων alt και shift για να μιμηθεί "
+"συντόμευση πληκτρολογίου κατά την είσοδο braile"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the left windows and shift keys to emulate a keyboard "
+"shortcut with braille input"
+msgstr ""
+"Πραγματοποιεί εικονική εναλλαγή των πλήκτρων αριστερό windows και shift για "
+"να μιμηθεί συντόμευση πληκτρολογίου κατά την είσοδο braile"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the NVDA and shift keys to emulate a keyboard shortcut "
+"with braille input"
+msgstr ""
+"Πραγματοποιεί εικονική εναλλαγή των πλήκτρων NVDA και shift για να μιμηθεί "
+"συντόμευση πληκτρολογίου κατά την είσοδο braile"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the control and alt keys to emulate a keyboard shortcut "
+"with braille input"
+msgstr ""
+"Πραγματοποιεί εικονική εναλλαγή των πλήκτρων control και alt για να μιμηθεί "
+"συντόμευση πληκτρολογίου κατά την είσοδο braile"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the control, alt, and shift keys to emulate a keyboard "
+"shortcut with braille input"
+msgstr ""
+"Πραγματοποιεί εικονική εναλλαγή των πλήκτρων control, alt και shift για να "
+"μιμηθεί συντόμευση πληκτρολογίου κατά την είσοδο braile"
 
 #. Translators: Input help mode message for reload plugins command.
 msgid ""
@@ -4863,16 +4983,16 @@ msgstr "πληκτρολόγιο %s"
 msgid "keyboard, all layouts"
 msgstr "πληκτρολόγιο, όλες οι διατάξεις"
 
+#. Translators: the label for the Windows default NVDA interface language.
+msgid "User default"
+msgstr "Προεπιλογή χρήστη"
+
 #. Translators: The pattern defining how languages are displayed and sorted in in the general
 #. setting panel language list. Use "{desc}, {lc}" (most languages) to display first full language
 #. name and then ISO; use "{lc}, {desc}" to display first ISO language code and then full language name.
 #, python-brace-format
 msgid "{desc}, {lc}"
 msgstr "{desc}, {lc}"
-
-#. Translators: the label for the Windows default NVDA interface language.
-msgid "User default"
-msgstr "Προεπιλογή χρήστη"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
@@ -4903,6 +5023,22 @@ msgstr "Σομάλι"
 #, python-format
 msgid "%s cursor"
 msgstr "δρομέας %s"
+
+#. Translators: This is presented when the left mouse button is locked down (used for drag and drop).
+msgid "Left mouse button lock"
+msgstr "Κλείδωμα αριστερού πλήκτρου ποντικιού"
+
+#. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
+msgid "Left mouse button unlock"
+msgstr "Ξεκλείδωμα αριστερού πλήκτρου ποντικιού"
+
+#. Translators: This is presented when the right mouse button is locked down (used for drag and drop).
+msgid "Right mouse button lock"
+msgstr "Κλείδωμα δεξιού πλήκτρου ποντικιού"
+
+#. Translators: This is presented when the right mouse button lock is released (used for drag and drop).
+msgid "Right mouse button unlock"
+msgstr "Ξεκλείδωμα δεξιού πλήκτρου ποντικιού"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6510,6 +6646,23 @@ msgid "Moves the navigator object and focus to the previous row"
 msgstr ""
 "Μετακινεί το αντικείμενο πλοήγησης και την εστίαση στην προηγούμενη γραμμή"
 
+#. Translators: The description of an NVDA command.
+msgid "Moves the navigator object to the first column"
+msgstr "Μετακινεί το αντικείμενο πλοήγησης στην πρώτη στήλη"
+
+#. Translators: The description of an NVDA command.
+msgid "Moves the navigator object to the last column"
+msgstr "Μετακινεί το αντικείμενο πλοήγησης στην τελευταία στήλη"
+
+#. Translators: The description of an NVDA command.
+msgid "Moves the navigator object and focus to the first row"
+msgstr "Μετακινεί το αντικείμενο πλοήγησης και την εστίαση στην πρώτη γραμμή"
+
+#. Translators: The description of an NVDA command.
+msgid "Moves the navigator object and focus to the last row"
+msgstr ""
+"Μετακινεί το αντικείμενο πλοήγησης και την εστίαση στην τελευταία γραμμή"
+
 #. Translators: Announced in braille when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
 msgid "Suggestions"
 msgstr "Υποδείξεις"
@@ -6524,6 +6677,49 @@ msgstr "Σύνθεση"
 #. Translators: A label for a 'candidate' list which contains symbols the user can choose from  when typing east-asian characters into a document.
 msgid "Candidate"
 msgstr "Επιλογή συμβόλου"
+
+#. Translators: The label shown for a spelling and grammar error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
+msgid "spelling and grammar: {text}"
+msgstr "ορθογραφικός και γραμματικός έλεγχος: {text}"
+
+#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
+msgid "spelling: {text}"
+msgstr "Ορθογραφικός έλεγχος: {text}"
+
+#. Translators: The label shown for a grammar error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
+msgid "grammar: {text}"
+msgstr "γραμματική: {text}"
+
+#. Translators: a style of fill type (to color the inside of a control or text)
+msgctxt "UIAHandler.FillType"
+msgid "none"
+msgstr "χωρίς γέμισμα"
+
+#. Translators: a style of fill type (to color the inside of a control or text)
+msgctxt "UIAHandler.FillType"
+msgid "color"
+msgstr "χρώμα"
+
+#. Translators: a style of fill type (to color the inside of a control or text)
+msgctxt "UIAHandler.FillType"
+msgid "gradient"
+msgstr "διαβάθμιση"
+
+#. Translators: a style of fill type (to color the inside of a control or text)
+msgctxt "UIAHandler.FillType"
+msgid "picture"
+msgstr "εικόνα"
+
+#. Translators: a style of fill type (to color the inside of a control or text)
+msgctxt "UIAHandler.FillType"
+msgid "pattern"
+msgstr "μοτίβο"
 
 msgid "Display"
 msgstr "Οθόνη"
@@ -7062,6 +7258,16 @@ msgstr "Κενή διαφάνεια"
 msgid "Waiting for Powerpoint..."
 msgstr "Αναμονή για το PowerPoint..."
 
+#. Translators: LibreOffice, report selected range of cell coordinates with their values
+#, python-brace-format
+msgid "{firstAddress} {firstValue} through {lastAddress} {lastValue}"
+msgstr "{firstAddress} {firstValue} έως {lastAddress} {lastValue}"
+
+#. Translators: LibreOffice, report range of cell coordinates
+#, python-brace-format
+msgid "{firstAddress} through {lastAddress}"
+msgstr "{firstAddress} έως {lastAddress}"
+
 msgid "left"
 msgstr "αριστερά"
 
@@ -7088,7 +7294,8 @@ msgctxt "repeat"
 msgid "off"
 msgstr "απενεργοποιημένο"
 
-#. Translators: presented when there is no emoji when searching for one in Windows 10 Fall Creators Update and later.
+#. Translators: presented when there is no emoji when searching for one
+#. in Windows 10 Fall Creators Update and later.
 msgid "No emoji"
 msgstr "Χωρίς emoji"
 
@@ -7259,6 +7466,21 @@ msgstr "Αναγνώριση σε εξέλιξη"
 
 msgid "Recognition failed"
 msgstr "Η αναγνώριση απέτυχε"
+
+#. Translators: Reported for text which is at the baseline position;
+#. i.e. not superscript or subscript.
+msgid "baseline"
+msgstr "γραμμή αναφοράς"
+
+#. Translators: Reported for subscript text.
+#. Translators: Describes text formatting.
+msgid "subscript"
+msgstr "δείκτης"
+
+#. Translators: Reported for superscript text.
+#. Translators: Describes text formatting.
+msgid "superscript"
+msgstr "εκθέτης"
 
 #. Translators: Presented when an item is marked as current in a collection of items
 msgid "current"
@@ -7816,16 +8038,6 @@ msgstr "χρώμα προσκηνίου"
 msgid "background color"
 msgstr "χρώμα παρασκηνίου"
 
-#. Translators: Describes text formatting.
-#. Translators: Reported for superscript text.
-msgid "superscript"
-msgstr "εκθέτης"
-
-#. Translators: Describes text formatting.
-#. Translators: Reported for subscript text.
-msgid "subscript"
-msgstr "δείκτης"
-
 #. Translators: Describes style of text.
 #. Translators: a Microsoft Word revision type (style change)
 msgid "style"
@@ -7900,6 +8112,10 @@ msgstr "σχήμα"
 #. Translators: Identifies marked (highlighted) content
 msgid "highlighted"
 msgstr "επισημάνθηκε"
+
+#. Translators: Identifies a progress bar with indeterminate state, I.E. progress can not be determined.
+msgid "busy indicator"
+msgstr "ένδειξη απροσδιόριστου υπολειπόμενου χρόνου"
 
 #. Translators: Indicates that a particular state of an object is negated.
 #. Separate strings have now been defined for commonly negated states (e.g. not selected and not
@@ -8044,10 +8260,6 @@ msgstr "φθίνουσα ταξινόμηση"
 msgid "has long description"
 msgstr "διατίθεται εκτενής περιγραφή"
 
-#. Translators: a state that denotes that an object has additional details (such as a comment section).
-msgid "has details"
-msgstr "με πληροφορίες"
-
 #. Translators: a state that denotes that an object is pinned in its current location
 msgid "pinned"
 msgstr "Καρφιτσωμένο"
@@ -8057,7 +8269,7 @@ msgid "has formula"
 msgstr "υπάρχει συνάρτηση"
 
 #. Translators: a state that denotes the existance of a comment.
-#. Translators: Reported when text contains a comment.
+#. Translators: Reported when text contains a generic comment.
 msgid "has comment"
 msgstr "υπάρχει σχόλιο"
 
@@ -8078,6 +8290,10 @@ msgstr "υπερχείλιση"
 #. Excel spreadsheet).
 msgid "unlocked"
 msgstr "ξεκλείδωτο"
+
+#. Translators: a state that denotes the existence of a note.
+msgid "has note"
+msgstr "έχει σημείωση"
 
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
@@ -8103,12 +8319,6 @@ msgstr "Η διαμόρφωση εφαρμόστηκε"
 #. Translators: Reported when configuration has been restored to defaults by using restore configuration to factory defaults item in NVDA menu.
 msgid "Configuration restored to factory defaults"
 msgstr "Η διαμόρφωση επανήλθε στις εργοστασιακές ρυθμίσεις"
-
-#. Translators: Reported when current configuration cannot be saved while NVDA is running in secure mode such as in Windows login screen.
-msgid "Cannot save configuration - NVDA in secure mode"
-msgstr ""
-"Αδυναμία αποθήκευσης της διαμόρφωσης - το NVDA βρίσκεται σε κατάσταση "
-"ασφαλούς λειτουργίας"
 
 #. Translators: Reported when current configuration has been saved.
 msgid "Configuration saved"
@@ -8180,43 +8390,6 @@ msgstr "&Ρυθμίσεις..."
 #. Translators: The description for the menu item to open NVDA Settings dialog.
 msgid "NVDA settings"
 msgstr "Ρυθμίσεις του NVDA"
-
-#. Translators: The label for the menu item to open Default speech dictionary dialog.
-msgid "&Default dictionary..."
-msgstr "&Προεπιλεγμένο λεξικό..."
-
-#. Translators: The help text for the menu item to open Default speech dictionary dialog.
-msgid ""
-"A dialog where you can set default dictionary by adding dictionary entries "
-"to the list"
-msgstr ""
-"Παράθυρο διαλόγου όπου μπορείτε να ορίσετε προεπιλεγμένο λεξικό με την "
-"προσθήκη καταχωρήσεων λεξικού στη λίστα"
-
-#. Translators: The label for the menu item to open Voice specific speech dictionary dialog.
-msgid "&Voice dictionary..."
-msgstr "&Λεξικό φωνής..."
-
-#. Translators: The help text for the menu item
-#. to open Voice specific speech dictionary dialog.
-msgid ""
-"A dialog where you can set voice-specific dictionary by adding dictionary "
-"entries to the list"
-msgstr ""
-"Παράθυρο διαλόγου όπου μπορείτε να ορίσετε λεξικό ειδικό για τη φωνή με την "
-"προσθήκη καταχωρήσεων λεξικού στη λίστα"
-
-#. Translators: The label for the menu item to open Temporary speech dictionary dialog.
-msgid "&Temporary dictionary..."
-msgstr "&Προσωρινό λεξικό..."
-
-#. Translators: The help text for the menu item to open Temporary speech dictionary dialog.
-msgid ""
-"A dialog where you can set temporary dictionary by adding dictionary entries "
-"to the edit box"
-msgstr ""
-"Παράθυρο διαλόγου όπου μπορείτε να ορίσετε προσωρινό λεξικό με την προσθήκη "
-"καταχωρήσεων λεξικού στο πλαίσιο επεξεργασίας κειμένου"
 
 #. Translators: The label for a submenu under NvDA Preferences menu to select speech dictionaries.
 msgid "Speech &dictionaries"
@@ -8313,33 +8486,6 @@ msgstr "Πληροφορίες..."
 msgid "&Help"
 msgstr "&Βοήθεια"
 
-# Το "προφίλς" δεν είναι δόκιμο. Πρέπει όμως να φαίνεται ο πληθυντικός...
-#. Translators: The label for the menu item to open the Configuration Profiles dialog.
-msgid "&Configuration profiles..."
-msgstr "&Προφίλ διαμόρφωσης..."
-
-#. Translators: The label for the menu item to revert to saved configuration.
-msgid "&Revert to saved configuration"
-msgstr "&Επαναφορά στην αποθηκευμένη διαμόρφωση"
-
-msgid "Reset all settings to saved state"
-msgstr "Επαναφορά όλων των ρυθμίσεων στις αποθηκευμένες τιμές"
-
-#. Translators: The label for the menu item to reset settings to default settings.
-#. Here, default settings means settings that were there when the user first used NVDA.
-msgid "&Reset configuration to factory defaults"
-msgstr "&Επαναφορά διαμόρφωσης στις εργοστασιακές ρυθμίσεις"
-
-msgid "Reset all settings to default state"
-msgstr "Επαναφορά όλων των ρυθμίσεων στις προκαθορισμένες τιμές"
-
-#. Translators: The label for the menu item to save current settings.
-msgid "&Save configuration"
-msgstr "&Αποθήκευση διαμόρφωσης"
-
-msgid "Write the current configuration to nvda.ini"
-msgstr "Εγγραφή της τρέχουσας διαμόρφωσης στο nvda.ini"
-
 #. Translators: The label for the menu item to open donate page.
 msgid "Donate"
 msgstr "Δωρεά"
@@ -8359,37 +8505,73 @@ msgstr "Έ&ξοδος"
 msgid "Exit NVDA"
 msgstr "Έξοδος από το NVDA"
 
-#. Translators: A message in the exit Dialog shown when all add-ons are disabled.
+#. Translators: The label for the menu item to open Default speech dictionary dialog.
+msgid "&Default dictionary..."
+msgstr "&Προεπιλεγμένο λεξικό..."
+
+#. Translators: The help text for the menu item to open Default speech dictionary dialog.
 msgid ""
-"All add-ons are now disabled. They will be re-enabled on the next restart "
-"unless you choose to disable them again."
+"A dialog where you can set default dictionary by adding dictionary entries "
+"to the list"
 msgstr ""
-"Όλα τα πρόσθετα είναι τώρα απενεργοποιημένα. Θα ενεργοποιηθούν ξανά στην "
-"επόμενη επανεκκίνηση εκτός και αν τα απενεργοποιήσετε ξανά."
+"Παράθυρο διαλόγου όπου μπορείτε να ορίσετε προεπιλεγμένο λεξικό με την "
+"προσθήκη καταχωρήσεων λεξικού στη λίστα"
 
-#. Translators: The label for actions list in the Exit dialog.
-msgid "What would you like to &do?"
-msgstr "Τι θα θέλατε να &κάνετε;"
+#. Translators: The label for the menu item to open Voice specific speech dictionary dialog.
+msgid "&Voice dictionary..."
+msgstr "&Λεξικό φωνής..."
 
-#. Translators: An option in the combo box to choose exit action.
-msgid "Exit"
-msgstr "Έξοδος "
+#. Translators: The help text for the menu item
+#. to open Voice specific speech dictionary dialog.
+msgid ""
+"A dialog where you can set voice-specific dictionary by adding dictionary "
+"entries to the list"
+msgstr ""
+"Παράθυρο διαλόγου όπου μπορείτε να ορίσετε λεξικό ειδικό για τη φωνή με την "
+"προσθήκη καταχωρήσεων λεξικού στη λίστα"
 
-#. Translators: An option in the combo box to choose exit action.
-msgid "Restart"
-msgstr "Επανεκκίνηση"
+#. Translators: The label for the menu item to open Temporary speech dictionary dialog.
+msgid "&Temporary dictionary..."
+msgstr "&Προσωρινό λεξικό..."
 
-#. Translators: An option in the combo box to choose exit action.
-msgid "Restart with add-ons disabled"
-msgstr "Επανεκκίνηση με τα πρόσθετα απενεργοποιημένα"
+#. Translators: The help text for the menu item to open Temporary speech dictionary dialog.
+msgid ""
+"A dialog where you can set temporary dictionary by adding dictionary entries "
+"to the edit box"
+msgstr ""
+"Παράθυρο διαλόγου όπου μπορείτε να ορίσετε προσωρινό λεξικό με την προσθήκη "
+"καταχωρήσεων λεξικού στο πλαίσιο επεξεργασίας κειμένου"
 
-#. Translators: An option in the combo box to choose exit action.
-msgid "Restart with debug logging enabled"
-msgstr "Επανεκκίνηση με ενεργοποιημένη την καταγραφή του εντοπισμού σφαλμάτων"
+# Το "προφίλς" δεν είναι δόκιμο. Πρέπει όμως να φαίνεται ο πληθυντικός...
+#. Translators: The label for the menu item to open the Configuration Profiles dialog.
+msgid "&Configuration profiles..."
+msgstr "&Προφίλ διαμόρφωσης..."
 
-#. Translators: An option in the combo box to choose exit action.
-msgid "Install pending update"
-msgstr "Εγκατάσταση εκκρεμούς ενημέρωσης"
+#. Translators: The label for the menu item to revert to saved configuration.
+msgid "&Revert to saved configuration"
+msgstr "&Επαναφορά στην αποθηκευμένη διαμόρφωση"
+
+#. Translators: The help text for the menu item to revert to saved configuration.
+msgid "Reset all settings to saved state"
+msgstr "Επαναφορά όλων των ρυθμίσεων στις αποθηκευμένες τιμές"
+
+#. Translators: The label for the menu item to reset settings to default settings.
+#. Here, default settings means settings that were there when the user first used NVDA.
+msgid "&Reset configuration to factory defaults"
+msgstr "&Επαναφορά διαμόρφωσης στις εργοστασιακές ρυθμίσεις"
+
+#. Translators: The help text for the menu item to reset settings to default settings.
+#. Here, default settings means settings that were there when the user first used NVDA.
+msgid "Reset all settings to default state"
+msgstr "Επαναφορά όλων των ρυθμίσεων στις προκαθορισμένες τιμές"
+
+#. Translators: The label for the menu item to save current settings.
+msgid "&Save configuration"
+msgstr "&Αποθήκευση διαμόρφωσης"
+
+#. Translators: The help text for the menu item to save current settings.
+msgid "Write the current configuration to nvda.ini"
+msgstr "Εγγραφή της τρέχουσας διαμόρφωσης στο nvda.ini"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -8729,6 +8911,21 @@ msgstr ""
 "Απαιτείται ενημερωμένη έκδοση αυτού του πρόσθετου. Η ελάχιστη υποστηριζόμενη "
 "έκδοση API είναι {}"
 
+#. Translators: Reported when an action cannot be performed because NVDA is in a secure screen
+msgid "Action unavailable in secure context"
+msgstr "Μη διαθέσιμη ενέργεια σε ασφαλές περιβάλλον"
+
+#. Translators: Reported when an action cannot be performed because NVDA has been installed
+#. from the Windows Store.
+msgid "Action unavailable in NVDA Windows Store version"
+msgstr "Μη διαθέσιμη ενέργεια στην έκδοση του NVDA για το Windows Store"
+
+#. Translators: Reported when an action cannot be performed because NVDA is waiting
+#. for a response from a modal dialog
+msgid "Action unavailable while a dialog requires a response"
+msgstr ""
+"Μη διαθέσιμη ενέργεια όταν ένα παράθυρο διαλόγου χρειάζεται αλληλεπίδραση "
+
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
 msgstr "Προφίλ Διαμόρφωσης"
@@ -8923,6 +9120,48 @@ msgstr "Δε διατίθεται βοήθεια εδώ."
 msgid "No user guide found."
 msgstr "Δε βρέθηκε εγχειρίδιο χρήσης."
 
+#. Translators: An option in the combo box to choose exit action.
+msgid "Exit"
+msgstr "Έξοδος "
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart"
+msgstr "Επανεκκίνηση"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with add-ons disabled"
+msgstr "Επανεκκίνηση με τα πρόσθετα απενεργοποιημένα"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with debug logging enabled"
+msgstr "Επανεκκίνηση με ενεργοποιημένη την καταγραφή του εντοπισμού σφαλμάτων"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Install pending update"
+msgstr "Εγκατάσταση εκκρεμούς ενημέρωσης"
+
+#. Translators: A message in the exit Dialog shown when all add-ons are disabled.
+msgid ""
+"All add-ons are now disabled. They will be re-enabled on the next restart "
+"unless you choose to disable them again."
+msgstr ""
+"Όλα τα πρόσθετα είναι τώρα απενεργοποιημένα. Θα ενεργοποιηθούν ξανά στην "
+"επόμενη επανεκκίνηση εκτός και αν τα απενεργοποιήσετε ξανά."
+
+#. Translators: A message in the exit Dialog shown when NVDA language has been
+#. overwritten from the command line.
+msgid ""
+"NVDA's interface language is now forced from the command line. On the next "
+"restart, the language  saved in NVDA's configuration will be used instead."
+msgstr ""
+"Τώρα μπορεί να επιβληθεί αλλαγή της γλώσσας διεπαφής του NVDA από τη γραμμή "
+"εντολών. Στην επόμενη επανεκκίνηση θα χρησιμοποιηθεί η γλώσσα που έχει "
+"αποθηκευθεί στις ρυθμίσεις του NVDA. "
+
+#. Translators: The label for actions list in the Exit dialog.
+msgid "What would you like to &do?"
+msgstr "Τι θα θέλατε να &κάνετε;"
+
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
 #. {source} is replaced with the gesture's source; e.g. laptop keyboard.
@@ -8965,8 +9204,8 @@ msgid "&Filter by:"
 msgstr "&Φιλτράρισμα κατά:"
 
 #. Translators: The label of a button to add a gesture in the Input Gestures dialog.
-#. Translators: The label for a button in speech dictionaries dialog to add new entries.
 #. Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
+#. Translators: The label for a button in speech dictionaries dialog to add new entries.
 msgid "&Add"
 msgstr "&Προσθήκη"
 
@@ -9270,6 +9509,12 @@ msgstr "είσοδος/έξοδος"
 #. Translators: One of the log levels of NVDA (the debug mode shows debug messages as NVDA runs).
 msgid "debug"
 msgstr "αποσφαλμάτωση"
+
+#. Translators: Shown for a language which has been provided from the command line
+#. 'langDesc' would be replaced with description of the given locale.
+#, python-brace-format
+msgid "Command line option: {langDesc}"
+msgstr "Επιλογή γραμμής εντολών: {langDesc}"
 
 #. Translators: The label for a setting in general settings to select NVDA's interface language
 #. (once selected, NVDA must be restarted; the option user default means the user's Windows language
@@ -9874,6 +10119,11 @@ msgstr "&Σημειώσεις και σχόλια"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
+msgid "&Bookmarks"
+msgstr "&Σελιδοδείκτες"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings panel.
 msgid "&Editor revisions"
 msgstr "&Αναθεωρήσεις συντάκτη"
 
@@ -10075,13 +10325,33 @@ msgstr ""
 "Ενεργοποίηση επιλεκτικής καταχώρησης συμβάντων κατά την αυτοματοποίηση της "
 "διεπαφής χρήστη και την αλλαγή ιδιοτήτων"
 
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid ""
-"Use UI Automation to access Microsoft &Word document controls when available"
+#. Translators: Label for the Use UIA with MS Word combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithMSWord"
+msgid "Use UI Automation to access Microsoft &Word document controls"
 msgstr ""
-"Χρήση αυτοματοποίησης διεπαφής χρήστη για να αποκτήσετε πρόσβαση στα κουμπιά "
-"ελέγχου εγγράφων του Microsoft &Word, όταν διατίθεται."
+"Χρήση Αυτοματισμού Περιβάλλοντος Εργασίας Χρήστη για πρόσβαση στα στοιχεία "
+"ελέγχου εγγράφου Microsoft &Word"
+
+#. Translators: Label for the default value of the Use UIA with MS Word combobox,
+#. in the Advanced settings panel.
+msgctxt "advanced.uiaWithMSWord"
+msgid "Default (Where suitable)"
+msgstr "Προεπιλογή (Όπου είναι κατάλληλο)"
+
+#. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithMSWord"
+msgid "Only when necessary"
+msgstr "Μόνο όταν είναι απαραίτητο"
+
+#. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithMSWord"
+msgid "Where suitable"
+msgstr "Όπου είναι κατάλληλο"
+
+#. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithMSWord"
+msgid "Always"
+msgstr "Πάντα"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -10098,13 +10368,6 @@ msgid "Use UI Automation to access the Windows C&onsole when available"
 msgstr ""
 "Χρήση αυτοματοποίησης διεπαφής χρήστη για να αποκτήσετε πρόσβαση στην "
 "&Κονσόλα των Windows όταν διατίθεται"
-
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid "Speak &passwords in UIA consoles (may improve performance)"
-msgstr ""
-"Η εκφώνηση των &κωδικών πρόσβασης στις κονσόλες UIA (μπορεί να βελτιώσει την "
-"απόδοση)"
 
 #. Translators: Label for the Use UIA with Chromium combobox, in the Advanced settings panel.
 #. Note the '\n' is used to split this long label approximately in half.
@@ -10144,8 +10407,8 @@ msgstr "Σχόλια"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-msgid "Report details in browse mode"
-msgstr "Αναφορά πληροφοριών σε λειτουργία περιήγησης"
+msgid "Report 'has details' for structured annotations"
+msgstr "Αναφέρει ότι 'έχει πληροφορίες' για δομημένα σχόλια"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -10154,55 +10417,80 @@ msgstr "Πάντα αναφορά περιγραφών aria"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
+msgid "HID Braille Standard"
+msgstr "HID Braille Standard"
+
+#. Translators: Label for option in the 'Enable support for HID braille' combobox
+#. in the Advanced settings panel.
+#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
+#. in the Advanced settings panel.
+msgid "Default (Yes)"
+msgstr "Προεπιλογή (Ναι)"
+
+#. Translators: Label for option in the 'Enable support for HID braille' combobox
+#. in the Advanced settings panel.
+#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
+#. in the Advanced settings panel.
+msgid "Yes"
+msgstr "Ναι"
+
+#. Translators: Label for option in the 'Enable support for HID braille' combobox
+#. in the Advanced settings panel.
+#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
+#. in the Advanced settings panel.
+msgid "No"
+msgstr "Όχι"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Enable support for HID braille"
+msgstr "Ενεργοποίηση υποστήριξης για HID braille"
+
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
 msgid "Terminal programs"
 msgstr "Προγράμματα τερματικού"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-msgid "Use the new t&yped character support in Windows Console when available"
+msgid "Speak &passwords in all enhanced terminals (may improve performance)"
 msgstr ""
-"Χρήση της υποστήριξης για τους νέους πληκτρολογημένους χαρακτήρες στην "
-"κονσόλα των Windows όταν διατίθεται"
+"Εκφώνηση &Κωδικών πρόσβασης σε όλα τα enhanced terminals (ίσως βελτιωθεί η "
+"απόδοση)"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid ""
+"Use enhanced t&yped character support in legacy Windows Console when "
+"available"
+msgstr ""
+"Χρήση &βελτιωμένων χαρακτήρων σε παλαιού τύπου Windows Console όταν "
+"διατίθενται"
 
 #. Translators: This is the label for a combo box for selecting a
 #. method of detecting changed content in terminals in the advanced
 #. settings panel.
-#. Choices are automatic, allow Diff Match Patch, and force Difflib.
+#. Choices are automatic, Diff Match Patch, and Difflib.
 msgid "&Diff algorithm:"
 msgstr "Αλγόριθμος &Diff:"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA determine the method of detecting changed
 #. content in terminals automatically.
-msgid "Automatic (Diff Match Patch)"
-msgstr "Αυτόματο (Diff Match Patch)"
+msgid "Automatic (prefer Diff Match Patch)"
+msgstr "Αυτόματο (προτιμώμενο Diff Match Patch)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA detect changes in terminals
-#. by character when supported, using the diff match patch algorithm.
-msgid "allow Diff Match Patch"
-msgstr "Να επιτρέπεται το Diff Match Patch"
+#. by character, using the diff match patch algorithm.
+msgid "Diff Match Patch"
+msgstr "Diff Match Patch"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA detect changes in terminals
 #. by line, using the difflib algorithm.
-msgid "force Difflib"
-msgstr "επιβολή Difflib"
-
-#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
-#. in the Advanced settings panel.
-msgid "Default (Yes)"
-msgstr "Προεπιλογή (Ναι)"
-
-#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
-#. in the Advanced settings panel.
-msgid "Yes"
-msgstr "Ναι"
-
-#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
-#. in the Advanced settings panel.
-msgid "No"
-msgstr "Όχι"
+msgid "Difflib"
+msgstr "Difflib"
 
 #. Translators: This is the label for combobox in the Advanced settings panel.
 msgid "Attempt to cancel speech for expired focus events:"
@@ -10280,98 +10568,6 @@ msgstr ""
 #. Translators: This is the label for a button in the Advanced settings panel
 msgid "Restore defaults"
 msgstr "Επαναφορά προεπιλογών"
-
-#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-msgid "&Anywhere"
-msgstr "&Οπουδήποτε"
-
-#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-msgid "Whole &word"
-msgstr "&Ολόκληρη λέξη"
-
-#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-msgid "Regular &expression"
-msgstr "Συνήθης &έκφραση"
-
-#. Translators: This is the label for the edit dictionary entry dialog.
-msgid "Edit Dictionary Entry"
-msgstr "Επεξεργασία Καταχώρησης Λεξικού"
-
-#. Translators: This is a label for an edit field in add dictionary entry dialog.
-msgid "&Pattern"
-msgstr "&Μοτίβο"
-
-#. Translators: This is a label for an edit field in add dictionary entry dialog and in punctuation/symbol pronunciation dialog.
-#. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
-msgid "&Replacement"
-msgstr "&Αντικατάσταση"
-
-#. Translators: This is a label for an edit field in add dictionary entry dialog.
-msgid "&Comment"
-msgstr "&Σχόλιο"
-
-#. Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
-msgid "&Type"
-msgstr "&είδος"
-
-#. Translators: This is an error message to let the user know that the pattern field in the dictionary entry is not valid.
-msgid "A pattern is required."
-msgstr "Απαιτείται μοτίβο."
-
-msgid "Dictionary Entry Error"
-msgstr "Σφάλμα Καταχώρησης Στο Λεξικό"
-
-#. Translators: This is an error message to let the user know that the dictionary entry is not valid.
-#, python-format
-msgid "Regular Expression error: \"%s\"."
-msgstr "Σύνηθες Σφάλμα Έκφρασης: \"%s\"."
-
-#. Translators: The label for the list box of dictionary entries in speech dictionary dialog.
-msgid "&Dictionary entries"
-msgstr "&Καταχωρήσεις λεξικού"
-
-#. Translators: The label for a column in dictionary entries list used to identify comments for the entry.
-msgid "Comment"
-msgstr "Σχόλιο"
-
-#. Translators: The label for a column in dictionary entries list used to identify pattern (original word or a pattern).
-msgid "Pattern"
-msgstr "Μοτίβο"
-
-#. Translators: The label for a column in dictionary entries list and in a list of symbols from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
-#. Translators: The label for a column in symbols list used to identify a replacement.
-msgid "Replacement"
-msgstr "Αντικατάσταση"
-
-#. Translators: The label for a column in dictionary entries list used to identify whether the entry is case sensitive or not.
-msgid "case"
-msgstr "διάκριση πεζών-κεφαλαίων"
-
-#. Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression, matches whole words, or matches anywhere.
-msgid "Type"
-msgstr "Είδος"
-
-#. Translators: The label for a button in speech dictionaries dialog to edit existing entries.
-msgid "&Edit"
-msgstr "&Επεξεργασία"
-
-#. Translators: This is the label for the add dictionary entry dialog.
-msgid "Add Dictionary Entry"
-msgstr "Προσθήκη Καταχώρησης στο Λεξικό"
-
-#. Translators: Title for default speech dictionary dialog.
-msgid "Default dictionary"
-msgstr "Προεπιλεγμένο λεξικό"
-
-#. Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
-#, python-format
-msgid "Voice dictionary (%s)"
-msgstr "Λεξικό φωνής (%s)"
-
-#. Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long
-#. as NvDA is running).
-msgid "Temporary dictionary"
-msgstr "Προσωρινό λεξικό"
 
 #. Translators: A label for the braille display on the braille panel.
 msgid "Braille &display"
@@ -10564,6 +10760,12 @@ msgstr "&Σύμβολα"
 msgid "Symbol"
 msgstr "Σύμβολο"
 
+#. Translators: The label for a column in symbols list used to identify a replacement.
+#. Translators: The label for a column in dictionary entries list and in a list of symbols
+#. from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
+msgid "Replacement"
+msgstr "Αντικατάσταση"
+
 #. Translators: The label for a column in symbols list used to identify a symbol's speech level (either none, some, most, all or character).
 msgid "Level"
 msgstr "Επίπεδο"
@@ -10576,6 +10778,12 @@ msgstr "διατήρηση"
 #. Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
 msgid "Change selected symbol"
 msgstr "Αλλαγή επιλεγμένου συμβόλου"
+
+#. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
+#. Translators: This is a label for an edit field in add dictionary entry dialog
+#. and in punctuation/symbol pronunciation dialog.
+msgid "&Replacement"
+msgstr "&Αντικατάσταση"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"
@@ -10593,6 +10801,104 @@ msgstr "Αφ&αίρεση"
 #, python-format
 msgid "Symbol \"%s\" is already present."
 msgstr "Το σύμβολο \"%s\" υπάρχει ήδη."
+
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "&Anywhere"
+msgstr "&Οπουδήποτε"
+
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "Whole &word"
+msgstr "&Ολόκληρη λέξη"
+
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "Regular &expression"
+msgstr "Συνήθης &έκφραση"
+
+#. Translators: This is the label for the edit dictionary entry dialog.
+msgid "Edit Dictionary Entry"
+msgstr "Επεξεργασία Καταχώρησης Λεξικού"
+
+#. Translators: This is a label for an edit field in add dictionary entry dialog.
+msgid "&Pattern"
+msgstr "&Μοτίβο"
+
+#. Translators: This is a label for an edit field in add dictionary entry dialog.
+msgid "&Comment"
+msgstr "&Σχόλιο"
+
+#. Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
+msgid "&Type"
+msgstr "&είδος"
+
+#. Translators: This is an error message to let the user know that the pattern field
+#. in the dictionary entry is not valid.
+msgid "A pattern is required."
+msgstr "Απαιτείται μοτίβο."
+
+#. Translators: The title of an error message raised by the Dictionary Entry dialog
+msgid "Dictionary Entry Error"
+msgstr "Σφάλμα Καταχώρησης Στο Λεξικό"
+
+#. Translators: This is an error message to let the user know that the dictionary entry is not valid.
+#, python-format
+msgid "Regular Expression error: \"%s\"."
+msgstr "Σύνηθες Σφάλμα Έκφρασης: \"%s\"."
+
+#. Translators: The label for the list box of dictionary entries in speech dictionary dialog.
+msgid "&Dictionary entries"
+msgstr "&Καταχωρήσεις λεξικού"
+
+#. Translators: The label for a column in dictionary entries list used to identify comments for the entry.
+msgid "Comment"
+msgstr "Σχόλιο"
+
+#. Translators: The label for a column in dictionary entries list used to identify pattern
+#. (original word or a pattern).
+msgid "Pattern"
+msgstr "Μοτίβο"
+
+#. Translators: The label for a column in dictionary entries list used to identify
+#. whether the entry is case sensitive or not.
+msgid "case"
+msgstr "διάκριση πεζών-κεφαλαίων"
+
+#. Translators: The label for a column in dictionary entries list used to identify
+#. whether the entry is a regular expression, matches whole words, or matches anywhere.
+msgid "Type"
+msgstr "Είδος"
+
+#. Translators: The label for a button in speech dictionaries dialog to edit existing entries.
+msgid "&Edit"
+msgstr "&Επεξεργασία"
+
+#. Translators: The label for a button on the Speech Dictionary dialog.
+#. Translators: The title on a prompt for confirmation on the Speech Dictionary dialog.
+msgid "Remove all"
+msgstr "Αφαίρεση όλων"
+
+#. Translators: This is the label for the add dictionary entry dialog.
+msgid "Add Dictionary Entry"
+msgstr "Προσθήκη Καταχώρησης στο Λεξικό"
+
+#. Translators: A prompt for confirmation on the Speech Dictionary dialog.
+msgid "Are you sure you want to remove all the entries in this dictionary?"
+msgstr ""
+"Είστε βέβαιοι ότι θέλετε να αφαιρέσετε όλες τις καταχωρήσεις σε αυτό το "
+"λεξικό;"
+
+#. Translators: Title for default speech dictionary dialog.
+msgid "Default dictionary"
+msgstr "Προεπιλεγμένο λεξικό"
+
+#. Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
+#, python-format
+msgid "Voice dictionary (%s)"
+msgstr "Λεξικό φωνής (%s)"
+
+#. Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long
+#. as NvDA is running).
+msgid "Temporary dictionary"
+msgstr "Προσωρινό λεξικό"
 
 #. Translators: The main message for the Welcome dialog when the user starts NVDA for the first time.
 msgid ""
@@ -10774,6 +11080,10 @@ msgstr "με %s στήλες"
 msgid "with %s rows"
 msgstr "με %s σειρές"
 
+#. Translators: Speaks when there a further details/annotations that can be fetched manually.
+msgid "has details"
+msgstr "με πληροφορίες"
+
 #. Translators: Speaks the item level in treeviews (example output: level 2).
 #, python-format
 msgid "level %s"
@@ -10813,6 +11123,11 @@ msgstr "στήλη {0} από {1}"
 #, python-format
 msgid "%s columns"
 msgstr "%s στήλες"
+
+#. Translators: Indicates the text column number in a document.
+#, python-brace-format
+msgid "column {columnNumber}"
+msgstr "στήλη {columnNumber}"
 
 msgid "continuous section break"
 msgstr "αλλαγή διαδοχικού τμήματος"
@@ -10971,11 +11286,6 @@ msgstr "κρυφό"
 msgid "not hidden"
 msgstr "φανερό"
 
-#. Translators: Reported for text which is at the baseline position;
-#. i.e. not superscript or subscript.
-msgid "baseline"
-msgstr "γραμμή αναφοράς"
-
 #. Translators: Reported when text is left-aligned.
 msgid "align left"
 msgstr "στοίχιση αριστερά"
@@ -11067,9 +11377,25 @@ msgstr "Χωρίς εσοχή πρώτης γραμμής"
 msgid "line spacing %s"
 msgstr "διάστιχο γραμμής %s"
 
+#. Translators: Reported when text contains a draft comment.
+msgid "has draft comment"
+msgstr "έχει πρόχειρο σχόλιο"
+
+#. Translators: Reported when text contains a resolved comment.
+msgid "has resolved comment"
+msgstr "έχει επιλυμένο σχόλιο"
+
 #. Translators: Reported when text no longer contains a comment.
 msgid "out of comment"
 msgstr "Εκτός σχολίου"
+
+#. Translators: Reported when text contains a bookmark
+msgid "bookmark"
+msgstr "Σελιδοδείκτης "
+
+#. Translators: Reported when text no longer contains a bookmark
+msgid "out of bookmark"
+msgstr "εκτός σελιδοδείκτη"
 
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
@@ -11445,19 +11771,28 @@ msgstr "{firstAddress} {firstValue} έως {lastAddress} {lastValue}"
 msgid "Reports the note or comment thread on the current cell"
 msgstr "Αναφέρει τη σημείωση ή τα σχόλια στο τρέχον κελί"
 
-#. Translators: a comment on a cell in Microsoft excel.
+#. Translators: a note on a cell in Microsoft excel.
 #, python-brace-format
-msgid "{comment}  by {author}"
-msgstr "{comment} από {author}"
+msgid "{name}: {desc}"
+msgstr "{name}: {desc}"
+
+#. Translators: message when a cell in Excel contains no note
+msgid "No note on this cell"
+msgstr "Καμμία σημείωση σε αυτό το κελί"
 
 #. Translators: a comment on a cell in Microsoft excel.
 #, python-brace-format
-msgid "{comment}  by {author} with {numReplies} replies"
-msgstr "{comment} από {author} με {numReplies} απαντήσεις"
+msgid "Comment thread: {comment}  by {author}"
+msgstr "Νήμα σχολίων: {comment} από {author}"
 
-#. Translators: A message in Excel when there is no note
-msgid "No note or comment thread on this cell"
-msgstr "Χωρίς σημείωση ή σχόλια σε αυτό το κελί"
+#. Translators: a comment on a cell in Microsoft excel.
+#, python-brace-format
+msgid "Comment thread: {comment}  by {author} with {numReplies} replies"
+msgstr "Νήμα σχολίων: {comment} από {author} με {numReplies} απαντήσεις"
+
+#. Translators: A message in Excel when there is no comment thread
+msgid "No comment thread on this cell"
+msgstr "Κανένα νήμα σχολίων σε αυτό το κελί"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -12868,87 +13203,42 @@ msgstr "Διπλό διάστιχο γραμμής"
 msgid "1.5 line spacing"
 msgstr "Διάστιχο γραμμής 1.5"
 
-#~ msgid "mrkd"
-#~ msgstr "mrkd"
+#, fuzzy
+#~ msgid "Moves the navigator object to the first row"
+#~ msgstr "Μετακινεί το αντικείμενο πλοήγησης στο επόμενο αντικείμενο"
 
-#~ msgid "report marked on"
-#~ msgstr "ενεργοποίηση αναφοράς επισήμανσης"
+#, fuzzy
+#~ msgid "Moves the navigator object to the last row"
+#~ msgstr "Μετακινεί το αντικείμενο πλοήγησης στο επόμενο αντικείμενο"
 
-#~ msgid "report marked off"
-#~ msgstr "απενεργοποίηση αναφοράς επισήμανσης"
+#~ msgid "Chinese (China, Mandarin) grade 2"
+#~ msgstr "Κινεζικά (Κίνα, Μανταρινικά) βαθμού 2"
 
-#~ msgid "marked content"
-#~ msgstr "επισημασμένο περιεχόμενο"
-
-#~ msgid "An NVDA settings dialog is already open. Please close it first."
+#~ msgid "Cannot save configuration - NVDA in secure mode"
 #~ msgstr ""
-#~ "Ένα παράθυρο διαλόγου ρυθμίσεων του NVDA είναι ήδη ανοικτό. Παρακαλώ "
-#~ "κλείστε πρώτα το παράθυρο."
+#~ "Αδυναμία αποθήκευσης της διαμόρφωσης - το NVDA βρίσκεται σε κατάσταση "
+#~ "ασφαλούς λειτουργίας"
 
-#~ msgid "Mar&ked (highlighted text)"
-#~ msgstr "&Επιλογή (επισημασμένου κειμένου)"
+#~ msgid "details"
+#~ msgstr "πληροφορίες"
 
-#, fuzzy
-#~ msgctxt "command toggle"
-#~ msgid "off"
-#~ msgstr "Απενεργοποιημένο"
+#~ msgid "{modifier} pressed"
+#~ msgstr "{modifier} πατήθηκε"
 
-#, fuzzy
-#~ msgctxt "command toggle"
-#~ msgid "on"
-#~ msgstr "ενεργοποιημένο"
+#~ msgid "Dutch (Belgium) 6 dot"
+#~ msgstr "Ολλανδικά (Βέλγιο) εξάστιγμο"
 
-#~ msgid "Israeli 8 dot computer braille"
-#~ msgstr "Εβραϊκό οκτάστιγμο braille υπολογιστών"
+#~ msgid "Dutch (Netherlands) 6 dot"
+#~ msgstr "Ολλανδικά (Ολλανδία) εξάστιγμο"
 
-#~ msgid "COM Registration Fixing tool complete"
-#~ msgstr "Ολοκλήρωση COM Registration Fixing Tool"
+#~ msgid "Polish grade 1"
+#~ msgstr "Πολωνικά βαθμού 1"
 
-#~ msgid "Automatic (Difflib)"
-#~ msgstr "Αυτόματα (Difflib)"
+#~ msgid "Shows a summary of the details at this position if found."
+#~ msgstr "Εμφανίζει μια σύνοψη των πληροφοριών για αυτή τη θέση, αν υπάρχουν."
 
-#, fuzzy
-#~ msgid "category"
-#~ msgid_plural "categories"
-#~ msgstr[0] "&Κατηγορίες:"
-#~ msgstr[1] "&Κατηγορίες:"
+#~ msgid "Report details in browse mode"
+#~ msgstr "Αναφορά πληροφοριών σε λειτουργία περιήγησης"
 
-#~ msgid "&Activate"
-#~ msgstr "&Ενεργοποίηση"
-
-#~ msgctxt "line spacing value"
-#~ msgid "exact"
-#~ msgstr "ακριβές"
-
-#~ msgid "Russian grade 1"
-#~ msgstr "Ρωσικά βαθμού 1"
-
-#~ msgid "%s copied to clipboard"
-#~ msgstr "%s αντιγράφηκε στο πρόχειρο"
-
-#~ msgid "Review selection copied to clipboard"
-#~ msgstr "Το επιλεγμένο κείμενο προς επισκόπηση αντιγράφηκε στο πρόχειρο"
-
-#~ msgid "Apply"
-#~ msgstr "Εφαρμογή"
-
-#~ msgid "Co&mments"
-#~ msgstr "&Σχόλια"
-
-#~ msgid "C&omments"
-#~ msgstr "Σ&χόλιας"
-
-#~ msgid "Ukrainian"
-#~ msgstr "Ουκρανικά"
-
-#~ msgid "Russian braille for computer code"
-#~ msgstr "Ρωσικός braille κώδικας πληροφορικής"
-
-#~ msgid "Speaks the current foreground object"
-#~ msgstr "Εκφωνεί το τρέχον αντικείμενο στο προσκήνιο"
-
-#~ msgid "&Automatically start NVDA after I log on to Windows"
-#~ msgstr "&Αυτόματη εκκίνηση του NVDA μετά τη σύνδεσή μου στα Windows"
-
-#~ msgid "Use NVDA on the Windows &logon screen"
-#~ msgstr "Χρήση του NVDA στην οθόνη &σύνδεσης στα Windows"
+#~ msgid "{comment}  by {author}"
+#~ msgstr "{comment} από {author}"
