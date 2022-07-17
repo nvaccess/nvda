@@ -25,13 +25,27 @@ devDocsOutputDir=outputDir.Dir('devDocs')
 htmlFile=env.txt2tags('developerGuide.t2t')
 env.Depends(htmlFile, t2tBuildConf)
 env.SideEffect('_txt2tags',htmlFile)
-devGuide=env.Command(devDocsOutputDir.File('developerGuide.html'),htmlFile,Move('$TARGET','$SOURCE'))
+devGuide = env.Command(
+	target=devDocsOutputDir.File('developerGuide.html'),
+	source=htmlFile,
+	action=Move('$TARGET','$SOURCE')
+)
 env.Alias("developerGuide",devGuide)
 
 devDocs_nvdaHelper_temp=env.Doxygen(source='../nvdaHelper/doxyfile')
-devDocs_nvdaHelper=env.Command(devDocsOutputDir.Dir('nvdaHelper'),devDocs_nvdaHelper_temp,Move('$TARGET','$SOURCE'))
+devDocs_nvdaHelper = env.Command(
+	target=devDocsOutputDir.Dir('nvdaHelper'),
+	source=devDocs_nvdaHelper_temp,
+	action=Move('$TARGET','$SOURCE')
+)
 env.Alias('devDocs_nvdaHelper', devDocs_nvdaHelper)
 env.Clean('devDocs_nvdaHelper', devDocs_nvdaHelper)
+
+devDocs_nvdaHelper_readme = env.Command(
+	target=devDocsOutputDir.File('nvdaHelper_readme.md'),
+	source=env.File('../nvdaHelper/readme.md'),
+	action=Copy('$TARGET', '$SOURCE')
+)
 
 ignorePaths = [
 	'_buildVersion.py',
@@ -77,5 +91,5 @@ sphinxHtml = env.Command(
 	]]
 )
 devDocs_nvda = env.Command(devDocsOutputDir.Dir('NVDA'), sphinxHtml, Move('$TARGET', '$SOURCE'))
-env.Alias('devDocs', [devGuide, devDocs_nvda])
-env.Clean('devDocs', [devGuide, devDocs_nvda])
+env.Alias('devDocs', [devGuide, devDocs_nvda, devDocs_nvdaHelper_readme])
+env.Clean('devDocs', [devGuide, devDocs_nvda, devDocs_nvdaHelper_readme])

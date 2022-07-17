@@ -24,11 +24,11 @@ class TestFocusContextPresentation(unittest.TestCase):
 
 	def setUp(self):
 		"""Set up a fake focus object and give it some ancestry."""
-		self.obj=NVDAObjectWithRole(role=controlTypes.ROLE_LISTITEM)
+		self.obj=NVDAObjectWithRole(role=controlTypes.Role.LISTITEM)
 		# Forcefully create a fake focus ancestry
 		# Note that the braille code excludes the desktop object when getting regions for focus ancestry
 		# The resulting focus object including ancestry will look like: "dialog dlg list lst list item"
-		globalVars.focusAncestors=[api.getDesktopObject(),NVDAObjectWithRole(role=controlTypes.ROLE_DIALOG),NVDAObjectWithRole(role=controlTypes.ROLE_LIST)]
+		globalVars.focusAncestors=[api.getDesktopObject(),NVDAObjectWithRole(role=controlTypes.Role.DIALOG),NVDAObjectWithRole(role=controlTypes.Role.LIST)]
 		braille.handler.handleGainFocus(self.obj)
 		# Make sure that we are testing with three regions
 		self.assertEqual(len(self.regionsWithPositions),3)
@@ -123,4 +123,3 @@ class TestDisplayTextForGestureIdentifier(unittest.TestCase):
 			braille.BrailleDisplayGesture.getDisplayTextForIdentifier('br(noBraille):noKey1+noKey2'),
 			(u'No braille', 'noKey1+noKey2')
 		)
-

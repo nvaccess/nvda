@@ -66,7 +66,7 @@ Pa mas detalles, puetz [mirar-te la licencia completa.  https://www.gnu.org/lice
 Pa detalles arredol d'as excepcions, accede t'o documento d'a licencia dende lo menú d'o NVDA baixo la sección d'"aduya".
 
 + Requerimientos d'o Sistema +[SystemRequirements]
-- Sistemas Operativos: todas las edicions de 32 y 64 bits d'o Windows 7, Windows 8, Windows 8.1 y Windows 10  y totz los sistemas operativos servidors empecipiando dende lo Windows Server 2008 R2.
+- Sistemas Operativos: todas las edicions de 32 y 64 bits d'o Windows 7, Windows 8, Windows 8.1, Windows 10, Windows 11 y totz los sistemas operativos servidors empecipiando dende lo Windows Server 2008 R2.
 - Pa lo Windows 7 lo NVDA requier  lo Service Pack 1 u superior.
 - Pa lo Windows Server 2008 R2 lo NVDA requier  lo Service Pack 1 u superior.
 - A lo menos 150 MB d'espacio d'almagazenamiento.
@@ -312,10 +312,10 @@ Quan lo [resaltau visual #VisionFocusHighlight] siga enchegau, la localización 
 Bi ha qualques ordens de teclau utils quan nos movemos con o foco:
 %kc:beginInclude
 || Nombre | tecla sobremesa | tecla portatil | Descripción |
-| Anunciar o foco actual | NVDA+tabulador | NVDA+tabulador | anuncia l'obchecto actual u lo control que tienga o foco d'o sistema. Pretando-ne dos veces letriará a información  |
-| Anunciar o titol | NVDA+t | NVDA+t | Anuncia o titol d'a finestra activa actualment. Pretando-ne dos veces letriará a información. Pretando-ne tres veces a copiará t'o portafuellas |
-| Leyer a finestra activa | NVDA+b | NVDA+b | leye totz os controls en a finestra actualment activa (util ta dialogos) |
-| Anunciar a Barra d'Estau | NVDA+fin | NVDA+mayus+fin | Anuncia a barra d'estau si o NVDA en troba una. Tamién mueve o navegador d'obchectos ta ixa localización. En pretar dos veces letreya a información. En pretar tres veces lo copiará en o portafuellas |
+| Anunciar lo foco actual | NVDA+tabulador | NVDA+tabulador | anuncia l'obchecto actual u lo control que tienga lo foco d'o sistema. Pretando-lo dos veces letriará la información  |
+| Anunciar lo titol | NVDA+t | NVDA+t | Anuncia lo titol d'a finestra activa actualment. Pretando-lo dos veces letriará la información. Pretando-lo tres veces la copiará t'o portafuellas |
+| Leyer la finestra activa | NVDA+b | NVDA+b | leye totz los controls en a finestra actualment activa (util pa dialogos) |
+| Anunciar la Barra d'Estau | NVDA+fin | NVDA+mayus+fin | Anuncia la barra d'estau si lo NVDA en troba una. En pretar dos veces letreya la información. En pretar tres veces lo copiará en o portafuellas |
 %kc:endInclude
 
 ++ Navegando con o Cursor d'o Sistema ++[SystemCaret]
@@ -372,15 +372,16 @@ Pa navegar por obchectos, fe servir as siguients ordens:
 
 %kc:beginInclude
 || Nombre | Tecla Sobremesa | Tecla Portatil | Tactil | Descripción |
-| Anunciar l'obchecto actual | NVDA+5 Teclau numerico | NVDA+control+i | no | Anuncia o navegador d'obchectos actual. Pretando-ne dos veces letreya a información y pretando-ne 3 veces copia iste nombre y valor de l'obchecto en o portafuellas. |
-| Navegar ta l'obchecto contenedor | NVDA+8 teclau numerico | NVDA+mayus+i | eslizar enta alto (Modo d'obchecto) | Navega t'o contenedor d'o navegador d'obchectos actual |
+| Anunciar l'obchecto actual | NVDA+5 Teclau numerico | NVDA+control+i | no | Anuncia lo navegador d'obchectos actual. Pretando-lo dos veces letreya la información y pretando-lo 3 veces copia ixe nombre y valor de l'obchecto en o portafuellas. |
+| Navegar ta l'obchecto contenedor | NVDA+8 teclau numerico | NVDA+mayus+i | eslizar ent'alto (Modo d'obchecto) | Navega t'o contenedor d'o navegador d'obchectos actual |
 | Navegar ta l'obchecto anterior | NVDA+4 teclau numerico | NVDA+control+j | eslizar t'a cucha (modo d'obchecto) | Navega ta l'obchecto dreitament antis de l'actual navegador d'obchectos |
 | Navegar t'o siguient obchecto | NVDA+6 teclau numerico | control+NVDA+l | eslizar t'a dreita (modo d'obchecto) | Navega ta l'obchecto dreitament dimpués de l'actual navegador d'obchectos |
-| Navegar t'o primer obchecto conteniu | NVDA+2 teclau numerico | NVDA+mayus+coma | eslizar enta abaixo (modo d'obchecto) | Navega t'o primer obchecto conteniu por l'actual navegador d'obchectos |
-| Navegar t'a fin d'o foco | NVDA+Menos teclau numerico | NVDA+Retroceso | no | Navega ta l'obchecto que tien actualment o foco d'o sistema, y tamién coloca o cursor de revisión en a posición d'o cursor d'o Sistema, si s'amuestra |
-| Activar l'actual navegador d'obchectos | NVDA+Intro teclau numerico | NVDA+Intro | dople toque | Activa l'actual navegador d'obchectos (semellant a fer clic con o churi u pretar espacio quan tien o foco d'o sistema) |
-| Mover o foco d'o Sistema ta l'actual navegador d'obchectos | NVDA+mayus+Menos teclau numerico | NVDA+mayus+retroceso | no | pretau una vez Mueve o foco d'o Sistema t'o navegador d'obchectos actual, pretau dos veces mueve o cursor d'o sistema t'a posición d'o cursor de revisión |
-| Anunciar a ubicación d'o cursor de revisión | NVDA+Suprimir teclau numerico | NVDA+suprimir | no | Anuncia información arredol d'a ubicación d'o  texto u obchecto en o cursor de revisión.  Por eixemplo isto puet incluir o porcentache  a traviés d'o documento a distancia dende o canto d'a pachina u  a posición exacta en a pantalla. En pretar-ne dos veces puet anunciar-se mas información. |
+| Navegar t'o primer obchecto conteniu | NVDA+2 teclau numerico | NVDA+mayus+coma | eslizar ent'abaixo (modo d'obchecto) | Navega t'o primer obchecto conteniu por l'actual navegador d'obchectos |
+| Navegar t'a fin d'o foco | NVDA+Menos teclau numerico | NVDA+Retroceso | no | Navega ta l'obchecto que tien actualment lo foco d'o sistema, y tamién coloca lo cursor de revisión en a posición d'o cursor d'o Sistema, si s'amuestra |
+| Activar l'actual navegador d'obchectos | NVDA+Intro teclau numerico | NVDA+Intro | dople toque | Activa l'actual navegador d'obchectos (semellant a fer clic con o churi u pretar l'espacio quan tien lo foco d'o sistema) |
+| Mover lo foco d'o Sistema ta l'actual navegador d'obchectos | NVDA+mayus+Menos teclau numerico | NVDA+mayus+retroceso | no | pretau una vez Mueve lo foco d'o Sistema t'o navegador d'obchectos actual, pretau dos veces mueve lo cursor d'o sistema t'a posición d'o cursor de revisión |
+| Anunciar la ubicación d'o cursor de revisión | NVDA+Suprimir teclau numerico | NVDA+suprimir | no | Anuncia información arredol d'a ubicación d'o  texto u obchecto en o cursor de revisión.  Por eixemplo ixo puet incluir o porcentache  a traviés d'o documento a distancia dende lo canto d'a pachina u  la posición exacta en a pantalla. En pretar-lo dos veces puet anunciar-se-ne mas información. |
+| Mover lo cursor de revisión t'a barra d'estau | garra | garra | garra | Anuncia la barra d'estau  si lo NVDA en troba una. Tamién mueve lo navegador d'obchectos ta ixa ubicación. |
 %kc:endInclude
 
 nota: Las teclas d'o teclau numerico requieren que lo bloueryo numerico siga desenchegau pa funcionar apropiadament.
@@ -498,7 +499,6 @@ Ixo inclui documentos en as siguients aplicacions:
 - Lo Microsoft Edge
 - L'Adobe Reader
 - Lo Foxit Reader
-- L'Adobe Flash.
 - Los libros suportaus en l'Amazon Kindle pa PC 
 -
 
@@ -596,7 +596,7 @@ Fe servir las siguients teclas pa rializar  buscas:
 %kc:endInclude
 
 ++ Obchectos Integraus ++[ImbeddedObjects]
-As pachinas pueden incluir conteniu enriquiu emplegando tecnolochías tals como l'Adobe Flash, l'Oracle Java u l'HTML 5, asinas como aplicacions y dialogos. 
+Las pachinas pueden incluir conteniu enriquiu emplegando tecnolochías tals como l'Oracle Java u l'HTML 5, asinas como aplicacions y dialogos. 
 Do istas se troben en un modo de Navegación, o NVDA anunciará "obchecto integrau", "aplicación" u "dialogo", respectivament.
 Tu puetz mover-te-ne a escape t'a ells fendo servir as teclas de navegación d'una sola letra pa obchectos integraus; o y mayus+o.
 Pa interactuar con ixos obchectos puetz pretar l'intro en ells.
@@ -794,9 +794,15 @@ Pa ixa situgación, lo NVDA contiene una caracteristica clamada "cortina de pant
 
 Puetz enchegar la Cortina de Pantalla en a [categoría de visión #VisionSettings] d'o dialogo d'[opcions d'o NVDA #NVDASettings].
 
+Quan la cortina de pantalla ye enchegada bellas fainasbasadas directament en lo que amaneix en a pantalla como la rialización de l'[OCR #Win10Ocr] u prener una captrua de pantalla no se puet aconseguir.
+
+A causa d'un cambeo en l'API de magnificación d'o Windows, la cortina de pantalla ha d'estar esviellada pa suportar las versions mas nuevas d'o Windows.
+Fe servir lo NVDA 2021.2 pa activar la cortina de pantalla con o Windows 10 21H2 (10.0.19044) u superiors.
+Por propositos de seguridat, en fer servir una nueva versión d'o Windows, obtiene confirmación visual de que la cortina de pantalla fa la pantalla negra de raso.
+
 + Reconoixencia de Contenius +[ContentRecognition]
 Quan os autors no furnen prau información pa que un usuario de lector de pantalla determine o conteniu de bella cosa, pueden fer-se servir bellas ferramientas pa mirar de reconoixer o conteniu dende una imachen.
-O NVDA suporta a funcionalidat de reconoixencia optica de caracters (OCR) integrada en o Windows 10 pa reconoixer texto dende imachens.
+Lo NVDA suporta la funcionalidat de reconoixencia optica de caracters (OCR) integrada en o Windows 10 y superiors pa reconoixer texto dende imachens.
 Puet furnir-se reconoixedors de conteniu adicionals en complementos d'o NVDA.
 
 Quan emplegues un comando de reconoixencia de conteniu, o NVDA reconoix conteniu dende o [navegador d'obchectos #ObjectNavigation] actual.
@@ -808,15 +814,17 @@ Una vez que a reconoixencia se complete, o resultau se presentará en un documen
 Pretando l'intro u lo espacio activará (normalment un clic) o texto en o cursor si ye posible.
 Pretando lo escape escartas o resultau d'a reconoixencia.
 
-++ OCR d'o Windows 10 ++[Win10Ocr]
-O Windows 10 inclui un OCR pa muitos idiomas.
-O NVDA puet fer-lo servir pa reconoixer texto dende imachens u aplicacions inaccesibles.
+++ OCR d'o Windows ++[Win10Ocr]
+Lo Windows 10 y superiors incluyen un OCR pa muitos idiomas.
+Lo NVDA puet fer-lo servir pa reconoixer texto dende imachens u aplicacions inaccesibles.
 
-Puetz configurar l'idioma a emplegar pa la reconoixencia de texto en a [categoría d'OCR d'o Windows 10 #Win10OcrSettings]d'o dialogo d'[opcions d'o NVDA #NVDASettings].
-Puet instalar-se idiomas adicionals ubrindo lo menú d'inicio, esleyindo configuración, seleccionando hora y Idioma -> rechión y Idioma y dimpués esleyindo adhibir un Idioma.
+Puetz configurar l'idioma a emplegar pa la reconoixencia de texto en a [categoría d'OCR d'o Windows #Win10OcrSettings]d'o dialogo d'[opcions d'o NVDA #NVDASettings].
+Puet instalar-se-bi idiomas adicionals ubrindo lo menú d'inicio, esleyindo configuración, seleccionando hora y Idioma -> rechión y Idioma y dimpués esleyindo adhibir un Idioma.
+
+L'OCR d'o Windows puet estar en parti u de raso incompatible con as [milloras d'a visión d'o NVDA #Vision] u atras aduyas visuals externas. Puetz haber de desenchegar ixas aduyas antis de no proceder con un reconoiximiento.
 
 %kc:beginInclude
-Pa reconoixer o texto en l'actual navegador d'obchectos fendo servir l'OCR d'o Windows 10, preta NVDA+r.
+Pa reconoixer lo texto en l'actual navegador d'obchectos fendo servir l'OCR d'o Windows, preta NVDA+r.
 %kc:endInclude
 
 + Caracteristicas Especificas pa aplicacións +[ApplicationSpecificFeatures]
@@ -1390,9 +1398,13 @@ Por defecto lo NVDA emplega la detección de puerto automatica,  lo que quiere d
 Por tanto, pa bellas linias braille, podrás esleixir de propio qué puerto s'habría d'emplegar.
 Las opcions comunas son "automatico" (que le diz a lo NVDA que emplegue lo procedimiento de selección de puerto automatico predeterminau), "USB", "Bluetooth" y puertos serie heredaus si la tuya linia braille suporta iste tipo de comunicación.
 
-Ixa opción no será disponible si a tuya linia braille no suporta que detección automatica de puertos.
+Ixa opción no será disponible si la tuya linia braille no suporta que detección automatica de puertos.
 
 Puetz mirar-te la documentación pa la tuya linia braille en a sección de [linias braille suportadas #SupportedBrailleDisplays] pa mirar mas detalles sobre los tipos compatibles de comunicación y puertos disponibles.
+
+Por favor, para cuenta: Si connectas qualques linias braille t'a tuya maquina de vez que fagan servir lo mesmo controlador (p.eix. connectar dos linias Seika),
+Actualment no ye posible decir-le a lo NVDA qué linia cal que emplegue.
+Por tanto ye recomendau connectar nomás una linia braille d'un tipo dau u fabricant t'a maquina tuya de vez.
 
 +++ Visión +++[VisionSettings]
 La categoría de visión en o dialogo d'opcions d'o NVDA te permite enchegar, desenchegar y configurar [aduyas visuals #Vision].
@@ -1568,7 +1580,8 @@ Pa alternar lo modo de revisión dende do siga asigna un cenyo personalizau fend
 
 +++ Presentación d'obchectos (NVDA+control+o) +++[ObjectPresentationSettings]
 La categoría de presentación d'obchectos d'o dialogo d'opcions d'o NVDA s'emplega pa establir la cantidat d'información que lo NVDA presentará sobre controls tals como descripción, información de posición, etc.
-Ista categoría contién las siguients opcions:
+Istas opcions no s'aplican tipicament a lo modo de navegación.
+Istas opcions s'aplican tipicament a l'anunciau d'o foco y a la navegación d'obchectos d'o NVDA, pero no pas en leyer conteniu de texto, p.eix. lo modo de navegación.
 
 ==== Anunciar los consellos ====[ObjectPresentationReportToolTips]
 Una caixeta de verificación que quan ye marcada diz a lo NVDA que anuncie los consellos seguntes amaneixcan. 
@@ -1733,7 +1746,7 @@ Puetz configurar l'anunciau de:
  - Atributos d'a fuent
  - Superescritos y subescritos
  - Enfasi
- - Marcau (texto resaltau)
+ - Texto resaltau (marcau)
  - Estilo
  - Colors
 - Información de documento
@@ -1743,7 +1756,7 @@ Puetz configurar l'anunciau de:
 - Pachinas y espaciau
  - Numers de pachina
  - Numers de linia
- - Anunciau d'a sangría de linia (desenchegau, fabla, tons, todas dos fabla y tons)
+ - Anunciau d'a sangría de linia (desenchegau, fabla, tons, todas dos fabla y tons) #DocumentFormattingSettingsLineIndentation
  - Sangría de paragrafo (por eixemplo: sangría francesa, sangría d'a primera linia)
  - Espaciau de linia (simple, dople, etc.)
  - Aliniación
@@ -1786,8 +1799,8 @@ O ton puyará de ton cada espacio, y pa una tabulación, puyará os tons equival
 - Todas dos, voz y tons: Ista opción leye a sangría fendo servir totz dos metodos debantditos.
 -
 
-+++ Opcions de l'OCR d'o Windows 10 +++[Win10OcrSettings]
-Las opcions en ista categoría te permiten de configurar [l'OCR d'o Windows 10 #Win10Ocr].
++++ Opcions de l'OCR d'o Windows +++[Win10OcrSettings]
+Las opcions en ista categoría te permiten configurar [l'OCR d'o Windows #Win10Ocr].
 Ista categoría contién las siguients opcions:
 
 ==== Idioma de reconoixencia ====[Win10OcrSettingsRecognitionLanguage]
@@ -1823,18 +1836,53 @@ Ixo tien un mayor impacto negativo en o rendimiento, especialment en as aplicaci
 Por lo tanto, quan s'enchega ista opción, lo NVDA limitará lo rechistro d'eventos a lo foco d'o sistema pa la mayoría d'os eventos.
 Si sufres problemas de rendimiento en una u mas aplicacions, te recomendamos que prebes ista funcionalidat a mirar si lo rendimiento amillora.
 
-==== Utilizar l'UI automation pa acceder ta controls de documento d'o Microsoft Word quan siga disponible ====[AdvancedSettingsUseUiaForWord]
-Quan ista opción siga activada, lo NVDA intentará utilizar l'API d'accesibilidat de Microsoft UI Automation pa obtener información d'os controls de documentos d'o Microsoft Word.
+==== Fer servir l'UI automation pa acceder ta controls de documento d'o Microsoft Word quan siga disponible ====[AdvancedSettingsUseUiaForWord]
+Quan ista opción siga activada, lo NVDA mirará de fer servir l'API d'accesibilidat de Microsoft UI Automation pa obtener información d'os controls de documentos d'o Microsoft Word, mesmo pa las versions menos recients d'o Microsoft Office 2016 / 365.
 Ixo incluye lo mesmo Microsoft Word, y tamién lo visor de mensaches y la redacción d'o Microsoft Outlook.
- Pa las versions mas recients d'o Microsoft Office 2016/365 que s'executa en o Windows 10, la compatibilidat con l'UI Automation  ye prou completa como pa furnir acceso ta documentos d'o Microsoft Word quasi igual como la compatibilidat con o Microsoft Word existent d'o NVDA, con l'avantalla anyadida que la capacidat de respuesta aumenta considerablement.
-Manimenos, puet haber-bi bella información que no siga exposada u que siga exposada incorrectament en qualques versions d'o Microsoft Office, lo que significa que no siempre se puet confidar con ixe suporte de l'UI automation.
-Encara no recomendamos que la mayoría d'os usuarios activen ista opción de traza predeterminada, encara que convidamos a los usuarios de l'Office 2016/365 a que preben ista función y nos ninvien los suyos comentarios.
+Pa las versions mas recients d'o Microsoft Office 2016 / 365 correndo sobre lo WIndows 10 y posteriors, lo suporte d'UI Automation ye prou completo pa furnir acceso ta docuemntos d'o Microsoft Word quasi igual como lo suporte existtent d'o NVDA pa lo Microsoft Word, con l'avantalla anyadida que la respuesta ye mayorment amillorada. 
+Manimenos, podría haber-bi bella información que no siga exposada, u exposada incorrectament en bellas  construccions mas viellas d'o Microsoft Office, lo que quiere decir que no siempre se puet confidar con iste suporte d'UI automation.
+Encara no se recomienda que la mas gran parti d'usuarios encheguen isto por defecto, anque son bienvenius los usuarios de l'Office 2016 / 365 que preben ista caracteristica y en furneixcan retroalimentación.
 
 ==== Fer servir l'UI Automation pa acceder t'a consola d'o Windows quan siga disponible ====[AdvancedSettingsConsoleUIA]
-Quan ista opción siga enchegada, lo NVDA fará servir una nueva versión en progreso d'o suyo suporte pa la consola d'o Windows que da avantallas de [milloras d'accesibilidat feitas por Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Ista caracteristica ye sumament experimental y encara ye incompleta conque l'uso suyo encara no ye recomendau. Manimenos, una vez completau, ixo anticipa que ixe suporte nuevo esdevienga lo predeterminau, amillorando lo rendimiento y la estabilidat d'o NVDA en as consolas de comandos d'o Windows.
+Quan ista opción siga enchegada, lo NVDA fará servir lo suyo suporte pa la consola d'o Windows que da avantallas de [milloras d'accesibilidat feitas por Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Ista caracteristica ye sumament experimental y encara ye incompleta conque l'uso suyo encara no ye recomendau. Manimenos, una vez completau, ixo anticipa que ixe suporte nuevo esdevienga lo predeterminau, amillorando lo rendimiento y la estabilidat d'o NVDA en as consolas de comandos d'o Windows.
 
 ==== Verbalizar as Claus en as consolas UIA ====[AdvancedSettingsWinConsoleSpeakPasswords]
 Ista opción controla si los caracters se charran por [charrar los caracters en escribir-los #KeyboardSettingsSpeakTypedCharacters] u [charrar las parolas en escribir-las #KeyboardSettingsSpeakTypedWords] en situgacions en que la pantalla no s'actualice (tal como la dentrada de contraseñas) en a consola d'o Windows con a compatibilidat con l'UI automation enchegada. Por razons de seguridat, ixa opción ha de deixar-se desenchegada. Manimenos, ye posible que deseyes enchegar-la si experimentas problemas de rendimiento u inestabilidat con l'anunciau d'os caracters y/u las parolas escritas mientras s'emplegue lo nuevo suporte experimental pa consolas d'o NVDA.
+
+==== Fer servir l'UIA con o Microsoft Edge y atros navegadors basaus en o Chromium quan siga disponible ====[ChromiumUIA]
+Permite especificar que s'utilizará l'UIA quan siga disponible en os navegadors basaus en o Chromium tals como lo Microsoft Edge.
+Lo suporte UIA pa los navegadors basaus en o Chromium ye en una fase temprana de desembolique y puet estar que no ufra lo mesmo libel d'acceso que IA2.
+Lo quadro combinau tiene las siguients opcions:
+- Por defecto (Nomás quan ye necesario): La valor por defecto d'o NVDA, actualment ye "Nomás quan siga necesario". Ixa valor por defecto puet cambear en o futuro a mida que la tecnolochía madure.
+- Nomás quan siga necesario: Quan lo NVDA no pueda inyectar en o proceso d'o navegador pa usar IA2 y UIA siga disponible, allora lo NVDA tornará a usar UIA.
+- Sí: si lo navegador fa accesible a UIA, lo NVDA lo utilizará.
+- No: no utiliza UIA, mesmo si lo NVDA no puet inyectar en o proceso. Esto puede estar util pa los desembolicadors que depuren problemas con IA2 y quieren asegurar-se que lo NVDA no torne a utilizar UIA.
+-
+
+==== Anotacions ====[Annotations]
+Iste grupo d'opcions s'emplega pa enchegar caracteristicas que adhiben suporte experimental pa las anotacions ARIA.
+Belunas d'istas caracteristicas pueden estar incompletas.
+Existe las siguients opcions: 
+- "Anunciar los detalles en o modo de navegación": enchega l'anunciau si un obchecto tien detalles en o modo de navegación.
+L'anunciau d'o resumen d'ixos detalles se puet fer asignando-bi un cenyo fendo servir lo [dialogo de cenyos de dentrada #InputGestures].
+- "Anunciar siempre las descripcions aria":
+  Quan la fuent de ``accDescription`` ye aria-description, s'anuncia la descripción.
+  Ixo ye util pa las anotacions en a web.
+  Nota:
+  - Bi ha muitas fuents pa ``accDescription`` belunas tienen una semantica mixta u poco fidable.
+    Historicament AT no ye estau capaz de diferenciar las fuents de ``accDescription`` tipicament no se verbalizaba a causa d'a semantica mixta.
+  - Ista opción ye en un desembolique muito primitivo, se basa en as caracteristicas d'o navegador que encara no son ampliament disponibles.
+  - S'aspera que funcione con Chromium 92.0.4479.0+
+  -
+-
+
+==== Fer servir l'UI automation pa acceder ta controls en fuellas de calculo d'o Microsoft  Excel quan siga disponible ====[UseUiaForExcel]
+Quan ista opción ye enchegada, lo NVDA mirará d'emplegar l'API d'accesibilidat Microsoft UI Automation  pa obtener información d'os controls d'as fuellas de calculo d'o Microsoft Excel.
+Ista ye una funcionalidat experimental y qualques caracteristicas d'o Microsoft Excel pueden no estar disponibles en iste modo.
+Por eixemplo, las caracteristicas d'a Lista d'Elementos d'o NVDA pa enumerar formulas y comentarios y la tecla rapida de navegación d'o modo de navegación pa blincar campos de formulario en una fuella de calculo no son disponibles.
+Manimenos, pa la navegación y edición basica d'as fuellas de calculo, ista opción puet furnir una gran millora de rendimiento.
+Encara no recomendamos que la mayoría d'os usuarios encheguen ista opción por defecto, encara que convidamos a los usuarios d'o Microsoft Excel  compilación 16.0.13522.10000 u superior a que preben ista función y nos den la suya opinión.
+La implementación de UI automation d'o Microsoft Excel cambea constantment y ye posible que las versions d'o Microsoft Office anteriors a la 16.0.13522.10000 puedan no exposar prou información pa que ista opción siga util.
 
 ==== Fer servir lo suporte nuevo de caracters escritos en a consola d'o Windows quan siga disponible ====[AdvancedSettingsKeyboardSupportInLegacy]
 Ista opción enchega un metodo alternativo pa detectar caracters en escribir en as consolas de comandos d'o Windows.
@@ -1843,19 +1891,43 @@ Ista caracteristica ye disponible y enchegada por defecto en versions d'o Window
 Alvertencia: con ista opción enchegada, los caracters escritos que no amaneixcan en a pantalla, tals como las claus, no se suprimirán.
 En entornos no confidables, podrás desenchegar temporalment lo [charrar los caracters en escribir-los #KeyboardSettingsSpeakTypedCharacters] y lo [charrar las parolas en escribir-las #KeyboardSettingsSpeakTypedWords] en ficar claus.
 
+==== Algorismo Diff ====[DiffAlgo]
+Ista opción controla la forma en a quala lo NVDA determina lo nuevo texto pa charrar en as terminals.
+Lo quadro combinau de l'algorismo diff tiene tres opcions:
+- Automatico: a partir d'o NVDA 2021.2, ista opción equivale a "permitir Diff Match Patch".
+- Permitir Diff Match Patch: Ista opción fa que lo NVDA calcule los cambeos por caracters en o texto d'a terminal.
+Puet amillorar lo rendimiento quan s'escriba grans volumens de texto en a consola y permite un anunciau mas preciso d'os cambeos rializaus en o meyo d'as linias.
+Manimenos puet estar incompatible con qualques aplicacions, allora no se i emplega lo Diff Match Patch.
+Ista función ye compatible con a consola d'o Windows en o Windows 10 versión 1607 y posteriors.
+Amás, puet estar disponible en atras terminals en versions anteriors d'o Windows.
+- Aforzar lo Difflib: Ista opción fa que lo NVDA calcule los cambeos en o texto d'a terminal por linias.
+Ye identico a lo comportamiento d'o NVDA en a versión 2020.4 y anteriors.
+-
+
 ==== Mirar de cancelar la voz pa eventos d'expiración d'o foco ====[CancelExpiredFocusSpeech]
 Ista opción enchega lo comportamiento que mira de cancelar la voz pa eventos d'expiración d'o foco.
 Concretament mover-se rapedament a traviés de mensaches en o Gmail con o Chrome puet causar que lo NVDA charre información aviellada.
-Ista funcionalidat ye experimental dende lo NVDA 2020.2.
+Ista funcionalidat ye enchegada por defecto dende lo NVDA 2021.1.
 
 ==== Tiempo d'aspera pa lo movimiento d'o cursor (en MS) ====[AdvancedSettingsCaretMoveTimeout]
 Ista opción te permite configurar lo numero de milisegundos que lo NVDA asperará a que lo cursor (punto d'inserción) se mueva en os controls de texto editables.
 Si veyes que lo NVDA aparenta estar seguindo incorrectament lo cursor, por eixemplo, pareixe estar siempre un caracter per dezaga u repetindo linias, alavez puetz intentar aumentar ista valor.
 
+==== Anunciar la transparencia d'as colors ====[ReportTransparentColors]
+Ista opción permite anunciar quan son transparents las colors, util pa los desembolicadors de complementos y modulos d'aplicación que chuntan información pa amillorar la experiencia de l'usuario con una aplicación de tercers.
+Qualques aplicacions GDI resaltan lo texto con una color de fundo, lo NVDA (a traviés d'o modelo de visualización) mira d'informar d'ixa color.
+En qualques situgacions, lo fundo d'o texto puet estar transparent de raso, con o texto en capas sobre belatro elemento d'a GUI.
+Con quantas APIs de GUI historicament populars, lo texto puet estar renderizau con un fundo transparent, pero visualment la color de fondo cal.
+
 ==== Categorías d'o rechistro de depuración ====[AdvancedSettingsDebugLoggingCategories]
 Las caixetas de verificación d'ista lista te permiten enchegar categorías especificas de mensaches de depuración en o rechistro d'o NVDA.
 Lo rechistro d'ixos mensaches puede resultar en un menor rendimiento y en fichers de rechistro de gran grandaria.
 Activa-ne nomás un d'ells si bell desembolicador d'o NVDA t'ha dau instruccions especificas, por eixemplo, a lo depurar por qué un controlador de linia braille no ye funcionando correctament.
+
+==== Reproducir un son pa las errors rechistradas ====[PlayErrorSound]
+Ista opción permite especificar si lo NVDA reproducirá un son d'error caso que se rechistre una error.
+Trigando Nomás en versions de preba (por defecto) fa que lo NVDA reproduzca sons d'error nomás si la versión actual de NVDA ye una versión de preba (alfa, beta u executada dende lo codigo fuent).
+Trigando Sí permite enchegar los sons d'error qualsiquiera que siga la versión actual d'o NVDA.
 
 ++ Opcions miscelanias ++[MiscSettings]
 Amás d'o dialogo d'[opcions d'o NVDA #NVDASettings], lo submenú Preferencias d'o menú NVDA contién atros elementos que se describe contino.
@@ -2215,7 +2287,7 @@ Pa una lista mas extensa d'os sintetizadors libres y comercials que puetz descar
 
 ++ eSpeak NG ++[eSpeakNG]
 Lo sintetizador [eSpeak NG https://github.com/espeak-ng/espeak-ng/] se construi dreitament en o NVDA y no requier garra atro controlador u components especials pa instalar-se.
-En o Windows 7, 8 y 8.1, lo NVDA fa servir lo Espeak NG de traza predeterminada (lo [Windows OneCore #OneCore] s'emplega en o Windows 10 por defecto).
+En o Windows 7, 8 y 8.1, lo NVDA fa servir lo Espeak NG de traza predeterminada (lo [Windows OneCore #OneCore] s'emplega en o Windows 10 y superiors por defecto).
 Como ixe sintetizador ye integrau en o NVDA, ye una gran esleción ta quan s'executa lo NVDA en  una memoria USB u en un CD en atros sistemas.
 
 Cada voz que vien con o eSpeak NG charra un idioma diferent.
@@ -2249,9 +2321,9 @@ Pa emplegar istas voces, te fará falta instalar dos components:
 -
 
 ++ Voces Windows OneCore ++[OneCore]
-Lo Windows 10 inclui nuevas voces conoixidas como voces "OneCore" u "mobile".
+Lo Windows 10 y superiors incluyen nuevas voces conoixidas como voces "OneCore" u "mobile".
 Se furne voces pa muitos idiomas y son mas achils que no as voces Microsoft disponibles en fer servir o Microsoft Speech API versión 5.
-En o Windows 10, lo NVDA fa servir voces Windows OneCore por defecto (lo [eSpeak NG #eSpeakNG] s'emplega en atras versions).
+En o Windows 10 y superiors, lo NVDA fa servir voces Windows OneCore por defecto (lo [eSpeak NG #eSpeakNG] s'emplega en atras versions).
 
 Pa anyadir nuevas voces de l'OneCore d'o Windows, ves t'as opcions de voz, adentro d'as opcions d'o sistema d'o Windows.
 Fe servir la opción d'anyadir voces y mira la luenga desiada.
@@ -2283,6 +2355,7 @@ Las siguients linias suportan ista funcionalidat de detección automatica.
 - Series d'as HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille
 - Linias Eurobraille Esys/Esytime/Iris
 - Linias Nattiq nBraille
+- Qualsiquier linia que suporte lo protocolo estandar HID braille
 -
 
 ++ Series d'a Freedom Scientific Focus/PAC Mate ++[FreedomScientificFocus]
@@ -2468,7 +2541,7 @@ Si se connecta a traviés d'USB as linias que no fan servir l'HID, en primeras h
 La VarioUltra y la Pronto! fan servir l'HID.
 La Refreshabraille y a Orbit Reader 20 pueden fer servir l'HID si son configuradas apropiadament.
 
-Lo modo de serie USB d'a Orbit Reader 20 actualment no ye suportau que en o Windows 10.
+Lo modo de serie USB d'a Orbit Reader 20 actualment no ye suportau que en o Windows 10 y superiors.
 Por un regular s'habría de fer servir l'USB HID en cuenta.
 
 Contino va las asignacions de teclas pa istas linias con o NVDA.
@@ -3071,7 +3144,7 @@ Por favor mira-te la documentación d'a pantalla pa descripcions d'do puede trob
 
 ++ Linias Nattiq nBraille ++[NattiqTechnologies]
 Lo NVDA suporta linias de [Nattiq Technologies https://www.nattiq.com/] en connectar-se a traviés d'USB.
-Lo Windows 10 detecta las linias braille en connectar-las, te puet fer falta instalar los controlaldors USB si emplegas versions mas antigas d'o Windows (anteriors a Win10).
+Lo Windows 10 y superiors detectan las linias braille en connectar-las, te puet fer falta instalar los controlaldors USB si emplegas versions mas antigas d'o Windows (anteriors a Win10).
 Puetz obtener-los dende lo puesto web d'o fabricant.
 
 Contino va las asignacions de teclas pa las linias de Nattiq Technologies con o NVDA.
@@ -3105,6 +3178,37 @@ Por favor mira-te las [listas de vinclos de teclas de BRLTTY http://mielke.cc/br
 | Mover a linia braille t'a linia anterior | lnup (va una linia enta alto) |
 | Mover a linia braille t'a siguient linia | lndn (va una linia enta baixo) |
 | Guidar t'a celda braille | route (leva o cursor t'o caracter) |
+%kc:endInclude
+
+++ Linias estandar HID braille ++[HIDBraille]
+Iste ye un controlador experimental pa la nueva Especificación Estandar HID Braille, alcordada en 2018 por Microsoft, Google, Apple y quantas interpresas de tecnolochía d'asistencia, incluyindo NV Access. 
+La esperanza ye que totz los futuros modelos de linias Braille creyaus por qualsiquier fabricant, fagan servir iste protocolo estandar que eliminará la necesidat de controladors braille especificos d'o fabricant.
+
+La detección automatica de linias braille d'o NVDA tamién reconoixerá qualsiquier linia que suporte iste protocolo.
+ 
+Contino va las asignacions de teclas actuals pa istas linias.
+%kc:beginInclude
+|| Nombre | Tecla |
+| Desplazar la linia braille enta zaga | pan t'a zurda u garnela alto |
+| Desplazar la linia braille enta debant | pan t'a dreita u garnela abaixo |
+| Mover la linia braille t'a linia anterior | espacio+punto1 |
+| Mover la linia braille t'a linia siguient | espacio+punto4
+| Levar t'a celda braille | conchunto de sensors de enrotamiento 1|
+| Alternar lo seguimiento de braille | alto+abaixo |
+| Tecla flecha alto | ceprén alto |
+| Tecla flecha enta baixo | ceprén enta baixo |
+| Tecla flecha cucha | espacio+punto3 u ceprén t'a zurda |
+| Tecla flecha dreita | espacio+punto6 u ceprén t'a dreita |
+| Teclas mayus+tab | espacio+punto1+punto3 |
+| tecla tab | espacio+punto4+punto6 |
+| tecla alt | espacio+punto1+punto3+punto4 (espacio+m) |
+| tecla escape | espacio+punto1+punto5 (espacio+y) |
+| tecla intro | punto8 u intro d'o ceprén |
+| tecla windows | espacio+punto3+punto4 |
+| teclas alt+tab | espacio+punto2+punto+punto4+punto5 (espacio+t) |
+| Menú NVDA | espacio+punto1+punto3+punto4+punto5 (espacio+n) |
+| teclas windows+d (minimizar todas las aplicacions) | espacio+punto1+punto4+punto5 (espacio+d) |
+| Verbalizar-lo tot | espacio+punto1+punto2+punto3+punto4+punto5+punto6 |
 %kc:endInclude
 
 + Temas Abanzaus +[AdvancedTopics]

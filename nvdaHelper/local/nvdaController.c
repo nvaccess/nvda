@@ -12,7 +12,7 @@ This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
-#include "nvdaController.h"
+#include <local/nvdaController.h>
 
 error_status_t(__stdcall *_nvdaController_speakText)(const wchar_t*);
 error_status_t __stdcall nvdaController_speakText(const wchar_t* text) {

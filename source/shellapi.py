@@ -1,4 +1,3 @@
-#shellapi.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006-2009 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
@@ -6,6 +5,8 @@
 
 from ctypes import *
 from ctypes.wintypes import *
+from typing import Optional
+
 
 shell32 = windll.shell32
 
@@ -33,9 +34,20 @@ SHELLEXECUTEINFO = SHELLEXECUTEINFOW
 
 SEE_MASK_NOCLOSEPROCESS = 0x00000040
 
-def ShellExecute(hwnd, operation, file, parameters, directory, showCmd):
+
+def ShellExecute(
+		hwnd: Optional[int],
+		operation: Optional[str],
+		file: str,
+		parameters: Optional[str],
+		directory: Optional[str],
+		showCmd: int
+) -> None:
+	if not file:
+		raise RuntimeError("file cannot be None")
 	if shell32.ShellExecuteW(hwnd, operation, file, parameters, directory, showCmd) <= 32:
 		raise WinError()
+
 
 def ShellExecuteEx(execInfo):
 	if not shell32.ShellExecuteExW(byref(execInfo)):

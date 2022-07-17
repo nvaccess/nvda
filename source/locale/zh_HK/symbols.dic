@@ -1,170 +1,235 @@
-﻿#locale/zh_HK/symbols.dic
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2011-2014 NVDA Contributors
-#This file is covered by the GNU General Public License.
+﻿#locale/ZH-HK/symbols.dic
+#Edited by Hong Kong Blind Union staff March 2021
 
+complexSymbols:
+# identifier	regexp
+# Sentence endings.
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
+# Phrase endings.
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
+# Others
+decimal point	(?<![^\d -])\.(?=\d)
+in-word '	(?<=[^\W_])['’]
+negative number	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
 
 symbols:
+# identifier	replacement[[	level][	preserve]][	# display name]
+
+# Complex symbols
+. sentence ending	dot	all	always
+! sentence ending	bang	all	always
+? sentence ending	question	all	always
+; phrase ending	semi	most	always
+: phrase ending	colon	most	always
+decimal point		none	always
+in-word '	tick	all	norep
+negative number	負	none	norep
+
 # Whitespace
-\0	空白	char
+\0	blank	char	# null
 \t	跳格
-\n	換行符號	char
+\n	行尾	char	
 \f	分頁符號	none
-\r	航尾	char
+\r	carriage return	char
  	空格	char
- 	空格	char	# no-break space
+ 	space	char	# no-break space
 
-# CJK symbols
-﹗	感嘆號	most	always
-！	感嘆號	most	always
-＃	井號	most
-﹩	錢號	some
-＄	錢號	some
-﹪	巴仙	some
-％	巴仙	some
-＆	和號	some
-﹙	開括號	most	norep
-（	開括號	most	norep
-︵	開括號	most	norep
-﹚	關括號	most	norep
-）	關括號	most	norep
-︶	關括號	most	norep
-＊	星號	some
-﹐	逗號	all	always
-，	逗號	all	always
-﹑	頓號	most	always
-、	頓號	most	always
-､	頓號	most	always
-﹒	英文句號	most	always
-。	句號	all	always
-｡	句號	all	always
-﹕	冒號	most	always
-：	冒號	most	always
-︰	冒號	most	always
-﹔	分號	all	always
-；	分號	all	always
-﹖	問號	most	always
-？	問號	most	always
-﹫	at	most	norep
-＠	at	most	norep
-﹛	開大括號	most	norep
-｛	開大括號	most	norep
-︷	開大括號	most	norep
-﹜	關大括號	most	norep
-｝	關大括號	most	norep
-︸	關大括號	most	norep
-「	開單引號	most	norep
-﹁	開單引號	most	norep
-｢	開單引號	most	norep
-」	關單引號	most	norep
-﹂	關單引號	most	norep
-｣	關單引號	most	norep
-『	開雙引號	most	norep
-﹃	開雙引號	most	norep
-』	關雙引號	most	norep
-﹄	關雙引號	most	norep
-【	開方括號	most	norep
-︻	開方括號	most	norep
-】	關方括號	most	norep
-︼	關方括號	most	norep
-﹝	開方括號	most	norep
-〔	開方括號	most	norep
-︹	開方括號	most	norep
-﹞	關方括號	most	norep
-〕	關方括號	most	norep
-︺	關方括號	most	norep
-･	間隔號	most	norep
-．	間隔號	most	norep
-…	省略號	most
-※	星號	some
-♀	女性	most
-♂	男性	most
-〝	開雙引號	most	norep
-〞	關雙引號	most	norep
-《	開雙書名號	most	norep
-︽	開雙書名號	most	norep
-》	關雙書名號	most	norep
-︾	關雙書名號	most	norep
-〈	開單書名號	most	norep
-︿	開單書名號	most	norep
-〉	關單書名號	most	norep
-﹀	關單書名號	most	norep
-╴	連接號	most
-─	破折號	most
-‥	點點	most
-︱	直破折號	most
-︳	直底線	most
-︴	直波浪符號	most
-﹏	波浪符號	most
-〃	同上符號	most
-㊣	正字標記	most
-﹟	井字號	most
-﹠	和號	most
-﹡	米字號	most
-
-# math symbols
-√	開根號	most
-∞	無窮大	most
-≒	約等於	most
-～	相似	most
-∩	焦集	most
-∪	聯集	most
-∠	角	most
-∟	直角	most
-⊿	直角三角形	most
-㏒	常用對數	most
-㏑	自然對數	most
-⊙	中心點圓	most
-↖	左上箭頭	most
-↗	右上箭頭	most
-↙	左下箭頭	most
-↘	右下箭頭	most
-∥	平行	most
-∦	非平衡	most
-∣	直線	most
-／	斜線	most
-＼	反斜線	most
-℃	攝氏度	some
-℉	華氏度	some
-㏕	毫升	none
-㎜	毫米	none
-㎝	公分	none
-㎞	千米	none
-㏎	公里	none
-㎡	平方米	none
-㎎	亳克	none
-㎏	千克	none
-㏄	立方公分	none
-兙	十克	none
-兛	千克	none
-兡	百克	none
-嗧	加侖	none
-瓩	千瓦	none
-糎	公分	none
-糎	公分	none
+# Standard punctuation/symbols
+!	bang	all
+"	quote	most
+\#	number	some
+$	dollar	all	norep
+£	pound	all	norep
+€	euro	all	norep
+¢	Cents	all	norep
+¥	Yen	all	norep
+₹	Rupee	some	norep
+ƒ	florin	all	norep
+¤	currency sign	all	norep
+%	percent	some
+‰	per mille	some
+&	and	some
+'	tick	all
+(	left paren	most	always
+)	right paren	most	always
+*	star	some
++	加號	some
+−	減號	most
+,	comma	all	always
+-	dash	most
+.	dot	some
+/	slash	some
+:	colon	most	norep
+;	semi	most
 <	小於	most
 >	大於	most
 =	等於	most
-﹢	加號	most
-＋	加號	most
-﹤	小於	most
-＜	小於	most
-﹦	等於	most
-＝	等於	most
-﹣	減號	most
-－	減號	most
-﹥	大於	most
-＞	大於	most
-∴	所以	most
-∵	因為	most
-≠	不等於號	most
-≡	全等於號	most
-≦	小於或等於號	most
-≧	大於或等於號	most
-￠	仙	some
-￡	英鎊	some
-￥	人民幣	some
+?	question	all
+@	at	some
+[	left bracket	most
+]	right bracket	most
+\\	backslash	most
+^	caret	most
+_	line	most
+`	graav	most
+{	left brace	most
+}	right brace	most
+|	bar	most
+¦	下標及上標	most
+~	tilda	most
+¡	inverted exclamation point	some
+¿	inverted question mark	some
+·	點號	most
+‚	single low quote	most
+„	double low quote	most
+′	prime	most
+″	雙重 prime	most
+‴	三重 prime	most
+
+# Other characters
+•	項目符號	most
+…	省略號	most
+...	點點點	all	always
+	項目符號	most
+“	左雙引號	most
+”	右雙引號	most
+‘	左單引號	most
+’	右單引號	most
+–	en dash	most	always
+—	破折號	most
+­	soft hyphen	most
+⁃	橫線項目符號	none
+●	實心圓	most
+¨	分音符號	most	# 多用於德語、西班牙語、葡萄牙語
+¯	伸展線	most
+´	尖音符	most
+¸	分隔號	most
+‎	左至右符號	char
+‏	右至左符號	char
+¶	段落符號	most
+■	實心方形	most
+▪	實心小方形	most
+◾	空心小方形	most
+◦	白色項目符號	most
+⇒	右雙箭頭	most
+⇨	右向粗箭頭	some
+➔	向右鍵頭	some
+➢	right arrowhead	some
+⮚	right arrowhead	some
+❖	black diamond minus white X	some
+♣	黑桃	some
+♦	實心方塊	some
+§	章節符號	all
+°	度	some
+«	double left pointing angle bracket
+»	double right pointing angle bracket
+µ	micro	some
+º	ordinal	some
+ª	superscript a	some
+⁰	上標0	some
+¹	一次方	most
+²	平方	most
+³	立方	most
+⁴	上標4	some
+⁵	上標5	some
+⁶	上標6	some
+⁷	上標7	some
+⁸	上標8	some
+⁹	上標9	some
+⁺	正數	most
+⁻	負數	most
+⁼	上標等號	some
+⁽	上標左小括號	some
+⁾	上標右小括號	some
+ⁿ	上標n	some
+₀	下標0	some
+₁	下標1	some
+₂	下標2	some
+₃	下標3	some
+₄	下標4	some
+₅	下標5	some
+₆	下標6	some
+₇	下標7	some
+₈	下標8	some
+₉	下標9	some
+₊	下標加號	some
+₋	下標減號	some
+₌	下標等號	some
+₍	下標左小括號	some
+₎	下標右小括號	some
+®	註冊商標	some
+™	商標	some
+©	Copyright	some
+℠	ServiceMark	some
+±	加減號	most
+×	乘號	most
+÷	除號	most
+←	左箭頭	most
+→	右箭頭	most
+✓	勾選	some
+✔	勾選	some
+🡺	右箭頭	some
+†	dagger	some
+‡	下加標及上加標	most
+‣	三角形項目符號	none
+✗	x形項目符號	none
+￼	object replacement character	none
+
+#Mathematical Operators U+2200 to U+220F
+∀	所有	most
+∁	補集	none
+∂	偏微分	most
+∃	存在	most
+∄	不存在	most
+∅	空集	most
+∆	判別或改變	most
+∇	倒三角算子	most
+∈	元素	most
+∉	非元素	most
+∊	SMALL ELEMENT OF	none
+∋	CONTAINS AS MEMBER	none
+∌	DOES NOT CONTAIN AS MEMBER	none
+∍	SMALL CONTAINS AS MEMBER	none
+∎	證明完畢	none
+∏	總積	most
+
+# Miscellaneous Mathematical Operators
+∑	總和	most
+√	開根號	most
+∛	開立方根號	none
+∜	n 方根	most
 ∝	成正比	most
+∞	無窮大	most
+∟	直角	most
+∠	角	most
+∥	平行	most
+∦	非平衡	most
+∧	邏輯和	most
+∨	邏輯或	most
+¬	邏輯非	none
+∩	焦集	most
+∪	聯集	most
+∫	積分	most
+∵	因為	most
+∴	所以	most
+∶	比	none
+∷	比例	most
+≤	小於或等於	most
+≥	大於或等於	most
+⊂	子集	most
+⊃	母集	most
+⊆	子集或等於	most
+⊇	母集或等於	most
+㏎	公里	none
+㏄	立方公分	none
+﹤	小於	most
+﹦	等於	most
+﹥	大於	most
+≡	全等於號	most
+￠	仙	some
 ≟	問號等於	most
 ≈	幾乎等於	most
 ≉	不幾乎等於	most
@@ -177,7 +242,6 @@ symbols:
 ≆	大約但不等於	most
 ≇	非大約亦非等於	most
 ≊	幾乎等於或等於	most
-≌	全部等於	most
 ≍	相等	most
 ≭	不相等	most
 ≎	幾何相等的	most
@@ -193,8 +257,6 @@ symbols:
 ≜	三角洲等於	most
 ≝	根據定義等於	most
 ≞	測定方法	most
-≤	小於或等於	most
-≥	大於或等於	most
 ≪	遠遠小於	most
 ≫	遠遠大於	most
 ≮	不小於	most
@@ -205,48 +267,21 @@ symbols:
 ≷	大於或小於	most
 ≸	不小於或大於	most
 ≹	不大於或小於	most
-±	加減號	most
 ∓	減或加	most
-+	加號	some
-−	減號	most
-⁺	正數	most
-⁻	負數	most
 ‧	隱型乘號	most
 ∗	星號	most
-×	乘號	most
 ∕	除號斜線	most
-÷	除號	most
-→	右箭頭	most
-←	左箭頭	most
-↑	上箭頭	most
-↓	下箭頭	most
 ↕	上下箭頭	most
 ↔	左右箭頭	most
-⇒	右雙箭頭	most
 ⇐	左雙箭頭	most
 ⇔	左右雙箭頭	most
 ⇏	右雙前頭連斜線	most
 ⇍	左雙前頭連斜線	most
 ⇎	左右雙箭頭連斜線	most
-∇	倒三角算子	most
 ⋄	菱形	most
 ∙	項目符號	most
-∘	環形	most
 ⋅	點號運算符	most
 ⋆	星號運算符	most
-○	空心圓	most
-●	實心圓	most
-△	空心上三角形	most
-▲	實心上三角形	most
-◎	雙圓圈	most
-☆	空心星號	most
-★	實心星號	most
-◇	空心菱形	most
-◆	實心菱形	most
-□	空心方形	most
-■	實心方形	most
-▽	空心下三角形	most
-▼	實心下三角形	most
 ▶	實心右三角形	most
 ℒ	laplace transform	most
 ℱ	fourier transform	most
@@ -292,54 +327,30 @@ symbols:
 ℚ	double-struck Q	most
 ℝ	double-struck R	most
 ℤ	double-struck capital Z	most
-·	點號	most
 ⋯	中線省略號	most
 ⋮	比率	most
-∷	比例	most
 ‸	caret	most
 ∤	不分隔	most
 ⊢	right track	most
 ⊣	left track	most
 ⊤	down track	most
-⊥	up track	most
-¯	伸展線	most
 ‼	雙階乘	most
-∑	總和	most
-∏	總積	most
 ∡	測量角	most
 ∢	球面角	most
 ⊾	正角連弧	most
-′	prime	most
-″	雙重 prime	most
-‴	三重 prime	most
 đ	微分 d	most
 Đ	大寫微分 D	most
-∂	偏微分	most
-∫	積分	most
 ∬	雙重積分	most
 ∭	三重積分	most
-∮	線積分	most
 ∯	雙重線積分	most
 ∲	順時針線積分	most
 ∳	逆時針線積分	most
 ‵	反向 prime	most
 ‶	反向雙重 prime	most
 ‷	反向三重 prime	most
-∀	所有	most
-∃	存在	most
-∄	不存在	most
-∅	空集	most
-∈	元素	most
-∉	非元素	most
 ∖	集的減號	most
-∧	邏輯和	most
-∨	邏輯或	most
-⊂	子集	most
-⊃	母集	most
 ⊄	非子集	most
 ⊅	非母集	most
-⊆	子集或等於	most
-⊇	母集或等於	most
 ⊈	非子集亦不等於	most
 ⊉	非母集亦不等於	most
 ⊌	多重集	most
@@ -351,23 +362,248 @@ symbols:
 ⊒	square original of or equal to	most
 ⊓	square cap	most
 ⊔	square cup	most
-⊕	㘣形內含加號	most
 ⊖	㘣形內含減號	most
-¹	一次方	most
-²	平方	most
-³	立方	most
-∆	判別或改變	most
 ◢	粗體	most
 ░	間距	most
 ◟	下標	most
-¦	下標及上標	most
 ‾	上加標	most
-‡	下加標及上加標	most
-¸	分隔號	most
-∜	n 方根	most
 ╱	上下分數	most
 ⁄	斜分數	most
 ‹	開區塊	most
 ›	關區塊	most
 ⌈	開矩陣	most
 ⌋	關矩陣	most
+
+　	全形空格	all
+\r	航尾	char
+negative number	負
+·	間隔號	most
+，	逗號	all	always
+、	頓號	most	always
+。	句號	all	always
+．	間隔號	most	norep
+；	分號	all	always
+？	問號	most	always
+﹗	感嘆號	most	always
+！	感嘆號	most	always
+：	冒號	most	always
+…	省略號	most
+‥	點點	most
+︱	直破折號	most
+─	破折號	most
+︳	直底線	most
+╴	連接號	most
+＿	底線	most
+︴	直波浪符號	most
+（	開括號	most	norep
+）	關括號	most	norep
+︵	開括號	most	norep
+︶	關括號	most	norep
+｛	開大括號	most	norep
+｝	關大括號	most	norep
+︷	開大括號	most	norep
+︸	關大括號	most	norep
+〔	開方括號	most	norep
+〕	關方括號	most	norep
+︹	開方括號	most	norep
+︺	關方括號	most	norep
+【	開方括號	most	norep
+】	關方括號	most	norep
+︻	開方括號	most	norep
+︼	關方括號	most	norep
+《	開雙書名號	most	norep
+》	關雙書名號	most	norep
+︽	開雙書名號	most	norep
+︾	關雙書名號	most	norep
+〈	開單書名號	most	norep
+〉	關單書名號	most	norep
+︿	開單書名號	most	norep
+﹀	關單書名號	most	norep
+「	開單引號	most	norep
+」	關單引號	most	norep
+『	開雙引號	most	norep
+』	關雙引號	most	norep
+﹃	開雙引號	most	norep
+﹄	關雙引號	most	norep
+﹛	開大括號	most	norep
+﹜	關大括號	most	norep
+﹝	開方括號	most	norep
+﹞	關方括號	most	norep
+﹩	錢號	some
+＄	錢號	some
+﹪	巴仙	some
+﹙	開括號	most	norep
+﹚	關括號	most	norep
+﹐	逗號	all	always
+﹑	頓號	most	always
+､	頓號	most	always
+﹒	英文句號	most	always
+｡	句號	all	always
+﹕	冒號	most	always
+︰	冒號	most	always
+﹔	分號	all	always
+﹖	問號	most	always
+﹫	at	most	norep
+﹁	開單引號	most	norep
+｢	開單引號	most	norep
+﹂	關單引號	most	norep
+｣	關單引號	most	norep
+･	間隔號	most	norep
+〝	開雙引號	most	norep
+〞	關雙引號	most	norep
+﹏	波浪符號	most
+﹟	井字號	most
+﹠	和號	most
+﹡	米字號	most
+〖	空心左粗中括號	most	always
+〗	空心右粗中括號	most	always
+＃	井號	most
+＆	和號	some
+＊	星號	some
+※	星號	some
+§	章節符號	most
+〃	同上符號	most
+○	空心圓	most
+△	空心上三角形	most
+▲	實心上三角形	most
+◎	雙圓圈	most
+☆	空心星號	most
+★	實心星號	most
+◇	空心菱形	most
+◆	實心菱形	most
+□	空心方形	most
+▽	空心下三角形	most
+▼	實心下三角形	most
+㊣	正字標記	most
+＋	加號	most
+－	減號	most
+＜	小於	most
+＞	大於	most
+＝	等於	most
+≦	小於或等於號	most
+≧	大於或等於號	most
+≠	不等於號	most
+≒	約等於	most
+≌	全部等於	most
+﹢	加號	most
+†	拉丁十字	some
+﹣	減號	most
+～	相似	most
+⊥	up track	most
+∟	直角	some
+⊿	直角三角形	most
+㏒	常用對數	most
+㏑	自然對數	most
+∮	線積分	most
+♀	女性	most
+♂	男性	most
+⊕	㘣形內含加號	most
+⊙	中心點圓	most
+↑	上箭頭	most
+↓	下箭頭	most
+↖	左上箭頭	most
+↗	右上箭頭	most
+↙	左下箭頭	most
+↘	右下箭頭	most
+∣	直線	most
+／	斜線	most
+＼	反斜線	most
+￥	人民幣	some
+￡	英鎊	some
+％	巴仙	some
+＠	at	most	norep
+℃	攝氏度	some
+℉	華氏度	some
+∘	環形	most
+㏕	毫升	none
+㎜	毫米	none
+㎝	公分	none
+㎞	千米	none
+㎡	平方米	none
+㎎	亳克	none
+㎏	千克	none
+兙	十克	none
+兛	千克	none
+兡	百克	none
+嗧	加侖	none
+瓩	千瓦	none
+糎	公分	none
+
+# 選擇題選項
+①	圓圈數字1	none
+②	圓圈數字2	none
+③	圓圈數字3	none
+④	圓圈數字4	none
+⑤	圓圈數字5	none
+⑥	圓圈數字6	none
+⑦	圓圈數字7	none
+⑧	圓圈數字8	none
+⑨	圓圈數字9	none
+⑩	圓圈數字十	none
+Ⓐ	圓圈大寫字母A	none
+Ⓑ	圓圈大寫字母B	none
+Ⓒ	圓圈大寫字母C	none
+Ⓓ	圓圈大寫字母D	none
+Ⓔ	圓圈大寫字母E	none
+Ⓕ	圓圈大寫字母F	none
+ⓐ	圓圈小寫字母a	none
+ⓑ	圓圈小寫字母b	none
+ⓒ	圓圈小寫字母c	none
+ⓓ	圓圈小寫字母d	none
+ⓔ	圓圈小寫字母e	none
+ⓕ	圓圈小寫字母f	none
+	選項A	none
+	選項B	none
+	選項C	none
+	選項D	none
+
+# 全形英文大寫字母
+Ａ	a	none
+Ｂ	b	none
+Ｃ	c	none
+Ｄ	d	none
+Ｅ	e	none
+Ｆ	f	none
+Ｇ	g	none
+Ｈ	h	none
+Ｉ	i	none
+Ｊ	j	none
+Ｋ	k	none
+Ｌ	l	none
+Ｍ	m	none
+Ｎ	n	none
+Ｏ	o	none
+Ｐ	p	none
+Ｑ	q	none
+Ｒ	r	none
+Ｓ	s	none
+Ｔ	t	none
+Ｕ	u	none
+Ｖ	v	none
+Ｗ	w	none
+Ｘ	x	none
+Ｙ	y	none
+Ｚ	z	none
+
+# Vulgur Fractions U+2150 to U+215E
+⅐	七分之一	none
+⅑	九分之一	none
+⅒	十分之一	none
+⅓	三分之一	none
+⅔	三分之二	none
+⅕	五分之一	none
+⅖	五分之二	none
+⅗	五分之三	none
+⅘	五分之四	none
+⅙	六分之一	none
+⅚	六分之五	none
+⅛	八分之一	none
+⅜	八分之三	none
+⅝	八分之五	none
+⅞	八分之七	none
+¼	四分之一	none
+½	二分之一	none
+¾	四分之三	none
+
+# Miscellaneous Technical
+⌘	Mac Command 鍵	none

@@ -26,11 +26,13 @@ espeakDLL=None
 #: This is necessary because index positions are given as ms since the start of the utterance.
 _numBytesPushed = 0
 
-#Parameter bounds
-minRate=80
-maxRate=450
-minPitch=0
-maxPitch=99
+# Parameter bounds
+# maxRate set to 449 to avoid triggering sonic at rate = 100% when rate boost is off.
+# See https://github.com/espeak-ng/espeak-ng/issues/131
+minRate = 80
+maxRate = 449
+minPitch = 0
+maxPitch = 99
 
 #event types
 espeakEVENT_LIST_TERMINATED=0

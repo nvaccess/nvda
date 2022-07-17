@@ -12,7 +12,7 @@ This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
-#include "nvdaControllerInternal.h"
+#include <local/nvdaControllerInternal.h>
 
 error_status_t(__stdcall *_nvdaControllerInternal_requestRegistration)(const wchar_t*);
 error_status_t __stdcall nvdaControllerInternal_requestRegistration(const wchar_t* uuidString) {
@@ -78,4 +78,9 @@ error_status_t __stdcall nvdaControllerInternal_drawFocusRectNotify(const long h
 error_status_t(__stdcall *_nvdaControllerInternal_reportLiveRegion)(const wchar_t*, const wchar_t*);
 error_status_t __stdcall nvdaControllerInternal_reportLiveRegion(const wchar_t* text, const wchar_t* politeness) {
 	return _nvdaControllerInternal_reportLiveRegion(text, politeness);
+}
+
+error_status_t(__stdcall *_nvdaControllerInternal_openConfigDirectory)();
+error_status_t __stdcall nvdaControllerInternal_openConfigDirectory() {
+	return _nvdaControllerInternal_openConfigDirectory();
 }

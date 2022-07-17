@@ -363,7 +363,7 @@ class SayAllEmulatedTests(unittest.TestCase):
 		callBack = smi.create_CallBackCommand
 		expectIndex = smi.create_ExpectedIndex
 
-		# First sayAllHandler queues up a number of utterances.
+		# First sayAll queues up a number of utterances.
 		with smi.expectation():
 			seqNum = smi.speak([
 				callBack(expectedToBecomeIndex=1),
@@ -401,7 +401,7 @@ class SayAllEmulatedTests(unittest.TestCase):
 
 		with smi.expectation():
 			smi.pumpAll()
-			# no side effect, sayAllHandler does not send more speech until the final callback index is hit.
+			# no side effect, sayAll does not send more speech until the final callback index is hit.
 			smi.expect_indexReachedCallback(forIndex=1, sideEffect=None)
 
 		with smi.expectation():
@@ -485,7 +485,7 @@ class InitialDevelopmentTests(unittest.TestCase):
 		the features they test.
 		Manual test steps are kept in unit tests doc string, they can be run in the NVDA python console after
 		the following imports:
-			import sayAllHandler, appModuleHandler
+			from speech import sayAll, appModuleHandler
 	"""
 
 	def setUp(self):
@@ -834,8 +834,8 @@ class InitialDevelopmentTests(unittest.TestCase):
 	def test_4_profiles(self):
 		"""Text, pitch, text, enter profile1, enter profile2, text, exit profile1, text.
 		Manual Test (in NVDA python console):
-			import sayAllHandler, appModuleHandler
-			t1 = sayAllHandler.SayAllProfileTrigger()
+			from speech import sayAll, appModuleHandler
+			t1 = sayAll.SayAllProfileTrigger()
 			t2 = appModuleHandler.AppProfileTrigger("notepad")
 			wx.CallLater(500, speech.speak, [
 				u"Testing testing ", PitchCommand(offset=100), "1 2 3 4",
@@ -912,8 +912,8 @@ class InitialDevelopmentTests(unittest.TestCase):
 	def test_5_profiles(self):
 		"""Enter profile, text, exit profile.
 		Manual Test (in NVDA python console):
-			import sayAllHandler
-			trigger = sayAllHandler.SayAllProfileTrigger()
+			from speech import sayAll
+			trigger = sayAll.SayAllProfileTrigger()
 			wx.CallLater(500, speech.speak, [
 				ConfigProfileTriggerCommand(trigger, True), u"5 6 7 8",
 				ConfigProfileTriggerCommand(trigger, False),
@@ -954,8 +954,8 @@ class InitialDevelopmentTests(unittest.TestCase):
 	def test_10_SPRI_profiles(self):
 		"""Utterance at SPRI_NORMAL. Utterance at SPRI_NOW with profile switch.
 		Manual Test (in NVDA python console):
-			import sayAllHandler;
-			trigger = sayAllHandler.SayAllProfileTrigger();
+			from speech import sayAll;
+			trigger = sayAll.SayAllProfileTrigger();
 			wx.CallLater(500, speech.speak, [
 				ConfigProfileTriggerCommand(trigger, True),
 				u"This is a normal utterance with a different profile"
@@ -1000,8 +1000,8 @@ class InitialDevelopmentTests(unittest.TestCase):
 	def test_11_SPRI_Profile(self):
 		"""Utterance at SPRI_NORMAL with profile switch. Utterance at SPRI_NOW.
 		Manual Test (in NVDA python console):
-			import sayAllHandler
-			trigger = sayAllHandler.SayAllProfileTrigger()
+			from speech import sayAll
+			trigger = sayAll.SayAllProfileTrigger()
 			wx.CallLater(500, speech.speak, [
 				ConfigProfileTriggerCommand(trigger, True),
 				u"This is a normal utterance with a different profile"
@@ -1064,8 +1064,8 @@ class InitialDevelopmentTests(unittest.TestCase):
 	def test_12_SPRI_profile(self):
 		"""Utterance at SPRI_NORMAL with profile 1. Utterance at SPRI_NOW with profile 2.
 		Manual Test (in NVDA python console):
-			import sayAllHandler, appModuleHandler
-			t1 = sayAllHandler.SayAllProfileTrigger()
+			from speech import sayAll, appModuleHandler
+			t1 = sayAll.SayAllProfileTrigger()
 			t2 = appModuleHandler.AppProfileTrigger("notepad")
 			wx.CallLater(500, speech.speak, [
 				ConfigProfileTriggerCommand(t1, True),

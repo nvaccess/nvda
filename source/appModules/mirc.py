@@ -33,7 +33,7 @@ class Input(Window):
 class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
-		if obj.role == controlTypes.ROLE_WINDOW:
+		if obj.role == controlTypes.Role.WINDOW:
 			return
 		if obj.windowClassName == "Static" and obj.windowControlID == 32918:
 			clsList.remove(StaticText)

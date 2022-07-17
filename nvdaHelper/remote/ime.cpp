@@ -15,7 +15,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <windows.h>
 #include <wchar.h>
 #include "nvdaHelperRemote.h"
-#include "nvdaControllerInternal.h"
+#include <remote/nvdaControllerInternal.h>
 #include "typedCharacter.h"
 #include "tsf.h"
 #include <common/log.h>
@@ -108,12 +108,22 @@ DWORD getIMEVersion(HKL kbd_layout, wchar_t* filename) {
 			// Do not know how to extract version number
 			return 0;
 	}
-	DWORD ver_handle;
-	DWORD buf_size = GetFileVersionInfoSizeW(filename, &ver_handle);
+	DWORD buf_size = GetFileVersionInfoSizeW(
+		filename,
+		nullptr  // lpdwHandle
+	);
 	if (!buf_size)  return 0;
 	void* buf = malloc(buf_size);
-    if (!buf)  return 0;
-	if (GetFileVersionInfoW(filename, ver_handle, buf_size, buf)) {
+	if (!buf) {
+		return 0;
+	}
+	const auto gotFileVerInfo = GetFileVersionInfoW(
+		filename,
+		0,  // dwHandle
+		buf_size,
+		buf
+	);
+	if (gotFileVerInfo) {
 		void* data = NULL;
 		UINT  data_len;
 		if (VerQueryValueW(buf, L"\\", &data, &data_len)) {
@@ -129,13 +139,16 @@ DWORD getIMEVersion(HKL kbd_layout, wchar_t* filename) {
 
 bool getTIPFilename(REFCLSID clsid, WCHAR* filename, DWORD len) {
 	// Format registry path for CLSID
-	WCHAR reg_path[100];
+	WCHAR reg_path[100]{};
 	_snwprintf(reg_path, ARRAYSIZE(reg_path),
 		L"CLSID\\{%08X-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X}\\InProcServer32",
 		clsid.Data1, clsid.Data2, clsid.Data3,
 		clsid.Data4[0], clsid.Data4[1], clsid.Data4[2], clsid.Data4[3],
 		clsid.Data4[4], clsid.Data4[5], clsid.Data4[6], clsid.Data4[7]);
 	HKEY reg_key = NULL;
+	// ensure null terminated for the case where the formatted string is longer than the reg_path buffer
+	// see _snwprintf docs
+	reg_path[99] = '\0';
 	RegOpenKeyW(HKEY_CLASSES_ROOT, reg_path, &reg_key);
 	if (!reg_key)  return false;
 	DWORD type = REG_NONE;
@@ -206,6 +219,9 @@ void handleReadingStringUpdate(HWND hwnd) {
 		len = GetReadingString(imc, 0, NULL, &err, &vert, &max_len);
 		if (len) {
 			read_str = (WCHAR*)malloc(sizeof(WCHAR) * (len + 1));
+			if (!read_str) {
+				return;
+			}
 			read_str[len] = '\0';
 			GetReadingString(imc, len, read_str, &err, &vert, &max_len);
 		}
@@ -249,6 +265,9 @@ void handleReadingStringUpdate(HWND hwnd) {
 				break;
 		}
 		read_str = (WCHAR*)malloc(sizeof(WCHAR) * (len + 1));
+		if (!read_str) {
+			return;
+		}
 		read_str[len] = '\0';
 		memcpy(read_str, str, sizeof(WCHAR) * len);
 		immUnlockIMCC(ctx->hPrivate);
@@ -318,6 +337,9 @@ static bool handleCandidates(HWND hwnd) {
 		return false;
 	}
 	CANDIDATELIST* list = (CANDIDATELIST*)malloc(len);
+	if (!list) {
+		return false;
+	}
 	ImmGetCandidateList(imc, 0, list, len);
 	ImmReleaseContext(hwnd, imc);
 
@@ -340,8 +362,12 @@ static bool handleCandidates(HWND hwnd) {
 		}
 	}
 	WCHAR* cand_str = NULL;
+	bool cand_updated = false;
 	if(buflen>0) {
 		cand_str=(WCHAR*)malloc(buflen);
+		if (!cand_str) {
+			return false;
+		}
 		WCHAR* ptr = cand_str;
 		for (DWORD n = list->dwPageStart; n < pageEnd;  ++n) {
 			DWORD offset = list->dwOffset[n];
@@ -356,17 +382,21 @@ static bool handleCandidates(HWND hwnd) {
 		WCHAR filename[MAX_PATH + 1]={0};
 		ImmGetIMEFileNameW(kbd_layout, filename, MAX_PATH);
 		nvdaControllerInternal_inputCandidateListUpdate(cand_str,selection,filename);
+		cand_updated = true;
 		free(cand_str);
 	}
 	/* Clean up */
 	free(list);
-	return cand_str!=NULL;
+	return cand_updated;
 }
 
 static WCHAR* getCompositionString(HIMC imc, DWORD index) {
 	int len = ImmGetCompositionStringW(imc, index, 0, 0);
 	if (len < sizeof(WCHAR))  return NULL;
 	WCHAR* wstr = (WCHAR*)malloc(len + sizeof(WCHAR));
+	if (!wstr) {
+		return nullptr;
+	}
 	len = ImmGetCompositionStringW(imc, index, wstr, len) / sizeof(WCHAR);
 	wstr[len] = L'\0';
 	 return wstr;

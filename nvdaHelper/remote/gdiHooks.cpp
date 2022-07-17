@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2006-2010 NVDA contributers.
+Copyright 2006-2021 NV Access Limited, Aleksey Sadovoy, Babbage B.V., Matthew Campbell
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -12,6 +12,9 @@ This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
+#include <vector>
+#include <algorithm>
+#include <optional>
 #include <map>
 #include <set>
 #include <list>
@@ -22,7 +25,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include "apiHook.h"
 #include "displayModel.h"
 #include <common/log.h>
-#include "nvdaControllerInternal.h"
+#include <remote/nvdaControllerInternal.h>
 #include <common/lock.h>
 #include "gdiHooks.h"
 
@@ -180,32 +183,28 @@ void swapBuffer(WORD* array, int length) {
 }
 
 //Retrieves table data from font selected in DC using GetFontData [SynPdf]
-PBYTE getTTFData(HDC hdc, char* tableName, LPDWORD dataSize) {
-	PBYTE res=NULL;
+std::vector<BYTE> getTTFData(HDC hdc, char* tableName) {
 	DWORD len=GetFontData(hdc,*((LPDWORD)tableName),0,NULL,0);
 	if(len==GDI_ERROR) {
 		LOG_DEBUG("getTTFData for table "<<tableName<<" result GDI_ERROR");
-		if(dataSize!=NULL) *dataSize=0;
-		return NULL;
+        return std::vector<BYTE>();
 	}
-	res=(PBYTE)calloc(len,sizeof(BYTE));
+	std::vector<BYTE> resVec(len, BYTE(0));
+	PBYTE res = resVec.data();
 	if(GetFontData(hdc,*((LPDWORD)tableName),0,res,len)==GDI_ERROR) {
 		//Probably could not happen
 		LOG_DEBUG("getTTFData for table "<<tableName<<", dataSize="<<len<<" result GDI_ERROR");
-		free(res);
-		if(dataSize!=NULL) *dataSize=0;
-		return NULL;
+		return std::vector<BYTE>();
 	}
-	if(dataSize!=NULL) *dataSize=len;
 	LOG_DEBUG("getTTFData for table "<<tableName<<", dataSize="<<len);
 	swapBuffer((WORD*)res,len>>1);
-	return res;
+	return resVec;
 }
 
 //This class contains glyphIndex to wchar_t mapping. See [cmap], subheading "Format 4: Segment mapping to delta values"
 class GlyphTranslator {
 	private:
-	volatile long _refCount;
+	unsigned volatile long _refCount;
 	map<int,wchar_t> _glyphs;
 
 	public:
@@ -226,9 +225,13 @@ class GlyphTranslator {
 	GlyphTranslator(HDC hdc) : _glyphs(), _refCount(0) {
 		incRef();
 		LOG_DEBUG("Creating instance at "<<this);
-		DWORD cmapLen;
-		PBYTE p=getTTFData(hdc,"cmap",&cmapLen);
-		if(p==NULL) return;
+
+		std::vector<BYTE> pVec = getTTFData(hdc, "cmap");
+		if(pVec.empty()){
+			return;
+		}
+		PBYTE p = pVec.data();
+		DWORD cmapLen = static_cast<DWORD>(pVec.size()); // size could be bigger than a DWORD
 		CmapHeader* header=(CmapHeader*)p;
 		EncodingRecord* encodings=(EncodingRecord*)(p+sizeof(CmapHeader));
 		DWORD off=0;
@@ -243,12 +246,10 @@ class GlyphTranslator {
 		}
 		if(off==0 || off>cmapLen) {
 			LOG_DEBUG("Offset seems to be out of range ("<<off<<")");
-			free(p);
 			return;
 		}
 		CmapFmt4Header* fmt4=(CmapFmt4Header*)(p+off);
 		if(fmt4->format!=4) {
-			free(p);
 			LOG_DEBUG("No format4 table found, found format "<<fmt4->format);
 			return;
 		}
@@ -278,7 +279,6 @@ class GlyphTranslator {
 			}
 		}
 		LOG_DEBUG(_glyphs.size()<<" glyphs were mapped");
-		free(p);
 	}
 
 	~GlyphTranslator() {
@@ -289,16 +289,14 @@ class GlyphTranslator {
 
 	bool translateGlyphs(const wchar_t* lpString, int cbCount, wstring& newString) {
 		if(!hasMapping()) return false;
-		wchar_t* newStr=(wchar_t*)calloc(cbCount,sizeof(wchar_t));
-		if(newStr==NULL) return false;
+		newString.assign(cbCount, '\0');
+		wchar_t* newStr = newString.data();
 		for(int i=0; i<cbCount; i++) {
 			map<int,wchar_t>::iterator wchr=_glyphs.find((int)lpString[i]);
 			if(wchr==_glyphs.end()) newStr[i]=' ';
 			else newStr[i]=wchr->second;
 		}
-		newString=wstring(newStr,cbCount);
-		free(newStr);
-		LOG_DEBUG("Translated glyphs: "<<newString);
+		LOG_DEBUG("Translated glyphs: " << newString);
 		return true;
 	}
 };
@@ -313,8 +311,11 @@ class GlyphTranslatorCache : protected LockableObject {
 	GlyphTranslatorCache() : _glyphTranslatorsByFontChecksum(), LockableObject() {}
 
 	GlyphTranslator* fetchGlyphTranslator(HDC hdc) {
-		FontHeader* fh=(FontHeader*)getTTFData(hdc,"head",NULL);
-		if(!fh) return NULL;
+		std::vector<BYTE> fhVec = getTTFData(hdc, "head");
+		if (fhVec.empty()) {
+			return nullptr;
+		}
+		FontHeader* fh = reinterpret_cast<FontHeader*>(fhVec.data());
 		GlyphTranslator* gt=NULL;
 		acquire();
 		map<int,GlyphTranslator*>::iterator i=_glyphTranslatorsByFontChecksum.find(fh->checksumAdjustment);
@@ -326,7 +327,6 @@ class GlyphTranslatorCache : protected LockableObject {
 		}
 		if(gt) gt->incRef();
 		release();
-		free(fh);
 		return gt;
 	}
 
@@ -343,31 +343,98 @@ class GlyphTranslatorCache : protected LockableObject {
 
 GlyphTranslatorCache glyphTranslatorCache;
 
+std::pair<std::vector<POINT>, SIZE> calcCharExtentsVecFromLpdx(
+	const int cbCount, const int* lpdx, const TEXTMETRIC& tm,
+	const UINT& fuOptions,
+	const HDC& hdc
+) {
+	const bool containsXandY = fuOptions & ETO_PDY; // does lpdx contain x and y or just x.
+	auto ret = std::make_pair(std::vector<POINT>(cbCount), SIZE());
+	auto& [characterExtentsVec, resultTextSize] = ret;
+
+	long acX = 0;
+	long acY = tm.tmHeight;
+	for (int i = 0; i < cbCount; ++i) {
+		const int lpdx_xIndex = containsXandY ? (i * 2) : i;
+		acX += lpdx[lpdx_xIndex];
+		characterExtentsVec[i].x = acX;
+	}
+	resultTextSize.cx = acX;
+	resultTextSize.cy = acY;
+	return ret;
+}
+
+std::pair<std::vector<POINT>, SIZE> calcCharExtentsVec(
+	const int cbCount, const TEXTMETRIC& tm, const bool fromGlyphs,
+	const HDC& hdc, const wchar_t* lpString, std::wstring& newText
+) {
+	const long height = tm.tmHeight;
+	auto ret = std::make_pair(std::vector<POINT>(cbCount), SIZE());
+	auto& [characterExtentsVec, resultTextSize] = ret;
+
+	std::vector<int>characterExtentsXVec(cbCount);
+	int* characterExtentsX = characterExtentsXVec.data();
+	
+	if(fromGlyphs) {
+		LPWORD lpwszString = reinterpret_cast<LPWORD>(const_cast<wchar_t*>(lpString));
+		GetTextExtentExPointI(
+			hdc, lpwszString, cbCount, 0, nullptr,
+			characterExtentsX, &resultTextSize
+		);
+	} else {
+		GetTextExtentExPoint(
+			hdc, newText.data(), cbCount, 0, nullptr,
+			characterExtentsX, &resultTextSize
+		);
+	}
+	for (int i = 0; i<cbCount; ++i) {
+		characterExtentsVec[i].x = characterExtentsX[i];
+		characterExtentsVec[i].y = height;
+	}
+	return ret;
+}
+
 /**
- * Given a displayModel, this function clears a rectangle, and inserts a chunk, for the given text, using the given offsets and rectangle etc.
+ * Given a displayModel, this function clears a rectangle, and inserts a chunk, for the given text,
+ * using the given offsets and rectangle etc.
  * This function is used by many of the hook functions.
  * @param model a pointer to a displayModel
  * @param hdc a handle to the device context that was used to write the text originally.
- * @param x the x coordinate (in device units) where the text should start from (depending on textAlign flags, this could be the left, center, or right of the text).
- * @param y the y coordinate (in device units) where the text should start from (depending on textAlign flags, this could be the top, or bottom of the text).
- * @param lprc a pointer to the rectangle that should be cleared. If lprc is NULL, or ETO_OPAQUE is not in fuOptions, then only the rectangle bounding the text will be cleared.
- * @param fuOptions flags accepted by GDI32's ExtTextOut.
- * @param textAlign possible flags returned by GDI32's GetTextAlign.
- * @param lpString the string of unicode text you wish to record.
- * @param codePage not used in the unicode version
- * @param lpdx an optional array of x (or x and y paires if ETO_PDY is set) that describes where the next character starts relative to the origin of the current character. 
- * @param cbCount the length of the string in characters.
- * @param resultTextSize an optional pointer to a SIZE structure that will contain the size of the text.
- * @param direction >0 for left to right, <0 for right to left, 0 for neutral or unknown. Text must still be passed in in visual order.
+ * @param[in] x the x coordinate (in device units) where the text should start from
+	(depending on textAlign flags, this could be the left, center, or right of the text).
+ * @param[in] y the y coordinate (in device units) where the text should start from
+	(depending on textAlign flags, this could be the top, or bottom of the text).
+ * @param[in] lprc a pointer to the rectangle that should be cleared.
+	If lprc is NULL, or ETO_OPAQUE is not in fuOptions, then only the rectangle
+	bounding the text will be cleared.
+ * @param[in] fuOptions flags accepted by GDI32's ExtTextOut.
+ * @param[in] textAlign possible flags returned by GDI32's GetTextAlign.
+ * @param[in] lpString the string of unicode text you wish to record.
+ * @param[in] codePage not used in the unicode version
+ * @param[in] lpdx an optional array of x (or x and y paires if ETO_PDY is set) that describes
+	where the next character starts relative to the origin of the current character.
+ * @param[in] cbCount the length of the string in characters.
+ * @param[out] resultTextSize An optional pointer to a SIZE structure that should be filled
+	with the size of the text.
+ * @param[in] direction >0 for left to right, <0 for right to left, 0 for neutral or unknown.
+	Text must still be passed in in visual order.
   */
-void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* lprc,UINT fuOptions,UINT textAlign, BOOL stripHotkeyIndicator, const wchar_t* lpString, const int codePage, const int* lpdx, int cbCount, LPSIZE resultTextSize, int direction) {
+void ExtTextOutHelper(
+	displayModel_t* model, HDC hdc, int x, int y, const RECT* lprc,
+	UINT fuOptions,UINT textAlign, BOOL stripHotkeyIndicator,
+	const wchar_t* lpString, const int codePage, const int* lpdx,
+	int cbCount, LPSIZE resultTextSize, int direction
+) {
+	const bool isOpaqueRequested = fuOptions & ETO_OPAQUE; // The current background color should be used to fill the rectangle.
 	RECT clearRect={0,0,0,0};
 	//If a rectangle was provided, convert it to screen coordinates
 	if(lprc) {
 		clearRect=*lprc;
 		dcPointsToScreenPoints(hdc,(LPPOINT)&clearRect,2,false);
 		//Also if opaquing is requested, clear this rectangle in the given display model
-		if(fuOptions&ETO_OPAQUE) model->clearRectangle(clearRect);
+		if (isOpaqueRequested) {
+			model->clearRectangle(clearRect);
+		}
 	}
 	//If there is no string given, then we don't need to go further
 	if(!lpString||cbCount<=0) return;
@@ -407,42 +474,38 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 			cbCount--;
 		}
 	}
+
 	//Fetch the text metrics for this font
 	TEXTMETRIC tm;
 	GetTextMetrics(hdc,&tm);
-	//Calculate character extents array 
-	POINT* characterExtents=(POINT*)calloc(cbCount,sizeof(POINT));
-	if(lpdx) {
-		long acX=0;
-		long acY=tm.tmHeight;
-		for(int i=0;i<cbCount;++i) {
-			characterExtents[i].x=(acX+=lpdx[(fuOptions&ETO_PDY)?(i*2):i]);
-			//if(fuOptions&ETO_PDY) characterExtents[i].y=(acY+=lpdx[(i*2)+1]);
-		}
-		resultTextSize->cx=acX;
-		resultTextSize->cy=acY;
-	} else {
-		long* characterExtentsX=(long*)calloc(cbCount,sizeof(long));
-		if(fromGlyphs) {
-			GetTextExtentExPointI(hdc,(LPWORD)lpString,cbCount,0,NULL,(LPINT)characterExtentsX,resultTextSize);
-		} else {
-			GetTextExtentExPoint(hdc,newText.c_str(),cbCount,0,NULL,(LPINT)characterExtentsX,resultTextSize);
-		}
-		for(int i=0;i<cbCount;++i) {
-			characterExtents[i].x=characterExtentsX[i];
-			characterExtents[i].y=tm.tmHeight;
-		}
-		free(characterExtentsX);
-	}
+
+	//Calculate character extents array
+	auto[characterExtentsVec, textSize] = lpdx ?
+		calcCharExtentsVecFromLpdx(cbCount, lpdx, tm, fuOptions, hdc)
+		:
+		calcCharExtentsVec(cbCount, tm, fromGlyphs, hdc, lpString, newText);
+	POINT* characterExtents = characterExtentsVec.data();
+	*resultTextSize = textSize; // resultTextSize is an out-param and must be calculated before early exit.
+	
+	
 	//Convert the character extents from logical to physical points, but keep them relative
 	dcPointsToScreenPoints(hdc,characterExtents,cbCount,true);
-	//are we writing a transparent background?
-	if(tm.tmCharSet!=SYMBOL_CHARSET&&!(fuOptions&ETO_OPAQUE)&&(GetBkMode(hdc)==TRANSPARENT)) {
+
+	// Are we writing a transparent background?
+	std::optional<bool> cached_transparentBackground;
+	// Prevent multiple calculations
+	auto isBackgroundTransparent = [&hdc, &cached_transparentBackground, isOpaqueRequested]() -> bool {
+		if (!cached_transparentBackground.has_value()) {
+			cached_transparentBackground = (!isOpaqueRequested) && GetBkMode(hdc) == TRANSPARENT;
+		}
+		return cached_transparentBackground.value();
+	};
+	
+	if(tm.tmCharSet != SYMBOL_CHARSET && isBackgroundTransparent()) {
 		//Find out if the text we're writing is just whitespace
 		BOOL whitespace=TRUE;
 		for(wstring::iterator i=newText.begin();i!=newText.end()&&(whitespace=iswspace(*i));++i);
 		if(whitespace) {
-			free(characterExtents);
 			return;
 		}
 	}
@@ -484,27 +547,32 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 	//Make sure this is text, and that its not using the symbol charset (e.g. the tick for a checkbox)
 	//Before recording the text.
 	if(cbCount>0&&tm.tmCharSet!=SYMBOL_CHARSET) {
-		displayModelFormatInfo_t formatInfo;
 		LOGFONT logFont;
-		HGDIOBJ fontObj=GetCurrentObject(hdc,OBJ_FONT);
-		GetObject(fontObj,sizeof(LOGFONT),&logFont);
-		wcsncpy(formatInfo.fontName,logFont.lfFaceName,32);
-		if(logFont.lfHeight!=0) {
-			formatInfo.fontSize=(abs(logFont.lfHeight)*72)/GetDeviceCaps(hdc,LOGPIXELSY);
-		} else {
-			formatInfo.fontSize=0;
-		}
-		formatInfo.bold=(logFont.lfWeight>=700)?true:false;
-		formatInfo.italic=logFont.lfItalic?true:false;
-		formatInfo.underline=logFont.lfUnderline?true:false;
-		formatInfo.color=GetTextColor(hdc);
-		formatInfo.backgroundColor=GetBkColor(hdc);
+		HGDIOBJ fontObj = GetCurrentObject(hdc, OBJ_FONT);
+		GetObject(fontObj, sizeof(LOGFONT), &logFont);
+		
+		int fontSize = 0;
+		if (logFont.lfHeight != 0) {
+			const auto pixelsPerInchY = GetDeviceCaps(hdc, LOGPIXELSY);
+			fontSize = (abs(logFont.lfHeight) * 72) / pixelsPerInchY;
+		};
+		displayModelFormatInfo_t formatInfo = {
+			// lfFaceName will be NULL terminated
+			// https://docs.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-logfonta
+			std::wstring(logFont.lfFaceName), // fontName.
+			fontSize, // fontSize
+			bool(logFont.lfWeight >= 700), // bold
+			bool(logFont.lfItalic), // italic
+			bool(logFont.lfUnderline), // underline,
+			displayModelFormatColor_t(GetTextColor(hdc)), // color
+			displayModelFormatColor_t(GetBkColor(hdc), isBackgroundTransparent()) // backgroundColor
+		};
+		
 		model->insertChunk(textRect,baselinePoint.y,newText,characterExtents,formatInfo,direction,(fuOptions&ETO_CLIPPED)?&clearRect:NULL);
 		TextInsertionTracker::reportTextInsertion();
 		HWND hwnd=WindowFromDC(hdc);
 		if(hwnd) queueTextChangeNotify(hwnd,textRect);
 	}
-	free(characterExtents);
 }
 
 /**
@@ -514,16 +582,32 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
   */
 void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* lprc,UINT fuOptions,UINT textAlign, BOOL stripHotkeyIndicator, const char* lpString, const int codePage, const int* lpdx, int cbCount, LPSIZE resultTextSize, int direction) {
 	int newCount=0;
-	wchar_t* newString=NULL;
+	wchar_t* pNewString = nullptr;
+	std::wstring newString;
 	if(lpString&&cbCount) {
 		newCount=MultiByteToWideChar(codePage,0,lpString,cbCount,NULL,0);
 		if(newCount>0) {
-			newString=(wchar_t*)calloc(newCount+1,sizeof(wchar_t));
-			MultiByteToWideChar(codePage,0,lpString,cbCount,newString,newCount);
+			newString.assign(newCount + 1, '\0');
+			pNewString = newString.data();
+			MultiByteToWideChar(codePage, 0, lpString, cbCount, pNewString, newCount);
 		}
 	}
-	ExtTextOutHelper(model,hdc,x,y,lprc,fuOptions,textAlign,stripHotkeyIndicator,newString,codePage,lpdx,newCount,resultTextSize,direction);
-	if(newString) free(newString);
+	ExtTextOutHelper(
+					model,
+					hdc,
+					x,
+					y,
+					lprc,
+					fuOptions,
+					textAlign,
+					stripHotkeyIndicator,
+					pNewString,
+					codePage,
+					lpdx,
+					newCount,
+					resultTextSize,
+					direction
+	);
 }
 
 //TextOut hook class template
@@ -1135,30 +1219,30 @@ void gdiHooks_inProcess_initialize() {
 	//Initialize critical sections and access variables for various maps
 	InitializeCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
 	allow_ScriptStringAnalyseArgsByAnalysis=TRUE;
-	//Hook needed functions
-	hookClass_TextOut<char>::realFunction=apiHook_hookFunction_safe("GDI32.dll",TextOutA,hookClass_TextOut<char>::fakeFunction);
-	hookClass_TextOut<wchar_t>::realFunction=apiHook_hookFunction_safe("GDI32.dll",TextOutW,hookClass_TextOut<wchar_t>::fakeFunction);
-	hookClass_PolyTextOut<POLYTEXTA>::realFunction=apiHook_hookFunction_safe("GDI32.dll",PolyTextOutA,hookClass_PolyTextOut<POLYTEXTA>::fakeFunction);
-	hookClass_PolyTextOut<POLYTEXTW>::realFunction=apiHook_hookFunction_safe("GDI32.dll",PolyTextOutW,hookClass_PolyTextOut<POLYTEXTW>::fakeFunction);
-	hookClass_ExtTextOut<char>::realFunction=apiHook_hookFunction_safe("GDI32.dll",ExtTextOutA,hookClass_ExtTextOut<char>::fakeFunction);
-	hookClass_ExtTextOut<wchar_t>::realFunction=apiHook_hookFunction_safe("GDI32.dll",ExtTextOutW,hookClass_ExtTextOut<wchar_t>::fakeFunction);
-	real_CreateCompatibleDC=apiHook_hookFunction_safe("GDI32.dll",CreateCompatibleDC,fake_CreateCompatibleDC);
-	real_SelectObject=apiHook_hookFunction_safe("GDI32.dll",SelectObject,fake_SelectObject);
-	real_DeleteDC=apiHook_hookFunction_safe("GDI32.dll",DeleteDC,fake_DeleteDC);
-	real_FillRect=apiHook_hookFunction_safe("USER32.dll",FillRect,fake_FillRect);
-	real_DrawFocusRect=apiHook_hookFunction_safe("USER32.dll",DrawFocusRect,fake_DrawFocusRect);
-	real_BeginPaint=apiHook_hookFunction_safe("USER32.dll",BeginPaint,fake_BeginPaint);
-	real_BitBlt=apiHook_hookFunction_safe("GDI32.dll",BitBlt,fake_BitBlt);
-	real_StretchBlt=apiHook_hookFunction_safe("GDI32.dll",StretchBlt,fake_StretchBlt);
-	real_GdiTransparentBlt=apiHook_hookFunction_safe("GDI32.dll",GdiTransparentBlt,fake_GdiTransparentBlt);
-	real_PatBlt=apiHook_hookFunction_safe("GDI32.dll",PatBlt,fake_PatBlt);
-	real_ScrollWindow=apiHook_hookFunction_safe("USER32.dll",ScrollWindow,fake_ScrollWindow);
-	real_ScrollWindowEx=apiHook_hookFunction_safe("USER32.dll",ScrollWindowEx,fake_ScrollWindowEx);
-	real_DestroyWindow=apiHook_hookFunction_safe("USER32.dll",DestroyWindow,fake_DestroyWindow);
-	real_ScriptStringAnalyse=apiHook_hookFunction_safe("USP10.dll",ScriptStringAnalyse,fake_ScriptStringAnalyse);
-	real_ScriptStringFree=apiHook_hookFunction_safe("USP10.dll",ScriptStringFree,fake_ScriptStringFree);
-	real_ScriptStringOut=apiHook_hookFunction_safe("USP10.dll",ScriptStringOut,fake_ScriptStringOut);
-	real_ScriptTextOut=apiHook_hookFunction_safe("USP10.dll",ScriptTextOut,fake_ScriptTextOut);
+	// Hook needed functions
+	apiHook_hookFunction_safe(TextOutA, hookClass_TextOut<char>::fakeFunction, &hookClass_TextOut<char>::realFunction);
+	apiHook_hookFunction_safe(TextOutW, hookClass_TextOut<wchar_t>::fakeFunction, &hookClass_TextOut<wchar_t>::realFunction);
+	apiHook_hookFunction_safe(PolyTextOutA, hookClass_PolyTextOut<POLYTEXTA>::fakeFunction, &hookClass_PolyTextOut<POLYTEXTA>::realFunction);
+	apiHook_hookFunction_safe(PolyTextOutW, hookClass_PolyTextOut<POLYTEXTW>::fakeFunction, &hookClass_PolyTextOut<POLYTEXTW>::realFunction);
+	apiHook_hookFunction_safe(ExtTextOutA, hookClass_ExtTextOut<char>::fakeFunction, &hookClass_ExtTextOut<char>::realFunction);
+	apiHook_hookFunction_safe(ExtTextOutW, hookClass_ExtTextOut<wchar_t>::fakeFunction, &hookClass_ExtTextOut<wchar_t>::realFunction);
+	apiHook_hookFunction_safe(CreateCompatibleDC, fake_CreateCompatibleDC, &real_CreateCompatibleDC);
+	apiHook_hookFunction_safe(SelectObject, fake_SelectObject, &real_SelectObject);
+	apiHook_hookFunction_safe(DeleteDC, fake_DeleteDC, &real_DeleteDC);
+	apiHook_hookFunction_safe(FillRect, fake_FillRect, &real_FillRect);
+	apiHook_hookFunction_safe(DrawFocusRect, fake_DrawFocusRect, &real_DrawFocusRect);
+	apiHook_hookFunction_safe(BeginPaint, fake_BeginPaint, &real_BeginPaint);
+	apiHook_hookFunction_safe(BitBlt, fake_BitBlt, &real_BitBlt);
+	apiHook_hookFunction_safe(StretchBlt, fake_StretchBlt, &real_StretchBlt);
+	apiHook_hookFunction_safe(GdiTransparentBlt, fake_GdiTransparentBlt, &real_GdiTransparentBlt);
+	apiHook_hookFunction_safe(PatBlt, fake_PatBlt, &real_PatBlt);
+	apiHook_hookFunction_safe(ScrollWindow, fake_ScrollWindow, &real_ScrollWindow);
+	apiHook_hookFunction_safe(ScrollWindowEx, fake_ScrollWindowEx, &real_ScrollWindowEx);
+	apiHook_hookFunction_safe(DestroyWindow, fake_DestroyWindow, &real_DestroyWindow);
+	apiHook_hookFunction_safe(ScriptStringAnalyse, fake_ScriptStringAnalyse, &real_ScriptStringAnalyse);
+	apiHook_hookFunction_safe(ScriptStringFree, fake_ScriptStringFree, &real_ScriptStringFree);
+	apiHook_hookFunction_safe(ScriptStringOut, fake_ScriptStringOut, &real_ScriptStringOut);
+	apiHook_hookFunction_safe(ScriptTextOut, fake_ScriptTextOut, &real_ScriptTextOut);
 }
 
 void gdiHooks_inProcess_terminate() {

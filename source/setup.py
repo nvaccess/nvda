@@ -234,6 +234,12 @@ setup(
 		],
 		"packages": [
 			"NVDAObjects",
+			# As of py2exe 0.11.0.0 if the forcibly included package contains subpackages
+			# they need to be listed explicitly (py2exe issue 113).
+			"NVDAObjects.IAccessible",
+			"NVDAObjects.JAB",
+			"NVDAObjects.UIA",
+			"NVDAObjects.window",
 			"virtualBuffers",
 			"appModules",
 			"comInterfaces",
@@ -252,7 +258,7 @@ setup(
 	data_files=[
 		(".",glob("*.dll")+glob("*.manifest")+["builtin.dic"]),
 		("documentation", ['../copying.txt', '../contributors.txt']),
-		("lib/%s"%version, glob("lib/*.dll")),
+		("lib/%s" % version, glob("lib/*.dll") + glob("lib/*.manifest")),
 		("lib64/%s"%version, glob("lib64/*.dll") + glob("lib64/*.exe")),
 		("libArm64/%s"%version, glob("libArm64/*.dll") + glob("libArm64/*.exe")),
 		("waves", glob("waves/*.wav")),

@@ -23,8 +23,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <common/log.h>
 #include <optional>
 #include "nvdaHelperRemote.h"
-#include "nvdaInProcUtils.h"
-#include "nvdaInProcUtils.h"
+#include <remote/nvdaInProcUtils.h>
 #include <remote/WinWord/Constants.h>
 #include <remote/WinWord/Fields.h>
 #include "winword.h"
@@ -622,7 +621,7 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 			}
 			float fVal=0.0;
 			if((formatConfig&formatConfig_reportFontSize)&&(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_SIZE,VT_R4,&fVal)==S_OK)) {
-				formatAttribsStream<<L"font-size=\""<<fVal<<L"pt\" ";
+				formatAttribsStream<<L"font-size=\""<<fVal<<L"\" ";
 			}
 			if((formatConfig&formatConfig_reportColor)&&(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_COLOR,VT_I4,&iVal)==S_OK)) {
 				formatAttribsStream<<L"color=\""<<iVal<<L"\" ";

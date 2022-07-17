@@ -97,4 +97,9 @@ interface NvdaControllerInternal {
  * @param level The level of live region, I.E. "polite"
  */
 	error_status_t __stdcall reportLiveRegion([in,string] const wchar_t* text, [in,string] const wchar_t* level);
+
+/**
+ * Asks NVDA to open currently used configuration directory.
+ */
+	error_status_t __stdcall openConfigDirectory();
 };

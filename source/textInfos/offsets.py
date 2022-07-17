@@ -16,7 +16,11 @@ from treeInterceptorHandler import TreeInterceptor
 import api
 import textUtils
 from dataclasses import dataclass
-from typing import Optional, Tuple
+from typing import (
+	Optional,
+	Tuple,
+	Dict,
+)
 from logHandler import log
 
 @dataclass
@@ -560,7 +564,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			else:
 				self._startOffset=self._endOffset
 
-	def getTextWithFields(self,formatConfig=None):
+	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
 		if not formatConfig:
 			formatConfig=config.conf["documentFormatting"]
 		if self.detectFormattingAfterCursorMaybeSlow and not formatConfig['detectFormatAfterCursor']:

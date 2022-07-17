@@ -41,7 +41,7 @@ symbols:
 decimal point		# virgule décimale
 thousands separator		# point des mille
 between-words -	tiret	all	norep	# - entre deux mots
-in-word '	apostrophe	# ' dans un mot
+in-word '	apostrophe	all	norep	# ' dans un mot
 in-word -	tiret	all	norep	# - dans un mot
 dates .	\1 point \2 point \3	all	norep	# point de date
 dates /	\1 barre oblique \2 barre oblique \3	all	norep	# barre oblique de date
@@ -57,6 +57,7 @@ n°	\1 \2 	most	norep	# numéro
 \r	retour chariot
  	espace
  	espace insécable	char	# espace insécable
+\v	tabulation verticale	char	never	# 
 
 # Standard punctuation/symbols
 !	point d'exclamation
@@ -74,7 +75,6 @@ $	dollar
 (	parenthèse gauche
 )	parenthèse droite
 *	astérisque
-+	pluce	some	norep
 ,	virgule
 -	tiret
 .	point
@@ -84,14 +84,11 @@ $	dollar
 :	deux points
 ;	point virgule
 <	inférieur
->	supérieur
 =	égal
 ?	point d'interrogation
-¿	point d'interrogation renversé	some
 @	arobase	none
 [	crochet gauche
 ]	crochet droit
-"	guillemet
 \\	barre oblique inversée
 ^	accent circonflexe
 _	souligné
@@ -109,8 +106,8 @@ _	souligné
 …	points de suspension
 ...	point point point
 	puce
-“	guillemet double ouvrant
-”	guillemet double fermant
+“	double guillemet ouvrant
+”	double guillemet fermant
 ‘	apostrophe gauche
 ’	apostrophe droite
 –	tiret demicadratin
@@ -129,6 +126,7 @@ _	souligné
 □	carré blanc	some
 ◦	puce blanche
 ❖	losange noir avec croix	some
+♣	carreau noir
 ➔	flèche droite
 ➢	pointe de flèche droite	some
 
@@ -173,16 +171,14 @@ _	souligné
 ®	marque déposée
 ™	marque de fabrique
 ©	Copyright
-±	Plus ou Moins
-×	fois
-÷	divisé par
+℠	marque de service
 ←	flèche gauche
 →	flèche droite
 ✓	coché
 ✔	coché
 ¶	paragraphe	all
 ‰	pour-mille
-„	guillemet vers le bas	none
+„	double guillemet vers le bas	most
 ↔	flèche gauche droite	none
 ∞	infini	none
 	flèche gauche	some
@@ -194,15 +190,99 @@ _	souligné
 🡺	flèche droite	some
 ✗	puce en x	some
 
+#Opérateurs arithmétiques
++	pluss	some	norep
+−	moins	none	never
+×	fois
+⋅	fois
+⨯	produit vectoriel
+∕	divisé par
+⁄	divisé par
+÷	divisé par
+∓	moins ou plus
+±	plus ou Moins
+
+#operations sur les ensembles
+∖	différence d'ensembles
+⊍	multiplication de multiensemble
+𝒫	ensemble de pouvoirs de l'ensemble
+𝔓	ensemble de pouvoirs de l'ensemble
+℘	ensemble de pouvoirs de l'ensemble
+∁	complément
+
+#Définir les relations et définir les constructions
+∅	ensemble vide
+⊂	sous-ensemble de
+⊄	pas un sous-ensemble de
+⊃	sur-ensemble de
+⊅	pas un sur-ensemble de
+⊆	est inclus dans ou est égal à
+⊈	ni un sous-ensemble ni égal à
+⊇	contient ou est égal à
+⊉	ni un sur-ensemble ni égal à
+⊌	multiensemble
+
+#Signes d'égalité
+=	égal
+≃	asymptotiquement égal à
+≄	non asymptotiquement égal à
+≅	approximativement égal à
+≆	approximativement mais non strictement égal à
+≈	environ égal à
+≌	entièrement égal à
+≍	équivalent à
+≭	non équivalent à
+≎	géométriquement équivalent à
+≑	géométriquement égal à
+≚	équiangulaire à
+≬	entre
+≠	différent de
+≡	identique à
+≣	strictement identique à
+≢	non identique à
+∼	similaire à
+≙	estime
+≟	égalité en doute
+
+#signes de comparaison
+>	supérieur
+≦	inférieur ou égal
+≪	très inférieur
+≥	supérieur ou égal à
+≧	supérieur ou égal à
+≫	très supérieur
+≶	plus petit ou plus grand que
+≷	plus grand ou plus petit que
+≮	pas plus petit que
+≯	pas plus grand que
+
+#Fonctions
+∘	rond	none	never
+∂	différencielle partielle
+∇	NABLA
+
+#Géométrie et algèbre linéaire
+⃗	vecteur entre
+△	triangle
+▭	rectangle
+∟	angle droit
+∠	angle
+∥	parallèle à
+∦	non parallèle à
+⊥	perpendiculaire à
+⟂	ortogonal à
+‖	norme de vecteur
+̂	normalise
+∿	sinusoïde
+∡	angle mesuré
+∢	angle sphérique
+
 #Opérateurs Mathématiques U+2200 to U+220F
 ∀	pour tout 
-∁	complément
-∂	différencielle partielle
 ∃	il existe
 ∄	il n'existe pas de
-∅	ensemble vide
+⇏	n'implique pas
 ∆	incrément
-∇	NABLA
 ∈	élément de
 ∉	pas un élément de
 ∊	petit élément de
@@ -210,20 +290,16 @@ _	souligné
 ∌	ne contient pas comme membre	none
 ∍	petit contient comme membre
 ∎	fin de preuve
+∑	somme n-aire
 ∏	produit n-aire
+∐	coproduit de la famille
 
 # Opérateurs Mathématiques Divers et lettres grecques
-
-∑	somme n-aire
 √	racine carrée
 ∛	racine cubique
 ∜	racine quatrième
 ∝	proportionnel à
 ∞	infini
-∟	angle droit
-∠	angle
-∥	parallèle à
-∦	non parallèle à
 ∧	et logique
 ∨	ou logique
 ¬	non logique
@@ -235,22 +311,18 @@ _	souligné
 ∶	RATIO
 ∷	PROPORTION
 ≤	inférieur ou égal à
-≥	supérieur ou égal à
-⊂	sous-ensemble de
 ⊃	sur ensemble de
-⊆	est inclus dans ou est égal à
-⊇	contient ou est égal à
-⃗	vecteur	char	never	# ⃗
 ƒ	florin
 ‣	Puce triangulaire
 †	obel
 ‡	double obel
 
-≠	différent de	none	never	# Δ
+≠	différent de
+‑	trait d'union insécable
 ­	Trait d'union conditionnel
-‚	Guillemet simple  en bas
-‹	Simple Guillemet ouvrant
-›	Simple Guillemet fermant
+‚	Guillemet vers le bas	most
+‹	Simple Guillemet ouvrant	most
+›	Simple Guillemet fermant	most
 ℅	Attention à
 ―	Barre horizontale
 ‾	Ligne au dessus
@@ -262,7 +334,6 @@ _	souligné
 τ	tau	none	never
 Τ	tau	none	never
 λ	lambda	none	never
-−	moins	none	never
 Λ	lambda	none	never
 θ	thêta	none	never
 ϑ	thêta	none	never
@@ -275,14 +346,11 @@ _	souligné
 π	pi	none	never
 ϖ	pi	none	never
 Π	pi	none	never
-‖	norme vecteur	none	never
 α	alpha	none	never
 Α	alpha	none	never
 ⊕	plus encerclé	none	never	# ⊕
+⊖	moins encerclé
 ⨁	grand plus encerclé	none	never
-≈	environ égal à	none	never
-≡	identique à	none	never
-∘	rond	none	never
 ⋂	grande intersection	none	never
 ⋃	grande union	none	never
 ⋁	grand ou logique	none	never
@@ -361,13 +429,30 @@ _	souligné
 ⇒	implication droite	none	never
 ⇐	implication gauche	none	never
 ⇔	équivalence	none	never
-⊥	perpendiculaire à	none	never
 ↗	croissant	none	never
 ↘	décroissant	none	never
-∬	intégrale double	none	never
-∭	intégrale triple	none	never
-≪	très inférieur à	none	never
-≫	très supérieur à	none	never
+∬	intégrale double
+∭	intégrale triple
+∮	intégrale de contour
+∯	Intégrale de surface
+∰	Intégrale de volume
+∱	Intégrale en sens négatif
+∲	intégrale de contour en sens négatif
+∳	intégrale de contour en sens positif
+∹	excès
+∺	proportion géométrique
+≀	produit couronne
+≏	différence entre
+≐	tend vers la limite
+∙	opérateur puce
+∣	est un diviseur de
+∤	n'est pas un diviseur de
+≔	deux-points égal
+≕	égal deux-points
+≺	précède
+≻	suit
+⊀	ne précède pas
+⊁	ne suit pas
 
 # Vulgur Fractions U+2150 to U+215E
 ¼	un quart
@@ -388,6 +473,24 @@ _	souligné
 ⅜	trois huitièmes
 ⅝	cinq huitièmes
 ⅞	sept huitièmes
+
+#Ensemble de nombres
+𝔸	nombres algébriques
+ℂ	nombres complexes
+ℑ	partie imaginaire d'un nombre complexe
+ℍ	quaternions
+ℕ	nombres naturels
+𝕁	nombres entiers non négatifs
+ℚ	nombres rationnels
+ℝ	nombres réels
+ℜ	partie réelle d'un nombre complexe
+ℤ	entiers
+ℵ	nombre aleph
+ℶ	nombre beth
+
+#Ajustements CLDR
+▾	Petit triangle plein pointant vers le bas	most
+
 
 # Miscellaneous Technical
 ⌘	Touche Commande Mac

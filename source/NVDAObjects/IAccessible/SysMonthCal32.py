@@ -10,7 +10,7 @@ from . import IAccessible
 class SysMonthCal32(IAccessible):
 
 	def _get_role(self):
-		return controlTypes.ROLE_CALENDAR
+		return controlTypes.Role.CALENDAR
 
 	def _get_name(self):
 		return ""

@@ -1,22 +1,17 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy
+# Copyright (C) 2006-2021 NV Access Limited, Peter Vágner, Aleksey Sadovoy
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+from typing import Optional
+from enum import IntEnum
 import locale
 from collections import OrderedDict
-import threading
-import time
-import os
-from ctypes import *
 import comtypes.client
 from comtypes import COMError
 import winreg
 import audioDucking
-import NVDAHelper
-import globalVars
-import speech
 from synthDriverHandler import SynthDriver, VoiceInfo, synthIndexReached, synthDoneSpeaking
 import config
 import nvwave
@@ -35,81 +30,28 @@ from speech.commands import (
 	SpeechCommand,
 )
 
-# SPAudioState enumeration
-SPAS_CLOSED=0
-SPAS_STOP=1
-SPAS_PAUSE=2
-SPAS_RUN=3
 
-class FunctionHooker(object):
+class SPAudioState(IntEnum):
+	# https://docs.microsoft.com/en-us/previous-versions/windows/desktop/ms720596(v=vs.85)
+	CLOSED = 0
+	STOP = 1
+	PAUSE = 2
+	RUN = 3
 
-	def __init__(
-		self,
-		targetDll: str,
-		importDll: str,
-		funcName: str,
-		newFunction # result of ctypes.WINFUNCTYPE
-	):
-		# dllImportTableHooks_hookSingle expects byte strings.
-		try:
-			self._hook=NVDAHelper.localLib.dllImportTableHooks_hookSingle(
-				targetDll.encode("mbcs"),
-				importDll.encode("mbcs"),
-				funcName.encode("mbcs"),
-				newFunction
-			)
-		except UnicodeEncodeError:
-			log.error("Error encoding FunctionHooker input parameters", exc_info=True)
-			self._hook = None
-		if self._hook:
-			log.debug(f"Hooked {funcName}")
-		else:
-			log.error(f"Could not hook {funcName}")
-			raise RuntimeError(f"Could not hook {funcName}")
 
-	def __del__(self):
-		if self._hook:
-			NVDAHelper.localLib.dllImportTableHooks_unhookSingle(self._hook)
+class SpeechVoiceSpeakFlags(IntEnum):
+	# https://docs.microsoft.com/en-us/previous-versions/windows/desktop/ms720892(v=vs.85)
+	Async = 1
+	PurgeBeforeSpeak = 2
+	IsXML = 8
 
-_duckersByHandle={}
 
-@WINFUNCTYPE(windll.winmm.waveOutOpen.restype,*windll.winmm.waveOutOpen.argtypes,use_errno=False,use_last_error=False)
-def waveOutOpen(pWaveOutHandle,deviceID,wfx,callback,callbackInstance,flags):
-	try:
-		res=windll.winmm.waveOutOpen(pWaveOutHandle,deviceID,wfx,callback,callbackInstance,flags) or 0
-	except WindowsError as e:
-		res=e.winerror
-	if res==0 and pWaveOutHandle:
-		h=pWaveOutHandle.contents.value
-		d=audioDucking.AudioDucker()
-		d.enable()
-		_duckersByHandle[h]=d
-	return res
+class SpeechVoiceEvents(IntEnum):
+	# https://msdn.microsoft.com/en-us/previous-versions/windows/desktop/ms720886(v=vs.85)
+	StartInputStream = 2
+	EndInputStream = 4
+	Bookmark = 16
 
-@WINFUNCTYPE(c_long,c_long)
-def waveOutClose(waveOutHandle):
-	try:
-		res=windll.winmm.waveOutClose(waveOutHandle) or 0
-	except WindowsError as e:
-		res=e.winerror
-	if res==0 and waveOutHandle:
-		_duckersByHandle.pop(waveOutHandle,None)
-	return res
-
-_waveOutHooks=[]
-def ensureWaveOutHooks():
-	if not _waveOutHooks and audioDucking.isAudioDuckingSupported():
-		sapiPath=os.path.join(os.path.expandvars("$SYSTEMROOT"),"system32","speech","common","sapi.dll")
-		_waveOutHooks.append(FunctionHooker(sapiPath,"WINMM.dll","waveOutOpen",waveOutOpen))
-		_waveOutHooks.append(FunctionHooker(sapiPath,"WINMM.dll","waveOutClose",waveOutClose))
-
-class constants:
-	SVSFlagsAsync = 1
-	SVSFPurgeBeforeSpeak = 2
-	SVSFIsXML = 8
-	# From the SpeechVoiceEvents enum: https://msdn.microsoft.com/en-us/library/ms720886(v=vs.85).aspx
-	SVEEndInputStream = 4
-	SVEBookmark = 16
 
 class SapiSink(object):
 	"""Handles SAPI event notifications.
@@ -118,6 +60,16 @@ class SapiSink(object):
 
 	def __init__(self, synthRef: weakref.ReferenceType):
 		self.synthRef = synthRef
+
+	def StartStream(self, streamNum, pos):
+		synth = self.synthRef()
+		if synth is None:
+			log.debugWarning("Called StartStream method on SapiSink while driver is dead")
+			return
+		if synth._audioDucker:
+			if audioDucking._isDebug():
+				log.debug("Enabling audio ducking due to starting speech stream")
+			synth._audioDucker.enable()
 
 	def Bookmark(self, streamNum, pos, bookmark, bookmarkId):
 		synth = self.synthRef()
@@ -132,6 +84,11 @@ class SapiSink(object):
 			log.debugWarning("Called Bookmark method on EndStream while driver is dead")
 			return
 		synthDoneSpeaking.notify(synth=synth)
+		if synth._audioDucker:
+			if audioDucking._isDebug():
+				log.debug("Disabling audio ducking due to speech stream end")
+			synth._audioDucker.disable()
+
 
 class SynthDriver(SynthDriver):
 	supportedSettings=(SynthDriver.VoiceSetting(),SynthDriver.RateSetting(),SynthDriver.PitchSetting(),SynthDriver.VolumeSetting())
@@ -162,13 +119,15 @@ class SynthDriver(SynthDriver):
 			return False
 
 	ttsAudioStream=None #: Holds the ISPAudio interface for the current voice, to aid in stopping and pausing audio
+	_audioDucker: Optional[audioDucking.AudioDucker] = None
 
 	def __init__(self,_defaultVoiceToken=None):
 		"""
 		@param _defaultVoiceToken: an optional sapi voice token which should be used as the default voice (only useful for subclasses)
 		@type _defaultVoiceToken: ISpeechObjectToken
 		"""
-		ensureWaveOutHooks()
+		if audioDucking.isAudioDuckingSupported():
+			self._audioDucker = audioDucking.AudioDucker()
 		self._pitch=50
 		self._initTts(_defaultVoiceToken)
 
@@ -242,7 +201,9 @@ class SynthDriver(SynthDriver):
 		if outputDeviceID>=0:
 			self.tts.audioOutput=self.tts.getAudioOutputs()[outputDeviceID]
 		self._eventsConnection = comtypes.client.GetEvents(self.tts, SapiSink(weakref.ref(self)))
-		self.tts.EventInterests = constants.SVEBookmark | constants.SVEEndInputStream
+		self.tts.EventInterests = (
+			SpeechVoiceEvents.StartInputStream | SpeechVoiceEvents.Bookmark | SpeechVoiceEvents.EndInputStream
+		)
 		from comInterfaces.SpeechLib import ISpAudio
 		try:
 			self.ttsAudioStream=self.tts.audioOutputStream.QueryInterface(ISpAudio)
@@ -376,18 +337,75 @@ class SynthDriver(SynthDriver):
 		outputTags()
 
 		text = "".join(textList)
-		flags = constants.SVSFIsXML | constants.SVSFlagsAsync
-		self.tts.Speak(text, flags)
+		flags = SpeechVoiceSpeakFlags.IsXML | SpeechVoiceSpeakFlags.Async
+		# Ducking should be complete before the synth starts producing audio.
+		# For this to happen, the speech method must block until ducking is complete.
+		# Ducking should be disabled when the synth is finished producing audio.
+		# Note that there may be calls to speak with a string that results in no audio,
+		# it is important that in this case the audio does not get stuck ducked.
+		# When there is no audio produced the startStream and endStream handlers are not called.
+		# To prevent audio getting stuck ducked, it is unducked at the end of speech.
+		# There are some known issues:
+		# - When there is no audio produced by the synth, a user may notice volume lowering (ducking) temporarily.
+		# - If the call to startStream handler is delayed significantly, users may notice a variation in volume
+		# (as ducking is disabled at the end of speak, and re-enabled when the startStream handler is called)
+		
+		# A note on the synchronicity of components of this approach:
+		# SAPISink.StartStream event handler (callback):
+		# the synth speech is not blocked by this event callback.
+		# SAPISink.EndStream event handler (callback):
+		# assumed also to be async but not confirmed. Synchronicity is irrelevant to the current approach.
+		# AudioDucker.disable returns before the audio is completely unducked.
+		# AudioDucker.enable() ducking will complete before the function returns.
+		# It is not possible to "double duck the audio", calling twice yields the same result as calling once.
+		# AudioDucker class instances count the number of enables/disables,
+		# in order to unduck there must be no remaining enabled audio ducker instances.
+		# Due to this a temporary audio ducker is used around the call to speak.
+		# SAPISink.StartStream: Ducking here may allow the early speech to start before ducking is completed.
+		if audioDucking.isAudioDuckingSupported():
+			tempAudioDucker = audioDucking.AudioDucker()
+		else:
+			tempAudioDucker = None
+		if tempAudioDucker:
+			if audioDucking._isDebug():
+				log.debug("Enabling audio ducking due to speak call")
+			tempAudioDucker.enable()
+		try:
+			self.tts.Speak(text, flags)
+		finally:
+			if tempAudioDucker:
+				if audioDucking._isDebug():
+					log.debug("Disabling audio ducking  after speak call")
+				tempAudioDucker.disable()
 
 	def cancel(self):
 		# SAPI5's default means of stopping speech can sometimes lag at end of speech, especially with Win8 / Win 10 Microsoft Voices.
 		# Therefore  instruct the underlying audio interface to stop first, before interupting and purging any remaining speech.
 		if self.ttsAudioStream:
-			self.ttsAudioStream.setState(SPAS_STOP,0)
-		self.tts.Speak(None, 1|constants.SVSFPurgeBeforeSpeak)
+			self.ttsAudioStream.setState(SPAudioState.STOP, 0)
+		self.tts.Speak(None, SpeechVoiceSpeakFlags.Async | SpeechVoiceSpeakFlags.PurgeBeforeSpeak)
+		if self._audioDucker:
+			if audioDucking._isDebug():
+				log.debug("Disabling audio ducking due to setting output audio state to stop")
+			self._audioDucker.disable()
 
-	def pause(self,switch):
-		# SAPI5's default means of pausing in most cases is either extrmemely slow (e.g. takes more than half a second) or does not work at all.
+	def pause(self, switch: bool):
+		# SAPI5's default means of pausing in most cases is either extremely slow
+		# (e.g. takes more than half a second) or does not work at all.
 		# Therefore instruct the underlying audio interface to pause instead.
 		if self.ttsAudioStream:
-			self.ttsAudioStream.setState(SPAS_PAUSE if switch else SPAS_RUN,0)
+			oldState = self.ttsAudioStream.GetStatus().State
+			if switch and oldState == SPAudioState.RUN:
+				# pausing
+				if self._audioDucker:
+					if audioDucking._isDebug():
+						log.debug("Disabling audio ducking due to setting output audio state to pause")
+					self._audioDucker.disable()
+				self.ttsAudioStream.setState(SPAudioState.PAUSE, 0)
+			elif not switch and oldState == SPAudioState.PAUSE:
+				# unpausing
+				if self._audioDucker:
+					if audioDucking._isDebug():
+						log.debug("Enabling audio ducking due to setting output audio state to run")
+					self._audioDucker.enable()
+				self.ttsAudioStream.setState(SPAudioState.RUN, 0)

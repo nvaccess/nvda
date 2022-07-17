@@ -6,6 +6,7 @@
 
 import threading
 from typing import Optional
+from comtypes import COMError
 
 import garbageHandler
 import queueHandler
@@ -21,6 +22,8 @@ import globalPluginHandler
 import config
 import winUser
 import extensionPoints
+import oleacc
+
 
 #Some dicts to store event counts by name and or obj
 _pendingEventCountsByName={}
@@ -175,22 +178,25 @@ class FocusLossCancellableSpeechCommand(_CancellableSpeechCommand):
 		elif not hasattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME):
 			setattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME, False)
 
-	def _checkIfValid(self):
+	def _checkIfValid(self) -> bool:
 		stillValid = (
 			self.isLastFocusObj()
 			or not self.previouslyHadFocus()
 			or self.isAncestorOfCurrentFocus()
 			# Ensure titles for dialogs gaining focus are reported, EG NVDA Find dialog
 			or self.isForegroundObject()
+			# Ensure menu items are reported when focus is gained to the menu start (see #12624).
+			or self.isMenuItemOfCurrentFocus()
 		)
 		return stillValid
 
-	def _getDevInfo(self):
+	def _getDevInfo(self) -> str:
 		return (
 			f"isLast: {self.isLastFocusObj()}"
 			f", previouslyHad: {self.previouslyHadFocus()}"
 			f", isAncestorOfCurrentFocus: {self.isAncestorOfCurrentFocus()}"
 			f", is foreground obj {self.isForegroundObject()}"
+			f", isMenuItemOfCurrentFocus: {self.isMenuItemOfCurrentFocus()}"
 		)
 
 	def isLastFocusObj(self):
@@ -207,6 +213,39 @@ class FocusLossCancellableSpeechCommand(_CancellableSpeechCommand):
 	def isForegroundObject(self):
 		foreground = api.getForegroundObject()
 		return self._obj is foreground or self._obj == foreground
+
+	def isMenuItemOfCurrentFocus(self) -> bool:
+		"""
+		Checks if the current object is a menu item of the current focus.
+		The only known case where this returns True is the following (see #12624):
+		
+		When opening a submenu in certain applications (like Thunderbird 78.12),
+		NVDA can process a menu start event after the first item in the menu is focused.
+		The menu start event causes a focus event on the menu, taking NVDA's focus from the menu item.
+		Additionally, the "menu" parent of the submenu item is not keyboard focusable, and is separate from
+		the menu item which triggered the submenu.
+		The object tree in this case (menu item > submenu (not keyboard focusable) > submenu item).
+		The focus event order after activating the menu item's sub menu is (submenu item, submenu).
+		"""
+		from NVDAObjects import IAccessible
+		lastFocus = api.getFocusObject()
+		_isMenuItemOfCurrentFocus = (
+			self._obj.parent
+			and isinstance(self._obj, IAccessible.IAccessible)
+			and isinstance(lastFocus, IAccessible.IAccessible)
+			and self._obj.IAccessibleRole == oleacc.ROLE_SYSTEM_MENUITEM
+			and lastFocus.IAccessibleRole == oleacc.ROLE_SYSTEM_MENUPOPUP
+			and self._obj.parent == lastFocus
+		)
+		if _isMenuItemOfCurrentFocus:
+			# Change this to log.error for easy debugging
+			log.debugWarning(
+				"This parent menu was not announced properly, "
+				"and should have been focused before the submenu item.\n"
+				f"Object info: {self._obj.devInfo}\n"
+				f"Object parent info: {self._obj.parent.devInfo}\n"
+			)
+		return _isMenuItemOfCurrentFocus
 
 
 def _getFocusLossCancellableSpeechCommand(
@@ -375,8 +414,8 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 
 	# #6713: Edge (and soon all UWP apps) will no longer have windows as descendants of the foreground window.
 	# However, it does look like they are always  equal to or descendants of the "active" window of the input thread. 
+	gi = winUser.getGUIThreadInfo(0)
 	if wClass.startswith('Windows.UI.Core'):
-		gi=winUser.getGUIThreadInfo(0)
 		if winUser.isDescendantWindow(gi.hwndActive,windowHandle):
 			return True
 
@@ -400,4 +439,31 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 		# This window or its root is a topmost window.
 		# This includes menus, combo box pop-ups and the task switching list.
 		return True
+	# This may be an event for a windowless embedded Chrome document
+	# (E.g. Microsoft Loop component).
+	if wClass == "Chrome_RenderWidgetHostHWND":
+		# The event is for a Chromium document
+		if winUser.getClassName(gi.hwndFocus) == "Chrome_WidgetWin_0":
+			# The real win32 focus is on a Chrome embedding window.
+			# See if we can get from the event's Chromium document to the Chrome embedding window
+			# via ancestors in the UIA tree.
+			rootWindowHandle = winUser.getAncestor(windowHandle, winUser.GA_ROOT)
+			import UIAHandler
+			try:
+				rootElement = UIAHandler.handler.clientObject.elementFromHandle(rootWindowHandle)
+			except COMError:
+				log.debugWarning("Could not create UIA element for root of Chromium document", exc_info=True)
+			else:
+				condition = UIAHandler.handler.clientObject.CreatePropertyCondition(
+					UIAHandler.UIA_NativeWindowHandlePropertyId, gi.hwndFocus
+				)
+				try:
+					walker = UIAHandler.handler.clientObject.CreateTreeWalker(condition)
+					ancestorElement = walker.NormalizeElement(rootElement)
+				except COMError:
+					log.debugWarning("Unable to normalize root Chromium element to focused ancestor", exc_info=True)
+					ancestorElement = None
+				if ancestorElement:
+					# The real focused window is an ancestor of the Chromium document in the UIA tree.
+					return True
 	return False

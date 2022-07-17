@@ -1,9 +1,9 @@
-#synthDrivers/silence.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2014 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2021 NV Access Limited
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
+from collections import OrderedDict
 import synthDriverHandler
 from speech.commands import IndexCommand
 
@@ -18,7 +18,8 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 	def check(cls):
 		return True
 
-	supportedSettings=[]
+	supportedSettings = frozenset()
+	_availableVoices = OrderedDict({name: synthDriverHandler.VoiceInfo(name, description)})
 
 	def speak(self, speechSequence):
 		self.lastIndex = None
@@ -28,3 +29,6 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 
 	def cancel(self):
 		self.lastIndex = None
+
+	def _get_voice(self):
+		return self.name

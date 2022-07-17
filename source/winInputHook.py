@@ -44,7 +44,7 @@ mouseCallback=None
 
 @WINFUNCTYPE(c_long,c_int,WPARAM,LPARAM)
 def keyboardHook(code,wParam,lParam):
-	if watchdog.isAttemptingRecovery or code!=HC_ACTION:
+	if code != HC_ACTION:
 		return windll.user32.CallNextHookEx(0,code,wParam,lParam)
 	kbd=KBDLLHOOKSTRUCT.from_address(lParam)
 	if keyUpCallback and kbd.flags&LLKHF_UP:

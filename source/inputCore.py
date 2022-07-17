@@ -1,8 +1,7 @@
-#inputCore.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2010-2019 NV Access Limited, Babbage B.V., Mozilla Corporation
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2010-2022 NV Access Limited, Babbage B.V., Mozilla Corporation
 
 """Core framework for handling input from the user.
 Every piece of input from the user (e.g. a key press) is represented by an L{InputGesture}.
@@ -12,13 +11,12 @@ For example, it is used to execute gestures and handle input help.
 
 import sys
 import os
-import itertools
 import weakref
 import time
 from typing import Dict, Any, Tuple, List, Union
-
+from gui import blockAction
 import configobj
-import sayAllHandler
+from speech import sayAll
 import baseObject
 import scriptHandler
 import queueHandler
@@ -32,7 +30,6 @@ from logHandler import log
 import globalVars
 import languageHandler
 import controlTypes
-import keyLabels
 import winKernel
 
 #: Script category for emulated keyboard keys.
@@ -376,12 +373,11 @@ class GlobalGestureMap(object):
 			raise ValueError("Mapping not found")
 		scripts.remove((module, className, script))
 
+	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def save(self):
 		"""Save this gesture map to disk.
 		@precondition: L{load} must have been called.
 		"""
-		if globalVars.appArgs.secure:
-			return
 		if not self.fileName:
 			raise ValueError("No file name")
 		out = configobj.ConfigObj(encoding="UTF-8")
@@ -455,12 +451,12 @@ class InputManager(baseObject.AutoPropertyObject):
 		wasInSayAll=False
 		if gesture.isModifier:
 			if not self.lastModifierWasInSayAll:
-				wasInSayAll=self.lastModifierWasInSayAll=sayAllHandler.isRunning()
+				wasInSayAll = self.lastModifierWasInSayAll = sayAll.SayAllHandler.isRunning()
 		elif self.lastModifierWasInSayAll:
 			wasInSayAll=True
 			self.lastModifierWasInSayAll=False
 		else:
-			wasInSayAll=sayAllHandler.isRunning()
+			wasInSayAll = sayAll.SayAllHandler.isRunning()
 		if wasInSayAll:
 			gesture.wasInSayAll=True
 
@@ -553,7 +549,7 @@ class InputManager(baseObject.AutoPropertyObject):
 		speech.speakText(
 			textList[0],
 			reason=controlTypes.OutputReason.MESSAGE,
-			symbolLevel=characterProcessing.SYMLVL_ALL
+			symbolLevel=characterProcessing.SymbolLevel.ALL
 		)
 		for text in textList[1:]:
 			speech.speakMessage(text)

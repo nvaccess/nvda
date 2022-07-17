@@ -1,12 +1,10 @@
-#displayModel.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2006-2017 NV Access Limited, Babbage B.V.
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2006-2022 NV Access Limited, Babbage B.V., Joseph Lee
 
 import ctypes
 from ctypes import *
-from ctypes.wintypes import RECT
 from comtypes import BSTR
 import unicodedata
 import math
@@ -23,7 +21,13 @@ from logHandler import log
 import windowUtils
 from locationHelper import RectLTRB, RectLTWH
 import textUtils
-from typing import Union, List, Tuple
+from typing import (
+	Union,
+	List,
+	Tuple,
+	Optional,
+	Dict
+)
 
 #: A text info unit constant for a single chunk in a display model
 UNIT_DISPLAYCHUNK = "displayChunk"
@@ -421,7 +425,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 	def _getTextRange(self, start, end):
 		return u"".join(x for x in self._getFieldsInRange(start,end) if isinstance(x,str))
 
-	def getTextWithFields(self,formatConfig=None):
+	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
 		start=self._startOffset
 		end=self._endOffset
 		if start==end:
@@ -437,10 +441,14 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		field['underline']=True if field.get('underline')=="true" else False
 		color=field.get('color')
 		if color is not None:
-			field['color']=colors.RGB.fromCOLORREF(int(color))
+			field['color'] = colors.RGB.fromDisplayModelFormatColor_t(int(color))
 		bkColor=field.get('background-color')
 		if bkColor is not None:
-			field['background-color']=colors.RGB.fromCOLORREF(int(bkColor))
+			field['background-color'] = colors.RGB.fromDisplayModelFormatColor_t(int(bkColor))
+		fontSize = field.get("font-size")
+		if fontSize is not None:
+			# Translators: Abbreviation for points, a measurement of font size.
+			field["font-size"] = pgettext("font size", "%s pt") % fontSize
 
 	def _getOffsetFromPoint(self, x, y):
 		# Accepts physical coordinates.
@@ -636,8 +644,7 @@ class EditableTextDisplayModelTextInfo(DisplayModelTextInfo):
 		x,y=windowUtils.logicalToPhysicalPoint(self.obj.windowHandle,x,y)
 		oldX,oldY=winUser.getCursorPos()
 		winUser.setCursorPos(x,y)
-		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN,0,0)
-		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP,0,0)
+		mouseHandler.doPrimaryClick()
 		winUser.setCursorPos(oldX,oldY)
 
 	def _getSelectionOffsets(self):

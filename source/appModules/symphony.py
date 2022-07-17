@@ -14,7 +14,7 @@ class AppModule(appModuleHandler.AppModule):
 	def event_valueChange(self,obj,nextHandler):
 		#Ignore value changes from an annoying progress bar  which is a child of the main window
 		#that keeps moving due to application performance
-		if isinstance(obj,IAccessible) and obj.role==controlTypes.ROLE_PROGRESSBAR:
+		if isinstance(obj,IAccessible) and obj.role==controlTypes.Role.PROGRESSBAR:
 			windowParent=Window._get_parent(obj)
 			if windowParent and windowParent.windowClassName=="SWT_Window0":
 				return

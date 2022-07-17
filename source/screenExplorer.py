@@ -19,7 +19,7 @@ class ScreenExplorer(object):
 		while obj  and obj.beTransparentToMouse:
 			prevObj=obj
 			obj=obj.parent
-		if not obj or (obj.presentationType!=obj.presType_content and obj.role!=controlTypes.ROLE_PARAGRAPH):
+		if not obj or (obj.presentationType!=obj.presType_content and obj.role!=controlTypes.Role.PARAGRAPH):
 			obj=prevObj
 		if not obj:
 			return

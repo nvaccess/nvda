@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2007-2017 NV Access Limited, Mozilla Corporation
+Copyright 2007-2022 NV Access Limited, Mozilla Corporation
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -47,7 +47,10 @@ bool hasXmlRoleAttribContainingValue(const map<wstring,wstring>& attribsMap, con
 	return attribsMapIt != attribsMap.end() && attribsMapIt->second.find(roleName) != wstring::npos;
 }
 
-CComPtr<IAccessible2> GeckoVBufBackend_t::getLabelElement(IAccessible2_2* element) {
+CComPtr<IAccessible2> GeckoVBufBackend_t::getRelationElement(
+	LPCOLESTR ia2TargetRelation,
+	IAccessible2_2* element
+) {
 	IUnknown** ppUnk=nullptr;
 	long nTargets=0;
 	// We only need to request one relation target
@@ -60,7 +63,13 @@ CComPtr<IAccessible2> GeckoVBufBackend_t::getLabelElement(IAccessible2_2* elemen
 		numRelations=0;
 	}
 	// the relation type string *must* be passed correctly as a BSTR otherwise we can see crashes in 32 bit Firefox.
-	HRESULT res=element->get_relationTargetsOfType(CComBSTR(IA2_RELATION_LABELLED_BY),numRelations,&ppUnk,&nTargets);
+	CComBSTR relationAsBSTR(ia2TargetRelation);
+	HRESULT res = element->get_relationTargetsOfType(
+		relationAsBSTR,
+		numRelations,
+		&ppUnk,
+		&nTargets
+	);
 	if(res!=S_OK) return nullptr;
 	// Grab all the returned IUnknowns and store them as smart pointers within a smart pointer array 
 	// so that any further returns will correctly release all the objects. 
@@ -71,13 +80,16 @@ CComPtr<IAccessible2> GeckoVBufBackend_t::getLabelElement(IAccessible2_2* elemen
 	// we can now free the memory that Gecko  allocated to give us  the IUnknowns
 	CoTaskMemFree(ppUnk);
 	if(nTargets==0) {
-		LOG_DEBUG(L"relationTargetsOfType for IA2_RELATION_LABELLED_BY found no targets");
+		LOG_DEBUG(L"relationTargetsOfType for " << relationAsBSTR.m_str << L" found no targets");
 		return nullptr;
 	}
 	return CComQIPtr<IAccessible2>(ppUnk_smart[0]);
 }
 
 const wchar_t EMBEDDED_OBJ_CHAR = 0xFFFC;
+// Always render a space for "empty" / metadata only
+// text leaf nodes so the user can access them.
+constexpr wchar_t* EMPTY_TEXT_NODE {L" "};
 
 static IAccessible2* IAccessible2FromIdentifier(int docHandle, int ID) {
 	IAccessible* pacc=NULL;
@@ -105,21 +117,6 @@ static IAccessible2* IAccessible2FromIdentifier(int docHandle, int ID) {
 	return pacc2;
 }
 
-template<typename TableType> inline void fillTableCounts(VBufStorage_controlFieldNode_t* node, IAccessible2* pacc, TableType* paccTable) {
-	wostringstream s;
-	long count = 0;
-	// Fetch row and column counts and add them as attributes on this vbuf node.
-	if (paccTable->get_nRows(&count) == S_OK) {
-		s << count;
-		node->addAttribute(L"table-rowcount", s.str());
-		s.str(L"");
-	}
-	if (paccTable->get_nColumns(&count) == S_OK) {
-		s << count;
-		node->addAttribute(L"table-columncount", s.str());
-	}
-}
-
 inline int getTableIDFromCell(IAccessibleTableCell* tableCell) {
 	IUnknown* unk = NULL;
 	if (tableCell->get_table(&unk) != S_OK || !unk)
@@ -134,31 +131,6 @@ inline int getTableIDFromCell(IAccessibleTableCell* tableCell) {
 	acc->get_uniqueID((long*)&id);
 	acc->Release();
 	return id;
-}
-
-inline void fillTableCellInfo_IATable(VBufStorage_controlFieldNode_t* node, IAccessibleTable* paccTable, const wstring& cellIndexStr) {
-	wostringstream s;
-	long cellIndex = _wtoi(cellIndexStr.c_str());
-	long row, column, rowExtents, columnExtents;
-	boolean isSelected;
-	// Fetch row and column extents and add them as attributes on this node.
-	if (paccTable->get_rowColumnExtentsAtIndex(cellIndex, &row, &column, &rowExtents, &columnExtents, &isSelected) == S_OK) {
-		s << row + 1;
-		node->addAttribute(L"table-rownumber", s.str());
-		s.str(L"");
-		s << column + 1;
-		node->addAttribute(L"table-columnnumber", s.str());
-		if (columnExtents > 1) {
-			s.str(L"");
-			s << columnExtents;
-			node->addAttribute(L"table-columnsspanned", s.str());
-		}
-		if (rowExtents > 1) {
-			s.str(L"");
-			s << rowExtents;
-			node->addAttribute(L"table-rowsspanned", s.str());
-		}
-	}
 }
 
 typedef HRESULT(STDMETHODCALLTYPE IAccessibleTableCell::*IATableCellGetHeaderCellsFunc)(IUnknown***, long*);
@@ -267,7 +239,7 @@ using OptionalLabelInfo = optional< LabelInfo >;
 OptionalLabelInfo GeckoVBufBackend_t::getLabelInfo(IAccessible2* pacc2) {
 	CComQIPtr<IAccessible2_2> pacc2_2=pacc2;
 	if (!pacc2_2) return OptionalLabelInfo();
-	auto targetAcc=getLabelElement(pacc2_2);
+	auto targetAcc = getRelationElement(IA2_RELATION_LABELLED_BY, pacc2_2);
 	if(!targetAcc) return OptionalLabelInfo();
 	CComVariant child;
 	child.vt = VT_I4;
@@ -277,6 +249,15 @@ OptionalLabelInfo GeckoVBufBackend_t::getLabelInfo(IAccessible2* pacc2) {
 	bool isVisible = res == S_OK && !(state.lVal & STATE_SYSTEM_INVISIBLE);
 	auto ID = getIAccessible2UniqueID(targetAcc);
 	return LabelInfo { isVisible, ID } ;
+}
+
+std::optional<int> GeckoVBufBackend_t::getRelationId(LPCOLESTR ia2TargetRelation, IAccessible2* pacc2) {
+	CComQIPtr<IAccessible2_2> pacc2_2 = pacc2;
+	if (pacc2_2 == nullptr) return std::optional<int>();
+	auto targetAcc = getRelationElement(ia2TargetRelation, pacc2_2);
+	if (targetAcc == nullptr) return std::optional<int>();
+	auto ID = getIAccessible2UniqueID(targetAcc);
+	return ID;
 }
 
 long getChildCount(const bool isAriaHidden, IAccessible2 * const pacc){
@@ -293,6 +274,15 @@ long getChildCount(const bool isAriaHidden, IAccessible2 * const pacc){
 bool hasAriaHiddenAttribute(const map<wstring,wstring>& IA2AttribsMap){
 	const auto IA2AttribsMapIt = IA2AttribsMap.find(L"hidden");
 	return (IA2AttribsMapIt != IA2AttribsMap.end() && IA2AttribsMapIt->second == L"true");
+}
+
+std::optional<wstring> getAccDescription(IAccessible2* pacc, VARIANT childID) {
+	std::optional<wstring> desc;
+	CComBSTR rawDesc;
+	if (S_OK == pacc->get_accDescription(childID, &rawDesc)) {
+		desc = rawDesc;
+	}
+	return desc;
 }
 
 /**
@@ -371,15 +361,69 @@ CComPtr<IAccessible2> getTextBoxInComboBox(
 	return child;
 }
 
+
+std::tuple<long, CComBSTR> getRoleLongRoleString(CComPtr<IAccessible2> pacc, CComVariant varChild) {
+	long role = 0;
+	CComBSTR roleString;
+	CComVariant varRole;
+	if (pacc->role(&role) != S_OK) {
+		role = IA2_ROLE_UNKNOWN;
+	}
+	if (role == 0) {
+		if (pacc->get_accRole(varChild, &varRole) != S_OK) {
+			LOG_DEBUG(L"accRole failed");
+		}
+		if (varRole.vt == VT_I4) {
+			role = varRole.lVal;
+		}
+		else if (varRole.vt == VT_BSTR) {
+			roleString = varRole.bstrVal;
+		}
+	}
+	return std::make_tuple(role, roleString);
+}
+
+
 const vector<wstring>ATTRLIST_ROLES(1, L"IAccessible2::attribute_xml-roles");
 const wregex REGEX_PRESENTATION_ROLE(L"IAccessible2\\\\:\\\\:attribute_xml-roles:.*\\bpresentation\\b.*;");
+
+
+void GeckoVBufBackend_t::fillVBufAriaDetails(
+	int docHandle,
+	CComPtr<IAccessible2> pacc,
+	VBufStorage_buffer_t& buffer,
+	VBufStorage_controlFieldNode_t& parentNode,
+	const std::wstring& roleAttr
+){
+	/* Set the details role by checking for both IA2_RELATION_DETAILS and IA2_RELATION_DETAILS_FOR as one
+	of the nodes in the relationship will not be in the buffer yet */
+	std::optional<int> detailsId = getRelationId(IA2_RELATION_DETAILS, pacc);
+	std::optional<int> detailsForId = getRelationId(IA2_RELATION_DETAILS_FOR, pacc);
+	VBufStorage_controlFieldNode_t* detailsParentNode = nullptr;
+	std::optional<std::wstring> detailsRole;
+	if (detailsId.has_value()) {
+		parentNode.addAttribute(L"hasDetails", L"true");
+		detailsParentNode = &parentNode;
+		auto detailsChildNode = buffer.getControlFieldNodeWithIdentifier(docHandle, detailsId.value());
+		if (detailsChildNode != nullptr) {
+			detailsRole = detailsChildNode->getAttribute(L"role");
+		}
+	}
+	if (detailsForId.has_value()) {
+		detailsParentNode = buffer.getControlFieldNodeWithIdentifier(docHandle, detailsForId.value());
+		detailsRole = roleAttr;
+	}
+	if (detailsParentNode != nullptr && detailsRole.has_value()) {
+		detailsParentNode->addAttribute(L"detailsRole", detailsRole.value());
+	}
+}
+
 
 VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 	IAccessible2* pacc,
 	VBufStorage_buffer_t* buffer,
 	VBufStorage_controlFieldNode_t* parentNode,
 	VBufStorage_fieldNode_t* previousNode,
-	IAccessibleTable* paccTable,
 	IAccessibleTable2* paccTable2,
 	long tableID,
 	const wchar_t* parentPresentationalRowNumber,
@@ -394,6 +438,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 	varChild.vt=VT_I4;
 	varChild.lVal=0;
 	wostringstream s;
+	std::wstring roleAttr;
 
 	//get docHandle -- IAccessible2 windowHandle
 	HWND docHwnd;
@@ -447,21 +492,10 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 	}
 
 	//Get role -- IAccessible2 role
-	long role=0;
-	BSTR roleString=NULL;
-	if(pacc->role(&role)!=S_OK)
-		role=IA2_ROLE_UNKNOWN;
-	VARIANT varRole;
-	VariantInit(&varRole);
-	if(role==0) {
-		if(pacc->get_accRole(varChild,&varRole)!=S_OK) {
-			LOG_DEBUG(L"accRole failed");
-		}
-		if(varRole.vt==VT_I4)
-			role=varRole.lVal;
-		else if(varRole.vt==VT_BSTR)
-			roleString=varRole.bstrVal;
-	}
+	long role = 0;
+	CComBSTR roleString;
+	CComPtr<IAccessible2> smartPacc = CComQIPtr<IAccessible2>(pacc);
+	std::tie(role, roleString) = getRoleLongRoleString(smartPacc, CComVariant(&varChild));
 
 	// Specifically force the role of ARIA treegrids from outline to table.
 	// We do this very early on in the rendering so that all our table logic applies.
@@ -471,14 +505,13 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 		}
 	}
 
-	//Add role as an attrib
-	if(roleString)
-		s<<roleString;
-	else
-		s<<role;
-	parentNode->addAttribute(L"IAccessible::role",s.str());
-	s.str(L"");
-	VariantClear(&varRole);
+	if (roleString) {
+		roleAttr = roleString;
+	} else {
+		roleAttr = std::to_wstring(role);
+	}
+
+	parentNode->addAttribute(L"IAccessible::role", roleAttr);
 
 	//get states -- IAccessible accState
 	VARIANT varState;
@@ -505,7 +538,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 		LOG_DEBUG(L"pacc->get_states failed");
 		IA2States=0;
 	}
-	// Remove state_editible from tables as Gecko exposes it for ARIA grids which is not in the ARIA spec. 
+	// Remove state_editable from tables as Gecko exposes it for ARIA grids which is not in the ARIA spec. 
 	if(IA2States&IA2_STATE_EDITABLE&&role==ROLE_SYSTEM_TABLE) {
 			IA2States-=IA2_STATE_EDITABLE;
 	}
@@ -555,12 +588,9 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 	if(pacc->get_accName(varChild,&name)!=S_OK)
 		name=NULL;
 
-	wstring description;
-	BSTR rawDesc=NULL;
-	if(pacc->get_accDescription(varChild,&rawDesc)==S_OK) {
-		description=rawDesc;
-		parentNode->addAttribute(L"description",description);
-		SysFreeString(rawDesc);
+	std::optional<wstring> description{ getAccDescription(pacc, varChild) };
+	if (description.has_value()) {
+		parentNode->addAttribute(L"description", description.value());
 	}
 
 	wstring locale;
@@ -732,7 +762,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 	}
 
 	// Handle table cell information.
-	IAccessibleTableCell* paccTableCell = NULL;
+	IAccessibleTableCell* paccTableCell = nullptr;
 	if(pacc->QueryInterface(IID_IAccessibleTableCell, (void**)&paccTableCell)!=S_OK) {
 		paccTableCell=nullptr;
 	}
@@ -764,65 +794,78 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 		}
 	}
 
-	// For IAccessibleTable, we must always be passed the table interface by the caller.
 	// For IAccessibleTable2, we can always obtain the cell interface,
 	// which allows us to handle updates to table cells.
-	if (
-		 paccTableCell || // IAccessibleTable2
-		(paccTable && (IA2AttribsMapIt = IA2AttribsMap.find(L"table-cell-index")) != IA2AttribsMap.end()) // IAccessibleTable
-	) {
-		if (paccTableCell) {
-			// IAccessibleTable2
-			this->fillTableCellInfo_IATable2(parentNode, paccTableCell);
-			if (!paccTable2) {
-				// This is an update; we're not rendering the entire table.
-				tableID = getTableIDFromCell(paccTableCell);
-			}
-			paccTableCell->Release();
-			paccTableCell = NULL;
-		} else // IAccessibleTable
-			fillTableCellInfo_IATable(parentNode, paccTable, IA2AttribsMapIt->second);
+	if (paccTableCell) {
+		this->fillTableCellInfo_IATable2(parentNode, paccTableCell);
+		if (!paccTable2) {
+			// This is an update; we're not rendering the entire table.
+			tableID = getTableIDFromCell(paccTableCell);
+		}
+		paccTableCell->Release();
+		paccTableCell = nullptr;
 		// tableID is the IAccessible2::uniqueID for paccTable.
 		s << tableID;
 		parentNode->addAttribute(L"table-id", s.str());
 		s.str(L"");
 		// We're now within a cell, so descendant nodes shouldn't refer to this table anymore.
-		paccTable = NULL;
-		paccTable2 = NULL;
+		paccTable2 = nullptr;
 		tableID = 0;
 	}
 	// Handle table information.
 	// Don't release the table unless it was created in this call.
-	bool releaseTable = false;
-	// If paccTable is not NULL, we're within a table but not yet within a cell, so don't bother to query for table info.
-	if (!paccTable2 && !paccTable) {
+	IAccessibleTable2* curNodePaccTable2 = nullptr;
+	// If paccTable2 is not NULL, we're within a table but not yet within a cell, so don't bother to query for table info.
+	if (!paccTable2) {
 		// Try to get table information.
-		pacc->QueryInterface(IID_IAccessibleTable2,(void**)&paccTable2);
-		if(!paccTable2)
-			pacc->QueryInterface(IID_IAccessibleTable,(void**)&paccTable);
-		if (paccTable2||paccTable) {
-			// We did the QueryInterface for paccTable, so we must release it after all calls that use it are done.
-			releaseTable = true;
+		pacc->QueryInterface(IID_IAccessibleTable2, (void**)&curNodePaccTable2);
+		if (curNodePaccTable2) {
 			// This is a table, so add its information as attributes.
-			if((IA2AttribsMapIt = IA2AttribsMap.find(L"layout-guess")) != IA2AttribsMap.end())
+			if((IA2AttribsMapIt = IA2AttribsMap.find(L"layout-guess")) != IA2AttribsMap.end()) {
 				parentNode->addAttribute(L"table-layout",L"1");
+			}
 			tableID = ID;
 			s << ID;
 			parentNode->addAttribute(L"table-id", s.str());
 			s.str(L"");
-			if(paccTable2)
-				fillTableCounts<IAccessibleTable2>(parentNode, pacc, paccTable2);
-			else
-				fillTableCounts<IAccessibleTable>(parentNode, pacc, paccTable);
-			// Add the table summary if one is present and the table is visible.
-			if (isVisible &&
-				(!description.empty() && (tempNode = buffer->addTextFieldNode(parentNode, previousNode, description))) ||
-				// If there is no caption, the summary (if any) is the name.
-				// There is no caption if the label isn't visible.
-				(name && !labelVisible && (tempNode = buffer->addTextFieldNode(parentNode, previousNode, name)))
-			) {
-				if(!locale.empty()) tempNode->addAttribute(L"language",locale);
-				previousNode = tempNode;
+			// Fetch row and column counts and add them as attributes on the vbuf node.
+			long rowCount = 0;
+			if (curNodePaccTable2->get_nRows(&rowCount) == S_OK) {
+				s << rowCount;
+				parentNode->addAttribute(L"table-rowcount", s.str());
+				s.str(L"");
+			}
+			long colCount = 0;
+			if (curNodePaccTable2->get_nColumns(&colCount) == S_OK) {
+				s << colCount;
+				parentNode->addAttribute(L"table-columncount", s.str());
+				s.str(L"");
+			}
+			if (rowCount > 0 || colCount > 0) {
+				// This table has rows and columns.
+				// Maintain curNodePaccTable2 for child rendering until any table cells are found.
+				paccTable2 = curNodePaccTable2;
+			}
+
+			
+			{ // Add the table summary if one is present and the table is visible.
+				VBufStorage_fieldNode_t* summaryTempNode = nullptr;
+				if (isVisible && description.has_value()) {
+					tempNode = summaryTempNode = buffer->addTextFieldNode(parentNode, previousNode, description.value());
+				}
+				else if (
+						// If there is no caption, the summary (if any) is the name.
+						// There is no caption if the label isn't visible.
+						name && !labelVisible
+					) {
+					tempNode = summaryTempNode = buffer->addTextFieldNode(parentNode, previousNode, name);
+				}
+				if (summaryTempNode != nullptr) {
+					if (!locale.empty()) {
+						summaryTempNode->addAttribute(L"language", locale);
+					}
+					previousNode = summaryTempNode;
+				}
 			}
 		}
 	}
@@ -939,7 +982,6 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 						buffer,
 						parentNode,
 						previousNode,
-						paccTable,
 						paccTable2,
 						tableID,
 						presentationalRowNumber,
@@ -955,25 +997,47 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 
 		} else if (renderChildren && childCount > 0) {
 			// The object has no text, but we do want to render its children.
-			VARIANT* varChildren;
-			if(!(varChildren=(VARIANT*)malloc(sizeof(VARIANT)*childCount))) {
-				LOG_DEBUG(L"Error allocating varChildren memory");
-				return NULL;
+			auto [varChildren, accChildRes] = getAccessibleChildren(pacc, 0, childCount);
+			if (S_OK != accChildRes || varChildren.size() == 0) {
+				std::wstringstream msg;
+				msg << L"AccessibleChildren failed (count: " << childCount << L"), res: " << accChildRes;
+				switch (accChildRes) {
+				case E_NOINTERFACE:
+					msg << L" (E_NOINTERFACE, No such interface supported)";
+					LOG_ERROR(msg.str());  // Indicates a bug in the IA2 provider.
+					break;
+				case RPC_E_DISCONNECTED:
+					msg << L" (RPC_E_DISCONNECTED, object invoked has disconnected from its clients.)";
+					// RPC_E_DISCONNECTED indicates that the parent died since the query to accChildCount.
+					LOG_DEBUG(msg.str());  // This is expected to occur in dynamic content.
+					break;
+				case CO_E_OBJNOTCONNECTED:
+					msg << L" (CO_E_OBJNOTCONNECTED, Object is not connected to server)";
+					LOG_DEBUG(msg.str());
+					break;
+				case S_FALSE:  // Success, but unexpeced number of children were returned.
+					msg << L" (S_FALSE, expected childcount, got "
+						<< varChildren.size()
+						<< L". Children may have been removed from document.)";
+					// Returning no children indicates that all children died since the call to accChildCount.
+					// Even if the children had been rendered, they were removed immediately thereafter.
+					LOG_DEBUG(msg.str());  // This is expected to occur in dynamic content.
+					break;
+				default:
+					// Other unknown failures, log at error.
+					LOG_ERROR(msg.str());
+				}
 			}
-			long accessibleChildrenCount = 0;
-			if(AccessibleChildren(pacc,0,childCount,varChildren,&accessibleChildrenCount)!=S_OK) {
-				LOG_DEBUG(L"AccessibleChildren failed");
-				accessibleChildrenCount=0;
-			}
-			for(long i=0;i<accessibleChildrenCount;++i) {
-				if (varChildren[i].vt != VT_DISPATCH) {
-					VariantClear(&(varChildren[i]));
+			LOG_DEBUG(L"got " << varChildren.size() << L" children");
+
+			for(CComVariant& child : varChildren) {
+				if (child.vt != VT_DISPATCH || !child.pdispVal) {
+					child.Clear();
 					continue;
 				}
-				IAccessible2* childPacc=NULL;
-				if(varChildren[i].pdispVal) varChildren[i].pdispVal->QueryInterface(IID_IAccessible2,(void**)&childPacc);
+				CComQIPtr< IAccessible2, &IID_IAccessible2> childPacc(child.pdispVal);
 				if (!childPacc) {
-					VariantClear(&(varChildren[i]));
+					child.Clear();
 					continue;
 				}
 				tempNode = this->fillVBuf(
@@ -981,7 +1045,6 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 					buffer,
 					parentNode,
 					previousNode,
-					paccTable,
 					paccTable2,
 					tableID,
 					presentationalRowNumber,
@@ -992,11 +1055,8 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 				}
 				else
 					LOG_DEBUG(L"Error in calling fillVBuf");
-				childPacc->Release();
-				VariantClear(&(varChildren[i]));
+				child.Clear();
 			}
-			free(varChildren);
-
 		} else if (renderSelectedItemOnly) {
 			CComPtr<IAccessible2> item = this->getSelectedItem(pacc, IA2AttribsMap);
 			if (item) {
@@ -1005,7 +1065,6 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 					buffer,
 					parentNode,
 					previousNode,
-					paccTable,
 					paccTable2,
 					tableID,
 					presentationalRowNumber,
@@ -1032,7 +1091,6 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 					buffer,
 					parentNode,
 					previousNode,
-					paccTable,
 					paccTable2,
 					tableID,
 					presentationalRowNumber,
@@ -1049,31 +1107,37 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 					previousNode->addAttribute(L"language", locale);
 				}
 			}
-
-		} else {
-			// There were no children to render.
-			if(role==ROLE_SYSTEM_GRAPHIC) {
-				if (name && name[0]) {
-					// The graphic has a label, so use it.
-					previousNode=buffer->addTextFieldNode(parentNode,previousNode,name);
-					if(previousNode&&!locale.empty()) previousNode->addAttribute(L"language",locale);
-				} else if ((name && !name[0]) || ignoreInteractiveUnlabelledGraphics) {
-					// alt="" or we've determined that all unlabelled graphics should be ignored,
-					// so don't render the graphic at all.
-					isInteractive = false;
-				} else if (isInteractive) {
-					// The graphic is unlabelled, but we should try to derive a name for it.
-					if (inLink && value) {
-						// derive the label from the link URL.
-						previousNode = buffer->addTextFieldNode(parentNode, previousNode, getNameForURL(value));
-					} else if ((IA2AttribsMapIt = IA2AttribsMap.find(L"src")) != IA2AttribsMap.end()) {
-						// Derive the label from the graphic URL.
-						previousNode = buffer->addTextFieldNode(parentNode, previousNode, getNameForURL(IA2AttribsMap[L"src"]));
-					}
-				}
-			} else if (!nameIsContent && value) {
-				previousNode=buffer->addTextFieldNode(parentNode,previousNode,value);
+		} else if(role == ROLE_SYSTEM_GRAPHIC) {
+			if (name && name[0]) {
+				// The graphic has a label, so use it.
+				previousNode=buffer->addTextFieldNode(parentNode,previousNode,name);
 				if(previousNode&&!locale.empty()) previousNode->addAttribute(L"language",locale);
+			} else if ((name && !name[0]) || ignoreInteractiveUnlabelledGraphics) {
+				// alt="" or we've determined that all unlabelled graphics should be ignored,
+				// so don't render the graphic at all.
+				isInteractive = false;
+			} else if (isInteractive) {
+				// The graphic is unlabelled, but we should try to derive a name for it.
+				if (inLink && value) {
+					// derive the label from the link URL.
+					previousNode = buffer->addTextFieldNode(parentNode, previousNode, getNameForURL(value));
+				} else if ((IA2AttribsMapIt = IA2AttribsMap.find(L"src")) != IA2AttribsMap.end()) {
+					// Derive the label from the graphic URL.
+					previousNode = buffer->addTextFieldNode(parentNode, previousNode, getNameForURL(IA2AttribsMap[L"src"]));
+				}
+			}
+		} else if (role == ROLE_SYSTEM_PROGRESSBAR && states & STATE_SYSTEM_INDETERMINATE){
+			// ROLE_SYSTEM_PROGRESSBAR with STATE_SYSTEM_INDETERMINATE is an
+			// indeterminate progress bar (maps to NVDA Role BUSY_INDICATOR).
+			// Value is meaningless (always zero), don't use it as the text node, use space instead.
+			previousNode=buffer->addTextFieldNode(parentNode,previousNode, EMPTY_TEXT_NODE);
+			if (previousNode && !locale.empty()) {
+				previousNode->addAttribute(L"language", locale);
+			}
+		} else if (!nameIsContent && value) {
+			previousNode = buffer->addTextFieldNode(parentNode, previousNode, value);
+			if (previousNode && !locale.empty()) {
+				previousNode->addAttribute(L"language", locale);
 			}
 		}
 
@@ -1091,7 +1155,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 
 		if ((role == ROLE_SYSTEM_CELL || role == ROLE_SYSTEM_ROWHEADER || role == ROLE_SYSTEM_COLUMNHEADER||role==IA2_ROLE_UNKNOWN) && parentNode->getLength() == 0) {
 			// Always render a space for empty table cells and unknowns.
-			previousNode=buffer->addTextFieldNode(parentNode,previousNode,L" ");
+			previousNode = buffer->addTextFieldNode( parentNode, previousNode, EMPTY_TEXT_NODE);
 			if(previousNode&&!locale.empty()) previousNode->addAttribute(L"language",locale);
 			parentNode->isBlock=false;
 		}
@@ -1099,7 +1163,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 		if ((isInteractive || role == ROLE_SYSTEM_SEPARATOR) && parentNode->getLength() == 0) {
 			// If the node is interactive or otherwise relevant even when empty
 			// and it still has no content, render a space so the user can access the node.
-			previousNode=buffer->addTextFieldNode(parentNode,previousNode,L" ");
+			previousNode = buffer->addTextFieldNode(parentNode, previousNode, EMPTY_TEXT_NODE);
 			if(previousNode&&!locale.empty()) previousNode->addAttribute(L"language",locale);
 		}
 	}
@@ -1124,6 +1188,23 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 		}
 	}
 
+	//If the description matches the content, notify NVDA to prevent duplicate reporting
+	const bool descriptionIsContent = (
+		description.has_value()
+		&& nodeContentMatchesString(parentNode, description.value())
+	);
+	if (descriptionIsContent){
+		parentNode->addAttribute(L"descriptionIsContent", L"true");
+	}
+
+	fillVBufAriaDetails(
+		docHandle,
+		smartPacc,
+		*buffer,
+		*parentNode,
+		roleAttr
+	);
+
 	// Clean up.
 	if(name)
 		SysFreeString(name);
@@ -1133,19 +1214,17 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 		SysFreeString(IA2Text);
 	if(paccText)
 		paccText->Release();
-	if (releaseTable) {
-		if(paccTable2)
-			paccTable2->Release();
-		else
-			paccTable->Release();
+	if (curNodePaccTable2) {
+		curNodePaccTable2->Release();
+		curNodePaccTable2 = nullptr;
 	}
-
 	return parentNode;
 }
 
 void CALLBACK GeckoVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) {
 	switch(eventID) {
 		case EVENT_OBJECT_FOCUS:
+		case IA2_EVENT_DOCUMENT_LOAD_COMPLETE:
 		case EVENT_SYSTEM_ALERT:
 		case IA2_EVENT_TEXT_UPDATED:
 		case IA2_EVENT_TEXT_INSERTED:
@@ -1183,8 +1262,12 @@ void CALLBACK GeckoVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK ho
 			continue;
 		LOG_DEBUG(L"found active backend for this window at "<<backend);
 
-		//For focus and alert events, force any invalid nodes to be updated right now
-		if(eventID==EVENT_OBJECT_FOCUS||eventID==EVENT_SYSTEM_ALERT) {
+		//For focus, documentLoadComplete and alert events, force any nodes already marked as invalid  to be updated right now,
+		if(
+			eventID == EVENT_OBJECT_FOCUS
+			|| eventID == IA2_EVENT_DOCUMENT_LOAD_COMPLETE
+			|| eventID==EVENT_SYSTEM_ALERT
+		) {
 			backend->forceUpdate();
 			continue;
 		}

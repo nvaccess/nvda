@@ -1,0 +1,41 @@
+###
+#This file is a part of the NVDA project.
+#URL: http://www.nvda-project.org/
+#Copyright 2021 NV Access Limited.
+#This program is free software: you can redistribute it and/or modify
+#it under the terms of the GNU General Public License version 2.0, as published by
+#the Free Software Foundation.
+#This program is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+#This license can be found at:
+#http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+###
+
+Import([
+	'env',
+	'localLib',
+	'MSUIA_lib_outDir',
+	'MSUIA_include_outDir',
+])
+
+env = env.Clone()
+env.Append(CPPPATH=Dir('#include/wil/include'))
+env.Append(CPPPATH=MSUIA_include_outDir)
+env.Append(CCFLAGS='/MD')
+
+UIARemoteLib=env.SharedLibrary(
+	target="UIARemote",
+	source=[
+		env['projectResFile'],
+		"UIARemote.cpp",
+	],
+	LIBS=[
+		"runtimeobject",
+		"UIAutomationCore",
+		localLib[2],
+		MSUIA_lib_outDir.File('UiaOperationAbstraction.lib'),
+	],
+)
+
+Return('UIARemoteLib')

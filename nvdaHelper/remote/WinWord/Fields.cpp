@@ -20,7 +20,6 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <windows.h>
 #include <common/log.h>
 #include <remote/nvdaInProcUtils.h>
-#include <remote/nvdaInProcUtils.h>
 
 #include "Fields.h"
 #include <remote/WinWord/Constants.h>

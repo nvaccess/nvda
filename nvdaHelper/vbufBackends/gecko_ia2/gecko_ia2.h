@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2006-2010 NVDA contributers.
+Copyright 2006-2022 NVDA contributors.
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -28,10 +28,17 @@ class GeckoVBufBackend_t: public VBufBackend_t {
 		VBufStorage_buffer_t* buffer,
 		VBufStorage_controlFieldNode_t* parentNode,
 		VBufStorage_fieldNode_t* previousNode,
-		IAccessibleTable* paccTable=NULL,
 		IAccessibleTable2* paccTable2=NULL,
 		long tableID=0, const wchar_t* parentPresentationalRowNumber=NULL,
 		bool ignoreInteractiveUnlabelledGraphics=false
+	);
+
+	void fillVBufAriaDetails(
+		int docHandle,
+		CComPtr<IAccessible2> pacc,
+		VBufStorage_buffer_t& buffer,
+		VBufStorage_controlFieldNode_t& parentNode,
+		const std::wstring& roleAttr
 	);
 
 	void versionSpecificInit(IAccessible2* pacc);
@@ -40,8 +47,9 @@ class GeckoVBufBackend_t: public VBufBackend_t {
 
 	std::wstring toolkitName;
 
+	std::optional<int> getRelationId(LPCOLESTR ia2TargetRelation, IAccessible2* pacc2);
 	std::optional< LabelInfo > getLabelInfo(IAccessible2* pacc2);
-	CComPtr<IAccessible2> getLabelElement(IAccessible2_2* element);
+	CComPtr<IAccessible2> getRelationElement(LPCOLESTR ia2TargetRelation, IAccessible2_2* element);
 	CComPtr<IAccessible2> getSelectedItem(IAccessible2* container,
 		const std::map<std::wstring, std::wstring>& attribs);
 

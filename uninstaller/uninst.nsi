@@ -1,5 +1,4 @@
 !include "MUI2.nsh"
-!include "..\miscDeps\uninstaller\uac.nsh"
 
 !define appName "NVDA"
 
@@ -12,15 +11,13 @@ XPStyle on
 InstProgressFlags Smooth
 RequestExecutionLevel user
 
-!addplugindir "..\miscDeps\uninstaller"
-ReserveFile "..\miscDeps\uninstaller\UAC.dll"
-
 Name "${appName}"
 VIProductVersion "${VERSION_YEAR}.${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_BUILD}" ;Needs to be here so other version info shows up
 VIAddVersionKey "ProductName" "${appName}"
 VIAddVersionKey "LegalCopyright" "${COPYRIGHT}"
 VIAddVersionKey "FileDescription" "${appName} uninstaller"
 VIAddVersionKey "ProductVersion" "${VERSION}"
+VIAddVersionKey "fileVersion" "${VERSION}"
 
 ;Minimal installer to generate uninstaller
 OutFile "${INSTEXE}";
@@ -66,31 +63,17 @@ SectionEnd
 !insertmacro MUI_LANGUAGE "Albanian"
 !insertmacro MUI_LANGUAGE "Bulgarian"
 !insertmacro MUI_LANGUAGE "Norwegian"
-  !insertmacro MUI_LANGUAGE "NorwegianNynorsk"
+!insertmacro MUI_LANGUAGE "NorwegianNynorsk"
 
 Function un.onInit
 ; Get the locale language ID from kernel32.dll and dynamically change language of the installer
 System::Call 'kernel32::GetUserDefaultUILanguage() i .r0'
 ;Force zh-HK to zh-TW as zh-HK uses wrong encoding on Vista/7 #1596 
+; zh-HK is no longer used in Windows 10+
+; https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/available-language-packs-for-windows?view=windows-11#language-packs
 StrCmp $0 "3076" 0 +2
 StrCpy $0 "1028"
 StrCpy $LANGUAGE $0
-doElevate:
-!insertmacro UAC_RunElevated
-;If couldn't change user then fail
-strcmp 0 $0 +1 elevationFail
-;If we are the outer user process, then silently quit
-strcmp 1 $1 +1 +2
-quit
-;If bad login then try again
-strcmp 3 $1 doElevate +1
-;If admin then success
-strcmp 2 $1 elevationSuccess +1
-elevationFail:
-MessageBox mb_iconstop "Unable to elevate, error $0"
-quit
-elevationSuccess:
-;Odd the uninstaller does not do this?
 ReadRegStr $INSTDIR ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir"
 FunctionEnd
 
