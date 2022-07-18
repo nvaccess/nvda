@@ -258,10 +258,12 @@ def registerInstallation(
 		shouldCreateDesktopShortcut: bool,
 		startOnLogonScreen: bool,
 		configInLocalAppData: bool = False
-):
+) -> None:
 	calculatedUninstallerRegInfo = uninstallerRegInfo.copy()
 	# EstimatedSize is in KiB
-	calculatedUninstallerRegInfo.update(EstimatedSize=getDirectorySize(installDir) // 1024)
+	estimatedSize = getDirectorySize(installDir)
+	log.debug(f"Estimated install size {estimatedSize}")
+	calculatedUninstallerRegInfo.update(EstimatedSize=estimatedSize // 1024)
 	with winreg.CreateKeyEx(
 		winreg.HKEY_LOCAL_MACHINE,
 		r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\NVDA",
