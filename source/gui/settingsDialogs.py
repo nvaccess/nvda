@@ -1645,12 +1645,12 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		if currentIncludeCLDR is not newIncludeCldr:
 			# Either included or excluded CLDR data, so clear the cache.
 			characterProcessing.clearSpeechSymbols()
+		delayedDescriptions = self.delayedCharacterDescriptionsCheckBox.IsChecked()
 		config.conf["speech"]["delayedCharacterDescriptions"] = delayedDescriptions
 		config.conf["speech"][self.driver.name]["capPitchChange"]=self.capPitchChangeEdit.Value
 		config.conf["speech"][self.driver.name]["sayCapForCapitals"]=self.sayCapForCapsCheckBox.IsChecked()
 		config.conf["speech"][self.driver.name]["beepForCapitals"]=self.beepForCapsCheckBox.IsChecked()
 		config.conf["speech"][self.driver.name]["useSpellingFunctionality"]=self.useSpellingFunctionalityCheckBox.IsChecked()
-		delayedDescriptions = self.delayedCharacterDescriptionsCheckBox.IsChecked()
 
 class KeyboardSettingsPanel(SettingsPanel):
 	# Translators: This is the label for the keyboard settings panel.
