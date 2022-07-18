@@ -298,7 +298,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 	_cache__storyFieldsAndRects = True
 
 	def _get__storyFieldsAndRects(self) -> Tuple[
-		List[Union[str, textInfos.FieldCommand]],
+		List[textInfos.TextInfo.TextOrFieldsT],
 		List[RectLTRB],
 		List[int],
 		List[int]

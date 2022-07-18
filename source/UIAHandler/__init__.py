@@ -10,9 +10,6 @@ from ctypes import (
 	oledll,
 	windll,
 )
-from enum import (
-	Enum,
-)
 
 import comtypes.client
 from comtypes.automation import VT_EMPTY
