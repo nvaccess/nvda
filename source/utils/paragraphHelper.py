@@ -8,8 +8,6 @@ import speech
 import controlTypes
 import textInfos
 import tones
-from NVDAObjects.IAccessible.winword import WordDocument as IAccessibleWordDocument
-from NVDAObjects.UIA.wordDocument import WordDocument as UIAWordDocument
 
 MAX_LINES = 250  # give up after searching this many lines
 
@@ -18,8 +16,6 @@ def getTextInfoAtCaret() -> textInfos.TextInfo:
 	# returns None if not editable text or if in Microsoft Word document
 	ti = None
 	focus = api.getFocusObject()
-	if isinstance(focus, IAccessibleWordDocument) or isinstance(focus, UIAWordDocument):
-		return ti
 	if controlTypes.State.MULTILINE not in focus.states:
 		return ti
 	if focus.role == controlTypes.Role.EDITABLETEXT:
