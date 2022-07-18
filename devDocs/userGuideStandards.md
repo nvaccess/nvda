@@ -6,6 +6,8 @@ The principles outlined in ["The Documentation System" guide for reference mater
 ## General standards
 - Key commands should be lowerCamelCase and encapsulated in monospace code-block formatting.
   - e.g. ` ``NVDA+control+upArrow`` `
+- When referring to Windows terminology, follow the [Windows style guide](https://docs.microsoft.com/en-us/style-guide/welcome/).
+  - For instance, instead of "system tray" refer to "notification area"
 
 ## Feature flags
 
