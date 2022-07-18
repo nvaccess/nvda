@@ -339,6 +339,15 @@ def _getSpellingSpeechWithoutCharMode(
 		yield EndUtteranceCommand()
 
 
+def getSingleCharDescriptionDelayMS() -> int:
+	"""
+	@returns: 1 second, a default delay.
+	In the future, this should fetch its value from a user defined NVDA idle time.
+	Blocked by: https://github.com/nvaccess/nvda/issues/13915
+	"""
+	return 1000
+
+
 def getSingleCharDescription(
 		text: str,
 		locale: Optional[str] = None,
@@ -363,8 +372,7 @@ def getSingleCharDescription(
 	uppercase = char.isupper()
 	if description is None:
 		return
-	delayTimeMs = config.conf["speech"][getSynth().name]["delayedCharacterDescriptionsTimeoutMs"]
-	yield BreakCommand(delayTimeMs)
+	yield BreakCommand(getSingleCharDescriptionDelayMS())
 	yield from _getSpellingCharAddCapNotification(
 		description[0],
 		sayCapForCapitals=uppercase and synthConfig["sayCapForCapitals"],

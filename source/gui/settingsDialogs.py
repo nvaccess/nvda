@@ -1630,40 +1630,6 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		self.delayedCharacterDescriptionsCheckBox.SetValue(
 			config.conf["speech"][self.driver.name]["delayedCharacterDescriptions"]
 		)
-		self.delayedCharacterDescriptionsCheckBox.Bind(
-			wx.EVT_CHECKBOX,
-			self.onToggleDelayDescriptions
-		)
-
-		minDelay = int(config.conf.getConfigValidation(
-			("speech", self.driver.name, "delayedCharacterDescriptionsTimeoutMs")
-		).kwargs["min"])
-		maxDelay = int(config.conf.getConfigValidation(
-			("speech", self.driver.name, "delayedCharacterDescriptionsTimeoutMs")
-		).kwargs["max"])
-
-		# Translators: This is a label for a setting in voice settings,
-		# an edit box to change the time for the delayed character descriptions in milliseconds.
-		delayedCharacterDescriptionsTimeoutMsLabel = _("&Time for delayed character descriptions (ms)")
-		self.delayedCharacterDescriptionsTimeoutMsEdit = settingsSizerHelper.addLabeledControl(
-			delayedCharacterDescriptionsTimeoutMsLabel,
-			nvdaControls.SelectOnFocusSpinCtrl,
-			min=minDelay,
-			max=maxDelay,
-			initial=config.conf["speech"][self.driver.name]["delayedCharacterDescriptionsTimeoutMs"],
-		)
-		self.bindHelpEvent(
-			"delayedCharacterDescriptionsTimeoutMs",
-			self.delayedCharacterDescriptionsTimeoutMsEdit
-		)
-		if not config.conf["speech"][self.driver.name]["delayedCharacterDescriptions"]:
-			self.delayedCharacterDescriptionsTimeoutMsEdit.Disable()
-
-	def onToggleDelayDescriptions(self, evt: wx.CommandEvent) -> None:
-		if evt.IsChecked():
-			self.delayedCharacterDescriptionsTimeoutMsEdit.Enable()
-		else:
-			self.delayedCharacterDescriptionsTimeoutMsEdit.Disable()
 
 	def onSave(self):
 		AutoSettingsMixin.onSave(self)
@@ -1685,8 +1651,6 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		config.conf["speech"][self.driver.name]["useSpellingFunctionality"]=self.useSpellingFunctionalityCheckBox.IsChecked()
 		delayedDescriptions = self.delayedCharacterDescriptionsCheckBox.IsChecked()
 		config.conf["speech"][self.driver.name]["delayedCharacterDescriptions"] = delayedDescriptions
-		delayedDescriptionsMs = self.delayedCharacterDescriptionsTimeoutMsEdit.Value
-		config.conf["speech"][self.driver.name]["delayedCharacterDescriptionsTimeoutMs"] = delayedDescriptionsMs
 
 class KeyboardSettingsPanel(SettingsPanel):
 	# Translators: This is the label for the keyboard settings panel.
