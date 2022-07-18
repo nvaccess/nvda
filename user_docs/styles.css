@@ -68,11 +68,13 @@ In t2t, definition lists are defined as follows:
 :
 */
 
+/* Definition list */
 dl {
   display: grid;
   grid-template-columns: max-content auto;
 }
 
+/* Term of a definition */
 dl > dt {
   display: inherit;
   grid-column-start: 1;
