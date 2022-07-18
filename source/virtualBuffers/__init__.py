@@ -648,7 +648,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 			axis: documentBase._Axis,
 	) -> textInfos.TextInfo:
 		tableID, origRow, origCol, origRowSpan, origColSpan = (
-			cell.tableID, cell.row, cell.col, cell.rowSpan, cell.collSpan
+			cell.tableID, cell.row, cell.col, cell.rowSpan, cell.colSpan
 		)
 		# Determine destination row and column.
 		destRow = origRow
