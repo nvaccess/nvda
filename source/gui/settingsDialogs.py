@@ -1560,6 +1560,8 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		)
 		self.includeCLDRCheckbox.SetValue(config.conf["speech"]["includeCLDR"])
 
+		self._appendDelayedCharacterDescriptions(settingsSizerHelper)
+
 		minPitchChange = int(config.conf.getConfigValidation(
 			("speech", self.driver.name, "capPitchChange")
 		).kwargs["min"])
@@ -1618,8 +1620,6 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 			config.conf["speech"][self.driver.name]["useSpellingFunctionality"]
 		)
 
-		self._appendDelayedCharacterDescriptions(settingsSizerHelper)
-
 	def _appendDelayedCharacterDescriptions(self, settingsSizerHelper: guiHelper.BoxSizerHelper) -> None:
 		# Translators: This is the label for a checkbox in the voice settings panel.
 		delayedCharacterDescriptionsText = _("&Delayed descriptions for characters on cursor movement")
@@ -1628,7 +1628,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		)
 		self.bindHelpEvent("delayedCharacterDescriptions", self.delayedCharacterDescriptionsCheckBox)
 		self.delayedCharacterDescriptionsCheckBox.SetValue(
-			config.conf["speech"][self.driver.name]["delayedCharacterDescriptions"]
+			config.conf["speech"]["delayedCharacterDescriptions"]
 		)
 
 	def onSave(self):
@@ -1645,12 +1645,12 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		if currentIncludeCLDR is not newIncludeCldr:
 			# Either included or excluded CLDR data, so clear the cache.
 			characterProcessing.clearSpeechSymbols()
+		config.conf["speech"]["delayedCharacterDescriptions"] = delayedDescriptions
 		config.conf["speech"][self.driver.name]["capPitchChange"]=self.capPitchChangeEdit.Value
 		config.conf["speech"][self.driver.name]["sayCapForCapitals"]=self.sayCapForCapsCheckBox.IsChecked()
 		config.conf["speech"][self.driver.name]["beepForCapitals"]=self.beepForCapsCheckBox.IsChecked()
 		config.conf["speech"][self.driver.name]["useSpellingFunctionality"]=self.useSpellingFunctionalityCheckBox.IsChecked()
 		delayedDescriptions = self.delayedCharacterDescriptionsCheckBox.IsChecked()
-		config.conf["speech"][self.driver.name]["delayedCharacterDescriptions"] = delayedDescriptions
 
 class KeyboardSettingsPanel(SettingsPanel):
 	# Translators: This is the label for the keyboard settings panel.

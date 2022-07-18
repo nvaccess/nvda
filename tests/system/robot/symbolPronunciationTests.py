@@ -320,7 +320,7 @@ def test_delayedDescriptions():
 
 	# Activate delayed descriptions feature to do the next test.
 	spy = _NvdaLib.getSpyLib()
-	spy.set_configValue(['speech', 'SpeechSpySynthDriver', 'delayedCharacterDescriptions'], True)
+	spy.set_configValue(['speech', 'delayedCharacterDescriptions'], True)
 
 	_testDelayedDescription()
 

@@ -1590,7 +1590,7 @@ def _getTextInfoSpeech_considerSpelling(
 		if (
 			reason == OutputReason.CARET
 			and unit == textInfos.UNIT_CHARACTER
-			and config.conf["speech"][getSynth().name]["delayedCharacterDescriptions"]
+			and config.conf["speech"]["delayedCharacterDescriptions"]
 		):
 			descriptionSequence = list(getSingleCharDescription(
 				textWithFields[0],

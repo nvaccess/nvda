@@ -45,13 +45,13 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	outputDevice = string(default=default)
 	autoLanguageSwitching = boolean(default=true)
 	autoDialectSwitching = boolean(default=false)
+	delayedCharacterDescriptions = boolean(default=false)
 
 	[[__many__]]
 		capPitchChange = integer(default=30,min=-100,max=100)
 		sayCapForCapitals = boolean(default=false)
 		beepForCapitals = boolean(default=false)
 		useSpellingFunctionality = boolean(default=true)
-		delayedCharacterDescriptions = boolean(default=false)
 
 # Audio settings
 [audio]
