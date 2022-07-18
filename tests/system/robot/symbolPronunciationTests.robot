@@ -43,7 +43,7 @@ moveByCharacter
 	test_moveByChar
 
 delayedCharacterDescriptions
-	[Documentation]	Ensure delayed character descriptions are announced as expected when navigating by character or cancelled if the control key is pressed.
+	[Documentation]	Ensure delayed character descriptions are announced as expected when navigating by character.
 	test_delayedDescriptions
 
 selectionByWord
