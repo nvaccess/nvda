@@ -17,6 +17,8 @@ Feature flags should be included using the following format.
 ==== The name of a feature ====[FeatureDescriptionAnchor]
 : Default
   Enabled
+: Options
+  Default (Enabled), Enabled, Disabled
 : ``NVDA+o``
   Toggle this feature
 :
