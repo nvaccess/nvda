@@ -36,12 +36,12 @@ Glavne karakteristike su:
 
 ++ Internacionalizacija ++[Internationalization]
 Važno je da ljudi gde god da se nalaze na svetu, bez obzira koji jezik govore, dobiju jednak pristup tehnologiji.
-Pored Engleskog, NVDA je preveden na 54 jezika uključujući: Afrikanski, Albanski, Amharski, Arapski, Aragoneski, Bugarski, Burmese, Katalonski, Kineski (pojednostavljen i tradicionalni), Hrvatski, Češki, Danski, Holandski, Farsi, Finski, Francuski, Galski, Gruzijski, Nemački (Nemačka i Švajcarska), Grčki, Hebrejski, Indijski, Mađarski, Islandski, Irski, Italijanski, Japanski, Kannada, Korejski, Kirgijški, Litvanski, Makedonski, Mongolski, Nepali, Norveški, Poljski, Portugalski (Brazil i Portugal), Pundžabi, Rumunski, Ruski, Srpski, Slovački, Slovenski, Španski (Kolumbija i Španija), Švetski, Tamil, Tajvanski, Turski, Ukrajinski i Vijetnamski.
+Pored Engleskog, NVDA je preveden na 54 jezika uključujući: Afrikanski, Albanski, Amharski, Arapski, Aragoneski, Bugarski, Burmese, Katalonski, Kineski (pojednostavljen i tradicionalni), Hrvatski, Češki, Danski, Holandski, Farsi, Finski, Francuski, Galski, Gruzijski, Nemački (Nemačka i Švajcarska), Grčki, Hebrejski, Indijski, Mađarski, Islandski, Irski, Italijanski, Japanski, Kannada, Korejski, Kirgijški, Litvanski, Makedonski, Mongolski, Nepali, Norveški, Poljski, Portugalski (Brazil i Portugal), Pundžabi, Rumunski, Ruski, Srpski, Slovački, Slovenački, Španski (Kolumbija i Španija), Švetski, Tamil, Tajvanski, Turski, Ukrajinski i Vijetnamski.
 
 ++ Podrška za sintetizatore govora ++[SpeechSynthesizerSupport]
-Pored pružanja svojih poruka i interfejsa na jednom od podržanih jezika, NVDA takođe dozvoljava korisniku da čita tekst na bilo kom jeziku, dokle god imaju sintetizator koji podržava taj jezik.
+Pored pružanja svojih poruka i interfejsa na jednom od podržanih jezika, NVDA takođe dozvoljava korisnicima da čitaju tekst na bilo kom jeziku, dokle god imaju sintetizator koji podržava taj jezik.
 
-NVDA dolazi uz [eSpeak NG https://github.com/espeak-ng/espeak-ng], besplatnom, otvorenog koda, višejezičnom sintezom.
+Uz NVDA dolazi [eSpeak NG https://github.com/espeak-ng/espeak-ng], besplatan, višejezičan i sintetizator otvorenog koda.
 
 Informacije o sintezama koje NVDA podržava možete pronaći u delu[Podržani sintetizatori govora #SupportedSpeechSynths].
 
@@ -56,7 +56,7 @@ NVDA podržava brajeve kodove za puno jezika, uključujući skraćene, standardn
 ++ Licenca i autorska prava ++[LicenseAndCopyright]
 NVDA je pod autorskim pravima NVDA_COPYRIGHT_YEARS NVDA saradnici.
 
-NVDA je dostupan pod  GNU opštom javnom licencom verzija 2, uz dva posebna izuzetka.
+NVDA je dostupan pod  GNU opštom javnom licencom verzije 2, uz dva posebna izuzetka.
 Izuzeci su označeni u dokumentu sa licencom u sekcijama "Non-GPL Components in Plugins and Drivers" i "Microsoft Distributable Code".
 NVDA takođe koristi komponente koje su dostupne pod različitim slobodnim licencama otvorenog koda.
 Možete menjati ovaj program dok god date izvorni kod onima koji to žele i dok je pod zaštitom ove licence.
@@ -67,8 +67,8 @@ Za detalje o izuzecima, pristupite dokumentu licence u NVDA meniju u sekciji "po
 
 + Sistemski zahtevi +[SystemRequirements]
  - Operativni sistemi: sve 32-bitne i 64-bitne verzije operativnih  sistema Windows 7, Windows 8, Windows 8.1, Windows 10, Windows 11, i sve server verzije Windows operativnog sistema počevši od  Windows Server 2008 R2.
- - za Windows 7, NVDA zahteva Service Pack 1 ili noviji.
- - za Windows Server 2008 R2, NVDA zahteva Service Pack 1 ili noviji.
+ - za Windows 7, NVDA zahteva servisni paket 1 ili noviji.
+ - za Windows Server 2008 R2, NVDA zahteva servisni paket 1 ili noviji.
 Oba bi trebalo da budu instalirana ako su primenjena sva ažuriranja koristeći Windows Update.
 - Barem 150 MB memorijskog prostora.
 -
@@ -89,7 +89,7 @@ Prenosiva kopija takođe poseduje sposobnost instalacije na nekom računaru.
 Međutim, ako želite da kopirate NVDA na medijima koji su samo za čitanje kao što je CD, kopirajte samo preuzetu datoteku.
 Pokretanje prenosive kopije sa takvih medija trenutno nije podržano.
 
-Korišćenje programa NVDA kao privremena kopija je takođe jedna od opcija(na primer u svrhu demonstracije), ali pokretanje programa NVDA svaki put na ovaj način može izgubiti dosta vremena.
+Korišćenje programa NVDA kao privremene kopije je takođe jedna od opcija(na primer u svrhu demonstracije), ali pokretanje programa NVDA svaki put na ovaj način može izgubiti dosta vremena.
 
 ++ Ograničenja prenosive i privremene kopije ++[PortableAndTemporaryCopyRestrictions]
 Pored toga što ne mogu da se pokrenu nakon i u toku prijave u Windows, privremena i prenosiva kopija takođe imaju sledeća ograničenja:
@@ -146,7 +146,7 @@ Pritisnite OK da zatvorite ovaj dijalog.
 
 ++ Pokretanje programa NVDA ++[LaunchingNVDA]
 Ako ste instalirali NVDA, pokretanje NVDA možete ostvariti prečicom control+alt+n, ili izborom NVDA u start meniju.
-Takođe možete upisati NVDA u dialog za otvaranje i pritisnuti enter.
+Takođe možete upisati NVDA u dialog za pokretanje i pritisnuti enter.
 Ako je NVDA već pokrenut, biće zaustavljen a zatim ponovo pokrenut.
 Takođe možete dodati[opcije komandne linije #CommandLineOptions] koje vam dozvoljavaju da izađete(-q), onemogućite dodatke(--disable-addons), i tako dalje.
 
@@ -159,7 +159,7 @@ Ako je NVDA već pokrenut, automatski će biti zaustavljen pre pokretanja prenos
 
 Dok se NVDA pokreće, čućete niz tonova(koji vam govore da se NVDA učitava).
 U zavisnosti od brzine vašeg računara, ili ako pokrećete NVDA sa sporijeg medija, možda će ovo malo duže trajati.
-Ako traje duže, NVDA će reći"Učitavanje NVDA. molimo sačekajte..."
+Ako traje duže, NVDA će reći"Učitavanje NVDA. Molimo sačekajte..."
 
 Ako ne čujete ništa od ovoga, ili čujete Windows zvuk za grešku, ili silazne tonove, to znači da NVDA ima grešku, i možda ćete morati da prijavite grešku programerima.
 Molimo proverite NVDA sajt da saznate kako to da uradite.
@@ -209,7 +209,7 @@ Da omogućite ili onemogućite podršku interakcije sa ekranom osetljivim na dod
 Takođe možete da omogućite ili onemogućite [podršku interakcije sa ekranom #TouchSupportEnable] iz kategorije interakcija sa ekranom osetljivim na dodir u NVDA podešavanjima.
 
 +++ Istraživanje ekrana +++[ExploringTheScreen]
-Naj osnovnija radnja sa ekrana osetljivog na dodir je izgovor teksta bilo gde na ekranu.
+Osnovna radnja sa ekrana osetljivog na dodir je izgovor teksta bilo gde na ekranu.
 Da biste to uradili, stavite vaš prst bilo gde na ekranu.
 Takođe možete držati prst na ekranu i kretati se po njemu kako bi NVDA izgovarao tekst ispod vašeg prsta.
 
@@ -234,13 +234,13 @@ Brzo prevucite prst preko ekrana.
 Postoje četiri ovakva pokreta u zavisnosti od pravca prevlačenja: Prevlačenje levo, Prevlačenje desno, Prevlačenje gore I prevlačenje dole.
 
 Kao i dodiri, više od jednog prsta se može koristiti za pokrete.
-Tako da, pokreti kao što su prevlačenje sa četiri prsta nagore ili dva prsta nadole su mogući.
+Tako da, pokreti kao što su prevlačenje sa četiri prsta gore ili dva prsta dole su mogući.
 
 +++ Režimi dodira +++[TouchModes]
 Budući da postoji mnogo više NVDA prečica nego pokreta sa ekrana, NVDA ima više režima koji omogućavaju više različitih komandi.
 Dva režima su režim teksta i režim objekata. 
 Određene komande u ovom dokumentu će možda imati režim dodira u zagradama nakon pokreta.
-Na primer, prevlačenje ngore(režim teksta) znači da će komanda biti izvršena ako prevučete ngore, ali samo kada ste u režimu teksta.
+Na primer, prevlačenje gore(režim teksta) znači da će komanda biti izvršena ako prevučete gore, ali samo kada ste u režimu teksta.
 Ako komanda nema režim, radiće u bilo kom režimu.
 
 %kc:beginInclude
@@ -261,7 +261,7 @@ Puno komandi je spomenuto kroz ovaj vodič, ali lak način da saznate šta svaka
 
 Da uključite pomoć za unos, pritisnite NVDA+1.
 Da je isključite, pritisnite NVDA+1 ponovo.
-Dok ste u režimu pomoći za unos, korišćenje bilo koje komande(kao što je pritiskanje tastera ili pokreti sa ekrana) će prijaviti komandu i šta ona radi(ako radi nešto).
+Dok ste u režimu pomoći za unos, korišćenje bilo koje komande(kao što su pritiskanje tastera ili pokreti sa ekrana) će prijaviti komandu i šta ona radi(ako radi nešto).
 Komande neće ništa uraditi dok ste u režimu pomoći za unos.
 
 ++ NVDA meni ++[TheNVDAMenu]
@@ -290,7 +290,7 @@ Kada se meni pojavi, možete koristiti strelice da se krećete kroz meni, i tast
 %kc:beginInclude
 || Ime | Komanda | Opis |
 | Prijavi datum/vreme | NVDA+f12 | Ako se pritisne jednom prijavljuje trenutni datum, ako se pritisne dva puta prijavljuje trenutno vreme |
-| Prijavi stanje baterije | NVDA+šift+b | prijavljuje stanje baterije da li je punjač uključen i trenutni procenat. |
+| Prijavi stanje baterije | NVDA+šift+b | prijavljuje stanje baterije, da li je punjač uključen i trenutni procenat. |
 | Prijavi tekst privremene memorije | NVDA+c | prijavljuje tekst privremene memorije ako ima teksta. |
 %kc:endInclude
 
@@ -306,7 +306,7 @@ Sistemski fokus, takođe poznat kao fokus, je[objekat#Objects] koji prima taster
 Na primer, ako pišete u polju za unos teksta, polje za unos teksta ima fokus.
 
 Najčešći način navigacije kroz Windows sa programom NVDA je pomeranje sistemskog fokusa standardnim komandama sa tastature, kao što je pritiskanje tastera tab ili šift+tab da se krećete napred i nazad kroz kontrole, pritiskanje tastera alt da uđete u traku menija a zatim korišćenje strelica za kretanje kroz meni, i korišćenje kombinacije alt+tab da se krećete kroz otvorene programe.
-Dok to radite, NVDA će prijavljivati informacije o objektima, kao što su njegovo ime, tip, vrednost, stanje, opis, tasterska prečica i informacije o poziciji.
+Dok to radite, NVDA će prijavljivati informacije o objektima, kao što su njegovo ime, tip, vrednost, stanje, opis, tastersku prečicu i informacije o poziciji.
 Kada je [Vizuelno označavanje  #VisionFocusHighlight] omogućeno, lokacija sistemskog fokusa je takođe vizuelno označena.
 
 Postoje određene komande koje mogu biti korisne u navigaciji sa sistemskim fokusom:
@@ -314,8 +314,8 @@ Postoje određene komande koje mogu biti korisne u navigaciji sa sistemskim foku
 || Ime | Desktop komanda | Laptop komanda | Opis |
 | Prijavi trenutni fokus | NVDA+tab | NVDA+tab | Izgovara trenutni objekat ili kontrolu koja ima sistemski fokus. Ako se pritisne dva puta informacija se sriče |
  | Prijavi naslov | NVDA+t | NVDA+t | Prijavi naslov trenutno aktivnog prozora. Ako se pritisne dva puta informacija se sriče. Ako se pritisne tri puta informacija se kopira u privremenu memoriju |
- | Čitaj aktivan prozor | NVDA+b | NVDA+b | Čita sve kontrole u trenutnom prozoru(korisno za dijaloge) |
- | Prijavi statusnu traku | NVDA+end | NVDA+Šift+end | Prijavljuje statusnu traku ako je NVDA pronađe. Ako se pritisne dva puta informacija se sriče. Ako se pritisne tri puta  kopira se u privremenu memoriju |
+| Čitaj aktivan prozor | NVDA+b | NVDA+b | Čita sve kontrole u trenutnom prozoru(korisno za dijaloge) |
+| Prijavi statusnu traku | NVDA+end | NVDA+Šift+end | Prijavljuje statusnu traku ako je NVDA pronađe. Ako se pritisne dva puta informacija se sriče. Ako se pritisne tri puta  kopira se u privremenu memoriju |
 %kc:endInclude
 
 ++ Navigacija sa sistemskim kursorom++[SystemCaret]

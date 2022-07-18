@@ -42,6 +42,7 @@ import exceptions
 import extensionPoints
 from fileUtils import getFileVersionInfo
 import globalVars
+from systemUtils import getCurrentProcessLogonSessionId, getProcessLogonSessionId
 
 
 # Dictionary of processID:appModule pairs used to hold the currently running modules
@@ -655,6 +656,20 @@ class AppModule(baseObject.ScriptableObject):
 			return True
 		self.isWindowsStoreApp = False
 		return self.isWindowsStoreApp
+
+	def _get_isRunningUnderDifferentLogonSession(self) -> bool:
+		"""Returns whether the application for this appModule was started under a different logon session.
+		This applies to applications started with the Windows runas command
+		or when choosing "run as a different user" from an application's (shortcut) context menu.
+		"""
+		try:
+			self.isRunningUnderDifferentLogonSession = (
+				getCurrentProcessLogonSessionId() != getProcessLogonSessionId(self.processHandle)
+			)
+		except WindowsError:
+			log.error(f"Couldn't compare logon session ID for {self}", exc_info=True)
+			self.isRunningUnderDifferentLogonSession = False
+		return self.isRunningUnderDifferentLogonSession
 
 	def _get_appArchitecture(self):
 		"""Returns the target architecture for the specified app.

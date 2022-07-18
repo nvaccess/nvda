@@ -636,6 +636,7 @@ class InputGesturesDialog(SettingsDialog):
 		super()._onWindowDestroy(evt)
 
 	def onFilterChange(self, evt):
+		self.tree.Unselect()
 		filterText = evt.GetEventObject().GetValue()
 		self.filter(filterText)
 

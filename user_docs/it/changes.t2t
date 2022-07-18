@@ -1,10 +1,17 @@
-Novità in NVDA 
+﻿Novità in NVDA 
 
 
 %!includeconf: ../changes.t2tconf
 
 
 = 2022.2 =
+
+Questa versione si è focalizzata nel risolvere un gran numero di bug.
+In particolare, vi sono notevoli miglioramenti nelle app che si basano su Java, nel supporto ai display braille e ad alcune funzioni di Windows.
+
+Sono stati introdotti nuovi comandi di navigazione nelle tabelle.
+è stato aggiornato il supporto Unicode CLDR.
+Come sempre, aggiornate anche le tabelle LibLouis, con il supporto ad una nuova tabella braille tedesca.
 
 == Novità ==
 - Supporto e gestione dei componenti Microsoft Loop nei prodotti Microsoft Office. (#13617)
@@ -18,7 +25,10 @@ Novità in NVDA
 == Cambiamenti ==
 - NSIS è stato aggiornato alla versione 3.08. (#9134)
 - CLDR è stato aggiornato alla versione 41.0. (#13582)
+- Aggiornato Liblouis alla versione [3.22.0 https://github.com/liblouis/liblouis/releases/tag/v3.22.0]. (#13775)
 - Aggiunto un nuovo ruolo per i controlli "barre di avanzamento non determinabili". (#10644)
+  - Nuova tabella braille: Tedesco grado 2 (dettagliato)
+  -
 - NVDA ora annuncia quando un'azione NVDA non può essere eseguita. (#13500)
   - Questo include quando:
     - Si utilizza la versione NVDA per Windows Store.
@@ -30,6 +40,21 @@ Novità in NVDA
 
 
 == Bug Corretti ==
+- Correzioni per applicazioni basate su Java:
+  - NVDA ora annuncerà lo stato di sola lettura. (#13692)
+  - NVDA ora annuncerà lo stato disabilitato/abilitato correttamente. (#10993)
+  - NVDA ora annuncerà le scorciatoie dei tasti funzione. (#13643)
+  - NVDA ora può emettere un segnale acustico o parlare sulle barre di avanzamento. (#13594)
+  - NVDA non rimuoverà più erroneamente il testo dai widget durante la presentazione all'utente. (#13102)
+  - NVDA ora annuncia lo stato degli interruttori . (#9728)
+  - NVDA ora sarà in grado di identificare la finestra in un'applicazione Java con finestre multiple. (#9184)
+  - NVDA ora annuncerà le informazioni sulla posizione nei controlli a scheda. (#13744)
+  -
+- Problemi risolti inerenti il braille:
+  - Risolto il problema con la lettura durante la navigazione in un testo nei controlli editazione avanzati di Mozilla, come la bozza di un messaggio in Thunderbird. (#12542)
+  - Quando l'inseguimento braille è impostato su automatico e e il mouse viene spostato con la funzione di tracciamento mouse attiva, i comandi di revisione del testo ora aggiornano correttamente il display braille con ciò che la sintesi vocale legge.
+  - Risulta ora possibile scorrere il display braille in un contenuto dopo che sono stati utilizzati i comandi di revisione del testo (#8682)
+  -
 - Il programma di installazione di NVDA ora può essere eseguito da directory con caratteri speciali. (#13270)
 - In Firefox, NVDA non incontra più problemi nel segnalare gli elementi nelle pagine Web quando gli attributi aria-rowindex, aria-colindex, aria-rowcount o aria-colcount non risultano validi. (#13405)
 - Il cursore non cambia più riga o colonna quando si utilizza la navigazione in una tabella per spostarsi tra le celle unite. (#7278)
@@ -40,19 +65,13 @@ Novità in NVDA
   - Si tenga presente che affinché la lettura avvenga correttamente, la visualizzazione dei numeri di riga deve essere abilitata sia in Visual Studio che in NVDA.
   -
 - Visual Studio ora segnala correttamente i rientri della riga. (#13574)
-- Correzioni per applicazioni basate su Java:
-  - NVDA ora annuncerà lo stato di sola lettura. (#13692)
-  - NVDA ora annuncerà lo stato disabilitato/abilitato correttamente. (#10993)
-  - NVDA ora annuncerà le scorciatoie dei tasti funzione. (#13643)
-  - NVDA ora può emettere un segnale acustico o parlare sulle barre di avanzamento. (#13594)
-  - NVDA non rimuoverà più erroneamente il testo dai widget durante la presentazione all'utente. (#13102)
-  -
 - NVDA leggerà nuovamente i dettagli dei risultati di ricerca del menu Start nelle recenti versioni di Windows 10 e 11. (#13544)
 - Nella Calcolatrice versione 10.1908 e successive in Windows 10 e 11, NVDA annuncerà i risultati quando vengono premuti più comandi, come quelli della modalità scientifica. (#13386)
-- Risolto il problema con la lettura braille durante la navigazione in un testo nei controlli editazione avanzati di Mozilla, come la bozza di un messaggio in Thunderbird. (#12542)
 - In Windows 11, è nuovamente possibile navigare e interagire con gli elementi dell'interfaccia utente come la barra delle applicazioni e la visualizzazione attività utilizzando il mouse o l'interazione a tocco. (#13508)
-- Il testo nascosto non viene più annunciato in Wordpad e in altri controlli di ``richEdit``. (#13618)
-- NVDA annuncerà il contenuto della barra di stato nel Blocco note di Windows 11. (#13386)
+- NVDA annuncerà il contenuto della barra di stato nel Blocco note di Windows 11. (#13688)
+- L'evidenziazione del navigatore ad oggetti ora si attiverà istantaneamente subito dopo l'attivazione della funzione.. (#13641)
+- Sistemata la lettura della prima colonna nella visualizzazione ad elenco degli elementi. (#13659, #13735)
+- Sistemato il cambio lingua automatico in eSpeak per Inglese e Francese che selezioneranno British English and French (France). (#13727)
 -
 
 

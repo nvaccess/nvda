@@ -8,11 +8,17 @@ What's New in NVDA
 == New Features ==
 - In the Windows Console Host used by Command Prompt, PowerShell, and the Windows Subsystem for Linux on Windows 11 version 22H2 (Sun Valley 2) and later:
   - Vastly improved performance and stability. (#10964)
-  - When pressing ``ctrl+f`` to find text, the review cursor position is updated to follow the found term. (#11172)
+  - When pressing ``control+f`` to find text, the review cursor position is updated to follow the found term. (#11172)
   - Reporting of typed text that does not appear onscreen (such as passwords) is disabled by default.
 It can be re-enabled in NVDA's advanced settings panel. (#11554)
   - Text that has scrolled offscreen can be reviewed without scrolling the console window. (#12669)
   - More detailed text formatting information is available. ([microsoft/terminal PR 10336 https://github.com/microsoft/terminal/pull/10336])
+  -
+- Added the following table commands. (#13469)
+  - Say all in column: ``NVDA+control+alt+downArrow``
+  - Say all in row: ``NVDA+control+alt+rightArrow``
+  - Read entire column: ``NVDA+control+alt+upArrow``
+  - Read entire row: ``NVDA+control+alt+leftArrow``
   -
 -
 
@@ -31,10 +37,16 @@ It can be re-enabled in NVDA's advanced settings panel. (#11554)
 
 
 == Bug Fixes ==
+- Adobe Acrobat / Reader 64 bit will no longer crash when reading a PDF document. (#12920)
+  - Note that the most up to date version of Adobe Acrobat / Reader is also required to avoid the crash.
+  -
 - Font size measurements are now translatable in NVDA. (#13573)
 - Ignore Java Access Bridge events where no window handle can be found for Java applications.
 This will improve performance for some Java applications including IntelliJ IDEA. (#13039)
 - Announcement of selected cells for LibreOffice Calc is more efficient and no longer results in a Calc freeze when many cells are selected. (#13232)
+- When running under a different user, Microsoft Edge is no longer inaccessible. (#13032)
+- When rate boost is off, eSpeak's rate does not drop anymore between rates 99% and 100%. (#13876)
+- Fix bug which allowed 2 Input Gestures dialogs to open. (#13854)
 -
 
 
@@ -44,6 +56,8 @@ This will improve performance for some Java applications including IntelliJ IDEA
   - This can be overridden by changing the "Windows Console support" setting in NVDA's advanced settings panel.
   - To find your Windows Console's NVDA API level, set "Windows Console support" to "UIA when available", then check the NVDA+F1 log opened from a running Windows Console instance.
   -
+- The Chromium virtual buffer is now loaded even when the document object has the MSAA ``STATE_SYSTEM_BUSY`` exposed via IA2. (#13306)
+- A config spec type ``featureFlag`` has been created for use with experimental features in NVDA. See ``devDocs/featureFlag.md`` for more information. (#13859)
 -
 
 
