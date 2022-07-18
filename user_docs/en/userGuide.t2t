@@ -1266,12 +1266,12 @@ However, some Microsoft Speech API synthesizers do not implement this correctly 
 If you are having problems with the pronunciation of individual characters, try disabling this option.
 
 ==== Delayed descriptions for characters on cursor movement ====[delayedCharacterDescriptions]
-When this setting is checked, NVDA will say the character description when you move by characters, after 1 second.
+When this setting is checked, NVDA will say the character description when you move by characters.
 
-For example, if you review this line by characters, when you read the letter "b", NVDA will say "Bravo" after 1 second.
+For example, while reviewing a line by characters, when the letter "b" is read NVDA will say "Bravo" after a 1 second delay.
 This can be useful if it is hard to distinguish between pronunciation of symbols, or for hearing impaired users.
 
-The delayed character description will be cancelled if other text is spoken during that time, or if you press the control key.
+The delayed character description will be cancelled if other text is spoken during that time, or if you press the ``control`` key.
 
 +++ Select Synthesizer (NVDA+control+s) +++[SelectSynthesizer]
 The Synthesizer dialog, which can be opened by activating the Change... button in the speech category of the NVDA settings dialog, allows you to select which Synthesizer NVDA should use to speak with.
