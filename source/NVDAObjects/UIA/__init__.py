@@ -7,23 +7,22 @@
 """Support for UI Automation (UIA) controls."""
 import typing
 from typing import (
+	Generator,
+	List,
 	Optional,
 	Dict,
+	Tuple,
 )
-from ctypes import byref
-from ctypes.wintypes import POINT, RECT
+from ctypes.wintypes import POINT
 from comtypes import COMError
 from comtypes.automation import VARIANT
 import time
-import weakref
 import numbers
 import colors
 import languageHandler
 import UIAHandler
 import UIAHandler.customProps
 import UIAHandler.customAnnotations
-import globalVars
-import eventHandler
 import controlTypes
 from controlTypes import TextPosition
 import config
@@ -31,6 +30,9 @@ import speech
 import api
 import textInfos
 from logHandler import log
+from UIAHandler.types import (
+	IUIAutomationTextRangeT
+)
 from UIAHandler.utils import (
 	BulkUIATextRangeAttributeValueFetcher,
 	UIATextRangeAttributeValueFetcher,
@@ -41,7 +43,11 @@ from UIAHandler.utils import (
 	UIATextRangeFromElement,
 )
 from NVDAObjects.window import Window
-from NVDAObjects import NVDAObjectTextInfo, InvalidNVDAObject
+from NVDAObjects import (
+	NVDAObject,
+	NVDAObjectTextInfo,
+	InvalidNVDAObject,
+)
 from NVDAObjects.behaviors import (
 	ProgressBar,
 	EditableTextWithoutAutoSelectDetection,
@@ -65,6 +71,7 @@ paragraphIndentIDs = {
 
 
 class UIATextInfo(textInfos.TextInfo):
+	_rangeObj: IUIAutomationTextRangeT
 
 	_cache_controlFieldNVDAObjectClass=True
 	def _get_controlFieldNVDAObjectClass(self):
@@ -149,20 +156,25 @@ class UIATextInfo(textInfos.TextInfo):
 			return True
 		return False
 
-	def _getFormatFieldAtRange(self,textRange,formatConfig,ignoreMixedValues=False):
+	# C901 '_getFormatFieldAtRange' is too complex
+	# Note: when working on _getFormatFieldAtRange, look for opportunities to simplify
+	# and move logic out into smaller helper functions.
+	def _getFormatFieldAtRange(  # noqa: C901
+			self,
+			textRange: IUIAutomationTextRangeT,
+			formatConfig: Dict,
+			ignoreMixedValues: bool = False,
+	) -> textInfos.FormatField:
 		"""
 		Fetches formatting for the given UI Automation Text range.
 		@param textRange: the text range whos formatting should be fetched.
-		@type textRange: L{UIAutomation.IUIAutomationTextRange}
 		@param formatConfig: the types of formatting requested.
 		@type formatConfig: a dictionary of NVDA document formatting configuration keys
 			with values set to true for those types that should be fetched.
 		@param ignoreMixedValues: If True, formatting that is mixed according to UI Automation will not be included.
 			If False, L{UIAHandler.utils.MixedAttributeError} will be raised if UI Automation gives back
 			a mixed attribute value signifying that the caller may want to try again with a smaller range.
-		@type: bool
 		@return: The formatting for the given text range.
-		@rtype: L{textInfos.FormatField}
 		"""
 		formatField=textInfos.FormatField()
 		if not isinstance(textRange,UIAHandler.IUIAutomationTextRange):
@@ -394,8 +406,15 @@ class UIATextInfo(textInfos.TextInfo):
 			valText = _("{val:.2f} cm").format(val=val)
 		return valText
 	
-	
-	def __init__(self,obj,position,_rangeObj=None):
+	# C901 '__init__' is too complex
+	# Note: when working on getPropertiesBraille, look for opportunities to simplify
+	# and move logic out into smaller helper functions.
+	def __init__(  # noqa: C901
+			self,
+			obj: NVDAObject,
+			position: str,
+			_rangeObj: Optional[IUIAutomationTextRangeT] = None
+	):
 		super(UIATextInfo,self).__init__(obj,position)
 		if _rangeObj:
 			try:
@@ -410,7 +429,7 @@ class UIATextInfo(textInfos.TextInfo):
 			except COMError:
 				raise RuntimeError("No selection available")
 			if sel.length>0:
-				self._rangeObj=sel.getElement(0).clone()
+				self._rangeObj: IUIAutomationTextRangeT = sel.getElement(0).clone()
 			else:
 				raise NotImplementedError("UIAutomationTextRangeArray is empty")
 			if position==textInfos.POSITION_CARET:
@@ -419,21 +438,21 @@ class UIATextInfo(textInfos.TextInfo):
 			self._rangeObj=position._rangeObj
 		elif position==textInfos.POSITION_FIRST:
 			try:
-				self._rangeObj=self.obj.UIATextPattern.documentRange
+				self._rangeObj: IUIAutomationTextRangeT = self.obj.UIATextPattern.documentRange
 			except COMError:
 				# Error: first position not supported by the UIA text pattern.
 				raise RuntimeError
 			self.collapse()
 		elif position==textInfos.POSITION_LAST:
-			self._rangeObj=self.obj.UIATextPattern.documentRange
+			self._rangeObj: IUIAutomationTextRangeT = self.obj.UIATextPattern.documentRange
 			self.collapse(True)
 		elif position==textInfos.POSITION_ALL or position==self.obj:
-			self._rangeObj=self.obj.UIATextPattern.documentRange
+			self._rangeObj: IUIAutomationTextRangeT = self.obj.UIATextPattern.documentRange
 		elif isinstance(position,UIA) or isinstance(position,UIAHandler.IUIAutomationElement):
 			if isinstance(position,UIA):
 				position=position.UIAElement
 			try:
-				self._rangeObj=self.obj.UIATextPattern.rangeFromChild(position)
+				self._rangeObj: Optional[IUIAutomationTextRangeT] = self.obj.UIATextPattern.rangeFromChild(position)
 			except COMError:
 				raise LookupError
 			# sometimes rangeFromChild can return a NULL range
@@ -442,13 +461,14 @@ class UIATextInfo(textInfos.TextInfo):
 			if winVersion.getWinVer() <= winVersion.WIN7_SP1:
 				# #9435: RangeFromPoint causes a freeze in UIA client library in the Windows 7 start menu!
 				raise NotImplementedError("RangeFromPoint not supported on Windows 7")
-			self._rangeObj=self.obj.UIATextPattern.RangeFromPoint(position.toPOINT())
-		elif isinstance(position,UIAHandler.IUIAutomationTextRange):
-			self._rangeObj=position.clone()
+			self._rangeObj: IUIAutomationTextRangeT = self.obj.UIATextPattern.RangeFromPoint(position.toPOINT())
+		elif isinstance(position, UIAHandler.IUIAutomationTextRange):
+			position = typing.cast(IUIAutomationTextRangeT, position)
+			self._rangeObj = position.clone()
 		else:
 			raise ValueError("Unknown position %s"%position)
 
-	def __eq__(self,other):
+	def __eq__(self, other: "UIATextInfo"):
 		if self is other: return True
 		if self.__class__ is not other.__class__: return False
 		return bool(self._rangeObj.compare(other._rangeObj))
@@ -553,27 +573,28 @@ class UIATextInfo(textInfos.TextInfo):
 				pass
 		return field
 
-	def _getTextFromUIARange(self, textRange):
+	def _getTextFromUIARange(self, textRange: IUIAutomationTextRangeT) -> str:
 		"""
 		Fetches plain text from the given UI Automation text range.
 		Just calls getText(-1). This only exists to be overridden for filtering.
 		"""
 		return textRange.getText(-1)
 
-	def _getTextWithFields_text(self,textRange,formatConfig,UIAFormatUnits=None):
+	def _getTextWithFields_text(
+			self,
+			textRange: IUIAutomationTextRangeT,
+			formatConfig: Dict,
+			UIAFormatUnits: Optional[List[int]] = None
+	) -> Generator[textInfos.FieldCommand, None, None]:
 		"""
 		Yields format fields and text for the given UI Automation text range, split up by the first available UI Automation text unit that does not result in mixed attribute values.
 		@param textRange: the UI Automation text range to walk.
-		@type textRange: L{UIAHandler.IUIAutomationTextRange}
-		@param formatConfig: the types of formatting requested.
-		@type formatConfig: a dictionary of NVDA document formatting configuration keys
+		@param formatConfig: a dictionary of NVDA document formatting configuration keys
 			with values set to true for those types that should be fetched.
 		@param UIAFormatUnits: the UI Automation text units (in order of resolution) that should be used to split the text so as to avoid mixed attribute values. This is None by default.
 			If the parameter is a list of 1 or more units, The range will be split by the first unit in the list, and this method will be recursively run on each subrange, with the remaining units in this list given as the value of this parameter. 
 			If this parameter is an empty list, then formatting and text is fetched for the entire range, but any mixed attribute values are ignored and no splitting occures.
 			If this parameter is None, text and formatting is fetched for the entire range in one go, but if mixed attribute values are found, it will split by the first unit in self.UIAFormatUnits, and run this method recursively on each subrange, providing the remaining units from self.UIAFormatUnits as the value of this parameter. 
-		@type UIAFormatUnits: List of UI Automation Text Units or None
-		@rtype: a Generator yielding L{textInfos.FieldCommand} objects containing L{textInfos.FormatField} objects, and text strings.
 		"""
 		debug = UIAHandler._isDebug() and log.isEnabledFor(log.DEBUG)
 		if debug:
@@ -615,26 +636,31 @@ class UIATextInfo(textInfos.TextInfo):
 		if debug:
 			log.debug("Done _getTextWithFields_text")
 
-	def _getTextWithFieldsForUIARange(self,rootElement,textRange,formatConfig,includeRoot=False,alwaysWalkAncestors=True,recurseChildren=True,_rootElementClipped=(True,True)):
+	# C901 '_getTextWithFieldsForUIARange' is too complex
+	# Note: when working on getPropertiesBraille, look for opportunities to simplify
+	# and move logic out into smaller helper functions.
+	def _getTextWithFieldsForUIARange(  # noqa: C901
+			self,
+			rootElement: UIAHandler.IUIAutomationElement,
+			textRange: IUIAutomationTextRangeT,
+			formatConfig: Dict,
+			includeRoot: bool = False,
+			alwaysWalkAncestors: bool = True,
+			recurseChildren: bool = True,
+			_rootElementClipped: Tuple[bool, bool] = (True, True),
+	) -> Generator[textInfos.TextInfo.TextOrFieldsT, None, None]:
 		"""
 		Yields start and end control fields, and text, for the given UI Automation text range.
 		@param rootElement: the highest ancestor that encloses the given text range. This function will not walk higher than this point.
-		@type rootElement: L{UIAHandler.IUIAutomation}
 		@param textRange: the UI Automation text range whos content should be fetched.
-		@type textRange: L{UIAHandler.IUIAutomation}
 		@param formatConfig: the types of formatting requested.
 		@type formatConfig: a dictionary of NVDA document formatting configuration keys
 			with values set to true for those types that should be fetched.
 		@param includeRoot: If true, then a control start and end will be yielded for the root element.
-		@type includeRoot: bool
 		@param alwaysWalkAncestors: If true then control fields will be yielded for any element enclosing the given text range, that is a descendant of the root element. If false then the root element may be  assumed to be the only ancestor.
-		@type alwaysWalkAncestors: bool
 		@param recurseChildren: If true, this function will be recursively called for each child of the given text range, clipped to the bounds of this text range. Formatted text between the children will also be yielded. If false, only formatted text will be yielded.
-		@type recurseChildren: bool
 		@param _rootElementClipped: Indicates if textRange represents all of the given rootElement,
 			or is clipped at the start or end.
-		@type _rootElementClipped: 2-tuple
-		@rtype: A generator that yields L{textInfo.FieldCommand} objects and text strings.
 		"""
 		debug = UIAHandler._isDebug() and log.isEnabledFor(log.DEBUG)
 		if debug:
@@ -853,12 +879,11 @@ class UIATextInfo(textInfos.TextInfo):
 	def _get_text(self):
 		return self._getTextFromUIARange(self._rangeObj)
 
-	def _getBoundingRectsFromUIARange(self, textRange):
+	def _getBoundingRectsFromUIARange(self, textRange: IUIAutomationTextRangeT) -> locationHelper.RectLTWH:
 		"""
 		Fetches per line bounding rectangles from the given UI Automation text range.
 		Note that if the range object doesn't cover a whole line (e.g. a character),
 		the bounding rectangle will be restricted to the range.
-		@rtype: [locationHelper.RectLTWH]
 		"""
 		rects = []
 		rectArray = textRange.GetBoundingRectangles()
@@ -872,11 +897,16 @@ class UIATextInfo(textInfos.TextInfo):
 	def _get_boundingRects(self):
 		return self._getBoundingRectsFromUIARange(self._rangeObj)
 
-	def expand(self,unit):
+	def expand(self, unit: str) -> None:
 		UIAUnit=UIAHandler.NVDAUnitsToUIAUnits[unit]
 		self._rangeObj.ExpandToEnclosingUnit(UIAUnit)
 
-	def move(self,unit,direction,endPoint=None):
+	def move(
+			self,
+			unit: str,
+			direction: int,
+			endPoint: Optional[str] = None,
+	):
 		UIAUnit=UIAHandler.NVDAUnitsToUIAUnits[unit]
 		if endPoint=="start":
 			res=self._rangeObj.MoveEndpointByUnit(UIAHandler.TextPatternRangeEndpoint_Start,UIAUnit,direction)
@@ -892,13 +922,13 @@ class UIATextInfo(textInfos.TextInfo):
 	def copy(self):
 		return self.__class__(self.obj,None,_rangeObj=self._rangeObj)
 
-	def collapse(self,end=False):
+	def collapse(self, end: bool = False):
 		if end:
 			self._rangeObj.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,self._rangeObj,UIAHandler.TextPatternRangeEndpoint_End)
 		else:
 			self._rangeObj.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,self._rangeObj,UIAHandler.TextPatternRangeEndpoint_Start)
 
-	def compareEndPoints(self,other,which):
+	def compareEndPoints(self, other: "UIATextInfo", which: str):
 		if which.startswith('start'):
 			src=UIAHandler.TextPatternRangeEndpoint_Start
 		else:
@@ -909,7 +939,7 @@ class UIATextInfo(textInfos.TextInfo):
 			target=UIAHandler.TextPatternRangeEndpoint_End
 		return self._rangeObj.CompareEndpoints(src,other._rangeObj,target)
 
-	def setEndPoint(self,other,which):
+	def setEndPoint(self, other: "UIATextInfo", which: str):
 		if which.startswith('start'):
 			src=UIAHandler.TextPatternRangeEndpoint_Start
 		else:
