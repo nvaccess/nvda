@@ -231,7 +231,7 @@ def removeOldProgramFiles(destPath):
 uninstallerRegInfo: Dict[str, str] = {
 	"DisplayName": f"{versionInfo.name} {versionInfo.version}",
 	"DisplayVersion": versionInfo.version_detailed,
-	"DisplayIcon": r"{installDir}\images\nvda.ico",
+	"DisplayIcon": os.path.join(installDir, "images", "nvda.ico"),
 	"InstallDir": "{installDir}",
 	"Publisher": versionInfo.publisher,
 	"UninstallDirectory": "{installDir}",
