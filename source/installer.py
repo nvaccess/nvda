@@ -234,7 +234,7 @@ uninstallerRegInfo: Dict[str, str] = {
 	"DisplayIcon": os.path.join(installDir, "images", "nvda.ico"),
 	"InstallDir": installDir,
 	"Publisher": versionInfo.publisher,
-	"UninstallDirectory": "{installDir}",
+	"UninstallDirectory": "installDir",
 	"UninstallString": os.path.join(installDir, "uninstall.exe"),
 	"URLInfoAbout": versionInfo.url,
 }
