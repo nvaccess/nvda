@@ -3622,6 +3622,18 @@ class GlobalCommands(ScriptableObject):
 			else:
 				_enableScreenCurtain()
 
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Toggles through paragraph navigation styles",
+		),
+	)
+	def script_toggleParagraphStyle(self, gesture):
+		from utils.paragraphHelper import nextParagraphStyle
+		style = nextParagraphStyle()
+		config.conf["paragraphNavigation"]["paragraphStyle"] = style[0]
+		ui.message(style[1])
+
 
 #: The single global commands instance.
 #: @type: L{GlobalCommands}

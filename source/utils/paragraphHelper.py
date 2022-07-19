@@ -8,11 +8,12 @@ import speech
 import controlTypes
 import textInfos
 import tones
+import config
 
 MAX_LINES = 250  # give up after searching this many lines
 
 paragraphStyles = [
-	# values used in config
+	# values used for config.conf["paragraphNavigation"]["paragraphStyle"]
 	"auto",
 	"application",
 	"normal",
@@ -30,6 +31,14 @@ paragraphStyleChoices = [
 	# Translators: A paragraph style for navigating by paragraphs
 	_("Block style")
 ]
+
+
+def nextParagraphStyle() -> (str, str):
+	# returns (configSetting, UISetting) for the next paragraph style, wrapping around when reaching end
+	curStyle = config.conf["paragraphNavigation"]["paragraphStyle"]
+	i = paragraphStyles.index(curStyle) + 1
+	i %= len(paragraphStyles)
+	return (paragraphStyles[i], paragraphStyleChoices[i])
 
 
 def getTextInfoAtCaret() -> textInfos.TextInfo:
