@@ -235,7 +235,7 @@ uninstallerRegInfo: Dict[str, str] = {
 	"InstallDir": "{installDir}",
 	"Publisher": versionInfo.publisher,
 	"UninstallDirectory": "{installDir}",
-	"UninstallString": r"{installDir}\uninstall.exe",
+	"UninstallString": os.path.join(installDir, "uninstall.exe"),
 	"URLInfoAbout": versionInfo.url,
 }
 
