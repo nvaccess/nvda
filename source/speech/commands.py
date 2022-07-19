@@ -224,8 +224,10 @@ class BaseProsodyCommand(SynthParamCommand):
 		if self._offset == 0:
 			# Returning to default.
 			return 1
-		# If value is 0, division by 0 error occurs
-		defaultVal = max(self.defaultValue, 1)
+		defaultVal = self.defaultValue
+		if self.defaultValue == 0:
+			# If value is 0, division by 0 error occurs
+			defaultVal = 1
 		# Calculate multiplier from default value and offset.
 		newVal = defaultVal + self._offset
 		return float(newVal) / defaultVal
