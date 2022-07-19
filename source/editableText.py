@@ -296,9 +296,7 @@ class EditableText(TextContainerObject,ScriptableObject):
 
 	def _handleParagraphNavigation(self, gesture, nextParagraph: bool):
 		setting = config.conf["paragraphNavigation"]["paragraphStyle"]
-		if setting == "application":
-			self.script_caret_moveByParagraph(gesture)
-		elif setting == "normal":
+		if setting == "normal":
 			from utils.paragraphHelper import moveToParagraph
 			if not moveToParagraph(nextParagraph=nextParagraph, speakNew=not willSayAllResume(gesture)):
 				self.script_caret_moveByParagraph(gesture)
@@ -306,6 +304,8 @@ class EditableText(TextContainerObject,ScriptableObject):
 			from utils.paragraphHelper import moveToBlockParagraph
 			if not moveToBlockParagraph(nextParagraph=nextParagraph, speakNew=not willSayAllResume(gesture)):
 				self.script_caret_moveByParagraph(gesture)
+		else:
+			self.script_caret_moveByParagraph(gesture)
 
 	def script_caret_previousParagraph(self, gesture):
 		self._handleParagraphNavigation(gesture, False)

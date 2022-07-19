@@ -11,6 +11,26 @@ import tones
 
 MAX_LINES = 250  # give up after searching this many lines
 
+paragraphStyles = [
+	# values used in config
+	"auto",
+	"application",
+	"normal",
+	"block"
+]
+
+paragraphStyleChoices = [
+	# displayed in settings UI
+	# Translators: Automatic paragraph style selection
+	_("Automatic"),
+	# Translators: A paragraph style for navigating by paragraphs
+	_("Handled by application"),
+	# Translators: A paragraph style for navigating by paragraphs
+	_("Normal style"),
+	# Translators: A paragraph style for navigating by paragraphs
+	_("Block style")
+]
+
 
 def getTextInfoAtCaret() -> textInfos.TextInfo:
 	# returns None if not editable text or if in Microsoft Word document

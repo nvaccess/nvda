@@ -2536,28 +2536,20 @@ class ParagraphNavigationPanel(SettingsPanel):
 	# Translators: This is the label for the paragraph navigation settings panel.
 	title = _("Paragraph Navigation")
 	helpId = "ParagraphNavigation"
-	paragraphStyles = ("application", "normal", "block")
 
 	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: This is a label for the paragraph navigation style in the paragraph navigation dialog
 		paragraphStyleLabel = _("&Paragraph style:")
-		paragraphStyleChoices = [
-			# Translators: A choice in a combo box in the paragraph navigation dialog
-			# which specifies that the application handles paragraph navigation
-			_("Handled by application"),
-			# Translators: A choice in a combo box in the paragraph navigation dialog  to navigate by normal paragraphs
-			_("Normal style"),
-			# Translators: A choice in a combo box in the paragraph navigation dialog  to navigate by block paragraphs
-			_("Block style")
-		]
+		from utils.paragraphHelper import paragraphStyles, paragraphStyleChoices
 		self.styleCombo = sHelper.addLabeledControl(paragraphStyleLabel, wx.Choice, choices=paragraphStyleChoices)
 		self.styleCombo.SetSelection(
-			self.paragraphStyles.index(config.conf["paragraphNavigation"]["paragraphStyle"]))
+			paragraphStyles.index(config.conf["paragraphNavigation"]["paragraphStyle"]))
 
 	def onSave(self):
+		from utils.paragraphHelper import paragraphStyles
 		choice = self.styleCombo.GetSelection()
-		config.conf["paragraphNavigation"]["paragraphStyle"] = self.paragraphStyles[choice]
+		config.conf["paragraphNavigation"]["paragraphStyle"] = paragraphStyles[choice]
 
 class TouchInteractionPanel(SettingsPanel):
 	# Translators: This is the label for the touch interaction settings panel.
