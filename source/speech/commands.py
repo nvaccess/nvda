@@ -184,18 +184,20 @@ class BaseProsodyCommand(SynthParamCommand):
 	To return to the default value, specify neither.
 	This base class should not be instantiated directly.
 	"""
-	#: The name of the setting in the configuration; e.g. pitch, rate, etc.
-	settingName = None
 
-	def __init__(self, offset=0, multiplier=1):
+	settingName: Optional[str] = None
+	"""
+	The name of the setting in the configuration; e.g. pitch, rate, etc.
+	Should have an integer value from 0-100 in the config.
+	"""
+
+	def __init__(self, offset: int = 0, multiplier: float = 1):
 		"""Constructor.
 		Either of C{offset} or C{multiplier} may be specified, but not both.
 		@param offset: The amount by which to increase/decrease the user configured setting;
 			e.g. 30 increases by 30, -10 decreases by 10, 0 returns to the configured setting.
-		@type offset: int
 		@param multiplier: The number by which to multiply the user configured setting;
 			e.g. 0.5 is half, 1 returns to the configured setting.
-		@param multiplier: int/float
 		"""
 		if offset != 0 and multiplier != 1:
 			raise ValueError("offset and multiplier both specified")
@@ -204,15 +206,16 @@ class BaseProsodyCommand(SynthParamCommand):
 		self.isDefault = offset == 0 and multiplier == 1
 
 	@property
-	def defaultValue(self):
+	def defaultValue(self) -> int:
 		"""The default value for the setting as configured by the user.
+		@returns: a settings value from 0-100 such as pitch, volume or rate.
 		"""
 		synth = getSynth()
 		synthConf = config.conf["speech"][synth.name]
 		return synthConf[self.settingName]
 
 	@property
-	def multiplier(self):
+	def multiplier(self) -> float:
 		"""The number by which to multiply the default value.
 		"""
 		if self._multiplier != 1:
@@ -221,13 +224,14 @@ class BaseProsodyCommand(SynthParamCommand):
 		if self._offset == 0:
 			# Returning to default.
 			return 1
+		# If value is 0, division by 0 error occurs
+		defaultVal = max(self.defaultValue, 1)
 		# Calculate multiplier from default value and offset.
-		defaultVal = self.defaultValue
 		newVal = defaultVal + self._offset
 		return float(newVal) / defaultVal
 
 	@property
-	def offset(self):
+	def offset(self) -> int:
 		"""The amount by which to increase/decrease the default value.
 		"""
 		if self._offset != 0:
@@ -242,7 +246,7 @@ class BaseProsodyCommand(SynthParamCommand):
 		return int(newVal - defaultVal)
 
 	@property
-	def newValue(self):
+	def newValue(self) -> int:
 		"""The new absolute value after the offset or multiplier is applied to the default value.
 		"""
 		if self._offset != 0:
@@ -254,7 +258,7 @@ class BaseProsodyCommand(SynthParamCommand):
 		# Returning to default.
 		return self.defaultValue
 
-	def __repr__(self):
+	def __repr__(self) -> str:
 		if self._offset != 0:
 			param = "offset=%d" % self._offset
 		elif self._multiplier != 1:
