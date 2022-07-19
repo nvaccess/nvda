@@ -226,6 +226,7 @@ def removeOldProgramFiles(destPath):
 				except RetriableFailure:
 					log.warning(f"Couldn't remove file: {path!r}")
 
+
 uninstallerRegInfo={
 	"DisplayName":versionInfo.name,
 	"DisplayVersion":versionInfo.version,
@@ -237,10 +238,55 @@ uninstallerRegInfo={
 	"URLInfoAbout":versionInfo.url,
 }
 
-def registerInstallation(installDir,startMenuFolder,shouldCreateDesktopShortcut,startOnLogonScreen,configInLocalAppData=False):
-	with winreg.CreateKeyEx(winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\NVDA",0,winreg.KEY_WRITE) as k:
-		for name,value in uninstallerRegInfo.items(): 
-			winreg.SetValueEx(k,name,None,winreg.REG_SZ,value.format(installDir=installDir))
+
+def getDirectorySize(path: str) -> int:
+	"""Calculates the size of a directory in bytes.
+	"""
+	total = 0
+	with os.scandir(path) as iterator:
+		for entry in iterator:
+			if entry.is_file():
+				total += entry.stat().st_size
+			elif entry.is_dir():
+				total += getDirectorySize(entry.path)
+	return total
+
+
+def registerInstallation(
+		installDir: str,
+		startMenuFolder: str,
+		shouldCreateDesktopShortcut: bool,
+		startOnLogonScreen: bool,
+		configInLocalAppData: bool = False
+) -> None:
+	calculatedUninstallerRegInfo = uninstallerRegInfo.copy()
+	# EstimatedSize is in KiB
+	estimatedSize = getDirectorySize(installDir)
+	log.debug(f"Estimated install size {estimatedSize}")
+	calculatedUninstallerRegInfo.update(EstimatedSize=estimatedSize // 1024)
+	with winreg.CreateKeyEx(
+		winreg.HKEY_LOCAL_MACHINE,
+		r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\NVDA",
+		0,
+		winreg.KEY_WRITE
+	) as k:
+		for name, value in calculatedUninstallerRegInfo.items():
+			if isinstance(value, int):
+				winreg.SetValueEx(
+					k,
+					name,
+					None,
+					winreg.REG_DWORD,
+					value
+				)
+			else:
+				winreg.SetValueEx(
+					k,
+					name,
+					None,
+					winreg.REG_SZ,
+					value.format(installDir=installDir)
+				)
 	with winreg.CreateKeyEx(winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\nvda.exe",0,winreg.KEY_WRITE) as k:
 		winreg.SetValueEx(k,"",None,winreg.REG_SZ,os.path.join(installDir,"nvda.exe"))
 	with winreg.CreateKeyEx(winreg.HKEY_LOCAL_MACHINE, config.RegistryKey.NVDA.value, 0, winreg.KEY_WRITE) as k:
@@ -584,8 +630,14 @@ def install(shouldCreateDesktopShortcut=True,shouldRunAtLogon=True):
 			break
 	else:
 		raise RuntimeError("No available executable to use as nvda.exe")
-	registerInstallation(installDir,startMenuFolder,shouldCreateDesktopShortcut,shouldRunAtLogon,configInLocalAppData)
-	removeOldLibFiles(installDir,rebootOK=True)
+	removeOldLibFiles(installDir, rebootOK=True)
+	registerInstallation(
+		installDir,
+		startMenuFolder,
+		shouldCreateDesktopShortcut,
+		shouldRunAtLogon,
+		configInLocalAppData
+	)
 	COMRegistrationFixes.fixCOMRegistrations()
 
 def removeOldLoggedFiles(installPath):

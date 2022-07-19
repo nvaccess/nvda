@@ -3587,6 +3587,18 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		except:
 			index=0
 		self.focusContextPresentationList.SetSelection(index)
+
+		self.brailleInterruptSpeechCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
+			labelText=_(
+				# Translators: This is a label for a combo-box in the Braille settings panel.
+				"I&nterrupt speech while scrolling"
+			),
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["braille", "interruptSpeechWhileScrolling"],
+			conf=config.conf,
+		)
+		self.bindHelpEvent("BrailleSettingsInterruptSpeech", self.brailleInterruptSpeechCombo)
+
 		if gui._isDebug():
 			log.debug("Finished making settings, now at %.2f seconds from start"%(time.time() - startTime))
 
@@ -3615,6 +3627,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		config.conf["braille"]["readByParagraph"] = self.readByParagraphCheckBox.Value
 		config.conf["braille"]["wordWrap"] = self.wordWrapCheckBox.Value
 		config.conf["braille"]["focusContextPresentation"] = self.focusContextPresentationValues[self.focusContextPresentationList.GetSelection()]
+		self.brailleInterruptSpeechCombo.saveCurrentValueToConf()
 
 	def onShowCursorChange(self, evt):
 		self.cursorBlinkCheckBox.Enable(evt.IsChecked())
