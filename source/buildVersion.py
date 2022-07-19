@@ -70,7 +70,6 @@ version_major = 3
 version_minor = 0
 version_build = 0  # Should not be set manually. Set in 'sconscript' provided by 'appVeyor.yml'
 version=_formatDevVersionString()
-version_detailed = formatBuildVersionString()
 publisher="unknown"
 updateVersionType=None
 try:
@@ -78,5 +77,6 @@ try:
 except ImportError:
 	_updateVersionFromVCS()
 
+version_detailed = formatBuildVersionString()
 # A test version is anything other than a final or rc release.
 isTestVersion = not version[0].isdigit() or "alpha" in version or "beta" in version or "dev" in version
