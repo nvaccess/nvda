@@ -4,14 +4,19 @@ This document aims to create a standard style guide for writing documentation in
 The principles outlined in ["The Documentation System" guide for reference materials](https://documentation.divio.com/reference/) are encouraged when working on the User Guide and this document.
 
 ## General standards
-- Key commands should be lowerCamelCase and encapsulated in monospace code-block formatting.
-  - e.g. ` ``NVDA+control+upArrow`` `
+- Key commands (e.g. ` ``NVDA+control+upArrow`` `):
+  - should be written in lowerCamelCase
+  - encapsulated in monospace code-block formatting
+  - NVDA should be capitalized
 - When referring to Windows terminology, follow the [Windows style guide](https://docs.microsoft.com/en-us/style-guide/welcome/).
   - For instance, instead of "system tray" refer to "notification area"
 
-## Feature flags
+## Feature settings
 
 Feature flags should be included using the following format.
+
+`FeatureDescriptionAnchor` should not include the settings category.
+Once the anchor is set it cannot be updated, while settings may move categories.
 
 ```text2tags
 ==== The name of a feature ====[FeatureDescriptionAnchor]
