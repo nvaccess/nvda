@@ -1265,6 +1265,20 @@ This option should generally be enabled.
 However, some Microsoft Speech API synthesizers do not implement this correctly and behave strangely when it is enabled.
 If you are having problems with the pronunciation of individual characters, try disabling this option.
 
+==== Delayed descriptions for characters on cursor movement ====[delayedCharacterDescriptions]
+: Default
+  Disabled
+: Options
+  Enabled, Disabled
+:
+
+When this setting is checked, NVDA will say the character description when you move by characters.
+
+For example, while reviewing a line by characters, when the letter "b" is read NVDA will say "Bravo" after a 1 second delay.
+This can be useful if it is hard to distinguish between pronunciation of symbols, or for hearing impaired users.
+
+The delayed character description will be cancelled if other text is spoken during that time, or if you press the ``control`` key.
+
 +++ Select Synthesizer (NVDA+control+s) +++[SelectSynthesizer]
 The Synthesizer dialog, which can be opened by activating the Change... button in the speech category of the NVDA settings dialog, allows you to select which Synthesizer NVDA should use to speak with.
 Once you have selected your synthesizer of choice, you can press Ok and NVDA will load the selected Synthesizer.
@@ -1414,6 +1428,21 @@ Thus, in the example above, NVDA will display that you focused a list item.
 However, in order for you to read the context (i.e. that you are in a list and that the list is part of a dialog), you will have to scroll your braille display back.
 
 To toggle focus context presentation from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
+
+==== Interrupt speech while scrolling ====[BrailleSettingsInterruptSpeech]
+: Default
+  Enabled
+: Options
+  Default (Enabled), Enabled, Disabled
+:
+
+This setting determines if speech should be interrupted when the Braille display is scrolled backwards/forwards.
+Previous/next line commands always interrupt speech.
+
+On-going speech might be a distraction while reading Braille.
+For this reason the option is enabled by default, interrupting speech when scrolling braille.
+
+Disabling this option allows speech to be heard while simultaneously reading Braille.
 
 +++ Select Braille Display (NVDA+control+a) +++[SelectBrailleDisplay]
 The Select Braille Display dialog, which can be opened by activating the Change... button in the Braille category of the NVDA settings dialog, allows you to select which Braille display NVDA should use for braille output.
