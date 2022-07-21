@@ -24,8 +24,6 @@ Once the anchor is set it cannot be updated, while settings may move categories.
   Enabled
 : Options
   Default (Enabled), Enabled, Disabled
-: ``NVDA+o``
-  Toggle this feature
 :
 
 This setting allows the feature of using functionality in a certain situation to be controlled in some way.
