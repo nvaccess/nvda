@@ -74,14 +74,8 @@ dl {
   grid-template-columns: auto;
 }
 
-/* Monospace formatting block inside the definition list */
-dl code {
-  width: max-content;
-}
-
 /* Term of a definition */
 dl > dt {
-  display: inherit;
   grid-column-start: 1;
   font-style: italic;
   font-weight: bold;
