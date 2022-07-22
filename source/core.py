@@ -848,6 +848,11 @@ def _terminate(module, name=None):
 	except:
 		log.exception("Error terminating %s" % name)
 
+
+def isMainThread() -> bool:
+	return threading.get_ident() == mainThreadId
+
+
 def requestPump():
 	"""Request a core pump.
 	This will perform any queued activity.
@@ -858,7 +863,7 @@ def requestPump():
 	if not _pump or _isPumpPending:
 		return
 	_isPumpPending = True
-	if threading.get_ident() == mainThreadId:
+	if isMainThread():
 		_pump.Start(PUMP_MAX_DELAY, True)
 		return
 	# This isn't the main thread. wx timers cannot be run outside the main thread.
@@ -882,7 +887,7 @@ def callLater(delay, callable, *args, **kwargs):
 		# If NVDA has not fully initialized yet, the wxApp may not be initialized.
 		# wx.CallLater and wx.CallAfter requires the wxApp to be initialized.
 		raise NVDANotInitializedError("Cannot schedule callable, wx.App is not initialized")
-	if threading.get_ident() == mainThreadId:
+	if isMainThread():
 		return wx.CallLater(delay, _callLaterExec, callable, args, kwargs)
 	else:
 		return wx.CallAfter(wx.CallLater,delay, _callLaterExec, callable, args, kwargs)

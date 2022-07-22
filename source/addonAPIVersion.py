@@ -15,7 +15,11 @@ how the API has changed as well as the range of API versions supported by this b
 
 AddonApiVersionT = Tuple[int, int, int]
 
-CURRENT: AddonApiVersionT = (buildVersion.version_year, buildVersion.version_major, buildVersion.version_minor)
+CURRENT: AddonApiVersionT = (
+	buildVersion.version_year,
+	buildVersion.version_major,
+	buildVersion.version_minor
+)
 BACK_COMPAT_TO: AddonApiVersionT = (2022, 1, 0)
 """
 As BACK_COMPAT_TO is incremented, the changed / removed parts / or reasoning should be added below.

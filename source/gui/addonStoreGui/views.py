@@ -15,7 +15,12 @@ import wx.lib.newevent
 from wx.lib.expando import ExpandoTextCtrl
 
 import gui
-from gui import guiHelper, nvdaControls, DpiScalingHelperMixinWithoutInit
+from gui import (
+	guiHelper,
+	nvdaControls,
+	DpiScalingHelperMixinWithoutInit,
+	addonGui,
+)
 from gui.settingsDialogs import SettingsDialog
 from logHandler import log
 
@@ -560,6 +565,41 @@ class AddonStoreDialog(SettingsDialog):
 
 	def _onWindowDestroy(self, evt: wx.WindowDestroyEvent):
 		super()._onWindowDestroy(evt)
+
+	def onOk(self, evt: wx.CommandEvent):
+		# Translators: Title for message shown prior to installing add-ons when closing the add-on store dialog.
+		installationPromptTitle = _("Add-on installation")
+		numInProgress = len(self._storeVM._downloader.progress)
+		if numInProgress:
+			res = gui.messageBox(
+				# Translators: Message shown prior to installing add-ons when closing the add-on store dialog
+				# The placeholder {} will be replaced with the number of add-ons to be installed
+				_("Download of {} add-ons in progress, cancel downloading?").format(
+					numInProgress
+				),
+				installationPromptTitle,
+				style=wx.YES_NO
+			)
+			if res == wx.YES:
+				log.debug("Cancelling the download.")
+				self._storeVM.cancelDownloads()
+				# Continue to installation if any downloads completed
+			else:
+				# Let the user return to the add-on store and inspect add-ons being downloaded.
+				return
+
+		if self._storeVM._pendingInstalls:
+			gui.messageBox(
+				# Translators: Message shown prior to installing add-ons when closing the add-on store dialog
+				# The placeholder {} will be replaced with the number of add-ons to be installed
+				_("Now installing {} add-ons.").format(len(self._storeVM._pendingInstalls)),
+				installationPromptTitle
+			)
+			self._storeVM.installPending()
+			addonGui.promptUserForRestart()
+
+		# let the dialog exit.
+		super().onOk(evt)
 
 	def onFilterChange(self, evt):
 		filterText = evt.GetEventObject().GetValue()

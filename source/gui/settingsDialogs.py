@@ -250,7 +250,7 @@ class SettingsDialog(
 		Sub-classes may override this method.
 		"""
 
-	def onOk(self, evt):
+	def onOk(self, evt: wx.CommandEvent):
 		"""Take action in response to the OK button being pressed.
 		Sub-classes may extend this method.
 		This base method should always be called to clean up the dialog.
@@ -258,7 +258,7 @@ class SettingsDialog(
 		self.DestroyLater()
 		self.SetReturnCode(wx.ID_OK)
 
-	def onCancel(self, evt):
+	def onCancel(self, evt: wx.CommandEvent):
 		"""Take action in response to the Cancel button being pressed.
 		Sub-classes may extend this method.
 		This base method should always be called to clean up the dialog.
@@ -266,7 +266,7 @@ class SettingsDialog(
 		self.DestroyLater()
 		self.SetReturnCode(wx.ID_CANCEL)
 
-	def onApply(self, evt):
+	def onApply(self, evt: wx.CommandEvent):
 		"""Take action in response to the Apply button being pressed.
 		Sub-classes may extend or override this method.
 		This base method should be called to run the postInit method.

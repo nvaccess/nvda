@@ -4,6 +4,9 @@
 # See the file COPYING for more details.
 import typing
 import enum
+from os import (
+	PathLike,
+)
 from enum import (
 	Enum,
 )
@@ -11,6 +14,7 @@ from typing import (
 	List,
 	Optional,
 	Dict,
+	Tuple,
 )
 import threading
 
@@ -47,6 +51,8 @@ class AvailableAddonStatus(DisplayStringEnum):
 	# noinspection PyArgumentList
 	DOWNLOAD_FAILED = enum.auto()
 	# noinspection PyArgumentList
+	DOWNLOAD_SUCCESS = enum.auto()
+	# noinspection PyArgumentList
 	INSTALLING = enum.auto()
 	# noinspection PyArgumentList
 	INSTALL_FAILED = enum.auto()
@@ -70,6 +76,8 @@ class AvailableAddonStatus(DisplayStringEnum):
 			AvailableAddonStatus.DOWNLOADING: _("Downloading"),
 			# Translators: Status for addons shown in the add-on store dialog
 			AvailableAddonStatus.DOWNLOAD_FAILED: _("Download failed"),
+			# Translators: Status for addons shown in the add-on store dialog
+			AvailableAddonStatus.DOWNLOAD_SUCCESS: _("Downloaded"),
 			# Translators: Status for addons shown in the add-on store dialog
 			AvailableAddonStatus.INSTALLING: _("Installing"),
 			# Translators: Status for addons shown in the add-on store dialog
@@ -179,7 +187,7 @@ class AddonListVM:
 	def _itemDataUpdated(self, addonListItemVM: AddonListItemVM):
 		addonId: str = addonListItemVM.Id
 		log.debug(f"status: {addonListItemVM.status}")
-		log.debug(f"equal instances: {addonListItemVM == self._addons[addonId]}")
+		assert addonListItemVM == self._addons[addonId], "Must be the same instance."
 		if addonId in self._addonsFilteredOrdered:
 			log.debug("calling")
 			index = self._addonsFilteredOrdered.index(addonId)
@@ -462,6 +470,9 @@ class AddonStoreVM:
 		self._addons: List[AddonDetailsModel] = []
 		self._filteredStatuses = [None, AvailableAddonStatus.RUNNING]
 
+		self._downloader = dataManager.getFileDownloader()
+		self._pendingInstalls: List[Tuple[AddonListItemVM, PathLike]] = []
+
 		self.listVM: AddonListVM = AddonListVM(
 			addons=_createListItemVMs(self._addons, self._filteredStatuses)
 		)
@@ -493,47 +504,62 @@ class AddonStoreVM:
 			AddonActionVM(
 				# Translators: Label for a button that installs the selected addon
 				displayName=_("Install"),
-				actionHandler=self.installAddon,
+				actionHandler=self.getAddon,
 				validCheck=self.isInstallActionValid,
 				listItemVM=selectedListItem
 			),
 		]
 
-	def _installAddonInBG(self, listItemVM: AddonListItemVM):
-		try:
-			for status in self._doInstallAddon(listItemVM):
-				log.debug(f"{listItemVM.Id} status: {status}")
-				listItemVM.status = status
-		except TranslatedError as e:
-			log.debugWarning(f"Error during installation of {listItemVM.Id}", exc_info=True)
+	def getAddon(self, listItemVM: AddonListItemVM):
+		listItemVM.status = AvailableAddonStatus.DOWNLOADING
+		log.debug(f"{listItemVM.Id} status: {listItemVM.status}")
+		self._downloader.download(listItemVM.model, self._downloadComplete)
+
+	def _downloadComplete(self, addonDetails: AddonDetailsModel, fileDownloaded: Optional[PathLike]):
+		listItemVM: Optional[AddonListItemVM] = self.listVM._addons[addonDetails.addonId]
+		if listItemVM is None:
+			log.error(f"No list item VM for addon with id: {addonDetails.addonId}")
+			return
+
+		if fileDownloaded is None:
+			listItemVM.status = AvailableAddonStatus.DOWNLOAD_FAILED
+			log.debugWarning(f"Error during download of {listItemVM.Id}", exc_info=True)
+			e = TranslatedError(
+				# Translators: A message shown when downloading an add-on fails
+				displayMessage=pgettext("addonStore", "Unable to download add-on.")
+			)
 			# ensure calling on the main thread.
 			core.callLater(delay=0, callable=self.hasError.notify, error=e)
+			return
 
-	def installAddon(self, listItemVM: AddonListItemVM):
-		threading.Thread(
-			target=self._installAddonInBG,
-			name="install addon",
-			args=[listItemVM],
-		).start()
+		listItemVM.status = AvailableAddonStatus.DOWNLOAD_SUCCESS
+		log.debug(f"Queuing add-on for install on dialog exit: {listItemVM.Id}")
+		# Add-ons can have "installTasks", which often call the GUI assuming they are on the main thread.
+		self._pendingInstalls.append((listItemVM, fileDownloaded))
 
-	def _doInstallAddon(self, addon: AddonListItemVM) -> typing.Generator[AvailableAddonStatus, None, None]:
-		yield AvailableAddonStatus.DOWNLOADING
-		fileDownloaded = self._dataManager.downloadAddonFile(addon.model)
-		if fileDownloaded is None:
-			yield AvailableAddonStatus.DOWNLOAD_FAILED
-			raise TranslatedError(
-				displayMessage=pgettext(
-					"addonStore",
-					"Unable to download addon."
-				)
-			)
-		yield AvailableAddonStatus.INSTALLING
+	def installPending(self):
+		if not core.isMainThread():
+			# Add-ons can have "installTasks", which often call the GUI assuming they are on the main thread.
+			log.error("installation must happen on main thread.")
+		for listItemVM, fileDownloaded in self._pendingInstalls:
+			self._doInstall(listItemVM, fileDownloaded)
+
+	def _doInstall(self, listItemVM: AddonListItemVM, fileDownloaded: PathLike):
+		if not core.isMainThread():
+			# Add-ons can have "installTasks", which often call the GUI assuming they are on the main thread.
+			log.error("installation must happen on main thread.")
+			return
+		listItemVM.status = AvailableAddonStatus.INSTALLING
+		log.debug(f"{listItemVM.Id} status: {listItemVM.status}")
 		try:
 			installAddon(fileDownloaded)
 		except TranslatedError as e:
-			yield AvailableAddonStatus.INSTALL_FAILED
-			raise e
-		yield AvailableAddonStatus.INSTALLED
+			listItemVM.status = AvailableAddonStatus.INSTALL_FAILED
+			log.debug(f"{listItemVM.Id} status: {listItemVM.status}")
+			self.hasError.notify(error=e)
+			return
+		listItemVM.status = AvailableAddonStatus.INSTALLED
+		log.debug(f"{listItemVM.Id} status: {listItemVM.status}")
 
 	def refresh(self):
 		threading.Thread(target=self._getAddonsInBG, name="getAddonData").start()
@@ -549,6 +575,11 @@ class AddonStoreVM:
 		self.listVM.resetListItems(_createListItemVMs(self._addons, self._filteredStatuses))
 		self.detailsVM.listItem = self.listVM.getSelection()
 		log.debug("completed refresh")
+
+	def cancelDownloads(self):
+		for a in self._downloader.progress.keys():
+			self.listVM._addons[a.addonId].status = AvailableAddonStatus.AVAILABLE
+		self._downloader.cancelAll()
 
 
 class TranslatedError(Exception):
@@ -603,13 +634,14 @@ def getPreviouslyInstalledAddonById(addonId: str) -> Optional[addonHandler.Addon
 	return None
 
 
-def installAddon(addonPath: str) -> None:
+def installAddon(addonPath: PathLike) -> None:
 	""" Installs the addon at path.
 	Any error messages / warnings are presented to the user via a GUI message box.
 	If attempting to install an addon that is pending removal, it will no longer be pending removal.
 	@note See also L{gui.addonGui.installAddon}
 	@raise TranslatedError on failure
 	"""
+	addonPath = typing.cast(str, addonPath)
 	bundle = getAddonBundleToInstallIfValid(addonPath)
 	prevAddon = getPreviouslyInstalledAddonById(addonId=bundle.name)
 
