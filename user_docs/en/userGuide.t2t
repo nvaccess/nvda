@@ -95,7 +95,7 @@ Check the [System Requirements #SystemRequirements] for full details.
 
 These steps assume some familiarity with navigating a web page.
 
-- Open your web browser (Press the ``Windows`` key, type the word "internet" without quotes, and press `enter`)
+- Open your web browser (Press the ``Windows`` key, type the word "internet" without quotes, and press ``enter``)
 - Load the NV Access download page (Press ``alt+d``, type the following address and press ``enter``): 
 https://www.nvaccess.org/download 
 - Activate the "download" button
@@ -120,9 +120,9 @@ The year and version changes between updates to reflect the current release.
 Music plays while a temporary copy of NVDA loads.
 Once loaded, NVDA will speak throughout the rest of the process.
 +	The NVDA Launcher window appears with the license agreement.
-Press `down arrow` to read the license agreement if desired.
-+	Press `tab` to move to the "I agree" checkbox, then press the `spacebar` to check it.
-+	Press `tab` to move through the options, then press `enter` on the desired option.
+Press ``down arrow`` to read the license agreement if desired.
++	Press ``tab`` to move to the "I agree" checkbox, then press the ``spacebar`` to check it.
++	Press ``tab`` to move through the options, then press ``enter`` on the desired option.
 The options are: 
 ++	"Install NVDA on this computer": This is the main option most users want for easy use of NVDA. 
 ++	"Create portable copy": This allows NVDA to be setup in any folder without installing.
@@ -142,39 +142,39 @@ Installing NVDA will allow for additional functionality such as automatic starti
 These cannot be done with portable and temporary copies.
 For full details of the limitations when running a portable or temporary copy of NVDA, please see [Portable and temporary copy restrictions PortableAndTemporaryCopyRestrictions].
 
-Installing also offers to create Start Menu and desktop shortcuts, and allow NVDA to be started with `control+alt+n`.
+Installing also offers to create Start Menu and desktop shortcuts, and allow NVDA to be started with ``control+alt+n``.
 
 +++ Steps for installing NVDA from the launcher [StepsForInstallingNVDAFromTheLauncher]
 These steps walk through the most common setup options.
 For more details on the options available, please see [Installation options InstallingNVDA].
 
 +	From the launcher, ensure the checkbox to agree to the license is checked.
-+	`Tab` to, and activate the "Install NVDA on this computer" button.
++	``Tab`` to, and activate the "Install NVDA on this computer" button.
 +	Next, are options to use NVDA during Windows sign-in and to create a desktop shortcut.
 These are checked by default.
-If desired, press `tab` and `spacebar` to change any of these options, or leave them at the default.
-+	Press `enter` to continue.
+If desired, press ``tab`` and ``spacebar`` to change any of these options, or leave them at the default.
++	Press ``enter`` to continue.
 +	A Windows "User Account Control (UAC)" dialog appears asking "Do you want to allow this app to make changes to your PC?".
-+ Press `alt+y` to accept the UAC prompt.
++ Press ``alt+y`` to accept the UAC prompt.
 +	A progress bar fills up as NVDA installs.
 During this process NVDA sounds an increasingly higher pitched beep.
 This process is often fast and may not be noticed.
 +	A dialog box appears confirm that the install of NVDA has been successful.
 The message advises to "Press OK to start the installed copy".
-Press `enter` to start the installed copy.
+Press ``enter`` to start the installed copy.
 +	The "Welcome to NVDA" dialog appears, and NVDA reads a welcome message.
 The focus is on the "Keyboard Layout" drop-down:
 ++	"Desktop" keyboard layout (the default), uses the number pad for some functions. 
 ++	"Laptop" Keyboard layout" reassigns number pad functions to other keys.
 ++
-+	Press `tab` to move to "Use `caps lock` as an NVDA modifier key".
-`Insert` is set as the NVDA modifier key by default.
-Press `spacebar` to select `caps lock` as an alternate modifier key.
++	Press ``tab`` to move to "Use ``caps lock`` as an NVDA modifier key".
+``Insert`` is set as the NVDA modifier key by default.
+Press ``spacebar`` to select ``caps lock`` as an alternate modifier key.
 Note that the keyboard layout is set separately from the NVDA modifier key.
 The NVDA key and keyboard layout can be changed later from the Keyboard Settings.
-+	Use `tab` and `spacebar` to adjust the other options on this screen.
++	Use ``tab`` and ``spacebar`` to adjust the other options on this screen.
 These set whether NVDA starts automatically.
-+	Press `enter` to close the dialog box with NVDA now running.
++	Press ``enter`` to close the dialog box with NVDA now running.
 +
 
 ++ Running NVDA +[RunningNVDA]
@@ -188,11 +188,11 @@ Here are some basic commands which are used frequently.
 All commands are configurable, so these are the default keystrokes for these functions.
 
 +++ The NVDA Modifier Key
-The default NVDA modifier key is either the `numpad zero`, (with `numlock` off), or the `insert` key, near the `delete`, `home` and `end` keys.
-The NVDA modifier key can also be set to the `caps lock` key.
+The default NVDA modifier key is either the ``numpad zero``, (with ``numlock`` off), or the ``insert`` key, near the ``delete``, ``home`` and ``end`` keys.
+The NVDA modifier key can also be set to the ``caps lock`` key.
 
 +++ Input Help
-To learn and practice the location of keys, press `NVDA+1` to turn Input help on.
+To learn and practice the location of keys, press ``NVDA+1`` to turn Input help on.
 While in input help mode, performing any input gesture (such as pressing a key or performing a touch gesture) will report the action and describe what it does (if anything).
 The actual commands will not execute while in input help mode. 
 
@@ -242,16 +242,16 @@ The actual commands will not execute while in input help mode.
 | Landmark | d | Move to the next landmark |
 | List | l | Move to the next list |
 | Table | t | Move to the next table |
-| Move backwards | shift+letter | Press `shift` and any of the above letters to move to the previous element of that type |
+| Move backwards | shift+letter | Press ``shift`` and any of the above letters to move to the previous element of that type |
 | Elements list | NVDA+f7 | Lists various types of elements, such as links and headings |
 
 ++ Preferences +[Preferences]
 
 Most NVDA functions can be enabled or changed via the NVDA settings.
 Settings, and other options, are available via NVDA's menu.
-To open NVDA's menu, press `NVDA+n`.
-To open NVDA's general settings dialog directly, press `NVDA+control+g`.
-Many settings screens have keystrokes to open them directly, such as `NVDA+control+s` for synthesizer, or `NVDA+control+v` for other voice options.
+To open NVDA's menu, press ``NVDA+n``.
+To open NVDA's general settings dialog directly, press ``NVDA+control+g``.
+Many settings screens have keystrokes to open them directly, such as ``NVDA+control+s`` for synthesizer, or ``NVDA+control+v`` for other voice options.
 
 ++ Community +[Community]
 
@@ -265,7 +265,7 @@ This is an online exam you can complete to demonstrate your skills in NVDA.
 
 ++ Getting help +[GettingHelp]
 
-To get help for NVDA, press `NVDA+n` to open the menu, then `h` for help.
+To get help for NVDA, press ``NVDA+n`` to open the menu, then ``h`` for help.
 From this submenu you can access the User Guide, a quick reference of commands, history of new features and more.
 These first three options open in the default web browser.
 There is also more comprehensive Training Material available in the [NV Access Shop https://www.nvaccess.org/shop].
