@@ -142,3 +142,6 @@ self.loadChromeVbufWhenBusyCombo.resetToConfigSpecDefault()
 # save GUI value to config:
 self.loadChromeVbufWhenBusyCombo.saveCurrentValueToConf()
 ```
+
+## User Guide Documentation
+Refer to [User Guide Standards](./userGuideStandards.md#feature-settings)
