@@ -550,8 +550,6 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 				fontObj = textRange.font
 			fgColor=fontObj.foreColor
 			if fgColor==comInterfaces.tom.tomAutoColor:
-				# Translators: The default color of text when a color has not been set by the author. 
-				formatField['color']=_("default color")
 				formatField['color'] = colors.RGB.fromCOLORREF(winUser.user32.GetSysColor(SC_COLOR_WINDOWTEXT))
 			elif fgColor&0xff000000:
 				# The color is a palet index (we don't know the palet)
@@ -561,8 +559,6 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 				formatField["color"]=colors.RGB.fromCOLORREF(fgColor)
 			bkColor=fontObj.backColor
 			if bkColor==comInterfaces.tom.tomAutoColor:
-				# Translators: The default background color  when a color has not been set by the author. 
-				formatField['background-color']=_("default color")
 				formatField['background-color'] = colors.RGB.fromCOLORREF(winUser.user32.GetSysColor(SC_COLOR_WINDOW))
 			elif bkColor&0xff000000:
 				# The color is a palet index (we don't know the palet)
