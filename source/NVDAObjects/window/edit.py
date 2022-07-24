@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited, Babbage B.V.
+# Copyright (C) 2006-2022 NV Access Limited, Babbage B.V., Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -161,6 +161,12 @@ WB_MOVEWORDRIGHT=5
 WB_LEFTBREAK=6
 WB_RIGHTBREAK=7
 
+# Color index for GetSystemColor
+# See https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getsyscolor
+SC_COLOR_WINDOW = 5
+SC_COLOR_WINDOWTEXT = 8
+
+
 class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _getPointFromOffset(self,offset):
@@ -282,8 +288,17 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 			    formatField["text-position"] = TextPosition.BASELINE
 		if formatConfig["reportColor"]:
 			if charFormat is None: charFormat=self._getCharFormat(offset)
-			formatField["color"]=colors.RGB.fromCOLORREF(charFormat.crTextColor) if not charFormat.dwEffects&CFE_AUTOCOLOR else _("default color")
-			formatField["background-color"]=colors.RGB.fromCOLORREF(charFormat.crBackColor) if not charFormat.dwEffects&CFE_AUTOBACKCOLOR else _("default color")
+			if charFormat.dwEffects & CFE_AUTOCOLOR:
+				rgb = winUser.user32.GetSysColor(SC_COLOR_WINDOWTEXT)
+			else:
+				rgb = charFormat.crTextColor
+			formatField["color"] = colors.RGB.fromCOLORREF(rgb)
+			if charFormat.dwEffects & CFE_AUTOBACKCOLOR:
+				rgb = winUser.user32.GetSysColor(SC_COLOR_WINDOW)
+			else:
+				rgb = charFormat.crBackColor
+			formatField["background-color"] = colors.RGB.fromCOLORREF(rgb)
+				
 		if formatConfig["reportLineNumber"]:
 			formatField["line-number"]=self._getLineNumFromOffset(offset)+1
 		if formatConfig["reportLinks"]:
@@ -538,6 +553,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 			if fgColor==comInterfaces.tom.tomAutoColor:
 				# Translators: The default color of text when a color has not been set by the author. 
 				formatField['color']=_("default color")
+				formatField['color'] = colors.RGB.fromCOLORREF(winUser.user32.GetSysColor(SC_COLOR_WINDOWTEXT))
 			elif fgColor&0xff000000:
 				# The color is a palet index (we don't know the palet)
 				# Translators: The color of text cannot be detected. 
@@ -548,6 +564,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 			if bkColor==comInterfaces.tom.tomAutoColor:
 				# Translators: The default background color  when a color has not been set by the author. 
 				formatField['background-color']=_("default color")
+				formatField['background-color'] = colors.RGB.fromCOLORREF(winUser.user32.GetSysColor(SC_COLOR_WINDOW))
 			elif bkColor&0xff000000:
 				# The color is a palet index (we don't know the palet)
 				# Translators: The background color cannot be detected. 
