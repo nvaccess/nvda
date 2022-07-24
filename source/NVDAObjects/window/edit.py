@@ -298,7 +298,6 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 			else:
 				rgb = charFormat.crBackColor
 			formatField["background-color"] = colors.RGB.fromCOLORREF(rgb)
-				
 		if formatConfig["reportLineNumber"]:
 			formatField["line-number"]=self._getLineNumFromOffset(offset)+1
 		if formatConfig["reportLinks"]:
