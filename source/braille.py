@@ -2819,7 +2819,6 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 			return description, key
 
 inputCore.registerGestureSource("br", BrailleDisplayGesture)
-# inputCore.registerGestureSource("kb", BrailleDisplayGesture)
 
 
 def getSerialPorts(filterFunc=None) -> typing.Iterator[typing.Tuple[str, str]]:
