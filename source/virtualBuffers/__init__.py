@@ -1,8 +1,9 @@
 # -*- coding: UTF-8 -*-
-# A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2007-2022 NV Access Limited, Peter Vágner
+#virtualBuffers/__init__.py
+#A part of NonVisual Desktop Access (NVDA)
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+#Copyright (C) 2007-2017 NV Access Limited, Peter Vágner
 
 import time
 import threading
@@ -38,8 +39,6 @@ import aria
 import treeInterceptorHandler
 import watchdog
 from abc import abstractmethod
-import documentBase
-
 
 VBufStorage_findDirection_forward=0
 VBufStorage_findDirection_back=1
@@ -640,16 +639,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		for item in results:
 			yield item.textInfo
 
-	def _getNearestTableCell(
-			self,
-			startPos: textInfos.TextInfo,
-			cell: documentBase._TableCell,
-			movement: documentBase._Movement,
-			axis: documentBase._Axis,
-	) -> textInfos.TextInfo:
-		tableID, origRow, origCol, origRowSpan, origColSpan = (
-			cell.tableID, cell.row, cell.col, cell.rowSpan, cell.collSpan
-		)
+	def _getNearestTableCell(self, tableID, startPos, origRow, origCol, origRowSpan, origColSpan, movement, axis):
 		# Determine destination row and column.
 		destRow = origRow
 		destCol = origCol
