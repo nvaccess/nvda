@@ -2778,12 +2778,12 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 		return self.id.split("+")
 
 	def _get_speechEffectWhenExecuted(self) -> Optional[str]:
-		from globalCommands import GlobalCommands
+		from globalCommands import commands
 		if (
 			not config.conf["braille"]["interruptSpeechWhileScrolling"]
 			and self.script in {
-				GlobalCommands.script_braille_scrollBack,
-				GlobalCommands.script_braille_scrollForward,
+				commands.script_braille_scrollBack,
+				commands.script_braille_scrollForward,
 			}
 		):
 			return None
@@ -2819,6 +2819,7 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 			return description, key
 
 inputCore.registerGestureSource("br", BrailleDisplayGesture)
+# inputCore.registerGestureSource("kb", BrailleDisplayGesture)
 
 
 def getSerialPorts(filterFunc=None) -> typing.Iterator[typing.Tuple[str, str]]:
