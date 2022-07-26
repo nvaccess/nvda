@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2021 NV Access Limited, Leonard de Ruijter, Joseph Lee, Renaud Paquay, pvagner
+# Copyright (C) 2006-2022 NV Access Limited, Leonard de Ruijter, Joseph Lee, Renaud Paquay, pvagner
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -97,13 +97,21 @@ JABStatesToNVDAStates={
 }
 
 
+re_simpleXmlTag = re.compile(r"(\<[^>]+\>)+")
 
-re_simpleXmlTag=re.compile(r"\<[^>]+\>")
+
+def _subHtmlTag(match: re.match) -> str:
+	""" Determines whether to replace the tag with a space or to just remove it. """
+	startIndex, endIndex = match.span()
+	return "" if (
+		startIndex == 0 or match.string[startIndex - 1].isspace()
+		or endIndex == len(match.string) or match.string[endIndex].isspace()
+	) else " "
 
 
-def _processHtml(text):
+def _processHtml(text: str) -> str:
 	""" Strips HTML tags from text if it is HTML """
-	return re_simpleXmlTag.sub(" ", text) if text.startswith("<html>") else text
+	return re_simpleXmlTag.sub(_subHtmlTag, text) if text.startswith("<html>") else text
 
 
 class JABTextInfo(textInfos.offsets.OffsetsTextInfo):
@@ -169,10 +177,12 @@ class JABTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return self._getLineOffsets(offset)
 
 	def _getFormatFieldAndOffsets(self, offset, formatConfig, calculateOffsets=True):
+		attribs: JABHandler.AccessibleTextAttributesInfo
 		attribs, length = self.obj.jabContext.getTextAttributesInRange(offset, self._endOffset - 1)
 		field = textInfos.FormatField()
 		field["font-family"] = attribs.fontFamily
-		field["font-size"] = "%dpt" % attribs.fontSize
+		# Translators: Abbreviation for points, a measurement of font size.
+		field["font-size"] = pgettext("font size", "%s pt") % str(attribs.fontSize)
 		field["bold"] = bool(attribs.bold)
 		field["italic"] = bool(attribs.italic)
 		field["strikethrough"] = bool(attribs.strikethrough)
@@ -320,6 +330,9 @@ class JAB(Window):
 		for state in stateStrings:
 			if state in JABStatesToNVDAStates:
 				stateSet.add(JABStatesToNVDAStates[state])
+		if self.role is controlTypes.Role.TOGGLEBUTTON and controlTypes.State.CHECKED in stateSet:
+			stateSet.discard(controlTypes.State.CHECKED)
+			stateSet.add(controlTypes.State.PRESSED)
 		if "editable" not in stateStrings and self._JABAccContextInfo.accessibleText:
 			stateSet.add(controlTypes.State.READONLY)
 		if "visible" not in stateStrings:
@@ -333,7 +346,15 @@ class JAB(Window):
 		return stateSet
 
 	def _get_value(self):
-		if self.role not in [controlTypes.Role.CHECKBOX,controlTypes.Role.MENU,controlTypes.Role.MENUITEM,controlTypes.Role.RADIOBUTTON,controlTypes.Role.BUTTON] and self._JABAccContextInfo.accessibleValue and not self._JABAccContextInfo.accessibleText:
+		if (
+			self.role not in [
+				controlTypes.Role.TOGGLEBUTTON, controlTypes.Role.CHECKBOX,
+				controlTypes.Role.MENU, controlTypes.Role.MENUITEM,
+				controlTypes.Role.RADIOBUTTON, controlTypes.Role.BUTTON
+			]
+			and self._JABAccContextInfo.accessibleValue
+			and not self._JABAccContextInfo.accessibleText
+		):
 			return self.jabContext.getCurrentAccessibleValueFromContext()
 
 	def _get_description(self):
@@ -372,7 +393,14 @@ class JAB(Window):
 				return info
 
 		parent=self.parent
-		if isinstance(parent,JAB) and self.role in (controlTypes.Role.TREEVIEWITEM,controlTypes.Role.LISTITEM):
+		if (
+			isinstance(parent, JAB)
+			and self.role in (
+				controlTypes.Role.TREEVIEWITEM,
+				controlTypes.Role.LISTITEM,
+				controlTypes.Role.TAB
+			)
+		):
 			index=self._JABAccContextInfo.indexInParent+1
 			childCount=parent._JABAccContextInfo.childrenCount
 			info['indexInGroup']=index
@@ -389,7 +417,7 @@ class JAB(Window):
 	def _get_parent(self):
 		if not hasattr(self,'_parent'):
 			jabContext=self.jabContext.getAccessibleParentFromContext()
-			if jabContext:
+			if jabContext and self.indexInParent is not None:
 				self._parent=JAB(jabContext=jabContext)
 			else:
 				self._parent=super(JAB,self).parent

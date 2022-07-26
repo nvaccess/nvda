@@ -3,6 +3,126 @@ NVDA 更新日志
 
 %!includeconf: ../changes.t2tconf
 
+= 2022.2 =
+该版本包含许多错误修复。
+尤其在基于 Java 的应用程序、盲文点显器和 Windows 功能方面有一些显著的改进。
+
+增加了新的表格导航快捷键。
+更新了 Unicode CLDR。
+更新了 LibLouis ，增加了一套新的德语盲文表。
+
+
+== 新特性 ==
+- 支持与 Microsoft Office 产品中的 Microsoft Loop Components 进行交互。 (#13617)
+- 添加了新的表格导航快捷键。 (#957)
+ - ``control+alt+home/end`` 移动到第一列/最后一列。
+ - ``control+alt+pageUp/pageDown`` 移动到第一行/最后一行。
+ -
+- 添加了一个未分配的手势来循环切换语言和方言切换模式开关。 (#10253)
+-
+
+== 改进 ==
+- 将 NSIS  更新到了 3.08. (#9134)
+- 将 CLDR 更新到了 41.0. (#13582)
+- 将 LibLouis 盲文翻译器更新到了 [3.22.0 https://github.com/liblouis/liblouis/releases/tag/v3.22.0]. (#13775)
+  - 新盲文表：德语2级（详细）
+  -
+- 为“忙碌指示器”控件添加了新角色。 (#10644)
+- NVDA 现在会在无法执行 NVDA 操作时发出通知。 (#13500)
+  - 具体如下：
+    - 使用了 Windows 应用商店版本的 NVDA。
+    - 在安全环境下。
+    - 等待模态对话框的响应。
+    -
+  -
+-
+
+
+== 错误修复 ==
+- 基于 Java 的应用程序中存在的以下问题得到了修复：
+  - 支持读出只读状态。 (#13692)
+  - 支持正确读出启用/禁用状态 (#10993)
+  - 支持读出对象的快捷键。 (#13643)
+  - 支持用语音朗读或提示音指示进度条进度。 (#13594)
+  - 修复了 NVDA 在向用户呈现信息时可能会错误地从 Java 小部件中删除文本的问题。 (#13102)
+  - 支持读出切换按钮的状态。 (#9728)
+  - 支持正确读出包含多窗口的 Java 应用程序的窗口标题。 (#9184)
+  - 支持读出选项卡控件的位置信息。 (#13744)
+  -
+- 盲文相关修复：
+  - 修复了在 Mozilla 富文本编辑控件中导航某些文本时的盲文输出问题，例如在 Thunderbird 中撰写消息。 (#12542)
+  - 当盲文自动连接并在启用鼠标导航的情况下移动鼠标时，文本导航命令会使用语音朗读的内容更新盲文显示。 (#11519)
+  - 支持在使用文本查看命令后正常滚动盲文显示。 (#8682)
+  -
+- NVDA 安装程序支持在包含特殊字符的目录中运行。 (#13270)
+- 在 Firefox 中，当 aria-rowindex、aria-colindex、aria-rowcount 或 aria-colcount 属性无效时，NVDA 支持读出网页中的项目。 (#13405)
+- 使用表格导航在合并的单元格中导航时，光标不会再切换行或列。 (#7278)
+- 在 Adobe Reader 中阅读非交互式 PDF 时，现在会读出表单（例如复选框和单选按钮）的类型和状态。 (#13285)
+- 支持在安全模式下使用 NVDA 菜单中的“重置设置为默认值”。 (#13547)
+- 当 NVDA 退出时，会释放所有已锁定的鼠标键，在以前鼠标键将保持锁定状态。 (#13410)
+- 支持在 Visual Studio 中读出行号。 (#13604)
+  - 请注意，如果要读出行号，必须在 Visual Studio 和 NVDA 中启用行号。
+  -
+- 支持在 Visual Studio 中正确读出行缩进。 (#13574)
+- 支持在最新的 Windows 10 和 11 中读出开始菜单搜索结果的详细信息。 (#13544)
+- 在 Windows 10 和 11 计算器版本 10.1908 及更高版本中，NVDA 会在按下更多命令时读出结果，例如科学计算器模式下的相关命令。 (#13383)
+- 在 Windows 11 中，支持导航某些用户界面元素并与之交互，例如使用鼠标和触摸交互的任务栏和任务视图。 (#13506)
+- 在 Windows 11 的记事本中支持读出状态栏的内容。 (#13688)
+- “高亮显示导航对象”在启用后可以立即生效。 (#13641)
+- 修复了无法朗读某些单列列表视图中的列表项的问题。 (#13659, #13735)
+- 修复了英语和法语的 eSpeak 自动语言切换回退到英国英语和法语（法国）。 (#13727)
+- 在尝试切换到之前安装的语言时修复 OneCore 自动语言切换。 (#13732)
+-
+
+
+== 插件以及 NVDA 核心开发者需要了解的变动 ==
+- 支持使用 Visual Studio 2022 (17.0) 编译 NVDA 依赖项。对于开发和发布版本，仍使用 Visual Studio 2019 进行编译。 (#13033)
+- 通过 accSelection 检索选定子项的数量时，可以正确处理由“IAccessible::get accSelection”返回负子 ID 或 IDispatch 的情况。 (#13277)
+- 新的便利函数 “registerExecutableWithAppModule” 和 “unregisterExecutable” 已添加到 “appModuleHandler” 模块中。该特性可用于使用多个可执行文件的单个 App Module。 (#13366)
+-
+
+=== 弃用 ===
+这些是提议的重大 API 更改。
+弃用的 API 在指定版本发布前仍然可用。
+如果未明确指定版本，则表明尚未确定移除计划。
+注意，会尽可能遵循删除路线图，但也可能会发生变化。
+请测试新的 API 并提供反馈。
+对于插件作者，如果这些更改使 API 无法满足您的需求，请打开一个 GitHub Issue。
+
+
+- ``appModuleHandler.NVDAProcessID`` 已弃用，请改用 ``globalVars.appPid``。 (#13646)
+- ``gui.quit`` 已弃用，请改用 ``wx.CallAfter(mainFrame.onExitCommand, None)``。 (#13498)
+  -
+% Insert new list items here as the alias appModule table should be kept at the bottom of this list
+- 以下 appModules 已被标记为已弃用。要导入其中任意一项请从替代模块中导入。 (#13366)
+-
+
+|| 弃用模块 | 替代模块 |
+| azuredatastudio | code |
+| azuredatastudio-insiders | code |
+| calculatorapp | calculator |
+| code - insiders | code |
+| commsapps | hxmail |
+| dbeaver | eclipse |
+| digitaleditionspreview | digitaleditions |
+| esybraille | esysuite |
+| hxoutlook | hxmail |
+| miranda64 | miranda32 |
+| mpc-hc | mplayerc |
+| mpc-hc64 | mplayerc |
+| notepad++ | notepadPlusPlus |
+| searchapp | searchui |
+| searchhost | searchui |
+| springtoolsuite4 | eclipse |
+| sts | eclipse |
+| teamtalk3 | teamtalk4classic |
+| textinputhost | windowsinternal_composableshell_experiences_textinput_inputapp |
+| totalcmd64 | totalcmd |
+| win32calc | calc |
+| winmail | msimn |
+| zend-eclipse-php | eclipse |
+| zendstudio | eclipse |
+
 
 = 2022.1 =
 此版本针对 Microsoft Office 提供了 UIA 支持的重大改进。
@@ -19,7 +139,7 @@ eSpeak-NG 语音合成器以及 LibLouis 盲文翻译模块都得到了升级，
  -
 
 
-==新特性 ==
+== 新特性 ==
 - Windows 11下开启UIA后，支持在MS Excel中读出注释。 (#12861)
 - Windows 11下基于UIA接口，在最新的MS Word开发版中，能够通过语音和盲文呈现书签、草稿、批注及已解决批注等信息。 (#12861)
 - 新的--lang命令行参数允许覆盖已设定的NVDA语言。 (#10044)

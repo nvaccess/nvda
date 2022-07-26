@@ -253,18 +253,15 @@ def getReviewPosition() -> textInfos.TextInfo:
 
 def setReviewPosition(
 		reviewPosition,
-		clearNavigatorObject=True,
-		isCaret=False,
-		isMouse=False
-):
+		clearNavigatorObject: bool = True,
+		isCaret: bool = False,
+		isMouse: bool = False,
+) -> None:
 	"""Sets a TextInfo instance as the review position.
-	@param clearNavigatorObject: if  true, It sets the current navigator object to C{None}.
+	@param clearNavigatorObject: If True, it sets the current navigator object to C{None}.
 		In that case, the next time the navigator object is asked for it fetches it from the review position.
-	@type clearNavigatorObject: bool
 	@param isCaret: Whether the review position is changed due to caret following.
-	@type isCaret: bool
 	@param isMouse: Whether the review position is changed due to mouse following.
-	@type isMouse: bool
 	"""
 	globalVars.reviewPosition=reviewPosition.copy()
 	globalVars.reviewPositionObj=reviewPosition.obj
