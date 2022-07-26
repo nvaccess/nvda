@@ -3,38 +3,32 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import locale
 from typing import (
 	Dict,
 	Optional,
+	Type,
 )
 
 import comtypes.client
-import struct
 import ctypes
 from comtypes import COMError
 import oleTypes
 import colors
-import globalVars
 import NVDAHelper
 import eventHandler
 import comInterfaces.tom
 from logHandler import log
 import languageHandler
 import config
-import speech
 import winKernel
 import api
 import winUser
 import textInfos.offsets
-from keyboardHandler import KeyboardInputGesture
-from scriptHandler import isScriptWaiting
 import controlTypes
 from controlTypes import TextPosition
 from . import Window
 from .. import NVDAObjectTextInfo
 from ..behaviors import EditableTextWithAutoSelectDetection
-import braille
 import watchdog
 import locationHelper
 import textUtils
@@ -799,8 +793,14 @@ class Edit(EditableTextWithAutoSelectDetection, Window):
 	editAPIVersion=0
 	editValueUnit=textInfos.UNIT_LINE
 
-	def _get_TextInfo(self):
-		if self.editAPIVersion!=0 and self.ITextDocumentObject:
+	def _get_TextInfo(self) -> Type["textInfos.TextInfo"]:
+		if (
+			self.editAPIVersion not in {
+				0,
+				5,  # wx RichEdit50 controls do not work with ITextDocumentTextInfo #13420
+			}
+			and self.ITextDocumentObject
+		):
 			return ITextDocumentTextInfo
 		else:
 			return EditTextInfo
