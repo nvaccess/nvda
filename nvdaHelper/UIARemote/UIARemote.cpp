@@ -59,7 +59,7 @@ extern "C" __declspec(dllexport) bool __stdcall msWord_getCustomAttributeValue(I
 			/* condition */ docElement.IsExtensionSupported(guid_msWord_extendedTextRangePattern),
 			/* body */ [&]() {
 				logger<<L"guid_msWord_extendedTextRangePattern is supported extension"<<endl;
-				UiaElement patternElement{nullptr};
+				UiaConnectionBoundObject patternElement{nullptr};
 				docElement.CallExtension(guid_msWord_extendedTextRangePattern, patternElement);
 				scope.If(
 					/* condition */ patternElement,
