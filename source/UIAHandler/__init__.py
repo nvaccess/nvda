@@ -10,9 +10,6 @@ from ctypes import (
 	oledll,
 	windll,
 )
-from enum import (
-	Enum,
-)
 
 import comtypes.client
 from comtypes.automation import VT_EMPTY
@@ -814,21 +811,23 @@ class UIAHandler(COMObject):
 				and not config.conf['UIA']['useInMSExcelWhenAvailable']
 			):
 				return False
-			# Unless explicitly allowed, all Chromium implementations (including Edge) should not be UIA,
-			# As their IA2 implementation is still better at the moment.
-			elif (
-				windowClass == "Chrome_RenderWidgetHostHWND"
-				and (
+			elif windowClass == "Chrome_RenderWidgetHostHWND":
+				# Unless explicitly allowed, all Chromium implementations (including Edge) should not be UIA,
+				# As their IA2 implementation is still better at the moment.
+				# However, in cases where Chromium is running under another logon session,
+				# the IAccessible2 implementation is unavailable.
+				hasAccessToIA2 = not appModule.isRunningUnderDifferentLogonSession
+				if (
 					AllowUiaInChromium.getConfig() == AllowUiaInChromium.NO
 					# Disabling is only useful if we can inject in-process (and use our older code)
 					or (
 						canUseOlderInProcessApproach
+						and hasAccessToIA2
 						and AllowUiaInChromium.getConfig() != AllowUiaInChromium.YES  # Users can prefer to use UIA
 					)
-				)
-			):
-				return False
-			if windowClass == "ConsoleWindowClass":
+				):
+					return False
+			elif windowClass == "ConsoleWindowClass":
 				return utils._shouldUseUIAConsole(hwnd)
 		return bool(res)
 

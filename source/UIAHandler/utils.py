@@ -305,9 +305,7 @@ def _shouldUseUIAConsole(hwnd: int) -> bool:
 	else:
 		# #7497: the UIA implementation in old conhost is incomplete, therefore we
 		# should ignore it.
-		# When the UIA implementation is improved, the below line will be replaced
-		# with a check that _getConhostAPILevel >= FORMATTED.
-		return False
+		return _getConhostAPILevel(hwnd) >= WinConsoleAPILevel.FORMATTED
 
 
 @lru_cache(maxsize=10)

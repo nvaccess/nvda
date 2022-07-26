@@ -1,11 +1,10 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2021 NV Access Limited, Babbage B.V., Joseph Lee
+# Copyright (C) 2006-2022 NV Access Limited, Babbage B.V., Joseph Lee
 
 import ctypes
 from ctypes import *
-from ctypes.wintypes import RECT
 from comtypes import BSTR
 import unicodedata
 import math
@@ -299,7 +298,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 	_cache__storyFieldsAndRects = True
 
 	def _get__storyFieldsAndRects(self) -> Tuple[
-		List[Union[str, textInfos.FieldCommand]],
+		List[textInfos.TextInfo.TextOrFieldsT],
 		List[RectLTRB],
 		List[int],
 		List[int]
@@ -446,6 +445,10 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		bkColor=field.get('background-color')
 		if bkColor is not None:
 			field['background-color'] = colors.RGB.fromDisplayModelFormatColor_t(int(bkColor))
+		fontSize = field.get("font-size")
+		if fontSize is not None:
+			# Translators: Abbreviation for points, a measurement of font size.
+			field["font-size"] = pgettext("font size", "%s pt") % fontSize
 
 	def _getOffsetFromPoint(self, x, y):
 		# Accepts physical coordinates.
