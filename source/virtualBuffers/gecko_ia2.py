@@ -546,9 +546,28 @@ class Gecko_ia2(VirtualBuffer):
 		except (COMError, RuntimeError):
 			raise LookupError
 
-	def _getNearestTableCell(self, tableID, startPos, origRow, origCol, origRowSpan, origColSpan, movement, axis):
+	def _getNearestTableCell(
+			self,
+			tableID,
+			startPos,
+			origRow,
+			origCol,
+			origRowSpan,
+			origColSpan,
+			movement,
+			axis,
+	):
 		# Skip the VirtualBuffer implementation as the base BrowseMode implementation is good enough for us here.
-		return super(VirtualBuffer,self)._getNearestTableCell(tableID, startPos, origRow, origCol, origRowSpan, origColSpan, movement, axis)
+		return super(VirtualBuffer, self)._getNearestTableCell(
+			tableID,
+			startPos,
+			origRow,
+			origCol,
+			origRowSpan,
+			origColSpan,
+			movement,
+			axis
+		)
 
 	def _get_documentConstantIdentifier(self):
 		try:
