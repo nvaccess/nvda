@@ -1925,6 +1925,12 @@ This setting contains the following values:
 -
 
 ==== Windows Console support ====[AdvancedSettingsConsoleUIA]
+: Default
+  Automatic
+: Options
+  Automatic, UIA when available, Legacy
+:
+
 This option selects how NVDA interacts with the Windows Console used by command prompt, PowerShell, and the Windows Subsystem for Linux.
 It does not affect the modern Windows Terminal.
 In Windows 10 version 1709, Microsoft [added support for its UI Automation API to the console https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/], bringing vastly improved performance and stability for screen readers that support it.
