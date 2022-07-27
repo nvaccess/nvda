@@ -28,7 +28,7 @@ For add-on authors, please open a GitHub issue if these changes stop the API fro
 
 = 2022.3 =
 A significant amount of this release was contributed by the NVDA development community.
-This includes table say all commands, delayed character descriptions, and improved Windows Console support.
+This includes delayed character descriptions and improved Windows Console support.
 
 This release also includes several bug fixes.
 Notably, up-to-date versions of Adobe Acrobat/Reader will no longer crash when reading a PDF document.
@@ -43,12 +43,6 @@ eSpeak has been updated, which introduces 3 new languages: Belarusian, Luxembour
 It can be re-enabled in NVDA's advanced settings panel. (#11554)
   - Text that has scrolled offscreen can be reviewed without scrolling the console window. (#12669)
   - More detailed text formatting information is available. ([microsoft/terminal PR 10336 https://github.com/microsoft/terminal/pull/10336])
-  -
-- Added the following table commands. (#13469)
-  - Say all in column: ``NVDA+control+alt+downArrow``
-  - Say all in row: ``NVDA+control+alt+rightArrow``
-  - Read entire column: ``NVDA+control+alt+upArrow``
-  - Read entire row: ``NVDA+control+alt+leftArrow``
   -
 - A new Speech option has been added to read character descriptions after a delay. (#13509)
 - A new Braille option has been added to determine if scrolling the display forward/back should interrupt speech. (#2124)
