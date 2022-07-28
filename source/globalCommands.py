@@ -2185,7 +2185,7 @@ class GlobalCommands(ScriptableObject):
 		),
 		category=SCRCAT_FOCUS,
 	)
-	def script_reportFocusObjectAccelerator(self, gesture: "inputCore.InputGesture") -> None:
+	def script_reportFocusObjectAccelerator(self, gesture: inputCore.InputGesture) -> None:
 		obj = api.getFocusObject()
 		if obj.keyboardShortcut:
 			res = obj.keyboardShortcut
