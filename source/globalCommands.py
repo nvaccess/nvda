@@ -2,9 +2,9 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2021 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee,
+# Copyright (C) 2006-2022 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee,
 # Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Łukasz Golonka, Accessolutions,
-# Julien Cochuyt, Jakub Lukowicz
+# Julien Cochuyt, Jakub Lukowicz, Bill Dengler
 
 import itertools
 
@@ -2176,6 +2176,24 @@ class GlobalCommands(ScriptableObject):
 			self.script_spellStatusLine(gesture)
 		else:
 			self.script_copyStatusLine(gesture)
+
+	@script(
+		description=_(
+			# Translators: Description for a keyboard command which reports the
+			# accelerator key of the currently focused object.
+			"Reports the shortcut key of the currently focused object."
+		),
+		category=SCRCAT_FOCUS,
+	)
+	def script_reportFocusObjectAccelerator(self, gesture):
+		obj = api.getFocusObject()
+		if obj.keyboardShortcut:
+			res = obj.keyboardShortcut
+		else:
+			# Translators: reported when a user requests the accelerator key
+			# of the currently focused object, but there is none set.
+			res = _("No shortcut key")
+		ui.message(res)
 
 	@script(
 		# Translators: Input help mode message for toggle mouse tracking command.
