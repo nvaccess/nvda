@@ -2181,9 +2181,10 @@ class GlobalCommands(ScriptableObject):
 		description=_(
 			# Translators: Description for a keyboard command which reports the
 			# accelerator key of the currently focused object.
-			"Reports the shortcut key of the currently focused object."
+			"Reports the shortcut key of the currently focused object.",
 		),
 		category=SCRCAT_FOCUS,
+		gestures=("kb:shift+numpad5", "kb(laptop):NVDA+control+shift+."),
 	)
 	def script_reportFocusObjectAccelerator(self, gesture: inputCore.InputGesture) -> None:
 		obj = api.getFocusObject()
