@@ -74,6 +74,7 @@ JABRolesToNVDARoles={
 	"spin box":controlTypes.Role.SPINBUTTON,
 	"font chooser":controlTypes.Role.FONTCHOOSER,
 	"group box":controlTypes.Role.GROUPING,
+	"groupbox":controlTypes.Role.GROUPING,
 	"header":controlTypes.Role.HEADER,
 	"footer":controlTypes.Role.FOOTER,
 	"paragraph":controlTypes.Role.PARAGRAPH,
