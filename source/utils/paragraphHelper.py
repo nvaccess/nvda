@@ -9,6 +9,8 @@ import controlTypes
 import textInfos
 import tones
 import config
+from NVDAObjects.IAccessible.winword import WordDocument as IAccessibleWordDocument
+from NVDAObjects.UIA.wordDocument import WordDocument as UIAWordDocument
 
 MAX_LINES = 250  # give up after searching this many lines
 
@@ -42,17 +44,14 @@ def nextParagraphStyle() -> (str, str):
 
 
 def getTextInfoAtCaret() -> textInfos.TextInfo:
-	# returns None if not editable text or if in Microsoft Word document
+	# returns None if not editable text or document
 	ti = None
 	focus = api.getFocusObject()
-	if controlTypes.State.MULTILINE not in focus.states:
-		return ti
-	if focus.role == controlTypes.Role.EDITABLETEXT:
+	if (focus.role == controlTypes.Role.EDITABLETEXT) or (focus.role == controlTypes.Role.DOCUMENT):
 		try:
 			ti = focus.makeTextInfo(textInfos.POSITION_CARET)
 		except (NotImplementedError, RuntimeError):
 			pass
-
 	return ti
 
 
@@ -152,8 +151,13 @@ def speakBlockParagraph(ti: textInfos.TextInfo):
 	speech.speakMessage(paragraph)
 
 
-def moveToBlockParagraph(nextParagraph: bool, speakNew: bool) -> bool:
-	ti = getTextInfoAtCaret()
+def moveToBlockParagraph(nextParagraph: bool, speakNew: bool, ti: textInfos.TextInfo = None) -> bool:
+	# disallow if in a Word document, as Word has performance issues
+	focus = api.getFocusObject()
+	if isinstance(focus, IAccessibleWordDocument) or isinstance(focus, UIAWordDocument):
+		return False
+	if ti is None:
+		ti = getTextInfoAtCaret()
 	if ti is None:
 		return False
 	moved = False
