@@ -269,7 +269,9 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 		if setting == "block":
 			from utils.paragraphHelper import moveToBlockParagraph
 			ti = self.makeTextInfo(textInfos.POSITION_SELECTION)
-			if not moveToBlockParagraph(nextParagraph=nextParagraph, speakNew=not willSayAllResume(gesture), ti=ti):
+			if moveToBlockParagraph(nextParagraph=nextParagraph, speakNew=not willSayAllResume(gesture), ti=ti):
+				self.selection = ti
+			else:
 				# fail over to default behavior
 				self._caretMovementScriptHelper(gesture, textInfos.UNIT_PARAGRAPH, 1 if nextParagraph else -1)
 		else:
