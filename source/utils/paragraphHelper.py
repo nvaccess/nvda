@@ -11,6 +11,7 @@ import tones
 import config
 from NVDAObjects.IAccessible.winword import WordDocument as IAccessibleWordDocument
 from NVDAObjects.UIA.wordDocument import WordDocument as UIAWordDocument
+from NVDAObjects.UIA import UIATextInfo
 
 MAX_LINES = 250  # give up after searching this many lines
 
@@ -127,6 +128,8 @@ def moveToParagraph(nextParagraph: bool, speakNew: bool) -> bool:
 
 	if moved:
 		ti.updateCaret()
+		if isinstance(ti, UIATextInfo):
+			ti._rangeObj.ScrollIntoView(False)
 		speakParagraph(ti)
 	else:
 		tones.beep(1000, 30)
@@ -192,6 +195,9 @@ def moveToBlockParagraph(nextParagraph: bool, speakNew: bool, ti: textInfos.Text
 
 	if moved:
 		ti.updateCaret()
+		if isinstance(ti, UIATextInfo):
+			# Updating caret position in UITextInfo does not scroll the display. Force it to scroll here.
+			ti._rangeObj.ScrollIntoView(False)
 		if speakNew:
 			speakBlockParagraph(ti)
 	else:
