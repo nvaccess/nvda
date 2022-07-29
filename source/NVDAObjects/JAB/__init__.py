@@ -5,6 +5,9 @@
 
 import ctypes
 import re
+from typing import (
+	Dict,
+)
 import eventHandler
 import keyLabels
 import JABHandler
@@ -19,7 +22,7 @@ from .. import InvalidNVDAObject
 from locationHelper import RectLTWH
 
 
-JABRolesToNVDARoles={
+JABRolesToNVDARoles: Dict[str, controlTypes.Role] = {
 	"alert": controlTypes.Role.DIALOG,
 	"column header": controlTypes.Role.TABLECOLUMNHEADER,
 	"canvas": controlTypes.Role.CANVAS,
