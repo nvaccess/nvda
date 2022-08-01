@@ -16,6 +16,7 @@ from SystemTestSpy import (
 	_getLib,
 )
 from SystemTestSpy.windows import (
+	CloseWindow,
 	GetWindowWithTitle,
 	GetForegroundWindowTitle,
 	Window,
@@ -49,7 +50,7 @@ class ChromeLib:
 	def _getTestCasePath(filename):
 		return _pJoin(ChromeLib._testFileStagingPath, filename)
 
-	def exit_chrome(self):
+	def close_chrome_tab(self):
 		spy = _NvdaLib.getSpyLib()
 		builtIn.log(
 			# True is expected due to /wait argument.
@@ -67,6 +68,22 @@ class ChromeLib:
 			"Is Start process still running (False expected): "
 			f"{process.is_process_running(self.processRFHandleForStart)}"
 		)
+
+	def exit_chrome(self):
+		# When exiting, instance variables cached in other methods may no longer be set.
+		# The RF library may be re-initialised for the teardown procedure.
+		_window = GetWindowWithTitle(
+			re.compile(f"^{ChromeLib._testCaseTitle}"),
+			builtIn.log,
+		)
+		if _window is not None:
+			res = CloseWindow(_window)
+			if not res:
+				builtIn.log(f"Unable to task kill chrome hwnd: {self.chromeWindow.hwndVal}", level="ERROR")
+			else:
+				self.chromeWindow = _window = None
+		else:
+			builtIn.log("No chrome handle, unable to task kill", level="WARN")
 
 	def start_chrome(self, filePath: str, testCase: str) -> Window:
 		builtIn.log(f"starting chrome: {filePath}")
