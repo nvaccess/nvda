@@ -21,7 +21,10 @@ import addonHandler
 import easeOfAccess
 import COMRegistrationFixes
 import winKernel
-from typing import Dict, Union
+from typing import (
+	Dict,
+	Union,
+)
 
 _wsh=None
 def _getWSH():
@@ -231,7 +234,7 @@ def removeOldProgramFiles(destPath):
 def getUninstallerRegInfo(installDir: str) -> Dict[str, Union[str, int]]:
 	"""
 	Constructs a dictionary that is written to the registry for NVDA to show up
-	in the Windows' Aps and Features overview.
+	in the Windows "Apps and Features" overview.
 	"""
 	return dict(
 		DisplayName=f"{versionInfo.name} {versionInfo.version}",
@@ -268,7 +271,7 @@ def registerInstallation(
 		configInLocalAppData: bool = False
 ) -> None:
 	calculatedUninstallerRegInfo = getUninstallerRegInfo(installDir)
-	log.debug(f"Estimated install size {calculatedUninstallerRegInfo.get('EstimatedSize')}")
+	log.debug(f"Estimated install size: {calculatedUninstallerRegInfo.get('EstimatedSize')} KiB")
 	with winreg.CreateKeyEx(
 		winreg.HKEY_LOCAL_MACHINE,
 		r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\NVDA",
@@ -276,11 +279,17 @@ def registerInstallation(
 		winreg.KEY_WRITE
 	) as k:
 		for name, value in calculatedUninstallerRegInfo.items():
+			if isinstance(value, int):
+				regType = winreg.REG_DWORD
+			elif isinstance(value, str):
+				regType = winreg.REG_SZ
+			else:
+				raise NotImplementedError("Unexpected value from dictionary in getUninstallerRegInfo")
 			winreg.SetValueEx(
 				k,
 				name,
 				None,
-				winreg.REG_DWORD if isinstance(value, int) else winreg.REG_SZ,
+				regType,
 				value
 			)
 	with winreg.CreateKeyEx(winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\nvda.exe",0,winreg.KEY_WRITE) as k:
