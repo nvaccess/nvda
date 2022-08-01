@@ -187,14 +187,17 @@ def moveToBlockParagraph(nextParagraph: bool, speakNew: bool, ti: textInfos.Text
 
 	# exception: if moving backwards, need to move to top of now current paragraph
 	if moved and not nextParagraph:
+		moved = False
 		while lines < MAX_LINES:
 			if not ti.move(textInfos.UNIT_LINE, -1):
+				moved = True
 				break  # leave at top
 			tempTi = ti.copy()
 			tempTi.expand(textInfos.UNIT_LINE)
 			if not len(tempTi.text.strip()):
 				# found blank line before desired paragraph
 				ti.move(textInfos.UNIT_LINE, 1)  # first line of paragraph
+				moved = True
 				break
 			lines += 1
 
