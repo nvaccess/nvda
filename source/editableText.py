@@ -298,11 +298,13 @@ class EditableText(TextContainerObject,ScriptableObject):
 		setting = config.conf["paragraphNavigation"]["paragraphStyle"]
 		if setting == "normal":
 			from utils.paragraphHelper import moveToParagraph
-			if not moveToParagraph(nextParagraph=nextParagraph, speakNew=not willSayAllResume(gesture)):
+			passKey, moved = moveToParagraph(nextParagraph=nextParagraph, speakNew=not willSayAllResume(gesture))
+			if passKey:
 				self.script_caret_moveByParagraph(gesture)
 		elif setting == "block":
 			from utils.paragraphHelper import moveToBlockParagraph
-			if not moveToBlockParagraph(nextParagraph=nextParagraph, speakNew=not willSayAllResume(gesture)):
+			passKey, moved = moveToBlockParagraph(nextParagraph=nextParagraph, speakNew=not willSayAllResume(gesture))
+			if passKey:
 				self.script_caret_moveByParagraph(gesture)
 		else:
 			self.script_caret_moveByParagraph(gesture)

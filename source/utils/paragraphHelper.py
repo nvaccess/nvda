@@ -83,11 +83,16 @@ def speakParagraph(ti: textInfos.TextInfo):
 		speech.speakMessage(_("blank"))
 
 
-def moveToParagraph(nextParagraph: bool, speakNew: bool) -> bool:
+def moveToParagraph(nextParagraph: bool, speakNew: bool) -> (bool, bool):
 	# moves to previous or next regular paragraph, delineated by a single line break
+	# returns (passKey, moved)
 	ti = getTextInfoAtCaret()
 	if ti is None:
-		return False
+		return (True, False)
+	# disallow if in a Word document, as Word has performance issues
+	focus = api.getFocusObject()
+	if isinstance(focus, IAccessibleWordDocument) or isinstance(focus, UIAWordDocument):
+		return (True, False)
 	ti.expand(textInfos.UNIT_LINE)
 	ti.collapse()  # move to start of line
 	moveOffset = 1 if nextParagraph else -1
@@ -133,11 +138,10 @@ def moveToParagraph(nextParagraph: bool, speakNew: bool) -> bool:
 		speakParagraph(ti)
 	else:
 		tones.beep(1000, 30)
-	return True
+	return (False, moved)
 
 
 def speakBlockParagraph(ti: textInfos.TextInfo):
-	# ti is TextInfo object
 	paragraph = ""
 	lines = 0
 	tempTi = ti.copy()
@@ -154,15 +158,16 @@ def speakBlockParagraph(ti: textInfos.TextInfo):
 	speech.speakMessage(paragraph)
 
 
-def moveToBlockParagraph(nextParagraph: bool, speakNew: bool, ti: textInfos.TextInfo = None) -> bool:
+def moveToBlockParagraph(nextParagraph: bool, speakNew: bool, ti: textInfos.TextInfo = None) -> (bool, bool):
+	# returns (passKey, moved)
 	# disallow if in a Word document, as Word has performance issues
 	focus = api.getFocusObject()
 	if isinstance(focus, IAccessibleWordDocument) or isinstance(focus, UIAWordDocument):
-		return False
+		return (True, False)
 	if ti is None:
 		ti = getTextInfoAtCaret()
 	if ti is None:
-		return False
+		return (True, False)
 	moved = False
 	lookingForBlank = True
 	moveOffset = 1 if nextParagraph else -1
@@ -203,4 +208,4 @@ def moveToBlockParagraph(nextParagraph: bool, speakNew: bool, ti: textInfos.Text
 	else:
 		tones.beep(1000, 30)
 
-	return True
+	return (False, moved)
