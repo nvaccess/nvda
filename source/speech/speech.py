@@ -327,10 +327,10 @@ def _getSpellingSpeechWithoutCharMode(
 			speakCharAs = item
 			if useCharacterDescriptions:
 				charDesc=characterProcessing.getCharacterDescription(locale,speakCharAs.lower())
-		uppercase=speakCharAs.isupper()			
+		uppercase=speakCharAs.isupper()
 		if useCharacterDescriptions and charDesc:
-				IDEOGRAPHIC_COMMA = u"\u3001"
-				speakCharAs=charDesc[0] if textLength>1 else IDEOGRAPHIC_COMMA.join(charDesc)
+			IDEOGRAPHIC_COMMA = u"\u3001"
+			speakCharAs=charDesc[0] if textLength>1 else IDEOGRAPHIC_COMMA.join(charDesc)
 		elif useCharacterDescriptions and not charDesc and not fallbackToCharIfNoDescription:
 			return None
 		else:
