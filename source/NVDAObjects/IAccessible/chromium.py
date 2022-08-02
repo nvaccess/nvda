@@ -11,7 +11,7 @@ from comtypes import COMError
 from ctypes import byref
 import winUser
 import IAccessibleHandler
-from comInterfaces.IAccessible2Lib import IAccessible2_4, IA2Range
+from comInterfaces.IAccessible2Lib import IAccessibleTextSelectionContainer, IA2TextSelection
 import textInfos
 import config
 import controlTypes
@@ -102,7 +102,7 @@ class ChromeVBuf(GeckoVBuf):
 
 	def updateAppSelection(self):
 		try:
-			pacc2_4 = self.rootNVDAObject.IAccessibleObject.QueryInterface(IAccessible2_4)
+			paccTextSelectionContainer = self.rootNVDAObject.IAccessibleObject.QueryInterface(IAccessibleTextSelectionContainer)
 		except COMError as e:
 			raise NotImplementedError from e
 		selInfo = self.makeTextInfo(textInfos.POSITION_SELECTION)
@@ -155,8 +155,8 @@ class ChromeVBuf(GeckoVBuf):
 			ia2EndObj, childID = IAccessibleHandler.accessibleObjectFromEvent(ia2EndWindow, winUser.OBJID_CLIENT, ia2EndID)
 			assert (childID == 0), f"childID should be 0"
 			log.debug(f"ia2EndObj {ia2EndObj}")
-		r = IA2Range(ia2EndObj, ia2EndOffset, ia2StartObj, ia2StartOffset)
-		pacc2_4.SetSelectionRanges(1, byref(r))
+		r = IA2TextSelection(ia2StartObj, ia2StartOffset, ia2EndObj, ia2EndOffset, False)
+		paccTextSelectionContainer.SetSelections(1, byref(r))
 
 
 class Document(ia2Web.Document):
