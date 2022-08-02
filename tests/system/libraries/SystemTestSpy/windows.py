@@ -7,18 +7,33 @@
 """
 
 from ctypes.wintypes import HWND, LPARAM
-from ctypes import c_bool, c_int, create_unicode_buffer, POINTER, WINFUNCTYPE, windll, WinError
+from ctypes import (
+	c_bool,
+	c_int,
+	create_unicode_buffer,
+	POINTER,
+	WINFUNCTYPE,
+	windll,
+	WinError,
+)
 import re
 from SystemTestSpy.blockUntilConditionMet import _blockUntilConditionMet
 from typing import Callable, List, NamedTuple
+from robot.libraries.BuiltIn import BuiltIn
+
+builtIn: BuiltIn = BuiltIn()
+
+# rather than using the ctypes.c_void_p type, which may encourage attempting to dereference
+# what may be an invalid or illegal pointer, we'll treat it as an opaque value.
+HWNDVal = int
 
 
 class Window(NamedTuple):
-	hwnd: HWND
+	hwndVal: HWNDVal
 	title: str
 
 
-def _GetWindowTitle(hwnd: HWND) -> str:
+def _GetWindowTitle(hwnd: HWNDVal) -> str:
 	length = windll.user32.GetWindowTextLengthW(hwnd)
 	if not length:
 		return ''
@@ -32,22 +47,27 @@ def _GetWindows(
 		filterUsingWindow: Callable[[Window], bool] = lambda _: True,
 ) -> List[Window]:
 	windows: List[Window] = []
-	EnumWindowsProc = WINFUNCTYPE(c_bool, POINTER(c_int), POINTER(c_int))
 
-	def _append_title(hwnd: HWND, _lParam: LPARAM) -> bool:
+	# BOOL CALLBACK EnumWindowsProc _In_ HWND,_In_ LPARAM
+	# HWND as a pointer creates confusion, treat as an int
+	# http://makble.com/the-story-of-lpclong
+	@WINFUNCTYPE(c_bool, c_int, POINTER(c_int))
+	def _append_title(hwnd: HWNDVal, _lParam: LPARAM) -> bool:
+		if not isinstance(hwnd, (HWNDVal, c_int)):
+			builtIn.log(f"Hwnd type {type(hwnd)}, value {hwnd}")
 		window = Window(hwnd, _GetWindowTitle(hwnd))
 		if filterUsingWindow(window):
 			windows.append(window)
 		return True
 
-	if not windll.user32.EnumWindows(EnumWindowsProc(_append_title), 0):
+	if not windll.user32.EnumWindows(_append_title, 0):
 		raise WinError()
 	return windows
 
 
 def _GetVisibleWindows() -> List[Window]:
 	return _GetWindows(
-		filterUsingWindow=lambda window: windll.user32.IsWindowVisible(window.hwnd) and bool(window.title)
+		filterUsingWindow=lambda window: windll.user32.IsWindowVisible(window.hwndVal) and bool(window.title)
 	)
 
 
@@ -60,8 +80,8 @@ def SetForegroundWindow(targetTitle: re.Pattern, logger: Callable[[str], None] =
 		filterUsingWindow=lambda window: re.match(targetTitle, window.title)
 	)
 	if len(windows) == 1:
-		logger(f"Focusing window to (HWND: {windows[0].hwnd}) (title: {windows[0].title})")
-		return windll.user32.SetForegroundWindow(windows[0].hwnd)
+		logger(f"Found window (HWND: {windows[0].hwndVal}) (title: {windows[0].title})")
+		return windll.user32.SetForegroundWindow(windows[0].hwndVal)
 	elif len(windows) == 0:
 		logger("No windows matching the pattern found")
 	else:
@@ -75,7 +95,7 @@ def GetVisibleWindowTitles() -> List[str]:
 
 
 def GetForegroundWindowTitle() -> str:
-	hwnd = windll.user32.GetForegroundWindow()
+	hwnd: HWNDVal = windll.user32.GetForegroundWindow()
 	return _GetWindowTitle(hwnd)
 
 
@@ -87,9 +107,9 @@ def waitUntilWindowFocused(targetWindowTitle: str, timeoutSecs: int = 5):
 	)
 
 
-def getWindowHandle(windowClassName: str, windowName: str) -> int:
+def getWindowHandle(windowClassName: str, windowName: str) -> HWNDVal:
 	return windll.user32.FindWindowW(windowClassName, windowName)
 
 
-def windowWithHandleExists(handle: int) -> bool:
+def windowWithHandleExists(handle: HWNDVal) -> bool:
 	return bool(windll.user32.IsWindow(handle))
