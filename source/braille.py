@@ -2,10 +2,11 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2008-2021 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau
+# Copyright (C) 2008-2022 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau
 
 import itertools
 import os
+import typing
 from typing import Iterable, Union, Tuple, List, Optional
 from locale import strxfrm
 
@@ -41,7 +42,7 @@ import brailleViewer
 from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting
 
 
-roleLabels = {
+roleLabels: typing.Dict[controlTypes.Role, str] = {
 	# Translators: Displayed in braille for an object which is a
 	# window.
 	controlTypes.Role.WINDOW: _("wnd"),
@@ -99,6 +100,9 @@ roleLabels = {
 	# Translators: Displayed in braille for an object which is a
 	# progress bar.
 	controlTypes.Role.PROGRESSBAR: _("prgbar"),
+	# Translators: Displayed in braille for an object which is an
+	# indeterminate progress bar, aka busy indicator.
+	controlTypes.Role.BUSY_INDICATOR: _("bsyind"),
 	# Translators: Displayed in braille for an object which is a
 	# scroll bar.
 	controlTypes.Role.SCROLLBAR: _("scrlbar"),
@@ -184,7 +188,13 @@ roleLabels = {
 	# Translators: Displayed in braille for an object which is a figure.
 	controlTypes.Role.FIGURE: _("fig"),
 	# Translators: Displayed in braille for an object which represents marked (highlighted) content
-	controlTypes.Role.MARKED_CONTENT: _("mrkd"),
+	controlTypes.Role.MARKED_CONTENT: _("hlght"),
+	# Translators: Displayed in braille when an object is a comment.
+	controlTypes.Role.COMMENT: _("cmnt"),
+	# Translators: Displayed in braille when an object is a suggestion.
+	controlTypes.Role.SUGGESTION: _("sggstn"),
+	# Translators: Displayed in braille when an object is a definition.
+	controlTypes.Role.DEFINITION: _("definition"),
 }
 
 positiveStateLabels = {
@@ -220,8 +230,6 @@ positiveStateLabels = {
 	controlTypes.State.SORTED_ASCENDING: _("sorted asc"),
 	# Translators: Displayed in braille when an object is sorted descending.
 	controlTypes.State.SORTED_DESCENDING: _("sorted desc"),
-	# Translators: Displayed in braille when an object has additional details (such as a comment section).
-	controlTypes.State.HAS_ARIA_DETAILS: _("details"),
 	# Translators: Displayed in braille when an object (usually a graphic) has a long description.
 	controlTypes.State.HASLONGDESC: _("ldesc"),
 	# Translators: Displayed in braille when there is a formula on a spreadsheet cell.
@@ -490,7 +498,7 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 	name = propertyValues.get("name")
 	if name:
 		textList.append(name)
-	role = propertyValues.get("role")
+	role: Optional[Union[controlTypes.Role, int]] = propertyValues.get("role")
 	roleText = propertyValues.get('roleText')
 	states = propertyValues.get("states")
 	positionInfo = propertyValues.get("positionInfo")
@@ -505,6 +513,7 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 	columnSpan = propertyValues.get("columnSpan") or 1
 	includeTableCellCoords = propertyValues.get("includeTableCellCoords", True)
 	if role is not None and not roleText:
+		role = controlTypes.Role(role)
 		if role == controlTypes.Role.HEADING and level:
 			# Translators: Displayed in braille for a heading with a level.
 			# %s is replaced with the level.
@@ -518,8 +527,8 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 		elif (name or cellCoordsText or rowNumber or columnNumber) and role in controlTypes.silentRolesOnFocus:
 			roleText = None
 		else:
-			roleText = roleLabels.get(role, controlTypes.roleLabels[role])
-	elif role is None: 
+			roleText = roleLabels.get(role, role.displayString)
+	elif role is None:
 		role = propertyValues.get("_role")
 	value = propertyValues.get("value")
 	if value and role not in controlTypes.silentValuesForRoles:
@@ -541,6 +550,19 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 	description = propertyValues.get("description")
 	if description:
 		textList.append(description)
+	hasDetails = propertyValues.get("hasDetails")
+	if hasDetails:
+		detailsRole: Optional[controlTypes.Role] = propertyValues.get("detailsRole")
+		if detailsRole is not None:
+			detailsRoleLabel = roleLabels.get(detailsRole, detailsRole.displayString)
+			# Translators: Braille when there are further details/annotations that can be fetched manually.
+			# %s specifies the type of details (e.g. comment, suggestion)
+			textList.append(_("has %s") % detailsRoleLabel)
+		else:
+			textList.append(
+				# Translators: Braille when there are further details/annotations that can be fetched manually.
+				_("details")
+			)
 	keyboardShortcut = propertyValues.get("keyboardShortcut")
 	if keyboardShortcut:
 		textList.append(keyboardShortcut)
@@ -557,7 +579,7 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 			# %s is replaced with the level.
 			textList.append(_('lv %s')%positionInfo['level'])
 	if rowNumber:
-		if includeTableCellCoords and not cellCoordsText: 
+		if includeTableCellCoords and not cellCoordsText:
 			if rowSpan>1:
 				# Translators: Displayed in braille for the table cell row numbers when a cell spans multiple rows.
 				# Occurences of %s are replaced with the corresponding row numbers.
@@ -613,24 +635,36 @@ class NVDAObjectRegion(Region):
 		obj = self.obj
 		presConfig = config.conf["presentation"]
 		role = obj.role
+		name = obj.name
 		placeholderValue = obj.placeholder
 		if placeholderValue and not obj._isTextEmpty:
 			placeholderValue = None
-		description = None
-		if obj.description and (
-			presConfig["reportObjectDescriptions"]
-			or (
-				config.conf["annotations"]["reportAriaDescription"]
-				and obj.descriptionFrom == controlTypes.DescriptionFrom.ARIA_DESCRIPTION
+
+		# determine if description should be read
+		_shouldUseDescription = (
+			obj.description  # is there a description
+			and obj.description != name  # the description must not be a duplicate of name, prevent double braille
+			and (
+				presConfig["reportObjectDescriptions"]  # report description always
+				or (
+					# aria description provides more relevant information than other sources of description such as
+					# a 'title' attribute.
+					# It should be used for extra details that would be obvious visually.
+					config.conf["annotations"]["reportAriaDescription"]
+					and obj.descriptionFrom == controlTypes.DescriptionFrom.ARIA_DESCRIPTION
+				)
 			)
-		):
-			description = obj.description
+		)
+		description = obj.description if _shouldUseDescription else None
+
 		text = getPropertiesBraille(
-			name=obj.name,
+			name=name,
 			role=role,
 			roleText=obj.roleTextBraille,
 			current=obj.isCurrent,
 			placeholder=placeholderValue,
+			hasDetails=obj.hasDetails,
+			detailsRole=obj.detailsRole,
 			value=obj.value if not NVDAObjectHasUsefulText(obj) else None ,
 			states=obj.states,
 			description=description,
@@ -640,7 +674,6 @@ class NVDAObjectRegion(Region):
 		)
 		if role == controlTypes.Role.MATH:
 			import mathPres
-			mathPres.ensureInit()
 			if mathPres.brailleProvider:
 				try:
 					text += TEXT_SEPARATOR + mathPres.brailleProvider.getBrailleForMathMl(
@@ -656,7 +689,17 @@ class NVDAObjectRegion(Region):
 		except NotImplementedError:
 			pass
 
-def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
+
+#  C901 'getControlFieldBraille' is too complex
+# Note: when working on getControlFieldBraille, look for opportunities to simplify
+# and move logic out into smaller helper functions.
+def getControlFieldBraille(  # noqa: C901
+		info: textInfos.TextInfo,
+		field: textInfos.Field,
+		ancestors: typing.List[textInfos.Field],
+		reportStart: bool,
+		formatConfig: config.AggregatedSection
+):
 	presCat = field.getPresentationCategory(ancestors, formatConfig)
 	# Cache this for later use.
 	field._presCat = presCat
@@ -677,22 +720,34 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 
 	description = None
 	_descriptionFrom: controlTypes.DescriptionFrom = field.get("_description-from")
+	_descriptionIsContent: bool = field.get("descriptionIsContent", False)
 	if (
-		config.conf["presentation"]["reportObjectDescriptions"]
-		or (
+		not _descriptionIsContent
+		# Note "reportObjectDescriptions" is not a reason to include description,
+		# "Object" implies focus/object nav, getControlFieldBraille calculates text for Browse mode.
+		# There is no way to identify getControlFieldBraille being called for reason focus, as is done in speech.
+		and (
 			config.conf["annotations"]["reportAriaDescription"]
 			and _descriptionFrom == controlTypes.DescriptionFrom.ARIA_DESCRIPTION
 		)
 	):
 		description = field.get("description", None)
+
 	states = field.get("states", set())
 	value=field.get('value',None)
 	current = field.get('current', controlTypes.IsCurrent.NO)
 	placeholder=field.get('placeholder', None)
+	hasDetails = field.get('hasDetails', False) and config.conf["annotations"]["reportDetails"]
+	if config.conf["annotations"]["reportDetails"]:
+		detailsRole: Optional[controlTypes.Role] = field.get('detailsRole')
+	else:
+		detailsRole = None
+
 	roleText = field.get('roleTextBraille', field.get('roleText'))
 	landmark = field.get("landmark")
 	if not roleText and role == controlTypes.Role.LANDMARK and landmark:
 		roleText = f"{roleLabels[controlTypes.Role.LANDMARK]} {landmarkLabels[landmark]}"
+
 	content = field.get("content")
 
 	if presCat == field.PRESCAT_LAYOUT:
@@ -718,6 +773,8 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 			"includeTableCellCoords": reportTableCellCoords,
 			"current": current,
 			"description": description,
+			"hasDetails": hasDetails,
+			"detailsRole": detailsRole,
 		}
 		if reportTableHeaders:
 			props["columnHeaderText"] = field.get("table-columnheadertext")
@@ -734,6 +791,8 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 			"placeholder": placeholder,
 			"roleText": roleText,
 			"description": description,
+			"hasDetails": hasDetails,
+			"detailsRole": detailsRole,
 		}
 		if field.get('alwaysReportName', False):
 			# Ensure that the name of the field gets presented even if normally it wouldn't.
@@ -754,7 +813,6 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 			text += content
 		elif role == controlTypes.Role.MATH:
 			import mathPres
-			mathPres.ensureInit()
 			if mathPres.brailleProvider:
 				try:
 					if text:
@@ -806,6 +864,29 @@ def getFormatFieldBraille(field, fieldCache, isAtStart, formatConfig):
 		oldLink=fieldCache.get("link")
 		if link and link != oldLink:
 			textList.append(roleLabels[controlTypes.Role.LINK])
+	if formatConfig["reportComments"]:
+		comment = field.get("comment")
+		oldComment = fieldCache.get("comment") if fieldCache is not None else None
+		if (comment or oldComment is not None) and comment != oldComment:
+			if comment:
+				if comment is textInfos.CommentType.DRAFT:
+					# Translators: Brailled when text contains a draft comment.
+					text = _("drft cmnt")
+				elif comment is textInfos.CommentType.RESOLVED:
+					# Translators: Brailled when text contains a resolved comment.
+					text = _("rslvd cmnt")
+				else:  # generic
+					# Translators: Brailled when text contains a generic comment.
+					text = _("cmnt")
+				textList.append(text)
+	if formatConfig["reportBookmarks"]:
+		bookmark = field.get("bookmark")
+		oldBookmark = fieldCache.get("bookmark") if fieldCache is not None else None
+		if (bookmark or oldBookmark is not None) and bookmark != oldBookmark:
+			if bookmark:
+				# Translators: brailled when text contains a bookmark
+				text = _("bkmk")
+				textList.append(text)
 	fieldCache.clear()
 	fieldCache.update(field)
 	return TEXT_SEPARATOR.join([x for x in textList if x])
@@ -1723,8 +1804,20 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	def _get_enabled(self):
 		return bool(self.displaySize)
 
-	_lastRequestedDisplayName=None #: the name of the last requested braille display driver with setDisplayByName, even if it failed and has fallen back to no braille.
-	def setDisplayByName(self, name, isFallback=False, detected=None):
+	_lastRequestedDisplayName = None
+	"""The name of the last requested braille display driver with setDisplayByName,
+	even if it failed and has fallen back to no braille.
+	"""
+
+	# C901 'setDisplayByName' is too complex
+	# Note: when working on setDisplayByName, look for opportunities to simplify
+	# and move logic out into smaller helper functions.
+	def setDisplayByName(  # noqa: C901
+			self,
+			name: str,
+			isFallback=False,
+			detected: typing.Optional[bdDetect.DeviceMatch] = None,
+	):
 		if not isFallback:
 			# #8032: Take note of the display requested, even if it is going to fail.
 			self._lastRequestedDisplayName=name
@@ -1736,7 +1829,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 		kwargs = {}
 		if detected:
-			kwargs["port"]=detected
+			kwargs["port"] = detected
 		else:
 			# See if the user has defined a specific port to connect to
 			try:
@@ -2230,10 +2323,15 @@ class _BgThread:
 			if cls.exit:
 				break
 
-#: Maps old braille display driver names to new drivers that supersede old drivers.
+
+# Maps old braille display driver names to new drivers that supersede old drivers.
+# Ensure that if a user has set a preferred driver which has changed name, the new
+# user preference is retained.
 RENAMED_DRIVERS = {
-	"syncBraille":"hims",
-	"alvaBC6":"alva"
+	# "oldDriverName": "newDriverName"
+	"syncBraille": "hims",
+	"alvaBC6": "alva",
+	"hid": "hidBrailleStandard",
 }
 
 handler: BrailleHandler
@@ -2249,6 +2347,7 @@ def initialize():
 	newTableName = brailleTables.RENAMED_TABLES.get(oldTableName)
 	if newTableName:
 		config.conf["braille"]["translationTable"] = newTableName
+	bdDetect.initializeDetectionData()
 	handler = BrailleHandler()
 	# #7459: the syncBraille has been dropped in favor of the native hims driver.
 	# Migrate to renamed drivers as smoothly as possible.
@@ -2316,6 +2415,17 @@ class BrailleDisplayDriver(driverHandler.Driver):
 	#: @type: float
 	timeout = 0.2
 
+	def __init__(self, port: typing.Union[None, str, bdDetect.DeviceMatch] = None):
+		"""Constructor
+		@param port: Information on how to connect to the device.
+			Use L{_getTryPorts} to normalise to L{DeviceMatch} instances.
+			- A string (from config "config.conf["braille"][name]["port"]"). When manually configured.
+				This value is set via the settings dialog, the source of the options provided to the user
+				is the BrailleDisplayDriver.getPossiblePorts method.
+			- A L{DeviceMatch} instance. When automatically detected.
+		"""
+		super().__init__()
+
 	@classmethod
 	def check(cls):
 		"""Determine whether this braille display is available.
@@ -2342,13 +2452,13 @@ class BrailleDisplayDriver(driverHandler.Driver):
 		Subclasses should call the superclass method first.
 		@postcondition: This instance can no longer be used unless it is constructed again.
 		"""
-		super(BrailleDisplayDriver,self).terminate()
+		super().terminate()
 		# Clear the display.
 		try:
 			self.display([0] * self.numCells)
-		except:
+		except Exception:
 			# The display driver seems to be failing, but we're terminating anyway, so just ignore it.
-			pass
+			log.error(f"Display driver {self} failed to display while terminating.", exc_info=True)
 
 	#: typing information for autoproperty _get_numCells
 	numCells: int
@@ -2371,14 +2481,18 @@ class BrailleDisplayDriver(driverHandler.Driver):
 	AUTOMATIC_PORT = AUTOMATIC_PORT
 
 	@classmethod
-	def getPossiblePorts(cls):
+	def getPossiblePorts(cls) -> typing.OrderedDict[str, str]:
 		""" Returns possible hardware ports for this driver.
+		Optionally and in addition to the values from L{getManualPorts},
+		three special values may be returned if the driver supports
+		them, "auto", "usb", and "bluetooth".
+
 		Generally, drivers shouldn't implement this method directly.
 		Instead, they should provide automatic detection data via L{bdDetect}
 		and implement L{getPossibleManualPorts} if they support manual ports
 		such as serial ports.
-		@return: ordered dictionary of name : description for each port
-		@rtype: OrderedDict
+
+		@return: Ordered dictionary for each port a (key : value) of name : translated description.
 		"""
 		try:
 			next(bdDetect.getConnectedUsbDevicesForDriver(cls.name))
@@ -2426,18 +2540,18 @@ class BrailleDisplayDriver(driverHandler.Driver):
 			pass
 
 	@classmethod
-	def getManualPorts(cls) -> Iterable[str]:
+	def getManualPorts(cls) -> typing.Iterator[typing.Tuple[str, str]]:
 		"""Get possible manual hardware ports for this driver.
 		This is for ports which cannot be detected automatically
 		such as serial ports.
-		@return: The name and description for each port.
+		@return: An iterator containing the name and description for each port.
 		"""
 		raise NotImplementedError
 
 	@classmethod
 	def _getTryPorts(
 			cls, port: Union[str, bdDetect.DeviceMatch]
-	) -> Iterable[bdDetect.DeviceMatch]:
+	) -> typing.Iterator[bdDetect.DeviceMatch]:
 		"""Returns the ports for this driver to which a connection attempt should be made.
 		This generator function is usually used in L{__init__} to connect to the desired display.
 		@param port: the port to connect to.
@@ -2663,6 +2777,18 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 		"""
 		return self.id.split("+")
 
+	def _get_speechEffectWhenExecuted(self) -> Optional[str]:
+		from globalCommands import commands
+		if (
+			not config.conf["braille"]["interruptSpeechWhileScrolling"]
+			and self.script in {
+				commands.script_braille_scrollBack,
+				commands.script_braille_scrollForward,
+			}
+		):
+			return None
+		return super().speechEffectWhenExecuted
+
 	#: Compiled regular expression to match an identifier including an optional model name
 	#: The model name should be an alphanumeric string without spaces.
 	#: @type: RegexObject
@@ -2695,7 +2821,7 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 inputCore.registerGestureSource("br", BrailleDisplayGesture)
 
 
-def getSerialPorts(filterFunc=None):
+def getSerialPorts(filterFunc=None) -> typing.Iterator[typing.Tuple[str, str]]:
 	"""Get available serial ports in a format suitable for L{BrailleDisplayDriver.getManualPorts}.
 	@param filterFunc: a function executed on every dictionary retrieved using L{hwPortUtils.listComPorts}.
 		For example, this can be used to filter by USB or Bluetooth com ports.

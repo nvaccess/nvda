@@ -1,8 +1,7 @@
-#fileUtils.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2017-2019 NV Access Limited, Bram Duvigneau
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2017-2021 NV Access Limited, Bram Duvigneau, Łukasz Golonka
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import os
 import ctypes
@@ -13,6 +12,10 @@ from tempfile import NamedTemporaryFile
 from logHandler import log
 from six import text_type
 import winKernel
+import shlobj
+from functools import wraps
+import systemUtils
+
 
 @contextmanager
 def FaultTolerantFile(name):
@@ -40,6 +43,32 @@ def FaultTolerantFile(name):
 		f.close()
 		winKernel.moveFileEx(f.name, name, winKernel.MOVEFILE_REPLACE_EXISTING)
 
+
+def _suspendWow64RedirectionForFileInfoRetrieval(func):
+	"""
+	This decorator checks if the file provided as a `filePath`
+	is placed in a system32 directory, and if for the current system system32
+	redirects 32-bit processes such as NVDA to a different syswow64 directory
+	disables redirection for the duration of the function call.
+	This is necessary when fetching file version info since NVDA is a 32-bit application
+	and without redirection disabled we would either access a wrong file or not be able to access it at all.
+	"""
+	@wraps(func)
+	def funcWrapper(filePath, *attributes):
+		nativeSys32 = shlobj.SHGetKnownFolderPath(shlobj.FolderId.SYSTEM)
+		if (
+			systemUtils.hasSyswow64Dir()
+			# Path's returned from `appModule.appPath` and `shlobj.SHGetKnownFolderPath` often differ in case
+			and filePath.casefold().startswith(nativeSys32.casefold())
+		):
+			with winKernel.suspendWow64Redirection():
+				return func(filePath, *attributes)
+		else:
+			return func(filePath, *attributes)
+	return funcWrapper
+
+
+@_suspendWow64RedirectionForFileInfoRetrieval
 def getFileVersionInfo(name, *attributes):
 	"""Gets the specified file version info attributes from the provided file."""
 	if not isinstance(name, text_type):

@@ -1,12 +1,24 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2021 NV Access Limited, Babbage B.V.
+# Copyright (C) 2006-2022 NV Access Limited, Babbage B.V.
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
+
 import typing
+from typing import (
+	Optional,
+	Union,
+)
 
 from comtypes.automation import IEnumVARIANT, VARIANT
-from comtypes import COMError, IServiceProvider, GUID
+from comtypes import (
+	COMError,
+	IServiceProvider,
+	GUID,
+	IUnknown,
+	BSTR,
+)
 from comtypes.hresult import S_OK, S_FALSE
+import comtypes.client
 import ctypes
 import os
 import re
@@ -14,6 +26,7 @@ import sys
 import itertools
 import importlib
 from comInterfaces.tom import ITextDocument
+from comInterfaces import Accessibility as IA
 from comInterfaces import IAccessible2Lib as IA2
 import tones
 import languageHandler
@@ -33,12 +46,20 @@ import braille
 import api
 import config
 import controlTypes
+from controlTypes import TextPosition
+from controlTypes.formatFields import FontSize
 from NVDAObjects.window import Window
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo, InvalidNVDAObject
 import NVDAObjects.JAB
 import eventHandler
 from NVDAObjects.behaviors import ProgressBar, Dialog, EditableTextWithAutoSelectDetection, FocusableUnfocusableContainer, ToolTip, Notification
 from locationHelper import RectLTWH
+import NVDAHelper
+
+
+# Custom object ID used for clipboard pane in some versions of MS Office
+MSO_COLLECT_AND_PASTE_OBJECT_ID = 21
+
 
 def getNVDAObjectFromEvent(hwnd,objectID,childID):
 	try:
@@ -117,6 +138,14 @@ def normalizeIA2TextFormatField(formatField):
 	language=formatField.get('language')
 	if language:
 		formatField['language']=languageHandler.normalizeLanguage(language)
+	try:
+		formatField["text-position"] = TextPosition(formatField.pop("text-position"))
+	except KeyError:
+		formatField["text-position"] = TextPosition.BASELINE
+
+	fontSize = formatField.get("font-size")
+	if fontSize is not None:
+		formatField["font-size"] = FontSize.translateFromAttribute(fontSize)
 
 class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 
@@ -479,7 +508,7 @@ the NVDAObject for IAccessible
 				from .winword import SpellCheckErrorField
 				clsList.append(SpellCheckErrorField)
 			else:
-				from .winword import WordDocument_WwN
+				from NVDAObjects.window.winword import WordDocument_WwN
 				clsList.append(WordDocument_WwN)
 		elif windowClassName=="DirectUIHWND" and role==oleacc.ROLE_SYSTEM_TOOLBAR:
 			parentWindow=winUser.getAncestor(self.windowHandle,winUser.GA_PARENT)
@@ -499,7 +528,10 @@ the NVDAObject for IAccessible
 		elif windowClassName.startswith('Mozilla'):
 			from . import mozilla
 			mozilla.findExtraOverlayClasses(self, clsList)
-		elif self.event_objectID in (None,winUser.OBJID_CLIENT) and windowClassName.startswith('bosa_sdm'):
+		elif(
+			self.event_objectID in (None, winUser.OBJID_CLIENT, MSO_COLLECT_AND_PASTE_OBJECT_ID)
+			and windowClassName.startswith('bosa_sdm')
+		):
 			if role==oleacc.ROLE_SYSTEM_GRAPHIC and controlTypes.State.FOCUSED in self.states:
 				from .msOffice import SDMSymbols
 				clsList.append(SDMSymbols)
@@ -588,17 +620,20 @@ the NVDAObject for IAccessible
 			if clsList[0]==IAccessible and len(clsList)==3 and self.IAccessibleRole==oleacc.ROLE_SYSTEM_CLIENT and self.childCount==0:
 				clsList.insert(0,ContentGenericClient)
 
-	def __init__(self,windowHandle=None,IAccessibleObject=None,IAccessibleChildID=None,event_windowHandle=None,event_objectID=None,event_childID=None):
+	# C901: 'IAccessible.__init__' is too complex
+	def __init__(  # noqa: C901
+			self,
+			windowHandle: Optional[int] = None,
+			IAccessibleObject: Optional[Union[IUnknown, IA.IAccessible, IA2.IAccessible2]] = None,
+			IAccessibleChildID: Optional[int] = None,
+			event_windowHandle: Optional = None,
+			event_objectID: Optional = None,
+			event_childID: Optional = None
+	):
 		"""
-@param pacc: a pointer to an IAccessible object
-@type pacc: ctypes.POINTER(IAccessible)
-@param child: A child ID that will be used on all methods of the IAccessible pointer
-@type child: int
-@param hwnd: the window handle, if known
-@type hwnd: int
-@param objectID: the objectID for the IAccessible Object, if known
-@type objectID: int
-"""
+		@param windowHandle: the window handle, if known
+		@param IAccessibleChildID: A child ID that will be used on all methods of the IAccessible pointer
+		"""
 		self.IAccessibleObject=IAccessibleObject
 		self.IAccessibleChildID=IAccessibleChildID
 
@@ -827,7 +862,11 @@ the NVDAObject for IAccessible
 				self._IAccessibleIdentity=None
 		return self._IAccessibleIdentity
 
-	def _get_IAccessibleRole(self):
+	IAccessibleRole: int
+	"""Type definition for auto prop '_get_IAccessibleRole'
+	"""
+
+	def _get_IAccessibleRole(self) -> int:
 		if isinstance(self.IAccessibleObject, IA2.IAccessible2):
 			try:
 				role=self.IAccessibleObject.role()
@@ -843,29 +882,39 @@ the NVDAObject for IAccessible
 				role=0
 		return role
 
-
 	def _get_role(self):
 		IARole=self.IAccessibleRole
 		if IARole==oleacc.ROLE_SYSTEM_CLIENT:
 			superRole=super(IAccessible,self).role
 			if superRole!=controlTypes.Role.WINDOW:
 					return superRole
-		if isinstance(IARole,str):
+		if isinstance(IARole, str):  # todo: when can this be a string?
 			IARole=IARole.split(',')[0].lower()
 			log.debug("IARole: %s"%IARole)
-		return IAccessibleHandler.IAccessibleRolesToNVDARoles.get(IARole,controlTypes.Role.UNKNOWN)
+		# must not create interdependence between role and states properties. Use IARole / IAStates.
+		NVDARole = IAccessibleHandler.calculateNvdaRole(IARole, self.IAccessibleStates)
+		return NVDARole
 	# #2569: Don't cache role,
 	# as it relies on other properties which might change when overlay classes are applied.
 	_cache_role = False
 
-	def _get_IAccessibleStates(self):
+	IAccessibleStates: int
+	"""Type info for auto property: _get_IAccessibleStates
+	"""
+
+	def _get_IAccessibleStates(self) -> int:
 		try:
 			res=self.IAccessibleObject.accState(self.IAccessibleChildID)
 		except COMError:
 			return 0
 		return res if isinstance(res,int) else 0
 
-	def _get_states(self):
+	states: typing.Set[controlTypes.State]
+	"""Type info for auto property: _get_states
+	"""
+
+	# C901 '_get_states' is too complex. Look for opportunities to break this method down.
+	def _get_states(self) -> typing.Set[controlTypes.State]:  # noqa: C901
 		states=set()
 		if self.event_objectID in (winUser.OBJID_CLIENT, winUser.OBJID_WINDOW) and self.event_childID == 0:
 			states.update(super(IAccessible, self).states)
@@ -874,12 +923,16 @@ the NVDAObject for IAccessible
 		except COMError:
 			log.debugWarning("could not get IAccessible states",exc_info=True)
 		else:
-			states.update(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in (y for y in (1<<z for z in range(32)) if y&IAccessibleStates) if x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
+			states.update(
+				IAccessibleHandler.calculateNvdaStates(self.IAccessibleRole, IAccessibleStates)
+			)
+
 		if not isinstance(self.IAccessibleObject, IA2.IAccessible2):
 			# Not an IA2 object.
 			return states
-		IAccessible2States=self.IA2States
-		states=states|set(IAccessibleHandler.IAccessible2StatesToNVDAStates[x] for x in (y for y in (1<<z for z in range(32)) if y&IAccessible2States) if x in IAccessibleHandler.IAccessible2StatesToNVDAStates)
+		IAccessible2States = self.IA2States
+		states |= IAccessibleHandler.getStatesSetFromIAccessible2States(IAccessible2States)
+
 		# Readonly should override editable
 		if controlTypes.State.READONLY in states:
 			states.discard(controlTypes.State.EDITABLE)
@@ -1093,7 +1146,10 @@ the NVDAObject for IAccessible
 				event_windowHandle=self.event_windowHandle, event_objectID=self.event_objectID, event_childID=child[1])
 		return self.correctAPIForRelation(IAccessible(IAccessibleObject=child[0], IAccessibleChildID=child[1]))
 
-	def _get_IA2Attributes(self):
+	#: Type definition for auto prop '_get_IA2Attributes'
+	IA2Attributes: typing.Dict[str, str]
+
+	def _get_IA2Attributes(self) -> typing.Dict[str, str]:
 		if not isinstance(self.IAccessibleObject, IA2.IAccessible2):
 			return {}
 		try:
@@ -1289,17 +1345,23 @@ the NVDAObject for IAccessible
 			return self.table
 		return super(IAccessible,self).selectionContainer
 
-	def _getSelectedItemsCount_accSelection(self,maxCount):
+	def _getSelectedItemsCount_accSelection(self, maxCount: int) -> int:
 		sel=self.IAccessibleObject.accSelection
 		if not sel:
 			raise NotImplementedError
 		# accSelection can return a child ID of a simple element, for instance in QT tree tables. 
-		# Therefore treet this as a single selection.
-		if isinstance(sel,int) and sel>0:
+		# Therefore treat this as a single selection unless the child ID is CHILDID_SELF (0).
+		if isinstance(sel, int) and sel != 0:
+			return 1
+		# accSelection can return IDispatch for a single selected child object
+		if isinstance(sel, comtypes.client.dynamic._Dispatch):
 			return 1
 		enumObj=sel.QueryInterface(IEnumVARIANT)
 		if not enumObj:
 			raise NotImplementedError
+		# Some implementations of accSelection (e.g. in Symphony based products) don't return
+		# a fresh IEnumVARIANT. Reset it to ensure we enumerate from the start.
+		enumObj.Reset()
 		# Call the rawmethod for IEnumVARIANT::Next as COMTypes' overloaded version does not allow limiting the amount of items returned
 		numItemsFetched=ctypes.c_ulong()
 		itemsBuf=(VARIANT*(maxCount+1))()
@@ -1310,24 +1372,33 @@ the NVDAObject for IAccessible
 			raise COMError(res,None,None)
 		return numItemsFetched.value if numItemsFetched.value <= maxCount else sys.maxsize
 
-	def getSelectedItemsCount(self,maxCount):
-		# To fetch the number of selected items, we first try MSAA's accSelection, but if that fails in any way, we fall back to using IAccessibleTable2's nSelectedCells, if we are on an IAccessible2 table.
+	def getSelectedItemsCount(self, maxCount=2):
+		# To fetch the number of selected items, we first try MSAA's accSelection,
+		# but if that fails in any way, we fall back to using IAccessibleTable2's nSelectedCells,
+		# if we are on an IAccessible2 table, or IAccessibleTable's nSelectedChildren,
+		# if we are on an IAccessible table.
 		# Currently Chrome does not implement accSelection, thus for Google Sheets we must use nSelectedCells when on a table.
+		# For older symphony based products, we use nSelectedChildren.
 		try:
 			return self._getSelectedItemsCount_accSelection(maxCount)
 		except (COMError,NotImplementedError) as e:
 			log.debug("Cannot fetch selected items count using accSelection, %s"%e)
 			pass
-		if hasattr(self,'IAccessibleTable2Object'):
+		if hasattr(self, 'IAccessibleTable2Object'):
 			try:
 				return self.IAccessibleTable2Object.nSelectedCells
 			except COMError as e:
-				log.debug("Error calling IAccessibleTable2::nSelectedCells, %s"%e)
+				log.debug(f"Error calling IAccessibleTable2::nSelectedCells, {e}")
+			pass
+		elif hasattr(self, 'IAccessibleTableObject'):
+			try:
+				return self.IAccessibleTableObject.nSelectedChildren
+			except COMError as e:
+				log.debug(f"Error calling IAccessibleTable::nSelectedCells, {e}")
 			pass
 		else:
 			log.debug("No means of getting a selection count from this IAccessible")
-		return super(IAccessible,self).getSelectedItemsCount(maxCount)
-
+		return super().getSelectedItemsCount(maxCount)
 
 	def _get_table(self):
 		if not isinstance(self.IAccessibleObject, IA2.IAccessible2):
@@ -1422,39 +1493,126 @@ the NVDAObject for IAccessible
 				pass
 		raise NotImplementedError
 
-	def _get__IA2Relations(self):
+	#: Type definition for auto prop '_get__IA2Relations'
+	_IA2Relations: typing.List[IA2.IAccessibleRelation]
+
+	def _get__IA2Relations(self) -> typing.List[IA2.IAccessibleRelation]:
 		if not isinstance(self.IAccessibleObject, IA2.IAccessible2):
+			log.debug("Not an IA2.IAccessible2")
 			raise NotImplementedError
 		import ctypes
 		import comtypes.hresult
 		try:
 			size = self.IAccessibleObject.nRelations
 		except COMError:
+			log.debug("Unable to get nRelations")
 			raise NotImplementedError
 		if size <= 0:
-			return ()
+			return list()
 		relations = (ctypes.POINTER(IA2.IAccessibleRelation) * size)()
 		count = ctypes.c_int()
 		# The client allocated relations array is an [out] parameter instead of [in, out], so we need to use the raw COM method.
 		res = self.IAccessibleObject._IAccessible2__com__get_relations(size, relations, ctypes.byref(count))
 		if res != comtypes.hresult.S_OK:
+			log.debug("Unable to get relations")
 			raise NotImplementedError
 		return list(relations)
 
-	def _getIA2RelationFirstTarget(self, relationType):
-		for relation in self._IA2Relations:
-			try:
+	def _getIA2TargetsForRelationsOfType(
+			self,
+			relationType: "IAccessibleHandler.RelationType",
+			maxRelations: int = 1,
+	) -> typing.List[IUnknown]:
+		"""Gets the target IAccessible (actually IUnknown; use QueryInterface or
+		normalizeIAccessible to resolve) for the relations with given type.
+		Allows escape of exception: COMError(-2147417836, 'Requested object does not exist.'),
+		callers should handle this, for this reason consider using _getIA2RelationFirstTarget
+		if only the first target is required, and you wish the target to be converted to an IAccessible
+		"""
+		acc = self.IAccessibleObject
+		if not isinstance(acc, IA2.IAccessible2):
+			raise NotImplementedError
+		if not isinstance(relationType, IAccessibleHandler.RelationType):
+			raise NotImplementedError
+		if 1 > maxRelations:
+			raise ValueError
+		if not isinstance(acc, IA2.IAccessible2_2):
+			acc = acc.QueryInterface(IA2.IAccessible2_2)
+		targets, count = acc.relationTargetsOfType(
+			relationType.value,
+			maxRelations
+		)
+		if count == 0:
+			return list()
+		relationsGen = (
+			targets[i]
+			for i in range(min(maxRelations, count))
+		)
+		return list(relationsGen)
+
+	def _getIA2RelationFirstTarget(
+			self,
+			relationType: typing.Union[str, "IAccessibleHandler.RelationType"]
+	) -> typing.Optional["IAccessible"]:
+		""" Get the first target for the relation of type.
+		@param relationType: The type of relation to fetch.
+		"""
+		if not isinstance(relationType, IAccessibleHandler.RelationType):
+			if isinstance(relationType, str):
+				relationType = IAccessibleHandler.RelationType(relationType)
+			else:
+				raise TypeError(f"Bad type for 'relationType' arg, got: {type(relationType)}")
+
+		relationType = typing.cast(IAccessibleHandler.RelationType, relationType)
+
+		try:
+			# rather than fetch all the relations and querying the type, do that in process for performance reasons
+			targets = self._getIA2TargetsForRelationsOfType(relationType, maxRelations=1)
+			if targets:
+				ia2Object = IAccessibleHandler.normalizeIAccessible(targets[0])
+				return IAccessible(
+					IAccessibleObject=ia2Object,
+					IAccessibleChildID=0
+				)
+		except (NotImplementedError, COMError):
+			log.debugWarning("Unable to use _getIA2TargetsForRelationsOfType, fallback to _IA2Relations.")
+
+		# eg IA2_2 is not available, fall back to old approach
+		try:
+			for relation in self._IA2Relations:
 				if relation.relationType == relationType:
-					return IAccessible(IAccessibleObject=IAccessibleHandler.normalizeIAccessible(relation.target(0)), IAccessibleChildID=0)
-			except COMError:
-				pass
+					# Take the first of 'relation.nTargets' see IAccessibleRelation._methods_
+					target = relation.target(0)
+					ia2Object = IAccessibleHandler.normalizeIAccessible(target)
+					return IAccessible(
+						IAccessibleObject=ia2Object,
+						IAccessibleChildID=0
+					)
+		except (NotImplementedError, COMError):
+			log.debug("Unable to fetch _IA2Relations", exc_info=True)
+			pass
 		return None
 
-	def _get_flowsTo(self):
-		return self._getIA2RelationFirstTarget(IAccessibleHandler.IA2_RELATION_FLOWS_TO)
+	#: Type definition for auto prop '_get_detailsRelations'
+	detailsRelations: typing.Iterable["IAccessible"]
 
-	def _get_flowsFrom(self):
-		return self._getIA2RelationFirstTarget(IAccessibleHandler.IA2_RELATION_FLOWS_FROM)
+	def _get_detailsRelations(self) -> typing.Iterable["IAccessible"]:
+		relationTarget = self._getIA2RelationFirstTarget(IAccessibleHandler.RelationType.DETAILS)
+		if not relationTarget:
+			return ()
+		return (relationTarget, )
+
+	#: Type definition for auto prop '_get_flowsTo'
+	flowsTo: typing.Optional["IAccessible"]
+
+	def _get_flowsTo(self) -> typing.Optional["IAccessible"]:
+		return self._getIA2RelationFirstTarget(IAccessibleHandler.RelationType.FLOWS_TO)
+
+	#: Type definition for auto prop '_get_flowsFrom'
+	flowsFrom: typing.Optional["IAccessible"]
+
+	def _get_flowsFrom(self) -> typing.Optional["IAccessible"]:
+		return self._getIA2RelationFirstTarget(IAccessibleHandler.RelationType.FLOWS_FROM)
 
 	def event_valueChange(self):
 		if isinstance(self, EditableTextWithAutoSelectDetection):
@@ -1600,6 +1758,11 @@ the NVDAObject for IAccessible
 			except Exception as e:
 				ret = "exception: %s" % e
 			info.append("IAccessible2 attributes: %s" % ret)
+			try:
+				ret = ", ".join(r.RelationType for r in self._IA2Relations)
+			except Exception as e:
+				ret = f"exception: {e}"
+			info.append(f"IAccessible2 relations: {ret}")
 		return info
 
 	def _get_language(self):
@@ -1631,7 +1794,11 @@ the NVDAObject for IAccessible
 	# Temporary caching breaks because the cache isn't initialised when this is first called.
 	_cache_IA2WindowHandle = False
 
-	def _get_IA2States(self):
+	IA2States: int
+	"""Type info for auto property: _get_IA2States
+	"""
+
+	def _get_IA2States(self) -> int:
 		if not isinstance(self.IAccessibleObject, IA2.IAccessible2):
 			return 0
 		try:
@@ -1648,6 +1815,32 @@ the NVDAObject for IAccessible
 			return True
 		except COMError:
 			return False
+
+	def summarizeInProcess(self) -> str:
+		"""Uses nvdaInProcUtils to get the text for an IAccessible.
+		Can be used without a virtual buffer loaded.
+		"""
+		text = BSTR()
+		log.debug("Calling nvdaInProcUtils_getTextFromIAccessible")
+		res = NVDAHelper.localLib.nvdaInProcUtils_getTextFromIAccessible(
+			# [in] handle_t bindingHandle
+			self.appModule.helperLocalBindingHandle,
+			# [in] const unsigned long hwnd
+			self.windowHandle,
+			# [in] long parentID
+			self.IAccessibleObject.uniqueID,
+			# // Params for getTextFromIAccessible
+			# [out, string] BSTR* textBuf
+			ctypes.byref(text),
+			# [in, defaultvalue(TRUE)] const boolean recurse,
+			True,
+			# [in, defaultvalue(TRUE)] const boolean includeTopLevelText
+			True,
+		)
+		if res != 0:
+			log.error(f"Error calling nvdaInProcUtils_getTextFromIAccessible, res: {res}")
+			raise ctypes.WinError(res)
+		return text.value
 
 class ContentGenericClient(IAccessible):
 

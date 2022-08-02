@@ -4,18 +4,23 @@ Ce este nou în NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2021.2 =
+Această versiune introduce suportul preliminar pentru Windows 11.
+În timp ce lansarea oficială a Windows 11 încă se lasă așteptată, această versiune de NVDA a fost testată pe versiunile de previzualizare ale acestui sistem de operare.
+Acest fapt include o reparare importantă a cortinei ecranului (vedeți secțiunea Note Importante).
+Instrumentul de Remediere a Înregistrării COM poate rezolva mai multe probleme atunci când se execută NVDA.
+De asemenea, există actualizări pentru sintetizatorul eSpeak și pentru traducătorul braille LibLouis.
+Există și alte rezolvări de probleme și îmbunătățiri, în special pentru suportul braille și pentru terminalele Windows, precum și pentru calculator, panoul de emoji și pentru istoricul planșetei.
+
 
 == Note importante ==
-- Funcționalitatea Cortină Ecran din versiunile anterioare de NVDA nu mai este compatibilă cu versiunile de Windows mai noi decât Windows 10 21H2 (10.0.19044).
-Acest lucru se întâmplă din cauza unei modificări în API-ul Windows Magnification.
-La utilizarea versiunilor mai vechi de NVDA pe versiunile mai noi decât Windows 10 21H2, cortina ecranului poate avea probleme de funcționare fără să îl înștiințeze pe utilizator despre asta.
-Pentru siguranță, confirmați că această cortină a ecranului funcționează fără probleme cu versiunile noi sau experimentale de Windows.
-(#12491, #12684)
--
+Din cauza unei modificări în API-ul Magnification al Windows, Cortina de Ecran a fost actualizată cele mai noi versiuni de Windows.
+Utilizați NVDA 2021.2 pentru a activa Cortina de Ecran cu Windows 10 21H2 (10.0.19044) sau mai nou.
+Aceasta include Windows 10 Insiders și Windows 11.
+Dacă folosiți o nouă versiune de Windows, pentru a fi sigur că funcționalitatea Cortină Ecran face ecranul complet negru, întrebați pe cineva care vede.
 
 
 == Noi Funcționalități ==
-- Suport pentru adnotările ARIA:
+- Suport experimental pentru adnotările ARIA:
   - adaugă o comandă pentru citirea unor informații pe scurt despre un obiect cu aria-details. (#12364)
   - adaugă o opțiune în panoul setărilor avansate care să raporteze atunci când un obiect are detalii în modul de navigare. (#12439)
   -
@@ -49,6 +54,7 @@ Pentru siguranță, confirmați că această cortină a ecranului funcționează
 - Versiunea 10.0.22000 a Windows este recunoscută ca Windows 11. Se aplică și pentru versiunile mai noi decât aceasta. (#12626)
 - A fost reparat și testat suportul cortinei ecranului pe versiunile de Windows până la 10.0.22000. (#12684)
 - Dacă nu sunt afișate rezultate la filtrarea gesturilor de intrare, dialogul acestora de configurare continuă să funcționeze așa cum era de așteptat. (#12673)
+- A fost reparată o eroare care făcea ca primul element de meniu dintr-un submeniu nu era anunțat în niște contexte. (#12624)
 -
 
 

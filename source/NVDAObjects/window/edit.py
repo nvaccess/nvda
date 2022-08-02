@@ -1,34 +1,32 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2021 NV Access Limited, Babbage B.V.
+# Copyright (C) 2006-2022 NV Access Limited, Babbage B.V.
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import locale
+from typing import (
+	Dict,
+	Optional,
+)
+
 import comtypes.client
-import struct
 import ctypes
 from comtypes import COMError
 import oleTypes
 import colors
-import globalVars
 import NVDAHelper
 import eventHandler
 import comInterfaces.tom
 from logHandler import log
 import languageHandler
 import config
-import speech
 import winKernel
 import api
 import winUser
 import textInfos.offsets
-from keyboardHandler import KeyboardInputGesture
-from scriptHandler import isScriptWaiting
 import controlTypes
+from controlTypes import TextPosition
 from . import Window
-from .. import NVDAObjectTextInfo
 from ..behaviors import EditableTextWithAutoSelectDetection
-import braille
 import watchdog
 import locationHelper
 import textUtils
@@ -256,7 +254,9 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 		if formatConfig["reportFontSize"]:
 			if charFormat is None: charFormat=self._getCharFormat(offset)
 			# Font size is supposed to be an integral value
-			formatField["font-size"]="%spt"%(charFormat.yHeight//20)
+			fontSize = charFormat.yHeight // 20
+			# Translators: Abbreviation for points, a measurement of font size.
+			formatField["font-size"] = pgettext("font size", "%s pt") % fontSize
 		if formatConfig["reportFontAttributes"]:
 			if charFormat is None: charFormat=self._getCharFormat(offset)
 			formatField["bold"]=bool(charFormat.dwEffects&CFE_BOLD)
@@ -267,9 +267,11 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 			if charFormat is None:
 				charFormat = self._getCharFormat(offset)
 			if charFormat.dwEffects&CFE_SUBSCRIPT:
-				formatField["text-position"]="sub"
+				formatField["text-position"] = TextPosition.SUBSCRIPT
 			elif charFormat.dwEffects&CFE_SUPERSCRIPT:
-				formatField["text-position"]="super"
+				formatField["text-position"] = TextPosition.SUPERSCRIPT
+			else:
+			    formatField["text-position"] = TextPosition.BASELINE
 		if formatConfig["reportColor"]:
 			if charFormat is None: charFormat=self._getCharFormat(offset)
 			formatField["color"]=colors.RGB.fromCOLORREF(charFormat.crTextColor) if not charFormat.dwEffects&CFE_AUTOCOLOR else _("default color")
@@ -455,15 +457,16 @@ ITextDocumentUnitsToNVDAUnits={
 	comInterfaces.tom.tomStory:textInfos.UNIT_STORY,
 }
 
-NVDAUnitsToITextDocumentUnits={
-	textInfos.UNIT_CHARACTER:comInterfaces.tom.tomCharacter,
-	textInfos.UNIT_WORD:comInterfaces.tom.tomWord,
-	textInfos.UNIT_LINE:comInterfaces.tom.tomLine,
-	textInfos.UNIT_SENTENCE:comInterfaces.tom.tomSentence,
-	textInfos.UNIT_PARAGRAPH:comInterfaces.tom.tomParagraph,
-	textInfos.UNIT_STORY:comInterfaces.tom.tomStory,
-	textInfos.UNIT_READINGCHUNK:comInterfaces.tom.tomSentence,
+NVDAUnitsToITextDocumentUnits: Dict[str, int] = {
+	textInfos.UNIT_CHARACTER: comInterfaces.tom.tomCharacter,
+	textInfos.UNIT_WORD: comInterfaces.tom.tomWord,
+	textInfos.UNIT_LINE: comInterfaces.tom.tomLine,
+	textInfos.UNIT_SENTENCE: comInterfaces.tom.tomSentence,
+	textInfos.UNIT_PARAGRAPH: comInterfaces.tom.tomParagraph,
+	textInfos.UNIT_STORY: comInterfaces.tom.tomStory,
+	textInfos.UNIT_READINGCHUNK: comInterfaces.tom.tomLine,
 }
+
 
 class ITextDocumentTextInfo(textInfos.TextInfo):
 
@@ -499,7 +502,8 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		if formatConfig["reportFontSize"]:
 			if not fontObj:
 				fontObj = textRange.font
-			formatField["font-size"]="%spt"%fontObj.size
+			# Translators: Abbreviation for points, a measurement of font size.
+			formatField["font-size"] = pgettext("font size", "%s pt") % fontObj.size
 		if formatConfig["reportFontAttributes"]:
 			if not fontObj:
 				fontObj = textRange.font
@@ -511,9 +515,11 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 			if not fontObj:
 				fontObj = textRange.font
 			if fontObj.superscript:
-				formatField["text-position"]="super"
+				formatField["text-position"] = TextPosition.SUPERSCRIPT
 			elif fontObj.subscript:
-				formatField["text-position"]="sub"
+				formatField["text-position"] = TextPosition.SUBSCRIPT
+			else:
+			    formatField["text-position"] = TextPosition.BASELINE
 		if formatConfig["reportLinks"]:
 			linkRange = textRange.Duplicate
 			linkRange.Collapse(comInterfaces.tom.tomStart)
@@ -669,20 +675,28 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		else:
 			raise NotImplementedError("position: %s"%position)
 
-	def getTextWithFields(self,formatConfig=None):
+	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
 		if not formatConfig:
 			formatConfig=config.conf["documentFormatting"]
 		textRange=self._rangeObj.duplicate
 		textRange.collapse(True)
 		if not formatConfig["detectFormatAfterCursor"]:
 			textRange.expand(comInterfaces.tom.tomCharacter)
-			return [textInfos.FieldCommand("formatChange",self._getFormatFieldAtRange(textRange, formatConfig)),
-				self._getTextAtRange(self._rangeObj)]
+			return [
+				textInfos.FieldCommand(
+					"formatChange",
+					self._getFormatFieldAtRange(textRange, formatConfig)
+				),
+				self._getTextAtRange(self._rangeObj)
+			]
 		commandList=[]
 		endLimit=self._rangeObj.end
 		while textRange.end<endLimit:
 			self._expandFormatRange(textRange, formatConfig)
-			commandList.append(textInfos.FieldCommand("formatChange",self._getFormatFieldAtRange(textRange, formatConfig)))
+			commandList.append(textInfos.FieldCommand(
+				"formatChange",
+				self._getFormatFieldAtRange(textRange, formatConfig)
+			))
 			commandList.append(self._getTextAtRange(textRange))
 			end = textRange.end
 			textRange.start = end

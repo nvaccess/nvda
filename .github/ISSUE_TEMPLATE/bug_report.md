@@ -16,8 +16,20 @@ Each of the questions and sections below start with multiple hash symbols (#). P
 ### Steps to reproduce:
 
 ### Actual behavior:
+<!--
+Use "Speak command keys" (NVDA+4) and speech viewer to copy and paste here. 
+Use braille viewer to copy and paste here.
+You may additionally include an explanation.
+-->
 
 ### Expected behavior:
+<!--
+Use "Speak command keys" (NVDA+4) and speech viewer to copy and paste here. 
+Use braille viewer to copy and paste here.
+You may additionally include an explanation.
+-->
+
+### NVDA logs, crash dumps and other attachments:
 
 ### System configuration
 #### NVDA installed/portable/running from source:
@@ -35,6 +47,6 @@ Each of the questions and sections below start with multiple hash symbols (#). P
 
 #### Have you tried any other versions of NVDA? If so, please report their behaviors.
 
-#### If add-ons are disabled, is your problem still occurring?
+#### If NVDA add-ons are disabled, is your problem still occurring?
 
 #### Does the issue still occur after you run the COM Registration Fixing Tool in NVDA's tools menu?

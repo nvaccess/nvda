@@ -3,10 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2007-2020 NV Access Limited
 
-from ctypes import *
-from ctypes.wintypes import *
 import api
-import winKernel
 import controlTypes
 import speech
 import UIAHandler
@@ -36,19 +33,6 @@ TVGN_PREVIOUS=2
 TVGN_PARENT=3
 TVGN_CHILD=4
 
-class TVItemStruct(Structure):
-	_fields_=[
-		('mask',c_uint),
-		('hItem',c_void_p),
-		('state',c_uint),
-		('stateMask',c_uint),
-		('pszText',LPWSTR),
-		('cchTextMax',c_int),
-		('iImage',c_int),
-		('iSelectedImage',c_int),
-		('cChildren',c_int),
-		('lParam',LPARAM),
-	]
 
 class TreeView(IAccessible):
 

@@ -1,8 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2021 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
-# Julien Cochuyt
+# Copyright (C) 2006-2022 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
+# Julien Cochuyt, Derek Riemer
 
 """High-level functions to speak information.
 """ 
@@ -15,7 +15,7 @@ import time
 import colors
 import api
 import controlTypes
-from controlTypes import OutputReason
+from controlTypes import OutputReason, TextPosition
 import tones
 from synthDriverHandler import getSynth
 import re
@@ -26,6 +26,7 @@ import languageHandler
 from . import manager
 from .commands import (
 	# Commands that are used in this file.
+	BreakCommand,
 	SpeechCommand,
 	PitchCommand,
 	LangChangeCommand,
@@ -338,6 +339,48 @@ def _getSpellingSpeechWithoutCharMode(
 		yield EndUtteranceCommand()
 
 
+def getSingleCharDescriptionDelayMS() -> int:
+	"""
+	@returns: 1 second, a default delay.
+	In the future, this should fetch its value from a user defined NVDA idle time.
+	Blocked by: https://github.com/nvaccess/nvda/issues/13915
+	"""
+	return 1000
+
+
+def getSingleCharDescription(
+		text: str,
+		locale: Optional[str] = None,
+) -> Generator[SequenceItemT, None, None]:
+	# This should only be used for single chars.
+	if not len(text) == 1:
+		return
+	synth = getSynth()
+	synthConfig = config.conf["speech"][synth.name]
+	if synth.isSupported("pitch"):
+		capPitchChange = synthConfig["capPitchChange"]
+	else:
+		capPitchChange = 0
+	defaultLanguage = getCurrentLanguage()
+	if not locale or (
+		not config.conf['speech']['autoDialectSwitching']
+		and locale.split('_')[0] == defaultLanguage.split('_')[0]
+	):
+		locale = defaultLanguage
+	# If the description for the locale is unknown, we yield nothing.
+	char, description = getCharDescListFromText(text, locale=locale)[0]
+	uppercase = char.isupper()
+	if description is None:
+		return
+	yield BreakCommand(getSingleCharDescriptionDelayMS())
+	yield from _getSpellingCharAddCapNotification(
+		description[0],
+		sayCapForCapitals=uppercase and synthConfig["sayCapForCapitals"],
+		capPitchChange=(capPitchChange if uppercase else 0),
+		beepForCapitals=uppercase and synthConfig["beepForCapitals"],
+	)
+
+
 def getSpellingSpeech(
 		text: str,
 		locale: Optional[str] = None,
@@ -388,7 +431,7 @@ def getCharDescListFromText(text,locale):
 	return charDescList
 
 
-def speakObjectProperties(  # noqa: C901
+def speakObjectProperties(
 		obj,
 		reason: OutputReason = OutputReason.QUERY,
 		_prefixSpeechCommand: Optional[SpeechCommand] = None,
@@ -428,6 +471,11 @@ def getObjectPropertiesSpeech(  # noqa: C901
 			# getPropertiesSpeech names this "current", but the NVDAObject property is
 			# named "isCurrent", it's type should always be controltypes.IsCurrent
 			newPropertyValues['current'] = obj.isCurrent
+
+		elif value and name == "hasDetails":
+			newPropertyValues['hasDetails'] = obj.hasDetails
+		elif value and name == "detailsRole":
+			newPropertyValues["detailsRole"] = obj.detailsRole
 		elif value and name == "descriptionFrom" and (
 			obj.descriptionFrom == controlTypes.DescriptionFrom.ARIA_DESCRIPTION
 		):
@@ -451,6 +499,14 @@ def getObjectPropertiesSpeech(  # noqa: C901
 				except NotImplementedError:
 					continue
 				break
+
+	if (
+		newPropertyValues.get("description")  # has a value
+		and newPropertyValues.get("name") == newPropertyValues.get("description")  # value is equal to name
+		and reason != controlTypes.OutputReason.CHANGE  # if the value has changed, report it.
+	):
+		del newPropertyValues['description']  # prevent duplicate speech due to description matching name
+
 	if positionInfo:
 		if allowedProperties.get('positionInfo_level',False) and 'level' in positionInfo:
 			newPropertyValues['positionInfo_level']=positionInfo['level']
@@ -476,8 +532,11 @@ def getObjectPropertiesSpeech(  # noqa: C901
 				newStates=newPropertyValues[name]
 				newPropertyValues['states']=newStates-oldStates
 				newPropertyValues['negativeStates']=oldStates-newStates
-	#properties such as states need to know the role to speak properly, give it as a _ name
-	newPropertyValues['_role']=newPropertyValues.get('role',obj.role)
+
+	# properties such as states or value need to know the role to speak properly,
+	# give it as a _ name
+	newPropertyValues['_role'] = newPropertyValues.get('role', obj.role)
+
 	# The real states are needed also, as the states entry might be filtered.
 	newPropertyValues['_states']=obj.states
 	if "rowNumber" in newPropertyValues or "columnNumber" in newPropertyValues:
@@ -613,7 +672,6 @@ def getObjectSpeech(  # noqa: C901
 			sequence.extend(_flattenNestedSequences(speechGen))
 	elif role == controlTypes.Role.MATH:
 		import mathPres
-		mathPres.ensureInit()
 		if mathPres.speechProvider:
 			try:
 				sequence.extend(
@@ -632,6 +690,8 @@ def _objectSpeech_calculateAllowedProps(reason, shouldReportTextContent):
 		'states': True,
 		'value': True,
 		'description': True,
+		'hasDetails': config.conf["annotations"]["reportDetails"],
+		"detailsRole": config.conf["annotations"]["reportDetails"],
 		'descriptionFrom': config.conf["annotations"]["reportAriaDescription"],
 		'keyboardShortcut': True,
 		'positionInfo_level': True,
@@ -1103,7 +1163,6 @@ def _extendSpeechSequence_addMathForTextInfo(
 		speechSequence: SpeechSequence, info: textInfos.TextInfo, field: textInfos.Field
 ) -> None:
 	import mathPres
-	mathPres.ensureInit()
 	if not mathPres.speechProvider:
 		return
 	try:
@@ -1153,7 +1212,6 @@ def getTextInfoSpeech(  # noqa: C901
 		onlyInitialFields: bool = False,
 		suppressBlanks: bool = False
 ) -> Generator[SpeechSequence, None, bool]:
-	onlyCache = reason == OutputReason.ONLYCACHE
 	if isinstance(useCache,SpeakTextInfoState):
 		speakTextInfoState=useCache
 	elif useCache:
@@ -1193,8 +1251,8 @@ def getTextInfoSpeech(  # noqa: C901
 		except KeyError:
 			pass
 
-	#Make a new controlFieldStack and formatField from the textInfo's initialFields
-	newControlFieldStack=[]
+	# Make a new controlFieldStack and formatField from the textInfo's initialFields
+	newControlFieldStack: List[textInfos.ControlField] = []
 	newFormatField=textInfos.FormatField()
 	initialFields=[]
 	for field in textWithFields:
@@ -1233,7 +1291,7 @@ def getTextInfoSpeech(  # noqa: C901
 	speechSequence: SpeechSequence = []
 	# #2591: Only if the reason is not focus, Speak the exit of any controlFields not in the new stack.
 	# We don't do this for focus because hearing "out of list", etc. isn't useful when tabbing or using quick navigation and makes navigation less efficient.
-	if reason != OutputReason.FOCUS:
+	if reason not in [OutputReason.FOCUS, OutputReason.QUICKNAV]:
 		endingBlock=False
 		for count in reversed(range(commonFieldCount,len(controlFieldStackCache))):
 			fieldSequence = info.getControlFieldSpeech(
@@ -1288,7 +1346,7 @@ def getTextInfoSpeech(  # noqa: C901
 				# We entered the most outer clickable, so announce it, if we won't be announcing anything else interesting for this field
 				presCat=field.getPresentationCategory(newControlFieldStack[0:count],formatConfig,reason)
 				if not presCat or presCat is field.PRESCAT_LAYOUT:
-					speechSequence.append(controlTypes.stateLabels[controlTypes.State.CLICKABLE])
+					speechSequence.append(controlTypes.State.CLICKABLE.displayString)
 					shouldConsiderTextInfoBlank = False
 				inClickable=True
 		fieldSequence = info.getControlFieldSpeech(
@@ -1324,32 +1382,29 @@ def getTextInfoSpeech(  # noqa: C901
 		language=newFormatField.get('language')
 		speechSequence.append(LangChangeCommand(language))
 		lastLanguage=language
-
-	def isControlEndFieldCommand(x):
-		return isinstance(x, textInfos.FieldCommand) and x.command == "controlEnd"
-
 	isWordOrCharUnit = unit in (textInfos.UNIT_CHARACTER, textInfos.UNIT_WORD)
 	if onlyInitialFields or (
 		isWordOrCharUnit
 		and len(textWithFields) > 0
 		and len(textWithFields[0].strip() if not textWithFields[0].isspace() else textWithFields[0]) == 1
-		and all(isControlEndFieldCommand(x) for x in itertools.islice(textWithFields, 1, None))
+		and all(_isControlEndFieldCommand(x) for x in itertools.islice(textWithFields, 1, None))
 	):
-		if not onlyCache:
-			if onlyInitialFields or any(isinstance(x, str) for x in speechSequence):
-				yield speechSequence
-			if not onlyInitialFields:
-				spellingSequence = list(getSpellingSpeech(
-					textWithFields[0],
-					locale=language
-				))
-				logBadSequenceTypes(spellingSequence)
-				yield spellingSequence
+		if reason != OutputReason.ONLYCACHE:
+			yield from list(_getTextInfoSpeech_considerSpelling(
+				unit,
+				onlyInitialFields,
+				textWithFields,
+				reason,
+				speechSequence,
+				language,
+			))
 		if useCache:
-			speakTextInfoState.controlFieldStackCache=newControlFieldStack
-			speakTextInfoState.formatFieldAttributesCache=formatFieldAttributesCache
-			if not isinstance(useCache,SpeakTextInfoState):
-				speakTextInfoState.updateObj()
+			_getTextInfoSpeech_updateCache(
+				useCache,
+				speakTextInfoState,
+				newControlFieldStack,
+				formatFieldAttributesCache,
+			)
 		return False
 
 	# Similar to before, but If the most inner clickable is exited, then we allow announcing clickable for the next lot of clickable fields entered.
@@ -1392,7 +1447,7 @@ def getTextInfoSpeech(  # noqa: C901
 						# Announce it if there is nothing else interesting about the field, but not if the user turned it off. 
 						presCat=command.field.getPresentationCategory(newControlFieldStack[0:],formatConfig,reason)
 						if not presCat or presCat is command.field.PRESCAT_LAYOUT:
-							fieldSequence.append(controlTypes.stateLabels[controlTypes.State.CLICKABLE])
+							fieldSequence.append(controlTypes.State.CLICKABLE.displayString)
 						inClickable=True
 				fieldSequence.extend(info.getControlFieldSpeech(
 					command.field,
@@ -1495,18 +1550,65 @@ def getTextInfoSpeech(  # noqa: C901
 		# Translators: This is spoken when the line is considered blank.
 		speechSequence.append(_("blank"))
 
-	#Cache a copy of the new controlFieldStack for future use
+	# Cache a copy of the new controlFieldStack for future use
 	if useCache:
-		speakTextInfoState.controlFieldStackCache=list(newControlFieldStack)
-		speakTextInfoState.formatFieldAttributesCache=formatFieldAttributesCache
-		if not isinstance(useCache,SpeakTextInfoState):
-			speakTextInfoState.updateObj()
+		_getTextInfoSpeech_updateCache(
+			useCache,
+			speakTextInfoState,
+			newControlFieldStack,
+			formatFieldAttributesCache,
+		)
 
 	if reason == OutputReason.ONLYCACHE or not speechSequence:
 		return False
 
 	yield speechSequence
 	return True
+
+
+def _isControlEndFieldCommand(command: Union[str, textInfos.FieldCommand]):
+	return isinstance(command, textInfos.FieldCommand) and command.command == "controlEnd"
+
+
+def _getTextInfoSpeech_considerSpelling(
+		unit: Optional[textInfos.TextInfo],
+		onlyInitialFields: bool,
+		textWithFields: textInfos.TextInfo.TextWithFieldsT,
+		reason: OutputReason,
+		speechSequence: SpeechSequence,
+		language: str,
+) -> Generator[SpeechSequence, None, None]:
+	if onlyInitialFields or any(isinstance(x, str) for x in speechSequence):
+		yield speechSequence
+	if not onlyInitialFields:
+		spellingSequence = list(getSpellingSpeech(
+			textWithFields[0],
+			locale=language
+		))
+		logBadSequenceTypes(spellingSequence)
+		yield spellingSequence
+		if (
+			reason == OutputReason.CARET
+			and unit == textInfos.UNIT_CHARACTER
+			and config.conf["speech"]["delayedCharacterDescriptions"]
+		):
+			descriptionSequence = list(getSingleCharDescription(
+				textWithFields[0],
+				locale=language,
+			))
+			yield descriptionSequence
+
+
+def _getTextInfoSpeech_updateCache(
+		useCache: Union[bool, SpeakTextInfoState],
+		speakTextInfoState: SpeakTextInfoState,
+		newControlFieldStack: List[textInfos.ControlField],
+		formatFieldAttributesCache: textInfos.Field,
+):
+	speakTextInfoState.controlFieldStackCache = newControlFieldStack
+	speakTextInfoState.formatFieldAttributesCache = formatFieldAttributesCache
+	if not isinstance(useCache, SpeakTextInfoState):
+		speakTextInfoState.updateObj()
 
 
 # C901 'getPropertiesSpeech' is too complex
@@ -1521,14 +1623,15 @@ def getPropertiesSpeech(  # noqa: C901
 	if name:
 		textList.append(name)
 	if 'role' in propertyValues:
-		role=propertyValues['role']
+		role: controlTypes.Role = propertyValues['role']
 		speakRole=True
 	elif '_role' in propertyValues:
 		speakRole=False
-		role=propertyValues['_role']
+		role: controlTypes.Role = propertyValues['_role']
 	else:
 		speakRole=False
 		role=controlTypes.Role.UNKNOWN
+	role = controlTypes.Role(role)
 	value: Optional[str] = propertyValues.get('value') if role not in controlTypes.silentValuesForRoles else None
 	cellCoordsText: Optional[str] = propertyValues.get('cellCoordsText')
 	rowNumber = propertyValues.get('rowNumber')
@@ -1545,7 +1648,8 @@ def getPropertiesSpeech(  # noqa: C901
 			or reason not in (
 				OutputReason.SAYALL,
 				OutputReason.CARET,
-				OutputReason.FOCUS
+				OutputReason.FOCUS,
+				OutputReason.QUICKNAV
 			)
 			or not (
 				name
@@ -1563,7 +1667,7 @@ def getPropertiesSpeech(  # noqa: C901
 				OutputReason.SAYALL
 			)
 	)):
-		textList.append(roleText if roleText else controlTypes.roleLabels[role])
+		textList.append(roleText if roleText else role.displayString)
 	if value:
 		textList.append(value)
 	states = propertyValues.get('states')
@@ -1670,6 +1774,22 @@ def getPropertiesSpeech(  # noqa: C901
 	if isCurrent != controlTypes.IsCurrent.NO:
 		textList.append(isCurrent.displayString)
 
+	# are there further details
+	hasDetails = propertyValues.get('hasDetails', False)
+	if hasDetails:
+		detailsRole: Optional[controlTypes.Role] = propertyValues.get("detailsRole")
+		if detailsRole is not None:
+			textList.append(
+				# Translators: Speaks when there are further details/annotations that can be fetched manually.
+				# %s specifies the type of details (e.g. comment, suggestion)
+				_("has %s" % detailsRole.displayString)
+			)
+		else:
+			textList.append(
+				# Translators: Speaks when there are further details/annotations that can be fetched manually.
+				_("has details")
+			)
+
 	placeholder: Optional[str] = propertyValues.get('placeholder', None)
 	if placeholder:
 		textList.append(placeholder)
@@ -1723,7 +1843,7 @@ def _shouldSpeakContentFirst(
 		controlTypes.Role.REGION,
 	)
 	return (
-		reason == OutputReason.FOCUS
+		reason in [OutputReason.FOCUS, OutputReason.QUICKNAV]
 		and (
 			# the category is not a container, unless it's an article (#11103)
 			presCat != attrs.PRESCAT_CONTAINER
@@ -1760,7 +1880,7 @@ def getControlFieldSpeech(  # noqa: C901
 	childControlCount=int(attrs.get('_childcontrolcount',"0"))
 	role = attrs.get('role', controlTypes.Role.UNKNOWN)
 	if (
-		reason == OutputReason.FOCUS
+		reason in [OutputReason.FOCUS, OutputReason.QUICKNAV]
 		or attrs.get('alwaysReportName', False)
 	):
 		name = attrs.get('name', "")
@@ -1769,33 +1889,40 @@ def getControlFieldSpeech(  # noqa: C901
 	states=attrs.get('states',set())
 	keyboardShortcut=attrs.get('keyboardShortcut', "")
 	isCurrent = attrs.get('current', controlTypes.IsCurrent.NO)
+	hasDetails = attrs.get('hasDetails', False)
+	detailsRole: Optional[controlTypes.Role] = attrs.get("detailsRole")
 	placeholderValue=attrs.get('placeholder', None)
 	value=attrs.get('value',"")
 
 	description: Optional[str] = None
 	_descriptionFrom = attrs.get('_description-from', controlTypes.DescriptionFrom.UNKNOWN)
+	_descriptionIsContent: bool = attrs.get("descriptionIsContent", False)
+	_reportDescriptionAsAnnotation: bool = (
+		# Don't report other sources of description like "title" all the time
+		# The usages of these is not consistent and often does not seem to have
+		# Screen Reader users in mind
+		config.conf["annotations"]["reportAriaDescription"]
+		and not _descriptionIsContent
+		and controlTypes.DescriptionFrom.ARIA_DESCRIPTION == _descriptionFrom
+		and reason in (
+			OutputReason.FOCUS,
+			OutputReason.QUICKNAV,
+			OutputReason.CARET,
+			OutputReason.SAYALL,
+		)
+	)
 	if (
 		(
 			config.conf["presentation"]["reportObjectDescriptions"]
-			and (
-				reason == OutputReason.FOCUS
-				# 'alwaysReportDescription' provides symmetry with 'alwaysReportName'.
-				# Not used internally, but may be used by addons.
-				or attrs.get('alwaysReportDescription', False)
-			)
+			and not _descriptionIsContent
+			and reason in [OutputReason.FOCUS, OutputReason.QUICKNAV]
 		)
 		or (
-			# Don't report other sources of description like "title" all the time
-			# The usages of these is not consistent and often does not seem to have
-			# Screen Reader users in mind
-			config.conf["annotations"]["reportAriaDescription"]
-			and controlTypes.DescriptionFrom.ARIA_DESCRIPTION == _descriptionFrom
-			and reason in (
-				OutputReason.FOCUS,
-				OutputReason.CARET,
-				OutputReason.SAYALL,
-			)
+			# 'alwaysReportDescription' provides symmetry with 'alwaysReportName'.
+			# Not used internally, but may be used by addons.
+			attrs.get('alwaysReportDescription', False)
 		)
+		or _reportDescriptionAsAnnotation
 	):
 		description = attrs.get('description')
 
@@ -1812,7 +1939,7 @@ def getControlFieldSpeech(  # noqa: C901
 		roleTextSequence = [roleText, ]
 	elif role == controlTypes.Role.LANDMARK and landmark:
 		roleTextSequence = [
-			f"{aria.landmarkRoles[landmark]} {controlTypes.roleLabels[controlTypes.Role.LANDMARK]}",
+			f"{aria.landmarkRoles[landmark]} {controlTypes.Role.LANDMARK.displayString}",
 		]
 	else:
 		roleTextSequence = getPropertiesSpeech(reason=reason, role=role)
@@ -1823,9 +1950,10 @@ def getControlFieldSpeech(  # noqa: C901
 			reason=reason, keyboardShortcut=keyboardShortcut
 		)
 	isCurrentSequence = getPropertiesSpeech(reason=reason, current=isCurrent)
+	hasDetailsSequence = getPropertiesSpeech(reason=reason, hasDetails=hasDetails, detailsRole=detailsRole)
 	placeholderSequence = getPropertiesSpeech(reason=reason, placeholder=placeholderValue)
 	nameSequence = getPropertiesSpeech(reason=reason, name=name)
-	valueSequence = getPropertiesSpeech(reason=reason, value=value)
+	valueSequence = getPropertiesSpeech(reason=reason, value=value, _role=role)
 	descriptionSequence = []
 	if description is not None:
 		descriptionSequence = getPropertiesSpeech(
@@ -1893,7 +2021,7 @@ def getControlFieldSpeech(  # noqa: C901
 		return tableSeq
 	elif (
 		nameSequence
-		and reason == OutputReason.FOCUS
+		and reason in [OutputReason.FOCUS, OutputReason.QUICKNAV]
 		and fieldType == "start_addedToControlFieldStack"
 		and role in (controlTypes.Role.GROUPING, controlTypes.Role.PROPERTYPAGE)
 	):
@@ -1927,6 +2055,7 @@ def getControlFieldSpeech(  # noqa: C901
 		tableCellSequence = getPropertiesSpeech(_tableID=tableID, **getProps)
 		tableCellSequence.extend(stateTextSequence)
 		tableCellSequence.extend(isCurrentSequence)
+		tableCellSequence.extend(hasDetailsSequence)
 		types.logBadSequenceTypes(tableCellSequence)
 		return tableCellSequence
 
@@ -1976,6 +2105,7 @@ def getControlFieldSpeech(  # noqa: C901
 		out.extend(roleTextSequence if speakStatesFirst else stateTextSequence)
 		out.append(containerContainsText)
 		out.extend(isCurrentSequence)
+		out.extend(hasDetailsSequence)
 		out.extend(valueSequence)
 		out.extend(descriptionSequence)
 		out.extend(levelSequence)
@@ -2012,7 +2142,9 @@ def getControlFieldSpeech(  # noqa: C901
 		out = []
 		if isCurrent != controlTypes.IsCurrent.NO:
 			out.extend(isCurrentSequence)
-		if descriptionSequence:
+		if hasDetails:
+			out.extend(hasDetailsSequence)
+		if descriptionSequence and _reportDescriptionAsAnnotation:
 			out.extend(descriptionSequence)
 		# Speak expanded / collapsed / level for treeview items (in ARIA treegrids)
 		if role == controlTypes.Role.TREEVIEWITEM:
@@ -2096,6 +2228,10 @@ def getFormatFieldSpeech(  # noqa: C901
 				# %s will be replaced with the number of text columns.
 				text=_("%s columns")%(textColumnCount)
 				textList.append(text)
+			elif textColumnNumber:
+				# Translators: Indicates the text column number in a document.
+				text = _("column {columnNumber}").format(columnNumber=textColumnNumber)
+				textList.append(text)
 
 	sectionBreakType=attrs.get("section-break")
 	if sectionBreakType:
@@ -2124,7 +2260,10 @@ def getFormatFieldSpeech(  # noqa: C901
 			headingLevel
 			and (
 				initialFormat
-				and (reason == OutputReason.FOCUS or unit in (textInfos.UNIT_LINE, textInfos.UNIT_PARAGRAPH))
+				and (
+					reason in [OutputReason.FOCUS, OutputReason.QUICKNAV]
+					or unit in (textInfos.UNIT_LINE, textInfos.UNIT_PARAGRAPH)
+				)
 				or headingLevel != oldHeadingLevel
 			)
 		):
@@ -2165,9 +2304,9 @@ def getFormatFieldSpeech(  # noqa: C901
 		if fontName and fontName!=oldFontName:
 			textList.append(fontName)
 	if  formatConfig["reportFontSize"]:
-		fontSize=attrs.get("font-size")
-		oldFontSize=attrsCache.get("font-size") if attrsCache is not None else None
-		if fontSize and fontSize!=oldFontSize:
+		fontSize = attrs.get("font-size")
+		oldFontSize = attrsCache.get("font-size") if attrsCache is not None else None
+		if fontSize and fontSize != oldFontSize:
 			textList.append(fontSize)
 	if  formatConfig["reportColor"]:
 		color=attrs.get("color")
@@ -2320,21 +2459,20 @@ def getFormatFieldSpeech(  # noqa: C901
 			)
 			textList.append(text)
 	if formatConfig["reportSuperscriptsAndSubscripts"]:
-		textPosition=attrs.get("text-position")
-		oldTextPosition=attrsCache.get("text-position") if attrsCache is not None else None
-		if (textPosition or oldTextPosition is not None) and textPosition!=oldTextPosition:
-			textPosition=textPosition.lower() if textPosition else textPosition
-			if textPosition=="super":
-				# Translators: Reported for superscript text.
-				text=_("superscript")
-			elif textPosition=="sub":
-				# Translators: Reported for subscript text.
-				text=_("subscript")
-			else:
-				# Translators: Reported for text which is at the baseline position;
-				# i.e. not superscript or subscript.
-				text=_("baseline")
-			textList.append(text)
+		textPosition = attrs.get("text-position", TextPosition.UNDEFINED)
+		attrs["text-position"] = textPosition
+		oldTextPosition = attrsCache.get("text-position") if attrsCache is not None else None
+		if (
+			textPosition != oldTextPosition
+			and (
+				textPosition in [TextPosition.SUPERSCRIPT, TextPosition.SUBSCRIPT]
+				or (
+					textPosition == TextPosition.BASELINE
+					and (oldTextPosition is not None and oldTextPosition != TextPosition.UNDEFINED)
+				)
+			)
+		):
+			textList.append(textPosition.displayString)
 	if formatConfig["reportAlignment"]:
 		textAlign=attrs.get("text-align")
 		oldTextAlign=attrsCache.get("text-align") if attrsCache is not None else None
@@ -2439,12 +2577,31 @@ def getFormatFieldSpeech(  # noqa: C901
 		oldComment=attrsCache.get("comment") if attrsCache is not None else None
 		if (comment or oldComment is not None) and comment!=oldComment:
 			if comment:
-				# Translators: Reported when text contains a comment.
-				text=_("has comment")
+				if comment is textInfos.CommentType.DRAFT:
+					# Translators: Reported when text contains a draft comment.
+					text = _("has draft comment")
+				elif comment is textInfos.CommentType.RESOLVED:
+					# Translators: Reported when text contains a resolved comment.
+					text = _("has resolved comment")
+				else:  # generic
+					# Translators: Reported when text contains a generic comment.
+					text = _("has comment")
 				textList.append(text)
 			elif extraDetail:
 				# Translators: Reported when text no longer contains a comment.
 				text=_("out of comment")
+				textList.append(text)
+	if formatConfig["reportBookmarks"]:
+		bookmark = attrs.get("bookmark")
+		oldBookmark = attrsCache.get("bookmark") if attrsCache is not None else None
+		if (bookmark or oldBookmark is not None) and bookmark != oldBookmark:
+			if bookmark:
+				# Translators: Reported when text contains a bookmark
+				text = _("bookmark")
+				textList.append(text)
+			elif extraDetail:
+				# Translators: Reported when text no longer contains a bookmark
+				text = _("out of bookmark")
 				textList.append(text)
 	if formatConfig["reportSpellingErrors"]:
 		invalidSpelling=attrs.get("invalid-spelling")

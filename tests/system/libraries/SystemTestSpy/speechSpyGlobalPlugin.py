@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2018 NV Access Limited
+# Copyright (C) 2018-2022 NV Access Limited
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -8,9 +8,14 @@ It allows tests to get information out of NVDA.
 It is copied into the (system test specific) NVDA profile directory. It becomes the '__init__.py' file as part
 of a package.
 """
+import gettext
 import typing
-from typing import Optional
+from typing import (
+	Optional,
+	Tuple,
+)
 
+import extensionPoints
 import globalPluginHandler
 import threading
 from .blockUntilConditionMet import _blockUntilConditionMet
@@ -37,6 +42,32 @@ def _importRobotRemoteServer() -> typing.Type:
 	return RobotRemoteServer
 
 
+class BrailleViewerSpy:
+	postBrailleUpdate = extensionPoints.Action()
+
+	def __init__(self):
+		self._last = ""
+
+	def updateBrailleDisplayed(
+			self,
+			cells,  # ignored
+			rawText,
+			currentCellCount,  # ignored
+	):
+		rawText = rawText.strip()
+		if rawText and rawText != self._last:
+			self._last = rawText
+			self.postBrailleUpdate.notify(rawText=rawText)
+
+	isDestroyed: bool = False
+
+	def saveInfoAndDestroy(self):
+		if not self.isDestroyed:
+			self.isDestroyed = True
+			import brailleViewer
+			brailleViewer._onGuiDestroyed()
+
+
 class NVDASpyLib:
 	""" Robot Framework Library to spy on NVDA during system tests.
 	Used to determine if NVDA has finished starting, and various ways of getting speech output.
@@ -50,10 +81,20 @@ class NVDASpyLib:
 			[""],  # initialise with an empty string, this allows for access via [-1]. This is equiv to no speech.
 		]
 		self._lastSpeechTime_requiresLock = _timer()
-		#: Lock to protect members written in _onNvdaSpeech.
+		#: Lock to protect members that are written to in _onNvdaSpeech.
 		self._speechLock = threading.RLock()
+
+		# braille raw text (not dots) cache is ordered temporally,
+		# oldest at low indexes, most recent at highest index.
+		self._nvdaBraille_requiresLock = [  # requires thread locking before read/write
+			"",  # initialise with an empty string, this allows for access via [-1]. This is equiv to no braille.
+		]
+		#: Lock to protect members that are written to in _onNvdaBraille.
+		self._brailleLock = threading.RLock()
+
 		self._isNvdaStartupComplete = False
 		self._allSpeechStartIndex = self.get_last_speech_index()
+		self._allBrailleStartIndex = self.get_last_braille_index()
 		self._maxKeywordDuration = 30
 		self._registerWithExtensionPoints()
 
@@ -67,6 +108,9 @@ class NVDASpyLib:
 		from synthDrivers.speechSpySynthDriver import post_speech
 		post_speech.register(self._onNvdaSpeech)
 
+		self._brailleSpy = BrailleViewerSpy()
+		self._brailleSpy.postBrailleUpdate.register(self._onNvdaBraille)
+
 	def set_configValue(self, keyPath: typing.List[str], val: typing.Union[str, bool, int]):
 		import config
 		if not keyPath or len(keyPath) < 1:
@@ -76,6 +120,41 @@ class NVDASpyLib:
 			penultimateConf = penultimateConf[key]
 		ultimateKey = keyPath[-1]
 		penultimateConf[ultimateKey] = val
+
+	fakeTranslations: typing.Optional[gettext.NullTranslations] = None
+
+	def override_translationString(self, invariantString: str, replacementString: str):
+		import languageHandler
+		if not self.fakeTranslations:
+			class Translation_Fake(gettext.NullTranslations):
+				originalTranslationFunction: Optional
+				translationResults: typing.Dict[str, str]
+
+				def __init__(
+						self,
+						originalTranslationFunction: Optional
+				):
+					self.originalTranslationFunction = originalTranslationFunction
+					self.translationResults = {}
+					super().__init__()
+					self.install()
+
+				def gettext(self, msg: str) -> str:
+					if msg in self.translationResults:
+						return self.translationResults[msg]
+					if self.originalTranslationFunction:
+						return self.originalTranslationFunction.gettext(msg)
+					return msg
+
+				def restore(self) -> None:
+					self.translationResults.clear()
+					if self.originalTranslationFunction:
+						self.originalTranslationFunction.install()
+
+			self.fakeTranslations = Translation_Fake(
+				languageHandler.installedTranslation() if languageHandler.installedTranslation else None
+			)
+		self.fakeTranslations.translationResults[invariantString] = replacementString
 
 	def queueNVDAMainThreadCrash(self):
 		from queueHandler import queueFunction, eventQueue
@@ -92,6 +171,18 @@ class NVDASpyLib:
 	# callbacks for extension points
 	def _onNvdaStartupComplete(self):
 		self._isNvdaStartupComplete = True
+		import brailleViewer
+		brailleViewer._brailleGui = self._brailleSpy
+		self.setBrailleCellCount(120)
+		brailleViewer.postBrailleViewerToolToggledAction.notify(created=True)
+
+	def _onNvdaBraille(self, rawText: str):
+		if not rawText:
+			return
+		if not isinstance(rawText, str):
+			raise TypeError(f"rawText expected as str, got: {type(rawText)}, {rawText!r}")
+		with self._brailleLock:
+			self._nvdaBraille_requiresLock.append(rawText)
 
 	def _onNvdaSpeech(self, speechSequence=None):
 		if not speechSequence:
@@ -143,6 +234,27 @@ class NVDASpyLib:
 			finished = self.SPEECH_HAS_FINISHED_SECONDS < _timer() - self._lastSpeechTime_requiresLock
 			return started and finished
 
+	def setBrailleCellCount(self, brailleCellCount: int):
+		import brailleViewer
+		brailleViewer.DEFAULT_NUM_CELLS = brailleCellCount
+
+	def _getBrailleAtIndex(self, brailleIndex: int) -> str:
+		with self._brailleLock:
+			return self._nvdaBraille_requiresLock[brailleIndex]
+
+	def get_braille_at_index_until_now(self, brailleIndex: int) -> str:
+		""" All raw braille text from (and including) the index until now.
+		@param brailleIndex:
+		@return: The raw text, each update on a new line
+		"""
+		with self._brailleLock:
+			rangeOfInterest = self._nvdaBraille_requiresLock[brailleIndex:]
+			return "\n".join(rangeOfInterest)
+
+	def get_last_braille_index(self) -> int:
+		with self._brailleLock:
+			return len(self._nvdaBraille_requiresLock) - 1
+
 	def _devInfoToLog(self):
 		import api
 		obj = api.getNavigatorObject()
@@ -162,6 +274,14 @@ class NVDASpyLib:
 				log.debug(f"All speech:\n{repr(self._nvdaSpeech_requiresLock)}")
 			except Exception:
 				log.error("Unable to log speech")
+
+	def dump_braille_to_log(self):
+		log.debug("dump_braille_to_log.")
+		with self._brailleLock:
+			try:
+				log.debug(f"All braille:\n{repr(self._nvdaBraille_requiresLock)}")
+			except Exception:
+				log.error("Unable to log braille")
 
 	def _minTimeout(self, timeout: float) -> float:
 		"""Helper to get the minimum value, the timeout passed in, or self._maxKeywordDuration"""
@@ -199,32 +319,83 @@ class NVDASpyLib:
 		"""
 		return self.get_last_speech_index() + 1
 
+	def _has_speech_occurred_before_timeout(
+			self,
+			speech: str,
+			afterIndex: Optional[int],
+			maxWaitSeconds: float,
+			intervalBetweenSeconds: float,
+	) -> Tuple[bool, Optional[int]]:
+		"""
+		@param speech: The speech to expect.
+		@param afterIndex: The speech should come after this index. The index is exclusive.
+		@param maxWaitSeconds: The amount of time to wait in seconds.
+		@param intervalBetweenSeconds: The amount of time to wait between checking speech, in seconds.
+		@return: True if the speech occurred and the index of the speech.
+		"""
+		return _blockUntilConditionMet(
+			getValue=lambda: self._getIndexOfSpeech(speech, afterIndex),
+			giveUpAfterSeconds=self._minTimeout(maxWaitSeconds),
+			shouldStopEvaluator=lambda indexFound: indexFound >= (afterIndex if afterIndex else 0),
+			intervalBetweenSeconds=intervalBetweenSeconds,
+			errorMessage=None
+		)
+
 	def wait_for_specific_speech(
 			self,
 			speech: str,
 			afterIndex: Optional[int] = None,
-			maxWaitSeconds: int = 5,
+			maxWaitSeconds: float = 5.0,
+			intervalBetweenSeconds: float = 0.1,
 	) -> int:
 		"""
 		@param speech: The speech to expect.
 		@param afterIndex: The speech should come after this index. The index is exclusive.
 		@param maxWaitSeconds: The amount of time to wait in seconds.
+		@param intervalBetweenSeconds: The amount of time to wait between checking speech, in seconds.
 		@return: the index of the speech.
 		"""
-		success, speechIndex = _blockUntilConditionMet(
-			getValue=lambda: self._getIndexOfSpeech(speech, afterIndex),
-			giveUpAfterSeconds=self._minTimeout(maxWaitSeconds),
-			shouldStopEvaluator=lambda indexFound: indexFound >= (afterIndex if afterIndex else 0),
-			intervalBetweenSeconds=0.1,
-			errorMessage=None
+		success, speechIndex = self._has_speech_occurred_before_timeout(
+			speech,
+			afterIndex,
+			maxWaitSeconds,
+			intervalBetweenSeconds
 		)
 		if not success:
 			self.dump_speech_to_log()
 			raise AssertionError(
-				"Specific speech did not occur before timeout: {}\n"
-				"See NVDA log for dump of all speech.".format(speech)
+				f"Specific speech did not occur before timeout: {speech}\n"
+				"See NVDA log for dump of all speech."
 			)
 		return speechIndex
+
+	def ensure_speech_did_not_occur(
+			self,
+			speech: str,
+			afterIndex: Optional[int] = None,
+			maxWaitSeconds: float = SPEECH_HAS_FINISHED_SECONDS,
+			intervalBetweenSeconds: float = 0.1,
+	) -> None:
+		"""
+		@param speech: The speech to check for.
+		@param afterIndex: Check for speech after this index. The index is exclusive.
+		@param maxWaitSeconds: The amount of time to wait in seconds.
+		As this is the expected path, this will cause a successful test run to be delayed the time provided.
+		The default is SPEECH_HAS_FINISHED_SECONDS to allow for delays from the application / OS.
+		@param intervalBetweenSeconds: The amount of time to wait between checking speech, in seconds.
+		"""
+		success, _speechIndex = self._has_speech_occurred_before_timeout(
+			speech,
+			afterIndex,
+			maxWaitSeconds,
+			intervalBetweenSeconds
+		)
+		if success:
+			self.dump_speech_to_log()
+			raise AssertionError(
+				f"Specific speech occurred unexpectedly before timeout: {speech}\n"
+				"See NVDA log for dump of all speech."
+			)
 
 	def wait_for_speech_to_finish(
 			self,
@@ -236,6 +407,28 @@ class NVDASpyLib:
 			giveUpAfterSeconds=self._minTimeout(maxWaitSeconds),
 			errorMessage="Speech did not finish before timeout"
 		)
+
+	def wait_for_braille_update(
+			self,
+			nextBrailleIndex: int,
+			maxWaitSeconds=5.0,
+	):
+		"""Wait until there is at least a single update.
+		@note there may be subsequent braille updates. This method does not confirm updates are finished.
+		"""
+		_blockUntilConditionMet(
+			getValue=lambda: self.get_last_braille_index() == nextBrailleIndex,
+			giveUpAfterSeconds=self._minTimeout(maxWaitSeconds),
+			errorMessage=None
+		)
+
+	def get_last_braille(self) -> str:
+		return self._getBrailleAtIndex(-1)
+
+	def get_next_braille_index(self) -> int:
+		""" @return: the next index that will be used.
+		"""
+		return self.get_last_braille_index() + 1
 
 	def emulateKeyPress(self, kbIdentifier: str, blockUntilProcessed=True):
 		"""

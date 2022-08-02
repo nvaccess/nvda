@@ -1,8 +1,8 @@
 # Design Overview
 
 This article attempts to provide an overview of NVDA's technical design and architecture.
-It is necessarily somewhat technical in nature.
-You should have a reasonable knowledge of programming and object oriented programming concepts in particular, as well as at least a basic knowledge of Python, before attempting to understand NVDA's design 
+It is necessarily technical in nature.
+You should have a reasonable knowledge of programming and object oriented programming concepts in particular, as well as at least a basic knowledge of Python, before attempting to understand NVDA's design.
 Please see the code documentation for the relevant classes for more information.
 
 ## Terminology
@@ -34,6 +34,28 @@ Rich accessibility APIs provide additional information, including the ability to
 NVDA relies heavily on accessibility APIs to gather information.
 Several accessibility APIs are used, including Microsoft Active Accessibility (MSAA) (also known as IAccessible), [IAccessible2](http://www.linuxfoundation.org/en/Accessibility/IAccessible2), Java Access Bridge and UI Automation.
 
+**Note:** IAccessible2 was not created by Microsoft, see [Wikipedia for more background](https://en.wikipedia.org/wiki/IAccessible2).
+
+See also:
+- [Stack Overflow: "What is the difference between IAccessible, IAccessible2, UIAutomation and MSAA?"](https://stackoverflow.com/a/55130227)
+- [The Linux Foundation IA2 reference](https://accessibility.linuxfoundation.org/a11yspecs/ia2/docs/html/)
+- [IA2 event constants](https://accessibility.linuxfoundation.org/a11yspecs/ia2/docs/html/_accessible_event_i_d_8idl.html)
+  - From the perspective of Windows, the IA2 event constants are considered custom "application specific" event IDs.
+- [IA2 Project (IDL files)](https://github.com/LinuxA11y/IAccessible2) 
+- [Windows event constants](https://docs.microsoft.com/en-us/windows/win32/winauto/event-constants)
+
+
+#### Tools for investigating Accessibility APIs
+
+- Using [NVDA Object Navigation](https://www.nvaccess.org/files/nvda/documentation/userGuide.html#ObjectNavigation) and [logging developer information](https://www.nvaccess.org/files/nvda/documentation/userGuide.html#LogViewer).
+- [Accessibility Viewer (aViewer)](https://github.com/ThePacielloGroup/aviewer/)
+	- handles MSAA, IA2, UIA but can be a bit buggy
+	- tends to provide user friendly display strings that make it harder to map back to raw values
+- [Accessibility Insights for Windows - Accessibility Insights](https://accessibilityinsights.io/docs/en/windows/overview/#:~:text=Accessibility%20Insights%20for%20Windows%20helps%20developers%20find%20and,the%20element%20or%20setting%20keyboard%20focus%20on%20it.)
+	- Good for UIA, doesn't support MSAA / IA2
+- [Inspect.exe (Windows SDK)](https://docs.microsoft.com/en-us/windows/win32/winauto/inspect-objects)
+	- Handles MSAA and UIA, but not IA2
+
 ### Native APIs
 Some widgets do not expose sufficient information via accessibility APIs to make them fully accessible.
 For example, MSAA, which is the accessibility API used by most standard Windows controls, does not provide the ability to obtain the location of the cursor or retrieve individual units of text in editable text fields.
@@ -45,6 +67,14 @@ Aside from accessibility and native APIs, Windows provides many functions which 
 Information that can be obtained includes the class name of a window, the current foreground window and system battery status.
 Tasks that can be performed include moving/clicking the mouse and sending key presses.
 
+### Logging
+
+#### Logging in secure mode
+`logHandler.initialize` prevents logging in [secure mode](https://www.nvaccess.org/files/nvda/documentation/userGuide.html#SecureMode).
+This is because it is a security concern to log during secure mode (e.g. passwords are logged on [secure screens](https://www.nvaccess.org/files/nvda/documentation/userGuide.html#SecureScreens).
+To change this for testing, use the [serviceDebug](https://www.nvaccess.org/files/nvda/documentation/userGuide.html#SystemWideParameters) system wide parameter to prevent secure mode on secure screens.
+When logging from a secure screen, `nvda.log` files are generated in the System profile's `%TEMP%` directory.
+
 ## NVDA Components
 NVDA is built with an extensible, modular, object oriented, abstract design.
 It is divided into several distinct components.
@@ -52,7 +82,7 @@ It is divided into several distinct components.
 ### Launcher
 The launcher is the module which the user executes to start NVDA.
 It is contained in the file `nvda.pyw`.
-It handles command line arguments, performs some basic initialisation and starts the [core](#core) (unless NVDA is already running or a command line option specifies otherwise).
+Refer to [startupShutdown documentation](./devDocs/startupShutdown.md).
 
 ### Core
 The core (in the function `core.main`) loads the configuration, initialises all other components and then enters the main loop.
@@ -105,7 +135,7 @@ Braille display drivers are drivers to allow NVDA to utilise particular braille 
 They are derived from the `braille.BrailleDisplayDriver` base class.
 
 ### NVDA Objects
-An NVDA object (NVDAObject) is an abstract representation of a single widget in NVDA.
+An NVDA object (`NVDAObject`) is an abstract representation of a single widget in NVDA.
 All NVDA objects derive from the base `NVDAObjects.NVDAObject` class.
 Methods and properties are used to query information about, handle events from and execute actions on the widget represented by the NVDA object in an abstract way.
 This means that the bulk of NVDA need not be concerned with specific accessibility or native APIs, but can instead work with a single, abstract representation.
@@ -117,7 +147,7 @@ NVDA objects that might be used in any application are contained in the NVDAObje
 
 A part from properties such as a widget's name, role, states etc, NVDA objects also include relational properties such as parent, next, previous and first child.
 These allow both the user and code to navigate the entire Operating System and its applications in a tree-like structure.
-The root of the tree being the Desktop, whos children is all the top-level windows for all open applications, each containing further subtrees of more widgets representing an application's user interface.
+The root of the tree being the Desktop, whose children is all the top-level windows for all open applications, each containing further subtrees of more widgets representing an application's user interface.
  
 ### Text Ranges
 When working with editable text controls, NVDA needs to be able to obtain information about the text in the widget.
@@ -132,7 +162,7 @@ TextInfo objects contain properties and methods to:
 * compare the start and end of a range with itself or another range
 * Fetch the text and formatting of the range
  
- You can fetch a TextInfo object from an NVDA object via its `makeTextInfo` method, passing in the particular `textInfos.POSITION_*` constant depending on whether you want to fetch a range representing the position of the caret, selection, start or end of the text, or the entire text.
+You can fetch a TextInfo object from an NVDA object via its `makeTextInfo` method, passing in the particular `textInfos.POSITION_*` constant depending on whether you want to fetch a range representing the position of the caret, selection, start or end of the text, or the entire text.
  
 ### Global Commands
 The global commands object (`globalCommands.GlobalCommands`) contains built-in global scripts; i.e.
@@ -151,6 +181,8 @@ An app module provides support specific to an application for these cases.
 An app module is derived from the `appModuleHandler.AppModule` base class.
 App modules receive events for all [NVDA objects](#nvda-objects) in the application and can bind scripts which can be executed anywhere in that application.
 They can also implement their own NVDA objects for use within the application.
+Usually the App Module should be named the same as the executable for which it should be loaded.
+In cases where this is problematic (one App Module should support multiple applications, the binary is named in a way which conflicts with the Python import system) you can add an entry to the `appModules.EXECUTABLE_NAMES_TO_APP_MODS` where the binary name is the key and the name of the App Module is the value.
 
 #### Global Plugins
 Aside from application specific customisation using [app modules](#app-modules), it is also possible to extend NVDA on a global level.
@@ -183,7 +215,46 @@ A virtual buffer (VirtualBuffer) in NVDA is derived from the `virtualBuffers.Vir
 
 ### GUI
 NVDA has its own graphical user interface to allow for easy configuration and other user interaction.
-This code is primarily contained in the `gui` package. [wxPython](http://www.wxpython.org/) is used as the GUI toolkit.
+This code is primarily contained in the `gui` package.
+[wxPython](http://www.wxpython.org/) is used as the GUI toolkit.
+
+#### Common GUI bugs
+
+##### Controls are invisible or clipping
+
+Adding controls to the wrong parent will cause them to visually clip or become invisible.
+Adding controls to a ``wx.StaticBoxSizer`` by adding them to its parent causes undefined behaviour.
+This has caused problems with users with right-to-left language locales.
+wxWidgets requires that these items be added directly to the `StaticBox` associated with the `wx.StaticBoxSizer` via `GetStaticBox()`.
+
+**Before (buggy behaviour):** 
+
+```python
+sizer = new wx.StaticBoxSizer(wx.VERTICAL, parent, "Test")
+sizer.Add(wx.StaticText(parent, wx.ID_ANY, "Where am I?"))
+sizer.Add(wx.Button(parent, wx.ID_ADD))
+```
+
+**After:** 
+
+```python
+sizer = new wx.StaticBoxSizer(wx.VERTICAL, parent, "Test")
+sizer.Add(wx.StaticText(sizer.GetStaticBox(), wx.ID_ANY, "Where am I?"))
+sizer.Add(wx.Button(sizer.GetStaticBox(), wx.ID_ADD))
+```
+
+PR [#12181](https://github.com/nvaccess/nvda/pull/12181) is an example of fixing this.
+
+##### Event handlers are firing unexpectedly or failing to fire
+
+When event handlers are firing unexpectedly or failing to fire, refer to the [wxWidgets documentation for event propagation](https://wiki.wxpython.org/EventPropagation).
+
+Notably:
+* Event handlers stop propagation.
+   - If `event.Skip()` is called in an event handler, propagation will continue.
+* `wx.CommandEvents`, a subset of wxEvents, will propagate up to the parent dialog by default.
+   - If a child control performs an event, a parent event handler may fire.
+   PR [#13117](https://github.com/nvaccess/nvda/pull/13117) is an example of a bug caused by this being fixed.
 
 ### Configuration management
 NVDA includes an extensive configuration management facility including various preferences dialogs, ability to apply a given configuration in apps and so forth.
@@ -193,7 +264,7 @@ The base configuration options, as well as routines that manage configuration pr
 
 ### Events
 NVDA object, global plugin, app module and tree interceptor instances can all contain special methods which handle events for NVDA Objects.
-These methods are all named beginning with "event_"; e.g. `event_gainFocus` and `event_nameChange`.
+These methods are all named beginning with "`event_`"; e.g. `event_gainFocus` and `event_nameChange`.
 These events are generally executed by a call to `eventHandler.executeEvent`, which is in turn generally called resultant to events queued by [API Handlers](#api-handlers).
 Most events do not take any additional arguments.
 Global plugins, app modules and tree interceptors are passed a handler function which should be called if the event should be handled by the next handler;
@@ -220,14 +291,14 @@ These are inherited from `baseObject.ScriptableObject`.
 Similar to events, input gestures have a chance to be handled by a script at one of many levels.
 But unlike events, once an input gesture finds and executes a script, there is no clean way to have the input gesture handled by a subsequent level.
  
- The chain of handlers is as follows:
-* The first found global plugin 
+The chain of handlers is as follows:
+* The first found global plugin
 * The next found global plugin (until no more are found)
-* The app module containing the currently focused NVDA object, I.e. fetched from the NVDA object's `appModule` property 
+* The app module containing the currently focused NVDA object, I.e. fetched from the NVDA object's `appModule` property
 * The tree interceptor containing the currently focused NVDA object, I.e. fetched from the NVDA object's `treeInterceptor` property if the property is not `None`
 * The currently focused NVDA object
-* the first ancestor (parent) of the currently focused NVDAObject, if the found script's `canPropagate` property is True
-* the next ancestor of the currently focused NVDAObject, if the found script's `canPropagate` property is True...
+* the first ancestor (parent) of the currently focused NVDAObject, if the found script's `canPropagate` property is `True`
+* the next ancestor of the currently focused NVDAObject, if the found script's `canPropagate` property is `True`...
  * Global commands
  
 ## Inter-process Communication

@@ -66,7 +66,7 @@ Dokładne brzmienie licencji znajdziesz online: [Pełna treść licencji. https:
 Dla szczegółowych informacji dotyczących wyjątków, skonsultuj się z dokumentem dostępnym w menu NVDA w podmenu "pomoc".
 
 + Wymagania systemowe +[SystemRequirements]
-- Systemy operacyjne: wsparcie wszystkich 32-bitowych i 64-bitowych wersji systemu Windows 7, Windows 8, Windows 8.1 i Windows 10 (w tym systemów operacyjnych dla serwerów od Windows Server 2008 R2).
+- Systemy operacyjne: wsparcie wszystkich 32-bitowych i 64-bitowych wersji systemu Windows 7, Windows 8, Windows 8.1, Windows 10 i Windows 11 (w tym systemów operacyjnych dla serwerów od Windows Server 2008 R2).
  - Dla Windows 7, NVDA wymaga Service Pack 1 lub wyższego.
  - Dla Windows Server 2008 R2, NVDA wymaga Service Pack 1 lub wyższego.
 - Co najmniej 150 MB wolnej przestrzeni dyskowej.
@@ -315,7 +315,7 @@ Przydatne skróty klawiszowe do nawigacji za pomocą fokusa:
 | Odczytuje aktualny fokus | NVDA+Tab | NVDA+Tab | Odczytuje obiekt posiadający aktualnie fokus. Dwukrotne naciśnięcie literuje informacje  |
 | Odczytuje tytuł okna | NVDA+t | NVDA+t | Odczytuje tytuł aktualnej aplikacji lub okna. Dwukrotne naciśnięcie literuje tytuł. Trzykrotne naciśnięcie kopiuje tytuł do schowka. |
 | Odczytuje aktywne okno | NVDA+b | NVDA+b | Odczytuje zawartość obiektu na pierwszym planie (aktualnie aktywnego okna). Funkcja przydatna zwłaszcza w przypadku okna dialogowego lub komunikatu, którego pojawienie się nie zostało zauważone. |
-| Odczytaj pasek stanu | NVDA+End | NVDA+Shift+End | Odczytuje pasek statusu jeśli go znajdzie, przenosi tam także obiekt nawigatora. Dwukrotne naciśnięcie przeliteruje informację. Trzykrotne naciśnięcie kopiuje ją do schowka. |
+| Odczytaj pasek stanu | NVDA+End | NVDA+Shift+End | Odczytuje pasek stanu jeśli go znajdzie. Dwukrotne naciśnięcie przeliteruje informację. Trzykrotne naciśnięcie kopiuje ją do schowka. |
 %kc:endInclude
 
 ++ Nawigacja kursorem systemowym ++
@@ -381,6 +381,7 @@ Poniżej znajdują się skróty klawiszowe do nawigacji w hierarchii obiektów:
 | Aktywuje aktualny obiekt | NVDA+Numeryczny enter | NVDA+Enter | Podwójne stuknięcie | Aktywuje bieżący obiekt (podobnie jak kliknięcie myszą lub naciśnięcie klawisza spacji, gdy ma fokus) |
 | Przenosi fokus lub kursor na aktualną pozycję przeglądania | NVDA+Shift+Numeryczny minus | NVDA+Shift+Backspace | Brak | Naciśnięty raz przenosi fokus do aktualnego obiektu nawigatora, naciśnięty dwukrotnie przenosi kursor systemowy do aktualnej pozycji kursora przeglądania |
 | Odczytuje położenie kursora przeglądu | NVDA+Numeryczne delete | NVDA+delete | Brak | Zgłasza położenie tekstu lub obiektu pod kursorem przeglądu. Może to być wyrażone w procentach w obrębie dokumentu, jako odległość od krawędzi strony lub jako dokładna pozycja na ekranie. Dwukrotne naciśnięcie odczyta dalsze informacje.|
+| Przenieś kursor przeglądu do paska stanu | brak | brak | brak | Odczytuje pasek stanu, jeżeli NVDA go znajdzie. Objekt nawigatora będzie przeniesiony do tej lokalizacji. |
 %kc:endInclude
 
 UWAGA: Aby skróty na klawiaturze numerycznej działały poprawnie, należy wyłączyć klawisz NumLock.
@@ -795,9 +796,13 @@ Możesz włączyć funkcję kurtyny w ustawieniach [widoczności #VisionSettings
 
 Gdy kurtyna jest aktywna, niektóre zadania bezpośrednio oparte na tym co widzimy na ekranie, takie jak wywoływanie [rozpoznawania tekstu #Win10Ocr] lub fotografowania treści ekranu nie mogą być wypełnione.
 
+Z powodu zmiany w API Lupy Systemu Windows, należało zaktualizować Kurtynę, aby wspierała najnowsze wersje systemu Windows.
+Użyj NVDA 2021.2 aby włączyć Kurtynę w systemie Windows 10 21H2 (10.0.19044) lub nowszych.
+Jeśli używasz nowej wersji systemu Windows, dla bezpieczeństwa upewnij się, że przy włączonej Kurtynie ekran jest zupełnie czarny.
+
 + Rozpoznawanie treści +[ContentRecognition]
 Jeśli autorzy nie dostarczają informacji pomocnej użytkownikom ekranu do odczytania treści, rozmaite narzędzia mogą zostać użyte dla rozpoznania tekstowej treści z graficznego obrazu.
-NVDA obsługuje funkcjonalność optycznego rozpoznawania znaków (OCR) wbudowaną w Windows 10 aby wydobyć tekst z obrazów.
+NVDA obsługuje funkcjonalność optycznego rozpoznawania znaków (OCR) wbudowaną w system operacyjny Windows 10 i nowsze wersje, aby wydobyć tekst z obrazów.
 Dodatkowe narzędzie rozpoznawania treści może zostać dostarczone poprzez dodatki NVDA.
 
 Przy użyciu komendy rozpoznawania treści, NVDA rozpoznaje zawartość aktualnego [obiektu nawigatora #ObjectNavigation].
@@ -809,17 +814,17 @@ Gdy rozpoznanie zostanie zakończone, wynik zostanie zaprezentowany w dokumencie
 Naciśnięcie spacji lub entera aktywuje (zwykle przez kliknięcie) tekst pod kursorem, jeśli będzie to możliwe.
 Naciśnięcie klawisza Escape spowoduje wyjście z wyniku rozpoznawania.
 
-++ OCR w Windows 10 ++[Win10Ocr]
-Windows 10 zawiera OCR dla wielu języków.
+++ OCR Windows ++[Win10Ocr]
+Windows 10 i nowsze wersje systemu operacyjnego Windows zawierają OCR dla wielu języków.
 NVDA może go używać dla rozpoznawania tekstu z obrazków lub okien niedostępnych aplikacji.
 
-Możesz ustawić język, który ma być użyty dla rozpoznawania tekstu w kategorii [Windows 10 OCR #Win10OcrSettings] w oknie [Preferencji NVDA #NVDASettings], znajdującym się w podmenu Ustawienia w menu NVDA.
+Możesz ustawić język, który ma być użyty dla rozpoznawania tekstu w kategorii [Windows OCR #Win10OcrSettings] w oknie [Preferencji NVDA #NVDASettings], znajdującym się w podmenu Ustawienia w menu NVDA.
 Dodatkowe języki mogą zostać zainstalowane po otwarciu Menu start, wybraniu Ustawienia, wybór daty i języka -> Region i język, a następnie po wybraniu Dodaj język.
 
-Funkcja Windows 10 OCR może być częsciowo oraz całkowicie niezgodna z [Ulepszeniami wizji NVDA #Vision] oraz z innymi zewnętrznymi pomocami do ulepszenia widzenia. Przed rospoczęciem rozpoznawania tekstu, trzeba wyłączyć takie narzędzia.
+Funkcja Windows OCR może być częsciowo oraz całkowicie niezgodna z [Ulepszeniami wizji NVDA #Vision] oraz z innymi zewnętrznymi pomocami do ulepszenia widzenia. Przed rospoczęciem rozpoznawania tekstu, trzeba wyłączyć takie narzędzia.
 
 %kc:beginInclude
-Aby rozpoznać tekst aktualnego obiektu nawigatora przy użyciu OCR Windows 10, naciśnij NVDA+r.
+Aby rozpoznać tekst aktualnego obiektu nawigatora przy użyciu OCR systemu Windows, naciśnij NVDA+r.
 %kc:endInclude
 
 + Funkcje specyficzne dla aplikacji +[ApplicationSpecificFeatures]
@@ -1397,6 +1402,10 @@ Ta lista rozwijana nie pojawi się, jeśli twój monitor brajlowski obsługuje w
 
 Możesz zajrzeć do sekcji omawiającej twój monitor brajlowski w rozdziale [Obsługiwane monitory brajlowskie #SupportedBrailleDisplays] aby poznać więcej szczegółów na temat wspieranych rodzajów komunikacji i dostępnych portów.
 
+Miej na uwadze, że jeżeli podłączasz więcej monitorów brajlowskich w tym samym momencie używających tego samego sterownika Np. podłączenie tych samych monitorów brajlowskich seika,
+że teraz jest niemożliwie dokładnie ustawić w NVDA, który monitor brajlowski ma być używany.
+Czyli zaleca się podłączać monitor brajlowski określonego typu/producenta na raz.
+
 +++ Ustawienia widoczności +++[VisionSettings]
 ustawienia widoczności programu NVDA pozwalają na włączanie, wyłączanie i konfigurowanie poszczególnych [ustawień pomocy wizualnych #Vision].
 
@@ -1571,7 +1580,8 @@ Aby przełączać ten tryb z każdego miejsca, proszę przypisać własne zdarze
 
 +++ Prezentacja obiektów (NVDA+Ctrl+O) +++[ObjectPresentationSettings]
 Ta kategoria ustawień NVDA  pozwala określić ilość informacji prezentowanych przez NVDA na temat kontrolek takich jak opis, informacje o położeniu itd.
-Zawiera następujące ustawienia:
+Te opcje typowo nie są stosowane  do trybu czytania.
+Te opcje zazwyczas są zastosowane do czytania fokusu i obiektową nawigację NVDA, ale nie i do czytania tekstowej treści na przykład tryb czytania na stronach webowych.
 
 ==== Czytaj dymki podpowiedzi ====[ObjectPresentationReportToolTips]
 Jeśli zaznaczysz to pole, NVDA będzie czytać pojawiające się dymki podpowiedzi (tooltip).
@@ -1735,7 +1745,7 @@ Możemy w ten sposób skonfigurować odczytywanie:
  - Rozmiaru czcionki
  - Atrybutów czcionki
  - Podkreślenia
- - Oznaczonego (Podświetlonego tekstu)
+ - Podkreślonego, (zaznaczonego tekstu)
  - Stylu tekstu
  - Kolorów
 - Informacji o dokumencie
@@ -1789,8 +1799,8 @@ Wysokość dźwięku będzie wzrastać dla każdej spacji, a dla tabulatora przy
 - Mowa i dźwięki: ta opcja zgłosi wcięcia przy użyciu obu powyższych metod.
 -
 
-+++ Ustawienia Windows 10 OCR +++[Win10OcrSettings]
-Ta kategoria ustawień NVDA pozwala skonfigurować [Windows 10 OCR #Win10Ocr].
++++ Ustawienia Windows OCR +++[Win10OcrSettings]
+Ta kategoria ustawień NVDA pozwala skonfigurować [Windows OCR #Win10Ocr].
 Zawiera następujące ustawienia:
 
 ==== Język rozpoznawania ====[Win10OcrSettingsRecognitionLanguage]
@@ -1829,7 +1839,7 @@ Jeżeli doświadczasz znacznych problemów z wydajnością, zalecamy włączenie
 ==== Użyj Microsoft UI automation do interakcji z kontrolkami dokumentów  Word ====[AdvancedSettingsUseUiaForWord]
 Gdy ta opcja jest włączona, NVDA będzie próbowało używać interfejsu Microsoft UI Automation dla pozyskiwania informacji o dokumencie w kontrolkach Microsoft Word.
 Obejmuje to sam edytor Microsoft Word oraz okna przeglądania i tworzenia wiadomości w Microsoft Outlook.
- Dla najnowszych wersji Microsoft Office 2016/365 uruchomionych na systemie windows 10, obsługa UI Automation jest wystarczająco kompletna aby umożliwić dostęp do Microsoft Word prawie równy z wcześniej istniejącą obsługą dokumentów Word przez NVDA, z dodatkową zaletą zwiększonej responsywności.
+ Dla najnowszych wersji Microsoft Office 2016/365 uruchomionych na systemie windows 10 i nowszych weersjach systemu Windows, obsługa UI Automation jest wystarczająco kompletna aby umożliwić dostęp do Microsoft Word prawie równy z wcześniej istniejącą obsługą dokumentów Word przez NVDA, z dodatkową zaletą zwiększonej responsywności.
 Mogą jednak istnieć informacje, które nie są wcale dostarczane, albo są dostarczane nieprawidłowo  w niektórych wersjach Microsoft Office,  co znaczy, że na obsłudze UI Automation nie zawsze można polegać.
 Wciąż nie zalecamy domyślnego włączania tej funkcji przez większość użytkowników, ale mile widziane będą testy i uwagi od użytkowników Office 2016/365.
 
@@ -1846,7 +1856,24 @@ Pole wyboru zawiera następujące opcje:
 - Domyślne (tylko wtedy, gdy jest to potrzebne): Opcja domyślna używana w NVDA, aktualnie jest używane "tylko, gdy jest to potrzebne". Ten stan domyślny może się w przyszłości zmienić z czasem postępu rozwoju tej technologii.
 - Tylko gdy jest to potrzebne: Gdy NVDA nie może wejsć w interakcje z procesem przeglądarki w celu używania IA2, a jest dostępny interfejs UIA, wtedy NVDA będzie używała UIA.
 - Tak: jeżeli przeglądarka udostępnia UIA, NVDA będzie używała tego interfejsu.
-- Nie: Nie Używa UIA, nawet gdy NVDA nie może wejść w interakcję z procesem przeglądarki. Ta opcja moze być użyteczna dla deweloperów debugującym problemy z UIA, upewniając się, że interfejs UIA nie będzie używany.
+- Nie: Nie Używa UIA, nawet gdy NVDA nie może wejść w interakcję z procesem przeglądarki. Ta opcja moze być użyteczna dla deweloperów debugujących problemy z UIA, upewniając się, że interfejs UIA nie będzie używany.
+-
+
+==== Adnotacje ====[Annotations]
+Ta grupa opcji jest używana do włączania funkcji, które dodają eksperymentalne wsparcie dla adnotacji aria.
+Niektóre z tych funkcji mogą być niedopracowane.
+Istnieją następujące opcje: 
+- "Ogłaszaj szczeguły w trybie czytania": włącza zgłaszanie szczegółów w trybie czytania.
+streszczenie tych szczegułów może być włączone przydzielając skrót używając okno dialogowe  [zdarzenia wejścia #InputGestures].
+- "Zawsze odczytuj aria-description":
+ Gdy źródłem ``accDescription`` jest aria- description, opis jest odczytywany.
+ Jest to użyteczne dla adnotacji na stronach www.
+  Uwaga:
+ - Istnieje wielu źródeł dla ``accDescription`` niektóe z nich posiadają mieszaną lub nieprzewidywalną semantykę.
+  Historycznie, technologie wspomagające nie mogły to rozróźniać źródła ``accDescription``i typowo nie były one wymawiane z powodu mieszanej  semantyki.
+ - Ta opcja jest w bardzo wczesnym stadium rozwoju, i polega na opcjach przeglądarek, które nie są szeroko dostępne.
+ - Oczekiwane jest, że ta funkcja będzie działać z Chromium 92.0.4479.0 i nowszymi wersjami.
+ -
 -
 
 ==== Użyj interfejsu UI Automation dla dostępu do kontrolek arkuszy kalkulacyjnych w programie Microsoft Excel, gdy jest to możliwe ====[UseUiaForExcel]
@@ -1867,11 +1894,10 @@ W środowiskach niegodnych zaufania możesz tymczasowo wyłączyć opcję [czyta
 ==== Metoda wykrywania zmian treści w terminalu ====[DiffAlgo]
 To ustawienie kontroluje wymowę nowego tekstu w programach konsolowych.
 Lista rozwijana Metoda wykrywania zmian treści w terminalu zawiera trzy opcji:
-- Automatycznie: Od wersji NVDA 2021.1, ta opcja ejst równoważna z opcją Difflib.
-W przyszłej wersji, może zostać zmieniona na Diff Match Patch po pozytywnej oponii użytkowników.
+- Automatycznie: Od wersji NVDA 2021.2, ta opcja jest równoznaczna z opcją "zezwól Diff Match Patch".
 - Zezwól Diff Match Patch: Ta opcja skutkuje, że NVDA wylicza zmiany po znaku.
 To może usprawnić wydajność gdy w konsoli pojawi się wielka ilość tekstu, a także umożliwia dokłądniejsze ogłaszanie tekstu w środku wiersza.
-Jednakże, ta opcja może być niezgodna z niektórymi programami.
+Jednakże, ta opcja może być niezgodna z niektórymi programami, co oznacza, że Diff match patch nie jest zawsze używany.
 Ta funkcja jest wspierana w wierszu poleceń w wersjach systemu  Windows 10 1607 i nowszych.
 Dodatkowo, ta opcja może być dostępna w innych programach konsolowych w starszych wersjach systemu Windows.
 - Wymuszaj Difflib: Ta opcja skutkuje, że NVDA wylicza zmiany tekstu w konsoli po linii.
@@ -1887,10 +1913,21 @@ Jest to funkcja domyślna od wersji NVDA 2021.1.
 Pozwala skonfigurować ilość milisekund, którą  NVDA będzie czekało przed przesunięciem kursora w polach edycji.
 Jeśli zauważysz, że NVDA nieprawidłowo śledzi kursor, np.  jest zawsze znak za kursorem lub powtarza linie, możesz próbować zwiększyć tę wartość.
 
+==== Odczytuj przejrzystość kolorów ====[ReportTransparentColors]
+Ta opcja pozwala odczytywać przejrzystość kolorów, co jest ważne dla deweloperów dodatków oraz modułów aplikacji, którzy zbierają informacje w celu ulepszenia doświatczenia użytkownika.
+Niektóre aplikacje GDI będą podkreślać tekst kolorem tłą, NVDA (za pomocą modelu wyświetlania) spróbuje zgłośić ten kolor.
+W niektórych sytuacjach, tło tekstowe może być całkowicie przejrzyste, z tekstem pokazanym nad innym elementem okna.
+Z niektórymi historycznie popularnymi API do wyświetlania okien, tekst może być pokazywany za pomocą przejrzystego tła, ale wizualnie kolor jest dokładny.
+
 ==== Włączone logowanie kategorii debugowania ====[AdvancedSettingsDebugLoggingCategories]
 Pola wyboru na tej liście pozwalają włączyć konkretne kategorie informacji debugowania w dzienniku NVDA.
 Zapisywanie tych informacji może zmniejszyć wydajność i zwiększyć rozmiar pliku logu.
 Włącz określone kategorie tylko, gdy zostaniesz poinstruowany przez programistę NVDA np. w trakcie badania, dlaczego sterownik linijki brajlowskiej nie pracuje prawidłowo.
+
+==== Odtwarzaj dźwięk dla logowanych błędów ====[PlayErrorSound]
+Ta opcja pozwala określić możliwość odtwarzania dźwięku błędu przez NVDA w przypadku zapisanego błędu.
+Wybierając "tylko w wersjach testowych" (domyślnie) spowoduje, że błędy będą odtwarzane tylko w wersjach testowych (alpha, beta lub z wersji uruchomionych z kodu źródłowego).
+Wybierając "tak" umożliwia odtwarzanie dźwięku błędu niezależnie od wersji NVDA.
 
 ++ Różne ustawienia ++[MiscSettings]
 Oprócz okna [ustawień NVDA #NVDASettings], podmenu opcje w menu NVDA zawiera kilka innych elementów, omówionych poniżej.
@@ -2250,7 +2287,7 @@ Dla jeszcze bardziej rozszerzonej listy darmowych i komercyjnych syntezatorów, 
 
 ++ eSpeak NG ++[eSpeakNG]
 [eSpeak NG https://github.com/espeak-ng/espeak-ng] jest to syntezator wbudowany bezpośrednio w NVDA i nie wymaga specjalnych sterowników lub innych komponentów, które muszą być zainstalowane. 
-W systemie Windows 7, 8 i 8.1, NVDA używa domyślnie syntezatora eSpeak NG ([Głosy Windows OneCore #OneCore] natomiast, są używane w systemie Windows 10.
+W systemie Windows 7, 8 i 8.1, NVDA używa domyślnie syntezatora eSpeak NG ([Głosy Windows OneCore #OneCore] natomiast, są używane w systemie Windows 10 i nowszych jego wersjach.
 Jako że syntezator ten jest wbudowany w NVDA, jest to doskonały wybór przy uruchamianiu NVDA z napędu USB na innych systemach.
 
 Każdy głos eSpeak NG, mówi innym językiem. 
@@ -2284,9 +2321,9 @@ Aby użyć tych głosów, musisz zainstalować dwa komponenty:
 -
 
 ++ Głosy Windows OneCore ++[OneCore]
-Windows 10 zawiera nowe głosy znane jako "OneCore" lub głosy "mobilne".
+System operacyjny Windows 10 i nowsze jego wersje zawierają nowe głosy znane jako "OneCore" lub głosy "mobilne".
 Dostarczone są głosy dla wielu języków, są bardziej responsywne niż głosy Microsoft dostępne przy użyciu Microsoft Speech API version 5.
-W systemie Windows 10, NVDA domyślnie używa głosów Windows One Core ([[eSpeak NG #eSpeakNG] natomiast, używany jest w innych wydaniach systemu operacyjnego.
+W systemie Windows 10 i nowszych jego wersjach, NVDA domyślnie używa głosów Windows One Core ([[eSpeak NG #eSpeakNG] natomiast, używany jest w innych wydaniach systemu operacyjnego.
 
 Aby dodać nowe Głosy Windows OneCore, proszę wejść do kategorii "mowa", znajdującej się w ustawieniach systemu Windows. 
 Trzeba użyć opcji "dodawanie głosu" i znaleźć odpowiedni język.
@@ -2318,6 +2355,7 @@ Poniższe linijki brajlowskie mogą być automatycznie wykrywane.
 - HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille
 - Eurobraille Esys/Esytime/Iris
 - Monitory brajlowskie Nattiq nBraille
+- Jakikolwiek monitor brajlowski wspierający standardowy HID protokół brajlowski
 -
 
 ++ Freedom Scientific Focus/PAC Mate Series ++[FreedomScientificFocus]
@@ -2503,7 +2541,7 @@ Przy połączeniu przez USB do monitorów, które nie używają HID, musisz najp
 VarioUltra i Pronto! używają HID.
 Refreshabraille i Orbit Reader 20 mogą używać HID, jeśli są odpowiednio skonfigurowane.
 
-Tryb szeregowy USB monitora Orbit Reader 20 jest obsługiwany obecnie tylko w Windows 10.
+Tryb szeregowy USB monitora Orbit Reader 20 jest obsługiwany obecnie tylko w Windows 10 i nowszych wersjach systemu operacyjnego Windows.
 USB HID zasadniczo powinien być używany zamiast tego.
 
 Poniżej skróty klawiszowe dla tych monitorów, które działają w NVDA.
@@ -3105,8 +3143,8 @@ Informacje na temat rozmieszczenia tych klawiszy, znajdują się w dokumentacji 
 %kc:endInclude
 
 ++ Monitory brajlowskie Nattiq nBraille ++[NattiqTechnologies]
-NVDA spiera monitory brajlowskei firmy [Nattiq Technologies https://www.nattiq.com/] gdy są podłączone do portuUSB.
-W systemie windows 10 monitor brajlowski jest wykrywany od razu po podłączeniu, do starszych wersji systemu windows trzeba zainstalować sterownik (poniżej windowsa 10).
+NVDA wspiera monitory brajlowskie firmy [Nattiq Technologies https://www.nattiq.com/] gdy są podłączone do portuUSB.
+W systemie windows 10 i nowszych jego wersji monitor brajlowski jest wykrywany od razu po podłączeniu, do starszych wersji systemu windows trzeba zainstalować sterownik (poniżej windowsa 10).
 Można je pobrać ze strony producenta.
 
 Poniżej znajdują się skróty dla monitorów brajlowskich Nattiq Technologies do użycia z NVDA.
@@ -3140,6 +3178,37 @@ Zobacz [tabele klawiszy w dokumentacji brltty http://mielke.cc/brltty/doc/KeyBin
 | Przenieś monitor do poprzedniej linii | lnup (go up one line) |
 | Przenieś monitor do następnej linii | lndn (go down one line) |
 | Przywołaj do komórki brajla | route (przenieś kursor do znaku) |
+%kc:endInclude
+
+++ Standardowe monitory brajlowskei HID ++[HIDBraille]
+Jest to eksperymentalny sterownik dla monitorów brajlowskich zrobionych według specyfikacji HID, którą przyjeli w roku 2018 Microsoft, Google, Apple i niektóre inne firmy produkujące technologie wspomagające włączając w to NV Access. 
+Mamy nadzieję, że przyszłe monitory brajlowskie stworzone przez jakiegokolwiek producenta będą wspierane będą używali ten protokół co wyeliminuje potrzebę dla specyficznych sterowników.
+
+Wykrywanie automatyczne brajlowskich monitorów NVDA będzie automatycznie wykrywało monitory brajlowskie według tego standartu.
+ 
+Oto skróty klawiszowe przydzielone dla tego monitora brajlowskiego.
+%kc:beginInclude
+|| nazwanie | klawisz |
+| przejście brajlowskiego monitoru wstecz | pan left lub rocker up|
+| przejście brajlowskiego monitoru w przód | pan right lub rocker down|
+| przemieszczanie monitoru brajlowskiego do poprzedniego wiersza | spacja + kropka1 |
+| przenieś monitor brajlowski do następnego wiersza | spacja + kropka4 |
+| przemieszczenie do brajlowskiej komórki | routing set 1|
+| przełączanie przywiązania brajla do | up+down |
+| strzałka w górę | joystick up |
+| strzałka w dół | joystick down |
+| strzałka w lewo | space+dot3 or joystick left |
+| strzałka w prawo | space+dot6 or joystick right |
+| shift+tab | spacja+kropka1+kropka3 |
+| tab | spacja+kropka4+kropka6 |
+| alt | spacja+kropka1+kropka3+kropka4 (spaja+m) |
+| escape | spacja+kropka1+kropka5 (spacja+e) |
+| enter | kropka8 lub joystick center |
+| window | spacja+kropka3+kropka4 |
+| alt+tab | spacja+kropka2+kropka3+kropka4+kropka5 (spacja+t) |
+| NVDA Menu | spacja+kropka1+kropka3+kropka4+kropka5 (spacja+n) |
+| windows+d (minimalizuje wszystkie aplikacje) | spacja+kropka1+kropka4+kropka5 (spacja+d) |
+| czytaj wszystko | spacja+kropka1+kropka2+kropka3+kropka4+kropka5+kropka6 |
 %kc:endInclude
 
 + Dla zaawansowanych +[AdvancedTopics]

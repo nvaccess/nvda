@@ -72,7 +72,12 @@ class InputComposition(EditableTextWithAutoSelectDetection,Window):
 		if (config.conf["keyboard"]["speakTypedCharacters"] or config.conf["keyboard"]["speakTypedWords"]):
 			newText=calculateInsertedChars(oldString.strip(u'\u3000'),newString.strip(u'\u3000'))
 			if newText:
-				queueHandler.queueFunction(queueHandler.eventQueue,speech.speakText,newText,symbolLevel=characterProcessing.SYMLVL_ALL)
+				queueHandler.queueFunction(
+					queueHandler.eventQueue,
+					speech.speakText,
+					newText,
+					symbolLevel=characterProcessing.SymbolLevel.ALL
+				)
 
 	def compositionUpdate(self,compositionString,selectionStart,selectionEnd,isReading,announce=True):
 		if isReading and not config.conf["inputComposition"]["reportReadingStringChanges"]: return

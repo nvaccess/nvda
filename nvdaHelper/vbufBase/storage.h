@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2006-2010 NVDA contributers.
+Copyright 2006-2022 NVDA contributors.
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -21,6 +21,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <list>
 #include <vector>
 #include <regex>
+#include <optional>
 
 /**
  * values to indicate a direction for searching
@@ -89,7 +90,11 @@ typedef std::map<std::wstring,std::wstring> VBufStorage_attributeMap_t;
 
 /**
  * a node that represents a field in a buffer.
- * Nodes have relationships with other nodes (giving the ability to form a tree structure), they have a length in characters (how many characters they span in the buffer), and they can hold name value attribute paires. Their constructor is protected and their only friend is a buffer, thus they can only be created by a buffer. 
+ * Nodes have relationships with other nodes (giving the ability to form a tree structure),
+ * they have a length in characters (how many characters they span in the buffer),
+ * and they can hold name value attribute paires.
+ * Their constructor and destructor is protected and their only friend is a buffer,
+ * thus they can only be created by a buffer.
  */
 class VBufStorage_fieldNode_t {
 	protected:
@@ -194,11 +199,13 @@ class VBufStorage_fieldNode_t {
  * constructor.
  * @param length the length in characters this node should be, usually left as  its default.
  * @param isBlock true if this node should be a block element, false otherwise
+ * @remark Protected because this class is always dynamically allocated and memory is managed by friend classes
  */
 	VBufStorage_fieldNode_t(int length, bool isBlock);
 
 /**
  * destructor
+ * @remark Protected: This and derived classes are always dynamically allocated and memory managed by friends
  */
 	virtual ~VBufStorage_fieldNode_t();
 
@@ -260,6 +267,13 @@ class VBufStorage_fieldNode_t {
  */
 	bool addAttribute(const std::wstring& name, const std::wstring& value);
 
+	/**
+	 * Gets an attribute value for this field.
+	 * @param name the name of the attribute
+	 * @return the attribute if the attribute exists, NULL if it doesn't exist.
+	 */
+	std::optional<std::wstring> getAttribute(const std::wstring& name);
+
 /**
  * @return a string of all the attributes in this field, format of name:value pares separated by a semi colon.
  */
@@ -309,6 +323,8 @@ class VBufStorage_controlFieldNode_t : public VBufStorage_fieldNode_t {
  */
 	VBufStorage_controlFieldNode_t(int docHandle, int ID, bool isBlock);
 
+	// This class is always dynamically allocated and memory managed by friend classes,
+	// however, note that the friend classes also do much more with their access.
 	friend class VBufStorage_buffer_t;
 
 	public:

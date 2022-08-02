@@ -1,33 +1,53 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2009-2021 NV Access Limited, Joseph Lee, Mohammad Suliman,
+# Copyright (C) 2009-2022 NV Access Limited, Joseph Lee, Mohammad Suliman,
 # Babbage B.V., Leonard de Ruijter, Bill Dengler
 
 """Support for UI Automation (UIA) controls."""
 import typing
-from ctypes import byref
-from ctypes.wintypes import POINT, RECT
+from typing import (
+	Generator,
+	List,
+	Optional,
+	Dict,
+	Tuple,
+)
+from ctypes.wintypes import POINT
 from comtypes import COMError
 from comtypes.automation import VARIANT
 import time
-import weakref
 import numbers
 import colors
 import languageHandler
 import UIAHandler
-import _UIACustomProps
-import globalVars
-import eventHandler
+import UIAHandler.customProps
+import UIAHandler.customAnnotations
 import controlTypes
+from controlTypes import TextPosition
 import config
 import speech
 import api
 import textInfos
 from logHandler import log
-from UIAUtils import *
+from UIAHandler.types import (
+	IUIAutomationTextRangeT
+)
+from UIAHandler.utils import (
+	BulkUIATextRangeAttributeValueFetcher,
+	UIATextRangeAttributeValueFetcher,
+	getChildrenWithCacheFromUIATextRange,
+	getEnclosingElementWithCacheFromUIATextRange,
+	iterUIARangeByUnit,
+	UIAMixedAttributeError,
+	UIATextRangeFromElement,
+)
 from NVDAObjects.window import Window
-from NVDAObjects import NVDAObjectTextInfo, InvalidNVDAObject
+from NVDAObjects import (
+	NVDAObject,
+	NVDAObjectTextInfo,
+	InvalidNVDAObject,
+)
 from NVDAObjects.behaviors import (
 	ProgressBar,
 	EditableTextWithoutAutoSelectDetection,
@@ -43,7 +63,15 @@ import ui
 import winVersion
 
 
+paragraphIndentIDs = {
+	UIAHandler.UIA_IndentationFirstLineAttributeId,
+	UIAHandler.UIA_IndentationLeadingAttributeId,
+	UIAHandler.UIA_IndentationTrailingAttributeId,
+}
+
+
 class UIATextInfo(textInfos.TextInfo):
+	_rangeObj: IUIAutomationTextRangeT
 
 	_cache_controlFieldNVDAObjectClass=True
 	def _get_controlFieldNVDAObjectClass(self):
@@ -81,8 +109,6 @@ class UIATextInfo(textInfos.TextInfo):
 		UIAHandler.UIA_GridColumnCountPropertyId,
 		UIAHandler.UIA_GridItemContainingGridPropertyId,
 		UIAHandler.UIA_RangeValueValuePropertyId,
-		UIAHandler.UIA_RangeValueMinimumPropertyId,
-		UIAHandler.UIA_RangeValueMaximumPropertyId,
 		UIAHandler.UIA_ValueValuePropertyId,
 		UIAHandler.UIA_PositionInSetPropertyId,
 		UIAHandler.UIA_SizeOfSetPropertyId,
@@ -130,23 +156,35 @@ class UIATextInfo(textInfos.TextInfo):
 			return True
 		return False
 
-	def _getFormatFieldAtRange(self,textRange,formatConfig,ignoreMixedValues=False):
+	# C901 '_getFormatFieldAtRange' is too complex
+	# Note: when working on _getFormatFieldAtRange, look for opportunities to simplify
+	# and move logic out into smaller helper functions.
+	def _getFormatFieldAtRange(  # noqa: C901
+			self,
+			textRange: IUIAutomationTextRangeT,
+			formatConfig: Dict,
+			ignoreMixedValues: bool = False,
+	) -> textInfos.FormatField:
 		"""
 		Fetches formatting for the given UI Automation Text range.
 		@param textRange: the text range whos formatting should be fetched.
-		@type textRange: L{UIAutomation.IUIAutomationTextRange}
 		@param formatConfig: the types of formatting requested.
 		@type formatConfig: a dictionary of NVDA document formatting configuration keys
 			with values set to true for those types that should be fetched.
-		@param ignoreMixedValues: If True, formatting that is mixed according to UI Automation will not be included. If False, L{UIAUtils.MixedAttributeError} will be raised if UI Automation gives back a mixed attribute value signifying that the caller may want to try again with a smaller range. 
-		@type: bool
+		@param ignoreMixedValues: If True, formatting that is mixed according to UI Automation will not be included.
+			If False, L{UIAHandler.utils.MixedAttributeError} will be raised if UI Automation gives back
+			a mixed attribute value signifying that the caller may want to try again with a smaller range.
 		@return: The formatting for the given text range.
-		@rtype: L{textInfos.FormatField}
 		"""
 		formatField=textInfos.FormatField()
 		if not isinstance(textRange,UIAHandler.IUIAutomationTextRange):
 			raise ValueError("%s is not a text range"%textRange)
-		fetchAnnotationTypes=formatConfig["reportSpellingErrors"] or formatConfig["reportComments"] or formatConfig["reportRevisions"]
+		fetchAnnotationTypes = (
+			formatConfig["reportSpellingErrors"]
+			or formatConfig["reportComments"]
+			or formatConfig["reportRevisions"]
+			or formatConfig["reportBookmarks"]
+		)
 		try:
 			textRange=textRange.QueryInterface(UIAHandler.IUIAutomationTextRange3)
 		except (COMError,AttributeError):
@@ -170,6 +208,8 @@ class UIATextInfo(textInfos.TextInfo):
 					UIAHandler.UIA_IsSuperscriptAttributeId,
 					UIAHandler.UIA_IsSubscriptAttributeId
 				})
+			if formatConfig["reportParagraphIndentation"]:
+				IDs.update(set(paragraphIndentIDs))
 			if formatConfig["reportAlignment"]:
 				IDs.add(UIAHandler.UIA_HorizontalTextAlignmentAttributeId)
 			if formatConfig["reportColor"]:
@@ -193,8 +233,9 @@ class UIATextInfo(textInfos.TextInfo):
 				formatField["font-name"]=val
 		if formatConfig["reportFontSize"]:
 			val=fetcher.getValue(UIAHandler.UIA_FontSizeAttributeId,ignoreMixedValues=ignoreMixedValues)
-			if isinstance(val,numbers.Number):
-				formatField['font-size']="%g pt"%float(val)
+			if isinstance(val, numbers.Number):
+				# Translators: Abbreviation for points, a measurement of font size.
+				formatField['font-size'] = pgettext("font size", "%s pt") % float(val)
 		if formatConfig["reportFontAttributes"]:
 			val=fetcher.getValue(UIAHandler.UIA_FontWeightAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if isinstance(val,int):
@@ -212,19 +253,20 @@ class UIATextInfo(textInfos.TextInfo):
 			textPosition=None
 			val=fetcher.getValue(UIAHandler.UIA_IsSuperscriptAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if val!=UIAHandler.handler.reservedNotSupportedValue and val:
-				textPosition='super'
+				textPosition = TextPosition.SUPERSCRIPT
 			else:
 				val=fetcher.getValue(UIAHandler.UIA_IsSubscriptAttributeId,ignoreMixedValues=ignoreMixedValues)
 				if val!=UIAHandler.handler.reservedNotSupportedValue and val:
-					textPosition="sub"
+					textPosition = TextPosition.SUBSCRIPT
 				else:
-					textPosition="baseline"
-			if textPosition:
-				formatField['text-position']=textPosition
+					textPosition = TextPosition.BASELINE
+			formatField['text-position'] = textPosition
 		if formatConfig['reportStyle']:
 			val=fetcher.getValue(UIAHandler.UIA_StyleNameAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if val!=UIAHandler.handler.reservedNotSupportedValue:
 				formatField["style"]=val
+		if formatConfig["reportParagraphIndentation"]:
+			formatField.update(self._getFormatFieldIndent(fetcher, ignoreMixedValues=ignoreMixedValues))
 		if formatConfig["reportAlignment"]:
 			val=fetcher.getValue(UIAHandler.UIA_HorizontalTextAlignmentAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if val==UIAHandler.HorizontalTextAlignment_Left:
@@ -274,13 +316,22 @@ class UIATextInfo(textInfos.TextInfo):
 				if UIAHandler.AnnotationType_GrammarError in annotationTypes:
 					formatField["invalid-grammar"]=True
 			if formatConfig["reportComments"]:
-				if UIAHandler.AnnotationType_Comment in annotationTypes:
-					formatField["comment"]=True
+				cats = self.obj._UIACustomAnnotationTypes
+				if cats.microsoftWord_draftComment.id and cats.microsoftWord_draftComment.id in annotationTypes:
+					formatField["comment"] = textInfos.CommentType.DRAFT
+				elif cats.microsoftWord_resolvedComment.id and cats.microsoftWord_resolvedComment.id in annotationTypes:
+					formatField["comment"] = textInfos.CommentType.RESOLVED
+				elif UIAHandler.AnnotationType_Comment in annotationTypes:
+					formatField["comment"] = True
 			if formatConfig["reportRevisions"]:
 				if UIAHandler.AnnotationType_InsertionChange in annotationTypes:
 					formatField["revision-insertion"]=True
 				elif UIAHandler.AnnotationType_DeletionChange in annotationTypes:
 					formatField["revision-deletion"]=True
+			if formatConfig["reportBookmarks"]:
+				cats = self.obj._UIACustomAnnotationTypes
+				if cats.microsoftWord_bookmark.id and cats.microsoftWord_bookmark.id in annotationTypes:
+					formatField["bookmark"] = True
 		cultureVal=fetcher.getValue(UIAHandler.UIA_CultureAttributeId,ignoreMixedValues=ignoreMixedValues)
 		if cultureVal and isinstance(cultureVal,int):
 			try:
@@ -290,7 +341,80 @@ class UIATextInfo(textInfos.TextInfo):
 				pass
 		return textInfos.FieldCommand("formatChange",formatField)
 
-	def __init__(self,obj,position,_rangeObj=None):
+	def _getFormatFieldIndent(
+			self,
+			fetcher: UIATextRangeAttributeValueFetcher,
+			ignoreMixedValues: bool,
+	) -> textInfos.FormatField:
+		"""
+		Helper function to get indent formatting from the fetcher passed as parameter.
+		The indent formatting is reported according to MS Word's convention.
+		@param fetcher: the UIA fetcher used to get all formatting information.
+		@param ignoreMixedValues: If True, formatting that is mixed according to UI Automation will not be included.
+			If False, L{UIAHandler.utils.MixedAttributeError} will be raised if UI Automation gives back
+			a mixed attribute value signifying that the caller may want to try again with a smaller range.
+		@return: The indent formatting informations corresponding to what has been retrieved via the fetcher.
+		"""
+		
+		formatField = textInfos.FormatField()
+		val = fetcher.getValue(UIAHandler.UIA_IndentationFirstLineAttributeId, ignoreMixedValues=ignoreMixedValues)
+		uiaIndentFirstLine = val if isinstance(val, float) else None
+		val = fetcher.getValue(UIAHandler.UIA_IndentationLeadingAttributeId, ignoreMixedValues=ignoreMixedValues)
+		uiaIndentLeading = val if isinstance(val, float) else None
+		val = fetcher.getValue(UIAHandler.UIA_IndentationTrailingAttributeId, ignoreMixedValues=ignoreMixedValues)
+		uiaIndentTrailing = val if isinstance(val, float) else None
+		if uiaIndentFirstLine is not None and uiaIndentLeading is not None:
+			reportedFirstLineIndent = uiaIndentFirstLine - uiaIndentLeading
+			if reportedFirstLineIndent > 0:  # First line positive indent
+				reportedLeftIndent = uiaIndentLeading
+				reportedHangingIndent = None
+			elif reportedFirstLineIndent < 0:  # First line negative indent
+				reportedLeftIndent = uiaIndentFirstLine
+				reportedHangingIndent = -reportedFirstLineIndent
+				reportedFirstLineIndent = None
+			else:
+				reportedLeftIndent = uiaIndentLeading
+				reportedFirstLineIndent = None
+				reportedHangingIndent = None
+			if reportedLeftIndent:
+				formatField['left-indent'] = self._getIndentValueDisplayString(reportedLeftIndent)
+			if reportedFirstLineIndent:
+				formatField['first-line-indent'] = self._getIndentValueDisplayString(reportedFirstLineIndent)
+			if reportedHangingIndent:
+				formatField['hanging-indent'] = self._getIndentValueDisplayString(reportedHangingIndent)
+		if uiaIndentTrailing:
+			formatField['right-indent'] = self._getIndentValueDisplayString(uiaIndentTrailing)
+		return formatField
+	
+	@staticmethod
+	def _getIndentValueDisplayString(val: float) -> str:
+		"""A function returning the string to display in formatting info.
+		@param val: an indent value measured in points, fetched via
+			an UIAHandler.UIA_Indentation*AttributeId attribute.
+		@return: The string used in formatting information to report the length of an indentation.
+		"""
+		
+		# convert points to inches (1pt = 1/72 in)
+		val /= 72.0
+		if languageHandler.useImperialMeasurements():
+			# Translators: a measurement in inches
+			valText = _("{val:.2f} in").format(val=val)
+		else:
+			# Convert from inches to centimetres
+			val *= 2.54
+			# Translators: a measurement in centimetres
+			valText = _("{val:.2f} cm").format(val=val)
+		return valText
+	
+	# C901 '__init__' is too complex
+	# Note: when working on getPropertiesBraille, look for opportunities to simplify
+	# and move logic out into smaller helper functions.
+	def __init__(  # noqa: C901
+			self,
+			obj: NVDAObject,
+			position: str,
+			_rangeObj: Optional[IUIAutomationTextRangeT] = None
+	):
 		super(UIATextInfo,self).__init__(obj,position)
 		if _rangeObj:
 			try:
@@ -305,7 +429,7 @@ class UIATextInfo(textInfos.TextInfo):
 			except COMError:
 				raise RuntimeError("No selection available")
 			if sel.length>0:
-				self._rangeObj=sel.getElement(0).clone()
+				self._rangeObj: IUIAutomationTextRangeT = sel.getElement(0).clone()
 			else:
 				raise NotImplementedError("UIAutomationTextRangeArray is empty")
 			if position==textInfos.POSITION_CARET:
@@ -314,21 +438,21 @@ class UIATextInfo(textInfos.TextInfo):
 			self._rangeObj=position._rangeObj
 		elif position==textInfos.POSITION_FIRST:
 			try:
-				self._rangeObj=self.obj.UIATextPattern.documentRange
+				self._rangeObj: IUIAutomationTextRangeT = self.obj.UIATextPattern.documentRange
 			except COMError:
 				# Error: first position not supported by the UIA text pattern.
 				raise RuntimeError
 			self.collapse()
 		elif position==textInfos.POSITION_LAST:
-			self._rangeObj=self.obj.UIATextPattern.documentRange
+			self._rangeObj: IUIAutomationTextRangeT = self.obj.UIATextPattern.documentRange
 			self.collapse(True)
 		elif position==textInfos.POSITION_ALL or position==self.obj:
-			self._rangeObj=self.obj.UIATextPattern.documentRange
+			self._rangeObj: IUIAutomationTextRangeT = self.obj.UIATextPattern.documentRange
 		elif isinstance(position,UIA) or isinstance(position,UIAHandler.IUIAutomationElement):
 			if isinstance(position,UIA):
 				position=position.UIAElement
 			try:
-				self._rangeObj=self.obj.UIATextPattern.rangeFromChild(position)
+				self._rangeObj: Optional[IUIAutomationTextRangeT] = self.obj.UIATextPattern.rangeFromChild(position)
 			except COMError:
 				raise LookupError
 			# sometimes rangeFromChild can return a NULL range
@@ -337,13 +461,14 @@ class UIATextInfo(textInfos.TextInfo):
 			if winVersion.getWinVer() <= winVersion.WIN7_SP1:
 				# #9435: RangeFromPoint causes a freeze in UIA client library in the Windows 7 start menu!
 				raise NotImplementedError("RangeFromPoint not supported on Windows 7")
-			self._rangeObj=self.obj.UIATextPattern.RangeFromPoint(position.toPOINT())
-		elif isinstance(position,UIAHandler.IUIAutomationTextRange):
-			self._rangeObj=position.clone()
+			self._rangeObj: IUIAutomationTextRangeT = self.obj.UIATextPattern.RangeFromPoint(position.toPOINT())
+		elif isinstance(position, UIAHandler.IUIAutomationTextRange):
+			position = typing.cast(IUIAutomationTextRangeT, position)
+			self._rangeObj = position.clone()
 		else:
 			raise ValueError("Unknown position %s"%position)
 
-	def __eq__(self,other):
+	def __eq__(self, other: "UIATextInfo"):
 		if self is other: return True
 		if self.__class__ is not other.__class__: return False
 		return bool(self._rangeObj.compare(other._rangeObj))
@@ -448,27 +573,28 @@ class UIATextInfo(textInfos.TextInfo):
 				pass
 		return field
 
-	def _getTextFromUIARange(self, textRange):
+	def _getTextFromUIARange(self, textRange: IUIAutomationTextRangeT) -> str:
 		"""
 		Fetches plain text from the given UI Automation text range.
 		Just calls getText(-1). This only exists to be overridden for filtering.
 		"""
 		return textRange.getText(-1)
 
-	def _getTextWithFields_text(self,textRange,formatConfig,UIAFormatUnits=None):
+	def _getTextWithFields_text(
+			self,
+			textRange: IUIAutomationTextRangeT,
+			formatConfig: Dict,
+			UIAFormatUnits: Optional[List[int]] = None
+	) -> Generator[textInfos.FieldCommand, None, None]:
 		"""
 		Yields format fields and text for the given UI Automation text range, split up by the first available UI Automation text unit that does not result in mixed attribute values.
 		@param textRange: the UI Automation text range to walk.
-		@type textRange: L{UIAHandler.IUIAutomationTextRange}
-		@param formatConfig: the types of formatting requested.
-		@type formatConfig: a dictionary of NVDA document formatting configuration keys
+		@param formatConfig: a dictionary of NVDA document formatting configuration keys
 			with values set to true for those types that should be fetched.
 		@param UIAFormatUnits: the UI Automation text units (in order of resolution) that should be used to split the text so as to avoid mixed attribute values. This is None by default.
 			If the parameter is a list of 1 or more units, The range will be split by the first unit in the list, and this method will be recursively run on each subrange, with the remaining units in this list given as the value of this parameter. 
 			If this parameter is an empty list, then formatting and text is fetched for the entire range, but any mixed attribute values are ignored and no splitting occures.
 			If this parameter is None, text and formatting is fetched for the entire range in one go, but if mixed attribute values are found, it will split by the first unit in self.UIAFormatUnits, and run this method recursively on each subrange, providing the remaining units from self.UIAFormatUnits as the value of this parameter. 
-		@type UIAFormatUnits: List of UI Automation Text Units or None
-		@rtype: a Generator yielding L{textInfos.FieldCommand} objects containing L{textInfos.FormatField} objects, and text strings.
 		"""
 		debug = UIAHandler._isDebug() and log.isEnabledFor(log.DEBUG)
 		if debug:
@@ -488,7 +614,7 @@ class UIATextInfo(textInfos.TextInfo):
 		rangeIter=iterUIARangeByUnit(textRange,unit) if unit is not None else [textRange]
 		for tempRange in rangeIter:
 			text=self._getTextFromUIARange(tempRange) or ""
-			if text:
+			if text is not None:
 				if debug:
 					log.debug("Chunk has text. Fetching formatting")
 				try:
@@ -503,31 +629,38 @@ class UIATextInfo(textInfos.TextInfo):
 					continue
 				if debug:
 					log.debug("Yielding formatting and text")
-				yield field
+					log.debug(f"field: {field}, text: {text}")
+				if field:
+					yield field
 				yield text
 		if debug:
 			log.debug("Done _getTextWithFields_text")
 
-	def _getTextWithFieldsForUIARange(self,rootElement,textRange,formatConfig,includeRoot=False,alwaysWalkAncestors=True,recurseChildren=True,_rootElementClipped=(True,True)):
+	# C901 '_getTextWithFieldsForUIARange' is too complex
+	# Note: when working on getPropertiesBraille, look for opportunities to simplify
+	# and move logic out into smaller helper functions.
+	def _getTextWithFieldsForUIARange(  # noqa: C901
+			self,
+			rootElement: UIAHandler.IUIAutomationElement,
+			textRange: IUIAutomationTextRangeT,
+			formatConfig: Dict,
+			includeRoot: bool = False,
+			alwaysWalkAncestors: bool = True,
+			recurseChildren: bool = True,
+			_rootElementClipped: Tuple[bool, bool] = (True, True),
+	) -> Generator[textInfos.TextInfo.TextOrFieldsT, None, None]:
 		"""
 		Yields start and end control fields, and text, for the given UI Automation text range.
 		@param rootElement: the highest ancestor that encloses the given text range. This function will not walk higher than this point.
-		@type rootElement: L{UIAHandler.IUIAutomation}
 		@param textRange: the UI Automation text range whos content should be fetched.
-		@type textRange: L{UIAHandler.IUIAutomation}
 		@param formatConfig: the types of formatting requested.
 		@type formatConfig: a dictionary of NVDA document formatting configuration keys
 			with values set to true for those types that should be fetched.
 		@param includeRoot: If true, then a control start and end will be yielded for the root element.
-		@type includeRoot: bool
 		@param alwaysWalkAncestors: If true then control fields will be yielded for any element enclosing the given text range, that is a descendant of the root element. If false then the root element may be  assumed to be the only ancestor.
-		@type alwaysWalkAncestors: bool
 		@param recurseChildren: If true, this function will be recursively called for each child of the given text range, clipped to the bounds of this text range. Formatted text between the children will also be yielded. If false, only formatted text will be yielded.
-		@type recurseChildren: bool
 		@param _rootElementClipped: Indicates if textRange represents all of the given rootElement,
 			or is clipped at the start or end.
-		@type _rootElementClipped: 2-tuple
-		@rtype: A generator that yields L{textInfo.FieldCommand} objects and text strings.
 		"""
 		debug = UIAHandler._isDebug() and log.isEnabledFor(log.DEBUG)
 		if debug:
@@ -737,7 +870,7 @@ class UIATextInfo(textInfos.TextInfo):
 		if debug:
 			log.debug("_getTextWithFieldsForUIARange end")
 
-	def getTextWithFields(self,formatConfig=None):
+	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
 		if not formatConfig:
 			formatConfig=config.conf["documentFormatting"]
 		fields=list(self._getTextWithFieldsForUIARange(self.obj.UIAElement,self._rangeObj,formatConfig))
@@ -746,12 +879,11 @@ class UIATextInfo(textInfos.TextInfo):
 	def _get_text(self):
 		return self._getTextFromUIARange(self._rangeObj)
 
-	def _getBoundingRectsFromUIARange(self, textRange):
+	def _getBoundingRectsFromUIARange(self, textRange: IUIAutomationTextRangeT) -> locationHelper.RectLTWH:
 		"""
 		Fetches per line bounding rectangles from the given UI Automation text range.
 		Note that if the range object doesn't cover a whole line (e.g. a character),
 		the bounding rectangle will be restricted to the range.
-		@rtype: [locationHelper.RectLTWH]
 		"""
 		rects = []
 		rectArray = textRange.GetBoundingRectangles()
@@ -765,11 +897,16 @@ class UIATextInfo(textInfos.TextInfo):
 	def _get_boundingRects(self):
 		return self._getBoundingRectsFromUIARange(self._rangeObj)
 
-	def expand(self,unit):
+	def expand(self, unit: str) -> None:
 		UIAUnit=UIAHandler.NVDAUnitsToUIAUnits[unit]
 		self._rangeObj.ExpandToEnclosingUnit(UIAUnit)
 
-	def move(self,unit,direction,endPoint=None):
+	def move(
+			self,
+			unit: str,
+			direction: int,
+			endPoint: Optional[str] = None,
+	):
 		UIAUnit=UIAHandler.NVDAUnitsToUIAUnits[unit]
 		if endPoint=="start":
 			res=self._rangeObj.MoveEndpointByUnit(UIAHandler.TextPatternRangeEndpoint_Start,UIAUnit,direction)
@@ -785,13 +922,13 @@ class UIATextInfo(textInfos.TextInfo):
 	def copy(self):
 		return self.__class__(self.obj,None,_rangeObj=self._rangeObj)
 
-	def collapse(self,end=False):
+	def collapse(self, end: bool = False):
 		if end:
 			self._rangeObj.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,self._rangeObj,UIAHandler.TextPatternRangeEndpoint_End)
 		else:
 			self._rangeObj.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,self._rangeObj,UIAHandler.TextPatternRangeEndpoint_Start)
 
-	def compareEndPoints(self,other,which):
+	def compareEndPoints(self, other: "UIATextInfo", which: str):
 		if which.startswith('start'):
 			src=UIAHandler.TextPatternRangeEndpoint_Start
 		else:
@@ -802,7 +939,7 @@ class UIATextInfo(textInfos.TextInfo):
 			target=UIAHandler.TextPatternRangeEndpoint_End
 		return self._rangeObj.CompareEndpoints(src,other._rangeObj,target)
 
-	def setEndPoint(self,other,which):
+	def setEndPoint(self, other: "UIATextInfo", which: str):
 		if which.startswith('start'):
 			src=UIAHandler.TextPatternRangeEndpoint_Start
 		else:
@@ -816,10 +953,15 @@ class UIATextInfo(textInfos.TextInfo):
 	def updateSelection(self):
 		self._rangeObj.Select()
 
-	updateCaret = updateSelection
+	def updateCaret(self) -> None:
+		copyTextInfo = self.copy()
+		copyTextInfo.collapse()
+		copyTextInfo.updateSelection()
+
 
 class UIA(Window):
-	_UIACustomProps = _UIACustomProps.CustomPropertiesCommon.get()
+	_UIACustomProps = UIAHandler.customProps.CustomPropertiesCommon.get()
+	_UIACustomAnnotationTypes = UIAHandler.customAnnotations.CustomAnnotationTypesCommon.get()
 
 	shouldAllowDuplicateUIAFocusEvent = False
 
@@ -879,6 +1021,13 @@ class UIA(Window):
 			clsList.append(PlaceholderNetUITWMenuItem)
 		elif UIAClassName=="WpfTextView":
 			clsList.append(WpfTextView)
+		elif (
+			UIAClassName == "ListViewItem"
+			and self.UIAElement.cachedFrameworkID == "WPF"
+			and self.role == controlTypes.Role.DATAITEM
+		):
+			from NVDAObjects.behaviors import RowWithFakeNavigation
+			clsList.append(RowWithFakeNavigation)
 		elif UIAClassName=="NetUIDropdownAnchor":
 			clsList.append(NetUIDropdownAnchor)
 		elif self.windowClassName == "EXCEL6" and self.role == controlTypes.Role.PANE:
@@ -964,7 +1113,7 @@ class UIA(Window):
 				clsList.append(chromium.ChromiumUIA)
 		elif (
 			self.role == controlTypes.Role.DOCUMENT
-			and self.UIAElement.cachedAutomationId == "Microsoft.Windows.PDF.DocumentView"
+			and UIAAutomationId == "Microsoft.Windows.PDF.DocumentView"
 		):
 			# PDFs
 			from . import spartanEdge
@@ -975,7 +1124,7 @@ class UIA(Window):
 		):
 			clsList.insert(0, DevExpressXtraRichEdit)
 		if UIAControlType == UIAHandler.UIA_ProgressBarControlTypeId:
-			clsList.append(ProgressBar)
+			clsList.insert(0, ProgressBar)
 		if UIAClassName=="ControlPanelLink":
 			clsList.append(ControlPanelLink)
 		if UIAClassName=="UIColumnHeader":
@@ -1010,11 +1159,11 @@ class UIA(Window):
 		if isDialog:
 			clsList.append(Dialog)
 		# #6241: Try detecting all possible suggestions containers and search fields scattered throughout Windows 10.
-		try:
-			if UIAAutomationId in ("SearchTextBox", "TextBox"):
-				clsList.append(SearchField)
-		except COMError:
-			log.debug("Failed to locate UIA search field", exc_info=True)
+		if UIAAutomationId in ("SearchTextBox", "TextBox"):
+			clsList.append(SearchField)
+		# #12790: detect suggestions list views firing layout invalidated event.
+		if UIAAutomationId == "SuggestionsList":
+			clsList.append(SuggestionsList)
 		try:
 			# Nested block here in order to catch value error and variable binding error when attempting to access automation ID for invalid elements.
 			try:
@@ -1038,7 +1187,12 @@ class UIA(Window):
 		if self.windowClassName == "ConsoleWindowClass":
 			from . import winConsoleUIA
 			winConsoleUIA.findExtraOverlayClasses(self, clsList)
-		elif UIAClassName == "TermControl":
+		elif UIAClassName in ("TermControl", "TermControl2"):
+			# microsoft/terminal#12358: Eventually, TermControl2 should have
+			# a separate overlay class that is not a descendant of LiveText.
+			# TermControl2 sends inserted text using UIA notification events,
+			# so it is no longer necessary to diff the object as with all
+			# previous terminal implementations.
 			from . import winConsoleUIA
 			clsList.append(winConsoleUIA.WinTerminalUIA)
 
@@ -1182,6 +1336,20 @@ class UIA(Window):
 		self.UIAGridPattern=self._getUIAPattern(UIAHandler.UIA_GridPatternId,UIAHandler.IUIAutomationGridPattern)
 		return self.UIAGridPattern
 
+	def _get_UIARangeValuePattern(self):
+		self.UIARangeValuePattern = self._getUIAPattern(
+			UIAHandler.UIA_RangeValuePatternId,
+			UIAHandler.IUIAutomationRangeValuePattern
+		)
+		return self.UIARangeValuePattern
+
+	def _get_UIAValuePattern(self):
+		self.UIAValuePattern = self._getUIAPattern(
+			UIAHandler.UIA_ValuePatternId,
+			UIAHandler.IUIAutomationValuePattern
+		)
+		return self.UIAValuePattern
+
 	def _get_UIATogglePattern(self):
 		self.UIATogglePattern=self._getUIAPattern(UIAHandler.UIA_TogglePatternId,UIAHandler.IUIAutomationTogglePattern)
 		return self.UIATogglePattern
@@ -1257,6 +1425,14 @@ class UIA(Window):
 			cache=False
 		)
 		return self.UIATextPattern
+
+	def _get_UIATableItemPattern(self):
+		self.UIATableItemPattern = self._getUIAPattern(
+			UIAHandler.UIA_TableItemPatternId,
+			UIAHandler.IUIAutomationTableItemPattern,
+			cache=False
+		)
+		return self.UIATableItemPattern
 
 	def _get_UIATextEditPattern(self):
 		if not isinstance(UIAHandler.handler.clientObject,UIAHandler.IUIAutomation3):
@@ -1627,6 +1803,15 @@ class UIA(Window):
 			return val
 		return 1
 
+	def _getTextFromHeaderElement(self, element: UIAHandler.IUIAutomationElement) -> typing.Optional[str]:
+		obj = UIA(
+			windowHandle=self.windowHandle,
+			UIAElement=element.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
+		)
+		if not obj:
+			return None
+		return obj.makeTextInfo(textInfos.POSITION_ALL).text
+
 	def _get_rowHeaderText(self):
 		val=self._getUIACacheablePropertyValue(UIAHandler.UIA_TableItemRowHeaderItemsPropertyId ,True)
 		if val==UIAHandler.handler.reservedNotSupportedValue:
@@ -1637,9 +1822,9 @@ class UIA(Window):
 			e=val.getElement(i)
 			if UIAHandler.handler.clientObject.compareElements(e,self.UIAElement):
 				continue
-			obj=UIA(windowHandle=self.windowHandle,UIAElement=e.buildUpdatedCache(UIAHandler.handler.baseCacheRequest))
-			if not obj: continue
-			text=obj.makeTextInfo(textInfos.POSITION_ALL).text
+			text = self._getTextFromHeaderElement(e)
+			if not text:
+				continue
 			textList.append(text)
 		return " ".join(textList)
 
@@ -1665,9 +1850,9 @@ class UIA(Window):
 			e=val.getElement(i)
 			if UIAHandler.handler.clientObject.compareElements(e,self.UIAElement):
 				continue
-			obj=UIA(windowHandle=self.windowHandle,UIAElement=e.buildUpdatedCache(UIAHandler.handler.baseCacheRequest))
-			if not obj: continue
-			text=obj.makeTextInfo(textInfos.POSITION_ALL).text
+			text = self._getTextFromHeaderElement(e)
+			if not text:
+				continue
 			textList.append(text)
 		return " ".join(textList)
 
@@ -1712,19 +1897,24 @@ class UIA(Window):
 		# r is a tuple of floats representing left, top, width and height.
 		return locationHelper.RectLTWH.fromFloatCollection(*r)
 
-	def _get_value(self):
-		val=self._getUIACacheablePropertyValue(UIAHandler.UIA_RangeValueValuePropertyId,True)
-		if val!=UIAHandler.handler.reservedNotSupportedValue:
-			minVal=self._getUIACacheablePropertyValue(UIAHandler.UIA_RangeValueMinimumPropertyId,False)
-			maxVal=self._getUIACacheablePropertyValue(UIAHandler.UIA_RangeValueMaximumPropertyId,False)
-			if minVal==maxVal:
-				# There is no range.
-				return "0"
-			val=((val-minVal)/(maxVal-minVal))*100.0
-			return "%d"%round(val,4)
-		val=self._getUIACacheablePropertyValue(UIAHandler.UIA_ValueValuePropertyId,True)
-		if val!=UIAHandler.handler.reservedNotSupportedValue:
+	def _get_UIAValue(self) -> typing.Optional[str]:
+		val = self._getUIACacheablePropertyValue(UIAHandler.UIA.UIA_ValueValuePropertyId, True)
+		if val != UIAHandler.handler.reservedNotSupportedValue:
 			return val
+		return None
+
+	def _get_UIARangeValue(self) -> typing.Optional[float]:
+		val = self._getUIACacheablePropertyValue(UIAHandler.UIA.UIA_RangeValueValuePropertyId, True)
+		if val != UIAHandler.handler.reservedNotSupportedValue:
+			return val
+		return None
+
+	def _get_value(self) -> typing.Optional[str]:
+		if self.UIAValue is not None:
+			return self.UIAValue
+		if self.UIARangeValue is not None:
+			return f"{round(self.UIARangeValue)}"
+		return None
 
 	def _get_actionCount(self):
 		if self.UIAInvokePattern:
@@ -2028,15 +2218,40 @@ class SearchField(EditableTextWithSuggestions, UIA):
 			self.event_suggestionsClosed()
 
 
-class SuggestionListItem(UIA):
-	"""Recent Windows releases use suggestions lists for various things, including Start menu suggestions, Store, Settings app and so on.
+class SuggestionsList(UIA):
+	"""A list of suggestions in response to search terms being entered.
+	This list shows suggestions without selecting the top suggestion.
+	Examples include suggestions lists in modern apps such as Settings app in Windows 10 and later.
 	"""
 
-	role=controlTypes.Role.LISTITEM
+	def event_UIA_layoutInvalidated(self):
+		# #12790: announce number of items found
+		if self.childCount == 0:
+			return
+		# In some cases, suggestions list fires layout invalidated event repeatedly.
+		# This is the case with Microsoft Store's search field.
+		speech.cancelSpeech()
+		# Item count must be the last one spoken.
+		suggestionsCount: int = self.childCount
+		suggestionsMessage = (
+			# Translators: part of the suggestions count message for one suggestion.
+			_("1 suggestion")
+			# Translators: part of the suggestions count message (for example: 2 suggestions).
+			if suggestionsCount == 1 else _("{} suggestions").format(suggestionsCount)
+		)
+		ui.message(suggestionsMessage)
+
+
+class SuggestionListItem(UIA):
+	"""Recent Windows releases use suggestions lists for various things, including Start menu suggestions, Store, Settings app and so on.
+	Unlike suggestions list class, top suggestion is automatically selected.
+	"""
+
+	role = controlTypes.Role.LISTITEM
 
 	def event_UIA_elementSelected(self):
-		focusControllerFor=api.getFocusObject().controllerFor
-		if len(focusControllerFor)>0 and focusControllerFor[0].appModule is self.appModule and self.name:
+		focusControllerFor = api.getFocusObject().controllerFor
+		if len(focusControllerFor) > 0 and focusControllerFor[0].appModule is self.appModule and self.name:
 			speech.cancelSpeech()
 			api.setNavigatorObject(self, isFocus=True)
 			self.reportFocus()
@@ -2082,3 +2297,23 @@ class DevExpressXtraRichEdit(UIA):
 		if self.UIATextPattern and self.UIATextPattern.DocumentRange:
 			return super().TextInfo
 		return super(UIA, self).TextInfo
+
+
+class ProgressBar(UIA, ProgressBar):
+	"""#12727: In the past, UIA progress bars could have a different range than what could be expected
+	from a progress bar, i.e. a percentage from 0 to 100.
+	This overlay class ensures that the reported value wil be between the accepted range of progress bar values.
+	"""
+
+	def _get_value(self) -> typing.Optional[str]:
+		val = self.UIARangeValue
+		if val is None:
+			return self.UIAValue
+		minVal = self._getUIACacheablePropertyValue(UIAHandler.UIA_RangeValueMinimumPropertyId, False)
+		maxVal = self._getUIACacheablePropertyValue(UIAHandler.UIA_RangeValueMaximumPropertyId, False)
+		if minVal == maxVal:
+			# There is no range, use the raw value from the pattern, it might be incorrect.
+			pass
+		else:
+			val = ((val - minVal) / (maxVal - minVal)) * 100.0
+		return f"{round(val)}%"

@@ -22,7 +22,7 @@ import braille
 import appModuleHandler
 import eventHandler
 import UIAHandler
-from UIAUtils import createUIAMultiPropertyCondition
+from UIAHandler.utils import createUIAMultiPropertyCondition
 import api
 import controlTypes
 import config
@@ -30,8 +30,13 @@ import speech
 import ui
 from NVDAObjects.IAccessible import IAccessible
 from NVDAObjects.window import Window
-from NVDAObjects.window.winword import WordDocument as BaseWordDocument
-from NVDAObjects.IAccessible.winword import WordDocument, WordDocumentTreeInterceptor, BrowseModeWordDocumentTextInfo, WordDocumentTextInfo
+from NVDAObjects.window.winword import (
+	WordDocument as BaseWordDocument,
+	WordDocumentTreeInterceptor,
+	BrowseModeWordDocumentTextInfo,
+	WordDocumentTextInfo,
+)
+from NVDAObjects.IAccessible.winword import WordDocument
 from NVDAObjects.IAccessible.MSHTML import MSHTML
 from NVDAObjects.behaviors import RowWithFakeNavigation, Dialog
 from NVDAObjects.UIA import UIA
@@ -256,29 +261,6 @@ class SuperGridClient2010(IAccessible):
 		obj.parent=self.parent
 		eventHandler.executeEvent("gainFocus",obj)
 
-class MessageItem(Window):
-
-	def __init__(self,windowHandle=None,parent=None,msg=None):
-		if not parent or not msg:
-			raise ArguementError("__init__ needs windowHandle, parent and msg arguments")
-		if not windowHandle:
-			windowHandle=parent.windowHandle
-		self.msg=msg
-		self.parent=parent
-		Window.__init__(self,windowHandle=windowHandle)
-
-	def _get_name(self):
-		typeID=self.msg.Class
-		if typeID==40:
-			return getContactString(self.msg)
-		elif typeID==43:
-			return getReceivedMessageString(self.msg)
-
-	def _get_role(self):
-		return controlTypes.Role.LISTITEM
-
-	def _get_states(self):
-		return frozenset([controlTypes.State.SELECTED])
 
 class AddressBookEntry(IAccessible):
 
@@ -348,7 +330,7 @@ class CalendarView(IAccessible):
 		separatorBuf = ctypes.create_unicode_buffer(bufLength)
 		if ctypes.windll.kernel32.GetLocaleInfoW(
 			languageHandler.LOCALE_USER_DEFAULT,
-			languageHandler.LOCALE_SLIST,
+			languageHandler.LOCALE.SLIST,
 			separatorBuf,
 			bufLength
 		) == 0:
@@ -439,9 +421,9 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 	def _get_name(self):
 		textList=[]
 		if controlTypes.State.EXPANDED in self.states:
-			textList.append(controlTypes.stateLabels[controlTypes.State.EXPANDED])
+			textList.append(controlTypes.State.EXPANDED.displayString)
 		elif controlTypes.State.COLLAPSED in self.states:
-			textList.append(controlTypes.stateLabels[controlTypes.State.COLLAPSED])
+			textList.append(controlTypes.State.COLLAPSED.displayString)
 		selection=None
 		if self.appModule.nativeOm:
 			try:

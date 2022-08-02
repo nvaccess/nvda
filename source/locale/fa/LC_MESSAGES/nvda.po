@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master-9280,3350d74\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-11 00:01+0000\n"
-"PO-Revision-Date: 2021-06-11 18:51+0330\n"
+"POT-Creation-Date: 2022-07-08 00:02+0000\n"
+"PO-Revision-Date: 2022-07-07 15:19+0330\n"
 "Last-Translator: Mohammadreza Rashad <mohammadreza5712@gmail.com>\n"
 "Language-Team: NVDA Translation Team <nvda-translations@groups.io>\n"
 "Language: fa\n"
@@ -77,49 +77,6 @@ msgstr "زبان نامشخص"
 #. Translators: The label for an unknown input method when switching input methods.
 msgid "unknown input method"
 msgstr "روشِ ورودیِ نامشخص"
-
-#. Translators: The label shown for a spelling and grammar error in the NVDA Elements List dialog in Microsoft Word.
-#. {text} will be replaced with the text of the spelling error.
-#, python-brace-format
-msgid "spelling and grammar: {text}"
-msgstr "خطای املایی و دستوری: {text}"
-
-#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
-#. {text} will be replaced with the text of the spelling error.
-#, python-brace-format
-msgid "spelling: {text}"
-msgstr "خطای املایی: {text}"
-
-#. Translators: The label shown for a grammar error in the NVDA Elements List dialog in Microsoft Word.
-#. {text} will be replaced with the text of the spelling error.
-#, python-brace-format
-msgid "grammar: {text}"
-msgstr "خطای دستوری: {text}"
-
-#. Translators: a style of fill type (to color the inside of a control or text)
-msgctxt "UIAHandler.FillType"
-msgid "none"
-msgstr "هیچ"
-
-#. Translators: a style of fill type (to color the inside of a control or text)
-msgctxt "UIAHandler.FillType"
-msgid "color"
-msgstr "رنگ"
-
-#. Translators: a style of fill type (to color the inside of a control or text)
-msgctxt "UIAHandler.FillType"
-msgid "gradient"
-msgstr "شیبدار"
-
-#. Translators: a style of fill type (to color the inside of a control or text)
-msgctxt "UIAHandler.FillType"
-msgid "picture"
-msgstr "تصویر"
-
-#. Translators: a style of fill type (to color the inside of a control or text)
-msgctxt "UIAHandler.FillType"
-msgid "pattern"
-msgstr "الگو"
 
 #. Translators: shown when an addon API version string is unknown
 #. Translators: The word for an unknown control type.
@@ -278,6 +235,11 @@ msgstr "برگ"
 msgid "prgbar"
 msgstr "نپیش"
 
+#. Translators: Displayed in braille for an object which is an
+#. indeterminate progress bar, aka busy indicator.
+msgid "bsyind"
+msgstr "شغل"
+
 #. Translators: Displayed in braille for an object which is a
 #. scroll bar.
 msgid "scrlbar"
@@ -413,8 +375,8 @@ msgid "fig"
 msgstr "فیگ"
 
 #. Translators: Displayed in braille for an object which represents marked (highlighted) content
-msgid "mrkd"
-msgstr "نشان"
+msgid "hlght"
+msgstr "برجس"
 
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
@@ -477,6 +439,7 @@ msgid "frml"
 msgstr "فرمل"
 
 #. Translators: Displayed in braille when there is a comment for a spreadsheet cell or piece of text in a document.
+#. Translators: Brailled when text contains a generic comment.
 msgid "cmnt"
 msgstr "توض"
 
@@ -616,6 +579,18 @@ msgstr "ت{columnNumber}"
 msgid "%s end"
 msgstr "پای %s"
 
+#. Translators: Brailled when text contains a draft comment.
+msgid "drft cmnt"
+msgstr "پیشدید"
+
+#. Translators: Brailled when text contains a resolved comment.
+msgid "rslvd cmnt"
+msgstr "حلدید"
+
+#. Translators: brailled when text contains a bookmark
+msgid "bkmk"
+msgstr "نشنک"
+
 #. Translators: The label for a braille setting indicating that braille should be
 #. tethered to focus or review cursor automatically.
 msgid "automatically"
@@ -664,11 +639,6 @@ msgstr "ورودیِ پشتیبانی‌نشده"
 #, python-brace-format
 msgid "{modifier} released"
 msgstr "{modifier} رها شد"
-
-#. Translators: Reported when a braille input modifier is pressed.
-#, python-brace-format
-msgid "{modifier} pressed"
-msgstr "{modifier} فشرده شد"
 
 #. Translators: Used when reporting braille dots to the user.
 #. Translators: Reported when braille dots are pressed in input help mode.
@@ -755,6 +725,16 @@ msgstr "بلغاری بریلِ 8 نقطه‌ی رایانه"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Bulgarian grade 1"
+msgstr "بلغاری درجه‌ی 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Catalan grade 1"
+msgstr "کاتالان درجه‌ی 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Central Kurdish grade 1"
 msgstr "کُردیِ مرکزی درجه‌ی 1"
 
@@ -810,6 +790,11 @@ msgstr "دانمارکیِ ۸ نقطه، درجه‌ی ۲"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "German 6 dot computer braille"
+msgstr "آلمانی بریلِ ۶ نقطه‌ی رایانه"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "German 8 dot computer braille"
 msgstr "آلمانی بریلِ 8 نقطه‌ی رایانه"
 
@@ -837,6 +822,11 @@ msgstr "آلمانی درجه‌ی 1 (مُفَصّل)"
 #. braille settings dialog.
 msgid "German grade 2"
 msgstr "آلمانی درجه‌ی 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "German grade 2 (detailed)"
+msgstr "آلمانی درجه‌ی ۲ (مُفَصّل)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -980,18 +970,13 @@ msgstr "بریلِ یونانیِ بین‌المللی"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Hebrew 8 dot computer braille"
-msgstr "عِبری بریلِ 8 نقطه‌ی رایانه"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
 msgid "Israeli grade 1"
 msgstr "اسراییلی درجه‌ی 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Israeli 8 dot computer braille"
-msgstr "اسراییلی بریلِ 8 نقطه‌ی رایانه"
+msgid "Hebrew computer braille"
+msgstr "عِبری بریلِ رایانه"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1040,8 +1025,28 @@ msgstr "ايتاليايی بریلِ 8 نقطه‌ی رایانه"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Japanese (Kantenji) literary braille"
+msgstr "ژاپنی (کانْتِنجی) بریلِ معمولی"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Kannada grade 1"
 msgstr "کانادا درجه‌ی 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Kazakh grade 1"
+msgstr "قزاقی درجه‌ی 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Khmer grade 1"
+msgstr "خِمِری درجه‌ی 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Northern Kurdish grade 0"
+msgstr "کُردیِ شمالی درجه‌ی ۰"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1115,13 +1120,18 @@ msgstr "ماراتی درجه‌ی 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Belgium) 6 dot"
-msgstr "هلندی (بلژیک) ۶ نقطه"
+msgid "Burmese grade 1"
+msgstr "برمه‌ای درجه‌ی 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Netherlands) 6 dot"
-msgstr "هلندی (هلند) ۶ نقطه"
+msgid "Burmese grade 2"
+msgstr "برمه‌ای درجه‌ی 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Dutch 6 dot"
+msgstr "هلندیِ ۶ نقطه"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1160,6 +1170,16 @@ msgstr "نپالی درجه‌ی 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Sepedi grade 1"
+msgstr "سِپِدی درجه‌ی 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Sepedi grade 2"
+msgstr "سِپِدیی درجه‌ی ۲"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Oriya grade 1"
 msgstr "اوریا درجه‌ی 1"
 
@@ -1170,8 +1190,8 @@ msgstr "لهستانی بریلِ 8 نقطه‌ی رایانه"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Polish grade 1"
-msgstr "لهستانی درجه‌ی 1"
+msgid "Polish literary braille"
+msgstr "لهستانی بریلِ معمولی"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1215,8 +1235,18 @@ msgstr "روسی بریلِ نوشتاری (مُفَصَّل)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Russian contracted braille"
+msgstr "بریلِ کوتاهنویسیِ روسی"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Sanskrit grade 1"
 msgstr "سانسکریت درجه‌ی 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Yakut grade 1"
+msgstr "یاقوتی درجه‌ی 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1245,6 +1275,16 @@ msgstr "اِسلُوِنیایی درجه‌ی 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Sesotho grade 1"
+msgstr "سِسوتو درجه‌ی 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Sesotho grade 2"
+msgstr "سِسوتو درجه‌ی 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Serbian grade 1"
 msgstr "صِربستانی درجه‌ی 1"
 
@@ -1255,6 +1295,11 @@ msgstr "تامیل درجه‌ی 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Tatar grade 1"
+msgstr "تاتاری درجه‌ی 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Telugu grade 1"
 msgstr "تلوگو درجه‌ی 1"
 
@@ -1262,6 +1307,16 @@ msgstr "تلوگو درجه‌ی 1"
 #. braille settings dialog.
 msgid "Turkish grade 1"
 msgstr "ترکی درجه‌ی 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Setswana grade 1"
+msgstr "سِتسوانا درجه‌ی 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Setswana grade 2"
+msgstr "سِتسوانا درجه‌ی 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1295,18 +1350,55 @@ msgstr "بریلِ یونیکُد"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Vietnamese grade 0"
+msgstr "ویتنامی درجه‌ی ۰"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Tshivenda grade 1"
+msgstr "وِندایی درجه ۱"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Tshivenda grade 2"
+msgstr "وِندایی درجه ۲"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Vietnamese grade 1"
 msgstr "ویتنامی درجه‌ی 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Chinese (China, Mandarin) grade 1"
-msgstr "چینی (چین، ماندارین) درجه ۱"
+msgid "Vietnamese grade 2"
+msgstr "ویتنامی درجه‌ی ۲"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Chinese (China, Mandarin) grade 2"
-msgstr "چینی (چین، ماندارین) درجه ۲"
+msgid "Southern Vietnamese grade 1"
+msgstr "ویتنامیِ جنوبی درجه‌ی 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Xhosa grade 1"
+msgstr "خوسا درجه‌ی 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Xhosa grade 2"
+msgstr "خوسا درجه‌ی 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#. This should be translated to '中文中国汉语现行盲文' in Mandarin.
+msgid "Chinese (China, Mandarin) Current Braille System"
+msgstr "چینی (چین، ماندارین) سیستمِ فعلیِ بریل"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#. This should be translated to '中文中国汉语双拼盲文' in Mandarin.
+msgid "Chinese (China, Mandarin) Double-phonic Braille System"
+msgstr "چینی (چین، ماندارین) سیستمِ بریلِ دوآوایی"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1317,6 +1409,16 @@ msgstr "چینی (هُنگ‌کُنگ, کانتونی)"
 #. braille settings dialog.
 msgid "Chinese (Taiwan, Mandarin)"
 msgstr "چینی (تایوان, ماندارین)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Zulu grade 1"
+msgstr "زولو درجه‌ی 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Zulu grade 2"
+msgstr "زولو درجه‌ی ۲"
 
 #. Translators: The mode to interact with controls in documents
 msgid "Focus mode"
@@ -1988,6 +2090,13 @@ msgctxt "symbolPreserve"
 msgid "only below symbol's level"
 msgstr "تنها پایین‌تر از سطحِ نماد"
 
+#. Translators: a transparent color, {colorDescription} replaced with the full description of the color e.g.
+#. "transparent bright orange-yellow"
+#, python-brace-format
+msgctxt "color variation"
+msgid "transparent {colorDescription}"
+msgstr "{colorDescription}ِ شفاف"
+
 #. Translators: the color white (HSV saturation0%, value 100%)
 msgctxt "color hue"
 msgid "white"
@@ -2190,819 +2299,15 @@ msgctxt "color hue"
 msgid "brown-yellow"
 msgstr "قهوه‌ای-زرد"
 
-#. Translators: The word for window of a program such as document window.
-msgid "window"
-msgstr "پنجره"
-
-#. Translators: Used to identify title bar of a program.
-msgid "title bar"
-msgstr "نوارِ عنوان"
-
-#. Translators: The word used for pane such as desktop pane.
-msgid "pane"
-msgstr "جایگاه"
-
-#. Translators: The word used to denote a dialog box such as open dialog.
-msgid "dialog"
-msgstr "پنجره‌ی محاوره‌ای"
-
-#. Translators: The text used to identify check boxes such as select check box.
-msgid "check box"
-msgstr "کادرِ علامت‌زدنی"
-
-#. Translators: The text used to identify radio buttons such as yes or no radio button.
-msgid "radio button"
-msgstr "دکمه‌ی رادیویی"
-
-#. Translators: The word used to identify a static text such as dialog text.
-msgid "text"
-msgstr "متن"
-
-#. Translators: The word used to identify edit fields such as subject edit field.
-msgid "edit"
-msgstr "ویرایشی"
-
-#. Translators: The word used to identify a button such as OK button.
-msgid "button"
-msgstr "دکمه"
-
-#. Translators: Text used to identify menu bar of a program.
-msgid "menu bar"
-msgstr "نوارِ منو"
-
-#. Translators: Used to identify a menu item such as an item in file menu.
-msgid "menu item"
-msgstr "جزءِ منو"
-
-#. Translators: The word used for menus such as edit menu.
-#. Translators: Identifies a menu such as file menu.
-msgid "menu"
-msgstr "منو"
-
-#. Translators: Used to identify combo boxes such as file type combo box.
-msgid "combo box"
-msgstr "جعبه‌ی کشویی"
-
-#. Translators: The word used for lists such as folder list.
-msgid "list"
-msgstr "فهرست"
-
-#. Translators: Used to identify a list item such as email list items.
-msgid "list item"
-msgstr "جزءِ فهرست"
-
-#. Translators: The word used to identify graphics such as webpage graphics.
-msgid "graphic"
-msgstr "گرافیک"
-
-#. Translators: Used to identify help balloon (a circular window with helpful text such as notification text).
-msgid "help balloon"
-msgstr "بالُنِ راهنما"
-
-#. Translators: Used to identify a tooltip (a small window with additional text about selected item such as file information).
-msgid "tool tip"
-msgstr "پیامِ راهنما"
-
-#. Translators: Identifies a link in webpage documents.
-msgid "link"
-msgstr "لینک"
-
-#. Translators: Identifies a treeview (a tree-like structure such as treeviews for subfolders).
-msgid "tree view"
-msgstr "نمای درختی"
-
-#. Translators: Identifies a tree view item.
-msgid "tree view item"
-msgstr "جزءِ نمای درختی"
-
-#. Translators: The word presented for tabs in a tab enabled window.
-msgctxt "controlType"
-msgid "tab"
-msgstr "سربرگ"
-
-#. Translators: Identifies a tab control such as webpage tabs in web browsers.
-msgid "tab control"
-msgstr "برگه دان"
-
-#. Translators: Identifies a slider such as volume slider.
-msgid "slider"
-msgstr "لغزنده"
-
-#. Translators: Identifies a progress bar such as NvDA update progress.
-msgid "progress bar"
-msgstr "نوارِ پیشرفت"
-
-#. Translators: Identifies a scroll bar.
-msgid "scroll bar"
-msgstr "نوارِ مرور"
-
-#. Translators: Identifies a status bar (text at the bottom bar of the screen such as cursor position in a document).
-msgid "status bar"
-msgstr "نوارِ وضعیت"
-
-#. Translators: Identifies a table such as ones used in various websites.
-msgid "table"
-msgstr "جدول"
-
-#. Translators: Identifies a cell in a table.
-msgid "cell"
-msgstr "خانه"
-
-#. Translators: Identifies a column (a group of vertical cells in a table).
-msgid "column"
-msgstr "ستون"
-
-#. Translators: Identifies a row (a group of horizontal cells in a table).
-msgid "row"
-msgstr "سطر"
-
-#. Translators: Identifies a frame (a smaller window in a webpage or a document).
-#. Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page embedded within a web page.
-msgid "frame"
-msgstr "قاب"
-
-#. Translators: Identifies a tool bar.
-msgid "tool bar"
-msgstr "نوارِ ابزار"
-
-#. Translators: Identifies a column header in tables and spreadsheets.
-msgid "column header"
-msgstr "سر‌ستون"
-
-#. Translators: Identifies a row header in tables and spreadsheets.
-msgid "row header"
-msgstr "سر‌سطر"
-
-#. Translators: Identifies a drop down button (a button that, when clicked, opens a menu of its own).
-msgid "drop down button"
-msgstr "دکمه‌ی کِرکِرِ‌ای"
-
-#. Translators: Identifies an element.
-msgid "clock"
-msgstr "ساعت"
-
-#. Translators: Identifies a separator (a horizontal line drawn on the screen).
-msgid "separator"
-msgstr "جدا ساز"
-
-#. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
-msgid "form"
-msgstr "فرم"
-
-#. Translators: Identifies a heading (a bold text used for identifying a section).
-msgid "heading"
-msgstr "سرنوشتار"
-
-#. Translators: Identifies a heading level.
-msgid "heading 1"
-msgstr "سرنوشتارِ ۱"
-
-#. Translators: Identifies a heading level.
-msgid "heading 2"
-msgstr "سرنوشتارِ ۲"
-
-#. Translators: Identifies a heading level.
-msgid "heading 3"
-msgstr "سرنوشتارِ ۳"
-
-#. Translators: Identifies a heading level.
-msgid "heading 4"
-msgstr "سرنوشتارِ ۴"
-
-#. Translators: Identifies a heading level.
-msgid "heading 5"
-msgstr "سرنوشتارِ ۵"
-
-#. Translators: Identifies a heading level.
-msgid "heading 6"
-msgstr "سرنوشتارِ ۶"
-
-#. Translators: Identifies a paragraph (a group of text surrounded by blank lines).
-msgid "paragraph"
-msgstr "پاراگراف"
-
-#. Translators: Presented for a section in a document which is a block quotation;
-#. i.e. a long quotation in a separate paragraph distinguished by indentation, etc.
-#. See http://en.wikipedia.org/wiki/Block_quotation
-msgid "block quote"
-msgstr "نقلِ قول"
-
-#. Translators: Identifies a table header (a short text at the start of a table which describes what the table is about).
-msgid "table header"
-msgstr "سرِ جدول"
-
-#. Translators: Identifies a table body (the main body of the table).
-msgid "table body"
-msgstr "تنه‌ی جدول"
-
-#. Translators: Identifies a table footer (text placed at the end of the table).
-msgid "table footer"
-msgstr "پایه‌ی جدول"
-
-#. Translators: Identifies a document (for example, a webpage document).
-msgid "document"
-msgstr "سند"
-
-#. Translators: Identifies an animation in a document or a webpage.
-msgid "animation"
-msgstr "پویانما"
-
-#. Translators: Identifies an application in webpages.
-msgid "application"
-msgstr "برنامه"
-
-#. Translators: Identifies a box element.
-msgid "box"
-msgstr "جعبه"
-
-#. Translators: Identifies a grouping (a number of related items grouped together, such as related options in dialogs).
-msgid "grouping"
-msgstr "گروه"
-
-#. Translators: Identifies a property page such as drive properties dialog.
-msgid "property page"
-msgstr "صفحه‌ی خصوصیات"
-
-#. Translators: Identifies a canvas element on webpages (a box with some background color with some text drawn on the box, like a canvas).
-msgid "canvas"
-msgstr "بومِ نقاشی"
-
-#. Translators: Identifies a caption (usually a short text identifying a picture or a graphic on websites).
-msgid "caption"
-msgstr "رو‌نویس"
-
-#. Translators: Identifies a check menu item (a menu item with a checkmark as part of the menu item's name).
-msgid "check menu item"
-msgstr "جزءِ علامت‌دارِ منو"
-
-#. Translators: Identifies a data edit field.
-msgid "date edit"
-msgstr "ویرایشِ داده"
-
-#. Translators: Identifies an icon.
-msgid "icon"
-msgstr "شکلک"
-
-#. Translators: Identifies a directory pane.
-msgid "directory pane"
-msgstr "جایگاهِ پوشه ها"
-
-#. Translators: Identifies an object that is embedded in a document.
-msgid "embedded object"
-msgstr "شیءِ توکار"
-
-#. Translators: Identifies an end note.
-msgid "end note"
-msgstr "یادداشتِ پایانی"
-
-#. Translators: Identifies a footer (usually text).
-msgid "footer"
-msgstr "پا‌صفحه"
-
-#. Translators: Identifies a foot note (text at the end of a passage or used for anotations).
-msgid "foot note"
-msgstr "پانویس"
-
-#. Translators: Reported for an object which is a glass pane; i.e.
-#. a pane that is guaranteed to be on top of all panes beneath it.
-msgid "glass pane"
-msgstr "جایگاهِ شیشه‌ای"
-
-#. Translators: Identifies a header (usually text at top of documents or on tops of pages).
-msgid "header"
-msgstr "سر‌صفحه"
-
-#. Translators: Identifies an image map (a type of graphical link).
-msgid "image map"
-msgstr "تصویرِ نقشه‌نما"
-
-#. Translators: Identifies an input window.
-msgid "input window"
-msgstr "پنجره‌ی ورودی"
-
-#. Translators: Identifies a label.
-msgid "label"
-msgstr "برچسب"
-
-#. Translators: Identifies a note field.
-msgid "note"
-msgstr "یادداشت"
-
-#. Translators: Identifies a page.
-msgid "page"
-msgstr "صفحه"
-
-#. Translators: Identifies a radio menu item.
-msgid "radio menu item"
-msgstr "جزءِ منوی رادیویی"
-
-#. Translators: Identifies a layered pane.
-msgid "layered pane"
-msgstr "جایگاهِ لایه‌دار"
-
-# no info available to find the concempt of the 'redundant object'
-#. Translators: Identifies a redundant object.
-msgid "redundant object"
-msgstr "شیءِ اضافی"
-
-#. Translators: Identifies a root pane.
-msgid "root pane"
-msgstr "جایگاهِ ریشه"
-
-#. Translators: May be reported for an editable text object in a toolbar.
-#. This is deprecated and is not often (if ever) used.
-msgid "edit bar"
-msgstr "نوارِ ویرایش"
-
-#. Translators: Identifies a terminal window such as command prompt.
-msgid "terminal"
-msgstr "پایانه"
-
-#. Translators: Identifies a rich edit box (an edit box which allows entering formatting commands in addition to text; encountered on webpages and NvDA log viewer).
-msgid "rich edit"
-msgstr "ویرایشیِ پیشرفته"
-
-#. Translators: Identifies a ruler object (commonly seen on some webpages and in some Office programs).
-msgid "ruler"
-msgstr "خطکش"
-
-#. Translators: Identifies a scroll pane.
-msgid "scroll pane"
-msgstr "جایگاهِ مرور"
-
-#. Translators: Identifies a section of text.
-msgid "section"
-msgstr "بخش"
-
-#. Translators: Identifies a shape.
-msgid "shape"
-msgstr "شکل"
-
-#. Translators: Identifies a split pane.
-msgid "split pane"
-msgstr "جایگاهِ چند‌تکه‌ای"
-
-#. Translators: Reported for a view port; i.e. an object usually used in a scroll pane
-#. which represents the portion of the entire data that the user can see.
-#. As the user manipulates the scroll bars, the contents of the view port can change.
-msgid "view port"
-msgstr "پِیمایِش‌نما"
-
-#. Translators: Reported for an object that forms part of a menu system
-#. but which can be undocked from or torn off the menu system
-#. to exist as a separate window.
-msgid "tear off menu"
-msgstr "منوی جداشدنی"
-
-#. Translators: Identifies a text frame (a frame window which contains text).
-msgid "text frame"
-msgstr "قابِ متنی"
-
-#. Translators: Identifies a toggle button (a button used to toggle something).
-msgid "toggle button"
-msgstr "دکمه‌ی چند‌کاره"
-
-msgid "border"
-msgstr "حاشیه"
-
-#. Translators: Identifies a caret object.
-msgid "caret"
-msgstr "نشانگر"
-
-#. Translators: Identifies a character field (should not be confused with edit fields).
-msgid "character"
-msgstr "نویسه"
-
-#. Translators: Identifies a chart (commonly seen on some websites and in some Office documents).
-msgid "chart"
-msgstr "نمودار"
-
-#. Translators: Identifies a cursor object.
-msgid "cursor"
-msgstr "مکان‌نما"
-
-#. Translators: Identifies a diagram (seen on some websites and on Office documents).
-msgid "diagram"
-msgstr "نمودار"
-
-#. Translators: Identifies a dial object.
-msgid "dial"
-msgstr "شماره‌گیر"
-
-#. Translators: Identifies a drop list.
-msgid "drop list"
-msgstr "فهرستِ کِرکِرِ‌ای"
-
-#. Translators: Identifies a split button (a control which performs different actions when different parts are clicked).
-msgid "split button"
-msgstr "دکمه‌ی چند‌تکه‌ای"
-
-#. Translators: Identifies a menu button (a button which opens a menu of items).
-msgid "menu button"
-msgstr "دکمه‌ی منو"
-
-#. Translators: Reported for a button which expands a grid when it is pressed.
-msgid "drop down button grid"
-msgstr "دکمه‌ی جدول‌گستر"
-
-#. Translators: Identifies mathematical content.
-msgid "math"
-msgstr "ریاضی"
-
-#. Translators: Identifies a grip control.
-msgid "grip"
-msgstr "دستگیره"
-
-#. Translators: Identifies a hot key field (a field where one can enter a hot key for something, such as assigning shortcut for icons on the desktop).
-msgid "hot key field"
-msgstr "ورودیِ کلیدِ میان‌بُر"
-
-#. Translators: Identifies an indicator control.
-msgid "indicator"
-msgstr "نشان دهنده"
-
-#. Translators: Identifies a spin button (a button used to go through options in a spinning fashion).
-msgid "spin button"
-msgstr "دکمه‌ی چرخان"
-
-#. Translators: Identifies a sound clip on websites.
-msgid "sound"
-msgstr "صدا"
-
-#. Translators: Identifies a whitespace.
-msgid "white space"
-msgstr "فاصله‌ی سفید"
-
-#. Translators: Identifies a tree view button.
-msgid "tree view button"
-msgstr "دکمه‌ی نمای درختی"
-
-#. Translators: Identifies an IP address (an IP address field element).
-msgid "IP address"
-msgstr "نشانیِ آیْپی"
-
-#. Translators: Identifies a desktop icon (the icons on the desktop such as computer and various shortcuts for programs).
-msgid "desktop icon"
-msgstr "شکلکِ میزِ کار"
-
-#. Translators: Identifies desktop pane (the desktop window).
-msgid "desktop pane"
-msgstr "جایگاهِ میزِ کار"
-
-#. Translators: Identifies an option pane.
-msgid "option pane"
-msgstr "جایگاهِ گزینه‌ها"
-
-#. Translators: Identifies a color chooser.
-msgid "color chooser"
-msgstr "انتخاب‌کننده‌ی  رنگ"
-
-#. Translators: Identifies a file chooser (to select a file or groups of files from a list).
-msgid "file chooser"
-msgstr "انتخاب‌کننده‌ی فایل"
-
-msgid "filler"
-msgstr "پر کننده"
-
-#. Translators: Identifies a panel control for grouping related options.
-msgid "panel"
-msgstr "پیشخوان"
-
-#. Translators: Identifies a password field (a protected edit field for entering passwords such as when logging into web-based email sites).
-msgid "password edit"
-msgstr "ویرایشیِ گذرواژه"
-
-#. Translators: Identifies a font chooser.
-msgid "font chooser"
-msgstr "انتخاب کننده‌ی قلم"
-
-msgid "line"
-msgstr "خط"
-
-#. Translators: Identifies a font name.
-msgid "font name"
-msgstr "نامِ قلم"
-
-#. Translators: Identifies font size.
-msgid "font size"
-msgstr "اندازه‌ی قلم"
-
-#. Translators: Describes text formatting.
-#. Translators: Reported when text is bolded.
-msgid "bold"
-msgstr "کلفت‌نوشته"
-
-#. Translators: Describes text formatting.
-#. Translators: Reported when text is italicized.
-msgid "italic"
-msgstr "کج‌نوشته"
-
-#. Translators: Describes text formatting.
-msgid "underline"
-msgstr "زیر‌خط‌دار"
-
-#. Translators: Describes text formatting.
-msgid "foreground color"
-msgstr "رنگِ پیش‌زمینه"
-
-#. Translators: Describes text formatting.
-msgid "background color"
-msgstr "رنگِ پس‌زمینه"
-
-#. Translators: Describes text formatting.
-#. Translators: Reported for superscript text.
-msgid "superscript"
-msgstr "بالانوشته"
-
-#. Translators: Describes text formatting.
-#. Translators: Reported for subscript text.
-msgid "subscript"
-msgstr "زیر‌نوشته"
-
-#. Translators: Describes style of text.
-#. Translators: a Microsoft Word revision type (style change)
-msgid "style"
-msgstr "سبْک"
-
-#. Translators: Describes text formatting.
-msgid "indent"
-msgstr "تورفتگی"
-
-#. Translators: Describes text formatting.
-msgid "alignment"
-msgstr "تراز"
-
-#. Translators: Identifies an alert window or bar (usually on Internet Explorer 9 and above for alerts such as file downloads or pop-up blocker).
-msgid "alert"
-msgstr "هشدار"
-
-#. Translators: Identifies a data grid control (a grid which displays data).
-msgid "data grid"
-msgstr "جدولِ داده"
-
-msgid "data item"
-msgstr "جزءِ داده"
-
-msgid "header item"
-msgstr "جزءِ سر‌ستون"
-
-#. Translators: Identifies a thumb control (a button-like control for changing options).
-msgid "thumb control"
-msgstr "شَستی"
-
-msgid "calendar"
-msgstr "تقویم"
-
-msgid "video"
-msgstr "ویدیو"
-
-msgid "audio"
-msgstr "صدا"
-
-#. Translators: Identifies a chart element.
-msgid "chart element"
-msgstr "سازه‌ی نمودار"
-
-#. Translators: Identifies deleted content.
-#. Translators: Reported when text is marked as having been deleted
-msgid "deleted"
-msgstr "حذف‌شده"
-
-#. Translators: Identifies inserted content.
-#. Translators: Reported when text is marked as having been inserted
-msgid "inserted"
-msgstr "درج‌شده"
-
-#. Translators: Identifies a landmark.
-msgid "landmark"
-msgstr "بخش"
-
-#. Translators: Identifies an article.
-msgid "article"
-msgstr "مقاله"
-
-#. Translators: Identifies a region.
-msgid "region"
-msgstr "ناحیه"
-
-#. Translators: Identifies a figure (commonly seen on some websites).
-msgid "figure"
-msgstr "فیگور"
-
-#. Translators: Identifies marked (highlighted) content
-msgid "marked content"
-msgstr "محتوای نشانه‌گذاری‌شده"
-
-#. Translators: This is presented when a control or document is unavailable.
-msgid "unavailable"
-msgstr "بیرون از دسترس"
-
-#. Translators: This is presented when a control has focus.
-msgid "focused"
-msgstr "فرمان‌پذیر‍‍"
-
-#. Translators: This is presented when the control is selected.
-msgid "selected"
-msgstr "انتخاب شده"
-
-#. Translators: This is presented when a document is busy.
-msgid "busy"
-msgstr "مشغول است"
-
-#. Translators: This is presented when a button is pressed.
-msgid "pressed"
-msgstr "فشرده شده"
-
-#. Translators: This is presented when a check box is checked.
-msgid "checked"
-msgstr "علامت‌دار"
-
-#. Translators: This is presented when a three state check box is half checked.
-msgid "half checked"
-msgstr "نیمه علامت‌دار"
-
-#. Translators: This is presented when the control is a read-only control such as read-only edit box.
-msgid "read only"
-msgstr "تنها خواندنی"
-
-#. Translators: This is presented when a tree view or submenu item is expanded.
-msgid "expanded"
-msgstr "باز شده"
-
-#. Translators: This is presented when a tree view or submenu is collapsed.
-msgid "collapsed"
-msgstr "بسته شده"
-
-#. Translators: This is presented when a control or a document becomes invisible.
-msgid "invisible"
-msgstr "نادیدنی"
-
-#. Translators: This is presented when a visited link is encountered.
-msgid "visited"
-msgstr "دیده شده"
-
-#. Translators: This is presented when a link is encountered.
-msgid "linked"
-msgstr "پیوند شده"
-
-#. Translators: This is presented when the control menu item has a submenu.
-msgid "subMenu"
-msgstr "زیر‌منو"
-
-#. Translators: This is presented when a protected control or a document is encountered.
-msgid "protected"
-msgstr "محافظت شده"
-
-#. Translators: This is presented when a required form field is encountered.
-msgid "required"
-msgstr "نیاز است"
-
-#. Translators: Reported when an object no longer exists in the user interface;
-#. i.e. it is dead and is no longer usable.
-msgid "defunct"
-msgstr "از میان رفته"
-
-#. Translators: This is presented when an invalid entry has been made.
-msgid "invalid entry"
-msgstr "ورودیِ نامعتبر"
-
-msgid "modal"
-msgstr "وادارنده"
-
-#. Translators: This is presented when a field supports auto completion of entered text such as email address field in Microsoft Outlook.
-msgid "has auto complete"
-msgstr "کامل‌کننده‌ی خودکار دارد"
-
-#. Translators: This is presented when an edit field allows typing multiple lines of text such as comment fields on websites.
-msgid "multi line"
-msgstr "چند‌خطّی"
-
-msgid "iconified"
-msgstr "نشاندار است"
-
-#. Translators: Presented when the current control is located off screen.
-msgid "off screen"
-msgstr "بیرون از صفحه"
-
-#. Translators: Presented when the control allows selection such as text fields.
-msgid "selectable"
-msgstr "انتخاب‌شدنی"
-
-#. Translators: Presented when a control can be moved to using system focus.
-msgid "focusable"
-msgstr "فرمان‌پذیر"
-
-#. Translators: Presented when a control allows clicking via mouse (mostly presented on web controls).
-msgid "clickable"
-msgstr "کلیک‌شدنی"
-
-msgid "editable"
-msgstr "ویرایش‌شدنی"
-
-msgid "checkable"
-msgstr "علامت‌زدنی"
-
-msgid "draggable"
-msgstr "کشیدنی"
-
-msgid "dragging"
-msgstr "در حالِ کشیدن"
-
-#. Translators: Reported where an object which is being dragged can be dropped.
-#. This is only reported for objects that support accessible drag and drop.
-msgid "drop target"
-msgstr "محلِّ رها کردن"
-
-msgid "sorted"
-msgstr "مرتب‌شده"
-
-msgid "sorted ascending"
-msgstr "صعودی مرتب‌شده"
-
-msgid "sorted descending"
-msgstr "نزولی مرتب‌شده"
-
-#. Translators: a state that denotes that an object (usually a graphic) has a long description.
-msgid "has long description"
-msgstr "توضیحِ طولانی دارد"
-
-#. Translators: a state that denotes that an object is pinned in its current location
-msgid "pinned"
-msgstr "سنجاق‌شده"
-
-#. Translators: a state that denotes the existance of a formula on a spreadsheet cell
-msgid "has formula"
-msgstr "فرمول دارد"
-
-#. Translators: a state that denotes the existance of a comment.
-#. Translators: Reported when text contains a comment.
-msgid "has comment"
-msgstr "توضیح دارد"
-
-#. Translators: a state that denotes that the object is covered partially or fully by another object
-msgid "obscured"
-msgstr "پوشانده‌شده"
-
-#. Translators: a state that denotes that the object(text) is cropped as it couldn't be accommodated in the allocated/available space
-msgid "cropped"
-msgstr "حذف‌شده"
-
-#. Translators: a state that denotes that the object(text) is overflowing into the adjacent space
-msgid "overflowing"
-msgstr "اضافی"
-
-#. Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected Excel spreadsheet).
-msgid "unlocked"
-msgstr "قفل‌نشده"
-
-#. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
-msgid "not selected"
-msgstr "انتخاب‌نشده"
-
-#. Translators: This is presented when a button is not pressed.
-msgid "not pressed"
-msgstr "فشرده‌نشده"
-
-#. Translators: This is presented when a checkbox is not checked.
-msgid "not checked"
-msgstr "بدونِ علامت"
-
-#. Translators: This is presented when drag and drop is finished.
-#. This is only reported for objects which support accessible drag and drop.
-msgid "done dragging"
-msgstr "کشاندن انجام شد"
-
-#. Translators: Presented when an item is marked as current in a collection of items
-msgid "current"
-msgstr "جاری"
-
-#. Translators: Presented when a page item is marked as current in a collection of page items
-msgid "current page"
-msgstr "صفحه‌ی جاری"
-
-#. Translators: Presented when a step item is marked as current in a collection of step items
-msgid "current step"
-msgstr "مرحله‌ی جاری"
-
-#. Translators: Presented when a location item is marked as current in a collection of location items
-msgid "current location"
-msgstr "موقعیتِ جاری"
-
-#. Translators: Presented when a date item is marked as current in a collection of date items
-msgid "current date"
-msgstr "تاریخِ جاری"
-
-#. Translators: Presented when a time item is marked as current in a collection of time items
-msgid "current time"
-msgstr "زمانِ جاری"
-
-#. Translators: Indicates that a particular state of an object is negated.
-#. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
-#. but this still might be used in some other cases.
-#. %s will be replaced with the full identifier of the negated state (e.g. selected).
-#, python-format
-msgid "not %s"
-msgstr "نه %s"
+#. Translators: Shown when NVDA has been started with unknown command line parameters.
+#, python-brace-format
+msgid "The following command line parameters are unknown to NVDA: {params}"
+msgstr "پارامترهای خطِّ فرمانِ زیر برای NVDA ناشناخته هستند: {params}"
+
+#. Translators: Title of the dialog letting user know
+#. that command line parameters they provided are unknown.
+msgid "Unknown command line parameters"
+msgstr "پارامترهای خطِّ فرمانِ ناشناس"
 
 #. Translators: A message informing the user that there are errors in the configuration file.
 msgid ""
@@ -3122,6 +2427,22 @@ msgstr "به ستونِ بَعدیِ جدول میبَرَد"
 #. Translators: the description for the previous table column script on browseMode documents.
 msgid "moves to the previous table column"
 msgstr "به ستونِ قبلیِ جدول میبَرَد."
+
+#. Translators: the description for the first table row script on browseMode documents.
+msgid "moves to the first table row"
+msgstr "به اولین سطرِ جدول میبَرَد."
+
+#. Translators: the description for the last table row script on browseMode documents.
+msgid "moves to the last table row"
+msgstr "به آخرین سطرِ جدول میبَرَد."
+
+#. Translators: the description for the first table column script on browseMode documents.
+msgid "moves to the first table column"
+msgstr "به اولین ستونِ جدول میبَرَد"
+
+#. Translators: the description for the last table column script on browseMode documents.
+msgid "moves to the last table column"
+msgstr "به آخرین ستونِ جدول میبَرَد"
 
 #. Translators: The message announced when toggling the include layout tables browse mode setting.
 msgid "layout tables off"
@@ -3273,25 +2594,9 @@ msgstr "راست‌کلیک"
 msgid "Locks or unlocks the left mouse button"
 msgstr "دکمه‌ی چپِ موس را پایین نگه‌میدارد یا رها میکند"
 
-#. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
-msgid "Left mouse button unlock"
-msgstr "دکمه‌ی چپِ موس رها شد"
-
-#. Translators: This is presented when the left mouse button is locked down (used for drag and drop).
-msgid "Left mouse button lock"
-msgstr "دکمه‌ی چپِ موس پایین نگهداشته شد"
-
 #. Translators: Input help mode message for right mouse lock/unlock command.
 msgid "Locks or unlocks the right mouse button"
 msgstr "دکمه‌ی راستِ موس را پایین نگه‌میدارد یا رها میکند"
-
-#. Translators: This is presented when the right mouse button lock is released (used for drag and drop).
-msgid "Right mouse button unlock"
-msgstr "دکمه‌ی راستِ موس رها شد"
-
-#. Translators: This is presented when the right mouse button is locked down (used for drag and drop).
-msgid "Right mouse button lock"
-msgstr "دکمه‌ی راستِ موس پایین نگهداشته شد"
 
 #. Translators: Input help mode message for report current selection command.
 msgid ""
@@ -3306,8 +2611,8 @@ msgid ""
 "If pressed once, reports the current time. If pressed twice, reports the "
 "current date"
 msgstr ""
-"اگر یک بار فشار داده شود زمانِ کنونی را گزارش می‌دهد. اگر دو بار فشار داده شود "
-"تاریخِ کنونی را گزارش می‌دهد"
+"اگر یک بار فشار داده شود زمانِ کنونی را اعلام میکند. اگر دو بار فشار داده شود "
+"تاریخِ کنونی را اعلام میکند"
 
 #. Translators: Input help mode message for increase synth setting value command.
 msgid "Increases the currently active setting in the synth settings ring"
@@ -3445,16 +2750,16 @@ msgid "report emphasis on"
 msgstr "تأکید‌ها اعلام میشوند"
 
 #. Translators: Input help mode message for toggle report marked (highlighted) content command.
-msgid "Toggles on and off the reporting of marked text"
-msgstr "اعلام شدنِ متنِ نشان‌گذاری‌شده را فعال یا غیرفعال میکند."
+msgid "Toggles on and off the reporting of highlighted text"
+msgstr "اعلام شدنِ متنِ برجسته را فعال یا غیرفعال میکند."
 
 #. Translators: The message announced when toggling the report marked document formatting setting.
-msgid "report marked on"
-msgstr "متن‌های نشان‌گذاری‌شده اعلام میشوند"
+msgid "report highlighted on"
+msgstr "برجسته اعلام میشود"
 
 #. Translators: The message announced when toggling the report marked document formatting setting.
-msgid "report marked off"
-msgstr "متن‌های نشان‌گذاری‌شده اعلام نمیشوند"
+msgid "report highlighted off"
+msgstr "برجسته اعلام نمیشود"
 
 #. Translators: Input help mode message for toggle report colors command.
 msgid "Toggles on and off the reporting of colors"
@@ -3608,6 +2913,22 @@ msgstr "مُختصاتِ خانه‌های جدول اعلام نمیشوند."
 msgid "report table cell coordinates on"
 msgstr "مُختصاتِ خانه‌های جدول اعلام میشوند."
 
+#. Translators: Input help mode message for toggle report cell borders command.
+msgid "Cycles through the cell border reporting settings"
+msgstr "تنظیماتِ اعلامِ حاشیه‌ی خانه‌ها را تغییر میدهد"
+
+#. Translators: A message reported when cycling through cell borders settings.
+msgid "Report styles of cell borders"
+msgstr "سبْک‌های حاشیه‌ی خانه اعلام میشود"
+
+#. Translators: A message reported when cycling through cell borders settings.
+msgid "Report colors and styles of cell borders"
+msgstr "رنگ‌ها و سبْک‌های حاشیه‌ی خانه‌ها اعلام میشوند"
+
+#. Translators: A message reported when cycling through cell borders settings.
+msgid "Report cell borders off."
+msgstr "حاشیه‌ی خانه‌ها اعلام نمیشوند."
+
 #. Translators: Input help mode message for toggle report links command.
 msgid "Toggles on and off the reporting of links"
 msgstr "اعلام شدنِ لینک‌ها را فعال یا غیرفعال میکند."
@@ -3740,6 +3061,26 @@ msgstr "کلیک‌شدنی‌ها اعلام نمیشوند."
 msgid "report if clickable on"
 msgstr "کلیک‌شدنی‌ها اعلام میشوند."
 
+#. Translators: Input help mode message for cycle through automatic language switching mode command.
+msgid ""
+"Cycles through speech modes for automatic language switching: off, language "
+"only and language and dialect."
+msgstr ""
+"حالت‌های گفتار را برای تعویضِ زبانِ خودکار، بینِ خاموش، تنها زبان، و زبان و لهجه "
+"تغییر میدهد."
+
+#. Translators: A message reported when executing the cycle automatic language switching mode command.
+msgid "Automatic language switching off"
+msgstr "تعویضِ خودکارِ زبان غیرفعال شد"
+
+#. Translators: A message reported when executing the cycle automatic language switching mode command.
+msgid "Automatic language and dialect switching on"
+msgstr "تعویضِ خودکارِ زبان و لهجه فعال شد"
+
+#. Translators: A message reported when executing the cycle automatic language switching mode command.
+msgid "Automatic language switching on"
+msgstr "تعویضِ خودکارِ زبان فعال شد"
+
 #. Translators: Input help mode message for cycle speech symbol level command.
 msgid ""
 "Cycles through speech symbol levels which determine what symbols are spoken"
@@ -3822,6 +3163,37 @@ msgstr ""
 msgid "No navigator object"
 msgstr "پِیمایِشگری وجود ندارد."
 
+#. Translators: message when there is no location information
+msgid "No location information"
+msgstr "اطلاعاتِ مکانی موجود نیست."
+
+#. Translators: Description for a keyboard command which reports location of the
+#. review cursor, falling back to the location of navigator object if needed.
+msgid ""
+"Reports information about the location of the text at the review cursor, or "
+"location of the navigator object if there is no text under review cursor."
+msgstr ""
+"اطلاعاتی درباره‌ی محلِّ متنی که مکان‌نمای بازبینی روی آن است اعلام میکند. اگر "
+"متنی زیرِ مکان‌نمای بازبینی نباشد، اطلاعاتِ محلِ پیمایشگر را اعلام میکند."
+
+#. Translators: Description for a keyboard command which reports location of the navigator object.
+msgid "Reports information about the location of the current navigator object."
+msgstr "اطلاعاتی درباره‌ی محلِّ پیمایشگرِ جاری اعلام میکند."
+
+#. Translators: Description for a keyboard command which reports location of the
+#. current caret position falling back to the location of focused object if needed.
+msgid ""
+"Reports information about the location of the text at the caret, or location "
+"of the currently focused object if there is no caret."
+msgstr ""
+"اطلاعاتی درباره‌ی موقعیتِ متنی که نشانگر روی آن است، یا موقعیتِ شیءِ جاریِ در "
+"تیررس، چنانچه متنی در محلِّ نشانگر نباشد، اعلام میکند."
+
+#. Translators: Description for a keyboard command which reports location of the
+#. currently focused object.
+msgid "Reports information about the location of the currently focused object."
+msgstr "اطلاعاتی درباره‌ی موقعیتِ شیءِ در حالِ حاضر در تیررس قرارگرفته میدهد."
+
 #. Translators: Description for report review cursor location command.
 msgid ""
 "Reports information about the location of the text or object at the review "
@@ -3830,9 +3202,15 @@ msgstr ""
 "اطلاعاتی درباره موقعیتِ متن یا شیئی که در مکان‌نمای بازبینی قرار دارد میدهد. "
 "با دو بار فشردن، ممکن است جزئیاتِ بیشتری فراهم بیاید."
 
-#. Translators: message when there is no location information for the review cursor
-msgid "No location information"
-msgstr "اطلاعاتِ مکانی موجود نیست."
+#. Translators: Description for a keyboard command
+#. which reports location of the text at the caret position
+#. or object with focus if there is no caret.
+msgid ""
+"Reports information about the location of the text or object at the position "
+"of system caret. Pressing twice may provide further detail."
+msgstr ""
+"اطلاعاتی درباره موقعیتِ متن یا شیئی که در محلِّ قرارگیریِ نشانگر سیستم قرار دارد "
+"میدهد. با دو بار فشردن، ممکن است جزئیاتِ بیشتری فراهم بیاید."
 
 #. Translators: Input help mode message for move navigator object to current focus command.
 msgid ""
@@ -4077,12 +3455,14 @@ msgstr "سخن میگوید"
 
 #. Translators: Input help mode message for move to next document with focus command,
 #. mostly used in web browsing to move from embedded object to the webpage document.
-msgid "Moves the focus to the next closest document that contains the focus"
-msgstr "فکوس (مکانِ فرمان‌پذیری) را به نزدیکترین سندی که دارای فکوس است میبَرَد."
+msgid ""
+"Moves the focus out of the current embedded object and into the document "
+"that contains it"
+msgstr ""
+"فکوس را از شیءِ توکار خارج کرده و به سندی که شیءِ توکار در آن قرار دارد میبَرَد."
 
 #. Translators: Input help mode message for toggle focus and browse mode command
 #. in web browsing and other situations.
-#. Translators: Input help mode message for toggle focus and browse mode command in web browsing and other situations.
 msgid ""
 "Toggles between browse mode and focus mode. When in focus mode, keys will "
 "pass straight through to the application, allowing you to interact directly "
@@ -4166,33 +3546,57 @@ msgstr ""
 "اطلاعاتِ قالببندی را برای متنِ زیرِ نشانگر اعلام میکند. اگر دو بار فشرده شود، "
 "اطلاعات را در حالتِ مرور نمایش میدهد."
 
+#. Translators: the description for the reportDetailsSummary script.
+msgid "Report summary of any annotation details at the system caret."
+msgstr "خلاصه‌ی جزئیاتِ هر یادداشتِ موجود در نشانگرِ سیستم را اعلام میکند."
+
+#. Translators: message given when there is no annotation details for the reportDetailsSummary script.
+msgid "No additional details"
+msgstr "جزئیات دیگری نیست."
+
 #. Translators: Input help mode message for report current focus command.
 msgid "Reports the object with focus. If pressed twice, spells the information"
 msgstr ""
 "شیءِ دارای فکوس را اعلام میکند. اگر دو بار فشرده شود، اطلاعاتِ اعلام‌شده را هِجّی "
 "میکند."
 
-#. Translators: Input help mode message for report status line text command.
-msgid ""
-"Reads the current application status bar and moves the navigator to it. If "
-"pressed twice, spells the information. If pressed three times, copies the "
-"status bar to the clipboard"
-msgstr ""
-"نوارِ وضعیتِ برنامه‌ی جاری را میخوانَد و پِیمایِشگر را به محل قرارگیری آن میبَرَد. "
-"اگر دو بار فشرده شود، اطلاعات را هِجّی میکند. اگر سه بار فشرده شود، نوارِ وضعیت "
-"را در کلیپ‌برد کپی میکند."
-
 #. Translators: Reported when there is no status line for the current program or window.
 msgid "No status line found"
 msgstr "هیچ خطِّ وضعیتی یافت نشد"
+
+#. Translators: Input help mode message for command which reads content of the status bar.
+msgid "Reads the current application status bar."
+msgstr "نوارِ وضعیتِ برنامه‌ی جاری را میخوانَد."
 
 #. Translators: Reported when status line exist, but is empty.
 msgid "no status bar information"
 msgstr "اطلاعاتِ نوارِ وضعیت موجود نیست."
 
+#. Translators: Input help mode message for command which spells content of the status bar.
+msgid "Spells the current application status bar."
+msgstr "نوارِ وضعیتِ برنامه‌ی جاری را هجی میکند."
+
+#. Translators: Input help mode message for command which copies status bar content to the clipboard.
+msgid ""
+"Copies content of the status bar  of current application to the clipboard."
+msgstr "محتوای نوارِ وضعیتِ برنامه‌ی جاری را در کلیپ‌برد کپی میکند."
+
 #. Translators: Reported when user attempts to copy content of the empty status line.
-msgid "unable to copy status bar content to clipboard"
+msgid "Unable to copy status bar content to clipboard"
 msgstr "نمیتوانم محتوای نوارِ وضعیت را در کلیپ‌برد کپی کنم"
+
+#. Translators: Input help mode message for Command which moves review cursor to the status bar.
+msgid ""
+"Reads the current application status bar and moves navigator object into it."
+msgstr "نوارِ وضعیتِ برنامه‌ی جاری را میخوانَد و پیمایشگر را درونِ آن میبَرَد."
+
+#. Translators: Input help mode message for report status line text command.
+msgid ""
+"Reads the current application status bar. If pressed twice, spells the "
+"information. If pressed three times, copies the status bar to the clipboard"
+msgstr ""
+"نوارِ وضعیتِ برنامه‌ی جاری را میخوانَد. اگر دو بار فشرده شود، اطلاعات را هجی "
+"میکند. اگر سه بار فشرده شود، نوارِ وضعیت را در کلیپ‌برد کپی میکند."
 
 #. Translators: Input help mode message for toggle mouse tracking command.
 msgid "Toggles the reporting of information as the mouse moves"
@@ -4303,7 +3707,7 @@ msgstr ""
 
 #. Translators: A mode where no progress bar updates are given.
 msgid "No progress bar updates"
-msgstr "هیچ پیشرفتی گزارش نمیشود."
+msgstr "هیچ پیشرفتی اعلام نمیشود."
 
 #. Translators: A mode where progress bar updates will be spoken.
 msgid "Speak progress bar updates"
@@ -4556,6 +3960,23 @@ msgstr "نمایشگرِ گفتار ِیرِ فعال شد."
 msgid "speech viewer enabled"
 msgstr "نمایشگرِ گفتار فعال شد."
 
+#. Translators: Input help mode message for toggle Braille viewer command.
+msgid ""
+"Toggles the NVDA Braille viewer, a floating window that allows you to view "
+"braille output, and the text equivalent for each braille character"
+msgstr ""
+"نمایشگرِ مجازیِ بریلِ NVDA را فعال یا غیرفعال میکند. این نمایشگر، پنجره‌ایست "
+"شناور که به شما امکان میدهد خروجیِ بریل و متنِ معادلِ هر نویسه‌ی بریل را مشاهده "
+"کنید."
+
+#. Translators: The message announced when disabling braille viewer.
+msgid "Braille viewer disabled"
+msgstr "نمایشگرِ مجازیِ بریل غیرفعال شد"
+
+#. Translators: The message announced when enabling Braille viewer.
+msgid "Braille viewer enabled"
+msgstr "نمایشگرِ مجازیِ بریل فعال شد"
+
 #. Translators: Input help mode message for toggle braille tether to command
 #. (tethered means connected to or follows).
 msgid "Toggle tethering of braille between the focus and the review position"
@@ -4754,6 +4175,54 @@ msgstr ""
 "کلیدِ NVDA را بطور مجازی پایین نگه‌میدارد تا با یک ورودی بریل، یک کلیدِ میانبر "
 "را شبیه‌سازی کند."
 
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the control and shift keys to emulate a keyboard shortcut "
+"with braille input"
+msgstr ""
+"کلیدهای کنترل و شیفت را بطور مجازی پایین نگه‌میدارد تا با یک ورودی بریل، یک "
+"کلیدِ میانبر را شبیه‌سازی کند."
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the alt and shift keys to emulate a keyboard shortcut with "
+"braille input"
+msgstr ""
+"کلیدهای آلْت و  شیفت را بطور مجازی پایین نگه‌میدارد تا با یک ورودی بریل، یک "
+"کلیدِ میانبر را شبیه‌سازی کند."
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the left windows and shift keys to emulate a keyboard "
+"shortcut with braille input"
+msgstr ""
+"کلیدهای ویندوزِ چپ و شیفت را بطور مجازی پایین نگه‌میدارد تا با یک ورودی بریل، "
+"یک کلیدِ میانبر را شبیه‌سازی کند."
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the NVDA and shift keys to emulate a keyboard shortcut "
+"with braille input"
+msgstr ""
+"کلیدهای NVDA و شیفت را بطور مجازی پایین نگه‌میدارد تا با یک ورودی بریل، یک "
+"کلیدِ میانبر را شبیه‌سازی کند."
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the control and alt keys to emulate a keyboard shortcut "
+"with braille input"
+msgstr ""
+"کلیدهای کنترل و آلْت را بطور مجازی پایین نگه‌میدارد تا با یک ورودی بریل، یک "
+"کلیدِ میانبر را شبیه‌سازی کند."
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the control, alt, and shift keys to emulate a keyboard "
+"shortcut with braille input"
+msgstr ""
+"کلیدهای کنترل، آلْت و شیفت  را بطور مجازی پایین نگه‌میدارد تا با یک ورودی "
+"بریل، یک کلیدِ میانبر را شبیه‌سازی کند."
+
 #. Translators: Input help mode message for reload plugins command.
 msgid ""
 "Reloads app modules and global plugins without restarting NVDA, which can be "
@@ -4858,18 +4327,17 @@ msgid "Not math"
 msgstr "ریاضی نیست."
 
 #. Translators: Describes a command.
-msgid ""
-"Recognizes the content of the current navigator object with Windows 10 OCR"
-msgstr "محتوای پیمایشگرِ جاری را با OCRِ ویندوز ۱۰ بازمیشناسد"
+msgid "Recognizes the content of the current navigator object with Windows OCR"
+msgstr "محتوای پیمایشگرِ جاری را با نویسه‌خوانِ نوریِ ویندوز بازمیشناسد"
 
-#. Translators: Reported when Windows 10 OCR is not available.
-msgid "Windows 10 OCR not available"
-msgstr "نویسه‌خوانِ نوریِ ویندوزِ ۱۰ در دسترس نیست"
+#. Translators: Reported when Windows OCR is not available.
+msgid "Windows OCR not available"
+msgstr "نویسه‌خوانِ نوریِ ویندوز در دسترس نیست"
 
 #. Translators: Reported when screen curtain is enabled.
-msgid "Please disable screen curtain before using Windows 10 OCR."
+msgid "Please disable screen curtain before using Windows OCR."
 msgstr ""
-"لطفا پیش از استفاده از نویسه‌خوان نوری ویندوز ۱۰، پرده‌ی صفحه نمایش را غیرفعال "
+"لطفا پیش از استفاده از نویسه‌خوانِ نوریِ ویندوز، پرده‌ی صفحه نمایش را غیرفعال "
 "کنید."
 
 #. Translators: Input help mode message for toggle report CLDR command.
@@ -5337,6 +4805,17 @@ msgstr "صفحه کلیدِ %s"
 msgid "keyboard, all layouts"
 msgstr "همه‌ی چیدمان‌های صفحه کلید"
 
+#. Translators: the label for the Windows default NVDA interface language.
+msgid "User default"
+msgstr "پیش‌فرضِ کاربر"
+
+#. Translators: The pattern defining how languages are displayed and sorted in in the general
+#. setting panel language list. Use "{desc}, {lc}" (most languages) to display first full language
+#. name and then ISO; use "{lc}, {desc}" to display first ISO language code and then full language name.
+#, python-brace-format
+msgid "{desc}, {lc}"
+msgstr "{desc}, {lc}"
+
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
 msgid "Aragonese"
@@ -5362,21 +4841,26 @@ msgctxt "languageName"
 msgid "Somali"
 msgstr "سومالیایی"
 
-#. Translators: The pattern defining how languages are displayed and sorted in in the general
-#. setting panel language list. Use "{desc}, {lc}" (most languages) to display first full language
-#. name and then ISO; use "{lc}, {desc}" to display first ISO language code and then full language name.
-#, python-brace-format
-msgid "{desc}, {lc}"
-msgstr "{desc}, {lc}"
-
-#. Translators: the label for the Windows default NVDA interface language.
-msgid "User default"
-msgstr "پیش‌فرضِ کاربر"
-
 #. Translators: Reported when mouse cursor shape changes (example output: edit cursor).
 #, python-format
 msgid "%s cursor"
 msgstr "مکان‌نمای %s"
+
+#. Translators: This is presented when the left mouse button is locked down (used for drag and drop).
+msgid "Left mouse button lock"
+msgstr "دکمه‌ی چپِ موس پایین نگهداشته شد"
+
+#. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
+msgid "Left mouse button unlock"
+msgstr "دکمه‌ی چپِ موس رها شد"
+
+#. Translators: This is presented when the right mouse button is locked down (used for drag and drop).
+msgid "Right mouse button lock"
+msgstr "دکمه‌ی راستِ موس پایین نگهداشته شد"
+
+#. Translators: This is presented when the right mouse button lock is released (used for drag and drop).
+msgid "Right mouse button unlock"
+msgstr "دکمه‌ی راستِ موس رها شد"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6907,7 +6391,7 @@ msgstr ""
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
-msgstr "میزِ کارِ محافظت شده"
+msgstr "میزِ کارِ امن"
 
 #. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
 #, python-brace-format
@@ -6946,6 +6430,22 @@ msgstr "پِیمایِشگر و فکوس را به سطرِ بعدی میبَر�
 msgid "Moves the navigator object and focus to the previous row"
 msgstr "پِیمایِشگر و فکوس را به سطرِ قبلی میبَرَد"
 
+#. Translators: The description of an NVDA command.
+msgid "Moves the navigator object to the first column"
+msgstr "پِیمایِشگر را به اولین ستون میبَرَد."
+
+#. Translators: The description of an NVDA command.
+msgid "Moves the navigator object to the last column"
+msgstr "پِیمایِشگر را به آخرین ستون میبَرَد."
+
+#. Translators: The description of an NVDA command.
+msgid "Moves the navigator object and focus to the first row"
+msgstr "پِیمایِشگر و فکوس را به اولین سطر میبَرَد"
+
+#. Translators: The description of an NVDA command.
+msgid "Moves the navigator object and focus to the last row"
+msgstr "پِیمایِشگر و فکوس را به آخرین سطر میبَرَد"
+
 #. Translators: Announced in braille when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
 msgid "Suggestions"
 msgstr "پیشنهادها"
@@ -6960,6 +6460,49 @@ msgstr "نوشتن حروفِ ویژه‌ی آسیای شرقی"
 #. Translators: A label for a 'candidate' list which contains symbols the user can choose from  when typing east-asian characters into a document.
 msgid "Candidate"
 msgstr "کاندیدا"
+
+#. Translators: The label shown for a spelling and grammar error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
+msgid "spelling and grammar: {text}"
+msgstr "خطای املایی و دستوری: {text}"
+
+#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
+msgid "spelling: {text}"
+msgstr "خطای املایی: {text}"
+
+#. Translators: The label shown for a grammar error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
+msgid "grammar: {text}"
+msgstr "خطای دستوری: {text}"
+
+#. Translators: a style of fill type (to color the inside of a control or text)
+msgctxt "UIAHandler.FillType"
+msgid "none"
+msgstr "هیچ"
+
+#. Translators: a style of fill type (to color the inside of a control or text)
+msgctxt "UIAHandler.FillType"
+msgid "color"
+msgstr "رنگ"
+
+#. Translators: a style of fill type (to color the inside of a control or text)
+msgctxt "UIAHandler.FillType"
+msgid "gradient"
+msgstr "شیبدار"
+
+#. Translators: a style of fill type (to color the inside of a control or text)
+msgctxt "UIAHandler.FillType"
+msgid "picture"
+msgstr "تصویر"
+
+#. Translators: a style of fill type (to color the inside of a control or text)
+msgctxt "UIAHandler.FillType"
+msgid "pattern"
+msgstr "الگو"
 
 msgid "Display"
 msgstr "نمایش دادن"
@@ -7463,9 +7006,9 @@ msgid ""
 "This does not change what is visible on-screen, but only what the user can "
 "read with NVDA"
 msgstr ""
-"نوعِ گزارش را بینِ خواندنِ یادداشتهای گوینده و محتوای واقعیِ اسلاید تغییر میدهد. "
-"این فرمان آنچه را که روی صفحه دیده میشود تغییر نمیدهد. تنها آنچه که کاربر "
-"میتواند با NVDA بخواند را تغییر میدهد."
+"چگونگیِ اعلام را بینِ خواندنِ یادداشتهای گوینده و محتوای واقعیِ اسلاید تغییر "
+"میدهد. این فرمان آنچه را که روی صفحه دیده میشود تغییر نمیدهد. تنها آنچه که "
+"کاربر میتواند با NVDA بخواند را تغییر میدهد."
 
 #. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
 #, python-brace-format
@@ -7493,6 +7036,16 @@ msgstr "اسلایدِ خالی"
 msgid "Waiting for Powerpoint..."
 msgstr "در انتظارِ پاورپوینت"
 
+#. Translators: LibreOffice, report selected range of cell coordinates with their values
+#, python-brace-format
+msgid "{firstAddress} {firstValue} through {lastAddress} {lastValue}"
+msgstr "از {firstAddress} {firstValue} تا {lastAddress} {lastValue}"
+
+#. Translators: LibreOffice, report range of cell coordinates
+#, python-brace-format
+msgid "{firstAddress} through {lastAddress}"
+msgstr "از {firstAddress} تا {lastAddress}"
+
 msgid "left"
 msgstr "چپ"
 
@@ -7519,7 +7072,8 @@ msgctxt "repeat"
 msgid "off"
 msgstr "تکرار خاموش"
 
-#. Translators: presented when there is no emoji when searching for one in Windows 10 Fall Creators Update and later.
+#. Translators: presented when there is no emoji when searching for one
+#. in Windows 10 Fall Creators Update and later.
 msgid "No emoji"
 msgstr "ایموجی نیست"
 
@@ -7609,6 +7163,10 @@ msgid "Toggle braille input"
 msgstr "ورودیِ بریل را فعال یا غیرفعال میکند"
 
 #. Translators: The name of a series of braille displays.
+msgid "Standard HID Braille Display"
+msgstr "نمایشگرِ بریلِ استانداردِ HID"
+
+#. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille series"
 msgstr ""
 "از سِری نمایشگرهای Braille Sense/Braille EDGE/Smart Beetle/Sync Braille از "
@@ -7689,6 +7247,851 @@ msgstr "در حالِ بازشناسی"
 msgid "Recognition failed"
 msgstr "خطا در بازشناسی"
 
+#. Translators: Reported for text which is at the baseline position;
+#. i.e. not superscript or subscript.
+msgid "baseline"
+msgstr "روی خط"
+
+#. Translators: Reported for subscript text.
+#. Translators: Describes text formatting.
+msgid "subscript"
+msgstr "زیر‌نوشته"
+
+#. Translators: Reported for superscript text.
+#. Translators: Describes text formatting.
+msgid "superscript"
+msgstr "بالانوشته"
+
+#. Translators: Presented when an item is marked as current in a collection of items
+msgid "current"
+msgstr "جاری"
+
+#. Translators: Presented when a page item is marked as current in a collection of page items
+msgid "current page"
+msgstr "صفحه‌ی جاری"
+
+#. Translators: Presented when a step item is marked as current in a collection of step items
+msgid "current step"
+msgstr "مرحله‌ی جاری"
+
+#. Translators: Presented when a location item is marked as current in a collection of location items
+msgid "current location"
+msgstr "موقعیتِ جاری"
+
+#. Translators: Presented when a date item is marked as current in a collection of date items
+msgid "current date"
+msgstr "تاریخِ جاری"
+
+#. Translators: Presented when a time item is marked as current in a collection of time items
+msgid "current time"
+msgstr "زمانِ جاری"
+
+#. Translators: The word for window of a program such as document window.
+msgid "window"
+msgstr "پنجره"
+
+#. Translators: Used to identify title bar of a program.
+msgid "title bar"
+msgstr "نوارِ عنوان"
+
+#. Translators: The word used for pane such as desktop pane.
+msgid "pane"
+msgstr "جایگاه"
+
+#. Translators: The word used to denote a dialog box such as open dialog.
+msgid "dialog"
+msgstr "پنجره‌ی محاوره‌ای"
+
+#. Translators: The text used to identify check boxes such as select check box.
+msgid "check box"
+msgstr "کادرِ علامت‌زدنی"
+
+#. Translators: The text used to identify radio buttons such as yes or no radio button.
+msgid "radio button"
+msgstr "دکمه‌ی رادیویی"
+
+#. Translators: The word used to identify a static text such as dialog text.
+msgid "text"
+msgstr "متن"
+
+#. Translators: The word used to identify edit fields such as subject edit field.
+msgid "edit"
+msgstr "ویرایشی"
+
+#. Translators: The word used to identify a button such as OK button.
+msgid "button"
+msgstr "دکمه"
+
+#. Translators: Text used to identify menu bar of a program.
+msgid "menu bar"
+msgstr "نوارِ منو"
+
+#. Translators: Used to identify a menu item such as an item in file menu.
+msgid "menu item"
+msgstr "جزءِ منو"
+
+#. Translators: The word used for menus such as edit menu.
+#. Translators: Identifies a menu such as file menu.
+msgid "menu"
+msgstr "منو"
+
+#. Translators: Used to identify combo boxes such as file type combo box.
+msgid "combo box"
+msgstr "جعبه‌ی کشویی"
+
+#. Translators: The word used for lists such as folder list.
+msgid "list"
+msgstr "فهرست"
+
+#. Translators: Used to identify a list item such as email list items.
+msgid "list item"
+msgstr "جزءِ فهرست"
+
+#. Translators: The word used to identify graphics such as webpage graphics.
+msgid "graphic"
+msgstr "گرافیک"
+
+#. Translators: Used to identify help balloon (a circular window with helpful text such as notification
+#. text).
+msgid "help balloon"
+msgstr "بالُنِ راهنما"
+
+#. Translators: Used to identify a tooltip (a small window with additional text about selected item such as
+#. file information).
+msgid "tool tip"
+msgstr "پیامِ راهنما"
+
+#. Translators: Identifies a link in webpage documents.
+msgid "link"
+msgstr "لینک"
+
+#. Translators: Identifies a treeview (a tree-like structure such as treeviews for subfolders).
+msgid "tree view"
+msgstr "نمای درختی"
+
+#. Translators: Identifies a tree view item.
+msgid "tree view item"
+msgstr "جزءِ نمای درختی"
+
+#. Translators: The word presented for tabs in a tab enabled window.
+msgctxt "controlType"
+msgid "tab"
+msgstr "سربرگ"
+
+#. Translators: Identifies a tab control such as webpage tabs in web browsers.
+msgid "tab control"
+msgstr "برگه دان"
+
+#. Translators: Identifies a slider such as volume slider.
+msgid "slider"
+msgstr "لغزنده"
+
+#. Translators: Identifies a progress bar such as NvDA update progress.
+msgid "progress bar"
+msgstr "نوارِ پیشرفت"
+
+#. Translators: Identifies a scroll bar.
+msgid "scroll bar"
+msgstr "نوارِ مرور"
+
+#. Translators: Identifies a status bar (text at the bottom bar of the screen such as cursor position in a
+#. document).
+msgid "status bar"
+msgstr "نوارِ وضعیت"
+
+#. Translators: Identifies a table such as ones used in various websites.
+msgid "table"
+msgstr "جدول"
+
+#. Translators: Identifies a cell in a table.
+msgid "cell"
+msgstr "خانه"
+
+#. Translators: Identifies a column (a group of vertical cells in a table).
+msgid "column"
+msgstr "ستون"
+
+#. Translators: Identifies a row (a group of horizontal cells in a table).
+msgid "row"
+msgstr "سطر"
+
+#. Translators: Identifies a frame (a smaller window in a webpage or a document).
+#. Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page
+#. embedded within a web page.
+msgid "frame"
+msgstr "قاب"
+
+#. Translators: Identifies a tool bar.
+msgid "tool bar"
+msgstr "نوارِ ابزار"
+
+#. Translators: Identifies a column header in tables and spreadsheets.
+msgid "column header"
+msgstr "سر‌ستون"
+
+#. Translators: Identifies a row header in tables and spreadsheets.
+msgid "row header"
+msgstr "سر‌سطر"
+
+#. Translators: Identifies a drop down button (a button that, when clicked, opens a menu of its own).
+msgid "drop down button"
+msgstr "دکمه‌ی کِرکِرِ‌ای"
+
+#. Translators: Identifies an element.
+msgid "clock"
+msgstr "ساعت"
+
+#. Translators: Identifies a separator (a horizontal line drawn on the screen).
+msgid "separator"
+msgstr "جدا ساز"
+
+#. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
+msgid "form"
+msgstr "فرم"
+
+#. Translators: Identifies a heading (a bold text used for identifying a section).
+msgid "heading"
+msgstr "سرنوشتار"
+
+#. Translators: Identifies a heading level.
+msgid "heading 1"
+msgstr "سرنوشتارِ ۱"
+
+#. Translators: Identifies a heading level.
+msgid "heading 2"
+msgstr "سرنوشتارِ ۲"
+
+#. Translators: Identifies a heading level.
+msgid "heading 3"
+msgstr "سرنوشتارِ ۳"
+
+#. Translators: Identifies a heading level.
+msgid "heading 4"
+msgstr "سرنوشتارِ ۴"
+
+#. Translators: Identifies a heading level.
+msgid "heading 5"
+msgstr "سرنوشتارِ ۵"
+
+#. Translators: Identifies a heading level.
+msgid "heading 6"
+msgstr "سرنوشتارِ ۶"
+
+#. Translators: Identifies a paragraph (a group of text surrounded by blank lines).
+msgid "paragraph"
+msgstr "پاراگراف"
+
+#. Translators: Presented for a section in a document which is a block quotation;
+#. i.e. a long quotation in a separate paragraph distinguished by indentation, etc.
+#. See http://en.wikipedia.org/wiki/Block_quotation
+msgid "block quote"
+msgstr "نقلِ قول"
+
+#. Translators: Identifies a table header (a short text at the start of a table which describes what the
+#. table is about).
+msgid "table header"
+msgstr "سرِ جدول"
+
+#. Translators: Identifies a table body (the main body of the table).
+msgid "table body"
+msgstr "تنه‌ی جدول"
+
+#. Translators: Identifies a table footer (text placed at the end of the table).
+msgid "table footer"
+msgstr "پایه‌ی جدول"
+
+#. Translators: Identifies a document (for example, a webpage document).
+msgid "document"
+msgstr "سند"
+
+#. Translators: Identifies an animation in a document or a webpage.
+msgid "animation"
+msgstr "پویانما"
+
+#. Translators: Identifies an application in webpages.
+msgid "application"
+msgstr "برنامه"
+
+#. Translators: Identifies a box element.
+msgid "box"
+msgstr "جعبه"
+
+#. Translators: Identifies a grouping (a number of related items grouped together, such as related options
+#. in dialogs).
+msgid "grouping"
+msgstr "گروه"
+
+#. Translators: Identifies a property page such as drive properties dialog.
+msgid "property page"
+msgstr "صفحه‌ی خصوصیات"
+
+#. Translators: Identifies a canvas element on webpages (a box with some background color with some text
+#. drawn on the box, like a canvas).
+msgid "canvas"
+msgstr "بومِ نقاشی"
+
+#. Translators: Identifies a caption (usually a short text identifying a picture or a graphic on websites).
+msgid "caption"
+msgstr "رو‌نویس"
+
+#. Translators: Identifies a check menu item (a menu item with a checkmark as part of the menu item's
+#. name).
+msgid "check menu item"
+msgstr "جزءِ علامت‌دارِ منو"
+
+#. Translators: Identifies a data edit field.
+msgid "date edit"
+msgstr "ویرایشِ داده"
+
+#. Translators: Identifies an icon.
+msgid "icon"
+msgstr "شکلک"
+
+#. Translators: Identifies a directory pane.
+msgid "directory pane"
+msgstr "جایگاهِ پوشه ها"
+
+#. Translators: Identifies an object that is embedded in a document.
+msgid "embedded object"
+msgstr "شیءِ توکار"
+
+#. Translators: Identifies an end note.
+msgid "end note"
+msgstr "یادداشتِ پایانی"
+
+#. Translators: Identifies a footer (usually text).
+msgid "footer"
+msgstr "پا‌صفحه"
+
+#. Translators: Identifies a foot note (text at the end of a passage or used for anotations).
+msgid "foot note"
+msgstr "پانویس"
+
+#. Translators: Reported for an object which is a glass pane; i.e.
+#. a pane that is guaranteed to be on top of all panes beneath it.
+msgid "glass pane"
+msgstr "جایگاهِ شیشه‌ای"
+
+#. Translators: Identifies a header (usually text at top of documents or on tops of pages).
+msgid "header"
+msgstr "سر‌صفحه"
+
+#. Translators: Identifies an image map (a type of graphical link).
+msgid "image map"
+msgstr "تصویرِ نقشه‌نما"
+
+#. Translators: Identifies an input window.
+msgid "input window"
+msgstr "پنجره‌ی ورودی"
+
+#. Translators: Identifies a label.
+msgid "label"
+msgstr "برچسب"
+
+#. Translators: Identifies a note field.
+msgid "note"
+msgstr "یادداشت"
+
+#. Translators: Identifies a page.
+msgid "page"
+msgstr "صفحه"
+
+#. Translators: Identifies a radio menu item.
+msgid "radio menu item"
+msgstr "جزءِ منوی رادیویی"
+
+#. Translators: Identifies a layered pane.
+msgid "layered pane"
+msgstr "جایگاهِ لایه‌دار"
+
+# no info available to find the concempt of the 'redundant object'
+#. Translators: Identifies a redundant object.
+msgid "redundant object"
+msgstr "شیءِ اضافی"
+
+#. Translators: Identifies a root pane.
+msgid "root pane"
+msgstr "جایگاهِ ریشه"
+
+#. Translators: May be reported for an editable text object in a toolbar.
+#. This is deprecated and is not often (if ever) used.
+msgid "edit bar"
+msgstr "نوارِ ویرایش"
+
+#. Translators: Identifies a terminal window such as command prompt.
+msgid "terminal"
+msgstr "پایانه"
+
+#. Translators: Identifies a rich edit box (an edit box which allows entering formatting commands in
+#. addition to text; encountered on webpages and NvDA log viewer).
+msgid "rich edit"
+msgstr "ویرایشیِ پیشرفته"
+
+#. Translators: Identifies a ruler object (commonly seen on some webpages and in some Office programs).
+msgid "ruler"
+msgstr "خطکش"
+
+#. Translators: Identifies a scroll pane.
+msgid "scroll pane"
+msgstr "جایگاهِ مرور"
+
+#. Translators: Identifies a section of text.
+msgid "section"
+msgstr "بخش"
+
+#. Translators: Identifies a shape.
+msgid "shape"
+msgstr "شکل"
+
+#. Translators: Identifies a split pane.
+msgid "split pane"
+msgstr "جایگاهِ چند‌تکه‌ای"
+
+#. Translators: Reported for a view port; i.e. an object usually used in a scroll pane
+#. which represents the portion of the entire data that the user can see.
+#. As the user manipulates the scroll bars, the contents of the view port can change.
+msgid "view port"
+msgstr "پِیمایِش‌نما"
+
+#. Translators: Reported for an object that forms part of a menu system
+#. but which can be undocked from or torn off the menu system
+#. to exist as a separate window.
+msgid "tear off menu"
+msgstr "منوی جداشدنی"
+
+#. Translators: Identifies a text frame (a frame window which contains text).
+msgid "text frame"
+msgstr "قابِ متنی"
+
+#. Translators: Identifies a toggle button (a button used to toggle something).
+msgid "toggle button"
+msgstr "دکمه‌ی چند‌کاره"
+
+msgid "border"
+msgstr "حاشیه"
+
+#. Translators: Identifies a caret object.
+msgid "caret"
+msgstr "نشانگر"
+
+#. Translators: Identifies a character field (should not be confused with edit fields).
+msgid "character"
+msgstr "نویسه"
+
+#. Translators: Identifies a chart (commonly seen on some websites and in some Office documents).
+msgid "chart"
+msgstr "نمودار"
+
+#. Translators: Identifies a cursor object.
+msgid "cursor"
+msgstr "مکان‌نما"
+
+#. Translators: Identifies a diagram (seen on some websites and on Office documents).
+msgid "diagram"
+msgstr "نمودار"
+
+#. Translators: Identifies a dial object.
+msgid "dial"
+msgstr "شماره‌گیر"
+
+#. Translators: Identifies a drop list.
+msgid "drop list"
+msgstr "فهرستِ کِرکِرِ‌ای"
+
+#. Translators: Identifies a split button (a control which performs different actions when different parts
+#. are clicked).
+msgid "split button"
+msgstr "دکمه‌ی چند‌تکه‌ای"
+
+#. Translators: Identifies a menu button (a button which opens a menu of items).
+msgid "menu button"
+msgstr "دکمه‌ی منو"
+
+#. Translators: Reported for a button which expands a grid when it is pressed.
+msgid "drop down button grid"
+msgstr "دکمه‌ی جدول‌گستر"
+
+#. Translators: Identifies mathematical content.
+msgid "math"
+msgstr "ریاضی"
+
+#. Translators: Identifies a grip control.
+msgid "grip"
+msgstr "دستگیره"
+
+#. Translators: Identifies a hot key field (a field where one can enter a hot key for something, such as
+#. assigning shortcut for icons on the desktop).
+msgid "hot key field"
+msgstr "ورودیِ کلیدِ میان‌بُر"
+
+#. Translators: Identifies an indicator control.
+msgid "indicator"
+msgstr "نشان دهنده"
+
+#. Translators: Identifies a spin button (a button used to go through options in a spinning fashion).
+msgid "spin button"
+msgstr "دکمه‌ی چرخان"
+
+#. Translators: Identifies a sound clip on websites.
+msgid "sound"
+msgstr "صدا"
+
+#. Translators: Identifies a whitespace.
+msgid "white space"
+msgstr "فاصله‌ی سفید"
+
+#. Translators: Identifies a tree view button.
+msgid "tree view button"
+msgstr "دکمه‌ی نمای درختی"
+
+#. Translators: Identifies an IP address (an IP address field element).
+msgid "IP address"
+msgstr "نشانیِ آیْپی"
+
+#. Translators: Identifies a desktop icon (the icons on the desktop such as computer and various shortcuts
+#. for programs).
+msgid "desktop icon"
+msgstr "شکلکِ میزِ کار"
+
+#. Translators: Identifies desktop pane (the desktop window).
+msgid "desktop pane"
+msgstr "جایگاهِ میزِ کار"
+
+#. Translators: Identifies an option pane.
+msgid "option pane"
+msgstr "جایگاهِ گزینه‌ها"
+
+#. Translators: Identifies a color chooser.
+msgid "color chooser"
+msgstr "انتخاب‌کننده‌ی  رنگ"
+
+#. Translators: Identifies a file chooser (to select a file or groups of files from a list).
+msgid "file chooser"
+msgstr "انتخاب‌کننده‌ی فایل"
+
+msgid "filler"
+msgstr "پر کننده"
+
+#. Translators: Identifies a panel control for grouping related options.
+msgid "panel"
+msgstr "پیشخوان"
+
+#. Translators: Identifies a password field (a protected edit field for entering passwords such as when
+#. logging into web-based email sites).
+msgid "password edit"
+msgstr "ویرایشیِ گذرواژه"
+
+#. Translators: Identifies a font chooser.
+msgid "font chooser"
+msgstr "انتخاب کننده‌ی قلم"
+
+msgid "line"
+msgstr "خط"
+
+#. Translators: Identifies a font name.
+msgid "font name"
+msgstr "نامِ قلم"
+
+#. Translators: Identifies font size.
+msgid "font size"
+msgstr "اندازه‌ی قلم"
+
+#. Translators: Describes text formatting.
+#. Translators: Reported when text is bolded.
+msgid "bold"
+msgstr "کلفت‌نوشته"
+
+#. Translators: Describes text formatting.
+#. Translators: Reported when text is italicized.
+msgid "italic"
+msgstr "کج‌نوشته"
+
+#. Translators: Describes text formatting.
+msgid "underline"
+msgstr "زیر‌خط‌دار"
+
+#. Translators: Describes text formatting.
+msgid "foreground color"
+msgstr "رنگِ پیش‌زمینه"
+
+#. Translators: Describes text formatting.
+msgid "background color"
+msgstr "رنگِ پس‌زمینه"
+
+#. Translators: Describes style of text.
+#. Translators: a Microsoft Word revision type (style change)
+msgid "style"
+msgstr "سبْک"
+
+#. Translators: Describes text formatting.
+msgid "indent"
+msgstr "تورفتگی"
+
+#. Translators: Describes text formatting.
+msgid "alignment"
+msgstr "تراز"
+
+#. Translators: Identifies an alert window or bar (usually on Internet Explorer 9 and above for alerts such
+#. as file downloads or pop-up blocker).
+msgid "alert"
+msgstr "هشدار"
+
+#. Translators: Identifies a data grid control (a grid which displays data).
+msgid "data grid"
+msgstr "جدولِ داده"
+
+msgid "data item"
+msgstr "جزءِ داده"
+
+msgid "header item"
+msgstr "جزءِ سر‌ستون"
+
+#. Translators: Identifies a thumb control (a button-like control for changing options).
+msgid "thumb control"
+msgstr "شَستی"
+
+msgid "calendar"
+msgstr "تقویم"
+
+msgid "video"
+msgstr "ویدیو"
+
+msgid "audio"
+msgstr "صدا"
+
+#. Translators: Identifies a chart element.
+msgid "chart element"
+msgstr "سازه‌ی نمودار"
+
+#. Translators: Identifies deleted content.
+#. Translators: Reported when text is marked as having been deleted
+msgid "deleted"
+msgstr "حذف‌شده"
+
+#. Translators: Identifies inserted content.
+#. Translators: Reported when text is marked as having been inserted
+msgid "inserted"
+msgstr "درج‌شده"
+
+#. Translators: Identifies a landmark.
+msgid "landmark"
+msgstr "بخش"
+
+#. Translators: Identifies an article.
+msgid "article"
+msgstr "مقاله"
+
+#. Translators: Identifies a region.
+msgid "region"
+msgstr "ناحیه"
+
+#. Translators: Identifies a figure (commonly seen on some websites).
+msgid "figure"
+msgstr "فیگور"
+
+#. Translators: Identifies marked (highlighted) content
+msgid "highlighted"
+msgstr "برجسته"
+
+#. Translators: Identifies a progress bar with indeterminate state, I.E. progress can not be determined.
+msgid "busy indicator"
+msgstr "مشغول"
+
+#. Translators: Indicates that a particular state of an object is negated.
+#. Separate strings have now been defined for commonly negated states (e.g. not selected and not
+#. checked), but this still might be used in some other cases.
+#. %s will be replaced with the full identifier of the negated state (e.g. selected).
+#, python-format
+msgid "not %s"
+msgstr "نه %s"
+
+#. Translators: This is presented when a control or document is unavailable.
+msgid "unavailable"
+msgstr "بیرون از دسترس"
+
+#. Translators: This is presented when a control has focus.
+msgid "focused"
+msgstr "فرمان‌پذیر‍‍"
+
+#. Translators: This is presented when the control is selected.
+msgid "selected"
+msgstr "انتخاب شده"
+
+#. Translators: This is presented when a document is busy.
+msgid "busy"
+msgstr "مشغول است"
+
+#. Translators: This is presented when a button is pressed.
+msgid "pressed"
+msgstr "فشرده شده"
+
+#. Translators: This is presented when a check box is checked.
+msgid "checked"
+msgstr "علامت‌دار"
+
+#. Translators: This is presented when a three state check box is half checked.
+msgid "half checked"
+msgstr "نیمه علامت‌دار"
+
+#. Translators: This is presented when the control is a read-only control such as read-only edit box.
+msgid "read only"
+msgstr "تنها خواندنی"
+
+#. Translators: This is presented when a tree view or submenu item is expanded.
+msgid "expanded"
+msgstr "باز شده"
+
+#. Translators: This is presented when a tree view or submenu is collapsed.
+msgid "collapsed"
+msgstr "بسته شده"
+
+#. Translators: This is presented when a control or a document becomes invisible.
+msgid "invisible"
+msgstr "نادیدنی"
+
+#. Translators: This is presented when a visited link is encountered.
+msgid "visited"
+msgstr "دیده شده"
+
+#. Translators: This is presented when a link is encountered.
+msgid "linked"
+msgstr "پیوند شده"
+
+#. Translators: This is presented when the control menu item has a submenu.
+msgid "subMenu"
+msgstr "زیر‌منو"
+
+#. Translators: This is presented when a protected control or a document is encountered.
+msgid "protected"
+msgstr "محافظت شده"
+
+#. Translators: This is presented when a required form field is encountered.
+msgid "required"
+msgstr "نیاز است"
+
+#. Translators: Reported when an object no longer exists in the user interface;
+#. i.e. it is dead and is no longer usable.
+msgid "defunct"
+msgstr "از میان رفته"
+
+#. Translators: This is presented when an invalid entry has been made.
+msgid "invalid entry"
+msgstr "ورودیِ نامعتبر"
+
+msgid "modal"
+msgstr "وادارنده"
+
+#. Translators: This is presented when a field supports auto completion of entered text such as email
+#. address field in Microsoft Outlook.
+msgid "has auto complete"
+msgstr "کامل‌کننده‌ی خودکار دارد"
+
+#. Translators: This is presented when an edit field allows typing multiple lines of text such as comment
+#. fields on websites.
+msgid "multi line"
+msgstr "چند‌خطّی"
+
+msgid "iconified"
+msgstr "نشاندار است"
+
+#. Translators: Presented when the current control is located off screen.
+msgid "off screen"
+msgstr "بیرون از صفحه"
+
+#. Translators: Presented when the control allows selection such as text fields.
+msgid "selectable"
+msgstr "انتخاب‌شدنی"
+
+#. Translators: Presented when a control can be moved to using system focus.
+msgid "focusable"
+msgstr "فرمان‌پذیر"
+
+#. Translators: Presented when a control allows clicking via mouse (mostly presented on web controls).
+msgid "clickable"
+msgstr "کلیک‌شدنی"
+
+msgid "editable"
+msgstr "ویرایش‌شدنی"
+
+msgid "checkable"
+msgstr "علامت‌زدنی"
+
+msgid "draggable"
+msgstr "کشیدنی"
+
+msgid "dragging"
+msgstr "در حالِ کشیدن"
+
+#. Translators: Reported where an object which is being dragged can be dropped.
+#. This is only reported for objects that support accessible drag and drop.
+msgid "drop target"
+msgstr "محلِّ رها کردن"
+
+msgid "sorted"
+msgstr "مرتب‌شده"
+
+msgid "sorted ascending"
+msgstr "صعودی مرتب‌شده"
+
+msgid "sorted descending"
+msgstr "نزولی مرتب‌شده"
+
+#. Translators: a state that denotes that an object (usually a graphic) has a long description.
+msgid "has long description"
+msgstr "توضیحِ طولانی دارد"
+
+#. Translators: a state that denotes that an object is pinned in its current location
+msgid "pinned"
+msgstr "سنجاق‌شده"
+
+#. Translators: a state that denotes the existance of a formula on a spreadsheet cell
+msgid "has formula"
+msgstr "فرمول دارد"
+
+#. Translators: a state that denotes the existance of a comment.
+#. Translators: Reported when text contains a generic comment.
+msgid "has comment"
+msgstr "توضیح دارد"
+
+#. Translators: a state that denotes that the object is covered partially or fully by another object
+msgid "obscured"
+msgstr "پوشانده‌شده"
+
+#. Translators: a state that denotes that the object(text) is cropped as it couldn't be accommodated in the
+#. allocated/available space
+msgid "cropped"
+msgstr "حذف‌شده"
+
+#. Translators: a state that denotes that the object(text) is overflowing into the adjacent space
+msgid "overflowing"
+msgstr "اضافی"
+
+#. Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected
+#. Excel spreadsheet).
+msgid "unlocked"
+msgstr "قفل‌نشده"
+
+#. Translators: a state that denotes the existence of a note.
+msgid "has note"
+msgstr "یادداشت دارد"
+
+#. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
+msgid "not selected"
+msgstr "انتخاب‌نشده"
+
+#. Translators: This is presented when a button is not pressed.
+msgid "not pressed"
+msgstr "فشرده‌نشده"
+
+#. Translators: This is presented when a checkbox is not checked.
+msgid "not checked"
+msgstr "بدونِ علامت"
+
+#. Translators: This is presented when drag and drop is finished.
+#. This is only reported for objects which support accessible drag and drop.
+msgid "done dragging"
+msgstr "کشاندن انجام شد"
+
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 msgid "Configuration applied"
 msgstr "پیکره‌بندی اِعمال شد."
@@ -7696,10 +8099,6 @@ msgstr "پیکره‌بندی اِعمال شد."
 #. Translators: Reported when configuration has been restored to defaults by using restore configuration to factory defaults item in NVDA menu.
 msgid "Configuration restored to factory defaults"
 msgstr "پیکره‌بندی به پیشفرضِ تولیدکننده بازگشت."
-
-#. Translators: Reported when current configuration cannot be saved while NVDA is running in secure mode such as in Windows login screen.
-msgid "Cannot save configuration - NVDA in secure mode"
-msgstr "پیکره‌بندی را نمیتوانم ذخیره کنم. NVDA در حالتِ محافظت‌شده قرار دارد."
 
 #. Translators: Reported when current configuration has been saved.
 msgid "Configuration saved"
@@ -7709,28 +8108,10 @@ msgstr "تنظیمات ذخیره شد."
 msgid "Could not save configuration - probably read only file system"
 msgstr "پیکره‌بندی ذخیره نشد. احتمالا فایل سیستم، فقط خواندنیست."
 
-#. Translators: Message shown when attempting to open another NVDA settings dialog when one is already open
-#. (example: when trying to open keyboard settings when general settings dialog is open).
-msgid "An NVDA settings dialog is already open. Please close it first."
-msgstr "یک پنجره‌ی تنظیماتِ NVDA از قبل باز مانده است. لطفا نخست آنرا ببندید."
-
 #. Translators: Message shown when trying to open an unavailable category of a multi category settings dialog
 #. (example: when trying to open touch interaction settings on an unsupported system).
 msgid "The settings panel you tried to open is unavailable on this system."
 msgstr "پنجره‌ی تنظیماتی که تلاش کردید باز شود، روی این سیستم موجود نیست."
-
-#. Translators: Title for default speech dictionary dialog.
-msgid "Default dictionary"
-msgstr "دیکشنریِ پیش‌فرض"
-
-#. Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
-#, python-format
-msgid "Voice dictionary (%s)"
-msgstr "دیکشنریِ صدای (%s)"
-
-#. Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long as NvDA is running).
-msgid "Temporary dictionary"
-msgstr "دیکشنریِ موقت"
 
 #. Translators: The title of the dialog to show about info for NVDA.
 msgid "About NVDA"
@@ -7767,8 +8148,12 @@ msgid "Please wait while NVDA tries to fix your system's COM registrations."
 msgstr "لطفا شکیبا باشید تا nvda رجیستریِ سیستمتان را تعمیر کند"
 
 #. Translators: The message displayed when the COM Registration Fixing tool completes.
-msgid "COM Registration Fixing tool complete"
-msgstr "کارِ ابزارِ تعمیرِ رجیستری تمام شد"
+msgid ""
+"The COM Registration Fixing tool has finished. It is highly recommended that "
+"you restart your computer now, to make sure the changes take full effect."
+msgstr ""
+"کارِ ابزارِ تعمیرِ رجیستری تمام شد. اکیدا توصیه میکنیم برای اینکه از اثرگزاریِ "
+"کاملِ تغییرات مطمئن شوید، همین حالا کامپیوترتان را از نو راه‌اندازی کنید."
 
 #. Translators: The label for the menu item to open NVDA Settings dialog.
 msgid "&Settings..."
@@ -7777,43 +8162,6 @@ msgstr "&تنظیمات..."
 #. Translators: The description for the menu item to open NVDA Settings dialog.
 msgid "NVDA settings"
 msgstr "تنظیماتِ NVDA"
-
-#. Translators: The label for the menu item to open Default speech dictionary dialog.
-msgid "&Default dictionary..."
-msgstr "دیکشنریِ &پیش‌فرض..."
-
-#. Translators: The help text for the menu item to open Default speech dictionary dialog.
-msgid ""
-"A dialog where you can set default dictionary by adding dictionary entries "
-"to the list"
-msgstr ""
-"پنجره‌ای محاوره‌ایست که میتوانید در آن کلمات و تلفظهای جدید به دیکشنریِ پیش‌فرض "
-"اضافه کنید."
-
-#. Translators: The label for the menu item to open Voice specific speech dictionary dialog.
-msgid "&Voice dictionary..."
-msgstr "دیکشنریِ &صدا..."
-
-#. Translators: The help text for the menu item
-#. to open Voice specific speech dictionary dialog.
-msgid ""
-"A dialog where you can set voice-specific dictionary by adding dictionary "
-"entries to the list"
-msgstr ""
-"پنجره‌ای محاوره‌ایست که میتوانید با استفاده از آن ورودیهای دیکشنری را به "
-"دیکشنری مخصوص یک صدا اضافه کنید."
-
-#. Translators: The label for the menu item to open Temporary speech dictionary dialog.
-msgid "&Temporary dictionary..."
-msgstr "دیکشنریِ &موقت..."
-
-#. Translators: The help text for the menu item to open Temporary speech dictionary dialog.
-msgid ""
-"A dialog where you can set temporary dictionary by adding dictionary entries "
-"to the edit box"
-msgstr ""
-"پنجره‌ای محاوره‌ایست که میتوانید در آن با وارد کردن واژه و تلفظِ جدید، یک "
-"دیکشنریِ موقت ایجاد کنید."
 
 #. Translators: The label for a submenu under NvDA Preferences menu to select speech dictionaries.
 msgid "Speech &dictionaries"
@@ -7910,32 +8258,6 @@ msgstr "درباره..."
 msgid "&Help"
 msgstr "&راهنما"
 
-#. Translators: The label for the menu item to open the Configuration Profiles dialog.
-msgid "&Configuration profiles..."
-msgstr "&پروفایل‌های پیکره‌بندی..."
-
-#. Translators: The label for the menu item to revert to saved configuration.
-msgid "&Revert to saved configuration"
-msgstr "&بازگشت به پیکره‌بَندیِ ذخیره شده"
-
-msgid "Reset all settings to saved state"
-msgstr "تمامِ تنظیمات را به حالتِ از پیش ذخیره شده برمیگردانَد."
-
-#. Translators: The label for the menu item to reset settings to default settings.
-#. Here, default settings means settings that were there when the user first used NVDA.
-msgid "&Reset configuration to factory defaults"
-msgstr "برگرداندنِ تنظیمات به &پیش‌فرضِ تولید کننده"
-
-msgid "Reset all settings to default state"
-msgstr "تمامِ تنظیمات را به وضعیتِ اولیه بازمیگردانَد."
-
-#. Translators: The label for the menu item to save current settings.
-msgid "&Save configuration"
-msgstr "&ذخیره‌ی پیکره‌بندی"
-
-msgid "Write the current configuration to nvda.ini"
-msgstr "پیکره‌بَندیِ جاری را در nvda.ini مینویسد."
-
 #. Translators: The label for the menu item to open donate page.
 msgid "Donate"
 msgstr "کمکِ مالی"
@@ -7955,37 +8277,72 @@ msgstr "&خروج"
 msgid "Exit NVDA"
 msgstr "خروج از NVDA"
 
-#. Translators: A message in the exit Dialog shown when all add-ons are disabled.
+#. Translators: The label for the menu item to open Default speech dictionary dialog.
+msgid "&Default dictionary..."
+msgstr "دیکشنریِ &پیش‌فرض..."
+
+#. Translators: The help text for the menu item to open Default speech dictionary dialog.
 msgid ""
-"All add-ons are now disabled. They will be re-enabled on the next restart "
-"unless you choose to disable them again."
+"A dialog where you can set default dictionary by adding dictionary entries "
+"to the list"
 msgstr ""
-"همه‌ی افزونه‌ها در حالِ حاضر غیرفعال شده‌اند. آن‌ها هنگامِ آغاز به کارِ بَعدیِ NVDA "
-"دوباره فعال خواهند شد؛ مگر این‌که بخواهید دوباره غیرفعالشان کنید."
+"پنجره‌ای محاوره‌ایست که میتوانید در آن کلمات و تلفظهای جدید به دیکشنریِ پیش‌فرض "
+"اضافه کنید."
 
-#. Translators: The label for actions list in the Exit dialog.
-msgid "What would you like to &do?"
-msgstr "چه کار می&کنید؟"
+#. Translators: The label for the menu item to open Voice specific speech dictionary dialog.
+msgid "&Voice dictionary..."
+msgstr "دیکشنریِ &صدا..."
 
-#. Translators: An option in the combo box to choose exit action.
-msgid "Exit"
-msgstr "خروج"
+#. Translators: The help text for the menu item
+#. to open Voice specific speech dictionary dialog.
+msgid ""
+"A dialog where you can set voice-specific dictionary by adding dictionary "
+"entries to the list"
+msgstr ""
+"پنجره‌ای محاوره‌ایست که میتوانید با استفاده از آن ورودیهای دیکشنری را به "
+"دیکشنری مخصوص یک صدا اضافه کنید."
 
-#. Translators: An option in the combo box to choose exit action.
-msgid "Restart"
-msgstr "راه‌اندازیِ مجدد"
+#. Translators: The label for the menu item to open Temporary speech dictionary dialog.
+msgid "&Temporary dictionary..."
+msgstr "دیکشنریِ &موقت..."
 
-#. Translators: An option in the combo box to choose exit action.
-msgid "Restart with add-ons disabled"
-msgstr "راه‌اندازیِ مجدد با افزونه های غیرفعال"
+#. Translators: The help text for the menu item to open Temporary speech dictionary dialog.
+msgid ""
+"A dialog where you can set temporary dictionary by adding dictionary entries "
+"to the edit box"
+msgstr ""
+"پنجره‌ای محاوره‌ایست که میتوانید در آن با وارد کردن واژه و تلفظِ جدید، یک "
+"دیکشنریِ موقت ایجاد کنید."
 
-#. Translators: An option in the combo box to choose exit action.
-msgid "Restart with debug logging enabled"
-msgstr "راه‌اندازیِ مجدد با ثبتِ وقایع در سطحِ آسیب‌یابی"
+#. Translators: The label for the menu item to open the Configuration Profiles dialog.
+msgid "&Configuration profiles..."
+msgstr "&پروفایل‌های پیکره‌بندی..."
 
-#. Translators: An option in the combo box to choose exit action.
-msgid "Install pending update"
-msgstr "نصبِ به‌روزرسانیِ به‌تعویق‌افتاده"
+#. Translators: The label for the menu item to revert to saved configuration.
+msgid "&Revert to saved configuration"
+msgstr "&بازگشت به پیکره‌بَندیِ ذخیره شده"
+
+#. Translators: The help text for the menu item to revert to saved configuration.
+msgid "Reset all settings to saved state"
+msgstr "تمامِ تنظیمات را به حالتِ از پیش ذخیره شده برمیگردانَد."
+
+#. Translators: The label for the menu item to reset settings to default settings.
+#. Here, default settings means settings that were there when the user first used NVDA.
+msgid "&Reset configuration to factory defaults"
+msgstr "برگرداندنِ تنظیمات به &پیش‌فرضِ تولید کننده"
+
+#. Translators: The help text for the menu item to reset settings to default settings.
+#. Here, default settings means settings that were there when the user first used NVDA.
+msgid "Reset all settings to default state"
+msgstr "تمامِ تنظیمات را به وضعیتِ اولیه بازمیگردانَد."
+
+#. Translators: The label for the menu item to save current settings.
+msgid "&Save configuration"
+msgstr "&ذخیره‌ی پیکره‌بندی"
+
+#. Translators: The help text for the menu item to save current settings.
+msgid "Write the current configuration to nvda.ini"
+msgstr "پیکره‌بَندیِ جاری را در nvda.ini مینویسد."
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -8316,6 +8673,20 @@ msgid ""
 "version is now {}"
 msgstr "یک نسخه‌ی به‌روز از افزونه نیاز است. حداقل نسخه‌ی پشتیبانی‌شده {} است."
 
+#. Translators: Reported when an action cannot be performed because NVDA is in a secure screen
+msgid "Action unavailable in secure context"
+msgstr "این کار در محتوای امن در دسترس نیست."
+
+#. Translators: Reported when an action cannot be performed because NVDA has been installed
+#. from the Windows Store.
+msgid "Action unavailable in NVDA Windows Store version"
+msgstr "این کار در نسخه‌ی فروشگاهیِ NVDA در دسترس نیست."
+
+#. Translators: Reported when an action cannot be performed because NVDA is waiting
+#. for a response from a modal dialog
+msgid "Action unavailable while a dialog requires a response"
+msgstr "این کار در حالی که پنجره‌ای نیازمندِ پاسخ است در دسترس نیست."
+
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
 msgstr "پروفایل‌های پیکره‌بندی"
@@ -8506,6 +8877,47 @@ msgstr "هیچ راهنمایی اینجا موجود نیست."
 msgid "No user guide found."
 msgstr "هیچ راهنمای کاربری یافت نشد"
 
+#. Translators: An option in the combo box to choose exit action.
+msgid "Exit"
+msgstr "خروج"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart"
+msgstr "راه‌اندازیِ مجدد"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with add-ons disabled"
+msgstr "راه‌اندازیِ مجدد با افزونه های غیرفعال"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with debug logging enabled"
+msgstr "راه‌اندازیِ مجدد با ثبتِ وقایع در سطحِ آسیب‌یابی"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Install pending update"
+msgstr "نصبِ به‌روزرسانیِ به‌تعویق‌افتاده"
+
+#. Translators: A message in the exit Dialog shown when all add-ons are disabled.
+msgid ""
+"All add-ons are now disabled. They will be re-enabled on the next restart "
+"unless you choose to disable them again."
+msgstr ""
+"همه‌ی افزونه‌ها در حالِ حاضر غیرفعال شده‌اند. آن‌ها هنگامِ آغاز به کارِ بَعدیِ NVDA "
+"دوباره فعال خواهند شد؛ مگر این‌که بخواهید دوباره غیرفعالشان کنید."
+
+#. Translators: A message in the exit Dialog shown when NVDA language has been
+#. overwritten from the command line.
+msgid ""
+"NVDA's interface language is now forced from the command line. On the next "
+"restart, the language  saved in NVDA's configuration will be used instead."
+msgstr ""
+"زبانِ رابطِ کاربریِ NVDA حالا از خطِّ فرمان تعیین شده است. در راه‌اندازیِ بعدی، "
+"زبانِ ذخیره‌شده در پیکره‌بَندیِ NVDA به جایش استفاده خواهد شد."
+
+#. Translators: The label for actions list in the Exit dialog.
+msgid "What would you like to &do?"
+msgstr "چه کار می&کنید؟"
+
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
 #. {source} is replaced with the gesture's source; e.g. laptop keyboard.
@@ -8548,8 +8960,8 @@ msgid "&Filter by:"
 msgstr "&فیلتر کردن با"
 
 #. Translators: The label of a button to add a gesture in the Input Gestures dialog.
-#. Translators: The label for a button in speech dictionaries dialog to add new entries.
 #. Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
+#. Translators: The label for a button in speech dictionaries dialog to add new entries.
 msgid "&Add"
 msgstr "&افزودن"
 
@@ -8841,6 +9253,12 @@ msgstr "ورودی/خروجی"
 msgid "debug"
 msgstr "آسیب‌یابی"
 
+#. Translators: Shown for a language which has been provided from the command line
+#. 'langDesc' would be replaced with description of the given locale.
+#, python-brace-format
+msgid "Command line option: {langDesc}"
+msgstr "گزینه‌ی خطِّ فرمان: {langDesc}"
+
 #. Translators: The label for a setting in general settings to select NVDA's interface language
 #. (once selected, NVDA must be restarted; the option user default means the user's Windows language
 #. will be used).
@@ -8889,7 +9307,7 @@ msgid ""
 "administrator privileges)"
 msgstr ""
 "استفاده از تنظیماتِ ذخیره‌شده‌ی &فعلی هنگامِ ورود به ویندوز و دیگر صفحاتِ "
-"محافظت‌شده (به اِختیاراتِ مدیریتی نیاز دارد)"
+"امن (به اِختیاراتِ مدیریتی نیاز دارد)"
 
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
 msgid "Automatically check for &updates to NVDA"
@@ -9218,6 +9636,16 @@ msgstr "اعلامِ تغییرات در رشته‌ی &خواندنی"
 msgid "Report changes to the &composition string"
 msgstr "اعلامِ تغییرات در رشته‌ی &نِوِشتنی"
 
+#. Translators: This is a label appearing on the Object Presentation settings panel.
+msgid ""
+"Configure how much information NVDA will present about controls. These "
+"options apply to focus reporting and NVDA object navigation, but not when "
+"reading text content e.g. web content with browse mode."
+msgstr ""
+"مقدار اطلاعاتی را که NVDA درباره‌ی کنترل‌ها ارائه میدهد پیکربندی میکند. این "
+"گزینه‌ها برای اعلام فکوس و پیمایشِ اشیاء در NVDA اِعمال میشود؛ نه در مورد "
+"خواندنِ محتوای متنی، مثلا محتوای وب در حالتِ مرور."
+
 #. Translators: This is the label for the object presentation panel.
 msgid "Object Presentation"
 msgstr "نحوه ارائه‌ی اشیاء"
@@ -9350,6 +9778,8 @@ msgid "Automatically set system &focus to focusable elements"
 msgstr "تنظیمِ خودکارِ &فکوسِ سیستم روی سازه‌های فکوس‌پذیر"
 
 #. Translators: This is the label for the document formatting panel.
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
 msgid "Document Formatting"
 msgstr "قالب‌بَندیِ اسناد"
 
@@ -9391,8 +9821,8 @@ msgstr "تأک&ید"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-msgid "Mar&ked (highlighted text)"
-msgstr "ن&شانه‌گذاری‌شده (متنِ برجسته)"
+msgid "Highlighted (mar&ked) text"
+msgstr "متنِ برجسته (نشان‌گذاری‌شده)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -9413,6 +9843,11 @@ msgstr "اطلاعاتِ سند"
 #. document formatting settings panel.
 msgid "No&tes and comments"
 msgstr "&توضیح‌ها و یادداشت‌ها"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings panel.
+msgid "&Bookmarks"
+msgstr "ن&شانک‌ها"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -9577,11 +10012,11 @@ msgstr "فعال‌سازیِ پشتیبانی از تعاملِ لمسی"
 msgid "&Touch typing mode"
 msgstr "حالتِ تایپِ &لمسی"
 
-#. Translators: The title of the Windows 10 OCR panel.
-msgid "Windows 10 OCR"
-msgstr "نویسه‌خوانِ نوریِ ویندوز ۱۰"
+#. Translators: The title of the Windows OCR panel.
+msgid "Windows OCR"
+msgstr "نویسه‌خوانِ نوریِ ویندوز"
 
-#. Translators: Label for an option in the Windows 10 OCR dialog.
+#. Translators: Label for an option in the Windows OCR dialog.
 msgid "Recognition &language:"
 msgstr "&زبانِ بازشناسی"
 
@@ -9610,13 +10045,31 @@ msgid ""
 "Enable &selective registration for UI Automation events and property changes"
 msgstr "فعال‌سازیِ ثبتِ &انتخابی برای رخدادهای UI Automation و تغییراتِ خصوصیات"
 
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid ""
-"Use UI Automation to access Microsoft &Word document controls when available"
-msgstr ""
-"استفاده از UI Automation برای دستیابی به کنترل‌های مایکروسافت و اسنادِ Word در "
-"صورت موجود بودن"
+#. Translators: Label for the Use UIA with MS Word combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithMSWord"
+msgid "Use UI Automation to access Microsoft &Word document controls"
+msgstr "استفاده از UI Automation برای دسترسی به کنترل‌های اسنادِ مایکروسافت &وُرد"
+
+#. Translators: Label for the default value of the Use UIA with MS Word combobox,
+#. in the Advanced settings panel.
+msgctxt "advanced.uiaWithMSWord"
+msgid "Default (Where suitable)"
+msgstr "پیش‌فرض (هرجا مناسب باشد)"
+
+#. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithMSWord"
+msgid "Only when necessary"
+msgstr "تنها وقتی لازم باشد"
+
+#. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithMSWord"
+msgid "Where suitable"
+msgstr "هرجا مناسب باشد"
+
+#. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithMSWord"
+msgid "Always"
+msgstr "همیشه"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -9632,11 +10085,6 @@ msgstr ""
 msgid "Use UI Automation to access the Windows C&onsole when available"
 msgstr ""
 "استفاده از UI Automation برای دستیابی به میزِ &فرمانِ ویندوز در صورت موجود بودن"
-
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid "Speak &passwords in UIA consoles (may improve performance)"
-msgstr "خواندنِ &گذرواژه‌ها در میزهای فرمانِ UIA (ممکن است اجرا را بهبود بخشد)"
 
 #. Translators: Label for the Use UIA with Chromium combobox, in the Advanced settings panel.
 #. Note the '\n' is used to split this long label approximately in half.
@@ -9672,55 +10120,94 @@ msgstr "نه"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
+msgid "Annotations"
+msgstr "یادداشت‌ها"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Report 'has details' for structured annotations"
+msgstr "«جزئیات دارد» را برای یادداشت‌های ساختاریافته اعلام میکند"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Report aria-description always"
+msgstr "اعلامِ aria-description همیشه"
+
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
+msgid "HID Braille Standard"
+msgstr "استانداردِ بریلِ HID"
+
+#. Translators: Label for option in the 'Enable support for HID braille' combobox
+#. in the Advanced settings panel.
+#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
+#. in the Advanced settings panel.
+msgid "Default (Yes)"
+msgstr "پیش‌فرض (بله)"
+
+#. Translators: Label for option in the 'Enable support for HID braille' combobox
+#. in the Advanced settings panel.
+#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
+#. in the Advanced settings panel.
+msgid "Yes"
+msgstr "بله"
+
+#. Translators: Label for option in the 'Enable support for HID braille' combobox
+#. in the Advanced settings panel.
+#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
+#. in the Advanced settings panel.
+msgid "No"
+msgstr "نه"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Enable support for HID braille"
+msgstr "فعالسازیِ پشتیبانی از بریلِ HID"
+
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
 msgid "Terminal programs"
 msgstr "برنامه‌های پایانه‌ای"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-msgid "Use the new t&yped character support in Windows Console when available"
+msgid "Speak &passwords in all enhanced terminals (may improve performance)"
 msgstr ""
-"استفاده از پشتیبانیِ جدید از نویسه‌های &تایپ‌شده در میزِ فرمانِ ویندوز در صورت "
-"موجود بودن"
+"خواندنِ گ&ذرواژه‌ها در همه‌ی پایانه‌های پیشرفته (ممکن است اجرا را بهبود بخشد)"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid ""
+"Use enhanced t&yped character support in legacy Windows Console when "
+"available"
+msgstr ""
+"استفاده از پشتیبانیِ پیشرفته از نویسه‌های &تایپ‌شده در میزهای فرمانِ قدیمیِ "
+"ویندوز در صورت موجود بودن"
 
 #. Translators: This is the label for a combo box for selecting a
 #. method of detecting changed content in terminals in the advanced
 #. settings panel.
-#. Choices are automatic, allow Diff Match Patch, and force Difflib.
+#. Choices are automatic, Diff Match Patch, and Difflib.
 msgid "&Diff algorithm:"
 msgstr "ال&گوریتمِ Diff"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA determine the method of detecting changed
 #. content in terminals automatically.
-msgid "Automatic (Difflib)"
-msgstr "خودکار (Difflib)"
+msgid "Automatic (prefer Diff Match Patch)"
+msgstr "خودکار (Diff Match Patch را ترجیح بده)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA detect changes in terminals
-#. by character when supported, using the diff match patch algorithm.
-msgid "allow Diff Match Patch"
-msgstr "به Diff Match Patch اجازه بده"
+#. by character, using the diff match patch algorithm.
+msgid "Diff Match Patch"
+msgstr "Diff Match Patch"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA detect changes in terminals
 #. by line, using the difflib algorithm.
-msgid "force Difflib"
-msgstr "به Difflib وادار کن"
-
-#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
-#. in the Advanced settings panel.
-msgid "Default (Yes)"
-msgstr "پیش‌فرض (بله)"
-
-#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
-#. in the Advanced settings panel.
-msgid "Yes"
-msgstr "بله"
-
-#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
-#. in the Advanced settings panel.
-msgid "No"
-msgstr "نه"
+msgid "Difflib"
+msgstr "Difflib"
 
 #. Translators: This is the label for combobox in the Advanced settings panel.
 msgid "Attempt to cancel speech for expired focus events:"
@@ -9736,6 +10223,11 @@ msgstr "متنِ ویرایش‌شدنی"
 msgid "Caret movement timeout (in ms)"
 msgstr "مدت زمانِ حرکتِ نشانگر (به هزارمِ ثانیه)"
 
+#. Translators: This is the label for a checkbox control in the
+#. Advanced settings panel.
+msgid "Report transparent color values"
+msgstr "اعلامِ مقدارهای رنگ‌های روشن"
+
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 msgid "Debug logging"
@@ -9745,6 +10237,20 @@ msgstr "ثبتِ آسیب‌یابی"
 #. Advanced settings panel
 msgid "Enabled logging categories"
 msgstr "دسته‌های فعال برای ثبتِ وقایع"
+
+#. Translators: Label for the Play a sound for logged errors combobox, in the Advanced settings panel.
+msgid "Play a sound for logged e&rrors:"
+msgstr "پخش صدا برای خ&طاهای ثبت‌شده"
+
+#. Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
+msgctxt "advanced.playErrorSound"
+msgid "Only in NVDA test versions"
+msgstr "تنها در نسخه‌های آزمایشیِ NVDA"
+
+#. Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
+msgctxt "advanced.playErrorSound"
+msgid "Yes"
+msgstr "بله"
 
 #. Translators: This is the label for the Advanced settings panel.
 msgid "Advanced"
@@ -9774,84 +10280,6 @@ msgstr "میدانم که تغییرِ این تنظیمات میتواند با
 #. Translators: This is the label for a button in the Advanced settings panel
 msgid "Restore defaults"
 msgstr "برگرداندن به پیش‌فرض"
-
-#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-msgid "&Anywhere"
-msgstr "در &هر جا"
-
-#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-msgid "Whole &word"
-msgstr "همه‌ی &واژه"
-
-#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-msgid "Regular &expression"
-msgstr "&عبارتِ مُنتظم"
-
-#. Translators: This is the label for the edit dictionary entry dialog.
-msgid "Edit Dictionary Entry"
-msgstr "ویرایشِ واژه‌ی وارد‌شده در دیکشنری"
-
-#. Translators: This is a label for an edit field in add dictionary entry dialog.
-msgid "&Pattern"
-msgstr "&الگو"
-
-#. Translators: This is a label for an edit field in add dictionary entry dialog and in punctuation/symbol pronunciation dialog.
-#. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
-msgid "&Replacement"
-msgstr "&جایگزین"
-
-#. Translators: This is a label for an edit field in add dictionary entry dialog.
-msgid "&Comment"
-msgstr "&توضیح"
-
-#. Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
-msgid "&Type"
-msgstr "&نوع"
-
-#. Translators: This is an error message to let the user know that the pattern field in the dictionary entry is not valid.
-msgid "A pattern is required."
-msgstr "نیاز است یک الگو وارد کنید."
-
-msgid "Dictionary Entry Error"
-msgstr "خطا در ورودیِ دیکشنری"
-
-#. Translators: This is an error message to let the user know that the dictionary entry is not valid.
-#, python-format
-msgid "Regular Expression error: \"%s\"."
-msgstr "خطا در عبارتِ مُنتظم: \"%s\"."
-
-#. Translators: The label for the list box of dictionary entries in speech dictionary dialog.
-msgid "&Dictionary entries"
-msgstr "واژگانِ وارد‌شده در &دیکشنری"
-
-#. Translators: The label for a column in dictionary entries list used to identify comments for the entry.
-msgid "Comment"
-msgstr "توضیح"
-
-#. Translators: The label for a column in dictionary entries list used to identify pattern (original word or a pattern).
-msgid "Pattern"
-msgstr "الگو"
-
-#. Translators: The label for a column in dictionary entries list and in a list of symbols from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
-#. Translators: The label for a column in symbols list used to identify a replacement.
-msgid "Replacement"
-msgstr "جایگزین"
-
-#. Translators: The label for a column in dictionary entries list used to identify whether the entry is case sensitive or not.
-msgid "case"
-msgstr "حساس به حروفِ بزرگ یا کوچک"
-
-#. Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression, matches whole words, or matches anywhere.
-msgid "Type"
-msgstr "نوع"
-
-#. Translators: The label for a button in speech dictionaries dialog to edit existing entries.
-msgid "&Edit"
-msgstr "&ویرایش کردن"
-
-#. Translators: This is the label for the add dictionary entry dialog.
-msgid "Add Dictionary Entry"
-msgstr "افزودن واژه به فهرستِ واژگان"
 
 #. Translators: A label for the braille display on the braille panel.
 msgid "Braille &display"
@@ -10039,6 +10467,12 @@ msgstr "&نمادها"
 msgid "Symbol"
 msgstr "نماد"
 
+#. Translators: The label for a column in symbols list used to identify a replacement.
+#. Translators: The label for a column in dictionary entries list and in a list of symbols
+#. from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
+msgid "Replacement"
+msgstr "جایگزین"
+
 #. Translators: The label for a column in symbols list used to identify a symbol's speech level (either none, some, most, all or character).
 msgid "Level"
 msgstr "سطح"
@@ -10051,6 +10485,12 @@ msgstr "ارسالِ خودِ نماد به گفتار"
 #. Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
 msgid "Change selected symbol"
 msgstr "تغییرِ نمادِ انتخاب‌شده"
+
+#. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
+#. Translators: This is a label for an edit field in add dictionary entry dialog
+#. and in punctuation/symbol pronunciation dialog.
+msgid "&Replacement"
+msgstr "&جایگزین"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"
@@ -10068,6 +10508,103 @@ msgstr "&حذف کردن"
 #, python-format
 msgid "Symbol \"%s\" is already present."
 msgstr "نمادِ \"%s\" در حالِ حاضر موجود است"
+
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "&Anywhere"
+msgstr "در &هر جا"
+
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "Whole &word"
+msgstr "همه‌ی &واژه"
+
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "Regular &expression"
+msgstr "&عبارتِ مُنتظم"
+
+#. Translators: This is the label for the edit dictionary entry dialog.
+msgid "Edit Dictionary Entry"
+msgstr "ویرایشِ واژه‌ی وارد‌شده در دیکشنری"
+
+#. Translators: This is a label for an edit field in add dictionary entry dialog.
+msgid "&Pattern"
+msgstr "&الگو"
+
+#. Translators: This is a label for an edit field in add dictionary entry dialog.
+msgid "&Comment"
+msgstr "&توضیح"
+
+#. Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
+msgid "&Type"
+msgstr "&نوع"
+
+#. Translators: This is an error message to let the user know that the pattern field
+#. in the dictionary entry is not valid.
+msgid "A pattern is required."
+msgstr "نیاز است یک الگو وارد کنید."
+
+#. Translators: The title of an error message raised by the Dictionary Entry dialog
+msgid "Dictionary Entry Error"
+msgstr "خطا در ورودیِ دیکشنری"
+
+#. Translators: This is an error message to let the user know that the dictionary entry is not valid.
+#, python-format
+msgid "Regular Expression error: \"%s\"."
+msgstr "خطا در عبارتِ مُنتظم: \"%s\"."
+
+#. Translators: The label for the list box of dictionary entries in speech dictionary dialog.
+msgid "&Dictionary entries"
+msgstr "واژگانِ وارد‌شده در &دیکشنری"
+
+#. Translators: The label for a column in dictionary entries list used to identify comments for the entry.
+msgid "Comment"
+msgstr "توضیح"
+
+#. Translators: The label for a column in dictionary entries list used to identify pattern
+#. (original word or a pattern).
+msgid "Pattern"
+msgstr "الگو"
+
+#. Translators: The label for a column in dictionary entries list used to identify
+#. whether the entry is case sensitive or not.
+msgid "case"
+msgstr "حساس به حروفِ بزرگ یا کوچک"
+
+#. Translators: The label for a column in dictionary entries list used to identify
+#. whether the entry is a regular expression, matches whole words, or matches anywhere.
+msgid "Type"
+msgstr "نوع"
+
+#. Translators: The label for a button in speech dictionaries dialog to edit existing entries.
+msgid "&Edit"
+msgstr "&ویرایش کردن"
+
+#. Translators: The label for a button on the Speech Dictionary dialog.
+#. Translators: The title on a prompt for confirmation on the Speech Dictionary dialog.
+msgid "Remove all"
+msgstr "حذفِ همه"
+
+#. Translators: This is the label for the add dictionary entry dialog.
+msgid "Add Dictionary Entry"
+msgstr "افزودن واژه به فهرستِ واژگان"
+
+#. Translators: A prompt for confirmation on the Speech Dictionary dialog.
+msgid "Are you sure you want to remove all the entries in this dictionary?"
+msgstr ""
+"آیا مطمئنید که میخواهید همه‌ی آنچه در این دیکشنری وارد شده است را حذف کنید؟"
+
+#. Translators: Title for default speech dictionary dialog.
+msgid "Default dictionary"
+msgstr "دیکشنریِ پیش‌فرض"
+
+#. Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
+#, python-format
+msgid "Voice dictionary (%s)"
+msgstr "دیکشنریِ صدای (%s)"
+
+#. Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long
+#. as NvDA is running).
+msgid "Temporary dictionary"
+msgstr "دیکشنریِ موقت"
 
 #. Translators: The main message for the Welcome dialog when the user starts NVDA for the first time.
 msgid ""
@@ -10247,6 +10784,10 @@ msgstr "دارای %s ستون"
 msgid "with %s rows"
 msgstr "دارای %s سطر"
 
+#. Translators: Speaks when there a further details/annotations that can be fetched manually.
+msgid "has details"
+msgstr "دارای جزئیات است"
+
 #. Translators: Speaks the item level in treeviews (example output: level 2).
 #, python-format
 msgid "level %s"
@@ -10286,6 +10827,11 @@ msgstr "ستونِ {0} از {1}"
 #, python-format
 msgid "%s columns"
 msgstr "%s ستون"
+
+#. Translators: Indicates the text column number in a document.
+#, python-brace-format
+msgid "column {columnNumber}"
+msgstr "ستونِ {columnNumber}"
 
 msgid "continuous section break"
 msgstr "شکستِ بخشِ پیوسته"
@@ -10444,11 +10990,6 @@ msgstr "مخفیست"
 msgid "not hidden"
 msgstr "مخفی نیست"
 
-#. Translators: Reported for text which is at the baseline position;
-#. i.e. not superscript or subscript.
-msgid "baseline"
-msgstr "روی خط"
-
 #. Translators: Reported when text is left-aligned.
 msgid "align left"
 msgstr "چپ‌چین"
@@ -10540,9 +11081,25 @@ msgstr "بدونِ تورفتگیِ خطِّ اول"
 msgid "line spacing %s"
 msgstr "فاصله‌ی خطّیِ %s"
 
+#. Translators: Reported when text contains a draft comment.
+msgid "has draft comment"
+msgstr "دیدگاهِ پیشنویس دارد"
+
+#. Translators: Reported when text contains a resolved comment.
+msgid "has resolved comment"
+msgstr "دیدگاهِ حل‌شده دارد"
+
 #. Translators: Reported when text no longer contains a comment.
 msgid "out of comment"
 msgstr "هیچ دیدگاهی نیست"
+
+#. Translators: Reported when text contains a bookmark
+msgid "bookmark"
+msgstr "نشانک"
+
+#. Translators: Reported when text no longer contains a bookmark
+msgid "out of bookmark"
+msgstr "بیرونِ نشانک"
 
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
@@ -10696,7 +11253,7 @@ msgid ""
 "Cannot set headers. Please enable reporting of table headers in Document "
 "Formatting Settings"
 msgstr ""
-"نمیتوانم سرنویسها را تنظیم کنم. لطفا گزینه‌ی گزارشِ سرنویسهای جدول را در "
+"نمیتوانم سر‌ستون‌ها را تنظیم کنم. لطفا گزینه‌ی اعلامِ سر‌ستون‌های جدول را در "
 "تنظیمات قالببندیِ اسناد فعال کنید."
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
@@ -10777,8 +11334,26 @@ msgstr "متنِ توضیحِ جایی که نشانگرِ سیستم قرار �
 msgid "Not in table"
 msgstr "در جدول نیستید"
 
+#. Translators: a measurement in inches
+#, python-brace-format
+msgid "{val:.2f} in"
+msgstr "{val:.2f} اینچ"
+
+#. Translators: a measurement in centimetres
+#, python-brace-format
+msgid "{val:.2f} cm"
+msgstr "{val:.2f} سانتیمتر"
+
 msgid "invoke"
 msgstr "فراخوانی"
+
+#. Translators: part of the suggestions count message for one suggestion.
+msgid "1 suggestion"
+msgstr "۱ پیشنهاد"
+
+#. Translators: part of the suggestions count message (for example: 2 suggestions).
+msgid "{} suggestions"
+msgstr "{} پیشنهاد"
 
 #. Translators: the description of a script
 msgctxt "excel-UIA"
@@ -10879,19 +11454,28 @@ msgstr "از {firstAddress} {firstValue} تا {lastAddress} {lastValue}"
 msgid "Reports the note or comment thread on the current cell"
 msgstr "یادداشت یا دیدگاهِ روی خانه‌ی جاری را اعلام میکند"
 
-#. Translators: a comment on a cell in Microsoft excel.
+#. Translators: a note on a cell in Microsoft excel.
 #, python-brace-format
-msgid "{comment}  by {author}"
-msgstr "{comment} توسط {author}"
+msgid "{name}: {desc}"
+msgstr "{name}: {desc}"
+
+#. Translators: message when a cell in Excel contains no note
+msgid "No note on this cell"
+msgstr "یادداشتی در این خانه نیست"
 
 #. Translators: a comment on a cell in Microsoft excel.
 #, python-brace-format
-msgid "{comment}  by {author} with {numReplies} replies"
-msgstr "{comment} توسط {author} با {numReplies} پاسخ"
+msgid "Comment thread: {comment}  by {author}"
+msgstr "دیدگاه: {comment} توسط {author}"
 
-#. Translators: A message in Excel when there is no note
-msgid "No note or comment thread on this cell"
-msgstr "یادداشت یا دیدگاهی در این خانه نیست"
+#. Translators: a comment on a cell in Microsoft excel.
+#, python-brace-format
+msgid "Comment thread: {comment}  by {author} with {numReplies} replies"
+msgstr "دیدگاه: {comment} توسط {author} با {numReplies} پاسخ"
+
+#. Translators: A message in Excel when there is no comment thread
+msgid "No comment thread on this cell"
+msgstr "دیدگاهی در این خانه نیست"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -10927,6 +11511,10 @@ msgstr "دیدگاه: {comment} توسط {author}"
 #, python-brace-format
 msgid "Comment: {comment} by {author} on {date}"
 msgstr "توضیح: {comment} توسط {author} به تاریخِ {date}"
+
+#. Translators: a message when navigating by sentence is unavailable in MS Word
+msgid "Navigating by sentence not supported in this document"
+msgstr "پیمایش با جمله در این سند پشتیبانی نمیشود"
 
 msgid "Desktop"
 msgstr "میزِ کار"
@@ -12290,46 +12878,39 @@ msgid "1.5 line spacing"
 msgstr "فاصله‌ی یِکُنیم خطّی"
 
 #, fuzzy
-#~ msgid "category"
-#~ msgid_plural "categories"
-#~ msgstr[0] "&دسته‌ها"
+#~ msgid "Moves the navigator object to the first row"
+#~ msgstr "پِیمایِشگر را به شیءِ بعدی میبَرَد."
 
-#~ msgid "&Activate"
-#~ msgstr "&فعال کردن"
+#, fuzzy
+#~ msgid "Moves the navigator object to the last row"
+#~ msgstr "پِیمایِشگر را به شیءِ بعدی میبَرَد."
 
-#~ msgctxt "line spacing value"
-#~ msgid "exact"
-#~ msgstr "دقیق"
+#~ msgid "Chinese (China, Mandarin) grade 2"
+#~ msgstr "چینی (چین، ماندارین) درجه ۲"
 
-#~ msgid "Russian grade 1"
-#~ msgstr "روسی درجه‌ی 1"
+#~ msgid "Cannot save configuration - NVDA in secure mode"
+#~ msgstr "پیکره‌بندی را نمیتوانم ذخیره کنم. NVDA در حالتِ امن قرار دارد."
 
-#~ msgid "%s copied to clipboard"
-#~ msgstr "%s در کلیپ‌برد کپی شد."
+#~ msgid "details"
+#~ msgstr "جزئیات"
 
-#~ msgid "Review selection copied to clipboard"
-#~ msgstr "متنِ بازبینی‌شده‌ی انتخاب شده در کلیپ‌برد کپی شد."
+#~ msgid "{modifier} pressed"
+#~ msgstr "{modifier} فشرده شد"
 
-#~ msgid "Apply"
-#~ msgstr "اِعمال"
+#~ msgid "Dutch (Belgium) 6 dot"
+#~ msgstr "هلندی (بلژیک) ۶ نقطه"
 
-#~ msgid "Co&mments"
-#~ msgstr "تو&ضیحات"
+#~ msgid "Dutch (Netherlands) 6 dot"
+#~ msgstr "هلندی (هلند) ۶ نقطه"
 
-#~ msgid "C&omments"
-#~ msgstr "ت&وضیح‌ها"
+#~ msgid "Polish grade 1"
+#~ msgstr "لهستانی درجه‌ی 1"
 
-#~ msgid "Ukrainian"
-#~ msgstr "اوکراینی"
+#~ msgid "Shows a summary of the details at this position if found."
+#~ msgstr "خلاصه‌ی جزئیات را در این قسمت در صورتی که یافت شود نشان میدهد."
 
-#~ msgid "Russian braille for computer code"
-#~ msgstr "بریلِ روسیِ رایانه"
+#~ msgid "Report details in browse mode"
+#~ msgstr "اعلامِ جزئیات در حالتِ مرور"
 
-#~ msgid "Speaks the current foreground object"
-#~ msgstr "شیءِ پیش‌زمینه‌ی جاری را میخوانَد."
-
-#~ msgid "&Automatically start NVDA after I log on to Windows"
-#~ msgstr "&شروعِ خودکارِ NVDA هنگامی که من واردِ ویندوز میشوم"
-
-#~ msgid "Use NVDA on the Windows &logon screen"
-#~ msgstr "استفاده از NVDA در صفحه‌ی &ورودیِ ویندوز"
+#~ msgid "{comment}  by {author}"
+#~ msgstr "{comment} توسط {author}"

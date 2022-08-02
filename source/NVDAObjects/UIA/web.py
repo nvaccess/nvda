@@ -2,6 +2,10 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 # Copyright (C) 2015-2021 NV Access Limited, Babbage B.V., Leonard de Ruijter
+from typing import (
+	Optional,
+	Dict,
+)
 
 from comtypes import COMError
 from comtypes.automation import VARIANT
@@ -19,13 +23,13 @@ import cursorManager
 import re
 import aria
 import textInfos
-from UIABrowseMode import (
+from UIAHandler.browseMode import (
 	UIABrowseModeDocument,
 	UIABrowseModeDocumentTextInfo,
 	UIATextRangeQuickNavItem,
 	UIAControlQuicknavIterator,
 )
-from UIAUtils import (
+from UIAHandler.utils import (
 	createUIAMultiPropertyCondition,
 	getUIATextAttributeValueFromRange,
 )
@@ -263,7 +267,10 @@ class UIAWebTextInfo(UIATextInfo):
 	# C901 'getTextWithFields' is too complex
 	# Note: when working on getTextWithFields, look for opportunities to simplify
 	# and move logic out into smaller helper functions.
-	def getTextWithFields(self, formatConfig=None):  # noqa: C901
+	def getTextWithFields(  # noqa: C901
+		self,
+		formatConfig: Optional[Dict] = None
+	) -> textInfos.TextInfo.TextWithFieldsT:
 		# We don't want fields for collapsed ranges.
 		# This would normally be a general rule, but MS Word currently needs fields for collapsed ranges,
 		# thus this code is not in the base.

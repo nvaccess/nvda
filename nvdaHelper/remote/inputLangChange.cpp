@@ -16,7 +16,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <windows.h>
 #include <VersionHelpers.h>
 #include "nvdaHelperRemote.h"
-#include "nvdaControllerInternal.h"
+#include <remote/nvdaControllerInternal.h>
 #include "ime.h"
 #include "tsf.h"
 #include "inputLangChange.h"

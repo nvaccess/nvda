@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2021 NV Access Limited
+# Copyright (C) 2021-2022 NV Access Limited, Łukasz Golonka
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -79,9 +79,17 @@ def GetForegroundWindowTitle() -> str:
 	return _GetWindowTitle(hwnd)
 
 
-def waitUntilWindowFocused(targetWindowTitle: str):
+def waitUntilWindowFocused(targetWindowTitle: str, timeoutSecs: int = 5):
 	_blockUntilConditionMet(
 		getValue=lambda: GetForegroundWindowTitle() == targetWindowTitle,
-		giveUpAfterSeconds=5,
+		giveUpAfterSeconds=timeoutSecs,
 		errorMessage=f"Timed out waiting {targetWindowTitle} to focus",
 	)
+
+
+def getWindowHandle(windowClassName: str, windowName: str) -> int:
+	return windll.user32.FindWindowW(windowClassName, windowName)
+
+
+def windowWithHandleExists(handle: int) -> bool:
+	return bool(windll.user32.IsWindow(handle))

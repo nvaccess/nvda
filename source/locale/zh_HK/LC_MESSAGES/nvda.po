@@ -2,11 +2,11 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 2021.1beta1\n"
+"Project-Id-Version: 2022.2beta3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-25 00:01+0000\n"
-"PO-Revision-Date: 2021-06-28 15:07+0800\n"
-"Last-Translator: Eric Yip <cyeric20@yahoo.com.hk>\n"
+"POT-Creation-Date: 2022-07-01 05:41+0000\n"
+"PO-Revision-Date: 2022-07-06 15:35+0800\n"
+"Last-Translator: EricYip@HKBU <cyeric20@yahoo.com.hk>\n"
 "Language-Team: Eric Yip@ HKBU <ericyip@hkbu.org.hk>\n"
 "Language: zh_HK\n"
 "MIME-Version: 1.0\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.6.9\n"
+"X-Generator: Poedit 1.6.11\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
@@ -80,49 +80,6 @@ msgstr "未知的語言"
 #. Translators: The label for an unknown input method when switching input methods.
 msgid "unknown input method"
 msgstr "未知的輸入法"
-
-#. Translators: The label shown for a spelling and grammar error in the NVDA Elements List dialog in Microsoft Word.
-#. {text} will be replaced with the text of the spelling error.
-#, python-brace-format
-msgid "spelling and grammar: {text}"
-msgstr "拼字和文法：{text}"
-
-#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
-#. {text} will be replaced with the text of the spelling error.
-#, python-brace-format
-msgid "spelling: {text}"
-msgstr "拼字：{text}"
-
-#. Translators: The label shown for a grammar error in the NVDA Elements List dialog in Microsoft Word.
-#. {text} will be replaced with the text of the spelling error.
-#, python-brace-format
-msgid "grammar: {text}"
-msgstr "文法：{text}"
-
-#. Translators: a style of fill type (to color the inside of a control or text)
-msgctxt "UIAHandler.FillType"
-msgid "none"
-msgstr "沒有"
-
-#. Translators: a style of fill type (to color the inside of a control or text)
-msgctxt "UIAHandler.FillType"
-msgid "color"
-msgstr "顏色"
-
-#. Translators: a style of fill type (to color the inside of a control or text)
-msgctxt "UIAHandler.FillType"
-msgid "gradient"
-msgstr "漸層"
-
-#. Translators: a style of fill type (to color the inside of a control or text)
-msgctxt "UIAHandler.FillType"
-msgid "picture"
-msgstr "圖片"
-
-#. Translators: a style of fill type (to color the inside of a control or text)
-msgctxt "UIAHandler.FillType"
-msgid "pattern"
-msgstr "模式"
 
 #. Translators: shown when an addon API version string is unknown
 #. Translators: The word for an unknown control type.
@@ -281,6 +238,11 @@ msgstr "tabctl"
 msgid "prgbar"
 msgstr "prgbar"
 
+#. Translators: Displayed in braille for an object which is an
+#. indeterminate progress bar, aka busy indicator.
+msgid "bsyind"
+msgstr "bsyind"
+
 #. Translators: Displayed in braille for an object which is a
 #. scroll bar.
 msgid "scrlbar"
@@ -416,8 +378,8 @@ msgid "fig"
 msgstr "fig"
 
 #. Translators: Displayed in braille for an object which represents marked (highlighted) content
-msgid "mrkd"
-msgstr "mrkd"
+msgid "hlght"
+msgstr "hlght"
 
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
@@ -480,6 +442,7 @@ msgid "frml"
 msgstr "frml"
 
 #. Translators: Displayed in braille when there is a comment for a spreadsheet cell or piece of text in a document.
+#. Translators: Brailled when text contains a generic comment.
 msgid "cmnt"
 msgstr "cmnt"
 
@@ -619,6 +582,18 @@ msgstr "c{columnNumber}"
 msgid "%s end"
 msgstr "%s完"
 
+#. Translators: Brailled when text contains a draft comment.
+msgid "drft cmnt"
+msgstr "drft cmnt"
+
+#. Translators: Brailled when text contains a resolved comment.
+msgid "rslvd cmnt"
+msgstr "rslvd cmnt"
+
+#. Translators: brailled when text contains a bookmark
+msgid "bkmk"
+msgstr "bkmk"
+
 #. Translators: The label for a braille setting indicating that braille should be
 #. tethered to focus or review cursor automatically.
 msgid "automatically"
@@ -668,11 +643,6 @@ msgstr "不支援的輸入"
 msgid "{modifier} released"
 msgstr "放開 {modifier}"
 
-#. Translators: Reported when a braille input modifier is pressed.
-#, python-brace-format
-msgid "{modifier} pressed"
-msgstr "按住 {modifier}"
-
 #. Translators: Used when reporting braille dots to the user.
 #. Translators: Reported when braille dots are pressed in input help mode.
 msgid "dot"
@@ -704,142 +674,162 @@ msgstr "任何點"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Afrikaans grade 1"
-msgstr "南非文一級點字"
+msgstr "南非荷兰语1 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Afrikaans grade 2"
-msgstr "南非文二級點字"
+msgstr "南非荷兰语2 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Arabic 8 dot computer braille"
-msgstr "阿拉伯文八點電腦點字"
+msgstr "阿拉伯語電腦8 點"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Arabic grade 1"
-msgstr "阿拉伯文一級點字"
+msgstr "阿拉伯語1 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Arabic grade 2"
-msgstr "阿拉伯文二級點字"
+msgstr "阿拉伯語2 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Assamese grade 1"
-msgstr "阿薩姆語一級點字"
+msgstr "阿薩姆語1 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Bashkir grade 1"
-msgstr "巴什基爾文一級點字"
+msgstr "巴什基爾語1 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Bengali grade 1"
-msgstr "孟加拉語一級點字"
+msgstr "孟加拉語1 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Belarusian computer braille"
-msgstr "白俄罗斯语電腦點字"
+msgstr "白俄罗斯语電腦"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Belarusian literary braille"
-msgstr "白俄罗斯書面語點字"
+msgstr "白俄罗斯書面語"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Bulgarian 8 dot computer braille"
-msgstr "保加利亞語八點電腦點字"
+msgstr "保加利亞語電腦8 點"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Bulgarian grade 1"
+msgstr "保加利亞語1 級"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Catalan grade 1"
+msgstr "加泰羅尼亞文1 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Central Kurdish grade 1"
-msgstr "中库尔德語一級點字"
+msgstr "中库尔德語1 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Coptic 8 dot computer braille"
-msgstr "科普特文八點電腦點字"
+msgstr "科普特語電腦8 點"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Welsh grade 1"
-msgstr "威爾斯語一級點字"
+msgstr "威爾斯語1 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Welsh grade 2"
-msgstr "威爾斯語二級點字"
+msgstr "威爾斯語2 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Czech 8 dot computer braille"
-msgstr "捷克語八點電腦點字"
+msgstr "捷克語電腦8 點"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Czech grade 1"
-msgstr "捷克語一級點字"
+msgstr "捷克語1 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Danish 8 dot computer braille"
-msgstr "丹麥語八點電腦點字"
+msgstr "丹麥語電腦8 點"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Danish 6 dot grade 1"
-msgstr "丹麥語一級六點點字"
+msgstr "丹麥語電腦6 點1 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Danish 8 dot grade 1"
-msgstr "丹麥語一級八點點字"
+msgstr "丹麥語8 點1 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Danish 6 dot grade 2"
-msgstr "丹麥語二級六點點字"
+msgstr "丹麥語6 點2 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Danish 8 dot grade 2"
-msgstr "丹麥語二級八點點字"
+msgstr "丹麥語8 點2 級"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "German 6 dot computer braille"
+msgstr "德文電腦6 點"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "German 8 dot computer braille"
-msgstr "德語八點電腦點字"
+msgstr "德語電腦8 點"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "German grade 0"
-msgstr "德語零級點字"
+msgstr "德語0 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "German grade 0 (detailed)"
-msgstr "德語零級點字 (詳細)"
+msgstr "德語詳細0 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "German grade 1"
-msgstr "德語一級點字"
+msgstr "德語1 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "German grade 1 (detailed)"
-msgstr "德語一級點字 (詳細)"
+msgstr "德語詳細1 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "German grade 2"
-msgstr "德語二級點字"
+msgstr "德語2 級"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "German grade 2 (detailed)"
+msgstr "德語詳細2 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -849,352 +839,382 @@ msgstr "希臘語 (希臘)"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "English (U.K.) 8 dot computer braille"
-msgstr "英式英語八點電腦點字"
+msgstr "英式英語電腦8 點"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "English (U.K.) grade 1"
-msgstr "英式英語一級點字"
+msgstr "英式英語1 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "English (U.K.) grade 2"
-msgstr "英式英語二級點字"
+msgstr "英式英語2 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "English North American Braille Computer Code"
-msgstr "北美英語電腦點字"
+msgstr "北美英語電腦"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Unified English Braille Code grade 1"
-msgstr "統一英語點字碼一級點字"
+msgstr "統一英語點字碼1 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Unified English Braille Code grade 2"
-msgstr "統一英語點字碼二級點字"
+msgstr "統一英語點字碼2 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "English (U.S.) 6 dot computer braille"
-msgstr "美式英語六點電腦點字"
+msgstr "美式英語電腦6 點"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "English (U.S.) 8 dot computer braille"
-msgstr "美式英語八點電腦點字"
+msgstr "美式英語電腦8 點"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "English (U.S.) grade 1"
-msgstr "美式英語一級點字"
+msgstr "美式英語1 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "English (U.S.) grade 2"
-msgstr "美式英語二級點字"
+msgstr "美式英語2 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Esperanto grade 1"
-msgstr "世界語一級點字"
+msgstr "世界語1 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Spanish 8 dot computer braille"
-msgstr "西班牙文八點電腦點字"
+msgstr "西班牙語電腦8 點"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Spanish grade 1"
-msgstr "西班牙文一級點字"
+msgstr "西班牙語1 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Spanish grade 2"
-msgstr "西班牙文二級點字"
+msgstr "西班牙語2 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Estonian grade 0"
-msgstr "愛沙尼亞語零級點字"
+msgstr "愛沙尼亞語0 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Ethiopic grade 1"
-msgstr "埃塞俄比亞語一級點字"
+msgstr "埃塞俄比亞語1 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Persian 8 dot computer braille"
-msgstr "波斯語八點電腦點字"
+msgstr "波斯語電腦8 點"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Persian grade 1"
-msgstr "波斯語一級點字"
+msgstr "波斯語1 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Finnish 6 dot"
-msgstr "芬兰語六點點字"
+msgstr "芬兰語6 點"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Finnish 8 dot computer braille"
-msgstr "芬蘭語八點電腦點字"
+msgstr "芬蘭語8 點"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "French (unified) 6 dot computer braille"
-msgstr "統一法語六點電腦點字"
+msgstr "統一法語電腦6 點"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "French (unified) 8 dot computer braille"
-msgstr "統一法語八點電腦點字"
+msgstr "統一法語電腦8 點"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "French (unified) grade 2"
-msgstr "統一法語二級點字"
+msgstr "統一法語2 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Irish grade 1"
-msgstr "愛爾蘭語一級點字"
+msgstr "愛爾蘭語1 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Irish grade 2"
-msgstr "愛爾蘭語二級點字"
+msgstr "愛爾蘭語2 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Gujarati grade 1"
-msgstr "古吉拉特語一級點字"
+msgstr "古吉拉特語1 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Greek international braille"
-msgstr "國際希臘點字"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "Hebrew 8 dot computer braille"
-msgstr "希伯來語八點電腦點字"
+msgstr "國際希臘"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Israeli grade 1"
-msgstr "以色列語一級點字"
+msgstr "以色列語1 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Israeli 8 dot computer braille"
-msgstr "以色列語 八點電腦點字"
+msgid "Hebrew computer braille"
+msgstr "希伯來語電腦"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Hindi grade 1"
-msgstr "北印度語一級點字"
+msgstr "北印度語1 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Croatian 8 dot computer braille"
-msgstr "克羅地亞語八點電腦點字"
+msgstr "克羅地亞語電腦8 點"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Croatian grade 1"
-msgstr "克羅地亞語一級點字"
+msgstr "克羅地亞語1 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Hungarian 8 dot computer braille"
-msgstr "匈牙利語八點電腦點字"
+msgstr "匈牙利語電腦8 點"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Hungarian grade 1"
-msgstr "匈牙利語一級點字"
+msgstr "匈牙利語1 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Hungarian grade 2"
-msgstr "匈牙利語二級點字"
+msgstr "匈牙利語2 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Icelandic 8 dot computer braille"
-msgstr "冰島語八點電腦點字"
+msgstr "冰島語電腦8 點"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Italian 6 dot computer braille"
-msgstr "義大利語 六點電腦點字"
+msgstr "義大利語電腦6 點"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Italian 8 dot computer braille"
-msgstr "義大利語 八點電腦點字"
+msgstr "義大利語電腦8點"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Japanese (Kantenji) literary braille"
+msgstr "日文 (漢點字) 書寫"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Kannada grade 1"
-msgstr "卡納達語一級點字"
+msgstr "卡納達語1 級"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Kazakh grade 1"
+msgstr "哈薩克語1 級"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Khmer grade 1"
+msgstr "高棉語1 級"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Northern Kurdish grade 0"
+msgstr "北庫爾德語0 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Korean grade 1 (2006)"
-msgstr "韓語 2006 年一級點字"
+msgstr "韓語 2006 年1 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Korean grade 2 (2006)"
-msgstr "韓語 2006 年二級點字"
+msgstr "韓語 2006 年2 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Korean grade 1"
-msgstr "韓語一級點字"
+msgstr "韓語1 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Korean grade 2"
-msgstr "韓語二級點字"
+msgstr "韓語2 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Kashmiri grade 1"
-msgstr "喀什米爾語一級點字"
+msgstr "喀什米爾語1 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Lithuanian 8 dot"
-msgstr "立陶宛8 點點字"
+msgstr "立陶宛8 點"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Lithuanian 6 dot"
-msgstr "立陶宛6 點點字"
+msgstr "立陶宛6 點"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Latvian grade 1"
-msgstr "拉脫維亞語一級點字"
+msgstr "拉脫維亞語1 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Malayalam grade 1"
-msgstr "馬拉雅拉姆語一級點字"
+msgstr "馬拉雅拉姆語1 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Manipuri grade 1"
-msgstr "曼尼普爾語一級點字"
+msgstr "曼尼普爾語1 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Malay grade 2"
-msgstr "馬拉語二級點字"
+msgstr "馬拉語2 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Mongolian grade 1"
-msgstr "蒙古語一級點字"
+msgstr "蒙古語1 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Mongolian grade 2"
-msgstr "蒙古語二級點字"
+msgstr "蒙古語2 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Marathi grade 1"
-msgstr "馬拉地語語一級點字"
+msgstr "馬拉地語1 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Belgium) 6 dot"
-msgstr "荷蘭語(比利時)六點"
+msgid "Burmese grade 1"
+msgstr "緬甸語1 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Netherlands) 6 dot"
-msgstr "荷蘭語(荷蘭)六點"
+msgid "Burmese grade 2"
+msgstr "緬甸語2 級"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Dutch 6 dot"
+msgstr "荷蘭文6 點"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Dutch 8 dot"
-msgstr "荷蘭語八點"
+msgstr "荷蘭語8點"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Norwegian 8 dot computer braille"
-msgstr "挪威語八點電腦點字"
+msgstr "挪威語電腦8 點"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Norwegian grade 0"
-msgstr "挪威語零級點字"
+msgstr "挪威語0 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Norwegian grade 1"
-msgstr "挪威語一級點字"
+msgstr "挪威語1 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Norwegian grade 2"
-msgstr "挪威語二級點字"
+msgstr "挪威語2 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Norwegian grade 3"
-msgstr "挪威語三級點字"
+msgstr "挪威語3 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Nepali grade 1"
-msgstr "尼泊爾語一級點字"
+msgstr "尼泊爾語1 級"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Sepedi grade 1"
+msgstr "北梭托語1 級"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Sepedi grade 2"
+msgstr "北梭托語2 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Oriya grade 1"
-msgstr "奧里亞語一級點字"
+msgstr "奧里亞語1 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Polish 8 dot computer braille"
-msgstr "波蘭語八點電腦點字"
+msgstr "波蘭語電腦8 點"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Polish grade 1"
-msgstr "波蘭語一級點字"
+msgid "Polish literary braille"
+msgstr "波蘭文書寫"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Portuguese 8 dot computer braille"
-msgstr "葡萄牙語 八點電腦點字"
+msgstr "葡萄牙語電腦8 點"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Portuguese grade 1"
-msgstr "葡萄牙語一級點字"
+msgstr "葡萄牙語1 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Portuguese grade 2"
-msgstr "葡萄牙語二級點字"
+msgstr "葡萄牙語2 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Punjabi grade 1"
-msgstr "旁遮普語一級點字"
+msgstr "旁遮普語1 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1204,122 +1224,204 @@ msgstr "羅馬尼亞語"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Russian computer braille"
-msgstr "俄語八點電腦點字"
+msgstr "俄語電腦8 點"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Russian literary braille"
-msgstr "俄文書面語點字"
+msgstr "俄文書面語"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Russian literary braille (detailed)"
-msgstr "俄文書面語點字 (詳細)"
+msgstr "俄文書面語 (詳細)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Russian contracted braille"
+msgstr "俄語簡寫"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Sanskrit grade 1"
-msgstr "梵語一級點字"
+msgstr "梵語1 級"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Yakut grade 1"
+msgstr "雅库特语1 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Swedish 8 dot computer braille"
-msgstr "瑞典語八點電腦點字"
+msgstr "瑞典語電腦8 點"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Swedish grade 1"
-msgstr "瑞典語一級點字"
+msgstr "瑞典語1 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Slovak grade 1"
-msgstr "斯洛法克語一級點字"
+msgstr "斯洛法克語1 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Slovenian 8 dot computer braille"
-msgstr "斯洛文尼亞語八點電腦點字"
+msgstr "斯洛文尼亞語電腦8 點"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Slovenian grade 1"
-msgstr "斯洛文尼亞語一級點字"
+msgstr "斯洛文尼亞語1 級"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Sesotho grade 1"
+msgstr "塞索托语1 級"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Sesotho grade 2"
+msgstr "塞索托语2 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Serbian grade 1"
-msgstr "塞爾維亞語一級點字"
+msgstr "塞爾維亞語1級 "
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Tamil grade 1"
-msgstr "泰米爾語一級點字"
+msgstr "泰米爾語1 級"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Tatar grade 1"
+msgstr "鞑靼语1 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Telugu grade 1"
-msgstr "泰盧固語一級點字"
+msgstr "泰盧固語1 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Turkish grade 1"
-msgstr "土耳其語一級點字"
+msgstr "土耳其語1 級"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Setswana grade 1"
+msgstr "塞茨瓦纳语1 級"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Setswana grade 2"
+msgstr "塞茨瓦纳语2 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Ukrainian grade 1"
-msgstr "烏克蘭語一級點字"
+msgstr "烏克蘭語1 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Ukrainian computer braille"
-msgstr "烏克蘭語電腦點字"
+msgstr "烏克蘭語電腦"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Urdu grade 1"
-msgstr "烏爾都語一級點字"
+msgstr "烏爾都語1 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Urdu grade 2"
-msgstr "烏爾都語二級點字"
+msgstr "烏爾都語2 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Uzbek grade 1"
-msgstr "烏兹别克語一級點字"
+msgstr "烏兹别克語1 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Unicode braille"
-msgstr "Unicode 點字"
+msgstr "Unicode"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Vietnamese grade 0"
+msgstr "越南語0 級"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Tshivenda grade 1"
+msgstr "文达文1 級"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Tshivenda grade 2"
+msgstr "文达文2 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Vietnamese grade 1"
-msgstr "越南語一級點字"
+msgstr "越南語1 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Chinese (China, Mandarin) grade 1"
+msgid "Vietnamese grade 2"
+msgstr "越南語2 級"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Southern Vietnamese grade 1"
+msgstr "越南南部1 級"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Xhosa grade 1"
+msgstr "科萨语1 級"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Xhosa grade 2"
+msgstr "科萨语2 級"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#. This should be translated to '中文中国汉语现行盲文' in Mandarin.
+msgid "Chinese (China, Mandarin) Current Braille System"
 msgstr "中文（中國）現行盲文"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Chinese (China, Mandarin) grade 2"
-msgstr "中文（中國）漢語雙拼"
+#. This should be translated to '中文中国汉语双拼盲文' in Mandarin.
+msgid "Chinese (China, Mandarin) Double-phonic Braille System"
+msgstr "中文（中國）漢語雙拼盲文"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Chinese (Hong Kong, Cantonese)"
-msgstr "中文香港粵語點字"
+msgstr "中文香港粵語"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Chinese (Taiwan, Mandarin)"
-msgstr "中文台灣注音點字"
+msgstr "中文台灣注音"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Zulu grade 1"
+msgstr "祖鲁语1 級"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Zulu grade 2"
+msgstr "祖鲁语2 級"
 
 #. Translators: The mode to interact with controls in documents
 msgid "Focus mode"
@@ -1988,6 +2090,13 @@ msgctxt "symbolPreserve"
 msgid "only below symbol's level"
 msgstr "僅低於符號等級"
 
+#. Translators: a transparent color, {colorDescription} replaced with the full description of the color e.g.
+#. "transparent bright orange-yellow"
+#, python-brace-format
+msgctxt "color variation"
+msgid "transparent {colorDescription}"
+msgstr "透明 {colorDescription}"
+
 #. Translators: the color white (HSV saturation0%, value 100%)
 msgctxt "color hue"
 msgid "white"
@@ -2190,818 +2299,15 @@ msgctxt "color hue"
 msgid "brown-yellow"
 msgstr "黃褐色"
 
-#. Translators: The word for window of a program such as document window.
-msgid "window"
-msgstr "視窗"
-
-#. Translators: Used to identify title bar of a program.
-msgid "title bar"
-msgstr "標題列"
-
-#. Translators: The word used for pane such as desktop pane.
-msgid "pane"
-msgstr "窗格"
-
-#. Translators: The word used to denote a dialog box such as open dialog.
-msgid "dialog"
-msgstr "對話方塊"
-
-#. Translators: The text used to identify check boxes such as select check box.
-msgid "check box"
-msgstr "核取方塊"
-
-#. Translators: The text used to identify radio buttons such as yes or no radio button.
-msgid "radio button"
-msgstr "單選紐"
-
-#. Translators: The word used to identify a static text such as dialog text.
-msgid "text"
-msgstr "文字"
-
-#. Translators: The word used to identify edit fields such as subject edit field.
-msgid "edit"
-msgstr "編輯區"
-
-#. Translators: The word used to identify a button such as OK button.
-msgid "button"
-msgstr "按鈕"
-
-#. Translators: Text used to identify menu bar of a program.
-msgid "menu bar"
-msgstr "選單列"
-
-#. Translators: Used to identify a menu item such as an item in file menu.
-msgid "menu item"
-msgstr "選單項目"
-
-#. Translators: The word used for menus such as edit menu.
-#. Translators: Identifies a menu such as file menu.
-msgid "menu"
-msgstr "選單"
-
-#. Translators: Used to identify combo boxes such as file type combo box.
-msgid "combo box"
-msgstr "下拉方塊"
-
-#. Translators: The word used for lists such as folder list.
-msgid "list"
-msgstr "清單"
-
-#. Translators: Used to identify a list item such as email list items.
-msgid "list item"
-msgstr "清單項目"
-
-#. Translators: The word used to identify graphics such as webpage graphics.
-msgid "graphic"
-msgstr "圖片"
-
-#. Translators: Used to identify help balloon (a circular window with helpful text such as notification text).
-msgid "help balloon"
-msgstr "氣泡提示"
-
-#. Translators: Used to identify a tooltip (a small window with additional text about selected item such as file information).
-msgid "tool tip"
-msgstr "工具提示"
-
-#. Translators: Identifies a link in webpage documents.
-msgid "link"
-msgstr "連結"
-
-#. Translators: Identifies a treeview (a tree-like structure such as treeviews for subfolders).
-msgid "tree view"
-msgstr "樹狀檢視"
-
-#. Translators: Identifies a tree view item.
-msgid "tree view item"
-msgstr "樹狀檢視項目"
-
-#. Translators: The word presented for tabs in a tab enabled window.
-msgctxt "controlType"
-msgid "tab"
-msgstr "索引標籤"
-
-#. Translators: Identifies a tab control such as webpage tabs in web browsers.
-msgid "tab control"
-msgstr "索引標籤"
-
-#. Translators: Identifies a slider such as volume slider.
-msgid "slider"
-msgstr "滑桿"
-
-#. Translators: Identifies a progress bar such as NvDA update progress.
-msgid "progress bar"
-msgstr "進度列"
-
-#. Translators: Identifies a scroll bar.
-msgid "scroll bar"
-msgstr "捲軸"
-
-#. Translators: Identifies a status bar (text at the bottom bar of the screen such as cursor position in a document).
-msgid "status bar"
-msgstr "狀態列"
-
-#. Translators: Identifies a table such as ones used in various websites.
-msgid "table"
-msgstr "表格"
-
-#. Translators: Identifies a cell in a table.
-msgid "cell"
-msgstr "儲存格"
-
-#. Translators: Identifies a column (a group of vertical cells in a table).
-msgid "column"
-msgstr "欄"
-
-#. Translators: Identifies a row (a group of horizontal cells in a table).
-msgid "row"
-msgstr "列"
-
-#. Translators: Identifies a frame (a smaller window in a webpage or a document).
-#. Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page embedded within a web page.
-msgid "frame"
-msgstr "頁框"
-
-#. Translators: Identifies a tool bar.
-msgid "tool bar"
-msgstr "工具列"
-
-#. Translators: Identifies a column header in tables and spreadsheets.
-msgid "column header"
-msgstr "欄標題"
-
-#. Translators: Identifies a row header in tables and spreadsheets.
-msgid "row header"
-msgstr "列標題"
-
-#. Translators: Identifies a drop down button (a button that, when clicked, opens a menu of its own).
-msgid "drop down button"
-msgstr "下拉按鈕"
-
-#. Translators: Identifies an element.
-msgid "clock"
-msgstr "時鐘"
-
-#. Translators: Identifies a separator (a horizontal line drawn on the screen).
-msgid "separator"
-msgstr "分隔符號"
-
-#. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
-msgid "form"
-msgstr "表單"
-
-#. Translators: Identifies a heading (a bold text used for identifying a section).
-msgid "heading"
-msgstr "標題"
-
-#. Translators: Identifies a heading level.
-msgid "heading 1"
-msgstr "第一級標題"
-
-#. Translators: Identifies a heading level.
-msgid "heading 2"
-msgstr "第二級標題"
-
-#. Translators: Identifies a heading level.
-msgid "heading 3"
-msgstr "第三級標題"
-
-#. Translators: Identifies a heading level.
-msgid "heading 4"
-msgstr "第四級標題"
-
-#. Translators: Identifies a heading level.
-msgid "heading 5"
-msgstr "第五級標題"
-
-#. Translators: Identifies a heading level.
-msgid "heading 6"
-msgstr "第六級標題"
-
-#. Translators: Identifies a paragraph (a group of text surrounded by blank lines).
-msgid "paragraph"
-msgstr "段落"
-
-#. Translators: Presented for a section in a document which is a block quotation;
-#. i.e. a long quotation in a separate paragraph distinguished by indentation, etc.
-#. See http://en.wikipedia.org/wiki/Block_quotation
-msgid "block quote"
-msgstr "引述區"
-
-#. Translators: Identifies a table header (a short text at the start of a table which describes what the table is about).
-msgid "table header"
-msgstr "表頭"
-
-#. Translators: Identifies a table body (the main body of the table).
-msgid "table body"
-msgstr "表身"
-
-#. Translators: Identifies a table footer (text placed at the end of the table).
-msgid "table footer"
-msgstr "表尾"
-
-#. Translators: Identifies a document (for example, a webpage document).
-msgid "document"
-msgstr "文件"
-
-#. Translators: Identifies an animation in a document or a webpage.
-msgid "animation"
-msgstr "動畫"
-
-#. Translators: Identifies an application in webpages.
-msgid "application"
-msgstr "應用程式"
-
-#. Translators: Identifies a box element.
-msgid "box"
-msgstr "方塊"
-
-#. Translators: Identifies a grouping (a number of related items grouped together, such as related options in dialogs).
-msgid "grouping"
-msgstr "群組"
-
-#. Translators: Identifies a property page such as drive properties dialog.
-msgid "property page"
-msgstr "內容頁"
-
-#. Translators: Identifies a canvas element on webpages (a box with some background color with some text drawn on the box, like a canvas).
-msgid "canvas"
-msgstr "繪圖畫布"
-
-#. Translators: Identifies a caption (usually a short text identifying a picture or a graphic on websites).
-msgid "caption"
-msgstr "文字描述"
-
-#. Translators: Identifies a check menu item (a menu item with a checkmark as part of the menu item's name).
-msgid "check menu item"
-msgstr "可核取選單項目"
-
-#. Translators: Identifies a data edit field.
-msgid "date edit"
-msgstr "日期編輯區"
-
-#. Translators: Identifies an icon.
-msgid "icon"
-msgstr "圖示"
-
-#. Translators: Identifies a directory pane.
-msgid "directory pane"
-msgstr "目錄窗格"
-
-#. Translators: Identifies an object that is embedded in a document.
-msgid "embedded object"
-msgstr "嵌入式物件"
-
-#. Translators: Identifies an end note.
-msgid "end note"
-msgstr "章節附註"
-
-#. Translators: Identifies a footer (usually text).
-msgid "footer"
-msgstr "頁尾"
-
-#. Translators: Identifies a foot note (text at the end of a passage or used for anotations).
-msgid "foot note"
-msgstr "註腳"
-
-#. Translators: Reported for an object which is a glass pane; i.e.
-#. a pane that is guaranteed to be on top of all panes beneath it.
-msgid "glass pane"
-msgstr "透明窗格"
-
-#. Translators: Identifies a header (usually text at top of documents or on tops of pages).
-msgid "header"
-msgstr "頁首"
-
-#. Translators: Identifies an image map (a type of graphical link).
-msgid "image map"
-msgstr "圖像地圖"
-
-#. Translators: Identifies an input window.
-msgid "input window"
-msgstr "輸入區"
-
-#. Translators: Identifies a label.
-msgid "label"
-msgstr "標記"
-
-#. Translators: Identifies a note field.
-msgid "note"
-msgstr "註解"
-
-#. Translators: Identifies a page.
-msgid "page"
-msgstr "頁"
-
-#. Translators: Identifies a radio menu item.
-msgid "radio menu item"
-msgstr "單選選單項目"
-
-#. Translators: Identifies a layered pane.
-msgid "layered pane"
-msgstr "分層窗格"
-
-#. Translators: Identifies a redundant object.
-msgid "redundant object"
-msgstr "多餘物件"
-
-#. Translators: Identifies a root pane.
-msgid "root pane"
-msgstr "根窗格"
-
-#. Translators: May be reported for an editable text object in a toolbar.
-#. This is deprecated and is not often (if ever) used.
-msgid "edit bar"
-msgstr "編輯列"
-
-#. Translators: Identifies a terminal window such as command prompt.
-msgid "terminal"
-msgstr "終端機"
-
-#. Translators: Identifies a rich edit box (an edit box which allows entering formatting commands in addition to text; encountered on webpages and NvDA log viewer).
-msgid "rich edit"
-msgstr "Rich text 編輯模式"
-
-#. Translators: Identifies a ruler object (commonly seen on some webpages and in some Office programs).
-msgid "ruler"
-msgstr "尺規"
-
-#. Translators: Identifies a scroll pane.
-msgid "scroll pane"
-msgstr "捲軸窗格"
-
-#. Translators: Identifies a section of text.
-msgid "section"
-msgstr "區塊"
-
-#. Translators: Identifies a shape.
-msgid "shape"
-msgstr "外型"
-
-#. Translators: Identifies a split pane.
-msgid "split pane"
-msgstr "分開的窗格"
-
-#. Translators: Reported for a view port; i.e. an object usually used in a scroll pane
-#. which represents the portion of the entire data that the user can see.
-#. As the user manipulates the scroll bars, the contents of the view port can change.
-msgid "view port"
-msgstr "檢視端口"
-
-#. Translators: Reported for an object that forms part of a menu system
-#. but which can be undocked from or torn off the menu system
-#. to exist as a separate window.
-msgid "tear off menu"
-msgstr "分離式選單"
-
-#. Translators: Identifies a text frame (a frame window which contains text).
-msgid "text frame"
-msgstr "文字框架"
-
-#. Translators: Identifies a toggle button (a button used to toggle something).
-msgid "toggle button"
-msgstr "切換按鈕"
-
-msgid "border"
-msgstr "邊界"
-
-#. Translators: Identifies a caret object.
-msgid "caret"
-msgstr "次方號"
-
-#. Translators: Identifies a character field (should not be confused with edit fields).
-msgid "character"
-msgstr "字元"
-
-#. Translators: Identifies a chart (commonly seen on some websites and in some Office documents).
-msgid "chart"
-msgstr "圖表"
-
-#. Translators: Identifies a cursor object.
-msgid "cursor"
-msgstr "游標"
-
-#. Translators: Identifies a diagram (seen on some websites and on Office documents).
-msgid "diagram"
-msgstr "圖解"
-
-#. Translators: Identifies a dial object.
-msgid "dial"
-msgstr "撥打"
-
-#. Translators: Identifies a drop list.
-msgid "drop list"
-msgstr "下拉清單"
-
-#. Translators: Identifies a split button (a control which performs different actions when different parts are clicked).
-msgid "split button"
-msgstr "多用途按鈕"
-
-#. Translators: Identifies a menu button (a button which opens a menu of items).
-msgid "menu button"
-msgstr "選單按鈕"
-
-#. Translators: Reported for a button which expands a grid when it is pressed.
-msgid "drop down button grid"
-msgstr "區塊按鈕"
-
-#. Translators: Identifies mathematical content.
-msgid "math"
-msgstr "算式"
-
-#. Translators: Identifies a grip control.
-msgid "grip"
-msgstr "區塊"
-
-#. Translators: Identifies a hot key field (a field where one can enter a hot key for something, such as assigning shortcut for icons on the desktop).
-msgid "hot key field"
-msgstr "快速鍵欄位"
-
-#. Translators: Identifies an indicator control.
-msgid "indicator"
-msgstr "指示標記"
-
-#. Translators: Identifies a spin button (a button used to go through options in a spinning fashion).
-msgid "spin button"
-msgstr "調整按鈕"
-
-#. Translators: Identifies a sound clip on websites.
-msgid "sound"
-msgstr "聲音"
-
-#. Translators: Identifies a whitespace.
-msgid "white space"
-msgstr "空白字元"
-
-#. Translators: Identifies a tree view button.
-msgid "tree view button"
-msgstr "樹狀檢視按鈕"
-
-#. Translators: Identifies an IP address (an IP address field element).
-msgid "IP address"
-msgstr "IP 位址"
-
-#. Translators: Identifies a desktop icon (the icons on the desktop such as computer and various shortcuts for programs).
-msgid "desktop icon"
-msgstr "桌面圖示"
-
-#. Translators: Identifies desktop pane (the desktop window).
-msgid "desktop pane"
-msgstr "桌面窗格"
-
-#. Translators: Identifies an option pane.
-msgid "option pane"
-msgstr "選項對話窗格"
-
-#. Translators: Identifies a color chooser.
-msgid "color chooser"
-msgstr "顏色選擇框"
-
-#. Translators: Identifies a file chooser (to select a file or groups of files from a list).
-msgid "file chooser"
-msgstr "檔案選擇框"
-
-msgid "filler"
-msgstr "填寫框"
-
-#. Translators: Identifies a panel control for grouping related options.
-msgid "panel"
-msgstr "面板"
-
-#. Translators: Identifies a password field (a protected edit field for entering passwords such as when logging into web-based email sites).
-msgid "password edit"
-msgstr "密碼編輯區"
-
-#. Translators: Identifies a font chooser.
-msgid "font chooser"
-msgstr "字型選擇框"
-
-msgid "line"
-msgstr "單行"
-
-#. Translators: Identifies a font name.
-msgid "font name"
-msgstr "字體名稱"
-
-#. Translators: Identifies font size.
-msgid "font size"
-msgstr "字體大小"
-
-#. Translators: Describes text formatting.
-#. Translators: Reported when text is bolded.
-msgid "bold"
-msgstr "粗體"
-
-#. Translators: Describes text formatting.
-#. Translators: Reported when text is italicized.
-msgid "italic"
-msgstr "斜體"
-
-#. Translators: Describes text formatting.
-msgid "underline"
-msgstr "底線"
-
-#. Translators: Describes text formatting.
-msgid "foreground color"
-msgstr "前景色"
-
-#. Translators: Describes text formatting.
-msgid "background color"
-msgstr "背景色"
-
-#. Translators: Describes text formatting.
-#. Translators: Reported for superscript text.
-msgid "superscript"
-msgstr "上標"
-
-#. Translators: Describes text formatting.
-#. Translators: Reported for subscript text.
-msgid "subscript"
-msgstr "下標"
-
-#. Translators: Describes style of text.
-#. Translators: a Microsoft Word revision type (style change)
-msgid "style"
-msgstr "樣式"
-
-#. Translators: Describes text formatting.
-msgid "indent"
-msgstr "縮排"
-
-#. Translators: Describes text formatting.
-msgid "alignment"
-msgstr "對齊"
-
-#. Translators: Identifies an alert window or bar (usually on Internet Explorer 9 and above for alerts such as file downloads or pop-up blocker).
-msgid "alert"
-msgstr "注意"
-
-#. Translators: Identifies a data grid control (a grid which displays data).
-msgid "data grid"
-msgstr "資料格網"
-
-msgid "data item"
-msgstr "資料項目"
-
-msgid "header item"
-msgstr "標題項目"
-
-#. Translators: Identifies a thumb control (a button-like control for changing options).
-msgid "thumb control"
-msgstr "滑桿控制按鈕"
-
-msgid "calendar"
-msgstr "行事曆"
-
-msgid "video"
-msgstr "視頻"
-
-msgid "audio"
-msgstr "音頻"
-
-#. Translators: Identifies a chart element.
-msgid "chart element"
-msgstr "圖表項目"
-
-#. Translators: Identifies deleted content.
-#. Translators: Reported when text is marked as having been deleted
-msgid "deleted"
-msgstr "已刪除"
-
-#. Translators: Identifies inserted content.
-#. Translators: Reported when text is marked as having been inserted
-msgid "inserted"
-msgstr "已新增"
-
-#. Translators: Identifies a landmark.
-msgid "landmark"
-msgstr "地標"
-
-#. Translators: Identifies an article.
-msgid "article"
-msgstr "文章"
-
-#. Translators: Identifies a region.
-msgid "region"
-msgstr "區域"
-
-#. Translators: Identifies a figure (commonly seen on some websites).
-msgid "figure"
-msgstr "圖形"
-
-#. Translators: Identifies marked (highlighted) content
-msgid "marked content"
-msgstr "標記的內容"
-
-#. Translators: This is presented when a control or document is unavailable.
-msgid "unavailable"
-msgstr "無法使用"
-
-#. Translators: This is presented when a control has focus.
-msgid "focused"
-msgstr "有焦點"
-
-#. Translators: This is presented when the control is selected.
-msgid "selected"
-msgstr "選取"
-
-#. Translators: This is presented when a document is busy.
-msgid "busy"
-msgstr "忙碌中"
-
-#. Translators: This is presented when a button is pressed.
-msgid "pressed"
-msgstr "按下"
-
-#. Translators: This is presented when a check box is checked.
-msgid "checked"
-msgstr "勾選"
-
-#. Translators: This is presented when a three state check box is half checked.
-msgid "half checked"
-msgstr "部份勾選"
-
-#. Translators: This is presented when the control is a read-only control such as read-only edit box.
-msgid "read only"
-msgstr "唯讀"
-
-#. Translators: This is presented when a tree view or submenu item is expanded.
-msgid "expanded"
-msgstr "展開"
-
-#. Translators: This is presented when a tree view or submenu is collapsed.
-msgid "collapsed"
-msgstr "折疊"
-
-#. Translators: This is presented when a control or a document becomes invisible.
-msgid "invisible"
-msgstr "隱藏"
-
-#. Translators: This is presented when a visited link is encountered.
-msgid "visited"
-msgstr "到訪過"
-
-#. Translators: This is presented when a link is encountered.
-msgid "linked"
-msgstr "連結"
-
-#. Translators: This is presented when the control menu item has a submenu.
-msgid "subMenu"
-msgstr "子選單"
-
-#. Translators: This is presented when a protected control or a document is encountered.
-msgid "protected"
-msgstr "保密"
-
-#. Translators: This is presented when a required form field is encountered.
-msgid "required"
-msgstr "需要"
-
-#. Translators: Reported when an object no longer exists in the user interface;
-#. i.e. it is dead and is no longer usable.
-msgid "defunct"
-msgstr "沒有功能"
-
-#. Translators: This is presented when an invalid entry has been made.
-msgid "invalid entry"
-msgstr "輸入錯誤"
-
-msgid "modal"
-msgstr "樣式的"
-
-#. Translators: This is presented when a field supports auto completion of entered text such as email address field in Microsoft Outlook.
-msgid "has auto complete"
-msgstr "可自動完成"
-
-#. Translators: This is presented when an edit field allows typing multiple lines of text such as comment fields on websites.
-msgid "multi line"
-msgstr "多行"
-
-msgid "iconified"
-msgstr "圖示化"
-
-#. Translators: Presented when the current control is located off screen.
-msgid "off screen"
-msgstr "畫面以外的"
-
-#. Translators: Presented when the control allows selection such as text fields.
-msgid "selectable"
-msgstr "可選取"
-
-#. Translators: Presented when a control can be moved to using system focus.
-msgid "focusable"
-msgstr "焦點可到"
-
-#. Translators: Presented when a control allows clicking via mouse (mostly presented on web controls).
-msgid "clickable"
-msgstr "可點擊"
-
-msgid "editable"
-msgstr "可編輯"
-
-msgid "checkable"
-msgstr "可核取"
-
-msgid "draggable"
-msgstr "可拖曳"
-
-msgid "dragging"
-msgstr "拖曳"
-
-#. Translators: Reported where an object which is being dragged can be dropped.
-#. This is only reported for objects that support accessible drag and drop.
-msgid "drop target"
-msgstr "放置目標"
-
-msgid "sorted"
-msgstr "排序"
-
-msgid "sorted ascending"
-msgstr "遞增排序"
-
-msgid "sorted descending"
-msgstr "遞減排序"
-
-#. Translators: a state that denotes that an object (usually a graphic) has a long description.
-msgid "has long description"
-msgstr "有詳細描述"
-
-#. Translators: a state that denotes that an object is pinned in its current location
-msgid "pinned"
-msgstr "已釘選"
-
-#. Translators: a state that denotes the existance of a formula on a spreadsheet cell
-msgid "has formula"
-msgstr "有公式"
-
-#. Translators: a state that denotes the existance of a comment.
-#. Translators: Reported when text contains a comment.
-msgid "has comment"
-msgstr "有註解"
-
-#. Translators: a state that denotes that the object is covered partially or fully by another object
-msgid "obscured"
-msgstr "遮蓋"
-
-#. Translators: a state that denotes that the object(text) is cropped as it couldn't be accommodated in the allocated/available space
-msgid "cropped"
-msgstr "已裁撤"
-
-#. Translators: a state that denotes that the object(text) is overflowing into the adjacent space
-msgid "overflowing"
-msgstr "過多"
-
-#. Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected Excel spreadsheet).
-msgid "unlocked"
-msgstr "沒鎖"
-
-#. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
-msgid "not selected"
-msgstr "沒選取"
-
-#. Translators: This is presented when a button is not pressed.
-msgid "not pressed"
-msgstr "沒按下"
-
-#. Translators: This is presented when a checkbox is not checked.
-msgid "not checked"
-msgstr "沒勾選"
-
-#. Translators: This is presented when drag and drop is finished.
-#. This is only reported for objects which support accessible drag and drop.
-msgid "done dragging"
-msgstr "拖曳完成"
-
-#. Translators: Presented when an item is marked as current in a collection of items
-msgid "current"
-msgstr "目前"
-
-#. Translators: Presented when a page item is marked as current in a collection of page items
-msgid "current page"
-msgstr "目前頁"
-
-#. Translators: Presented when a step item is marked as current in a collection of step items
-msgid "current step"
-msgstr "目前步驟"
-
-#. Translators: Presented when a location item is marked as current in a collection of location items
-msgid "current location"
-msgstr "目前位置"
-
-#. Translators: Presented when a date item is marked as current in a collection of date items
-msgid "current date"
-msgstr "目前日期"
-
-#. Translators: Presented when a time item is marked as current in a collection of time items
-msgid "current time"
-msgstr "目前時間"
-
-#. Translators: Indicates that a particular state of an object is negated.
-#. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
-#. but this still might be used in some other cases.
-#. %s will be replaced with the full identifier of the negated state (e.g. selected).
-#, python-format
-msgid "not %s"
-msgstr "沒%s"
+#. Translators: Shown when NVDA has been started with unknown command line parameters.
+#, python-brace-format
+msgid "The following command line parameters are unknown to NVDA: {params}"
+msgstr "以下命令列參數 NVDA 不懂: {params}"
+
+#. Translators: Title of the dialog letting user know
+#. that command line parameters they provided are unknown.
+msgid "Unknown command line parameters"
+msgstr "未知的命令列參數"
 
 #. Translators: A message informing the user that there are errors in the configuration file.
 msgid ""
@@ -3118,6 +2424,22 @@ msgstr "移到表格的右一欄"
 #. Translators: the description for the previous table column script on browseMode documents.
 msgid "moves to the previous table column"
 msgstr "移到表格的左一欄"
+
+#. Translators: the description for the first table row script on browseMode documents.
+msgid "moves to the first table row"
+msgstr "移到表格的第一列"
+
+#. Translators: the description for the last table row script on browseMode documents.
+msgid "moves to the last table row"
+msgstr "移到表格的最後一列"
+
+#. Translators: the description for the first table column script on browseMode documents.
+msgid "moves to the first table column"
+msgstr "移到表格的第一欄"
+
+#. Translators: the description for the last table column script on browseMode documents.
+msgid "moves to the last table column"
+msgstr "移到表格的最後一欄"
 
 #. Translators: The message announced when toggling the include layout tables browse mode setting.
 msgid "layout tables off"
@@ -3264,25 +2586,9 @@ msgstr "右擊"
 msgid "Locks or unlocks the left mouse button"
 msgstr "將滑鼠左鍵鎖定或解鎖"
 
-#. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
-msgid "Left mouse button unlock"
-msgstr "滑鼠左鍵解鎖"
-
-#. Translators: This is presented when the left mouse button is locked down (used for drag and drop).
-msgid "Left mouse button lock"
-msgstr "滑鼠左鍵鎖定"
-
 #. Translators: Input help mode message for right mouse lock/unlock command.
 msgid "Locks or unlocks the right mouse button"
 msgstr "將滑鼠右鍵鎖定或解鎖"
-
-#. Translators: This is presented when the right mouse button lock is released (used for drag and drop).
-msgid "Right mouse button unlock"
-msgstr "滑鼠右鍵解鎖"
-
-#. Translators: This is presented when the right mouse button is locked down (used for drag and drop).
-msgid "Right mouse button lock"
-msgstr "滑鼠右鍵鎖定"
 
 #. Translators: Input help mode message for report current selection command.
 msgid ""
@@ -3429,16 +2735,16 @@ msgid "report emphasis on"
 msgstr "讀出強調"
 
 #. Translators: Input help mode message for toggle report marked (highlighted) content command.
-msgid "Toggles on and off the reporting of marked text"
-msgstr "切換是否讀出標記文字"
+msgid "Toggles on and off the reporting of highlighted text"
+msgstr "切換是否讀出加亮文字"
 
 #. Translators: The message announced when toggling the report marked document formatting setting.
-msgid "report marked on"
-msgstr "讀出標記文字"
+msgid "report highlighted on"
+msgstr "讀出加亮文字"
 
 #. Translators: The message announced when toggling the report marked document formatting setting.
-msgid "report marked off"
-msgstr "不讀出標記文字"
+msgid "report highlighted off"
+msgstr "不讀出加亮文字"
 
 #. Translators: Input help mode message for toggle report colors command.
 msgid "Toggles on and off the reporting of colors"
@@ -3592,6 +2898,22 @@ msgstr "不讀出表格座標"
 msgid "report table cell coordinates on"
 msgstr "讀出表格座標"
 
+#. Translators: Input help mode message for toggle report cell borders command.
+msgid "Cycles through the cell border reporting settings"
+msgstr "循環切換讀出儲存格框線的設定"
+
+#. Translators: A message reported when cycling through cell borders settings.
+msgid "Report styles of cell borders"
+msgstr "讀出儲存格框線的樣式"
+
+#. Translators: A message reported when cycling through cell borders settings.
+msgid "Report colors and styles of cell borders"
+msgstr "讀出儲存格框線的色彩及樣式"
+
+#. Translators: A message reported when cycling through cell borders settings.
+msgid "Report cell borders off."
+msgstr "不讀出儲存格框線。"
+
 #. Translators: Input help mode message for toggle report links command.
 msgid "Toggles on and off the reporting of links"
 msgstr "切換是否讀出連結"
@@ -3724,6 +3046,24 @@ msgstr "不讀出可點擊"
 msgid "report if clickable on"
 msgstr "讀出可點擊"
 
+#. Translators: Input help mode message for cycle through automatic language switching mode command.
+msgid ""
+"Cycles through speech modes for automatic language switching: off, language "
+"only and language and dialect."
+msgstr "循環選擇自動切換朗讀語言：不切換、只切換語言、切換語言及方言。"
+
+#. Translators: A message reported when executing the cycle automatic language switching mode command.
+msgid "Automatic language switching off"
+msgstr "不自動切換朗讀語言"
+
+#. Translators: A message reported when executing the cycle automatic language switching mode command.
+msgid "Automatic language and dialect switching on"
+msgstr "自動切換朗讀語言及方言"
+
+#. Translators: A message reported when executing the cycle automatic language switching mode command.
+msgid "Automatic language switching on"
+msgstr "自動切換朗讀語言"
+
 #. Translators: Input help mode message for cycle speech symbol level command.
 msgid ""
 "Cycles through speech symbol levels which determine what symbols are spoken"
@@ -3800,15 +3140,46 @@ msgstr ""
 msgid "No navigator object"
 msgstr "沒有目前物件"
 
+#. Translators: message when there is no location information
+msgid "No location information"
+msgstr "沒有位置資訊"
+
+#. Translators: Description for a keyboard command which reports location of the
+#. review cursor, falling back to the location of navigator object if needed.
+msgid ""
+"Reports information about the location of the text at the review cursor, or "
+"location of the navigator object if there is no text under review cursor."
+msgstr "讀出易讀游標的位置資訊，或物件的位置資訊。"
+
+#. Translators: Description for a keyboard command which reports location of the navigator object.
+msgid "Reports information about the location of the current navigator object."
+msgstr "讀出目前物件的位置資訊"
+
+#. Translators: Description for a keyboard command which reports location of the
+#. current caret position falling back to the location of focused object if needed.
+msgid ""
+"Reports information about the location of the text at the caret, or location "
+"of the currently focused object if there is no caret."
+msgstr "讀出編輯游標的位置資訊，或焦點物件的位置資訊。"
+
+#. Translators: Description for a keyboard command which reports location of the
+#. currently focused object.
+msgid "Reports information about the location of the currently focused object."
+msgstr "讀出目前焦點物件的位置資訊。"
+
 #. Translators: Description for report review cursor location command.
 msgid ""
 "Reports information about the location of the text or object at the review "
 "cursor. Pressing twice may provide further detail."
 msgstr "讀出易讀游標所在的文字或物件的位置資訊。按兩下可進一步提供詳細的內容。"
 
-#. Translators: message when there is no location information for the review cursor
-msgid "No location information"
-msgstr "沒有位置資訊"
+#. Translators: Description for a keyboard command
+#. which reports location of the text at the caret position
+#. or object with focus if there is no caret.
+msgid ""
+"Reports information about the location of the text or object at the position "
+"of system caret. Pressing twice may provide further detail."
+msgstr "讀出系統游標的位置資訊。按兩下或可提供更多資料。"
 
 #. Translators: Input help mode message for move navigator object to current focus command.
 msgid ""
@@ -4032,12 +3403,13 @@ msgstr "語音開啟"
 
 #. Translators: Input help mode message for move to next document with focus command,
 #. mostly used in web browsing to move from embedded object to the webpage document.
-msgid "Moves the focus to the next closest document that contains the focus"
-msgstr "把焦點移到下一個最接近的文件"
+msgid ""
+"Moves the focus out of the current embedded object and into the document "
+"that contains it"
+msgstr "焦點退出嵌入式物件返回文件"
 
 #. Translators: Input help mode message for toggle focus and browse mode command
 #. in web browsing and other situations.
-#. Translators: Input help mode message for toggle focus and browse mode command in web browsing and other situations.
 msgid ""
 "Toggles between browse mode and focus mode. When in focus mode, keys will "
 "pass straight through to the application, allowing you to interact directly "
@@ -4111,30 +3483,53 @@ msgid ""
 "presents the information in browse mode"
 msgstr "讀出游標所在字元的格式資訊，連按兩次在瀏覽模式顯示資訊。"
 
+#. Translators: the description for the reportDetailsSummary script.
+msgid "Report summary of any annotation details at the system caret."
+msgstr "讀出系統游標位置的注釋的摘要。"
+
+#. Translators: message given when there is no annotation details for the reportDetailsSummary script.
+msgid "No additional details"
+msgstr "沒更多資料"
+
 #. Translators: Input help mode message for report current focus command.
 msgid "Reports the object with focus. If pressed twice, spells the information"
 msgstr "讀出目前有焦點的物件，連按兩次拼讀出來。"
-
-#. Translators: Input help mode message for report status line text command.
-msgid ""
-"Reads the current application status bar and moves the navigator to it. If "
-"pressed twice, spells the information. If pressed three times, copies the "
-"status bar to the clipboard"
-msgstr ""
-"將物件游標移到並讀出目前應用程式的狀態列，連按兩次拼讀出來，連按三次複製到剪"
-"貼簿"
 
 #. Translators: Reported when there is no status line for the current program or window.
 msgid "No status line found"
 msgstr "找不到狀態列"
 
+#. Translators: Input help mode message for command which reads content of the status bar.
+msgid "Reads the current application status bar."
+msgstr "讀出目前程式的狀態列。"
+
 #. Translators: Reported when status line exist, but is empty.
 msgid "no status bar information"
 msgstr "狀態列沒有文字資訊"
 
+#. Translators: Input help mode message for command which spells content of the status bar.
+msgid "Spells the current application status bar."
+msgstr "拼讀目前程式狀態列的文字。"
+
+#. Translators: Input help mode message for command which copies status bar content to the clipboard.
+msgid ""
+"Copies content of the status bar  of current application to the clipboard."
+msgstr "複製目前程式狀態列的內容到剪貼簿。"
+
 #. Translators: Reported when user attempts to copy content of the empty status line.
-msgid "unable to copy status bar content to clipboard"
-msgstr "狀態列沒有文字資訊可複製"
+msgid "Unable to copy status bar content to clipboard"
+msgstr "沒能複製狀態列文字到剪貼簿"
+
+#. Translators: Input help mode message for Command which moves review cursor to the status bar.
+msgid ""
+"Reads the current application status bar and moves navigator object into it."
+msgstr "將易讀游標移到並讀出目前程式的狀態列。"
+
+#. Translators: Input help mode message for report status line text command.
+msgid ""
+"Reads the current application status bar. If pressed twice, spells the "
+"information. If pressed three times, copies the status bar to the clipboard"
+msgstr "讀出目前程式的狀態列，連按兩次拼讀出來，連按三次複製到剪貼簿"
 
 #. Translators: Input help mode message for toggle mouse tracking command.
 msgid "Toggles the reporting of information as the mouse moves"
@@ -4473,6 +3868,20 @@ msgstr "關閉報讀檢視器"
 msgid "speech viewer enabled"
 msgstr "開啟報讀檢視器"
 
+#. Translators: Input help mode message for toggle Braille viewer command.
+msgid ""
+"Toggles the NVDA Braille viewer, a floating window that allows you to view "
+"braille output, and the text equivalent for each braille character"
+msgstr "開關 NVDA 點字檢視視窗，那就是一個浮動視窗顯示目前顯示的點字字元"
+
+#. Translators: The message announced when disabling braille viewer.
+msgid "Braille viewer disabled"
+msgstr "關閉點字檢視視窗"
+
+#. Translators: The message announced when enabling Braille viewer.
+msgid "Braille viewer enabled"
+msgstr "開啟點字檢視視窗"
+
 #. Translators: Input help mode message for toggle braille tether to command
 #. (tethered means connected to or follows).
 msgid "Toggle tethering of braille between the focus and the review position"
@@ -4654,6 +4063,42 @@ msgid ""
 "input"
 msgstr "點字書入時模擬按住或放開 NVDA 鍵"
 
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the control and shift keys to emulate a keyboard shortcut "
+"with braille input"
+msgstr "點字書入時模擬按住或放開 control 和 Shift 鍵"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the alt and shift keys to emulate a keyboard shortcut with "
+"braille input"
+msgstr "點字書入時模擬按住或放開 Alt 和 shift 鍵"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the left windows and shift keys to emulate a keyboard "
+"shortcut with braille input"
+msgstr "點字書入時模擬按住或放開左邊 windows 和 Shift 鍵"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the NVDA and shift keys to emulate a keyboard shortcut "
+"with braille input"
+msgstr "點字書入時模擬按住或放開 NVDA 和 shift 鍵"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the control and alt keys to emulate a keyboard shortcut "
+"with braille input"
+msgstr "點字書入時模擬按住或放開 control 和 Alt 鍵"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the control, alt, and shift keys to emulate a keyboard "
+"shortcut with braille input"
+msgstr "點字書入時模擬按住或放開 control 和 Alt 和 Shift 鍵"
+
 #. Translators: Input help mode message for reload plugins command.
 msgid ""
 "Reloads app modules and global plugins without restarting NVDA, which can be "
@@ -4750,17 +4195,16 @@ msgid "Not math"
 msgstr "不是算式"
 
 #. Translators: Describes a command.
-msgid ""
-"Recognizes the content of the current navigator object with Windows 10 OCR"
-msgstr "利用 Windows 10 光學字元辨識辨認出目前物件中的文字"
+msgid "Recognizes the content of the current navigator object with Windows OCR"
+msgstr "利用 Windows 光學字元辨識辨認出目前物件中的文字"
 
-#. Translators: Reported when Windows 10 OCR is not available.
-msgid "Windows 10 OCR not available"
-msgstr "Windows 10光學字元辨識不可用"
+#. Translators: Reported when Windows OCR is not available.
+msgid "Windows OCR not available"
+msgstr "Windows 光學字元辨識不可用"
 
 #. Translators: Reported when screen curtain is enabled.
-msgid "Please disable screen curtain before using Windows 10 OCR."
-msgstr "請先停用螢幕變黑，才啟用 Windows 10 光學字元辨識功能"
+msgid "Please disable screen curtain before using Windows OCR."
+msgstr "請先停用螢幕變黑，才啟用 Windows 光學字元辨識功能"
 
 #. Translators: Input help mode message for toggle report CLDR command.
 msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
@@ -5223,6 +4667,17 @@ msgstr "%s鍵盤配置"
 msgid "keyboard, all layouts"
 msgstr "所有鍵盤配置"
 
+#. Translators: the label for the Windows default NVDA interface language.
+msgid "User default"
+msgstr "預設語言"
+
+#. Translators: The pattern defining how languages are displayed and sorted in in the general
+#. setting panel language list. Use "{desc}, {lc}" (most languages) to display first full language
+#. name and then ISO; use "{lc}, {desc}" to display first ISO language code and then full language name.
+#, python-brace-format
+msgid "{desc}, {lc}"
+msgstr "{lc}, {desc}"
+
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
 msgid "Aragonese"
@@ -5248,21 +4703,26 @@ msgctxt "languageName"
 msgid "Somali"
 msgstr "索馬利亞語"
 
-#. Translators: The pattern defining how languages are displayed and sorted in in the general
-#. setting panel language list. Use "{desc}, {lc}" (most languages) to display first full language
-#. name and then ISO; use "{lc}, {desc}" to display first ISO language code and then full language name.
-#, python-brace-format
-msgid "{desc}, {lc}"
-msgstr "{lc}, {desc}"
-
-#. Translators: the label for the Windows default NVDA interface language.
-msgid "User default"
-msgstr "預設語言"
-
 #. Translators: Reported when mouse cursor shape changes (example output: edit cursor).
 #, python-format
 msgid "%s cursor"
 msgstr "%s 游標"
+
+#. Translators: This is presented when the left mouse button is locked down (used for drag and drop).
+msgid "Left mouse button lock"
+msgstr "滑鼠左鍵鎖定"
+
+#. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
+msgid "Left mouse button unlock"
+msgstr "滑鼠左鍵解鎖"
+
+#. Translators: This is presented when the right mouse button is locked down (used for drag and drop).
+msgid "Right mouse button lock"
+msgstr "滑鼠右鍵鎖定"
+
+#. Translators: This is presented when the right mouse button lock is released (used for drag and drop).
+msgid "Right mouse button unlock"
+msgstr "滑鼠右鍵解鎖"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6822,6 +6282,22 @@ msgstr "將易讀游標移到下一列"
 msgid "Moves the navigator object and focus to the previous row"
 msgstr "將易讀游標移到上一列"
 
+#. Translators: The description of an NVDA command.
+msgid "Moves the navigator object to the first column"
+msgstr "將物件游標移到第一欄"
+
+#. Translators: The description of an NVDA command.
+msgid "Moves the navigator object to the last column"
+msgstr "將物件游標移到最後一欄"
+
+#. Translators: The description of an NVDA command.
+msgid "Moves the navigator object and focus to the first row"
+msgstr "將物件游標及焦點移到第一列"
+
+#. Translators: The description of an NVDA command.
+msgid "Moves the navigator object and focus to the last row"
+msgstr "將物件游標及焦點移到最後一列"
+
 #. Translators: Announced in braille when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
 msgid "Suggestions"
 msgstr "建議"
@@ -6836,6 +6312,49 @@ msgstr "字根"
 #. Translators: A label for a 'candidate' list which contains symbols the user can choose from  when typing east-asian characters into a document.
 msgid "Candidate"
 msgstr "候選字詞"
+
+#. Translators: The label shown for a spelling and grammar error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
+msgid "spelling and grammar: {text}"
+msgstr "拼字和文法：{text}"
+
+#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
+msgid "spelling: {text}"
+msgstr "拼字：{text}"
+
+#. Translators: The label shown for a grammar error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
+msgid "grammar: {text}"
+msgstr "文法：{text}"
+
+#. Translators: a style of fill type (to color the inside of a control or text)
+msgctxt "UIAHandler.FillType"
+msgid "none"
+msgstr "沒有"
+
+#. Translators: a style of fill type (to color the inside of a control or text)
+msgctxt "UIAHandler.FillType"
+msgid "color"
+msgstr "顏色"
+
+#. Translators: a style of fill type (to color the inside of a control or text)
+msgctxt "UIAHandler.FillType"
+msgid "gradient"
+msgstr "漸層"
+
+#. Translators: a style of fill type (to color the inside of a control or text)
+msgctxt "UIAHandler.FillType"
+msgid "picture"
+msgstr "圖片"
+
+#. Translators: a style of fill type (to color the inside of a control or text)
+msgctxt "UIAHandler.FillType"
+msgid "pattern"
+msgstr "模式"
 
 msgid "Display"
 msgstr "顯示"
@@ -7364,6 +6883,16 @@ msgstr "空白投影片"
 msgid "Waiting for Powerpoint..."
 msgstr "正在等待 PowerPoint..."
 
+#. Translators: LibreOffice, report selected range of cell coordinates with their values
+#, python-brace-format
+msgid "{firstAddress} {firstValue} through {lastAddress} {lastValue}"
+msgstr "{firstAddress} {firstValue} 到 {lastAddress} {lastValue}"
+
+#. Translators: LibreOffice, report range of cell coordinates
+#, python-brace-format
+msgid "{firstAddress} through {lastAddress}"
+msgstr "{firstAddress} 到 {lastAddress}"
+
 msgid "left"
 msgstr "左"
 
@@ -7390,7 +6919,8 @@ msgctxt "repeat"
 msgid "off"
 msgstr "不重複播放"
 
-#. Translators: presented when there is no emoji when searching for one in Windows 10 Fall Creators Update and later.
+#. Translators: presented when there is no emoji when searching for one
+#. in Windows 10 Fall Creators Update and later.
 msgid "No emoji"
 msgstr "沒有表情符號"
 
@@ -7480,6 +7010,10 @@ msgid "Toggle braille input"
 msgstr "切換啟用點字輸入與否"
 
 #. Translators: The name of a series of braille displays.
+msgid "Standard HID Braille Display"
+msgstr "標準 HID 點字顯示器"
+
+#. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille series"
 msgstr ""
 "HIMS Braille Sense 或 Braille EDGE 或 Smart Beetle 或 Sync Braille 系列"
@@ -7559,6 +7093,850 @@ msgstr "辨識中"
 msgid "Recognition failed"
 msgstr "辨識失敗"
 
+#. Translators: Reported for text which is at the baseline position;
+#. i.e. not superscript or subscript.
+msgid "baseline"
+msgstr "基準線"
+
+#. Translators: Reported for subscript text.
+#. Translators: Describes text formatting.
+msgid "subscript"
+msgstr "下標"
+
+#. Translators: Reported for superscript text.
+#. Translators: Describes text formatting.
+msgid "superscript"
+msgstr "上標"
+
+#. Translators: Presented when an item is marked as current in a collection of items
+msgid "current"
+msgstr "目前"
+
+#. Translators: Presented when a page item is marked as current in a collection of page items
+msgid "current page"
+msgstr "目前頁"
+
+#. Translators: Presented when a step item is marked as current in a collection of step items
+msgid "current step"
+msgstr "目前步驟"
+
+#. Translators: Presented when a location item is marked as current in a collection of location items
+msgid "current location"
+msgstr "目前位置"
+
+#. Translators: Presented when a date item is marked as current in a collection of date items
+msgid "current date"
+msgstr "目前日期"
+
+#. Translators: Presented when a time item is marked as current in a collection of time items
+msgid "current time"
+msgstr "目前時間"
+
+#. Translators: The word for window of a program such as document window.
+msgid "window"
+msgstr "視窗"
+
+#. Translators: Used to identify title bar of a program.
+msgid "title bar"
+msgstr "標題列"
+
+#. Translators: The word used for pane such as desktop pane.
+msgid "pane"
+msgstr "窗格"
+
+#. Translators: The word used to denote a dialog box such as open dialog.
+msgid "dialog"
+msgstr "對話方塊"
+
+#. Translators: The text used to identify check boxes such as select check box.
+msgid "check box"
+msgstr "核取方塊"
+
+#. Translators: The text used to identify radio buttons such as yes or no radio button.
+msgid "radio button"
+msgstr "單選紐"
+
+#. Translators: The word used to identify a static text such as dialog text.
+msgid "text"
+msgstr "文字"
+
+#. Translators: The word used to identify edit fields such as subject edit field.
+msgid "edit"
+msgstr "編輯區"
+
+#. Translators: The word used to identify a button such as OK button.
+msgid "button"
+msgstr "按鈕"
+
+#. Translators: Text used to identify menu bar of a program.
+msgid "menu bar"
+msgstr "選單列"
+
+#. Translators: Used to identify a menu item such as an item in file menu.
+msgid "menu item"
+msgstr "選單項目"
+
+#. Translators: The word used for menus such as edit menu.
+#. Translators: Identifies a menu such as file menu.
+msgid "menu"
+msgstr "選單"
+
+#. Translators: Used to identify combo boxes such as file type combo box.
+msgid "combo box"
+msgstr "下拉方塊"
+
+#. Translators: The word used for lists such as folder list.
+msgid "list"
+msgstr "清單"
+
+#. Translators: Used to identify a list item such as email list items.
+msgid "list item"
+msgstr "清單項目"
+
+#. Translators: The word used to identify graphics such as webpage graphics.
+msgid "graphic"
+msgstr "圖片"
+
+#. Translators: Used to identify help balloon (a circular window with helpful text such as notification
+#. text).
+msgid "help balloon"
+msgstr "氣泡提示"
+
+#. Translators: Used to identify a tooltip (a small window with additional text about selected item such as
+#. file information).
+msgid "tool tip"
+msgstr "工具提示"
+
+#. Translators: Identifies a link in webpage documents.
+msgid "link"
+msgstr "連結"
+
+#. Translators: Identifies a treeview (a tree-like structure such as treeviews for subfolders).
+msgid "tree view"
+msgstr "樹狀檢視"
+
+#. Translators: Identifies a tree view item.
+msgid "tree view item"
+msgstr "樹狀檢視項目"
+
+#. Translators: The word presented for tabs in a tab enabled window.
+msgctxt "controlType"
+msgid "tab"
+msgstr "索引標籤"
+
+#. Translators: Identifies a tab control such as webpage tabs in web browsers.
+msgid "tab control"
+msgstr "索引標籤"
+
+#. Translators: Identifies a slider such as volume slider.
+msgid "slider"
+msgstr "滑桿"
+
+#. Translators: Identifies a progress bar such as NvDA update progress.
+msgid "progress bar"
+msgstr "進度列"
+
+#. Translators: Identifies a scroll bar.
+msgid "scroll bar"
+msgstr "捲軸"
+
+#. Translators: Identifies a status bar (text at the bottom bar of the screen such as cursor position in a
+#. document).
+msgid "status bar"
+msgstr "狀態列"
+
+#. Translators: Identifies a table such as ones used in various websites.
+msgid "table"
+msgstr "表格"
+
+#. Translators: Identifies a cell in a table.
+msgid "cell"
+msgstr "儲存格"
+
+#. Translators: Identifies a column (a group of vertical cells in a table).
+msgid "column"
+msgstr "欄"
+
+#. Translators: Identifies a row (a group of horizontal cells in a table).
+msgid "row"
+msgstr "列"
+
+#. Translators: Identifies a frame (a smaller window in a webpage or a document).
+#. Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page
+#. embedded within a web page.
+msgid "frame"
+msgstr "頁框"
+
+#. Translators: Identifies a tool bar.
+msgid "tool bar"
+msgstr "工具列"
+
+#. Translators: Identifies a column header in tables and spreadsheets.
+msgid "column header"
+msgstr "欄標題"
+
+#. Translators: Identifies a row header in tables and spreadsheets.
+msgid "row header"
+msgstr "列標題"
+
+#. Translators: Identifies a drop down button (a button that, when clicked, opens a menu of its own).
+msgid "drop down button"
+msgstr "下拉按鈕"
+
+#. Translators: Identifies an element.
+msgid "clock"
+msgstr "時鐘"
+
+#. Translators: Identifies a separator (a horizontal line drawn on the screen).
+msgid "separator"
+msgstr "分隔符號"
+
+#. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
+msgid "form"
+msgstr "表單"
+
+#. Translators: Identifies a heading (a bold text used for identifying a section).
+msgid "heading"
+msgstr "標題"
+
+#. Translators: Identifies a heading level.
+msgid "heading 1"
+msgstr "第一級標題"
+
+#. Translators: Identifies a heading level.
+msgid "heading 2"
+msgstr "第二級標題"
+
+#. Translators: Identifies a heading level.
+msgid "heading 3"
+msgstr "第三級標題"
+
+#. Translators: Identifies a heading level.
+msgid "heading 4"
+msgstr "第四級標題"
+
+#. Translators: Identifies a heading level.
+msgid "heading 5"
+msgstr "第五級標題"
+
+#. Translators: Identifies a heading level.
+msgid "heading 6"
+msgstr "第六級標題"
+
+#. Translators: Identifies a paragraph (a group of text surrounded by blank lines).
+msgid "paragraph"
+msgstr "段落"
+
+#. Translators: Presented for a section in a document which is a block quotation;
+#. i.e. a long quotation in a separate paragraph distinguished by indentation, etc.
+#. See http://en.wikipedia.org/wiki/Block_quotation
+msgid "block quote"
+msgstr "引述區"
+
+#. Translators: Identifies a table header (a short text at the start of a table which describes what the
+#. table is about).
+msgid "table header"
+msgstr "表頭"
+
+#. Translators: Identifies a table body (the main body of the table).
+msgid "table body"
+msgstr "表身"
+
+#. Translators: Identifies a table footer (text placed at the end of the table).
+msgid "table footer"
+msgstr "表尾"
+
+#. Translators: Identifies a document (for example, a webpage document).
+msgid "document"
+msgstr "文件"
+
+#. Translators: Identifies an animation in a document or a webpage.
+msgid "animation"
+msgstr "動畫"
+
+#. Translators: Identifies an application in webpages.
+msgid "application"
+msgstr "應用程式"
+
+#. Translators: Identifies a box element.
+msgid "box"
+msgstr "方塊"
+
+#. Translators: Identifies a grouping (a number of related items grouped together, such as related options
+#. in dialogs).
+msgid "grouping"
+msgstr "群組"
+
+#. Translators: Identifies a property page such as drive properties dialog.
+msgid "property page"
+msgstr "內容頁"
+
+#. Translators: Identifies a canvas element on webpages (a box with some background color with some text
+#. drawn on the box, like a canvas).
+msgid "canvas"
+msgstr "繪圖畫布"
+
+#. Translators: Identifies a caption (usually a short text identifying a picture or a graphic on websites).
+msgid "caption"
+msgstr "文字描述"
+
+#. Translators: Identifies a check menu item (a menu item with a checkmark as part of the menu item's
+#. name).
+msgid "check menu item"
+msgstr "可核取選單項目"
+
+#. Translators: Identifies a data edit field.
+msgid "date edit"
+msgstr "日期編輯區"
+
+#. Translators: Identifies an icon.
+msgid "icon"
+msgstr "圖示"
+
+#. Translators: Identifies a directory pane.
+msgid "directory pane"
+msgstr "目錄窗格"
+
+#. Translators: Identifies an object that is embedded in a document.
+msgid "embedded object"
+msgstr "嵌入式物件"
+
+#. Translators: Identifies an end note.
+msgid "end note"
+msgstr "章節附註"
+
+#. Translators: Identifies a footer (usually text).
+msgid "footer"
+msgstr "頁尾"
+
+#. Translators: Identifies a foot note (text at the end of a passage or used for anotations).
+msgid "foot note"
+msgstr "註腳"
+
+#. Translators: Reported for an object which is a glass pane; i.e.
+#. a pane that is guaranteed to be on top of all panes beneath it.
+msgid "glass pane"
+msgstr "透明窗格"
+
+#. Translators: Identifies a header (usually text at top of documents or on tops of pages).
+msgid "header"
+msgstr "頁首"
+
+#. Translators: Identifies an image map (a type of graphical link).
+msgid "image map"
+msgstr "圖像地圖"
+
+#. Translators: Identifies an input window.
+msgid "input window"
+msgstr "輸入區"
+
+#. Translators: Identifies a label.
+msgid "label"
+msgstr "標記"
+
+#. Translators: Identifies a note field.
+msgid "note"
+msgstr "註解"
+
+#. Translators: Identifies a page.
+msgid "page"
+msgstr "頁"
+
+#. Translators: Identifies a radio menu item.
+msgid "radio menu item"
+msgstr "單選選單項目"
+
+#. Translators: Identifies a layered pane.
+msgid "layered pane"
+msgstr "分層窗格"
+
+#. Translators: Identifies a redundant object.
+msgid "redundant object"
+msgstr "多餘物件"
+
+#. Translators: Identifies a root pane.
+msgid "root pane"
+msgstr "根窗格"
+
+#. Translators: May be reported for an editable text object in a toolbar.
+#. This is deprecated and is not often (if ever) used.
+msgid "edit bar"
+msgstr "編輯列"
+
+#. Translators: Identifies a terminal window such as command prompt.
+msgid "terminal"
+msgstr "終端機"
+
+#. Translators: Identifies a rich edit box (an edit box which allows entering formatting commands in
+#. addition to text; encountered on webpages and NvDA log viewer).
+msgid "rich edit"
+msgstr "Rich text 編輯模式"
+
+#. Translators: Identifies a ruler object (commonly seen on some webpages and in some Office programs).
+msgid "ruler"
+msgstr "尺規"
+
+#. Translators: Identifies a scroll pane.
+msgid "scroll pane"
+msgstr "捲軸窗格"
+
+#. Translators: Identifies a section of text.
+msgid "section"
+msgstr "區塊"
+
+#. Translators: Identifies a shape.
+msgid "shape"
+msgstr "外型"
+
+#. Translators: Identifies a split pane.
+msgid "split pane"
+msgstr "分開的窗格"
+
+#. Translators: Reported for a view port; i.e. an object usually used in a scroll pane
+#. which represents the portion of the entire data that the user can see.
+#. As the user manipulates the scroll bars, the contents of the view port can change.
+msgid "view port"
+msgstr "檢視端口"
+
+#. Translators: Reported for an object that forms part of a menu system
+#. but which can be undocked from or torn off the menu system
+#. to exist as a separate window.
+msgid "tear off menu"
+msgstr "分離式選單"
+
+#. Translators: Identifies a text frame (a frame window which contains text).
+msgid "text frame"
+msgstr "文字框架"
+
+#. Translators: Identifies a toggle button (a button used to toggle something).
+msgid "toggle button"
+msgstr "切換按鈕"
+
+msgid "border"
+msgstr "邊界"
+
+#. Translators: Identifies a caret object.
+msgid "caret"
+msgstr "次方號"
+
+#. Translators: Identifies a character field (should not be confused with edit fields).
+msgid "character"
+msgstr "字元"
+
+#. Translators: Identifies a chart (commonly seen on some websites and in some Office documents).
+msgid "chart"
+msgstr "圖表"
+
+#. Translators: Identifies a cursor object.
+msgid "cursor"
+msgstr "游標"
+
+#. Translators: Identifies a diagram (seen on some websites and on Office documents).
+msgid "diagram"
+msgstr "圖解"
+
+#. Translators: Identifies a dial object.
+msgid "dial"
+msgstr "撥打"
+
+#. Translators: Identifies a drop list.
+msgid "drop list"
+msgstr "下拉清單"
+
+#. Translators: Identifies a split button (a control which performs different actions when different parts
+#. are clicked).
+msgid "split button"
+msgstr "多用途按鈕"
+
+#. Translators: Identifies a menu button (a button which opens a menu of items).
+msgid "menu button"
+msgstr "選單按鈕"
+
+#. Translators: Reported for a button which expands a grid when it is pressed.
+msgid "drop down button grid"
+msgstr "區塊按鈕"
+
+#. Translators: Identifies mathematical content.
+msgid "math"
+msgstr "算式"
+
+#. Translators: Identifies a grip control.
+msgid "grip"
+msgstr "區塊"
+
+#. Translators: Identifies a hot key field (a field where one can enter a hot key for something, such as
+#. assigning shortcut for icons on the desktop).
+msgid "hot key field"
+msgstr "快速鍵欄位"
+
+#. Translators: Identifies an indicator control.
+msgid "indicator"
+msgstr "指示標記"
+
+#. Translators: Identifies a spin button (a button used to go through options in a spinning fashion).
+msgid "spin button"
+msgstr "調整按鈕"
+
+#. Translators: Identifies a sound clip on websites.
+msgid "sound"
+msgstr "聲音"
+
+#. Translators: Identifies a whitespace.
+msgid "white space"
+msgstr "空白字元"
+
+#. Translators: Identifies a tree view button.
+msgid "tree view button"
+msgstr "樹狀檢視按鈕"
+
+#. Translators: Identifies an IP address (an IP address field element).
+msgid "IP address"
+msgstr "IP 位址"
+
+#. Translators: Identifies a desktop icon (the icons on the desktop such as computer and various shortcuts
+#. for programs).
+msgid "desktop icon"
+msgstr "桌面圖示"
+
+#. Translators: Identifies desktop pane (the desktop window).
+msgid "desktop pane"
+msgstr "桌面窗格"
+
+#. Translators: Identifies an option pane.
+msgid "option pane"
+msgstr "選項對話窗格"
+
+#. Translators: Identifies a color chooser.
+msgid "color chooser"
+msgstr "顏色選擇框"
+
+#. Translators: Identifies a file chooser (to select a file or groups of files from a list).
+msgid "file chooser"
+msgstr "檔案選擇框"
+
+msgid "filler"
+msgstr "填寫框"
+
+#. Translators: Identifies a panel control for grouping related options.
+msgid "panel"
+msgstr "面板"
+
+#. Translators: Identifies a password field (a protected edit field for entering passwords such as when
+#. logging into web-based email sites).
+msgid "password edit"
+msgstr "密碼編輯區"
+
+#. Translators: Identifies a font chooser.
+msgid "font chooser"
+msgstr "字型選擇框"
+
+msgid "line"
+msgstr "單行"
+
+#. Translators: Identifies a font name.
+msgid "font name"
+msgstr "字體名稱"
+
+#. Translators: Identifies font size.
+msgid "font size"
+msgstr "字體大小"
+
+#. Translators: Describes text formatting.
+#. Translators: Reported when text is bolded.
+msgid "bold"
+msgstr "粗體"
+
+#. Translators: Describes text formatting.
+#. Translators: Reported when text is italicized.
+msgid "italic"
+msgstr "斜體"
+
+#. Translators: Describes text formatting.
+msgid "underline"
+msgstr "底線"
+
+#. Translators: Describes text formatting.
+msgid "foreground color"
+msgstr "前景色"
+
+#. Translators: Describes text formatting.
+msgid "background color"
+msgstr "背景色"
+
+#. Translators: Describes style of text.
+#. Translators: a Microsoft Word revision type (style change)
+msgid "style"
+msgstr "樣式"
+
+#. Translators: Describes text formatting.
+msgid "indent"
+msgstr "縮排"
+
+#. Translators: Describes text formatting.
+msgid "alignment"
+msgstr "對齊"
+
+#. Translators: Identifies an alert window or bar (usually on Internet Explorer 9 and above for alerts such
+#. as file downloads or pop-up blocker).
+msgid "alert"
+msgstr "注意"
+
+#. Translators: Identifies a data grid control (a grid which displays data).
+msgid "data grid"
+msgstr "資料格網"
+
+msgid "data item"
+msgstr "資料項目"
+
+msgid "header item"
+msgstr "標題項目"
+
+#. Translators: Identifies a thumb control (a button-like control for changing options).
+msgid "thumb control"
+msgstr "滑桿控制按鈕"
+
+msgid "calendar"
+msgstr "行事曆"
+
+msgid "video"
+msgstr "視頻"
+
+msgid "audio"
+msgstr "音頻"
+
+#. Translators: Identifies a chart element.
+msgid "chart element"
+msgstr "圖表項目"
+
+#. Translators: Identifies deleted content.
+#. Translators: Reported when text is marked as having been deleted
+msgid "deleted"
+msgstr "已刪除"
+
+#. Translators: Identifies inserted content.
+#. Translators: Reported when text is marked as having been inserted
+msgid "inserted"
+msgstr "已新增"
+
+#. Translators: Identifies a landmark.
+msgid "landmark"
+msgstr "地標"
+
+#. Translators: Identifies an article.
+msgid "article"
+msgstr "文章"
+
+#. Translators: Identifies a region.
+msgid "region"
+msgstr "區域"
+
+#. Translators: Identifies a figure (commonly seen on some websites).
+msgid "figure"
+msgstr "圖形"
+
+#. Translators: Identifies marked (highlighted) content
+msgid "highlighted"
+msgstr "已加亮"
+
+#. Translators: Identifies a progress bar with indeterminate state, I.E. progress can not be determined.
+msgid "busy indicator"
+msgstr "忙碌標示"
+
+#. Translators: Indicates that a particular state of an object is negated.
+#. Separate strings have now been defined for commonly negated states (e.g. not selected and not
+#. checked), but this still might be used in some other cases.
+#. %s will be replaced with the full identifier of the negated state (e.g. selected).
+#, python-format
+msgid "not %s"
+msgstr "沒%s"
+
+#. Translators: This is presented when a control or document is unavailable.
+msgid "unavailable"
+msgstr "無法使用"
+
+#. Translators: This is presented when a control has focus.
+msgid "focused"
+msgstr "有焦點"
+
+#. Translators: This is presented when the control is selected.
+msgid "selected"
+msgstr "選取"
+
+#. Translators: This is presented when a document is busy.
+msgid "busy"
+msgstr "忙碌中"
+
+#. Translators: This is presented when a button is pressed.
+msgid "pressed"
+msgstr "按下"
+
+#. Translators: This is presented when a check box is checked.
+msgid "checked"
+msgstr "勾選"
+
+#. Translators: This is presented when a three state check box is half checked.
+msgid "half checked"
+msgstr "部份勾選"
+
+#. Translators: This is presented when the control is a read-only control such as read-only edit box.
+msgid "read only"
+msgstr "唯讀"
+
+#. Translators: This is presented when a tree view or submenu item is expanded.
+msgid "expanded"
+msgstr "展開"
+
+#. Translators: This is presented when a tree view or submenu is collapsed.
+msgid "collapsed"
+msgstr "折疊"
+
+#. Translators: This is presented when a control or a document becomes invisible.
+msgid "invisible"
+msgstr "隱藏"
+
+#. Translators: This is presented when a visited link is encountered.
+msgid "visited"
+msgstr "到訪過"
+
+#. Translators: This is presented when a link is encountered.
+msgid "linked"
+msgstr "連結"
+
+#. Translators: This is presented when the control menu item has a submenu.
+msgid "subMenu"
+msgstr "子選單"
+
+#. Translators: This is presented when a protected control or a document is encountered.
+msgid "protected"
+msgstr "保密"
+
+#. Translators: This is presented when a required form field is encountered.
+msgid "required"
+msgstr "需要"
+
+#. Translators: Reported when an object no longer exists in the user interface;
+#. i.e. it is dead and is no longer usable.
+msgid "defunct"
+msgstr "沒有功能"
+
+#. Translators: This is presented when an invalid entry has been made.
+msgid "invalid entry"
+msgstr "輸入錯誤"
+
+msgid "modal"
+msgstr "樣式的"
+
+#. Translators: This is presented when a field supports auto completion of entered text such as email
+#. address field in Microsoft Outlook.
+msgid "has auto complete"
+msgstr "可自動完成"
+
+#. Translators: This is presented when an edit field allows typing multiple lines of text such as comment
+#. fields on websites.
+msgid "multi line"
+msgstr "多行"
+
+msgid "iconified"
+msgstr "圖示化"
+
+#. Translators: Presented when the current control is located off screen.
+msgid "off screen"
+msgstr "畫面以外的"
+
+#. Translators: Presented when the control allows selection such as text fields.
+msgid "selectable"
+msgstr "可選取"
+
+#. Translators: Presented when a control can be moved to using system focus.
+msgid "focusable"
+msgstr "焦點可到"
+
+#. Translators: Presented when a control allows clicking via mouse (mostly presented on web controls).
+msgid "clickable"
+msgstr "可點擊"
+
+msgid "editable"
+msgstr "可編輯"
+
+msgid "checkable"
+msgstr "可核取"
+
+msgid "draggable"
+msgstr "可拖曳"
+
+msgid "dragging"
+msgstr "拖曳"
+
+#. Translators: Reported where an object which is being dragged can be dropped.
+#. This is only reported for objects that support accessible drag and drop.
+msgid "drop target"
+msgstr "放置目標"
+
+msgid "sorted"
+msgstr "排序"
+
+msgid "sorted ascending"
+msgstr "遞增排序"
+
+msgid "sorted descending"
+msgstr "遞減排序"
+
+#. Translators: a state that denotes that an object (usually a graphic) has a long description.
+msgid "has long description"
+msgstr "有詳細描述"
+
+#. Translators: a state that denotes that an object is pinned in its current location
+msgid "pinned"
+msgstr "已釘選"
+
+#. Translators: a state that denotes the existance of a formula on a spreadsheet cell
+msgid "has formula"
+msgstr "有公式"
+
+#. Translators: a state that denotes the existance of a comment.
+#. Translators: Reported when text contains a generic comment.
+msgid "has comment"
+msgstr "有註解"
+
+#. Translators: a state that denotes that the object is covered partially or fully by another object
+msgid "obscured"
+msgstr "遮蓋"
+
+#. Translators: a state that denotes that the object(text) is cropped as it couldn't be accommodated in the
+#. allocated/available space
+msgid "cropped"
+msgstr "已裁撤"
+
+#. Translators: a state that denotes that the object(text) is overflowing into the adjacent space
+msgid "overflowing"
+msgstr "過多"
+
+#. Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected
+#. Excel spreadsheet).
+msgid "unlocked"
+msgstr "沒鎖"
+
+#. Translators: a state that denotes the existence of a note.
+msgid "has note"
+msgstr "有註解"
+
+#. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
+msgid "not selected"
+msgstr "沒選取"
+
+#. Translators: This is presented when a button is not pressed.
+msgid "not pressed"
+msgstr "沒按下"
+
+#. Translators: This is presented when a checkbox is not checked.
+msgid "not checked"
+msgstr "沒勾選"
+
+#. Translators: This is presented when drag and drop is finished.
+#. This is only reported for objects which support accessible drag and drop.
+msgid "done dragging"
+msgstr "拖曳完成"
+
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 msgid "Configuration applied"
 msgstr "設定套用了"
@@ -7566,10 +7944,6 @@ msgstr "設定套用了"
 #. Translators: Reported when configuration has been restored to defaults by using restore configuration to factory defaults item in NVDA menu.
 msgid "Configuration restored to factory defaults"
 msgstr "所有設定已經回到出廠狀態"
-
-#. Translators: Reported when current configuration cannot be saved while NVDA is running in secure mode such as in Windows login screen.
-msgid "Cannot save configuration - NVDA in secure mode"
-msgstr "NVDA 在安全模式下不能儲存設定"
 
 #. Translators: Reported when current configuration has been saved.
 msgid "Configuration saved"
@@ -7579,28 +7953,10 @@ msgstr "設定存好了"
 msgid "Could not save configuration - probably read only file system"
 msgstr "未能儲存設定，檔案系統可能是唯讀的。"
 
-#. Translators: Message shown when attempting to open another NVDA settings dialog when one is already open
-#. (example: when trying to open keyboard settings when general settings dialog is open).
-msgid "An NVDA settings dialog is already open. Please close it first."
-msgstr "另一個 NVDA 設定對話方塊已打開，請先把它關閉"
-
 #. Translators: Message shown when trying to open an unavailable category of a multi category settings dialog
 #. (example: when trying to open touch interaction settings on an unsupported system).
 msgid "The settings panel you tried to open is unavailable on this system."
 msgstr "此系統無法開啟這個設定面板"
-
-#. Translators: Title for default speech dictionary dialog.
-msgid "Default dictionary"
-msgstr "預設字庫"
-
-#. Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
-#, python-format
-msgid "Voice dictionary (%s)"
-msgstr "語音字庫 (%s)"
-
-#. Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long as NvDA is running).
-msgid "Temporary dictionary"
-msgstr "暫存字庫"
 
 #. Translators: The title of the dialog to show about info for NVDA.
 msgid "About NVDA"
@@ -7635,8 +7991,10 @@ msgid "Please wait while NVDA tries to fix your system's COM registrations."
 msgstr "請稍候 NVDA 正在修復系統的 COM 註冊。"
 
 #. Translators: The message displayed when the COM Registration Fixing tool completes.
-msgid "COM Registration Fixing tool complete"
-msgstr "COM 註冊修復完成"
+msgid ""
+"The COM Registration Fixing tool has finished. It is highly recommended that "
+"you restart your computer now, to make sure the changes take full effect."
+msgstr "COM 註冊修復已經完成，強烈建議你立即重啟電腦，讓變更生效。"
 
 #. Translators: The label for the menu item to open NVDA Settings dialog.
 msgid "&Settings..."
@@ -7645,37 +8003,6 @@ msgstr "設定(&S)"
 #. Translators: The description for the menu item to open NVDA Settings dialog.
 msgid "NVDA settings"
 msgstr "NVDA 設定"
-
-#. Translators: The label for the menu item to open Default speech dictionary dialog.
-msgid "&Default dictionary..."
-msgstr "預設字庫...(&D)"
-
-#. Translators: The help text for the menu item to open Default speech dictionary dialog.
-msgid ""
-"A dialog where you can set default dictionary by adding dictionary entries "
-"to the list"
-msgstr "開啟預設字庫對話方塊，方塊可讓你加入、修改或移除預設字庫項目"
-
-#. Translators: The label for the menu item to open Voice specific speech dictionary dialog.
-msgid "&Voice dictionary..."
-msgstr "語音字庫...(&V)"
-
-#. Translators: The help text for the menu item
-#. to open Voice specific speech dictionary dialog.
-msgid ""
-"A dialog where you can set voice-specific dictionary by adding dictionary "
-"entries to the list"
-msgstr "開啟語音字庫對話方塊，方塊可讓你加入、修改或移除語音字庫項目"
-
-#. Translators: The label for the menu item to open Temporary speech dictionary dialog.
-msgid "&Temporary dictionary..."
-msgstr "暫存字庫...(&T)"
-
-#. Translators: The help text for the menu item to open Temporary speech dictionary dialog.
-msgid ""
-"A dialog where you can set temporary dictionary by adding dictionary entries "
-"to the edit box"
-msgstr "開啟暫存字庫對話方塊，方塊可讓你加入暫存字庫項目"
 
 #. Translators: The label for a submenu under NvDA Preferences menu to select speech dictionaries.
 msgid "Speech &dictionaries"
@@ -7772,32 +8099,6 @@ msgstr "關於(&A)"
 msgid "&Help"
 msgstr "說明(&H)"
 
-#. Translators: The label for the menu item to open the Configuration Profiles dialog.
-msgid "&Configuration profiles..."
-msgstr "組態設定(&C)"
-
-#. Translators: The label for the menu item to revert to saved configuration.
-msgid "&Revert to saved configuration"
-msgstr "還原設定 (&R)"
-
-msgid "Reset all settings to saved state"
-msgstr "所有設定值回到已儲存狀態"
-
-#. Translators: The label for the menu item to reset settings to default settings.
-#. Here, default settings means settings that were there when the user first used NVDA.
-msgid "&Reset configuration to factory defaults"
-msgstr "將設定回到出廠狀態(&R)"
-
-msgid "Reset all settings to default state"
-msgstr "將所有設定回到出廠狀態"
-
-#. Translators: The label for the menu item to save current settings.
-msgid "&Save configuration"
-msgstr "儲存設定(&S)"
-
-msgid "Write the current configuration to nvda.ini"
-msgstr "將現在的設定寫入 nvda.ini 檔案"
-
 #. Translators: The label for the menu item to open donate page.
 msgid "Donate"
 msgstr "連結至贊助 NVDA 英文網頁"
@@ -7817,35 +8118,66 @@ msgstr "結束(&X)"
 msgid "Exit NVDA"
 msgstr "結束 NVDA"
 
-#. Translators: A message in the exit Dialog shown when all add-ons are disabled.
+#. Translators: The label for the menu item to open Default speech dictionary dialog.
+msgid "&Default dictionary..."
+msgstr "預設字庫...(&D)"
+
+#. Translators: The help text for the menu item to open Default speech dictionary dialog.
 msgid ""
-"All add-ons are now disabled. They will be re-enabled on the next restart "
-"unless you choose to disable them again."
-msgstr "所有附加組件已被停用，直到下次重開 NVDA 時會再被啟用。"
+"A dialog where you can set default dictionary by adding dictionary entries "
+"to the list"
+msgstr "開啟預設字庫對話方塊，方塊可讓你加入、修改或移除預設字庫項目"
 
-#. Translators: The label for actions list in the Exit dialog.
-msgid "What would you like to &do?"
-msgstr "執行那個動作？(&D)"
+#. Translators: The label for the menu item to open Voice specific speech dictionary dialog.
+msgid "&Voice dictionary..."
+msgstr "語音字庫...(&V)"
 
-#. Translators: An option in the combo box to choose exit action.
-msgid "Exit"
-msgstr "結束"
+#. Translators: The help text for the menu item
+#. to open Voice specific speech dictionary dialog.
+msgid ""
+"A dialog where you can set voice-specific dictionary by adding dictionary "
+"entries to the list"
+msgstr "開啟語音字庫對話方塊，方塊可讓你加入、修改或移除語音字庫項目"
 
-#. Translators: An option in the combo box to choose exit action.
-msgid "Restart"
-msgstr "重開"
+#. Translators: The label for the menu item to open Temporary speech dictionary dialog.
+msgid "&Temporary dictionary..."
+msgstr "暫存字庫...(&T)"
 
-#. Translators: An option in the combo box to choose exit action.
-msgid "Restart with add-ons disabled"
-msgstr "重開後停用附加組件"
+#. Translators: The help text for the menu item to open Temporary speech dictionary dialog.
+msgid ""
+"A dialog where you can set temporary dictionary by adding dictionary entries "
+"to the edit box"
+msgstr "開啟暫存字庫對話方塊，方塊可讓你加入暫存字庫項目"
 
-#. Translators: An option in the combo box to choose exit action.
-msgid "Restart with debug logging enabled"
-msgstr "重開後啟用除錯事件記錄"
+#. Translators: The label for the menu item to open the Configuration Profiles dialog.
+msgid "&Configuration profiles..."
+msgstr "組態設定(&C)"
 
-#. Translators: An option in the combo box to choose exit action.
-msgid "Install pending update"
-msgstr "安裝已經下載的更新"
+#. Translators: The label for the menu item to revert to saved configuration.
+msgid "&Revert to saved configuration"
+msgstr "還原設定 (&R)"
+
+#. Translators: The help text for the menu item to revert to saved configuration.
+msgid "Reset all settings to saved state"
+msgstr "所有設定值回到已儲存狀態"
+
+#. Translators: The label for the menu item to reset settings to default settings.
+#. Here, default settings means settings that were there when the user first used NVDA.
+msgid "&Reset configuration to factory defaults"
+msgstr "將設定回到出廠狀態(&R)"
+
+#. Translators: The help text for the menu item to reset settings to default settings.
+#. Here, default settings means settings that were there when the user first used NVDA.
+msgid "Reset all settings to default state"
+msgstr "將所有設定回到出廠狀態"
+
+#. Translators: The label for the menu item to save current settings.
+msgid "&Save configuration"
+msgstr "儲存設定(&S)"
+
+#. Translators: The help text for the menu item to save current settings.
+msgid "Write the current configuration to nvda.ini"
+msgstr "將現在的設定寫入 nvda.ini 檔案"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -8168,6 +8500,20 @@ msgid ""
 "version is now {}"
 msgstr "需要更新此附加組件，可支援的版本至少應為 {}"
 
+#. Translators: Reported when an action cannot be performed because NVDA is in a secure screen
+msgid "Action unavailable in secure context"
+msgstr "目前在安全畫面不能執行此動作"
+
+#. Translators: Reported when an action cannot be performed because NVDA has been installed
+#. from the Windows Store.
+msgid "Action unavailable in NVDA Windows Store version"
+msgstr "Windows 市集版的 NVDA 不能執行此動作"
+
+#. Translators: Reported when an action cannot be performed because NVDA is waiting
+#. for a response from a modal dialog
+msgid "Action unavailable while a dialog requires a response"
+msgstr "目前有一個對話方塊正等待回應不能執行此動作"
+
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
 msgstr "組態設定"
@@ -8356,6 +8702,44 @@ msgstr "此處沒有說明。"
 msgid "No user guide found."
 msgstr "沒有目前語言的用戶指南。"
 
+#. Translators: An option in the combo box to choose exit action.
+msgid "Exit"
+msgstr "結束"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart"
+msgstr "重開"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with add-ons disabled"
+msgstr "重開後停用附加組件"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with debug logging enabled"
+msgstr "重開後啟用除錯事件記錄"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Install pending update"
+msgstr "安裝已經下載的更新"
+
+#. Translators: A message in the exit Dialog shown when all add-ons are disabled.
+msgid ""
+"All add-ons are now disabled. They will be re-enabled on the next restart "
+"unless you choose to disable them again."
+msgstr "所有附加組件已被停用，直到下次重開 NVDA 時會再被啟用。"
+
+#. Translators: A message in the exit Dialog shown when NVDA language has been
+#. overwritten from the command line.
+msgid ""
+"NVDA's interface language is now forced from the command line. On the next "
+"restart, the language  saved in NVDA's configuration will be used instead."
+msgstr ""
+"NVDA 介面語言現在由命令列強制變更，下次重新啟動將再套用儲存的語言設定。"
+
+#. Translators: The label for actions list in the Exit dialog.
+msgid "What would you like to &do?"
+msgstr "執行那個動作？(&D)"
+
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
 #. {source} is replaced with the gesture's source; e.g. laptop keyboard.
@@ -8398,8 +8782,8 @@ msgid "&Filter by:"
 msgstr "篩選指令(&F)"
 
 #. Translators: The label of a button to add a gesture in the Input Gestures dialog.
-#. Translators: The label for a button in speech dictionaries dialog to add new entries.
 #. Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
+#. Translators: The label for a button in speech dictionaries dialog to add new entries.
 msgid "&Add"
 msgstr "新增(&A)"
 
@@ -8681,6 +9065,12 @@ msgstr "輸入/輸出"
 #. Translators: One of the log levels of NVDA (the debug mode shows debug messages as NVDA runs).
 msgid "debug"
 msgstr "偵錯"
+
+#. Translators: Shown for a language which has been provided from the command line
+#. 'langDesc' would be replaced with description of the given locale.
+#, python-brace-format
+msgid "Command line option: {langDesc}"
+msgstr "命令列選項: {langDesc}"
 
 #. Translators: The label for a setting in general settings to select NVDA's interface language
 #. (once selected, NVDA must be restarted; the option user default means the user's Windows language
@@ -9052,6 +9442,15 @@ msgstr "讀出輸入的組字字元(&R)"
 msgid "Report changes to the &composition string"
 msgstr "報出輸入字根(&C)"
 
+#. Translators: This is a label appearing on the Object Presentation settings panel.
+msgid ""
+"Configure how much information NVDA will present about controls. These "
+"options apply to focus reporting and NVDA object navigation, but not when "
+"reading text content e.g. web content with browse mode."
+msgstr ""
+"設定 NVDA 讀出多少控製項資訊。這些選項適用於讀出焦點及 NVDA 物件導航，但不適"
+"用於文字內容，例如在瀏覽模式閱讀網頁內容。"
+
 #. Translators: This is the label for the object presentation panel.
 msgid "Object Presentation"
 msgstr "O 物件顯示"
@@ -9184,6 +9583,8 @@ msgid "Automatically set system &focus to focusable elements"
 msgstr "自動將系統焦點移到可到項目"
 
 #. Translators: This is the label for the document formatting panel.
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
 msgid "Document Formatting"
 msgstr "D 文件格式(&F)"
 
@@ -9225,8 +9626,8 @@ msgstr "強調標記(&M)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-msgid "Mar&ked (highlighted text)"
-msgstr "加亮文字 (highlighted text)(&K)"
+msgid "Highlighted (mar&ked) text"
+msgstr "加亮文字(&K)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -9247,6 +9648,11 @@ msgstr "文件資訊"
 #. document formatting settings panel.
 msgid "No&tes and comments"
 msgstr "附註及註解(&T)"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings panel.
+msgid "&Bookmarks"
+msgstr "書籤(&B)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -9411,11 +9817,11 @@ msgstr "啟用觸控互動"
 msgid "&Touch typing mode"
 msgstr "觸控打字模式(&T)"
 
-#. Translators: The title of the Windows 10 OCR panel.
-msgid "Windows 10 OCR"
-msgstr "Windows 10 光學字元辨識"
+#. Translators: The title of the Windows OCR panel.
+msgid "Windows OCR"
+msgstr "Windows 光學字元辨識"
 
-#. Translators: Label for an option in the Windows 10 OCR dialog.
+#. Translators: Label for an option in the Windows OCR dialog.
 msgid "Recognition &language:"
 msgstr "辨識語言(&L)"
 
@@ -9444,11 +9850,31 @@ msgid ""
 "Enable &selective registration for UI Automation events and property changes"
 msgstr "啟用關於自動化技術事件及屬性變更的記錄(&S)"
 
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid ""
-"Use UI Automation to access Microsoft &Word document controls when available"
-msgstr "盡量利用自動化技術來存取 Microsoft Word 文件的控制項(&W)"
+#. Translators: Label for the Use UIA with MS Word combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithMSWord"
+msgid "Use UI Automation to access Microsoft &Word document controls"
+msgstr "利用自動化技術來存取 Microsoft Word 文件的控制項(&W)"
+
+#. Translators: Label for the default value of the Use UIA with MS Word combobox,
+#. in the Advanced settings panel.
+msgctxt "advanced.uiaWithMSWord"
+msgid "Default (Where suitable)"
+msgstr "預設 (相應情況下使用)"
+
+#. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithMSWord"
+msgid "Only when necessary"
+msgstr "必要時使用"
+
+#. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithMSWord"
+msgid "Where suitable"
+msgstr "相應情況下使用"
+
+#. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithMSWord"
+msgid "Always"
+msgstr "總是使用"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -9461,11 +9887,6 @@ msgstr "盡量利用自動化技術來存取 Microsoft Excel 試算表的控制�
 #. Advanced settings panel.
 msgid "Use UI Automation to access the Windows C&onsole when available"
 msgstr "盡量在 Windows 主控台中使用自動化技術(&O)"
-
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid "Speak &passwords in UIA consoles (may improve performance)"
-msgstr "在 UIA 主控台讀出密碼(可能提高效能)(&P)"
 
 #. Translators: Label for the Use UIA with Chromium combobox, in the Advanced settings panel.
 #. Note the '\n' is used to split this long label approximately in half.
@@ -9500,53 +9921,91 @@ msgstr "停用"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
+msgid "Annotations"
+msgstr "註解"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Report 'has details' for structured annotations"
+msgstr "針對結構注釋讀出「有詳細資料」"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Report aria-description always"
+msgstr "總是讀出 aria 描述"
+
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
+msgid "HID Braille Standard"
+msgstr "HID 點字器標準"
+
+#. Translators: Label for option in the 'Enable support for HID braille' combobox
+#. in the Advanced settings panel.
+#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
+#. in the Advanced settings panel.
+msgid "Default (Yes)"
+msgstr "預設 (是)"
+
+#. Translators: Label for option in the 'Enable support for HID braille' combobox
+#. in the Advanced settings panel.
+#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
+#. in the Advanced settings panel.
+msgid "Yes"
+msgstr "是("
+
+#. Translators: Label for option in the 'Enable support for HID braille' combobox
+#. in the Advanced settings panel.
+#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
+#. in the Advanced settings panel.
+msgid "No"
+msgstr "否"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Enable support for HID braille"
+msgstr "啟用 HID 點字器支援"
+
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
 msgid "Terminal programs"
 msgstr "終端程式"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-msgid "Use the new t&yped character support in Windows Console when available"
-msgstr "盡量在 Windows 主控台中使用新的輸入支援(&Y)"
+msgid "Speak &passwords in all enhanced terminals (may improve performance)"
+msgstr "在增強型終端機讀出密碼 (可能提高效能)(&P)"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid ""
+"Use enhanced t&yped character support in legacy Windows Console when "
+"available"
+msgstr "盡量在傳統 Windows 主控台採用增強的輸入字元支援(&Y)"
 
 #. Translators: This is the label for a combo box for selecting a
 #. method of detecting changed content in terminals in the advanced
 #. settings panel.
-#. Choices are automatic, allow Diff Match Patch, and force Difflib.
+#. Choices are automatic, Diff Match Patch, and Difflib.
 msgid "&Diff algorithm:"
 msgstr "內容差異分析(&D):"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA determine the method of detecting changed
 #. content in terminals automatically.
-msgid "Automatic (Difflib)"
-msgstr "自動 (單行分析)"
+msgid "Automatic (prefer Diff Match Patch)"
+msgstr "自動 (字元分析)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA detect changes in terminals
-#. by character when supported, using the diff match patch algorithm.
-msgid "allow Diff Match Patch"
+#. by character, using the diff match patch algorithm.
+msgid "Diff Match Patch"
 msgstr "字元分析"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA detect changes in terminals
 #. by line, using the difflib algorithm.
-msgid "force Difflib"
+msgid "Difflib"
 msgstr "單行分析"
-
-#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
-#. in the Advanced settings panel.
-msgid "Default (Yes)"
-msgstr "預設 (是)"
-
-#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
-#. in the Advanced settings panel.
-msgid "Yes"
-msgstr "是("
-
-#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
-#. in the Advanced settings panel.
-msgid "No"
-msgstr "否"
 
 #. Translators: This is the label for combobox in the Advanced settings panel.
 msgid "Attempt to cancel speech for expired focus events:"
@@ -9562,6 +10021,11 @@ msgstr "可編輯的文字"
 msgid "Caret movement timeout (in ms)"
 msgstr "游標移動時限(以毫秒計)"
 
+#. Translators: This is the label for a checkbox control in the
+#. Advanced settings panel.
+msgid "Report transparent color values"
+msgstr "讀出透明色彩值"
+
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 msgid "Debug logging"
@@ -9571,6 +10035,20 @@ msgstr "偵錯記錄"
 #. Advanced settings panel
 msgid "Enabled logging categories"
 msgstr "啟用類別記錄"
+
+#. Translators: Label for the Play a sound for logged errors combobox, in the Advanced settings panel.
+msgid "Play a sound for logged e&rrors:"
+msgstr "遇到錯誤紀錄時播放音效(&R):"
+
+#. Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
+msgctxt "advanced.playErrorSound"
+msgid "Only in NVDA test versions"
+msgstr "僅限 NVDA 測試版"
+
+#. Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
+msgctxt "advanced.playErrorSound"
+msgid "Yes"
+msgstr "總是播放"
 
 #. Translators: This is the label for the Advanced settings panel.
 msgid "Advanced"
@@ -9599,84 +10077,6 @@ msgstr "我明白修改這些設定後有可能導致 NVDA 不能正常執行。
 #. Translators: This is the label for a button in the Advanced settings panel
 msgid "Restore defaults"
 msgstr "回到預設值(&R)"
-
-#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-msgid "&Anywhere"
-msgstr "部份字詞(&A)"
-
-#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-msgid "Whole &word"
-msgstr "整個字詞(&W)"
-
-#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-msgid "Regular &expression"
-msgstr "正規表達式(&E)"
-
-#. Translators: This is the label for the edit dictionary entry dialog.
-msgid "Edit Dictionary Entry"
-msgstr "編輯字庫項目"
-
-#. Translators: This is a label for an edit field in add dictionary entry dialog.
-msgid "&Pattern"
-msgstr "原來文字(&P)"
-
-#. Translators: This is a label for an edit field in add dictionary entry dialog and in punctuation/symbol pronunciation dialog.
-#. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
-msgid "&Replacement"
-msgstr "代替文字(&R)"
-
-#. Translators: This is a label for an edit field in add dictionary entry dialog.
-msgid "&Comment"
-msgstr "註解(&C)"
-
-#. Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
-msgid "&Type"
-msgstr "種類(&T)"
-
-#. Translators: This is an error message to let the user know that the pattern field in the dictionary entry is not valid.
-msgid "A pattern is required."
-msgstr "項目必填。"
-
-msgid "Dictionary Entry Error"
-msgstr "字庫項目錯誤"
-
-#. Translators: This is an error message to let the user know that the dictionary entry is not valid.
-#, python-format
-msgid "Regular Expression error: \"%s\"."
-msgstr "正規表達式錯誤 \"%s\""
-
-#. Translators: The label for the list box of dictionary entries in speech dictionary dialog.
-msgid "&Dictionary entries"
-msgstr "字庫項目(&D)"
-
-#. Translators: The label for a column in dictionary entries list used to identify comments for the entry.
-msgid "Comment"
-msgstr "註解"
-
-#. Translators: The label for a column in dictionary entries list used to identify pattern (original word or a pattern).
-msgid "Pattern"
-msgstr "原來文字"
-
-#. Translators: The label for a column in dictionary entries list and in a list of symbols from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
-#. Translators: The label for a column in symbols list used to identify a replacement.
-msgid "Replacement"
-msgstr "代替文字"
-
-#. Translators: The label for a column in dictionary entries list used to identify whether the entry is case sensitive or not.
-msgid "case"
-msgstr "大小寫須相符"
-
-#. Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression, matches whole words, or matches anywhere.
-msgid "Type"
-msgstr "種類"
-
-#. Translators: The label for a button in speech dictionaries dialog to edit existing entries.
-msgid "&Edit"
-msgstr "編輯(&E)"
-
-#. Translators: This is the label for the add dictionary entry dialog.
-msgid "Add Dictionary Entry"
-msgstr "新增字庫項目"
 
 #. Translators: A label for the braille display on the braille panel.
 msgid "Braille &display"
@@ -9863,6 +10263,12 @@ msgstr "符號(&S)"
 msgid "Symbol"
 msgstr "符號"
 
+#. Translators: The label for a column in symbols list used to identify a replacement.
+#. Translators: The label for a column in dictionary entries list and in a list of symbols
+#. from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
+msgid "Replacement"
+msgstr "代替文字"
+
 #. Translators: The label for a column in symbols list used to identify a symbol's speech level (either none, some, most, all or character).
 msgid "Level"
 msgstr "報讀等級"
@@ -9875,6 +10281,12 @@ msgstr "傳送"
 #. Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
 msgid "Change selected symbol"
 msgstr "變更已選取的符號"
+
+#. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
+#. Translators: This is a label for an edit field in add dictionary entry dialog
+#. and in punctuation/symbol pronunciation dialog.
+msgid "&Replacement"
+msgstr "代替文字(&R)"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"
@@ -9892,6 +10304,102 @@ msgstr "移除(&M)"
 #, python-format
 msgid "Symbol \"%s\" is already present."
 msgstr "\"%s\" 已經存在"
+
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "&Anywhere"
+msgstr "部份字詞(&A)"
+
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "Whole &word"
+msgstr "整個字詞(&W)"
+
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "Regular &expression"
+msgstr "正規表達式(&E)"
+
+#. Translators: This is the label for the edit dictionary entry dialog.
+msgid "Edit Dictionary Entry"
+msgstr "編輯字庫項目"
+
+#. Translators: This is a label for an edit field in add dictionary entry dialog.
+msgid "&Pattern"
+msgstr "原來文字(&P)"
+
+#. Translators: This is a label for an edit field in add dictionary entry dialog.
+msgid "&Comment"
+msgstr "註解(&C)"
+
+#. Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
+msgid "&Type"
+msgstr "種類(&T)"
+
+#. Translators: This is an error message to let the user know that the pattern field
+#. in the dictionary entry is not valid.
+msgid "A pattern is required."
+msgstr "項目必填。"
+
+#. Translators: The title of an error message raised by the Dictionary Entry dialog
+msgid "Dictionary Entry Error"
+msgstr "字庫項目錯誤"
+
+#. Translators: This is an error message to let the user know that the dictionary entry is not valid.
+#, python-format
+msgid "Regular Expression error: \"%s\"."
+msgstr "正規表達式錯誤 \"%s\""
+
+#. Translators: The label for the list box of dictionary entries in speech dictionary dialog.
+msgid "&Dictionary entries"
+msgstr "字庫項目(&D)"
+
+#. Translators: The label for a column in dictionary entries list used to identify comments for the entry.
+msgid "Comment"
+msgstr "註解"
+
+#. Translators: The label for a column in dictionary entries list used to identify pattern
+#. (original word or a pattern).
+msgid "Pattern"
+msgstr "原來文字"
+
+#. Translators: The label for a column in dictionary entries list used to identify
+#. whether the entry is case sensitive or not.
+msgid "case"
+msgstr "大小寫須相符"
+
+#. Translators: The label for a column in dictionary entries list used to identify
+#. whether the entry is a regular expression, matches whole words, or matches anywhere.
+msgid "Type"
+msgstr "種類"
+
+#. Translators: The label for a button in speech dictionaries dialog to edit existing entries.
+msgid "&Edit"
+msgstr "編輯(&E)"
+
+#. Translators: The label for a button on the Speech Dictionary dialog.
+#. Translators: The title on a prompt for confirmation on the Speech Dictionary dialog.
+msgid "Remove all"
+msgstr "全部移除"
+
+#. Translators: This is the label for the add dictionary entry dialog.
+msgid "Add Dictionary Entry"
+msgstr "新增字庫項目"
+
+#. Translators: A prompt for confirmation on the Speech Dictionary dialog.
+msgid "Are you sure you want to remove all the entries in this dictionary?"
+msgstr "要移除此字庫中的所有項目嗎?"
+
+#. Translators: Title for default speech dictionary dialog.
+msgid "Default dictionary"
+msgstr "預設字庫"
+
+#. Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
+#, python-format
+msgid "Voice dictionary (%s)"
+msgstr "語音字庫 (%s)"
+
+#. Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long
+#. as NvDA is running).
+msgid "Temporary dictionary"
+msgstr "暫存字庫"
 
 #. Translators: The main message for the Welcome dialog when the user starts NVDA for the first time.
 msgid ""
@@ -10064,6 +10572,10 @@ msgstr "有 %s 欄"
 msgid "with %s rows"
 msgstr "有 %s 列"
 
+#. Translators: Speaks when there a further details/annotations that can be fetched manually.
+msgid "has details"
+msgstr "有更多資料"
+
 #. Translators: Speaks the item level in treeviews (example output: level 2).
 #, python-format
 msgid "level %s"
@@ -10103,6 +10615,11 @@ msgstr "第 {0} 欄共 {1} 欄"
 #, python-format
 msgid "%s columns"
 msgstr "%s 欄"
+
+#. Translators: Indicates the text column number in a document.
+#, python-brace-format
+msgid "column {columnNumber}"
+msgstr "第 {columnNumber} 欄"
 
 msgid "continuous section break"
 msgstr "接續本頁的分節符"
@@ -10261,11 +10778,6 @@ msgstr "隱藏"
 msgid "not hidden"
 msgstr "沒隱藏"
 
-#. Translators: Reported for text which is at the baseline position;
-#. i.e. not superscript or subscript.
-msgid "baseline"
-msgstr "基準線"
-
 #. Translators: Reported when text is left-aligned.
 msgid "align left"
 msgstr "靠左對齊"
@@ -10357,9 +10869,25 @@ msgstr "首航沒有縮排"
 msgid "line spacing %s"
 msgstr "行距%s"
 
+#. Translators: Reported when text contains a draft comment.
+msgid "has draft comment"
+msgstr "有草稿註解"
+
+#. Translators: Reported when text contains a resolved comment.
+msgid "has resolved comment"
+msgstr "有結果註解"
+
 #. Translators: Reported when text no longer contains a comment.
 msgid "out of comment"
 msgstr "離開註解"
+
+#. Translators: Reported when text contains a bookmark
+msgid "bookmark"
+msgstr "書籤"
+
+#. Translators: Reported when text no longer contains a bookmark
+msgid "out of bookmark"
+msgstr "離開書籤"
 
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
@@ -10581,8 +11109,26 @@ msgstr "讀出游標所在的註解文字"
 msgid "Not in table"
 msgstr "不在表格中"
 
+#. Translators: a measurement in inches
+#, python-brace-format
+msgid "{val:.2f} in"
+msgstr "{val:.2f} 英吋"
+
+#. Translators: a measurement in centimetres
+#, python-brace-format
+msgid "{val:.2f} cm"
+msgstr "{val:.2f} 釐米"
+
 msgid "invoke"
 msgstr "啟用"
+
+#. Translators: part of the suggestions count message for one suggestion.
+msgid "1 suggestion"
+msgstr "1 個建議"
+
+#. Translators: part of the suggestions count message (for example: 2 suggestions).
+msgid "{} suggestions"
+msgstr "{} 個建議"
 
 #. Translators: the description of a script
 msgctxt "excel-UIA"
@@ -10681,18 +11227,27 @@ msgstr "{firstAddress} {firstValue} 到 {lastAddress} {lastValue}"
 msgid "Reports the note or comment thread on the current cell"
 msgstr "報出目前儲存格的附註"
 
-#. Translators: a comment on a cell in Microsoft excel.
+#. Translators: a note on a cell in Microsoft excel.
 #, python-brace-format
-msgid "{comment}  by {author}"
-msgstr "{comment} 由 {author} 加註"
+msgid "{name}: {desc}"
+msgstr "{name}: {desc}"
+
+#. Translators: message when a cell in Excel contains no note
+msgid "No note on this cell"
+msgstr "儲存格沒有註解"
 
 #. Translators: a comment on a cell in Microsoft excel.
 #, python-brace-format
-msgid "{comment}  by {author} with {numReplies} replies"
-msgstr "{comment} 由 {author} 加註包含 {numReplies} 則回覆"
+msgid "Comment thread: {comment}  by {author}"
+msgstr "註解討論: {comment} 由 {author} 加註"
 
-#. Translators: A message in Excel when there is no note
-msgid "No note or comment thread on this cell"
+#. Translators: a comment on a cell in Microsoft excel.
+#, python-brace-format
+msgid "Comment thread: {comment}  by {author} with {numReplies} replies"
+msgstr "註解討論: {comment} 由 {author} 加註共有 {numReplies} 則回覆"
+
+#. Translators: A message in Excel when there is no comment thread
+msgid "No comment thread on this cell"
 msgstr "儲存格沒有註解"
 
 #. Translators: The label of a radio button to select the type of element
@@ -10729,6 +11284,10 @@ msgstr "註解: {comment} 由 {author} 加註"
 #, python-brace-format
 msgid "Comment: {comment} by {author} on {date}"
 msgstr "註解：{comment} 由 {author} 於 {date} 加註"
+
+#. Translators: a message when navigating by sentence is unavailable in MS Word
+msgid "Navigating by sentence not supported in this document"
+msgstr "本文件不支援句子朗讀指令"
 
 msgid "Desktop"
 msgstr "桌面"
@@ -12085,46 +12644,39 @@ msgid "1.5 line spacing"
 msgstr "1.5倍行高"
 
 #, fuzzy
-#~ msgid "category"
-#~ msgid_plural "categories"
-#~ msgstr[0] "類別(&C)："
+#~ msgid "Moves the navigator object to the first row"
+#~ msgstr "將物件游標移到下一個物件"
 
-#~ msgid "&Activate"
-#~ msgstr "啟動(&A)"
+#, fuzzy
+#~ msgid "Moves the navigator object to the last row"
+#~ msgstr "將物件游標移到下一個物件"
 
-#~ msgctxt "line spacing value"
-#~ msgid "exact"
-#~ msgstr "最小行高"
+#~ msgid "Chinese (China, Mandarin) grade 2"
+#~ msgstr "中文（中國）漢語雙拼"
 
-#~ msgid "Russian grade 1"
-#~ msgstr "俄語一級點字"
+#~ msgid "Cannot save configuration - NVDA in secure mode"
+#~ msgstr "NVDA 在安全模式下不能儲存設定"
 
-#~ msgid "%s copied to clipboard"
-#~ msgstr "%s已複製到剪貼簿"
+#~ msgid "details"
+#~ msgstr "更多資料"
 
-#~ msgid "Review selection copied to clipboard"
-#~ msgstr "標記複製文字終點同時複製到剪貼簿"
+#~ msgid "{modifier} pressed"
+#~ msgstr "按住 {modifier}"
 
-#~ msgid "Apply"
-#~ msgstr "套用"
+#~ msgid "Dutch (Belgium) 6 dot"
+#~ msgstr "荷蘭語(比利時)6 點"
 
-#~ msgid "Co&mments"
-#~ msgstr "註解(&M)"
+#~ msgid "Dutch (Netherlands) 6 dot"
+#~ msgstr "荷蘭語(荷蘭)6 點"
 
-#~ msgid "C&omments"
-#~ msgstr "註解(&o)"
+#~ msgid "Polish grade 1"
+#~ msgstr "波蘭語1 級"
 
-#~ msgid "Ukrainian"
-#~ msgstr "烏克蘭文"
+#~ msgid "Shows a summary of the details at this position if found."
+#~ msgstr "如有的話顯示目前位置的更多資料"
 
-#~ msgid "Russian braille for computer code"
-#~ msgstr "俄语電腦點字"
+#~ msgid "Report details in browse mode"
+#~ msgstr "在瀏覽模式報出更多資料"
 
-#~ msgid "Speaks the current foreground object"
-#~ msgstr "讀出前景物件"
-
-#~ msgid "&Automatically start NVDA after I log on to Windows"
-#~ msgstr "在登入 Windows 後自動啟動 NVDA(&A)"
-
-#~ msgid "Use NVDA on the Windows &logon screen"
-#~ msgstr "在 Windows 登入畫面啟用 NVDA(&L)"
+#~ msgid "{comment}  by {author}"
+#~ msgstr "{comment} 由 {author} 加註"

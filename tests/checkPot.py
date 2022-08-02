@@ -61,16 +61,12 @@ EXPECTED_MESSAGES_WITHOUT_COMMENTS = {
 	'right',
 	'Recognition failed',
 	'NVDA &web site',
-	'Reset all settings to saved state',
-	'Reset all settings to default state',
-	'Write the current configuration to nvda.ini',
 	'E&xit',
 	'Error renaming profile.',
 	'Use this profile for:',
 	'This change requires administrator privileges.',
 	'Insufficient Privileges',
 	'Synthesizer Error',
-	'Dictionary Entry Error',
 	'word',
 	'Taskbar',
 	'%s items',
@@ -120,7 +116,7 @@ def checkPot(fileName):
 	expectedErrors = 0
 	unexpectedSuccesses = 0
 	foundMessagesWithOutComments: Set[str] = set()
-	with open(fileName, "rt") as pot:
+	with open(fileName, "rt", encoding="utf-8") as pot:
 		passedHeader = False
 		for line in pot:
 			line = line.rstrip()

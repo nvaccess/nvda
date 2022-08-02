@@ -119,9 +119,9 @@ class MessageListItem(sysListView32.ListItem):
 		nameList=[]
 		imageState=watchdog.cancellableSendMessage(self.windowHandle,sysListView32.LVM_GETITEMSTATE,self.IAccessibleChildID-1,sysListView32.LVIS_STATEIMAGEMASK)>>12
 		if imageState==5:
-			nameList.append(controlTypes.stateLabels[controlTypes.State.COLLAPSED])
+			nameList.append(controlTypes.State.COLLAPSED.displayString)
 		elif imageState==6:
-			nameList.append(controlTypes.stateLabels[controlTypes.State.EXPANDED])
+			nameList.append(controlTypes.State.EXPANDED.displayString)
 		if self.isUnread:
 			# Translators: Displayed in outlook or live mail to indicate an email is unread
 			nameList.append(_("unread"))

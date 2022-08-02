@@ -17,6 +17,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <windows.h>
 #include <oleacc.h>
 #include <common/log.h>
+#include <common/ia2utils.h>
 #include <remote/nvdaHelperRemote.h>
 #include <vbufBase/backend.h>
 #include "lotusNotesRichText.h"
@@ -170,12 +171,18 @@ void lotusNotesRichTextVBufBackend_t::render(VBufStorage_buffer_t* buffer, int d
 		VBufStorage_fieldNode_t* previousNode=NULL;
 		long childCount=0;
 		pacc->get_accChildCount(&childCount);
-		VARIANT* varChildren=(VARIANT*)malloc(sizeof(VARIANT)*childCount);
-		HRESULT hRes;
-		hRes=AccessibleChildren(pacc,0,childCount,varChildren,&childCount);
-		for(int i=0;i<childCount;++i) {
-			if(varChildren[i].vt==VT_I4) {
-				previousNode=this->renderControlContent(buffer,parentNode,previousNode,docHandle,pacc,varChildren[i].lVal);
+
+		auto [varChildren, hres] = getAccessibleChildren(pacc, 0, childCount);
+		for(CComVariant& child : varChildren) {
+			if(VT_I4 == child.vt) {
+				previousNode = this->renderControlContent(
+					buffer,
+					parentNode,
+					previousNode,
+					docHandle,
+					pacc,
+					child.lVal
+				);
 			}
 		}
 	} else {

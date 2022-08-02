@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2008-2021 NV Access Limited, Babbage B.V., Mozilla Corporation, Accessolutions, Julien Cochuyt
+# Copyright (C) 2008-2022 NV Access Limited, Babbage B.V., Mozilla Corporation, Accessolutions, Julien Cochuyt
 
 import typing
 import weakref
@@ -13,6 +13,7 @@ import NVDAObjects.behaviors
 import winUser
 import mouseHandler
 import IAccessibleHandler
+
 import oleacc
 from logHandler import log
 import textInfos
@@ -22,8 +23,6 @@ from comtypes import COMError
 import aria
 import config
 from NVDAObjects.IAccessible import normalizeIA2TextFormatField, IA2TextTextInfo
-
-IA2_RELATION_CONTAINING_DOCUMENT = "containingDocument"
 
 
 def _getNormalizedCurrentAttrs(attrs: textInfos.ControlField) -> typing.Dict[str, typing.Any]:
@@ -86,10 +85,17 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 	# Note: when working on _normalizeControlField, look for opportunities to simplify
 	# and move logic out into smaller helper functions.
 	def _normalizeControlField(self, attrs):  # noqa: C901
-		for attr in ("table-rownumber-presentational","table-columnnumber-presentational","table-rowcount-presentational","table-columncount-presentational"):
-			attrVal=attrs.get(attr)
-			if attrVal is not None:
-				attrs[attr]=int(attrVal)
+		for attr in (
+			"table-rownumber-presentational",
+			"table-columnnumber-presentational",
+			"table-rowcount-presentational",
+			"table-columncount-presentational"
+		):
+			attrVal = attrs.get(attr)
+			if attrVal is not None and attrVal.lstrip('-').isdigit():
+				attrs[attr] = int(attrVal)
+			else:
+				attrs[attr] = None
 
 		attrs["_description-from"] = self._calculateDescriptionFrom(attrs)
 		attrs.update(_getNormalizedCurrentAttrs(attrs))
@@ -97,19 +103,19 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 		placeholder = self._getPlaceholderAttribute(attrs, "IAccessible2::attribute_placeholder")
 		if placeholder is not None:
 			attrs['placeholder']= placeholder
-		accRole=attrs['IAccessible::role']
-		accRole=int(accRole) if accRole.isdigit() else accRole
-		role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.Role.UNKNOWN)
+
+		role = IAccessibleHandler.NVDARoleFromAttr(attrs['IAccessible::role'])
 		if attrs.get('IAccessible2::attribute_tag',"").lower()=="blockquote":
 			role=controlTypes.Role.BLOCKQUOTE
-		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in range(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
-		states|=set(IAccessibleHandler.IAccessible2StatesToNVDAStates[x] for x in [1<<y for y in range(32)] if int(attrs.get('IAccessible2::state_%s'%x,0)) and x in IAccessibleHandler.IAccessible2StatesToNVDAStates)
+
+		states = IAccessibleHandler.getStatesSetFromIAccessibleAttrs(attrs)
+		states |= IAccessibleHandler.getStatesSetFromIAccessible2Attrs(attrs)
+		role, states = controlTypes.transformRoleStates(role, states)
+
 		if role == controlTypes.Role.EDITABLETEXT and not (controlTypes.State.FOCUSABLE in states or controlTypes.State.UNAVAILABLE in states or controlTypes.State.EDITABLE in states):
 			# This is a text leaf.
 			# See NVDAObjects.Iaccessible.mozilla.findOverlayClasses for an explanation of these checks.
 			role = controlTypes.Role.STATICTEXT
-		if attrs.get("detailsSummary") is not None:
-			states.add(controlTypes.State.HAS_ARIA_DETAILS)
 		if attrs.get("IAccessibleAction_showlongdesc") is not None:
 			states.add(controlTypes.State.HASLONGDESC)
 		if "IAccessibleAction_click" in attrs:
@@ -158,7 +164,34 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			attrs['level']=level
 		if landmark:
 			attrs["landmark"]=landmark
-		return super(Gecko_ia2_TextInfo,self)._normalizeControlField(attrs)
+
+		detailsRole = attrs.get('detailsRole')
+		if detailsRole is not None:
+			attrs['detailsRole'] = self._normalizeDetailsRole(detailsRole)
+		return super()._normalizeControlField(attrs)
+
+	def _normalizeDetailsRole(self, detailsRole: str) -> typing.Optional[controlTypes.Role]:
+		"""
+		The attribute has been added directly to the buffer as a string, either as a role string or a role integer.
+		Ensures the returned role is a fully supported by the details-roles attribute.
+		Braille and speech needs consistent normalization for translation and reporting.
+		"""
+		# Can't import at module level as chromium imports from this module
+		from NVDAObjects.IAccessible.chromium import supportedAriaDetailsRoles
+		if config.conf["debugLog"]["annotations"]:
+			log.debug(f"detailsRole: {repr(detailsRole)}")
+
+		if detailsRole.isdigit():
+			# get a role, but it may be unsupported
+			detailsRole = IAccessibleHandler.IAccessibleRolesToNVDARoles.get(int(detailsRole))
+			# return a supported details role
+			if detailsRole not in supportedAriaDetailsRoles.values():
+				detailsRole = None
+		else:
+			# return a supported details role
+			detailsRole = supportedAriaDetailsRoles.get(detailsRole)
+
+		return detailsRole
 
 	def _normalizeFormatField(self, attrs):
 		normalizeIA2TextFormatField(attrs)
@@ -199,7 +232,10 @@ class Gecko_ia2(VirtualBuffer):
 				# IAccessible NVDAObjects currently fetch IA2, but we need IA2_2 for relationTargetsOfType.
 				# (Out-of-process, for a single relation, this is cheaper than IA2::relations.)
 				acc = acc.QueryInterface(IA2.IAccessible2_2)
-			targets, count = acc.relationTargetsOfType(IA2_RELATION_CONTAINING_DOCUMENT, 1)
+			targets, count = acc.relationTargetsOfType(
+				IAccessibleHandler.RelationType.CONTAINING_DOCUMENT,
+				1  # max relations to fetch
+			)
 			if count == 0:
 				return None
 			doc = targets[0].QueryInterface(IA2.IAccessible2_2)
@@ -351,8 +387,7 @@ class Gecko_ia2(VirtualBuffer):
 			log.debugWarning("Clicking with mouse")
 			oldX, oldY = winUser.getCursorPos()
 			winUser.setCursorPos(*location.center)
-			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN, 0, 0)
-			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP, 0, 0)
+			mouseHandler.doPrimaryClick()
 			winUser.setCursorPos(oldX, oldY)
 			break
 
@@ -517,9 +552,28 @@ class Gecko_ia2(VirtualBuffer):
 		except (COMError, RuntimeError):
 			raise LookupError
 
-	def _getNearestTableCell(self, tableID, startPos, origRow, origCol, origRowSpan, origColSpan, movement, axis):
+	def _getNearestTableCell(
+			self,
+			tableID,
+			startPos,
+			origRow,
+			origCol,
+			origRowSpan,
+			origColSpan,
+			movement,
+			axis,
+	):
 		# Skip the VirtualBuffer implementation as the base BrowseMode implementation is good enough for us here.
-		return super(VirtualBuffer,self)._getNearestTableCell(tableID, startPos, origRow, origCol, origRowSpan, origColSpan, movement, axis)
+		return super(VirtualBuffer, self)._getNearestTableCell(
+			tableID,
+			startPos,
+			origRow,
+			origCol,
+			origRowSpan,
+			origColSpan,
+			movement,
+			axis
+		)
 
 	def _get_documentConstantIdentifier(self):
 		try:

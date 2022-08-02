@@ -98,6 +98,7 @@ class DiffMatchPatch(DiffAlgo):
 				]
 		except Exception:
 			log.exception("Exception in DMP, falling back to difflib")
+			self._terminate()
 			return Difflib().diff(newText, oldText)
 
 	def _terminate(self):
@@ -105,8 +106,12 @@ class DiffMatchPatch(DiffAlgo):
 			if DiffMatchPatch._proc:
 				log.debug("Terminating diff-match-patch proxy")
 				# nvda_dmp exits when it receives two zero-length texts.
-				DiffMatchPatch._proc.stdin.write(struct.pack("=II", 0, 0))
-				DiffMatchPatch._proc.wait(timeout=5)
+				try:
+					DiffMatchPatch._proc.stdin.write(struct.pack("=II", 0, 0))
+					DiffMatchPatch._proc.wait(timeout=5)
+				except Exception:
+					log.exception("Exception during DMP termination")
+				DiffMatchPatch._proc = None
 
 
 class Difflib(DiffAlgo):
@@ -171,7 +176,7 @@ class Difflib(DiffAlgo):
 		return "\n".join(ti.getTextInChunks(UNIT_LINE))
 
 
-def get_dmp_algo():
+def prefer_dmp():
 	"""
 		This function returns a Diff Match Patch object if allowed by the user.
 		DMP is new and can be explicitly disabled by a user setting. If config
@@ -184,9 +189,17 @@ def get_dmp_algo():
 	)
 
 
-def get_difflib_algo():
-	"Returns an instance of the difflib diffAlgo."
-	return _difflib
+def prefer_difflib():
+	"""
+		This function returns a Difflib object if allowed by the user.
+		Difflib can be explicitly disabled by a user setting. If config
+		does not allow Difflib, this function returns a DMP instance instead.
+	"""
+	return (
+		_dmp
+		if config.conf["terminals"]["diffAlgo"] == "dmp"
+		else _difflib
+	)
 
 
 _difflib = Difflib()

@@ -1,17 +1,17 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2021 NV Access Limited, Rui Batista, Aleksey Sadovoy, Peter Vagner,
+# Copyright (C) 2006-2022 NV Access Limited, Rui Batista, Aleksey Sadovoy, Peter Vagner,
 # Mozilla Corporation, Babbage B.V., Joseph Lee, Łukasz Golonka
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 """Functions that wrap Windows API functions from kernel32.dll and advapi32.dll"""
 
-from typing import Union
+from typing import Optional, Union
 import contextlib
 import ctypes
 import ctypes.wintypes
 from ctypes import byref, c_byte, POINTER, sizeof, Structure, windll, WinError
-from ctypes.wintypes import BOOL, DWORD, HANDLE, LARGE_INTEGER, LPWSTR, LPVOID, WORD
+from ctypes.wintypes import BOOL, DWORD, HANDLE, LARGE_INTEGER, LCID, LPWSTR, LPVOID, WORD
 
 kernel32=ctypes.windll.kernel32
 advapi32 = windll.advapi32
@@ -149,6 +149,36 @@ def GetSystemPowerStatus(sps):
 
 def getThreadLocale():
 	return kernel32.GetThreadLocale()
+
+
+ERROR_INVALID_FUNCTION = 0x1
+
+
+@contextlib.contextmanager
+def suspendWow64Redirection():
+	"""Context manager which disables Wow64 redirection for a section of code and re-enables it afterwards"""
+	oldValue = LPVOID()
+	res = kernel32.Wow64DisableWow64FsRedirection(byref(oldValue))
+	if res == 0:
+		# Disabling redirection failed.
+		# This can occur if we're running on 32-bit Windows (no Wow64 redirection)
+		# or as a 64-bit process on 64-bit Windows (Wow64 redirection not applicable)
+		# In this case failure is expected and there is no reason to raise an exception.
+		# Inspect last error code to determine reason for the failure.
+		errorCode = kernel32.GetLastError()
+		if errorCode == ERROR_INVALID_FUNCTION:  # Redirection not supported or not applicable.
+			redirectionDisabled = False
+		else:
+			raise WinError(errorCode)
+	else:
+		redirectionDisabled = True
+	try:
+		yield
+	finally:
+		if redirectionDisabled:
+			if kernel32.Wow64RevertWow64FsRedirection(oldValue) == 0:
+				raise WinError()
+
 
 class SYSTEMTIME(ctypes.Structure):
 	_fields_ = (
@@ -449,3 +479,23 @@ def SetThreadExecutionState(esFlags):
 	if not res:
 		raise WinError()
 	return res
+
+
+def LCIDToLocaleName(windowsLCID: LCID) -> Optional[str]:
+	# NVDA cannot run with this imported at module level
+	from logHandler import log
+	dwFlags = 0
+	bufferLength = kernel32.LCIDToLocaleName(windowsLCID, None, 0, dwFlags)
+	if bufferLength == 0:
+		# This means that there was an error fetching the LCID.
+		# As the buffer is empty, this indicates that the windowsLCID is invalid.
+		log.debugWarning(f"Invalid LCID {windowsLCID}")
+		return None
+	buffer = ctypes.create_unicode_buffer("", bufferLength)
+	bufferLength = kernel32.LCIDToLocaleName(windowsLCID, buffer, bufferLength, dwFlags)
+	if bufferLength == 0:
+		# This means that there was an error fetching the LCID.
+		# As we have already checked if the LCID is valid by receiveing a non-zero buffer length,
+		# something unexpected has failed.
+		raise ctypes.WinError()
+	return buffer.value

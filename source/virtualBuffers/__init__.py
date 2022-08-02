@@ -1,16 +1,18 @@
 # -*- coding: UTF-8 -*-
-#virtualBuffers/__init__.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2007-2017 NV Access Limited, Peter Vágner
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2007-2022 NV Access Limited, Peter Vágner
 
 import time
 import threading
 import ctypes
 import collections
 import itertools
-import typing
+from typing import (
+	Optional,
+	Dict,
+)
 import weakref
 import wx
 import review
@@ -260,23 +262,30 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 					return placeholder
 		return None
 
-	def _getFieldsInRange(self,start,end):
+	def _normalizeCommand(self, command: XMLFormatting.CommandsT) -> XMLFormatting.CommandsT:
+		if not isinstance(command, textInfos.FieldCommand):
+			return command  # no need to normalize str or None
+		field = command.field
+		if isinstance(field, textInfos.ControlField):
+			command.field = self._normalizeControlField(field)
+		elif isinstance(field, textInfos.FormatField):
+			command.field = self._normalizeFormatField(field)
+		return command
+
+	def _getFieldsInRange(self, start: int, end: int) -> textInfos.TextInfo.TextWithFieldsT:
 		text=NVDAHelper.VBuf_getTextInRange(self.obj.VBufHandle,start,end,True)
 		if not text:
-			return ""
-		commandList: typing.List[textInfos.FieldCommand] = XMLFormatting.XMLTextParser().parse(text)
-		for command in commandList:
-			if not isinstance(command, textInfos.FieldCommand):
-				continue  # no need to normalize str or None
-
-			field = command.field
-			if isinstance(field, textInfos.ControlField):
-				command.field = self._normalizeControlField(field)
-			elif isinstance(field, textInfos.FormatField):
-				command.field = self._normalizeFormatField(field)
+			return [""]
+		commandList = XMLFormatting.XMLTextParser().parse(text)
+		commandList = [
+			self._normalizeCommand(command)
+			for command in commandList
+			# drop None to convert from XMLFormatting.CommandListT to textInfos.TextInfo.TextWithFieldsT
+			if command is not None
+		]
 		return commandList
 
-	def getTextWithFields(self,formatConfig=None):
+	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
 		start=self._startOffset
 		end=self._endOffset
 		if start==end:
@@ -327,6 +336,10 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 			# Get the text for the header cells.
 			textList = []
 			for docHandle, ID in cellIdentifiers:
+				if attrs.get("controlIdentifier_docHandle") == docHandle and attrs.get("controlIdentifier_ID") == ID:
+					# This is a self-reference to a column or row header
+					# Do not double up the cell header name. This is happening in Chrome.
+					continue
 				try:
 					start, end = self._getOffsetsFromFieldIdentifier(int(docHandle), int(ID))
 				except (LookupError, ValueError):
@@ -463,12 +476,28 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		if not success:
 			self.passThrough=True
 			return
+		textLength = NVDAHelper.localLib.VBuf_getTextLength(self.VBufHandle)
+		if textLength == 0:
+			log.debugWarning("Empty buffer. Waiting for documentLoadComplete event instead")
+			# Empty buffer.
+			# May be due to focus event too early in Chromium 100 documents
+			# We may get a later chance to see content with a documentLoadComplete event
+			return
 		if self._hadFirstGainFocus:
 			# If this buffer has already had focus once while loaded, this is a refresh.
 			# Translators: Reported when a page reloads (example: after refreshing a webpage).
 			ui.message(_("Refreshed"))
 		if api.getFocusObject().treeInterceptor == self:
 			self.event_treeInterceptor_gainFocus()
+
+	def event_documentLoadComplete(self, obj, nextHandler):
+		if not self._hadFirstGainFocus:
+			# Any initial gainFocus events were too early to start reporting content in this buffer.
+			# Therefore as we are now alerted the document load is complete,
+			# We should handle the initial automatic say all etc.
+			if api.getFocusObject().treeInterceptor == self:
+				log.debug("Handling initial reporting of virtualBuffer via documentLoadComplete event")
+				self.event_treeInterceptor_gainFocus()
 
 	def _loadProgress(self):
 		# Translators: Reported while loading a document.
@@ -609,7 +638,17 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		for item in results:
 			yield item.textInfo
 
-	def _getNearestTableCell(self, tableID, startPos, origRow, origCol, origRowSpan, origColSpan, movement, axis):
+	def _getNearestTableCell(
+			self,
+			tableID,
+			startPos,
+			origRow,
+			origCol,
+			origRowSpan,
+			origColSpan,
+			movement,
+			axis
+	):
 		# Determine destination row and column.
 		destRow = origRow
 		destCol = origCol

@@ -19,7 +19,7 @@ class LotusNotesRichText_TextInfo(VirtualBufferTextInfo):
 
 	def _normalizeControlField(self,attrs):
 		role=controlTypes.Role.STATICTEXT
-		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in range(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
+		states = IAccessibleHandler.getStatesSetFromIAccessibleAttrs(attrs)
 		if controlTypes.State.LINKED in states:
 			role=controlTypes.Role.LINK
 		attrs['role']=role
@@ -90,8 +90,7 @@ class LotusNotesRichText(VirtualBuffer):
 			return
 		oldX,oldY=winUser.getCursorPos()
 		winUser.setCursorPos(*l.center)
-		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN,0,0)
-		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP,0,0)
+		mouseHandler.doPrimaryClick()
 		winUser.setCursorPos(oldX,oldY)
 
 	def _shouldSetFocusToObj(self, obj):

@@ -7,7 +7,7 @@
 """Types used in IAccessibleHander.
 Kept here so they can be re-used without having to worry about circular imports.
 """
-
+import enum
 from typing import Tuple
 
 IAccessibleObjectIdentifierType = Tuple[
@@ -15,3 +15,13 @@ IAccessibleObjectIdentifierType = Tuple[
 	int,  # objectID
 	int,  # childID
 ]
+
+
+# IAccessible2 relations (not included in the typelib)
+@enum.unique
+class RelationType(str, enum.Enum):
+	FLOWS_FROM = "flowsFrom"
+	FLOWS_TO = "flowsTo"
+	CONTAINING_DOCUMENT = "containingDocument"
+	DETAILS = "details"
+	DETAILS_FOR = "detailsFor"

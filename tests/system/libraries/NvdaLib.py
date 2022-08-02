@@ -22,9 +22,13 @@ from os.path import (
 	splitext as _splitext,
 )
 import tempfile as _tempFile
-from typing import Optional as _Optional
+from typing import (
+	Optional as _Optional,
+	Tuple as _Tuple,
+)
 from urllib.parse import quote as _quoteStr
 
+import typing
 from robotremoteserver import (
 	test_remote_server as _testRemoteServer,
 	stop_remote_server as _stopRemoteServer,
@@ -35,6 +39,9 @@ from SystemTestSpy import (
 	_nvdaSpyAlias,
 	configManager
 )
+
+if typing.TYPE_CHECKING:
+	from SystemTestSpy.speechSpyGlobalPlugin import NVDASpyLib
 
 # Imported for type information
 from robot.libraries.BuiltIn import BuiltIn
@@ -380,11 +387,10 @@ class NvdaLib:
 		return saveToPath
 
 
-def getSpyLib():
+def getSpyLib() -> "NVDASpyLib":
 	""" Gets the spy library instance. This has been augmented with methods for all supported keywords.
 	Requires NvdaLib and nvdaSpy (remote library - see speechSpyGlobalPlugin) to be initialised.
 	On failure check order of keywords in Robot log and NVDA log for failures.
-	@rtype: SystemTestSpy.speechSpyGlobalPlugin.NVDASpyLib
 	@return: Remote NVDA spy Robot Framework library.
 	"""
 	nvdaLib = _getLib("NvdaLib")
@@ -405,3 +411,25 @@ def getSpeechAfterKey(key) -> str:
 	spy.wait_for_speech_to_finish(speechStartedIndex=nextSpeechIndex)
 	speech = spy.get_speech_at_index_until_now(nextSpeechIndex)
 	return speech
+
+
+def getSpeechAndBrailleAfterKey(key) -> _Tuple[str, str]:
+	"""Ensure speech has stopped, press key, and get speech until it stops, report the status of the
+	braille display.
+	@return: Tuple of Speech then Braille.
+	"""
+	spy = getSpyLib()
+	spy.wait_for_speech_to_finish()
+
+	nextSpeechIndex = spy.get_next_speech_index()
+	nextBrailleIndex = spy.get_next_braille_index()
+
+	spy.emulateKeyPress(key)
+
+	spy.wait_for_speech_to_finish(speechStartedIndex=nextSpeechIndex)
+	speech = spy.get_speech_at_index_until_now(nextSpeechIndex)
+
+	spy.wait_for_braille_update(nextBrailleIndex)
+	braille = spy.get_last_braille()
+
+	return speech, braille

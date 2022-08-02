@@ -91,9 +91,7 @@ class MSCandUI21_candidateMenuItem(BaseCandidateItem):
 				y=l[1]
 				oldX,oldY=winUser.getCursorPos()
 				winUser.setCursorPos(x,y)
-				mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN,0,0)
-				time.sleep(0.2)
-				mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP,0,0)
+				mouseHandler.doPrimaryClick(releaseDelay=0.2)
 				winUser.setCursorPos(oldX,oldY)
 				return
 		raise NotImplementedError
