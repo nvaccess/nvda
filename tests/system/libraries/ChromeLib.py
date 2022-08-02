@@ -82,7 +82,6 @@ class ChromeLib:
 			" --disable-notifications"
 			" --no-experiments"
 			" --no-default-browser-check"
-			" -kiosk"
 			f' "{filePath}"',
 			shell=True,
 			alias='chromeStartAlias',
