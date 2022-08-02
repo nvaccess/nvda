@@ -295,7 +295,13 @@ def _getSpellingSpeechWithoutCharMode(
 		sayCapForCapitals: bool,
 		capPitchChange: int,
 		beepForCapitals: bool,
+		fallbackToCharIfNoDescription: bool = True,
 ) -> Generator[SequenceItemT, None, None]:
+	"""
+	@param fallbackToCharIfNoDescription: Only applies if useCharacterDescriptions is True.
+	If fallbackToCharIfNoDescription is True, and no character description is found,
+	the character itself will be announced. Otherwise, nothing will be spoken.
+	"""
 	
 	defaultLanguage=getCurrentLanguage()
 	if not locale or (not config.conf['speech']['autoDialectSwitching'] and locale.split('_')[0]==defaultLanguage.split('_')[0]):
@@ -321,10 +327,12 @@ def _getSpellingSpeechWithoutCharMode(
 			speakCharAs = item
 			if useCharacterDescriptions:
 				charDesc=characterProcessing.getCharacterDescription(locale,speakCharAs.lower())
-		uppercase=speakCharAs.isupper()
+		uppercase=speakCharAs.isupper()			
 		if useCharacterDescriptions and charDesc:
-			IDEOGRAPHIC_COMMA = u"\u3001"
-			speakCharAs=charDesc[0] if textLength>1 else IDEOGRAPHIC_COMMA.join(charDesc)
+				IDEOGRAPHIC_COMMA = u"\u3001"
+				speakCharAs=charDesc[0] if textLength>1 else IDEOGRAPHIC_COMMA.join(charDesc)
+		elif useCharacterDescriptions and not charDesc and not fallbackToCharIfNoDescription:
+			return None
 		else:
 			speakCharAs=characterProcessing.processSpeechSymbol(locale,speakCharAs)
 		if config.conf['speech']['autoLanguageSwitching']:
@@ -368,6 +376,7 @@ def getSingleCharDescription(
 		sayCapForCapitals=text.isupper() and synthConfig["sayCapForCapitals"],
 		capPitchChange=(capPitchChange if text.isupper() else 0),
 		beepForCapitals=text.isupper() and synthConfig["beepForCapitals"],
+		fallbackToCharIfNoDescription=False,
 	)
 
 
