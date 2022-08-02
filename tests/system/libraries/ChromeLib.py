@@ -134,33 +134,41 @@ class ChromeLib:
 			f.write(fileContents)
 		return filePath
 
-	def _wasStartMarkerSpoken(self, speech: str):
-		if "document" not in speech:
-			return False
-		documentIndex = speech.index("document")
-		marker = ChromeLib._beforeMarker
-		return marker in speech and documentIndex < speech.index(marker)
-
-	def _waitForStartMarker(self, spy, lastSpeechIndex):
+	def _waitForStartMarker(self) -> bool:
 		""" Wait until the page loads and NVDA reads the start marker.
-		@param spy:
-		@type spy: SystemTestSpy.speechSpyGlobalPlugin.NVDASpyLib
-		@return: None
+		Depends on Chrome having focus, then tries to ensure that the document is focused and NVDA
+		virtual cursor is set to the "start marker"
+		@return: False on failure
 		"""
-		for i in range(3):  # set a limit on the number of tries.
-			builtIn.sleep("0.5 seconds")  # ensure application has time to receive input
-			spy.wait_for_speech_to_finish()
-			actualSpeech = spy.get_speech_at_index_until_now(lastSpeechIndex)
-			if self._wasStartMarkerSpoken(actualSpeech):
-				break
-			lastSpeechIndex = spy.get_last_speech_index()
-		else:  # Exceeded the number of tries
-			spy.dump_speech_to_log()
-			builtIn.fail(
-				"Unable to locate 'before sample' marker."
-				f" Too many attempts looking for '{ChromeLib._beforeMarker}'"
-				" See NVDA log for full speech."
-			)
+		spy = _NvdaLib.getSpyLib()
+		spy.emulateKeyPress('alt+d')  # focus the address bar, chrome shortcut
+		spy.wait_for_speech_to_finish()
+		addressSpeechIndex = spy.get_last_speech_index()
+
+		spy.emulateKeyPress('control+F6')  # focus web content, chrome shortcut.
+		spy.wait_for_speech_to_finish()
+		afterControlF6Speech = spy.get_speech_at_index_until_now(addressSpeechIndex)
+		if f"document\n{ChromeLib._beforeMarker}" not in afterControlF6Speech:
+			builtIn.log(afterControlF6Speech, level="DEBUG")
+			return False
+
+		spy.emulateKeyPress('control+home')  # ensure we start at the top of the document
+		controlHomeSpeechIndex = spy.get_last_speech_index()
+		spy.emulateKeyPress('numpad8')  # report current line
+		spy.wait_for_speech_to_finish()
+		afterNumPad8Speech = spy.get_speech_at_index_until_now(controlHomeSpeechIndex)
+		if ChromeLib._beforeMarker not in afterNumPad8Speech:
+			builtIn.log(afterNumPad8Speech, level="DEBUG")
+			return False
+		return True
+
+
+	def ensureChromeTitleCanBeReported(self, applicationTitle) -> int:
+		spy = _NvdaLib.getSpyLib()
+		afterFocusToggleIndex = spy.get_last_speech_index()
+		spy.emulateKeyPress('NVDA+t')
+		appTitleIndex = spy.wait_for_specific_speech(applicationTitle, afterIndex=afterFocusToggleIndex)
+		return appTitleIndex
 
 	def prepareChrome(self, testCase: str) -> None:
 		"""
@@ -175,8 +183,15 @@ class ChromeLib:
 		lastSpeechIndex = spy.get_last_speech_index()
 		_chromeLib.start_chrome(path, testCase)
 		applicationTitle = ChromeLib.getUniqueTestCaseTitle(testCase)
-		appTitleIndex = spy.wait_for_specific_speech(applicationTitle, afterIndex=lastSpeechIndex)
-		self._waitForStartMarker(spy, appTitleIndex)
+
+		_chromeLib.ensureChromeTitleCanBeReported(applicationTitle)
+		spy.wait_for_speech_to_finish()
+
+		if not self._waitForStartMarker():
+			builtIn.fail(
+				"Unable to locate 'before sample' marker."
+				" See NVDA log for full speech."
+			)
 		# Move to the loading status line, and wait fore it to become complete
 		# the page has fully loaded.
 		spy.emulateKeyPress('downArrow')
