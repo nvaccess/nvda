@@ -309,7 +309,6 @@ def _getSpellingSpeechWithoutCharMode(
 		text=text.rstrip()
 
 	textLength=len(text)
-	count = 0
 	localeHasConjuncts = True if locale.split('_',1)[0] in LANGS_WITH_CONJUNCT_CHARS else False
 	charDescList = getCharDescListFromText(text,locale) if localeHasConjuncts else text
 	for item in charDescList:
@@ -361,23 +360,14 @@ def getSingleCharDescription(
 		capPitchChange = synthConfig["capPitchChange"]
 	else:
 		capPitchChange = 0
-	defaultLanguage = getCurrentLanguage()
-	if not locale or (
-		not config.conf['speech']['autoDialectSwitching']
-		and locale.split('_')[0] == defaultLanguage.split('_')[0]
-	):
-		locale = defaultLanguage
-	# If the description for the locale is unknown, we yield nothing.
-	char, description = getCharDescListFromText(text, locale=locale)[0]
-	uppercase = char.isupper()
-	if description is None:
-		return
 	yield BreakCommand(getSingleCharDescriptionDelayMS())
-	yield from _getSpellingCharAddCapNotification(
-		description[0],
-		sayCapForCapitals=uppercase and synthConfig["sayCapForCapitals"],
-		capPitchChange=(capPitchChange if uppercase else 0),
-		beepForCapitals=uppercase and synthConfig["beepForCapitals"],
+	yield from _getSpellingSpeechWithoutCharMode(
+		text,
+		locale,
+		useCharacterDescriptions=True,
+		sayCapForCapitals=text.isupper() and synthConfig["sayCapForCapitals"],
+		capPitchChange=(capPitchChange if text.isupper() else 0),
+		beepForCapitals=text.isupper() and synthConfig["beepForCapitals"],
 	)
 
 
