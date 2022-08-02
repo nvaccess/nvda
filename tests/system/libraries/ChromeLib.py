@@ -16,10 +16,7 @@ from SystemTestSpy import (
 	_getLib,
 )
 from SystemTestSpy.windows import (
-	GetForegroundWindowTitle,
 	GetWindowWithTitle,
-	GetVisibleWindowTitles,
-	SetForegroundWindow,
 	Window,
 )
 import re
@@ -165,33 +162,6 @@ class ChromeLib:
 				" See NVDA log for full speech."
 			)
 
-	def _focusChrome(self, startsWithTestCaseTitle: re.Pattern):
-		""" Ensure chrome started and is focused.
-		Different versions of chrome have variations in how the title is presented.
-		This may mean that there is a separator between document name and application name.
-		E.G. "htmlTest   Google Chrome", "html – Google Chrome" or perhaps no application name at all.
-		Rather than try to get this right, just use the doc title.
-		If this continues to be unreliable we could use Selenium or similar to start chrome and inform us
-		when it is ready.
-		"""
-		success, _success = _blockUntilConditionMet(
-			getValue=lambda: SetForegroundWindow(startsWithTestCaseTitle, builtIn.log),
-			giveUpAfterSeconds=5,
-			intervalBetweenSeconds=0.2
-		)
-		if success:
-			return
-		windowInformation = ""
-		try:
-			windowInformation = f"Foreground Window: {GetForegroundWindowTitle()}.\n"
-			windowInformation += f"Open Windows: {GetVisibleWindowTitles()}"
-		except OSError as e:
-			builtIn.log(f"Couldn't retrieve active window information.\nException: {e}")
-		raise AssertionError(
-			"Unable to focus Chrome.\n"
-			f"{windowInformation}"
-		)
-
 	def prepareChrome(self, testCase: str) -> None:
 		"""
 		Starts Chrome opening a file containing the HTML sample
@@ -204,7 +174,6 @@ class ChromeLib:
 		spy.wait_for_speech_to_finish()
 		lastSpeechIndex = spy.get_last_speech_index()
 		_chromeLib.start_chrome(path, testCase)
-		self._focusChrome(ChromeLib.getUniqueTestCaseTitleRegex(testCase))
 		applicationTitle = ChromeLib.getUniqueTestCaseTitle(testCase)
 		appTitleIndex = spy.wait_for_specific_speech(applicationTitle, afterIndex=lastSpeechIndex)
 		self._waitForStartMarker(spy, appTitleIndex)
