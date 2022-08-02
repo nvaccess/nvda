@@ -17,6 +17,7 @@ from SystemTestSpy import (
 )
 from SystemTestSpy.windows import (
 	GetWindowWithTitle,
+	GetForegroundWindowTitle,
 	Window,
 )
 import re
@@ -162,6 +163,27 @@ class ChromeLib:
 			return False
 		return True
 
+	def toggleFocusChrome(self):
+		"""Remove focus, then refocus chrome
+		Attempt to work around NVDA missing focus / foreground events when chrome first opens
+		@returns: last speech index before refocusing chrome
+		"""
+		spy = _NvdaLib.getSpyLib()
+		spy.emulateKeyPress('windows+d')
+		_blockUntilConditionMet(
+			giveUpAfterSeconds=5,
+			getValue=GetForegroundWindowTitle,
+			shouldStopEvaluator=lambda _title: self.chromeWindow.title != _title,
+			errorMessage="Chrome didn't lose focus"
+		)
+		spy.emulateKeyPress('alt+tab')
+		_blockUntilConditionMet(
+			giveUpAfterSeconds=5,
+			getValue=GetForegroundWindowTitle,
+			shouldStopEvaluator=lambda _title: self.chromeWindow.title == _title,
+			errorMessage="Chrome didn't gain focus"
+		)
+		spy.wait_for_speech_to_finish()
 
 	def ensureChromeTitleCanBeReported(self, applicationTitle) -> int:
 		spy = _NvdaLib.getSpyLib()
@@ -170,7 +192,7 @@ class ChromeLib:
 		appTitleIndex = spy.wait_for_specific_speech(applicationTitle, afterIndex=afterFocusToggleIndex)
 		return appTitleIndex
 
-	def prepareChrome(self, testCase: str) -> None:
+	def prepareChrome(self, testCase: str, _doToggleFocus=False) -> None:
 		"""
 		Starts Chrome opening a file containing the HTML sample
 		@param testCase - The HTML sample to test.
@@ -186,6 +208,10 @@ class ChromeLib:
 
 		_chromeLib.ensureChromeTitleCanBeReported(applicationTitle)
 		spy.wait_for_speech_to_finish()
+
+		if _doToggleFocus:  # may work around focus/foreground event missed issues for tests.
+			_chromeLib.toggleFocusChrome()
+			spy.wait_for_speech_to_finish()
 
 		if not self._waitForStartMarker():
 			builtIn.fail(
