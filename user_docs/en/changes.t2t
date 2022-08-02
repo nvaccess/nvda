@@ -6,6 +6,11 @@ What's New in NVDA
 = 2022.4 =
 
 == New Features ==
+- Introduced a new command to check the keyboard shortcut of the current focus. (#13960)
+  - Desktop: ``shift+numpad2``
+  - Laptop: ``NVDA+ctrl+shift+.``
+  -
+-
 
 
 == Changes ==
@@ -14,6 +19,7 @@ What's New in NVDA
 == Bug Fixes ==
 - When updating NVDA using the Windows Package Manager CLI (aka winget), a released version of NVDA is no longer always treated as newer than whatever alpha version is installed. (#12469)
 - NVDA will now correctly announce Group boxes in Java applications. (#13962)
+- Caret properly follows spoken text in say all in applications such as Bookworm, WordPad, or the NVDA log viewer. (#13420, #9179)
 -
 
 
