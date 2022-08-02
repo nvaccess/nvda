@@ -79,22 +79,23 @@ def _GetVisibleWindows() -> List[Window]:
 Logger = Callable[[str], None]
 
 
-def SetForegroundWindow(targetTitle: re.Pattern, logger: Callable[[str], None] = lambda _: None) -> bool:
-	currentTitle = GetForegroundWindowTitle()
-	if re.match(targetTitle, currentTitle):
-		logger(f"Window '{currentTitle}' already focused")
+def SetForegroundWindow(window: Window, logger: Logger) -> bool:
+	"""This may be unreliable, there are conditions on which processes can set the foreground window.
+	https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setforegroundwindow#remarks
+	Additionally, note that this code is run by the Robot Framework test runner, not NVDA.
+	"""
+	if window is None or Window.hwndVal is None:
+		return False
+
+	if window.hwndVal == GetForegroundHwnd():
+		title = _GetWindowTitle(window.hwndVal)
+		logger(f"Window already focused, HWND '{window.hwndVal}' with title: {title}")
 		return True
-	windows = _GetWindows(
-		filterUsingWindow=lambda window: re.match(targetTitle, window.title)
-	)
-	if len(windows) == 1:
-		logger(f"Found window (HWND: {windows[0].hwndVal}) (title: {windows[0].title})")
-		return windll.user32.SetForegroundWindow(windows[0].hwndVal)
-	elif len(windows) == 0:
-		logger("No windows matching the pattern found")
-	else:
-		logger(f"Too many windows to focus {windows}")
-	return False
+
+	logger(f"Focusing window to (HWND: {window.hwndVal}) (title: {window.title})")
+	# https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setforegroundwindow#remarks
+	# The test may not be able to set the foreground window with user32.SetForegroundWindow
+	return windll.user32.SetForegroundWindow(window.hwndVal)
 
 
 def GetWindowWithTitle(targetTitle: re.Pattern, logger: Logger) -> Optional[Window]:
@@ -115,6 +116,10 @@ def GetWindowWithTitle(targetTitle: re.Pattern, logger: Logger) -> Optional[Wind
 def GetVisibleWindowTitles() -> List[str]:
 	windows = _GetVisibleWindows()
 	return [w.title for w in windows]
+
+
+def GetForegroundHwnd() -> HWNDVal:
+	return windll.user32.GetForegroundWindow()
 
 
 def GetForegroundWindowTitle() -> str:
