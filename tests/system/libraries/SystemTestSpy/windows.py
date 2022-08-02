@@ -16,9 +16,14 @@ from ctypes import (
 	windll,
 	WinError,
 )
+from typing import (
+	Callable,
+	List,
+	NamedTuple,
+	Optional,
+)
 import re
 from SystemTestSpy.blockUntilConditionMet import _blockUntilConditionMet
-from typing import Callable, List, NamedTuple
 from robot.libraries.BuiltIn import BuiltIn
 
 builtIn: BuiltIn = BuiltIn()
@@ -71,6 +76,9 @@ def _GetVisibleWindows() -> List[Window]:
 	)
 
 
+Logger = Callable[[str], None]
+
+
 def SetForegroundWindow(targetTitle: re.Pattern, logger: Callable[[str], None] = lambda _: None) -> bool:
 	currentTitle = GetForegroundWindowTitle()
 	if re.match(targetTitle, currentTitle):
@@ -87,6 +95,21 @@ def SetForegroundWindow(targetTitle: re.Pattern, logger: Callable[[str], None] =
 	else:
 		logger(f"Too many windows to focus {windows}")
 	return False
+
+
+def GetWindowWithTitle(targetTitle: re.Pattern, logger: Logger) -> Optional[Window]:
+	windows = _GetWindows(
+		filterUsingWindow=lambda _window: bool(re.match(targetTitle, _window.title))
+	)
+	if len(windows) == 1:
+		logger(f"Found window (HWND: {windows[0].hwndVal}) (title: {windows[0].title})")
+		return windows[0]
+	elif len(windows) == 0:
+		logger(f"No windows found matching the pattern: {targetTitle}")
+		return None
+	else:
+		logger(f"Too many windows to focus {windows}")
+		return None
 
 
 def GetVisibleWindowTitles() -> List[str]:

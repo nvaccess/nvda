@@ -17,8 +17,10 @@ from SystemTestSpy import (
 )
 from SystemTestSpy.windows import (
 	GetForegroundWindowTitle,
+	GetWindowWithTitle,
 	GetVisibleWindowTitles,
 	SetForegroundWindow,
+	Window,
 )
 import re
 from robot.libraries.BuiltIn import BuiltIn
@@ -40,7 +42,10 @@ class ChromeLib:
 	_testFileStagingPath = _tempfile.mkdtemp()
 
 	def __init__(self):
-		self.chromeHandle: _Optional[int] = None
+		self.chromeWindow: _Optional[Window] = None
+		"""Chrome Hwnd used to control Chrome via Windows functions."""
+		self.processRFHandleForStart: _Optional[int] = None
+		"""RF process handle, will wait for the chrome process to exit."""
 
 	@staticmethod
 	def _getTestCasePath(filename):
@@ -48,23 +53,53 @@ class ChromeLib:
 
 	def exit_chrome(self):
 		spy = _NvdaLib.getSpyLib()
+		builtIn.log(
+			# True is expected due to /wait argument.
+			"Is Start process still running (True expected): "
+			f"{process.is_process_running(self.processRFHandleForStart)}"
+		)
 		spy.emulateKeyPress('control+w')
-		process.wait_for_process(self.chromeHandle, timeout="1 minute", on_timeout="continue")
+		process.wait_for_process(
+			self.processRFHandleForStart,
+			timeout="1 minute",
+			on_timeout="continue"
+		)
+		builtIn.log(
+			# False is expected, chrome should have allowed "Start" to exit.
+			"Is Start process still running (False expected): "
+			f"{process.is_process_running(self.processRFHandleForStart)}"
+		)
 
-	def start_chrome(self, filePath):
+	def start_chrome(self, filePath: str, testCase: str) -> Window:
 		builtIn.log(f"starting chrome: {filePath}")
-		self.chromeHandle = process.start_process(
-			"start chrome"
+		self.processRFHandleForStart = process.start_process(
+			"start"  # windows utility to start a process
+			# https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/start
+			" /wait"  # Starts an application and waits for it to end.
+			" chrome"  # Start Chrome
 			" --force-renderer-accessibility"
 			" --suppress-message-center-popups"
 			" --disable-notifications"
+			" --no-experiments"
+			" --no-default-browser-check"
 			" -kiosk"
 			f' "{filePath}"',
 			shell=True,
-			alias='chromeAlias',
+			alias='chromeStartAlias',
 		)
-		process.process_should_be_running(self.chromeHandle)
-		return self.chromeHandle
+		process.process_should_be_running(self.processRFHandleForStart)
+		titlePattern = self.getUniqueTestCaseTitleRegex(testCase)
+		success, self.chromeWindow = _blockUntilConditionMet(
+			getValue=lambda: GetWindowWithTitle(titlePattern, lambda message: builtIn.log(message, "DEBUG")),
+			giveUpAfterSeconds=3,
+			shouldStopEvaluator=lambda _window: _window is not None,
+			intervalBetweenSeconds=0.5,
+			errorMessage="Unable to get chrome window"
+		)
+
+		if not success or self.chromeWindow is None:
+			builtIn.fatal_error("Unable to get chrome window")
+		return self.chromeWindow
 
 	_testCaseTitle = "NVDA Browser Test Case"
 	_beforeMarker = "Before Test Case Marker"
@@ -164,11 +199,12 @@ class ChromeLib:
 		@param testCase - The HTML sample to test.
 		"""
 		spy = _NvdaLib.getSpyLib()
+		_chromeLib: "ChromeLib" = _getLib('ChromeLib')  # using the lib gives automatic 'keyword' logging.
 		path = self._writeTestFile(testCase)
 
 		spy.wait_for_speech_to_finish()
 		lastSpeechIndex = spy.get_last_speech_index()
-		self.start_chrome(path)
+		_chromeLib.start_chrome(path, testCase)
 		self._focusChrome(ChromeLib.getUniqueTestCaseTitleRegex(testCase))
 		applicationTitle = ChromeLib.getUniqueTestCaseTitle(testCase)
 		appTitleIndex = spy.wait_for_specific_speech(applicationTitle, afterIndex=lastSpeechIndex)
