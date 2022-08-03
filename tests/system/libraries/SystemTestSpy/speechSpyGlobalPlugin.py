@@ -511,6 +511,11 @@ class SystemTestSpyServer(globalPluginHandler.GlobalPlugin):
 
 
 def _crashNVDA():
+	# Causes a breakpoint exception to occur in the current process.
+	# This allows the calling thread to signal the debugger to handle the exception.
+	#
+	# This may be caught by a "postmortem debugger", which would prevent the application from exiting.
+	# https://docs.microsoft.com/en-us/windows-hardware/drivers/debugger/enabling-postmortem-debugging
 	ctypes.windll.Kernel32.DebugBreak()
 
 
