@@ -182,7 +182,12 @@ class ChromeLib:
 
 	def toggleFocusChrome(self):
 		"""Remove focus, then refocus chrome
-		Attempt to work around NVDA missing focus / foreground events when chrome first opens
+		Attempt to work around NVDA missing focus / foreground events when chrome first opens.
+		Forcing chrome to send another foreground event by focusing the desktop, then using alt+tab to return
+		chrome to the foreground.
+		@remarks If another application raises to the foreground after chrome, this approach won't resolve that
+		situation.
+		We don't have evidence that another application taking focus is a cause of failure yet.
 		"""
 		spy = _NvdaLib.getSpyLib()
 		spy.emulateKeyPress('windows+d')
