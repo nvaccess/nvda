@@ -200,7 +200,7 @@ class NvdaLib:
 		)
 		return handle
 
-	def _connectToRemoteServer(self, connectionTimeoutSecs=10):
+	def _connectToRemoteServer(self, connectionTimeoutSecs=15):
 		"""Connects to the nvdaSpyServer
 		Because we do not know how far through the startup NVDA is, we have to poll
 		to check that the server is available. Importing the library immediately seems
@@ -217,6 +217,7 @@ class NvdaLib:
 		_blockUntilConditionMet(
 			getValue=lambda: _testRemoteServer(self._spyServerURI, log=False),
 			giveUpAfterSeconds=connectionTimeoutSecs,
+			intervalBetweenSeconds=0.3,
 			errorMessage=f"Unable to connect to {self._spyAlias}",
 		)
 		builtIn.log(f"Connecting to {self._spyAlias}", level='DEBUG')
