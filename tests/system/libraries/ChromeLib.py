@@ -180,7 +180,7 @@ class ChromeLib:
 			return False
 		return True
 
-	def toggleFocusChrome(self):
+	def toggleFocusChrome(self) -> None:
 		"""Remove focus, then refocus chrome
 		Attempt to work around NVDA missing focus / foreground events when chrome first opens.
 		Forcing chrome to send another foreground event by focusing the desktop, then using alt+tab to return
@@ -213,10 +213,11 @@ class ChromeLib:
 		appTitleIndex = spy.wait_for_specific_speech(applicationTitle, afterIndex=afterFocusToggleIndex)
 		return appTitleIndex
 
-	def prepareChrome(self, testCase: str, _doToggleFocus=False) -> None:
+	def prepareChrome(self, testCase: str, _doToggleFocus: bool = False) -> None:
 		"""
 		Starts Chrome opening a file containing the HTML sample
 		@param testCase - The HTML sample to test.
+		@param _doToggleFocus - When True, Chrome will be intentionally de-focused and re-focused
 		"""
 		spy = _NvdaLib.getSpyLib()
 		_chromeLib: "ChromeLib" = _getLib('ChromeLib')  # using the lib gives automatic 'keyword' logging.
