@@ -95,8 +95,8 @@ def SetForegroundWindow(window: Window, logger: Logger) -> bool:
 	https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setforegroundwindow#remarks
 	Additionally, note that this code is run by the Robot Framework test runner, not NVDA.
 	"""
-	if window is None or Window.hwndVal is None:
-		return False
+	assert window is not None
+	assert bool(window.hwndVal)
 
 	if window.hwndVal == GetForegroundHwnd():
 		title = _GetWindowTitle(window.hwndVal)

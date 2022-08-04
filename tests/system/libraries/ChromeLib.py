@@ -183,7 +183,6 @@ class ChromeLib:
 	def toggleFocusChrome(self):
 		"""Remove focus, then refocus chrome
 		Attempt to work around NVDA missing focus / foreground events when chrome first opens
-		@returns: last speech index before refocusing chrome
 		"""
 		spy = _NvdaLib.getSpyLib()
 		spy.emulateKeyPress('windows+d')
@@ -202,7 +201,7 @@ class ChromeLib:
 		)
 		spy.wait_for_speech_to_finish()
 
-	def ensureChromeTitleCanBeReported(self, applicationTitle) -> int:
+	def ensureChromeTitleCanBeReported(self, applicationTitle: str) -> int:
 		spy = _NvdaLib.getSpyLib()
 		afterFocusToggleIndex = spy.get_last_speech_index()
 		spy.emulateKeyPress('NVDA+t')
