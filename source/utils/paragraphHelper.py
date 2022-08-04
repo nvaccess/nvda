@@ -73,6 +73,34 @@ def isLastLineOfParagraph(line: str):
 	return stripped.endswith('\r') or stripped.endswith('\n')
 
 
+def splitParagraphIntoChunks(paragraph: str) -> []:
+	CHUNK_SIZE = 2048
+	SENTENCE_TERMINATOR = ". "
+	TERMINATOR_LEN = len(SENTENCE_TERMINATOR)
+	start = 0
+	paragraphLen = len(paragraph)
+	if paragraphLen <= CHUNK_SIZE:
+		return [paragraph]
+	chunks = []
+	while start < paragraphLen:
+		remaining = paragraphLen - start
+		if remaining <= CHUNK_SIZE:
+			chunks.append(paragraph[start:])
+			break
+		end = start
+		maxNextChunk = min(remaining, CHUNK_SIZE)
+		while (end != -1) and ((end - start) < maxNextChunk):
+			end = paragraph.find(SENTENCE_TERMINATOR, end)
+			if end != -1:
+				end += TERMINATOR_LEN
+		if end == -1:
+			chunks.append(paragraph[start:])
+			break
+		chunks.append(paragraph[start: end])
+		start = end
+	return chunks
+
+
 def speakParagraph(ti: textInfos.TextInfo):
 	paragraph = ""
 	numLines = 0
@@ -89,7 +117,9 @@ def speakParagraph(ti: textInfos.TextInfo):
 		numLines += 1
 
 	if len(paragraph.strip()) > 0:
-		speech.speakMessage(paragraph)
+		chunks = splitParagraphIntoChunks(paragraph)
+		for chunk in chunks:
+			speech.speakMessage(chunk)
 	else:
 		# Translators: This is spoken when a paragraph is considered blank.
 		speech.speakMessage(_("blank"))
@@ -163,7 +193,9 @@ def speakBlockParagraph(ti: textInfos.TextInfo):
 			break
 		numLines += 1
 
-	speech.speakMessage(paragraph)
+	chunks = splitParagraphIntoChunks(paragraph)
+	for chunk in chunks:
+		speech.speakMessage(chunk)
 
 
 def moveToBlockParagraph(nextParagraph: bool, speakNew: bool, ti: textInfos.TextInfo = None) -> (bool, bool):
