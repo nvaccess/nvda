@@ -166,9 +166,8 @@ The message advises to "Press OK to start the installed copy".
 Press ``enter`` to start the installed copy.
 + The "Welcome to NVDA" dialog appears, and NVDA reads a welcome message.
 The focus is on the "Keyboard Layout" drop-down.
-This has two options:
-- "Desktop" keyboard layout (the default), uses the number pad for some functions. 
-- "Laptop" Keyboard layout" reassigns number pad functions to other keys.
+By default, "Desktop" keyboard layout uses the number pad for some function.
+If desired, press ``downArrow`` to choose "Laptop" keyboard layout to reassign number pad functions to other keys.
 + Press ``tab`` to move to "Use ``capLock`` as an NVDA modifier key".
 ``Insert`` is set as the NVDA modifier key by default.
 Press ``spaceBar`` to select ``capsLock`` as an alternate modifier key.
@@ -235,7 +234,8 @@ The actual commands will not execute while in input help mode.
 | Increment current synth setting | ``NVDA+control+upArrow`` | ``NVDA+shift+control+upArrow`` | increases the current speech setting you are on. E.g. increases the rate, chooses the next voice, increases the volume |
 | Decrement current synth setting | ``NVDA+control+downArrow`` | ``NVDA+shift+control+downArrow`` | decreases the current speech setting you are on. E.g. decreases the rate, chooses the previous voice, decreases the volume |
 
-+++ Internet commands (full list in [Browse Mode #BrowseMode]) +++[InternetCommands]
++++ Web navigation +++[WebNavigation]
+The full list of Single Letter Navigation keys is in the [Browse Mode #BrowseMode] section of the user guide.
 || Command | Keystroke | Description |
 | Heading | ``h`` | Move to the next heading |
 | Heading level 1, 2, or 3 | ``1``, ``2``, ``3`` | Move to the next heading at the specified level |
