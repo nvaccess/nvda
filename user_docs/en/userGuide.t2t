@@ -169,7 +169,6 @@ The focus is on the "Keyboard Layout" drop-down.
 This has two options:
 - "Desktop" keyboard layout (the default), uses the number pad for some functions. 
 - "Laptop" Keyboard layout" reassigns number pad functions to other keys.
--
 + Press ``tab`` to move to "Use ``capLock`` as an NVDA modifier key".
 ``Insert`` is set as the NVDA modifier key by default.
 Press ``spaceBar`` to select ``capsLock`` as an alternate modifier key.
@@ -199,21 +198,21 @@ To learn and practice the location of keys, press ``NVDA+1`` to turn Input help 
 While in input help mode, performing any input gesture (such as pressing a key or performing a touch gesture) will report the action and describe what it does (if anything).
 The actual commands will not execute while in input help mode. 
 
-+++ Starting and stopping NVDA +++[StartingAndStoppingNVDA]:
++++ Starting and stopping NVDA +++[StartingAndStoppingNVDA]
 || Name | Desktop key | Laptop key | Description |
 | Start NVDA | ``control+alt+n`` | ``control+alt+n`` | Starts or restarts NVDA |
 | Exit NVDA | ``NVDA+q``, then ``enter`` | ``NVDA+q``, then enter | Exits NVDA |
 | Pause or restart speech | ``shift`` | ``shift`` | Instantly pauses speech. Pressing it again will continue speaking where it left off |
 | Stop speech | ``control`` | ``control`` | Instantly stops speaking |
 
-+++ Reading text +++[ReadingText]:
++++ Reading text +++[ReadingText]
 || Name | Desktop key | Laptop key | Description |
 | Say all | ``NVDA+downArrow`` | ``NVDA+a`` | Starts reading from the current position, moving it along as it goes |
 | Read current line | ``NVDA+upArrow`` | ``NVDA+l`` | Reads the line. Pressing twice spells the line. Pressing three times spells the line using character descriptions (Alpha, Bravo, Charlie, etc) |
 | Read selection | ``NVDA+shift+upArrow`` | ``NVDA+shift+s`` | Reads any selected text |
 | Read clipboard text | ``NVDA+c`` | ``NVDA+c`` | Reads any text on the clipboard |
 
-+++ Reporting location and other information +++[ReportingLocation]:
++++ Reporting location and other information +++[ReportingLocation]
 || Name | Desktop key | Laptop key | Description |
 | Window title | ``NVDA+t`` | ``NVDA+t`` | Reports the title of the currently active window. Pressing twice will spell the information. Pressing three times will copy it to the clipboard |
 | Report focus | ``NVDA+tab`` | ``NVDA+tab`` | Reports the current control which has focus.  Pressing twice will spell the information |
@@ -222,7 +221,7 @@ The actual commands will not execute while in input help mode.
 | Read time | ``NVDA+f12`` | ``NVDA+f12`` | Pressing once reports the current time, pressing twice reports the date |
 | Report text formatting | ``NVDA+f`` | ``NVDA+f`` | Reports text formatting. Pressing twice shows the information in a window |
 
-+++ Toggle which information NVDA reads +++[ToggleWhichInformationNVDAReads]:
++++ Toggle which information NVDA reads +++[ToggleWhichInformationNVDAReads]
 || Name | Desktop key | Laptop key | Description |
 | Speak typed characters | ``NVDA+2`` | ``NVDA+2`` | When enabled, NVDA will announce all characters you type on the keyboard. |
 | Speak typed words | ``NVDA+3`` | ``NVDA+3`` | When enabled, NVDA will announce word you type on the keyboard. |
