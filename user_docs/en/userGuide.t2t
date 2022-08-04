@@ -86,7 +86,7 @@ Please refer to the full User Guide for more detailed information on each topic.
 NVDA is completely free for anyone to use.
 There is no license key to worry about or expensive subscription to pay.
 NVDA is updated, on average, four times per year.
-The latest version of NVDA is always available from the "Download" page of the [NV Access website #NVDA_URL].
+The latest version of NVDA is always available from the "Download" page of the [NV Access website NVDA_URL].
 
 NVDA works with all recent versions of Microsoft Windows.
 Check the [System Requirements #SystemRequirements] for full details.
@@ -116,26 +116,28 @@ If available, an internet connection does enable NVDA to check for updates perio
 
 The setup file is named "nvda_2022.1.exe" or similar.
 The year and version changes between updates to reflect the current release.
-- Run the downloaded file.
++ Run the downloaded file.
 Music plays while a temporary copy of NVDA loads.
 Once loaded, NVDA will speak throughout the rest of the process.
 + The NVDA Launcher window appears with the license agreement.
 Press ``downArrow`` to read the license agreement if desired.
 + Press ``tab`` to move to the "I agree" checkbox, then press the ``spacebar`` to check it.
 + Press ``tab`` to move through the options, then press ``enter`` on the desired option.
++
+
 The options are: 
-++ "Install NVDA on this computer": This is the main option most users want for easy use of NVDA. 
-++ "Create portable copy": This allows NVDA to be setup in any folder without installing.
+- "Install NVDA on this computer": This is the main option most users want for easy use of NVDA. 
+- "Create portable copy": This allows NVDA to be setup in any folder without installing.
 This is useful on computers without admin rights, or on a memory stick to carry with you.
 When selected, NVDA walks through the steps to create a portable copy.
 The main thing NVDA needs to know is the folder to setup the portable copy in. 
-++ "Continue running": This keeps the temporary copy of NVDA running.
+- "Continue running": This keeps the temporary copy of NVDA running.
 This is useful for testing features in a new version before installing it.
 When selected, the launcher window closes and the temporary copy of NVDA continues running until it is exited or the PC is shut down.
 Note that changes to settings are not saved. 
-++ "Cancel": This closes NVDA without performing any action.
-++
-+
+- "Cancel": This closes NVDA without performing any action.
+-
+
 
 If you plan to always use NVDA on this computer, you will want to choose to install NVDA.
 Installing NVDA will allow for additional functionality such as automatic starting after sign-in, the ability to read the Windows sign-in and [secure screens #SecureScreens].
@@ -163,10 +165,11 @@ This process is often fast and may not be noticed.
 The message advises to "Press OK to start the installed copy".
 Press ``enter`` to start the installed copy.
 + The "Welcome to NVDA" dialog appears, and NVDA reads a welcome message.
-The focus is on the "Keyboard Layout" drop-down:
-++ "Desktop" keyboard layout (the default), uses the number pad for some functions. 
-++ "Laptop" Keyboard layout" reassigns number pad functions to other keys.
-++
+The focus is on the "Keyboard Layout" drop-down.
+This has two options:
+- "Desktop" keyboard layout (the default), uses the number pad for some functions. 
+- "Laptop" Keyboard layout" reassigns number pad functions to other keys.
+-
 + Press ``tab`` to move to "Use ``capLock`` as an NVDA modifier key".
 ``Insert`` is set as the NVDA modifier key by default.
 Press ``spaceBar`` to select ``capsLock`` as an alternate modifier key.
@@ -187,30 +190,30 @@ The "Basic Training for NVDA" NVDA training module has each command in more dept
 Here are some basic commands which are used frequently.
 All commands are configurable, so these are the default keystrokes for these functions.
 
-+++ The NVDA Modifier Key
++++ The NVDA Modifier Key +++[NVDAModifierKey]
 The default NVDA modifier key is either the ``numpadZero``, (with ``numLock`` off), or the ``insert`` key, near the ``delete``, ``home`` and ``end`` keys.
 The NVDA modifier key can also be set to the ``capsLock`` key.
 
-+++ Input Help
++++ Input Help +++[InputHelp]
 To learn and practice the location of keys, press ``NVDA+1`` to turn Input help on.
 While in input help mode, performing any input gesture (such as pressing a key or performing a touch gesture) will report the action and describe what it does (if anything).
 The actual commands will not execute while in input help mode. 
 
-+++ Starting and stopping NVDA:
++++ Starting and stopping NVDA +++[StartingAndStoppingNVDA]:
 || Name | Desktop key | Laptop key | Description |
 | Start NVDA | ``control+alt+n`` | ``control+alt+n`` | Starts or restarts NVDA |
 | Exit NVDA | ``NVDA+q``, then ``enter`` | ``NVDA+q``, then enter | Exits NVDA |
 | Pause or restart speech | ``shift`` | ``shift`` | Instantly pauses speech. Pressing it again will continue speaking where it left off |
 | Stop speech | ``control`` | ``control`` | Instantly stops speaking |
 
-+++ Reading text:
++++ Reading text +++[ReadingText]:
 || Name | Desktop key | Laptop key | Description |
 | Say all | ``NVDA+downArrow`` | ``NVDA+a`` | Starts reading from the current position, moving it along as it goes |
 | Read current line | ``NVDA+upArrow`` | ``NVDA+l`` | Reads the line. Pressing twice spells the line. Pressing three times spells the line using character descriptions (Alpha, Bravo, Charlie, etc) |
 | Read selection | ``NVDA+shift+upArrow`` | ``NVDA+shift+s`` | Reads any selected text |
 | Read clipboard text | ``NVDA+c`` | ``NVDA+c`` | Reads any text on the clipboard |
 
-+++ Reporting location and other information:
++++ Reporting location and other information +++[ReportingLocation]:
 || Name | Desktop key | Laptop key | Description |
 | Window title | ``NVDA+t`` | ``NVDA+t`` | Reports the title of the currently active window. Pressing twice will spell the information. Pressing three times will copy it to the clipboard |
 | Report focus | ``NVDA+tab`` | ``NVDA+tab`` | Reports the current control which has focus.  Pressing twice will spell the information |
@@ -219,21 +222,21 @@ The actual commands will not execute while in input help mode.
 | Read time | ``NVDA+f12`` | ``NVDA+f12`` | Pressing once reports the current time, pressing twice reports the date |
 | Report text formatting | ``NVDA+f`` | ``NVDA+f`` | Reports text formatting. Pressing twice shows the information in a window |
 
-+++ Toggle which information NVDA reads:
++++ Toggle which information NVDA reads +++[ToggleWhichInformationNVDAReads]:
 || Name | Desktop key | Laptop key | Description |
 | Speak typed characters | ``NVDA+2`` | ``NVDA+2`` | When enabled, NVDA will announce all characters you type on the keyboard. |
 | Speak typed words | ``NVDA+3`` | ``NVDA+3`` | When enabled, NVDA will announce word you type on the keyboard. |
 | Speak command keys | ``NVDA+4`` | ``NVDA+4`` | When enabled, NVDA will announce all non-character keys you type on the keyboard. This includes key combinations such as control plus another letter. |
 | Enable mouse tracking | ``NVDA+m`` | ``NVDA+m`` | When enabled, NVDA will announce the text currently under the mouse pointer, as you move it around the screen. This allows you to find things on the screen, by physically moving the mouse, rather than trying to find them through object navigation. |
 
-+++ Synth settings ring
++++ The synth settings ring +++[TheSynthSettingsRing]
 || Name | Desktop key | Laptop key | Description |
 | Move to next synth setting | ``NVDA+control+rightArrow`` | ``NVDA+shift+control+rightArrow`` | Moves to the next available speech setting after the current, wrapping around to the first setting again after the last |
 | Move to previous synth setting | ``NVDA+control+leftArrow`` | ``NVDA+shift+control+leftArrow`` | Moves to the next available speech setting before the current, wrapping around to the last setting after the first |
 | Increment current synth setting | ``NVDA+control+upArrow`` | ``NVDA+shift+control+upArrow`` | increases the current speech setting you are on. E.g. increases the rate, chooses the next voice, increases the volume |
 | Decrement current synth setting | ``NVDA+control+downArrow`` | ``NVDA+shift+control+downArrow`` | decreases the current speech setting you are on. E.g. decreases the rate, chooses the previous voice, decreases the volume |
 
-+++ Internet commands (full list in [Browse Mode BrowseMode])
++++ Internet commands (full list in [Browse Mode #BrowseMode]) +++[InternetCommands]
 || Command | Keystroke | Description |
 | Heading | ``h`` | Move to the next heading |
 | Heading level 1, 2, or 3 | ``1``, ``2``, ``3`` | Move to the next heading at the specified level |
@@ -308,7 +311,7 @@ This option allows you to choose whether or not NVDA should automatically start 
 This also includes User Account Control and [other secure screens #SecureScreens].
 This option is enabled by default for fresh installations.
 
-+++ Create Desktop Shortcut (``ctrl+alt+n``) +++[CreateDesktopShortcut]
++++ Create Desktop Shortcut (ctrl+alt+n) +++[CreateDesktopShortcut]
 This option allows you to choose whether or not NVDA should create a shortcut on the desktop to start NVDA. 
 If created, this shortcut will also be assigned a shortcut key of ``control+alt+n``, allowing you to start NVDA at any time with this keystroke.
 
