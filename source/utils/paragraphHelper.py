@@ -75,9 +75,9 @@ def isLastLineOfParagraph(line: str):
 
 def speakParagraph(ti: textInfos.TextInfo):
 	paragraph = ""
-	lines = 0
+	numLines = 0
 	tempTi = ti.copy()
-	while lines < MAX_LINES:
+	while numLines < MAX_LINES:
 		tempTi.expand(textInfos.UNIT_LINE)
 		line = tempTi.text.strip()
 		if len(line) > 0:
@@ -86,7 +86,7 @@ def speakParagraph(ti: textInfos.TextInfo):
 			break
 		if not tempTi.move(textInfos.UNIT_LINE, 1):
 			break
-		lines += 1
+		numLines += 1
 
 	if len(paragraph.strip()) > 0:
 		speech.speakMessage(paragraph)
@@ -105,18 +105,18 @@ def moveToParagraph(nextParagraph: bool, speakNew: bool) -> (bool, bool):
 	ti.collapse()  # move to start of line
 	moveOffset = 1 if nextParagraph else -1
 	moved = False
-	lines = 0
+	numLines = 0
 	tempTi = ti.copy()
 	tempTi.expand(textInfos.UNIT_LINE)
 	# if starting line is the last line of a paragraph, move back two paragraph markers
 	moveBackTwice = isLastLineOfParagraph(tempTi.text)
-	while lines < MAX_LINES:
+	while numLines < MAX_LINES:
 		tempTi = ti.copy()
 		tempTi.expand(textInfos.UNIT_LINE)
 		if isLastLineOfParagraph(tempTi.text):
 			if not nextParagraph:
 				if not moveBackTwice:
-					while lines < MAX_LINES:
+					while numLines < MAX_LINES:
 						if not ti.move(textInfos.UNIT_LINE, -1):
 							moved = True  # pin to beginning
 							break
@@ -126,7 +126,7 @@ def moveToParagraph(nextParagraph: bool, speakNew: bool) -> (bool, bool):
 							ti.move(textInfos.UNIT_LINE, 1)
 							moved = True
 							break
-						lines += 1
+						numLines += 1
 
 					break  # break out of outer while loop
 				else:
@@ -137,7 +137,7 @@ def moveToParagraph(nextParagraph: bool, speakNew: bool) -> (bool, bool):
 				break
 		if not ti.move(textInfos.UNIT_LINE, moveOffset):
 			break
-		lines += 1
+		numLines += 1
 
 	if moved:
 		ti.updateCaret()
@@ -151,9 +151,9 @@ def moveToParagraph(nextParagraph: bool, speakNew: bool) -> (bool, bool):
 
 def speakBlockParagraph(ti: textInfos.TextInfo):
 	paragraph = ""
-	lines = 0
+	numLines = 0
 	tempTi = ti.copy()
-	while lines < MAX_LINES:
+	while numLines < MAX_LINES:
 		tempTi.expand(textInfos.UNIT_LINE)
 		line = tempTi.text.strip()
 		if not len(line):
@@ -161,7 +161,7 @@ def speakBlockParagraph(ti: textInfos.TextInfo):
 		paragraph += line + "\r\n"
 		if not tempTi.move(textInfos.UNIT_LINE, 1):
 			break
-		lines += 1
+		numLines += 1
 
 	speech.speakMessage(paragraph)
 
@@ -175,8 +175,8 @@ def moveToBlockParagraph(nextParagraph: bool, speakNew: bool, ti: textInfos.Text
 	moved = False
 	lookingForBlank = True
 	moveOffset = 1 if nextParagraph else -1
-	lines = 0
-	while lines < MAX_LINES:
+	numLines = 0
+	while numLines < MAX_LINES:
 		tempTi = ti.copy()
 		tempTi.expand(textInfos.UNIT_LINE)
 		isBlank = len(tempTi.text.strip()) == 0
@@ -187,12 +187,12 @@ def moveToBlockParagraph(nextParagraph: bool, speakNew: bool, ti: textInfos.Text
 			break
 		if not ti.move(textInfos.UNIT_LINE, moveOffset):
 			break
-		lines += 1
+		numLines += 1
 
 	# exception: if moving backwards, need to move to top of now current paragraph
 	if moved and not nextParagraph:
 		moved = False
-		while lines < MAX_LINES:
+		while numLines < MAX_LINES:
 			if not ti.move(textInfos.UNIT_LINE, -1):
 				moved = True
 				break  # leave at top
@@ -203,7 +203,7 @@ def moveToBlockParagraph(nextParagraph: bool, speakNew: bool, ti: textInfos.Text
 				ti.move(textInfos.UNIT_LINE, 1)  # first line of paragraph
 				moved = True
 				break
-			lines += 1
+			numLines += 1
 
 	if moved:
 		ti.updateCaret()
