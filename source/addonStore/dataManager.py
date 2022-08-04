@@ -6,6 +6,7 @@ import dataclasses
 import enum
 import json
 import os
+import pathlib
 from concurrent.futures import (
 	Future,
 	ThreadPoolExecutor
@@ -161,6 +162,10 @@ class DataManager:
 		self._preferredChannel = Channel.ALL
 		self._cacheFile = os.path.join(cacheDirLocation, DataManager._cacheFilename)
 		self._addonDownloadCacheDir = os.path.join(cacheDirLocation, "_dl")
+		# ensure caching dirs exist
+		pathlib.Path(cacheDirLocation).mkdir(parents=True, exist_ok=True)
+		pathlib.Path(self._addonDownloadCacheDir).mkdir(parents=True, exist_ok=True)
+
 		self._availableAddonCache: Optional[CachedAddonModel] = self._getCachedAddonData()
 
 	def getFileDownloader(self) -> AddonFileDownloader:
