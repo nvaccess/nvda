@@ -9,9 +9,10 @@ import controlTypes
 import textInfos
 import tones
 import config
-from NVDAObjects.IAccessible.winword import WordDocument as IAccessibleWordDocument
-from NVDAObjects.UIA.wordDocument import WordDocument as UIAWordDocument
+from NVDAObjects.window.winword import WordDocumentTextInfo
+from NVDAObjects.window.winword import BrowseModeWordDocumentTextInfo
 from NVDAObjects.UIA import UIATextInfo
+from displayModel import EditableTextDisplayModelTextInfo
 
 MAX_LINES = 250  # give up after searching this many lines
 
@@ -56,6 +57,17 @@ def getTextInfoAtCaret() -> textInfos.TextInfo:
 	return ti
 
 
+def isAcceptableTextInfo(ti: textInfos.TextInfo):
+	acceptable = True
+	# disallow if in a Word document, as Word has performance issues
+	if (isinstance(ti, WordDocumentTextInfo)) or (isinstance(ti, BrowseModeWordDocumentTextInfo)):
+		acceptable = False
+	# disallow if EditableTextDisplayModelTextInfo, as has performance issues (TextPad for example)
+	if isinstance(ti, EditableTextDisplayModelTextInfo):
+		acceptable = False
+	return acceptable
+
+
 def isLastLineOfParagraph(line: str):
 	stripped = line.strip(' \t')
 	return stripped.endswith('\r') or stripped.endswith('\n')
@@ -87,11 +99,7 @@ def moveToParagraph(nextParagraph: bool, speakNew: bool) -> (bool, bool):
 	# moves to previous or next regular paragraph, delineated by a single line break
 	# returns (passKey, moved)
 	ti = getTextInfoAtCaret()
-	if ti is None:
-		return (True, False)
-	# disallow if in a Word document, as Word has performance issues
-	focus = api.getFocusObject()
-	if isinstance(focus, IAccessibleWordDocument) or isinstance(focus, UIAWordDocument):
+	if (ti is None) or (not isAcceptableTextInfo(ti)):
 		return (True, False)
 	ti.expand(textInfos.UNIT_LINE)
 	ti.collapse()  # move to start of line
@@ -160,13 +168,9 @@ def speakBlockParagraph(ti: textInfos.TextInfo):
 
 def moveToBlockParagraph(nextParagraph: bool, speakNew: bool, ti: textInfos.TextInfo = None) -> (bool, bool):
 	# returns (passKey, moved)
-	# disallow if in a Word document, as Word has performance issues
-	focus = api.getFocusObject()
-	if isinstance(focus, IAccessibleWordDocument) or isinstance(focus, UIAWordDocument):
-		return (True, False)
 	if ti is None:
 		ti = getTextInfoAtCaret()
-	if ti is None:
+	if (ti is None) or (not isAcceptableTextInfo(ti)):
 		return (True, False)
 	moved = False
 	lookingForBlank = True
