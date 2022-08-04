@@ -601,9 +601,10 @@ def getAddonBundleToInstallIfValid(addonPath: str) -> addonHandler.AddonBundle:
 	except addonHandler.AddonError:
 		log.error("Error opening addon bundle from %s" % addonPath, exc_info=True)
 		raise TranslatedError(
-			# Translators: The message displayed when an error occurs when opening an add-on package for adding.
 			displayMessage=pgettext(
 				"addonStore",
+				# Translators: The message displayed when an error occurs when opening an add-on package for adding.
+				# The %s will be replaced with the path to the add-on that could not be opened.
 				"Failed to open add-on package file at %s - missing file or invalid file format"
 			) % addonPath
 		)
@@ -614,9 +615,10 @@ def getAddonBundleToInstallIfValid(addonPath: str) -> addonHandler.AddonBundle:
 	):
 		# This should not happen, only compatible add-ons are intended to be presented in the add-on store.
 		raise TranslatedError(
-			# Translators: The message displayed when an add-on is not supported by this version of NVDA.
 			displayMessage=pgettext(
 				"addonStore",
+				# Translators: The message displayed when an add-on is not supported by this version of NVDA.
+				# The %s will be replaced with the path to the add-on that is not supported.
 				"Add-on not supported %s"
 			) % addonPath
 		)
@@ -652,9 +654,10 @@ def installAddon(addonPath: PathLike) -> None:
 	except addonHandler.AddonError:  # Handle other exceptions as they are known
 		log.error("Error installing addon bundle from %s" % addonPath, exc_info=True)
 		raise TranslatedError(
-			# Translators: The message displayed when an error occurs when installing an add-on package.
 			displayMessage=pgettext(
 				"addonStore",
+				# Translators: The message displayed when an error occurs when installing an add-on package.
+				# The %s will be replaced with the path to the add-on that could not be installed.
 				"Failed to install add-on from %s"
 			) % addonPath
 		)
