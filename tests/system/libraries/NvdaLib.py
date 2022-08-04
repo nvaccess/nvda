@@ -279,10 +279,14 @@ class NvdaLib:
 		self.lastNVDAStart = _datetime.utcnow()
 		builtIn.log(f"Starting NVDA with config: {settingsFileName}")
 		self.setup_nvda_profile(settingsFileName, gesturesFileName)
+		builtIn.log("Config copied", level="DEBUG")  # observe timing of the startup
 		nvdaProcessHandle = self._startNVDAProcess()
+		builtIn.log("Started NVDA process", level="DEBUG")   # observe timing of the startup
 		process.process_should_be_running(nvdaProcessHandle)
 		self._connectToRemoteServer()
+		builtIn.log("Connected to RF remote server", level="DEBUG")  # observe timing of the startup
 		self.nvdaSpy.wait_for_NVDA_startup_to_complete()
+		builtIn.log("Startup complete", level="DEBUG")  # observe timing of the startup
 		return nvdaProcessHandle
 
 	def save_NVDA_log(self):
