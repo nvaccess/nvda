@@ -119,21 +119,21 @@ The year and version changes between updates to reflect the current release.
 - Run the downloaded file.
 Music plays while a temporary copy of NVDA loads.
 Once loaded, NVDA will speak throughout the rest of the process.
-+	The NVDA Launcher window appears with the license agreement.
++ The NVDA Launcher window appears with the license agreement.
 Press ``downArrow`` to read the license agreement if desired.
-+	Press ``tab`` to move to the "I agree" checkbox, then press the ``spacebar`` to check it.
-+	Press ``tab`` to move through the options, then press ``enter`` on the desired option.
++ Press ``tab`` to move to the "I agree" checkbox, then press the ``spacebar`` to check it.
++ Press ``tab`` to move through the options, then press ``enter`` on the desired option.
 The options are: 
-++	"Install NVDA on this computer": This is the main option most users want for easy use of NVDA. 
-++	"Create portable copy": This allows NVDA to be setup in any folder without installing.
+++ "Install NVDA on this computer": This is the main option most users want for easy use of NVDA. 
+++ "Create portable copy": This allows NVDA to be setup in any folder without installing.
 This is useful on computers without admin rights, or on a memory stick to carry with you.
 When selected, NVDA walks through the steps to create a portable copy.
 The main thing NVDA needs to know is the folder to setup the portable copy in. 
-++	"Continue running": This keeps the temporary copy of NVDA running.
+++ "Continue running": This keeps the temporary copy of NVDA running.
 This is useful for testing features in a new version before installing it.
 When selected, the launcher window closes and the temporary copy of NVDA continues running until it is exited or the PC is shut down.
 Note that changes to settings are not saved. 
-++	"Cancel": This closes NVDA without performing any action.
+++ "Cancel": This closes NVDA without performing any action.
 ++
 +
 
@@ -148,33 +148,33 @@ Installing also offers to create Start Menu and desktop shortcuts, and allow NVD
 These steps walk through the most common setup options.
 For more details on the options available, please see [Installation options InstallingNVDA].
 
-+	From the launcher, ensure the checkbox to agree to the license is checked.
-+	``Tab`` to, and activate the "Install NVDA on this computer" button.
-+	Next, are options to use NVDA during Windows sign-in and to create a desktop shortcut.
++ From the launcher, ensure the checkbox to agree to the license is checked.
++ ``Tab`` to, and activate the "Install NVDA on this computer" button.
++ Next, are options to use NVDA during Windows sign-in and to create a desktop shortcut.
 These are checked by default.
-If desired, press ``tab`` and ``spacebar`` to change any of these options, or leave them at the default.
-+	Press ``enter`` to continue.
-+	A Windows "User Account Control (UAC)" dialog appears asking "Do you want to allow this app to make changes to your PC?".
+If desired, press ``tab`` and ``spaceBar`` to change any of these options, or leave them at the default.
++ Press ``enter`` to continue.
++ A Windows "User Account Control (UAC)" dialog appears asking "Do you want to allow this app to make changes to your PC?".
 + Press ``alt+y`` to accept the UAC prompt.
-+	A progress bar fills up as NVDA installs.
++ A progress bar fills up as NVDA installs.
 During this process NVDA sounds an increasingly higher pitched beep.
 This process is often fast and may not be noticed.
-+	A dialog box appears confirm that the install of NVDA has been successful.
++ A dialog box appears confirm that the install of NVDA has been successful.
 The message advises to "Press OK to start the installed copy".
 Press ``enter`` to start the installed copy.
-+	The "Welcome to NVDA" dialog appears, and NVDA reads a welcome message.
++ The "Welcome to NVDA" dialog appears, and NVDA reads a welcome message.
 The focus is on the "Keyboard Layout" drop-down:
-++	"Desktop" keyboard layout (the default), uses the number pad for some functions. 
-++	"Laptop" Keyboard layout" reassigns number pad functions to other keys.
+++ "Desktop" keyboard layout (the default), uses the number pad for some functions. 
+++ "Laptop" Keyboard layout" reassigns number pad functions to other keys.
 ++
-+	Press ``tab`` to move to "Use ``caps lock`` as an NVDA modifier key".
++ Press ``tab`` to move to "Use ``capLock`` as an NVDA modifier key".
 ``Insert`` is set as the NVDA modifier key by default.
-Press ``spacebar`` to select ``caps lock`` as an alternate modifier key.
+Press ``spaceBar`` to select ``capsLock`` as an alternate modifier key.
 Note that the keyboard layout is set separately from the NVDA modifier key.
 The NVDA key and keyboard layout can be changed later from the Keyboard Settings.
-+	Use ``tab`` and ``spacebar`` to adjust the other options on this screen.
++ Use ``tab`` and ``spaceBar`` to adjust the other options on this screen.
 These set whether NVDA starts automatically.
-+	Press ``enter`` to close the dialog box with NVDA now running.
++ Press ``enter`` to close the dialog box with NVDA now running.
 +
 
 ++ Running NVDA ++[RunningNVDA]
@@ -188,8 +188,8 @@ Here are some basic commands which are used frequently.
 All commands are configurable, so these are the default keystrokes for these functions.
 
 +++ The NVDA Modifier Key
-The default NVDA modifier key is either the ``numpad zero``, (with ``numlock`` off), or the ``insert`` key, near the ``delete``, ``home`` and ``end`` keys.
-The NVDA modifier key can also be set to the ``caps lock`` key.
+The default NVDA modifier key is either the ``numpadZero``, (with ``numLock`` off), or the ``insert`` key, near the ``delete``, ``home`` and ``end`` keys.
+The NVDA modifier key can also be set to the ``capsLock`` key.
 
 +++ Input Help
 To learn and practice the location of keys, press ``NVDA+1`` to turn Input help on.
@@ -205,9 +205,9 @@ The actual commands will not execute while in input help mode.
 
 +++ Reading text:
 || Name | Desktop key | Laptop key | Description |
-| Say all | ``NVDA+down arrow`` | ``NVDA+a`` | Starts reading from the current position, moving it along as it goes |
+| Say all | ``NVDA+downArrow`` | ``NVDA+a`` | Starts reading from the current position, moving it along as it goes |
 | Read current line | ``NVDA+upArrow`` | ``NVDA+l`` | Reads the line. Pressing twice spells the line. Pressing three times spells the line using character descriptions (Alpha, Bravo, Charlie, etc) |
-| Read selection | ``NVDA+shift+up arrow`` | ``NVDA+shift+s`` | Reads any selected text |
+| Read selection | ``NVDA+shift+upArrow`` | ``NVDA+shift+s`` | Reads any selected text |
 | Read clipboard text | ``NVDA+c`` | ``NVDA+c`` | Reads any text on the clipboard |
 
 +++ Reporting location and other information:
