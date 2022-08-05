@@ -3,6 +3,61 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2022.3 =
+NVDA:n kehitysyhteisö on antanut panoksensa merkittävään osaan tästä julkaisusta.
+Tämä sisältää viivästetyt merkkikuvaukset ja parannetun Windows-konsolin tuen.
+
+Tämä julkaisu sisältää myös useita bugikorjauksia.
+Erityisesti Adobe Acrobatin/Readerin uusimmat versiot eivät enää kaadu PDF-asiakirjaa luettaessa.
+
+eSpeak on päivitetty, ja se sisältää 3 uutta kieltä: valkovenäjä, luxemburgi ja Pohjois-Ylämaan sekoitus.
+
+== Uudet ominaisuudet ==
+- Windows-konsoli-isäntä, jota käyttävät Komentokehote, PowerShell ja Windows-alijärjestelmä Linuxille Windows 11:n versiossa 22H2 (Sun Valley 2) ja uudemmissa:
+  - Huomattavasti parantunut suorituskyky ja vakaus. (#10964)
+  - Kun painetaan ``Ctrl+F`` tekstin etsimiseksi, tarkastelukohdistimen sijainti päivitetään seuraamaan löydettyä termiä. (#11172)
+  - Sellaisen kirjoitetun tekstin puhuminen, joka ei näy ruudulla (esim. salasanat), on oletusarvoisesti pois käytöstä.
+Se voidaan ottaa uudelleen käyttöön NVDA:n lisäasetusten paneelista. (#11554)
+  - Ruudun ulkopuolelle vierittynyttä tekstiä voidaan tarkastella vierittämättä konsoli-ikkunaa. (#12669)
+  - Yksityiskohtaisempia tekstin muotoilutietoja on käytettävissä. ([microsoft/terminal PR 10336 https://github.com/microsoft/terminal/pull/10336])
+  -
+- Lisätty uusi puheasetus merkkikuvausten lukemiseksi viipeen jälkeen. (#13509)
+- Lisätty uusi pistekirjoitusasetus, joka määrittää, keskeytyykö puhe vieritettäessä pistenäyttöä eteen/taaksepäin. (#2124)
+-
+
+
+== Muutokset ==
+- eSpeak NG on päivitetty versioksi 1.52-dev muutos ``9de65fcb``. (#13295)
+  - Lisätty kieliä:
+    - valkovenäjä
+    - luxemburgi
+    - Pohjois-Ylämaan sekoitus
+    -
+  -
+- NVDA voi nyt ilmoittaa, kun solu on yhdistetty käytettäessä UI Automation -rajapintaa Microsoft Excelin laskentataulukon ohjausobjektien käyttämiseen. (#12843)
+- Ilmoituksen "sisältää lisätietoja" sijaan sisällytetään nyt mahdollisuuksien mukaan tietojen tarkoitus, esim. "sisältää lisätiedon kommentti". (#13649)
+- NVDA:n asennuskoko näkyy nyt Windowsin Ohjelmat ja toiminnot -osiossa. (#13909)
+-
+
+
+== Bugikorjaukset ==
+- 64-bittinen Adobe Acrobat / Reader ei enää kaadu PDF-asiakirjaa luettaessa. (#12920)
+  - Huomaa, että kaatumisen välttämiseksi tarvitaan myös Adobe Acrobatin / Readerin uusin versio.
+  -
+- Fonttikoon mitat ovat nyt käännettävissä eri kielille. (#13573)
+- Ohita Java Access Bridge -tapahtumat, joissa Java-sovelluksille ei löydy ikkunakahvaa.
+Tämä parantaa joidenkin Java-sovellusten, mukaan lukien IntelliJ IDEA, suorituskykyä. (#13039)
+- LibreOffice Calcin valittujen solujen ilmoittaminen on tehokkaampaa, eikä se enää johda Calcin jumiutumiseen useita soluja valittaessa. (#13232)
+- Microsoft Edge ei ole enää käyttökelvoton toisena käyttäjänä suoritettaessa. (#13032)
+- Kun nopeuden lisäys ei ole käytössä, eSpeakin puhenopeus ei enää putoa 99 %:n ja 100 %:n välille. (#13876)
+- Korjattu bugi, joka mahdollisti kahden samanaikaisen Näppäinkomennot-valintaikkunan avautumisen. (#13854)
+-
+
+
+== Muutokset kehittäjille ==
+Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/changes.html]
+
+
 = 2022.2 =
 Tämä julkaisu sisältää useita bugikorjauksia.
 Erityisesti Java-pohjaisiin sovelluksiin, pistenäyttöihin ja Windows-ominaisuuksiin on tehty merkittäviä parannuksia.

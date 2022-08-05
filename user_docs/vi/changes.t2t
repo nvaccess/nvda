@@ -3,6 +3,62 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2022.3 =
+Cộng đồng phát triển NVDA đã có một số đóng góp đáng kể cho bản phát hành này.
+Bao gồm việc chờ để đọc mô tả kí tự và hỗ trợ cho Windows Console.
+
+Bản phát hành này cũng sửa một số lỗi.
+Đáng chú ý, bản cập nhật mới nhất của Adobe Acrobat/Reader sẽ không còn bị treo khi đọc một tài liệu PDF.
+
+Đã cập nhật bộ đọc eSpeak với ba ngôn ngữ mới: Belarus, Luxembourgish và Totontepec Mixe.
+
+== Tính năng mới ==
+- Trong Windows Console Host được dùng bởi Command Prompt, PowerShell và Windows Subsystem for Linux trên Windows 11 phiên bản 22H2 (Sun Valley 2) trở lên:
+  - Hiệu suất vận hành và tính ổn định được cải thiện rõ rệt. (#10964)
+  - Khi bấm ``control+f`` để tìm văn bản, vị trí con trỏ duyệt đã được cập nhật để đi theo cụm từ được tìm thấy. (#11172)
+  - Việc đọc các văn bản được nhập nhưng không hiện lên màn hình (mật khẩu chẳng hạn) mặc định bị vô hiệu.
+Có thể bật lại nó trong bảng cài đặt mở rộng của NVDA. (#11554)
+  - Có thể đọc lại văn bản đã bị cuộn khỏi màn hình mà không cần phải cuộn cửa sổ console. (#12669)
+  - Xem thêm thông tin chi tiết về định dạng văn bản. ([microsoft/terminal PR 10336 https://github.com/microsoft/terminal/pull/10336])
+  -
+
+- Đã thêm một tùy chọn cho bộ đọc để đọc mô tả kí tự sau một khoảng thời gian ngắn. (#13509)
+- Đã thêm một tùy chọn cho chữ nổi để phát hiện và ngừng đọc khi cuộn màn hình tới hay lùi. (#2124)
+-
+
+
+== Các thay đổi ==
+- Đã cập nhật eSpeak NG lên 1.52-dev commit ``9de65fcb``. (#13295)
+  - Các ngôn ngữ được thêm vào:
+    - Belarus
+    - Luxembourgish
+    - Totontepec Mixe
+    -
+  -
+- Khi dùng UI Automation để truy cập các điều khiển của bảng tính Microsoft Excel, NVDA giờ đây có khả năng thông báo khi một ô được trộn. (#12843)
+- Thay vì thông báo "có chi tiết", thông tin chi tiết sẽ được thông báo rõ ràng. Ví dụ "có chú thích". (#13649)
+- Kích thước bộ cài đặt của NVDA giờ đây được hiển thị trong Windows Programs and Feature. (#13909)
+-
+
+
+== Sửa lỗi ==
+- Adobe Acrobat / Reader 64 bit sẽ không còn bị treo khi đọc một tài liệu PDF. (#12920)
+  - Lưu ý là cần dùng bản cập nhật mới nhất của Adobe Acrobat / Reader để tránh gặp lỗi này.
+  -
+- Đơn vị đo cỡ chữ đã được phiên dịch trong NVDA. (#13573)
+- Bỏ qua các sự kiện của Java Access Bridge khi không thể tìm thấy window handle cho các ứng dụng Java.
+Điều này sẽ cải thiện hiệu suất vận hành cho vài ứng dụng Java bao gồm IntelliJ IDEA. (#13039)
+- Việc thông báo các ô được chọn cho LibreOffice Calc đã có hiệu quả hơn và không còn làm cho Calc bị đóng băng khi nhiều ô được chọn. (#13232)
+- Khi chạy với một tài khoản người dùng khác, Microsoft Edge không còn bị tình trạng không tiếp cận được. (#13032)
+- Khi tắt chế độ tăng tốc độ đọc, tốc độ đọc của eSpeakd không còn bị giảm giữa tốc độ 99% và 100%. (#13876)
+- Sữa lỗi làm cho hai hộp thoại Quản Lý Các Thao Tác mở cùng lúc. (#13854)
+-
+
+
+== Các thay đổi cho nhà phát triển ==
+Phần này không được dịch. Vui lòng xem bản tiếng Anh changes.t2t để biết thêm thông tin.
+
+
 = 2022.2 =
 Bản phát hành này bao gồm nhiều lỗi được sửa.
 Đáng chú ý, có những cải tiến đáng kể cho các ứng dụng trên nền Java, màn hình nổi và các tính năng của Windows.
