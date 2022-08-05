@@ -15,6 +15,7 @@ from typing import (
 	Tuple,
 )
 
+import core
 import extensionPoints
 import globalPluginHandler
 import threading
@@ -256,6 +257,9 @@ class NVDASpyLib:
 			return len(self._nvdaBraille_requiresLock) - 1
 
 	def _devInfoToLog(self):
+		"""Should only be called on main thread"""
+		if threading.get_ident() != core.mainThreadId:
+			log.warning("RF lib error, must be called on main thread.")
 		import api
 		obj = api.getNavigatorObject()
 		if hasattr(obj, "devInfo"):
@@ -263,7 +267,10 @@ class NVDASpyLib:
 		else:
 			log.info("No developer info for navigator object")
 
-	def dump_speech_to_log(self):
+	def _dump_speech_to_log(self):
+		"""Should only be called on main thread"""
+		if threading.get_ident() != core.mainThreadId:
+			log.warning("RF lib error, must be called on main thread.")
 		log.debug("dump_speech_to_log.")
 		with self._speechLock:
 			try:
@@ -275,13 +282,24 @@ class NVDASpyLib:
 			except Exception:
 				log.error("Unable to log speech")
 
-	def dump_braille_to_log(self):
+	def _dump_braille_to_log(self):
+		"""Should only be called on main thread"""
+		if threading.get_ident() != core.mainThreadId:
+			log.warning("RF lib error, must be called on main thread.")
 		log.debug("dump_braille_to_log.")
 		with self._brailleLock:
 			try:
 				log.debug(f"All braille:\n{repr(self._nvdaBraille_requiresLock)}")
 			except Exception:
 				log.error("Unable to log braille")
+
+	def dump_speech_to_log(self):
+		# must be called on mainThread queue that to happen
+		core.callLater(0, self._dump_speech_to_log)
+
+	def dump_braille_to_log(self):
+		# must be called on mainThread queue that to happen
+		core.callLater(0, self._dump_speech_to_log)
 
 	def _minTimeout(self, timeout: float) -> float:
 		"""Helper to get the minimum value, the timeout passed in, or self._maxKeywordDuration"""
@@ -493,6 +511,11 @@ class SystemTestSpyServer(globalPluginHandler.GlobalPlugin):
 
 
 def _crashNVDA():
+	# Causes a breakpoint exception to occur in the current process.
+	# This allows the calling thread to signal the debugger to handle the exception.
+	#
+	# This may be caught by a "postmortem debugger", which would prevent the application from exiting.
+	# https://docs.microsoft.com/en-us/windows-hardware/drivers/debugger/enabling-postmortem-debugging
 	ctypes.windll.Kernel32.DebugBreak()
 
 
