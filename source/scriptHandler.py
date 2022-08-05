@@ -5,10 +5,12 @@
 
 from typing import (
 	Callable,
+	Generator,
 	Optional,
 	Iterator,
 	List,
 	Set,
+	Tuple,
 )
 import time
 import weakref
@@ -27,6 +29,14 @@ import baseObject
 
 
 _ScriptFunctionT = Callable[["inputCore.InputGesture"], None]
+_ScriptFilterT = Callable[
+	[
+		Optional[_ScriptFunctionT],
+		"NVDAObjects.NVDAObject",
+		"inputCore.InputGesture"
+	],
+	Optional[_ScriptFunctionT]
+]
 
 _numScriptsQueued=0 #Number of scripts that are queued to be executed
 #: Number of scripts that send their gestures on that are queued to be executed or are currently being executed.
@@ -88,80 +98,82 @@ def findScript(gesture: "inputCore.InputGesture") -> Optional[_ScriptFunctionT]:
 	focus = api.getFocusObject()
 	if not focus:
 		return None
-	
+
 	globalMapScripts = getGlobalMapScripts(gesture)
 
+	for obj, filterFunc in _yieldObjectsForFindScript(gesture):
+		if obj:
+			func = _getObjScript(obj, gesture, globalMapScripts)
+			if filterFunc:
+				func = filterFunc(func, obj, gesture)
+			if func:
+				return func
+
+	return None
+
+
+def _getTreeModeInterceptorScript(
+		func: Optional[_ScriptFunctionT],
+		obj: "NVDAObjects.NVDAObject",
+		gesture: "inputCore.InputGesture",
+) -> Optional[_ScriptFunctionT]:
+	from browseMode import BrowseModeTreeInterceptor
+	if isinstance(obj, BrowseModeTreeInterceptor):
+		func = obj.getAlternativeScript(gesture, func)
+	if func and (not obj.passThrough or getattr(func, "ignoreTreeInterceptorPassThrough", False)):
+		return func
+	return None
+
+
+def _getFocusAncestorScript(
+		func: Optional[_ScriptFunctionT],
+		obj: "NVDAObjects.NVDAObject",
+		gesture: "inputCore.InputGesture",
+) -> Optional[_ScriptFunctionT]:
+	if func and getattr(func, 'canPropagate', False):
+		return func
+	return None
+
+
+def _yieldObjectsForFindScript(
+		gesture: "inputCore.InputGesture"
+) -> Generator[Tuple["NVDAObjects.NVDAObject", Optional[_ScriptFilterT]], None, None]:
 	# Import late to avoid circular import.
 	# We need to import this here because this might be the first import of this module
 	# and it might be needed by global maps.
 	import globalCommands
-	# Gesture specific scriptable object.
-	obj = gesture.scriptableObject
-	if obj:
-		func = _getObjScript(obj, gesture, globalMapScripts)
-		if func:
-			return func
+	focus = api.getFocusObject()
 
-	# Global plugin level.
-	for plugin in globalPluginHandler.runningPlugins:
-		func = _getObjScript(plugin, gesture, globalMapScripts)
-		if func:
-			return func
-
-	# App module level.
-	app = focus.appModule
-	if app:
-		func = _getObjScript(app, gesture, globalMapScripts)
-		if func:
-			return func
+	yield gesture.scriptableObject, None  # Gesture specific scriptable object.
+	yield from ((p, None) for p in globalPluginHandler.runningPlugins)  # Global plugin level.
+	yield focus.appModule, None  # App module level.
 
 	# Braille display level
 	if (
 		braille.handler
 		and isinstance(braille.handler.display, baseObject.ScriptableObject)
 	):
-		func = _getObjScript(braille.handler.display, gesture, globalMapScripts)
-		if func:
-			return func
+		yield braille.handler.display, None
 
 	# Vision enhancement provider level
 	if vision.handler:
 		for provider in vision.handler.getActiveProviderInstances():
 			if isinstance(provider, baseObject.ScriptableObject):
-				func = _getObjScript(provider, gesture, globalMapScripts)
-				if func:
-					return func
+				yield provider, None
 
-	# Tree interceptor level.
 	treeInterceptor = focus.treeInterceptor
 	if treeInterceptor and treeInterceptor.isReady:
-		func = _getObjScript(treeInterceptor, gesture, globalMapScripts)
-		from browseMode import BrowseModeTreeInterceptor
-		if isinstance(treeInterceptor,BrowseModeTreeInterceptor):
-			func=treeInterceptor.getAlternativeScript(gesture,func)
-		if func and (not treeInterceptor.passThrough or getattr(func,"ignoreTreeInterceptorPassThrough",False)):
-			return func
+		yield treeInterceptor, _getTreeModeInterceptorScript
 
 	# NVDAObject level.
-	func = _getObjScript(focus, gesture, globalMapScripts)
-	if func:
-		return func
-	for obj in reversed(api.getFocusAncestors()):
-		func = _getObjScript(obj, gesture, globalMapScripts)
-		if func and getattr(func, 'canPropagate', False):
-			return func
+	yield focus, None
 
-	# Configuration profile activation scripts
-	func = _getObjScript(globalCommands.configProfileActivationCommands, gesture, globalMapScripts)
-	if func:
-		return func
+	# Focus ancestors
+	yield from ((a, _getFocusAncestorScript) for a in reversed(api.getFocusAncestors()))
 
-	# Global commands.
-	func = _getObjScript(globalCommands.commands, gesture, globalMapScripts)
-	if func:
-		return func
+	yield globalCommands.configProfileActivationCommands, None
+	yield globalCommands.commands, None
 
-	return None
 
 def getScriptName(script):
 	return script.__name__[7:]
