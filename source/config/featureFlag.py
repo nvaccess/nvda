@@ -151,7 +151,6 @@ def _transformSpec_AddFeatureFlagDefault(specString: str, **kwargs) -> str:
 		- 'behaviorOfDefault'
 		- 'optionsEnum'
 	"""
-	log.info(f"specString: {specString}, kwargs: {kwargs}")
 	usage = 'Usage: featureFlag(behaviorOfDefault="enabled"|"disabled", optionsEnum="BoolFlag")'
 	if "default=" in specString:
 		raise VdtParamError(
