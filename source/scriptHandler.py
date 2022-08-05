@@ -104,7 +104,7 @@ def findScript(gesture: "inputCore.InputGesture") -> Optional[_ScriptFunctionT]:
 	for obj, filterFunc in _yieldObjectsForFindScript(gesture):
 		if obj:
 			func = _getObjScript(obj, gesture, globalMapScripts)
-			if filterFunc:
+			if filterFunc is not None:
 				func = filterFunc(func, obj, gesture)
 			if func:
 				return func
@@ -130,6 +130,10 @@ def _getFocusAncestorScript(
 		obj: "NVDAObjects.NVDAObject",
 		gesture: "inputCore.InputGesture",
 ) -> Optional[_ScriptFunctionT]:
+	"""
+	A filtering function used with _yieldObjectsForFindScript, to ensure a focus ancestor
+	should propagate scripts and therefore handle the input gesture.
+	"""
 	if func and getattr(func, 'canPropagate', False):
 		return func
 	return None
@@ -138,6 +142,15 @@ def _getFocusAncestorScript(
 def _yieldObjectsForFindScript(
 		gesture: "inputCore.InputGesture"
 ) -> Generator[Tuple["NVDAObjects.NVDAObject", Optional[_ScriptFilterT]], None, None]:
+	"""
+	This generator is used to determine which NVDAObject to perform an input gesture on,
+	in order of priority.
+	For example, if the first yielded object has an associated script for the given gesture, findScript
+	will use that script.
+	@yields: A tuple, which includes
+	 - an NVDAObject, to check if there is an associated script
+	 - an optional function to handle any further filtering required after checking for an associated script
+	"""
 	# Import late to avoid circular import.
 	# We need to import this here because this might be the first import of this module
 	# and it might be needed by global maps.
