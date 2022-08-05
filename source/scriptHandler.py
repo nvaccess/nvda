@@ -117,6 +117,10 @@ def _getTreeModeInterceptorScript(
 		obj: "NVDAObjects.NVDAObject",
 		gesture: "inputCore.InputGesture",
 ) -> Optional[_ScriptFunctionT]:
+	"""
+	A filtering function used with _yieldObjectsForFindScript, to ensure a tree interceptor
+	should propagate scripts and therefore handle the input gesture.
+	"""
 	from browseMode import BrowseModeTreeInterceptor
 	if isinstance(obj, BrowseModeTreeInterceptor):
 		func = obj.getAlternativeScript(gesture, func)
