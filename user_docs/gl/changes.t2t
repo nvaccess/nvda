@@ -3,6 +3,72 @@ Que hai de Novo no NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2022.3 =
+A comunidade de desenvolvedores do NVDA contribuíu en grande medida a esta versión.
+Esto inclúe o retraso das descripcións dos caracteres e a mellora do soporte da Consola de Windows.
+
+Esta versión tamén inclúe varios arranxos de fallos.
+En particular, as versións actualizadas de Adobe Acrobat/Reader xa non se bloquean ao ler un documento PDF.
+
+eSpeak actualizouse, o que introduce tres linguas novas: Bielorruso, Luxemburgués e Totontepec Mixe.
+
+== Novas Características ==
+- Na Consola de Windows úsase Host polo Símbolo do Sistema, por PowerShell e polo subsistema de Windows para Linux en Windows 11 versión 22H2 (Sun Valley 2) e posterior:
+  - Rendemento e estabilidade moi mellorados. (#10964)
+  - Ao premer ``control+f`` para procurar texto, a posición do cursor de revisión actualízase para seguer ao término atopado. (#11172)
+  - O anunciado do texto escrebido que non apareza na pantalla (como as contrasinais) deshabilítanse predeterminadamente. 
+Pode voltar a habilitarse no panel Avanzado dos axustes do NVDA. (#11554)
+  - O texto que se desprazara fora da pantalla pódese revisar sen desprazar a ventá da consola. (#12669)
+  - Está dispoñible máis información detallada de formato de texto. ([microsoft/terminal PR 10336 https://github.com/microsoft/terminal/pull/10336])
+  -
+- Engadiuse unha nova opción de Fala para ler as descripcións de caracteres tras un retraso. (#13509)
+- Engadiuse unha nova opción de Braille para determinar se o desprazamento cara adiante ou cara atrás da pantalla debería interrumpir a fala. (#2124)
+-
+
+
+== Cambios ==
+- eSpeak NG actualizouse a 1.52-dev commit ``9de65fcb``. (#13295)
+  - Linguas engadidas:
+    - Bielorruso
+    - Luxemburgués
+    - Totontepec Mixe
+    -
+  -
+- Ao se usar UI Automation para acesar a controis de folla de cálculo de Microsoft Excel, o NVDA agora pode anunciar cando unha celda está fusionada. (#12843)
+- A cambio de anunciar "ten detalles" inclúese o propósito dos detalles cando sexa posible, por exemplo "ten comentarios". (#13649)
+- O tamano de instalación do NVDA agora amósase na seción Programas e Características de Windows. (#13909)
+-
+
+
+== Arranxo de Erros ==
+- O Adobe Acrobat / Reader de 64 bits xa non se bloqueará ao ler un documento PDF. (#12920)
+  - Ten en conta que é necesaria tamén a versión máis actualizada do Adobe Acrobat / Reader para evitar o bloqueo.
+  -
+- As medidas de tamano de fonte agora son traducibles no NVDA. (#13573)
+- Ignóranse os eventos de Java Access Bridge nos que non se poda atopar un manexador de ventá para as aplicacións Java. 
+Esto mellorará o rendemento para algunhas aplicacións Java incluíndo IntelliJ IDEA. (#13039)
+- O anunciado de celdas selecionadas para LibreOffice Calc é máis eficaz e xa non da lugar á conxelación de Calc cando se selecionen moitas celdas. (#13232)
+- Cando se execute nun usuario diferente, Microsoft Edge xa non é inaccesible. (#13032)
+- Cando o aumento brusco de velocidade estea desactivado, a velocidade do eSpeak non descende máis entre velocidades do 99% e 100%. (#13876)
+- Arranxouse un erro que permitía que se abriran 2 diálogos de xestos de Entrada. (#13854)
+-
+
+
+== Cambios para Desenvolvedores ==
+- Actualizado Comtypes á versión 1.1.11. (#12953)
+- En compilacións da Consola de Windows (``conhost.exe``) cun nivel 2 da API de NVDA (``FORMATTED``) ou máis grandes, como aqueles incluídos co Windows 11 versión 22H2 (Sun Valley 2), UI Automation agora úsase por defecto. (#10964)
+  - Esto pódese anular cambiando a opción "Soporte da Consola de Windows" no panel Avanzado da configuración do NVDA.
+  - Para atopar o teu nivel de API de NVDA para a Consola de Windows, configura "Soporte de Consola de Windows" a "UIA cando estea dispoñible", entón verifica que o rexistro estea aberto con NVDA+F1 dende unha instancia de Consola de Windows en execución.
+  -
+- O Búfer virtual de Chromium agora cárgase incluso cando o obxecto documento teña o MSAA ``STATE_SYSTEM_BUSY`` exposto a través de IA2. (#13306)
+- Creouse un tipo específico de configuración ``featureFlag`` para utilizar con características experimentais en NVDA. Consulta ``devDocs/featureFlag.md`` para máis información. (#13859)
+-
+
+
+=== Obsolescencias ===
+Non se propoñen obsolescencias en 2022.3.
+
+
 = 2022.2 =
 Esta versión inclúe moitos arranxos de fallos.
 En particular, hai grandes melloras para aplicacións baseadas en Java, para pantallas braille e para características de Windows.
