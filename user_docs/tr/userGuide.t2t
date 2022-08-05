@@ -27,7 +27,7 @@ NVDA, kör ve az görenlerin Windows işletim sistemi ve sistemde kurulu birçok
 - Kullanımı kolay konuşan kurulum uygulaması
 - 54 dile çevrilmiş oluşu
 - 32 ve 64 bit dahil modern Windows işletim sistemlerinin desteklenmesi
-- Windows Logon ve diğer güvenli ekranlarda çalışabilme özelliği
+- Windows Logon ve diğer [güvenli ekranlarda #SecureScreens] çalışabilme özelliği
 - Dokunmatik hareketlerle metin ve kontrollerin bildirimi
 - Microsoft Active Accessibility, Java Access Bridge, IAccessible2 ve UI Automation gibi yaygın erişilebilirlik arayüzlerinin desteklenmesi
 - Windows Komut İstemi ve Console uygulamalarının desteklenmesi
@@ -81,7 +81,7 @@ Buradan Download bölümüne giderek programın en son sürümünün indirme ba�
 Daha sonra sizden, NVDA kurulumunu yapmak, taşınabilir bir kopya oluşturmak ve geçici kopyayı kullanmaya devam etmek seçenekleri arasında seçim yapmanız istenecektir.
 
 NVDA'yı bu bilgisayarda devamlı olarak kullanmayı planlıyorsanız, NVDA'yı kurma seçeneğini tercih edebilirsiniz.
-NVDA'yı kurmanız, Windows açıldıktan sonra NVDA'yı otomatik olarak başlatabilmenizi, Windows giriş ekranlarında ya da güvenli kipte karşılaştığınız iletişim kutularını NVDA'yla okuyabilmenizi, (ki bunu taşınabilir kopya ile yapamazsınız), NVDA'ya başlat menüsü ya da masaüstünden ulaşabilmenizi sağlayacaktır.
+NVDA'yı kurmanız, Windows açıldıktan sonra NVDA'yı otomatik olarak başlatabilmenizi, Windows giriş ekranlarında ya da [güvenli ekranlarda #SecureScreens] karşılaştığınız iletişim kutularını NVDA'yla okuyabilmenizi, (ki bunu taşınabilir kopya ile yapamazsınız), NVDA'ya başlat menüsü ya da masaüstünden ulaşabilmenizi sağlayacaktır.
 Ek olarak, kurulmuş NVDA kopyasını daha sonra taşınabilir kopya oluşturmak için de kullanabilirsiniz.
 
 NVDA'yı USB bellek ya da benzer taşınabilir ortamlara kopyalamak istiyorsanız, taşınabilir kopya oluştur seçeneğini tercih etmelisiniz.
@@ -118,7 +118,7 @@ Bu düğme hakkında daha fazla yardım için [uyumsuz eklentiler iletişim kutu
 
 +++ Windows Giriş Ekranında NVDA'yı Kullan +++[StartAtWindowsLogon]
 Bu seçenek NVDA'nın Windows giriş ekranında, parolanızı girmeden önce otomatik olarak başlayıp başlamayacağını belirlemenizi sağlar.
-Bu, kullanıcı hesabı denetimi (UAC) ekranı ve diğer güvenli ekranlar için de geçerlidir.
+Bu, kullanıcı hesabı denetimi (UAC) ekranı ve diğer [güvenli ekranlar #SecureScreens] için de geçerlidir.
 Bu seçenek yeni kurulumlar için varsayılan olarak etkindir.
 
 +++ Masaüstünde Kısayol Oluştur (ctrl+alt+n) +++[CreateDesktopShortcut]
@@ -127,7 +127,7 @@ Kısayol oluşturulduğu taktirde, NVDA'nın başlatılması için bir kısayol 
 
 +++ Taşınabilir Konfigürasyonu Mevcut Kullanıcı Hesabına Kopyala +++[CopyPortableConfigurationToCurrentUserAccount]
 Bu seçenek, çalışmakta olan NVDA için kullanılan konfigürasyonun, kurulacak NVDA için de geçerli olmasını belirlemenize olanak tanır. 
-Bu, konfigürasyonu yalnızca mevcut kullanıcı için kopyalar, başka kullanıcıların ayarları ya da güvenli ekranlar için kullanılan konfigürasyon değiştirilmez.
+Bu, konfigürasyonu yalnızca mevcut kullanıcı için kopyalar, başka kullanıcıların ayarları ya da [güvenli ekranlarda #SecureScreens] için kullanılan konfigürasyon değiştirilmez.
 Bu seçenek yalnızca kurulumu NVDA taşınabilir kopyası üzerinden yaparken sunulur, doğrudan ana kurulum paketini kullanarak yapacağınız kurulumlarda gösterilmez.
 
 ++ Taşınabilir Bir Kopya Oluşturma ++[CreatingAPortableCopy]
@@ -342,6 +342,10 @@ Tablolarda aşağıdaki tuşlar da kullanılabilir:
 | Bir sonraki sütuna gitme | kontrol+alt+Sağ yön tuşu | Sistem imlecini aynı satırdaki bir sonraki sütuna götürür |
 | Bir önceki satıra gitme | kontrol+alt+yukarı yön tuşu | Sistem imlecini aynı sütunda kalarak bir önceki satıra götürür |
 | Bir sonraki satıra gitme | kontrol+alt+aşağı yön tuşu | Sistem imlecini aynı sütunda kalarak bir sonraki satıra götürür |
+| İlk sütuna gitme | kontrol+alt+home | Sistem imlecini aynı satırda kalarak ilk sütuna götürür |
+| Son sütuna gitme | kontrol+alt+End | Sistem imlecini aynı satırda kalarak son sütuna götürür |
+| İlk satıra gitme | kontrol+alt+sayfa yukarı | Sistem imlecini aynı sütunda kalarak ilk satıra götürür |
+| Son satıra gitme | kontrol+alt+sayfa aşağı | Sistem imlecini aynı sütunda kalarak ilk satıra götürür |
 %kc:endInclude
 
 ++ Nesne Dolaşımı ++[ObjectNavigation]
@@ -617,8 +621,11 @@ NVDA aşağıdaki matematiksel içerik türlerini destekler:
 - Mozilla Firefox, Microsoft Internet Explorer ve Google Chrome MathML.
 - UI otomasyonu aracılığıyla Microsoft Word 365 Modern Matematik Denklemleri:
 NVDA, Microsoft Word 365/2016 build 14326 ve üzeri sürümlerde matematik denklemlerini okuyabilir ve bunlarla etkileşim kurabilir.
-Bununla birlikte, önceden oluşturulmuş MathType denklemlerinin önce her birini seçip bağlam menüsünde Denklem Seçenekleri -> Office Math'a Dönüştür'ü seçerek Office Math'a dönüştürülmesi gerektiğini unutmayın. Bunu yapmadan önce MathType sürümünüzün en son sürüm olduğundan emin olun.
-Microsoft Word ayrıca denklemlerin kendisinde doğrusal sembol tabanlı gezinme sağlar ve LateX dahil olmak üzere çeşitli sözdizimlerini kullanarak matematik girişini destekler. Daha fazla ayrıntı için lütfen [Word'de UnicodeMath ve LaTeX kullanan doğrusal biçimli denklemler https://support.microsoft.com/en-us/office/linear-format-equations-using-unicodemath-and-latex-in-word-2e00618d-b1fd-49d8-8cb4-8d17f25754f8] makalesine bakın
+Ancak, önceden oluşturulmuş MathType denklemlerinin önce Office Math'a dönüştürülmesi gerektiğini unutmayın.
+Denklemleri dönüştürmek için, her birini seçip "Denklem Seçenekleri"ni ve ardından bağlam menüsünde "Office Math'a Dönüştür"ü seçin.
+Bunu yapmadan önce MathType sürümünüzün en son sürüm olduğundan emin olun.
+Microsoft Word ayrıca denklemlerin kendisinde doğrusal sembol tabanlı gezinme sağlar ve LateX dahil olmak üzere çeşitli sözdizimlerini kullanarak matematik girişini destekler. 
+Daha fazla ayrıntı için lütfen [Word'de UnicodeMath ve LaTeX kullanan doğrusal biçimli denklemler https://support.microsoft.com/en-us/office/linear-format-equations-using-unicodemath-and-latex-in-word-2e00618d-b1fd-49d8-8cb4-8d17f25754f8] makalesine bakın
 - Microsoft Powerpoint ve Microsoft Word'ün eski sürümleri:
 NVDA, MathType denklemlerini hem Microsoft Powerpoint hem de Microsoft word'de okuyabilir ve içlerinde dolaşılmasını sağlayabilir.
 Bunun çalışabilmesi için MathType'ın kurulu olması gerekir.
@@ -704,6 +711,7 @@ Braille ekranaa mümkün olduğunca fazla bilgi sığdırmak amacıyla, kontrol 
 | mnüöğe | menü öğesi |
 | pnl | panel |
 | aşmçb | aşama çubuğu |
++| mşkl | meşgul göstergesi |
 | sd | seçim düğmesi |
 | kydrçb | kaydırma çubuğu |
 | blm | bölüm |
@@ -775,7 +783,7 @@ Mesela, rakam işaretiyle başlayıp girdiğiniz bazı rakamlardan sonra geri si
 %kc:endInclude
 
 +++ Klavye kısayolları girişi +++[BrailleKeyboardShortcuts]
-NVDA, klavye kısayollarının girilmesini ve braille ekranını kullanarak tuşlaran taklit edilmeisni destekler.
+NVDA, klavye kısayollarının girilmesini ve braille ekranını kullanarak tuşlaran taklit edilmesini destekler.
 Taklit iki şekilde gelir: bir tuşa doğrudan bir Braille girdisi atamak ve sanal değiştirici tuşları kullanmak.
 
 Ok tuşları veya menülere ulaşmak için Alt tuşuna basmak gibi yaygın olarak kullanılan tuşlar, doğrudan Braille girişlerine eşlenebilir.
@@ -784,7 +792,8 @@ Her bir Braille ekranının sürücüsü, bu görevlerden bazılarıyla önceden
 
 Bu yaklaşım, yaygın olarak basılan veya biricik tuşlar (Tab gibi) için kullanışlı olsa da, her klavye kısayoluna biricik bir tuş takımı atamak istemeyebilirsiniz.
 NVDA, değiştirici tuşların basılı tutulduğu durumlarda tuş basmalarının taklit edilmesini sağlamak için kontrol, alt, shift, windows ve NVDA tuşlarının  ayrı ayrı , bu tuşların bazı kombinasyonlarının birlikte kullanılması için çeşitli komutlar sunar.
-Bu geçişleri kullanmak için önce basılmasını istediğiniz değiştirici tuşlar için komuta (veya komut dizisine) basın, ardından girmek istediğiniz klavye kısayolunun parçası olan karakteri girin.
+Bu geçişleri kullanmak için önce basılmasını istediğiniz değiştirici tuşlar için komuta (veya komut dizisine) basın. 
+Ardından girmek istediğiniz klavye kısayolunun parçası olan karakteri girin.
 Örneğin, kontrol+f kısayol tuşunu kullanmak için "Kontrol tuşunu aç" komutunu kullanın ve ardından f yazın,
 ve kontrol+alt+t'yi girmek için, sırası fark etmez, "Kontrol tuşunu aç" ve "Alt tuşunu aç" komutlarını veya "Kontrol+alt tuşlarını aç" komutunu kullanın ve ardından t yazın.
 
@@ -1125,7 +1134,7 @@ Windowsa kullanıcı adı ve şifre girerek oturum açıyorsanız, bu seçeneği
 Bu seçenek, yalnızca sisteme yüklenmiş olan NVDA kopyalarında mevcuttur.
 
 ==== Windows Giriş ve Diğer Güvenli Ekranlarda Mevcut kaydedilmiş Ayarları Kullan (Yönetici yetkisi gerekirr) ====[GeneralSettingsCopySettings]
-Bu düğmeye basmak Şu anki NVDA ayarlarınızı NVDA system configuration dizinine kopyalar ve böylece oturum açma, kullanıcı hesapları kontrolü (uac) ve diğer güvenli ekranlarda NVDA bu ayarları kullanır.
+Bu düğmeye basmak Şu anki NVDA ayarlarınızı NVDA system configuration dizinine kopyalar ve böylece oturum açma, kullanıcı hesapları kontrolü (uac) ve diğer [güvenli ekranlarda #SecureScreens] NVDA bu ayarları kullanır.
 Tüm ayarlarınızın transfer edildiğinden emin olmak için, önce kontrol+NVDA+c tuşlarına basarak NVDA ayarlarınızı kaydettiğinizden emin olun veya NVDA menüsünden konfigürasyonu  kaydedin.
 Bu seçenek, yalnızca bilgisayara kurulu  NVDA kopyalarında mevcuttur.
 
@@ -1709,7 +1718,11 @@ Bu değer, önceki sayfa ve sonraki sayfa tuşlarıyla tarama kipinde gösterile
 ==== Destekleniyorsa Ekran Düzenini Kullan ====[BrowseModeSettingsScreenLayout]
 Tuş: NVDA+v
 
-Bu seçenek, tarama kipinin tıklanabilir içeriği (bağlantılar, düğmeler ve alanlar) ayrı satırlara  mı yerleştirmesi yoksa görsel olarak ekranda görüldüğü gibi metin akışında mı tutması gerektiğini belirlemenizi sağlar. Bu seçeneğin, her zaman ekran düzenini kullanan Outlook ve Word gibi Microsoft Office uygulamaları için geçerli olmadığını unutmayın.
+Bu seçenek, tarama kipinin tıklanabilir içeriği (bağlantılar, düğmeler ve alanlar) ayrı satırlara  mı yerleştirmesi yoksa görsel olarak ekranda görüldüğü gibi metin akışında mı tutması gerektiğini belirlemenizi sağlar. 
+Bu seçeneğin, her zaman ekran düzenini kullanan Outlook ve Word gibi Microsoft Office uygulamaları için geçerli olmadığını unutmayın.
+Örneğin, birden çok bağlantıdan oluşan bir satırda bağlantılar aynı satırda farklı farklı bağlantılar şeklinde gösterilecektir.
+Eğer bu seçenek aktif değilse, bğlantılar orijinal halleriyle görüntülenecektir.
+Bu, satır satır gezinme sırasında	 anlaşılmayı kolaylaştırabilir ve bazı kullanıcılar için öğelerle etkileşim kurmayı kolaylaştırabilir.
 Ekran düzeni etkinleştirildiğinde, sayfa öğeleri görsel olarak gösterildiği gibi kalacaktır. Örneğin, birden çok bağlantının gösterildiği bir satır, konuşmaya ve braille'e de aynı şekilde aktarılır. Devre dışı bırakılırsa, öğeler ayrı satırlara yerleştirilecektir; bu, satır satır dolaşılırken  öğeler arasındaki farkı daha anlaşılabilir kılar ve bazı kullanıcılar için öğelerle etkileşimi kolaylaştırabilir.
 
 ==== Sayfa yüklendiğinde tarama kipini etkinleştir ====[BrowseModeSettingsEnableOnPageLoad]
@@ -2371,16 +2384,6 @@ Birçok dil birden çok aksan içerir.
 "Birleşik Krallık" ve "Avustralya" İngilizce aksanlardan ikisidir.
 "Fransa", "Kanada" ve "İsviçre", mevcut Fransızca aksanlardır.
 Farklı aksanlara  sahip dili (İngilizce veya Fransızca gibi) arayın, ardından aksanı listede bulun.
-İstediğiniz dilleri seçin ve eklemek için "ekle" düğmesini kullanın.
-Ekledikten sonra NVDA'yı yeniden başlatın.
-
-
-Yeni Windows OneCore seslerinden birini  eklemek için Windows sistem ayarlarında "Konuşma Ayarları"na gidin. 
-"Ses ekle" seçeneğini kullanın ve istediğiniz dili arayın.
-Birçok dilde birden çok seçenek bulunabilir.
-"Birleşik Krallık" ve "Avustralya" İngilizce seçeneklerden ikisidir.
-"Fransa", "Kanada" ve "İsviçre", mevcut Fransızca seçenekleridir.
-Daha geniş  bir dil (İngilizce veya Fransızca gibi) arayın, ardından alt seçeneği listede bulun.
 İstediğiniz dilleri seçin ve eklemek için "ekle" düğmesini kullanın.
 Ekledikten sonra NVDA'yı yeniden başlatın.
 
@@ -3320,6 +3323,34 @@ Following are the current key assignments for these displays.
  
 + İleri Düzey Konular +[AdvancedTopics]
 
+++ Güvenli Mod ++[SecureMode]
+NVDA, ``-s`` [komut satırı seçenekleri #CommandLineOptions] ile güvenli modda başlatılabilir.
+NVDA, ``serviceDebug`` [Sistem Çapında Geçerli Parametreleri #SystemWideParameters] etkinleştirilmedikçe [güvenli ekranlarda #SecureScreens] yürütüldüğünde güvenli modda çalışır.
+
+Güvenli mod şu özellikleri devre dışı bırakır:
+
+- Konfigurasyonu ve diğer ayarları diske kaydetme
+- Girdi hareketlerini diske kaydetme
+- [Konfigürasyon profilleri  #ConfigurationProfiles] özellikleri örneğin; oluşturma, silme vb.
+- NVDA'yı güncelleme ve taşınabilir kopyalar oluşturma
+-  [Python konsolu #PythonConsole]
+- The [Log dosyasını göster #LogViewer] ve loglama
+-
+
+++ Güvenli Ekranlar ++[SecureScreens]
+NVDA, ``serviceDebug`` [Sistem Çapında Geçerli Parametreleri #SystemWideParameters] etkinleştirilmedikçe güvenli ekranlarda çalıştırıldığında [güvenli mod #SecureMode]'da çalışır.
+
+Güvenli bir ekranda çalıştırırken, NVDA tercihler için bir sistem profili kullanır.
+Güvenli ekranlarda kullanım için [kullanıcı tercihleri #GeneralSettingsCopySettings] kopyalanabilir.
+
+Güvenli ekranlar şunları içerir::
+
+- Windows oturum açma ekranı
+- Kullanıcı hesabı denetimi iletişim kutusu: bir eylemi yönetici olarak çalıştırmanız gerektiğinde görünür
+  - Bu, programların yüklenmesi olabilir
+  -
+-
+
 ++ Komut Satırı Seçenekleri ++[CommandLineOptions]
 NVDA başladığında onun davranışını değiştirecek bir veya daha fazla ek seçenek kabul edebilir.
 İhtiyaç duyduğunuz kadar seçenek kullanabilirsiniz.
@@ -3353,7 +3384,7 @@ Aşağıdakiler NVDA komut satırı seçenekleridir:
 | -c CONFIGPATH | --config-path=CONFIGPATH | NVDA ile ilgili tüm ayarların kaydedileceği adres |
 | None | --lang=LANGUAGE | Yapılandırılmış NVDA dilini geçersiz kılın. Geçerli kullanıcı varsayılanı için "Windows", İngilizce için "en" vb. olarak ayarlayın. |
 | -m | --minimal | Ses, arayüz, başlangıç mesajı vb olmaz |
-| -s | --secure | Güvenli mod: Python konsolunu, oluşturma, silme, profilleri yeniden adlandırma vb. gibi profil özelliklerini, güncelleme kontrolünü, hoş geldiniz iletişim kutusundaki ve genel ayarlar kategorisindeki bazı onay kutularını (örneğin oturum açtıktan sonra NVDA'yı başlat, çıkıştan sonra yapılandırmayı kaydet vb.) devre dışı bırakır. logviewer ve log özellikleri olarak (sıklıkla güvenli ekranlarda kullanılır). Ayrıca, bu komutun sistem yapılandırmasında ayarları kaydetme olasılığını devre dışı bırakacağını ve hareket haritasının diske kaydedilmeyeceğini unutmayın. |
+| -s | --secure | NVDA'yı [Güvenli Mod #GüvenliMod]'da başlatır |
 | None | --disable-addons | Eklentiler etkisizdir |
 | None | --debug-logging | Yalnızca bu çalıştırma için hata ayıklama seviyesi günlüğünü etkinleştirin. Bu ayar, herhangi bir kayıt seçeneği de dahil olmak üzere verilen herhangi bir günlük seviyesi ("" --loglevel "", -l) argümanını geçersiz kılar. |
 | None | --no-logging | NVDA'yı kullanırken günlüğü tamamen devre dışı bırakın. Komut satırından bir günlük seviyesi ("" --loglevel "", -l) belirtilirse veya hata ayıklama günlüğü açıksa bu ayarın üzerine yazılabilir. |
@@ -3376,7 +3407,7 @@ Bu değerler kayıt defterinde aşağıdaki anahtarlardan birinin altında tutul
 Bu kayıt defteri anahtarı altında aşağıdaki değerler ayarlanabilir:
 || Ad | Tür | Olası değerler | Açıklama |
 | configInLocalAppData | DWORD | devre dışı bırakmak için 0 (varsayılan), etkinleştirmek için 1 | etkinleştirilirse, NVDA kullanıcı konfigürasyonunu roaming application data  yerine local application data  altında tutar |
-| serviceDebug | DWORD | devre dışı bırakmak için 0 (varsayılan), etkinleştirmek için 1 | Etkinleştirilirse, Windows güvenli masaüstlerinde güvenli modu devre dışı bırakarak Python konsolu ve Günlük görüntüleyicinin kullanımına izin verir. Güvenlik açısından birkaç önemli sonuç nedeniyle, bu seçeneğin kullanılması kesinlikle önerilmez. |
+| +| serviceDebug | DWORD devre dışı bırakmak için 0 (varsayılan), etkinleştirmek için 1 | Etkinse, [güvenlli mod #SecureMode]'u [güvenli ekranlarda #SecureScreens] devre dışı bırakır. Güvenlik açısından birkaç önemli sonuç nedeniyle, bu seçeneğin kullanılması kesinlikle önerilmez. |
 
 + Daha Detaylı Bilgi +[FurtherInformation]
 NVDA ile ilgili daha fazla bilgiye veya yardıma ihtiyaç duyarsanız, NVDA_URL adresini ziyaret edebilirsiniz.
