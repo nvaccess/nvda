@@ -1,17 +1,20 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2020 NV Access Limited, Babbage B.V., Julien Cochuyt
+# Copyright (C) 2007-2022 NV Access Limited, Babbage B.V., Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 from typing import (
+	Callable,
 	Optional,
 	Iterator,
 	List,
+	Set,
 )
 import time
 import weakref
 import types
 import config
+import NVDAObjects
 from speech import sayAll
 import api
 import queueHandler
@@ -21,6 +24,9 @@ import globalPluginHandler
 import braille
 import vision
 import baseObject
+
+
+_ScriptFunctionT = Callable[["inputCore.InputGesture"], None]
 
 _numScriptsQueued=0 #Number of scripts that are queued to be executed
 #: Number of scripts that send their gestures on that are queued to be executed or are currently being executed.
@@ -39,7 +45,12 @@ def _makeKbEmulateScript(scriptName):
 	func.__doc__ = _("Emulates pressing %s on the system keyboard") % emuGesture.displayName
 	return func
 
-def _getObjScript(obj, gesture, globalMapScripts):
+
+def _getObjScript(
+		obj: "NVDAObjects.NVDAObject",
+		gesture: "inputCore.InputGesture",
+		globalMapScripts: Set["inputCore._ScriptType"],
+) -> Optional[_ScriptFunctionT]:
 	# Search the scripts from the global gesture maps.
 	for cls, scriptName in globalMapScripts:
 		if isinstance(obj, cls):
@@ -60,25 +71,30 @@ def _getObjScript(obj, gesture, globalMapScripts):
 	except Exception:  # Prevent a faulty add-on from breaking script handling altogether (#5446)
 		log.exception()
 
-def findScript(gesture):
-	focus = api.getFocusObject()
-	if not focus:
-		return None
 
-	# Import late to avoid circular import.
-	# We need to import this here because this might be the first import of this module
-	# and it might be needed by global maps.
-	import globalCommands
-
-	globalMapScripts = []
+def getGlobalMapScripts(gesture: "inputCore.InputGesture") -> Set["inputCore._ScriptType"]:
+	globalMapScripts: Set["inputCore._ScriptType"] = set()
 	globalMaps = [inputCore.manager.userGestureMap, inputCore.manager.localeGestureMap]
 	globalMap = braille.handler.display.gestureMap if braille.handler and braille.handler.display else None
 	if globalMap:
 		globalMaps.append(globalMap)
 	for globalMap in globalMaps:
 		for identifier in gesture.normalizedIdentifiers:
-			globalMapScripts.extend(globalMap.getScriptsForGesture(identifier))
+			globalMapScripts.update(globalMap.getScriptsForGesture(identifier))
+	return globalMapScripts
 
+
+def findScript(gesture: "inputCore.InputGesture") -> Optional[_ScriptFunctionT]:
+	focus = api.getFocusObject()
+	if not focus:
+		return None
+	
+	globalMapScripts = getGlobalMapScripts(gesture)
+
+	# Import late to avoid circular import.
+	# We need to import this here because this might be the first import of this module
+	# and it might be needed by global maps.
+	import globalCommands
 	# Gesture specific scriptable object.
 	obj = gesture.scriptableObject
 	if obj:
