@@ -1052,8 +1052,9 @@ Cando se estea na táboa de vista de libros engadidos:
 O NVDA proporciona compatibilidade para a consola de ordes de Windows utilizada polo indicativo do sistema, PowerShell, e o subsistema Windows para Linux.
 A ventá da consola é de tamano fixo, normalmente moito máis pequena que o búfer que contén a saída.
 Segundo se escrebe un novo texto, o contido desprázase cara arriba e o texto anterior xa non é visible.
-O texto que non se amosa visiblemente na ventá non é acesible cos comandos de revisión de texto do NVDA.
+En versións de Windows anteriores a Windows 11 22H2, o texto que non se amosa visiblemente na ventá non é acesible cos comandos de revisión de texto do NVDA.
 Polo tanto, é necesario desprazarse pola ventá da consola para ler o texto anterior.
+Nas novas versións da consola e no Terminal de Windows, é posible revisar todo o búfer de texto libremente sen necesidade de desprazar a ventá.
 %kc:beginInclude
 Os seguintes métodos abreviados de teclado incorporados na Consola de Windows poden seren útiles ao [revisar texto #ReviewingText] co NVDA:
 || Nome | Tecla | Descripción |
@@ -1260,6 +1261,20 @@ Esta opción xeralmente debería activarse.
 Nembargantes, algúns sintetizadores Microsoft Speech API non implementan esto correctamente e funciona anómalamente cando se activa.
 Se estás a ter problemas ca pronunciación de carácteres individuais,  proba desactivando esta opción.
 
+==== Descripcións retrasadas para caracteres en movementos do cursor ====[delayedCharacterDescriptions]
+: Predeterminado
+  Deshabilitado
+: Optións
+  Habilitado, Deshabilitado
+:
+
+Cando esta opción está marcada, o NVDA dirá a descipción do carácter cando te movas por caracteres.
+
+Por exemplo, mentres revisas unha liña por caracteres, cando se lea a letra "b" o NVDA dirá "Bravo" tras 1 segundo de retraso.
+Esto pode seren útil se che costa distinguir entre la pronunciación dos símbolos, ou para usuarios con dificultades auditivas.
+
+A descripción retrasada de caracteres cancelarase se se fala outro texto durante ese tiempo, ou se ti premes a tecla ``control``.
+
 +++ Selecionar Sintetizador (NVDA+control+s) +++[SelectSynthesizer]
 A caixa de diálogo Sintetizador, o que pode abrirse activando o botón Cambiar... na categoría voz do diálogo Opcións do NVDA, permíteche selecionar que Sintetizador debería usar o NVDA para falar.
 Unha vez selecionaras o sintetizador da túa eleción, podes premer Aceptar e o NVDA cargará o sintetizador selecionado.
@@ -1409,6 +1424,21 @@ Así, no exemplo anterior, o NVDA amosará que enfocaches un elemento de lista.
 Polo tanto, para ler o contexto (é dicir, que estás nunha lista e que esta lista é parte dun diálogo), terás que desprazar a pantalla braille cara atrás.
 
 Para conmutar a presentación de contexto do foco dende calquera lugar, por favor asigna un xesto personalizado usando o [diálogo Xestos de Entrada #InputGestures].
+
+==== Interrumpir fala  mentres se despraza ====[BrailleSettingsInterruptSpeech]
+: Predeterminado
+  Habilitado
+: Opcións
+  Predeterminado (Habilitado), Habilitado, Deshabilitado
+:
+
+Esta opción determina se a voz debería interrumpirse cando a pantalla Braille se desprace cara adiante ou cara atrás.
+As ordes de liña anterior e seguinte sempre interrumpen a fala.
+
+A voz falando podería seren unha distración mentres se le en Braille.
+Por esta razón a opción está habilitada por defecto, interrumpindo a voz ao desprazar o braille.
+
+Deshabilitar esta opción permite que a voz se escoite mentres se le en braille simultáneamente.
 
 +++ Selecionar Pantalla Braille (NVDA+control+a) +++[SelectBrailleDisplay]
 A caixa de diálogo Selecionar Pantalla Braille, o que se pode abrir activando o botón Cambiar... na categoría Braille do diálogo Opcións do NVDA, permíteche selecionar que pantalla braille debería usar o NVDA para a saída braille.
@@ -1888,8 +1918,26 @@ Esta opción contén os seguintes valores:
 - Sempre: cando a UI automation estea dispoñible en Microsoft word (sen importar cómo de compreta sexa).
 -
 
-==== Usar UI Automation para acesar á Consola de Windows cando estea dispoñible ====[AdvancedSettingsConsoleUIA]
-Cando esta opción estea activada, o NVDA usará unha versión nova en progreso do seu soporte para a Consola de Windows que ten a ventalla da [mellora de accesibilidade feita por Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Esta característica é moi experimental e aínda está incompreta, así que o seu uso aínda non está recomendado. Sen embargo, unha vez compretada, cóidase que este novo soporte se converterá no predeterminado, mellorando o rendemento e a estabilidade do NVDA Nas consolas de ordes de Windows.
+==== Soporte para Consola de Windows ====[AdvancedSettingsConsoleUIA]
+: Predeterminado
+  Automático
+: Opcións
+  Automático, UIA cando estea dispoñible, herdado
+:
+
+Esta opción seleciona coma o NVDA interactúa coa Consola de Windows usada polo símbolo do sistema, polo PowerShell e polo subsistema de Windows para Linux.
+Non afecta á Terminal moderna de Windows.
+En Windows 10 versión 1709, Microsoft [engadiu soporte para a súa API UI Automation á consola https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/], dando un rendemento e unha estabilidade moi mellorados para lectores de pantalla que o admitan.
+En situacións nas que UI Automation non estea dispoñible ou que se sepa que a experiencia de usuario sexa inferior, o soporte da consola herdada do NVDA está dispoñible como alternativa.
+A caixa combinada Soporte para a Consola de Windows ten tres opcións:
+- Automático: usa UI Automation na versión da Consola de Windows incluída con Windows 11 versión 22H2 e posterior.
+Esta opción recoméndase e é a predeterminada.
+- UIA cando estea dispoñible: usa UI Automation en consolas se está dispoñible, incluso para versións con implementacións incompletas ou con erros.
+Aíndaque esta funcionalidade limitada pode seren útil (e incluso suficiente para o teu uso), a utilización desta opción é totalmente baixo o teu proprio resgo e non se proporcionará soporte para ela.
+- Herdado: UI Automation na Consola de Windows deshabilitarase compretamente.
+O sistema herdado usarase sempre incluso en situacións nas que UI Automation proporcionaría unha experiencia de usuario superior.
+Polo tanto, selecionar esta opción non é recomendable ao menos que sepas o que estás a facer.
+-
 
 ==== Utilizar UIA con Microsoft Edge e outros navegadores baseados en Chromium cando estea dispoñible ====[ChromiumUIA]
 Permite especificar que se utilizará UIA cando estea dispoñible en navegadores baseados en Chromium como Microsoft Edge.

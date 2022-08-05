@@ -1,6 +1,13 @@
 $testOutput = (Resolve-Path .\testOutput\)
 $systemTestOutput = (Resolve-Path "$testOutput\system")
-.\runsystemtests.bat --variable whichNVDA:installed --variable installDir:"${env:nvdaLauncherFile}" --include installer
+
+.\runsystemtests.bat `
+--variable whichNVDA:installed `
+--variable installDir:"${env:nvdaLauncherFile}" `
+--include installer `
+--include NVDA `
+# last line inentionally blank, allowing all lines to have line continuations.
+
 if($LastExitCode -ne 0) {
 	Set-AppveyorBuildVariable "testFailExitCode" $LastExitCode
 	Add-AppveyorMessage "FAIL: System tests. See test results for more information."
