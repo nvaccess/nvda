@@ -2578,8 +2578,7 @@ class BrailleDisplayDriver(driverHandler.Driver):
 					yield match
 
 	#: Global input gesture map for this display driver.
-	#: @type: L{inputCore.GlobalGestureMap}
-	gestureMap = None
+	gestureMap: Optional[inputCore.GlobalGestureMap] = None
 
 	@classmethod
 	def _getModifierGestures(cls, model=None):

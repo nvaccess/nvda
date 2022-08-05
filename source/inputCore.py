@@ -13,7 +13,17 @@ import sys
 import os
 import weakref
 import time
-from typing import Dict, Any, Tuple, List, Union
+from typing import (
+	Any,
+	Dict,
+	Generator,
+	List,
+	Optional,
+	Tuple,
+	Type,
+	TypeVar,
+	Union
+)
 from gui import blockAction
 import configobj
 from speech import sayAll
@@ -31,6 +41,10 @@ import globalVars
 import languageHandler
 import controlTypes
 import winKernel
+
+
+_AnyClass = TypeVar("_AnyClass")
+_ScriptType = Tuple[Type[_AnyClass], str]
 
 #: Script category for emulated keyboard keys.
 # Translators: The name of a category of NVDA commands.
@@ -321,13 +335,11 @@ class GlobalGestureMap(object):
 						self.lastUpdateContainedError = True
 						continue
 
-	def getScriptsForGesture(self, gesture):
+	def getScriptsForGesture(self, gesture: InputGesture) -> Generator[_ScriptType, None, None]:
 		"""Get the scripts associated with a particular gesture.
 		@param gesture: The gesture identifier.
-		@type gesture: str
 		@return: The Python class and script name for each script;
 			the script name may be C{None} indicating that the gesture should be unbound for this class.
-		@rtype: generator of (class, str)
 		"""
 		try:
 			scripts = self._map[gesture]
@@ -845,9 +857,10 @@ def getDisplayTextForGestureIdentifier(identifier):
 		raise
 		raise LookupError("Couldn't get display text for identifier: %s" % identifier)
 
+
 #: The singleton input manager instance.
-#: @type: L{InputManager}
-manager = None
+manager: Optional[InputManager] = None
+
 
 def initialize():
 	"""Initializes input core, creating a global L{InputManager} singleton.
