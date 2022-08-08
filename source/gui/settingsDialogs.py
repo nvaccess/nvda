@@ -2547,24 +2547,29 @@ class DocumentFormattingPanel(SettingsPanel):
 		config.conf["documentFormatting"]["reportClickable"]=self.clickableCheckBox.Value
 
 
-class ParagraphNavigationPanel(SettingsPanel):
-	# Translators: This is the label for the paragraph navigation settings panel.
-	title = _("Paragraph Navigation")
-	helpId = "ParagraphNavigation"
+class DocumentNavigationPanel(SettingsPanel):
+	# Translators: This is the label for the document navigation settings panel.
+	title = _("Document Navigation")
+	helpId = "DocumentNavigation"
 
-	def makeSettings(self, settingsSizer):
+	def makeSettings(self, settingsSizer: wx.BoxSizer) -> None:
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
-		# Translators: This is a label for the paragraph navigation style in the paragraph navigation dialog
+		# Translators: This is a label for the paragraph navigation style in the document navigation dialog
 		paragraphStyleLabel = _("&Paragraph style:")
-		from utils.paragraphHelper import paragraphStyles, paragraphStyleChoices
-		self.styleCombo = sHelper.addLabeledControl(paragraphStyleLabel, wx.Choice, choices=paragraphStyleChoices)
-		self.styleCombo.SetSelection(
-			paragraphStyles.index(config.conf["paragraphNavigation"]["paragraphStyle"]))
+		from utils.paragraphHelper import ParagraphStyles
+		lst = list(ParagraphStyles)
+		styles = [s.value for s in lst]
+		choices = [s.displayString for s in lst]
+		styleIndex = styles.index(config.conf["documentNavigation"]["paragraphStyle"])
+		self.styleCombo = sHelper.addLabeledControl(paragraphStyleLabel, wx.Choice, choices=choices)
+		self.styleCombo.SetSelection(styleIndex)
 
 	def onSave(self):
-		from utils.paragraphHelper import paragraphStyles
+		from utils.paragraphHelper import ParagraphStyles
+		lst = list(ParagraphStyles)
+		styles = [s.value for s in lst]
 		choice = self.styleCombo.GetSelection()
-		config.conf["paragraphNavigation"]["paragraphStyle"] = paragraphStyles[choice]
+		config.conf["documentNavigation"]["paragraphStyle"] = styles[choice]
 
 class TouchInteractionPanel(SettingsPanel):
 	# Translators: This is the label for the touch interaction settings panel.
@@ -4127,7 +4132,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		ObjectPresentationPanel,
 		BrowseModePanel,
 		DocumentFormattingPanel,
-		ParagraphNavigationPanel,
+		DocumentNavigationPanel,
 	]
 	if touchHandler.touchSupported():
 		categoryClasses.append(TouchInteractionPanel)

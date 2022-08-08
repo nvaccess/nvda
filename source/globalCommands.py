@@ -3698,10 +3698,10 @@ class GlobalCommands(ScriptableObject):
 			"Toggles through paragraph navigation styles",
 		),
 	)
-	def script_toggleParagraphStyle(self, gesture):
+	def script_toggleParagraphStyle(self, gesture: "inputCore.InputGesture") -> None:
 		from utils.paragraphHelper import nextParagraphStyle
 		style = nextParagraphStyle()
-		config.conf["paragraphNavigation"]["paragraphStyle"] = style[0]
+		config.conf["documentNavigation"]["paragraphStyle"] = style[0]
 		ui.message(style[1])
 
 

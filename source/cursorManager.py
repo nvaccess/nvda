@@ -26,9 +26,10 @@ import config
 import braille
 import vision
 import controlTypes
-from inputCore import SCRCAT_BROWSEMODE
+from inputCore import SCRCAT_BROWSEMODE, InputGesture
 import ui
 from textInfos import DocumentWithPageTurns
+from logHandler import log
 
 
 class FindDialog(
@@ -264,9 +265,11 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 		self._caretMovementScriptHelper(gesture,textInfos.UNIT_SENTENCE,1)
 	script_moveBySentence_forward.resumeSayAllMode = sayAll.CURSOR.CARET
 
-	def _handleParagraphNavigation(self, gesture, nextParagraph: bool):
-		setting = config.conf["paragraphNavigation"]["paragraphStyle"]
-		if setting == "block":
+	def _handleParagraphNavigation(self, gesture: "InputGesture", nextParagraph: bool) -> None:
+		setting = config.conf["documentNavigation"]["paragraphStyle"]
+		if setting == "auto" or setting == "application" or setting == "normal":
+			self._caretMovementScriptHelper(gesture, textInfos.UNIT_PARAGRAPH, 1 if nextParagraph else -1)
+		elif setting == "block":
 			from utils.paragraphHelper import moveToBlockParagraph
 			ti = self.makeTextInfo(textInfos.POSITION_SELECTION)
 			passKey, moved = moveToBlockParagraph(
@@ -277,7 +280,8 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 				# fail over to default behavior
 				self._caretMovementScriptHelper(gesture, textInfos.UNIT_PARAGRAPH, 1 if nextParagraph else -1)
 		else:
-			self._caretMovementScriptHelper(gesture, textInfos.UNIT_PARAGRAPH, 1 if nextParagraph else -1)
+			log.error(f"Unexpected setting value {setting}")
+
 
 	def script_moveByParagraph_back(self,gesture):
 		self._handleParagraphNavigation(gesture, False)

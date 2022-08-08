@@ -13,36 +13,39 @@ from NVDAObjects.window.winword import WordDocumentTextInfo
 from NVDAObjects.window.winword import BrowseModeWordDocumentTextInfo
 from NVDAObjects.UIA import UIATextInfo
 from displayModel import EditableTextDisplayModelTextInfo
+from utils.displayString import DisplayStringStrEnum
 
 MAX_LINES = 250  # give up after searching this many lines
 
-paragraphStyles = [
-	# values used for config.conf["paragraphNavigation"]["paragraphStyle"]
-	"auto",
-	"application",
-	"normal",
-	"block"
-]
 
-paragraphStyleChoices = [
-	# displayed in settings UI
-	# Translators: Automatic paragraph style selection
-	_("Automatic"),
-	# Translators: A paragraph style for navigating by paragraphs
-	_("Handled by application"),
-	# Translators: A paragraph style for navigating by paragraphs
-	_("Normal style"),
-	# Translators: A paragraph style for navigating by paragraphs
-	_("Block style")
-]
+class ParagraphStyles(DisplayStringStrEnum):
+	AUTO = "auto"
+	APPLICATION = "application"
+	NORMAL = "normal"
+	BLOCK = "block"
+	
+	@property
+	def _displayStringLabels(self) -> str:
+		return {
+			# Translators: Automatic paragraph style selection
+			self.AUTO: _("Automatic"),
+			# Translators: A paragraph style for navigating by paragraphs
+			self.APPLICATION: _("Handled by application"),
+			# Translators: A paragraph style for navigating by paragraphs
+			self.NORMAL: _("Normal style"),
+			# Translators: A paragraph style for navigating by paragraphs
+			self.BLOCK: _("Block style")
+		}
 
 
-def nextParagraphStyle() -> (str, str):
+def nextParagraphStyle() -> tuple((str, str)):
 	# returns (configSetting, UISetting) for the next paragraph style, wrapping around when reaching end
-	curStyle = config.conf["paragraphNavigation"]["paragraphStyle"]
-	i = paragraphStyles.index(curStyle) + 1
-	i %= len(paragraphStyles)
-	return (paragraphStyles[i], paragraphStyleChoices[i])
+	curStyle = config.conf["documentNavigation"]["paragraphStyle"]
+	lst = list(ParagraphStyles)
+	styles = [s.value for s in lst]
+	newIndex = styles.index(curStyle) + 1
+	newIndex %= len(styles)
+	return (lst[newIndex].value, lst[newIndex].displayString)
 
 
 def getTextInfoAtCaret() -> textInfos.TextInfo:
@@ -57,10 +60,10 @@ def getTextInfoAtCaret() -> textInfos.TextInfo:
 	return ti
 
 
-def isAcceptableTextInfo(ti: textInfos.TextInfo):
+def isAcceptableTextInfo(ti: textInfos.TextInfo) -> bool:
 	acceptable = True
 	# disallow if in a Word document, as Word has performance issues
-	if (isinstance(ti, WordDocumentTextInfo)) or (isinstance(ti, BrowseModeWordDocumentTextInfo)):
+	if isinstance(ti, WordDocumentTextInfo) or isinstance(ti, BrowseModeWordDocumentTextInfo):
 		acceptable = False
 	# disallow if EditableTextDisplayModelTextInfo, as has performance issues (TextPad for example)
 	if isinstance(ti, EditableTextDisplayModelTextInfo):
@@ -68,12 +71,12 @@ def isAcceptableTextInfo(ti: textInfos.TextInfo):
 	return acceptable
 
 
-def isLastLineOfParagraph(line: str):
+def isLastLineOfParagraph(line: str) -> bool:
 	stripped = line.strip(' \t')
 	return stripped.endswith('\r') or stripped.endswith('\n')
 
 
-def splitParagraphIntoChunks(paragraph: str) -> []:
+def splitParagraphIntoChunks(paragraph: str) -> list([str]):
 	CHUNK_SIZE = 2048
 	SENTENCE_TERMINATOR = ". "
 	TERMINATOR_LEN = len(SENTENCE_TERMINATOR)
@@ -101,7 +104,7 @@ def splitParagraphIntoChunks(paragraph: str) -> []:
 	return chunks
 
 
-def speakParagraph(ti: textInfos.TextInfo):
+def speakParagraph(ti: textInfos.TextInfo) -> None:
 	paragraph = ""
 	numLines = 0
 	tempTi = ti.copy()
@@ -125,9 +128,16 @@ def speakParagraph(ti: textInfos.TextInfo):
 		speech.speakMessage(_("blank"))
 
 
-def moveToParagraph(nextParagraph: bool, speakNew: bool) -> (bool, bool):
-	# moves to previous or next regular paragraph, delineated by a single line break
-	# returns (passKey, moved)
+def moveToParagraph(nextParagraph: bool, speakNew: bool) -> tuple((bool, bool)):
+	"""
+	Moves to the previous or next normal paragraph, delimited by a single line break.
+	@param nextParagraph: bool indicating desired direction of movement,
+	True for next paragraph, False for previous paragraph
+	@param speakNew: bool indicating if new paragraph should be spoken after navigating
+	@returns: A boolean 2-tuple of:
+	-passKey: if True, should send the gesture on
+	- moved: if True, position has changed
+	"""
 	ti = getTextInfoAtCaret()
 	if (ti is None) or (not isAcceptableTextInfo(ti)):
 		return (True, False)
@@ -179,7 +189,7 @@ def moveToParagraph(nextParagraph: bool, speakNew: bool) -> (bool, bool):
 	return (False, moved)
 
 
-def speakBlockParagraph(ti: textInfos.TextInfo):
+def speakBlockParagraph(ti: textInfos.TextInfo) -> None:
 	paragraph = ""
 	numLines = 0
 	tempTi = ti.copy()
@@ -198,8 +208,20 @@ def speakBlockParagraph(ti: textInfos.TextInfo):
 		speech.speakMessage(chunk)
 
 
-def moveToBlockParagraph(nextParagraph: bool, speakNew: bool, ti: textInfos.TextInfo = None) -> (bool, bool):
-	# returns (passKey, moved)
+def moveToBlockParagraph(
+		nextParagraph: bool, speakNew: bool, ti: textInfos.TextInfo = None) -> tuple((bool, bool)):
+	"""
+	Moves to the previous or next block paragraph, delineated by a blank line.
+	@param nextParagraph: bool indicating desired direction of movement,
+	True for next paragraph, False for previous paragraph
+	@param speakNew: bool indicating if new paragraph should be spoken after navigating
+	@param ti: TextInfo object on which to perform the move,
+	if None, attempts to create a TextInfo using the current caret position
+	@returns: A boolean 2-tuple of:
+	- passKey: if True, should send the gesture on
+	- moved: if True, position has changed
+	"""
+
 	if ti is None:
 		ti = getTextInfoAtCaret()
 	if (ti is None) or (not isAcceptableTextInfo(ti)):
