@@ -120,10 +120,18 @@ class AddonFileDownloader:
 		try:
 			with requests.get(addonData.addonURL, stream=True) as r:
 				with open(inProgressFilePath, 'wb') as fd:
-					for chunk in r.iter_content(chunk_size=128000):
+					# Most add-ons are small. This value was chosen quite arbitrarily, but with the intention to allow
+					# interrupting the download. This is particularly important on a slow connection, to provide
+					# a responsive UI when cancelling.
+					# A size has been selected attempting to balance the maximum throughput, with responsiveness for
+					# users with a slow connection.
+					# This could be improved by dynamically adjusting the chunk size based on the time elapsed between
+					# chunk, starting with small chunks and increasing up until a maximum wait time is reached.
+					chunkSize = 128000
+					for chunk in r.iter_content(chunk_size=chunkSize):
 						log.debug(f"Chunk download: {addonData.addonId}")
 						fd.write(chunk)
-						if addonData in self.progress:
+						if addonData in self.progress:  # Removed when the download should be cancelled.
 							self.progress[addonData] += 1
 						else:
 							log.debug(f"Cancelled download: {addonData.addonId}")
