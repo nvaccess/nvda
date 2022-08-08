@@ -33,20 +33,30 @@ Thumbprint                                Subject
 
 This [method uses a password](https://docs.microsoft.com/en-us/windows/msix/package/create-certificate-package-signing#password-usage) to handle access.
 
-Using PowerShell in your NVDA source directory:
+Using PowerShell:
 ```ps1
+cd <nvdaSourceDirectory>
 $password = ConvertTo-SecureString -String <Password> -Force -AsPlainText 
-Export-PfxCertificate -cert "Cert:\CurrentUser\My\<Certificate Thumbprint>" -FilePath <PathToNVDASource/local.pfx> -Password $password
+Export-PfxCertificate -cert "Cert:\CurrentUser\My\<Certificate Thumbprint>" -FilePath local.pfx -Password $password
 ```
 
 ### Import the certificate
+Run PowerShell as Administrator, execute [Import-PfxCertificate
+](https://docs.microsoft.com/en-us/powershell/module/pki/import-pfxcertificate):
+```ps1
+cd <nvdaSourceDirectory>
+$password = ConvertTo-SecureString -String <Password> -Force -AsPlainText
+Import-PfxCertificate -Password $password -CertStoreLocation "Cert:\LocalMachine\TrustedPublisher" -FilePath local.pfx
+```
 
-1. Open `local.pfx` using the default file handler "Certificate Import Wizard"
-1. Install to the Local Machine, continue to the next screen
-1. Confirm the correct file is selected, continue to the next screen
-1. Enter your password, continue to the next screen
-1. Choose the location for the certificate to be stored: "Trusted Root Certification Authorities"
-1. Finish the import
+This should output the same thumbprint. Example Output:
+```ps1
+   PSParentPath: Microsoft.PowerShell.Security\Certificate::LocalMachine\TrustedPublisher
+
+Thumbprint                                Subject
+----------                                -------
+148CB69869B802A36B3D8D801BA8D9D0F3C1484F  CN=Test NVDA Build, O=NV Access Dev, C=US
+```
 
 ### Using the certificate
 
