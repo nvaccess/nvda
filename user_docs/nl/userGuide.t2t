@@ -341,7 +341,7 @@ U kunt de volgende NVDA-toetscommando’s gebruiken om met de textcursor te navi
 | Deze regel lezen | NVDA+pijl omhoog | NVDA+l | Hiermee wordt de regel waarin de tekstcursor zich momenteel bevindt voorgelezen. Bij tweemaal drukken wordt regel gespeld. bij driemaal drukken wordt regel gespeld met gebruikmaking van spellingsalfabet. |
 | Geselecteerde tekst lezen | NVDA+Shift+pijl omhoog | NVDA+Shift+s | Hiermee wordt geselecteerde tekst voorgelezen. |
 | Tekstopmaak melden | NVDA+f | NVDA+f | Meldt  de opmaakkenmerken van de tekst op  de huidige cursorpositie. Bij tweemaal  drukken wordt de informatie weergegeven in bladermodus. |
-| Cursorlocatie melden| NVDA+numeriekDelete | NVDA+delete | geen | Meldt informatie over de locatie van de tekst of het object ten opzichte van de positie van de systeemcursor. Hieronder kan bij voorbeeld vallen waar procentsgewijs in  het document de cursor zich bevindt, de afstand vanaf  de rand van de pagina of de exacte schermpositie. Ttweemaal drukken geeft mogelijk meer details. |
+| Cursorlocatie melden| NVDA+numeriekDelete | NVDA+delete | Meldt informatie over de locatie van de tekst of het object ten opzichte van de positie van de systeemcursor. Hieronder kan bij voorbeeld vallen waar procentsgewijs in  het document de cursor zich bevindt, de afstand vanaf  de rand van de pagina of de exacte schermpositie. Ttweemaal drukken geeft mogelijk meer details. |
 | Volgende zin | alt+Pijl omlaag | alt+Pijl omlaag | Verplaatst cursor naar volgende zin en meldt deze (alleen ondersteund in Microsoft Word en Outlook). |
 | Vorige zin | alt+Pijl omhoog | Alt+Pijl omhoog | Verplaatst cursor naar vorige zin en meldt deze (alleen ondersteund in Microsoft Word en Outlook ). |
 
@@ -355,6 +355,10 @@ Binnen een tabel kunt u ook de volgende toetscommando’s gebruiken:
 | Ga naar laatste kolom | control+alt+end | Verplaatst de systeemcursor naar de laatste kolom (van dezelfde rij) |
 | Ga naar eerste rij | control+alt+pageUp | Verplaatst de systeemcursor naar de eerste rij (van dezelfde kolom) |
 | Ga naar laatste rij | control+alt+pageDown | Verplaatst de systeemcursor naar de laatste rij (van dezelfde kolom) |
+| Alles in kolom voorlezen | ``NVDA+control+alt+pijlOmlaag | Kolom wordt verticaal in neerwaartse richting gelezen vanaf  de huidige tot de onderste cel   in de kolom. |
+| Alles in rij voorlezen | ``NVDA+control+alt+pijlRechts`` | De rij wordt van links naar rechts voorgelezen  vanaf de huidige cel  tot de laatste cel in de rij. |
+| Gehele kolom voorlezen | ``NVDA+control+alt+pijlOmhoog`` | Huidige kolom wordt verticaal van boven naar onder voorgelezen zonder dat de systeemcursor wordt verplaatst. |
+| Gehele rij voorlezen | ``NVDA+control+alt+pijlLinks`` | De huidige rij wordt  horizontaal van links naar rechts gelezen zonder dat de  systeemcursor wordt verplaatst. |
 %kc:endInclude
 
 ++ Objectnavigatie ++[ObjectNavigation]
@@ -1063,10 +1067,11 @@ Wanneer u in de tabelweergave van toegevoegde boeken bent:
 NVDA biedt ondersteuning voor het Windows-commandoconsool, ( ook wel de Windows-opdrachtmodule genoemd) dat gebruikt wordt door de Opdrachtprompt, de PowerShell, en het Subsysteem van Windows voor Linux.
 Het consoolvenster heeft een vaste grootte, in het algemeen veel kleiner dan de buffer met de uitvoer.
 Bij het toevoegen van nieuwe tekst schuift de inhoud omhoog en  eerdere tekst verdwijnt uit beeld. 
-Tekst die niet getoond wordt in het venster is niet toegankelijk met de leescommando's van NVDA.
+In Windows-versies ouder dan Windows 11 22H2 is tekst die niet getoond wordt in het venster niet toegankelijk met de leescommando's van NVDA.
 Daarom moet u het consoolvenster verschuiven om eerder ingevoerde tekst te lezen.
+In latere versies van het consool en in Windows Terminal kan de gehele tekstbuffer vrijelijk worden bekeken zonder dat u het venster hoeft te scrollen.
 %kc:beginInclude
-De volgende in het Windows-consool beschikbare sneltoetscombinaties kunnen bij het nalezen van tekst #ReviewingText] met NVDA van pas komen:
+De volgende in het Windows-consool ingebouwde sneltoetscombinaties kunnen bij het [nalezen van tekst #ReviewingText] met NVDA van pas komen in oudere versies van het Windows-consool:
 || Naam | Toets | Beschrijving |
 | Omhoog schuiven  | control+pijltjeOmhoog| Schuift het consoolvenster omhoog om eerder ingevoerde tekst te kunnen lezen. |
 | Omlaag schuiven | control+pijltjeOmlaag | Schuift consoolvenster omlaag om later ingevoerde tekst te lezen. |
@@ -1271,7 +1276,21 @@ De meeste synthesizers ondersteunen deze functionaliteit.
 
 In het algemeen is het aan te bevelen dit selectievakje aan te vinken. Er zijn evenwel synthesizers die van de Microsoft API gebruik maken die met de uitspraak van individuele lettertekens niet goed omgaan. Als u problemen hiermee ondervindt, kunt u het selectievakje beter niet aanvinken.
 
-+++ Synthesizer Selecteren (NVDA+control+s) +++[SelectSynthesizer]
+==== Vertraagde beschrijving van (letter)tekens bij cursorverplaatsing ====[delayedCharacterDescriptions]
+: Standaard
+  Uitgeschakeld
+: Opties
+  Ingeschakeld, Uitgeschakeld
+:
+
+Wanneer deze optie is aangevinkt zal NVDA het (letter)teken nader beschrijven wanneer  u de cursor letter voor letter verplaatst.
+
+Wanneer u bijvoorbeeld een regel letter voor letter naleest, krijgt u bij de letter "b" met een vertraging van 1 seconde "Bravo" te horen.
+Dit kan handig zijn als het lastig is het verschil in uitspraak te horen tussen 2 letters of voor slecht horende gebruikers.
+
+De vertraagde nadere beschrijving van lettertekens komt niet ten uitvoer als er in de tussentijd andere tekst wordt voorgelezen of als u op de ``control`` toets drukt.
+
+ +++ Synthesizer Selecteren (NVDA+control+s) +++[SelectSynthesizer]
 Via het dialoogvenster Synthesizer dat u kunt openen door de knop Wijzigen te activeren in de categorie spraak van de dialoog Instellingen van NVDA kunt u selecteren welke Synthesizer NVDA moet gebruiken voor spraakuitvoer.
 Als u de synthesizer van uw keuze hebt geselecteerd, kunt u op Ok drukken en NVDA zal de geselecteerde Synthesizer laden.
 Als er een fout optreedt bij het laden van de synthesizer, zal NVDA dit melden en de vorige synthesizer blijven gebruiken.
@@ -1421,6 +1440,21 @@ Met betrekking tot bovengenoemd voorbeeld houdt dit in dat NVDA weergeeft dat u 
 Als u de context echter wilt lezen (dat wil zeggen wanneer u zich in een lijst bevindt en de lijst is onderdeel van een dialoog), moet u uw leesregel terugscrollen.
 
 Om Te tonen contextinformatie aan of uit te zetten vanaf elke willekeurige plaats kunt u een aangepaste invoerhandeling toekennen met behulp van het [dialoogvenster Invoerhandelingen #InputGestures].
+
+==== Spraak onderbreken tijdens het scrollen ====[BrailleSettingsInterruptSpeech]
+: Standaard
+  Ingeschakeld
+: Opties
+  Standaard (Ingeschakeld), Ingeschakeldd, Uitgeschakeld
+:
+
+Met deze instelling bepaalt u of de spraak moet worden onderbroken bij vooruit-/achteruitscrollen van de brailleleesregel.
+De opdracht 'Vorige/Volgende'regel leidt altijd tot onderbreking van de spraakuitvoer.
+
+Het gesproken woord kan ertoe leiden dat de aandacht wordt afgeleid tijdens het braille-lezen.
+Dat is de reden dat de optie, spraak onderbreken tijdens het scrollen van braille, standaard staat ingeschakeld.
+
+Door deze optie uit te schakelen kunt u wat u in braille leest gelijktijdig hardop laten voorlezen.
 
 +++ Brailleleesregel Selecteren (NVDA+control+a) +++[SelectBrailleDisplay]
 Via het dialoogvenster Brailleleesregel Selecteren dat u kunt openen door de knop Verander te activeren in de categorie Braille van de dialoog Instellingen van NVDA kunt u selecteren welke leesregel NVDA moet gebruiken voor brailleuitvoer.
@@ -1909,8 +1943,20 @@ Deze instelling kent de volgende keuzemogelijkheden:
 - Altijd: steeds waar over  UI automation beschikt kan worden  in Microsoft word (ongeacht de mate waarin).
 -
 
-==== UI Automation gebruiken om toegang te krijgen tot Windows-consool wanneer beschikbaar ====[AdvancedSettingsConsoleUIA]
-Wanneer deze optie ingeschakeld is, zal NVDA een nieuwe, nog in otwikkeling zijnde, versie van haar ondersteuning voor de Windows-consool gebruiken waarmee toegankelijkheidsverbeteringen worden benut die Microsoft heeft doorgevoerd https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Deze mogelijkheid is nog zeer experimenteel van aard en  nog incompleet, dus wordt het gebruik ervan nog niet aanbevolen. Wanneer deze echter volledig is uitontwikkeld, dan is de verwachting dat deze nieuwe vorm van ondersteuning de standaard gaat worden waarmee de prestaties en stabiliteit van NVDA in opdrachtmodules van Windows worden verbeterd. 
+==== Ondersteuning Windows Consool ====[AdvancedSettingsConsoleUIA]
+Met deze instelling wordt bepaald hoe NVDA moet omgaan met de Windows-consool die door de Opdrachtprompt, PowerShell, en het Windows Subsysteem voor Linux gebruikt wordt.
+Dit heeft geen invloed op de moderne Windows Terminal.
+In de Windows 10-versie 1709, heeft Microsoft ondersteuning voor UI Automation API toegevoegd aan de consool https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/], bringing vastly improved performance and stability for screen readers that support it.
+In situaties waar UI Automation niet beschikbaar is of als bekend is dat gebruik ervan ondermaats is, kan NVDA terugvallen op de 'legacyconsole support' optie.
+Het keuzemenu waarmee ondersteuning voor de Windows-consool wordt bepaald heeft drie opties:
+- Automatisch: maakt gebruik van  UI (User Interface) Automation in de versie van  de  Windows-consool die meekomt met Windows 11 versie 22H2 en later.
+Deze optie wordt aanbevolen en is de standaardinstelling.
+- UIA wanneer beschikbaar: maakt gebruik van UI Automation in consolen als deze beschikbaar zijn, zelfs voor versies met incomplete of gebrekkige implementatie.
+Hoewel   deze beperkte functionaliteit nuttig kan zijn en alles doet wat voor u nodig is, is gebruik van deze optie volledig voor eigen risico en kan hiervoor geen ondersteuing worden geboden.
+- Legacy: UI Automation in de Windows-consool staat helemaal uit.
+Er wordt te allen tijde teruggevallen op legacy zelfs wanneer UI Automation tot een betere gebruikservaring zou leiden.
+Daarom is de keuze voor deze optie niet aan te bevelen tenzij u weet wat u doet.
+-
 
 ==== UI automation gebruiken bij Edge en andere op Chromium gebaseerde browsers waar beschikbaar ====[ChromiumUIA]
 Biedt de mogelijkheid aan te geven wanneer UIA (User Interface Automation)  gebruikt wordt, voor zover deze beschikbaar is, in op Chromium gebaseerde browsers zoals Microsoft Edge.
