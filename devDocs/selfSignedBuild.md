@@ -13,7 +13,7 @@ Do not forget to [remove the certificate](#remove-the-certificate) when you are 
 
 ### Prerequisites
 
-[PKI CMDlets are required](https://docs.microsoft.com/en-us/windows/msix/package/create-certificate-package-signing) for performing PowerShell commands related to certificates.
+[PKI CMDlets are required](https://docs.microsoft.com/en-us/windows/msix/package/create-certificate-package-signing#prerequisites) for performing PowerShell commands related to certificates.
 From PowerShell running as administrator, install [PKI](https://github.com/PKISolutions/PSPKI#download-and-install-powershell-pki-module-from-the-powershell-gallery-using-powershell):
 
 ```ps1
