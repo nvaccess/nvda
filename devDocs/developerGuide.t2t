@@ -12,6 +12,20 @@ NVDA NVDA_VERSION Developer Guide
 + Introduction +
 This guide provides information concerning NVDA development, including translation and the development of components for NVDA.
 
+The API only includes symbols which are not marked with prefixing underscores.
+
+++ Changes to the API ++
+The NVDA Add-on API changes over time, such as removals, deprecations and new features.
+Important changes to the API are announced on the [NVDA API mailing list https://groups.google.com/a/nvaccess.org/g/nvda-api/about].
+
+API breaking releases happen at most once per year, these are ``.1`` releases, e.g. ``2022.1``.
+The API remains backwards compatible between breaking releases.
+API breaking changes should be considered relatively stable in the first beta: e.g. ``2022.1.beta1``.
+
+API features may become deprecated over time.
+Deprecated API features may have a scheduled removal date, a future breaking release (e.g. ``2022.1``).
+Deprecations may also have no scheduled removal date, and will remain supported until it is no longer reasonable.
+
 ++ A Note About Python ++
 NVDA and its components are primarily written in the Python programming language.
 It is not the goal of this guide to teach you Python, though examples are provided through out this guide which will help to familiarise you with the Python syntax.
