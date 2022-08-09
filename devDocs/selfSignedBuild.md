@@ -11,18 +11,9 @@ If the private key is compromised, this poses a serious security risk to your sy
 
 Do not forget to [remove the certificate](#remove-the-certificate) when you are done testing.
 
-### Prerequisites
-
-[PKI CMDlets are required](https://docs.microsoft.com/en-us/windows/msix/package/create-certificate-package-signing#prerequisites) for performing PowerShell commands related to certificates.
-From PowerShell running as administrator, install [PKI](https://github.com/PKISolutions/PSPKI#download-and-install-powershell-pki-module-from-the-powershell-gallery-using-powershell):
-
-```ps1
-Install-Module -Name PSPKI
-```
-
 ### Create a self-signed certificate
 
-Using PKI, create a self signed build with a custom name (`FriendlyName`) and publisher (`Subject`).
+Using [PKI](https://docs.microsoft.com/en-us/windows/msix/package/create-certificate-package-signing#prerequisite), create a self signed build with a custom name (`FriendlyName`) and publisher (`Subject`).
 Other parameters are determined by [MS docs](https://docs.microsoft.com/en-us/windows/msix/package/create-certificate-package-signing#use-new-selfsignedcertificate-to-create-a-certificate).
 
 From PowerShell:
