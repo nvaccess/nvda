@@ -47,6 +47,8 @@ Export-PfxCertificate -cert "Cert:\CurrentUser\My\<Certificate Thumbprint>" -Fil
 
 ### Import the certificate
 
+Import the certificate to the Local Machine in the "Trusted Root Certification Authorities" store.
+
 Run PowerShell as Administrator, execute [Import-PfxCertificate
 ](https://docs.microsoft.com/en-us/powershell/module/pki/import-pfxcertificate).
 
@@ -67,6 +69,9 @@ Thumbprint                                Subject
 ----------                                -------
 148CB69869B802A36B3D8D801BA8D9D0F3C1484F  CN=Test NVDA Build, O=NV Access Dev, C=US
 ```
+
+For Windows 7, you will need to use an alternative method.
+On any supported version of Windows, you can manage certifications through the "Certificate Manager".
 
 ### Using the certificate
 
@@ -95,7 +100,7 @@ View the certificate for the NVDA launcher:
 
 ### Remove the certificate
 
-After being finished with testing, remove the certificate from being in the Trusted Root Authorities.
+After being finished with testing, remove the certificate from the Local Machine "Trusted Root Certification Authorities" store.
 Leaving the certificate installed is potentially a security risk.
 
 The certificate will still be in `Cert:\CurrentUser\My\<Certificate Thumbprint>`.
@@ -106,3 +111,6 @@ Replace the following in this PowerShell script:
 ```ps1
 Remove-Item -Path "Cert:\LocalMachine\Root\<Certificate Thumbprint>" -DeleteKey
 ```
+
+For Windows 7, you will need to use an alternative method.
+On any supported version of Windows, you can manage certifications through the "Certificate Manager".
