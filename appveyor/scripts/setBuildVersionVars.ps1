@@ -1,5 +1,9 @@
 $ErrorActionPreference = "Stop";
-# iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+
+# Accessing Windows build worker via Remote Desktop
+# https://www.appveyor.com/docs/how-to/rdp-to-build-worker/
+iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+
 $pythonVersion = (py --version)
 echo $pythonVersion
 if ($env:APPVEYOR_REPO_TAG_NAME -and $env:APPVEYOR_REPO_TAG_NAME.StartsWith("release-")) {
