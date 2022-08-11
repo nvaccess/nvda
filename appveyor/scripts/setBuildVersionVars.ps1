@@ -1,8 +1,11 @@
 $ErrorActionPreference = "Stop";
 
 # Accessing Windows build worker via Remote Desktop (RDP)
-# Set a password via Appveyor settings to enable, ensure passsword requirements are met
-# see docs: https://www.appveyor.com/docs/how-to/rdp-to-build-worker/
+# To enable:
+# Set an RDP password (before triggering the build), ensure password requirements are met.
+# Remove the password after the RDP connection params are shown in the build output.
+# For passwords requirements and instructions for setting, see the appveyor docs:
+# https://www.appveyor.com/docs/how-to/rdp-to-build-worker/
 if ($env:APPVEYOR_RDP_PASSWORD) {
 	$rdpScriptURL = 'https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'
 	iex ((new-object net.webclient).DownloadString($rdpScriptURL))
