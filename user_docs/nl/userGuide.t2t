@@ -355,10 +355,6 @@ Binnen een tabel kunt u ook de volgende toetscommando’s gebruiken:
 | Ga naar laatste kolom | control+alt+end | Verplaatst de systeemcursor naar de laatste kolom (van dezelfde rij) |
 | Ga naar eerste rij | control+alt+pageUp | Verplaatst de systeemcursor naar de eerste rij (van dezelfde kolom) |
 | Ga naar laatste rij | control+alt+pageDown | Verplaatst de systeemcursor naar de laatste rij (van dezelfde kolom) |
-| Alles in kolom voorlezen | ``NVDA+control+alt+pijlOmlaag | Kolom wordt verticaal in neerwaartse richting gelezen vanaf  de huidige tot de onderste cel   in de kolom. |
-| Alles in rij voorlezen | ``NVDA+control+alt+pijlRechts`` | De rij wordt van links naar rechts voorgelezen  vanaf de huidige cel  tot de laatste cel in de rij. |
-| Gehele kolom voorlezen | ``NVDA+control+alt+pijlOmhoog`` | Huidige kolom wordt verticaal van boven naar onder voorgelezen zonder dat de systeemcursor wordt verplaatst. |
-| Gehele rij voorlezen | ``NVDA+control+alt+pijlLinks`` | De huidige rij wordt  horizontaal van links naar rechts gelezen zonder dat de  systeemcursor wordt verplaatst. |
 %kc:endInclude
 
 ++ Objectnavigatie ++[ObjectNavigation]
@@ -1944,6 +1940,12 @@ Deze instelling kent de volgende keuzemogelijkheden:
 -
 
 ==== Ondersteuning Windows Consool ====[AdvancedSettingsConsoleUIA]
+: Standaard
+  Automatisch
+: Opties
+  Automatisch, UIA wanneer beschikbaar, Legacy
+:
+
 Met deze instelling wordt bepaald hoe NVDA moet omgaan met de Windows-consool die door de Opdrachtprompt, PowerShell, en het Windows Subsysteem voor Linux gebruikt wordt.
 Dit heeft geen invloed op de moderne Windows Terminal.
 In de Windows 10-versie 1709, heeft Microsoft ondersteuning voor UI Automation API toegevoegd aan de consool https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/], bringing vastly improved performance and stability for screen readers that support it.
