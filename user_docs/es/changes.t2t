@@ -3,6 +3,72 @@ Qué hay de Nuevo en NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2022.3 =
+La comunidad de desarrolladores de NVDA ha contribuido en gran medida a esta versión.
+Esto incluye el retraso de las descripciones de los caracteres y la mejora del soporte de la Consola de Windows.
+
+Esta versión también incluye varias correcciones de fallos.
+En particular, las versiones actualizadas de Adobe Acrobat/Reader ya no se bloquean al leer un documento PDF.
+
+eSpeak se ha actualizado, lo cual introduce tres idiomas nuevos: Bielorruso, Luxemburgués y Totontepec Mixe.
+
+== Nuevas Características ==
+- En la Consola de Windows se utiliza Host por el Símbolo del Sistema, por PowerShell y por el subsistema de Windows para Linux en Windows 11 versión 22H2 (Sun Valley 2) y posterior:
+  - Rendimiento y estabilidad muy mejorados. (#10964)
+  - Al pulsar ``control+f`` para buscar texto, la posición del cursor de revisión se actualiza para seguir al término encontrado. (#11172)
+  - El anunciado del texto escrito que no aparezca en la pantalla (tal como las contraseñas) se deshabilita predeterminadamente. 
+Puede volver a habilitarse en el panel Avanzado de los ajustes de NVDA. (#11554)
+  - El texto que se haya desplazado fuera de la pantalla se puede revisar sin desplazar la ventana de la consola. (#12669)
+  - Está disponible más información detallada de formato de texto. ([microsoft/terminal PR 10336 https://github.com/microsoft/terminal/pull/10336])
+  -
+- Se ha añadido una nueva opción de Voz para leer las descripciones de caracteres tras un retraso. (#13509)
+- Se ha añadido una nueva opción de Braille para determinar si el desplazamiento hacia adelante o hacia atrás de la pantalla debería interrumpir la voz. (#2124)
+-
+
+
+== Cambios ==
+- eSpeak NG se ha actualizado a 1.52-dev commit ``9de65fcb``. (#13295)
+  - Idiomas añadidos:
+    - Bielorruso
+    - Luxemburgués
+    - Totontepec Mixe
+    -
+  -
+- Al utilizar UI Automation para acceder a controles de hoja de cálculo de Microsoft Excel, NVDA ahora puede anunciar cuando una celda está fusionada. (#12843)
+- En lugar de anunciar "tiene detalles" se incluye el propósito de los detalles cuando sea posible, por ejemplo "tiene comentarios". (#13649)
+- El tamaño de instalación de NVDA ahora se muestra en la sección Programas y Características de Windows. (#13909)
+-
+
+
+== Corrección de Fallos ==
+- Adobe Acrobat / Reader de 64 bits ya no se bloqueará al leer un documento PDF. (#12920)
+  - Ten en cuenta que es necesaria también la versión más actualizada de Adobe Acrobat / Reader para evitar el bloqueo.
+  -
+- Las medidas de tamaño de fuente ahora son traducibles en NVDA. (#13573)
+- Se ignoran los eventos de Java Access Bridge en los que no se pueda encontrar un manejador de ventana para las aplicaciones Java. 
+Esto mejorará el rendimiento para algunas aplicaciones Java incluyendo IntelliJ IDEA. (#13039)
+- El anunciado de celdas seleccionadas para LibreOffice Calc es más eficaz y ya no da lugar a la congelación de Calc cuando se seleccionen muchas celdas. (#13232)
+- Cuando se ejecute en un usuario diferente, Microsoft Edge ya no es inaccesible. (#13032)
+- Cuando el aumento brusco de velocidad esté desactivado, la velocidad de eSpeak no desciende más entre velocidades del 99% y 100%. (#13876)
+- Se ha corregido un fallo que permitía que se abrieran 2 diálogos de Gestos de Entrada. (#13854)
+-
+
+
+== Cambios para Desarrolladores ==
+- Actualizado Comtypes a la versión 1.1.11. (#12953)
+- En compilaciones de la Consola de Windows (``conhost.exe``) con un nivel 2 de la API de NVDA (``FORMATTED``) o más grandes, tal como aquellos incluídos con Windows 11 versión 22H2 (Sun Valley 2), UI Automation ahora se utiliza por defecto. (#10964)
+  - Esto se puede anular cambiando la opción "Soporte de la Consola de Windows" en el panel Avanzado de la configuración de NVDA.
+  - Para encontrar tu nivel de API de NVDA para la Consola de Windows, configura "Soporte de Consola de Windows" a "UIA cuando esté disponible", entonces verifica que el registro esté abierto con NVDA+F1 desde una instancia de Consola de Windows en ejecución.
+  -
+- El Búfer virtual de Chromium ahora se carga incluso cuando el objeto documento tenga el MSAA ``STATE_SYSTEM_BUSY`` expuesto a través de IA2. (#13306)
+- Se ha creado un tipo específico de configuración ``featureFlag`` para utilizar con características experimentales en NVDA. Consulta ``devDocs/featureFlag.md`` para más información. (#13859)
+-
+
+
+=== Obsolescencias ===
+No se proponen obsolescencias en 2022.3.
+
+
 = 2022.2 =
 Esta versión incluye muchas correcciones de fallos.
 En particular, hay mejoras significativas para aplicaciones basadas en Java, para pantallas braille y para características de Windows.
@@ -48,7 +114,7 @@ Se ha actualizado LibLouis, lo que incluye una tabla braille alemana nueva .
   - NVDA ahora identificará la ventana en una aplicación Java con varias ventanas. (#9184)
   - NVDA ahora anunciará información de la posición para controles de pestaña. (#13744)
   -
-- Corecciones de braille:
+- Correcciones de braille:
   - Corregida la salida braille al navegar por cierto texto en conroles de edición enriquecidos de Mozilla, como redactar un mensaje en Thunderbird. (#12542)
   - Cuando se sigue al braille automáticamente y el ratón se mueve con el seguimiento del ratón habilitado,
    las órdenes de revisión de texto ahora actualizan la pantalla braille con el contenido verbalizado. (#11519)
@@ -850,7 +916,7 @@ Lo reseñable de esta versión incluye el soporte de una nueva pantalla braille 
 - NVDA ya no anuncia los mensajes "izquierda" y "derecha" al mover el cursor de revisión directamente al primer o último carácter del actual navegador de objetos con los scripts mover cursor de revisión a la izquierda o a la derecha respectivamente. (#9551)
 
 
-== Corección de Errores ==
+== Corrección de Errores ==
 - NVDA ahora arranca correctamente cuando el fichero de registro no se pueda crear. (#6330)
 - En versiones recientes de Microsoft Word 365, NVDA ya no anunciará "borrar palabra atrás" cuando se pulse Control+Retroceso mientras se edita un documento. (#10851)
 - En Winamp, NVDA anunciará de nuevo el estado de conmutación de aleatorio o de repetir. (#10945)
@@ -2131,7 +2197,7 @@ Lo reseñable de esta  versión incluye la capacidad de leer gráficos en  Micro
 
 
 = 2015.1 =
-Lo reseñable en esta versión  incluye el modo exploración para documentos en Microsoft Word y Outlook; mejoras mayores al soporte para Skype para Escritorio; y corecciones significativas para Microsoft Internet Explorer.
+Lo reseñable en esta versión  incluye el modo exploración para documentos en Microsoft Word y Outlook; mejoras mayores al soporte para Skype para Escritorio; y correcciones significativas para Microsoft Internet Explorer.
 
 == Nuevas Características ==
 - Ahora puedes añadir símbolos nuevos en el diálogo Pronunciación de Símbolos. (#4354)

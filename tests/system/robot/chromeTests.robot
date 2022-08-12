@@ -21,7 +21,6 @@ default teardown
 	Run Keyword If Test Failed	Take Screenshot	${screenShotName}
 	dump_speech_to_log
 	dump_braille_to_log
-	exit chrome
 	quit NVDA
 
 default setup

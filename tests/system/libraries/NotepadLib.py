@@ -18,7 +18,8 @@ from SystemTestSpy import (
 from SystemTestSpy.windows import (
 	GetForegroundWindowTitle,
 	GetVisibleWindowTitles,
-	SetForegroundWindow,
+	GetForegroundHwnd,
+	GetWindowWithTitle,
 )
 import re
 from robot.libraries.BuiltIn import BuiltIn
@@ -83,11 +84,17 @@ class NotepadLib:
 			f.write(testCase)
 		return filePath
 
-	def _focusNotepad(self, startsWithTestCaseTitle: re.Pattern):
-		""" Ensure Notepad started and is focused.
+	def _waitForNotepadFocus(self, startsWithTestCaseTitle: re.Pattern):
+		""" Wait for Notepad to come into focus.
 		"""
+		def _isNotepadInForeground() -> bool:
+			notepadWindow = GetWindowWithTitle(startsWithTestCaseTitle, builtIn.log)
+			if notepadWindow is None:
+				return False
+			return notepadWindow.hwndVal == GetForegroundHwnd()
+
 		success, _success = _blockUntilConditionMet(
-			getValue=lambda: SetForegroundWindow(startsWithTestCaseTitle, builtIn.log),
+			getValue=_isNotepadInForeground,
 			giveUpAfterSeconds=3,
 			intervalBetweenSeconds=0.5
 		)
@@ -117,7 +124,7 @@ class NotepadLib:
 
 		spy.wait_for_speech_to_finish()
 		self.start_notepad(path)
-		self._focusNotepad(NotepadLib.getUniqueTestCaseTitleRegex(testCase))
+		self._waitForNotepadFocus(NotepadLib.getUniqueTestCaseTitleRegex(testCase))
 		# Move to the start of file
 		spy.emulateKeyPress('home')
 		spy.wait_for_speech_to_finish()
