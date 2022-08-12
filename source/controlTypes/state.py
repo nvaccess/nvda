@@ -96,6 +96,7 @@ class State(DisplayStringIntEnum):
 	# indeterminate progress bar, aka busy indicator. No specific state label.
 	# when combined with role of 'progress bar', role is mutated to 'busy indicator'
 	INDETERMINATE = setBit(44)
+	HALFPRESSED = setBit(45)
 
 
 STATES_SORTED = frozenset([State.SORTED, State.SORTED_ASCENDING, State.SORTED_DESCENDING])
@@ -116,6 +117,9 @@ _stateLabels: Dict[State, str] = {
 	State.CHECKED: _("checked"),
 	# Translators: This is presented when a three state check box is half checked.
 	State.HALFCHECKED: _("half checked"),
+	# Translators: This is presented when a three state toggle button is half pressed.
+	State.HALFPRESSED: _("half pressed"),
+
 	# Translators: This is presented when the control is a read-only control such as read-only edit box.
 	State.READONLY: _("read only"),
 	# Translators: This is presented when a tree view or submenu item is expanded.
