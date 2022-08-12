@@ -74,7 +74,7 @@ class NVDASpyLib:
 	Used to determine if NVDA has finished starting, and various ways of getting speech output.
 	All public methods are part of the Robot Library
 	"""
-	SPEECH_HAS_FINISHED_SECONDS: float = 0.5
+	SPEECH_HAS_FINISHED_SECONDS: float = 1.0
 
 	def __init__(self):
 		# speech cache is ordered temporally, oldest at low indexes, most recent at highest index.
