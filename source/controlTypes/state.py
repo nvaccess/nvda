@@ -119,7 +119,6 @@ _stateLabels: Dict[State, str] = {
 	State.HALFCHECKED: _("half checked"),
 	# Translators: This is presented when a three state toggle button is half pressed.
 	State.HALFPRESSED: _("half pressed"),
-
 	# Translators: This is presented when the control is a read-only control such as read-only edit box.
 	State.READONLY: _("read only"),
 	# Translators: This is presented when a tree view or submenu item is expanded.
