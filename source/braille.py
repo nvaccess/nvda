@@ -202,6 +202,8 @@ positiveStateLabels = {
 	controlTypes.State.SELECTED: _("sel"),
 	# Displayed in braille when an object (e.g. a toggle button) is pressed.
 	controlTypes.State.PRESSED: u"⢎⣿⡱",
+	# Displayed in braille when an object (e.g. a toggle button) is half pressed.
+	controlTypes.State.HALFPRESSED: u"⢎⣸⡱",
 	# Displayed in braille when an object (e.g. a check box) is checked.
 	controlTypes.State.CHECKED: u"⣏⣿⣹",
 	# Displayed in braille when an object (e.g. a check box) is half checked.
