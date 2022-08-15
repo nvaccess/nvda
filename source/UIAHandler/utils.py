@@ -354,7 +354,7 @@ def _getConhostAPILevel(hwnd: int) -> WinConsoleAPILevel:
 
 
 def _shouldSelectivelyRegister() -> bool:
-	"Determinbes whether to register for UIA events selectively or globally."
+	"Determines whether to register for UIA events selectively or globally."
 	setting = config.conf['UIA']['eventRegistration']
 	if setting == "selective":
 		return True
