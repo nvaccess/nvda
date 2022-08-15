@@ -12,6 +12,17 @@ import sys
 sys.path.insert(0, os.path.abspath('../source'))
 import sourceEnv  # noqa: F401, E402
 
+
+# Apply several monkey patches to comtypes.
+# Add our `comInterfaces` to the `comtypes.gen` seach path to replicate the behavior at runtime
+# without this patch many modules aren't importable, since they depend on `comInterfaces` being present.
+# Also disable module being never than typelib error, seen when
+# virtual environment has been created under different version of Windows than the one
+# used for developer documentation build. This also matches the behavior at runtime.
+import monkeyPatches.comtypesMonkeyPatches  # noqa: E402
+monkeyPatches.comtypesMonkeyPatches.replace_check_version()
+monkeyPatches.comtypesMonkeyPatches.appendComInterfacesToGenSearchPath()
+
 # Initialize languageHandler so that sphinx is able to deal with translatable strings.
 import languageHandler  # noqa: E402
 languageHandler.setLanguage("en")
