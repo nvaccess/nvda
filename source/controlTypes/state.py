@@ -96,7 +96,7 @@ class State(DisplayStringIntEnum):
 	# indeterminate progress bar, aka busy indicator. No specific state label.
 	# when combined with role of 'progress bar', role is mutated to 'busy indicator'
 	INDETERMINATE = setBit(44)
-	HALFPRESSED = setBit(45)
+	HALF_PRESSED = setBit(45)
 
 
 STATES_SORTED = frozenset([State.SORTED, State.SORTED_ASCENDING, State.SORTED_DESCENDING])
