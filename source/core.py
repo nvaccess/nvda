@@ -423,13 +423,8 @@ def main():
 	Finally, it starts the wx main loop.
 	"""
 	log.debug("Core starting")
-
-	if winVersion.getWinVer() >= winVersion.WIN10_1703:
-		ctypes.windll.user32.SetProcessDpiAwarenessContext(-4)  # DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2
-	elif winVersion.getWinVer() >= winVersion.WIN81:
-		ctypes.windll.shcore.SetProcessDpiAwareness(2)  # PROCESS_PER_MONITOR_DPI_AWARE
-	else:
-		ctypes.windll.user32.SetProcessDPIAware()
+	from winAPI.dpiAwareness import setDPIAwareness
+	setDPIAwareness()
 
 	import config
 	if not globalVars.appArgs.configPath:
