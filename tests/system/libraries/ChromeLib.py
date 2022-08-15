@@ -242,7 +242,7 @@ class ChromeLib:
 				"Unable to locate 'before sample' marker."
 				" See NVDA log for full speech."
 			)
-		# Move to the loading status line, and wait fore it to become complete
+		# Move to the loading status line, and wait for it to become complete
 		# the page has fully loaded.
 		spy.emulateKeyPress('downArrow')
 		for x in range(10):
