@@ -1,11 +1,10 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2008-2020 NV Access Limited, Peter Vagner, Davy Kager, Mozilla Corporation, Google LLC,
+# Copyright (C) 2008-2022 NV Access Limited, Peter Vagner, Davy Kager, Mozilla Corporation, Google LLC,
 # Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 import os
-import sys
 import winreg
 import msvcrt
 import versionInfo
@@ -34,7 +33,9 @@ if os.environ.get('PROCESSOR_ARCHITEW6432') == 'ARM64':
 	versionedLib64Path = os.path.join(globalVars.appDir, 'libArm64')
 else:
 	versionedLib64Path = os.path.join(globalVars.appDir, 'lib64')
-if getattr(sys,'frozen',None):
+
+
+if not globalVars.runningAsSource:
 	# Not running from source. Libraries are in a version-specific directory
 	versionedLibPath=os.path.join(versionedLibPath,versionInfo.version)
 	versionedLib64Path=os.path.join(versionedLib64Path,versionInfo.version)

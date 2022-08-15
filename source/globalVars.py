@@ -17,6 +17,7 @@
 
 import argparse
 import os
+import sys
 import typing
 
 if typing.TYPE_CHECKING:
@@ -78,4 +79,9 @@ This should never be False in released code.
 Making this False may be useful for testing if code is compliant without using deprecated APIs.
 Note that deprecated code may be imported at runtime,
 and as such, this value cannot be changed at runtime to test compliance.
+"""
+
+runningAsSource = getattr(sys, 'frozen', None) is None
+"""
+True if NVDA is running as a source copy.
 """

@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2021 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner,
+# Copyright (C) 2006-2022 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner,
 # Derek Riemer, Babbage B.V., Zahari Yurukov, Łukasz Golonka
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -156,7 +156,7 @@ def restartUnsafely():
 		except ValueError:
 			pass
 	options = []
-	if not hasattr(sys, "frozen"):
+	if globalVars.runningAsSource:
 		options.append(os.path.basename(sys.argv[0]))
 	_startNewInstance(NewNVDAInstance(
 		sys.executable,
@@ -181,7 +181,7 @@ def restart(disableAddons=False, debugLogging=False):
 		except ValueError:
 			pass
 	options = []
-	if not hasattr(sys, "frozen"):
+	if globalVars.runningAsSource:
 		options.append(os.path.basename(sys.argv[0]))
 	if disableAddons:
 		options.append('--disable-addons')
@@ -628,7 +628,7 @@ def main():
 	# initialize wxpython localization support
 	wxLocaleObj = wx.Locale()
 	wxLang = getWxLangOrNone()
-	if hasattr(sys,'frozen'):
+	if not globalVars.runningAsSource:
 		wxLocaleObj.AddCatalogLookupPathPrefix(os.path.join(globalVars.appDir, "locale"))
 	if wxLang:
 		try:

@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2020 NV Access Limited, Rui Batista, Joseph Lee, Leonard de Ruijter, Babbage B.V.,
+# Copyright (C) 2007-2022 NV Access Limited, Rui Batista, Joseph Lee, Leonard de Ruijter, Babbage B.V.,
 # Accessolutions, Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -125,15 +125,17 @@ def shouldPlayErrorSound() -> bool:
 
 
 # Function to strip the base path of our code from traceback text to improve readability.
-if getattr(sys, "frozen", None):
-	# We're running a py2exe build.
-	stripBasePathFromTracebackText = lambda text: text
-else:
+if globalVars.runningAsSource:
 	BASE_PATH = os.path.split(__file__)[0] + os.sep
 	TB_BASE_PATH_PREFIX = '  File "'
 	TB_BASE_PATH_MATCH = TB_BASE_PATH_PREFIX + BASE_PATH
 	def stripBasePathFromTracebackText(text):
 		return text.replace(TB_BASE_PATH_MATCH, TB_BASE_PATH_PREFIX)
+else:
+	# We're running a py2exe build.
+	def stripBasePathFromTracebackText(text: str) -> str:
+		return text
+
 
 class Logger(logging.Logger):
 	# Import standard levels for convenience.
@@ -379,12 +381,14 @@ log: Logger = logging.getLogger("nvda")
 #: The singleton log handler instance.
 logHandler: Optional[logging.Handler] = None
 
+
 def _getDefaultLogFilePath():
-	if getattr(sys, "frozen", None):
+	if globalVars.runningAsSource:
+		return os.path.join(globalVars.appDir, "nvda.log")
+	else:
 		import tempfile
 		return os.path.join(tempfile.gettempdir(), "nvda.log")
-	else:
-		return os.path.join(globalVars.appDir, "nvda.log")
+
 
 def _excepthook(*exc_info):
 	log.exception(exc_info=exc_info, codepath="unhandled exception")
