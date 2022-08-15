@@ -126,7 +126,7 @@ def _processNegativeStates(
 		and (reason != OutputReason.CHANGE or State.FOCUSED in states)
 	):
 		speakNegatives.add(State.CHECKED)
-	if role == Role.TOGGLEBUTTON:
+	if role == Role.TOGGLEBUTTON and State.HALF_PRESSED not in states:
 		speakNegatives.add(State.PRESSED)
 	if reason == OutputReason.CHANGE:
 		# We want to speak this state only if it is changing to negative.
@@ -138,6 +138,9 @@ def _processNegativeStates(
 		# #6946: if HALFCHECKED is present but CHECKED isn't, we should make sure we add CHECKED to speakNegatives.
 		if (State.HALFCHECKED in negativeStates and State.CHECKED not in states):
 			speakNegatives.add(State.CHECKED)
+		if State.HALF_PRESSED in negativeStates and State.PRESSED not in states:
+			speakNegatives.add(State.PRESSED)
+
 		if STATES_SORTED & negativeStates and not STATES_SORTED & states:
 			# If the object has just stopped being sorted, just report not sorted.
 			# The user doesn't care how it was sorted before.

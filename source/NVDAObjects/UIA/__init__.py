@@ -1647,6 +1647,11 @@ class UIA(Window):
 		if s!=UIAHandler.handler.reservedNotSupportedValue:
 			if not role:
 				role=self.role
+			if s == UIAHandler.ToggleState_Indeterminate:
+				if role == controlTypes.Role.TOGGLEBUTTON:
+					states.add(controlTypes.State.HALF_PRESSED)
+				else:
+					states.add(controlTypes.State.HALFCHECKED)
 			if role==controlTypes.Role.TOGGLEBUTTON:
 				if s==UIAHandler.ToggleState_On:
 					states.add(controlTypes.State.PRESSED)
