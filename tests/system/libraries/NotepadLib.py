@@ -42,28 +42,57 @@ class NotepadLib:
 	_testCaseTitle = "test"
 
 	def __init__(self):
-		self.notepadHandle: _Optional[int] = None
+		self.notepadWindow: _Optional[Window] = None
+		self.processRFHandleForStart: _Optional[int] = None
 
 	@staticmethod
 	def _getTestCasePath(filename):
 		return _pJoin(NotepadLib._testFileStagingPath, filename)
 
 	def exit_notepad(self):
-		spy = _NvdaLib.getSpyLib()
-		spy.emulateKeyPress('alt+f4')
-		process.wait_for_process(self.notepadHandle, timeout="1 minute", on_timeout="continue")
 
-	def start_notepad(self, filePath):
+		spy = _NvdaLib.getSpyLib()
+		builtIn.log(
+			# True is expected due to /wait argument.
+			"Is Start process still running (True expected): "
+			f"{process.is_process_running(self.processRFHandleForStart)}"
+		)
+		spy.emulateKeyPress('alt+f4')
+		process.wait_for_process(
+			self.processRFHandleForStart,
+			timeout="1 minute",
+			on_timeout="continue"
+		)
+		builtIn.log(
+			# False is expected, chrome should have allowed "Start" to exit.
+			"Is Start process still running (False expected): "
+			f"{process.is_process_running(self.processRFHandleForStart)}"
+		)
+
+	def start_notepad(self, filePath: str, expectedTitlePattern: re.Pattern) -> Window:
 		builtIn.log(f"starting notepad: {filePath}")
-		self.notepadHandle = process.start_process(
-			"start notepad"
+		self.processRFHandleForStart = process.start_process(
+			"start"  # windows utility to start a process
+			# https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/start
+			" /wait"  # Starts an application and waits for it to end.
+			" notepad"
 			f' "{filePath}"',
 			shell=True,
 			alias='NotepadAlias',
 		)
-		process.process_should_be_running(self.notepadHandle)
-		return self.notepadHandle
+		process.process_should_be_running(self.processRFHandleForStart)
 
+		success, self.notepadWindow = _blockUntilConditionMet(
+			getValue=lambda: GetWindowWithTitle(expectedTitlePattern, lambda message: builtIn.log(message, "DEBUG")),
+			giveUpAfterSeconds=3,
+			shouldStopEvaluator=lambda _window: _window is not None,
+			intervalBetweenSeconds=0.5,
+			errorMessage="Unable to get notepad window"
+		)
+
+		if not success or self.notepadWindow is None:
+			builtIn.fatal_error("Unable to get notepad window")
+		return self.notepadWindow
 	@staticmethod
 	def getUniqueTestCaseTitle(testCase: str) -> str:
 		return f"{NotepadLib._testCaseTitle} ({abs(hash(testCase))}).txt"
@@ -123,7 +152,7 @@ class NotepadLib:
 		path = self._writeTestFile(testCase)
 
 		spy.wait_for_speech_to_finish()
-		self.start_notepad(path)
+		self.start_notepad(path, expectedTitlePattern=self.getUniqueTestCaseTitleRegex(testCase))
 		self._waitForNotepadFocus(NotepadLib.getUniqueTestCaseTitleRegex(testCase))
 		# Move to the start of file
 		spy.emulateKeyPress('home')
