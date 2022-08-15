@@ -84,4 +84,5 @@ and as such, this value cannot be changed at runtime to test compliance.
 runningAsSource = getattr(sys, 'frozen', None) is None
 """
 True if NVDA is running as a source copy.
+When running as an installed copy, py2exe sets sys.frozen to 'windows_exe'.
 """
