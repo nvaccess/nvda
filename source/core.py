@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2021 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner,
+# Copyright (C) 2006-2022 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner,
 # Derek Riemer, Babbage B.V., Zahari Yurukov, Łukasz Golonka
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -423,8 +423,10 @@ def main():
 	Finally, it starts the wx main loop.
 	"""
 	log.debug("Core starting")
-	from winAPI.dpiAwareness import setDPIAwareness
-	setDPIAwareness()
+	# TODO: change to globalVars.runningFromSource
+	if getattr(sys, 'frozen', None) is None:
+		from winAPI.dpiAwareness import setDPIAwareness
+		setDPIAwareness()
 
 	import config
 	if not globalVars.appArgs.configPath:
