@@ -3,6 +3,61 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2022.3 =
+A significant amount of this release was contributed by the NVDA development community.
+This includes delayed character descriptions and improved Windows Console support.
+
+This release also includes several bug fixes.
+Notably, up-to-date versions of Adobe Acrobat/Reader will no longer crash when reading a PDF document.
+
+eSpeak has been updated, which introduces 3 new languages: Belarusian, Luxembourgish and Totontepec Mixe.
+
+== New Features ==
+- In the Windows Console Host used by Command Prompt, PowerShell, and the Windows Subsystem for Linux on Windows 11 version 22H2 (Sun Valley 2) and later:
+  - Vastly improved performance and stability. (#10964)
+  - When pressing ``control+f`` to find text, the review cursor position is updated to follow the found term. (#11172)
+  - Reporting of typed text that does not appear on-screen (such as passwords) is disabled by default.
+It can be re-enabled in NVDA's advanced settings panel. (#11554)
+  - Text that has scrolled offscreen can be reviewed without scrolling the console window. (#12669)
+  - More detailed text formatting information is available. ([microsoft/terminal PR 10336 https://github.com/microsoft/terminal/pull/10336])
+  -
+- A new Speech option has been added to read character descriptions after a delay. (#13509)
+- A new Braille option has been added to determine if scrolling the display forward/back should interrupt speech. (#2124)
+-
+
+
+== Changes ==
+- eSpeak NG has been updated to 1.52-dev commit ``9de65fcb``. (#13295)
+  - Added languages:
+    - Belarusian
+    - Luxembourgish
+    - Totontepec Mixe
+    -
+  -
+- When using UI Automation to access Microsoft Excel spreadsheet controls, NVDA is now able to report when a cell is merged. (#12843)
+- Instead of reporting "has details" the purpose of details is included where possible, for example "has comment". (#13649)
+- The installation size of NVDA is now shown in Windows Programs and Feature section. (#13909)
+-
+
+
+== Bug Fixes ==
+- Adobe Acrobat / Reader 64 bit will no longer crash when reading a PDF document. (#12920)
+  - Note that the most up to date version of Adobe Acrobat / Reader is also required to avoid the crash.
+  -
+- Font size measurements are now translatable in NVDA. (#13573)
+- Ignore Java Access Bridge events where no window handle can be found for Java applications.
+This will improve performance for some Java applications including IntelliJ IDEA. (#13039)
+- Announcement of selected cells for LibreOffice Calc is more efficient and no longer results in a Calc freeze when many cells are selected. (#13232)
+- When running under a different user, Microsoft Edge is no longer inaccessible. (#13032)
+- When rate boost is off, eSpeak's rate does not drop anymore between rates 99% and 100%. (#13876)
+- Fix bug which allowed 2 Input Gestures dialogs to open. (#13854)
+-
+
+
+== Izmjene za razvojne programere ==
+Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
+
+
 = 2022.2 =
 Ova inačica uključuje puno ispravaka grešaka.
 Prije svega, značajno je unapređena suradnja sa aplikacijama baziranim na java sučelju, brajičnim redcima i značajkama operacijskog sustava Windows.

@@ -21,7 +21,6 @@ default teardown
 	Run Keyword If Test Failed	Take Screenshot	${screenShotName}
 	dump_speech_to_log
 	dump_braille_to_log
-	exit chrome
 	quit NVDA
 
 default setup
@@ -123,15 +122,6 @@ Focus reports target first
 Table navigation with merged columns
 	[Documentation]	When navigating through a merged cell, preserve the column/row position from the previous cell.
 	test_tableNavigationWithMergedColumns
-Table sayAll commands
-	[Documentation]	Table sayAll commands
-	test_tableSayAllCommands
-Table Speak All commands
-	[Documentation]	Table speak entire row/column commands
-	test_tableSpeakAllCommands
-Table sayAll axis caching for merged cells
-	[Documentation]	Tests that axis caching for merged cells in table sayAll commands works.
-	test_tableSayAllAxisCachingForMergedCells
 focus mode is turned on on focused read-only list item
 	[Documentation]	Focused list items with a focusable list container should cause focus mode to be turned on automatically.
 	test_focus_mode_on_focusable_read_only_lists

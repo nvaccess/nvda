@@ -2777,6 +2777,18 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 		"""
 		return self.id.split("+")
 
+	def _get_speechEffectWhenExecuted(self) -> Optional[str]:
+		from globalCommands import commands
+		if (
+			not config.conf["braille"]["interruptSpeechWhileScrolling"]
+			and self.script in {
+				commands.script_braille_scrollBack,
+				commands.script_braille_scrollForward,
+			}
+		):
+			return None
+		return super().speechEffectWhenExecuted
+
 	#: Compiled regular expression to match an identifier including an optional model name
 	#: The model name should be an alphanumeric string without spaces.
 	#: @type: RegexObject
