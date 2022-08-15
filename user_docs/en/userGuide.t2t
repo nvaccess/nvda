@@ -2114,6 +2114,11 @@ This button opens the directory where you can place custom code while developing
 This button is only enabled if NVDA is configured to enable loading custom code from the Developer Scratchpad Directory.
 
 ==== Registration for UI Automation events and property changes ====[AdvancedSettingsSelectiveUIAEventRegistration]
+: Default
+  Automatic
+: Options
+  Automatic, Selectively, Globally
+
 This option changes how NVDA registers for events fired by the Microsoft UI Automation accessibility API.
 The registration for UI Automation events and property changes combo box has three options:
 - Automatic: "selectively" on Windows 11 Sun Valley 2 (version 22H2) and later, "globally" otherwise.
