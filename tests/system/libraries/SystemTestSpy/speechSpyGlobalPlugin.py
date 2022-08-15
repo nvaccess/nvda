@@ -112,7 +112,15 @@ class NVDASpyLib:
 		self._brailleSpy = BrailleViewerSpy()
 		self._brailleSpy.postBrailleUpdate.register(self._onNvdaBraille)
 
-	def set_configValue(self, keyPath: typing.List[str], val: typing.Union[str, bool, int]):
+	ConfKeyPath = typing.List[str]
+	ConfKeyVal = typing.Union[str, bool, int]
+	NVDAConfMods = typing.List[typing.Tuple[ConfKeyPath, ConfKeyVal]]
+
+	def modifyNVDAConfig(self, confMods: NVDAConfMods):
+		for keyPath, keyVal in confMods:
+			self.set_configValue(keyPath, keyVal)
+
+	def set_configValue(self, keyPath: ConfKeyPath, val: ConfKeyVal):
 		import config
 		if not keyPath or len(keyPath) < 1:
 			raise ValueError("Key path not provided")
