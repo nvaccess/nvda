@@ -350,3 +350,9 @@ def _getConhostAPILevel(hwnd: int) -> WinConsoleAPILevel:
 	except (COMError, ValueError):
 		log.exception()
 		return WinConsoleAPILevel.END_INCLUSIVE
+
+
+def _shouldSelectivelyRegister() -> bool:
+	"Determines whether to register for UIA events selectively or globally."
+	setting = config.conf['UIA']['eventRegistration']
+	return setting == "selective"

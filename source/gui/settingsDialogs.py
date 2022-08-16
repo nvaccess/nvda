@@ -2654,17 +2654,46 @@ class AdvancedPanelControls(
 		UIAGroup = guiHelper.BoxSizerHelper(self, sizer=UIASizer)
 		sHelper.addItem(UIAGroup)
 
-		# Translators: This is the label for a checkbox in the
-		#  Advanced settings panel.
-		label = _("Enable &selective registration for UI Automation events and property changes")
-		self.selectiveUIAEventRegistrationCheckBox = UIAGroup.addItem(wx.CheckBox(UIABox, label=label))
+		# Translators: This is the label for a combo box for selecting the
+		# means of registering for UI Automation events in the advanced settings panel.
+		# Choices are automatic, selectively, and globally.
+		selectiveUIAEventRegistrationComboText = _("Regi&stration for UI Automation events and property changes:")
+		selectiveUIAEventRegistrationChoices = [
+			# Translators: A choice in a combo box in the advanced settings
+			# panel to have NVDA decide whether to register
+			# selectively or globally for UI Automation events.
+			_("Automatic (globally)"),
+			# Translators: A choice in a combo box in the advanced settings
+			# panel to have NVDA register selectively for UI Automation events
+			# (i.e. not to request events for objects outside immediate focus).
+			_("Selectively"),
+			# Translators: A choice in a combo box in the advanced settings
+			# panel to have NVDA register for all UI Automation events
+			# in all cases.
+			_("Globally")
+		]
+		#: The possible event registration config values, in the order they appear
+		#: in the combo box.
+		self.selectiveUIAEventRegistrationVals = (
+			"auto",
+			"selective",
+			"global"
+		)
+		self.selectiveUIAEventRegistrationCombo = UIAGroup.addLabeledControl(
+			selectiveUIAEventRegistrationComboText,
+			wx.Choice,
+			choices=selectiveUIAEventRegistrationChoices
+		)
 		self.bindHelpEvent(
 			"AdvancedSettingsSelectiveUIAEventRegistration",
-			self.selectiveUIAEventRegistrationCheckBox
+			self.selectiveUIAEventRegistrationCombo
 		)
-		self.selectiveUIAEventRegistrationCheckBox.SetValue(config.conf["UIA"]["selectiveEventRegistration"])
-		self.selectiveUIAEventRegistrationCheckBox.defaultValue = (
-			self._getDefaultValue(["UIA", "selectiveEventRegistration"])
+		curChoice = self.selectiveUIAEventRegistrationVals.index(
+			config.conf['UIA']['eventRegistration']
+		)
+		self.selectiveUIAEventRegistrationCombo.SetSelection(curChoice)
+		self.selectiveUIAEventRegistrationCombo.defaultValue = self.selectiveUIAEventRegistrationVals.index(
+			self._getDefaultValue(["UIA", "eventRegistration"])
 		)
 
 		label = pgettext(
@@ -3031,8 +3060,8 @@ class AdvancedPanelControls(
 			self._defaultsRestored
 			and self.scratchpadCheckBox.IsChecked() == self.scratchpadCheckBox.defaultValue
 			and (
-				self.selectiveUIAEventRegistrationCheckBox.IsChecked()
-				== self.selectiveUIAEventRegistrationCheckBox.defaultValue
+				self.selectiveUIAEventRegistrationCombo.GetSelection()
+				== self.selectiveUIAEventRegistrationCombo.defaultValue
 			)
 			and self.UIAInMSWordCombo.GetSelection() == self.UIAInMSWordCombo.defaultValue
 			and self.UIAInMSExcelCheckBox.IsChecked() == self.UIAInMSExcelCheckBox.defaultValue
@@ -3054,7 +3083,9 @@ class AdvancedPanelControls(
 
 	def restoreToDefaults(self):
 		self.scratchpadCheckBox.SetValue(self.scratchpadCheckBox.defaultValue)
-		self.selectiveUIAEventRegistrationCheckBox.SetValue(self.selectiveUIAEventRegistrationCheckBox.defaultValue)
+		self.selectiveUIAEventRegistrationCombo.SetSelection(
+			self.selectiveUIAEventRegistrationCombo.defaultValue == 'auto'
+		)
 		self.UIAInMSWordCombo.SetSelection(self.UIAInMSWordCombo.defaultValue)
 		self.UIAInMSExcelCheckBox.SetValue(self.UIAInMSExcelCheckBox.defaultValue)
 		self.consoleCombo.SetSelection(self.consoleCombo.defaultValue == 'auto')
@@ -3075,7 +3106,10 @@ class AdvancedPanelControls(
 	def onSave(self):
 		log.debug("Saving advanced config")
 		config.conf["development"]["enableScratchpadDir"]=self.scratchpadCheckBox.IsChecked()
-		config.conf["UIA"]["selectiveEventRegistration"] = self.selectiveUIAEventRegistrationCheckBox.IsChecked()
+		selectiveUIAEventRegistrationChoice = self.selectiveUIAEventRegistrationCombo.GetSelection()
+		config.conf['UIA']['eventRegistration'] = (
+			self.selectiveUIAEventRegistrationVals[selectiveUIAEventRegistrationChoice]
+		)
 		config.conf["UIA"]["allowInMSWord"] = self.UIAInMSWordCombo.GetSelection()
 		config.conf["UIA"]["useInMSExcelWhenAvailable"] = self.UIAInMSExcelCheckBox.IsChecked()
 		consoleChoice = self.consoleCombo.GetSelection()
