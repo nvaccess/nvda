@@ -104,6 +104,8 @@ def upgradeConfigFrom_5_to_6(profile: dict):
 def upgradeConfigFrom_6_to_7(profile: Dict[str, str]) -> None:
 	"""
 	Selective UIA registration check box has been replaced with event registration multi choice.
+	If the user has explicitly enabled selective UIA event registration, set the new eventRegistration preference to selective.
+	Otherwise, the default value, auto, will be used.
 	"""
 	try:
 		selectiveEventRegistration = profile['UIA']['selectiveEventRegistration']
