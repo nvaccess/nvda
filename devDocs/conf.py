@@ -16,9 +16,10 @@ import sourceEnv  # noqa: F401, E402
 # Apply several monkey patches to comtypes.
 # Add our `comInterfaces` to the `comtypes.gen` search path to replicate the behavior at runtime
 # without this patch many modules aren't importable, since they depend on `comInterfaces` being present.
-# Also disable module being never than typelib error, seen when
-# virtual environment has been created under different version of Windows than the one
-# used for developer documentation build. This also matches the behavior at runtime.
+# When a virtual environment has been created under a different version of Windows than the one
+# used for developer documentation build, "ImportError: Typelib different than module" is raised
+# by comTypes.
+# This patch causes the error to be ignored, which matches the behavior at runtime.
 import monkeyPatches.comtypesMonkeyPatches  # noqa: E402
 monkeyPatches.comtypesMonkeyPatches.replace_check_version()
 monkeyPatches.comtypesMonkeyPatches.appendComInterfacesToGenSearchPath()
