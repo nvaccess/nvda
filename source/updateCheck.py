@@ -119,7 +119,8 @@ def checkForUpdate(auto: bool = False) -> Optional[Dict]:
 		"version": versionInfo.version,
 		"versionType": versionInfo.updateVersionType,
 		"osVersion": winVersionText,
-		"x64": os.environ.get("PROCESSOR_ARCHITEW6432") == "AMD64",
+		"x64": os.environ.get("PROCESSOR_ARCHITEW6432") in ("AMD64", "ARM64"),
+		"osArchitecture": os.environ.get("PROCESSOR_ARCHITEW6432"),
 	}
 	if auto and allowUsageStats:
 		synthDriverClass = synthDriverHandler.getSynth().__class__
