@@ -22,6 +22,10 @@ What's New in NVDA
 - NVDA will now correctly announce Group boxes in Java applications. (#13962)
 - Caret properly follows spoken text in say all in applications such as Bookworm, WordPad, or the NVDA log viewer. (#13420, #9179)
 - In programs using UI Automation, partially checked checkboxes will be reported correctly. (#13975)
+- Improved performance and stability in in Microsoft Visual Studio, Windows Terminal, and other UI Automation based applications. (#11077, #11209)
+  - These fixes apply to Windows 11 Sun Valley 2 (version 22H2) and later.
+  - Selective registration for UI Automation events and property changes now enabled by default.
+  -
 -
 
 
