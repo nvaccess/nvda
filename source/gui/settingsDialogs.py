@@ -2662,7 +2662,7 @@ class AdvancedPanelControls(
 			# Translators: A choice in a combo box in the advanced settings
 			# panel to have NVDA decide whether to register
 			# selectively or globally for UI Automation events.
-			_("Automatic (globally)"),
+			_("Automatic (prefer selectively)"),
 			# Translators: A choice in a combo box in the advanced settings
 			# panel to have NVDA register selectively for UI Automation events
 			# (i.e. not to request events for objects outside immediate focus).
