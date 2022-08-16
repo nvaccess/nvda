@@ -9,6 +9,7 @@ import config
 import ctypes
 import UIAHandler
 import weakref
+import winVersion
 from functools import lru_cache
 from logHandler import log
 from .constants import WinConsoleAPILevel
@@ -355,4 +356,9 @@ def _getConhostAPILevel(hwnd: int) -> WinConsoleAPILevel:
 def _shouldSelectivelyRegister() -> bool:
 	"Determines whether to register for UIA events selectively or globally."
 	setting = config.conf['UIA']['eventRegistration']
-	return setting == "selective"
+	if setting == "selective":
+		return True
+	elif setting == "global":
+		return False
+	else:
+		return winVersion.getWinVer() >= winVersion.WIN11_22H2
