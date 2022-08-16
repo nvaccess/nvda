@@ -132,7 +132,6 @@ if globalVars.runningAsSource:
 	def stripBasePathFromTracebackText(text):
 		return text.replace(TB_BASE_PATH_MATCH, TB_BASE_PATH_PREFIX)
 else:
-	# We're running a py2exe build.
 	def stripBasePathFromTracebackText(text: str) -> str:
 		return text
 

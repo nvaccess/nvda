@@ -36,7 +36,7 @@ else:
 
 
 if not globalVars.runningAsSource:
-	# Not running from source. Libraries are in a version-specific directory
+	# When running as a py2exe build, libraries are in a version-specific directory
 	versionedLibPath=os.path.join(versionedLibPath,versionInfo.version)
 	versionedLib64Path=os.path.join(versionedLib64Path,versionInfo.version)
 
