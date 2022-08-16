@@ -18,6 +18,7 @@ import fnmatch
 # versionInfo names must be imported after Gettext
 # Suppress E402 (module level import not at top of file)
 from versionInfo import (
+	copyright as NVDAcopyright,  # copyright is a reserved python keyword
 	description,
 	formatBuildVersionString,
 	name,
@@ -137,7 +138,7 @@ setup(
 			"description":"NVDA application",
 			"product_name":name,
 			"product_version":version,
-			"copyright":copyright,
+			"copyright": NVDAcopyright,
 			"company_name":publisher,
 		},
 		# The nvda_uiAccess target will be added at runtime if required.
@@ -150,7 +151,7 @@ setup(
 			"description": name,
 			"product_name":name,
 			"product_version": version,
-			"copyright": copyright,
+			"copyright": NVDAcopyright,
 			"company_name": publisher,
 		},
 		{
@@ -163,7 +164,7 @@ setup(
 			"description": "NVDA Ease of Access proxy",
 			"product_name":name,
 			"product_version": version,
-			"copyright": copyright,
+			"copyright": NVDAcopyright,
 			"company_name": publisher,
 		},
 	],
@@ -177,7 +178,7 @@ setup(
 			"description": "NVDA Diff-match-patch proxy",
 			"product_name": name,
 			"product_version": version,
-			"copyright": f"{copyright}, Bill Dengler",
+			"copyright": f"{NVDAcopyright}, Bill Dengler",
 			"company_name": f"Bill Dengler, {publisher}",
 		},
 	],
