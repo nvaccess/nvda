@@ -1440,7 +1440,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_TEXTREVIEW,
 		gestures=("kb:NVDA+pageUp", "kb(laptop):NVDA+shift+pageUp", "ts(text):flickUp")
 	)
-	def script_review_previousPage(self, gesture):
+	def script_review_previousPage(self, gesture: inputCore.InputGesture) -> None:
 		info = api.getReviewPosition().copy()
 		try:
 			info.expand(textInfos.UNIT_PAGE)
