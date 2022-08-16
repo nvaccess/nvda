@@ -10,6 +10,9 @@ import copy
 import gettext
 gettext.install("nvda")
 from setuptools import setup
+# While the import of py2exe appears unused it is required.
+# py2exe monkey patches distutils when importing py2exe for the first time.
+import py2exe as py2exeModule  # noqa: F401, E402
 from glob import glob
 import fnmatch
 # versionInfo names must be imported after Gettext
@@ -18,9 +21,9 @@ from versionInfo import (
 	description,
 	formatBuildVersionString,
 	name,
-	version,
 	publisher,
 	url,
+	version,
 )  # noqa: E402
 from py2exe import distutils_buildexe
 from py2exe.dllfinder import DllFinder
@@ -57,7 +60,7 @@ class py2exe(distutils_buildexe.py2exe):
 		self.enable_uiAccess = False
 
 	def run(self):
-		with open(manifestTemplateFilePath, "r") as manifestTemplateFile:
+		with open(manifestTemplateFilePath, "r", encoding="utf-8") as manifestTemplateFile:
 			manifestTemplate = manifestTemplateFile.read()
 		dist = self.distribution
 		if self.enable_uiAccess:
