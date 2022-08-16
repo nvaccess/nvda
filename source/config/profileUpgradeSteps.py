@@ -15,6 +15,7 @@ that no information is lost, while updating the ConfigObj to meet the requiremen
 """
 
 from logHandler import log
+from typing import Dict
 
 
 def upgradeConfigFrom_0_to_1(profile):
