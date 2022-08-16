@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2016–2022 NV Access Limited, Bill Dengler
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2016–2022 NV Access Limited, Bill Dengler
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 """
 Contains upgrade steps for the NVDA configuration files. These steps are run to ensure that a configuration file
