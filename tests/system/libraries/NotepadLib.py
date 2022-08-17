@@ -20,6 +20,7 @@ from SystemTestSpy.windows import (
 	GetVisibleWindowTitles,
 	GetForegroundHwnd,
 	GetWindowWithTitle,
+	Window,
 )
 import re
 from robot.libraries.BuiltIn import BuiltIn
@@ -29,11 +30,13 @@ from robot.libraries.OperatingSystem import OperatingSystem as _OpSysLib
 from robot.libraries.Process import Process as _ProcessLib
 from AssertsLib import AssertsLib as _AssertsLib
 import NvdaLib as _NvdaLib
+import WindowsLib as _WindowsLib
 
 builtIn: BuiltIn = BuiltIn()
 opSys: _OpSysLib = _getLib('OperatingSystem')
 process: _ProcessLib = _getLib('Process')
 assertsLib: _AssertsLib = _getLib('AssertsLib')
+windowsLib: _WindowsLib = _getLib('WindowsLib')
 
 
 # In Robot libraries, class name must match the name of the module. Use caps for both.
@@ -93,6 +96,7 @@ class NotepadLib:
 		if not success or self.notepadWindow is None:
 			builtIn.fatal_error("Unable to get notepad window")
 		return self.notepadWindow
+
 	@staticmethod
 	def getUniqueTestCaseTitle(testCase: str) -> str:
 		return f"{NotepadLib._testCaseTitle} ({abs(hash(testCase))}).txt"
@@ -140,6 +144,17 @@ class NotepadLib:
 			f"{windowInformation}"
 		)
 
+	def canNotepadTitleBeReported(self, applicationTitle: str) -> bool:
+		spy = _NvdaLib.getSpyLib()
+		afterFocusToggleIndex = spy.get_last_speech_index()
+		spy.emulateKeyPress('NVDA+t')
+		appTitleIndex = spy.wait_for_specific_speech_no_raise(
+			applicationTitle,
+			afterIndex=afterFocusToggleIndex
+		)
+		builtIn.log(f"Notepad title('{applicationTitle}') reported at index: {repr(appTitleIndex)}")
+		return appTitleIndex is None
+
 	def prepareNotepad(self, testCase: str) -> None:
 		"""
 		Starts Notepad opening a file containing the plaintext sample.
@@ -153,7 +168,13 @@ class NotepadLib:
 
 		spy.wait_for_speech_to_finish()
 		self.start_notepad(path, expectedTitlePattern=self.getUniqueTestCaseTitleRegex(testCase))
+
+		if not self.canNotepadTitleBeReported(self.notepadWindow.title):
+			builtIn.log("Trying to switch to notepad Window")
+			windowsLib.taskSwitchToItemMatching(pattern=re.compile(
+				f"{NotepadLib._testCaseTitle} \\({abs(hash(testCase))}\\)"
+			))
+
 		self._waitForNotepadFocus(NotepadLib.getUniqueTestCaseTitleRegex(testCase))
 		# Move to the start of file
-		spy.emulateKeyPress('home')
-		spy.wait_for_speech_to_finish()
+		_NvdaLib.getSpeechAfterKey('home')
