@@ -1471,12 +1471,12 @@ class GlobalCommands(ScriptableObject):
 		info = origInfo.copy()
 		try:
 			res = info.move(textInfos.UNIT_PAGE, 1)
+			newPage = info.copy()
+			newPage.expand(textInfos.UNIT_PAGE)
 		except (ValueError, NotImplementedError):
 			# Translators: a message reported when movement by page is unsupported
 			ui.reviewMessage(_("Movement by page not supported"))
 			return
-		newPage = info.copy()
-		newPage.expand(textInfos.UNIT_PAGE)
 		# #12808: Some implementations of move forward may succeed one more time than expected,
 		# landing on the exclusive end of the document.
 		# Therefore, verify that expanding after the move does result in being on a new page,
