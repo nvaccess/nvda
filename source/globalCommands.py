@@ -1434,6 +1434,61 @@ class GlobalCommands(ScriptableObject):
 		speech.speakTextInfo(newLine, unit=textInfos.UNIT_LINE, reason=controlTypes.OutputReason.CARET)
 
 	@script(
+		# Translators: Input help mode message for move review cursor to previous page command.
+		description=_("Moves the review cursor to the previous page of the current navigator object and speaks it"),
+		resumeSayAllMode=sayAll.CURSOR.REVIEW,
+		category=SCRCAT_TEXTREVIEW,
+		gestures=("kb:NVDA+pageUp", "kb(laptop):NVDA+shift+pageUp", "ts(text):flickUp")
+	)
+	def script_review_previousPage(self, gesture: inputCore.InputGesture) -> None:
+		info = api.getReviewPosition().copy()
+		try:
+			info.expand(textInfos.UNIT_PAGE)
+			info.collapse()
+			res = info.move(textInfos.UNIT_PAGE, -1)
+		except (ValueError, NotImplementedError):
+			# Translators: a message reported when movement by page is unsupported
+			ui.reviewMessage(_("Movement by page not supported"))
+			return
+		if res == 0:
+			# Translators: a message reported when review cursor is at the top line of the current navigator object.
+			ui.reviewMessage(_("Top"))
+		else:
+			api.setReviewPosition(info)
+		info.expand(textInfos.UNIT_PAGE)
+		speech.speakTextInfo(info, unit=textInfos.UNIT_PAGE, reason=controlTypes.OutputReason.CARET)
+
+	@script(
+		# Translators: Input help mode message for move review cursor to next page command.
+		description=_("Moves the review cursor to the next page of the current navigator object and speaks it"),
+		resumeSayAllMode=sayAll.CURSOR.REVIEW,
+		category=SCRCAT_TEXTREVIEW,
+		gestures=("kb:NVDA+pageDown", "kb(laptop):NVDA+shift+pageDown", "ts(text):flickUp")
+	)
+	def script_review_nextPage(self, gesture: inputCore.InputGesture) -> None:
+		origInfo = api.getReviewPosition().copy()
+		origInfo.collapse()
+		info = origInfo.copy()
+		try:
+			res = info.move(textInfos.UNIT_PAGE, 1)
+		except (ValueError, NotImplementedError):
+			# Translators: a message reported when movement by page is unsupported
+			ui.reviewMessage(_("Movement by page not supported"))
+			return
+		newPage = info.copy()
+		newPage.expand(textInfos.UNIT_PAGE)
+		# #12808: Some implementations of move forward may succeed one more time than expected,
+		# landing on the exclusive end of the document.
+		# Therefore, verify that expanding after the move does result in being on a new page,
+		# i.e. the new page starts after the original review cursor position.
+		if res == 0 or newPage.start <= origInfo.start:
+			# Translators: a message reported when review cursor is at the bottom line of the current navigator object.
+			ui.reviewMessage(_("Bottom"))
+		else:
+			api.setReviewPosition(info)
+		speech.speakTextInfo(newPage, unit=textInfos.UNIT_PAGE, reason=controlTypes.OutputReason.CARET)
+
+	@script(
 		# Translators: Input help mode message for move review cursor to bottom line command.
 		description=_("Moves the review cursor to the bottom line of the current navigator object and speaks it"),
 		category=SCRCAT_TEXTREVIEW,
