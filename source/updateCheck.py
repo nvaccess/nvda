@@ -119,7 +119,8 @@ def checkForUpdate(auto: bool = False) -> Optional[Dict]:
 		"version": versionInfo.version,
 		"versionType": versionInfo.updateVersionType,
 		"osVersion": winVersionText,
-		"x64": os.environ.get("PROCESSOR_ARCHITEW6432") in ("AMD64", "ARM64"),
+		# https://docs.microsoft.com/en-gb/windows/win32/winprog64/wow64-implementation-details
+		"x64": os.environ.get("PROCESSOR_ARCHITEW6432") != "x86",
 		"osArchitecture": os.environ.get("PROCESSOR_ARCHITEW6432"),
 	}
 	if auto and allowUsageStats:
