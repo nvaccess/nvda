@@ -190,6 +190,7 @@ class NVDASpyLib:
 			return
 		with self._speechLock:
 			self._lastSpeechTime_requiresLock = _timer()
+			log.debug(f"Appending to speech spy at index {len(self._nvdaSpeech_requiresLock)}")
 			self._nvdaSpeech_requiresLock.append(speechSequence)
 
 	@staticmethod
