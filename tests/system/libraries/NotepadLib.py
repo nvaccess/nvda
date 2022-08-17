@@ -144,16 +144,11 @@ class NotepadLib:
 			f"{windowInformation}"
 		)
 
-	def canNotepadTitleBeReported(self, applicationTitle: str) -> bool:
-		spy = _NvdaLib.getSpyLib()
-		afterFocusToggleIndex = spy.get_last_speech_index()
-		spy.emulateKeyPress('NVDA+t')
-		appTitleIndex = spy.wait_for_specific_speech_no_raise(
-			applicationTitle,
-			afterIndex=afterFocusToggleIndex
+	def canNotepadTitleBeReported(self, notepadTitleSpeechPattern: re.Pattern) -> bool:
+		titleSpeech = _NvdaLib.getSpeechAfterKey('NVDA+t')
+		return bool(
+			notepadTitleSpeechPattern.search(titleSpeech)
 		)
-		builtIn.log(f"Notepad title('{applicationTitle}') reported at index: {repr(appTitleIndex)}")
-		return appTitleIndex is None
 
 	def prepareNotepad(self, testCase: str) -> None:
 		"""
@@ -169,11 +164,13 @@ class NotepadLib:
 		spy.wait_for_speech_to_finish()
 		self.start_notepad(path, expectedTitlePattern=self.getUniqueTestCaseTitleRegex(testCase))
 
-		if not self.canNotepadTitleBeReported(self.notepadWindow.title):
+		testCaseNotepadTitleSpeech = re.compile(
+			# Unlike getUniqueTestCaseTitleRegex, this speech does not have to be at the start of the string.
+			f"{NotepadLib._testCaseTitle} \\({abs(hash(testCase))}\\)"
+		)
+		if not self.canNotepadTitleBeReported(notepadTitleSpeechPattern=testCaseNotepadTitleSpeech):
 			builtIn.log("Trying to switch to notepad Window")
-			windowsLib.taskSwitchToItemMatching(pattern=re.compile(
-				f"{NotepadLib._testCaseTitle} \\({abs(hash(testCase))}\\)"
-			))
+			windowsLib.taskSwitchToItemMatching(pattern=testCaseNotepadTitleSpeech)
 
 		self._waitForNotepadFocus(NotepadLib.getUniqueTestCaseTitleRegex(testCase))
 		# Move to the start of file

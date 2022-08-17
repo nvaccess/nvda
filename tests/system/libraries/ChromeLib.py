@@ -190,15 +190,11 @@ class ChromeLib:
 			return False
 		return True
 
-	def canChromeTitleBeReported(self, applicationTitle: str) -> bool:
-		spy = _NvdaLib.getSpyLib()
-		afterFocusToggleIndex = spy.get_last_speech_index()
-		spy.emulateKeyPress('NVDA+t')
-		appTitleIndex = spy.wait_for_specific_speech_no_raise(
-			applicationTitle,
-			afterIndex=afterFocusToggleIndex
+	def canChromeTitleBeReported(self, chromeTitleSpeechPattern: re.Pattern) -> bool:
+		speech = _NvdaLib.getSpeechAfterKey('NVDA+t')
+		return bool(
+			chromeTitleSpeechPattern.search(speech)
 		)
-		return None is appTitleIndex
 
 	def prepareChrome(self, testCase: str, _alwaysDoToggleFocus: bool = False) -> None:
 		"""
@@ -219,18 +215,20 @@ class ChromeLib:
 
 		spy.wait_for_speech_to_finish()
 		_chromeLib.start_chrome(path, testCase)
+
 		applicationTitle = ChromeLib.getUniqueTestCaseTitle(testCase)
+		# application title will be something like "NVDA Browser Test Case (499078752)"
+		# the parentheses could be escaped, instead we can just replace them with "match any char".
+		patternSafeTitleString = applicationTitle.replace('(', '.').replace(')', '.')
+		chromeTitleSpeechPattern = re.compile(patternSafeTitleString)
 
 		if (
 			_alwaysDoToggleFocus  # may work around focus/foreground event missed issues for tests.
-			or not _chromeLib.canChromeTitleBeReported(applicationTitle)
+			or not _chromeLib.canChromeTitleBeReported(chromeTitleSpeechPattern)
 		):
-			# application title will be something like "NVDA Browser Test Case (499078752)"
-			# the parentheses could be escaped, instead we can just replace them with "match any char".
-			patternSafeTitleString = applicationTitle.replace('(', '.').replace(')', '.')
-			windowsLib.taskSwitchToItemMatching(pattern=re.compile(patternSafeTitleString))
+			windowsLib.taskSwitchToItemMatching(pattern=chromeTitleSpeechPattern)
 
-		if not _chromeLib.canChromeTitleBeReported(applicationTitle):
+		if not _chromeLib.canChromeTitleBeReported(chromeTitleSpeechPattern):
 			raise AssertionError("NVDA unable to report chrome title")
 		spy.wait_for_speech_to_finish()
 
