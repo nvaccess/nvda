@@ -11,7 +11,7 @@ from comtypes import COMError
 from ctypes import byref
 import winUser
 import IAccessibleHandler
-from comInterfaces.IAccessible2Lib import IAccessibleTextSelectionContainer, IA2TextSelection
+from comInterfaces.IAccessible2Lib import IAccessibleTextSelectionContainer, IA2TextSelection, IAccessibleText
 import textInfos
 import config
 import controlTypes
@@ -127,6 +127,7 @@ class ChromeVBuf(GeckoVBuf):
 		log.debug(f"ia2StartOffset: {ia2StartOffset}")
 		ia2StartObj, childID = IAccessibleHandler.accessibleObjectFromEvent(ia2StartWindow, winUser.OBJID_CLIENT, ia2StartID)
 		assert (childID == 0), f"childID should be 0"
+		ia2StartObj = ia2StartObj.QueryInterface(IAccessibleText)
 		log.debug(f"ia2StartObj {ia2StartObj}")
 		lastTextLen = 0
 		for field in reversed(selFields):
@@ -154,6 +155,7 @@ class ChromeVBuf(GeckoVBuf):
 		else:
 			ia2EndObj, childID = IAccessibleHandler.accessibleObjectFromEvent(ia2EndWindow, winUser.OBJID_CLIENT, ia2EndID)
 			assert (childID == 0), f"childID should be 0"
+			ia2EndObj = ia2EndObj.QueryInterface(IAccessibleText)
 			log.debug(f"ia2EndObj {ia2EndObj}")
 		r = IA2TextSelection(ia2StartObj, ia2StartOffset, ia2EndObj, ia2EndOffset, False)
 		paccTextSelectionContainer.SetSelections(1, byref(r))
