@@ -1266,7 +1266,7 @@ When in the table view of added books:
 | Context menu | applications | Opens the context menu for the selected book. |
 %kc:endInclude
 
-++ Windows Console ++[WinConsole]
+++ Windows Console and Terminal ++[WinConsole]
 NVDA provides support for the Windows command console used by Command Prompt, PowerShell, and the Windows Subsystem for Linux.
 The console window is of fixed size, typically much smaller than the buffer that holds the output.
 As new text is written, the content scroll upwards and previous text is no longer visible. 
@@ -1280,6 +1280,9 @@ The following built-in Windows Console keyboard shortcuts may be useful when [re
 | Scroll down | control+downArrow | Scrolls the console window down, so later text can be read. |
 | Scroll to start | control+home | Scrolls the console window to the beginning of the buffer. |
 | Scroll to end | control+end | Scrolls the console window to the end of the buffer. |
+
+When using Windows Terminal version 1.18 and later, you may use NVDA's Move to previous page in review/Move to next page in review commands to scroll visible screens of output.
+This can be used, for instance, to jump to the top of a currently visible page of paginated output from commands such as ``less``.
 %kc:endInclude
 
 + Configuring NVDA +[ConfiguringNVDA]
