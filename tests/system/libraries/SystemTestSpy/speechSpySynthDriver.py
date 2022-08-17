@@ -39,13 +39,13 @@ class SpeechSpySynthDriver(synthDriverHandler.SynthDriver):
 		log.debug(f"Start of Speak: {speechSequence}")
 		for item in speechSequence:
 			if isinstance(item, IndexCommand):
-				log.debug(f"index reached: {item.index}")
+				log.debug(f"Speech IndexCommand reached: {item.index}, notifying synthDriverHandler")
 				synthDriverHandler.synthIndexReached.notify(synth=self, index=item.index)
-		log.debug("done speaking")
+		log.debug("Done speaking, notifying synthDriverHandler")
 		synthDriverHandler.synthDoneSpeaking.notify(synth=self)
-		log.debug("post_speech notify start")
+		log.debug("Before notify post_speech")
 		post_speech.notify(speechSequence=speechSequence)
-		log.debug("post_speech notify complete")
+		log.debug("After post_speech notify")
 
 	def cancel(self):
 		pass
