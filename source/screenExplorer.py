@@ -1,5 +1,9 @@
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2012-2022 NV Access Limited
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+
 import api
-import tones
 import controlTypes
 import textInfos
 import locationHelper
@@ -28,7 +32,8 @@ class ScreenExplorer(object):
 			self._obj=obj
 			hasNewObj=True
 			if self.updateReview:
-				api.setNavigatorObject(obj)
+				if not api.setNavigatorObject(obj):
+					return
 		else:
 			obj=self._obj
 		pos=None

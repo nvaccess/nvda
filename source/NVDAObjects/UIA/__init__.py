@@ -10,20 +10,15 @@ from typing import (
 	Optional,
 	Dict,
 )
-from ctypes import byref
-from ctypes.wintypes import POINT, RECT
+from ctypes.wintypes import POINT
 from comtypes import COMError
-from comtypes.automation import VARIANT
 import time
-import weakref
 import numbers
 import colors
 import languageHandler
 import UIAHandler
 import UIAHandler.customProps
 import UIAHandler.customAnnotations
-import globalVars
-import eventHandler
 import controlTypes
 from controlTypes import TextPosition
 import config
@@ -2218,12 +2213,12 @@ class SuggestionListItem(UIA):
 		focusControllerFor = api.getFocusObject().controllerFor
 		if len(focusControllerFor) > 0 and focusControllerFor[0].appModule is self.appModule and self.name:
 			speech.cancelSpeech()
-			api.setNavigatorObject(self, isFocus=True)
-			self.reportFocus()
-			# Display results as flash messages.
-			braille.handler.message(braille.getPropertiesBraille(
-				name=self.name, role=self.role, positionInfo=self.positionInfo
-			))
+			if api.setNavigatorObject(self, isFocus=True):
+				self.reportFocus()
+				# Display results as flash messages.
+				braille.handler.message(braille.getPropertiesBraille(
+					name=self.name, role=self.role, positionInfo=self.positionInfo
+				))
 
 # NetUIDropdownAnchor comboBoxes (such as in the MS Office Options dialog)
 class NetUIDropdownAnchor(UIA):

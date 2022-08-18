@@ -52,3 +52,4 @@ https://github.com/nvaccess/nvda/blob/master/devDocs/githubPullRequestTemplateEx
   - Low Vision
   - Different web browsers
   - Localization in other languages / culture than English
+- [ ] Security precautions taken.
