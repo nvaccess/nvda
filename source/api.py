@@ -8,7 +8,6 @@
 Functions should mostly refer to getting an object (NVDAObject) or a position (TextInfo).
 """
 
-import enum
 import typing
 
 import config
