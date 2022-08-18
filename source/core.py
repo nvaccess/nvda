@@ -590,9 +590,9 @@ def main():
 		def warnIfSessionTrackingNotRegistered(self) -> None:
 			if self._isSessionTrackingRegistered:
 				return
-			# Translators: This is a warning to users, shown if NVDA cannot determine if
-			# Windows is locked.
 			failedToRegisterMsg = _(
+				# Translators: This is a warning to users, shown if NVDA cannot determine if
+				# Windows is locked.
 				"NVDA failed to register session tracking. "
 				"While this instance of NVDA is running, "
 				"your desktop will not be secure when Windows is locked. "
