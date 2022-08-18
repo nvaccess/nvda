@@ -276,6 +276,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	synthDriver = boolean(default=false)
 	nvwave = boolean(default=false)
 	annotations = boolean(default=false)
+	events = boolean(default=false)
 
 [uwpOcr]
 	language = string(default="")

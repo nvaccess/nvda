@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2021 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner,
+# Copyright (C) 2006-2022 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner,
 # Derek Riemer, Babbage B.V., Zahari Yurukov, Łukasz Golonka
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -8,7 +8,10 @@
 
 
 from dataclasses import dataclass
-from typing import List, Optional
+from typing import (
+	List,
+	Optional,
+)
 import comtypes
 import sys
 import winVersion
@@ -44,6 +47,7 @@ mainThreadId = threading.get_ident()
 #: @type wParam: int
 #: @param lParam: Additional message information.
 #: @type lParam: int
+# TODO: move to winAPI.messageWindow
 post_windowMessageReceipt = extensionPoints.Action()
 
 _pump = None
@@ -545,20 +549,30 @@ def main():
 		# the GUI mainloop must be running for this to work so delay it
 		wx.CallAfter(audioDucking.initialize)
 
+	from winAPI.messageWindow import WindowMessage
+	from winAPI.sessionTracking import (
+		handleSessionChange,
+		registerSessionNotification,
+		unregisterSessionNotification,
+		WindowsTrackedSession,
+	)
+	import winUser
 	# #3763: In wxPython 3, the class name of frame windows changed from wxWindowClassNR to wxWindowNR.
 	# NVDA uses the main frame to check for and quit another instance of NVDA.
 	# To remain compatible with older versions of NVDA, create our own wxWindowClassNR.
 	# We don't need to do anything else because wx handles WM_QUIT for all windows.
 	import windowUtils
+	# TODO: move to winAPI.messageWindow
 	class MessageWindow(windowUtils.CustomWindow):
 		className = u"wxWindowClassNR"
 		# Windows constants for power / display changes
-		WM_POWERBROADCAST = 0x218
+		# TODO: move to winAPI
 		PBT_APMPOWERSTATUSCHANGE = 0xA
 		UNKNOWN_BATTERY_STATUS = 0xFF
 		AC_ONLINE = 0X1
 		NO_SYSTEM_BATTERY = 0X80
 		#States for screen orientation
+		# TODO: move to winAPI, turn to Enum
 		ORIENTATION_NOT_INITIALIZED = 0
 		ORIENTATION_PORTRAIT = 1
 		ORIENTATION_LANDSCAPE = 2
@@ -570,16 +584,51 @@ def main():
 			self.orientationCoordsCache = (0,0)
 			self.handlePowerStatusChange()
 
+			# Call must be paired with a call to unregisterSessionNotification
+			self._isSessionTrackingRegistered = registerSessionNotification(self.handle)
+
+		def warnIfSessionTrackingNotRegistered(self) -> None:
+			if self._isSessionTrackingRegistered:
+				return
+			failedToRegisterMsg = _(
+				# Translators: This is a warning to users, shown if NVDA cannot determine if
+				# Windows is locked.
+				"NVDA failed to register session tracking. "
+				"While this instance of NVDA is running, "
+				"your desktop will not be secure when Windows is locked. "
+				"Restart NVDA? "
+			)
+			if wx.YES == gui.messageBox(
+				failedToRegisterMsg,
+				# Translators: This is a warning to users, shown if NVDA cannot determine if
+				# Windows is locked.
+				caption=_("NVDA could not start securely."),
+				style=wx.ICON_ERROR | wx.YES_NO,
+			):
+				restart()
+
+		def destroy(self):
+			"""
+			NVDA must unregister session tracking before destroying the message window.
+			"""
+			if self._isSessionTrackingRegistered:
+				# Requires an active message window and a handle to unregister.
+				unregisterSessionNotification(self.handle)
+			super().destroy()
+
 		def windowProc(self, hwnd, msg, wParam, lParam):
 			post_windowMessageReceipt.notify(msg=msg, wParam=wParam, lParam=lParam)
-			if msg == self.WM_POWERBROADCAST and wParam == self.PBT_APMPOWERSTATUSCHANGE:
+			if msg == WindowMessage.POWERBROADCAST and wParam == self.PBT_APMPOWERSTATUSCHANGE:
 				self.handlePowerStatusChange()
 			elif msg == winUser.WM_DISPLAYCHANGE:
 				self.handleScreenOrientationChange(lParam)
+			elif msg == WindowMessage.WTSSESSION_CHANGE:
+				# If we are receiving WTSSESSION_CHANGE events, _isSessionTrackingRegistered should be True
+				handleSessionChange(WindowsTrackedSession(wParam), lParam)
 
 		def handleScreenOrientationChange(self, lParam):
+			# TODO: move to winAPI
 			import ui
-			import winUser
 			# Resolution detection comes from an article found at https://msdn.microsoft.com/en-us/library/ms812142.aspx.
 			#The low word is the width and hiword is height.
 			width = winUser.LOWORD(lParam)
@@ -600,6 +649,7 @@ def main():
 				self.orientationStateCache = self.ORIENTATION_PORTRAIT
 
 		def handlePowerStatusChange(self):
+			# TODO: move to winAPI
 			#Mostly taken from script_say_battery_status, but modified.
 			import ui
 			import winKernel
@@ -773,6 +823,8 @@ def main():
 	queueHandler.queueFunction(queueHandler.eventQueue, _doPostNvdaStartupAction)
 
 	log.debug("entering wx application main loop")
+	# Warn here as NVDA must be ready before providing a gui message
+	messageWindow.warnIfSessionTrackingNotRegistered()
 	app.MainLoop()
 
 	log.info("Exiting")
