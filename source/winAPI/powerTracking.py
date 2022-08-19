@@ -148,6 +148,7 @@ def reportCurrentBatteryStatus(onlyReportIfStatusChanged: bool = False) -> None:
 		# Translators: Reported when the battery is no longer plugged in, and now is not charging.
 		text.append(_("AC disconnected"))
 
+	# Translators: This is presented to inform the user of the current battery percentage.
 	text.append(_("%d percent") % sps.BatteryLifePercent)
 	BATTERY_LIFE_TIME_UNKNOWN = 0xffffffff
 	if sps.BatteryLifeTime != BATTERY_LIFE_TIME_UNKNOWN:
