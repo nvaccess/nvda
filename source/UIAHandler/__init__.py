@@ -356,7 +356,7 @@ class UIAHandler(COMObject):
 			self.rootElement=self.clientObject.getRootElementBuildCache(self.baseCacheRequest)
 			self.reservedNotSupportedValue=self.clientObject.ReservedNotSupportedValue
 			self.ReservedMixedAttributeValue=self.clientObject.ReservedMixedAttributeValue
-			if config.conf['UIA']['selectiveEventRegistration']:
+			if utils._shouldSelectivelyRegister():
 				self._createLocalEventHandlerGroup()
 			self._registerGlobalEventHandlers()
 			if winVersion.getWinVer() >= winVersion.WIN11:
@@ -388,13 +388,13 @@ class UIAHandler(COMObject):
 			self,
 			*self.clientObject.IntSafeArrayToNativeArray(
 				globalEventHandlerGroupUIAPropertyIds
-				if config.conf['UIA']['selectiveEventRegistration']
+				if utils._shouldSelectivelyRegister()
 				else UIAPropertyIdsToNVDAEventNames
 			)
 		)
 		for eventId in (
 			globalEventHandlerGroupUIAEventIds
-			if config.conf['UIA']['selectiveEventRegistration']
+			if utils._shouldSelectivelyRegister()
 			else UIAEventIdsToNVDAEventNames
 		):
 			self.globalEventHandlerGroup.AddAutomationEventHandler(

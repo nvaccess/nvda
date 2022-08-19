@@ -60,6 +60,7 @@ from .priorities import Spri
 from enum import IntEnum
 from dataclasses import dataclass
 from copy import copy
+from utils.security import _isSecureObjectWhileLockScreenActivated
 
 if typing.TYPE_CHECKING:
 	import NVDAObjects
@@ -431,7 +432,7 @@ def getCharDescListFromText(text,locale):
 
 
 def speakObjectProperties(
-		obj,
+		obj: "NVDAObjects.NVDAObject",
 		reason: OutputReason = OutputReason.QUERY,
 		_prefixSpeechCommand: Optional[SpeechCommand] = None,
 		priority: Optional[Spri] = None,
@@ -456,6 +457,8 @@ def getObjectPropertiesSpeech(  # noqa: C901
 		_prefixSpeechCommand: Optional[SpeechCommand] = None,
 		**allowedProperties
 ) -> SpeechSequence:
+	if _isSecureObjectWhileLockScreenActivated(obj):
+		return []
 	#Fetch the values for all wanted properties
 	newPropertyValues={}
 	positionInfo=None
@@ -614,10 +617,12 @@ def speakObject(
 # Note: when working on getObjectSpeech, look for opportunities to simplify
 # and move logic out into smaller helper functions.
 def getObjectSpeech(  # noqa: C901
-		obj,
+		obj: "NVDAObjects.NVDAObject",
 		reason: OutputReason = OutputReason.QUERY,
 		_prefixSpeechCommand: Optional[SpeechCommand] = None,
-):
+) -> SpeechSequence:
+	if _isSecureObjectWhileLockScreenActivated(obj):
+		return []
 	role=obj.role
 	# Choose when we should report the content of this object's textInfo, rather than just the object's value
 	import browseMode

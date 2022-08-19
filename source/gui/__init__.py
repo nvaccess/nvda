@@ -7,7 +7,6 @@
 
 import time
 import os
-import sys
 import threading
 import ctypes
 import wx
@@ -453,7 +452,7 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 			# Translators: The label of a menu item to open the Add-ons Manager.
 			item = menu_tools.Append(wx.ID_ANY, _("Manage &add-ons..."))
 			self.Bind(wx.EVT_MENU, frame.onAddonsManagerCommand, item)
-		if not globalVars.appArgs.secure and not config.isAppX and getattr(sys,'frozen',None):
+		if not globalVars.appArgs.secure and not config.isAppX and not globalVars.runningAsSource:
 			# Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
 			item = menu_tools.Append(wx.ID_ANY, _("Create portable copy..."))
 			self.Bind(wx.EVT_MENU, frame.onCreatePortableCopyCommand, item)

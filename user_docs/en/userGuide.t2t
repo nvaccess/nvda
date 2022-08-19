@@ -170,7 +170,7 @@ Press ``enter`` to start the installed copy.
 The focus is on the "Keyboard Layout" drop-down.
 By default, "Desktop" keyboard layout uses the number pad for some function.
 If desired, press ``downArrow`` to choose "Laptop" keyboard layout to reassign number pad functions to other keys.
-+ Press ``tab`` to move to "Use ``capLock`` as an NVDA modifier key".
++ Press ``tab`` to move to "Use ``capsLock`` as an NVDA modifier key".
 ``Insert`` is set as the NVDA modifier key by default.
 Press ``spaceBar`` to select ``capsLock`` as an alternate modifier key.
 Note that the keyboard layout is set separately from the NVDA modifier key.
@@ -527,7 +527,7 @@ There are some key commands that are useful when moving with the System focus:
 | Report title | NVDA+t | NVDA+t | Reports the title of the currently active window. Pressing twice will spell the information. Pressing three times will copy it to the clipboard |
 | Read active window | NVDA+b | NVDA+b | reads all the controls in the currently active window (useful for dialogs) |
 | Report Status Bar | NVDA+end | NVDA+shift+end | Reports the Status Bar if NVDA finds one. Pressing twice will spell the information. Pressing three times will copy it to the clipboard |
-| Report Shortcut Key | ``shift+numpad2`` | ``NVDA+control+shift+.`` | Reports the shortcut (accelerator) key of the currently focused object. |
+| Report Shortcut Key | ``shift+numpad2`` | ``NVDA+control+shift+.`` | Reports the shortcut (accelerator) key of the currently focused object |
 %kc:endInclude
 
 ++ Navigating with the System Caret ++[SystemCaret]
@@ -630,6 +630,8 @@ The following commands are available for reviewing text:
 | Report current character in review | numpad2 | NVDA+. | none | Announces the current character on the line of text where the review cursor is positioned. Pressing twice reports a description or example of that character. Pressing three times reports the numeric value of the character in decimal and hexadecimal. |
 | Move to next character in review | numpad3 | NVDA+rightArrow | flick right (text mode) | Move the review cursor to the next character on the current line of text |
 | Move to end of line in review | shift+numpad3 | NVDA+end | none | Moves the review cursor to the end of the current line of text |
+| Move to previous page in review | ``NVDA+pageUp`` | ``NVDA+shift+pageUp`` | none | Moves the review cursor to the previous page of text if supported by the application |
+| Move to next page in review | ``NVDA+pageDown`` | ``NVDA+shift+pageDown`` | none | Moves the review cursor to the next page of text if supported by the application |
 | Say all with review | numpadPlus | NVDA+shift+a | 3-finger flick down (text mode) | Reads from the current position of the review cursor, moving it as it goes |
 | Select then Copy from review cursor | NVDA+f9 | NVDA+f9 | none | Starts the select then copy process from the current position of the review cursor. The actual action is not performed until you tell NVDA where the end of the text range is |
 | Select then Copy to review cursor | NVDA+f10 | NVDA+f10 | none | On the first press, text is selected from the position previously set as start marker up to and including the review cursor's current position. If the system caret can reach the text, it will be moved to the selected text. After pressing this key stroke a second time, the text will be copied to the Windows clipboard |
@@ -2113,12 +2115,22 @@ If you wish to distribute custom code to others, you should package it as an NVD
 This button opens the directory where you can place custom code while developing it.
 This button is only enabled if NVDA is configured to enable loading custom code from the Developer Scratchpad Directory.
 
-==== Enable selective registration for UI Automation events and property changes ====[AdvancedSettingsSelectiveUIAEventRegistration]
+==== Registration for UI Automation events and property changes ====[AdvancedSettingsSelectiveUIAEventRegistration]
+: Default
+  Automatic
+: Options
+  Automatic, Selectively, Globally
+:
+
 This option changes how NVDA registers for events fired by the Microsoft UI Automation accessibility API.
-When this option is disabled, NVDA registers for many UIA events that are processed and discarded within NVDA itself.
-This has a major negative impact on performance, especially in applications like Microsoft Visual Studio.
-Therefore, when this option is enabled, NVDA will limit event registration to the system focus for most events.
+The registration for UI Automation events and property changes combo box has three options:
+- Automatic: "selectively" on Windows 11 Sun Valley 2 (version 22H2) and later, "globally" otherwise.
+- Selectively: NVDA will limit event registration to the system focus for most events.
 If you suffer from performance issues in one or more applications, We recommend you to try this functionality to see whether performance improves.
+However, on older versions of Windows, NVDA may have trouble tracking focus in some controls (such as the task manager and emoji panel).
+- Globally: NVDA registers for many UIA events that are processed and discarded within NVDA itself.
+While focus tracking is more reliable in more situations, performance is significantly degraded, especially in applications like Microsoft Visual Studio.
+-
 
 ==== Use UI automation to access Microsoft Word document controls ====[MSWordUIA]
 Configures whether or not NVDA should use the UI Automation accessibility API to access Microsoft Word documents, rather than the older Microsoft Word object model.

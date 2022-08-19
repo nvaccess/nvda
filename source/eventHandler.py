@@ -1,10 +1,10 @@
-#eventHandler.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2007-2017 NV Access Limited, Babbage B.V.
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2007-2022 NV Access Limited, Babbage B.V.
 
 import threading
+import typing
 from typing import Optional
 from comtypes import COMError
 
@@ -13,7 +13,6 @@ import queueHandler
 import api
 import speech
 from speech.commands import _CancellableSpeechCommand
-import appModuleHandler
 import treeInterceptorHandler
 import globalVars
 import controlTypes
@@ -23,6 +22,10 @@ import config
 import winUser
 import extensionPoints
 import oleacc
+from utils.security import _isSecureObjectWhileLockScreenActivated
+
+if typing.TYPE_CHECKING:
+	import NVDAObjects
 
 
 #Some dicts to store event counts by name and or obj
@@ -146,14 +149,20 @@ class _EventExecuter(garbageHandler.TrackedObject):
 WAS_GAIN_FOCUS_OBJ_ATTR_NAME = "wasGainFocusObj"
 
 
-def _trackFocusObject(eventName, obj) -> None:
+def _trackFocusObject(eventName: str, obj: "NVDAObjects.NVDAObject") -> None:
 	""" Keeps track of lastQueuedFocusObject and sets wasGainFocusObj attr on objects.
 	:param eventName: the event type, eg "gainFocus"
 	:param obj: the object to track if focused
 	"""
 	global lastQueuedFocusObject
 
-	if eventName == "gainFocus":
+	if (
+		eventName == "gainFocus"
+		and not _isSecureObjectWhileLockScreenActivated(
+			obj,
+			shouldLog=config.conf["debugLog"]["events"],
+		)
+	):
 		lastQueuedFocusObject = obj
 
 
@@ -263,14 +272,21 @@ def _getFocusLossCancellableSpeechCommand(
 	return FocusLossCancellableSpeechCommand(obj, reportDevInfo=shouldReportDevInfo)
 
 
-def executeEvent(eventName, obj, **kwargs):
+def executeEvent(
+		eventName: str,
+		obj: "NVDAObjects.NVDAObject",
+		**kwargs,
+) -> None:
 	"""Executes an NVDA event.
 	@param eventName: the name of the event type (e.g. 'gainFocus', 'nameChange')
-	@type eventName: string
 	@param obj: the object the event is for
-	@type obj: L{NVDAObjects.NVDAObject}
 	@param kwargs: Additional event parameters as keyword arguments.
 	"""
+	if _isSecureObjectWhileLockScreenActivated(
+		obj,
+		shouldLog=config.conf["debugLog"]["events"],
+	):
+		return
 	try:
 		isGainFocus = eventName == "gainFocus"
 		# Allow NVDAObjects to redirect focus events to another object of their choosing.
@@ -286,12 +302,17 @@ def executeEvent(eventName, obj, **kwargs):
 	except:
 		log.exception("error executing event: %s on %s with extra args of %s"%(eventName,obj,kwargs))
 
-def doPreGainFocus(obj,sleepMode=False):
-	oldForeground=api.getForegroundObject()
+
+def doPreGainFocus(obj: "NVDAObjects.NVDAObject", sleepMode: bool = False) -> bool:
+	if _isSecureObjectWhileLockScreenActivated(
+		obj,
+		shouldLog=config.conf["debugLog"]["events"],
+	):
+		return False
 	oldFocus=api.getFocusObject()
 	oldTreeInterceptor=oldFocus.treeInterceptor if oldFocus else None
-	api.setFocusObject(obj)
-
+	if not api.setFocusObject(obj):
+		return False
 	if speech.manager._shouldCancelExpiredFocusEvents():
 		log._speechManagerDebug("executeEvent: Removing cancelled speech commands.")
 		# ask speechManager to check if any of it's queued utterances should be cancelled
@@ -315,8 +336,9 @@ def doPreGainFocus(obj,sleepMode=False):
 				newForeground=ancestors[1]
 			else:
 				newForeground=obj
-		api.setForegroundObject(newForeground)
-		executeEvent('foreground',newForeground)
+		if not api.setForegroundObject(newForeground):
+			return False
+		executeEvent('foreground', newForeground)
 	if sleepMode: return True
 	#Fire focus entered events for all new ancestors of the focus if this is a gainFocus event
 	for parent in globalVars.focusAncestors[globalVars.focusDifferenceLevel:]:

@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2016 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2016–2022 NV Access Limited, Bill Dengler
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 """
 Contains upgrade steps for the NVDA configuration files. These steps are run to ensure that a configuration file
@@ -15,6 +15,9 @@ that no information is lost, while updating the ConfigObj to meet the requiremen
 """
 
 from logHandler import log
+from typing import (
+	Dict,
+)
 
 
 def upgradeConfigFrom_0_to_1(profile):
@@ -99,3 +102,19 @@ def upgradeConfigFrom_5_to_6(profile: dict):
 	if useInMSWord:
 		from . import AllowUiaInMSWord
 		profile['UIA']['allowInMSWord'] = AllowUiaInMSWord.ALWAYS.value
+
+
+def upgradeConfigFrom_6_to_7(profile: Dict[str, str]) -> None:
+	"""
+	Selective UIA registration check box has been replaced with event registration multi choice.
+	If the user has explicitly enabled selective UIA event registration, set
+	the new eventRegistration preference to selective.
+	Otherwise, the default value, auto, will be used.
+	"""
+	try:
+		selectiveEventRegistration = profile['UIA']['selectiveEventRegistration']
+		del profile['UIA']['selectiveEventRegistration']
+	except KeyError:
+		selectiveEventRegistration = False
+	if selectiveEventRegistration:
+		profile['UIA']['eventRegistration'] = "selective"
