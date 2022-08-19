@@ -14,10 +14,10 @@ from typing import (
 	Any,
 	List,
 	Optional,
+	Tuple,
 )
 
 import config
-from NVDAObjects import NVDAObject
 import textInfos
 import review
 from logHandler import log
@@ -42,7 +42,7 @@ if typing.TYPE_CHECKING:
 @dataclass
 class _APIState:
 	desktopObject: Optional[NVDAObjects.NVDAObject] = None
-	focusAncestors: List[NVDAObjects.NVDAObject] = []
+	focusAncestors: Tuple[NVDAObjects.NVDAObject] = ()
 	focusObject: Optional[NVDAObjects.NVDAObject] = None
 	focusDifferenceLevel: Optional[int] = None
 	foregroundObject: Optional[NVDAObjects.NVDAObject] = None
@@ -110,7 +110,7 @@ def setFocusObject(obj: NVDAObjects.NVDAObject) -> bool:  # noqa: C901
 		return False
 	if _apiState.focusObject:
 		eventHandler.executeEvent("loseFocus", _apiState.focusObject)
-	oldFocusLine = _apiState.focusAncestors
+	oldFocusLine = getFocusAncestors()
 	#add the old focus to the old focus ancestors, but only if its not None (is none at NVDA initialization)
 	if _apiState.focusObject:
 		oldFocusLine.append(_apiState.focusObject)
@@ -191,7 +191,7 @@ def setFocusObject(obj: NVDAObjects.NVDAObject) -> bool:  # noqa: C901
 	# Set global focus variables.
 	_apiState.focusDifferenceLevel = focusDifferenceLevel
 	_apiState.focusObject = obj
-	_apiState.focusAncestors = ancestors
+	_apiState.focusAncestors = tuple(ancestors)
 	braille.invalidateCachedFocusAncestors(focusDifferenceLevel)
 	if config.conf["reviewCursor"]["followFocus"]:
 		setNavigatorObject(obj,isFocus=True)
@@ -204,10 +204,10 @@ def getFocusDifferenceLevel() -> Optional[int]:
 
 def getFocusAncestors() -> List[NVDAObjects.NVDAObject]:
 	"""An array of NVDAObjects that are all parents of the object which currently has focus"""
-	return _apiState.focusAncestors
+	return list(_apiState.focusAncestors)
 
 
-def getMouseObject() -> Optional[NVDAObject]:
+def getMouseObject() -> Optional[NVDAObjects.NVDAObject]:
 	"""Returns the object that is directly under the mouse"""
 	return _apiState.mouseObject
 
