@@ -1,19 +1,18 @@
-#tests/unit/test_braille.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2017-2019 NV Access Limited, Babbage B.V.
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2017-2022 NV Access Limited, Babbage B.V.
 
 """Unit tests for the braille module.
 """
 
 import unittest
 import braille
-from .objectProvider import PlaceholderNVDAObject, NVDAObjectWithRole
+from .objectProvider import NVDAObjectWithRole
 import controlTypes
 from config import conf
 import api
-import globalVars
+
 
 class TestFocusContextPresentation(unittest.TestCase):
 	"""A test for the different focus context presentation options."""
@@ -28,7 +27,11 @@ class TestFocusContextPresentation(unittest.TestCase):
 		# Forcefully create a fake focus ancestry
 		# Note that the braille code excludes the desktop object when getting regions for focus ancestry
 		# The resulting focus object including ancestry will look like: "dialog dlg list lst list item"
-		globalVars.focusAncestors=[api.getDesktopObject(),NVDAObjectWithRole(role=controlTypes.Role.DIALOG),NVDAObjectWithRole(role=controlTypes.Role.LIST)]
+		api._apiState.focusAncestors = [
+			api.getDesktopObject(),
+			NVDAObjectWithRole(role=controlTypes.Role.DIALOG),
+			NVDAObjectWithRole(role=controlTypes.Role.LIST),
+		]
 		braille.handler.handleGainFocus(self.obj)
 		# Make sure that we are testing with three regions
 		self.assertEqual(len(self.regionsWithPositions),3)

@@ -840,9 +840,10 @@ def main():
 	config.saveOnExit()
 
 	try:
-		if globalVars.focusObject and hasattr(globalVars.focusObject,"event_loseFocus"):
+		focusObject = api.getFocusObject()
+		if focusObject and hasattr(focusObject, "event_loseFocus"):
 			log.debug("calling lose focus on object with focus")
-			globalVars.focusObject.event_loseFocus()
+			focusObject.event_loseFocus()
 	except:
 		log.exception("Lose focus error")
 	try:

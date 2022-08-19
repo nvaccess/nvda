@@ -8,12 +8,18 @@
 Functions should mostly refer to getting an object (NVDAObject) or a position (TextInfo).
 """
 
+from dataclasses import dataclass
 import typing
+from typing import (
+	Any,
+	List,
+	Optional,
+)
 
 import config
+from NVDAObjects import NVDAObject
 import textInfos
 import review
-import globalVars
 from logHandler import log
 import ui
 import treeInterceptorHandler
@@ -27,11 +33,25 @@ import watchdog
 import exceptions
 import appModuleHandler
 import cursorManager
-from typing import Any, Optional
 from utils.security import _isSecureObjectWhileLockScreenActivated
 
 if typing.TYPE_CHECKING:
 	import documentBase
+
+
+@dataclass
+class _APIState:
+	desktopObject: Optional[NVDAObjects.NVDAObject] = None
+	focusAncestors: List[NVDAObjects.NVDAObject] = []
+	focusObject: Optional[NVDAObjects.NVDAObject] = None
+	focusDifferenceLevel: Optional[int] = None
+	foregroundObject: Optional[NVDAObjects.NVDAObject] = None
+	mouseObject: Optional[NVDAObjects.NVDAObject] = None
+	navigatorObject: Optional[NVDAObjects.NVDAObject] = None
+	reviewPosition: Optional[textInfos.TextInfo] = None
+
+
+_apiState = _APIState()
 
 
 def getFocusObject() -> NVDAObjects.NVDAObject:
@@ -39,7 +59,7 @@ def getFocusObject() -> NVDAObjects.NVDAObject:
 	Gets the current object with focus.
 	@returns: the object with focus
 	"""
-	return globalVars.focusObject
+	return _apiState.focusObject
 
 
 def getForegroundObject() -> NVDAObjects.NVDAObject:
@@ -51,7 +71,7 @@ def getForegroundObject() -> NVDAObjects.NVDAObject:
 	functions such as "getFocusAncestors".
 	@returns: the current foreground object
 	"""
-	return globalVars.foregroundObject
+	return _apiState.foregroundObject
 
 
 def setForegroundObject(obj: NVDAObjects.NVDAObject) -> bool:
@@ -68,7 +88,7 @@ def setForegroundObject(obj: NVDAObjects.NVDAObject) -> bool:
 		return False
 	if _isSecureObjectWhileLockScreenActivated(obj):
 		return False
-	globalVars.foregroundObject=obj
+	_apiState.foregroundObject = obj
 	return True
 
 
@@ -88,12 +108,12 @@ def setFocusObject(obj: NVDAObjects.NVDAObject) -> bool:  # noqa: C901
 		return False
 	if _isSecureObjectWhileLockScreenActivated(obj):
 		return False
-	if globalVars.focusObject:
-		eventHandler.executeEvent("loseFocus",globalVars.focusObject)
-	oldFocusLine=globalVars.focusAncestors
+	if _apiState.focusObject:
+		eventHandler.executeEvent("loseFocus", _apiState.focusObject)
+	oldFocusLine = _apiState.focusAncestors
 	#add the old focus to the old focus ancestors, but only if its not None (is none at NVDA initialization)
-	if globalVars.focusObject: 
-		oldFocusLine.append(globalVars.focusObject)
+	if _apiState.focusObject:
+		oldFocusLine.append(_apiState.focusObject)
 	oldAppModules=[o.appModule for o in oldFocusLine if o and o.appModule]
 	appModuleHandler.cleanup()
 	ancestors=[]
@@ -169,24 +189,27 @@ def setFocusObject(obj: NVDAObjects.NVDAObject) -> bool:  # noqa: C901
 	# setFocusObject shouldn't fail earlier anyway, but it's best to be safe.
 	appModuleHandler.handleAppSwitch(oldAppModules,newAppModules)
 	# Set global focus variables.
-	globalVars.focusDifferenceLevel=focusDifferenceLevel
-	globalVars.focusObject=obj
-	globalVars.focusAncestors=ancestors
+	_apiState.focusDifferenceLevel = focusDifferenceLevel
+	_apiState.focusObject = obj
+	_apiState.focusAncestors = ancestors
 	braille.invalidateCachedFocusAncestors(focusDifferenceLevel)
 	if config.conf["reviewCursor"]["followFocus"]:
 		setNavigatorObject(obj,isFocus=True)
 	return True
 
-def getFocusDifferenceLevel():
-	return globalVars.focusDifferenceLevel
 
-def getFocusAncestors():
+def getFocusDifferenceLevel() -> Optional[int]:
+	return _apiState.focusDifferenceLevel
+
+
+def getFocusAncestors() -> List[NVDAObjects.NVDAObject]:
 	"""An array of NVDAObjects that are all parents of the object which currently has focus"""
-	return globalVars.focusAncestors
+	return _apiState.focusAncestors
 
-def getMouseObject():
+
+def getMouseObject() -> Optional[NVDAObject]:
 	"""Returns the object that is directly under the mouse"""
-	return globalVars.mouseObject
+	return _apiState.mouseObject
 
 
 def setMouseObject(obj: NVDAObjects.NVDAObject) -> bool:
@@ -196,13 +219,13 @@ def setMouseObject(obj: NVDAObjects.NVDAObject) -> bool:
 		return False
 	if _isSecureObjectWhileLockScreenActivated(obj):
 		return False
-	globalVars.mouseObject=obj
+	_apiState.mouseObject = obj
 	return True
 
 
 def getDesktopObject() -> NVDAObjects.NVDAObject:
 	"""Get the desktop object"""
-	return globalVars.desktopObject
+	return _apiState.desktopObject
 
 
 def setDesktopObject(obj: NVDAObjects.NVDAObject) -> None:
@@ -210,19 +233,19 @@ def setDesktopObject(obj: NVDAObjects.NVDAObject) -> None:
 	We cannot prevent setting this when _isSecureObjectWhileLockScreenActivated is True,
 	as NVDA needs to set the desktopObject on start, and NVDA may start from the lockscreen.
 	"""
-	globalVars.desktopObject=obj
+	_apiState.desktopObject = obj
 
 
 def getReviewPosition() -> textInfos.TextInfo:
 	"""Retrieves the current TextInfo instance representing the user's review position.
 	If it is not set, it uses navigator object to create a TextInfo.
 	"""
-	if globalVars.reviewPosition: 
-		return globalVars.reviewPosition
+	if _apiState.reviewPosition:
+		return _apiState.reviewPosition
 	else:
-		obj=globalVars.navigatorObject
-		globalVars.reviewPosition,globalVars.reviewPositionObj=review.getPositionForCurrentMode(obj)
-		return globalVars.reviewPosition
+		obj = _apiState.navigatorObject
+		_apiState.reviewPosition, _reviewPositionObj = review.getPositionForCurrentMode(obj)
+		return _apiState.reviewPosition
 
 
 def setReviewPosition(
@@ -237,9 +260,9 @@ def setReviewPosition(
 	@param isCaret: Whether the review position is changed due to caret following.
 	@param isMouse: Whether the review position is changed due to mouse following.
 	"""
-	globalVars.reviewPosition=reviewPosition.copy()
-	globalVars.reviewPositionObj=reviewPosition.obj
-	if clearNavigatorObject: globalVars.navigatorObject=None
+	_apiState.reviewPosition = reviewPosition.copy()
+	if clearNavigatorObject:
+		_apiState.navigatorObject = None
 	# When the review cursor follows the caret and braille is auto tethered to review,
 	# we should not update braille with the new review position as a tether to focus is due.
 	if not (braille.handler.shouldAutoTether and isCaret):
@@ -260,20 +283,20 @@ def getNavigatorObject() -> NVDAObjects.NVDAObject:
 	If the navigator object is not set, it fetches and sets it from the review position.
 	@returns: the current navigator object
 	"""
-	if globalVars.navigatorObject:
-		return globalVars.navigatorObject
+	if _apiState.navigatorObject:
+		return _apiState.navigatorObject
 	elif review.getCurrentMode() == 'object':
-		obj = globalVars.reviewPosition.obj
+		obj = _apiState.reviewPosition.obj
 	else:
 		try:
-			obj = globalVars.reviewPosition.NVDAObjectAtStart
+			obj = _apiState.reviewPosition.NVDAObjectAtStart
 		except (NotImplementedError, LookupError):
-			obj = globalVars.reviewPosition.obj
+			obj = _apiState.reviewPosition.obj
 	nextObj = getattr(obj, 'rootNVDAObject', None) or obj
 	if _isSecureObjectWhileLockScreenActivated(nextObj):
-		return globalVars.navigatorObject
-	globalVars.navigatorObject = nextObj
-	return globalVars.navigatorObject
+		return _apiState.navigatorObject
+	_apiState.navigatorObject = nextObj
+	return _apiState.navigatorObject
 
 
 def setNavigatorObject(obj: NVDAObjects.NVDAObject, isFocus: bool = False) -> bool:
@@ -291,9 +314,8 @@ def setNavigatorObject(obj: NVDAObjects.NVDAObject, isFocus: bool = False) -> bo
 		return False
 	if _isSecureObjectWhileLockScreenActivated(obj):
 		return False
-	globalVars.navigatorObject=obj
-	globalVars.reviewPosition=None
-	globalVars.reviewPositionObj=None
+	_apiState.navigatorObject = obj
+	_apiState.reviewPosition = None
 	reviewMode=review.getCurrentMode()
 	# #3320: If in document review yet there is no document to review the mode should be forced to object. 
 	if reviewMode=='document' and (not isinstance(obj.treeInterceptor,treeInterceptorHandler.DocumentTreeInterceptor)  or not obj.treeInterceptor.isReady or obj.treeInterceptor.passThrough):
@@ -302,8 +324,7 @@ def setNavigatorObject(obj: NVDAObjects.NVDAObject, isFocus: bool = False) -> bo
 		if reviewMode=='object':
 			review.setCurrentMode('document',False)
 		if isFocus:
-			globalVars.reviewPosition=obj.treeInterceptor.makeTextInfo(textInfos.POSITION_CARET)
-			globalVars.reviewPositionObj=globalVars.reviewPosition
+			_apiState.reviewPosition = obj.treeInterceptor.makeTextInfo(textInfos.POSITION_CARET)
 	eventHandler.executeEvent("becomeNavigatorObject",obj,isFocus=isFocus)
 	return True
 
