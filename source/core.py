@@ -550,12 +550,7 @@ def main():
 		wx.CallAfter(audioDucking.initialize)
 
 	from winAPI.messageWindow import WindowMessage
-	from winAPI.sessionTracking import (
-		handleSessionChange,
-		registerSessionNotification,
-		unregisterSessionNotification,
-		WindowsTrackedSession,
-	)
+	from winAPI import sessionTracking
 	import winUser
 	# #3763: In wxPython 3, the class name of frame windows changed from wxWindowClassNR to wxWindowNR.
 	# NVDA uses the main frame to check for and quit another instance of NVDA.
@@ -584,8 +579,8 @@ def main():
 			self.orientationCoordsCache = (0,0)
 			self.handlePowerStatusChange()
 
-			# Call must be paired with a call to unregisterSessionNotification
-			self._isSessionTrackingRegistered = registerSessionNotification(self.handle)
+			# Call must be paired with a call to sessionTracking.unregister
+			self._isSessionTrackingRegistered = sessionTracking.register(self.handle)
 
 		def warnIfSessionTrackingNotRegistered(self) -> None:
 			if self._isSessionTrackingRegistered:
@@ -613,18 +608,18 @@ def main():
 			"""
 			if self._isSessionTrackingRegistered:
 				# Requires an active message window and a handle to unregister.
-				unregisterSessionNotification(self.handle)
+				sessionTracking.unregister(self.handle)
 			super().destroy()
 
 		def windowProc(self, hwnd, msg, wParam, lParam):
 			post_windowMessageReceipt.notify(msg=msg, wParam=wParam, lParam=lParam)
-			if msg == WindowMessage.POWERBROADCAST and wParam == self.PBT_APMPOWERSTATUSCHANGE:
+			if msg == WindowMessage.POWER_BROADCAST and wParam == self.PBT_APMPOWERSTATUSCHANGE:
 				self.handlePowerStatusChange()
 			elif msg == winUser.WM_DISPLAYCHANGE:
 				self.handleScreenOrientationChange(lParam)
-			elif msg == WindowMessage.WTSSESSION_CHANGE:
-				# If we are receiving WTSSESSION_CHANGE events, _isSessionTrackingRegistered should be True
-				handleSessionChange(WindowsTrackedSession(wParam), lParam)
+			elif msg == WindowMessage.WTS_SESSION_CHANGE:
+				# If we are receiving WTS_SESSION_CHANGE events, _isSessionTrackingRegistered should be True
+				sessionTracking.handleSessionChange(sessionTracking.WindowsTrackedSession(wParam), lParam)
 
 		def handleScreenOrientationChange(self, lParam):
 			# TODO: move to winAPI
