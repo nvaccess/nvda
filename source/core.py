@@ -160,7 +160,7 @@ def restartUnsafely():
 		except ValueError:
 			pass
 	options = []
-	if not hasattr(sys, "frozen"):
+	if globalVars.runningAsSource:
 		options.append(os.path.basename(sys.argv[0]))
 	_startNewInstance(NewNVDAInstance(
 		sys.executable,
@@ -185,7 +185,7 @@ def restart(disableAddons=False, debugLogging=False):
 		except ValueError:
 			pass
 	options = []
-	if not hasattr(sys, "frozen"):
+	if globalVars.runningAsSource:
 		options.append(os.path.basename(sys.argv[0]))
 	if disableAddons:
 		options.append('--disable-addons')
@@ -678,7 +678,7 @@ def main():
 	# initialize wxpython localization support
 	wxLocaleObj = wx.Locale()
 	wxLang = getWxLangOrNone()
-	if hasattr(sys,'frozen'):
+	if not globalVars.runningAsSource:
 		wxLocaleObj.AddCatalogLookupPathPrefix(os.path.join(globalVars.appDir, "locale"))
 	if wxLang:
 		try:
