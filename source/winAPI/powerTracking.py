@@ -153,7 +153,8 @@ def reportCurrentBatteryStatus(onlyReportIfStatusChanged: bool = False) -> None:
 	BATTERY_LIFE_TIME_UNKNOWN = 0xffffffff
 	if sps.BatteryLifeTime != BATTERY_LIFE_TIME_UNKNOWN:
 		# Translators: This is the estimated remaining runtime of the laptop battery.
-		text.append(_("{hours:d} hours and {minutes:d} minutes remaining") .format(
+		text.append(_("{hours:d} hours and {minutes:d} minutes remaining").format(
 			hours=sps.BatteryLifeTime // 3600,
 			minutes=(sps.BatteryLifeTime % 3600) // 60)
 		)
+	ui.message(" ".join(text))
