@@ -46,6 +46,7 @@ import inputCore
 import characterProcessing
 from baseObject import ScriptableObject
 import core
+from winAPI.powerTracking import reportCurrentBatteryStatus
 import winVersion
 from base64 import b16encode
 import vision
@@ -2515,26 +2516,8 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_SYSTEM,
 		gesture="kb:NVDA+shift+b"
 	)
-	def script_say_battery_status(self,gesture):
-		UNKNOWN_BATTERY_STATUS = 0xFF
-		AC_ONLINE = 0X1
-		NO_SYSTEM_BATTERY = 0X80
-		sps = winKernel.SYSTEM_POWER_STATUS()
-		if not winKernel.GetSystemPowerStatus(sps) or sps.BatteryFlag is UNKNOWN_BATTERY_STATUS:
-			log.error("error accessing system power status")
-			return
-		if sps.BatteryFlag & NO_SYSTEM_BATTERY:
-			# Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
-			ui.message(_("No system battery"))
-			return
-		# Translators: This is presented to inform the user of the current battery percentage.
-		text = _("%d percent") % sps.BatteryLifePercent + " "
-		# Translators: This is presented when AC power is connected such as when recharging a laptop battery.
-		if sps.ACLineStatus & AC_ONLINE: text += _("AC power on")
-		elif sps.BatteryLifeTime!=0xffffffff: 
-			# Translators: This is the estimated remaining runtime of the laptop battery.
-			text += _("{hours:d} hours and {minutes:d} minutes remaining") .format(hours=sps.BatteryLifeTime // 3600, minutes=(sps.BatteryLifeTime % 3600) // 60)
-		ui.message(text)
+	def script_say_battery_status(self, gesture: inputCore.InputGesture) -> None:
+		reportCurrentBatteryStatus()
 
 	@script(
 		description=_(

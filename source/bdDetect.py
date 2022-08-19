@@ -1,8 +1,7 @@
-#bdDetect.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2013-2017 NV Access Limited
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2013-2022 NV Access Limited
 
 """Support for braille display detection.
 This allows devices to be automatically detected and used when they become available,
@@ -18,19 +17,16 @@ from collections import namedtuple, defaultdict, OrderedDict
 import threading
 
 import typing
-import wx
 import hwPortUtils
 import braille
 import winKernel
 import winUser
-import core
-import ctypes
 from logHandler import log
 import config
-import time
 import appModuleHandler
 from baseObject import AutoPropertyObject
 import re
+from winAPI import messageWindow
 
 
 HID_USAGE_PAGE_BRAILLE = 0x41
@@ -256,7 +252,7 @@ class Detector(object):
 		self._BgScanApc = winKernel.PAPCFUNC(self._bgScan)
 		self._btDevsLock = threading.Lock()
 		self._btDevs = None
-		core.post_windowMessageReceipt.register(self.handleWindowMessage)
+		messageWindow.post_windowMessageReceipt.register(self.handleWindowMessage)
 		appModuleHandler.post_appSwitch.register(self.pollBluetoothDevices)
 		self._stopEvent = threading.Event()
 		self._queuedScanLock = threading.Lock()
@@ -390,7 +386,7 @@ class Detector(object):
 
 	def terminate(self):
 		appModuleHandler.post_appSwitch.unregister(self.pollBluetoothDevices)
-		core.post_windowMessageReceipt.unregister(self.handleWindowMessage)
+		messageWindow.post_windowMessageReceipt.unregister(self.handleWindowMessage)
 		self._stopBgScan()
 
 
