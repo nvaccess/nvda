@@ -59,7 +59,7 @@ def _makeKbEmulateScript(scriptName):
 def _getObjScript(
 		obj: "NVDAObjects.NVDAObject",
 		gesture: "inputCore.InputGesture",
-		globalMapScripts: Set["inputCore._ScriptType"],
+		globalMapScripts: Set[_ScriptFunctionT],
 ) -> Optional[_ScriptFunctionT]:
 	# Search the scripts from the global gesture maps.
 	for cls, scriptName in globalMapScripts:
@@ -82,8 +82,8 @@ def _getObjScript(
 		log.exception()
 
 
-def getGlobalMapScripts(gesture: "inputCore.InputGesture") -> Set["inputCore._ScriptType"]:
-	globalMapScripts: Set["inputCore._ScriptType"] = set()
+def getGlobalMapScripts(gesture: "inputCore.InputGesture") -> Set[_ScriptFunctionT]:
+	globalMapScripts: Set[_ScriptFunctionT] = set()
 	globalMaps = [inputCore.manager.userGestureMap, inputCore.manager.localeGestureMap]
 	globalMap = braille.handler.display.gestureMap if braille.handler and braille.handler.display else None
 	if globalMap:
@@ -95,6 +95,19 @@ def getGlobalMapScripts(gesture: "inputCore.InputGesture") -> Set["inputCore._Sc
 
 
 def findScript(gesture: "inputCore.InputGesture") -> Optional[_ScriptFunctionT]:
+	from utils.security import getSafeScripts
+	from winAPI.sessionTracking import isWindowsLocked
+	foundScript = _findScript(gesture)
+	if (
+		foundScript is not None
+		and isWindowsLocked()
+		and foundScript not in getSafeScripts()
+	):
+		return None
+	return foundScript
+
+
+def _findScript(gesture: "inputCore.InputGesture") -> Optional[_ScriptFunctionT]:
 	focus = api.getFocusObject()
 	if not focus:
 		return None

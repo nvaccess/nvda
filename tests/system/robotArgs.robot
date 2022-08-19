@@ -2,7 +2,7 @@
 --outputdir testOutput\system
 --xunit systemTests.xml
 --pythonpath .\tests\system\libraries
---include NVDA
 --exclude excluded_from_build
+--include fakeTagToEnforceUsageOfInclude
 --variable whichNVDA:source
 --variable installDir:

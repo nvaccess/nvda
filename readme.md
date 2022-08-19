@@ -308,7 +308,8 @@ Any arguments given to rununittests.bat are forwarded onto Nose.
 Please refer to Nose's own documentation on how to filter tests etc.
 
 ### System Tests
-System tests can be run with the `runsystemtests.bat` script.
+System tests can be run with the `runsystemtests.bat --include <TAG>` script.
+To run all tests standard tests for developers use `runsystemtests.bat --include NVDA`.
 Internally this script uses the Robot  test framework to execute the tests.
 Any arguments given to runsystemtests.bat are forwarded onto Robot.
 For more details (including filtering and exclusion of tests) see `tests/system/readme.md`.

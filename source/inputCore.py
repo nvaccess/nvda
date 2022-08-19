@@ -44,7 +44,7 @@ import winKernel
 
 
 _AnyClass = TypeVar("_AnyClass")
-_ScriptType = Tuple[Type[_AnyClass], str]
+_ScriptT = Tuple[Type[_AnyClass], str]
 
 #: Script category for emulated keyboard keys.
 # Translators: The name of a category of NVDA commands.
@@ -337,7 +337,7 @@ class GlobalGestureMap(object):
 						self.lastUpdateContainedError = True
 						continue
 
-	def getScriptsForGesture(self, gesture: InputGesture) -> Generator[_ScriptType, None, None]:
+	def getScriptsForGesture(self, gesture: InputGesture) -> Generator[_ScriptT, None, None]:
 		"""Get the scripts associated with a particular gesture.
 		@param gesture: The gesture identifier.
 		@return: The Python class and script name for each script;

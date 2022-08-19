@@ -980,8 +980,8 @@ class GlobalCommands(ScriptableObject):
 		# Translators: Reported when attempting to move the navigator object to the object under mouse pointer.
 		ui.message(_("Move navigator object to mouse"))
 		obj=api.getMouseObject()
-		api.setNavigatorObject(obj)
-		speech.speakObject(obj)
+		if api.setNavigatorObject(obj):
+			speech.speakObject(obj)
 
 	@script(
 		description=_(
@@ -1189,7 +1189,8 @@ class GlobalCommands(ScriptableObject):
 	def script_navigatorObject_toFocus(self,gesture):
 		tIAtCaret = self._getTIAtCaret(True)
 		focusedObj = api.getFocusObject()
-		api.setNavigatorObject(focusedObj)
+		if not api.setNavigatorObject(focusedObj):
+			return
 		api.setReviewPosition(tIAtCaret)
 		# Translators: Reported when attempting to move the navigator object to focus.
 		speech.speakMessage(_("Move to focus"))
@@ -1242,8 +1243,7 @@ class GlobalCommands(ScriptableObject):
 			return
 		simpleReviewMode=config.conf["reviewCursor"]["simpleReviewMode"]
 		curObject=curObject.simpleParent if simpleReviewMode else curObject.parent
-		if curObject is not None:
-			api.setNavigatorObject(curObject)
+		if curObject is not None and api.setNavigatorObject(curObject):
 			speech.speakObject(curObject, reason=controlTypes.OutputReason.FOCUS)
 		else:
 			# Translators: Reported when there is no containing (parent) object such as when focused on desktop.
@@ -1264,8 +1264,7 @@ class GlobalCommands(ScriptableObject):
 			return
 		simpleReviewMode=config.conf["reviewCursor"]["simpleReviewMode"]
 		curObject=curObject.simpleNext if simpleReviewMode else curObject.next
-		if curObject is not None:
-			api.setNavigatorObject(curObject)
+		if curObject is not None and api.setNavigatorObject(curObject):
 			speech.speakObject(curObject, reason=controlTypes.OutputReason.FOCUS)
 		else:
 			# Translators: Reported when there is no next object (current object is the last object).
@@ -1286,8 +1285,7 @@ class GlobalCommands(ScriptableObject):
 			return
 		simpleReviewMode=config.conf["reviewCursor"]["simpleReviewMode"]
 		curObject=curObject.simplePrevious if simpleReviewMode else curObject.previous
-		if curObject is not None:
-			api.setNavigatorObject(curObject)
+		if curObject is not None and api.setNavigatorObject(curObject):
 			speech.speakObject(curObject, reason=controlTypes.OutputReason.FOCUS)
 		else:
 			# Translators: Reported when there is no previous object (current object is the first object).
@@ -1308,8 +1306,7 @@ class GlobalCommands(ScriptableObject):
 			return
 		simpleReviewMode=config.conf["reviewCursor"]["simpleReviewMode"]
 		curObject=curObject.simpleFirstChild if simpleReviewMode else curObject.firstChild
-		if curObject is not None:
-			api.setNavigatorObject(curObject)
+		if curObject is not None and api.setNavigatorObject(curObject):
 			speech.speakObject(curObject, reason=controlTypes.OutputReason.FOCUS)
 		else:
 			# Translators: Reported when there is no contained (first child) object such as inside a document.
@@ -1432,6 +1429,61 @@ class GlobalCommands(ScriptableObject):
 		else:
 			api.setReviewPosition(info)
 		speech.speakTextInfo(newLine, unit=textInfos.UNIT_LINE, reason=controlTypes.OutputReason.CARET)
+
+	@script(
+		# Translators: Input help mode message for move review cursor to previous page command.
+		description=_("Moves the review cursor to the previous page of the current navigator object and speaks it"),
+		resumeSayAllMode=sayAll.CURSOR.REVIEW,
+		category=SCRCAT_TEXTREVIEW,
+		gestures=("kb:NVDA+pageUp", "kb(laptop):NVDA+shift+pageUp", "ts(text):flickUp")
+	)
+	def script_review_previousPage(self, gesture: inputCore.InputGesture) -> None:
+		info = api.getReviewPosition().copy()
+		try:
+			info.expand(textInfos.UNIT_PAGE)
+			info.collapse()
+			res = info.move(textInfos.UNIT_PAGE, -1)
+		except (ValueError, NotImplementedError):
+			# Translators: a message reported when movement by page is unsupported
+			ui.reviewMessage(_("Movement by page not supported"))
+			return
+		if res == 0:
+			# Translators: a message reported when review cursor is at the top line of the current navigator object.
+			ui.reviewMessage(_("Top"))
+		else:
+			api.setReviewPosition(info)
+		info.expand(textInfos.UNIT_PAGE)
+		speech.speakTextInfo(info, unit=textInfos.UNIT_PAGE, reason=controlTypes.OutputReason.CARET)
+
+	@script(
+		# Translators: Input help mode message for move review cursor to next page command.
+		description=_("Moves the review cursor to the next page of the current navigator object and speaks it"),
+		resumeSayAllMode=sayAll.CURSOR.REVIEW,
+		category=SCRCAT_TEXTREVIEW,
+		gestures=("kb:NVDA+pageDown", "kb(laptop):NVDA+shift+pageDown", "ts(text):flickUp")
+	)
+	def script_review_nextPage(self, gesture: inputCore.InputGesture) -> None:
+		origInfo = api.getReviewPosition().copy()
+		origInfo.collapse()
+		info = origInfo.copy()
+		try:
+			res = info.move(textInfos.UNIT_PAGE, 1)
+			newPage = info.copy()
+			newPage.expand(textInfos.UNIT_PAGE)
+		except (ValueError, NotImplementedError):
+			# Translators: a message reported when movement by page is unsupported
+			ui.reviewMessage(_("Movement by page not supported"))
+			return
+		# #12808: Some implementations of move forward may succeed one more time than expected,
+		# landing on the exclusive end of the document.
+		# Therefore, verify that expanding after the move does result in being on a new page,
+		# i.e. the new page starts after the original review cursor position.
+		if res == 0 or newPage.start <= origInfo.start:
+			# Translators: a message reported when review cursor is at the bottom line of the current navigator object.
+			ui.reviewMessage(_("Bottom"))
+		else:
+			api.setReviewPosition(info)
+		speech.speakTextInfo(newPage, unit=textInfos.UNIT_PAGE, reason=controlTypes.OutputReason.CARET)
 
 	@script(
 		# Translators: Input help mode message for move review cursor to bottom line command.
@@ -2063,7 +2115,8 @@ class GlobalCommands(ScriptableObject):
 		if obj:
 			text = api.getStatusBarText(obj)
 			if setReviewCursor:
-				api.setNavigatorObject(obj)
+				if not api.setNavigatorObject(obj):
+					return None
 			found = True
 		else:
 			foreground = api.getForegroundObject()
@@ -2181,7 +2234,7 @@ class GlobalCommands(ScriptableObject):
 		description=_(
 			# Translators: Description for a keyboard command which reports the
 			# accelerator key of the currently focused object.
-			"Reports the shortcut key of the currently focused object.",
+			"Reports the shortcut key of the currently focused object",
 		),
 		category=SCRCAT_FOCUS,
 		gestures=("kb:shift+numpad2", "kb(laptop):NVDA+control+shift+."),
@@ -3270,8 +3323,7 @@ class GlobalCommands(ScriptableObject):
 				parent=parent.simpleParent
 			if parent:
 				newObject=parent.simpleNext
-		if newObject:
-			api.setNavigatorObject(newObject)
+		if newObject and api.setNavigatorObject(newObject):
 			speech.speakObject(newObject, reason=controlTypes.OutputReason.FOCUS)
 		else:
 			# Translators: a message when there is no next object when navigating
@@ -3291,8 +3343,7 @@ class GlobalCommands(ScriptableObject):
 				newObject=newObject.simpleLastChild
 		else:
 			newObject=curObject.simpleParent
-		if newObject:
-			api.setNavigatorObject(newObject)
+		if newObject and api.setNavigatorObject(newObject):
 			speech.speakObject(newObject, reason=controlTypes.OutputReason.FOCUS)
 		else:
 			# Translators: a message when there is no previous object when navigating
