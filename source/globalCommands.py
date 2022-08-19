@@ -980,8 +980,8 @@ class GlobalCommands(ScriptableObject):
 		# Translators: Reported when attempting to move the navigator object to the object under mouse pointer.
 		ui.message(_("Move navigator object to mouse"))
 		obj=api.getMouseObject()
-		api.setNavigatorObject(obj)
-		speech.speakObject(obj)
+		if api.setNavigatorObject(obj):
+			speech.speakObject(obj)
 
 	@script(
 		description=_(
@@ -1189,7 +1189,8 @@ class GlobalCommands(ScriptableObject):
 	def script_navigatorObject_toFocus(self,gesture):
 		tIAtCaret = self._getTIAtCaret(True)
 		focusedObj = api.getFocusObject()
-		api.setNavigatorObject(focusedObj)
+		if not api.setNavigatorObject(focusedObj):
+			return
 		api.setReviewPosition(tIAtCaret)
 		# Translators: Reported when attempting to move the navigator object to focus.
 		speech.speakMessage(_("Move to focus"))
@@ -1242,8 +1243,7 @@ class GlobalCommands(ScriptableObject):
 			return
 		simpleReviewMode=config.conf["reviewCursor"]["simpleReviewMode"]
 		curObject=curObject.simpleParent if simpleReviewMode else curObject.parent
-		if curObject is not None:
-			api.setNavigatorObject(curObject)
+		if curObject is not None and api.setNavigatorObject(curObject):
 			speech.speakObject(curObject, reason=controlTypes.OutputReason.FOCUS)
 		else:
 			# Translators: Reported when there is no containing (parent) object such as when focused on desktop.
@@ -1264,8 +1264,7 @@ class GlobalCommands(ScriptableObject):
 			return
 		simpleReviewMode=config.conf["reviewCursor"]["simpleReviewMode"]
 		curObject=curObject.simpleNext if simpleReviewMode else curObject.next
-		if curObject is not None:
-			api.setNavigatorObject(curObject)
+		if curObject is not None and api.setNavigatorObject(curObject):
 			speech.speakObject(curObject, reason=controlTypes.OutputReason.FOCUS)
 		else:
 			# Translators: Reported when there is no next object (current object is the last object).
@@ -1286,8 +1285,7 @@ class GlobalCommands(ScriptableObject):
 			return
 		simpleReviewMode=config.conf["reviewCursor"]["simpleReviewMode"]
 		curObject=curObject.simplePrevious if simpleReviewMode else curObject.previous
-		if curObject is not None:
-			api.setNavigatorObject(curObject)
+		if curObject is not None and api.setNavigatorObject(curObject):
 			speech.speakObject(curObject, reason=controlTypes.OutputReason.FOCUS)
 		else:
 			# Translators: Reported when there is no previous object (current object is the first object).
@@ -1308,8 +1306,7 @@ class GlobalCommands(ScriptableObject):
 			return
 		simpleReviewMode=config.conf["reviewCursor"]["simpleReviewMode"]
 		curObject=curObject.simpleFirstChild if simpleReviewMode else curObject.firstChild
-		if curObject is not None:
-			api.setNavigatorObject(curObject)
+		if curObject is not None and api.setNavigatorObject(curObject):
 			speech.speakObject(curObject, reason=controlTypes.OutputReason.FOCUS)
 		else:
 			# Translators: Reported when there is no contained (first child) object such as inside a document.
@@ -2118,7 +2115,8 @@ class GlobalCommands(ScriptableObject):
 		if obj:
 			text = api.getStatusBarText(obj)
 			if setReviewCursor:
-				api.setNavigatorObject(obj)
+				if not api.setNavigatorObject(obj):
+					return None
 			found = True
 		else:
 			foreground = api.getForegroundObject()
@@ -3325,8 +3323,7 @@ class GlobalCommands(ScriptableObject):
 				parent=parent.simpleParent
 			if parent:
 				newObject=parent.simpleNext
-		if newObject:
-			api.setNavigatorObject(newObject)
+		if newObject and api.setNavigatorObject(newObject):
 			speech.speakObject(newObject, reason=controlTypes.OutputReason.FOCUS)
 		else:
 			# Translators: a message when there is no next object when navigating
@@ -3346,8 +3343,7 @@ class GlobalCommands(ScriptableObject):
 				newObject=newObject.simpleLastChild
 		else:
 			newObject=curObject.simpleParent
-		if newObject:
-			api.setNavigatorObject(newObject)
+		if newObject and api.setNavigatorObject(newObject):
 			speech.speakObject(newObject, reason=controlTypes.OutputReason.FOCUS)
 		else:
 			# Translators: a message when there is no previous object when navigating
