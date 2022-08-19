@@ -4,17 +4,17 @@
 %!includeconf: ../changes.t2tconf
 
 = 2022.3 =
-A significant amount of this release was contributed by the NVDA development community.
-This includes delayed character descriptions and improved Windows Console support.
+ Znaczna część tej wersji została opracowana przez społeczność programistów NVDA.
+Zawiera ona opisy liter po ich nazwach  oraz poprawione wsparcie dla konsoli systemu operacyjnego Windows.
 
-This release also includes several bug fixes.
-Notably, up-to-date versions of Adobe Acrobat/Reader will no longer crash when reading a PDF document.
+Dodano również kilka poprawek błędów.
+Najistotniejsza poprawka błędów dla najnowszych wersji programów Adobe Acrobat/Reader zapobiega niespodziewanemu zamykaniu się programu z raportem o błędzie podczas wyświetlania dokumentu PDF.
 
-eSpeak has been updated, which introduces 3 new languages: Belarusian, Luxembourgish and Totontepec Mixe.
+Do najnowszej wersji syntezatora mowy eSpeak dodano 3 nowe języki: białoruski, luksemburski i Totontepec Mixe.
 
-== New Features ==
-- In the Windows Console Host used by Command Prompt, PowerShell, and the Windows Subsystem for Linux on Windows 11 version 22H2 (Sun Valley 2) and later:
-  - Vastly improved performance and stability. (#10964)
+== Nowe funkcje ==
+- W Hoście konsoli używanym przez wiersz poleceń, PowerShell oraz podsystem Linux dla systemu Windows 11 w wersji 22H2 (Sun Valley 2) i nowszych:
+  - znacząco poprawiono wydajność i stabilność. (#10964)
   - When pressing ``control+f`` to find text, the review cursor position is updated to follow the found term. (#11172)
   - Reporting of typed text that does not appear on-screen (such as passwords) is disabled by default.
 It can be re-enabled in NVDA's advanced settings panel. (#11554)
