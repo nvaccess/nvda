@@ -8,8 +8,18 @@ What's New in NVDA
 == New Features ==
 - Added a "Quick Start Guide" section to the User Guide. (#13934)
 - Introduced a new command to check the keyboard shortcut of the current focus. (#13960)
-  - Desktop: ``shift+numpad2``
-  - Laptop: ``NVDA+ctrl+shift+.``
+  - Desktop: ``shift+numpad2``.
+  - Laptop: ``NVDA+ctrl+shift+.``.
+  -
+- Introduced new commands to move the review cursor by page where supported by the application.
+  - Move to previous page:
+    - Desktop: ``NVDA+pageUp``.
+    - Laptop: ``NVDA+shift+pageUp``.
+    -
+  - Move to next page:
+    - Desktop: ``NVDA+pageDown``.
+    - Laptop: ``NVDA+shift+pageDown``.
+    -
   -
 -
 
@@ -22,6 +32,10 @@ What's New in NVDA
 - NVDA will now correctly announce Group boxes in Java applications. (#13962)
 - Caret properly follows spoken text in say all in applications such as Bookworm, WordPad, or the NVDA log viewer. (#13420, #9179)
 - In programs using UI Automation, partially checked checkboxes will be reported correctly. (#13975)
+- Improved performance and stability in in Microsoft Visual Studio, Windows Terminal, and other UI Automation based applications. (#11077, #11209)
+  - These fixes apply to Windows 11 Sun Valley 2 (version 22H2) and later.
+  - Selective registration for UI Automation events and property changes now enabled by default.
+  -
 -
 
 
@@ -102,6 +116,27 @@ This will improve performance for some Java applications including IntelliJ IDEA
 === Deprecations ===
 There are no deprecations proposed in 2022.3.
 
+
+= 2022.2.1 =
+This is a minor release to fix a security issue.
+Please responsibly disclose security issues to info@nvaccess.org.
+
+== Security Fixes ==
+- Fixed exploit where it was possible to run a python console from the lockscreen. (GHSA-rmq3-vvhq-gp32)
+- Fixed exploit where it was possible to escape the lockscreen using object navigation. (GHSA-rmq3-vvhq-gp32)
+-
+
+== Changes for Developers ==
+
+=== Deprecations ===
+These deprecations are currently not scheduled for removal.
+The deprecated aliases will remain until further notice.
+Please test the new API and provide feedback.
+For add-on authors, please open a GitHub issue if these changes stop the API from meeting your needs.
+
+- ``appModules.lockapp.LockAppObject`` should be replaced with ``NVDAObjects.lockscreen.LockScreenObject``. (GHSA-rmq3-vvhq-gp32)
+- ``appModules.lockapp.AppModule.SAFE_SCRIPTS`` should be replaced with ``utils.security.getSafeScripts()``. (GHSA-rmq3-vvhq-gp32)
+-
 
 = 2022.2 =
 This release includes many bug fixes.

@@ -1,7 +1,7 @@
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2016-2018 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2016-2022 NV Access Limited
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 from dataclasses import dataclass
 from typing import Optional
@@ -15,7 +15,6 @@ import queueHandler
 import api
 import screenBitmap
 import speech
-import globalVars
 import eventHandler
 from logHandler import log
 import config
@@ -220,7 +219,8 @@ def executeMouseMoveEvent(x,y):
 	if oldMouseObject==mouseObject:
 		mouseObject=oldMouseObject
 	else:
-		api.setMouseObject(mouseObject)
+		if not api.setMouseObject(mouseObject):
+			return
 	try:
 		eventHandler.executeEvent("mouseMove",mouseObject,x=x,y=y)
 		oldMouseObject=mouseObject

@@ -2,7 +2,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2020 NV Access Limited, Peter Vágner, Joseph Lee, Bill Dengler
+# Copyright (C) 2006-2022 NV Access Limited, Peter Vágner, Joseph Lee, Bill Dengler
 
 """Mix-in classes which provide common behaviour for particular types of controls across different APIs.
 Behaviors described in this mix-in include providing table navigation commands for certain table rows, terminal input and output support, announcing notifications and suggestion items and so on.
@@ -591,8 +591,8 @@ class RowWithFakeNavigation(NVDAObject):
 		if obj is not self:
 			# Use the focused copy of the row as the parent for all cells to make comparison faster.
 			obj.parent = self
-		api.setNavigatorObject(obj)
-		speech.speakObject(obj, reason=controlTypes.OutputReason.FOCUS)
+		if api.setNavigatorObject(obj):
+			speech.speakObject(obj, reason=controlTypes.OutputReason.FOCUS)
 
 	def _moveToColumnNumber(self, column):
 		child = column - 1

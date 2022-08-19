@@ -92,7 +92,8 @@ class ImeCandidateItem(CandidateItemBehavior, UIA):
 		if isinstance(oldNav, ImeCandidateItem) and self.name == oldNav.name:
 			# Duplicate selection event fired on the candidate item. Ignore it.
 			return
-		api.setNavigatorObject(self)
+		if not api.setNavigatorObject(self):
+			return
 		speech.cancelSpeech()
 		# Report the entire current page of candidate items if it is newly shown  or it has changed.
 		if config.conf["inputComposition"]["autoReportAllCandidates"]:
@@ -149,8 +150,7 @@ class AppModule(appModuleHandler.AppModule):
 				# Emoji categories list.
 				ui.message(candidate.name)
 				obj = candidate.firstChild
-		if obj is not None:
-			api.setNavigatorObject(obj)
+		if obj is not None and api.setNavigatorObject(obj):
 			obj.reportFocus()
 			braille.handler.message(braille.getPropertiesBraille(
 				name=obj.name,

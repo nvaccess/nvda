@@ -18,7 +18,6 @@ import api
 import speech
 import eventHandler
 import mouseHandler
-from NVDAObjects.window import Window
 from NVDAObjects.IAccessible import IAccessible, List
 from NVDAObjects.UIA import UIA
 from NVDAObjects.behaviors import ToolTip
@@ -46,9 +45,9 @@ class SuggestionListItem(UIA):
 
 	def event_UIA_elementSelected(self):
 		speech.cancelSpeech()
-		api.setNavigatorObject(self, isFocus=True)
-		self.reportFocus()
-		super(SuggestionListItem,self).event_UIA_elementSelected()
+		if api.setNavigatorObject(self, isFocus=True):
+			self.reportFocus()
+			super().event_UIA_elementSelected()
 
 
 # Windows 8 hack: Class to disable incorrect focus on windows 8 search box (containing the already correctly focused edit field)

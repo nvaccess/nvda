@@ -3,6 +3,72 @@ Was ist neu in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2022.3 =
+Ein großer Teil dieser Version wurde von der NVDA-Entwicklergemeinschaft beigesteuert. 
+Dazu gehören verzögerte Zeichenbeschreibungen und eine verbesserte Unterstützung der Windows-Konsole.
+
+Diese Version enthält auch mehrere Fehlerbehebungen.
+Insbesondere stürzen aktuelle Versionen von Adobe Acrobat bzw. Adobe Reader beim Lesen von PDF-Dokumenten nicht mehr ab.
+
+eSpeak wurde aktualisiert, wodurch drei neue Sprachen hinzugekommen sind: Belarussisch, Luxemburgisch und Totontepec Mixe.
+
+== Neue Features ==
+- Im Windows Console Host, der von  der Eingabeaufforderung, PowerShell und dem Windows-Subsystem für Linux unter Windows 11 Version 22H2 (Sun Valley 2) und neuer verwendet wird:
+  - Deutlich verbesserte Leistung und Stabilität. (#10964)
+  - Wenn Sie ``Strg+F`` drücken, um Text zu suchen, wird die Position des NVDA-Cursors aktualisiert, um dem gefundenen Begriff zu folgen. (#11172)
+  - Die Meldung von eingegebenem Text, der nicht auf dem Bildschirm erscheint (z. B. Kennwörter), ist standardmäßig deaktiviert.
+Dies kann in den erweiterten Einstellungen von NVDA wieder aktiviert werden. (#11554)
+  - Text, der aus dem Bildschirm gescrollt wurde, kann ohne Scrollen des Konsolenfensters nachgelesen werden. (#12669)
+  - Ausführlichere Informationen zur Textformatierung sind verfügbar. ([Microsoft Windows-Terminal PR 10336 https://github.com/microsoft/terminal/pull/10336])
+  -
+- Eine neue Sprachoption wurde hinzugefügt, um Zeichenbeschreibungen nach einer Verzögerung zu lesen. (#13509)
+- Eine neue Braille-Option wurde hinzugefügt, mit der festgelegt werden kann, ob beim Vorwärts- bzw. Rückwärtsscrollen der Anzeige die Sprachausgabe unterbrochen werden soll. (#2124)
+-
+
+
+== Änderungen ==
+- eSpeak NG wurde auf 1.52-dev commit ``9de65fcb`` aktualisiert. (#13295)
+  - Weitere Sprachen hinzugefügt:
+    - Belarussisch
+    - Luxembourgisch
+    - Totontepec Mixe
+    -
+  -
+ Bei Verwendung von UIA für den Zugriff auf Steuerelemente von Microsoft Excel-Tabellenkalkulationen kann NVDA nun mitteilen, sobald eine Zelle zusammengeführt wird. (#12843)
+- Anstatt "hat Details" zu melden, wird, sofern möglich, der Zweck der Details angegeben, zum Beispiel "enthält Kommentar". (#13649)
+- Die Installationsgröße von NVDA wird nun im Abschnitt Windows-Programme und -Funktionen angezeigt. (#13909)
+-
+
+
+== Fehlerbehebungen ==
+- Der Adobe Acrobat / Adobe Reader (64-Bit) stürzt beim Lesen eines PDF-Dokuments nicht mehr ab. (#12920)
+  - Bitte beachten Sie, dass die aktuellste Version von Adobe Acrobat bzw. Adobe Reader ebenfalls erforderlich ist, um den Absturz zu vermeiden.
+  -
+- Die Messungen von Schriftgrößen sind nun in NVDA übersetzbar. (#13573)
+- Ignoriert Java Access Bridge-Ereignisse, bei denen kein Fensterhandle für Java-Anwendungen gefunden werden kann.
+Dies verbessert die Leistung für einige Java-Anwendungen, einschließlich IntelliJ IDEA. (#13039)
+- Die Mitteilungen ausgewählter Zellen für LibreOffice Calc ist effizienter und führt nicht mehr zu einem Einfrieren von Calc, wenn viele Zellen ausgewählt sind. (#13232)
+- Wenn Microsoft Edge unter einem anderen Benutzer ausgeführt wird, ist es (weiterhin) zugänglich. (#13032)
+- Wenn die Erhöhung der Geschwindigkeit ausgeschaltet ist, sinkt die Geschwindigkeit von eSpeak nicht mehr zwischen 99 und 100 %. (#13876)
+- Behebung eines Fehlers, der das Öffnen von doppelte Dialogfeldern der Tastenbefehle ermöglichte. (#13854)
+-
+
+
+== Änderungen für Entwickler ==
+- Comtypes auf Version 1.1.11 aktualisiert. (#12953)
+- In Builds der Windows-Konsole (``conhost.exe``) mit einem NVDA-API-Level von 2 (``FORMATTED``) oder höher, wie sie in Windows 11 Version 22H2 (Sun Valley 2) enthalten sind, wird nun standardmäßig UIA verwendet. (#10964)
+  - Dies kann durch Ändern der Einstellung der Unterstützung für Windows-Konsolen in den erweiterten Einstellungen von NVDA außer Kraft gesetzt werden.
+  - Um die NVDA-API-Level Ihrer Windows-Konsole zu ermitteln, setzen Sie "Windows-Konsolenunterstützung" auf "UIA, wenn verfügbar" und überprüfen Sie dann das Protokoll mit NVDA+F1, das von einer laufenden Windows-Konsoleninstanz geöffnet wurde.
+  -
+- Die virtuelle Chromium-Ansicht wird nun auch dann geladen, wenn das Dokumentobjekt den MSAA ``STATE_SYSTEM_BUSY`` hat, der über IA2 ausgesetzt ist. (#13306)
+- Für die Verwendung mit experimentellen Funktionen in NVDA wurde ein Konfigurationsspezifikationstyp ``featureFlag`` erstellt. Siehe ``devDocs/featureFlag.md`` für weitere Informationen. (#13859)
+-
+
+
+=== Veraltete Funktionen ===
+Für 2022.3 wurden keine Änderungen an der API vorgenommen.
+
+
 = 2022.2 =
 Diese Version enthält viele Fehlerbehebungen.
 Vor allem für Java-basierte Anwendungen, Braillezeilen und Windows-Funktionen gibt es erhebliche Verbesserungen.
@@ -3743,5 +3809,5 @@ Die wichtigsten Neuerungen dieser Version sind u. a. die Unterstützung von 64-B
 - Falls es beim Wechsel der Sprache zu einem Fehler kommt, wird der anwender darüber informiert.
 - NVDA fragt nun nach, ob nach einem Sprachenwechsel die Konfiguration gespeichert und neu gestartet werden soll. Ein Neustart von NVDA ist nach einem sprachenwechsel notwendig.
 - Wenn bei der Auswahl eines Synthesizers aus dem Sprachausgabendialog dieser nicht geladen werden kann, wird der Anwender darüber informiert.
-- Wird ein Synthesizer das erste mal geladen, wird nach einer passenden Stimme gesucht bzw. passende Werte für Geschwindigkeit, Lautstärke und Stimmhöhe eingestellt. Dies behebt Probleme mit den sapi4-Versionen von Eloquence und viavoice, die bisher zu schnell gesprochen haben.
+- Wird eine Sprachausgabe das erste mal geladen, wird nach einer passenden Stimme gesucht bzw. passende Werte für Geschwindigkeit, Lautstärke und Stimmhöhe eingestellt. Dies behebt Probleme mit den sapi4-Versionen von Eloquence und viavoice, die bisher zu schnell gesprochen haben.
 
