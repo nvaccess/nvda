@@ -44,9 +44,10 @@ class NotepadLib:
 	_testFileStagingPath = _tempfile.mkdtemp()
 	_testCaseTitle = "test"
 
-	def __init__(self):
-		self.notepadWindow: _Optional[Window] = None
-		self.processRFHandleForStart: _Optional[int] = None
+	# Use class variables for state that should be tied to the RF library instance.
+	# These variables will be available in the teardown
+	notepadWindow: _Optional[Window] = None
+	processRFHandleForStart: _Optional[int] = None
 
 	@staticmethod
 	def _getTestCasePath(filename):
@@ -58,23 +59,23 @@ class NotepadLib:
 		builtIn.log(
 			# True is expected due to /wait argument.
 			"Is Start process still running (True expected): "
-			f"{process.is_process_running(self.processRFHandleForStart)}"
+			f"{process.is_process_running(NotepadLib.processRFHandleForStart)}"
 		)
 		spy.emulateKeyPress('alt+f4')
 		process.wait_for_process(
-			self.processRFHandleForStart,
+			NotepadLib.processRFHandleForStart,
 			timeout="1 minute",
 			on_timeout="continue"
 		)
 		builtIn.log(
 			# False is expected, chrome should have allowed "Start" to exit.
 			"Is Start process still running (False expected): "
-			f"{process.is_process_running(self.processRFHandleForStart)}"
+			f"{process.is_process_running(NotepadLib.processRFHandleForStart)}"
 		)
 
 	def start_notepad(self, filePath: str, expectedTitlePattern: re.Pattern) -> Window:
 		builtIn.log(f"starting notepad: {filePath}")
-		self.processRFHandleForStart = process.start_process(
+		NotepadLib.processRFHandleForStart = process.start_process(
 			"start"  # windows utility to start a process
 			# https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/start
 			" /wait"  # Starts an application and waits for it to end.
@@ -83,9 +84,9 @@ class NotepadLib:
 			shell=True,
 			alias='NotepadAlias',
 		)
-		process.process_should_be_running(self.processRFHandleForStart)
+		process.process_should_be_running(NotepadLib.processRFHandleForStart)
 
-		success, self.notepadWindow = _blockUntilConditionMet(
+		success, NotepadLib.notepadWindow = _blockUntilConditionMet(
 			getValue=lambda: GetWindowWithTitle(expectedTitlePattern, lambda message: builtIn.log(message, "DEBUG")),
 			giveUpAfterSeconds=3,
 			shouldStopEvaluator=lambda _window: _window is not None,
@@ -93,9 +94,9 @@ class NotepadLib:
 			errorMessage="Unable to get notepad window"
 		)
 
-		if not success or self.notepadWindow is None:
+		if not success or NotepadLib.notepadWindow is None:
 			builtIn.fatal_error("Unable to get notepad window")
-		return self.notepadWindow
+		return NotepadLib.notepadWindow
 
 	@staticmethod
 	def getUniqueTestCaseTitle(testCase: str) -> str:
