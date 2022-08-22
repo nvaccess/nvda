@@ -94,7 +94,7 @@ class SystemPowerStatus(ctypes.Structure):
 	BatteryLifeTime: int
 
 
-_batteryState: PowerState = 0
+_batteryState: PowerState = PowerState.UNKNOWN
 
 
 def initialize():
