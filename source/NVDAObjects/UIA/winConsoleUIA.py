@@ -421,7 +421,9 @@ def findExtraOverlayClasses(obj, clsList):
 
 
 class WinTerminalUIA(UIA):
+	#: Override the role, which is controlTypes.Role.STATICTEXT by default.
 	role = controlTypes.Role.TERMINAL
+	#: New line text is announced using UIA notification events
 	announceNewLineText=False
 
 	def event_UIA_notification(self, notificationKind, notificationProcessing, displayString, activityId):
