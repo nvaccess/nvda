@@ -18,7 +18,7 @@ from SystemTestSpy import (
 from SystemTestSpy.windows import (
 	GetForegroundWindowTitle,
 	GetVisibleWindowTitles,
-	GetForegroundHwnd,
+	GetForegroundHwnd as _getForegroundHwnd,
 	GetWindowWithTitle,
 	Window,
 )
@@ -124,7 +124,7 @@ class NotepadLib:
 			notepadWindow = GetWindowWithTitle(startsWithTestCaseTitle, builtIn.log)
 			if notepadWindow is None:
 				return False
-			return notepadWindow.hwndVal == GetForegroundHwnd()
+			return notepadWindow.hwndVal == _getForegroundHwnd()
 
 		success, _success = _blockUntilConditionMet(
 			getValue=_isNotepadInForeground,
