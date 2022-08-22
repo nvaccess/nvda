@@ -160,10 +160,15 @@ class ChromeLib:
 		"""
 		spy = _NvdaLib.getSpyLib()
 		spy.wait_for_speech_to_finish()
-		lastSpeechIndex = spy.get_last_speech_index()
-		spy.emulateKeyPress('alt+d')  # focus the address bar, chrome shortcut
-		spy.wait_for_speech_to_finish(speechStartedIndex=lastSpeechIndex)
-		addressSpeechIndex = spy.get_last_speech_index()
+		expectedAddressBarSpeech = "Address and search bar"
+		moveToAddressBarSpeech = _NvdaLib.getSpeechAfterKey('nvda+tab')  # report current focus.
+		if expectedAddressBarSpeech not in moveToAddressBarSpeech:
+			moveToAddressBarSpeech = _NvdaLib.getSpeechAfterKey('alt+d')  # focus the address bar, chrome shortcut
+			if expectedAddressBarSpeech not in moveToAddressBarSpeech:
+				builtIn.log(
+					f"Didn't read '{expectedAddressBarSpeech}' after alt+d, instead got: {moveToAddressBarSpeech}"
+				)
+				return False
 
 		spy.emulateKeyPress('control+F6')  # focus web content, chrome shortcut.
 		spy.wait_for_speech_to_finish(speechStartedIndex=addressSpeechIndex)
