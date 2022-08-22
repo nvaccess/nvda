@@ -174,34 +174,40 @@ def _yieldObjectsForFindScript(
 	import globalCommands
 	focus = api.getFocusObject()
 
-	yield gesture.scriptableObject, None  # Gesture specific scriptable object.
-	yield from ((p, None) for p in globalPluginHandler.runningPlugins)  # Global plugin level.
-	yield focus.appModule, None  # App module level.
+	# Gesture specific scriptable object
+	yield gesture.scriptableObject, None
+	# Global plugins
+	yield from ((p, None) for p in globalPluginHandler.runningPlugins)
+	# App module
+	yield focus.appModule, None
 
-	# Braille display level
+	# Braille display
 	if (
 		braille.handler
 		and isinstance(braille.handler.display, baseObject.ScriptableObject)
 	):
 		yield braille.handler.display, None
 
-	# Vision enhancement provider level
+	# Vision enhancement provider
 	if vision.handler:
 		for provider in vision.handler.getActiveProviderInstances():
 			if isinstance(provider, baseObject.ScriptableObject):
 				yield provider, None
 
+	# Tree interceptor
 	treeInterceptor = focus.treeInterceptor
 	if treeInterceptor and treeInterceptor.isReady:
 		yield treeInterceptor, _getTreeModeInterceptorScript
 
-	# NVDAObject level.
+	# NVDAObject
 	yield focus, None
 
 	# Focus ancestors
 	yield from ((a, _getFocusAncestorScript) for a in reversed(api.getFocusAncestors()))
 
+	# Configuration profile activation scripts
 	yield globalCommands.configProfileActivationCommands, None
+	# Global commands
 	yield globalCommands.commands, None
 
 
