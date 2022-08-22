@@ -22,7 +22,7 @@ import config
 import winUser
 import extensionPoints
 import oleacc
-from utils.security import objectOutsideOfLockScreenAndWindowsIsLocked
+from utils.security import objectBelowLockScreenAndWindowsIsLocked
 
 if typing.TYPE_CHECKING:
 	import NVDAObjects
@@ -158,7 +158,7 @@ def _trackFocusObject(eventName: str, obj: "NVDAObjects.NVDAObject") -> None:
 
 	if (
 		eventName == "gainFocus"
-		and not objectOutsideOfLockScreenAndWindowsIsLocked(
+		and not objectBelowLockScreenAndWindowsIsLocked(
 			obj,
 			shouldLog=config.conf["debugLog"]["events"],
 		)
@@ -282,7 +282,7 @@ def executeEvent(
 	@param obj: the object the event is for
 	@param kwargs: Additional event parameters as keyword arguments.
 	"""
-	if objectOutsideOfLockScreenAndWindowsIsLocked(
+	if objectBelowLockScreenAndWindowsIsLocked(
 		obj,
 		shouldLog=config.conf["debugLog"]["events"],
 	):
@@ -304,7 +304,7 @@ def executeEvent(
 
 
 def doPreGainFocus(obj: "NVDAObjects.NVDAObject", sleepMode: bool = False) -> bool:
-	if objectOutsideOfLockScreenAndWindowsIsLocked(
+	if objectBelowLockScreenAndWindowsIsLocked(
 		obj,
 		shouldLog=config.conf["debugLog"]["events"],
 	):

@@ -78,7 +78,7 @@ def _isLockAppAndAlive(appModule: "appModuleHandler.AppModule") -> bool:
 	return appModule.appName == "lockapp" and appModule.isAlive
 
 
-def objectOutsideOfLockScreenAndWindowsIsLocked(
+def objectBelowLockScreenAndWindowsIsLocked(
 		obj: "NVDAObjects.NVDAObject",
 		shouldLog: bool = True,
 ) -> bool:
