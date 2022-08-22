@@ -30,7 +30,7 @@ from speech.commands import (
 	CharacterModeCommand,
 	PhonemeCommand,
 )
-from utils.security import _isSecureObjectWhileLockScreenActivated
+from utils.security import objectOutsideOfLockScreenAndWindowsIsLocked
 
 
 RE_MP_SPEECH = re.compile(
@@ -103,7 +103,7 @@ class MathPlayerInteraction(mathPres.MathInteractionNVDAObject):
 			self,
 			review: bool = False,
 	) -> Generator[braille.Region, None, None]:
-		if _isSecureObjectWhileLockScreenActivated(self):
+		if objectOutsideOfLockScreenAndWindowsIsLocked(self):
 			return
 		yield braille.NVDAObjectRegion(self, appendText=" ")
 		region = braille.Region()

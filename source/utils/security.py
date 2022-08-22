@@ -78,10 +78,7 @@ def _isLockAppAndAlive(appModule: "appModuleHandler.AppModule") -> bool:
 	return appModule.appName == "lockapp" and appModule.isAlive
 
 
-# TODO: mark this API as public when it becomes stable (i.e. remove the underscore).
-# Add-on authors may require this function to make their code secure.
-# Consider renaming (e.g. objectOutsideOfLockScreenAndWindowsIsLocked).
-def _isSecureObjectWhileLockScreenActivated(
+def objectOutsideOfLockScreenAndWindowsIsLocked(
 		obj: "NVDAObjects.NVDAObject",
 		shouldLog: bool = True,
 ) -> bool:
