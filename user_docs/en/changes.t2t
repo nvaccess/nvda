@@ -11,7 +11,7 @@ What's New in NVDA
   - Desktop: ``shift+numpad2``.
   - Laptop: ``NVDA+ctrl+shift+.``.
   -
-- Introduced new commands to move the review cursor by page where supported by the application.
+- Introduced new commands to move the review cursor by page where supported by the application. (#14021)
   - Move to previous page:
     - Desktop: ``NVDA+pageUp``.
     - Laptop: ``NVDA+shift+pageUp``.
@@ -25,6 +25,8 @@ What's New in NVDA
 
 
 == Changes ==
+- NVDA now includes the architecture of the operating system as part of user statistics tracking. (#14019)
+-
 
 
 == Bug Fixes ==
@@ -40,15 +42,13 @@ What's New in NVDA
 
 
 == Changes for Developers ==
+Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] for information on NVDA's API deprecation and removal process.
+
+- The [NVDA API Announcement mailing list https://groups.google.com/a/nvaccess.org/g/nvda-api/about] was created. (#13999)
+-
 
 
 === Deprecations ===
-These are proposed API breaking changes.
-The deprecated part of the API will continue to be available until the specified release.
-If no release is specified, the plan for removal has not been determined.
-Note, the roadmap for removals is 'best effort' and may be subject to change.
-Please test the new API and provide feedback.
-For add-on authors, please open a GitHub issue if these changes stop the API from meeting your needs.
 
 
 = 2022.3 =
