@@ -100,7 +100,7 @@ _batteryState: PowerState = 0
 def initialize():
 	global _batteryState
 	sps = SystemPowerStatus()
-	if not winKernel.GetSystemPowerStatus(sps) or sps.BatteryFlag & BatteryFlag.UNKNOWN:
+	if not winKernel.GetSystemPowerStatus(sps) or sps.BatteryFlag == BatteryFlag.UNKNOWN:
 		log.error("Error retrieving system power status")
 		return
 
@@ -122,7 +122,7 @@ def reportCurrentBatteryStatus(onlyReportIfStatusChanged: bool = False) -> None:
 	if not systemPowerStatusUpdateResult:
 		log.error(f"Error retrieving power status: {ctypes.GetLastError()}")
 
-	if not systemPowerStatusUpdateResult or sps.BatteryFlag & BatteryFlag.UNKNOWN:
+	if not systemPowerStatusUpdateResult or sps.BatteryFlag == BatteryFlag.UNKNOWN:
 		# Translators: This is presented when there is an error retrieving the battery status.
 		ui.message(_("Unknown power status"))
 		return
