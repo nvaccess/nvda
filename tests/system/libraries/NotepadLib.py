@@ -164,6 +164,7 @@ class NotepadLib:
 		spy.wait_for_speech_to_finish()
 		self.start_notepad(path, expectedTitlePattern=self.getUniqueTestCaseTitleRegex(testCase))
 
+		windowsLib.logForegroundWindowTitle()
 		testCaseNotepadTitleSpeech = re.compile(
 			# Unlike getUniqueTestCaseTitleRegex, this speech does not have to be at the start of the string.
 			f"{NotepadLib._testCaseTitle} \\({abs(hash(testCase))}\\)"
@@ -171,7 +172,9 @@ class NotepadLib:
 		if not self.canNotepadTitleBeReported(notepadTitleSpeechPattern=testCaseNotepadTitleSpeech):
 			builtIn.log("Trying to switch to notepad Window")
 			windowsLib.taskSwitchToItemMatching(pattern=testCaseNotepadTitleSpeech)
+			windowsLib.logForegroundWindowTitle()
 
 		self._waitForNotepadFocus(NotepadLib.getUniqueTestCaseTitleRegex(testCase))
+		windowsLib.logForegroundWindowTitle()
 		# Move to the start of file
 		_NvdaLib.getSpeechAfterKey('home')
