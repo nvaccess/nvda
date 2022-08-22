@@ -104,7 +104,7 @@ def isWindowsLocked() -> bool:
 	return WindowsTrackedSession.SESSION_LOCK in _currentSessionStates
 
 
-def registerSessionNotification(handle: HWND) -> bool:
+def register(handle: HWND) -> bool:
 	"""
 	@param handle: handle for NVDA message window.
 	When registered, Windows Messages related to session event changes will be
@@ -113,7 +113,7 @@ def registerSessionNotification(handle: HWND) -> bool:
 
 	Blocks until Windows accepts session tracking registration.
 
-	Every call to this function must be paired with a call to unregisterSessionNotification.
+	Every call to this function must be paired with a call to unregister.
 
 	If registration fails, NVDA may not work properly until the session can be registered in a new instance.
 	NVDA will not know when the lock screen is activated, which means it becomes a security risk.
@@ -157,9 +157,9 @@ def registerSessionNotification(handle: HWND) -> bool:
 	return registrationSuccess
 
 
-def unregisterSessionNotification(handle: HWND) -> None:
+def unregister(handle: HWND) -> None:
 	"""
-	This function must be called once for every call to registerSessionNotification.
+	This function must be called once for every call to register.
 	If unregistration fails, NVDA may not work properly until the session can be unregistered in a new instance.
 
 	https://docs.microsoft.com/en-us/windows/win32/api/wtsapi32/nf-wtsapi32-wtsunregistersessionnotification
