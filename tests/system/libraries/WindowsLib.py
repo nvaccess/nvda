@@ -21,6 +21,10 @@ from robot.libraries.Process import Process as _ProcessLib
 from AssertsLib import AssertsLib as _AssertsLib
 import NvdaLib as _NvdaLib
 
+from SystemTestSpy.windows import (
+	GetForegroundWindowTitle as _getForegroundWindowTitle,
+)
+
 builtIn: BuiltIn = BuiltIn()
 opSys: _OpSysLib = _getLib('OperatingSystem')
 process: _ProcessLib = _getLib('Process')
@@ -30,6 +34,14 @@ assertsLib: _AssertsLib = _getLib('AssertsLib')
 # However, if converting to a class note that in Robot libraries, the class name must match the name
 # of the module.
 # Use caps for both.
+
+
+def logForegroundWindowTitle():
+	"""Debugging helper, log the current foreground window title to the robot framework log.
+	See log.html.
+	"""
+	windowTitle = _getForegroundWindowTitle()
+	builtIn.log(f"Foreground window title: {windowTitle}")
 
 
 def taskSwitchToItemMatching(pattern: re.Pattern, maxWindowsToTest: int = 10) -> None:

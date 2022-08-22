@@ -215,6 +215,7 @@ class ChromeLib:
 
 		spy.wait_for_speech_to_finish()
 		_chromeLib.start_chrome(path, testCase)
+		windowsLib.logForegroundWindowTitle()
 
 		applicationTitle = ChromeLib.getUniqueTestCaseTitle(testCase)
 		# application title will be something like "NVDA Browser Test Case (499078752)"
@@ -227,6 +228,7 @@ class ChromeLib:
 			or not _chromeLib.canChromeTitleBeReported(chromeTitleSpeechPattern)
 		):
 			windowsLib.taskSwitchToItemMatching(pattern=chromeTitleSpeechPattern)
+			windowsLib.logForegroundWindowTitle()
 
 		if not _chromeLib.canChromeTitleBeReported(chromeTitleSpeechPattern):
 			raise AssertionError("NVDA unable to report chrome title")
