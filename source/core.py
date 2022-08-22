@@ -427,8 +427,7 @@ def main():
 	Finally, it starts the wx main loop.
 	"""
 	log.debug("Core starting")
-	# TODO: change to globalVars.runningFromSource
-	if getattr(sys, 'frozen', None) is None:
+	if globalVars.runningAsSource:
 		from winAPI.dpiAwareness import setDPIAwareness
 		setDPIAwareness()
 
