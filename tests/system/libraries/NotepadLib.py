@@ -54,19 +54,23 @@ class NotepadLib:
 		return _pJoin(NotepadLib._testFileStagingPath, filename)
 
 	def exit_notepad(self):
-
 		spy = _NvdaLib.getSpyLib()
 		builtIn.log(
 			# True is expected due to /wait argument.
 			"Is Start process still running (True expected): "
 			f"{process.is_process_running(NotepadLib.processRFHandleForStart)}"
 		)
-		spy.emulateKeyPress('alt+f4')
-		process.wait_for_process(
-			NotepadLib.processRFHandleForStart,
-			timeout="1 minute",
-			on_timeout="continue"
-		)
+
+		if _getForegroundHwnd() == NotepadLib.notepadWindow.hwndVal:
+			builtIn.log("Test case in foreground, trying to close")
+			spy.emulateKeyPress('alt+f4')
+			process.wait_for_process(
+				NotepadLib.processRFHandleForStart,
+				timeout="1 minute",
+				on_timeout="continue"
+			)
+		else:
+			builtIn.log("Test case not in foreground, can't close it.")
 		builtIn.log(
 			# False is expected, chrome should have allowed "Start" to exit.
 			"Is Start process still running (False expected): "
