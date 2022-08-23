@@ -9,8 +9,8 @@ import enum
 class HResult(enum.IntEnum):
 	# https://docs.microsoft.com/en-us/windows/win32/seccrypto/common-hresult-values
 	S_OK = 0x00000000
-	E_ACCESSDENIED = 0x80070005
-	E_INVALIDARG = 0x80070057
+	E_ACCESS_DENIED = 0x80070005  # E_ACCESSDENIED
+	E_INVALID_ARG = 0x80070057  # E_INVALIDARG
 
 
 class SystemErrorCodes(enum.IntEnum):

@@ -70,7 +70,7 @@ def setDPIAwareness() -> None:
 	else:
 		if hResult == HResult.S_OK:
 			return
-		elif hResult == HResult.E_ACCESSDENIED:
+		elif hResult == HResult.E_ACCESS_DENIED:
 			# The DPI awareness is already set,
 			# either by calling this API previously or through the application (.exe) manifest.
 			# This is unexpected as we should only set DPI awareness once.
@@ -78,7 +78,7 @@ def setDPIAwareness() -> None:
 			# however this function should only be called when running from source.
 			log.error("DPI Awareness already set.")
 			return
-		elif hResult == HResult.E_INVALIDARG:
+		elif hResult == HResult.E_INVALID_ARG:
 			log.error("DPI Awareness function provided invalid argument.")
 		else:
 			log.error(f"Unknown error setting DPI Awareness. HRESULT: {hResult}")
