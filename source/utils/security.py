@@ -83,11 +83,20 @@ def objectBelowLockScreenAndWindowsIsLocked(
 		shouldLog: bool = True,
 ) -> bool:
 	"""
-	While Windows is locked, Windows 10 and 11 doesn't prevent object navigation outside of the lockscreen.
-	As such, NVDA must prevent accessing and reading objects outside of the lockscreen when Windows is locked.
-	@return: C{True} if the Windows 10/11 lockscreen is active and C{obj} is outside of the lock screen.
+	While Windows is locked, the current user session is still running, and below the lockscreen
+	exists the current user's desktop.
+
+	Windows 10 and 11 doesn't prevent object navigation below the lockscreen.
+
+	If an object is above the lockscreen, it is accessible and visible to the user
+	through the Windows UX while Windows is locked.
+	An object below the lockscreen should only be accessible when Windows is unlocked,
+	as it may contain sensitive information.
+
+	As such, NVDA must prevent accessing and reading objects below the lockscreen when Windows is locked.
+	@return: C{True} if the Windows 10/11 lockscreen is active and C{obj} is below the lock screen.
 	"""
-	if isWindowsLocked() and not isObjectInsideLockScreen(obj):
+	if isWindowsLocked() and not isObjectAboveLockScreen(obj):
 		if shouldLog and log.isEnabledFor(log.DEBUG):
 			devInfo = '\n'.join(obj.devInfo)
 			log.debug(f"Attempt at navigating to a secure object: {devInfo}")
@@ -96,10 +105,18 @@ def objectBelowLockScreenAndWindowsIsLocked(
 	return False
 
 
-def isObjectInsideLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
+def isObjectAboveLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 	"""
+	While Windows is locked, the current user session is still running, and below the lockscreen
+	exists the current user's desktop.
+
 	When Windows is locked, the foreground Window is usually LockApp,
 	but other Windows can be focused (e.g. Windows Magnifier).
+
+	If an object is above the lockscreen, it is accessible and visible to the user
+	through the Windows UX while Windows is locked.
+	An object below the lockscreen should only be accessible when Windows is unlocked,
+	as it may contain sensitive information.
 	"""
 	import appModuleHandler
 	from NVDAObjects.IAccessible import TaskListIcon
