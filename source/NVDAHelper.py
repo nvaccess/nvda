@@ -27,6 +27,8 @@ import queueHandler
 import api
 import globalVars
 from logHandler import log
+import NVDAState
+
 
 versionedLibPath = os.path.join(globalVars.appDir, 'lib')
 if os.environ.get('PROCESSOR_ARCHITEW6432') == 'ARM64':
@@ -35,7 +37,7 @@ else:
 	versionedLib64Path = os.path.join(globalVars.appDir, 'lib64')
 
 
-if not globalVars.runningAsSource:
+if not NVDAState.isRunningAsSource():
 	# When running as a py2exe build, libraries are in a version-specific directory
 	versionedLibPath=os.path.join(versionedLibPath,versionInfo.version)
 	versionedLib64Path=os.path.join(versionedLib64Path,versionInfo.version)

@@ -14,7 +14,6 @@ import api
 import speech
 from speech.commands import _CancellableSpeechCommand
 import treeInterceptorHandler
-import globalVars
 import controlTypes
 from logHandler import log
 import globalPluginHandler
@@ -182,7 +181,7 @@ class FocusLossCancellableSpeechCommand(_CancellableSpeechCommand):
 
 			# Assumption: we only process one focus event at a time, so even if several focus events are queued,
 			# all focused objects will still gain this tracking attribute. Otherwise, this may need to be set via
-			# api.setFocusObject when globalVars.focusObject is set.
+			# api.setFocusObject when api.getFocusObject is set.
 			setattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME, True)
 		elif not hasattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME):
 			setattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME, False)
@@ -327,7 +326,7 @@ def doPreGainFocus(obj: "NVDAObjects.NVDAObject", sleepMode: bool = False) -> bo
 		# - api.getFocusAncestors() via api.setFocusObject() called in doPreGainFocus
 		speech._manager.removeCancelledSpeechCommands()
 
-	if globalVars.focusDifferenceLevel<=1:
+	if api.getFocusDifferenceLevel() <= 1:
 		newForeground=api.getDesktopObject().objectInForeground()
 		if not newForeground:
 			log.debugWarning("Can not get real foreground, resorting to focus ancestors")
@@ -341,7 +340,7 @@ def doPreGainFocus(obj: "NVDAObjects.NVDAObject", sleepMode: bool = False) -> bo
 		executeEvent('foreground', newForeground)
 	if sleepMode: return True
 	#Fire focus entered events for all new ancestors of the focus if this is a gainFocus event
-	for parent in globalVars.focusAncestors[globalVars.focusDifferenceLevel:]:
+	for parent in api.getFocusAncestors()[api.getFocusDifferenceLevel()]:
 		executeEvent("focusEntered",parent)
 	if obj.treeInterceptor is not oldTreeInterceptor:
 		if hasattr(oldTreeInterceptor,"event_treeInterceptor_loseFocus"):
