@@ -90,7 +90,7 @@ def _isSecureObjectWhileLockScreenActivated(
 	As such, NVDA must prevent accessing and reading objects outside of the lockscreen when Windows is locked.
 	@return: C{True} if the Windows 10/11 lockscreen is active and C{obj} is outside of the lock screen.
 	"""
-	if isWindowsLocked() and not isObjectInsideLockScreen(obj):
+	if isWindowsLocked() and not isObjectAboveLockScreen(obj):
 		if shouldLog and log.isEnabledFor(log.DEBUG):
 			devInfo = '\n'.join(obj.devInfo)
 			log.debug(f"Attempt at navigating to a secure object: {devInfo}")
@@ -99,7 +99,7 @@ def _isSecureObjectWhileLockScreenActivated(
 	return False
 
 
-def isObjectInsideLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
+def isObjectAboveLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 	"""
 	When Windows is locked, the foreground Window is usually LockApp,
 	but other Windows can be focused (e.g. Windows Magnifier).
