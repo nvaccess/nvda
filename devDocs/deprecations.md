@@ -46,7 +46,9 @@ As a result, it not possible to retain backwards compatibility for module level 
 For example, if there is a global variable named `currentState` in `exampleModule.py`, `currentState` cannot be deprecated.
 
 This is because:
-* Setting an attribute that is fetched via `__getattr__` will override the `__getattr__`, and any future gets will fetch the newly assigned value.
+* `__getattr__` only fetches variables which are not defined on the module level.
+As such, setting an attribute that is fetched via `__getattr__` will prevent `__getattr__` from fetching the attribute.
+Any future gets will fetch the newly assigned value.
 * Python does not have an equivalent module level `__setattr__` like the `__getattr__` example.
 * Encapsulating a module level variable into another data structure changes the import behaviour.
 	- e.g. if `exampleModule` became a class, so `exampleModule.currentState` was a class level variable with the same namespace as the deprecated symbol, `exampleModule` may not be importable in the same manner.
