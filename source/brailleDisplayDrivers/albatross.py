@@ -11,12 +11,29 @@ from collections import deque
 from ctypes import byref
 from ctypes.wintypes import DWORD
 from logHandler import log
-from serial.win32 import ERROR_IO_PENDING, EV_RXCHAR
-from serial.win32 import PURGE_RXABORT, PURGE_TXABORT
-from serial.win32 import PURGE_RXCLEAR, PURGE_TXCLEAR
-from serial.win32 import GetLastError, PurgeComm, SetCommMask
-from threading import Event, Lock, Timer, Thread
-from typing import List, Optional, Tuple
+from serial.win32 import (
+	ERROR_IO_PENDING,
+	EV_RXCHAR,
+	PURGE_RXABORT,
+	PURGE_TXABORT,
+	PURGE_RXCLEAR,
+	PURGE_TXCLEAR,
+	GetLastError,
+	PurgeComm,
+	SetCommMask
+)
+from threading import (
+	Event,
+	Lock,
+	Timer,
+	Thread
+)
+from typing import (
+	Callable,
+	List,
+	Optional,
+	Tuple
+)
 
 import braille
 import inputCore
@@ -130,7 +147,14 @@ KC_INTERVAL = 1.5
 # Suspended most of time.
 class ReadThread(Thread):
 	def __init__(
-			self, readFunction, disableFunction, event, dev, *args, **kwargs):
+			self,
+			readFunction: Callable,
+			disableFunction: Callable,
+			event: Event,
+			dev: serial.Serial,
+			*args,
+			**kwargs
+	):
 		super().__init__(*args, **kwargs)
 		self._readFunction = readFunction
 		self._disableFunction = disableFunction
@@ -144,11 +168,13 @@ class ReadThread(Thread):
 			# Try to reconnect if port is not open
 			if not self._dev.is_open:
 				log.debug(
-					f"Calling {self._readFunction.__name__}, port {self._dev.name} not open")
+					f"Calling {self._readFunction.__name__}, port {self._dev.name} not open"
+				)
 				self._readFunction()
 				if not self._dev.is_open:
 					log.debug(
-						f"Sleepin {KC_INTERVAL} seconds, port {self._dev.name} not open")
+						f"Sleepin {KC_INTERVAL} seconds, port {self._dev.name} not open"
+					)
 					self._event.wait(KC_INTERVAL)
 					continue
 			try:
@@ -159,16 +185,20 @@ class ReadThread(Thread):
 					log.debug("SetCommMask failed")
 					raise(ctypes.WinError())
 				result = ctypes.windll.kernel32.WaitCommEvent(
-					self._dev._port_handle, byref(dwEvtMask),
-					byref(self._dev._overlapped_read))
+					self._dev._port_handle,
+					byref(dwEvtMask),
+					byref(self._dev._overlapped_read)
+				)
 				if not result and GetLastError() != ERROR_IO_PENDING:
 					if self._event.isSet():
 						break
 					log.debug("WaitCommEvent failed")
 					raise ctypes.WinError()
 				result = ctypes.windll.kernel32.GetOverlappedResult(
-					self._dev._port_handle, byref(self._dev._overlapped_read),
-					byref(data), True)
+					self._dev._port_handle,
+					byref(self._dev._overlapped_read),
+					byref(data), True
+				)
 				if result:
 					log.debug(f"Calling function {self._readFunction.__name__} for read")
 					self._readFunction()
@@ -191,7 +221,13 @@ class ReadThread(Thread):
 # (copied from
 # https://stackoverflow.com/questions/474528/what-is-the-best-way-to-repeatedly-execute-a-function-every-x-seconds)
 class RepeatedTimer(object):
-	def __init__(self, interval, function, *args, **kwargs):
+	def __init__(
+			self,
+			interval: float,
+			function: Callable,
+			*args,
+			**kwargs
+	):
 		self.interval = interval
 		self._timer = Timer(self.interval, self._run)
 		self.function = function
@@ -270,14 +306,22 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				while len(self._oldCells) < self.numCells:
 					self._oldCells.append(0)
 				self._kc = RepeatedTimer(
-					KC_INTERVAL, self._keepConnected)
+					KC_INTERVAL,
+					self._keepConnected
+				)
 				self._handleRead = ReadThread(
-					self._readHandling, self._disableConnection, self._exitEvent,
-					self._dev, name="albatross_read", daemon=True)
+					self._readHandling,
+					self._disableConnection,
+					self._exitEvent,
+					self._dev,
+					name="albatross_read",
+					daemon=True
+				)
 				self._handleRead.start()
 				log.info(
 					f"Connected to Caiku Albatross {self.numCells} on {portType} port {port} "
-					f"at {BAUD_RATE} bps.")
+					f"at {BAUD_RATE} bps."
+				)
 				break
 			# This device initialization failed.
 			if self._dev:
@@ -287,10 +331,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			if self._invalidSettingsByte:
 				log.info(
 					"After checking internal settings, switch display off and on, "
-					"and if needed restart NVDA")
+					"and if needed restart NVDA"
+				)
 			log.info(
 				f"Connection to Caiku Albatross display on {portType} port {port} "
-				f"at {BAUD_RATE} bps failed.")
+				f"at {BAUD_RATE} bps failed."
+			)
 		else:
 			raise RuntimeError("No Albatross found")
 
@@ -334,7 +380,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				self._tryToConnect = False
 			else:
 				log.debug(
-					f"Sleeping {TIMEOUT} seconds before try {i + 1} / {MAX_INIT_SLEEPS}")
+					f"Sleeping {TIMEOUT} seconds before try {i + 1} / {MAX_INIT_SLEEPS}"
+				)
 				time.sleep(TIMEOUT)
 			if not self._readInitByte():
 				if self._invalidSettingsByte:
@@ -366,7 +413,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				return False
 			log.debug(
 				f"Port {self._currentPort} not initialized, sleeping {TIMEOUT} seconds "
-				f"before try {i + 2} / {MAX_INIT_SLEEPS}", exc_info=True)
+				f"before try {i + 2} / {MAX_INIT_SLEEPS}", exc_info=True
+			)
 			time.sleep(TIMEOUT)
 			return False
 
@@ -389,7 +437,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				return False
 			log.debug(
 				f"Port {self._currentPort} not opened, sleeping {TIMEOUT} seconds "
-				f"before try {i + 2} / {MAX_INIT_SLEEPS}", exc_info=True)
+				f"before try {i + 2} / {MAX_INIT_SLEEPS}", exc_info=True
+			)
 			time.sleep(TIMEOUT)
 			return False
 
@@ -419,7 +468,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			self._disableConnection()
 			log.debug(
 				f"INIT_START_BYTE {INIT_START_BYTE} read failed, "
-				"trying to reconnect", exc_info=True)
+				"trying to reconnect", exc_info=True
+			)
 			return False
 
 	def _readSettingsByte(self) -> bool:
@@ -455,7 +505,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				if not self._invalidSettingsByte:
 					self._invalidSettingsByte = True
 					log.info(
-						f"Settings byte cannot be {data}, check display internal settings")
+						f"Settings byte cannot be {data}, check display internal settings"
+					)
 				self._disableConnection()
 				return False
 		except (IOError, AttributeError):
@@ -475,7 +526,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		# See comment in _somethingToRead
 		except (IOError, AttributeError):
 			log.debug(
-				f"I/O buffer reset failed on port {self._currentPort}", exc_info=True)
+				f"I/O buffer reset failed on port {self._currentPort}", exc_info=True
+			)
 			if self._dev.is_open:
 				self._dev.close()
 			return False
@@ -517,7 +569,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				return None
 			data = self._dev.read(self._dev.in_waiting)
 			log.debug(
-				f"Read: {data}, length {len(data)}, in_waiting {self._dev.in_waiting}")
+				f"Read: {data}, length {len(data)}, in_waiting {self._dev.in_waiting}"
+			)
 			return data
 		# Considering situation where "albatross_read" thread is about to read
 		# but writing to display fails during it - or vice versa - AttributeError
@@ -547,7 +600,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					self._invalidSettingsByte = True
 					log.info(
 						f"Settings byte cannot be {INIT_START_BYTE}, check display internal "
-						"settings")
+						"settings"
+					)
 					self._disableConnection()
 					return False
 			self._readQueue.append(i.to_bytes(1, 'big'))
@@ -586,7 +640,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	def _handleReadQueue(self):
 		log.debug(
-			f"_ReadQueue is: {self._readQueue}, length {len(self._readQueue)}")
+			f"_ReadQueue is: {self._readQueue}, length {len(self._readQueue)}"
+		)
 		while len(self._readQueue):
 			try:
 				data = self._readQueue.popleft()
@@ -621,7 +676,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			except IndexError:
 				self._waitingSettingsByte = True
 				log.debug(
-					"Read: _readQueue is empty, waiting for settings byte", exc_info=True)
+					"Read: _readQueue is empty, waiting for settings byte", exc_info=True
+				)
 				return
 			self._writeQueue.appendleft(ESTABLISHED)
 			log.debug(f"Write: enqueued {ESTABLISHED}")
@@ -642,7 +698,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			# Queue a call to the background thread.
 			braille._BgThread.queueApc(braille._BgThread.executor)
 			log.debug(
-				"Updating display content after reconnection or display menu exit")
+				"Updating display content after reconnection or display menu exit"
+			)
 		if self._waitingSettingsByte:
 			self._waitingSettingsByte = False
 
@@ -677,7 +734,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					self._partialCtrlPacket = data
 					log.debug(
 						f"Read: Ctrl key packet {data} dequeued partially, "
-						"_readQueue is empty", exc_info=True)
+						"_readQueue is empty", exc_info=True
+					)
 					return
 				if len(data) > MAX_COMBINATION_KEYS and data[len(data) - 1] != data[0]:
 					self._waitingCtrlPacket = False
