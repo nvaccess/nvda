@@ -9,7 +9,7 @@ import time
 import globalVars
 
 
-def isNVDARunningAsSource() -> bool:
+def isRunningAsSource() -> bool:
 	"""
 	True if NVDA is running as a source copy.
 	When running as an installed copy, py2exe sets sys.frozen to 'windows_exe'.
