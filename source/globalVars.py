@@ -5,19 +5,24 @@
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 """global variables module
-@var foregroundObject: holds the current foreground object. The object for the last foreground event received.
-@var focusObject: holds the current focus object
-@var mouseObject: holds the object that is at the position of the mouse pointer
-@var mouseOldX: the last x coordinate of the mouse pointer before its current position
-@type oldMouseX: int
-@var mouseOldY: the last y coordinate of the mouse pointer before its current position
-@type oldMouseY: int
-@var navigatorObject: holds the current navigator object
+
+This module is scheduled for deprecation.
+Do not continue to add variables to this module.
+
+To retain backwards compatibility, variables should not be removed
+from globalVars.
+Instead, encapsulate variables in setters and getters in
+other modules.
+
+When NVDA core is no longer dependent on globalVars,
+a deprecation warning should be added to this module which
+warns developers when importing anything from this module.
+
+Once a warning is in place, after some time it may become appropriate to delete this module.
 """
 
 import argparse
 import os
-import sys
 import typing
 
 if typing.TYPE_CHECKING:
@@ -48,41 +53,34 @@ class DefaultAppArgs(argparse.Namespace):
 	easeOfAccess: bool = False
 
 
-startTime=0
+# Encapsulated by api module,
+# refer to #14037 for removal strategy.
 desktopObject: typing.Optional['NVDAObjects.NVDAObject'] = None
 foregroundObject: typing.Optional['NVDAObjects.NVDAObject'] = None
 focusObject: typing.Optional['NVDAObjects.NVDAObject'] = None
 focusAncestors: typing.List['NVDAObjects.NVDAObject'] = []
 focusDifferenceLevel=None
 mouseObject: typing.Optional['NVDAObjects.NVDAObject'] = None
-mouseOldX=None
-mouseOldY=None
 navigatorObject: typing.Optional['NVDAObjects.NVDAObject'] = None
 reviewPosition=None
 reviewPositionObj=None
-lastProgressValue=0
+
+# unused, should eventually get removed.
+mouseOldX = None
+mouseOldY = None
+lastProgressValue = 0
+
+# TODO: encapsulate in NVDAState
+startTime: float = 0.0
 appArgs = DefaultAppArgs()
 unknownAppArgs: typing.List[str] = []
-settingsRing = None
-speechDictionaryProcessing=True
 exitCode=0
-
 appPid: int = 0
 """The process ID of NVDA itself.
 """
 
-_allowDeprecatedAPI: bool = True
-"""
-Used for marking code as deprecated.
-This should never be False in released code.
+# TODO: encapsulate in synthDriverHandler
+settingsRing = None
 
-Making this False may be useful for testing if code is compliant without using deprecated APIs.
-Note that deprecated code may be imported at runtime,
-and as such, this value cannot be changed at runtime to test compliance.
-"""
-
-runningAsSource: bool = getattr(sys, 'frozen', None) is None
-"""
-True if NVDA is running as a source copy.
-When running as an installed copy, py2exe sets sys.frozen to 'windows_exe'.
-"""
+# TODO: encapsulate in speechDict
+speechDictionaryProcessing: bool = True
