@@ -1,0 +1,6 @@
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2022 NV Access Limited, Burman's Computer and Education Ltd.
+
+from brailleDisplayDrivers.albatross.driver import *
