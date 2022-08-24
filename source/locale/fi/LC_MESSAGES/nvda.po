@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-29 00:02+0000\n"
-"PO-Revision-Date: 2022-08-02 23:08+0200\n"
+"POT-Creation-Date: 2022-08-19 00:02+0000\n"
+"PO-Revision-Date: 2022-08-19 14:42+0200\n"
 "Last-Translator: Jani Kinnunen <janikinnunen340@gmail.com>\n"
 "Language-Team: janikinnunen340@gmail.com\n"
 "Language: fi_FI\n"
@@ -2361,6 +2361,22 @@ msgstr "Virhe näppäinkomentotiedostossa"
 #. Translators: This is spoken when NVDA is starting.
 msgid "Loading NVDA. Please wait..."
 msgstr "Käynnistetään NVDA, odota..."
+
+#. Translators: This is a warning to users, shown if NVDA cannot determine if
+#. Windows is locked.
+msgid ""
+"NVDA failed to register session tracking. While this instance of NVDA is "
+"running, your desktop will not be secure when Windows is locked. Restart "
+"NVDA? "
+msgstr ""
+"NVDA ei voinut rekisteröidä istunnon seurantaa. Työpöytäsi ei ole suojattu, "
+"kun tämä NVDA-esiintymä on käynnissä Windowsin ollessa lukittuna. "
+"Käynnistetäänkö NVDA uudelleen?"
+
+#. Translators: This is a warning to users, shown if NVDA cannot determine if
+#. Windows is locked.
+msgid "NVDA could not start securely."
+msgstr "NVDA ei voinut käynnistyä suojatusti."
 
 #. Translators: The screen is oriented so that it is wider than it is tall.
 msgid "Landscape"
@@ -6593,7 +6609,7 @@ msgid "Tries to read documentation for the selected autocompletion item."
 msgstr "Yrittää lukea ohjeen valitulle automaattisen täydennyksen kohteelle."
 
 #. Translators: When the help popup cannot be found for the selected autocompletion item
-msgid "Cann't find the documentation window."
+msgid "Can't find the documentation window."
 msgstr "Ohjeikkunaa ei löydy."
 
 #. Translators: Reported when no track is playing in Foobar 2000.
