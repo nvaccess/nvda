@@ -3,15 +3,16 @@
 # See the file COPYING for more details.
 # Copyright (C) 2019-2022 Bill Dengler, Leonard de Ruijter
 
+import api
+import config
+import controlTypes
 import ctypes
 import NVDAHelper
+import speech
 import textInfos
 import textUtils
 import UIAHandler
-import speech
-import controlTypes
-import api
-import config
+
 from comtypes import COMError
 from diffHandler import prefer_difflib
 from logHandler import log
