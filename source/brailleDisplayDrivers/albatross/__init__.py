@@ -3,4 +3,4 @@
 # See the file COPYING for more details.
 # Copyright (C) 2022 NV Access Limited, Burman's Computer and Education Ltd.
 
-from brailleDisplayDrivers.albatross.driver import *
+from brailleDisplayDrivers.albatross.driver import BrailleDisplayDriver
