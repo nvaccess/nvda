@@ -12,8 +12,8 @@ from typing import Optional as _Optional
 from SystemTestSpy import (
 	_getLib,
 )
-import re
-from robot.libraries.BuiltIn import BuiltIn
+import re as _re
+from robot.libraries.BuiltIn import BuiltIn as _BuiltInLib
 
 # Imported for type information
 from robot.libraries.OperatingSystem import OperatingSystem as _OpSysLib
@@ -25,7 +25,7 @@ from SystemTestSpy.windows import (
 	GetForegroundWindowTitle as _getForegroundWindowTitle,
 )
 
-builtIn: BuiltIn = BuiltIn()
+builtIn: _BuiltInLib = _BuiltInLib()
 opSys: _OpSysLib = _getLib('OperatingSystem')
 process: _ProcessLib = _getLib('Process')
 assertsLib: _AssertsLib = _getLib('AssertsLib')
@@ -44,7 +44,7 @@ def logForegroundWindowTitle():
 	builtIn.log(f"Foreground window title: {windowTitle}")
 
 
-def taskSwitchToItemMatching(pattern: re.Pattern, maxWindowsToTest: int = 10) -> None:
+def taskSwitchToItemMatching(pattern: _re.Pattern, maxWindowsToTest: int = 10) -> None:
 	"""Opens the task switcher, rightArrows through the items trying to search the for the pattern in the
 	speech for each item.
 	Raises AssertionError if not found.
@@ -87,7 +87,7 @@ def taskSwitchToItemMatching(pattern: re.Pattern, maxWindowsToTest: int = 10) ->
 	spy.wait_for_speech_to_finish(speechStartedIndex=nextIndex)
 	speech = spy.get_speech_at_index_until_now(nextIndex)
 	# if there is only one application open, it will already be selected:
-	firstItemPattern = re.compile(r"row 1\s+column 1")
+	firstItemPattern = _re.compile(r"row 1\s+column 1")
 	atFirstItemAlready = bool(firstItemPattern.search(speech))
 
 	if not atFirstItemAlready:
