@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-12 00:02+0000\n"
-"PO-Revision-Date: 2022-08-13 01:05+0700\n"
+"POT-Creation-Date: 2022-08-19 00:02+0000\n"
+"PO-Revision-Date: 2022-08-21 17:01+0700\n"
 "Last-Translator: Zvonimir <9a5dsz@gozaltech.org>\n"
 "Language-Team: killer@tyflonet.com\n"
 "Language: pl_PL\n"
@@ -2364,6 +2364,22 @@ msgstr "błąd pliku mapy gestów"
 #. Translators: This is spoken when NVDA is starting.
 msgid "Loading NVDA. Please wait..."
 msgstr "Ładowanie NVDA... proszę czekać..."
+
+#. Translators: This is a warning to users, shown if NVDA cannot determine if
+#. Windows is locked.
+msgid ""
+"NVDA failed to register session tracking. While this instance of NVDA is "
+"running, your desktop will not be secure when Windows is locked. Restart "
+"NVDA? "
+msgstr ""
+"NVDA nie udało się zarejestrować śledzenia sesji. Gdy ta kopia NVDA jest "
+"uruchomione, pulpit nie będzie bezpieczny, gdy system Windows jest "
+"zablokowany. Czy zresetować NVDA? "
+
+#. Translators: This is a warning to users, shown if NVDA cannot determine if
+#. Windows is locked.
+msgid "NVDA could not start securely."
+msgstr "Bezpiecznie uruchomienie NVDA nie było możliwe."
 
 #. Translators: The screen is oriented so that it is wider than it is tall.
 msgid "Landscape"
@@ -6567,8 +6583,8 @@ msgstr ""
 "autouzupełniania."
 
 #. Translators: When the help popup cannot be found for the selected autocompletion item
-msgid "Cann't find the documentation window."
-msgstr "Nie znaleziono okna dokumentacji."
+msgid "Can't find the documentation window."
+msgstr "Nie można znaleźć okna dokumentacji."
 
 #. Translators: Reported when no track is playing in Foobar 2000.
 msgid "No track playing"
