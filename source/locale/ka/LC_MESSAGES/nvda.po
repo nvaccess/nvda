@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA_georgian_translation\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-12 00:02+0000\n"
-"PO-Revision-Date: 2022-08-15 19:30+0400\n"
+"POT-Creation-Date: 2022-08-19 00:02+0000\n"
+"PO-Revision-Date: 2022-08-23 13:01+0400\n"
 "Last-Translator: Dragan Ratkovich\n"
 "Language-Team: Georgian translation team <admin@gozaltech.org>\n"
 "Language: ka\n"
@@ -673,7 +673,7 @@ msgstr "წერტილი"
 
 #. Translators: Reported when braille space is pressed with dots in input help mode.
 msgid "space with dot"
-msgstr "დაშორება წერტილებით"
+msgstr "დაშორება წერტილით"
 
 #. Translators: Reported when braille space is pressed in input help mode.
 #. Translators: This is the name of a key on the keyboard.
@@ -2368,6 +2368,22 @@ msgstr "ჟესტების დამაკავშირებელი �
 #. Translators: This is spoken when NVDA is starting.
 msgid "Loading NVDA. Please wait..."
 msgstr "NVDA იტვირთება. გთხოვთ, დაელოდოთ..."
+
+#. Translators: This is a warning to users, shown if NVDA cannot determine if
+#. Windows is locked.
+msgid ""
+"NVDA failed to register session tracking. While this instance of NVDA is "
+"running, your desktop will not be secure when Windows is locked. Restart "
+"NVDA? "
+msgstr ""
+"NVDA-მ ვერ დაარეგისტრირა სესიის თვალყურის დევნება. სანამ NVDA-ს ეს ასლი "
+"მუშაობს, Windows-ის დაბლოკვისას თქვენი სამუშაო მაგიდა არ იქნება დაცული. "
+"გსურთ რომ გადაიტვირთოს NVDA? "
+
+#. Translators: This is a warning to users, shown if NVDA cannot determine if
+#. Windows is locked.
+msgid "NVDA could not start securely."
+msgstr "NVDA-ს უსაფრთხოდ გაშვება ვერ მოხერხდა."
 
 #. Translators: The screen is oriented so that it is wider than it is tall.
 msgid "Landscape"
@@ -6628,7 +6644,8 @@ msgid "Tries to read documentation for the selected autocompletion item."
 msgstr "ცდილობს წაიკითხოს არჩეული ავტომატური შევსების ელემენტის დოკუმენტაცია."
 
 #. Translators: When the help popup cannot be found for the selected autocompletion item
-msgid "Cann't find the documentation window."
+#, fuzzy
+msgid "Can't find the documentation window."
 msgstr "დოკუმენტაციის ფანჯარა ვერ მოიძებნა."
 
 #. Translators: Reported when no track is playing in Foobar 2000.
