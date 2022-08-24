@@ -16,7 +16,7 @@ from logHandler import log
 from UIAHandler.utils import _getConhostAPILevel
 from UIAHandler.constants import WinConsoleAPILevel
 from . import UIA, UIATextInfo
-from ..behaviors import EnhancedTermTypedCharSupport, KeyboardHandlerBasedTypedCharSupport
+from ..behaviors import KeyboardHandlerBasedTypedCharSupport
 from ..window import Window
 
 
@@ -427,4 +427,14 @@ class WinTerminalUIA(UIA):
 	announceNewLineText=False
 
 	def event_UIA_notification(self, notificationKind, notificationProcessing, displayString, activityId):
-		speech.speakText(displayString)
+		# Do not announce output from background terminals.
+		if self.appModule != api.getFocusObject().appModule:
+			return
+		# microsoft/terminal#12358: Automatic reading of terminal output
+		# is provided by UIA notifications. If the user does not want
+		# automatic reporting of dynamic output, suppress this notification.
+		if not config.conf["presentation"]["reportDynamicContentChanges"]:
+			return
+		for line in displayString.splitlines():
+			if line:  # Don't say "blank" during autoread
+				speech.speakText(line)
