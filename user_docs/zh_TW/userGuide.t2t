@@ -332,7 +332,7 @@ NVDA 允許您以不同的方式探索及導覽 Windows 系統，包括一般性
 | 讀出游標所在行 | NVDA+向上鍵 | NVDA+l | 讀出游標所在的一行，連按兩下拼讀整行，連按三下使用字詞解釋拼讀整行。 |
 | 讀出選取文字 | NVDA+Shift+向上鍵 | NVDA+Shift+s | 讀出目前已選取的文字。 |
 | 讀出文字格式 | NVDA+F | NVDA+F | 讀出游標所在的文字格式，按兩下以瀏覽模式顯示資訊 |
-| 讀出游標位置 | NVDA+數字鍵盤 Delete | NVDA+Delete | 無 | 讀出系統游標所在的文字或物件的位置資訊。例如：這可能包括文件中的百分比、頁面與邊緣的距離或精確的螢幕位置，連按兩下可提供更多細節。 |
+| 讀出游標位置 | NVDA+數字鍵盤 Delete | NVDA+Delete | 讀出系統游標所在的文字或物件的位置資訊。例如：這可能包括文件中的百分比、頁面與邊緣的距離或精確的螢幕位置，連按兩下可提供更多細節。 |
 | 下一句 | alt+向下鍵 | alt+向下鍵 | 移動游標到下一個句子的開頭並讀出該句子 (僅支援 Microsoft Word 及 Outlook) |
 | 上一句 | alt+向上鍵 | alt+向上鍵 | 移動游標到上一個句子的開頭並讀出該句子 (僅支援 Microsoft Word 及 Outlook) |
 
@@ -1051,11 +1051,12 @@ Kindle 允許您對選取的文字執行各種功能，包括查字典、添加�
 ++ Windows 主控台 ++[WinConsole]
 NVDA 支援 Windows 命令主控台，包括命令提示字元、PowerShell 及 Windows Subsystem for Linux (wsl)。
 主控台視窗大小是固定的，通常會比輸出內容的範圍還要小，
-當輸入新的文字時，先前的文字會被向上捲動至視窗外而無法看見，
-那些沒有顯示在視窗中的文字同樣無法利用 NVDA 的文字檢閱指令讀出，
-因此要讀到先前的文字就必須捲動視窗。
+當輸入新的文字時，先前的文字會被向上捲動至視窗外而看不到，
+在 Windows 11 22H2 之前的版本，沒有顯示在視窗中的文字無法利用 NVDA 的文字檢閱指令讀出，
+因此必須捲動主控台視窗才能讀到先前的文字，
+在新版的主控台及 Windows 終端機中，可以自由地檢閱所有文字緩衝區而不需要捲動視窗。
 %kc:beginInclude
-以下 Windows 主控台內建的快速鍵可以幫助我們搭配 NVDA 來[檢閱文字 #ReviewingText]。
+以下 Windows 主控台內建的快速鍵可以幫助我們在舊版的 Windows 主控台中搭配 NVDA 來[檢閱文字 #ReviewingText]。
 || 名稱 | 快速鍵 | 說明 |
 | 向上捲動 | control+upArrow | 向上捲動主控台視窗以讀取先前的文字 |
 | 向下捲動 | control+downArrow | 向下捲動主控台視窗以讀取較新的文字 |
@@ -1260,6 +1261,20 @@ ESpeak NG 的變聲聽起來更像語音，因為他們提供的屬性與 ESpeak
 然而某些 Microsoft Speech API 合成器無法正確實作此功能，在啟用後反而表現異常，
 如果您在個別字元的讀音上遇到問題，請嘗試停用此選項。
 
+==== 游標移動時延後讀出字元的字詞解釋 ====[delayedCharacterDescriptions]
+: 預設
+  停用
+: 選項
+  啟用、停用
+:
+
+當勾選此設定，逐字元移動時 NVDA 會說出字詞解釋。
+
+例如以逐字元方式檢閱一行文字，當讀到字母「B」，NVDA 會在一秒後說出「Bravo」。
+這對於難以區分發音的字母或是同音不同字的中文字很有幫助，對於聽覺障礙使用者也很有用。
+
+在說出字詞解釋的期間若有其他要讀出的文字或您按下了 Ctrl 鍵則說出字詞解釋會被取消。
+
 +++ 選擇合成器 (NVDA+control+s) +++[SelectSynthesizer]
 「選擇合成器」對話框可以透過 NVDA 設定對話框中「語音」類別的「變更...」按鈕來開啟，讓您選擇 NVDA 要使用何種合成器來朗讀，
 當您選擇了合成器並按「確認」按鈕，NVDA 將載入選定的合成器，
@@ -1409,6 +1424,21 @@ NVDA 設定對話框中「點字」類別的「變更...」按鈕，會開啟[�
 為了能摸讀到脈絡資訊 (例如您在清單中，而清單是對話框的一部分)，您須要往回捲動點顯器。
 
 要在任何地方切換焦點脈絡呈現方式，請使用[輸入手勢 #InputGestures]對話框來指派手勢。
+
+==== 捲動時中斷語音 ====[BrailleSettingsInterruptSpeech]
+: 預設
+  啟用
+: 選項
+  預設 (啟用)、啟用、停用
+:
+
+此設定決定當點顯器向上或向下捲動時是否應中斷語音，
+點字游標移到上一行或下一行的指令則始終會中斷語音。
+
+閱讀點字時持續的語音可能會使人分心，
+因此此選項預設啟用，當捲動點顯器時就會中斷語音。
+
+停用此選項允許在閱讀點字的同時聽到語音。
 
 +++ 選擇點顯器 (NVDA+Ctrl+a) +++[SelectBrailleDisplay]
 「選擇點顯器」對話框可以從 NVDA 設定對話框中「點字」類別的「變更...」按鈕來開啟，允許您選擇 NVDA 應該使用何種點顯器來輸出點字。
@@ -1888,8 +1918,26 @@ NVDA 設定對話框中的「瀏覽模式」類別用於設定當您閱讀和導
 - 總是使用：無論 UI automation 在 Microsoft word 是否可用 (無論其完整性)。
 -
 
-==== 使用 UI Automation 處理 Windows 主控台 (若可用) ====[AdvancedSettingsConsoleUIA]
-當啟用此選項，NVDA 會使用一個全新且正在嘗試的功能來支援 Windows 主控台，它是基於 [Microsoft 針對無障礙的改善 https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]。此功能還在測試階段且尚未全部完成，因此目前並不推薦啟用。然而當此功能完善後，可預期它會成為 NVDA 的預設功能，來提升在 Windows 主控台中操作的效能及穩定性。
+==== Windows 主控台支援 ====[AdvancedSettingsConsoleUIA]
+: 預設
+  自動
+: 選項
+  自動、UIA (若可用)、傳統
+:
+
+此選項選擇 NVDA 如何與命令提示字元、PowerShell 及 Windows Subsystem for Linux 使用的 Windows 主控台互動。
+這不會影響新版 Windows 終端機。
+在 Windows 10 版本 1709，Microsoft [在主控台中加入了 UI Automation API 的支援 https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]，對於支援主控台的螢幕報讀軟體帶來極大效能及穩定性的改善，
+在無法使用 UI Automation 或已知會導致較差的使用者體驗情況下，NVDA 的傳統主控台支援可做為備用。
+Windows 主控台支援下拉式方塊有三個選項：
+- 自動：在 Windows 11 22H2 及之後版本中的 Windows  主控台使用 UI Automation，
+建議使用此選項並設為預設。
+- UIA (若可用)：若可用時在主控台中使用 UI Automation，即使是實作上有不完整或有錯誤的版本。
+雖然此有限的功能可能好用 (甚至可滿足您的使用需求)，然而您必須負擔使用此選項帶來的所有風險，且不會提供任何支援。
+- 傳統：Windows 主控台中的 UI Automation 將被完全停用，
+即使在使用 UI Automation 可提供更佳使用者體驗的情況下，也總是使用備用的傳統主控台，
+因此除非您知道自己在做什麼否則不建議選擇此選項。
+-
 
 ==== 在 Microsoft Edge 及其他以 Chromium 為基礎的瀏覽器中使用 UIA (若可用) ====[ChromiumUIA]
 允許在使用以 Chromium 為基礎的瀏覽器時 (如 Microsoft Edge) 指定何時使用 UIA，
@@ -1978,7 +2026,7 @@ Microsoft Excel 的 UI automation 實作不斷改變，而 Microsoft Office 版�
 ==== 紀錄到錯誤時播放音效 ====[PlayErrorSound]
 此選項允許您指定 NVDA 是否在錯誤事件被記錄時播放錯誤音效。
 選擇「僅限於測試版本」(預設) 時，讓 NVDA 僅在執行測試版本 (alpha、 beta 或從原始程式碼執行) 時播放錯誤音效。
-選擇「開」，則不論您目前使用的 NVDA 版本為何均會播放錯誤音效。
+選擇「是」，則不論您目前使用的 NVDA 版本為何均會播放錯誤音效。
 
 ++ 其他設定 ++[MiscSettings]
 除了 [NVDA 設定 #NVDASettings]對話框，NVDA 功能表中的偏好子功能表包含以下幾個其他項目。
@@ -2276,7 +2324,7 @@ NVDA 會確認您是否要移除，
 
 要停用附加元件，需按「停用」按鈕，
 要啟用先前停用的附加元件，須按「啟用」按鈕。
-若附加元件的狀態顯示為「已啟用」，您可以停用附加元件，若顯示為「已停用」，您可以啟用它。
+若附加元件的狀態顯示為「啟用」，您可以停用附加元件，若顯示為「停用」，您可以啟用它。
 每次按下「啟用/停用」按鈕，附加元件的狀態會顯示 NVDA 重新啟動後的變更，
 如果附加元件先前為停用，狀態將顯示「重新啟動後啟用」，
 如果附加元件先前為「啟用」，狀態將顯示「重新啟動後停用」。
