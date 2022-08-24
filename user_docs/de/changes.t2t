@@ -69,6 +69,27 @@ Dies verbessert die Leistung für einige Java-Anwendungen, einschließlich Intel
 Für 2022.3 wurden keine Änderungen an der API vorgenommen.
 
 
+= 2022.2.1 =
+Dies ist eine kleinere Version zur Behebung einer Sicherheitslücke.
+Bitte melden Sie Sicherheitsprobleme umgehend  an info@nvaccess.org.
+
+== Sicherheitskorrekturen ==
+- Es wurde ein Exploit behoben, durch den es möglich war, die Python-Konsole über den Sperrbildschirm zu starten. (GHSA-rmq3-vvhq-gp32)
+- Es wurde ein Exploit behoben, bei dem es möglich war, den Sperrbildschirm durch die Objekt-Navigation zu umgehen. (GHSA-rmq3-vvhq-gp32)
+-
+
+== Änderungen für Entwickler ==
+
+=== Veraltete Funktionen ===
+Die veralteten Funktionen sind derzeit nicht zur Entfernung  vorgesehen.
+Die veralteten Aliasnamen werden bis auf weiteres beibehalten.
+Bitte testen Sie die neue API und teilen Sie uns Ihr Feedback mit.
+Autoren von NVDA-Erweiterungen sollten bitte einen Ticket bei GitHub einreichen, wenn diese Änderungen dazu führen, dass die API nicht mehr Ihren Anforderungen entspricht.
+
+- ``appModules.lockapp.LockAppObject`` sollte durch ``NVDAObjects.lockscreen.LockScreenObject`` ersetzt werden. (GHSA-rmq3-vvhq-gp32)
+- ``appModules.lockapp.AppModule.SAFE_SCRIPTS`` sollte durch ``utils.security.getSafeScripts()`` ersetzt werden. (GHSA-rmq3-vvhq-gp32)
+-
+
 = 2022.2 =
 Diese Version enthält viele Fehlerbehebungen.
 Vor allem für Java-basierte Anwendungen, Braillezeilen und Windows-Funktionen gibt es erhebliche Verbesserungen.
@@ -365,7 +386,7 @@ Hinweis:
 +This is a minor release to fix a security issue.
 +Please responsibly disclose security issues to info@nvaccess.org.
 +
-== Sicherheitsbehebungen ==
+== Sicherheitskorrekturen ==
 - Behoben wurde der Sicherheitshinweis ``GHSA-xc5m-v23f-pgr7``.
   - Das Dialogfeld für die Ansage von Symbolen wurde im geschützten Modus deaktiviert.
   -
@@ -3761,7 +3782,7 @@ Die wichtigsten Neuerungen dieser Version sind u. a. die Unterstützung von 64-B
  - -m, --minimal: Spielt weder Klänge beim Starten und beenden ab, noch wird ein Willkommensbildschirm angezeigt.
  - -q, --quit: Beendet jegliche laufende NVDA-Instanzen.
  - -s, --stderr-file Dateiname: Gibt eine Datei an, in der nicht abgefangene Fehler und ausnahmen protokolliert werden sollen.
- - -d, --debug-file Dateiname: Gibt eine Datei an, in der Meldungen zur Fehlerkorrektur festgehalten werden sollen.
+ - -d, --debug-file Dateiname: Gibt eine Datei an, in der Meldungen zur Fehlerbehebung festgehalten werden sollen.
  - -c, --config-file: Gibt eine alternative Konfigurationsdatei an.
  - -h, -help: Zeigt ein Hilfefenster an, das die Kommandozeilenparameter auflistet.
 - Problem behoben, wonach Satzzeichen nicht übersetzt wurden, wenn Sie eine andere Sprache als Englisch eingestellt haben und wenn die Aussprache eingegebener Zeichen aktiviert ist.

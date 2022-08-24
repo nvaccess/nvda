@@ -58,6 +58,19 @@ Tämä parantaa joidenkin Java-sovellusten, mukaan lukien IntelliJ IDEA, suoritu
 Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/changes.html]
 
 
+= 2022.2.1 =
+Tämä on pieni julkaisu tietoturvaongelman korjaamiseksi.
+Ilmoita tietoturvaongelmista vastuullisesti osoitteeseen info@nvaccess.org.
+
+== Tietoturvakorjaukset ==
+- Korjattu haavoittuvuus, jota hyväksikäyttäen Python-konsolia oli mahdollista ajaa lukitusnäytöltä. (GHSA-rmq3-vvhq-gp32)
+- Korjattu haavoittuvuus, jota hyväksikäyttäen lukitusnäytöltä oli mahdollista poistua objektinavigoinnin avulla. (GHSA-rmq3-vvhq-gp32)
+-
+
+== Muutokset kehittäjille ==
+Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/changes.html]
+
+
 = 2022.2 =
 Tämä julkaisu sisältää useita bugikorjauksia.
 Erityisesti Java-pohjaisiin sovelluksiin, pistenäyttöihin ja Windows-ominaisuuksiin on tehty merkittäviä parannuksia.
