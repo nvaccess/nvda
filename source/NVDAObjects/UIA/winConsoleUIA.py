@@ -10,6 +10,8 @@ import textUtils
 import UIAHandler
 import speech
 import controlTypes
+import api
+import config
 from comtypes import COMError
 from diffHandler import prefer_difflib
 from logHandler import log
@@ -424,7 +426,7 @@ class WinTerminalUIA(UIA):
 	#: Override the role, which is controlTypes.Role.STATICTEXT by default.
 	role = controlTypes.Role.TERMINAL
 	#: New line text is announced using UIA notification events
-	announceNewLineText=False
+	announceNewLineText = False
 
 	def event_UIA_notification(self, notificationKind, notificationProcessing, displayString, activityId):
 		# Do not announce output from background terminals.
