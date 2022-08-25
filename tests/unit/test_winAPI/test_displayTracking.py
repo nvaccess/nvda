@@ -79,4 +79,3 @@ class Test_UpdateOrientationState(unittest.TestCase):
 		self.assertTrue(landscapeMonitorSet)
 		changeToOtherLandscapeMonitorChangedState = _updateOrientationState(2, 1)
 		self.assertTrue(changeToOtherLandscapeMonitorChangedState)
-

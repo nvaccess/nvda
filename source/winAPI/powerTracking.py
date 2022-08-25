@@ -104,7 +104,10 @@ _batteryState: PowerState = PowerState.UNKNOWN
 def initialize():
 	global _batteryState
 	systemPowerStatus = SystemPowerStatus()
-	if not winKernel.GetSystemPowerStatus(systemPowerStatus) or systemPowerStatus.BatteryFlag == BatteryFlag.UNKNOWN:
+	if (
+		not winKernel.GetSystemPowerStatus(systemPowerStatus)
+		or systemPowerStatus.BatteryFlag == BatteryFlag.UNKNOWN
+	):
 		log.error("Error retrieving system power status")
 		return
 
@@ -138,9 +141,9 @@ def _getPowerStatus() -> Optional[SystemPowerStatus]:
 
 
 def _getSpeechForBatteryStatus(
-	systemPowerStatus: Optional[SystemPowerStatus],
-	onlyReportIfStatusChanged: bool,
-	oldPowerState: PowerState,
+		systemPowerStatus: Optional[SystemPowerStatus],
+		onlyReportIfStatusChanged: bool,
+		oldPowerState: PowerState,
 ) -> List[str]:
 	if not systemPowerStatus or systemPowerStatus.BatteryFlag == BatteryFlag.UNKNOWN:
 		# Translators: This is presented when there is an error retrieving the battery status.
