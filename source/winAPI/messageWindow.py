@@ -21,11 +21,10 @@ from . import (
 	powerTracking,
 	sessionTracking,
 )
+from .types import HWNDValT
 import extensionPoints
 import gui
 import windowUtils
-
-from .types import HWNDValT
 
 
 post_windowMessageReceipt = extensionPoints.Action()
