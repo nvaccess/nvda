@@ -4,7 +4,11 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-"""Functions that wrap Windows API functions from kernel32.dll and advapi32.dll"""
+"""
+Functions that wrap Windows API functions from kernel32.dll and advapi32.dll.
+
+When working on this file, consider moving to winAPI.
+"""
 
 import contextlib
 import ctypes

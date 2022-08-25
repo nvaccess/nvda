@@ -3,7 +3,11 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-"""Functions that wrap Windows API functions from user32.dll"""
+"""
+Functions that wrap Windows API functions from user32.dll.
+
+When working on this file, consider moving to winAPI.
+"""
 
 import contextlib
 from ctypes import *
