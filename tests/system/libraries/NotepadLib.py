@@ -66,7 +66,7 @@ class NotepadLib:
 			spy.emulateKeyPress('alt+f4')
 			process.wait_for_process(
 				NotepadLib.processRFHandleForStart,
-				timeout="1 minute",
+				timeout="10 seconds",
 				on_timeout="continue"
 			)
 		else:
