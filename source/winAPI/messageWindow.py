@@ -96,9 +96,6 @@ class _MessageWindow(windowUtils.CustomWindow):
 		# Call must be paired with a call to sessionTracking.unregister
 		self._isSessionTrackingRegistered = sessionTracking.register(self.handle)
 
-		# Call must be paired with calls to deregister
-		post_windowMessageReceipt.register(_MessageWindow.handleWindowMessage)
-
 	def warnIfSessionTrackingNotRegistered(self) -> None:
 		if self._isSessionTrackingRegistered:
 			return
@@ -123,20 +120,24 @@ class _MessageWindow(windowUtils.CustomWindow):
 	def destroy(self):
 		"""
 		NVDA must unregister session tracking before destroying the message window.
+
+		Windows API states that every registration of session tracking must be paired with
+		de-registering session tracking.
+		We cannot deregister session tracking after the message window has been destroyed.
 		"""
-		post_windowMessageReceipt.unregister(_MessageWindow.handleWindowMessage)
 		if self._isSessionTrackingRegistered:
 			# Requires an active message window and a handle to unregister.
 			sessionTracking.unregister(self.handle)
 		super().destroy()
 
-	@staticmethod
-	def handleWindowMessage(msg: int, wParam: int, lParam: int) -> None:
+	def windowProc(self, hwnd: HWNDValT, msg: int, wParam: int, lParam: int) -> None:
 		"""
+		@param hwnd
 		@param msg: The window message.
 		@param wParam: Additional message information.
 		@param lParam: Additional message information.
 		"""
+		post_windowMessageReceipt.notify(msg=msg, wParam=wParam, lParam=lParam)
 		if msg == WindowMessage.POWER_BROADCAST:
 			if wParam == powerTracking.PowerBroadcast.APM_POWER_STATUS_CHANGE:
 				powerTracking.reportCurrentBatteryStatus(onlyReportIfStatusChanged=True)
@@ -145,12 +146,3 @@ class _MessageWindow(windowUtils.CustomWindow):
 		elif msg == WindowMessage.WTS_SESSION_CHANGE:
 			# If we are receiving WTS_SESSION_CHANGE events, _isSessionTrackingRegistered should be True
 			sessionTracking.handleSessionChange(sessionTracking.WindowsTrackedSession(wParam), lParam)
-
-	def windowProc(self, hwnd: HWND, msg: int, wParam: int, lParam: int) -> None:
-		"""
-		@param hwnd
-		@param msg: The window message.
-		@param wParam: Additional message information.
-		@param lParam: Additional message information.
-		"""
-		post_windowMessageReceipt.notify(msg=msg, wParam=wParam, lParam=lParam)
