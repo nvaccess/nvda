@@ -212,15 +212,6 @@ class _TextReader(garbageHandler.TrackedObject, metaclass=ABCMeta):
 		Advances cursor to the next reading chunk (e.g. paragraph).
 		@return: C{True} if advanced successfully, C{False} otherwise.
 		"""
-		# Collapse to the end of this line, ready to read the next.
-		try:
-			self.reader.collapse(end=True)
-		except RuntimeError:
-			# This occurs in Microsoft Word when the range covers the end of the document.
-			# without this exception to indicate that further collapsing is not possible,
-			# say all could enter an infinite loop.
-
-			return False
 		# Expand to the current line.
 		# We use move end rather than expand
 		# because the user might start in the middle of a line
@@ -238,6 +229,21 @@ class _TextReader(garbageHandler.TrackedObject, metaclass=ABCMeta):
 				self.finish()
 			return False
 		return True
+
+	def collapseLineImpl(self) -> bool:
+		"""
+		Collapses to the end of this line, ready to read the next.
+		@return: C{True} if collapsed successfully, C{False} otherwise.
+		"""
+		try:
+			self.reader.collapse(end=True)
+			return True
+		except RuntimeError:
+			# This occurs in Microsoft Word when the range covers the end of the document.
+			# without this exception to indicate that further collapsing is not possible,
+			# say all could enter an infinite loop.
+			self.finish()
+			return False
 
 	def nextLine(self):
 		if not self.reader:
@@ -285,6 +291,9 @@ class _TextReader(garbageHandler.TrackedObject, metaclass=ABCMeta):
 		spoke = self.handler.speechWithoutPausesInstance.speakWithoutPauses(seq)
 		# Update the textInfo state ready for when speaking the next line.
 		self.speakTextInfoState = state.copy()
+
+		if not self.collapseLineImpl():
+			return
 
 		if not spoke:
 			# This line didn't include a natural pause, so nothing was spoken.
@@ -390,6 +399,9 @@ class _TableTextReader(_CaretTextReader):
 			return True
 		except StopIteration:
 			return False
+
+	def collapseLineImpl(self) -> bool:
+		return True
 
 	def shouldReadInitialPosition(self) -> bool:
 		return True
