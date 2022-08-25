@@ -76,6 +76,8 @@ def reportScreenOrientationChange(heightWidth: int) -> None:
 	width = winUser.LOWORD(heightWidth)
 	if _updateOrientationState(height, width):
 		if _orientationState.style == Orientation.LANDSCAPE:
+			# Translators: The screen is oriented so that it is wider than it is tall.
 			ui.message(_("Landscape"))
 		if _orientationState.style == Orientation.PORTRAIT:
+			# Translators: The screen is oriented in such a way that the height is taller than it is wide.
 			ui.message(_("Portrait"))
