@@ -33,35 +33,48 @@ class OrientationState:
 _orientationState = OrientationState()
 
 
-def reportScreenOrientationChange(heightWidth: int) -> None:
+def _updateOrientationState(heightWidth: int) -> bool:
 	"""
-	Reports the screen orientation only if the screen orientation has changed.
+	@returns: True if there has been an orientation state change.
 	"""
 	# Resolution detection comes from an article found at https://msdn.microsoft.com/en-us/library/ms812142.aspx.
 	width = winUser.LOWORD(heightWidth)
 	height = winUser.HIWORD(heightWidth)
+	heightAndWidthUnchanged = _orientationState.height == height and _orientationState.width == width
 	if width > height:
 		# The new orientation is landscape
 		if (
 			# Orientation has changed
 			_orientationState.style != Orientation.LANDSCAPE
 			# If the height and width are the same, it's a screen flip
-			or (_orientationState.height == height and _orientationState.width == width)
+			# otherwise, it may be a change of display (e.g. monitor disconnected).
+			or heightAndWidthUnchanged
 		):
-			# Translators: The screen is oriented so that it is wider than it is tall.
-			ui.message(_("Landscape"))
 			_orientationState.style = Orientation.LANDSCAPE
+			return True
 	else:
 		# The new orientation is portrait
 		if (
 			# Orientation has changed
 			_orientationState.style != Orientation.PORTRAIT
 			# If the height and width are the same, it's a screen flip
-			or (_orientationState.height == height and _orientationState.width == width)
+			# otherwise, it may be a change of display (e.g. monitor disconnected).
+			or heightAndWidthUnchanged
 		):
-			# Translators: The screen is oriented in such a way that the height is taller than it is wide.
-			ui.message(_("Portrait"))
 			_orientationState.style = Orientation.PORTRAIT
+			return True
 
 	_orientationState.height = height
 	_orientationState.width = width
+	return False
+
+
+def reportScreenOrientationChange(heightWidth: int) -> None:
+	"""
+	Reports the screen orientation only if the screen orientation has changed.
+	"""
+	if _updateOrientationState(heightWidth):
+		if _orientationState.style == Orientation.LANDSCAPE:
+			ui.message(_("Landscape"))
+		if _orientationState.style == Orientation.PORTRAIT:
+			ui.message(_("Portrait"))

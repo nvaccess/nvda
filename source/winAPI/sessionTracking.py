@@ -42,6 +42,8 @@ RPC_S_INVALID_BINDING = 0x6A6
 """
 Error which occurs when Windows is not ready to register session notification tracking.
 This error can be prevented by waiting for the event: 'Global\\TermSrvReadyEvent.'
+
+https://docs.microsoft.com/en-us/windows/win32/debug/system-error-codes--1700-3999-
 """
 
 NOTIFY_FOR_THIS_SESSION = 0
