@@ -18,6 +18,7 @@ from enum import (
 )
 from typing import (
 	List,
+	Optional,
 )
 
 from logHandler import log
@@ -99,15 +100,15 @@ _batteryState: PowerState = PowerState.UNKNOWN
 
 def initialize():
 	global _batteryState
-	sps = SystemPowerStatus()
-	if not winKernel.GetSystemPowerStatus(sps) or sps.BatteryFlag == BatteryFlag.UNKNOWN:
+	systemPowerStatus = SystemPowerStatus()
+	if not winKernel.GetSystemPowerStatus(systemPowerStatus) or systemPowerStatus.BatteryFlag == BatteryFlag.UNKNOWN:
 		log.error("Error retrieving system power status")
 		return
 
-	if sps.BatteryFlag & BatteryFlag.NO_SYSTEM_BATTERY:
+	if systemPowerStatus.BatteryFlag & BatteryFlag.NO_SYSTEM_BATTERY:
 		return
 
-	_batteryState = sps.ACLineStatus
+	_batteryState = systemPowerStatus.ACLineStatus
 	return
 
 
@@ -117,31 +118,44 @@ def reportCurrentBatteryStatus(onlyReportIfStatusChanged: bool = False) -> None:
 	Set this to True to only report if the power status changes.
 	"""
 	global _batteryState
+	systemPowerStatus = _getPowerStatus()
+	speechSequence = _getSpeechForBatteryStatus(onlyReportIfStatusChanged, systemPowerStatus, _batteryState)
+	ui.message(" ".join(speechSequence))
+	if systemPowerStatus is not None:
+		_batteryState = systemPowerStatus.ACLineStatus
+
+
+def _getPowerStatus() -> Optional[SystemPowerStatus]:
 	sps = SystemPowerStatus()
 	systemPowerStatusUpdateResult = winKernel.GetSystemPowerStatus(sps)
 	if not systemPowerStatusUpdateResult:
 		log.error(f"Error retrieving power status: {ctypes.GetLastError()}")
+		return None
+	return sps
 
-	if not systemPowerStatusUpdateResult or sps.BatteryFlag == BatteryFlag.UNKNOWN:
+
+def _getSpeechForBatteryStatus(
+	systemPowerStatus: Optional[SystemPowerStatus],
+	onlyReportIfStatusChanged: bool,
+	oldPowerState: PowerState,
+) -> List[str]:
+	if not systemPowerStatus or systemPowerStatus.BatteryFlag == BatteryFlag.UNKNOWN:
 		# Translators: This is presented when there is an error retrieving the battery status.
-		ui.message(_("Unknown power status"))
-		return
+		return [_("Unknown power status")]
 
-	if sps.BatteryFlag & BatteryFlag.NO_SYSTEM_BATTERY:
+	if systemPowerStatus.BatteryFlag & BatteryFlag.NO_SYSTEM_BATTERY:
 		# Translators: This is presented when there is no battery such as desktop computers
 		# and laptops with battery pack removed.
-		ui.message(_("No system battery"))
-		return
+		return [_("No system battery")]
 
-	if onlyReportIfStatusChanged and sps.ACLineStatus == _batteryState:
+	if onlyReportIfStatusChanged and systemPowerStatus.ACLineStatus == oldPowerState:
 		# Sometimes, the power change event double fires.
 		# The power change event also fires when the battery level decreases by 3%.
-		return
+		return []
 
-	_batteryState = sps.ACLineStatus
 	text: List[str] = []
 	# Translators: This is presented to inform the user of the current battery percentage.
-	if sps.ACLineStatus & PowerState.AC_ONLINE:
+	if systemPowerStatus.ACLineStatus & PowerState.AC_ONLINE:
 		# Translators: Reported when the battery is plugged in, and now is charging.
 		text.append(_("Charging battery"))
 	else:
@@ -149,14 +163,14 @@ def reportCurrentBatteryStatus(onlyReportIfStatusChanged: bool = False) -> None:
 		text.append(_("AC disconnected"))
 
 	# Translators: This is presented to inform the user of the current battery percentage.
-	text.append(_("%d percent") % sps.BatteryLifePercent)
+	text.append(_("%d percent") % systemPowerStatus.BatteryLifePercent)
 	BATTERY_LIFE_TIME_UNKNOWN = 0xffffffff
 	SECONDS_PER_HOUR = 3600
 	SECONDS_PER_MIN = 60
-	if sps.BatteryLifeTime != BATTERY_LIFE_TIME_UNKNOWN:
+	if systemPowerStatus.BatteryLifeTime != BATTERY_LIFE_TIME_UNKNOWN:
 		# Translators: This is the estimated remaining runtime of the laptop battery.
 		text.append(_("{hours:d} hours and {minutes:d} minutes remaining").format(
-			hours=sps.BatteryLifeTime // SECONDS_PER_HOUR,
-			minutes=(sps.BatteryLifeTime % SECONDS_PER_HOUR) // SECONDS_PER_MIN
+			hours=systemPowerStatus.BatteryLifeTime // SECONDS_PER_HOUR,
+			minutes=(systemPowerStatus.BatteryLifeTime % SECONDS_PER_HOUR) // SECONDS_PER_MIN
 		))
-	ui.message(" ".join(text))
+	return text
