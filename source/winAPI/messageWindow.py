@@ -9,7 +9,6 @@ A submodule for NVDA's message window, used for handling Window Messages.
 Message windows can be used to handle communications from other processes, new NVDA instances and Windows.
 """
 
-from ctypes.wintypes import HWND
 from enum import IntEnum
 from typing import (
 	Optional,
@@ -25,6 +24,8 @@ from . import (
 import extensionPoints
 import gui
 import windowUtils
+
+from .types import HWNDValT
 
 
 post_windowMessageReceipt = extensionPoints.Action()
