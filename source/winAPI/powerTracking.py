@@ -151,10 +151,12 @@ def reportCurrentBatteryStatus(onlyReportIfStatusChanged: bool = False) -> None:
 	# Translators: This is presented to inform the user of the current battery percentage.
 	text.append(_("%d percent") % sps.BatteryLifePercent)
 	BATTERY_LIFE_TIME_UNKNOWN = 0xffffffff
+	SECONDS_PER_HOUR = 3600
+	SECONDS_PER_MIN = 60
 	if sps.BatteryLifeTime != BATTERY_LIFE_TIME_UNKNOWN:
 		# Translators: This is the estimated remaining runtime of the laptop battery.
 		text.append(_("{hours:d} hours and {minutes:d} minutes remaining").format(
-			hours=sps.BatteryLifeTime // 3600,
-			minutes=(sps.BatteryLifeTime % 3600) // 60)
-		)
+			hours=sps.BatteryLifeTime // SECONDS_PER_HOUR,
+			minutes=(sps.BatteryLifeTime % SECONDS_PER_HOUR) // SECONDS_PER_MIN
+		))
 	ui.message(" ".join(text))
