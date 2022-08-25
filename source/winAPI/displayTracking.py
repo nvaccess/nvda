@@ -33,14 +33,13 @@ class OrientationState:
 _orientationState = OrientationState()
 
 
-def _updateOrientationState(heightWidth: int) -> bool:
+def _updateOrientationState(height: int, width: int) -> bool:
 	"""
 	@returns: True if there has been an orientation state change.
 	"""
 	# Resolution detection comes from an article found at https://msdn.microsoft.com/en-us/library/ms812142.aspx.
-	width = winUser.LOWORD(heightWidth)
-	height = winUser.HIWORD(heightWidth)
 	heightAndWidthUnchanged = _orientationState.height == height and _orientationState.width == width
+	orientationChanged = False
 	if width > height:
 		# The new orientation is landscape
 		if (
@@ -51,7 +50,7 @@ def _updateOrientationState(heightWidth: int) -> bool:
 			or heightAndWidthUnchanged
 		):
 			_orientationState.style = Orientation.LANDSCAPE
-			return True
+			orientationChanged = True
 	else:
 		# The new orientation is portrait
 		if (
@@ -62,18 +61,20 @@ def _updateOrientationState(heightWidth: int) -> bool:
 			or heightAndWidthUnchanged
 		):
 			_orientationState.style = Orientation.PORTRAIT
-			return True
+			orientationChanged = True
 
 	_orientationState.height = height
 	_orientationState.width = width
-	return False
+	return orientationChanged
 
 
 def reportScreenOrientationChange(heightWidth: int) -> None:
 	"""
 	Reports the screen orientation only if the screen orientation has changed.
 	"""
-	if _updateOrientationState(heightWidth):
+	height = winUser.HIWORD(heightWidth)
+	width = winUser.LOWORD(heightWidth)
+	if _updateOrientationState(height, width):
 		if _orientationState.style == Orientation.LANDSCAPE:
 			ui.message(_("Landscape"))
 		if _orientationState.style == Orientation.PORTRAIT:

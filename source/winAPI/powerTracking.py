@@ -26,6 +26,9 @@ import ui
 import winKernel
 
 
+BATTERY_LIFE_TIME_UNKNOWN = 0xffffffff
+
+
 class PowerBroadcast(IntEnum):
 	# https://docs.microsoft.com/en-us/windows/win32/power/wm-powerbroadcast
 	APM_POWER_STATUS_CHANGE = 0xA
@@ -164,7 +167,6 @@ def _getSpeechForBatteryStatus(
 
 	# Translators: This is presented to inform the user of the current battery percentage.
 	text.append(_("%d percent") % systemPowerStatus.BatteryLifePercent)
-	BATTERY_LIFE_TIME_UNKNOWN = 0xffffffff
 	SECONDS_PER_HOUR = 3600
 	SECONDS_PER_MIN = 60
 	if systemPowerStatus.BatteryLifeTime != BATTERY_LIFE_TIME_UNKNOWN:
