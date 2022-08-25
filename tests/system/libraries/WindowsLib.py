@@ -54,35 +54,18 @@ def taskSwitchToItemMatching(pattern: _re.Pattern, maxWindowsToTest: int = 10) -
 	spy = _NvdaLib.getSpyLib()
 	spy.wait_for_speech_to_finish()
 
-	nextIndex = spy.get_next_speech_index()
-	builtIn.log(f"Looking for window: {pattern}", level="DEBUG")
-	spy.emulateKeyPress('control+alt+tab')  # opens the task switcher until enter or escape is pressed.
-	# each item has "row 1 column 1" appended, ensure that the task switcher has opened.
-	indexOfSpeech: _Optional[int] = spy.wait_for_specific_speech_no_raise(
-		"row 1",
-		afterIndex=nextIndex - 1,
-		maxWaitSeconds=5,
-		intervalBetweenSeconds=0.2
-	)
+	indexOfSpeech, nextIndex = _tryOpenTaskSwitcher(pattern, spy)
 	if indexOfSpeech is None:
+		# Try opening the task switcher again
 		spy.emulateKeyPress('escape')
+		# Hack: using 'sleep' is error-prone.
+		# Given that opening the task switcher failed, or was too slow, the intention is to dismiss it
+		# and give the system time to recover before trying again.
 		builtIn.sleep(3)
 
-		nextIndex = spy.get_next_speech_index()
-		builtIn.log(f"Looking for window: {pattern}", level="DEBUG")
-		spy.emulateKeyPress('control+alt+tab')  # opens the task switcher until enter or escape is pressed.
-		# each item has "row 1 column 1" appended, ensure that the task switcher has opened.
-		indexOfSpeech: _Optional[int] = spy.wait_for_specific_speech_no_raise(
-			"row 1",
-			afterIndex=nextIndex - 1,
-			maxWaitSeconds=5,
-			intervalBetweenSeconds=0.2
-		)
+		indexOfSpeech, nextIndex = _tryOpenTaskSwitcher(pattern, spy)
 		if indexOfSpeech is None:
-			builtIn.log(f"indexOfSpeech 'row 1': {indexOfSpeech}")
-			raise AssertionError("tried twice to open task switcher and failed")
-
-	builtIn.log(f"indexOfSpeech 'row 1': {indexOfSpeech}")
+			raise AssertionError("Tried twice to open task switcher and failed.")
 
 	spy.wait_for_speech_to_finish(speechStartedIndex=nextIndex)
 	speech = spy.get_speech_at_index_until_now(nextIndex)
@@ -141,3 +124,19 @@ def taskSwitchToItemMatching(pattern: _re.Pattern, maxWindowsToTest: int = 10) -
 				f", nextIndex: {spy.get_next_speech_index()}"
 				f", speech in range: {spy.get_speech_at_index_until_now(nextIndex)}"
 			)
+
+
+def _tryOpenTaskSwitcher(pattern, spy):
+	nextIndex = spy.get_next_speech_index()
+	builtIn.log(f"Looking for window: {pattern}", level="DEBUG")
+	spy.emulateKeyPress('control+alt+tab')  # opens the task switcher until enter or escape is pressed.
+	# each item has "row 1 column 1" appended, ensure that the task switcher has opened.
+	firstRow = "row 1"
+	indexOfSpeech: _Optional[int] = spy.wait_for_specific_speech_no_raise(
+		firstRow,
+		afterIndex=nextIndex - 1,
+		maxWaitSeconds=5,
+		intervalBetweenSeconds=0.2
+	)
+	builtIn.log(f"indexOfSpeech '{firstRow}': {indexOfSpeech}", level="DEBUG")
+	return indexOfSpeech, nextIndex
