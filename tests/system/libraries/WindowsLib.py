@@ -95,6 +95,10 @@ def taskSwitchToItemMatching(targetWindowNamePattern: _re.Pattern, maxWindowsToT
 	while (
 		not found
 		and not firstItemPattern.search(speech)
+		# In most cases it is expected that the target Window is close to the top of the z-order.
+		# On CI there should not be many windows open.
+		# A sanity check on the max windows to test ensures the test does not get stuck cycling through the
+		# available windows if the other tests fail for some reason.
 		and windowsTested < maxWindowsToTest
 	):
 		nextIndex = spy.get_next_speech_index()
