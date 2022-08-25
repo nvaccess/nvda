@@ -230,7 +230,7 @@ class ChromeLib:
 			_alwaysDoToggleFocus  # may work around focus/foreground event missed issues for tests.
 			or not _chromeLib.canChromeTitleBeReported(chromeTitleSpeechPattern)
 		):
-			windowsLib.taskSwitchToItemMatching(pattern=chromeTitleSpeechPattern)
+			windowsLib.taskSwitchToItemMatching(targetWindowNamePattern=chromeTitleSpeechPattern)
 			windowsLib.logForegroundWindowTitle()
 
 		if not _chromeLib.canChromeTitleBeReported(chromeTitleSpeechPattern):

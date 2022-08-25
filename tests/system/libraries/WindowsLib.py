@@ -44,7 +44,7 @@ def logForegroundWindowTitle():
 	builtIn.log(f"Foreground window title: {windowTitle}")
 
 
-def taskSwitchToItemMatching(pattern: _re.Pattern, maxWindowsToTest: int = 10) -> None:
+def taskSwitchToItemMatching(targetWindowNamePattern: _re.Pattern, maxWindowsToTest: int = 10) -> None:
 	"""Opens the task switcher, rightArrows through the items trying to search the for the pattern in the
 	speech for each item.
 	Raises AssertionError if not found.
@@ -54,7 +54,7 @@ def taskSwitchToItemMatching(pattern: _re.Pattern, maxWindowsToTest: int = 10) -
 	spy = _NvdaLib.getSpyLib()
 	spy.wait_for_speech_to_finish()
 
-	indexOfSpeech, nextIndex = _tryOpenTaskSwitcher(pattern, spy)
+	indexOfSpeech, nextIndex = _tryOpenTaskSwitcher(targetWindowNamePattern, spy)
 	if indexOfSpeech is None:
 		# Try opening the task switcher again
 		spy.emulateKeyPress('escape')
@@ -63,7 +63,7 @@ def taskSwitchToItemMatching(pattern: _re.Pattern, maxWindowsToTest: int = 10) -
 		# and give the system time to recover before trying again.
 		builtIn.sleep(3)
 
-		indexOfSpeech, nextIndex = _tryOpenTaskSwitcher(pattern, spy)
+		indexOfSpeech, nextIndex = _tryOpenTaskSwitcher(targetWindowNamePattern, spy)
 		if indexOfSpeech is None:
 			raise AssertionError("Tried twice to open task switcher and failed.")
 
@@ -87,7 +87,7 @@ def taskSwitchToItemMatching(pattern: _re.Pattern, maxWindowsToTest: int = 10) -
 			raise AssertionError("Didn't return to the first item with left arrow")
 
 	found = False
-	if pattern.search(speech):
+	if targetWindowNamePattern.search(speech):
 		found = True
 
 	speech = ""
@@ -102,7 +102,7 @@ def taskSwitchToItemMatching(pattern: _re.Pattern, maxWindowsToTest: int = 10) -
 		spy.wait_for_speech_to_finish(speechStartedIndex=nextIndex)
 		speech = spy.get_speech_at_index_until_now(nextIndex)
 		builtIn.log(f"next window: {speech}", level="DEBUG")
-		if pattern.search(speech):
+		if targetWindowNamePattern.search(speech):
 			found = True
 		windowsTested += 1
 
@@ -111,7 +111,7 @@ def taskSwitchToItemMatching(pattern: _re.Pattern, maxWindowsToTest: int = 10) -
 		spy.emulateKeyPress("escape")
 		spy.wait_for_speech_to_finish(speechStartedIndex=nextIndex)
 		raise AssertionError(
-			f"Unable to find Window in task switcher matching: {pattern}\n"
+			f"Unable to find Window in task switcher matching: {targetWindowNamePattern}\n"
 			"See NVDA log for dump of all speech."
 		)
 	else:

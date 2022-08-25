@@ -176,7 +176,7 @@ class NotepadLib:
 		)
 		if not self.canNotepadTitleBeReported(notepadTitleSpeechPattern=testCaseNotepadTitleSpeech):
 			builtIn.log("Trying to switch to notepad Window")
-			windowsLib.taskSwitchToItemMatching(pattern=testCaseNotepadTitleSpeech)
+			windowsLib.taskSwitchToItemMatching(targetWindowNamePattern=testCaseNotepadTitleSpeech)
 			windowsLib.logForegroundWindowTitle()
 
 		self._waitForNotepadFocus(NotepadLib.getUniqueTestCaseTitleRegex(testCase))
