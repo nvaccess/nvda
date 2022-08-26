@@ -50,6 +50,11 @@ def _getObjScript(
 		gesture: "inputCore.InputGesture",
 		globalMapScripts: List[_ScriptFunctionT],
 ) -> Optional[_ScriptFunctionT]:
+	"""
+	@param globalMapScripts: An ordered list of maps.
+	The list is ordered by resolution priority,
+	the first map in the list should be used to resolve the script first.
+	"""
 	# Search the scripts from the global gesture maps.
 	for cls, scriptName in globalMapScripts:
 		if isinstance(obj, cls):
@@ -72,6 +77,11 @@ def _getObjScript(
 
 
 def getGlobalMapScripts(gesture: "inputCore.InputGesture") -> List[_ScriptFunctionT]:
+	"""
+	@returns: An ordered list of maps.
+	The list is ordered by resolution priority,
+	the first map in the list should be used to resolve scripts first.
+	"""
 	globalMapScripts: List[_ScriptFunctionT] = []
 	globalMaps = [inputCore.manager.userGestureMap, inputCore.manager.localeGestureMap]
 	globalMap = braille.handler.display.gestureMap if braille.handler and braille.handler.display else None
