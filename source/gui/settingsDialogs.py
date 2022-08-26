@@ -2556,20 +2556,15 @@ class DocumentNavigationPanel(SettingsPanel):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: This is a label for the paragraph navigation style in the document navigation dialog
 		paragraphStyleLabel = _("&Paragraph style:")
-		from utils.paragraphHelper import ParagraphStyles
-		lst = list(ParagraphStyles)
-		styles = [s.value for s in lst]
-		choices = [s.displayString for s in lst]
-		styleIndex = styles.index(config.conf["documentNavigation"]["paragraphStyle"])
-		self.styleCombo = sHelper.addLabeledControl(paragraphStyleLabel, wx.Choice, choices=choices)
-		self.styleCombo.SetSelection(styleIndex)
+		self.paragraphStyleCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
+			labelText=paragraphStyleLabel,
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["documentNavigation", "paragraphStyle"],
+			conf=config.conf
+		)
 
 	def onSave(self):
-		from utils.paragraphHelper import ParagraphStyles
-		lst = list(ParagraphStyles)
-		styles = [s.value for s in lst]
-		choice = self.styleCombo.GetSelection()
-		config.conf["documentNavigation"]["paragraphStyle"] = styles[choice]
+		pass
 
 class TouchInteractionPanel(SettingsPanel):
 	# Translators: This is the label for the touch interaction settings panel.

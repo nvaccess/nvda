@@ -67,6 +67,23 @@ class BoolFlag(DisplayStringEnum):
 		return self == BoolFlag.ENABLED
 
 
+class ParagraphNavigationFlag(DisplayStringEnum):
+	def _displayStringLabels(self):
+		return {
+			# Translators: Label for an option in NVDA settings.
+			self.APPLICATION: _("Handled by application"),
+			# Translators: Label for an option in NVDA settings.
+			self.NORMAL: _("Normal style"),
+			# Translators: Label for an option in NVDA settings.
+			self.BLOCK: _("Block style")
+		}
+
+	DEFAULT = enum.auto()
+	APPLICATION = enum.auto()
+	NORMAL = enum.auto()
+	BLOCK = enum.auto()
+
+
 def getAvailableEnums() -> typing.Generator[typing.Tuple[str, FlagValueEnum], None, None]:
 	for name, value in globals().items():
 		if (

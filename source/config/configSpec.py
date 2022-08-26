@@ -225,7 +225,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	reportClickable = boolean(default=true)
 
 [documentNavigation]
-	paragraphStyle = option("auto", "application", "normal", "block", default="auto")
+	paragraphStyle = featureFlag(optionsEnum="ParagraphNavigationFlag", behaviorOfDefault="application")
 
 [reviewCursor]
 	simpleReviewMode = boolean(default=True)
