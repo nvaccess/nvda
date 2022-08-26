@@ -126,7 +126,8 @@ def reportCurrentBatteryStatus(onlyReportIfStatusChanged: bool = False) -> None:
 	global _batteryState
 	systemPowerStatus = _getPowerStatus()
 	speechSequence = _getSpeechForBatteryStatus(onlyReportIfStatusChanged, systemPowerStatus, _batteryState)
-	ui.message(" ".join(speechSequence))
+	if speechSequence:
+		ui.message(" ".join(speechSequence))
 	if systemPowerStatus is not None:
 		_batteryState = systemPowerStatus.ACLineStatus
 
