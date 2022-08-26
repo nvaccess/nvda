@@ -42,8 +42,9 @@ import controlTypes
 import winKernel
 
 
-_InputGestureBindingClassT = TypeVar("_InputGestureBindingClassT")
-InputGestureScriptT = Tuple[_InputGestureBindingClassT, Optional[str]]
+InputGestureBindingClassT = TypeVar("InputGestureBindingClassT")
+ScriptNameT = str
+InputGestureScriptT = Tuple[InputGestureBindingClassT, Optional[ScriptNameT]]
 """
 The Python class and script name for each script;
 the script name may be C{None} indicating that the gesture should be unbound for this class.
