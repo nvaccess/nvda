@@ -137,6 +137,14 @@ class _MessageWindow(windowUtils.CustomWindow):
 		@param lParam: Additional message information.
 		"""
 		post_windowMessageReceipt.notify(msg=msg, wParam=wParam, lParam=lParam)
+		self.handleWindowMessage(msg, wParam, lParam)
+
+	def handleWindowMessage(self, msg: int, wParam: int, lParam: int) -> None:
+		"""
+		@param msg: The window message.
+		@param wParam: Additional message information.
+		@param lParam: Additional message information.
+		"""
 		if msg == WindowMessage.POWER_BROADCAST:
 			if wParam == powerTracking.PowerBroadcast.APM_POWER_STATUS_CHANGE:
 				powerTracking.reportCurrentBatteryStatus(onlyReportIfStatusChanged=True)
