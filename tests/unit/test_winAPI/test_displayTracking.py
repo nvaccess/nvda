@@ -7,75 +7,96 @@ import unittest
 
 from winAPI import displayTracking
 from winAPI.displayTracking import (
-	_updateOrientationState,
+	_getNewOrientationState,
 	Orientation,
 	OrientationState,
 )
 
 
 class Test_UpdateOrientationState(unittest.TestCase):
-	def setUp(self) -> None:
-		displayTracking._orientationState = OrientationState()
-
-	def tearDown(self) -> None:
-		displayTracking._orientationState = OrientationState()
 
 	def test_landscapeInitiallySet(self):
-		monitorSet = _updateOrientationState(1, 2)
-		self.assertTrue(monitorSet)
+		newStyle = _getNewOrientationState(
+			previousState=OrientationState(),  # simulates initialization
+			height=1,
+			width=2,
+		)
 		self.assertEqual(
-			displayTracking._orientationState.style,
+			newStyle,
 			Orientation.LANDSCAPE
 		)
 
 	def test_portraitInitiallySet(self):
-		monitorSet = _updateOrientationState(2, 1)
-		self.assertTrue(monitorSet)
+		newStyle = _getNewOrientationState(
+			previousState=OrientationState(),  # simulates initialization
+			height=2,
+			width=1,
+		)
 		self.assertEqual(
-			displayTracking._orientationState.style,
+			newStyle,
 			Orientation.PORTRAIT
 		)
 
 	def test_orientationChange(self):
-		monitorSet = _updateOrientationState(2, 1)
-		self.assertTrue(monitorSet)
-		self.assertEqual(
-			displayTracking._orientationState.style,
-			Orientation.PORTRAIT
-		)
-
 		# simulate a 90deg rotation
-		monitorSet = _updateOrientationState(1, 2)
-		self.assertTrue(monitorSet)
+		newStyle = _getNewOrientationState(
+			previousState=OrientationState(
+				height=2,
+				width=1,
+				style=Orientation.PORTRAIT,
+			),
+			height=1,
+			width=2,
+		)
 		self.assertEqual(
-			displayTracking._orientationState.style,
+			newStyle,
 			Orientation.LANDSCAPE
 		)
 
 	def test_screenFlip(self):
-		monitorSet = _updateOrientationState(1, 2)
-		self.assertTrue(monitorSet)
-		self.assertEqual(
-			displayTracking._orientationState.style,
-			Orientation.LANDSCAPE
+		# simulate a 180deg rotation
+		newStyle = _getNewOrientationState(
+			previousState=OrientationState(
+				height=1,
+				width=2,
+				style=Orientation.LANDSCAPE,
+			),
+			height=1,
+			width=2,
 		)
-
-		# no change of orientation indicates a screen flip (180deg rotation)
-		monitorSet = _updateOrientationState(1, 2)
-		self.assertTrue(monitorSet)
 		self.assertEqual(
-			displayTracking._orientationState.style,
+			newStyle,
 			Orientation.LANDSCAPE
 		)
 
 	def test_monitorChangeNoOrientationChange(self):
-		landscapeMonitorSet = _updateOrientationState(1, 2)
-		self.assertTrue(landscapeMonitorSet)
-		changeToOtherLandscapeMonitorChangedState = _updateOrientationState(1, 3)
-		self.assertFalse(changeToOtherLandscapeMonitorChangedState)
+		# simulate a display change, where the orientation doesn't update
+		# this should not be considered a new orientation state
+		newStyle = _getNewOrientationState(
+			previousState=OrientationState(
+				height=1,
+				width=2,
+				style=Orientation.LANDSCAPE,
+			),
+			height=1,
+			width=3,
+		)
+		self.assertIsNone(newStyle)
 
 	def test_monitorChangeOrientationChange(self):
-		landscapeMonitorSet = _updateOrientationState(1, 2)
-		self.assertTrue(landscapeMonitorSet)
-		changeToOtherLandscapeMonitorChangedState = _updateOrientationState(2, 1)
-		self.assertTrue(changeToOtherLandscapeMonitorChangedState)
+		# simulate a display change, where the orientation doesn't update
+		# this should not be considered a new orientation state
+		newStyle = _getNewOrientationState(
+			previousState=OrientationState(
+				height=1,
+				width=2,
+				style=Orientation.LANDSCAPE,
+			),
+			height=2,
+			width=1,
+		)
+		self.assertEqual(
+			newStyle,
+			Orientation.PORTRAIT
+		)
+

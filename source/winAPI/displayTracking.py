@@ -12,6 +12,9 @@ and we notify the user of changes to the orientation.
 
 from dataclasses import dataclass
 import enum
+from typing import (
+	Optional,
+)
 
 import ui
 import winUser
@@ -33,39 +36,33 @@ class OrientationState:
 _orientationState = OrientationState()
 
 
-def _updateOrientationState(height: int, width: int) -> bool:
+def _getNewOrientationState(previousState: OrientationState, height: int, width: int) -> Optional[Orientation]:
 	"""
-	@returns: True if there has been an orientation state change.
+	@returns: Orientation if there has been an orientation state change, otherwise None
 	"""
 	# Resolution detection comes from an article found at https://msdn.microsoft.com/en-us/library/ms812142.aspx.
-	heightAndWidthUnchanged = _orientationState.height == height and _orientationState.width == width
-	orientationChanged = False
+	heightAndWidthUnchanged = previousState.height == height and previousState.width == width
 	if width > height:
 		# The new orientation is landscape
 		if (
 			# Orientation has changed
-			_orientationState.style != Orientation.LANDSCAPE
+			previousState.style != Orientation.LANDSCAPE
 			# If the height and width are the same, it's a screen flip
 			# otherwise, it may be a change of display (e.g. monitor disconnected).
 			or heightAndWidthUnchanged
 		):
-			_orientationState.style = Orientation.LANDSCAPE
-			orientationChanged = True
+			return Orientation.LANDSCAPE
 	else:
 		# The new orientation is portrait
 		if (
 			# Orientation has changed
-			_orientationState.style != Orientation.PORTRAIT
+			previousState.style != Orientation.PORTRAIT
 			# If the height and width are the same, it's a screen flip
 			# otherwise, it may be a change of display (e.g. monitor disconnected).
 			or heightAndWidthUnchanged
 		):
-			_orientationState.style = Orientation.PORTRAIT
-			orientationChanged = True
-
-	_orientationState.height = height
-	_orientationState.width = width
-	return orientationChanged
+			return Orientation.PORTRAIT
+	return None
 
 
 def reportScreenOrientationChange(heightWidth: int) -> None:
@@ -74,10 +71,15 @@ def reportScreenOrientationChange(heightWidth: int) -> None:
 	"""
 	height = winUser.HIWORD(heightWidth)
 	width = winUser.LOWORD(heightWidth)
-	if _updateOrientationState(height, width):
+	newState = _getNewOrientationState(_orientationState, height, width)
+	if newState:
+		_orientationState.style = newState
 		if _orientationState.style == Orientation.LANDSCAPE:
 			# Translators: The screen is oriented so that it is wider than it is tall.
 			ui.message(_("Landscape"))
 		if _orientationState.style == Orientation.PORTRAIT:
 			# Translators: The screen is oriented in such a way that the height is taller than it is wide.
 			ui.message(_("Portrait"))
+
+	_orientationState.height = height
+	_orientationState.width = width
