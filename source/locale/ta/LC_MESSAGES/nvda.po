@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-29 00:02+0000\n"
-"PO-Revision-Date: 2022-07-31 13:05+0530\n"
+"POT-Creation-Date: 2022-08-19 00:02+0000\n"
+"PO-Revision-Date: 2022-08-19 20:01+0530\n"
 "Last-Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language-Team: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language: ta\n"
@@ -2336,6 +2336,22 @@ msgstr "gesture வரைப்பட கோப்புப் பிழை"
 #. Translators: This is spoken when NVDA is starting.
 msgid "Loading NVDA. Please wait..."
 msgstr "என்விடிஏ ஏற்றப்படுகிறது. அருள்கூர்ந்து காத்திருக்கவும்..."
+
+#. Translators: This is a warning to users, shown if NVDA cannot determine if
+#. Windows is locked.
+msgid ""
+"NVDA failed to register session tracking. While this instance of NVDA is "
+"running, your desktop will not be secure when Windows is locked. Restart "
+"NVDA? "
+msgstr ""
+"அமர்வுக் கண்காணிப்பை பதிய என்விடிஏ தவறிவிட்டது. என்விடிஏவின் இந்நிகழ்வு "
+"இயங்கிக்கொண்டிருந்தால், விண்டோஸ் பூட்டப்பட்ட நிலையில் தங்களின் மேசைத்தளம் பாதுகாப்பாக "
+"இருக்காது. என்விடிஏவை மறுதுவக்க வேண்டுமா?"
+
+#. Translators: This is a warning to users, shown if NVDA cannot determine if
+#. Windows is locked.
+msgid "NVDA could not start securely."
+msgstr "என்விடிஏவால் பாதுகாப்பாகத் துவங்க இயலவில்லை."
 
 #. Translators: The screen is oriented so that it is wider than it is tall.
 msgid "Landscape"
@@ -6537,8 +6553,8 @@ msgstr ""
 "முயற்சிக்கிறது."
 
 #. Translators: When the help popup cannot be found for the selected autocompletion item
-msgid "Cann't find the documentation window."
-msgstr "ஆவணமாக்கல் சாளரம் காணப்படவில்லை"
+msgid "Can't find the documentation window."
+msgstr "ஆவணமாக்கல் சாளரத்தைக் கண்டறிய இயலவில்லை"
 
 #. Translators: Reported when no track is playing in Foobar 2000.
 msgid "No track playing"
@@ -9583,7 +9599,7 @@ msgstr "எழுத்துகளாக படித்திடும் வ�
 
 #. Translators: This is the label for a checkbox in the voice settings panel.
 msgid "&Delayed descriptions for characters on cursor movement"
-msgstr "சுட்டியின் நகர்வின்பொழுது வரியுருக்களுக்கான தாமத விளக்கங்கள் (&D)"
+msgstr "சுட்டி நகரும்பொழுது தாமதிக்கப்பட்ட எழுத்து விளக்கங்கள் (&D)"
 
 #. Translators: This is the label for the keyboard settings panel.
 msgid "Keyboard"
@@ -9613,12 +9629,12 @@ msgstr "தட்டச்சிடப்படும் சொற்களை�
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
 msgid "Speech &interrupt for typed characters"
-msgstr "வரியுருக்கள் தட்டச்சிடப்படும்பொழுது பேச்சை இடைநிறுத்துக (&I)"
+msgstr "வரியுருக்கள் தட்டச்சிடப்படும்பொழுது பேச்சைக் குறுக்கிடுக (&I)"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
 msgid "Speech i&nterrupt for Enter key"
-msgstr "உள்ளிடு விசை அழுத்தப்படும்பொழுது பேச்சை இடைநிறுத்துக (&N)"
+msgstr "உள்ளிடு விசை அழுத்தப்படும்பொழுது பேச்சைக் குறுக்கிடுக (&N)"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -10522,7 +10538,7 @@ msgstr "குவிமைய சூழலளிக்கை"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
 msgid "I&nterrupt speech while scrolling"
-msgstr "திரை உருளலின்பொழுது பேச்சை இடைநிறுத்துக (&N)"
+msgstr "உருளலின்பொழுது பேச்சைக் குறுக்கிடுக (&N)"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load a single vision enhancement provider.

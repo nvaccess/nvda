@@ -107,3 +107,9 @@ self.copySettingsButton = wx.Button(
 
 When writing new code, consider how the code can be moved in future while retaining backwards compatibility.
 Refer to the [limitations to retaining backwards compatibility](./deprecations.md#limitations-to-retaining-backwards-compatibility).
+
+In summary:
+- Avoid module level global variables.
+Any module level variables should be prefixed with and underscore and be encapsulated, e.g. via getters and setters.
+- Avoid code which executes at import time.
+Instead use initializer functions.
