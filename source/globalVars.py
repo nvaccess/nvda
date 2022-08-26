@@ -23,18 +23,23 @@ Once a warning is in place, after some time it may become appropriate to delete 
 
 import argparse
 import os
-import typing
+from typing import (
+	TYPE_CHECKING,
+	List,
+	Optional,
+)
+from typing_extensions import Literal
 
-if typing.TYPE_CHECKING:
+if TYPE_CHECKING:
 	import NVDAObjects  # noqa: F401 used for type checking only
 
 
 class DefaultAppArgs(argparse.Namespace):
 	quit: bool = False
 	check_running: bool = False
-	logFileName: typing.Optional[os.PathLike] = ""
+	logFileName: Optional[os.PathLike] = ""
 	logLevel: int = 0
-	configPath: typing.Optional[os.PathLike] = None
+	configPath: Optional[os.PathLike] = None
 	language: str = "en"
 	minimal: bool = False
 	secure: bool = False
@@ -46,58 +51,76 @@ class DefaultAppArgs(argparse.Namespace):
 	installSilent: bool = False
 	createPortable: bool = False
 	createPortableSilent: bool = False
-	portablePath: typing.Optional[os.PathLike] = None
+	portablePath: Optional[os.PathLike] = None
 	launcher: bool = False
-	enableStartOnLogon: typing.Optional[bool] = None
+	enableStartOnLogon: Optional[bool] = None
 	copyPortableConfig: bool = False
 	easeOfAccess: bool = False
 
 
 # Encapsulated by api module,
 # refer to #14037 for removal strategy.
-desktopObject: typing.Optional['NVDAObjects.NVDAObject'] = None
+desktopObject: Optional['NVDAObjects.NVDAObject'] = None
 """Deprecated, use `setDesktopObject|getDesktopObject` from `api` instead"""
-foregroundObject: typing.Optional['NVDAObjects.NVDAObject'] = None
+
+foregroundObject: Optional['NVDAObjects.NVDAObject'] = None
 """Deprecated, use `setForegroundObject|getForegroundObject` from `api` instead"""
-focusObject: typing.Optional['NVDAObjects.NVDAObject'] = None
+
+focusObject: Optional['NVDAObjects.NVDAObject'] = None
 """Deprecated, use `setFocusObject|getFocusObject` from `api` instead"""
-focusAncestors: typing.List['NVDAObjects.NVDAObject'] = []
+
+focusAncestors: List['NVDAObjects.NVDAObject'] = []
 """Deprecated, use `getFocusAncestors` from `api` instead"""
-focusDifferenceLevel=None
+
+focusDifferenceLevel: Optional[int] = None
 """Deprecated, use `getFocusDifferenceLevel` from `api` instead"""
-mouseObject: typing.Optional['NVDAObjects.NVDAObject'] = None
+
+mouseObject: Optional['NVDAObjects.NVDAObject'] = None
 """Deprecated, use ``setMouseObject|getMouseObject`` from `api` instead"""
-navigatorObject: typing.Optional['NVDAObjects.NVDAObject'] = None
+
+navigatorObject: Optional['NVDAObjects.NVDAObject'] = None
 """Deprecated, use ``setNavigatorObject|getNavigatorObject`` from `api` instead"""
-reviewPosition=None
+
+reviewPosition: Optional["NVDAObjects.NVDAObject"] = None
 """Deprecated, use ``getReviewPosition|setReviewPosition`` from `api` instead"""
-reviewPositionObj=None
+
+reviewPositionObj: Optional["NVDAObjects.NVDAObject"] =None
 """Deprecated, use ``api.getReviewPosition().obj`` instead"""
 
+
 # unused, should eventually get removed.
-mouseOldX = None
+mouseOldX: Literal[None] = None
 """Deprecated, this is unused and not set by NVDA core"""
-mouseOldY = None
+
+mouseOldY: Literal[None] = None
 """Deprecated, this is unused and not set by NVDA core"""
-lastProgressValue = 0
+
+lastProgressValue: Literal[0] = 0
 """Deprecated, this is unused and not set by NVDA core"""
+
 
 # TODO: encapsulate in NVDAState
 startTime: float = 0.0
 """Deprecated, use ``NVDAState.getStartTime`` instead"""
+
 appArgs = DefaultAppArgs()
-unknownAppArgs: typing.List[str] = []
-exitCode=0
+
+unknownAppArgs: List[str] = []
+
+exitCode: int = 0
 """
 Deprecated, this should not be used by add-on authors.
 NVDA core should use `NVDAState._getExitCode|_setExitCode` instead.
 """
+
 appPid: int = 0
 """The process ID of NVDA itself.
 """
 
+
 # TODO: encapsulate in synthDriverHandler
 settingsRing = None
+
 
 # TODO: encapsulate in speechDict
 speechDictionaryProcessing: bool = True
