@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2022 NV Access Limited, Babbage B.V., Julien Cochuyt
+# Copyright (C) 2007-2022 NV Access Limited, Babbage B.V., Julien Cochuyt, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -8,7 +8,6 @@ from typing import (
 	Optional,
 	Iterator,
 	List,
-	Set,
 )
 import time
 import weakref
@@ -49,8 +48,13 @@ def _makeKbEmulateScript(scriptName):
 def _getObjScript(
 		obj: "NVDAObjects.NVDAObject",
 		gesture: "inputCore.InputGesture",
-		globalMapScripts: Set[_ScriptFunctionT],
+		globalMapScripts: List["inputCore.InputGestureScriptT"],
 ) -> Optional[_ScriptFunctionT]:
+	"""
+	@param globalMapScripts: An ordered list of scripts.
+	The list is ordered by resolution priority,
+	the first map in the list should be used to resolve the script first.
+	"""
 	# Search the scripts from the global gesture maps.
 	for cls, scriptName in globalMapScripts:
 		if isinstance(obj, cls):
@@ -72,15 +76,20 @@ def _getObjScript(
 		log.exception()
 
 
-def getGlobalMapScripts(gesture: "inputCore.InputGesture") -> Set[_ScriptFunctionT]:
-	globalMapScripts: Set[_ScriptFunctionT] = set()
+def getGlobalMapScripts(gesture: "inputCore.InputGesture") -> List["inputCore.InputGestureScriptT"]:
+	"""
+	@returns: An ordered list of scripts.
+	The list is ordered by resolution priority,
+	the first map in the list should be used to resolve scripts first.
+	"""
+	globalMapScripts: List["inputCore.InputGestureScriptT"] = []
 	globalMaps = [inputCore.manager.userGestureMap, inputCore.manager.localeGestureMap]
 	globalMap = braille.handler.display.gestureMap if braille.handler and braille.handler.display else None
 	if globalMap:
 		globalMaps.append(globalMap)
 	for globalMap in globalMaps:
 		for identifier in gesture.normalizedIdentifiers:
-			globalMapScripts.update(globalMap.getScriptsForGesture(identifier))
+			globalMapScripts.extend(globalMap.getScriptsForGesture(identifier))
 	return globalMapScripts
 
 
