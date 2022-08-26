@@ -48,10 +48,10 @@ def _makeKbEmulateScript(scriptName):
 def _getObjScript(
 		obj: "NVDAObjects.NVDAObject",
 		gesture: "inputCore.InputGesture",
-		globalMapScripts: List[_ScriptFunctionT],
+		globalMapScripts: List[inputCore.InputGestureScriptT],
 ) -> Optional[_ScriptFunctionT]:
 	"""
-	@param globalMapScripts: An ordered list of maps.
+	@param globalMapScripts: An ordered list of scripts.
 	The list is ordered by resolution priority,
 	the first map in the list should be used to resolve the script first.
 	"""
@@ -76,13 +76,13 @@ def _getObjScript(
 		log.exception()
 
 
-def getGlobalMapScripts(gesture: "inputCore.InputGesture") -> List[_ScriptFunctionT]:
+def getGlobalMapScripts(gesture: "inputCore.InputGesture") -> List[inputCore.InputGestureScriptT]:
 	"""
-	@returns: An ordered list of maps.
+	@returns: An ordered list of scripts.
 	The list is ordered by resolution priority,
 	the first map in the list should be used to resolve scripts first.
 	"""
-	globalMapScripts: List[_ScriptFunctionT] = []
+	globalMapScripts: List[inputCore.InputGestureScriptT] = []
 	globalMaps = [inputCore.manager.userGestureMap, inputCore.manager.localeGestureMap]
 	globalMap = braille.handler.display.gestureMap if braille.handler and braille.handler.display else None
 	if globalMap:
