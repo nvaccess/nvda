@@ -276,6 +276,7 @@ class UIAHandler(COMObject):
 		super(UIAHandler,self).__init__()
 		self.globalEventHandlerGroup = None
 		self.localEventHandlerGroup = None
+		self.localEventHandlerGroupWithTextChanges = None
 		self._localEventHandlerGroupElements = set()
 		self.MTAThreadInitEvent=threading.Event()
 		self.MTAThreadQueue = Queue()
@@ -500,6 +501,17 @@ class UIAHandler(COMObject):
 					or element.CachedAutomationID in textChangeUIAAutomationIDs
 					else self.localEventHandlerGroup
 				)
+				if _isDebug():
+					prefix = (
+						"Explicitly"
+						if group == self.localEventHandlerGroupWithTextChanges
+						else "Not"
+					)
+					log.debugWarning(
+						f"{prefix} registering for textChange events from UIA element "
+						f"with class name {repr(element.currentClassName)} "
+						f"and automation ID {repr(element.CachedAutomationID)}"
+					)
 				self.addEventHandlerGroup(element, group)
 			except COMError:
 				log.error("Could not register for UIA events for element", exc_info=True)
@@ -543,8 +555,9 @@ class UIAHandler(COMObject):
 			else:
 				if _isDebug():
 					log.debugWarning(
-						"HandleAutomationEvent: Dropping unused textChange event"
-						+ f" from {sender.currentClassName}" if sender.currentClassName else ""
+						"HandleAutomationEvent: Dropping textChange event from element "
+						f"with class name {repr(sender.currentClassName)} "
+						f"and automation ID {repr(sender.CachedAutomationID)}"
 					)
 				return
 		else:
