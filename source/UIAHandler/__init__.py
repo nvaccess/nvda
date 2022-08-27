@@ -416,6 +416,7 @@ class UIAHandler(COMObject):
 			not utils._shouldSelectivelyRegister()
 			and winVersion.getWinVer() >= winVersion.WIN10
 		):
+			# #14067: Due to poor performance, textChange requires special handling
 			self.globalEventHandlerGroup.AddAutomationEventHandler(
 				UIA.UIA_Text_TextChangedEventId,
 				UIA.TreeScope_Subtree,
