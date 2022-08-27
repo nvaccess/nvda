@@ -36,11 +36,14 @@ class OrientationState:
 _orientationState = OrientationState()
 
 
-def _getNewOrientationState(previousState: OrientationState, height: int, width: int) -> Optional[Orientation]:
+def _getNewOrientationState(
+		previousState: OrientationState,
+		height: int,
+		width: int,
+) -> Optional[Orientation]:
 	"""
 	@returns: Orientation if there has been an orientation state change, otherwise None
 	"""
-	# Resolution detection comes from an article found at https://msdn.microsoft.com/en-us/library/ms812142.aspx.
 	heightAndWidthUnchanged = previousState.height == height and previousState.width == width
 	newOrientation = Orientation.LANDSCAPE if width > height else Orientation.PORTRAIT
 	if (
@@ -59,6 +62,8 @@ def reportScreenOrientationChange(heightWidth: int) -> None:
 	"""
 	Reports the screen orientation only if the screen orientation has changed.
 	"""
+	# Resolution detection comes from an article found at
+	# https://msdn.microsoft.com/en-us/library/ms812142.aspx.
 	height = winUser.HIWORD(heightWidth)
 	width = winUser.LOWORD(heightWidth)
 	newState = _getNewOrientationState(_orientationState, height, width)
