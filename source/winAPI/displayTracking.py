@@ -42,26 +42,16 @@ def _getNewOrientationState(previousState: OrientationState, height: int, width:
 	"""
 	# Resolution detection comes from an article found at https://msdn.microsoft.com/en-us/library/ms812142.aspx.
 	heightAndWidthUnchanged = previousState.height == height and previousState.width == width
-	if width > height:
-		# The new orientation is landscape
-		if (
-			# Orientation has changed
-			previousState.style != Orientation.LANDSCAPE
-			# If the height and width are the same, it's a screen flip
-			# otherwise, it may be a change of display (e.g. monitor disconnected).
-			or heightAndWidthUnchanged
-		):
-			return Orientation.LANDSCAPE
-	else:
-		# The new orientation is portrait
-		if (
-			# Orientation has changed
-			previousState.style != Orientation.PORTRAIT
-			# If the height and width are the same, it's a screen flip
-			# otherwise, it may be a change of display (e.g. monitor disconnected).
-			or heightAndWidthUnchanged
-		):
-			return Orientation.PORTRAIT
+	newOrientation = Orientation.LANDSCAPE if width > height else Orientation.PORTRAIT
+	if (
+		# Orientation has changed
+		previousState.style != newOrientation
+		# If the height and width are the same, it's a screen flip
+		# and the orientation state has changed.
+		# Otherwise, it may be a change of display (e.g. monitor disconnected).
+		or heightAndWidthUnchanged
+	):
+		return newOrientation
 	return None
 
 
