@@ -412,6 +412,16 @@ class UIAHandler(COMObject):
 				self.baseCacheRequest,
 				self
 			)
+		if (
+			not utils._shouldSelectivelyRegister()
+			and winVersion.getWinVer() >= winVersion.WIN10
+		):
+			self.globalEventHandlerGroup.AddAutomationEventHandler(
+				UIA.UIA_Text_TextChangedEventId,
+				UIA.TreeScope_Subtree,
+				self.baseCacheRequest,
+				self
+			)
 		# #7984: add support for notification event (IUIAutomation5, part of Windows 10 build 16299 and later).
 		if isinstance(self.clientObject, UIA.IUIAutomation5):
 			self.globalEventHandlerGroup.AddNotificationEventHandler(
