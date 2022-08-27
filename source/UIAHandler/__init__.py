@@ -99,9 +99,12 @@ UIADialogClassNames=[
 	"Shell_SystemDialog", # Various dialogs in Windows 10 Settings app
 ]
 
+textChangeUIAAutomationIDs = (
+	"Text Area",  # Windows Console Host
+)
+
 textChangeUIAClassNames = (
-	"_WwG",
-	"ConsoleWindowClass",
+	"_WwG",  # Microsoft Word
 	"TermControl",
 	"TermControl2"
 )
@@ -494,6 +497,7 @@ class UIAHandler(COMObject):
 				group = (
 					self.localEventHandlerGroupWithTextChanges
 					if element.currentClassName in textChangeUIAClassNames
+					or element.CachedAutomationID in textChangeUIAAutomationIDs
 					else self.localEventHandlerGroup
 				)
 				self.addEventHandlerGroup(element, group)
@@ -531,7 +535,10 @@ class UIAHandler(COMObject):
 				log.debug("HandleAutomationEvent: Ignored MenuOpenedEvent while focus event pending")
 			return
 		if eventID == UIA.UIA_Text_TextChangedEventId:
-			if sender.currentClassName in textChangeUIAClassNames:
+			if (
+				sender.currentClassName in textChangeUIAClassNames
+				or sender.CachedAutomationID in textChangeUIAAutomationIDs
+			):
 				NVDAEventName = "textChange"
 			else:
 				if _isDebug():
