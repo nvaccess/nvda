@@ -27,7 +27,6 @@ from controlTypes import TextPosition
 import config
 import speech
 import api
-import eventHandler
 import textInfos
 from logHandler import log
 from UIAHandler.types import (
@@ -2036,18 +2035,17 @@ class UIA(Window):
 				speech.cancelSpeech()
 			ui.message(displayString)
 
+	_itemStatusCache = None
+
 	def event_UIA_itemStatus(self):
 		"""
 		Base implementation of UIA item status property event.
 		By default NVDA will announce element name and item status if any.
 		"""
 		itemStatus = self.UIAElement.currentItemStatus
-		# Filter duplicate events.
-		if (
-			eventHandler.isPendingEvents(eventName="UIA_itemStatus", obj=self)
-		):
-			return
-		ui.message(f"{self.name} {itemStatus}")
+		if itemStatus and itemStatus != self._itemStatusCache:
+			ui.message(f"{self.name} {itemStatus}")
+		self._itemStatusCache = itemStatus
 
 
 class TreeviewItem(UIA):
