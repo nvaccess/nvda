@@ -65,8 +65,9 @@ class ReadThread(Thread):
 					# Exiting
 					if self._event.isSet():
 						break
+					self._disableFunction()
 					log.debug("SetCommMask failed")
-					raise(ctypes.WinError())
+					continue
 				result = ctypes.windll.kernel32.WaitCommEvent(
 					self._dev._port_handle,
 					byref(dwEvtMask),
@@ -75,8 +76,9 @@ class ReadThread(Thread):
 				if not result and GetLastError() != ERROR_IO_PENDING:
 					if self._event.isSet():
 						break
+					self._disableFunction()
 					log.debug("WaitCommEvent failed")
-					raise ctypes.WinError()
+					continue
 				result = ctypes.windll.kernel32.GetOverlappedResult(
 					self._dev._port_handle,
 					byref(self._dev._overlapped_read),
@@ -88,8 +90,8 @@ class ReadThread(Thread):
 				else:
 					if self._event.isSet():
 						break
+					self._disableFunction()
 					log.debug("GetOverLappedResult failed")
-					raise(ctypes.WinError())
 			# See comment in _somethingToRead
 			except (OSError, AttributeError):
 				if self._event.isSet():
