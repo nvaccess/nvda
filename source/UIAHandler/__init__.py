@@ -105,8 +105,6 @@ textChangeUIAAutomationIDs = (
 
 textChangeUIAClassNames = (
 	"_WwG",  # Microsoft Word
-	"TermControl",
-	"TermControl2"
 )
 
 NVDAUnitsToUIAUnits: Dict[str, int] = {
