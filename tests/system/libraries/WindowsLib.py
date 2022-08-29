@@ -25,6 +25,8 @@ import NvdaLib as _NvdaLib
 
 from SystemTestSpy.windows import (
 	GetForegroundWindowTitle as _getForegroundWindowTitle,
+	GetForegroundHwnd as _getForegroundHwnd,
+	Window as _Window,
 )
 
 if _typing.TYPE_CHECKING:
@@ -41,6 +43,10 @@ assertsLib: _AssertsLib = _getLib('AssertsLib')
 # However, if converting to a class note that in Robot libraries, the class name must match the name
 # of the module.
 # Use caps for both.
+
+
+def isWindowInForeground(window: _Window) -> bool:
+	return window.hwndVal == _getForegroundHwnd()
 
 
 def logForegroundWindowTitle():

@@ -42,11 +42,13 @@ windowsLib: _WindowsLib = _getLib('WindowsLib')
 class ChromeLib:
 	_testFileStagingPath = _tempfile.mkdtemp()
 
-	def __init__(self):
-		self.chromeWindow: _Optional[Window] = None
-		"""Chrome Hwnd used to control Chrome via Windows functions."""
-		self.processRFHandleForStart: _Optional[int] = None
-		"""RF process handle, will wait for the chrome process to exit."""
+	# Use class variables for state that should be tied to the RF library instance.
+	# These variables will be available in the teardown
+	_chromeWindow: _Optional[Window] = None
+	"""Chrome Hwnd used to control Chrome via Windows functions."""
+	_processRFHandleForStart: _Optional[int] = None
+	"""RF process handle, will wait for the chrome process to exit."""
+
 
 	@staticmethod
 	def _getTestCasePath(filename):
@@ -56,19 +58,31 @@ class ChromeLib:
 		spy = _NvdaLib.getSpyLib()
 		builtIn.log(
 			# True is expected due to /wait argument.
+			# Note: if chrome was already open when this test started, the start process will no longer be open
+			# Assumption:
+			# An additionally started chrome process merely communicates the intent to open a URI and then exits.
+			# Start is tracking only this process.
 			"Is Start process still running (True expected): "
-			f"{process.is_process_running(self.processRFHandleForStart)}"
+			f"{process.is_process_running(ChromeLib._processRFHandleForStart)}"
 		)
+
+		if not windowsLib.isWindowInForeground(ChromeLib._chromeWindow):
+			builtIn.log(
+				"Unable to close tab, window not in foreground: "
+				f"({ChromeLib._chromeWindow.title} - {ChromeLib._chromeWindow.hwndVal})"
+			)
+			return
+
 		spy.emulateKeyPress('control+w')
 		process.wait_for_process(
-			self.processRFHandleForStart,
-			timeout="1 minute",
+			ChromeLib._processRFHandleForStart,
+			timeout="10 seconds",
 			on_timeout="continue"
 		)
 		builtIn.log(
 			# False is expected, chrome should have allowed "Start" to exit.
 			"Is Start process still running (False expected): "
-			f"{process.is_process_running(self.processRFHandleForStart)}"
+			f"{process.is_process_running(ChromeLib._processRFHandleForStart)}"
 		)
 
 	def exit_chrome(self):
@@ -81,18 +95,26 @@ class ChromeLib:
 		if _window is not None:
 			res = CloseWindow(_window)
 			if not res:
-				builtIn.log(f"Unable to task kill chrome hwnd: {self.chromeWindow.hwndVal}", level="ERROR")
+				builtIn.log(f"Unable to task kill chrome hwnd: {ChromeLib._chromeWindow.hwndVal}", level="ERROR")
 			else:
-				self.chromeWindow = _window = None
+				ChromeLib._chromeWindow = _window = None
 		else:
 			builtIn.log("No chrome handle, unable to task kill", level="WARN")
 
 	def start_chrome(self, filePath: str, testCase: str) -> Window:
 		builtIn.log(f"starting chrome: {filePath}")
-		self.processRFHandleForStart = process.start_process(
+		ChromeLib._processRFHandleForStart = process.start_process(
 			"start"  # windows utility to start a process
 			# https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/start
-			" /wait"  # Starts an application and waits for it to end.
+			#
+			" /wait"
+			# /wait: Starts an application and waits for it to end.
+			# If chrome was already open, the start.exe process won't be able to track the full lifetime of the
+			# intent to view the URI.
+			# Assumption.
+			# An additionally started chrome process merely communicates the intent to open a URI and then exits.
+			# Start is tracking only this process.
+
 			" chrome"  # Start Chrome
 			" --force-renderer-accessibility"
 			" --suppress-message-center-popups"
@@ -103,9 +125,9 @@ class ChromeLib:
 			shell=True,
 			alias='chromeStartAlias',
 		)
-		process.process_should_be_running(self.processRFHandleForStart)
+		process.process_should_be_running(ChromeLib._processRFHandleForStart)
 		titlePattern = self.getUniqueTestCaseTitleRegex(testCase)
-		success, self.chromeWindow = _blockUntilConditionMet(
+		success, ChromeLib._chromeWindow = _blockUntilConditionMet(
 			getValue=lambda: GetWindowWithTitle(titlePattern, lambda message: builtIn.log(message, "DEBUG")),
 			giveUpAfterSeconds=3,
 			shouldStopEvaluator=lambda _window: _window is not None,
@@ -113,9 +135,9 @@ class ChromeLib:
 			errorMessage="Unable to get chrome window"
 		)
 
-		if not success or self.chromeWindow is None:
+		if not success or ChromeLib._chromeWindow is None:
 			builtIn.fatal_error("Unable to get chrome window")
-		return self.chromeWindow
+		return ChromeLib._chromeWindow
 
 	_testCaseTitle = "NVDA Browser Test Case"
 	_beforeMarker = "Before Test Case Marker"
