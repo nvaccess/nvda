@@ -31,6 +31,7 @@ import ctypes
 import sys
 import os
 
+SpeechIndexT = int
 
 def _importRobotRemoteServer() -> typing.Type:
 	log.debug(f"before path mod: {sys.path}")
@@ -341,7 +342,7 @@ class NVDASpyLib:
 		self._allSpeechStartIndex = self.get_last_speech_index()
 		return self._allSpeechStartIndex
 
-	def get_next_speech_index(self) -> int:
+	def get_next_speech_index(self) -> SpeechIndexT:
 		""" @return: the next index that will be used.
 		"""
 		return self.get_last_speech_index() + 1

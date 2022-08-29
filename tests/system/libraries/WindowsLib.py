@@ -6,9 +6,11 @@
 """ This module provides the WindowsLib Robot Framework Library which allows interacting with Windows GUI
 features.
 """
-
 # imported methods start with underscore (_) so they don't get imported into robot files as keywords
-from typing import Optional as _Optional
+import typing as _typing
+from typing import (
+	Optional as _Optional,
+)
 from SystemTestSpy import (
 	_getLib,
 )
@@ -24,6 +26,12 @@ import NvdaLib as _NvdaLib
 from SystemTestSpy.windows import (
 	GetForegroundWindowTitle as _getForegroundWindowTitle,
 )
+
+if _typing.TYPE_CHECKING:
+	from SystemTestSpy.speechSpyGlobalPlugin import (
+		NVDASpyLib as _NVDASpyLib,
+		SpeechIndexT as _SpeechIndexT,
+	)
 
 builtIn: _BuiltInLib = _BuiltInLib()
 opSys: _OpSysLib = _getLib('OperatingSystem')
@@ -54,8 +62,9 @@ def taskSwitchToItemMatching(targetWindowNamePattern: _re.Pattern, maxWindowsToT
 	spy = _NvdaLib.getSpyLib()
 	spy.wait_for_speech_to_finish()
 
-	indexOfSpeech, nextIndex = _tryOpenTaskSwitcher(targetWindowNamePattern, spy)
-	if indexOfSpeech is None:
+	builtIn.log(f"Looking for window: {targetWindowNamePattern}", level="DEBUG")
+	startOfTaskSwitcherSpeech = _tryOpenTaskSwitcher(spy)
+	if startOfTaskSwitcherSpeech is None:
 		# Try opening the task switcher again
 		spy.emulateKeyPress('escape')
 		# Hack: using 'sleep' is error-prone.
@@ -63,12 +72,12 @@ def taskSwitchToItemMatching(targetWindowNamePattern: _re.Pattern, maxWindowsToT
 		# and give the system time to recover before trying again.
 		builtIn.sleep(3)
 
-		indexOfSpeech, nextIndex = _tryOpenTaskSwitcher(targetWindowNamePattern, spy)
-		if indexOfSpeech is None:
+		startOfTaskSwitcherSpeech = _tryOpenTaskSwitcher(spy)
+		if startOfTaskSwitcherSpeech is None:
 			raise AssertionError("Tried twice to open task switcher and failed.")
 
-	spy.wait_for_speech_to_finish(speechStartedIndex=nextIndex)
-	speech = spy.get_speech_at_index_until_now(nextIndex)
+	spy.wait_for_speech_to_finish(speechStartedIndex=startOfTaskSwitcherSpeech)
+	speech = spy.get_speech_at_index_until_now(startOfTaskSwitcherSpeech)
 	# if there is only one application open, it will already be selected:
 	firstItemPattern = _re.compile(r"row 1\s+column 1")
 	atFirstItemAlready = bool(firstItemPattern.search(speech))
@@ -130,17 +139,23 @@ def taskSwitchToItemMatching(targetWindowNamePattern: _re.Pattern, maxWindowsToT
 			)
 
 
-def _tryOpenTaskSwitcher(pattern, spy):
-	nextIndex = spy.get_next_speech_index()
-	builtIn.log(f"Looking for window: {pattern}", level="DEBUG")
+def _tryOpenTaskSwitcher(spy: "_NVDASpyLib") -> _Optional["_SpeechIndexT"]:
+	"""
+	@param spy: The NVDA spy lib to be used.
+	@return: If the task switcher 'row 1' was spoken, the speech index for the start of the task switcher
+	speech.
+	"""
+	expectedStartOfKeypressSpeechIndex = spy.get_next_speech_index()
 	spy.emulateKeyPress('control+alt+tab')  # opens the task switcher until enter or escape is pressed.
 	# each item has "row 1 column 1" appended, ensure that the task switcher has opened.
 	firstRow = "row 1"
 	indexOfSpeech: _Optional[int] = spy.wait_for_specific_speech_no_raise(
 		firstRow,
-		afterIndex=nextIndex - 1,
+		afterIndex=expectedStartOfKeypressSpeechIndex - 1,
 		maxWaitSeconds=5,
 		intervalBetweenSeconds=0.2
 	)
 	builtIn.log(f"indexOfSpeech '{firstRow}': {indexOfSpeech}", level="DEBUG")
-	return indexOfSpeech, nextIndex
+	if indexOfSpeech:
+		return expectedStartOfKeypressSpeechIndex
+	return None
