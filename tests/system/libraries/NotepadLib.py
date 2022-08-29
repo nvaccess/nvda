@@ -72,7 +72,7 @@ class NotepadLib:
 		else:
 			builtIn.log("Test case not in foreground, can't close it.")
 		builtIn.log(
-			# False is expected, chrome should have allowed "Start" to exit.
+			# False is expected, notepad should have allowed "Start" to exit.
 			"Is Start process still running (False expected): "
 			f"{process.is_process_running(NotepadLib.processRFHandleForStart)}"
 		)
