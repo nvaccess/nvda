@@ -439,5 +439,5 @@ class WinTerminalUIA(UIA):
 		if not config.conf["presentation"]["reportDynamicContentChanges"]:
 			return
 		for line in displayString.splitlines():
-			if line:  # Don't say "blank" during autoread
+			if line and not line.isspace():  # Don't say "blank" during autoread
 				speech.speakText(line)
