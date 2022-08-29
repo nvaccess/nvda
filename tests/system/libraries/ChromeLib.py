@@ -121,6 +121,15 @@ class ChromeLib:
 			" --disable-notifications"
 			" --no-experiments"
 			" --no-default-browser-check"
+			" --disable-session-crashed-bubble"
+			# --disable-session-crashed-bubble: If chrome crashes, don't cause subsequent tests to fail.
+			# However, the config can be checked to determine if a crash occurred.
+			# See https://superuser.com/a/1343331
+			# Use C:\Users\username\AppData\Local\Google\Chrome\User Data\Default\Preference
+			# Values:
+			# "exit_type": "none",
+			# "exited_cleanly":true,
+
 			f' "{filePath}"',
 			shell=True,
 			alias='chromeStartAlias',
