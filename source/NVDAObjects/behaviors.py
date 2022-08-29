@@ -2,7 +2,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2020 NV Access Limited, Peter Vágner, Joseph Lee, Bill Dengler
+# Copyright (C) 2006-2022 NV Access Limited, Peter Vágner, Joseph Lee, Bill Dengler
 
 """Mix-in classes which provide common behaviour for particular types of controls across different APIs.
 Behaviors described in this mix-in include providing table navigation commands for certain table rows, terminal input and output support, announcing notifications and suggestion items and so on.
@@ -591,8 +591,8 @@ class RowWithFakeNavigation(NVDAObject):
 		if obj is not self:
 			# Use the focused copy of the row as the parent for all cells to make comparison faster.
 			obj.parent = self
-		api.setNavigatorObject(obj)
-		speech.speakObject(obj, reason=controlTypes.OutputReason.FOCUS)
+		if api.setNavigatorObject(obj):
+			speech.speakObject(obj, reason=controlTypes.OutputReason.FOCUS)
 
 	def _moveToColumnNumber(self, column):
 		child = column - 1
@@ -601,6 +601,12 @@ class RowWithFakeNavigation(NVDAObject):
 		cell = self.getChild(child)
 		self._moveToColumn(cell)
 
+	@script(
+		# Translators: The description of an NVDA command.
+		description=_("Moves the navigator object to the next column"),
+		gesture="kb:control+alt+rightArrow",
+		canPropagate=True,
+	)
 	def script_moveToNextColumn(self, gesture):
 		cur = api.getNavigatorObject()
 		if cur == self:
@@ -613,10 +619,13 @@ class RowWithFakeNavigation(NVDAObject):
 		while new and new.location and new.location.width == 0:
 			new = new.next
 		self._moveToColumn(new)
-	script_moveToNextColumn.canPropagate = True
-	# Translators: The description of an NVDA command.
-	script_moveToNextColumn.__doc__ = _("Moves the navigator object to the next column")
 
+	@script(
+		# Translators: The description of an NVDA command.
+		description=_("Moves the navigator object to the previous column"),
+		gesture="kb:control+alt+leftArrow",
+		canPropagate=True,
+	)
 	def script_moveToPreviousColumn(self, gesture):
 		cur = api.getNavigatorObject()
 		if cur == self:
@@ -628,9 +637,6 @@ class RowWithFakeNavigation(NVDAObject):
 			while new and new.location and new.location.width == 0:
 				new = new.previous
 		self._moveToColumn(new)
-	script_moveToPreviousColumn.canPropagate = True
-	# Translators: The description of an NVDA command.
-	script_moveToPreviousColumn.__doc__ = _("Moves the navigator object to the previous column")
 
 	def reportFocus(self):
 		col = self._savedColumnNumber
@@ -647,17 +653,23 @@ class RowWithFakeNavigation(NVDAObject):
 			self.__class__._savedColumnNumber = nav.columnNumber
 		row.setFocus()
 
+	@script(
+		# Translators: The description of an NVDA command.
+		description=_("Moves the navigator object and focus to the next row"),
+		gesture="kb:control+alt+downArrow",
+		canPropagate=True,
+	)
 	def script_moveToNextRow(self, gesture):
 		self._moveToRow(self.next)
-	script_moveToNextRow.canPropagate = True
-	# Translators: The description of an NVDA command.
-	script_moveToNextRow.__doc__ = _("Moves the navigator object and focus to the next row")
 
+	@script(
+		# Translators: The description of an NVDA command.
+		description=_("Moves the navigator object and focus to the previous row"),
+		gesture="kb:control+alt+upArrow",
+		canPropagate=True,
+	)
 	def script_moveToPreviousRow(self, gesture):
 		self._moveToRow(self.previous)
-	script_moveToPreviousRow.canPropagate = True
-	# Translators: The description of an NVDA command.
-	script_moveToPreviousRow.__doc__ = _("Moves the navigator object and focus to the previous row")
 
 	@script(
 		description=_(
@@ -693,7 +705,7 @@ class RowWithFakeNavigation(NVDAObject):
 	@script(
 		description=_(
 			# Translators: The description of an NVDA command.
-			"Moves the navigator object to the first row"
+			"Moves the navigator object and focus to the first row"
 		),
 		gesture="kb:Control+Alt+PageUp",
 		canPropagate=True,
@@ -704,7 +716,7 @@ class RowWithFakeNavigation(NVDAObject):
 	@script(
 		description=_(
 			# Translators: The description of an NVDA command.
-			"Moves the navigator object to the last row"
+			"Moves the navigator object and focus to the last row"
 		),
 		gesture="kb:Control+Alt+PageDown",
 		canPropagate=True,
@@ -712,12 +724,6 @@ class RowWithFakeNavigation(NVDAObject):
 	def script_moveToLastRow(self, gesture):
 		self._moveToRow(self.parent.lastChild)
 
-	__gestures = {
-		"kb:control+alt+rightArrow": "moveToNextColumn",
-		"kb:control+alt+leftArrow": "moveToPreviousColumn",
-		"kb:control+alt+downArrow": "moveToNextRow",
-		"kb:control+alt+upArrow": "moveToPreviousRow",
-	}
 
 class RowWithoutCellObjects(NVDAObject):
 	"""An abstract class which creates cell objects for table rows which don't natively expose them.

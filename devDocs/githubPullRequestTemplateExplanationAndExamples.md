@@ -25,11 +25,19 @@ to be close manually after merging the pull request.
 ### Summary of the issue:
 A quick summary of the problem you are trying to solve.
 
-### Description of how this pull request fixes the issue:
-Please include a quick discussion of how this change addresses the issue.
+### Description of user facing changes:
+Please include a short explanation of how the user experience has changed to address the issue.
+
+### Description of development approach
+Provide a description of the technical changes.
 Please also include any links or external information you may have used in order to address the
 issue.
 This helps others to have the same background as you and learn from this work.
+
+Include reasoning as to why the approach followed is the best approach compared to other ways of fixing the issue.
+It may be worth including a summary of the history of the technical changes, and how the final approach was determined.
+
+Example: a new app module was created, which handles an event raised by UIA.
 
 ### Testing strategy:
 Outline the steps you took to test the change.
@@ -172,3 +180,14 @@ Discuss under "testing strategy" heading:
   - Localization in other languages / culture than English
 - When one of these can not be supported with this change,
   highlight it under the "Known issues" heading
+
+### Security precautions taken
+Windows allows NVDA to access secure information from a user's desktop while the lock screen is activated.
+When handling NVDAObjects, code should check if an object should be available while the lock screen is activated.
+This can be done checking `utils.security._isSecureObjectWhileLockScreenActivated`.
+If this function returns `True`, code should not process the NVDAObject any further, and return gracefully.
+It is important that information from the object does not reach the user.
+
+Any code which should not performed on [secure screens](https://www.nvaccess.org/files/nvda/documentation/userGuide.html#SecureScreens), should check `globalVars.appArgs.secure` and return gracefully.
+If this is a user initiated action `gui.blockAction` should be used to notify the user that the action cannot be performed.
+This can be done by decorating the function with `@blockAction.when(blockAction.Context.SECURE_MODE)`.

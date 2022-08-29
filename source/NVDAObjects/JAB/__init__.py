@@ -1,10 +1,13 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2021 NV Access Limited, Leonard de Ruijter, Joseph Lee, Renaud Paquay, pvagner
+# Copyright (C) 2006-2022 NV Access Limited, Leonard de Ruijter, Joseph Lee, Renaud Paquay, pvagner
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 import ctypes
 import re
+from typing import (
+	Dict,
+)
 import eventHandler
 import keyLabels
 import JABHandler
@@ -19,66 +22,67 @@ from .. import InvalidNVDAObject
 from locationHelper import RectLTWH
 
 
-JABRolesToNVDARoles={
-	"alert":controlTypes.Role.DIALOG,
-	"column header":controlTypes.Role.TABLECOLUMNHEADER,
-	"canvas":controlTypes.Role.CANVAS,
-	"combo box":controlTypes.Role.COMBOBOX,
-	"desktop icon":controlTypes.Role.DESKTOPICON,
-	"internal frame":controlTypes.Role.INTERNALFRAME,
-	"desktop pane":controlTypes.Role.DESKTOPPANE,
-	"option pane":controlTypes.Role.OPTIONPANE,
-	"window":controlTypes.Role.WINDOW,
-	"frame":controlTypes.Role.FRAME,
-	"dialog":controlTypes.Role.DIALOG,
-	"color chooser":controlTypes.Role.COLORCHOOSER,
-	"directory pane":controlTypes.Role.DIRECTORYPANE,
-	"file chooser":controlTypes.Role.FILECHOOSER,
-	"filler":controlTypes.Role.FILLER,
-	"hyperlink":controlTypes.Role.LINK,
-	"icon":controlTypes.Role.ICON,
-	"label":controlTypes.Role.LABEL,
-	"root pane":controlTypes.Role.PANEL,
-	"glass pane":controlTypes.Role.PANEL,
-	"layered pane":controlTypes.Role.PANEL,
-	"list":controlTypes.Role.LIST,
-	"list item":controlTypes.Role.LISTITEM,
-	"menu bar":controlTypes.Role.MENUBAR,
-	"popup menu":controlTypes.Role.POPUPMENU,
-	"menu":controlTypes.Role.MENU,
-	"menu item":controlTypes.Role.MENUITEM,
-	"separator":controlTypes.Role.SEPARATOR,
-	"page tab list":controlTypes.Role.TABCONTROL,
-	"page tab":controlTypes.Role.TAB,
-	"panel":controlTypes.Role.PANEL,
-	"progress bar":controlTypes.Role.PROGRESSBAR,
-	"password text":controlTypes.Role.PASSWORDEDIT,
-	"push button":controlTypes.Role.BUTTON,
-	"toggle button":controlTypes.Role.TOGGLEBUTTON,
-	"check box":controlTypes.Role.CHECKBOX,
-	"radio button":controlTypes.Role.RADIOBUTTON,
-	"row header":controlTypes.Role.TABLEROWHEADER,
-	"scroll pane":controlTypes.Role.SCROLLPANE,
-	"scroll bar":controlTypes.Role.SCROLLBAR,
-	"view port":controlTypes.Role.VIEWPORT,
-	"slider":controlTypes.Role.SLIDER,
-	"split pane":controlTypes.Role.SPLITPANE,
-	"table":controlTypes.Role.TABLE,
-	"text":controlTypes.Role.EDITABLETEXT,
-	"tree":controlTypes.Role.TREEVIEW,
-	"tool bar":controlTypes.Role.TOOLBAR,
-	"tool tip":controlTypes.Role.TOOLTIP,
-	"status bar":controlTypes.Role.STATUSBAR,
-	"statusbar":controlTypes.Role.STATUSBAR,
-	"date editor":controlTypes.Role.DATEEDITOR,
-	"spin box":controlTypes.Role.SPINBUTTON,
-	"font chooser":controlTypes.Role.FONTCHOOSER,
-	"group box":controlTypes.Role.GROUPING,
-	"header":controlTypes.Role.HEADER,
-	"footer":controlTypes.Role.FOOTER,
-	"paragraph":controlTypes.Role.PARAGRAPH,
-	"ruler":controlTypes.Role.RULER,
-	"edit bar":controlTypes.Role.EDITBAR,
+JABRolesToNVDARoles: Dict[str, controlTypes.Role] = {
+	"alert": controlTypes.Role.DIALOG,
+	"column header": controlTypes.Role.TABLECOLUMNHEADER,
+	"canvas": controlTypes.Role.CANVAS,
+	"combo box": controlTypes.Role.COMBOBOX,
+	"desktop icon": controlTypes.Role.DESKTOPICON,
+	"internal frame": controlTypes.Role.INTERNALFRAME,
+	"desktop pane": controlTypes.Role.DESKTOPPANE,
+	"option pane": controlTypes.Role.OPTIONPANE,
+	"window": controlTypes.Role.WINDOW,
+	"frame": controlTypes.Role.FRAME,
+	"dialog": controlTypes.Role.DIALOG,
+	"color chooser": controlTypes.Role.COLORCHOOSER,
+	"directory pane": controlTypes.Role.DIRECTORYPANE,
+	"file chooser": controlTypes.Role.FILECHOOSER,
+	"filler": controlTypes.Role.FILLER,
+	"hyperlink": controlTypes.Role.LINK,
+	"icon": controlTypes.Role.ICON,
+	"label": controlTypes.Role.LABEL,
+	"root pane": controlTypes.Role.PANEL,
+	"glass pane": controlTypes.Role.PANEL,
+	"layered pane": controlTypes.Role.PANEL,
+	"list": controlTypes.Role.LIST,
+	"list item": controlTypes.Role.LISTITEM,
+	"menu bar": controlTypes.Role.MENUBAR,
+	"popup menu": controlTypes.Role.POPUPMENU,
+	"menu": controlTypes.Role.MENU,
+	"menu item": controlTypes.Role.MENUITEM,
+	"separator": controlTypes.Role.SEPARATOR,
+	"page tab list": controlTypes.Role.TABCONTROL,
+	"page tab": controlTypes.Role.TAB,
+	"panel": controlTypes.Role.PANEL,
+	"progress bar": controlTypes.Role.PROGRESSBAR,
+	"password text": controlTypes.Role.PASSWORDEDIT,
+	"push button": controlTypes.Role.BUTTON,
+	"toggle button": controlTypes.Role.TOGGLEBUTTON,
+	"check box": controlTypes.Role.CHECKBOX,
+	"radio button": controlTypes.Role.RADIOBUTTON,
+	"row header": controlTypes.Role.TABLEROWHEADER,
+	"scroll pane": controlTypes.Role.SCROLLPANE,
+	"scroll bar": controlTypes.Role.SCROLLBAR,
+	"view port": controlTypes.Role.VIEWPORT,
+	"slider": controlTypes.Role.SLIDER,
+	"split pane": controlTypes.Role.SPLITPANE,
+	"table": controlTypes.Role.TABLE,
+	"text": controlTypes.Role.EDITABLETEXT,
+	"tree": controlTypes.Role.TREEVIEW,
+	"tool bar": controlTypes.Role.TOOLBAR,
+	"tool tip": controlTypes.Role.TOOLTIP,
+	"status bar": controlTypes.Role.STATUSBAR,
+	"statusbar": controlTypes.Role.STATUSBAR,
+	"date editor": controlTypes.Role.DATEEDITOR,
+	"spin box": controlTypes.Role.SPINBUTTON,
+	"font chooser": controlTypes.Role.FONTCHOOSER,
+	"group box": controlTypes.Role.GROUPING,
+	"groupbox": controlTypes.Role.GROUPING,
+	"header": controlTypes.Role.HEADER,
+	"footer": controlTypes.Role.FOOTER,
+	"paragraph": controlTypes.Role.PARAGRAPH,
+	"ruler": controlTypes.Role.RULER,
+	"edit bar": controlTypes.Role.EDITBAR,
 }
 
 JABStatesToNVDAStates={
@@ -177,10 +181,12 @@ class JABTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return self._getLineOffsets(offset)
 
 	def _getFormatFieldAndOffsets(self, offset, formatConfig, calculateOffsets=True):
+		attribs: JABHandler.AccessibleTextAttributesInfo
 		attribs, length = self.obj.jabContext.getTextAttributesInRange(offset, self._endOffset - 1)
 		field = textInfos.FormatField()
 		field["font-family"] = attribs.fontFamily
-		field["font-size"] = "%dpt" % attribs.fontSize
+		# Translators: Abbreviation for points, a measurement of font size.
+		field["font-size"] = pgettext("font size", "%s pt") % str(attribs.fontSize)
 		field["bold"] = bool(attribs.bold)
 		field["italic"] = bool(attribs.italic)
 		field["strikethrough"] = bool(attribs.strikethrough)

@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Russian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-15 00:02+0000\n"
-"PO-Revision-Date: 2022-04-17 13:00+0800\n"
+"POT-Creation-Date: 2022-08-24 04:02+0000\n"
+"PO-Revision-Date: 2022-08-25 02:17+0800\n"
 "Last-Translator: Kvark <kvark128@yandex.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -33,11 +33,11 @@ msgstr "Режим частичной формы"
 
 #. Translators: For Japanese character input: half-shaped (single-byte) alpha numeric (roman/english) mode.
 msgid "half alphanumeric"
-msgstr "Частично буквенно-цифровой"
+msgstr "частично буквенно-цифровой"
 
 #. Translators: For Japanese character input: half-shaped (single-byte) Katacana input mode.
 msgid "half katakana"
-msgstr "Частично katakana"
+msgstr "частично katakana"
 
 #. Translators: For Japanese character input: alpha numeric (roman/english) mode.
 msgid "alphanumeric"
@@ -73,7 +73,7 @@ msgstr "Редактор метода ввода закрыт"
 
 #. Translators: the label for an unknown language when switching input methods.
 msgid "unknown language"
-msgstr "Неизвестный язык"
+msgstr "неизвестный язык"
 
 #. Translators: The label for an unknown input method when switching input methods.
 msgid "unknown input method"
@@ -236,6 +236,11 @@ msgstr "⠺⠅⠇"
 msgid "prgbar"
 msgstr "⠊⠺"
 
+#. Translators: Displayed in braille for an object which is an
+#. indeterminate progress bar, aka busy indicator.
+msgid "bsyind"
+msgstr "⠊⠵"
+
 #. Translators: Displayed in braille for an object which is a
 #. scroll bar.
 msgid "scrlbar"
@@ -374,6 +379,22 @@ msgstr "⠊⠇"
 msgid "hlght"
 msgstr "⠏⠕⠙⠎⠺"
 
+#. Translators: Displayed in braille when an object is a comment.
+#. Translators: Displayed in braille when there is a comment for a spreadsheet cell or piece of text in a document.
+#. Translators: Brailled when text contains a generic comment.
+msgid "cmnt"
+msgstr "⠏⠗⠍"
+
+#. Translators: Displayed in braille when an object is a suggestion.
+msgid "sggstn"
+msgstr ""
+
+#. Translators: Displayed in braille when an object is a definition.
+#. Translators: Identifies a definition.
+#, fuzzy
+msgid "definition"
+msgstr "определение стиля"
+
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
 msgstr "⠺⠮⠙"
@@ -408,7 +429,7 @@ msgstr "⠝⠺"
 
 #. Translators: Displayed in braille when an object supports autocompletion.
 msgid "..."
-msgstr "⠄⠄⠄"
+msgstr "⠄⠄."
 
 #. Translators: Displayed in braille when an edit field allows typing multiple lines of text such as comment fields on websites.
 msgid "mln"
@@ -433,11 +454,6 @@ msgstr "⠕⠏"
 #. Translators: Displayed in braille when there is a formula on a spreadsheet cell.
 msgid "frml"
 msgstr "⠋⠗⠍"
-
-#. Translators: Displayed in braille when there is a comment for a spreadsheet cell or piece of text in a document.
-#. Translators: Brailled when text contains a generic comment.
-msgid "cmnt"
-msgstr "⠏⠗⠍"
 
 #. Translators: Displayed in braille when an object is not selected.
 msgid "nsel"
@@ -529,6 +545,19 @@ msgstr "з%s"
 msgid "vlnk"
 msgstr "|пс|"
 
+#. Translators: Braille when there are further details/annotations that can be fetched manually.
+#. %s specifies the type of details (e.g. comment, suggestion)
+#. Translators: Speaks when there are further details/annotations that can be fetched manually.
+#. %s specifies the type of details (e.g. comment, suggestion)
+#, python-format
+msgid "has %s"
+msgstr ""
+
+#. Translators: Braille when there are further details/annotations that can be fetched manually.
+#, fuzzy
+msgid "details"
+msgstr "содержит дополнительные подробности"
+
 #. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
 #. {total} is replaced with the total number of items in the group.
@@ -577,15 +606,15 @@ msgstr "|кон %s|"
 
 #. Translators: Brailled when text contains a draft comment.
 msgid "drft cmnt"
-msgstr ""
+msgstr "⠟⠏"
 
 #. Translators: Brailled when text contains a resolved comment.
 msgid "rslvd cmnt"
-msgstr ""
+msgstr "⠗⠏"
 
 #. Translators: brailled when text contains a bookmark
 msgid "bkmk"
-msgstr ""
+msgstr "⠵⠁⠅⠇"
 
 #. Translators: The label for a braille setting indicating that braille should be
 #. tethered to focus or review cursor automatically.
@@ -648,7 +677,7 @@ msgstr "пробел точками"
 #. Translators: Reported when braille space is pressed in input help mode.
 #. Translators: This is the name of a key on the keyboard.
 msgid "space"
-msgstr "Пробел"
+msgstr "пробел"
 
 #. Translators: Used when describing keys on a braille keyboard.
 msgid "braille keyboard"
@@ -818,6 +847,11 @@ msgstr "Немецкий (подробная первая ступень)"
 #. braille settings dialog.
 msgid "German grade 2"
 msgstr "Немецкий (вторая ступень)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "German grade 2 (detailed)"
+msgstr "Немецкий (подробная вторая ступень)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1381,13 +1415,15 @@ msgstr "Ко́са (вторая ступень)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Chinese (China, Mandarin) grade 1"
-msgstr "Китайский (Китай, Мандарин) (первая ступень)"
+#. This should be translated to '中文中国汉语现行盲文' in Mandarin.
+msgid "Chinese (China, Mandarin) Current Braille System"
+msgstr "Китайский (Китай, Мандарин) текущая система брайля"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Chinese (China, Mandarin) grade 2"
-msgstr "Китайский (Китай, Мандарин) (вторая ступень)"
+#. This should be translated to '中文中国汉语双拼盲文' in Mandarin.
+msgid "Chinese (China, Mandarin) Double-phonic Braille System"
+msgstr "Китайский (Китай, Мандарин) двухфоническая система брайля"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1461,483 +1497,483 @@ msgstr "Передаёт жест текущему приложению"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading"
-msgstr "Переходит на следующий заголовок"
+msgstr "переходит на следующий заголовок"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next heading"
-msgstr "Нет следующего заголовка"
+msgstr "нет следующего заголовка"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous heading"
-msgstr "Переходит на предыдущий заголовок"
+msgstr "переходит на предыдущий заголовок"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous heading"
-msgstr "Нет предыдущего заголовка"
+msgstr "нет предыдущего заголовка"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading at level 1"
-msgstr "Переходит на следующий заголовок первого уровня"
+msgstr "переходит на следующий заголовок первого уровня"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next heading at level 1"
-msgstr "Нет следующего заголовка первого уровня"
+msgstr "нет следующего заголовка первого уровня"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous heading at level 1"
-msgstr "Переходит на предыдущий заголовок первого уровня"
+msgstr "переходит на предыдущий заголовок первого уровня"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous heading at level 1"
-msgstr "Нет предыдущего заголовка первого уровня"
+msgstr "нет предыдущего заголовка первого уровня"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading at level 2"
-msgstr "Переходит на следующий заголовок второго уровня"
+msgstr "переходит на следующий заголовок второго уровня"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next heading at level 2"
-msgstr "Нет следующего заголовка второго уровня"
+msgstr "нет следующего заголовка второго уровня"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous heading at level 2"
-msgstr "Переходит на предыдущий заголовок второго уровня"
+msgstr "переходит на предыдущий заголовок второго уровня"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous heading at level 2"
-msgstr "Нет предыдущего заголовка второго уровня"
+msgstr "нет предыдущего заголовка второго уровня"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading at level 3"
-msgstr "Переходит на следующий заголовок третьего уровня"
+msgstr "переходит на следующий заголовок третьего уровня"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next heading at level 3"
-msgstr "Нет следующего заголовка третьего уровня"
+msgstr "нет следующего заголовка третьего уровня"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous heading at level 3"
-msgstr "Переходит на предыдущий заголовок третьего уровня"
+msgstr "переходит на предыдущий заголовок третьего уровня"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous heading at level 3"
-msgstr "Нет предыдущего заголовка третьего уровня"
+msgstr "нет предыдущего заголовка третьего уровня"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading at level 4"
-msgstr "Переходит на следующий заголовок четвёртого уровня"
+msgstr "переходит на следующий заголовок четвёртого уровня"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next heading at level 4"
-msgstr "Нет следующего заголовка четвёртого уровня"
+msgstr "нет следующего заголовка четвёртого уровня"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous heading at level 4"
-msgstr "Переходит на предыдущий заголовок четвёртого уровня"
+msgstr "переходит на предыдущий заголовок четвёртого уровня"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous heading at level 4"
-msgstr "Нет предыдущего заголовка четвёртого уровня"
+msgstr "нет предыдущего заголовка четвёртого уровня"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading at level 5"
-msgstr "Переходит на следующий заголовок пятого уровня"
+msgstr "переходит на следующий заголовок пятого уровня"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next heading at level 5"
-msgstr "Нет следующего заголовка пятого уровня"
+msgstr "нет следующего заголовка пятого уровня"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous heading at level 5"
-msgstr "Переходит на предыдущий заголовок пятого уровня"
+msgstr "переходит на предыдущий заголовок пятого уровня"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous heading at level 5"
-msgstr "Нет предыдущего заголовка пятого уровня"
+msgstr "нет предыдущего заголовка пятого уровня"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading at level 6"
-msgstr "Переходит на следующий заголовок шестого уровня"
+msgstr "переходит на следующий заголовок шестого уровня"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next heading at level 6"
-msgstr "Нет следующего заголовка шестого уровня"
+msgstr "нет следующего заголовка шестого уровня"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous heading at level 6"
-msgstr "Переходит на предыдущий заголовок шестого уровня"
+msgstr "переходит на предыдущий заголовок шестого уровня"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous heading at level 6"
-msgstr "Нет предыдущего заголовка шестого уровня"
+msgstr "нет предыдущего заголовка шестого уровня"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next table"
-msgstr "Переходит на следующую таблицу"
+msgstr "переходит на следующую таблицу"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next table"
-msgstr "Нет следующей таблицы"
+msgstr "нет следующей таблицы"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous table"
-msgstr "Переходит на предыдущую таблицу"
+msgstr "переходит на предыдущую таблицу"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous table"
-msgstr "Нет предыдущей таблицы"
+msgstr "нет предыдущей таблицы"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next link"
-msgstr "Переходит на следующую ссылку"
+msgstr "переходит на следующую ссылку"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next link"
-msgstr "Нет следующей ссылки"
+msgstr "нет следующей ссылки"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous link"
-msgstr "Переходит на предыдущую ссылку"
+msgstr "переходит на предыдущую ссылку"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous link"
-msgstr "Нет предыдущей ссылки"
+msgstr "нет предыдущей ссылки"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next visited link"
-msgstr "Переходит на следующую посещённую ссылку"
+msgstr "переходит на следующую посещённую ссылку"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next visited link"
-msgstr "Нет следующей посещённой ссылки"
+msgstr "нет следующей посещённой ссылки"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous visited link"
-msgstr "Переходит на предыдущую посещённую ссылку"
+msgstr "переходит на предыдущую посещённую ссылку"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous visited link"
-msgstr "Нет предыдущей посещённой ссылки"
+msgstr "нет предыдущей посещённой ссылки"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next unvisited link"
-msgstr "Переходит на следующую не посещённую ссылку"
+msgstr "переходит на следующую не посещённую ссылку"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next unvisited link"
-msgstr "Нет следующей не посещённой ссылки"
+msgstr "нет следующей не посещённой ссылки"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous unvisited link"
-msgstr "Переходит на предыдущую не посещённую ссылку"
+msgstr "переходит на предыдущую не посещённую ссылку"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous unvisited link"
-msgstr "Нет предыдущей не посещённой ссылки"
+msgstr "нет предыдущей не посещённой ссылки"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next form field"
-msgstr "Переходит на следующее поле формы"
+msgstr "переходит на следующее поле формы"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next form field"
-msgstr "Нет следующего поля формы"
+msgstr "нет следующего поля формы"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous form field"
-msgstr "Переходит на предыдущее поле формы"
+msgstr "переходит на предыдущее поле формы"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous form field"
-msgstr "Нет предыдущего поля формы"
+msgstr "нет предыдущего поля формы"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next list"
-msgstr "Переходит на следующий список"
+msgstr "переходит на следующий список"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next list"
-msgstr "Нет следующего списка"
+msgstr "нет следующего списка"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous list"
-msgstr "Переходит на предыдущий список"
+msgstr "переходит на предыдущий список"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous list"
-msgstr "Нет предыдущего списка"
+msgstr "нет предыдущего списка"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next list item"
-msgstr "Переходит на следующий элемент списка"
+msgstr "переходит на следующий элемент списка"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next list item"
-msgstr "Нет следующего элемента списка"
+msgstr "нет следующего элемента списка"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous list item"
-msgstr "Переходит на предыдущий элемент списка"
+msgstr "переходит на предыдущий элемент списка"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous list item"
-msgstr "Нет предыдущего элемента списка"
+msgstr "нет предыдущего элемента списка"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next button"
-msgstr "Переходит на следующую кнопку"
+msgstr "переходит на следующую кнопку"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next button"
-msgstr "Нет следующей кнопки"
+msgstr "нет следующей кнопки"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous button"
-msgstr "Переходит на предыдущую кнопку"
+msgstr "переходит на предыдущую кнопку"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous button"
-msgstr "Нет предыдущей кнопки"
+msgstr "нет предыдущей кнопки"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next edit field"
-msgstr "Переходит на следующее поле редактора"
+msgstr "переходит на следующее поле редактора"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next edit field"
-msgstr "Нет следующего поля редактора"
+msgstr "нет следующего поля редактора"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous edit field"
-msgstr "Переходит на предыдущее поле редактора"
+msgstr "переходит на предыдущее поле редактора"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous edit field"
-msgstr "Нет предыдущего поля редактора"
+msgstr "нет предыдущего поля редактора"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next frame"
-msgstr "Переходит на следующий фрейм"
+msgstr "переходит на следующий фрейм"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next frame"
-msgstr "Нет следующего фрейма"
+msgstr "нет следующего фрейма"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous frame"
-msgstr "Переходит на предыдущий фрейм"
+msgstr "переходит на предыдущий фрейм"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous frame"
-msgstr "Нет предыдущего фрейма"
+msgstr "нет предыдущего фрейма"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next separator"
-msgstr "Переходит на следующий разделитель"
+msgstr "переходит на следующий разделитель"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next separator"
-msgstr "Нет следующего разделителя"
+msgstr "нет следующего разделителя"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous separator"
-msgstr "Переходит на предыдущий разделитель"
+msgstr "переходит на предыдущий разделитель"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous separator"
-msgstr "Нет предыдущего разделителя"
+msgstr "нет предыдущего разделителя"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next radio button"
-msgstr "Переходит на следующую радио-кнопку"
+msgstr "переходит на следующую радио-кнопку"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next radio button"
-msgstr "Нет следующей радио-кнопки"
+msgstr "нет следующей радио-кнопки"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous radio button"
-msgstr "Переходит на предыдущую радио-кнопку"
+msgstr "переходит на предыдущую радио-кнопку"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous radio button"
-msgstr "Нет предыдущей радио-кнопки"
+msgstr "нет предыдущей радио-кнопки"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next combo box"
-msgstr "Переходит на следующий комбинированный список"
+msgstr "переходит на следующий комбинированный список"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next combo box"
-msgstr "Нет следующего комбинированного списка"
+msgstr "нет следующего комбинированного списка"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous combo box"
-msgstr "Переходит на предыдущий комбинированный список"
+msgstr "переходит на предыдущий комбинированный список"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous combo box"
-msgstr "Нет предыдущего комбинированного списка"
+msgstr "нет предыдущего комбинированного списка"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next check box"
-msgstr "Переходит на следующий флажок"
+msgstr "переходит на следующий флажок"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next check box"
-msgstr "Нет следующего флажка"
+msgstr "нет следующего флажка"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous check box"
-msgstr "Переходит на предыдущий флажок"
+msgstr "переходит на предыдущий флажок"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous check box"
-msgstr "Нет предыдущего флажка"
+msgstr "нет предыдущего флажка"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next graphic"
-msgstr "Переходит на следующий графический элемент"
+msgstr "переходит на следующий графический элемент"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next graphic"
-msgstr "Нет следующего графического элемента"
+msgstr "нет следующего графического элемента"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous graphic"
-msgstr "Переходит на предыдущий графический элемент"
+msgstr "переходит на предыдущий графический элемент"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous graphic"
-msgstr "Нет предыдущего графического элемента"
+msgstr "нет предыдущего графического элемента"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next block quote"
-msgstr "Переходит на следующую цитату"
+msgstr "переходит на следующую цитату"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next block quote"
-msgstr "Нет следующей Цитаты"
+msgstr "нет следующей Цитаты"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous block quote"
-msgstr "Переходит на предыдущую цитату"
+msgstr "переходит на предыдущую цитату"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous block quote"
-msgstr "Нет предыдущей цитаты"
+msgstr "нет предыдущей цитаты"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "skips forward past a block of links"
-msgstr "Переходит на текст после группы ссылок"
+msgstr "переходит на текст после группы ссылок"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no more text after a block of links"
-msgstr "Нет текста после группы ссылок"
+msgstr "нет текста после группы ссылок"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "skips backward past a block of links"
-msgstr "Переходит на текст перед группой ссылок"
+msgstr "переходит на текст перед группой ссылок"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no more text before a block of links"
-msgstr "Нет текста перед группой ссылок"
+msgstr "нет текста перед группой ссылок"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next landmark"
-msgstr "Переходит на следующий ориентир"
+msgstr "переходит на следующий ориентир"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next landmark"
-msgstr "Нет следующего ориентира"
+msgstr "нет следующего ориентира"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous landmark"
-msgstr "Переходит на предыдущий ориентир"
+msgstr "переходит на предыдущий ориентир"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous landmark"
-msgstr "Нет предыдущего ориентира"
+msgstr "нет предыдущего ориентира"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next embedded object"
-msgstr "Переходит на следующий встроенный объект"
+msgstr "переходит на следующий встроенный объект"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next embedded object"
-msgstr "Нет следующего встроенного объекта"
+msgstr "нет следующего встроенного объекта"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous embedded object"
-msgstr "Переходит на предыдущий встроенный объект"
+msgstr "переходит на предыдущий встроенный объект"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous embedded object"
-msgstr "Нет предыдущего встроенного объекта"
+msgstr "нет предыдущего встроенного объекта"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next annotation"
-msgstr "Переходит на следующую рецензию"
+msgstr "переходит на следующую рецензию"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next annotation"
-msgstr "Нет следующей рецензии"
+msgstr "нет следующей рецензии"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous annotation"
-msgstr "Переходит на предыдущую рецензию"
+msgstr "переходит на предыдущую рецензию"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous annotation"
-msgstr "Нет предыдущей рецензии"
+msgstr "нет предыдущей рецензии"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next error"
-msgstr "Переходит на следующую ошибку"
+msgstr "переходит на следующую ошибку"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next error"
-msgstr "Нет следующей ошибки"
+msgstr "нет следующей ошибки"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous error"
-msgstr "Переходит на предыдущую ошибку"
+msgstr "переходит на предыдущую ошибку"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous error"
-msgstr "Нет предыдущей ошибки"
+msgstr "нет предыдущей ошибки"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next article"
-msgstr "Переходит на следующую статью"
+msgstr "переходит на следующую статью"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next article"
-msgstr "Нет следующей статьи"
+msgstr "нет следующей статьи"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous article"
-msgstr "Переходит на предыдущую статью"
+msgstr "переходит на предыдущую статью"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous article"
-msgstr "Нет предыдущей статьи"
+msgstr "нет предыдущей статьи"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next grouping"
-msgstr "Переходит на следующую группу"
+msgstr "переходит на следующую группу"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next grouping"
-msgstr "Нет следующей группы"
+msgstr "нет следующей группы"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous grouping"
-msgstr "Переходит на предыдущую группу"
+msgstr "переходит на предыдущую группу"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous grouping"
-msgstr "Нет предыдущей группы"
+msgstr "нет предыдущей группы"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -2002,7 +2038,7 @@ msgstr "Нет подробного описания"
 msgid "Shows the long description at this position if one is found."
 msgstr ""
 "Показывает подробное описание элемента в текущей позиции курсора, если оно "
-"имеется"
+"имеется."
 
 #. Translators: Reported when the user attempts to move to the start or end of a container
 #. (list, table, etc.) but there is no container.
@@ -2035,50 +2071,50 @@ msgstr "Включает и выключает экранное представ
 
 #. Translators: The message reported for not supported toggling of screen layout
 msgid "Not supported in this document."
-msgstr "Не поддерживается в этом документе"
+msgstr "Не поддерживается в этом документе."
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
 msgid "none"
-msgstr "Ничего"
+msgstr "ничего"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
 msgid "some"
-msgstr "Некоторые"
+msgstr "некоторые"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
 msgid "most"
-msgstr "Большинство"
+msgstr "большинство"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
 msgid "all"
-msgstr "Все"
+msgstr "все"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
 msgid "character"
-msgstr "Символ"
+msgstr "символ"
 
 #. Translators: An option for when a symbol itself will be sent to the synthesizer.
 #. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
 msgctxt "symbolPreserve"
 msgid "never"
-msgstr "Никогда"
+msgstr "никогда"
 
 #. Translators: An option for when a symbol itself will be sent to the synthesizer.
 #. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
 msgctxt "symbolPreserve"
 msgid "always"
-msgstr "Всегда"
+msgstr "всегда"
 
 #. Translators: An option for when a symbol itself will be sent to the synthesizer.
 #. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
 msgctxt "symbolPreserve"
 msgid "only below symbol's level"
-msgstr "Только если уровень пунктуации ниже уровня символа"
+msgstr "только если уровень пунктуации ниже уровня символа"
 
 #. Translators: a transparent color, {colorDescription} replaced with the full description of the color e.g.
 #. "transparent bright orange-yellow"
@@ -2321,11 +2357,24 @@ msgstr ""
 "Более подробную информацию об ошибках можно найти в журнале NVDA."
 
 msgid "gesture map File Error"
-msgstr "Ошибка файла привязки жестов"
+msgstr "ошибка файла привязки жестов"
 
 #. Translators: This is spoken when NVDA is starting.
 msgid "Loading NVDA. Please wait..."
 msgstr "Загрузка NVDA. Пожалуйста, подождите..."
+
+#. Translators: This is a warning to users, shown if NVDA cannot determine if
+#. Windows is locked.
+msgid ""
+"NVDA failed to register session tracking. While this instance of NVDA is "
+"running, your desktop will not be secure when Windows is locked. Restart "
+"NVDA? "
+msgstr ""
+
+#. Translators: This is a warning to users, shown if NVDA cannot determine if
+#. Windows is locked.
+msgid "NVDA could not start securely."
+msgstr ""
 
 #. Translators: The screen is oriented so that it is wider than it is tall.
 msgid "Landscape"
@@ -2364,32 +2413,38 @@ msgstr "Учитывать &регистр"
 
 #, python-format
 msgid "text \"%s\" not found"
-msgstr "Текст «%s» не найден"
+msgstr "текст «%s» не найден"
 
 msgid "Find Error"
 msgstr "Ошибка поиска"
 
 #. Translators: Input help message for NVDA's find command.
 msgid "find a text string from the current cursor position"
-msgstr "Поиск текста с текущей позиции курсора"
+msgstr "поиск текста с текущей позиции курсора"
 
 #. Translators: Input help message for find next command.
 msgid ""
 "find the next occurrence of the previously entered text string from the "
 "current cursor's position"
 msgstr ""
-"Поиск следующего вхождения ранее введённого текста с текущей позиции курсора"
+"поиск следующего вхождения ранее введённого текста с текущей позиции курсора"
 
 #. Translators: Input help message for find previous command.
 msgid ""
 "find the previous occurrence of the previously entered text string from the "
 "current cursor's position"
 msgstr ""
-"Поиск предыдущего вхождения ранее введённого текста с текущей позиции курсора"
+"поиск предыдущего вхождения ранее введённого текста с текущей позиции курсора"
 
 #. Translators: Reported when there is no text selected (for copying).
 msgid "No selection"
 msgstr "Нет выделения"
+
+#. Translators: Abbreviation for points, a measurement of font size.
+#, python-format
+msgctxt "font size"
+msgid "%s pt"
+msgstr ""
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
@@ -2404,19 +2459,35 @@ msgstr "Граница таблицы"
 
 #. Translators: the description for the next table row script on browseMode documents.
 msgid "moves to the next table row"
-msgstr "Переходит на следующую строку таблицы"
+msgstr "переходит на следующую строку таблицы"
 
 #. Translators: the description for the previous table row script on browseMode documents.
 msgid "moves to the previous table row"
-msgstr "Переходит на предыдущую строку таблицы"
+msgstr "переходит на предыдущую строку таблицы"
 
 #. Translators: the description for the next table column script on browseMode documents.
 msgid "moves to the next table column"
-msgstr "Переходит на следующий столбец таблицы"
+msgstr "переходит на следующий столбец таблицы"
 
 #. Translators: the description for the previous table column script on browseMode documents.
 msgid "moves to the previous table column"
-msgstr "Переходит на предыдущий столбец таблицы"
+msgstr "переходит на предыдущий столбец таблицы"
+
+#. Translators: the description for the first table row script on browseMode documents.
+msgid "moves to the first table row"
+msgstr "переходит на первую строку таблицы"
+
+#. Translators: the description for the last table row script on browseMode documents.
+msgid "moves to the last table row"
+msgstr "переходит на последнюю строку таблицы"
+
+#. Translators: the description for the first table column script on browseMode documents.
+msgid "moves to the first table column"
+msgstr "переходит на первый столбец таблицы"
+
+#. Translators: the description for the last table column script on browseMode documents.
+msgid "moves to the last table column"
+msgstr "переходит на последний столбец таблицы"
 
 #. Translators: The message announced when toggling the include layout tables browse mode setting.
 msgid "layout tables off"
@@ -2521,15 +2592,15 @@ msgstr ""
 
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help on"
-msgstr "Справка по вводу включена"
+msgstr "справка по вводу включена"
 
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help off"
-msgstr "Справка по вводу выключена"
+msgstr "справка по вводу выключена"
 
 #. Translators: Input help mode message for toggle sleep mode command.
 msgid "Toggles sleep mode on and off for the active application."
-msgstr "Включает и выключает режим сна для активного приложения"
+msgstr "Включает и выключает режим сна для активного приложения."
 
 #. Translators: This is presented when sleep mode is deactivated, NVDA will continue working as expected.
 msgid "Sleep mode off"
@@ -2571,25 +2642,9 @@ msgstr "Щелчок правой кнопкой мыши"
 msgid "Locks or unlocks the left mouse button"
 msgstr "Зажимает или отпускает левую кнопку мыши"
 
-#. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
-msgid "Left mouse button unlock"
-msgstr "Левая кнопка мыши отпущена"
-
-#. Translators: This is presented when the left mouse button is locked down (used for drag and drop).
-msgid "Left mouse button lock"
-msgstr "Левая кнопка мыши зажата"
-
 #. Translators: Input help mode message for right mouse lock/unlock command.
 msgid "Locks or unlocks the right mouse button"
 msgstr "Зажимает или отпускает правую кнопку мыши"
-
-#. Translators: This is presented when the right mouse button lock is released (used for drag and drop).
-msgid "Right mouse button unlock"
-msgstr "Правая кнопка мыши отпущена"
-
-#. Translators: This is presented when the right mouse button is locked down (used for drag and drop).
-msgid "Right mouse button lock"
-msgstr "Правая кнопка мыши зажата"
 
 #. Translators: Input help mode message for report current selection command.
 msgid ""
@@ -2707,12 +2762,12 @@ msgstr ""
 #. Translators: The message announced when toggling the report superscripts and subscripts
 #. document formatting setting.
 msgid "report superscripts and subscripts on"
-msgstr "Чтение надстрочного и подстрочного расположения включено"
+msgstr "чтение надстрочного и подстрочного расположения включено"
 
 #. Translators: The message announced when toggling the report superscripts and subscripts
 #. document formatting setting.
 msgid "report superscripts and subscripts off"
-msgstr "Чтение надстрочного и подстрочного расположения выключено"
+msgstr "чтение надстрочного и подстрочного расположения выключено"
 
 #. Translators: Input help mode message for toggle report revisions command.
 msgid "Toggles on and off the reporting of revisions"
@@ -2908,15 +2963,15 @@ msgstr "Циклически переключает способы озвучи�
 
 #. Translators: A message reported when cycling through cell borders settings.
 msgid "Report styles of cell borders"
-msgstr "читать стиль границ ячеек"
+msgstr "Читать стиль границ ячеек"
 
 #. Translators: A message reported when cycling through cell borders settings.
 msgid "Report colors and styles of cell borders"
-msgstr "читать цвет и стиль границ ячеек"
+msgstr "Читать цвет и стиль границ ячеек"
 
 #. Translators: A message reported when cycling through cell borders settings.
 msgid "Report cell borders off."
-msgstr "чтение границ ячеек выключено"
+msgstr "Чтение границ ячеек выключено."
 
 #. Translators: Input help mode message for toggle report links command.
 msgid "Toggles on and off the reporting of links"
@@ -3050,6 +3105,26 @@ msgstr "чтение интерактивных элементов выключ�
 msgid "report if clickable on"
 msgstr "чтение интерактивных элементов включено"
 
+#. Translators: Input help mode message for cycle through automatic language switching mode command.
+msgid ""
+"Cycles through speech modes for automatic language switching: off, language "
+"only and language and dialect."
+msgstr ""
+"Циклически переключает режимы автоматического переключения языков между "
+"выключено, только языки и языки и диалекты."
+
+#. Translators: A message reported when executing the cycle automatic language switching mode command.
+msgid "Automatic language switching off"
+msgstr "Автоматическое переключение языков выключено"
+
+#. Translators: A message reported when executing the cycle automatic language switching mode command.
+msgid "Automatic language and dialect switching on"
+msgstr "Автоматическое переключение языков и диалектов включено"
+
+#. Translators: A message reported when executing the cycle automatic language switching mode command.
+msgid "Automatic language switching on"
+msgstr "Автоматическое переключение языков включено"
+
 #. Translators: Input help mode message for cycle speech symbol level command.
 msgid ""
 "Cycles through speech symbol levels which determine what symbols are spoken"
@@ -3158,7 +3233,7 @@ msgid ""
 "of the currently focused object if there is no caret."
 msgstr ""
 "Сообщает информацию о расположении текста под системной кареткой или "
-"местоположение системного фокуса, если каретка отсутствует"
+"местоположение системного фокуса, если каретка отсутствует."
 
 #. Translators: Description for a keyboard command which reports location of the
 #. currently focused object.
@@ -3294,7 +3369,7 @@ msgid ""
 msgstr ""
 "Читает строку под просмотровым курсором объекта навигатора. Если нажато "
 "дважды, произносит её по символам. Если нажато трижды, читает фонетическое "
-"описание символов"
+"описание символов."
 
 #. Translators: Input help mode message for move review cursor to next line command.
 msgid ""
@@ -3538,7 +3613,7 @@ msgstr ""
 
 #. Translators: the description for the reportDetailsSummary script.
 msgid "Report summary of any annotation details at the system caret."
-msgstr ""
+msgstr "Сообщать подробности любых рецензий в позиции системной каретки."
 
 #. Translators: message given when there is no annotation details for the reportDetailsSummary script.
 msgid "No additional details"
@@ -3556,7 +3631,7 @@ msgstr "Не удалось найти строку состояния"
 
 #. Translators: Input help mode message for command which reads content of the status bar.
 msgid "Reads the current application status bar."
-msgstr "Сообщает строку состояния текущего приложения"
+msgstr "Сообщает строку состояния текущего приложения."
 
 #. Translators: Reported when status line exist, but is empty.
 msgid "no status bar information"
@@ -3564,24 +3639,24 @@ msgstr "нет текста в строке состояния"
 
 #. Translators: Input help mode message for command which spells content of the status bar.
 msgid "Spells the current application status bar."
-msgstr "Сообщает строку состояния текущего приложения по символам"
+msgstr "Сообщает строку состояния текущего приложения по символам."
 
 #. Translators: Input help mode message for command which copies status bar content to the clipboard.
 msgid ""
 "Copies content of the status bar  of current application to the clipboard."
 msgstr ""
-"Копирует содержимое строки состояния текущего приложения в буфер обмена"
+"Копирует содержимое строки состояния текущего приложения в буфер обмена."
 
 #. Translators: Reported when user attempts to copy content of the empty status line.
 msgid "Unable to copy status bar content to clipboard"
-msgstr "не удалось скопировать содержимое строки состояния в буфер обмена"
+msgstr "Не удалось скопировать содержимое строки состояния в буфер обмена"
 
 #. Translators: Input help mode message for Command which moves review cursor to the status bar.
 msgid ""
 "Reads the current application status bar and moves navigator object into it."
 msgstr ""
 "Сообщает строку состояния текущего приложения и приводит к ней объектный "
-"навигатор"
+"навигатор."
 
 #. Translators: Input help mode message for report status line text command.
 msgid ""
@@ -3639,7 +3714,7 @@ msgid ""
 "state of GUI components."
 msgstr ""
 "Открывает WX Widget Inspection Tool. Используется для получения "
-"дополнительной информации об элементах графического интерфейса"
+"дополнительной информации об элементах графического интерфейса."
 
 #. Translators: Input help mode message for developer info for current navigator object command,
 #. used by developers to examine technical info on navigator object.
@@ -3650,7 +3725,7 @@ msgid ""
 msgstr ""
 "Добавляет в файл журнала информацию о текущем объекте навигатора, которая "
 "может быть полезна разработчикам и активирует просмотрщик журнала для её "
-"просмотра"
+"просмотра."
 
 #. Translators: Input help mode message for a command to delimit then
 #. copy a fragment of the log to clipboard
@@ -3690,7 +3765,7 @@ msgstr "Копирование не удалось"
 
 #. Translators: Input help mode message for Open user configuration directory command.
 msgid "Opens NVDA configuration directory for the current user."
-msgstr "Открывает каталог конфигурации NVDA для текущего пользователя"
+msgstr "Открывает каталог конфигурации NVDA для текущего пользователя."
 
 #. Translators: Input help mode message for toggle progress bar output command.
 msgid ""
@@ -3737,15 +3812,15 @@ msgid ""
 "Toggles on and off the movement of the review cursor due to the caret moving."
 msgstr ""
 "Включает или выключает перемещение просмотрового курсора вслед за системной "
-"кареткой"
+"кареткой."
 
 #. Translators: presented when toggled.
 msgid "caret moves review cursor off"
-msgstr "Привязка просмотрового курсора к каретке выключена"
+msgstr "привязка просмотрового курсора к каретке выключена"
 
 #. Translators: presented when toggled.
 msgid "caret moves review cursor on"
-msgstr "Привязка просмотрового курсора к каретке включена"
+msgstr "привязка просмотрового курсора к каретке включена"
 
 #. Translators: Input help mode message for toggle focus moves navigator object command.
 msgid ""
@@ -3755,11 +3830,11 @@ msgstr ""
 
 #. Translators: presented when toggled.
 msgid "focus moves navigator object off"
-msgstr "Привязка навигатора к фокусу выключена"
+msgstr "привязка навигатора к фокусу выключена"
 
 #. Translators: presented when toggled.
 msgid "focus moves navigator object on"
-msgstr "Привязка навигатора к фокусу включена"
+msgstr "привязка навигатора к фокусу включена"
 
 #. Translators: Input help mode message for toggle auto focus focusable elements command.
 msgid ""
@@ -3827,14 +3902,14 @@ msgstr ""
 #. This message will not be presented if there is no module for the current program.
 #, python-format
 msgid " %s module is loaded. "
-msgstr "Загружен модуль %s. "
+msgstr " Загружен модуль %s. "
 
 #. Translators: Indicates the name of the current program (example output: explorer.exe is currently running).
 #. Note that it does not give friendly name such as Windows Explorer; it presents the file name of the current application.
 #. For example, the complete message for Windows explorer is: "explorer module is loaded. Explorer.exe is currenty running."
 #, python-format
 msgid " %s is currently running."
-msgstr "Работает приложение %s"
+msgstr " Работает приложение %s."
 
 #. Translators: Input help mode message for go to general settings command.
 msgid "Shows NVDA's general settings"
@@ -3911,7 +3986,7 @@ msgstr "Сообщает имя текущего профиля конфигур
 #. Translators: Message announced when the command to report the current configuration profile and
 #. the default configuration profile is active.
 msgid "normal configuration profile active"
-msgstr "Активен профиль по умолчанию"
+msgstr "активен профиль по умолчанию"
 
 #. Translators: Message announced when the command to report the current configuration profile
 #. is active. The placeholder '{profilename}' is replaced with the name of the current active profile.
@@ -3929,7 +4004,7 @@ msgid ""
 "state. Pressing three times resets to factory defaults."
 msgstr ""
 "Однократное нажатие возвращает текущую конфигурацию к последнему "
-"сохранённому состоянию. Тройное нажатие сбрасывает её к заводским настройкам"
+"сохранённому состоянию. Тройное нажатие сбрасывает её к заводским настройкам."
 
 #. Translators: Input help mode message for activate python console command.
 msgid "Activates the NVDA Python Console, primarily useful for development"
@@ -4091,7 +4166,7 @@ msgstr "Невозможно выделить текст. Нажмите два�
 
 #. Translators: Input help mode message for a braille command.
 msgid "Scrolls the braille display back"
-msgstr "прокручивает брайлевскую строку назад"
+msgstr "Прокручивает брайлевскую строку назад"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Scrolls the braille display forward"
@@ -4107,11 +4182,11 @@ msgstr "Сообщает форматирование текста под это
 
 #. Translators: Input help mode message for a braille command.
 msgid "Moves the braille display to the previous line"
-msgstr "перемещает брайлевское отображение на предыдущую строку"
+msgstr "Перемещает брайлевское отображение на предыдущую строку"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Moves the braille display to the next line"
-msgstr "перемещает брайлевское отображение на предыдущую строку"
+msgstr "Перемещает брайлевское отображение на предыдущую строку"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Inputs braille dots via the braille keyboard"
@@ -4338,7 +4413,7 @@ msgstr "Компонент Windows OCR недоступен"
 #. Translators: Reported when screen curtain is enabled.
 msgid "Please disable screen curtain before using Windows OCR."
 msgstr ""
-"Пожалуйста, отключите затемнение экрана перед использованием Windows OCR"
+"Пожалуйста, отключите затемнение экрана перед использованием Windows OCR."
 
 #. Translators: Input help mode message for toggle report CLDR command.
 msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
@@ -4461,7 +4536,7 @@ msgstr "Что нового"
 
 #. Translators: A file extension label for NVDA add-on package.
 msgid "NVDA add-on package"
-msgstr "файл дополнений NVDA"
+msgstr "Файл дополнений NVDA"
 
 #. Translators: This is the name of the back key found on multimedia keyboards for controlling the web-browser.
 msgid "back"
@@ -4856,6 +4931,22 @@ msgstr "Сомалийский"
 msgid "%s cursor"
 msgstr "%s курсор"
 
+#. Translators: This is presented when the left mouse button is locked down (used for drag and drop).
+msgid "Left mouse button lock"
+msgstr "Левая кнопка мыши зажата"
+
+#. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
+msgid "Left mouse button unlock"
+msgstr "Левая кнопка мыши отпущена"
+
+#. Translators: This is presented when the right mouse button is locked down (used for drag and drop).
+msgid "Right mouse button lock"
+msgstr "Правая кнопка мыши зажата"
+
+#. Translators: This is presented when the right mouse button lock is released (used for drag and drop).
+msgid "Right mouse button unlock"
+msgstr "Правая кнопка мыши отпущена"
+
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
@@ -5019,7 +5110,7 @@ msgstr "Прямоугольник с вырезом"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "four snipped corners"
-msgstr "Четыре прямоугольных треугольника"
+msgstr "четыре прямоугольных треугольника"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6416,7 +6507,7 @@ msgstr ""
 "Границы объекта расположены {left:.1f} процента справа от левого края "
 "экрана, {top:.1f} процента снизу от верхнего края экрана, Ширина объекта "
 "{width:.1f} процентов ширины экрана, высота - {height:.1f} процентов высоты "
-"экрана."
+"экрана"
 
 #. Translators: a message announcing a candidate's character and description.
 #, python-brace-format
@@ -6430,19 +6521,35 @@ msgstr "{number} {candidate}"
 
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object to the next column"
-msgstr "Устанавливает навигатор на следующий столбец"
+msgstr "Перемещает навигатор на следующий столбец"
 
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object to the previous column"
-msgstr "Устанавливает навигатор на предыдущий столбец"
+msgstr "Перемещает навигатор на предыдущий столбец"
 
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object and focus to the next row"
-msgstr "Устанавливает навигатор и системный фокус на следующую строку"
+msgstr "Перемещает навигатор и системный фокус на следующую строку"
 
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object and focus to the previous row"
-msgstr "Устанавливает навигатор и системный фокус на предыдущую строку"
+msgstr "Перемещает навигатор и системный фокус на предыдущую строку"
+
+#. Translators: The description of an NVDA command.
+msgid "Moves the navigator object to the first column"
+msgstr "Перемещает навигатор на первый столбец"
+
+#. Translators: The description of an NVDA command.
+msgid "Moves the navigator object to the last column"
+msgstr "Перемещает навигатор на последний столбец"
+
+#. Translators: The description of an NVDA command.
+msgid "Moves the navigator object and focus to the first row"
+msgstr "Перемещает навигатор и системный фокус на первую строку"
+
+#. Translators: The description of an NVDA command.
+msgid "Moves the navigator object and focus to the last row"
+msgstr "Перемещает навигатор и системный фокус на последнюю строку"
 
 #. Translators: Announced in braille when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
 msgid "Suggestions"
@@ -6510,7 +6617,8 @@ msgid "Tries to read documentation for the selected autocompletion item."
 msgstr "Пробует прочитать документацию для выбранного элемента автодополнения."
 
 #. Translators: When the help popup cannot be found for the selected autocompletion item
-msgid "Cann't find the documentation window."
+#, fuzzy
+msgid "Can't find the documentation window."
 msgstr "Не удалось найти окно документации."
 
 #. Translators: Reported when no track is playing in Foobar 2000.
@@ -6644,7 +6752,7 @@ msgstr "Скрытая копия:"
 #. Translators: Displayed in outlook or live mail to indicate an email is unread
 #. Translators: when an email is unread
 msgid "unread"
-msgstr "Непрочитано"
+msgstr "непрочитано"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Python Console"
@@ -6701,21 +6809,21 @@ msgstr "низкая важность"
 #. Translators: This is presented in outlook or live mail, email subject
 #, python-format
 msgid "subject: %s"
-msgstr "Тема: %s"
+msgstr "тема: %s"
 
 #. Translators: This is presented in outlook or live mail, email received time
 #, python-format
 msgid "received: %s"
-msgstr "Получено: %s"
+msgstr "получено: %s"
 
 #. Translators: This is presented in outlook or live mail, indicating email attachments
 msgid "attachment"
-msgstr "Вложение"
+msgstr "вложение"
 
 #. Translators: This is presented in outlook or live mail, email sent date
 #, python-format
 msgid "sent: %s"
-msgstr "Отправлено: %s"
+msgstr "отправлено: %s"
 
 #. Translators: The title for the dialog shown while Microsoft Outlook initializes.
 msgid "Waiting for Outlook..."
@@ -6762,7 +6870,7 @@ msgstr "Не удалось найти окно примечаний для пе
 
 #. Translators: The description of an NVDA command for Poedit.
 msgid "Reports any notes for translators"
-msgstr "Читает примечания для переводчиков."
+msgstr "Читает примечания для переводчиков"
 
 #. Translators: this message is reported when NVDA is unable to find
 #. the 'comments' window in poedit.
@@ -6853,35 +6961,35 @@ msgstr "Заполнитель изображения"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Slide view"
-msgstr "просмотр Слайдов"
+msgstr "Просмотр Слайдов"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Slide Master view"
-msgstr "просмотр Мастера слайдов"
+msgstr "Просмотр Мастера слайдов"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Notes page"
-msgstr "страница Заметок"
+msgstr "Страница Заметок"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Handout Master view"
-msgstr "просмотр Мастера Выдач"
+msgstr "Просмотр Мастера Выдач"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Notes Master view"
-msgstr "просмотр Мастера Заметок"
+msgstr "Просмотр Мастера Заметок"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Outline view"
-msgstr "просмотр Образца"
+msgstr "Просмотр Образца"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Slide Sorter view"
-msgstr "просмотр Сортировщика Слайдов"
+msgstr "Просмотр Сортировщика Слайдов"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Title Master view"
-msgstr "просмотр Мастера Заголовков"
+msgstr "Просмотр Мастера Заголовков"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Normal view"
@@ -7006,7 +7114,7 @@ msgid ""
 msgstr ""
 "Переключает чтение заметок чтецом экрана и текущим содержимым слайда. Это не "
 "изменяет видимое содержимое на экране, а только позволяет пользователю "
-"просмотреть информацию с помощью NVDA."
+"просмотреть информацию с помощью NVDA"
 
 #. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
 #, python-brace-format
@@ -7214,6 +7322,18 @@ msgstr "&Открывать просмотрщик брайля при запу�
 msgid "&Hover for cell routing"
 msgstr "Выполнять &маршрутизацию к ячейкам при наведении мыши"
 
+#. Translators: Label for an option in NVDA settings.
+#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
+#. Translators: One of the show states of braille messages
+#. (the disabled mode turns off showing of braille messages completely).
+msgid "Disabled"
+msgstr "Отключено"
+
+#. Translators: Label for an option in NVDA settings.
+#. Translators: The status shown for an addon when its currently running in NVDA.
+msgid "Enabled"
+msgstr "Включено"
+
 #. Translators: The title of the document used to present the result of content recognition.
 msgid "Result"
 msgstr "Результат"
@@ -7257,6 +7377,88 @@ msgstr "подстрочный"
 #. Translators: Describes text formatting.
 msgid "superscript"
 msgstr "надстрочный"
+
+#. Translators: Abbreviation for pixels, a measurement of font size.
+#, python-format
+msgctxt "font size"
+msgid "%s px"
+msgstr ""
+
+#. Translators: A measurement unit of font size.
+#, fuzzy, python-format
+msgctxt "font size"
+msgid "%s em"
+msgstr "|кон %s|"
+
+#. Translators: A measurement unit of font size.
+#, fuzzy, python-format
+msgctxt "font size"
+msgid "%s ex"
+msgstr "|кон %s|"
+
+#. Translators: Abbreviation for relative em, a measurement of font size.
+#, python-format
+msgctxt "font size"
+msgid "%s rem"
+msgstr ""
+
+#. Translators: Font size measured as a percentage
+#, python-format
+msgctxt "font size"
+msgid "%s%%"
+msgstr ""
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "xx-small"
+msgstr ""
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "x-small"
+msgstr ""
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "small"
+msgstr ""
+
+#. Translators: A measurement unit of font size.
+#, fuzzy
+msgctxt "font size"
+msgid "medium"
+msgstr "средняя"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "large"
+msgstr ""
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "x-large"
+msgstr ""
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "xx-large"
+msgstr ""
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "xxx-large"
+msgstr ""
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "larger"
+msgstr ""
+
+#. Translators: A measurement unit of font size.
+#, fuzzy
+msgctxt "font size"
+msgid "smaller"
+msgstr "заполнитель"
 
 #. Translators: Presented when an item is marked as current in a collection of items
 msgid "current"
@@ -7562,7 +7764,7 @@ msgstr "концевая сноска"
 msgid "footer"
 msgstr "нижний колонтитул"
 
-#. Translators: Identifies a foot note (text at the end of a passage or used for anotations).
+#. Translators: Identifies a foot note (text at the end of a passage or used for annotations).
 msgid "foot note"
 msgstr "сноска"
 
@@ -7891,6 +8093,20 @@ msgstr "иллюстрация"
 msgid "highlighted"
 msgstr "подсвеченный"
 
+#. Translators: Identifies a progress bar with indeterminate state, I.E. progress can not be determined.
+msgid "busy indicator"
+msgstr "индикатор занятости"
+
+#. Translators: Identifies a comment.
+#, fuzzy
+msgid "comment"
+msgstr "Примечание"
+
+#. Translators: Identifies a suggestion.
+#, fuzzy
+msgid "suggestion"
+msgstr "одно предложение"
+
 #. Translators: Indicates that a particular state of an object is negated.
 #. Separate strings have now been defined for commonly negated states (e.g. not selected and not
 #. checked), but this still might be used in some other cases.
@@ -8065,7 +8281,7 @@ msgstr "переполнено"
 msgid "unlocked"
 msgstr "разблокировано"
 
-#. Translators: a state that denotes the existance of a note.
+#. Translators: a state that denotes the existence of a note.
 msgid "has note"
 msgstr "содержит заметку"
 
@@ -8084,7 +8300,7 @@ msgstr "не отмечено"
 #. Translators: This is presented when drag and drop is finished.
 #. This is only reported for objects which support accessible drag and drop.
 msgid "done dragging"
-msgstr "Перетаскивание завершено"
+msgstr "перетаскивание завершено"
 
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 msgid "Configuration applied"
@@ -8094,12 +8310,6 @@ msgstr "Конфигурация применена"
 msgid "Configuration restored to factory defaults"
 msgstr "Конфигурация сброшена к заводским настройкам"
 
-#. Translators: Reported when current configuration cannot be saved while NVDA is running in secure mode such as in Windows login screen.
-msgid "Cannot save configuration - NVDA in secure mode"
-msgstr ""
-"Конфигурация не может быть сохранена, поскольку NVDA работает в безопасном "
-"режиме"
-
 #. Translators: Reported when current configuration has been saved.
 msgid "Configuration saved"
 msgstr "Конфигурация сохранена"
@@ -8108,7 +8318,7 @@ msgstr "Конфигурация сохранена"
 msgid "Could not save configuration - probably read only file system"
 msgstr ""
 "Не удалось сохранить конфигурацию. Вероятно, NVDA запущена из области, "
-"доступной только для чтения."
+"доступной только для чтения"
 
 #. Translators: Message shown when trying to open an unavailable category of a multi category settings dialog
 #. (example: when trying to open touch interaction settings on an unsupported system).
@@ -8171,6 +8381,120 @@ msgstr "&Настройки..."
 msgid "NVDA settings"
 msgstr "Настройки NVDA"
 
+#. Translators: The label for a submenu under NvDA Preferences menu to select speech dictionaries.
+msgid "Speech &dictionaries"
+msgstr "&Речевые словари"
+
+#. Translators: The label for the menu item to open Punctuation/symbol pronunciation dialog.
+msgid "&Punctuation/symbol pronunciation..."
+msgstr "Про&изношение символов/пунктуации..."
+
+#. Translators: The label for the menu item to open the Input Gestures dialog.
+msgid "I&nput gestures..."
+msgstr "Жесты вв&ода..."
+
+#. Translators: The label for Preferences submenu in NVDA menu.
+msgid "&Preferences"
+msgstr "&Параметры"
+
+#. Translators: The label for the menu item to open NVDA Log Viewer.
+msgid "View log"
+msgstr "Просмотр &журнала"
+
+#. Translators: The label for the menu item to toggle Speech Viewer.
+msgid "Speech viewer"
+msgstr "Просмотрщик &речи"
+
+#. Translators: The label for the menu item to toggle Braille Viewer.
+msgid "Braille viewer"
+msgstr "Просмотрщик &брайля"
+
+#. Translators: The label for the menu item to open NVDA Python Console.
+msgid "Python console"
+msgstr "Консоль Python"
+
+#. Translators: The label of a menu item to open the Add-ons Manager.
+msgid "Manage &add-ons..."
+msgstr "Менеджер &дополнений..."
+
+#. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
+msgid "Create portable copy..."
+msgstr "Создать переносную копию..."
+
+#. Translators: The label for the menu item to install NVDA on the computer.
+msgid "&Install NVDA..."
+msgstr "&Установить NVDA..."
+
+#. Translators: The label for the menu item to run the COM registration fix tool
+msgid "Run COM Registration Fixing tool..."
+msgstr "Средство &восстановления COM-объектов..."
+
+#. Translators: The label for the menu item to reload plugins.
+msgid "Reload plugins"
+msgstr "Перезагрузить плагины"
+
+#. Translators: The label for the Tools submenu in NVDA menu.
+msgid "Tools"
+msgstr "Се&рвис"
+
+#. Translators: The label of a menu item to open NVDA user guide.
+msgid "&User Guide"
+msgstr "&Руководство пользователя"
+
+#. Translators: The label of a menu item to open the Commands Quick Reference document.
+msgid "Commands &Quick Reference"
+msgstr "&Краткий справочник команд"
+
+#. Translators: The label for the menu item to open What's New document.
+msgid "What's &new"
+msgstr "Что &нового"
+
+msgid "NVDA &web site"
+msgstr "Web-&сайт NVDA"
+
+#. Translators: The label for the menu item to view NVDA License document.
+msgid "L&icense"
+msgstr "&Лицензионное соглашение"
+
+#. Translators: The label for the menu item to view NVDA Contributors list document.
+msgid "C&ontributors"
+msgstr "Сп&исок разработчиков"
+
+#. Translators: The label for the menu item to open NVDA Welcome Dialog.
+msgid "We&lcome dialog..."
+msgstr "Диалог &Добро Пожаловать..."
+
+#. Translators: The label of a menu item to manually check for an updated version of NVDA.
+msgid "&Check for update..."
+msgstr "&Проверить наличие обновлений..."
+
+#. Translators: The label for the menu item to open About dialog to get information about NVDA.
+msgid "About..."
+msgstr "О программе..."
+
+#. Translators: The label for the Help submenu in NVDA menu.
+msgid "&Help"
+msgstr "&Справка"
+
+#. Translators: The label for the menu item to open donate page.
+msgid "Donate"
+msgstr "Сделать по&жертвование"
+
+#. Translators: The label for the menu item to run a pending update.
+msgid "Install pending &update"
+msgstr "Установить &отложенное обновление"
+
+#. Translators: The description for the menu item to run a pending update.
+msgid "Execute a previously downloaded NVDA update"
+msgstr "Выполняет установку ранее загруженного обновления NVDA"
+
+msgid "E&xit"
+msgstr "В&ыход"
+
+#. Translators: The title of the dialog to exit NVDA
+msgid "Exit NVDA"
+msgstr "Завершение работы NVDA"
+
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
 msgid "&Default dictionary..."
 msgstr "&Общий словарь..."
@@ -8208,101 +8532,6 @@ msgstr ""
 "Диалог, в котором вы можете сформировать временный словарь, добавляя "
 "необходимые статьи"
 
-#. Translators: The label for a submenu under NvDA Preferences menu to select speech dictionaries.
-msgid "Speech &dictionaries"
-msgstr "&Речевые словари"
-
-#. Translators: The label for the menu item to open Punctuation/symbol pronunciation dialog.
-msgid "&Punctuation/symbol pronunciation..."
-msgstr "Про&изношение символов/пунктуации..."
-
-#. Translators: The label for the menu item to open the Input Gestures dialog.
-msgid "I&nput gestures..."
-msgstr "Жесты вв&ода"
-
-#. Translators: The label for Preferences submenu in NVDA menu.
-msgid "&Preferences"
-msgstr "&Параметры"
-
-#. Translators: The label for the menu item to open NVDA Log Viewer.
-msgid "View log"
-msgstr "Просмотр &журнала"
-
-#. Translators: The label for the menu item to toggle Speech Viewer.
-msgid "Speech viewer"
-msgstr "Просмотрщик &речи"
-
-#. Translators: The label for the menu item to toggle Braille Viewer.
-msgid "Braille viewer"
-msgstr "Просмотрщик &брайля"
-
-#. Translators: The label for the menu item to open NVDA Python Console.
-msgid "Python console"
-msgstr "Консоль Python"
-
-#. Translators: The label of a menu item to open the Add-ons Manager.
-msgid "Manage &add-ons..."
-msgstr "Менеджер &дополнений"
-
-#. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
-msgid "Create portable copy..."
-msgstr "Создать переносную копию..."
-
-#. Translators: The label for the menu item to install NVDA on the computer.
-msgid "&Install NVDA..."
-msgstr "&Установить NVDA..."
-
-#. Translators: The label for the menu item to run the COM registration fix tool
-msgid "Run COM Registration Fixing tool..."
-msgstr "Средство &восстановления COM-объектов"
-
-#. Translators: The label for the menu item to reload plugins.
-msgid "Reload plugins"
-msgstr "Перезагрузить плагины"
-
-#. Translators: The label for the Tools submenu in NVDA menu.
-msgid "Tools"
-msgstr "Се&рвис"
-
-#. Translators: The label of a menu item to open NVDA user guide.
-msgid "&User Guide"
-msgstr "&Руководство пользователя"
-
-#. Translators: The label of a menu item to open the Commands Quick Reference document.
-msgid "Commands &Quick Reference"
-msgstr "&Краткий справочник команд"
-
-#. Translators: The label for the menu item to open What's New document.
-msgid "What's &new"
-msgstr "Что &нового"
-
-msgid "NVDA &web site"
-msgstr "Web-&сайт NVDA"
-
-#. Translators: The label for the menu item to view NVDA License document.
-msgid "L&icense"
-msgstr "&Лицензионное соглашение"
-
-#. Translators: The label for the menu item to view NVDA Contributors list document.
-msgid "C&ontributors"
-msgstr "Сп&исок разработчиков"
-
-#. Translators: The label for the menu item to open NVDA Welcome Dialog.
-msgid "We&lcome dialog..."
-msgstr "Диалог &Добро Пожаловать"
-
-#. Translators: The label of a menu item to manually check for an updated version of NVDA.
-msgid "&Check for update..."
-msgstr "&Проверить наличие обновлений..."
-
-#. Translators: The label for the menu item to open About dialog to get information about NVDA.
-msgid "About..."
-msgstr "О программе..."
-
-#. Translators: The label for the Help submenu in NVDA menu.
-msgid "&Help"
-msgstr "&Справка"
-
 #. Translators: The label for the menu item to open the Configuration Profiles dialog.
 msgid "&Configuration profiles..."
 msgstr "Про&фили конфигурации..."
@@ -8311,6 +8540,7 @@ msgstr "Про&фили конфигурации..."
 msgid "&Revert to saved configuration"
 msgstr "&Вернуться к сохранённой конфигурации"
 
+#. Translators: The help text for the menu item to revert to saved configuration.
 msgid "Reset all settings to saved state"
 msgstr "Сбросить все настройки в сохранённое состояние"
 
@@ -8319,6 +8549,8 @@ msgstr "Сбросить все настройки в сохранённое с�
 msgid "&Reset configuration to factory defaults"
 msgstr "С&бросить конфигурацию к заводским настройкам"
 
+#. Translators: The help text for the menu item to reset settings to default settings.
+#. Here, default settings means settings that were there when the user first used NVDA.
 msgid "Reset all settings to default state"
 msgstr "Сбросить все настройки в состояние по умолчанию"
 
@@ -8326,69 +8558,9 @@ msgstr "Сбросить все настройки в состояние по у
 msgid "&Save configuration"
 msgstr "С&охранить конфигурацию"
 
+#. Translators: The help text for the menu item to save current settings.
 msgid "Write the current configuration to nvda.ini"
 msgstr "Записать текущую конфигурацию в nvda.ini"
-
-#. Translators: The label for the menu item to open donate page.
-msgid "Donate"
-msgstr "Сделать по&жертвование"
-
-#. Translators: The label for the menu item to run a pending update.
-msgid "Install pending &update"
-msgstr "Установить &отложенное обновление"
-
-#. Translators: The description for the menu item to run a pending update.
-msgid "Execute a previously downloaded NVDA update"
-msgstr "Выполняет установку ранее загруженного обновления NVDA"
-
-msgid "E&xit"
-msgstr "В&ыход"
-
-#. Translators: The title of the dialog to exit NVDA
-msgid "Exit NVDA"
-msgstr "Завершение работы NVDA"
-
-#. Translators: An option in the combo box to choose exit action.
-msgid "Exit"
-msgstr "Завершить работу"
-
-#. Translators: An option in the combo box to choose exit action.
-msgid "Restart"
-msgstr "Перезагрузить"
-
-#. Translators: An option in the combo box to choose exit action.
-msgid "Restart with add-ons disabled"
-msgstr "Перезагрузить с отключёнными дополнениями"
-
-#. Translators: An option in the combo box to choose exit action.
-msgid "Restart with debug logging enabled"
-msgstr "Перезагрузить с журналом на уровне отладки"
-
-#. Translators: An option in the combo box to choose exit action.
-msgid "Install pending update"
-msgstr "Установить отложенное обновление"
-
-#. Translators: A message in the exit Dialog shown when all add-ons are disabled.
-msgid ""
-"All add-ons are now disabled. They will be re-enabled on the next restart "
-"unless you choose to disable them again."
-msgstr ""
-"Все дополнения отключены. Они будут вновь включены при следующей "
-"перезагрузке, если вы не решите отключить их снова."
-
-#. Translators: A message in the exit Dialog shown when NVDA language has been
-#. overwritten from the command line.
-msgid ""
-"NVDA's interface language is now forced from the command line. On the next "
-"restart, the language  saved in NVDA's configuration will be used instead."
-msgstr ""
-"Язык интерфейса NVDA принудительно переопределён в командной строке. При "
-"следующей перезагрузке вместо него будет использоваться язык, сохранённый в "
-"конфигурации NVDA."
-
-#. Translators: The label for actions list in the Exit dialog.
-msgid "What would you like to &do?"
-msgstr "Что вы хотите &сделать?"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -8558,31 +8730,21 @@ msgstr "Удаление дополнения"
 msgid "Incompatible"
 msgstr "Несовместимо"
 
-#. Translators: The status shown for an addon when its currently running in NVDA.
-msgid "Enabled"
-msgstr "Включено"
-
 #. Translators: The status shown for a newly installed addon before NVDA is restarted.
 msgid "Install"
 msgstr "Установка"
 
-#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
-#. Translators: One of the show states of braille messages
-#. (the disabled mode turns off showing of braille messages completely).
-msgid "Disabled"
-msgstr "Отключено"
-
 #. Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
 msgid "Removed after restart"
-msgstr "будет удалено после перезагрузки"
+msgstr "Будет удалено после перезагрузки"
 
 #. Translators: The status shown for an addon when it requires a restart to become disabled
 msgid "Disabled after restart"
-msgstr "будет отключено после перезагрузки"
+msgstr "Будет отключено после перезагрузки"
 
 #. Translators: The status shown for an addon when it requires a restart to become enabled
 msgid "Enabled after restart"
-msgstr "будет включено после перезагрузки"
+msgstr "Будет включено после перезагрузки"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Enable add-on"
@@ -8713,7 +8875,7 @@ msgstr "Причина несовместимости"
 #. Translators: The reason an add-on is not compatible. A more recent version of NVDA is
 #. required for the add-on to work. The placeholder will be replaced with Year.Major.Minor (EG 2019.1).
 msgid "An updated version of NVDA is required. NVDA version {} or later."
-msgstr "Требуется NVDA {} или новее"
+msgstr "Требуется NVDA {} или новее."
 
 #. Translators: The reason an add-on is not compatible. The addon relies on older, removed features of NVDA,
 #. an updated add-on is required. The placeholder will be replaced with Year.Major.Minor (EG 2019.1).
@@ -8723,6 +8885,21 @@ msgid ""
 msgstr ""
 "Требуется более новая версия этого дополнения. Минимальной поддерживаемой "
 "версией API является {}"
+
+#. Translators: Reported when an action cannot be performed because NVDA is in a secure screen
+msgid "Action unavailable in secure context"
+msgstr "Действие недоступно в безопасном режиме"
+
+#. Translators: Reported when an action cannot be performed because NVDA has been installed
+#. from the Windows Store.
+msgid "Action unavailable in NVDA Windows Store version"
+msgstr "Действие недоступно в версии NVDA из Windows Store"
+
+#. Translators: Reported when an action cannot be performed because NVDA is waiting
+#. for a response from a modal dialog
+msgid "Action unavailable while a dialog requires a response"
+msgstr ""
+"Действие недоступно, пока диалоговое окно требует ответа от пользователя"
 
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
@@ -8918,6 +9095,48 @@ msgstr "Здесь справка недоступна."
 #. indicating that	the user guide could not be found.
 msgid "No user guide found."
 msgstr "Руководство пользователя не найдено."
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Exit"
+msgstr "Завершить работу"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart"
+msgstr "Перезагрузить"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with add-ons disabled"
+msgstr "Перезагрузить с отключёнными дополнениями"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with debug logging enabled"
+msgstr "Перезагрузить с журналом на уровне отладки"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Install pending update"
+msgstr "Установить отложенное обновление"
+
+#. Translators: A message in the exit Dialog shown when all add-ons are disabled.
+msgid ""
+"All add-ons are now disabled. They will be re-enabled on the next restart "
+"unless you choose to disable them again."
+msgstr ""
+"Все дополнения отключены. Они будут вновь включены при следующей "
+"перезагрузке, если вы не решите отключить их снова."
+
+#. Translators: A message in the exit Dialog shown when NVDA language has been
+#. overwritten from the command line.
+msgid ""
+"NVDA's interface language is now forced from the command line. On the next "
+"restart, the language  saved in NVDA's configuration will be used instead."
+msgstr ""
+"Язык интерфейса NVDA принудительно переопределён в командной строке. При "
+"следующей перезагрузке вместо него будет использоваться язык, сохранённый в "
+"конфигурации NVDA."
+
+#. Translators: The label for actions list in the Exit dialog.
+msgid "What would you like to &do?"
+msgstr "Что вы хотите &сделать?"
 
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
@@ -9238,6 +9457,13 @@ msgstr "Журнал NVDA недоступен"
 msgid "Cancel"
 msgstr "Отмена"
 
+#. Translators: Label for the default option for some feature-flag combo boxes
+#. Such as, in the Advanced settings panel option, 'Load Chromium virtual buffer when document busy.'
+#. The placeholder {} is replaced with the label of the option which describes current default behavior
+#. in NVDA. EG "Default (Yes)".
+msgid "Default ({})"
+msgstr "По умолчанию ({})"
+
 #. Translators: The label for the list of categories in a multi category settings dialog.
 msgid "&Categories:"
 msgstr "&Категории:"
@@ -9378,7 +9604,7 @@ msgid "Successfully copied NVDA user settings"
 msgstr "Пользовательские настройки NVDA успешно скопированы"
 
 msgid "This change requires administrator privileges."
-msgstr "Это изменение требует прав администратора"
+msgstr "Это изменение требует прав администратора."
 
 msgid "Insufficient Privileges"
 msgstr "Недостаточно прав"
@@ -9428,7 +9654,7 @@ msgstr "&Устройство вывода:"
 
 #. Translators: name for default (Microsoft Sound Mapper) audio output device.
 msgid "Microsoft Sound Mapper"
-msgstr "Переназначение звуковых устр."
+msgstr "Переназначение звуковых устройств"
 
 #. Translators: This is a label for the audio ducking combo box in the Synthesizer Settings dialog.
 msgid "Audio d&ucking mode:"
@@ -9498,6 +9724,10 @@ msgstr "Сигнал перед &заглавными буквами"
 #. voice settings panel.
 msgid "Use &spelling functionality if supported"
 msgstr "Использовать поси&мвольное чтение, если поддерживается"
+
+#. Translators: This is the label for a checkbox in the voice settings panel.
+msgid "&Delayed descriptions for characters on cursor movement"
+msgstr ""
 
 #. Translators: This is the label for the keyboard settings panel.
 msgid "Keyboard"
@@ -10069,7 +10299,7 @@ msgstr ""
 #. Translators: Label for the Use UIA with MS Word combobox, in the Advanced settings panel.
 msgctxt "advanced.uiaWithMSWord"
 msgid "Use UI Automation to access Microsoft &Word document controls"
-msgstr "Использовать UI Automation для доступа к документам Microsoft &Word"
+msgstr "Использовать UI Automation для доступа к документам Microsoft &Word:"
 
 #. Translators: Label for the default value of the Use UIA with MS Word combobox,
 #. in the Advanced settings panel.
@@ -10101,11 +10331,28 @@ msgstr ""
 "Использовать UI Automation для доступа к таблицам Microsoft &Excel (если "
 "возможно)"
 
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid "Use UI Automation to access the Windows C&onsole when available"
-msgstr ""
-"Использовать UI Automation для доступа к Windows C&onsole (если возможно)"
+#. Translators: This is the label for a combo box for selecting the
+#. active console implementation in the advanced settings panel.
+#. Choices are automatic, UIA when available, and legacy.
+msgid "Windows C&onsole support:"
+msgstr "Поддержка Windows &Console:"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA determine its Windows Console implementation
+#. automatically.
+msgid "Automatic (prefer UIA)"
+msgstr "Автоматическая (предпочитать UIA)"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA use UIA in the Windows Console when available.
+msgid "UIA when available"
+msgstr "UIA если возможно"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA use its legacy Windows Console support
+#. in all cases.
+msgid "Legacy"
+msgstr "Устаревшая"
 
 #. Translators: Label for the Use UIA with Chromium combobox, in the Advanced settings panel.
 #. Note the '\n' is used to split this long label approximately in half.
@@ -10237,6 +10484,15 @@ msgstr "Пытаться отменять речевой вывод для ус�
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
+msgid "Virtual Buffers"
+msgstr "Виртуальные буферы"
+
+#. Translators: This is the label for a combo-box in the Advanced settings panel.
+msgid "Load Chromium virtual buffer when document busy."
+msgstr "Загружать виртуальный буфер Chromium, когда документ занят:"
+
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
 msgid "Editable Text"
 msgstr "Редактирование текста"
 
@@ -10300,7 +10556,7 @@ msgid ""
 "incorrectly."
 msgstr ""
 "Я понимаю, что изменение этих настроек может привести к некорректной работе "
-"NVDA"
+"NVDA."
 
 #. Translators: This is the label for a button in the Advanced settings panel
 msgid "Restore defaults"
@@ -10378,7 +10634,7 @@ msgstr "Показывать бесконечно"
 #. Translators: The label for a setting in braille settings to combobox enabling user
 #. to decide if braille messages should be shown and automatically disappear from braille display.
 msgid "Show messages"
-msgstr "Показывать сообщения:"
+msgstr "Показывать сообщения"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message &timeout (sec)"
@@ -10399,6 +10655,10 @@ msgstr "Не разбивать &слова в середине, когда во
 #. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
 msgid "Focus context presentation:"
 msgstr "Представление контекста:"
+
+#. Translators: This is a label for a combo-box in the Braille settings panel.
+msgid "I&nterrupt speech while scrolling"
+msgstr ""
 
 #. Translators: This message is presented when
 #. NVDA is unable to load a single vision enhancement provider.
@@ -10527,7 +10787,7 @@ msgstr "&Уровень"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
 msgid "&Send actual symbol to synthesizer"
-msgstr "Передавать &фактический символ на синтезатор:"
+msgstr "Передавать &фактический символ на синтезатор"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
 msgid "Re&move"
@@ -10596,7 +10856,7 @@ msgstr "Шаблон"
 #. Translators: The label for a column in dictionary entries list used to identify
 #. whether the entry is case sensitive or not.
 msgid "case"
-msgstr "Регистр"
+msgstr "регистр"
 
 #. Translators: The label for a column in dictionary entries list used to identify
 #. whether the entry is a regular expression, matches whole words, or matches anywhere.
@@ -10672,10 +10932,6 @@ msgstr "&Использовать CapsLock как клавишу-модифик�
 msgid "&Show this dialog when NVDA starts"
 msgstr "&Показывать этот диалог при запуске NVDA"
 
-#. Translators: The label of the license text which will be shown when NVDA installation program starts.
-msgid "License Agreement"
-msgstr "Лицензионное соглашение"
-
 #. Translators: The label for a checkbox in NvDA installation program to agree to the license agreement.
 msgid "I &agree"
 msgstr "Я &согласен"
@@ -10692,6 +10948,10 @@ msgstr "Создать &переносную копию"
 #. to continue using the installation program as a temporary copy of NVDA.
 msgid "&Continue running"
 msgstr "&Продолжить работу"
+
+#. Translators: The label of the license text which will be shown when NVDA installation program starts.
+msgid "License Agreement"
+msgstr "Лицензионное соглашение"
 
 #. Translators: The title of the dialog asking if usage data can be collected
 msgid "NVDA  Usage Data Collection"
@@ -10753,7 +11013,7 @@ msgstr "нет отступа"
 #. For example 'selected hello world'
 #, python-format
 msgid "selected %s"
-msgstr "Выделено %s"
+msgstr "выделено %s"
 
 #. Translators: This is spoken to indicate what has just been selected.
 #. The text preceding 'selected' is intentional.
@@ -10813,7 +11073,7 @@ msgstr "из %s столбцов"
 msgid "with %s rows"
 msgstr "из %s строк"
 
-#. Translators: Speaks when there a further details/annotations that can be fetched manually.
+#. Translators: Speaks when there are further details/annotations that can be fetched manually.
 msgid "has details"
 msgstr "содержит дополнительные подробности"
 
@@ -11158,7 +11418,7 @@ msgstr "таблица из {columnCount} столбцов и {rowCount} стр�
 #. Translators: name of the default espeak varient.
 msgctxt "espeakVarient"
 msgid "none"
-msgstr "Ничего"
+msgstr "ничего"
 
 #. Translators: Description for a speech synthesizer.
 msgid "Windows OneCore voices"
@@ -11298,7 +11558,7 @@ msgstr ""
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
-"строка {rowNumber} от столбца {columnNumber} уже установлена в качестве "
+"Строка {rowNumber} от столбца {columnNumber} уже установлена в качестве "
 "заголовков для столбцов"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
@@ -11384,7 +11644,7 @@ msgid "{val:.2f} cm"
 msgstr "{val:.2f} сантиметров"
 
 msgid "invoke"
-msgstr "Активировать"
+msgstr "активировать"
 
 #. Translators: part of the suggestions count message for one suggestion.
 msgid "1 suggestion"
@@ -11485,11 +11745,17 @@ msgstr "Ошибка: {errorText}"
 msgid "{author} is editing"
 msgstr "{author} редактирует"
 
-#. Translators: Excel, report range of cell coordinates
+#. Translators: Excel, report selected range of cell coordinates
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "{firstAddress} {firstValue} through {lastAddress} {lastValue}"
 msgstr "{firstAddress} {firstValue} по {lastAddress} {lastValue}"
+
+#. Translators: Excel, report merged range of cell coordinates
+#, python-brace-format
+msgctxt "excel-UIA"
+msgid "{firstAddress} through {lastAddress}"
+msgstr "{firstAddress} по {lastAddress}"
 
 #. Translators: the description  for a script for Excel
 msgid "Reports the note or comment thread on the current cell"
@@ -12080,7 +12346,7 @@ msgstr "Увеличилось на {incrementValue} в точке {previousInde
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
 #, python-brace-format
 msgid "decreased by {decrementValue} from point {previousIndex}, "
-msgstr "Уменьшилось на {decrementValue} в точке {previousIndex}, "
+msgstr "уменьшилось на {decrementValue} в точке {previousIndex}, "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
@@ -12409,7 +12675,7 @@ msgstr "{start} по {end}"
 #. Translators: the description  for a script for Excel
 msgid "opens a dropdown item at the current cell"
 msgstr ""
-"Активирует пункт «Выбрать из раскрывающегося списка» для текущей ячейки"
+"активирует пункт «Выбрать из раскрывающегося списка» для текущей ячейки"
 
 #. Translators: the description  for a script for Excel
 msgid "Sets the current cell as start of column header"
@@ -12447,7 +12713,7 @@ msgstr ""
 
 #. Translators: the description  for a script for Excel
 msgid "sets the current cell as start of row header"
-msgstr "Устанавливает текущую ячейку в качестве начала заголовка строки"
+msgstr "устанавливает текущую ячейку в качестве начала заголовка строки"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 #, python-brace-format
@@ -12832,7 +13098,7 @@ msgstr "Выравнивание по левому краю"
 
 #. Translators: a an alignment in Microsoft Word
 msgid "centered"
-msgstr "Выравнивание по центру"
+msgstr "выравнивание по центру"
 
 #. Translators: a an alignment in Microsoft Word
 msgid "Right aligned"
@@ -12910,9 +13176,9 @@ msgstr "{offset:.3g} сантиметров"
 msgid "{offset:.3g} millimeters"
 msgstr "{offset:.3g} миллиметров"
 
-#. Translators: a measurement in Microsoft Word
-#, python-brace-format
-msgid "{offset:.3g} points"
+#. Translators: a measurement in Microsoft Word (points)
+#, fuzzy, python-brace-format
+msgid "{offset:.3g} pt"
 msgstr "{offset:.3g} пунктов"
 
 #. Translators: a measurement in Microsoft Word
@@ -12932,3 +13198,7 @@ msgstr "Двойной междустрочный интервал"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Полуторный междустрочный интервал"
+
+#~ msgid "Use UI Automation to access the Windows C&onsole when available"
+#~ msgstr ""
+#~ "Использовать UI Automation для доступа к Windows C&onsole (если возможно)"

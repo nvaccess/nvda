@@ -126,9 +126,13 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 				break
 		else:
 			raise LookupError("Not in a table cell")
-		return (attrs["table-id"],
-			attrs["table-rownumber"], attrs["table-columnnumber"],
-			attrs.get("table-rowsspanned", 1), attrs.get("table-columnsspanned", 1))
+		return (
+			attrs["table-id"],
+			attrs["table-rownumber"],
+			attrs["table-columnnumber"],
+			attrs.get("table-rowsspanned", 1),
+			attrs.get("table-columnsspanned", 1),
+		)
 
 	def _getTableDimensions(self, info: textInfos.TextInfo) -> Tuple[int, int]:
 		"""
@@ -304,8 +308,8 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 
 		if isScriptWaiting():
 			return
-		formatConfig=config.conf["documentFormatting"].copy()
-		formatConfig["reportTables"]=True
+		formatConfig = config.conf["documentFormatting"].copy()
+		formatConfig["reportTables"] = True
 		try:
 			tableID, origRow, origCol, origRowSpan, origColSpan = self._getTableCellCoords(self.selection)
 		except LookupError:
@@ -362,7 +366,7 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 			# but the cursor can't be moved in that direction because it is at the edge of the table.
 			ui.message(_("Edge of table"))
 			# Retrieve the cell on which we started.
-			info = self._getTableCellAt(tableID, self.selection,origRow, origCol)
+			info = self._getTableCellAt(tableID, self.selection, origRow, origCol)
 			newTableID, newRow, newCol, newRowSpan, newColSpan = self._getTableCellCoords(info)
 
 		speakTextInfo(info, formatConfig=formatConfig, reason=controlTypes.OutputReason.CARET)

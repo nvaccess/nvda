@@ -27,7 +27,7 @@ Af væsentlige funktioner kan nævnes:
 - Talende installation der er let at bruge
 - Oversat til 54 sprog
 - Understøttelse af moderne Windows operativsystemer herunder 32 og 64 bit varianter
-- Kan køre på Windows logon skærmen og andre beskyttede skærme
+- Kan køre på Windows logon skærmen og [andre beskyttede skærme #SecureScreens]
 - Oplæsning af kontroller og tekst, når der benyttes touch-bevægelser
 - Understøttelse af fælles tilgængelighedsgrænseflader såsom Microsoft Active Accessibility, Java Access Bridge, IAccessible2 and UI Automation
 - Understøtter Windows kommandoprompt og konsolapplikationer
@@ -81,7 +81,7 @@ Når du kører den fil du lige har hentet, starter du en midlertidig kopi af NVD
 Du bliver så spurgt om du ønsker at installere NVDA, oprette en flytbar kopi af NVDA, eller fortsætte med at benytte den midlertidige kopi.
 
 Hvis du har planer om altid at benytte NVDA på denne computer, skal du vælge at installere NVDA.
-Installation af NVDA giver mulighed for yderligere funktionalitet, såsom automatisk start efter logon, evnen til at læse Windows Logon og Windows Beskyttet Skrivebord skærme (dette kan ikke gøres med flytbare og midlertidige kopier) og oprettelse af Start Menu og genveje på skrivebordet.
+Installation af NVDA giver mulighed for yderligere funktionalitet, såsom automatisk start efter logon, evnen til at læse skærmen ved Windows Logon og [Beskyttet Skrivebord #SecureScreens] (dette kan ikke gøres med flytbare og midlertidige kopier) og oprettelse af Start Menu og genveje på skrivebordet.
 Med den installerede kopi af NVDA kan du også oprette en flytbar kopi når som helst.
 
 Hvis du ønsker, at tage NVDA med dig på et USB-drev eller andre skrivbare medier, skal du vælge at oprette en flytbar kopi.
@@ -118,7 +118,7 @@ Læs venligst afsnittet om [dialogen omfattende inkompatible tilføjelser #incom
 
 +++ Brug af NVDA på logon-skærmen +++[StartAtWindowsLogon]
 Med denne indstilling bestemmer du, om du vil starte NVDA på Windows logon-skærmen, før du har indtastet din adgangskode.
-Dette omfanger også kontrol af brugerkonti og andre sikre skærme.
+Dette omfanger også kontrol af brugerkonti og [ andre sikre skærme#SecureScreens].
 Denne indstilling er aktiveret for nye installationer.
 
 +++ Opret Genvej på Skrivebordet (ctrl+alt+n) +++[CreateDesktopShortcut]
@@ -127,7 +127,7 @@ Hvis du vælger, at oprette denne genvej på dit skrivebord, vil genvejen også 
 
 +++ Kopier flytbar konfiguration til nuværende brugerkonto +++[CopyPortableConfigurationToCurrentUserAccount]
 Denne indstilling lader dig vælge, om du vil kopiere brugerkonfigurationen fra den kørende kopi af NVDA til konfigurationen for den bruger, som er logget på. Indstillingen gælder brugerens installerede kopi. 
-Dette vil ikke kopiere konfigurationen for andre brugere på dette system, og vil heller ikke kopiere til systemkonfigurationen til brug af Windows sikkert logon og andre sikre skærme.
+Dette vil ikke kopiere konfigurationen for andre brugere på dette system, og vil heller ikke kopiere til systemkonfigurationen til brug af Windows sikkert logon og [andre sikre skærme #SecureScreens].
 Denne indstilling er kun tilgængelig når du installerer fra den flytbare kopi, og ikke den hentede fil.
 
 ++ Opret en flytbar kopi ++[CreatingAPortableCopy]
@@ -342,6 +342,10 @@ Når du er i en tabel, kan følgende kommandoer også bruges:
 | Flyt til næste kolonne | Ctrl+Alt+Højre-pil | Flytter markøren til den næste kolonne (i samme række) |
 | Flyt til forrige række | Ctrl+Alt+Pil-op | Flytter markøren til den forrige række (i den samme kolonne) |
 | Flyt til næste række | Ctrl+Alt+Pil-ned | Flytter markøren til næste række (i den samme kolonne) |
+| Flyt til første kolonne | ctrl+alt+hjem | Flytter markøren til den første kolonne (i den samme række) |
+| Flyt til sidste kolonne | ctrl+alt+end | Flytter markøren til den sidste kolonne (i den samme række) |
+| Flyt til første række | Ctrl+alt+side op | Flytter markøren til den første række (i den samme kolonne) |
+| Flyt til sidste række | ctrl+alt+side ned | Flytter markøren til den sidste række (i den samme kolonne) |
 %kc:endInclude
 
 ++ Objektbaseret navigering ++[ObjectNavigation]
@@ -617,8 +621,11 @@ NVDA understøtter følgende typer af matematisk indhold:
 - MathML i Mozilla Firefox, Microsoft Internet Explorer og Google Chrome.
 - Microsoft Word 365 moderne matematikligninger via UI automation:
 NVDA er i stand til at læse og interagere med matematikligninger i Microsoft Word 365/2016 build 14326 og nyere.
-Bemærk, at du først skal konvertere dine MathType ligninger til Office ligninger ved at vælge ligningen, og derefter vælge "Equation options>Convert to Office Math" fra kontekstmenuen. Dette skal gøres for hver ligning. Sørg for, at du har den seneste udgave af Mathtype, før du gør dette.
-Microsoft Word lader dig nu også  navigere lineært mellem symbolerne i selve ligningen, og understøtter desuden indtastning af matematik i forskellige formater, herunder LateX. For yderligere oplysninger, læs [Ligninger i lineært format ved hjælp af UnicodeMath og LaTeX i Word https://support.microsoft.com/da-dk/office/linear-format-equations-using-unicodemath-and-latex-in-word-2e00618d-b1fd-49d8-8cb4-8d17f25754f8]
+Bemærk, at du først skal konvertere dine MathType ligninger til Office ligninger.
+Dette gøres ved at vælge ligningen, og derefter vælge "Equation options>Convert to Office Math" fra kontekstmenuen. Dette skal gøres for hver ligning.
+Sørg for, at du har den seneste udgave af Mathtype, før du gør dette.
+Microsoft Word lader dig nu også  navigere lineært mellem symbolerne i selve ligningen, og understøtter desuden indtastning af matematik i forskellige formater, herunder LateX.
+For yderligere oplysninger, læs [Ligninger i lineært format ved hjælp af UnicodeMath og LaTeX i Word https://support.microsoft.com/da-dk/office/linear-format-equations-using-unicodemath-and-latex-in-word-2e00618d-b1fd-49d8-8cb4-8d17f25754f8]
 - Microsoft Powerpoint og ældre versioner af Microsoft Word: 
 NVDA kan læse og navigere i MathType-ligninger i Microsoft Powerpoint og Microsoft word.
 MathType skal være installeret, for at dette kan virke.
@@ -704,6 +711,7 @@ For at få plads til så meget som muligt på et punktdisplay bruger NVDA følge
 | mnupnkt | menupunkt |
 | pnl | panel |
 | bhln | behandlingslinje |
+| opbhln | optaget behandlingslinje |
 | rknp | radioknap |
 | rulln | rullelinje |
 | sekt | sektion |
@@ -784,7 +792,8 @@ Du kan ændre disse tastekombinationer eller tildele nye via [dialogen "Håndter
 
 Selvom dette er brugbart for ofte benyttede taster såsom tab, så anbefales det ikke, at du tildeler unikke tastetryk til hver genvej.
 For at lade dig benytte tastekombinationer, hvor  taster holdes nede, har NVDA kommandoer, der lader dig holde tasterne Control, alt, skift, windows og NVDA-tasten nede, således at du kan benytte dem til at udføre en kommando fra punktdisplayet.
-For at benytte denne funktion skal du først indtaste kommandoen for den ønskede funktionstast. Du kan bruge mere end én på samme tid. Derefter skal du indtaste bogstavet, der skal benyttes sammen med tasten.
+For at benytte denne funktion skal du først indtaste kommandoerne for den ønskede funktionstast. Du kan bruge mere end én på samme tid.
+Derefter skal du indtaste bogstavet, der skal benyttes sammen med tasten.
 Vil du eksempelvis trykke Control+F, skal du første indtaste kommandoen der holder Control-tasten nede på dit punktdisplay og derefter bogstavet f.
 Det samme er tilfældet med f.eks. kommandoen Alt+skift+t. Her kan du indtaste tastekombinationerne, der holder henholdsvis alt og skift nede i en vilkårlig rækkefølge, eller benytte kommandoen, der holder disse taster nede samtidigt, og derefter indtaste et t.
 
@@ -1125,7 +1134,7 @@ Hvis du skal angive brugernavn og adgangskode for at logge på Windows, kan denn
 Denne funktion er kun tilgængelig i en installeret kopi af NVDA.
 
 ==== Benyt de aktuelt gemte indstillinger på logon-skærmen og andre beskyttede skærmbilleder (kræver administratorrettigheder)====[GeneralSettingsCopySettings]
-Aktivering af denne knap kopierer dine aktuelt gemte brugerindstillinger i NVDA til NVDAs systemkonfigurationsmappe, så NVDA vil bruge dem, når du befinder dig på logon, brugerkontokontrol (UAC) og andre beskyttede skærmbilleder.
+Aktivering af denne knap kopierer dine aktuelt gemte brugerindstillinger i NVDA til NVDAs systemkonfigurationsmappe, så NVDA vil bruge dem, når du befinder dig på logon, brugerkontokontrol (UAC) og [andre beskyttede skærmbilleder #SecureScreens].
 For at være sikker på at alle dine indstillinger bliver kopieret, skal du først gemme dine indstillinger med Ctrl+NVDA+c eller gem konfiguration in NVDA-menuen.
 Denne funktion er kun tilgængelig i en installeret kopi af NVDA.
 
@@ -1538,7 +1547,7 @@ Når denne check box er markeret, vil NVDA fortælle formen på musemarkøren, h
 I Windows ændrer musemarkøren form for at videregive visse typer af information som fx. når noget kan redigeres,, når noget er ved at blive indlæst osv. .
 
 %kc:setting
-==== Slå musefølgning til ====[MouseSettingsTracking]
+==== Følg musen ====[MouseSettingsTracking]
 Tast: NVDA+m
 
 Når denne funktion er slået til, oplæser NVDA den tekst, der i øjeblikket befinder sig under musemarkøren i takt med, at musemarkøren flyttes rundt på skærmen. Det giver mulighed for at finde ting på skærmen ved fysisk at bevæge musen, i stedet for at lede efter dem ved hjælp af objektnavigation.
@@ -1564,7 +1573,7 @@ Denne indstilling er slået fra som standard.
 ==== Ignorér museinput fra andre applikationer ====[MouseSettingsHandleMouseControl]
 Denne indstilling lader brugeren ignorere musehandlinger (f.eks. musebevægelse og museklik) udført af andre programmer som TeamViewer og andet software til fjernstyring.
 Denne indstilling er slået fra som standard.
-Hvis du vælger denne indstilling og du har musefølgning slået til, vil NVDA ikke annoncere hvad der befinder sig under musen, når musen flyttes af andre applikationer.
+Hvis du vælger denne indstilling og du har slået "følg musen" til, vil NVDA ikke annoncere hvad der befinder sig under musen, når musen flyttes af andre applikationer.
 
 +++ Berøringsinteraktion +++[TouchInteraction]
 Denne indstillingskategori vil kun være tilgængelig på computere, der kører Windows 8 og nyere, samt har mulighed for touch-funktionalitet. Disse indstillinger lader dig konfigurere, hvordan NVDA håndtere berøring af touchskærme.
@@ -1709,8 +1718,12 @@ Med dette felt kan du indstille, hvor mange linjer du springer ad gangen, når d
 ==== Brug skærmlayout ====[BrowseModeSettingsScreenLayout]
 Tast: NVDA+v
 
-Med denne indstilling kan du vælge, om NVDA i gennemsynstilstand skal placere klikbart indhold som links, knapper og felter på hver sin linje, eller om de skal bevares som en del af den løbende tekst, sådan som det bliver vist på skærmen. Bemærk, at denne indstilling ikke vil påvirke adfærden i Office-programmer herunder Word og Outlook. Disse vil altid benytte skærmlayout.
-Hvis denne indstilling er slået til, vil hele sidens opbygning blive vist ligesom på skærmen. Eksempelvis vil en visuel linje med flere links blive vist som en del af den samlede linje både i talestrømmen og på punktskrift. Hvis indstillingen deaktiveres, vil ethvert element på siden blive vist på sin egen linje, hvilket kan gøre det nemmere for nogle brugere at navigere på websider.
+Med denne indstilling kan du vælge, om NVDA i gennemsynstilstand skal placere klikbart indhold som links, knapper og felter på hver sin linje, eller om de skal bevares som en del af den løbende tekst, sådan som det bliver vist på skærmen.
+Bemærk, at denne indstilling ikke vil påvirke adfærden i Office-programmer herunder Word og Outlook. Disse vil altid benytte skærmlayout.
+Hvis denne indstilling er slået til, vil hele sidens opbygning blive vist ligesom på skærmen.
+Eksempelvis vil en visuel linje med flere links blive vist som en del af den samlede linje både i talestrømmen og på punktskrift.
+Hvis indstillingen deaktiveres, vil ethvert element på siden blive vist på sin egen linje.
+Dette kan gøre det nemmere for nogle brugere at navigere på websider.
 
 ==== Aktivér gennemsynstilstand ved sideindlæsning ====[BrowseModeSettingsEnableOnPageLoad]
 Denne check box lader dig vælge, om gennemsynstilstand skal aktiveres automatisk, når en side indlæses.
@@ -3310,6 +3323,34 @@ Følgende er tastekombinationerne ved brug af displays, der bruger denne standar
 
 + Avancerede emner +[AdvancedTopics]
 
+++ Sikker tilstand ++[SecureMode]
+NVDA kan startes i sikker tilstand ved brug af -s [kommandolinjeparameter#CommandLineOptions].
+NVDA kører automatisk i sikker tilstand, når du bruger [beskyttede skærme #SecureScreens], medmindre "serviceDebug" [systemspecifikke parameter #SystemWideParameters] er aktiveret.
+
+Sikker tilstand deaktiverer:
+
+- Muligheden for at gemme konfiguration og andre indstillinger til disken
+- Muligheden for at gemme filen til håndtering af kommandoer til disken
+- [Konfigurationsprofiler #ConfigurationProfiles] funktioner som at oprette, slette og omdøbe profiler, osv.
+- Opdatering af NVDA og oprettelse af flytbare kopier
+- Python-konsollen #PythonConsole]
+- Logviseren #LogViewer] og logføring
+-
+
+++ Sikre skærme ++[SecureScreens]
+NVDA kører i sikker tilstand, når du bruger [beskyttede skærme #SecureScreens], medmindre "serviceDebug" [systemspecifikke parameter #SystemWideParameters] er aktiveret.
+
+Når NVDA afvikles i et sikkert miljø, vil NVDA benytte systemprofilen til at anvende indstillinger.
+NVDAs indstillinger kan kopieres for brug på [sikre skærme #GeneralSettingsCopySettings].
+
+Sikre skærme inkluderer:
+
+- Windows logon-skærmen
+- Kontrol af brugerkonti (aktiv, når du udfører bestemte handlinger som administrator)
+  - Dette er også tilfældet, når du installerer programmer
+  -
+-
+
 ++ indstillinger på kommandolinjen ++[CommandLineOptions]
 Du kan angive en eller flere indstillinger på kommandolinjen, når du starter NVDA.
 Du kan angive så mange indstillinger, som du har brug for.
@@ -3343,7 +3384,7 @@ De mulige kommandolinjeparametre til NVDA er følgende:
 | -c CONFIGPATH | --config-path=KONFIGURATIONSSTI | Stien, hvor alle indstillinger i NVDA skal gemmes |
 | None | --lang=SPROG | Brug et specifikt sprog uanset NVDAs konfiguration. Skriv "Windows" for standardsprog, "en" for engelsk, osv. |
 | -m | --minimal | Ingen lyde, ingen brugergrænseflade, ingen opstartsmeddelelser osv. |
-| -s | --secure | Sikker tilstand: Deaktiverer Python console, profilfunktioner som oprettelse, omdøbning og sletning af profiler, osv. Søgning efter opdateringer er også deaktiveret. Nogle bokse i velkomstdialogen deaktiveres ligeledes. Nogle indstillinger deaktiveres også i NVDAs generelle indstillinger (f.eks. "Start NVDA automatisk, når jeg har logget på Windows" "Gem konfiguration ved afslutning" osv). Logningsfunktioner kan heller ikke benyttes i denne tilstand herunder logviseren N(såsom dem, der benyttes på sikre skærme). Bemærk også at denne kommando vil forhindre at NVDAs indstillinger gemmes til systemkonfigurationen, og kommandoer ligeledes ikke gemmes. |
+| -s | --secure | Sikker tilstand |
 | Ingen | --disable-addons | ingen tilføjelsesprogrammer |
 | Ingen | --debug-logging | Aktivér logningsniveau til brug ved fejlfinding for kun denne opstart. Denne indstilling vil overstyre alle logningsniveau ( ""--loglevel"", -l) argumenter. |
 | Ingen | --no-logging | Deaktivér logning fuldstændigt under brugen af NVDA. Denne indstilling kan blive tilsidesat hvis ( ""--loglevel"", -l) angives fra kommandolinjen eller såfremt logning for fejlfinding er slået til. |
@@ -3366,7 +3407,7 @@ Disse værdier er gemt i registreringsdatabasen under en af følgende nøgler:
 Følgende værdier kan indstilles under denne registreringsdatabasenøgle:
 || Navn | Type | Mulige værdier | Beskrivelse |
 | configInLocalAppData | DWORD | 0 (standard) for at deaktivere, 1 for at aktivere | Hvis dette er aktiveret, vil NVDAs konfiguration gemmes i local application data i stedet for mappen roaming application data |
-| serviceDebug | DWORD | 0 (standard) for at deaktivere, 1 for at aktivere | Hvis dette aktiveres, vil beskyttet tilstand blive deaktiveret på beskyttede skriveborde i Windows. Dette vil tillade brugen af Python-konsollen og logviseren. På grund af flere sikkerhedsbrud, kan denne indstilling ikke anbefales |
+| serviceDebug | DWORD | 0 (standard) for at deaktivere, 1 for at aktivere | På grund af flere sikkerhedsbrud, kan denne indstilling ikke anbefales |
 
 + Yderligere information +[FurtherInformation]
 Hvis du har brug for yderligere information eller hjælp til brugen af NVDA, besøg venligst NVDAs netsted NVDA_URL.

@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2021 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
+# Copyright (C) 2006-2022 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
 # Julien Cochuyt
 
 from enum import IntEnum
@@ -127,7 +127,11 @@ class _ObjectsReader(garbageHandler.TrackedObject):
 			return
 		if self.prevObj:
 			# We just started speaking this object, so move the navigator to it.
-			api.setNavigatorObject(self.prevObj, isFocus=self.handler.lastSayAllMode == CURSOR.CARET)
+			if not api.setNavigatorObject(
+				self.prevObj,
+				isFocus=self.handler.lastSayAllMode == CURSOR.CARET
+			):
+				return
 			winKernel.SetThreadExecutionState(winKernel.ES_SYSTEM_REQUIRED)
 		# Move onto the next object.
 		self.prevObj = obj = next(self.walker, None)
@@ -249,7 +253,8 @@ class _TextReader(garbageHandler.TrackedObject):
 			self.reader.collapse(end=True)
 		except RuntimeError:
 			# This occurs in Microsoft Word when the range covers the end of the document.
-			# without this exception to indicate that further collapsing is not possible, say all could enter an infinite loop.
+			# without this exception to indicate that further collapsing is not possible,
+			# say all could enter an infinite loop.
 			self.finish()
 			return
 		if not spoke:

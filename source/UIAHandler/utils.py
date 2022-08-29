@@ -9,6 +9,7 @@ import config
 import ctypes
 import UIAHandler
 import weakref
+import winVersion
 from functools import lru_cache
 from logHandler import log
 from .constants import WinConsoleAPILevel
@@ -305,9 +306,7 @@ def _shouldUseUIAConsole(hwnd: int) -> bool:
 	else:
 		# #7497: the UIA implementation in old conhost is incomplete, therefore we
 		# should ignore it.
-		# When the UIA implementation is improved, the below line will be replaced
-		# with a check that _getConhostAPILevel >= FORMATTED.
-		return False
+		return _getConhostAPILevel(hwnd) >= WinConsoleAPILevel.FORMATTED
 
 
 @lru_cache(maxsize=10)
@@ -352,3 +351,14 @@ def _getConhostAPILevel(hwnd: int) -> WinConsoleAPILevel:
 	except (COMError, ValueError):
 		log.exception()
 		return WinConsoleAPILevel.END_INCLUSIVE
+
+
+def _shouldSelectivelyRegister() -> bool:
+	"Determines whether to register for UIA events selectively or globally."
+	setting = config.conf['UIA']['eventRegistration']
+	if setting == "selective":
+		return True
+	elif setting == "global":
+		return False
+	else:
+		return winVersion.getWinVer() >= winVersion.WIN11_22H2

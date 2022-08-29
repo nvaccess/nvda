@@ -26,12 +26,16 @@ import config
 import controlTypes
 import appModuleHandler
 import treeInterceptorHandler
+from treeInterceptorHandler import (
+	TreeInterceptor,
+)
 import braille
 import vision
 import globalPluginHandler
 import brailleInput
 import locationHelper
 import aria
+from winAPI.sessionTracking import isWindowsLocked
 
 
 class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
@@ -108,6 +112,12 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 					log.exception(f"Exception in chooseNVDAObjectOverlayClasses for {plugin}")
 					pass
 
+		# After all other mutation has finished,
+		# add LockScreenObject if Windows is locked.
+		# LockScreenObject must become the first class to be resolved,
+		# i.e. insertion order of 0.
+		self._insertLockScreenObject(clsList)
+
 		# Determine the bases for the new class.
 		bases=[]
 		for index in range(len(clsList)):
@@ -165,6 +175,16 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 		This should be called when a plugin is unloaded so that any used overlay classes in the unloaded plugin can be garbage collected.
 		"""
 		cls._dynamicClassCache.clear()
+
+	def _insertLockScreenObject(self, clsList: typing.List["NVDAObject"]) -> None:
+		"""
+		Inserts LockScreenObject to the start of the clsList if Windows is locked.
+		"""
+		from .lockscreen import LockScreenObject
+		if isWindowsLocked():
+			# This must be resolved first to prevent object navigation outside of the lockscreen.
+			clsList.insert(0, LockScreenObject)
+
 
 class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, metaclass=DynamicNVDAObjectType):
 	"""NVDA's representation of a single control/widget.
@@ -255,19 +275,26 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		@rtype: boolean
 		"""
 		raise NotImplementedError
- 
 
-	def findOverlayClasses(self, clsList):
-		"""Chooses overlay classes which should be added to this object's class structure after the object has been initially instantiated.
-		After an NVDAObject class (normally an API-level class) is instantiated, this method is called on the instance to choose appropriate overlay classes.
+	def findOverlayClasses(self, clsList: typing.List["NVDAObject"]) -> None:
+		"""
+		Chooses overlay classes which should be added to this object's class structure,
+		after the object has been initially instantiated.
+		After an NVDAObject class (normally an API-level class) is instantiated,
+		this method is called on the instance to choose appropriate overlay classes.
+
 		This method may use properties, etc. on the instance to make this choice.
 		The object's class structure is then mutated to contain these classes.
+
 		L{initOverlayClass} is then called for each class which was not part of the initially instantiated object.
 		This process allows an NVDAObject to be dynamically created using the most appropriate NVDAObject subclass at each API level.
-		Classes should be listed with subclasses first. That is, subclasses should generally call super and then append their own classes to the list.
-		For example: Called on an IAccessible NVDAObjectThe list might contain DialogIaccessible (a subclass of IAccessible), Edit (a subclass of Window).
+		Classes should be listed with subclasses first.
+		That is, subclasses should generally call super and then append their own classes to the list.
+
+		For example: Called on an IAccessible NVDAObject, the list might contain:
+		"DialogIAccessible (a subclass of IAccessible), Edit (a subclass of Window)".
+
 		@param clsList: The list of classes, which will be modified by this method if appropriate.
-		@type clsList: list of L{NVDAObject}
 		"""
 		clsList.append(NVDAObject)
 
@@ -352,10 +379,15 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 
 	focusRedirect=None #: Another object which should be treeted as the focus if focus is ever given to this object.
 
-	def _get_treeInterceptorClass(self):
+	treeInterceptorClass: typing.Type[TreeInterceptor]
+	"""Type definition for auto prop '_get_treeInterceptorClass'"""
+
+	def _get_treeInterceptorClass(self) -> typing.Type[TreeInterceptor]:
 		"""
-		If this NVDAObject should use a treeInterceptor, then this property provides the L{treeInterceptorHandler.TreeInterceptor} class it should use. 
+		If this NVDAObject should use a treeInterceptor, then this property
+		provides the L{treeInterceptorHandler.TreeInterceptor} class it should use.
 		If not then it should be not implemented.
+		@raises NotImplementedError when no TreeInterceptor class is available.
 		"""
 		raise NotImplementedError
 
@@ -368,10 +400,10 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 	#: @type: bool
 	shouldCreateTreeInterceptor = True
 
-	#: Type definition for auto prop '_get_treeInterceptor'
-	treeInterceptor: treeInterceptorHandler.TreeInterceptor
+	treeInterceptor: typing.Optional[TreeInterceptor]
+	"""Type definition for auto prop '_get_treeInterceptor'"""
 
-	def _get_treeInterceptor(self) -> treeInterceptorHandler.TreeInterceptor:
+	def _get_treeInterceptor(self) -> typing.Optional[TreeInterceptor]:
 		"""Retrieves the treeInterceptor associated with this object.
 		If a treeInterceptor has not been specifically set,
 		the L{treeInterceptorHandler} is asked if it can find a treeInterceptor containing this object.
@@ -392,7 +424,7 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 				self._treeInterceptor=weakref.ref(ti)
 			return ti
 
-	def _set_treeInterceptor(self,obj):
+	def _set_treeInterceptor(self, obj: typing.Optional[TreeInterceptor]):
 		"""Specifically sets a treeInterceptor to be associated with this object.
 		"""
 		if obj:
@@ -492,6 +524,14 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		In most instances this should be optimised.
 		"""
 		return bool(self.detailsSummary)
+
+	#: Typing information for auto property _get_detailsRole
+	detailsRole: typing.Optional[controlTypes.Role]
+
+	def _get_detailsRole(self) -> typing.Optional[controlTypes.Role]:
+		if config.conf["debugLog"]["annotations"]:
+			log.debugWarning(f"Fetching details summary not supported on: {self.__class__.__qualname__}")
+		return None
 
 	def _get_controllerFor(self):
 		"""Retrieves the object/s that this object controls."""
@@ -969,9 +1009,11 @@ Tries to force this object to take the focus.
 		"""
 		return {}
 
-	def _get_processID(self):
-		"""Retrieves an identifyer of the process this object is a part of.
-		@rtype: int
+	#: Type definition for auto prop '_get_processID'
+	processID: int
+
+	def _get_processID(self) -> int:
+		"""Retrieves an identifier of the process this object is a part of.
 		"""
 		raise NotImplementedError
 
@@ -1281,6 +1323,7 @@ This code is executed if a gain focus event is received by this object.
 		info.append("name: %s" % ret)
 		ret = self.role
 		info.append("role: %s" % ret)
+		info.append(f"processID: {self.processID}")
 		try:
 			ret = repr(self.roleText)
 		except Exception as e:

@@ -4,7 +4,6 @@
 # Copyright (C) 2007-2021 NV Access Limited, Babbage B.V.
 
 from enum import (
-	auto,
 	unique,
 )
 from typing import Dict
@@ -18,6 +17,16 @@ def setBit(bitPos: int) -> int:
 
 @unique
 class State(DisplayStringIntEnum):
+	"""
+	Add-on authors are recommended not to depend on values and use a `State` directly.
+	From a string, this can be done as `controlTypes.State[nameOfState]` e.g. `State["CHECKED"]`.
+	Although unlikely to change, if names/values changing represents a significant risk for your add-on,
+	then consider decoupling, and maintain an internal mapping of `State` to add-on internal states.
+
+	As add-on authors may still rely on the values, new members of State should continue
+	the pattern of incrementing.
+	"""
+
 	@property
 	def _displayStringLabels(self):
 		return _stateLabels
@@ -87,6 +96,7 @@ class State(DisplayStringIntEnum):
 	# indeterminate progress bar, aka busy indicator. No specific state label.
 	# when combined with role of 'progress bar', role is mutated to 'busy indicator'
 	INDETERMINATE = setBit(44)
+	HALF_PRESSED = setBit(45)
 
 
 STATES_SORTED = frozenset([State.SORTED, State.SORTED_ASCENDING, State.SORTED_DESCENDING])
@@ -107,6 +117,8 @@ _stateLabels: Dict[State, str] = {
 	State.CHECKED: _("checked"),
 	# Translators: This is presented when a three state check box is half checked.
 	State.HALFCHECKED: _("half checked"),
+	# Translators: This is presented when a three state toggle button is half pressed.
+	State.HALF_PRESSED: _("half pressed"),
 	# Translators: This is presented when the control is a read-only control such as read-only edit box.
 	State.READONLY: _("read only"),
 	# Translators: This is presented when a tree view or submenu item is expanded.
