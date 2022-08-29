@@ -30,7 +30,6 @@ from SystemTestSpy.windows import (
 if _typing.TYPE_CHECKING:
 	#  F401 used for type checking only
 	from SystemTestSpy.speechSpyGlobalPlugin import SpeechIndexT as _SpeechIndexT  # noqa: F401
-	from SystemTestSpy.speechSpyGlobalPlugin import NVDASpyLib as _NVDASpyLib
 
 
 builtIn: _BuiltInLib = _BuiltInLib()
@@ -63,7 +62,7 @@ def taskSwitchToItemMatching(targetWindowNamePattern: _re.Pattern, maxWindowsToT
 	spy.wait_for_speech_to_finish()
 
 	builtIn.log(f"Looking for window: {targetWindowNamePattern}", level="DEBUG")
-	startOfTaskSwitcherSpeech = _tryOpenTaskSwitcher(spy)
+	startOfTaskSwitcherSpeech = _tryOpenTaskSwitcher()
 	if startOfTaskSwitcherSpeech is None:
 		# Try opening the task switcher again
 		spy.emulateKeyPress('escape')
@@ -72,7 +71,7 @@ def taskSwitchToItemMatching(targetWindowNamePattern: _re.Pattern, maxWindowsToT
 		# and give the system time to recover before trying again.
 		builtIn.sleep(3)
 
-		startOfTaskSwitcherSpeech = _tryOpenTaskSwitcher(spy)
+		startOfTaskSwitcherSpeech = _tryOpenTaskSwitcher()
 		if startOfTaskSwitcherSpeech is None:
 			raise AssertionError("Tried twice to open task switcher and failed.")
 
@@ -139,12 +138,12 @@ def taskSwitchToItemMatching(targetWindowNamePattern: _re.Pattern, maxWindowsToT
 			)
 
 
-def _tryOpenTaskSwitcher(spy: "_NVDASpyLib") -> _Optional["_SpeechIndexT"]:
+def _tryOpenTaskSwitcher() -> _Optional["_SpeechIndexT"]:
 	"""
-	@param spy: The NVDA spy lib to be used.
 	@return: If the task switcher 'row 1' was spoken, the speech index for the start of the task switcher
 	speech.
 	"""
+	spy = _NvdaLib.getSpyLib()
 	expectedStartOfKeypressSpeechIndex = spy.get_next_speech_index()
 	spy.emulateKeyPress('control+alt+tab')  # opens the task switcher until enter or escape is pressed.
 	# each item has "row 1 column 1" appended, ensure that the task switcher has opened.
