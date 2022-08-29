@@ -507,14 +507,14 @@ class UIAHandler(COMObject):
 					return
 			try:
 				if (
-						element.currentClassName in textChangeUIAClassNames
-						or element.CachedAutomationID in textChangeUIAAutomationIDs
+					element.currentClassName in textChangeUIAClassNames
+					or element.CachedAutomationID in textChangeUIAAutomationIDs
 				):
-						group = self.localEventHandlerGroupWithTextChanges
-						logPrefix = "Explicitly"
-				else :
-						group = self.localEventHandlerGroup
-						logPrefix = "Not"
+					group = self.localEventHandlerGroupWithTextChanges
+					logPrefix = "Explicitly"
+				else:
+					group = self.localEventHandlerGroup
+					logPrefix = "Not"
 
 				if _isDebug():
 					log.debugWarning(
