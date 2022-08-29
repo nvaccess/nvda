@@ -506,20 +506,19 @@ class UIAHandler(COMObject):
 				if not isStillFocus:
 					return
 			try:
-				group = (
-					self.localEventHandlerGroupWithTextChanges
-					if element.currentClassName in textChangeUIAClassNames
-					or element.CachedAutomationID in textChangeUIAAutomationIDs
-					else self.localEventHandlerGroup
-				)
+				if (
+						element.currentClassName in textChangeUIAClassNames
+						or element.CachedAutomationID in textChangeUIAAutomationIDs
+				):
+						group = self.localEventHandlerGroupWithTextChanges
+						logPrefix = "Explicitly"
+				else :
+						group = self.localEventHandlerGroup
+						logPrefix = "Not"
+
 				if _isDebug():
-					prefix = (
-						"Explicitly"
-						if group == self.localEventHandlerGroupWithTextChanges
-						else "Not"
-					)
 					log.debugWarning(
-						f"{prefix} registering for textChange events from UIA element "
+						f"{logPrefix} registering for textChange events from UIA element "
 						f"with class name {repr(element.currentClassName)} "
 						f"and automation ID {repr(element.CachedAutomationID)}"
 					)
