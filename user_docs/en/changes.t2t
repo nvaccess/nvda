@@ -25,7 +25,7 @@ What's New in NVDA
 
 
 == Changes ==
-- eSpeak NG has been updated to 1.52-dev commit ``97414c47``. (#14060)
+- eSpeak NG has been updated to 1.52-dev commit ``0dbe7182``. (#14060, #14079)
 - NVDA now includes the architecture of the operating system as part of user statistics tracking. (#14019)
 -
 
@@ -39,6 +39,7 @@ What's New in NVDA
   - These fixes apply to Windows 11 Sun Valley 2 (version 22H2) and later.
   - Selective registration for UI Automation events and property changes now enabled by default.
   -
+- NVDA will announce UIA item status property changes in places such as the Visual Studio 2022 create app packages dialog. (#13973)
 -
 
 
@@ -46,6 +47,7 @@ What's New in NVDA
 Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] for information on NVDA's API deprecation and removal process.
 
 - The [NVDA API Announcement mailing list https://groups.google.com/a/nvaccess.org/g/nvda-api/about] was created. (#13999)
+- NVDA no longer processes ``textChange`` events for most UI Automation applications due to their extreme negative performance impact. (#11002, #14067)
 -
 
 

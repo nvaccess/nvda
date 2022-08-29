@@ -2035,6 +2035,19 @@ class UIA(Window):
 				speech.cancelSpeech()
 			ui.message(displayString)
 
+	_itemStatusCache = None
+
+	def event_UIA_itemStatus(self):
+		"""
+		Base implementation of UIA item status property event.
+		By default NVDA will announce element name and item status if any.
+		"""
+		itemStatus = self.UIAElement.currentItemStatus
+		if itemStatus and itemStatus != self._itemStatusCache:
+			ui.message(f"{self.name} {itemStatus}")
+		self._itemStatusCache = itemStatus
+
+
 class TreeviewItem(UIA):
 
 	def _get_value(self):
