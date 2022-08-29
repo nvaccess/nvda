@@ -114,7 +114,7 @@ class ChromeLib:
 			# Assumption.
 			# An additionally started chrome process merely communicates the intent to open a URI and then exits.
 			# Start is tracking only this process.
-
+			#
 			" chrome"  # Start Chrome
 			" --force-renderer-accessibility"
 			" --suppress-message-center-popups"
@@ -129,7 +129,7 @@ class ChromeLib:
 			# Values:
 			# "exit_type": "none",
 			# "exited_cleanly":true,
-
+			#
 			f' "{filePath}"',
 			shell=True,
 			alias='chromeStartAlias',
