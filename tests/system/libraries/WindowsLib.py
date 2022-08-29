@@ -28,10 +28,10 @@ from SystemTestSpy.windows import (
 )
 
 if _typing.TYPE_CHECKING:
-	from SystemTestSpy.speechSpyGlobalPlugin import (
-		NVDASpyLib as _NVDASpyLib,
-		SpeechIndexT as _SpeechIndexT,
-	)
+	#  F401 used for type checking only
+	from SystemTestSpy.speechSpyGlobalPlugin import SpeechIndexT as _SpeechIndexT  # noqa: F401
+	from SystemTestSpy.speechSpyGlobalPlugin import NVDASpyLib as _NVDASpyLib
+
 
 builtIn: _BuiltInLib = _BuiltInLib()
 opSys: _OpSysLib = _getLib('OperatingSystem')
