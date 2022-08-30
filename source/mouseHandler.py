@@ -24,7 +24,7 @@ import ui
 from math import floor
 from contextlib import contextmanager
 import threading
-from winAPI.constants import SystemMetrics
+from winAPI.winUser.constants import SystemMetrics
 
 
 WM_MOUSEMOVE=0x0200

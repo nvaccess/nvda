@@ -70,8 +70,8 @@ Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documen
 
 === Deprecations ===
 - ``core.post_windowMessageReceipt`` is deprecated, use ``winAPI.messageWindow.pre_handleWindowMessage`` instead.
-- ``winKernel.SYSTEM_POWER_STATUS`` is deprecated, use ``winAPI.powerTracking.SystemPowerStatus`` instead.
-- ``winUser.SM_*`` constants are deprecated, use ``winAPI.constants.SystemMetrics`` instead.
+- ``winKernel.SYSTEM_POWER_STATUS`` is deprecated and usage is discouraged, this has been moved to ``winAPI._powerTracking.SystemPowerStatus``.
+- ``winUser.SM_*`` constants are deprecated, use ``winAPI.winUser.constants.SystemMetrics`` instead.
 -
 
 

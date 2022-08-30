@@ -21,7 +21,7 @@ from logHandler import log
 import ui
 import winUser
 
-from .constants import SystemMetrics
+from .winUser.constants import SystemMetrics
 
 
 class Orientation(enum.Enum):

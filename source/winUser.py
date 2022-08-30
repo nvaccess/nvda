@@ -41,7 +41,7 @@ WNDPROC=WINFUNCTYPE(LRESULT,HWND,c_uint,WPARAM,LPARAM)
 
 
 def __getattr__(attrName: str) -> Any:
-	from winAPI.constants import SystemMetrics
+	from winAPI.winUser.constants import SystemMetrics
 	_deprecatedConstantsMap = {
 		"SM_CXSCREEN": SystemMetrics.CX_SCREEN,
 		"SM_CYSCREEN": SystemMetrics.CY_SCREEN,
