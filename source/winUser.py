@@ -56,7 +56,7 @@ def __getattr__(attrName: str) -> Any:
 		replacementSymbol = _deprecatedConstantsMap[attrName]
 		log.warning(
 			f"Importing {attrName} from here is deprecated. "
-			f"Import {replacementSymbol.name} instead. "
+			f"Import {replacementSymbol.name} from winAPI.winUser.constants instead. "
 		)
 		return replacementSymbol
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
