@@ -21,6 +21,8 @@ import buildVersion
 from typing import Optional
 import exceptions
 import RPCConstants
+import NVDAState
+
 
 ERROR_INVALID_WINDOW_HANDLE = 1400
 ERROR_TIMEOUT = 1460
@@ -125,7 +127,7 @@ def shouldPlayErrorSound() -> bool:
 
 
 # Function to strip the base path of our code from traceback text to improve readability.
-if globalVars.runningAsSource:
+if NVDAState.isRunningAsSource():
 	BASE_PATH = os.path.split(__file__)[0] + os.sep
 	TB_BASE_PATH_PREFIX = '  File "'
 	TB_BASE_PATH_MATCH = TB_BASE_PATH_PREFIX + BASE_PATH
@@ -382,7 +384,7 @@ logHandler: Optional[logging.Handler] = None
 
 
 def _getDefaultLogFilePath():
-	if globalVars.runningAsSource:
+	if NVDAState.isRunningAsSource():
 		return os.path.join(globalVars.appDir, "nvda.log")
 	else:
 		import tempfile

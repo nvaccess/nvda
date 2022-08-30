@@ -21,6 +21,12 @@ What's New in NVDA
     - Laptop: ``NVDA+shift+pageDown``.
     -
   -
+- Added the following table commands. (#14070)
+  - Say all in column: ``NVDA+control+alt+downArrow``
+  - Say all in row: ``NVDA+control+alt+rightArrow``
+  - Read entire column: ``NVDA+control+alt+upArrow``
+  - Read entire row: ``NVDA+control+alt+leftArrow``
+  -
 -
 
 
@@ -38,6 +44,15 @@ What's New in NVDA
 - Improved performance and stability in in Microsoft Visual Studio, Windows Terminal, and other UI Automation based applications. (#11077, #11209)
   - These fixes apply to Windows 11 Sun Valley 2 (version 22H2) and later.
   - Selective registration for UI Automation events and property changes now enabled by default.
+  -
+- NVDA is now DPI aware when using multiple monitors.
+There are several fixes for using a DPI setting higher than 100% or multiple monitors.
+Issues may still exist with versions of Windows older than Windows 10 1809.
+Applications which NVDA interacts with also need to be DPI aware. (#13254)
+  - Visual highlighting frames should now be correctly placed in most applications. (#13370, #3875, #12070)
+  - Touch screen interaction should now be accurate for most applications. (#7083)
+  - Mouse tracking should now work for most applications.
+  Note there are still known issues with Chrome. (#6722, #7915)
   -
 - NVDA will announce UIA item status property changes in places such as the Visual Studio 2022 create app packages dialog. (#13973)
 -

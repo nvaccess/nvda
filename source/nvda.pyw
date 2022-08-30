@@ -18,6 +18,8 @@ import globalVars
 import ctypes
 from ctypes import wintypes
 import monkeyPatches
+import NVDAState
+
 
 monkeyPatches.applyMonkeyPatches()
 
@@ -28,7 +30,7 @@ _log = logging.Logger(name="preStartup", level=logging.INFO)
 _log.addHandler(logging.NullHandler(level=logging.INFO))
 
 customVenvDetected = False
-if globalVars.runningAsSource:
+if NVDAState.isRunningAsSource():
 	# Ensure we are inside the NVDA build system's Python virtual environment.
 	nvdaVenv = os.getenv("NVDA_VENV")
 	virtualEnv = os.getenv("VIRTUAL_ENV")
@@ -104,7 +106,9 @@ class NoConsoleOptionParser(argparse.ArgumentParser):
 		winUser.MessageBox(0, out, u"Error", 0)
 		sys.exit(2)
 
-globalVars.startTime=time.time()
+
+NVDAState._initializeStartTime()
+
 
 # Check OS version requirements
 import winVersion
@@ -411,4 +415,4 @@ finally:
 		log.error(f"Unable to close mutex handle, last error: {winUser.WinError(error)}")
 
 log.info("NVDA exit")
-sys.exit(globalVars.exitCode)
+sys.exit(NVDAState._getExitCode())

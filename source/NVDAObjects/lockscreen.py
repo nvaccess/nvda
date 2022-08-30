@@ -13,7 +13,7 @@ from NVDAObjects import NVDAObject
 class LockScreenObject(NVDAObject):
 	"""
 	Prevent users from object navigating outside of the lock screen.
-	While usages of `_isSecureObjectWhileLockScreenActivated` in the api module prevent
+	While usages of `api.objectBelowLockScreenAndWindowsIsLocked` prevent
 	the user from moving to the object, this overlay class prevents reading neighbouring objects.
 	"""
 
