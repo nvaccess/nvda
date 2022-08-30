@@ -3,11 +3,6 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-"""
-When working on this file, consider moving to winAPI.
-"""
-
-
 from dataclasses import dataclass
 from typing import Optional
 import time

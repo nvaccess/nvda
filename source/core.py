@@ -34,12 +34,12 @@ def __getattr__(attrName: str) -> Any:
 	"""Module level `__getattr__` used to preserve backward compatibility.
 	"""
 	if attrName == "post_windowMessageReceipt" and globalVars._allowDeprecatedAPI:
-		from winAPI.messageWindow import post_windowMessageReceipt
+		from winAPI.messageWindow import pre_handleWindowMessage
 		log.warning(
 			"core.post_windowMessageReceipt is deprecated, "
-			"use winAPI.messageWindow.post_windowMessageReceipt instead."
+			"use winAPI.messageWindow.pre_handleWindowMessage instead."
 		)
-		return post_windowMessageReceipt
+		return pre_handleWindowMessage
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
 
 

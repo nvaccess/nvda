@@ -33,6 +33,7 @@ What's New in NVDA
 == Changes ==
 - eSpeak NG has been updated to 1.52-dev commit ``0dbe7182``. (#14060, #14079)
 - NVDA now includes the architecture of the operating system as part of user statistics tracking. (#14019)
+- Reporting power state changes and using the script to report battery status now report the same message consistently. (#14035)
 -
 
 
@@ -46,6 +47,7 @@ What's New in NVDA
   - Selective registration for UI Automation events and property changes now enabled by default.
   -
 - NVDA will announce UIA item status property changes in places such as the Visual Studio 2022 create app packages dialog. (#13973)
+- Orientation state (landscape/portrait) changes are now correctly ignored when there is no change (e.g. monitor changes). (#14035)
 -
 
 
@@ -58,6 +60,10 @@ Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documen
 
 
 === Deprecations ===
+- ``core.post_windowMessageReceipt`` is deprecated, use ``winAPI.messageWindow.pre_handleWindowMessage`` instead.
+- ``winKernel.SYSTEM_POWER_STATUS`` is deprecated, use ``winAPI.powerTracking.SystemPowerStatus`` instead.
+- ``winUser.SM_*`` constants are deprecated, use ``winAPI.constants.SystemMetrics`` instead.
+-
 
 
 = 2022.3 =

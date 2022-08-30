@@ -252,7 +252,7 @@ class Detector(object):
 		self._BgScanApc = winKernel.PAPCFUNC(self._bgScan)
 		self._btDevsLock = threading.Lock()
 		self._btDevs = None
-		messageWindow.post_windowMessageReceipt.register(self.handleWindowMessage)
+		messageWindow.pre_handleWindowMessage.register(self.handleWindowMessage)
 		appModuleHandler.post_appSwitch.register(self.pollBluetoothDevices)
 		self._stopEvent = threading.Event()
 		self._queuedScanLock = threading.Lock()
@@ -386,7 +386,7 @@ class Detector(object):
 
 	def terminate(self):
 		appModuleHandler.post_appSwitch.unregister(self.pollBluetoothDevices)
-		messageWindow.post_windowMessageReceipt.unregister(self.handleWindowMessage)
+		messageWindow.pre_handleWindowMessage.unregister(self.handleWindowMessage)
 		self._stopBgScan()
 
 

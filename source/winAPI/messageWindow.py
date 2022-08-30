@@ -26,8 +26,8 @@ import extensionPoints
 import gui
 import windowUtils
 
-
-post_windowMessageReceipt = extensionPoints.Action()
+pre_handleWindowMessage
+pre_handleWindowMessage = extensionPoints.Action()
 """
 Notifies when a window message has been received by NVDA.
 This allows components to perform an action when several system events occur,
@@ -137,7 +137,7 @@ class _MessageWindow(windowUtils.CustomWindow):
 		@param wParam: Additional message information.
 		@param lParam: Additional message information.
 		"""
-		post_windowMessageReceipt.notify(msg=msg, wParam=wParam, lParam=lParam)
+		pre_handleWindowMessage.notify(msg=msg, wParam=wParam, lParam=lParam)
 		self.handleWindowMessage(msg, wParam, lParam)
 
 	def handleWindowMessage(self, msg: int, wParam: int, lParam: int) -> None:
