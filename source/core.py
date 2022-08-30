@@ -27,6 +27,7 @@ from logHandler import log
 import addonHandler
 import extensionPoints
 import garbageHandler
+import NVDAState
 
 
 # inform those who want to know that NVDA has finished starting up.
@@ -427,7 +428,8 @@ def main():
 	Finally, it starts the wx main loop.
 	"""
 	log.debug("Core starting")
-	if globalVars.runningAsSource:
+	if NVDAState.isRunningAsSource():
+		# When running as packaged version, DPI awareness is set via the app manifest.
 		from winAPI.dpiAwareness import setDPIAwareness
 		setDPIAwareness()
 
