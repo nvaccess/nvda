@@ -340,7 +340,7 @@ def doPreGainFocus(obj: "NVDAObjects.NVDAObject", sleepMode: bool = False) -> bo
 		executeEvent('foreground', newForeground)
 	if sleepMode: return True
 	#Fire focus entered events for all new ancestors of the focus if this is a gainFocus event
-	for parent in api.getFocusAncestors()[api.getFocusDifferenceLevel()]:
+	for parent in api.getFocusAncestors()[api.getFocusDifferenceLevel():]:
 		executeEvent("focusEntered",parent)
 	if obj.treeInterceptor is not oldTreeInterceptor:
 		if hasattr(oldTreeInterceptor,"event_treeInterceptor_loseFocus"):
