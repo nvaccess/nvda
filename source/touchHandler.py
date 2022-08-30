@@ -6,6 +6,8 @@
 """handles touchscreen interaction (Windows 8 and later).
 Used to provide input gestures for touchscreens, touch modes and other support facilities.
 In order to use touch features, NVDA must be installed on a touchscreen computer running Windows 8 and later.
+
+When working on this file, consider moving to winAPI.
 """
 
 import threading

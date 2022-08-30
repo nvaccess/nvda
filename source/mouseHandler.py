@@ -3,6 +3,11 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+"""
+When working on this file, consider moving to winAPI.
+"""
+
+
 from dataclasses import dataclass
 from typing import Optional
 import time
@@ -24,6 +29,8 @@ import ui
 from math import floor
 from contextlib import contextmanager
 import threading
+from winAPI.constants import SystemMetrics
+
 
 WM_MOUSEMOVE=0x0200
 WM_LBUTTONDOWN=0x0201
@@ -288,7 +295,7 @@ def getLogicalButtonFlags() -> LogicalButtonFlags:
 	taking into account the Windows user setting
 	for which button (left or right) is primary and which is secondary.
 	"""
-	swappedButtons = ctypes.windll.user32.GetSystemMetrics(winUser.SM_SWAPBUTTON)
+	swappedButtons = ctypes.windll.user32.GetSystemMetrics(SystemMetrics.SWAP_BUTTON)
 	if not swappedButtons:
 		return LogicalButtonFlags(
 			primaryDown=winUser.MOUSEEVENTF_LEFTDOWN,
