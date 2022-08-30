@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2008-2021 NV Access Limited, Joseph Lee, Babbage B.V., Leonard de Ruijter, Bill Dengler
+# Copyright (C) 2008-2022 NV Access Limited, Joseph Lee, Babbage B.V., Leonard de Ruijter, Bill Dengler
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -98,6 +98,16 @@ UIADialogClassNames=[
 	"Shell_Flyout",
 	"Shell_SystemDialog", # Various dialogs in Windows 10 Settings app
 ]
+
+textChangeUIAAutomationIDs = (
+	"Text Area",  # Windows Console Host
+)
+
+textChangeUIAClassNames = (
+	"_WwG",  # Microsoft Word
+	"TermControl",
+	"TermControl2"
+)
 
 NVDAUnitsToUIAUnits: Dict[str, int] = {
 	textInfos.UNIT_CHARACTER: UIA.TextUnit_Character,
@@ -206,11 +216,9 @@ localEventHandlerGroupUIAEventIds = set()
 autoSelectDetectionAvailable = False
 if winVersion.getWinVer() >= winVersion.WIN10:
 	UIAEventIdsToNVDAEventNames.update({
-		UIA.UIA_Text_TextChangedEventId: "textChange",
 		UIA.UIA_Text_TextSelectionChangedEventId: "caret",
 	})
 	localEventHandlerGroupUIAEventIds.update({
-		UIA.UIA_Text_TextChangedEventId,
 		UIA.UIA_Text_TextSelectionChangedEventId,
 	})
 	autoSelectDetectionAvailable = True
@@ -268,6 +276,7 @@ class UIAHandler(COMObject):
 		super(UIAHandler,self).__init__()
 		self.globalEventHandlerGroup = None
 		self.localEventHandlerGroup = None
+		self.localEventHandlerGroupWithTextChanges = None
 		self._localEventHandlerGroupElements = set()
 		self.MTAThreadInitEvent=threading.Event()
 		self.MTAThreadQueue = Queue()
@@ -403,6 +412,17 @@ class UIAHandler(COMObject):
 				self.baseCacheRequest,
 				self
 			)
+		if (
+			not utils._shouldSelectivelyRegister()
+			and winVersion.getWinVer() >= winVersion.WIN10
+		):
+			# #14067: Due to poor performance, textChange requires special handling
+			self.globalEventHandlerGroup.AddAutomationEventHandler(
+				UIA.UIA_Text_TextChangedEventId,
+				UIA.TreeScope_Subtree,
+				self.baseCacheRequest,
+				self
+			)
 		# #7984: add support for notification event (IUIAutomation5, part of Windows 10 build 16299 and later).
 		if isinstance(self.clientObject, UIA.IUIAutomation5):
 			self.globalEventHandlerGroup.AddNotificationEventHandler(
@@ -421,9 +441,17 @@ class UIAHandler(COMObject):
 	def _createLocalEventHandlerGroup(self):
 		if isinstance(self.clientObject, UIA.IUIAutomation6):
 			self.localEventHandlerGroup = self.clientObject.CreateEventHandlerGroup()
+			self.localEventHandlerGroupWithTextChanges = self.clientObject.CreateEventHandlerGroup()
 		else:
 			self.localEventHandlerGroup = utils.FakeEventHandlerGroup(self.clientObject)
+			self.localEventHandlerGroupWithTextChanges = utils.FakeEventHandlerGroup(self.clientObject)
 		self.localEventHandlerGroup.AddPropertyChangedEventHandler(
+			UIA.TreeScope_Ancestors | UIA.TreeScope_Element,
+			self.baseCacheRequest,
+			self,
+			*self.clientObject.IntSafeArrayToNativeArray(localEventHandlerGroupUIAPropertyIds)
+		)
+		self.localEventHandlerGroupWithTextChanges.AddPropertyChangedEventHandler(
 			UIA.TreeScope_Ancestors | UIA.TreeScope_Element,
 			self.baseCacheRequest,
 			self,
@@ -436,6 +464,18 @@ class UIAHandler(COMObject):
 				self.baseCacheRequest,
 				self
 			)
+			self.localEventHandlerGroupWithTextChanges.AddAutomationEventHandler(
+				eventId,
+				UIA.TreeScope_Ancestors | UIA.TreeScope_Element,
+				self.baseCacheRequest,
+				self
+			)
+		self.localEventHandlerGroupWithTextChanges.AddAutomationEventHandler(
+			UIA.UIA_Text_TextChangedEventId,
+			UIA.TreeScope_Ancestors | UIA.TreeScope_Element,
+			self.baseCacheRequest,
+			self
+		)
 
 	def addEventHandlerGroup(self, element, eventHandlerGroup):
 		if isinstance(eventHandlerGroup, UIA.IUIAutomationEventHandlerGroup):
@@ -466,7 +506,23 @@ class UIAHandler(COMObject):
 				if not isStillFocus:
 					return
 			try:
-				self.addEventHandlerGroup(element, self.localEventHandlerGroup)
+				if (
+					element.currentClassName in textChangeUIAClassNames
+					or element.CachedAutomationID in textChangeUIAAutomationIDs
+				):
+					group = self.localEventHandlerGroupWithTextChanges
+					logPrefix = "Explicitly"
+				else:
+					group = self.localEventHandlerGroup
+					logPrefix = "Not"
+
+				if _isDebug():
+					log.debugWarning(
+						f"{logPrefix} registering for textChange events from UIA element "
+						f"with class name {repr(element.currentClassName)} "
+						f"and automation ID {repr(element.CachedAutomationID)}"
+					)
+				self.addEventHandlerGroup(element, group)
 			except COMError:
 				log.error("Could not register for UIA events for element", exc_info=True)
 			else:
@@ -500,7 +556,22 @@ class UIAHandler(COMObject):
 			if _isDebug():
 				log.debug("HandleAutomationEvent: Ignored MenuOpenedEvent while focus event pending")
 			return
-		NVDAEventName=UIAEventIdsToNVDAEventNames.get(eventID,None)
+		if eventID == UIA.UIA_Text_TextChangedEventId:
+			if (
+				sender.currentClassName in textChangeUIAClassNames
+				or sender.CachedAutomationID in textChangeUIAAutomationIDs
+			):
+				NVDAEventName = "textChange"
+			else:
+				if _isDebug():
+					log.debugWarning(
+						"HandleAutomationEvent: Dropping textChange event from element "
+						f"with class name {repr(sender.currentClassName)} "
+						f"and automation ID {repr(sender.CachedAutomationID)}"
+					)
+				return
+		else:
+			NVDAEventName = UIAEventIdsToNVDAEventNames.get(eventID, None)
 		if not NVDAEventName:
 			if _isDebug():
 				log.debugWarning(f"HandleAutomationEvent: Don't know how to handle event {eventID}")

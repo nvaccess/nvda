@@ -675,15 +675,16 @@ class ExecAndPump(threading.Thread):
 			self.threadExc=e
 			log.debugWarning("task had errors",exc_info=True)
 
+
 class IndeterminateProgressDialog(wx.ProgressDialog):
 
-	def __init__(self, parent, title, message):
-		super(IndeterminateProgressDialog, self).__init__(title, message, parent=parent)
+	def __init__(self, parent: wx.Window, title: str, message: str):
+		super().__init__(title, message, parent=parent)
 		self._speechCounter = -1
 		self.timer = wx.PyTimer(self.Pulse)
 		self.timer.Start(1000)
-		self.Raise()
 		self.CentreOnScreen()
+		self.Raise()
 
 	def Pulse(self):
 		super(IndeterminateProgressDialog, self).Pulse()
