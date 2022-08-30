@@ -13,10 +13,14 @@ import enum
 
 
 class WindowMessage(enum.IntEnum):
-	POWERBROADCAST = 0x0218
-	WTSSESSION_CHANGE = 0x02B1
+	POWER_BROADCAST = 0x0218
 	"""
+	WM_POWERBROADCAST
+	"""
+	WTS_SESSION_CHANGE = 0x02B1
+	"""
+	WM_WTSSESSION_CHANGE
 	Windows Message for when a Session State Changes.
-	Receiving these messages is registered by registerSessionNotification.
+	Receiving these messages is registered by sessionTracking.register.
 	handleSessionChange handles these messages.
 	"""

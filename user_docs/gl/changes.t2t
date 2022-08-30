@@ -69,6 +69,27 @@ Esto mellorará o rendemento para algunhas aplicacións Java incluíndo IntelliJ
 Non se propoñen obsolescencias en 2022.3.
 
 
+= 2022.2.1 =
+Esta é unha versión menor para arranxar un problema de seguridade.
+Por favor, comunica responsablemente os fallos de seguridade a info@nvaccess.org.
+
+== Arranxos de Seguridade ==
+- Arranxouse un fallo polo que era posible executar unha consola python dende a pantalla de bloqueo. (GHSA-rmq3-vvhq-gp32)
+- Arranxouse o fallo polo que era posible escapar da pantalla de bloqueo usando a navegación de obxectos. (GHSA-rmq3-vvhq-gp32)
+-
+
+== Cambios para Desenvolvedores ==
+
+=== Obsolescencias ===
+Estas obsolescencias non se programaron actualmente para a súa eliminación.
+Os alias obsoletos permanecerán ata novo aviso.
+Por favor, proba a nova API e proporciona retroalimentación.
+Para autores de complementos, por favor abride unha incidencia en GitHub se estos cambios impiden que a API satisfaga as vosas necesidades.
+
+- ``appModules.lockapp.LockAppObject`` debería reemplazarse con ``NVDAObjects.lockscreen.LockScreenObject``. (GHSA-rmq3-vvhq-gp32)
+- ``appModules.lockapp.AppModule.SAFE_SCRIPTS`` debería reemplazarse con ``utils.security.getSafeScripts()``. (GHSA-rmq3-vvhq-gp32)
+-
+
 = 2022.2 =
 Esta versión inclúe moitos arranxos de fallos.
 En particular, hai grandes melloras para aplicacións baseadas en Java, para pantallas braille e para características de Windows.
