@@ -60,3 +60,16 @@ class SystemMetrics(IntEnum):
 
 	SM_CYVIRTUALSCREEN
 	"""
+
+
+class HResult(IntEnum):
+	# https://docs.microsoft.com/en-us/windows/win32/seccrypto/common-hresult-values
+	S_OK = 0x00000000
+	E_ACCESS_DENIED = 0x80070005  # E_ACCESSDENIED
+	E_INVALID_ARG = 0x80070057  # E_INVALIDARG
+
+
+class SystemErrorCodes(IntEnum):
+	# https://docs.microsoft.com/en-us/windows/win32/debug/system-error-codes--0-499-
+	ACCESS_DENIED = 0x5
+	INVALID_PARAMETER = 0x57

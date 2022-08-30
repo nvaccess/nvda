@@ -11,12 +11,14 @@ import sys
 import os
 import globalVars
 import monkeyPatches.comtypesMonkeyPatches
+import NVDAState
+
 
 # Ensure that slave uses generated comInterfaces by adding our comInterfaces to `comtypes.gen` search path.
 monkeyPatches.comtypesMonkeyPatches.appendComInterfacesToGenSearchPath()
 
 
-if globalVars.runningAsSource:
+if NVDAState.isRunningAsSource():
 	globalVars.appDir = os.path.abspath(os.path.dirname(__file__))
 else:
 	# Error messages (which are only for debugging) should not cause the py2exe log message box to appear.

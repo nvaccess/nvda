@@ -16,6 +16,7 @@ from logHandler import log
 from textInfos import TextInfo, UNIT_LINE
 from threading import Lock
 from typing import List
+import NVDAState
 
 
 class DiffAlgo(AutoPropertyObject):
@@ -44,7 +45,7 @@ class DiffMatchPatch(DiffAlgo):
 		@note: This should be run from within the context of an acquired lock."""
 		if not DiffMatchPatch._proc:
 			log.debug("Starting diff-match-patch proxy")
-			if globalVars.runningAsSource:
+			if NVDAState.isRunningAsSource():
 				dmp_path = (sys.executable, os.path.join(
 					globalVars.appDir, "..", "include", "nvda_dmp", "nvda_dmp.py"
 				))

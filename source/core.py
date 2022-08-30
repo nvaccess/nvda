@@ -28,6 +28,7 @@ from logHandler import log
 import addonHandler
 import extensionPoints
 import garbageHandler
+import NVDAState
 
 
 def __getattr__(attrName: str) -> Any:
@@ -162,7 +163,7 @@ def restartUnsafely():
 		except ValueError:
 			pass
 	options = []
-	if globalVars.runningAsSource:
+	if NVDAState.isRunningAsSource():
 		options.append(os.path.basename(sys.argv[0]))
 	_startNewInstance(NewNVDAInstance(
 		sys.executable,
@@ -174,7 +175,7 @@ def restartUnsafely():
 def restart(disableAddons=False, debugLogging=False):
 	"""Restarts NVDA by starting a new copy."""
 	if globalVars.appArgs.launcher:
-		globalVars.exitCode=3
+		NVDAState._setExitCode(3)
 		if not triggerNVDAExit():
 			log.error("NVDA already in process of exiting, this indicates a logic error.")
 		return
@@ -187,7 +188,7 @@ def restart(disableAddons=False, debugLogging=False):
 		except ValueError:
 			pass
 	options = []
-	if globalVars.runningAsSource:
+	if NVDAState.isRunningAsSource():
 		options.append(os.path.basename(sys.argv[0]))
 	if disableAddons:
 		options.append('--disable-addons')
@@ -429,8 +430,10 @@ def main():
 	Finally, it starts the wx main loop.
 	"""
 	log.debug("Core starting")
-
-	ctypes.windll.user32.SetProcessDPIAware()
+	if NVDAState.isRunningAsSource():
+		# When running as packaged version, DPI awareness is set via the app manifest.
+		from winAPI.dpiAwareness import setDPIAwareness
+		setDPIAwareness()
 
 	import config
 	if not globalVars.appArgs.configPath:
@@ -485,8 +488,9 @@ def main():
 	import mathPres
 	log.debug("Initializing MathPlayer")
 	mathPres.initialize()
-	if not globalVars.appArgs.minimal and (time.time()-globalVars.startTime)>5:
-		log.debugWarning("Slow starting core (%.2f sec)" % (time.time()-globalVars.startTime))
+	timeSinceStart = time.time() - NVDAState.getStartTime()
+	if not globalVars.appArgs.minimal and timeSinceStart > 5:
+		log.debugWarning("Slow starting core (%.2f sec)" % timeSinceStart)
 		# Translators: This is spoken when NVDA is starting.
 		speech.speakMessage(_("Loading NVDA. Please wait..."))
 	import wx
@@ -558,7 +562,7 @@ def main():
 	# initialize wxpython localization support
 	wxLocaleObj = wx.Locale()
 	wxLang = getWxLangOrNone()
-	if not globalVars.runningAsSource:
+	if not NVDAState.isRunningAsSource():
 		wxLocaleObj.AddCatalogLookupPathPrefix(os.path.join(globalVars.appDir, "locale"))
 	if wxLang:
 		try:
@@ -720,9 +724,10 @@ def main():
 	config.saveOnExit()
 
 	try:
-		if globalVars.focusObject and hasattr(globalVars.focusObject,"event_loseFocus"):
+		focusObject = api.getFocusObject()
+		if focusObject and hasattr(focusObject, "event_loseFocus"):
 			log.debug("calling lose focus on object with focus")
-			globalVars.focusObject.event_loseFocus()
+			focusObject.event_loseFocus()
 	except:
 		log.exception("Lose focus error")
 	try:
