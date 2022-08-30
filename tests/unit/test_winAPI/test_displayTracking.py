@@ -6,7 +6,7 @@
 import unittest
 
 from winAPI.displayTracking import (
-	_getNewOrientationState,
+	_getNewOrientationStyle,
 	Orientation,
 	OrientationState,
 )
@@ -15,7 +15,7 @@ from winAPI.displayTracking import (
 class Test_UpdateOrientationState(unittest.TestCase):
 
 	def test_landscapeInitiallySet(self):
-		newStyle = _getNewOrientationState(
+		newStyle = _getNewOrientationStyle(
 			previousState=OrientationState(),  # simulates initialization
 			height=1,
 			width=2,
@@ -26,7 +26,7 @@ class Test_UpdateOrientationState(unittest.TestCase):
 		)
 
 	def test_portraitInitiallySet(self):
-		newStyle = _getNewOrientationState(
+		newStyle = _getNewOrientationStyle(
 			previousState=OrientationState(),  # simulates initialization
 			height=2,
 			width=1,
@@ -39,7 +39,7 @@ class Test_UpdateOrientationState(unittest.TestCase):
 	def test_orientationChange_landscape(self):
 		# Simulate a 90deg rotation
 		# or a new monitor with a different orientation.
-		newStyle = _getNewOrientationState(
+		newStyle = _getNewOrientationStyle(
 			previousState=OrientationState(
 				height=2,
 				width=1,
@@ -56,7 +56,7 @@ class Test_UpdateOrientationState(unittest.TestCase):
 	def test_orientationChange_portrait(self):
 		# Simulate a 90deg rotation
 		# or a new monitor with a different orientation.
-		newStyle = _getNewOrientationState(
+		newStyle = _getNewOrientationStyle(
 			previousState=OrientationState(
 				height=1,
 				width=2,
@@ -74,7 +74,7 @@ class Test_UpdateOrientationState(unittest.TestCase):
 		# Test no changes in dimensions.
 		# This represents a screen flip (180deg rotation),
 		# and should be considered an orientation change.
-		newStyle = _getNewOrientationState(
+		newStyle = _getNewOrientationStyle(
 			previousState=OrientationState(
 				height=1,
 				width=2,
@@ -91,7 +91,7 @@ class Test_UpdateOrientationState(unittest.TestCase):
 	def test_widthIncreaseLandscape(self):
 		# simulate a display change, where the orientation doesn't update
 		# this should not be considered a new orientation state
-		newStyle = _getNewOrientationState(
+		newStyle = _getNewOrientationStyle(
 			previousState=OrientationState(
 				height=1,
 				width=2,
@@ -105,7 +105,7 @@ class Test_UpdateOrientationState(unittest.TestCase):
 	def test_widthIncreasePortrait(self):
 		# simulate a display change, where the orientation doesn't update
 		# this should not be considered a new orientation state
-		newStyle = _getNewOrientationState(
+		newStyle = _getNewOrientationStyle(
 			previousState=OrientationState(
 				height=3,
 				width=1,
@@ -119,7 +119,7 @@ class Test_UpdateOrientationState(unittest.TestCase):
 	def test_widthDecreaseLandscape(self):
 		# simulate a display change, where the orientation doesn't update
 		# this should not be considered a new orientation state
-		newStyle = _getNewOrientationState(
+		newStyle = _getNewOrientationStyle(
 			previousState=OrientationState(
 				height=1,
 				width=3,
@@ -133,7 +133,7 @@ class Test_UpdateOrientationState(unittest.TestCase):
 	def test_widthDecreasePortrait(self):
 		# simulate a display change, where the orientation doesn't update
 		# this should not be considered a new orientation state
-		newStyle = _getNewOrientationState(
+		newStyle = _getNewOrientationStyle(
 			previousState=OrientationState(
 				height=3,
 				width=2,
@@ -147,7 +147,7 @@ class Test_UpdateOrientationState(unittest.TestCase):
 	def test_heightIncreaseLandscape(self):
 		# simulate a display change, where the orientation doesn't update
 		# this should not be considered a new orientation state
-		newStyle = _getNewOrientationState(
+		newStyle = _getNewOrientationStyle(
 			previousState=OrientationState(
 				height=1,
 				width=3,
@@ -161,7 +161,7 @@ class Test_UpdateOrientationState(unittest.TestCase):
 	def test_heightIncreasePortrait(self):
 		# simulate a display change, where the orientation doesn't update
 		# this should not be considered a new orientation state
-		newStyle = _getNewOrientationState(
+		newStyle = _getNewOrientationStyle(
 			previousState=OrientationState(
 				height=2,
 				width=1,
@@ -175,7 +175,7 @@ class Test_UpdateOrientationState(unittest.TestCase):
 	def test_heightDecreaseLandscape(self):
 		# simulate a display change, where the orientation doesn't update
 		# this should not be considered a new orientation state
-		newStyle = _getNewOrientationState(
+		newStyle = _getNewOrientationStyle(
 			previousState=OrientationState(
 				height=2,
 				width=3,
@@ -189,7 +189,7 @@ class Test_UpdateOrientationState(unittest.TestCase):
 	def test_heightDecreasePortrait(self):
 		# simulate a display change, where the orientation doesn't update
 		# this should not be considered a new orientation state
-		newStyle = _getNewOrientationState(
+		newStyle = _getNewOrientationStyle(
 			previousState=OrientationState(
 				height=3,
 				width=1,

@@ -36,7 +36,7 @@ class OrientationState:
 _orientationState = OrientationState()
 
 
-def _getNewOrientationState(
+def _getNewOrientationStyle(
 		previousState: OrientationState,
 		height: int,
 		width: int,
@@ -66,7 +66,7 @@ def reportScreenOrientationChange(heightWidth: int) -> None:
 	# https://msdn.microsoft.com/en-us/library/ms812142.aspx.
 	height = winUser.HIWORD(heightWidth)
 	width = winUser.LOWORD(heightWidth)
-	newState = _getNewOrientationState(_orientationState, height, width)
+	newState = _getNewOrientationStyle(_orientationState, height, width)
 	if newState:
 		_orientationState.style = newState
 		if _orientationState.style == Orientation.LANDSCAPE:
