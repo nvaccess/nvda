@@ -84,7 +84,7 @@ navigatorObject: Optional['NVDAObjects.NVDAObject'] = None
 reviewPosition: Optional["NVDAObjects.NVDAObject"] = None
 """Deprecated, use ``getReviewPosition|setReviewPosition`` from `api` instead"""
 
-reviewPositionObj: Optional["NVDAObjects.NVDAObject"] =None
+reviewPositionObj: Optional["NVDAObjects.NVDAObject"] = None
 """Deprecated, use ``api.getReviewPosition().obj`` instead"""
 
 
