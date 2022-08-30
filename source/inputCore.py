@@ -20,9 +20,8 @@ from typing import (
 	List,
 	Optional,
 	Tuple,
-	Type,
 	TypeVar,
-	Union
+	Union,
 )
 from gui import blockAction
 import configobj
@@ -43,8 +42,13 @@ import controlTypes
 import winKernel
 
 
-_AnyClass = TypeVar("_AnyClass")
-_ScriptT = Tuple[Type[_AnyClass], str]
+InputGestureBindingClassT = TypeVar("InputGestureBindingClassT")
+ScriptNameT = str
+InputGestureScriptT = Tuple[InputGestureBindingClassT, Optional[ScriptNameT]]
+"""
+The Python class and script name for each script;
+the script name may be C{None} indicating that the gesture should be unbound for this class.
+"""
 
 #: Script category for emulated keyboard keys.
 # Translators: The name of a category of NVDA commands.
@@ -337,7 +341,7 @@ class GlobalGestureMap(object):
 						self.lastUpdateContainedError = True
 						continue
 
-	def getScriptsForGesture(self, gesture: InputGesture) -> Generator[_ScriptT, None, None]:
+	def getScriptsForGesture(self, gesture: str) -> Generator[InputGestureScriptT, None, None]:
 		"""Get the scripts associated with a particular gesture.
 		@param gesture: The gesture identifier.
 		@return: The Python class and script name for each script;
