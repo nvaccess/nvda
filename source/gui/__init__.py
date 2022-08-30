@@ -45,9 +45,10 @@ from . import logViewer
 import speechViewer
 import winUser
 import api
+import NVDAState
 
 
-if globalVars._allowDeprecatedAPI:
+if NVDAState._allowDeprecatedAPI():
 	def quit():
 		"""
 		Deprecated, use `wx.CallAfter(mainFrame.onExitCommand, None)` directly instead.
@@ -452,7 +453,7 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 			# Translators: The label of a menu item to open the Add-ons Manager.
 			item = menu_tools.Append(wx.ID_ANY, _("Manage &add-ons..."))
 			self.Bind(wx.EVT_MENU, frame.onAddonsManagerCommand, item)
-		if not globalVars.appArgs.secure and not config.isAppX and not globalVars.runningAsSource:
+		if not globalVars.appArgs.secure and not config.isAppX and not NVDAState.isRunningAsSource():
 			# Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
 			item = menu_tools.Append(wx.ID_ANY, _("Create portable copy..."))
 			self.Bind(wx.EVT_MENU, frame.onCreatePortableCopyCommand, item)
