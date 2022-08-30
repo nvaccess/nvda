@@ -428,8 +428,10 @@ def main():
 	Finally, it starts the wx main loop.
 	"""
 	log.debug("Core starting")
-
-	ctypes.windll.user32.SetProcessDPIAware()
+	if NVDAState.isRunningAsSource():
+		# When running as packaged version, DPI awareness is set via the app manifest.
+		from winAPI.dpiAwareness import setDPIAwareness
+		setDPIAwareness()
 
 	import config
 	if not globalVars.appArgs.configPath:
