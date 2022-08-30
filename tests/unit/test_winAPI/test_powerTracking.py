@@ -7,7 +7,7 @@ from typing import cast
 import unittest
 from unittest.mock import MagicMock
 
-from winAPI.powerTracking import (
+from winAPI._powerTracking import (
 	BATTERY_LIFE_TIME_UNKNOWN,
 	BatteryFlag,
 	PowerState,

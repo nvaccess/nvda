@@ -46,7 +46,7 @@ import inputCore
 import characterProcessing
 from baseObject import ScriptableObject
 import core
-from winAPI.powerTracking import reportCurrentBatteryStatus
+from winAPI._powerTracking import reportCurrentBatteryStatus
 import winVersion
 from base64 import b16encode
 import vision

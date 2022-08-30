@@ -34,7 +34,7 @@ import NVDAState
 def __getattr__(attrName: str) -> Any:
 	"""Module level `__getattr__` used to preserve backward compatibility.
 	"""
-	if attrName == "post_windowMessageReceipt" and globalVars._allowDeprecatedAPI:
+	if attrName == "post_windowMessageReceipt" and NVDAState._allowDeprecatedAPI():
 		from winAPI.messageWindow import pre_handleWindowMessage
 		log.warning(
 			"core.post_windowMessageReceipt is deprecated, "

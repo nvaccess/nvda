@@ -5,7 +5,7 @@
 
 import unittest
 
-from winAPI.displayTracking import (
+from winAPI._displayTracking import (
 	_getNewOrientationStyle,
 	Orientation,
 	OrientationState,

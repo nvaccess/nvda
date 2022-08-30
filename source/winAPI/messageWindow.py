@@ -17,8 +17,8 @@ from typing import (
 import wx
 
 from . import (
-	displayTracking,
-	powerTracking,
+	_displayTracking,
+	_powerTracking,
 	sessionTracking,
 )
 from .types import HWNDValT
@@ -26,7 +26,7 @@ import extensionPoints
 import gui
 import windowUtils
 
-pre_handleWindowMessage
+
 pre_handleWindowMessage = extensionPoints.Action()
 """
 Notifies when a window message has been received by NVDA.
@@ -90,8 +90,8 @@ class _MessageWindow(windowUtils.CustomWindow):
 
 	def __init__(self, windowName: Optional[str] = None):
 		super().__init__(windowName)
-		displayTracking.initialize()
-		powerTracking.initialize()
+		_displayTracking.initialize()
+		_powerTracking.initialize()
 
 		# Call must be paired with a call to sessionTracking.unregister
 		self._isSessionTrackingRegistered = sessionTracking.register(self.handle)
@@ -147,10 +147,10 @@ class _MessageWindow(windowUtils.CustomWindow):
 		@param lParam: Additional message information.
 		"""
 		if msg == WindowMessage.POWER_BROADCAST:
-			if wParam == powerTracking.PowerBroadcast.APM_POWER_STATUS_CHANGE:
-				powerTracking.reportCurrentBatteryStatus(onlyReportIfStatusChanged=True)
+			if wParam == _powerTracking.PowerBroadcast.APM_POWER_STATUS_CHANGE:
+				_powerTracking.reportCurrentBatteryStatus(onlyReportIfStatusChanged=True)
 		elif msg == WindowMessage.DISPLAY_CHANGE:
-			displayTracking.reportScreenOrientationChange(lParam)
+			_displayTracking.reportScreenOrientationChange(lParam)
 		elif msg == WindowMessage.WTS_SESSION_CHANGE:
 			# If we are receiving WTS_SESSION_CHANGE events, _isSessionTrackingRegistered should be True
 			sessionTracking.handleSessionChange(sessionTracking.WindowsTrackedSession(wParam), lParam)

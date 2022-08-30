@@ -23,19 +23,19 @@ from typing import (
 )
 
 if TYPE_CHECKING:
-	from winAPI.powerTracking import SystemPowerStatus
+	from winAPI._powerTracking import SystemPowerStatus
 
 
 def __getattr__(attrName: str) -> Any:
-	import globalVars
+	import NVDAState
 	"""Module level `__getattr__` used to preserve backward compatibility.
 	"""
-	if attrName == "SYSTEM_POWER_STATUS" and globalVars._allowDeprecatedAPI:
+	if attrName == "SYSTEM_POWER_STATUS" and NVDAState._allowDeprecatedAPI():
 		from logHandler import log
-		from winAPI.powerTracking import SystemPowerStatus
+		from winAPI._powerTracking import SystemPowerStatus
 		log.warning(
 			"winKernel.SYSTEM_POWER_STATUS is deprecated, "
-			"use winAPI.powerTracking.SystemPowerStatus instead."
+			"use winAPI._powerTracking.SystemPowerStatus instead."
 		)
 		return SystemPowerStatus
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
