@@ -90,6 +90,7 @@ class _MessageWindow(windowUtils.CustomWindow):
 
 	def __init__(self, windowName: Optional[str] = None):
 		super().__init__(windowName)
+		displayTracking.initialize()
 		powerTracking.initialize()
 
 		# Call must be paired with a call to sessionTracking.unregister

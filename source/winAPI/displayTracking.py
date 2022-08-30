@@ -10,30 +10,66 @@ When the display resolution changes, the new height and width is sent to NVDA,
 and we notify the user of changes to the orientation.
 """
 
+from ctypes import windll
 from dataclasses import dataclass
 import enum
 from typing import (
 	Optional,
 )
 
+from logHandler import log
 import ui
 import winUser
 
+from .constants import SystemMetrics
+
 
 class Orientation(enum.Enum):
-	NOT_INITIALIZED = enum.auto()
 	PORTRAIT = enum.auto()
 	LANDSCAPE = enum.auto()
 
 
 @dataclass
 class OrientationState:
-	width: int = 0
-	height: int = 0
-	style: Orientation = Orientation.NOT_INITIALIZED
+	width: int
+	height: int
+	style: Orientation
 
 
-_orientationState = OrientationState()
+_orientationState: Optional[OrientationState] = None
+
+
+def initialize():
+	"""
+	The NVDA message window only handles changes of state.
+	As such, to correctly ignore an initial display change event,
+	which does not change the orientation style (e.g. monitor change),
+	we fetch the primary display orientation manually.
+	"""
+	global _orientationState
+	_orientationState = getPrimaryDisplayOrientation()
+
+
+def getPrimaryDisplayOrientation() -> OrientationState:
+	width = windll.user32.GetSystemMetrics(SystemMetrics.CX_SCREEN)
+	if width == 0:
+		# If the function fails, the return value is 0.
+		# GetLastError does not provide extended error information.
+		log.error("Failed to get primary display width")
+	height = windll.user32.GetSystemMetrics(SystemMetrics.CY_SCREEN)
+	if height == 0:
+		# If the function fails, the return value is 0.
+		# GetLastError does not provide extended error information.
+		log.error("Failed to get primary display height")
+	return OrientationState(
+		width,
+		height,
+		_getOrientationStyle(width, height)
+	)
+
+
+def _getOrientationStyle(height: int, width: int) -> Orientation:
+	return Orientation.LANDSCAPE if width > height else Orientation.PORTRAIT
 
 
 def _getNewOrientationStyle(
@@ -45,7 +81,7 @@ def _getNewOrientationStyle(
 	@returns: Orientation if there has been an orientation state change, otherwise None
 	"""
 	heightAndWidthUnchanged = previousState.height == height and previousState.width == width
-	newOrientation = Orientation.LANDSCAPE if width > height else Orientation.PORTRAIT
+	newOrientation = _getOrientationStyle(height, width)
 	if (
 		# Orientation has changed
 		previousState.style != newOrientation

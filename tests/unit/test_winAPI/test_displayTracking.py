@@ -14,28 +14,6 @@ from winAPI.displayTracking import (
 
 class Test_UpdateOrientationState(unittest.TestCase):
 
-	def test_landscapeInitiallySet(self):
-		newStyle = _getNewOrientationStyle(
-			previousState=OrientationState(),  # simulates initialization
-			height=1,
-			width=2,
-		)
-		self.assertEqual(
-			newStyle,
-			Orientation.LANDSCAPE
-		)
-
-	def test_portraitInitiallySet(self):
-		newStyle = _getNewOrientationStyle(
-			previousState=OrientationState(),  # simulates initialization
-			height=2,
-			width=1,
-		)
-		self.assertEqual(
-			newStyle,
-			Orientation.PORTRAIT
-		)
-
 	def test_orientationChange_landscape(self):
 		# Simulate a 90deg rotation
 		# or a new monitor with a different orientation.

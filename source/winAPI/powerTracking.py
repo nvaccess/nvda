@@ -98,11 +98,17 @@ class SystemPowerStatus(ctypes.Structure):
 	BatteryLifeTime: int
 
 
-_batteryState: PowerState = PowerState.UNKNOWN
+_powerState: PowerState = PowerState.UNKNOWN
 
 
 def initialize():
-	global _batteryState
+	"""
+	The NVDA message window only handles changes of state.
+	As such, to correctly ignore an initial power change event,
+	which does not change the power state (e.g. a battery level drop),
+	we fetch the initial power state manually.
+	"""
+	global _powerState
 	systemPowerStatus = SystemPowerStatus()
 	if (
 		not winKernel.GetSystemPowerStatus(systemPowerStatus)
@@ -114,7 +120,7 @@ def initialize():
 	if systemPowerStatus.BatteryFlag & BatteryFlag.NO_SYSTEM_BATTERY:
 		return
 
-	_batteryState = systemPowerStatus.ACLineStatus
+	_powerState = systemPowerStatus.ACLineStatus
 	return
 
 
@@ -123,13 +129,13 @@ def reportCurrentBatteryStatus(onlyReportIfStatusChanged: bool = False) -> None:
 	@param onlyReportIfStatusChanged: sometimes multiple events may fire for a power status change.
 	Set this to True to only report if the power status changes.
 	"""
-	global _batteryState
+	global _powerState
 	systemPowerStatus = _getPowerStatus()
-	speechSequence = _getSpeechForBatteryStatus(onlyReportIfStatusChanged, systemPowerStatus, _batteryState)
+	speechSequence = _getSpeechForBatteryStatus(systemPowerStatus, onlyReportIfStatusChanged, _powerState)
 	if speechSequence:
 		ui.message(" ".join(speechSequence))
 	if systemPowerStatus is not None:
-		_batteryState = systemPowerStatus.ACLineStatus
+		_powerState = systemPowerStatus.ACLineStatus
 
 
 def _getPowerStatus() -> Optional[SystemPowerStatus]:
