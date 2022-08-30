@@ -25,7 +25,7 @@ What's New in NVDA
 
 
 == Changes ==
-- eSpeak NG has been updated to 1.52-dev commit ``97414c47``. (#14060)
+- eSpeak NG has been updated to 1.52-dev commit ``0dbe7182``. (#14060, #14079)
 - NVDA now includes the architecture of the operating system as part of user statistics tracking. (#14019)
 -
 
@@ -117,6 +117,13 @@ This will improve performance for some Java applications including IntelliJ IDEA
 === Deprecations ===
 There are no deprecations proposed in 2022.3.
 
+
+= 2022.2.2 =
+This is a patch release to fix a bug introduced in 2022.2.1 with input gestures.
+
+== Bug Fixes ==
+- Fixed a bug where input gestures didn't always work. (#14065)
+-
 
 = 2022.2.1 =
 This is a minor release to fix a security issue.
