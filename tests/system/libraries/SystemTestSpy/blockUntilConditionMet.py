@@ -33,7 +33,10 @@ Optional[Any]  # None or the value when the evaluator was met
 	assert callable(getValue)
 	assert callable(shouldStopEvaluator)
 	assert intervalBetweenSeconds > 0.001
-	SLEEP_TIME = intervalBetweenSeconds * 0.5
+	# Set SLEEP_TIME so that worst case overshoot (for interval) should be ~10%
+	# But limit very small values, they approach the inaccuracy of sleep.
+	SLEEP_TIME = max(intervalBetweenSeconds * 0.1, 0.001)
+
 	startTime = _timer()
 	lastRunTime = startTime
 	firstRun = True  # ensure we start immediately
