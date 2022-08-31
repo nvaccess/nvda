@@ -3,6 +3,12 @@
 # See the file COPYING for more details.
 # Copyright (C) 2022 NV Access Limited, Burman's Computer and Education Ltd.
 
+"""Threads for Tivomatic Caiku Albatross 46 and 80 braille display driver.
+Classes:
+- L{ReadThread}
+- L{RepeatedTimer}
+"""
+
 import ctypes
 import serial
 
@@ -25,9 +31,9 @@ from typing import Callable
 from brailleDisplayDrivers.albatross.constants import KC_INTERVAL
 
 
-# Controls most of read operations and tries to reconnect when needed
-# Suspended most of time.
 class ReadThread(Thread):
+	"""Controls most of read operations and tries to reconnect when needed."""
+
 	def __init__(
 			self,
 			readFunction: Callable,
@@ -37,6 +43,12 @@ class ReadThread(Thread):
 			*args,
 			**kwargs
 	):
+		"""Constructor.
+		@param readFunction: Handles read operations and reconnection.
+		@param disableFunction: Called on connection failure.
+		@param event: Exit thread when set.
+		@param dev: Port object.
+		"""
 		super().__init__(*args, **kwargs)
 		self._readFunction = readFunction
 		self._disableFunction = disableFunction
@@ -102,10 +114,14 @@ class ReadThread(Thread):
 		log.debug(f"Exiting {self.name}")
 
 
-# Timer is used to send BOTH_BYTES regularly to keep connection
-# (copied from
-# https://stackoverflow.com/questions/474528/what-is-the-best-way-to-repeatedly-execute-a-function-every-x-seconds)
 class RepeatedTimer(object):
+	"""Repeating timer.
+	Timer is used to check if data needs to be sent to display to keep
+	connected.
+	Code copied from
+	https://stackoverflow.com/questions/474528/what-is-the-best-way-to-repeatedly-execute-a-function-every-x-seconds
+	"""
+
 	def __init__(
 			self,
 			interval: float,
@@ -113,6 +129,10 @@ class RepeatedTimer(object):
 			*args,
 			**kwargs
 	):
+		"""Constructor.
+		@param interval: Checking frequency.
+		@param function: Function to call to check.
+		"""
 		self.interval = interval
 		self._timer = Timer(self.interval, self._run)
 		self.function = function

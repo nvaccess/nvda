@@ -3,6 +3,12 @@
 # See the file COPYING for more details.
 # Copyright (C) 2022 NV Access Limited, Burman's Computer and Education Ltd.
 
+"""Braille display driver for Tivomatic Caiku albatross 46 and 80 displays.
+Contains modules:
+- constants
+- threads
+"""
+
 import serial
 import time
 
@@ -31,9 +37,10 @@ import brailleDisplayDrivers.albatross.threads as threads
 
 from brailleDisplayDrivers.albatross.constants import (
 	BAUD_RATE,
-	TIMEOUT,
+	READ_TIMEOUT,
 	WRITE_TIMEOUT,
-	MAX_INIT_SLEEPS,
+	SLEEP_TIMEOUT,
+	MAX_INIT_RETRIES,
 	RESET_COUNT,
 	RESET_SLEEP,
 	WRITE_QUEUE_LENGTH,
@@ -138,6 +145,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			raise RuntimeError("No Albatross found")
 
 	def terminate(self):
+		"""Destructor.
+		Clear dissplay, and close and release all resources before exit.
+		"""
 		try:
 			if self._handleRead:
 				self._exitEvent.set()
@@ -161,12 +171,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			# Terminating anyway
 			pass
 
-	# _initConnection, _initPort, _openPort, _readInitByte and _readSettingsByte
-	# are helper functions to establish connection.
-	# If no connection, Albatross sends continuously INIT_START_BYTE
-	# followed by byte containing various settings like number of cells.
 	def _initConnection(self) -> bool:
-		for i in range(MAX_INIT_SLEEPS):
+		"""_initConnection, _initPort, _openPort, _readInitByte and _readSettingsByte
+		are helper functions to establish connection.
+		If no connection, Albatross sends continuously INIT_START_BYTE
+		followed by byte containing various settings like number of cells.
+		"""
+		for i in range(MAX_INIT_RETRIES):
 			if not self._dev:
 				if not self._initPort(i):
 					continue
@@ -177,9 +188,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				self._tryToConnect = False
 			else:
 				log.debug(
-					f"Sleeping {TIMEOUT} seconds before try {i + 1} / {MAX_INIT_SLEEPS}"
+					f"Sleeping {SLEEP_TIMEOUT} seconds before try {i + 1} / {MAX_INIT_RETRIES}"
 				)
-				time.sleep(TIMEOUT)
+				time.sleep(SLEEP_TIMEOUT)
 			if not self._readInitByte():
 				if self._invalidSettingsByte:
 					return False
@@ -189,54 +200,59 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				return True
 		return False
 
-	# Parameter i is just for loggint retries
-	def _initPort(self, i=MAX_INIT_SLEEPS - 1) -> bool:
+	def _initPort(self, i: int = MAX_INIT_RETRIES - 1) -> bool:
+		"""Initializes port.
+		@param i: Just for loggint retries.
+		"""
 		try:
 			self._dev = serial.Serial(
 				self._currentPort, baudrate=BAUD_RATE, stopbits=serial.STOPBITS_ONE,
-				parity=serial.PARITY_NONE, timeout=TIMEOUT, writeTimeout=WRITE_TIMEOUT)
+				parity=serial.PARITY_NONE, timeout=READ_TIMEOUT, writeTimeout=WRITE_TIMEOUT
+			)
 			log.debug(f"Port {self._currentPort} initialized")
 			if not self._resetBuffers():
-				if i == MAX_INIT_SLEEPS - 1:
+				if i == MAX_INIT_RETRIES - 1:
 					return False
 				log(
-					f"sleeping {TIMEOUT} seconds before try {i + 2} / {MAX_INIT_SLEEPS}")
-				time.sleep(TIMEOUT)
+					f"sleeping {SLEEP_TIMEOUT} seconds before try {i + 2} / {MAX_INIT_RETRIES}")
+				time.sleep(SLEEP_TIMEOUT)
 				return False
 			return True
 		except IOError:
-			if i == MAX_INIT_SLEEPS - 1:
+			if i == MAX_INIT_RETRIES - 1:
 				log.debug(f"Port {self._currentPort} not initialized", exc_info=True)
 				return False
 			log.debug(
-				f"Port {self._currentPort} not initialized, sleeping {TIMEOUT} seconds "
-				f"before try {i + 2} / {MAX_INIT_SLEEPS}", exc_info=True
+				f"Port {self._currentPort} not initialized, sleeping {SLEEP_TIMEOUT} seconds "
+				f"before try {i + 2} / {MAX_INIT_RETRIES}", exc_info=True
 			)
-			time.sleep(TIMEOUT)
+			time.sleep(SLEEP_TIMEOUT)
 			return False
 
-	# Parameter i is just for loggint retries
-	def _openPort(self, i=MAX_INIT_SLEEPS - 1) -> bool:
+	def _openPort(self, i: int = MAX_INIT_RETRIES - 1) -> bool:
+		"""Opens port.
+		@param i: Just for loggint retries.
+		"""
 		try:
 			self._dev.open()
 			log.debug(f"Port {self._currentPort} opened")
 			if not self._resetBuffers():
-				if i == MAX_INIT_SLEEPS - 1:
+				if i == MAX_INIT_RETRIES - 1:
 					return False
 				log(
-					f"sleeping {TIMEOUT} seconds before try {i + 2} / {MAX_INIT_SLEEPS}")
-				time.sleep(TIMEOUT)
+					f"sleeping {SLEEP_TIMEOUT} seconds before try {i + 2} / {MAX_INIT_RETRIES}")
+				time.sleep(SLEEP_TIMEOUT)
 				return False
 			return True
 		except IOError:
-			if i == MAX_INIT_SLEEPS - 1:
+			if i == MAX_INIT_RETRIES - 1:
 				log.debug(f"Port {self._currentPort} not opened", exc_info=True)
 				return False
 			log.debug(
-				f"Port {self._currentPort} not opened, sleeping {TIMEOUT} seconds "
-				f"before try {i + 2} / {MAX_INIT_SLEEPS}", exc_info=True
+				f"Port {self._currentPort} not opened, sleeping {SLEEP_TIMEOUT} seconds "
+				f"before try {i + 2} / {MAX_INIT_RETRIES}", exc_info=True
 			)
-			time.sleep(TIMEOUT)
+			time.sleep(SLEEP_TIMEOUT)
 			return False
 
 	def _readInitByte(self) -> bool:
@@ -316,7 +332,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			for j in range(RESET_COUNT):
 				PurgeComm(
 					self._dev._port_handle,
-					PURGE_RXCLEAR | PURGE_RXABORT | PURGE_TXCLEAR | PURGE_TXABORT)
+					PURGE_RXCLEAR | PURGE_RXABORT | PURGE_TXCLEAR | PURGE_TXABORT
+				)
 				time.sleep(RESET_SLEEP)
 			log.debug("I/O buffers reset done")
 			return True
@@ -330,6 +347,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			return False
 
 	def _disableConnection(self):
+		"""Disables current connection after failure.
+		Reconnection retries are started.
+		"""
 		self.numCells = 0
 		if self._dev and self._dev.is_open:
 			self._dev.close()
@@ -359,8 +379,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			return
 		self._handleReadQueue()
 
-	# All but connecting/reconnecting related read operations
 	def _somethingToRead(self) -> Optional[bytes]:
+		"""All but connecting/reconnecting related read operations."""
 		try:
 			if not self._dev.in_waiting:
 				return None
@@ -378,6 +398,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			return None
 
 	def _skipRedundantInitPackets(self, data: bytes) -> bool:
+		"""Filters redundant init packets.
+		@param data: Bytes read from display.
+		"""
 		settingsByte = None
 		for i in data:
 			if not self._initByteReceived:
@@ -410,8 +433,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				self._readQueue.append(settingsByte)
 		return True
 
-	# All write operations are done here
 	def _somethingToWrite(self):
+		"""All write operations."""
 		with self._writeLock:
 			data = b""
 			while len(self._writeQueue):
@@ -453,10 +476,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				else:
 					self._handleKeyPresses(data)
 
-	# Display also starts to send init packets when exited internal menu or when
-	# delay sending data to display causes its fallback to "wait for connection"
-	# state.
 	def _handleInitPackets(self, data: bytes):
+		"""Display also starts to send init packets when exited internal menu or when
+		delay sending data to display causes its fallback to 'wait for connection'
+		state.
+		"""
 		if not self._waitingSettingsByte:
 			if data != INIT_START_BYTE:
 				try:
@@ -500,9 +524,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		if self._waitingSettingsByte:
 			self._waitingSettingsByte = False
 
-	# If bit 7 (LSB 0 scheme) is 1, there is 80 cells model, else 46 cells model.
-	# Other display settings are currently ignored.
 	def _setNumCellCount(self, data: bytes):
+		"""If bit 7 (LSB 0 scheme) is 1, there is 80 cells model, else 46 cells model.
+		Other display settings are currently ignored.
+		@param data: Settings byte.
+		"""
 		self.numCells = 80 if ord(data) >> 7 == 1 else 46
 
 	def _handleKeyPresses(self, data: bytes):
@@ -550,20 +576,23 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			self._waitingCtrlPacket = False
 			self._partialCtrlPacket = None
 
-	# Keep display connected if nothing is sent for a while
 	def _keepConnected(self):
+		"""Keep display connected if nothing is sent for a while."""
 		if self._tryToConnect or not self.numCells:
 			return
 		if time.time() - self._writeTime >= KC_INTERVAL:
 			self._writeQueue.append(BOTH_BYTES)
 			self._somethingToWrite()
 
-	# Whole display should be updated at next time.
 	def _clearOldCells(self):
+		"""Whole display should be updated at next time."""
 		for i in range(len(self._oldCells)):
 			self._oldCells[i] = 0
 
 	def display(self, cells: List[int]):
+		"""Prepare cell content for display.
+		@param cells: List of cells content."
+		"""
 		# Keep _currentCells up to date for reconnection regardless
 		# of connection state of driver.
 		self._currentCells = cells.copy()

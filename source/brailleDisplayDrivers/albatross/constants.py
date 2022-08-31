@@ -1,25 +1,32 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2021 NV Access Limited, Burman's Computer and Education Ltd.
+# Copyright (C) 2022 NV Access Limited, Burman's Computer and Education Ltd.
 
-from typing import List
+"""Constants for Tivomatic Caiku Albatross 46 and 80 display driver."""
+
+from typing import Set
 
 BAUD_RATE = 19200
-TIMEOUT = 0.2
+READ_TIMEOUT = 0.2
 WRITE_TIMEOUT = 0
-# How many times initial connection is waited by sleeping TIMEOUT.
-# It sounds big value but users should appreciate that braille starts.
-# It should not harm other devices with same PID&VID because this device
-# is last one.
-MAX_INIT_SLEEPS = 20
-# Maybe due to writings of other drivers with same PID&VID, device seems
-# to send init packets it should not. Although reset do not work well,
-# hopefully at least strange packets would be discarded.
-# How many times to try to reset I/O buffers
+SLEEP_TIMEOUT = 0.2
+"""How long to sleep between port init or open retries."""
+MAX_INIT_RETRIES = 20
+"""How many times port initialization or opening is tried.
+It sounds big value but users should appreciate that braille starts.
+It should not harm other devices with same PID&VID because this device
+is detected as last one.
+"""
 RESET_COUNT = 10
-# How long to sleep between I/O buffer resets
+"""
+How many times to try to reset I/O buffers
+Maybe due to write operations of other drivers with same PID&VID, device seems
+to send init packets it should not. Although reset do not work well,
+hopefully at least strange packets would be discarded.
+"""
 RESET_SLEEP = 0.05
+"""How long to sleep between I/O buffer resets."""
 WRITE_QUEUE_LENGTH = 20
 KEY_NAMES = {
 	1: "attribute1",
@@ -67,10 +74,10 @@ KEY_NAMES = {
 	215: "rWheelUp",
 	216: "rWheelDown",
 }
-# Maximum number of keys in key combination.
 MAX_COMBINATION_KEYS = 4
+"""Maximum number of keys in key combination."""
 # These are ctrl keys which may start key combination.
-CONTROL_KEY_CODES: List[int] = [
+CONTROL_KEY_CODES: Set[int] = {
 	1,  # attribute1
 	42,  # attribute2
 	83,  # f1
@@ -91,20 +98,24 @@ CONTROL_KEY_CODES: List[int] = [
 	202,  # end2
 	203,  # eCursor2
 	204,  # cursor2
-]
-# Send this to Albatross to confirm that connection is established.
+}
 ESTABLISHED = b"\xfe\xfd\xfe\xfd"
-# If no connection, Albatross sends continuously byte \xff followed by byte
-# containing various settings like number of cells.
+"""Send this to Albatross to confirm that connection is established."""
 INIT_START_BYTE = b"\xff"
-# Send information to Albatross enclosed by these bytes.
+"""
+If no connection, Albatross sends continuously byte \xff followed by byte
+containing various settings like number of cells.
+"""
 START_BYTE = b"\xfb"
 END_BYTE = b"\xfc"
-# To keep connected these both above bytes must be sent periodically.
+"""Send information to Albatross enclosed by these bytes."""
 BOTH_BYTES = b"\xfb\xfc"
-# Display requires at least START_BYTE and END_BYTE combination within
-# approximately 2 seconds from previous appropriate data packet.
-# Otherwise it falls back to "wait for connection" state. This behavior
-# is built-in feature of the firmware of device.
-# How often BOTH_BYTES should be sent and reconnection tried
+"""To keep connected these both above bytes must be sent periodically."""
 KC_INTERVAL = 1.5
+"""
+How often BOTH_BYTES should be sent and reconnection tried
+Display requires at least START_BYTE and END_BYTE combination within
+approximately 2 seconds from previous appropriate data packet.
+Otherwise it falls back to "wait for connection" state. This behavior
+is built-in feature of the firmware of device.
+"""
