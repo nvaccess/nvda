@@ -6,6 +6,8 @@
 """A module used to record Windows versions.
 It is also used to define feature checks such as
 making sure NVDA can run on a minimum supported version of Windows.
+
+When working on this file, consider moving to winAPI.
 """
 
 from typing import Optional
