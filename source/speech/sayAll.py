@@ -187,6 +187,7 @@ class _TextReader(garbageHandler.TrackedObject, metaclass=ABCMeta):
 	MAX_BUFFERED_LINES = 10
 
 	def __init__(self, handler: _SayAllHandler):
+		self.reader = None
 		self.handler = handler
 		self.trigger = SayAllProfileTrigger()
 		self.reader = self.getInitialTextInfo()
