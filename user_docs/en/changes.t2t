@@ -48,11 +48,11 @@ What's New in NVDA
 - NVDA is now DPI aware when using multiple monitors.
 There are several fixes for using a DPI setting higher than 100% or multiple monitors.
 Issues may still exist with versions of Windows older than Windows 10 1809.
-Applications which NVDA interacts with also need to be DPI aware. (#13254)
+For these fixes to work, applications which NVDA interacts with also need to be DPI aware.
+Note there are still known issues with Chrome and Edge. (#13254)
   - Visual highlighting frames should now be correctly placed in most applications. (#13370, #3875, #12070)
   - Touch screen interaction should now be accurate for most applications. (#7083)
-  - Mouse tracking should now work for most applications.
-  Note there are still known issues with Chrome. (#6722, #7915)
+  - Mouse tracking should now work for most applications. (#6722)
   -
 - NVDA will announce UIA item status property changes in places such as the Visual Studio 2022 create app packages dialog. (#13973)
 -
