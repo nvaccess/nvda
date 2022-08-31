@@ -264,8 +264,9 @@ class ChromeLib:
 			windowsLib.taskSwitchToItemMatching(targetWindowNamePattern=chromeTitleSpeechPattern)
 			windowsLib.logForegroundWindowTitle()
 
-		if not _chromeLib.canChromeTitleBeReported(chromeTitleSpeechPattern):
-			raise AssertionError("NVDA unable to report chrome title")
+			if not _chromeLib.canChromeTitleBeReported(chromeTitleSpeechPattern):
+				raise AssertionError("NVDA unable to report chrome title")
+
 		spy.wait_for_speech_to_finish()
 
 		if not self._waitForStartMarker():
