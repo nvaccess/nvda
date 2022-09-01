@@ -13,39 +13,18 @@ from NVDAObjects.window.winword import WordDocumentTextInfo
 from NVDAObjects.window.winword import BrowseModeWordDocumentTextInfo
 from NVDAObjects.UIA import UIATextInfo
 from displayModel import EditableTextDisplayModelTextInfo
-from utils.displayString import DisplayStringStrEnum
 
 MAX_LINES = 250  # give up after searching this many lines
 
 
-class ParagraphStyles(DisplayStringStrEnum):
-	AUTO = "auto"
-	APPLICATION = "application"
-	NORMAL = "normal"
-	BLOCK = "block"
-	
-	@property
-	def _displayStringLabels(self) -> str:
-		return {
-			# Translators: Automatic paragraph style selection
-			self.AUTO: _("Automatic"),
-			# Translators: A paragraph style for navigating by paragraphs
-			self.APPLICATION: _("Handled by application"),
-			# Translators: A paragraph style for navigating by paragraphs
-			self.NORMAL: _("Normal style"),
-			# Translators: A paragraph style for navigating by paragraphs
-			self.BLOCK: _("Block style")
-		}
-
-
-def nextParagraphStyle() -> tuple((str, str)):
-	# returns (configSetting, UISetting) for the next paragraph style, wrapping around when reaching end
-	curStyle = config.conf["documentNavigation"]["paragraphStyle"]
-	lst = list(ParagraphStyles)
-	styles = [s.value for s in lst]
-	newIndex = styles.index(curStyle) + 1
-	newIndex %= len(styles)
-	return (lst[newIndex].value, lst[newIndex].displayString)
+def nextParagraphStyle() -> config.featureFlag.FeatureFlag:
+	from config.featureFlagEnums import ParagraphNavigationFlag
+	flag: config.featureFlag.FeatureFlag = config.conf["documentNavigation"]["paragraphStyle"]
+	numStyles = len(ParagraphNavigationFlag.__members__)
+	newEnumVal = flag.value.value + 1
+	newEnumVal %= numStyles
+	newFlag: config.featureFlag.FeatureFlag = ParagraphNavigationFlag(newEnumVal)
+	return newFlag
 
 
 def getTextInfoAtCaret() -> textInfos.TextInfo:

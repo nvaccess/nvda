@@ -68,6 +68,7 @@ class BoolFlag(DisplayStringEnum):
 
 
 class ParagraphNavigationFlag(DisplayStringEnum):
+	@property
 	def _displayStringLabels(self):
 		return {
 			# Translators: Label for an option in NVDA settings.

@@ -266,10 +266,21 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 	script_moveBySentence_forward.resumeSayAllMode = sayAll.CURSOR.CARET
 
 	def _handleParagraphNavigation(self, gesture: "InputGesture", nextParagraph: bool) -> None:
-		setting = config.conf["documentNavigation"]["paragraphStyle"]
-		if setting == "auto" or setting == "application" or setting == "normal":
+		from config.featureFlagEnums import ParagraphNavigationFlag
+		flag: config.featureFlag.FeatureFlag = config.conf["documentNavigation"]["paragraphStyle"]
+		if (
+			flag.value == ParagraphNavigationFlag.APPLICATION
+			or flag.value == ParagraphNavigationFlag.NORMAL
+			or (
+				flag.value == ParagraphNavigationFlag.DEFAULT
+				and (
+					flag.behaviorOfDefault == ParagraphNavigationFlag.APPLICATION
+					or flag.behaviorOfDefault == ParagraphNavigationFlag.NORMAL
+				)
+			)
+		):
 			self._caretMovementScriptHelper(gesture, textInfos.UNIT_PARAGRAPH, 1 if nextParagraph else -1)
-		elif setting == "block":
+		elif flag.value == ParagraphNavigationFlag.BLOCK:
 			from utils.paragraphHelper import moveToBlockParagraph
 			ti = self.makeTextInfo(textInfos.POSITION_SELECTION)
 			passKey, moved = moveToBlockParagraph(
@@ -280,7 +291,7 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 				# fail over to default behavior
 				self._caretMovementScriptHelper(gesture, textInfos.UNIT_PARAGRAPH, 1 if nextParagraph else -1)
 		else:
-			log.error(f"Unexpected setting value {setting}")
+			log.error(f"Unexpected ParagraphNavigationFlag value {flag.value}")
 
 
 	def script_moveByParagraph_back(self,gesture):

@@ -2564,7 +2564,8 @@ class DocumentNavigationPanel(SettingsPanel):
 		)
 
 	def onSave(self):
-		pass
+		self.paragraphStyleCombo.saveCurrentValueToConf()
+
 
 class TouchInteractionPanel(SettingsPanel):
 	# Translators: This is the label for the touch interaction settings panel.

@@ -296,21 +296,40 @@ class EditableText(TextContainerObject,ScriptableObject):
 		self._deleteScriptHelper(textInfos.UNIT_WORD, gesture)
 
 	def _handleParagraphNavigation(self, gesture: "inputCore.InputGesture", nextParagraph: bool) -> None:
-		setting = config.conf["documentNavigation"]["paragraphStyle"]
-		if setting == "auto" or setting == "application":
+		from config.featureFlagEnums import ParagraphNavigationFlag
+		flag: config.featureFlag.FeatureFlag = config.conf["documentNavigation"]["paragraphStyle"]
+		if (
+			flag.value == ParagraphNavigationFlag.APPLICATION
+			or (
+				flag.value == ParagraphNavigationFlag.DEFAULT
+				and flag.behaviorOfDefault == ParagraphNavigationFlag.APPLICATION
+			)
+		):
 			self.script_caret_moveByParagraph(gesture)
-		elif setting == "normal":
+		elif (
+			flag.value == ParagraphNavigationFlag.NORMAL
+			or (
+				flag.value == ParagraphNavigationFlag.DEFAULT
+				and flag.behaviorOfDefault == ParagraphNavigationFlag.NORMAL
+			)
+		):
 			from utils.paragraphHelper import moveToParagraph
 			passKey, moved = moveToParagraph(nextParagraph=nextParagraph, speakNew=not willSayAllResume(gesture))
 			if passKey:
 				self.script_caret_moveByParagraph(gesture)
-		elif setting == "block":
+		elif (
+			flag == ParagraphNavigationFlag.BLOCK
+			or (
+				flag.value == ParagraphNavigationFlag.DEFAULT
+				and flag.behaviorOfDefault == ParagraphNavigationFlag.BLOCK
+			)
+		):
 			from utils.paragraphHelper import moveToBlockParagraph
 			passKey, moved = moveToBlockParagraph(nextParagraph=nextParagraph, speakNew=not willSayAllResume(gesture))
 			if passKey:
 				self.script_caret_moveByParagraph(gesture)
 		else:
-			log.error(f"Unexpected setting value {setting}")
+			log.error(f"Unexpected ParagraphNavigationFlag value {flag.value}")
 
 	def script_caret_previousParagraph(self, gesture: "inputCore.InputGesture") -> None:
 		self._handleParagraphNavigation(gesture, False)
