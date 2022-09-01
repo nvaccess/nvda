@@ -1,0 +1,9 @@
+version: 2
+updates:
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    ignore:
+      - dependency-name: "wxPython"
+      - dependency-name: "configobj"
