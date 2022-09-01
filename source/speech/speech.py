@@ -60,7 +60,7 @@ from .priorities import Spri
 from enum import IntEnum
 from dataclasses import dataclass
 from copy import copy
-from utils.security import _isSecureObjectWhileLockScreenActivated
+from utils.security import objectBelowLockScreenAndWindowsIsLocked
 
 if typing.TYPE_CHECKING:
 	import NVDAObjects
@@ -457,7 +457,7 @@ def getObjectPropertiesSpeech(  # noqa: C901
 		_prefixSpeechCommand: Optional[SpeechCommand] = None,
 		**allowedProperties
 ) -> SpeechSequence:
-	if _isSecureObjectWhileLockScreenActivated(obj):
+	if objectBelowLockScreenAndWindowsIsLocked(obj):
 		return []
 	#Fetch the values for all wanted properties
 	newPropertyValues={}
@@ -621,7 +621,7 @@ def getObjectSpeech(  # noqa: C901
 		reason: OutputReason = OutputReason.QUERY,
 		_prefixSpeechCommand: Optional[SpeechCommand] = None,
 ) -> SpeechSequence:
-	if _isSecureObjectWhileLockScreenActivated(obj):
+	if objectBelowLockScreenAndWindowsIsLocked(obj):
 		return []
 	role=obj.role
 	# Choose when we should report the content of this object's textInfo, rather than just the object's value

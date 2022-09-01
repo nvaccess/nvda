@@ -21,12 +21,19 @@ What's New in NVDA
     - Laptop: ``NVDA+shift+pageDown``.
     -
   -
+- Added the following table commands. (#14070)
+  - Say all in column: ``NVDA+control+alt+downArrow``
+  - Say all in row: ``NVDA+control+alt+rightArrow``
+  - Read entire column: ``NVDA+control+alt+upArrow``
+  - Read entire row: ``NVDA+control+alt+leftArrow``
+  -
 -
 
 
 == Changes ==
 - eSpeak NG has been updated to 1.52-dev commit ``0dbe7182``. (#14060, #14079)
 - NVDA now includes the architecture of the operating system as part of user statistics tracking. (#14019)
+- Reporting power state changes and using the script to report battery status now report the same message consistently. (#14035)
 -
 
 
@@ -39,7 +46,17 @@ What's New in NVDA
   - These fixes apply to Windows 11 Sun Valley 2 (version 22H2) and later.
   - Selective registration for UI Automation events and property changes now enabled by default.
   -
+- NVDA is now DPI aware when using multiple monitors.
+There are several fixes for using a DPI setting higher than 100% or multiple monitors.
+Issues may still exist with versions of Windows older than Windows 10 1809.
+For these fixes to work, applications which NVDA interacts with also need to be DPI aware.
+Note there are still known issues with Chrome and Edge. (#13254)
+  - Visual highlighting frames should now be correctly placed in most applications. (#13370, #3875, #12070)
+  - Touch screen interaction should now be accurate for most applications. (#7083)
+  - Mouse tracking should now work for most applications. (#6722)
+  -
 - NVDA will announce UIA item status property changes in places such as the Visual Studio 2022 create app packages dialog. (#13973)
+- Orientation state (landscape/portrait) changes are now correctly ignored when there is no change (e.g. monitor changes). (#14035)
 -
 
 
@@ -52,6 +69,10 @@ Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documen
 
 
 === Deprecations ===
+- ``core.post_windowMessageReceipt`` is deprecated, use ``winAPI.messageWindow.pre_handleWindowMessage`` instead.
+- ``winKernel.SYSTEM_POWER_STATUS`` is deprecated and usage is discouraged, this has been moved to ``winAPI._powerTracking.SystemPowerStatus``.
+- ``winUser.SM_*`` constants are deprecated, use ``winAPI.winUser.constants.SystemMetrics`` instead.
+-
 
 
 = 2022.3 =
