@@ -179,6 +179,7 @@ UIAPropertyIdsToNVDAEventNames={
 	UIA_ControllerForPropertyId:"UIA_controllerFor",
 	UIA_ItemStatusPropertyId:"UIA_itemStatus",
 	UIA_DragDropEffectPropertyId: "UIA_dragDropEffect",
+	UIA_DropTargetDropTargetEffectPropertyId: "UIA_dropTargetEffect",
 }
 
 globalEventHandlerGroupUIAPropertyIds = {
