@@ -3,6 +3,34 @@ Quoi de Neuf dans NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2022.2.2 =
+Ceci est une version corrective pour corriger un problème introduit en 2022.2.1 avec les gestes de commandes.
+
+== Corrections de bogues ==
+- Correction d'un problème où les gestes de commandes ne fonctionnaient pas toujours (#14065)
+-
+
+= 2022.2.1 =
+Cela est une version mineure pour corriger un problème de sécurité.
+Veuillez signaler de manière responsable les problèmes de sécurité à info@nvaccess.org.
+
+== Correctifs de sécurité ==
+- Correction d'une faille où il était possible d'exécuter une console Python depuis l'écran de verrouillage. (GHSA-rmq3-vvhq-gp32)
+- Correction d'une faille où il était possible de sortir de l'écran de verrouillage en utilisant la navigation par objet. (GHSA-rmq3-vvhq-gp32)
+-
+
+== Changements pour les développeurs ==
+
+=== Dépréciations ===
+Ces dépréciations ne sont actuellement pas prévues pour être supprimées.
+Les alias dépréciées resteront disponibles jusqu'à nouvel ordre.
+Veuillez tester la nouvelle API et fournir des commentaires.
+Pour les auteurs d'extensions, veuillez ouvrir un problème GitHub si ces modifications empêchent l'API de répondre à vos besoins.
+
+- ``appModules.lockapp.LockAppObject`` doit être remplacé par ``NVDAObjects.lockscreen.LockScreenObject``. (GHSA-rmq3-vvhq-gp32)
+- ``appModules.lockapp.AppModule.SAFE_SCRIPTS`` doit être remplacé par ``utils.security.getSafeScripts()``. (GHSA-rmq3-vvhq-gp32)
+-
+
 = 2022.3 =
 Une grande partie des améliorations de cette version a été réalisée par la communauté de NVDA.
 Cela inclut la description différée des caractères et la prise en charge améliorée de la console Windows.
