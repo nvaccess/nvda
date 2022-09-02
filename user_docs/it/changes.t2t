@@ -4,6 +4,41 @@
 %!includeconf: ../changes.t2tconf
 
 
+= 2022.3 =
+Per questa versione di NVDA, molte modifiche sono state rese possibili grazie al contributo degli sviluppatori appartenenti alla community.
+Ciò comprende la descrizione ritardata dei caratteri e il supporto migliorato per la console di Windows.
+
+Questa versione include anche diverse correzioni di bug.
+In particolare, le versioni aggiornate di Adobe Acrobat/Reader non si arrestano più in modo anomalo durante la lettura di un documento PDF.
+
+Espeak è stata aggiornata, con l'introduzione di 3 nuove lingue: bielorusso, lussemburghese e totontepec Mixe.
+
+== Novità ==
+- Per quanto riguarda l'host della console di Windows utilizzato dal Prompt dei comandi, da PowerShell e dal sottosistema Windows per Linux su Windows 11 versione 22H2 (Sun Valley 2) e successive:
+  - Prestazioni e stabilità notevolmente migliorate. (#10964)
+  - Quando si preme ``control+f`` per trovare del testo, la posizione del cursore di controllo viene aggiornata e spostata sul termine trovato. (#11172).
+  - Da impostazione predefinita, viene disattivata la segnalazione del testo digitato che non appare sullo schermo (come le password)
+Può essere riattivata nel pannello delle impostazioni avanzate di NVDA. (#11554)
+  - è possibile esaminare il testo non più presente a schermo senza dover far scorrere indietro la Console. (#12669)
+  - Sono disponibili informazioni più dettagliate sulla formattazione del testo. ([microsoft/terminal PR 10336 https://github.com/microsoft/terminal/pull/10336])
+  -
+- È stata aggiunta una nuova opzione vocale per leggere le descrizioni dei caratteri dopo un ritardo. (#13509)
+- Aggiunta una nuova opzione Braille per determinare se lo scorrimento del display avanti/indietro debba o meno interrompere la sintesi vocale. (#2124)
+-
+
+
+== Cambiamenti ==
+- eSpeak NG è stata aggiornata alla versione 1.52-dev commit ``9de65fcb``. (#13295)
+  - Lingue aggiunte:
+    - Bielorusso
+    - Lussemburghese
+    - Totontepec Mixe
+    -
+- Quando si utilizza UIA per accedere ai controlli del foglio di calcolo di Microsoft Excel, NVDA è ora in grado di segnalare quando una cella viene unita. (#12843)
+- Piuttosto di annunciare "contiene dettagli", ora quando possibile viene annunciato il dettaglio stesso, ad esempio "contiene commenti". (#13649)
+- La dimensione dell'installazione di NVDA è ora mostrata nella sezione Programmi e funzionalità di Windows. (#13909)
+
+
 = 2022.2 =
 
 Questa versione si è focalizzata nel risolvere un gran numero di bug.
