@@ -2047,6 +2047,13 @@ class UIA(Window):
 			ui.message(f"{self.name} {itemStatus}")
 		self._itemStatusCache = itemStatus
 
+	def event_UIA_dragDropEffect(self):
+		# UIA drag drop effect was introduced in Windows 8.
+		try:
+			ui.message(self._getUIACacheablePropertyValue(UIAHandler.UIA_DragDropEffectPropertyId))
+		except COMError:
+			pass
+
 
 class TreeviewItem(UIA):
 
