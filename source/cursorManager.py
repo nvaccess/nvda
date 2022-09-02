@@ -269,18 +269,11 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 		from config.featureFlagEnums import ParagraphNavigationFlag
 		flag: config.featureFlag.FeatureFlag = config.conf["documentNavigation"]["paragraphStyle"]
 		if (
-			flag.value == ParagraphNavigationFlag.APPLICATION
-			or flag.value == ParagraphNavigationFlag.NORMAL
-			or (
-				flag.value == ParagraphNavigationFlag.DEFAULT
-				and (
-					flag.behaviorOfDefault == ParagraphNavigationFlag.APPLICATION
-					or flag.behaviorOfDefault == ParagraphNavigationFlag.NORMAL
-				)
-			)
+			flag.calculated() == ParagraphNavigationFlag.APPLICATION
+			or flag.calculated() == ParagraphNavigationFlag.NORMAL
 		):
 			self._caretMovementScriptHelper(gesture, textInfos.UNIT_PARAGRAPH, 1 if nextParagraph else -1)
-		elif flag.value == ParagraphNavigationFlag.BLOCK:
+		elif flag.calculated() == ParagraphNavigationFlag.BLOCK:
 			from utils.paragraphHelper import moveToBlockParagraph
 			ti = self.makeTextInfo(textInfos.POSITION_SELECTION)
 			passKey, moved = moveToBlockParagraph(

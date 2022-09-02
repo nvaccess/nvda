@@ -298,32 +298,14 @@ class EditableText(TextContainerObject,ScriptableObject):
 	def _handleParagraphNavigation(self, gesture: "inputCore.InputGesture", nextParagraph: bool) -> None:
 		from config.featureFlagEnums import ParagraphNavigationFlag
 		flag: config.featureFlag.FeatureFlag = config.conf["documentNavigation"]["paragraphStyle"]
-		if (
-			flag.value == ParagraphNavigationFlag.APPLICATION
-			or (
-				flag.value == ParagraphNavigationFlag.DEFAULT
-				and flag.behaviorOfDefault == ParagraphNavigationFlag.APPLICATION
-			)
-		):
+		if flag.calculated() == ParagraphNavigationFlag.APPLICATION:
 			self.script_caret_moveByParagraph(gesture)
-		elif (
-			flag.value == ParagraphNavigationFlag.NORMAL
-			or (
-				flag.value == ParagraphNavigationFlag.DEFAULT
-				and flag.behaviorOfDefault == ParagraphNavigationFlag.NORMAL
-			)
-		):
+		elif flag.calculated() == ParagraphNavigationFlag.NORMAL:
 			from utils.paragraphHelper import moveToParagraph
 			passKey, moved = moveToParagraph(nextParagraph=nextParagraph, speakNew=not willSayAllResume(gesture))
 			if passKey:
 				self.script_caret_moveByParagraph(gesture)
-		elif (
-			flag == ParagraphNavigationFlag.BLOCK
-			or (
-				flag.value == ParagraphNavigationFlag.DEFAULT
-				and flag.behaviorOfDefault == ParagraphNavigationFlag.BLOCK
-			)
-		):
+		elif flag.calculated() == ParagraphNavigationFlag.BLOCK:
 			from utils.paragraphHelper import moveToBlockParagraph
 			passKey, moved = moveToBlockParagraph(nextParagraph=nextParagraph, speakNew=not willSayAllResume(gesture))
 			if passKey:

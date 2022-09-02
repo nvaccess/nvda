@@ -21,10 +21,10 @@ def nextParagraphStyle() -> config.featureFlag.FeatureFlag:
 	from config.featureFlagEnums import ParagraphNavigationFlag
 	flag: config.featureFlag.FeatureFlag = config.conf["documentNavigation"]["paragraphStyle"]
 	numStyles = len(ParagraphNavigationFlag.__members__)
-	newEnumVal = flag.value.value + 1
-	newEnumVal %= numStyles
-	newFlag: config.featureFlag.FeatureFlag = ParagraphNavigationFlag(newEnumVal)
-	return newFlag
+	newEnumVal = flag.calculated().value + 1
+	if newEnumVal > numStyles:
+		newEnumVal = 2  # wrap around, skip DEFAULT
+	return ParagraphNavigationFlag(newEnumVal)
 
 
 def getTextInfoAtCaret() -> textInfos.TextInfo:
