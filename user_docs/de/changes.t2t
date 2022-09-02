@@ -69,11 +69,19 @@ Dies verbessert die Leistung für einige Java-Anwendungen, einschließlich Intel
 Für 2022.3 wurden keine Änderungen an der API vorgenommen.
 
 
+= 2022.2.2 =
+Dieser Patch behebt einen Fehler, der in Version 2022.2.1 beim Betätigen der Tastenbefehle auftrat.
+
+== Fehlerbehebung ==
+- Ein Fehler wurde behoben, bei dem Tastenbefehle nicht immer funktionierten. (#14065)
+-
+
+
 = 2022.2.1 =
 Dies ist eine kleinere Version zur Behebung einer Sicherheitslücke.
 Bitte melden Sie Sicherheitsprobleme umgehend  an info@nvaccess.org.
 
-== Sicherheitskorrekturen ==
+== Sicherheitsproblembehebungen ==
 - Es wurde ein Exploit behoben, durch den es möglich war, die Python-Konsole über den Sperrbildschirm zu starten. (GHSA-rmq3-vvhq-gp32)
 - Es wurde ein Exploit behoben, bei dem es möglich war, den Sperrbildschirm durch die Objekt-Navigation zu umgehen. (GHSA-rmq3-vvhq-gp32)
 -
@@ -386,7 +394,7 @@ Hinweis:
 +This is a minor release to fix a security issue.
 +Please responsibly disclose security issues to info@nvaccess.org.
 +
-== Sicherheitskorrekturen ==
+== Sicherheitsproblembehebungen ==
 - Behoben wurde der Sicherheitshinweis ``GHSA-xc5m-v23f-pgr7``.
   - Das Dialogfeld für die Ansage von Symbolen wurde im geschützten Modus deaktiviert.
   -
