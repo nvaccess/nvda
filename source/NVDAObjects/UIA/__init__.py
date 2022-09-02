@@ -2054,6 +2054,28 @@ class UIA(Window):
 		except COMError:
 			pass
 
+	def event_UIA_dropTargetEffect(self):
+		# UIA drop target effect property was introduced in Windows 8.
+		try:
+			dropTargetEffect = self._getUIACacheablePropertyValue(
+				UIAHandler.UIA_DropTargetDropTargetEffectPropertyId
+			)
+		except COMError:
+			dropTargetEffect = ""
+		# Sometimes drop target effect text is empty as it comes from a different object.
+		if not dropTargetEffect:
+			for element in reversed(api.getFocusAncestors()):
+				try:
+					dropTargetEffect = element._getUIACacheablePropertyValue(
+						UIAHandler.UIA_DropTargetDropTargetEffectPropertyId
+					)
+				except (COMError, AttributeError):
+					dropTargetEffect = ""
+				if dropTargetEffect:
+					break
+		if dropTargetEffect:
+			ui.message(dropTargetEffect)
+
 
 class TreeviewItem(UIA):
 
