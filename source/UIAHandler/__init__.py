@@ -169,22 +169,22 @@ UIALiveSettingtoNVDAAriaLivePoliteness: Dict[str, aria.AriaLivePoliteness] = {
 }
 
 UIAPropertyIdsToNVDAEventNames={
-	UIA_NamePropertyId:"nameChange",
-	UIA_HelpTextPropertyId:"descriptionChange",
-	UIA_ExpandCollapseExpandCollapseStatePropertyId:"stateChange",
-	UIA_ToggleToggleStatePropertyId:"stateChange",
-	UIA_IsEnabledPropertyId:"stateChange",
-	UIA_ValueValuePropertyId:"valueChange",
-	UIA_RangeValueValuePropertyId:"valueChange",
-	UIA_ControllerForPropertyId:"UIA_controllerFor",
-	UIA_ItemStatusPropertyId:"UIA_itemStatus",
-	UIA_DragDropEffectPropertyId: "UIA_dragDropEffect",
-	UIA_DropTargetDropTargetEffectPropertyId: "UIA_dropTargetEffect",
+	UIA.UIA_NamePropertyId: "nameChange",
+	UIA.UIA_HelpTextPropertyId: "descriptionChange",
+	UIA.UIA_ExpandCollapseExpandCollapseStatePropertyId: "stateChange",
+	UIA.UIA_ToggleToggleStatePropertyId: "stateChange",
+	UIA.UIA_IsEnabledPropertyId: "stateChange",
+	UIA.UIA_ValueValuePropertyId: "valueChange",
+	UIA.UIA_RangeValueValuePropertyId: "valueChange",
+	UIA.UIA_ControllerForPropertyId: "UIA_controllerFor",
+	UIA.UIA_ItemStatusPropertyId: "UIA_itemStatus",
+	UIA.UIA_DragDropEffectPropertyId: "UIA_dragDropEffect",
+	UIA.UIA_DropTargetDropTargetEffectPropertyId: "UIA_dropTargetEffect",
 }
 
 globalEventHandlerGroupUIAPropertyIds = {
 	UIA.UIA_RangeValueValuePropertyId,
-	UIA_DropTargetDropTargetEffectPropertyId
+	UIA.UIA_DropTargetDropTargetEffectPropertyId
 }
 
 localEventHandlerGroupUIAPropertyIds = (
