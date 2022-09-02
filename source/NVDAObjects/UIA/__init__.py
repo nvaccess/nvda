@@ -1589,6 +1589,7 @@ class UIA(Window):
 		UIAHandler.UIA_IsEnabledPropertyId,
 		UIAHandler.UIA_IsOffscreenPropertyId,
 		UIAHandler.UIA_AnnotationTypesPropertyId,
+		UIAHandler.UIA_DragIsGrabbedPropertyId,
 	}
 
 	def _get_states(self):
@@ -1667,6 +1668,13 @@ class UIA(Window):
 		if annotationTypes:
 			if UIAHandler.AnnotationType_Comment in annotationTypes:
 				states.add(controlTypes.State.HASCOMMENT)
+		# Drag "is grabbed" property was added in Windows 8.
+		try:
+			isGrabbed = self._getUIACacheablePropertyValue(UIAHandler.UIA_DragIsGrabbedPropertyId)
+		except COMError:
+			isGrabbed = False
+		if isGrabbed:
+			states.add(controlTypes.State.DRAGGING)
 		return states
 
 	def _getReadOnlyState(self) -> bool:
