@@ -119,7 +119,7 @@ CHUNK_SEPARATOR = "  "
 
 
 #: If a chunk of text contains only these characters, it will be considered blank.
-BLANK_CHUNK_CHARS = frozenset((" ", "\n", "\r", "\0", u"\xa0"))
+BLANK_CHUNK_CHARS = frozenset((" ", "\n", "\r", "\0", u"\xa0", "\t"))
 def isBlank(text):
 	"""Determine whether text should be reported as blank.
 	@param text: The text in question.
