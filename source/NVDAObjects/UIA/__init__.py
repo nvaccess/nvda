@@ -2082,6 +2082,7 @@ class UIA(Window):
 				if dropTargetEffect:
 					break
 		if dropTargetEffect:
+			speech.cancelSpeech()
 			ui.message(dropTargetEffect)
 
 
