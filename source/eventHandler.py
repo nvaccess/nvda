@@ -329,7 +329,7 @@ def doPreGainFocus(obj: "NVDAObjects.NVDAObject", sleepMode: bool = False) -> bo
 
 	if globalVars.focusDifferenceLevel<=1:
 		newForeground=api.getDesktopObject().objectInForeground()
-		if not newForeground:
+		if not newForeground or _isSecureObjectWhileLockScreenActivated(newForeground):
 			log.debugWarning("Can not get real foreground, resorting to focus ancestors")
 			ancestors=api.getFocusAncestors()
 			if len(ancestors)>1:

@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2021 NV Access Limited, Łukasz Golonka, Leonard de Ruijter
+# Copyright (C) 2006-2022 NV Access Limited, Łukasz Golonka, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -797,6 +797,7 @@ def processDesktopSwitchWinEvent(window, objectID, childID):
 		)
 	hDesk = windll.user32.OpenInputDesktop(0, False, 0)
 	if hDesk != 0:
+		api.setDesktopObject(NVDAObjects.window.Desktop(windowHandle=hDesk))
 		windll.user32.CloseDesktop(hDesk)
 		core.callLater(200, _correctFocus)
 	else:
@@ -805,6 +806,7 @@ def processDesktopSwitchWinEvent(window, objectID, childID):
 		# so clear our recorded modifiers.
 		keyboardHandler.currentModifiers.clear()
 		obj = SecureDesktopNVDAObject(windowHandle=window)
+		api.setDesktopObject(obj)
 		eventHandler.executeEvent("gainFocus", obj)
 
 

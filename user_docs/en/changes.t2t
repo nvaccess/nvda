@@ -3,6 +3,14 @@ What's New in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2022.2.3 =
+This is a patch release to fix an accidental API breakage introduced in 2022.2.1.
+
+== Bug Fixes ==
+- Fixed a bug where NVDA did not announce "Secure Desktop" when entering a secure desktop.
+This caused NVDA remote to not recognize secure desktops. (#14094)
+-
+
 = 2022.2.2 =
 This is a patch release to fix a bug introduced in 2022.2.1 with input gestures.
 

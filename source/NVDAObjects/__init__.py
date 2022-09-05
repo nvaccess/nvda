@@ -330,11 +330,10 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		return obj
 
 	@staticmethod
-	def objectInForeground():
+	def objectInForeground() -> typing.Optional["NVDAObject"]:
 		"""Retrieves the object representing the current foreground control according to the
 		Operating System. This may differ from NVDA's cached foreground object.
 		@return: the foreground object
-		@rtype: L{NVDAObject}
 		"""
 		kwargs={}
 		APIClass=NVDAObject.findBestAPIClass(kwargs,relation="foreground")
