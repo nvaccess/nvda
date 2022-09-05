@@ -2073,7 +2073,7 @@ class UIA(Window):
 		# Sometimes drop target effect text is empty as it comes from a different object.
 		if not dropTargetEffect:
 			for element in reversed(api.getFocusAncestors()):
-				if not isinstance(element, NVDAObjects.UIA.UIA):
+				if not isinstance(element, UIA):
 					continue
 				try:
 					dropTargetEffect = element._getUIACacheablePropertyValue(
