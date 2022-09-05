@@ -210,6 +210,8 @@ UIAEventIdsToNVDAEventNames: Dict[int, str] = {
 	UIA.UIA_SystemAlertEventId: "UIA_systemAlert",
 	UIA.UIA_LayoutInvalidatedEventId: "UIA_layoutInvalidated",
 	UIA.UIA_Drag_DragStartEventId: "stateChange",
+	UIA.UIA_Drag_DragCancelEventId: "stateChange",
+	UIA.UIA_Drag_DragCompleteEventId: "stateChange",
 }
 
 localEventHandlerGroupUIAEventIds = set()
