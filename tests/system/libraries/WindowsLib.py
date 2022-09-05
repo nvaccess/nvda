@@ -158,7 +158,7 @@ def _tryOpenTaskSwitcher() -> _Optional["_SpeechIndexT"]:
 		firstRow,
 		afterIndex=expectedStartOfKeypressSpeechIndex - 1,
 		maxWaitSeconds=5,
-		intervalBetweenSeconds=0.2
+		intervalBetweenSeconds=0.3
 	)
 	builtIn.log(f"indexOfSpeech '{firstRow}': {indexOfSpeech}", level="DEBUG")
 	if indexOfSpeech:

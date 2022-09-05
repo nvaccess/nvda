@@ -12,30 +12,37 @@ from time import sleep as _sleep
 from time import perf_counter as _timer
 from typing import Any, Callable, Optional, Tuple
 
+EvaluatorWasMetT = bool
+GetValueResultT = Any
 
 def _blockUntilConditionMet(
-		getValue: Callable[[], Any],
+		getValue: Callable[[], GetValueResultT],
 		giveUpAfterSeconds: float,
 		shouldStopEvaluator=lambda value: bool(value),
-		intervalBetweenSeconds: float = 0.1,
+		intervalBetweenSeconds: float = 0.3,
 		errorMessage: Optional[str] = None
 		) -> Tuple[
-bool,  # Was evaluator met?
-Optional[Any]  # None or the value when the evaluator was met
+EvaluatorWasMetT,  # Was evaluator met?
+Optional[GetValueResultT]  # Value when the evaluator was met, if it was met.
 ]:
 	"""Repeatedly tries to get a value up until a time limit expires. Tries are separated by
 	a time interval. The call will block until shouldStopEvaluator returns True when given the value,
 	the default evaluator just returns the value converted to a boolean.
+	@param getValue: Get the value to be tested by shouldStropEvaluator.
+	@param giveUpAfterSeconds: The max number of seconds to block for.
+	@param shouldStopEvaluator: Given the last value from getValue, is the condition met?
+	When True is returned, stop blocking.
+	@param intervalBetweenSeconds: The approximate period (seconds) between each test of getValue.
+	Small values can starve NVDA core preventing it from being able to process queued events.
+	Must be greater than 0.1, higher is recommended.
 	@param errorMessage: Use 'None' to suppress the exception.
-	@returns: Tuple, (True, value) if evaluator condition is met, otherwise (False, None)
 	@raises RuntimeError if the time limit expires and an errorMessage is given.
 	"""
 	assert callable(getValue)
 	assert callable(shouldStopEvaluator)
-	assert intervalBetweenSeconds > 0.001
-	# Set SLEEP_TIME so that worst case overshoot (for interval) should be ~10%
-	# But limit very small values, they approach the inaccuracy of sleep.
-	SLEEP_TIME = max(intervalBetweenSeconds * 0.1, 0.001)
+	assert intervalBetweenSeconds > 0.1
+
+	SLEEP_TIME = max(intervalBetweenSeconds, 0.1)
 
 	startTime = _timer()
 	lastRunTime = startTime

@@ -382,7 +382,7 @@ class NVDASpyLib:
 			speech: str,
 			afterIndex: Optional[int] = None,
 			maxWaitSeconds: float = 5.0,
-			intervalBetweenSeconds: float = 0.1,
+			intervalBetweenSeconds: float = 0.3,
 	) -> Optional[int]:
 		"""
 		@param speech: The speech to expect.
@@ -406,7 +406,7 @@ class NVDASpyLib:
 			speech: str,
 			afterIndex: Optional[int] = None,
 			maxWaitSeconds: float = 5.0,
-			intervalBetweenSeconds: float = 0.1,
+			intervalBetweenSeconds: float = 0.3,
 	) -> int:
 		"""
 		@param speech: The speech to expect.
@@ -434,7 +434,7 @@ class NVDASpyLib:
 			speech: str,
 			afterIndex: Optional[int] = None,
 			maxWaitSeconds: float = SPEECH_HAS_FINISHED_SECONDS,
-			intervalBetweenSeconds: float = 0.1,
+			intervalBetweenSeconds: float = 0.3,
 	) -> None:
 		"""
 		@param speech: The speech to check for.
