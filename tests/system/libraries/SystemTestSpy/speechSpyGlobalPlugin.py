@@ -192,6 +192,7 @@ class NVDASpyLib:
 		if not isinstance(rawText, str):
 			raise TypeError(f"rawText expected as str, got: {type(rawText)}, {rawText!r}")
 		with self._brailleLock:
+			log.debug(f"Appending to braille spy at index {len(self._nvdaBraille_requiresLock)}")
 			self._nvdaBraille_requiresLock.append(rawText)
 
 	def _onNvdaSpeech(self, speechSequence=None):
@@ -241,8 +242,15 @@ class NVDASpyLib:
 
 	def _hasSpeechFinished(self, speechStartedIndex: Optional[int] = None):
 		with self._speechLock:
-			started = speechStartedIndex is None or speechStartedIndex < self.get_next_speech_index()
-			finished = self.SPEECH_HAS_FINISHED_SECONDS < _timer() - self._lastSpeechTime_requiresLock
+			nextIndex = self.get_next_speech_index()
+			started = speechStartedIndex is None or speechStartedIndex < nextIndex
+			elapsed = _timer() - self._lastSpeechTime_requiresLock
+			log.debug(
+				f"started: {started}"
+				f" (speechStartedIndex: {speechStartedIndex}, nextIndex: {nextIndex})"
+				f" elapsedSinceLastSpeech: {elapsed}"
+			)
+			finished = self.SPEECH_HAS_FINISHED_SECONDS < elapsed
 			return started and finished
 
 	def setBrailleCellCount(self, brailleCellCount: int):
@@ -498,6 +506,7 @@ class NVDASpyLib:
 		E.g. control+shift+downArrow.
 		See vkCodes.py in the NVDA source directory for valid key names.
 		"""
+		log.debug(f"Sending gesture {kbIdentifier}")
 		gesture = KeyboardInputGesture.fromName(kbIdentifier)
 		inputCore.manager.emulateGesture(gesture)
 		if blockUntilProcessed:
@@ -509,20 +518,24 @@ class NVDASpyLib:
 				nonlocal queueProcessed
 				queueProcessed = True
 
+			log.debug(f"Waiting for gesture to be processed")
 			queueHandler.queueFunction(queueHandler.eventQueue, _setQueueProcessed)
 			_blockUntilConditionMet(
 				getValue=lambda: queueProcessed,
 				giveUpAfterSeconds=self._minTimeout(5),
 				errorMessage="Timed out waiting for key to be processed",
 			)
+
 			# We know that by now the core will have woken up and processed the scripts, events and our own function.
 			# Wait for the core to go to sleep,
 			# Which means there is no more things the core is currently processing.
+			log.debug(f"Waiting for core to sleep, to ensure all resulting events have been processed.")
 			_blockUntilConditionMet(
 				getValue=lambda: watchdog.isCoreAsleep(),
 				giveUpAfterSeconds=self._minTimeout(5),
 				errorMessage="Timed out waiting for core to sleep again",
 			)
+			log.debug(f"Core sleeping")
 
 
 class SystemTestSpyServer(globalPluginHandler.GlobalPlugin):
