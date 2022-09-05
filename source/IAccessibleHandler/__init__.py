@@ -772,6 +772,14 @@ def processFocusNVDAEvent(obj, force=False):
 
 
 class SecureDesktopNVDAObject(NVDAObjects.window.Desktop):
+	"""
+	Used to indicate to the user and to API consumers (including NVDA remote),
+	that the user has switched to a secure desktop.
+	This is triggered when Windows notification EVENT_SYSTEM_DESKTOPSWITCH
+	notifies that the desktop has changed, and is handled via a gainFocus event.
+	The gainFocus event causes NVDA to enter sleep mode as the secure mode
+	NVDA instance starts on the secure screen.
+	"""
 
 	def findOverlayClasses(self, clsList):
 		clsList.append(SecureDesktopNVDAObject)
