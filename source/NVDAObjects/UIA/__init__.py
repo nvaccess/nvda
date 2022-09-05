@@ -2079,7 +2079,7 @@ class UIA(Window):
 					dropTargetEffect = element._getUIACacheablePropertyValue(
 						UIAHandler.UIA_DropTargetDropTargetEffectPropertyId
 					)
-				except (COMError, AttributeError):
+				except COMError:
 					dropTargetEffect = ""
 				if dropTargetEffect:
 					break
