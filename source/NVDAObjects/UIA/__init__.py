@@ -2055,6 +2055,37 @@ class UIA(Window):
 			ui.message(f"{self.name} {itemStatus}")
 		self._itemStatusCache = itemStatus
 
+	def event_UIA_dragDropEffect(self):
+		# UIA drag drop effect was introduced in Windows 8.
+		try:
+			ui.message(self._getUIACacheablePropertyValue(UIAHandler.UIA_DragDropEffectPropertyId))
+		except COMError:
+			pass
+
+	def event_UIA_dropTargetEffect(self):
+		# UIA drop target effect property was introduced in Windows 8.
+		try:
+			dropTargetEffect = self._getUIACacheablePropertyValue(
+				UIAHandler.UIA_DropTargetDropTargetEffectPropertyId
+			)
+		except COMError:
+			dropTargetEffect = ""
+		# Sometimes drop target effect text is empty as it comes from a different object.
+		if not dropTargetEffect:
+			for element in reversed(api.getFocusAncestors()):
+				if not isinstance(element, UIA):
+					continue
+				try:
+					dropTargetEffect = element._getUIACacheablePropertyValue(
+						UIAHandler.UIA_DropTargetDropTargetEffectPropertyId
+					)
+				except COMError:
+					dropTargetEffect = ""
+				if dropTargetEffect:
+					break
+		if dropTargetEffect:
+			ui.message(dropTargetEffect)
+
 
 class TreeviewItem(UIA):
 

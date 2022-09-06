@@ -1,6 +1,12 @@
 $testOutput = (Resolve-Path .\testOutput\)
 $systemTestOutput = (Resolve-Path "$testOutput\system")
 
+if ($env:VERBOSE_SYSTEM_TEST_LOGGING) {
+	$verboseDebugLogging="True"
+} else {
+	$verboseDebugLogging=""
+}
+
 # This tag is used to exclude system tests.
 # If provided to runsystemtests, RF would give an error.
 $SKIP_SYS_TESTS = "excluded_from_build"
@@ -25,6 +31,7 @@ $includeTags = $tagsForTestArray | ForEach-Object {
 .\runsystemtests.bat `
 --variable whichNVDA:installed `
 --variable installDir:"${env:nvdaLauncherFile}" `
+--variable verboseDebugLogging:"${verboseDebugLogging}" `
 @includeTags `
 # last line inentionally blank, allowing all lines to have line continuations.
 
