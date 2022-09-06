@@ -402,8 +402,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					log.debug(f"Write: enqueued {ESTABLISHED}")
 					self._somethingToWrite()
 					ui.message(
-						# Translators: Number of status cells should be changed.
 						_(
+							# Translators: Number of status cells should be changed.
 							"To use Albatross with NVDA: "
 							"change number of status cells in Albatross internal menu at most "
 							f"to {MAX_STATUS_CELLS_ALLOWED}, and if needed, restart Albatross "
