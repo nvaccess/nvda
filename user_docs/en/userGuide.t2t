@@ -3572,7 +3572,7 @@ The Caiku Albatross devices, which were manufactured by Tivomatic and available 
 You do not need any specific drivers to be installed to use these displays.
 Just plug in the display and configure NVDA to use it.
 
-Note: Only baud rate 19200 is supported. Switch baud rate to 19200 as needed from display internal menu before using with NVDA.
+Note: Baud rate 19200 is strongly recommended. Switch baud rate to 19200 as needed from display internal menu before using with NVDA. Although driver supports 9600 baud rate, it has no way to control what baud rate display uses. Because 19200 is the display default baud rate, driver tries it at first. If baud rates are not the same, there are side effects.
 
 Following are key assignments for these displays with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.

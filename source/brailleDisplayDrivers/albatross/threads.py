@@ -3,7 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2022 NV Access Limited, Burman's Computer and Education Ltd.
 
-"""Threads for Tivomatic Caiku Albatross 46 and 80 braille display driver.
+"""Threads for Tivomatic Caiku Albatross braille display driver.
 Classes:
 - L{ReadThread}
 - L{RepeatedTimer}
@@ -23,12 +23,12 @@ from serial.win32 import (
 )
 from threading import (
 	Event,
-	Timer,
-	Thread
+	Thread,
+	Timer
 )
 from typing import Callable
 
-from brailleDisplayDrivers.albatross.constants import KC_INTERVAL
+from .constants import KC_INTERVAL
 
 
 class ReadThread(Thread):
@@ -105,7 +105,7 @@ class ReadThread(Thread):
 					self._disableFunction()
 					log.debug("GetOverLappedResult failed")
 			# See comment in _somethingToRead
-			except (OSError, AttributeError):
+			except (OSError, AttributeError, TypeError):
 				if self._event.isSet():
 					break
 				else:

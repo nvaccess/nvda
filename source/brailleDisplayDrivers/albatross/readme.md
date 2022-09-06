@@ -6,9 +6,15 @@ This module contains driver for Caiku Albatross 46 and 80 braille displays.
 
 - `__init.py__`
 - `constants.py`
+- `driver.py`
+- `gestures.py`
 - `threads.py`
 
 `constants.py` contains various constants.
+
+`driver.py` manages I/O.
+
+`gestures.py` contains default key mapping, and stuff to interpret and forward display key presses.
 
 `threads.py` contains two classes for threads:
 
@@ -16,5 +22,3 @@ This module contains driver for Caiku Albatross 46 and 80 braille displays.
 
 `RepeatedTimer` defines timer which is used to send data to display
 periodically so that display does not fall back in "wait for connection" state.
-
-`__init__.py` contains code to communicate with display, default key mapping, and stuff to interpret and forward its key presses.
