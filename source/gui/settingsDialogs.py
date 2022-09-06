@@ -2656,21 +2656,21 @@ class AdvancedPanelControls(
 
 		# Translators: This is the label for a combo box for selecting the
 		# means of registering for UI Automation events in the advanced settings panel.
-		# Choices are automatic, selectively, and globally.
+		# Choices are automatic, selective, and global.
 		selectiveUIAEventRegistrationComboText = _("Regi&stration for UI Automation events and property changes:")
 		selectiveUIAEventRegistrationChoices = [
 			# Translators: A choice in a combo box in the advanced settings
 			# panel to have NVDA decide whether to register
 			# selectively or globally for UI Automation events.
-			_("Automatic (prefer selectively)"),
+			_("Automatic (prefer selective)"),
 			# Translators: A choice in a combo box in the advanced settings
 			# panel to have NVDA register selectively for UI Automation events
 			# (i.e. not to request events for objects outside immediate focus).
-			_("Selectively"),
+			_("Selective"),
 			# Translators: A choice in a combo box in the advanced settings
 			# panel to have NVDA register for all UI Automation events
 			# in all cases.
-			_("Globally")
+			_("Global")
 		]
 		#: The possible event registration config values, in the order they appear
 		#: in the combo box.
