@@ -48,6 +48,7 @@ import eventHandler
 import keyboardHandler
 from logHandler import log
 import mouseHandler
+from NVDAObjects import NVDAObject
 import NVDAObjects.IAccessible
 import NVDAObjects.window
 import winUser
@@ -771,7 +772,31 @@ def processFocusNVDAEvent(obj, force=False):
 	return True
 
 
-class SecureDesktopNVDAObject(NVDAObjects.window.Desktop):
+class SecureDesktopNVDAObject(NVDAObject):
+	"""
+	Used to indicate to the user and to API consumers (including NVDA remote),
+	that the user has switched to a secure desktop.
+	This is triggered when Windows notification EVENT_SYSTEM_DESKTOPSWITCH
+	notifies that the desktop has changed, and is handled via a gainFocus event.
+	The gainFocus event causes NVDA to enter sleep mode as the secure mode
+	NVDA instance starts on the secure screen.
+
+	This object is not backed by a valid MSAA object as the Secure Desktop
+	object should not be accessed via NVDA.
+	The minimal functionality has been added to support backwards compatibility.
+	"""
+
+	def __init__(self, windowHandle: int):
+		"""
+		@param windowHandle: to retain backwards compatibility,
+		unused as this object is not backed by a valid MSAA object.
+		This object just serves as a minimal API endpoint.
+		"""
+		self._windowHandle = windowHandle
+		super().__init__()
+
+	def _get_processID(self) -> int:
+		return 0
 
 	def findOverlayClasses(self, clsList):
 		clsList.append(SecureDesktopNVDAObject)

@@ -105,6 +105,7 @@ def isObjectAboveLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 	but other Windows can be focused (e.g. Windows Magnifier).
 	"""
 	import appModuleHandler
+	from IAccessibleHandler import SecureDesktopNVDAObject
 	from NVDAObjects.IAccessible import TaskListIcon
 
 	foregroundWindow = winUser.getForegroundWindow()
@@ -118,6 +119,10 @@ def isObjectAboveLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 		# The task switcher window does not become the foreground process on the lock screen,
 		# so we must whitelist it explicitly.
 		isinstance(obj, TaskListIcon)
+		# Secure Desktop Object.
+		# Used to indicate to the user and to API consumers (including NVDA remote) via gainFocus,
+		# that the user has switched to a secure desktop.
+		or isinstance(obj, SecureDesktopNVDAObject)
 	):
 		return True
 
