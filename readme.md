@@ -43,10 +43,10 @@ The NVDA project uses the [Git](https://www.git-scm.com/) version control system
 The NVDA Git repository is located at https://github.com/nvaccess/nvda.git. You can clone it with the following command, which will place files in a directory named `nvda`:
 
 ```
-git clone --recursive https://github.com/nvaccess/nvda.git
+git clone --recurse-submodules https://github.com/nvaccess/nvda.git
 ```
-
-The `--recursive` option is needed to retrieve various Git submodules we use.
+Explanation:
+`--recurse-submodules`: Retrieve the [Git submodules NVDA depends on](#Git-Submodules).
 
 ## Supported Operating Systems
 Although NVDA can run on any Windows version starting from Windows 7 Service pack 1, building NVDA from source is currently limited to only Windows 10 and above.
@@ -81,10 +81,20 @@ The following dependencies need to be installed on your system:
 
 
 ### Git Submodules
-Some of the dependencies are contained in Git submodules.
-If you didn't pass the `--recursive` option to git clone, you will need to run `git submodule update --init`.
-Whenever a required submodule commit changes (e.g. after git pull), you will need to run `git submodule update`.
-If you aren't sure, run `git submodule update` after every git pull, merge or checkout.
+Some NVDA dependencies are contained in Git submodules.
+If you didn't pass the `--recurse-submodules` option to `git clone`,
+then you will need to run `git submodule update --init`.
+
+After a submodule commit has been changed (e.g. after `git pull`),
+you will need to run:
+```
+git submodule sync
+git submodule update --init --recursive
+```
+If you aren't sure, run these commands after every git `pull`, `merge` or `checkout` to prevent build errors
+or other unexpected behavior.
+
+The submodules are configured to do a shallow fetch, to speed up the clone process.
 
 For reference, the following run time dependencies are included in Git submodules:
 
