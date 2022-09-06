@@ -1,9 +1,16 @@
 $testOutput = (Resolve-Path .\testOutput\)
 $systemTestOutput = (Resolve-Path "$testOutput\system")
 
+if ($env:VERBOSE_SYSTEM_TEST_LOGGING) {
+	$verboseDebugLogging="True"
+} else {
+	$verboseDebugLogging=""
+}
+
 .\runsystemtests.bat `
 --variable whichNVDA:installed `
 --variable installDir:"${env:nvdaLauncherFile}" `
+--variable verboseDebugLogging:"${verboseDebugLogging}" `
 --include installer `
 --include NVDA `
 # last line inentionally blank, allowing all lines to have line continuations.
