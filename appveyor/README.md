@@ -67,7 +67,8 @@ These must be set before the build starts, and should be removed again once the 
 
 - `APPVEYOR_RDP_PASSWORD`: Setting an RDP password will allow connecting over RDP.
    Monitor the early build output to get the connection string.
-- `VERBOSE_SYSTEM_TEST_LOGGING`: Setting "true" will enable more verbose NVDA logs for the tests
+- `VERBOSE_SYSTEM_TEST_LOGGING`: Setting `True` (or any non-empty string) will enable more verbose NVDA logs
+   for the tests.
    See method `enable_verbose_debug_logging_if_requested` in `NvdaLib.py`, enables:
   - `MSAA`
   - `UIA`
