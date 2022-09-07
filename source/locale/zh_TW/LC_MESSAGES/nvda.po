@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA-TW\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-12 00:02+0000\n"
+"POT-Creation-Date: 2022-08-26 06:43+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -2360,6 +2360,21 @@ msgstr "手勢對應檔錯誤"
 #. Translators: This is spoken when NVDA is starting.
 msgid "Loading NVDA. Please wait..."
 msgstr "載入 NVDA 中，請稍後..."
+
+#. Translators: This is a warning to users, shown if NVDA cannot determine if
+#. Windows is locked.
+msgid ""
+"NVDA failed to register session tracking. While this instance of NVDA is "
+"running, your desktop will not be secure when Windows is locked. Restart "
+"NVDA? "
+msgstr ""
+"NVDA 無法登入工作階段追蹤。當此 NVDA 執行個體執行時，在 Windows 鎖定畫面您的"
+"桌面將不安全。是否重新啟動 NVDA？ "
+
+#. Translators: This is a warning to users, shown if NVDA cannot determine if
+#. Windows is locked.
+msgid "NVDA could not start securely."
+msgstr "NVDA 無法安全啟動。"
 
 #. Translators: The screen is oriented so that it is wider than it is tall.
 msgid "Landscape"
@@ -6406,8 +6421,8 @@ msgid "Tries to read documentation for the selected autocompletion item."
 msgstr "讀出自動填入項目的文字。"
 
 #. Translators: When the help popup cannot be found for the selected autocompletion item
-msgid "Cann't find the documentation window."
-msgstr "無法找到文件視窗。"
+msgid "Can't find the documentation window."
+msgstr "找不到文件視窗。"
 
 #. Translators: Reported when no track is playing in Foobar 2000.
 msgid "No track playing"
@@ -6652,7 +6667,7 @@ msgstr "沒有給譯者的備註。"
 #. Translators: this message is reported when NVDA is unable to find
 #. the 'Notes for translators' window in poedit.
 msgid "Could not find Notes for translators window."
-msgstr "無法找到給譯者的備註。"
+msgstr "找不到給譯者的備註。"
 
 #. Translators: The description of an NVDA command for Poedit.
 msgid "Reports any notes for translators"
@@ -6661,7 +6676,7 @@ msgstr "讀出給譯者的備註"
 #. Translators: this message is reported when NVDA is unable to find
 #. the 'comments' window in poedit.
 msgid "Could not find comment window."
-msgstr "無法找到註解視窗。"
+msgstr "找不到註解視窗。"
 
 #. Translators: this message is reported when there are no
 #. comments to be presented to the user in the translator
@@ -8996,7 +9011,7 @@ msgstr "已成功更新您所安裝的 NVDA。 "
 #. Translators: The message displayed to the user after NVDA is installed
 #. and the installed copy is about to be started.
 msgid "Please press OK to start the installed copy."
-msgstr "請按 確定 開始使用安裝的版本。"
+msgstr "請按「確認」開始使用安裝的版本。"
 
 #. Translators: The title of a dialog presented to indicate a successful operation.
 msgid "Success"
@@ -9434,7 +9449,7 @@ msgstr "使用拼字功能 (若有支援)(&S)"
 
 #. Translators: This is the label for a checkbox in the voice settings panel.
 msgid "&Delayed descriptions for characters on cursor movement"
-msgstr "游標移動時延後讀出字元的字詞解釋(&D)"
+msgstr "游標移動時延遲讀出字元的字詞解釋(&D)"
 
 #. Translators: This is the label for the keyboard settings panel.
 msgid "Keyboard"
@@ -10063,7 +10078,7 @@ msgid ""
 "&Chromium based browsers when available:"
 msgstr ""
 "在 Microsoft Edge 及其他以 Chromium 為基礎\n"
-"的瀏覽器中使用 UIA (若可用(&C)"
+"的瀏覽器中使用 UIA (若可用)(&C):"
 
 #. Translators: Label for the default value of the Use UIA with Chromium combobox,
 #. in the Advanced settings panel.
@@ -10079,12 +10094,12 @@ msgstr "必要時使用"
 #. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
 msgctxt "advanced.uiaWithChromium"
 msgid "Yes"
-msgstr "一律使用"
+msgstr "是"
 
 #. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
 msgctxt "advanced.uiaWithChromium"
 msgid "No"
-msgstr "不使用"
+msgstr "否"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -10224,7 +10239,7 @@ msgstr "僅限於 NVDA 測試版本"
 #. Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
 msgctxt "advanced.playErrorSound"
 msgid "Yes"
-msgstr "開"
+msgstr "是"
 
 #. Translators: This is the label for the Advanced settings panel.
 msgid "Advanced"
@@ -12841,41 +12856,3 @@ msgstr "2 倍行高"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5 倍行高"
-
-#~ msgid "Use UI Automation to access the Windows C&onsole when available"
-#~ msgstr "使用 UI Automation 處理 Windows 主控台 (若可用)(&O)"
-
-#, fuzzy
-#~ msgid "Moves the navigator object to the first row"
-#~ msgstr "導覽物件移到下一個物件"
-
-#, fuzzy
-#~ msgid "Moves the navigator object to the last row"
-#~ msgstr "導覽物件移到下一個物件"
-
-#~ msgid "Chinese (China, Mandarin) grade 2"
-#~ msgstr "中文 (中國) 漢語雙拼"
-
-#~ msgid "Cannot save configuration - NVDA in secure mode"
-#~ msgstr "不能儲存組態 - NVDA 在安全模式下"
-
-#~ msgid "{modifier} pressed"
-#~ msgstr "{modifier} 按下了"
-
-#~ msgid "Dutch (Belgium) 6 dot"
-#~ msgstr "荷蘭文 (比利時) 六點"
-
-#~ msgid "Dutch (Netherlands) 6 dot"
-#~ msgstr "荷蘭文 (荷蘭) 六點"
-
-#~ msgid "Polish grade 1"
-#~ msgstr "波蘭文一級"
-
-#~ msgid "Shows a summary of the details at this position if found."
-#~ msgstr "顯示此位置的詳細資料摘要 (若有找到)"
-
-#~ msgid "Report details in browse mode"
-#~ msgstr "在瀏覽模式中讀出詳細資料"
-
-#~ msgid "{comment}  by {author}"
-#~ msgstr "{comment} 由 {author} 加註"
