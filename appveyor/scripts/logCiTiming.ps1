@@ -1,4 +1,4 @@
-# Input: timing.csv
+# Input: ../timing.csv
 # Expect two cols:
 #   - Build-stage name
 #   - Time [Get-Date -o] (Round trip format)
@@ -7,7 +7,7 @@
 # - timingWithElapsed.csv
 # - CI Timing message to Appveyor messages.
 
-$entries = Import-Csv -Path .\timing.csv -Header Stage, Time
+$entries = Import-Csv -Path ../timing.csv -Header Stage, Time
 $lastTime = Get-Date -Date $entries[0].Time
 
 foreach ($e in $entries) {

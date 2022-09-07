@@ -17,7 +17,7 @@ branches:
 init:
   # set the init time for the build, used to calculate the time taken for each stage of the build.
   - ps: |
-      "CI_INIT, $(Get-Date -Format 'o')"| Out-File timing.csv -Append
+      "CI_INIT, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append
 
 environment:
  PY_PYTHON: 3.7-32
@@ -31,17 +31,17 @@ environment:
 
 install:
  - ps: |
-    "CI_INSTALL_START, $(Get-Date -Format 'o')"| Out-File timing.csv -Append
+    "CI_INSTALL_START, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append
  - ps: appveyor\scripts\setBuildVersionVars.ps1
  - ps: appveyor\scripts\decryptFilesForSigning.ps1
  - py -m pip install --upgrade --no-warn-script-location pip
  - git submodule update --init
  - ps: |
-    "CI_INSTALL_END, $(Get-Date -Format 'o')"| Out-File timing.csv -Append
+    "CI_INSTALL_END, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append
 
 build_script:
  - ps: |
-     "CI_BUILD_START, $(Get-Date -Format 'o')"| Out-File timing.csv -Append
+     "CI_BUILD_START, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append
  - ps: appveyor\scripts\setSconsArgs.ps1
  - scons source %sconsArgs%
  - scons %sconsOutTargets% %sconsArgs%
@@ -52,25 +52,25 @@ build_script:
  - 7z a -tzip -r ..\output\symbols.zip *.dl_ *.ex_ *.pd_
  - cd ..
  - ps: |
-     "CI_BUILD_END, $(Get-Date -Format 'o')"| Out-File timing.csv -Append
+     "CI_BUILD_END, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append
 
 before_test:
  - ps: |
-     "CI_TESTSETUP_START, $(Get-Date -Format 'o')"| Out-File timing.csv -Append
+     "CI_TESTSETUP_START, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append
  - ps: appveyor\scripts\tests\beforeTests.ps1
  - ps: appveyor\scripts\installNVDA.ps1
  - ps: |
-     "CI_TESTSETUP_END, $(Get-Date -Format 'o')"| Out-File timing.csv -Append
+     "CI_TESTSETUP_END, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append
 
 test_script:
  - ps: |
-     "CI_TEST_START, $(Get-Date -Format 'o')"| Out-File timing.csv -Append
+     "CI_TEST_START, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append
  - ps: appveyor\scripts\tests\translationCheck.ps1
  - ps: appveyor\scripts\tests\unitTests.ps1
  - ps: appveyor\scripts\tests\lintCheck.ps1
  - ps: appveyor\scripts\tests\systemTests.ps1
  - ps: |
-     "CI_TEST_END, $(Get-Date -Format 'o')"| Out-File timing.csv -Append
+     "CI_TEST_END, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append
 
 after_test:
  - ps: appveyor\scripts\tests\checkTestFailure.ps1
@@ -88,5 +88,5 @@ on_failure:
 on_finish:
  - ps: appveyor\scripts\pushPackagingInfo.ps1
  - ps: |
-     "CI_FINISH_END, $(Get-Date -Format 'o')"| Out-File timing.csv -Append
+     "CI_FINISH_END, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append
  - ps: appveyor\scripts\logCiTiming.ps1
