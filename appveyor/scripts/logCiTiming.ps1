@@ -16,6 +16,11 @@ foreach ($e in $entries) {
     $e | Add-Member -NotePropertyName ElapsedMin -NotePropertyValue $elapsedMin
 }
 
-$entries | Export-Csv -Append -Path timingWithElapsed.csv
+$processedTimesFile = "BuildStageTimingWithElapsed.csv"
+$entries | Export-Csv -Path $processedTimesFile
+$mesg = $entries | Format-Table | out-string
+Add-AppveyorMessage ("CI timing: " + $mesg)
 
-Add-AppveyorMessage "CI timing:\n$entries"
+if (Test-Path -Path $processedTimesFile){
+	Push-AppveyorArtifact $processedTimesFile -FileName $processedTimesFile
+}
