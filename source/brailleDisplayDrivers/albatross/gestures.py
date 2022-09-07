@@ -91,6 +91,9 @@ class InputGestureKeys(braille.BrailleDisplayGesture):
 				except (KeyError, ValueError):
 					log.debug(f"Unknown key with id {key}")
 		self.id = "+".join(names)
+		# Try to fix the first valid key press was not recognized as a gesture
+		if self.id and not self.script:
+			self.script = self._get_script()
 
 	def _getRoutingIndex(self, key: int) -> Optional[Tuple[str, int]]:
 		""" Get the routing index, if the key is in a routing index range, returns the name of the range and the

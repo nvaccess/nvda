@@ -557,13 +557,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		pressedKeys = set(data)
 		log.debug(f"Forwarding keys {pressedKeys}")
 		try:
-			# Try to fix the first valid key press was not recognized as a gesture
-			if gestures.InputGestureKeys(pressedKeys, self.name).id:
-				if not gestures.InputGestureKeys(pressedKeys, self.name).script:
-					time.sleep(0)
-				inputCore.manager.executeGesture(
-					gestures.InputGestureKeys(pressedKeys, self.name)
-				)
+			inputCore.manager.executeGesture(
+				gestures.InputGestureKeys(pressedKeys, self.name)
+			)
 		# Attribute error which rarely occurs here is something strange.
 		except (inputCore.NoInputGestureAction, AttributeError):
 			log.debug("", exc_info=True)
