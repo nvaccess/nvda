@@ -19,6 +19,21 @@ init:
   - ps: |
       "CI_INIT, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append
 
+
+# Disable clone_depth due to requirement to generate the diff for lint checking.
+# clone_depth: 30
+# From docs: https://www.appveyor.com/docs/how-to/repository-shallow-clone/
+# Be aware that if you do a lot of commits producing queued builds and depth number is too small,
+# the git checkout operation following git clone can fail because requested commit is not present
+# in a cloned repository.
+# Interpretation:
+# Given clone_depth: 1:
+# - A build is already in progress
+# - A commit is made, queueing a build (A)
+# - A subsequent commit is added, queueing a new build (B) (but Appveyor is not configured to cancel build A)
+# - When trying to checkout commit for A, the commit will not be available
+
+
 environment:
  PY_PYTHON: 3.7-32
  secure_authenticode_pass:
@@ -35,7 +50,7 @@ install:
  - ps: appveyor\scripts\setBuildVersionVars.ps1
  - ps: appveyor\scripts\decryptFilesForSigning.ps1
  - py -m pip install --upgrade --no-warn-script-location pip
- - git submodule update --init
+ - git submodule update --init --depth 1
  - ps: |
     "CI_INSTALL_END, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append
 

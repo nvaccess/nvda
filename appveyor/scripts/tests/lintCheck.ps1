@@ -7,13 +7,17 @@ if ($env:APPVEYOR_PULL_REQUEST_NUMBER -or $env:APPVEYOR_REPO_BRANCH.StartsWith("
 	# resulting from the pr branch being merged into its base branch.
 	# Therefore to create a diff for linting, we must fetch the head of the base branch.
 	# In a PR, APPVEYOR_REPO_BRANCH points to the head of the base branch. 
-	# Additionally, we can not use a clone_depth of 1, but must use an unlimited clone.
+	# Additionally, an unlimited clone is required (rather than clone_depth of 1) because the lint check
+	# requires checking the diff.
+	# Although possible to fetch the branch heads (with --append) into FETCH_HEAD,
+	# it still won't be possible to calculate the merge-base (common-ancestor) of the two branches.
+	# This is required for the diff (see genDiff.py)
 	if($env:APPVEYOR_PULL_REQUEST_NUMBER) {
-		git fetch -q origin $env:APPVEYOR_REPO_BRANCH
+		git fetch --quiet origin $env:APPVEYOR_REPO_BRANCH
 		$msgBaseLabel = "PR"
 	} else {
 		# However in a pushed branch, we must fetch master.
-		git fetch -q origin master:master
+		git fetch --quiet origin master:master
 		$msgBaseLabel = "Branch"
 	}
 	.\runlint.bat FETCH_HEAD "$flake8Output" 

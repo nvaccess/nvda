@@ -95,6 +95,7 @@ If you aren't sure, run these commands after every git `pull`, `merge` or `check
 or other unexpected behavior.
 
 The submodules are configured to do a shallow fetch, to speed up the clone process.
+The shallow fetch can be bypassed with the `--no-recommend-shallow` option.
 
 For reference, the following run time dependencies are included in Git submodules:
 
