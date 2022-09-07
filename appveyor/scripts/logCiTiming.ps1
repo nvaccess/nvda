@@ -11,9 +11,10 @@ $entries = Import-Csv -Path ../timing.csv -Header Stage, Time
 $lastTime = Get-Date -Date $entries[0].Time
 
 foreach ($e in $entries) {
-    $nextTime = Get-Date -Date $e.Time
-    $elapsedMin = ($nextTime - $lastTime).TotalMinutes
-    $e | Add-Member -NotePropertyName ElapsedMin -NotePropertyValue $elapsedMin
+	$nextTime = Get-Date -Date $e.Time
+	$elapsedMin = ($nextTime - $lastTime).TotalMinutes
+	$e | Add-Member -NotePropertyName ElapsedMin -NotePropertyValue $elapsedMin
+	$lastTime = $nextTime
 }
 
 $processedTimesFile = "BuildStageTimingWithElapsed.csv"
