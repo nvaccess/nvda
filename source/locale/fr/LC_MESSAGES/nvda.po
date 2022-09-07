@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:11331\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-05 00:02+0000\n"
-"PO-Revision-Date: 2022-08-05 08:51+0200\n"
+"POT-Creation-Date: 2022-08-26 06:43+0000\n"
+"PO-Revision-Date: 2022-08-31 16:22+0200\n"
 "Last-Translator: Michel Such <michelsuch93@gmail.com>\n"
 "Language-Team: fra <LL@li.org>\n"
 "Language: fr_FR\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.0\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
@@ -2366,6 +2366,22 @@ msgstr "Erreur dans le fichier de définition de gestes"
 #. Translators: This is spoken when NVDA is starting.
 msgid "Loading NVDA. Please wait..."
 msgstr "Chargement de NVDA. Veuillez patienter..."
+
+#. Translators: This is a warning to users, shown if NVDA cannot determine if
+#. Windows is locked.
+msgid ""
+"NVDA failed to register session tracking. While this instance of NVDA is "
+"running, your desktop will not be secure when Windows is locked. Restart "
+"NVDA? "
+msgstr ""
+"Échec de l'enregistrement du suivi de session. Tant que cette instance de "
+"NVDA est en cours d'exécution, votre bureau ne sera pas sécurisé lorsque "
+"Windows sera verrouillé. Voulez-vous redémarrer NVDA ?"
+
+#. Translators: This is a warning to users, shown if NVDA cannot determine if
+#. Windows is locked.
+msgid "NVDA could not start securely."
+msgstr "NVDA n'a pas pu démarrer en toute sécurité."
 
 #. Translators: The screen is oriented so that it is wider than it is tall.
 msgid "Landscape"
@@ -6602,7 +6618,7 @@ msgstr ""
 "Essaie de lire la documentation pour l'élément sélectionné par autocomplétion"
 
 #. Translators: When the help popup cannot be found for the selected autocompletion item
-msgid "Cann't find the documentation window."
+msgid "Can't find the documentation window."
 msgstr "Impossible de trouver la fenêtre de documentation."
 
 #. Translators: Reported when no track is playing in Foobar 2000.
@@ -7395,12 +7411,12 @@ msgstr "%s%%"
 #. Translators: A measurement unit of font size.
 msgctxt "font size"
 msgid "xx-small"
-msgstr "très petit"
+msgstr "très très petit"
 
 #. Translators: A measurement unit of font size.
 msgctxt "font size"
 msgid "x-small"
-msgstr "petit"
+msgstr "très petit"
 
 #. Translators: A measurement unit of font size.
 msgctxt "font size"
@@ -7420,17 +7436,17 @@ msgstr "grand"
 #. Translators: A measurement unit of font size.
 msgctxt "font size"
 msgid "x-large"
-msgstr "grand"
-
-#. Translators: A measurement unit of font size.
-msgctxt "font size"
-msgid "xx-large"
 msgstr "très grand"
 
 #. Translators: A measurement unit of font size.
 msgctxt "font size"
-msgid "xxx-large"
+msgid "xx-large"
 msgstr "très très grand"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "xxx-large"
+msgstr "très très très grand"
 
 #. Translators: A measurement unit of font size.
 msgctxt "font size"
