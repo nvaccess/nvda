@@ -88,7 +88,6 @@ class InputGestureKeys(braille.BrailleDisplayGesture):
 			else:
 				try:
 					names.append(Key(key).name)
-					log.debug(f"Key is {key} and key name is {Key(key).name}")
 				except (KeyError, ValueError):
 					log.debug(f"Unknown key with id {key}")
 		self.id = "+".join(names)
