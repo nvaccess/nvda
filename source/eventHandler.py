@@ -304,6 +304,8 @@ def executeEvent(
 
 
 def doPreGainFocus(obj: "NVDAObjects.NVDAObject", sleepMode: bool = False) -> bool:
+	from IAccessibleHandler import SecureDesktopNVDAObject
+
 	if _isSecureObjectWhileLockScreenActivated(
 		obj,
 		shouldLog=config.conf["debugLog"]["events"],
@@ -327,7 +329,16 @@ def doPreGainFocus(obj: "NVDAObjects.NVDAObject", sleepMode: bool = False) -> bo
 		# - api.getFocusAncestors() via api.setFocusObject() called in doPreGainFocus
 		speech._manager.removeCancelledSpeechCommands()
 
-	if globalVars.focusDifferenceLevel<=1:
+	if (
+		globalVars.focusDifferenceLevel <= 1
+		# This object should not set off a foreground event.
+		# SecureDesktopNVDAObject uses a gainFocus event to trigger NVDA
+		# to sleep as the secure instance of NVDA starts for the
+		# secure desktop.
+		# The newForeground object fetches from the User Desktop,
+		# not the secure desktop.
+		and not isinstance(obj, SecureDesktopNVDAObject)
+	):
 		newForeground=api.getDesktopObject().objectInForeground()
 		if not newForeground:
 			log.debugWarning("Can not get real foreground, resorting to focus ancestors")

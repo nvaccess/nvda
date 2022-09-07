@@ -69,6 +69,22 @@ This will improve performance for some Java applications including IntelliJ IDEA
 There are no deprecations proposed in 2022.3.
 
 
+= 2022.2.3 =
+This is a patch release to fix an accidental API breakage introduced in 2022.2.1.
+
+== Bug Fixes ==
+- Fixed a bug where NVDA did not announce "Secure Desktop" when entering a secure desktop.
+This caused NVDA remote to not recognize secure desktops. (#14094)
+-
+
+== Changes for Developers ==
+This release contains a technical breakage in API backwards compatibility.
+It is expected that this change does not affect any add-ons.
+Please open a GitHub issue if your add-on becomes incompatible as a result of this release.
+
+- ``SecureDesktopNVDAObject`` is no longer a subclass of ``Desktop`` or ``Window``. (#14105)
+-
+
 = 2022.2.2 =
 This is a patch release to fix a bug introduced in 2022.2.1 with input gestures.
 
