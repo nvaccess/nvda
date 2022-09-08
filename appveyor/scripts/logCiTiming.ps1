@@ -4,10 +4,12 @@
 #   - Time [Get-Date -o] (Round trip format)
 # Process: add elapsed minutes between entries
 # Output:
-# - timingWithElapsed.csv
+# - buildStageTimingWithElapsed.csv
 # - CI Timing message to Appveyor messages.
+$inputFile = "../timing.csv"
+$processedTimesFile = "buildStageTimingWithElapsed.csv"
 
-$entries = Import-Csv -Path ../timing.csv -Header Stage, Time
+$entries = Import-Csv -Path $inputFile -Header Stage, Time
 $lastTime = Get-Date -Date $entries[0].Time
 
 foreach ($e in $entries) {
@@ -17,10 +19,15 @@ foreach ($e in $entries) {
 	$lastTime = $nextTime
 }
 
-$processedTimesFile = "BuildStageTimingWithElapsed.csv"
 $entries | Export-Csv -Path $processedTimesFile
-$mesg = $entries | Format-Table | out-string
-Add-AppveyorMessage ("CI timing: " + $mesg)
+
+$mesgs = (
+	$entries.foreach({
+		($_.Stage, $_.ElapsedMin.tostring('N1'), "min") -join " "
+	})
+) -join ",  "
+
+Add-AppveyorMessage ("CI timing: " + $mesgs)
 
 if (Test-Path -Path $processedTimesFile){
 	Push-AppveyorArtifact $processedTimesFile -FileName $processedTimesFile
