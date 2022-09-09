@@ -69,6 +69,22 @@ Bu sayede IntelliJ IDEA dahil olmak üzere bazı Java uygulamalarında performan
 There are no deprecations proposed in 2022.3.
 
 
+= 2022.2.3 =
+2022.2.1 sürümünde yapılan bir API hatasını düzeltmek için yayınlanan bir yama sürümüdür.
+
+== Hata düzeltmeleri ==
+- Güvenli kipe girerken NVDA'nın "güvenli kip" seslendirmesi yapmamasına neden olan bir hata düzeltildi.
+Bu hata, NVDA uzak bağlantı eklentisinin güvenli kipe girildiğini algılamamasına neden oluyordu. (#14094)
+-
+
+== Changes for Developers ==
+This release contains a technical breakage in API backwards compatibility.
+It is expected that this change does not affect any add-ons.
+Please open a GitHub issue if your add-on becomes incompatible as a result of this release.
+
+- ``SecureDesktopNVDAObject`` is no longer a subclass of ``Desktop`` or ``Window``. (#14105)
+-
+
 = 2022.2.2 =
 Bu sürüm, 2022.2.1'de girdi hareketleriyle ilgili bir hatayı düzeltmek için yayınlanan bir yama sürümüdür.
 == Hata düzeltmeleri ==
