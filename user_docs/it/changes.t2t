@@ -39,6 +39,64 @@ Può essere riattivata nel pannello delle impostazioni avanzate di NVDA. (#11554
 - La dimensione dell'installazione di NVDA è ora mostrata nella sezione Programmi e funzionalità di Windows. (#13909)
 
 
+== Bug Fixes ==
+- Adobe Acrobat / Reader 64 bit non si arresta più in modo anomalo durante la lettura di un documento PDF. (#12920)
+  - Si noti che è necessaria anche la versione più aggiornata di Adobe Acrobat/Reader per evitare il crash.
+  -
+- Le misure della grandezza caratteri sono ora traducibili in NVDA. (#13573)
+- Vengono ignorati gli eventi Java Access Bridge laddove non sia possibile trovare alcun handle di finestra per le applicazioni Java.
+Ciò migliorerà le prestazioni per alcune applicazioni Java, tra cui IntelliJ IDEA. (#13039)
+- La lettura delle celle selezionate per LibreOffice Calc risulta più efficiente e non provoca più un blocco del programma quando vengono selezionate molte celle. (#13232)
+- Microsoft Edge non risulta più inaccessibile se eseguito da un utente diverso. (#13032)
+- quando l'aumento di velocità è disattivato, la velocità di Espeak non rallenta quando ci si trova tra  99% e 100%. (#13876)
+- Risolto un bug che consentiva l'apertura di 2 finestre di dialogo dei gesti di immissione. (#13854)
+-
+
+
+== Cambiamenti per sviluppatori, in inglese ==
+- Updated Comtypes to version 1.1.11. (#12953)
+- In builds of Windows Console (``conhost.exe``) with an NVDA API level of 2 (``FORMATTED``) or greater, such as those included with Windows 11 version 22H2 (Sun Valley 2), UI Automation is now used by default. (#10964)
+  - This can be overridden by changing the "Windows Console support" setting in NVDA's advanced settings panel.
+  - To find your Windows Console's NVDA API level, set "Windows Console support" to "UIA when available", then check the NVDA+F1 log opened from a running Windows Console instance.
+  -
+- The Chromium virtual buffer is now loaded even when the document object has the MSAA ``STATE_SYSTEM_BUSY`` exposed via IA2. (#13306)
+- A config spec type ``featureFlag`` has been created for use with experimental features in NVDA. See ``devDocs/featureFlag.md`` for more information. (#13859)
+-
+
+
+=== Deprecations ===
+There are no deprecations proposed in 2022.3.
+
+
+= 2022.2.2 =
+This is a patch release to fix a bug introduced in 2022.2.1 with input gestures.
+
+== Bug Fixes ==
+- Fixed a bug where input gestures didn't always work. (#14065)
+-
+
+= 2022.2.1 =
+This is a minor release to fix a security issue.
+Please responsibly disclose security issues to info@nvaccess.org.
+
+== Security Fixes ==
+- Fixed exploit where it was possible to run a python console from the lockscreen. (GHSA-rmq3-vvhq-gp32)
+- Fixed exploit where it was possible to escape the lockscreen using object navigation. (GHSA-rmq3-vvhq-gp32)
+-
+
+== Changes for Developers ==
+
+=== Deprecations ===
+These deprecations are currently not scheduled for removal.
+The deprecated aliases will remain until further notice.
+Please test the new API and provide feedback.
+For add-on authors, please open a GitHub issue if these changes stop the API from meeting your needs.
+
+- ``appModules.lockapp.LockAppObject`` should be replaced with ``NVDAObjects.lockscreen.LockScreenObject``. (GHSA-rmq3-vvhq-gp32)
+- ``appModules.lockapp.AppModule.SAFE_SCRIPTS`` should be replaced with ``utils.security.getSafeScripts()``. (GHSA-rmq3-vvhq-gp32)
+-
+
+
 = 2022.2 =
 
 Questa versione si è focalizzata nel risolvere un gran numero di bug.
