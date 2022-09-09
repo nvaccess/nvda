@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-05 00:02+0000\n"
-"PO-Revision-Date: 2022-08-08 18:48+0900\n"
+"POT-Creation-Date: 2022-09-07 04:25+0000\n"
+"PO-Revision-Date: 2022-09-07 13:26+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -146,7 +146,7 @@ msgstr "常にダッキング"
 #. Translators: Displayed in braille for an object which is a
 #. window.
 msgid "wnd"
-msgstr "ウインドウ"
+msgstr "ウィンドウ"
 
 #. Translators: Displayed in braille for an object which is a
 #. dialog.
@@ -2360,6 +2360,22 @@ msgstr "ジェスチャーマップファイルエラー"
 msgid "Loading NVDA. Please wait..."
 msgstr "NVDAを読み込み中です。お待ちください..."
 
+#. Translators: This is a warning to users, shown if NVDA cannot determine if
+#. Windows is locked.
+msgid ""
+"NVDA failed to register session tracking. While this instance of NVDA is "
+"running, your desktop will not be secure when Windows is locked. Restart "
+"NVDA? "
+msgstr ""
+"NVDAはセッショントラッキングの登録に失敗しました。このNVDAのインスタンスが実"
+"行されている間はWindowsのロック画面は安全ではありません。NVDAを再起動します"
+"か?"
+
+#. Translators: This is a warning to users, shown if NVDA cannot determine if
+#. Windows is locked.
+msgid "NVDA could not start securely."
+msgstr "NVDAを正常に起動できませんでした"
+
 #. Translators: The screen is oriented so that it is wider than it is tall.
 msgid "Landscape"
 msgstr "横長の向き"
@@ -3635,7 +3651,7 @@ msgid ""
 "pressed twice, spells the title. If pressed three times, copies the title to "
 "the clipboard"
 msgstr ""
-"現在のアプリまたは最前面のウインドウのタイトルを報告。2回押すと、タイトルをス"
+"現在のアプリまたは最前面のウィンドウのタイトルを報告。2回押すと、タイトルをス"
 "ペル読み。3回押すとタイトルをクリップボードにコピー"
 
 #. Translators: Reported when there is no title text for current program or window.
@@ -3729,7 +3745,7 @@ msgid ""
 "Toggles on and off the reporting of dynamic content changes, such as new "
 "text in dos console windows"
 msgstr ""
-"DOSウインドウ上に書き込まれた新しいテキストのような、動的コンテンツの変化の報"
+"DOSウィンドウ上に書き込まれた新しいテキストのような、動的コンテンツの変化の報"
 "告を切り替え"
 
 #. Translators: presented when the present dynamic changes is toggled.
@@ -4529,7 +4545,7 @@ msgstr "シフト"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "windows"
-msgstr "ウインドウズ"
+msgstr "ウィンドウズ"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "enter"
@@ -4713,7 +4729,7 @@ msgstr "右コントロール"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "left windows"
-msgstr "左ウインドウズ"
+msgstr "左ウィンドウズ"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "left shift"
@@ -4733,7 +4749,7 @@ msgstr "右オルト"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "right windows"
-msgstr "右ウインドウズ"
+msgstr "右ウィンドウズ"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "break"
@@ -6493,8 +6509,8 @@ msgid "Tries to read documentation for the selected autocompletion item."
 msgstr "選択した自動入力候補のドキュメントを読む"
 
 #. Translators: When the help popup cannot be found for the selected autocompletion item
-msgid "Cann't find the documentation window."
-msgstr "ドキュメントのウインドウが見つかりません。"
+msgid "Can't find the documentation window."
+msgstr "ドキュメントのウィンドウが見つかりません。"
 
 #. Translators: Reported when no track is playing in Foobar 2000.
 msgid "No track playing"
@@ -6739,7 +6755,7 @@ msgstr "翻訳者への注記なし"
 #. Translators: this message is reported when NVDA is unable to find
 #. the 'Notes for translators' window in poedit.
 msgid "Could not find Notes for translators window."
-msgstr "翻訳者への注記ウインドウが見つかりません。"
+msgstr "翻訳者への注記ウィンドウが見つかりません。"
 
 #. Translators: The description of an NVDA command for Poedit.
 msgid "Reports any notes for translators"
@@ -6748,7 +6764,7 @@ msgstr "翻訳者への注記の報告"
 #. Translators: this message is reported when NVDA is unable to find
 #. the 'comments' window in poedit.
 msgid "Could not find comment window."
-msgstr "コメントウインドウが見つかりません。"
+msgstr "コメントウィンドウが見つかりません。"
 
 #. Translators: this message is reported when there are no
 #. comments to be presented to the user in the translator
@@ -6758,7 +6774,7 @@ msgstr "コメントなし"
 
 #. Translators: The description of an NVDA command for Poedit.
 msgid "Reports any comments in the comments window"
-msgstr "コメントウインドウのすべてのコメントの報告"
+msgstr "コメントウィンドウのすべてのコメントの報告"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Title placeholder"
@@ -7356,7 +7372,7 @@ msgstr "現在の時刻"
 
 #. Translators: The word for window of a program such as document window.
 msgid "window"
-msgstr "ウインドウ"
+msgstr "ウィンドウ"
 
 #. Translators: Used to identify title bar of a program.
 msgid "title bar"
@@ -7650,7 +7666,7 @@ msgstr "イメージマップ"
 
 #. Translators: Identifies an input window.
 msgid "input window"
-msgstr "入力ウインドウ"
+msgstr "入力ウィンドウ"
 
 #. Translators: Identifies a label.
 msgid "label"

@@ -48,7 +48,6 @@ import eventHandler
 import keyboardHandler
 from logHandler import log
 import mouseHandler
-from NVDAObjects import NVDAObject
 import NVDAObjects.IAccessible
 import NVDAObjects.window
 import winUser
@@ -774,7 +773,7 @@ def processFocusNVDAEvent(obj, force=False):
 	return True
 
 
-class SecureDesktopNVDAObject(NVDAObject):
+class SecureDesktopNVDAObject(NVDAObjects.window.Desktop):
 	"""
 	Used to indicate to the user and to API consumers (including NVDA remote),
 	that the user has switched to a secure desktop.
@@ -783,22 +782,11 @@ class SecureDesktopNVDAObject(NVDAObject):
 	The gainFocus event causes NVDA to enter sleep mode as the secure mode
 	NVDA instance starts on the secure screen.
 
-	This object is not backed by a valid MSAA object as the Secure Desktop
-	object should not be accessed via NVDA.
-	The minimal functionality has been added to support backwards compatibility.
+	This object is backed by a valid MSAA object.
+	However, as information from the Secure Desktop object should not be accessed via this instance of NVDA,
+	getting related objects returns None.
+	This object must remain a Desktop subclass to retain backwards compatibility.
 	"""
-
-	def __init__(self, windowHandle: int):
-		"""
-		@param windowHandle: to retain backwards compatibility,
-		unused as this object is not backed by a valid MSAA object.
-		This object just serves as a minimal API endpoint.
-		"""
-		self._windowHandle = windowHandle
-		super().__init__()
-
-	def _get_processID(self) -> int:
-		return 0
 
 	def findOverlayClasses(self, clsList):
 		clsList.append(SecureDesktopNVDAObject)
@@ -815,6 +803,21 @@ class SecureDesktopNVDAObject(NVDAObject):
 		super(SecureDesktopNVDAObject, self).event_gainFocus()
 		# After handling the focus, NVDA should sleep while the secure desktop is active.
 		self.sleepMode = self.SLEEP_FULL
+
+	def _get_next(self) -> None:
+		return None
+
+	def _get_previous(self) -> None:
+		return None
+
+	def _get_firstChild(self) -> None:
+		return None
+
+	def _get_lastChild(self) -> None:
+		return None
+
+	def _get_parent(self) -> None:
+		return None
 
 
 def processDesktopSwitchWinEvent(window, objectID, childID):
