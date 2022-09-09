@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Vietnamese Language for NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-26 06:43+0000\n"
-"PO-Revision-Date: 2022-08-20 16:26+0700\n"
+"POT-Creation-Date: 2022-09-07 04:25+0000\n"
+"PO-Revision-Date: 2022-09-06 22:34+0700\n"
 "Last-Translator: Dang Manh Cuong <dangmanhcuong@gmail.com>\n"
 "Language-Team: Sao Mai Center for the Blind <danghoaiphuc@gmail.com>\n"
 "Language: vi_VN\n"
@@ -392,7 +392,6 @@ msgstr "sggstn"
 
 #. Translators: Displayed in braille when an object is a definition.
 #. Translators: Identifies a definition.
-#, fuzzy
 msgid "definition"
 msgstr "định nghĩa kiểu"
 
@@ -2367,11 +2366,14 @@ msgid ""
 "running, your desktop will not be secure when Windows is locked. Restart "
 "NVDA? "
 msgstr ""
+"NVDA không đăng kí theo dõi được cho phiên làm việc này. Khi bản NVDA này "
+"chạy, máy tính của bạn sẽ không được bảo vệ khi Windows bị khóa. Khởi động "
+"lại NVDA? "
 
 #. Translators: This is a warning to users, shown if NVDA cannot determine if
 #. Windows is locked.
 msgid "NVDA could not start securely."
-msgstr ""
+msgstr "Không thể khởi động NVDA một cách an toàn."
 
 #. Translators: The screen is oriented so that it is wider than it is tall.
 msgid "Landscape"
@@ -6526,9 +6528,8 @@ msgid "Tries to read documentation for the selected autocompletion item."
 msgstr "Cố gắng đọc tài liệu cho mục tự hoàn thành đã chọn."
 
 #. Translators: When the help popup cannot be found for the selected autocompletion item
-#, fuzzy
 msgid "Can't find the documentation window."
-msgstr "Không tìm thấy cửa sổ tài liệu."
+msgstr "Không tìm thấy cửa sổ tài lieu."
 
 #. Translators: Reported when no track is playing in Foobar 2000.
 msgid "No track playing"
@@ -7293,16 +7294,16 @@ msgid "%s px"
 msgstr "%s px"
 
 #. Translators: A measurement unit of font size.
-#, fuzzy, python-format
+#, python-format
 msgctxt "font size"
 msgid "%s em"
-msgstr "cuối %s"
+msgstr "%s em"
 
 #. Translators: A measurement unit of font size.
-#, fuzzy, python-format
+#, python-format
 msgctxt "font size"
 msgid "%s ex"
-msgstr "cuối %s"
+msgstr "%s ex"
 
 #. Translators: Abbreviation for relative em, a measurement of font size.
 #, python-format
@@ -7332,7 +7333,6 @@ msgid "small"
 msgstr "small"
 
 #. Translators: A measurement unit of font size.
-#, fuzzy
 msgctxt "font size"
 msgid "medium"
 msgstr "trung bình"
@@ -7363,10 +7363,9 @@ msgid "larger"
 msgstr "larger"
 
 #. Translators: A measurement unit of font size.
-#, fuzzy
 msgctxt "font size"
 msgid "smaller"
-msgstr "bộ điền"
+msgstr "nhỏ hơn"
 
 #. Translators: Presented when an item is marked as current in a collection of items
 msgid "current"
@@ -8003,14 +8002,12 @@ msgid "busy indicator"
 msgstr "chỉ báo bận"
 
 #. Translators: Identifies a comment.
-#, fuzzy
 msgid "comment"
-msgstr "Chú thích"
+msgstr "chú thích"
 
 #. Translators: Identifies a suggestion.
-#, fuzzy
 msgid "suggestion"
-msgstr "1 gợi ý"
+msgstr "gợi ý"
 
 #. Translators: Indicates that a particular state of an object is negated.
 #. Separate strings have now been defined for commonly negated states (e.g. not selected and not
@@ -9333,9 +9330,8 @@ msgstr "Hủy bỏ"
 #. Such as, in the Advanced settings panel option, 'Load Chromium virtual buffer when document busy.'
 #. The placeholder {} is replaced with the label of the option which describes current default behavior
 #. in NVDA. EG "Default (Yes)".
-#, fuzzy
 msgid "Default ({})"
-msgstr "Mặc định (Không)"
+msgstr "Mặc định ({})"
 
 #. Translators: The label for the list of categories in a multi category settings dialog.
 msgid "&Categories:"
@@ -9596,7 +9592,7 @@ msgstr "Sử dụng chức năng đánh &vần nếu có hỗ trợ"
 
 #. Translators: This is the label for a checkbox in the voice settings panel.
 msgid "&Delayed descriptions for characters on cursor movement"
-msgstr ""
+msgstr "&Chờ để mô tả cho kí tự khi di chuyển con trỏ"
 
 #. Translators: This is the label for the keyboard settings panel.
 msgid "Keyboard"
@@ -10208,15 +10204,13 @@ msgstr "Hỗ trợ Windows C&onsole"
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA determine its Windows Console implementation
 #. automatically.
-#, fuzzy
 msgid "Automatic (prefer UIA)"
-msgstr "Tự động (ưu tiên Diff Match Patch)"
+msgstr "Tự động (ưu tiên UIA)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA use UIA in the Windows Console when available.
-#, fuzzy
 msgid "UIA when available"
-msgstr "không hoạt động"
+msgstr "UIA không hoạt động"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA use its legacy Windows Console support
@@ -10355,7 +10349,7 @@ msgstr "Của sổ ảo"
 
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
 msgid "Load Chromium virtual buffer when document busy."
-msgstr ""
+msgstr "Tải Chromium virtual buffer khi tài lieu ảo bận."
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -10525,7 +10519,7 @@ msgstr "Trình bày ngữ cảnh tại focus:"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
 msgid "I&nterrupt speech while scrolling"
-msgstr ""
+msgstr "Ngừ&ng đọc trong khi cuộn"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load a single vision enhancement provider.
@@ -11606,10 +11600,10 @@ msgid "{firstAddress} {firstValue} through {lastAddress} {lastValue}"
 msgstr "{firstAddress} {firstValue} qua {lastAddress} {lastValue}"
 
 #. Translators: Excel, report merged range of cell coordinates
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgctxt "excel-UIA"
 msgid "{firstAddress} through {lastAddress}"
-msgstr "{firstAddress} qua {lastAddress}"
+msgstr "{firstAddress} đến {lastAddress}"
 
 #. Translators: the description  for a script for Excel
 msgid "Reports the note or comment thread on the current cell"
@@ -13013,9 +13007,9 @@ msgid "{offset:.3g} millimeters"
 msgstr "{offset:.3g} mi-li-mét"
 
 #. Translators: a measurement in Microsoft Word (points)
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "{offset:.3g} pt"
-msgstr "{offset:.3g} điểm"
+msgstr "{offset:.3g} pt"
 
 #. Translators: a measurement in Microsoft Word
 #. See http://support.microsoft.com/kb/76388 for details.

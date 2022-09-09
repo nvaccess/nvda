@@ -1054,7 +1054,7 @@ Cửa sổ console có kích thước cố định, thường nhỏ hơn nhiều
 Khi văn bản mới được nhập vào, nội dung sẽ được cuộn lên trên và các văn bản trước đó không hiển thị nữa. 
 Trên các phiên bản Windows trước Windows 11 22H2, văn bản không hiển thị trực quan trên cửa sổ thì không tiếp cận được với các lệnh duyệt văn bản của NVDA.
 Vậy nên, cần phải cuộn cửa sổ console để đọc các nội dung phía trên.
-Trong các phiên bản mới hơn của console và trong Windows Terminal, đã có thể xem lại toàn bộ văn bản hiển thị trước đó mà không cần phải cuộn của sổ.
+Trong các phiên bản mới hơn của console và trong Windows Terminal, đã có thể xem lại toàn bộ văn bản hiển thị trước đó mà không cần phải cuộn cửa sổ.
 %kc:beginInclude
 Các phím tắt có sẵn sau đây của Windows Console  có thể hữu ích khi [duyệt nội dung #ReviewingText] với NVDA trong các phiên bản cũ của Windows Console:
 || Tên | Phím | Mô tả |
@@ -1928,11 +1928,11 @@ Thiết lập này có các giá trị sau:
 Tùy chọn này để thiết lập cách mà NVDA tương tác với Windows Console, được dùng bởi command prompt, PowerShell và Windows Subsystem for Linux.
 nó không ảnh hưởng đến Windows Terminal kiểu mới.
 Trong Windows 10 phiên bản 1709, Microsoft đã [thêm hỗ trợ cho UI Automation API của họ vào console https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/], mang lại cải thiện đáng kể về hiệu xuất vận hành  và tính ổn định cho các trình đọc màn hình có hỗ trợ nó.
-Trường họp UI Automation không hoạt động hoặc được biết đến là một trải nghiệm kém hơn cho người dùng, vẫn có hỗ trợ của NVDA cho kiểu console cũ (legacy) như một giải pháp dự phòng.
+Trường hợp UI Automation không hoạt động hoặc được biết đến là một trải nghiệm kém hơn cho người dùng, vẫn có hỗ trợ của NVDA cho kiểu console cũ (legacy) như một giải pháp dự phòng.
 Hộp xổ Hỗ Trợ Windows Console có ba tùy chọn:
-- Tự động: sử dụng UI Automation với  Windows Console được tích họp trong Windows 11 phiên bản 22H2 và cao hơn.
-Đây là tùy chọn được khuyên dùng và cũng được chọn mặc định.
-- Dùng UIA khi có thể: sử dụng UI Automation trong consoles nếu được, kể cả với các phiên bản chưa hoàn thành hoặc còn bị lỗi.
+- Tự động: sử dụng UI Automation với  Windows Console được tích hợp trong Windows 11 phiên bản 22H2 và cao hơn.
+Tùy chọn này được khuyên dùng và cũng được chọn mặc định.
+- Dùng UIA khi có thể: sử dụng UI Automation trong consoles nếu được, kể cả với các phiên bản chưa hoàn chỉnh hoặc còn bị lỗi.
 Trong khi giới hạn của chức năng này có thể hữu ích (và thậm chí là đủ cho nhu cầu sử dụng của bạn), Việc sử dụng tùy chọn này hoàn toàn có nguy cơ gây rủi ro cho bạn và không có sự hỗ trợ nào cho nó được cung cấp.
 - Kiểu cũ: UI Automation trong Windows Console sẽ bị vô hiệu hoàn toàn.
 Kiểu dự phòng này sẽ luôn được sử dụng, kể cả trong trường hợp UI Automation cung cấp trải nghiệm tốt hơn cho người dùng.

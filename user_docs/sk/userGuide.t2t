@@ -332,7 +332,7 @@ NVDA obsahuje nasledujúce klávesové skratky súvisiace so systémovým kurzor
 | Aktuálny riadok | NVDA+šípka hore | NVDA+l | Prečíta   aktuálny riadok zameraný systémovým kurzorom. Stlačené dvakrát rýchlo za sebou vyhláskuje riadok a stlačené trikrát za sebou vyhláskuje riadok foneticky. |
 | Aktuálny výber | NVDA+Shift+šípka hore | NVDA+shift+s | Oznámi práve vybratý text |
 | Oznámiť formátovanie textu | NVDA+f | NVDA+f | Oznámi formátovanie pod textovým kurzorom. Stlačené dvakrát za sebou zobrazí informáciu v režime prehliadania |
-| Oznámiť súradnice kurzora | NVDA+numerický Delete | NVDA+delete | nie je | Oznámi informáciu o súradniciach textu, alebo objektu pod textovým kurzorom. Toto môže zahŕňať oznámenie percent prečítaného dokumentu, alebo vzdialenosť objektu od okrajov alebo presné súradnice na obrazovke. Stlačené dvakrát poskytne podrobnejšie informácie. |
+| Oznámiť súradnice kurzora | NVDA+numerický Delete | NVDA+delete | Oznámi informáciu o súradniciach textu, alebo objektu pod textovým kurzorom. Toto môže zahŕňať oznámenie percent prečítaného dokumentu, alebo vzdialenosť objektu od okrajov alebo presné súradnice na obrazovke. Stlačené dvakrát poskytne podrobnejšie informácie. |
 | Nasledujúca veta | alt+šípka dole | alt+šípka dole | presunie systémový kurzor na nasledujúcu vetu a prečíta ju (platí len pre Microsoft Word a Outlook) |
 | Predchádzajúca veta | alt+šípka hore | alt+šípka hore | Presunie systémový kurzor na predchádzajúcu vetu a prečíta ju (platí len pre Microsoft Word a Outlook) |
 
@@ -1052,10 +1052,11 @@ V tabuľke s knihami:
 NVDA poskytuje podporu pre konzolu, ktorá sa používa v príkazovom riadku, PowerShell, a Windows Subsystéme pre Linux.
 Okno konzoly má pevne stanovenú veľkosť a zvyčajne sa doň nevmestí celý výstup.
 Keď sa v okne objaví nový text, staršie záznamy nie sú viditeľné.
-Takto skrytý text nie je možné čítať prezeracím kurzorom NVDA.
+Vo verziách Windows pred verziou 11 22H2, Takto skrytý text nie je možné čítať prezeracím kurzorom NVDA.
 Preto je potrebné posúvať okno konzoly, aby ste si mohli prečítať staršie výstupi.
-%kc:beginInclude
-Nasledujúce vstavané klávesové skratky pre Windows konzolu môžu byť užitočné pri [čítaní textu #ReviewingText]:
+V nových verziách systému Windows je možné prezerať buffer Windows konzoly a terminálu bez nutnosti skrolovať výstup.
+%kc%kc:beginInclude
+Nasledujúce vstavané klávesové skratky  môžu byť užitočné pri [čítaní textu #ReviewingText] v starších typoch Windows konzoly:
 || Názov | Klávesová skratka | Popis |
 | Posunúť hore | CTRL+šípka hore | Posunie okno konzoly vyššie, takže je možné čítať staršie záznamy. |
 | Posunúť dole | CTRL+šípka dole | posunie okno konzoly nižšie, takže je možné čítať novšie záznamy. |
@@ -1260,6 +1261,20 @@ Odporúča sa nechať túto možnosť zapnutú.
 Žiaľ niektoré hlasové výstupy Microsoft Speech API toto nastavenie nepodporujú a môžu sa správať zvláštne, ak je to začiarknuté.
 Ak pozorujete problémy s vyslovovaním jednotlivých znakov, skúste túto voľbu odčiarknuť.
 
+==== Foneticky hláskovať pri čítaní po znakoch ====[delayedCharacterDescriptions]
+: predvolene
+  vypnuté
+: Možnosti
+  Vypnuté, zapnuté
+:
+
+Ak je táto možnosť zapnutá, bude NVDA vyslovovať aj fonetické popisky pre znaky, ktoré prečítate pod kurzorom.
+
+Ak napríklad prejdete šípkou doprava na písmeno B, NVDA po sekunde povie Božena.
+Toto môže byť užitočné, ak nedokážete správne rozpoznať znaky, alebo ak horšie počujete.
+
+Fonetické hláskovanie je prerušené v prípade, že NVDA vyslovuje iný text, alebo stlačíte kláves ctrl.
+
 +++ Nastavenie hlasového výstupu (NVDA+ctrl+s) +++[SelectSynthesizer]
 Toto okno sa otvorí, ak v kategórii reč aktivujete tlačidlo zmeniť. Tu môžete následne nastaviť hlasový výstup a zvukovú kartu, ktorú chcete používať.
 Ak ste vybrali požadovaný hlasový výstup, stlačte tlačidlo OK a NVDA začne tento výstup automaticky používať.
@@ -1409,6 +1424,21 @@ V našom príklade sa teda dozviete len to, že ste napoložke v zozname.
 ak si chcete prečítať celú kontextovú informáciu (že ste v zozname a tento je súčasťou dialógu), musíte posunúť zobrazenie na riadku späť.
 
 Ak chcete toto nastavenie meniť kedykoľvek z klávesnice, môžete si k nemu priradiť klávesovú skratku v dialógu [Klávesové skratky  #InputGestures].
+
+==== Prerušiť reč počas posúvania ====[BrailleSettingsInterruptSpeech]
+: Predvolene
+  zapnuté
+: Možnosti
+  Predvolené (zapnuté), zapnuté, vypnuté
+:
+
+Toto nastavenie určuje, či má byť reč prerušená, ak posuniete brailový riadok vpred alebo späť.
+Príkazy, ktoré prechádzajú na predchádzajúci alebo nasledujúci riadok, vždy prerušia tok reči.
+
+Súčasné čítanie textu a počúvanie iného textu môže byť rušivé.
+Z tohto dôvodu je predvolene zapnuté prerušenie reči v prípade posúvania riadka.
+
+Ak túto možnosť vypnete, je možné počúvať hlas a čítať text zároveň.
 
 +++ Nastavenie brailového riadka (NVDA+ctrl+a) +++[SelectBrailleDisplay]
 Tento dialóg môžete otvoriť v nastaveniach NVDA v kategórii Braille stlačením tlačidla zmeniť... Tu následne môžete nastaviť brailový riadok, ktorý chcete používať.
@@ -1888,9 +1918,27 @@ Je možné nastaviť tieto možnosti:
 -
 
 
-==== Použiť UIA na zobrazenie Windows konzoly ====[AdvancedSettingsConsoleUIA]
-Ak začiarknete túto možnosť, NVDA bude používať novú, rozpracovanú  [podporu pre UI Automation API https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. V súčasnosti je táto podpora experimentálna a nie je dokončená, preto jej používanie neodporúčame. Po dokončení sa predpokladá jej ostré nasadenie, čím bude nahradená doterajšia podpora pre Windows konzolu a zlepší sa stabilita a prístupnosť.
+==== Podpora pre konzolu Windows ====[AdvancedSettingsConsoleUIA]
+: Predvolene
+  Automaticky
+: Možnosti
+  Automaticky, UIA ak je dostupné, staršie
+:
 
+Určuje, ako NVDA spolupracuje s Windows konzolami v príkazovom riadku, PowerShell a Windows Subsystémom pre Linux.
+Nastavenie tejto možnosti nemá vplyv na moderný Windows terminál.
+V systéme Windows 10 vo verzii 1709, Microsoft [pridal podporu pre UI Automation API do konzoly (text v angličtine) https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/], čím priniesol vylepšenú odozvu a stabilitu pre čítače obrazovky, ktoré túto možnosť podporujú.
+Ak UI Automation nie je dostupné, alebo je známe, že prináša horšie výsledky, NVDA sa vráti k pôvodnému, staršiemu spôsobu spracovania výstupu z konzoly.
+Dostupné sú tri možnosti:
+- Automaticky: Používa UI Automation od verzie Windows 11  22H2.
+Táto možnosť je odporúčaná a predvolene nastavená.
+- UIA ak je dostupné: Používa UI Automation v konzolách vždy, keď je to možné, aj vo verziách s nepresnou a chybovou implementáciou.
+Hoci táto možnosť môže byť užitočná (a postačujúca pre vaše potreby), používate ju na vlastné ryziko a pre tieto prípady neponúkame podporu.
+- Staršie: UI Automation vo Windows konzolách bude úplne vypnuté.
+Táto možnosť sa zapína automaticky vždy, ak by použitie UI Automation prinášalo zhoršenú odozvu.
+Preto odporúčame zvoliť túto možnosť len v prípadoch, ak viete, čo robíte.
+-
+ 
 ==== Použiť UI Automation v Microsoft Edge a ostatných prehliadačoch založených na Chromium ====[ChromiumUIA]
 Umožňuje nastaviť za akých okolností sa použije rozhranie UIA, ak je dostupné v prehliadačoch založených na jadre Chromium ako je Microsoft Edge.
 Podpora pre sprístupnenie prehliadačov založených na jadre Chromium cez rozhranie prístupnosti UIA je v skorom štádiu vývoja a nemusí poskytovať dostatočnú úroveň prístupnosti ako prístupnosť cez rozhranie IA2.

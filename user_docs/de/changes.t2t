@@ -8,12 +8,12 @@ Ein großer Teil dieser Version wurde von der NVDA-Entwicklergemeinschaft beiges
 Dazu gehören verzögerte Zeichenbeschreibungen und eine verbesserte Unterstützung der Windows-Konsole.
 
 Diese Version enthält auch mehrere Fehlerbehebungen.
-Insbesondere stürzen aktuelle Versionen von Adobe Acrobat bzw. Adobe Reader beim Lesen von PDF-Dokumenten nicht mehr ab.
+Insbesondere stürzen aktuelle Versionen von Adobe Acrobat bzw. Adobe Reader beim Lesen von PDF-Dokumenten nicht mehr  ab.
 
 eSpeak wurde aktualisiert, wodurch drei neue Sprachen hinzugekommen sind: Belarussisch, Luxemburgisch und Totontepec Mixe.
 
 == Neue Features ==
-- Im Windows Console Host, der von  der Eingabeaufforderung, PowerShell und dem Windows-Subsystem für Linux unter Windows 11 Version 22H2 (Sun Valley 2) und neuer verwendet wird:
+- Im Windows Console Host, der von der Eingabeaufforderung, PowerShell und dem Windows-Subsystem für Linux unter Windows 11 Version 22H2 (Sun Valley 2) und neuer verwendet wird:
   - Deutlich verbesserte Leistung und Stabilität. (#10964)
   - Wenn Sie ``Strg+F`` drücken, um Text zu suchen, wird die Position des NVDA-Cursors aktualisiert, um dem gefundenen Begriff zu folgen. (#11172)
   - Die Meldung von eingegebenem Text, der nicht auf dem Bildschirm erscheint (z. B. Kennwörter), ist standardmäßig deaktiviert.
@@ -34,14 +34,14 @@ Dies kann in den erweiterten Einstellungen von NVDA wieder aktiviert werden. (#1
     - Totontepec Mixe
     -
   -
- Bei Verwendung von UIA für den Zugriff auf Steuerelemente von Microsoft Excel-Tabellenkalkulationen kann NVDA nun mitteilen, sobald eine Zelle zusammengeführt wird. (#12843)
+ Bei Verwendung von UIA für den Zugriff auf Steuerelemente von Microsoft Excel-Tabellenkalkulationen teilt NVDA nun mit, sobald eine Zelle zusammengeführt wird. (#12843)
 - Anstatt "hat Details" zu melden, wird, sofern möglich, der Zweck der Details angegeben, zum Beispiel "enthält Kommentar". (#13649)
 - Die Installationsgröße von NVDA wird nun im Abschnitt Windows-Programme und -Funktionen angezeigt. (#13909)
 -
 
 
 == Fehlerbehebungen ==
-- Der Adobe Acrobat / Adobe Reader (64-Bit) stürzt beim Lesen eines PDF-Dokuments nicht mehr ab. (#12920)
+- Der Adobe Acrobat bzw. Adobe Reader (64-Bit) stürzt beim Lesen eines PDF-Dokuments nicht mehr ab. (#12920)
   - Bitte beachten Sie, dass die aktuellste Version von Adobe Acrobat bzw. Adobe Reader ebenfalls erforderlich ist, um den Absturz zu vermeiden.
   -
 - Die Messungen von Schriftgrößen sind nun in NVDA übersetzbar. (#13573)
@@ -68,6 +68,22 @@ Dies verbessert die Leistung für einige Java-Anwendungen, einschließlich Intel
 === Veraltete Funktionen ===
 Für 2022.3 wurden keine Änderungen an der API vorgenommen.
 
+
+= 2022.2.3 =
+Dies ist ein Patch-Release, um einen versehentlichen API-Fehler zu beheben, der in 2022.2.1 sich einschlich.
+
+== Fehlerbehebungen ==
+- Ein Fehler wurde behoben, bei dem NVDA beim Aufrufen eines geschützte Desktops nicht "Geschützter Desktop" anzeigte.
+Dies führte dazu, dass NVDA Remote keine geschützten Desktops mehr erkannte. (#14094)
+-
+
+== Änderungen für Entwickler ==
+Diese Version enthält einen technischen Fehler in der Rückwärtskompatibilität der API.
+Es wird davon ausgegangen, dass diese Änderung keine Auswirkungen auf NVDA-Erweiterungen hat.
+Bitte melden Sie ein Problem über GitHub an NV Access, wenn Ihre Erweiterung durch diese Version inkompatibel sein sollte.
+
+- ``SecureDesktopNVDAObject`` ist nicht länger eine Unterklasse von ``Desktop`` oder ``Window``. (#14105)
+-
 
 = 2022.2.2 =
 Dieser Patch behebt einen Fehler, der in Version 2022.2.1 beim Betätigen der Tastenbefehle auftrat.
@@ -152,7 +168,7 @@ LibLouis wurde aktualisiert und enthält eine neue deutsche Braille-Tabelle.
 - Das NVDA-Installationsprogramm kann fortan von Verzeichnissen mit Sonderzeichen aus gestartet werden. (#13270)
 - In Firefox teilt NVDA keine Elemente auf Webseiten mehr mit, wenn die Attribute aria-rowindex, aria-colindex, aria-rowcount oder aria-colcount ungültig sind. (#13405)
 - Der Cursor wechselt nicht mehr die Zeile oder Spalte, wenn Sie die Tabellennavigation verwenden, um durch zusammengeführte Zellen zu navigieren. (#7278)
-- Beim Lesen nicht-interaktiver PDFs in Adobe Reader werden nun Typ und Zustand von Formularfeldern (z. B. Kontrollkästchen und Optionsfelder) mitgeteilt. (#13285)
+- Beim Lesen nicht-interaktiver PDF-Dateien in Adobe Reader werden nun Typ und Zustand von Formularfeldern (z. B. Kontrollkästchen und Optionsfelder) mitgeteilt. (#13285)
 - Die Funktion "Konfiguration auf Standard-Einstellungen zurücksetzen" ist nun im NVDA-Menü im geschützten Modus verfügbar. (#13547)
 - Gesperrte Maus-Tasten werden beim Beenden von NVDA wieder entsperrt, vorher blieb die Maus-Taste gesperrt. (#13410)
 - In Visual Studio werden nun Zeilennummern mitgeteilt. (#13604)
@@ -305,7 +321,7 @@ Hinweis:
 - Mehrere Fälle wurden behoben, in denen Listenelemente in 64-Bit-Anwendungen, wie z. B. in Reaper, nicht mitgeteilt werden konnten. (#8175)
 - Im Download-Manager in Microsoft Edge wechselt NVDA jetzt automatisch in den Fokus-Modus, sobald das Listenelement mit dem zuletzt getätigten Download den Fokus erhält. (#13221)
 - NVDA verursacht bei 64-Bit-Versionen von Notepad++ 8.3 und neuer keinen Absturz mehr. (#13311)
-- Adobe Reader stürzt nicht mehr beim Start ab, sobald der geschützte Modus von Adobe Reader aktiviert ist. (#11568)
+- Der Adobe Reader stürzt nicht mehr beim Start ab, sobald der geschützte Modus von Adobe Reader aktiviert wird. (#11568)
 - Ein Fehler wurde behoben, bei dem die Auswahl des Braillezeilen-Treibers von Papenmeier zu einem Absturz in NVDA führte. (#13348)
 - In Microsoft Word mit UIA: Seitenzahlen und andere Formatierungen werden nicht mehr fälschlicherweise angezeigt, wenn man von einer leeren Tabellenzelle in eine Zelle mit Inhalt oder vom Ende des Dokuments in einen bestehenden Inhalt wechselt. (#13458, #13459)
 - NVDA liest den Seitentitel vor und beginnt automatisch mit dem Lesen, wenn eine Seite in Google Chrome 100 geladen wurde. (#13571)
@@ -314,7 +330,7 @@ Hinweis:
 
 
 == Änderungen für entwickler ==
-- Hinweis: Dies ist eine Version, die die Kompatibilität der API für Erweiterungen beeinträchtigt. Erweiterungen müssen erneut getestet werden und das Manifest muss aktualisiert werden.
+- Hinweis: Dies ist eine Version, die die Kompatibilität der API für Erweiterungen beeinträchtigt. NVDA-Erweiterungen müssen erneut getestet werden und die Manifest-Datei muss aktualisiert werden.
 - Obwohl NVDA immer noch Visual Studio 2019 benötigt, sollten Builds nicht mehr fehlschlagen, sobald eine neuere Version von Visual Studio (z. B. 2022) parallel zu 2019 installiert ist. (#13033, #13387)
 - SCons wurde auf Version 4.3.0 aktualisiert. (#13033)
 - Py2exe wurde auf Version 0.11.1.0 aktualisiert. (#13510)
