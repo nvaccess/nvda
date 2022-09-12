@@ -28,6 +28,10 @@ from threading import (
 )
 from typing import Callable
 
+import api
+
+from IAccessibleHandler import SecureDesktopNVDAObject
+
 from .constants import KC_INTERVAL
 
 
@@ -59,6 +63,10 @@ class ReadThread(Thread):
 		data = dwEvtMask = DWORD()
 		log.debug(f"{self.name} started")
 		while not self._event.isSet():
+			if isinstance(api.getFocusObject(), SecureDesktopNVDAObject):
+				log.debug(f"Secure desktop, sleeping {KC_INTERVAL} seconds")
+				self._event.wait(KC_INTERVAL)
+				continue
 			# Try to reconnect if port is not open
 			if not self._dev.is_open:
 				log.debug(
@@ -102,8 +110,8 @@ class ReadThread(Thread):
 				else:
 					if self._event.isSet():
 						break
+					log.debug(f"GetOverLappedResult failed {ctypes.WinError()}")
 					self._disableFunction()
-					log.debug("GetOverLappedResult failed")
 			# See comment in _somethingToRead
 			except (OSError, AttributeError, TypeError):
 				if self._event.isSet():

@@ -8,6 +8,7 @@ Classes:
 - BrailleDisplayDriver
 """
 
+import api
 import serial
 import time
 
@@ -32,6 +33,9 @@ from typing import (
 import braille
 import inputCore
 import ui
+
+from IAccessibleHandler import SecureDesktopNVDAObject
+
 from . import gestures
 from . import threads
 
@@ -100,6 +104,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self._kc = None
 		# When previous write was done (see KC_INTERVAL).
 		self._writeTime = 0.0
+		self._try = False
 		self._searchPorts(port)
 
 	def terminate(self):
@@ -336,7 +341,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		"""
 		self.numCells = 0
 		if self._dev and self._dev.is_open:
-			self._dev.close()
+			try:
+				self._dev.close()
+				log.debug(f"Port {self._currentPort} closed")
+			except (AttributeError, OSError):
+				log.debug(f"Port {self._currentPort} close failed", exc_info=True)
 		if len(self._oldCells):
 			self._clearOldCells()
 		self._waitingCtrlPacket = False
@@ -424,6 +433,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def _somethingToWrite(self):
 		"""All write operations."""
 		with self._writeLock:
+			# Secure desktop
+			if isinstance(api.getFocusObject(), SecureDesktopNVDAObject):
+				self._disableConnection()
+				log.debug("Secure desktop, connection disabled")
+				return
 			data = b""
 			while len(self._writeQueue):
 				try:
