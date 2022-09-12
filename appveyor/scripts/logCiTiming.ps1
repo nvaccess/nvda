@@ -25,9 +25,9 @@ $mesgs = (
 	$entries.foreach({
 		($_.Stage, $_.ElapsedMin.tostring('N1')) -join " "
 	})
-) -join ",  "
+) -join ", `n"
 
-Add-AppveyorMessage ("CI timing (mins):  " + $mesgs)
+Add-AppveyorMessage ("CI timing (mins): `n" + $mesgs)
 
 if (Test-Path -Path $processedTimesFile){
 	Push-AppveyorArtifact $processedTimesFile -FileName $processedTimesFile
