@@ -35,6 +35,7 @@ import extensionPoints
 from . import profileUpgrader
 from .configSpec import confspec
 from .featureFlag import (
+	FeatureFlag,
 	_transformSpec_AddFeatureFlagDefault,
 	_validateConfig_featureFlag,
 )
@@ -1157,6 +1158,8 @@ class AggregatedSection(object):
 	def _cacheLeaf(self, key, spec, val):
 		if spec:
 			# Validate and convert the value.
+			if isinstance(val, FeatureFlag):
+				val = str(val)
 			val = self.manager.validator.check(spec, val)
 		self._cache[key] = val
 		return val
