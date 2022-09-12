@@ -23,11 +23,11 @@ $entries | Export-Csv -Path $processedTimesFile
 
 $mesgs = (
 	$entries.foreach({
-		($_.Stage, $_.ElapsedMin.tostring('N1'), "min") -join " "
+		($_.Stage, $_.ElapsedMin.tostring('N1')) -join " "
 	})
 ) -join ",  "
 
-Add-AppveyorMessage ("CI timing: " + $mesgs)
+Add-AppveyorMessage ("CI timing (mins):  " + $mesgs)
 
 if (Test-Path -Path $processedTimesFile){
 	Push-AppveyorArtifact $processedTimesFile -FileName $processedTimesFile
