@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2016–2022 NV Access Limited, Bill Dengler
+# Copyright (C) 2016–2022 NV Access Limited, Bill Dengler, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -118,3 +118,19 @@ def upgradeConfigFrom_6_to_7(profile: Dict[str, str]) -> None:
 		selectiveEventRegistration = False
 	if selectiveEventRegistration:
 		profile['UIA']['eventRegistration'] = "selective"
+
+
+def upgradeConfigFrom_7_to_8(profile: Dict[str, str]) -> None:
+	"""
+	In Document formatting settings, "Row/column headers" check box has been replaced with "Headers" combobox.
+	"""
+	try:
+		reportTableHeaders = profile['documentFormatting']['reportTableHeaders']
+	except KeyError:
+		# Setting does not exist, no need for upgrade of this setting
+		log.debug("reportTableHeaders not present, no action taken.")
+	else:
+		if reportTableHeaders:
+			profile['documentFormatting']['reportTableHeaders'] = 1  # Rows and columns
+		else:
+			profile['documentFormatting']['reportTableHeaders'] = 0  # Off

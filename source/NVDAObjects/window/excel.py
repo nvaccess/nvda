@@ -1,5 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited, Dinesh Kaushal, Siddhartha Gupta, Accessolutions, Julien Cochuyt
+# Copyright (C) 2006-2022 NV Access Limited, Dinesh Kaushal, Siddhartha Gupta, Accessolutions, Julien Cochuyt,
+# Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -24,6 +25,7 @@ import ui
 import speech
 from tableUtils import HeaderCellInfo, HeaderCellTracker
 import config
+from config.configFlags import ReportTableHeaders
 import textInfos
 import colors
 import eventHandler
@@ -1272,7 +1274,7 @@ class ExcelCell(ExcelBase):
 		gesture="kb:NVDA+shift+c")
 	def script_setColumnHeader(self,gesture):
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
-		if not config.conf['documentFormatting']['reportTableHeaders']:
+		if config.conf['documentFormatting']['reportTableHeaders'] == ReportTableHeaders.OFF:
 			# Translators: a message reported in the SetColumnHeader script for Excel.
 			ui.message(_("Cannot set headers. Please enable reporting of table headers in Document Formatting Settings"))
 			return
@@ -1298,7 +1300,7 @@ class ExcelCell(ExcelBase):
 		gesture="kb:NVDA+shift+r")
 	def script_setRowHeader(self,gesture):
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
-		if not config.conf['documentFormatting']['reportTableHeaders']:
+		if config.conf['documentFormatting']['reportTableHeaders'] == ReportTableHeaders.OFF:
 			# Translators: a message reported in the SetRowHeader script for Excel.
 			ui.message(_("Cannot set headers. Please enable reporting of table headers in Document Formatting Settings"))
 			return

@@ -13,6 +13,7 @@ import speech
 import braille
 import controlTypes
 import config
+from config.configFlags import ReportTableHeaders
 import tableUtils
 import textInfos
 import eventHandler
@@ -205,7 +206,7 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 
 	def script_setColumnHeader(self,gesture):
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
-		if not config.conf['documentFormatting']['reportTableHeaders']:
+		if config.conf['documentFormatting']['reportTableHeaders'] == ReportTableHeaders.OFF:
 			# Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 			ui.message(_("Cannot set headers. Please enable reporting of table headers in Document Formatting Settings"))
 			return
@@ -233,7 +234,7 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 
 	def script_setRowHeader(self,gesture):
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
-		if not config.conf['documentFormatting']['reportTableHeaders']:
+		if config.conf['documentFormatting']['reportTableHeaders'] == ReportTableHeaders.OFF:
 			# Translators: a message reported in the SetRowHeader script for Microsoft Word.
 			ui.message(_("Cannot set headers. Please enable reporting of table headers in Document Formatting Settings"))
 			return
