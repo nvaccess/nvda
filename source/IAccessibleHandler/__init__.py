@@ -811,8 +811,8 @@ class SecureDesktopNVDAObject(NVDAObject):
 
 	def event_gainFocus(self):
 		from speech.speech import cancelSpeech
-		super().event_gainFocus()
 		cancelSpeech()
+		super().event_gainFocus()
 		# After handling the focus, NVDA should sleep while the secure desktop is active.
 		self.sleepMode = self.SLEEP_FULL
 
