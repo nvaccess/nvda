@@ -208,7 +208,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	reportTables = boolean(default=true)
 	includeLayoutTables = boolean(default=False)
 	# 0: Off, 1: Rows and columns, 2: Rows, 3: Columns
-	reportTableHeaders = integer(0, 3, default=0)
+	reportTableHeaders = integer(0, 3, default=1)
 	reportTableCellCoords = boolean(default=True)
 	reportBorderStyle = boolean(default=False)
 	reportBorderColor = boolean(default=False)
