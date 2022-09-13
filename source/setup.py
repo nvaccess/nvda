@@ -215,6 +215,7 @@ setup(
 			"appModules",
 			"comInterfaces",
 			"brailleDisplayDrivers",
+			"brailleDisplayDrivers.albatross",
 			"synthDrivers",
 			"visionEnhancementProviders",
 		],
