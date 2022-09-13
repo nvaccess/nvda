@@ -543,6 +543,7 @@ addTable("xh-za-g1.utb", _("Xhosa grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("xh-za-g2.ctb", _("Xhosa grade 2"), contracted=True)
+
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 # This should be translated to '中文中国汉语通用盲文' in Mandarin.
@@ -565,6 +566,7 @@ addTable("zh-hk.ctb", _("Chinese (Hong Kong, Cantonese)"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("zh-tw.ctb", _("Chinese (Taiwan, Mandarin)"))
+
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("zu-za-g1.utb", _("Zulu grade 1"))
