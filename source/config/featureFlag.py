@@ -15,7 +15,7 @@ from .featureFlagEnums import (
 	FlagValueEnum,
 )
 from typing import (
-	Optional,
+	Union,
 )
 from configobj.validate import (
 	ValidateError,
@@ -79,7 +79,7 @@ class FeatureFlag:
 
 
 def _validateConfig_featureFlag(
-		value: Optional[str],
+		value: Union[str, FeatureFlag],
 		optionsEnum: str,
 		behaviorOfDefault: str
 ) -> FeatureFlag:
@@ -121,6 +121,9 @@ def _validateConfig_featureFlag(
 		)
 	if behaviorOfDefault == OptionsEnumClass.DEFAULT:
 		raise ValidateError("Spec Error: behaviorOfDefault must not be 'default'/'DEFAULT'")
+
+	if isinstance(value, FeatureFlag):
+		return value
 
 	if not isinstance(value, str):
 		raise ValidateError(
