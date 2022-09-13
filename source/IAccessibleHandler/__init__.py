@@ -815,6 +815,8 @@ class SecureDesktopNVDAObject(NVDAObject):
 		# Before announcing the secure desktop and entering sleep mode,
 		# cancel speech so that speech does not overlap with the new instance of NVDA
 		# started on the secure desktop.
+		# Cancelling speech was previously handled by a foreground event on SecureDesktopNVDAObject.
+		# This foreground event is now explicitly prevented for security purposes.
 		cancelSpeech()
 		super().event_gainFocus()
 		# After handling the focus, NVDA should sleep while the secure desktop is active.
