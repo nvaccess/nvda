@@ -3,15 +3,18 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-"""Flags used for the configuration.
-"""
+"""Flags used for the configuration."""
+
 from enum import unique
 from utils.displayString import DisplayStringIntEnum
 
 
 @unique
 class ReportTableHeaders(DisplayStringIntEnum):
-	"""The possible config values to report table headers.
+	"""Enumeration containing the possible config values to report table headers.
+	
+	Use ReportTableHeaders.MEMBER.value to compare with the config;
+	use ReportTableHeaders.MEMBER.displayString in the UI for a translatable description of this member.
 	"""
 	
 	OFF = 0

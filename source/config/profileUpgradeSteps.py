@@ -15,6 +15,7 @@ that no information is lost, while updating the ConfigObj to meet the requiremen
 """
 
 from logHandler import log
+from config.configFlags import ReportTableHeaders
 from typing import (
 	Dict,
 )
@@ -131,6 +132,6 @@ def upgradeConfigFrom_7_to_8(profile: Dict[str, str]) -> None:
 		log.debug("reportTableHeaders not present, no action taken.")
 	else:
 		if reportTableHeaders:
-			profile['documentFormatting']['reportTableHeaders'] = 1  # Rows and columns
+			profile['documentFormatting']['reportTableHeaders'] = ReportTableHeaders.ROWS_AND_COLUMNS.value
 		else:
-			profile['documentFormatting']['reportTableHeaders'] = 0  # Off
+			profile['documentFormatting']['reportTableHeaders'] = ReportTableHeaders.OFF.value
