@@ -20,6 +20,7 @@ Whether you are a beginner, an advanced user, a new or a long time developer; or
 * [NVDA Users Mailing List](https://nvda.groups.io/g/nvda)
 * [NVDA Developers Mailing List](https://groups.io/g/nvda-devel)
 * [NVDA Add-ons Mailing List](https://groups.io/g/nvda-addons)
+* [NVDA Add-on API Mailing List](https://groups.google.com/a/nvaccess.org/g/nvda-api)
 * [Instant Messaging channel for NVDA Support](https://gitter.im/nvaccess/NVDA)
 * [Other sources including groups and profiles on social media channels, language specific websites and mailing lists etc.](https://github.com/nvaccess/nvda-community/wiki/Connect)
 
