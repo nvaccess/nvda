@@ -811,6 +811,10 @@ class SecureDesktopNVDAObject(NVDAObject):
 
 	def event_gainFocus(self):
 		from speech.speech import cancelSpeech
+		# NVDA announces the secure desktop when handling the gainFocus event.
+		# Before announcing the secure desktop and entering sleep mode,
+		# cancel speech so that speech does not overlap with the new instance of NVDA
+		# started on the secure desktop.
 		cancelSpeech()
 		super().event_gainFocus()
 		# After handling the focus, NVDA should sleep while the secure desktop is active.
