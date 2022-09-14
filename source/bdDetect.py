@@ -251,11 +251,11 @@ class Detector(object):
 			C{None} if no driver filtering should occur.
 		"""
 		self._executor = ThreadPoolExecutor(1)
-		self._stopEvent = threading.Event()
 		self._btDevsLock = threading.Lock()
 		self._btDevs = None
 		messageWindow.pre_handleWindowMessage.register(self.handleWindowMessage)
 		appModuleHandler.post_appSwitch.register(self.pollBluetoothDevices)
+		self._stopEvent = threading.Event()
 		self._detectUsb = usb
 		self._detectBluetooth = bluetooth
 		self._limitToDevices = limitToDevices
