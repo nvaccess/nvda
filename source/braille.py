@@ -2302,6 +2302,8 @@ class _BgThread:
 
 	@classmethod
 	def queueApc(cls, func, param=0):
+		# Ensure the thread is running
+		cls.start()
 		ctypes.windll.kernel32.QueueUserAPC(func, cls.handle, param)
 
 	@classmethod
