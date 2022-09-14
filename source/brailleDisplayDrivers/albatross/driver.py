@@ -3,12 +3,14 @@
 # See the file COPYING for more details.
 # Copyright (C) 2022 NV Access Limited, Burman's Computer and Education Ltd.
 
-"""I/O code for Tivomatic Caiku Albatross braille display driver.
+"""Main code for Tivomatic Caiku Albatross braille display driver.
+Communication with display is done here. See class L{BrailleDisplayDriver}
+for description of most important functions.
+
 Classes:
-- BrailleDisplayDriver
+- L{BrailleDisplayDriver}
 """
 
-import api
 import serial
 import time
 
@@ -34,10 +36,8 @@ import braille
 import inputCore
 import ui
 
-from IAccessibleHandler import SecureDesktopNVDAObject
-
 from . import gestures
-from . import threads
+from . import _threads
 
 from .constants import (
 	BAUD_RATE,
@@ -63,6 +63,15 @@ from .gestures import _gestureMap
 
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+	"""Communication with display.
+
+	Most important functions:
+
+	- L{_readHandling}; all data from display is read there
+	- L{_somethingToWrite}; manages all write operations
+	- L{display}; prepares data which should be displayed on braille so
+	that display can show it properly
+"""
 	name = "albatross"
 	# Translators: Names of braille displays.
 	description = _("Caiku Albatross 46/80")
@@ -134,7 +143,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			# Terminating anyway
 			pass
 
-	def _searchPorts(self, port):
+	def _searchPorts(self, port: str):
 		"""Search ports where display can be connected."""
 		for self._baudRate in BAUD_RATE:
 			for portType, portId, port, portInfo in self._getTryPorts(port):
@@ -146,11 +155,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					# Prepare _oldCells to store last displayed content.
 					while len(self._oldCells) < self.numCells:
 						self._oldCells.append(0)
-					self._kc = threads.RepeatedTimer(
+					self._kc = _threads.RepeatedTimer(
 						KC_INTERVAL,
 						self._keepConnected
 					)
-					self._handleRead = threads.ReadThread(
+					self._handleRead = _threads.ReadThread(
 						self._readHandling,
 						self._disableConnection,
 						self._exitEvent,
@@ -206,7 +215,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	def _initPort(self, i: int = MAX_INIT_RETRIES - 1) -> bool:
 		"""Initializes port.
-		@param i: Just for loggint retries.
+		@param i: Just for logging retries.
 		"""
 		try:
 			self._dev = serial.Serial(
@@ -235,7 +244,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	def _openPort(self, i: int = MAX_INIT_RETRIES - 1) -> bool:
 		"""Opens port.
-		@param i: Just for loggint retries.
+		@param i: Just for logging retries.
 		"""
 		try:
 			self._dev.open()
@@ -260,12 +269,14 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			return False
 
 	def _readInitByte(self) -> bool:
-		# Strange but very rarely in_waiting causes exception.
+		# Very rarely in_waiting raises IOError
 		try:
 			if not self._dev.in_waiting:
 				log.debug("Read: no data")
 				return False
-		# See comment in _somethingToRead
+		# Considering situation where "albatross_read" thread is about to read
+		# but writing to display fails during it - or vice versa - AttributeError
+		# might raise.
 		except (IOError, AttributeError):
 			self._disableConnection()
 			log.debug("Trying to reconnect", exc_info=True)
@@ -295,7 +306,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				self._waitingSettingsByte = True
 				log.debug("Read: no data")
 				return False
-		# See comment in _readInitByte
+		# Considering situation where "albatross_read" thread is about to read
+		# but writing to display fails during it - or vice versa - AttributeError
+		# might raise.
 		except (IOError, AttributeError):
 			self._disableConnection()
 			log.debug("Trying to reconnect", exc_info=True)
@@ -326,7 +339,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				time.sleep(RESET_SLEEP)
 			log.debug("I/O buffers reset done")
 			return True
-		# See comment in _somethingToRead
+		# Considering situation where "albatross_read" thread is about to read
+		# but writing to display fails during it - or vice versa - AttributeError
+		# might raise.
 		except (IOError, AttributeError):
 			log.debug(
 				f"I/O buffer reset failed on port {self._currentPort}", exc_info=True
@@ -357,6 +372,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self._tryToConnect = True
 
 	def _readHandling(self):
+		"""Manages all read operations.
+Most of time called from albatross_read thread when there is something to
+read in the port. See L{_threads} module ReadThread class.
+When initial connection is established called from L{_searchPorts} function.
+"""
 		if self._tryToConnect:
 			# Only one try to open port when called from "albatross_read" thread.
 			# This is indicated by _dev is not None.
@@ -433,11 +453,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def _somethingToWrite(self):
 		"""All write operations."""
 		with self._writeLock:
-			# Secure desktop
-			if isinstance(api.getFocusObject(), SecureDesktopNVDAObject):
-				self._disableConnection()
-				log.debug("Secure desktop, connection disabled")
-				return
 			data = b""
 			while len(self._writeQueue):
 				try:
@@ -455,12 +470,15 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					self._kc.stop()
 					self._kc.start()
 				log.debug(f"Written: {data}")
-			# see comment in _somethingToRead
+			# Considering situation where "albatross_read" thread is about to read
+			# but writing to display fails during it - or vice versa - AttributeError
+			# might raise.
 			except (IOError, AttributeError):
 				self._disableConnection()
 				log.debug(f"Write failed: {data}, trying to reconnect", exc_info=True)
 
 	def _handleReadQueue(self):
+		"""Handles data read in L{_readHandling}."""
 		log.debug(
 			f"_ReadQueue is: {self._readQueue}, length {len(self._readQueue)}"
 		)
@@ -534,8 +552,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self.numCells = 80 if ord(data) >> 7 == 1 else 46
 
 	def _handleKeyPresses(self, data: bytes):
-		# in single ctrl-key presses and ctrl-key combinations the first key is
-		# resent as last one.
+		"""Handles display button presses.
+		in single ctrl-key presses and ctrl-key combinations the first key is
+		resent as last one.
+		"""
 		if ord(data) in CONTROL_KEY_CODES or self._waitingCtrlPacket:
 			# at most MAX_COMBINATION_KEYS keys.
 			if self._waitingCtrlPacket:

@@ -5,8 +5,11 @@
 
 """Threads for Tivomatic Caiku Albatross braille display driver.
 Classes:
-- L{ReadThread}
-- L{RepeatedTimer}
+- L{ReadThread}; manages reconnection retries and works as a trigger
+for read operations excluding initial connection establishment
+- L{RepeatedTimer}; timer to check periodically if data needs to be sent
+to display to keep connection. If display gets nothing within approximately
+2 seconds, it falls back to "wait for connection" state.
 """
 
 import ctypes
@@ -28,10 +31,6 @@ from threading import (
 )
 from typing import Callable
 
-import api
-
-from IAccessibleHandler import SecureDesktopNVDAObject
-
 from .constants import KC_INTERVAL
 
 
@@ -40,8 +39,8 @@ class ReadThread(Thread):
 
 	def __init__(
 			self,
-			readFunction: Callable,
-			disableFunction: Callable,
+			readFunction: Callable[[None], None],
+			disableFunction: Callable[[None], None],
 			event: Event,
 			dev: serial.Serial,
 			*args,
@@ -63,10 +62,6 @@ class ReadThread(Thread):
 		data = dwEvtMask = DWORD()
 		log.debug(f"{self.name} started")
 		while not self._event.isSet():
-			if isinstance(api.getFocusObject(), SecureDesktopNVDAObject):
-				log.debug(f"Secure desktop, sleeping {KC_INTERVAL} seconds")
-				self._event.wait(KC_INTERVAL)
-				continue
 			# Try to reconnect if port is not open
 			if not self._dev.is_open:
 				log.debug(
@@ -127,13 +122,13 @@ class RepeatedTimer(object):
 	Timer is used to check if data needs to be sent to display to keep
 	connected.
 	Code copied from
-	https://stackoverflow.com/questions/474528/what-is-the-best-way-to-repeatedly-execute-a-function-every-x-seconds
+	https://stackoverflow.com/a/38317060
 	"""
 
 	def __init__(
 			self,
 			interval: float,
-			function: Callable,
+			function: Callable[[None], None],
 			*args,
 			**kwargs
 	):

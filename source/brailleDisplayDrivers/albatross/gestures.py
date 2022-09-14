@@ -9,14 +9,16 @@ from logHandler import log
 from typing import (
 	Optional,
 	Set,
-	Tuple
+	Tuple,
 )
 
 import braille
 import inputCore
 
-from .constants import Key
-
+from .constants import (
+	Key,
+	ROUTING_KEY_RANGES,
+)
 _gestureMap = inputCore.GlobalGestureMap({
 	"globalCommands.GlobalCommands": {
 		"review_top": ("br(albatross):home1", "br(albatross):home2",),
@@ -29,9 +31,16 @@ _gestureMap = inputCore.GlobalGestureMap({
 		"braille_toggleTether": ("br(albatross):cursor1+cursor2",),
 		"braille_previousLine": ("br(albatross):up1", "br(albatross):up2", "br(albatross):up3",),
 		"braille_nextLine": ("br(albatross):down1", "br(albatross):down2", "br(albatross):down3",),
-		"braille_scrollBack": ("br(albatross):left", "br(albatross):lWheelLeft", "br(albatross):rWheelLeft",),
+		"braille_scrollBack": (
+			"br(albatross):left",
+			"br(albatross):lWheelLeft",
+			"br(albatross):rWheelLeft",
+		),
 		"braille_scrollForward": (
-			"br(albatross):right", "br(albatross):lWheelRight", "br(albatross):rWheelRight",),
+			"br(albatross):right",
+			"br(albatross):lWheelRight",
+			"br(albatross):rWheelRight",
+		),
 		"braille_routeTo": ("br(albatross):routing",),
 		"braille_reportFormatting": ("br(albatross):secondRouting",),
 		"braille_toggleFocusContextPresentation": ("br(albatross):attribute1+attribute3",),
@@ -69,15 +78,6 @@ class InputGestureKeys(braille.BrailleDisplayGesture):
 	def __init__(self, keys: Set[int], name: str):
 		super().__init__()
 		self.source = name
-		# Dictionary keys contain routing and second routing value ranges,
-		# and values subtraction required to get actual routing index
-		# and corresponding routing name.
-		self._routingRanges = {  # range values are inclusive
-			(2, 41): (2, "routing"),
-			(43, 82): (43, "secondRouting"),
-			(111, 150): (71, "routing"),
-			(152, 191): (112, "secondRouting"),
-		}
 		self.keyCodes = set(keys)
 		names = []
 		for key in self.keyCodes:
@@ -96,14 +96,11 @@ class InputGestureKeys(braille.BrailleDisplayGesture):
 			self.script = self._get_script()
 
 	def _getRoutingIndex(self, key: int) -> Optional[Tuple[str, int]]:
-		""" Get the routing index, if the key is in a routing index range, returns the name of the range and the
+		"""Get the routing index, if the key is in a routing index range, returns the name of the range and the
 		index within that range.
-		See _routingRanges
+		See L{ROUTING_KEY_RANGES}.
 		"""
-		for rangeStart, rangeEnd in self._routingRanges:
-			value = self._routingRanges[(rangeStart, rangeEnd)]
-			indexOffset = value[0]
-			routingName = value[1]
-			if rangeStart <= key <= rangeEnd:
-				return routingName, key - indexOffset
+		for routingKeyRange in ROUTING_KEY_RANGES:
+			if routingKeyRange.start <= key <= routingKeyRange.end:
+				return routingKeyRange.name, key - routingKeyRange.indexOffset
 		return None

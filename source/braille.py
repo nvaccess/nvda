@@ -2369,10 +2369,11 @@ class _BgThread:
 		while True:
 			# Ensuring with try except that occasional OS errors with SleepEx
 			# do not break loop
+			# Typical error is: OSError: exception: access violation reading 0xFFFFFFFF
 			try:
 				ctypes.windll.kernel32.SleepEx(winKernel.INFINITE, True)
 			except OSError:
-				log.debug("", exc_info=True)
+				log.error("Exception thrown on sleeping braille thread:", exc_info=True)
 			if cls.exit:
 				break
 

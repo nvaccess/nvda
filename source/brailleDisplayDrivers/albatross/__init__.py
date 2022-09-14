@@ -6,10 +6,11 @@
 """Braille display driver for Tivomatic Caiku albatross 46 and 80 displays.
 Contains modules:
 
-- constants
-- driver
-- gestures
-- threads
+- constants.py
+- driver.py
+- gestures.py
+- _threads.py
 """
 
+# Imported here so that braille._getDisplayDriver can import
 from .driver import BrailleDisplayDriver  # noqa: F401
