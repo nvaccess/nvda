@@ -15,8 +15,7 @@ For drivers in add-ons, this must be done in a global plugin.
 import itertools
 from collections import namedtuple, defaultdict, OrderedDict
 import threading
-from concurrent.futures import ThreadPoolExecutor
-import queue
+from concurrent.futures import ThreadPoolExecutor, Future
 import typing
 import hwPortUtils
 import braille
@@ -255,7 +254,8 @@ class Detector(object):
 		"""
 		self._executor = ThreadPoolExecutor(1)
 		self._btDevsLock = threading.Lock()
-		self._btDevs = None
+		self._btDevs: typing.Optional[typing.Tuple[str, DeviceMatch]] = None
+		self._queuedFuture: typing.Optional[Future] = None
 		messageWindow.pre_handleWindowMessage.register(self.handleWindowMessage)
 		appModuleHandler.post_appSwitch.register(self.pollBluetoothDevices)
 		self._stopEvent = threading.Event()
@@ -264,10 +264,6 @@ class Detector(object):
 		self._limitToDevices = limitToDevices
 		# Perform initial scan.
 		self._queueBgScan(usb=usb, bluetooth=bluetooth, limitToDevices=limitToDevices)
-
-	@property
-	def _scanQueued(self) -> bool:
-		return not self._executor._work_queue.empty()
 
 	def _queueBgScan(
 			self,
@@ -286,19 +282,19 @@ class Detector(object):
 		self._detectUsb = usb
 		self._detectBluetooth = bluetooth
 		self._limitToDevices = limitToDevices
-		if not self._scanQueued:
-			self._executor.submit(self._bgScan, usb, bluetooth, limitToDevices)
+		if self._queuedFuture:
+			# This will cancel a queued scan (i.e. not the currently running scan, if any)
+			# If this future belongs to a scan that is currently running or finished, this does nothing.
+			self._queuedFuture.cancel()
+		self._queuedFuture = self._executor.submit(self._bgScan, usb, bluetooth, limitToDevices)
 
 	def _stopBgScan(self):
 		"""Stops the current scan as soon as possible and prevents a queued scan to start."""
 		self._stopEvent.set()
-		# Cancel queued scans
-		try:
-			while self._scanQueued:
-				workItem = self._executor._work_queue.get_nowait()
-				workItem.future.cancel()
-		except queue.Empty:
-			pass
+		if self._queuedFuture:
+			# This will cancel a queued scan (i.e. not the currently running scan, if any)
+			# If this future belongs to a scan that is currently running or finished, this does nothing.
+			self._queuedFuture.cancel()
 
 	# C901 '_bgScan' is too complex
 	# Note: when working on _bgScan, look for opportunities to simplify
