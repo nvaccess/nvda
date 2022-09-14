@@ -15,12 +15,11 @@ For drivers in add-ons, this must be done in a global plugin.
 import itertools
 from collections import namedtuple, defaultdict, OrderedDict
 import threading
-from concurrent.futures import Future, ThreadPoolExecutor
-
+from concurrent.futures import ThreadPoolExecutor
+import queue
 import typing
 import hwPortUtils
 import braille
-import winKernel
 import winUser
 from logHandler import log
 import config
@@ -239,14 +238,18 @@ class Detector(object):
 	This should only be used by the L{braille} module.
 	"""
 
-	def __init__(self, usb=True, bluetooth=True, limitToDevices=None):
+	def __init__(
+			self,
+			usb: bool = True,
+			bluetooth: bool = True,
+			limitToDevices: typing.Optional[typing.List[str]] = None
+	):
 		"""Constructor.
 		The keyword arguments initialize the detector in a particular state.
-		On an initialized instance, these initial arguments can be overridden by calling L{_queueBgScan} or L{rescan}.
+		On an initialized instance, these initial arguments can be overridden by calling
+		L{_queueBgScan} or L{rescan}.
 		@param usb: Whether this instance should detect USB devices initially.
-		@type usb: bool
 		@param bluetooth: Whether this instance should detect Bluetooth devices initially.
-		@type bluetooth: bool
 		@param limitToDevices: Drivers to which detection should be limited initially.
 			C{None} if no driver filtering should occur.
 		"""
@@ -263,17 +266,20 @@ class Detector(object):
 		self._queueBgScan(usb=usb, bluetooth=bluetooth, limitToDevices=limitToDevices)
 
 	@property
-	def _scanQueued(self):
+	def _scanQueued(self) -> bool:
 		return not self._executor._work_queue.empty()
 
-	def _queueBgScan(self, usb=False, bluetooth=False, limitToDevices=None):
+	def _queueBgScan(
+			self,
+			usb: bool = False,
+			bluetooth: bool = False,
+			limitToDevices: typing.Optional[typing.List[str]] = None
+	):
 		"""Queues a scan for devices.
 		If a scan is already in progress, a new scan will be queued after the current scan.
 		To explicitely cancel a scan in progress, use L{rescan}.
 		@param usb: Whether USB devices should be detected for this and subsequent scans.
-		@type usb: bool
 		@param bluetooth: Whether Bluetooth devices should be detected for this and subsequent scans.
-		@type bluetooth: bool
 		@param limitToDevices: Drivers to which detection should be limited for this and subsequent scans.
 			C{None} if no driver filtering should occur.
 		"""
@@ -287,11 +293,29 @@ class Detector(object):
 		"""Stops the current scan as soon as possible and prevents a queued scan to start."""
 		self._stopEvent.set()
 		# Cancel queued scans
-		while self._scanQueued:
-			workItem = self._executor._work_queue.get_nowait()
-			workItem.future.cancel()
+		try:
+			while self._scanQueued:
+				workItem = self._executor._work_queue.get_nowait()
+				workItem.future.cancel()
+		except queue.Empty:
+			pass
 
-	def _bgScan(self, detectUsb, detectBluetooth, limitToDevices):
+	# C901 '_bgScan' is too complex
+	# Note: when working on _bgScan, look for opportunities to simplify
+	# and move logic out into smaller helper functions.
+	def _bgScan(  # noqa: C901
+			self,
+			detectUsb: bool,
+			detectBluetooth: bool,
+			limitToDevices: typing.Optional[typing.List[str]]
+	):
+		"""Performs the actual background scan.
+		this function should be run on a background thread.
+		@param usb: Whether USB devices should be detected for this particular scan.
+		@param bluetooth: Whether Bluetooth devices should be detected for this particular scan.
+		@param limitToDevices: Drivers to which detection should be limited for this scan.
+			C{None} if no driver filtering should occur.
+		"""
 		# Clear the stop event before a scan is started.
 		# Since a scan can take some time to complete, another thread can set the stop event to cancel it.
 		self._stopEvent.clear()
@@ -301,7 +325,7 @@ class Detector(object):
 			for driver, match in getDriversForConnectedUsbDevices():
 				if self._stopEvent.isSet():
 					return
-				if (self._limitToDevices and driver not in self._limitToDevices):
+				if (limitToDevices and driver not in limitToDevices):
 					continue
 				if braille.handler.setDisplayByName(driver, detected=match):
 					return
@@ -319,7 +343,7 @@ class Detector(object):
 			for driver, match in btDevs:
 				if self._stopEvent.isSet():
 					return
-				if (self._limitToDevices and driver not in self._limitToDevices):
+				if (self._limitToDevices and driver not in limitToDevices):
 					continue
 				if btDevsCache is not btDevs:
 					btDevsCache.append((driver, match))
