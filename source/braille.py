@@ -1788,7 +1788,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		brailleViewer.postBrailleViewerToolToggledAction.register(self._onBrailleViewerChangedState)
 
 	def terminate(self):
-		bgThreadStopTimeout = 2.5 if self._detectionEnabled else None
 		self._disableDetection()
 		if self._messageCallLater:
 			self._messageCallLater.Stop()
@@ -1800,7 +1799,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if self.display:
 			self.display.terminate()
 			self.display = None
-		_BgThread.stop(timeout=bgThreadStopTimeout)
+		_BgThread.stop()
 		louisHelper.terminate()
 
 	def getTether(self):
@@ -1890,9 +1889,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 					# Re-initialize with supported kwargs.
 					extensionPoints.callWithSupportedKwargs(newDisplay.__init__, **kwargs)
 			else:
-				if newDisplay.isThreadSafe and not detected:
+				if newDisplay.isThreadSafe:
 					# Start the thread if it wasn't already.
-					# Auto detection implies the thread is already started.
 					_BgThread.start()
 				try:
 					newDisplay = newDisplay(**kwargs)
@@ -1950,7 +1948,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		blinkRate = config.conf["braille"]["cursorBlinkRate"]
 		if cursorShouldBlink and blinkRate:
 			self._cursorBlinkTimer = gui.NonReEntrantTimer(self._blink)
-			# This is called from the background thread when a display is auto detected.
+			# This is called from another thread when a display is auto detected.
 			# Make sure we start the blink timer from the main thread to avoid wx assertions
 			wx.CallAfter(self._cursorBlinkTimer.Start,blinkRate)
 
@@ -2265,7 +2263,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if self._detectionEnabled and self._detector:
 			self._detector.rescan(usb=usb, bluetooth=bluetooth, limitToDevices=limitToDevices)
 			return
-		_BgThread.start()
 		config.conf["braille"]["display"] = AUTO_DISPLAY_NAME
 		if not keepCurrentDisplay:
 			self.setDisplayByName("noBraille", isFallback=True)
@@ -2308,7 +2305,7 @@ class _BgThread:
 		ctypes.windll.kernel32.QueueUserAPC(func, cls.handle, param)
 
 	@classmethod
-	def stop(cls, timeout=None):
+	def stop(cls):
 		if not cls.thread:
 			return
 		cls.exit = True
@@ -2318,7 +2315,7 @@ class _BgThread:
 		cls.ackTimerHandle = None
 		# Wake up the thread. It will exit when it sees exit is True.
 		cls.queueApc(cls.executor)
-		cls.thread.join(timeout)
+		cls.thread.join()
 		cls.exit = False
 		winKernel.closeHandle(cls.handle)
 		cls.handle = None
