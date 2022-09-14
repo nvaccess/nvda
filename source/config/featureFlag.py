@@ -79,7 +79,7 @@ class FeatureFlag:
 
 
 def _validateConfig_featureFlag(
-		value: Union[str, FeatureFlag],
+		value: Union[str, FeatureFlag, None],
 		optionsEnum: str,
 		behaviorOfDefault: str
 ) -> FeatureFlag:
