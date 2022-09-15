@@ -671,7 +671,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_DOCUMENTFORMATTING
 	)
 	def script_toggleReportTableHeaders(self,gesture):
-		from config.configFlags import ReportTableHeaders
+		ReportTableHeaders = config.configFlags.ReportTableHeaders
 		numVals = len(ReportTableHeaders)
 		state = ReportTableHeaders((config.conf["documentFormatting"]["reportTableHeaders"] + 1) % numVals)
 		config.conf["documentFormatting"]["reportTableHeaders"] = state.value
