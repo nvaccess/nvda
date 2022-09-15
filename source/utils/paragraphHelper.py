@@ -161,6 +161,7 @@ def moveToParagraph(nextParagraph: bool, speakNew: bool) -> tuple((bool, bool)):
 	if moved:
 		ti.updateCaret()
 		if isinstance(ti, UIATextInfo):
+			# Updating caret position in UIATextInfo does not scroll the display. Force it to scroll here.
 			ti._rangeObj.ScrollIntoView(False)
 		speakParagraph(ti)
 	else:
@@ -241,7 +242,7 @@ def moveToBlockParagraph(
 	if moved:
 		ti.updateCaret()
 		if isinstance(ti, UIATextInfo):
-			# Updating caret position in UITextInfo does not scroll the display. Force it to scroll here.
+			# Updating caret position in UIATextInfo does not scroll the display. Force it to scroll here.
 			ti._rangeObj.ScrollIntoView(False)
 		if speakNew:
 			speakBlockParagraph(ti)

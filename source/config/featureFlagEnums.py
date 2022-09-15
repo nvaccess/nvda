@@ -71,11 +71,11 @@ class ParagraphNavigationFlag(DisplayStringEnum):
 	@property
 	def _displayStringLabels(self):
 		return {
-			# Translators: Label for an option in NVDA settings.
+			# Translators: Label for a paragraph style in NVDA settings.
 			self.APPLICATION: _("Handled by application"),
-			# Translators: Label for an option in NVDA settings.
+			# Translators: Label for a paragraph style in NVDA settings.
 			self.NORMAL: _("Normal style"),
-			# Translators: Label for an option in NVDA settings.
+			# Translators: Label for a paragraph style in NVDA settings.
 			self.BLOCK: _("Block style")
 		}
 

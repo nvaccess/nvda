@@ -21,7 +21,7 @@ import eventHandler
 from scriptHandler import isScriptWaiting, willSayAllResume
 import textInfos
 import controlTypes
-import inputCore
+from inputCore import InputGesture
 from logHandler import log
 
 class EditableText(TextContainerObject,ScriptableObject):
@@ -295,7 +295,7 @@ class EditableText(TextContainerObject,ScriptableObject):
 	def script_caret_deleteWord(self, gesture):
 		self._deleteScriptHelper(textInfos.UNIT_WORD, gesture)
 
-	def _handleParagraphNavigation(self, gesture: "inputCore.InputGesture", nextParagraph: bool) -> None:
+	def _handleParagraphNavigation(self, gesture: InputGesture, nextParagraph: bool) -> None:
 		from config.featureFlagEnums import ParagraphNavigationFlag
 		flag: config.featureFlag.FeatureFlag = config.conf["documentNavigation"]["paragraphStyle"]
 		if flag.calculated() == ParagraphNavigationFlag.APPLICATION:
@@ -313,11 +313,11 @@ class EditableText(TextContainerObject,ScriptableObject):
 		else:
 			log.error(f"Unexpected ParagraphNavigationFlag value {flag.value}")
 
-	def script_caret_previousParagraph(self, gesture: "inputCore.InputGesture") -> None:
+	def script_caret_previousParagraph(self, gesture: InputGesture) -> None:
 		self._handleParagraphNavigation(gesture, False)
 	script_caret_previousParagraph.resumeSayAllMode = sayAll.CURSOR.CARET
 
-	def script_caret_nextParagraph(self, gesture: "inputCore.InputGesture") -> None:
+	def script_caret_nextParagraph(self, gesture: InputGesture) -> None:
 		self._handleParagraphNavigation(gesture, True)
 	script_caret_nextParagraph.resumeSayAllMode = sayAll.CURSOR.CARET
 	

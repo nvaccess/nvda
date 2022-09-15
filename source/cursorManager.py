@@ -265,7 +265,7 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 		self._caretMovementScriptHelper(gesture,textInfos.UNIT_SENTENCE,1)
 	script_moveBySentence_forward.resumeSayAllMode = sayAll.CURSOR.CARET
 
-	def _handleParagraphNavigation(self, gesture: "InputGesture", nextParagraph: bool) -> None:
+	def _handleParagraphNavigation(self, gesture: InputGesture, nextParagraph: bool) -> None:
 		from config.featureFlagEnums import ParagraphNavigationFlag
 		flag: config.featureFlag.FeatureFlag = config.conf["documentNavigation"]["paragraphStyle"]
 		if (
@@ -286,12 +286,11 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 		else:
 			log.error(f"Unexpected ParagraphNavigationFlag value {flag.value}")
 
-
-	def script_moveByParagraph_back(self,gesture):
+	def script_moveByParagraph_back(self, gesture: InputGesture):
 		self._handleParagraphNavigation(gesture, False)
 	script_moveByParagraph_back.resumeSayAllMode = sayAll.CURSOR.CARET
 
-	def script_moveByParagraph_forward(self,gesture):
+	def script_moveByParagraph_forward(self, gesture: InputGesture):
 		self._handleParagraphNavigation(gesture, True)
 	script_moveByParagraph_forward.resumeSayAllMode = sayAll.CURSOR.CARET
 
