@@ -170,7 +170,7 @@ If no connection, Albatross sends continuously byte \xff followed by byte
 containing various settings like number of cells.
 """
 MAX_SETTINGS_BYTE = b"\xfd"
-"""
+"""Maximum value allowed for settings byte.
 Settings byte can be anything from \x00 to \xff. However, \xff
 would make connection establishment quite complex:
 
@@ -205,6 +205,7 @@ MAX_STATUS_CELLS_ALLOWED = 13
 see L{MAX_SETTINGS_BYTE}.
 """
 START_BYTE = b"\xfb"
+"""Send information to Albatross enclosed by L{START_BYTE} and L{END_BYTE}."""
 END_BYTE = b"\xfc"
 """Send information to Albatross enclosed by L{START_BYTE} and L{END_BYTE}."""
 BOTH_BYTES = b"\xfb\xfc"
