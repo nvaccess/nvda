@@ -8,7 +8,7 @@ This module contains driver for Caiku Albatross 46 and 80 braille displays.
 - `constants.py`
 - `driver.py`
 - `gestures.py`
-- `threads.py`
+- `_threads.py`
 
 `constants.py` contains various constants.
 
@@ -16,7 +16,7 @@ This module contains driver for Caiku Albatross 46 and 80 braille displays.
 
 `gestures.py` contains default key mapping, and stuff to interpret and forward display key presses.
 
-`threads.py` contains two classes for threads:
+`_threads.py` contains two classes for threads:
 
 `ReadThread` detects when there is something to read (key presses or new connection init packets) and connection loss.
 
