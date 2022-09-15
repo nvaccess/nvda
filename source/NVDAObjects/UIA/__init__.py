@@ -1589,6 +1589,7 @@ class UIA(Window):
 		UIAHandler.UIA_IsEnabledPropertyId,
 		UIAHandler.UIA_IsOffscreenPropertyId,
 		UIAHandler.UIA_AnnotationTypesPropertyId,
+		UIAHandler.UIA_DragIsGrabbedPropertyId,
 	}
 
 	def _get_states(self):
@@ -1667,6 +1668,13 @@ class UIA(Window):
 		if annotationTypes:
 			if UIAHandler.AnnotationType_Comment in annotationTypes:
 				states.add(controlTypes.State.HASCOMMENT)
+		# Drag "is grabbed" property was added in Windows 8.
+		try:
+			isGrabbed = self._getUIACacheablePropertyValue(UIAHandler.UIA_DragIsGrabbedPropertyId)
+		except COMError:
+			isGrabbed = False
+		if isGrabbed:
+			states.add(controlTypes.State.DRAGGING)
 		return states
 
 	def _getReadOnlyState(self) -> bool:
@@ -2035,17 +2043,36 @@ class UIA(Window):
 				speech.cancelSpeech()
 			ui.message(displayString)
 
-	_itemStatusCache = None
+	def event_UIA_dragDropEffect(self):
+		# UIA drag drop effect was introduced in Windows 8.
+		try:
+			ui.message(self._getUIACacheablePropertyValue(UIAHandler.UIA_DragDropEffectPropertyId))
+		except COMError:
+			pass
 
-	def event_UIA_itemStatus(self):
-		"""
-		Base implementation of UIA item status property event.
-		By default NVDA will announce element name and item status if any.
-		"""
-		itemStatus = self.UIAElement.currentItemStatus
-		if itemStatus and itemStatus != self._itemStatusCache:
-			ui.message(f"{self.name} {itemStatus}")
-		self._itemStatusCache = itemStatus
+	def event_UIA_dropTargetEffect(self):
+		# UIA drop target effect property was introduced in Windows 8.
+		try:
+			dropTargetEffect = self._getUIACacheablePropertyValue(
+				UIAHandler.UIA_DropTargetDropTargetEffectPropertyId
+			)
+		except COMError:
+			dropTargetEffect = ""
+		# Sometimes drop target effect text is empty as it comes from a different object.
+		if not dropTargetEffect:
+			for element in reversed(api.getFocusAncestors()):
+				if not isinstance(element, UIA):
+					continue
+				try:
+					dropTargetEffect = element._getUIACacheablePropertyValue(
+						UIAHandler.UIA_DropTargetDropTargetEffectPropertyId
+					)
+				except COMError:
+					dropTargetEffect = ""
+				if dropTargetEffect:
+					break
+		if dropTargetEffect:
+			ui.message(dropTargetEffect)
 
 
 class TreeviewItem(UIA):

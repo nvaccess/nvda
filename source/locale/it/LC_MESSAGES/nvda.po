@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-05 00:02+0000\n"
-"PO-Revision-Date: 2022-08-11 10:24+0100\n"
+"POT-Creation-Date: 2022-09-07 04:25+0000\n"
+"PO-Revision-Date: 2022-09-02 09:44+0100\n"
 "Last-Translator: Simone Dal Maso <simone.dalmaso@gmail.com>\n"
 "Language-Team: Italian NVDA Community <info@nvda.it>\n"
 "Language: it_IT\n"
@@ -2360,6 +2360,22 @@ msgstr "Errore nella mappatura del file dei gesti"
 #. Translators: This is spoken when NVDA is starting.
 msgid "Loading NVDA. Please wait..."
 msgstr "Caricamento di NVDA in corso, attendere prego"
+
+#. Translators: This is a warning to users, shown if NVDA cannot determine if
+#. Windows is locked.
+msgid ""
+"NVDA failed to register session tracking. While this instance of NVDA is "
+"running, your desktop will not be secure when Windows is locked. Restart "
+"NVDA? "
+msgstr ""
+"NVDA non è riuscito ad individuare la sessione di Windows corrente. Durante "
+"l'esecuzione di questa istanza di NVDA, il desktop non sarà protetto quando "
+"Windows è bloccato. Riavviare NVDA?"
+
+#. Translators: This is a warning to users, shown if NVDA cannot determine if
+#. Windows is locked.
+msgid "NVDA could not start securely."
+msgstr "Impossibile avviare NVDA in modalità sicura."
 
 #. Translators: The screen is oriented so that it is wider than it is tall.
 msgid "Landscape"
@@ -6622,8 +6638,8 @@ msgstr ""
 "automatico selezionato."
 
 #. Translators: When the help popup cannot be found for the selected autocompletion item
-msgid "Cann't find the documentation window."
-msgstr "Impossibile trovare la finestra documentazione."
+msgid "Can't find the documentation window."
+msgstr "Impossibile trovare la finestra della documentazione."
 
 #. Translators: Reported when no track is playing in Foobar 2000.
 msgid "No track playing"
@@ -8093,7 +8109,7 @@ msgstr "Evidenziato"
 
 #. Translators: Identifies a progress bar with indeterminate state, I.E. progress can not be determined.
 msgid "busy indicator"
-msgstr "indicatore non determinabile"
+msgstr "occupato"
 
 #. Translators: Identifies a comment.
 msgid "comment"

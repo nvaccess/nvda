@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-08 00:02+0000\n"
-"PO-Revision-Date: 2022-07-07 22:19-0300\n"
+"POT-Creation-Date: 2022-09-07 04:25+0000\n"
+"PO-Revision-Date: 2022-09-01 22:20-0300\n"
 "Last-Translator: Cleverson Casarin Uliana <clever97@gmail.com>\n"
 "Language-Team: NVDA Brazilian Portuguese translation team (Equipe de "
 "tradução do NVDA para Português Brasileiro) <clever97@gmail.com>\n"
@@ -385,6 +385,21 @@ msgstr "fig"
 msgid "hlght"
 msgstr "dstcd"
 
+#. Translators: Displayed in braille when an object is a comment.
+#. Translators: Displayed in braille when there is a comment for a spreadsheet cell or piece of text in a document.
+#. Translators: Brailled when text contains a generic comment.
+msgid "cmnt"
+msgstr "cmnt"
+
+#. Translators: Displayed in braille when an object is a suggestion.
+msgid "sggstn"
+msgstr "sgst"
+
+#. Translators: Displayed in braille when an object is a definition.
+#. Translators: Identifies a definition.
+msgid "definition"
+msgstr "definição"
+
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
 msgstr "sel"
@@ -444,11 +459,6 @@ msgstr "descl"
 #. Translators: Displayed in braille when there is a formula on a spreadsheet cell.
 msgid "frml"
 msgstr "frml"
-
-#. Translators: Displayed in braille when there is a comment for a spreadsheet cell or piece of text in a document.
-#. Translators: Brailled when text contains a generic comment.
-msgid "cmnt"
-msgstr "cmnt"
 
 #. Translators: Displayed in braille when an object is not selected.
 msgid "nsel"
@@ -539,6 +549,18 @@ msgstr "t%s"
 #. Translators: Displayed in braille for a link which has been visited.
 msgid "vlnk"
 msgstr "lnkv"
+
+#. Translators: Braille when there are further details/annotations that can be fetched manually.
+#. %s specifies the type of details (e.g. comment, suggestion)
+#. Translators: Speaks when there are further details/annotations that can be fetched manually.
+#. %s specifies the type of details (e.g. comment, suggestion)
+#, python-format
+msgid "has %s"
+msgstr "tem %s"
+
+#. Translators: Braille when there are further details/annotations that can be fetched manually.
+msgid "details"
+msgstr "detalhes"
 
 #. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
@@ -2347,6 +2369,22 @@ msgstr "erro no arquivo com mapa de gestos"
 msgid "Loading NVDA. Please wait..."
 msgstr "Carregando o NVDA; por favor aguarde..."
 
+#. Translators: This is a warning to users, shown if NVDA cannot determine if
+#. Windows is locked.
+msgid ""
+"NVDA failed to register session tracking. While this instance of NVDA is "
+"running, your desktop will not be secure when Windows is locked. Restart "
+"NVDA? "
+msgstr ""
+"O NVDA fracassou ao registrar o rastreamento de sessão. Enquanto esta "
+"instância do NVDA estiver executando, seu ambiente de trabalho não estará "
+"seguro quando o Windows estiver bloqueado. Reiniciar o NVDA? "
+
+#. Translators: This is a warning to users, shown if NVDA cannot determine if
+#. Windows is locked.
+msgid "NVDA could not start securely."
+msgstr "NVDA não conseguiu iniciar seguro."
+
 #. Translators: The screen is oriented so that it is wider than it is tall.
 msgid "Landscape"
 msgstr "Paisagem"
@@ -2412,6 +2450,12 @@ msgstr ""
 #. Translators: Reported when there is no text selected (for copying).
 msgid "No selection"
 msgstr "Sem seleção"
+
+#. Translators: Abbreviation for points, a measurement of font size.
+#, python-format
+msgctxt "font size"
+msgid "%s pt"
+msgstr "%s pt"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
@@ -6578,7 +6622,7 @@ msgid "Tries to read documentation for the selected autocompletion item."
 msgstr "Tenta ler a documentação para o item de autocompletação selecionado."
 
 #. Translators: When the help popup cannot be found for the selected autocompletion item
-msgid "Cann't find the documentation window."
+msgid "Can't find the documentation window."
 msgstr "Não foi possível encontrar a janela de documentação."
 
 #. Translators: Reported when no track is playing in Foobar 2000.
@@ -7280,6 +7324,18 @@ msgstr "Mo&strar o visualizador de Braille ao iniciar"
 msgid "&Hover for cell routing"
 msgstr "&Explorar para sincronizar cela"
 
+#. Translators: Label for an option in NVDA settings.
+#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
+#. Translators: One of the show states of braille messages
+#. (the disabled mode turns off showing of braille messages completely).
+msgid "Disabled"
+msgstr "Desativado"
+
+#. Translators: Label for an option in NVDA settings.
+#. Translators: The status shown for an addon when its currently running in NVDA.
+msgid "Enabled"
+msgstr "Ativado"
+
 #. Translators: The title of the document used to present the result of content recognition.
 msgid "Result"
 msgstr "Resultado"
@@ -7323,6 +7379,86 @@ msgstr "subscrito"
 #. Translators: Describes text formatting.
 msgid "superscript"
 msgstr "sobrescrito"
+
+#. Translators: Abbreviation for pixels, a measurement of font size.
+#, python-format
+msgctxt "font size"
+msgid "%s px"
+msgstr "%s px"
+
+#. Translators: A measurement unit of font size.
+#, python-format
+msgctxt "font size"
+msgid "%s em"
+msgstr "%s em"
+
+#. Translators: A measurement unit of font size.
+#, python-format
+msgctxt "font size"
+msgid "%s ex"
+msgstr "%s ex"
+
+#. Translators: Abbreviation for relative em, a measurement of font size.
+#, python-format
+msgctxt "font size"
+msgid "%s rem"
+msgstr "%s rem"
+
+#. Translators: Font size measured as a percentage
+#, python-format
+msgctxt "font size"
+msgid "%s%%"
+msgstr "%s%%"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "xx-small"
+msgstr "xx-pequena"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "x-small"
+msgstr "x-pequena"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "small"
+msgstr "pequena"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "medium"
+msgstr "média"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "large"
+msgstr "grande"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "x-large"
+msgstr "x-grande"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "xx-large"
+msgstr "xx-grande"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "xxx-large"
+msgstr "xxx-grande"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "larger"
+msgstr "maior"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "smaller"
+msgstr "menor"
 
 #. Translators: Presented when an item is marked as current in a collection of items
 msgid "current"
@@ -7625,7 +7761,7 @@ msgstr "nota de adendo"
 msgid "footer"
 msgstr "rodapé"
 
-#. Translators: Identifies a foot note (text at the end of a passage or used for anotations).
+#. Translators: Identifies a foot note (text at the end of a passage or used for annotations).
 msgid "foot note"
 msgstr "nota de rodapé"
 
@@ -7957,6 +8093,14 @@ msgstr "destacado"
 #. Translators: Identifies a progress bar with indeterminate state, I.E. progress can not be determined.
 msgid "busy indicator"
 msgstr "indicador de ocupado"
+
+#. Translators: Identifies a comment.
+msgid "comment"
+msgstr "comentário"
+
+#. Translators: Identifies a suggestion.
+msgid "suggestion"
+msgstr "sugestão"
 
 #. Translators: Indicates that a particular state of an object is negated.
 #. Separate strings have now been defined for commonly negated states (e.g. not selected and not
@@ -8578,19 +8722,9 @@ msgstr "Remover Complemento"
 msgid "Incompatible"
 msgstr "Incompatível"
 
-#. Translators: The status shown for an addon when its currently running in NVDA.
-msgid "Enabled"
-msgstr "Ativado"
-
 #. Translators: The status shown for a newly installed addon before NVDA is restarted.
 msgid "Install"
 msgstr "Instalar"
-
-#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
-#. Translators: One of the show states of braille messages
-#. (the disabled mode turns off showing of braille messages completely).
-msgid "Disabled"
-msgstr "Desativado"
 
 #. Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
 msgid "Removed after restart"
@@ -9306,6 +9440,13 @@ msgstr "Log está indisponível"
 msgid "Cancel"
 msgstr "Cancelar"
 
+#. Translators: Label for the default option for some feature-flag combo boxes
+#. Such as, in the Advanced settings panel option, 'Load Chromium virtual buffer when document busy.'
+#. The placeholder {} is replaced with the label of the option which describes current default behavior
+#. in NVDA. EG "Default (Yes)".
+msgid "Default ({})"
+msgstr "Padrão ({})"
+
 #. Translators: The label for the list of categories in a multi category settings dialog.
 msgid "&Categories:"
 msgstr "&Categorias:"
@@ -9568,6 +9709,10 @@ msgstr "&Bipar em maiúsculas"
 #. voice settings panel.
 msgid "Use &spelling functionality if supported"
 msgstr "Usar soletragem &melhorada quando suportado"
+
+#. Translators: This is the label for a checkbox in the voice settings panel.
+msgid "&Delayed descriptions for characters on cursor movement"
+msgstr "&Descrições de caracteres com atraso ao movimentar cursor"
 
 #. Translators: This is the label for the keyboard settings panel.
 msgid "Keyboard"
@@ -10171,11 +10316,28 @@ msgstr ""
 "Usar UI Automation para acessar controles de planilha no Microsoft &Excel "
 "quando disponível"
 
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid "Use UI Automation to access the Windows C&onsole when available"
-msgstr ""
-"Usar UI Automation para acessar o C&onsole do Windows quando disponível"
+#. Translators: This is the label for a combo box for selecting the
+#. active console implementation in the advanced settings panel.
+#. Choices are automatic, UIA when available, and legacy.
+msgid "Windows C&onsole support:"
+msgstr "Suporte ao C&onsole do Windows:"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA determine its Windows Console implementation
+#. automatically.
+msgid "Automatic (prefer UIA)"
+msgstr "Automático (preferir UIA)"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA use UIA in the Windows Console when available.
+msgid "UIA when available"
+msgstr "UIA quando disponível"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA use its legacy Windows Console support
+#. in all cases.
+msgid "Legacy"
+msgstr "Legado"
 
 #. Translators: Label for the Use UIA with Chromium combobox, in the Advanced settings panel.
 #. Note the '\n' is used to split this long label approximately in half.
@@ -10302,6 +10464,15 @@ msgstr "Difflib"
 #. Translators: This is the label for combobox in the Advanced settings panel.
 msgid "Attempt to cancel speech for expired focus events:"
 msgstr "Tentar cancelar a fala de eventos com foco expirado:"
+
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
+msgid "Virtual Buffers"
+msgstr "Exibidores virtuais"
+
+#. Translators: This is the label for a combo-box in the Advanced settings panel.
+msgid "Load Chromium virtual buffer when document busy."
+msgstr "Carregar exibidor virtual do Chromium em documento ocupado."
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -10467,6 +10638,10 @@ msgstr "&Quando possível, não quebrar palavras"
 #. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
 msgid "Focus context presentation:"
 msgstr "Apresentação do contexto do foco:"
+
+#. Translators: This is a label for a combo-box in the Braille settings panel.
+msgid "I&nterrupt speech while scrolling"
+msgstr "I&nterromper a fala enquanto rola"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load a single vision enhancement provider.
@@ -10739,10 +10914,6 @@ msgstr "&Usar CapsLock como uma tecla modificadora do NVDA"
 msgid "&Show this dialog when NVDA starts"
 msgstr "Mo&strar este diálogo ao iniciar o NVDA"
 
-#. Translators: The label of the license text which will be shown when NVDA installation program starts.
-msgid "License Agreement"
-msgstr "Acordo de Licença"
-
 #. Translators: The label for a checkbox in NvDA installation program to agree to the license agreement.
 msgid "I &agree"
 msgstr "C&oncordo"
@@ -10759,6 +10930,10 @@ msgstr "Criar cópia &portátil"
 #. to continue using the installation program as a temporary copy of NVDA.
 msgid "&Continue running"
 msgstr "&Continuar usando"
+
+#. Translators: The label of the license text which will be shown when NVDA installation program starts.
+msgid "License Agreement"
+msgstr "Acordo de Licença"
 
 #. Translators: The title of the dialog asking if usage data can be collected
 msgid "NVDA  Usage Data Collection"
@@ -10879,7 +11054,7 @@ msgstr "com %s colunas"
 msgid "with %s rows"
 msgstr "com %s linhas"
 
-#. Translators: Speaks when there a further details/annotations that can be fetched manually.
+#. Translators: Speaks when there are further details/annotations that can be fetched manually.
 msgid "has details"
 msgstr "contém detalhes"
 
@@ -11554,11 +11729,17 @@ msgstr "Erro: {errorText}"
 msgid "{author} is editing"
 msgstr "{author} está editando"
 
-#. Translators: Excel, report range of cell coordinates
+#. Translators: Excel, report selected range of cell coordinates
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "{firstAddress} {firstValue} through {lastAddress} {lastValue}"
 msgstr "{firstAddress} {firstValue} até {lastAddress} {lastValue}"
+
+#. Translators: Excel, report merged range of cell coordinates
+#, python-brace-format
+msgctxt "excel-UIA"
+msgid "{firstAddress} through {lastAddress}"
+msgstr "{firstAddress} até {lastAddress}"
 
 #. Translators: the description  for a script for Excel
 msgid "Reports the note or comment thread on the current cell"
@@ -12969,10 +13150,10 @@ msgstr "{offset:.3g} centímetros"
 msgid "{offset:.3g} millimeters"
 msgstr "{offset:.3g} milímetros"
 
-#. Translators: a measurement in Microsoft Word
+#. Translators: a measurement in Microsoft Word (points)
 #, python-brace-format
-msgid "{offset:.3g} points"
-msgstr "{offset:.3g} pontos"
+msgid "{offset:.3g} pt"
+msgstr "{offset:.3g} pt"
 
 #. Translators: a measurement in Microsoft Word
 #. See http://support.microsoft.com/kb/76388 for details.
@@ -12992,6 +13173,10 @@ msgstr "Espaçamento de linha duplo"
 msgid "1.5 line spacing"
 msgstr "Espaçamento de linhas 1,5"
 
+#~ msgid "Use UI Automation to access the Windows C&onsole when available"
+#~ msgstr ""
+#~ "Usar UI Automation para acessar o C&onsole do Windows quando disponível"
+
 #, fuzzy
 #~ msgid "Moves the navigator object to the first row"
 #~ msgstr "Coloca como objeto de navegação o próximo"
@@ -13005,9 +13190,6 @@ msgstr "Espaçamento de linhas 1,5"
 
 #~ msgid "Cannot save configuration - NVDA in secure mode"
 #~ msgstr "Impossível salvar configuração; NVDA em modo seguro"
-
-#~ msgid "details"
-#~ msgstr "detalhes"
 
 #~ msgid "{modifier} pressed"
 #~ msgstr "{modifier} pressionado"

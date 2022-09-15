@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Russian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-24 04:02+0000\n"
-"PO-Revision-Date: 2022-08-25 02:17+0800\n"
+"POT-Creation-Date: 2022-09-07 04:25+0000\n"
+"PO-Revision-Date: 2022-09-04 18:41+0800\n"
 "Last-Translator: Kvark <kvark128@yandex.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -387,13 +387,12 @@ msgstr "⠏⠗⠍"
 
 #. Translators: Displayed in braille when an object is a suggestion.
 msgid "sggstn"
-msgstr ""
+msgstr "⠏⠗⠑⠙⠇"
 
 #. Translators: Displayed in braille when an object is a definition.
 #. Translators: Identifies a definition.
-#, fuzzy
 msgid "definition"
-msgstr "определение стиля"
+msgstr ""
 
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
@@ -551,12 +550,11 @@ msgstr "|пс|"
 #. %s specifies the type of details (e.g. comment, suggestion)
 #, python-format
 msgid "has %s"
-msgstr ""
+msgstr "содержит %s"
 
 #. Translators: Braille when there are further details/annotations that can be fetched manually.
-#, fuzzy
 msgid "details"
-msgstr "содержит дополнительные подробности"
+msgstr ""
 
 #. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
@@ -1913,19 +1911,19 @@ msgstr "нет предыдущего встроенного объекта"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next annotation"
-msgstr "переходит на следующую рецензию"
+msgstr "переходит на следующую аннотацию"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next annotation"
-msgstr "нет следующей рецензии"
+msgstr "нет следующей аннотации"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous annotation"
-msgstr "переходит на предыдущую рецензию"
+msgstr "переходит на предыдущую аннотацию"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous annotation"
-msgstr "нет предыдущей рецензии"
+msgstr "нет предыдущей аннотации"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next error"
@@ -2370,11 +2368,14 @@ msgid ""
 "running, your desktop will not be secure when Windows is locked. Restart "
 "NVDA? "
 msgstr ""
+"NVDA не удалось зарегистрировать отслеживание сеанса. Пока этот экземпляр "
+"NVDA работает, ваш рабочий стол не будет защищён, когда Windows "
+"заблокирована. Перезапустить NVDA?"
 
 #. Translators: This is a warning to users, shown if NVDA cannot determine if
 #. Windows is locked.
 msgid "NVDA could not start securely."
-msgstr ""
+msgstr "NVDA не удалось запустить безопасно"
 
 #. Translators: The screen is oriented so that it is wider than it is tall.
 msgid "Landscape"
@@ -2444,7 +2445,7 @@ msgstr "Нет выделения"
 #, python-format
 msgctxt "font size"
 msgid "%s pt"
-msgstr ""
+msgstr "%s пунктов"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
@@ -3613,7 +3614,7 @@ msgstr ""
 
 #. Translators: the description for the reportDetailsSummary script.
 msgid "Report summary of any annotation details at the system caret."
-msgstr "Сообщать подробности любых рецензий в позиции системной каретки."
+msgstr "Сообщает подробности любых аннотаций в позиции системной каретки."
 
 #. Translators: message given when there is no annotation details for the reportDetailsSummary script.
 msgid "No additional details"
@@ -6617,7 +6618,6 @@ msgid "Tries to read documentation for the selected autocompletion item."
 msgstr "Пробует прочитать документацию для выбранного элемента автодополнения."
 
 #. Translators: When the help popup cannot be found for the selected autocompletion item
-#, fuzzy
 msgid "Can't find the documentation window."
 msgstr "Не удалось найти окно документации."
 
@@ -7382,19 +7382,19 @@ msgstr "надстрочный"
 #, python-format
 msgctxt "font size"
 msgid "%s px"
+msgstr "%s пикселей"
+
+#. Translators: A measurement unit of font size.
+#, python-format
+msgctxt "font size"
+msgid "%s em"
 msgstr ""
 
 #. Translators: A measurement unit of font size.
-#, fuzzy, python-format
-msgctxt "font size"
-msgid "%s em"
-msgstr "|кон %s|"
-
-#. Translators: A measurement unit of font size.
-#, fuzzy, python-format
+#, python-format
 msgctxt "font size"
 msgid "%s ex"
-msgstr "|кон %s|"
+msgstr ""
 
 #. Translators: Abbreviation for relative em, a measurement of font size.
 #, python-format
@@ -7406,59 +7406,57 @@ msgstr ""
 #, python-format
 msgctxt "font size"
 msgid "%s%%"
-msgstr ""
+msgstr "%s%%"
 
 #. Translators: A measurement unit of font size.
 msgctxt "font size"
 msgid "xx-small"
-msgstr ""
+msgstr "очень очень мелкий"
 
 #. Translators: A measurement unit of font size.
 msgctxt "font size"
 msgid "x-small"
-msgstr ""
+msgstr "очень мелкий"
 
 #. Translators: A measurement unit of font size.
 msgctxt "font size"
 msgid "small"
-msgstr ""
+msgstr "мелкий"
 
 #. Translators: A measurement unit of font size.
-#, fuzzy
 msgctxt "font size"
 msgid "medium"
-msgstr "средняя"
+msgstr "средний"
 
 #. Translators: A measurement unit of font size.
 msgctxt "font size"
 msgid "large"
-msgstr ""
+msgstr "крупный"
 
 #. Translators: A measurement unit of font size.
 msgctxt "font size"
 msgid "x-large"
-msgstr ""
+msgstr "очень крупный"
 
 #. Translators: A measurement unit of font size.
 msgctxt "font size"
 msgid "xx-large"
-msgstr ""
+msgstr "очень очень крупный"
 
 #. Translators: A measurement unit of font size.
 msgctxt "font size"
 msgid "xxx-large"
-msgstr ""
+msgstr "очень очень очень крупный"
 
 #. Translators: A measurement unit of font size.
 msgctxt "font size"
 msgid "larger"
-msgstr ""
+msgstr "крупнее"
 
 #. Translators: A measurement unit of font size.
-#, fuzzy
 msgctxt "font size"
 msgid "smaller"
-msgstr "заполнитель"
+msgstr "мельче"
 
 #. Translators: Presented when an item is marked as current in a collection of items
 msgid "current"
@@ -8098,14 +8096,12 @@ msgid "busy indicator"
 msgstr "индикатор занятости"
 
 #. Translators: Identifies a comment.
-#, fuzzy
 msgid "comment"
-msgstr "Примечание"
+msgstr "примечание"
 
 #. Translators: Identifies a suggestion.
-#, fuzzy
 msgid "suggestion"
-msgstr "одно предложение"
+msgstr "предложение"
 
 #. Translators: Indicates that a particular state of an object is negated.
 #. Separate strings have now been defined for commonly negated states (e.g. not selected and not
@@ -9727,7 +9723,7 @@ msgstr "Использовать поси&мвольное чтение, есл�
 
 #. Translators: This is the label for a checkbox in the voice settings panel.
 msgid "&Delayed descriptions for characters on cursor movement"
-msgstr ""
+msgstr "О&тложенные описания символов при перемещении курсора"
 
 #. Translators: This is the label for the keyboard settings panel.
 msgid "Keyboard"
@@ -10388,7 +10384,7 @@ msgstr "Нет"
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 msgid "Annotations"
-msgstr "Рецензии"
+msgstr "Аннотации"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -10658,7 +10654,7 @@ msgstr "Представление контекста:"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
 msgid "I&nterrupt speech while scrolling"
-msgstr ""
+msgstr "Пр&ерывание речи при прокрутке:"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load a single vision enhancement provider.
@@ -11787,7 +11783,7 @@ msgstr "В этой ячейке нет цепочки примечаний"
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 msgid "&Annotations"
-msgstr "&Рецензии"
+msgstr "&Аннотации"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -13177,7 +13173,7 @@ msgid "{offset:.3g} millimeters"
 msgstr "{offset:.3g} миллиметров"
 
 #. Translators: a measurement in Microsoft Word (points)
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "{offset:.3g} pt"
 msgstr "{offset:.3g} пунктов"
 

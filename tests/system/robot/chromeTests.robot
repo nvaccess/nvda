@@ -25,6 +25,7 @@ default teardown
 
 default setup
 	start NVDA	standard-dontShowWelcomeDialog.ini	chrome-gestures.ini
+	enable_verbose_debug_logging_if_requested
 
 *** Test Cases ***
 

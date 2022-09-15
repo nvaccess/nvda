@@ -86,6 +86,7 @@ RENAMED_TABLES = {
 	"no-no-comp8.ctb": "no-no-8dot.utb",
 	"ru-compbrl.ctb": "ru.ctb",
 	"ru-ru-g1.utb": "ru-litbrl-detailed.utb",
+	"Se-Se-g1.utb": "sv-g0.utb",
 	"sk-sk-g1.utb": "sk-g1.ctb",
 	"UEBC-g1.ctb": "en-ueb-g1.ctb",
 	"UEBC-g2.ctb": "en-ueb-g2.ctb",
@@ -341,6 +342,9 @@ addTable("ko-g2.ctb", _("Korean grade 2"), contracted=True)
 addTable("ks-in-g1.utb", _("Kashmiri grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
+addTable("lg-ug-g1.utb", _("Luganda literary braille"))
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
 addTable("lt.ctb", _("Lithuanian 8 dot"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
@@ -440,6 +444,9 @@ addTable("ru-litbrl-detailed.utb", _("Russian literary braille (detailed)"))
 addTable("ru-ru-g1.ctb", _("Russian contracted braille"), contracted=True, input=False)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
+addTable("rw-rw-g1.utb", _("Kinyarwanda literary braille"))
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
 addTable("sa-in-g1.utb", _("Sanskrit grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
@@ -447,9 +454,6 @@ addTable("sah.utb", _("Yakut grade 1"), input=False)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("Se-Se.ctb", _("Swedish 8 dot computer braille"))
-# Translators: The name of a braille table displayed in the
-# braille settings dialog.
-addTable("Se-Se-g1.utb", _("Swedish grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("sk-g1.ctb", _("Slovak grade 1"))
@@ -468,6 +472,17 @@ addTable("sot-za-g2.ctb", _("Sesotho grade 2"), contracted=True)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("sr-g1.ctb", _("Serbian grade 1"))
+
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("sv-g0.utb", _("Swedish uncontracted braille"), input=False)
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("sv-g1.ctb", _("Swedish partially contracted braille"), input=False)
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("sv-g2.ctb", _("Swedish contracted braille"), contracted=True, input=False)
+
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("ta-ta-g1.ctb", _("Tamil grade 1"))
@@ -528,6 +543,15 @@ addTable("xh-za-g1.utb", _("Xhosa grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("xh-za-g2.ctb", _("Xhosa grade 2"), contracted=True)
+
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+# This should be translated to '中文中国汉语通用盲文' in Mandarin.
+addTable("zhcn-cbs.ctb", _("Chinese common braille (simplified Chinese characters)"), input=False)
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+# This should be translated to '中文中国汉语现行盲文（无声调）' in Mandarin.
+addTable("zh-chn.ctb", _("Chinese (China, Mandarin) Current Braille System (no tones)"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 # This should be translated to '中文中国汉语现行盲文' in Mandarin.
@@ -542,6 +566,7 @@ addTable("zh-hk.ctb", _("Chinese (Hong Kong, Cantonese)"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("zh-tw.ctb", _("Chinese (Taiwan, Mandarin)"))
+
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("zu-za-g1.utb", _("Zulu grade 1"))

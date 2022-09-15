@@ -31,7 +31,18 @@ What's New in NVDA
 
 
 == Changes ==
-- eSpeak NG has been updated to 1.52-dev commit ``0dbe7182``. (#14060, #14079)
+- eSpeak NG has been updated to 1.52-dev commit ``735ecdb8``. (#14060, #14079, #14117)
+  - Fixed reporting of Latin characters when using Mandarin. (#12952, #13572)
+  -
+- Updated LibLouis braille translator to [3.23.0 https://github.com/liblouis/liblouis/releases/tag/v3.23.0]. (#14112)
+  - Added braille tables:
+    - Chinese common braille (simplified Chinese characters)
+    - Kinyarwanda literary braille
+    - Luganda literary braille
+    - Swedish uncontracted braille
+    - Swedish partially contracted braille
+    - Swedish contracted braille
+    - Chinese (China, Mandarin) Current Braille System (no tones) (#14138)
 - NVDA now includes the architecture of the operating system as part of user statistics tracking. (#14019)
 - Reporting power state changes and using the script to report battery status now report the same message consistently. (#14035)
 -
@@ -55,8 +66,9 @@ Note there are still known issues with Chrome and Edge. (#13254)
   - Touch screen interaction should now be accurate for most applications. (#7083)
   - Mouse tracking should now work for most applications. (#6722)
   -
-- NVDA will announce UIA item status property changes in places such as the Visual Studio 2022 create app packages dialog. (#13973)
 - Orientation state (landscape/portrait) changes are now correctly ignored when there is no change (e.g. monitor changes). (#14035)
+- NVDA will announce dragging items on screen in places such as rearranging Windows 10 Start menu tiles and virtual desktops in Windows 11. (#12271, #14081)
+- In advanced settings, "Play a sound for logged errors" option is now correctly restored to its default value when pressing the "Restore defaults" button. (#14149)
 -
 
 
@@ -140,6 +152,14 @@ This will improve performance for some Java applications including IntelliJ IDEA
 === Deprecations ===
 There are no deprecations proposed in 2022.3.
 
+
+= 2022.2.3 =
+This is a patch release to fix an accidental API breakage introduced in 2022.2.1.
+
+== Bug Fixes ==
+- Fixed a bug where NVDA did not announce "Secure Desktop" when entering a secure desktop.
+This caused NVDA remote to not recognize secure desktops. (#14094)
+-
 
 = 2022.2.2 =
 This is a patch release to fix a bug introduced in 2022.2.1 with input gestures.
