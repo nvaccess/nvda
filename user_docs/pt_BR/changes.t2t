@@ -14,7 +14,7 @@ Notavelmente, as versões atualizadas do Adobe Acrobat/Reader não travarão mai
 O eSpeak foi atualizado, introduzindo 3 novos idiomas: bielorrusso, luxemburguês e Mixe de Totontepec.
 
 == Novas Características ==
-- No Host de Console do Windows usado pelo Prompt de Comando, PowerShell e o Subsistema Windows para Linux no Windows 11 versão 22H2 (Sun Valley 2) e posterior:
+- No Host de Console do Windows usado pelo Prompt de Comando, PowerShell e o Subsistema Windows para Linux no Windows 11 versão 22H2 (Sun Valley 2) e posteriores:
   - Desempenho e estabilidade muito melhorados. (#10964)
   - Ao pressionar ``control+f`` para localizar o texto, a posição do cursor de exploração é atualizada para seguir o termo encontrado. (#11172)
   - O relato de texto digitado que não aparece na tela (como senhas) é desabilitado por padrão.
@@ -46,7 +46,7 @@ Ele pode ser reativado no painel de configurações avançadas do NVDA. (#11554)
   - Observe que a versão mais atualizada do Adobe Acrobat / Reader também é necessária para evitar o travamento.
   -
 - As medidas de tamanho de fonte agora são traduzíveis no NVDA. (#13573)
-- Ignore eventos Java Access Bridge onde nenhum identificador de janela pode ser encontrado para aplicativos Java.
+- Ignora eventos Java Access Bridge onde nenhum identificador de janela pode ser encontrado para aplicativos Java.
 Isso melhorará o desempenho de alguns aplicativos Java, incluindo o IntelliJ IDEA. (#13039)
 - O anúncio de células selecionadas para o LibreOffice Calc é mais eficiente e não resulta mais no congelamento do Calc quando muitas células são selecionadas. (#13232)
 - Ao executar com um usuário diferente, o Microsoft Edge não mais fica inacessível. (#13032)
@@ -76,14 +76,6 @@ Esta é uma versão de correção ""[patch]"" para corrigir uma quebra acidental
 == Correção de Falhas ==
 - Corrigida uma falha onde o NVDA não anunciava "Área de Trabalho Segura" ao entrar numa área de trabalho segura.
 Isso fez com que o NVDA remoto não reconhecesse áreas de trabalho seguras. (#14094)
--
-
-== Alterações para Desenvolvedores ==
-Esta versão contém uma quebra técnica na compatibilidade com versões anteriores da API.
-Espera-se que essa alteração não afete nenhum complemento.
-Abra um problema ""[issue]"" no GitHub se seu complemento se tornar incompatível como resultado desta versão.
-
-- ``SecureDesktopNVDAObject`` não é mais uma subclasse de ``Desktop`` ou ``Window``. (#14105)
 -
 
 = 2022.2.2 =
