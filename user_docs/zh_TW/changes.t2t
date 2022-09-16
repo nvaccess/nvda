@@ -16,7 +16,7 @@ NVDA 新版資訊
   - 當按 ``Ctrl+F`` 搜尋文字時，檢閱游標會跟隨移動至找到的字串上。 (#11172)
   - 預設情況下停用讀出未出現在螢幕上的輸入文字 (例如密碼)。
 它可以在 NVDA 的進皆設定中重新啟用。 （#11554）
-  - 可以在不捲動主控視窗的情況下查看已捲動到螢幕之外的文字。 (#12669)
+  - 可以在不捲動主控台視窗的情況下查看已捲動到螢幕之外的文字。 (#12669)
   - 提供更詳細的文字格式資訊。 ([microsoft/terminal PR 10336 https://github.com/microsoft/terminal/pull/10336])
   -
 - 在語音設定中新增可在一段延遲時間後讀出字詞解釋的選項。 (#13509)
@@ -113,6 +113,29 @@ This will improve performance for some Java applications including IntelliJ IDEA
 === Deprecations ===
 There are no deprecations proposed in 2022.3.
 
+
+= 2022.2.3 =
+This is a patch release to fix an accidental API breakage introduced in 2022.2.1.
+
+== Bug Fixes ==
+- Fixed a bug where NVDA did not announce "Secure Desktop" when entering a secure desktop.
+This caused NVDA remote to not recognize secure desktops. (#14094)
+-
+
+== Changes for Developers ==
+This release contains a technical breakage in API backwards compatibility.
+It is expected that this change does not affect any add-ons.
+Please open a GitHub issue if your add-on becomes incompatible as a result of this release.
+
+- ``SecureDesktopNVDAObject`` is no longer a subclass of ``Desktop`` or ``Window``. (#14105)
+-
+
+= 2022.2.2 =
+This is a patch release to fix a bug introduced in 2022.2.1 with input gestures.
+
+== Bug Fixes ==
+- Fixed a bug where input gestures didn't always work. (#14065)
+-
 
 = 2022.2.1 =
 This is a minor release to fix a security issue.
