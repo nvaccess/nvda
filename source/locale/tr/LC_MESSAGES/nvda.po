@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-29 00:02+0000\n"
+"POT-Creation-Date: 2022-09-09 04:49+0000\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Çağrı Doğan <cagrid@hotmail.com>\n"
+"Last-Translator: Dragan Ratkovich\n"
 "Language-Team: \n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.1.1\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 msgid "Native input"
@@ -234,6 +234,11 @@ msgstr "skmdntm"
 msgid "prgbar"
 msgstr "aşmçb"
 
+#. Translators: Displayed in braille for an object which is an
+#. indeterminate progress bar, aka busy indicator.
+msgid "bsyind"
+msgstr "bsyind"
+
 #. Translators: Displayed in braille for an object which is a
 #. scroll bar.
 msgid "scrlbar"
@@ -372,6 +377,21 @@ msgstr "fig"
 msgid "hlght"
 msgstr "vrgl"
 
+#. Translators: Displayed in braille when an object is a comment.
+#. Translators: Displayed in braille when there is a comment for a spreadsheet cell or piece of text in a document.
+#. Translators: Brailled when text contains a generic comment.
+msgid "cmnt"
+msgstr "açkl"
+
+#. Translators: Displayed in braille when an object is a suggestion.
+msgid "sggstn"
+msgstr "sggstn"
+
+#. Translators: Displayed in braille when an object is a definition.
+#. Translators: Identifies a definition.
+msgid "definition"
+msgstr "tanım"
+
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
 msgstr "seç"
@@ -418,11 +438,11 @@ msgstr "tkl"
 
 #. Translators: Displayed in braille when an object is sorted ascending.
 msgid "sorted asc"
-msgstr "Aski sıralı"
+msgstr "Sıralı Aski"
 
 #. Translators: Displayed in braille when an object is sorted descending.
 msgid "sorted desc"
-msgstr "Z'den A'ya sıralı"
+msgstr "z'den A'ya sıralı"
 
 #. Translators: Displayed in braille when an object (usually a graphic) has a long description.
 msgid "ldesc"
@@ -431,11 +451,6 @@ msgstr "uzntrf"
 #. Translators: Displayed in braille when there is a formula on a spreadsheet cell.
 msgid "frml"
 msgstr "frml"
-
-#. Translators: Displayed in braille when there is a comment for a spreadsheet cell or piece of text in a document.
-#. Translators: Brailled when text contains a generic comment.
-msgid "cmnt"
-msgstr "açkl"
 
 #. Translators: Displayed in braille when an object is not selected.
 msgid "nsel"
@@ -527,6 +542,18 @@ msgstr "b%s"
 msgid "vlnk"
 msgstr "zbln"
 
+#. Translators: Braille when there are further details/annotations that can be fetched manually.
+#. %s specifies the type of details (e.g. comment, suggestion)
+#. Translators: Speaks when there are further details/annotations that can be fetched manually.
+#. %s specifies the type of details (e.g. comment, suggestion)
+#, python-format
+msgid "has %s"
+msgstr "%s var"
+
+#. Translators: Braille when there are further details/annotations that can be fetched manually.
+msgid "details"
+msgstr "ayrıntı"
+
 #. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
 #. {total} is replaced with the total number of items in the group.
@@ -592,7 +619,7 @@ msgstr "Otomatik olarak"
 
 #. Translators: The label for a braille setting indicating that braille should be tethered to focus.
 msgid "to focus"
-msgstr "Sistem odağı"
+msgstr "sistem odağı"
 
 #. Translators: The label for a braille setting indicating that braille should be tethered to the review cursor.
 msgid "to review"
@@ -725,7 +752,7 @@ msgstr "Bulgarca derece1"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Catalan grade 1"
-msgstr "katalonca derece 1"
+msgstr "katalonca kısaltma 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -816,6 +843,11 @@ msgstr "Almanca derece1 (ayrıntılı)"
 #. braille settings dialog.
 msgid "German grade 2"
 msgstr "Almanca derece 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "German grade 2 (detailed)"
+msgstr "Almanca 2. derece (ayrıntılı)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1255,7 +1287,7 @@ msgstr "Slovakça derece 1"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Slovenian 8 dot computer braille"
-msgstr "Slovence 8 noktalı bilgisayar braille "
+msgstr "Slovence 8 noktalı bilgisayar braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1379,13 +1411,15 @@ msgstr "Xhosa derece2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Chinese (China, Mandarin) grade 1"
-msgstr "Çince (Çin, Mandarin) Derece 1 "
+#. This should be translated to '中文中国汉语现行盲文' in Mandarin.
+msgid "Chinese (China, Mandarin) Current Braille System"
+msgstr "Çince (Çin, Mandarin) Derece 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Chinese (China, Mandarin) grade 2"
-msgstr "Çince (Çin, Mandarin) Derece 2 "
+#. This should be translated to '中文中国汉语双拼盲文' in Mandarin.
+msgid "Chinese (China, Mandarin) Double-phonic Braille System"
+msgstr "Çince (Çin, Mandarin) Derece 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1436,8 +1470,8 @@ msgid ""
 "keys are passed to the application"
 msgstr ""
 "Tek tuşla Seri dolaşımı açıp kapatır. Açıkken ilgili tuşla tarama kipinde "
-"çeşitli öğeler arasında dolaşılabilirken, kapalıyken basılaan tuş doğrudan "
-"uygulamaya gönderilir."
+"çeşitli öğeler arasında dolaşılabilirken, kapalıyken basılan tuş doğrudan "
+"uygulamaya gönderilir"
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
 #. Translators: Reported when a user tries to use a find command when it isn't supported.
@@ -1458,7 +1492,7 @@ msgstr "Hareketi uygulamaya aktarır"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading"
-msgstr "Sonraki başlığa gider"
+msgstr "sonraki başlığa gider"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next heading"
@@ -1466,7 +1500,7 @@ msgstr "İleride başlık yok"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous heading"
-msgstr "Önceki başlığa gider"
+msgstr "önceki başlığa gider"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous heading"
@@ -1482,7 +1516,7 @@ msgstr "İleride birinci seviyede başlık yok"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous heading at level 1"
-msgstr "Birinci seviyedeki önceki başlığa gider"
+msgstr "birinci seviyedeki önceki başlığa gider"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous heading at level 1"
@@ -1972,7 +2006,7 @@ msgstr "öge listesi"
 #. Translators: The label of a group of radio buttons to select the type of element
 #. in the browse mode Elements List dialog.
 msgid "Type:"
-msgstr "Tür"
+msgstr "Tür:"
 
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
@@ -2075,7 +2109,7 @@ msgstr "Her zaman"
 #. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
 msgctxt "symbolPreserve"
 msgid "only below symbol's level"
-msgstr "Yalnızca noktalama / imla düzeyinin altındaysa"
+msgstr "yalnızca noktalama / imla düzeyinin altındaysa"
 
 #. Translators: a transparent color, {colorDescription} replaced with the full description of the color e.g.
 #. "transparent bright orange-yellow"
@@ -2117,7 +2151,7 @@ msgstr "çok koyu gri"
 #. Translators: the color black (HSV saturation 0%, value 0%)
 msgctxt "color hue"
 msgid "black"
-msgstr "Siyah"
+msgstr "siyah"
 
 #. Translators: The color red (HSV hue 0 degrees)
 msgctxt "color hue"
@@ -2132,12 +2166,12 @@ msgstr "kırmızı-turuncu"
 #. Translators: The color orange (HSV hue 30 degrees)
 msgctxt "color hue"
 msgid "orange"
-msgstr "Turuncu"
+msgstr "turuncu"
 
 #. Translators: The color between  orange and yellow (HSV hue 45 degrees)
 msgctxt "color hue"
 msgid "orange-yellow"
-msgstr "Turuncu-sarı"
+msgstr "turuncu-sarı"
 
 #. Translators: The color yellow (HSV hue 60 degrees)
 msgctxt "color hue"
@@ -2152,12 +2186,12 @@ msgstr "sarı-yeşil"
 #. Translators: The color green (HSV hue 120 degrees)
 msgctxt "color hue"
 msgid "green"
-msgstr "Yeşil"
+msgstr "yeşil"
 
 #. Translators: The color between  green and aqua (HSV hue 150 degrees)
 msgctxt "color hue"
 msgid "green-aqua"
-msgstr "Yeşil-aqua"
+msgstr "yeşil-aqua"
 
 #. Translators: The color aqua (HSV hue 180 degrees)
 msgctxt "color hue"
@@ -2325,6 +2359,22 @@ msgstr "gesture map dosyasında hata"
 msgid "Loading NVDA. Please wait..."
 msgstr "NVDA açılıyor, lütfen bekleyin..."
 
+#. Translators: This is a warning to users, shown if NVDA cannot determine if
+#. Windows is locked.
+msgid ""
+"NVDA failed to register session tracking. While this instance of NVDA is "
+"running, your desktop will not be secure when Windows is locked. Restart "
+"NVDA? "
+msgstr ""
+"NVDA, oturum izlemeyi kaydedemedi. Bu NVDA örneği çalışırken, Windows "
+"kilitlendiğinde masaüstünüz güvenli olmayacaktır. NVDA yeniden başlatılsın "
+"mı? "
+
+#. Translators: This is a warning to users, shown if NVDA cannot determine if
+#. Windows is locked.
+msgid "NVDA could not start securely."
+msgstr "NVDA güvenli bir şekilde başlatılamadı."
+
 #. Translators: The screen is oriented so that it is wider than it is tall.
 msgid "Landscape"
 msgstr "Yatay"
@@ -2375,7 +2425,7 @@ msgstr "Metni mevcut imleç konumundan sonra ara"
 msgid ""
 "find the next occurrence of the previously entered text string from the "
 "current cursor's position"
-msgstr "Sonrakini bul"
+msgstr "sonrakini bul"
 
 #. Translators: Input help message for find previous command.
 msgid ""
@@ -2387,32 +2437,54 @@ msgstr "Öncekini bul"
 msgid "No selection"
 msgstr "Seçim yok"
 
+#. Translators: Abbreviation for points, a measurement of font size.
+#, python-format
+msgctxt "font size"
+msgid "%s pt"
+msgstr "%s punto"
+
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
 #. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
 msgid "Not in a table cell"
-msgstr "Bir tablo hücresinde değil."
+msgstr "Bir tablo hücresinde değil"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. but the cursor can't be moved in that direction because it is at the edge of the table.
 msgid "Edge of table"
-msgstr "tablo sınırı"
+msgstr "Tablo sınırı"
 
 #. Translators: the description for the next table row script on browseMode documents.
 msgid "moves to the next table row"
-msgstr "Bir sonraki tablo satırına gider"
+msgstr "bir sonraki tablo satırına gider"
 
 #. Translators: the description for the previous table row script on browseMode documents.
 msgid "moves to the previous table row"
-msgstr "Bir önceki tablo satırına gider"
+msgstr "bir önceki tablo satırına gider"
 
 #. Translators: the description for the next table column script on browseMode documents.
 msgid "moves to the next table column"
-msgstr "Bir sonraki tablo sütununa gider"
+msgstr "bir sonraki tablo sütununa gider"
 
 #. Translators: the description for the previous table column script on browseMode documents.
 msgid "moves to the previous table column"
-msgstr "Bir önceki tablo sütununa gider"
+msgstr "bir önceki tablo sütununa gider"
+
+#. Translators: the description for the first table row script on browseMode documents.
+msgid "moves to the first table row"
+msgstr "bir sonraki tablo satırına gider"
+
+#. Translators: the description for the last table row script on browseMode documents.
+msgid "moves to the last table row"
+msgstr "bir sonraki tablo satırına gider"
+
+#. Translators: the description for the first table column script on browseMode documents.
+msgid "moves to the first table column"
+msgstr "bir sonraki tablo sütununa gider"
+
+#. Translators: the description for the last table column script on browseMode documents.
+msgid "moves to the last table column"
+msgstr "bir sonraki tablo sütununa gider"
 
 #. Translators: The message announced when toggling the include layout tables browse mode setting.
 msgid "layout tables off"
@@ -2552,7 +2624,7 @@ msgstr "Mevcut fare konumuna bir kez sol tıklar"
 
 #. Translators: Reported when left mouse button is clicked.
 msgid "Left click"
-msgstr "sol tık"
+msgstr "Sol tık"
 
 #. Translators: Input help mode message for right mouse click command.
 msgid "Clicks the right mouse button once at the current mouse position"
@@ -2566,25 +2638,9 @@ msgstr "sağ tık"
 msgid "Locks or unlocks the left mouse button"
 msgstr "Sol fareyi kilitleyip açar"
 
-#. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
-msgid "Left mouse button unlock"
-msgstr "Sol fare kilitli değil"
-
-#. Translators: This is presented when the left mouse button is locked down (used for drag and drop).
-msgid "Left mouse button lock"
-msgstr "sol fare kilitli"
-
 #. Translators: Input help mode message for right mouse lock/unlock command.
 msgid "Locks or unlocks the right mouse button"
 msgstr "Sağ fareyi kilitleyip açar"
-
-#. Translators: This is presented when the right mouse button lock is released (used for drag and drop).
-msgid "Right mouse button unlock"
-msgstr "Sağ fare kilitli değil"
-
-#. Translators: This is presented when the right mouse button is locked down (used for drag and drop).
-msgid "Right mouse button lock"
-msgstr "sağ fare kilitli"
 
 #. Translators: Input help mode message for report current selection command.
 msgid ""
@@ -2626,11 +2682,11 @@ msgstr "Yazılan karakterlerin seslendirilmesiyle ilgili ayarı açıp kapatır"
 
 #. Translators: The message announced when toggling the speak typed characters keyboard setting.
 msgid "speak typed characters off"
-msgstr "Yazılan karakterleri seslendir, kapalı"
+msgstr "yazılan karakterleri seslendir, kapalı"
 
 #. Translators: The message announced when toggling the speak typed characters keyboard setting.
 msgid "speak typed characters on"
-msgstr "Yazılan karakterleri seslendir, açık"
+msgstr "yazılan karakterleri seslendir, açık"
 
 #. Translators: Input help mode message for toggle speak typed words command.
 msgid "Toggles on and off the speaking of typed words"
@@ -2638,11 +2694,11 @@ msgstr "Yazılan sözcüklerin seslendirilmesiyle ilgili ayarı açıp kapatır"
 
 #. Translators: The message announced when toggling the speak typed words keyboard setting.
 msgid "speak typed words off"
-msgstr "Yazılan sözcükleri seslendir, kapalı"
+msgstr "yazılan sözcükleri seslendir, kapalı"
 
 #. Translators: The message announced when toggling the speak typed words keyboard setting.
 msgid "speak typed words on"
-msgstr "Yazılan sözcükleri seslendir, açık"
+msgstr "yazılan sözcükleri seslendir, açık"
 
 #. Translators: Input help mode message for toggle speak command keys command.
 msgid ""
@@ -2664,11 +2720,11 @@ msgstr "Yazı tipinin bildirimini açıp kapatır"
 
 #. Translators: The message announced when toggling the report font name document formatting setting.
 msgid "report font name off"
-msgstr "Yazı tipi adını bildirme"
+msgstr "yazı tipi adını bildirme"
 
 #. Translators: The message announced when toggling the report font name document formatting setting.
 msgid "report font name on"
-msgstr "Yazı tipi adını bildir"
+msgstr "yazı tipi adını bildir"
 
 #. Translators: Input help mode message for toggle report font size command.
 msgid "Toggles on and off the reporting of font size changes"
@@ -2680,7 +2736,7 @@ msgstr "yazı boyutunu bildirme"
 
 #. Translators: The message announced when toggling the report font size document formatting setting.
 msgid "report font size on"
-msgstr "Yazı boyutunu bildir"
+msgstr "yazı boyutunu bildir"
 
 #. Translators: Input help mode message for toggle report font attributes command.
 msgid "Toggles on and off the reporting of font attributes"
@@ -2688,11 +2744,11 @@ msgstr "Yazı tipi özelliklerinin bildirimini açıp kapatır"
 
 #. Translators: The message announced when toggling the report font attributes document formatting setting.
 msgid "report font attributes off"
-msgstr "Yazı tipi özelliklerini bildirme"
+msgstr "yazı tipi özelliklerini bildirme"
 
 #. Translators: The message announced when toggling the report font attributes document formatting setting.
 msgid "report font attributes on"
-msgstr "Yazı tipi özelliklerini bildir"
+msgstr "yazı tipi özelliklerini bildir"
 
 #. Translators: Input help mode message for toggle superscripts and subscripts command.
 msgid "Toggles on and off the reporting of superscripts and subscripts"
@@ -2706,7 +2762,7 @@ msgstr "üst simge ve alt simgeleri bildir"
 #. Translators: The message announced when toggling the report superscripts and subscripts
 #. document formatting setting.
 msgid "report superscripts and subscripts off"
-msgstr "Üst ve alt simge bildirimi kapalı"
+msgstr "üst ve alt simge bildirimi kapalı"
 
 #. Translators: Input help mode message for toggle report revisions command.
 msgid "Toggles on and off the reporting of revisions"
@@ -2730,7 +2786,7 @@ msgstr "Vurguyu bildirme"
 
 #. Translators: The message announced when toggling the report emphasis document formatting setting.
 msgid "report emphasis on"
-msgstr "Vurguyu bildir"
+msgstr "vurguyu bildir"
 
 #. Translators: Input help mode message for toggle report marked (highlighted) content command.
 msgid "Toggles on and off the reporting of highlighted text"
@@ -2742,7 +2798,7 @@ msgstr "vurgulananı bildir"
 
 #. Translators: The message announced when toggling the report marked document formatting setting.
 msgid "report highlighted off"
-msgstr "Vurgulananı bildirme"
+msgstr "vurgulananı bildirme"
 
 #. Translators: Input help mode message for toggle report colors command.
 msgid "Toggles on and off the reporting of colors"
@@ -2786,11 +2842,11 @@ msgstr "Yazım hatalarının bildirimini açıp kapatır"
 
 #. Translators: The message announced when toggling the report spelling errors document formatting setting.
 msgid "report spelling errors off"
-msgstr "Yazım hatalarını bildirme"
+msgstr "yazım hatalarını bildirme"
 
 #. Translators: The message announced when toggling the report spelling errors document formatting setting.
 msgid "report spelling errors on"
-msgstr "Yazım hatalarını bildir"
+msgstr "yazım hatalarını bildir"
 
 #. Translators: Input help mode message for toggle report pages command.
 msgid "Toggles on and off the reporting of pages"
@@ -2862,15 +2918,15 @@ msgstr "satır aralığını bildir"
 
 #. Translators: Input help mode message for toggle report tables command.
 msgid "Toggles on and off the reporting of tables"
-msgstr "tabloların bildirimini açıp kapatır"
+msgstr "Tabloların bildirimini açıp kapatır"
 
 #. Translators: The message announced when toggling the report tables document formatting setting.
 msgid "report tables off"
-msgstr "Tabloları bildirme"
+msgstr "tabloları bildirme"
 
 #. Translators: The message announced when toggling the report tables document formatting setting.
 msgid "report tables on"
-msgstr "Tabloları bildir"
+msgstr "tabloları bildir"
 
 #. Translators: Input help mode message for toggle report table row/column headers command.
 msgid "Toggles on and off the reporting of table row and column headers"
@@ -2878,11 +2934,11 @@ msgstr "Tablo satır ve sütun başlıklarının bildirimini açıp kapatır"
 
 #. Translators: The message announced when toggling the report table row/column headers document formatting setting.
 msgid "report table row and column headers off"
-msgstr "Tablo satır ve sütun başlıklarını bildirme"
+msgstr "tablo satır ve sütun başlıklarını bildirme"
 
 #. Translators: The message announced when toggling the report table row/column headers document formatting setting.
 msgid "report table row and column headers on"
-msgstr "Tablo satır ve sütun başlıklarını bildir"
+msgstr "tablo satır ve sütun başlıklarını bildir"
 
 #. Translators: Input help mode message for toggle report table cell coordinates command.
 msgid "Toggles on and off the reporting of table cell coordinates"
@@ -2890,11 +2946,11 @@ msgstr "Tablo hücre koordinatlarının bildirimini açıp kapatır"
 
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
 msgid "report table cell coordinates off"
-msgstr "Tablo hücre koordinatlarını bildirme"
+msgstr "tablo hücre koordinatlarını bildirme"
 
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
 msgid "report table cell coordinates on"
-msgstr "Tablo hücre koordinatlarını bildir"
+msgstr "tablo hücre koordinatlarını bildir"
 
 #. Translators: Input help mode message for toggle report cell borders command.
 msgid "Cycles through the cell border reporting settings"
@@ -2942,11 +2998,11 @@ msgstr "Açıklamaların bildirimini açıp kapatır"
 
 #. Translators: The message announced when toggling the report comments document formatting setting.
 msgid "report comments off"
-msgstr "Açıklamaları bildirme"
+msgstr "açıklamaları bildirme"
 
 #. Translators: The message announced when toggling the report comments document formatting setting.
 msgid "report comments on"
-msgstr "Açıklamaları bildir"
+msgstr "açıklamaları bildir"
 
 #. Translators: Input help mode message for toggle report lists command.
 msgid "Toggles on and off the reporting of lists"
@@ -3002,11 +3058,11 @@ msgstr "Sınır imleri bildirimini açıp kapatır"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
 msgid "report landmarks and regions off"
-msgstr "Sınır İmleri ve bölgeleri bildirme"
+msgstr "sınır imleri ve bölgeleri bildirme"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
 msgid "report landmarks and regions on"
-msgstr "Sınır imleri ve bölgeleri bildir"
+msgstr "sınır imleri ve bölgeleri bildir"
 
 #. Translators: Input help mode message for toggle report articles command.
 msgid "Toggles on and off the reporting of articles"
@@ -3038,11 +3094,31 @@ msgstr "Tıklanabilir olup olmadığı bilgisini açıp kapatır"
 
 #. Translators: The message announced when toggling the report if clickable document formatting setting.
 msgid "report if clickable off"
-msgstr "Tıklanabilir olup olmadığını bildirme"
+msgstr "tıklanabilir olup olmadığını bildirme"
 
 #. Translators: The message announced when toggling the report if clickable document formatting setting.
 msgid "report if clickable on"
-msgstr "Tıklanabilir olup olmadığını bildir açık"
+msgstr "tıklanabilir olup olmadığını bildir açık"
+
+#. Translators: Input help mode message for cycle through automatic language switching mode command.
+msgid ""
+"Cycles through speech modes for automatic language switching: off, language "
+"only and language and dialect."
+msgstr ""
+"Otomatik dil geçişi için konuşma modları arasında geçiş yapar: kapalı, "
+"yalnızca dil ve dil ve lehçe."
+
+#. Translators: A message reported when executing the cycle automatic language switching mode command.
+msgid "Automatic language switching off"
+msgstr "Otomatik dil değiştirme kapalı"
+
+#. Translators: A message reported when executing the cycle automatic language switching mode command.
+msgid "Automatic language and dialect switching on"
+msgstr "Otomatik dil ve lehçe değiştirme açık"
+
+#. Translators: A message reported when executing the cycle automatic language switching mode command.
+msgid "Automatic language switching on"
+msgstr "Otomatik dil değiştirme açık"
 
 #. Translators: Input help mode message for cycle speech symbol level command.
 msgid ""
@@ -3183,7 +3259,7 @@ msgstr ""
 
 #. Translators: Reported when attempting to move the navigator object to focus.
 msgid "Move to focus"
-msgstr "odağa git"
+msgstr "Odağa git"
 
 #. Translators: Input help mode message for move focus to current navigator object command.
 msgid ""
@@ -3201,7 +3277,7 @@ msgstr "odak yok"
 
 #. Translators: Reported when attempting to move focus to navigator object.
 msgid "Move focus"
-msgstr "odağı taşı"
+msgstr "Odağı taşı"
 
 #. Translators: Reported when trying to move caret to the position of the review cursor but there is no caret.
 #. Translators: Reported when there is no caret.
@@ -3275,7 +3351,7 @@ msgstr "İnceleme imlecini önceki satıra taşır ve okur"
 #. Translators: Reported when attempting to move to the previous result in the Python Console
 #. output pane while there is no previous result.
 msgid "Top"
-msgstr "üst"
+msgstr "Üst"
 
 #. Translators: Input help mode message for read current line under review cursor command.
 msgid ""
@@ -3437,7 +3513,7 @@ msgstr "NVDA'yı kapatır"
 
 #. Translators: Input help mode message for restart NVDA command.
 msgid "Restarts NVDA!"
-msgstr "NVDA'yı yeniden başlatır"
+msgstr "NVDA'yı yeniden başlatır!"
 
 #. Translators: Input help mode message for show NVDA menu command.
 msgid "Shows the NVDA menu"
@@ -3702,7 +3778,7 @@ msgid ""
 "Toggles on and off the movement of the review cursor due to the caret moving."
 msgstr ""
 "İnceleme imlecinin düzenleme imlecini takip etmesiyle ilgili ayarı açıp "
-"kapatır"
+"kapatır."
 
 #. Translators: presented when toggled.
 msgid "caret moves review cursor off"
@@ -3710,7 +3786,7 @@ msgstr "Düzenleme imleci inceleme imlecini taşır, kapalı"
 
 #. Translators: presented when toggled.
 msgid "caret moves review cursor on"
-msgstr "Düzenleme imleci inceleme imlecini taşır, açık"
+msgstr "düzenleme imleci inceleme imlecini taşır, açık"
 
 #. Translators: Input help mode message for toggle focus moves navigator object command.
 msgid ""
@@ -3719,11 +3795,11 @@ msgstr "Nesne sunucusunun odağı takip etmesiyle ilgili ayarı açıp kapatır"
 
 #. Translators: presented when toggled.
 msgid "focus moves navigator object off"
-msgstr "Odak nesne sunucusunu taşır, kapalı"
+msgstr "odak nesne sunucusunu taşır, kapalı"
 
 #. Translators: presented when toggled.
 msgid "focus moves navigator object on"
-msgstr "Odak nesne sunucusunu taşır, açık"
+msgstr "odak nesne sunucusunu taşır, açık"
 
 #. Translators: Input help mode message for toggle auto focus focusable elements command.
 msgid ""
@@ -4164,8 +4240,8 @@ msgid ""
 "Virtually toggles the NVDA and shift keys to emulate a keyboard shortcut "
 "with braille input"
 msgstr ""
-"Virtually toggles the NVDA and shift keys to emulate a keyboard shortcut "
-"with braille input"
+"Braille girişli bir klavye kısayolunu taklit etmek için NVDA ve shift "
+"tuşlarını sanal olarak değiştirir"
 
 #. Translators: Input help mode message for a braille command.
 msgid ""
@@ -4180,15 +4256,15 @@ msgid ""
 "Virtually toggles the control, alt, and shift keys to emulate a keyboard "
 "shortcut with braille input"
 msgstr ""
-"Virtually toggles the control, alt, and shift keys to emulate a keyboard "
-"shortcut with braille input"
+"Braille girişli bir klavye kısayolunu taklit etmek için kontrol, alt ve "
+"shift tuşlarını sanal olarak değiştirir"
 
 #. Translators: Input help mode message for reload plugins command.
 msgid ""
 "Reloads app modules and global plugins without restarting NVDA, which can be "
 "Useful for developers"
 msgstr ""
-"uygulama modüllerini ve global pluginleri  NVDA'yı yeniden başlatmadan "
+"Uygulama modüllerini ve global pluginleri  NVDA'yı yeniden başlatmadan "
 "yükler,. geliştiriciler için faydalı olabilir"
 
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
@@ -4438,7 +4514,7 @@ msgstr "Güncelle"
 
 #. Translators: This is the name of the stop key found on multimedia keyboards for controlling the web-browser.
 msgid "browser stop"
-msgstr "Tarayıcı durdur"
+msgstr "tarayıcı durdur"
 
 #. Translators: This is the name of the back key found on multimedia keyboards to goto the search page of the web-browser.
 msgid "search page"
@@ -4446,7 +4522,7 @@ msgstr "Sayfayı ara"
 
 #. Translators: This is the name of the favorites key found on multimedia keyboards to open favorites in the web-browser.
 msgid "favorites"
-msgstr "Sık kullanılanlar"
+msgstr "sık kullanılanlar"
 
 #. Translators: This is the name of the home key found on multimedia keyboards to goto the home page in the web-browser.
 msgid "home page"
@@ -4454,19 +4530,19 @@ msgstr "Ana sayfa"
 
 #. Translators: This is the name of the mute key found on multimedia keyboards to control playback volume.
 msgid "mute"
-msgstr "Sustur"
+msgstr "sustur"
 
 #. Translators: This is the name of the volume down key found on multimedia keyboards to reduce playback volume.
 msgid "volume down"
-msgstr "Sesi azalt"
+msgstr "sesi azalt"
 
 #. Translators: This is the name of the volume up key found on multimedia keyboards to increase playback volume.
 msgid "volume up"
-msgstr "Sesi artır"
+msgstr "sesi artır"
 
 #. Translators: This is the name of the next track key found on multimedia keyboards to skip to next track in the mediaplayer.
 msgid "next track"
-msgstr "Sonraki parça"
+msgstr "sonraki parça"
 
 #. Translators: This is the name of the next track key found on multimedia keyboards to skip to next track in the mediaplayer.
 msgid "previous track"
@@ -4514,7 +4590,7 @@ msgstr "Alt"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "shift"
-msgstr "Şift"
+msgstr "şift"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "windows"
@@ -4542,7 +4618,7 @@ msgstr "sonraki sayfa"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "end"
-msgstr "Son"
+msgstr "son"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "home"
@@ -4558,7 +4634,7 @@ msgstr "numaratör sil"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "left arrow"
-msgstr "Sol ok"
+msgstr "sol ok"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "right arrow"
@@ -4574,7 +4650,7 @@ msgstr "Aşağı ok"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "applications"
-msgstr "Uygulama"
+msgstr "uygulama"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "num lock"
@@ -4706,7 +4782,7 @@ msgstr "sol Windows"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "left shift"
-msgstr "Sol Şift"
+msgstr "sol Şift"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "right shift"
@@ -4748,7 +4824,7 @@ msgid "unknown %s"
 msgstr "bilinmeyen %s"
 
 msgid "on"
-msgstr "Açık"
+msgstr "açık"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which disables reporting of progress bars.
@@ -4807,6 +4883,22 @@ msgstr "Somali"
 #, python-format
 msgid "%s cursor"
 msgstr "%s imleci"
+
+#. Translators: This is presented when the left mouse button is locked down (used for drag and drop).
+msgid "Left mouse button lock"
+msgstr "Sol fare kilitli"
+
+#. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
+msgid "Left mouse button unlock"
+msgstr "Sol fare kilitli değil"
+
+#. Translators: This is presented when the right mouse button is locked down (used for drag and drop).
+msgid "Right mouse button lock"
+msgstr "sağ fare kilitli"
+
+#. Translators: This is presented when the right mouse button lock is released (used for drag and drop).
+msgid "Right mouse button unlock"
+msgstr "Sağ fare kilitli değil"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4992,7 +5084,7 @@ msgstr "kavisli Aşağı ok"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Ribbon banner"
-msgstr "şerit benır"
+msgstr "Şerit benır"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5016,7 +5108,7 @@ msgstr "Kavisli Yukarı ok"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Curved Up Ribbon banner"
-msgstr "yukarı eğimli Şerit afiş"
+msgstr "Yukarı eğimli Şerit afiş"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5202,7 +5294,7 @@ msgstr "Sayfa dışı Bağlayıcısı akış sembolü"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "'Or' flowchart symbol"
-msgstr "'Veya' akış sembolü "
+msgstr "'Veya' akış sembolü"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5316,7 +5408,7 @@ msgstr "Altıgen"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Horizontal scroll"
-msgstr "Yatay kaydırma "
+msgstr "Yatay kaydırma"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5340,7 +5432,7 @@ msgstr "Sol Ok ile belirtme"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Left brace"
-msgstr "aç küme parantez"
+msgstr "Aç küme parantez"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5376,7 +5468,7 @@ msgstr "Çift uçlu Dairesel ok"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Ribbon with left and right arrows"
-msgstr "sol ve sağ oklu şerit"
+msgstr "Sol ve sağ oklu şerit"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5418,7 +5510,7 @@ msgstr "Kenar ve yatay vurgu çubuğu ile belirtme"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with horizontal line"
-msgstr "Yatay çizgi ile belirtme "
+msgstr "Yatay çizgi ile belirtme"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5498,7 +5590,7 @@ msgstr "Kenarsız ve U-şekli oluşturan  belirtme çizgisi ile belirtme"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Line inverse"
-msgstr "Line inverse"
+msgstr "Ters satır"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5780,13 +5872,13 @@ msgstr "Yukarı okla belirtme"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Double-ended Arrow pointing up and down"
-msgstr "yukarı ve aşağıyı gösteren Çift uçlu ok"
+msgstr "Yukarı ve aşağıyı gösteren Çift uçlu ok"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with arrows that point up and down"
-msgstr "yukarı ve aşağıyı gösteren Çift uçlu okla belirtme"
+msgstr "Yukarı ve aşağıyı gösteren Çift uçlu okla belirtme"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6142,7 +6234,7 @@ msgstr ""
 "Ancak, NVDA yapılandırmanız NVDA'nın bu sürümüyle uyumlu olmayan eklentiler "
 "içeriyor. Bu eklentiler kurulumdan sonra devre dışı bırakılacak. Bu "
 "eklentilere güveniyorsanız, lütfen kuruluma devam edilip edilmeyeceğine "
-"karar vermek için listeyi gözden geçirin."
+"karar vermek için listeyi gözden geçirin"
 
 #. Translators: A message to confirm that the user understands that addons that have not been
 #. reviewed and made available, will be disabled after installation.
@@ -6204,7 +6296,7 @@ msgstr ""
 "Ancak, NVDA yapılandırmanız NVDA'nın bu sürümüyle uyumlu olmayan eklentiler "
 "içeriyor. Bu eklentiler kurulumdan sonra devre dışı bırakılacak. Bu "
 "eklentilere güveniyorsanız, lütfen kuruluma devam edilip edilmeyeceğine "
-"karar vermek için listeyi gözden geçirin."
+"karar vermek için listeyi gözden geçirin"
 
 #. Translators: The label of a button to install an NVDA update.
 msgid "&Install update"
@@ -6350,7 +6442,7 @@ msgid ""
 "{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
 "screen, height is {height:.1f} per cent of screen"
 msgstr ""
-"soldan yüzde {left:.1f}, yukarıdan yüzde {top:.1f} uzaklıkta, genişlik "
+"Soldan yüzde {left:.1f}, yukarıdan yüzde {top:.1f} uzaklıkta, genişlik "
 "ekranın yüzde {width:.1f}, yükseklik {height:.1f}"
 
 #. Translators: a message announcing a candidate's character and description.
@@ -6378,6 +6470,22 @@ msgstr "Nesne sunucusunu ve odağı sonraki satıra taşır"
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object and focus to the previous row"
 msgstr "Nesne sunucusunu ve odağı önceki satıra taşır"
+
+#. Translators: The description of an NVDA command.
+msgid "Moves the navigator object to the first column"
+msgstr "Nesne sunucusunu ilk  sütuna taşır"
+
+#. Translators: The description of an NVDA command.
+msgid "Moves the navigator object to the last column"
+msgstr "Nesne sunucusunu son sütuna taşır"
+
+#. Translators: The description of an NVDA command.
+msgid "Moves the navigator object and focus to the first row"
+msgstr "Nesne sunucusunu ve odağı ilk satıra taşır"
+
+#. Translators: The description of an NVDA command.
+msgid "Moves the navigator object and focus to the last row"
+msgstr "Nesne sunucusunu ve odağı son satıra taşır"
 
 #. Translators: Announced in braille when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
 msgid "Suggestions"
@@ -6445,8 +6553,8 @@ msgid "Tries to read documentation for the selected autocompletion item."
 msgstr "Seçilen otomatik tamamlama öğesinin belgelerini okumaya çalışır."
 
 #. Translators: When the help popup cannot be found for the selected autocompletion item
-msgid "Cann't find the documentation window."
-msgstr "Belge penceresi bulunamadı."
+msgid "Can't find the documentation window."
+msgstr "Belge penceresi bulunamıyor."
 
 #. Translators: Reported when no track is playing in Foobar 2000.
 msgid "No track playing"
@@ -6557,7 +6665,7 @@ msgstr "Yönlendir:"
 
 #. Translators: This is presented in outlook or live mail
 msgid "Answer to:"
-msgstr "yanıt:"
+msgstr "Yanıt:"
 
 #. Translators: This is presented in outlook or live mail
 msgid "Organisation:"
@@ -6900,7 +7008,7 @@ msgstr "slayt sol kenarından {distance:.3g} punto"
 #. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
 #, python-brace-format
 msgid "Off left slide edge by {distance:.3g} points"
-msgstr "slayt sol kenarından {distance:.3g} punto"
+msgstr "Slayt sol kenarından {distance:.3g} punto"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
 #, python-brace-format
@@ -6915,22 +7023,22 @@ msgstr "Slayt üst kenarından {distance:.3g} punto"
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
 #, python-brace-format
 msgid "{distance:.3g} points from right slide edge"
-msgstr "Slayt sağ kenarından {distance:.3g} punto "
+msgstr "Slayt sağ kenarından {distance:.3g} punto"
 
 #. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
 #, python-brace-format
 msgid "Off right slide edge by {distance:.3g} points"
-msgstr "Slayt sağ kenarından {distance:.3g} punto "
+msgstr "Slayt sağ kenarından {distance:.3g} punto"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
 #, python-brace-format
 msgid "{distance:.3g} points from bottom slide edge"
-msgstr "Slayt alt kenarından {distance:.3g} punto "
+msgstr "Slayt alt kenarından {distance:.3g} punto"
 
 #. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
 #, python-brace-format
 msgid "Off bottom slide edge by {distance:.3g} points"
-msgstr "Slayt alt kenarından {distance:.3g} punto "
+msgstr "Slayt alt kenarından {distance:.3g} punto"
 
 #. Translators: The description for a script
 msgid ""
@@ -7148,6 +7256,18 @@ msgstr "&Başlangıçta Braille Görüntüleyici'yı Göster"
 msgid "&Hover for cell routing"
 msgstr "&Hücre yönlendirme için üzerine gelin"
 
+#. Translators: Label for an option in NVDA settings.
+#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
+#. Translators: One of the show states of braille messages
+#. (the disabled mode turns off showing of braille messages completely).
+msgid "Disabled"
+msgstr "devre dışı"
+
+#. Translators: Label for an option in NVDA settings.
+#. Translators: The status shown for an addon when its currently running in NVDA.
+msgid "Enabled"
+msgstr "Etkin"
+
 #. Translators: The title of the document used to present the result of content recognition.
 msgid "Result"
 msgstr "Sonuç"
@@ -7191,6 +7311,86 @@ msgstr "alt simge"
 #. Translators: Describes text formatting.
 msgid "superscript"
 msgstr "üst simge"
+
+#. Translators: Abbreviation for pixels, a measurement of font size.
+#, python-format
+msgctxt "font size"
+msgid "%s px"
+msgstr "%s piksel"
+
+#. Translators: A measurement unit of font size.
+#, python-format
+msgctxt "font size"
+msgid "%s em"
+msgstr "%s sonu"
+
+#. Translators: A measurement unit of font size.
+#, python-format
+msgctxt "font size"
+msgid "%s ex"
+msgstr "%s sonu"
+
+#. Translators: Abbreviation for relative em, a measurement of font size.
+#, python-format
+msgctxt "font size"
+msgid "%s rem"
+msgstr "%s kalan"
+
+#. Translators: Font size measured as a percentage
+#, python-format
+msgctxt "font size"
+msgid "%s%%"
+msgstr "%s%%"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "xx-small"
+msgstr "xx-küçük"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "x-small"
+msgstr "x-küçük"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "small"
+msgstr "küçük"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "medium"
+msgstr "orta"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "large"
+msgstr "büyük"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "x-large"
+msgstr "x-büyük"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "xx-large"
+msgstr "xx-büyük"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "xxx-large"
+msgstr "xxx-büyük"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "larger"
+msgstr "daha büyük"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "smaller"
+msgstr "doldurucu"
 
 #. Translators: Presented when an item is marked as current in a collection of items
 msgid "current"
@@ -7301,7 +7501,7 @@ msgstr "AĞAÇ görünümü"
 
 #. Translators: Identifies a tree view item.
 msgid "tree view item"
-msgstr "AĞAÇ görünüm ögesi"
+msgstr "aĞAÇ görünüm ögesi"
 
 #. Translators: The word presented for tabs in a tab enabled window.
 msgctxt "controlType"
@@ -7314,7 +7514,7 @@ msgstr "kontrol sekmesi"
 
 #. Translators: Identifies a slider such as volume slider.
 msgid "slider"
-msgstr "Sürgü"
+msgstr "sürgü"
 
 #. Translators: Identifies a progress bar such as NvDA update progress.
 msgid "progress bar"
@@ -7365,7 +7565,7 @@ msgstr "Satır Başlığı"
 
 #. Translators: Identifies a drop down button (a button that, when clicked, opens a menu of its own).
 msgid "drop down button"
-msgstr "Açılabilir menü düğmesi"
+msgstr "açılabilir menü düğmesi"
 
 #. Translators: Identifies an element.
 msgid "clock"
@@ -7440,7 +7640,7 @@ msgstr "animasyon"
 
 #. Translators: Identifies an application in webpages.
 msgid "application"
-msgstr "Uygulama"
+msgstr "uygulama"
 
 #. Translators: Identifies a box element.
 msgid "box"
@@ -7458,7 +7658,7 @@ msgstr "özellik sayfası"
 #. Translators: Identifies a canvas element on webpages (a box with some background color with some text
 #. drawn on the box, like a canvas).
 msgid "canvas"
-msgstr "Tuval"
+msgstr "tuval"
 
 #. Translators: Identifies a caption (usually a short text identifying a picture or a graphic on websites).
 msgid "caption"
@@ -7471,11 +7671,11 @@ msgstr "Onay ögesi"
 
 #. Translators: Identifies a data edit field.
 msgid "date edit"
-msgstr "Tarih alanı"
+msgstr "tarih alanı"
 
 #. Translators: Identifies an icon.
 msgid "icon"
-msgstr "Simge"
+msgstr "simge"
 
 #. Translators: Identifies a directory pane.
 msgid "directory pane"
@@ -7493,7 +7693,7 @@ msgstr "son not"
 msgid "footer"
 msgstr "altbilgi "
 
-#. Translators: Identifies a foot note (text at the end of a passage or used for anotations).
+#. Translators: Identifies a foot note (text at the end of a passage or used for annotations).
 msgid "foot note"
 msgstr "dipnot"
 
@@ -7549,7 +7749,7 @@ msgstr "düzenleme çubuğu"
 
 #. Translators: Identifies a terminal window such as command prompt.
 msgid "terminal"
-msgstr "Uçbirim"
+msgstr "uçbirim"
 
 #. Translators: Identifies a rich edit box (an edit box which allows entering formatting commands in
 #. addition to text; encountered on webpages and NvDA log viewer).
@@ -7671,7 +7871,7 @@ msgstr "beyaz boşluk"
 
 #. Translators: Identifies a tree view button.
 msgid "tree view button"
-msgstr "Ağaç görünüm düğmesi"
+msgstr "ağaç görünüm düğmesi"
 
 #. Translators: Identifies an IP address (an IP address field element).
 msgid "IP address"
@@ -7712,7 +7912,7 @@ msgstr "Parola yazı alanı"
 
 #. Translators: Identifies a font chooser.
 msgid "font chooser"
-msgstr "Yazı tipi Seçici"
+msgstr "yazı tipi Seçici"
 
 msgid "line"
 msgstr "Satır"
@@ -7750,7 +7950,7 @@ msgstr "arkaplan rengi"
 #. Translators: Describes style of text.
 #. Translators: a Microsoft Word revision type (style change)
 msgid "style"
-msgstr "Stil"
+msgstr "stil"
 
 #. Translators: Describes text formatting.
 msgid "indent"
@@ -7770,7 +7970,7 @@ msgid "data grid"
 msgstr "veri klavuzu"
 
 msgid "data item"
-msgstr "Veri ögesi"
+msgstr "veri ögesi"
 
 msgid "header item"
 msgstr "başlık ögesi"
@@ -7780,7 +7980,7 @@ msgid "thumb control"
 msgstr "başparmak kontrol"
 
 msgid "calendar"
-msgstr "Takvim"
+msgstr "takvim"
 
 msgid "video"
 msgstr "video"
@@ -7820,7 +8020,19 @@ msgstr "figür"
 
 #. Translators: Identifies marked (highlighted) content
 msgid "highlighted"
-msgstr "Vurgulanan"
+msgstr "vurgulanan"
+
+#. Translators: Identifies a progress bar with indeterminate state, I.E. progress can not be determined.
+msgid "busy indicator"
+msgstr "meşgul göstergesi"
+
+#. Translators: Identifies a comment.
+msgid "comment"
+msgstr "açıklama"
+
+#. Translators: Identifies a suggestion.
+msgid "suggestion"
+msgstr "öneri"
 
 #. Translators: Indicates that a particular state of an object is negated.
 #. Separate strings have now been defined for commonly negated states (e.g. not selected and not
@@ -7953,17 +8165,17 @@ msgid "drop target"
 msgstr "bırakma yeri"
 
 msgid "sorted"
-msgstr "Sıralı"
+msgstr "sıralı"
 
 msgid "sorted ascending"
-msgstr "A'dan Z'ye sıralı"
+msgstr "a'dan z'ye sıralı"
 
 msgid "sorted descending"
-msgstr "Z'den A'ya sıralı"
+msgstr "z'den A'ya sıralı"
 
 #. Translators: a state that denotes that an object (usually a graphic) has a long description.
 msgid "has long description"
-msgstr "Uzun tarif var"
+msgstr "uzun tarif var"
 
 #. Translators: a state that denotes that an object is pinned in its current location
 msgid "pinned"
@@ -7994,9 +8206,9 @@ msgstr "taşan"
 #. Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected
 #. Excel spreadsheet).
 msgid "unlocked"
-msgstr "Açıldı"
+msgstr "açıldı"
 
-#. Translators: a state that denotes the existance of a note.
+#. Translators: a state that denotes the existence of a note.
 msgid "has note"
 msgstr "Notu var"
 
@@ -8024,10 +8236,6 @@ msgstr "Kaydedilmiş konfigürasyona geri dönüldü"
 #. Translators: Reported when configuration has been restored to defaults by using restore configuration to factory defaults item in NVDA menu.
 msgid "Configuration restored to factory defaults"
 msgstr "Fabrika ayarlarına dönüldü"
-
-#. Translators: Reported when current configuration cannot be saved while NVDA is running in secure mode such as in Windows login screen.
-msgid "Cannot save configuration - NVDA in secure mode"
-msgstr "Güvenli modda NVDA konfigürasyonu kaydedilemez"
 
 #. Translators: Reported when current configuration has been saved.
 msgid "Configuration saved"
@@ -8093,41 +8301,6 @@ msgstr "Ayar&lar..."
 #. Translators: The description for the menu item to open NVDA Settings dialog.
 msgid "NVDA settings"
 msgstr "NVDA ayarları"
-
-#. Translators: The label for the menu item to open Default speech dictionary dialog.
-msgid "&Default dictionary..."
-msgstr "&Varsayılan sözlük..."
-
-#. Translators: The help text for the menu item to open Default speech dictionary dialog.
-msgid ""
-"A dialog where you can set default dictionary by adding dictionary entries "
-"to the list"
-msgstr ""
-"NVDA'yla birlikte kullanılan tüm sesleri etkileyecek, Varsayılan sözlüğü "
-"düzenleyebileceğiniz iletişim kutusu"
-
-#. Translators: The label for the menu item to open Voice specific speech dictionary dialog.
-msgid "&Voice dictionary..."
-msgstr "Ses sö&zlüğü"
-
-#. Translators: The help text for the menu item
-#. to open Voice specific speech dictionary dialog.
-msgid ""
-"A dialog where you can set voice-specific dictionary by adding dictionary "
-"entries to the list"
-msgstr ""
-"Yalnızca kullanmakta olduğunuz konuşmacıyı etkileyecek sözlük girişi "
-"yapabileceğiniz İletişim kutusu "
-
-#. Translators: The label for the menu item to open Temporary speech dictionary dialog.
-msgid "&Temporary dictionary..."
-msgstr "Ge&çici sözlük..."
-
-#. Translators: The help text for the menu item to open Temporary speech dictionary dialog.
-msgid ""
-"A dialog where you can set temporary dictionary by adding dictionary entries "
-"to the edit box"
-msgstr "Geçici sözlük oluşturabileceğiniz iletişim kutusu"
 
 #. Translators: The label for a submenu under NvDA Preferences menu to select speech dictionaries.
 msgid "Speech &dictionaries"
@@ -8224,32 +8397,6 @@ msgstr "Hakkında..."
 msgid "&Help"
 msgstr "Y&ardım"
 
-#. Translators: The label for the menu item to open the Configuration Profiles dialog.
-msgid "&Configuration profiles..."
-msgstr "&Konfigürasyon profilleri..."
-
-#. Translators: The label for the menu item to revert to saved configuration.
-msgid "&Revert to saved configuration"
-msgstr "&Kaydedilmiş konfigürasyona dön"
-
-msgid "Reset all settings to saved state"
-msgstr "Kaydedilmiş konfigürasyona geri dön"
-
-#. Translators: The label for the menu item to reset settings to default settings.
-#. Here, default settings means settings that were there when the user first used NVDA.
-msgid "&Reset configuration to factory defaults"
-msgstr "&Fabrika ayarlarına dön"
-
-msgid "Reset all settings to default state"
-msgstr "Varsayılan konfigürasyona geri dön"
-
-#. Translators: The label for the menu item to save current settings.
-msgid "&Save configuration"
-msgstr "Konfi&gürasyonu kaydet"
-
-msgid "Write the current configuration to nvda.ini"
-msgstr "Mevcut konfigürasyonu NVDA.ini'ye yaz"
-
 #. Translators: The label for the menu item to open donate page.
 msgid "Donate"
 msgstr "Bağışta bulun"
@@ -8269,48 +8416,70 @@ msgstr "&Çıkış"
 msgid "Exit NVDA"
 msgstr "NVDA'dan çık"
 
-#. Translators: An option in the combo box to choose exit action.
-msgid "Exit"
-msgstr "Kapat"
+#. Translators: The label for the menu item to open Default speech dictionary dialog.
+msgid "&Default dictionary..."
+msgstr "&Varsayılan sözlük..."
 
-#. Translators: An option in the combo box to choose exit action.
-msgid "Restart"
-msgstr "Yeniden başlat"
-
-#. Translators: An option in the combo box to choose exit action.
-msgid "Restart with add-ons disabled"
-msgstr "Eklentileri devre dışı bırakarak yeniden başlat"
-
-#. Translators: An option in the combo box to choose exit action.
-msgid "Restart with debug logging enabled"
-msgstr "Hata ayıklamayı etkinleştirerek yeniden başlat"
-
-#. Translators: An option in the combo box to choose exit action.
-msgid "Install pending update"
-msgstr "Bekleyen güncellemeyi kur"
-
-#. Translators: A message in the exit Dialog shown when all add-ons are disabled.
+#. Translators: The help text for the menu item to open Default speech dictionary dialog.
 msgid ""
-"All add-ons are now disabled. They will be re-enabled on the next restart "
-"unless you choose to disable them again."
+"A dialog where you can set default dictionary by adding dictionary entries "
+"to the list"
 msgstr ""
-"Tüm eklentiler şimdi devre dışı bırakılıyor. Tekrar devre dışı "
-"bırakmadığınız taktirde bir sonraki yeniden başlatma sonrasında yeniden "
-"etkinleştirilecekler."
+"NVDA'yla birlikte kullanılan tüm sesleri etkileyecek, Varsayılan sözlüğü "
+"düzenleyebileceğiniz iletişim kutusu"
 
-#. Translators: A message in the exit Dialog shown when NVDA language has been
-#. overwritten from the command line.
+#. Translators: The label for the menu item to open Voice specific speech dictionary dialog.
+msgid "&Voice dictionary..."
+msgstr "Ses sö&zlüğü"
+
+#. Translators: The help text for the menu item
+#. to open Voice specific speech dictionary dialog.
 msgid ""
-"NVDA's interface language is now forced from the command line. On the next "
-"restart, the language  saved in NVDA's configuration will be used instead."
+"A dialog where you can set voice-specific dictionary by adding dictionary "
+"entries to the list"
 msgstr ""
-"NVDA'nın arayüz dili artık komut satırından istenmektedir . Bir sonraki "
-"yeniden başlatmada, bunun yerine NVDA'nın yapılandırmasında kayıtlı olan dil "
-"kullanılacaktır."
+"Yalnızca kullanmakta olduğunuz konuşmacıyı etkileyecek sözlük girişi "
+"yapabileceğiniz İletişim kutusu"
 
-#. Translators: The label for actions list in the Exit dialog.
-msgid "What would you like to &do?"
-msgstr "Ne &yapmak istersiniz?"
+#. Translators: The label for the menu item to open Temporary speech dictionary dialog.
+msgid "&Temporary dictionary..."
+msgstr "Ge&çici sözlük..."
+
+#. Translators: The help text for the menu item to open Temporary speech dictionary dialog.
+msgid ""
+"A dialog where you can set temporary dictionary by adding dictionary entries "
+"to the edit box"
+msgstr "Geçici sözlük oluşturabileceğiniz iletişim kutusu"
+
+#. Translators: The label for the menu item to open the Configuration Profiles dialog.
+msgid "&Configuration profiles..."
+msgstr "&Konfigürasyon profilleri..."
+
+#. Translators: The label for the menu item to revert to saved configuration.
+msgid "&Revert to saved configuration"
+msgstr "&Kaydedilmiş konfigürasyona dön"
+
+#. Translators: The help text for the menu item to revert to saved configuration.
+msgid "Reset all settings to saved state"
+msgstr "Kaydedilmiş konfigürasyona geri dön"
+
+#. Translators: The label for the menu item to reset settings to default settings.
+#. Here, default settings means settings that were there when the user first used NVDA.
+msgid "&Reset configuration to factory defaults"
+msgstr "&Fabrika ayarlarına dön"
+
+#. Translators: The help text for the menu item to reset settings to default settings.
+#. Here, default settings means settings that were there when the user first used NVDA.
+msgid "Reset all settings to default state"
+msgstr "Varsayılan konfigürasyona geri dön"
+
+#. Translators: The label for the menu item to save current settings.
+msgid "&Save configuration"
+msgstr "Konfi&gürasyonu kaydet"
+
+#. Translators: The help text for the menu item to save current settings.
+msgid "Write the current configuration to nvda.ini"
+msgstr "Mevcut konfigürasyonu NVDA.ini'ye yaz"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -8478,21 +8647,11 @@ msgstr "Eklentiyi Kaldır"
 
 #. Translators: The status shown for an addon when it's not considered compatible with this version of NVDA.
 msgid "Incompatible"
-msgstr "uyumsuz"
-
-#. Translators: The status shown for an addon when its currently running in NVDA.
-msgid "Enabled"
-msgstr "Etkin"
+msgstr "Uyumsuz"
 
 #. Translators: The status shown for a newly installed addon before NVDA is restarted.
 msgid "Install"
 msgstr "kur"
-
-#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
-#. Translators: One of the show states of braille messages
-#. (the disabled mode turns off showing of braille messages completely).
-msgid "Disabled"
-msgstr "devre dışı"
 
 #. Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
 msgid "Removed after restart"
@@ -8645,6 +8804,20 @@ msgid ""
 msgstr ""
 "Bu eklentinin güncellenmiş bir sürümü gerekli. Desteklenen minimum API "
 "sürümü şimdi {}"
+
+#. Translators: Reported when an action cannot be performed because NVDA is in a secure screen
+msgid "Action unavailable in secure context"
+msgstr "Eylem güvenli bağlamda kullanılamıyor"
+
+#. Translators: Reported when an action cannot be performed because NVDA has been installed
+#. from the Windows Store.
+msgid "Action unavailable in NVDA Windows Store version"
+msgstr "Eylem, NVDA Windows Mağazası sürümünde kullanılamıyor"
+
+#. Translators: Reported when an action cannot be performed because NVDA is waiting
+#. for a response from a modal dialog
+msgid "Action unavailable while a dialog requires a response"
+msgstr "İletişim kutusu yanıt gerektirirken eylem kullanılamıyor"
 
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
@@ -8836,6 +9009,49 @@ msgstr "Burada yardım mevcut değil."
 #. indicating that	the user guide could not be found.
 msgid "No user guide found."
 msgstr "Kullanıcı rehberi bulunamadı."
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Exit"
+msgstr "Kapat"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart"
+msgstr "Yeniden başlat"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with add-ons disabled"
+msgstr "Eklentileri devre dışı bırakarak yeniden başlat"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with debug logging enabled"
+msgstr "Hata ayıklamayı etkinleştirerek yeniden başlat"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Install pending update"
+msgstr "Bekleyen güncellemeyi kur"
+
+#. Translators: A message in the exit Dialog shown when all add-ons are disabled.
+msgid ""
+"All add-ons are now disabled. They will be re-enabled on the next restart "
+"unless you choose to disable them again."
+msgstr ""
+"Tüm eklentiler şimdi devre dışı bırakılıyor. Tekrar devre dışı "
+"bırakmadığınız taktirde bir sonraki yeniden başlatma sonrasında yeniden "
+"etkinleştirilecekler."
+
+#. Translators: A message in the exit Dialog shown when NVDA language has been
+#. overwritten from the command line.
+msgid ""
+"NVDA's interface language is now forced from the command line. On the next "
+"restart, the language  saved in NVDA's configuration will be used instead."
+msgstr ""
+"NVDA'nın arayüz dili artık komut satırından istenmektedir . Bir sonraki "
+"yeniden başlatmada, bunun yerine NVDA'nın yapılandırmasında kayıtlı olan dil "
+"kullanılacaktır."
+
+#. Translators: The label for actions list in the Exit dialog.
+msgid "What would you like to &do?"
+msgstr "Ne &yapmak istersiniz?"
 
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
@@ -9149,6 +9365,13 @@ msgstr "Log kullanılamıyor"
 msgid "Cancel"
 msgstr "İptal"
 
+#. Translators: Label for the default option for some feature-flag combo boxes
+#. Such as, in the Advanced settings panel option, 'Load Chromium virtual buffer when document busy.'
+#. The placeholder {} is replaced with the label of the option which describes current default behavior
+#. in NVDA. EG "Default (Yes)".
+msgid "Default ({})"
+msgstr "Varsayılan (Evet)"
+
 #. Translators: The label for the list of categories in a multi category settings dialog.
 msgid "&Categories:"
 msgstr "&Kategori:"
@@ -9175,7 +9398,7 @@ msgstr "Giriş/çıkış "
 
 #. Translators: One of the log levels of NVDA (the debug mode shows debug messages as NVDA runs).
 msgid "debug"
-msgstr "Tamir"
+msgstr "tamir"
 
 #. Translators: Shown for a language which has been provided from the command line
 #. 'langDesc' would be replaced with description of the given locale.
@@ -9213,7 +9436,7 @@ msgstr "&Günlük tutma seviyesi"
 #. start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
 #. Translators: The label of a checkbox in the Welcome dialog.
 msgid "St&art NVDA after I sign in"
-msgstr "NVDA'yı oturum açtıktan sonra başlat"
+msgstr "NVDA'yı oturum &açtıktan sonra başlat"
 
 #. Translators: The label for a setting in general settings to
 #. allow NVDA to come up in Windows login screen (useful if user
@@ -9349,7 +9572,7 @@ msgstr "Ses &zayıflaması modu:"
 #. synthesizer.
 #, python-format
 msgid "Could not load the %s synthesizer."
-msgstr "%s Sentezleyicisi yüklenemiyor"
+msgstr "%s Sentezleyicisi yüklenemiyor."
 
 msgid "Synthesizer Error"
 msgstr "Sentezleyici hatası"
@@ -9410,6 +9633,10 @@ msgstr "Büyük harflerde b&ip sesi çıkar"
 msgid "Use &spelling functionality if supported"
 msgstr "De&stekleniyorsa kodlama işlevini kullan"
 
+#. Translators: This is the label for a checkbox in the voice settings panel.
+msgid "&Delayed descriptions for characters on cursor movement"
+msgstr "İmle&ç hareketindeki karakterler için gecikmeli açıklamalar"
+
 #. Translators: This is the label for the keyboard settings panel.
 msgid "Keyboard"
 msgstr "Klavye"
@@ -9428,12 +9655,12 @@ msgstr "&NVDA değişken tuşlarını seçin"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
 msgid "Speak typed &characters"
-msgstr "yazarken &karakterleri seslendir"
+msgstr "Yazarken &karakterleri seslendir"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
 msgid "Speak typed &words"
-msgstr "yazarken s&özcükleri seslendir"
+msgstr "Yazarken s&özcükleri seslendir"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -9643,7 +9870,7 @@ msgstr "dinamik içerik &değişikliklerini bildir"
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
 msgid "Play a sound when &auto-suggestions appear"
-msgstr "Otomatik öneriler gösterilirken ses çal"
+msgstr "&Otomatik öneriler gösterilirken ses çal"
 
 #. Translators: This is the label for the browse mode settings panel.
 msgid "Browse Mode"
@@ -9688,7 +9915,7 @@ msgstr "Odak değiştiğinde otomatik olarak odak kipine geç"
 #. browse mode settings panel.
 msgid "Automatic focus mode for caret movement"
 msgstr ""
-"Sistem düzenleme imleci hareket ettiğinde otomatik  olarak Odak kipine geç."
+"Sistem düzenleme imleci hareket ettiğinde otomatik  olarak Odak kipine geç"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
@@ -9703,7 +9930,7 @@ msgstr "&Komut tuşu olmayan tuşların belgeye ulaşmasını engelle"
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
 msgid "Automatically set system &focus to focusable elements"
-msgstr "Sistem odağı otomatik olarak odaklanabilir öğelere taşınsın"
+msgstr "Sistem odağı &otomatik olarak odaklanabilir öğelere taşınsın"
 
 #. Translators: This is the label for the document formatting panel.
 #. Translators: This is the label for a group of advanced options in the
@@ -9732,7 +9959,7 @@ msgstr "&Yazı tipi adı"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "Font &size"
-msgstr "Yazı tipi &boyutu "
+msgstr "Yazı tipi &boyutu"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -9752,7 +9979,7 @@ msgstr "&Vurgu"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "Highlighted (mar&ked) text"
-msgstr "Vurgulanan (işaretlenmiş) metin"
+msgstr "V&urgulanan (işaretlenmiş) metin"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -9777,7 +10004,7 @@ msgstr "No&tlar ve açıklamalar "
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "&Bookmarks"
-msgstr "Yer imleri"
+msgstr "Yer &imleri"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -10016,10 +10243,28 @@ msgstr ""
 "Uygunsa Microsoft &Excel elektronik tablo kontrollerine erişmek için UI "
 "Otomasyonu kullan"
 
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid "Use UI Automation to access the Windows C&onsole when available"
-msgstr "Uygunsa Windows K&onsoluna erişmek için UI Otomasyonu'nu kullan"
+#. Translators: This is the label for a combo box for selecting the
+#. active console implementation in the advanced settings panel.
+#. Choices are automatic, UIA when available, and legacy.
+msgid "Windows C&onsole support:"
+msgstr "Windows K&onsol desteği:"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA determine its Windows Console implementation
+#. automatically.
+msgid "Automatic (prefer UIA)"
+msgstr "Otomatik (UIA'yı tercih edin)"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA use UIA in the Windows Console when available.
+msgid "UIA when available"
+msgstr "UIA mevcut olduğunda"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA use its legacy Windows Console support
+#. in all cases.
+msgid "Legacy"
+msgstr "Bağış"
 
 #. Translators: Label for the Use UIA with Chromium combobox, in the Advanced settings panel.
 #. Note the '\n' is used to split this long label approximately in half.
@@ -10146,6 +10391,15 @@ msgstr "Difflib"
 #. Translators: This is the label for combobox in the Advanced settings panel.
 msgid "Attempt to cancel speech for expired focus events:"
 msgstr "Süresi dolmuş odak etkinlikleri içinKonuşmayı iptal etmeyi dene:"
+
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
+msgid "Virtual Buffers"
+msgstr "Sanal Ara Bellekler"
+
+#. Translators: This is the label for a combo-box in the Advanced settings panel.
+msgid "Load Chromium virtual buffer when document busy."
+msgstr "Belge meşgulken Chromium sanal arabelleğini yükle."
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -10311,6 +10565,10 @@ msgstr "Mümkün olduğunda &sözcükleri bölmemeye çalış"
 #. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
 msgid "Focus context presentation:"
 msgstr "Odak içerik sunumu:"
+
+#. Translators: This is a label for a combo-box in the Braille settings panel.
+msgid "I&nterrupt speech while scrolling"
+msgstr "Kaydırma sırası&nda konuşmayı kesme"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load a single vision enhancement provider.
@@ -10582,10 +10840,6 @@ msgstr "Büyük harf kilidini NVDA t&uşu olarak kullan"
 msgid "&Show this dialog when NVDA starts"
 msgstr "&NVDA açıldığında, bu iletişim kutusunu göster"
 
-#. Translators: The label of the license text which will be shown when NVDA installation program starts.
-msgid "License Agreement"
-msgstr "Lisans Sözleşmesi"
-
 #. Translators: The label for a checkbox in NvDA installation program to agree to the license agreement.
 msgid "I &agree"
 msgstr "On&aylıyorum"
@@ -10602,6 +10856,10 @@ msgstr "Taşınabilir ko&pya oluştur"
 #. to continue using the installation program as a temporary copy of NVDA.
 msgid "&Continue running"
 msgstr "Geçi&ci Kopyayla Devam Et"
+
+#. Translators: The label of the license text which will be shown when NVDA installation program starts.
+msgid "License Agreement"
+msgstr "Lisans Sözleşmesi"
 
 #. Translators: The title of the dialog asking if usage data can be collected
 msgid "NVDA  Usage Data Collection"
@@ -10722,14 +10980,14 @@ msgstr "%s sütunlu"
 msgid "with %s rows"
 msgstr "%s satırlı"
 
-#. Translators: Speaks when there a further details/annotations that can be fetched manually.
+#. Translators: Speaks when there are further details/annotations that can be fetched manually.
 msgid "has details"
 msgstr "ayrıntı var"
 
 #. Translators: Speaks the item level in treeviews (example output: level 2).
 #, python-format
 msgid "level %s"
-msgstr "Seviye %s"
+msgstr "seviye %s"
 
 #. Translators: Number of items in a list (example output: list with 5 items).
 #, python-format
@@ -10758,7 +11016,7 @@ msgstr "Bölüm %s"
 #. {1} will be replaced with the number of text columns.
 #, python-brace-format
 msgid "column {0} of {1}"
-msgstr "SÜTUN {0} / {1}"
+msgstr "sÜTUN {0} / {1}"
 
 #. Translators: Indicates the text column number in a document.
 #. %s will be replaced with the number of text columns.
@@ -10787,7 +11045,7 @@ msgid "odd pages section break"
 msgstr "tek sayfa bölüm sonu"
 
 msgid "column break"
-msgstr "Sütun sonu"
+msgstr "sütun sonu"
 
 #. Translators: Speaks the heading level (example output: heading level 2).
 #, python-format
@@ -10799,16 +11057,16 @@ msgstr "başlık seviyesi %d"
 #. %s will be replaced with the name of the style.
 #, python-format
 msgid "style %s"
-msgstr "Stil %s"
+msgstr "stil %s"
 
 #. Translators: Indicates that text has reverted to the default style.
 #. A style is a collection of formatting settings and depends on the application.
 msgid "default style"
-msgstr "Varsayılan stil"
+msgstr "varsayılan stil"
 
 #. Translators: Indicates that cell does not have border lines.
 msgid "no border lines"
-msgstr "Sınır çizgisi yokaltı çizili değil"
+msgstr "sınır çizgisi yokaltı çizili değil"
 
 #. Translators: Reported when there are two background colors.
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
@@ -10853,7 +11111,7 @@ msgstr "Eklenmemiş"
 
 #. Translators: Reported when text is no longer marked as having been  deleted.
 msgid "not deleted"
-msgstr "Silinmemiş"
+msgstr "silinmemiş"
 
 #. Translators: Reported when text is revised.
 #, python-format
@@ -10883,11 +11141,11 @@ msgstr "Güçlü değil"
 
 #. Translators: Reported when text is marked as emphasised
 msgid "emphasised"
-msgstr "Vurgulu"
+msgstr "vurgulu"
 
 #. Translators: Reported when text is no longer marked as emphasised
 msgid "not emphasised"
-msgstr "Vurgulu değil"
+msgstr "vurgulu değil"
 
 #. Translators: Reported when text is not bolded.
 msgid "no bold"
@@ -10930,7 +11188,7 @@ msgstr "gizli değil"
 
 #. Translators: Reported when text is left-aligned.
 msgid "align left"
-msgstr "Sola hizalı"
+msgstr "sola hizalı"
 
 #. Translators: Reported when text is centered.
 msgid "align center"
@@ -10952,7 +11210,7 @@ msgstr "Dağıtık hizalı"
 
 #. Translators: Reported when text has reverted to default alignment.
 msgid "align default"
-msgstr "Varsayılan hiza"
+msgstr "varsayılan hiza"
 
 #. Translators: Reported when text is vertically top-aligned.
 msgid "vertical align top"
@@ -11029,7 +11287,7 @@ msgstr "Çözülmüş bir komutu var"
 
 #. Translators: Reported when text no longer contains a comment.
 msgid "out of comment"
-msgstr "Açıklama dışı"
+msgstr "açıklama dışı"
 
 #. Translators: Reported when text contains a bookmark
 msgid "bookmark"
@@ -11037,11 +11295,11 @@ msgstr "yerimi"
 
 #. Translators: Reported when text no longer contains a bookmark
 msgid "out of bookmark"
-msgstr "Yerimi dışı"
+msgstr "yerimi dışı"
 
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
-msgstr "Yazım hatası"
+msgstr "yazım hatası"
 
 #. Translators: Reported when moving out of text containing a spelling error.
 msgid "out of spelling error"
@@ -11078,7 +11336,7 @@ msgid "No speech"
 msgstr "Sessiz"
 
 msgid "word"
-msgstr "Sözcük"
+msgstr "sözcük"
 
 #. Translators: the current position's screen coordinates in pixels
 #, python-brace-format
@@ -11260,12 +11518,12 @@ msgstr ""
 
 #. Translators: a message when there is no comment to report in Microsoft Word
 msgid "No comments"
-msgstr "Açıklama yok."
+msgstr "Açıklama yok"
 
 #. Translators: a description for a script
 #. Translators: a description for a script that reports the comment at the caret.
 msgid "Reports the text of the comment where the System caret is located."
-msgstr "Sistem imlecinin bulunduğu noktadaki açıklama metnini aktarır"
+msgstr "Sistem imlecinin bulunduğu noktadaki açıklama metnini aktarır."
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
@@ -11382,11 +11640,17 @@ msgstr "Hata: {errorText}"
 msgid "{author} is editing"
 msgstr "{author} Düzenliyor"
 
-#. Translators: Excel, report range of cell coordinates
+#. Translators: Excel, report selected range of cell coordinates
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "{firstAddress} {firstValue} through {lastAddress} {lastValue}"
 msgstr "{firstAddress} {firstValue} ile {lastAddress} {lastValue} arasında"
+
+#. Translators: Excel, report merged range of cell coordinates
+#, python-brace-format
+msgctxt "excel-UIA"
+msgid "{firstAddress} through {lastAddress}"
+msgstr "{firstAddress} ile {lastAddress} arasında"
 
 #. Translators: the description  for a script for Excel
 msgid "Reports the note or comment thread on the current cell"
@@ -11466,12 +11730,12 @@ msgstr "3-B Alan"
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Stacked Area"
-msgstr "3-B Yığılmış Alan "
+msgstr "3-B Yığılmış Alan"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Area"
-msgstr "%100 Yığılmış Alan "
+msgstr "%100 Yığılmış Alan"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -11481,7 +11745,7 @@ msgstr "3-B Kümelenmiş Çubuk"
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Stacked Bar"
-msgstr "3-B Yığılmış Çubuk "
+msgstr "3-B Yığılmış Çubuk"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -11516,7 +11780,7 @@ msgstr "3-B Çizgi"
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Pie"
-msgstr "3-B Pasta "
+msgstr "3-B Pasta"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -11606,12 +11870,12 @@ msgstr "Kümelenmiş Koni Sütun "
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Stacked Cone Column"
-msgstr "Yığılmış Koni Sütun "
+msgstr "Yığılmış Koni Sütun"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Cone Column"
-msgstr "Yüzde 100 Koni Yığılmış Sütun "
+msgstr "Yüzde 100 Koni Yığılmış Sütun"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
@@ -11631,12 +11895,12 @@ msgstr "Yüzde 100 Silindir Yığılmış Çubuk"
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "3D Cylinder Column"
-msgstr "3D Silindir Sütun "
+msgstr "3D Silindir Sütun"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Cylinder Column"
-msgstr "Yüzde 100 Silindir Yığılmış Sütun "
+msgstr "Yüzde 100 Silindir Yığılmış Sütun"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -11671,12 +11935,12 @@ msgstr "İşaretçileriyle ile %100 Yığılmış Çizgi "
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Stacked Line"
-msgstr "Yığılmış Çizgi "
+msgstr "Yığılmış Çizgi"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Line"
-msgstr "%100 Yığılmış Çizgi "
+msgstr "%100 Yığılmış Çizgi"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -11721,12 +11985,12 @@ msgstr "Kümelenmiş Piramit Sütun"
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Stacked Pyramid Column"
-msgstr "Yığılmış Piramit Sütun "
+msgstr "Yığılmış Piramit Sütun"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Pyramid Column"
-msgstr "Yüzde 100 Piramit Yığılmış Sütun "
+msgstr "Yüzde 100 Piramit Yığılmış Sütun"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -11766,7 +12030,7 @@ msgstr "İşlem hacmi-Açılış-En yüksek-En düşük-Kapanış"
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Surface"
-msgstr "3-B Yüzey "
+msgstr "3-B Yüzey"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -11781,12 +12045,12 @@ msgstr "(kontur tel çerçeve) yüzey"
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Surface (wireframe)"
-msgstr "(Tel çerçeve) 3-B Yüzey "
+msgstr "(Tel çerçeve) 3-B Yüzey"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Scatter"
-msgstr "XY (Dağılım) "
+msgstr "XY (Dağılım)"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -11796,7 +12060,7 @@ msgstr "Çizgilerle dağılım"
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Scatter with Lines and No Data Markers"
-msgstr "Veri İşaretleri olmadan Çizgilerle dağılım "
+msgstr "Veri İşaretleri olmadan Çizgilerle dağılım"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -11806,7 +12070,7 @@ msgstr "Düzgünleştirilmiş çizgilerle dağılım "
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Scatter with Smoothed Lines and No Data Markers"
-msgstr "Veri İşaretleri olmadan düz çizgilerle dağılım "
+msgstr "Veri İşaretleri olmadan düz çizgilerle dağılım"
 
 #. Translators: A slice in a pie chart.
 msgid "slice"
@@ -11913,7 +12177,7 @@ msgstr "Y Hata Çubukları"
 
 #. Translators: A type of element in a Microsoft Office chart.
 msgid "Shape"
-msgstr "şekil"
+msgstr "Şekil"
 
 #. Translators: Message reporting the title and type of a chart.
 #, python-brace-format
@@ -11936,7 +12200,7 @@ msgstr "Dizi {number} {name}"
 
 #. Translators: Indicates that there are no series in a chart.
 msgid "No Series defined."
-msgstr "Tanımlanmış dizi yok"
+msgstr "Tanımlanmış dizi yok."
 
 #. Translators: Speak text chart elements when virtual row of chart elements is reached while navigation
 msgid "Chart Elements"
@@ -11974,7 +12238,7 @@ msgstr "{previousIndex} noktasından sonra {decrementValue} azalma "
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
 #, python-brace-format
 msgid "{categoryAxisTitle} {categoryAxisData}: "
-msgstr "{categoryAxisTitle} {categoryAxisData}:"
+msgstr "{categoryAxisTitle} {categoryAxisData} "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
@@ -11993,7 +12257,7 @@ msgstr "{valueAxisTitle} {valueAxisData}"
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
 #, python-brace-format
 msgid "value {valueAxisData}"
-msgstr " değer {valueAxisData},"
+msgstr "değer {valueAxisData},"
 
 #. Translators: Details about a slice of a pie chart.
 #. For example, this might report "fraction 25.25 percent slice 1 of 5"
@@ -12064,7 +12328,7 @@ msgstr "Üst"
 
 #. Translators: Substitute superscript two by square for R square value
 msgid " square "
-msgstr " Kare"
+msgstr " Kare "
 
 #. Translators: Substitute - by minus in trendline equations.
 msgid " minus "
@@ -12144,7 +12408,7 @@ msgstr ""
 #. Translators: The default background color  when a color has not been set by the author.
 #. Translators: the default (automatic) color in Microsoft Word
 msgid "default color"
-msgstr "Varsayılan renk"
+msgstr "varsayılan renk"
 
 #. Translators: The color of text cannot be detected.
 #. Translators: The background color cannot be detected.
@@ -12175,13 +12439,13 @@ msgstr "ters çapraz şerit"
 #. 12.5% gray
 #, no-python-format
 msgid "12.5% gray"
-msgstr "%12.5 gri "
+msgstr "%12.5 gri"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 25% gray
 #, no-python-format
 msgid "25% gray"
-msgstr "% 25 gri "
+msgstr "% 25 gri"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 50% gray
@@ -12193,13 +12457,13 @@ msgstr "% 50 gri"
 #. 75% gray
 #, no-python-format
 msgid "75% gray"
-msgstr "% 75 gri "
+msgstr "% 75 gri"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 6.25% gray
 #, no-python-format
 msgid "6.25% gray"
-msgstr "%6.25 gri "
+msgstr "%6.25 gri"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Grid
@@ -12407,7 +12671,7 @@ msgstr ""
 
 #. Translators: border positions in Microsoft Excel.
 msgid "top edge"
-msgstr "Üst kenar"
+msgstr "üst kenar"
 
 #. Translators: border positions in Microsoft Excel.
 msgid "bottom edge"
@@ -12423,7 +12687,7 @@ msgstr "sağ kenar"
 
 #. Translators: border positions in Microsoft Excel.
 msgid "up-right diagonal line"
-msgstr "-sağ çapraz çizgi "
+msgstr "-sağ çapraz çizgi"
 
 #. Translators: border positions in Microsoft Excel.
 msgid "down-right diagonal line"
@@ -12431,7 +12695,7 @@ msgstr "aşağı doğru çapraz çizgi "
 
 #. Translators: border positions in Microsoft Excel.
 msgid "horizontal borders except outside"
-msgstr "yatay sınırlar dışında "
+msgstr "yatay sınırlar dışında"
 
 #. Translators: border positions in Microsoft Excel.
 msgid "vertical borders except outside"
@@ -12439,7 +12703,7 @@ msgstr "dikey sınırlar dışında "
 
 #. Translators: border styles in Microsoft Excel.
 msgid "continuous"
-msgstr "sürekli "
+msgstr "sürekli"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "dashed"
@@ -12521,7 +12785,7 @@ msgstr "{desc} sol ve sağ kenarlar"
 #. Translators: border styles in Microsoft Excel.
 #, python-brace-format
 msgid "{desc} up-right and down-right diagonal lines"
-msgstr "{desc} yukarı doğru ve aşağı doğru çapraz çizgiler "
+msgstr "{desc} yukarı doğru ve aşağı doğru çapraz çizgiler"
 
 #. Translators: border styles in Microsoft Excel.
 #, python-brace-format
@@ -12600,7 +12864,7 @@ msgid "Comments"
 msgstr "Açıklamalar"
 
 msgid "Endnotes"
-msgstr "son notlar"
+msgstr "Son notlar"
 
 msgid "Even pages footer"
 msgstr "çift sayfa altlığı"
@@ -12630,7 +12894,7 @@ msgstr "metin çerçevesi"
 #. {text}, {author} and {date} will be replaced by the corresponding details about the comment.
 #, python-brace-format
 msgid "comment: {text} by {author} on {date}"
-msgstr "Açıklama: {text} {author} tarafından, {date} tarihinde"
+msgstr "açıklama: {text} {author} tarafından, {date} tarihinde"
 
 #. Translators: The label shown for an editor revision (tracked change)  in the NVDA Elements List dialog in Microsoft Word.
 #. {revisionType} will be replaced with the type of revision; e.g. insertion, deletion or property.
@@ -12654,7 +12918,7 @@ msgstr "{distance} sayfanın üst kenarından"
 #. Translators: single line spacing
 msgctxt "line spacing value"
 msgid "single"
-msgstr "Tek"
+msgstr "tek"
 
 #. Translators: double line spacing
 msgctxt "line spacing value"
@@ -12670,7 +12934,7 @@ msgstr "1.5 satır"
 #, python-brace-format
 msgctxt "line spacing value"
 msgid "exactly {space:.1f} pt"
-msgstr "Tam olarak {space:.1f} pt"
+msgstr "tam olarak {space:.1f} pt"
 
 #. Translators: line spacing of at least x point
 #, python-format
@@ -12730,7 +12994,7 @@ msgstr "İki yana yaslı"
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Superscript"
-msgstr "üst simge"
+msgstr "Üst simge"
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Subscript"
@@ -12738,12 +13002,12 @@ msgstr "alt simge"
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Baseline"
-msgstr "temel hiza"
+msgstr "Temel hiza"
 
 #. Translators: a message reported when a paragraph is moved below another paragraph
 #, python-format
 msgid "Moved below %s"
-msgstr "altına git %s"
+msgstr "Altına git %s"
 
 #. Translators: a message reported when a paragraph is moved below a blank paragraph
 msgid "Moved below blank paragraph"
@@ -12752,7 +13016,7 @@ msgstr "Boş paragraf altına taşındı"
 #. Translators: a message reported when a paragraph is moved above another paragraph
 #, python-format
 msgid "Moved above %s"
-msgstr "üstüne git %s"
+msgstr "Üstüne git %s"
 
 #. Translators: a message reported when a paragraph is moved above a blank paragraph
 msgid "Moved above blank paragraph"
@@ -12796,9 +13060,9 @@ msgstr "{offset:.3g} santimetre"
 msgid "{offset:.3g} millimeters"
 msgstr "{offset:.3g} milimetre"
 
-#. Translators: a measurement in Microsoft Word
+#. Translators: a measurement in Microsoft Word (points)
 #, python-brace-format
-msgid "{offset:.3g} points"
+msgid "{offset:.3g} pt"
 msgstr "{offset:.3g} punto"
 
 #. Translators: a measurement in Microsoft Word
@@ -12819,8 +13083,26 @@ msgstr "Çift satır aralığı"
 msgid "1.5 line spacing"
 msgstr "1.5 satır aralığı"
 
-#~ msgid "details"
-#~ msgstr "ayrıntı"
+#~ msgid "Use UI Automation to access the Windows C&onsole when available"
+#~ msgstr "Uygunsa Windows K&onsoluna erişmek için UI Otomasyonu'nu kullan"
+
+#, fuzzy
+#~ msgid "Moves the navigator object to the first row"
+#~ msgstr ""
+#~ "Nesne sunucusunu, mevcut nesneyle hiyerarşik açıdan aynı düzeyde bulunan "
+#~ "bir sonraki nesneye taşır"
+
+#, fuzzy
+#~ msgid "Moves the navigator object to the last row"
+#~ msgstr ""
+#~ "Nesne sunucusunu, mevcut nesneyle hiyerarşik açıdan aynı düzeyde bulunan "
+#~ "bir sonraki nesneye taşır"
+
+#~ msgid "Chinese (China, Mandarin) grade 2"
+#~ msgstr "Çince (Çin, Mandarin) Derece 2 "
+
+#~ msgid "Cannot save configuration - NVDA in secure mode"
+#~ msgstr "Güvenli modda NVDA konfigürasyonu kaydedilemez"
 
 #~ msgid "{modifier} pressed"
 #~ msgstr "{modifier} basıldı"
