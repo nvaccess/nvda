@@ -41,7 +41,7 @@ def getTextInfoAtCaret() -> textInfos.TextInfo:
 
 def isAcceptableTextInfo(ti: textInfos.TextInfo) -> bool:
 	acceptable = True
-	# disallow if in a Word document, as Word has performance issues
+	# disallow if in a Word document and not using UIA, as Word has performance issues
 	if isinstance(ti, WordDocumentTextInfo) or isinstance(ti, BrowseModeWordDocumentTextInfo):
 		acceptable = False
 	# disallow if EditableTextDisplayModelTextInfo, as has performance issues (TextPad for example)
