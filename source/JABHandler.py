@@ -566,7 +566,7 @@ class JABContext(object):
 		return buf.value
 
 	def selectTextRange(self,start,end):
-		bridgeDll.selectTextRange(start,end)
+		bridgeDll.selectTextRange(self.vmID, self.accContext, start ,end)
 
 	def setCaretPosition(self,offset):
 		bridgeDll.setCaretPosition(self.vmID,self.accContext,offset)
