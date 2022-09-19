@@ -1,7 +1,7 @@
 # This file is covered by the GNU General Public License.
 # A part of NonVisual Desktop Access (NVDA)
 # See the file COPYING for more details.
-# Copyright (C) 2016-2022 NV Access Limited, Joseph Lee, Jakub Lukowicz
+# Copyright (C) 2016-2022 NV Access Limited, Joseph Lee, Jakub Lukowicz, Babbage B.V.
 
 from typing import (
 	Optional,
@@ -36,7 +36,7 @@ from NVDAObjects.window.winword import (
 )
 from NVDAObjects import NVDAObject
 from scriptHandler import script
-
+from speech import sayAll
 
 """Support for Microsoft Word via UI Automation."""
 
@@ -102,7 +102,8 @@ def getCommentInfoFromPosition(position):
 		typeID = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_AnnotationAnnotationTypeIdPropertyId)
 		# Use Annotation Type Comment if available
 		if typeID == UIAHandler.AnnotationType_Comment:
-			comment = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_NamePropertyId)
+			log.info("getting comment with name?")
+			comment = UIAElement.GetCurrentPropertyValue(30159)
 			author = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_AnnotationAuthorPropertyId)
 			date = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_AnnotationDateTimePropertyId)
 			return dict(comment=comment, author=author, date=date)
@@ -488,10 +489,11 @@ class WordBrowseModeDocument(UIABrowseModeDocument):
 	script_shiftTab=script_tab
 
 	def _iterNodesByType(self,nodeType,direction="next",pos=None):
+		log.info("iter nodes types")
 		if nodeType=="annotation":
 			comments=UIATextAttributeQuicknavIterator(CommentUIATextInfoQuickNavItem,nodeType,self,pos,direction=direction)
-			revisions=UIATextAttributeQuicknavIterator(RevisionUIATextInfoQuickNavItem,nodeType,self,pos,direction=direction)
-			return browseMode.mergeQuickNavItemIterators([comments,revisions],direction)
+			#revisions=UIATextAttributeQuicknavIterator(RevisionUIATextInfoQuickNavItem,nodeType,self,pos,direction=direction)
+			return comments #browseMode.mergeQuickNavItemIterators([comments,revisions],direction)
 		return super(WordBrowseModeDocument,self)._iterNodesByType(nodeType,direction=direction,pos=pos)
 
 	ElementsListDialog=ElementsListDialog
@@ -589,3 +591,27 @@ class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentB
 			# Translators: a message when there is no comment to report in Microsoft Word
 			ui.message(_("No comments"))
 		return
+
+	@script(
+		gesture="kb:control+downArrow"
+	)
+	def script_nextParagraph(self, gesture):
+		info = self.makeTextInfo(textInfos.POSITION_CARET)
+		# solved #10821, same function as in IAccessible/winword.py but with UIAHandler.TextUnit_Paragraph constant
+		info._rangeObj.move(UIAHandler.TextUnit_Paragraph, 1)
+		info.updateCaret()
+		self._caretScriptPostMovedHelper(textInfos.UNIT_PARAGRAPH, gesture, None)
+
+	script_nextParagraph.resumeSayAllMode = sayAll.CURSOR.CARET
+
+	@script(
+		gesture="kb:control+upArrow"
+	)
+	def script_previousParagraph(self, gesture):
+		info = self.makeTextInfo(textInfos.POSITION_CARET)
+		# solved #10821, same function as in IAccessible/winword.py but with UIAHandler.TextUnit_Paragraph constant
+		info._rangeObj.move(UIAHandler.TextUnit_Paragraph, -1)
+		info.updateCaret()
+		self._caretScriptPostMovedHelper(textInfos.UNIT_PARAGRAPH, gesture, None)
+
+	script_previousParagraph.resumeSayAllMode = sayAll.CURSOR.CARET
