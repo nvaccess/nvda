@@ -282,14 +282,22 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 			if charFormat is None: charFormat=self._getCharFormat(offset)
 			if charFormat.dwEffects & CFE_AUTOCOLOR:
 				rgb = winUser.user32.GetSysColor(SC_COLOR_WINDOWTEXT)
+				# Translators: The text color as reported in Wordpad (Automatic) or NVDA log viewer.
+				formatField["color"] = _("{color} (default color)").format(
+					color=colors.RGB.fromCOLORREF(rgb).name,
+				)
 			else:
 				rgb = charFormat.crTextColor
-			formatField["color"] = colors.RGB.fromCOLORREF(rgb)
+				formatField["color"] = colors.RGB.fromCOLORREF(rgb)
 			if charFormat.dwEffects & CFE_AUTOBACKCOLOR:
 				rgb = winUser.user32.GetSysColor(SC_COLOR_WINDOW)
+				# Translators: The background color as reported in Wordpad (Automatic) or NVDA log viewer.
+				formatField["background-color"] = _("{color} (default color)").format(
+					color=colors.RGB.fromCOLORREF(rgb).name,
+				)
 			else:
 				rgb = charFormat.crBackColor
-			formatField["background-color"] = colors.RGB.fromCOLORREF(rgb)
+				formatField["background-color"] = colors.RGB.fromCOLORREF(rgb)
 		if formatConfig["reportLineNumber"]:
 			formatField["line-number"]=self._getLineNumFromOffset(offset)+1
 		if formatConfig["reportLinks"]:
@@ -543,7 +551,10 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 				fontObj = textRange.font
 			fgColor=fontObj.foreColor
 			if fgColor==comInterfaces.tom.tomAutoColor:
-				formatField['color'] = colors.RGB.fromCOLORREF(winUser.user32.GetSysColor(SC_COLOR_WINDOWTEXT))
+				# Translators: The text color as reported in Wordpad (Automatic) or NVDA log viewer.
+				formatField['color'] = _("{color} (default color)").format(
+					color=colors.RGB.fromCOLORREF(winUser.user32.GetSysColor(SC_COLOR_WINDOWTEXT)).name,
+				)
 			elif fgColor&0xff000000:
 				# The color is a palet index (we don't know the palet)
 				# Translators: The color of text cannot be detected. 
@@ -552,7 +563,10 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 				formatField["color"]=colors.RGB.fromCOLORREF(fgColor)
 			bkColor=fontObj.backColor
 			if bkColor==comInterfaces.tom.tomAutoColor:
-				formatField['background-color'] = colors.RGB.fromCOLORREF(winUser.user32.GetSysColor(SC_COLOR_WINDOW))
+				# Translators: The background color as reported in Wordpad (Automatic) or NVDA log viewer.
+				formatField['background-color'] = _("{color} (default color)").format(
+					color=colors.RGB.fromCOLORREF(winUser.user32.GetSysColor(SC_COLOR_WINDOW)).name,
+				)
 			elif bkColor&0xff000000:
 				# The color is a palet index (we don't know the palet)
 				# Translators: The background color cannot be detected. 
