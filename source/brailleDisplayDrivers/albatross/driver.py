@@ -269,7 +269,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			return False
 
 	def _readInitByte(self) -> bool:
-		# Very rarely in_waiting raises IOError
+		# If ClearCommError fails, in_waiting raises SerialException
 		try:
 			if not self._dev.in_waiting:
 				log.debug("Read: no data")
@@ -301,6 +301,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			return False
 
 	def _readSettingsByte(self) -> bool:
+		# If ClearCommError fails, in_waiting raises SerialException
 		try:
 			if not self._dev.in_waiting:
 				self._waitingSettingsByte = True
@@ -394,6 +395,7 @@ When initial connection is established called from L{_searchPorts} function.
 
 	def _somethingToRead(self) -> Optional[bytes]:
 		"""All but connecting/reconnecting related read operations."""
+		# If ClearCommError fails, in_waiting raises SerialException
 		try:
 			if not self._dev.in_waiting:
 				return None
