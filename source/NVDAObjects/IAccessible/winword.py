@@ -13,7 +13,6 @@ import speech
 import braille
 import controlTypes
 import config
-from config.configFlags import ReportTableHeaders
 import tableUtils
 import textInfos
 import eventHandler

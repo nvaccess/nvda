@@ -25,7 +25,6 @@ import ui
 import speech
 from tableUtils import HeaderCellInfo, HeaderCellTracker
 import config
-from config.configFlags import ReportTableHeaders
 import textInfos
 import colors
 import eventHandler
