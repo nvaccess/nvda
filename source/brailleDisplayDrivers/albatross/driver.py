@@ -301,20 +301,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			return False
 
 	def _readSettingsByte(self) -> bool:
-		# If ClearCommError fails, in_waiting raises SerialException
 		try:
+			# If ClearCommError fails, in_waiting raises SerialException
 			if not self._dev.in_waiting:
 				self._waitingSettingsByte = True
 				log.debug("Read: no data")
 				return False
-		# Considering situation where "albatross_read" thread is about to read
-		# but writing to display fails during it - or vice versa - AttributeError
-		# might raise.
-		except (IOError, AttributeError):
-			self._disableConnection()
-			log.debug("Trying to reconnect", exc_info=True)
-			return False
-		try:
 			data = self._dev.read(1)
 			log.debug(f"Read: {data}")
 			self._writeQueue.append(ESTABLISHED)
@@ -325,6 +317,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				return False
 			self._setNumCellCount(data)
 			return True
+		# Considering situation where "albatross_read" thread is about to read
+		# but writing to display fails during it - or vice versa - AttributeError
+		# might raise.
 		except (IOError, AttributeError):
 			self._disableConnection()
 			log.debug("Settings byte read failed, trying to reconnect", exc_info=True)
