@@ -23,7 +23,7 @@ from typing_extensions import (
 )
 
 
-class FeatureFlagEnumProtocol(Protocol, typing.Collection):
+class FeatureFlagEnumProtocol(Protocol):
 	""" All feature flags are expected to have a "DEFAULT" value.
 	This definition is provided only for type annotations
 	"""

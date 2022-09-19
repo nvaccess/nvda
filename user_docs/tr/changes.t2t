@@ -3,6 +3,115 @@ NVDA'daki Yenilikler
 
 %!includeconf: ../changes.t2tconf
 
+= 2022.3 =
+Bu güncellemenin önemli bir kısmı NVDA üretici topluluğunun katkılarıyla hazırlanmıştır.
+Bu katkılara gecikmeli karakter açıklamaları ve iyileştirilmiş Windows konsolu desteği dahildir.
+
+Ayrıca çeşitli hata düzeltmeleri yapılmıştır.
+Özellikle, PDF belgesi okurken Adobe Acrobat/Reader'ın güncel sürümleri artık çökmeyecek.
+
+eSpeak güncellendi, bu sayede 3 yeni dil daha destekleniyor: Belarusça, Lüksemburg dili ve Totontepec Mixe.
+
+== Yeni özellikler ==
+- Windows 11 22H2 (Sun Valley 2) ve üzeri sürümlerde komut istemi, PowerShell ve Linux için Windows alt sistemi tarafından kullanılan Windows console host'ta yapılan değişiklikler:
+  - Performans ve kararlılık kaydadeğer bir şekilde iyileştirildi. (#10964)
+  - Metin bulmak için ``kontrol+f`` tuşlarına basıldığında, inceleme imlecinin konumu bulunan metin ile eşleşecek şekilde güncelleniyor. (#11172)
+  - Ekranda görünmeyen metinlerin (parolalar gibi) söylenmesi varsayılan olarak devredışı bırakıldı.
+NVDA'nın gelişmiş ayarlar iletişim kutusundan yeniden etkinleştirilebilir. (#11554)
+  - Ekranın dışında kalan metin, konsol penceresini kaydırmadan incelenebilecek. (#12669)
+  - Yazı biçimi bilgisi daha detaylı olarak alınabilecek. ([microsoft/terminal PR 10336 https://github.com/microsoft/terminal/pull/10336])
+  -
+- Gecikmeli olarak karakter açıklamalarının okunabilmesi için yeni bir konuşma seçeneği eklendi. (#13509)
+- Ekranın ileri/geri kaydırıldığında konuşmanın durmasını ayarlamak için yeni bir braille seçeneği eklendi. (#2124)
+-
+
+
+== Değişiklikler ==
+- eSpeak NG 1.52-dev commit ``9de65fcb`` sürümüne güncellendi. (#13295)
+  - Eklenen diller:
+    - Belarusça
+    - Lüxemburg dili
+    - Totontepec Mixe
+    -
+  -
+- Microsoft Excel elektronik tablo kontrollerine erişmek için UI Otomasyonu kullanıldığında, NVDA artık hücrenin birleştirildiğini seslendirebilecek. (#12843)
+- "Ayrıntı var" seslendirmesini yapmak yerine, NVDA mümkün olduğunda ayrıntının amacını da söyleyecek. Örneğin açıklama olduğunda "açıklama var" şeklinde seslendirme yapacak. (#13649)
+- NVDA'nın boyutu Windows uygulamalar ve özellikler bölümünde görünüyor. (#13909)
+-
+
+
+==Hata düzeltmeleri ==
+- PDF belgesi okurken Adobe Acrobat/Reader 64 bit artık çökmeyecek. (#12920)
+  - Sorunun giderilebilmesi için Adobe Acrobat/Reader'ın en güncel sürümünün gerekli olduğunu unutmayın.
+ -
+- Yazı tipi ölçüleri NVDA'da çevrilebiliyor. (#13573)
+- Java uygulamaları için pencere tanıtıcıları bulunamadığında Java Access Bridge olayları yoksayılıyor.
+Bu sayede IntelliJ IDEA dahil olmak üzere bazı Java uygulamalarında performans iyileşecek. (#13039)
+- LibreOffice Calc'ta seçili hücrelerin okunması daha verimli hâle getirildi ve çok sayıda hücre seçildiğinde Calc artık çökmeyecek. (#13232)
+- Farklı kullanıcı olarak çalışırken, Microsoft Edge'e artık erişilebilecek. (#13032)
+- Hız arttırıcı kapalıyken Espeak'in hızı artık %100 ve %99 arasında düşmeyecek. (#13876)
+- 2 girdi hareketleri iletişim kutusunun aynı anda açılabilmesine sebep olan bir hata düzeltildi. (#13854)
+-
+
+
+== Changes for Developers ==
+- Updated Comtypes to version 1.1.11. (#12953)
+- In builds of Windows Console (``conhost.exe``) with an NVDA API level of 2 (``FORMATTED``) or greater, such as those included with Windows 11 version 22H2 (Sun Valley 2), UI Automation is now used by default. (#10964)
+  - This can be overridden by changing the "Windows Console support" setting in NVDA's advanced settings panel.
+  - To find your Windows Console's NVDA API level, set "Windows Console support" to "UIA when available", then check the NVDA+F1 log opened from a running Windows Console instance.
+  -
+- The Chromium virtual buffer is now loaded even when the document object has the MSAA ``STATE_SYSTEM_BUSY`` exposed via IA2. (#13306)
+- A config spec type ``featureFlag`` has been created for use with experimental features in NVDA. See ``devDocs/featureFlag.md`` for more information. (#13859)
+-
+
+
+=== Deprecations ===
+There are no deprecations proposed in 2022.3.
+
+
+= 2022.2.3 =
+2022.2.1 sürümünde yapılan bir API hatasını düzeltmek için yayınlanan bir yama sürümüdür.
+
+== Hata düzeltmeleri ==
+- Güvenli kipe girerken NVDA'nın "güvenli kip" seslendirmesi yapmamasına neden olan bir hata düzeltildi.
+Bu hata, NVDA uzak bağlantı eklentisinin güvenli kipe girildiğini algılamamasına neden oluyordu. (#14094)
+-
+
+== Changes for Developers ==
+This release contains a technical breakage in API backwards compatibility.
+It is expected that this change does not affect any add-ons.
+Please open a GitHub issue if your add-on becomes incompatible as a result of this release.
+
+- ``SecureDesktopNVDAObject`` is no longer a subclass of ``Desktop`` or ``Window``. (#14105)
+-
+
+= 2022.2.2 =
+Bu sürüm, 2022.2.1'de girdi hareketleriyle ilgili bir hatayı düzeltmek için yayınlanan bir yama sürümüdür.
+== Hata düzeltmeleri ==
+- Girdi hareketlerinin bazı zamanlarda çalışmamasına sebep olan bir hata düzeltildi. (#14065)
+-
+
+= 2022.2.1 =
+Bir güvenlik sorununu düzeltmek için yayınlanan küçük bir güncellemedir.
+Güvenlik sorunlarını lütfen sorumluca info@nvaccess.org adresine gönderiniz.
+
+== Güvenlik düzeltmeleri ==
+- Kilit ekranından Python konsolunun çalıştırılabilmesine sebep olan bir açık giderildi. (GHSA-rmq3-vvhq-gp32)
+- Nesne dolaşımı kullanılarak kilit ekranının dışına çıkılabilmesine sebep olan bir açık giderildi. (GHSA-rmq3-vvhq-gp32)
+-
+
+== Changes for Developers ==
+
+=== Deprecations ===
+These deprecations are currently not scheduled for removal.
+The deprecated aliases will remain until further notice.
+Please test the new API and provide feedback.
+For add-on authors, please open a GitHub issue if these changes stop the API from meeting your needs.
+
+- ``appModules.lockapp.LockAppObject`` should be replaced with ``NVDAObjects.lockscreen.LockScreenObject``. (GHSA-rmq3-vvhq-gp32)
+- ``appModules.lockapp.AppModule.SAFE_SCRIPTS`` should be replaced with ``utils.security.getSafeScripts()``. (GHSA-rmq3-vvhq-gp32)
+-
+
 = 2022.2 =
 Bu sürüm, birçok hata düzeltmesi içerir.
 Özellikle Java tabanlı uygulamalar, braille ekranlar ve Windows özellikleri için önemli iyileştirmeler yapılmıştır.
@@ -49,7 +158,7 @@ LibLouis'in güncellenmesiyle yeni bir Almanca braille tablo desteği eklendi.
   - NVDA artık sekme kontrolleri için konum bilgilerini bildirecek. (#13744)
   -
 - Braille düzeltmeleri:
-  - Thunderbird'de mesaj taslağı hazırlamak gibi Mozilla zengin düzenleme kontrollerinde belirli metinlerde gezinirken karşıılaşılabilecek braille çıktı sorunları düzeltildi. (#12542)
+  - Thunderbird'de mesaj taslağı hazırlamak gibi Mozilla zengin düzenleme kontrollerinde belirli metinlerde gezinirken karşılaşılabilecek braille çıktı sorunları düzeltildi. (#12542)
   - vBraille otomatik olarak bağlandığında ve fare, fare izleme etkinken hareket ettirildiğinde,
    Artık metin inceleme komutları braille ekranını konuşulan içerikle eş olarak günceller. (#11519)
   - Artık metin inceleme komutlarını kullandıktan sonra braille ekranı içerik üzerinden kaydırmak mümkün. (#8682)

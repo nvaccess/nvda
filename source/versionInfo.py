@@ -21,7 +21,7 @@ copyright = _("Copyright (C) {years} NVDA Contributors").format(
 aboutMessage = _(
 	# Translators: "About NVDA" dialog box message
 	u"""{longName} ({name})
-Version: {version}
+Version: {version} ({version_detailed})
 URL: {url}
 {copyright}
 

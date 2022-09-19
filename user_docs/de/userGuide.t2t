@@ -332,7 +332,7 @@ Folgende Tastenkombinationen stehen im Zusammenhang mit dem System-Cursor zur Ve
 | Aktuelle Zeile lesen | NVDA+Pfeil nach oben | NVDA+L | Liest die Zeile, auf der sich der System-Cursor befindet. Wird diese Tastenkombination zweimal gedrückt, wird die Zeile buchstabiert, wird die Tastenkombination 3-mal gedrückt, wird die Zeile phonetisch buchstabiert. |
 | Markierten Text lesen | NVDA+Umschalt+Pfeil nach oben | NVDA+Umschalt+S | Liest den markierten Text, sofern vorhanden. |
 | Text-Formatierungen ausgeben | NVDA+F | NVDA+F | Gibt die Text-Formatierungen unter dem System-Cursor aus. Bei zweimal Drücken werden diese Informationen im Lesemodus angezeigt. |
-| System-Cursor-Position mitteilen | NVDA+Nummernblock Komma | NVDA+Entfernen | Keine | Teilt Informationen über die Position des Textes oder des Objekts an der Position des System-Cursors mit. Dies kann z. B. der Prozentsatz im Dokument, der Abstand zum Seitenrand oder die genaue Position auf dem Bildschirm sein. Durch zweimaliges Drücken können weitere Details angezeigt werden. |
+| Position des System-Cursors mitteilen | NVDA+Nummernblock Entfernen | NVDA+Entf | Meldet Informationen über die Position des Textes oder des Objekts an der Position des System-Cursors. Dies kann z. B. der Prozentsatz im Dokument, der Abstand zum Seitenrand oder die genaue Position auf dem Bildschirm sein. Durch zweimaliges Drücken können weitere Details angezeigt werden. |
 | Nächsten Satz lesen | Alt+Pfeiltaste nach unten | Alt+Pfeiltaste nach unten | Zieht die Schreibmarke zum nächsten Satz und gibt ihn aus (nur in Microsoft Word und Microsoft Outlook unterstützt). |
 | Vorherigen Satz lesen | Alt+Pfeiltaste nach oben | Alt+Pfeiltaste nach oben | Zieht die Schreibmarke zum vorherigen Satz und gibt ihn aus (nur in Microsoft Word und Microsoft Outlook unterstützt). |
 
@@ -1052,10 +1052,11 @@ Wenn Sie sich in der Tabellenansicht der hinzugefügten Bücher befinden:
 NVDA bietet Unterstützung für die Windows-Befehlskonsole, die von der Eingabeaufforderung, PowerShell und dem Windows-Subsystem für Linux verwendet wird.
 Das Konsolenfenster ist von fester Größe und typischerweise viel kleiner als der Puffer, der die Ausgabe enthält.
 Wenn neuer Text geschrieben wird, läuft der Inhalt nach oben und der vorherige Text ist nicht mehr sichtbar.
-Text, der im Fenster nicht sichtbar angezeigt wird, ist mit den Textanzeigebefehlen von NVDA nicht zugänglich.
+Bei Windows-Versionen vor Windows 11 Version 22H2 ist Text in der Konsole, der nicht sichtbar im Fenster angezeigt wird, nicht mit den Textbefehlen von NVDA zugänglich.
 Daher ist es notwendig, im Konsolenfenster zu navigieren, um frühere Texte zu lesen.
+In neueren Versionen der Konsole und im Windows-Terminal ist es möglich, die gesamte Textansicht auszulesen, ohne dass das Fenster gescrollt werden muss.
 %kc:beginInclude
-Die folgenden integrierten Tastenkombinationen der Windows-Konsole können nützlich sein, wenn Sie [Text #ReviewingText] mit NVDA lesen möchten:
+Die folgenden integrierten Tastenkombinationen für die Windows-Konsole können beim [Textlesen #ReviewingText] mit NVDA in älteren Versionen der Windows-Konsole nützlich sein:
 || Name | Tastenkombination | Beschreibung |
 | Nach oben rollen | Strg+Pfeiltaste nach oben | Rollt das Konsolenfenster nach oben, sodass früherer Text gelesen werden kann. |
 | Nach unten rollen | Strg+Pfeiltaste nach unten | Rollt das Konsolenfenster nach unten, sodass späterer Text gelesen werden kann. |
@@ -1260,6 +1261,20 @@ Diese Option sollte im Allgemeinen aktiviert sein.
 Es gibt jedoch einige SAPI-Sprachausgaben von Microsoft, bei denen dies nicht korrekt implementiert ist und die sich eigenwillig verhalten, wenn diese Option aktiviert ist.
 Wenn Sie Probleme mit der Aussprache mancher Zeichen haben, versuchen Sie, die Option zu deaktivieren.
 
+==== Verzögerte Beschreibungen für Zeichen bei Cursor-Bewegung ====[delayedCharacterDescriptions]
+: Standard
+  Ausgeschaltet
+: Optionen
+  Eingeschaltet, Ausgeschaltet
+:
+
+Wenn diese Einstellung aktiviert ist, nennt NVDA die Zeichenbeschreibung, wenn Sie sich zeichenweise bewegen.
+
+Wenn zum Beispiel beim Durchsehen einer Zeile nach Zeichen der Buchstabe "b" vorgelesen wird, nennt NVDA nach einer Verzögerung von einer Sekunde "Bertha".
+Dies kann nützlich sein, wenn die Aussprache von Symbolen schwer zu unterscheiden ist, oder auch für hörgeschädigte Benutzer.
+
+Die verzögerte Zeichenbeschreibung wird abgebrochen, wenn während dieser Zeit ein anderer Text vorgelesen wird oder die ``Strg``-Taste gedrückt wird.
+
 +++ Sprachausgabe auswählen (NVDA+Strg+S) +++[SelectSynthesizer]
 Das Dialogfeld, welches durch das Betätigen des Schalters "Ändern" geöffnet wird, ermöglicht die Sprachausgabe auszuwählen. Diese wird dann von NVDA dazu genutzt Informationen mittels Sprache zugänglich zu machen.
 NVDA wird die Sprachausgabe verwenden, sobald Sie einen Eintrag ausgewählt und den Schalter "OK" betätigt haben.
@@ -1409,6 +1424,21 @@ Für das obige Beispiel bedeutet dies, dass NVDA immer nur den aktuellen Listene
 Wenn Sie dennoch Kontext-Informationen (wie z. B. den Namen der Liste) angezeigt bekommen möchten, müssen Sie die Braillezeile rückwärtsnavigieren.
 
 Um die Einstellung von überall aus zu ändern, weisen Sie eine Tastenkombination mit Hilfe des Dialogs [Tastenbefehle #InputGestures] zu.
+
+==== Unterbrechen der Sprachausgabe beim Navigieren ====[BrailleSettingsInterruptSpeech]
+: Standard
+  Eingeschaltet
+: Optionen
+  Eingeschaltet, Ausgeschaltet
+:
+
+Diese Einstellung legt fest, ob die Sprachausgabe unterbrochen werden soll, sobald die Braillezeile vorwärts oder rückwärts gescrollt wird.
+Befehle für die vorherige bzw. nächste Zeile unterbricht immer die Sprachausgabe.
+
+Das ständige Vorlesen kann beim Lesen der Braille-Schrift ablenken.
+Aus diesem Grund ist die Option standardmäßig aktiviert und unterbricht die Sprache beim Navigieren in Blindenschrift.
+
+Wenn Sie diese Option deaktivieren, können Sie die Sprachausgabe hören und gleichzeitig die Brailleschrift lesen.
 
 +++ Braillezeile auswählen (NVDA+Strg+A) +++[SelectBrailleDisplay]
 Dies ist das Dialogfeld zum Ändern der Braillezeile, welches über den Schalter "Ändern" in der Kategorie "Braille" geöffnet wird. Es ermöglicht die Braillezeile auszuwählen, die NVDA dazu verwendet, Informationen in Punktschrift darzustellen.
@@ -1888,8 +1918,26 @@ Diese Einstellung enthält die folgenden Werte:
 - Immer: Wo auch immer UIA in Microsoft Word verfügbar ist (unabhängig davon, wie es funktioniert).
 -
 
-==== Für den Zugriff auf die Windows-Konsole UIA verwenden, sofern verfügbar ====[AdvancedSettingsConsoleUIA]
-Wenn diese Option aktiviert ist, verwendet NVDA eine neue, experimentelle Version der Unterstützung für die Windows-Konsole, die die Vorteile von [Verbesserungen der Zugänglichkeit durch Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/] nutzt. Diese Funktion ist sehr experimentell und noch unvollständig, daher wird ihre Verwendung noch nicht empfohlen. Es wird jedoch erwartet, dass diese neue Unterstützung nach ihrer Fertigstellung zur Standardeinstellung wird und die Leistung und Stabilität von NVDA in Windows-Kommandokonsolen verbessert.
+==== Unterstützung der Windows-Konsole ====[AdvancedSettingsConsoleUIA]
+: Standard
+  Automatisch
+: Optionen
+  Automatisch, UIA, wenn verfügbar, Legacy
+:
+
+Diese Option legt fest, wie NVDA mit der Windows-Konsole interagiert, die von der Eingabeaufforderung, der PowerShell und dem Windows-Subsystem für Linux verwendet wird.
+Das moderne Windows-Terminal ist davon nicht betroffen.
+In Windows 10 Version 1709 hat Microsoft [der Konsole https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/] Unterstützung für seine UI-Automatisierungs-API hinzugefügt und damit die Leistung und Stabilität für Screenreader, die diese unterstützen, erheblich verbessert.
+In Situationen, in denen die UIA nicht verfügbar ist oder bekanntermaßen zu einem schlechteren Erlebnis für den Benutzer führt, steht die NVDA-Konsolenunterstützung als Ausweichlösung zur Verfügung.
+Das Kombinationsfeld für die Unterstützung der Windows-Konsole enthält drei Optionen:
+- Automatisch: Verwendet UIA in der Version der Windows-Konsole, die in Windows 11 Version 22H2 und höher enthalten ist.
+Diese Option wird empfohlen und ist standardmäßig eingestellt.
+- UIA, wenn verfügbar: Verwendet UIA in Konsolen, wenn verfügbar, auch für Versionen mit unvollständigen oder fehlerhaften Implementierungen.
+Diese eingeschränkte Funktionalität kann zwar nützlich (und für Ihre Zwecke sogar ausreichend) sein, aber die Nutzung dieser Option erfolgt auf eigene Gefahr, und es wird kein Support dafür angeboten.
+- Legacy: Die UIA in der Windows-Konsole wird vollständig deaktiviert.
+Der Legacy-Fallback wird immer verwendet, selbst in Situationen, in denen UI Automation eine bessere Benutzererfahrung bieten würde.
+Es wird daher nicht empfohlen, diese Option zu wählen, wenn Sie nicht wissen, was Sie tun.
+-
 
 ==== UIA mit Microsoft Edge und anderen Chromium-basierten Browsern verwenden, sofern verfügbar ====[ChromiumUIA]
 Ermöglicht das Festlegen, wann UIA verwendet wird, wenn es in Chromium-basierten Browsern wie Microsoft Edge verfügbar ist.

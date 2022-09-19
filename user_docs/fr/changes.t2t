@@ -3,6 +3,116 @@ Quoi de Neuf dans NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2022.3 =
+Une grande partie des améliorations de cette version a été réalisée par la communauté de NVDA.
+Cela inclut la description différée des caractères et la prise en charge améliorée de la console Windows.
+
+Cette version intègre également de nombreux correctifs.
+Notamment, les versions récentes d'Adobe Acrobat ne plantent plus lors de la lecture de documents PDF.
+
+eSpeak a été mis à jour, ce qui introduit 3 nouvelles langues : Bélarusse, Luxembourgeois et Totontepec Mixe.
+
+== Nouvelles fonctionnalités ==
+- Dans l'hôte de console Windows utilisé par l'invite de commande, PowerShell, et le sous-système Windows pour Linux sous Windows 11 version 22H2 (Sun Valley 2) et supérieur :
+  - Considérables améliorations de performance et de stabilité. (#10964)
+  - Lors de l'appui sur CTRL-F pour effectuer une recherche, la position du curseur de revue est mise à jour à la position du résultat trouvé. (#11172)
+  - L'annonce du texte tapé n'apparaissant pas à l'écran (comme les mots de passe) est désactivée par défaut.
+Elle peut être réactivée dans le panneau des paramètres avancés de NVDA. (#11554)
+  - Le texte ayant défilé hors de l'écran peut être revu sans devoir faire défiler la fenêtre de la console. (#12669)
+  - Plus de détails sur le formatage du texte sont disponibles. ([microsoft/terminal PR 10336 https://github.com/microsoft/terminal/pull/10336])
+  -
+- Une nouvelle option de parole a été ajoutée pour lire la description des caractères après un délai. (#13509)
+- Une nouvelle option Braille a été ajoutée pour choisir si le défilement avant/arrière de l'afficheur Braille doit interrompre la voix. (#2124)
+-
+
+
+== Changements ==
+- eSpeak NG a été mis à jour à la version 1.52-dev révision ``9de65fcb``. (#13295)
+  - Langues ajoutées :
+    - Bélarusse
+    - Luxembourgeois
+    - Totontepec Mixe
+    -
+  -
+- Lors de l'utilisation de UIAutomation pour accéder aux feuilles de calcul Microsoft Excel, NVDA peut maintenant annoncer si une cellule est fusionnée. (#12843)
+- Au lieu d'indiquer "contient des détails" le type de détail est inclus si possible, par exemple "contient un commentaire". (#13649)
+- La taille d'installation de NVDA est maintenant affichée dans la section programmes et fonctionnalités de Windows. (#13909)
+-
+
+
+== Corrections de bogues ==
+- Adobe Acrobat / Reader 64 bit ne plantera plus lors de la lecture d'un document PDF.. (#12920)
+  - Notez que la version la plus récente d'Adobe Acrobat / Reader est également nécessaire pour éviter le plantage.
+  -
+- Les mesures de tailles de police sont maintenant traduisibles dans NVDA. (#13573)
+- Les évènements Java Access Bridge sont ignorés lorsqu'aucune fenêtre ne peut être trouvée pour une application Java.
+Cela améliorera les performances pour certaines applications Java incluant IntelliJ IDEA. (#13039)
+- L'annonce des cellules sélectionnées dans LibreOffice Calc est plus efficace et évitera désormais le gel de Calc lorsque beaucoup de cellules sont sélectionnées. (#13232)
+- Exécuté sous un compte utilisateur différent, Microsoft Edge n'est plus inaccessible. (#13032)
+- Lorsque la voix turbo est désactivée, le débit de eSpeak ne vari plus anormalement entre 99 et 100%. (#13876)
+- Correction d'un bogue qui permettait à 2 dialogues "Gestes de commandes" d'être ouverts. (#13854)
+-
+
+
+== Changements pour les développeurs ==
+- Mise à jour de Comtypes à la version 1.1.11. (#12953)
+- Dans les versions de la console Windows (``conhost.exe``) avec un niveau d'API NVDA de 2 (``FORMATTED``) ou supérieur, telles que celles incluses avec Windows 11 version 22H2 (Sun Valley 2), UI Automation est désormais utilisé par défaut. (#10964)
+  - Cela peut être annulé en modifiant le paramètre "Prise en charge de la console Windows" dans le panneau des paramètres avancés de NVDA.
+  - Pour trouver le niveau d'API NVDA de votre console Windows, définissez "Prise en charge de la console Windows" sur "UIA si disponible", puis vérifiez le journal NVDA+F1 ouvert à partir d'une instance de la console Windows en cours d'exécution.
+  -
+- Le tampon virtuel Chromium est maintenant chargé même lorsque l'objet document a l'état MSAA ``STATE_SYSTEM_BUSY`` exposé via IA2. (#13306)
+- Un type de spécification de configuration ``featureFlag`` a été créé pour être utilisé avec des fonctionnalités expérimentales dans NVDA. Voir ``devDocs/featureFlag.md`` pour plus d'informations. (#13859)
+-
+
+
+=== Dépréciations ===
+Aucune dépréciation n'est proposée pour la version 2022.3.
+
+
+= 2022.2.3 =
+Cette version corrige une rupture accidentelle d'API introduite dans la version 2022.2.1.
+
+== Corrections de Bogues ==
+- Correction d'un bogue faisant que NVDA n'annonçait pas "Bureau Sécurisé" quand on entrait dans un bureau sécurisé.
+Cela faisait que NVDA Remote ne reconnaissait pas les bureaux sécurisés. (#14094)
+-
+
+== Changements pour les Développeurs ==
+Cette version contient une rupture technique dans la rétrocompatibilité de l'API.
+Ce changement ne devrait affecter aucune extension.
+Veuillez ouvrir un problème GitHub si votre extension devient incompatible à la suite de cette version.
+
+- ``SecureDesktopNVDAObject`` n'est plus une sous-classe de ``Desktop`` ou ``Window``. (#14105)
+-
+
+= 2022.2.2 =
+Ceci est une version corrigeant un problème introduit en 2022.2.1 concernant les gestes de commandes.
+
+== Corrections de bogues ==
+- Correction d'un problème faisant que les gestes de commandes ne fonctionnaient pas toujours (#14065)
+-
+
+= 2022.2.1 =
+Version mineure corrigeant un problème de sécurité.
+Veuillez signaler de manière responsable les problèmes de sécurité à info@nvaccess.org.
+
+== Correctifs de sécurité ==
+- Correction d'une faille rendant possible d'exécuter une console Python depuis l'écran de verrouillage. (GHSA-rmq3-vvhq-gp32)
+- Correction d'une faille rendant possible de sortir de l'écran de verrouillage en utilisant la navigation par objet. (GHSA-rmq3-vvhq-gp32)
+-
+
+== Changements pour les développeurs ==
+
+=== Dépréciations ===
+Ces dépréciations ne sont actuellement pas prévues pour être supprimées.
+Les alias dépréciés resteront disponibles jusqu'à nouvel ordre.
+Veuillez tester la nouvelle API et fournir des commentaires.
+Pour les auteurs d'extensions, veuillez ouvrir un problème GitHub si ces modifications empêchent l'API de répondre à vos besoins.
+
+- ``appModules.lockapp.LockAppObject`` doit être remplacé par ``NVDAObjects.lockscreen.LockScreenObject``. (GHSA-rmq3-vvhq-gp32)
+- ``appModules.lockapp.AppModule.SAFE_SCRIPTS`` doit être remplacé par ``utils.security.getSafeScripts()``. (GHSA-rmq3-vvhq-gp32)
+-
+
 = 2022.2 =
 Cette version inclut beaucoup de correctifs.
 Notamment, il y a des améliorations significatives pour les applications Java, le Braille, et les fonctionnalités Windows.

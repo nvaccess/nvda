@@ -3,6 +3,139 @@ NVDA 新版資訊
 
 %!includeconf: ../changes.t2tconf
 
+= 2022.3 更新中文摘譯 =
+此版本的大部分更新內容是由 NVDA 開發社群所貢獻。
+這包括延遲讀出字元的字詞解釋及改善 Windows 主控台支援。
+此更新也包含一些錯誤修正。
+值得注意的是，使用最新版本的 Adobe Acrobat/Reader 閱讀 pdf 文件時將不再崩潰。
+更新 eSpeak 新支援三種語言：白俄羅斯語、盧森堡語及 Totontepec Mixe.
+
+== 新功能 ==
+- 在使用 Windows 主控台的應用程式，包括命令提示字元、PowerShell、及在 Windows 11 版本 22H2 (Sun Valley 2) 及更高版本上適用於 Linux 的 Windows 子系統等中：
+  - 大幅提高了效能和穩定性。 (#10964)
+  - 當按 ``Ctrl+F`` 搜尋文字時，檢閱游標會跟隨移動至找到的字串上。 (#11172)
+  - 預設情況下停用讀出未出現在螢幕上的輸入文字 (例如密碼)。
+它可以在 NVDA 的進皆設定中重新啟用。 （#11554）
+  - 可以在不捲動主控視窗的情況下查看已捲動到螢幕之外的文字。 (#12669)
+  - 提供更詳細的文字格式資訊。 ([microsoft/terminal PR 10336 https://github.com/microsoft/terminal/pull/10336])
+  -
+- 在語音設定中新增可在一段延遲時間後讀出字詞解釋的選項。 (#13509)
+- 在點字設定中新增選項來決定在向前/後捲動點顯器時是否中斷語音。(#2124)
+-
+
+
+== 更新 ==
+- 更新 eSpeak NG 至版本 1.52-dev commit ``9de65fcb``。(#13295)
+  - 新增語言：
+    - 白俄羅斯語
+    - 盧森堡語
+    - Totontepec Mixe
+    -
+  -
+- 當使用 UI Automation 處理 Microsoft Excel 工作表中的控制項時， NVDA 現在能夠讀出合併儲存格。 (#12843)
+- 盡可能讀出詳細資料的正確種類，而不是只讀出「有詳細資料」，例如「有註解」。 (#13649)
+- Windows 程式和功能中會顯示 NVDA 的安裝大小。 (#13909)
+-
+
+
+== 錯誤修正 ==
+- 當閱讀 pdf 文件時，Adobe Acrobat / Reader 64 位元不會再崩潰。(#12920)
+  - 注意：要避免崩潰也需要安裝最新版本的 Adobe Acrobat / Reader 以避免崩潰。
+  -
+- 字體大小的度量在 NVDA 中可被翻譯。(#13573)
+- 讀出在 LibreOffice Calc 內選取的儲存格時更有效率，且在選取多個儲存格時不會導致 Calc 凍結。(#13232)
+- 修正允許同時開啟兩個輸入手勢對話框的錯誤。(#13854)
+-
+
+
+= 2022.3 =
+A significant amount of this release was contributed by the NVDA development community.
+This includes delayed character descriptions and improved Windows Console support.
+
+This release also includes several bug fixes.
+Notably, up-to-date versions of Adobe Acrobat/Reader will no longer crash when reading a PDF document.
+
+eSpeak has been updated, which introduces 3 new languages: Belarusian, Luxembourgish and Totontepec Mixe.
+
+== New Features ==
+- In the Windows Console Host used by Command Prompt, PowerShell, and the Windows Subsystem for Linux on Windows 11 version 22H2 (Sun Valley 2) and later:
+  - Vastly improved performance and stability. (#10964)
+  - When pressing ``control+f`` to find text, the review cursor position is updated to follow the found term. (#11172)
+  - Reporting of typed text that does not appear on-screen (such as passwords) is disabled by default.
+It can be re-enabled in NVDA's advanced settings panel. (#11554)
+  - Text that has scrolled offscreen can be reviewed without scrolling the console window. (#12669)
+  - More detailed text formatting information is available. ([microsoft/terminal PR 10336 https://github.com/microsoft/terminal/pull/10336])
+  -
+- A new Speech option has been added to read character descriptions after a delay. (#13509)
+- A new Braille option has been added to determine if scrolling the display forward/back should interrupt speech. (#2124)
+-
+
+
+== Changes ==
+- eSpeak NG has been updated to 1.52-dev commit ``9de65fcb``. (#13295)
+  - Added languages:
+    - Belarusian
+    - Luxembourgish
+    - Totontepec Mixe
+    -
+  -
+- When using UI Automation to access Microsoft Excel spreadsheet controls, NVDA is now able to report when a cell is merged. (#12843)
+- Instead of reporting "has details" the purpose of details is included where possible, for example "has comment". (#13649)
+- The installation size of NVDA is now shown in Windows Programs and Feature section. (#13909)
+-
+
+
+== Bug Fixes ==
+- Adobe Acrobat / Reader 64 bit will no longer crash when reading a PDF document. (#12920)
+  - Note that the most up to date version of Adobe Acrobat / Reader is also required to avoid the crash.
+  -
+- Font size measurements are now translatable in NVDA. (#13573)
+- Ignore Java Access Bridge events where no window handle can be found for Java applications.
+This will improve performance for some Java applications including IntelliJ IDEA. (#13039)
+- Announcement of selected cells for LibreOffice Calc is more efficient and no longer results in a Calc freeze when many cells are selected. (#13232)
+- When running under a different user, Microsoft Edge is no longer inaccessible. (#13032)
+- When rate boost is off, eSpeak's rate does not drop anymore between rates 99% and 100%. (#13876)
+- Fix bug which allowed 2 Input Gestures dialogs to open. (#13854)
+-
+
+
+== Changes for Developers ==
+- Updated Comtypes to version 1.1.11. (#12953)
+- In builds of Windows Console (``conhost.exe``) with an NVDA API level of 2 (``FORMATTED``) or greater, such as those included with Windows 11 version 22H2 (Sun Valley 2), UI Automation is now used by default. (#10964)
+  - This can be overridden by changing the "Windows Console support" setting in NVDA's advanced settings panel.
+  - To find your Windows Console's NVDA API level, set "Windows Console support" to "UIA when available", then check the NVDA+F1 log opened from a running Windows Console instance.
+  -
+- The Chromium virtual buffer is now loaded even when the document object has the MSAA ``STATE_SYSTEM_BUSY`` exposed via IA2. (#13306)
+- A config spec type ``featureFlag`` has been created for use with experimental features in NVDA. See ``devDocs/featureFlag.md`` for more information. (#13859)
+-
+
+
+=== Deprecations ===
+There are no deprecations proposed in 2022.3.
+
+
+= 2022.2.1 =
+This is a minor release to fix a security issue.
+Please responsibly disclose security issues to info@nvaccess.org.
+
+== Security Fixes ==
+- Fixed exploit where it was possible to run a python console from the lockscreen. (GHSA-rmq3-vvhq-gp32)
+- Fixed exploit where it was possible to escape the lockscreen using object navigation. (GHSA-rmq3-vvhq-gp32)
+-
+
+== Changes for Developers ==
+
+=== Deprecations ===
+These deprecations are currently not scheduled for removal.
+The deprecated aliases will remain until further notice.
+Please test the new API and provide feedback.
+For add-on authors, please open a GitHub issue if these changes stop the API from meeting your needs.
+
+- ``appModules.lockapp.LockAppObject`` should be replaced with ``NVDAObjects.lockscreen.LockScreenObject``. (GHSA-rmq3-vvhq-gp32)
+- ``appModules.lockapp.AppModule.SAFE_SCRIPTS`` should be replaced with ``utils.security.getSafeScripts()``. (GHSA-rmq3-vvhq-gp32)
+-
+
+
 = 2022.2 更新中文摘譯 =
 此版本更新包含了許多錯誤修正，尤其是基於 Java 的應用程式、點字顯示器及 Windows 功能。
 加入新的表格導覽指令、更新 Unicode CLDR、更新 LibLouis，包含了新的德文點字表。。
