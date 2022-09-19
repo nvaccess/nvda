@@ -395,8 +395,8 @@ When initial connection is established called from L{_searchPorts} function.
 
 	def _somethingToRead(self) -> Optional[bytes]:
 		"""All but connecting/reconnecting related read operations."""
-		# If ClearCommError fails, in_waiting raises SerialException
 		try:
+			# If ClearCommError fails, in_waiting raises SerialException
 			if not self._dev.in_waiting:
 				return None
 			data = self._dev.read(self._dev.in_waiting)
