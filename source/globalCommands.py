@@ -4,7 +4,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2006-2022 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee,
 # Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Łukasz Golonka, Accessolutions,
-# Julien Cochuyt, Jakub Lukowicz, Bill Dengler
+# Julien Cochuyt, Jakub Lukowicz, Bill Dengler, Cyrille Bougot
 
 import itertools
 
@@ -46,6 +46,7 @@ import inputCore
 import characterProcessing
 from baseObject import ScriptableObject
 import core
+from winAPI._powerTracking import reportCurrentBatteryStatus
 import winVersion
 from base64 import b16encode
 import vision
@@ -666,19 +667,17 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		# Translators: Input help mode message for toggle report table row/column headers command.
-		description=_("Toggles on and off the reporting of table row and column headers"),
+		description=_("Cycle through the possible modes to report table row and column headers"),
 		category=SCRCAT_DOCUMENTFORMATTING
 	)
 	def script_toggleReportTableHeaders(self,gesture):
-		if config.conf["documentFormatting"]["reportTableHeaders"]:
-			# Translators: The message announced when toggling the report table row/column headers document formatting setting.
-			state = _("report table row and column headers off")
-			config.conf["documentFormatting"]["reportTableHeaders"]=False
-		else:
-			# Translators: The message announced when toggling the report table row/column headers document formatting setting.
-			state = _("report table row and column headers on")
-			config.conf["documentFormatting"]["reportTableHeaders"]=True
-		ui.message(state)
+		ReportTableHeaders = config.configFlags.ReportTableHeaders
+		numVals = len(ReportTableHeaders)
+		state = ReportTableHeaders((config.conf["documentFormatting"]["reportTableHeaders"] + 1) % numVals)
+		config.conf["documentFormatting"]["reportTableHeaders"] = state.value
+		# Translators: Reported when the user cycles through report table header modes.
+		# {mode} will be replaced with the mode; e.g. None, Rows and columns, Rows or Columns.
+		ui.message(_("Report table headers {mode}").format(mode=state.displayString))
 
 	@script(
 		# Translators: Input help mode message for toggle report table cell coordinates command.
@@ -2515,26 +2514,8 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_SYSTEM,
 		gesture="kb:NVDA+shift+b"
 	)
-	def script_say_battery_status(self,gesture):
-		UNKNOWN_BATTERY_STATUS = 0xFF
-		AC_ONLINE = 0X1
-		NO_SYSTEM_BATTERY = 0X80
-		sps = winKernel.SYSTEM_POWER_STATUS()
-		if not winKernel.GetSystemPowerStatus(sps) or sps.BatteryFlag is UNKNOWN_BATTERY_STATUS:
-			log.error("error accessing system power status")
-			return
-		if sps.BatteryFlag & NO_SYSTEM_BATTERY:
-			# Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
-			ui.message(_("No system battery"))
-			return
-		# Translators: This is presented to inform the user of the current battery percentage.
-		text = _("%d percent") % sps.BatteryLifePercent + " "
-		# Translators: This is presented when AC power is connected such as when recharging a laptop battery.
-		if sps.ACLineStatus & AC_ONLINE: text += _("AC power on")
-		elif sps.BatteryLifeTime!=0xffffffff: 
-			# Translators: This is the estimated remaining runtime of the laptop battery.
-			text += _("{hours:d} hours and {minutes:d} minutes remaining") .format(hours=sps.BatteryLifeTime // 3600, minutes=(sps.BatteryLifeTime % 3600) // 60)
-		ui.message(text)
+	def script_say_battery_status(self, gesture: inputCore.InputGesture) -> None:
+		reportCurrentBatteryStatus()
 
 	@script(
 		description=_(

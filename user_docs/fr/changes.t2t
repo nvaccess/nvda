@@ -66,14 +66,52 @@ Cela améliorera les performances pour certaines applications Java incluant Inte
 
 
 === Dépréciations ===
-Voici des propositions de changements de rupture d'API.
-La partie obsolète de l'API restera disponible jusqu'à la version spécifiée.
-Si aucune version n'est spécifiée, le plan de suppression n'a pas été déterminé.
-Notez que la feuille de route pour les suppressions est « au mieux » et peut être sujette à modification.
-Veuillez tester la nouvelle API et fournir des commentaires.
-Pour les auteurs d'extensions, veuillez ouvrir un problème GitHub si ces modifications empêchent l'API de répondre à vos besoins.
 Aucune dépréciation n'est proposée pour la version 2022.3.
 
+
+= 2022.2.3 =
+Cette version corrige une rupture accidentelle d'API introduite dans la version 2022.2.1.
+
+== Corrections de Bogues ==
+- Correction d'un bogue faisant que NVDA n'annonçait pas "Bureau Sécurisé" quand on entrait dans un bureau sécurisé.
+Cela faisait que NVDA Remote ne reconnaissait pas les bureaux sécurisés. (#14094)
+-
+
+== Changements pour les Développeurs ==
+Cette version contient une rupture technique dans la rétrocompatibilité de l'API.
+Ce changement ne devrait affecter aucune extension.
+Veuillez ouvrir un problème GitHub si votre extension devient incompatible à la suite de cette version.
+
+- ``SecureDesktopNVDAObject`` n'est plus une sous-classe de ``Desktop`` ou ``Window``. (#14105)
+-
+
+= 2022.2.2 =
+Ceci est une version corrigeant un problème introduit en 2022.2.1 concernant les gestes de commandes.
+
+== Corrections de bogues ==
+- Correction d'un problème faisant que les gestes de commandes ne fonctionnaient pas toujours (#14065)
+-
+
+= 2022.2.1 =
+Version mineure corrigeant un problème de sécurité.
+Veuillez signaler de manière responsable les problèmes de sécurité à info@nvaccess.org.
+
+== Correctifs de sécurité ==
+- Correction d'une faille rendant possible d'exécuter une console Python depuis l'écran de verrouillage. (GHSA-rmq3-vvhq-gp32)
+- Correction d'une faille rendant possible de sortir de l'écran de verrouillage en utilisant la navigation par objet. (GHSA-rmq3-vvhq-gp32)
+-
+
+== Changements pour les développeurs ==
+
+=== Dépréciations ===
+Ces dépréciations ne sont actuellement pas prévues pour être supprimées.
+Les alias dépréciés resteront disponibles jusqu'à nouvel ordre.
+Veuillez tester la nouvelle API et fournir des commentaires.
+Pour les auteurs d'extensions, veuillez ouvrir un problème GitHub si ces modifications empêchent l'API de répondre à vos besoins.
+
+- ``appModules.lockapp.LockAppObject`` doit être remplacé par ``NVDAObjects.lockscreen.LockScreenObject``. (GHSA-rmq3-vvhq-gp32)
+- ``appModules.lockapp.AppModule.SAFE_SCRIPTS`` doit être remplacé par ``utils.security.getSafeScripts()``. (GHSA-rmq3-vvhq-gp32)
+-
 
 = 2022.2 =
 Cette version inclut beaucoup de correctifs.

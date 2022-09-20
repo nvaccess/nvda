@@ -7,6 +7,72 @@
 Da biste pročitali promene koje su bitne za programere, molimo pogledajte [Englesku verziju ovog dokumenta ../en/changes.html].
 
 
+= 2022.3 =
+Ogroman deo ove verzije je doprinela zajednica NVDA programera.
+Ovo uključuje odložene opise znakova i poboljšanu podršku za Windows konzolu.
+
+Ova verzija takođe uključuje nekoliko ispravljenih grešaka.
+Od važnijih, najnovije verzije programa Adobe Acrobat/Reader se više neće rušiti pri čitanju PDF dokumenata.
+
+eSpeak je ažuriran, i sada uključuje 3 nova jezika: Beloruski, Luksemburški i Totontepec Mixe.
+
+== Nove karakteristike ==
+- U Windows Console Hostu kojeg koriste komandna linija, PowerShell, i Windows podsistem za Linux na Windowsu 11 verzija 22H2 (Sun Valley 2) i novije:
+  - Značajno poboljšana brzina i stabilnost. (#10964)
+  - Kada se pritisne ``kontrol+f`` da pretražite tekst, pozicija preglednog kursora će biti ažurirana kako bi pratila pronađeni termin. (#11172)
+  - Prijavljivanje upisanog teksta koji se ne pojavljuje na ekranu (kao što su lozinke) je podrazumevano onemogućeno.
+Može se ponovo omogućiti u NVDA panelu naprednih podešavanja. (#11554)
+  - Tekst koji je van ekrana se može pregledati bez potrebe za pomeranjem prozora konzole. (#12669)
+  - Dostupne su detaljnije informacije o formatiranju teksta. ([microsoft/terminal PR 10336 https://github.com/microsoft/terminal/pull/10336])
+  -
+- Dodata je nova opcija u podešavanjima govora za čitanje opisa znakova uz odlaganje. (#13509)
+- Dodata je nova opcija za brajeve redove koja određuje da li će pomeranje brajevog reda napred i nazad prekinuti govor. (#2124)
+-
+
+
+== Promene ==
+- eSpeak NG je ažuriran na 1.52-dev commit ``9de65fcb``. (#13295)
+  - Dodati jezici:
+    - Beloruski
+    - Luksemburški
+    - Totontepec Mixe
+    -
+  -
+- Kada se koristi UI Automation za pristup kontrolama u programu Microsoft Excel, NVDA sada može da prijavi kada je ćelija spojena. (#12843)
+- Umesto prijavljivanja "ima detalje" biće prijavljena svrha detalja kada je moguće, na primer "ima komentar". (#13649)
+- Veličina instalacije programa NVDA se sada prikazuje u Windows programima i funkcijama. (#13909)
+-
+
+
+== Ispravljene greške ==
+- Adobe Acrobat / Reader 64 bitni se više neće rušiti pri čitanju PDF dokumenata. (#12920)
+  - Napomena da je najnovija verzija programa Adobe Acrobat / Reader takođe neophodna kako bi se izbeglo rušenje.
+  -
+- Java access bridge događaji će biti ignorisani kada se ne može pronaći window handle u Java aplikacijama.
+Ovo će poboljšati brzinu u nekim Java aplikacijama kao što je IntelliJ IDEA. (#13039)
+- Izgovor izabranih ćelija u programu LibreOffice Calc je efikasniji i više neće smrzavati Calc kada je puno ćelija izabrano. (#13232)
+- Kada je pokrenut od strane drugog korisnika, Microsoft Edge više nije nepristupačan. (#13032)
+- Kada je povećanje brzine isključeno, brzina sintetizatora ESpeak više ne pada između brzina 99% i 100%. (#13876)
+- Ispravljena greška koja je dozvoljavala otvaranje dva dijaloga ulaznih komandi. (#13854)
+-
+
+
+= 2022.2.2 =
+Ova verzija ispravlja grešku iz verzije 2022.2.1 sa ulaznim komandama.
+
+== Ispravljene greške ==
+- Ispravljena greška koja je izazvala da ulazne komande ne rade uvek. (#14065)
+-
+
+= 2022.2.1 =
+Ovo je manje ažuriranje kako bi se ispravio bezbednosni problem.
+Molimo odgovorno prijavite bezbednosne probleme na info@nvaccess.org.
+
+== Bezbednosne ispravke ==
+- Ispravljen propust koji je dozvoljavao pokretanje Python konzole sa zaključanog ekrana. (GHSA-rmq3-vvhq-gp32)
+- Ispravljen propust koji je dozvoljavao da napustite zaključani ekran objektnom navigacijom. (GHSA-rmq3-vvhq-gp32)
+-
+
 = 2022.2 =
 Mnoge greške su ispravljene u ovoj verziji.
 Od važnijih, dodata su brojna poboljšanja u Java aplikacijama, za brajeve redove i Windows opcije.

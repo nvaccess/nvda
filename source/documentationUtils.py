@@ -8,11 +8,13 @@ import os
 
 import globalVars
 import languageHandler
+import NVDAState
+
 
 
 def getDocFilePath(fileName, localized=True):
 	if not getDocFilePath.rootPath:
-		if globalVars.runningAsSource:
+		if NVDAState.isRunningAsSource():
 			getDocFilePath.rootPath = os.path.join(globalVars.appDir, "..", "user_docs")
 		else:
 			getDocFilePath.rootPath = os.path.join(globalVars.appDir, "documentation")
@@ -41,7 +43,7 @@ def getDocFilePath(fileName, localized=True):
 		return None
 	else:
 		# Not localized.
-		if globalVars.runningAsSource and fileName in ("copying.txt", "contributors.txt"):
+		if NVDAState.isRunningAsSource() and fileName in ("copying.txt", "contributors.txt"):
 			# If running from source, these two files are in the root dir.
 			return os.path.join(globalVars.appDir, "..", fileName)
 		else:

@@ -58,6 +58,27 @@ Ovo će unaprediti performanse za neke java aplikacije uključujući IntelliJ ID
 Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
 
 
+= 2022.2.2 =
+Ovo je verzija sa zakrpom koja ispravlja grešku iz verzije  2022.2.1 sa ulaznim gestama.
+
+== Ispravke grešaka ==
+- Ispravljena greška sa ulaznim gestama koje nisu ispravno radile. (#14065)
+-
+
+
+= 2022.2.1 =
+Ovo je mala verzija koja ispravlja sigurnosni propust.
+Molimo odgovorno prijavljujte sigurnosne propuste na adresu info@nvaccess.org.
+
+== Ispravke sigurnosnih propusta ==
+- Ispravljena ranjivost  u kojoj je bilo moguće pokrenuti python konzolu sa zaključanog zaslona. (GHSA-rmq3-vvhq-gp32)
+- Ispravljena ranjivost pomoću koje je bilo moguće izaći iz zaključanog zaslona koristeći objektnu navigaciju. (GHSA-rmq3-vvhq-gp32)
+
+
+== Izmjene za razvojne programere ==
+Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
+
+
 = 2022.2 =
 Ova inačica uključuje puno ispravaka grešaka.
 Prije svega, značajno je unapređena suradnja sa aplikacijama baziranim na java sučelju, brajičnim redcima i značajkama operacijskog sustava Windows.

@@ -2,7 +2,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 # Copyright (C) 2006-2022 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
-# Julien Cochuyt, Derek Riemer
+# Julien Cochuyt, Derek Riemer, Cyrille Bougot
 
 """High-level functions to speak information.
 """ 
@@ -55,12 +55,13 @@ from typing import (
 )
 from logHandler import log
 import config
+from config.configFlags import ReportTableHeaders
 import aria
 from .priorities import Spri
 from enum import IntEnum
 from dataclasses import dataclass
 from copy import copy
-from utils.security import _isSecureObjectWhileLockScreenActivated
+from utils.security import objectBelowLockScreenAndWindowsIsLocked
 
 if typing.TYPE_CHECKING:
 	import NVDAObjects
@@ -457,7 +458,7 @@ def getObjectPropertiesSpeech(  # noqa: C901
 		_prefixSpeechCommand: Optional[SpeechCommand] = None,
 		**allowedProperties
 ) -> SpeechSequence:
-	if _isSecureObjectWhileLockScreenActivated(obj):
+	if objectBelowLockScreenAndWindowsIsLocked(obj):
 		return []
 	#Fetch the values for all wanted properties
 	newPropertyValues={}
@@ -611,17 +612,12 @@ def speakObject(
 		speak(sequence, priority=priority)
 
 
-
-
-# C901 'getObjectSpeech' is too complex
-# Note: when working on getObjectSpeech, look for opportunities to simplify
-# and move logic out into smaller helper functions.
-def getObjectSpeech(  # noqa: C901
+def getObjectSpeech(
 		obj: "NVDAObjects.NVDAObject",
 		reason: OutputReason = OutputReason.QUERY,
 		_prefixSpeechCommand: Optional[SpeechCommand] = None,
 ) -> SpeechSequence:
-	if _isSecureObjectWhileLockScreenActivated(obj):
+	if objectBelowLockScreenAndWindowsIsLocked(obj):
 		return []
 	role=obj.role
 	# Choose when we should report the content of this object's textInfo, rather than just the object's value
@@ -733,20 +729,29 @@ def _objectSpeech_calculateAllowedProps(reason, shouldReportTextContent):
 		allowProperties["cellCoordsText"] = False
 		# rowNumber and columnNumber might be needed even if we're not reporting coordinates.
 		allowProperties["includeTableCellCoords"] = False
-	if not formatConf["reportTableHeaders"]:
+	if formatConf["reportTableHeaders"] not in (ReportTableHeaders.ROWS_AND_COLUMNS, ReportTableHeaders.ROWS):
 		allowProperties["rowHeaderText"] = False
+	if formatConf["reportTableHeaders"] not in (ReportTableHeaders.ROWS_AND_COLUMNS, ReportTableHeaders.COLUMNS):
 		allowProperties["columnHeaderText"] = False
 	if (
 		not formatConf["reportTables"]
 		or (
 			not formatConf["reportTableCellCoords"]
-			and not formatConf["reportTableHeaders"]
+			and formatConf["reportTableHeaders"] in (ReportTableHeaders.OFF, ReportTableHeaders.COLUMNS)
 		)
 	):
-		# We definitely aren't reporting any table info at all.
+		# We definitely aren't reporting any table row info at all.
 		allowProperties["rowNumber"] = False
-		allowProperties["columnNumber"] = False
 		allowProperties["rowSpan"] = False
+	if (
+		not formatConf["reportTables"]
+		or (
+			not formatConf["reportTableCellCoords"]
+			and formatConf["reportTableHeaders"] in (ReportTableHeaders.OFF, ReportTableHeaders.ROWS)
+		)
+	):
+		# We definitely aren't reporting any table column info at all.
+		allowProperties["columnNumber"] = False
 		allowProperties["columnSpan"] = False
 	if shouldReportTextContent:
 		allowProperties['value'] = False
@@ -2053,8 +2058,9 @@ def getControlFieldSpeech(  # noqa: C901
 			'columnSpan': attrs.get("table-columnsspanned"),
 			'includeTableCellCoords': reportTableCellCoords
 		}
-		if reportTableHeaders:
+		if reportTableHeaders in (ReportTableHeaders.ROWS_AND_COLUMNS, ReportTableHeaders.ROWS):
 			getProps['rowHeaderText'] = attrs.get("table-rowheadertext")
+		if reportTableHeaders in (ReportTableHeaders.ROWS_AND_COLUMNS, ReportTableHeaders.COLUMNS):
 			getProps['columnHeaderText'] = attrs.get("table-columnheadertext")
 		tableCellSequence = getPropertiesSpeech(_tableID=tableID, **getProps)
 		tableCellSequence.extend(stateTextSequence)

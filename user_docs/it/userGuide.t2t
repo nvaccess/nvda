@@ -332,7 +332,7 @@ NVDA fornisce i seguenti comandi quando si lavora con il cursore di sistema:
 | Legge Riga Corrente | NVDA+freccia su | NVDA+l | Legge la riga sulla quale si trova il cursore di sistema. Premendo la combinazione due volte viene effettuato lo spelling della riga. La tripla pressione effettuerà lo spelling utilizzando la descrizione dei caratteri (ancona, bari, como, domodossola, etc|
 | Legge Selezione corrente | NVDA+Shift+freccia su | NVDA+shift+s | Legge il testo selezionato ammesso che ve ne sia uno. |
 | Annuncia formattazione testo | NVDA+f | NVDA+f | Legge la formattazione del testo alla posizione del cursore di sistema. Una doppia pressione visualizzerà le informazioni in modalità navigazione |
-| Legge posizione cursore | NVDA+Canc tastierino numerico | NVDA+canc | none | Fornisce informazioni inerenti il testo o l'oggetto su cui è situato il cursore di sistema. Ad esempio, ciò potrebbe includere la percentuale in un documento, la distanza dal bordo della pagina o la posizione esatta dello schermo. Premendo due volte si possono ottenere ulteriori dettagli. |
+| Legge posizione cursore | NVDA+Canc tastierino numerico | NVDA+canc | Fornisce informazioni inerenti il testo o l'oggetto su cui è situato il cursore di sistema. Ad esempio, ciò potrebbe includere la percentuale in un documento, la distanza dal bordo della pagina o la posizione esatta dello schermo. Premendo due volte si possono ottenere ulteriori dettagli. |
 | frase successiva | alt+freccia Giù | alt+freccia Giù | Sposta il cursore sulla frase successiva e la legge. (Supportato solo in Microsoft Word e Outlook) |
 | frase precedente | alt+freccia Su | alt+freccia Su | Sposta il cursore sulla frase precedente e la legge. (Supportato solo in Microsoft Word e Outlook) |
 
@@ -1053,10 +1053,11 @@ Quando ci si trova nella visualizzazione della tabella dei libri aggiunti:
 NVDA fornisce supporto per la console di Windows utilizzata da Prompt dei comandi, PowerShell e il sottosistema Windows per Linux.
 La finestra della console ha dimensioni fisse, in genere molto più piccole del buffer che contiene l'output.
 Man mano che viene aggiunto del testo, il contenuto scorre verso l'alto e il testo precedente non è più visibile.
-NVDA non può più quindi leggere del testo che non risulta più visibile nella finestra con i comandi standard di revisione.
+Nelle versioni di Windows precedenti a Windows11 22H2, NVDA non è in grado di leggere il testo che non risulta più visibile nella finestra con i comandi standard di revisione.
 Pertanto, è necessario scorrere la finestra della console per rileggere del testo precedente.
+Nelle versioni più recenti della console e nel terminale di Windows, è possibile riesaminare l'intero buffer di testo liberamente senza la necessità di scorrere la finestra.
 %kc:beginInclude
-Le seguenti scorciatoie da tastiera integrate nella Console di Windows possono essere utili quando si [esplora del testo #ReviewingText] con NVDA:
+Le seguenti scorciatoie da tastiera integrate nella Console possono essere utili quando si [esplora del testo #ReviewingText] con NVDA nelle versioni precedenti della console di Windows:
 || Nome | Tasto | Descrizione |
 | Scorri verso l'alto | control+freccia su | Scorre la finestra della console verso l'alto, in modo da poter leggere il testo precedente. |
 | Scorri verso il basso | control+freccia giù | Scorre la finestra della console verso il basso, in modo da poter leggere il testo successivo. |
@@ -1261,6 +1262,20 @@ Generalmente, si consiglia di abilitare questa impostazione.
 Talvolta, può succedere che alcune sintesi Microsoft Speech Api si comportino in modo strano nell'eseguire lo spelling.
 In caso ciò avvenga, consigliamo di disattivare questa caratteristica.
 
+==== Descrizione ritardata dei caratteri al movimento del cursore ====
+: Default
+  Disabilitata
+: Opzioni
+  Abilitata, disabilitata
+:
+
+Quando questa impostazione viene attivata, NVDA pronuncerà una descrizione del carattere man mano che ci si sposta lettera per lettera.
+
+Per esempio, se si sta esaminando una riga carattere per carattere, e ci troviamo sulla lettera b, NVDA pronuncerà "Bologna" dopo un secondo di ritardo.
+Questo può essere utile nel caso in cui si incontrino difficoltà nella comprensione dei simboli, o per le persone con problemi di udito..
+
+Tale funzione verrà inibita nel caso in cui venga letto del testo durante il secondo di ritardo, oppure se viene premuto il tasto control..
+
 +++ Seleziona sintetizzatore (NVDA+control+s) +++[SelectSynthesizer]
 La finestra Sintetizzatore, che si apre premendo il pulsante cambia... dalla categoria voce della finestra impostazioni di NVDA, consente di selezionare con quale sintesi vocale NVDA debba parlare.
 Una volta scelto il sintetizzatore desiderato, premere OK affinché NVDA lo carichi ed inizi ad utilizzarlo.
@@ -1410,6 +1425,21 @@ Così, sempre riferendosi all'esempio di prima, NVDA visualizzerà che è stato 
 Comunque, se si desidera leggere il contesto (ossia che ci si trova in un elenco e che tale elenco fa parte di una finestra di dialogo), sarà necessario scorrere il proprio display braille indietro.
 
 Per modificare la presentazione delle informazioni di contesto da qualsiasi punto ci si trovi, è necessario assegnare un nuovo gesto o tasto rapido utilizzando la [finestra di dialogo tasti e gesti di immissione #InputGestures].
+
+==== Interrompi la voce durante lo scorrimento ====[BrailleSettingsInterruptSpeech]
+: Default
+  Abilitato
+: Opzioni
+  Default (Abilitato), Abilitato, Disabilitato
+:
+
+Questa impostazione determina se la sintesi vocale debba interrompersi quando si scorre il display braille indietro o avanti..
+I comandi riga precedente/successiva interrompono sempre la sintesi.
+
+Per alcune persone la voce che legge di continuo potrebbe essere fonte di distrazione se si è concentrati sul braille.
+Per questo motivo l'opzione è abilitata di default, interrompendo il parlato durante lo scorrimento del braille.
+
+La disattivazione di questa opzione consente di ascoltare la sintesi indipendentemente dallo scorrimento del  display braille.
 
 +++ Selezione display braille (NVDA+control+a) +++[SelectBrailleDisplay]
 La finestra di dialogo Selezione display Braille, che si apre tramite il pulsante "cambia..." nella categoria Braille delle impostazioni di NVDA, permette di scegliere quale barra braille NVDA dovrà usare.
@@ -1892,6 +1922,21 @@ Questa impostazione contiene i seguenti valori:
 ==== Utilizza UI Automation per accedere alla console di Windows quando disponibile ====[AdvancedSettingsConsoleUIA]
 Quando questa opzione è abilitata, NVDA utilizzerà una nuova versione ancora in sviluppo del suo supporto per il prompt dei comandi e la console di Windows che sfrutta i [miglioramenti dell'accessibilità apportati da Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Questa funzione è altamente sperimentale ed è ancora incompleta, quindi il suo uso non è ancora raccomandato. Tuttavia, una volta completato, si prevede che questo nuovo supporto diventerà quello predefinito, migliorando le prestazioni e la stabilità di NVDA nel prompt dei comandi e nelle console di Windows.
 
+==== Supporto alla Console di Windows ====[AdvancedSettingsConsoleUIA]
+Questa opzione permette di selezionare la modalità con cui NVDA interagisce con la console di Windows utilizzata dal prompt dei comandi, PowerShell e il sottosistema Windows per Linux.
+Non influisce sul più moderno Terminale di Windows.
+In Windows 10 versione 1709, Microsoft [ha aggiunto il supporto per la sua UI Automation API alla console https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/], offrendo prestazioni e stabilità notevolmente migliorate per gli screen reader che lo supportano.
+Nelle situazioni in cui l'interfaccia UIA non risulti disponibile oppure offra un'esperienza utente non soddisfacente, NVDA passerà automaticamente al supporto più vecchio per le console..
+La casella combinata supporto di Windows Console ha tre opzioni:
+- Automatico: Utilizza UIA Automation nella versione di Windows Console inclusa con Windows 11 versione 22H2 e successive.
+Questa opzione è consigliata e impostata per impostazione predefinita.
+- UIA quando disponibile: Utilizza UI Automation nella console se disponibile, anche per versioni incompatibili o con bug conosciuti..
+Sebbene questa funzionalità limitata possa essere utile (e sufficiente per un utilizzo standard), l'uso di questa opzione è interamente a proprio rischio e non verrà fornito alcun supporto per essa.
+- Meno recente: verrà completamente disabilitato l'uso di UI Automation nella console di Windows..
+Si tenga presente che in questo modo il supporto a UI Automation non verrà mai usato, anche quando l'esperienza utente sarebbe migliore.
+Pertanto, la selezione di questa opzione non è consigliata a meno che non si sappia ciò che si sta facendo.
+-
+ 
 ==== Utilizza UIA con Microsoft Edge e altri Browser basati su Chromium quando disponibile ====[ChromiumUIA]
 Consente di specificare se servirsi della tecnologia UIA quando disponibile nei browser basati su Chromium come Microsoft Edge.
 Il supporto UIA per i browser basati su Chromium è in fase di sviluppo e potrebbe non fornire lo stesso livello di accessibilità di IA2.
