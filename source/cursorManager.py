@@ -277,7 +277,9 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 			from utils.paragraphHelper import moveToBlockParagraph
 			ti = self.makeTextInfo(textInfos.POSITION_SELECTION)
 			passKey, moved = moveToBlockParagraph(
-				nextParagraph=nextParagraph, speakNew=not willSayAllResume(gesture), ti=ti)
+				nextParagraph=nextParagraph,
+				speakNew=not willSayAllResume(gesture),
+				ti=ti)
 			if moved:
 				self.selection = ti
 			elif passKey:

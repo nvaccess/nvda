@@ -13,8 +13,13 @@ from NVDAObjects.window.winword import WordDocumentTextInfo
 from NVDAObjects.window.winword import BrowseModeWordDocumentTextInfo
 from NVDAObjects.UIA import UIATextInfo
 from displayModel import EditableTextDisplayModelTextInfo
+from typing import Tuple
 
 MAX_LINES = 250  # give up after searching this many lines
+ERROR_TONE_FREQUENCY = 1000
+ERROR_TONE_DURATION = 30
+OFFSET_PREVIOUS_LINE = -1
+OFFSET_NEXT_LINE = 1
 
 
 def nextParagraphStyle() -> config.featureFlag.FeatureFlag:
@@ -23,7 +28,8 @@ def nextParagraphStyle() -> config.featureFlag.FeatureFlag:
 	numStyles = len(ParagraphNavigationFlag.__members__)
 	newEnumVal = flag.calculated().value + 1
 	if newEnumVal > numStyles:
-		newEnumVal = 2  # wrap around, skip DEFAULT
+		newEnumVal = ParagraphNavigationFlag.DEFAULT.value + 1  # wrap around, skip DEFAULT
+
 	return ParagraphNavigationFlag(newEnumVal)
 
 
@@ -39,7 +45,7 @@ def getTextInfoAtCaret() -> textInfos.TextInfo:
 	return ti
 
 
-def isAcceptableTextInfo(ti: textInfos.TextInfo) -> bool:
+def _isAcceptableTextInfo(ti: textInfos.TextInfo) -> bool:
 	acceptable = True
 	# disallow if in a Word document and not using UIA, as Word has performance issues
 	if isinstance(ti, WordDocumentTextInfo) or isinstance(ti, BrowseModeWordDocumentTextInfo):
@@ -50,12 +56,12 @@ def isAcceptableTextInfo(ti: textInfos.TextInfo) -> bool:
 	return acceptable
 
 
-def isLastLineOfParagraph(line: str) -> bool:
+def _isLastLineOfParagraph(line: str) -> bool:
 	stripped = line.strip(' \t')
 	return stripped.endswith('\r') or stripped.endswith('\n')
 
 
-def splitParagraphIntoChunks(paragraph: str) -> list([str]):
+def _splitParagraphIntoChunks(paragraph: str) -> list([str]):
 	CHUNK_SIZE = 2048
 	SENTENCE_TERMINATOR = ". "
 	TERMINATOR_LEN = len(SENTENCE_TERMINATOR)
@@ -92,14 +98,14 @@ def speakParagraph(ti: textInfos.TextInfo) -> None:
 		line = tempTi.text.strip()
 		if len(line) > 0:
 			paragraph += line + " "
-		if isLastLineOfParagraph(tempTi.text):
+		if _isLastLineOfParagraph(tempTi.text):
 			break
 		if not tempTi.move(textInfos.UNIT_LINE, 1):
 			break
 		numLines += 1
 
 	if len(paragraph.strip()) > 0:
-		chunks = splitParagraphIntoChunks(paragraph)
+		chunks = _splitParagraphIntoChunks(paragraph)
 		for chunk in chunks:
 			speech.speakMessage(chunk)
 	else:
@@ -107,32 +113,32 @@ def speakParagraph(ti: textInfos.TextInfo) -> None:
 		speech.speakMessage(_("blank"))
 
 
-def moveToParagraph(nextParagraph: bool, speakNew: bool) -> tuple((bool, bool)):
+def moveToParagraph(nextParagraph: bool, speakNew: bool) -> Tuple[bool, bool]:
 	"""
 	Moves to the previous or next normal paragraph, delimited by a single line break.
 	@param nextParagraph: bool indicating desired direction of movement,
 	True for next paragraph, False for previous paragraph
 	@param speakNew: bool indicating if new paragraph should be spoken after navigating
 	@returns: A boolean 2-tuple of:
-	-passKey: if True, should send the gesture on
+	- passKey: if True, should send the gesture on
 	- moved: if True, position has changed
 	"""
 	ti = getTextInfoAtCaret()
-	if (ti is None) or (not isAcceptableTextInfo(ti)):
+	if (ti is None) or (not _isAcceptableTextInfo(ti)):
 		return (True, False)
 	ti.expand(textInfos.UNIT_LINE)
 	ti.collapse()  # move to start of line
-	moveOffset = 1 if nextParagraph else -1
+	moveOffset = OFFSET_NEXT_LINE if nextParagraph else OFFSET_PREVIOUS_LINE
 	moved = False
 	numLines = 0
 	tempTi = ti.copy()
 	tempTi.expand(textInfos.UNIT_LINE)
 	# if starting line is the last line of a paragraph, move back two paragraph markers
-	moveBackTwice = isLastLineOfParagraph(tempTi.text)
+	moveBackTwice = _isLastLineOfParagraph(tempTi.text)
 	while numLines < MAX_LINES:
 		tempTi = ti.copy()
 		tempTi.expand(textInfos.UNIT_LINE)
-		if isLastLineOfParagraph(tempTi.text):
+		if _isLastLineOfParagraph(tempTi.text):
 			if not nextParagraph:
 				if not moveBackTwice:
 					while numLines < MAX_LINES:
@@ -141,7 +147,7 @@ def moveToParagraph(nextParagraph: bool, speakNew: bool) -> tuple((bool, bool)):
 							break
 						tempTi = ti.copy()
 						tempTi.expand(textInfos.UNIT_LINE)
-						if isLastLineOfParagraph(tempTi.text):
+						if _isLastLineOfParagraph(tempTi.text):
 							ti.move(textInfos.UNIT_LINE, 1)
 							moved = True
 							break
@@ -165,7 +171,7 @@ def moveToParagraph(nextParagraph: bool, speakNew: bool) -> tuple((bool, bool)):
 			ti._rangeObj.ScrollIntoView(False)
 		speakParagraph(ti)
 	else:
-		tones.beep(1000, 30)
+		tones.beep(ERROR_TONE_FREQUENCY, ERROR_TONE_DURATION)
 	return (False, moved)
 
 
@@ -183,13 +189,15 @@ def speakBlockParagraph(ti: textInfos.TextInfo) -> None:
 			break
 		numLines += 1
 
-	chunks = splitParagraphIntoChunks(paragraph)
+	chunks = _splitParagraphIntoChunks(paragraph)
 	for chunk in chunks:
 		speech.speakMessage(chunk)
 
 
 def moveToBlockParagraph(
-		nextParagraph: bool, speakNew: bool, ti: textInfos.TextInfo = None) -> tuple((bool, bool)):
+		nextParagraph: bool,
+		speakNew: bool,
+		ti: textInfos.TextInfo = None) -> Tuple[bool, bool]:
 	"""
 	Moves to the previous or next block paragraph, delineated by a blank line.
 	@param nextParagraph: bool indicating desired direction of movement,
@@ -204,11 +212,11 @@ def moveToBlockParagraph(
 
 	if ti is None:
 		ti = getTextInfoAtCaret()
-	if (ti is None) or (not isAcceptableTextInfo(ti)):
+	if (ti is None) or (not _isAcceptableTextInfo(ti)):
 		return (True, False)
 	moved = False
 	lookingForBlank = True
-	moveOffset = 1 if nextParagraph else -1
+	moveOffset = OFFSET_NEXT_LINE if nextParagraph else OFFSET_PREVIOUS_LINE
 	numLines = 0
 	while numLines < MAX_LINES:
 		tempTi = ti.copy()
@@ -247,6 +255,6 @@ def moveToBlockParagraph(
 		if speakNew:
 			speakBlockParagraph(ti)
 	else:
-		tones.beep(1000, 30)
+		tones.beep(ERROR_TONE_FREQUENCY, ERROR_TONE_DURATION)
 
 	return (False, moved)
