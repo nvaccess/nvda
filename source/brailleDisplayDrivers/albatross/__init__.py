@@ -9,7 +9,7 @@ Contains modules:
 - constants.py
 - driver.py
 - gestures.py
-- _threads.py
+- _threading.py
 """
 
 # Imported here so that braille._getDisplayDriver can import

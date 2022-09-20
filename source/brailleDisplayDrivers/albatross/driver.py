@@ -37,7 +37,7 @@ import inputCore
 import ui
 
 from . import gestures
-from . import _threads
+from . import _threading
 
 from .constants import (
 	BAUD_RATE,
@@ -72,6 +72,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	- L{display}; prepares data which should be displayed on braille so
 	that display can show it properly
 """
+
 	name = "albatross"
 	# Translators: Names of braille displays.
 	description = _("Caiku Albatross 46/80")
@@ -155,11 +156,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					# Prepare _oldCells to store last displayed content.
 					while len(self._oldCells) < self.numCells:
 						self._oldCells.append(0)
-					self._kc = _threads.RepeatedTimer(
+					self._kc = _threading.RepeatedTimer(
 						KC_INTERVAL,
 						self._keepConnected
 					)
-					self._handleRead = _threads.ReadThread(
+					self._handleRead = _threading.ReadThread(
 						self._readHandling,
 						self._disableConnection,
 						self._exitEvent,
@@ -369,10 +370,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	def _readHandling(self):
 		"""Manages all read operations.
-Most of time called from albatross_read thread when there is something to
-read in the port. See L{_threads} module ReadThread class.
-When initial connection is established called from L{_searchPorts} function.
-"""
+		Most of time called from albatross_read thread when there is something to
+		read in the port. See L{_threading} module ReadThread class.
+		When initial connection is established called from L{_searchPorts} function.
+		"""
 		if self._tryToConnect:
 			# Only one try to open port when called from "albatross_read" thread.
 			# This is indicated by _dev is not None.
@@ -629,8 +630,13 @@ When initial connection is established called from L{_searchPorts} function.
 				# display indexing starts from 1
 				writeBytes.append((i + 1).to_bytes(1, 'big'))
 				# Bits have to be reversed.
-				# Source: https://stackoverflow.com/questions/12681945/reversing-bits-of-python-integer
-				writeBytes.append((int('{:08b}'.format(cell)[::-1], 2).to_bytes(1, 'big')))
+				writeBytes.append(
+					(
+						int(
+							'{:08b}'.format(cell)[::-1], 2
+						).to_bytes(1, 'big')
+					)
+				)
 		writeBytes.append(END_BYTE)
 		if len(writeBytes) < 3:  # Only START_BYTE and END_BYTE
 			return

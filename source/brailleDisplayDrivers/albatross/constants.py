@@ -9,12 +9,12 @@ Classes:
 
 Summary of important constants:
 
-- L{INIT_STARTBYTE} and L{MAX_SETTINGS_BYTE}; when no connection
-display sends continuously L{INIT_START_BYTE} followed by settings byte.
+- L{INIT_STARTBYTE} and L{MAX_SETTINGS_BYTE}; when there is no connection,
+the display continuously sends L{INIT_START_BYTE} followed by the settings byte.
 The number of these packets is arbitrary. L{INIT_START_BYTE} is \xff.
-Settings byte can be from \x00 to \xff. It is limited to be at most
-L{MAX_SETTINGS_BYTE} to reliably detect init packets, and for harm that
-value \xfe causes during automatic detection for other driver with
+Settings byte can be from \x00 to \xff.
+It is limited to be at most L{MAX_SETTINGS_BYTE} to reliably detect init packets.
+The value \xfe causes failure during automatic detection for other drivers with the
 same PID&VID.
 - L{ESTABLISHED}; driver sends this to confirm connection, and
 display stops sending init packets
@@ -24,8 +24,9 @@ L{END_BYTE}
 "wait for connection state" if it does not get appropriate data packet
 within approximately 2 seconds. L{KC_INTERVAL} defines suitable time which
 in turn is used by timer.
-- part of display buttonss see L{Key} are control keys used to compose
-key combinations see L{CONTROL_KEY_CODES}
+- part of display buttons.
+L{Key} are control keys used to compose key combinations.
+See also L{CONTROL_KEY_CODES}.
 - L{RESET_COUNT} defines how many times port buffer reset is done before
 trying to establish connection.
 There are many I/O buffers between device and driver so several
@@ -44,20 +45,22 @@ from typing import (
 )
 
 BAUD_RATE: List[int] = [19200, 9600]
+"""Because 19200 is the display default, it is tried at first."""
+
 READ_TIMEOUT = 0.2
 WRITE_TIMEOUT = 0
 SLEEP_TIMEOUT = 0.2
 """How long to sleep between port init or open retries."""
-MAX_INIT_RETRIES = 20
 
-"""How many times port initialization or opening is tried.
+MAX_INIT_RETRIES = 20
+"""
+How many times port initialization or opening is tried.
 This large value is required for braille to start.
 This should not effect other devices with the same PID and VID,
 because this device is detected as last one.
 """
 
 RESET_COUNT = 10
-
 """
 How many times to try to reset I/O buffers.
 Possibly due to write operations of other drivers with same PID&VID,
@@ -69,6 +72,7 @@ which can be safely ignored.
 
 RESET_SLEEP = 0.05
 """How long to sleep between I/O buffer resets."""
+
 WRITE_QUEUE_LENGTH = 20
 
 
@@ -103,7 +107,7 @@ class Key(IntEnum):
 	f12 = 196
 	f13 = 197
 	f14 = 198
-	f15 = 199,
+	f15 = 199
 	f16 = 200
 	home2 = 201
 	end2 = 202
@@ -121,6 +125,7 @@ class Key(IntEnum):
 
 MAX_COMBINATION_KEYS = 4
 """Maximum number of keys in key combination."""
+
 CONTROL_KEY_CODES: Set[Key] = {
 	Key.attribute1,
 	Key.attribute2,
@@ -162,13 +167,16 @@ ROUTING_KEY_RANGES: Set[RoutingKeyRange] = frozenset(
 		RoutingKeyRange("secondRouting", 152, 191, indexOffset=112)
 	}
 )
+
 ESTABLISHED = b"\xfe\xfd\xfe\xfd"
 """Send this to Albatross to confirm that connection is established."""
+
 INIT_START_BYTE = b"\xff"
 """
 If no connection, Albatross sends continuously byte \xff followed by byte
 containing various settings like number of cells.
 """
+
 MAX_SETTINGS_BYTE = b"\xfd"
 """Maximum value allowed for settings byte.
 Settings byte can be anything from \x00 to \xff. However, \xff
@@ -200,16 +208,21 @@ or driver job to use them when applicable.
 Only display settings which affects on its own functionality are baud rate
 and key repeat which can be slow or fast.
 """
+
 MAX_STATUS_CELLS_ALLOWED = 13
 """Used to inform user how many status cells can be used
 see L{MAX_SETTINGS_BYTE}.
 """
+
 START_BYTE = b"\xfb"
 """Send information to Albatross enclosed by L{START_BYTE} and L{END_BYTE}."""
+
 END_BYTE = b"\xfc"
 """Send information to Albatross enclosed by L{START_BYTE} and L{END_BYTE}."""
+
 BOTH_BYTES = b"\xfb\xfc"
 """To keep connected these both above bytes must be sent periodically."""
+
 KC_INTERVAL = 1.5
 """
 How often BOTH_BYTES should be sent and reconnection tried.

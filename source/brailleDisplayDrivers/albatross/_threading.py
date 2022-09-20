@@ -30,17 +30,19 @@ from threading import (
 	Timer
 )
 from typing import Callable
+from typing_extensions import ParamSpec
 
 from .constants import KC_INTERVAL
 
+FunctionParamsT = ParamSpec('FunctionParamsT')
 
 class ReadThread(Thread):
 	"""Controls most of read operations and tries to reconnect when needed."""
 
 	def __init__(
 			self,
-			readFunction: Callable[[None], None],
-			disableFunction: Callable[[None], None],
+			readFunction: Callable[[], None],
+			disableFunction: Callable[[], None],
 			event: Event,
 			dev: serial.Serial,
 			*args,
@@ -117,41 +119,39 @@ class ReadThread(Thread):
 		log.debug(f"Exiting {self.name}")
 
 
-class RepeatedTimer(object):
+class RepeatedTimer:
 	"""Repeating timer.
 	Timer is used to check if data needs to be sent to display to keep
 	connected.
-	Code copied from
-	https://stackoverflow.com/a/38317060
 	"""
 
 	def __init__(
 			self,
 			interval: float,
-			function: Callable[[None], None],
+			callback: Callable[FunctionParamsT, None],
 			*args,
 			**kwargs
 	):
 		"""Constructor.
-		@param interval: Checking frequency.
-		@param function: Function to call to check.
+		@param interval: Checking frequency
+		@param callback: Call-back function
 		"""
-		self.interval = interval
-		self._timer = Timer(self.interval, self._run)
-		self.function = function
-		self.args = args
-		self.kwargs = kwargs
+		self._interval = interval
+		self._timer = Timer(self._interval, self._run)
+		self._callback = callback
+		self._args = args
+		self._kwargs = kwargs
 		self.is_running = False
 		self.start()
 
 	def _run(self):
 		self.is_running = False
 		self.start()
-		self.function(*self.args, **self.kwargs)
+		self._callback(*self._args, **self._kwargs)
 
 	def start(self):
 		if not self.is_running:
-			self._timer = Timer(self.interval, self._run)
+			self._timer = Timer(self._interval, self._run)
 			self._timer.start()
 			self.is_running = True
 

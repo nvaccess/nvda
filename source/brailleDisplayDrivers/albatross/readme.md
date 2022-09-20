@@ -8,17 +8,114 @@ This module contains driver for Caiku Albatross 46 and 80 braille displays.
 - `constants.py`
 - `driver.py`
 - `gestures.py`
-- `_threads.py`
+- `_threading.py`
 
-`constants.py` contains various constants.
+### General
 
-`driver.py` manages I/O.
+Opposite to many other displays Albatross models do not wait that driver
+sends query of their presence to them. In stead, they send continuously
+init packets until driver sends to them quit that connection has been
+established.
 
-`gestures.py` contains default key mapping, and stuff to interpret and forward display key presses.
+These displays also require that they get some data within approximately
+2 seconds, otherwise they fall back to "wait for connection state" and
+start again send their init packets until driver sends quit packet.
 
-`_threads.py` contains two classes for threads:
+Similarly, if user enters device internal menu, then after exit init packets
+are continuously sent until driver sends quit packet.
 
-`ReadThread` detects when there is something to read (key presses or new connection init packets) and connection loss.
+Init packets are also sent when device is powered off and then on.
 
-`RepeatedTimer` defines timer which is used to send data to display
-periodically so that display does not fall back in "wait for connection" state.
+Display init packets consist of two bytes: the first one is \xff which tells
+that this is an init packet. The second one is settings byte which contains
+display settings like length of display and number of status cells.
+The most meaningful setting is the length of display, and other settings
+are ignored by this version. Other settings contained by settings byte can be
+regarded as notes to screenreader, and it is screenreader or driver job to use
+them when applicable. For example, there are no separate status cells in
+the device but if screenreader supports using status cells, it can be notified
+to use them by settings byte.
+
+Settings byte can be anything between \x00 and \xff. Thus it could be the
+same as init byte.
+
+It is possible that settings byte may have same value with any display buttons.
+Because init packets may be sent also during session (user exits display
+internal menu for example), it is essential to know if byte is button press
+or part of init packet.
+
+Because display when it is in "wait for connection" state sends init packets
+continuously, there may be hundreds of bytes to handle. There are several
+rx buffers between device and driver which seems to cause situation that all
+data cannot be read with one read operation. It cannot be known when all data
+has been read. This is the case with init packets but also with key
+combinations.
+
+There are other devices with same PID&VID. When automatic braille display
+detection is used, other displays with same PID&VID are tried before Albatross.
+Those drivers try to send queries to the port to detect their own displays.
+These queries may cause Albatross to send unexpected init packets which in turn
+could disturb this driver - it could get inappropriate settings byte. On the
+other hand, if Albatross settings byte is \xfe it causes problems to the other
+driver so that it causes infinite loop in its detection procedure.
+
+To reduce complexity of data handling and to prevent disturbances to other
+drivers this driver accepts only settings bytes <= \xfd. From user perspective
+this means that with 80 model user can ask screenreader to use at most 13
+status cells when without limitation user could ask 15. Limitation is applied
+only if user has switched all other settings to values that cause value of byte
+to be > \xfd. From settings byte for status cells there are reserved the most
+right 4 bits. Limitation does not affect on 46 cells model because the most
+left bit of byte defines the length of display (0 for 46 and 1 for 80 cells
+model).
+
+### Driver requirements
+
+- support for both 46 and 80 cells models
+- support for both automatic and manual detection
+- when connected allows device plugging out and in, and power switching off and
+on so that display content is up-to-date and buttons work as expected after
+these operations.
+
+### Design
+
+Driver has modular structure:
+
+- `__init__.py`
+- `constants.py`
+- `driver.py`
+- `gestures.py`
+- `_threading.py`
+
+`constants.py` contains all the constant definitions, for example button
+values and names.
+
+`driver.py` is the main part of the code. It implements `BrailleDisplayDriver`
+class which is in response of all read and write operations. It also takes care
+to format data which is meant to be displayed on the braille line.
+
+Important main functions of `BrailleDisplayDriver` are:
+
+- `_readHandling`; performs connecting/reconnecting to the device, and all read
+operations during connection
+- `_somethingToWrite`; performs all write operations to the display
+- `display`; prepares data to be displayed on the braille line
+
+In `gestures.py` numeric values of pressed buttons are interpreted as gestures
+so that they can be forwarded to NVDA input system.
+
+`_threads.py` defines two threads. Thread called albatross-read calls
+`BrailleDisplayDriver` `_readHandling` function when it gets signaled that port
+has data to be read. Idea is somewhat similar to `hwIo` `onReceive` function.
+For deeper read and write operations control own thread was implemented. In
+addition, it calls `_readHandling` if it detects port problems so that
+`_readHandling` can try to reconnect. Albatross-read thread sleeps most of the
+time because user does not press buttons continuously, and connection problems
+occur rarely.
+
+The second thread is timer which checks periodically (after approximately 1.5
+seconds) that some data has been sent to display so that it keeps connected.
+`_SomethingToWrite` function updates time of last write operation. If there is
+at least 1.5 seconds from last write operation, display is feeded data packet
+containing `START_BYTE` and `END_BYTE` which enclose data which is sent to be
+displayed on the braille line.
