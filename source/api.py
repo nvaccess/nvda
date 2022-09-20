@@ -175,6 +175,9 @@ def setFocusObject(obj: NVDAObjects.NVDAObject) -> bool:  # noqa: C901
 	braille.invalidateCachedFocusAncestors(focusDifferenceLevel)
 	if config.conf["reviewCursor"]["followFocus"]:
 		setNavigatorObject(obj,isFocus=True)
+	# Fire focusExited event for all old focus ancestors not common with the new focus
+	for oldFocusAncestor in reversed(oldFocusLine[focusDifferenceLevel:-1]):
+		eventHandler.executeEvent("focusExited", oldFocusAncestor)
 	return True
 
 def getFocusDifferenceLevel():
