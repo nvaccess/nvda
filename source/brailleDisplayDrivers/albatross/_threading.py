@@ -36,6 +36,7 @@ from .constants import KC_INTERVAL
 
 FunctionParamsT = ParamSpec('FunctionParamsT')
 
+
 class ReadThread(Thread):
 	"""Controls most of read operations and tries to reconnect when needed."""
 
