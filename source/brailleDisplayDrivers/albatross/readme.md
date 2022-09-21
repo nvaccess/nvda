@@ -104,12 +104,12 @@ operations during connection
 In `gestures.py` numeric values of pressed buttons are interpreted as gestures
 so that they can be forwarded to NVDA input system.
 
-`_threads.py` defines two threads. Thread called albatross-read calls
+`_threads.py` defines two threads. Thread called albatross_read calls
 `BrailleDisplayDriver` `_readHandling` function when it gets signaled that port
 has data to be read. Idea is somewhat similar to `hwIo` `onReceive` function.
 For deeper read and write operations control own thread was implemented. In
 addition, it calls `_readHandling` if it detects port problems so that
-`_readHandling` can try to reconnect. Albatross-read thread sleeps most of the
+`_readHandling` can try to reconnect. Albatross_read thread sleeps most of the
 time because user does not press buttons continuously, and connection problems
 occur rarely.
 

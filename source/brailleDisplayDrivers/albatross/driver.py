@@ -631,10 +631,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				writeBytes.append((i + 1).to_bytes(1, 'big'))
 				# Bits have to be reversed.
 				writeBytes.append(
-					(
-						int(
-							'{:08b}'.format(cell)[::-1], 2
-						).to_bytes(1, 'big')
+					int(
+						'{:08b}'.format(cell)[::-1], 2
+					)
+					.to_bytes(
+						1, 'big'
 					)
 				)
 		writeBytes.append(END_BYTE)
