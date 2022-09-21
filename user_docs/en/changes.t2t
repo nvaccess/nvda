@@ -4,11 +4,14 @@ What's New in NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2022.2.3 =
-This is a patch release to fix an accidental API breakage introduced in 2022.2.1.
+This is a patch release to fix a security issue.
+This release also fixes an accidental API breakage introduced in 2022.2.1.
 
 == Bug Fixes ==
 - Fixed a bug where NVDA did not announce "Secure Desktop" when entering a secure desktop.
 This caused NVDA remote to not recognize secure desktops. (#14094)
+- Fixed an exploit where it was possible to open the NVDA python console via the log viewer on the lock screen.
+([GHSA-585m-rpvv-93qg https://github.com/nvaccess/nvda/security/advisories/GHSA-585m-rpvv-93qg])
 -
 
 = 2022.2.2 =

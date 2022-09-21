@@ -226,20 +226,19 @@ def getReviewPosition() -> textInfos.TextInfo:
 
 
 def setReviewPosition(
-		reviewPosition,
-		clearNavigatorObject=True,
-		isCaret=False,
-		isMouse=False
-):
+		reviewPosition: textInfos.TextInfo,
+		clearNavigatorObject: bool = True,
+		isCaret: bool = False,
+		isMouse: bool = False
+) -> bool:
 	"""Sets a TextInfo instance as the review position.
-	@param clearNavigatorObject: if  true, It sets the current navigator object to C{None}.
+	@param clearNavigatorObject: if True, It sets the current navigator object to C{None}.
 		In that case, the next time the navigator object is asked for it fetches it from the review position.
-	@type clearNavigatorObject: bool
 	@param isCaret: Whether the review position is changed due to caret following.
-	@type isCaret: bool
 	@param isMouse: Whether the review position is changed due to mouse following.
-	@type isMouse: bool
 	"""
+	if _isSecureObjectWhileLockScreenActivated(reviewPosition.obj):
+		return False
 	globalVars.reviewPosition=reviewPosition.copy()
 	globalVars.reviewPositionObj=reviewPosition.obj
 	if clearNavigatorObject: globalVars.navigatorObject=None
@@ -254,6 +253,7 @@ def setReviewPosition(
 	else:
 		visionContext = vision.constants.Context.REVIEW
 	vision.handler.handleReviewMove(context=visionContext)
+	return True
 
 
 def getNavigatorObject() -> NVDAObjects.NVDAObject:
