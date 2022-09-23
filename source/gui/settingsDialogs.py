@@ -2562,6 +2562,7 @@ class DocumentNavigationPanel(SettingsPanel):
 			keyPath=["documentNavigation", "paragraphStyle"],
 			conf=config.conf
 		)
+		self.bindHelpEvent("DocumentFormattingParagraphStyle", self.paragraphStyleCombo)
 
 	def onSave(self):
 		self.paragraphStyleCombo.saveCurrentValueToConf()
