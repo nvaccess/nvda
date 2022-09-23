@@ -30,11 +30,8 @@ from threading import (
 	Timer
 )
 from typing import Callable
-from typing_extensions import ParamSpec
 
 from .constants import KC_INTERVAL
-
-FunctionParamsT = ParamSpec('FunctionParamsT')
 
 
 class ReadThread(Thread):
@@ -129,26 +126,22 @@ class RepeatedTimer:
 	def __init__(
 			self,
 			interval: float,
-			callback: Callable[FunctionParamsT, None],
-			*args,
-			**kwargs
+			feedFunction: Callable[[], None]
 	):
 		"""Constructor.
 		@param interval: Checking frequency
-		@param callback: Call-back function
+		@param feedFunction: feeds display with data if needed
 		"""
 		self._interval = interval
 		self._timer = Timer(self._interval, self._run)
-		self._callback = callback
-		self._args = args
-		self._kwargs = kwargs
+		self._feedFunction = feedFunction
 		self.is_running = False
 		self.start()
 
 	def _run(self):
 		self.is_running = False
 		self.start()
-		self._callback(*self._args, **self._kwargs)
+		self._feedFunction()
 
 	def start(self):
 		if not self.is_running:
