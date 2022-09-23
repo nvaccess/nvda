@@ -16,7 +16,7 @@ Hlasový výstup bol aktualizovaný na novú verziu a prináša 3 nové jazyky: 
 == Nové vlastnosti ==
 - Vo windows konzolách, ktoré sa používajú v príkazovom riadku, PowerShell, a Windows Subsystéme pre Linux od verzie Windows 11 22H2 (Sun Valley 2):
   - Vylepšená odozva a stabilita. (#10964)
-  - Po stlačení ``ctrl+f`` na vyhľadanie textu, prezerací kurzor sa presúva na vyhľadaný výraz. (#11172)
+  - Po stlačení ``ctrl+f`` na vyhľadanie textu, sa prezerací  kurzor  presúva na vyhľadaný výraz. (#11172)
   - Predvolene je vypnuté oznamovanie napísaného textu, ktorý sa nezobrazuje na obrazovke (zvyčajne ide o heslá).
 Toto je možné zapnúť v pokročilých nastaveniach NVDA. (#11554)
   - Text, ktorý nie je viditeľný na obrazovke, je stále možné prezerať bez nutnosti posúvať okno konzoly. (#12669)
@@ -48,17 +48,17 @@ Toto je možné zapnúť v pokročilých nastaveniach NVDA. (#11554)
 - Rôzne jednotky veľkosti písma sú odteraz dostupné na preklad pre prekladateľov a objavujú sa aj správne v Slovenskom jazyku. (#13573)
 - NVDA ignoruje udalosti z Java Access Bridge, ak nemá fokus žiadne okno Java aplikácie.
 Toto zlepší odozvu niektorých Java aplikácií, napríklad IntelliJ IDEA. (#13039)
-- Vylepšené sledovanie vybratých buniek v LibreOffice Calc, pričom viac nedokáza k zamrznutiu, ak je vybratých viacero buniek. (#13232)
+- Vylepšené sledovanie vybratých buniek v LibreOffice Calc, pričom viac nedochádza k zamrznutiu, ak je vybratých viacero buniek. (#13232)
 - Odteraz je možné používať MS Edge aj v situáciách, ak ste prihlásený pod kontom iného používateľa. (#13032)
 - Ak je vypnuté použitie dvojnásobnej rýchlosti, hlasový výstup eSpeak nepoužíva skracovanie hlások, ktoré sa zvyčajne používa pri použití dvojnásobnej rýchlosti ani v prípade, že je tempo nastavené na 100%. (#13876)
 - Odteraz nie je možné otvoriť dve okná s nastavením klávesových skratiek súčasne. (#13854)
 -
 
 = 2022.2.3 =
-Táto opravná verzia opravuje chybu, ktorá sa nedopatreným dostala do verzie 2022.2.
+Táto opravná verzia opravuje chybu, ktorá sa nedopatrením dostala do verzie 2022.2.
 
 == opravy ==
-- Opravená chyba, ktorá spôsobovala, že NVDA neoznamovalo hlásenie "zabezpečená pracovná plocha". Toto spôsobovalo, že NVDA Remote ndeokázalo rozpoznať zabezpečené okná. (#14094)
+- Opravená chyba, ktorá spôsobovala, že NVDA neoznamovalo hlásenie "zabezpečená pracovná plocha". Toto spôsobovalo, že NVDA Remote nedokázalo rozpoznať zabezpečené okná. (#14094)
 -
 
 = 2022.2.2 =
