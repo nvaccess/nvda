@@ -22,6 +22,8 @@ import config
 import winKernel
 import api
 import winUser
+from winAPI.winUser import GetSysColor
+from winAPI.winUser.constants import SysColorIndex
 import textInfos.offsets
 import controlTypes
 from controlTypes import TextPosition
@@ -153,11 +155,6 @@ WB_MOVEWORDRIGHT=5
 WB_LEFTBREAK=6
 WB_RIGHTBREAK=7
 
-# Color index for GetSystemColor
-# See https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getsyscolor
-SC_COLOR_WINDOW = 5
-SC_COLOR_WINDOWTEXT = 8
-
 
 class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 
@@ -281,7 +278,7 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 		if formatConfig["reportColor"]:
 			if charFormat is None: charFormat=self._getCharFormat(offset)
 			if charFormat.dwEffects & CFE_AUTOCOLOR:
-				rgb = winUser.user32.GetSysColor(SC_COLOR_WINDOWTEXT)
+				rgb = GetSysColor(SysColorIndex.WINDOW_TEXT)
 				# Translators: The text color as reported in Wordpad (Automatic) or NVDA log viewer.
 				formatField["color"] = _("{color} (default color)").format(
 					color=colors.RGB.fromCOLORREF(rgb).name,
@@ -290,7 +287,7 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 				rgb = charFormat.crTextColor
 				formatField["color"] = colors.RGB.fromCOLORREF(rgb)
 			if charFormat.dwEffects & CFE_AUTOBACKCOLOR:
-				rgb = winUser.user32.GetSysColor(SC_COLOR_WINDOW)
+				rgb = GetSysColor(SysColorIndex.WINDOW)
 				# Translators: The background color as reported in Wordpad (Automatic) or NVDA log viewer.
 				formatField["background-color"] = _("{color} (default color)").format(
 					color=colors.RGB.fromCOLORREF(rgb).name,
@@ -553,7 +550,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 			if fgColor==comInterfaces.tom.tomAutoColor:
 				# Translators: The text color as reported in Wordpad (Automatic) or NVDA log viewer.
 				formatField['color'] = _("{color} (default color)").format(
-					color=colors.RGB.fromCOLORREF(winUser.user32.GetSysColor(SC_COLOR_WINDOWTEXT)).name,
+					color=colors.RGB.fromCOLORREF(GetSysColor(SysColorIndex.WINDOW_TEXT)).name,
 				)
 			elif fgColor&0xff000000:
 				# The color is a palet index (we don't know the palet)
@@ -565,7 +562,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 			if bkColor==comInterfaces.tom.tomAutoColor:
 				# Translators: The background color as reported in Wordpad (Automatic) or NVDA log viewer.
 				formatField['background-color'] = _("{color} (default color)").format(
-					color=colors.RGB.fromCOLORREF(winUser.user32.GetSysColor(SC_COLOR_WINDOW)).name,
+					color=colors.RGB.fromCOLORREF(GetSysColor(SysColorIndex.WINDOW)).name,
 				)
 			elif bkColor&0xff000000:
 				# The color is a palet index (we don't know the palet)
