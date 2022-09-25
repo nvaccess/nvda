@@ -466,7 +466,7 @@ def speakObjectProperties(
 		**allowedProperties,
 	)
 	if speechSequence:
-		speak(speechSequence, priority=priority, suppressBlanks=reason == OutputReason.SAYALL)
+		speak(speechSequence, priority=priority)
 
 
 # C901 'getObjectPropertiesSpeech' is too complex
@@ -629,7 +629,7 @@ def speakObject(
 		_prefixSpeechCommand,
 	)
 	if sequence:
-		speak(sequence, priority=priority, suppressBlanks=reason == OutputReason.SAYALL)
+		speak(sequence, priority=priority)
 
 
 def getObjectSpeech(
@@ -786,13 +786,13 @@ def speakText(
 ):
 	"""Speaks some text.
 	@param text: The text to speak.
-	@param reason: reason for speech
+	@param reason: Unused
 	@param symbolLevel: The symbol verbosity level; C{None} (default) to use the user's configuration.
 	@param priority: The speech priority.
 	"""
 	seq = _getSpeakMessageSpeech(text)
 	if seq:
-		speak(seq, symbolLevel=symbolLevel, priority=priority, suppressBlanks=reason == OutputReason.SAYALL)
+		speak(seq, symbolLevel=symbolLevel, priority=priority)
 
 
 RE_INDENTATION_SPLIT = re.compile(r"^([^\S\r\n\f\v]*)(.*)$", re.UNICODE | re.DOTALL)
@@ -1245,11 +1245,7 @@ def speakTextInfo(
 
 	speechGen = GeneratorWithReturn(speechGen)
 	for seq in speechGen:
-		speak(
-			seq,
-			priority=priority,
-			suppressBlanks=suppressBlanks or reason == OutputReason.SAYALL
-		)
+		speak(seq, priority=priority, suppressBlanks=suppressBlanks)
 	return speechGen.returnValue
 
 
