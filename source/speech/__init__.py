@@ -156,6 +156,8 @@ def initialize():
 	synthDriverHandler.setSynth(config.conf["speech"]["synth"])
 	speechInitialize()
 	sayAllInitialize(
+		# override speak func to always have suppressBlanks=True,
+		# since blanks should never be spoken in say all
 		functools.partial(speak, suppressBlanks=True),
 		speakObject,
 		getTextInfoSpeech,
