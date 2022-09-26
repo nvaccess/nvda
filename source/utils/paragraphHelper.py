@@ -13,7 +13,7 @@ from NVDAObjects.window.winword import WordDocumentTextInfo
 from NVDAObjects.window.winword import BrowseModeWordDocumentTextInfo
 from NVDAObjects.UIA import UIATextInfo
 from displayModel import EditableTextDisplayModelTextInfo
-from typing import Tuple
+from typing import Tuple, List
 from enum import IntEnum
 
 MAX_LINES = 250  # give up after searching this many lines
@@ -68,7 +68,7 @@ def _isLastLineOfParagraph(line: str) -> bool:
 	return stripped.endswith('\r') or stripped.endswith('\n')
 
 
-def _splitParagraphIntoChunks(paragraph: str) -> list([str]):
+def _splitParagraphIntoChunks(paragraph: str) -> List[str]:
 	CHUNK_SIZE = 2048
 	SENTENCE_TERMINATOR = ". "
 	TERMINATOR_LEN = len(SENTENCE_TERMINATOR)
@@ -204,7 +204,8 @@ def speakBlockParagraph(ti: textInfos.TextInfo) -> None:
 def moveToBlockParagraph(
 		nextParagraph: bool,
 		speakNew: bool,
-		ti: textInfos.TextInfo = None) -> Tuple[bool, bool]:
+		ti: textInfos.TextInfo = None
+) -> Tuple[bool, bool]:
 	"""
 	Moves to the previous or next block paragraph, delineated by a blank line.
 	@param nextParagraph: bool indicating desired direction of movement,
