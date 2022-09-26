@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2016–2022 NV Access Limited, Bill Dengler, Cyrille Bougot
+# Copyright (C) 2016-2022 NV Access Limited, Bill Dengler, Cyrille Bougot, Łukasz Golonka
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -19,6 +19,7 @@ from config.configFlags import ReportTableHeaders
 from typing import (
 	Dict,
 )
+import configobj.validate
 
 
 def upgradeConfigFrom_0_to_1(profile):
@@ -27,10 +28,9 @@ def upgradeConfigFrom_0_to_1(profile):
 	# having a cursor)
 	try:
 		blinkRate = int(profile["braille"]["cursorBlinkRate"])
-	except KeyError as e:
+	except KeyError:
 		# Setting does not exist, no need for upgrade of this setting
 		log.debug("No cursorBlinkRate, no action taken.")
-		pass
 	else:
 		newMinBlinkRate = 200
 		if blinkRate < newMinBlinkRate:
@@ -38,15 +38,15 @@ def upgradeConfigFrom_0_to_1(profile):
 			if blinkRate < 1:
 				profile["braille"]["cursorBlink"] = False
 
+
 def upgradeConfigFrom_1_to_2(profile):
 	# Schema has been modified to split cursor shape into focus and review shapes
 	# Previously, the same cursor shape was used for focus and review
 	try:
 		cursorShape = int(profile["braille"]["cursorShape"])
-	except KeyError as e:
+	except KeyError:
 		# Setting does not exist, no need for upgrade of this setting
 		log.debug("No cursorShape, no action taken.")
-		pass
 	else:
 		del profile["braille"]["cursorShape"]
 		profile["braille"]["cursorShapeFocus"] = cursorShape
@@ -59,7 +59,6 @@ def upgradeConfigFrom_2_to_3(profile):
 	except KeyError:
 		# Setting does not exist, no need for upgrade of this setting
 		log.debug("winConsoleSpeakPasswords not present, no action taken.")
-		pass
 	else:
 		del profile["UIA"]["winConsoleSpeakPasswords"]
 		if "terminals" not in profile:
@@ -96,11 +95,11 @@ def upgradeConfigFrom_5_to_6(profile: dict):
 	useInMSWordWhenAvailable in UIA section has been replaced with allowInMSWord multichoice.
 	"""
 	try:
-		useInMSWord = profile['UIA']['useInMSWordWhenAvailable']
+		useInMSWord: str = profile['UIA']['useInMSWordWhenAvailable']
 		del profile['UIA']['useInMSWordWhenAvailable']
 	except KeyError:
 		useInMSWord = False
-	if useInMSWord:
+	if configobj.validate.is_boolean(useInMSWord):
 		from . import AllowUiaInMSWord
 		profile['UIA']['allowInMSWord'] = AllowUiaInMSWord.ALWAYS.value
 
@@ -113,11 +112,11 @@ def upgradeConfigFrom_6_to_7(profile: Dict[str, str]) -> None:
 	Otherwise, the default value, auto, will be used.
 	"""
 	try:
-		selectiveEventRegistration = profile['UIA']['selectiveEventRegistration']
+		selectiveEventRegistration: str = profile['UIA']['selectiveEventRegistration']
 		del profile['UIA']['selectiveEventRegistration']
 	except KeyError:
 		selectiveEventRegistration = False
-	if selectiveEventRegistration:
+	if configobj.validate.is_boolean(selectiveEventRegistration):
 		profile['UIA']['eventRegistration'] = "selective"
 
 
@@ -126,12 +125,12 @@ def upgradeConfigFrom_7_to_8(profile: Dict[str, str]) -> None:
 	In Document formatting settings, "Row/column headers" check box has been replaced with "Headers" combobox.
 	"""
 	try:
-		reportTableHeaders = profile['documentFormatting']['reportTableHeaders']
+		reportTableHeaders: str = profile['documentFormatting']['reportTableHeaders']
 	except KeyError:
 		# Setting does not exist, no need for upgrade of this setting
 		log.debug("reportTableHeaders not present, no action taken.")
 	else:
-		if reportTableHeaders:
+		if configobj.validate.is_boolean(reportTableHeaders):
 			profile['documentFormatting']['reportTableHeaders'] = ReportTableHeaders.ROWS_AND_COLUMNS.value
 		else:
 			profile['documentFormatting']['reportTableHeaders'] = ReportTableHeaders.OFF.value
