@@ -14,8 +14,11 @@ from NVDAObjects.window.winword import BrowseModeWordDocumentTextInfo
 from NVDAObjects.UIA import UIATextInfo
 from displayModel import EditableTextDisplayModelTextInfo
 from typing import Tuple
+from enum import IntEnum
 
 MAX_LINES = 250  # give up after searching this many lines
+
+
 class _ErrorTone(IntEnum):
 	FREQUENCY_HZ = 1000
 	DURATION_MS = 30
@@ -132,7 +135,7 @@ def moveToParagraph(nextParagraph: bool, speakNew: bool) -> Tuple[bool, bool]:
 		return (True, False)
 	ti.expand(textInfos.UNIT_LINE)
 	ti.collapse()  # move to start of line
-	moveOffset = OFFSET_NEXT_LINE if nextParagraph else OFFSET_PREVIOUS_LINE
+	moveOffset: _Offset = _Offset.NEXT_LINE if nextParagraph else _Offset.PREVIOUS_LINE
 	moved = False
 	numLines = 0
 	tempTi = ti.copy()
@@ -175,7 +178,7 @@ def moveToParagraph(nextParagraph: bool, speakNew: bool) -> Tuple[bool, bool]:
 			ti._rangeObj.ScrollIntoView(False)
 		speakParagraph(ti)
 	else:
-		tones.beep(ERROR_TONE_FREQUENCY, ERROR_TONE_DURATION)
+		tones.beep(_ErrorTone.FREQUENCY_HZ, _ErrorTone.DURATION_MS)
 	return (False, moved)
 
 
@@ -220,7 +223,7 @@ def moveToBlockParagraph(
 		return (True, False)
 	moved = False
 	lookingForBlank = True
-	moveOffset = OFFSET_NEXT_LINE if nextParagraph else OFFSET_PREVIOUS_LINE
+	moveOffset: _Offset = _Offset.NEXT_LINE if nextParagraph else _Offset.PREVIOUS_LINE
 	numLines = 0
 	while numLines < MAX_LINES:
 		tempTi = ti.copy()
@@ -259,6 +262,6 @@ def moveToBlockParagraph(
 		if speakNew:
 			speakBlockParagraph(ti)
 	else:
-		tones.beep(ERROR_TONE_FREQUENCY, ERROR_TONE_DURATION)
+		tones.beep(_ErrorTone.FREQUENCY_HZ, _ErrorTone.DURATION_MS)
 
 	return (False, moved)
