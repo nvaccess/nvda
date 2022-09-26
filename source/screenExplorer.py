@@ -8,7 +8,7 @@ import controlTypes
 import textInfos
 import locationHelper
 import speech
-from utils.security import _isSecureObjectWhileLockScreenActivated
+from utils.security import objectBelowLockScreenAndWindowsIsLocked
 
 class ScreenExplorer(object):
 
@@ -65,7 +65,10 @@ class ScreenExplorer(object):
 		if pos and self.updateReview:
 			api.setReviewPosition(pos)
 		speechCanceled=False
-		if hasNewObj and not _isSecureObjectWhileLockScreenActivated(obj):
+		if (
+			hasNewObj
+			and not objectBelowLockScreenAndWindowsIsLocked(obj)
+		):
 			speech.cancelSpeech()
 			speechCanceled=True
 			speech.speakObject(obj)
@@ -78,7 +81,7 @@ class ScreenExplorer(object):
 				or pos.compareEndPoints(self._pos, "startToStart") != 0
 				or pos.compareEndPoints(self._pos, "endToEnd") != 0
 			)
-			and not _isSecureObjectWhileLockScreenActivated(pos.obj)
+			and not objectBelowLockScreenAndWindowsIsLocked(pos.obj)
 		):
 				self._pos=pos
 				if not speechCanceled:
