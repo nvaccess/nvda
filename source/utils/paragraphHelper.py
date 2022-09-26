@@ -16,10 +16,14 @@ from displayModel import EditableTextDisplayModelTextInfo
 from typing import Tuple
 
 MAX_LINES = 250  # give up after searching this many lines
-ERROR_TONE_FREQUENCY = 1000
-ERROR_TONE_DURATION = 30
-OFFSET_PREVIOUS_LINE = -1
-OFFSET_NEXT_LINE = 1
+class _ErrorTone(IntEnum):
+	FREQUENCY_HZ = 1000
+	DURATION_MS = 30
+
+
+class _Offset(IntEnum):
+	PREVIOUS_LINE = -1
+	NEXT_LINE = 1
 
 
 def nextParagraphStyle() -> config.featureFlag.FeatureFlag:
