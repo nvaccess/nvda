@@ -2093,10 +2093,16 @@ The tone will increase in pitch every space, and for a tab, it will increase in 
 This category allows you to adjust various aspects of document navigation.
 
 ==== Paragraph Style ====[ParagraphStyle]
-This combo box allows you to select the paragraph style to be used when navigating by paragraphs with ``control+upArrow`` and ``control+downArrow``. The available paragraph styles are:
-- Default (handled by application)
+: Default (Handled by application)
+  Enabled
+: Options
+  Default (Handled by application), Handled by application, Normal, Block
+:
+
+This combo box allows you to select the paragraph style to be used when navigating by paragraphs with ``control+upArrow`` and ``control+downArrow``.
+The available paragraph styles are:
 - Handled by application: NVDA will let the application determine the previous or next paragraph, and NVDA will read the new paragraph when navigating.
-This style works best when the application supports paragraph navigation natively.
+This style works best when the application supports paragraph navigation natively, and is the default.
 - Normal style: NVDA will attempt to determine the previous or next paragraph using a single line break as the paragraph indicator.
 This style works best when reading documents in an application which does not natively support paragraph navigation, and paragraphs in the document are marked by a single press of the ``enter`` key.
 - Block style: NVDA will attempt to determine the previous or next paragraph using at least one blank line (two presses of the ``enter`` key) as the paragraph indicator.
