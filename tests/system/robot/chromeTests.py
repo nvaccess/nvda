@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2020-2021 NV Access Limited, Leonard de Ruijter
+# Copyright (C) 2020-2022 NV Access Limited, Leonard de Ruijter, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -57,7 +57,7 @@ def checkbox_labelled_by_inner_element():
 
 REVIEW_CURSOR_FOLLOW_CARET_KEY = ["reviewCursor", "followCaret"]
 REVIEW_CURSOR_FOLLOW_FOCUS_KEY = ["reviewCursor", "followFocus"]
-READ_DETAILS_GESTURE = "NVDA+\\"  # see chrome-gestures.ini
+READ_DETAILS_GESTURE = "NVDA+d"
 
 
 def _getNoVBuf_AriaDetails_sample() -> str:

@@ -25,6 +25,7 @@ import logHandler
 import installer
 from synthDriverHandler import changeVoice, getSynth, getSynthList, setSynth, SynthDriver
 import config
+from config.configFlags import ReportTableHeaders
 import languageHandler
 import speech
 import gui
@@ -2395,11 +2396,18 @@ class DocumentFormattingPanel(SettingsPanel):
 		self.tablesCheckBox = tablesGroup.addItem(wx.CheckBox(tablesGroupBox, label=_("&Tables")))
 		self.tablesCheckBox.SetValue(config.conf["documentFormatting"]["reportTables"])
 
-		# Translators: This is the label for a checkbox in the
-		# document formatting settings panel.
-		_tableHeadersCheckBox = wx.CheckBox(tablesGroupBox, label=_("Row/column h&eaders"))
-		self.tableHeadersCheckBox = tablesGroup.addItem(_tableHeadersCheckBox)
-		self.tableHeadersCheckBox.SetValue(config.conf["documentFormatting"]["reportTableHeaders"])
+		tableHeaderChoices = [i.displayString for i in ReportTableHeaders]
+		# The possible config values to report table headers, in the order they appear
+		# in the combo box.
+		self.tableHeaderVals = [i.value for i in ReportTableHeaders]
+		self.tableHeadersComboBox = tablesGroup.addLabeledControl(
+			# Translators: This is the label for a combobox in the
+			# document formatting settings panel.
+			_("H&eaders"),
+			wx.Choice,
+			choices=tableHeaderChoices,
+		)
+		self.tableHeadersComboBox.SetSelection(config.conf['documentFormatting']['reportTableHeaders'])
 
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
@@ -2530,7 +2538,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		config.conf["documentFormatting"]["reportParagraphIndentation"]=self.paragraphIndentationCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLineSpacing"]=self.lineSpacingCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportTables"]=self.tablesCheckBox.IsChecked()
-		config.conf["documentFormatting"]["reportTableHeaders"]=self.tableHeadersCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportTableHeaders"] = self.tableHeadersComboBox.GetSelection()
 		config.conf["documentFormatting"]["reportTableCellCoords"]=self.tableCellCoordsCheckBox.IsChecked()
 		choice = self.borderComboBox.GetSelection()
 		config.conf["documentFormatting"]["reportBorderStyle"] = choice in (1,2)
