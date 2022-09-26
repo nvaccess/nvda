@@ -2095,9 +2095,13 @@ This category allows you to adjust various aspects of document navigation.
 ==== Paragraph Style ====[ParagraphStyle]
 This combo box allows you to select the paragraph style to be used when navigating by paragraphs with ``control+upArrow`` and ``control+downArrow``. The available paragraph styles are:
 - Default (handled by application)
-- Handled by application: NVDA will let the application determine the previous or next paragraph, and NVDA will read the new paragraph when navigating. This style works best when the application supports paragraph navigation natively.
-- Normal style: NVDA will attempt to determine the previous or next paragraph using a single line break as the paragraph indicator. This style works best when reading documents in an application which does not natively support paragraph navigation, and paragraphs in the document are marked by a single press of the Enter key.
-- Block style: NVDA will attempt to determine the previous or next paragraph using at least one blank line (two presses of the Enter key) as the paragraph indicator. This style works best when working with documents which use block paragraphs. Note that this paragraph style cannot be used in Microsoft Word or Microsoft Outlook, unless you are using UIA to access Microsoft Word controls.
+- Handled by application: NVDA will let the application determine the previous or next paragraph, and NVDA will read the new paragraph when navigating.
+This style works best when the application supports paragraph navigation natively.
+- Normal style: NVDA will attempt to determine the previous or next paragraph using a single line break as the paragraph indicator.
+This style works best when reading documents in an application which does not natively support paragraph navigation, and paragraphs in the document are marked by a single press of the ``enter`` key.
+- Block style: NVDA will attempt to determine the previous or next paragraph using at least one blank line (two presses of the ``enter`` key) as the paragraph indicator.
+This style works best when working with documents which use block paragraphs.
+Note that this paragraph style cannot be used in Microsoft Word or Microsoft Outlook, unless you are using UIA to access Microsoft Word controls.
 -
 
 If a beep is heard when attempting to navigate by paragraphs, this indicates that there are either no more paragraphs in the specified direction, or the next or previous paragraph is too large for efficient processing.
