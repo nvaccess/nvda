@@ -3,6 +3,31 @@ What's New in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2023.1 =
+
+== New Features ==
+
+
+== Changes ==
+
+
+== Bug Fixes ==
+
+
+== Changes for Developers ==
+Note: this is an Add-on API compatibility breaking release.
+Add-ons will need to be re-tested and have their manifest updated.
+Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] for information on NVDA's API deprecation and removal process.
+
+
+=== API Breaking Changes ===
+These are breaking API changes.
+Please open a GitHub issue if your Add-on has an issue with updating to the new API.
+
+
+=== Deprecations ===
+
+
 = 2022.4 =
 
 == New Features ==
@@ -28,6 +53,7 @@ What's New in NVDA
   - Read entire row: ``NVDA+control+alt+leftArrow``
   -
 - Microsoft Excel via UI Automation: NVDA now announces when moving out of a table within a spreadsheet. (#14165)
+- Reporting table headers can now be configured separately for rows and columns. (#14075)
 -
 
 
@@ -70,6 +96,7 @@ Note there are still known issues with Chrome and Edge. (#13254)
 - Orientation state (landscape/portrait) changes are now correctly ignored when there is no change (e.g. monitor changes). (#14035)
 - NVDA will announce dragging items on screen in places such as rearranging Windows 10 Start menu tiles and virtual desktops in Windows 11. (#12271, #14081)
 - In advanced settings, "Play a sound for logged errors" option is now correctly restored to its default value when pressing the "Restore defaults" button. (#14149)
+- NVDA can now select text using the ``NVDA+f10`` keyboard shortcut on Java applications. (#14163)
 -
 
 

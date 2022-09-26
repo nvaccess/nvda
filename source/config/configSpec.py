@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2022 NV Access Limited, Babbage B.V., Davy Kager, Bill Dengler, Julien Cochuyt,
-# Joseph Lee, Dawid Pieper, mltony, Bram Duvigneau
+# Joseph Lee, Dawid Pieper, mltony, Bram Duvigneau, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -12,7 +12,7 @@ from configobj import ConfigObj
 #: provide an upgrade step (@see profileUpgradeSteps.py). An upgrade step does not need to be added when
 #: just adding a new element to (or removing from) the schema, only when old versions of the config 
 #: (conforming to old schema versions) will not work correctly with the new schema.
-latestSchemaVersion = 7
+latestSchemaVersion = 8
 
 #: The configuration specification string
 #: @type: String
@@ -207,7 +207,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	reportParagraphIndentation = boolean(default=False)
 	reportTables = boolean(default=true)
 	includeLayoutTables = boolean(default=False)
-	reportTableHeaders = boolean(default=True)
+	# 0: Off, 1: Rows and columns, 2: Rows, 3: Columns
+	reportTableHeaders = integer(0, 3, default=1)
 	reportTableCellCoords = boolean(default=True)
 	reportBorderStyle = boolean(default=False)
 	reportBorderColor = boolean(default=False)
