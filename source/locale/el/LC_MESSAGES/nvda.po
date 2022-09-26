@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-07 04:25+0000\n"
-"PO-Revision-Date: 2022-09-06 23:25+0200\n"
+"POT-Creation-Date: 2022-09-09 04:49+0000\n"
+"PO-Revision-Date: 2022-09-14 19:03+0200\n"
 "Last-Translator: Irene Nakas <irnakas@gmail.com>\n"
 "Language-Team: Gerasimos Xydas, Irene Nakas, Nikos Demetriou <access@e-"
 "rhetor.com, irnakas@gmail.com, nikosdemetriou@googlemail.com>\n"
@@ -2383,6 +2383,10 @@ msgid ""
 "running, your desktop will not be secure when Windows is locked. Restart "
 "NVDA? "
 msgstr ""
+"To NVDA απέτυχε να καταχωρήσει την παρακολούθηση της περιόδου λειτουργίας. "
+"Στη συγκεκριμένη περίοδο λειτουργίας του NVDA, η επιφάνεια εργασίας σας δεν "
+"είναι ασφαλής, όταν τα Windows είναι κλειδωμένα. Να γίνει επανεκκίνηση του "
+"NVDA?"
 
 #. Translators: This is a warning to users, shown if NVDA cannot determine if
 #. Windows is locked.
@@ -2459,7 +2463,7 @@ msgstr "Καμία επιλογή"
 #, python-format
 msgctxt "font size"
 msgid "%s pt"
-msgstr ""
+msgstr "%s στιγμές"
 
 # check
 #. Translators: The message reported when a user attempts to use a table movement command
@@ -7539,25 +7543,25 @@ msgstr "εκθέτης"
 #, python-format
 msgctxt "font size"
 msgid "%s px"
-msgstr ""
+msgstr "%s πίξελ"
 
 #. Translators: A measurement unit of font size.
-#, fuzzy, python-format
+#, python-format
 msgctxt "font size"
 msgid "%s em"
-msgstr "τέλος %s"
+msgstr "%s em"
 
 #. Translators: A measurement unit of font size.
-#, fuzzy, python-format
+#, python-format
 msgctxt "font size"
 msgid "%s ex"
-msgstr "τέλος %s"
+msgstr "%s ex"
 
 #. Translators: Abbreviation for relative em, a measurement of font size.
 #, python-format
 msgctxt "font size"
 msgid "%s rem"
-msgstr ""
+msgstr "%s rem"
 
 #. Translators: Font size measured as a percentage
 #, python-format
@@ -7568,54 +7572,52 @@ msgstr "%s%%"
 #. Translators: A measurement unit of font size.
 msgctxt "font size"
 msgid "xx-small"
-msgstr ""
+msgstr "xx-small"
 
 #. Translators: A measurement unit of font size.
 msgctxt "font size"
 msgid "x-small"
-msgstr ""
+msgstr "x-small"
 
 #. Translators: A measurement unit of font size.
 msgctxt "font size"
 msgid "small"
-msgstr ""
+msgstr "μικρό"
 
 #. Translators: A measurement unit of font size.
-#, fuzzy
 msgctxt "font size"
 msgid "medium"
-msgstr "μέτρια"
+msgstr "μεσαίο"
 
 #. Translators: A measurement unit of font size.
 msgctxt "font size"
 msgid "large"
-msgstr ""
+msgstr "μεγάλο"
 
 #. Translators: A measurement unit of font size.
 msgctxt "font size"
 msgid "x-large"
-msgstr ""
+msgstr "x-large"
 
 #. Translators: A measurement unit of font size.
 msgctxt "font size"
 msgid "xx-large"
-msgstr ""
+msgstr "xx-large"
 
 #. Translators: A measurement unit of font size.
 msgctxt "font size"
 msgid "xxx-large"
-msgstr ""
+msgstr "xxx-large"
 
 #. Translators: A measurement unit of font size.
 msgctxt "font size"
 msgid "larger"
-msgstr ""
+msgstr "μεγαλύτερο"
 
 #. Translators: A measurement unit of font size.
-#, fuzzy
 msgctxt "font size"
 msgid "smaller"
-msgstr "filler"
+msgstr "μικρότερο"
 
 #. Translators: Presented when an item is marked as current in a collection of items
 msgid "current"
@@ -9889,7 +9891,7 @@ msgstr "Χρήση λειτουργίας &εκφώνησης ανά χαρακ�
 
 #. Translators: This is the label for a checkbox in the voice settings panel.
 msgid "&Delayed descriptions for characters on cursor movement"
-msgstr ""
+msgstr "&Καθυστερημένη περιγραφή χαρακτήρων κατά την κίνηση του δρομέα"
 
 #. Translators: This is the label for the keyboard settings panel.
 msgid "Keyboard"
@@ -10510,26 +10512,24 @@ msgstr ""
 #. active console implementation in the advanced settings panel.
 #. Choices are automatic, UIA when available, and legacy.
 msgid "Windows C&onsole support:"
-msgstr ""
+msgstr "Υποστήριξη Windows Console:"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA determine its Windows Console implementation
 #. automatically.
-#, fuzzy
 msgid "Automatic (prefer UIA)"
-msgstr "Αυτόματο (προτιμώμενο Diff Match Patch)"
+msgstr "Αυτόματο (προτιμώμενο UIA)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA use UIA in the Windows Console when available.
-#, fuzzy
 msgid "UIA when available"
-msgstr "μη διαθέσιμο"
+msgstr "UIA όταν διατίθεται"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA use its legacy Windows Console support
 #. in all cases.
 msgid "Legacy"
-msgstr ""
+msgstr "Παλαιές εκδόσεις"
 
 #. Translators: Label for the Use UIA with Chromium combobox, in the Advanced settings panel.
 #. Note the '\n' is used to split this long label approximately in half.
@@ -10663,11 +10663,13 @@ msgstr ""
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 msgid "Virtual Buffers"
-msgstr ""
+msgstr "Εικονική Προσωρινή Αποθήκευση"
 
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
 msgid "Load Chromium virtual buffer when document busy."
 msgstr ""
+"Φόρτωση σε εικονική προσωρινή αποθήκευση Chromium όταν το έγγραφο είναι "
+"απασχολημένο."
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -11943,7 +11945,7 @@ msgid "{firstAddress} {firstValue} through {lastAddress} {lastValue}"
 msgstr "{firstAddress} {firstValue} έως {lastAddress} {lastValue}"
 
 #. Translators: Excel, report merged range of cell coordinates
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgctxt "excel-UIA"
 msgid "{firstAddress} through {lastAddress}"
 msgstr "{firstAddress} έως {lastAddress}"
@@ -13362,7 +13364,7 @@ msgid "{offset:.3g} millimeters"
 msgstr "{offset:.3g} χιλιοστά"
 
 #. Translators: a measurement in Microsoft Word (points)
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "{offset:.3g} pt"
 msgstr "{offset:.3g} στιγμές"
 
