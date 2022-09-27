@@ -13,7 +13,10 @@ from NVDAObjects.window.winword import WordDocumentTextInfo
 from NVDAObjects.window.winword import BrowseModeWordDocumentTextInfo
 from NVDAObjects.UIA import UIATextInfo
 from displayModel import EditableTextDisplayModelTextInfo
-from typing import Tuple, List
+from typing import (
+	Tuple,
+	List,
+)
 from enum import IntEnum
 
 MAX_LINES = 250  # give up after searching this many lines

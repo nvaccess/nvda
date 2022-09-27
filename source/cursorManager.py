@@ -1,8 +1,8 @@
-#cursorManager.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2018 NV Access Limited, Joseph Lee, Derek Riemer, Davy Kager
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# cursorManager.py
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2022 NV Access Limited, Joseph Lee, Derek Riemer, Davy Kager, Rob Meredith
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 """
 Implementation of cursor managers.
@@ -26,7 +26,10 @@ import config
 import braille
 import vision
 import controlTypes
-from inputCore import SCRCAT_BROWSEMODE, InputGesture
+from inputCore import (
+	SCRCAT_BROWSEMODE,
+	InputGesture,
+)
 import ui
 from textInfos import DocumentWithPageTurns
 from logHandler import log
