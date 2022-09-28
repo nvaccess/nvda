@@ -26,6 +26,7 @@ from UIAHandler.utils import createUIAMultiPropertyCondition
 import api
 import controlTypes
 import config
+from config.configFlags import ReportTableHeaders
 import speech
 import ui
 from NVDAObjects.IAccessible import IAccessible
@@ -509,7 +510,10 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 				continue
 			name=e.cachedName
 			columnHeaderTextList=[]
-			if name and config.conf['documentFormatting']['reportTableHeaders']:
+			if name and config.conf['documentFormatting']['reportTableHeaders'] in (
+				ReportTableHeaders.ROWS_AND_COLUMNS,
+				ReportTableHeaders.COLUMNS,
+			):
 				columnHeaderItems=e.getCachedPropertyValueEx(UIAHandler.UIA_TableItemColumnHeaderItemsPropertyId,True)
 			else:
 				columnHeaderItems=None

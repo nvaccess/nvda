@@ -25,7 +25,9 @@ E.G. to run all tests with the chrome tag use:
 runsystemtests -i "chrome" ...
 ```
 
-Other options exit for specifying tests to run (e.g. by suite, tag, etc).
+Note: For tests based on Chrome, be sure that no previous instance of Chrome is open when you launch the test, specifically on non-English systems.
+
+Other options exist for specifying tests to run (e.g. by suite, tag, etc).
 Consult `runsystemtests --help`
 
 ### Tags are required

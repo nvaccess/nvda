@@ -205,10 +205,6 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 
 	def script_setColumnHeader(self,gesture):
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
-		if not config.conf['documentFormatting']['reportTableHeaders']:
-			# Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-			ui.message(_("Cannot set headers. Please enable reporting of table headers in Document Formatting Settings"))
-			return
 		try:
 			cell=self.WinwordSelectionObject.cells[1]
 		except COMError:
@@ -233,10 +229,6 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 
 	def script_setRowHeader(self,gesture):
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
-		if not config.conf['documentFormatting']['reportTableHeaders']:
-			# Translators: a message reported in the SetRowHeader script for Microsoft Word.
-			ui.message(_("Cannot set headers. Please enable reporting of table headers in Document Formatting Settings"))
-			return
 		try:
 			cell=self.WinwordSelectionObject.cells[1]
 		except COMError:
