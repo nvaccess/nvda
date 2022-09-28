@@ -47,6 +47,7 @@ def getSafeScripts() -> Set["scriptHandler._ScriptFunctionT"]:
 		# is handled using `api.setMouseObject` and `api.setNavigatorObject`.
 		commands.script_moveMouseToNavigatorObject,
 		commands.script_moveNavigatorObjectToMouse,
+		# Mouse click events are harmless
 		commands.script_leftMouseClick,
 		commands.script_rightMouseClick,
 		

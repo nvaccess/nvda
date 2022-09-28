@@ -1145,7 +1145,9 @@ Tries to force this object to take the focus.
 			import tones
 			tones.beep(3000,40)
 
-	def event_mouseMove(self,x,y):
+	def event_mouseMove(self, x: int, y: int) -> None:
+		from utils.security import _isSecureObjectWhileLockScreenActivated
+
 		if not self._mouseEntered and config.conf['mouse']['reportObjectRoleOnMouseEnter']:
 			speech.cancelSpeech()
 			speech.speakObjectProperties(self,role=True)
@@ -1160,6 +1162,12 @@ Tries to force this object to take the focus.
 			info=NVDAObjectTextInfo(self,textInfos.POSITION_FIRST)
 		except LookupError:
 			return
+
+		# This event may fire on the lock screen, as such
+		# ensure the target TextInfo does not contain secure information.
+		if _isSecureObjectWhileLockScreenActivated(info.obj):
+			return
+
 		if config.conf["reviewCursor"]["followMouse"]:
 			api.setReviewPosition(info, isCaret=True)
 		info.expand(info.unit_mouseChunk)
