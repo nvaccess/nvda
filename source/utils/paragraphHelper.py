@@ -18,13 +18,18 @@ from typing import (
 	List,
 )
 from enum import IntEnum
+from dataclasses import dataclass
 
 MAX_LINES = 250  # give up after searching this many lines
 
 
-class _ErrorTone(IntEnum):
-	FREQUENCY_HZ = 1000
-	DURATION_MS = 30
+@dataclass(frozen=True)
+class _ErrorToneData:
+	frequencyHz: float = 1000.0
+	durationMs: int = 30
+
+
+_ERROR_TONE = _ErrorToneData()
 
 
 class _Offset(IntEnum):
@@ -181,7 +186,7 @@ def moveToParagraph(nextParagraph: bool, speakNew: bool) -> Tuple[bool, bool]:
 			ti._rangeObj.ScrollIntoView(False)
 		speakParagraph(ti)
 	else:
-		tones.beep(_ErrorTone.FREQUENCY_HZ, _ErrorTone.DURATION_MS)
+		tones.beep(_ERROR_TONE.frequencyHz, _ERROR_TONE.durationMs)
 	return (False, moved)
 
 
@@ -266,6 +271,6 @@ def moveToBlockParagraph(
 		if speakNew:
 			speakBlockParagraph(ti)
 	else:
-		tones.beep(_ErrorTone.FREQUENCY_HZ, _ErrorTone.DURATION_MS)
+		tones.beep(_ERROR_TONE.frequencyHz, _ERROR_TONE.durationMs)
 
 	return (False, moved)
