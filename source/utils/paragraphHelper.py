@@ -16,6 +16,7 @@ from displayModel import EditableTextDisplayModelTextInfo
 from typing import (
 	Tuple,
 	List,
+	FrozenSet,
 )
 from enum import IntEnum
 from dataclasses import dataclass
@@ -78,8 +79,7 @@ def _isLastLineOfParagraph(line: str) -> bool:
 
 def _splitParagraphIntoChunks(paragraph: str) -> List[str]:
 	CHUNK_SIZE = 2048
-	SENTENCE_TERMINATOR = ". "
-	TERMINATOR_LEN = len(SENTENCE_TERMINATOR)
+	SENTENCE_TERMINATORS: FrozenSet[str] = {".", "?", "!"}
 	start = 0
 	paragraphLen = len(paragraph)
 	if paragraphLen <= CHUNK_SIZE:
@@ -92,10 +92,14 @@ def _splitParagraphIntoChunks(paragraph: str) -> List[str]:
 			break
 		end = start
 		maxNextChunk = min(remaining, CHUNK_SIZE)
+		lastTerminatorEnd = -1
 		while (end != -1) and ((end - start) < maxNextChunk):
-			end = paragraph.find(SENTENCE_TERMINATOR, end)
+			end = paragraph.find(" ", end)
+			if end > 0 and paragraph[end - 1] in SENTENCE_TERMINATORS:
+				lastTerminatorEnd = end + 1
 			if end != -1:
-				end += TERMINATOR_LEN
+				end += 1
+		end = lastTerminatorEnd
 		if end == -1:
 			chunks.append(paragraph[start:])
 			break
