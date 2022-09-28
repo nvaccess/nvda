@@ -115,7 +115,7 @@ def speakParagraph(ti: textInfos.TextInfo) -> None:
 			paragraph += line + " "
 		if _isLastLineOfParagraph(tempTi.text):
 			break
-		if not tempTi.move(textInfos.UNIT_LINE, 1):
+		if not tempTi.move(textInfos.UNIT_LINE, _Offset.NEXT_LINE):
 			break
 		numLines += 1
 
@@ -157,13 +157,13 @@ def moveToParagraph(nextParagraph: bool, speakNew: bool) -> Tuple[bool, bool]:
 			if not nextParagraph:
 				if not moveBackTwice:
 					while numLines < MAX_LINES:
-						if not ti.move(textInfos.UNIT_LINE, -1):
+						if not ti.move(textInfos.UNIT_LINE, _Offset.PREVIOUS_LINE):
 							moved = True  # pin to beginning
 							break
 						tempTi = ti.copy()
 						tempTi.expand(textInfos.UNIT_LINE)
 						if _isLastLineOfParagraph(tempTi.text):
-							ti.move(textInfos.UNIT_LINE, 1)
+							ti.move(textInfos.UNIT_LINE, _Offset.NEXT_LINE)
 							moved = True
 							break
 						numLines += 1
@@ -172,7 +172,7 @@ def moveToParagraph(nextParagraph: bool, speakNew: bool) -> Tuple[bool, bool]:
 				else:
 					moveBackTwice = False
 			else:  # moving to next paragraph
-				if ti.move(textInfos.UNIT_LINE, 1):
+				if ti.move(textInfos.UNIT_LINE, _Offset.NEXT_LINE):
 					moved = True
 				break
 		if not ti.move(textInfos.UNIT_LINE, moveOffset):
@@ -200,7 +200,7 @@ def speakBlockParagraph(ti: textInfos.TextInfo) -> None:
 		if not len(line):
 			break
 		paragraph += line + "\r\n"
-		if not tempTi.move(textInfos.UNIT_LINE, 1):
+		if not tempTi.move(textInfos.UNIT_LINE, _Offset.NEXT_LINE):
 			break
 		numLines += 1
 
@@ -251,14 +251,14 @@ def moveToBlockParagraph(
 	if moved and not nextParagraph:
 		moved = False
 		while numLines < MAX_LINES:
-			if not ti.move(textInfos.UNIT_LINE, -1):
+			if not ti.move(textInfos.UNIT_LINE, _Offset.PREVIOUS_LINE):
 				moved = True
 				break  # leave at top
 			tempTi = ti.copy()
 			tempTi.expand(textInfos.UNIT_LINE)
 			if not len(tempTi.text.strip()):
 				# found blank line before desired paragraph
-				ti.move(textInfos.UNIT_LINE, 1)  # first line of paragraph
+				ti.move(textInfos.UNIT_LINE, _Offset.NEXT_LINE)  # first line of paragraph
 				moved = True
 				break
 			numLines += 1
