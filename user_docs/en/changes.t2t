@@ -3,6 +3,35 @@ What's New in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2023.1 =
+
+== New Features ==
+
+
+== Changes ==
+- Updated Sonic rate boost library to commit ``1d70513``. (#14180)
+
+
+
+== Bug Fixes ==
+
+
+== Changes for Developers ==
+Note: this is an Add-on API compatibility breaking release.
+Add-ons will need to be re-tested and have their manifest updated.
+Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] for information on NVDA's API deprecation and removal process.
+
+- System test should now pass when run locally on non-English systems. (#13362)
+-
+
+=== API Breaking Changes ===
+These are breaking API changes.
+Please open a GitHub issue if your Add-on has an issue with updating to the new API.
+
+
+=== Deprecations ===
+
+
 = 2022.4 =
 
 == New Features ==
@@ -59,6 +88,7 @@ What's New in NVDA
   - These fixes apply to Windows 11 Sun Valley 2 (version 22H2) and later.
   - Selective registration for UI Automation events and property changes now enabled by default.
   -
+- Text reporting, Braille output, and password suppression now work as expected in the embedded Windows Terminal control in Visual Studio 2022. (#14194)
 - NVDA is now DPI aware when using multiple monitors.
 There are several fixes for using a DPI setting higher than 100% or multiple monitors.
 Issues may still exist with versions of Windows older than Windows 10 1809.
@@ -155,6 +185,14 @@ This will improve performance for some Java applications including IntelliJ IDEA
 === Deprecations ===
 There are no deprecations proposed in 2022.3.
 
+
+= 2022.2.4 =
+This is a patch release to fix a security issue.
+
+== Bug Fixes ==
+- Fixed an exploit where it was possible to open the NVDA python console via the log viewer on the lock screen.
+([GHSA-585m-rpvv-93qg https://github.com/nvaccess/nvda/security/advisories/GHSA-585m-rpvv-93qg])
+-
 
 = 2022.2.3 =
 This is a patch release to fix an accidental API breakage introduced in 2022.2.1.

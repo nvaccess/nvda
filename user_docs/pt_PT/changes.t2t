@@ -68,6 +68,14 @@ Isto irá melhorar o desempenho de algumas aplicações Java, incluindo o Intell
 There are no deprecations proposed in 2022.3.
 
 
+= 2022.2.3 =
+Esta é uma versão menor que corrige uma acidental quebra de compatibilidade introduzida na versão 2022.2.1.
+
+== Correcção de erros ==
+- Corrigida uma falha que fazia que o NVDA não anunciasse "Ambiente de trabalho seguro" ao entrar num ambiente de trabalho seguro.
+Isto fazia com que o NVDA remote não reconhecesse ambientes de trabalho seguros. (#14094)
+-
+
 = 2022.2.2 =
 Esta é uma versão de correção de um erro introduzido na versão 2022.2.1.
 
@@ -76,7 +84,7 @@ Esta é uma versão de correção de um erro introduzido na versão 2022.2.1.
 -
 
 = 2022.2.1 =
-Este é um pequeno lançamento para resolver um problema de segurança.
+Esta é uma versão menor para resolver um problema de segurança.
 Por favor, revele responsavelmente as questões de segurança a info@nvaccess.org.
 
 == Correcções de segurança ==

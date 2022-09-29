@@ -77,14 +77,6 @@ Este é un parche liberado para arranxar unha rotura acidental da API introducid
 Esto provocaba que o NVDA remote non recoñecese os escritorios seguros. (#14094)
 -
 
-== Cambios para Desenvolvedores ==
-Esta versión contén unha rotura técnica na retrocompatibilidade da API.
-Espérase que este cambio non afecte a ningún complemento.
-Por favor abre unha entrada de GitHub se o teu complemento chega a ser incompatible como resultado desta versión.
-
-- ``SecureDesktopNVDAObject`` xa non é unha subclase de ``Desktop`` ou de ``Window``. (#14105)
--
-
 = 2022.2.2 =
 Este é un parche liberado para arranxar un fallo introducido en 2022.2.1 cos xestos de entrada.
 
