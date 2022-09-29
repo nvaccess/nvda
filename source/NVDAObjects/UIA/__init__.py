@@ -1186,13 +1186,15 @@ class UIA(Window):
 		if self.windowClassName == "ConsoleWindowClass":
 			from . import winConsoleUIA
 			winConsoleUIA.findExtraOverlayClasses(self, clsList)
-		elif UIAClassName in ("TermControl", "TermControl2"):
+		elif UIAClassName in ("TermControl", "TermControl2", "WPFTermControl"):
 			# TermControl2 was going to represent a terminal that supported UIA
 			# notifications (i.e. one where microsoft/terminal#12358 has been
 			# merged). However, the UIA class name was not changed in
 			# microsoft/terminal#12358 due to backward compat concerns raised
 			# by Freedom Scientific. However, a check for it is kept here just
 			# in case it should later become necessary to change it.
+			# WPFTermControl represents an embedded Windows Terminal control
+			# In .NET apps, such as LTS Visual Studio.
 			from . import winConsoleUIA
 			clsList.append(winConsoleUIA.WinTerminalUIA)
 
