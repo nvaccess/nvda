@@ -107,7 +107,7 @@ textChangeUIAClassNames = (
 	"_WwG",  # Microsoft Word
 	"TermControl",
 	"TermControl2",
-	"WPFTermControl"
+	"WPFTermControl",
 )
 
 NVDAUnitsToUIAUnits: Dict[str, int] = {
