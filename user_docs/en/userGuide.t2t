@@ -332,7 +332,7 @@ NVDA provides the following key commands in relation to the system caret:
 | Read current line | NVDA+upArrow | NVDA+l | Reads the line where the system caret is currently situated. Pressing twice spells the line. Pressing three times spells the line using character descriptions. |
 | Read current text selection | NVDA+Shift+upArrow | NVDA+shift+s | Reads any currently selected text |
 | Report text formatting | NVDA+f | NVDA+f | Reports the formatting of the text where the caret is currently situated. Pressing twice shows the information in browse mode |
-| Report caret location | NVDA+numpadDelete | NVDA+delete | none | Reports information about the location of the text or object at the position of system caret. For example, this might include the percentage through the document, the distance from the edge of the page or the exact screen position. Pressing twice may provide further detail. |
+| Report caret location | NVDA+numpadDelete | NVDA+delete | Reports information about the location of the text or object at the position of system caret. For example, this might include the percentage through the document, the distance from the edge of the page or the exact screen position. Pressing twice may provide further detail. |
 | Next sentence | alt+downArrow | alt+downArrow | Moves the caret to the next sentence and announces it. (only supported in Microsoft Word and Outlook) |
 | Previous sentence | alt+upArrow | alt+upArrow | Moves the caret to the previous sentence and announces it. (only supported in Microsoft Word and Outlook) |
 
@@ -1052,10 +1052,11 @@ When in the table view of added books:
 NVDA provides support for the Windows command console used by Command Prompt, PowerShell, and the Windows Subsystem for Linux.
 The console window is of fixed size, typically much smaller than the buffer that holds the output.
 As new text is written, the content scroll upwards and previous text is no longer visible. 
-Text that is not visibly displayed in the window is not accessible with NVDA's text review commands.
+On Windows versions before Windows 11 22H2, text in the console that is not visibly displayed in the window is not accessible with NVDA's text review commands.
 Therefore, it is necessary to scroll the console window to read earlier text.
+In newer versions of the console and in Windows Terminal, it is possible to review the entire text buffer freely without the need to scroll the window.
 %kc:beginInclude
-The following built-in Windows Console keyboard shortcuts may be useful when [reviewing text #ReviewingText] with NVDA:
+The following built-in Windows Console keyboard shortcuts may be useful when [reviewing text #ReviewingText] with NVDA in older versions of Windows Console:
 || Name | Key | Description |
 | Scroll up | control+upArrow | Scrolls the console window up, so earlier text can be read. |
 | Scroll down | control+downArrow | Scrolls the console window down, so later text can be read. |
@@ -1260,6 +1261,20 @@ This option should generally be enabled.
 However, some Microsoft Speech API synthesizers do not implement this correctly and behave strangely when it is enabled.
 If you are having problems with the pronunciation of individual characters, try disabling this option.
 
+==== Delayed descriptions for characters on cursor movement ====[delayedCharacterDescriptions]
+: Default
+  Disabled
+: Options
+  Enabled, Disabled
+:
+
+When this setting is checked, NVDA will say the character description when you move by characters.
+
+For example, while reviewing a line by characters, when the letter "b" is read NVDA will say "Bravo" after a 1 second delay.
+This can be useful if it is hard to distinguish between pronunciation of symbols, or for hearing impaired users.
+
+The delayed character description will be cancelled if other text is spoken during that time, or if you press the ``control`` key.
+
 +++ Select Synthesizer (NVDA+control+s) +++[SelectSynthesizer]
 The Synthesizer dialog, which can be opened by activating the Change... button in the speech category of the NVDA settings dialog, allows you to select which Synthesizer NVDA should use to speak with.
 Once you have selected your synthesizer of choice, you can press Ok and NVDA will load the selected Synthesizer.
@@ -1409,6 +1424,21 @@ Thus, in the example above, NVDA will display that you focused a list item.
 However, in order for you to read the context (i.e. that you are in a list and that the list is part of a dialog), you will have to scroll your braille display back.
 
 To toggle focus context presentation from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
+
+==== Interrupt speech while scrolling ====[BrailleSettingsInterruptSpeech]
+: Default
+  Enabled
+: Options
+  Default (Enabled), Enabled, Disabled
+:
+
+This setting determines if speech should be interrupted when the Braille display is scrolled backwards/forwards.
+Previous/next line commands always interrupt speech.
+
+On-going speech might be a distraction while reading Braille.
+For this reason the option is enabled by default, interrupting speech when scrolling braille.
+
+Disabling this option allows speech to be heard while simultaneously reading Braille.
 
 +++ Select Braille Display (NVDA+control+a) +++[SelectBrailleDisplay]
 The Select Braille Display dialog, which can be opened by activating the Change... button in the Braille category of the NVDA settings dialog, allows you to select which Braille display NVDA should use for braille output.
@@ -1888,8 +1918,26 @@ This setting contains the following values:
 - Always: where ever UI automation is available in Microsoft word (no matter how complete).
 -
 
-==== Use UI Automation to access the Windows Console when available ====[AdvancedSettingsConsoleUIA]
-When this option is enabled, NVDA will use a new, work in progress version of its support for Windows Console which takes advantage of [accessibility improvements made by Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. This feature is highly experimental and is still incomplete, so its use is not yet recommended. However, once completed, it is anticipated that this new support will become the default, improving NVDA's performance and stability in Windows command consoles.
+==== Windows Console support ====[AdvancedSettingsConsoleUIA]
+: Default
+  Automatic
+: Options
+  Automatic, UIA when available, Legacy
+:
+
+This option selects how NVDA interacts with the Windows Console used by command prompt, PowerShell, and the Windows Subsystem for Linux.
+It does not affect the modern Windows Terminal.
+In Windows 10 version 1709, Microsoft [added support for its UI Automation API to the console https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/], bringing vastly improved performance and stability for screen readers that support it.
+In situations where UI Automation is unavailable or known to result in an inferior user experience, NVDA's legacy console support is available as a fallback.
+The Windows Console support combo box has three options:
+- Automatic: Uses UI Automation in the version of Windows Console included with Windows 11 version 22H2 and later.
+This option is recommended and set by default.
+- UIA when available: Uses UI Automation in consoles if available, even for versions with incomplete or buggy implementations.
+While this limited functionality may be useful (and even sufficient for your usage), use of this option is entirely at your own risk and no support for it will be provided.
+- Legacy: UI Automation in the Windows Console will be completely disabled.
+The legacy fallback will always be used even in situations where UI Automation would provide a superior user experience.
+Therefore, selecting this option is not recommended unless you know what you are doing.
+-
 
 ==== Use UIA with Microsoft Edge and other Chromium based browsers when available ====[ChromiumUIA]
 Allows specifying when UIA will be used when it is available in Chromium based browsers such as Microsoft Edge.

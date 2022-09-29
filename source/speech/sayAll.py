@@ -253,7 +253,8 @@ class _TextReader(garbageHandler.TrackedObject):
 			self.reader.collapse(end=True)
 		except RuntimeError:
 			# This occurs in Microsoft Word when the range covers the end of the document.
-			# without this exception to indicate that further collapsing is not possible, say all could enter an infinite loop.
+			# without this exception to indicate that further collapsing is not possible,
+			# say all could enter an infinite loop.
 			self.finish()
 			return
 		if not spoke:

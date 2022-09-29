@@ -229,7 +229,7 @@ def setReviewPosition(
 		reviewPosition: textInfos.TextInfo,
 		clearNavigatorObject: bool = True,
 		isCaret: bool = False,
-		isMouse: bool = False
+		isMouse: bool = False,
 ) -> bool:
 	"""Sets a TextInfo instance as the review position.
 	@param clearNavigatorObject: if True, It sets the current navigator object to C{None}.

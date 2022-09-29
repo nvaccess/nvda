@@ -332,7 +332,7 @@ NVDA:ssa on seuraavat järjestelmäkohdistimeen liittyvät näppäinkomennot:
 | Lue nykyinen rivi | NVDA+Nuoli ylös | NVDA+L | Lukee järjestelmäkohdistimen kohdalla olevan rivin. Kahdesti painettaessa se tavataan normaalisti ja kolmesti painettaessa merkkikuvauksia käyttäen. |
 | Lue valittu teksti | NVDA+Vaihto+Nuoli ylös | NVDA+Vaihto+S | Lukee kaiken valittuna olevan tekstin. |
 | Lue tekstin muotoilutiedot | NVDA+F | NVDA+F | Lukee kohdistimen kohdalla olevan tekstin muotoilutiedot. Kahdesti painettaessa tiedot näytetään selaustilassa. |
-| Lue kohdistimen sijainti | NVDA+Laskimen Del | NVDA+Del | Ei mitään | Lukee järjestelmäkohdistimen kohdalla olevan tekstin tai objektin sijaintitiedot. Näitä tietoja voivat olla esim.  asiakirjan luettu osuus prosentteina, etäisyys sivun reunasta tai tarkka paikka ruudulla. Kahdesti painaminen saattaa antaa lisätietoja. |
+| Lue kohdistimen sijainti | NVDA+Laskimen Del | NVDA+Del | Lukee järjestelmäkohdistimen kohdalla olevan tekstin tai objektin sijaintitiedot. Näitä tietoja voivat olla esim.  asiakirjan luettu osuus prosentteina, etäisyys sivun reunasta tai tarkka paikka ruudulla. Kahdesti painaminen saattaa antaa lisätietoja. |
 | Seuraava virke | Alt+Nuoli alas | Alt+Nuoli alas | Siirtää kohdistimen seuraavaan virkkeeseen ja lukee sen. (tuetaan vain Microsoft Wordissa ja Outlookissa) |
 | Edellinen virke | Alt+Nuoli ylös | Alt+Nuoli ylös | Siirtää kohdistimen edelliseen virkkeeseen ja lukee sen. (tuetaan vain Microsoft Wordissa ja Outlookissa) |
 
@@ -1052,10 +1052,11 @@ Lisättyjen kirjojen taulukkonäkymässä:
 NVDA tarjoaa tuen Windowsin komentokonsolille, jota komentokehote, PowerShell ja Windows-alijärjestelmä Linuxille käyttävät.
 Konsoli-ikkunan koko on kiinteä, tyypillisesti paljon pienempi kuin puskuri, joka sisältää komentojen palauttaman tulosteen.
 Kun uutta tekstiä kirjoitetaan, sisältöä vieritetään ylöspäin, eikä aiempi teksti ole enää näkyvissä.
-Tekstiä, jota ei näy ikkunassa, ei voi tarkastella NVDA:n tekstintarkastelukomennoilla.
+Tekstiä, jota ei näy ikkunassa, ei voi tarkastella NVDA:n tekstintarkastelukomennoilla Windows 11 22H2:ta vanhemmissa käyttöjärjestelmissä.
 Konsoli-ikkunan vierittäminen on siksi tarpeen, jotta aiempaa tekstiä voidaan lukea.
+Uudemmissa konsolin versioissa ja Windows Terminalissa on mahdollista tarkastella koko tekstipuskuria vapaasti ilman ikkunan vierittämistä.
 %kc:beginInclude
-Seuraavat sisäänrakennetut Windows-konsolin pikanäppäimet voivat olla hyödyllisiä [tarkasteltaessa tekstiä #ReviewingText] NVDA:lla:
+Seuraavat sisäänrakennetut Windows-konsolin pikanäppäimet voivat olla hyödyllisiä [tarkasteltaessa tekstiä #ReviewingText] NVDA:lla vanhemmissa Windows-konsolin versioissa:
 || Nimi | Näppäinkomento | Kuvaus |
 | Vieritä ylös | Ctrl+Ylänuoli | Vierittää konsoli-ikkunaa ylöspäin, jotta aiempaa tekstiä voidaan lukea. |
 | Vieritä alas | Ctrl+Alanuoli | Vierittää konsoli-ikkunaa alaspäin, jotta uudempaa tekstiä voidaan lukea. |
@@ -1260,6 +1261,20 @@ Tämä asetus tulisi tavallisesti ottaa käyttöön.
 Jotkin SAPI-syntetisaattorit toimivat kuitenkin kummallisesti tämän ollessa käytössä, koska ominaisuutta ei ole toteutettu niissä kunnolla.
 Asetus kannattaa poistaa käytöstä, jos yksittäisten kirjainten lausumisessa on ongelmia.
 
+==== Viivästetyt merkkien kuvaukset kohdistinta siirrettäessä ====[delayedCharacterDescriptions]
+: Oletus
+  Ei käytössä
+: Vaihtoehdot
+  Käytössä, Ei käytössä
+:
+
+Kun tämä asetus on käytössä, NVDA sanoo merkin kuvauksen, kun siirryt tekstissä merkki kerrallaan.
+
+Esimerkiksi kun kirjain "b" luetaan tarkasteltaessa riviä merkeittäin, NVDA sanoo "Bertta" yhden sekunnin viipeen jälkeen.
+Tästä voi olla hyötyä, mikäli symbolien ääntämistä on vaikea erottaa toisistaan, tai kuulovammaisille käyttäjille.
+
+Viivästetty merkin kuvaus peruuntuu, jos tuona aikana puhutaan muuta tekstiä tai jos painetaan ``Ctrl``-näppäintä.
+
 +++ Valitse syntetisaattori (NVDA+Ctrl+S) +++[SelectSynthesizer]
 Syntetisaattori-valintaikkunassa, joka voidaan avata painamalla Muuta...-painiketta Asetukset-valintaikkunan Puhe-kategoriassa, valitaan, mitä syntetisaattoria NVDA käyttää.
 Kun haluttu syntetisaattori on valittu, NVDA ottaa sen käyttöön OK-painikkeen painamisen jälkeen.
@@ -1409,6 +1424,21 @@ Joten NVDA näyttää edellä olevassa esimerkissä, että kohdistus on luettelo
 Konteksti voidaan lukea (ts. että ollaan luettelossa ja että se on osa valintaikkunaa) vierittämällä pistenäyttöä taaksepäin.
 
 Kohdistuskontekstin näyttäminen -asetusta voidaan vaihtaa mistä tahansa liittämällä siihen oma näppäinkomento [Näppäinkomennot-valintaikkunaa #InputGestures] käyttäen.
+
+==== Keskeytä puhe vieritettäessä ====[BrailleSettingsInterruptSpeech]
+: Oletus
+  Käytössä
+: Vaihtoehdot
+  Oletus (Käytössä), Käytössä, Ei käytössä
+:
+
+Tämä asetus määrittää, keskeytetäänkö puhe, kun pistenäyttöä vieritetään taakse/eteenpäin.
+Edelliselle/seuraavalle riville siirtävät komennot keskeyttävät puheen aina.
+
+Jatkuva puhe saattaa häiritä pistekirjoitusta luettaessa.
+Tästä syystä asetus on oletusarvoisesti käytössä, jolloin puhe keskeytetään pistenäyttöä vieritettäessä.
+
+Tämän asetuksen poistaminen käytöstä sallii puheen kuulumisen samalla, kun pistekirjoitusta luetaan.
 
 +++ Valitse pistenäyttö (NVDA+Ctrl+A) +++[SelectBrailleDisplay]
 Valitse pistenäyttö -valintaikkunasta, joka voidaan avata painamalla Muuta...-painiketta Asetukset-valintaikkunan Pistekirjoitus-kategoriassa, valitaan, mitä pistenäyttöä NVDA käyttää pistekirjoituksen tulostamiseen.
@@ -1888,8 +1918,26 @@ Asetus sisältää seuraavat arvot:
 - Aina: Aina kun UI automation -rajapinta on käytettävissä Microsoft wordissa (riippumatta siitä, miten valmis se on).
 -
 
-==== Käytä UI Automation -rajapintaa Windows-konsolissa, kun käytettävissä ====[AdvancedSettingsConsoleUIA]
-Kun tämä asetus on käytössä, NVDA käyttää uutta, työn alla olevaa versiota Windows-konsolin tuesta, joka hyödyntää [Microsoftin tekemiä saavutettavuusparannuksia. https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/] Ominaisuus on vielä kokeellinen ja keskeneräinen, joten sen käyttöä ei vielä suositella. Valmistuttuaan uuden tuen odotetaan kuitenkin tulevan oletukseksi, mikä parantaa NVDA:n suorituskykyä ja vakautta Windowsin komentokonsoleissa.
+==== Windows-konsolin tuki ====[AdvancedSettingsConsoleUIA]
+: Oletus
+  Automaattinen
+: Vaihtoehdot
+  Automaattinen, UIA, kun käytettävissä, Vanha
+:
+
+Tämä asetus määrittää, miten NVDA toimii vuorovaikutuksessa Windows-konsolin kanssa, jota Komentokehote, PowerShell ja Windowsin Linux-alijärjestelmä käyttävät.
+Se ei vaikuta moderniin Windows Terminaliin.
+Windows 10:n versiossa 1709 Microsoft [lisäsi konsoliin tuen UI Automation -rajapinnalle https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/], mikä parantaa huomattavasti sitä tukevien näytönlukuohjelmien suorituskykyä ja vakautta.
+NVDA:n vanha konsolituki on käytettävissä varavaihtoehtona tilanteissa, joissa UI Automation -rajapinta ei ole käytettävissä tai sen tiedetään johtavan huonompaan käyttökokemukseen.
+Windows-konsolituen yhdistelmäruudussa on kolme vaihtoehtoa:
+- Automaattinen: Käyttää UI Automation -rajapintaa Windows 11 -version 22H2 ja uudempien mukana toimitetussa Windows-konsolin versiossa.
+Tätä vaihtoehtoa suositellaan ja se on asetettu oletukseksi.
+- UIA, kun käytettävissä: Käyttää UI Automation -rajapintaa konsoleissa, mikäli se on käytettävissä, jopa versioissa, joissa on epätäydellisiä tai virheellisiä toteutuksia.
+Vaikka tämä rajoitettu toiminnallisuus voi olla hyödyllinen (ja jopa riittävä käyttöösi), tämän vaihtoehdon käyttö on täysin omalla vastuullasi, eikä sille tarjota tukea.
+- Vanha: Windows-konsolin UI Automation -rajapinta poistetaan kokonaan käytöstä.
+Vanhaa varavaihtoehtoa käytetään aina myös tilanteissa, joissa UI Automation -rajapinta tarjoaisi ylivertaisen käyttökokemuksen.
+Siksi tämän vaihtoehdon valitsemista ei suositella, ellet tiedä mitä olet tekemässä.
+-
 
 ==== Käytä UIA:ta Microsoft Edgessä ja muissa Chromium-pohjaisissa selaimissa, kun käytettävissä ====[ChromiumUIA]
 Tämän asetuksen avulla voit määrittää, milloin UIA:ta käytetään (mikäli se on käytettävissä) Chromium-pohjaisissa selaimissa, kuten Microsoft Edgessä.

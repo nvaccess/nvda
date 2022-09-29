@@ -88,7 +88,7 @@ If you aren't sure, run `git submodule update` after every git pull, merge or ch
 
 For reference, the following run time dependencies are included in Git submodules:
 
-* [eSpeak NG](https://github.com/espeak-ng/espeak-ng), version 1.51-dev commit 7e5457f91e10
+* [eSpeak NG](https://github.com/espeak-ng/espeak-ng), version 1.52-dev commit 9de65fcb
 * [Sonic](https://github.com/waywardgeek/sonic), commit 4f8c1d11
 * [IAccessible2](https://wiki.linuxfoundation.org/accessibility/iaccessible2/start), commit cbc1f29631780
 * [liblouis](http://www.liblouis.org/), version 3.22.0
@@ -111,7 +111,7 @@ Additionally, the following build time dependencies are included in the miscDeps
 * xgettext and msgfmt from [GNU gettext](https://sourceforge.net/projects/cppcms/files/boost_locale/gettext_for_windows/)
 
 The following dependencies aren't needed by most people, and are not included in Git submodules:
-* To generate developer documentation for nvdaHelper: [Doxygen Windows installer](http://www.doxygen.nl/download.html), version 1.8.15:
+* To generate [developer documentation for nvdaHelper](#building-nvdahelper-developer-documentation): [Doxygen Windows installer](http://www.doxygen.nl/download.html), version 1.8.15:
 * When you are using Visual Studio Code as your integrated development environment of preference, you can make use of our [prepopulated workspace configuration](https://github.com/nvaccess/vscode-nvda/) for [Visual Studio Code](https://code.visualstudio.com/).
 	While this VSCode project is not included as a submodule in the NVDA repository, you can easily check out the workspace configuration in your repository by executing the following from the root of the repository.
 
@@ -212,6 +212,8 @@ scons devDocs
 
 The documentation will be placed in the `NVDA` folder in the output directory.
 
+#### Building nvdaHelper developer documentation
+
 To generate developer documentation for nvdaHelper (not included in the devDocs target):
 
 ```
@@ -219,6 +221,7 @@ scons devDocs_nvdaHelper
 ```
 
 The documentation will be placed in the `devDocs\nvdaHelper` folder in the output directory.
+This requires having Doxygen installed.
 
 ### Generate debug symbols archive
 To generate an archive of debug symbols for the various dll/exe binaries, type:
@@ -305,7 +308,8 @@ Any arguments given to rununittests.bat are forwarded onto Nose.
 Please refer to Nose's own documentation on how to filter tests etc.
 
 ### System Tests
-System tests can be run with the `runsystemtests.bat` script.
+System tests can be run with the `runsystemtests.bat --include <TAG>` script.
+To run all tests standard tests for developers use `runsystemtests.bat --include NVDA`.
 Internally this script uses the Robot  test framework to execute the tests.
 Any arguments given to runsystemtests.bat are forwarded onto Robot.
 For more details (including filtering and exclusion of tests) see `tests/system/readme.md`.

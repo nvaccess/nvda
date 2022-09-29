@@ -21,7 +21,6 @@ default teardown
 	Run Keyword If Test Failed	Take Screenshot	${screenShotName}
 	dump_speech_to_log
 	dump_braille_to_log
-	exit chrome
 	quit NVDA
 
 default setup
@@ -126,3 +125,6 @@ Table navigation with merged columns
 focus mode is turned on on focused read-only list item
 	[Documentation]	Focused list items with a focusable list container should cause focus mode to be turned on automatically.
 	test_focus_mode_on_focusable_read_only_lists
+ARIA details role
+	[Documentation]	Test aria details roles being announced on discovery
+	test_mark_aria_details_role

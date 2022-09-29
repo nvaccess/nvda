@@ -22,13 +22,11 @@ from typing import (
 	List,
 	Optional,
 	Tuple,
-	Union,
 )
-import zipimport
 
 import winVersion
-import pkgutil
 import importlib
+import importlib.util
 import threading
 import tempfile
 import comtypes.client
@@ -44,13 +42,12 @@ import exceptions
 import extensionPoints
 from fileUtils import getFileVersionInfo
 import globalVars
+from systemUtils import getCurrentProcessLogonSessionId, getProcessLogonSessionId
 
 
-_KNOWN_IMPORTERS_T = Union[importlib.machinery.FileFinder, zipimport.zipimporter]
 # Dictionary of processID:appModule pairs used to hold the currently running modules
 runningTable: Dict[int, AppModule] = {}
 _CORE_APP_MODULES_PATH: os.PathLike = appModules.__path__[0]
-_importers: Optional[List[_KNOWN_IMPORTERS_T]] = None
 _getAppModuleLock=threading.RLock()
 #: Notifies when another application is taking foreground.
 #: This allows components to react upon application switches.
@@ -136,16 +133,6 @@ def unregisterExecutable(executableName: str) -> None:
 		log.error(f"Executable {executableName} was not previously registered.")
 
 
-def _getPathFromImporter(importer: _KNOWN_IMPORTERS_T) -> os.PathLike:
-	try:  # Standard `FileFinder` instance
-		return importer.path
-	except AttributeError:
-		try:  # Special case for `zipimporter`
-			return os.path.normpath(os.path.join(importer.archive, importer.prefix))
-		except AttributeError:
-			raise TypeError(f"Cannot retrieve path from {repr(importer)}") from None
-
-
 def _getPossibleAppModuleNamesForExecutable(executableName: str) -> Tuple[str, ...]:
 	"""Returns list of the appModule names for a given executable.
 	The names in the tuple are placed in order in which import of these aliases should be attempted that is:
@@ -157,7 +144,7 @@ def _getPossibleAppModuleNamesForExecutable(executableName: str) -> Tuple[str, .
 		aliasName for aliasName in (
 			_executableNamesToAppModsAddons.get(executableName),
 			# #5323: Certain executables contain dots as part of their file names.
-			# Since Python threats dot as a package separator we replace it with undescore
+			# Since Python treats dot as a package separator we replace it with an underscore
 			# in the name of the Python module.
 			# For new App Modules consider adding an alias to `appModule.EXECUTABLE_NAMES_TO_APP_MODS`
 			# rather than rely on the fact that dots are replaced.
@@ -172,27 +159,29 @@ def doesAppModuleExist(name: str, ignoreDeprecatedAliases: bool = False) -> bool
 	:param ignoreDeprecatedAliases: used for backward compatibility, so that by default alias modules
 	are not excluded.
 	"""
-	for importer in _importers:
-		modExists = importer.find_module(f"appModules.{name}")
-		if modExists:
-			# While the module has been found it is possible tis is just a deprecated alias.
-			# Before PR #13366 the only possibility to map a single app module to multiple executables
-			# was to create a alias app module and import everything from the main module into it.
-			# Now the preferred solution is to add an entry into `appModules.EXECUTABLE_NAMES_TO_APP_MODS`,
-			# but old alias modules have to stay to preserve backwards compatibility.
-			# We cannot import the alias module since they show a deprecation warning on import.
-			# To determine if the module should be imported or not we check if:
-			# - it is placed in the core appModules package, and
-			# - it has an alias defined in `appModules.EXECUTABLE_NAMES_TO_APP_MODS`.
-			# If both of these are true the module should not be imported in core.
-			if (
-				ignoreDeprecatedAliases
-				and name in appModules.EXECUTABLE_NAMES_TO_APP_MODS
-				and _getPathFromImporter(importer) == _CORE_APP_MODULES_PATH
-			):
-				continue
-			return True
-	return False  # None of the aliases exists
+	try:
+		modSpec = importlib.util.find_spec(f"appModules.{name}", package=appModules)
+	except ImportError:
+		modSpec = None
+	if modSpec is None:
+		return False
+	# While the module has been found it is possible this is a deprecated alias.
+	# Before PR #13366 the only possibility to map a single app module to multiple executables
+	# was to create an alias app module and import everything from the main module into it.
+	# Now the preferred solution is to add an entry into `appModules.EXECUTABLE_NAMES_TO_APP_MODS`,
+	# but old alias modules have to stay to preserve backwards compatibility.
+	# We cannot import the alias module since they show a deprecation warning on import.
+	# To determine if the module should be imported or not we check if:
+	# - it is placed in the core appModules package, and
+	# - it has an alias defined in `appModules.EXECUTABLE_NAMES_TO_APP_MODS`.
+	# If both of these are true the module should not be imported in core.
+	if (
+		ignoreDeprecatedAliases
+		and name in appModules.EXECUTABLE_NAMES_TO_APP_MODS
+		and os.path.dirname(modSpec.origin) == _CORE_APP_MODULES_PATH
+	):
+		return False
+	return True
 
 
 def _importAppModuleForExecutable(executableName: str) -> Optional[ModuleType]:
@@ -371,9 +360,7 @@ def reloadAppModules():
 def initialize():
 	"""Initializes the appModule subsystem. 
 	"""
-	global _importers
 	config.addConfigDirsToPythonPackagePath(appModules)
-	_importers=list(pkgutil.iter_importers("appModules.__init__"))
 	if not initialize._alreadyInitialized:
 		initialize._alreadyInitialized = True
 
@@ -669,6 +656,20 @@ class AppModule(baseObject.ScriptableObject):
 			return True
 		self.isWindowsStoreApp = False
 		return self.isWindowsStoreApp
+
+	def _get_isRunningUnderDifferentLogonSession(self) -> bool:
+		"""Returns whether the application for this appModule was started under a different logon session.
+		This applies to applications started with the Windows runas command
+		or when choosing "run as a different user" from an application's (shortcut) context menu.
+		"""
+		try:
+			self.isRunningUnderDifferentLogonSession = (
+				getCurrentProcessLogonSessionId() != getProcessLogonSessionId(self.processHandle)
+			)
+		except WindowsError:
+			log.error(f"Couldn't compare logon session ID for {self}", exc_info=True)
+			self.isRunningUnderDifferentLogonSession = False
+		return self.isRunningUnderDifferentLogonSession
 
 	def _get_appArchitecture(self):
 		"""Returns the target architecture for the specified app.

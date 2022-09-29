@@ -25,11 +25,19 @@ to be close manually after merging the pull request.
 ### Summary of the issue:
 A quick summary of the problem you are trying to solve.
 
-### Description of how this pull request fixes the issue:
-Please include a quick discussion of how this change addresses the issue.
+### Description of user facing changes:
+Please include a short explanation of how the user experience has changed to address the issue.
+
+### Description of development approach
+Provide a description of the technical changes.
 Please also include any links or external information you may have used in order to address the
 issue.
 This helps others to have the same background as you and learn from this work.
+
+Include reasoning as to why the approach followed is the best approach compared to other ways of fixing the issue.
+It may be worth including a summary of the history of the technical changes, and how the final approach was determined.
+
+Example: a new app module was created, which handles an event raised by UIA.
 
 ### Testing strategy:
 Outline the steps you took to test the change.
