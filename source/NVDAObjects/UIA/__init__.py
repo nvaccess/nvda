@@ -1182,11 +1182,7 @@ class UIA(Window):
 			from . import VisualStudio
 			VisualStudio.findExtraOverlayClasses(self, clsList)
 
-		# Support Windows Console's UIA interface
-		if self.windowClassName == "ConsoleWindowClass":
-			from . import winConsoleUIA
-			winConsoleUIA.findExtraOverlayClasses(self, clsList)
-
+		# Support Windows Console and Terminal
 		_all_wt_UIAClassNames = frozenset(
 			# TermControl represents an up-to-date version of the UWP (standard)
 			# Windows Terminal control.
@@ -1205,6 +1201,9 @@ class UIA(Window):
 			# and is anticipated to be replaced by the UWP implementation.
 			"WPFTermControl",
 		)
+		if self.windowClassName == "ConsoleWindowClass":
+			from . import winConsoleUIA
+			winConsoleUIA.findExtraOverlayClasses(self, clsList)
 		elif UIAClassName in _all_wt_UIAClassNames:
 			from . import winConsoleUIA
 			clsList.append(winConsoleUIA.WinTerminalUIA)
