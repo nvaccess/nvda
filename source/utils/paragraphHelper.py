@@ -79,7 +79,7 @@ def _isLastLineOfParagraph(line: str) -> bool:
 
 def _splitParagraphIntoChunks(paragraph: str) -> List[str]:
 	CHUNK_SIZE = 2048
-	SENTENCE_TERMINATORS: FrozenSet[str] = {".", "?", "!"}
+	SENTENCE_TERMINATORS = frozenset({".", "?", "!"})
 	start = 0
 	paragraphLen = len(paragraph)
 	if paragraphLen <= CHUNK_SIZE:
