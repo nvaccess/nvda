@@ -332,7 +332,7 @@ NVDA wykorzystuje następujące klawisze poleceń do nawigacji kursorem klawiatu
 | Odczytuje aktualną linię | NVDA+Strzałka w górę | NVDA+l | Odczytuje aktualną linię w miejscu kursora. Dwukrotne naciśnięcie literuje aktualną linię. Trzykrotne naciśnięcie literuje linię przy użyciu opisów znaków. |
 | Odczytuje aktualne zaznaczenie | NVDA+Shift+Strzałka w górę | NVDA+Shift+S | Odczytuje cały aktualnie zaznaczony tekst |
 | Odczytaj formatowanie | NVDA+f | NVDA+f | Odczytuje formatowanie tekstu pod kursorem. Dwukrotne wciśnięcie skrótu pokazuje informacje w trybie przeglądania. |
-| Odczytaj położenie kursora | NVDA+numpadDelete | NVDA+delete | brak | Odczytuje informacje o położeniu obiektu oraz tekstu pod kursorem systemowym. Na przykłąd, może to włączać procent odczytanego dokumentu, dystans krawędzi strony lub dokładną pozycje na ekranie. Po dwukrotnym naciśnięciu, można usłyszeć więcej szczegułów. |
+| Odczytaj położenie kursora | NVDA+numpadDelete | NVDA+delete | Odczytuje informacje o położeniu obiektu oraz tekstu pod kursorem systemowym. Na przykłąd, może to włączać procent odczytanego dokumentu, dystans krawędzi strony lub dokładną pozycje na ekranie. Po dwukrotnym naciśnięciu, można usłyszeć więcej szczegułów. |
 | Następne zdanie | Alt+Strzałka w dół | Alt+Strzałka w dół | Przenosi kursor do następnego zdania i odczytuje je (obsługiwane tylko w Microsoft Word i Outlook). |
 | Poprzednie zdanie | Alt+Strzałka w górę | Alt+Strzałka w górę | Przenosi kursor do poprzedniego zdania i odczytuje je (obsługiwane tylko w Microsoft Word i Outlook). |
 
@@ -1052,10 +1052,11 @@ W widoku tabeli dodanych książek:
 NVDA posiada wsparcie dla wiersza poleceń systemu Windows, używanego przez programy takie jak: CMD, Powershell czy podsystem Linuxa.
 Okno konsoli posiada stały rozmiar, przeważnie o wiele mniejszy niż bufor wyjściowy.
 Gdy nowy tekst jest zapisywany do bufora, okno przewija się w dół co uniemożliwia czytanie tekstu poprzednio widocznego na ekranie.
-Tekst który jest niewidoczny, jest niedostępny dla kursora przeglądu programu.
+W wersjach systemu Windows do wersji systemu Windows 11 22H2, tekst w wierszu poleceń, który jest wizualnie niedostępny w oknie nie jest dostępny z poleceniami NVDA do przeglądu tekstu.
 A więc, czasami wymagane jest przewijanie okna konsoli.
+W nowszych wersjach wiersza poleceń i programie Windows Terminal, istnieje możliwość swobodnego przeglądania bufora konsoli bez konieczności przewijania okna.
 %kc:beginInclude
-Następujące skróty wbudowane w system Windows mogą być przydatne podczas [nawigacji po tekście #ReviewingText] przy pomocy programu NVDA: 
+Następujące skróty wbudowane w system Windows mogą być przydatne podczas [nawigacji po tekście #ReviewingText] za pomocą programu NVDA w starszych wersjach wiersza poleceń i konsoli systemu Windows: 
 || Nazwa | Skrót klawiszowy | Opis |
 | Przewiń w górę | CTRL+strzałka w górę | Przewija ekran do góry w celu pokazania wcześniej widocznego tekstu. |
 | Przewiń w dół | control+strzałka w dół | Przewija ekran w dół, w celu pokazania późniejszego tekstu. |
@@ -1260,6 +1261,20 @@ Ta opcja na ogół powinna być włączona.
 Niektóre syntezatory pracujące w standardzie Microsoft Speech API (SAPI)  nie obsługują prawidłowo tej funkcjonalności i zachowują się dziwnie, gdy jest ona włączona.
 Jeśli napotykasz na problemy z wymową pojedynczych znaków, spróbuj wyłączyć tę opcję.
 
+==== Opisy po nazwie liter podczas ruchu kursora ====[delayedCharacterDescriptions]
+: Domyślnie
+  Wyłączone
+: Opcje
+  Włączone, Wyłączone
+:
+
+Gdy ta opcaje jest włączona, NVDA wypowie opis znaku podczas poruszania się po znakach.
+
+Na przykład, podczas przeglądu linii po znakach, kiedy litera "b" zostanie przeczytana NVDA powie "barbara" po jednosekundowej przerwie.
+To może być użyteczne jeżeli nie można odróżnić wymowę niektórych znaków, albo może to być korzystne użytkownikom z wadami słuchu.
+
+Opóźniony opis znaków nie będzie wypowiedzony jeżeli zostanie wypowiedzony inny tekst w tym czasie, lub jeżeli zostanie naciśnięty klawisz ``control``.
+
 +++ Wybór syntezatora (NVDA+control+s) +++[SelectSynthesizer]
 Okno dialogowe "Syntezator...", pod przyciskiem "Zmień..." w kategorii mowa w oknie preferencji NVDA, pozwala wybrać używany przez NVDA syntezator mowy.
 Po zaznaczeniu wybranego syntezatora, naciśnij przycisk "Ok" a NVDA załaduje go.
@@ -1409,6 +1424,21 @@ W przykładzie powyżej, NVDA pokaże, że fokus znajduje się na elemencie list
 Aby przeczytać informację kontekstową, konieczne będzie przewinięcie monitora brajlowskiego wstecz.
 
 Aby w dowolnym miejscu przełączyć kontekstową prezentację fokusa, można przypisać własne zdarzenie wejścia przy pomocy [okna ustawień zdarzenia wejścia #InputGestures].
+
+==== Przerwij mowę podczas przewijania ====[BrailleSettingsInterruptSpeech]
+: Domyślne
+  Włączone
+: Opcje
+  Domyślnie (włączone), Włączone, Wyłączone
+:
+
+Ta opcja reguluje przerwanie mowy podczas przewijania tekstu na monitorze brajlowskim wstecz albo wprzód.
+Polecenia poprzedniego następnego wiersza zawsze przerywają mowę.
+
+Nadchodząca mowa może przeszkadzać podczas czytania brajla.
+Z tego powodu opcja jest domyślnie włączona, przerywając mowę podczas przewijania tekstu.
+
+Wyłączając tą opcję umożliwia słyszenie mowy podczas symultanicznego odczytu tekstu.
 
 +++ Wybór monitora brajlowskiego (NVDA+control+a) +++[SelectBrailleDisplay]
 Okno wyboru monitora brajlowskiego jest otwierane po kliknięciu przycisku "Zmień..."  w kategorii brajl preferencji NVDA, pozwala wybrać, której linijki brajlowskiej NVDA ma używać do generowania komunikatów w brajlu.
@@ -1888,8 +1918,26 @@ To ustawienie zawiera następujące wartości:
 - Zawsze: gdziekolwiek dostępne jest UIA w programie Microsoft word (niezależnie od tego, na ile wsparcie jest stabilne i kompletne).
 -
 
-==== Używaj UIA Api w celu korzystania z konsoli systemu Windows, gdy to możliwe ====[AdvancedSettingsConsoleUIA]
-Gdy ta opcja jest włączona, NVDA będzie korzystać z nowego, eksperymentalnego wsparcia dla konsoli systemu Windows 10 korzystającego z  [poprawek dostępności poczynionych przez Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Jak powiedziano powyżej funkcja ta jest nadal bardzo eksperymentalna, toteż jej używanie nie jest jeszcze zalecane. Zakłada się że po ukończeniu prac stanie się ona nową domyślną metodą interakcji z programami konsolowymi.
+==== Obsługa konsoli systemu Windows ====[AdvancedSettingsConsoleUIA]
+: Domyślne
+  Automatyczne
+: Opcje
+  Automatyczne, UIA gdy jest to możliwe, przestarzałe
+:
+
+Ta opcja reguluje interakcję z konsolą używaną przez wiersza poleceń, PowerShell, i podsystem Linux dla systemu WIndows.
+Ta opcja nie wpłynie na Windows terminal.
+W wersji systemu Windows 10 kompilacja 1709, firma Microsoft [dodała wsparcie dla swojego API UI Automation dla wierszy poleceń https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/], ulepszając wydajność i stabilność dla czytników ekranu które to api wspierają.
+W sytuacjach w których UI Automation jest niedostępne oraz jest znane że spowoduje spadek dobrego doświadczenia użytkownika, wsparcie przestarzałe dla wiersza poleceń systemu Windows dla NVDA jest dostępne jako zapas.
+Lista rozwijana wsparcie konsoli systemu Windows posiada trzy opcje:
+- automatyczny: używa UI Automation w wersji konsoli systemu Windows dołączonej do Windows 11 wersji 22H2 i nowszych.
+Ta opcja jest zalecana i domyślnie ustawiona.
+- UIA jeżeli jest dostępne: używa UI Automation w konsolach jeżeli jest to dostępne, nawet z wersjami zawierającymi niekompletne oraz błędne implementacje.
+Choć ta opcja moze być korzystna (i nawet dostateczna dla użytku), używanie tej opcjie podlega pod ryzyko użytkownika a wsparcie dla tej opcji nie będzie okazywane.
+- przestarzałe: UI Automation w konsoli systemu windows będzie kompletnie wyłączone.
+Opcja przestarzałe będzie używana jako zapasowa nawet w sytuacjach w których UI Automation będzie działała lepiej dla użytkownika.
+Więc, wybór tej opcji jest niezalecany chyba żę wiesz co robisz.
+-
 
 ==== Użyj UIA z przeglądarką Microsoft Edge i innymi przeglądarkami opartymi na Chromium gdy jest to możliwe ====[ChromiumUIA]
 Umożliwia definiowanie, kiedy interfejs UIA będzie używany gdy jest dostępny w przeglądarkach opartych na Chromium, takich jak Microsoft Edge.
