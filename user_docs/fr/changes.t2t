@@ -77,14 +77,6 @@ Cette version corrige une rupture accidentelle d'API introduite dans la version 
 Cela faisait que NVDA Remote ne reconnaissait pas les bureaux sécurisés. (#14094)
 -
 
-== Changements pour les Développeurs ==
-Cette version contient une rupture technique dans la rétrocompatibilité de l'API.
-Ce changement ne devrait affecter aucune extension.
-Veuillez ouvrir un problème GitHub si votre extension devient incompatible à la suite de cette version.
-
-- ``SecureDesktopNVDAObject`` n'est plus une sous-classe de ``Desktop`` ou ``Window``. (#14105)
--
-
 = 2022.2.2 =
 Ceci est une version corrigeant un problème introduit en 2022.2.1 concernant les gestes de commandes.
 

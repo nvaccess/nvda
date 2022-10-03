@@ -28,10 +28,40 @@ def getSafeScripts() -> Set["scriptHandler._ScriptFunctionT"]:
 	# and it might be needed by global maps.
 	from globalCommands import commands
 	return {
+		# The focus object should not cache secure content
+		# due to handling in `api.setFocusObject`.
 		commands.script_reportCurrentFocus,
+		
+		# Reports the foreground window.
+		# The foreground object should not cache secure content
+		# due to handling in `api.setForegroundObject`.
 		commands.script_title,
+		
+		# Reports system information that should be accessible from the lock screen.
 		commands.script_dateTime,
 		commands.script_say_battery_status,
+		
+		# Mouse navigation is required to ensure controls
+		# on the lock screen are accessible.
+		# Preventing mouse navigation outside the lock screen
+		# is handled using `api.setMouseObject` and `api.setNavigatorObject`.
+		commands.script_moveMouseToNavigatorObject,
+		commands.script_moveNavigatorObjectToMouse,
+		commands.script_leftMouseClick,
+		commands.script_rightMouseClick,
+		
+		# Braille commands are safe, and required to interact
+		# on the lock screen using braille.
+		commands.script_braille_scrollBack,
+		commands.script_braille_scrollForward,
+		commands.script_braille_routeTo,
+		commands.script_braille_previousLine,
+		commands.script_braille_nextLine,
+		
+		# Object navigation is required to ensure controls
+		# on the lock screen are accessible.
+		# Preventing object navigation outside the lock screen
+		# is handled in `api.setNavigatorObject` and by applying `LockScreenObject`.
 		commands.script_navigatorObject_current,
 		commands.script_navigatorObject_currentDimensions,
 		commands.script_navigatorObject_toFocus,
@@ -40,7 +70,13 @@ def getSafeScripts() -> Set["scriptHandler._ScriptFunctionT"]:
 		commands.script_navigatorObject_next,
 		commands.script_navigatorObject_previous,
 		commands.script_navigatorObject_firstChild,
-		commands.script_navigatorObject_devInfo,
+		commands.script_navigatorObject_nextInFlow,
+		commands.script_navigatorObject_previousInFlow,
+		
+		# Moving the review cursor is required to ensure controls
+		# on the lock screen are accessible.
+		# Preventing review cursor navigation outside the lock screen
+		# is handled in `api.setReviewPosition`.
 		commands.script_review_activate,
 		commands.script_review_top,
 		commands.script_review_previousLine,
@@ -56,21 +92,16 @@ def getSafeScripts() -> Set["scriptHandler._ScriptFunctionT"]:
 		commands.script_review_nextCharacter,
 		commands.script_review_endOfLine,
 		commands.script_review_sayAll,
-		commands.script_braille_scrollBack,
-		commands.script_braille_scrollForward,
-		commands.script_braille_routeTo,
-		commands.script_braille_previousLine,
-		commands.script_braille_nextLine,
-		commands.script_navigatorObject_nextInFlow,
-		commands.script_navigatorObject_previousInFlow,
-		commands.script_touch_changeMode,
-		commands.script_touch_newExplore,
-		commands.script_touch_explore,
-		commands.script_touch_hoverUp,
-		commands.script_moveMouseToNavigatorObject,
-		commands.script_moveNavigatorObjectToMouse,
-		commands.script_leftMouseClick,
-		commands.script_rightMouseClick,
+		
+		# Using the touch screen is required to ensure controls
+		# on the lock screen are accessible.
+		# Preventing touch navigation outside the lock screen
+		# is handled in `screenExplorer.ScreenExplorer.moveTo`.
+		commands.script_touch_changeMode,  # cycles through available touch screen modes
+		commands.script_touch_newExplore,  # tap gesture, reports content under the finger
+		commands.script_touch_explore,  # hover gesture, reports content changes under the finger
+		commands.script_touch_hoverUp,  # hover up gesture, fixes a situation with touch typing
+		# commands.script_touch_rightClick, TODO: consider adding, was this missed previously?
 	}
 
 
