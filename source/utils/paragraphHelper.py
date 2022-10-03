@@ -77,6 +77,11 @@ def _isLastLineOfParagraph(line: str) -> bool:
 
 
 def _splitParagraphIntoChunks(paragraph: str) -> List[str]:
+	"""
+This optional function attempts to break large paragraphs into smaller chunks
+	to possibly improve processing efficiency by some synthesizers.
+	If this function fails to break the paragraph into chunks, functionality will still be fine.
+	"""
 	CHUNK_SIZE = 2048
 	SENTENCE_TERMINATORS = frozenset({".", "?", "!"})
 	start = 0
