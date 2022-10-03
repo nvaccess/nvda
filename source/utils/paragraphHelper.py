@@ -16,7 +16,6 @@ from displayModel import EditableTextDisplayModelTextInfo
 from typing import (
 	Tuple,
 	List,
-	FrozenSet,
 )
 from enum import IntEnum
 from dataclasses import dataclass
