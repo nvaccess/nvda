@@ -1146,7 +1146,7 @@ Tries to force this object to take the focus.
 			tones.beep(3000,40)
 
 	def event_mouseMove(self, x: int, y: int) -> None:
-		from utils.security import _isSecureObjectWhileLockScreenActivated
+		from utils.security import objectBelowLockScreenAndWindowsIsLocked
 
 		if not self._mouseEntered and config.conf['mouse']['reportObjectRoleOnMouseEnter']:
 			speech.cancelSpeech()
@@ -1165,7 +1165,7 @@ Tries to force this object to take the focus.
 
 		# This event may fire on the lock screen, as such
 		# ensure the target TextInfo does not contain secure information.
-		if _isSecureObjectWhileLockScreenActivated(info.obj):
+		if objectBelowLockScreenAndWindowsIsLocked(info.obj):
 			return
 
 		if config.conf["reviewCursor"]["followMouse"]:

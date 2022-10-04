@@ -51,7 +51,7 @@ from winAPI._powerTracking import reportCurrentBatteryStatus
 import winVersion
 from base64 import b16encode
 import vision
-from utils.security import _isSecureObjectWhileLockScreenActivated
+from utils.security import objectBelowLockScreenAndWindowsIsLocked
 
 
 if TYPE_CHECKING:
@@ -968,7 +968,7 @@ class GlobalCommands(ScriptableObject):
 			# This script is available on the lock screen, as such
 			# ensure the review position does not contain secure information
 			# before navigating to this object
-			and _isSecureObjectWhileLockScreenActivated(reviewPosition.obj)
+			and objectBelowLockScreenAndWindowsIsLocked(reviewPosition.obj)
 		):
 			x = reviewPositionStartPoint.x
 			y = reviewPositionStartPoint.y
@@ -978,7 +978,7 @@ class GlobalCommands(ScriptableObject):
 			# This script is available on the lock screen, as such
 			# ensure the navigatorObject does not contain secure information
 			# before navigating to this object
-			if _isSecureObjectWhileLockScreenActivated(navigatorObject):
+			if objectBelowLockScreenAndWindowsIsLocked(navigatorObject):
 				# Translators: Reported when the object has no location for the mouse to move to it.
 				ui.message(_("Object has no location"))
 				return
@@ -1085,7 +1085,7 @@ class GlobalCommands(ScriptableObject):
 			# This script is available on the lock screen, as such
 			# ensure the navigatorObject does not contain secure information
 			# before announcing this object
-			or _isSecureObjectWhileLockScreenActivated(curObject)
+			or objectBelowLockScreenAndWindowsIsLocked(curObject)
 		):
 			# Translators: Reported when the user tries to perform a command related to the navigator object
 			# but there is no current navigator object.
@@ -1251,7 +1251,7 @@ class GlobalCommands(ScriptableObject):
 			# This script is available on the lock screen, as such
 			# ensure the navigatorObject does not contain secure information
 			# before setting focus to this object
-			or _isSecureObjectWhileLockScreenActivated(obj)
+			or objectBelowLockScreenAndWindowsIsLocked(obj)
 		):
 			# Translators: Reported when:
 			# 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
@@ -1268,7 +1268,7 @@ class GlobalCommands(ScriptableObject):
 			# This script is available on the lock screen, as such
 			# ensure the review object does not contain secure information
 			# before speaking this object
-			if _isSecureObjectWhileLockScreenActivated(review.obj):
+			if objectBelowLockScreenAndWindowsIsLocked(review.obj):
 				# Translators: Reported when trying to move caret to the position of the review cursor but there is no caret.
 				ui.message(_("No caret"))
 				return
@@ -1406,7 +1406,7 @@ class GlobalCommands(ScriptableObject):
 		# This script is available on the lock screen, as such
 		# ensure the review position does not contain secure information
 		# before activating this object
-		if not _isSecureObjectWhileLockScreenActivated(pos.obj):
+		if not objectBelowLockScreenAndWindowsIsLocked(pos.obj):
 			try:
 				pos.activate()
 				if isinstance(gesture,touchHandler.TouchInputGesture):
@@ -1421,7 +1421,7 @@ class GlobalCommands(ScriptableObject):
 			# This script is available on the lock screen, as such
 			# ensure the review position does not contain secure information
 			# before activating this object
-			and not _isSecureObjectWhileLockScreenActivated(obj)
+			and not objectBelowLockScreenAndWindowsIsLocked(obj)
 		):
 			realActionName=actionName
 			try:
@@ -1480,7 +1480,7 @@ class GlobalCommands(ScriptableObject):
 		# This script is available on the lock screen, as such
 		# ensure the review position does not contain secure information
 		# before announcing this object
-		if not _isSecureObjectWhileLockScreenActivated(info.obj):
+		if not objectBelowLockScreenAndWindowsIsLocked(info.obj):
 			info.expand(textInfos.UNIT_LINE)
 			speech.speakTextInfo(
 				info,
@@ -1503,7 +1503,7 @@ class GlobalCommands(ScriptableObject):
 		# This script is available on the lock screen, as such
 		# ensure the review position does not contain secure information
 		# before announcing this object
-		if not _isSecureObjectWhileLockScreenActivated(info.obj):
+		if not objectBelowLockScreenAndWindowsIsLocked(info.obj):
 			return
 		info.expand(textInfos.UNIT_LINE)
 		# Explicitly tether here
@@ -1541,7 +1541,7 @@ class GlobalCommands(ScriptableObject):
 		# This script is available on the lock screen, as such
 		# ensure the review position does not contain secure information
 		# before announcing this object
-		if not _isSecureObjectWhileLockScreenActivated(newLine.obj):
+		if not objectBelowLockScreenAndWindowsIsLocked(newLine.obj):
 			speech.speakTextInfo(
 				newLine,
 				unit=textInfos.UNIT_LINE,
@@ -1642,7 +1642,7 @@ class GlobalCommands(ScriptableObject):
 		# This script is available on the lock screen, as such
 		# ensure the review position does not contain secure information
 		# before announcing this object
-		if not _isSecureObjectWhileLockScreenActivated(info.obj):
+		if not objectBelowLockScreenAndWindowsIsLocked(info.obj):
 			info.expand(textInfos.UNIT_WORD)
 			speech.speakTextInfo(
 				info,
@@ -1665,7 +1665,7 @@ class GlobalCommands(ScriptableObject):
 		# This script is available on the lock screen, as such
 		# ensure the review position does not contain secure information
 		# before announcing this object
-		if not _isSecureObjectWhileLockScreenActivated(info.obj):
+		if not objectBelowLockScreenAndWindowsIsLocked(info.obj):
 			return
 
 		info.expand(textInfos.UNIT_WORD)
@@ -1703,7 +1703,7 @@ class GlobalCommands(ScriptableObject):
 		# This script is available on the lock screen, as such
 		# ensure the review position does not contain secure information
 		# before announcing this object
-		if not _isSecureObjectWhileLockScreenActivated(newWord.obj):
+		if not objectBelowLockScreenAndWindowsIsLocked(newWord.obj):
 			speech.speakTextInfo(
 				newWord,
 				unit=textInfos.UNIT_WORD,
@@ -1761,7 +1761,7 @@ class GlobalCommands(ScriptableObject):
 		# This script is available on the lock screen, as such
 		# ensure the review position does not contain secure information
 		# before announcing this object
-		if not _isSecureObjectWhileLockScreenActivated(reviewInfo.obj):
+		if not objectBelowLockScreenAndWindowsIsLocked(reviewInfo.obj):
 			reviewInfo.expand(textInfos.UNIT_CHARACTER)
 			speech.speakTextInfo(
 				reviewInfo,
@@ -1784,7 +1784,7 @@ class GlobalCommands(ScriptableObject):
 		# This script is available on the lock screen, as such
 		# ensure the review position does not contain secure information
 		# before announcing this object
-		if not _isSecureObjectWhileLockScreenActivated(info.obj):
+		if not objectBelowLockScreenAndWindowsIsLocked(info.obj):
 			return
 
 		info.expand(textInfos.UNIT_CHARACTER)
@@ -1833,7 +1833,7 @@ class GlobalCommands(ScriptableObject):
 		# This script is available on the lock screen, as such
 		# ensure the review position does not contain secure information
 		# before announcing this object
-		if not _isSecureObjectWhileLockScreenActivated(reviewInfo.obj):
+		if not objectBelowLockScreenAndWindowsIsLocked(reviewInfo.obj):
 			reviewInfo.expand(textInfos.UNIT_CHARACTER)
 			speech.speakTextInfo(
 				reviewInfo,
@@ -2291,7 +2291,7 @@ class GlobalCommands(ScriptableObject):
 			# This script is available on the lock screen, as such
 			# ensure the focus object does not contain secure information
 			# before announcing this object
-			and not _isSecureObjectWhileLockScreenActivated(focusObject)
+			and not objectBelowLockScreenAndWindowsIsLocked(focusObject)
 		):
 			if scriptHandler.getLastScriptRepeatCount()==0:
 				speech.speakObject(focusObject, reason=controlTypes.OutputReason.QUERY)
@@ -2312,7 +2312,7 @@ class GlobalCommands(ScriptableObject):
 			# This script is available on the lock screen, as such
 			# ensure the status bar does not contain secure information
 			# before announcing this object
-			and not _isSecureObjectWhileLockScreenActivated(obj)
+			and not objectBelowLockScreenAndWindowsIsLocked(obj)
 		):
 			text = api.getStatusBarText(obj)
 			if setReviewCursor:
@@ -2334,7 +2334,7 @@ class GlobalCommands(ScriptableObject):
 				# This script is available on the lock screen, as such
 				# ensure the status bar does not contain secure information
 				# before announcing this object
-				and not _isSecureObjectWhileLockScreenActivated(info.obj)
+				and not objectBelowLockScreenAndWindowsIsLocked(info.obj)
 			):
 				text = info.text
 				info.collapse()
@@ -2346,7 +2346,7 @@ class GlobalCommands(ScriptableObject):
 			ui.message(_("No status line found"))
 			return None
 		# Ensure any text comes from objects that have been
-		# checked with _isSecureObjectWhileLockScreenActivated
+		# checked with objectBelowLockScreenAndWindowsIsLocked
 		return text
 
 	@script(
@@ -2511,7 +2511,7 @@ class GlobalCommands(ScriptableObject):
 		# This script is available on the lock screen, as such
 		# ensure the title does not contain secure information
 		# before announcing this object
-		if _isSecureObjectWhileLockScreenActivated(obj):
+		if objectBelowLockScreenAndWindowsIsLocked(obj):
 			return
 		title=obj.name
 		if not isinstance(title,str) or not title or title.isspace():

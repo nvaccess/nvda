@@ -16,7 +16,7 @@ import api
 import textInfos
 import queueHandler
 import winKernel
-from utils.security import _isSecureObjectWhileLockScreenActivated
+from utils.security import objectBelowLockScreenAndWindowsIsLocked
 
 from .commands import CallbackCommand, EndUtteranceCommand
 from .speechWithoutPauses import SpeechWithoutPauses
@@ -259,7 +259,7 @@ class _TextReader(garbageHandler.TrackedObject, metaclass=ABCMeta):
 			# SayAll is available on the lock screen, as such
 			# ensure the say all reader does not contain secure information
 			# before continuing
-			or _isSecureObjectWhileLockScreenActivated(self.reader.obj)
+			or objectBelowLockScreenAndWindowsIsLocked(self.reader.obj)
 		):
 			log.debug("no self.reader.obj")
 			self.finish()
