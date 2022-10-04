@@ -1258,7 +1258,7 @@ class GlobalCommands(ScriptableObject):
 			# 2. Trying to move focus to navigator object but there is no focus.
 			ui.message(_("No focus"))
 
-		elif scriptHandler.getLastScriptRepeatCount()==0:
+		elif scriptHandler.getLastScriptRepeatCount() == 0:
 			# Translators: Reported when attempting to move focus to navigator object.
 			ui.message(_("Move focus"))
 			obj.setFocus()
@@ -1269,7 +1269,8 @@ class GlobalCommands(ScriptableObject):
 			# ensure the review object does not contain secure information
 			# before speaking this object
 			if objectBelowLockScreenAndWindowsIsLocked(review.obj):
-				# Translators: Reported when trying to move caret to the position of the review cursor but there is no caret.
+				# Translators: Reported when trying to move caret to the
+				# position of the review cursor but there is no caret.
 				ui.message(_("No caret"))
 				return
 			try:
@@ -1409,7 +1410,7 @@ class GlobalCommands(ScriptableObject):
 		if not objectBelowLockScreenAndWindowsIsLocked(pos.obj):
 			try:
 				pos.activate()
-				if isinstance(gesture,touchHandler.TouchInputGesture):
+				if isinstance(gesture, touchHandler.TouchInputGesture):
 					touchHandler.handler.notifyInteraction(pos.NVDAObjectAtStart)
 				ui.message(actionName)
 				return
