@@ -126,7 +126,7 @@ class NvdaLib:
 	- NvdaLib.nvdaSpy is a library instance for getting speech and other information out of NVDA
 	"""
 	def __init__(self):
-		self.nvdaSpy = None  #: _Optional[SystemTestSpy.speechSpyGlobalPlugin.NVDASpyLib]
+		self.nvdaSpy: _Optional["NVDASpyLib"] = None
 		self.nvdaHandle: _Optional[int] = None
 		self.lastNVDAStart: _Optional[_datetime] = None
 
@@ -274,6 +274,19 @@ class NvdaLib:
 		self._connectToRemoteServer(connectionTimeoutSecs=30)
 		self.nvdaSpy.wait_for_NVDA_startup_to_complete()
 		return nvdaProcessHandle
+
+	def enable_verbose_debug_logging_if_requested(self):
+		builtIn.should_be_true(self.nvdaSpy is not None)
+		shouldEnableVerboseDebugLogging = bool(
+			builtIn.get_variable_value("${verboseDebugLogging}", "")
+		)
+		if shouldEnableVerboseDebugLogging:
+			self.nvdaSpy.modifyNVDAConfig(
+				[
+					(["debugLog", "MSAA"], True),
+					(["debugLog", "UIA"], True),
+					(["debugLog", "timeSinceInput"], True),
+			])
 
 	def start_NVDA(self, settingsFileName: str, gesturesFileName: _Optional[str] = None):
 		self.lastNVDAStart = _datetime.utcnow()

@@ -4,8 +4,9 @@
 # Copyright (C) 2006-2022 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
 # Julien Cochuyt
 
+from abc import ABCMeta, abstractmethod
 from enum import IntEnum
-from typing import Callable, TYPE_CHECKING
+from typing import Callable, TYPE_CHECKING, Optional
 import weakref
 import garbageHandler
 from logHandler import log
@@ -37,6 +38,7 @@ if TYPE_CHECKING:
 class CURSOR(IntEnum):
 	CARET = 0
 	REVIEW = 1
+	TABLE = 2
 
 
 SayAllHandler = None
@@ -96,10 +98,23 @@ class _SayAllHandler:
 		self._getActiveSayAll = weakref.ref(reader)
 		reader.next()
 
-	def readText(self, cursor: CURSOR):
+	def readText(
+			self,
+			cursor: CURSOR,
+			startPos: Optional[textInfos.TextInfo] = None,
+			nextLineFunc: Optional[Callable[[textInfos.TextInfo], textInfos.TextInfo]] = None,
+			shouldUpdateCaret: bool = True,
+	) -> None:
 		self.lastSayAllMode = cursor
 		try:
-			reader = _TextReader(self, cursor)
+			if cursor == CURSOR.CARET:
+				reader = _CaretTextReader(self)
+			elif cursor == CURSOR.REVIEW:
+				reader = _ReviewTextReader(self)
+			elif cursor == CURSOR.TABLE:
+				reader = _TableTextReader(self, startPos, nextLineFunc, shouldUpdateCaret)
+			else:
+				raise RuntimeError(f"Unknown cursor {cursor}")
 		except NotImplementedError:
 			log.debugWarning("Unable to make reader", exc_info=True)
 			return
@@ -150,7 +165,7 @@ class _ObjectsReader(garbageHandler.TrackedObject):
 		self.walker = None
 
 
-class _TextReader(garbageHandler.TrackedObject):
+class _TextReader(garbageHandler.TrackedObject, metaclass=ABCMeta):
 	"""Manages continuous reading of text.
 	This is intended for internal use only.
 
@@ -172,23 +187,65 @@ class _TextReader(garbageHandler.TrackedObject):
 	"""
 	MAX_BUFFERED_LINES = 10
 
-	def __init__(self, handler: _SayAllHandler, cursor: CURSOR):
-		self.handler = handler
-		self.cursor = cursor
-		self.trigger = SayAllProfileTrigger()
+	def __init__(self, handler: _SayAllHandler):
 		self.reader = None
-		# Start at the cursor.
-		if cursor == CURSOR.CARET:
-			try:
-				self.reader = api.getCaretObject().makeTextInfo(textInfos.POSITION_CARET)
-			except (NotImplementedError, RuntimeError) as e:
-				raise NotImplementedError("Unable to make TextInfo: " + str(e))
-		else:
-			self.reader = api.getReviewPosition()
+		self.handler = handler
+		self.trigger = SayAllProfileTrigger()
+		self.reader = self.getInitialTextInfo()
 		# #10899: SayAll profile can't be activated earlier because they may not be anything to read
 		self.trigger.enter()
 		self.speakTextInfoState = SayAllHandler._makeSpeakTextInfoState(self.reader.obj)
 		self.numBufferedLines = 0
+		self.initialIteration = True
+
+	@abstractmethod
+	def getInitialTextInfo(self) -> textInfos.TextInfo:
+		...
+
+	@abstractmethod
+	def updateCaret(self, updater: textInfos.TextInfo) -> None:
+		...
+
+	def shouldReadInitialPosition(self) -> bool:
+		return False
+
+	def nextLineImpl(self) -> bool:
+		"""
+		Advances cursor to the next reading chunk (e.g. paragraph).
+		@return: C{True} if advanced successfully, C{False} otherwise.
+		"""
+		# Expand to the current line.
+		# We use move end rather than expand
+		# because the user might start in the middle of a line
+		# and we don't want to read from the start of the line in that case.
+		# For lines after the first, it's also more efficient because
+		# we're already at the start of the line, so there's no need to search backwards.
+		delta = self.reader.move(textInfos.UNIT_READINGCHUNK, 1, endPoint="end")
+		if delta <= 0:
+			# No more text.
+			if isinstance(self.reader.obj, textInfos.DocumentWithPageTurns):
+				# Once the last line finishes reading, try turning the page.
+				cb = CallbackCommand(self.turnPage, name="say-all:turnPage")
+				self.handler.speechWithoutPausesInstance.speakWithoutPauses([cb, EndUtteranceCommand()])
+			else:
+				self.finish()
+			return False
+		return True
+
+	def collapseLineImpl(self) -> bool:
+		"""
+		Collapses to the end of this line, ready to read the next.
+		@return: C{True} if collapsed successfully, C{False} otherwise.
+		"""
+		try:
+			self.reader.collapse(end=True)
+			return True
+		except RuntimeError:
+			# This occurs in Microsoft Word when the range covers the end of the document.
+			# without this exception to indicate that further collapsing is not possible,
+			# say all could enter an infinite loop.
+			self.finish()
+			return False
 
 	def nextLine(self):
 		if not self.reader:
@@ -208,24 +265,12 @@ class _TextReader(garbageHandler.TrackedObject):
 			self.finish()
 			return
 
-		bookmark = self.reader.bookmark
-		# Expand to the current line.
-		# We use move end rather than expand
-		# because the user might start in the middle of a line
-		# and we don't want to read from the start of the line in that case.
-		# For lines after the first, it's also more efficient because
-		# we're already at the start of the line, so there's no need to search backwards.
-		delta = self.reader.move(textInfos.UNIT_READINGCHUNK, 1, endPoint="end")
-		if delta <= 0:
-			# No more text.
-			if isinstance(self.reader.obj, textInfos.DocumentWithPageTurns):
-				# Once the last line finishes reading, try turning the page.
-				cb = CallbackCommand(self.turnPage, name="say-all:turnPage")
-				self.handler.speechWithoutPausesInstance.speakWithoutPauses([cb, EndUtteranceCommand()])
-			else:
+		if not self.initialIteration or not self.shouldReadInitialPosition():
+			if not self.nextLineImpl():
 				self.finish()
-			return
-
+				return
+		self.initialIteration = False
+		bookmark = self.reader.bookmark
 		# Copy the speakTextInfoState so that speak callbackCommand
 		# and its associated callback are using a copy isolated to this specific line.
 		state = self.speakTextInfoState.copy()
@@ -257,15 +302,9 @@ class _TextReader(garbageHandler.TrackedObject):
 		# Update the textInfo state ready for when speaking the next line.
 		self.speakTextInfoState = state.copy()
 
-		# Collapse to the end of this line, ready to read the next.
-		try:
-			self.reader.collapse(end=True)
-		except RuntimeError:
-			# This occurs in Microsoft Word when the range covers the end of the document.
-			# without this exception to indicate that further collapsing is not possible,
-			# say all could enter an infinite loop.
-			self.finish()
+		if not self.collapseLineImpl():
 			return
+
 		if not spoke:
 			# This line didn't include a natural pause, so nothing was spoken.
 			self.numBufferedLines += 1
@@ -284,10 +323,7 @@ class _TextReader(garbageHandler.TrackedObject):
 		# We've just started speaking this line, so move the cursor there.
 		state.updateObj()
 		updater = obj.makeTextInfo(bookmark)
-		if self.cursor == CURSOR.CARET:
-			updater.updateCaret()
-		if self.cursor != CURSOR.CARET or config.conf["reviewCursor"]["followCaret"]:
-			api.setReviewPosition(updater, isCaret=self.cursor == CURSOR.CARET)
+		self.updateCaret(updater)
 		winKernel.SetThreadExecutionState(winKernel.ES_SYSTEM_REQUIRED)
 		if self.numBufferedLines == 0:
 			# This was the last line spoken, so move on.
@@ -328,6 +364,62 @@ class _TextReader(garbageHandler.TrackedObject):
 
 	def __del__(self):
 		self.stop()
+
+
+class _CaretTextReader(_TextReader):
+	def getInitialTextInfo(self) -> textInfos.TextInfo:
+		try:
+			return api.getCaretObject().makeTextInfo(textInfos.POSITION_CARET)
+		except (NotImplementedError, RuntimeError) as e:
+			raise NotImplementedError("Unable to make TextInfo: ", e)
+
+	def updateCaret(self, updater: textInfos.TextInfo) -> None:
+		updater.updateCaret()
+		if config.conf["reviewCursor"]["followCaret"]:
+			api.setReviewPosition(updater, isCaret=True)
+
+
+class _ReviewTextReader(_TextReader):
+	def getInitialTextInfo(self) -> textInfos.TextInfo:
+		return api.getReviewPosition()
+
+	def updateCaret(self, updater: textInfos.TextInfo) -> None:
+		api.setReviewPosition(updater, isCaret=False)
+
+
+class _TableTextReader(_CaretTextReader):
+	def __init__(
+			self,
+			handler: _SayAllHandler,
+			startPos: Optional[textInfos.TextInfo] = None,
+			nextLineFunc: Optional[Callable[[textInfos.TextInfo], textInfos.TextInfo]] = None,
+			shouldUpdateCaret: bool = True,
+	):
+		self.startPos = startPos
+		self.nextLineFunc = nextLineFunc
+		self.shouldUpdateCaret = shouldUpdateCaret
+		super().__init__(handler)
+
+	def getInitialTextInfo(self) -> textInfos.TextInfo:
+		return self.startPos or super().getInitialTextInfo()
+
+	def nextLineImpl(self) -> bool:
+		try:
+			self.reader = self.nextLineFunc(self.reader)
+			return True
+		except StopIteration:
+			return False
+
+	def collapseLineImpl(self) -> bool:
+		return True
+
+	def shouldReadInitialPosition(self) -> bool:
+		return True
+
+	def updateCaret(self, updater: textInfos.TextInfo) -> None:
+		if self.shouldUpdateCaret:
+			return super().updateCaret(updater)
+
 
 class SayAllProfileTrigger(config.ProfileTrigger):
 	"""A configuration profile trigger for when say all is in progress.

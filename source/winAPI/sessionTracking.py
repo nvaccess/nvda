@@ -19,7 +19,6 @@ https://docs.microsoft.com/en-us/windows/win32/api/wtsapi32/nf-wtsapi32-wtsregis
 import ctypes
 from ctypes.wintypes import (
 	HANDLE,
-	HWND,
 )
 import enum
 from typing import (
@@ -28,6 +27,8 @@ from typing import (
 )
 
 from logHandler import log
+
+from .types import HWNDValT
 
 
 _currentSessionStates: Set["WindowsTrackedSession"] = set()
@@ -41,6 +42,8 @@ RPC_S_INVALID_BINDING = 0x6A6
 """
 Error which occurs when Windows is not ready to register session notification tracking.
 This error can be prevented by waiting for the event: 'Global\\TermSrvReadyEvent.'
+
+https://docs.microsoft.com/en-us/windows/win32/debug/system-error-codes--1700-3999-
 """
 
 NOTIFY_FOR_THIS_SESSION = 0
@@ -104,7 +107,7 @@ def isWindowsLocked() -> bool:
 	return WindowsTrackedSession.SESSION_LOCK in _currentSessionStates
 
 
-def register(handle: HWND) -> bool:
+def register(handle: HWNDValT) -> bool:
 	"""
 	@param handle: handle for NVDA message window.
 	When registered, Windows Messages related to session event changes will be
@@ -157,7 +160,7 @@ def register(handle: HWND) -> bool:
 	return registrationSuccess
 
 
-def unregister(handle: HWND) -> None:
+def unregister(handle: HWNDValT) -> None:
 	"""
 	This function must be called once for every call to register.
 	If unregistration fails, NVDA may not work properly until the session can be unregistered in a new instance.

@@ -38,6 +38,8 @@ import aria
 import treeInterceptorHandler
 import watchdog
 from abc import abstractmethod
+import documentBase
+
 
 VBufStorage_findDirection_forward=0
 VBufStorage_findDirection_back=1
@@ -640,15 +642,14 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 
 	def _getNearestTableCell(
 			self,
-			tableID,
-			startPos,
-			origRow,
-			origCol,
-			origRowSpan,
-			origColSpan,
-			movement,
-			axis
-	):
+			startPos: textInfos.TextInfo,
+			cell: documentBase._TableCell,
+			movement: documentBase._Movement,
+			axis: documentBase._Axis,
+	) -> textInfos.TextInfo:
+		tableID, origRow, origCol, origRowSpan, origColSpan = (
+			cell.tableID, cell.row, cell.col, cell.rowSpan, cell.colSpan
+		)
 		# Determine destination row and column.
 		destRow = origRow
 		destCol = origCol

@@ -14,12 +14,12 @@ import api
 import config
 import controlTypes
 import eventHandler
-import globalVars
 import inputCore
 from logHandler import log
 from NVDAObjects import NVDAObject
 from NVDAObjects.lockscreen import LockScreenObject
 from NVDAObjects.UIA import UIA
+import NVDAState
 from utils.security import getSafeScripts
 from winAPI.sessionTracking import isWindowsLocked
 
@@ -34,7 +34,7 @@ Refer to usages of `winAPI.sessionTracking.isWindowsLocked`.
 def __getattr__(attrName: str) -> Any:
 	"""Module level `__getattr__` used to preserve backward compatibility.
 	"""
-	if attrName == "LockAppObject" and globalVars._allowDeprecatedAPI:
+	if attrName == "LockAppObject" and NVDAState._allowDeprecatedAPI():
 		log.warning("lockapp.LockAppObject is deprecated, use NVDAObjects.lockscreen.LockScreenObject instead.")
 		return LockScreenObject
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")

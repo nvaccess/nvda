@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2019 NV Access Limited
+# Copyright (C) 2019-2022 NV Access Limited, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 *** Settings ***
@@ -24,7 +24,8 @@ default teardown
 	quit NVDA
 
 default setup
-	start NVDA	standard-dontShowWelcomeDialog.ini	chrome-gestures.ini
+	start NVDA	standard-dontShowWelcomeDialog.ini
+	enable_verbose_debug_logging_if_requested
 
 *** Test Cases ***
 
@@ -122,6 +123,15 @@ Focus reports target first
 Table navigation with merged columns
 	[Documentation]	When navigating through a merged cell, preserve the column/row position from the previous cell.
 	test_tableNavigationWithMergedColumns
+Table sayAll commands
+	[Documentation]	Table sayAll commands
+	test_tableSayAllCommands
+Table Speak All commands
+	[Documentation]	Table speak entire row/column commands
+	test_tableSpeakAllCommands
+Table sayAll axis caching for merged cells
+	[Documentation]	Tests that axis caching for merged cells in table sayAll commands works.
+	test_tableSayAllAxisCachingForMergedCells
 focus mode is turned on on focused read-only list item
 	[Documentation]	Focused list items with a focusable list container should cause focus mode to be turned on automatically.
 	test_focus_mode_on_focusable_read_only_lists

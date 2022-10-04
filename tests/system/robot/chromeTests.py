@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2020-2021 NV Access Limited, Leonard de Ruijter
+# Copyright (C) 2020-2022 NV Access Limited, Leonard de Ruijter, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -57,7 +57,7 @@ def checkbox_labelled_by_inner_element():
 
 REVIEW_CURSOR_FOLLOW_CARET_KEY = ["reviewCursor", "followCaret"]
 REVIEW_CURSOR_FOLLOW_FOCUS_KEY = ["reviewCursor", "followFocus"]
-READ_DETAILS_GESTURE = "NVDA+\\"  # see chrome-gestures.ini
+READ_DETAILS_GESTURE = "NVDA+d"
 
 
 def _getNoVBuf_AriaDetails_sample() -> str:
@@ -1851,6 +1851,197 @@ def test_tableNavigationWithMergedColumns():
 	# This caused column position to be lost when navigating through merged cells
 	actualSpeech = _chrome.getSpeechAfterKey("control+alt+upArrow")
 	_asserts.strings_match(actualSpeech, "row 1  column 2  b 1")
+
+
+def prepareChromeForTableSayAllTests():
+	_chrome.prepareChrome("""
+		<p>Hello, world!</p>
+		<table border=3>
+			<tr>
+				<td>A1</td>
+				<td>B1</td>
+				<td rowspan=2>C1+C2</td>
+				<td>D1</td>
+				<td>E1</td>
+			</tr>
+			<tr>
+				<td>A2</td>
+				<td>B2</td>
+				<td>D2</td>
+				<td>E2</td>
+			</tr>
+			<tr>
+				<td colspan=2>A3+B3</td>
+				<td>C3</td>
+				<td colspan=2>D3+E3</td>
+			</tr>
+			<tr>
+				<td>A4</td>
+				<td>B4</td>
+				<td colspan=2 rowspan=2>C4+D4+<br>C5+D5</td>
+				<td>E4</td>
+			</tr>
+			<tr>
+				<td>A5</td>
+				<td>B5</td>
+				<td>E5</td>
+			</tr>
+		</table>
+		<p>Bye-bye, world!</p>
+	""")
+
+	# Jump to table
+	actualSpeech = _chrome.getSpeechAfterKey("t")
+	_asserts.strings_match(actualSpeech, "table  with 5 rows and 5 columns  row 1  column 1  A 1")
+
+
+def tableSayAllJumpToB2():
+	_chrome.getSpeechAfterKey("control+alt+pageUp")
+	_chrome.getSpeechAfterKey("control+alt+home")
+	_chrome.getSpeechAfterKey("control+alt+rightArrow")
+	actualSpeech = _chrome.getSpeechAfterKey("control+alt+downArrow")
+	_asserts.strings_match(actualSpeech, "row 2  B 2")
+
+
+def test_tableSayAllCommands():
+	""" Tests that table sayAll commands work correctly.
+	Key bindings: NVDA+control+alt+downArrow/rightArrow
+	Refer to #13469.
+	"""
+	prepareChromeForTableSayAllTests()
+	tableSayAllJumpToB2()
+	# sayAll column
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+control+alt+downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"\n".join([
+			"B 2",
+			"row 3  column 1  through 2  A 3 plus B 3",
+			"row 4  column 2  B 4",
+			"row 5  B 5",
+		]),
+	)
+
+	# Check that cursor has moved to B5
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+upArrow")
+	_asserts.strings_match(actualSpeech, "B 5")
+
+	tableSayAllJumpToB2()
+	# sayAll row
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+control+alt+rightArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"\n".join([
+			"B 2",
+			"row 1  through 2  column 3  C 1 plus C 2",
+			"row 2  D 2",
+			"column 4  E 2",
+		]),
+	)
+
+	# Check that cursor has moved to E2
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+upArrow")
+	_asserts.strings_match(actualSpeech, "E 2")
+
+	# Jump to A3
+	_chrome.getSpeechAfterKey("control+alt+pageUp")
+	_chrome.getSpeechAfterKey("control+alt+home")
+	_chrome.getSpeechAfterKey("control+alt+downArrow")
+	actualSpeech = _chrome.getSpeechAfterKey("control+alt+downArrow")
+	_asserts.strings_match(actualSpeech, "row 3  column 1  through 2  A 3 plus B 3")
+
+	# sayAll row with cells merged horizontally
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+control+alt+rightArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"\n".join([
+			"A 3 plus B 3",
+			"column 3  C 3",
+			"column 4  through 5  D 3 plus E 3",
+		]),
+	)
+
+	# Check that cursor has moved to E3
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+upArrow")
+	_asserts.strings_match(actualSpeech, "D 3 plus E 3")
+
+
+def test_tableSpeakAllCommands():
+	""" Tests that table speak entire row/column commands work correctly.
+	Key bindings: NVDA+control+alt+upArrow/leftArrow
+	Refer to #13469.
+	"""
+	prepareChromeForTableSayAllTests()
+	tableSayAllJumpToB2()
+	# Speak current column
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("NVDA+control+alt+upArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"\n".join([
+			"row 1  B 1",
+			"row 2  B 2",
+			"row 3  column 1  through 2  A 3 plus B 3",
+			"row 4  column 2  B 4",
+			"row 5  B 5",
+		])
+	)
+	_asserts.braille_matches(
+		actualBraille,
+		"r2 c2 B2",
+		message="Speak entire column",
+	)
+
+	# Check that cursor still stays at B2
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+upArrow")
+	_asserts.strings_match(actualSpeech, "row 2  B 2")
+
+	# Speak current row
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+control+alt+leftArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"\n".join([
+			"column 1  A 2",
+			"column 2  B 2",
+			"row 1  through 2  column 3  C 1 plus C 2",
+			"row 2  D 2",
+			"column 4  E 2",
+		])
+	)
+
+	# Check that cursor stays at B2
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+upArrow")
+	_asserts.strings_match(actualSpeech, "column 2  B 2")
+
+
+def test_tableSayAllAxisCachingForMergedCells():
+	""" Tests that axis caching for merged cells in table sayAll commands works.
+	Refer to #13469.
+	"""
+	prepareChromeForTableSayAllTests()
+
+	# Jump to D5
+	_chrome.getSpeechAfterKey("control+alt+pageUp")
+	_chrome.getSpeechAfterKey("control+alt+end")
+	_chrome.getSpeechAfterKey("control+alt+leftArrow")
+	_chrome.getSpeechAfterKey("control+alt+downArrow")
+	_chrome.getSpeechAfterKey("control+alt+downArrow")
+	actualSpeech = _chrome.getSpeechAfterKey("control+alt+downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"row 4  column 3  through row 5 column 4  C 4 plus D 4 plus  C 5 plus D 5"
+	)
+
+	# Speak current column - should reuse cached column
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+control+alt+upArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"\n".join([
+			"row 1  column 4  D 1",
+			"row 2  column 3  D 2",
+			"row 3  column 4  through 5  D 3 plus E 3",
+			"row 4  column 3  through row 5 column 4  C 4 plus D 4 plus  C 5 plus D 5",
+		]),
+	)
 
 
 def test_focus_mode_on_focusable_read_only_lists():

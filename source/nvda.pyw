@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2021 NV Access Limited, Aleksey Sadovoy, Babbage B.V., Joseph Lee, Łukasz Golonka
+# Copyright (C) 2006-2022 NV Access Limited, Aleksey Sadovoy, Babbage B.V., Joseph Lee, Łukasz Golonka
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -18,6 +18,8 @@ import globalVars
 import ctypes
 from ctypes import wintypes
 import monkeyPatches
+import NVDAState
+
 
 monkeyPatches.applyMonkeyPatches()
 
@@ -28,13 +30,7 @@ _log = logging.Logger(name="preStartup", level=logging.INFO)
 _log.addHandler(logging.NullHandler(level=logging.INFO))
 
 customVenvDetected = False
-if getattr(sys, "frozen", None):
-	# We are running as an executable.
-	# Append the path of the executable to sys so we can import modules from the dist dir.
-	sys.path.append(sys.prefix)
-	appDir = sys.prefix
-else:
-	# we are running from source
+if NVDAState.isRunningAsSource():
 	# Ensure we are inside the NVDA build system's Python virtual environment.
 	nvdaVenv = os.getenv("NVDA_VENV")
 	virtualEnv = os.getenv("VIRTUAL_ENV")
@@ -51,6 +47,11 @@ else:
 	import sourceEnv
 	#We should always change directory to the location of this module (nvda.pyw), don't rely on sys.path[0]
 	appDir = os.path.normpath(os.path.dirname(__file__))
+else:
+	# Append the path of the executable to sys so we can import modules from the dist dir.
+	sys.path.append(sys.prefix)
+	appDir = sys.prefix
+
 appDir = os.path.abspath(appDir)
 os.chdir(appDir)
 globalVars.appDir = appDir
@@ -105,7 +106,9 @@ class NoConsoleOptionParser(argparse.ArgumentParser):
 		winUser.MessageBox(0, out, u"Error", 0)
 		sys.exit(2)
 
-globalVars.startTime=time.time()
+
+NVDAState._initializeStartTime()
+
 
 # Check OS version requirements
 import winVersion
@@ -412,4 +415,4 @@ finally:
 		log.error(f"Unable to close mutex handle, last error: {winUser.WinError(error)}")
 
 log.info("NVDA exit")
-sys.exit(globalVars.exitCode)
+sys.exit(NVDAState._getExitCode())
