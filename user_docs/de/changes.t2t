@@ -77,13 +77,6 @@ Dies ist ein Patch-Release, um einen versehentlichen API-Fehler zu beheben, der 
 Dies führte dazu, dass NVDA Remote keine geschützten Desktops mehr erkannte. (#14094)
 -
 
-== Änderungen für Entwickler ==
-Diese Version enthält einen technischen Fehler in der Rückwärtskompatibilität der API.
-Es wird davon ausgegangen, dass diese Änderung keine Auswirkungen auf NVDA-Erweiterungen hat.
-Bitte melden Sie ein Problem über GitHub an NV Access, wenn Ihre Erweiterung durch diese Version inkompatibel sein sollte.
-
-- ``SecureDesktopNVDAObject`` ist nicht länger eine Unterklasse von ``Desktop`` oder ``Window``. (#14105)
--
 
 = 2022.2.2 =
 Dieser Patch behebt einen Fehler, der in Version 2022.2.1 beim Betätigen der Tastenbefehle auftrat.
