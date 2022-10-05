@@ -13,8 +13,11 @@ The power status can also be reported using script_say_battery_status.
 
 import ctypes
 from enum import (
+	Enum,
 	IntEnum,
 	IntFlag,
+	auto,
+	unique,
 )
 from typing import (
 	List,
@@ -124,14 +127,28 @@ def initialize():
 	return
 
 
-def reportCurrentBatteryStatus(onlyReportIfStatusChanged: bool = False) -> None:
+@unique
+class ReportContext(Enum):
 	"""
-	@param onlyReportIfStatusChanged: sometimes multiple events may fire for a power status change.
-	Set this to True to only report if the power status changes.
+	Used to determine the order of information, based on relevance to the user,
+	when announcing power status information
+	"""
+
+	AC_STATUS_CHANGE = auto()
+	"""e.g. a charger is connected/disconnected"""
+	FETCH_STATUS = auto()
+	"""e.g. when a user presses nvda+shift+b to fetch the current battery status"""
+
+
+def reportCurrentBatteryStatus(context: ReportContext) -> None:
+	"""
+	@param context: the context is used to order the announcement.
+	When the context is AC_STATUS_CHANGE, this reports the current AC status first.
+	When the context is FETCH_STATUS, this reports the remaining battery life first.
 	"""
 	global _powerState
 	systemPowerStatus = _getPowerStatus()
-	speechSequence = _getSpeechForBatteryStatus(systemPowerStatus, onlyReportIfStatusChanged, _powerState)
+	speechSequence = _getSpeechForBatteryStatus(systemPowerStatus, context, _powerState)
 	if speechSequence:
 		ui.message(" ".join(speechSequence))
 	if systemPowerStatus is not None:
@@ -149,7 +166,7 @@ def _getPowerStatus() -> Optional[SystemPowerStatus]:
 
 def _getSpeechForBatteryStatus(
 		systemPowerStatus: Optional[SystemPowerStatus],
-		onlyReportIfStatusChanged: bool,
+		context: ReportContext,
 		oldPowerState: PowerState,
 ) -> List[str]:
 	if not systemPowerStatus or systemPowerStatus.BatteryFlag == BatteryFlag.UNKNOWN:
@@ -161,20 +178,44 @@ def _getSpeechForBatteryStatus(
 		# and laptops with battery pack removed.
 		return [_("No system battery")]
 
-	if onlyReportIfStatusChanged and systemPowerStatus.ACLineStatus == oldPowerState:
+	if (
+		context == ReportContext.AC_STATUS_CHANGE
+		and systemPowerStatus.ACLineStatus == oldPowerState
+	):
 		# Sometimes, the power change event double fires.
 		# The power change event also fires when the battery level decreases by 3%.
 		return []
 
 	text: List[str] = []
+
+	if context == ReportContext.AC_STATUS_CHANGE:
+		# When the AC status changes, users want to be alerted to the new AC status first.
+		text.append(_getACStatusText(systemPowerStatus))
+		text.extend(_getBatteryInformation(systemPowerStatus))
+	elif context == ReportContext.FETCH_STATUS:
+		# When fetching the current battery status,
+		# users want to know the current battery status first,
+		# rather than the AC status which should be unchanged.
+		text.extend(_getBatteryInformation(systemPowerStatus))
+		text.append(_getACStatusText(systemPowerStatus))
+	else:
+		raise NotImplementedError(f"Unexpected ReportContext: {context}")
+
+	return text
+
+
+def _getACStatusText(systemPowerStatus: SystemPowerStatus) -> str:
 	# Translators: This is presented to inform the user of the current battery percentage.
 	if systemPowerStatus.ACLineStatus & PowerState.AC_ONLINE:
 		# Translators: Reported when the battery is plugged in, and now is charging.
-		text.append(_("Charging battery"))
+		return _("Charging battery")
 	else:
 		# Translators: Reported when the battery is no longer plugged in, and now is not charging.
-		text.append(_("AC disconnected"))
+		return _("AC disconnected")
 
+
+def _getBatteryInformation(systemPowerStatus: SystemPowerStatus) -> List[str]:
+	text: List[str] = []
 	# Translators: This is presented to inform the user of the current battery percentage.
 	text.append(_("%d percent") % systemPowerStatus.BatteryLifePercent)
 	SECONDS_PER_HOUR = 3600
