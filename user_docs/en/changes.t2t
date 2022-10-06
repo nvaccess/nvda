@@ -62,8 +62,8 @@ Please open a GitHub issue if your Add-on has an issue with updating to the new 
 
 
 == Changes ==
-- eSpeak NG has been updated to 1.52-dev commit ``735ecdb8``. (#14060, #14079, #14117)
-  - Fixed reporting of Latin characters when using Mandarin. (#12952, #13572)
+- eSpeak NG has been updated to 1.52-dev commit ``735ecdb8``. (#14060, #14079, #14117, #14203)
+  - Fixed reporting of Latin characters when using Mandarin. (#12952, #13572, #14197)
   -
 - Updated LibLouis braille translator to [3.23.0 https://github.com/liblouis/liblouis/releases/tag/v3.23.0]. (#14112)
   - Added braille tables:
@@ -88,6 +88,7 @@ Please open a GitHub issue if your Add-on has an issue with updating to the new 
   - These fixes apply to Windows 11 Sun Valley 2 (version 22H2) and later.
   - Selective registration for UI Automation events and property changes now enabled by default.
   -
+- Text reporting, Braille output, and password suppression now work as expected in the embedded Windows Terminal control in Visual Studio 2022. (#14194)
 - NVDA is now DPI aware when using multiple monitors.
 There are several fixes for using a DPI setting higher than 100% or multiple monitors.
 Issues may still exist with versions of Windows older than Windows 10 1809.
