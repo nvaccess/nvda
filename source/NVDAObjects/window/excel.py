@@ -33,7 +33,7 @@ from logHandler import log
 import gui
 import gui.contextHelp
 import winUser
-from winAPI.winUser import GetSysColor
+from winAPI.winUser.functions import GetSysColor
 from winAPI.winUser.constants import SysColorIndex
 import mouseHandler
 from displayModel import DisplayModelTextInfo

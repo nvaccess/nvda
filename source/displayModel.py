@@ -12,7 +12,7 @@ import colors
 import XMLFormatting
 import api
 import winUser
-from winAPI.winUser import GetSysColor
+from winAPI.winUser.functions import GetSysColor
 from winAPI.winUser.constants import SysColorIndex
 import mouseHandler
 import NVDAHelper
