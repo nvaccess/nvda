@@ -58,6 +58,14 @@ Tämä parantaa joidenkin Java-sovellusten, mukaan lukien IntelliJ IDEA, suoritu
 Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/changes.html]
 
 
+= 2022.2.4 =
+Tämä versio korjaa tietoturvaongelman.
+
+== Bugikorjaukset ==
+- Korjattu hyökkäyskeino, jota hyväksi käyttäen oli mahdollista avata NVDA:n Python-konsoli lokintarkastelun kautta lukitusnäytössä. ([GHSA-585m-rpvv-93qg https://github.com/nvaccess/nvda/security/advisories/GHSA-585m-rpvv-93qg])
+-
+
+
 = 2022.2.3 =
 Tämä julkaisu korjaa versiossa 2022.2.1 ilmenneen rajapinnan rikkoutumisen.
 
