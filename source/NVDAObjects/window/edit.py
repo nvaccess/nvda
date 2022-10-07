@@ -6,6 +6,7 @@
 from typing import (
 	Dict,
 	Optional,
+	Union,
 )
 
 import comtypes.client
@@ -24,6 +25,7 @@ import api
 import winUser
 from winAPI.winUser.functions import GetSysColor
 from winAPI.winUser.constants import SysColorIndex
+import textInfos
 import textInfos.offsets
 import controlTypes
 from controlTypes import TextPosition
@@ -280,7 +282,7 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 			    formatField["text-position"] = TextPosition.BASELINE
 		if formatConfig["reportColor"]:
 			if charFormat is None: charFormat=self._getCharFormat(offset)
-			self._getFormatFieldColor(charFormat, formatField)
+			self._setFormatFieldColor(charFormat, formatField)
 		if formatConfig["reportLineNumber"]:
 			formatField["line-number"]=self._getLineNumFromOffset(offset)+1
 		if formatConfig["reportLinks"]:
@@ -288,7 +290,11 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 			formatField["link"]=bool(charFormat.dwEffects&CFM_LINK)
 		return formatField,(startOffset,endOffset)
 	
-	def _getFormatFieldColor(self, charFormat, formatField):
+	def _setFormatFieldColor(
+			self,
+			charFormat: Union[CharFormat2AStruct, CharFormat2WStruct],
+			formatField: textInfos.FormatField
+	) -> None:
 		if charFormat.dwEffects & CFE_AUTOCOLOR:
 			rgb = GetSysColor(SysColorIndex.WINDOW_TEXT)
 			# Translators: The text color as reported in Wordpad (Automatic) or NVDA log viewer.
@@ -555,7 +561,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		if formatConfig["reportColor"]:
 			if not fontObj:
 				fontObj = textRange.font
-			self._getFormatFieldColor(fontObj, formatField)
+			self._setFormatFieldColor(fontObj, formatField)
 		if not fontObj:
 			fontObj = textRange.font
 		try:
@@ -567,7 +573,11 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 			pass
 		return formatField
 
-	def _getFormatFieldColor(self, fontObj, formatField):
+	def _setFormatFieldColor(
+			self,
+			fontObj,
+			formatField: textInfos.FormatField
+	) -> None:
 		fgColor = fontObj.foreColor
 		if fgColor == comInterfaces.tom.tomAutoColor:
 			# Translators: The text color as reported in Wordpad (Automatic) or NVDA log viewer.
