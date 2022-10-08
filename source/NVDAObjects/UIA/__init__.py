@@ -2013,16 +2013,19 @@ class UIA(Window):
 			# We can search this object's  ancestors for obj with a UIA treeWalker
 			# which is much more efficient than fetching each parent.
 			objID = obj.UIAElement.GetRuntimeId()
-			objIDArray=array.array("l",objID)
-			UIACondition=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_RuntimeIdPropertyId,objIDArray)
-			UIAWalker=UIAHandler.handler.clientObject.createTreeWalker(UIACondition)
+			objIDArray = array.array("l", objID)
+			UIACondition = UIAHandler.handler.clientObject.createPropertyCondition(
+				UIAHandler.UIA_RuntimeIdPropertyId,
+				objIDArray
+			)
+			UIAWalker = UIAHandler.handler.clientObject.createTreeWalker(UIACondition)
 			try:
-				objUIAElement=UIAWalker.normalizeElement(self.UIAElement)
+				objUIAElement = UIAWalker.normalizeElement(self.UIAElement)
 			except COMError:
-				log.debugWarning("Error walking ancestors",exc_info=True)
-				objUIAElement=None
+				log.debugWarning("Error walking ancestors", exc_info=True)
+				objUIAElement = None
 			return bool(objUIAElement)
-		else: # not UIA
+		else:  # not UIA
 			raise NotImplementedError
 
 	def _get_controllerFor(self):

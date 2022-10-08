@@ -176,7 +176,8 @@ class InputFieldWithSuggestions(NVDAObject):
 		Subclasses should provide custom implementations if possible.
 		By default NVDA will announce appearance of suggestions using speech, braille or a sound will be played.
 		"""
-		# Translators: Announced in braille when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
+		# Translators: Announced in braille when suggestions appear when search term is entered
+		# in various search fields such as Start search box in Windows 10.
 		braille.handler.message(_("Suggestions"))
 		if config.conf["presentation"]["reportAutoSuggestionsWithSound"]:
 			nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "suggestionsOpened.wav"))
@@ -191,7 +192,7 @@ class InputFieldWithSuggestions(NVDAObject):
 
 	def event_controllerForChange(self):
 		# Report when suggestions appear and disappear.
-		if self is api.getFocusObject() and len(self.controllerFor)>0:
+		if self is api.getFocusObject() and len(self.controllerFor) > 0:
 			self.event_suggestionsOpened()
 		else:
 			self.event_suggestionsClosed()
@@ -279,7 +280,8 @@ class EditableTextWithSuggestions(InputFieldWithSuggestions, EditableTextBase):
 class EditableText(EditableTextWithSuggestions, EditableTextBase):
 	""" Represents an editable text field.
 	This is an empty class as functionality has been moved to the base EditableTextBase class.
-	This class also supports reporting of the appearance and disappearence of suggestions by inheriting from the EditableTextWithSuggestions class.
+	This class also supports reporting of the appearance and disappearence of suggestions
+	by inheriting from the EditableTextWithSuggestions class.
 	"""
 
 

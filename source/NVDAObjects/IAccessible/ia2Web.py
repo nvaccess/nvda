@@ -30,7 +30,7 @@ class Ia2Web(IAccessible):
 		if obj.windowHandle != self.windowHandle:
 			# Only supported on the same window.
 			raise NotImplementedError
-		if not isinstance(obj,Ia2Web):
+		if not isinstance(obj, Ia2Web):
 			# #4080: Input composition NVDAObjects are the same window but not IAccessible2!
 			raise NotImplementedError
 		accId = obj.IA2UniqueID
