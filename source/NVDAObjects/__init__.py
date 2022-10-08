@@ -1093,6 +1093,10 @@ Tries to force this object to take the focus.
 		"""
 		speech.speakObject(self, reason=controlTypes.OutputReason.FOCUS)
 
+	def isDescendantOf(self, obj: "NVDAObject") -> bool:
+		"""  is this object a descendant of obj? """
+		raise NotImplementedError
+
 	def _get_placeholder(self):
 		"""If it exists for this object get the value of the placeholder text.
 		For example this might be the aria-placeholder text for a field in a web page.

@@ -13,6 +13,7 @@ from typing import (
 	Dict,
 	Tuple,
 )
+import array
 from ctypes.wintypes import POINT
 from comtypes import COMError
 import time
@@ -2005,6 +2006,24 @@ class UIA(Window):
 
 	def scrollIntoView(self):
 		pass
+
+	def isDescendantOf(self, obj):
+		if isinstance(obj, UIA):
+			# As both objects are UIA,
+			# We can search this object's  ancestors for obj with a UIA treeWalker
+			# which is much more efficient than fetching each parent.
+			objID = obj.UIAElement.GetRuntimeId()
+			objIDArray=array.array("l",objID)
+			UIACondition=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_RuntimeIdPropertyId,objIDArray)
+			UIAWalker=UIAHandler.handler.clientObject.createTreeWalker(UIACondition)
+			try:
+				objUIAElement=UIAWalker.normalizeElement(self.UIAElement)
+			except COMError:
+				log.debugWarning("Error walking ancestors",exc_info=True)
+				objUIAElement=None
+			return bool(objUIAElement)
+		else: # not UIA
+			raise NotImplementedError
 
 	def _get_controllerFor(self):
 		e=self._getUIACacheablePropertyValue(UIAHandler.UIA_ControllerForPropertyId)
