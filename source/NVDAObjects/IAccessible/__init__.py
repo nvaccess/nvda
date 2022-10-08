@@ -1661,9 +1661,6 @@ the NVDAObject for IAccessible
 		else:
 			return super(IAccessible,self)._get_groupName()
 
-	def event_selection(self):
-		return self.event_stateChange()
-
 	def event_selectionAdd(self):
 		return self.event_stateChange()
 

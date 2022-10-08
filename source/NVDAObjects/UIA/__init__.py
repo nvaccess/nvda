@@ -2039,8 +2039,11 @@ class UIA(Window):
 				objList.append(obj)
 		return objList
 
+	def event_UIA_controllerFor(self):
+		return self.event_controllerForChange()
+
 	def event_UIA_elementSelected(self):
-		self.event_stateChange()
+		self.event_selection()
 
 	def event_valueChange(self):
 		if issubclass(self.TextInfo, UIATextInfo):
@@ -2284,14 +2287,8 @@ class WpfTextView(UIA):
 
 class SearchField(EditableTextWithSuggestions, UIA):
 	"""An edit field that presents suggestions based on a search term.
+	This is now an empty class as Functionality has been moved to the base EditableText behaviour.
 	"""
-
-	def event_UIA_controllerFor(self):
-		# Only useful if suggestions appear and disappear.
-		if self == api.getFocusObject() and len(self.controllerFor)>0:
-			self.event_suggestionsOpened()
-		else:
-			self.event_suggestionsClosed()
 
 
 class SuggestionsList(UIA):
@@ -2321,20 +2318,11 @@ class SuggestionsList(UIA):
 class SuggestionListItem(UIA):
 	"""Recent Windows releases use suggestions lists for various things, including Start menu suggestions, Store, Settings app and so on.
 	Unlike suggestions list class, top suggestion is automatically selected.
+	Note that support for reporting the selection is now handled generically on the base NVDAObject.
 	"""
 
 	role = controlTypes.Role.LISTITEM
 
-	def event_UIA_elementSelected(self):
-		focusControllerFor = api.getFocusObject().controllerFor
-		if len(focusControllerFor) > 0 and focusControllerFor[0].appModule is self.appModule and self.name:
-			speech.cancelSpeech()
-			if api.setNavigatorObject(self, isFocus=True):
-				self.reportFocus()
-				# Display results as flash messages.
-				braille.handler.message(braille.getPropertiesBraille(
-					name=self.name, role=self.role, positionInfo=self.positionInfo
-				))
 
 # NetUIDropdownAnchor comboBoxes (such as in the MS Office Options dialog)
 class NetUIDropdownAnchor(UIA):
