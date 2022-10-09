@@ -20,7 +20,7 @@ class StartMenuSearchField(SearchField):
 	# #7370: do not announce text when start menu (searchui) closes.
 	announceNewLineText = False
 
-	def _get_description(self):
+	def _get_description(self) -> str:
 		# #13841: detect search highlights and anounce it.
 		if self.lastChild.UIAAutomationId == "PlaceholderTextContentPresenter":
 			return self.lastChild.name
