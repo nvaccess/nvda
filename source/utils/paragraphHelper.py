@@ -78,37 +78,38 @@ def _isLastLineOfParagraph(line: str) -> bool:
 
 def _splitParagraphIntoChunks(paragraph: str) -> List[str]:
 	"""
-This optional function attempts to break large paragraphs into smaller chunks
-	to possibly improve processing efficiency by some synthesizers.
-	If this function fails to break the paragraph into chunks, functionality will still be fine.
+This function attempts to break large paragraphs into smaller chunks
+	in an attempt to improve processing efficiency by some synthesizers.
+	If this function fails to break the paragraph into chunks, functionality will likely be fine,
+	though responsiveness may not be optimal.
 	"""
-	CHUNK_SIZE = 2048
-	SENTENCE_TERMINATORS = frozenset({".", "?", "!"})
-	start = 0
+	from utils.sentenceHelper import findEndOfSentence
+	CHUNK_SIZE = 1024
 	paragraphLen = len(paragraph)
 	if paragraphLen <= CHUNK_SIZE:
 		return [paragraph]
 	chunks = []
-	while start < paragraphLen:
-		remaining = paragraphLen - start
-		if remaining <= CHUNK_SIZE:
-			chunks.append(paragraph[start:])
-			break
-		end = start
-		maxNextChunk = min(remaining, CHUNK_SIZE)
-		lastTerminatorEnd = -1
-		while (end != -1) and ((end - start) < maxNextChunk):
-			end = paragraph.find(" ", end)
-			if end > 0 and paragraph[end - 1] in SENTENCE_TERMINATORS:
-				lastTerminatorEnd = end + 1
-			if end != -1:
-				end += 1
-		end = lastTerminatorEnd
-		if end == -1:
-			chunks.append(paragraph[start:])
-			break
-		chunks.append(paragraph[start: end])
-		start = end
+	sentenceEndPoints = []
+	endPoint = findEndOfSentence(paragraph, 0)
+	while endPoint != -1:
+		sentenceEndPoints.append(endPoint)
+		endPoint = findEndOfSentence(paragraph, endPoint)
+	chunkStart = chunkEnd = startIndex = endIndex = 0
+	while endIndex < len(sentenceEndPoints):
+		chunkLength = sentenceEndPoints[endIndex] - chunkStart
+		if chunkLength > CHUNK_SIZE:
+			if endIndex > startIndex:
+				chunkEnd = sentenceEndPoints[endIndex - 1]
+			else:
+				chunkEnd = sentenceEndPoints[endIndex]
+				endIndex += 1
+			chunks.append(paragraph[chunkStart: chunkEnd])
+			chunkStart = chunkEnd
+			startIndex = endIndex
+		else:
+			endIndex += 1
+	if chunkStart < paragraphLen:  # any leftovers?
+		chunks.append(paragraph[chunkStart:])
 	return chunks
 
 
