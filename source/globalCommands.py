@@ -3527,7 +3527,9 @@ class GlobalCommands(ScriptableObject):
 				parent=parent.simpleParent
 			if parent:
 				newObject=parent.simpleNext
-		# explicit check here as script is available on the lock screen
+		# This script is available on the lock screen, as such
+		# ensure the navigator object does not contain secure information
+		# before announcing this object
 		if newObject and api.setNavigatorObject(newObject):
 			speech.speakObject(newObject, reason=controlTypes.OutputReason.FOCUS)
 		else:
