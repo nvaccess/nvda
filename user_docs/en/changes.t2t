@@ -10,10 +10,14 @@ What's New in NVDA
 
 == Changes ==
 - Updated Sonic rate boost library to commit ``1d70513``. (#14180)
-
+-
 
 
 == Bug Fixes ==
+- In Windows 11, NVDA will announce search highlights when opening Start menu. (#13841)
+- Suggestions are reported when typing an @mention in in Microsoft Excel comments. (#13764)
+- In the Google Chrome location bar, suggestion controls (switch to tab, remove suggestion etc) are now reported when selected. (#13522)
+-
 
 
 == Changes for Developers ==
@@ -22,6 +26,7 @@ Add-ons will need to be re-tested and have their manifest updated.
 Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] for information on NVDA's API deprecation and removal process.
 
 - System test should now pass when run locally on non-English systems. (#13362)
+- It is no longer necessary to use SearchField and SuggestionListItem UIA NvDAObjects  in new UI Automation scenarios where automatic reporting of search suggestions where typing has been exposed via UI Automation with the controllerFor pattern, as this functionality is now available generically via behaviours.EditableText and the base NVDAObject respectively.
 -
 
 === API Breaking Changes ===
