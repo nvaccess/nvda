@@ -1178,7 +1178,17 @@ Tries to force this object to take the focus.
 				speech.speakText(text)
 
 	def event_stateChange(self):
-		if self is api.getFocusObject():
+		# Automatically announce state changes for certain objects.
+		inFocus = (
+			# this is the current focus:
+			# E.g. announcing the checked state of a checkbox
+			self is api.getFocusObject()
+			# this is a focuse ancestor:
+			# Including the ancestors supports scenarios such as when pressing a focused button changes the state of an ancestor container,
+			# E.g. a button inside a column header that changes the sorting state of the column (#10890)
+			or any(self is obj for obj in api.getFocusAncestors())
+		)
+		if inFocus:
 			speech.speakObjectProperties(self, states=True, reason=controlTypes.OutputReason.CHANGE)
 		braille.handler.handleUpdate(self)
 		vision.handler.handleUpdate(self, property="states")
