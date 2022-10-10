@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA_georgian_translation\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-07 04:25+0000\n"
-"PO-Revision-Date: 2022-09-08 15:54+0400\n"
+"POT-Creation-Date: 2022-09-30 00:02+0000\n"
+"PO-Revision-Date: 2022-10-06 13:54+0400\n"
 "Last-Translator: Dragan Ratkovich\n"
 "Language-Team: Georgian translation team <admin@gozaltech.org>\n"
 "Language: ka\n"
@@ -96,7 +96,6 @@ msgid "banner"
 msgstr "ბანერი"
 
 #. Translators: Reported for the complementary landmark, normally found on web pages.
-#, fuzzy
 msgctxt "aria"
 msgid "complementary"
 msgstr "დამატებითი"
@@ -107,13 +106,11 @@ msgid "content info"
 msgstr "ინფორმაცია შინაარსის შესახებ"
 
 #. Translators: Reported for the main landmark, normally found on web pages.
-#, fuzzy
 msgctxt "aria"
 msgid "main"
 msgstr "მთავარი"
 
 #. Translators: Reported for the navigation landmark, normally found on web pages.
-#, fuzzy
 msgctxt "aria"
 msgid "navigation"
 msgstr "ნავიგაცია"
@@ -124,7 +121,6 @@ msgid "search"
 msgstr "ძიება"
 
 #. Translators: Reported for the form landmark, normally found on web pages.
-#, fuzzy
 msgctxt "aria"
 msgid "form"
 msgstr "ფორმა"
@@ -132,7 +128,7 @@ msgstr "ფორმა"
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
 msgid "No ducking"
-msgstr "ხმის დახშობა გამორთულია"
+msgstr "ხმის დახშობის გამორთვა"
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
@@ -2378,7 +2374,7 @@ msgid ""
 msgstr ""
 "NVDA-მ ვერ დაარეგისტრირა სესიის თვალყურის დევნება. სანამ NVDA-ს ეს ასლი "
 "მუშაობს, Windows-ის დაბლოკვისას თქვენი სამუშაო მაგიდა არ იქნება დაცული. "
-"გსურთ რომ გადაიტვირთოს NVDA? "
+"გსურთ რომ გადაიტვირთოს NVDA?"
 
 #. Translators: This is a warning to users, shown if NVDA cannot determine if
 #. Windows is locked.
@@ -2396,7 +2392,7 @@ msgstr "პორტრეტი"
 #. Translators: Reported when the battery is plugged in, and now is charging.
 #, python-format
 msgid "Charging battery. %d percent"
-msgstr "ბატარეა იტენება. %d პროცენტი"
+msgstr "დატენვა დაწყებულია. %d პროცენტი"
 
 #. Translators: Reported when the battery is no longer plugged in, and now is not charging.
 #, python-format
@@ -2409,7 +2405,7 @@ msgstr "NVDA ჩართულია"
 
 #. Translators: Title of a dialog to find text.
 msgid "Find"
-msgstr "ძებნა"
+msgstr "ძიება"
 
 #. Translators: Dialog text for NvDA's find command.
 msgid "Type the text you wish to find"
@@ -2429,22 +2425,23 @@ msgstr "ძიების შეცდომა"
 
 #. Translators: Input help message for NVDA's find command.
 msgid "find a text string from the current cursor position"
-msgstr "ტექსტის ძიება კურსორის მიმდინარე პოზიციიდან"
+msgstr "ტექსტის სტრიქონის ძიება კურსორის მიმდინარე პოზიციიდან"
 
 #. Translators: Input help message for find next command.
 msgid ""
 "find the next occurrence of the previously entered text string from the "
 "current cursor's position"
 msgstr ""
-"წინა შეყვანილი ტექსტის შემდეგი გამოვლინების ძიება კურსორის მიმდინარე "
-"პოზიციიდან"
+"წინა შეყვანილი ტექსტის სტრიქონის შემდეგი გამოვლინების ძიება კურსორის "
+"მიმდინარე პოზიციიდან"
 
 #. Translators: Input help message for find previous command.
 msgid ""
 "find the previous occurrence of the previously entered text string from the "
 "current cursor's position"
 msgstr ""
-"წინა შეყვანილი ტექსტის წინა გამოვლინების ძიება კურსორის მიმდინარე პოზიციიდან"
+"წინა შეყვანილი ტექსტის სტრიქონის წინა გამოვლინების ძიება კურსორის მიმდინარე "
+"პოზიციიდან"
 
 #. Translators: Reported when there is no text selected (for copying).
 msgid "No selection"
@@ -2540,7 +2537,6 @@ msgid "Configuration"
 msgstr "კონფიგურაცია"
 
 #. Translators: The name of a category of NVDA commands.
-#, fuzzy
 msgid "Configuration profiles"
 msgstr "კონფიგურაციის პროფილები"
 
@@ -2905,7 +2901,7 @@ msgstr "ხაზის შეწევის გახმოვანება 
 
 #. Translators: A message reported when cycling through line indentation settings.
 msgid "Report line indentation with speech and tones"
-msgstr "ხაზის შეწევის გახმოვანება მეტყველებითა და ხმოვანი სიგნალებით"
+msgstr "ხაზის შეწევის გახმოვანება მეტყველებითა და სიგნალებით"
 
 #. Translators: A message reported when cycling through line indentation settings.
 msgid "Report line indentation off"
@@ -4083,7 +4079,7 @@ msgstr "გადართავს ბრაილის მიბმას ფ
 #. (braille can be tethered automatically or to either focus or review position).
 #, python-format
 msgid "Braille tethered %s"
-msgstr "ბრაილი მიბმულია %sზე"
+msgstr "ბრაილი მიბმულია %s"
 
 #. Translators: Input help mode message for toggle braille focus context presentation command.
 msgid "Toggle the way context information is presented in braille"
@@ -4214,7 +4210,7 @@ msgstr "ბრაილის დისპლეის გადაადგი�
 
 #. Translators: Input help mode message for a braille command.
 msgid "Inputs braille dots via the braille keyboard"
-msgstr "ბრაილის შრიფტით აკრეფა ბრაილის კლავიატურაზე"
+msgstr "ბრაილის წერტილების შეყვანა ბრაილის კლავიატურის გამოყენებით"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Moves the braille display to the current focus"
@@ -4325,8 +4321,8 @@ msgid ""
 "Reloads app modules and global plugins without restarting NVDA, which can be "
 "Useful for developers"
 msgstr ""
-"ხელახლა ჩატვირთავს აპლიკაციის მოდულებსა და გლობალურ პლაგინებს NVDA-ის "
-"გადატვირთვის გარეშე, რომელიც, შესაძლოა, სასარგებლო იყოს დამმუშავებლებისთვის"
+"გადატვირთავს აპლიკაციის მოდულებსა და გლობალურ პლაგინებს NVDA-ს გადატვირთვის "
+"გარეშე, რომელიც, შესაძლოა, სასარგებლო იყოს დამმუშავებლებისთვის"
 
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
@@ -4394,7 +4390,6 @@ msgstr ""
 "გამოიყენება კონტექსტური მენიუს გასააქტიურებლად."
 
 #. Translators: Reported when the object has no location for the mouse to move to it.
-#, fuzzy
 msgid "object has no location"
 msgstr "ობიექტს არ აქვს მდებარეობა"
 
@@ -4441,7 +4436,7 @@ msgstr "Windows-ის სიმბოლოების ოპტიკურ�
 msgid "Please disable screen curtain before using Windows OCR."
 msgstr ""
 "Windows-ის სიმბოლოების ოპტიკური ამომცნობის გამოსაყენებლად, გთხოვთ, "
-"თავდაპირველად გათიშოთ ეკრანის ჩაბნელება."
+"თავდაპირველად გამორთოთ ეკრანის ჩაბნელება."
 
 #. Translators: Input help mode message for toggle report CLDR command.
 msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
@@ -4913,7 +4908,7 @@ msgstr "%s კლავიატურა"
 
 #. Translators: Used when describing keys on the system keyboard applying to all layouts.
 msgid "keyboard, all layouts"
-msgstr "კლავიატურა, ყველა წყობა"
+msgstr "კლავიატურა, ყველა განლაგება"
 
 #. Translators: the label for the Windows default NVDA interface language.
 msgid "User default"
@@ -5040,7 +5035,6 @@ msgstr "რკალი"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Balloon"
 msgstr "დამხმარე სისტემური შეტყობინება"
@@ -5059,7 +5053,6 @@ msgstr "მოხრილი ზედა ისარი"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Bevel"
 msgstr "დონე"
@@ -5195,7 +5188,6 @@ msgstr "ათკუთხა"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Diagonal stripe"
 msgstr "დიაგონალური შტრიხები"
@@ -5241,7 +5233,6 @@ msgstr "ორმაგი ტალღა"
 # Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Down Arrow"
 msgstr "ისარი ქვემოთ"
@@ -5946,7 +5937,6 @@ msgstr "ტრაპეცია"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Up Arrow"
 msgstr "ისარი ზემოთ"
@@ -5977,7 +5967,6 @@ msgstr "U-ს ფორმის ისარი"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Vertical scroll"
 msgstr "ვერტიკალური ზოლი"
@@ -5996,21 +5985,18 @@ msgstr "უკან"
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "action"
 msgid "Beginning"
 msgstr "მუშაობს"
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "action"
 msgid "Document"
 msgstr "დოკუმენტი"
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "action"
 msgid "End"
 msgstr "დასასრული"
@@ -6053,7 +6039,6 @@ msgstr "დაბრუნება"
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "action"
 msgid "Sound"
 msgstr "ხმა"
@@ -6133,7 +6118,6 @@ msgid "Rate boos&t"
 msgstr "დამა&ტებითი სიჩქარე"
 
 #. Translators: Label for a setting in synth settings ring.
-#, fuzzy
 msgctxt "synth setting"
 msgid "Rate boost"
 msgstr "დამატებითი სიჩქარე"
@@ -6444,7 +6428,7 @@ msgstr ""
 
 #. Translators: The title of the dialog requesting donations from users.
 msgid "Please Donate"
-msgstr "გთხოვთ შემოწიროთ თანხა"
+msgstr "გთხოვთ, შემოწიროთ თანხა"
 
 #. Translators: The label of the button to donate
 #. in the "Please Donate" dialog.
@@ -6511,7 +6495,7 @@ msgstr ""
 "\n"
 "{name} მუშავდება NV Access, არაკომერციული ორგანიზაციის მიერ, რომელიც მიზნად "
 "ისახავს, დაეხმაროს და ხელი შეუწყოს უფასო და ღია კოდის მქონე პროგრამებით "
-"უსინათლო და მცირემხედველ პირებს..\n"
+"უსინათლო და მცირემხედველ პირებს.\n"
 "თუ თვლით, რომ NVDA სასარგებლოა და გსურთ რომ ის გაუმჯობესდეს, გთხოვთ, გაიღოთ "
 "NV Access-ისთვის შემოწირულობა. თანხის შემოწირვა შეგიძლიათ NVDA მენიუდან, "
 "თანხის შემოწირვის არჩევით."
@@ -6636,7 +6620,6 @@ msgid "picture"
 msgstr "სურათი"
 
 #. Translators: a style of fill type (to color the inside of a control or text)
-#, fuzzy
 msgctxt "UIAHandler.FillType"
 msgid "pattern"
 msgstr "ნიმუში"
@@ -6646,10 +6629,10 @@ msgstr "ეკრანი"
 
 #. Translators: Input help mode message for the 'read documentation script
 msgid "Tries to read documentation for the selected autocompletion item."
-msgstr "ცდილობს წაიკითხოს არჩეული ავტომატური შევსების ელემენტის დოკუმენტაცია."
+msgstr ""
+"ცდილობს წაიკითხოს დოკუმენტაცია არჩეული ავტომატური შევსების ელემენტისთვის."
 
 #. Translators: When the help popup cannot be found for the selected autocompletion item
-#, fuzzy
 msgid "Can't find the documentation window."
 msgstr "დოკუმენტაციის ფანჯარა ვერ მოიძებნა."
 
@@ -6663,12 +6646,13 @@ msgstr "დარჩენილი დროის განსაზღვრ�
 
 #. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
-msgstr "ახმოვანებს ბილიკის დაკვრის დარჩენილ დროს თუ შესაძლებელია"
+msgstr ""
+"მიმდინარე ბილიკისთვის ახმოვანებს დარჩენილ დროს, ასეთის არსებობის შემთხვევაში"
 
 #. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
 msgid "Reports the elapsed time of the currently playing track, if any"
 msgstr ""
-"მიმდინარე ბილიკისთვის აცხადებს გასულ დროს, ასეთის არსებობის შემთხვევაში"
+"მიმდინარე ბილიკისთვის ახმოვანებს გასულ დროს, ასეთის არსებობის შემთხვევაში"
 
 #. Translators: Reported if the total time is not available in Foobar2000
 msgid "Total time not available"
@@ -6722,7 +6706,7 @@ msgstr "აჩვენებს ერთ ერთ უახლეს შე�
 #. Translators: This Outlook Express message has an attachment
 #. Translators: when an email has attachments
 msgid "has attachment"
-msgstr "შეიცავს ფაილს"
+msgstr "შეიცავს მიმაგრებულ ფაილს"
 
 #. Translators: this Outlook Express message is flagged
 msgid "flagged"
@@ -6786,7 +6770,6 @@ msgid "unread"
 msgstr "წაუკითხავი"
 
 #. Translators: The name of a category of NVDA commands.
-#, fuzzy
 msgid "Python Console"
 msgstr "Python კონსოლი"
 
@@ -6816,7 +6799,7 @@ msgstr "მიმდინარე შედეგის დასაწყი�
 #. Translators: A message announcing what configuration profile is currently being edited.
 #, python-brace-format
 msgid "Editing profile {profile}"
-msgstr "{profile} პროფილის რედაქტირება"
+msgstr "რედაქტირდება {profile} პროფილი"
 
 #. Translators: the last action taken on an Outlook mail message
 msgid "replied"
@@ -7302,7 +7285,7 @@ msgstr "გადართავს ბრაილის შეყვანა�
 
 #. Translators: The name of a series of braille displays.
 msgid "Standard HID Braille Display"
-msgstr "სტანდარტული HID ბრაილის დისპლეი"
+msgstr "სტანდარტული HID ბრაილის ეკრანი"
 
 #. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille series"
@@ -7650,7 +7633,7 @@ msgstr "ხაზი"
 #. Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page
 #. embedded within a web page.
 msgid "frame"
-msgstr "ფრეიმი"
+msgstr "ჩარჩო"
 
 #. Translators: Identifies a tool bar.
 msgid "tool bar"
@@ -7763,7 +7746,7 @@ msgstr "საფენი"
 
 #. Translators: Identifies a caption (usually a short text identifying a picture or a graphic on websites).
 msgid "caption"
-msgstr "ხელმოწერა"
+msgstr "წარწერა"
 
 #. Translators: Identifies a check menu item (a menu item with a checkmark as part of the menu item's
 #. name).
@@ -7809,7 +7792,7 @@ msgstr "სათაური"
 
 #. Translators: Identifies an image map (a type of graphical link).
 msgid "image map"
-msgstr "სურათი"
+msgstr "გამოსახულების რუკა"
 
 #. Translators: Identifies an input window.
 msgid "input window"
@@ -7891,14 +7874,14 @@ msgstr "გახლეჩილი მენიუ"
 
 #. Translators: Identifies a text frame (a frame window which contains text).
 msgid "text frame"
-msgstr "ტექსტური ფრეიმი"
+msgstr "ტექსტური ჩარჩო"
 
 #. Translators: Identifies a toggle button (a button used to toggle something).
 msgid "toggle button"
 msgstr "გადამრთველი ღილაკი"
 
 msgid "border"
-msgstr "ჩარჩო"
+msgstr "საზღვარი"
 
 #. Translators: Identifies a caret object.
 msgid "caret"
@@ -8112,7 +8095,6 @@ msgid "article"
 msgstr "სტატია"
 
 #. Translators: Identifies a region.
-#, fuzzy
 msgid "region"
 msgstr "არე"
 
@@ -8129,7 +8111,6 @@ msgid "busy indicator"
 msgstr "ჩატვირთვის მაჩვენებელი"
 
 #. Translators: Identifies a comment.
-#, fuzzy
 msgid "comment"
 msgstr "კომენტარი"
 
@@ -8240,7 +8221,7 @@ msgstr "ეკრანის მიღმა"
 
 #. Translators: Presented when the control allows selection such as text fields.
 msgid "selectable"
-msgstr "მონიშვნადი"
+msgstr "არჩევადი"
 
 #. Translators: Presented when a control can be moved to using system focus.
 msgid "focusable"
@@ -8389,7 +8370,7 @@ msgstr "COM რეგისტრაციის გამოსწორებ�
 #. Translators: The message displayed while NVDA is running the COM Registration fixing tool
 msgid "Please wait while NVDA tries to fix your system's COM registrations."
 msgstr ""
-"გთხოვთ, დაელოდოთ სანამ NVDA შეეცდება თქვენი სისტემის COM რეგისტრაციების "
+"გთხოვთ, დაელოდოთ, სანამ NVDA შეეცდება თქვენი სისტემის COM რეგისტრაციების "
 "გამოსწორებას."
 
 #. Translators: The message displayed when the COM Registration Fixing tool completes.
@@ -8466,7 +8447,7 @@ msgstr "სერვისები"
 
 #. Translators: The label of a menu item to open NVDA user guide.
 msgid "&User Guide"
-msgstr "&მომხმარებლის სახელმძღვანელო"
+msgstr "მომხმარებლის სა&ხელმძღვანელო"
 
 #. Translators: The label of a menu item to open the Commands Quick Reference document.
 msgid "Commands &Quick Reference"
@@ -8493,7 +8474,7 @@ msgstr "მი&სალმების დიალოგი..."
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
 msgid "&Check for update..."
-msgstr "განახლების &შემოწმება..."
+msgstr "განახლების შ&ემოწმება..."
 
 #. Translators: The label for the menu item to open About dialog to get information about NVDA.
 msgid "About..."
@@ -8509,14 +8490,14 @@ msgstr "თანხის შეწირვა"
 
 #. Translators: The label for the menu item to run a pending update.
 msgid "Install pending &update"
-msgstr "მოლოდინის რეჟიმში მყოფი განახლ&ების დაყენება"
+msgstr "მოლოდინის რეჟიმში მყოფი &განახლების დაყენება"
 
 #. Translators: The description for the menu item to run a pending update.
 msgid "Execute a previously downloaded NVDA update"
 msgstr "NVDA-ს ადრე ჩამოტვირთული განახლების გაშვება"
 
 msgid "E&xit"
-msgstr "გამო&სვლა"
+msgstr "გა&მოსვლა"
 
 #. Translators: The title of the dialog to exit NVDA
 msgid "Exit NVDA"
@@ -8583,7 +8564,7 @@ msgstr "ყველა პარამეტრის ნაგულისხ�
 
 #. Translators: The label for the menu item to save current settings.
 msgid "&Save configuration"
-msgstr "&კონფიგურაციის შენახვა"
+msgstr "კონფიგურაციის შენა&ხვა"
 
 #. Translators: The help text for the menu item to save current settings.
 msgid "Write the current configuration to nvda.ini"
@@ -8724,7 +8705,7 @@ msgstr "დამატებების &მიღება..."
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
-msgstr "&დაყენება..."
+msgstr "და&ყენება..."
 
 #. Translators: The label of a button in the Add-ons Manager to open the list of incompatible add-ons.
 msgid "&View incompatible add-ons..."
@@ -8746,8 +8727,8 @@ msgid ""
 "Are you sure you wish to remove the {addon} add-on from NVDA? This cannot be "
 "undone."
 msgstr ""
-"დარწმუნებული ხართ რომ გსურთ წაშალოთ დამატება {addon} NVDA-დან? ამის გაუქმება "
-"შეუძლებელია."
+"დარწმუნებული ხართ, რომ გსურთ წაშალოთ დამატება {addon} NVDA-დან? ამის "
+"გაუქმება შეუძლებელია."
 
 #. Translators: Title for message asking if the user really wishes to remove the selected Addon.
 msgid "Remove Add-on"
@@ -8831,7 +8812,7 @@ msgid "Please wait while the add-on is being installed."
 msgstr "გთხოვთ, დაელოდოთ, სანამ დამატება ყენდება."
 
 #. Translators: The message displayed when an error occurs when installing an add-on package.
-#, fuzzy, python-format
+#, python-format
 msgid "Failed to install add-on from %s"
 msgstr "ვერ მოხერხდა დამატების დაყენება %s დან"
 
@@ -8951,7 +8932,7 @@ msgstr "გადამრთ&ველები..."
 
 #. Translators: The label of a checkbox in the Configuration Profiles dialog.
 msgid "Temporarily d&isable all triggers"
-msgstr "დ&როებით  ყველა გადამრთველის გამორთვა"
+msgstr "დ&როებით ყველა გადამრთველის გამორთვა"
 
 #. Translators: The item to select the user's normal configuration
 #. in the profile list in the Configuration Profiles dialog.
@@ -9079,10 +9060,10 @@ msgid ""
 "will be removed from that profile and associated with this one.\n"
 "Are you sure you want to continue?"
 msgstr ""
-"ეს გადამრთველი უკვე დაკავშირებულია სხვა პროფილთან, თუ თქვენ აირჩევთ "
+"ეს გადამრთველი უკვე დაკავშირებულია სხვა პროფილთან. თუ თქვენ აირჩევთ "
 "გაგრძელებას, გადამრთველი მოეხსნება წინა პროფილს და დაუკავშირდება "
 "მიმდინარეს.\n"
-"დარწმუნებული ხართ რომ გსურთ გაგრძელება?"
+"დარწმუნებული ხართ, რომ გსურთ გაგრძელება?"
 
 #. Translators: An error displayed when the user attempts to create a configuration profile
 #. with an empty name.
@@ -9635,7 +9616,7 @@ msgstr "იმისათვის, რომ ახალი ენა ძა�
 
 #. Translators: The label for a button  in the dialog which appears when the user changed NVDA's interface language.
 msgid "Restart &now"
-msgstr "ახლა გადა&ტვირთვა"
+msgstr "გადატვირთ&ვა"
 
 #. Translators: The label for a button  in the dialog which appears when the user changed NVDA's interface language.
 msgid "Restart &later"
@@ -10324,7 +10305,7 @@ msgctxt "advanced.uiaWithMSWord"
 msgid "Use UI Automation to access Microsoft &Word document controls"
 msgstr ""
 "Microsoft &Word-ის დოკუმენტების კონტროლებზე წვდომისთვის UI ავტომატიზაციის "
-"გამოყენება"
+"გამოყენება:"
 
 #. Translators: Label for the default value of the Use UIA with MS Word combobox,
 #. in the Advanced settings panel.
@@ -10344,7 +10325,6 @@ msgstr "სადაც შესაფერისია"
 
 # გამოიყენება სიმბოლოების წარმოთქვმის დიალოგში.
 #. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
-#, fuzzy
 msgctxt "advanced.uiaWithMSWord"
 msgid "Always"
 msgstr "ყოველთვის"
@@ -10456,7 +10436,7 @@ msgstr "არა"
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
 msgid "Enable support for HID braille"
-msgstr "HID ბრაილის მხარდაჭერის ჩართვა"
+msgstr "HID ბრაილის მხარდაჭერის ჩართვა:"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -10515,7 +10495,7 @@ msgstr "ვირტუალური ბუფერები"
 
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
 msgid "Load Chromium virtual buffer when document busy."
-msgstr "Chromium-ის ვირტუალური ბუფერის ჩატვირთვა როცა დოკუმენტი დაკავებულია."
+msgstr "Chromium-ის ვირტუალური ბუფერის ჩატვირთვა როცა დოკუმენტი დაკავებულია:"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -10589,9 +10569,8 @@ msgid "Restore defaults"
 msgstr "სტანდარტული პარამეტრების აღდგენა"
 
 #. Translators: A label for the braille display on the braille panel.
-#, fuzzy
 msgid "Braille &display"
-msgstr "ბრაილის&დისპლეი"
+msgstr "ბრაილის ეკრანი"
 
 #. Translators: This is the label for the braille display selection dialog.
 msgid "Select Braille Display"
@@ -10685,7 +10664,7 @@ msgstr "ფოკუსირებული კონტექსტის წ�
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
 msgid "I&nterrupt speech while scrolling"
-msgstr "მე&ტყველების გაწყვეტა გადახვევისას"
+msgstr "მე&ტყველების გაწყვეტა გადახვევისას:"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load a single vision enhancement provider.
@@ -10835,9 +10814,8 @@ msgid "Whole &word"
 msgstr "მთლიანი &სიტყვა"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-#, fuzzy
 msgid "Regular &expression"
-msgstr "&რეგულარული გამოთქმა"
+msgstr "რეგულარული გამოთქმა"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
@@ -10984,7 +10962,7 @@ msgstr "სალიცენზიო შეთანხმება"
 
 #. Translators: The title of the dialog asking if usage data can be collected
 msgid "NVDA  Usage Data Collection"
-msgstr "NVDA გამოყენების მონაცემთა შეგროვება"
+msgstr "NVDA-ს გამოყენების მონაცემთა შეგროვება"
 
 #. Translators: A message asking the user if they want to allow usage stats gathering
 msgid ""
@@ -11431,7 +11409,6 @@ msgid "grammar error"
 msgstr "გრამატიკული შეცდომა"
 
 #. Translators: Reported when moving out of text containing a grammar error.
-#, fuzzy
 msgid "out of grammar error"
 msgstr "გრამატიკული შეცდომის გარეთ"
 
@@ -11561,7 +11538,7 @@ msgstr "RGB წითელი {rgb.red}, მწვანე {rgb.green}, ლუ
 
 #, python-format
 msgid "%s items"
-msgstr "%s ელემენტები"
+msgstr "%s ელემენტი"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
@@ -11571,7 +11548,7 @@ msgid ""
 "Cannot set headers. Please enable reporting of table headers in Document "
 "Formatting Settings"
 msgstr ""
-"სათაურების დაყენება შეუძლებელია, გთხოვთ, ჩართოთ სათაურების გამოცხადება "
+"სათაურების დაყენება შეუძლებელია, გთხოვთ, ჩართოთ სათაურების გახმოვანება "
 "დოკუმენტის ფორმატირების პარამეტრებიდან"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
@@ -11778,10 +11755,10 @@ msgid "{firstAddress} {firstValue} through {lastAddress} {lastValue}"
 msgstr "{firstAddress} {firstValue}-დან {lastAddress} {lastValue}-მდე"
 
 #. Translators: Excel, report merged range of cell coordinates
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgctxt "excel-UIA"
 msgid "{firstAddress} through {lastAddress}"
-msgstr "{firstAddress}-დან {lastAddress}-მდე"
+msgstr "{firstAddress}დან {lastAddress}მდე"
 
 #. Translators: the description  for a script for Excel
 msgid "Reports the note or comment thread on the current cell"
@@ -12432,7 +12409,6 @@ msgid "Secondary Value Axis"
 msgstr "მეორადი მნიშვნელობის ღერძი"
 
 #. Translators: Indicates Primary Series Axis
-#, fuzzy
 msgid "Primary Series Axis"
 msgstr "პირველი ქვედა კოლონა"
 
@@ -12808,9 +12784,9 @@ msgstr "შენიშვნა"
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 #. Beware to keep two spaces between the address and the content. Otherwise some synthesizer
 #. may mix the address and the content when the cell contains a 3-digit number.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "{firstAddress}  {firstContent} through {lastAddress}  {lastContent}"
-msgstr "{firstAddress} {firstContent}-დან  {lastAddress} {lastContent}-მდე"
+msgstr "{firstAddress}  {firstContent}დან {lastAddress}  {lastContent}მდე"
 
 #. Translators: border positions in Microsoft Excel.
 msgid "top edge"
