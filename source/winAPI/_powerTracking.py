@@ -128,7 +128,7 @@ def initialize():
 
 
 @unique
-class ReportContext(Enum):
+class _ReportContext(Enum):
 	"""
 	Used to determine the order of information, based on relevance to the user,
 	when announcing power status information
@@ -140,7 +140,15 @@ class ReportContext(Enum):
 	"""e.g. when a user presses nvda+shift+b to fetch the current battery status"""
 
 
-def reportCurrentBatteryStatus(context: ReportContext) -> None:
+def reportACStateChange() -> None:
+	_reportPowerStatus(_ReportContext.AC_STATUS_CHANGE)
+
+
+def reportCurrentBatteryStatus() -> None:
+	_reportPowerStatus(_ReportContext.FETCH_STATUS)
+
+
+def _reportPowerStatus(context: _ReportContext) -> None:
 	"""
 	@param context: the context is used to order the announcement.
 	When the context is AC_STATUS_CHANGE, this reports the current AC status first.
@@ -166,7 +174,7 @@ def _getPowerStatus() -> Optional[SystemPowerStatus]:
 
 def _getSpeechForBatteryStatus(
 		systemPowerStatus: Optional[SystemPowerStatus],
-		context: ReportContext,
+		context: _ReportContext,
 		oldPowerState: PowerState,
 ) -> List[str]:
 	if not systemPowerStatus or systemPowerStatus.BatteryFlag == BatteryFlag.UNKNOWN:
@@ -179,7 +187,7 @@ def _getSpeechForBatteryStatus(
 		return [_("No system battery")]
 
 	if (
-		context == ReportContext.AC_STATUS_CHANGE
+		context == _ReportContext.AC_STATUS_CHANGE
 		and systemPowerStatus.ACLineStatus == oldPowerState
 	):
 		# Sometimes, the power change event double fires.
@@ -188,18 +196,18 @@ def _getSpeechForBatteryStatus(
 
 	text: List[str] = []
 
-	if context == ReportContext.AC_STATUS_CHANGE:
+	if context == _ReportContext.AC_STATUS_CHANGE:
 		# When the AC status changes, users want to be alerted to the new AC status first.
 		text.append(_getACStatusText(systemPowerStatus))
 		text.extend(_getBatteryInformation(systemPowerStatus))
-	elif context == ReportContext.FETCH_STATUS:
+	elif context == _ReportContext.FETCH_STATUS:
 		# When fetching the current battery status,
 		# users want to know the current battery status first,
 		# rather than the AC status which should be unchanged.
 		text.extend(_getBatteryInformation(systemPowerStatus))
 		text.append(_getACStatusText(systemPowerStatus))
 	else:
-		raise NotImplementedError(f"Unexpected ReportContext: {context}")
+		raise NotImplementedError(f"Unexpected _ReportContext: {context}")
 
 	return text
 

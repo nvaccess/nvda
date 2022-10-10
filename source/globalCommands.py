@@ -46,7 +46,7 @@ import inputCore
 import characterProcessing
 from baseObject import ScriptableObject
 import core
-from winAPI._powerTracking import reportCurrentBatteryStatus, ReportContext
+from winAPI._powerTracking import reportCurrentBatteryStatus
 import winVersion
 from base64 import b16encode
 import vision
@@ -2515,7 +2515,7 @@ class GlobalCommands(ScriptableObject):
 		gesture="kb:NVDA+shift+b"
 	)
 	def script_say_battery_status(self, gesture: inputCore.InputGesture) -> None:
-		reportCurrentBatteryStatus(ReportContext.FETCH_STATUS)
+		reportCurrentBatteryStatus()
 
 	@script(
 		description=_(

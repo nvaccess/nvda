@@ -148,7 +148,7 @@ class _MessageWindow(windowUtils.CustomWindow):
 		"""
 		if msg == WindowMessage.POWER_BROADCAST:
 			if wParam == _powerTracking.PowerBroadcast.APM_POWER_STATUS_CHANGE:
-				_powerTracking.reportCurrentBatteryStatus(_powerTracking.ReportContext.AC_STATUS_CHANGE)
+				_powerTracking.reportACStateChange()
 		elif msg == WindowMessage.DISPLAY_CHANGE:
 			_displayTracking.reportScreenOrientationChange(lParam)
 		elif msg == WindowMessage.WTS_SESSION_CHANGE:
