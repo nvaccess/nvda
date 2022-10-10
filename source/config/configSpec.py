@@ -12,7 +12,7 @@ from configobj import ConfigObj
 #: provide an upgrade step (@see profileUpgradeSteps.py). An upgrade step does not need to be added when
 #: just adding a new element to (or removing from) the schema, only when old versions of the config 
 #: (conforming to old schema versions) will not work correctly with the new schema.
-latestSchemaVersion = 8
+latestSchemaVersion = 9
 
 #: The configuration specification string
 #: @type: String
@@ -202,8 +202,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	reportSpellingErrors = boolean(default=true)
 	reportPage = boolean(default=true)
 	reportLineNumber = boolean(default=False)
-	reportLineIndentation = boolean(default=False)
-	reportLineIndentationWithTones = boolean(default=False)
+	# 0: Off, 1: Speech, 2: Tones, 3: Both Speech and Tones
+	reportLineIndentation = integer(0, 3, default=0)
 	reportParagraphIndentation = boolean(default=False)
 	reportTables = boolean(default=true)
 	includeLayoutTables = boolean(default=False)

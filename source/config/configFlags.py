@@ -10,6 +10,36 @@ from utils.displayString import DisplayStringIntEnum
 
 
 @unique
+class ReportLineIndentation(DisplayStringIntEnum):
+	"""Enumeration containing the possible config values to report line indent.
+	
+	Use ReportLineIndentation.MEMBER.value to compare with the config;
+	use ReportLineIndentation.MEMBER.displayString in the UI for a translatable description of this member.
+	"""
+	
+	OFF = 0
+	SPEECH = 1
+	TONES = 2
+	SPEECH_AND_TONES = 3
+	
+	@property
+	def _displayStringLabels(self):
+		return {
+			# Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+			ReportLineIndentation.OFF: _("Off"),
+			# Translators: A choice in a combo box in the document formatting dialog  to report indentation
+			# with Speech.
+			ReportLineIndentation.SPEECH: pgettext('line indentation setting', "Speech"),
+			# Translators: A choice in a combo box in the document formatting dialog  to report indentation
+			# with tones.
+			ReportLineIndentation.TONES: _("Tones"),
+			# Translators: A choice in a combo box in the document formatting dialog  to report indentation with both
+			# Speech and tones.
+			ReportLineIndentation.SPEECH_AND_TONES: _("Both Speech and Tones"),
+		}
+
+
+@unique
 class ReportTableHeaders(DisplayStringIntEnum):
 	"""Enumeration containing the possible config values to report table headers.
 	

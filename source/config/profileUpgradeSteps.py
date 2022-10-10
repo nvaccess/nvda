@@ -15,7 +15,10 @@ that no information is lost, while updating the ConfigObj to meet the requiremen
 """
 
 from logHandler import log
-from config.configFlags import ReportTableHeaders
+from config.configFlags import (
+	ReportTableHeaders,
+	ReportLineIndentation,
+)
 from typing import (
 	Dict,
 )
@@ -134,3 +137,38 @@ def upgradeConfigFrom_7_to_8(profile: Dict[str, str]) -> None:
 			profile['documentFormatting']['reportTableHeaders'] = ReportTableHeaders.ROWS_AND_COLUMNS.value
 		else:
 			profile['documentFormatting']['reportTableHeaders'] = ReportTableHeaders.OFF.value
+
+
+def upgradeConfigFrom_8_to_9(profile: Dict[str, str]) -> None:
+	"""
+	In NVDA config, when various values were controlling a single combobox in the settings window, these values
+	have been replaced by a single value.
+	The following settings are upgraded:
+	- Line indentation (in Document formatting settings)
+	"""
+	
+	anySettingInConfig = False
+	try:
+		reportLineIndent: str = profile['documentFormatting']['reportLineIndentation']
+		anySettingInConfig = True
+	except KeyError:
+		reportLineIndent = False
+	try:
+		reportLineIndentWithTones: str = profile['documentFormatting']['reportLineIndentationWithTones']
+		del profile['documentFormatting']['reportLineIndentationWithTones']
+		anySettingInConfig = True
+	except KeyError:
+		reportLineIndentWithTones = False
+	if anySettingInConfig:
+		if configobj.validate.is_boolean(reportLineIndent):
+			if configobj.validate.is_boolean(reportLineIndentWithTones):
+				profile['documentFormatting']['reportLineIndentation'] = ReportLineIndentation.SPEECH_AND_TONES.value
+			else:
+				profile['documentFormatting']['reportLineIndentation'] = ReportLineIndentation.SPEECH.value
+		else:
+			if configobj.validate.is_boolean(reportLineIndentWithTones):
+				profile['documentFormatting']['reportLineIndentation'] = ReportLineIndentation.TONES.value
+			else:
+				profile['documentFormatting']['reportLineIndentation'] = ReportLineIndentation.OFF.value
+	else:
+		log.debug("reportLineIndentation and reportLineIndentationWithTones not present, no action taken.")

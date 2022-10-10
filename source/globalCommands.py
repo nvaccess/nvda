@@ -594,28 +594,13 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_DOCUMENTFORMATTING
 	)
 	def script_toggleReportLineIndentation(self,gesture):
-		lineIndentationSpeech = config.conf["documentFormatting"]["reportLineIndentation"]
-		lineIndentationTones = config.conf["documentFormatting"]["reportLineIndentationWithTones"]
-		if not lineIndentationSpeech and not lineIndentationTones:
-			# Translators: A message reported when cycling through line indentation settings.
-			ui.message(_("Report line indentation with speech"))
-			lineIndentationSpeech = True
-		elif lineIndentationSpeech and not lineIndentationTones:
-			# Translators: A message reported when cycling through line indentation settings.
-			ui.message(_("Report line indentation with tones"))
-			lineIndentationSpeech = False
-			lineIndentationTones = True
-		elif not lineIndentationSpeech and lineIndentationTones:
-			# Translators: A message reported when cycling through line indentation settings.
-			ui.message(_("Report line indentation with speech and tones"))
-			lineIndentationSpeech = True
-		else:
-			# Translators: A message reported when cycling through line indentation settings.
-			ui.message(_("Report line indentation off"))
-			lineIndentationSpeech = False
-			lineIndentationTones = False
-		config.conf["documentFormatting"]["reportLineIndentation"] = lineIndentationSpeech
-		config.conf["documentFormatting"]["reportLineIndentationWithTones"] = lineIndentationTones
+		ReportLineIndentation = config.configFlags.ReportLineIndentation
+		numVals = len(ReportLineIndentation)
+		state = ReportLineIndentation((config.conf["documentFormatting"]["reportLineIndentation"] + 1) % numVals)
+		config.conf["documentFormatting"]["reportLineIndentation"] = state.value
+		# Translators: A message reported when cycling through line indentation settings.
+		# {mode} will be replaced with the mode; i.e. Off, Speech, Tones or Both Speech and Tones.
+		ui.message(_("Report line indentation {mode}").format(mode=state.displayString))
 
 	@script(
 		# Translators: Input help mode message for toggle report paragraph indentation command.

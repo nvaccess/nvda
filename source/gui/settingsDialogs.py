@@ -25,7 +25,10 @@ import logHandler
 import installer
 from synthDriverHandler import changeVoice, getSynth, getSynthList, setSynth, SynthDriver
 import config
-from config.configFlags import ReportTableHeaders
+from config.configFlags import (
+	ReportTableHeaders,
+	ReportLineIndentation,
+)
 import languageHandler
 import speech
 import gui
@@ -2341,28 +2344,20 @@ class DocumentFormattingPanel(SettingsPanel):
 		self.lineNumberCheckBox = pageAndSpaceGroup.addItem(wx.CheckBox(pageAndSpaceBox, label=lineText))
 		self.lineNumberCheckBox.SetValue(config.conf["documentFormatting"]["reportLineNumber"])
 
-		# Translators: This is the label for a combobox controlling the reporting of line indentation in the
-		# Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
-		lineIndentationText = _("Line &indentation reporting:")
-		indentChoices=[
-			#Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
-			_("Off"),
-			#Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
-			pgettext('line indentation setting', "Speech"),
-			#Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
-			_("Tones"),
-			#Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
-			_("Both Speech and Tones")
-		]
-		self.lineIndentationCombo = pageAndSpaceGroup.addLabeledControl(lineIndentationText, wx.Choice, choices=indentChoices)
+		lineIndentationChoices = [i.displayString for i in ReportLineIndentation]
+		self.lineIndentationCombo = pageAndSpaceGroup.addLabeledControl(
+			# Translators: This is the label for a combobox controlling the reporting of line indentation in the
+			# Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
+			_("Line &indentation reporting:"),
+			wx.Choice,
+			choices=lineIndentationChoices,
+		)
 		self.bindHelpEvent(
 			"DocumentFormattingSettingsLineIndentation",
 			self.lineIndentationCombo
 		)
-		#We use bitwise operations because it saves us a four way if statement.
-		curChoice = config.conf["documentFormatting"]["reportLineIndentationWithTones"] << 1 |  config.conf["documentFormatting"]["reportLineIndentation"]
-		self.lineIndentationCombo.SetSelection(curChoice)
-
+		self.lineIndentationCombo.SetSelection(config.conf['documentFormatting']['reportLineIndentation'])
+		
 		# Translators: This message is presented in the document formatting settings panelue
 		# If this option is selected, NVDA will report paragraph indentation if available. 
 		paragraphIndentationText = _("&Paragraph indentation")
@@ -2397,9 +2392,6 @@ class DocumentFormattingPanel(SettingsPanel):
 		self.tablesCheckBox.SetValue(config.conf["documentFormatting"]["reportTables"])
 
 		tableHeaderChoices = [i.displayString for i in ReportTableHeaders]
-		# The possible config values to report table headers, in the order they appear
-		# in the combo box.
-		self.tableHeaderVals = [i.value for i in ReportTableHeaders]
 		self.tableHeadersComboBox = tablesGroup.addLabeledControl(
 			# Translators: This is the label for a combobox in the
 			# document formatting settings panel.
@@ -2532,9 +2524,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		config.conf["documentFormatting"]["reportSpellingErrors"]=self.spellingErrorsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportPage"]=self.pageCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLineNumber"]=self.lineNumberCheckBox.IsChecked()
-		choice = self.lineIndentationCombo.GetSelection()
-		config.conf["documentFormatting"]["reportLineIndentation"] = choice in (1, 3)
-		config.conf["documentFormatting"]["reportLineIndentationWithTones"] = choice in (2, 3)
+		config.conf["documentFormatting"]["reportLineIndentation"] = self.lineIndentationCombo.GetSelection()
 		config.conf["documentFormatting"]["reportParagraphIndentation"]=self.paragraphIndentationCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLineSpacing"]=self.lineSpacingCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportTables"]=self.tablesCheckBox.IsChecked()
