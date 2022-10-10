@@ -21,6 +21,8 @@ import aria
 import api
 import speech
 import config
+import NVDAObjects
+
 
 class Ia2Web(IAccessible):
 	IAccessibleTableUsesTableCellIndexAttrib=True

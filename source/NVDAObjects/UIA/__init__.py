@@ -61,6 +61,7 @@ import braille
 import locationHelper
 import ui
 import winVersion
+import NVDAObjects
 
 
 paragraphIndentIDs = {
