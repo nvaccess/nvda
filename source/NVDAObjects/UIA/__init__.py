@@ -2291,6 +2291,7 @@ class WpfTextView(UIA):
 class SearchField(EditableTextWithSuggestions, UIA):
 	"""An edit field that presents suggestions based on a search term.
 	This is now an empty class as Functionality has been moved to the base EditableText behaviour.
+	@warning Deprecated, may be removed in future versions.
 	"""
 
 
