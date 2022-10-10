@@ -32,6 +32,7 @@ import winKernel
 import keyboardHandler
 import baseObject
 import config
+from config.configFlags import ReportTableHeaders
 from logHandler import log
 import controlTypes
 import api
@@ -48,7 +49,7 @@ import bdDetect
 import queueHandler
 import brailleViewer
 from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting
-from utils.security import _isSecureObjectWhileLockScreenActivated
+from utils.security import objectBelowLockScreenAndWindowsIsLocked
 
 if TYPE_CHECKING:
 	from NVDAObjects import NVDAObject
@@ -214,6 +215,8 @@ positiveStateLabels = {
 	controlTypes.State.SELECTED: _("sel"),
 	# Displayed in braille when an object (e.g. a toggle button) is pressed.
 	controlTypes.State.PRESSED: u"⢎⣿⡱",
+	# Displayed in braille when an object (e.g. a toggle button) is half pressed.
+	controlTypes.State.HALF_PRESSED: u"⢎⣸⡱",
 	# Displayed in braille when an object (e.g. a check box) is checked.
 	controlTypes.State.CHECKED: u"⣏⣿⣹",
 	# Displayed in braille when an object (e.g. a check box) is half checked.
@@ -341,7 +344,7 @@ BLUETOOTH_PORT =  ("bluetooth", _("Bluetooth"))
 
 
 def NVDAObjectHasUsefulText(obj: "NVDAObject") -> bool:
-	if _isSecureObjectWhileLockScreenActivated(obj):
+	if objectBelowLockScreenAndWindowsIsLocked(obj):
 		return False
 	import displayModel
 	if issubclass(obj.TextInfo,displayModel.DisplayModelTextInfo):
@@ -641,7 +644,7 @@ class NVDAObjectRegion(Region):
 		@param obj: The associated NVDAObject.
 		@param appendText: Text which should always be appended to the NVDAObject text, useful if this region will always precede other regions.
 		"""
-		if _isSecureObjectWhileLockScreenActivated(obj):
+		if objectBelowLockScreenAndWindowsIsLocked(obj):
 			raise RuntimeError("NVDA object is secure and should not be initialized as a braille region")
 		super().__init__()
 		self.obj = obj
@@ -792,7 +795,7 @@ def getControlFieldBraille(  # noqa: C901
 			"hasDetails": hasDetails,
 			"detailsRole": detailsRole,
 		}
-		if reportTableHeaders:
+		if reportTableHeaders in (ReportTableHeaders.ROWS_AND_COLUMNS, ReportTableHeaders.COLUMNS):
 			props["columnHeaderText"] = field.get("table-columnheadertext")
 		return getPropertiesBraille(**props)
 
@@ -913,7 +916,7 @@ class TextInfoRegion(Region):
 	allowPageTurns=True #: True if a page turn should be tried when a TextInfo cannot move anymore and the object supports page turns.
 
 	def __init__(self, obj: "NVDAObject"):
-		if _isSecureObjectWhileLockScreenActivated(obj):
+		if objectBelowLockScreenAndWindowsIsLocked(obj):
 			raise RuntimeError("NVDA object is secure and should not be initialized as a braille region")
 		super().__init__()
 		self.obj = obj
@@ -1627,7 +1630,7 @@ def getFocusContextRegions(
 		obj: "NVDAObject",
 		oldFocusRegions: Optional[List[Region]] = None,
 ) -> Generator[Region, None, None]:
-	if _isSecureObjectWhileLockScreenActivated(obj):
+	if objectBelowLockScreenAndWindowsIsLocked(obj):
 		return
 	global _cachedFocusAncestorsEnd
 	# Late import to avoid circular import.
@@ -1700,7 +1703,7 @@ def getFocusRegions(
 		obj: "NVDAObject",
 		review: bool = False,
 ) -> Generator[Region, None, None]:
-	if _isSecureObjectWhileLockScreenActivated(obj):
+	if objectBelowLockScreenAndWindowsIsLocked(obj):
 		return
 	# Allow objects to override normal behaviour.
 	try:
@@ -2067,7 +2070,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	def handleGainFocus(self, obj: "NVDAObject", shouldAutoTether: bool = True) -> None:
 		if not self.enabled:
 			return
-		if _isSecureObjectWhileLockScreenActivated(obj):
+		if objectBelowLockScreenAndWindowsIsLocked(obj):
 			return
 		if shouldAutoTether:
 			self.setTether(self.TETHER_FOCUS, auto=True)
@@ -2109,7 +2112,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	) -> None:
 		if not self.enabled:
 			return
-		if _isSecureObjectWhileLockScreenActivated(obj):
+		if objectBelowLockScreenAndWindowsIsLocked(obj):
 			return
 		prevTether = self._tether
 		if shouldAutoTether:
@@ -2160,7 +2163,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self,
 			obj: "NVDAObject",
 	) -> None:
-		if _isSecureObjectWhileLockScreenActivated(obj):
+		if objectBelowLockScreenAndWindowsIsLocked(obj):
 			return
 		oldTime = getattr(self, "_lastProgressBarUpdateTime", None)
 		newTime = time.time()
@@ -2176,7 +2179,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	def handleUpdate(self, obj: "NVDAObject") -> None:
 		if not self.enabled:
 			return
-		if _isSecureObjectWhileLockScreenActivated(obj):
+		if objectBelowLockScreenAndWindowsIsLocked(obj):
 			return
 		# Optimisation: It is very likely that it is the focus object that is being updated.
 		# If the focus object is in the braille buffer, it will be the last region, so scan the regions backwards.

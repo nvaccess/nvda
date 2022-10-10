@@ -3,38 +3,30 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import locale
 from typing import (
 	Dict,
 	Optional,
 )
 
 import comtypes.client
-import struct
 import ctypes
 from comtypes import COMError
 import oleTypes
 import colors
-import globalVars
 import NVDAHelper
 import eventHandler
 import comInterfaces.tom
 from logHandler import log
 import languageHandler
 import config
-import speech
 import winKernel
 import api
 import winUser
 import textInfos.offsets
-from keyboardHandler import KeyboardInputGesture
-from scriptHandler import isScriptWaiting
 import controlTypes
 from controlTypes import TextPosition
 from . import Window
-from .. import NVDAObjectTextInfo
 from ..behaviors import EditableTextWithAutoSelectDetection
-import braille
 import watchdog
 import locationHelper
 import textUtils
@@ -465,15 +457,16 @@ ITextDocumentUnitsToNVDAUnits={
 	comInterfaces.tom.tomStory:textInfos.UNIT_STORY,
 }
 
-NVDAUnitsToITextDocumentUnits={
-	textInfos.UNIT_CHARACTER:comInterfaces.tom.tomCharacter,
-	textInfos.UNIT_WORD:comInterfaces.tom.tomWord,
-	textInfos.UNIT_LINE:comInterfaces.tom.tomLine,
-	textInfos.UNIT_SENTENCE:comInterfaces.tom.tomSentence,
-	textInfos.UNIT_PARAGRAPH:comInterfaces.tom.tomParagraph,
-	textInfos.UNIT_STORY:comInterfaces.tom.tomStory,
-	textInfos.UNIT_READINGCHUNK:comInterfaces.tom.tomSentence,
+NVDAUnitsToITextDocumentUnits: Dict[str, int] = {
+	textInfos.UNIT_CHARACTER: comInterfaces.tom.tomCharacter,
+	textInfos.UNIT_WORD: comInterfaces.tom.tomWord,
+	textInfos.UNIT_LINE: comInterfaces.tom.tomLine,
+	textInfos.UNIT_SENTENCE: comInterfaces.tom.tomSentence,
+	textInfos.UNIT_PARAGRAPH: comInterfaces.tom.tomParagraph,
+	textInfos.UNIT_STORY: comInterfaces.tom.tomStory,
+	textInfos.UNIT_READINGCHUNK: comInterfaces.tom.tomLine,
 }
+
 
 class ITextDocumentTextInfo(textInfos.TextInfo):
 

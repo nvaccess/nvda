@@ -63,7 +63,12 @@ class ProgressBar(NVDAObject):
 			self.progressValueCache["beep,%d,%d"%(x,y)]=percentage
 		lastSpeechProgressValue=self.progressValueCache.get("speech,%d,%d"%(x,y),None)
 		if pbConf["progressBarOutputMode"] in ("speak","both") and (lastSpeechProgressValue is None or abs(percentage-lastSpeechProgressValue)>=pbConf["speechPercentageInterval"]):
-			queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage,_("%d percent")%percentage)
+			queueHandler.queueFunction(
+				queueHandler.eventQueue,
+				speech.speakMessage,
+				# Translators: This is presented to inform the user of a progress bar percentage.
+				_("%d percent") % percentage,
+			)
 			self.progressValueCache["speech,%d,%d"%(x,y)]=percentage
 
 class Dialog(NVDAObject):

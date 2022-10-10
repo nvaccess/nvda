@@ -50,7 +50,6 @@ The Python class and script name for each script;
 the script name may be C{None} indicating that the gesture should be unbound for this class.
 """
 
-
 #: Script category for emulated keyboard keys.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_KBEMU = _("Emulated system keyboard keys")
@@ -182,11 +181,13 @@ class InputGesture(baseObject.AutoPropertyObject):
 		"""
 		raise NotImplementedError
 
-	def _get_scriptableObject(self):
+	#: typing information for autoproperty _get_scriptableObject
+	scriptableObject: Optional[baseObject.ScriptableObject]
+
+	def _get_scriptableObject(self) -> Optional[baseObject.ScriptableObject]:
 		"""An object which contains scripts specific to this  gesture or type of gesture.
 		This object will be searched for scripts before any other object when handling this gesture.
 		@return: The gesture specific scriptable object or C{None} if there is none.
-		@rtype: L{baseObject.ScriptableObject}
 		"""
 		return None
 
