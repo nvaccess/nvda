@@ -165,7 +165,7 @@ class Dialog(NVDAObject):
 
 
 class InputFieldWithSuggestions(NVDAObject):
-	"""Allows NvDA to announce appearance/disappearance of suggestions as content is entered.
+	"""Allows NVDA to announce appearance/disappearance of suggestions as content is entered.
 	This is used in various places, including Windows 10 search edit fields and others.
 	Subclasses should provide L{event_suggestionsOpened} and can optionally override L{event_suggestionsClosed}.
 	These events are fired when suggestions appear and disappear, respectively.

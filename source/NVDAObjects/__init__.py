@@ -1184,12 +1184,12 @@ Tries to force this object to take the focus.
 	def event_selection(self):
 		# This object has been selected.
 		# If this object's container / parent is being controlled by the focus,
-		# Then report this selection.
+		# then report this selection.
 		focus = api.getFocusObject()
 		controls = focus.controllerFor
 		for control in controls:
 			# The focus is controling one or more objects.
-			# If possible, Check if this object is a decendant of the object being controlled.
+			# If possible, check if this object is a descendant of the object being controlled.
 			try:
 				isDescendant = self.isDescendantOf(control)
 			except NotImplementedError:

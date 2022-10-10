@@ -2007,10 +2007,10 @@ class UIA(Window):
 	def scrollIntoView(self):
 		pass
 
-	def isDescendantOf(self, obj):
+	def isDescendantOf(self, obj: "NVDAObjects.NVDAObject") -> bool:
 		if isinstance(obj, UIA):
 			# As both objects are UIA,
-			# We can search this object's  ancestors for obj with a UIA treeWalker
+			# We can search this object's ancestors for obj with a UIA treeWalker
 			# which is much more efficient than fetching each parent.
 			objID = obj.UIAElement.GetRuntimeId()
 			objIDArray = array.array("l", objID)
@@ -2290,7 +2290,7 @@ class WpfTextView(UIA):
 
 class SearchField(EditableTextWithSuggestions, UIA):
 	"""An edit field that presents suggestions based on a search term.
-	This is now an empty class as Functionality has been moved to the base EditableText behaviour.
+	This is now an empty class as functionality has been moved to the base EditableText behaviour.
 	@warning Deprecated, may be removed in future versions.
 	"""
 

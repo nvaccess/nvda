@@ -26,7 +26,7 @@ class Ia2Web(IAccessible):
 	IAccessibleTableUsesTableCellIndexAttrib=True
 	caretMovementDetectionUsesEvents = False
 
-	def isDescendantOf(self, obj):
+	def isDescendantOf(self, obj: "NVDAObjects.NVDAObject") -> bool:
 		if obj.windowHandle != self.windowHandle:
 			# Only supported on the same window.
 			raise NotImplementedError
