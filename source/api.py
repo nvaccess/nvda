@@ -240,7 +240,7 @@ def setReviewPosition(
 	@param isCaret: Whether the review position is changed due to caret following.
 	@param isMouse: Whether the review position is changed due to mouse following.
 	"""
-	if _isSecureObjectWhileLockScreenActivated(reviewPosition.obj):
+	if objectBelowLockScreenAndWindowsIsLocked(reviewPosition.obj):
 		return False
 	globalVars.reviewPosition=reviewPosition.copy()
 	globalVars.reviewPositionObj=reviewPosition.obj
