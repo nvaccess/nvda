@@ -12,6 +12,14 @@ FULL_WIDTH_TERMINATORS_PATTERN: re.Pattern = re.compile("[。！？]")
 
 
 def findEndOfSentence(sentence: str, offset: int) -> int:
+	"""
+	Returns an index which points one character past the end of the current sentence,
+	or if the sentence is at the end of the string, returns the length of the string.
+	In the case of western sentence terminators,
+	conbinations of space, \r, or \n at the end of the sentence are included.
+	@param sentence: string containing at least current sentence
+	@param offset: int indicating where to start searching for the end of the sentence
+	"""
 	res = -1
 	m = re.search(FULL_WIDTH_TERMINATORS_PATTERN, sentence[offset:])
 	if m:
