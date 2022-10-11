@@ -1187,7 +1187,7 @@ class WordDocument(Window):
 			return colors.RGB.fromCOLORREF(val).name
 		elif (val&0xffffffff)==0xff000000:
 			# Translators: the default (automatic) color in Microsoft Word
-			return _("default color")
+			return _("automatic color")
 		elif ((val>>28)&0xf)==0xd and ((val>>16)&0xff)==0x00:
 			# An MS word color index Plus intencity
 			# Made up of MS Word Theme Color index, hsv value ratio (MS Word darker percentage) and hsv saturation ratio (MS Word lighter percentage)
