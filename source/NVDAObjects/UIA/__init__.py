@@ -1903,6 +1903,11 @@ class UIA(Window):
 			return UIA(UIAElement=e)
 		raise NotImplementedError
 
+	def _get_tableID(self):
+		table = self.table
+		if table:
+			return self.table.UIAElement.GetRuntimeId()
+
 	def _get_processID(self):
 		if self.windowClassName == 'ConsoleWindowClass':
 			# #10115: The UIA implementation for Windows console windows exposes the process ID of conhost,
