@@ -26,6 +26,7 @@ from keyboardHandler import KeyboardInputGesture
 import inputCore
 import queueHandler
 import watchdog
+import api
 
 import ctypes
 import sys
@@ -386,6 +387,21 @@ class NVDASpyLib:
 				"See NVDA log for dump of all speech."
 			)
 		return speechIndex
+
+	def execExpressionOnMainThread(self, expressionStr):
+		doneExpression = False
+		expressionResult = None
+		def _execExpression():
+			nonlocal doneExpression, expressionResult
+			expressionResult = eval(expressionStr)
+			doneExpression = True
+		core.callLater(0, _execExpression)
+		_blockUntilConditionMet(
+			getValue=lambda: doneExpression,
+			giveUpAfterSeconds=self._minTimeout(5),
+			errorMessage="Timed out waiting for expression to execute",
+		)
+		return expressionResult
 
 	def ensure_speech_did_not_occur(
 			self,

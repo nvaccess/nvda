@@ -160,13 +160,20 @@ class ChromeLib:
 		@return: False on failure
 		"""
 		spy = _NvdaLib.getSpyLib()
+		addressSpeechIndex = spy.get_next_speech_index()
 		spy.emulateKeyPress('alt+d')  # focus the address bar, chrome shortcut
-		spy.wait_for_speech_to_finish()
-		addressSpeechIndex = spy.get_last_speech_index()
+		_blockUntilConditionMet(
+			giveUpAfterSeconds=5,
+			getValue=lambda: spy.execExpressionOnMainThread("api.getFocusObject().name"),
+			shouldStopEvaluator=lambda name: name == "Address and search bar",
+			errorMessage="Could not focus Chrome address bar"
+		)
+		spy.wait_for_speech_to_finish(addressSpeechIndex)
+		docSpeechIndex = spy.get_next_speech_index()
 
 		spy.emulateKeyPress('control+F6')  # focus web content, chrome shortcut.
-		spy.wait_for_speech_to_finish()
-		afterControlF6Speech = spy.get_speech_at_index_until_now(addressSpeechIndex)
+		spy.wait_for_speech_to_finish(docSpeechIndex)
+		afterControlF6Speech = spy.get_speech_at_index_until_now(docSpeechIndex)
 		if f"document\n{ChromeLib._beforeMarker}" not in afterControlF6Speech:
 			builtIn.log(afterControlF6Speech, level="DEBUG")
 			return False
