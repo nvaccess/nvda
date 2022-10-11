@@ -30,14 +30,16 @@
 [submodule "include/nsis"]
 	path = include/nsis
 	url = https://github.com/nvaccess/nsis-build
-[submodule "include/microsoft-ui-uiautomation"]
-	path = include/microsoft-ui-uiautomation
-	url = https://github.com/michaeldcurran/microsoft-ui-uiautomation
 [submodule "include/wil"]
 	path = include/wil
 	url = https://github.com/microsoft/wil
 [submodule "nvda-cldr"]
 	path = include/nvda-cldr
 	url = https://github.com/nvaccess/nvda-cldr.git
+	branch = main-out
+	shallow = true
+[submodule "nvda-microsoft-ui-uiautomation"]
+	path = include/nvda-microsoft-ui-uiautomation
+	url = https://github.com/nvaccess/nvda-microsoft-ui-uiautomation
 	branch = main-out
 	shallow = true

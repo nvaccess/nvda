@@ -11,12 +11,10 @@
 #This license can be found at:
 #http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 ###
-
-import os
-import glob
-
 """
-Builds the  open source Microsoft-UI-UIAutomation Remote Operations library from https://github.com/microsoft/microsoft-ui-uiautomation.
+Exposes the pre-built Microsoft-UI-UIAutomation Remote Operations library
+See submodule nvda-microsoft-ui-uiautomation
+
 This library contains both a low-level winrt API, and a higher-level pure C++ API.
 The outputs of this sconscript are:
 * a 'lib' directory, containing:
@@ -28,99 +26,44 @@ The outputs of this sconscript are:
 	* a 'UIAOperationAbstraction' directory containing all the public headers for the high-level C++ API
 	* a 'winrt' directory containing the generated C++/winrt language bindings of the low-level API, required by the high-level C++ API headers
 """
+import typing
+if typing.TYPE_CHECKING:
+	import SCons
+	from SCons import(
+		Dir,
+		Import,
+	)
 
+sourceLibDir: "SCons.Node.FS.Dir"
+env: "SCons.Environment.Base"
 
 Import(
 	'env',
-	'sourceDir',
 	'sourceLibDir',
 )
+env: "SCons.Environment.Base" = env.Clone()
 
-env = env.Clone()
-# Building with msbuild requires windir to be set as environment variable,
-# otherwise the build fails with Visual Studio 2022
-env['ENV']['windir'] = os.environ['windir']
+# <repoRoot>\include\nvda-microsoft-ui-uiautomation
+MSUIA_sourceDir = Dir('#include/nvda-microsoft-ui-uiautomation/')
 
-MSUIA_sourceDir = Dir('#include/microsoft-ui-uiautomation/src/uiAutomation')
-MSUIA_lib_outDir = Dir('lib')
-MSUIA_include_outDir = Dir('include')
-MSUIA_solutionFile = MSUIA_sourceDir.File('UIAutomation.sln')
-
-MSUIA_wrapper_libs = env.Command(
-	target = [
-		MSUIA_lib_outDir.File('Microsoft.UI.UIAutomation.dll'),
-		MSUIA_lib_outDir.File('Microsoft.UI.UIAutomation.exp'),
-		MSUIA_lib_outDir.File('Microsoft.UI.UIAutomation.pdb'),
-		MSUIA_lib_outDir.File('Microsoft.UI.UIAutomation.lib'),
-		MSUIA_lib_outDir.File('winmd/Microsoft.UI.UIAutomation.winmd'),
-		MSUIA_sourceDir.File('microsoft.ui.uiautomation/Generated Files/winrt/microsoft.ui.uiautomation.h'),
-		MSUIA_sourceDir.File('microsoft.ui.uiautomation/Generated Files/winrt/impl/microsoft.ui.uiautomation.0.h'),
-		MSUIA_sourceDir.File('microsoft.ui.uiautomation/Generated Files/winrt/impl/microsoft.ui.uiautomation.1.h'),
-		MSUIA_sourceDir.File('microsoft.ui.uiautomation/Generated Files/winrt/impl/microsoft.ui.uiautomation.2.h'),
-	],
-	source = [
-		MSUIA_sourceDir.File('microsoft.ui.uiautomation/Microsoft.UI.UIAutomation.vcxproj'),
-		MSUIA_sourceDir.File('microsoft.ui.uiautomation/Microsoft.UI.UIAutomation.idl'),
-		glob.glob(os.path.join(MSUIA_sourceDir.abspath, 'microsoft.ui.uiautomation', '*.cpp')),
-		glob.glob(os.path.join(MSUIA_sourceDir.abspath, 'microsoft.ui.uiautomation', '*.h')),
-	],
-	action = [
-		# Fetch any required NuGet packages
-		f"msbuild {MSUIA_solutionFile} /t:Restore /p:RestorePackagesConfig=true,Configuration=Release,Platform=x86",
-		# Remove any old generated files
-		Delete(MSUIA_sourceDir.Dir('microsoft.ui.uiautomation/Generated Files')),
-		# Do the actual build
-		"msbuild /t:Build /p:Configuration=Release,Platform=x86,OutDir={outDir}/ $SOURCE".format(outDir=MSUIA_lib_outDir.abspath)
-	],
-)
-env.Ignore(MSUIA_wrapper_libs,MSUIA_sourceDir.File('microsoft.ui.uiautomation/Microsoft.UI.UIAutomation_h.h'))
-
-env.Install(sourceLibDir,MSUIA_wrapper_libs[0])
-env.Install(sourceLibDir, "Microsoft.UI.UIAutomation.dll.manifest")
-
-MSUIA_abstraction_libs = env.Command(
-	target = [
-		MSUIA_lib_outDir.File('UiaOperationAbstraction.lib'),
-	],
-	source = [
-		MSUIA_sourceDir.File('UiaOperationAbstraction/UiaOperationAbstraction.vcxproj'),
-		glob.glob(os.path.join(MSUIA_sourceDir.abspath, 'UiaOperationAbstraction', '*.cpp')),
-		glob.glob(os.path.join(MSUIA_sourceDir.abspath, 'UiaOperationAbstraction', '*.h')),
-	],
-	action = [
-		"msbuild /t:Build /p:Configuration=Release,Platform=x86,OutDir={outDir}/ $SOURCE".format(outDir=MSUIA_lib_outDir.abspath),
+# Specify files required in the "<repoRoot>/source/lib" directory
+env.Install(
+	sourceLibDir,  # Target
+	[  # Source
+		MSUIA_sourceDir.File("lib/Microsoft.UI.UIAutomation.dll.manifest"),
+		MSUIA_sourceDir.File('lib/Microsoft.UI.UIAutomation.dll'),
 	]
 )
 
-env.Depends(MSUIA_abstraction_libs,MSUIA_wrapper_libs)
-
-MSUIA_wrapper_header = env.Install(
-	MSUIA_include_outDir.Dir('winrt'),
-	MSUIA_sourceDir.File('microsoft.ui.uiautomation/Generated Files/winrt/microsoft.ui.uiautomation.h'),
-)
-env.Depends(MSUIA_wrapper_header,MSUIA_wrapper_libs)
-
-MSUIA_wrapper_impl = env.Install(
-	MSUIA_include_outDir.Dir('winrt/impl'),
-	[
-		MSUIA_sourceDir.File('microsoft.ui.uiautomation/Generated Files/winrt/impl/microsoft.ui.uiautomation.0.h'),
-		MSUIA_sourceDir.File('microsoft.ui.uiautomation/Generated Files/winrt/impl/microsoft.ui.uiautomation.1.h'),
-		MSUIA_sourceDir.File('microsoft.ui.uiautomation/Generated Files/winrt/impl/microsoft.ui.uiautomation.2.h'),
-	]
-)
-env.Depends(MSUIA_wrapper_impl,MSUIA_wrapper_libs)
-
-
-MSUIA_abstraction_headers = env.Install(
-	MSUIA_include_outDir.Dir('UiaOperationAbstraction'),
-	[
-		MSUIA_sourceDir.File('UiaOperationAbstraction/UiaOperationAbstraction.h'),
-		MSUIA_sourceDir.File('UiaOperationAbstraction/UiaTypeAbstractionEnums.g.h'),
-		MSUIA_sourceDir.File('UiaOperationAbstraction/UiaTypeAbstraction.g.h'),
-		MSUIA_sourceDir.File('UiaOperationAbstraction/SafeArrayUtil.h'),
-	]
+# Set up includes/libs for other projects to depend on.
+MSUIA_build_install = env.RecursiveInstall(
+	# Source structure is expected already to be correct.
+	# Copy directly to the build directory.
+	Dir('.'),  # Target <repoRoot>/build/x86/microsoft-ui-uiautomation
+	MSUIA_sourceDir.abspath,  # Source
 )
 
-env.Depends(MSUIA_abstraction_headers,[MSUIA_wrapper_header,MSUIA_wrapper_impl])
+MSUIA_lib_outDir = Dir("lib")  # <repoRoot>/build/x86/microsoft-ui-uiautomation/lib
+MSUIA_include_outDir = Dir("include")  # <repoRoot>/build/x86/microsoft-ui-uiautomation/include
 
 Return(['MSUIA_lib_outDir','MSUIA_include_outDir'])
