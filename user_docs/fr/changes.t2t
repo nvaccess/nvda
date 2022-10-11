@@ -69,6 +69,14 @@ Cela améliorera les performances pour certaines applications Java incluant Inte
 Aucune dépréciation n'est proposée pour la version 2022.3.
 
 
+= 2022.2.4 =
+Version mineure corrigeant un problème de sécurité.
+
+== Corrections de Bogues ==
+- Correction d'un exploit rendant possible d'ouvrir la console python NVDA via la visionneuse de journal sur l'écran de verrouillage.
+([GHSA-585m-rpvv-93qg https://github.com/nvaccess/nvda/security/advisories/GHSA-585m-rpvv-93qg])
+-
+
 = 2022.2.3 =
 Cette version corrige une rupture accidentelle d'API introduite dans la version 2022.2.1.
 

@@ -1041,6 +1041,9 @@ class UIA(Window):
 			elif self.role == controlTypes.Role.DATAGRID:
 				from .excel import ExcelWorksheet
 				clsList.append(ExcelWorksheet)
+			elif self.role == controlTypes.Role.TABLE:
+				from .excel import ExcelTable
+				clsList.append(ExcelTable)
 			elif self.role == controlTypes.Role.EDITABLETEXT:
 				from .excel import CellEdit
 				clsList.append(CellEdit)
