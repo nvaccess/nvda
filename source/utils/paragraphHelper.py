@@ -15,7 +15,7 @@ from NVDAObjects.UIA import UIATextInfo
 from displayModel import EditableTextDisplayModelTextInfo
 from typing import (
 	Tuple,
-	List,
+	Generator,
 )
 from enum import IntEnum
 from dataclasses import dataclass
@@ -76,7 +76,7 @@ def _isLastLineOfParagraph(line: str) -> bool:
 	return stripped.endswith('\r') or stripped.endswith('\n')
 
 
-def _splitParagraphIntoChunks(paragraph: str) -> List[str]:
+def _splitParagraphIntoChunks(paragraph: str) -> Generator:
 	"""
 	This function attempts to break large paragraphs into smaller chunks
 	with the goal of improving processing efficiency by some synthesizers.
@@ -87,8 +87,8 @@ def _splitParagraphIntoChunks(paragraph: str) -> List[str]:
 	CHUNK_SIZE = 1024
 	paragraphLen = len(paragraph)
 	if paragraphLen <= CHUNK_SIZE:
-		return [paragraph]
-	chunks = []
+		yield paragraph
+		return
 	sentenceEndPoints = []
 	endPoint = findEndOfSentence(paragraph, 0)
 	while endPoint != -1:
@@ -103,14 +103,13 @@ def _splitParagraphIntoChunks(paragraph: str) -> List[str]:
 			else:
 				chunkEnd = sentenceEndPoints[endIndex]
 				endIndex += 1
-			chunks.append(paragraph[chunkStart: chunkEnd])
+			yield paragraph[chunkStart: chunkEnd]
 			chunkStart = chunkEnd
 			startIndex = endIndex
 		else:
 			endIndex += 1
 	if chunkStart < paragraphLen:  # any leftovers?
-		chunks.append(paragraph[chunkStart:])
-	return chunks
+		yield paragraph[chunkStart:]
 
 
 def speakParagraph(ti: textInfos.TextInfo) -> None:
@@ -129,8 +128,8 @@ def speakParagraph(ti: textInfos.TextInfo) -> None:
 		numLines += 1
 
 	if len(paragraph.strip()) > 0:
-		chunks = _splitParagraphIntoChunks(paragraph)
-		for chunk in chunks:
+		gen = _splitParagraphIntoChunks(paragraph)
+		for chunk in gen:
 			speech.speakMessage(chunk)
 	else:
 		# Translators: This is spoken when a paragraph is considered blank.
@@ -213,8 +212,8 @@ def speakBlockParagraph(ti: textInfos.TextInfo) -> None:
 			break
 		numLines += 1
 
-	chunks = _splitParagraphIntoChunks(paragraph)
-	for chunk in chunks:
+	gen = _splitParagraphIntoChunks(paragraph)
+	for chunk in gen:
 		speech.speakMessage(chunk)
 
 
