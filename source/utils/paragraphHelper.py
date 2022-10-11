@@ -78,8 +78,8 @@ def _isLastLineOfParagraph(line: str) -> bool:
 
 def _splitParagraphIntoChunks(paragraph: str) -> List[str]:
 	"""
-This function attempts to break large paragraphs into smaller chunks
-	in an attempt to improve processing efficiency by some synthesizers.
+	This function attempts to break large paragraphs into smaller chunks
+	with the goal of improving processing efficiency by some synthesizers.
 	If this function fails to break the paragraph into chunks, functionality will likely be fine,
 	though responsiveness may not be optimal.
 	"""

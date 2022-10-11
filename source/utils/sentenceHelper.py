@@ -11,16 +11,16 @@ WESTERN_TERMINATORS_SINGLE_PATTERN: re.Pattern = re.compile("[.?!]")
 FULL_WIDTH_TERMINATORS_PATTERN: re.Pattern = re.compile("[。！？]")
 
 
-def findEndOfSentence(s: str, offset: int) -> int:
+def findEndOfSentence(sentence: str, offset: int) -> int:
 	res = -1
-	m = re.search(FULL_WIDTH_TERMINATORS_PATTERN, s[offset:])
+	m = re.search(FULL_WIDTH_TERMINATORS_PATTERN, sentence[offset:])
 	if m:
 		res = m.end() + offset
 	else:
-		m = re.search(WESTERN_TERMINATORS_PATTERN, s[offset:])
+		m = re.search(WESTERN_TERMINATORS_PATTERN, sentence[offset:])
 		if m:
 			res = m.end() + offset
 		else:
-			if re.match(WESTERN_TERMINATORS_SINGLE_PATTERN, s[-1]):  # check for terminator at end of string
-				res = len(s)
+			if re.match(WESTERN_TERMINATORS_SINGLE_PATTERN, sentence[-1]):  # check for terminator at end of string
+				res = len(sentence)
 	return res
