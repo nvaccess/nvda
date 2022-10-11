@@ -2089,3 +2089,51 @@ def test_focus_mode_on_focusable_read_only_lists():
 		]),
 		message="focus mode - focus list item and turn on focus mode"
 	)
+
+def test_i10890():
+	"""
+	Ensure that sort state is announced on a column header when changed with inner button
+	"""
+	spy = _NvdaLib.getSpyLib()
+	# Chrome sometimes exposes tables as clickable, sometimes not.
+	# This test does not need to know, so disable reporting of clickables.
+	spy.set_configValue(["documentFormatting", "reportClickable"], False)
+	testFile = os.path.join(ARIAExamplesDir, "grid", "datagrids.html")
+	_chrome.prepareChrome(
+		f"""
+			<iframe src="{testFile}"></iframe>
+		"""
+	)
+	# Jump to the Example 2 heading
+	_chrome.getSpeechAfterKey("3")
+	actualSpeech = _chrome.getSpeechAfterKey("3")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"Example 2: Sortable Data Grid With Editable Cells",
+			"heading",
+			"level 3",
+		])
+	)
+	# Jump to the table
+	actualSpeech = _chrome.getSpeechAfterKey("t")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"Transactions January 1 through January 7",
+			"table",
+			"with 8 rows and 6 columns",
+			"row 1",
+			"column 1",
+			"sorted ascending",
+			"Date",
+			"button",
+		])
+	)
+	# Press the button
+	actualSpeech = _chrome.getSpeechAfterKey("space")
+	# and ensure that the new sort state is spoken.
+	_asserts.strings_match(
+		actualSpeech,
+		"sorted descending",
+	)
