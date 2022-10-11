@@ -2090,6 +2090,7 @@ def test_focus_mode_on_focusable_read_only_lists():
 		message="focus mode - focus list item and turn on focus mode"
 	)
 
+
 def test_i10890():
 	"""
 	Ensure that sort state is announced on a column header when changed with inner button
