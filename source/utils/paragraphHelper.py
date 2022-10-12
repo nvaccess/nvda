@@ -76,7 +76,7 @@ def _isLastLineOfParagraph(line: str) -> bool:
 	return stripped.endswith('\r') or stripped.endswith('\n')
 
 
-def _splitParagraphIntoChunks(paragraph: str) -> Generator:
+def _splitParagraphIntoChunks(paragraph: str) -> Generator[str, None, None]:
 	"""
 	This function attempts to break large paragraphs into smaller chunks
 	with the goal of improving processing efficiency by some synthesizers.
