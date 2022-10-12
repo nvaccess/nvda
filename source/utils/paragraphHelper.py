@@ -7,7 +7,7 @@ import api
 import speech
 import controlTypes
 import textInfos
-import tones
+import ui
 import config
 from NVDAObjects.window.winword import WordDocumentTextInfo
 from NVDAObjects.window.winword import BrowseModeWordDocumentTextInfo
@@ -18,18 +18,8 @@ from typing import (
 	Generator,
 )
 from enum import IntEnum
-from dataclasses import dataclass
 
 MAX_LINES = 250  # give up after searching this many lines
-
-
-@dataclass(frozen=True)
-class _ErrorToneData:
-	frequencyHz: float = 1000.0
-	durationMs: int = 30
-
-
-_ERROR_TONE = _ErrorToneData()
 
 
 class _Offset(IntEnum):
@@ -136,6 +126,15 @@ def speakParagraph(ti: textInfos.TextInfo) -> None:
 		speech.speakMessage(_("blank"))
 
 
+def _notFoundMessage(nextParagraph: bool):
+	if nextParagraph:
+		# Translators: this message is given when there is no next paragraph
+		ui.message("No next paragraph")
+	else:
+		# Translators: this message is given when there is no previous paragraph
+		ui.message("No previous paragraph")
+
+
 def moveToParagraph(nextParagraph: bool, speakNew: bool) -> Tuple[bool, bool]:
 	"""
 	Moves to the previous or next normal paragraph, delimited by a single line break.
@@ -194,7 +193,7 @@ def moveToParagraph(nextParagraph: bool, speakNew: bool) -> Tuple[bool, bool]:
 			ti._rangeObj.ScrollIntoView(False)
 		speakParagraph(ti)
 	else:
-		tones.beep(_ERROR_TONE.frequencyHz, _ERROR_TONE.durationMs)
+		_notFoundMessage(nextParagraph)
 	return (False, moved)
 
 
@@ -279,6 +278,6 @@ def moveToBlockParagraph(
 		if speakNew:
 			speakBlockParagraph(ti)
 	else:
-		tones.beep(_ERROR_TONE.frequencyHz, _ERROR_TONE.durationMs)
+		_notFoundMessage(nextParagraph)
 
 	return (False, moved)
