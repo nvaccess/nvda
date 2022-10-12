@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2013-2018 NV Access Limited, Joseph Lee, Julien Cochuyt, Thomas Stivers
+# Copyright (C) 2013-2022 NV Access Limited, Joseph Lee, Julien Cochuyt, Thomas Stivers, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -171,6 +171,7 @@ class ProfilesDialog(
 		try:
 			config.conf.manualActivateProfile(profile)
 		except:
+			log.debugWarning("", exc_info=True)
 			# Translators: An error displayed when activating a configuration profile fails.
 			gui.messageBox(_("Error activating profile."),
 				_("Error"), wx.OK | wx.ICON_ERROR, self)
