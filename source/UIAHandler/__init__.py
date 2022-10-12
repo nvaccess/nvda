@@ -49,6 +49,14 @@ import aria
 from . import remote as UIARemote
 
 
+baseCachePropertyIDs = set([
+	UIA.UIA_FrameworkIdPropertyId, UIA.UIA_AutomationIdPropertyId, UIA.UIA_ClassNamePropertyId,
+	UIA.UIA_ControlTypePropertyId, UIA.UIA_ProviderDescriptionPropertyId, UIA.UIA_ProcessIdPropertyId,
+	UIA.UIA_IsTextPatternAvailablePropertyId,
+	UIA.UIA_IsContentElementPropertyId, UIA.UIA_IsControlElementPropertyId,
+	UIA.UIA_NamePropertyId, UIA.UIA_LocalizedControlTypePropertyId,
+])
+
 #: The window class name for Microsoft Word documents.
 # Microsoft Word's UI Automation implementation
 # also exposes this value as the document UIA element's classname property.
@@ -366,7 +374,7 @@ class UIAHandler(COMObject):
 			self.UIAWindowHandleCache={}
 			self.baseTreeWalker=self.clientObject.RawViewWalker
 			self.baseCacheRequest=self.windowCacheRequest.Clone()
-			for propertyId in (UIA_FrameworkIdPropertyId,UIA_AutomationIdPropertyId,UIA_ClassNamePropertyId,UIA_ControlTypePropertyId,UIA_ProviderDescriptionPropertyId,UIA_ProcessIdPropertyId,UIA_IsTextPatternAvailablePropertyId,UIA_IsContentElementPropertyId,UIA_IsControlElementPropertyId):
+			for propertyId in baseCachePropertyIDs:
 				self.baseCacheRequest.addProperty(propertyId)
 			self.baseCacheRequest.addPattern(UIA_TextPatternId)
 			self.rootElement=self.clientObject.getRootElementBuildCache(self.baseCacheRequest)
@@ -651,6 +659,7 @@ class UIAHandler(COMObject):
 			if _isDebug():
 				log.debug("HandleFocusChangedEvent: Ignoring for non native element")
 			return
+		log.info(f"UIA focus: {sender.currentName} {sender.currentLocalizedControlType}")
 		import NVDAObjects.UIA
 		if isinstance(eventHandler.lastQueuedFocusObject,NVDAObjects.UIA.UIA):
 			lastFocusObj = eventHandler.lastQueuedFocusObject
