@@ -6,9 +6,9 @@
 
 import re
 
-WESTERN_TERMINATORS_PATTERN: re.Pattern = re.compile("[.?!]( |\r|\n)+")
+WESTERN_TERMINATORS_PATTERN: re.Pattern = re.compile("[.?!](?: |\r|\n)+")
 WESTERN_TERMINATORS_SINGLE_PATTERN: re.Pattern = re.compile("[.?!]")
-FULL_WIDTH_TERMINATORS_PATTERN: re.Pattern = re.compile("[。！？]")
+FULL_WIDTH_TERMINATORS_PATTERN: re.Pattern = re.compile("[。！？](?:\r|\n)*")
 
 
 def _findEndOfSentence(sentence: str, offset: int) -> int:
@@ -17,6 +17,8 @@ def _findEndOfSentence(sentence: str, offset: int) -> int:
 	or if the sentence is at the end of the string, returns the length of the string.
 	In the case of western sentence terminators,
 	conbinations of space, \r, or \n at the end of the sentence are included.
+	In the case of full width sentence terminators,
+	conbinations of \r or \n at the end of the sentence are included.
 	@param sentence: string containing at least current sentence
 	@param offset: int indicating where to start searching for the end of the sentence
 	"""
