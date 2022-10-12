@@ -16,6 +16,7 @@ that no information is lost, while updating the ConfigObj to meet the requiremen
 
 from logHandler import log
 from config.configFlags import (
+	ShowMessages,
 	ReportTableHeaders,
 	ReportLineIndentation,
 )
@@ -145,8 +146,14 @@ def upgradeConfigFrom_8_to_9(profile: Dict[str, str]) -> None:
 	have been replaced by a single value.
 	The following settings are upgraded:
 	- Line indentation (in Document formatting settings)
+	- Show messages (in Braille settings)
 	"""
 	
+	_upgradeConfigFrom_8_to_9_lineIndent(profile)
+	_upgradeConfigFrom_8_to_9_showMessages(profile)
+
+
+def _upgradeConfigFrom_8_to_9_lineIndent(profile: Dict[str, str]) -> None:
 	anySettingInConfig = False
 	try:
 		reportLineIndent: str = profile['documentFormatting']['reportLineIndentation']
@@ -172,3 +179,43 @@ def upgradeConfigFrom_8_to_9(profile: Dict[str, str]) -> None:
 				profile['documentFormatting']['reportLineIndentation'] = ReportLineIndentation.OFF.value
 	else:
 		log.debug("reportLineIndentation and reportLineIndentationWithTones not present, no action taken.")
+
+
+def _upgradeConfigFrom_8_to_9_showMessages(profile: Dict[str, str]) -> None:
+	upgradeNeeded = False
+	try:
+		noMessageTimeout: str = profile['braille']['noMessageTimeout']
+	except KeyError:
+		noMessageTimeoutVal = False  # Default value
+	else:
+		del profile['braille']['noMessageTimeout']
+		noMessageTimeoutVal = configobj.validate.is_boolean(noMessageTimeout)
+		upgradeNeeded = True
+	try:
+		messageTimeout: str = profile['braille']['messageTimeout']
+	except KeyError:
+		messageTimeoutVal = 4  # Default value
+	else:
+		messageTimeoutVal = configobj.validate.is_integer(messageTimeout)
+		if messageTimeoutVal == 0:
+			del profile['braille']['messageTimeout']
+			upgradeNeeded = True
+	
+	if upgradeNeeded:
+		if messageTimeoutVal == 0:
+			profile['braille']['showMessages'] = ShowMessages.DISABLED.value
+			if noMessageTimeoutVal:
+				# Invalid config with noMessageTimeout=True and messageTimeout=0." is possible (if set manually by a user)
+				# and it actually leads to disabled messages.
+				# So we fix it with ShowMessages.DISABLED but also issue a warning.
+				log.debugWarning(
+					"Invalid config found: noMessageTimeout=True and messageTimeout=0."
+					" Fixing it with setting showMessages on DISABLE."
+				)
+		else:
+			if noMessageTimeout:
+				profile['braille']['showMessages'] = ShowMessages.SHOW_INDEFINITELY.value
+			else:
+				profile['braille']['showMessages'] = ShowMessages.USE_TIMEOUT.value
+	else:
+		log.debug("messageTimeout >= 1 or not present and noMessageTimeout not present, no action taken.")

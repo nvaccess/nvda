@@ -32,7 +32,10 @@ import winKernel
 import keyboardHandler
 import baseObject
 import config
-from config.configFlags import ReportTableHeaders
+from config.configFlags import (
+	ShowMessages,
+	ReportTableHeaders,
+)
 from logHandler import log
 import controlTypes
 import api
@@ -2028,7 +2031,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		If a key is pressed the message will be dismissed by the next text being written to the display.
 		@postcondition: The message is displayed.
 		"""
-		if not self.enabled or config.conf["braille"]["messageTimeout"] == 0 or text is None:
+		if not self.enabled or config.conf["braille"]["showMessages"] == ShowMessages.DISABLED or text is None:
 			return
 		if self.buffer is self.messageBuffer:
 			self.buffer.clear()
@@ -2046,7 +2049,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		"""Reset the message timeout.
 		@precondition: A message is currently being displayed.
 		"""
-		if config.conf["braille"]["noMessageTimeout"]:
+		if config.conf["braille"]["showMessages"] == ShowMessages.SHOW_INDEFINITELY:
 			return
 		# Configured timeout is in seconds.
 		timeout = config.conf["braille"]["messageTimeout"] * 1000

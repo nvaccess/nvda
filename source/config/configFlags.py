@@ -10,6 +10,33 @@ from utils.displayString import DisplayStringIntEnum
 
 
 @unique
+class ShowMessages(DisplayStringIntEnum):
+	"""Enumeration containing the possible config values for "Show messages" option in braille settings.
+	
+	Use ShowMessages.MEMBER.value to compare with the config;
+	use ShowMessages.MEMBER.displayString in the UI for a translatable description of this member.
+	"""
+	
+	DISABLED = 0
+	USE_TIMEOUT = 1
+	SHOW_INDEFINITELY = 2
+	
+	@property
+	def _displayStringLabels(self):
+		return {
+			# Translators: One of the show states of braille messages
+			# (the disabled mode turns off showing of braille messages completely).
+			ShowMessages.DISABLED: _("Disabled"),
+			# Translators: One of the show states of braille messages
+			# (the timeout mode shows messages for the specific time).
+			ShowMessages.USE_TIMEOUT: _("Use timeout"),
+			# Translators: One of the show states of braille messages
+			# (the indefinitely mode prevents braille messages from disappearing automatically).
+			ShowMessages.SHOW_INDEFINITELY: _("Show indefinitely"),
+		}
+
+
+@unique
 class ReportLineIndentation(DisplayStringIntEnum):
 	"""Enumeration containing the possible config values to report line indent.
 	
@@ -25,15 +52,15 @@ class ReportLineIndentation(DisplayStringIntEnum):
 	@property
 	def _displayStringLabels(self):
 		return {
-			# Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+			# Translators: A choice in a combo box in the document formatting dialog to report No line Indentation.
 			ReportLineIndentation.OFF: _("Off"),
-			# Translators: A choice in a combo box in the document formatting dialog  to report indentation
+			# Translators: A choice in a combo box in the document formatting dialog to report indentation
 			# with Speech.
 			ReportLineIndentation.SPEECH: pgettext('line indentation setting', "Speech"),
-			# Translators: A choice in a combo box in the document formatting dialog  to report indentation
+			# Translators: A choice in a combo box in the document formatting dialog to report indentation
 			# with tones.
 			ReportLineIndentation.TONES: _("Tones"),
-			# Translators: A choice in a combo box in the document formatting dialog  to report indentation with both
+			# Translators: A choice in a combo box in the document formatting dialog to report indentation with both
 			# Speech and tones.
 			ReportLineIndentation.SPEECH_AND_TONES: _("Both Speech and Tones"),
 		}
