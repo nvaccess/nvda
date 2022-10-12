@@ -11,7 +11,7 @@ WESTERN_TERMINATORS_SINGLE_PATTERN: re.Pattern = re.compile("[.?!]")
 FULL_WIDTH_TERMINATORS_PATTERN: re.Pattern = re.compile("[。！？]")
 
 
-def findEndOfSentence(sentence: str, offset: int) -> int:
+def _findEndOfSentence(sentence: str, offset: int) -> int:
 	"""
 	Returns an index which points one character past the end of the current sentence,
 	or if the sentence is at the end of the string, returns the length of the string.
