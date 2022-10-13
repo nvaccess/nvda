@@ -153,6 +153,7 @@ def upgradeConfigFrom_8_to_9(profile: Dict[str, str]) -> None:
 	_upgradeConfigFrom_8_to_9_lineIndent(profile)
 	_upgradeConfigFrom_8_to_9_cellBorders(profile)
 	_upgradeConfigFrom_8_to_9_showMessages(profile)
+	_upgradeConfigFrom_8_to_9_tetherTo(profile)
 
 
 def _upgradeConfigFrom_8_to_9_lineIndent(profile: Dict[str, str]) -> None:
@@ -255,3 +256,43 @@ def _upgradeConfigFrom_8_to_9_showMessages(profile: Dict[str, str]) -> None:
 				profile['braille']['showMessages'] = ShowMessages.USE_TIMEOUT.value
 	else:
 		log.debug("messageTimeout >= 1 or not present and noMessageTimeout not present, no action taken.")
+
+
+def _upgradeConfigFrom_8_to_9_tetherTo(profile: Dict[str, str]) -> None:
+	try:
+		autoTether: str = profile["braille"]["autoTether"]
+		isAutoTetherMissing = False
+	except KeyError:
+		autoTether: str = "True"
+		isAutoTetherMissing = True
+	else:
+		del profile["braille"]["autoTether"]
+	try:
+		tetherTo: str = profile["braille"]["tetherTo"]
+		isTetherToMissing = False
+	except KeyError:
+		tetherTo: str = "focus"
+		isTetherToMissing = True
+	
+	autoTetherVal = configobj.validate.is_boolean(autoTether)
+	tetherToVal = configobj.validate.is_string(tetherTo)
+	if isAutoTetherMissing and isTetherToMissing:
+		log.debug("autoTether and tetherTo not present in config, no action taken.")
+	elif isAutoTetherMissing:
+		# It is not possible to get tetherTo without having autoTether in default profile's config.
+		# This is possible in a non-default config in case "Tether to" option is not set to "Automatically" (e.g.
+		# "Review") and the current profile has this option set to "Focus".
+		# In this case, tetherTo keeps the same value.
+		log.debug(
+			"autoTether not present in config but tetherTo present, no action taken (keeping tetherTo value)."
+		)
+	elif isTetherToMissing:
+		if autoTetherVal:
+			profile["braille"]["tetherTo"] = "auto"
+		else:
+			profile["braille"]["tetherTo"] = "focus"
+	else:  # both values present in config
+		if autoTetherVal:
+			profile["braille"]["tetherTo"] = "auto"
+		else:
+			profile["braille"]["tetherTo"] = tetherToVal

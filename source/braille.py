@@ -1784,7 +1784,10 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._cells = []
 		self._cursorBlinkTimer = None
 		config.post_configProfileSwitch.register(self.handlePostConfigProfileSwitch)
-		self._tether = config.conf["braille"]["tetherTo"]
+		if config.conf["braille"]["tetherTo"] == self.TETHER_AUTO:
+			self._tether = self.TETHER_FOCUS
+		else:
+			self._tether = config.conf["braille"]["tetherTo"]
 		self._detectionEnabled = False
 		self._detector = None
 		self._rawText = u""
@@ -1821,7 +1824,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.mainBuffer.clear()
 
 	def _get_shouldAutoTether(self):
-		return self.enabled and config.conf["braille"]["autoTether"]
+		return self.enabled and config.conf["braille"]["tetherTo"] == self.TETHER_AUTO
 
 	displaySize: int
 

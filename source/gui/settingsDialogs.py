@@ -3560,7 +3560,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		tetherChoices = [x[1] for x in braille.handler.tetherValues]
 		self.tetherList = sHelper.addLabeledControl(tetherListText, wx.Choice, choices=tetherChoices)
 		self.bindHelpEvent("BrailleTether", self.tetherList)
-		tetherChoice=braille.handler.TETHER_AUTO if config.conf["braille"]["autoTether"] else config.conf["braille"]["tetherTo"]
+		tetherChoice = config.conf["braille"]["tetherTo"]
 		selection = next((x for x,y in enumerate(braille.handler.tetherValues) if y[0]==tetherChoice))
 		try:
 			self.tetherList.SetSelection(selection)
@@ -3620,10 +3620,8 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		config.conf["braille"]["messageTimeout"] = self.messageTimeoutEdit.GetValue()
 		tetherChoice = braille.handler.tetherValues[self.tetherList.GetSelection()][0]
 		if tetherChoice==braille.handler.TETHER_AUTO:
-			config.conf["braille"]["autoTether"] = True
-			config.conf["braille"]["tetherTo"] = braille.handler.TETHER_FOCUS
+			config.conf["braille"]["tetherTo"] = braille.handler.TETHER_AUTO
 		else:
-			config.conf["braille"]["autoTether"] = False
 			braille.handler.setTether(tetherChoice, auto=False)
 		config.conf["braille"]["readByParagraph"] = self.readByParagraphCheckBox.Value
 		config.conf["braille"]["wordWrap"] = self.wordWrapCheckBox.Value

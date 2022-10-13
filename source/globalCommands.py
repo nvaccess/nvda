@@ -2796,19 +2796,12 @@ class GlobalCommands(ScriptableObject):
 	def script_braille_toggleTether(self, gesture):
 		values = [x[0] for x in braille.handler.tetherValues]
 		labels = [x[1] for x in braille.handler.tetherValues]
-		try:
-			index = values.index(
-				braille.handler.TETHER_AUTO if config.conf["braille"]["autoTether"] else config.conf["braille"]["tetherTo"]
-			)
-		except:
-			index=0
+		index = values.index(config.conf["braille"]["tetherTo"])
 		newIndex = (index+1) % len(values)
 		newTetherChoice = values[newIndex]
 		if newTetherChoice==braille.handler.TETHER_AUTO:
-			config.conf["braille"]["autoTether"] = True
-			config.conf["braille"]["tetherTo"] = braille.handler.TETHER_FOCUS
+			config.conf["braille"]["tetherTo"] = braille.handler.TETHER_AUTO
 		else:
-			config.conf["braille"]["autoTether"] = False
 			braille.handler.setTether(newTetherChoice, auto=False)
 			if newTetherChoice==braille.handler.TETHER_REVIEW:
 				braille.handler.handleReviewMove(shouldAutoTether=False)
