@@ -184,15 +184,15 @@ class ProfilesDialog(
 
 	def onDelete(self, evt):
 		index = self.profileList.Selection
+		name = self.profileNames[index]
 		if gui.messageBox(
 			# Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
-			_("This profile will be permanently deleted. This action cannot be undone."),
+			_("The profile {} will be permanently deleted. This action cannot be undone.").format(name),
 			# Translators: The title of the confirmation dialog for deletion of a configuration profile.
 			_("Confirm Deletion"),
-			wx.OK | wx.CANCEL | wx.ICON_QUESTION, self
+			wx.OK | wx.CANCEL | wx.CANCEL_DEFAULT | wx.ICON_QUESTION, self
 		) != wx.OK:
 			return
-		name = self.profileNames[index]
 		try:
 			config.conf.deleteProfile(name)
 		except:
