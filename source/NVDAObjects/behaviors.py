@@ -280,7 +280,7 @@ class EditableTextWithSuggestions(InputFieldWithSuggestions, EditableTextBase):
 class EditableText(EditableTextWithSuggestions, EditableTextBase):
 	""" Represents an editable text field.
 	This is an empty class as functionality has been moved to the base EditableTextBase class.
-	This class also supports reporting of the appearance and disappearence of suggestions
+	This class also supports reporting of the appearance and disappearance of suggestions
 	by inheriting from the EditableTextWithSuggestions class.
 	"""
 
