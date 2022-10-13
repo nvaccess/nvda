@@ -959,8 +959,8 @@ class UIATextInfo(textInfos.TextInfo):
 
 
 class UIA(Window):
-	_UIACustomProps = UIAHandler.customProps.CustomPropertiesCommon.get()
-	_UIACustomAnnotationTypes = UIAHandler.customAnnotations.CustomAnnotationTypesCommon.get()
+	_UIACustomProps = UIAHandler.customProps.CustomPropertiesCommon()
+	_UIACustomAnnotationTypes = UIAHandler.customAnnotations.CustomAnnotationTypesCommon()
 
 	shouldAllowDuplicateUIAFocusEvent = False
 
