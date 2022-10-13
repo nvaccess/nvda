@@ -141,8 +141,6 @@ class ExcelCell(ExcelObject):
 
 	name = ""
 	role = controlTypes.Role.TABLECELL
-	rowHeaderText = None
-	columnHeaderText = None
 
 	#: Typing information for auto-property: _get_areGridlinesVisible
 	areGridlinesVisible: bool
