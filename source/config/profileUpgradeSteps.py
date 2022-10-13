@@ -17,8 +17,9 @@ that no information is lost, while updating the ConfigObj to meet the requiremen
 from logHandler import log
 from config.configFlags import (
 	ShowMessages,
-	ReportTableHeaders,
 	ReportLineIndentation,
+	ReportTableHeaders,
+	ReportCellBorders,
 )
 from typing import (
 	Dict,
@@ -150,6 +151,7 @@ def upgradeConfigFrom_8_to_9(profile: Dict[str, str]) -> None:
 	"""
 	
 	_upgradeConfigFrom_8_to_9_lineIndent(profile)
+	_upgradeConfigFrom_8_to_9_cellBorders(profile)
 	_upgradeConfigFrom_8_to_9_showMessages(profile)
 
 
@@ -179,6 +181,40 @@ def _upgradeConfigFrom_8_to_9_lineIndent(profile: Dict[str, str]) -> None:
 				profile['documentFormatting']['reportLineIndentation'] = ReportLineIndentation.OFF.value
 	else:
 		log.debug("reportLineIndentation and reportLineIndentationWithTones not present, no action taken.")
+
+
+def _upgradeConfigFrom_8_to_9_cellBorders(profile: Dict[str, str]) -> None:
+	anySettingInConfig = False
+	try:
+		reportBorderStyle: str = profile["documentFormatting"]["reportBorderStyle"]
+		del profile["documentFormatting"]["reportBorderStyle"]
+		anySettingInConfig = True
+		reportBorderStyleMissing = False
+	except KeyError:
+		reportBorderStyle = False
+		reportBorderStyleMissing = True
+	try:
+		reportBorderColor: str = profile["documentFormatting"]["reportBorderColor"]
+		del profile["documentFormatting"]["reportBorderColor"]
+		anySettingInConfig = True
+	except KeyError:
+		reportBorderColor = False
+	if anySettingInConfig:
+		if configobj.validate.is_boolean(reportBorderStyle):
+			if configobj.validate.is_boolean(reportBorderColor):
+				profile["documentFormatting"]["reportCellBorders"] = ReportCellBorders.COLOR_AND_STYLE.value
+			else:
+				profile["documentFormatting"]["reportCellBorders"] = ReportCellBorders.STYLE.value
+		elif configobj.validate.is_boolean(reportBorderColor) and reportBorderStyleMissing:
+			# In default profile, this config cannot be set.
+			# However in a non-default profile you can get this config if:
+			# - default profile is set with "Cell borders" on "styles"
+			# - the other profile is set with "Cell borders" on "Both colors and styles"
+			profile["documentFormatting"]["reportCellBorders"] = ReportCellBorders.COLOR_AND_STYLE.value
+		else:
+			profile["documentFormatting"]["reportCellBorders"] = ReportCellBorders.OFF.value
+	else:
+		log.debug("reportBorderStyle and reportBorderColor not present, no action taken.")
 
 
 def _upgradeConfigFrom_8_to_9_showMessages(profile: Dict[str, str]) -> None:

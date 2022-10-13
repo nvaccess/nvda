@@ -56,8 +56,9 @@ from typing import (
 from logHandler import log
 import config
 from config.configFlags import (
-	ReportTableHeaders,
 	ReportLineIndentation,
+	ReportTableHeaders,
+	ReportCellBorders,
 )
 import aria
 from .priorities import Spri
@@ -2306,7 +2307,7 @@ def getFormatFieldSpeech(  # noqa: C901
 				# A style is a collection of formatting settings and depends on the application.
 				text=_("default style")
 			textList.append(text)
-	if  formatConfig["reportBorderStyle"]:
+	if formatConfig["reportCellBorders"] != ReportCellBorders.OFF:
 		borderStyle=attrs.get("border-style")
 		oldBorderStyle=attrsCache.get("border-style") if attrsCache is not None else None
 		if borderStyle!=oldBorderStyle:

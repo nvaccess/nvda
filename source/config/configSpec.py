@@ -211,8 +211,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	# 0: Off, 1: Rows and columns, 2: Rows, 3: Columns
 	reportTableHeaders = integer(0, 3, default=1)
 	reportTableCellCoords = boolean(default=True)
-	reportBorderStyle = boolean(default=False)
-	reportBorderColor = boolean(default=False)
+	# 0: Off, 1: style, 2: color and style
+	reportCellBorders = integer(0, 2, default=0)
 	reportLinks = boolean(default=true)
 	reportGraphics = boolean(default=True)
 	reportComments = boolean(default=true)

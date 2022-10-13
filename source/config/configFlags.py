@@ -95,3 +95,30 @@ class ReportTableHeaders(DisplayStringIntEnum):
 			# document formatting settings panel.
 			ReportTableHeaders.COLUMNS: _("Columns"),
 		}
+
+
+@unique
+class ReportCellBorders(DisplayStringIntEnum):
+	"""Enumeration containing the possible config values to report cell borders.
+	
+	Use ReportCellBorders.MEMBER.value to compare with the config;
+	use ReportCellBorders.MEMBER.displayString in the UI for a translatable description of this member.
+	"""
+	
+	OFF = 0
+	STYLE = 1
+	COLOR_AND_STYLE = 2
+	
+	@property
+	def _displayStringLabels(self):
+		return {
+			# Translators: This is the label for a combobox in the
+			# document formatting settings panel.
+			ReportCellBorders.OFF: _("Off"),
+			# Translators: This is the label for a combobox in the
+			# document formatting settings panel.
+			ReportCellBorders.STYLE: _("Styles"),
+			# Translators: This is the label for a combobox in the
+			# document formatting settings panel.
+			ReportCellBorders.COLOR_AND_STYLE: _("Both Colors and Styles"),
+		}

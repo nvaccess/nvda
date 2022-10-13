@@ -27,8 +27,9 @@ from synthDriverHandler import changeVoice, getSynth, getSynthList, setSynth, Sy
 import config
 from config.configFlags import (
 	ShowMessages,
-	ReportTableHeaders,
 	ReportLineIndentation,
+	ReportTableHeaders,
+	ReportCellBorders,
 )
 import languageHandler
 import speech
@@ -2408,17 +2409,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		self.tableCellCoordsCheckBox = tablesGroup.addItem(_tableCellCoordsCheckBox)
 		self.tableCellCoordsCheckBox.SetValue(config.conf["documentFormatting"]["reportTableCellCoords"])
 
-		borderChoices=[
-			# Translators: This is the label for a combobox in the
-			# document formatting settings panel.
-			_("Off"),
-			# Translators: This is the label for a combobox in the
-			# document formatting settings panel.
-			_("Styles"),
-			# Translators: This is the label for a combobox in the
-			# document formatting settings panel.
-			_("Both Colors and Styles"),
-		]
+		borderChoices = [i.displayString for i in ReportCellBorders]
 		self.borderComboBox = tablesGroup.addLabeledControl(
 			# Translators: This is the label for a combobox in the
 			# document formatting settings panel.
@@ -2426,13 +2417,7 @@ class DocumentFormattingPanel(SettingsPanel):
 			wx.Choice,
 			choices=borderChoices
 		)
-		curChoice = 0
-		if config.conf["documentFormatting"]["reportBorderStyle"]:
-			if config.conf["documentFormatting"]["reportBorderColor"]:
-				curChoice = 2
-			else:
-				curChoice = 1
-		self.borderComboBox.SetSelection(curChoice)
+		self.borderComboBox.SetSelection(config.conf["documentFormatting"]["reportCellBorders"])
 
 		# Translators: This is the label for a group of document formatting options in the 
 		# document formatting settings panel
@@ -2531,9 +2516,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		config.conf["documentFormatting"]["reportTables"]=self.tablesCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportTableHeaders"] = self.tableHeadersComboBox.GetSelection()
 		config.conf["documentFormatting"]["reportTableCellCoords"]=self.tableCellCoordsCheckBox.IsChecked()
-		choice = self.borderComboBox.GetSelection()
-		config.conf["documentFormatting"]["reportBorderStyle"] = choice in (1,2)
-		config.conf["documentFormatting"]["reportBorderColor"] = (choice == 2)
+		config.conf["documentFormatting"]["reportCellBorders"] = self.borderComboBox.GetSelection()
 		config.conf["documentFormatting"]["reportLinks"]=self.linksCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportGraphics"] = self.graphicsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportHeadings"]=self.headingsCheckBox.IsChecked()

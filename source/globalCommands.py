@@ -686,25 +686,13 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_DOCUMENTFORMATTING,
 	)
 	def script_toggleReportCellBorders(self, gesture):
-		if (
-			not config.conf["documentFormatting"]["reportBorderStyle"]
-			and not config.conf["documentFormatting"]["reportBorderColor"]
-		):
-			# Translators: A message reported when cycling through cell borders settings.
-			ui.message(_("Report styles of cell borders"))
-			config.conf["documentFormatting"]["reportBorderStyle"] = True
-		elif (
-			config.conf["documentFormatting"]["reportBorderStyle"]
-			and not config.conf["documentFormatting"]["reportBorderColor"]
-		):
-			# Translators: A message reported when cycling through cell borders settings.
-			ui.message(_("Report colors and styles of cell borders"))
-			config.conf["documentFormatting"]["reportBorderColor"] = True
-		else:
-			# Translators: A message reported when cycling through cell borders settings.
-			ui.message(_("Report cell borders off."))
-			config.conf["documentFormatting"]["reportBorderStyle"] = False
-			config.conf["documentFormatting"]["reportBorderColor"] = False
+		ReportCellBorders = config.configFlags.ReportCellBorders
+		numVals = len(ReportCellBorders)
+		state = ReportCellBorders((config.conf["documentFormatting"]["reportCellBorders"] + 1) % numVals)
+		config.conf["documentFormatting"]["reportCellBorders"] = state.value
+		# Translators: Reported when the user cycles through report cell border modes.
+		# {mode} will be replaced with the mode; e.g. Off, Styles and Colors and styles.
+		ui.message(_("Report cell borders {mode}").format(mode=state.displayString))
 
 	@script(
 		# Translators: Input help mode message for toggle report links command.
@@ -1868,8 +1856,7 @@ class GlobalCommands(ScriptableObject):
 			"reportLineIndentation",
 			"reportParagraphIndentation",
 			"reportLineSpacing",
-			"reportBorderStyle",
-			"reportBorderColor",
+			"reportCellBorders",
 		)
 
 		# Create a dictionary to replace the config section that would normally be
