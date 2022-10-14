@@ -16,7 +16,10 @@ Used to:
 https://docs.microsoft.com/en-us/windows/win32/api/wtsapi32/nf-wtsapi32-wtsregistersessionnotification
 """
 
+from __future__ import annotations
+import contextlib
 import ctypes
+from contextlib import contextmanager
 from ctypes.wintypes import (
 	HANDLE,
 )
@@ -24,8 +27,18 @@ import enum
 from typing import (
 	Dict,
 	Set,
+	Optional,
 )
-
+from winAPI.wtsApi32 import (
+	WTSINFOEXW,
+	WTSQuerySessionInformation,
+	WTS_CURRENT_SERVER_HANDLE,
+	WTS_CURRENT_SESSION,
+	WTS_INFO_CLASS,
+	WTSFreeMemory,
+	WTS_LockState,
+	WTSINFOEX_LEVEL1_W,
+)
 from logHandler import log
 
 from .types import HWNDValT
@@ -35,8 +48,18 @@ _currentSessionStates: Set["WindowsTrackedSession"] = set()
 """
 Current state of the Windows session associated with this instance of NVDA.
 Maintained via receiving session notifications via the NVDA MessageWindow.
+Initial state will be set by querying the current status.
 """
 
+_sessionQueryLockStateHasBeenUnknown = False
+"""
+Track if any 'Unknown' Value when querying the Session Lock status has been encountered.
+"""
+
+_isSessionTrackingRegistered = False
+"""
+Session tracking is required for NVDA to be notified of lock state changes for security purposes.
+"""
 
 RPC_S_INVALID_BINDING = 0x6A6
 """
@@ -64,7 +87,8 @@ class WindowsTrackedSession(enum.IntEnum):
 	Windows Tracked Session notifications.
 	Members are states which form logical pairs,
 	except SESSION_REMOTE_CONTROL which requires more complex handling.
-
+	Values from: https://learn.microsoft.com/en-us/windows/win32/termserv/wm-wtssession-change
+	Context:
 	https://docs.microsoft.com/en-us/windows/win32/api/wtsapi32/nf-wtsapi32-wtsregistersessionnotification
 	"""
 	CONSOLE_CONNECT = 1
@@ -98,13 +122,91 @@ e.g. SESSION_LOCK/SESSION_UNLOCK.
 """
 
 
+def _hasLockStateBeenTracked() -> bool:
+	"""
+	Checks if NVDA is aware of a session lock state change since NVDA started.
+	"""
+	return bool(_currentSessionStates.intersection({
+		WindowsTrackedSession.SESSION_LOCK,
+		WindowsTrackedSession.SESSION_UNLOCK
+	}))
+
+
+def _recordLockStateTrackingFailure(error: Optional[Exception] = None):
+	log.error(
+		"Unknown lock state, unexpected, potential security issue, please report.",
+		exc_info=error
+	)  # Report error repeatedly, attention is required.
+	##
+	# For security it would be best to treat unknown as locked.
+	# However, this would make NVDA unusable.
+	# Instead, the user should be warned, and allowed to mitigate the impact themselves.
+	# Reporting is achieved via _sessionQueryLockStateHasBeenUnknown exposed with
+	# L{hasLockStateBeenUnknown}.
+	global _sessionQueryLockStateHasBeenUnknown
+	_sessionQueryLockStateHasBeenUnknown = True
+
+
 def isWindowsLocked() -> bool:
 	"""
 	Checks if the Window lockscreen is active.
-
 	Not to be confused with the Windows sign-in screen, a secure screen.
 	"""
-	return WindowsTrackedSession.SESSION_LOCK in _currentSessionStates
+	lockStateTracked = _hasLockStateBeenTracked()
+	if lockStateTracked:
+		return WindowsTrackedSession.SESSION_LOCK in _currentSessionStates
+	else:
+		_recordLockStateTrackingFailure()  # Report error repeatedly, attention is required.
+		##
+		# For security it would be best to treat unknown as locked.
+		# However, this would make NVDA unusable.
+		# Instead, the user should be warned via UI, and allowed to mitigate the impact themselves.
+		# See usage of L{hasLockStateBeenUnknown}.
+		return False  # return False, indicating unlocked, to allow NVDA to be used
+
+
+def _setInitialWindowLockState() -> None:
+	"""Ensure that session tracking state is initialized.
+	If NVDA has started on a lockScreen, it needs to be aware of this.
+	"""
+	lockStateTracked = _hasLockStateBeenTracked()
+	if lockStateTracked:
+		raise RuntimeError("Can't set initial state if it is already tracked.")
+	# Fall back to explicit query
+	try:
+		isLocked = _isWindowsLocked_checkViaSessionQuery()
+		_currentSessionStates.add(
+			WindowsTrackedSession.SESSION_LOCK
+			if isLocked
+			else WindowsTrackedSession.SESSION_UNLOCK
+		)
+	except RuntimeError as error:
+		_recordLockStateTrackingFailure(error)
+
+
+def _isWindowsLocked_checkViaSessionQuery() -> bool:
+	""" Use a session query to check if the session is locked
+	@return: True is the session is locked.
+	@raise: Runtime error if the lock state can not be determined via a Session Query.
+	"""
+	sessionQueryLockState = _getSessionLockedValue()
+	if sessionQueryLockState == WTS_LockState.WTS_SESSIONSTATE_UNKNOWN:
+		raise RuntimeError(
+			"Unable to determine lock state via Session Query."
+			f" Lock state value: {sessionQueryLockState!r}"
+		)
+	return sessionQueryLockState == WTS_LockState.WTS_SESSIONSTATE_LOCK
+
+
+def isLockStateSuccessfullyTracked() -> bool:
+	"""Check if the lock state is successfully tracked.
+	I.E. Registered for session tracking AND initial value set correctly.
+	@return: True when successfully tracked.
+	"""
+	return (
+		not _sessionQueryLockStateHasBeenUnknown
+		or not _isSessionTrackingRegistered
+	)
 
 
 def register(handle: HWNDValT) -> bool:
@@ -124,6 +226,11 @@ def register(handle: HWNDValT) -> bool:
 
 	https://docs.microsoft.com/en-us/windows/win32/api/wtsapi32/nf-wtsapi32-wtsregistersessionnotification
 	"""
+	##
+	# Ensure that an initial state is set,
+	# do this first to prevent a race condition with session tracking / message processing.
+	_setInitialWindowLockState()
+
 	# OpenEvent handle must be closed with CloseHandle.
 	eventObjectHandle: HANDLE = ctypes.windll.kernel32.OpenEventW(
 		# Blocks until WTS session tracking can be registered.
@@ -157,7 +264,9 @@ def register(handle: HWNDValT) -> bool:
 		else:
 			log.error("Unexpected error registering session tracking.", exc_info=error)
 
-	return registrationSuccess
+	global _isSessionTrackingRegistered
+	_isSessionTrackingRegistered = registrationSuccess
+	return isLockStateSuccessfullyTracked()
 
 
 def unregister(handle: HWNDValT) -> None:
@@ -167,6 +276,9 @@ def unregister(handle: HWNDValT) -> None:
 
 	https://docs.microsoft.com/en-us/windows/win32/api/wtsapi32/nf-wtsapi32-wtsunregistersessionnotification
 	"""
+	if not _isSessionTrackingRegistered:
+		log.info("Not unregistered session tracking, it was not registered.")
+		return
 	if ctypes.windll.wtsapi32.WTSUnRegisterSessionNotification(handle):
 		log.debug("Unregistered session tracking")
 	else:
@@ -190,6 +302,9 @@ def handleSessionChange(newState: WindowsTrackedSession, sessionId: int) -> None
 
 	log.debug(f"Windows Session state notification received: {newState.name}")
 
+	if not _isSessionTrackingRegistered:
+		log.debugWarning("Session tracking not registered, unexpected session change message")
+
 	if newState not in _toggleWindowsSessionStatePair:
 		log.debug(f"Ignoring {newState} event as tracking is not required.")
 		return
@@ -210,3 +325,81 @@ def handleSessionChange(newState: WindowsTrackedSession, sessionId: int) -> None
 		log.debug(f"NVDA started in state {oppositeState.name} or dropped a state change event")
 
 	log.debug(f"New Windows Session state: {_currentSessionStates}")
+
+
+@contextmanager
+def WTSCurrentSessionInfoEx() -> contextlib.AbstractContextManager[ctypes.pointer[WTSINFOEXW]]:
+	"""Context manager to get the WTSINFOEXW for the current server/session or raises a RuntimeError.
+	Handles freeing the memory when usage is complete.
+	"""
+	info = _getCurrentSessionInfoEx()
+	try:
+		yield info
+	finally:
+		WTSFreeMemory(
+			ctypes.cast(info, ctypes.c_void_p),
+		)
+
+
+def _getCurrentSessionInfoEx() -> ctypes.POINTER(WTSINFOEXW):
+	""" Gets the WTSINFOEXW for the current server/session or raises a RuntimeError
+	on failure.
+	On RuntimeError memory is first freed.
+	In other cases use WTSFreeMemory.
+	Ideally use the WTSCurrentSessionInfoEx context manager which will handle freeing the memory.
+	"""
+	ppBuffer = ctypes.wintypes.LPWSTR(None)
+	pBytesReturned = ctypes.wintypes.DWORD(0)
+
+	res = WTSQuerySessionInformation(
+		WTS_CURRENT_SERVER_HANDLE,  # WTS_CURRENT_SERVER_HANDLE to indicate the RD Session Host server on
+		# which the application is running.
+		WTS_CURRENT_SESSION,  # To indicate the session in which the calling application is running
+		# (or the current session) specify WTS_CURRENT_SESSION
+		WTS_INFO_CLASS.WTSSessionInfoEx,  # Indicates the type of session information to retrieve
+		# Fetch a WTSINFOEXW containing a WTSINFOEX_LEVEL1 structure.
+		ctypes.pointer(ppBuffer),  # A pointer to a variable that receives a pointer to the requested information.
+		# The format and contents of the data depend on the information class specified in the WTSInfoClass
+		# parameter.
+		# To free the returned buffer, call the WTSFreeMemory function.
+		ctypes.pointer(pBytesReturned),  # A pointer to a variable that receives the size, in bytes, of the data
+		# returned in ppBuffer.
+	)
+	try:
+		if not res:
+			raise RuntimeError(f"Failure calling WTSQuerySessionInformationW: {res}")
+		elif ctypes.sizeof(WTSINFOEXW) != pBytesReturned.value:
+			raise RuntimeError(
+				f"Returned data size failure, got {pBytesReturned.value}, expected {ctypes.sizeof(WTSINFOEXW)}"
+			)
+		info = ctypes.cast(
+			ppBuffer,
+			ctypes.POINTER(WTSINFOEXW)
+		)
+		if (
+			not info.contents
+			or info.contents.Level != 1
+			##
+			# Level value must be 1, see:
+			# https://learn.microsoft.com/en-us/windows/win32/api/wtsapi32/ns-wtsapi32-wtsinfoexa
+		):
+			raise RuntimeError(
+				f"Unexpected Level data, got {info.contents.Level}."
+			)
+		return info
+	except Exception as e:
+		log.exception("Unexpected WTSQuerySessionInformation value:", exc_info=e)
+		WTSFreeMemory(
+			ctypes.cast(ppBuffer, ctypes.c_void_p),
+		)
+
+
+def _getSessionLockedValue() -> WTS_LockState:
+	"""Get the WTS_LockState for the current server/session or raises a RuntimeError
+	"""
+	with WTSCurrentSessionInfoEx() as info:
+		infoEx: WTSINFOEX_LEVEL1_W = info.contents.Data.WTSInfoExLevel1
+		sessionFlags: ctypes.wintypes.LONG = infoEx.SessionFlags
+		lockState = WTS_LockState(sessionFlags)
+		log.debug(f"Query Lock state result: {lockState!r}")
+		return lockState
