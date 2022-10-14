@@ -256,7 +256,7 @@ class _TextReader(garbageHandler.TrackedObject, metaclass=ABCMeta):
 		if (
 			# The object died, so we should too.
 			not self.reader.obj
-			# SayAll is available on the lock screen, as such
+			# SayAll is available on the lock screen via getSafeScripts, as such
 			# ensure the say all reader does not contain secure information
 			# before continuing
 			or objectBelowLockScreenAndWindowsIsLocked(self.reader.obj)
