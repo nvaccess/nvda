@@ -7,7 +7,15 @@
 import itertools
 import os
 import typing
-from typing import Iterable, Union, Tuple, List, Optional
+from typing import (
+	TYPE_CHECKING,
+	Generator,
+	Iterable,
+	List,
+	Optional,
+	Tuple,
+	Union,
+)
 from locale import strxfrm
 
 import driverHandler
@@ -24,6 +32,7 @@ import winKernel
 import keyboardHandler
 import baseObject
 import config
+from config.configFlags import ReportTableHeaders
 from logHandler import log
 import controlTypes
 import api
@@ -40,6 +49,10 @@ import bdDetect
 import queueHandler
 import brailleViewer
 from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting
+from utils.security import objectBelowLockScreenAndWindowsIsLocked
+
+if TYPE_CHECKING:
+	from NVDAObjects import NVDAObject
 
 
 roleLabels: typing.Dict[controlTypes.Role, str] = {
@@ -202,6 +215,8 @@ positiveStateLabels = {
 	controlTypes.State.SELECTED: _("sel"),
 	# Displayed in braille when an object (e.g. a toggle button) is pressed.
 	controlTypes.State.PRESSED: u"⢎⣿⡱",
+	# Displayed in braille when an object (e.g. a toggle button) is half pressed.
+	controlTypes.State.HALF_PRESSED: u"⢎⣸⡱",
 	# Displayed in braille when an object (e.g. a check box) is checked.
 	controlTypes.State.CHECKED: u"⣏⣿⣹",
 	# Displayed in braille when an object (e.g. a check box) is half checked.
@@ -327,7 +342,10 @@ USB_PORT =  ("usb", _("USB"))
 # Translators: String representing the Bluetooth port selection for braille displays.
 BLUETOOTH_PORT =  ("bluetooth", _("Bluetooth"))
 
-def NVDAObjectHasUsefulText(obj):
+
+def NVDAObjectHasUsefulText(obj: "NVDAObject") -> bool:
+	if objectBelowLockScreenAndWindowsIsLocked(obj):
+		return False
 	import displayModel
 	if issubclass(obj.TextInfo,displayModel.DisplayModelTextInfo):
 		# #1711: Flat review (using displayModel) should always be presented on the braille display
@@ -335,6 +353,7 @@ def NVDAObjectHasUsefulText(obj):
 	else:
 		# Let the NVDAObject choose if the text should be presented
 		return obj._hasNavigableText
+
 
 def _getDisplayDriver(moduleName, caseSensitive=True):
 	try:
@@ -620,14 +639,14 @@ class NVDAObjectRegion(Region):
 	A cursor routing request will activate the object's default action.
 	"""
 
-	def __init__(self, obj, appendText=""):
+	def __init__(self, obj: "NVDAObject", appendText: str = ""):
 		"""Constructor.
 		@param obj: The associated NVDAObject.
-		@type obj: L{NVDAObjects.NVDAObject}
 		@param appendText: Text which should always be appended to the NVDAObject text, useful if this region will always precede other regions.
-		@type appendText: str
 		"""
-		super(NVDAObjectRegion, self).__init__()
+		if objectBelowLockScreenAndWindowsIsLocked(obj):
+			raise RuntimeError("NVDA object is secure and should not be initialized as a braille region")
+		super().__init__()
 		self.obj = obj
 		self.appendText = appendText
 
@@ -776,7 +795,7 @@ def getControlFieldBraille(  # noqa: C901
 			"hasDetails": hasDetails,
 			"detailsRole": detailsRole,
 		}
-		if reportTableHeaders:
+		if reportTableHeaders in (ReportTableHeaders.ROWS_AND_COLUMNS, ReportTableHeaders.COLUMNS):
 			props["columnHeaderText"] = field.get("table-columnheadertext")
 		return getPropertiesBraille(**props)
 
@@ -896,8 +915,10 @@ class TextInfoRegion(Region):
 	pendingCaretUpdate=False #: True if the cursor should be updated for this region on the display
 	allowPageTurns=True #: True if a page turn should be tried when a TextInfo cannot move anymore and the object supports page turns.
 
-	def __init__(self, obj):
-		super(TextInfoRegion, self).__init__()
+	def __init__(self, obj: "NVDAObject"):
+		if objectBelowLockScreenAndWindowsIsLocked(obj):
+			raise RuntimeError("NVDA object is secure and should not be initialized as a braille region")
+		super().__init__()
 		self.obj = obj
 
 	def _isMultiline(self):
@@ -1604,7 +1625,13 @@ def invalidateCachedFocusAncestors(index):
 	# There could be multiple calls to this function before getFocusContextRegions() is called.
 	_cachedFocusAncestorsEnd = min(_cachedFocusAncestorsEnd, index)
 
-def getFocusContextRegions(obj, oldFocusRegions=None):
+
+def getFocusContextRegions(
+		obj: "NVDAObject",
+		oldFocusRegions: Optional[List[Region]] = None,
+) -> Generator[Region, None, None]:
+	if objectBelowLockScreenAndWindowsIsLocked(obj):
+		return
 	global _cachedFocusAncestorsEnd
 	# Late import to avoid circular import.
 	from treeInterceptorHandler import TreeInterceptor
@@ -1671,7 +1698,13 @@ def getFocusContextRegions(obj, oldFocusRegions=None):
 
 	_cachedFocusAncestorsEnd = ancestorsEnd
 
-def getFocusRegions(obj, review=False):
+
+def getFocusRegions(
+		obj: "NVDAObject",
+		review: bool = False,
+) -> Generator[Region, None, None]:
+	if objectBelowLockScreenAndWindowsIsLocked(obj):
+		return
 	# Allow objects to override normal behaviour.
 	try:
 		regions = obj.getBrailleRegions(review=review)
@@ -1701,6 +1734,7 @@ def getFocusRegions(obj, review=False):
 	if region2:
 		region2.update()
 		yield region2
+
 
 def formatCellsForLog(cells: List[int]) -> str:
 	"""Formats a sequence of braille cells so that it is suitable for logging.
@@ -2033,8 +2067,10 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self._messageCallLater = None
 		self.update()
 
-	def handleGainFocus(self, obj, shouldAutoTether=True):
+	def handleGainFocus(self, obj: "NVDAObject", shouldAutoTether: bool = True) -> None:
 		if not self.enabled:
+			return
+		if objectBelowLockScreenAndWindowsIsLocked(obj):
 			return
 		if shouldAutoTether:
 			self.setTether(self.TETHER_FOCUS, auto=True)
@@ -2069,8 +2105,14 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		elif self.buffer is self.messageBuffer and keyboardHandler.keyCounter>self._keyCountForLastMessage:
 			self._dismissMessage()
 
-	def handleCaretMove(self, obj, shouldAutoTether=True):
+	def handleCaretMove(
+			self,
+			obj: "NVDAObject",
+			shouldAutoTether: bool = True
+	) -> None:
 		if not self.enabled:
+			return
+		if objectBelowLockScreenAndWindowsIsLocked(obj):
 			return
 		prevTether = self._tether
 		if shouldAutoTether:
@@ -2117,7 +2159,12 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 	# #6862: The value change of a progress bar change often goes together with changes of other objects in the dialog,
 	# e.g. the time remaining. Therefore, update the dialog when a contained progress bar changes.
-	def _handleProgressBarUpdate(self, obj):
+	def _handleProgressBarUpdate(
+			self,
+			obj: "NVDAObject",
+	) -> None:
+		if objectBelowLockScreenAndWindowsIsLocked(obj):
+			return
 		oldTime = getattr(self, "_lastProgressBarUpdateTime", None)
 		newTime = time.time()
 		if oldTime and newTime - oldTime < 1:
@@ -2129,8 +2176,10 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 				self.handleUpdate(obj)
 				return
 
-	def handleUpdate(self, obj):
+	def handleUpdate(self, obj: "NVDAObject") -> None:
 		if not self.enabled:
+			return
+		if objectBelowLockScreenAndWindowsIsLocked(obj):
 			return
 		# Optimisation: It is very likely that it is the focus object that is being updated.
 		# If the focus object is in the braille buffer, it will be the last region, so scan the regions backwards.
@@ -2578,8 +2627,7 @@ class BrailleDisplayDriver(driverHandler.Driver):
 					yield match
 
 	#: Global input gesture map for this display driver.
-	#: @type: L{inputCore.GlobalGestureMap}
-	gestureMap = None
+	gestureMap: Optional[inputCore.GlobalGestureMap] = None
 
 	@classmethod
 	def _getModifierGestures(cls, model=None):
@@ -2778,12 +2826,12 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 		return self.id.split("+")
 
 	def _get_speechEffectWhenExecuted(self) -> Optional[str]:
-		from globalCommands import GlobalCommands
+		from globalCommands import commands
 		if (
 			not config.conf["braille"]["interruptSpeechWhileScrolling"]
 			and self.script in {
-				GlobalCommands.script_braille_scrollBack,
-				GlobalCommands.script_braille_scrollForward,
+				commands.script_braille_scrollBack,
+				commands.script_braille_scrollForward,
 			}
 		):
 			return None

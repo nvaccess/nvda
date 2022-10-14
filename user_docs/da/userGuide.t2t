@@ -332,7 +332,7 @@ Følgende NVDA-kommandoer kan bruges i forbindelse med systemmarkøren:
 | Læs aktuelle linje | NVDA+Pil-op | NVDA+l | Læser den linje, hvor markøren for øjeblikket befinder sig. Tryk to gange for at få linjen stavet. Tryk tre gange for at stave linjen ved brug af tegnbeskrivelser. |
 | Læs den valgte tekst | NVDA+Shift+Pil-op | NVDA+Shift+s | Læser den tekst, som er blevet markeret |
 | Rapportér tekstformatering | NVDA+f | NVDA+f | Oplyser formateringsinformation for systemmarkørens aktuelle position i et dokument. Ved et dobbelttryk vil denne information blive vist i gennemsynstilstand |
-| Oplys systemmarkørens position | NVDA+NumpadDelete | NVDA+Delete | Ingen | Giver information om placeringen af teksten eller objektet ved systemmarkøren. Fx. procentdel af dokumentet, afstand fra kanten af siden eller den præcise position på skærmen. To tryk kan give flere detaljer. |
+| Oplys systemmarkørens position | NVDA+NumpadDelete | NVDA+Delete | Giver information om placeringen af teksten eller objektet ved systemmarkøren. Fx. procentdel af dokumentet, afstand fra kanten af siden eller den præcise position på skærmen. To tryk kan give flere detaljer. |
 | Næste sætning | Alt+Pil-ned | Alt+Pil-ned | Flytter markøren til den næste sætning og læser den (kun understøttet i Microsoft Word og Outlook). |
 | Forrige sætning | Alt+Pil-op | Alt+Pil-op | Flytter markøren til den forrige sætning og læser den (kun understøttet i Microsoft Word og Outlook). |
 
@@ -1052,10 +1052,11 @@ Når du befinder dig i tabelvisningen for tilføjede bøger:
 NVDA har understøttelse for Windows-kommandokonsollen brugt af Kommandoprompt, PowerShell, og Windows Subsystem for Linux.
 Kommandokonsollens vindue har en forudbestemt størrelse, der typisk er meget mindre end den beholder, der indeholder den tekst, der kommer frem på skærmen.
 Efterhånden som nyere linjer af tekst skrives, vil teksten rulle opad og forrige linjer af tekst vil ikke forblive synlige.
-Tekst, der ikke er synlig, kan ikke læses ved brug af NVDAs læsekommandoer.
+Tekst, der ikke er synlig, kan ikke læses ved brug af NVDAs læsekommandoer, hvis du bruger en Windows version ældre end Windows 11 22H2.
 Derfor er det nødvendigt at bruge kommandoer til at rulle konsolvinduet.
+I Windows-konsollen og terminaler er det nu muligt at læse alt tekst uden at rulle konsolvinduet.
 %kc:beginInclude
-Følgende indbyggede kommandoer til manipulering af konsolvinduet kan være nyttige, når du skal [læse teksten #ReviewingText] med NVDA:
+Følgende indbyggede kommandoer til manipulering af konsolvinduet kan være nyttige, når du skal [læse teksten #ReviewingText] med NVDA i ældre versioner af Windows-konsollen:
 || Navn | Tast | Beskrivelse |
 | Rul op | control+Pil op | Ruller konsolvinduet opad, så tidligere tekst kan læses. |
 | Rul ned | control+Pil ned | Ruller konsolvinduet nedad, så nyere tekst kan læses. |
@@ -1260,6 +1261,20 @@ Denne indstilling bør generelt være slået til.
 Nogle Microsoft Speech API synteser anvender dog ikke denne funktion korrekt og opfører sig mærkeligt når indstillingen er slået til.
 Hvis du har problemer med udtalen af diverse bogstaver kan du prøve at deaktivere denne indstilling.
 
+==== Forsinkede beskrivelser af tegn ved markørbevægelser ====[delayedCharacterDescriptions]
+: Standard
+  Deaktiveret
+: Muligheder
+  Aktiveret, deaktiveret
+:
+
+Når denne indstilling er aktiveret, vil NVDA sige tegnbeskrivelsen, når du flytter markøren tegn for tegn.
+
+For eksempel, mens du gennemgår en linje med tegn, når bogstavet "b" læses, vil NVDA sige "Bravo" efter ét sekund.
+Dette kan være nyttigt, hvis det er svært at skelne mellem udtale af symboler, eller for hørehæmmede brugere.
+
+Tegnets beskrivelse vil ikke blive oplæst, hvis andet tekst udtales, eller hvis du trykker på Ctrl-tasten.
+
 +++ Vælg talesyntese (NVDA+Ctrl+S) +++[SelectSynthesizer]
 Talesyntesedialogen, som findes ved at trykke på knappen "Skift..." i indstillingskategorien "Tale", lader dig vælge hvilken talesyntese NVDA skal bruge.
 Så snart du har valgt en talesyntese med piletasterne, kan du trykke Ok og NVDA vil benytte den valgte talesyntese.
@@ -1409,6 +1424,21 @@ Således vil NVDA i eksemplet ovenfor vise, at du har fokus på et listeemne.
 For at du skal kunne læse konteksten (dvs. at du er på en liste, og at listen er en del af en dialog), skal du rulle dit punktdisplay tilbage.
 
 Hvis du vil skifte fokuskontekstpræsentation fra hvor som helst, skal du tildele en brugerdefineret bevægelse eller et tastetryk ved hjælp af [dialogboksen Håndter Kommandoer #InputGestures].
+
+==== Afbryd talen, mens du panorerer ====[BrailleSettingsInterruptSpeech]
+: Standard
+  Aktiveret
+: Muligheder
+  Aktiveret, deaktiveret
+:
+
+Denne indstilling bestemmer, om talen skal afbrydes, når Braille-displayet rulles tilbage/fremad.
+Forrige/næste linje kommandoer afbryder altid tale.
+
+Igangværende tale kan være en distraktion, mens du læser punktskrift.
+Af denne grund er indstillingen aktiveret som standard, hvilket afbryder tale, når du panorerer dit display.
+
+Deaktivering af denne indstilling gør det muligt at høre tale, mens du læser punktskrift.
 
 +++ Vælg punktdisplay (NVDA+control+a) +++[SelectBrailleDisplay]
 Denne dialog, der tilgås vha. knappen "Skift..." i NVDAs indstillingsdialog under kategorien "Punkt", lader dig vælge hvilket punktdisplay NVDA skal benytte.
@@ -1888,8 +1918,26 @@ Indstillingen indeholder følgende muligheder:
 - Altid: Denne mulighed vil benytte UI Automation i Microsoft Word i ethvert tilfælde, selv når understøttelsen for UI Automation ikke er fuldstændig.
 -
 
-==== Benyt UI Automation til at få adgang til Windows-konsollen, når denne er tilgængelig ====[AdvancedSettingsConsoleUIA]
-Når denne indstilling er aktiveret, vil NVDA benytte [tilgængelighedsforbedringer fra Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Denne funktion er dog ikke færdigudviklet, så brug af denne anbefales ikke. Når denne funktion er fuldt udviklet forventer vi at denne indstilling bliver indstillet som standard.
+==== Understøttelse af Windows-konsol ====[AdvancedSettingsConsoleUIA]
+: Standard
+  Automatisk
+: Muligheder
+  Automatisk, UIA, når dette er tilgængeligt, Forældet
+:
+
+Denne indstilling bestemmer, hvordan NVDA interagerer med Windows-konsollen, der bruges af kommandoprompt, PowerShell og Windows Subsystem for Linux.
+Dette påvirker ikke den moderne Windows Terminal.
+I Windows 10 version 1709 [tilføjede Microsoft understøttelse af sin UI Automation API til konsollen https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators- update/], hvilket betyder en markant forbedret ydeevne og stabilitet med skærmlæsere, der understøtter dette.
+I situationer, hvor UI Automation er utilgængelig eller kendt for at resultere i en dårligere brugeroplevelse, er NVDAs forældede konsolsupport tilgængelig som en reservemetode.
+Boksen har tre muligheder:
+- Automatisk: Bruger UI Automation i versionen af Windows-konsollen, der følger med Windows 11 version 22H2 og nyere.
+Denne indstilling anbefales og indstilles som standard.
+- UIA, når dette er tilgængeligt: Bruger UI Automation  i konsoller, hvis det er tilgængeligt, selv for versioner med ufuldstændige eller fejlagtige implementeringer.
+Selvom denne begrænsede funktionalitet kan være nyttig (og endda tilstrækkelig til dit brug), er brugen af denne mulighed helt på egen risiko, og der vil ikke blive ydet support til den.
+- Forældet: UI Automation i Windows-konsollen vil være fuldstændig deaktiveret.
+Den gamle reservemetode  vil altid blive brugt selv i situationer, hvor UI Automation ville give en betydeligt bedre brugeroplevelse.
+Derfor anbefales det ikke at vælge denne mulighed, medmindre du ved, hvad du laver.
+-
 
 ==== Brug UIA med Microsoft Edge og andre Chromium-baserede browsere, hvis muligt ====[ChromiumUIA]
 Denne indstillinger lader dig vælge, hvorvidt UIA bliver benyttet, når du bruger en Chromium-baseret browser som Microsoft Edge.

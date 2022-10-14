@@ -385,6 +385,7 @@ espeakLib=env.SharedLibrary(
 		"../ucd-tools/src/proplist.c",
 		"../ucd-tools/src/scripts.c",
 		"../ucd-tools/src/tostring.c",
+		"common.c",
 		"compiledata.c",
 		"compiledict.c",
 #		"compilembrola.c", # we dont use MBROLA, this is a compile option in espeak
@@ -410,6 +411,7 @@ espeakLib=env.SharedLibrary(
 		"synthesize.c",
 		"synth_mbrola.c", # provides symbols used by synthesize.obj, voices.obj, and wavegen.obj
 		"translate.c",
+		"translateword.c",
 		"tr_languages.c",
 		"voices.c",
 		"wavegen.c",

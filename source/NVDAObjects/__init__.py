@@ -35,6 +35,7 @@ import globalPluginHandler
 import brailleInput
 import locationHelper
 import aria
+from winAPI.sessionTracking import isWindowsLocked
 
 
 class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
@@ -111,6 +112,12 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 					log.exception(f"Exception in chooseNVDAObjectOverlayClasses for {plugin}")
 					pass
 
+		# After all other mutation has finished,
+		# add LockScreenObject if Windows is locked.
+		# LockScreenObject must become the first class to be resolved,
+		# i.e. insertion order of 0.
+		self._insertLockScreenObject(clsList)
+
 		# Determine the bases for the new class.
 		bases=[]
 		for index in range(len(clsList)):
@@ -168,6 +175,16 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 		This should be called when a plugin is unloaded so that any used overlay classes in the unloaded plugin can be garbage collected.
 		"""
 		cls._dynamicClassCache.clear()
+
+	def _insertLockScreenObject(self, clsList: typing.List["NVDAObject"]) -> None:
+		"""
+		Inserts LockScreenObject to the start of the clsList if Windows is locked.
+		"""
+		from .lockscreen import LockScreenObject
+		if isWindowsLocked():
+			# This must be resolved first to prevent object navigation outside of the lockscreen.
+			clsList.insert(0, LockScreenObject)
+
 
 class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, metaclass=DynamicNVDAObjectType):
 	"""NVDA's representation of a single control/widget.
@@ -258,19 +275,26 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		@rtype: boolean
 		"""
 		raise NotImplementedError
- 
 
-	def findOverlayClasses(self, clsList):
-		"""Chooses overlay classes which should be added to this object's class structure after the object has been initially instantiated.
-		After an NVDAObject class (normally an API-level class) is instantiated, this method is called on the instance to choose appropriate overlay classes.
+	def findOverlayClasses(self, clsList: typing.List["NVDAObject"]) -> None:
+		"""
+		Chooses overlay classes which should be added to this object's class structure,
+		after the object has been initially instantiated.
+		After an NVDAObject class (normally an API-level class) is instantiated,
+		this method is called on the instance to choose appropriate overlay classes.
+
 		This method may use properties, etc. on the instance to make this choice.
 		The object's class structure is then mutated to contain these classes.
+
 		L{initOverlayClass} is then called for each class which was not part of the initially instantiated object.
 		This process allows an NVDAObject to be dynamically created using the most appropriate NVDAObject subclass at each API level.
-		Classes should be listed with subclasses first. That is, subclasses should generally call super and then append their own classes to the list.
-		For example: Called on an IAccessible NVDAObjectThe list might contain DialogIaccessible (a subclass of IAccessible), Edit (a subclass of Window).
+		Classes should be listed with subclasses first.
+		That is, subclasses should generally call super and then append their own classes to the list.
+
+		For example: Called on an IAccessible NVDAObject, the list might contain:
+		"DialogIAccessible (a subclass of IAccessible), Edit (a subclass of Window)".
+
 		@param clsList: The list of classes, which will be modified by this method if appropriate.
-		@type clsList: list of L{NVDAObject}
 		"""
 		clsList.append(NVDAObject)
 
@@ -985,9 +1009,11 @@ Tries to force this object to take the focus.
 		"""
 		return {}
 
-	def _get_processID(self):
-		"""Retrieves an identifyer of the process this object is a part of.
-		@rtype: int
+	#: Type definition for auto prop '_get_processID'
+	processID: int
+
+	def _get_processID(self) -> int:
+		"""Retrieves an identifier of the process this object is a part of.
 		"""
 		raise NotImplementedError
 
@@ -1177,6 +1203,10 @@ This code is executed if a gain focus event is received by this object.
 		# Forget the word currently being typed as focus is moving to a new control. 
 		speech.clearTypedWordBuffer()
 
+	def event_focusExited(self):
+		# In the general case, NVDA should not announce anything when focus exits an ancestor control.
+		pass
+
 	def event_foreground(self):
 		"""Called when the foreground window changes.
 		This method should only perform tasks specific to the foreground window changing.
@@ -1297,6 +1327,7 @@ This code is executed if a gain focus event is received by this object.
 		info.append("name: %s" % ret)
 		ret = self.role
 		info.append("role: %s" % ret)
+		info.append(f"processID: {self.processID}")
 		try:
 			ret = repr(self.roleText)
 		except Exception as e:
