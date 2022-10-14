@@ -69,6 +69,14 @@ Esto mejorará el rendimiento para algunas aplicaciones Java incluyendo IntelliJ
 No se proponen obsolescencias en 2022.3.
 
 
+= 2022.2.4 =
+Este es un parche liberado para corregir un fallo de seguridad.
+
+== Corrección de Fallos ==
+- Se ha corregido un fallo por el que era posible abrir la consola python de NVDA a través del visualizador del registro en la pantalla de bloqueo.
+([GHSA-585m-rpvv-93qg https://github.com/nvaccess/nvda/security/advisories/GHSA-585m-rpvv-93qg])
+-
+
 = 2022.2.3 =
 Este es un parche liberado para corregir una ruptura accidental de la API introducida en 2022.2.1.
 

@@ -14,7 +14,6 @@ import api
 import speech
 from speech.commands import _CancellableSpeechCommand
 import treeInterceptorHandler
-import globalVars
 import controlTypes
 from logHandler import log
 import globalPluginHandler
@@ -22,7 +21,7 @@ import config
 import winUser
 import extensionPoints
 import oleacc
-from utils.security import _isSecureObjectWhileLockScreenActivated
+from utils.security import objectBelowLockScreenAndWindowsIsLocked
 
 if typing.TYPE_CHECKING:
 	import NVDAObjects
@@ -158,7 +157,7 @@ def _trackFocusObject(eventName: str, obj: "NVDAObjects.NVDAObject") -> None:
 
 	if (
 		eventName == "gainFocus"
-		and not _isSecureObjectWhileLockScreenActivated(
+		and not objectBelowLockScreenAndWindowsIsLocked(
 			obj,
 			shouldLog=config.conf["debugLog"]["events"],
 		)
@@ -182,7 +181,7 @@ class FocusLossCancellableSpeechCommand(_CancellableSpeechCommand):
 
 			# Assumption: we only process one focus event at a time, so even if several focus events are queued,
 			# all focused objects will still gain this tracking attribute. Otherwise, this may need to be set via
-			# api.setFocusObject when globalVars.focusObject is set.
+			# api.setFocusObject when api.getFocusObject is set.
 			setattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME, True)
 		elif not hasattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME):
 			setattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME, False)
@@ -282,7 +281,7 @@ def executeEvent(
 	@param obj: the object the event is for
 	@param kwargs: Additional event parameters as keyword arguments.
 	"""
-	if _isSecureObjectWhileLockScreenActivated(
+	if objectBelowLockScreenAndWindowsIsLocked(
 		obj,
 		shouldLog=config.conf["debugLog"]["events"],
 	):
@@ -306,7 +305,7 @@ def executeEvent(
 def doPreGainFocus(obj: "NVDAObjects.NVDAObject", sleepMode: bool = False) -> bool:
 	from IAccessibleHandler import SecureDesktopNVDAObject
 
-	if _isSecureObjectWhileLockScreenActivated(
+	if objectBelowLockScreenAndWindowsIsLocked(
 		obj,
 		shouldLog=config.conf["debugLog"]["events"],
 	):
@@ -330,7 +329,7 @@ def doPreGainFocus(obj: "NVDAObjects.NVDAObject", sleepMode: bool = False) -> bo
 		speech._manager.removeCancelledSpeechCommands()
 
 	if (
-		globalVars.focusDifferenceLevel <= 1
+		api.getFocusDifferenceLevel() <= 1
 		# This object should not set off a foreground event.
 		# SecureDesktopNVDAObject uses a gainFocus event to trigger NVDA
 		# to sleep as the secure instance of NVDA starts for the
@@ -352,7 +351,7 @@ def doPreGainFocus(obj: "NVDAObjects.NVDAObject", sleepMode: bool = False) -> bo
 		executeEvent('foreground', newForeground)
 	if sleepMode: return True
 	#Fire focus entered events for all new ancestors of the focus if this is a gainFocus event
-	for parent in globalVars.focusAncestors[globalVars.focusDifferenceLevel:]:
+	for parent in api.getFocusAncestors()[api.getFocusDifferenceLevel():]:
 		executeEvent("focusEntered",parent)
 	if obj.treeInterceptor is not oldTreeInterceptor:
 		if hasattr(oldTreeInterceptor,"event_treeInterceptor_loseFocus"):
