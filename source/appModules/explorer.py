@@ -473,7 +473,11 @@ class AppModule(appModuleHandler.AppModule):
 			obj.presentationType=obj.presType_layout
 			return
 
-		if windowClass == "DirectUIHWND" and role == controlTypes.Role.LIST:
+		if (
+			winVersion.getWinVer() < winVersion.WIN8
+			and windowClass == "DirectUIHWND"
+			and role == controlTypes.Role.LIST
+		):
 			# Is this a list containing search results in Windows 7 start menu?
 			isWin7SearchResultsList = False
 			try:
@@ -483,7 +487,7 @@ class AppModule(appModuleHandler.AppModule):
 			except AttributeError:
 				isWin7SearchResultsList = False
 			if isWin7SearchResultsList:
-				# Namae of this list is not useful and should be  discarded.
+				# Name of this list is not useful and should be  discarded.
 				obj.name = None
 				return
 
