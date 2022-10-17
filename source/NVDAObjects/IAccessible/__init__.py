@@ -7,6 +7,7 @@ import typing
 from typing import (
 	Optional,
 	Union,
+	List,
 )
 
 from comtypes.automation import IEnumVARIANT, VARIANT
