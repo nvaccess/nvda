@@ -909,6 +909,7 @@ class UIAHandler(COMObject):
 			if _isDebug():
 				log.debugWarning(f"HandlePropertyChangedEvent: Don't know how to handle property {propertyId}")
 			return
+		obj = None
 		focus = api.getFocusObject()
 		import NVDAObjects.UIA
 		if (
@@ -916,42 +917,48 @@ class UIAHandler(COMObject):
 			and self.clientObject.compareElements(focus.UIAElement, sender)
 		):
 			if _isDebug():
-				log.debug("propertyChange event is for focus")
-			pass
+				log.debug(
+					"propertyChange event is for  focus. "
+					f"Redirecting event to focus NVDAObject {focus}"
+				)
+			obj = focus
 		elif not self.isNativeUIAElement(sender):
 			if _isDebug():
 				log.debug(
 					f"HandlePropertyChangedEvent: Ignoring event {NVDAEventName} for non native element"
 				)
 			return
-		window = self.getNearestWindowHandle(sender)
-		if window and not eventHandler.shouldAcceptEvent(NVDAEventName, windowHandle=window):
+		window = obj.windowHandle if obj else self.getNearestWindowHandle(sender)
+		if window:
 			if _isDebug():
 				log.debug(
-					f"HandlePropertyChangedEvent: Ignoring event {NVDAEventName} for shouldAcceptEvent=False"
+					f"Checking if should accept NVDA event {NVDAEventName} "
+					f"with window {self.getWindowHandleDebugString(window)}"
 				)
-			return
-		try:
-			obj = NVDAObjects.UIA.UIA(UIAElement=sender)
-		except Exception:
-			if _isDebug():
-				log.debugWarning(
-					f"HandlePropertyChangedEvent: Exception while creating object for event {NVDAEventName}",
-					exc_info=True
-				)
-			return
+			if not eventHandler.shouldAcceptEvent(NVDAEventName, windowHandle=window):
+				if _isDebug():
+					log.debug(
+						f"HandlePropertyChangedEvent: Ignoring event {NVDAEventName} for shouldAcceptEvent=False"
+					)
+				return
 		if not obj:
+			try:
+				obj = NVDAObjects.UIA.UIA(UIAElement=sender)
+			except Exception:
+				if _isDebug():
+					log.debugWarning(
+						f"HandlePropertyChangedEvent: Exception while creating object for event {NVDAEventName}",
+						exc_info=True
+					)
+				return
+			if not obj:
+				if _isDebug():
+					log.debug(f"HandlePropertyChangedEvent: Ignoring event {NVDAEventName} because no object")
+				return
 			if _isDebug():
-				log.debug(f"HandlePropertyChangedEvent: Ignoring event {NVDAEventName} because no object")
-			return
-		if _isDebug():
-			log.debug(
-				f"handlePropertyChangeEvent: created object {obj} "
-			)
-		if obj==focus:
-			if _isDebug():
-				log.debug("handlePropertyChangeEvent: redirecting to focus")
-			obj=focus
+				log.debug(
+					f"handlePropertyChangeEvent: created object {obj} "
+				)
 		if _isDebug():
 			log.debug(
 				f"handlePropertyChangeEvent: queuing NVDA {NVDAEventName} event "
