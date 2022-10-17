@@ -1596,7 +1596,7 @@ the NVDAObject for IAccessible
 	#: Type definition for auto prop '_get_detailsRelations'
 	detailsRelations: typing.Iterable["IAccessible"]
 
-	def _get_controllerFor(self):
+	def _get_controllerFor(self) -> List[NVDAObject]:
 		control = self._getIA2RelationFirstTarget(IAccessibleHandler.RelationType.CONTROLLER_FOR)
 		if control:
 			return [control]

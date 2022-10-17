@@ -2046,7 +2046,7 @@ class UIA(Window):
 				objList.append(obj)
 		return objList
 
-	def event_UIA_controllerFor(self):
+	def event_UIA_controllerFor(self) -> None:
 		return self.event_controllerForChange()
 
 	def event_UIA_elementSelected(self):
@@ -2295,7 +2295,6 @@ class WpfTextView(UIA):
 class SearchField(EditableTextWithSuggestions, UIA):
 	"""An edit field that presents suggestions based on a search term.
 	This is now an empty class as functionality has been moved to the base EditableText behaviour.
-	@warning Deprecated, may be removed in future versions.
 	"""
 
 

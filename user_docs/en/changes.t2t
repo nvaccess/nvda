@@ -27,7 +27,8 @@ Add-ons will need to be re-tested and have their manifest updated.
 Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] for information on NVDA's API deprecation and removal process.
 
 - System test should now pass when run locally on non-English systems. (#13362)
-- It is no longer necessary to use SearchField and SuggestionListItem UIA NvDAObjects  in new UI Automation scenarios where automatic reporting of search suggestions where typing has been exposed via UI Automation with the controllerFor pattern, as this functionality is now available generically via behaviours.EditableText and the base NVDAObject respectively.
+- It is no longer necessary to use ``SearchField`` and ``SuggestionListItem`` ``UIA`` ``NVDAObjects`` in new UI Automation scenarios, where automatic reporting of search suggestions, and where typing has been exposed via UI Automation with the ``controllerFor`` pattern.
+This functionality is now available generically via ``behaviours.EditableText`` and the base ``NVDAObject`` respectively.
 -
 
 === API Breaking Changes ===
