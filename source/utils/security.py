@@ -184,3 +184,50 @@ def isObjectAboveLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 		return True
 
 	return False
+
+
+_hasSessionLockStateUnknownWarningBeenGiven = False
+"""Track whether the user has been notified.
+"""
+
+
+def warnSessionLockStateUnknown() -> None:
+	""" Warn the user that the lock state of the computer can not be determined.
+	NVDA will not be able to determine if Windows is on the lock screen
+	(LockApp on Windows 10/11), and will not be able to ensure privacy/security
+	of the signed-in user against unauthenticated users.
+	@note Only warn the user once.
+	"""
+	global _hasSessionLockStateUnknownWarningBeenGiven
+	if _hasSessionLockStateUnknownWarningBeenGiven:
+		return
+	_hasSessionLockStateUnknownWarningBeenGiven = True
+
+	log.warning(
+		"NVDA is unable to determine if Windows is locked."
+		" While this instance of NVDA is running,"
+		" your desktop will not be secure when Windows is locked."
+		" Restarting Windows may address this."
+		" If this error is ongoing then disabling the Windows lock screen is recommended."
+	)
+
+	unableToDetermineSessionLockStateMsg = _(
+		# Translators: This is the message for a warning shown if NVDA cannot determine if
+		# Windows is locked.
+		"NVDA is unable to determine if Windows is locked."
+		" While this instance of NVDA is running,"
+		" your desktop will not be secure when Windows is locked."
+		" Restarting Windows may address this."
+		" If this error is ongoing then disabling the Windows lock screen is recommended."
+	)
+
+	import wx  # Late import to prevent circular dependency.
+	import gui  # Late import to prevent circular dependency.
+	log.debug("Presenting session lock tracking failure warning.")
+	gui.messageBox(
+		unableToDetermineSessionLockStateMsg,
+		# Translators: This is the title for a warning dialog, shown if NVDA cannot determine if
+		# Windows is locked.
+		caption=_("Lock screen not secure while using NVDA"),
+		style=wx.ICON_ERROR | wx.OK,
+	)
