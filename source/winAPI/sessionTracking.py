@@ -299,6 +299,7 @@ def handleSessionChange(newState: WindowsTrackedSession, sessionId: int) -> None
 
 	https://docs.microsoft.com/en-us/windows/win32/termserv/wm-wtssession-change
 	"""
+	stateChanged = False
 
 	log.debug(f"Windows Session state notification received: {newState.name}")
 
@@ -318,13 +319,23 @@ def handleSessionChange(newState: WindowsTrackedSession, sessionId: int) -> None
 		)
 	else:
 		_currentSessionStates.add(newState)
+		stateChanged = True
 
 	if oppositeState in _currentSessionStates:
 		_currentSessionStates.remove(oppositeState)
 	else:
-		log.debug(f"NVDA started in state {oppositeState.name} or dropped a state change event")
+		log.debugWarning(
+			f"NVDA expects Windows to be in {newState} already. "
+			f"NVDA may have dropped a {oppositeState} event. "
+		)
 
 	log.debug(f"New Windows Session state: {_currentSessionStates}")
+	if (
+		stateChanged
+		and newState in {WindowsTrackedSession.SESSION_LOCK, WindowsTrackedSession.SESSION_UNLOCK}
+	):
+		from utils.security import postSessionLockStateChanged
+		postSessionLockStateChanged.notify(isNowLocked=newState == WindowsTrackedSession.SESSION_LOCK)
 
 
 @contextmanager
