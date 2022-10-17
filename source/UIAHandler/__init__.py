@@ -730,6 +730,7 @@ class UIAHandler(COMObject):
 			if _isDebug():
 				log.debugWarning(f"HandleAutomationEvent: Don't know how to handle event {eventID}")
 			return
+		obj = None
 		focus = api.getFocusObject()
 		import NVDAObjects.UIA
 		if (
@@ -737,38 +738,48 @@ class UIAHandler(COMObject):
 			and self.clientObject.compareElements(focus.UIAElement, sender)
 		):
 			if _isDebug():
-				log.debug("handleAutomationEvent: element matches focus")
-			pass
+				log.debug(
+					"handleAutomationEvent: element matches focus. "
+					f"Redirecting event to focus NVDAObject {focus}"
+				)
+			obj = focus
 		elif not self.isNativeUIAElement(sender):
 			if _isDebug():
 				log.debug(
 					f"HandleAutomationEvent: Ignoring event {NVDAEventName} for non native element"
 				)
 			return
-		window = self.getNearestWindowHandle(sender)
-		if window and not eventHandler.shouldAcceptEvent(NVDAEventName, windowHandle=window):
+		window = obj.windowHandle if obj else self.getNearestWindowHandle(sender)
+		if window:
 			if _isDebug():
 				log.debug(
-					f"HandleAutomationEvent: Ignoring event {NVDAEventName} for shouldAcceptEvent=False"
+					f"Checking if should accept NVDA event {NVDAEventName} "
+					f"with window {self.getWindowHandleDebugString(window)}"
 				)
-			return
-		try:
-			obj = NVDAObjects.UIA.UIA(UIAElement=sender)
-		except Exception:
-			if _isDebug():
-				log.debugWarning(
-					f"HandleAutomationEvent: Exception while creating object for event {NVDAEventName}",
-					exc_info=True
-				)
-			return
-		if not obj:
-			if _isDebug():
-				log.debug("handleAutomationEvent: No NVDAObject could be created")
+			if not eventHandler.shouldAcceptEvent(NVDAEventName, windowHandle=window):
+				if _isDebug():
+					log.debug(
+						f"HandleAutomationEvent: Ignoring event {NVDAEventName} for shouldAcceptEvent=False"
+					)
 				return
-		if _isDebug():
-			log.debug(
-				f"handleAutomationEvent: created object {obj} "
-			)
+		if not obj:
+			try:
+				obj = NVDAObjects.UIA.UIA(UIAElement=sender)
+			except Exception:
+				if _isDebug():
+					log.debugWarning(
+						f"HandleAutomationEvent: Exception while creating object for event {NVDAEventName}",
+						exc_info=True
+					)
+				return
+			if not obj:
+				if _isDebug():
+					log.debug(f"handleAutomationEvent: No NVDAObject could be created")
+				return
+			if _isDebug():
+				log.debug(
+					f"handleAutomationEvent: created object {obj} "
+				)
 		if (
 			(NVDAEventName == "gainFocus" and not obj.shouldAllowUIAFocusEvent)
 			or (NVDAEventName=="liveRegionChange" and not obj._shouldAllowUIALiveRegionChangeEvent)
@@ -779,10 +790,6 @@ class UIAHandler(COMObject):
 					f"Ignoring event {NVDAEventName} because ignored by object itself"
 				)
 			return
-		if obj==focus:
-			if _isDebug():
-				log.debug("handleAutomationEvent: redirecting event to focus")
-			obj=focus
 		if _isDebug():
 			log.debug(
 				f"handleAutomationEvent: queuing NVDA event {NVDAEventName} "
