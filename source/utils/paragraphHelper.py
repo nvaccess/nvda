@@ -128,10 +128,10 @@ def speakParagraph(ti: textInfos.TextInfo) -> None:
 
 def _notFoundMessage(nextParagraph: bool):
 	if nextParagraph:
-		# Translators: this message is given when there is no next paragraph
+		# Translators: this message is given when there is no next paragraph when navigating by paragraph
 		ui.message("No next paragraph")
 	else:
-		# Translators: this message is given when there is no previous paragraph
+		# Translators: this message is given when there is no previous paragraph when navigating by paragraph
 		ui.message("No previous paragraph")
 
 
