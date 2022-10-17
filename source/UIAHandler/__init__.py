@@ -50,12 +50,18 @@ from . import remote as UIARemote
 
 
 baseCachePropertyIDs = {
-	UIA.UIA_FrameworkIdPropertyId, UIA.UIA_AutomationIdPropertyId, UIA.UIA_ClassNamePropertyId,
-	UIA.UIA_ControlTypePropertyId, UIA.UIA_ProviderDescriptionPropertyId, UIA.UIA_ProcessIdPropertyId,
+	UIA.UIA_FrameworkIdPropertyId,
+	UIA.UIA_AutomationIdPropertyId,
+	UIA.UIA_ClassNamePropertyId,
+	UIA.UIA_ControlTypePropertyId,
+	UIA.UIA_ProviderDescriptionPropertyId,
+	UIA.UIA_ProcessIdPropertyId,
 	UIA.UIA_IsTextPatternAvailablePropertyId,
-	UIA.UIA_IsContentElementPropertyId, UIA.UIA_IsControlElementPropertyId,
-	UIA.UIA_NamePropertyId, UIA.UIA_LocalizedControlTypePropertyId,
-])
+	UIA.UIA_IsContentElementPropertyId,
+	UIA.UIA_IsControlElementPropertyId,
+	UIA.UIA_NamePropertyId,
+	UIA.UIA_LocalizedControlTypePropertyId,
+}
 
 #: The window class name for Microsoft Word documents.
 # Microsoft Word's UI Automation implementation
