@@ -1304,12 +1304,14 @@ class UIA(Window):
 		UIACachedWindowHandle=UIAElement.cachedNativeWindowHandle
 		self.UIAIsWindowElement=bool(UIACachedWindowHandle)
 		if not windowHandle:
-			if UIAHandler._isDebug():
-				log.debug(
-					f"No windowHandle for UIA NvDAObject. "
-					f"Searching UIA element ancestry for nearest windowHandle"
-				)
-			windowHandle=UIAHandler.handler.getNearestWindowHandle(UIAElement)
+			windowHandle = UIACachedWindowHandle
+			if not windowHandle:
+				if UIAHandler._isDebug():
+					log.debug(
+						f"No windowHandle for UIA NvDAObject. "
+						f"Searching UIA element ancestry for nearest windowHandle"
+					)
+				windowHandle = UIAHandler.handler.getNearestWindowHandle(UIAElement)
 		if not windowHandle:
 			raise InvalidNVDAObject("no windowHandle")
 		super(UIA,self).__init__(windowHandle=windowHandle)
