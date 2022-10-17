@@ -3,6 +3,100 @@ Was ist neu in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2022.4 =
+Diese Version enthält mehrere neue Tastenkombinationen, darunter die Tastenbefehle für das Vorlesen von Tabellen.
+Das Benutzerhandbuch wurde um den Abschnitt "Schnellstartanleitung" erweitert.
+Außerdem wurden mehrere Fehler behoben.
+
+Die Sprachausgabe eSpeak und der Braille-Übersetzer LibLouis wurden aktualisiert.
+Es gibt neue Braille-Tabellen für Chinesisch, Schwedisch, Luganda und Kinyarwanda.
+
+== Neue Features ==
+- Dem Benutzerhandbuch wurde ein Abschnitt "Schnellstartanleitung" hinzugefügt. (#13934)
+- Es wurde ein neuer Tastenbefehl eingeführt, um das Tastaturkürzel des aktuellen Fokus zu überprüfen. (#13960)
+  - Desktop: ``Umschalt+Nummernblock 2``.
+  - Laptop: ``NVDA+Strg+Umschalt+Punkt``.
+  -
+- Es wurden neue Tastenbefehle eingeführt, um den NVDA-Cursor seitenweise zu navigieren, sofern dies von der Anwendung unterstützt wird. (#14021)
+  - Zur vorherigen Seite wechseln:
+    - Desktop: ``NVDA+Seite nach oben``.
+    - Laptop: ``NVDA+Umschalt+Seite nach oben``.
+    -
+  - Zur nächsten  Seite wechseln:
+    - Desktop: ``NVDA+Seite nach unten``.
+    - Laptop: ``NVDA+Umschalt+Seite nach unten``.
+    -
+  -
+- Die folgenden Tabellenbefehle wurden hinzugefügt. (#14070)
+  - Aktuelle Spalte vorlesen: ``NVDA+Strg+Alt+Pfeiltaste nach unten``
+  - Aktuelle Zeile vorlesen: ``NVDA+Strg+Alt+Pfeiltaste nach rechts``
+  - Gesamte Spalte vorlesen ``NVDA+Strg+Alt+Pfeiltaste nach oben``
+  - Gesamte Zeile vorlesen: ``NVDA+Strg+Alt+Pfeiltaste nach links``
+  -
+- Microsoft Excel über UIA: NVDA teilt nun mit, sobald Sie eine Tabelle innerhalb einer Tabelle verlassen. (#14165)
+- Das Mitteilen von Überschriften in Tabellen können nun für Zeilen und Spalten getrennt konfiguriert werden. (#14075)
+-
+
+
+== Änderungen ==
+- Die Sprachausgabe eSpeak NG wurde aktualisiert auf 1.52-dev commit ``735ecdb8``. (#14060, #14079, #14118, #14203)
+  - Die Ansage von lateinischen Schriftzeichen bei der Verwendung von Mandarin wurde korrigiert. (#12952, #13572, #14197)
+  -
+- Der Braille-Übersetzer LibLouis wurde aktualisiert auf [3.23.0 https://github.com/liblouis/liblouis/releases/tag/v3.23.0]. (#14112)
+  - Braille-Tabellen hinzugefügt:
+    - Chinesische Braille-Schrift (vereinfachte chinesische Schriftzeichen)
+    - Literatur-Braille (Kinyarwanda)
+    - Literatur-Braille-Schrift (Luganda)
+    - Schwedische basisschrift
+    - Schwedische Vollschrift
+    - Schwedische Kurzschrift
+    - Chinesisch (China, Mandarin) Aktuelles Braille-System (ohne Laute) (#14138)
+    -
+- NVDA erfasst nun die Architektur des Betriebssystems als Teil der Benutzer-Statistiken. (#14019)
+-
+
+
+== Fehlerbehebungen ==
+- Bei der Aktualisierung von NVDA mit dem Windows Package Manager CLI (aka winget) wird eine freigegebene Version von NVDA nicht mehr immer als neuer als die installierte Alpha-Version behandelt. (#12469)
+- NVDA zeigt nun Gruppenfelder in Java-Anwendungen korrekt an. (#13962)
+- Der System-Cursor folgt dem vorgelesenen Text während "Alles Lesen" in Anwendungen wie Bookworm, WordPad oder dem NVDA-Protokollbetrachter. (#13420, #9179)
+- In Programmen, die UIA verwenden, werden teilweise angehakte Kontrollkästchen korrekt mitgeteilt. (#13975)
+- Verbesserte Leistung und Stabilität in Microsoft Visual Studio, Windows Terminal und anderen auf UIA-basierenden Anwendungen. (#11077, #11209)
+  - Diese Anpassungen  gelten für Windows 11 Version 22H2 bzw. 2022 (Sun Valley 2).
+  - Ausgewählte Registrierung für UIA-Ereignisse und Eigenschaftsänderungen nun standardmäßig aktiviert.
+  -
+- Text vorlesen, Braille-Ausgabe und Passwort-Unterdrückung funktionieren jetzt wie erwartet im eingebetteten Windows-Terminal-Steuerelement in Visual Studio 2022. (#14194)
+- NVDA kann nun mit mehreren Monitoren umgehen, die verschiedene Auflösungen verwenden.
+Es gibt mehrere Lösungen für die Verwendung einer DPI-Einstellung von mehr als 100 % oder mehrerer Monitore.
+Bei älteren Windows-Versionen als Windows 10 Version 1809 können weiterhin Probleme auftreten.
+Damit diese Anpassungen  funktionieren, müssen die Anwendungen, mit denen NVDA interagiert, ebenfalls DPI-kompatibel sein.
+Beachten Sie, dass es immer noch bekannte Probleme mit Google Chrome und Microsoft Edge gibt. (#13254)
+  - Visuelle Hervorhebungsrahmen sollten nun in den meisten Anwendungen korrekt platziert werden. (#13370, #3875, #12070)
+  - Die Touchscreen-Interaktionen sollte nun für die meisten Anwendungen präzise sein. (#7083)
+  - Die Mausverfolgung sollte nun für die meisten Anwendungen funktionieren. (#6722)
+  -
+- Änderungen der Ausrichtung (Querformat/Hochformat) werden nun korrekt ignoriert, wenn es keine Änderung gibt (z. B. beim Umschalten des Monitors). (#14035)
+- NVDA teilt mit, dass das Ziehen von Elementen auf dem Bildschirm an Stellen wie der Neuanordnung von Kacheln im Startmenü von Windows 10 und virtuellen Desktops in Windows 11 möglich ist. (#12271, #14081)
+- In den erweiterten Einstellungen wird die Option "Bei protokollierten Fehlern einen Signalton wiedergeben" nun korrekt auf den Standardwert zurückgesetzt, wenn die Schaltfläche "Standardwerte wiederherstellen" betätigt wird. (#14149)
+- NVDA kann nun Text mit dem Tastaturkürzel ``NVDA+F10`` in Java-Anwendungen auswählen. (#14163)
+-
+
+
+== Änderungen für Entwickler ==
+Bitte lesen Sie das [Entwicklerhandbuch https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] für Informationen über den NVDA-API-Abkündigungs- und Entfernungsprozess.
+
+- Die [Mailingliste für NVDA-API-Ankündigungen https://groups.google.com/a/nvaccess.org/g/nvda-api/about] wurde ins Leben gerufen. (#13999)
+- NVDA verarbeitet keine ``TextChange``-Ereignisse mehr für die meisten UIA-Anwendungen, da diese extrem negative Auswirkungen auf die Leistung haben. (#11002, #14067)
+-
+
+
+=== Veraltete Funktionen ===
+- ``core.post_windowMessageReceipt`` ist veraltet, verwenden Sie stattdessen ``winAPI.messageWindow.pre_handleWindowMessage``.
+- ``winKernel.SYSTEM_POWER_STATUS`` ist veraltet und es wird von der Verwendung abgeraten, dies wurde nach ``winAPI._powerTracking.SystemPowerStatus`` verschoben.
+- ``winUser.SM_*``-Konstanten sind veraltet, verwenden Sie stattdessen ``winAPI.winUser.constants.SystemMetrics``.
+-
+
+
 = 2022.3 =
 Ein großer Teil dieser Version wurde von der NVDA-Entwicklergemeinschaft beigesteuert. 
 Dazu gehören verzögerte Zeichenbeschreibungen und eine verbesserte Unterstützung der Windows-Konsole.
