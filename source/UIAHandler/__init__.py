@@ -49,7 +49,7 @@ import aria
 from . import remote as UIARemote
 
 
-baseCachePropertyIDs = set([
+baseCachePropertyIDs = {
 	UIA.UIA_FrameworkIdPropertyId, UIA.UIA_AutomationIdPropertyId, UIA.UIA_ClassNamePropertyId,
 	UIA.UIA_ControlTypePropertyId, UIA.UIA_ProviderDescriptionPropertyId, UIA.UIA_ProcessIdPropertyId,
 	UIA.UIA_IsTextPatternAvailablePropertyId,
@@ -287,7 +287,7 @@ class UIAHandler(COMObject):
 		UIA.IUIAutomationActiveTextPositionChangedEventHandler,
 	]
 
-	#: A cache of UIA notification kinds  to friendly names for logging
+	#: A cache of UIA notification kinds to friendly names for logging
 	_notificationKindsToNamesCache = {
 		v: k[len('NotificationKind_'):]
 		for k, v in vars(UIA).items()
@@ -299,13 +299,13 @@ class UIAHandler(COMObject):
 		Generates a string representation of the given UIA notification kind,
 		suitable for logging.
 		This is the name part of the NotificationKind_* constant.
-		If a matching  constant can not be found,
+		If a matching constant can not be found,
 		then a string representation of the NotificationKind value itself is used.
 		E.g. "unknown notification kind 1234".
 		"""
 		name = self._notificationKindsToNamesCache.get(notificationKind)
 		if not name:
-			name = "unknown notification kind {notificationKind}"
+			name = f"unknown notification kind {notificationKind}"
 		return name
 
 	#: A cache of UIA notification processing values  to friendly names for logging
@@ -320,13 +320,13 @@ class UIAHandler(COMObject):
 		Generates a string representation of the given UIA notification processing value,
 		suitable for logging.
 		This is the name part of the NotificationProcessing_* constant.
-		If a matching  constant can not be found,
+		If a matching constant can not be found,
 		then a string representation of the NotificationProcessing value itself is used.
 		E.g. "unknown notification processing value 1234".
 		"""
 		name = self._notificationProcessingValuesToNamesCache.get(notificationProcessing)
 		if not name:
-			name = "unknown notification processing value {notificationProcessing}"
+			name = f"unknown notification processing value {notificationProcessing}"
 		return name
 
 	def getUIAPropertyIDDebugString(self, propertyID: int) -> str:
@@ -358,12 +358,12 @@ class UIAHandler(COMObject):
 		Generates a string representation of the given UIA event ID,
 		suitable for logging.
 		This is the name part of the UIA_*EventId constant.
-		If a matching  constant can not be found, then a string representation of the ID itself is used.
+		If a matching constant can not be found, then a string representation of the ID itself is used.
 		E.g. "unknown event ID 1234".
 		"""
 		name = self._eventIDsToNamesCache.get(eventID)
 		if not name:
-			name = "unknown event ID {eventID}"
+			name = f"unknown event ID {eventID}"
 		return name
 
 	def getUIAElementPropertyDebugString(self, element: UIA.IUIAutomationElement, propertyId: int) -> str:
@@ -702,7 +702,7 @@ class UIAHandler(COMObject):
 			else:
 				if _isDebug():
 					log.debugWarning(
-						f"HandleAutomationEvent: Dropping textChange event "
+						"HandleAutomationEvent: Dropping textChange event "
 						f"from element {self.getUIAElementDebugString(sender)}"
 					)
 				return
@@ -778,7 +778,7 @@ class UIAHandler(COMObject):
 
 	def IUIAutomationFocusChangedEventHandler_HandleFocusChangedEvent(self,sender):
 		if _isDebug():
-			log.debug(f"handleFocusChangedEvent called with  element {self.getUIAElementDebugString(sender)}")
+			log.debug(f"handleFocusChangedEvent called with element {self.getUIAElementDebugString(sender)}")
 		if not self.MTAThreadInitEvent.isSet():
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
 			if _isDebug():
@@ -897,7 +897,7 @@ class UIAHandler(COMObject):
 			and self.clientObject.compareElements(focus.UIAElement, sender)
 		):
 			if _isDebug():
-				log.debug(f"propertyChange event is for  focus")
+				log.debug(f"propertyChange event is for focus")
 			pass
 		elif not self.isNativeUIAElement(sender):
 			if _isDebug():
@@ -988,7 +988,7 @@ class UIAHandler(COMObject):
 			return
 		if _isDebug():
 			log.debug(
-				f"Queuing  UIA_notification NVDA event "
+				"Queuing UIA_notification NVDA event "
 				f"for NVDAObject {obj}"
 			)
 		eventHandler.queueEvent("UIA_notification",obj, notificationKind=NotificationKind, notificationProcessing=NotificationProcessing, displayString=displayString, activityId=activityId)
@@ -1156,7 +1156,7 @@ class UIAHandler(COMObject):
 				log.debug("window does not have UIA server side provider. Treating as non-UIA")
 		return bool(res)
 
-	def isUIAWindow(self, hwnd: int, isDebug=False) -> bool:
+	def isUIAWindow(self, hwnd: int, isDebug: bool = False) -> bool:
 		# debugging for this function is explicitly controled via an argument
 		# as this function may be also called from MSAA code.
 		now=time.time()
