@@ -1823,7 +1823,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._tether = tether
 		self.mainBuffer.clear()
 
-	def _get_shouldAutoTether(self):
+	def _get_shouldAutoTether(self) -> bool:
 		return self.enabled and config.conf["braille"]["tetherTo"] == self.TETHER_AUTO
 
 	displaySize: int
@@ -2034,7 +2034,11 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		If a key is pressed the message will be dismissed by the next text being written to the display.
 		@postcondition: The message is displayed.
 		"""
-		if not self.enabled or config.conf["braille"]["showMessages"] == ShowMessages.DISABLED or text is None:
+		if (
+			not self.enabled
+			or config.conf["braille"]["showMessages"] == ShowMessages.DISABLED
+			or text is None
+		):
 			return
 		if self.buffer is self.messageBuffer:
 			self.buffer.clear()

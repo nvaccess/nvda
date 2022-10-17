@@ -593,7 +593,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Cycles through line indentation settings"),
 		category=SCRCAT_DOCUMENTFORMATTING
 	)
-	def script_toggleReportLineIndentation(self,gesture):
+	def script_toggleReportLineIndentation(self, gesture: inputCore.InputGesture):
 		ReportLineIndentation = config.configFlags.ReportLineIndentation
 		numVals = len(ReportLineIndentation)
 		state = ReportLineIndentation((config.conf["documentFormatting"]["reportLineIndentation"] + 1) % numVals)
@@ -685,7 +685,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Cycles through the cell border reporting settings"),
 		category=SCRCAT_DOCUMENTFORMATTING,
 	)
-	def script_toggleReportCellBorders(self, gesture):
+	def script_toggleReportCellBorders(self, gesture: inputCore.InputGesture):
 		ReportCellBorders = config.configFlags.ReportCellBorders
 		numVals = len(ReportCellBorders)
 		state = ReportCellBorders((config.conf["documentFormatting"]["reportCellBorders"] + 1) % numVals)
