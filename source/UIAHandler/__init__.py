@@ -752,7 +752,7 @@ class UIAHandler(COMObject):
 				return
 		if not obj:
 			try:
-				obj = NVDAObjects.UIA.UIA(UIAElement=sender)
+				obj = NVDAObjects.UIA.UIA(windowHandle=window, UIAElement=sender)
 			except Exception:
 				if _isDebug():
 					log.debugWarning(
@@ -842,7 +842,7 @@ class UIAHandler(COMObject):
 				)
 			return
 		try:
-			obj = NVDAObjects.UIA.UIA(UIAElement=sender)
+			obj = NVDAObjects.UIA.UIA(windowHandle=window, UIAElement=sender)
 		except Exception:
 			if _isDebug():
 				log.debugWarning(
@@ -937,7 +937,7 @@ class UIAHandler(COMObject):
 				return
 		if not obj:
 			try:
-				obj = NVDAObjects.UIA.UIA(UIAElement=sender)
+				obj = NVDAObjects.UIA.UIA(windowHandle=window, UIAElement=sender)
 			except Exception:
 				if _isDebug():
 					log.debugWarning(
