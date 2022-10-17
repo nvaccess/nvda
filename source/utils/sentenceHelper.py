@@ -5,16 +5,18 @@
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 import re
+from typing import Optional
 
 WESTERN_TERMINATORS_PATTERN: re.Pattern = re.compile("[.?!](?: |\r|\n)+")
 WESTERN_TERMINATORS_SINGLE_PATTERN: re.Pattern = re.compile("[.?!]")
 FULL_WIDTH_TERMINATORS_PATTERN: re.Pattern = re.compile("[。！？](?:\r|\n)*")
 
 
-def _findEndOfSentence(sentence: str, offset: int) -> int:
+def _findEndOfSentence(sentence: str, offset: int) -> Optional[int]:
 	"""
 	Returns an index which points one character past the end of the current sentence,
 	or if the sentence is at the end of the string, returns the length of the string.
+	Returns None if sentence end not found.
 	In the case of western sentence terminators,
 	conbinations of space, \r, or \n at the end of the sentence are included.
 	In the case of full width sentence terminators,
@@ -22,7 +24,7 @@ def _findEndOfSentence(sentence: str, offset: int) -> int:
 	@param sentence: string containing at least current sentence
 	@param offset: int indicating where to start searching for the end of the sentence
 	"""
-	res = -1
+	res = None
 	m = re.search(FULL_WIDTH_TERMINATORS_PATTERN, sentence[offset:])
 	if m:
 		res = m.end() + offset
