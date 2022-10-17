@@ -944,6 +944,22 @@ class GlobalCommands(ScriptableObject):
 		ui.message(_("Symbol level %s") % name)
 
 	@script(
+		# Translators: Input help mode message for toggle delayed character description command.
+		description=_("Toggles on and off delayed descriptions for characters on cursor movement"),
+		category=SCRCAT_SPEECH,
+	)
+	def script_toggleDelayedCharacterDescription(self, gesture: inputCore.InputGesture) -> None:
+		enabled: bool = not config.conf["speech"]["delayedCharacterDescriptions"]
+		config.conf["speech"]["delayedCharacterDescriptions"] = enabled
+		if enabled:
+			# Translators: The message announced when toggling the delayed character description setting.
+			state = _("delayed character descriptions on")
+		else:
+			# Translators: The message announced when toggling the delayed character description setting.
+			state = _("delayed character descriptions off")
+		ui.message(state)
+	
+	@script(
 		# Translators: Input help mode message for move mouse to navigator object command.
 		description=_("Moves the mouse pointer to the current navigator object"),
 		category=SCRCAT_MOUSE,
