@@ -3,6 +3,89 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2022.4 =
+Tämä julkaisu sisältää useita uusia näppäinkomentoja, mukaan lukien taulukon jatkuva luku.
+Käyttöoppaaseen on lisätty "Pika-aloitusopas"-kappale.
+Useita bugikorjauksia on myös tehty.
+
+eSpeak ja LibLouis on päivitetty.
+Lisätty uusia kiinalaisia, ruotsalaisia, gandalaisia ja ruandalaisia pistetaulukoita.
+
+== Uudet ominaisuudet ==
+- Lisätty käyttöoppaaseen "Pika-aloitusopas"-kappale. (#13934)
+- Lisätty uusi komento aktiivisen kohdan näppäinkomennon tarkistamiseen. (#13960)
+  - Pöytäkone: ``Vaihto+laskimen 2``.
+  - Kannettava: ``NVDA+Ctrl+Vaihto+.``.
+  -
+- Lisätty uusia komentoja tarkastelukohdistimen siirtämiseen sivu kerrallaan sellaisissa sovelluksissa, jotka sitä tukevat. (#14021)
+  - Siirry edelliselle sivulle:
+    - Pöytäkone: ``NVDA+Page up``.
+    - Kannettava: ``NVDA+Vaihto+Page up``.
+    -
+  - Siirry seuraavalle sivulle:
+    - Pöytäkone: ``NVDA+Page down``.
+    - Kannettava: ``NVDA+Vaihto+Page down``.
+    -
+  -
+- Lisätty seuraavat taulukkokomennot. (#14070)
+  - Sarakkeen jatkuva luku: ``NVDA+Ctrl+Alt+Nuoli alas``
+  - Rivin jatkuva luku: ``NVDA+Ctrl+Alt+Nuoli oikealle``
+  - Lue koko sarake: ``NVDA+Ctrl+Alt+Nuoli ylös``
+  - Lue koko rivi: ``NVDA+Ctrl+Alt+Nuoli vasemmalle``
+  -
+- NVDA ilmoittaa nyt Microsoft Excelissä, kun laskentataulukossa olevasta taulukosta siirrytään pois UI Automation -rajapinnan ollessa käytössä. (#14165)
+- Taulukko-otsikoiden lukeminen voidaan nyt määrittää erikseen riveille ja sarakkeille. (#14075)
+-
+
+
+== Muutokset ==
+- eSpeak NG on päivitetty versioksi 1.52-dev muutos ``735ecdb8``. (#14060, #14079, #14118, #14203)
+  - Korjattu latinalaisten kirjainten lukeminen mandariinikiinaa käytettäessä. (#12952, #13572, #14197)
+  -
+- Päivitetty LibLouis-pistekirjoituskääntäjä versioksi [3.23.0 https://github.com/liblouis/liblouis/releases/tag/v3.23.0]. (#14112)
+  - Lisätty pistetaulukoita:
+    - Kiinalainen yleinen pistekirjoitus (yksinkertaistetut merkit)
+    - Ruandalainen kaunokirjallinen pistekirjoitus
+    - Gandalainen kaunokirjallinen pistekirjoitus
+    - Ruotsalainen lyhentämätön pistekirjoitus
+    - Ruotsalainen osittainen lyhennekirjoitus
+    - Ruotsalainen lyhennekirjoitus
+    - Kiinalainen (Kiina, mandariini), nykyinen pistekirjoitusjärjestelmä (ei tooneja) (#14138)
+    -
+- NVDA sisältää nyt käyttöjärjestelmän arkkitehtuurin osana käyttäjätilastojen seurantaa. (#14019)
+-
+
+
+== Bugikorjaukset ==
+- - Kun NVDA päivitetään Windows Package Managerin komentoriviversion (winget) avulla, julkaistua NVDA:n versiota ei enää aina käsitellä uudempana kuin mitä tahansa asennettua alfaversiota. (#12469)
+- NVDA ilmoittaa nyt asianmukaisesti ryhmäruudut Java-sovelluksissa. (#13962)
+- Kohdistin seuraa asianmukaisesti puhuttua tekstiä jatkuvan luvun aikana sellaisissa sovelluksissa kuin Bookworm, WordPad tai NVDA:n lokintarkastelu. (#13420, #9179)
+- Osittain valitut valintaruudut ilmoitetaan oikein UI Automation -rajapintaa käyttävissä ohjelmissa. (#13975)
+- Suorituskykyä ja vakautta paranneltu Microsoft Visual Studiossa, Windows Terminalissa sekä muissa UI Automation -pohjaisissa sovelluksissa. (#11077, #11209)
+  - Nämä korjaukset koskevat Windows 11 Sun Valley 2:ta (versio 22H2) ja sitä uudempia.
+  - UI Automation -tapahtumien ja ominaisuusmuutosten valikoiva rekisteröinti on nyt oletusarvoisesti käytössä.
+  -
+- Tekstin lukeminen, pistekirjoituksen tulostus sekä salasanan lukemisen estäminen toimivat nyt odotetusti Visual Studio 2022:n upotetussa Windows Terminal -säätimessä. (#14194)
+- NVDA on nyt DPI-tietoinen useita näyttöjä käytettäessä.
+Tehty useita korjauksia korkeampaa kuin 100 %:n DPI-asetusta tai useita näyttöjä käytettäessä.
+Ongelmia saattaa edelleen esiintyä Windows 10 1809:ää vanhemmissa versioissa.
+Jotta nämä korjaukset toimisivat, sovellusten, joiden kanssa NVDA on vuorovaikutuksessa, on myös oltava DPI-tietoisia.
+Huomaa, että Chromessa ja Edgessä on edelleen tunnettuja ongelmia. (#13254)
+  - Visuaalisten korostuskehysten sijoittamisen pitäisi nyt onnistua asianmukaisesti useimmissa sovelluksissa. (#13370, #3875, #12070)
+  - Kosketusnäyttövuorovaikutuksen pitäisi nyt olla tarkkaa useimmissa sovelluksissa. (#7083)
+  - Hiiren seurannan pitäisi nyt toimia useimmissa sovelluksissa. (#6722)
+  -
+- Suuntatilan (vaaka/pysty) muutokset ohitetaan nyt oikein, kun muutosta ei tapahdu (esim. näytön muutokset). (#14035)
+- NVDA ilmoittaa kohteiden vetämisestä näytöllä esim. uudelleenjärjesteltäessä Windows 10:n Käynnistä-valikon ruutuja ja virtuaalisia työpöytiä Windows 11:ssä. (#12271, #14081)
+- Lisäasetusten "Ilmaise lokiin tallennetut virheet toistamalla ääni" -asetus palautetaan nyt asianmukaisesti oletusarvoonsa painettaessa "Palauta oletukset" -painiketta. (#14149)
+- NVDA voi nyt valita tekstiä Java-sovelluksissa ``NVDA+F10``-pikanäppäintä käyttäen. (#14163)
+-
+
+
+== Muutokset kehittäjille ==
+Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/changes.html]
+
+
 = 2022.3 =
 NVDA:n kehitysyhteisö on antanut panoksensa merkittävään osaan tästä julkaisusta.
 Tämä sisältää viivästetyt merkkikuvaukset ja parannetun Windows-konsolin tuen.
