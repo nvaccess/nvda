@@ -301,12 +301,12 @@ class EditableText(TextContainerObject,ScriptableObject):
 		if flag.calculated() == ParagraphNavigationFlag.APPLICATION:
 			self.script_caret_moveByParagraph(gesture)
 		elif flag.calculated() == ParagraphNavigationFlag.NORMAL:
-			from utils.paragraphHelper import moveToParagraph
+			from documentNavigation.paragraphHelper import moveToParagraph
 			passKey, moved = moveToParagraph(nextParagraph=nextParagraph, speakNew=not willSayAllResume(gesture))
 			if passKey:
 				self.script_caret_moveByParagraph(gesture)
 		elif flag.calculated() == ParagraphNavigationFlag.BLOCK:
-			from utils.paragraphHelper import moveToBlockParagraph
+			from documentNavigation.paragraphHelper import moveToBlockParagraph
 			passKey, moved = moveToBlockParagraph(nextParagraph=nextParagraph, speakNew=not willSayAllResume(gesture))
 			if passKey:
 				self.script_caret_moveByParagraph(gesture)

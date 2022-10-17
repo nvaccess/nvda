@@ -3680,7 +3680,7 @@ class GlobalCommands(ScriptableObject):
 		),
 	)
 	def script_toggleParagraphStyle(self, gesture: "inputCore.InputGesture") -> None:
-		from utils.paragraphHelper import nextParagraphStyle
+		from documentNavigation.paragraphHelper import nextParagraphStyle
 		newFlag: config.featureFlag.FeatureFlag = nextParagraphStyle()
 		config.conf["documentNavigation"]["paragraphStyle"] = newFlag.name
 		ui.message(newFlag.displayString)

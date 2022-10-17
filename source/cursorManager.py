@@ -276,7 +276,7 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 		):
 			self._caretMovementScriptHelper(gesture, textInfos.UNIT_PARAGRAPH, 1 if nextParagraph else -1)
 		elif flag.calculated() == ParagraphNavigationFlag.BLOCK:
-			from utils.paragraphHelper import moveToBlockParagraph
+			from documentNavigation.paragraphHelper import moveToBlockParagraph
 			ti = self.makeTextInfo(textInfos.POSITION_SELECTION)
 			passKey, moved = moveToBlockParagraph(
 				nextParagraph=nextParagraph,
