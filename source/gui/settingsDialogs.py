@@ -25,6 +25,7 @@ import logHandler
 import installer
 from synthDriverHandler import changeVoice, getSynth, getSynthList, setSynth, SynthDriver
 import config
+from config.configFlags import ReportTableHeaders
 import languageHandler
 import speech
 import gui
@@ -2395,11 +2396,18 @@ class DocumentFormattingPanel(SettingsPanel):
 		self.tablesCheckBox = tablesGroup.addItem(wx.CheckBox(tablesGroupBox, label=_("&Tables")))
 		self.tablesCheckBox.SetValue(config.conf["documentFormatting"]["reportTables"])
 
-		# Translators: This is the label for a checkbox in the
-		# document formatting settings panel.
-		_tableHeadersCheckBox = wx.CheckBox(tablesGroupBox, label=_("Row/column h&eaders"))
-		self.tableHeadersCheckBox = tablesGroup.addItem(_tableHeadersCheckBox)
-		self.tableHeadersCheckBox.SetValue(config.conf["documentFormatting"]["reportTableHeaders"])
+		tableHeaderChoices = [i.displayString for i in ReportTableHeaders]
+		# The possible config values to report table headers, in the order they appear
+		# in the combo box.
+		self.tableHeaderVals = [i.value for i in ReportTableHeaders]
+		self.tableHeadersComboBox = tablesGroup.addLabeledControl(
+			# Translators: This is the label for a combobox in the
+			# document formatting settings panel.
+			_("H&eaders"),
+			wx.Choice,
+			choices=tableHeaderChoices,
+		)
+		self.tableHeadersComboBox.SetSelection(config.conf['documentFormatting']['reportTableHeaders'])
 
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
@@ -2530,7 +2538,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		config.conf["documentFormatting"]["reportParagraphIndentation"]=self.paragraphIndentationCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLineSpacing"]=self.lineSpacingCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportTables"]=self.tablesCheckBox.IsChecked()
-		config.conf["documentFormatting"]["reportTableHeaders"]=self.tableHeadersCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportTableHeaders"] = self.tableHeadersComboBox.GetSelection()
 		config.conf["documentFormatting"]["reportTableCellCoords"]=self.tableCellCoordsCheckBox.IsChecked()
 		choice = self.borderComboBox.GetSelection()
 		config.conf["documentFormatting"]["reportBorderStyle"] = choice in (1,2)
@@ -2654,17 +2662,46 @@ class AdvancedPanelControls(
 		UIAGroup = guiHelper.BoxSizerHelper(self, sizer=UIASizer)
 		sHelper.addItem(UIAGroup)
 
-		# Translators: This is the label for a checkbox in the
-		#  Advanced settings panel.
-		label = _("Enable &selective registration for UI Automation events and property changes")
-		self.selectiveUIAEventRegistrationCheckBox = UIAGroup.addItem(wx.CheckBox(UIABox, label=label))
+		# Translators: This is the label for a combo box for selecting the
+		# means of registering for UI Automation events in the advanced settings panel.
+		# Choices are automatic, selective, and global.
+		selectiveUIAEventRegistrationComboText = _("Regi&stration for UI Automation events and property changes:")
+		selectiveUIAEventRegistrationChoices = [
+			# Translators: A choice in a combo box in the advanced settings
+			# panel to have NVDA decide whether to register
+			# selectively or globally for UI Automation events.
+			_("Automatic (prefer selective)"),
+			# Translators: A choice in a combo box in the advanced settings
+			# panel to have NVDA register selectively for UI Automation events
+			# (i.e. not to request events for objects outside immediate focus).
+			_("Selective"),
+			# Translators: A choice in a combo box in the advanced settings
+			# panel to have NVDA register for all UI Automation events
+			# in all cases.
+			_("Global")
+		]
+		#: The possible event registration config values, in the order they appear
+		#: in the combo box.
+		self.selectiveUIAEventRegistrationVals = (
+			"auto",
+			"selective",
+			"global"
+		)
+		self.selectiveUIAEventRegistrationCombo = UIAGroup.addLabeledControl(
+			selectiveUIAEventRegistrationComboText,
+			wx.Choice,
+			choices=selectiveUIAEventRegistrationChoices
+		)
 		self.bindHelpEvent(
 			"AdvancedSettingsSelectiveUIAEventRegistration",
-			self.selectiveUIAEventRegistrationCheckBox
+			self.selectiveUIAEventRegistrationCombo
 		)
-		self.selectiveUIAEventRegistrationCheckBox.SetValue(config.conf["UIA"]["selectiveEventRegistration"])
-		self.selectiveUIAEventRegistrationCheckBox.defaultValue = (
-			self._getDefaultValue(["UIA", "selectiveEventRegistration"])
+		curChoice = self.selectiveUIAEventRegistrationVals.index(
+			config.conf['UIA']['eventRegistration']
+		)
+		self.selectiveUIAEventRegistrationCombo.SetSelection(curChoice)
+		self.selectiveUIAEventRegistrationCombo.defaultValue = self.selectiveUIAEventRegistrationVals.index(
+			self._getDefaultValue(["UIA", "eventRegistration"])
 		)
 
 		label = pgettext(
@@ -3032,51 +3069,58 @@ class AdvancedPanelControls(
 			self._defaultsRestored
 			and self.scratchpadCheckBox.IsChecked() == self.scratchpadCheckBox.defaultValue
 			and (
-				self.selectiveUIAEventRegistrationCheckBox.IsChecked()
-				== self.selectiveUIAEventRegistrationCheckBox.defaultValue
+				self.selectiveUIAEventRegistrationCombo.GetSelection()
+				== self.selectiveUIAEventRegistrationCombo.defaultValue
 			)
 			and self.UIAInMSWordCombo.GetSelection() == self.UIAInMSWordCombo.defaultValue
 			and self.UIAInMSExcelCheckBox.IsChecked() == self.UIAInMSExcelCheckBox.defaultValue
 			and self.consoleCombo.GetSelection() == self.consoleCombo.defaultValue
-			and self.cancelExpiredFocusSpeechCombo.GetSelection() == self.cancelExpiredFocusSpeechCombo.defaultValue
 			and self.UIAInChromiumCombo.GetSelection() == self.UIAInChromiumCombo.defaultValue
-			and self.winConsoleSpeakPasswordsCheckBox.IsChecked() == self.winConsoleSpeakPasswordsCheckBox.defaultValue
-			and self.keyboardSupportInLegacyCheckBox.IsChecked() == self.keyboardSupportInLegacyCheckBox.defaultValue
-			and self.diffAlgoCombo.GetSelection() == self.diffAlgoCombo.defaultValue
-			and self.caretMoveTimeoutSpinControl.GetValue() == self.caretMoveTimeoutSpinControl.defaultValue
-			and self.reportTransparentColorCheckBox.GetValue() == self.reportTransparentColorCheckBox.defaultValue
-			and set(self.logCategoriesList.CheckedItems) == set(self.logCategoriesList.defaultCheckedItems)
 			and self.annotationsDetailsCheckBox.IsChecked() == self.annotationsDetailsCheckBox.defaultValue
 			and self.ariaDescCheckBox.IsChecked() == self.ariaDescCheckBox.defaultValue
 			and self.supportHidBrailleCombo.GetSelection() == self.supportHidBrailleCombo.defaultValue
+			and self.keyboardSupportInLegacyCheckBox.IsChecked() == self.keyboardSupportInLegacyCheckBox.defaultValue
+			and self.winConsoleSpeakPasswordsCheckBox.IsChecked() == self.winConsoleSpeakPasswordsCheckBox.defaultValue
+			and self.diffAlgoCombo.GetSelection() == self.diffAlgoCombo.defaultValue
+			and self.cancelExpiredFocusSpeechCombo.GetSelection() == self.cancelExpiredFocusSpeechCombo.defaultValue
 			and self.loadChromeVBufWhenBusyCombo.isValueConfigSpecDefault()
+			and self.caretMoveTimeoutSpinControl.GetValue() == self.caretMoveTimeoutSpinControl.defaultValue
+			and self.reportTransparentColorCheckBox.GetValue() == self.reportTransparentColorCheckBox.defaultValue
+			and set(self.logCategoriesList.CheckedItems) == set(self.logCategoriesList.defaultCheckedItems)
+			and self.playErrorSoundCombo.GetSelection() == self.playErrorSoundCombo.defaultValue
 			and True  # reduce noise in diff when the list is extended.
 		)
 
 	def restoreToDefaults(self):
 		self.scratchpadCheckBox.SetValue(self.scratchpadCheckBox.defaultValue)
-		self.selectiveUIAEventRegistrationCheckBox.SetValue(self.selectiveUIAEventRegistrationCheckBox.defaultValue)
+		self.selectiveUIAEventRegistrationCombo.SetSelection(
+			self.selectiveUIAEventRegistrationCombo.defaultValue == 'auto'
+		)
 		self.UIAInMSWordCombo.SetSelection(self.UIAInMSWordCombo.defaultValue)
 		self.UIAInMSExcelCheckBox.SetValue(self.UIAInMSExcelCheckBox.defaultValue)
 		self.consoleCombo.SetSelection(self.consoleCombo.defaultValue == 'auto')
 		self.UIAInChromiumCombo.SetSelection(self.UIAInChromiumCombo.defaultValue)
-		self.cancelExpiredFocusSpeechCombo.SetSelection(self.cancelExpiredFocusSpeechCombo.defaultValue)
-		self.winConsoleSpeakPasswordsCheckBox.SetValue(self.winConsoleSpeakPasswordsCheckBox.defaultValue)
-		self.keyboardSupportInLegacyCheckBox.SetValue(self.keyboardSupportInLegacyCheckBox.defaultValue)
-		self.diffAlgoCombo.SetSelection(self.diffAlgoCombo.defaultValue == 'auto')
-		self.caretMoveTimeoutSpinControl.SetValue(self.caretMoveTimeoutSpinControl.defaultValue)
 		self.annotationsDetailsCheckBox.SetValue(self.annotationsDetailsCheckBox.defaultValue)
 		self.ariaDescCheckBox.SetValue(self.ariaDescCheckBox.defaultValue)
 		self.supportHidBrailleCombo.SetSelection(self.supportHidBrailleCombo.defaultValue)
+		self.winConsoleSpeakPasswordsCheckBox.SetValue(self.winConsoleSpeakPasswordsCheckBox.defaultValue)
+		self.keyboardSupportInLegacyCheckBox.SetValue(self.keyboardSupportInLegacyCheckBox.defaultValue)
+		self.diffAlgoCombo.SetSelection(self.diffAlgoCombo.defaultValue == 'auto')
+		self.cancelExpiredFocusSpeechCombo.SetSelection(self.cancelExpiredFocusSpeechCombo.defaultValue)
+		self.loadChromeVBufWhenBusyCombo.resetToConfigSpecDefault()
+		self.caretMoveTimeoutSpinControl.SetValue(self.caretMoveTimeoutSpinControl.defaultValue)
 		self.reportTransparentColorCheckBox.SetValue(self.reportTransparentColorCheckBox.defaultValue)
 		self.logCategoriesList.CheckedItems = self.logCategoriesList.defaultCheckedItems
-		self.loadChromeVBufWhenBusyCombo.resetToConfigSpecDefault()
+		self.playErrorSoundCombo.SetSelection(self.playErrorSoundCombo.defaultValue)
 		self._defaultsRestored = True
 
 	def onSave(self):
 		log.debug("Saving advanced config")
 		config.conf["development"]["enableScratchpadDir"]=self.scratchpadCheckBox.IsChecked()
-		config.conf["UIA"]["selectiveEventRegistration"] = self.selectiveUIAEventRegistrationCheckBox.IsChecked()
+		selectiveUIAEventRegistrationChoice = self.selectiveUIAEventRegistrationCombo.GetSelection()
+		config.conf['UIA']['eventRegistration'] = (
+			self.selectiveUIAEventRegistrationVals[selectiveUIAEventRegistrationChoice]
+		)
 		config.conf["UIA"]["allowInMSWord"] = self.UIAInMSWordCombo.GetSelection()
 		config.conf["UIA"]["useInMSExcelWhenAvailable"] = self.UIAInMSExcelCheckBox.IsChecked()
 		consoleChoice = self.consoleCombo.GetSelection()

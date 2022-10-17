@@ -1039,6 +1039,9 @@ class UIA(Window):
 			elif self.role == controlTypes.Role.DATAGRID:
 				from .excel import ExcelWorksheet
 				clsList.append(ExcelWorksheet)
+			elif self.role == controlTypes.Role.TABLE:
+				from .excel import ExcelTable
+				clsList.append(ExcelTable)
 			elif self.role == controlTypes.Role.EDITABLETEXT:
 				from .excel import CellEdit
 				clsList.append(CellEdit)
@@ -1182,16 +1185,29 @@ class UIA(Window):
 			from . import VisualStudio
 			VisualStudio.findExtraOverlayClasses(self, clsList)
 
-		# Support Windows Console's UIA interface
+		# Support Windows Console and Terminal
+		_all_wt_UIAClassNames = frozenset((
+			# TermControl represents an up-to-date version of the UWP (standard)
+			# Windows Terminal control.
+			"TermControl",
+			# TermControl2 was going to represent a
+			# terminal that supported UIA notifications (i.e. one where
+			# microsoft/terminal#12358 has been merged). However, the UIA class
+			# name was not changed in microsoft/terminal#12358 due to backward
+			# compat concerns raised by Freedom Scientific. However, a check for
+			# it is kept here just in case it should later become necessary to
+			# change it.
+			"TermControl2",
+			# WPFTermControl represents an embedded Windows Terminal control
+			# In .NET apps, such as LTS Visual Studio.
+			# WPFTermControl does not follow the same update cadence as TermControl
+			# and is anticipated to be replaced by the UWP implementation.
+			"WPFTermControl",
+		))
 		if self.windowClassName == "ConsoleWindowClass":
 			from . import winConsoleUIA
 			winConsoleUIA.findExtraOverlayClasses(self, clsList)
-		elif UIAClassName in ("TermControl", "TermControl2"):
-			# microsoft/terminal#12358: Eventually, TermControl2 should have
-			# a separate overlay class that is not a descendant of LiveText.
-			# TermControl2 sends inserted text using UIA notification events,
-			# so it is no longer necessary to diff the object as with all
-			# previous terminal implementations.
+		elif UIAClassName in _all_wt_UIAClassNames:
 			from . import winConsoleUIA
 			clsList.append(winConsoleUIA.WinTerminalUIA)
 
@@ -1588,6 +1604,7 @@ class UIA(Window):
 		UIAHandler.UIA_IsEnabledPropertyId,
 		UIAHandler.UIA_IsOffscreenPropertyId,
 		UIAHandler.UIA_AnnotationTypesPropertyId,
+		UIAHandler.UIA_DragIsGrabbedPropertyId,
 	}
 
 	def _get_states(self):
@@ -1646,6 +1663,11 @@ class UIA(Window):
 		if s!=UIAHandler.handler.reservedNotSupportedValue:
 			if not role:
 				role=self.role
+			if s == UIAHandler.ToggleState_Indeterminate:
+				if role == controlTypes.Role.TOGGLEBUTTON:
+					states.add(controlTypes.State.HALF_PRESSED)
+				else:
+					states.add(controlTypes.State.HALFCHECKED)
 			if role==controlTypes.Role.TOGGLEBUTTON:
 				if s==UIAHandler.ToggleState_On:
 					states.add(controlTypes.State.PRESSED)
@@ -1661,6 +1683,13 @@ class UIA(Window):
 		if annotationTypes:
 			if UIAHandler.AnnotationType_Comment in annotationTypes:
 				states.add(controlTypes.State.HASCOMMENT)
+		# Drag "is grabbed" property was added in Windows 8.
+		try:
+			isGrabbed = self._getUIACacheablePropertyValue(UIAHandler.UIA_DragIsGrabbedPropertyId)
+		except COMError:
+			isGrabbed = False
+		if isGrabbed:
+			states.add(controlTypes.State.DRAGGING)
 		return states
 
 	def _getReadOnlyState(self) -> bool:
@@ -2028,6 +2057,38 @@ class UIA(Window):
 				# Note that no distinction is made between important and non-important.
 				speech.cancelSpeech()
 			ui.message(displayString)
+
+	def event_UIA_dragDropEffect(self):
+		# UIA drag drop effect was introduced in Windows 8.
+		try:
+			ui.message(self._getUIACacheablePropertyValue(UIAHandler.UIA_DragDropEffectPropertyId))
+		except COMError:
+			pass
+
+	def event_UIA_dropTargetEffect(self):
+		# UIA drop target effect property was introduced in Windows 8.
+		try:
+			dropTargetEffect = self._getUIACacheablePropertyValue(
+				UIAHandler.UIA_DropTargetDropTargetEffectPropertyId
+			)
+		except COMError:
+			dropTargetEffect = ""
+		# Sometimes drop target effect text is empty as it comes from a different object.
+		if not dropTargetEffect:
+			for element in reversed(api.getFocusAncestors()):
+				if not isinstance(element, UIA):
+					continue
+				try:
+					dropTargetEffect = element._getUIACacheablePropertyValue(
+						UIAHandler.UIA_DropTargetDropTargetEffectPropertyId
+					)
+				except COMError:
+					dropTargetEffect = ""
+				if dropTargetEffect:
+					break
+		if dropTargetEffect:
+			ui.message(dropTargetEffect)
+
 
 class TreeviewItem(UIA):
 
