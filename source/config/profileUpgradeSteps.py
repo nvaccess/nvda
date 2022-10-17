@@ -147,7 +147,9 @@ def upgradeConfigFrom_8_to_9(profile: Dict[str, str]) -> None:
 	have been replaced by a single value.
 	The following settings are upgraded:
 	- Line indentation (in Document formatting settings)
+	- Cell borders (in Document formatting settings)
 	- Show messages (in Braille settings)
+	- Tether to (in Braille settings)
 	"""
 	
 	_upgradeConfigFrom_8_to_9_lineIndent(profile)
