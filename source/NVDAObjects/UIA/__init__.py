@@ -13,6 +13,7 @@ from typing import (
 	Dict,
 	Tuple,
 )
+import array
 from ctypes.wintypes import POINT
 from comtypes import COMError
 import time
@@ -60,6 +61,7 @@ import braille
 import locationHelper
 import ui
 import winVersion
+import NVDAObjects
 
 
 paragraphIndentIDs = {
@@ -1039,6 +1041,9 @@ class UIA(Window):
 			elif self.role == controlTypes.Role.DATAGRID:
 				from .excel import ExcelWorksheet
 				clsList.append(ExcelWorksheet)
+			elif self.role == controlTypes.Role.TABLE:
+				from .excel import ExcelTable
+				clsList.append(ExcelTable)
 			elif self.role == controlTypes.Role.EDITABLETEXT:
 				from .excel import CellEdit
 				clsList.append(CellEdit)
@@ -1900,6 +1905,11 @@ class UIA(Window):
 			return UIA(UIAElement=e)
 		raise NotImplementedError
 
+	def _get_tableID(self):
+		table = self.table
+		if table:
+			return self.table.UIAElement.GetRuntimeId()
+
 	def _get_processID(self):
 		if self.windowClassName == 'ConsoleWindowClass':
 			# #10115: The UIA implementation for Windows console windows exposes the process ID of conhost,
@@ -2006,6 +2016,27 @@ class UIA(Window):
 	def scrollIntoView(self):
 		pass
 
+	def isDescendantOf(self, obj: "NVDAObjects.NVDAObject") -> bool:
+		if isinstance(obj, UIA):
+			# As both objects are UIA,
+			# We can search this object's ancestors for obj with a UIA treeWalker
+			# which is much more efficient than fetching each parent.
+			objID = obj.UIAElement.GetRuntimeId()
+			objIDArray = array.array("l", objID)
+			UIACondition = UIAHandler.handler.clientObject.createPropertyCondition(
+				UIAHandler.UIA_RuntimeIdPropertyId,
+				objIDArray
+			)
+			UIAWalker = UIAHandler.handler.clientObject.createTreeWalker(UIACondition)
+			try:
+				objUIAElement = UIAWalker.normalizeElement(self.UIAElement)
+			except COMError:
+				log.debugWarning("Error walking ancestors", exc_info=True)
+				objUIAElement = None
+			return bool(objUIAElement)
+		else:  # not UIA
+			raise NotImplementedError
+
 	def _get_controllerFor(self):
 		e=self._getUIACacheablePropertyValue(UIAHandler.UIA_ControllerForPropertyId)
 		if UIAHandler.handler.clientObject.checkNotSupported(e):
@@ -2020,8 +2051,11 @@ class UIA(Window):
 				objList.append(obj)
 		return objList
 
+	def event_UIA_controllerFor(self) -> None:
+		return self.event_controllerForChange()
+
 	def event_UIA_elementSelected(self):
-		self.event_stateChange()
+		self.event_selection()
 
 	def event_valueChange(self):
 		if issubclass(self.TextInfo, UIATextInfo):
@@ -2265,14 +2299,8 @@ class WpfTextView(UIA):
 
 class SearchField(EditableTextWithSuggestions, UIA):
 	"""An edit field that presents suggestions based on a search term.
+	This is now an empty class as functionality has been moved to the base EditableText behaviour.
 	"""
-
-	def event_UIA_controllerFor(self):
-		# Only useful if suggestions appear and disappear.
-		if self == api.getFocusObject() and len(self.controllerFor)>0:
-			self.event_suggestionsOpened()
-		else:
-			self.event_suggestionsClosed()
 
 
 class SuggestionsList(UIA):
@@ -2302,20 +2330,11 @@ class SuggestionsList(UIA):
 class SuggestionListItem(UIA):
 	"""Recent Windows releases use suggestions lists for various things, including Start menu suggestions, Store, Settings app and so on.
 	Unlike suggestions list class, top suggestion is automatically selected.
+	Note that support for reporting the selection is now handled generically on the base NVDAObject.
 	"""
 
 	role = controlTypes.Role.LISTITEM
 
-	def event_UIA_elementSelected(self):
-		focusControllerFor = api.getFocusObject().controllerFor
-		if len(focusControllerFor) > 0 and focusControllerFor[0].appModule is self.appModule and self.name:
-			speech.cancelSpeech()
-			if api.setNavigatorObject(self, isFocus=True):
-				self.reportFocus()
-				# Display results as flash messages.
-				braille.handler.message(braille.getPropertiesBraille(
-					name=self.name, role=self.role, positionInfo=self.positionInfo
-				))
 
 # NetUIDropdownAnchor comboBoxes (such as in the MS Office Options dialog)
 class NetUIDropdownAnchor(UIA):

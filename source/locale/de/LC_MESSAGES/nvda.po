@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-29 00:02+0000\n"
+"POT-Creation-Date: 2022-10-07 00:02+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Bernd Dorer <mail@bdorer.de>\n"
 "Language-Team: \n"
@@ -2363,6 +2363,22 @@ msgstr "Fehler in der Zuweisungsdatei für Tastenbefehle"
 msgid "Loading NVDA. Please wait..."
 msgstr "NVDA wird gestartet. Bitte warten..."
 
+#. Translators: This is a warning to users, shown if NVDA cannot determine if
+#. Windows is locked.
+msgid ""
+"NVDA failed to register session tracking. While this instance of NVDA is "
+"running, your desktop will not be secure when Windows is locked. Restart "
+"NVDA? "
+msgstr ""
+"NVDA konnte die Sitzungsverfolgung nicht registrieren. Während diese Instanz "
+"von NVDA ausgeführt wird, ist Ihr Desktop nicht sicher, wenn Windows "
+"gesperrt ist. NVDA neu starten? "
+
+#. Translators: This is a warning to users, shown if NVDA cannot determine if
+#. Windows is locked.
+msgid "NVDA could not start securely."
+msgstr "NVDA konnte nicht sicher gestartet werden."
+
 #. Translators: The screen is oriented so that it is wider than it is tall.
 msgid "Landscape"
 msgstr "Querformat"
@@ -2400,7 +2416,7 @@ msgstr "&Groß- und Kleinschreibung berücksichtigen"
 
 #, python-format
 msgid "text \"%s\" not found"
-msgstr "Text \"%s\" wurde nicht gefunden"
+msgstr "Der Text \"%s\" wurde nicht gefunden"
 
 msgid "Find Error"
 msgstr "Fehler beim Suchen"
@@ -4892,13 +4908,13 @@ msgid "unknown %s"
 msgstr "%s ist unbekannt"
 
 msgid "on"
-msgstr "eingeschaltet"
+msgstr "Eingeschaltet"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
 msgid "off"
-msgstr "ausgeschaltet"
+msgstr "Ausgeschaltet"
 
 #. Translators: Used when describing keys on the system keyboard with a particular layout.
 #. %s is replaced with the layout name.
@@ -6631,8 +6647,8 @@ msgstr ""
 "Autovervollständigung zu erfassen."
 
 #. Translators: When the help popup cannot be found for the selected autocompletion item
-msgid "Cann't find the documentation window."
-msgstr "Das Dokumentfenster konnte nicht gefunden werden."
+msgid "Can't find the documentation window."
+msgstr "Das Fenster für die Dokumentation konnte nicht gefunden werden."
 
 #. Translators: Reported when no track is playing in Foobar 2000.
 msgid "No track playing"
