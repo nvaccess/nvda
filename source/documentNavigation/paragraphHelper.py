@@ -81,7 +81,7 @@ def _splitParagraphIntoChunks(paragraph: str) -> Generator[str, None, None]:
 		return
 	sentenceEndPoints = []
 	endPoint = _findEndOfSentence(paragraph, 0)
-	while endPoint != -1:
+	while endPoint is not None:
 		sentenceEndPoints.append(endPoint)
 		endPoint = _findEndOfSentence(paragraph, endPoint)
 	chunkStart = chunkEnd = startIndex = endIndex = 0
