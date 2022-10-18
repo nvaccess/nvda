@@ -27,6 +27,7 @@ from synthDriverHandler import changeVoice, getSynth, getSynthList, setSynth, Sy
 import config
 from config.configFlags import (
 	ShowMessages,
+	TetherTo,
 	ReportLineIndentation,
 	ReportTableHeaders,
 	ReportCellBorders,
@@ -3561,11 +3562,8 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		self.tetherList = sHelper.addLabeledControl(tetherListText, wx.Choice, choices=tetherChoices)
 		self.bindHelpEvent("BrailleTether", self.tetherList)
 		tetherChoice = config.conf["braille"]["tetherTo"]
-		selection = next((x for x,y in enumerate(braille.handler.tetherValues) if y[0]==tetherChoice))
-		try:
-			self.tetherList.SetSelection(selection)
-		except:
-			pass
+		selection = [x.value for x in TetherTo].index(tetherChoice)
+		self.tetherList.SetSelection(selection)
 		if gui._isDebug():
 			log.debug("Loading tether settings completed, now at %.2f seconds from start"%(time.time() - startTime))
 
@@ -3618,9 +3616,9 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		config.conf["braille"]["cursorShapeReview"] = self.cursorShapes[self.cursorShapeReviewList.GetSelection()]
 		config.conf["braille"]["showMessages"] = self.showMessagesList.GetSelection()
 		config.conf["braille"]["messageTimeout"] = self.messageTimeoutEdit.GetValue()
-		tetherChoice = braille.handler.tetherValues[self.tetherList.GetSelection()][0]
-		if tetherChoice==braille.handler.TETHER_AUTO:
-			config.conf["braille"]["tetherTo"] = braille.handler.TETHER_AUTO
+		tetherChoice = [x.value for x in TetherTo][self.tetherList.GetSelection()]
+		if tetherChoice == TetherTo.AUTO.value:
+			config.conf["braille"]["tetherTo"] = TetherTo.AUTO.value
 		else:
 			braille.handler.setTether(tetherChoice, auto=False)
 		config.conf["braille"]["readByParagraph"] = self.readByParagraphCheckBox.Value

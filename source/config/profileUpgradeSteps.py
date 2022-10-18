@@ -17,6 +17,7 @@ that no information is lost, while updating the ConfigObj to meet the requiremen
 from logHandler import log
 from config.configFlags import (
 	ShowMessages,
+	TetherTo,
 	ReportLineIndentation,
 	ReportTableHeaders,
 	ReportCellBorders,
@@ -273,7 +274,7 @@ def _upgradeConfigFrom_8_to_9_tetherTo(profile: Dict[str, str]) -> None:
 		tetherTo: str = profile["braille"]["tetherTo"]
 		isTetherToMissing = False
 	except KeyError:
-		tetherTo: str = "focus"
+		tetherTo: str = TetherTo.FOCUS.value
 		isTetherToMissing = True
 	
 	autoTetherVal = configobj.validate.is_boolean(autoTether)
@@ -290,11 +291,11 @@ def _upgradeConfigFrom_8_to_9_tetherTo(profile: Dict[str, str]) -> None:
 		)
 	elif isTetherToMissing:
 		if autoTetherVal:
-			profile["braille"]["tetherTo"] = "auto"
+			profile["braille"]["tetherTo"] = TetherTo.AUTO.value
 		else:
-			profile["braille"]["tetherTo"] = "focus"
+			profile["braille"]["tetherTo"] = TetherTo.FOCUS.value
 	else:  # both values present in config
 		if autoTetherVal:
-			profile["braille"]["tetherTo"] = "auto"
+			profile["braille"]["tetherTo"] = TetherTo.FOCUS.value
 		else:
 			profile["braille"]["tetherTo"] = tetherToVal

@@ -20,6 +20,7 @@ from logHandler import log
 import gui
 import speech
 import braille
+from config.configFlags import TetherTo
 import globalVars
 from typing import Optional
 
@@ -94,7 +95,7 @@ def reviewMessage(text: str, speechPriority: Optional[speech.Spri] = None):
 	@param speechPriority: The speech priority.
 	"""
 	speech.speakMessage(text, priority=speechPriority)
-	if braille.handler.shouldAutoTether or braille.handler.getTether() == braille.handler.TETHER_REVIEW:
+	if braille.handler.shouldAutoTether or braille.handler.getTether() == TetherTo.REVIEW:
 		braille.handler.message(text)
 
 

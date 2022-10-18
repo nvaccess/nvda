@@ -6,7 +6,7 @@
 """Flags used for the configuration."""
 
 from enum import unique
-from utils.displayString import DisplayStringIntEnum
+from utils.displayString import DisplayStringIntEnum, DisplayStringStrEnum
 
 
 @unique
@@ -33,6 +33,32 @@ class ShowMessages(DisplayStringIntEnum):
 			# Translators: One of the show states of braille messages
 			# (the indefinitely mode prevents braille messages from disappearing automatically).
 			ShowMessages.SHOW_INDEFINITELY: _("Show indefinitely"),
+		}
+
+
+@unique
+class TetherTo(DisplayStringStrEnum):
+	"""Enumeration containing the possible config values for "Tether to" option in braille settings.
+	
+	Use TetherTo.MEMBER.value to compare with the config;
+	use TetherTo.MEMBER.displayString in the UI for a translatable description of this member.
+	"""
+	
+	AUTO = "auto"
+	FOCUS = "focus"
+	REVIEW = "review"
+	
+	@property
+	def _displayStringLabels(self):
+		return {
+			# Translators: The label for a braille setting indicating that braille should be
+			# tethered to focus or review cursor automatically.
+			TetherTo.AUTO: _("automatically"),
+			# Translators: The label for a braille setting indicating that braille should be tethered to focus.
+			TetherTo.FOCUS: _("to focus"),
+			# Translators: The label for a braille setting indicating that braille should be tethered
+			# to the review cursor.
+			TetherTo.REVIEW: _("to review"),
 		}
 
 
