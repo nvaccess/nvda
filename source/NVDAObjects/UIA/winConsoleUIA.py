@@ -19,7 +19,7 @@ from logHandler import log
 from UIAHandler.utils import _getConhostAPILevel
 from UIAHandler.constants import WinConsoleAPILevel
 from . import UIA, UIATextInfo
-from ..behaviors import KeyboardHandlerBasedTypedCharSupport
+from ..behaviors import EnhancedTermTypedCharSupport, KeyboardHandlerBasedTypedCharSupport
 from ..window import Window
 
 
@@ -423,7 +423,30 @@ def findExtraOverlayClasses(obj, clsList):
 		clsList.append(consoleUIAWindow)
 
 
-class WinTerminalUIA(UIA):
+class DiffBasedWinTerminalUIA(EnhancedTermTypedCharSupport):
+	"""
+	An overlay class for Windows Terminal (wt.exe) that uses diffing to speak
+	new text.
+	"""
+
+	def event_UIA_notification(self, **kwargs):
+		"""
+		In an upcoming terminal release, UIA notification events will be sent
+		to announce new text. Block these for now to avoid double-reporting of
+		text changes.
+		@note: In the longer term, NVDA should leverage these events in place
+		of the current LiveText strategy, as performance will likely be
+		significantly improved and #11002 can be completely mitigated.
+		"""
+		log.debugWarning(f"Notification event blocked to avoid double-report: {kwargs}")
+
+
+class NotificationsBasedWinTerminalUIA(UIA):
+	"""
+	An overlay class for Windows Terminal (wt.exe) that uses UIA notification
+	events provided by the application to speak new text.
+	"""
+
 	#: Override the role, which is controlTypes.Role.STATICTEXT by default.
 	role = controlTypes.Role.TERMINAL
 	#: New line text is announced using UIA notification events

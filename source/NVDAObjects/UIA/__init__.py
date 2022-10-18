@@ -41,6 +41,7 @@ from UIAHandler.utils import (
 	iterUIARangeByUnit,
 	UIAMixedAttributeError,
 	UIATextRangeFromElement,
+	_shouldUseWtNotifications
 )
 from NVDAObjects.window import Window
 from NVDAObjects import (
@@ -1211,7 +1212,10 @@ class UIA(Window):
 			winConsoleUIA.findExtraOverlayClasses(self, clsList)
 		elif UIAClassName in _all_wt_UIAClassNames:
 			from . import winConsoleUIA
-			clsList.append(winConsoleUIA.WinTerminalUIA)
+			if _shouldUseWtNotifications():
+				clsList.append(winConsoleUIA.NotificationsBasedWinTerminalUIA)
+			else:
+				clsList.append(winConsoleUIA.DiffBasedWinTerminalUIA)
 
 		# Add editableText support if UIA supports a text pattern
 		if self.TextInfo==UIATextInfo:
