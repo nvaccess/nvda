@@ -8,6 +8,7 @@ from typing import (
 	Set,
 )
 
+import extensionPoints
 from logHandler import log
 from winAPI.sessionTracking import isWindowsLocked
 import winUser
@@ -16,6 +17,25 @@ if typing.TYPE_CHECKING:
 	import appModuleHandler
 	import scriptHandler  # noqa: F401, use for typing
 	import NVDAObjects
+
+
+postSessionLockStateChanged = extensionPoints.Action()
+"""
+Notifies when a session lock or unlock event occurs.
+
+Usage:
+```
+def onSessionLockStateChange(isNowLocked: bool):
+	'''
+	@param isNowLocked: True if new state is locked, False if new state is unlocked
+	'''
+	pass
+
+postSessionLockStateChanged.register(onSessionLockStateChange)
+postSessionLockStateChanged.notify(isNowLocked=False)
+postSessionLockStateChanged.unregister(onSessionLockStateChange)
+```
+"""
 
 
 def getSafeScripts() -> Set["scriptHandler._ScriptFunctionT"]:
