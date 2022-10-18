@@ -25,6 +25,8 @@ def _findEndOfSentence(sentence: str, offset: int) -> Optional[int]:
 	@param offset: int indicating where to start searching for the end of the sentence
 	"""
 	res = None
+	if not len(sentence):
+		return res  # do nothing if empty string
 	m = re.search(FULL_WIDTH_TERMINATORS_PATTERN, sentence[offset:])
 	if m:
 		res = m.end() + offset
