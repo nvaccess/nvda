@@ -86,14 +86,6 @@ class WtStrategyFlag(DisplayStringEnum):
 	DIFFING = enum.auto()
 	NOTIFICATIONS = enum.auto()
 
-	def __bool__(self):
-		if self == BoolFlag.DEFAULT:
-			raise ValueError(
-				"Only DIFFING or NOTIFICATIONS are currently valid bool values"
-				", DEFAULT must be combined with a 'behaviour for default' to be Truthy or Falsy"
-			)
-		return self == BoolFlag.NOTIFICATIONS
-
 
 def getAvailableEnums() -> typing.Generator[typing.Tuple[str, FlagValueEnum], None, None]:
 	for name, value in globals().items():
