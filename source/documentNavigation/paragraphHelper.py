@@ -136,17 +136,24 @@ def _notFoundMessage(nextParagraph: bool):
 		ui.message("No previous paragraph")
 
 
-def moveToParagraph(nextParagraph: bool, speakNew: bool) -> Tuple[bool, bool]:
+def moveToParagraph(
+		nextParagraph: bool,
+		speakNew: bool,
+		ti: textInfos.TextInfo = None
+) -> Tuple[bool, bool]:
 	"""
 	Moves to the previous or next normal paragraph, delimited by a single line break.
 	@param nextParagraph: bool indicating desired direction of movement,
 	True for next paragraph, False for previous paragraph
 	@param speakNew: bool indicating if new paragraph should be spoken after navigating
+	@param ti: TextInfo object on which to perform the move,
+	if None, attempts to create a TextInfo using the current caret position
 	@returns: A boolean 2-tuple of:
 	- passKey: if True, should send the gesture on
 	- moved: if True, position has changed
 	"""
-	ti = _getTextInfoAtCaret()
+	if ti is None:
+		ti = _getTextInfoAtCaret()
 	if (ti is None) or (not _isAcceptableTextInfo(ti)):
 		return (True, False)
 	ti.expand(textInfos.UNIT_LINE)
