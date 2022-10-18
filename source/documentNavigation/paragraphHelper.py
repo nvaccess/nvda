@@ -16,6 +16,7 @@ from displayModel import EditableTextDisplayModelTextInfo
 from typing import (
 	Tuple,
 	Generator,
+	List,
 )
 from enum import IntEnum
 
@@ -38,7 +39,7 @@ def nextParagraphStyle() -> config.featureFlag.FeatureFlag:
 	return ParagraphNavigationFlag(newEnumVal)
 
 
-def getTextInfoAtCaret() -> textInfos.TextInfo:
+def _getTextInfoAtCaret() -> textInfos.TextInfo:
 	# returns None if not editable text or document
 	ti = None
 	focus = api.getFocusObject()
@@ -79,7 +80,7 @@ def _splitParagraphIntoChunks(paragraph: str) -> Generator[str, None, None]:
 	if paragraphLen <= CHUNK_SIZE:
 		yield paragraph
 		return
-	sentenceEndPoints = []
+	sentenceEndPoints: List[int] = []
 	endPoint = _findEndOfSentence(paragraph, 0)
 	while endPoint is not None:
 		sentenceEndPoints.append(endPoint)
@@ -145,7 +146,7 @@ def moveToParagraph(nextParagraph: bool, speakNew: bool) -> Tuple[bool, bool]:
 	- passKey: if True, should send the gesture on
 	- moved: if True, position has changed
 	"""
-	ti = getTextInfoAtCaret()
+	ti = _getTextInfoAtCaret()
 	if (ti is None) or (not _isAcceptableTextInfo(ti)):
 		return (True, False)
 	ti.expand(textInfos.UNIT_LINE)
@@ -234,7 +235,7 @@ def moveToBlockParagraph(
 	"""
 
 	if ti is None:
-		ti = getTextInfoAtCaret()
+		ti = _getTextInfoAtCaret()
 	if (ti is None) or (not _isAcceptableTextInfo(ti)):
 		return (True, False)
 	moved = False
