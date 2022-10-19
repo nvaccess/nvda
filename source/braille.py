@@ -32,6 +32,7 @@ import winKernel
 import keyboardHandler
 import baseObject
 import config
+from config.configFlags import ReportTableHeaders
 from logHandler import log
 import controlTypes
 import api
@@ -794,7 +795,7 @@ def getControlFieldBraille(  # noqa: C901
 			"hasDetails": hasDetails,
 			"detailsRole": detailsRole,
 		}
-		if reportTableHeaders:
+		if reportTableHeaders in (ReportTableHeaders.ROWS_AND_COLUMNS, ReportTableHeaders.COLUMNS):
 			props["columnHeaderText"] = field.get("table-columnheadertext")
 		return getPropertiesBraille(**props)
 

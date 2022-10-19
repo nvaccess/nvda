@@ -69,20 +69,20 @@ Esto mejorará el rendimiento para algunas aplicaciones Java incluyendo IntelliJ
 No se proponen obsolescencias en 2022.3.
 
 
+= 2022.2.4 =
+Este es un parche liberado para corregir un fallo de seguridad.
+
+== Corrección de Fallos ==
+- Se ha corregido un fallo por el que era posible abrir la consola python de NVDA a través del visualizador del registro en la pantalla de bloqueo.
+([GHSA-585m-rpvv-93qg https://github.com/nvaccess/nvda/security/advisories/GHSA-585m-rpvv-93qg])
+-
+
 = 2022.2.3 =
 Este es un parche liberado para corregir una ruptura accidental de la API introducida en 2022.2.1.
 
 == Corrección de Fallos ==
 - Corregido un fallo donde NVDA no anunciaba "Escritorio Seguro" al entrar en un escritorio seguro.
 Esto provocaba que NVDA remote no reconociera los escritorios seguros. (#14094)
--
-
-== Cambios para Desarrolladores ==
-Esta versión contiene una ruptura técnica en la retrocompatibilidad de la API.
-Se espera que este cambio no afecte a ningún complemento.
-Por favor abre una entrada de GitHub si tu complemento llega a ser incompatible como resultado de esta versión.
-
-- ``SecureDesktopNVDAObject`` ya no es una subclase de ``Desktop`` o de ``Window``. (#14105)
 -
 
 = 2022.2.2 =

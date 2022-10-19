@@ -11,6 +11,8 @@ import UIAHandler.constants
 from UIAHandler.constants import (
 	UIAutomationType,
 )
+import speech
+import api
 import colors
 import locationHelper
 import controlTypes
@@ -139,8 +141,6 @@ class ExcelCell(ExcelObject):
 
 	name = ""
 	role = controlTypes.Role.TABLECELL
-	rowHeaderText = None
-	columnHeaderText = None
 
 	#: Typing information for auto-property: _get_areGridlinesVisible
 	areGridlinesVisible: bool
@@ -592,3 +592,18 @@ class BadExcelFormulaEdit(ExcelObject):
 	"""
 
 	shouldAllowUIAFocusEvent = False
+
+
+class ExcelTable(UIA):
+	""" Represents a table within an Excel spreadsheet."""
+
+	def event_focusExited(self):
+		# Generally, NVDA would not announce when focus exits an ancestor control.
+		# However, it is very common for focus to enter and exit tables within a spreadsheet,
+		# Thus we specifically announce exiting tables here,
+		# But only when focus is on an Excel cell,
+		# As we don't want to announce exiting the table when focus moves out of the spreadsheet entirely.
+		newFocus = api.getFocusObject()
+		if isinstance(newFocus, ExcelCell):
+			# Translators: announced when moving outside of a table in an Excel spreadsheet.
+			speech.speakMessage(_("Out of table"))
