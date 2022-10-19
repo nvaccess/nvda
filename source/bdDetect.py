@@ -296,10 +296,52 @@ class Detector(object):
 			# If this future belongs to a scan that is currently running or finished, this does nothing.
 			self._queuedFuture.cancel()
 
-	# C901 '_bgScan' is too complex
-	# Note: when working on _bgScan, look for opportunities to simplify
-	# and move logic out into smaller helper functions.
-	def _bgScan(  # noqa: C901
+	def _bgScanUsb(self, limitToDevices: typing.Optional[typing.List[str]]):
+		"""Helper method to perform background scanning for USB devices.
+		@param limitToDevices: Drivers to which detection should be limited for this scan.
+			C{None} if no driver filtering should occur.
+		"""
+		if self._stopEvent.isSet():
+			return
+		for driver, match in getDriversForConnectedUsbDevices():
+			if self._stopEvent.isSet():
+				return
+			if limitToDevices and driver not in limitToDevices:
+				continue
+			if braille.handler.setDisplayByName(driver, detected=match):
+				return
+
+	def _bgScanBluetooth(self, limitToDevices: typing.Optional[typing.List[str]]):
+		"""Helper method to perform background scanning for Bluetooth devices.
+		@param limitToDevices: Drivers to which detection should be limited for this scan.
+			C{None} if no driver filtering should occur.
+		"""
+		if self._stopEvent.isSet():
+			return
+		with self._btDevsLock:
+			if self._btDevs is None:
+				btDevs = list(getDriversForPossibleBluetoothDevices())
+				# Cache Bluetooth devices for next time.
+				btDevsCache = []
+			else:
+				btDevs = self._btDevs
+				btDevsCache = btDevs
+		for driver, match in btDevs:
+			if self._stopEvent.isSet():
+				return
+			if limitToDevices and driver not in limitToDevices:
+				continue
+			if btDevsCache is not btDevs:
+				btDevsCache.append((driver, match))
+			if braille.handler.setDisplayByName(driver, detected=match):
+				return
+		if self._stopEvent.isSet():
+			return
+		if btDevsCache is not btDevs:
+			with self._btDevsLock:
+				self._btDevs = btDevsCache
+
+	def _bgScan(
 			self,
 			detectUsb: bool,
 			detectBluetooth: bool,
@@ -316,40 +358,9 @@ class Detector(object):
 		# Since a scan can take some time to complete, another thread can set the stop event to cancel it.
 		self._stopEvent.clear()
 		if detectUsb:
-			if self._stopEvent.isSet():
-				return
-			for driver, match in getDriversForConnectedUsbDevices():
-				if self._stopEvent.isSet():
-					return
-				if (limitToDevices and driver not in limitToDevices):
-					continue
-				if braille.handler.setDisplayByName(driver, detected=match):
-					return
+			self._bgScanUsb(limitToDevices)
 		if detectBluetooth:
-			if self._stopEvent.isSet():
-				return
-			with self._btDevsLock:
-				if self._btDevs is None:
-					btDevs = list(getDriversForPossibleBluetoothDevices())
-					# Cache Bluetooth devices for next time.
-					btDevsCache = []
-				else:
-					btDevs = self._btDevs
-					btDevsCache = btDevs
-			for driver, match in btDevs:
-				if self._stopEvent.isSet():
-					return
-				if (self._limitToDevices and driver not in limitToDevices):
-					continue
-				if btDevsCache is not btDevs:
-					btDevsCache.append((driver, match))
-				if braille.handler.setDisplayByName(driver, detected=match):
-					return
-			if self._stopEvent.isSet():
-				return
-			if btDevsCache is not btDevs:
-				with self._btDevsLock:
-					self._btDevs = btDevsCache
+			self._bgScanBluetooth(limitToDevices)
 
 	def rescan(self, usb=True, bluetooth=True, limitToDevices=None):
 		"""Stop a current scan when in progress, and start scanning from scratch.
