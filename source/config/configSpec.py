@@ -70,7 +70,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	cursorShapeReview = integer(default=128,min=1,max=255)
 	# How braille display will show messages
 	# 0: Disabled, 1: Use timeout, 2: Show indefinitely
-	showMessages = integer(0, 4, default=1)
+	showMessages = integer(0, 2, default=1)
 	# Timeout after the message will disappear from braille display
 	messageTimeout = integer(default=4,min=1,max=20)
 	tetherTo = option("auto", "focus", "review", default="auto")
