@@ -2048,8 +2048,9 @@ class UIA(Window):
 			# On Newer Windows versions, the client library correctly marshals this to
 			# IUIAutomationElementArray per the UI Automation documentation.
 			# UI Automation documentation seems to suggest controllerFor is supported on Windows 7,
-			# So it is unclear as to ewhat versions have this bug.
+			# So it is unclear as to what versions have this bug.
 			# Best just to catch KeyError.
+			log.debugWarning("Bad controllerFor property", exc_info=True)
 			return []
 		if UIAHandler.handler.clientObject.checkNotSupported(e):
 			return None
