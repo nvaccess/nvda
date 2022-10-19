@@ -11,6 +11,8 @@ New-Item -ItemType directory -Path testOutput\lint
 # In the mean time, the system tests failing delays development.
 #
 # Theory: Chrome is busy with post install tasks, so start chrome in the background ahead of the tests.
+# Use the same arguments to start Chrome as the system tests, some arguments are only observed for the first
+# start of Chrome.
 $chromeStartArgsString = $(py tests/system/libraries/_chromeArgs.py)
 $chromeStartArgsArray = $chromeStartArgsString -split " "
 
