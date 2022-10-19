@@ -93,7 +93,6 @@ class ChromeLib:
 			# https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/start
 			" /wait"  # Starts an application and waits for it to end.
 			f" {_chromeArgs.getChromeArgs()}"
-			" --lang=en-US"
 			f' "{filePath}"',
 			shell=True,
 			alias='chromeStartAlias',
