@@ -1756,6 +1756,8 @@ def formatCellsForLog(cells: List[int]) -> str:
 		for cell in cells])
 
 class BrailleHandler(baseObject.AutoPropertyObject):
+	# TETHER_AUTO, TETHER_FOCUS, TETHER_REVIEW and tetherValues
+	# are deprecated, but remain to retain API backwards compatibility
 	TETHER_AUTO = TetherTo.AUTO.value
 	TETHER_FOCUS = TetherTo.FOCUS.value
 	TETHER_REVIEW = TetherTo.REVIEW.value
