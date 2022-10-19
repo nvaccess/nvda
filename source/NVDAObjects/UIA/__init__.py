@@ -2038,7 +2038,19 @@ class UIA(Window):
 			raise NotImplementedError
 
 	def _get_controllerFor(self):
-		e=self._getUIACacheablePropertyValue(UIAHandler.UIA_ControllerForPropertyId)
+		try:
+			e = self._getUIACacheablePropertyValue(UIAHandler.UIA_ControllerForPropertyId)
+		except KeyError:
+			# #14270: comtypes may raise KeyError as it does not know how to unpack a variant of VT_Unknown | VT_Array.
+			# this may be seen on Windows 7 where
+			# the UIA client library directly returns the provider's VT_Unknown | VT_Array variant,
+			# Which is useless for a client.
+			# On Newer Windows versions, the client library correctly marshals this to
+			# IUIAutomationElementArray per the UI Automation documentation.
+			# UI Automation documentation seems to suggest controllerFor is supported on Windows 7,
+			# So it is unclear as to ewhat versions have this bug.
+			# Best just to catch KeyError.
+			return []
 		if UIAHandler.handler.clientObject.checkNotSupported(e):
 			return None
 		a=e.QueryInterface(UIAHandler.IUIAutomationElementArray)
