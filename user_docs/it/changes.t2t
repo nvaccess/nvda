@@ -68,6 +68,15 @@ Ciò migliorerà le prestazioni per alcune applicazioni Java, tra cui IntelliJ I
 There are no deprecations proposed in 2022.3.
 
 
+= 2022.2.3 =
+Questa è una versione che va a correggere un errore presente nelle API della versione 2022.2.1.
+
+== Bug Corretti ==
+- Risolto un bug per cui NVDA non annunciava "Desktop sicuro" quando si accedeva a un desktop sicuro.
+In questo modo quando si usava NVDA Remote non venivano riconosciuti i Desktop Sicuri. (#14094)
+-
+
+
 = 2022.2.2 =
 This is a patch release to fix a bug introduced in 2022.2.1 with input gestures.
 

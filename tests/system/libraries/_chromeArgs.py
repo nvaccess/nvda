@@ -19,6 +19,7 @@ def getChromeArgs() -> str:
 		" --disable-notifications"  # prevent notifications that may interfere with automated tests.
 		" --no-experiments"  # Stable behavior is preferred.
 		" --no-default-browser-check"  # Don't bother to check if Chrome is the default browser.
+		" --lang=en-US"
 	)
 
 

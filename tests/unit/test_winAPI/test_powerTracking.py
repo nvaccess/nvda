@@ -11,6 +11,7 @@ from winAPI._powerTracking import (
 	BATTERY_LIFE_TIME_UNKNOWN,
 	BatteryFlag,
 	PowerState,
+	_ReportContext,
 	SystemPowerStatus,
 	_getSpeechForBatteryStatus,
 )
@@ -23,10 +24,10 @@ class Test_GetSpeechForBatteryStatus(unittest.TestCase):
 			MagicMock(SystemPowerStatus())
 		)
 
-	def test_unknownPowerStatus_failedFetch(self):
+	def test_fetch_status_fetchFailed(self):
 		actualSpeech = _getSpeechForBatteryStatus(
 			systemPowerStatus=None,
-			onlyReportIfStatusChanged=False,
+			context=_ReportContext.FETCH_STATUS,
 			oldPowerState=PowerState.UNKNOWN,
 		)
 		self.assertEqual(
@@ -34,11 +35,11 @@ class Test_GetSpeechForBatteryStatus(unittest.TestCase):
 			actualSpeech,
 		)
 
-	def test_unknownPowerStatus_fetchSuccessful(self):
+	def test_fetch_status_fetchSuccessful_unknownPowerStatus(self):
 		self.testPowerStatus.BatteryFlag = BatteryFlag.UNKNOWN
 		actualSpeech = _getSpeechForBatteryStatus(
 			systemPowerStatus=self.testPowerStatus,
-			onlyReportIfStatusChanged=False,
+			context=_ReportContext.FETCH_STATUS,
 			oldPowerState=PowerState.UNKNOWN,
 		)
 		self.assertEqual(
@@ -46,11 +47,11 @@ class Test_GetSpeechForBatteryStatus(unittest.TestCase):
 			actualSpeech,
 		)
 
-	def test_noSystemBattery(self):
+	def test_fetch_status_fetchSuccessful_noSystemBattery(self):
 		self.testPowerStatus.BatteryFlag = 0 ^ BatteryFlag.NO_SYSTEM_BATTERY
 		actualSpeech = _getSpeechForBatteryStatus(
 			systemPowerStatus=self.testPowerStatus,
-			onlyReportIfStatusChanged=False,
+			context=_ReportContext.FETCH_STATUS,
 			oldPowerState=PowerState.UNKNOWN,
 		)
 		self.assertEqual(
@@ -58,12 +59,26 @@ class Test_GetSpeechForBatteryStatus(unittest.TestCase):
 			actualSpeech,
 		)
 
-	def test_statusUnchanged_ignore(self):
+	def test_fetch_status_full_report(self):
+		self.testPowerStatus.ACLineStatus = PowerState.AC_OFFLINE
+		self.testPowerStatus.BatteryFlag = BatteryFlag.HIGH
+		self.testPowerStatus.BatteryLifeTime = 3660
+		actualSpeech = _getSpeechForBatteryStatus(
+			systemPowerStatus=self.testPowerStatus,
+			context=_ReportContext.FETCH_STATUS,
+			oldPowerState=PowerState.AC_OFFLINE,
+		)
+		self.assertEqual(
+			['1 percent', '1 hours and 1 minutes remaining', "AC disconnected"],
+			actualSpeech,
+		)
+
+	def test_ac_status_change_statusUnchanged_ignore(self):
 		self.testPowerStatus.ACLineStatus = PowerState.AC_OFFLINE
 		self.testPowerStatus.BatteryFlag = BatteryFlag.HIGH
 		actualSpeech = _getSpeechForBatteryStatus(
 			systemPowerStatus=self.testPowerStatus,
-			onlyReportIfStatusChanged=True,
+			context=_ReportContext.AC_STATUS_CHANGE,
 			oldPowerState=PowerState.AC_OFFLINE,
 		)
 		self.assertEqual(
@@ -71,27 +86,13 @@ class Test_GetSpeechForBatteryStatus(unittest.TestCase):
 			actualSpeech,
 		)
 
-	def test_statusUnchanged_report(self):
-		self.testPowerStatus.ACLineStatus = PowerState.AC_OFFLINE
-		self.testPowerStatus.BatteryFlag = BatteryFlag.HIGH
-		self.testPowerStatus.BatteryLifeTime = 3660
-		actualSpeech = _getSpeechForBatteryStatus(
-			systemPowerStatus=self.testPowerStatus,
-			onlyReportIfStatusChanged=False,
-			oldPowerState=PowerState.AC_OFFLINE,
-		)
-		self.assertEqual(
-			["AC disconnected", '1 percent', '1 hours and 1 minutes remaining'],
-			actualSpeech,
-		)
-
-	def test_statusChanged_connected(self):
+	def test_ac_status_change_statusChanged_connected(self):
 		self.testPowerStatus.ACLineStatus = PowerState.AC_ONLINE
 		self.testPowerStatus.BatteryFlag = BatteryFlag.HIGH
 		self.testPowerStatus.BatteryLifeTime = 3660
 		actualSpeech = _getSpeechForBatteryStatus(
 			systemPowerStatus=self.testPowerStatus,
-			onlyReportIfStatusChanged=True,
+			context=_ReportContext.AC_STATUS_CHANGE,
 			oldPowerState=PowerState.AC_OFFLINE,
 		)
 		self.assertEqual(
@@ -99,13 +100,13 @@ class Test_GetSpeechForBatteryStatus(unittest.TestCase):
 			actualSpeech,
 		)
 
-	def test_statusChanged_disconnected(self):
+	def test_ac_status_change_statusChanged_disconnected(self):
 		self.testPowerStatus.ACLineStatus = PowerState.AC_OFFLINE
 		self.testPowerStatus.BatteryFlag = BatteryFlag.HIGH
 		self.testPowerStatus.BatteryLifeTime = 3660
 		actualSpeech = _getSpeechForBatteryStatus(
 			systemPowerStatus=self.testPowerStatus,
-			onlyReportIfStatusChanged=True,
+			context=_ReportContext.AC_STATUS_CHANGE,
 			oldPowerState=PowerState.AC_ONLINE,
 		)
 		self.assertEqual(
@@ -113,13 +114,13 @@ class Test_GetSpeechForBatteryStatus(unittest.TestCase):
 			actualSpeech,
 		)
 
-	def test_batteryLifetimeUnknown(self):
+	def test_ac_status_change_batteryLifetimeUnknown(self):
 		self.testPowerStatus.ACLineStatus = PowerState.AC_OFFLINE
 		self.testPowerStatus.BatteryFlag = BatteryFlag.HIGH
 		self.testPowerStatus.BatteryLifeTime = BATTERY_LIFE_TIME_UNKNOWN
 		actualSpeech = _getSpeechForBatteryStatus(
 			systemPowerStatus=self.testPowerStatus,
-			onlyReportIfStatusChanged=True,
+			context=_ReportContext.AC_STATUS_CHANGE,
 			oldPowerState=PowerState.AC_ONLINE,
 		)
 		self.assertEqual(
@@ -127,14 +128,14 @@ class Test_GetSpeechForBatteryStatus(unittest.TestCase):
 			actualSpeech,
 		)
 
-	def test_batteryLifePercent(self):
+	def test_ac_status_change_batteryLifePercent(self):
 		self.testPowerStatus.ACLineStatus = PowerState.AC_OFFLINE
 		self.testPowerStatus.BatteryFlag = BatteryFlag.HIGH
 		self.testPowerStatus.BatteryLifePercent = 7
 		self.testPowerStatus.BatteryLifeTime = BATTERY_LIFE_TIME_UNKNOWN
 		actualSpeech = _getSpeechForBatteryStatus(
 			systemPowerStatus=self.testPowerStatus,
-			onlyReportIfStatusChanged=True,
+			context=_ReportContext.AC_STATUS_CHANGE,
 			oldPowerState=PowerState.AC_ONLINE,
 		)
 		self.assertEqual(

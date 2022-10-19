@@ -707,8 +707,6 @@ def main():
 	queueHandler.queueFunction(queueHandler.eventQueue, _doPostNvdaStartupAction)
 
 	log.debug("entering wx application main loop")
-	# Warn here as NVDA must be ready before providing a gui message
-	messageWindow.warnIfSessionTrackingNotRegistered()
 	app.MainLoop()
 
 	log.info("Exiting")

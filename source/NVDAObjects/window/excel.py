@@ -1,5 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited, Dinesh Kaushal, Siddhartha Gupta, Accessolutions, Julien Cochuyt
+# Copyright (C) 2006-2022 NV Access Limited, Dinesh Kaushal, Siddhartha Gupta, Accessolutions, Julien Cochuyt,
+# Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -32,6 +33,8 @@ from logHandler import log
 import gui
 import gui.contextHelp
 import winUser
+from winAPI.winUser.functions import GetSysColor
+from winAPI.winUser.constants import SysColorIndex
 import mouseHandler
 from displayModel import DisplayModelTextInfo
 import controlTypes
@@ -1272,10 +1275,6 @@ class ExcelCell(ExcelBase):
 		gesture="kb:NVDA+shift+c")
 	def script_setColumnHeader(self,gesture):
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
-		if not config.conf['documentFormatting']['reportTableHeaders']:
-			# Translators: a message reported in the SetColumnHeader script for Excel.
-			ui.message(_("Cannot set headers. Please enable reporting of table headers in Document Formatting Settings"))
-			return
 		if scriptCount==0:
 			if self.parent.setAsHeaderCell(self,isColumnHeader=True,isRowHeader=False):
 				# Translators: a message reported in the SetColumnHeader script for Excel.
@@ -1298,10 +1297,6 @@ class ExcelCell(ExcelBase):
 		gesture="kb:NVDA+shift+r")
 	def script_setRowHeader(self,gesture):
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
-		if not config.conf['documentFormatting']['reportTableHeaders']:
-			# Translators: a message reported in the SetRowHeader script for Excel.
-			ui.message(_("Cannot set headers. Please enable reporting of table headers in Document Formatting Settings"))
-			return
 		if scriptCount==0:
 			if self.parent.setAsHeaderCell(self,isColumnHeader=False,isRowHeader=True):
 				# Translators: a message reported in the SetRowHeader script for Excel.
@@ -1625,8 +1620,8 @@ class ExcelDropdown(Window):
 	excelCell=None
 
 	def _get__highlightColors(self):
-		background=colors.RGB.fromCOLORREF(winUser.user32.GetSysColor(13))
-		foreground=colors.RGB.fromCOLORREF(winUser.user32.GetSysColor(14))
+		background = colors.RGB.fromCOLORREF(GetSysColor(SysColorIndex.HIGHLIGHT))
+		foreground = colors.RGB.fromCOLORREF(GetSysColor(SysColorIndex.HIGHLIGHT_TEXT))
 		self._highlightColors=(background,foreground)
 		return self._highlightColors
 

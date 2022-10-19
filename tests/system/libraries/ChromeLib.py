@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2020-2021 NV Access Limited
+# Copyright (C) 2020-2022 NV Access Limited, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -93,6 +93,7 @@ class ChromeLib:
 			# https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/start
 			" /wait"  # Starts an application and waits for it to end.
 			f" {_chromeArgs.getChromeArgs()}"
+			" --lang=en-US"
 			f' "{filePath}"',
 			shell=True,
 			alias='chromeStartAlias',
@@ -137,7 +138,7 @@ class ChromeLib:
 			<head>
 				<title>{ChromeLib.getUniqueTestCaseTitle(testCase)}</title>
 			</head>
-			<body onload="document.getElementById('loadStatus').innerHTML='{ChromeLib._loadCompleteString}'">
+			<body lang="en" onload="document.getElementById('loadStatus').innerHTML='{ChromeLib._loadCompleteString}'">
 				<p>{ChromeLib._beforeMarker}</p>
 				<p id="loadStatus">Loading...</p>
 				{testCase}
