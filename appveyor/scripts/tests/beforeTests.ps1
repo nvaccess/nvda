@@ -11,5 +11,8 @@ New-Item -ItemType directory -Path testOutput\lint
 # In the mean time, the system tests failing delays development.
 #
 # Theory: Chrome is busy with post install tasks, so start chrome in the background ahead of the tests.
-cmd /c start /min chrome.exe
+$chromeStartArgsString = $(py tests/system/libraries/_chromeArgs.py)
+$chromeStartArgsArray = $chromeStartArgsString -split " "
+
+cmd /c start /min $chromeStartArgsArray
 Set-AppveyorBuildVariable "testFailExitCode" 0

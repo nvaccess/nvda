@@ -21,6 +21,7 @@ from SystemTestSpy.windows import (
 	GetForegroundWindowTitle,
 	Window,
 )
+import _chromeArgs
 import re
 from robot.libraries.BuiltIn import BuiltIn
 
@@ -91,12 +92,7 @@ class ChromeLib:
 			"start"  # windows utility to start a process
 			# https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/start
 			" /wait"  # Starts an application and waits for it to end.
-			" chrome"  # Start Chrome
-			" --force-renderer-accessibility"
-			" --suppress-message-center-popups"
-			" --disable-notifications"
-			" --no-experiments"
-			" --no-default-browser-check"
+			f" {_chromeArgs.getChromeArgs()}"
 			f' "{filePath}"',
 			shell=True,
 			alias='chromeStartAlias',
