@@ -519,7 +519,7 @@ class UIAHandler(COMObject):
 				if (
 					element.currentClassName in textChangeUIAClassNames
 					or element.CachedAutomationID in textChangeUIAAutomationIDs
-					or (not utils._shouldUseWtNotifications() and element.currentClassName in windowsTerminalUIAClassNames)
+					or (not utils._shouldUseWindowsTerminalNotifications() and element.currentClassName in windowsTerminalUIAClassNames)
 				):
 					group = self.localEventHandlerGroupWithTextChanges
 					logPrefix = "Explicitly"
@@ -571,7 +571,7 @@ class UIAHandler(COMObject):
 			if (
 				sender.currentClassName in textChangeUIAClassNames
 				or sender.CachedAutomationID in textChangeUIAAutomationIDs
-				or (not utils._shouldUseWtNotifications() and sender.currentClassName in windowsTerminalUIAClassNames)
+				or (not utils._shouldUseWindowsTerminalNotifications() and sender.currentClassName in windowsTerminalUIAClassNames)
 			):
 				NVDAEventName = "textChange"
 			else:

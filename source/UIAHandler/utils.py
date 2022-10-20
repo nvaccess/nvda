@@ -365,6 +365,6 @@ def _shouldSelectivelyRegister() -> bool:
 		return winVersion.getWinVer() >= winVersion.WIN11_22H2
 
 
-def _shouldUseWtNotifications() -> bool:
+def _shouldUseWindowsTerminalNotifications() -> bool:
 	"Determines whether to use notifications for new text reporting in Windows Terminal."
 	return config.conf["terminals"]["wtStrategy"] == WindowsTerminalStrategyFlag.NOTIFICATIONS

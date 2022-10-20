@@ -41,7 +41,7 @@ from UIAHandler.utils import (
 	iterUIARangeByUnit,
 	UIAMixedAttributeError,
 	UIATextRangeFromElement,
-	_shouldUseWtNotifications
+	_shouldUseWindowsTerminalNotifications
 )
 from NVDAObjects.window import Window
 from NVDAObjects import (
@@ -1212,7 +1212,7 @@ class UIA(Window):
 			winConsoleUIA.findExtraOverlayClasses(self, clsList)
 		elif UIAClassName in _all_wt_UIAClassNames:
 			from . import winConsoleUIA
-			if _shouldUseWtNotifications():
+			if _shouldUseWindowsTerminalNotifications():
 				clsList.append(winConsoleUIA.NotificationsBasedWinTerminalUIA)
 			else:
 				clsList.append(winConsoleUIA.DiffBasedWinTerminalUIA)
