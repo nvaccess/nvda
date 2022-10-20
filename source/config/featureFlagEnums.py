@@ -67,7 +67,7 @@ class BoolFlag(DisplayStringEnum):
 		return self == BoolFlag.ENABLED
 
 
-class WtStrategyFlag(DisplayStringEnum):
+class WindowsTerminalStrategyFlag(DisplayStringEnum):
 	"""
 	A feature flag for defining how new text is calculated in Windows Terminal
 	(wt.exe).

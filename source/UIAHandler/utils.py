@@ -6,7 +6,7 @@
 import operator
 from comtypes import COMError
 import config
-from config.featureFlagEnums import WtStrategyFlag
+from config.featureFlagEnums import WindowsTerminalStrategyFlag
 import ctypes
 import UIAHandler
 import weakref
@@ -370,4 +370,4 @@ def _shouldUseWtNotifications() -> bool:
 	# Once we're ready to switch this on, update behaviorOfDefault in the
 	# config spec, then change the test below to check that the config value is
 	# not equal to DIFFING (assuming no other strategy is implemented in the meantime).
-	return config.conf["terminals"]["wtStrategy"].value == WtStrategyFlag.NOTIFICATIONS
+	return config.conf["terminals"]["wtStrategy"].value == WindowsTerminalStrategyFlag.NOTIFICATIONS

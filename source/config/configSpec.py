@@ -249,7 +249,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	speakPasswords = boolean(default=false)
 	keyboardSupportInLegacy = boolean(default=True)
 	diffAlgo = option("auto", "dmp", "difflib", default="auto")
-	wtStrategy = featureFlag(optionsEnum="WtStrategyFlag", behaviorOfDefault="diffing")
+	wtStrategy = featureFlag(optionsEnum="WindowsTerminalStrategyFlag", behaviorOfDefault="diffing")
 
 [update]
 	autoCheck = boolean(default=true)
