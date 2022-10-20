@@ -26,9 +26,10 @@ from typing import (
 	Dict,
 )
 import configobj.validate
+from configobj import ConfigObj
 
 
-def upgradeConfigFrom_0_to_1(profile):
+def upgradeConfigFrom_0_to_1(profile: ConfigObj) -> None:
 	# Schema has been modified to set a new minimum blink rate
 	# The blink rate could previously be set to zero to disable blinking (while still 
 	# having a cursor)
@@ -45,7 +46,7 @@ def upgradeConfigFrom_0_to_1(profile):
 				profile["braille"]["cursorBlink"] = False
 
 
-def upgradeConfigFrom_1_to_2(profile):
+def upgradeConfigFrom_1_to_2(profile: ConfigObj) -> None:
 	# Schema has been modified to split cursor shape into focus and review shapes
 	# Previously, the same cursor shape was used for focus and review
 	try:
@@ -58,7 +59,7 @@ def upgradeConfigFrom_1_to_2(profile):
 		profile["braille"]["cursorShapeFocus"] = cursorShape
 
 
-def upgradeConfigFrom_2_to_3(profile):
+def upgradeConfigFrom_2_to_3(profile: ConfigObj) -> None:
 	# The winConsoleSpeakPasswords option has been moved to the terminals section of the config.
 	try:
 		speakPasswords = profile["UIA"]["winConsoleSpeakPasswords"]
@@ -72,7 +73,7 @@ def upgradeConfigFrom_2_to_3(profile):
 		profile["terminals"]["speakPasswords"] = speakPasswords
 
 
-def upgradeConfigFrom_3_to_4(profile):
+def upgradeConfigFrom_3_to_4(profile: ConfigObj) -> None:
 	"Reporting of superscripts and subscripts can now be configured separately to font attributes."
 	try:
 		profile['documentFormatting']['reportSuperscriptsAndSubscripts'] = (
@@ -83,7 +84,7 @@ def upgradeConfigFrom_3_to_4(profile):
 		log.debug("reportFontAttributes not present, no action taken.")
 
 
-def upgradeConfigFrom_4_to_5(profile):
+def upgradeConfigFrom_4_to_5(profile: ConfigObj) -> None:
 	""" reporting details has become enabled by default.
 	Discard aria-details setting, ensure users are aware of the setting.
 	The setting was used while the feature was in development.
@@ -96,7 +97,7 @@ def upgradeConfigFrom_4_to_5(profile):
 		log.debug("reportDetails not present, no action taken.")
 
 
-def upgradeConfigFrom_5_to_6(profile: dict):
+def upgradeConfigFrom_5_to_6(profile: ConfigObj) -> None:
 	"""
 	useInMSWordWhenAvailable in UIA section has been replaced with allowInMSWord multichoice.
 	"""
@@ -110,7 +111,7 @@ def upgradeConfigFrom_5_to_6(profile: dict):
 		profile['UIA']['allowInMSWord'] = AllowUiaInMSWord.ALWAYS.value
 
 
-def upgradeConfigFrom_6_to_7(profile: Dict[str, str]) -> None:
+def upgradeConfigFrom_6_to_7(profile: ConfigObj) -> None:
 	"""
 	Selective UIA registration check box has been replaced with event registration multi choice.
 	If the user has explicitly enabled selective UIA event registration, set
@@ -126,7 +127,7 @@ def upgradeConfigFrom_6_to_7(profile: Dict[str, str]) -> None:
 		profile['UIA']['eventRegistration'] = "selective"
 
 
-def upgradeConfigFrom_7_to_8(profile: Dict[str, str]) -> None:
+def upgradeConfigFrom_7_to_8(profile: ConfigObj) -> None:
 	"""
 	In Document formatting settings, "Row/column headers" check box has been replaced with "Headers" combobox.
 	"""
@@ -142,7 +143,7 @@ def upgradeConfigFrom_7_to_8(profile: Dict[str, str]) -> None:
 			profile['documentFormatting']['reportTableHeaders'] = ReportTableHeaders.OFF.value
 
 
-def upgradeConfigFrom_8_to_9(profile: Dict[str, str]) -> None:
+def upgradeConfigFrom_8_to_9(profile: ConfigObj) -> None:
 	"""
 	In NVDA config, when various values were controlling a single combobox in the settings window, these values
 	have been replaced by a single value.
@@ -159,7 +160,7 @@ def upgradeConfigFrom_8_to_9(profile: Dict[str, str]) -> None:
 	_upgradeConfigFrom_8_to_9_tetherTo(profile)
 
 
-def _upgradeConfigFrom_8_to_9_lineIndent(profile: Dict[str, str]) -> None:
+def _upgradeConfigFrom_8_to_9_lineIndent(profile: ConfigObj) -> None:
 	anySettingInConfig = False
 	try:
 		reportLineIndent: str = profile['documentFormatting']['reportLineIndentation']
@@ -187,7 +188,7 @@ def _upgradeConfigFrom_8_to_9_lineIndent(profile: Dict[str, str]) -> None:
 		log.debug("reportLineIndentation and reportLineIndentationWithTones not present, no action taken.")
 
 
-def _upgradeConfigFrom_8_to_9_cellBorders(profile: Dict[str, str]) -> None:
+def _upgradeConfigFrom_8_to_9_cellBorders(profile: ConfigObj) -> None:
 	anySettingInConfig = False
 	try:
 		reportBorderStyle: str = profile["documentFormatting"]["reportBorderStyle"]
@@ -221,7 +222,7 @@ def _upgradeConfigFrom_8_to_9_cellBorders(profile: Dict[str, str]) -> None:
 		log.debug("reportBorderStyle and reportBorderColor not present, no action taken.")
 
 
-def _upgradeConfigFrom_8_to_9_showMessages(profile: Dict[str, str]) -> None:
+def _upgradeConfigFrom_8_to_9_showMessages(profile: ConfigObj) -> None:
 	upgradeNeeded = False
 	try:
 		noMessageTimeout: str = profile['braille']['noMessageTimeout']
@@ -261,7 +262,7 @@ def _upgradeConfigFrom_8_to_9_showMessages(profile: Dict[str, str]) -> None:
 		log.debug("messageTimeout >= 1 or not present and noMessageTimeout not present, no action taken.")
 
 
-def _upgradeConfigFrom_8_to_9_tetherTo(profile: Dict[str, str]) -> None:
+def _upgradeConfigFrom_8_to_9_tetherTo(profile: ConfigObj) -> None:
 	try:
 		autoTether: str = profile["braille"]["autoTether"]
 		isAutoTetherMissing = False
