@@ -6,6 +6,7 @@
 """Logic for NVDA + Google Chrome tests
 """
 
+import typing
 import os
 from robot.libraries.BuiltIn import BuiltIn
 # imported methods start with underscore (_) so they don't get imported into robot files as keywords
@@ -21,6 +22,9 @@ import NvdaLib as _NvdaLib
 _builtIn: BuiltIn = BuiltIn()
 _chrome: _ChromeLib = _getLib("ChromeLib")
 _asserts: _AssertsLib = _getLib("AssertsLib")
+
+if typing.TYPE_CHECKING:
+	from ..libraries.SystemTestSpy.speechSpyGlobalPlugin import NVDASpyLib
 
 
 #: Double space is used to separate semantics in speech output this typically
@@ -73,8 +77,11 @@ def _getNoVBuf_AriaDetails_sample() -> str:
 		"""
 
 
-def _doTestAriaDetails_NoVBufNoTextInterface():
+def _doTestAriaDetails_NoVBufNoTextInterface(nvdaConfValues: "NVDASpyLib.NVDAConfMods"):
 	_chrome.prepareChrome(_getNoVBuf_AriaDetails_sample())
+	spy: "NVDASpyLib" = _NvdaLib.getSpyLib()
+	spy.modifyNVDAConfig(nvdaConfValues)
+
 	actualSpeech = _NvdaLib.getSpeechAfterKey("tab")
 	_builtIn.should_contain(actualSpeech, "focus in app")
 
@@ -110,34 +117,38 @@ def test_aria_details_noVBufNoTextInterface():
 	"""The uncommon case, but for completeness, a role=application containing an element that does not have a text
 	interface.
 	"""
-	spy = _NvdaLib.getSpyLib()
-	spy.set_configValue(REVIEW_CURSOR_FOLLOW_CARET_KEY, True)
-	spy.set_configValue(REVIEW_CURSOR_FOLLOW_FOCUS_KEY, True)
-	_doTestAriaDetails_NoVBufNoTextInterface()
+	_doTestAriaDetails_NoVBufNoTextInterface(
+		nvdaConfValues=[
+			(REVIEW_CURSOR_FOLLOW_CARET_KEY, True),
+			(REVIEW_CURSOR_FOLLOW_FOCUS_KEY, True),
+	])
 
 
 def test_aria_details_noVBufNoTextInterface_freeReview():
 	"""The uncommon case, but for completeness, a role=application containing an element without a text
 	interface. Test with the review cursor configured not to follow focus or caret.
 	"""
-	spy = _NvdaLib.getSpyLib()
-	spy.set_configValue(REVIEW_CURSOR_FOLLOW_CARET_KEY, False)
-	spy.set_configValue(REVIEW_CURSOR_FOLLOW_FOCUS_KEY, False)
-	_doTestAriaDetails_NoVBufNoTextInterface()
+	_doTestAriaDetails_NoVBufNoTextInterface(
+		nvdaConfValues=[
+			(REVIEW_CURSOR_FOLLOW_CARET_KEY, False),
+			(REVIEW_CURSOR_FOLLOW_FOCUS_KEY, False),
+	])
 
 
 def test_mark_aria_details():
-	spy = _NvdaLib.getSpyLib()
-	spy.set_configValue(REVIEW_CURSOR_FOLLOW_CARET_KEY, True)
-	spy.set_configValue(REVIEW_CURSOR_FOLLOW_FOCUS_KEY, True)
-	exercise_mark_aria_details()
+	exercise_mark_aria_details(
+		nvdaConfValues=[
+			(REVIEW_CURSOR_FOLLOW_CARET_KEY, True),
+			(REVIEW_CURSOR_FOLLOW_FOCUS_KEY, True),
+	])
 
 
 def test_mark_aria_details_FreeReviewCursor():
-	spy = _NvdaLib.getSpyLib()
-	spy.set_configValue(REVIEW_CURSOR_FOLLOW_CARET_KEY, False)
-	spy.set_configValue(REVIEW_CURSOR_FOLLOW_FOCUS_KEY, False)
-	exercise_mark_aria_details()
+	exercise_mark_aria_details(
+		nvdaConfValues=[
+			(REVIEW_CURSOR_FOLLOW_CARET_KEY, False),
+			(REVIEW_CURSOR_FOLLOW_FOCUS_KEY, False),
+	])
 
 
 def test_mark_aria_details_role():
@@ -288,7 +299,7 @@ def test_mark_aria_details_role():
 	)
 
 
-def exercise_mark_aria_details():
+def exercise_mark_aria_details(nvdaConfValues: "NVDASpyLib.NVDAConfMods"):
 	_chrome.prepareChrome(
 		"""
 		<div class="editor" contenteditable spellcheck="false" role="textbox" aria-multiline="true">
@@ -311,6 +322,8 @@ def exercise_mark_aria_details():
 		</div>
 		"""
 	)
+	spy: "NVDASpyLib" = _NvdaLib.getSpyLib()
+	spy.modifyNVDAConfig(nvdaConfValues)
 
 	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey('downArrow')
 	_asserts.speech_matches(
@@ -1432,16 +1445,17 @@ def test_preventDuplicateSpeechFromDescription_browse_tab():
 	Settings which may affect this:
 	- speech.reportObjectDescriptions default:True
 	"""
-	spy = _NvdaLib.getSpyLib()
-	REPORT_OBJ_DESC_KEY = ["presentation", "reportObjectDescriptions"]
-	spy.set_configValue(REPORT_OBJ_DESC_KEY, True)
-
 	_chrome.prepareChrome(
 		"""
 		<a href="#" title="apple" style="display:block">apple</a>
 		<a href="#" title="banana" aria-label="banana" style="display:block">contents</a>
 		"""
 	)
+
+	spy = _NvdaLib.getSpyLib()
+	REPORT_OBJ_DESC_KEY = ["presentation", "reportObjectDescriptions"]
+	spy.set_configValue(REPORT_OBJ_DESC_KEY, True)
+
 	# Read in browse
 	actualSpeech = _chrome.getSpeechAfterKey('tab')
 	_asserts.strings_match(
@@ -1462,16 +1476,16 @@ def preventDuplicateSpeechFromDescription_focus():
 	Settings which may affect this:
 	- speech.reportObjectDescriptions default:True
 	"""
-	spy = _NvdaLib.getSpyLib()
-	REPORT_OBJ_DESC_KEY = ["presentation", "reportObjectDescriptions"]
-	spy.set_configValue(REPORT_OBJ_DESC_KEY, True)
-
 	_chrome.prepareChrome(
 		"""
 		<a href="#" title="apple" style="display:block">apple</a>
 		<a href="#" title="banana" aria-label="banana" style="display:block">contents</a>
 		"""
 	)
+	spy = _NvdaLib.getSpyLib()
+	REPORT_OBJ_DESC_KEY = ["presentation", "reportObjectDescriptions"]
+	spy.set_configValue(REPORT_OBJ_DESC_KEY, True)
+
 	# Force focus mode
 	actualSpeech = _chrome.getSpeechAfterKey("NVDA+space")
 	_asserts.strings_match(
@@ -1495,11 +1509,6 @@ def test_ensureNoBrowseModeDescription():
 	Test that option (speech.reportObjectDescriptions default:True)
 	does not result in description in browse mode.
 	"""
-	REPORT_OBJ_DESC_KEY = ["presentation", "reportObjectDescriptions"]
-	spy = _NvdaLib.getSpyLib()
-	# prevent browse / focus mode messages from interfering, 0 means don't show.
-	spy.set_configValue(["braille", "messageTimeout"], 0)
-
 	_chrome.prepareChrome(
 		"\n".join([
 			r'<button>something for focus</button>'
@@ -1508,6 +1517,11 @@ def test_ensureNoBrowseModeDescription():
 			r'<a href="#" style="display:block" title="Fish">Banana</a>',
 		])
 	)
+
+	REPORT_OBJ_DESC_KEY = ["presentation", "reportObjectDescriptions"]
+	spy = _NvdaLib.getSpyLib()
+	# prevent browse / focus mode messages from interfering, 0 means don't show.
+	spy.set_configValue(["braille", "messageTimeout"], 0)
 
 	actualSpeech = _NvdaLib.getSpeechAfterKey('tab')
 	_builtIn.should_contain(actualSpeech, "something for focus")
@@ -1616,10 +1630,6 @@ def test_quickNavTargetReporting():
 	When using quickNav, the target object should be spoken first, inner context should be given before outer
 	context.
 	"""
-	spy = _NvdaLib.getSpyLib()
-	REPORT_ARTICLES = ["documentFormatting", "reportArticles"]
-	spy.set_configValue(REPORT_ARTICLES, False)
-
 	_chrome.prepareChrome(
 		"""
 		<div
@@ -1637,6 +1647,10 @@ def test_quickNavTargetReporting():
 		</div>
 		"""
 	)
+	spy = _NvdaLib.getSpyLib()
+	REPORT_ARTICLES = ["documentFormatting", "reportArticles"]
+	spy.set_configValue(REPORT_ARTICLES, False)
+
 	# Quick nav to heading
 	actualSpeech = _chrome.getSpeechAfterKey("h")
 	_asserts.strings_match(
@@ -1676,10 +1690,6 @@ def test_focusTargetReporting():
 	When moving focus the target object should be spoken first, inner context should be given before outer
 	context.
 	"""
-	spy = _NvdaLib.getSpyLib()
-	REPORT_ARTICLES = ["documentFormatting", "reportArticles"]
-	spy.set_configValue(REPORT_ARTICLES, False)
-
 	_chrome.prepareChrome(
 		"""
 		<a href="#">before Target</a>
@@ -1698,6 +1708,11 @@ def test_focusTargetReporting():
 		</div>
 		"""
 	)
+
+	spy = _NvdaLib.getSpyLib()
+	REPORT_ARTICLES = ["documentFormatting", "reportArticles"]
+	spy.set_configValue(REPORT_ARTICLES, False)
+
 	# Set focus
 	actualSpeech = _chrome.getSpeechAfterKey("tab")
 	_asserts.strings_match(

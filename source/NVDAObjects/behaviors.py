@@ -163,7 +163,42 @@ class Dialog(NVDAObject):
 		self.isPresentableFocusAncestor = res = super(Dialog, self).isPresentableFocusAncestor
 		return res
 
-class EditableText(editableText.EditableText, NVDAObject):
+
+class InputFieldWithSuggestions(NVDAObject):
+	"""Allows NVDA to announce appearance/disappearance of suggestions as content is entered.
+	This is used in various places, including Windows 10 search edit fields and others.
+	Subclasses should provide L{event_suggestionsOpened} and can optionally override L{event_suggestionsClosed}.
+	These events are fired when suggestions appear and disappear, respectively.
+	"""
+
+	def event_suggestionsOpened(self):
+		"""Called when suggestions appear when text is entered e.g. search suggestions.
+		Subclasses should provide custom implementations if possible.
+		By default NVDA will announce appearance of suggestions using speech, braille or a sound will be played.
+		"""
+		# Translators: Announced in braille when suggestions appear when search term is entered
+		# in various search fields such as Start search box in Windows 10.
+		braille.handler.message(_("Suggestions"))
+		if config.conf["presentation"]["reportAutoSuggestionsWithSound"]:
+			nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "suggestionsOpened.wav"))
+
+	def event_suggestionsClosed(self):
+		"""Called when suggestions list or container is closed.
+		Subclasses should provide custom implementations if possible.
+		By default NVDA will announce this via speech, braille or via a sound.
+		"""
+		if config.conf["presentation"]["reportAutoSuggestionsWithSound"]:
+			nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "suggestionsClosed.wav"))
+
+	def event_controllerForChange(self):
+		# Report when suggestions appear and disappear.
+		if self is api.getFocusObject() and len(self.controllerFor) > 0:
+			self.event_suggestionsOpened()
+		else:
+			self.event_suggestionsClosed()
+
+
+class EditableTextBase(editableText.EditableText, NVDAObject):
 	"""Provides scripts to report appropriately when moving the caret in editable text fields.
 	This does not handle selection changes.
 	To handle selection changes, use either L{EditableTextWithAutoSelectDetection} or L{EditableTextWithoutAutoSelectDetection}.
@@ -234,6 +269,20 @@ class EditableText(editableText.EditableText, NVDAObject):
 			# Reporting of spelling errors is enabled and this character ends a word.
 			self._reportErrorInPreviousWord()
 		super().event_typedCharacter(ch)
+
+
+class EditableTextWithSuggestions(InputFieldWithSuggestions, EditableTextBase):
+	""" Represents an editable text field that shows suggestions as you type.
+	This is an empty class as functionality has been moved to the base InputFieldWithSuggestions class.
+	"""
+
+
+class EditableText(EditableTextWithSuggestions, EditableTextBase):
+	""" Represents an editable text field.
+	This is an empty class as functionality has been moved to the base EditableTextBase class.
+	This class also supports reporting of the appearance and disappearance of suggestions
+	by inheriting from the EditableTextWithSuggestions class.
+	"""
 
 
 class EditableTextWithAutoSelectDetection(EditableText):
@@ -873,30 +922,6 @@ class Notification(NVDAObject):
 
 	event_show = event_alert
 
-class EditableTextWithSuggestions(NVDAObject):
-	"""Allows NvDA to announce appearance/disappearance of suggestions as text is entered.
-	This is used in various places, including Windows 10 search edit fields and others.
-	Subclasses should provide L{event_suggestionsOpened} and can optionally override L{event_suggestionsClosed}.
-	These events are fired when suggestions appear and disappear, respectively.
-	"""
-
-	def event_suggestionsOpened(self):
-		"""Called when suggestions appear when text is entered e.g. search suggestions.
-		Subclasses should provide custom implementations if possible.
-		By default NVDA will announce appearance of suggestions using speech, braille or a sound will be played.
-		"""
-		# Translators: Announced in braille when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
-		braille.handler.message(_("Suggestions"))
-		if config.conf["presentation"]["reportAutoSuggestionsWithSound"]:
-			nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "suggestionsOpened.wav"))
-
-	def event_suggestionsClosed(self):
-		"""Called when suggestions list or container is closed.
-		Subclasses should provide custom implementations if possible.
-		By default NVDA will announce this via speech, braille or via a sound.
-		"""
-		if config.conf["presentation"]["reportAutoSuggestionsWithSound"]:
-			nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "suggestionsClosed.wav"))
 
 class WebDialog(NVDAObject):
 	"""
