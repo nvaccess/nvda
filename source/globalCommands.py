@@ -948,7 +948,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Toggles on and off delayed descriptions for characters on cursor movement"),
 		category=SCRCAT_SPEECH,
 	)
-	def script_toggleDelayedCharacterDescription(self, gesture: inputCore.InputGesture) -> None:
+	def script_toggleDelayedCharacterDescriptions(self, gesture: inputCore.InputGesture) -> None:
 		enabled: bool = not config.conf["speech"]["delayedCharacterDescriptions"]
 		config.conf["speech"]["delayedCharacterDescriptions"] = enabled
 		if enabled:
