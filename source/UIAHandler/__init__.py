@@ -1168,7 +1168,10 @@ class UIAHandler(COMObject):
 		now=time.time()
 		v=self.UIAWindowHandleCache.get(hwnd,None)
 		if not v or (now-v[1])>0.5:
-			v=self._isUIAWindowHelper(hwnd),now
+			v = (
+				self._isUIAWindowHelper(hwnd, isDebug=isDebug),
+				now
+			)
 			self.UIAWindowHandleCache[hwnd]=v
 		elif isDebug:
 			log.debug(f"Found cached is UIA window {v[0]} for hwnd {self.getWindowHandleDebugString(hwnd)}")
