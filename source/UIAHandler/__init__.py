@@ -110,7 +110,7 @@ textChangeUIAClassNames = (
 windowsTerminalUIAClassNames = (
 	"TermControl",
 	"TermControl2",
-	"WPFTermControl"
+	"WPFTermControl",
 )
 
 NVDAUnitsToUIAUnits: Dict[str, int] = {

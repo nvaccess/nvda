@@ -41,7 +41,7 @@ from UIAHandler.utils import (
 	iterUIARangeByUnit,
 	UIAMixedAttributeError,
 	UIATextRangeFromElement,
-	_shouldUseWindowsTerminalNotifications
+	_shouldUseWindowsTerminalNotifications,
 )
 from NVDAObjects.window import Window
 from NVDAObjects import (
