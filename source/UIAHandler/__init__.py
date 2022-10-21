@@ -185,6 +185,7 @@ UIAPropertyIdsToNVDAEventNames={
 
 globalEventHandlerGroupUIAPropertyIds = {
 	UIA.UIA_RangeValueValuePropertyId,
+	UIA.UIA_DragDropEffectPropertyId,
 	UIA.UIA_DropTargetDropTargetEffectPropertyId,
 }
 
