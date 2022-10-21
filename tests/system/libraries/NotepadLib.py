@@ -126,5 +126,4 @@ class NotepadLib:
 		self.start_notepad(path)
 		self._waitForNotepadFocus(NotepadLib.getUniqueTestCaseTitleRegex(testCase))
 		# Move to the start of file
-		spy.emulateKeyPress('home')
-		spy.wait_for_speech_to_finish()
+		_NvdaLib.getSpeechAfterKey('home')

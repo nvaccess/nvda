@@ -167,11 +167,8 @@ class ChromeLib:
 			builtIn.log(afterControlF6Speech, level="DEBUG")
 			return False
 
-		spy.emulateKeyPress('control+home')  # ensure we start at the top of the document
-		controlHomeSpeechIndex = spy.get_last_speech_index()
-		spy.emulateKeyPress('numpad8')  # report current line
-		spy.wait_for_speech_to_finish()
-		afterNumPad8Speech = spy.get_speech_at_index_until_now(controlHomeSpeechIndex)
+		_NvdaLib.getSpeechAfterKey('control+home')  # ensure we start at the top of the document
+		afterNumPad8Speech = _NvdaLib.getSpeechAfterKey('numpad8')  # report current line
 		if ChromeLib._beforeMarker not in afterNumPad8Speech:
 			builtIn.log(afterNumPad8Speech, level="DEBUG")
 			return False
