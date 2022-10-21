@@ -21,6 +21,15 @@ def getChromeArgs() -> str:
 		" --no-default-browser-check"  # Don't bother to check if Chrome is the default browser.
 		" --lang=en-US"  # Set GUI lang to English to ensure tests pass on non-English systems. Must be supplied
 		# to the first Chrome process started.
+		" --disable-session-crashed-bubble"
+		# --disable-session-crashed-bubble: If chrome crashes, don't cause subsequent tests to fail.
+		# However, the config can be checked to determine if a crash occurred.
+		# See https://superuser.com/a/1343331
+		# Use %APPDATA%\Local\Google\Chrome\User Data\Default\Preference
+		# Values:
+		# "exit_type": "none",
+		# "exited_cleanly": true,
+		#
 	)
 
 
