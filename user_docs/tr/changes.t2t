@@ -3,6 +3,60 @@ NVDA'daki Yenilikler
 
 %!includeconf: ../changes.t2tconf
 
+= 2022.4 =
+Bu sürümde, tabloda tümünü okuma komutları dahil olmak üzere çeşitli kısayol tuşları eklendi.
+Kullanıcı rehberine "hızlı başlangıç" bölümü eklendi.
+Bazı hatalar düzeltildi.
+
+eSpeak ve LibLouis güncellendi.
+Çince, İsveççe, Luganda dili ve Kinyarwanda braille tabloları eklendi.
+
+== Yeni özellikler ==
+- Kullanıcı rehberine "hızlı başlangıç rehberi" bölümü eklendi. (#13934)
+- Üzerinde bulunulan öğenin klavye kısayol tuşunu öğrenme komutu eklendi. (#13960)
+  - Masa üstü: ``şift+numpad2``.
+  -
+Uygulama tarafından desteklendiğinde, inceleme imlecini bir sayfa ileri ve geri hareket ettirme komutları eklendi. (#14021)
+  - Önceki sayfaya git:
+    - Masa üstü: ``NVDA+önceki sayfa``.
+    - Dizüstü: ``NVDA+şift+önceki sayfa``.
+    -
+  - Sonraki sayfaya git:
+    - Masa üstü: ``NVDA+sonraki sayfa``.
+    - Dizüstü: ``NVDA+şift+sonraki sayfa``.
+    -
+  -
+- Aşağıdaki tablo komutları eklendi:  (#14070)
+  - Sütunda tümünü oku: ``NVDA+kontrol+alt+aşağı ok``
+  - Satırda tümünü oku: ``NVDA+kontrol+alt+sağ ok``
+  - Tüm sütunu oku: ``NVDA+kontrol+alt+yukarı ok``
+  - Tüm satırı oku: ``NVDA+kontrol+alt+sol ok``
+  -
+- Microsoft Excel'i UI otomasyonu ile kullanırken, NVDA elektronik tablolarda tablo dışına çıkıldığını bildirecek. (#14165)
+- Tablolarda başlık bildirimi satır ve sütunlar için ayrı olarak ayarlanabiliyor. (#14075)
+-
+
+
+== Değişiklikler ==
+- eSpeak NG 1.52-dev commit ``735ecdb8`` sürümüne güncellendi. (#14060, #14079, #14118, #14203)
+  - Mandarin kullanırken Latince karakterlerin seslendirilmesi düzeltildi. (#12952, #13572, #14197)
+  -
+- LibLouis braille translator [3.23.0 https://github.com/liblouis/liblouis/releases/tag/v3.23.0] sürümüne güncellendi. (#14112)
+  - Eklenen braille tabloları:
+    - Çince yaygın braille (basitleştirilmiş Çince karakterler)(simplified Chinese characters)
+    - Kinyarwanda edebi braille
+    - Luganda edebi braille
+    - Swedish kısaltmasız braille
+    - İsveççe kısmi kısaltmalı braille
+    - İsveççe kısaltmalı braille
+    - Çince (Çin, Mandarin) Mevcut braille sistemi (tonlamasız) (#14138)
+    -
+- NVDA, kullanıcı istatistikleri izlemesine işletim sistemi mimarisini de dahil ediyor. (#14019)
+-
+
+
+== Hata düzeltmeleri ==
+
 = 2022.3 =
 Bu güncellemenin önemli bir kısmı NVDA üretici topluluğunun katkılarıyla hazırlanmıştır.
 Bu katkılara gecikmeli karakter açıklamaları ve iyileştirilmiş Windows konsolu desteği dahildir.
