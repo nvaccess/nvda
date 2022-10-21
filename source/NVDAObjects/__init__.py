@@ -1093,6 +1093,10 @@ Tries to force this object to take the focus.
 		"""
 		speech.speakObject(self, reason=controlTypes.OutputReason.FOCUS)
 
+	def isDescendantOf(self, obj: "NVDAObject") -> bool:
+		"""  is this object a descendant of obj? """
+		raise NotImplementedError
+
 	def _get_placeholder(self):
 		"""If it exists for this object get the value of the placeholder text.
 		For example this might be the aria-placeholder text for a field in a web page.
@@ -1177,6 +1181,29 @@ Tries to force this object to take the focus.
 					speech.cancelSpeech()
 				speech.speakText(text)
 
+	def event_selection(self):
+		# This object has been selected.
+		# If this object's container / parent is being controlled by the focus,
+		# then report this selection.
+		focus = api.getFocusObject()
+		controls = focus.controllerFor
+		for control in controls:
+			# The focus is controling one or more objects.
+			# If possible, check if this object is a descendant of the object being controlled.
+			try:
+				isDescendant = self.isDescendantOf(control)
+			except NotImplementedError:
+				isDescendant = False
+			if isDescendant:
+				speech.cancelSpeech()
+				if api.setNavigatorObject(self, isFocus=True):
+					self.reportFocus()
+					# Display results as flash messages.
+					braille.handler.message(braille.getPropertiesBraille(
+						name=self.name, role=self.role, positionInfo=self.positionInfo
+					))
+		self.event_stateChange()
+
 	def event_stateChange(self):
 		if self is api.getFocusObject():
 			speech.speakObjectProperties(self, states=True, reason=controlTypes.OutputReason.CHANGE)
@@ -1245,6 +1272,9 @@ This code is executed if a gain focus event is received by this object.
 			speech.speakObjectProperties(self, description=True, reason=controlTypes.OutputReason.CHANGE)
 		braille.handler.handleUpdate(self)
 		vision.handler.handleUpdate(self, property="description")
+
+	def event_controllerForChange(self):
+		pass
 
 	def event_caret(self):
 		if self is api.getFocusObject() and not eventHandler.isPendingEvents("gainFocus"):
