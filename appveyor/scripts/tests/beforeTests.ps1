@@ -3,7 +3,7 @@ New-Item -ItemType directory -Path testOutput\unit
 New-Item -ItemType directory -Path testOutput\system
 New-Item -ItemType directory -Path testOutput\lint
 
-# The first Chrome system test to run that occasionally fails.
+# The first Chrome system test to run occasionally fails.
 # This has been observed on developer machines after chrome updates, but is difficult to reproduce.
 # When this occur the NVDA logs indicate that a no virtual buffer is created.
 # It isn't known if this is a bug in Chrome or NVDA.

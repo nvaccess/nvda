@@ -9,6 +9,7 @@ Windows Notepad with a text sample and assert NVDA interacts with it in the expe
 
 # imported methods start with underscore (_) so they don't get imported into robot files as keywords
 from os.path import join as _pJoin
+import datetime as _datetime
 import tempfile as _tempfile
 from typing import Optional as _Optional
 from SystemTestSpy import (
@@ -65,21 +66,21 @@ class NotepadLib:
 		return self.notepadHandle
 
 	@staticmethod
-	def getUniqueTestCaseTitle(testCase: str) -> str:
-		return f"{NotepadLib._testCaseTitle} ({abs(hash(testCase))}).txt"
+	def getUniqueTestCaseTitle(testCaseHash: int) -> str:
+		return f"{NotepadLib._testCaseTitle} ({abs(testCaseHash)}).txt"
 
 	@staticmethod
-	def getUniqueTestCaseTitleRegex(testCase: str) -> re.Pattern:
-		return re.compile(f"^{NotepadLib._testCaseTitle} \\({abs(hash(testCase))}\\)")
+	def getUniqueTestCaseTitleRegex(testCaseHash: int) -> re.Pattern:
+		return re.compile(f"^{NotepadLib._testCaseTitle} \\({abs(testCaseHash)}\\)")
 
 	@staticmethod
-	def _writeTestFile(testCase) -> str:
+	def _writeTestFile(testCase: str, filename: str) -> str:
 		"""
 		Creates a file for a plaintext test case.
 		@param testCase:  The plaintext sample that is to be tested.
 		@return: path to the plaintext file.
 		"""
-		filePath = NotepadLib._getTestCasePath(NotepadLib.getUniqueTestCaseTitle(testCase))
+		filePath = NotepadLib._getTestCasePath(filename)
 		with open(file=filePath, mode='w', encoding='UTF-8') as f:
 			f.write(testCase)
 		return filePath
@@ -120,11 +121,13 @@ class NotepadLib:
 		@param testCase - The plaintext sample to test.
 		"""
 		spy = _NvdaLib.getSpyLib()
-		path = self._writeTestFile(testCase)
+		_testCaseHash = hash(testCase + _datetime.datetime.now().isoformat())
+		uniqueTitleRegex = NotepadLib.getUniqueTestCaseTitleRegex(_testCaseHash)
+		path = self._writeTestFile(testCase, self.getUniqueTestCaseTitle(_testCaseHash))
 
 		spy.wait_for_speech_to_finish()
 		self.start_notepad(path)
-		self._waitForNotepadFocus(NotepadLib.getUniqueTestCaseTitleRegex(testCase))
+		self._waitForNotepadFocus(uniqueTitleRegex)
 		# Move to the start of file
 		spy.emulateKeyPress('home')
 		spy.wait_for_speech_to_finish()
