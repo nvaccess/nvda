@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA-TW\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-17 00:02+0000\n"
+"POT-Creation-Date: 2022-08-26 06:43+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -12,7 +12,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 2.4.3\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 msgid "Native input"
@@ -379,6 +379,21 @@ msgstr "fig"
 msgid "hlght"
 msgstr "hlght"
 
+#. Translators: Displayed in braille when an object is a comment.
+#. Translators: Displayed in braille when there is a comment for a spreadsheet cell or piece of text in a document.
+#. Translators: Brailled when text contains a generic comment.
+msgid "cmnt"
+msgstr "cmnt"
+
+#. Translators: Displayed in braille when an object is a suggestion.
+msgid "sggstn"
+msgstr "sggstn"
+
+#. Translators: Displayed in braille when an object is a definition.
+#. Translators: Identifies a definition.
+msgid "definition"
+msgstr "定義"
+
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
 msgstr "sel"
@@ -438,11 +453,6 @@ msgstr "ldesc"
 #. Translators: Displayed in braille when there is a formula on a spreadsheet cell.
 msgid "frml"
 msgstr "frml"
-
-#. Translators: Displayed in braille when there is a comment for a spreadsheet cell or piece of text in a document.
-#. Translators: Brailled when text contains a generic comment.
-msgid "cmnt"
-msgstr "cmnt"
 
 #. Translators: Displayed in braille when an object is not selected.
 msgid "nsel"
@@ -533,6 +543,18 @@ msgstr "h%s"
 #. Translators: Displayed in braille for a link which has been visited.
 msgid "vlnk"
 msgstr "vlnk"
+
+#. Translators: Braille when there are further details/annotations that can be fetched manually.
+#. %s specifies the type of details (e.g. comment, suggestion)
+#. Translators: Speaks when there are further details/annotations that can be fetched manually.
+#. %s specifies the type of details (e.g. comment, suggestion)
+#, python-format
+msgid "has %s"
+msgstr "有%s"
+
+#. Translators: Braille when there are further details/annotations that can be fetched manually.
+msgid "details"
+msgstr "details"
 
 #. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
@@ -2339,6 +2361,21 @@ msgstr "手勢對應檔錯誤"
 msgid "Loading NVDA. Please wait..."
 msgstr "載入 NVDA 中，請稍後..."
 
+#. Translators: This is a warning to users, shown if NVDA cannot determine if
+#. Windows is locked.
+msgid ""
+"NVDA failed to register session tracking. While this instance of NVDA is "
+"running, your desktop will not be secure when Windows is locked. Restart "
+"NVDA? "
+msgstr ""
+"NVDA 無法登入工作階段追蹤。當此 NVDA 執行個體執行時，在 Windows 鎖定畫面您的"
+"桌面將不安全。是否重新啟動 NVDA？ "
+
+#. Translators: This is a warning to users, shown if NVDA cannot determine if
+#. Windows is locked.
+msgid "NVDA could not start securely."
+msgstr "NVDA 無法安全啟動。"
+
 #. Translators: The screen is oriented so that it is wider than it is tall.
 msgid "Landscape"
 msgstr "橫向螢幕"
@@ -2400,6 +2437,12 @@ msgstr "從目前游標位置找上一個先前輸入的字串"
 #. Translators: Reported when there is no text selected (for copying).
 msgid "No selection"
 msgstr "沒有選取文字"
+
+#. Translators: Abbreviation for points, a measurement of font size.
+#, python-format
+msgctxt "font size"
+msgid "%s pt"
+msgstr "%s 點"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
@@ -6378,8 +6421,8 @@ msgid "Tries to read documentation for the selected autocompletion item."
 msgstr "讀出自動填入項目的文字。"
 
 #. Translators: When the help popup cannot be found for the selected autocompletion item
-msgid "Cann't find the documentation window."
-msgstr "無法找到文件視窗。"
+msgid "Can't find the documentation window."
+msgstr "找不到文件視窗。"
 
 #. Translators: Reported when no track is playing in Foobar 2000.
 msgid "No track playing"
@@ -6624,7 +6667,7 @@ msgstr "沒有給譯者的備註。"
 #. Translators: this message is reported when NVDA is unable to find
 #. the 'Notes for translators' window in poedit.
 msgid "Could not find Notes for translators window."
-msgstr "無法找到給譯者的備註。"
+msgstr "找不到給譯者的備註。"
 
 #. Translators: The description of an NVDA command for Poedit.
 msgid "Reports any notes for translators"
@@ -6633,7 +6676,7 @@ msgstr "讀出給譯者的備註"
 #. Translators: this message is reported when NVDA is unable to find
 #. the 'comments' window in poedit.
 msgid "Could not find comment window."
-msgstr "無法找到註解視窗。"
+msgstr "找不到註解視窗。"
 
 #. Translators: this message is reported when there are no
 #. comments to be presented to the user in the translator
@@ -6777,42 +6820,42 @@ msgstr "其他項目"
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 #, python-brace-format
 msgid "covers left of {otherShape} by {distance:.3g} points"
-msgstr "覆蓋到{otherShape}左側{distance:.3g}點"
+msgstr "覆蓋{otherShape}左邊 {distance:.3g} 點"
 
 #. Translators: A message when a shape is behind  another shape on a powerpoint slide
 #, python-brace-format
 msgid "behind left of {otherShape} by {distance:.3g} points"
-msgstr "被{otherShape}左側覆蓋到{distance:.3g}點"
+msgstr "被{otherShape}左邊覆蓋 {distance:.3g} 點"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 #, python-brace-format
 msgid "covers top of {otherShape} by {distance:.3g} points"
-msgstr "覆蓋到{otherShape}上緣{distance:.3g}點"
+msgstr "覆蓋{otherShape}上面 {distance:.3g} 點"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
 #, python-brace-format
 msgid "behind top of {otherShape} by {distance:.3g} points"
-msgstr "被{otherShape}上緣覆蓋到{distance:.3g}點"
+msgstr "被{otherShape}上面覆蓋 {distance:.3g} 點"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 #, python-brace-format
 msgid "covers right of {otherShape} by {distance:.3g} points"
-msgstr "覆蓋到{otherShape}右側{distance:.3g}點"
+msgstr "覆蓋{otherShape}右邊 {distance:.3g} 點"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
 #, python-brace-format
 msgid "behind right of {otherShape} by {distance:.3g} points"
-msgstr "被{otherShape}右側覆蓋到{distance:.3g}點"
+msgstr "被{otherShape}右邊覆蓋 {distance:.3g} 點"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 #, python-brace-format
 msgid "covers bottom of {otherShape} by {distance:.3g} points"
-msgstr "覆蓋到{otherShape}下緣{distance:.3g}點"
+msgstr "覆蓋{otherShape}下面 {distance:.3g} 點"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
 #, python-brace-format
 msgid "behind bottom of {otherShape} by {distance:.3g} points"
-msgstr "被{otherShape}下緣覆蓋到{distance:.3g}點"
+msgstr "被{otherShape}下面覆蓋 {distance:.3g} 點"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 #, python-brace-format
@@ -7079,6 +7122,18 @@ msgstr "啟動時顯示點字檢視器(&S)"
 msgid "&Hover for cell routing"
 msgstr "停留鼠標以定位點字方(&H)"
 
+#. Translators: Label for an option in NVDA settings.
+#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
+#. Translators: One of the show states of braille messages
+#. (the disabled mode turns off showing of braille messages completely).
+msgid "Disabled"
+msgstr "停用"
+
+#. Translators: Label for an option in NVDA settings.
+#. Translators: The status shown for an addon when its currently running in NVDA.
+msgid "Enabled"
+msgstr "啟用"
+
 #. Translators: The title of the document used to present the result of content recognition.
 msgid "Result"
 msgstr "結果"
@@ -7122,6 +7177,86 @@ msgstr "下標"
 #. Translators: Describes text formatting.
 msgid "superscript"
 msgstr "上標"
+
+#. Translators: Abbreviation for pixels, a measurement of font size.
+#, python-format
+msgctxt "font size"
+msgid "%s px"
+msgstr "%s px"
+
+#. Translators: A measurement unit of font size.
+#, python-format
+msgctxt "font size"
+msgid "%s em"
+msgstr "%s em"
+
+#. Translators: A measurement unit of font size.
+#, python-format
+msgctxt "font size"
+msgid "%s ex"
+msgstr "%s ex"
+
+#. Translators: Abbreviation for relative em, a measurement of font size.
+#, python-format
+msgctxt "font size"
+msgid "%s rem"
+msgstr "%s rem"
+
+#. Translators: Font size measured as a percentage
+#, python-format
+msgctxt "font size"
+msgid "%s%%"
+msgstr "%s%%"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "xx-small"
+msgstr "xx-small"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "x-small"
+msgstr "x-small"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "small"
+msgstr "small"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "medium"
+msgstr "medium"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "large"
+msgstr "large"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "x-large"
+msgstr "x-large"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "xx-large"
+msgstr "xx-large"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "xxx-large"
+msgstr "xxx-large"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "larger"
+msgstr "larger"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "smaller"
+msgstr "smaller"
 
 #. Translators: Presented when an item is marked as current in a collection of items
 msgid "current"
@@ -7425,7 +7560,7 @@ msgstr "章節附註"
 msgid "footer"
 msgstr "頁尾"
 
-#. Translators: Identifies a foot note (text at the end of a passage or used for anotations).
+#. Translators: Identifies a foot note (text at the end of a passage or used for annotations).
 msgid "foot note"
 msgstr "註腳"
 
@@ -7758,6 +7893,14 @@ msgstr "高亮"
 msgid "busy indicator"
 msgstr "忙碌指示器"
 
+#. Translators: Identifies a comment.
+msgid "comment"
+msgstr "註解"
+
+#. Translators: Identifies a suggestion.
+msgid "suggestion"
+msgstr "建議"
+
 #. Translators: Indicates that a particular state of an object is negated.
 #. Separate strings have now been defined for commonly negated states (e.g. not selected and not
 #. checked), but this still might be used in some other cases.
@@ -7840,7 +7983,7 @@ msgid "invalid entry"
 msgstr "無效的輸入"
 
 msgid "modal"
-msgstr "樣式的"
+msgstr "強制回應"
 
 #. Translators: This is presented when a field supports auto completion of entered text such as email
 #. address field in Microsoft Outlook.
@@ -8359,19 +8502,9 @@ msgstr "移除附加元件"
 msgid "Incompatible"
 msgstr "不相容"
 
-#. Translators: The status shown for an addon when its currently running in NVDA.
-msgid "Enabled"
-msgstr "已啟用"
-
 #. Translators: The status shown for a newly installed addon before NVDA is restarted.
 msgid "Install"
 msgstr "安裝"
-
-#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
-#. Translators: One of the show states of braille messages
-#. (the disabled mode turns off showing of braille messages completely).
-msgid "Disabled"
-msgstr "已停用"
 
 #. Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
 msgid "Removed after restart"
@@ -8878,7 +9011,7 @@ msgstr "已成功更新您所安裝的 NVDA。 "
 #. Translators: The message displayed to the user after NVDA is installed
 #. and the installed copy is about to be started.
 msgid "Please press OK to start the installed copy."
-msgstr "請按 確定 開始使用安裝的版本。"
+msgstr "請按「確認」開始使用安裝的版本。"
 
 #. Translators: The title of a dialog presented to indicate a successful operation.
 msgid "Success"
@@ -9054,6 +9187,13 @@ msgstr "事件記錄無法使用"
 #. Translators: A cancel button on a message dialog.
 msgid "Cancel"
 msgstr "取消"
+
+#. Translators: Label for the default option for some feature-flag combo boxes
+#. Such as, in the Advanced settings panel option, 'Load Chromium virtual buffer when document busy.'
+#. The placeholder {} is replaced with the label of the option which describes current default behavior
+#. in NVDA. EG "Default (Yes)".
+msgid "Default ({})"
+msgstr "預設"
 
 #. Translators: The label for the list of categories in a multi category settings dialog.
 msgid "&Categories:"
@@ -9306,6 +9446,10 @@ msgstr "大寫字母發出嗶嗶聲(&B)"
 #. voice settings panel.
 msgid "Use &spelling functionality if supported"
 msgstr "使用拼字功能 (若有支援)(&S)"
+
+#. Translators: This is the label for a checkbox in the voice settings panel.
+msgid "&Delayed descriptions for characters on cursor movement"
+msgstr "游標移動時延遲讀出字元的字詞解釋(&D)"
 
 #. Translators: This is the label for the keyboard settings panel.
 msgid "Keyboard"
@@ -9903,10 +10047,28 @@ msgid ""
 "available"
 msgstr "使用 UI Automation 處理 Microsoft Excel 工作表中的控制項 (若可用)(&E)"
 
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid "Use UI Automation to access the Windows C&onsole when available"
-msgstr "使用 UI Automation 處理 Windows 主控台 (若可用)(&O)"
+#. Translators: This is the label for a combo box for selecting the
+#. active console implementation in the advanced settings panel.
+#. Choices are automatic, UIA when available, and legacy.
+msgid "Windows C&onsole support:"
+msgstr "Windows 主控台支援(&O):"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA determine its Windows Console implementation
+#. automatically.
+msgid "Automatic (prefer UIA)"
+msgstr "自動 (優先使用 UIA)"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA use UIA in the Windows Console when available.
+msgid "UIA when available"
+msgstr "UIA (若可用)"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA use its legacy Windows Console support
+#. in all cases.
+msgid "Legacy"
+msgstr "傳統"
 
 #. Translators: Label for the Use UIA with Chromium combobox, in the Advanced settings panel.
 #. Note the '\n' is used to split this long label approximately in half.
@@ -9916,7 +10078,7 @@ msgid ""
 "&Chromium based browsers when available:"
 msgstr ""
 "在 Microsoft Edge 及其他以 Chromium 為基礎\n"
-"的瀏覽器中使用 UIA (若可用(&C)"
+"的瀏覽器中使用 UIA (若可用)(&C):"
 
 #. Translators: Label for the default value of the Use UIA with Chromium combobox,
 #. in the Advanced settings panel.
@@ -9932,12 +10094,12 @@ msgstr "必要時使用"
 #. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
 msgctxt "advanced.uiaWithChromium"
 msgid "Yes"
-msgstr "一律使用"
+msgstr "是"
 
 #. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
 msgctxt "advanced.uiaWithChromium"
 msgid "No"
-msgstr "不使用"
+msgstr "否"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -9964,21 +10126,21 @@ msgstr "HID 點字標準"
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
 msgid "Default (Yes)"
-msgstr "預設 (開)"
+msgstr "預設 (是)"
 
 #. Translators: Label for option in the 'Enable support for HID braille' combobox
 #. in the Advanced settings panel.
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
 msgid "Yes"
-msgstr "開"
+msgstr "是"
 
 #. Translators: Label for option in the 'Enable support for HID braille' combobox
 #. in the Advanced settings panel.
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
 msgid "No"
-msgstr "關"
+msgstr "否"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -10033,6 +10195,15 @@ msgstr "嘗試將已過期焦點事件的語音取消:"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
+msgid "Virtual Buffers"
+msgstr "虛擬緩衝區"
+
+#. Translators: This is the label for a combo-box in the Advanced settings panel.
+msgid "Load Chromium virtual buffer when document busy."
+msgstr "文件處於忙碌時載入 Chromium 虛擬緩衝區。"
+
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
 msgid "Editable Text"
 msgstr "編輯區"
 
@@ -10068,7 +10239,7 @@ msgstr "僅限於 NVDA 測試版本"
 #. Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
 msgctxt "advanced.playErrorSound"
 msgid "Yes"
-msgstr "開"
+msgstr "是"
 
 #. Translators: This is the label for the Advanced settings panel.
 msgid "Advanced"
@@ -10191,6 +10362,10 @@ msgstr "儘量避免斷字(&W)"
 #. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
 msgid "Focus context presentation:"
 msgstr "焦點脈絡呈現方式:"
+
+#. Translators: This is a label for a combo-box in the Braille settings panel.
+msgid "I&nterrupt speech while scrolling"
+msgstr "捲動時中斷語音(&N)"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load a single vision enhancement provider.
@@ -10455,10 +10630,6 @@ msgstr "使用 Caps Lock 鍵作為 NVDA 鍵(&U)"
 msgid "&Show this dialog when NVDA starts"
 msgstr "NVDA 啟動時顯示此對話框(&S)"
 
-#. Translators: The label of the license text which will be shown when NVDA installation program starts.
-msgid "License Agreement"
-msgstr "授權合約"
-
 #. Translators: The label for a checkbox in NvDA installation program to agree to the license agreement.
 msgid "I &agree"
 msgstr "我同意(&A)"
@@ -10475,6 +10646,10 @@ msgstr "建立可攜式版(&P)"
 #. to continue using the installation program as a temporary copy of NVDA.
 msgid "&Continue running"
 msgstr "繼續執行(&C)"
+
+#. Translators: The label of the license text which will be shown when NVDA installation program starts.
+msgid "License Agreement"
+msgstr "授權合約"
 
 #. Translators: The title of the dialog asking if usage data can be collected
 msgid "NVDA  Usage Data Collection"
@@ -10590,7 +10765,7 @@ msgstr "有 %s 欄"
 msgid "with %s rows"
 msgstr "有 %s 列"
 
-#. Translators: Speaks when there a further details/annotations that can be fetched manually.
+#. Translators: Speaks when there are further details/annotations that can be fetched manually.
 msgid "has details"
 msgstr "有詳細資料"
 
@@ -10602,7 +10777,7 @@ msgstr "第 %s 級"
 #. Translators: Number of items in a list (example output: list with 5 items).
 #, python-format
 msgid "with %s items"
-msgstr "有 %s 個項目"
+msgstr "有 %s 項目"
 
 #. Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
 #, python-format
@@ -11243,11 +11418,17 @@ msgstr "錯誤: {errorText}"
 msgid "{author} is editing"
 msgstr "{author} 正在編輯"
 
-#. Translators: Excel, report range of cell coordinates
+#. Translators: Excel, report selected range of cell coordinates
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "{firstAddress} {firstValue} through {lastAddress} {lastValue}"
 msgstr "{firstAddress} {firstValue} 到 {lastAddress} {lastValue}"
+
+#. Translators: Excel, report merged range of cell coordinates
+#, python-brace-format
+msgctxt "excel-UIA"
+msgid "{firstAddress} through {lastAddress}"
+msgstr "{firstAddress} 到 {lastAddress}"
 
 #. Translators: the description  for a script for Excel
 msgid "Reports the note or comment thread on the current cell"
@@ -12221,7 +12402,7 @@ msgstr ""
 #. Translators: a message reported in the get location text script for Excel. {0} is replaced with the name of the excel worksheet, and {1} is replaced with the row and column identifier EG "G4"
 #, python-brace-format
 msgid "Sheet {0}, {1}"
-msgstr "工作表 {0} 座標 {1}"
+msgstr "工作表 {0} 儲存格 {1}"
 
 #, python-brace-format
 msgid "Input Message is {title}: {message}"
@@ -12653,9 +12834,9 @@ msgstr "{offset:.3g} 公分"
 msgid "{offset:.3g} millimeters"
 msgstr "{offset:.3g} 公釐"
 
-#. Translators: a measurement in Microsoft Word
+#. Translators: a measurement in Microsoft Word (points)
 #, python-brace-format
-msgid "{offset:.3g} points"
+msgid "{offset:.3g} pt"
 msgstr "{offset:.3g} 點"
 
 #. Translators: a measurement in Microsoft Word
@@ -12675,41 +12856,3 @@ msgstr "2 倍行高"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5 倍行高"
-
-#, fuzzy
-#~ msgid "Moves the navigator object to the first row"
-#~ msgstr "導覽物件移到下一個物件"
-
-#, fuzzy
-#~ msgid "Moves the navigator object to the last row"
-#~ msgstr "導覽物件移到下一個物件"
-
-#~ msgid "Chinese (China, Mandarin) grade 2"
-#~ msgstr "中文 (中國) 漢語雙拼"
-
-#~ msgid "Cannot save configuration - NVDA in secure mode"
-#~ msgstr "不能儲存組態 - NVDA 在安全模式下"
-
-#~ msgid "details"
-#~ msgstr "details"
-
-#~ msgid "{modifier} pressed"
-#~ msgstr "{modifier} 按下了"
-
-#~ msgid "Dutch (Belgium) 6 dot"
-#~ msgstr "荷蘭文 (比利時) 六點"
-
-#~ msgid "Dutch (Netherlands) 6 dot"
-#~ msgstr "荷蘭文 (荷蘭) 六點"
-
-#~ msgid "Polish grade 1"
-#~ msgstr "波蘭文一級"
-
-#~ msgid "Shows a summary of the details at this position if found."
-#~ msgstr "顯示此位置的詳細資料摘要 (若有找到)"
-
-#~ msgid "Report details in browse mode"
-#~ msgstr "在瀏覽模式中讀出詳細資料"
-
-#~ msgid "{comment}  by {author}"
-#~ msgstr "{comment} 由 {author} 加註"

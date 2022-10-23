@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-17 00:02+0000\n"
-"PO-Revision-Date: 2022-06-21 15:02+0200\n"
+"POT-Creation-Date: 2022-08-19 00:02+0000\n"
+"PO-Revision-Date: 2022-08-21 16:58+0700\n"
 "Last-Translator: Zvonimir <9a5dsz@gozaltech.org>\n"
 "Language-Team: Hr Zvonimir Stanecic <9a5dsz@gozaltech.org>\n"
 "Language: hr\n"
@@ -23,7 +23,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 3.1\n"
+"X-Generator: Poedit 3.1.1\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 msgid "Native input"
@@ -437,6 +437,22 @@ msgstr "⡎⠇"
 msgid "hlght"
 msgstr "⠊⠎⠞⠅⠄"
 
+# kom = komentar
+#. Translators: Displayed in braille when an object is a comment.
+#. Translators: Displayed in braille when there is a comment for a spreadsheet cell or piece of text in a document.
+#. Translators: Brailled when text contains a generic comment.
+msgid "cmnt"
+msgstr "⡅⠕⠍"
+
+#. Translators: Displayed in braille when an object is a suggestion.
+msgid "sggstn"
+msgstr "⠏⠗⠊⠚"
+
+#. Translators: Displayed in braille when an object is a definition.
+#. Translators: Identifies a definition.
+msgid "definition"
+msgstr "definicija"
+
 # oz = označeno
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
@@ -511,12 +527,6 @@ msgstr "⡙⠛⠕⠏⠊⠎"
 #. Translators: Displayed in braille when there is a formula on a spreadsheet cell.
 msgid "frml"
 msgstr "⡋⠗⠍⠇"
-
-# kom = komentar
-#. Translators: Displayed in braille when there is a comment for a spreadsheet cell or piece of text in a document.
-#. Translators: Brailled when text contains a generic comment.
-msgid "cmnt"
-msgstr "⡅⠕⠍"
 
 # neoz = neoznačeno
 #. Translators: Displayed in braille when an object is not selected.
@@ -617,6 +627,18 @@ msgstr "⡝%s"
 #. Translators: Displayed in braille for a link which has been visited.
 msgid "vlnk"
 msgstr "⡏⠏⠧⠵"
+
+#. Translators: Braille when there are further details/annotations that can be fetched manually.
+#. %s specifies the type of details (e.g. comment, suggestion)
+#. Translators: Speaks when there are further details/annotations that can be fetched manually.
+#. %s specifies the type of details (e.g. comment, suggestion)
+#, python-format
+msgid "has %s"
+msgstr "ima %s"
+
+#. Translators: Braille when there are further details/annotations that can be fetched manually.
+msgid "details"
+msgstr "detalji"
 
 #. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
@@ -2431,6 +2453,22 @@ msgstr "greška datoteke za mapiranje gesta"
 msgid "Loading NVDA. Please wait..."
 msgstr "NVDA se učitava. Pričekaj …"
 
+#. Translators: This is a warning to users, shown if NVDA cannot determine if
+#. Windows is locked.
+msgid ""
+"NVDA failed to register session tracking. While this instance of NVDA is "
+"running, your desktop will not be secure when Windows is locked. Restart "
+"NVDA? "
+msgstr ""
+"NVDA nije uspjio registrirati praćenje sesija. Dok je ova instanca NVDA "
+"pokrenuta, radna površina neće biti sigurna kada je Windows zaključan. "
+"Želite li ponovno pokrenuti NVDA? "
+
+#. Translators: This is a warning to users, shown if NVDA cannot determine if
+#. Windows is locked.
+msgid "NVDA could not start securely."
+msgstr "NVDA se nije mogao sigurno pokrenuti."
+
 #. Translators: The screen is oriented so that it is wider than it is tall.
 msgid "Landscape"
 msgstr "Polegnuto"
@@ -2496,6 +2534,12 @@ msgstr ""
 #. Translators: Reported when there is no text selected (for copying).
 msgid "No selection"
 msgstr "Nema odabira"
+
+#. Translators: Abbreviation for points, a measurement of font size.
+#, python-format
+msgctxt "font size"
+msgid "%s pt"
+msgstr "%s točaka"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
@@ -6650,7 +6694,7 @@ msgstr ""
 "Pokušava čitati dokumentaciju za odabranu stavku automatskog dovršavanja."
 
 #. Translators: When the help popup cannot be found for the selected autocompletion item
-msgid "Cann't find the documentation window."
+msgid "Can't find the documentation window."
 msgstr "Nije moguće pronaći prozor dokumentacije."
 
 #. Translators: Reported when no track is playing in Foobar 2000.
@@ -7361,6 +7405,18 @@ msgstr "Prikaži preglednik &brajice nakon pokretanja"
 msgid "&Hover for cell routing"
 msgstr "Navigacija po ćelijama pomoću prelaženja mišem"
 
+#. Translators: Label for an option in NVDA settings.
+#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
+#. Translators: One of the show states of braille messages
+#. (the disabled mode turns off showing of braille messages completely).
+msgid "Disabled"
+msgstr "Deaktivirano"
+
+#. Translators: Label for an option in NVDA settings.
+#. Translators: The status shown for an addon when its currently running in NVDA.
+msgid "Enabled"
+msgstr "Aktivirano"
+
 #. Translators: The title of the document used to present the result of content recognition.
 msgid "Result"
 msgstr "Rezultat"
@@ -7404,6 +7460,88 @@ msgstr "indeks"
 #. Translators: Describes text formatting.
 msgid "superscript"
 msgstr "eksponent"
+
+#. Translators: Abbreviation for pixels, a measurement of font size.
+#, python-format
+msgctxt "font size"
+msgid "%s px"
+msgstr "%s px"
+
+# kraj = kraj polja
+#. Translators: A measurement unit of font size.
+#, python-format
+msgctxt "font size"
+msgid "%s em"
+msgstr "%s em"
+
+# kraj = kraj polja
+#. Translators: A measurement unit of font size.
+#, python-format
+msgctxt "font size"
+msgid "%s ex"
+msgstr "%s ex"
+
+#. Translators: Abbreviation for relative em, a measurement of font size.
+#, python-format
+msgctxt "font size"
+msgid "%s rem"
+msgstr "%s rem"
+
+#. Translators: Font size measured as a percentage
+#, python-format
+msgctxt "font size"
+msgid "%s%%"
+msgstr "%s%%"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "xx-small"
+msgstr "xx-mali"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "x-small"
+msgstr "x-mali"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "small"
+msgstr "mali"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "medium"
+msgstr "srednja"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "large"
+msgstr "veliki"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "x-large"
+msgstr "x-veliki"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "xx-large"
+msgstr "xx-veliki"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "xxx-large"
+msgstr "xxx-veliki"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "larger"
+msgstr "veći"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "smaller"
+msgstr "manjja"
 
 #. Translators: Presented when an item is marked as current in a collection of items
 msgid "current"
@@ -7706,7 +7844,7 @@ msgstr "završna bilješka"
 msgid "footer"
 msgstr "podnožje"
 
-#. Translators: Identifies a foot note (text at the end of a passage or used for anotations).
+#. Translators: Identifies a foot note (text at the end of a passage or used for annotations).
 msgid "foot note"
 msgstr "fusnota"
 
@@ -8038,6 +8176,14 @@ msgstr "istaknuto"
 #. Translators: Identifies a progress bar with indeterminate state, I.E. progress can not be determined.
 msgid "busy indicator"
 msgstr "indikator zauzetosti"
+
+#. Translators: Identifies a comment.
+msgid "comment"
+msgstr "komentar"
+
+#. Translators: Identifies a suggestion.
+msgid "suggestion"
+msgstr "prijedlog"
 
 #. Translators: Indicates that a particular state of an object is negated.
 #. Separate strings have now been defined for commonly negated states (e.g. not selected and not
@@ -8657,19 +8803,9 @@ msgstr "Ukloni dodatak"
 msgid "Incompatible"
 msgstr "Nekompatibilan"
 
-#. Translators: The status shown for an addon when its currently running in NVDA.
-msgid "Enabled"
-msgstr "Aktivirano"
-
 #. Translators: The status shown for a newly installed addon before NVDA is restarted.
 msgid "Install"
 msgstr "Instaliraj"
-
-#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
-#. Translators: One of the show states of braille messages
-#. (the disabled mode turns off showing of braille messages completely).
-msgid "Disabled"
-msgstr "Deaktivirano"
 
 #. Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
 msgid "Removed after restart"
@@ -9383,6 +9519,13 @@ msgstr "Dnevnik je nedostupan"
 msgid "Cancel"
 msgstr "Odustani"
 
+#. Translators: Label for the default option for some feature-flag combo boxes
+#. Such as, in the Advanced settings panel option, 'Load Chromium virtual buffer when document busy.'
+#. The placeholder {} is replaced with the label of the option which describes current default behavior
+#. in NVDA. EG "Default (Yes)".
+msgid "Default ({})"
+msgstr "Podrazumjevano ({})"
+
 #. Translators: The label for the list of categories in a multi category settings dialog.
 msgid "&Categories:"
 msgstr "&Kategorije:"
@@ -9642,6 +9785,10 @@ msgstr "&Zvučni signal za velika slova"
 #. voice settings panel.
 msgid "Use &spelling functionality if supported"
 msgstr "Koristi funkcionalnost &slovkanja, ako je podržano"
+
+#. Translators: This is the label for a checkbox in the voice settings panel.
+msgid "&Delayed descriptions for characters on cursor movement"
+msgstr "&Opis znakova koji kasni poslije pomicanja kursora"
 
 #. Translators: This is the label for the keyboard settings panel.
 msgid "Keyboard"
@@ -10248,11 +10395,28 @@ msgstr ""
 "Koristi UI Automation za pristup kontrolama Microsoft &Excel proračunskih "
 "tablica kada je to moguće"
 
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid "Use UI Automation to access the Windows C&onsole when available"
-msgstr ""
-"Koristi UI Automation za pristup Windows &naredbenom retku kada je dostupno"
+#. Translators: This is the label for a combo box for selecting the
+#. active console implementation in the advanced settings panel.
+#. Choices are automatic, UIA when available, and legacy.
+msgid "Windows C&onsole support:"
+msgstr "Podrška Windows &naredbenog redka:"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA determine its Windows Console implementation
+#. automatically.
+msgid "Automatic (prefer UIA)"
+msgstr "Automatski (preferiraj UIA)"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA use UIA in the Windows Console when available.
+msgid "UIA when available"
+msgstr "UIA kada je dostupno"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA use its legacy Windows Console support
+#. in all cases.
+msgid "Legacy"
+msgstr "Zastarjela"
 
 #. Translators: Label for the Use UIA with Chromium combobox, in the Advanced settings panel.
 #. Note the '\n' is used to split this long label approximately in half.
@@ -10380,6 +10544,15 @@ msgstr "Difflib"
 #. Translators: This is the label for combobox in the Advanced settings panel.
 msgid "Attempt to cancel speech for expired focus events:"
 msgstr "Pokušaj zaustavljanja govora za događaje fokusa koji su istekli:"
+
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
+msgid "Virtual Buffers"
+msgstr "Virtualni Spremnici"
+
+#. Translators: This is the label for a combo-box in the Advanced settings panel.
+msgid "Load Chromium virtual buffer when document busy."
+msgstr "Učitaj Chromium virtualni spremnik kada se dokument učitava."
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -10544,6 +10717,10 @@ msgstr "Izbjegni rastavljanje riječi kad je to &moguće"
 #. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
 msgid "Focus context presentation:"
 msgstr "Predstavljanje sadržaja fokusa:"
+
+#. Translators: This is a label for a combo-box in the Braille settings panel.
+msgid "I&nterrupt speech while scrolling"
+msgstr "Prek&ini govor prilikom pomicanja teksta na brajičnom redku"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load a single vision enhancement provider.
@@ -10819,10 +10996,6 @@ msgstr "&Koristi CapsLock kao NVDA modifikacijsku tipku"
 msgid "&Show this dialog when NVDA starts"
 msgstr "&Prikaži ovaj dijaloški okvir kad se NVDA pokrene"
 
-#. Translators: The label of the license text which will be shown when NVDA installation program starts.
-msgid "License Agreement"
-msgstr "Ugovor o licenci"
-
 #. Translators: The label for a checkbox in NvDA installation program to agree to the license agreement.
 msgid "I &agree"
 msgstr "&Slažem se"
@@ -10839,6 +11012,10 @@ msgstr "Stvori &prijenosnu kopiju"
 #. to continue using the installation program as a temporary copy of NVDA.
 msgid "&Continue running"
 msgstr "&Nastavi pokretanje"
+
+#. Translators: The label of the license text which will be shown when NVDA installation program starts.
+msgid "License Agreement"
+msgstr "Ugovor o licenci"
 
 #. Translators: The title of the dialog asking if usage data can be collected
 msgid "NVDA  Usage Data Collection"
@@ -10960,7 +11137,7 @@ msgstr "s %s stupaca"
 msgid "with %s rows"
 msgstr "s %s redaka"
 
-#. Translators: Speaks when there a further details/annotations that can be fetched manually.
+#. Translators: Speaks when there are further details/annotations that can be fetched manually.
 msgid "has details"
 msgstr "sadrži detalje"
 
@@ -11628,11 +11805,17 @@ msgstr "Greška: {errorText}"
 msgid "{author} is editing"
 msgstr "{author} uređuje"
 
-#. Translators: Excel, report range of cell coordinates
+#. Translators: Excel, report selected range of cell coordinates
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "{firstAddress} {firstValue} through {lastAddress} {lastValue}"
 msgstr "{firstAddress} {firstValue} do {lastAddress} {lastValue}"
+
+#. Translators: Excel, report merged range of cell coordinates
+#, python-brace-format
+msgctxt "excel-UIA"
+msgid "{firstAddress} through {lastAddress}"
+msgstr "{firstAddress} do {lastAddress}"
 
 #. Translators: the description  for a script for Excel
 msgid "Reports the note or comment thread on the current cell"
@@ -13037,9 +13220,9 @@ msgstr "{offset:.3g} centimetara"
 msgid "{offset:.3g} millimeters"
 msgstr "{offset:.3g} milimetara"
 
-#. Translators: a measurement in Microsoft Word
+#. Translators: a measurement in Microsoft Word (points)
 #, python-brace-format
-msgid "{offset:.3g} points"
+msgid "{offset:.3g} pt"
 msgstr "{offset:.3g} točaka"
 
 #. Translators: a measurement in Microsoft Word
@@ -13060,6 +13243,11 @@ msgstr "Dvostruki prored"
 msgid "1.5 line spacing"
 msgstr "1,5 prored"
 
+#~ msgid "Use UI Automation to access the Windows C&onsole when available"
+#~ msgstr ""
+#~ "Koristi UI Automation za pristup Windows &naredbenom retku kada je "
+#~ "dostupno"
+
 #~ msgid "Moves the navigator object to the first row"
 #~ msgstr "Premješta navigacijski objekt na prvi redak"
 
@@ -13072,9 +13260,6 @@ msgstr "1,5 prored"
 #~ msgid "Cannot save configuration - NVDA in secure mode"
 #~ msgstr ""
 #~ "Nije moguće spremiti konfiguraciju – NVDA se nalazi u sigurnom načinu rada"
-
-#~ msgid "details"
-#~ msgstr "detalji"
 
 #~ msgid "{modifier} pressed"
 #~ msgstr "{modifier} pritisnut"

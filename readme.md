@@ -20,6 +20,7 @@ Whether you are a beginner, an advanced user, a new or a long time developer; or
 * [NVDA Users Mailing List](https://nvda.groups.io/g/nvda)
 * [NVDA Developers Mailing List](https://groups.io/g/nvda-devel)
 * [NVDA Add-ons Mailing List](https://groups.io/g/nvda-addons)
+* [NVDA Add-on API Mailing List](https://groups.google.com/a/nvaccess.org/g/nvda-api)
 * [Instant Messaging channel for NVDA Support](https://gitter.im/nvaccess/NVDA)
 * [Other sources including groups and profiles on social media channels, language specific websites and mailing lists etc.](https://github.com/nvaccess/nvda-community/wiki/Connect)
 
@@ -88,11 +89,11 @@ If you aren't sure, run `git submodule update` after every git pull, merge or ch
 
 For reference, the following run time dependencies are included in Git submodules:
 
-* [eSpeak NG](https://github.com/espeak-ng/espeak-ng), version 1.52-dev commit 9de65fcb
-* [Sonic](https://github.com/waywardgeek/sonic), commit 4f8c1d11
+* [eSpeak NG](https://github.com/espeak-ng/espeak-ng), version 1.52-dev commit `b17ed2d6`
+* [Sonic](https://github.com/waywardgeek/sonic), commit 1d705135
 * [IAccessible2](https://wiki.linuxfoundation.org/accessibility/iaccessible2/start), commit cbc1f29631780
-* [liblouis](http://www.liblouis.org/), version 3.22.0
-* [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/), version 41.0
+* [liblouis](http://www.liblouis.org/), version 3.23.0
+* [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/), version 42.0
 * NVDA images and sounds
 * [Adobe Acrobat accessibility interface, version XI](https://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)
 * [Microsoft Detours](https://github.com/microsoft/Detours), commit 45a76a3
@@ -308,7 +309,8 @@ Any arguments given to rununittests.bat are forwarded onto Nose.
 Please refer to Nose's own documentation on how to filter tests etc.
 
 ### System Tests
-System tests can be run with the `runsystemtests.bat` script.
+System tests can be run with the `runsystemtests.bat --include <TAG>` script.
+To run all tests standard tests for developers use `runsystemtests.bat --include NVDA`.
 Internally this script uses the Robot  test framework to execute the tests.
 Any arguments given to runsystemtests.bat are forwarded onto Robot.
 For more details (including filtering and exclusion of tests) see `tests/system/readme.md`.

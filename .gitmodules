@@ -24,9 +24,6 @@
 [submodule "include/w3c-aria-practices"]
 	path = include/w3c-aria-practices
 	url = https://github.com/w3c/aria-practices
-[submodule "include/cldr"]
-	path = include/cldr
-	url = https://github.com/unicode-org/cldr-staging.git
 [submodule "include/Detours"]
 	path = include/detours
 	url = https://github.com/microsoft/Detours/
@@ -39,3 +36,8 @@
 [submodule "include/wil"]
 	path = include/wil
 	url = https://github.com/microsoft/wil
+[submodule "nvda-cldr"]
+	path = include/nvda-cldr
+	url = https://github.com/nvaccess/nvda-cldr.git
+	branch = main-out
+	shallow = true

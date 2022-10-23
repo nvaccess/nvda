@@ -39,6 +39,8 @@ from .featureFlag import (
 	_validateConfig_featureFlag,
 )
 from typing import Any, Dict, List, Optional, Set
+import NVDAState
+
 
 #: True if NVDA is running as a Windows Store Desktop Bridge application
 isAppX=False
@@ -66,10 +68,10 @@ post_configReset = extensionPoints.Action()
 
 def __getattr__(attrName: str) -> Any:
 	"""Module level `__getattr__` used to preserve backward compatibility."""
-	if attrName == "NVDA_REGKEY" and globalVars._allowDeprecatedAPI:
+	if attrName == "NVDA_REGKEY" and NVDAState._allowDeprecatedAPI():
 		log.warning("NVDA_REGKEY is deprecated, use RegistryKey.NVDA instead.")
 		return RegistryKey.NVDA.value
-	if attrName == "RUN_REGKEY" and globalVars._allowDeprecatedAPI:
+	if attrName == "RUN_REGKEY" and NVDAState._allowDeprecatedAPI():
 		log.warning("RUN_REGKEY is deprecated, use RegistryKey.RUN instead.")
 		return RegistryKey.RUN.value
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")

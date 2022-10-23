@@ -4,7 +4,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2006-2022 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee,
 # Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Łukasz Golonka, Accessolutions,
-# Julien Cochuyt, Jakub Lukowicz, Bill Dengler
+# Julien Cochuyt, Jakub Lukowicz, Bill Dengler, Cyrille Bougot
 
 import itertools
 
@@ -46,6 +46,7 @@ import inputCore
 import characterProcessing
 from baseObject import ScriptableObject
 import core
+from winAPI._powerTracking import reportCurrentBatteryStatus
 import winVersion
 from base64 import b16encode
 import vision
@@ -666,19 +667,17 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		# Translators: Input help mode message for toggle report table row/column headers command.
-		description=_("Toggles on and off the reporting of table row and column headers"),
+		description=_("Cycle through the possible modes to report table row and column headers"),
 		category=SCRCAT_DOCUMENTFORMATTING
 	)
 	def script_toggleReportTableHeaders(self,gesture):
-		if config.conf["documentFormatting"]["reportTableHeaders"]:
-			# Translators: The message announced when toggling the report table row/column headers document formatting setting.
-			state = _("report table row and column headers off")
-			config.conf["documentFormatting"]["reportTableHeaders"]=False
-		else:
-			# Translators: The message announced when toggling the report table row/column headers document formatting setting.
-			state = _("report table row and column headers on")
-			config.conf["documentFormatting"]["reportTableHeaders"]=True
-		ui.message(state)
+		ReportTableHeaders = config.configFlags.ReportTableHeaders
+		numVals = len(ReportTableHeaders)
+		state = ReportTableHeaders((config.conf["documentFormatting"]["reportTableHeaders"] + 1) % numVals)
+		config.conf["documentFormatting"]["reportTableHeaders"] = state.value
+		# Translators: Reported when the user cycles through report table header modes.
+		# {mode} will be replaced with the mode; e.g. None, Rows and columns, Rows or Columns.
+		ui.message(_("Report table headers {mode}").format(mode=state.displayString))
 
 	@script(
 		# Translators: Input help mode message for toggle report table cell coordinates command.
@@ -945,6 +944,22 @@ class GlobalCommands(ScriptableObject):
 		ui.message(_("Symbol level %s") % name)
 
 	@script(
+		# Translators: Input help mode message for toggle delayed character description command.
+		description=_("Toggles on and off delayed descriptions for characters on cursor movement"),
+		category=SCRCAT_SPEECH,
+	)
+	def script_toggleDelayedCharacterDescriptions(self, gesture: inputCore.InputGesture) -> None:
+		enabled: bool = not config.conf["speech"]["delayedCharacterDescriptions"]
+		config.conf["speech"]["delayedCharacterDescriptions"] = enabled
+		if enabled:
+			# Translators: The message announced when toggling the delayed character description setting.
+			state = _("delayed character descriptions on")
+		else:
+			# Translators: The message announced when toggling the delayed character description setting.
+			state = _("delayed character descriptions off")
+		ui.message(state)
+	
+	@script(
 		# Translators: Input help mode message for move mouse to navigator object command.
 		description=_("Moves the mouse pointer to the current navigator object"),
 		category=SCRCAT_MOUSE,
@@ -980,8 +995,8 @@ class GlobalCommands(ScriptableObject):
 		# Translators: Reported when attempting to move the navigator object to the object under mouse pointer.
 		ui.message(_("Move navigator object to mouse"))
 		obj=api.getMouseObject()
-		api.setNavigatorObject(obj)
-		speech.speakObject(obj)
+		if api.setNavigatorObject(obj):
+			speech.speakObject(obj)
 
 	@script(
 		description=_(
@@ -1189,7 +1204,8 @@ class GlobalCommands(ScriptableObject):
 	def script_navigatorObject_toFocus(self,gesture):
 		tIAtCaret = self._getTIAtCaret(True)
 		focusedObj = api.getFocusObject()
-		api.setNavigatorObject(focusedObj)
+		if not api.setNavigatorObject(focusedObj):
+			return
 		api.setReviewPosition(tIAtCaret)
 		# Translators: Reported when attempting to move the navigator object to focus.
 		speech.speakMessage(_("Move to focus"))
@@ -1242,8 +1258,7 @@ class GlobalCommands(ScriptableObject):
 			return
 		simpleReviewMode=config.conf["reviewCursor"]["simpleReviewMode"]
 		curObject=curObject.simpleParent if simpleReviewMode else curObject.parent
-		if curObject is not None:
-			api.setNavigatorObject(curObject)
+		if curObject is not None and api.setNavigatorObject(curObject):
 			speech.speakObject(curObject, reason=controlTypes.OutputReason.FOCUS)
 		else:
 			# Translators: Reported when there is no containing (parent) object such as when focused on desktop.
@@ -1264,8 +1279,7 @@ class GlobalCommands(ScriptableObject):
 			return
 		simpleReviewMode=config.conf["reviewCursor"]["simpleReviewMode"]
 		curObject=curObject.simpleNext if simpleReviewMode else curObject.next
-		if curObject is not None:
-			api.setNavigatorObject(curObject)
+		if curObject is not None and api.setNavigatorObject(curObject):
 			speech.speakObject(curObject, reason=controlTypes.OutputReason.FOCUS)
 		else:
 			# Translators: Reported when there is no next object (current object is the last object).
@@ -1286,8 +1300,7 @@ class GlobalCommands(ScriptableObject):
 			return
 		simpleReviewMode=config.conf["reviewCursor"]["simpleReviewMode"]
 		curObject=curObject.simplePrevious if simpleReviewMode else curObject.previous
-		if curObject is not None:
-			api.setNavigatorObject(curObject)
+		if curObject is not None and api.setNavigatorObject(curObject):
 			speech.speakObject(curObject, reason=controlTypes.OutputReason.FOCUS)
 		else:
 			# Translators: Reported when there is no previous object (current object is the first object).
@@ -1308,8 +1321,7 @@ class GlobalCommands(ScriptableObject):
 			return
 		simpleReviewMode=config.conf["reviewCursor"]["simpleReviewMode"]
 		curObject=curObject.simpleFirstChild if simpleReviewMode else curObject.firstChild
-		if curObject is not None:
-			api.setNavigatorObject(curObject)
+		if curObject is not None and api.setNavigatorObject(curObject):
 			speech.speakObject(curObject, reason=controlTypes.OutputReason.FOCUS)
 		else:
 			# Translators: Reported when there is no contained (first child) object such as inside a document.
@@ -1432,6 +1444,61 @@ class GlobalCommands(ScriptableObject):
 		else:
 			api.setReviewPosition(info)
 		speech.speakTextInfo(newLine, unit=textInfos.UNIT_LINE, reason=controlTypes.OutputReason.CARET)
+
+	@script(
+		# Translators: Input help mode message for move review cursor to previous page command.
+		description=_("Moves the review cursor to the previous page of the current navigator object and speaks it"),
+		resumeSayAllMode=sayAll.CURSOR.REVIEW,
+		category=SCRCAT_TEXTREVIEW,
+		gestures=("kb:NVDA+pageUp", "kb(laptop):NVDA+shift+pageUp", "ts(text):flickUp")
+	)
+	def script_review_previousPage(self, gesture: inputCore.InputGesture) -> None:
+		info = api.getReviewPosition().copy()
+		try:
+			info.expand(textInfos.UNIT_PAGE)
+			info.collapse()
+			res = info.move(textInfos.UNIT_PAGE, -1)
+		except (ValueError, NotImplementedError):
+			# Translators: a message reported when movement by page is unsupported
+			ui.reviewMessage(_("Movement by page not supported"))
+			return
+		if res == 0:
+			# Translators: a message reported when review cursor is at the top line of the current navigator object.
+			ui.reviewMessage(_("Top"))
+		else:
+			api.setReviewPosition(info)
+		info.expand(textInfos.UNIT_PAGE)
+		speech.speakTextInfo(info, unit=textInfos.UNIT_PAGE, reason=controlTypes.OutputReason.CARET)
+
+	@script(
+		# Translators: Input help mode message for move review cursor to next page command.
+		description=_("Moves the review cursor to the next page of the current navigator object and speaks it"),
+		resumeSayAllMode=sayAll.CURSOR.REVIEW,
+		category=SCRCAT_TEXTREVIEW,
+		gestures=("kb:NVDA+pageDown", "kb(laptop):NVDA+shift+pageDown", "ts(text):flickUp")
+	)
+	def script_review_nextPage(self, gesture: inputCore.InputGesture) -> None:
+		origInfo = api.getReviewPosition().copy()
+		origInfo.collapse()
+		info = origInfo.copy()
+		try:
+			res = info.move(textInfos.UNIT_PAGE, 1)
+			newPage = info.copy()
+			newPage.expand(textInfos.UNIT_PAGE)
+		except (ValueError, NotImplementedError):
+			# Translators: a message reported when movement by page is unsupported
+			ui.reviewMessage(_("Movement by page not supported"))
+			return
+		# #12808: Some implementations of move forward may succeed one more time than expected,
+		# landing on the exclusive end of the document.
+		# Therefore, verify that expanding after the move does result in being on a new page,
+		# i.e. the new page starts after the original review cursor position.
+		if res == 0 or newPage.start <= origInfo.start:
+			# Translators: a message reported when review cursor is at the bottom line of the current navigator object.
+			ui.reviewMessage(_("Bottom"))
+		else:
+			api.setReviewPosition(info)
+		speech.speakTextInfo(newPage, unit=textInfos.UNIT_PAGE, reason=controlTypes.OutputReason.CARET)
 
 	@script(
 		# Translators: Input help mode message for move review cursor to bottom line command.
@@ -2063,7 +2130,8 @@ class GlobalCommands(ScriptableObject):
 		if obj:
 			text = api.getStatusBarText(obj)
 			if setReviewCursor:
-				api.setNavigatorObject(obj)
+				if not api.setNavigatorObject(obj):
+					return None
 			found = True
 		else:
 			foreground = api.getForegroundObject()
@@ -2181,7 +2249,7 @@ class GlobalCommands(ScriptableObject):
 		description=_(
 			# Translators: Description for a keyboard command which reports the
 			# accelerator key of the currently focused object.
-			"Reports the shortcut key of the currently focused object.",
+			"Reports the shortcut key of the currently focused object",
 		),
 		category=SCRCAT_FOCUS,
 		gestures=("kb:shift+numpad2", "kb(laptop):NVDA+control+shift+."),
@@ -2462,26 +2530,8 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_SYSTEM,
 		gesture="kb:NVDA+shift+b"
 	)
-	def script_say_battery_status(self,gesture):
-		UNKNOWN_BATTERY_STATUS = 0xFF
-		AC_ONLINE = 0X1
-		NO_SYSTEM_BATTERY = 0X80
-		sps = winKernel.SYSTEM_POWER_STATUS()
-		if not winKernel.GetSystemPowerStatus(sps) or sps.BatteryFlag is UNKNOWN_BATTERY_STATUS:
-			log.error("error accessing system power status")
-			return
-		if sps.BatteryFlag & NO_SYSTEM_BATTERY:
-			# Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
-			ui.message(_("No system battery"))
-			return
-		# Translators: This is presented to inform the user of the current battery percentage.
-		text = _("%d percent") % sps.BatteryLifePercent + " "
-		# Translators: This is presented when AC power is connected such as when recharging a laptop battery.
-		if sps.ACLineStatus & AC_ONLINE: text += _("AC power on")
-		elif sps.BatteryLifeTime!=0xffffffff: 
-			# Translators: This is the estimated remaining runtime of the laptop battery.
-			text += _("{hours:d} hours and {minutes:d} minutes remaining") .format(hours=sps.BatteryLifeTime // 3600, minutes=(sps.BatteryLifeTime % 3600) // 60)
-		ui.message(text)
+	def script_say_battery_status(self, gesture: inputCore.InputGesture) -> None:
+		reportCurrentBatteryStatus()
 
 	@script(
 		description=_(
@@ -3270,8 +3320,7 @@ class GlobalCommands(ScriptableObject):
 				parent=parent.simpleParent
 			if parent:
 				newObject=parent.simpleNext
-		if newObject:
-			api.setNavigatorObject(newObject)
+		if newObject and api.setNavigatorObject(newObject):
 			speech.speakObject(newObject, reason=controlTypes.OutputReason.FOCUS)
 		else:
 			# Translators: a message when there is no next object when navigating
@@ -3291,8 +3340,7 @@ class GlobalCommands(ScriptableObject):
 				newObject=newObject.simpleLastChild
 		else:
 			newObject=curObject.simpleParent
-		if newObject:
-			api.setNavigatorObject(newObject)
+		if newObject and api.setNavigatorObject(newObject):
 			speech.speakObject(newObject, reason=controlTypes.OutputReason.FOCUS)
 		else:
 			# Translators: a message when there is no previous object when navigating

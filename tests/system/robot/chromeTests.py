@@ -1,11 +1,12 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2020-2021 NV Access Limited, Leonard de Ruijter
+# Copyright (C) 2020-2022 NV Access Limited, Leonard de Ruijter, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 """Logic for NVDA + Google Chrome tests
 """
 
+import typing
 import os
 from robot.libraries.BuiltIn import BuiltIn
 # imported methods start with underscore (_) so they don't get imported into robot files as keywords
@@ -21,6 +22,9 @@ import NvdaLib as _NvdaLib
 _builtIn: BuiltIn = BuiltIn()
 _chrome: _ChromeLib = _getLib("ChromeLib")
 _asserts: _AssertsLib = _getLib("AssertsLib")
+
+if typing.TYPE_CHECKING:
+	from ..libraries.SystemTestSpy.speechSpyGlobalPlugin import NVDASpyLib
 
 
 #: Double space is used to separate semantics in speech output this typically
@@ -57,7 +61,7 @@ def checkbox_labelled_by_inner_element():
 
 REVIEW_CURSOR_FOLLOW_CARET_KEY = ["reviewCursor", "followCaret"]
 REVIEW_CURSOR_FOLLOW_FOCUS_KEY = ["reviewCursor", "followFocus"]
-READ_DETAILS_GESTURE = "NVDA+\\"  # see chrome-gestures.ini
+READ_DETAILS_GESTURE = "NVDA+d"
 
 
 def _getNoVBuf_AriaDetails_sample() -> str:
@@ -73,8 +77,11 @@ def _getNoVBuf_AriaDetails_sample() -> str:
 		"""
 
 
-def _doTestAriaDetails_NoVBufNoTextInterface():
+def _doTestAriaDetails_NoVBufNoTextInterface(nvdaConfValues: "NVDASpyLib.NVDAConfMods"):
 	_chrome.prepareChrome(_getNoVBuf_AriaDetails_sample())
+	spy: "NVDASpyLib" = _NvdaLib.getSpyLib()
+	spy.modifyNVDAConfig(nvdaConfValues)
+
 	actualSpeech = _NvdaLib.getSpeechAfterKey("tab")
 	_builtIn.should_contain(actualSpeech, "focus in app")
 
@@ -110,34 +117,38 @@ def test_aria_details_noVBufNoTextInterface():
 	"""The uncommon case, but for completeness, a role=application containing an element that does not have a text
 	interface.
 	"""
-	spy = _NvdaLib.getSpyLib()
-	spy.set_configValue(REVIEW_CURSOR_FOLLOW_CARET_KEY, True)
-	spy.set_configValue(REVIEW_CURSOR_FOLLOW_FOCUS_KEY, True)
-	_doTestAriaDetails_NoVBufNoTextInterface()
+	_doTestAriaDetails_NoVBufNoTextInterface(
+		nvdaConfValues=[
+			(REVIEW_CURSOR_FOLLOW_CARET_KEY, True),
+			(REVIEW_CURSOR_FOLLOW_FOCUS_KEY, True),
+	])
 
 
 def test_aria_details_noVBufNoTextInterface_freeReview():
 	"""The uncommon case, but for completeness, a role=application containing an element without a text
 	interface. Test with the review cursor configured not to follow focus or caret.
 	"""
-	spy = _NvdaLib.getSpyLib()
-	spy.set_configValue(REVIEW_CURSOR_FOLLOW_CARET_KEY, False)
-	spy.set_configValue(REVIEW_CURSOR_FOLLOW_FOCUS_KEY, False)
-	_doTestAriaDetails_NoVBufNoTextInterface()
+	_doTestAriaDetails_NoVBufNoTextInterface(
+		nvdaConfValues=[
+			(REVIEW_CURSOR_FOLLOW_CARET_KEY, False),
+			(REVIEW_CURSOR_FOLLOW_FOCUS_KEY, False),
+	])
 
 
 def test_mark_aria_details():
-	spy = _NvdaLib.getSpyLib()
-	spy.set_configValue(REVIEW_CURSOR_FOLLOW_CARET_KEY, True)
-	spy.set_configValue(REVIEW_CURSOR_FOLLOW_FOCUS_KEY, True)
-	exercise_mark_aria_details()
+	exercise_mark_aria_details(
+		nvdaConfValues=[
+			(REVIEW_CURSOR_FOLLOW_CARET_KEY, True),
+			(REVIEW_CURSOR_FOLLOW_FOCUS_KEY, True),
+	])
 
 
 def test_mark_aria_details_FreeReviewCursor():
-	spy = _NvdaLib.getSpyLib()
-	spy.set_configValue(REVIEW_CURSOR_FOLLOW_CARET_KEY, False)
-	spy.set_configValue(REVIEW_CURSOR_FOLLOW_FOCUS_KEY, False)
-	exercise_mark_aria_details()
+	exercise_mark_aria_details(
+		nvdaConfValues=[
+			(REVIEW_CURSOR_FOLLOW_CARET_KEY, False),
+			(REVIEW_CURSOR_FOLLOW_FOCUS_KEY, False),
+	])
 
 
 def test_mark_aria_details_role():
@@ -288,7 +299,7 @@ def test_mark_aria_details_role():
 	)
 
 
-def exercise_mark_aria_details():
+def exercise_mark_aria_details(nvdaConfValues: "NVDASpyLib.NVDAConfMods"):
 	_chrome.prepareChrome(
 		"""
 		<div class="editor" contenteditable spellcheck="false" role="textbox" aria-multiline="true">
@@ -311,6 +322,8 @@ def exercise_mark_aria_details():
 		</div>
 		"""
 	)
+	spy: "NVDASpyLib" = _NvdaLib.getSpyLib()
+	spy.modifyNVDAConfig(nvdaConfValues)
 
 	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey('downArrow')
 	_asserts.speech_matches(
@@ -1432,16 +1445,17 @@ def test_preventDuplicateSpeechFromDescription_browse_tab():
 	Settings which may affect this:
 	- speech.reportObjectDescriptions default:True
 	"""
-	spy = _NvdaLib.getSpyLib()
-	REPORT_OBJ_DESC_KEY = ["presentation", "reportObjectDescriptions"]
-	spy.set_configValue(REPORT_OBJ_DESC_KEY, True)
-
 	_chrome.prepareChrome(
 		"""
 		<a href="#" title="apple" style="display:block">apple</a>
 		<a href="#" title="banana" aria-label="banana" style="display:block">contents</a>
 		"""
 	)
+
+	spy = _NvdaLib.getSpyLib()
+	REPORT_OBJ_DESC_KEY = ["presentation", "reportObjectDescriptions"]
+	spy.set_configValue(REPORT_OBJ_DESC_KEY, True)
+
 	# Read in browse
 	actualSpeech = _chrome.getSpeechAfterKey('tab')
 	_asserts.strings_match(
@@ -1462,16 +1476,16 @@ def preventDuplicateSpeechFromDescription_focus():
 	Settings which may affect this:
 	- speech.reportObjectDescriptions default:True
 	"""
-	spy = _NvdaLib.getSpyLib()
-	REPORT_OBJ_DESC_KEY = ["presentation", "reportObjectDescriptions"]
-	spy.set_configValue(REPORT_OBJ_DESC_KEY, True)
-
 	_chrome.prepareChrome(
 		"""
 		<a href="#" title="apple" style="display:block">apple</a>
 		<a href="#" title="banana" aria-label="banana" style="display:block">contents</a>
 		"""
 	)
+	spy = _NvdaLib.getSpyLib()
+	REPORT_OBJ_DESC_KEY = ["presentation", "reportObjectDescriptions"]
+	spy.set_configValue(REPORT_OBJ_DESC_KEY, True)
+
 	# Force focus mode
 	actualSpeech = _chrome.getSpeechAfterKey("NVDA+space")
 	_asserts.strings_match(
@@ -1495,11 +1509,6 @@ def test_ensureNoBrowseModeDescription():
 	Test that option (speech.reportObjectDescriptions default:True)
 	does not result in description in browse mode.
 	"""
-	REPORT_OBJ_DESC_KEY = ["presentation", "reportObjectDescriptions"]
-	spy = _NvdaLib.getSpyLib()
-	# prevent browse / focus mode messages from interfering, 0 means don't show.
-	spy.set_configValue(["braille", "messageTimeout"], 0)
-
 	_chrome.prepareChrome(
 		"\n".join([
 			r'<button>something for focus</button>'
@@ -1508,6 +1517,11 @@ def test_ensureNoBrowseModeDescription():
 			r'<a href="#" style="display:block" title="Fish">Banana</a>',
 		])
 	)
+
+	REPORT_OBJ_DESC_KEY = ["presentation", "reportObjectDescriptions"]
+	spy = _NvdaLib.getSpyLib()
+	# prevent browse / focus mode messages from interfering, 0 means don't show.
+	spy.set_configValue(["braille", "messageTimeout"], 0)
 
 	actualSpeech = _NvdaLib.getSpeechAfterKey('tab')
 	_builtIn.should_contain(actualSpeech, "something for focus")
@@ -1616,10 +1630,6 @@ def test_quickNavTargetReporting():
 	When using quickNav, the target object should be spoken first, inner context should be given before outer
 	context.
 	"""
-	spy = _NvdaLib.getSpyLib()
-	REPORT_ARTICLES = ["documentFormatting", "reportArticles"]
-	spy.set_configValue(REPORT_ARTICLES, False)
-
 	_chrome.prepareChrome(
 		"""
 		<div
@@ -1637,6 +1647,10 @@ def test_quickNavTargetReporting():
 		</div>
 		"""
 	)
+	spy = _NvdaLib.getSpyLib()
+	REPORT_ARTICLES = ["documentFormatting", "reportArticles"]
+	spy.set_configValue(REPORT_ARTICLES, False)
+
 	# Quick nav to heading
 	actualSpeech = _chrome.getSpeechAfterKey("h")
 	_asserts.strings_match(
@@ -1676,10 +1690,6 @@ def test_focusTargetReporting():
 	When moving focus the target object should be spoken first, inner context should be given before outer
 	context.
 	"""
-	spy = _NvdaLib.getSpyLib()
-	REPORT_ARTICLES = ["documentFormatting", "reportArticles"]
-	spy.set_configValue(REPORT_ARTICLES, False)
-
 	_chrome.prepareChrome(
 		"""
 		<a href="#">before Target</a>
@@ -1698,6 +1708,11 @@ def test_focusTargetReporting():
 		</div>
 		"""
 	)
+
+	spy = _NvdaLib.getSpyLib()
+	REPORT_ARTICLES = ["documentFormatting", "reportArticles"]
+	spy.set_configValue(REPORT_ARTICLES, False)
+
 	# Set focus
 	actualSpeech = _chrome.getSpeechAfterKey("tab")
 	_asserts.strings_match(
@@ -1851,6 +1866,197 @@ def test_tableNavigationWithMergedColumns():
 	# This caused column position to be lost when navigating through merged cells
 	actualSpeech = _chrome.getSpeechAfterKey("control+alt+upArrow")
 	_asserts.strings_match(actualSpeech, "row 1  column 2  b 1")
+
+
+def prepareChromeForTableSayAllTests():
+	_chrome.prepareChrome("""
+		<p>Hello, world!</p>
+		<table border=3>
+			<tr>
+				<td>A1</td>
+				<td>B1</td>
+				<td rowspan=2>C1+C2</td>
+				<td>D1</td>
+				<td>E1</td>
+			</tr>
+			<tr>
+				<td>A2</td>
+				<td>B2</td>
+				<td>D2</td>
+				<td>E2</td>
+			</tr>
+			<tr>
+				<td colspan=2>A3+B3</td>
+				<td>C3</td>
+				<td colspan=2>D3+E3</td>
+			</tr>
+			<tr>
+				<td>A4</td>
+				<td>B4</td>
+				<td colspan=2 rowspan=2>C4+D4+<br>C5+D5</td>
+				<td>E4</td>
+			</tr>
+			<tr>
+				<td>A5</td>
+				<td>B5</td>
+				<td>E5</td>
+			</tr>
+		</table>
+		<p>Bye-bye, world!</p>
+	""")
+
+	# Jump to table
+	actualSpeech = _chrome.getSpeechAfterKey("t")
+	_asserts.strings_match(actualSpeech, "table  with 5 rows and 5 columns  row 1  column 1  A 1")
+
+
+def tableSayAllJumpToB2():
+	_chrome.getSpeechAfterKey("control+alt+pageUp")
+	_chrome.getSpeechAfterKey("control+alt+home")
+	_chrome.getSpeechAfterKey("control+alt+rightArrow")
+	actualSpeech = _chrome.getSpeechAfterKey("control+alt+downArrow")
+	_asserts.strings_match(actualSpeech, "row 2  B 2")
+
+
+def test_tableSayAllCommands():
+	""" Tests that table sayAll commands work correctly.
+	Key bindings: NVDA+control+alt+downArrow/rightArrow
+	Refer to #13469.
+	"""
+	prepareChromeForTableSayAllTests()
+	tableSayAllJumpToB2()
+	# sayAll column
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+control+alt+downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"\n".join([
+			"B 2",
+			"row 3  column 1  through 2  A 3 plus B 3",
+			"row 4  column 2  B 4",
+			"row 5  B 5",
+		]),
+	)
+
+	# Check that cursor has moved to B5
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+upArrow")
+	_asserts.strings_match(actualSpeech, "B 5")
+
+	tableSayAllJumpToB2()
+	# sayAll row
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+control+alt+rightArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"\n".join([
+			"B 2",
+			"row 1  through 2  column 3  C 1 plus C 2",
+			"row 2  D 2",
+			"column 4  E 2",
+		]),
+	)
+
+	# Check that cursor has moved to E2
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+upArrow")
+	_asserts.strings_match(actualSpeech, "E 2")
+
+	# Jump to A3
+	_chrome.getSpeechAfterKey("control+alt+pageUp")
+	_chrome.getSpeechAfterKey("control+alt+home")
+	_chrome.getSpeechAfterKey("control+alt+downArrow")
+	actualSpeech = _chrome.getSpeechAfterKey("control+alt+downArrow")
+	_asserts.strings_match(actualSpeech, "row 3  column 1  through 2  A 3 plus B 3")
+
+	# sayAll row with cells merged horizontally
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+control+alt+rightArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"\n".join([
+			"A 3 plus B 3",
+			"column 3  C 3",
+			"column 4  through 5  D 3 plus E 3",
+		]),
+	)
+
+	# Check that cursor has moved to E3
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+upArrow")
+	_asserts.strings_match(actualSpeech, "D 3 plus E 3")
+
+
+def test_tableSpeakAllCommands():
+	""" Tests that table speak entire row/column commands work correctly.
+	Key bindings: NVDA+control+alt+upArrow/leftArrow
+	Refer to #13469.
+	"""
+	prepareChromeForTableSayAllTests()
+	tableSayAllJumpToB2()
+	# Speak current column
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("NVDA+control+alt+upArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"\n".join([
+			"row 1  B 1",
+			"row 2  B 2",
+			"row 3  column 1  through 2  A 3 plus B 3",
+			"row 4  column 2  B 4",
+			"row 5  B 5",
+		])
+	)
+	_asserts.braille_matches(
+		actualBraille,
+		"r2 c2 B2",
+		message="Speak entire column",
+	)
+
+	# Check that cursor still stays at B2
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+upArrow")
+	_asserts.strings_match(actualSpeech, "row 2  B 2")
+
+	# Speak current row
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+control+alt+leftArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"\n".join([
+			"column 1  A 2",
+			"column 2  B 2",
+			"row 1  through 2  column 3  C 1 plus C 2",
+			"row 2  D 2",
+			"column 4  E 2",
+		])
+	)
+
+	# Check that cursor stays at B2
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+upArrow")
+	_asserts.strings_match(actualSpeech, "column 2  B 2")
+
+
+def test_tableSayAllAxisCachingForMergedCells():
+	""" Tests that axis caching for merged cells in table sayAll commands works.
+	Refer to #13469.
+	"""
+	prepareChromeForTableSayAllTests()
+
+	# Jump to D5
+	_chrome.getSpeechAfterKey("control+alt+pageUp")
+	_chrome.getSpeechAfterKey("control+alt+end")
+	_chrome.getSpeechAfterKey("control+alt+leftArrow")
+	_chrome.getSpeechAfterKey("control+alt+downArrow")
+	_chrome.getSpeechAfterKey("control+alt+downArrow")
+	actualSpeech = _chrome.getSpeechAfterKey("control+alt+downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"row 4  column 3  through row 5 column 4  C 4 plus D 4 plus  C 5 plus D 5"
+	)
+
+	# Speak current column - should reuse cached column
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+control+alt+upArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"\n".join([
+			"row 1  column 4  D 1",
+			"row 2  column 3  D 2",
+			"row 3  column 4  through 5  D 3 plus E 3",
+			"row 4  column 3  through row 5 column 4  C 4 plus D 4 plus  C 5 plus D 5",
+		]),
+	)
 
 
 def test_focus_mode_on_focusable_read_only_lists():

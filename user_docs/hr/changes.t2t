@@ -3,6 +3,91 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2022.3 =
+Velikom dijelu ove inačice je doprinijela zajednica NVDA doprinositelja.
+Ovo uključuje opise znakove poslije slovkanja i unapređenu podršku Windowsovog naredbenog redka.
+
+Ova inačica uključuje nekoliko ispravaka grešaka.
+Primjetno, posljednje inačice Adobe Acrobata/Readera neće se rušiti prilikom čitanja pdf dokumenta.
+
+eSpeak je nadograđen, što znaći da su dodana tri nova jezika: bjeloruski, Luksenburški i Totontepec Mixe.
+
+== Nove značajke ==
+- U hostu Windows naredbenog redka kojeg koristi naredbeni redak, PowerShell i windows podsustav za sustava Linux u Windowsima 11 inačica 22H2 (Sun Valley 2) i novijim:
+  - značajno su unapređene performanse i stabilnost. (#10964)
+  - Prilikom pritiska prečaca ``ctrl+f`` za traženje teksta, pozicija preglednog kursora će se obnoviti kako bi pregledni kursor pratio pronađeni pojam. (#11172)
+  - Izgovor upisanog teksta koji se ne pojavljuje na zaslonu poput lozinki je podrazumjevano isključen.
+Može se uključiti u panelu NVDA Naprednih postavki. (#11554)
+  - Tekst koji se pomaknuo izvan zaslona može se pregledavati bez potrebe za pomicanjem prozora naredbenog redka. (#12669)
+  - Detaljnije informacije o oblikovanju teksta su dostupne. ([microsoft/terminal PR 10336 https://github.com/microsoft/terminal/pull/10336])
+  -
+- Dodana je nova opcija za govor koja omogućuje čitanje opisa znaka poslije zadrške. (#13509)
+- Dodana je nova brajična opcija koja regulira dali će pomicanje teksta na brajičnom redku naprijed ili nazad prekidati govor. (#2124)
+-
+
+
+== Izmjene ==
+- eSpeak NG je nadograđen na inačicu 1.52-dev commit ``9de65fcb``. (#13295)
+  - Dodani jezici:
+    - Bjeloruski
+    - Luksenburški
+    - Totontepec Mixe
+    -
+  -
+- Prilikom korištenja UI Automation za pristup Microsoft Excel proračunskim tablicama, NVDA sada može izgovarati spojene ćelije. (#12843)
+- Umjesto izgovora "sadrži detalje" uključen je tip detalja, gdje je to moguće, na primjer "sadrži komentar". (#13649)
+- Veličina instalacije NVDA sada se prikazuje u odjeljku programi i funkcije operativnog sustava Windows. (#13909)
+-
+
+
+== Ispravke grešaka ==
+- Adobe Acrobat / Reader 64 bitne inačice više se neće rušiti prilikom čitanja PDF dokumenata. (#12920)
+  - Imajte na umu da je potrebna posljednja inačica Adobe/acrobat readera kako bi se izbjeglo rušenje.
+  -
+- Mjere veličine fonta su od sada prevedene u  NVDA. (#13573)
+- Ignorirani su događaji Java Access Bridge gdje se ne može pronaći uloga prozora za java aplikacije.
+Ovo će unaprediti performanse za neke java aplikacije uključujući IntelliJ IDEA. (#13039)
+- Izgovor označenih ćelija za LibreOffice Calc je točniji i ne rezultira rušenjem aplikacije Calc prilikom označavanja više ćelija. (#13232)
+- Kada se pokreće od drugug korisnika, Microsoft Edge više nije nepristupačan. (#13032)
+- Kada je dopojačanje brzine uključeno,, eSpeakova brzina ne pada u međuvrijednost između brzina 99% i 100%. (#13876)
+- Ispravljena je greška koja je dozvoljavala dva otvorena dijaloška okvira ulaznih gesti.. (#13854)
+-
+
+
+== Izmjene za razvojne programere ==
+Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
+
+
+= 2022.2.3 =
+Ovo je verzija koja je izdana u svrhu ispravljanja nekompatibilnosti API sučelja do koje je došlo u inačici 2022.2.1.
+
+== Ispravke grešaka ==
+- Ispravljena greška zbog koje NVDA nije izgovarao "sigurni zaslon" prilikom ulaza u sigurnu radnu površinu.
+Ovo je prouzrokovalo nemogućnost NVDA remote da prepoznaje sigurne radne površine. (#14094)
+-
+
+
+= 2022.2.2 =
+Ovo je verzija sa zakrpom koja ispravlja grešku iz verzije  2022.2.1 sa ulaznim gestama.
+
+== Ispravke grešaka ==
+- Ispravljena greška sa ulaznim gestama koje nisu ispravno radile. (#14065)
+-
+
+
+= 2022.2.1 =
+Ovo je mala verzija koja ispravlja sigurnosni propust.
+Molimo odgovorno prijavljujte sigurnosne propuste na adresu info@nvaccess.org.
+
+== Ispravke sigurnosnih propusta ==
+- Ispravljena ranjivost  u kojoj je bilo moguće pokrenuti python konzolu sa zaključanog zaslona. (GHSA-rmq3-vvhq-gp32)
+- Ispravljena ranjivost pomoću koje je bilo moguće izaći iz zaključanog zaslona koristeći objektnu navigaciju. (GHSA-rmq3-vvhq-gp32)
+
+
+== Izmjene za razvojne programere ==
+Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
+
+
 = 2022.2 =
 Ova inačica uključuje puno ispravaka grešaka.
 Prije svega, značajno je unapređena suradnja sa aplikacijama baziranim na java sučelju, brajičnim redcima i značajkama operacijskog sustava Windows.
