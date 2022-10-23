@@ -8,6 +8,7 @@ Google Chrome with a HTML sample and assert NVDA interacts with it in the expect
 """
 
 # imported methods start with underscore (_) so they don't get imported into robot files as keywords
+import datetime as _datetime
 from os.path import join as _pJoin
 import tempfile as _tempfile
 from typing import Optional as _Optional
@@ -21,6 +22,7 @@ from SystemTestSpy.windows import (
 	GetForegroundWindowTitle,
 	Window,
 )
+import _chromeArgs
 import re
 from robot.libraries.BuiltIn import BuiltIn
 
@@ -91,13 +93,7 @@ class ChromeLib:
 			"start"  # windows utility to start a process
 			# https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/start
 			" /wait"  # Starts an application and waits for it to end.
-			" chrome"  # Start Chrome
-			" --force-renderer-accessibility"
-			" --suppress-message-center-popups"
-			" --disable-notifications"
-			" --no-experiments"
-			" --no-default-browser-check"
-			" --lang=en-US"
+			f" {_chromeArgs.getChromeArgs()}"
 			f' "{filePath}"',
 			shell=True,
 			alias='chromeStartAlias',
@@ -220,6 +216,13 @@ class ChromeLib:
 		@param testCase - The HTML sample to test.
 		@param _doToggleFocus - When True, Chrome will be intentionally de-focused and re-focused
 		"""
+		testCase = testCase + (
+			"\n<!-- "  # new line, start a HTML comment
+			"Sample generation time, to ensure that the test case title is reproducibly unique purely from"
+			" this test case string: \n"
+			f"{ _datetime.datetime.now().isoformat()} "
+			f" -->"  # end HTML comment
+		)
 		spy = _NvdaLib.getSpyLib()
 		_chromeLib: "ChromeLib" = _getLib('ChromeLib')  # using the lib gives automatic 'keyword' logging.
 		path = self._writeTestFile(testCase)
