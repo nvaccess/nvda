@@ -1237,6 +1237,11 @@ class UIA(Window):
 		windowHandle=kwargs.get('windowHandle')
 		if isinstance(relation,tuple):
 			UIAElement=UIAHandler.handler.clientObject.ElementFromPointBuildCache(POINT(relation[0],relation[1]),UIAHandler.handler.baseCacheRequest)
+			if UIAHandler._isDebug():
+				log.debug(
+					f"kwargsFromSuper: given coordinates {relation}, "
+					f"fetched element {UIAHandler.handler.getUIAElementDebugString(UIAElement)}"
+				)
 			# Ignore this object if it is non native.
 			if not UIAHandler.handler.isNativeUIAElement(UIAElement):
 				if UIAHandler._isDebug():
@@ -1254,6 +1259,11 @@ class UIA(Window):
 			except COMError:
 				log.debugWarning("getFocusedElement failed", exc_info=True)
 				return False
+			if UIAHandler._isDebug():
+				log.debug(
+					f"kwargsFromSuper: fetched focused element "
+					f"{UIAHandler.handler.getUIAElementDebugString(UIAElement)}"
+				)
 			# Ignore this object if it is non native.
 			if ignoreNonNativeElementsWithFocus and not UIAHandler.handler.isNativeUIAElement(UIAElement):
 				if UIAHandler._isDebug():
@@ -1294,6 +1304,11 @@ class UIA(Window):
 		UIACachedWindowHandle=UIAElement.cachedNativeWindowHandle
 		self.UIAIsWindowElement=bool(UIACachedWindowHandle)
 		if not windowHandle:
+			if UIAHandler._isDebug():
+				log.debug(
+					f"No windowHandle for UIA NvDAObject. "
+					f"Searching UIA element ancestry for nearest windowHandle"
+				)
 			windowHandle=UIAHandler.handler.getNearestWindowHandle(UIAElement)
 		if not windowHandle:
 			raise InvalidNVDAObject("no windowHandle")
