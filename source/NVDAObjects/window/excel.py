@@ -33,6 +33,8 @@ from logHandler import log
 import gui
 import gui.contextHelp
 import winUser
+from winAPI.winUser.functions import GetSysColor
+from winAPI.winUser.constants import SysColorIndex
 import mouseHandler
 from displayModel import DisplayModelTextInfo
 import controlTypes
@@ -1618,8 +1620,8 @@ class ExcelDropdown(Window):
 	excelCell=None
 
 	def _get__highlightColors(self):
-		background=colors.RGB.fromCOLORREF(winUser.user32.GetSysColor(13))
-		foreground=colors.RGB.fromCOLORREF(winUser.user32.GetSysColor(14))
+		background = colors.RGB.fromCOLORREF(GetSysColor(SysColorIndex.HIGHLIGHT))
+		foreground = colors.RGB.fromCOLORREF(GetSysColor(SysColorIndex.HIGHLIGHT_TEXT))
 		self._highlightColors=(background,foreground)
 		return self._highlightColors
 

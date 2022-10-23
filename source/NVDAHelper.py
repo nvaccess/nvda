@@ -27,6 +27,7 @@ import queueHandler
 import api
 import globalVars
 from logHandler import log
+from utils.security import isWindowsLocked
 import NVDAState
 
 
@@ -452,7 +453,13 @@ def nvdaControllerInternal_vbufChangeNotify(rootDocHandle, rootID):
 @WINFUNCTYPE(c_long, c_wchar_p)
 def nvdaControllerInternal_installAddonPackageFromPath(addonPath):
 	if globalVars.appArgs.launcher:
-		log.debugWarning("Unable to install addon into launcher.")
+		log.debugWarning("Unable to install add-on into launcher.")
+		return
+	if globalVars.appArgs.secure:
+		log.debugWarning("Unable to install add-on into secure copy of NVDA.")
+		return
+	if isWindowsLocked():
+		log.debugWarning("Unable to install add-on while Windows is locked.")
 		return
 	import wx
 	from gui import addonGui
@@ -463,6 +470,12 @@ def nvdaControllerInternal_installAddonPackageFromPath(addonPath):
 
 @WINFUNCTYPE(c_long)
 def nvdaControllerInternal_openConfigDirectory():
+	if globalVars.appArgs.secure:
+		log.debugWarning("Unable to open user config directory for secure copy of NVDA.")
+		return
+	if isWindowsLocked():
+		log.debugWarning("Unable to open user config directory while Windows is locked.")
+		return
 	import systemUtils
 	systemUtils.openUserConfigurationDirectory()
 	return 0
