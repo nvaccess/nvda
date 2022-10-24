@@ -1213,9 +1213,9 @@ class UIA(Window):
 		elif UIAClassName in _all_wt_UIAClassNames:
 			from . import winConsoleUIA
 			if _shouldUseWindowsTerminalNotifications():
-				clsList.append(winConsoleUIA.NotificationsBasedWinTerminalUIA)
+				clsList.append(winConsoleUIA._NotificationsBasedWinTerminalUIA)
 			else:
-				clsList.append(winConsoleUIA.DiffBasedWinTerminalUIA)
+				clsList.append(winConsoleUIA._DiffBasedWinTerminalUIA)
 
 		# Add editableText support if UIA supports a text pattern
 		if self.TextInfo==UIATextInfo:

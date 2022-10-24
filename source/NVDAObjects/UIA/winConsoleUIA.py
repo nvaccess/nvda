@@ -425,7 +425,7 @@ def findExtraOverlayClasses(obj, clsList):
 		clsList.append(consoleUIAWindow)
 
 
-class DiffBasedWinTerminalUIA(EnhancedTermTypedCharSupport):
+class _DiffBasedWinTerminalUIA(EnhancedTermTypedCharSupport):
 	"""
 	An overlay class for Windows Terminal (wt.exe) that uses diffing to speak
 	new text.
@@ -436,7 +436,7 @@ class DiffBasedWinTerminalUIA(EnhancedTermTypedCharSupport):
 		log.debugWarning(f"Notification event blocked to avoid double-report: {kwargs}")
 
 
-class NotificationsBasedWinTerminalUIA(UIA):
+class _NotificationsBasedWinTerminalUIA(UIA):
 	"""
 	An overlay class for Windows Terminal (wt.exe) that uses UIA notification
 	events provided by the application to speak new text.
@@ -472,11 +472,11 @@ def __getattr__(attrName: str) -> Any:
 	if attrName == "WinTerminalUIA" and NVDAState._allowDeprecatedAPI():
 		log.warning(
 			"WinTerminalUIA is deprecated. "
-			"Instead use DiffBasedWinTerminalUIA or NotificationsBasedWinTerminalUIA"
+			"Instead use _DiffBasedWinTerminalUIA or _NotificationsBasedWinTerminalUIA"
 		)
 		return (
-			NotificationsBasedWinTerminalUIA
+			_NotificationsBasedWinTerminalUIA
 			if _shouldUseWindowsTerminalNotifications()
-			else DiffBasedWinTerminalUIA
+			else _DiffBasedWinTerminalUIA
 		)
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
