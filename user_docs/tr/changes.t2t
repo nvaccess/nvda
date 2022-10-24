@@ -56,6 +56,11 @@ Uygulama tarafından desteklendiğinde, inceleme imlecini bir sayfa ileri ve ger
 
 
 == Hata düzeltmeleri ==
+NVDA'yı Windows paket yöneticisi komut satırından güncellerken (Winget olarak da bilinir), NVDA çıkış sürümü her zaman kurulu Alpha sürümden daha yeni olarak tanınmıyor. (#12469)
+- NVDA Java uygulamalarında grup kutularını doğru şekilde seslendirecek. (#13962)
+- Bookworm, WordPad veya NVDA log görüntüleyicisi gibi uygulamalarda, imleç tümünü okuma işlemi sırasında okunan metni düzgün bir şekilde takip ediyor. (#13420, #9179)
+- UI otomasyonu kullanan uygulamalarda, kısmen işaretli onay kutuları düzgün bir şekilde seslendirilecek. (#13975)
+- Microsoft Visual Studio, Windows Terminal ve diğer UI otomasyonu tabanlı uygulamalarda performans ve kararlılık iyileştirildi. (#11077, #11209)
 
 = 2022.3 =
 Bu güncellemenin önemli bir kısmı NVDA üretici topluluğunun katkılarıyla hazırlanmıştır.
