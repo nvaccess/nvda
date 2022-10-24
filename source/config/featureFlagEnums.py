@@ -74,15 +74,15 @@ class ParagraphNavigationFlag(DisplayStringEnum):
 			# Translators: Label for a paragraph style in NVDA settings.
 			self.APPLICATION: _("Handled by application"),
 			# Translators: Label for a paragraph style in NVDA settings.
-			self.NORMAL: _("Normal style"),
+			self.SINGLE_LINE_BREAK: _("Single line break"),
 			# Translators: Label for a paragraph style in NVDA settings.
-			self.BLOCK: _("Block style")
+			self.DOUBLE_LINE_BREAK: _("Double line break")
 		}
 
 	DEFAULT = enum.auto()
 	APPLICATION = enum.auto()
-	NORMAL = enum.auto()
-	BLOCK = enum.auto()
+	SINGLE_LINE_BREAK = enum.auto()
+	DOUBLE_LINE_BREAK = enum.auto()
 
 
 def getAvailableEnums() -> typing.Generator[typing.Tuple[str, FlagValueEnum], None, None]:

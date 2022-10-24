@@ -300,12 +300,12 @@ class EditableText(TextContainerObject,ScriptableObject):
 		flag: config.featureFlag.FeatureFlag = config.conf["documentNavigation"]["paragraphStyle"]
 		if flag.calculated() == ParagraphNavigationFlag.APPLICATION:
 			self.script_caret_moveByParagraph(gesture)
-		elif flag.calculated() == ParagraphNavigationFlag.NORMAL:
+		elif flag.calculated() == ParagraphNavigationFlag.SINGLE_LINE_BREAK:
 			from documentNavigation.paragraphHelper import moveToParagraph
 			passKey, moved = moveToParagraph(nextParagraph=nextParagraph, speakNew=not willSayAllResume(gesture))
 			if passKey:
 				self.script_caret_moveByParagraph(gesture)
-		elif flag.calculated() == ParagraphNavigationFlag.BLOCK:
+		elif flag.calculated() == ParagraphNavigationFlag.DOUBLE_LINE_BREAK:
 			from documentNavigation.paragraphHelper import moveToBlockParagraph
 			passKey, moved = moveToBlockParagraph(nextParagraph=nextParagraph, speakNew=not willSayAllResume(gesture))
 			if passKey:
