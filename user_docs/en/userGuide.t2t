@@ -2244,7 +2244,7 @@ The Speak new text in Windows Terminal combo box has three options:
 - Default: This option is currently equivalent to "diffing", but it is anticipated to change once support for UIA notifications is further developed.
 - Diffing: This option uses the selected diff algorithm to calculate changes each time the terminal renders new text.
 This is identical to NVDA's behaviour in versions 2022.4 and earlier.
-- UIA notifications: This option defers the responsibility of determining what text to speak to Windows Terminal itself, meanning that NVDA no longer has to determine what text currently onscreen is "new".
+- UIA notifications: This option defers the responsibility of determining what text to speak to Windows Terminal itself, meanning that NVDA no longer has to determine what text currently on-screen is "new".
 This should markedly improve performance and stability of Windows Terminal, but this feature is not yet complete.
 In particular, typed characters that are not displayed on-screen, such as passwords, are reported when this option is selected.
 Additionally, contiguous spans of output of over 1,000 characters may not be reported accurately.
