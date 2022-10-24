@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-14 00:02+0000\n"
+"POT-Creation-Date: 2022-10-21 00:02+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Bernd Dorer <mail@bdorer.de>\n"
 "Language-Team: \n"
@@ -8327,7 +8327,7 @@ msgid "clickable"
 msgstr "anklickbar"
 
 msgid "editable"
-msgstr "bearbeitbar"
+msgstr "einstellbar"
 
 msgid "checkable"
 msgstr "aktivierbar"
@@ -11593,6 +11593,25 @@ msgstr "{curPercent:.0f} Prozent"
 msgid "at {x}, {y}"
 msgstr "bei {x}, {y}"
 
+#. Translators: This is the message for a warning shown if NVDA cannot determine if
+#. Windows is locked.
+msgid ""
+"NVDA is unable to determine if Windows is locked. While this instance of "
+"NVDA is running, your desktop will not be secure when Windows is locked. "
+"Restarting Windows may address this. If this error is ongoing then disabling "
+"the Windows lock screen is recommended."
+msgstr ""
+"NVDA konnte nicht erkennen, ob Windows gesperrt ist. Während diese Instanz "
+"von NVDA ausgeführt wird, ist Ihr Desktop nicht sicher, wenn Windows "
+"gesperrt ist. Ein Neustart von Windows könnte dieses Problem beheben. Wenn "
+"dieser Fehler weiterhin auftritt, wird empfohlen, den Sperrbildschirm von "
+"Windows zu deaktivieren."
+
+#. Translators: This is the title for a warning dialog, shown if NVDA cannot determine if
+#. Windows is locked.
+msgid "Lock screen not secure while using NVDA"
+msgstr "Sperrbildschirm bei Verwendung von NVDA nicht sicher"
+
 #. Translators: Reported when a page reloads (example: after refreshing a webpage).
 msgid "Refreshed"
 msgstr "Aktualisiert"
@@ -11699,22 +11718,6 @@ msgstr "Netzteil getrennt"
 #, python-brace-format
 msgid "{hours:d} hours and {minutes:d} minutes remaining"
 msgstr "{hours:d} Stunden und {minutes:d} Minuten verbleiben"
-
-#. Translators: This is a warning to users, shown if NVDA cannot determine if
-#. Windows is locked.
-msgid ""
-"NVDA failed to register session tracking. While this instance of NVDA is "
-"running, your desktop will not be secure when Windows is locked. Restart "
-"NVDA? "
-msgstr ""
-"NVDA konnte die Sitzungsverfolgung nicht registrieren. Während diese Instanz "
-"von NVDA ausgeführt wird, ist Ihr Desktop nicht sicher, wenn Windows "
-"gesperrt ist. NVDA neu starten? "
-
-#. Translators: This is a warning to users, shown if NVDA cannot determine if
-#. Windows is locked.
-msgid "NVDA could not start securely."
-msgstr "NVDA konnte nicht sicher gestartet werden."
 
 msgid "Taskbar"
 msgstr "Taskleiste"
@@ -13388,6 +13391,9 @@ msgstr "Doppelter Zeilenabstand"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1,5 Zeilenabstand"
+
+#~ msgid "NVDA could not start securely."
+#~ msgstr "NVDA konnte nicht sicher gestartet werden."
 
 #~ msgid "Swedish grade 1"
 #~ msgstr "Schwedische Vollschrift"

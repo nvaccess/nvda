@@ -97,6 +97,23 @@ Por favor consulta [a guía do desenvolvedor https://www.nvaccess.org/files/nvda
 -
 
 
+= 2022.3.1 =
+Esta é unha versión menor para arranxar varios problemas de seguridade.
+Por favor comunica responsablemente os problemas de seguridade a info@nvaccess.org.
+
+== Arranxos de Seguridade ==
+- Arranxouse o exploit polo que era posible elevar ao usuario os privilexios de sistema 
+([GHSA-q7c2-pgqm-vvw5 https://github.com/nvaccess/nvda/security/advisories/GHSA-q7c2-pgqm-vvw5])
+- Arranxouse un problema de seguridade que permitía o aceso á consola de python na pantalla de bloqueo a través dunha condición race para o arranque do NVDA.
+([GHSA-72mj-mqhj-qh4w https://github.com/nvaccess/nvda/security/advisories/GHSA-72mj-mqhj-qh4w])
+- Arranxouse un problema polo que o texto do visualizador de voz se gardaba en caché ao bloquear Windows.
+([GHSA-grvr-j2h8-3qm4 https://github.com/nvaccess/nvda/security/advisories/GHSA-grvr-j2h8-3qm4])
+-
+
+== Arranxo de Erros ==
+- Evítase que un usuario non autentificado actualice as opcións para os visualizadores de voz e Braille na pantalla de bloqueo. ([GHSA-grvr-j2h8-3qm4 https://github.com/nvaccess/nvda/security/advisories/GHSA-grvr-j2h8-3qm4])
+-
+
 = 2022.3 =
 A comunidade de desenvolvedores do NVDA contribuíu en grande medida a esta versión.
 Esto inclúe o retraso das descripcións dos caracteres e a mellora do soporte da Consola de Windows.
