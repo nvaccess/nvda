@@ -39,6 +39,10 @@ Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documen
 - It is no longer necessary to use ``SearchField`` and ``SuggestionListItem`` ``UIA`` ``NVDAObjects`` in new UI Automation scenarios, where automatic reporting of search suggestions, and where typing has been exposed via UI Automation with the ``controllerFor`` pattern.
 This functionality is now available generically via ``behaviours.EditableText`` and the base ``NVDAObject`` respectively.
 - the UIA debug logging category when enabled now produces significantly more logging for UIA event handlers and utilities. (#14256)
+- NVDAHelper build standards updated. (#13072)
+  - Now uses the C++20 standard, was C++17.
+  - Now uses the '/permissive-' compiler flag which disables permissive behaviors, and sets the '/Zc' compiler options for strict conformance.
+  -
 -
 
 === API Breaking Changes ===
