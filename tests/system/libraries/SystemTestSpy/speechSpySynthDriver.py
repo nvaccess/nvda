@@ -66,20 +66,15 @@ class SpeechSpySynthDriver(synthDriverHandler.SynthDriver):
 		except queue.Full:
 			log.error("Speech queue is full")
 
-	def _yieldThread(self):
-		"""Intended to allow the main thread to process pending events.
-		"""
-		time.sleep(0)
-
 	def _doDoneSpeaking(self):
 		log.debug("Done speaking, notifying synthDriverHandler")
 		synthDriverHandler.synthDoneSpeaking.notify(synth=self)
-		self._yieldThread()
+		_yieldThread()
 
 	def _doIndexReached(self, item: IndexCommand):
 		log.debug(f"Speech IndexCommand reached: {item.index}, notifying synthDriverHandler")
 		synthDriverHandler.synthIndexReached.notify(synth=self, index=item.index)
-		self._yieldThread()
+		_yieldThread()
 
 	def _doNotifySequenceProcessed(self, speechSequence):
 		log.debug("Before notify post_speech")
@@ -90,7 +85,7 @@ class SpeechSpySynthDriver(synthDriverHandler.SynthDriver):
 		while self._continue:
 			if self._cancel:
 				# Allow _queuedSpeech to be cleared and ready to read from again.
-				self._yieldThread()
+				_yieldThread()
 			else:
 				try:
 					speechSequence = self._queuedSpeech.get(
@@ -139,3 +134,9 @@ class SpeechSpySynthDriver(synthDriverHandler.SynthDriver):
 
 
 SynthDriver = SpeechSpySynthDriver
+
+
+def _yieldThread():
+	"""Intended to allow the main thread to process pending events.
+	"""
+	time.sleep(0)
