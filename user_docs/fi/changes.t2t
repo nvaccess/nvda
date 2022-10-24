@@ -86,6 +86,21 @@ Huomaa, että Chromessa ja Edgessä on edelleen tunnettuja ongelmia. (#13254)
 Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/changes.html]
 
 
+= 2022.3.1 =
+Tämä on pieni julkaisu, joka korjaa useita tietoturvaongelmia.
+Ilmoita tietoturvaongelmista vastuullisesti osoitteeseen info@nvaccess.org.
+
+== Tietoturvakorjaukset ==
+- Korjattu haavoittuvuus, jota hyväksikäyttäen käyttäjän oikeudet oli mahdollista nostaa järjestelmän oikeuksiksi. ([GHSA-q7c2-pgqm-vvw5 https://github.com/nvaccess/nvda/security/advisories/GHSA-q7c2-pgqm-vvw5])
+- Korjattu tietoturvaongelma, joka salli pääsyn Python-konsoliin lukitusnäytöllä kilpailutilanteen kautta NVDA:n käynnistyessä. ([GHSA-72mj-mqhj-qh4w https://github.com/nvaccess/nvda/security/advisories/GHSA-72mj-mqhj-qh4w])
+- Korjattu ongelma, joka aiheutti puheentarkastelun tekstin tallentamisen välimuistiin, kun Windows lukitaan. ([GHSA-grvr-j2h8-3qm4 https://github.com/nvaccess/nvda/security/advisories/GHSA-grvr-j2h8-3qm4])
+-
+
+== Bugikorjaukset ==
+- Estä todentamatonta käyttäjää päivittämästä puheen- ja pistekirjoituksen tarkastelun asetuksia lukitusnäytöllä. ([GHSA-grvr-j2h8-3qm4 https://github.com/nvaccess/nvda/security/advisories/GHSA-grvr-j2h8-3qm4])
+-
+
+
 = 2022.3 =
 NVDA:n kehitysyhteisö on antanut panoksensa merkittävään osaan tästä julkaisusta.
 Tämä sisältää viivästetyt merkkikuvaukset ja parannetun Windows-konsolin tuen.
@@ -283,7 +298,7 @@ Huomaa:
   - Nyt tuetaan myös Bluetooth-COM-portin manuaalista valitsemista.
   -
 - Lisätty komento Pistekirjoituksen tarkastelun käyttöön ottamiseen ja käytöstä poistamiseen. Oletusarvoista näppäinkomentoa ei ole määritetty. (#13258)
-- Lisätty komennot pistenäytön useiden toimintonäppäimien samanaikaiseen käyttöönottoon ja käytöstä poistamiseen. (#13152)
+- Lisätty komennot pistenäytön useiden muokkausnäppäinten samanaikaiseen käyttöönottoon ja käytöstä poistamiseen. (#13152)
 - Puhesanastovalintaikkunassa on nyt Poista kaikki -painike, jonka avulla koko sanaston tyhjentäminen on mahdollista. (#11802)
 - Lisätty tuki Windows 11:n Laskin-sovellukselle. (#13212)
 - Rivi- ja osanumeroiden lukeminen on nyt mahdollista Microsoft Wordissa UI Automation -rajapinnan ollessa käytössä Windows 11:ssä. (#13283, #13515)
@@ -303,7 +318,7 @@ Huomaa:
 - NVDA ilmoittaa valinnan ja yhdistetyt solut LibreOffice Calc 7.3:ssa ja uudemmissa. (#9310, #6897)
 - Yhteinen Unicode-kielitietovarasto (CLDR) päivitetty versioksi 40.0. (#12999)
 - ``NVDA+Laskimen Del`` -näppäinkomento ilmoittaa oletusarvoisesti järjestelmäkohdistimen tai aktiivisen objektin sijainnin. (#13060)
-- ``NVDA+Vaihto+Laskimen Del`` ilmoittaa tarkastelukohdistimen sijainnin. (#13060)
+- ``NVDA+Vaihto+laskinnäppäimistön Del`` ilmoittaa tarkastelukohdistimen sijainnin. (#13060)
 - Lisätty  Freedom Scientificin pistenäytöille oletusnäppäinkomennot muokkausnäppäimien käyttöönottoon ja käytöstä poistamiseen. (#13152)
 - Lue tekstin muotoilutiedot -komentoa (``NVDA+F``) käytettäessä ei enää ilmoiteta "perusviiva". (#11815)
 - Pitkän kuvauksen näyttävällä komennolla ei enää ole määritettyä oletusarvoista näppäinkomentoa. (#13380)
