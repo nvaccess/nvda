@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Russian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-14 00:02+0000\n"
-"PO-Revision-Date: 2022-10-18 11:11+0800\n"
+"POT-Creation-Date: 2022-10-21 00:02+0000\n"
+"PO-Revision-Date: 2022-10-23 20:02+0800\n"
 "Last-Translator: Kvark <kvark128@yandex.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -1099,7 +1099,7 @@ msgstr "Кашмирский (первая ступень)"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Luganda literary braille"
-msgstr ""
+msgstr "Луганда литературный брайль"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1269,7 +1269,7 @@ msgstr "Русский сокращённый брайль"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Kinyarwanda literary braille"
-msgstr ""
+msgstr "Киньяруанда литературный брайль"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1319,17 +1319,17 @@ msgstr "Сербский (первая ступень)"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Swedish uncontracted braille"
-msgstr ""
+msgstr "Шведский несокращённый брайль"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Swedish partially contracted braille"
-msgstr ""
+msgstr "Шведский частично сокращённый брайль"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Swedish contracted braille"
-msgstr ""
+msgstr "Шведский сокращённый брайль"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2959,12 +2959,14 @@ msgstr "чтение таблиц включено"
 #. Translators: Input help mode message for toggle report table row/column headers command.
 msgid "Cycle through the possible modes to report table row and column headers"
 msgstr ""
+"Циклическое переключение возможных режимов чтения заголовков строк и "
+"столбцов в таблицах"
 
 #. Translators: Reported when the user cycles through report table header modes.
 #. {mode} will be replaced with the mode; e.g. None, Rows and columns, Rows or Columns.
 #, python-brace-format
 msgid "Report table headers {mode}"
-msgstr ""
+msgstr "Чтение заголовков таблиц {mode}"
 
 #. Translators: Input help mode message for toggle report table cell coordinates command.
 msgid "Toggles on and off the reporting of table cell coordinates"
@@ -8202,7 +8204,7 @@ msgstr "частично отмечено"
 
 #. Translators: This is presented when a three state toggle button is half pressed.
 msgid "half pressed"
-msgstr ""
+msgstr "частично нажато"
 
 #. Translators: This is presented when the control is a read-only control such as read-only edit box.
 msgid "read only"
@@ -11518,6 +11520,20 @@ msgstr "{curPercent:.0f}%"
 msgid "at {x}, {y}"
 msgstr "координаты: {x}, {y}"
 
+#. Translators: This is the message for a warning shown if NVDA cannot determine if
+#. Windows is locked.
+msgid ""
+"NVDA is unable to determine if Windows is locked. While this instance of "
+"NVDA is running, your desktop will not be secure when Windows is locked. "
+"Restarting Windows may address this. If this error is ongoing then disabling "
+"the Windows lock screen is recommended."
+msgstr ""
+
+#. Translators: This is the title for a warning dialog, shown if NVDA cannot determine if
+#. Windows is locked.
+msgid "Lock screen not secure while using NVDA"
+msgstr ""
+
 #. Translators: Reported when a page reloads (example: after refreshing a webpage).
 msgid "Refreshed"
 msgstr "Обновлено"
@@ -11624,22 +11640,6 @@ msgstr "Питание отключено"
 #, python-brace-format
 msgid "{hours:d} hours and {minutes:d} minutes remaining"
 msgstr "Осталось {hours:d} часов и {minutes:d} минут"
-
-#. Translators: This is a warning to users, shown if NVDA cannot determine if
-#. Windows is locked.
-msgid ""
-"NVDA failed to register session tracking. While this instance of NVDA is "
-"running, your desktop will not be secure when Windows is locked. Restart "
-"NVDA? "
-msgstr ""
-"NVDA не удалось зарегистрировать отслеживание сеанса. Пока этот экземпляр "
-"NVDA работает, ваш рабочий стол не будет защищён, когда Windows "
-"заблокирована. Перезапустить NVDA?"
-
-#. Translators: This is a warning to users, shown if NVDA cannot determine if
-#. Windows is locked.
-msgid "NVDA could not start securely."
-msgstr "NVDA не удалось запустить безопасно"
 
 msgid "Taskbar"
 msgstr "Панель задач"
@@ -13309,6 +13309,9 @@ msgstr "Двойной междустрочный интервал"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Полуторный междустрочный интервал"
+
+#~ msgid "NVDA could not start securely."
+#~ msgstr "NVDA не удалось запустить безопасно"
 
 #~ msgid "Swedish grade 1"
 #~ msgstr "Шведский (первая ступень)"
