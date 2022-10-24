@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-14 00:02+0000\n"
-"PO-Revision-Date: 2022-10-19 18:55+0900\n"
+"POT-Creation-Date: 2022-10-21 00:02+0000\n"
+"PO-Revision-Date: 2022-10-23 16:54+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 msgid "Native input"
@@ -11346,6 +11346,23 @@ msgstr "{curPercent:.0f}パーセント"
 msgid "at {x}, {y}"
 msgstr "位置 {x}, {y}"
 
+#. Translators: This is the message for a warning shown if NVDA cannot determine if
+#. Windows is locked.
+msgid ""
+"NVDA is unable to determine if Windows is locked. While this instance of "
+"NVDA is running, your desktop will not be secure when Windows is locked. "
+"Restarting Windows may address this. If this error is ongoing then disabling "
+"the Windows lock screen is recommended."
+msgstr ""
+"NVDA が Windows のロック画面を判定できないため、ロック画面でセキュリティ対策"
+"が機能しません。 Windows を再起動するとこの問題に対処できます。このエラーがひ"
+"きつづき起きる場合は Windows のロック画面を無効にすることをお勧めします。"
+
+#. Translators: This is the title for a warning dialog, shown if NVDA cannot determine if
+#. Windows is locked.
+msgid "Lock screen not secure while using NVDA"
+msgstr "ロック画面で NVDA を使用するとセキュリティ対策が機能しません"
+
 #. Translators: Reported when a page reloads (example: after refreshing a webpage).
 msgid "Refreshed"
 msgstr "更新完了"
@@ -11451,22 +11468,6 @@ msgstr "AC電源が切断されています"
 #, python-brace-format
 msgid "{hours:d} hours and {minutes:d} minutes remaining"
 msgstr "残り{hours:d}時間{minutes:d}分"
-
-#. Translators: This is a warning to users, shown if NVDA cannot determine if
-#. Windows is locked.
-msgid ""
-"NVDA failed to register session tracking. While this instance of NVDA is "
-"running, your desktop will not be secure when Windows is locked. Restart "
-"NVDA? "
-msgstr ""
-"NVDAはセッショントラッキングの登録に失敗しました。このNVDAのインスタンスが実"
-"行されている間はWindowsのロック画面は安全ではありません。NVDAを再起動します"
-"か?"
-
-#. Translators: This is a warning to users, shown if NVDA cannot determine if
-#. Windows is locked.
-msgid "NVDA could not start securely."
-msgstr "NVDAを正常に起動できませんでした"
 
 msgid "Taskbar"
 msgstr "タスクバー"
@@ -13100,3 +13101,6 @@ msgstr "2行の行間"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5行の行間"
+
+#~ msgid "NVDA could not start securely."
+#~ msgstr "NVDAを正常に起動できませんでした"
