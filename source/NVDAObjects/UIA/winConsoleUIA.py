@@ -8,6 +8,7 @@ import config
 import controlTypes
 import ctypes
 import NVDAHelper
+import NVDAState
 import speech
 import textInfos
 import textUtils
@@ -16,7 +17,7 @@ import UIAHandler
 from comtypes import COMError
 from diffHandler import prefer_difflib
 from logHandler import log
-from typing import Optional
+from typing import Any, Optional
 from UIAHandler.utils import _getConhostAPILevel, _shouldUseWindowsTerminalNotifications
 from UIAHandler.constants import WinConsoleAPILevel
 from . import UIA, UIATextInfo
@@ -465,9 +466,17 @@ class NotificationsBasedWinTerminalUIA(UIA):
 			if line and not line.isspace():  # Don't say "blank" during autoread
 				speech.speakText(line)
 
-#: WinTerminalUIA is kept for backwards compatibility.
-WinTerminalUIA = (
-	NotificationsBasedWinTerminalUIA
-	if _shouldUseWindowsTerminalNotifications()
-	else DiffBasedWinTerminalUIA
-)
+
+def __getattr__(attrName: str) -> Any:
+	"""Module level `__getattr__` used to preserve backward compatibility."""
+	if attrName == "WinTerminalUIA" and NVDAState._allowDeprecatedAPI():
+		log.warning(
+			"WinTerminalUIA is deprecated. "
+			"Instead use DiffBasedWinTerminalUIA or NotificationsBasedWinTerminalUIA"
+		)
+		return (
+			NotificationsBasedWinTerminalUIA
+			if _shouldUseWindowsTerminalNotifications()
+			else DiffBasedWinTerminalUIA
+		)
+	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
