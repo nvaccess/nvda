@@ -17,7 +17,7 @@ from comtypes import COMError
 from diffHandler import prefer_difflib
 from logHandler import log
 from typing import Optional
-from UIAHandler.utils import _getConhostAPILevel
+from UIAHandler.utils import _getConhostAPILevel, _shouldUseWindowsTerminalNotifications
 from UIAHandler.constants import WinConsoleAPILevel
 from . import UIA, UIATextInfo
 from ..behaviors import EnhancedTermTypedCharSupport, KeyboardHandlerBasedTypedCharSupport
@@ -464,3 +464,10 @@ class NotificationsBasedWinTerminalUIA(UIA):
 		for line in displayString.splitlines():
 			if line and not line.isspace():  # Don't say "blank" during autoread
 				speech.speakText(line)
+
+#: WinTerminalUIA is kept for backwards compatibility.
+WinTerminalUIA = (
+	NotificationsBasedWinTerminalUIA
+	if _shouldUseWindowsTerminalNotifications()
+	else DiffBasedWinTerminalUIA
+)
