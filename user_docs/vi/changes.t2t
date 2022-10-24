@@ -3,6 +3,106 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2022.4 =
+Bản phát hành này tích hợp vài phím lệnh mới, bao gồm các lệnh đọc tất cả trong bảng biểu.
+Đã thêm phần "Hướng Dẫn Nhanh" vào tài liệu hướng dẫn sử dụng.
+Một số lỗi cũng đã được sửa.
+
+Đã cập nhật eSpeak và LibLouis.
+Đã có các bản chữ nổi mới của tiếng Trung Quốc, Thụy Điển, Luganda và Kinyarwanda.
+
+== Tính năng mới ==
+- Đã thêm phần "Hướng Dẫn Nhanh" vào tài liệu hướng dẫn sử dụng. (#13934)
+- Giới thiệu một lệnh mới để kiểm tra phím tắt tại vị trí con trỏ. (#13960)
+  - Máy bàn: ``shift+2 bàn phím số``.
+  - Máy xách tay: ``NVDA+ctrl+shift+.``.
+  -
+- Giới thiệu lệnh mới để di chuyển con trỏ duyệt qua từng trang nếu ứng dụng có hỗ trợ. (#14021)
+  - Chuyển về trang trước:
+    - Máy bàn: ``NVDA+pageUp``.
+    - Máy xách tay: ``NVDA+shift+pageUp``.
+    -
+  - Chuyển đến trang kế:
+    - Máy bàn: ``NVDA+pageDown``.
+    - Máy xách tay: ``NVDA+shift+pageDown``.
+    -
+  -
+- Đã thêm các lệnh sau cho bảng biểu. (#14070)
+  - Đọc tất cả trong cột: ``NVDA+control+alt+mũi tên xuống``
+  - Đọc tất cả trong dòng: ``NVDA+control+alt+mũi tên phải``
+  - Đọc toàn bộ cột: ``NVDA+control+alt+mũi tên lên``
+  - Đọc toàn bộ dòng: ``NVDA+control+alt+mũi tên trái``
+  -
+- Microsoft Excel thông qua UI Automation: NVDA giờ đây sẽ thông báo khi di chuyển ra khỏi một bảng   biểu trong một bảng tính. (#14165)
+- Việc đọc tiêu đề bảng giờ đây có thể cấu hình độc lập cho cột và dòng. (#14075)
+-
+
+
+== Các thay đổi ==
+- Đã cập nhật eSpeak NG lên 1.52-dev commit ``735ecdb8``. (#14060, #14079, #14118, #14203)
+  - Sửa lỗi đọc các kí tự tiếng Latin khi dùng với tiếng Quan Thoại. (#12952, #13572, #14197)
+  -
+- Đã cập nhật thư viện phiên dịch chữ nổi LibLouis lên [3.23.0 https://github.com/liblouis/liblouis/releases/tag/v3.23.0]. (#14112)
+  - Thêm các bảng chữ nổi:
+    - Chinese common braille (simplified Chinese characters)
+    - Kinyarwanda literary braille
+    - Luganda literary braille
+    - Swedish uncontracted braille
+    - Swedish partially contracted braille
+    - Swedish contracted braille
+    - Chinese (China, Mandarin) Current Braille System (no tones) (#14138)
+    -
+- NVDA giờ đây đã bao gồm kiểu hệ điều hành trong việc thống kê thông tin người dùng. (#14019)
+-
+
+
+== Sữa lỗi ==
+- Khi cập nhật NVDA bằng công cụ Windows Package Manager CLI (aka winget), phiên bản chính thức của NVDA sẽ không còn bị coi là bản mới hơn khi bạn đang cài một phiên bản alpha. (#12469)
+- NVDA giờ đây sẽ thông báo chính xác các điều khiển dạng Group boxe trong các ứng dụng Java. (#13962)
+- Con trỏ nháy đã đi theo một cách chính xác những văn bản được đọc trong khi "đọc tất cả" trong các ứng dụng như Bookworm, WordPad, hoặc trình xem log của NVDA. (#13420, #9179)
+- Trong các chương trình có dùng UI Automation, các hộp kiểm chỉ chọn một phần sẽ được thông báo chính xác. (#13975)
+- Cải thiện khả năng vận hành và tính ổn định trong Microsoft Visual Studio, Windows Terminal và các ứng dụng trên nền UI Automation khác. (#11077, #11209)
+  - Việc sửa lỗi này áp dụng cho Windows 11 Sun Valley 2 (version 22H2) trở lên.
+  - Đăng kí chọn lọc cho các thay đổi thuộc tính và sự kiện của UI Automation giờ đây mặc định được bật.
+  -
+- Việc đọc văn bản, đầu ra chữ nổi và việc ngăn đọc mật khẩu giờ đây đã hoạt động như mong muốn trong  các điều khiển Windows Terminal được nhun trong Visual Studio 2022. (#14194)
+- NVDA giờ đây được xem là  DPI khi dùng nhiều màn hình.
+Có một vài lỗi được sửa để dùng thiết lập DPI cao hơn 100% hoặc nhiều màn hình.
+Lỗi có thể vẫn tồn tại với các phiên bản Windows cũ hơn Windows 10 1809.
+Để việc sửa lỗi phát huy tác dụng, những ứng dụng mà NVDA tương tác cũng phải là ứng dùng được xem là ứng dụng DPI.
+Lưu ý là vẫn còn những lỗi được tìm thấy với Chrome và Edge. (#13254)
+  - Các khung làm nổi trực quan giờ đây đã được đặt chính xác ở hầu hết các ứng dụng. (#13370, #3875, #12070)
+  - Việc tương tác trên màn hình cảm ứng giờ đây đã hoạt động chính xác với hầu hết các ứng dụng. (#7083)
+  - Việc theo dõi bằng chuột đã hoạt động chính xác với hầu hết các ứng dụng. (#6722)
+  -
+- Trạng thái hướng màn hình (đứng / ngang) giờ đây đã bị bỏ qua khi không có thay đổi (ví dụ: thay đổi màn hình). (#14035)
+ NVDA sẽ thông báo các thành phần đang được kéo trên màn hình ở những nơi như sắp xếp lại trong kiểu Windows 10 Start menu và desktop ảo trong Windows 11. (#12271, #14081)
+- Trong cài đặt nâng cao, tùy chọn "Phát âm thanh cho lỗi log" giờ đây đã trả lại giá trị mặc định của nó khi bấm vào nút "Trả về mặc định". (#14149)
+- NVDA giờ đây có thể chọn văn bản bằng phím lệnh ``NVDA+f10``trên các ứng dụng Java. (#14163)
+-
+
+
+== Các thay đổi cho nhà phát triển ==
+Phần này không được dịch. Vui lòng xem bản tiếng Anh changes.t2t để biết thêm thông tin.
+
+
+= 2022.3.1 =
+Đây là một bản phát hành phụ để sửa vài lỗi bảo mật..
+Vui lòng báo cáo các vấn đề về bảo mật đến info@nvaccess.org.
+
+== Sửa lỗi bảo mật ==
+- Sửa lỗi làm cho có thể giả lập từ quyền người dùng đến quyền hệ thống.
+([GHSA-q7c2-pgqm-vvw5 https://github.com/nvaccess/nvda/security/advisories/GHSA-q7c2-pgqm-vvw5])
+- Sửa lỗi bảo mật nhằm cho phép truy cập python console ở màn hình khóa thông qua điều kiện chủng tộc (race condition) cho việc khởi chạy NVDA.
+([GHSA-72mj-mqhj-qh4w https://github.com/nvaccess/nvda/security/advisories/GHSA-72mj-mqhj-qh4w])
+- Sửa lỗi làm cho văn bản của trình xem nội dung đọc được nhớ khi khóa Windows.
+([GHSA-grvr-j2h8-3qm4 https://github.com/nvaccess/nvda/security/advisories/GHSA-grvr-j2h8-3qm4])
+-
+
+== Sữa lỗi ==
+- Chặn  một người dùng không xác định cập nhật các thiết lập cho trình xem nội dung đọc và   trình xem nội dung chữ nổi ở màn hình khóa. ([GHSA-grvr-j2h8-3qm4 https://github.com/nvaccess/nvda/security/advisories/GHSA-grvr-j2h8-3qm4])
+-
+
 = 2022.3 =
 Cộng đồng phát triển NVDA đã có một số đóng góp đáng kể cho bản phát hành này.
 Bao gồm việc chờ để đọc mô tả kí tự và hỗ trợ cho Windows Console.
@@ -59,6 +159,14 @@ Có thể bật lại nó trong bảng cài đặt mở rộng của NVDA. (#115
 Phần này không được dịch. Vui lòng xem bản tiếng Anh changes.t2t để biết thêm thông tin.
 
 
+= 2022.2.4 =
+Đây là bản phát hành nhằm sửa một lỗi bảo mật.
++
+== Sữa lỗi ==
+- Sửa một lỗi làm cho python console của NVDA có thể mở thông qua trình xem log ở màn hình khóa.
+([GHSA-585m-rpvv-93qg https://github.com/nvaccess/nvda/security/advisories/GHSA-585m-rpvv-93qg])
+-
+
 = 2022.2.3 =
 Đây là bản phát hành vá lỗi, nhằm khắc phục tình trạng một API bị hỏng, được nhắc đến ở phiên bản 2022.2.1.
 
@@ -80,7 +188,7 @@ Phần này không được dịch. Vui lòng xem bản tiếng Anh changes.t2t 
 
 = 2022.2.1 =
 Đây là một bản phát hành phụ để sửa lỗi bảo mật.
-Vui lòng báo cáo các vấn đề về bảo mật tại info@nvaccess.org.
+Vui lòng báo cáo các vấn đề về bảo mật đến info@nvaccess.org.
 
 == Sửa các lỗi bảo mật ==
 - Sửa lỗi khai thác  để có thể gọi chạy python console từ màn hình khóa. (GHSA-rmq3-vvhq-gp32)
