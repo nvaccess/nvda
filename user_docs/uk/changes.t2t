@@ -76,14 +76,6 @@ There are no deprecations proposed in 2022.3.
 Це призводило до того, що NVDA remote не розпізнавав захищених робочих столів. (#14094)
 -
 
-== Зміни для розробників (англ.) ==
-This release contains a technical breakage in API backwards compatibility.
-It is expected that this change does not affect any add-ons.
-Please open a GitHub issue if your add-on becomes incompatible as a result of this release.
-
-- ``SecureDesktopNVDAObject`` is no longer a subclass of ``Desktop`` or ``Window``. (#14105)
--
-
 = 2022.2.2 =
 Ця версія містить виправлення помилки, яка виникла у 2022.2.1 із жестами вводу.
 

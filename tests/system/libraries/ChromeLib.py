@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2020-2021 NV Access Limited
+# Copyright (C) 2020-2022 NV Access Limited, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -8,6 +8,7 @@ Google Chrome with a HTML sample and assert NVDA interacts with it in the expect
 """
 
 # imported methods start with underscore (_) so they don't get imported into robot files as keywords
+import datetime as _datetime
 from os.path import join as _pJoin
 import tempfile as _tempfile
 from typing import Optional as _Optional
@@ -21,6 +22,7 @@ from SystemTestSpy.windows import (
 	GetForegroundWindowTitle,
 	Window,
 )
+import _chromeArgs
 import re
 from robot.libraries.BuiltIn import BuiltIn
 
@@ -91,12 +93,7 @@ class ChromeLib:
 			"start"  # windows utility to start a process
 			# https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/start
 			" /wait"  # Starts an application and waits for it to end.
-			" chrome"  # Start Chrome
-			" --force-renderer-accessibility"
-			" --suppress-message-center-popups"
-			" --disable-notifications"
-			" --no-experiments"
-			" --no-default-browser-check"
+			f" {_chromeArgs.getChromeArgs()}"
 			f' "{filePath}"',
 			shell=True,
 			alias='chromeStartAlias',
@@ -141,7 +138,7 @@ class ChromeLib:
 			<head>
 				<title>{ChromeLib.getUniqueTestCaseTitle(testCase)}</title>
 			</head>
-			<body onload="document.getElementById('loadStatus').innerHTML='{ChromeLib._loadCompleteString}'">
+			<body lang="en" onload="document.getElementById('loadStatus').innerHTML='{ChromeLib._loadCompleteString}'">
 				<p>{ChromeLib._beforeMarker}</p>
 				<p id="loadStatus">Loading...</p>
 				{testCase}
@@ -213,6 +210,13 @@ class ChromeLib:
 		@param testCase - The HTML sample to test.
 		@param _doToggleFocus - When True, Chrome will be intentionally de-focused and re-focused
 		"""
+		testCase = testCase + (
+			"\n<!-- "  # new line, start a HTML comment
+			"Sample generation time, to ensure that the test case title is reproducibly unique purely from"
+			" this test case string: \n"
+			f"{ _datetime.datetime.now().isoformat()} "
+			f" -->"  # end HTML comment
+		)
 		spy = _NvdaLib.getSpyLib()
 		_chromeLib: "ChromeLib" = _getLib('ChromeLib')  # using the lib gives automatic 'keyword' logging.
 		path = self._writeTestFile(testCase)

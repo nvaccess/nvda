@@ -558,7 +558,7 @@ def winEventToNVDAEvent(  # noqa: C901
 			)
 		return None
 	# We do not support MSAA object proxied from native UIA
-	if UIAHandler.handler and UIAHandler.handler.isUIAWindow(window):
+	if UIAHandler.handler and UIAHandler.handler.isUIAWindow(window, isDebug=isMSAADebugLoggingEnabled()):
 		if isMSAADebugLoggingEnabled():
 			log.debug(
 				f"Native UIA window. Dropping winEvent {getWinEventLogInfo(window, objectID, childID, eventID)}"
@@ -800,7 +800,18 @@ class SecureDesktopNVDAObject(NVDAObjects.window.Desktop):
 		return controlTypes.Role.PANE
 
 	def event_gainFocus(self):
-		super(SecureDesktopNVDAObject, self).event_gainFocus()
+		from speech.speech import cancelSpeech
+		# NVDA announces the secure desktop when handling the gainFocus event.
+		# Before announcing the secure desktop and entering sleep mode,
+		# cancel speech so that speech does not overlap with the new instance of NVDA
+		# started on the secure desktop.
+		# Cancelling speech was previously handled by a foreground event,
+		# fired when focusing SecureDesktopNVDAObject.
+		# The foreground event would incorrectly fire on the foreground window of the user desktop.
+		# This foreground event is now explicitly prevented due to the security concerns of
+		# setting the foreground object to an object 'below the lock screen'.
+		cancelSpeech()
+		super().event_gainFocus()
 		# After handling the focus, NVDA should sleep while the secure desktop is active.
 		self.sleepMode = self.SLEEP_FULL
 

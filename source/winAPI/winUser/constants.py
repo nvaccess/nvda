@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022 NV Access Limited
+# Copyright (C) 2022 NV Access Limited, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -59,4 +59,35 @@ class SystemMetrics(IntEnum):
 	The height of the virtual screen, in pixels.
 
 	SM_CYVIRTUALSCREEN
+	"""
+
+
+class SysColorIndex(IntEnum):
+	"""
+	Color index to be used with GetSystemColor.
+	See https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getsyscolor
+	"""
+	
+	WINDOW = 5
+	"""
+	Window background.
+	The associated foreground colors are COLOR_WINDOWTEXT and COLOR_HOTLITE.
+	"""
+	
+	WINDOW_TEXT = 8
+	"""
+	Text in windows.
+	The associated background color is COLOR_WINDOW.
+	"""
+	
+	HIGHLIGHT = 13
+	"""
+	Item(s) selected in a control.
+	The associated foreground color is COLOR_HIGHLIGHTTEXT.
+	"""
+	
+	HIGHLIGHT_TEXT = 14
+	"""
+	Text of item(s) selected in a control.
+	The associated background color is COLOR_HIGHLIGHT.
 	"""
