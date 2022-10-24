@@ -558,7 +558,7 @@ def winEventToNVDAEvent(  # noqa: C901
 			)
 		return None
 	# We do not support MSAA object proxied from native UIA
-	if UIAHandler.handler and UIAHandler.handler.isUIAWindow(window):
+	if UIAHandler.handler and UIAHandler.handler.isUIAWindow(window, isDebug=isMSAADebugLoggingEnabled()):
 		if isMSAADebugLoggingEnabled():
 			log.debug(
 				f"Native UIA window. Dropping winEvent {getWinEventLogInfo(window, objectID, childID, eventID)}"

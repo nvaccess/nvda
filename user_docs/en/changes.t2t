@@ -26,6 +26,7 @@ What's New in NVDA
 - In the Google Chrome location bar, suggestion controls (switch to tab, remove suggestion etc) are now reported when selected. (#13522)
 - When requesting formatting information, colors are now explicitly reported in Wordpad or log viewer, rather than only "Default color". (#13959)
 - In Firefox, activating the "Show options" button on GitHub issue pages now works reliably. (#14269)
+- The date picker controls in Outlook 2016 / 365 Advanced search dialog now report their label and value. (#12726)
 -
 
 
@@ -37,6 +38,7 @@ Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documen
 - System test should now pass when run locally on non-English systems. (#13362)
 - It is no longer necessary to use ``SearchField`` and ``SuggestionListItem`` ``UIA`` ``NVDAObjects`` in new UI Automation scenarios, where automatic reporting of search suggestions, and where typing has been exposed via UI Automation with the ``controllerFor`` pattern.
 This functionality is now available generically via ``behaviours.EditableText`` and the base ``NVDAObject`` respectively.
+- the UIA debug logging category when enabled now produces significantly more logging for UIA event handlers and utilities. (#14256)
 - NVDAHelper build standards updated. (#13072)
   - Now uses the C++20 standard, was C++17.
   - Now uses the '/permissive-' compiler flag which disables permissive behaviors, and sets the '/Zc' compiler options for strict conformance.
