@@ -119,6 +119,9 @@ textChangeUIAAutomationIDs = (
 
 textChangeUIAClassNames = (
 	"_WwG",  # Microsoft Word
+)
+
+windowsTerminalUIAClassNames = (
 	"TermControl",
 	"TermControl2",
 	"WPFTermControl",
@@ -648,6 +651,10 @@ class UIAHandler(COMObject):
 				if (
 					element.currentClassName in textChangeUIAClassNames
 					or element.CachedAutomationID in textChangeUIAAutomationIDs
+					or (
+						not utils._shouldUseWindowsTerminalNotifications()
+						and element.currentClassName in windowsTerminalUIAClassNames
+					)
 				):
 					group = self.localEventHandlerGroupWithTextChanges
 					logPrefix = "Explicitly"
@@ -704,6 +711,10 @@ class UIAHandler(COMObject):
 			if (
 				sender.currentClassName in textChangeUIAClassNames
 				or sender.CachedAutomationID in textChangeUIAAutomationIDs
+				or (
+					not utils._shouldUseWindowsTerminalNotifications()
+					and sender.currentClassName in windowsTerminalUIAClassNames
+				)
 			):
 				NVDAEventName = "textChange"
 			else:
