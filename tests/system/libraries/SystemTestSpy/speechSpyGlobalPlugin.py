@@ -491,7 +491,7 @@ class NVDASpyLib:
 				nonlocal queueProcessed
 				queueProcessed = True
 
-			log.debug(f"Waiting for gesture to be processed")
+			log.debug("Waiting for gesture to be processed")
 			queueHandler.queueFunction(queueHandler.eventQueue, _setQueueProcessed)
 			_blockUntilConditionMet(
 				getValue=lambda: queueProcessed,
@@ -502,13 +502,13 @@ class NVDASpyLib:
 			# We know that by now the core will have woken up and processed the scripts, events and our own function.
 			# Wait for the core to go to sleep,
 			# Which means there is no more things the core is currently processing.
-			log.debug(f"Waiting for core to sleep, to ensure all resulting events have been processed.")
+			log.debug("Waiting for core to sleep, to ensure all resulting events have been processed.")
 			_blockUntilConditionMet(
 				getValue=lambda: watchdog.isCoreAsleep(),
 				giveUpAfterSeconds=self._minTimeout(5),
 				errorMessage="Timed out waiting for core to sleep again",
 			)
-			log.debug(f"Core sleeping")
+			log.debug("Core sleeping")
 
 
 class SystemTestSpyServer(globalPluginHandler.GlobalPlugin):

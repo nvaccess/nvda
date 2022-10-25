@@ -76,7 +76,7 @@ class SpeechSpySynthDriver(synthDriverHandler.SynthDriver):
 		synthDriverHandler.synthIndexReached.notify(synth=self, index=item.index)
 		_yieldThread()
 
-	def _doNotifySequenceProcessed(self, speechSequence):
+	def _doNotifySequenceProcessed(self, speechSequence: SpeechSequence):
 		log.debug("Before notify post_speech")
 		post_speech.notify(speechSequence=speechSequence)
 		log.debug("After post_speech notify")
@@ -99,13 +99,13 @@ class SpeechSpySynthDriver(synthDriverHandler.SynthDriver):
 					continue
 				self._speechStarted = True
 				self._processSpeechSequence(speechSequence)
-		log.debug(f"Stopping")
+		log.debug("Stopping")
 
 	def _processSpeechSequence(self, speechSequence: SpeechSequence):
 		log.debug(f"Sequence: {speechSequence}")
 		for item in speechSequence:
 			if self._cancel:
-				log.debug(f"Cancelled")
+				log.debug("Cancelled")
 				# stop immediately, don't call done speaking
 				return
 			if isinstance(item, IndexCommand):
@@ -118,9 +118,9 @@ class SpeechSpySynthDriver(synthDriverHandler.SynthDriver):
 
 	def cancel(self):
 		self._cancel = True
-		log.debug(f"Cancelling")
+		log.debug("Cancelling")
 		while not self._queuedSpeech.empty():
-			log.debug(f"discarding.")
+			log.debug("discarding.")
 			try:
 				self._queuedSpeech.get(
 					block=True,  # incase _doSpeechThread is still reading.
