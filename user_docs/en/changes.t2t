@@ -6,16 +6,30 @@ What's New in NVDA
 = 2023.1 =
 
 == New Features ==
+- Microsoft Excel via UI Automation: Automatic reporting of column and row headers in tables. (#14228)
+ - Note this is referring to tables formatted via Insert -> Table on the Ribon, where the table has a header row, and or a special first column.
+ - This is not referring to screen reader specific headers via named ranges, which is currently not supported via UI automation.
+ -
+- An unassigned script has been added to toggle delayed character descriptions. (#14267)
+- Added an experimental option to leverage the UIA notification support in Windows Terminal to report new or changed text in the terminal, resulting in improved stability and responsivity. (#13781)
+ - Consult the user guide for limitations of this experimental option.
+ - 
+-
 
 
 == Changes ==
 - Updated Sonic rate boost library to commit ``1d70513``. (#14180)
+- CLDR has been updated to version 42.0. (#14273)
 -
 
 
 == Bug Fixes ==
 - In Windows 11, NVDA will announce search highlights when opening Start menu. (#13841)
+- Suggestions are reported when typing an @mention in in Microsoft Excel comments. (#13764)
+- In the Google Chrome location bar, suggestion controls (switch to tab, remove suggestion etc) are now reported when selected. (#13522)
 - When requesting formatting information, colors are now explicitly reported in Wordpad or log viewer, rather than only "Default color". (#13959)
+- In Firefox, activating the "Show options" button on GitHub issue pages now works reliably. (#14269)
+- The date picker controls in Outlook 2016 / 365 Advanced search dialog now report their label and value. (#12726)
 -
 
 
@@ -25,6 +39,13 @@ Add-ons will need to be re-tested and have their manifest updated.
 Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] for information on NVDA's API deprecation and removal process.
 
 - System test should now pass when run locally on non-English systems. (#13362)
+- It is no longer necessary to use ``SearchField`` and ``SuggestionListItem`` ``UIA`` ``NVDAObjects`` in new UI Automation scenarios, where automatic reporting of search suggestions, and where typing has been exposed via UI Automation with the ``controllerFor`` pattern.
+This functionality is now available generically via ``behaviours.EditableText`` and the base ``NVDAObject`` respectively.
+- the UIA debug logging category when enabled now produces significantly more logging for UIA event handlers and utilities. (#14256)
+- NVDAHelper build standards updated. (#13072)
+  - Now uses the C++20 standard, was C++17.
+  - Now uses the '/permissive-' compiler flag which disables permissive behaviors, and sets the '/Zc' compiler options for strict conformance.
+  -
 -
 
 === API Breaking Changes ===
@@ -33,6 +54,8 @@ Please open a GitHub issue if your Add-on has an issue with updating to the new 
 
 
 === Deprecations ===
+- ``NVDAObjects.UIA.winConsoleUIA.WinTerminalUIA`` is deprecated and usage is dscouraged. (#14047)
+-
 
 
 = 2022.4 =
@@ -128,6 +151,23 @@ Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documen
 - ``winUser.SM_*`` constants are deprecated, use ``winAPI.winUser.constants.SystemMetrics`` instead.
 -
 
+
+= 2022.3.1 =
+This is a minor release to fix several security issues.
+Please responsibly disclose security issues to info@nvaccess.org.
+
+== Security Fixes ==
+- Fixed exploit where it was possible to elevate from user to system privileges.
+([GHSA-q7c2-pgqm-vvw5 https://github.com/nvaccess/nvda/security/advisories/GHSA-q7c2-pgqm-vvw5])
+- Fixed a security issue allowing access to the python console on the lock screen via a race condition for NVDA startup.
+([GHSA-72mj-mqhj-qh4w https://github.com/nvaccess/nvda/security/advisories/GHSA-72mj-mqhj-qh4w])
+- Fixed issue where speech viewer text is cached when locking Windows.
+([GHSA-grvr-j2h8-3qm4 https://github.com/nvaccess/nvda/security/advisories/GHSA-grvr-j2h8-3qm4])
+-
+
+== Bug Fixes ==
+- Prevent an unauthenticated user from updating settings for speech and Braille viewer on the lock screen. ([GHSA-grvr-j2h8-3qm4 https://github.com/nvaccess/nvda/security/advisories/GHSA-grvr-j2h8-3qm4])
+-
 
 = 2022.3 =
 A significant amount of this release was contributed by the NVDA development community.

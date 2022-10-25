@@ -21,10 +21,26 @@ import aria
 import api
 import speech
 import config
+import NVDAObjects
+
 
 class Ia2Web(IAccessible):
 	IAccessibleTableUsesTableCellIndexAttrib=True
 	caretMovementDetectionUsesEvents = False
+
+	def isDescendantOf(self, obj: "NVDAObjects.NVDAObject") -> bool:
+		if obj.windowHandle != self.windowHandle:
+			# Only supported on the same window.
+			raise NotImplementedError
+		if not isinstance(obj, Ia2Web):
+			# #4080: Input composition NVDAObjects are the same window but not IAccessible2!
+			raise NotImplementedError
+		accId = obj.IA2UniqueID
+		try:
+			res = obj.IAccessibleObject.accChild(accId)
+		except COMError:
+			return False
+		return bool(res)
 
 	def _get_positionInfo(self):
 		info=super(Ia2Web,self).positionInfo
