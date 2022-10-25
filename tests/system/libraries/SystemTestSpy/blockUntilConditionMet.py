@@ -15,11 +15,20 @@ from typing import Any, Callable, Optional, Tuple
 EvaluatorWasMetT = bool
 GetValueResultT = Any
 
+DEFAULT_INTERVAL_BETWEEN_EVAL_SECONDS = 0.3
+"""The default interval (in seconds) between calls to the evaluator."""
+
+_MIN_INTERVAL_BETWEEN_EVAL_SECONDS = 0.1
+"""The minimum interval (in seconds) between calls to the evaluator.
+Small values for the interval can starve NVDA core, preventing it
+from being able to process queued events.
+"""
+
 def _blockUntilConditionMet(
 		getValue: Callable[[], GetValueResultT],
 		giveUpAfterSeconds: float,
 		shouldStopEvaluator=lambda value: bool(value),
-		intervalBetweenSeconds: float = 0.3,
+		intervalBetweenSeconds: float = DEFAULT_INTERVAL_BETWEEN_EVAL_SECONDS,
 		errorMessage: Optional[str] = None
 		) -> Tuple[
 EvaluatorWasMetT,  # Was evaluator met?
@@ -28,22 +37,22 @@ Optional[GetValueResultT]  # Value when the evaluator was met, if it was met.
 	"""Repeatedly tries to get a value up until a time limit expires. Tries are separated by
 	a time interval. The call will block until shouldStopEvaluator returns True when given the value,
 	the default evaluator just returns the value converted to a boolean.
-	@param getValue: Get the value to be tested by shouldStropEvaluator.
+	@param getValue: Get the value to be tested by shouldStopEvaluator.
 	@param giveUpAfterSeconds: The max number of seconds to block for.
 	@param shouldStopEvaluator: Given the last value from getValue, is the condition met?
 	When True is returned, stop blocking.
 	@param intervalBetweenSeconds: The approximate period (seconds) between each test of getValue.
 	Small values can starve NVDA core preventing it from being able to process queued events.
-	Must be greater than 0.1, higher is recommended.
+	Must be greater than _MIN_INTERVAL_BETWEEN_EVAL_SECONDS, higher is recommended.
 	@param errorMessage: Use 'None' to suppress the exception.
 	@return A tuple, (True, value) if evaluator condition is met, otherwise (False, None)
 	@raises RuntimeError if the time limit expires and an errorMessage is given.
 	"""
 	assert callable(getValue)
 	assert callable(shouldStopEvaluator)
-	assert intervalBetweenSeconds > 0.1
+	assert intervalBetweenSeconds > _MIN_INTERVAL_BETWEEN_EVAL_SECONDS
 
-	SLEEP_TIME = max(intervalBetweenSeconds, 0.1)
+	SLEEP_TIME = max(intervalBetweenSeconds, _MIN_INTERVAL_BETWEEN_EVAL_SECONDS)
 
 	startTime = _timer()
 	lastRunTime = startTime

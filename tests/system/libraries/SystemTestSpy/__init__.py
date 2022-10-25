@@ -12,6 +12,7 @@
 # Expose shared code. Lint error F401 imported but unused. Exposing like this makes importing easier, and
 # allows code to be re-organized without having to fix many import statements.
 from .blockUntilConditionMet import _blockUntilConditionMet  # noqa: F401
+from .blockUntilConditionMet import DEFAULT_INTERVAL_BETWEEN_EVAL_SECONDS  # noqa: F401
 from .getLib import _getLib  # noqa: F401
 
 _nvdaSpyAlias = "nvdaSpyLib"

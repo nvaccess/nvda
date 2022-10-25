@@ -19,7 +19,10 @@ import core
 import extensionPoints
 import globalPluginHandler
 import threading
-from .blockUntilConditionMet import _blockUntilConditionMet
+from .blockUntilConditionMet import (
+	_blockUntilConditionMet,
+	DEFAULT_INTERVAL_BETWEEN_EVAL_SECONDS,
+)
 from logHandler import log
 from time import perf_counter as _timer
 from keyboardHandler import KeyboardInputGesture
@@ -381,7 +384,7 @@ class NVDASpyLib:
 			speech: str,
 			afterIndex: Optional[int] = None,
 			maxWaitSeconds: float = 5.0,
-			intervalBetweenSeconds: float = 0.3,
+			intervalBetweenSeconds: float = DEFAULT_INTERVAL_BETWEEN_EVAL_SECONDS,
 	) -> int:
 		"""
 		@param speech: The speech to expect.
@@ -409,7 +412,7 @@ class NVDASpyLib:
 			speech: str,
 			afterIndex: Optional[int] = None,
 			maxWaitSeconds: float = SPEECH_HAS_FINISHED_SECONDS,
-			intervalBetweenSeconds: float = 0.3,
+			intervalBetweenSeconds: float = DEFAULT_INTERVAL_BETWEEN_EVAL_SECONDS,
 	) -> None:
 		"""
 		@param speech: The speech to check for.
