@@ -1520,8 +1520,9 @@ def test_ensureNoBrowseModeDescription():
 
 	REPORT_OBJ_DESC_KEY = ["presentation", "reportObjectDescriptions"]
 	spy = _NvdaLib.getSpyLib()
-	# prevent browse / focus mode messages from interfering, 0 means don't show.
-	spy.set_configValue(["braille", "messageTimeout"], 0)
+	# prevent browse / focus mode messages from interfering, 0 means configFlags.ShowMessages.DISABLED,
+	# i.e. don't show.
+	spy.set_configValue(["braille", "showMessages"], 0)
 
 	actualSpeech = _NvdaLib.getSpeechAfterKey('tab')
 	_builtIn.should_contain(actualSpeech, "something for focus")
