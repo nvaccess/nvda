@@ -183,4 +183,3 @@ class NotepadLib:
 		windowsLib.logForegroundWindowTitle()
 		# Move to the start of file
 		_NvdaLib.getSpeechAfterKey('home')
-
