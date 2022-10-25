@@ -2104,3 +2104,125 @@ def test_focus_mode_on_focusable_read_only_lists():
 		]),
 		message="focus mode - focus list item and turn on focus mode"
 	)
+
+
+def test_ARIASwitchRole():
+	"""
+Ensure that ARIA switch controls have an appropriate role and states in browse mode.
+	"""
+	testFile = os.path.join(ARIAExamplesDir, "switch", "switch.html")
+	_chrome.prepareChrome(
+		f"""
+			<iframe src="{testFile}"></iframe>
+		"""
+	)
+	# Jump to the first heading 2 in the iframe.
+	actualSpeech = _chrome.getSpeechAfterKey("2")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"frame",
+			"main landmark",
+			"Example",
+			"heading  level 2"
+		]),
+		message="Move to first heading 2 in frame",
+	)
+	# Tab to the switch control
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"Notifications",
+			"switch",
+			"off",
+		]),
+		message="tab to switch control",
+	)
+	# Read the current line
+	actualSpeech = _chrome.getSpeechAfterKey("numpad8")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"switch",
+			"off",
+			"Notifications",
+		]),
+		message="Read current line",
+	)
+	# Report the current focus
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"Notifications",
+			"switch",
+			"focused",
+			"off",
+		]),
+		message="Report focus",
+	)
+	# Toggle the switch on
+	actualSpeech = _chrome.getSpeechAfterKey("space")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"on",
+		]),
+		message="Toggle switch control on",
+	)
+	# Read the current line
+	actualSpeech = _chrome.getSpeechAfterKey("numpad8")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"switch",
+			"on",
+			"Notifications",
+		]),
+		message="Read current line",
+	)
+	# Report the current focus
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"Notifications",
+			"switch",
+			"focused",
+			"on",
+		]),
+		message="Report focus",
+	)
+	# Toggle the switch off
+	actualSpeech = _chrome.getSpeechAfterKey("space")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"off",
+		]),
+		message="Toggle switch control off",
+	)
+	# Read the current line
+	actualSpeech = _chrome.getSpeechAfterKey("numpad8")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"switch",
+			"off",
+			"Notifications",
+		]),
+		message="Read current line",
+	)
+	# Report the current focus
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"Notifications",
+			"switch",
+			"focused",
+			"off",
+		]),
+		message="Report focus",
+	)
