@@ -199,7 +199,8 @@ def moveToParagraph(
 		if isinstance(ti, UIATextInfo):
 			# Updating caret position in UIATextInfo does not scroll the display. Force it to scroll here.
 			ti._rangeObj.ScrollIntoView(False)
-		speakParagraph(ti)
+		if speakNew:
+			speakParagraph(ti)
 	else:
 		_notFoundMessage(nextParagraph)
 	return (False, moved)
