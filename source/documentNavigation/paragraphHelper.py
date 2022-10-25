@@ -11,7 +11,6 @@ import ui
 import config
 from NVDAObjects.window.winword import WordDocumentTextInfo
 from NVDAObjects.window.winword import BrowseModeWordDocumentTextInfo
-from NVDAObjects.UIA import UIATextInfo
 from displayModel import EditableTextDisplayModelTextInfo
 from typing import (
 	Tuple,
@@ -136,30 +135,11 @@ def _notFoundMessage(nextParagraph: bool):
 		ui.message("No previous paragraph")
 
 
-def moveToParagraph(
-		nextParagraph: bool,
-		speakNew: bool,
-		ti: textInfos.TextInfo = None
-) -> Tuple[bool, bool]:
-	"""
-	Moves to the previous or next normal paragraph, delimited by a single line break.
-	@param nextParagraph: bool indicating desired direction of movement,
-	True for next paragraph, False for previous paragraph
-	@param speakNew: bool indicating if new paragraph should be spoken after navigating
-	@param ti: TextInfo object on which to perform the move,
-	if None, attempts to create a TextInfo using the current caret position
-	@returns: A boolean 2-tuple of:
-	- passKey: if True, should send the gesture on
-	- moved: if True, position has changed
-	"""
-	if ti is None:
-		ti = _getTextInfoAtCaret()
-	if (ti is None) or (not _isAcceptableTextInfo(ti)):
-		return (True, False)
+def _moveTextInfoToParagraph(nextParagraph: bool, ti: textInfos.TextInfo) -> bool:
+	moved = False
 	ti.expand(textInfos.UNIT_LINE)
 	ti.collapse()  # move to start of line
 	moveOffset: _Offset = _Offset.NEXT_LINE if nextParagraph else _Offset.PREVIOUS_LINE
-	moved = False
 	numLines = 0
 	tempTi = ti.copy()
 	tempTi.expand(textInfos.UNIT_LINE)
@@ -193,9 +173,33 @@ def moveToParagraph(
 		if not ti.move(textInfos.UNIT_LINE, moveOffset):
 			break
 		numLines += 1
+	return moved
 
+
+def moveToParagraph(
+		nextParagraph: bool,
+		speakNew: bool,
+		ti: textInfos.TextInfo = None
+) -> Tuple[bool, bool]:
+	"""
+	Moves to the previous or next normal paragraph, delimited by a single line break.
+	@param nextParagraph: bool indicating desired direction of movement,
+	True for next paragraph, False for previous paragraph
+	@param speakNew: bool indicating if new paragraph should be spoken after navigating
+	@param ti: TextInfo object on which to perform the move,
+	if None, attempts to create a TextInfo using the current caret position
+	@returns: A boolean 2-tuple of:
+	- passKey: if True, should send the gesture on
+	- moved: if True, position has changed
+	"""
+	if ti is None:
+		ti = _getTextInfoAtCaret()
+	if (ti is None) or (not _isAcceptableTextInfo(ti)):
+		return (True, False)
+	moved = _moveTextInfoToParagraph(nextParagraph, ti)
 	if moved:
 		ti.updateCaret()
+		from NVDAObjects.UIA import UIATextInfo
 		if isinstance(ti, UIATextInfo):
 			# Updating caret position in UIATextInfo does not scroll the display. Force it to scroll here.
 			ti._rangeObj.ScrollIntoView(False)
@@ -225,27 +229,7 @@ def speakBlockParagraph(ti: textInfos.TextInfo) -> None:
 		speech.speakMessage(chunk)
 
 
-def moveToBlockParagraph(
-		nextParagraph: bool,
-		speakNew: bool,
-		ti: textInfos.TextInfo = None
-) -> Tuple[bool, bool]:
-	"""
-	Moves to the previous or next block paragraph, delineated by a blank line.
-	@param nextParagraph: bool indicating desired direction of movement,
-	True for next paragraph, False for previous paragraph
-	@param speakNew: bool indicating if new paragraph should be spoken after navigating
-	@param ti: TextInfo object on which to perform the move,
-	if None, attempts to create a TextInfo using the current caret position
-	@returns: A boolean 2-tuple of:
-	- passKey: if True, should send the gesture on
-	- moved: if True, position has changed
-	"""
-
-	if ti is None:
-		ti = _getTextInfoAtCaret()
-	if (ti is None) or (not _isAcceptableTextInfo(ti)):
-		return (True, False)
+def _moveTextInfoToBlockParagraph(nextParagraph: bool, ti: textInfos.TextInfo) -> bool:
 	moved = False
 	lookingForBlank = True
 	moveOffset: _Offset = _Offset.NEXT_LINE if nextParagraph else _Offset.PREVIOUS_LINE
@@ -278,9 +262,34 @@ def moveToBlockParagraph(
 				moved = True
 				break
 			numLines += 1
+	return moved
 
+
+def moveToBlockParagraph(
+		nextParagraph: bool,
+		speakNew: bool,
+		ti: textInfos.TextInfo = None
+) -> Tuple[bool, bool]:
+	"""
+	Moves to the previous or next block paragraph, delineated by a blank line.
+	@param nextParagraph: bool indicating desired direction of movement,
+	True for next paragraph, False for previous paragraph
+	@param speakNew: bool indicating if new paragraph should be spoken after navigating
+	@param ti: TextInfo object on which to perform the move,
+	if None, attempts to create a TextInfo using the current caret position
+	@returns: A boolean 2-tuple of:
+	- passKey: if True, should send the gesture on
+	- moved: if True, position has changed
+	"""
+
+	if ti is None:
+		ti = _getTextInfoAtCaret()
+	if (ti is None) or (not _isAcceptableTextInfo(ti)):
+		return (True, False)
+	moved = _moveTextInfoToBlockParagraph(nextParagraph, ti)
 	if moved:
 		ti.updateCaret()
+		from NVDAObjects.UIA import UIATextInfo
 		if isinstance(ti, UIATextInfo):
 			# Updating caret position in UIATextInfo does not scroll the display. Force it to scroll here.
 			ti._rangeObj.ScrollIntoView(False)
