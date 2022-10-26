@@ -419,6 +419,20 @@ def _handleNVDAModuleCleanupBeforeGUIExit():
 	brailleViewer.destroyBrailleViewer()
 
 
+def _initializeObjectCaches():
+	import api
+	import NVDAObjects
+	import winUser
+	foregroundObject = NVDAObjects.window.Window(windowHandle=winUser.getForegroundWindow())
+	api.setForegroundObject(foregroundObject)
+	api.setFocusObject(foregroundObject)
+	api.setNavigatorObject(foregroundObject)
+	api.setMouseObject(foregroundObject)
+
+	desktopObject = NVDAObjects.window.Window(windowHandle=winUser.getDesktopWindow())
+	api.setDesktopObject(desktopObject)
+
+
 def main():
 	"""NVDA's core main loop.
 	This initializes all modules such as audio, IAccessible, keyboard, mouse, and GUI.
@@ -667,14 +681,8 @@ def main():
 	log.debug("Initializing garbageHandler")
 	garbageHandler.initialize()
 
-	import api
-	import winUser
-	import NVDAObjects.window
-	desktopObject=NVDAObjects.window.Window(windowHandle=winUser.getDesktopWindow())
-	api.setDesktopObject(desktopObject)
-	api.setFocusObject(desktopObject)
-	api.setNavigatorObject(desktopObject)
-	api.setMouseObject(desktopObject)
+	_initializeObjectCaches()
+
 	import JABHandler
 	log.debug("initializing Java Access Bridge support")
 	try:

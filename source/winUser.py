@@ -467,8 +467,10 @@ def setForegroundWindow(hwnd):
 def setFocus(hwnd):
 	user32.SetFocus(hwnd)
 
-def getDesktopWindow():
+
+def getDesktopWindow() -> HWND:
 	return user32.GetDesktopWindow()
+
 
 def getControlID(hwnd):
 	return user32.GetWindowLongW(hwnd,GWL_ID)
