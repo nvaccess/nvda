@@ -35,6 +35,7 @@ from robotremoteserver import (
 )
 from SystemTestSpy import (
 	_blockUntilConditionMet,
+	DEFAULT_INTERVAL_BETWEEN_EVAL_SECONDS,
 	_getLib,
 	_nvdaSpyAlias,
 	configManager
@@ -217,7 +218,7 @@ class NvdaLib:
 		_blockUntilConditionMet(
 			getValue=lambda: _testRemoteServer(self._spyServerURI, log=False),
 			giveUpAfterSeconds=connectionTimeoutSecs,
-			intervalBetweenSeconds=0.3,
+			intervalBetweenSeconds=DEFAULT_INTERVAL_BETWEEN_EVAL_SECONDS,
 			errorMessage=f"Unable to connect to {self._spyAlias}",
 		)
 		builtIn.log(f"Connecting to {self._spyAlias}", level='DEBUG')
