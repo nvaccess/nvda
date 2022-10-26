@@ -208,6 +208,8 @@ roleLabels: typing.Dict[controlTypes.Role, str] = {
 	controlTypes.Role.SUGGESTION: _("sggstn"),
 	# Translators: Displayed in braille when an object is a definition.
 	controlTypes.Role.DEFINITION: _("definition"),
+	# Translators: Displayed in braille when an object is a switch control
+	controlTypes.Role.SWITCH: _("swtch"),
 }
 
 positiveStateLabels = {
@@ -251,6 +253,8 @@ positiveStateLabels = {
 	controlTypes.State.HASFORMULA: _("frml"),
 	# Translators: Displayed in braille when there is a comment for a spreadsheet cell or piece of text in a document.
 	controlTypes.State.HASCOMMENT: _("cmnt"),
+	# Translators: Displayed in braille when a control is switched on
+	controlTypes.State.ON: "⣏⣿⣹",
 }
 negativeStateLabels = {
 	# Translators: Displayed in braille when an object is not selected.
@@ -259,6 +263,8 @@ negativeStateLabels = {
 	controlTypes.State.PRESSED: u"⢎⣀⡱",
 	# Displayed in braille when an object (e.g. a check box) is not checked.
 	controlTypes.State.CHECKED: u"⣏⣀⣹",
+	# Displayed in braille when an object (e.g. a switch control) is switched off.
+	controlTypes.State.ON: "⣏⣀⣹",
 }
 
 landmarkLabels = {
