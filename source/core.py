@@ -419,27 +419,72 @@ def _handleNVDAModuleCleanupBeforeGUIExit():
 	brailleViewer.destroyBrailleViewer()
 
 
-def _initializeObjectCaches():
-	import api
-	import NVDAObjects
+def _pollForForegroundHWND() -> int:
+	import ui
 	import winUser
+	foregroundHWND = winUser.getForegroundWindow()
+	_hasWarned = False
+	WARN_AFTER_SECS = 5
+	MAX_WAIT_TIME_SECS = 20
+	waitForForegroundHWND_startTime = time.time()
+	while True:
+		# while not foregroundHWND:
+		_timeElapsed = time.time() - waitForForegroundHWND_startTime
+		if (
+			not _hasWarned
+			and _timeElapsed > WARN_AFTER_SECS
+		):
+			_hasWarned = True
+			# Allow for braille / speech to be understood before exiting.
+			# Unfortunately we cannot block with a dialog as NVDA cannot read dialogs yet.
+			ui.message(_(
+				# Translators: Message when NVDA is having an issue starting up
+				"NVDA is failing to fetch the foreground window. "
+				"If this continues, NVDA will quit starting in %d seconds." % (MAX_WAIT_TIME_SECS - WARN_AFTER_SECS)
+			))
 
-	foregroundWindowHWND = winUser.getForegroundWindow()
-	while not foregroundWindowHWND:
+		if _timeElapsed > MAX_WAIT_TIME_SECS:
+			log.critical("NVDA could not fetch the foreground window. Exiting NVDA.")
+			# Raising exception here causes core.main to exit and NVDA to fail to start
+			raise NVDANotInitializedError("Could not fetch foreground window")
+
 		# The foreground window can be NULL in certain circumstances,
 		# such as when a window is losing activation.
 		# This should not remain the case for an extended period of time.
 		log.debugWarning("Foreground window not found, fetching again")
 		time.sleep(0.1)
-		foregroundWindowHWND = winUser.getForegroundWindow()
-	foregroundObject = NVDAObjects.window.Window(windowHandle=foregroundWindowHWND)
+		foregroundHWND = winUser.getForegroundWindow()
+
+	return foregroundHWND
+
+
+def _initializeObjectCaches():
+	"""
+	Caches the desktop object.
+	This may make information from the desktop window available on the lock screen,
+	however no known exploit is known for this.
+	2023.1 plans to ensure the desktopObject is available only when signed-in.
+
+	Also initializes other object caches to the foreground window.
+	Previously the object that was cached was the desktopObject,
+	however this may leak secure information to the lock screen.
+	The foreground window is set as the object cache,
+	as the foreground window would already be accessible on the lock screen (e.g. Magnifier).
+	It also is more intuitive that NVDA focuses the foreground window,
+	as opposed to the desktop object.
+	"""
+	import api
+	import NVDAObjects
+	import winUser
+
+	desktopObject = NVDAObjects.window.Window(windowHandle=winUser.getDesktopWindow())
+	api.setDesktopObject(desktopObject)
+	foregroundHWND = _pollForForegroundHWND()
+	foregroundObject = NVDAObjects.window.Window(windowHandle=foregroundHWND)
 	api.setForegroundObject(foregroundObject)
 	api.setFocusObject(foregroundObject)
 	api.setNavigatorObject(foregroundObject)
 	api.setMouseObject(foregroundObject)
-
-	desktopObject = NVDAObjects.window.Window(windowHandle=winUser.getDesktopWindow())
-	api.setDesktopObject(desktopObject)
 
 
 def main():
