@@ -672,7 +672,10 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		# Cells are grouped by row, so in most cases, we simply need to search in the right direction.
 		for info in self._iterTableCells(tableID, direction=movement, startPos=startPos):
 			cell = self._getTableCellCoords(info)
-			if cell.row <= destRow < cell.row + cell.rowSpan and cell.col <= destCol < cell.col + cell.colSpan:
+			if (
+				cell.row <= destRow < (cell.row + cell.rowSpan)
+				and cell.col <= destCol < (cell.col + cell.colSpan)
+			):
 				return info
 			elif cell.row > destRow and movement == "next":
 				# Optimisation: We've gone forward past destRow, so we know we won't find the cell.
@@ -689,7 +692,10 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 			# Therefore, try searching backwards.
 			for info in self._iterTableCells(tableID, direction="previous", startPos=startPos):
 				cell = self._getTableCellCoords(info)
-				if cell.row <= destRow < cell.row + cell.rowSpan and cell.col <= destCol < cell.col + cell.colSpan:
+			if (
+				cell.row <= destRow < (cell.row + cell.rowSpan)
+				and cell.col <= destCol < (cell.col + cell.colSpan)
+			):
 					return info
 			else:
 				raise LookupError
