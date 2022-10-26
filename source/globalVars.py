@@ -38,6 +38,11 @@ class DefaultAppArgs(argparse.Namespace):
 	This is also set to True when NVDA is running on a secure screen
 	(systemUtils._isSecureDesktop() returns True)
 	and the serviceDebug parameter has not been set.
+
+	For more information, refer to devDocs/technicalDesignOverview.md 'Logging in secure mode'
+	and the following userGuide sections:
+	 - SystemWideParameters (information on the serviceDebug parameter)
+	 - SecureMode and SecureScreens
 	"""
 	disableAddons: bool = False
 	debugLogging: bool = False

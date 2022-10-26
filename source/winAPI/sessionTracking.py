@@ -155,6 +155,11 @@ def isWindowsLocked() -> bool:
 		# we are in secure mode and on a secure screen,
 		# e.g. on the sign-in screen.
 		# _isSecureDesktop may also return True on the lock screen before a user has signed in.
+
+		# For more information, refer to devDocs/technicalDesignOverview.md 'Logging in secure mode'
+		# and the following userGuide sections:
+		# - SystemWideParameters (information on the serviceDebug parameter)
+		# - SecureMode and SecureScreens
 		return False
 	lockStateTracked = _hasLockStateBeenTracked()
 	if lockStateTracked:
