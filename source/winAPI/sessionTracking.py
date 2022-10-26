@@ -31,6 +31,8 @@ from typing import (
 	Set,
 	Optional,
 )
+
+from systemUtils import _isSecureDesktop
 from winAPI.wtsApi32 import (
 	WTSINFOEXW,
 	WTSQuerySessionInformation,
@@ -152,6 +154,17 @@ def isWindowsLocked() -> bool:
 	Checks if the Window lockscreen is active.
 	Not to be confused with the Windows sign-in screen, a secure screen.
 	"""
+	if _isSecureDesktop():
+		# If this is the Secure Desktop,
+		# we are in secure mode and on a secure screen,
+		# e.g. on the sign-in screen.
+		# _isSecureDesktop may also return True on the lock screen before a user has signed in.
+
+		# For more information, refer to devDocs/technicalDesignOverview.md 'Logging in secure mode'
+		# and the following userGuide sections:
+		# - SystemWideParameters (information on the serviceDebug parameter)
+		# - SecureMode and SecureScreens
+		return False
 	lockStateTracked = _hasLockStateBeenTracked()
 	if lockStateTracked:
 		return WindowsTrackedSession.SESSION_LOCK in _currentSessionStates
