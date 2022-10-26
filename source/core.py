@@ -430,6 +430,10 @@ def _pollForForegroundHWND() -> int:
 	waitForForegroundHWND_startTime = time.time()
 
 	while not foregroundHWND:
+		# The foreground window can be NULL in certain circumstances,
+		# such as when a window is losing activation.
+		# This should not remain the case for an extended period of time.
+
 		_timeElapsed = time.time() - waitForForegroundHWND_startTime
 		if (
 			not _hasWarned
@@ -449,9 +453,6 @@ def _pollForForegroundHWND() -> int:
 			# Raising exception here causes core.main to exit and NVDA to fail to start
 			raise NVDANotInitializedError("Could not fetch foreground window")
 
-		# The foreground window can be NULL in certain circumstances,
-		# such as when a window is losing activation.
-		# This should not remain the case for an extended period of time.
 		log.debugWarning("Foreground window not found, fetching again")
 		time.sleep(0.1)
 		foregroundHWND = winUser.getForegroundWindow()
