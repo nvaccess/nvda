@@ -427,6 +427,7 @@ def _pollForForegroundHWND() -> int:
 	_hasWarned = False
 	WARN_AFTER_SECS = 5
 	MAX_WAIT_TIME_SECS = 20
+	POLL_INTERVAL_SECS = 0.1
 	waitForForegroundHWND_startTime = time.time()
 
 	while not foregroundHWND:
@@ -454,7 +455,7 @@ def _pollForForegroundHWND() -> int:
 			raise NVDANotInitializedError("Could not fetch foreground window")
 
 		log.debugWarning("Foreground window not found, fetching again")
-		time.sleep(0.1)
+		time.sleep(POLL_INTERVAL_SECS)
 		foregroundHWND = winUser.getForegroundWindow()
 
 	return foregroundHWND
