@@ -422,13 +422,14 @@ def _handleNVDAModuleCleanupBeforeGUIExit():
 def _pollForForegroundHWND() -> int:
 	import ui
 	import winUser
+
 	foregroundHWND = winUser.getForegroundWindow()
 	_hasWarned = False
 	WARN_AFTER_SECS = 5
 	MAX_WAIT_TIME_SECS = 20
 	waitForForegroundHWND_startTime = time.time()
-	while True:
-		# while not foregroundHWND:
+
+	while not foregroundHWND:
 		_timeElapsed = time.time() - waitForForegroundHWND_startTime
 		if (
 			not _hasWarned
