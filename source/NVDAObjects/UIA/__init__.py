@@ -41,6 +41,7 @@ from UIAHandler.utils import (
 	iterUIARangeByUnit,
 	UIAMixedAttributeError,
 	UIATextRangeFromElement,
+	_shouldUseWindowsTerminalNotifications,
 )
 from NVDAObjects.window import Window
 from NVDAObjects import (
@@ -1211,7 +1212,10 @@ class UIA(Window):
 			winConsoleUIA.findExtraOverlayClasses(self, clsList)
 		elif UIAClassName in _all_wt_UIAClassNames:
 			from . import winConsoleUIA
-			clsList.append(winConsoleUIA.WinTerminalUIA)
+			if _shouldUseWindowsTerminalNotifications():
+				clsList.append(winConsoleUIA._NotificationsBasedWinTerminalUIA)
+			else:
+				clsList.append(winConsoleUIA._DiffBasedWinTerminalUIA)
 
 		# Add editableText support if UIA supports a text pattern
 		if self.TextInfo==UIATextInfo:
@@ -2100,7 +2104,13 @@ class UIA(Window):
 		# Ideally, we wouldn't use getPropertiesBraille directly.
 		braille.handler.message(braille.getPropertiesBraille(name=self.name, role=self.role))
 
-	def event_UIA_notification(self, notificationKind=None, notificationProcessing=UIAHandler.NotificationProcessing_CurrentThenMostRecent, displayString=None, activityId=None):
+	def event_UIA_notification(
+			self,
+			notificationKind: Optional[int] = None,
+			notificationProcessing: Optional[int] = UIAHandler.NotificationProcessing_CurrentThenMostRecent,
+			displayString: Optional[str] = None,
+			activityId: Optional[str] = None
+	):
 		"""
 		Introduced in Windows 10 Fall Creators Update (build 16299).
 		This base implementation announces all notifications from the UIA element.
