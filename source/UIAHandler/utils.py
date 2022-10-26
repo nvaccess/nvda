@@ -6,6 +6,7 @@
 import operator
 from comtypes import COMError
 import config
+from config.featureFlagEnums import WindowsTerminalStrategyFlag
 import ctypes
 import UIAHandler
 import weakref
@@ -362,3 +363,8 @@ def _shouldSelectivelyRegister() -> bool:
 		return False
 	else:
 		return winVersion.getWinVer() >= winVersion.WIN11_22H2
+
+
+def _shouldUseWindowsTerminalNotifications() -> bool:
+	"Determines whether to use notifications for new text reporting in Windows Terminal."
+	return config.conf["terminals"]["wtStrategy"] == WindowsTerminalStrategyFlag.NOTIFICATIONS

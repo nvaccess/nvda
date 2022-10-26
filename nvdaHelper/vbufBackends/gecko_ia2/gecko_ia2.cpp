@@ -89,7 +89,7 @@ CComPtr<IAccessible2> GeckoVBufBackend_t::getRelationElement(
 const wchar_t EMBEDDED_OBJ_CHAR = 0xFFFC;
 // Always render a space for "empty" / metadata only
 // text leaf nodes so the user can access them.
-constexpr wchar_t* EMPTY_TEXT_NODE {L" "};
+constexpr const wchar_t EMPTY_TEXT_NODE[]{L" "};
 
 static IAccessible2* IAccessible2FromIdentifier(int docHandle, int ID) {
 	IAccessible* pacc=NULL;
@@ -340,7 +340,7 @@ CComPtr<IAccessible2> getTextBoxInComboBox(
 	if (FAILED(comboBox->get_accChild(CComVariant(1), &childDisp))) {
 		return nullptr;
 	}
-	CComQIPtr<IAccessible2> child = childDisp;
+	CComQIPtr<IAccessible2> child{childDisp};
 	if (!child) {
 		return nullptr;
 	}
@@ -973,7 +973,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 					// In Gecko, hyperlinks correspond to embedded object chars,
 					// so there's no need to call IAHyperlink::hyperlinkIndex.
 					CComPtr<IAccessibleHyperlink> link = linkGetter->next();
-					CComQIPtr<IAccessible2> childPacc = link;
+					CComQIPtr<IAccessible2> childPacc{link};
 					if(!childPacc) {
 						continue;
 					}
