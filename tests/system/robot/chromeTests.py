@@ -2275,3 +2275,78 @@ def test_ARIASwitchRole():
 		]),
 		message="Report focus",
 	)
+
+
+def test_i13307():
+	"""
+	Even if (to avoid duplication) NVDA may choose to not speak a landmark or region's label
+	when arrowing into a landmark or region with an aria-labelledby,
+	it should still speak the label when junping inside the landmark or region
+	from outside using quicknav or focus.
+	"""
+	_chrome.prepareChrome(
+		"""
+		<p>navigation landmark with aria-label</p>
+		<nav aria-label="label">
+			<button>inner element</button>
+		</nav>
+		<p>Navigation landmark with aria-labelledby</p>
+		<nav aria-labelledby="innerHeading1">
+			<h1 id="innerHeading1">labelled by</h1>
+			<button>inner element</button>
+		</nav>
+		<p>Region with aria-label</p>
+		<section aria-label="label">
+			<button>inner element</button>
+		</section>
+		<p>Region with aria-labelledby</p>
+		<section aria-labelledby="innerHeading2">
+			<h1 id="innerHeading2">labelled by</h1>
+			<button>inner element</button>
+		</section>
+		"""
+	)
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"label",
+			"navigation landmark",
+			"inner element",
+			"button",
+		]),
+		message="jumping into landmark with aria-label should speak label",
+	)
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"labelled by",
+			"navigation landmark",
+			"inner element",
+			"button",
+		]),
+		message="jumping into landmark with aria-labelledby should speak label",
+	)
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"label",
+			"region",
+			"inner element",
+			"button",
+		]),
+		message="jumping into region with aria-label should speak label",
+	)
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"labelled by",
+			"region",
+			"inner element",
+			"button",
+		]),
+		message="jumping into region with aria-labelledby should speak label",
+	)
