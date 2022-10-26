@@ -166,4 +166,11 @@ def _getDesktopName() -> str:
 
 
 def _isSecureDesktop() -> bool:
+	"""
+	When NVDA is running on a secure screen,
+	it is running on the secure desktop.
+	When the serviceDebug parameter is not set,
+	NVDA should run in secure mode when on the secure desktop.
+	globalVars.appArgs.secure being set to True means NVDA is running in secure mode.
+	"""
 	return _getDesktopName() == "Winlogon"

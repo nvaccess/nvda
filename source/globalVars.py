@@ -32,6 +32,13 @@ class DefaultAppArgs(argparse.Namespace):
 	language: str = "en"
 	minimal: bool = False
 	secure: bool = False
+	"""
+	When this is True, NVDA is running in secure mode.
+	This is set to True when NVDA starts with the --secure parameter.
+	This is also set to True when NVDA is running on a secure screen
+	(systemUtils._isSecureDesktop() returns True)
+	and the serviceDebug parameter has not been set.
+	"""
 	disableAddons: bool = False
 	debugLogging: bool = False
 	noLogging: bool = False

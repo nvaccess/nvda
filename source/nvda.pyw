@@ -158,7 +158,16 @@ parser.add_argument(
 	)
 )
 parser.add_argument('-m','--minimal',action="store_true",dest='minimal',default=False,help="No sounds, no interface, no start message etc")
-parser.add_argument('-s','--secure',action="store_true",dest='secure',default=False,help="Secure mode (disable Python console)")
+# --secure is used to force secure mode.
+# Documented in the userGuide in #SecureMode.
+parser.add_argument(
+	'-s',
+	'--secure',
+	action="store_true",
+	dest='secure',
+	default=False,
+	help="Starts NVDA in secure mode",  
+)
 parser.add_argument('--disable-addons',action="store_true",dest='disableAddons',default=False,help="Disable all add-ons")
 parser.add_argument('--debug-logging',action="store_true",dest='debugLogging',default=False,help="Enable debug level logging just for this run. This setting will override any other log level (--loglevel, -l) argument given, as well as no logging option.")
 parser.add_argument('--no-logging',action="store_true",dest='noLogging',default=False,help="Disable logging completely for this run. This setting can be overwritten with other log level (--loglevel, -l) switch or if debug logging is specified.")
