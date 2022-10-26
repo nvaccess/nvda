@@ -872,7 +872,7 @@ def test_ariaCheckbox_browseMode():
 	"""
 	Navigate to an unchecked checkbox in reading mode.
 	"""
-	testFile = os.path.join(ARIAExamplesDir, "checkbox", "checkbox-1", "checkbox-1.html")
+	testFile = os.path.join(ARIAExamplesDir, "checkbox", "checkbox.html")
 	_chrome.prepareChrome(
 		f"""
 			<iframe src="{testFile}"></iframe>
