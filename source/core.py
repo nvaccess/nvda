@@ -423,7 +423,16 @@ def _initializeObjectCaches():
 	import api
 	import NVDAObjects
 	import winUser
-	foregroundObject = NVDAObjects.window.Window(windowHandle=winUser.getForegroundWindow())
+
+	foregroundWindowHWND = winUser.getForegroundWindow()
+	while not foregroundWindowHWND:
+		# The foreground window can be NULL in certain circumstances,
+		# such as when a window is losing activation.
+		# This should not remain the case for an extended period of time.
+		log.debugWarning("Foreground window not found, fetching again")
+		time.sleep(0.1)
+		foregroundWindowHWND = winUser.getForegroundWindow()
+	foregroundObject = NVDAObjects.window.Window(windowHandle=foregroundWindowHWND)
 	api.setForegroundObject(foregroundObject)
 	api.setFocusObject(foregroundObject)
 	api.setNavigatorObject(foregroundObject)

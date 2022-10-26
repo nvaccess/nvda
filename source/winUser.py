@@ -18,6 +18,10 @@ import enum
 #dll handles
 user32=windll.user32
 
+# rather than using the ctypes.c_void_p type, which may encourage attempting to dereference
+# what may be an invalid or illegal pointer, we'll treat it as an opaque value.
+HWNDVal = int
+
 LRESULT=c_long
 HCURSOR=c_long
 
@@ -458,7 +462,7 @@ def isDescendantWindow(parentHwnd,childHwnd):
 		return False
 
 
-def getForegroundWindow() -> HWND:
+def getForegroundWindow() -> HWNDVal:
 	return user32.GetForegroundWindow()
 
 def setForegroundWindow(hwnd):
@@ -468,7 +472,7 @@ def setFocus(hwnd):
 	user32.SetFocus(hwnd)
 
 
-def getDesktopWindow() -> HWND:
+def getDesktopWindow() -> HWNDVal:
 	return user32.GetDesktopWindow()
 
 
