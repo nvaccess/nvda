@@ -138,6 +138,9 @@ focus mode is turned on on focused read-only list item
 ARIA details role
 	[Documentation]	Test aria details roles being announced on discovery
 	test_mark_aria_details_role
+i10890
+	[Documentation]	Test sort state is announced on column header when changed with inner button
+	test_i10890
 ARIA switch role
 	[Documentation]	Test aria switch control has appropriate role and states in browse mode and when focused
 	test_ARIASwitchRole
