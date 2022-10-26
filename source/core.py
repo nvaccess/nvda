@@ -479,6 +479,7 @@ def _initializeObjectCaches():
 
 	desktopObject = NVDAObjects.window.Window(windowHandle=winUser.getDesktopWindow())
 	api.setDesktopObject(desktopObject)
+
 	foregroundHWND = _pollForForegroundHWND()
 	foregroundObject = NVDAObjects.window.Window(windowHandle=foregroundHWND)
 	api.setForegroundObject(foregroundObject)
