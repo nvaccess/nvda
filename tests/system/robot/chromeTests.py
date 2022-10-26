@@ -2108,7 +2108,7 @@ def test_focus_mode_on_focusable_read_only_lists():
 
 def test_ARIASwitchRole():
 	"""
-Ensure that ARIA switch controls have an appropriate role and states in browse mode.
+	Ensure that ARIA switch controls have an appropriate role and states in browse mode.
 	"""
 	testFile = os.path.join(ARIAExamplesDir, "switch", "switch.html")
 	_chrome.prepareChrome(

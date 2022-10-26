@@ -254,7 +254,7 @@ positiveStateLabels = {
 	# Translators: Displayed in braille when there is a comment for a spreadsheet cell or piece of text in a document.
 	controlTypes.State.HASCOMMENT: _("cmnt"),
 	# Translators: Displayed in braille when a control is switched on
-	controlTypes.State.ON: u"⣏⣿⣹",
+	controlTypes.State.ON: "⣏⣿⣹",
 }
 negativeStateLabels = {
 	# Translators: Displayed in braille when an object is not selected.
@@ -264,7 +264,7 @@ negativeStateLabels = {
 	# Displayed in braille when an object (e.g. a check box) is not checked.
 	controlTypes.State.CHECKED: u"⣏⣀⣹",
 	# Displayed in braille when an object (e.g. a switch control) is switched off.
-	controlTypes.State.ON: u"⣏⣀⣹",
+	controlTypes.State.ON: "⣏⣀⣹",
 }
 
 landmarkLabels = {
