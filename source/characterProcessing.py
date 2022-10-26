@@ -1,6 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2010-2022 NV Access Limited, World Light Information Limited,
-# Hong Kong Blind Union, Babbage B.V., Julien Cochuyt
+# Hong Kong Blind Union, Babbage B.V., Julien Cochuyt, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -578,7 +578,7 @@ class SpeechSymbolProcessor(object):
 			text = m.group()
 			symbol = self.computedSymbols[text[0]]
 			if self._level >= symbol.level:
-				return u" {count} {char} ".format(count=len(text), char=symbol.replacement)
+				return "  {count} {char} ".format(count=len(text), char=symbol.replacement)
 			else:
 				return " "
 

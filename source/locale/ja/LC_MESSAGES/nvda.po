@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-07 04:25+0000\n"
-"PO-Revision-Date: 2022-09-07 13:26+0900\n"
+"POT-Creation-Date: 2022-10-21 00:02+0000\n"
+"PO-Revision-Date: 2022-10-23 16:54+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 msgid "Native input"
@@ -1100,6 +1100,11 @@ msgstr "カシミール語1級点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Luganda literary braille"
+msgstr "ルガンダ語非縮約点字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Lithuanian 8 dot"
 msgstr "リトアニア語8点点字"
 
@@ -1265,6 +1270,11 @@ msgstr "ロシア語縮約点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Kinyarwanda literary braille"
+msgstr "キンヤルワンダ語非縮約点字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Sanskrit grade 1"
 msgstr "サンスクリット語1級点字"
 
@@ -1277,11 +1287,6 @@ msgstr "ヤクート語1級点字"
 #. braille settings dialog.
 msgid "Swedish 8 dot computer braille"
 msgstr "スウェーデン語8点コンピューター点字"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "Swedish grade 1"
-msgstr "スウェーデン語1級点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1312,6 +1317,21 @@ msgstr "セソト語2級点字"
 #. braille settings dialog.
 msgid "Serbian grade 1"
 msgstr "セルビア語1級点字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swedish uncontracted braille"
+msgstr "スウェーデン語非縮約点字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swedish partially contracted braille"
+msgstr "スウェーデン語一部縮約点字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swedish contracted braille"
+msgstr "スウェーデン語縮約点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1412,6 +1432,18 @@ msgstr "ショサ語1級点字"
 #. braille settings dialog.
 msgid "Xhosa grade 2"
 msgstr "ショサ語2級点字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#. This should be translated to '中文中国汉语通用盲文' in Mandarin.
+msgid "Chinese common braille (simplified Chinese characters)"
+msgstr "中国語共通点字 (簡体字)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#. This should be translated to '中文中国汉语现行盲文（无声调）' in Mandarin.
+msgid "Chinese (China, Mandarin) Current Braille System (no tones)"
+msgstr "中国語(中国、北京語) 従来方式の点字(声調なし)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2360,40 +2392,6 @@ msgstr "ジェスチャーマップファイルエラー"
 msgid "Loading NVDA. Please wait..."
 msgstr "NVDAを読み込み中です。お待ちください..."
 
-#. Translators: This is a warning to users, shown if NVDA cannot determine if
-#. Windows is locked.
-msgid ""
-"NVDA failed to register session tracking. While this instance of NVDA is "
-"running, your desktop will not be secure when Windows is locked. Restart "
-"NVDA? "
-msgstr ""
-"NVDAはセッショントラッキングの登録に失敗しました。このNVDAのインスタンスが実"
-"行されている間はWindowsのロック画面は安全ではありません。NVDAを再起動します"
-"か?"
-
-#. Translators: This is a warning to users, shown if NVDA cannot determine if
-#. Windows is locked.
-msgid "NVDA could not start securely."
-msgstr "NVDAを正常に起動できませんでした"
-
-#. Translators: The screen is oriented so that it is wider than it is tall.
-msgid "Landscape"
-msgstr "横長の向き"
-
-#. Translators: The screen is oriented in such a way that the height is taller than it is wide.
-msgid "Portrait"
-msgstr "縦長の向き"
-
-#. Translators: Reported when the battery is plugged in, and now is charging.
-#, python-format
-msgid "Charging battery. %d percent"
-msgstr "バッテリー %d パーセント 充電中"
-
-#. Translators: Reported when the battery is no longer plugged in, and now is not charging.
-#, python-format
-msgid "Not charging battery. %d percent"
-msgstr "バッテリー %d パーセント 充電していません"
-
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 msgid "NVDA started"
 msgstr "NVDA起動"
@@ -2486,6 +2484,30 @@ msgstr "テーブルの最初の列に移動"
 #. Translators: the description for the last table column script on browseMode documents.
 msgid "moves to the last table column"
 msgstr "テーブルの最後の列に移動"
+
+#. Translators: the description for the sayAll row command
+msgid ""
+"Reads the row horizontally from the current cell rightwards to the last cell "
+"in the row."
+msgstr "現在のセルから行を横方向に行の最後のセルまで読み上げ"
+
+#. Translators: the description for the sayAll row command
+msgid ""
+"Reads the column vertically from the current cell downwards to the last cell "
+"in the column."
+msgstr "現在のセルから列を縦方向に列の最後のセルまで読み上げ"
+
+#. Translators: the description for the speak row command
+msgid ""
+"Reads the current row horizontally from left to right without moving the "
+"system caret."
+msgstr "現在の行をテキストカーソルを移動させずに横方向に読み上げ"
+
+#. Translators: the description for the speak column command
+msgid ""
+"Reads the current column vertically from top to bottom without moving the "
+"system caret."
+msgstr "現在の列をテキストカーソルを移動させずに縦方向に読み上げ"
 
 #. Translators: The message announced when toggling the include layout tables browse mode setting.
 msgid "layout tables off"
@@ -2926,16 +2948,14 @@ msgid "report tables on"
 msgstr "テーブルを報告する"
 
 #. Translators: Input help mode message for toggle report table row/column headers command.
-msgid "Toggles on and off the reporting of table row and column headers"
-msgstr "テーブルの行列見出しの報告の切り替え"
+msgid "Cycle through the possible modes to report table row and column headers"
+msgstr "テーブルの行と列の見出しの報告の切り替え"
 
-#. Translators: The message announced when toggling the report table row/column headers document formatting setting.
-msgid "report table row and column headers off"
-msgstr "テーブルの行列見出しを報告しない"
-
-#. Translators: The message announced when toggling the report table row/column headers document formatting setting.
-msgid "report table row and column headers on"
-msgstr "テーブルの行列見出しを報告する"
+#. Translators: Reported when the user cycles through report table header modes.
+#. {mode} will be replaced with the mode; e.g. None, Rows and columns, Rows or Columns.
+#, python-brace-format
+msgid "Report table headers {mode}"
+msgstr "テーブルの見出しの報告 {mode}"
 
 #. Translators: Input help mode message for toggle report table cell coordinates command.
 msgid "Toggles on and off the reporting of table cell coordinates"
@@ -3360,6 +3380,24 @@ msgid ""
 msgstr ""
 "レビューカーソルを現在のナビゲーターオブジェクトの次の行へ移動して読み上げ"
 
+#. Translators: Input help mode message for move review cursor to previous page command.
+msgid ""
+"Moves the review cursor to the previous page of the current navigator object "
+"and speaks it"
+msgstr ""
+"レビューカーソルを現在のナビゲータオブジェクトの前のページに移動して読み上げ"
+
+#. Translators: a message reported when movement by page is unsupported
+msgid "Movement by page not supported"
+msgstr "ページ移動はサポートされていません"
+
+#. Translators: Input help mode message for move review cursor to next page command.
+msgid ""
+"Moves the review cursor to the next page of the current navigator object and "
+"speaks it"
+msgstr ""
+"レビューカーソルを現在のナビゲータオブジェクトの次のページに移動して読み上げ"
+
 #. Translators: Input help mode message for move review cursor to bottom line command.
 msgid ""
 "Moves the review cursor to the bottom line of the current navigator object "
@@ -3622,6 +3660,16 @@ msgstr ""
 "現在のアプリのステータスバーの報告。2回押すとスペルを報告。3回押すとステータ"
 "スバーをクリップボードにコピー"
 
+#. Translators: Description for a keyboard command which reports the
+#. accelerator key of the currently focused object.
+msgid "Reports the shortcut key of the currently focused object"
+msgstr "現在フォーカスされているオブジェクトのショートカットキーの報告"
+
+#. Translators: reported when a user requests the accelerator key
+#. of the currently focused object, but there is none set.
+msgid "No shortcut key"
+msgstr "ショートカットキーなし"
+
 #. Translators: Input help mode message for toggle mouse tracking command.
 msgid "Toggles the reporting of information as the mouse moves"
 msgstr "マウスカーソル移動の報告の切り替え"
@@ -3799,24 +3847,6 @@ msgstr "可能な場合に自動的にフォーカスを移動する"
 #. Translators: Input help mode message for report battery status command.
 msgid "Reports battery status and time remaining if AC is not plugged in"
 msgstr "電源に接続していない時にバッテリー残量と残り時間を報告"
-
-#. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
-msgid "No system battery"
-msgstr "システムバッテリーなし"
-
-#. Translators: This is presented to inform the user of the current battery percentage.
-#, python-format
-msgid "%d percent"
-msgstr "%dパーセント"
-
-#. Translators: This is presented when AC power is connected such as when recharging a laptop battery.
-msgid "AC power on"
-msgstr "AC電源オン"
-
-#. Translators: This is the estimated remaining runtime of the laptop battery.
-#, python-brace-format
-msgid "{hours:d} hours and {minutes:d} minutes remaining"
-msgstr "残り{hours:d}時間{minutes:d}分"
 
 #. Translators: Input help mode message for pass next key through command.
 msgid ""
@@ -6336,7 +6366,7 @@ msgstr "Copyright (C) {years} NVDA Contributors"
 #, python-brace-format
 msgid ""
 "{longName} ({name})\n"
-"Version: {version}\n"
+"Version: {version} ({version_detailed})\n"
 "URL: {url}\n"
 "{copyright}\n"
 "\n"
@@ -6357,7 +6387,7 @@ msgid ""
 "menu."
 msgstr ""
 "{longName} ({name})\n"
-"Version: {version}\n"
+"Version: {version} ({version_detailed})\n"
 "URL: {url}\n"
 "{copyright}\n"
 "\n"
@@ -6400,6 +6430,12 @@ msgstr ""
 "オブジェクトは、画面左端から{left:.1f}パーセント、上端から{top:.1f}パーセント"
 "にあり、画面の幅の{width:.1f}パーセント、高さの{height:.1f}パーセントを占めて"
 "います"
+
+#. Translators: This is presented to inform the user of a progress bar percentage.
+#. Translators: This is presented to inform the user of the current battery percentage.
+#, python-format
+msgid "%d percent"
+msgstr "%dパーセント"
 
 #. Translators: a message announcing a candidate's character and description.
 #, python-brace-format
@@ -7209,6 +7245,29 @@ msgstr "NVDA起動時に点字ビューアーを表示(&S)"
 #. whether hovering mouse routes to the cell.
 msgid "&Hover for cell routing"
 msgstr "マウスホバーでタッチカーソル操作(&H)"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+#. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Off"
+msgstr "なし"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Rows and columns"
+msgstr "行と列"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Rows"
+msgstr "行"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Columns"
+msgstr "列"
 
 #. Translators: Label for an option in NVDA settings.
 #. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
@@ -8023,6 +8082,10 @@ msgstr "チェック"
 #. Translators: This is presented when a three state check box is half checked.
 msgid "half checked"
 msgstr "一部チェック"
+
+#. Translators: This is presented when a three state toggle button is half pressed.
+msgid "half pressed"
+msgstr "一部押されています"
 
 #. Translators: This is presented when the control is a read-only control such as read-only edit box.
 msgid "read only"
@@ -9970,12 +10033,6 @@ msgstr "行番号(&N)"
 msgid "Line &indentation reporting:"
 msgstr "行インデント(&I)"
 
-#. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
-#. Translators: This is the label for a combobox in the
-#. document formatting settings panel.
-msgid "Off"
-msgstr "なし"
-
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
 msgctxt "line indentation setting"
 msgid "Speech"
@@ -10014,10 +10071,10 @@ msgstr "テーブル情報"
 msgid "&Tables"
 msgstr "テーブル(&T)"
 
-#. Translators: This is the label for a checkbox in the
+#. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
-msgid "Row/column h&eaders"
-msgstr "行と列の見出し(&E)"
+msgid "H&eaders"
+msgstr "ヘッダー(&E)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -10130,11 +10187,29 @@ msgstr "開発者用スクラッチパッドのフォルダーを開く"
 msgid "Microsoft UI Automation"
 msgstr "Microsoft UIオートメーション"
 
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid ""
-"Enable &selective registration for UI Automation events and property changes"
-msgstr "UIオートメーションのイベントとプロパティ変更を選択的に取得(&S)"
+#. Translators: This is the label for a combo box for selecting the
+#. means of registering for UI Automation events in the advanced settings panel.
+#. Choices are automatic, selective, and global.
+msgid "Regi&stration for UI Automation events and property changes:"
+msgstr "UIオートメーションのイベントとプロパティ変更の取得(&S)"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA decide whether to register
+#. selectively or globally for UI Automation events.
+msgid "Automatic (prefer selective)"
+msgstr "自動 (選択的を優先)"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA register selectively for UI Automation events
+#. (i.e. not to request events for objects outside immediate focus).
+msgid "Selective"
+msgstr "選択的"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA register for all UI Automation events
+#. in all cases.
+msgid "Global"
+msgstr "グローバル"
 
 #. Translators: Label for the Use UIA with MS Word combobox, in the Advanced settings panel.
 msgctxt "advanced.uiaWithMSWord"
@@ -11271,6 +11346,23 @@ msgstr "{curPercent:.0f}パーセント"
 msgid "at {x}, {y}"
 msgstr "位置 {x}, {y}"
 
+#. Translators: This is the message for a warning shown if NVDA cannot determine if
+#. Windows is locked.
+msgid ""
+"NVDA is unable to determine if Windows is locked. While this instance of "
+"NVDA is running, your desktop will not be secure when Windows is locked. "
+"Restarting Windows may address this. If this error is ongoing then disabling "
+"the Windows lock screen is recommended."
+msgstr ""
+"NVDA が Windows のロック画面を判定できないため、ロック画面でセキュリティ対策"
+"が機能しません。 Windows を再起動するとこの問題に対処できます。このエラーがひ"
+"きつづき起きる場合は Windows のロック画面を無効にすることをお勧めします。"
+
+#. Translators: This is the title for a warning dialog, shown if NVDA cannot determine if
+#. Windows is locked.
+msgid "Lock screen not secure while using NVDA"
+msgstr "ロック画面で NVDA を使用するとセキュリティ対策が機能しません"
+
 #. Translators: Reported when a page reloads (example: after refreshing a webpage).
 msgid "Refreshed"
 msgstr "更新完了"
@@ -11347,6 +11439,36 @@ msgstr ""
 msgid "Make screen black (immediate effect)"
 msgstr "画面を黒にする (即時に有効)"
 
+#. Translators: The screen is oriented so that it is wider than it is tall.
+msgid "Landscape"
+msgstr "横長の向き"
+
+#. Translators: The screen is oriented in such a way that the height is taller than it is wide.
+msgid "Portrait"
+msgstr "縦長の向き"
+
+#. Translators: This is presented when there is an error retrieving the battery status.
+msgid "Unknown power status"
+msgstr "電源の状態 不明"
+
+#. Translators: This is presented when there is no battery such as desktop computers
+#. and laptops with battery pack removed.
+msgid "No system battery"
+msgstr "システムバッテリーなし"
+
+#. Translators: Reported when the battery is plugged in, and now is charging.
+msgid "Charging battery"
+msgstr "バッテリー 充電中"
+
+#. Translators: Reported when the battery is no longer plugged in, and now is not charging.
+msgid "AC disconnected"
+msgstr "AC電源が切断されています"
+
+#. Translators: This is the estimated remaining runtime of the laptop battery.
+#, python-brace-format
+msgid "{hours:d} hours and {minutes:d} minutes remaining"
+msgstr "残り{hours:d}時間{minutes:d}分"
+
 msgid "Taskbar"
 msgstr "タスクバー"
 
@@ -11358,17 +11480,6 @@ msgstr "RGB 赤{rgb.red} 緑{rgb.green} 青{rgb.blue}"
 #, python-format
 msgid "%s items"
 msgstr "%s項目"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#. Translators: a message reported in the SetColumnHeader script for Excel.
-#. Translators: a message reported in the SetRowHeader script for Excel.
-msgid ""
-"Cannot set headers. Please enable reporting of table headers in Document "
-"Formatting Settings"
-msgstr ""
-"行列見出しを設定できません。書式とドキュメント情報の設定でテーブルの行列見出"
-"しの報告を有効にしてください。"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #, python-brace-format
@@ -11590,6 +11701,10 @@ msgstr "コメントのスレッド {comment} 更新者 {author} 返信 {numRepl
 #. Translators: A message in Excel when there is no comment thread
 msgid "No comment thread on this cell"
 msgstr "セルにコメントのスレッドなし"
+
+#. Translators: announced when moving outside of a table in an Excel spreadsheet.
+msgid "Out of table"
+msgstr "テーブルの外"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -12136,8 +12251,8 @@ msgstr "ポイント{previousIndex}から変化なし "
 
 #. Translators: For line charts, indicates an increase from the previous data point on the left
 #, python-brace-format
-msgid "Increased by {incrementValue} from point {previousIndex}, "
-msgstr "ポイント{previousIndex}から{incrementValue}増加 "
+msgid "increased by {incrementValue} from point {previousIndex}, "
+msgstr "ポイント {previousIndex} から {incrementValue} 増加"
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
 #, python-brace-format
@@ -12986,3 +13101,6 @@ msgstr "2行の行間"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5行の行間"
+
+#~ msgid "NVDA could not start securely."
+#~ msgstr "NVDAを正常に起動できませんでした"

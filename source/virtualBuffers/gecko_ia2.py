@@ -155,10 +155,14 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			role = controlTypes.Role.REGION
 		elif xmlRoles[0] == "switch":
 			# role="switch" gets mapped to IA2_ROLE_TOGGLE_BUTTON, but it uses the
-			# checked state instead of pressed. The simplest way to deal with this
-			# identity crisis is to map it to a check box.
-			role = controlTypes.Role.CHECKBOX
+			# checked state instead of pressed.
+			# We want to map this to our own Switch role and On state.
+			role = controlTypes.Role.SWITCH
 			states.discard(controlTypes.State.PRESSED)
+			states.discard(controlTypes.State.CHECKABLE)
+			if controlTypes.State.CHECKED in states:
+				states.discard(controlTypes.State.CHECKED)
+				states.add(controlTypes.State.ON)
 		attrs['role']=role
 		attrs['states']=states
 		if level != "" and level is not None:

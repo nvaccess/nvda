@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022 NV Access Limited
+# Copyright (C) 2022 NV Access Limited, Bill Dengler
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -65,6 +65,26 @@ class BoolFlag(DisplayStringEnum):
 				", DEFAULT must be combined with a 'behavior for default' to be Truthy or Falsy"
 			)
 		return self == BoolFlag.ENABLED
+
+
+class WindowsTerminalStrategyFlag(DisplayStringEnum):
+	"""
+	A feature flag for defining how new text is calculated in Windows Terminal
+	(wt.exe).
+	"""
+
+	@property
+	def _displayStringLabels(self):
+		return {
+			# Translators: Label for an option in NVDA settings.
+			self.DIFFING: _("Diffing"),
+			# Translators: Label for an option in NVDA settings.
+			self.NOTIFICATIONS: _("UIA notifications"),
+		}
+
+	DEFAULT = enum.auto()
+	DIFFING = enum.auto()
+	NOTIFICATIONS = enum.auto()
 
 
 def getAvailableEnums() -> typing.Generator[typing.Tuple[str, FlagValueEnum], None, None]:
