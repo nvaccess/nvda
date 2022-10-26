@@ -20,6 +20,7 @@ from typing import (
 from enum import IntEnum
 
 MAX_LINES = 250  # give up after searching this many lines
+PREFERRED_CHUNK_SIZE = 1024  # preferred size of chunk sent to synthesizer at one time
 
 
 class _Offset(IntEnum):
@@ -74,9 +75,8 @@ def _splitParagraphIntoChunks(paragraph: str) -> Generator[str, None, None]:
 	though responsiveness may not be optimal.
 	"""
 	from documentNavigation.sentenceHelper import _findEndOfSentence
-	CHUNK_SIZE = 1024
 	paragraphLen = len(paragraph)
-	if paragraphLen <= CHUNK_SIZE:
+	if paragraphLen <= PREFERRED_CHUNK_SIZE:
 		yield paragraph
 		return
 	sentenceEndPoints: List[int] = []
@@ -87,7 +87,7 @@ def _splitParagraphIntoChunks(paragraph: str) -> Generator[str, None, None]:
 	chunkStart = chunkEnd = startIndex = endIndex = 0
 	while endIndex < len(sentenceEndPoints):
 		chunkLength = sentenceEndPoints[endIndex] - chunkStart
-		if chunkLength > CHUNK_SIZE:
+		if chunkLength > PREFERRED_CHUNK_SIZE:
 			if endIndex > startIndex:
 				chunkEnd = sentenceEndPoints[endIndex - 1]
 			else:
