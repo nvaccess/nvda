@@ -141,3 +141,6 @@ ARIA details role
 ARIA switch role
 	[Documentation]	Test aria switch control has appropriate role and states in browse mode and when focused
 	test_ARIASwitchRole
+i13307
+	[Documentation]	ensure aria-labelledby on a landmark or region is automatically spoken when jumping inside from outside using focus in browse mode
+	test_i13307
