@@ -166,7 +166,7 @@ parser.add_argument(
 	action="store_true",
 	dest='secure',
 	default=False,
-	help="Starts NVDA in secure mode",  
+	help="Starts NVDA in secure mode",
 )
 parser.add_argument('--disable-addons',action="store_true",dest='disableAddons',default=False,help="Disable all add-ons")
 parser.add_argument('--debug-logging',action="store_true",dest='debugLogging',default=False,help="Enable debug level logging just for this run. This setting will override any other log level (--loglevel, -l) argument given, as well as no logging option.")
