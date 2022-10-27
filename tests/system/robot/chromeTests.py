@@ -2106,6 +2106,55 @@ def test_focus_mode_on_focusable_read_only_lists():
 	)
 
 
+def test_i10890():
+	"""
+	Ensure that sort state is announced on a column header when changed with inner button
+	"""
+	spy = _NvdaLib.getSpyLib()
+	# Chrome sometimes exposes tables as clickable, sometimes not.
+	# This test does not need to know, so disable reporting of clickables.
+	spy.set_configValue(["documentFormatting", "reportClickable"], False)
+	testFile = os.path.join(ARIAExamplesDir, "grid", "datagrids.html")
+	_chrome.prepareChrome(
+		f"""
+			<iframe src="{testFile}"></iframe>
+		"""
+	)
+	# Jump to the Example 2 heading
+	_chrome.getSpeechAfterKey("3")
+	actualSpeech = _chrome.getSpeechAfterKey("3")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"Example 2: Sortable Data Grid With Editable Cells",
+			"heading",
+			"level 3",
+		])
+	)
+	# Jump to the table
+	actualSpeech = _chrome.getSpeechAfterKey("t")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"Transactions January 1 through January 7",
+			"table",
+			"with 8 rows and 6 columns",
+			"row 1",
+			"column 1",
+			"sorted ascending",
+			"Date",
+			"button",
+		])
+	)
+	# Press the button
+	actualSpeech = _chrome.getSpeechAfterKey("space")
+	# and ensure that the new sort state is spoken.
+	_asserts.strings_match(
+		actualSpeech,
+		"sorted descending",
+	)
+
+
 def test_ARIASwitchRole():
 	"""
 	Ensure that ARIA switch controls have an appropriate role and states in browse mode.
@@ -2225,4 +2274,79 @@ def test_ARIASwitchRole():
 			"off",
 		]),
 		message="Report focus",
+	)
+
+
+def test_i13307():
+	"""
+	Even if (to avoid duplication) NVDA may choose to not speak a landmark or region's label
+	when arrowing into a landmark or region with an aria-labelledby,
+	it should still speak the label when junping inside the landmark or region
+	from outside using quicknav or focus.
+	"""
+	_chrome.prepareChrome(
+		"""
+		<p>navigation landmark with aria-label</p>
+		<nav aria-label="label">
+			<button>inner element</button>
+		</nav>
+		<p>Navigation landmark with aria-labelledby</p>
+		<nav aria-labelledby="innerHeading1">
+			<h1 id="innerHeading1">labelled by</h1>
+			<button>inner element</button>
+		</nav>
+		<p>Region with aria-label</p>
+		<section aria-label="label">
+			<button>inner element</button>
+		</section>
+		<p>Region with aria-labelledby</p>
+		<section aria-labelledby="innerHeading2">
+			<h1 id="innerHeading2">labelled by</h1>
+			<button>inner element</button>
+		</section>
+		"""
+	)
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"label",
+			"navigation landmark",
+			"inner element",
+			"button",
+		]),
+		message="jumping into landmark with aria-label should speak label",
+	)
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"labelled by",
+			"navigation landmark",
+			"inner element",
+			"button",
+		]),
+		message="jumping into landmark with aria-labelledby should speak label",
+	)
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"label",
+			"region",
+			"inner element",
+			"button",
+		]),
+		message="jumping into region with aria-label should speak label",
+	)
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"labelled by",
+			"region",
+			"inner element",
+			"button",
+		]),
+		message="jumping into region with aria-labelledby should speak label",
 	)
