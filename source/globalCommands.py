@@ -1025,6 +1025,7 @@ class GlobalCommands(ScriptableObject):
 			speech.speakObject(obj)
 		else:
 			ui.message(gui.blockAction.Context.WINDOWS_LOCKED.translatedMessage)
+			return
 
 	@script(
 		description=_(
@@ -1280,6 +1281,7 @@ class GlobalCommands(ScriptableObject):
 			# before setting focus to this object
 			if objectBelowLockScreenAndWindowsIsLocked(obj):
 				ui.message(gui.blockAction.Context.WINDOWS_LOCKED.translatedMessage)
+				return
 			else:
 				obj.setFocus()
 
@@ -1330,6 +1332,7 @@ class GlobalCommands(ScriptableObject):
 			speech.speakObject(curObject, reason=controlTypes.OutputReason.FOCUS)
 		else:
 			ui.reviewMessage(gui.blockAction.Context.WINDOWS_LOCKED.translatedMessage)
+			return
 
 	@script(
 		# Translators: Input help mode message for move to next object command.
@@ -1359,6 +1362,7 @@ class GlobalCommands(ScriptableObject):
 			speech.speakObject(curObject, reason=controlTypes.OutputReason.FOCUS)
 		else:
 			ui.reviewMessage(gui.blockAction.Context.WINDOWS_LOCKED.translatedMessage)
+			return
 
 	@script(
 		# Translators: Input help mode message for move to previous object command.
@@ -1387,6 +1391,7 @@ class GlobalCommands(ScriptableObject):
 			speech.speakObject(curObject, reason=controlTypes.OutputReason.FOCUS)
 		else:
 			ui.reviewMessage(gui.blockAction.Context.WINDOWS_LOCKED.translatedMessage)
+			return
 
 	@script(
 		# Translators: Input help mode message for move to first child object command.
@@ -1417,6 +1422,7 @@ class GlobalCommands(ScriptableObject):
 			speech.speakObject(curObject, reason=controlTypes.OutputReason.FOCUS)
 		else:
 			ui.reviewMessage(gui.blockAction.Context.WINDOWS_LOCKED.translatedMessage)
+			return
 
 	@script(
 		description=_(
@@ -1491,6 +1497,7 @@ class GlobalCommands(ScriptableObject):
 			)
 		else:
 			ui.reviewMessage(gui.blockAction.Context.WINDOWS_LOCKED.translatedMessage)
+			return
 
 	@script(
 		# Translators: Input help mode message for move review cursor to previous line command.
@@ -1515,6 +1522,7 @@ class GlobalCommands(ScriptableObject):
 		# before announcing this object
 		if objectBelowLockScreenAndWindowsIsLocked(info.obj):
 			ui.reviewMessage(gui.blockAction.Context.WINDOWS_LOCKED.translatedMessage)
+			return
 		else:
 			info.expand(textInfos.UNIT_LINE)
 			speech.speakTextInfo(
@@ -1579,6 +1587,7 @@ class GlobalCommands(ScriptableObject):
 		# before announcing this object
 		if objectBelowLockScreenAndWindowsIsLocked(newLine.obj):
 			ui.reviewMessage(gui.blockAction.Context.WINDOWS_LOCKED.translatedMessage)
+			return
 		else:
 			speech.speakTextInfo(
 				newLine,
@@ -1613,6 +1622,7 @@ class GlobalCommands(ScriptableObject):
 		# before announcing this object
 		if objectBelowLockScreenAndWindowsIsLocked(info.obj):
 			ui.reviewMessage(gui.blockAction.Context.WINDOWS_LOCKED.translatedMessage)
+			return
 		else:
 			info.expand(textInfos.UNIT_PAGE)
 			speech.speakTextInfo(info, unit=textInfos.UNIT_PAGE, reason=controlTypes.OutputReason.CARET)
@@ -1650,6 +1660,7 @@ class GlobalCommands(ScriptableObject):
 		# before announcing this object
 		if objectBelowLockScreenAndWindowsIsLocked(info.obj):
 			ui.reviewMessage(gui.blockAction.Context.WINDOWS_LOCKED.translatedMessage)
+			return
 		else:
 			speech.speakTextInfo(newPage, unit=textInfos.UNIT_PAGE, reason=controlTypes.OutputReason.CARET)
 
@@ -1674,6 +1685,7 @@ class GlobalCommands(ScriptableObject):
 			)
 		else:
 			ui.reviewMessage(gui.blockAction.Context.WINDOWS_LOCKED.translatedMessage)
+			return
 
 	@script(
 		# Translators: Input help mode message for move review cursor to previous word command.
@@ -1697,6 +1709,7 @@ class GlobalCommands(ScriptableObject):
 		# before announcing this object
 		if objectBelowLockScreenAndWindowsIsLocked(info.obj):
 			ui.reviewMessage(gui.blockAction.Context.WINDOWS_LOCKED.translatedMessage)
+			return
 		else:
 			info.expand(textInfos.UNIT_WORD)
 			speech.speakTextInfo(
@@ -1761,6 +1774,7 @@ class GlobalCommands(ScriptableObject):
 		# before announcing this object
 		if objectBelowLockScreenAndWindowsIsLocked(newWord.obj):
 			ui.reviewMessage(gui.blockAction.Context.WINDOWS_LOCKED.translatedMessage)
+			return
 		else:
 			speech.speakTextInfo(
 				newWord,
@@ -1795,6 +1809,7 @@ class GlobalCommands(ScriptableObject):
 			)
 		else:
 			ui.reviewMessage(gui.blockAction.Context.WINDOWS_LOCKED.translatedMessage)
+			return
 
 	@script(
 		description=_(
@@ -1824,6 +1839,7 @@ class GlobalCommands(ScriptableObject):
 		# before announcing this object
 		if objectBelowLockScreenAndWindowsIsLocked(reviewInfo.obj):
 			ui.reviewMessage(gui.blockAction.Context.WINDOWS_LOCKED.translatedMessage)
+			return
 		else:
 			reviewInfo.expand(textInfos.UNIT_CHARACTER)
 			speech.speakTextInfo(
@@ -1899,6 +1915,7 @@ class GlobalCommands(ScriptableObject):
 		# before announcing this object
 		if objectBelowLockScreenAndWindowsIsLocked(reviewInfo.obj):
 			ui.reviewMessage(gui.blockAction.Context.WINDOWS_LOCKED.translatedMessage)
+			return
 		else:
 			reviewInfo.expand(textInfos.UNIT_CHARACTER)
 			speech.speakTextInfo(
@@ -1934,6 +1951,7 @@ class GlobalCommands(ScriptableObject):
 			)
 		else:
 			ui.reviewMessage(gui.blockAction.Context.WINDOWS_LOCKED.translatedMessage)
+			return
 
 	def _getCurrentLanguageForTextInfo(self, info):
 		curLanguage = None
@@ -3267,6 +3285,7 @@ class GlobalCommands(ScriptableObject):
 			)
 		else:
 			ui.reviewMessage(gui.blockAction.Context.WINDOWS_LOCKED.translatedMessage)
+			return
 
 	@script(
 		description=_(
@@ -3616,6 +3635,7 @@ class GlobalCommands(ScriptableObject):
 			speech.speakObject(newObject, reason=controlTypes.OutputReason.FOCUS)
 		else:
 			ui.reviewMessage(gui.blockAction.Context.WINDOWS_LOCKED.translatedMessage)
+			return
 
 	@script(
 		# Translators: Input help mode message for a touchscreen gesture.
@@ -3644,6 +3664,7 @@ class GlobalCommands(ScriptableObject):
 			speech.speakObject(newObject, reason=controlTypes.OutputReason.FOCUS)
 		else:
 			ui.reviewMessage(gui.blockAction.Context.WINDOWS_LOCKED.translatedMessage)
+			return
 
 	@script(
 		# Translators: Describes a command.
