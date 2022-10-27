@@ -41,6 +41,7 @@ from UIAHandler.utils import (
 	iterUIARangeByUnit,
 	UIAMixedAttributeError,
 	UIATextRangeFromElement,
+	_shouldUseWindowsTerminalNotifications,
 )
 from NVDAObjects.window import Window
 from NVDAObjects import (
@@ -1211,7 +1212,10 @@ class UIA(Window):
 			winConsoleUIA.findExtraOverlayClasses(self, clsList)
 		elif UIAClassName in _all_wt_UIAClassNames:
 			from . import winConsoleUIA
-			clsList.append(winConsoleUIA.WinTerminalUIA)
+			if _shouldUseWindowsTerminalNotifications():
+				clsList.append(winConsoleUIA._NotificationsBasedWinTerminalUIA)
+			else:
+				clsList.append(winConsoleUIA._DiffBasedWinTerminalUIA)
 
 		# Add editableText support if UIA supports a text pattern
 		if self.TextInfo==UIATextInfo:
@@ -1237,6 +1241,11 @@ class UIA(Window):
 		windowHandle=kwargs.get('windowHandle')
 		if isinstance(relation,tuple):
 			UIAElement=UIAHandler.handler.clientObject.ElementFromPointBuildCache(POINT(relation[0],relation[1]),UIAHandler.handler.baseCacheRequest)
+			if UIAHandler._isDebug():
+				log.debug(
+					f"kwargsFromSuper: given coordinates {relation}, "
+					f"fetched element {UIAHandler.handler.getUIAElementDebugString(UIAElement)}"
+				)
 			# Ignore this object if it is non native.
 			if not UIAHandler.handler.isNativeUIAElement(UIAElement):
 				if UIAHandler._isDebug():
@@ -1254,6 +1263,11 @@ class UIA(Window):
 			except COMError:
 				log.debugWarning("getFocusedElement failed", exc_info=True)
 				return False
+			if UIAHandler._isDebug():
+				log.debug(
+					f"kwargsFromSuper: fetched focused element "
+					f"{UIAHandler.handler.getUIAElementDebugString(UIAElement)}"
+				)
 			# Ignore this object if it is non native.
 			if ignoreNonNativeElementsWithFocus and not UIAHandler.handler.isNativeUIAElement(UIAElement):
 				if UIAHandler._isDebug():
@@ -1294,6 +1308,11 @@ class UIA(Window):
 		UIACachedWindowHandle=UIAElement.cachedNativeWindowHandle
 		self.UIAIsWindowElement=bool(UIACachedWindowHandle)
 		if not windowHandle:
+			if UIAHandler._isDebug():
+				log.debug(
+					f"No windowHandle for UIA NvDAObject. "
+					f"Searching UIA element ancestry for nearest windowHandle"
+				)
 			windowHandle=UIAHandler.handler.getNearestWindowHandle(UIAElement)
 		if not windowHandle:
 			raise InvalidNVDAObject("no windowHandle")
@@ -2038,7 +2057,20 @@ class UIA(Window):
 			raise NotImplementedError
 
 	def _get_controllerFor(self):
-		e=self._getUIACacheablePropertyValue(UIAHandler.UIA_ControllerForPropertyId)
+		try:
+			e = self._getUIACacheablePropertyValue(UIAHandler.UIA_ControllerForPropertyId)
+		except KeyError:
+			# #14270: comtypes may raise KeyError as it does not know how to unpack a variant of VT_Unknown | VT_Array.
+			# this may be seen on Windows 7 where
+			# the UIA client library directly returns the provider's VT_Unknown | VT_Array variant,
+			# Which is useless for a client.
+			# On Newer Windows versions, the client library correctly marshals this to
+			# IUIAutomationElementArray per the UI Automation documentation.
+			# UI Automation documentation seems to suggest controllerFor is supported on Windows 7,
+			# So it is unclear as to what versions have this bug.
+			# Best just to catch KeyError.
+			log.debugWarning("Bad controllerFor property", exc_info=True)
+			return []
 		if UIAHandler.handler.clientObject.checkNotSupported(e):
 			return None
 		a=e.QueryInterface(UIAHandler.IUIAutomationElementArray)
@@ -2072,7 +2104,13 @@ class UIA(Window):
 		# Ideally, we wouldn't use getPropertiesBraille directly.
 		braille.handler.message(braille.getPropertiesBraille(name=self.name, role=self.role))
 
-	def event_UIA_notification(self, notificationKind=None, notificationProcessing=UIAHandler.NotificationProcessing_CurrentThenMostRecent, displayString=None, activityId=None):
+	def event_UIA_notification(
+			self,
+			notificationKind: Optional[int] = None,
+			notificationProcessing: Optional[int] = UIAHandler.NotificationProcessing_CurrentThenMostRecent,
+			displayString: Optional[str] = None,
+			activityId: Optional[str] = None
+	):
 		"""
 		Introduced in Windows 10 Fall Creators Update (build 16299).
 		This base implementation announces all notifications from the UIA element.

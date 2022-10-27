@@ -39,7 +39,7 @@ CComPtr<IAccessible2> IAccessible2FromIdentifier(int docHandle, int id) {
 		// so this object is invalid.
 		return nullptr;
 	}
-	CComQIPtr<IServiceProvider> serv = acc;
+	CComQIPtr<IServiceProvider> serv{acc};
 	if (!serv) {
 		return nullptr;
 	}

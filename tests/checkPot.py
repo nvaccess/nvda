@@ -38,7 +38,6 @@ EXPECTED_MESSAGES_WITHOUT_COMMENTS = {
 	'gesture map File Error',
 	'text \\"%s\\" not found',
 	'Find Error',
-	'on',
 	'Type help(object) to get help about object.',
 	'Type exit() to exit the console',
 	'NVDA Python Console',
