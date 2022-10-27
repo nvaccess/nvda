@@ -350,7 +350,7 @@ def _getSpellingSpeechWithoutCharMode(
 
 def getSingleCharDescriptionDelayMS() -> int:
 	"""
-	@returns: 1 second, a default delay.
+	@returns: 1 second, a default delay for delayed character descriptions.
 	In the future, this should fetch its value from a user defined NVDA idle time.
 	Blocked by: https://github.com/nvaccess/nvda/issues/13915
 	"""
@@ -360,43 +360,38 @@ def getSingleCharDescriptionDelayMS() -> int:
 def getSingleCharDescription(
 		text: str,
 		locale: Optional[str] = None,
-		suppressBeepForCap: bool = False,
-		suppressSayCap: bool = False,
-		suppressCapPitchChange: bool = False,
 ) -> Generator[SequenceItemT, None, None]:
+	"""
+	Returns a speech sequence:
+	a pause, the length determined by getSingleCharDescriptionDelayMS,
+	followed by the character description.
+	"""
 	# This should only be used for single chars.
 	if not len(text) == 1:
 		return
 	synth = getSynth()
 	synthConfig = config.conf["speech"][synth.name]
-
-	sayCapForCapitals = (
-		text.isupper()
-		and synthConfig["sayCapForCapitals"]
-		and not suppressSayCap
-	)
-
-	capPitchChange = synthConfig["capPitchChange"] if (
-		synth.isSupported("pitch")
-		and text.isupper()
-		and synthConfig["capPitchChange"]
-		and not suppressCapPitchChange
-	) else 0
-
-	beepForCapitals = (
-		text.isupper()
-		and synthConfig["beepForCapitals"]
-		and not suppressBeepForCap
-	)
-
+	if synth.isSupported("pitch") and text.isupper():
+		capPitchChange = synthConfig["capPitchChange"]
+	else:
+		capPitchChange = 0
 	yield BreakCommand(getSingleCharDescriptionDelayMS())
 	yield from _getSpellingSpeechWithoutCharMode(
 		text,
 		locale,
 		useCharacterDescriptions=True,
-		sayCapForCapitals=sayCapForCapitals,
+		# The pitch change may be useful,
+		# as a pitch change may be harder to notice,
+		# and continuing the shifted pitch
+		# is more intuitive.
 		capPitchChange=capPitchChange,
-		beepForCapitals=beepForCapitals,
+		# #14239: When navigating by character,
+		# there is already a beep or "cap" announcement.
+		# There is no need for a secondary beep
+		# or "cap" announcement when announcing the
+		# the delayed character description.
+		beepForCapitals=False,
+		sayCapForCapitals=False,
 		fallbackToCharIfNoDescription=False,
 	)
 
@@ -1623,18 +1618,6 @@ def _getTextInfoSpeech_considerSpelling(
 			descriptionSequence = list(getSingleCharDescription(
 				textWithFields[0],
 				locale=language,
-				# #14239: When navigating by character,
-				# there is already a beep or "cap" announcement.
-				# There is no need for a secondary beep
-				# or "cap" announcement when announcing the
-				# the delayed character description.
-				suppressBeepForCap=True,
-				suppressSayCap=True,
-				# The pitch change may be useful,
-				# as a pitch change may be harder to notice,
-				# and continuing the shifted pitch
-				# is more intuitive.
-				suppressCapPitchChange=False,
 			))
 			yield descriptionSequence
 
