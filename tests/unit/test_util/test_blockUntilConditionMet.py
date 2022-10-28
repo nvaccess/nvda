@@ -11,12 +11,16 @@ import unittest
 
 from utils.blockUntilConditionMet import blockUntilConditionMet
 
+
 class Test_blockUntilConditionMet(unittest.TestCase):
 	def test_condition_succeeds_before_timeout(self):
 		giveUpAfterSecs = 0.5
 		pollInterval = 0.1
 		startTime = timer()
-		succeedJustBeforeTimeOut = lambda value: (value - startTime) > (giveUpAfterSecs - pollInterval)
+
+		def succeedJustBeforeTimeOut(currentTime: float):
+			return (currentTime - startTime) > (giveUpAfterSecs - pollInterval)
+
 		success, endTimeOrNone = blockUntilConditionMet(
 			getValue=timer,
 			giveUpAfterSeconds=giveUpAfterSecs,
@@ -34,7 +38,10 @@ class Test_blockUntilConditionMet(unittest.TestCase):
 		giveUpAfterSecs = 0.5
 		pollInterval = 0.1
 		startTime = timer()
-		succeedJustAfterTimeOut = lambda value: (value - startTime) > (giveUpAfterSecs + pollInterval)
+
+		def succeedJustAfterTimeOut(currentTime: float):
+			return (currentTime - startTime) > (giveUpAfterSecs + pollInterval)
+
 		success, endTimeOrNone = blockUntilConditionMet(
 			getValue=timer,
 			giveUpAfterSeconds=giveUpAfterSecs,
