@@ -446,15 +446,17 @@ def _pollForForegroundHWND() -> int:
 	)
 	if success:
 		return foregroundHWND
+
+	exitAfterWarningSecs = MAX_WAIT_TIME_SECS - WARN_AFTER_SECS
 	ui.message(_(
 		# Translators: Message when NVDA is having an issue starting up
 		"NVDA is failing to fetch the foreground window. "
-		"If this continues, NVDA will quit starting in %d seconds." % (MAX_WAIT_TIME_SECS - WARN_AFTER_SECS)
+		"If this continues, NVDA will quit starting in %d seconds." % exitAfterWarningSecs
 	))
 
 	success, foregroundHWND = blockUntilConditionMet(
 		getValue=winUser.getForegroundWindow,
-		giveUpAfterSeconds=MAX_WAIT_TIME_SECS - WARN_AFTER_SECS,
+		giveUpAfterSeconds=exitAfterWarningSecs,
 	)
 	if success:
 		return foregroundHWND
