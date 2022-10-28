@@ -31,18 +31,20 @@ Optional[Any]  # None or the value when the evaluator was met
 	the default evaluator just returns the value converted to a boolean.
 	@return: A tuple, (True, value) if evaluator condition is met, otherwise (False, None)
 	"""
-	assert intervalBetweenSeconds > 0.001
-	SLEEP_TIME = intervalBetweenSeconds * 0.5
+	minIntervalBetweenSeconds = 0.001
+	assert intervalBetweenSeconds > minIntervalBetweenSeconds
 	startTime = timer()
-	lastRunTime = startTime
-	firstRun = True  # ensure we start immediately
 	while (timer() - startTime) < giveUpAfterSeconds:
-		if firstRun or (timer() - lastRunTime) > intervalBetweenSeconds:
-			firstRun = False
-			lastRunTime = timer()
-			val = getValue()
-			if shouldStopEvaluator(val):
-				return True, val
-			sleep(SLEEP_TIME)
+		val = getValue()
+		conditionTimeStart = timer()
+		if shouldStopEvaluator(val):
+			return True, val
+		conditionTimeElapsed = timer() - conditionTimeStart
+		sleepTime = max(
+			# attempt to keep a regular period between polling
+			intervalBetweenSeconds - conditionTimeElapsed,
+			minIntervalBetweenSeconds,
+		)
+		sleep(sleepTime)
 
 	return False, None

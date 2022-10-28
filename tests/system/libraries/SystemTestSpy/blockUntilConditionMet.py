@@ -30,8 +30,9 @@ def _blockUntilConditionMet(
 bool,  # Was evaluator met?
 Optional[Any]  # None or the value when the evaluator was met
 ]:
-	"""Repeatedly tries to get a value up until a time limit expires. Tries are separated by
-	a time interval. The call will block until shouldStopEvaluator returns True when given the value,
+	"""Repeatedly tries to get a value up until a time limit expires.
+	Tries are separated by a time interval.
+	The call will block until shouldStopEvaluator returns True when given the value,
 	the default evaluator just returns the value converted to a boolean.
 	@param errorMessage: Use 'None' to suppress the exception.
 	@return: A tuple, (True, value) if evaluator condition is met, otherwise (False, None)
@@ -39,21 +40,22 @@ Optional[Any]  # None or the value when the evaluator was met
 	"""
 	assert callable(getValue)
 	assert callable(shouldStopEvaluator)
-	assert intervalBetweenSeconds > 0.001
-	SLEEP_TIME = intervalBetweenSeconds * 0.5
+	minIntervalBetweenSeconds = 0.001
+	assert intervalBetweenSeconds > minIntervalBetweenSeconds
 	startTime = _timer()
-	lastRunTime = startTime
-	firstRun = True  # ensure we start immediately
 	while (_timer() - startTime) < giveUpAfterSeconds:
-		if firstRun or (_timer() - lastRunTime) > intervalBetweenSeconds:
-			firstRun = False
-			lastRunTime = _timer()
-			val = getValue()
-			if shouldStopEvaluator(val):
-				return True, val
-			_sleep(SLEEP_TIME)
+		val = getValue()
+		conditionTimeStart = _timer()
+		if shouldStopEvaluator(val):
+			return True, val
+		conditionTimeElapsed = _timer() - conditionTimeStart
+		sleepTime = max(
+			# attempt to keep a regular period between polling
+			intervalBetweenSeconds - conditionTimeElapsed,
+			minIntervalBetweenSeconds,
+		)
+		_sleep(sleepTime)
 
-	else:
-		if errorMessage:
-			raise AssertionError(errorMessage)
-		return False, None
+	if errorMessage:
+		raise AssertionError(errorMessage)
+	return False, None

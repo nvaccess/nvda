@@ -37,10 +37,10 @@ class Test_blockUntilConditionMet(unittest.TestCase):
 		startTime = self._timer.time()
 
 		def succeedJustBeforeTimeOut(currentTime: float):
-			return (currentTime - startTime) > (giveUpAfterSecs - pollInterval)
+			return (currentTime - startTime) >= (giveUpAfterSecs - pollInterval)
 
-		with patch("time.sleep", new_callable=lambda: self._timer.sleep):
-			with patch("time.perf_counter", new_callable=lambda: self._timer.time):
+		with patch("utils.blockUntilConditionMet.sleep", new_callable=lambda: self._timer.sleep):
+			with patch("utils.blockUntilConditionMet.timer", new_callable=lambda: self._timer.time):
 				success, endTimeOrNone = _moduleUnderTest.blockUntilConditionMet(
 					getValue=self._timer.time,
 					giveUpAfterSeconds=giveUpAfterSecs,
@@ -60,10 +60,10 @@ class Test_blockUntilConditionMet(unittest.TestCase):
 		startTime = self._timer.time()
 
 		def succeedJustAfterTimeOut(currentTime: float):
-			return (currentTime - startTime) > (giveUpAfterSecs + pollInterval)
+			return (currentTime - startTime) >= (giveUpAfterSecs + pollInterval)
 
-		with patch("time.sleep", new_callable=lambda: self._timer.sleep):
-			with patch("time.perf_counter", new_callable=lambda: self._timer.time):
+		with patch("utils.blockUntilConditionMet.sleep", new_callable=lambda: self._timer.sleep):
+			with patch("utils.blockUntilConditionMet.timer", new_callable=lambda: self._timer.time):
 				success, endTimeOrNone = _moduleUnderTest.blockUntilConditionMet(
 					getValue=self._timer.time,
 					giveUpAfterSeconds=giveUpAfterSecs,
@@ -75,4 +75,4 @@ class Test_blockUntilConditionMet(unittest.TestCase):
 			success,
 			msg=f"Test condition succeeded unexpectedly before timeout. Elapsed time: {timeElapsed:.2f}s"
 		)
-		self.assertGreater(timeElapsed, giveUpAfterSecs)
+		self.assertGreaterEqual(timeElapsed, giveUpAfterSecs)
