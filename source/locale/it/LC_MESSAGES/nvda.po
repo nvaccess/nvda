@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-14 00:02+0000\n"
-"PO-Revision-Date: 2022-10-18 09:50+0100\n"
+"POT-Creation-Date: 2022-10-24 00:11+0000\n"
+"PO-Revision-Date: 2022-10-24 11:30+0100\n"
 "Last-Translator: Simone Dal Maso <simone.dalmaso@gmail.com>\n"
 "Language-Team: Italian NVDA Community <info@nvda.it>\n"
 "Language: it_IT\n"
@@ -1097,9 +1097,8 @@ msgstr "Kashmiri grado 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Luganda literary braille"
-msgstr "Braille letterario russo"
+msgstr "Braille letterario Luganda "
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1268,9 +1267,8 @@ msgstr "Russo Braille contratto"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Kinyarwanda literary braille"
-msgstr "Braille letterario russo"
+msgstr "Braille letterario Kinyarwanda "
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1319,21 +1317,18 @@ msgstr "Serbo grado 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Swedish uncontracted braille"
-msgstr "Russo Braille contratto"
+msgstr "Svedese braille non contratto"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Swedish partially contracted braille"
-msgstr "Russo Braille contratto"
+msgstr "Svedese braille parzialmente contratto"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Swedish contracted braille"
-msgstr "Russo Braille contratto"
+msgstr "Svedese Braille contratto"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1439,14 +1434,13 @@ msgstr "Xhosa grado 2"
 #. braille settings dialog.
 #. This should be translated to '中文中国汉语通用盲文' in Mandarin.
 msgid "Chinese common braille (simplified Chinese characters)"
-msgstr ""
+msgstr "Cinese Braille comune (caratteri cinesi semplificati)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #. This should be translated to '中文中国汉语现行盲文（无声调）' in Mandarin.
-#, fuzzy
 msgid "Chinese (China, Mandarin) Current Braille System (no tones)"
-msgstr "Sistema Braille cinese (Cina, mandarino) attuale"
+msgstr "Cinese (Cina, Mandarin) SistemaBraille attuale(senza toni)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -11569,6 +11563,25 @@ msgstr "{curPercent:.0f}%"
 msgid "at {x}, {y}"
 msgstr "a {x}, {y}"
 
+#. Translators: This is the message for a warning shown if NVDA cannot determine if
+#. Windows is locked.
+msgid ""
+"NVDA is unable to determine if Windows is locked. While this instance of "
+"NVDA is running, your desktop will not be secure when Windows is locked. "
+"Restarting Windows may address this. If this error is ongoing then disabling "
+"the Windows lock screen is recommended."
+msgstr ""
+"NVDA non è in grado di determinare se Windows risulti bloccato. Durante "
+"l'esecuzione di questa istanza di NVDA, il desktop non sarà protetto quando "
+"Windows è bloccato. Il riavvio di Windows potrebbe risolvere questo "
+"problema. Se questo errore persiste, si consiglia di disabilitare la "
+"schermata di blocco di Windows."
+
+#. Translators: This is the title for a warning dialog, shown if NVDA cannot determine if
+#. Windows is locked.
+msgid "Lock screen not secure while using NVDA"
+msgstr "Schermata di blocco non protetta durante l'utilizzo di NVDA"
+
 #. Translators: Reported when a page reloads (example: after refreshing a webpage).
 msgid "Refreshed"
 msgstr "Aggiornato"
@@ -11675,22 +11688,6 @@ msgstr "Alimentazione disconnessa"
 #, python-brace-format
 msgid "{hours:d} hours and {minutes:d} minutes remaining"
 msgstr "{hours:d} ore e {minutes:d} minuti restanti"
-
-#. Translators: This is a warning to users, shown if NVDA cannot determine if
-#. Windows is locked.
-msgid ""
-"NVDA failed to register session tracking. While this instance of NVDA is "
-"running, your desktop will not be secure when Windows is locked. Restart "
-"NVDA? "
-msgstr ""
-"NVDA non è riuscito ad individuare la sessione di Windows corrente. Durante "
-"l'esecuzione di questa istanza di NVDA, il desktop non sarà protetto quando "
-"Windows è bloccato. Riavviare NVDA?"
-
-#. Translators: This is a warning to users, shown if NVDA cannot determine if
-#. Windows is locked.
-msgid "NVDA could not start securely."
-msgstr "Impossibile avviare NVDA in modalità sicura."
 
 msgid "Taskbar"
 msgstr "Barra delle applicazioni"
@@ -13348,6 +13345,9 @@ msgstr "spaziatura righe doppia"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "spaziatura righe 1.5"
+
+#~ msgid "NVDA could not start securely."
+#~ msgstr "Impossibile avviare NVDA in modalità sicura."
 
 #~ msgid "Swedish grade 1"
 #~ msgstr "Svedese grado 1"
