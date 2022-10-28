@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-07 00:02+0000\n"
+"POT-Creation-Date: 2022-10-24 00:11+0000\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Burak Yüksek <burakyuksek94@gmail.com>\n"
+"Last-Translator: Umut KORKMAZ <umutkork@gmail.com>\n"
 "Language-Team: \n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 msgid "Native input"
@@ -1096,6 +1096,11 @@ msgstr "Keşmir grade 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Luganda literary braille"
+msgstr "Luganda edebi braille"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Lithuanian 8 dot"
 msgstr "Litvanyaca 8 nokta"
 
@@ -1261,6 +1266,11 @@ msgstr "Rusça kısaltmalı braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Kinyarwanda literary braille"
+msgstr "Kinyarwanda edebi braille"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Sanskrit grade 1"
 msgstr "Sanskrit dili derece 1"
 
@@ -1273,11 +1283,6 @@ msgstr "Yakut derece1"
 #. braille settings dialog.
 msgid "Swedish 8 dot computer braille"
 msgstr "Isveç 8 noktalı bilgisayar braille"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "Swedish grade 1"
-msgstr "Isveççe Derece 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1308,6 +1313,21 @@ msgstr "Sesotho derece2"
 #. braille settings dialog.
 msgid "Serbian grade 1"
 msgstr "Sırpça derece 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swedish uncontracted braille"
+msgstr "İsveççe kısaltmasız braille"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swedish partially contracted braille"
+msgstr "İsveççe kısmen kısaltmalı braille"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swedish contracted braille"
+msgstr "İsveççe kısaltmalı braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1408,6 +1428,18 @@ msgstr "Xhosa derece1"
 #. braille settings dialog.
 msgid "Xhosa grade 2"
 msgstr "Xhosa derece2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#. This should be translated to '中文中国汉语通用盲文' in Mandarin.
+msgid "Chinese common braille (simplified Chinese characters)"
+msgstr "Çince yaygın braille (basitleştirilmiş Çince karakterler)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#. This should be translated to '中文中国汉语现行盲文（无声调）' in Mandarin.
+msgid "Chinese (China, Mandarin) Current Braille System (no tones)"
+msgstr "Çince (Çin, Mandarin) mevcut braille sistemi (tonlamasız)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2359,40 +2391,6 @@ msgstr "gesture map dosyasında hata"
 msgid "Loading NVDA. Please wait..."
 msgstr "NVDA açılıyor, lütfen bekleyin..."
 
-#. Translators: This is a warning to users, shown if NVDA cannot determine if
-#. Windows is locked.
-msgid ""
-"NVDA failed to register session tracking. While this instance of NVDA is "
-"running, your desktop will not be secure when Windows is locked. Restart "
-"NVDA? "
-msgstr ""
-"NVDA, oturum izlemeyi kaydedemedi. Bu NVDA örneği çalışırken, Windows "
-"kilitlendiğinde masaüstünüz güvenli olmayacaktır. NVDA yeniden başlatılsın "
-"mı? "
-
-#. Translators: This is a warning to users, shown if NVDA cannot determine if
-#. Windows is locked.
-msgid "NVDA could not start securely."
-msgstr "NVDA güvenli bir şekilde başlatılamadı."
-
-#. Translators: The screen is oriented so that it is wider than it is tall.
-msgid "Landscape"
-msgstr "Yatay"
-
-#. Translators: The screen is oriented in such a way that the height is taller than it is wide.
-msgid "Portrait"
-msgstr "Dikey"
-
-#. Translators: Reported when the battery is plugged in, and now is charging.
-#, python-format
-msgid "Charging battery. %d percent"
-msgstr "Pil şarj oluyor. yüzde %d"
-
-#. Translators: Reported when the battery is no longer plugged in, and now is not charging.
-#, python-format
-msgid "Not charging battery. %d percent"
-msgstr "Pil şarj edilmiyor. yüzde %d"
-
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 msgid "NVDA started"
 msgstr "NVDA başlatıldı"
@@ -2485,6 +2483,38 @@ msgstr "ilk tablo sütununa gider"
 #. Translators: the description for the last table column script on browseMode documents.
 msgid "moves to the last table column"
 msgstr "son tablo sütununa gider"
+
+#. Translators: the description for the sayAll row command
+msgid ""
+"Reads the row horizontally from the current cell rightwards to the last cell "
+"in the row."
+msgstr ""
+"Geçerli hücreden sağa doğru satırdaki son hücreye kadar satırı yatay olarak "
+"okur."
+
+#. Translators: the description for the sayAll row command
+msgid ""
+"Reads the column vertically from the current cell downwards to the last cell "
+"in the column."
+msgstr ""
+"Sütunu, geçerli hücreden aşağıya, sütundaki son hücreye kadar dikey olarak "
+"okur."
+
+#. Translators: the description for the speak row command
+msgid ""
+"Reads the current row horizontally from left to right without moving the "
+"system caret."
+msgstr ""
+"Sistem düzeltme imini hareket ettirmeden geçerli satırı soldan sağa yatay "
+"olarak okur."
+
+#. Translators: the description for the speak column command
+msgid ""
+"Reads the current column vertically from top to bottom without moving the "
+"system caret."
+msgstr ""
+"Sistem düzeltmeimini hareket ettirmeden geçerli sütunu yukarıdan aşağıya "
+"dikey olarak okur."
 
 #. Translators: The message announced when toggling the include layout tables browse mode setting.
 msgid "layout tables off"
@@ -2929,16 +2959,14 @@ msgid "report tables on"
 msgstr "tabloları bildir"
 
 #. Translators: Input help mode message for toggle report table row/column headers command.
-msgid "Toggles on and off the reporting of table row and column headers"
-msgstr "Tablo satır ve sütun başlıklarının bildirimini açıp kapatır"
+msgid "Cycle through the possible modes to report table row and column headers"
+msgstr "Tablo satır ve sütun başlık bildirimi modları arasında geçiş yapar"
 
-#. Translators: The message announced when toggling the report table row/column headers document formatting setting.
-msgid "report table row and column headers off"
-msgstr "tablo satır ve sütun başlıklarını bildirme"
-
-#. Translators: The message announced when toggling the report table row/column headers document formatting setting.
-msgid "report table row and column headers on"
-msgstr "tablo satır ve sütun başlıklarını bildir"
+#. Translators: Reported when the user cycles through report table header modes.
+#. {mode} will be replaced with the mode; e.g. None, Rows and columns, Rows or Columns.
+#, python-brace-format
+msgid "Report table headers {mode}"
+msgstr "Tablo başlık bildirimi {mode}"
 
 #. Translators: Input help mode message for toggle report table cell coordinates command.
 msgid "Toggles on and off the reporting of table cell coordinates"
@@ -3369,6 +3397,22 @@ msgid ""
 "speaks it"
 msgstr "İnceleme imlecini sonraki satıra taşır ve okur"
 
+#. Translators: Input help mode message for move review cursor to previous page command.
+msgid ""
+"Moves the review cursor to the previous page of the current navigator object "
+"and speaks it"
+msgstr "İnceleme imlecini nesne sunucusunun önceki sayfasına taşır ve okur"
+
+#. Translators: a message reported when movement by page is unsupported
+msgid "Movement by page not supported"
+msgstr "Sayfaya göre hareket desteklenmiyor"
+
+#. Translators: Input help mode message for move review cursor to next page command.
+msgid ""
+"Moves the review cursor to the next page of the current navigator object and "
+"speaks it"
+msgstr "İnceleme imlecini nesne sunucusunun sonraki sayfasına taşır ve okur"
+
 #. Translators: Input help mode message for move review cursor to bottom line command.
 msgid ""
 "Moves the review cursor to the bottom line of the current navigator object "
@@ -3634,6 +3678,16 @@ msgstr ""
 "Aktif pencerenin durum çubuğunu okur. İki kez basıldığında bilgi kodlanarak "
 "seslendirilir. Üç kez basılırsa bilgi panoya kopyalanır"
 
+#. Translators: Description for a keyboard command which reports the
+#. accelerator key of the currently focused object.
+msgid "Reports the shortcut key of the currently focused object"
+msgstr "O anda odaklanılan nesnenin kısayol tuşunu söyler"
+
+#. Translators: reported when a user requests the accelerator key
+#. of the currently focused object, but there is none set.
+msgid "No shortcut key"
+msgstr "Kısayol tuşu yok"
+
 #. Translators: Input help mode message for toggle mouse tracking command.
 msgid "Toggles the reporting of information as the mouse moves"
 msgstr "Fare hareketlerinin bildirimiyle ilgili ayarı açıp kapatır"
@@ -3820,24 +3874,6 @@ msgstr "Sistem odağı tarama kipi imlecini takip etsin, açık"
 #. Translators: Input help mode message for report battery status command.
 msgid "Reports battery status and time remaining if AC is not plugged in"
 msgstr "Güç kaynağı takılı değilse batarya durumunu ve kalan zamanı söyler"
-
-#. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
-msgid "No system battery"
-msgstr "Batarya yok"
-
-#. Translators: This is presented to inform the user of the current battery percentage.
-#, python-format
-msgid "%d percent"
-msgstr "yüzde %d"
-
-#. Translators: This is presented when AC power is connected such as when recharging a laptop battery.
-msgid "AC power on"
-msgstr "Güç kaynağı takılı"
-
-#. Translators: This is the estimated remaining runtime of the laptop battery.
-#, python-brace-format
-msgid "{hours:d} hours and {minutes:d} minutes remaining"
-msgstr "{hours:d} saat ve {minutes:d} dakika kaldı"
 
 #. Translators: Input help mode message for pass next key through command.
 msgid ""
@@ -6381,7 +6417,7 @@ msgstr "Kopyahakkı (C) {years} NVDA'ya katkıda bulunanlar"
 #, python-brace-format
 msgid ""
 "{longName} ({name})\n"
-"Version: {version}\n"
+"Version: {version} ({version_detailed})\n"
 "URL: {url}\n"
 "{copyright}\n"
 "\n"
@@ -6402,7 +6438,7 @@ msgid ""
 "menu."
 msgstr ""
 "{longName} ({name})\n"
-"Sürüm: {version}\n"
+"Sürüm: {version} ({version_detailed})\n"
 "Web sayfası: {url}\n"
 "{copyright}\n"
 "\n"
@@ -6444,6 +6480,12 @@ msgid ""
 msgstr ""
 "Soldan yüzde {left:.1f}, yukarıdan yüzde {top:.1f} uzaklıkta, genişlik "
 "ekranın yüzde {width:.1f}, yükseklik {height:.1f}"
+
+#. Translators: This is presented to inform the user of a progress bar percentage.
+#. Translators: This is presented to inform the user of the current battery percentage.
+#, python-format
+msgid "%d percent"
+msgstr "yüzde %d"
 
 #. Translators: a message announcing a candidate's character and description.
 #, python-brace-format
@@ -6588,7 +6630,7 @@ msgstr ""
 #. Translators: A position in a Kindle book
 #, no-python-format, python-brace-format
 msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
-msgstr "%{bookPercentage}, konum {curLocation} bölü {maxLocation}"
+msgstr "% {bookPercentage}, konum {curLocation} bölü {maxLocation}"
 
 #. Translators: a page in a Kindle book
 #, python-brace-format
@@ -7255,6 +7297,29 @@ msgstr "&Başlangıçta Braille Görüntüleyici'yı Göster"
 #. whether hovering mouse routes to the cell.
 msgid "&Hover for cell routing"
 msgstr "&Hücre yönlendirme için üzerine gelin"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+#. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Off"
+msgstr "Kapalı"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Rows and columns"
+msgstr "Satırlar ve sütunlar"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Rows"
+msgstr "Satırlar"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Columns"
+msgstr "Sütunlar"
 
 #. Translators: Label for an option in NVDA settings.
 #. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
@@ -8069,6 +8134,10 @@ msgstr "işaretli"
 #. Translators: This is presented when a three state check box is half checked.
 msgid "half checked"
 msgstr "kısmen işaretli"
+
+#. Translators: This is presented when a three state toggle button is half pressed.
+msgid "half pressed"
+msgstr "kısmen basılı"
 
 #. Translators: This is presented when the control is a read-only control such as read-only edit box.
 msgid "read only"
@@ -10036,12 +10105,6 @@ msgstr "Satır nu&maraları"
 msgid "Line &indentation reporting:"
 msgstr "Satır gi&rintilerinin bildirimi:"
 
-#. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
-#. Translators: This is the label for a combobox in the
-#. document formatting settings panel.
-msgid "Off"
-msgstr "Kapalı"
-
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
 msgctxt "line indentation setting"
 msgid "Speech"
@@ -10080,10 +10143,10 @@ msgstr "Tablo bilgileri"
 msgid "&Tables"
 msgstr "&Tablolar"
 
-#. Translators: This is the label for a checkbox in the
+#. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
-msgid "Row/column h&eaders"
-msgstr "Satır/s&ütun başlıkları"
+msgid "H&eaders"
+msgstr "b&aşlıklar"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -10198,13 +10261,30 @@ msgstr "Geliştirici scratchpad dizinini aç"
 msgid "Microsoft UI Automation"
 msgstr "Microsoft UI Otomasyonu"
 
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid ""
-"Enable &selective registration for UI Automation events and property changes"
+#. Translators: This is the label for a combo box for selecting the
+#. means of registering for UI Automation events in the advanced settings panel.
+#. Choices are automatic, selective, and global.
+msgid "Regi&stration for UI Automation events and property changes:"
 msgstr ""
-"UI Otomasyon etkinlikleri ve özellik değişiklikleri için &seçimli kaydı "
-"etkinleştirin"
+"UI Otomasyon etkinlikleri ve özellik değişiklikleri için seçimli kayı&t:"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA decide whether to register
+#. selectively or globally for UI Automation events.
+msgid "Automatic (prefer selective)"
+msgstr "Otomatik (seçiciyi tercih et)"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA register selectively for UI Automation events
+#. (i.e. not to request events for objects outside immediate focus).
+msgid "Selective"
+msgstr "Seçici"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA register for all UI Automation events
+#. in all cases.
+msgid "Global"
+msgstr "Global"
 
 #. Translators: Label for the Use UIA with MS Word combobox, in the Advanced settings panel.
 msgctxt "advanced.uiaWithMSWord"
@@ -11353,6 +11433,24 @@ msgstr "%{curPercent:.0f}"
 msgid "at {x}, {y}"
 msgstr "{x}, {y} konumunda"
 
+#. Translators: This is the message for a warning shown if NVDA cannot determine if
+#. Windows is locked.
+msgid ""
+"NVDA is unable to determine if Windows is locked. While this instance of "
+"NVDA is running, your desktop will not be secure when Windows is locked. "
+"Restarting Windows may address this. If this error is ongoing then disabling "
+"the Windows lock screen is recommended."
+msgstr ""
+"NVDA Windows'un kilitli olup olmadığını algılayamadı. NVDA'nın bu kopyası "
+"çalışırken, Windows kilitlendiğinde masaüstünüz olmayacak. Windows'u yeniden "
+"başlatmak sorunu çözebilir. Hata devam ederse kilit ekranını devredışı "
+"bırakmanız önerilir."
+
+#. Translators: This is the title for a warning dialog, shown if NVDA cannot determine if
+#. Windows is locked.
+msgid "Lock screen not secure while using NVDA"
+msgstr "NVDA kullanılırken giriş ekranı güvenli değil"
+
 #. Translators: Reported when a page reloads (example: after refreshing a webpage).
 msgid "Refreshed"
 msgstr "Güncellendi"
@@ -11429,6 +11527,36 @@ msgstr ""
 msgid "Make screen black (immediate effect)"
 msgstr "Ekranı karart, (anında devreye girer)"
 
+#. Translators: The screen is oriented so that it is wider than it is tall.
+msgid "Landscape"
+msgstr "Yatay"
+
+#. Translators: The screen is oriented in such a way that the height is taller than it is wide.
+msgid "Portrait"
+msgstr "Dikey"
+
+#. Translators: This is presented when there is an error retrieving the battery status.
+msgid "Unknown power status"
+msgstr "Güç durumu bilinmiyor"
+
+#. Translators: This is presented when there is no battery such as desktop computers
+#. and laptops with battery pack removed.
+msgid "No system battery"
+msgstr "Batarya yok"
+
+#. Translators: Reported when the battery is plugged in, and now is charging.
+msgid "Charging battery"
+msgstr "Pil şarj oluyor"
+
+#. Translators: Reported when the battery is no longer plugged in, and now is not charging.
+msgid "AC disconnected"
+msgstr "Güç kaynağı bağlantısı kesildi"
+
+#. Translators: This is the estimated remaining runtime of the laptop battery.
+#, python-brace-format
+msgid "{hours:d} hours and {minutes:d} minutes remaining"
+msgstr "{hours:d} saat ve {minutes:d} dakika kaldı"
+
 msgid "Taskbar"
 msgstr "Görev çubuğu"
 
@@ -11440,17 +11568,6 @@ msgstr "RGB kırmızı {rgb.red}, yeşil {rgb.green}, mavi {rgb.blue}"
 #, python-format
 msgid "%s items"
 msgstr "%s öge"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#. Translators: a message reported in the SetColumnHeader script for Excel.
-#. Translators: a message reported in the SetRowHeader script for Excel.
-msgid ""
-"Cannot set headers. Please enable reporting of table headers in Document "
-"Formatting Settings"
-msgstr ""
-"Başlıklar ayarlanamıyor. Lütfen belge format ayarlarından tablo "
-"başlıklarının bildirimini etkinleştirin"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #, python-brace-format
@@ -11679,6 +11796,10 @@ msgstr ""
 #. Translators: A message in Excel when there is no comment thread
 msgid "No comment thread on this cell"
 msgstr "Bu hücrede yorum dizisi yok"
+
+#. Translators: announced when moving outside of a table in an Excel spreadsheet.
+msgid "Out of table"
+msgstr "Tablo dışı"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -12225,8 +12346,8 @@ msgstr "{previousIndex} noktasından sonra değişiklik yok "
 
 #. Translators: For line charts, indicates an increase from the previous data point on the left
 #, python-brace-format
-msgid "Increased by {incrementValue} from point {previousIndex}, "
-msgstr "{previousIndex} noktasından sonra {incrementValue} artış, "
+msgid "increased by {incrementValue} from point {previousIndex}, "
+msgstr "{previousIndex} noktasından {incrementValue} artırıldı, "
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
 #, python-brace-format
@@ -13082,6 +13203,34 @@ msgstr "Çift satır aralığı"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5 satır aralığı"
+
+#~ msgid "NVDA could not start securely."
+#~ msgstr "NVDA güvenli bir şekilde başlatılamadı."
+
+#~ msgid "Swedish grade 1"
+#~ msgstr "Isveççe Derece 1"
+
+#~ msgid "Not charging battery. %d percent"
+#~ msgstr "Pil şarj edilmiyor. yüzde %d"
+
+#~ msgid "report table row and column headers off"
+#~ msgstr "tablo satır ve sütun başlıklarını bildirme"
+
+#~ msgid "report table row and column headers on"
+#~ msgstr "tablo satır ve sütun başlıklarını bildir"
+
+#~ msgid "AC power on"
+#~ msgstr "Güç kaynağı takılı"
+
+#~ msgid "Row/column h&eaders"
+#~ msgstr "Satır/s&ütun başlıkları"
+
+#~ msgid ""
+#~ "Cannot set headers. Please enable reporting of table headers in Document "
+#~ "Formatting Settings"
+#~ msgstr ""
+#~ "Başlıklar ayarlanamıyor. Lütfen belge format ayarlarından tablo "
+#~ "başlıklarının bildirimini etkinleştirin"
 
 #~ msgid "Use UI Automation to access the Windows C&onsole when available"
 #~ msgstr "Uygunsa Windows K&onsoluna erişmek için UI Otomasyonu'nu kullan"
