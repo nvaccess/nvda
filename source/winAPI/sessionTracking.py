@@ -24,11 +24,14 @@ from ctypes.wintypes import (
 	HANDLE,
 )
 import enum
+from threading import Lock
 from typing import (
 	Dict,
 	Set,
 	Optional,
 )
+
+from systemUtils import _isSecureDesktop
 from winAPI.wtsApi32 import (
 	WTSINFOEXW,
 	WTSQuerySessionInformation,
@@ -44,11 +47,14 @@ from logHandler import log
 from .types import HWNDValT
 
 
+_updateSessionStateLock = Lock()
+"""Used to protect updates to _currentSessionStates"""
 _currentSessionStates: Set["WindowsTrackedSession"] = set()
 """
 Current state of the Windows session associated with this instance of NVDA.
 Maintained via receiving session notifications via the NVDA MessageWindow.
 Initial state will be set by querying the current status.
+Actions which involve updating this state this should be protected by _updateSessionStateLock.
 """
 
 _sessionQueryLockStateHasBeenUnknown = False
@@ -152,6 +158,17 @@ def isWindowsLocked() -> bool:
 	Checks if the Window lockscreen is active.
 	Not to be confused with the Windows sign-in screen, a secure screen.
 	"""
+	if _isSecureDesktop():
+		# If this is the Secure Desktop,
+		# we are in secure mode and on a secure screen,
+		# e.g. on the sign-in screen.
+		# _isSecureDesktop may also return True on the lock screen before a user has signed in.
+
+		# For more information, refer to devDocs/technicalDesignOverview.md 'Logging in secure mode'
+		# and the following userGuide sections:
+		# - SystemWideParameters (information on the serviceDebug parameter)
+		# - SecureMode and SecureScreens
+		return False
 	lockStateTracked = _hasLockStateBeenTracked()
 	if lockStateTracked:
 		return WindowsTrackedSession.SESSION_LOCK in _currentSessionStates
@@ -166,22 +183,29 @@ def isWindowsLocked() -> bool:
 
 
 def _setInitialWindowLockState() -> None:
-	"""Ensure that session tracking state is initialized.
-	If NVDA has started on a lockScreen, it needs to be aware of this.
 	"""
-	lockStateTracked = _hasLockStateBeenTracked()
-	if lockStateTracked:
-		raise RuntimeError("Can't set initial state if it is already tracked.")
-	# Fall back to explicit query
-	try:
-		isLocked = _isWindowsLocked_checkViaSessionQuery()
-		_currentSessionStates.add(
-			WindowsTrackedSession.SESSION_LOCK
-			if isLocked
-			else WindowsTrackedSession.SESSION_UNLOCK
-		)
-	except RuntimeError as error:
-		_recordLockStateTrackingFailure(error)
+	Ensure that session tracking state is initialized.
+	If NVDA has started on a lockScreen, it needs to be aware of this.
+	As NVDA has already registered for session tracking notifications,
+	a lock is used to prevent conflicts.
+	"""
+	with _updateSessionStateLock:
+		lockStateTracked = _hasLockStateBeenTracked()
+		if lockStateTracked:
+			log.debugWarning(
+				"Initial state already set."
+				" NVDA may have received a session change notification before initialising"
+			)
+		# Fall back to explicit query
+		try:
+			isLocked = _isWindowsLocked_checkViaSessionQuery()
+			_currentSessionStates.add(
+				WindowsTrackedSession.SESSION_LOCK
+				if isLocked
+				else WindowsTrackedSession.SESSION_UNLOCK
+			)
+		except RuntimeError as error:
+			_recordLockStateTrackingFailure(error)
 
 
 def _isWindowsLocked_checkViaSessionQuery() -> bool:
@@ -226,10 +250,6 @@ def register(handle: HWNDValT) -> bool:
 
 	https://docs.microsoft.com/en-us/windows/win32/api/wtsapi32/nf-wtsapi32-wtsregistersessionnotification
 	"""
-	##
-	# Ensure that an initial state is set,
-	# do this first to prevent a race condition with session tracking / message processing.
-	_setInitialWindowLockState()
 
 	# OpenEvent handle must be closed with CloseHandle.
 	eventObjectHandle: HANDLE = ctypes.windll.kernel32.OpenEventW(
@@ -253,6 +273,15 @@ def register(handle: HWNDValT) -> bool:
 
 	if registrationSuccess:
 		log.debug("Registered session tracking")
+		# Ensure that an initial state is set.
+		# Do this only when session tracking has been registered,
+		# so that any changes to the state are not missed via a race condition with session tracking registration.
+		# As this occurs after NVDA hs registered for session tracking,
+		# it is possible NVDA is expected to handle a session change notification
+		# at the same time as initialisation.
+		# _updateSessionStateLock is used to prevent received session notifications from being handled at the
+		# same time as initialisation.
+		_setInitialWindowLockState()
 	else:
 		error = ctypes.WinError()
 		if error.errno == RPC_S_INVALID_BINDING:
@@ -299,43 +328,44 @@ def handleSessionChange(newState: WindowsTrackedSession, sessionId: int) -> None
 
 	https://docs.microsoft.com/en-us/windows/win32/termserv/wm-wtssession-change
 	"""
-	stateChanged = False
+	with _updateSessionStateLock:
+		stateChanged = False
 
-	log.debug(f"Windows Session state notification received: {newState.name}")
+		log.debug(f"Windows Session state notification received: {newState.name}")
 
-	if not _isSessionTrackingRegistered:
-		log.debugWarning("Session tracking not registered, unexpected session change message")
+		if not _isSessionTrackingRegistered:
+			log.debugWarning("Session tracking not registered, unexpected session change message")
 
-	if newState not in _toggleWindowsSessionStatePair:
-		log.debug(f"Ignoring {newState} event as tracking is not required.")
-		return
+		if newState not in _toggleWindowsSessionStatePair:
+			log.debug(f"Ignoring {newState} event as tracking is not required.")
+			return
 
-	oppositeState = _toggleWindowsSessionStatePair[newState]
-	if newState in _currentSessionStates:
-		log.error(
-			f"NVDA expects Windows to be in {newState} already. "
-			f"NVDA may have dropped a {oppositeState} event. "
-			f"Dropping this {newState} event. "
-		)
-	else:
-		_currentSessionStates.add(newState)
-		stateChanged = True
+		oppositeState = _toggleWindowsSessionStatePair[newState]
+		if newState in _currentSessionStates:
+			log.error(
+				f"NVDA expects Windows to be in {newState} already. "
+				f"NVDA may have dropped a {oppositeState} event. "
+				f"Dropping this {newState} event. "
+			)
+		else:
+			_currentSessionStates.add(newState)
+			stateChanged = True
 
-	if oppositeState in _currentSessionStates:
-		_currentSessionStates.remove(oppositeState)
-	else:
-		log.debugWarning(
-			f"NVDA expects Windows to be in {newState} already. "
-			f"NVDA may have dropped a {oppositeState} event. "
-		)
+		if oppositeState in _currentSessionStates:
+			_currentSessionStates.remove(oppositeState)
+		else:
+			log.debugWarning(
+				f"NVDA expects Windows to be in {newState} already. "
+				f"NVDA may have dropped a {oppositeState} event. "
+			)
 
-	log.debug(f"New Windows Session state: {_currentSessionStates}")
-	if (
-		stateChanged
-		and newState in {WindowsTrackedSession.SESSION_LOCK, WindowsTrackedSession.SESSION_UNLOCK}
-	):
-		from utils.security import postSessionLockStateChanged
-		postSessionLockStateChanged.notify(isNowLocked=newState == WindowsTrackedSession.SESSION_LOCK)
+		log.debug(f"New Windows Session state: {_currentSessionStates}")
+		if (
+			stateChanged
+			and newState in {WindowsTrackedSession.SESSION_LOCK, WindowsTrackedSession.SESSION_UNLOCK}
+		):
+			from utils.security import postSessionLockStateChanged
+			postSessionLockStateChanged.notify(isNowLocked=newState == WindowsTrackedSession.SESSION_LOCK)
 
 
 @contextmanager
