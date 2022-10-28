@@ -17,14 +17,19 @@ Test Teardown	default teardown
 
 *** Keywords ***
 default teardown
+	logForegroundWindowTitle
 	${screenshotName}=	create_preserved_test_output_filename	failedTest.png
 	Run Keyword If Test Failed	Take Screenshot	${screenShotName}
 	dump_speech_to_log
 	dump_braille_to_log
+	# leaving the chrome tabs open may slow down / cause chrome to crash on appveyor
+	close_chrome_tab
 	quit NVDA
 
 default setup
+	logForegroundWindowTitle
 	start NVDA	standard-dontShowWelcomeDialog.ini
+	logForegroundWindowTitle
 	enable_verbose_debug_logging_if_requested
 
 *** Test Cases ***
