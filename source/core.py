@@ -420,45 +420,47 @@ def _handleNVDAModuleCleanupBeforeGUIExit():
 
 
 def _pollForForegroundHWND() -> int:
+	"""
+	@note: The foreground window should usually be fetched on the first try,
+	however it may take longer if Windows is taking a long time changing window focus.
+	Times out after 20 seconds (MAX_WAIT_TIME_SECS).
+	After timing out, NVDA will give up trying to start and exit.
+	"""
 	import ui
+	from utils.blockUntilConditionMet import blockUntilConditionMet
 	import winUser
 
-	foregroundHWND = winUser.getForegroundWindow()
-	_hasWarned = False
+	# winUser.getForegroundWindow may return NULL in certain circumstances,
+	# such as when a window is losing activation.
+	# This should not remain the case for an extended period of time.
+	# If NVDA is taking longer than expected to fetch the foreground window, perform a warning.
+	# We must wait a long time after this warning to
+	# allow for braille / speech to be understood before exiting.
+	# Unfortunately we cannot block with a dialog as NVDA cannot read dialogs yet.
 	WARN_AFTER_SECS = 5
 	MAX_WAIT_TIME_SECS = 20
-	POLL_INTERVAL_SECS = 0.1
-	waitForForegroundHWND_startTime = time.time()
 
-	while not foregroundHWND:
-		# The foreground window can be NULL in certain circumstances,
-		# such as when a window is losing activation.
-		# This should not remain the case for an extended period of time.
+	success, foregroundHWND = blockUntilConditionMet(
+		getValue=winUser.getForegroundWindow,
+		giveUpAfterSeconds=WARN_AFTER_SECS,
+	)
+	if success:
+		return foregroundHWND
+	ui.message(_(
+		# Translators: Message when NVDA is having an issue starting up
+		"NVDA is failing to fetch the foreground window. "
+		"If this continues, NVDA will quit starting in %d seconds." % (MAX_WAIT_TIME_SECS - WARN_AFTER_SECS)
+	))
 
-		_timeElapsed = time.time() - waitForForegroundHWND_startTime
-		if (
-			not _hasWarned
-			and _timeElapsed > WARN_AFTER_SECS
-		):
-			_hasWarned = True
-			# Allow for braille / speech to be understood before exiting.
-			# Unfortunately we cannot block with a dialog as NVDA cannot read dialogs yet.
-			ui.message(_(
-				# Translators: Message when NVDA is having an issue starting up
-				"NVDA is failing to fetch the foreground window. "
-				"If this continues, NVDA will quit starting in %d seconds." % (MAX_WAIT_TIME_SECS - WARN_AFTER_SECS)
-			))
-
-		if _timeElapsed > MAX_WAIT_TIME_SECS:
-			log.critical("NVDA could not fetch the foreground window. Exiting NVDA.")
-			# Raising exception here causes core.main to exit and NVDA to fail to start
-			raise NVDANotInitializedError("Could not fetch foreground window")
-
-		log.debugWarning("Foreground window not found, fetching again")
-		time.sleep(POLL_INTERVAL_SECS)
-		foregroundHWND = winUser.getForegroundWindow()
-
-	return foregroundHWND
+	success, foregroundHWND = blockUntilConditionMet(
+		getValue=winUser.getForegroundWindow,
+		giveUpAfterSeconds=MAX_WAIT_TIME_SECS - WARN_AFTER_SECS,
+	)
+	if success:
+		return foregroundHWND
+	log.critical("NVDA could not fetch the foreground window. Exiting NVDA.")
+	# Raising exception here causes core.main to exit and NVDA to fail to start
+	raise NVDANotInitializedError("Could not fetch foreground window")
 
 
 def _initializeObjectCaches():
@@ -475,6 +477,11 @@ def _initializeObjectCaches():
 	as the foreground window would already be accessible on the lock screen (e.g. Magnifier).
 	It also is more intuitive that NVDA focuses the foreground window,
 	as opposed to the desktop object.
+
+	@note: The foreground window should usually be fetched on the first try,
+	however it may take longer if Windows is taking a long time changing window focus.
+	Times out after 20 seconds (MAX_WAIT_TIME_SECS in _pollForForegroundHWND).
+	After timing out, NVDA will give up trying to start and exit.
 	"""
 	import api
 	import NVDAObjects
