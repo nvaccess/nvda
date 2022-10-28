@@ -33,18 +33,18 @@ Optional[Any]  # None or the value when the evaluator was met
 	"""
 	minIntervalBetweenSeconds = 0.001
 	assert intervalBetweenSeconds > minIntervalBetweenSeconds
-	startTime = timer()
+	lastSleepTime = startTime = timer()
 	while (timer() - startTime) < giveUpAfterSeconds:
 		val = getValue()
-		conditionTimeStart = timer()
 		if shouldStopEvaluator(val):
 			return True, val
-		conditionTimeElapsed = timer() - conditionTimeStart
+		timeElapsedSinceLastSleep = timer() - lastSleepTime
 		sleepTime = max(
 			# attempt to keep a regular period between polling
-			intervalBetweenSeconds - conditionTimeElapsed,
+			intervalBetweenSeconds - timeElapsedSinceLastSleep,
 			minIntervalBetweenSeconds,
 		)
 		sleep(sleepTime)
+		lastSleepTime = timer()
 
 	return False, None

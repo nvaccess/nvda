@@ -42,19 +42,19 @@ Optional[Any]  # None or the value when the evaluator was met
 	assert callable(shouldStopEvaluator)
 	minIntervalBetweenSeconds = 0.001
 	assert intervalBetweenSeconds > minIntervalBetweenSeconds
-	startTime = _timer()
+	lastSleepTime = startTime = _timer()
 	while (_timer() - startTime) < giveUpAfterSeconds:
 		val = getValue()
-		conditionTimeStart = _timer()
 		if shouldStopEvaluator(val):
 			return True, val
-		conditionTimeElapsed = _timer() - conditionTimeStart
+		timeElapsedSinceLastSleep = _timer() - lastSleepTime
 		sleepTime = max(
 			# attempt to keep a regular period between polling
-			intervalBetweenSeconds - conditionTimeElapsed,
+			intervalBetweenSeconds - timeElapsedSinceLastSleep,
 			minIntervalBetweenSeconds,
 		)
 		_sleep(sleepTime)
+		lastSleepTime = _timer()
 
 	if errorMessage:
 		raise AssertionError(errorMessage)
