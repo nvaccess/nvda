@@ -350,7 +350,7 @@ def _getSpellingSpeechWithoutCharMode(
 
 def getSingleCharDescriptionDelayMS() -> int:
 	"""
-	@returns: 1 second, a default delay.
+	@returns: 1 second, a default delay for delayed character descriptions.
 	In the future, this should fetch its value from a user defined NVDA idle time.
 	Blocked by: https://github.com/nvaccess/nvda/issues/13915
 	"""
@@ -361,12 +361,17 @@ def getSingleCharDescription(
 		text: str,
 		locale: Optional[str] = None,
 ) -> Generator[SequenceItemT, None, None]:
+	"""
+	Returns a speech sequence:
+	a pause, the length determined by getSingleCharDescriptionDelayMS,
+	followed by the character description.
+	"""
 	# This should only be used for single chars.
 	if not len(text) == 1:
 		return
 	synth = getSynth()
 	synthConfig = config.conf["speech"][synth.name]
-	if synth.isSupported("pitch"):
+	if synth.isSupported("pitch") and text.isupper():
 		capPitchChange = synthConfig["capPitchChange"]
 	else:
 		capPitchChange = 0
@@ -375,9 +380,18 @@ def getSingleCharDescription(
 		text,
 		locale,
 		useCharacterDescriptions=True,
-		sayCapForCapitals=text.isupper() and synthConfig["sayCapForCapitals"],
-		capPitchChange=(capPitchChange if text.isupper() else 0),
-		beepForCapitals=text.isupper() and synthConfig["beepForCapitals"],
+		# The pitch change may be useful,
+		# as a pitch change may be harder to notice,
+		# and continuing the shifted pitch
+		# is more intuitive.
+		capPitchChange=capPitchChange,
+		# #14239: When navigating by character,
+		# there is already a beep or "cap" announcement.
+		# There is no need for a secondary beep
+		# or "cap" announcement when announcing the
+		# the delayed character description.
+		beepForCapitals=False,
+		sayCapForCapitals=False,
 		fallbackToCharIfNoDescription=False,
 	)
 
