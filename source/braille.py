@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -50,6 +49,7 @@ import queueHandler
 import brailleViewer
 from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
+import hwIo
 
 if TYPE_CHECKING:
 	from NVDAObjects import NVDAObject
@@ -1771,6 +1771,10 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		(TETHER_REVIEW,_("to review"))
 	]
 
+	queuedWrite: Optional[List[int]] = None
+	queuedWriteLock: threading.Lock()
+	ackTimerHandle: int
+
 	def __init__(self):
 		louisHelper.initialize()
 		self.display: Optional[BrailleDisplayDriver] = None
@@ -1792,11 +1796,19 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._detector = None
 		self._rawText = u""
 
+		self.queuedWriteLock = threading.Lock()
+		self.ackTimerHandle = winKernel.createWaitableTimer()
+		self.__ackTimeoutResetterApc = winKernel.PAPCFUNC(self._ackTimeoutResetter)
+
 		brailleViewer.postBrailleViewerToolToggledAction.register(self._onBrailleViewerChangedState)
 
 	def terminate(self):
-		bgThreadStopTimeout = 2.5 if self._detectionEnabled else None
 		self._disableDetection()
+		if self.ackTimerHandle:
+			if not ctypes.windll.kernel32.CancelWaitableTimer(self.ackTimerHandle):
+				raise ctypes.WinError()
+			winKernel.closeHandle(self.ackTimerHandle)
+			self.ackTimerHandle = None
 		if self._messageCallLater:
 			self._messageCallLater.Stop()
 			self._messageCallLater = None
@@ -1807,7 +1819,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if self.display:
 			self.display.terminate()
 			self.display = None
-		_BgThread.stop(timeout=bgThreadStopTimeout)
 		louisHelper.terminate()
 
 	def getTether(self):
@@ -1897,10 +1908,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 					# Re-initialize with supported kwargs.
 					extensionPoints.callWithSupportedKwargs(newDisplay.__init__, **kwargs)
 			else:
-				if newDisplay.isThreadSafe and not detected:
-					# Start the thread if it wasn't already.
-					# Auto detection implies the thread is already started.
-					_BgThread.start()
 				try:
 					newDisplay = newDisplay(**kwargs)
 				except TypeError:
@@ -1961,7 +1968,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			# Make sure we start the blink timer from the main thread to avoid wx assertions
 			wx.CallAfter(self._cursorBlinkTimer.Start,blinkRate)
 
-	def _writeCells(self, cells):
+	def _writeCells(self, cells: List[int]):
 		brailleViewer.update(cells, self._rawText)
 		if not self.display.isThreadSafe:
 			try:
@@ -1970,16 +1977,21 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 				log.error("Error displaying cells. Disabling display", exc_info=True)
 				self.handleDisplayUnavailable()
 			return
-		with _BgThread.queuedWriteLock:
-			alreadyQueued = _BgThread.queuedWrite
-			_BgThread.queuedWrite = cells
+		with self.queuedWriteLock:
+			alreadyQueued: Optional[List[int]] = self.queuedWrite
+			self.queuedWrite = cells
 		# If a write was already queued, we don't need to queue another;
 		# we just replace the data.
 		# This means that if multiple writes occur while an earlier write is still in progress,
 		# we skip all but the last.
 		if not alreadyQueued and not self.display._awaitingAck:
 			# Queue a call to the background thread.
-			_BgThread.queueApc(_BgThread.executor)
+			self._writeCellsInBackground()
+
+	def _writeCellsInBackground(self):
+		"""Writes cells to a braille display in the background by queuing a function to the i/o thread.
+		"""
+		hwIo.bgThread.queueAsApc(self._bgThreadExecutor)
 
 	def _displayWithCursor(self):
 		if not self._cells:
@@ -2272,7 +2284,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if self._detectionEnabled and self._detector:
 			self._detector.rescan(usb=usb, bluetooth=bluetooth, limitToDevices=limitToDevices)
 			return
-		_BgThread.start()
 		config.conf["braille"]["display"] = AUTO_DISPLAY_NAME
 		if not keepCurrentDisplay:
 			self.setDisplayByName("noBraille", isFallback=True)
@@ -2288,95 +2299,42 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self._detector = None
 		self._detectionEnabled = False
 
-class _BgThread:
-	"""A singleton background thread used for background writes and raw braille display I/O.
-	"""
-
-	thread = None
-	exit = False
-	queuedWrite = None
-
-	@classmethod
-	def start(cls):
-		if cls.thread:
-			return
-		cls.queuedWriteLock = threading.Lock()
-		thread = cls.thread = threading.Thread(
-			name=f"{cls.__module__}.{cls.__qualname__}",
-			target=cls.func
-		)
-		thread.daemon = True
-		thread.start()
-		cls.handle = ctypes.windll.kernel32.OpenThread(winKernel.THREAD_SET_CONTEXT, False, thread.ident)
-		cls.ackTimerHandle = winKernel.createWaitableTimer()
-
-	@classmethod
-	def queueApc(cls, func, param=0):
-		ctypes.windll.kernel32.QueueUserAPC(func, cls.handle, param)
-
-	@classmethod
-	def stop(cls, timeout=None):
-		if not cls.thread:
-			return
-		cls.exit = True
-		if not ctypes.windll.kernel32.CancelWaitableTimer(cls.ackTimerHandle):
-			raise ctypes.WinError()
-		winKernel.closeHandle(cls.ackTimerHandle)
-		cls.ackTimerHandle = None
-		# Wake up the thread. It will exit when it sees exit is True.
-		cls.queueApc(cls.executor)
-		cls.thread.join(timeout)
-		cls.exit = False
-		winKernel.closeHandle(cls.handle)
-		cls.handle = None
-		cls.thread = None
-
-	@winKernel.PAPCFUNC
-	def executor(param):
-		if _BgThread.exit:
-			# func will see this and exit.
-			return
-		if not handler.display:
-			# Sometimes, the executor is triggered when a display is not fully initialized.
+	def _bgThreadExecutor(self, param):
+		"""Executed as APC when cells have to be written to a display asynchronously.
+		"""
+		if not self.display:
+			# Sometimes, the bg thread executor is triggered when a display is not fully initialized.
 			# For example, this happens when handling an ACK during initialisation.
 			# We can safely ignore this.
 			return
-		if handler.display._awaitingAck:
+		if self.display._awaitingAck:
 			# Do not write cells when we are awaiting an ACK
 			return
-		with _BgThread.queuedWriteLock:
-			data = _BgThread.queuedWrite
-			_BgThread.queuedWrite = None
+		with self.queuedWriteLock:
+			data: Optional[List[int]] = self.queuedWrite
+			self.queuedWrite = None
 		if not data:
 			return
 		try:
-			handler.display.display(data)
+			self.display.display(data)
 		except:
 			log.error("Error displaying cells. Disabling display", exc_info=True)
-			handler.handleDisplayUnavailable()
+			self.handleDisplayUnavailable()
 		else:
-			if handler.display.receivesAckPackets:
-				handler.display._awaitingAck = True
+			if self.display.receivesAckPackets:
+				self.display._awaitingAck = True
 				winKernel.setWaitableTimer(
-					_BgThread.ackTimerHandle,
-					int(handler.display.timeout*2000),
+					self.ackTimerHandle,
+					int(self.display.timeout * 2000),
 					0,
-					_BgThread.ackTimeoutResetter
+					self._ackTimeoutResetterApc
 				)
 
-	@winKernel.PAPCFUNC
-	def ackTimeoutResetter(param):
-		if handler.display.receivesAckPackets and handler.display._awaitingAck:
-			log.debugWarning("Waiting for %s ACK packet timed out"%handler.display.name)
-			handler.display._awaitingAck = False
-			_BgThread.queueApc(_BgThread.executor)
-
-	@classmethod
-	def func(cls):
-		while True:
-			ctypes.windll.kernel32.SleepEx(winKernel.INFINITE, True)
-			if cls.exit:
-				break
+	def _ackTimeoutResetter(self, param):
+		if self.display and self.display.receivesAckPackets and self.display._awaitingAck:
+			log.debugWarning(f"Waiting for {self.display.name} ACK packet timed out")
+			self.display._awaitingAck = False
+			self._writeCellsInBackground()
 
 
 # Maps old braille display driver names to new drivers that supersede old drivers.
@@ -2466,9 +2424,8 @@ class BrailleDisplayDriver(driverHandler.Driver):
 	_awaitingAck = False
 	#: Maximum timeout to use for communication with a device (in seconds).
 	#: This can be used for serial connections.
-	#: Furthermore, it is used by L{_BgThread} to stop waiting for missed acknowledgement packets.
-	#: @type: float
-	timeout = 0.2
+	#: Furthermore, it is used to stop waiting for missed acknowledgement packets.
+	timeout: float = 0.2
 
 	def __init__(self, port: typing.Union[None, str, bdDetect.DeviceMatch] = None):
 		"""Constructor
@@ -2665,10 +2622,10 @@ class BrailleDisplayDriver(driverHandler.Driver):
 		"""Base implementation to handle acknowledgement packets."""
 		if not self.receivesAckPackets:
 			raise NotImplementedError("This display driver does not support ACK packet handling")
-		if not ctypes.windll.kernel32.CancelWaitableTimer(_BgThread.ackTimerHandle):
+		if not ctypes.windll.kernel32.CancelWaitableTimer(self.ackTimerHandle):
 			raise ctypes.WinError()
 		self._awaitingAck = False
-		_BgThread.queueApc(_BgThread.executor)
+		self._writeCellsInBackground()
 
 	@classmethod
 	def DotFirmnessSetting(cls,defaultVal,minVal,maxVal,useConfig=False):

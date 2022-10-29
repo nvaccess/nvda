@@ -19,7 +19,7 @@ import threading
 import typing
 import hwPortUtils
 import braille
-import winKernel
+import hwIo
 import winUser
 from logHandler import log
 import config
@@ -249,7 +249,6 @@ class Detector(object):
 		@param limitToDevices: Drivers to which detection should be limited initially.
 			C{None} if no driver filtering should occur.
 		"""
-		self._BgScanApc = winKernel.PAPCFUNC(self._bgScan)
 		self._btDevsLock = threading.Lock()
 		self._btDevs = None
 		messageWindow.pre_handleWindowMessage.register(self.handleWindowMessage)
@@ -298,7 +297,7 @@ class Detector(object):
 					# Since the scan is embeded in a loop, it will automatically do another scan,
 					# unless a display has been found.
 					return
-				braille._BgThread.queueApc(self._BgScanApc)
+				hwIo.bgThread.queueAsApc(self._bgScan)
 
 	def _stopBgScan(self):
 		"""Stops the current scan as soon as possible and prevents a queued scan to start."""
