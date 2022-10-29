@@ -69,7 +69,7 @@ Restarts on crash
 	[Documentation]	Ensure NVDA restarts on crash.
 	NVDA restarts on crash
 
-Restarts on i/o thread crash
+Restarts on io thread crash
 	[Documentation]	Ensure NVDA restarts on a crash on the hwIo background thread.
 	NVDA restarts on io thread crash
 
