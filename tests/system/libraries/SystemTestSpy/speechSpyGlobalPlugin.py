@@ -172,9 +172,9 @@ class NVDASpyLib:
 		from queueHandler import queueFunction, eventQueue
 		queueFunction(eventQueue, _crashNVDA)
 
-	def queueNVDABrailleThreadCrash(self):
-		from braille import _BgThread
-		_BgThread.queueApc(ctypes.windll.Kernel32.DebugBreak)
+	def queueNVDAIoThreadCrash(self):
+		from hwIo import bgThread
+		bgThread.queueAsApc(_crashNVDA)
 
 	def queueNVDAUIAHandlerThreadCrash(self):
 		from UIAHandler import handler
@@ -535,7 +535,7 @@ class SystemTestSpyServer(globalPluginHandler.GlobalPlugin):
 		self._server.stop()
 
 
-def _crashNVDA():
+def _crashNVDA(param=0):
 	# Causes a breakpoint exception to occur in the current process.
 	# This allows the calling thread to signal the debugger to handle the exception.
 	#
