@@ -60,25 +60,24 @@ The following dependencies need to be installed on your system:
 
 * [Python](https://www.python.org/), version 3.7, 32 bit
 	* Use latest minor version if possible.
-* Microsoft Visual Studio 2019 or 2022:
-	* To replicate the production build environment, use the [version of Visual Studio 2019 that AppVeyor is using](https://www.appveyor.com/docs/windows-images-software/#visual-studio-2019). 
-		* When you do not use the Visual Studio IDE itself, you can download the [build tools](https://aka.ms/vs/16/release/vs_BuildTools.exe)
-		* When you are intending to use the Visual Studio IDE (not required for NVDA development), you can download [the community version](https://aka.ms/vs/16/release/vs_Community.exe), which is also used by appveyor
+* Microsoft Visual Studio 2022:
+	* To replicate the production build environment, use the [version of Visual Studio 2022 that AppVeyor is using](https://www.appveyor.com/docs/windows-images-software/#visual-studio-2022). 
+		* When you do not use the Visual Studio IDE itself, you can download the [build tools](https://aka.ms/vs/17/release/vs_BuildTools.exe)
+		* When you are intending to use the Visual Studio IDE (not required for NVDA development), you can download [the community version](https://aka.ms/vs/17/release/vs_Community.exe), which is also used by appveyor
 		* The Professional and Enterprise versions are also supported
 		* Preview versions are *not* supported
-		* Building with Visual Studio 2022 explicitly requires the MSVC v142 - VS 2019 C++ build tools to be installed (see below)
 	* When installing Visual Studio, you need to enable the following:
 		* In the list  on the Workloads tab
 			* in the Windows grouping:
 				* Desktop development with C++
 			* Then in the Installation details tree view, under Desktop for C++, Optional, ensure the following are selected:
-				* MSVC v142 - VS 2019 C++ x64/x86 build tools
-				* Windows 11 SDK (10.0.22000.0)
-				* C++ ATL for v142 build tools (x86 & x64)
+				* MSVC v143 - VS 2022 C++ x64/x86 build tools
+				* Windows 11 SDK (10.0.22621.0)
+				* C++ ATL for v143 build tools (x86 & x64)
 				* C++ Clang tools for Windows
 		* On the Individual components tab, ensure the following items are selected:
-			* MSVC v142 - VS 2019 C++ ARM64 build tools
-			* C++ ATL for v142 build tools (ARM64)
+			* MSVC v143 - VS 2022 C++ ARM64 build tools
+			* C++ ATL for v143 build tools (ARM64)
 
 
 ### Git Submodules
