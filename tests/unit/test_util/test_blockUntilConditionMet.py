@@ -17,7 +17,7 @@ from unittest.mock import patch
 from utils.blockUntilConditionMet import blockUntilConditionMet
 
 
-class _FakeTimer():
+class _Timer:
 	"""
 	Used to simulate the passage of time.
 	Patches sleeping and getting the current time,
@@ -47,7 +47,7 @@ class _FakeTimer():
 		return _shouldStopEvaluator
 
 
-class _Timer_SlowSleep(_FakeTimer):
+class _Timer_SlowSleep(_Timer):
 	"""
 	Adds an extra amount of sleep when sleep is called to simulate
 	the device taking longer than expected.
@@ -56,7 +56,7 @@ class _Timer_SlowSleep(_FakeTimer):
 		return super().sleep(secs + 2 * self.POLL_INTERVAL)
 
 
-class _Timer_SlowGetValue(_FakeTimer):
+class _Timer_SlowGetValue(_Timer):
 	"""
 	Adds an extra amount of sleep when getValue is called to simulate
 	the function taking a significant amount of time.
@@ -66,7 +66,7 @@ class _Timer_SlowGetValue(_FakeTimer):
 		return super().getValue()
 
 
-class _Timer_SlowShouldStop(_FakeTimer):
+class _Timer_SlowShouldStop(_Timer):
 	"""
 	Adds an extra amount of sleep when shouldStopEvaluator is called to simulate
 	the function taking a significant amount of time.
@@ -85,7 +85,7 @@ class Test_blockUntilConditionMet_Timer(unittest.TestCase):
 	Ensures that blockUntilConditionMet succeeds just before timeout, and fails just after timeout.
 	"""
 
-	_TimerClass: Type[_FakeTimer] = _FakeTimer
+	_TimerClass: Type[_Timer] = _Timer
 	"""Test suites which inherit from Test_blockUntilConditionMet_Timer will override the TimerClass"""
 
 	def setUp(self) -> None:
@@ -105,9 +105,9 @@ class Test_blockUntilConditionMet_Timer(unittest.TestCase):
 			getValue=self._timer.getValue,
 			giveUpAfterSeconds=giveUpAfterSeconds,
 			shouldStopEvaluator=self._timer.createShouldStopEvaluator(
-				succeedAfterSeconds=giveUpAfterSeconds - _FakeTimer.POLL_INTERVAL
+				succeedAfterSeconds=giveUpAfterSeconds - _Timer.POLL_INTERVAL
 			),
-			intervalBetweenSeconds=_FakeTimer.POLL_INTERVAL,
+			intervalBetweenSeconds=_Timer.POLL_INTERVAL,
 		)
 
 		timeElapsed = self._timer.time()
@@ -123,9 +123,9 @@ class Test_blockUntilConditionMet_Timer(unittest.TestCase):
 			getValue=self._timer.getValue,
 			giveUpAfterSeconds=giveUpAfterSeconds,
 			shouldStopEvaluator=self._timer.createShouldStopEvaluator(
-				succeedAfterSeconds=giveUpAfterSeconds + _FakeTimer.POLL_INTERVAL
+				succeedAfterSeconds=giveUpAfterSeconds + _Timer.POLL_INTERVAL
 			),
-			intervalBetweenSeconds=_FakeTimer.POLL_INTERVAL,
+			intervalBetweenSeconds=_Timer.POLL_INTERVAL,
 		)
 		timeElapsed = self._timer.time()
 		self.assertFalse(
