@@ -3,14 +3,10 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-"""This module is not a Robot Framework library itself. Instead it provides utility methods called from
-libraries. It is also copied into the (system test specific) NVDA profile directory as part of a global plugin
-package. This enables sharing utility methods between the global plugin and other Robot Framework libraries.
-"""
 
 from time import (
-	perf_counter as _timer,
-	sleep as _sleep,
+	perf_counter as timer,
+	sleep,
 )
 from typing import (
 	Any,
@@ -20,12 +16,11 @@ from typing import (
 )
 
 
-def _blockUntilConditionMet(
+def blockUntilConditionMet(
 		getValue: Callable[[], Any],
 		giveUpAfterSeconds: float,
 		shouldStopEvaluator: Callable[[Any], bool] = lambda value: bool(value),
 		intervalBetweenSeconds: float = 0.1,
-		errorMessage: Optional[str] = None
 		) -> Tuple[
 bool,  # Was evaluator met?
 Optional[Any]  # None or the value when the evaluator was met
@@ -34,28 +29,22 @@ Optional[Any]  # None or the value when the evaluator was met
 	Tries are separated by a time interval.
 	The call will block until shouldStopEvaluator returns True when given the value,
 	the default evaluator just returns the value converted to a boolean.
-	@param errorMessage: Use 'None' to suppress the exception.
 	@return: A tuple, (True, value) if evaluator condition is met, otherwise (False, None)
-	@raises: AssertionError if the time limit expires and an errorMessage is given.
 	"""
-	assert callable(getValue)
-	assert callable(shouldStopEvaluator)
 	minIntervalBetweenSeconds = 0.001
 	assert intervalBetweenSeconds > minIntervalBetweenSeconds
-	lastSleepTime = startTime = _timer()
-	while (_timer() - startTime) < giveUpAfterSeconds:
+	lastSleepTime = startTime = timer()
+	while (timer() - startTime) < giveUpAfterSeconds:
 		val = getValue()
 		if shouldStopEvaluator(val):
 			return True, val
-		timeElapsedSinceLastSleep = _timer() - lastSleepTime
+		timeElapsedSinceLastSleep = timer() - lastSleepTime
 		sleepTime = max(
 			# attempt to keep a regular period between polling
 			intervalBetweenSeconds - timeElapsedSinceLastSleep,
 			minIntervalBetweenSeconds,
 		)
-		_sleep(sleepTime)
-		lastSleepTime = _timer()
+		sleep(sleepTime)
+		lastSleepTime = timer()
 
-	if errorMessage:
-		raise AssertionError(errorMessage)
 	return False, None
