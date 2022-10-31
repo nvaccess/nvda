@@ -860,6 +860,7 @@ class UIAHandler(COMObject):
 				log.debug(
 					"handleFocusChangedEvent: Could not create an NVDAObject "
 				)
+			return
 		if _isDebug():
 			log.debug(f"Created object {obj} for element {self.getUIAElementDebugString(sender)}")
 		if not obj.shouldAllowUIAFocusEvent:

@@ -153,6 +153,14 @@ Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documen
 - ``core.post_windowMessageReceipt`` is deprecated, use ``winAPI.messageWindow.pre_handleWindowMessage`` instead.
 - ``winKernel.SYSTEM_POWER_STATUS`` is deprecated and usage is discouraged, this has been moved to ``winAPI._powerTracking.SystemPowerStatus``.
 - ``winUser.SM_*`` constants are deprecated, use ``winAPI.winUser.constants.SystemMetrics`` instead.
+= 2022.3.2 =
+This is a minor release to fix regressions with 2022.3.1 and address a security issue.
+
+== Security Fixes ==
+
+
+== Bug Fixes ==
+- Fixes a regression from 2022.3.1 where certain functionality was disabled on secure screens. (#14286)
 -
 
 
