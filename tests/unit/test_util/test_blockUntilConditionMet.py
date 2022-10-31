@@ -8,6 +8,7 @@
 
 from typing import (
 	Any,
+	Callable,
 	Type,
 )
 import unittest
@@ -31,17 +32,17 @@ class _FakeTimer():
 		"""Patch for utils.blockUntilConditionMet.sleep"""
 		self._fakeTime += secs
 
-	def time(self):
+	def time(self) -> float:
 		"""Patch for utils.blockUntilConditionMet.timer"""
 		return self._fakeTime
 
-	def getValue(self):
+	def getValue(self) -> float:
 		"""Used to test the getValue parameter of utils.blockUntilConditionMet.blockUntilConditionMet"""
 		return self.time()
 
-	def createShouldStopEvaluator(self, succeedAfterSeconds: float):
+	def createShouldStopEvaluator(self, succeedAfterSeconds: float) -> Callable[[Any], bool]:
 		"""Used to test the shouldStopEvaluator parameter of utils.blockUntilConditionMet.blockUntilConditionMet"""
-		def _shouldStopEvaluator(_value: Any):
+		def _shouldStopEvaluator(_value: Any) -> bool:
 			return self._fakeTime >= succeedAfterSeconds
 		return _shouldStopEvaluator
 
@@ -52,15 +53,15 @@ class _Timer_SlowSleep(_FakeTimer):
 	the device taking longer than expected.
 	"""
 	def sleep(self, secs: float) -> None:
-		self._fakeTime += secs + 2 * self.POLL_INTERVAL
+		return super().sleep(secs + 2 * self.POLL_INTERVAL)
 
 
 class _Timer_SlowGetValue(_FakeTimer):
 	"""
 	Adds an extra amount of sleep when getValue is called to simulate
-	the device taking longer than expected.
+	the function taking a significant amount of time.
 	"""
-	def getValue(self):
+	def getValue(self) -> float:
 		self._fakeTime += 2 * self.POLL_INTERVAL
 		return super().getValue()
 
@@ -68,9 +69,9 @@ class _Timer_SlowGetValue(_FakeTimer):
 class _Timer_SlowShouldStop(_FakeTimer):
 	"""
 	Adds an extra amount of sleep when shouldStopEvaluator is called to simulate
-	the device taking longer than expected.
+	the function taking a significant amount of time.
 	"""
-	def createShouldStopEvaluator(self, succeedAfterSeconds: float):
+	def createShouldStopEvaluator(self, succeedAfterSeconds: float) -> Callable[[Any], bool]:
 		"""Used to test the shouldStopEvaluator parameter of utils.blockUntilConditionMet.blockUntilConditionMet"""
 		def _shouldStopEvaluator(_value: Any):
 			self._fakeTime += 2 * self.POLL_INTERVAL
