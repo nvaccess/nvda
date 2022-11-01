@@ -201,6 +201,7 @@ class Role(DisplayStringIntEnum):
 	COMMENT = 155
 	SUGGESTION = 156
 	DEFINITION = 157
+	SWITCH = 158
 
 
 _roleLabels: Dict[Role, str] = {
@@ -528,6 +529,9 @@ _roleLabels: Dict[Role, str] = {
 	Role.SUGGESTION: _("suggestion"),
 	# Translators: Identifies a definition.
 	Role.DEFINITION: _("definition"),
+	# Translators: The word role for a switch control
+	# I.e. a control that can be switched on or off.
+	Role.SWITCH: _("switch"),
 }
 
 

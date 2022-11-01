@@ -22,7 +22,13 @@ Import([
 env = env.Clone()
 env.Append(CPPPATH=Dir('#include/wil/include'))
 env.Append(CPPPATH=MSUIA_include_outDir)
-env.Append(CCFLAGS='/MD')
+# Re-enable permissive mode as disabling it isn't supported for UiaOperationAbstraction.h
+env['CCFLAGS'].remove('/permissive-')
+env.Append(CCFLAGS=[
+	'/MD',
+	# Swap C++20 for C++17 as C++20 is not yet supported by UiaOperationAbstraction.h
+	'/std:c++17',
+])
 
 UIARemoteLib=env.SharedLibrary(
 	target="UIARemote",
