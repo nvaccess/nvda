@@ -67,6 +67,9 @@ def getSafeScripts() -> Set["scriptHandler._ScriptFunctionT"]:
 		# is handled using `api.setMouseObject` and `api.setNavigatorObject`.
 		commands.script_moveMouseToNavigatorObject,
 		commands.script_moveNavigatorObjectToMouse,
+		# Mouse click events are harmless.
+		# Mouse clicks are already exposed by Windows, and these scripts emulate those mouse clicks,
+		# rather than passing a click event to an NVDAObject / HWND.
 		commands.script_leftMouseClick,
 		commands.script_rightMouseClick,
 		

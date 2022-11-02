@@ -34,6 +34,7 @@ import ctypes
 import sys
 import os
 
+SpeechIndexT = int
 
 def _importRobotRemoteServer() -> typing.Type:
 	log.debug(f"before path mod: {sys.path}")
@@ -352,7 +353,7 @@ class NVDASpyLib:
 		self._allSpeechStartIndex = self.get_last_speech_index()
 		return self._allSpeechStartIndex
 
-	def get_next_speech_index(self) -> int:
+	def get_next_speech_index(self) -> SpeechIndexT:
 		""" @return: the next index that will be used.
 		"""
 		return self.get_last_speech_index() + 1
@@ -378,6 +379,30 @@ class NVDASpyLib:
 			intervalBetweenSeconds=intervalBetweenSeconds,
 			errorMessage=None
 		)
+
+	def wait_for_specific_speech_no_raise(
+			self,
+			speech: str,
+			afterIndex: Optional[int] = None,
+			maxWaitSeconds: float = 5.0,
+			intervalBetweenSeconds: float = DEFAULT_INTERVAL_BETWEEN_EVAL_SECONDS,
+	) -> Optional[int]:
+		"""
+		@param speech: The speech to expect.
+		@param afterIndex: The speech should come after this index. The index is exclusive.
+		@param maxWaitSeconds: The amount of time to wait in seconds.
+		@param intervalBetweenSeconds: The amount of time to wait between checking speech, in seconds.
+		@return: the index of the speech.
+		"""
+		success, speechIndex = self._has_speech_occurred_before_timeout(
+			speech,
+			afterIndex,
+			maxWaitSeconds,
+			intervalBetweenSeconds
+		)
+		if not success:
+			return None
+		return speechIndex
 
 	def wait_for_specific_speech(
 			self,
@@ -438,13 +463,18 @@ class NVDASpyLib:
 	def wait_for_speech_to_finish(
 			self,
 			maxWaitSeconds=5.0,
-			speechStartedIndex: Optional[int] = None
-	):
-		_blockUntilConditionMet(
+			speechStartedIndex: Optional[int] = None,
+			errorMessage: Optional[str] = "Speech did not finish before timeout"
+	) -> bool:
+		"""speechStartedIndex should generally be fetched with get_next_speech_index
+		@param errorMessage: Supply None to bypass assert.
+		"""
+		success, _value = _blockUntilConditionMet(
 			getValue=lambda: self._hasSpeechFinished(speechStartedIndex=speechStartedIndex),
 			giveUpAfterSeconds=self._minTimeout(maxWaitSeconds),
-			errorMessage="Speech did not finish before timeout"
+			errorMessage=errorMessage,
 		)
+		return success
 
 	def wait_for_braille_update(
 			self,

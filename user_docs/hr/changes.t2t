@@ -3,6 +3,107 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2022.4 =
+U ovoj je inačici dodano nekoliko novih tipkovničkih prečaca, uključujući i prečace za čitanje cijele tablice.
+Dodan je odjeljak "Vodič za brzo upoznavanje sa NVDA" u korisnički priručnik.
+Ispravljene su također neke pogreške.
+
+Espeak i LibLouis su nadograđeni.
+Dodane su nove brajične tablice za jezike: kineski, švedski, Luganda i Kinyarwanda.
+
+== Nove značajke ==
+- Dodan je odlomak "Vodič za brzo upoznavanje" u vodič za korisnike. (#13934)
+- Dodan je novi prečac za provjeru tipkovničkog prečaca trenutno fokusirane stavke. (#13960)
+  - Za stolna računala: ``shift+numerički2``.
+  - za prijenosna računala: ``NVDA+ctrl+shift+.``.
+  -
+- Dodani su novi prečaci preglednog kursora za kretanje po stranici gdje to aplikacija podržava. (#14021)
+  - Idi na prethodnu stranicu:
+    - za stolna računala: ``NVDA+pageUp``.
+    - Za prijenosna računala: ``NVDA+shift+pageUp``.
+    -
+  - Idi na slijedeću stranicu:
+    - Za stolna računala: ``NVDA+pageDown``.
+    - Za prijenosna računala: ``NVDA+shift+pageDown``.
+    -
+  -
+- Dodani su slijedeći prečaci za kretanje po tablicama. (#14070)
+  - Čitaj sve u stupcu: ``NVDA+control+alt+downArrow``
+  - Čitaj sve u redku: ``NVDA+control+alt+rightArrow``
+  - Čitaj cijeli stupac: ``NVDA+control+alt+upArrow``
+  - Čitaj cijeli redak: ``NVDA+control+alt+leftArrow``
+  -
+- Microsoft Excel koji se koristi sa UI automation: NVDA sada obavještava o izlazku iz tablice u radnoj knjizi. (#14165)
+- Čitanje zaglavlja tablica sada može biti konfigurirano odvojeno redci od stupaca. (#14075)
+-
+
+
+== Izmjene ==
+- eSpeak NG je nadograđen  na inačicu 1.52-dev commit ``735ecdb8``. (#14060, #14079, #14118, #14203)
+  - Ispravljeno je čitanje latinice pri korištenju mandarinskog kineskog. (#12952, #13572, #14197)
+  -
+- Nadograđen je LibLouis brajični prevoditelj na inačicu [3.23.0 https://github.com/liblouis/liblouis/releases/tag/v3.23.0]. (#14112)
+  - Dodane brajične tablice:
+    - Kineska opća brajica (pojednostavljeni kineski znakovi)
+    - Kinyarwanda puno pismo
+    - Luganda puno pismo
+    - švedsko osnovno pismo
+    - švedsko puno pismo
+    - švedski kratkopis
+    - Kineski (Kina, mandarinski) Trenutačni brajični sustav (bez tonova) (#14138)
+    -
+- NVDA sada uključuje arhitekturu operacijskog sustava kao dio sakupljane korisničke statistike. (#14019)
+-
+
+
+== Ispravke grešaka ==
+- Prilikom nadogradnje NVDA uz pomoć Windows upravitelja paketa CLI (to jest winget), stabilna inačica se više ne tretira kao novija od bilo koje alpha inačice. (#12469)
+- NVDA će sada ispravno čitati grupiranja u java aplikacijama. (#13962)
+- Kursor sustava sada točno slijedi tijek "prečaca čitaj sve" u programima poput Bookworm-a, WordPada ili NVDA preglednika zapisnika. (#13420, #9179)
+- U programima koji koriste UI automation, polovično odabrani potvrdni okviri sada će biti ispravno pročitani. (#13975)
+- Unapređene su performanse i stabilnost u Microsoft Visual Studiu, Windows Terminalu, i drugim programima baziranim na UIA. (#11077, #11209)
+  - Ovi ispravci se primjenjuju na Windows 11 Sun Valley 2 (inačica 22H2) i novije.
+  - Selektivna registracija za događaje UI automation i izmjene svojstava sada je uključena podrazumjevano.
+  -
+- Čitanje teksta, brajični izlaz i neizgovaranje lozinki sada rade kako je to očekivano u ugrađenoj Windows terminal kontroli u Visual Studiu 2022. (#14194)
+- NVDA je sada DPI svjestan pri korištenju više monitora.
+Dodano je nekoliko ispravaka za korištenje DPI postavke više od 100% ili pri korištenju više monitora.
+Još mogu postojati problemi sa inačicama operacijskog sustava Windows starijih od Windows 10 1809.
+Kako bi ove ispravke radile, aplikacije s kojima NVDA ulazi u interakciju  također moraju biti DPI svjesne.
+Imajte na umu da postoje problemi sa Chrome i Edge preglednicima. (#13254)
+  - Okviri vizualnog označavanja sada će se postavljati ispravno u većini aplikacija. (#13370, #3875, #12070)
+  - Interakcija putem dodirnika sada će biti točnija za većinu aplikacija. (#7083)
+  - Praćenje miša će sada raditi ispravno za neke aplikacije. (#6722)
+  -
+- Stanje orijentacije zaslona (okomito/vodoravno) sada se ispravno ignoriraju kada ne postoji izmjena (npr. promjene monitora). (#14035)
+- NVDA će obavještavati o spuštanju stavaka na zaslonu kao što su to mjesta premještanja Windows 10 ploćica u izborniku start i virtualnim radnim površinama u Windows 11. (#12271, #14081)
+- U naprednim postavkama, opcija opcija "reproduciraj zvuk za zapisane greške" sada se ispravno vraća na svoje podrazumjevane vrijednsti prilikom pritiska gumba "vrati na zadano". (#14149)
+- NVDA sada može označavati tekst koristeći ``NVDA+f10`` tipkovnički prečac u java aplikacijama. (#14163)
+-
+
+
+== Izmjene za razvojne programere ==
+Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
+
+
+= 2022.3.1 =
+Ovo je podverzija koja ispravlja nekoliko sigurnosnih propusta.
+Molimo odgovorno izvještavajte o sigurnosnim problemima na adresu info@nvaccess.org.
+
+== Sigurnosne ispravke ==
+- Ispravljena ranjivost putem koje je bilo moguće podizanja prava sa korisnika na sustav.
+([GHSA-q7c2-pgqm-vvw5 https://github.com/nvaccess/nvda/security/advisories/GHSA-q7c2-pgqm-vvw5])
+- Ispravljen je sigurnosni propust koji je omogućavao pristpu python konzoli na zaključanom zaslonu preko rizične situacije NVDA pokretanja.
+([GHSA-72mj-mqhj-qh4w https://github.com/nvaccess/nvda/security/advisories/GHSA-72mj-mqhj-qh4w])
+- Ispravljena pogreška u kojej je tekst pregledniak govora bio zadržavan prilikom zaključavanja operacijskog sustava Windows.
+([GHSA-grvr-j2h8-3qm4 https://github.com/nvaccess/nvda/security/advisories/GHSA-grvr-j2h8-3qm4])
+-
+
+== Ispravke grešaka ==
+- Neautorizirani korisnik biti će spriječen u namjeri spremanja postavki preglednika govora i brajice na zaslonu zaključavanja. ([GHSA-grvr-j2h8-3qm4 https://github.com/nvaccess/nvda/security/advisories/GHSA-grvr-j2h8-3qm4])
+-
+
+
 = 2022.3 =
 Velikom dijelu ove inačice je doprinijela zajednica NVDA doprinositelja.
 Ovo uključuje opise znakove poslije slovkanja i unapređenu podršku Windowsovog naredbenog redka.
@@ -56,6 +157,15 @@ Ovo će unaprediti performanse za neke java aplikacije uključujući IntelliJ ID
 
 == Izmjene za razvojne programere ==
 Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
+
+
+= 2022.2.4 =
+Ovo je inačica koja ispravlja sigurnosnu ranjivost.
+
+== Ispravke grešaka ==
+- Ispravljena ranjivost putem koje je bilo moguće otvoriti Python konzolu preko pregledniak zapisnika na sigurnom zaslonu.
+([GHSA-585m-rpvv-93qg https://github.com/nvaccess/nvda/security/advisories/GHSA-585m-rpvv-93qg])
+-
 
 
 = 2022.2.3 =

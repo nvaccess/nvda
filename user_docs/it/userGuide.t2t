@@ -17,6 +17,8 @@ Lo screen reader è sviluppato da [NV Access https://www.nvaccess.org/], con con
 ++ Caratteristiche principali ++[GeneralFeatures]
 NVDA permette alle persone non vedenti di accedere ed interagire con il sistema operativo Windows e con diverse applicazioni di terze parti.
 
+Un breve video di presentazione in inglese, ["What is NVDA?" https://www.youtube.com/watch?v=tCFyyqy9mqo] is available from the NV Access YouTube channel.
+
 Le caratteristiche principali possono essere riassunte nei seguenti punti:
 - Supporto alle applicazioni più comuni come browser web, posta elettronica, wordprocessor e software per chattare.
 - sintesi vocale incorporata capace di parlare più di 80 lingue
@@ -34,6 +36,13 @@ Le caratteristiche principali possono essere riassunte nei seguenti punti:
 - Capacità di evidenziare il focus di sistema.
 -
   
+++ Requisiti di sistema +[SystemRequirements]
+- Sistemi operativi: tutte le versioni a 32 e 64 bit dei Sistemi Windows 7, Windows8, Windows8.1, Windows10, Windows11 e tutte le edizioni Server a partire da Windows Server 2008 r2.
+ - Per Windows 7, NVDA richiede Service Pack 1 o successivo.
+ - Per Windows Server 2008 R2, NVDA richiede Service Pack 1 o successivo.
+- Circa 150 Megabytes di spazio disco.
+-
+
 ++ Internazionalizzazione ++[Internationalization]
 è importante che tutte le persone del mondo, indipendentemente dalla loro nazionalità e dalla lingua parlata, abbiano eguale accesso alle informazioni.
 Oltre all'inglese, NVDA è stato tradotto in 54 lingue ossia Afrikaans, Albanese, Amharico, Arabo, Aragonese, Bulgaro, Burmese, Catalano, Cinese (semplificato e tradizionale), croato, Ceco, Coreano, Danese, Olandese, persiano, finlandese, Francese, Galiziano, Georgiano, tedesco (svizzero e tedesco, Greco, Ebraico, Hindi, Ungherese, Islandese, Irlandese, italiano, giapponese, Kannada, Coreano, Kyrgy, Lituano, Macedone, Mongolo, Nepalese, Norvegese, Polacco, portoghese (brasiliano e portoghese), Punjabi, Rumeno, russo, Serbo, slovacco, sloveno, Spagnolo (colombiano e spagnolo), Svedese, Tamil, Thai, Turco, ucraino e vietnamita.
@@ -65,12 +74,230 @@ Questo si applica a copie originali e modificate del software ed a qualsiasi pro
 Per maggiori informazioni è possibile [Leggere l'intera licenza. https://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 Per i dettagli relativi alle eccezioni, accedere al documento di licenza dal menu NVDA nella sezione "Guida".
 
-+ Requisiti di sistema +[SystemRequirements]
-- Sistemi operativi: tutte le versioni a 32 e 64 bit dei Sistemi Windows 7, Windows8, Windows8.1, Windows10, Windows11 e tutte le edizioni Server a partire da Windows Server 2008 r2.
- - Per Windows 7, NVDA richiede Service Pack 1 o successivo.
- - Per Windows Server 2008 R2, NVDA richiede Service Pack 1 o successivo.
-- Circa 150 Megabytes di spazio disco.
+
++ Guida rapida di NVDA +[NVDAQuickStartGuide]
+
+Questa guida rapida contiene tre sezioni principali: download, configurazione iniziale ed esecuzione di NVDA.
+Seguiranno poi informazioni sulla regolazione delle preferenze, su come partecipare alla community e ottenere aiuto.
+Le informazioni in questa guida rapida fanno riferimento a ciò che viene indicato nel presente manuale in forma estesa.
+Fare riferimento alla Guida utente completa per informazioni più dettagliate su ciascun argomento.
+
+++ Scaricare NVDA ++[GettingAndSettingUpNVDA]
+NVDA è completamente gratuito all'uso da parte di chiunque.
+Non ci sono chiavi di licenza di cui preoccuparsi o abbonamenti costosi da pagare.
+NVDA viene aggiornato, in media, quattro volte all'anno.
+L'ultima versione di NVDA è sempre disponibile alla "pagina di Download" del [sito web NV AccessNVDA_URL].
+
+NVDA funziona con tutte le versioni recenti di Microsoft Windows.
+Controllare la sezione sui [Requisiti di sistema #SystemRequirements] per tutti i dettagli.
+
++++ Procedimento passo passo per scaricare NVDA +++[StepsForDownloadingNVDA]
+
+Questi passaggi presuppongono una certa familiarità con la navigazione in una pagina web.
+
+- Aprire il browser web (Premere il tasto ``Windows``, digitare la parola "browser" senza le virgolette, e premere ``invio``)
+- Caricare l'apposita pagina web di download di NV Access (Premere ``alt+d``, digitare l'indirizzo seguente e premere ``invio``): 
+https://www.nvaccess.org/download 
+- Attivare il pulsante "download"
+- Il browser potrebbe richiedere o meno un'azione inerente il download, accettare la richiesta ed avviare lo scaricamento
+- A seconda del browser, il file potrebbe essere eseguito automaticamente dopo il download
+- Se il file deve essere avviato manualmente, premere ``alt+n`` per passare all'area di notifica, quindi ``alt+e`` per eseguire il file (o i passaggi per il proprio browser)
 -
+
+++ Configurazione di NVDA ++[SettingUpNVDA]
+
+L'esecuzione del file appena scaricato avvierà una copia temporanea di NVDA.
+Verrà quindi chiesto se si desidera installare NVDA, creare una copia portable o semplicemente continuare a utilizzare la copia temporanea.
+
+NVDA non ha bisogno dell'accesso a Internet per l'esecuzione o l'installazione una volta che si scaricato il programma.
+Se disponibile, la connessione ad Internet consente a NVDA di verificare periodicamente la presenza di aggiornamenti.
+
++++ Procedimento passo passo per eseguire il programma d'avvio appena scaricato +++[StepsForRunningTheDownloadLauncher]
+
+Il file di installazione è chiamato "nvda_2022.1.exe" o simile.
+L'anno e la versione sono diversi ad ogni aggiornamento in modo da adeguarsi man mano alle nuove release.
++ Eseguire il file scaricato.
+Viene riprodotta una breve introduzione sonora durante il caricamento di una copia temporanea di NVDA.
+Una volta caricato, NVDA parlerà per l'intera durata della procedura.
++ Viene visualizzata la finestra di NVDA con il contratto di licenza.
+Premere ``freccia giù`` per leggere il contratto di licenza, se lo si desidera.
++ Premere ``tab`` per passare alla casella di controllo "Accetto", quindi premere la ``barra spaziatrice`` per selezionarla.
++ Premere ``tab`` per spostarsi tra le opzioni, quindi premere ``invio`` sull'opzione desiderata.
++
+
+Le opzioni sono:
+- "Installa NVDA su questo computer": questa è l'opzione principale che la maggior parte degli utenti seleziona per un utilizzo facile ed immediato di NVDA.
+- "Crea copia portable": consente di configurare ed estrarre NVDA in una cartella qualsiasi senza installarlo.
+Questo è utile su computer senza diritti di amministratore o su un supporto di memoria da portare con sè.
+Una volta selezionato, NVDA segue i passaggi per creare una copia portable.
+La cosa principale che NVDA deve conoscere è la cartella in cui impostare la copia portable.
+- "Continua l'esecuzione": Ciò mantiene in esecuzione la copia temporanea di NVDA.
+Risulta utile per testare le funzionalità in una nuova versione prima di installarla.
+Quando viene selezionata, la finestra di avvio si chiude e la copia temporanea di NVDA continua a funzionare finché non viene chiusa o il PC viene spento.
+Si noti che le modifiche alle impostazioni non vengono salvate.
+- "Annulla": questo chiude NVDA senza eseguire alcuna azione.
+-
+
+
+Se si prevede di utilizzare sempre NVDA sul computer, è decisamente consigliabile installare NVDA.
+L'installazione di NVDA consentirà funzionalità aggiuntive come l'avvio automatico dopo l'accesso, la possibilità di leggere le schermate di login e di accesso a Windows e [schermate protette #SecureScreens].
+Tali caratteristiche non sono disponibili con copie portatili e temporanee.
+Per conoscere tutte le limitazioni durante l'esecuzione di una copia portable o temporanea di NVDA, vedere [Restrizioni delle copie portable e temporanee #PortableAndTemporaryCopyRestrictions].
+
+L'installazione offre anche la creazione di una voce nel menu avvio e dei collegamenti sul desktop, oltre a consentire l'avvio di NVDA con ``control+alt+n``.
+
++++ Procedura passo passo per installare NVDA dal programma appena scaricato +++[StepsForInstallingNVDAFromTheLauncher]
+Questi passaggi illustrano le opzioni di configurazione più comuni.
+Per maggiori dettagli sulle opzioni disponibili, vedere [Opzioni di installazione #InstallingNVDA].
+
++ Dal programma di avvio, assicurarsi che la casella di controllo per accettare la licenza sia selezionata.
++ Spostarsi con il tasto ``Tab`` e attivare il pulsante "Installa NVDA su questo computer".
++ Successivamente, ci sono le opzioni per utilizzare NVDA durante l'accesso a Windows e per creare un collegamento sul desktop.
+Esse sono già selezionate per impostazione predefinita.
+Se lo si desidera, premere ``tab`` e ``barra spaziatrice`` per modificare una qualsiasi di queste opzioni, o lasciarle al valore predefinito.
++ Premere ``invio`` per continuare.
++ Viene visualizzata una finestra di dialogo "Controllo account utente (UAC)" di Windows con una richiesta simile a questa: "Vuoi consentire a questa app di apportare modifiche al tuo PC?".
++ Premere ``alt+s`` per accettare.
++ Durante l'installazione di NVDA, apparirà una barra di avanzamento che si riempie sino al termine..
+Durante questo processo NVDA emette un segnale acustico sempre più acuto.
+Questo processo è spesso veloce e potrebbe non essere notato.
++ Viene visualizzata una finestra di dialogo per confermare che l'installazione di NVDA è andata a buon fine.
+Il messaggio consiglia di "Premere OK per avviare la copia installata".
+Premi ``invio`` per avviare la copia installata.
++ Viene visualizzata la finestra di dialogo "Benvenuto in NVDA" e lo screen reader ne leggerà il contenuto.
+Il focus si trova sulla casella combinata "Layout tastiera".
+Per impostazione predefinita, il layout della tastiera "Desktop" utilizza il tastierino numerico per alcune funzioni.
+Se lo si desidera, premere ``freccia giù`` per scegliere il layout della tastiera "Laptop" in modo da assegnare automaticamente le funzioni del tastierino numerico ad altri tasti.
++ Premere ``tab`` per spostarsi su  "Utilizza ``Blocca maiuscole`` come tasto NVDA".
+Per impostazioni predefinita, il tasto NVDA è assegnato a ``Insert``.
+Premere ``Barra spazio`` per selezionare ``blocca maiuscole`` come tasto NVDA..
+Si noti che le impostazioni sul layout della tastiera funzionano separatamente rispetto al tasto NVDA.
+Il tasto NVDA e il layout della tastiera possono essere modificati in seguito dalle Impostazioni tastiera.
++ Utilizzare ``tab`` e ``barra spazio`` per regolare le altre opzioni su questa schermata.
+Si tratta di stabilire se NVDA debba avviarsi automaticamente.
++ Premere ``invio`` per chiudere la finestra di dialogo con NVDA ora in esecuzione.
++
+
+++ Esecuzione di NVDA ++[RunningNVDA]
+
+La guida utente completa di NVDA contiene tutti i comandi del lettore di schermo, suddivisi in diverse sezioni per ottenere un facile riferimento.
+Le tabelle dei comandi sono disponibili anche nella "Guida rapida ai comandi".
+In inglese è stato prodotto del materiale formativo a pagamento che include esempi e ulteriori dettagli.
+"Il materiale formativo di base per NVDA" è disponibile in inglese dal [negozio NV Access http://www.nvaccess.org/shop].
+
+Ecco alcuni comandi di base che vengono utilizzati frequentemente.
+Tutti i comandi sono configurabili, quindi queste sono le sequenze di tasti predefinite per queste funzioni.
+
++++ Il tasto funzione NVDA +++[NVDAModifierKey]
+Per impostazioni predefinite il tasto funzione NVDA è assegnato  allo ``zero del tastierino numerico``, (con ``tastierino`` spento), oppure al tasto ``insert``, vicino al gruppo di sei tasti dove si trovano anche ``cancella``, ``inizio`` e ``fine``.
+Il tasto funzione NVDA può anche essere assegnato al ``blocca maiuscole``.
+
++++ Aiuto immissione +++[InputHelp]
+Per imparare ed esercitarsi sulla posizione dei tasti, premere ``NVDA+1`` per attivare l'Aiuto immissione.
+Con la modalità di aiuto immissione attivata, sarà possibile eseguire qualsiasi gesto (sia pressione di tasti o azioni sul touch screen) e lo screen reader annuncerà ciò che è stato premuto e la relativa azione associata (se presente).
+I comandi effettivi non verranno eseguiti nella modalità di aiuto immissione.
+
++++ Avviare e chiudere NVDA +++[StartingAndStoppingNVDA]
+|| Nome | Tasto Desktop | tasto Laptop | Descrizione |
+| Eseguire NVDA | ``control+alt+n`` | ``control+alt+n`` | Avvia o riavvia NVDA |
+| Uscire da NVDA | ``NVDA+q``, poi ``invio`` | ``NVDA+q``, poi ``invio`` | Esce da NVDA |
+| Pausa sintesi vocale | ``maiusc`` | ``maiusc`` | Mette in pausa all'istante la sintesi vocale. Ripremendo il tasto riprende da dove si era interrotto |
+| Stop Sintesi vocale | ``control`` | ``control`` | Ferma immediatamente la sintesi vocale |
+
++++ Leggere il testo +++[ReadingText]
+|| Nome | Tasto Desktop | Tasto Laptop | Descrizione |
+| Dire Tutto | ``NVDA+Freccia Giù`` | ``NVDA+a`` | Inizia a leggere dalla posizione del cursore di sistema sino alla fine del documento, spostando il cursore man mano che la lettura continua |
+| Legge Riga Corrente | ``NVDA+freccia su`` | ``NVDA+l`` | Legge la riga sulla quale si trova il cursore di sistema. Premendo la combinazione due volte viene effettuato lo spelling della riga. La tripla pressione effettuerà lo spelling utilizzando la descrizione dei caratteri (ancona, bari, como, domodossola, etc|
+| Legge Selezione corrente | ``NVDA+Shift+freccia su`` | ``NVDA+shift+s`` | Legge il testo selezionato ammesso esista. |
+| Legge testo negli appunti | ``NVDA+c`` | ``NVDA+c`` | Annuncia il testo contenuto negli appunti, se presente. |
+
++++ informazioni su posizione ed altro +++[ReportingLocation]
+|| Nome | Tasto Desktop | Tasto Laptop | Descrizione |
+| Legge il titolo | ``NVDA+t`` | ``NVDA+t`` | Legge il titolo della finestra attiva in quel momento. Premendo la combinazione due volte ne verrà fatto lo spelling. Premendo per tre volte il contenuto verrà copiato negli appunti. |
+| Legge il focus | ``NVDA+tab`` | ``NVDA+tab`` | Annuncia l'oggetto o il controllo attualmente focalizzato. Premendo la combinazione due volte ne verrà fatto lo spelling  |
+| Legge la Finestra Attiva | ``NVDA+b`` | ``NVDA+b`` | Legge il contenuto della finestra in primo piano (utile nelle finestre di dialogo). |
+| Legge la barra di stato | ``NVDA+fine`` | ``NVDA+maiuscola+fine`` | Legge la barra di stato nel caso in cui NVDA sia in grado di individuarla. Una doppia pressione provocherà lo spelling delle informazioni. Una tripla pressione copierà il contenuto della barra di stato negli appunti |
+| Annuncia data/Ora | ``NVDA+f12`` | ``NVDA+f12`` | Premendo una volta viene annunciato l'orario corrente, mentre premendo due volte verrà annunciata la data |
+| Annuncia formattazione | ``NVDA+f`` | ``NVDA+f`` | Legge la formattazione del testo; Una doppia pressione visualizzerà le informazioni in una finestra di dialogo |
+
++++ Stabilire quali informazioni NVDA debba leggere +++[ToggleWhichInformationNVDAReads]
+|| Nome | Tasto Desktop | Tasto Laptop | Descrizione |
+| Leggi i caratteri digitati | ``NVDA+2`` | ``NVDA+2`` | Quando abilitato, NVDA annuncerà tutti i caratteri digitati sulla tastiera. |
+| Leggi le parole digitate | ``NVDA+3`` | ``NVDA+3`` | Quando abilitato, NVDA annuncerà tutte le parole digitate sulla tastiera. |
+| Leggi i tasti di comando | ``NVDA+4`` | ``NVDA+4`` | Quando attivato, NVDA leggerà tutti i tasti digitati che non rappresentano un carattere. Ciò comprende anche combinazioni di tasti quali control e un'altra lettera. |
+| Abilita tracciamento del mouse | ``NVDA+m`` | ``NVDA+m`` | Quando attivata, istruisce NVDA ad annunciare il testo sul quale è posizionato il puntatore, mentre ci si sposta con esso sullo schermo. Questo permette di individuare gli elementi con una rappresentazione fisica e reale su come essi siano disposti sul video, piuttosto che utilizzare la navigazione ad oggetti. |
+
++++ Impostare al volo il sintetizzatore +++[TheSynthSettingsRing]
+|| Nome | Tasto Desktop | Tasto Laptop | Descrizione |
+| Spostarsi al parametro successivo del sintetizzatore | ``NVDA+control+FrecciaDestra`` | ``NVDA+Maiusc+control+FrecciaDestra`` | Si sposta al prossimo parametro disponibile inerente la sintesi vocale e nel caso si sia raggiunto l'ultimo dell'elenco tornerà al primo |
+| Spostarsi al parametro precedente del sintetizzatore | ``NVDA+control+FrecciaSinistra`` | ``NVDA+Maiusc+control+FrecciaSinistra`` | Si sposta al parametro precedente disponibile inerente la sintesi vocale e nel caso si sia raggiunto l'ultimo dell'elenco tornerà al primo |
+| Aumentare il parametro corrente del sintetizzatore | ``NVDA+Control+Freccia su`` | ``NVDA+Maiusc+Control+Freccia su`` | Aumenta il valore del parametro sul quale si è posizionati. Ad esempio si aumenta la velocità, poi ci si sposta all'impostazione successiva, si aumenta il volume etc |
+| Diminuire il parametro corrente del sintetizzatore | ``NVDA+Control+Freccia giù`` | ``NVDA+Shift+Control+Freccia giù`` | Diminuisce il valore del parametro sul quale si è posizionati. Ad esempio si diminuisce la velocità, poi ci si sposta all'impostazione successiva, si diminuisce il volume etc |
+
++++ Navigazione web +++[WebNavigation]
+L'elenco completo dei tasti di navigazione a lettere singole è disponibile nella sezione [Modalità di navigazione #BrowseMode] della guida utente.
+|| Comando | tasto | Descrizione |
+| Intestazione | ``h`` | Va all'intestazione successiva |
+| Livello intestazione 1, 2, o 3 | ``1``, ``2``, ``3`` | Va all'intestazione successiva del livello specificato |
+| Campo form | ``f`` | Va al campo form successivo (campo editazione, pulsante, etc) |
+| Link | ``k`` | Va al prossimo link |
+| Punto di riferimento | ``d`` | Va al prossimo punto di riferimento |
+| Elenco | ``l`` | Va all'elenco successivo |
+| Tabella | ``t`` | Va alla tabella successiva |
+| Spostarsi all'indietro | ``Maiusc+lettera`` | Premere ``maiusc`` e una qualsiasi delle lettere viste sopra per passare all'elemento precedente di quel tipo |
+| Elenco elementi | ``NVDA+f7`` | Elenca vari tipi di elementi, come collegamenti e intestazioni |
+
+++ Preferences ++[Preferences]
+
+Most NVDA functions can be enabled or changed via the NVDA settings.
+Settings, and other options, are available via NVDA's menu.
+To open NVDA's menu, press ``NVDA+n``.
+To open NVDA's general settings dialog directly, press ``NVDA+control+g``.
+Many settings screens have keystrokes to open them directly, such as ``NVDA+control+s`` for synthesizer, or ``NVDA+control+v`` for other voice options.
+
+++ Community ++[Community]
+
+NVDA has a vibrant user community.  There is a main [English language email list https://nvda.groups.io/g/nvda] and a page full of [local language groups https://github.com/nvaccess/nvda-community/wiki/Connect].
+NV Access, makers of NVDA, are active on [Twitter https://twitter.com/nvaccess] and [Facebook https://www.facebook.com/NVAccess].
+NV Access also have a regular [In-Process blog https://www.nvaccess.org/category/in-process/].
+
+There is also an [NVDA Certified Expert https://certification.nvaccess.org/] program.
+This is an online exam you can complete to demonstrate your skills in NVDA.
+[NVDA Certified Experts https://certification.nvaccess.org/] can list their contact and relevant business details.
+
+++ Getting help ++[GettingHelp]
+
+To get help for NVDA, press ``NVDA+n`` to open the menu, then ``h`` for help.
+From this submenu you can access the User Guide, a quick reference of commands, history of new features and more.
+These first three options open in the default web browser.
+There is also more comprehensive Training Material available in the [NV Access Shop https://www.nvaccess.org/shop].
+
+We recommend starting with the "Basic Training for NVDA module".
+This module covers concepts from getting started up to browsing the web and using object navigation.
+It is available in:
+- [Electronic text https://www.nvaccess.org/product/basic-training-for-nvda-ebook/], which includes Word DOCX, Web page HTML, eBook ePub and Kindle KFX formats.
+- [Human-read, MP3 audio https://www.nvaccess.org/product/basic-training-for-nvda-downloadable-audio/]
+- [Hard-copy UEB Braille https://www.nvaccess.org/product/basic-training-for-nvda-braille-hard-copy/] with delivery included anywhere in the world.
+-
+Other modules, and the discounted [NVDA Productivity Bundle https://www.nvaccess.org/product/nvda-productivity-bundle/], are available in the [NV Access Shop https://www.nvaccess.org/shop/].
+
+NV Access also sells [telephone support https://www.nvaccess.org/product/nvda-telephone-support/], either in blocks, or as part of the [NVDA Productivity Bundle https://www.nvaccess.org/product/nvda-productivity-bundle/].
+Telephone support includes local numbers in Australia and the USA.
+ 
+The [email user groups https://github.com/nvaccess/nvda-community/wiki/Connect] are a great source of community help, as are [certified NVDA experts https://certification.nvaccess.org/].
+
+
++ More Setup Options +[MoreSetupOptions]
+
+++ Installation Options ++[InstallingNVDA]
+
+If installing NVDA directly from the downloaded NVDA launcher, press the Install NVDA button.
+If you have already closed this dialog or are wanting to install from a portable copy, please choose the Install NVDA menu item found under Tools in the NVDA menu.
+
+The installation dialog that appears will confirm whether you wish to install NVDA and will also tell you whether this installation will be updating a previous install.
+Pressing the Continue button will start installing NVDA.
+There are also a few options in this dialog which are explained below.
+Once the installation has completed, a message will appear telling you that it was successful.
 
 + Scaricare e configurare NVDA +[GettingAndSettingUpNVDA]
 Se non si possiede ancora una copia di NVDA, è possibile scaricarla dal sito originale all'indirizzo [www.nvaccess.org NVDA_URL].
@@ -1923,6 +2150,12 @@ Questa impostazione contiene i seguenti valori:
 Quando questa opzione è abilitata, NVDA utilizzerà una nuova versione ancora in sviluppo del suo supporto per il prompt dei comandi e la console di Windows che sfrutta i [miglioramenti dell'accessibilità apportati da Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Questa funzione è altamente sperimentale ed è ancora incompleta, quindi il suo uso non è ancora raccomandato. Tuttavia, una volta completato, si prevede che questo nuovo supporto diventerà quello predefinito, migliorando le prestazioni e la stabilità di NVDA nel prompt dei comandi e nelle console di Windows.
 
 ==== Supporto alla Console di Windows ====[AdvancedSettingsConsoleUIA]
+: Default
+  Automatico
+: Opzioni
+  Automatico, UIA se disponibile, Meno recenti
+:
+
 Questa opzione permette di selezionare la modalità con cui NVDA interagisce con la console di Windows utilizzata dal prompt dei comandi, PowerShell e il sottosistema Windows per Linux.
 Non influisce sul più moderno Terminale di Windows.
 In Windows 10 versione 1709, Microsoft [ha aggiunto il supporto per la sua UI Automation API alla console https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/], offrendo prestazioni e stabilità notevolmente migliorate per gli screen reader che lo supportano.

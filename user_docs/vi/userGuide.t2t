@@ -17,6 +17,8 @@ NVDA được phát triển bởi công ty [NV Access https://www.nvaccess.org/]
 ++ Các tính năng chung ++[GeneralFeatures]
 NVDA cho phép người mù và nhìn kém tương tác và sử dụng máy tính với hệ điều hành Windows và các ứng dụng khác.
 
+Bạn có thể xem video ngắn minh họa bằng tiếng Anh, ["What is NVDA?" (NVDA là gì?) https://www.youtube.com/watch?v=tCFyyqy9mqo] trên kênh Youtube NV Access.
+
 Một số tính năng nổi bật bao gồm:
 - Hỗ trợ tương tác với các ứng dụng phổ biến như các trình duyệt web, chương trình thư điện tử (e-mail), chương trình trò chuyện (chat) và các bộ ứng dụng văn phòng
 - Tích hợp bộ tổng hợp tiếng nói hỗ trợ hơn 80 ngôn ngữ khác nhau
@@ -33,6 +35,15 @@ Một số tính năng nổi bật bao gồm:
 - Hỗ trợ đọc trong các cửa sổ console như dòng lệnh Windows (Windows Command Prompt) và những ứng dụng console khác
 - Khả năng làm nổi bật focus hệ thống
 - 
+
+++ Yêu Cầu Hệ Thống ++[SystemRequirements]
+- Hệ điều hành: tất cả các phiên bản 32bit và 64bit của Windows 7, Windows 8, Windows 8.1,  Windows 10, Windows 11 và các bản máy chủ từ bản Windows Server 2008 R2.
+- Đối với Windows 7, NVDA yêu cầu bản Service Pack 1 hoặc cao hơn.
+- Đối với Windows Server 2008 R2, NVDA yêu cầu bản Service Pack 1 hoặc cao hơn.
+  -
+- Không gian lưu trữ tối thiểu là 150 MB
+-
+
 
 ++ Tính quốc tế ++[Internationalization]
 Một điều quan trọng là tất cả mọi người trên thế giới đều có quyền ngang nhau trong việc tiếp cận với công nghệ; cho dù họ đang giao tiếp bằng ngôn ngữ nào.
@@ -65,43 +76,223 @@ Bạn có thể chia sẻ hoặc thay đổi phần mềm này theo ý mình, mi
 Để biết thêm thông tin chi tiết, xin [xem đầy đủ nội dung giấy phép. https://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 Để biết chi tiết các trường hợp ngoại lệ, hãy truy cập tài liệu giấy phép từ trình đơn NVDA trong phần "trợ giúp".
 
-+ Yêu Cầu Hệ Thống +[SystemRequirements]
-- Hệ điều hành: tất cả các phiên bản 32bit và 64bit của Windows 7, Windows 8, Windows 8.1,  Windows 10, Windows 11 và các bản máy chủ từ bản Windows Server 2008 R2.
- - Đối với Windows 7, NVDA yêu cầu bản Service Pack 1 hoặc cao hơn.
- - Đối với Windows Server 2008 R2, NVDA yêu cầu bản Service Pack 1 hoặc cao hơn.
-- Không gian lưu trữ tối thiểu là 150 MB
+
++ Hướng dẫn sử dụng nhanh NVDA +[NVDAQuickStartGuide]
+
+Hướng dẫn nhanh này gồm ba phần chính: tải phần mềm, bắt đầu cài đặt, và gọi chạy NVDA.
+Các phần này dựa trên thông tin về thiết lập trong tùy chỉnh, tham gia vào cộng đồng và nhận trợ giúp.
+Thông tin trong phần này được tổng hợp từ các phần khác của hướng dẫn sử dụng NVDA.
+Vui lòng xem hướng dẫn đầy đủ để biết thêm thông tin chi tiết cho mỗi chủ đề.
+
+++ Tải về NVDA ++[GettingAndSettingUpNVDA]
+NVDA là phần mềm hoàn toàn miễn phí cho bất kì ai có nhu cầu sử dụng.
+Không cần phải bận tâm về khóa bản quyền, cũng không có  khoản chi phí đắt đỏ nào phải thanh toán.
+Trung bình, NVDA sẽ cập nhật bốn lần trong một năm.
+Phiên bản mới nhất của NVDA luôn sẵn sàng trên trang "Download" của [trang web NV Access NVDA_URL].
+
+NVDA hoạt động được với tất cả phiên bản gần đây của Microsoft Windows.
+Xem phần [Yêu cầu hệ thống #SystemRequirements] để biết thông tin chi tiết.
+
++++ Các bước để tải về NVDA +++[StepsForDownloadingNVDA]
+Các bước này xem như người dùng đã có chút kĩ năng trong việc lướt web.
+
+- Mở trình duyệt của bạn (bấm phím ``Windows``, gõ từ "internet" không có dấu ngoặc kép, và bấm ``enter``)
+- Mở trang tải phần mềm của NV Access (bấm ``alt+d``, gõ vào địa chỉ sau và bấm ``enter``): 
+https://www.nvaccess.org/download 
+- Bấm vào nút "download"
+ Trình duyệt có thể đưa ra hoặc không đưa ra yêu cầu sau khi tải về, và sẽ bắt đầu tải về
+- Tùy vào trình duyệt, tập tin có thể tự chạy sau khi được tải về
+- Nếu tập tin cần được chạy thủ công, bấm ``alt+n`` để chuyển đến phần thông báo, rồi ``alt+r`` để chạy nó (hoặc làm các bước theo trình duyệt của bạn)
 -
 
-+ Tải và cài đặt NVDA +[GettingAndSettingUpNVDA]
-Nếu chưa có NVDA, bạn có thể tải về từ [trang web của NV Access NVDA_URL].
+++ Cài đặt NVDA ++[SettingUpNVDA]
 
-Tìm đến phần Download và bạn sẽ thấy liên kết để tải phiên bản mới nhất của NVDA.
 
 Chạy tập tin vừa tải về sẽ khởi động chương trình NVDA tạm thời.
 Tiếp theo, bạn sẽ được hỏi là muốn cài đặt NVDA vào máy, tạo bản chạy trực tiếp hay tiếp tục sử dụng phiên bản tạm thời đó.
+Khi đã được tải về, NVDA không yêu cầu truy cập internet để chạy hoặc cài đặt phần mềm.
+Nếu có, việc kết nối internet chỉ để cho phép NVDA định kì kiểm tra cập nhật.
 
-Nếu bạn có dự định dùng NVDA luôn trên máy này, bạn nên chọn cài đặt vào máy.
-Việc cài đặt NVDA vào máy sẽ cho phép bạn sử dụng một số tính năng như khởi động sau khi đăng nhập, khả năng đọc ở màn hình đăng nhập Windows và [các màn hình bảo vệ #SecureScreens] (vốn không được hỗ trợ cho bản chạy tạm thời và  bản chạy trực tiếp) cũng như tạo biểu tượng trên Start Menu và desktop.
-Bạn có thể tạo bản chạy trực tiếp sau khi cài đặt NVDA vào máy.
++++ Các bước để chạy tập tin cài đặt +++[StepsForRunningTheDownloadLauncher]
 
-Nếu muốn dùng NVDA từ ổ USB hay các phương tiện lưu trữ khác, bạn có thể chọn chức năng tạo bản chạy trực tiếp.
-Sau này, bạn cũng có thể cài bản chạy trực tiếp đó vào máy tính.
-Tuy nhiên, nếu bạn muốn tạo bản chạy trực tiếp trên ổ CD (phương tiện lưu trữ có thuộc tính chỉ đọc) thì bạn chỉ cần chép bản NVDA tải về lên đĩa CD.
-Hiện tại, NVDA chưa hỗ trợ dùng bản chạy trực tiếp trên các phương tiện lưu trữ có thuộc tính chỉ đọc (read-only).
+Tập tin cài đặt thường có tên là "nvda_2022.1.exe" hay đại khái như vậy.
+Việc thay đổi chỉ số về năm và phiên bản giữa những lần cập nhật phản ánh bản phát hành hiện tại.
+Hãy chạy tập tin đã tải về.
+Sẽ có tiếng nhạc phát lên trong khi gọi bản chạy tạm thời của NVDA.
+Khi được gọi chạy, NVDA sẽ đọc trong toàn bộ các bước còn lại của tiến trình.
++ Cửa sổ cài đặt NVDA xuất hiện với thỏa thuận về giấy phép sử dụng.
+Bấm ``mũi tên xuống`` để đọc giấy phép sử dụng, nếu muốn.
++ Bấm ``tab`` để chuyển đến hộp kiểm "Tôi đồng ý", rồi bấm khoảng trắng để đánh dấu chọn nó.
++ Bấm ``tab`` để di chuyển qua các tùy chọn, rồi bấm ``enter`` với các tùy chọn mong muốn.
++
 
-Việc sử dụng bản NVDA tạm thời cũng là một lựa chọn cho các mục đích chạy thử nghiệm (demonstration), vì mỗi lần khởi động NVDA theo cách này thì mất khá nhiều thời gian.
-
-++ Hạn chế của phiên bản tạm thời và bản chạy trực tiếp ++[PortableAndTemporaryCopyRestrictions]
-Bên cạnh việc không thể tự khởi động  trong và sau khi đăng nhập vào hệ thống thì bản chạy trực tiếp và bản tạm thời có các hạn chế sau:
-- Không có khả năng tương tác với các ứng dụng yêu cầu quyền quản trị, trừ trường hợp NVDA đang được chạy với quyền quản trị (không khuyến cáo).
-- Không có khả năng đọc các thông tin tài khoản người dùng(UAC) khi khởi động một ứng dụng được yêu cầu quyền quản trị.
-- Từ Windows 8 trở lên: Không có khả năng tương tác trên màn hình cảm ứng.
-- Từ Windows 8 trở lên: Không có khả năng tương tác trong chế độ duyệt (browse mode) hay đọc ký tự khi gõ trong các ứng dụng của Windows Store.
-- Từ Windows 8 trở lên: Không hỗ trợ chế độ giảm âm.
+Các tùy chọn bao gồm: 
+- "Cài NVDA vào máy tính": đây là tùy chọn chính được đa số người dùng lựa chọn để sử dụng NVDA dễ hơn. 
+- "Tạo bản chạy trực tiếp": tùy chọn này cho phép cài đặt NVDA vào một thư mục bất kì, thay vì cài vào máy.
+Tùy chọn này hữu ích với các máy tính không có quyền quản trị, hoặc một thiết bị lưu trữ của bạn.
+Khi được chọn, NVDA sẽ đi qua các bước để tạo một bản chạy trực tiếp.
+Cái chính mà NVDA cần biết là thư mục để tạo bản chạy trực tiếp. 
+- "Tiếp tục sử dụng": cho phép tiếp tục dùng bản tạm của NVDA.
+Tùy chọn này hữu ích khi muốn thử nghiệm các tính năng của phiên bản mới trước khi cài đặt vào máy.
+Khi được chọn, cửa sổ của trình chạy bị đóng lại và bản chạy tạm thời của NVDA sẽ tiếp tục hoạt động cho đến khi nó bị thoát ra hoặc máy tính bị tắt.
+Lưu ý là các thay đổi thiết lập sẽ không được lưu lại. 
+- "Hủy bỏ": tùy chọn này sẽ đóng NVDA mà không thực hiện hành động nào.
 -
 
-++ Cài đặt NVDA ++[InstallingNVDA]
-Nếu cài đặt trực tiếp từ gói NVDA đã tải về thì bạn có thể chọn nút "Cài đặt" NVDA.
+
+Nếu có dự định dùng NVDA luôn trên máy này, bạn nên chọn cài đặt vào máy.
+Việc cài đặt NVDA vào máy sẽ cho phép bạn sử dụng một số tính năng như khởi động sau khi đăng nhập, khả năng đọc ở màn hình đăng nhập Windows và [các màn hình bảo vệ #SecureScreens].
+Những tác vụ này không thể thực hiện với bản chạy tạm thời và  bản chạy trực tiếp.
+để biết đầy đủ các thông tin chi tiết về giới hạn khi dùng bản chạy tạm thời và bản chạy trực tiếp của NVDA, vui lòng xem phần [Hạn chế của phiên bản tạm thời và bản chạy trực tiếp #PortableAndTemporaryCopyRestrictions].
+
+Việc cài đặt cũng cho phép tạo biểu tượng trên Start Menu và desktop, đồng thời cho phép gọi chạy NVDA bằng phím tắt ``control+alt+n``.
+
++++ Các bước cài đặt NVDA từ tập tin chạy +++[StepsForInstallingNVDAFromTheLauncher]
+Các bước thực hiện ở đây tương tự với tùy chọn của các bộ cài đặt phổ biến.
+Để biết thêm chi tiết về các tùy chọn, vui lòng xem phần [Tùy chọn cài đặt #InstallingNVDA].
+
++ Từ tập tin cài đặt, hãy chắc rằng hộp kiểm đồng ý với giấy phép sử dụng đã được chọn.
++ Bấm ``Tab`` đến, và kích hoạt nút "Cài NVDA vào máy tính".
++ Tiếp theo là các tùy chọn để dùng NVDA trong khi đăng nhập Windows và tạo biểu tượng trên desktop.
+Mặc định, chúng được chọn.
+Nếu muốn, bấm ``tab`` và ``khoảng trắng`` để thay đổi tùy chọn, hoặc để như mặc định.
++ Bấm ``enter`` để tiếp tục.
++ Hộp thoại "User Account Control (UAC)" hiện ra, hỏi "Do you want to allow this app to make changes to your PC?" (Bạn có muốn ứng dụng này thực hiện các thay đổi trên máy không?).
++ Bấm ``alt+y`` (tương đương trả lời có) để xác nhận đồng ý câu hỏi của UAC.
++ Một thanh tiến độ sẽ xuất hiện khi cài đặt NVDA.
+Trong quá trình này, âm thanh beep của NVDA  sẽ tăng dần.
+Quá trình này thường nhanh và có thể không gây chú ý.
++ Một hộp thoại xuất hiện xác nhận rằng NVDA đã được cài đặt thành công.
+Thông điệp hiện ra nói rằng "Bấm Đồng Ý để bắt đầu chạy bản cài đặt".
+Bấm ``enter`` để chạy bản NVDA đã cài đặt.
++ Hộp thoại tên "Chào mừng bạn đến với NVDA" xuất hiện, và NVDA sẽ đọc lên thông tin chào mừng.
+Con trỏ sẽ đứng tại hộp xổ tên "Kiểu bàn phím".
+Mặc định, kiểu bàn phím "Desktop" sẽ dùng bàn phím số cho một vài chức năng.
+Nếu muốn, bấm ``mũi tên xuống`` chọn kiểu bàn phím "Laptop" để thay đổi các phím số thành phím khác.
++ bấm ``tab`` để chuyển đến mục "Sử dụng ``phím Khóa Hoa`` làm phím bổ trợ NVDA".
+Mặc định, ``Insert`` đã được chọn làm phím bổ trợ  NVDA.
+Bấm ``khoảng trắng`` để chọn ``capsLock`` làm phím bổ trợ thay thế.
+Lưu ý rằng kiểu bàn phím và phím bổ trợ NVDA là hai tùy chọn được thiết lập riêng biệt.
+Kiểu bàn phím và phím bổ trợ  NVDA có thể thay đổi sau trong cài đặt bàn phím.
++ Dùng ``tab`` và ``khoảng trắng`` để điều chỉnh các tùy chọn khác tại màn hình này.
+Các tùy chọn này quyết định việc NVDA tự khởi động.
++ bấm ``enter`` để đóng hộp thoại và giờ đây NVDA đang chạy.
++
+
+++ Gọi chạy NVDA ++[RunningNVDA]
+
+Tài liệu hướng dẫn sử dụng đầy đủ của NVDA có tất cả phím lệnh của chương trình, được chia thành các phần khác nhau cho dễ tra cứu.
+Bảng liệt kê các phím lệnh cũng đã được tích hợp  trong phần "Danh sách các phím lệnh".
+Tài liệu "Giáo trình tập huấn cơ bản với NVDA" đề cập chi tiết hơn cho mỗi phím lệnh với các bài tập thực hiện theo từng bước.
+"Giáo trình tập huấn cơ bản với NVDA" được bán tại [NV Access Shop http://www.nvaccess.org/shop].
+
+Sau đây là các phím lệnh cơ bản, được dùng thường xuyên.
+Tất cả phím lệnh đều có thể thay đổi nên đây chỉ là phím tắt mặc định cho các chức năng.
+
++++ Phím bổ trợ NVDA +++[NVDAModifierKey]
+Phím bổ trợ NVDA mặc định là phím ``0 bàn phím số``, (khi đã tắt ``numLock``), hoặc phím ``insert`` gần các phím ``delete``, ``home`` và ``end``.
+Phím này cũng có thể thiết lập thành phím ``capsLock``.
+
++++ Trợ giúp nhập +++[InputHelp]
+để học vị trí và thực hành các phím lệnh, bấm ``NVDA+1``  bật chức năng trợ giúp nhập.
+Khi ở trong chế độ trợ giúp nhập, việc thực hiện một thao tác bất kì (bấm một phím lệnh hay thực hiện một thao tác cảm ứng chẳng hạn) sẽ cho biết tên hành động và mô tả tính năng của nó (nếu có).
+Chức năng thật sự của thao tác sẽ không được thực thi khi ở trong chế độ trợ giúp nhập. 
+
++++ Gọi chạy và tắt NVDA +++[StartingAndStoppingNVDA]
+|| Tên | Phím máy bàn | Phím máy xách tay | Mô tả |
+| Gọi chạy NVDA | ``control+alt+n`` | ``control+alt+n`` | Gọi chạy hoặc khởi động lại NVDA |
+| Thoát NVDA | ``NVDA+q``, rồi ``enter`` | ``NVDA+q``, rồi ``enter`` | thoát NVDA |
+| Tạm dừng hoặc tiếp tục đọc | ``shift`` | ``shift`` | nhanh chóng tạm dừng bộ đọc. Bấm lại phím này để đọc tiếp từ nơi nó được tạm dừng |
+| Dừng đọc | ``control`` | ``control`` | Nhanh chóng dừng đọc |
+
++++ Đọc văn bản +++[ReadingText]
+|| Tên | Phím máy bàn | Phím máy xách tay | Mô tả |
+| Đọc tất cả | ``NVDA+mũi tên xuống`` | ``NVDA+a`` | Bắt đầu đọc từ vị trí hiện tại cho đến hết tài liệu |
+| Đọc dòng hiện tại | ``NVDA+mũi tên lên`` | ``NVDA+l`` | Đọc dòng. Bấm hai lần để đánh vần dòng đó. Bấm ba lần để đánh vần bằng mô tả kí tự (Alpha, Bravo, Charlie, v...v...) |
+| Đọc vùng chọn | ``NVDA+shift+mũi tên lên`` | ``NVDA+shift+s`` | đọc những văn bản được chọn |
+| Đọc văn bản trong bộ nhớ tạm | ``NVDA+c`` | ``NVDA+c`` | Đọc nội dung văn bản trong bộ nhớ tạm |
+
++++ Thông báo vị trí và các thông tin khác +++[ReportingLocation]
+|| Tên | Phím máy bàn | Phím máy xách tay | Mô tả |
+| Tên cửa sổ | ``NVDA+t`` | ``NVDA+t`` | Đọc tên cửa sổ hiện hành. Bấm hai lần để đánh vần thông tin. Bấm ba lần để chép thông tin vào bộ nhớ tạm |
+| Thông báo vị trí con trỏ | ``NVDA+tab`` | ``NVDA+tab`` | Thông báo điều khiển tại vị trí con trỏ.  Bấm hai lần để đánh vần thông tin |
+| Đọc cửa sổ | ``NVDA+b`` | ``NVDA+b`` | Đọc toàn bộ thông tin trên cửa sổ hiện hành (hữu ích khi dùng hộp thoại) |
+| Đọc thanh trạng thái | ``NVDA+end`` | ``NVDA+shift+end`` | Đọc thông tin thanh trạng thái nếu NVDA tìm thấy. Bấm hai lần để đánh vần thông tin. Bấm ba lần để chép nó vào bộ nhớ tạm |
+| Đọc giờ | ``NVDA+f12`` | ``NVDA+f12`` | Bấm một lần để đọc giờ hiện tại, bấm hai lần để đọc ngày |
+| Thông báo định dạng văn bản | ``NVDA+f`` | ``NVDA+f`` | Thông báo định dạng văn bản. Bấm hai lần để hiển thị thông tin trên một cửa sổ |
+
++++ Bật / tắt các thông tin được NVDA đọc +++[ToggleWhichInformationNVDAReads]
+|| Tên | Phím máy bàn | Phím máy xách tay | Mô tả |
+| Đọc các kí tự được nhập | ``NVDA+2`` | ``NVDA+2`` | Khi được bật, NVDA sẽ đọc tất cả các kí tự bạn nhập từ bàn phím. |
+| Đọc các từ dược nhập | ``NVDA+3`` | ``NVDA+3`` | Khi được bật, NVDA sẽ đọc các từ bạn nhập vào. |
+| Đọc các phím lệnh | ``NVDA+4`` | ``NVDA+4`` | Khi được bật, sẽ đọc các phím không phải là kí tự mỗi khi bạn nhập vào. Điều này bao gồm các kết hợp phím như control cộng với một kí tự nào đó. |
+| Bật theo dõi chuột | ``NVDA+m`` | ``NVDA+m`` | khi được bật, NVDA sẽ đọc các văn bản hiện có tại vị trí con trỏ chuột, mỗi khi bạn di chuyển nó trên màn hình. Điều này cho phép bạn tìm một cái gì đó trên màn hình, bằng cách di chuyển con chuột vật lý, thay vì tìm bằng  đối tượng điều hướng. |
+
++++ Vòng thiết lập cho bộ đọc +++[TheSynthSettingsRing]
+|| Tên | Phím máy bàn | Phím máy xách tay | Mô tả |
+| Đi đến thiết lập kế tiếp | ``NVDA+control+mũi tên phải`` | ``NVDA+shift+control+mũi tên phải`` | Đi đến thiết lập bộ đọc tiếp sau thiết lập hiện tại, sau thiết lập cuối cùng thì sẽ quay về thiết lập đầu tiên |
+| Đi đến thiết lập trước | ``NVDA+control+mũi tên trái`` | ``NVDA+shift+control+mũi tên trái`` | Đi đến thiết lập bộ đọc trước của thiết lập hiện tại, sau thiết lập đầu tiên thì sẽ quay về thiết lập cuối cùng |
+| Tăng giá trị cho thiết lập hiện tại | ``NVDA+control+mũi tên lên`` | ``NVDA+shift+control+mũi tên lên`` | Tăng giá trị cho thiết lập hiện tại của bộ đọc. Ví dụ, tăng tốc độ, chọn giọng đọc kế tiếp, tăng âm lượng |
+| Giảm giá trị cho thiết lập hiện tại | ``NVDA+control+mũi tên xuống`` | ``NVDA+shift+control+mũi tên xuống`` | giảm giá trị cho thiết lập hiện tại của bộ đọc. Ví dụ, giảm tốc độ, chọn giọng đọc trước, giảm âm lượng |
+
++++ Điều hướng trên web +++[WebNavigation]
+Danh sách đầy đủ các phím di chuyển đơn được liệt kê trong phần [Chế độ duyệt #BrowseMode] của tài liệu hướng dẫn.
+|| Lệnh | Phím tắt | Mô tả |
+| Tiêu đề | ``h`` | Di chuyển đến tiêu đề kế tiếp |
+| Tiêu đề cấp 1, 2, hoặc 3 | ``1``, ``2``, ``3`` | Di chuyển đến tiêu đề tiếp theo với cấp độ được định trước |
+| Biểu mẫu | ``f`` | Chuyển đến trường kế tiếp (hộp chỉnh sửa, nút bấm, v...v...) |
+| Liên kết | ``k`` | Di chuyển đến liên kết tiếp theo |
+| Cột mốc | ``d`` | Di chuyển đến cột mốc tiếp theo |
+| Danh sách | ``l`` | Di chuyển đến danh sách tiếp theo |
+| Bảng biểu | ``t`` | Chuyển đến bảng kế tiếp |
+| Chuyển về trước | ``shift+kí tự`` | Bấm ``shift`` và bất kì kí tự ở trên để chuyển đến mục trước  của loại thành phần đó |
+| Danh sách các thành phần | ``NVDA+f7`` | Liệt kê nhiều loại thành phần khác nhau, tiêu đề và liên kết chẳng hạn |
+
+++ Tùy chỉnh ++[Preferences]
+
+Hầu hết các chức năng của NVDA đều có thể được bật lên hoặc thay đổi thông qua cấu hình NVDA.
+Cấu hình và các tùy chọn khác đều có trong trình đơn NVDA.
+Để mở trình đơn NVDA, bấm ``NVDA+n``.
+Để mở trực tiếp hộp thoại cấu hình chung của NVDA, bấm ``NVDA+control+g``.
+Còn nhiều hộp thoại cấu hình khác có phím tắt để mở trực tiếp, chẳng hạn như ``NVDA+control+s`` để chọn bộ đọc, hay ``NVDA+control+v`` để tùy chỉnh cho giọng đọc.
+
+++ Cộng đồng ++[Community]
+
+NVDA có một cộng đồng người dùng sôi động.  [Diễn đàn trao đổi qua thư điện tử chính thức  bằng tiếng Anh https://nvda.groups.io/g/nvda] và một trang với đầy đủ các [nhóm ngôn ngữ bản địa https://github.com/nvaccess/nvda-community/wiki/Connect].
+NV Access, nhà phát triển  NVDA cũng hoạt động trên [Twitter https://twitter.com/nvaccess] và [Facebook https://www.facebook.com/NVAccess].
+NV Access cũng có một bảng tin phát hành thường xuyên, tên gọi [In-Process blog https://www.nvaccess.org/category/in-process/].
+
+Ngoài ra còn có chương trình [NVDA Certified Expert (chứng nhận chuyên gia NVDA) https://certification.nvaccess.org/].
+Đây là một bài thi trực tuyến mà bạn có thể hoàn thành để thể hiện kĩ năng của mình trong việc sử dụng NVDA.
+[Các chuyên gia NVDA https://certification.nvaccess.org/] có thể liệt kê thông tin liên hệ và các chi tiết liên quan đến cơ quan mà họ công tác.
+
+++ Nhận trợ giúp ++[GettingHelp]
+
+Để nhận trợ giúp cho NVDA, bấm ``NVDA+n`` để mở trình đơn, và ``t`` để đến phần trợ giúp.
+Từ trình đơn con này, bạn có thể truy cập Hướng Dẫn Sử Dụng, một bảng phím lệnh để tham khảo nhanh, lịch sử các tính năng mới và nhiều hơn nữa.
+Ba tùy chọn đầu tiên sẽ được mở bằng trình duyệt mạc định.
+Ngoài ra, còn có các tài liệu tập huấn chi tiết hơn trong [NV Access Shop https://www.nvaccess.org/shop].
+
+Chúng tôi khuyến cáo  bắt đầu bằng "Giáo trình tập huấn cơ bản với NVDA".
+Giáo trình này đề cập các khái niệm từ khi bắt đầu cho đến duyệt web và dùng phương pháp điều hướng đối tượng.
+Tài liệu được cung cấp dưới dạng:
+- [Tài liệu điện tử https://www.nvaccess.org/product/basic-training-for-nvda-ebook/], bao gồm các định dạng Word DOCX, Web HTML, sách điện tử ePub và Kindle KFX.
+- [Tài liệu do người đọc, MP3 audio https://www.nvaccess.org/product/basic-training-for-nvda-downloadable-audio/]
+- [Tài liệu chữ Braille chuẩn UEB https://www.nvaccess.org/product/basic-training-for-nvda-braille-hard-copy/] giao hàng toàn thế giới.
+ -
+Các tài liệu khác, cũng như chương trình khuyến mãi cho [Gói năng xuất của NVDA https://www.nvaccess.org/product/nvda-productivity-bundle/], có thể tham khảo trong [NV Access Shop https://www.nvaccess.org/shop/].
+
+NV Access Cũng cung cấp dịch vụ [hỗ trợ qua điện thoại https://www.nvaccess.org/product/nvda-telephone-support/], trongn các khối, hoặc một phần của  [Gói năng xuất của NVDA https://www.nvaccess.org/product/nvda-productivity-bundle/].
+Hỗ trợ qua điện thoại bao gồm số nội địa ở Úc và Mỹ.
+ 
+[Các nhóm trao đổi qua thư điện tử https://github.com/nvaccess/nvda-community/wiki/Connect] là một nguồn thông tin trợ giúp tuyệt vời từ cộng đồng, vì họ đã [được chứng nhận là chuyên gia NVDA https://certification.nvaccess.org/].
+
+
++ Thêm tùy chọn cài đặt +[MoreSetupOptions]
+
+++ Các tùy chọn cài đặt ++[InstallingNVDA]
+
+Nếu cài NVDA trực tiếp từ trình cài đặt đã tải về thì bấm nút "Cài đặt" NVDA.
 Nếu đã đóng hộp thoại này hay muốn cài đặt từ bản chạy trực tiếp thì bạn có thể chọn mục "Cài đặt NVDA" từ trình đơn "Công cụ" của NVDA.
 
 Hộp thoại cài đặt xuất hiện  sẽ yêu cầu bạn xác nhận việc cài đặt, và nó cũng cho bạn biết rằng NVDA sẽ được cập nhật từ bản cài trước đó.
@@ -123,7 +314,7 @@ Tùy chọn này mặc định được bật cho các bản cài đặt mới.
 
 +++ Tạo biểu tượng trên Desktop và phím tắt (Ctrl + alt + n) +++[CreateDesktopShortcut]
 Tùy chọn này cho phép  bạn tạo biểu tượng NVDA trên màn hình Desktop để khởi động chương trình.
-Nếu  được tạo, biểu tượng này cũng được gán phím tắt Ctrl + alt + n, cho phép bạn gọi chạy NVDA bất cứ lúc nào bằng tổ hợp phím này.
+Nếu  được tạo, biểu tượng này cũng được gán phím tắt Ctrl + alt + n, cho phép bạn gọi chạy NVDA bất cứ lúc nào bằng tổ hợp phím đó.
 
 +++ Chép thư mục cấu hình bản chạy trực tiếp vào thư mục người dùng hiện tại +++[CopyPortableConfigurationToCurrentUserAccount]
 Tùy chọn này sẽ chép thư mục cấu hình của bản NVDA chạy trực tiếp sang thư mục cấu hình của người dùng hiện tại (cho bản cài đặt).
@@ -131,7 +322,7 @@ Tùy chọn này sẽ không chép thư mục cấu hình của các tài khoả
 Tùy chọn này chỉ có trong quá trình cài đặt NVDA từ bản chạy trực tiếp, không có trong gói cài đặt được tải về.
 
 ++ Tạo bản NVDA chạy trực tiếp ++[CreatingAPortableCopy]
-Nếu muốn tạo bản NVDA chạy trực tiếp từ gói cài đặt được tải về thì bạn chỉ cần chọn nút Tạo bản chạy trực tiếp (Create portable copy).
+Nếu muốn tạo bản NVDA chạy trực tiếp từ gói cài đặt được tải về, bấm vào nút Tạo bản chạy trực tiếp.
 Nếu bạn đã đóng hộp thoại này hay đang sử dụng NVDA được cài đặt trên máy, hãy chọn  mục Tạo bản chạy trực tiếp từ trình đơn Công cụ của NVDA.
 
 Một hộp thoại xuất hiện cho phép bạn chọn nơi sẽ tạo bản chạy trực tiếp.
@@ -142,8 +333,26 @@ Bấm nút "Tiếp tục" để tiến hành tạo bản NVDA chạy trực ti�
 Khi hoàn tất, sẽ có một thông báo xác nhận là việc tạo bản chạy trực tiếp đã thành công.
 Bấm Đồng ý để đóng hộp thoại này.
 
-+ Bắt đầu với NVDA +[GettingStartedWithNVDA]
+++ Hạn chế của phiên bản tạm thời và bản chạy trực tiếp ++[PortableAndTemporaryCopyRestrictions]
 
+Nếu muốn dùng NVDA từ USB hay các phương tiện lưu trữ khác, bạn có thể chọn tạo bản chạy trực tiếp.
+Bản đang cài trên máy cũng có khả năng tự tạo bản chạy trực tiếp bất cứ lúc nào. 
+Bản chạy trực tiếp cũng có khả năng tự cài vào máy bất cứ lúc nào.
+Tuy nhiên, nếu muốn tạo bản chạy trực tiếp trên ổ CD (phương tiện lưu trữ có thuộc tính chỉ đọc) thì bạn chỉ nên chép gói cài đặt đã tải về.
+Hiện tại, NVDA chưa hỗ trợ dùng bản chạy trực tiếp trên các phương tiện lưu trữ có thuộc tính chỉ đọc (read-only).
+Việc sử dụng bản NVDA tạm thời cũng là một lựa chọn cho các mục đích chạy thử nghiệm (demonstration), vì mỗi lần khởi động NVDA theo cách này thì mất khá nhiều thời gian.
+
+Bên cạnh việc không thể tự khởi động  trong và sau khi đăng nhập vào hệ thống thì bản chạy trực tiếp và bản tạm thời có các hạn chế sau:
+- Không có khả năng tương tác với các ứng dụng yêu cầu quyền quản trị, trừ trường hợp NVDA đang được chạy với quyền quản trị (không khuyến khích).
+- Không có khả năng đọc các thông tin tài khoản người dùng(UAC) khi khởi động một ứng dụng được yêu cầu quyền quản trị.
+- Windows 8 trở lên: Không có khả năng tương tác trên màn hình cảm ứng.
+- Windows 8 trở lên: Không có khả năng tương tác trong chế độ duyệt (browse mode) hay đọc ký tự khi gõ trong các ứng dụng của Windows Store.
+- Windows 8 trở lên: Không hỗ trợ chế độ giảm âm.
+-
+
+
++ Sử dụng NVDA +[GettingStartedWithNVDA]
+ 
 ++ Khởi động NVDA ++[LaunchingNVDA]
 Nếu đã cài NVDA từ bộ cài đặt, bạn có thể khởi động nó bằng cách bấm tổ hợp phím ctrl + alt + n, hoặc chọn NVDA từ trình đơn NVDA trong Programs  trên menu start.
 Thêm nữa, bạn có thể gõ NVDA vào hộp thoại Run và bấm enter.
@@ -316,6 +525,7 @@ Có một số phím tắt quan trọng khi di chuyển với focus hệ thống
 | Thông báo tiêu đề | NVDA+t | NVDA+t | Thông báo tiêu đề của cửa sổ hiện tại. Bấm hai lần để đánh vần tiêu đề, bấm ba lần để sao chép nó vào bộ nhớ tạm |
 | Thông báo cửa sổ hiện tại | NVDA+b | NVDA+b | Đọc tất cả đối tượng trên cửa sổ hiện tại (rất hữu ích khi đứng trong một hộp thoại) |
 | Thông báo thanh trạng thái | NVDA+end | NVDA+shift+end | Thông báo thanh trạng thái của cửa sổ hiện tại nếu tìm thấy. Bấm hai lần để đánh vần thông tin. Bấm ba lần để chép nó vào bộ nhớ tạm. |
+| Thông báo phím tắt | ``shift+2 bàn phím số`` | ``NVDA+control+shift+.`` | Thông báo phím tắt (phím truy cập nhanh) của đối tượng tại vị trí con trỏ |
 %kc:endInclude
 
 ++ Di chuyển với dấu nháy hệ thống ++[SystemCaret]
@@ -346,6 +556,10 @@ Khi ở trong bảng thì dùng các phím tắt sau để thao tác:
 | Chuyển đến cột cuối cùng | control+alt+end | Chuyển dấu nháy hệ thống đến cột cuối cùng (giữ nguyên vị trí dòng) |
 | Chuyển đến dòng đầu tiên | control+alt+pageUp | Chuyển dấu nháy hệ thống đến dòng đầu tiên (giữ nguyên vị trí cột) |
 | Chuyển đến dòng cuối cùng | control+alt+pageDown | Chuyển dấu nháy hệ thống đến dòng cuối cùng (giữ nguyên vị trí cột) |
+| Đọc tất cả trong cột | ``NVDA+control+alt+mũi tên xuống`` | Đọc thông tin theo cột dọc từ ô hiện tại xuống đến ô cuối cùng của cột. |
+| Đọc tất cả trong dòng | ``NVDA+control+alt+mũi tên phải`` | Đọc thông tin theo hàng ngang từ ô hiện tại cho đến ô cuối cùng bên phải của dòng. |
+| Đọc toàn bộ cột | ``NVDA+control+alt+mũi tên lên`` | Đọc cột hiện tại theo chiều đứng từ trên xuống dưới mà không di chuyển dấu nháy hệ thống. |
+| Đọc toàn bộ dòng | ``NVDA+control+alt+mũi tên trái`` | Đọc dòng hiện tại theo chiều ngang từ trái sang phải mà không di chuyển dấu nháy hệ thống. |
 %kc:endInclude
 
 ++ Phương pháp duyệt đối tượng ++[ObjectNavigation]
@@ -418,6 +632,8 @@ Dưới đây là một số phím tắt dùng để duyệt nội dung:
 | Đọc ký tự hiện tại | 2 bàn phím số | NVDA+. | không có | Đọc ký tự nơi có con trỏ duyệt. Bấm hai lần để nghe đánh vần mô tả hay ví dụ về ký tự đó. Bấm ba lần để nghe mã cơ số 10 và 16 của ký tự đó |
 | chuyển qua ký tự bên phải | 3 bàn phím số | NVDA+mũi tên phải | Vuốt phải (chế độ văn bản) | chuyển con trỏ duyệt sang ký tự bên phải |
 | chuyển đến  cuối dòng | shift+3 bàn phím số | NVDA+end | không có | chuyển con trỏ duyệt đến cuối dòng hiện tại |
+| Chuyển đến trang trước | ``NVDA+pageUp`` | ``NVDA+shift+pageUp`` | không có | Chuyển con trỏ duyệt về trang trước của văn bản nếu được ứng dụng hỗ trợ |
+| Chuyển đến trang kế | ``NVDA+pageDown`` | ``NVDA+shift+pageDown`` | không có | Chuyển con trỏ duyệt về trang kế của văn bản nếu được ứng dụng hỗ trợ |
 | Đọc tất cả với con trỏ duyệt | dấu cộng bàn phím số | NVDA+shift+a | Vuốt xuống 3-ngón (chế độ văn bản) | Đọc cả vùng văn bản từ vị trí con trỏ duyệt hiện tại trở đi |
 | Bắt đầu chọn rồi sao chép với con trỏ duyệt | NVDA+f9 | NVDA+f9 | không có | Đánh dấu điểm bắt đầu của vùng chọn để sao chép. Hành động sao chép vẫn chưa được thực hiện cho đến khi bạn chọn điểm kết. |
 | Kết thúc chọn rồi sao chép với con trỏ duyệt | NVDA+f10 | NVDA+f10 | không có | Bấm lần đầu để đánh dấu điểm kết thúc và chọn vùng nội dung từ điểm bắt đầu đến điểm kết thúc.  Nếu dấu nháy hệ thống có thể tiếp cận với nội dung thì nó sẽ được đưa đến nội dung đã chọn. Bấm lần hai để thực hiện lệnh sao chép nội dung lên bộ nhớ tạm. |
@@ -493,7 +709,7 @@ Bên cạnh sử dụng trực tiếp chuột thì NVDA cũng cung cấp cho b�
 | Chuyển đến đối tượng dưới con trỏ chuột | NVDA+dấu nhân bàn phím số | NVDA+shift+n | không có | Đưa đối tượng điều hướng đến đối tượng tại vị trí chuột |
 %kc:endInclude
 
-+ Chế độ duyệt tài liệu +[BrowseMode]
++ Chế độ duyệt +[BrowseMode]
 Các tài liệu phức tạp có thuộc tính chỉ đọc như tài liệu web sẽ được duyệt bằng chế độ duyệt tài liệu trong NVDA.
 Chế độ này bao gồm tài liệu trong các ứng dụng sau:
 - Mozilla Firefox
@@ -1806,7 +2022,7 @@ Focus sẽ được cập nhật cho một thành phần cụ thể khi tương 
 Bật tùy chọn này có thể cải thiện hỗ trợ cho vài trang web vì lí do liên quan đến hiệu suất vận hành và tính ổn định.
 
 +++ Định Dạng Tài Liệu (NVDA+control+d) +++[DocumentFormattingSettings]
-Hầu hết các mục trong phân loại này là các  thông tin định dạng sẽ được thông báo khi bạn duyệt tài liệu.
+Hầu hết các tùy chọn trong phân loại này là để cấu hình những định dạng nào sẽ được đọc lên khi bạn di chuyển con trỏ trong tài liệu.
 Ví dụ nếu bạn chọn mục thông báo tên phông chữ, mỗi khi  duyệt tài liệu bằng mũi tên qua các nội dung bằng các phông khác nhau thì tên phông sẽ được thông báo.
 
 Tùy chọn định dạng tài liệu được tổ chức theo dạng nhóm
@@ -1834,7 +2050,7 @@ Bạn có thể chọn các mục sau:
  - Canh lề
 - Thông tin Bảng
  - Bảng
- - Tiêu đề cho hàng và cột
+  - Tiêu đề cột / dòng (Tắt, Dòng, Cột, Dòng và cột)
  - Tọa độ ô
  - Đường viền ô (Tắt, Kiểu dáng, Cả Màu và Kiểu Dáng)
 - Thành phần
@@ -1901,12 +2117,22 @@ Nếu muốn chia sẻ mã nguồn cho người khác, bạn nên đóng gói n�
 Nút này mở thư mục mà bạn có thể lưu mã nguồn trong khi đang phát triển nó.
 Nút này chỉ xuất hiện nếu NVDA được cấu hình để gọi mã nguồn tùy chỉnh từ thư mục Scratchpad.
 
-==== Bật các chọn lọc đăng kí cho các thay đổi sự kiện và thuộc tính của UI Automation ====[AdvancedSettingsSelectiveUIAEventRegistration]
+==== Các chọn lọc đăng kí cho các thay đổi sự kiện và thuộc tính của UI Automation ====[AdvancedSettingsSelectiveUIAEventRegistration]
+: Mặc định
+  Tự động
+: Tùy chọn
+  Tự động, Chọn lọc, Toàn cục
+:
+
 Tùy chọn này thay đổi việc NVDA đăng kí các sự kiện nổ ra bởi Microsoft UI Automation accessibility API.
-Khi tắt tùy chọn này, NVDA đăng kí cho nhiều sự kiện UIA được xử lý và loại bỏ trong chính NVDA.
-Điều này có một tác dụng tiêu cực không nhỏ đến sự vận hành, đặc biệt là trong các ứng dụng như Microsoft Visual Studio.
-Vậy nên, khi bật tùy chọn này, NVDA sẽ giới hạn các sự kiện đăng kí với focus hệ thống cho hầu hết các sự kiện.
-Nếu bạn thấy mệt mỏi với việc vận hành của một hay vài ứng dụng, chúng tôi khuyên bạn thử dùng tính năng này để cải thiện khả năng vận hành.
+Hộp xổ Bật các chọn lọc đăng kí cho các thay đổi sự kiện và thuộc tính của UI Automation có ba tùy chọn:
+- Tự động: "chọn lọc" trên Windows 11 Sun Valley 2 (phiên bản 22H2) trở lên, "toàn cục" cho các trường hợp khác.
+- Chọn lọc: NVDA sẽ giới hạn các sự kiện đăng kí đến con trỏ hệ thống cho hầu hết các sự kiện.
+Nếu bạn thấy mệt mỏi với việc vận hành của một hay vài ứng dụng, chúng tôi khuyên bạn thử dùng tính năng này để thấy sự cải thiện khả năng vận hành.
+Tuy nhiên, trên những phiên bản Windows cũ hơn, NVDA có thể sẽ gặp vấn đề khi theo dõi con trỏ trong vài điều khiển (trong task manager và bảng biểu tượng cảm xúc chẳng hạn).
+- Toàn cục: NVDA đăng kí nhiều sự kiện UIA  được xử lí và loại bỏ trong chính NVDA.
+Khi việc theo dõi con trỏ đáng tin cậy hơn trong nhiều tình huống, hiệu suất vận hành lại bị giảm đáng kể, nhất là trong các ứng dụng như Microsoft Visual Studio.
+-
 
 ==== Sử dụng UI Automation để truy cập các điều khiển của tài liệu Microsoft Word ====[MSWordUIA]
 Cấu hình cho NVDA dùng hay không dùng UI Automation accessibility API để truy cập các tài liệu Microsoft Word, thay vì mẫu đối tượng cũ của Microsoft Word .

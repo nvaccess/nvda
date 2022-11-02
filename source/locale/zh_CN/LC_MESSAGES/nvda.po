@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-14 00:02+0000\n"
+"POT-Creation-Date: 2022-10-24 00:11+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: 完美很难 <1872265132@qq.com>\n"
 "Language-Team: \n"
@@ -8328,7 +8328,7 @@ msgstr "捐赠(&D)"
 
 #. Translators: The label for the menu item to run a pending update.
 msgid "Install pending &update"
-msgstr "安装之前推迟的更新"
+msgstr "安装之前推迟的更新(&U)"
 
 #. Translators: The description for the menu item to run a pending update.
 msgid "Execute a previously downloaded NVDA update"
@@ -8937,7 +8937,7 @@ msgstr "安装之前推迟的更新"
 msgid ""
 "All add-ons are now disabled. They will be re-enabled on the next restart "
 "unless you choose to disable them again."
-msgstr "所有插件已经被禁用，他们将在下次重启时重新启用，除非您选择再次禁用。"
+msgstr "所有插件已被禁用，下次重启时会重新启用，除非您选择再次禁用。"
 
 #. Translators: A message in the exit Dialog shown when NVDA language has been
 #. overwritten from the command line.
@@ -9059,11 +9059,11 @@ msgstr "NVDA 安装失败。请检查用户日志以获取更多的信息。"
 
 #. Translators: The message displayed when NVDA has been successfully installed.
 msgid "Successfully installed NVDA. "
-msgstr "NVDA 安装完成 "
+msgstr "NVDA 安装完成。 "
 
 #. Translators: The message displayed when NVDA has been successfully updated.
 msgid "Successfully updated your installation of NVDA. "
-msgstr "您的NVDA 更新安装已完成。 "
+msgstr "您的NVDA 已更新完成。 "
 
 #. Translators: The message displayed to the user after NVDA is installed
 #. and the installed copy is about to be started.
@@ -11204,6 +11204,23 @@ msgstr "{curPercent:.0f}%"
 msgid "at {x}, {y}"
 msgstr "像素坐标 {x}， {y}"
 
+#. Translators: This is the message for a warning shown if NVDA cannot determine if
+#. Windows is locked.
+msgid ""
+"NVDA is unable to determine if Windows is locked. While this instance of "
+"NVDA is running, your desktop will not be secure when Windows is locked. "
+"Restarting Windows may address this. If this error is ongoing then disabling "
+"the Windows lock screen is recommended."
+msgstr ""
+"NVDA 无法确定 Windows 是否已锁定。在 NVDA 运行过程中，当 Windows 被锁定时，您"
+"的桌面会面临安全风险。重新启动 Windows 可能会解决此问题，如果该问题频繁出现，"
+"则建议禁用 Windows 锁屏。"
+
+#. Translators: This is the title for a warning dialog, shown if NVDA cannot determine if
+#. Windows is locked.
+msgid "Lock screen not secure while using NVDA"
+msgstr "在 NVDA 运行过程中锁定屏幕不安全"
+
 #. Translators: Reported when a page reloads (example: after refreshing a webpage).
 msgid "Refreshed"
 msgstr "已刷新"
@@ -11308,21 +11325,6 @@ msgstr "交流电源已断开"
 #, python-brace-format
 msgid "{hours:d} hours and {minutes:d} minutes remaining"
 msgstr "剩余{hours:d}小时{minutes:d}分钟"
-
-#. Translators: This is a warning to users, shown if NVDA cannot determine if
-#. Windows is locked.
-msgid ""
-"NVDA failed to register session tracking. While this instance of NVDA is "
-"running, your desktop will not be secure when Windows is locked. Restart "
-"NVDA? "
-msgstr ""
-"NVDA 未能注册会话跟踪。在运行该 NVDA 实例过程中，当 Windows 被锁定时，您的桌"
-"面会面临安全风险。重新启动 NVDA 吗？ "
-
-#. Translators: This is a warning to users, shown if NVDA cannot determine if
-#. Windows is locked.
-msgid "NVDA could not start securely."
-msgstr "NVDA 无法安全启动。"
 
 msgid "Taskbar"
 msgstr "任务栏"
@@ -12954,6 +12956,9 @@ msgstr "2 倍行距"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5 倍行距"
+
+#~ msgid "NVDA could not start securely."
+#~ msgstr "NVDA 无法安全启动。"
 
 #~ msgid "Swedish grade 1"
 #~ msgstr "瑞典语 1 级盲文"
