@@ -4,6 +4,7 @@
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 from typing import (
+	Optional,
 	Union,
 )
 
@@ -106,13 +107,15 @@ def getCurrentMode():
 	"""Fetches the ID of the current mode"""
 	return modes[_currentMode][0]
 
-def setCurrentMode(mode,updateReviewPosition=True):
+
+def setCurrentMode(
+		mode: Union[int, str],
+		updateReviewPosition: bool = True
+) -> Optional[str]:
 	"""
 	Sets the current review mode to the given mode ID or index and updates the review position.
 	@param mode: either a 0-based index into the modes list, or one of the mode IDs (first item of a tuple in the modes list).
-	@type mode: int or string
-	@return: a presentable label for the new current mode (suitable for speaking or brailleing)
-	@rtype: string
+	@return: a presentable label for the new current mode (suitable for speaking or braille)
 	"""
 	global _currentMode
 	if isinstance(mode,int):
@@ -128,8 +131,10 @@ def setCurrentMode(mode,updateReviewPosition=True):
 	pos=func(obj)
 	if pos:
 		_currentMode=mode
-		if updateReviewPosition: api.setReviewPosition(pos[0],clearNavigatorObject=False)
+		if updateReviewPosition:
+			api.setReviewPosition(pos[0], clearNavigatorObject=False)
 		return label
+
 
 def nextMode(prev=False,startMode=None):
 	"""
