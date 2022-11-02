@@ -57,7 +57,7 @@ class IoThread:
 		apcUuid = uuid.uuid4()
 
 		@winKernel.PAPCFUNC
-		def apc(param):
+		def apc(param: int):
 			try:
 				if self.exit:
 					return
@@ -70,7 +70,7 @@ class IoThread:
 		self._apcReferences[apcUuid] = apc
 		ctypes.windll.kernel32.QueueUserAPC(apc, self.handle, param)
 
-	def stop(self, timeout=None):
+	def stop(self, timeout: Optional[float] = None):
 		if not self.thread:
 			return
 		self.exit = True

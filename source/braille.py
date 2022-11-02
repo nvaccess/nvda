@@ -2299,7 +2299,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self._detector = None
 		self._detectionEnabled = False
 
-	def _bgThreadExecutor(self, param):
+	def _bgThreadExecutor(self, param: int):
 		"""Executed as APC when cells have to be written to a display asynchronously.
 		"""
 		if not self.display:
@@ -2330,8 +2330,12 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 					self._ackTimeoutResetterApc
 				)
 
-	def _ackTimeoutResetter(self, param):
-		if self.display and self.display.receivesAckPackets and self.display._awaitingAck:
+	def _ackTimeoutResetter(self, param: int):
+		if (
+			self.display
+			and self.display.receivesAckPackets
+			and self.display._awaitingAck
+		):
 			log.debugWarning(f"Waiting for {self.display.name} ACK packet timed out")
 			self.display._awaitingAck = False
 			self._writeCellsInBackground()

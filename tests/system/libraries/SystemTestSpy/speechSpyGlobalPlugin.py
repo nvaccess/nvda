@@ -535,7 +535,7 @@ class SystemTestSpyServer(globalPluginHandler.GlobalPlugin):
 		self._server.stop()
 
 
-def _crashNVDA(param=0):
+def _crashNVDA(param: int = 0):
 	# Causes a breakpoint exception to occur in the current process.
 	# This allows the calling thread to signal the debugger to handle the exception.
 	#
