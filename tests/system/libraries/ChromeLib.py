@@ -172,58 +172,47 @@ class ChromeLib:
 		"""
 		spy = _NvdaLib.getSpyLib()
 		spy.wait_for_speech_to_finish()
-		_NvdaLib.getSpeechAfterKey('alt+d')  # focus the address bar, chrome shortcut
+		expectedAddressBarSpeech = "Address and search bar"
+		moveToAddressBarSpeech = _NvdaLib.getSpeechAfterKey('nvda+tab')  # report current focus.
+		if expectedAddressBarSpeech not in moveToAddressBarSpeech:
+			moveToAddressBarSpeech = _NvdaLib.getSpeechAfterKey('alt+d')  # focus the address bar, chrome shortcut
+			if expectedAddressBarSpeech not in moveToAddressBarSpeech:
+				builtIn.log(
+					f"Didn't read '{expectedAddressBarSpeech}' after alt+d, instead got: {moveToAddressBarSpeech}"
+				)
+				return False
 
 		afterControlF6Speech = _NvdaLib.getSpeechAfterKey('control+F6')  # focus web content, chrome shortcut.
-		if f"document\n{ChromeLib._beforeMarker}" not in afterControlF6Speech:
-			builtIn.log(afterControlF6Speech, level="DEBUG")
+		documentDescriptor = f"document\n{ChromeLib._beforeMarker}"
+		if documentDescriptor not in afterControlF6Speech:
+			builtIn.log(
+				f"Didn't get '{documentDescriptor}' after moving to document, instead got: {afterControlF6Speech}"
+			)
 			return False
 
-		_NvdaLib.getSpeechAfterKey('control+home')  # ensure we start at the top of the document
+		# ensure we start at the top of the document
+		_NvdaLib.getSpeechAfterKey('control+home')
+
 		afterNumPad8Speech = _NvdaLib.getSpeechAfterKey('numpad8')  # report current line
 		if ChromeLib._beforeMarker not in afterNumPad8Speech:
-			builtIn.log(afterNumPad8Speech, level="DEBUG")
+			builtIn.log(
+				f"Didn't get {ChromeLib._beforeMarker} after reporting the current line"
+				f", instead got: {afterNumPad8Speech}"
+			)
 			return False
 		return True
 
-	def toggleFocusChrome(self) -> None:
-		"""Remove focus, then refocus chrome
-		Attempt to work around NVDA missing focus / foreground events when chrome first opens.
-		Forcing chrome to send another foreground event by focusing the desktop, then using alt+tab to return
-		chrome to the foreground.
-		@remarks If another application raises to the foreground after chrome, this approach won't resolve that
-		situation.
-		We don't have evidence that another application taking focus is a cause of failure yet.
-		"""
-		spy = _NvdaLib.getSpyLib()
-		spy.emulateKeyPress('windows+d')
-		_blockUntilConditionMet(
-			giveUpAfterSeconds=5,
-			getValue=GetForegroundWindowTitle,
-			shouldStopEvaluator=lambda _title: ChromeLib._chromeWindow.title != _title,
-			errorMessage="Chrome didn't lose focus"
+	def canChromeTitleBeReported(self, chromeTitleSpeechPattern: re.Pattern) -> bool:
+		speech = _NvdaLib.getSpeechAfterKey('NVDA+t')
+		return bool(
+			chromeTitleSpeechPattern.search(speech)
 		)
-		spy.emulateKeyPress('alt+tab')
-		_blockUntilConditionMet(
-			giveUpAfterSeconds=5,
-			getValue=GetForegroundWindowTitle,
-			shouldStopEvaluator=lambda _title: ChromeLib._chromeWindow.title == _title,
-			errorMessage="Chrome didn't gain focus"
-		)
-		spy.wait_for_speech_to_finish()
 
-	def ensureChromeTitleCanBeReported(self, applicationTitle: str) -> int:
-		spy = _NvdaLib.getSpyLib()
-		afterFocusToggleIndex = spy.get_last_speech_index()
-		spy.emulateKeyPress('NVDA+t')
-		appTitleIndex = spy.wait_for_specific_speech(applicationTitle, afterIndex=afterFocusToggleIndex)
-		return appTitleIndex
-
-	def prepareChrome(self, testCase: str, _doToggleFocus: bool = False) -> None:
+	def prepareChrome(self, testCase: str, _alwaysDoToggleFocus: bool = False) -> None:
 		"""
 		Starts Chrome opening a file containing the HTML sample
 		@param testCase - The HTML sample to test.
-		@param _doToggleFocus - When True, Chrome will be intentionally de-focused and re-focused
+		@param _alwaysDoToggleFocus - When True, Chrome will be intentionally de-focused and re-focused
 		"""
 		testCase = testCase + (
 			"\n<!-- "  # new line, start a HTML comment
@@ -237,23 +226,33 @@ class ChromeLib:
 		path = self._writeTestFile(testCase)
 
 		spy.wait_for_speech_to_finish()
-		lastSpeechIndex = spy.get_last_speech_index()
 		_chromeLib.start_chrome(path, testCase)
+		windowsLib.logForegroundWindowTitle()
+
 		applicationTitle = ChromeLib.getUniqueTestCaseTitle(testCase)
+		# application title will be something like "NVDA Browser Test Case (499078752)"
+		# the parentheses could be escaped, instead we can just replace them with "match any char".
+		patternSafeTitleString = applicationTitle.replace('(', '.').replace(')', '.')
+		chromeTitleSpeechPattern = re.compile(patternSafeTitleString)
 
-		_chromeLib.ensureChromeTitleCanBeReported(applicationTitle)
+		if (
+			_alwaysDoToggleFocus  # may work around focus/foreground event missed issues for tests.
+			or not _chromeLib.canChromeTitleBeReported(chromeTitleSpeechPattern)
+		):
+			windowsLib.taskSwitchToItemMatching(targetWindowNamePattern=chromeTitleSpeechPattern)
+			windowsLib.logForegroundWindowTitle()
+
+			if not _chromeLib.canChromeTitleBeReported(chromeTitleSpeechPattern):
+				raise AssertionError("NVDA unable to report chrome title")
+
 		spy.wait_for_speech_to_finish()
-
-		if _doToggleFocus:  # may work around focus/foreground event missed issues for tests.
-			_chromeLib.toggleFocusChrome()
-			spy.wait_for_speech_to_finish()
 
 		if not self._waitForStartMarker():
 			builtIn.fail(
 				"Unable to locate 'before sample' marker."
 				" See NVDA log for full speech."
 			)
-		# Move to the loading status line, and wait fore it to become complete
+		# Move to the loading status line, and wait for it to become complete
 		# the page has fully loaded.
 		spy.emulateKeyPress('downArrow')
 		for x in range(10):
