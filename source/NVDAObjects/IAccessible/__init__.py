@@ -7,6 +7,7 @@ import typing
 from typing import (
 	Optional,
 	Union,
+	List,
 )
 
 from comtypes.automation import IEnumVARIANT, VARIANT
@@ -1596,6 +1597,12 @@ the NVDAObject for IAccessible
 	#: Type definition for auto prop '_get_detailsRelations'
 	detailsRelations: typing.Iterable["IAccessible"]
 
+	def _get_controllerFor(self) -> List[NVDAObject]:
+		control = self._getIA2RelationFirstTarget(IAccessibleHandler.RelationType.CONTROLLER_FOR)
+		if control:
+			return [control]
+		return []
+
 	def _get_detailsRelations(self) -> typing.Iterable["IAccessible"]:
 		relationTarget = self._getIA2RelationFirstTarget(IAccessibleHandler.RelationType.DETAILS)
 		if not relationTarget:
@@ -1654,9 +1661,6 @@ the NVDAObject for IAccessible
 			return None
 		else:
 			return super(IAccessible,self)._get_groupName()
-
-	def event_selection(self):
-		return self.event_stateChange()
 
 	def event_selectionAdd(self):
 		return self.event_stateChange()

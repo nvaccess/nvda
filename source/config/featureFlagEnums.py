@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022 NV Access Limited, Rob Meredith
+# Copyright (C) 2022 NV Access Limited, Bill Dengler, Rob Meredith
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -83,6 +83,26 @@ class ParagraphNavigationFlag(DisplayStringEnum):
 	APPLICATION = enum.auto()
 	SINGLE_LINE_BREAK = enum.auto()
 	DOUBLE_LINE_BREAK = enum.auto()
+
+
+class WindowsTerminalStrategyFlag(DisplayStringEnum):
+	"""
+	A feature flag for defining how new text is calculated in Windows Terminal
+	(wt.exe).
+	"""
+
+	@property
+	def _displayStringLabels(self):
+		return {
+			# Translators: Label for an option in NVDA settings.
+			self.DIFFING: _("Diffing"),
+			# Translators: Label for an option in NVDA settings.
+			self.NOTIFICATIONS: _("UIA notifications"),
+		}
+
+	DEFAULT = enum.auto()
+	DIFFING = enum.auto()
+	NOTIFICATIONS = enum.auto()
 
 
 def getAvailableEnums() -> typing.Generator[typing.Tuple[str, FlagValueEnum], None, None]:

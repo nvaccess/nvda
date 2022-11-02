@@ -81,9 +81,9 @@ def CloseWindow(window: Window) -> bool:
 	@return: True if the window exists and the message was sent.
 	"""
 	if windowWithHandleExists(window.hwndVal):
-		return windll.user32.CloseWindow(
+		return bool(windll.user32.CloseWindow(
 			window.hwndVal,
-		)
+		))
 	return False
 
 
