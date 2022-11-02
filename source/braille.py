@@ -1772,7 +1772,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	]
 
 	queuedWrite: Optional[List[int]] = None
-	queuedWriteLock: threading.Lock()
+	queuedWriteLock: threading.Lock
 	ackTimerHandle: int
 
 	def __init__(self):
