@@ -150,7 +150,7 @@ def _watcher():
 		# This event will be reset by alive().
 		windll.kernel32.SetEvent(_cancelCallEvent)
 		# Some calls have to be killed individually.
-		while True:
+		while not _isAlive():
 			curTime = _timer()
 			if curTime-lastTime>FROZEN_WARNING_TIMEOUT:
 				lastTime=curTime
@@ -161,8 +161,7 @@ def _watcher():
 				log.info(f"Listing stacks for Python threads:\n{stacks}")
 			_recoverAttempt()
 			time.sleep(RECOVER_ATTEMPT_INTERVAL)
-			if _isAlive():
-				break
+
 		log.info(
 			f"Recovered from freeze after {_timer() - waitedSince} seconds."
 		)
