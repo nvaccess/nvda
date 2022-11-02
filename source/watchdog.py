@@ -35,11 +35,11 @@ FROZEN_WARNING_TIMEOUT = 15
 """ Seconds before the core should be considered severely frozen and a warning logged.
 """
 
-safeWindowClassSet=set([
+safeWindowClassSet = {
 	'Internet Explorer_Server',
 	'_WwG',
 	'EXCEL7',
-])
+}
 
 isRunning=False
 isAttemptingRecovery: bool = False
