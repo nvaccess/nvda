@@ -118,15 +118,18 @@ def _watcher():
 		logged = False
 		# The core hasn't reported alive for MIN_CORE_ALIVE_TIMEOUT.
 		waitedSince = _timer() - MIN_CORE_ALIVE_TIMEOUT  # already waiting this long via _coreDeadTimer
-		while not _isAlive() and not _shouldRecoverAfterMinTimeout():
+		while (
+			_timer() - waitedSince < NORMAL_CORE_ALIVE_TIMEOUT
+			and not _isAlive()
+			and not _shouldRecoverAfterMinTimeout()
+		):
 			if not logged:
 				logged = True
 				log.debug(f"Potential freeze, waiting up to {NORMAL_CORE_ALIVE_TIMEOUT} seconds.")
 			# The core is still dead and fast recovery doesn't apply.
-			# Wait up to NORMAL_ALIVE_TIMEOUT.
+			# Wait up to NORMAL_ALIVE_TIMEOUT in increments of MIN_CORE_ALIVE_TIMEOUT
 			time.sleep(MIN_CORE_ALIVE_TIMEOUT)
-			if _timer() - waitedSince >= NORMAL_CORE_ALIVE_TIMEOUT:
-				break
+
 		if _isAlive():
 			if logged:
 				log.debug(f"Recovered from potential freeze after {_timer() - waitedSince} seconds.")
