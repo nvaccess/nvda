@@ -114,19 +114,30 @@ def _watcher():
 		winKernel.waitForSingleObject(_coreDeadTimer, winKernel.INFINITE)
 		if not isRunning:
 			return
+
+		logged = False
 		# The core hasn't reported alive for MIN_CORE_ALIVE_TIMEOUT.
 		waitedSince = _timer() - MIN_CORE_ALIVE_TIMEOUT  # already waiting this long via _coreDeadTimer
 		while not _isAlive() and not _shouldRecoverAfterMinTimeout():
+			if not logged:
+				logged = True
+				log.debug(f"Potential freeze, waiting up to {NORMAL_CORE_ALIVE_TIMEOUT} seconds.")
 			# The core is still dead and fast recovery doesn't apply.
 			# Wait up to NORMAL_ALIVE_TIMEOUT.
 			time.sleep(MIN_CORE_ALIVE_TIMEOUT)
 			if _timer() - waitedSince >= NORMAL_CORE_ALIVE_TIMEOUT:
 				break
 		if _isAlive():
+			if logged:
+				log.debug(f"Recovered from potential freeze after {_timer() - waitedSince} seconds.")
 			continue
+
+		log.info(f"Starting freeze recovery after {_timer() - waitedSince} seconds.")
 		if log.isEnabledFor(log.DEBUGWARNING):
 			stacks = getFormattedStacksForAllThreads()
-			log.debugWarning(f"Trying to recover from freeze. Listing stacks for Python threads:\n{stacks}")
+			log.debugWarning(
+				f"Listing stacks for Python threads:\n{stacks}"
+			)
 
 		# After every FROZEN_WARNING_TIMEOUT seconds have elapsed
 		# log each threads stack trace
@@ -142,13 +153,16 @@ def _watcher():
 				lastTime=curTime
 				# Core is completely frozen.
 				# Collect formatted stacks for all Python threads.
-				log.error("Core frozen in stack!")
+				log.error(f"Core frozen in stack! ({curTime - waitedSince} seconds)")
 				stacks = getFormattedStacksForAllThreads()
 				log.info(f"Listing stacks for Python threads:\n{stacks}")
 			_recoverAttempt()
 			time.sleep(RECOVER_ATTEMPT_INTERVAL)
 			if _isAlive():
 				break
+		log.info(
+			f"Recovered from freeze after {_timer() - waitedSince} seconds."
+		)
 		isAttemptingRecovery = False
 
 def _shouldRecoverAfterMinTimeout():
