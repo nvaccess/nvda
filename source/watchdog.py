@@ -7,6 +7,7 @@ import sys
 import os
 import traceback
 import time
+from time import perf_counter as _timer
 import threading
 import inspect
 from ctypes import windll, oledll
@@ -21,16 +22,18 @@ import core
 import exceptions
 import NVDAHelper
 
-#settings
-#: The minimum time to wait for the core to be alive.
-MIN_CORE_ALIVE_TIMEOUT=0.5
-#: How long to wait for the core to be alive under normal circumstances.
-#: This must be a multiple of MIN_CORE_ALIVE_TIMEOUT.
-NORMAL_CORE_ALIVE_TIMEOUT=10
-#: How long to wait between recovery attempts
+MIN_CORE_ALIVE_TIMEOUT = 0.5
+"""The minimum time (seconds) to wait for the core to be alive.
+"""
+NORMAL_CORE_ALIVE_TIMEOUT = 10
+""" Seconds to wait for the core to be alive under normal circumstances.
+"""
 RECOVER_ATTEMPT_INTERVAL = 0.05
-#: The amount of time before the core should be considered severely frozen and a warning logged.
+""" Seconds to wait between recovery attempts
+"""
 FROZEN_WARNING_TIMEOUT = 15
+""" Seconds before the core should be considered severely frozen and a warning logged.
+"""
 
 safeWindowClassSet=set([
 	'Internet Explorer_Server',
@@ -112,27 +115,29 @@ def _watcher():
 		if not isRunning:
 			return
 		# The core hasn't reported alive for MIN_CORE_ALIVE_TIMEOUT.
-		waited = MIN_CORE_ALIVE_TIMEOUT
+		waitedSince = _timer() - MIN_CORE_ALIVE_TIMEOUT  # already waiting this long via _coreDeadTimer
 		while not _isAlive() and not _shouldRecoverAfterMinTimeout():
 			# The core is still dead and fast recovery doesn't apply.
 			# Wait up to NORMAL_ALIVE_TIMEOUT.
 			time.sleep(MIN_CORE_ALIVE_TIMEOUT)
-			waited += MIN_CORE_ALIVE_TIMEOUT
-			if waited >= NORMAL_CORE_ALIVE_TIMEOUT:
+			if _timer() - waitedSince >= NORMAL_CORE_ALIVE_TIMEOUT:
 				break
 		if _isAlive():
 			continue
 		if log.isEnabledFor(log.DEBUGWARNING):
 			stacks = getFormattedStacksForAllThreads()
 			log.debugWarning(f"Trying to recover from freeze. Listing stacks for Python threads:\n{stacks}")
-		lastTime=time.time()
+
+		# After every FROZEN_WARNING_TIMEOUT seconds have elapsed
+		# log each threads stack trace
+		lastTime = _timer()
 		isAttemptingRecovery = True
 		# Cancel calls until the core is alive.
 		# This event will be reset by alive().
 		windll.kernel32.SetEvent(_cancelCallEvent)
 		# Some calls have to be killed individually.
 		while True:
-			curTime=time.time()
+			curTime = _timer()
 			if curTime-lastTime>FROZEN_WARNING_TIMEOUT:
 				lastTime=curTime
 				# Core is completely frozen.
