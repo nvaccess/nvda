@@ -77,8 +77,20 @@ def alive():
 	windll.kernel32.ResetEvent(_cancelCallEvent)
 	# Set the timer so the watcher will take action in MIN_CORE_ALIVE_TIMEOUT
 	# if this function or asleep() isn't called.
-	windll.kernel32.SetWaitableTimer(_coreDeadTimer,
-		ctypes.byref(ctypes.wintypes.LARGE_INTEGER(-int(10000000 * MIN_CORE_ALIVE_TIMEOUT))),
+	SECOND_TO_100_NANOSECOND = 10 ** 7  # nanosecond is 10^9, 10^7 is hundreds of nanoseconds
+	windll.kernel32.SetWaitableTimer(
+		_coreDeadTimer,
+		ctypes.byref(ctypes.wintypes.LARGE_INTEGER(
+			# The time after which the state of the timer is to be set to signaled,
+			# in 100 nanosecond intervals.
+			# Use the format described by the FILETIME structure.
+			# Positive values indicate absolute time.
+			# Be sure to use a UTC-based absolute time, as the system uses UTC-based time internally.
+			# Negative values indicate relative time.
+			# The actual timer accuracy depends on the capability of your hardware.
+			# For more information about UTC-based time, see System Time.
+			-int(SECOND_TO_100_NANOSECOND * MIN_CORE_ALIVE_TIMEOUT)
+		)),
 		0, None, None, False)
 
 def asleep():
