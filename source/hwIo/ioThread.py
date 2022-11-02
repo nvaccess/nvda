@@ -70,7 +70,7 @@ class IoThread:
 		self._apcReferences[apcUuid] = apc
 		ctypes.windll.kernel32.QueueUserAPC(apc, self.handle, param)
 
-	def stop(self, timeout: Optional[float] = None):
+	def stop(self, timeout: typing.Optional[float] = None):
 		if not self.thread:
 			return
 		self.exit = True
