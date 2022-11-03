@@ -15,7 +15,6 @@ import config
 import controlTypes
 import eventHandler
 import globalVars
-import inputCore
 from logHandler import log
 from NVDAObjects import NVDAObject
 from NVDAObjects.lockscreen import LockScreenObject
@@ -75,20 +74,7 @@ class AppModule(appModuleHandler.AppModule):
 		api.setMouseObject(obj)
 		nextHandler()
 
-	def _inputCaptor(self, gesture: inputCore.InputGesture) -> bool:
-		script = gesture.script
-		if not script:
-			return True
-		scriptShouldRun = script in getSafeScripts()
-		if not scriptShouldRun:
-			log.error(
-				"scriptHandler failed to block script when Windows is locked. "
-				"This means Windows session tracking has failed. "
-			)
-		return scriptShouldRun
-
 	def event_appModule_gainFocus(self):
-		inputCore.manager._captureFunc = self._inputCaptor
 		if not config.conf["reviewCursor"]["followFocus"]:
 			# Move the review cursor so others can't access its previous position.
 			self._oldReviewPos = api.getReviewPosition()
@@ -99,4 +85,3 @@ class AppModule(appModuleHandler.AppModule):
 		if not config.conf["reviewCursor"]["followFocus"]:
 			api.setReviewPosition(self._oldReviewPos)
 			del self._oldReviewPos, self._oldReviewObj
-		inputCore.manager._captureFunc = None
