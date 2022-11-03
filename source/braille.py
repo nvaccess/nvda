@@ -1798,7 +1798,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 		self.queuedWriteLock = threading.Lock()
 		self.ackTimerHandle = winKernel.createWaitableTimer()
-		self.__ackTimeoutResetterApc = winKernel.PAPCFUNC(self._ackTimeoutResetter)
+		self._ackTimeoutResetterApc = winKernel.PAPCFUNC(self._ackTimeoutResetter)
 
 		brailleViewer.postBrailleViewerToolToggledAction.register(self._onBrailleViewerChangedState)
 
@@ -2626,10 +2626,10 @@ class BrailleDisplayDriver(driverHandler.Driver):
 		"""Base implementation to handle acknowledgement packets."""
 		if not self.receivesAckPackets:
 			raise NotImplementedError("This display driver does not support ACK packet handling")
-		if not ctypes.windll.kernel32.CancelWaitableTimer(self.ackTimerHandle):
+		if not ctypes.windll.kernel32.CancelWaitableTimer(handler.ackTimerHandle):
 			raise ctypes.WinError()
 		self._awaitingAck = False
-		self._writeCellsInBackground()
+		handler._writeCellsInBackground()
 
 	@classmethod
 	def DotFirmnessSetting(cls,defaultVal,minVal,maxVal,useConfig=False):
