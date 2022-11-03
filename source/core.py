@@ -797,6 +797,7 @@ def main():
 	config.saveOnExit()
 
 	try:
+		import api
 		focusObject = api.getFocusObject()
 		if focusObject and hasattr(focusObject, "event_loseFocus"):
 			log.debug("calling lose focus on object with focus")
