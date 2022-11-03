@@ -1804,11 +1804,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 	def terminate(self):
 		self._disableDetection()
-		if self.ackTimerHandle:
-			if not ctypes.windll.kernel32.CancelWaitableTimer(self.ackTimerHandle):
-				raise ctypes.WinError()
-			winKernel.closeHandle(self.ackTimerHandle)
-			self.ackTimerHandle = None
 		if self._messageCallLater:
 			self._messageCallLater.Stop()
 			self._messageCallLater = None
@@ -1819,6 +1814,11 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if self.display:
 			self.display.terminate()
 			self.display = None
+		if self.ackTimerHandle:
+			if not ctypes.windll.kernel32.CancelWaitableTimer(self.ackTimerHandle):
+				raise ctypes.WinError()
+			winKernel.closeHandle(self.ackTimerHandle)
+			self.ackTimerHandle = None
 		louisHelper.terminate()
 
 	def getTether(self):
