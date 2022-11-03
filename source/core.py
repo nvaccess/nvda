@@ -503,6 +503,17 @@ def _initializeObjectCaches():
 	api.setMouseObject(foregroundObject)
 
 
+def _doLoseFocus():
+	import api
+	focusObject = api.getFocusObject()
+	if focusObject and hasattr(focusObject, "event_loseFocus"):
+		log.debug("calling lose focus on object with focus")
+		try:
+			focusObject.event_loseFocus()
+		except Exception:
+			log.exception("Lose focus error")
+
+
 def main():
 	"""NVDA's core main loop.
 	This initializes all modules such as audio, IAccessible, keyboard, mouse, and GUI.
@@ -796,14 +807,8 @@ def main():
 	_terminate(gui)
 	config.saveOnExit()
 
-	try:
-		import api
-		focusObject = api.getFocusObject()
-		if focusObject and hasattr(focusObject, "event_loseFocus"):
-			log.debug("calling lose focus on object with focus")
-			focusObject.event_loseFocus()
-	except:
-		log.exception("Lose focus error")
+	_doLoseFocus()
+
 	try:
 		speech.cancelSpeech()
 	except:
