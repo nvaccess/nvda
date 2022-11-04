@@ -113,13 +113,13 @@ class _IgnoreWindowsLockState:
 
 	def __enter__(self) -> bool:
 		_IgnoreWindowsLockState._shouldIgnoreLockStateLock.acquire()
-		_IgnoreWindowsLockState.shouldIgnoreLockState = True
-		return _IgnoreWindowsLockState.shouldIgnoreLockState
+		_IgnoreWindowsLockState._shouldIgnoreLockState = True
+		return _IgnoreWindowsLockState._shouldIgnoreLockState
 
 	def __exit__(self, excType, excVal, traceback):
-		_IgnoreWindowsLockState.shouldIgnoreLockState = False
+		_IgnoreWindowsLockState._shouldIgnoreLockState = False
 		_IgnoreWindowsLockState._shouldIgnoreLockStateLock.release()
-		return _IgnoreWindowsLockState.shouldIgnoreLockState
+		return _IgnoreWindowsLockState._shouldIgnoreLockState
 
 	@staticmethod
 	def shouldIgnoreLockState() -> bool:
