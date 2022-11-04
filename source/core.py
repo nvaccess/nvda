@@ -419,50 +419,30 @@ def _handleNVDAModuleCleanupBeforeGUIExit():
 	brailleViewer.destroyBrailleViewer()
 
 
-def _pollForForegroundHWND() -> int:
+def _pollForForegroundHWND() -> Optional[int]:
 	"""
 	@note: The foreground window should usually be fetched on the first try,
 	however it may take longer if Windows is taking a long time changing window focus.
-	Times out after 20 seconds (MAX_WAIT_TIME_SECS).
-	After timing out, NVDA will give up trying to start and exit.
+	Gives up after 10 seconds (MAX_WAIT_TIME_SECS).
+
+	TODO: move to winAPI
 	"""
-	import ui
 	from utils.blockUntilConditionMet import blockUntilConditionMet
 	import winUser
 
 	# winUser.getForegroundWindow may return NULL in certain circumstances,
 	# such as when a window is losing activation.
 	# This should not remain the case for an extended period of time.
-	# If NVDA is taking longer than expected to fetch the foreground window, perform a warning.
-	# We must wait a long time after this warning to
-	# allow for braille / speech to be understood before exiting.
-	# Unfortunately we cannot block with a dialog as NVDA cannot read dialogs yet.
-	WARN_AFTER_SECS = 5
-	MAX_WAIT_TIME_SECS = 20
+	MAX_WAIT_TIME_SECS = 10
 
 	success, foregroundHWND = blockUntilConditionMet(
 		getValue=winUser.getForegroundWindow,
-		giveUpAfterSeconds=WARN_AFTER_SECS,
+		giveUpAfterSeconds=MAX_WAIT_TIME_SECS,
 	)
 	if success:
 		return foregroundHWND
-
-	exitAfterWarningSecs = MAX_WAIT_TIME_SECS - WARN_AFTER_SECS
-	ui.message(_(
-		# Translators: Message when NVDA is having an issue starting up
-		"NVDA is failing to fetch the foreground window. "
-		"If this continues, NVDA will quit starting in %d seconds." % exitAfterWarningSecs
-	))
-
-	success, foregroundHWND = blockUntilConditionMet(
-		getValue=winUser.getForegroundWindow,
-		giveUpAfterSeconds=exitAfterWarningSecs,
-	)
-	if success:
-		return foregroundHWND
-	log.critical("NVDA could not fetch the foreground window. Exiting NVDA.")
-	# Raising exception here causes core.main to exit and NVDA to fail to start
-	raise NVDANotInitializedError("Could not fetch foreground window")
+	log.error("NVDA could not fetch the foreground window.")
+	return None
 
 
 def _initializeObjectCaches():
@@ -472,8 +452,27 @@ def _initializeObjectCaches():
 	however no known exploit is known for this.
 	2023.1 plans to ensure the desktopObject is available only when signed-in.
 
-	Also initializes other object caches to the foreground window.
-	Previously the object that was cached was the desktopObject,
+	The desktop object must be used, as setting the object caches has side effects,
+	such as focus events.
+	Side effects from objects may require NVDA to be finished initializing.
+	The desktop object is an NVDA object without custom code associated with it.
+	"""
+	import api
+	import NVDAObjects
+	import winUser
+
+	desktopObject = NVDAObjects.window.Window(windowHandle=winUser.getDesktopWindow())
+	api.setDesktopObject(desktopObject)
+	api.setForegroundObject(desktopObject)
+	api.setFocusObject(desktopObject)
+	api.setNavigatorObject(desktopObject)
+	api.setMouseObject(desktopObject)
+
+
+def _updateObjectCachesToForeground():
+	"""
+	Initializes object caches (other than desktop object) to the foreground window.
+	Before this, the object that is cached is the desktopObject,
 	however this may leak secure information to the lock screen.
 	The foreground window is set as the object cache,
 	as the foreground window would already be accessible on the lock screen (e.g. Magnifier).
@@ -482,22 +481,46 @@ def _initializeObjectCaches():
 
 	@note: The foreground window should usually be fetched on the first try,
 	however it may take longer if Windows is taking a long time changing window focus.
-	Times out after 20 seconds (MAX_WAIT_TIME_SECS in _pollForForegroundHWND).
-	After timing out, NVDA will give up trying to start and exit.
+	Gives up after 10 seconds (MAX_WAIT_TIME_SECS in _pollForForegroundHWND).
 	"""
 	import api
 	import NVDAObjects
-	import winUser
-
-	desktopObject = NVDAObjects.window.Window(windowHandle=winUser.getDesktopWindow())
-	api.setDesktopObject(desktopObject)
-
+	
 	foregroundHWND = _pollForForegroundHWND()
+	if not foregroundHWND:
+		log.error("Could not update object caches to foreground window.")
+		return
+
 	foregroundObject = NVDAObjects.window.Window(windowHandle=foregroundHWND)
 	api.setForegroundObject(foregroundObject)
 	api.setFocusObject(foregroundObject)
 	api.setNavigatorObject(foregroundObject)
 	api.setMouseObject(foregroundObject)
+
+
+class _TrackNVDAInitialization:
+	"""
+	During NVDA initialization,
+	core._initializeObjectCaches needs to cache the desktop object,
+	regardless of lock state.
+	Security checks may cause the desktop object to not be set if NVDA starts on the lock screen.
+	As such, during initialization, NVDA should behave as if Windows is unlocked,
+	i.e. winAPI.sessionTracking.isWindowsLocked should return False.
+
+	TODO: move to NVDAState module
+	"""
+	_isNVDAInitialized = False
+	"""When False, isWindowsLocked is forced to return False.
+	"""
+
+	@staticmethod
+	def markInitializationComplete():
+		assert not _TrackNVDAInitialization._isNVDAInitialized
+		_TrackNVDAInitialization._isNVDAInitialized = True
+
+	@staticmethod
+	def isInitializationComplete() -> bool:
+		return _TrackNVDAInitialization._isNVDAInitialized
 
 
 def main():
@@ -861,6 +884,10 @@ def main():
 	else:
 		log.debug("initializing updateCheck")
 		updateCheck.initialize()
+
+	_TrackNVDAInitialization.markInitializationComplete()
+	_updateObjectCachesToForeground()
+
 	log.info("NVDA initialized")
 
 	# Queue the firing of the postNVDAStartup notification.

@@ -154,6 +154,9 @@ def isWindowsLocked() -> bool:
 	Checks if the Window lockscreen is active.
 	Not to be confused with the Windows sign-in screen, a secure screen.
 	"""
+	from core import _TrackNVDAInitialization
+	if not _TrackNVDAInitialization.isInitializationComplete():
+		return False
 	if _isSecureDesktop():
 		# If this is the Secure Desktop,
 		# we are in secure mode and on a secure screen,
