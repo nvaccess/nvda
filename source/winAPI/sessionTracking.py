@@ -25,7 +25,7 @@ from ctypes.wintypes import (
 	HWND,
 )
 import enum
-from threading import Lock, RLock
+from threading import Lock
 from typing import (
 	Dict,
 	Set,
@@ -82,50 +82,6 @@ SYNCHRONIZE = 0x00100000
 Parameter for OpenEventW, blocks thread until event is registered.
 https://docs.microsoft.com/en-us/windows/win32/sync/synchronization-object-security-and-access-rights
 """
-
-
-class _IgnoreWindowsLockState:
-	"""
-	Used to bypass security checks by forcing isWindowsLocked to return False.
-	Should only be used where the following conditions all apply:
-	- security checks are not possible, such as during NVDA initialization/termination.
-	- usage has no security implications, there are no exploits if the lock state is ignored.
-	- code does not take a long time to execute.
-
-	Using _IgnoreWindowsLockState blocks other threads from:
-	- checking isWindowsLocked
-	- using _IgnoreWindowsLockState
-
-	Usage
-	```
-	with _IgnoreWindowsLockState():
-		doCodeWhichIsSafe
-	"""
-	_shouldIgnoreLockState = False
-	"""When True, isWindowsLocked is forced to return False"""
-	_shouldIgnoreLockStateLock = RLock()
-	"""
-	This lock is used to protect _shouldIgnoreLockState.
-	If 2 threads are reading from shouldIgnoreLockState simultaneously,
-	and 1 thread is using `_IgnoreWindowsLockState`,
-	then both threads would act as if windows is unlocked.
-	"""
-
-	def __enter__(self) -> bool:
-		_IgnoreWindowsLockState._shouldIgnoreLockStateLock.acquire()
-		_IgnoreWindowsLockState._shouldIgnoreLockState = True
-		return _IgnoreWindowsLockState._shouldIgnoreLockState
-
-	def __exit__(self, excType, excVal, traceback):
-		_IgnoreWindowsLockState._shouldIgnoreLockState = False
-		_IgnoreWindowsLockState._shouldIgnoreLockStateLock.release()
-		return _IgnoreWindowsLockState._shouldIgnoreLockState
-
-	@staticmethod
-	def shouldIgnoreLockState() -> bool:
-		"""May block if another thread is using _IgnoreWindowsLockState"""
-		with _IgnoreWindowsLockState._shouldIgnoreLockStateLock:
-			return _IgnoreWindowsLockState._shouldIgnoreLockState
 
 
 class WindowsTrackedSession(enum.IntEnum):
@@ -198,7 +154,8 @@ def isWindowsLocked() -> bool:
 	Checks if the Window lockscreen is active.
 	Not to be confused with the Windows sign-in screen, a secure screen.
 	"""
-	if _IgnoreWindowsLockState.shouldIgnoreLockState():
+	from core import _TrackNVDAInitialization
+	if not _TrackNVDAInitialization.isInitializationComplete():
 		return False
 	if _isSecureDesktop():
 		# If this is the Secure Desktop,

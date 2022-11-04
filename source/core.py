@@ -9,8 +9,6 @@
 
 from dataclasses import dataclass
 from typing import (
-	Any,
-	Callable,
 	List,
 	Optional,
 )
@@ -426,6 +424,8 @@ def _pollForForegroundHWND() -> Optional[int]:
 	@note: The foreground window should usually be fetched on the first try,
 	however it may take longer if Windows is taking a long time changing window focus.
 	Gives up after 10 seconds (MAX_WAIT_TIME_SECS).
+
+	TODO: move to winAPI
 	"""
 	from utils.blockUntilConditionMet import blockUntilConditionMet
 	import winUser
@@ -459,16 +459,14 @@ def _initializeObjectCaches():
 	"""
 	import api
 	import NVDAObjects
-	from winAPI.sessionTracking import _IgnoreWindowsLockState
 	import winUser
 
 	desktopObject = NVDAObjects.window.Window(windowHandle=winUser.getDesktopWindow())
-	with _IgnoreWindowsLockState():
-		api.setDesktopObject(desktopObject)
-		api.setForegroundObject(desktopObject)
-		api.setFocusObject(desktopObject)
-		api.setNavigatorObject(desktopObject)
-		api.setMouseObject(desktopObject)
+	api.setDesktopObject(desktopObject)
+	api.setForegroundObject(desktopObject)
+	api.setFocusObject(desktopObject)
+	api.setNavigatorObject(desktopObject)
+	api.setMouseObject(desktopObject)
 
 
 def _updateObjectCachesToForeground():
@@ -498,6 +496,31 @@ def _updateObjectCachesToForeground():
 	api.setFocusObject(foregroundObject)
 	api.setNavigatorObject(foregroundObject)
 	api.setMouseObject(foregroundObject)
+
+
+class _TrackNVDAInitialization:
+	"""
+	During NVDA initialization,
+	core._initializeObjectCaches needs to cache the desktop object,
+	regardless of lock state.
+	Security checks may cause the desktop object to not be set if NVDA starts on the lock screen.
+	As such, during initialization, NVDA should behave as if Windows is unlocked,
+	i.e. winAPI.sessionTracking.isWindowsLocked should return False.
+
+	TODO: move to NVDAState module
+	"""
+	_isNVDAInitialized = False
+	"""When False, isWindowsLocked is forced to return False.
+	"""
+
+	@staticmethod
+	def markInitializationComplete():
+		assert not _TrackNVDAInitialization._isNVDAInitialized
+		_TrackNVDAInitialization._isNVDAInitialized = True
+
+	@staticmethod
+	def isInitializationComplete() -> bool:
+		return _TrackNVDAInitialization._isNVDAInitialized
 
 
 def main():
@@ -826,18 +849,10 @@ def main():
 	log.debug("Initializing core pump")
 	class CorePump(gui.NonReEntrantTimer):
 		"Checks the queues and executes functions."
-
-		def __init__(self, run: Optional[Callable[[None], Any]] = None):
-			self._firstRun = True
-			super().__init__(run)
-
 		def run(self):
 			global _isPumpPending
 			_isPumpPending = False
 			watchdog.alive()
-			if self._firstRun:
-				_updateObjectCachesToForeground()
-				self.firstRun = False
 			try:
 				if touchHandler.handler:
 					touchHandler.handler.pump()
@@ -869,6 +884,10 @@ def main():
 	else:
 		log.debug("initializing updateCheck")
 		updateCheck.initialize()
+
+	_TrackNVDAInitialization.markInitializationComplete()
+	_updateObjectCachesToForeground()
+
 	log.info("NVDA initialized")
 
 	# Queue the firing of the postNVDAStartup notification.
