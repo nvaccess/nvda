@@ -419,32 +419,6 @@ def _handleNVDAModuleCleanupBeforeGUIExit():
 	brailleViewer.destroyBrailleViewer()
 
 
-def _pollForForegroundHWND() -> Optional[int]:
-	"""
-	@note: The foreground window should usually be fetched on the first try,
-	however it may take longer if Windows is taking a long time changing window focus.
-	Gives up after 10 seconds (MAX_WAIT_TIME_SECS).
-
-	TODO: move to winAPI
-	"""
-	from utils.blockUntilConditionMet import blockUntilConditionMet
-	import winUser
-
-	# winUser.getForegroundWindow may return NULL in certain circumstances,
-	# such as when a window is losing activation.
-	# This should not remain the case for an extended period of time.
-	MAX_WAIT_TIME_SECS = 10
-
-	success, foregroundHWND = blockUntilConditionMet(
-		getValue=winUser.getForegroundWindow,
-		giveUpAfterSeconds=MAX_WAIT_TIME_SECS,
-	)
-	if success:
-		return foregroundHWND
-	log.error("NVDA could not fetch the foreground window.")
-	return None
-
-
 def _initializeObjectCaches():
 	"""
 	Caches the desktop object.
@@ -467,35 +441,6 @@ def _initializeObjectCaches():
 	api.setFocusObject(desktopObject)
 	api.setNavigatorObject(desktopObject)
 	api.setMouseObject(desktopObject)
-
-
-def _updateObjectCachesToForeground():
-	"""
-	Initializes object caches (other than desktop object) to the foreground window.
-	Before this, the object that is cached is the desktopObject,
-	however this may leak secure information to the lock screen.
-	The foreground window is set as the object cache,
-	as the foreground window would already be accessible on the lock screen (e.g. Magnifier).
-	It also is more intuitive that NVDA focuses the foreground window,
-	as opposed to the desktop object.
-
-	@note: The foreground window should usually be fetched on the first try,
-	however it may take longer if Windows is taking a long time changing window focus.
-	Gives up after 10 seconds (MAX_WAIT_TIME_SECS in _pollForForegroundHWND).
-	"""
-	import api
-	import NVDAObjects
-	
-	foregroundHWND = _pollForForegroundHWND()
-	if not foregroundHWND:
-		log.error("Could not update object caches to foreground window.")
-		return
-
-	foregroundObject = NVDAObjects.window.Window(windowHandle=foregroundHWND)
-	api.setForegroundObject(foregroundObject)
-	api.setFocusObject(foregroundObject)
-	api.setNavigatorObject(foregroundObject)
-	api.setMouseObject(foregroundObject)
 
 
 class _TrackNVDAInitialization:
@@ -886,7 +831,6 @@ def main():
 		updateCheck.initialize()
 
 	_TrackNVDAInitialization.markInitializationComplete()
-	_updateObjectCachesToForeground()
 
 	log.info("NVDA initialized")
 
