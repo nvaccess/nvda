@@ -84,6 +84,29 @@ https://docs.microsoft.com/en-us/windows/win32/sync/synchronization-object-secur
 """
 
 
+class _IgnoreWindowsLockState:
+	"""
+	Used to bypass security checks by forcing isWindowsLocked to return False.
+	Should only be used where:
+	- security checks are not possible, such as during NVDA initialization/termination.
+	- and code is safe to execute, there are no exploits even if the lock state is ignored.
+
+	Usage
+	```
+	with _IgnoreWindowsLockState():
+		doCodeWhichIsSafe
+	"""
+	shouldIgnoreLockState = False
+
+	def __enter__(self) -> bool:
+		_IgnoreWindowsLockState.shouldIgnoreLockState = True
+		return _IgnoreWindowsLockState.shouldIgnoreLockState
+
+	def __exit__(self, excType, excVal, traceback):
+		_IgnoreWindowsLockState.shouldIgnoreLockState = False
+		return _IgnoreWindowsLockState.shouldIgnoreLockState
+
+
 class WindowsTrackedSession(enum.IntEnum):
 	"""
 	Windows Tracked Session notifications.
@@ -154,6 +177,8 @@ def isWindowsLocked() -> bool:
 	Checks if the Window lockscreen is active.
 	Not to be confused with the Windows sign-in screen, a secure screen.
 	"""
+	if _IgnoreWindowsLockState.shouldIgnoreLockState:
+		return False
 	if _isSecureDesktop():
 		# If this is the Secure Desktop,
 		# we are in secure mode and on a secure screen,
