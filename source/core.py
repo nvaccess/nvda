@@ -428,8 +428,9 @@ def _initializeObjectCaches():
 
 	The desktop object must be used, as setting the object caches has side effects,
 	such as focus events.
-	Side effects from objects may require NVDA to be finished initializing.
-	The desktop object is an NVDA object without custom code associated with it.
+	Side effects from events generated while setting these objects may require NVDA to be finished initializing.
+	E.G. An app module for a lockScreen window.
+	The desktop object is an NVDA object without event handlers associated with it.
 	"""
 	import api
 	import NVDAObjects
