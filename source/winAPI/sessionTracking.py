@@ -121,7 +121,7 @@ class _IgnoreWindowsLockState:
 		_IgnoreWindowsLockState._shouldIgnoreLockStateLock.release()
 		return _IgnoreWindowsLockState.shouldIgnoreLockState
 
-	@classmethod
+	@staticmethod
 	def shouldIgnoreLockState() -> bool:
 		"""May block if another thread is using _IgnoreWindowsLockState"""
 		with _IgnoreWindowsLockState._shouldIgnoreLockStateLock:
