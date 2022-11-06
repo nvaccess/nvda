@@ -50,6 +50,9 @@ from .constants import (
 	WRITE_QUEUE_LENGTH,
 	MAX_COMBINATION_KEYS,
 	CONTROL_KEY_CODES,
+	LEFT_SIDE_BUTTON_CODES,
+	RIGHT_SIDE_BUTTON_CODES,
+	ButtonActions,
 	ESTABLISHED,
 	INIT_START_BYTE,
 	MAX_SETTINGS_BYTE,
@@ -86,6 +89,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		super().__init__()
 		# Number of cells is received when initializing connection.
 		self.numCells = 0
+		# Store settings how left and right pads should act.
+		self._buttonSettings: int
 		# Keep old display data, only changed content is sent.
 		self._oldCells: List[int] = []
 		# After reconnection and when user exits from device menu, display may not
@@ -316,7 +321,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			# If write failed
 			if self._tryToConnect:
 				return False
-			self._setNumCellCount(data)
+			self._handleSettingsByte(data)
 			return True
 		# Considering situation where "albatross_read" thread is about to read
 		# but writing to display fails during it - or vice versa - AttributeError
@@ -523,7 +528,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			self._somethingToWrite()
 			if self._tryToConnect:
 				return
-		self._setNumCellCount(data)
+		self._handleSettingsByte(data)
 		# Reconnected or exited device menu if length of _oldCells is numCells.
 		# Also checking that _currentCells has sometimes updated.
 		# Show last known content.
@@ -542,12 +547,49 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		if self._waitingSettingsByte:
 			self._waitingSettingsByte = False
 
-	def _setNumCellCount(self, data: bytes):
-		"""If bit 7 (LSB 0 scheme) is 1, there is 80 cells model, else 46 cells model.
-		Other display settings are currently ignored.
+	def _handleSettingsByte(self, data: bytes):
+		"""Extract current settings from settings byte.
+
+		All other settings except number of cells are only notes to screenreader,
+		and it is screenreader or driver job to use them when applicable.
+		For example, there are no separate status cells in the device but if
+		screenreader supports using status cells, it can be notified to use them
+		by settings byte.
+
+		Settings byte contain following settings (bits referred by using
+		MSB 0 scheme):
+
+		- bit 0: number of cells; 0 = 46, 1 = 80. This is model based value
+		which cannot be changed. This is the most important setting, and it
+		must be applied.
+		- bit 1: switch left side and right side keys; 0 = no, 1 = yes.
+		Left, Right, Down3, Up2, Routing and secondRouting keys are not affected.
+		Up2 and Down3 are ignored because they are in the middle of the front
+		panel of 80 model so they do not logically belong to left or right side.
+		All other keys are switched with corresponding other side keys.
+		- bit 2: place of status cells; 0 = left, 1 = right. Not implemented.
+		NVDA does not use status cells at the moment.
+		- bit 3: all keys act as right side keys; 0 = no, 1 = yes.
+		Left, Right, Down3, Up2, Routing and secondRouting keys are not affected.
+		Up2 and Down3 are ignored because they are in the middle of the front
+		panel of 80 model so they do not logically belong to left or right side.
+		All other left side keys are assigned to corresponding right side keys.
+		- bit 1 = 0 and bit 3 = 0: normal key layout.
+		- bit 1 = 1 and bit 3 = 1: all keys act as corresponding left side keys.
+		Left, Right, Down3, Up2, Routing and secondRouting keys are not affected.
+		Up2 and Down3 are ignored because they are in the middle of the front
+		panel of 80 model so they do not logically belong to left or right side.
+		All other right side keys are assigned to corresponding left side keys.
+		- bits 4 - 7: number of status cells. Not implemented.
+		NVDA does not use status cells at the moment.
+
 		@param data: Settings byte.
 		"""
 		self.numCells = 80 if ord(data) >> 7 == 1 else 46
+		self._buttonSettings = ord(data) >> 4 & ButtonActions.mask
+		log.debug(
+			f"Current settings: number of cells {self.numCells}, "
+			f"buttons {ButtonActions(self._buttonSettings).name}")
 
 	def _handleKeyPresses(self, data: bytes):
 		"""Handles display button presses.
@@ -585,6 +627,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					self._partialCtrlPacket = None
 					log.debug(f"Not valid key combination, ignoring {data}")
 					return
+		if self._buttonSettings != ButtonActions.normal:
+			# Using different key layout
+			data = self._changeKeyValues(data)
 		log.debug(f"Keys for key press: {data}")
 		pressedKeys = set(data)
 		log.debug(f"Forwarding keys {pressedKeys}")
@@ -598,6 +643,32 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		if self._waitingCtrlPacket:
 			self._waitingCtrlPacket = False
 			self._partialCtrlPacket = None
+
+	def _changeKeyValues(self, data: bytes) -> bytearray:
+		"""Changes pressed keys values according to current key layout.
+		@param data: pressed keys values.
+		@return: bytearray of pressed keys values based on current key layout.
+		"""
+		data = bytearray(data)
+		for i, key in enumerate(data):
+			if self._buttonSettings == ButtonActions.switched:
+				if key in LEFT_SIDE_BUTTON_CODES:
+					j = LEFT_SIDE_BUTTON_CODES.index(key)
+					data[i] = RIGHT_SIDE_BUTTON_CODES[j]
+				elif key in RIGHT_SIDE_BUTTON_CODES:
+					j = RIGHT_SIDE_BUTTON_CODES.index(key)
+					data[i] = LEFT_SIDE_BUTTON_CODES[j]
+				continue
+			if self._buttonSettings == ButtonActions.bothAsLeft:
+				if key in RIGHT_SIDE_BUTTON_CODES:
+					j = RIGHT_SIDE_BUTTON_CODES.index(key)
+					data[i] = LEFT_SIDE_BUTTON_CODES[j]
+				continue
+			if self._buttonSettings == ButtonActions.bothAsRight:
+				if key in LEFT_SIDE_BUTTON_CODES:
+					j = LEFT_SIDE_BUTTON_CODES.index(key)
+					data[i] = RIGHT_SIDE_BUTTON_CODES[j]
+		return data
 
 	def _keepConnected(self):
 		"""Keep display connected if nothing is sent for a while."""

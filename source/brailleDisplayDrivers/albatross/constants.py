@@ -24,9 +24,10 @@ L{END_BYTE}
 "wait for connection state" if it does not get appropriate data packet
 within approximately 2 seconds. L{KC_INTERVAL} defines suitable time which
 in turn is used by timer.
-- part of display buttons.
-L{Key} are control keys used to compose key combinations.
-See also L{CONTROL_KEY_CODES}.
+- part of display buttons L{Keys} are control keys used to compose key
+combinations. See also L{CONTROL_KEY_CODES}.
+- L{LEFT_SIDE_BUTTON_CODES} and L{RIGHT_SIDE_BUTTON_CODES} are used
+when handling custom key layouts.
 - L{RESET_COUNT} defines how many times port buffer reset is done before
 trying to establish connection.
 There are many I/O buffers between device and driver so several
@@ -40,11 +41,11 @@ can be safely ignored.
 from dataclasses import dataclass
 from enum import IntEnum
 from typing import (
-	List,
 	Set,
+	Tuple,
 )
 
-BAUD_RATE: List[int] = [19200, 9600]
+BAUD_RATE: Tuple[int] = (19200, 9600)
 """Because 19200 is the display default, it is tried at first."""
 
 READ_TIMEOUT = 0.2
@@ -76,7 +77,7 @@ RESET_SLEEP = 0.05
 WRITE_QUEUE_LENGTH = 20
 
 
-class Key(IntEnum):
+class Keys(IntEnum):
 	attribute1 = 1
 	attribute2 = 42
 	f1 = 83
@@ -126,29 +127,85 @@ class Key(IntEnum):
 MAX_COMBINATION_KEYS = 4
 """Maximum number of keys in key combination."""
 
-CONTROL_KEY_CODES: Set[Key] = {
-	Key.attribute1,
-	Key.attribute2,
-	Key.f1,
-	Key.f2,
-	Key.f7,
-	Key.f8,
-	Key.home1,
-	Key.end1,
-	Key.eCursor1,
-	Key.cursor1,
-	Key.attribute3,
-	Key.attribute4,
-	Key.f9,
-	Key.f10,
-	Key.f15,
-	Key.f16,
-	Key.home2,
-	Key.end2,
-	Key.eCursor2,
-	Key.cursor2,
+CONTROL_KEY_CODES: Set[Keys] = {
+	Keys.attribute1,
+	Keys.attribute2,
+	Keys.f1,
+	Keys.f2,
+	Keys.f7,
+	Keys.f8,
+	Keys.home1,
+	Keys.end1,
+	Keys.eCursor1,
+	Keys.cursor1,
+	Keys.attribute3,
+	Keys.attribute4,
+	Keys.f9,
+	Keys.f10,
+	Keys.f15,
+	Keys.f16,
+	Keys.home2,
+	Keys.end2,
+	Keys.eCursor2,
+	Keys.cursor2,
 }
 """Ctrl keys which may start key combination."""
+
+LEFT_SIDE_BUTTON_CODES: Tuple[Keys] = (
+	Keys.attribute1,
+	Keys.attribute2,
+	Keys.f1,
+	Keys.f2,
+	Keys.f3,
+	Keys.f4,
+	Keys.f5,
+	Keys.f6,
+	Keys.f7,
+	Keys.f8,
+	Keys.home1,
+	Keys.end1,
+	Keys.eCursor1,
+	Keys.cursor1,
+	Keys.up1,
+	Keys.down1,
+	Keys.lWheelRight,
+	Keys.lWheelLeft,
+	Keys.lWheelUp,
+	Keys.lWheelDown,
+)
+"""Left side buttons codes; used with custom key layouts."""
+
+RIGHT_SIDE_BUTTON_CODES: Tuple[Keys] = (
+	Keys.attribute3,
+	Keys.attribute4,
+	Keys.f9,
+	Keys.f10,
+	Keys.f11,
+	Keys.f12,
+	Keys.f13,
+	Keys.f14,
+	Keys.f15,
+	Keys.f16,
+	Keys.home2,
+	Keys.end2,
+	Keys.eCursor2,
+	Keys.cursor2,
+	Keys.up3,
+	Keys.down2,
+	Keys.rWheelRight,
+	Keys.rWheelLeft,
+	Keys.rWheelUp,
+	Keys.rWheelDown,
+)
+"""Right side buttons codes; used with custom key layouts."""
+
+
+class ButtonActions(IntEnum):
+	normal = 0
+	bothAsRight = 1
+	switched = 4
+	bothAsLeft = 5
+	mask = 5
 
 
 @dataclass(frozen=True)
@@ -194,8 +251,7 @@ In addition, \xfe seems to disturb other driver with same PID&VID when using
 automatic detection. It may cause infinite loop in that driver when
 it tries to recognize its own displays.
 
-Settings byte limitation should not cause additional problems although
-Albatross settings handling would be implemented in some future version
+Settings byte limitation should not cause additional problems
 because this only limits number of status cells to 13 (with \xff 15).
 These are very big values (5 could be normal maximum value), and NVDA
 does not utilize status cells.

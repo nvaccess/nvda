@@ -16,7 +16,7 @@ import braille
 import inputCore
 
 from .constants import (
-	Key,
+	Keys,
 	ROUTING_KEY_RANGES,
 )
 _gestureMap = inputCore.GlobalGestureMap({
@@ -87,7 +87,7 @@ class InputGestureKeys(braille.BrailleDisplayGesture):
 				self.routingIndex = routingTuple[1]
 			else:
 				try:
-					names.append(Key(key).name)
+					names.append(Keys(key).name)
 				except (KeyError, ValueError):
 					log.debug(f"Unknown key with id {key}")
 		self.id = "+".join(names)
