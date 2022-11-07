@@ -454,6 +454,7 @@ class _TrackNVDAInitialization:
 
 	TODO: move to NVDAState module
 	"""
+
 	_isNVDAInitialized = False
 	"""When False, isWindowsLocked is forced to return False.
 	"""
