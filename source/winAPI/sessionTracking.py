@@ -154,6 +154,14 @@ def isWindowsLocked() -> bool:
 	Checks if the Window lockscreen is active.
 	Not to be confused with the Windows sign-in screen, a secure screen.
 	"""
+	from core import _TrackNVDAInitialization
+	if not _TrackNVDAInitialization.isInitializationComplete():
+		# During NVDA initialization,
+		# core._initializeObjectCaches needs to cache the desktop object,
+		# regardless of lock state.
+		# Security checks may cause the desktop object to not be set if NVDA starts on the lock screen.
+		# As such, during initialization, NVDA should behave as if Windows is unlocked.
+		return False
 	if _isSecureDesktop():
 		# If this is the Secure Desktop,
 		# we are in secure mode and on a secure screen,
