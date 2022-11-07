@@ -48,9 +48,13 @@ class ReadThread(Thread):
 	):
 		"""Constructor.
 		@param readFunction: Handles read operations and reconnection.
+		@type readFunction: Callable[[], None]
 		@param disableFunction: Called on connection failure.
+		@type disableFunction: Callable[[], None]
 		@param event: Exit thread when set.
+		@type event: Event
 		@param dev: Port object.
+		@type dev: serial.Serial
 		"""
 		super().__init__(*args, **kwargs)
 		self._readFunction = readFunction
@@ -130,7 +134,9 @@ class RepeatedTimer:
 	):
 		"""Constructor.
 		@param interval: Checking frequency
+		@type interval: float
 		@param feedFunction: feeds display with data if needed
+		@type feedFunction: Callable[[], None]
 		"""
 		self._interval = interval
 		self._timer = Timer(self._interval, self._run)

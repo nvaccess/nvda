@@ -14,7 +14,7 @@ the display continuously sends L{INIT_START_BYTE} followed by the settings byte.
 The number of these packets is arbitrary. L{INIT_START_BYTE} is \xff.
 Settings byte can be from \x00 to \xff.
 It is limited to be at most L{MAX_SETTINGS_BYTE} to reliably detect init packets.
-The value \xfe causes failure during automatic detection for other drivers with the
+Part of values causes failure during automatic detection for other driver with the
 same PID&VID.
 - L{ESTABLISHED}; driver sends this to confirm connection, and
 display stops sending init packets
@@ -234,7 +234,7 @@ If no connection, Albatross sends continuously byte \xff followed by byte
 containing various settings like number of cells.
 """
 
-MAX_SETTINGS_BYTE = b"\xfd"
+MAX_SETTINGS_BYTE = b"\xfe"
 """Maximum value allowed for settings byte.
 Settings byte can be anything from \x00 to \xff. However, \xff
 would make connection establishment quite complex:
@@ -247,25 +247,36 @@ it is possible that the second byte is received during next read operation
 - typically there are tens of init packets but the number of packets
 varies
 
-In addition, \xfe seems to disturb other driver with same PID&VID when using
-automatic detection. It may cause infinite loop in that driver when
-it tries to recognize its own displays.
-
-Settings byte limitation should not cause additional problems
-because this only limits number of status cells to 13 (with \xff 15).
-These are very big values (5 could be normal maximum value), and NVDA
-does not utilize status cells.
+Settings byte limitation causes maximum number of status cells to be 14
+(with \xff 15) in 80 model. Limitation is applied only if other settings
+would make settings byte to be \xff. These are very big values (5 could be
+normal maximum value), and NVDA does not utilize status cells.
 
 Although settings like number of status cells are adjusted in display
-menu, display itself does not use them. They are just for screenreaders.
+menu, display itself does not use them. They are just notes for screenreaders.
 For example, display has no separate status cells. It is screenreader
 or driver job to use them when applicable.
 
 Only display settings which affects on its own functionality are baud rate
 and key repeat which can be slow or fast.
+
+There are other devices with same PID&VID. When automatic braille display
+detection is used, other displays with same PID&VID are tried before Albatross.
+Those drivers try to send queries to the port to detect their own displays.
+These queries may cause Albatross to send unexpected init packets which in turn
+could disturb this driver - it could get inappropriate settings byte.
+
+Part of Albatross settings byte values get the other driver to infinite loop
+in its detection procedure.
+
+For both problems the simplest solution is to manually select Albatross from
+the display list. If the problem is other driver infinite loop, Albatross
+internal settings can be changed until problem disappears. When there is no
+connection, it is important to switch display off and back on if used internal
+menu, before trying new connection.
 """
 
-MAX_STATUS_CELLS_ALLOWED = 13
+MAX_STATUS_CELLS_ALLOWED = 14
 """Used to inform user how many status cells can be used
 see L{MAX_SETTINGS_BYTE}.
 """

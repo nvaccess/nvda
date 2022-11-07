@@ -150,7 +150,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			pass
 
 	def _searchPorts(self, port: str):
-		"""Search ports where display can be connected."""
+		"""Search ports where display can be connected.
+		@param port: port name as string
+		@type port: str
+"""
 		for self._baudRate in BAUD_RATE:
 			for portType, portId, port, portInfo in self._getTryPorts(port):
 				# For reconnection
@@ -198,6 +201,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		are helper functions to establish connection.
 		If no connection, Albatross sends continuously INIT_START_BYTE
 		followed by byte containing various settings like number of cells.
+
+		@return: C{True} on success, C{False} on failure
+		@rtype: bool
 		"""
 		for i in range(MAX_INIT_RETRIES):
 			if not self._dev:
@@ -222,6 +228,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def _initPort(self, i: int = MAX_INIT_RETRIES - 1) -> bool:
 		"""Initializes port.
 		@param i: Just for logging retries.
+		@type i: int
+		@return: C{True} on success, C{False} on failure
+		@rtype: bool
 		"""
 		try:
 			self._dev = serial.Serial(
@@ -251,6 +260,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def _openPort(self, i: int = MAX_INIT_RETRIES - 1) -> bool:
 		"""Opens port.
 		@param i: Just for logging retries.
+		@type i: int
+		@return: C{True} on success, C{False} on failure
+		@rtype: bool
 		"""
 		try:
 			self._dev.open()
@@ -275,6 +287,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			return False
 
 	def _readInitByte(self) -> bool:
+		"""Reads init byte.
+		@return: C{True} on success, C{False} on failure
+		@rtype: bool
+		"""
 		# If ClearCommError fails, in_waiting raises SerialException
 		try:
 			if not self._dev.in_waiting:
@@ -307,6 +323,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			return False
 
 	def _readSettingsByte(self) -> bool:
+		"""Reads settings byte.
+		@return: C{True} on success, C{False} on failure
+		@rtype: bool
+		"""
 		try:
 			# If ClearCommError fails, in_waiting raises SerialException
 			if not self._dev.in_waiting:
@@ -332,6 +352,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			return False
 
 	def _resetBuffers(self) -> bool:
+		"""Resets I/O buffers.
+		Reset is done L{RESET_COUNT} times to get better results.
+		@return: C{True} on success, C{False} on failure
+		@rtype: bool
+		"""
 		try:
 			for j in range(RESET_COUNT):
 				PurgeComm(
@@ -395,7 +420,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self._handleReadQueue()
 
 	def _somethingToRead(self) -> Optional[bytes]:
-		"""All but connecting/reconnecting related read operations."""
+		"""All but connecting/reconnecting related read operations.
+		@return: on success returns data, on failure C{None}
+		@rtype: Optional[bytes]
+"""
 		try:
 			# If ClearCommError fails, in_waiting raises SerialException
 			if not self._dev.in_waiting:
@@ -416,6 +444,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def _skipRedundantInitPackets(self, data: bytes) -> bool:
 		"""Filters redundant init packets.
 		@param data: Bytes read from display.
+		@type data: bytes
+		@return: C{True} on success, C{False} on failure
+		@rtype: bool
 		"""
 		settingsByte = None
 		for i in data:
@@ -500,9 +531,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					self._handleKeyPresses(data)
 
 	def _handleInitPackets(self, data: bytes):
-		"""Display also starts to send init packets when exited internal menu or when
+		"""
+		Handles init packets.
+		Display also starts to send init packets when exited internal menu or when
 		delay sending data to display causes its fallback to 'wait for connection'
 		state.
+		@param data: one byte which can be L{INIT_START_BYTE} or settings byte
+		@type data: bytes
 		"""
 		if not self._waitingSettingsByte:
 			if data != INIT_START_BYTE:
@@ -583,7 +618,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		- bits 4 - 7: number of status cells. Not implemented.
 		NVDA does not use status cells at the moment.
 
-		@param data: Settings byte.
+		@param data: Settings byte
+		@type data: bytes
 		"""
 		self.numCells = 80 if ord(data) >> 7 == 1 else 46
 		self._buttonSettings = ord(data) >> 4 & ButtonActions.mask
@@ -595,6 +631,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		"""Handles display button presses.
 		in single ctrl-key presses and ctrl-key combinations the first key is
 		resent as last one.
+		@param data: single byte which may be whole or partial key press
+		@type data: bytes
 		"""
 		if ord(data) in CONTROL_KEY_CODES or self._waitingCtrlPacket:
 			# at most MAX_COMBINATION_KEYS keys.
@@ -629,7 +667,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					return
 		if self._buttonSettings != ButtonActions.normal:
 			# Using different key layout
-			data = self._changeKeyValues(data)
+			data = self._changeKeyValues(
+				bytearray(data)
+			)
 		log.debug(f"Keys for key press: {data}")
 		pressedKeys = set(data)
 		log.debug(f"Forwarding keys {pressedKeys}")
@@ -644,12 +684,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			self._waitingCtrlPacket = False
 			self._partialCtrlPacket = None
 
-	def _changeKeyValues(self, data: bytes) -> bytearray:
+	def _changeKeyValues(self, data: bytearray) -> bytes:
 		"""Changes pressed keys values according to current key layout.
 		@param data: pressed keys values.
-		@return: bytearray of pressed keys values based on current key layout.
+		@type data: bytearray
+		@return: pressed keys values based on current key layout.
+		@rtype: bytes
 		"""
-		data = bytearray(data)
 		for i, key in enumerate(data):
 			if self._buttonSettings == ButtonActions.switched:
 				if key in LEFT_SIDE_BUTTON_CODES:
@@ -668,7 +709,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				if key in LEFT_SIDE_BUTTON_CODES:
 					j = LEFT_SIDE_BUTTON_CODES.index(key)
 					data[i] = RIGHT_SIDE_BUTTON_CODES[j]
-		return data
+		return bytes(data)
 
 	def _keepConnected(self):
 		"""Keep display connected if nothing is sent for a while."""
@@ -685,7 +726,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	def display(self, cells: List[int]):
 		"""Prepare cell content for display.
-		@param cells: List of cells content."
+		@param cells: List of cells content
+		@type cells: List[int]
 		"""
 		# Keep _currentCells up to date for reconnection regardless
 		# of connection state of driver.

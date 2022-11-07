@@ -56,19 +56,25 @@ There are other devices with same PID&VID. When automatic braille display
 detection is used, other displays with same PID&VID are tried before Albatross.
 Those drivers try to send queries to the port to detect their own displays.
 These queries may cause Albatross to send unexpected init packets which in turn
-could disturb this driver - it could get inappropriate settings byte. On the
-other hand, if Albatross settings byte is \xfe it causes problems to the other
-driver so that it causes infinite loop in its detection procedure.
+could disturb this driver - it could get inappropriate settings byte.
 
-To reduce complexity of data handling and to prevent disturbances to other
-drivers this driver accepts only settings bytes <= \xfd. From user perspective
-this means that with 80 model user can ask screenreader to use at most 13
-status cells when without limitation user could ask 15. Limitation is applied
-only if user has switched all other settings to values that cause value of byte
-to be > \xfd. From settings byte for status cells there are reserved the most
-right 4 bits. Limitation does not affect on 46 cells model because the most
-left bit of byte defines the length of display (0 for 46 and 1 for 80 cells
-model).
+Part of Albatross settings byte values get the other driver to infinite loop
+in its detection procedure.
+
+For both problems the simplest solution is to manually select Albatross from
+the display list. If the problem is other driver infinite loop, Albatross
+internal settings can be changed until problem disappears. When there is no
+connection, it is important to switch display off and back on if used internal
+menu, before trying new connection.
+
+To reduce complexity of data handling this driver accepts only bytes <= \xfe.
+From user perspective this means that with 80 model user can ask screenreader
+to use at most 14 status cells when without limitation user could ask 15.
+Limitation is applied only if user has switched all other settings to values
+that cause value of byte to be \xff. From settings byte for status cells
+there are reserved the most right 4 bits. Limitation does not affect on 46
+cells model because the most left bit of byte defines the length of display
+(0 for 46 and 1 for 80 cells model).
 
 ### Driver requirements
 
