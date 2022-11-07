@@ -2430,6 +2430,41 @@ class GlobalCommands(ScriptableObject):
 		treeInterceptor._set_selection(info, reason=OutputReason.QUICKNAV)
 		speech.speakObject(treeInterceptor.currentNVDAObject, reason=OutputReason.QUICKNAV)
 		api.setNavigatorObject(target.targetObject)
+		self._annotationNav.priorOrigins.append(objWithAnnotation)
+		return
+
+	@script(
+		gesture="kb:NVDA+alt+shift+d",
+		description=_(
+			# Translators: the description for the script_popAnnotationStack script.
+			"Return to annotation subject"
+		),
+		category=SCRCAT_SYSTEMCARET,
+	)
+	def script_popAnnotationStack(self, gesture):
+		"""Go to the annotation details for the single character under the caret or the object with
+		system focus.
+		@note: See related script_reportDetailsSummary
+		"""
+		log.debug("Return to annotation parent.")
+		if not self._annotationNav.priorOrigins:
+			# Translators: message given when there is no annotation details for the reportDetailsSummary script.
+			ui.message(_("No annotation subject present"))
+			return
+		annotationParent = self._annotationNav.priorOrigins.pop()
+		ui.message("Navigating to origin")
+		focus = api.getFocusObject()
+		treeInterceptor = focus.treeInterceptor
+		from browseMode import BrowseModeDocumentTreeInterceptor
+		if not isinstance(treeInterceptor, BrowseModeDocumentTreeInterceptor) or treeInterceptor.passThrough:
+			ui.message("Not supported yet")
+			return
+		info = treeInterceptor.makeTextInfo(annotationParent)
+		info.collapse()
+		from controlTypes import OutputReason
+		treeInterceptor._set_selection(info, reason=OutputReason.QUICKNAV)
+		speech.speakObject(treeInterceptor.currentNVDAObject, reason=OutputReason.QUICKNAV)
+		api.setNavigatorObject(annotationParent)
 		return
 
 	@script(
