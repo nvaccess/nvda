@@ -5,7 +5,7 @@
 # Copyright (C) 2006-2022 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee,
 # Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Łukasz Golonka, Accessolutions,
 # Julien Cochuyt, Jakub Lukowicz, Bill Dengler, Cyrille Bougot
-
+import dataclasses
 import itertools
 
 from typing import (
@@ -13,6 +13,8 @@ from typing import (
 	Tuple,
 	Union,
 )
+
+import typing
 
 import audioDucking
 import touchHandler
@@ -934,7 +936,7 @@ class GlobalCommands(ScriptableObject):
 			# Translators: The message announced when toggling the delayed character description setting.
 			state = _("delayed character descriptions off")
 		ui.message(state)
-	
+
 	@script(
 		# Translators: Input help mode message for move mouse to navigator object command.
 		description=_("Moves the mouse pointer to the current navigator object"),
@@ -2279,6 +2281,63 @@ class GlobalCommands(ScriptableObject):
 		elif repeats == 1:
 			self.script_showFormattingAtCaret(gesture)
 
+	def _getNvdaObjWithAnnotationUnderCaret(self) -> Optional[NVDAObject]:
+		"""If it has an annotation, get the NVDA object for the single character under the caret or the object
+		with system focus.
+		@note: It is tempting to try to report any annotation details that exists in the range formed by prior
+			and current location. This would be a new paradigm in NVDA, and may feel natural when moving by line
+			to be able to more quickly have the 'details' reported. However, there may be more than one 'details
+			relation' in that range, and we don't yet have a way for the user to select which one to report.
+			For now, we minimise this risk by only reporting details at the current location.
+		"""
+		try:
+			# Common cases use Caret Position: vbuf available or object supports text range
+			# Eg editable text, or regular web content
+			# Firefox and Chromium support this even in a button within a role=application.
+			caret: textInfos.TextInfo = api.getCaretPosition()
+		except RuntimeError:
+			log.debugWarning("Unable to get the caret position.", exc_info=True)
+			return None
+		caret.expand(textInfos.UNIT_CHARACTER)
+		objAtStart: NVDAObject = caret.NVDAObjectAtStart
+		_isDebugLogCatEnabled = bool(config.conf["debugLog"]["annotations"])
+		if _isDebugLogCatEnabled:
+			log.debug(f"Trying with nvdaObject : {objAtStart}")
+
+		if objAtStart.detailsSummary:
+			log.debug("NVDAObjectAtStart of caret has details.")
+			return objAtStart
+		elif api.getFocusObject():
+			# If fetching from the caret position fails, try via the focus object
+			# This case is to support where there is no virtual buffer or text interface and a caret position can
+			# not be fetched.
+			# There may still be an object with focus that has details.
+			# There isn't a known test case for this, however there isn't a known downside to attempt this.
+			focus = api.getFocusObject()
+			if _isDebugLogCatEnabled:
+				log.debug(f"Trying focus object: {focus}")
+
+			if focus.detailsSummary:
+				if _isDebugLogCatEnabled:
+					log.debug("focus object has details, able to proceed")
+				return focus
+
+		if _isDebugLogCatEnabled:
+			log.debug("no details annotation found")
+		return None
+
+	@dataclasses.dataclass
+	class AnnotationNavigationNode:
+		_TargetIndex = int
+		origin: NVDAObject  # this is the last known location
+		indexOfLastReportedSummary: Optional[_TargetIndex] = None  # this would be the next destination
+
+	class AnnotationNavigation:
+		lastReported: Optional["GlobalCommands.AnnotationNavigationNode"] = None
+		priorOrigins: typing.List[NVDAObject] = []
+
+	_annotationNav = AnnotationNavigation()
+
 	@script(
 		gesture="kb:NVDA+d",
 		description=_(
@@ -2297,44 +2356,80 @@ class GlobalCommands(ScriptableObject):
 			For now, we minimise this risk by only reporting details at the current location.
 		"""
 		log.debug("Report annotation details summary at current location.")
-		try:
-			# Common cases use Caret Position: vbuf available or object supports text range
-			# Eg editable text, or regular web content
-			# Firefox and Chromium support this even in a button within a role=application.
-			caret: textInfos.TextInfo = api.getCaretPosition()
-		except RuntimeError:
-			log.debugWarning("Unable to get the caret position.", exc_info=True)
-			return
-		caret.expand(textInfos.UNIT_CHARACTER)
-		nvdaObject: NVDAObject = caret.NVDAObjectAtStart
-		if config.conf["debugLog"]["annotations"]:
-			log.debug(f"Trying with nvdaObject : {nvdaObject}")
-
-		annotation: Optional[str] = nvdaObject.detailsSummary
-		if annotation:
-			log.debug("NVDAObjectAtStart of caret has details.")
-		elif api.getFocusObject():
-			# If fetching from the caret position fails, try via the focus object
-			# This case is to support where there is no virtual buffer or text interface and a caret position can
-			# not be fetched.
-			# There may still be an object with focus that has details.
-			# There isn't a known test case for this, however there isn't a known downside to attempt this.
-			focus = api.getFocusObject()
-			if config.conf["debugLog"]["annotations"]:
-				log.debug(f"Trying focus object: {focus}")
-			annotation = focus.detailsSummary
-			if annotation:
-				if config.conf["debugLog"]["annotations"]:
-					log.debug("focus object has details, able to proceed")
-
-		if not annotation:
-			if config.conf["debugLog"]["annotations"]:
-				log.debug("no details annotation found")
+		objWithAnnotation = self._getNvdaObjWithAnnotationUnderCaret()
+		if (
+			not objWithAnnotation
+			or not objWithAnnotation.annotations
+		):
 			# Translators: message given when there is no annotation details for the reportDetailsSummary script.
 			ui.message(_("No additional details"))
 			return
 
-		ui.message(annotation)
+		targets = list(objWithAnnotation.annotations.targets)
+		if (
+			self._annotationNav.lastReported
+			and objWithAnnotation == self._annotationNav.lastReported.origin
+			and None is not self._annotationNav.lastReported.indexOfLastReportedSummary
+		):
+			last = self._annotationNav.lastReported.indexOfLastReportedSummary
+			indexOfNextTarget = next(itertools.cycle(itertools.chain(
+				range(last + 1, len(targets)),
+				range(0, last + 1))
+			))
+		else:
+			indexOfNextTarget = 0
+		targetToReport = targets[indexOfNextTarget]
+		ui.message(targetToReport.summary)
+		self._annotationNav.lastReported = GlobalCommands.AnnotationNavigationNode(
+			origin=objWithAnnotation,
+			indexOfLastReportedSummary=indexOfNextTarget
+		)
+		return
+
+	@script(
+		gesture="kb:NVDA+alt+d",
+		description=_(
+			# Translators: the description for the reportDetailsSummary script.
+			"Go to annotation details under the system caret."
+		),
+		category=SCRCAT_SYSTEMCARET,
+	)
+	def script_goToAnnotation(self, gesture):
+		"""Go to the annotation details for the single character under the caret or the object with
+		system focus.
+		@note: See related script_reportDetailsSummary
+		"""
+		log.debug("Go to annotation details at current location.")
+		objWithAnnotation = self._getNvdaObjWithAnnotationUnderCaret()
+		if not objWithAnnotation:
+			# Translators: message given when there is no annotation details for the reportDetailsSummary script.
+			ui.message(_("No annotation present"))
+			return
+
+		if (
+			self._annotationNav.lastReported
+			and objWithAnnotation == self._annotationNav.lastReported.origin
+			and None is not self._annotationNav.lastReported.indexOfLastReportedSummary
+		):
+			# This origin was the last
+			targetIndex = self._annotationNav.lastReported.indexOfLastReportedSummary
+			target = list(objWithAnnotation.annotations.targets)[targetIndex]
+		else:
+			target = next(iter(objWithAnnotation.annotations.targets))
+
+		ui.message("Navigating to target")
+		focus = api.getFocusObject()
+		treeInterceptor = focus.treeInterceptor
+		from browseMode import BrowseModeDocumentTreeInterceptor
+		if not isinstance(treeInterceptor, BrowseModeDocumentTreeInterceptor) or treeInterceptor.passThrough:
+			ui.message("Not supported yet")
+			return
+		info = treeInterceptor.makeTextInfo(target.targetObject)
+		info.collapse()
+		from controlTypes import OutputReason
+		treeInterceptor._set_selection(info, reason=OutputReason.QUICKNAV)
+		speech.speakObject(treeInterceptor.currentNVDAObject, reason=OutputReason.QUICKNAV)
+		api.setNavigatorObject(target.targetObject)
 		return
 
 	@script(
