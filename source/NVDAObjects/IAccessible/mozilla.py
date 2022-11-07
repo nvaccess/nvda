@@ -3,8 +3,10 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 # Copyright (C) 2006-2022 NV Access Limited, Peter Vágner
+import typing
 
 import IAccessibleHandler
+import annotation
 from comInterfaces import IAccessible2Lib as IA2
 import config
 import oleacc
@@ -17,6 +19,72 @@ from . import ia2Web
 from typing import (
 	Optional,
 )
+
+
+class MozAnnotationTarget(annotation.AnnotationTarget):
+	def __init__(self, target: IAccessible):
+		self._target: IAccessible = target
+
+	@property
+	def summary(self) -> str:
+		return self._target.summarizeInProcess()
+
+	@property
+	def role(self) -> "controlTypes.Role":
+		# details-roles is currently only defined in Chromium
+		# this may diverge in Firefox in the future.
+		from .chromium import supportedAriaDetailsRoles
+		detailsRole = IAccessibleHandler.IAccessibleRolesToNVDARoles.get(
+			self._target.IAccessibleRole
+		)
+		# return a supported details role
+		if config.conf["debugLog"]["annotations"]:
+			log.debug(f"detailsRole: {repr(detailsRole)}")
+		if detailsRole in supportedAriaDetailsRoles.values():
+			return detailsRole
+		raise ValueError(f"Unsupported aria details role: {detailsRole}")
+
+	@property
+	def targetObject(self) -> IAccessible:
+		return self._target
+
+
+class MozAnnotation(annotation.AnnotationOrigin):
+	"""
+	Unlike base Ia2Web implementation, the details-roles IA2 attribute is not exposed in Firefox.
+	"""
+	_originObj: "Mozilla"
+
+	def __bool__(self) -> bool:
+		# Unlike base Ia2Web implementation, the details-roles
+		# IA2 attribute is not exposed in Firefox.
+		# Although slower, we have to fetch the details relations instead.
+		return bool(
+			self._originObj.detailsRelations
+		)
+
+	@property
+	def targets(self) -> typing.Iterable["MozAnnotationTarget"]:
+		detailsRelations = self._originObj.detailsRelations
+		for rel in detailsRelations:
+			yield MozAnnotationTarget(rel)
+
+	@property
+	def roles(self) -> typing.Iterable["controlTypes.Role"]:
+		# Unlike base Ia2Web implementation, the details-roles
+		# IA2 attribute is not exposed in Firefox.
+		# Although slower, we have to fetch the details relations instead.
+		for target in self.targets:
+			# just take the first target for now.
+			try:
+				yield target.role
+			except ValueError:
+				log.error("Error getting role.", exc_info=True)
+
+	@property
+	def summaries(self) -> typing.Iterable["str"]:
+		for target in self.targets:
+			yield target.summary
 
 
 class Mozilla(ia2Web.Ia2Web):
@@ -63,43 +131,27 @@ class Mozilla(ia2Web.Ia2Web):
 				presType=self.presType_layout
 		return presType
 
+	annotations: "MozAnnotation"
+	"""Typing information for auto property _get_annotations
+	"""
+
+	def _get_annotations(self) -> "MozAnnotation":
+		annotationOrigin = MozAnnotation(self)
+		return annotationOrigin
+
 	def _get_detailsSummary(self) -> Optional[str]:
-		# Unlike base Ia2Web implementation, the details-roles
-		# IA2 attribute is not exposed in Firefox.
-		# Although slower, we have to fetch the details relations instead.
-		detailsRelations = self.detailsRelations
-		if not detailsRelations:
-			return None
-		for target in detailsRelations:
+		for summary in self.annotations.summaries:
 			# just take the first for now.
-			return target.summarizeInProcess()
+			return summary
 
 	def _get_detailsRole(self) -> Optional[controlTypes.Role]:
-		# Unlike base Ia2Web implementation, the details-roles
-		# IA2 attribute is not exposed in Firefox.
-		# Although slower, we have to fetch the details relations instead.
-		detailsRelations = self.detailsRelations
-		if not detailsRelations:
-			return None
-		for target in detailsRelations:
+		for role in self.annotations.roles:
 			# just take the first target for now.
-			# details-roles is currently only defined in Chromium
-			# this may diverge in Firefox in future.
-			from .chromium import supportedAriaDetailsRoles
-			detailsRole = IAccessibleHandler.IAccessibleRolesToNVDARoles.get(target.IAccessibleRole)
-			# return a supported details role
-			if config.conf["debugLog"]["annotations"]:
-				log.debug(f"detailsRole: {repr(detailsRole)}")
-			if detailsRole in supportedAriaDetailsRoles.values():
-				return detailsRole
-			return None
+			return role
 
 	@property
 	def hasDetails(self) -> bool:
-		# Unlike base Ia2Web implementation, the details-roles
-		# IA2 attribute is not exposed in Firefox.
-		# Although slower, we have to fetch the details relations instead.
-		return bool(self.detailsRelations)
+		return bool(self.annotations)
 
 
 class Document(ia2Web.Document):

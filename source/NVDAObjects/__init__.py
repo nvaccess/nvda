@@ -12,6 +12,9 @@ import time
 import typing
 import weakref
 import textUtils
+from annotation import (
+	AnnotationOrigin,
+)
 from logHandler import log
 import review
 import eventHandler
@@ -510,6 +513,17 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 	def _get_descriptionFrom(self) -> controlTypes.DescriptionFrom:
 		return controlTypes.DescriptionFrom.UNKNOWN
 
+	annotations: "AnnotationOrigin"
+	"""Typing information for auto property _get_annotations
+	"""
+
+	def _get_annotations(self) -> typing.Optional["AnnotationOrigin"]:
+		if config.conf["debugLog"]["annotations"]:
+			log.debugWarning(
+				f"Fetching annotations not supported on: {self.__class__.__qualname__}"
+			)
+		return None
+
 	#: Typing information for auto property _get_detailsSummary
 	detailsSummary: typing.Optional[str]
 
@@ -523,7 +537,7 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		"""Default implementation is based on the result of _get_detailsSummary
 		In most instances this should be optimised.
 		"""
-		return bool(self.detailsSummary)
+		return bool(self.annotations)
 
 	#: Typing information for auto property _get_detailsRole
 	detailsRole: typing.Optional[controlTypes.Role]
