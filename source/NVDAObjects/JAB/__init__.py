@@ -86,18 +86,19 @@ JABRolesToNVDARoles: Dict[str, controlTypes.Role] = {
 }
 
 JABStatesToNVDAStates={
-	"busy":controlTypes.State.BUSY,
-	"checked":controlTypes.State.CHECKED,
-	"focused":controlTypes.State.FOCUSED,
-	"selected":controlTypes.State.SELECTED,
-	"pressed":controlTypes.State.PRESSED,
-	"expanded":controlTypes.State.EXPANDED,
-	"collapsed":controlTypes.State.COLLAPSED,
-	"iconified":controlTypes.State.ICONIFIED,
-	"modal":controlTypes.State.MODAL,
-	"multi_line":controlTypes.State.MULTILINE,
-	"focusable":controlTypes.State.FOCUSABLE,
-	"editable":controlTypes.State.EDITABLE,
+	"busy": controlTypes.State.BUSY,
+	"checked": controlTypes.State.CHECKED,
+	"focused": controlTypes.State.FOCUSED,
+	"selected": controlTypes.State.SELECTED,
+	"pressed": controlTypes.State.PRESSED,
+	"expanded": controlTypes.State.EXPANDED,
+	"collapsed": controlTypes.State.COLLAPSED,
+	"iconified": controlTypes.State.ICONIFIED,
+	"modal": controlTypes.State.MODAL,
+	"multi_line": controlTypes.State.MULTILINE,
+	"focusable": controlTypes.State.FOCUSABLE,
+	"selectable": controlTypes.State.SELECTABLE,
+	"editable": controlTypes.State.EDITABLE,
 }
 
 
