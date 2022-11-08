@@ -27,7 +27,6 @@ def listPlugins():
 		yield plugin
 
 def initialize():
-	config.addConfigDirsToPythonPackagePath(globalPlugins)
 	for plugin in listPlugins():
 		try:
 			runningPlugins.add(plugin())

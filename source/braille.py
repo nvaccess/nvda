@@ -2393,7 +2393,6 @@ handler: BrailleHandler
 
 def initialize():
 	global handler
-	config.addConfigDirsToPythonPackagePath(brailleDisplayDrivers)
 	log.info("Using liblouis version %s" % louis.version())
 	import serial
 	log.info("Using pySerial version %s"%serial.VERSION)
