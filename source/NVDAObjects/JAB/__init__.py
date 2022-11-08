@@ -650,8 +650,6 @@ class Table(JAB):
 
 class TableCell(JAB):
 
-	role=controlTypes.Role.TABLECELL
-
 	def _get_table(self):
 		if self.parent and isinstance(self.parent,Table):
 			self.table=self.parent
