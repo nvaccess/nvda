@@ -9,8 +9,8 @@ import textInfos
 from .textProvider import BasicTextProvider
 
 
-class TestParagraphHelper(unittest.TestCase):
-	def test_singleLineBreakParagraphForward(self):
+class Test_moveTextInfoToParagraph(unittest.TestCase):
+	def test_singleLineBreakParagraph_forward(self):
 		text = """Paragraph 1.
 Paragraph 2.
 Paragraph 3."""
@@ -27,7 +27,7 @@ Paragraph 3."""
 		moved = paragraphHelper._moveTextInfoToParagraph(True, ti)  # no more paragraphs
 		self.assertFalse(moved)
 
-	def test_singleLineBreakParagraphBack(self):
+	def test_singleLineBreakParagraph_backward(self):
 		text = """Paragraph 1.
 Paragraph 2.
 Paragraph 3.
@@ -46,7 +46,7 @@ Paragraph 3.
 		moved = paragraphHelper._moveTextInfoToParagraph(False, ti)  # no more paragraphs
 		self.assertFalse(moved)
 
-	def test_DoubleLineBreakParagraphForward(self):
+	def test_doubleLineBreakParagraph_forward(self):
 		text = """Paragraph 1.
 
 Paragraph 2.
@@ -66,7 +66,7 @@ Paragraph 3.
 		moved = paragraphHelper._moveTextInfoToBlockParagraph(True, ti)  # no more paragraphs
 		self.assertFalse(moved)
 
-	def test_DoubleLineBreakParagraphBack(self):
+	def test_doubleLineBreakParagraph_backward(self):
 		text = """Paragraph 1.
 
 Paragraph 2.
@@ -90,7 +90,7 @@ Paragraph 3.
 		moved = paragraphHelper._moveTextInfoToBlockParagraph(False, ti)  # no more paragraphs
 		self.assertFalse(moved)
 
-	def test_multiLineBreakParagraphForward(self):
+	def test_multiLineBreakParagraph_forward(self):
 		"""
 			Along with double line break paragraphs (block style),
 			the algorithm supports any number of blank lines between block paragraphs.
@@ -132,7 +132,7 @@ Paragraph 1.
 		moved = paragraphHelper._moveTextInfoToBlockParagraph(True, ti)  # no more paragraphs
 		self.assertFalse(moved)
 
-	def test_multiLineBreakParagraphBack(self):
+	def test_multiLineBreakParagraph_backward(self):
 		"""
 			Test moving back when paragraphs are separated by multiple blank lines / whitespace
 		"""
@@ -186,6 +186,8 @@ Paragraph 3."""
 		moved = paragraphHelper._moveTextInfoToBlockParagraph(False, ti)
 		self.assertFalse(moved)
 
+
+class Test_chunkSplitter(unittest.TestCase):
 	def test_paragraphChunkerWithChunkableContent(self):
 		paragraph = "Multiple sentences for testing. " * 1000 + "\n"
 		gen = paragraphHelper._splitParagraphIntoChunks(paragraph)
