@@ -2418,20 +2418,32 @@ class GlobalCommands(ScriptableObject):
 			target = next(iter(objWithAnnotation.annotations.targets))
 
 		ui.message("Navigating to target")
+		self._moveToObject(target.targetObject)
+		self._annotationNav.priorOrigins.append(objWithAnnotation)
+		return
+
+	def _moveToObject(self, toObject: "NVDAObject"):
 		focus = api.getFocusObject()
 		treeInterceptor = focus.treeInterceptor
 		from browseMode import BrowseModeDocumentTreeInterceptor
 		if not isinstance(treeInterceptor, BrowseModeDocumentTreeInterceptor) or treeInterceptor.passThrough:
 			ui.message("Not supported yet")
 			return
-		info = treeInterceptor.makeTextInfo(target.targetObject)
-		info.collapse()
+		info = treeInterceptor.makeTextInfo(toObject)
+		forSelect = info.copy()
+		forSelect.collapse()
 		from controlTypes import OutputReason
-		treeInterceptor._set_selection(info, reason=OutputReason.QUICKNAV)
-		speech.speakObject(treeInterceptor.currentNVDAObject, reason=OutputReason.QUICKNAV)
-		api.setNavigatorObject(target.targetObject)
-		self._annotationNav.priorOrigins.append(objWithAnnotation)
-		return
+		treeInterceptor._set_selection(forSelect, reason=OutputReason.QUICKNAV)
+		self._reportInfoAfterMove(info)
+
+	def _reportInfoAfterMove(self, info: "textInfos.TextInfo"):
+
+		# See impl of browseMode.TextInfoQuickNavItem.report sometimes readUnit is provided:
+		# It originates from using textInfos.UNIT_LINE for:
+		# Table, list, edit, frame, notLinkBlock, landmark
+		# See "Add quick navigation scripts" in source/browseMode.py:646
+		from controlTypes import OutputReason
+		speech.speakTextInfo(info, reason=OutputReason.QUICKNAV)
 
 	@script(
 		gesture="kb:NVDA+alt+shift+d",
@@ -2453,18 +2465,7 @@ class GlobalCommands(ScriptableObject):
 			return
 		annotationParent = self._annotationNav.priorOrigins.pop()
 		ui.message("Navigating to origin")
-		focus = api.getFocusObject()
-		treeInterceptor = focus.treeInterceptor
-		from browseMode import BrowseModeDocumentTreeInterceptor
-		if not isinstance(treeInterceptor, BrowseModeDocumentTreeInterceptor) or treeInterceptor.passThrough:
-			ui.message("Not supported yet")
-			return
-		info = treeInterceptor.makeTextInfo(annotationParent)
-		info.collapse()
-		from controlTypes import OutputReason
-		treeInterceptor._set_selection(info, reason=OutputReason.QUICKNAV)
-		speech.speakObject(treeInterceptor.currentNVDAObject, reason=OutputReason.QUICKNAV)
-		api.setNavigatorObject(annotationParent)
+		self._moveToObject(annotationParent)
 		return
 
 	@script(
