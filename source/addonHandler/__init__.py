@@ -21,7 +21,7 @@ import globalVars
 import zipfile
 from configobj import ConfigObj
 from configobj.validate import Validator
-
+from .packaging import initializeModulePackagePaths
 import config
 import languageHandler
 from logHandler import log
@@ -601,54 +601,6 @@ def _translatedManifestPaths(lang=None, forBundle=False):
 			langs.append('en')
 	sep = "/" if forBundle else os.path.sep
 	return [sep.join(("locale", lang, MANIFEST_FILENAME)) for lang in langs]
-
-
-def initializeModulePackagePaths():
-	"""Initializes the module package paths for drivers and plugins.
-	This ensures that drivers (such as braille display drivers) or plugins (such as app modules)
-	can be discovered by NVDA.
-	"""
-	import appModules
-	import brailleDisplayDrivers
-	import globalPlugins
-	import synthDrivers
-	import visionEnhancementProviders
-	modules = [
-		appModules,
-		brailleDisplayDrivers,
-		globalPlugins,
-		synthDrivers,
-		visionEnhancementProviders,
-	]
-	for module in modules:
-		addDirsToPythonPackagePath(module)
-
-
-def addDirsToPythonPackagePath(module: ModuleType, subdir: typing.Optional[str] = None):
-	"""Add add-on and scratchpath directories for a module to the search path (__path__) of a Python package.
-	C{subdir} is added to each directory. It defaults to the name of the Python package.
-	@param module: The root module of the package.
-	@param subdir: The subdirectory to be used, C{None} for the name of C{module}.
-	"""
-	if config.isAppX or globalVars.appArgs.disableAddons:
-		return
-	for addon in getRunningAddons():
-		addon.addToPackagePath(module)
-	if globalVars.appArgs.secure or not config.conf['development']['enableScratchpadDir']:
-		return
-	if not subdir:
-		subdir = module.__name__
-	fullPath = os.path.join(config.getScratchpadDir(), subdir)
-	if fullPath in module.__path__:
-		return
-	# Ensure this directory exists otherwise pkgutil.iter_importers may emit None for missing paths.
-	if not os.path.isdir(fullPath):
-		os.makedirs(fullPath)
-	# Insert this path at the beginning  of the module's search paths.
-	# The module's search paths may not be a mutable list, so replace it with a new one
-	pathList = [fullPath]
-	pathList.extend(module.__path__)
-	module.__path__ = pathList
 
 
 class AddonBundle(AddonBase):
