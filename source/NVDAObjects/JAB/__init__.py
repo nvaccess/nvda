@@ -86,7 +86,7 @@ JABRolesToNVDARoles: Dict[str, controlTypes.Role] = {
 }
 
 JABStatesToNVDAStates={
-	"busy": controlTypes.State.BUSY,
+	"busy":controlTypes.State.BUSY,
 	"checked":controlTypes.State.CHECKED,
 	"focused":controlTypes.State.FOCUSED,
 	"selected":controlTypes.State.SELECTED,
