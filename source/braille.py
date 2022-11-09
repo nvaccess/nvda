@@ -2314,7 +2314,7 @@ class _BgThread:
 		ctypes.windll.kernel32.QueueUserAPC(func, cls.handle, param)
 
 	@classmethod
-	def stop(cls):
+	def stop(cls, timeout=None):
 		if not cls.thread:
 			return
 		cls.exit = True
@@ -2324,7 +2324,7 @@ class _BgThread:
 		cls.ackTimerHandle = None
 		# Wake up the thread. It will exit when it sees exit is True.
 		cls.queueApc(cls.executor)
-		cls.thread.join()
+		cls.thread.join(timeout)
 		cls.exit = False
 		winKernel.closeHandle(cls.handle)
 		cls.handle = None
