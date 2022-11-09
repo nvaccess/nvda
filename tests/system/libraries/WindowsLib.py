@@ -70,7 +70,7 @@ def taskSwitchToItemMatching(targetWindowNamePattern: _re.Pattern, maxWindowsToT
 	builtIn.log(f"Looking for window: {targetWindowNamePattern}", level="DEBUG")
 	startOfTaskSwitcherSpeech = _tryOpenTaskSwitcher()
 	if startOfTaskSwitcherSpeech is None:
-		builtIn.log(f"No speech for opening the task switcher, trying again", level="DEBUG")
+		builtIn.log("No speech for opening the task switcher, trying again", level="DEBUG")
 		# Try opening the task switcher again
 		spy.emulateKeyPress('escape')
 		# Hack: using 'sleep' is error-prone.
@@ -80,7 +80,7 @@ def taskSwitchToItemMatching(targetWindowNamePattern: _re.Pattern, maxWindowsToT
 
 		startOfTaskSwitcherSpeech = _tryOpenTaskSwitcher()
 		if startOfTaskSwitcherSpeech is None:
-			builtIn.log(f"No speech for opening the task switcher again", level="DEBUG")
+			builtIn.log("No speech for opening the task switcher again", level="DEBUG")
 			spy.emulateKeyPress('escape')
 			raise AssertionError("Tried twice to open task switcher and failed.")
 
@@ -126,13 +126,13 @@ def taskSwitchToItemMatching(targetWindowNamePattern: _re.Pattern, maxWindowsToT
 			builtIn.log(f"Found target window at item {windowsTested}", level="DEBUG")
 			found = True
 		elif rowChangedPattern.search(speech):
-			builtIn.log(f"Multiple task switch rows detected.", level="DEBUG")
+			builtIn.log("Multiple task switch rows detected.", level="DEBUG")
 			# Once in a row > 1, row and column will be reported when returning to the first row.
 			returnToFirstItemPattern = firstRowColPattern
 		windowsTested += 1
 
 	if not found:
-		builtIn.log(f"Not found, attempting to close task switcher.", level="DEBUG")
+		builtIn.log("Not found, attempting to close task switcher.", level="DEBUG")
 		nextIndex = spy.get_next_speech_index()
 		spy.emulateKeyPress("escape")
 		spy.wait_for_speech_to_finish(speechStartedIndex=nextIndex)
@@ -146,7 +146,7 @@ def taskSwitchToItemMatching(targetWindowNamePattern: _re.Pattern, maxWindowsToT
 		spy.emulateKeyPress("enter")
 		if not spy.wait_for_speech_to_finish(speechStartedIndex=nextIndex, errorMessage=None):
 			AssertionError(
-				f"Expected some speech after enter press."
+				"Expected some speech after enter press."
 				f" Speech at index: {nextIndex}"
 				f", nextIndex: {spy.get_next_speech_index()}"
 				f", speech in range: {spy.get_speech_at_index_until_now(nextIndex)}"
