@@ -1,11 +1,12 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited, Babbage B.V.
+# Copyright (C) 2006-2022 NV Access Limited, Babbage B.V., Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 from typing import (
 	Dict,
 	Optional,
+	Union,
 )
 
 import comtypes.client
@@ -22,6 +23,9 @@ import config
 import winKernel
 import api
 import winUser
+from winAPI.winUser.functions import GetSysColor
+from winAPI.winUser.constants import SysColorIndex
+import textInfos
 import textInfos.offsets
 import controlTypes
 from controlTypes import TextPosition
@@ -153,6 +157,7 @@ WB_MOVEWORDRIGHT=5
 WB_LEFTBREAK=6
 WB_RIGHTBREAK=7
 
+
 class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _getPointFromOffset(self,offset):
@@ -236,7 +241,10 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 			self._setSelectionOffsets(oldSel[0],oldSel[1])
 		return charFormat
 
-	def _getFormatFieldAndOffsets(self,offset,formatConfig,calculateOffsets=True):
+	# C901 '_getFormatFieldAndOffsets' is too complex
+	# Note: when working on _getFormatFieldAndOffsets look for opportunities to simplify
+	# and move logic out into smaller helper functions.
+	def _getFormatFieldAndOffsets(self, offset, formatConfig, calculateOffsets=True):  # noqa: C901
 		#Basic edit fields do not support formatting at all.
 		# Formatting for unidentified edit fields is ignored.
 		# Note that unidentified rich edit fields will most likely use L{ITextDocumentTextInfo}.
@@ -274,15 +282,38 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 			    formatField["text-position"] = TextPosition.BASELINE
 		if formatConfig["reportColor"]:
 			if charFormat is None: charFormat=self._getCharFormat(offset)
-			formatField["color"]=colors.RGB.fromCOLORREF(charFormat.crTextColor) if not charFormat.dwEffects&CFE_AUTOCOLOR else _("default color")
-			formatField["background-color"]=colors.RGB.fromCOLORREF(charFormat.crBackColor) if not charFormat.dwEffects&CFE_AUTOBACKCOLOR else _("default color")
+			self._setFormatFieldColor(charFormat, formatField)
 		if formatConfig["reportLineNumber"]:
 			formatField["line-number"]=self._getLineNumFromOffset(offset)+1
 		if formatConfig["reportLinks"]:
 			if charFormat is None: charFormat=self._getCharFormat(offset)
 			formatField["link"]=bool(charFormat.dwEffects&CFM_LINK)
 		return formatField,(startOffset,endOffset)
-
+	
+	def _setFormatFieldColor(
+			self,
+			charFormat: Union[CharFormat2AStruct, CharFormat2WStruct],
+			formatField: textInfos.FormatField
+	) -> None:
+		if charFormat.dwEffects & CFE_AUTOCOLOR:
+			rgb = GetSysColor(SysColorIndex.WINDOW_TEXT)
+			# Translators: The text color as reported in Wordpad (Automatic) or NVDA log viewer.
+			formatField["color"] = _("{color} (default color)").format(
+				color=colors.RGB.fromCOLORREF(rgb).name,
+			)
+		else:
+			rgb = charFormat.crTextColor
+			formatField["color"] = colors.RGB.fromCOLORREF(rgb)
+		if charFormat.dwEffects & CFE_AUTOBACKCOLOR:
+			rgb = GetSysColor(SysColorIndex.WINDOW)
+			# Translators: The background color as reported in Wordpad (Automatic) or NVDA log viewer.
+			formatField["background-color"] = _("{color} (default color)").format(
+				color=colors.RGB.fromCOLORREF(rgb).name,
+			)
+		else:
+			rgb = charFormat.crBackColor
+			formatField["background-color"] = colors.RGB.fromCOLORREF(rgb)
+	
 	def _getSelectionOffsets(self):
 		if self.obj.editAPIVersion>=1:
 			charRange=CharRangeStruct()
@@ -477,7 +508,10 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		else:
 			raise NotImplementedError
 
-	def _getFormatFieldAtRange(self, textRange, formatConfig):
+	# C901 '_getFormatFieldAtRange' is too complex
+	# Note: when working on _getFormatFieldAtRange look for opportunities to simplify
+	# and move logic out into smaller helper functions.
+	def _getFormatFieldAtRange(self, textRange, formatConfig):  # noqa: C901
 		formatField=textInfos.FormatField()
 		fontObj=None
 		paraFormatObj=None
@@ -527,26 +561,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		if formatConfig["reportColor"]:
 			if not fontObj:
 				fontObj = textRange.font
-			fgColor=fontObj.foreColor
-			if fgColor==comInterfaces.tom.tomAutoColor:
-				# Translators: The default color of text when a color has not been set by the author. 
-				formatField['color']=_("default color")
-			elif fgColor&0xff000000:
-				# The color is a palet index (we don't know the palet)
-				# Translators: The color of text cannot be detected. 
-				formatField['color']=_("Unknown color")
-			else:
-				formatField["color"]=colors.RGB.fromCOLORREF(fgColor)
-			bkColor=fontObj.backColor
-			if bkColor==comInterfaces.tom.tomAutoColor:
-				# Translators: The default background color  when a color has not been set by the author. 
-				formatField['background-color']=_("default color")
-			elif bkColor&0xff000000:
-				# The color is a palet index (we don't know the palet)
-				# Translators: The background color cannot be detected. 
-				formatField['background-color']=_("Unknown color")
-			else:
-				formatField["background-color"]=colors.RGB.fromCOLORREF(bkColor)
+			self._setFormatFieldColor(fontObj, formatField)
 		if not fontObj:
 			fontObj = textRange.font
 		try:
@@ -558,6 +573,36 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 			pass
 		return formatField
 
+	def _setFormatFieldColor(
+			self,
+			fontObj,
+			formatField: textInfos.FormatField
+	) -> None:
+		fgColor = fontObj.foreColor
+		if fgColor == comInterfaces.tom.tomAutoColor:
+			# Translators: The text color as reported in Wordpad (Automatic) or NVDA log viewer.
+			formatField['color'] = _("{color} (default color)").format(
+				color=colors.RGB.fromCOLORREF(GetSysColor(SysColorIndex.WINDOW_TEXT)).name,
+			)
+		elif fgColor & 0xff000000:
+			# The color is a palet index (we don't know the palet)
+			# Translators: The color of text cannot be detected.
+			formatField['color'] = _("Unknown color")
+		else:
+			formatField["color"] = colors.RGB.fromCOLORREF(fgColor)
+		bkColor = fontObj.backColor
+		if bkColor == comInterfaces.tom.tomAutoColor:
+			# Translators: The background color as reported in Wordpad (Automatic) or NVDA log viewer.
+			formatField['background-color'] = _("{color} (default color)").format(
+				color=colors.RGB.fromCOLORREF(GetSysColor(SysColorIndex.WINDOW)).name,
+			)
+		elif bkColor & 0xff000000:
+			# The color is a palet index (we don't know the palet)
+			# Translators: The background color cannot be detected.
+			formatField['background-color'] = _("Unknown color")
+		else:
+			formatField["background-color"] = colors.RGB.fromCOLORREF(bkColor)
+	
 	def _expandFormatRange(self, textRange, formatConfig):
 		startLimit=self._rangeObj.start
 		endLimit=self._rangeObj.end

@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-07 04:25+0000\n"
+"POT-Creation-Date: 2022-10-24 00:11+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: 完美很难 <1872265132@qq.com>\n"
 "Language-Team: \n"
@@ -1106,6 +1106,11 @@ msgstr "克什米尔语 1 级盲文"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Luganda literary braille"
+msgstr "卢干达语文学盲文"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Lithuanian 8 dot"
 msgstr "立陶宛语 8 点盲文"
 
@@ -1271,6 +1276,11 @@ msgstr "俄语简体盲文"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Kinyarwanda literary braille"
+msgstr "卢旺达语文学盲文"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Sanskrit grade 1"
 msgstr "梵语 1 级盲文"
 
@@ -1283,11 +1293,6 @@ msgstr "雅库特语 1 级盲文"
 #. braille settings dialog.
 msgid "Swedish 8 dot computer braille"
 msgstr "瑞典语 8 点计算机盲文"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "Swedish grade 1"
-msgstr "瑞典语 1 级盲文"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1318,6 +1323,21 @@ msgstr "塞索托语 2 级盲文"
 #. braille settings dialog.
 msgid "Serbian grade 1"
 msgstr "塞尔维亚语 1 级盲文"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swedish uncontracted braille"
+msgstr "瑞典语非简写盲文"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swedish partially contracted braille"
+msgstr "瑞典语部分简写盲文"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swedish contracted braille"
+msgstr "瑞典语简写盲文"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1418,6 +1438,18 @@ msgstr "科萨语 1 级盲文"
 #. braille settings dialog.
 msgid "Xhosa grade 2"
 msgstr "科萨语 2 级盲文"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#. This should be translated to '中文中国汉语通用盲文' in Mandarin.
+msgid "Chinese common braille (simplified Chinese characters)"
+msgstr "中文中国汉语通用盲文"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#. This should be translated to '中文中国汉语现行盲文（无声调）' in Mandarin.
+msgid "Chinese (China, Mandarin) Current Braille System (no tones)"
+msgstr "中文中国汉语现行盲文（不标调）"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2364,39 +2396,6 @@ msgstr "手势映射文件错误"
 msgid "Loading NVDA. Please wait..."
 msgstr "正在加载 NVDA，请稍后..."
 
-#. Translators: This is a warning to users, shown if NVDA cannot determine if
-#. Windows is locked.
-msgid ""
-"NVDA failed to register session tracking. While this instance of NVDA is "
-"running, your desktop will not be secure when Windows is locked. Restart "
-"NVDA? "
-msgstr ""
-"NVDA 未能注册会话跟踪。在运行该 NVDA 实例过程中，当 Windows 被锁定时，您的桌"
-"面会面临安全风险。重新启动 NVDA 吗？ "
-
-#. Translators: This is a warning to users, shown if NVDA cannot determine if
-#. Windows is locked.
-msgid "NVDA could not start securely."
-msgstr "NVDA 无法安全启动。"
-
-#. Translators: The screen is oriented so that it is wider than it is tall.
-msgid "Landscape"
-msgstr "横向"
-
-#. Translators: The screen is oriented in such a way that the height is taller than it is wide.
-msgid "Portrait"
-msgstr "纵向"
-
-#. Translators: Reported when the battery is plugged in, and now is charging.
-#, python-format
-msgid "Charging battery. %d percent"
-msgstr "正在充电， 百分之 %d"
-
-#. Translators: Reported when the battery is no longer plugged in, and now is not charging.
-#, python-format
-msgid "Not charging battery. %d percent"
-msgstr "没有充电，电量为百分之 %d"
-
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 msgid "NVDA started"
 msgstr "NVDA 已启动"
@@ -2489,6 +2488,30 @@ msgstr "移到表格内的第一列"
 #. Translators: the description for the last table column script on browseMode documents.
 msgid "moves to the last table column"
 msgstr "移到表格内的最后一列"
+
+#. Translators: the description for the sayAll row command
+msgid ""
+"Reads the row horizontally from the current cell rightwards to the last cell "
+"in the row."
+msgstr "从当前单元格开始水平向右朗读至当前行的最后一个单元格。"
+
+#. Translators: the description for the sayAll row command
+msgid ""
+"Reads the column vertically from the current cell downwards to the last cell "
+"in the column."
+msgstr "从当前单元格开始垂直向下朗读至当前列的最后一个单元格。"
+
+#. Translators: the description for the speak row command
+msgid ""
+"Reads the current row horizontally from left to right without moving the "
+"system caret."
+msgstr "在不移动输入焦点的情况下，从左到右水平朗读当前行。"
+
+#. Translators: the description for the speak column command
+msgid ""
+"Reads the current column vertically from top to bottom without moving the "
+"system caret."
+msgstr "在不移动输入焦点的情况下，从上到下垂直朗读当前列。"
 
 #. Translators: The message announced when toggling the include layout tables browse mode setting.
 msgid "layout tables off"
@@ -2924,16 +2947,14 @@ msgid "report tables on"
 msgstr "读出表格"
 
 #. Translators: Input help mode message for toggle report table row/column headers command.
-msgid "Toggles on and off the reporting of table row and column headers"
-msgstr "切换读出表格行列标题的开关"
+msgid "Cycle through the possible modes to report table row and column headers"
+msgstr "在行列标题朗读模式之间循环切换"
 
-#. Translators: The message announced when toggling the report table row/column headers document formatting setting.
-msgid "report table row and column headers off"
-msgstr "不读表格的行列标题"
-
-#. Translators: The message announced when toggling the report table row/column headers document formatting setting.
-msgid "report table row and column headers on"
-msgstr "读出表格的行列标题"
+#. Translators: Reported when the user cycles through report table header modes.
+#. {mode} will be replaced with the mode; e.g. None, Rows and columns, Rows or Columns.
+#, python-brace-format
+msgid "Report table headers {mode}"
+msgstr "读出 {mode}"
 
 #. Translators: Input help mode message for toggle report table cell coordinates command.
 msgid "Toggles on and off the reporting of table cell coordinates"
@@ -3319,13 +3340,13 @@ msgstr "没有默认动作"
 msgid ""
 "Moves the review cursor to the top line of the current navigator object and "
 "speaks it"
-msgstr "将浏览光标移动到该对象的顶部并读出其信息"
+msgstr "将浏览光标移动到当前查看对象的第一行并将其读出"
 
 #. Translators: Input help mode message for move review cursor to previous line command.
 msgid ""
 "Moves the review cursor to the previous line of the current navigator object "
 "and speaks it"
-msgstr "将浏览光标移动到该对象的上一行并读出其信息"
+msgstr "将浏览光标移动到当前查看对象的上一行并将其读出"
 
 #. Translators: a message reported when review cursor is at the top line of the current navigator object.
 #. Translators: Reported when attempting to move to the previous result in the Python Console
@@ -3345,19 +3366,35 @@ msgstr ""
 msgid ""
 "Moves the review cursor to the next line of the current navigator object and "
 "speaks it"
-msgstr "将浏览光标移动到当前查看对象的下一行，并将其读出"
+msgstr "将浏览光标移动到当前查看对象的下一行并将其读出"
+
+#. Translators: Input help mode message for move review cursor to previous page command.
+msgid ""
+"Moves the review cursor to the previous page of the current navigator object "
+"and speaks it"
+msgstr "将浏览光标移动到当前查看对象的上一页并将其读出"
+
+#. Translators: a message reported when movement by page is unsupported
+msgid "Movement by page not supported"
+msgstr "不支持按页移动"
+
+#. Translators: Input help mode message for move review cursor to next page command.
+msgid ""
+"Moves the review cursor to the next page of the current navigator object and "
+"speaks it"
+msgstr "将浏览光标移动到当前查看对象的下一页并将其读出"
 
 #. Translators: Input help mode message for move review cursor to bottom line command.
 msgid ""
 "Moves the review cursor to the bottom line of the current navigator object "
 "and speaks it"
-msgstr "将浏览光标移动到当前查看对象的最后一行，并将其读出"
+msgstr "将浏览光标移动到当前查看对象的最后一行并将其读出"
 
 #. Translators: Input help mode message for move review cursor to previous word command.
 msgid ""
 "Moves the review cursor to the previous word of the current navigator object "
 "and speaks it"
-msgstr "将浏览光标移动到当前查看对象的前一个单词，并将其读出"
+msgstr "将浏览光标移动到当前查看对象的前一个单词并将其读出"
 
 #. Translators: Input help mode message for report current word under review cursor command.
 msgid ""
@@ -3371,19 +3408,19 @@ msgstr ""
 msgid ""
 "Moves the review cursor to the next word of the current navigator object and "
 "speaks it"
-msgstr "将浏览光标移动到当前查看对象的后一个单词，并将其读出"
+msgstr "将浏览光标移动到当前查看对象的后一个单词并将其读出"
 
 #. Translators: Input help mode message for move review cursor to start of current line command.
 msgid ""
 "Moves the review cursor to the first character of the line where it is "
 "situated in the current navigator object and speaks it"
-msgstr "将浏览光标移动到当前查看对象的行首字符，并将其读出"
+msgstr "将浏览光标移动到当前查看对象的行首字符并将其读出"
 
 #. Translators: Input help mode message for move review cursor to previous character command.
 msgid ""
 "Moves the review cursor to the previous character of the current navigator "
 "object and speaks it"
-msgstr "将浏览光标移动到当前查看对象的前一个字符，并将其读出"
+msgstr "将浏览光标移动到当前查看对象的前一个字符并将其读出"
 
 #. Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
 msgid "Left"
@@ -3403,7 +3440,7 @@ msgstr ""
 msgid ""
 "Moves the review cursor to the next character of the current navigator "
 "object and speaks it"
-msgstr "将浏览光标移动到当前查看对象的后一个字符，并将其读出"
+msgstr "将浏览光标移动到当前查看对象的后一个字符并将其读出"
 
 #. Translators: a message reported when review cursor is at the rightmost character of the current navigator object's text.
 msgid "Right"
@@ -3413,29 +3450,30 @@ msgstr "右"
 msgid ""
 "Moves the review cursor to the last character of the line where it is "
 "situated in the current navigator object and speaks it"
-msgstr "将浏览光标移动到正在查看对象行尾的字符，并将其读出"
+msgstr "将浏览光标移动到当前查看对象的行尾字符并将其读出"
 
 #. Translators: Input help mode message for Review Current Symbol command.
 msgid ""
 "Reports the symbol where the review cursor is positioned. Pressed twice, "
 "shows the symbol and the text used to speak it in browse mode"
-msgstr "读出浏览光标所在的符号。连续按两次，在浏览模式下显示读出的符号和文本"
+msgstr ""
+"读出当前浏览光标处的符号。连按两次，在浏览模式下显示该符号极其发音替换文本"
 
 #. Translators: Reported when there is no replacement for the symbol at the position of the review cursor.
 msgid "No symbol replacement"
-msgstr "没有符号可替换"
+msgstr "无替换文本"
 
 #. Translators: Character and its replacement used from the "Review current Symbol" command. Example: "Character: ? Replacement: question"
 msgid ""
 "Character: {}\n"
 "Replacement: {}"
 msgstr ""
-"字符: {}\n"
-"替换: {}"
+"符号: {}\n"
+"替换文本: {}"
 
 #. Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
 msgid "Expanded symbol ({})"
-msgstr "扩展符号 ({})"
+msgstr "已展开符号 ({})"
 
 #. Translators: Input help mode message for toggle speech mode command.
 msgid ""
@@ -3587,6 +3625,16 @@ msgid ""
 "information. If pressed three times, copies the status bar to the clipboard"
 msgstr ""
 "读出当前应用程序的状态栏，连按两次拼读该信息，连按三次复制该信息到剪贴板"
+
+#. Translators: Description for a keyboard command which reports the
+#. accelerator key of the currently focused object.
+msgid "Reports the shortcut key of the currently focused object"
+msgstr "读出当前所聚焦对象的快捷键"
+
+#. Translators: reported when a user requests the accelerator key
+#. of the currently focused object, but there is none set.
+msgid "No shortcut key"
+msgstr "无快捷键"
 
 #. Translators: Input help mode message for toggle mouse tracking command.
 msgid "Toggles the reporting of information as the mouse moves"
@@ -3760,24 +3808,6 @@ msgstr "打开焦点自动跳转到可聚焦元素"
 #. Translators: Input help mode message for report battery status command.
 msgid "Reports battery status and time remaining if AC is not plugged in"
 msgstr "如果没有连接交流电源 读出电池状态和可用时间"
-
-#. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
-msgid "No system battery"
-msgstr "未检测到电池"
-
-#. Translators: This is presented to inform the user of the current battery percentage.
-#, python-format
-msgid "%d percent"
-msgstr "百分之%d"
-
-#. Translators: This is presented when AC power is connected such as when recharging a laptop battery.
-msgid "AC power on"
-msgstr "交流电源已接通"
-
-#. Translators: This is the estimated remaining runtime of the laptop battery.
-#, python-brace-format
-msgid "{hours:d} hours and {minutes:d} minutes remaining"
-msgstr "剩余{hours:d}小时{minutes:d}分钟"
 
 #. Translators: Input help mode message for pass next key through command.
 msgid ""
@@ -4086,7 +4116,7 @@ msgstr "擦除最后键入的字符或者盲文单元"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Translates any braille input and presses the enter key"
-msgstr "翻译任何盲文键入病按回车键"
+msgstr "翻译任何盲文键入并按回车键"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Translates any braille input"
@@ -4378,7 +4408,7 @@ msgstr "用户指南"
 
 #. Translators: A label for a shortcut in start menu to open NVDA what's new.
 msgid "What's new"
-msgstr "最近更新"
+msgstr "更新日志"
 
 #. Translators: A file extension label for NVDA add-on package.
 msgid "NVDA add-on package"
@@ -4550,103 +4580,103 @@ msgstr "滚动锁定"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 4"
-msgstr "小键盘 4"
+msgstr "数字键盘 4"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 6"
-msgstr "小键盘 6"
+msgstr "数字键盘 6"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 8"
-msgstr "小键盘 8"
+msgstr "数字键盘 8"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 2"
-msgstr "小键盘 2"
+msgstr "数字键盘 2"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 9"
-msgstr "小键盘 9"
+msgstr "数字键盘 9"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 3"
-msgstr "小键盘 3"
+msgstr "数字键盘 3"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 1"
-msgstr "小键盘 1"
+msgstr "数字键盘 1"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 7"
-msgstr "小键盘 7"
+msgstr "数字键盘 7"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 5"
-msgstr "小键盘 5"
+msgstr "数字键盘 5"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad divide"
-msgstr "小键盘 斜杠"
+msgstr "数字键盘 斜杠"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad multiply"
-msgstr "小键盘 星号"
+msgstr "数字键盘 星号"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad minus"
-msgstr "小键盘 减号"
+msgstr "数字键盘 减号"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad plus"
-msgstr "小键盘 加号"
+msgstr "数字键盘 加号"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad decimal"
-msgstr "小键盘点"
+msgstr "数字键盘删除"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad insert"
-msgstr "小键盘插入"
+msgstr "数字键盘插入"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 0"
-msgstr "小键盘0"
+msgstr "数字键盘0"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 1"
-msgstr "小键盘1"
+msgstr "数字键盘1"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 2"
-msgstr "小键盘2"
+msgstr "数字键盘2"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 3"
-msgstr "小键盘3"
+msgstr "数字键盘3"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 4"
-msgstr "小键盘4"
+msgstr "数字键盘4"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 5"
-msgstr "小键盘5"
+msgstr "数字键盘5"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 6"
-msgstr "小键盘6"
+msgstr "数字键盘6"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 7"
-msgstr "小键盘7"
+msgstr "数字键盘7"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 8"
-msgstr "小键盘8"
+msgstr "数字键盘8"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 9"
-msgstr "小键盘9"
+msgstr "数字键盘9"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "insert"
@@ -6255,7 +6285,7 @@ msgstr "NVDA 贡献者版权所有 {years} 年"
 #, python-brace-format
 msgid ""
 "{longName} ({name})\n"
-"Version: {version}\n"
+"Version: {version} ({version_detailed})\n"
 "URL: {url}\n"
 "{copyright}\n"
 "\n"
@@ -6275,21 +6305,21 @@ msgid ""
 "donating to NV Access. You can do this by selecting Donate from the NVDA "
 "menu."
 msgstr ""
-"{longName} ({name})\n"
-"版本: {version}\n"
-"网址: {url}\n"
+"{longName} （{name}）\n"
+"版本： {version} （{version_detailed}）\n"
+"网址： {url}\n"
 "{copyright}\n"
 "\n"
 "{name} 遵循 GNU 通用公共授权协议第二版， 您可以自由分享或者以任何方式修改本软"
 "件， 但在重新发布时必须包含本协议， 同时必须公开原版和修改版的源代码， 并附上"
 "任何用本软件的源代码所产生的软件。\n"
-"关于授权协议的详情,您可以通过“帮助”菜单的“授权信息”访问。\n"
+"关于本授权协议的详情,您可以通过“帮助”菜单的“版权信息”访问。\n"
 "您也可参看以下网页： https://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n"
 "\n"
 "{name} 是由非赢利组织“NV Access”开发的一个用于协助视障用户的免费且开放源代码"
 "的解决方案。\n"
-"若您觉的 NVDA 很实用，并希望他可以继续发展，请赞助“NV Access”。您可以通过选择"
-"位于 NVDA 主菜单的“捐赠”菜单打开捐赠页面。"
+"若您觉的 NVDA 很实用，并希望他可以继续发展，请赞助“NV Access”。您可以通"
+"过“NVDA 菜单”下的“捐赠”菜单打开捐赠页面进行捐赠。"
 
 #. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
 #, python-brace-format
@@ -6313,6 +6343,12 @@ msgid ""
 msgstr ""
 "对象与屏幕左边界的距离为百分之{left:.1f}，与屏幕上边界的距离为百分之"
 "{top:.1f}，宽度为百分之{width:.1f}，高度为百分之{height:.1f}"
+
+#. Translators: This is presented to inform the user of a progress bar percentage.
+#. Translators: This is presented to inform the user of the current battery percentage.
+#, python-format
+msgid "%d percent"
+msgstr "百分之%d"
 
 #. Translators: a message announcing a candidate's character and description.
 #, python-brace-format
@@ -7122,6 +7158,29 @@ msgstr "启动时显示盲文查看器(&S)"
 #. whether hovering mouse routes to the cell.
 msgid "&Hover for cell routing"
 msgstr "鼠标停留跟踪盲文光标位置(&H)"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+#. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Off"
+msgstr "关"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Rows and columns"
+msgstr "行标题和列标题"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Rows"
+msgstr "行标题"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Columns"
+msgstr "列标题"
 
 #. Translators: Label for an option in NVDA settings.
 #. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
@@ -7937,6 +7996,10 @@ msgstr "已选中"
 msgid "half checked"
 msgstr "部分选中"
 
+#. Translators: This is presented when a three state toggle button is half pressed.
+msgid "half pressed"
+msgstr "部分按下"
+
 #. Translators: This is presented when the control is a read-only control such as read-only edit box.
 msgid "read only"
 msgstr "只读"
@@ -8230,7 +8293,7 @@ msgstr "热键快速参考(&Q)"
 
 #. Translators: The label for the menu item to open What's New document.
 msgid "What's &new"
-msgstr "最近更新(&N)"
+msgstr "更新日志(&N)"
 
 msgid "NVDA &web site"
 msgstr "NVDA 官方网站(&W)"
@@ -8265,7 +8328,7 @@ msgstr "捐赠(&D)"
 
 #. Translators: The label for the menu item to run a pending update.
 msgid "Install pending &update"
-msgstr "安装之前推迟的更新"
+msgstr "安装之前推迟的更新(&U)"
 
 #. Translators: The description for the menu item to run a pending update.
 msgid "Execute a previously downloaded NVDA update"
@@ -8874,7 +8937,7 @@ msgstr "安装之前推迟的更新"
 msgid ""
 "All add-ons are now disabled. They will be re-enabled on the next restart "
 "unless you choose to disable them again."
-msgstr "所有插件已经被禁用，他们将在下次重启时重新启用，除非您选择再次禁用。"
+msgstr "所有插件已被禁用，下次重启时会重新启用，除非您选择再次禁用。"
 
 #. Translators: A message in the exit Dialog shown when NVDA language has been
 #. overwritten from the command line.
@@ -8996,11 +9059,11 @@ msgstr "NVDA 安装失败。请检查用户日志以获取更多的信息。"
 
 #. Translators: The message displayed when NVDA has been successfully installed.
 msgid "Successfully installed NVDA. "
-msgstr "NVDA 安装完成 "
+msgstr "NVDA 安装完成。 "
 
 #. Translators: The message displayed when NVDA has been successfully updated.
 msgid "Successfully updated your installation of NVDA. "
-msgstr "您的NVDA 更新安装已完成。 "
+msgstr "您的NVDA 已更新完成。 "
 
 #. Translators: The message displayed to the user after NVDA is installed
 #. and the installed copy is about to be started.
@@ -9105,7 +9168,7 @@ msgstr "拷贝当前用户配置(&U)"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 msgid "&Start the new portable copy after creation"
-msgstr "创建病自动启动便携副本(&S)"
+msgstr "创建并自动启动便携副本(&S)"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
@@ -9837,13 +9900,7 @@ msgstr "行号(&N)"
 #. Translators: This is the label for a combobox controlling the reporting of line indentation in the
 #. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
 msgid "Line &indentation reporting:"
-msgstr "行缩进提示朗读(&I)："
-
-#. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
-#. Translators: This is the label for a combobox in the
-#. document formatting settings panel.
-msgid "Off"
-msgstr "关"
+msgstr "行缩进提示(&I)："
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
 msgctxt "line indentation setting"
@@ -9883,10 +9940,10 @@ msgstr "表格信息"
 msgid "&Tables"
 msgstr "表格(&T)"
 
-#. Translators: This is the label for a checkbox in the
+#. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
-msgid "Row/column h&eaders"
-msgstr "行 / 列标题(&H)"
+msgid "H&eaders"
+msgstr "行列标题朗读(&H)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -9999,11 +10056,29 @@ msgstr "打开开发者实验目录"
 msgid "Microsoft UI Automation"
 msgstr "Microsoft UIA 接口"
 
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid ""
-"Enable &selective registration for UI Automation events and property changes"
-msgstr "启用选择性注册 UIA 事件和属性改变(&S)"
+#. Translators: This is the label for a combo box for selecting the
+#. means of registering for UI Automation events in the advanced settings panel.
+#. Choices are automatic, selective, and global.
+msgid "Regi&stration for UI Automation events and property changes:"
+msgstr "注册 UIA 事件和属性改变(&S):"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA decide whether to register
+#. selectively or globally for UI Automation events.
+msgid "Automatic (prefer selective)"
+msgstr "自动(选择性注册)"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA register selectively for UI Automation events
+#. (i.e. not to request events for objects outside immediate focus).
+msgid "Selective"
+msgstr "选择性注册"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA register for all UI Automation events
+#. in all cases.
+msgid "Global"
+msgstr "全局"
 
 #. Translators: Label for the Use UIA with MS Word combobox, in the Advanced settings panel.
 msgctxt "advanced.uiaWithMSWord"
@@ -11129,6 +11204,23 @@ msgstr "{curPercent:.0f}%"
 msgid "at {x}, {y}"
 msgstr "像素坐标 {x}， {y}"
 
+#. Translators: This is the message for a warning shown if NVDA cannot determine if
+#. Windows is locked.
+msgid ""
+"NVDA is unable to determine if Windows is locked. While this instance of "
+"NVDA is running, your desktop will not be secure when Windows is locked. "
+"Restarting Windows may address this. If this error is ongoing then disabling "
+"the Windows lock screen is recommended."
+msgstr ""
+"NVDA 无法确定 Windows 是否已锁定。在 NVDA 运行过程中，当 Windows 被锁定时，您"
+"的桌面会面临安全风险。重新启动 Windows 可能会解决此问题，如果该问题频繁出现，"
+"则建议禁用 Windows 锁屏。"
+
+#. Translators: This is the title for a warning dialog, shown if NVDA cannot determine if
+#. Windows is locked.
+msgid "Lock screen not secure while using NVDA"
+msgstr "在 NVDA 运行过程中锁定屏幕不安全"
+
 #. Translators: Reported when a page reloads (example: after refreshing a webpage).
 msgid "Refreshed"
 msgstr "已刷新"
@@ -11204,6 +11296,36 @@ msgstr ""
 msgid "Make screen black (immediate effect)"
 msgstr "开启黑屏 (立即生效)(&B)"
 
+#. Translators: The screen is oriented so that it is wider than it is tall.
+msgid "Landscape"
+msgstr "横向"
+
+#. Translators: The screen is oriented in such a way that the height is taller than it is wide.
+msgid "Portrait"
+msgstr "纵向"
+
+#. Translators: This is presented when there is an error retrieving the battery status.
+msgid "Unknown power status"
+msgstr "电源状态未知"
+
+#. Translators: This is presented when there is no battery such as desktop computers
+#. and laptops with battery pack removed.
+msgid "No system battery"
+msgstr "未检测到电池"
+
+#. Translators: Reported when the battery is plugged in, and now is charging.
+msgid "Charging battery"
+msgstr "正在充电"
+
+#. Translators: Reported when the battery is no longer plugged in, and now is not charging.
+msgid "AC disconnected"
+msgstr "交流电源已断开"
+
+#. Translators: This is the estimated remaining runtime of the laptop battery.
+#, python-brace-format
+msgid "{hours:d} hours and {minutes:d} minutes remaining"
+msgstr "剩余{hours:d}小时{minutes:d}分钟"
+
 msgid "Taskbar"
 msgstr "任务栏"
 
@@ -11215,15 +11337,6 @@ msgstr "RGB red {rgb.red}, green {rgb.green}, blue {rgb.blue}"
 #, python-format
 msgid "%s items"
 msgstr "%s项"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#. Translators: a message reported in the SetColumnHeader script for Excel.
-#. Translators: a message reported in the SetRowHeader script for Excel.
-msgid ""
-"Cannot set headers. Please enable reporting of table headers in Document "
-"Formatting Settings"
-msgstr "无法设置标题。请在“文档格式”设置面板中勾选“行 / 列标题”选项"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #, python-brace-format
@@ -11444,6 +11557,10 @@ msgstr "批注线程：{author} 的 {comment} 有 {numReplies} 条回复"
 #. Translators: A message in Excel when there is no comment thread
 msgid "No comment thread on this cell"
 msgstr "此单元格不包含批注线程"
+
+#. Translators: announced when moving outside of a table in an Excel spreadsheet.
+msgid "Out of table"
+msgstr "离开表格"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -11990,8 +12107,8 @@ msgstr "没有对点{previousIndex}进行修改 "
 
 #. Translators: For line charts, indicates an increase from the previous data point on the left
 #, python-brace-format
-msgid "Increased by {incrementValue} from point {previousIndex}, "
-msgstr "从点{previousIndex}增加{incrementValue} "
+msgid "increased by {incrementValue} from point {previousIndex}, "
+msgstr "从点{previousIndex}增加{incrementValue}, "
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
 #, python-brace-format
@@ -12839,6 +12956,32 @@ msgstr "2 倍行距"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5 倍行距"
+
+#~ msgid "NVDA could not start securely."
+#~ msgstr "NVDA 无法安全启动。"
+
+#~ msgid "Swedish grade 1"
+#~ msgstr "瑞典语 1 级盲文"
+
+#~ msgid "Not charging battery. %d percent"
+#~ msgstr "没有充电，电量为百分之 %d"
+
+#~ msgid "report table row and column headers off"
+#~ msgstr "不读表格的行列标题"
+
+#~ msgid "report table row and column headers on"
+#~ msgstr "读出表格的行列标题"
+
+#~ msgid "AC power on"
+#~ msgstr "交流电源已接通"
+
+#~ msgid "Row/column h&eaders"
+#~ msgstr "行 / 列标题(&H)"
+
+#~ msgid ""
+#~ "Cannot set headers. Please enable reporting of table headers in Document "
+#~ "Formatting Settings"
+#~ msgstr "无法设置标题。请在“文档格式”设置面板中勾选“行 / 列标题”选项"
 
 #~ msgid "Shows a summary of the details at this position if found."
 #~ msgstr "在此处显示详细信息摘要（如果有）"

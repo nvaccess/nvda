@@ -13,6 +13,7 @@ from typing import (
 	Dict,
 	Tuple,
 )
+import array
 from ctypes.wintypes import POINT
 from comtypes import COMError
 import time
@@ -40,6 +41,7 @@ from UIAHandler.utils import (
 	iterUIARangeByUnit,
 	UIAMixedAttributeError,
 	UIATextRangeFromElement,
+	_shouldUseWindowsTerminalNotifications,
 )
 from NVDAObjects.window import Window
 from NVDAObjects import (
@@ -60,6 +62,7 @@ import braille
 import locationHelper
 import ui
 import winVersion
+import NVDAObjects
 
 
 paragraphIndentIDs = {
@@ -1039,6 +1042,9 @@ class UIA(Window):
 			elif self.role == controlTypes.Role.DATAGRID:
 				from .excel import ExcelWorksheet
 				clsList.append(ExcelWorksheet)
+			elif self.role == controlTypes.Role.TABLE:
+				from .excel import ExcelTable
+				clsList.append(ExcelTable)
 			elif self.role == controlTypes.Role.EDITABLETEXT:
 				from .excel import CellEdit
 				clsList.append(CellEdit)
@@ -1182,19 +1188,34 @@ class UIA(Window):
 			from . import VisualStudio
 			VisualStudio.findExtraOverlayClasses(self, clsList)
 
-		# Support Windows Console's UIA interface
+		# Support Windows Console and Terminal
+		_all_wt_UIAClassNames = frozenset((
+			# TermControl represents an up-to-date version of the UWP (standard)
+			# Windows Terminal control.
+			"TermControl",
+			# TermControl2 was going to represent a
+			# terminal that supported UIA notifications (i.e. one where
+			# microsoft/terminal#12358 has been merged). However, the UIA class
+			# name was not changed in microsoft/terminal#12358 due to backward
+			# compat concerns raised by Freedom Scientific. However, a check for
+			# it is kept here just in case it should later become necessary to
+			# change it.
+			"TermControl2",
+			# WPFTermControl represents an embedded Windows Terminal control
+			# In .NET apps, such as LTS Visual Studio.
+			# WPFTermControl does not follow the same update cadence as TermControl
+			# and is anticipated to be replaced by the UWP implementation.
+			"WPFTermControl",
+		))
 		if self.windowClassName == "ConsoleWindowClass":
 			from . import winConsoleUIA
 			winConsoleUIA.findExtraOverlayClasses(self, clsList)
-		elif UIAClassName in ("TermControl", "TermControl2"):
-			# TermControl2 was going to represent a terminal that supported UIA
-			# notifications (i.e. one where microsoft/terminal#12358 has been
-			# merged). However, the UIA class name was not changed in
-			# microsoft/terminal#12358 due to backward compat concerns raised
-			# by Freedom Scientific. However, a check for it is kept here just
-			# in case it should later become necessary to change it.
+		elif UIAClassName in _all_wt_UIAClassNames:
 			from . import winConsoleUIA
-			clsList.append(winConsoleUIA.WinTerminalUIA)
+			if _shouldUseWindowsTerminalNotifications():
+				clsList.append(winConsoleUIA._NotificationsBasedWinTerminalUIA)
+			else:
+				clsList.append(winConsoleUIA._DiffBasedWinTerminalUIA)
 
 		# Add editableText support if UIA supports a text pattern
 		if self.TextInfo==UIATextInfo:
@@ -1220,6 +1241,11 @@ class UIA(Window):
 		windowHandle=kwargs.get('windowHandle')
 		if isinstance(relation,tuple):
 			UIAElement=UIAHandler.handler.clientObject.ElementFromPointBuildCache(POINT(relation[0],relation[1]),UIAHandler.handler.baseCacheRequest)
+			if UIAHandler._isDebug():
+				log.debug(
+					f"kwargsFromSuper: given coordinates {relation}, "
+					f"fetched element {UIAHandler.handler.getUIAElementDebugString(UIAElement)}"
+				)
 			# Ignore this object if it is non native.
 			if not UIAHandler.handler.isNativeUIAElement(UIAElement):
 				if UIAHandler._isDebug():
@@ -1237,6 +1263,11 @@ class UIA(Window):
 			except COMError:
 				log.debugWarning("getFocusedElement failed", exc_info=True)
 				return False
+			if UIAHandler._isDebug():
+				log.debug(
+					f"kwargsFromSuper: fetched focused element "
+					f"{UIAHandler.handler.getUIAElementDebugString(UIAElement)}"
+				)
 			# Ignore this object if it is non native.
 			if ignoreNonNativeElementsWithFocus and not UIAHandler.handler.isNativeUIAElement(UIAElement):
 				if UIAHandler._isDebug():
@@ -1277,6 +1308,11 @@ class UIA(Window):
 		UIACachedWindowHandle=UIAElement.cachedNativeWindowHandle
 		self.UIAIsWindowElement=bool(UIACachedWindowHandle)
 		if not windowHandle:
+			if UIAHandler._isDebug():
+				log.debug(
+					f"No windowHandle for UIA NvDAObject. "
+					f"Searching UIA element ancestry for nearest windowHandle"
+				)
 			windowHandle=UIAHandler.handler.getNearestWindowHandle(UIAElement)
 		if not windowHandle:
 			raise InvalidNVDAObject("no windowHandle")
@@ -1888,6 +1924,11 @@ class UIA(Window):
 			return UIA(UIAElement=e)
 		raise NotImplementedError
 
+	def _get_tableID(self):
+		table = self.table
+		if table:
+			return self.table.UIAElement.GetRuntimeId()
+
 	def _get_processID(self):
 		if self.windowClassName == 'ConsoleWindowClass':
 			# #10115: The UIA implementation for Windows console windows exposes the process ID of conhost,
@@ -1994,8 +2035,42 @@ class UIA(Window):
 	def scrollIntoView(self):
 		pass
 
+	def isDescendantOf(self, obj: "NVDAObjects.NVDAObject") -> bool:
+		if isinstance(obj, UIA):
+			# As both objects are UIA,
+			# We can search this object's ancestors for obj with a UIA treeWalker
+			# which is much more efficient than fetching each parent.
+			objID = obj.UIAElement.GetRuntimeId()
+			objIDArray = array.array("l", objID)
+			UIACondition = UIAHandler.handler.clientObject.createPropertyCondition(
+				UIAHandler.UIA_RuntimeIdPropertyId,
+				objIDArray
+			)
+			UIAWalker = UIAHandler.handler.clientObject.createTreeWalker(UIACondition)
+			try:
+				objUIAElement = UIAWalker.normalizeElement(self.UIAElement)
+			except COMError:
+				log.debugWarning("Error walking ancestors", exc_info=True)
+				objUIAElement = None
+			return bool(objUIAElement)
+		else:  # not UIA
+			raise NotImplementedError
+
 	def _get_controllerFor(self):
-		e=self._getUIACacheablePropertyValue(UIAHandler.UIA_ControllerForPropertyId)
+		try:
+			e = self._getUIACacheablePropertyValue(UIAHandler.UIA_ControllerForPropertyId)
+		except KeyError:
+			# #14270: comtypes may raise KeyError as it does not know how to unpack a variant of VT_Unknown | VT_Array.
+			# this may be seen on Windows 7 where
+			# the UIA client library directly returns the provider's VT_Unknown | VT_Array variant,
+			# Which is useless for a client.
+			# On Newer Windows versions, the client library correctly marshals this to
+			# IUIAutomationElementArray per the UI Automation documentation.
+			# UI Automation documentation seems to suggest controllerFor is supported on Windows 7,
+			# So it is unclear as to what versions have this bug.
+			# Best just to catch KeyError.
+			log.debugWarning("Bad controllerFor property", exc_info=True)
+			return []
 		if UIAHandler.handler.clientObject.checkNotSupported(e):
 			return None
 		a=e.QueryInterface(UIAHandler.IUIAutomationElementArray)
@@ -2008,8 +2083,11 @@ class UIA(Window):
 				objList.append(obj)
 		return objList
 
+	def event_UIA_controllerFor(self) -> None:
+		return self.event_controllerForChange()
+
 	def event_UIA_elementSelected(self):
-		self.event_stateChange()
+		self.event_selection()
 
 	def event_valueChange(self):
 		if issubclass(self.TextInfo, UIATextInfo):
@@ -2026,7 +2104,13 @@ class UIA(Window):
 		# Ideally, we wouldn't use getPropertiesBraille directly.
 		braille.handler.message(braille.getPropertiesBraille(name=self.name, role=self.role))
 
-	def event_UIA_notification(self, notificationKind=None, notificationProcessing=UIAHandler.NotificationProcessing_CurrentThenMostRecent, displayString=None, activityId=None):
+	def event_UIA_notification(
+			self,
+			notificationKind: Optional[int] = None,
+			notificationProcessing: Optional[int] = UIAHandler.NotificationProcessing_CurrentThenMostRecent,
+			displayString: Optional[str] = None,
+			activityId: Optional[str] = None
+	):
 		"""
 		Introduced in Windows 10 Fall Creators Update (build 16299).
 		This base implementation announces all notifications from the UIA element.
@@ -2042,18 +2126,6 @@ class UIA(Window):
 				# Note that no distinction is made between important and non-important.
 				speech.cancelSpeech()
 			ui.message(displayString)
-
-	_itemStatusCache = None
-
-	def event_UIA_itemStatus(self):
-		"""
-		Base implementation of UIA item status property event.
-		By default NVDA will announce element name and item status if any.
-		"""
-		itemStatus = self.UIAElement.currentItemStatus
-		if itemStatus and itemStatus != self._itemStatusCache:
-			ui.message(f"{self.name} {itemStatus}")
-		self._itemStatusCache = itemStatus
 
 	def event_UIA_dragDropEffect(self):
 		# UIA drag drop effect was introduced in Windows 8.
@@ -2265,14 +2337,8 @@ class WpfTextView(UIA):
 
 class SearchField(EditableTextWithSuggestions, UIA):
 	"""An edit field that presents suggestions based on a search term.
+	This is now an empty class as functionality has been moved to the base EditableText behaviour.
 	"""
-
-	def event_UIA_controllerFor(self):
-		# Only useful if suggestions appear and disappear.
-		if self == api.getFocusObject() and len(self.controllerFor)>0:
-			self.event_suggestionsOpened()
-		else:
-			self.event_suggestionsClosed()
 
 
 class SuggestionsList(UIA):
@@ -2302,20 +2368,11 @@ class SuggestionsList(UIA):
 class SuggestionListItem(UIA):
 	"""Recent Windows releases use suggestions lists for various things, including Start menu suggestions, Store, Settings app and so on.
 	Unlike suggestions list class, top suggestion is automatically selected.
+	Note that support for reporting the selection is now handled generically on the base NVDAObject.
 	"""
 
 	role = controlTypes.Role.LISTITEM
 
-	def event_UIA_elementSelected(self):
-		focusControllerFor = api.getFocusObject().controllerFor
-		if len(focusControllerFor) > 0 and focusControllerFor[0].appModule is self.appModule and self.name:
-			speech.cancelSpeech()
-			if api.setNavigatorObject(self, isFocus=True):
-				self.reportFocus()
-				# Display results as flash messages.
-				braille.handler.message(braille.getPropertiesBraille(
-					name=self.name, role=self.role, positionInfo=self.positionInfo
-				))
 
 # NetUIDropdownAnchor comboBoxes (such as in the MS Office Options dialog)
 class NetUIDropdownAnchor(UIA):

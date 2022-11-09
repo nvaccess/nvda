@@ -175,6 +175,9 @@ def setFocusObject(obj: NVDAObjects.NVDAObject) -> bool:  # noqa: C901
 	braille.invalidateCachedFocusAncestors(focusDifferenceLevel)
 	if config.conf["reviewCursor"]["followFocus"]:
 		setNavigatorObject(obj,isFocus=True)
+	# Fire focusExited event for all old focus ancestors not common with the new focus
+	for oldFocusAncestor in reversed(oldFocusLine[focusDifferenceLevel:-1]):
+		eventHandler.executeEvent("focusExited", oldFocusAncestor)
 	return True
 
 def getFocusDifferenceLevel():
@@ -226,17 +229,19 @@ def getReviewPosition() -> textInfos.TextInfo:
 
 
 def setReviewPosition(
-		reviewPosition,
+		reviewPosition: textInfos.TextInfo,
 		clearNavigatorObject: bool = True,
 		isCaret: bool = False,
 		isMouse: bool = False,
-) -> None:
+) -> bool:
 	"""Sets a TextInfo instance as the review position.
-	@param clearNavigatorObject: If True, it sets the current navigator object to C{None}.
+	@param clearNavigatorObject: if True, It sets the current navigator object to C{None}.
 		In that case, the next time the navigator object is asked for it fetches it from the review position.
 	@param isCaret: Whether the review position is changed due to caret following.
 	@param isMouse: Whether the review position is changed due to mouse following.
 	"""
+	if objectBelowLockScreenAndWindowsIsLocked(reviewPosition.obj):
+		return False
 	globalVars.reviewPosition=reviewPosition.copy()
 	globalVars.reviewPositionObj=reviewPosition.obj
 	if clearNavigatorObject: globalVars.navigatorObject=None
@@ -251,6 +256,7 @@ def setReviewPosition(
 	else:
 		visionContext = vision.constants.Context.REVIEW
 	vision.handler.handleReviewMove(context=visionContext)
+	return True
 
 
 def getNavigatorObject() -> NVDAObjects.NVDAObject:
