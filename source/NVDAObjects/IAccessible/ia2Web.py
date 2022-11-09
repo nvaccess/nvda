@@ -274,11 +274,15 @@ class Switch(Ia2Web):
 	# role="switch" gets mapped to IA2_ROLE_TOGGLE_BUTTON, but it uses the
 	# checked state instead of pressed. The simplest way to deal with this
 	# identity crisis is to map it to a check box.
-	role = controlTypes.Role.CHECKBOX
+	role = controlTypes.Role.SWITCH
 
 	def _get_states(self):
 		states = super().states
 		states.discard(controlTypes.State.PRESSED)
+		states.discard(controlTypes.State.CHECKABLE)
+		if controlTypes.State.CHECKED in states:
+			states.discard(controlTypes.State.CHECKED)
+			states.add(controlTypes.State.ON)
 		return states
 
 

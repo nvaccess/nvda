@@ -1,10 +1,15 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2019-2022 Bill Dengler
+# Copyright (C) 2019-2022 Bill Dengler, Leonard de Ruijter
 
+import api
+import config
+import controlTypes
 import ctypes
 import NVDAHelper
+import NVDAState
+import speech
 import textInfos
 import textUtils
 import UIAHandler
@@ -12,9 +17,13 @@ import UIAHandler
 from comtypes import COMError
 from diffHandler import prefer_difflib
 from logHandler import log
-from UIAHandler.utils import _getConhostAPILevel
+from typing import (
+	Any,
+	Optional,
+)
+from UIAHandler.utils import _getConhostAPILevel, _shouldUseWindowsTerminalNotifications
 from UIAHandler.constants import WinConsoleAPILevel
-from . import UIATextInfo
+from . import UIA, UIATextInfo
 from ..behaviors import EnhancedTermTypedCharSupport, KeyboardHandlerBasedTypedCharSupport
 from ..window import Window
 
@@ -419,14 +428,58 @@ def findExtraOverlayClasses(obj, clsList):
 		clsList.append(consoleUIAWindow)
 
 
-class WinTerminalUIA(EnhancedTermTypedCharSupport):
+class _DiffBasedWinTerminalUIA(EnhancedTermTypedCharSupport):
+	"""
+	An overlay class for Windows Terminal (wt.exe) that uses diffing to speak
+	new text.
+	"""
+
 	def event_UIA_notification(self, **kwargs):
-		"""
-		In an upcoming terminal release, UIA notification events will be sent
-		to announce new text. Block these for now to avoid double-reporting of
-		text changes.
-		@note: In the longer term, NVDA should leverage these events in place
-		of the current LiveText strategy, as performance will likely be
-		significantly improved and #11002 can be completely mitigated.
-		"""
+		"Block notification events when diffing to prevent double reporting."
 		log.debugWarning(f"Notification event blocked to avoid double-report: {kwargs}")
+
+
+class _NotificationsBasedWinTerminalUIA(UIA):
+	"""
+	An overlay class for Windows Terminal (wt.exe) that uses UIA notification
+	events provided by the application to speak new text.
+	"""
+
+	#: Override the role, which is controlTypes.Role.STATICTEXT by default.
+	role = controlTypes.Role.TERMINAL
+	#: New line text is announced using UIA notification events
+	announceNewLineText = False
+
+	def event_UIA_notification(
+			self,
+			notificationKind: Optional[int] = None,
+			notificationProcessing: Optional[int] = UIAHandler.NotificationProcessing_CurrentThenMostRecent,
+			displayString: Optional[str] = None,
+			activityId: Optional[str] = None
+	):
+		# Do not announce output from background terminals.
+		if self.appModule != api.getFocusObject().appModule:
+			return
+		# microsoft/terminal#12358: Automatic reading of terminal output
+		# is provided by UIA notifications. If the user does not want
+		# automatic reporting of dynamic output, suppress this notification.
+		if not config.conf["presentation"]["reportDynamicContentChanges"]:
+			return
+		for line in displayString.splitlines():
+			if line and not line.isspace():  # Don't say "blank" during autoread
+				speech.speakText(line)
+
+
+def __getattr__(attrName: str) -> Any:
+	"""Module level `__getattr__` used to preserve backward compatibility."""
+	if attrName == "WinTerminalUIA" and NVDAState._allowDeprecatedAPI():
+		log.warning(
+			"WinTerminalUIA is deprecated. "
+			"Instead use _DiffBasedWinTerminalUIA or _NotificationsBasedWinTerminalUIA"
+		)
+		return (
+			_NotificationsBasedWinTerminalUIA
+			if _shouldUseWindowsTerminalNotifications()
+			else _DiffBasedWinTerminalUIA
+		)
+	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")

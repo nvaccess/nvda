@@ -6,6 +6,7 @@
 """Logic for NVDA + Google Chrome tests
 """
 
+import typing
 import os
 from robot.libraries.BuiltIn import BuiltIn
 # imported methods start with underscore (_) so they don't get imported into robot files as keywords
@@ -21,6 +22,9 @@ import NvdaLib as _NvdaLib
 _builtIn: BuiltIn = BuiltIn()
 _chrome: _ChromeLib = _getLib("ChromeLib")
 _asserts: _AssertsLib = _getLib("AssertsLib")
+
+if typing.TYPE_CHECKING:
+	from ..libraries.SystemTestSpy.speechSpyGlobalPlugin import NVDASpyLib
 
 
 #: Double space is used to separate semantics in speech output this typically
@@ -73,8 +77,11 @@ def _getNoVBuf_AriaDetails_sample() -> str:
 		"""
 
 
-def _doTestAriaDetails_NoVBufNoTextInterface():
+def _doTestAriaDetails_NoVBufNoTextInterface(nvdaConfValues: "NVDASpyLib.NVDAConfMods"):
 	_chrome.prepareChrome(_getNoVBuf_AriaDetails_sample())
+	spy: "NVDASpyLib" = _NvdaLib.getSpyLib()
+	spy.modifyNVDAConfig(nvdaConfValues)
+
 	actualSpeech = _NvdaLib.getSpeechAfterKey("tab")
 	_builtIn.should_contain(actualSpeech, "focus in app")
 
@@ -110,34 +117,38 @@ def test_aria_details_noVBufNoTextInterface():
 	"""The uncommon case, but for completeness, a role=application containing an element that does not have a text
 	interface.
 	"""
-	spy = _NvdaLib.getSpyLib()
-	spy.set_configValue(REVIEW_CURSOR_FOLLOW_CARET_KEY, True)
-	spy.set_configValue(REVIEW_CURSOR_FOLLOW_FOCUS_KEY, True)
-	_doTestAriaDetails_NoVBufNoTextInterface()
+	_doTestAriaDetails_NoVBufNoTextInterface(
+		nvdaConfValues=[
+			(REVIEW_CURSOR_FOLLOW_CARET_KEY, True),
+			(REVIEW_CURSOR_FOLLOW_FOCUS_KEY, True),
+	])
 
 
 def test_aria_details_noVBufNoTextInterface_freeReview():
 	"""The uncommon case, but for completeness, a role=application containing an element without a text
 	interface. Test with the review cursor configured not to follow focus or caret.
 	"""
-	spy = _NvdaLib.getSpyLib()
-	spy.set_configValue(REVIEW_CURSOR_FOLLOW_CARET_KEY, False)
-	spy.set_configValue(REVIEW_CURSOR_FOLLOW_FOCUS_KEY, False)
-	_doTestAriaDetails_NoVBufNoTextInterface()
+	_doTestAriaDetails_NoVBufNoTextInterface(
+		nvdaConfValues=[
+			(REVIEW_CURSOR_FOLLOW_CARET_KEY, False),
+			(REVIEW_CURSOR_FOLLOW_FOCUS_KEY, False),
+	])
 
 
 def test_mark_aria_details():
-	spy = _NvdaLib.getSpyLib()
-	spy.set_configValue(REVIEW_CURSOR_FOLLOW_CARET_KEY, True)
-	spy.set_configValue(REVIEW_CURSOR_FOLLOW_FOCUS_KEY, True)
-	exercise_mark_aria_details()
+	exercise_mark_aria_details(
+		nvdaConfValues=[
+			(REVIEW_CURSOR_FOLLOW_CARET_KEY, True),
+			(REVIEW_CURSOR_FOLLOW_FOCUS_KEY, True),
+	])
 
 
 def test_mark_aria_details_FreeReviewCursor():
-	spy = _NvdaLib.getSpyLib()
-	spy.set_configValue(REVIEW_CURSOR_FOLLOW_CARET_KEY, False)
-	spy.set_configValue(REVIEW_CURSOR_FOLLOW_FOCUS_KEY, False)
-	exercise_mark_aria_details()
+	exercise_mark_aria_details(
+		nvdaConfValues=[
+			(REVIEW_CURSOR_FOLLOW_CARET_KEY, False),
+			(REVIEW_CURSOR_FOLLOW_FOCUS_KEY, False),
+	])
 
 
 def test_mark_aria_details_role():
@@ -288,7 +299,7 @@ def test_mark_aria_details_role():
 	)
 
 
-def exercise_mark_aria_details():
+def exercise_mark_aria_details(nvdaConfValues: "NVDASpyLib.NVDAConfMods"):
 	_chrome.prepareChrome(
 		"""
 		<div class="editor" contenteditable spellcheck="false" role="textbox" aria-multiline="true">
@@ -311,6 +322,8 @@ def exercise_mark_aria_details():
 		</div>
 		"""
 	)
+	spy: "NVDASpyLib" = _NvdaLib.getSpyLib()
+	spy.modifyNVDAConfig(nvdaConfValues)
 
 	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey('downArrow')
 	_asserts.speech_matches(
@@ -859,7 +872,7 @@ def test_ariaCheckbox_browseMode():
 	"""
 	Navigate to an unchecked checkbox in reading mode.
 	"""
-	testFile = os.path.join(ARIAExamplesDir, "checkbox", "checkbox-1", "checkbox-1.html")
+	testFile = os.path.join(ARIAExamplesDir, "checkbox", "checkbox.html")
 	_chrome.prepareChrome(
 		f"""
 			<iframe src="{testFile}"></iframe>
@@ -1432,16 +1445,17 @@ def test_preventDuplicateSpeechFromDescription_browse_tab():
 	Settings which may affect this:
 	- speech.reportObjectDescriptions default:True
 	"""
-	spy = _NvdaLib.getSpyLib()
-	REPORT_OBJ_DESC_KEY = ["presentation", "reportObjectDescriptions"]
-	spy.set_configValue(REPORT_OBJ_DESC_KEY, True)
-
 	_chrome.prepareChrome(
 		"""
 		<a href="#" title="apple" style="display:block">apple</a>
 		<a href="#" title="banana" aria-label="banana" style="display:block">contents</a>
 		"""
 	)
+
+	spy = _NvdaLib.getSpyLib()
+	REPORT_OBJ_DESC_KEY = ["presentation", "reportObjectDescriptions"]
+	spy.set_configValue(REPORT_OBJ_DESC_KEY, True)
+
 	# Read in browse
 	actualSpeech = _chrome.getSpeechAfterKey('tab')
 	_asserts.strings_match(
@@ -1462,16 +1476,16 @@ def preventDuplicateSpeechFromDescription_focus():
 	Settings which may affect this:
 	- speech.reportObjectDescriptions default:True
 	"""
-	spy = _NvdaLib.getSpyLib()
-	REPORT_OBJ_DESC_KEY = ["presentation", "reportObjectDescriptions"]
-	spy.set_configValue(REPORT_OBJ_DESC_KEY, True)
-
 	_chrome.prepareChrome(
 		"""
 		<a href="#" title="apple" style="display:block">apple</a>
 		<a href="#" title="banana" aria-label="banana" style="display:block">contents</a>
 		"""
 	)
+	spy = _NvdaLib.getSpyLib()
+	REPORT_OBJ_DESC_KEY = ["presentation", "reportObjectDescriptions"]
+	spy.set_configValue(REPORT_OBJ_DESC_KEY, True)
+
 	# Force focus mode
 	actualSpeech = _chrome.getSpeechAfterKey("NVDA+space")
 	_asserts.strings_match(
@@ -1495,11 +1509,6 @@ def test_ensureNoBrowseModeDescription():
 	Test that option (speech.reportObjectDescriptions default:True)
 	does not result in description in browse mode.
 	"""
-	REPORT_OBJ_DESC_KEY = ["presentation", "reportObjectDescriptions"]
-	spy = _NvdaLib.getSpyLib()
-	# prevent browse / focus mode messages from interfering, 0 means don't show.
-	spy.set_configValue(["braille", "messageTimeout"], 0)
-
 	_chrome.prepareChrome(
 		"\n".join([
 			r'<button>something for focus</button>'
@@ -1508,6 +1517,11 @@ def test_ensureNoBrowseModeDescription():
 			r'<a href="#" style="display:block" title="Fish">Banana</a>',
 		])
 	)
+
+	REPORT_OBJ_DESC_KEY = ["presentation", "reportObjectDescriptions"]
+	spy = _NvdaLib.getSpyLib()
+	# prevent browse / focus mode messages from interfering, 0 means don't show.
+	spy.set_configValue(["braille", "messageTimeout"], 0)
 
 	actualSpeech = _NvdaLib.getSpeechAfterKey('tab')
 	_builtIn.should_contain(actualSpeech, "something for focus")
@@ -1616,10 +1630,6 @@ def test_quickNavTargetReporting():
 	When using quickNav, the target object should be spoken first, inner context should be given before outer
 	context.
 	"""
-	spy = _NvdaLib.getSpyLib()
-	REPORT_ARTICLES = ["documentFormatting", "reportArticles"]
-	spy.set_configValue(REPORT_ARTICLES, False)
-
 	_chrome.prepareChrome(
 		"""
 		<div
@@ -1637,6 +1647,10 @@ def test_quickNavTargetReporting():
 		</div>
 		"""
 	)
+	spy = _NvdaLib.getSpyLib()
+	REPORT_ARTICLES = ["documentFormatting", "reportArticles"]
+	spy.set_configValue(REPORT_ARTICLES, False)
+
 	# Quick nav to heading
 	actualSpeech = _chrome.getSpeechAfterKey("h")
 	_asserts.strings_match(
@@ -1676,10 +1690,6 @@ def test_focusTargetReporting():
 	When moving focus the target object should be spoken first, inner context should be given before outer
 	context.
 	"""
-	spy = _NvdaLib.getSpyLib()
-	REPORT_ARTICLES = ["documentFormatting", "reportArticles"]
-	spy.set_configValue(REPORT_ARTICLES, False)
-
 	_chrome.prepareChrome(
 		"""
 		<a href="#">before Target</a>
@@ -1698,6 +1708,11 @@ def test_focusTargetReporting():
 		</div>
 		"""
 	)
+
+	spy = _NvdaLib.getSpyLib()
+	REPORT_ARTICLES = ["documentFormatting", "reportArticles"]
+	spy.set_configValue(REPORT_ARTICLES, False)
+
 	# Set focus
 	actualSpeech = _chrome.getSpeechAfterKey("tab")
 	_asserts.strings_match(
@@ -2088,4 +2103,250 @@ def test_focus_mode_on_focusable_read_only_lists():
 			"Focus mode",  # Focus mode should be enabled automatically and be indicated
 		]),
 		message="focus mode - focus list item and turn on focus mode"
+	)
+
+
+def test_i10890():
+	"""
+	Ensure that sort state is announced on a column header when changed with inner button
+	"""
+	spy = _NvdaLib.getSpyLib()
+	# Chrome sometimes exposes tables as clickable, sometimes not.
+	# This test does not need to know, so disable reporting of clickables.
+	spy.set_configValue(["documentFormatting", "reportClickable"], False)
+	testFile = os.path.join(ARIAExamplesDir, "grid", "datagrids.html")
+	_chrome.prepareChrome(
+		f"""
+			<iframe src="{testFile}"></iframe>
+		"""
+	)
+	# Jump to the Example 2 heading
+	_chrome.getSpeechAfterKey("3")
+	actualSpeech = _chrome.getSpeechAfterKey("3")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"Example 2: Sortable Data Grid With Editable Cells",
+			"heading",
+			"level 3",
+		])
+	)
+	# Jump to the table
+	actualSpeech = _chrome.getSpeechAfterKey("t")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"Transactions January 1 through January 7",
+			"table",
+			"with 8 rows and 6 columns",
+			"row 1",
+			"column 1",
+			"sorted ascending",
+			"Date",
+			"button",
+		])
+	)
+	# Press the button
+	actualSpeech = _chrome.getSpeechAfterKey("space")
+	# and ensure that the new sort state is spoken.
+	_asserts.strings_match(
+		actualSpeech,
+		"sorted descending",
+	)
+
+
+def test_ARIASwitchRole():
+	"""
+	Ensure that ARIA switch controls have an appropriate role and states in browse mode.
+	"""
+	testFile = os.path.join(ARIAExamplesDir, "switch", "switch.html")
+	_chrome.prepareChrome(
+		f"""
+			<iframe src="{testFile}"></iframe>
+		"""
+	)
+	# Jump to the first heading 2 in the iframe.
+	actualSpeech = _chrome.getSpeechAfterKey("2")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"frame",
+			"main landmark",
+			"Example",
+			"heading  level 2"
+		]),
+		message="Move to first heading 2 in frame",
+	)
+	# Tab to the switch control
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"Notifications",
+			"switch",
+			"off",
+		]),
+		message="tab to switch control",
+	)
+	# Read the current line
+	actualSpeech = _chrome.getSpeechAfterKey("numpad8")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"switch",
+			"off",
+			"Notifications",
+		]),
+		message="Read current line",
+	)
+	# Report the current focus
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"Notifications",
+			"switch",
+			"focused",
+			"off",
+		]),
+		message="Report focus",
+	)
+	# Toggle the switch on
+	actualSpeech = _chrome.getSpeechAfterKey("space")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"on",
+		]),
+		message="Toggle switch control on",
+	)
+	# Read the current line
+	actualSpeech = _chrome.getSpeechAfterKey("numpad8")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"switch",
+			"on",
+			"Notifications",
+		]),
+		message="Read current line",
+	)
+	# Report the current focus
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"Notifications",
+			"switch",
+			"focused",
+			"on",
+		]),
+		message="Report focus",
+	)
+	# Toggle the switch off
+	actualSpeech = _chrome.getSpeechAfterKey("space")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"off",
+		]),
+		message="Toggle switch control off",
+	)
+	# Read the current line
+	actualSpeech = _chrome.getSpeechAfterKey("numpad8")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"switch",
+			"off",
+			"Notifications",
+		]),
+		message="Read current line",
+	)
+	# Report the current focus
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"Notifications",
+			"switch",
+			"focused",
+			"off",
+		]),
+		message="Report focus",
+	)
+
+
+def test_i13307():
+	"""
+	Even if (to avoid duplication) NVDA may choose to not speak a landmark or region's label
+	when arrowing into a landmark or region with an aria-labelledby,
+	it should still speak the label when junping inside the landmark or region
+	from outside using quicknav or focus.
+	"""
+	_chrome.prepareChrome(
+		"""
+		<p>navigation landmark with aria-label</p>
+		<nav aria-label="label">
+			<button>inner element</button>
+		</nav>
+		<p>Navigation landmark with aria-labelledby</p>
+		<nav aria-labelledby="innerHeading1">
+			<h1 id="innerHeading1">labelled by</h1>
+			<button>inner element</button>
+		</nav>
+		<p>Region with aria-label</p>
+		<section aria-label="label">
+			<button>inner element</button>
+		</section>
+		<p>Region with aria-labelledby</p>
+		<section aria-labelledby="innerHeading2">
+			<h1 id="innerHeading2">labelled by</h1>
+			<button>inner element</button>
+		</section>
+		"""
+	)
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"label",
+			"navigation landmark",
+			"inner element",
+			"button",
+		]),
+		message="jumping into landmark with aria-label should speak label",
+	)
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"labelled by",
+			"navigation landmark",
+			"inner element",
+			"button",
+		]),
+		message="jumping into landmark with aria-labelledby should speak label",
+	)
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"label",
+			"region",
+			"inner element",
+			"button",
+		]),
+		message="jumping into region with aria-label should speak label",
+	)
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"labelled by",
+			"region",
+			"inner element",
+			"button",
+		]),
+		message="jumping into region with aria-labelledby should speak label",
 	)

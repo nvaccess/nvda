@@ -1149,7 +1149,9 @@ Tries to force this object to take the focus.
 			import tones
 			tones.beep(3000,40)
 
-	def event_mouseMove(self,x,y):
+	def event_mouseMove(self, x: int, y: int) -> None:
+		from utils.security import objectBelowLockScreenAndWindowsIsLocked
+
 		if not self._mouseEntered and config.conf['mouse']['reportObjectRoleOnMouseEnter']:
 			speech.cancelSpeech()
 			speech.speakObjectProperties(self,role=True)
@@ -1164,6 +1166,12 @@ Tries to force this object to take the focus.
 			info=NVDAObjectTextInfo(self,textInfos.POSITION_FIRST)
 		except LookupError:
 			return
+
+		# This event may fire on the lock screen, as such
+		# ensure the target TextInfo does not contain secure information.
+		if objectBelowLockScreenAndWindowsIsLocked(info.obj):
+			return
+
 		if config.conf["reviewCursor"]["followMouse"]:
 			api.setReviewPosition(info, isCaret=True)
 		info.expand(info.unit_mouseChunk)
@@ -1205,7 +1213,18 @@ Tries to force this object to take the focus.
 		self.event_stateChange()
 
 	def event_stateChange(self):
-		if self is api.getFocusObject():
+		# Automatically announce state changes for certain objects.
+		inFocus = (
+			# this is the current focus:
+			# E.g. announcing the checked state of a checkbox
+			self is api.getFocusObject()
+			# this is a focus ancestor:
+			# Including the ancestors supports scenarios such as
+			# when pressing a focused button changes the state of an ancestor container,
+			# E.g. a button inside a column header that changes the sorting state of the column (#10890)
+			or any(self is obj for obj in api.getFocusAncestors())
+		)
+		if inFocus:
 			speech.speakObjectProperties(self, states=True, reason=controlTypes.OutputReason.CHANGE)
 		braille.handler.handleUpdate(self)
 		vision.handler.handleUpdate(self, property="states")
