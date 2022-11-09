@@ -624,11 +624,10 @@ def initializeModulePackagePaths():
 		addDirsToPythonPackagePath(module)
 
 
-def addDirsToPythonPackagePath(module, subdir: typing.Optional[str] = None):
+def addDirsToPythonPackagePath(module: ModuleType, subdir: typing.Optional[str] = None):
 	"""Add add-on and scratchpath directories for a module to the search path (__path__) of a Python package.
 	C{subdir} is added to each directory. It defaults to the name of the Python package.
 	@param module: The root module of the package.
-	@type module: module
 	@param subdir: The subdirectory to be used, C{None} for the name of C{module}.
 	"""
 	if config.isAppX or globalVars.appArgs.disableAddons:
@@ -646,7 +645,7 @@ def addDirsToPythonPackagePath(module, subdir: typing.Optional[str] = None):
 	if not os.path.isdir(fullPath):
 		os.makedirs(fullPath)
 	# Insert this path at the beginning  of the module's search paths.
-	# The module's search paths may not be a mutable  list, so replace it with a new one
+	# The module's search paths may not be a mutable list, so replace it with a new one
 	pathList = [fullPath]
 	pathList.extend(module.__path__)
 	module.__path__ = pathList
