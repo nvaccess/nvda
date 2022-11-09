@@ -60,9 +60,12 @@ class IA2WebAnnotation(AnnotationOrigin):
 			if config.conf["debugLog"]["annotations"]:
 				log.debug("no annotations available")
 			return
-		detailsRelations = self._originObj.detailsRelations
-		for rel in detailsRelations:
-			yield IA2WebAnnotationTarget(rel)
+
+		ia2WebAnnotationTargetsGen = (
+			IA2WebAnnotationTarget(rel)
+			for rel in self._originObj.detailsRelations
+		)
+		yield from ia2WebAnnotationTargetsGen
 
 	@property
 	def roles(self) -> typing.Iterable["controlTypes.Role"]:

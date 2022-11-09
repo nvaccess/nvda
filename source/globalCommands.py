@@ -2305,7 +2305,7 @@ class GlobalCommands(ScriptableObject):
 			log.debug(f"Trying with nvdaObject : {objAtStart}")
 
 		if objAtStart.detailsSummary:
-			log.debug("NVDAObjectAtStart of caret has details.")
+			log.debug(f"NVDAObjectAtStart of caret has details: {objAtStart.detailsSummary}")
 			return objAtStart
 		elif api.getFocusObject():
 			# If fetching from the caret position fails, try via the focus object
@@ -2366,17 +2366,28 @@ class GlobalCommands(ScriptableObject):
 			return
 
 		targets = list(objWithAnnotation.annotations.targets)
+		log.debug(f"Number of targets: {len(targets)}")
+		if 1 > len(targets):
+			log.debugWarning("Expected some annotation targets, none retrieved.")
+			return
 		if (
 			self._annotationNav.lastReported
 			and objWithAnnotation == self._annotationNav.lastReported.origin
 			and None is not self._annotationNav.lastReported.indexOfLastReportedSummary
 		):
 			last = self._annotationNav.lastReported.indexOfLastReportedSummary
-			indexOfNextTarget = next(itertools.cycle(itertools.chain(
-				range(last + 1, len(targets)),
-				range(0, last + 1))
-			))
+			indexOfNextTarget = (last + 1) % len(targets)
 		else:
+			log.debug(
+				f"No prior target summary reported:"
+				f" lastReported: {self._annotationNav.lastReported}")
+			if self._annotationNav.lastReported:
+				log.debug(
+					f" objWithAnnotation == self._annotationNav.lastReported.origin: "
+					f"{objWithAnnotation == self._annotationNav.lastReported.origin}"
+					f" self._annotationNav.lastReported.indexOfLastReportedSummary: "
+					f"{self._annotationNav.lastReported.indexOfLastReportedSummary}"
+				)
 			indexOfNextTarget = 0
 		targetToReport = targets[indexOfNextTarget]
 		ui.message(targetToReport.summary)
