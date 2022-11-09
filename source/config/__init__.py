@@ -74,6 +74,13 @@ def __getattr__(attrName: str) -> Any:
 	if attrName == "RUN_REGKEY" and NVDAState._allowDeprecatedAPI():
 		log.warning("RUN_REGKEY is deprecated, use RegistryKey.RUN instead.")
 		return RegistryKey.RUN.value
+	if attrName == "addConfigDirsToPythonPackagePath" and NVDAState._allowDeprecatedAPI():
+		log.warning(
+			"addConfigDirsToPythonPackagePath is deprecated, "
+			"use addonHandler.packaging.addDirsToPythonPackagePath instead."
+		)
+		from addonHandler.packaging import addDirsToPythonPackagePath
+		return addDirsToPythonPackagePath
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
 
 
