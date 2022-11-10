@@ -34,8 +34,6 @@ contained by settings byte can be regarded as notes to screenreader, and it
 is screenreader or driver job to use them when applicable. For example,
 there are no separate status cells in the device but if screenreader
 supports using status cells, it can be notified to use them by settings byte.
-This driver ignores status cells related settings because NVDA does not
-use status cells at the moment.
 
 Settings byte can be anything between \x00 and \xff. Thus it could be the
 same as init byte.
@@ -55,26 +53,25 @@ combinations.
 There are other devices with same PID&VID. When automatic braille display
 detection is used, other displays with same PID&VID are tried before Albatross.
 Those drivers try to send queries to the port to detect their own displays.
-These queries may cause Albatross to send unexpected init packets which in turn
-could disturb this driver - it could get inappropriate settings byte.
+These queries may cause Albatross to send unexpected init packets which in
+turn could disturb this driver - it could get inappropriate settings byte.
+This is tried to prevent by resetting I/O buffers so that strange packets
+would be discarded.
 
-Part of Albatross settings byte values get the other driver to infinite loop
-in its detection procedure.
+If however, there are still strange init packets, Albatross should be
+manually selected from the display list.
 
-For both problems the simplest solution is to manually select Albatross from
-the display list. If the problem is other driver infinite loop, Albatross
-internal settings can be changed until problem disappears. When there is no
-connection, it is important to switch display off and back on if used internal
-menu, before trying new connection.
+To reduce complexity of data handling this driver accepts only settings bytes
+<= \xfe. From user perspective this means that with 80 model user can ask
+screenreader to use at most 14 status cells when without limitation user
+could ask 15. Limitation is applied only if user has switched all other
+settings to values that cause value of byte to be \xff. From settings byte
+for status cells there are reserved the most right 4 bits. Limitation does
+not affect on 46 cells model because the most left bit of byte defines the
+length of display (0 for 46 and 1 for 80 cells model).
 
-To reduce complexity of data handling this driver accepts only bytes <= \xfe.
-From user perspective this means that with 80 model user can ask screenreader
-to use at most 14 status cells when without limitation user could ask 15.
-Limitation is applied only if user has switched all other settings to values
-that cause value of byte to be \xff. From settings byte for status cells
-there are reserved the most right 4 bits. Limitation does not affect on 46
-cells model because the most left bit of byte defines the length of display
-(0 for 46 and 1 for 80 cells model).
+Note: This driver ignores status cells related settings because NVDA does not
+use status cells at the moment.
 
 ### Driver requirements
 
