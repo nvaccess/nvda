@@ -202,6 +202,9 @@ setup(
 			"winxptheme",
 			# numpy is an optional dependency of comtypes but we don't require it.
 			"numpy",
+			# multiprocessing isn't going to work in a frozen environment
+			"multiprocessing",
+			"concurrent.futures.process",
 		],
 		"packages": [
 			"NVDAObjects",

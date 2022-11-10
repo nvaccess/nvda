@@ -97,6 +97,15 @@ Bitte lesen Sie das [Entwicklerhandbuch https://www.nvaccess.org/files/nvda/docu
 -
 
 
+= 2022.3.2 =
+Dies ist eine kleinere Version, die Probleme mit 2022.3.1 behebt und eine Sicherheitslücke schließt.
+
+== Sicherheitsproblembehebungen ==
+- Behebt ein Problem aus 2022.3.1, bei der bestimmte Funktionen während der Anzeige von Sicherheitsmeldungen deaktiviert wurden. (#14286)
+- Behebt ein Problem aus 2022.3.1, bei der bestimmte Funktionen nach der Anmeldung deaktiviert wurden, sobald NVDA auf dem Sperrbildschirm gestartet wurde. (#14301)
+-
+
+
 = 2022.3.1 =
 Dies ist eine kleinere Version, die mehrere Sicherheitsprobleme behebt.
 Bitte melden Sie Sicherheitsprobleme umgehend an info@nvaccess.org.
@@ -110,6 +119,7 @@ Bitte melden Sie Sicherheitsprobleme umgehend an info@nvaccess.org.
 == Fehlerbehebungen ==
 - Verhindert, dass ein nicht authentifizierter Benutzer die Einstellungen für die Anzeige von Sprach- und Braille-Ausgaben auf dem Sperrbildschirm aktualisiert. ([GHSA-grvr-j2h8-3qm4 https://github.com/nvaccess/nvda/security/advisories/GHSA-grvr-j2h8-3qm4])
 -
+
 
 = 2022.3 =
 Ein großer Teil dieser Version wurde von der NVDA-Entwicklergemeinschaft beigesteuert. 
@@ -222,6 +232,7 @@ Autoren von NVDA-Erweiterungen sollten bitte ein Ticket bei GitHub einreichen, w
 - ``appModules.lockapp.LockAppObject`` sollte durch ``NVDAObjects.lockscreen.LockScreenObject`` ersetzt werden. (GHSA-rmq3-vvhq-gp32)
 - ``appModules.lockapp.AppModule.SAFE_SCRIPTS`` sollte durch ``utils.security.getSafeScripts()`` ersetzt werden. (GHSA-rmq3-vvhq-gp32)
 -
+
 
 = 2022.2 =
 Diese Version enthält viele Fehlerbehebungen.
@@ -347,6 +358,7 @@ Code, der von einem dieser Module importiert, sollte stattdessen von dem Ersatzm
 | winmail | msimn |
 | zend-eclipse-php | eclipse |
 | zendstudio | eclipse |
+
 
 = 2022.1 =
 Diese Version enthält wichtige Verbesserungen der UIA-Unterstützung für Microsoft Office.
