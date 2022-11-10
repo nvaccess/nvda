@@ -254,7 +254,7 @@ def _upgradeConfigFrom_8_to_9_showMessages(profile: ConfigObj) -> None:
 					" Fixing it with setting showMessages on DISABLE."
 				)
 		else:
-			if noMessageTimeout:
+			if noMessageTimeoutVal:
 				profile['braille']['showMessages'] = ShowMessages.SHOW_INDEFINITELY.value
 			else:
 				profile['braille']['showMessages'] = ShowMessages.USE_TIMEOUT.value
