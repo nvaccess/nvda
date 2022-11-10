@@ -12,8 +12,6 @@ and prevents navigating beyond apps open on the lock screen (LockScreen.exe, Mag
 Used to:
 - only allow a whitelist of safe scripts to run
 - ensure object navigation cannot occur outside of the lockscreen
-
-https://docs.microsoft.com/en-us/windows/win32/api/wtsapi32/nf-wtsapi32-wtsregistersessionnotification
 """
 
 from __future__ import annotations
