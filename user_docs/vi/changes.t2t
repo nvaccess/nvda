@@ -9,7 +9,7 @@ Bản phát hành này tích hợp vài phím lệnh mới, bao gồm các lện
 Một số lỗi cũng đã được sửa.
 
 Đã cập nhật eSpeak và LibLouis.
-Đã có các bản chữ nổi mới của tiếng Trung Quốc, Thụy Điển, Luganda và Kinyarwanda.
+Đã có các bảng chữ nổi mới của tiếng Trung Quốc, Thụy Điển, Luganda và Kinyarwanda.
 
 == Tính năng mới ==
 - Đã thêm phần "Hướng Dẫn Nhanh" vào tài liệu hướng dẫn sử dụng. (#13934)
@@ -56,7 +56,7 @@ Một số lỗi cũng đã được sửa.
 -
 
 
-== Sữa lỗi ==
+== Sửa lỗi ==
 - Khi cập nhật NVDA bằng công cụ Windows Package Manager CLI (aka winget), phiên bản chính thức của NVDA sẽ không còn bị coi là bản mới hơn khi bạn đang cài một phiên bản alpha. (#12469)
 - NVDA giờ đây sẽ thông báo chính xác các điều khiển dạng Group boxe trong các ứng dụng Java. (#13962)
 - Con trỏ nháy đã đi theo một cách chính xác những văn bản được đọc trong khi "đọc tất cả" trong các ứng dụng như Bookworm, WordPad, hoặc trình xem log của NVDA. (#13420, #9179)
@@ -65,11 +65,11 @@ Một số lỗi cũng đã được sửa.
   - Việc sửa lỗi này áp dụng cho Windows 11 Sun Valley 2 (version 22H2) trở lên.
   - Đăng kí chọn lọc cho các thay đổi thuộc tính và sự kiện của UI Automation giờ đây mặc định được bật.
   -
-- Việc đọc văn bản, đầu ra chữ nổi và việc ngăn đọc mật khẩu giờ đây đã hoạt động như mong muốn trong  các điều khiển Windows Terminal được nhun trong Visual Studio 2022. (#14194)
+- Việc đọc văn bản, đầu ra chữ nổi và việc ngăn đọc mật khẩu giờ đây đã hoạt động như mong muốn trong  các điều khiển Windows Terminal được nhún trong Visual Studio 2022. (#14194)
 - NVDA giờ đây được xem là  DPI khi dùng nhiều màn hình.
 Có một vài lỗi được sửa để dùng thiết lập DPI cao hơn 100% hoặc nhiều màn hình.
 Lỗi có thể vẫn tồn tại với các phiên bản Windows cũ hơn Windows 10 1809.
-Để việc sửa lỗi phát huy tác dụng, những ứng dụng mà NVDA tương tác cũng phải là ứng dùng được xem là ứng dụng DPI.
+Để việc sửa lỗi phát huy tác dụng, những ứng dụng mà NVDA tương tác cũng phải là ứng dụng được xem là ứng dụng DPI.
 Lưu ý là vẫn còn những lỗi được tìm thấy với Chrome và Edge. (#13254)
   - Các khung làm nổi trực quan giờ đây đã được đặt chính xác ở hầu hết các ứng dụng. (#13370, #3875, #12070)
   - Việc tương tác trên màn hình cảm ứng giờ đây đã hoạt động chính xác với hầu hết các ứng dụng. (#7083)
@@ -86,6 +86,17 @@ Lưu ý là vẫn còn những lỗi được tìm thấy với Chrome và Edge.
 Phần này không được dịch. Vui lòng xem bản tiếng Anh changes.t2t để biết thêm thông tin.
 
 
+= 2022.3.2 =
+Đây là bản phát hành phụ nhằm sửa lỗi hồi quy với 2022.3.1 và giải quyết một lỗi bảo mật.
+
+== các sửa lỗi bảo mật ==
+
+
+== Sửa lỗi ==
+- Sửa lỗi hồi quy từ bản 2022.3.1 làm cho vài chức năng bị vô hiệu ở các màn hình bảo vệ. (#14286)
+- Sửa lỗi hồi quy từ bản 2022.3.1 làm cho vài chức năng bị vô hiệu sau khi đăng nhập, nếu NVDA được gọi chạy từ màn hình khóa. (#14301)
+
+
 = 2022.3.1 =
 Đây là một bản phát hành phụ để sửa vài lỗi bảo mật..
 Vui lòng báo cáo các vấn đề về bảo mật đến info@nvaccess.org.
@@ -99,7 +110,7 @@ Vui lòng báo cáo các vấn đề về bảo mật đến info@nvaccess.org.
 ([GHSA-grvr-j2h8-3qm4 https://github.com/nvaccess/nvda/security/advisories/GHSA-grvr-j2h8-3qm4])
 -
 
-== Sữa lỗi ==
+== Sửa lỗi ==
 - Chặn  một người dùng không xác định cập nhật các thiết lập cho trình xem nội dung đọc và   trình xem nội dung chữ nổi ở màn hình khóa. ([GHSA-grvr-j2h8-3qm4 https://github.com/nvaccess/nvda/security/advisories/GHSA-grvr-j2h8-3qm4])
 -
 
