@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master-9280,3350d74\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-28 00:02+0000\n"
-"PO-Revision-Date: 2022-10-28 14:58+0330\n"
+"POT-Creation-Date: 2022-11-04 00:02+0000\n"
+"PO-Revision-Date: 2022-11-05 23:32+0330\n"
 "Last-Translator: Mohammadreza Rashad <mohammadreza5712@gmail.com>\n"
 "Language-Team: NVDA Translation Team <nvda-translations@groups.io>\n"
 "Language: fa\n"
@@ -2387,6 +2387,15 @@ msgstr ""
 msgid "gesture map File Error"
 msgstr "خطا در فایلِ نقشه‌ی فرمانهای کلیدی لمسی"
 
+#. Translators: Message when NVDA is having an issue starting up
+#, python-format
+msgid ""
+"NVDA is failing to fetch the foreground window. If this continues, NVDA will "
+"quit starting in %d seconds."
+msgstr ""
+"NVDA هنگامِ دریافتِ پنجره‌ی پیش‌زمینه دچار خطا شد. اگر این وضعیت ادامه یابد، "
+"NVDA تا %d ثانیه‌ی دیگر از شروع به کار منصرف میشود."
+
 #. Translators: This is spoken when NVDA is starting.
 msgid "Loading NVDA. Please wait..."
 msgstr "NVDA دارد بارگذاری می‌شود. لطفا شکیبا باشید..."
@@ -2678,8 +2687,8 @@ msgid ""
 "If pressed once, reports the current time. If pressed twice, reports the "
 "current date"
 msgstr ""
-"اگر یک بار فشار داده شود زمانِ کنونی را اعلام میکند. اگر دو بار فشار داده شود "
-"تاریخِ کنونی را اعلام میکند"
+"اگر یک بار فشرده شود، زمانِ جاری را اعلام میکند. اگر دو بار فشرده شود، تاریخِ "
+"جاری را اعلام میکند"
 
 #. Translators: Input help mode message for increase synth setting value command.
 msgid "Increases the currently active setting in the synth settings ring"
@@ -8535,7 +8544,7 @@ msgstr "تمامِ تنظیمات را به حالتِ از پیش ذخیره ش
 #. Translators: The label for the menu item to reset settings to default settings.
 #. Here, default settings means settings that were there when the user first used NVDA.
 msgid "&Reset configuration to factory defaults"
-msgstr "برگرداندنِ تنظیمات به &پیش‌فرضِ تولید کننده"
+msgstr "برگرداندنِ تن&ظیمات به پیش‌فرضِ تولید کننده"
 
 #. Translators: The help text for the menu item to reset settings to default settings.
 #. Here, default settings means settings that were there when the user first used NVDA.
@@ -9311,7 +9320,7 @@ msgstr "&اقدام به نصب (توصیه نمیشود)"
 
 #. Translators: The title of the Create Portable NVDA dialog.
 msgid "Create Portable NVDA"
-msgstr "ایجادِ NVDA‌ی قابلِ حمل"
+msgstr "ایجادِ NVDAِ قابلِ حمل"
 
 #. Translators: An informational message displayed in the Create Portable NVDA dialog.
 msgid ""
@@ -9523,7 +9532,7 @@ msgstr "یادآوری برای به‌روزرسانی‌های &در انتظ�
 
 #. Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
 msgid "Allow the NVDA project to gather NVDA usage statistics"
-msgstr "اجازه دادن به پروژه‌ی NVDA برای جمع‌آوریِ آمارِ نحوه استفاده از NVDA"
+msgstr "اجازه دادن به پروژه‌ی NVDA برای &جمع‌آوریِ آمارِ نحوه استفاده از NVDA"
 
 #. Translators: A message to warn the user when attempting to copy current
 #. settings to system settings.
@@ -9664,8 +9673,8 @@ msgid ""
 "Include Unicode Consortium data (including emoji) when processing characters "
 "and symbols"
 msgstr ""
-"در بر گرفتنِ داده‌های کنسرسیومِ یونیکُد (از جمله ایموجی‌ها)، هنگامِ پردازشِ نویسه‌ها "
-"و نمادها"
+"در بر گرفتنِ داده‌های کنسرسیومِ &یونیکُد (از جمله ایموجی‌ها)، هنگامِ پردازشِ "
+"نویسه‌ها و نمادها"
 
 #. Translators: This is a label for a setting in voice settings (an edit box to change
 #. voice pitch for capital letters; the higher the value, the pitch will be higher).
@@ -10009,27 +10018,27 @@ msgstr "&نامِ قلم"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "Font &size"
-msgstr "اندا&زه‌ی قلم"
+msgstr "&اندازه‌ی قلم"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "Font attrib&utes"
-msgstr "&مُشَخّصاتِ قلم"
+msgstr "مُ&شَخّصاتِ قلم"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "Su&perscripts and subscripts"
-msgstr "بالا&نویس‌ها و زیرنویس‌ها"
+msgstr "&بالانویس‌ها و زیرنویس‌ها"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "E&mphasis"
-msgstr "تأک&ید"
+msgstr "&تأکید"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "Highlighted (mar&ked) text"
-msgstr "متنِ برجسته (نشان‌گذاری‌شده)"
+msgstr "&متنِ برجسته (نشان‌گذاری‌شده)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -10039,7 +10048,7 @@ msgstr "&سبْک"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "&Colors"
-msgstr "رن&گ‌ها"
+msgstr "&رنگ‌ها"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
@@ -10049,17 +10058,17 @@ msgstr "اطلاعاتِ سند"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "No&tes and comments"
-msgstr "&توضیح‌ها و یادداشت‌ها"
+msgstr "&یادداشت‌ها و توضیح‌ها"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "&Bookmarks"
-msgstr "ن&شانک‌ها"
+msgstr "&نشانک‌ها"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "&Editor revisions"
-msgstr "بازبینی‌های &ویراستار"
+msgstr "&بازبینی‌های ویراستار"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -10084,7 +10093,7 @@ msgstr "&شماره‌ی خط‌ها"
 #. Translators: This is the label for a combobox controlling the reporting of line indentation in the
 #. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
 msgid "Line &indentation reporting:"
-msgstr "اعلامِ تورفتگیِ &خط با"
+msgstr "اعلامِ &تورفتگیِ خط با"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
 msgctxt "line indentation setting"
@@ -10107,12 +10116,12 @@ msgstr "تورفتگیِ &پاراگراف"
 #. Translators: This message is presented in the document formatting settings panelue
 #. If this option is selected, NVDA will report line spacing if available.
 msgid "&Line spacing"
-msgstr "فاص&له‌ی خط‌ها"
+msgstr "فاصله‌ی &خط‌ها"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "&Alignment"
-msgstr "&ترازبندی"
+msgstr "ت&رازبندی"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
@@ -10127,12 +10136,12 @@ msgstr "&جدول‌ها"
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
 msgid "H&eaders"
-msgstr "سرسطرها و سر‌ستون‌&ها"
+msgstr "&سرجدول‌ها"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "Cell c&oordinates"
-msgstr "مُختصاتِ خانه‌های ج&دول"
+msgstr "&مُختصاتِ خانه‌های جدول"
 
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
@@ -10147,7 +10156,7 @@ msgstr "رنگ‌ها و سبْک‌ها"
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
 msgid "Cell &borders:"
-msgstr "حاشیه‌های خانه"
+msgstr "&حاشیه‌های خانه"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
@@ -10172,17 +10181,17 @@ msgstr "&نقلِ قول‌ها"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "&Groupings"
-msgstr "&گروه‌ها"
+msgstr "گ&روه‌ها"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "Lan&dmarks and regions"
-msgstr "بخش‌ها و نا&حیه‌ها"
+msgstr "&بخش‌ها و ناحیه‌ها"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "Arti&cles"
-msgstr "مق&اله‌ها"
+msgstr "&مقاله‌ها"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -10192,7 +10201,7 @@ msgstr "&قاب‌ها"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "&Clickable"
-msgstr "&کلیک‌شدنی‌ها"
+msgstr "&کلیک‌شدنی"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -13163,15 +13172,15 @@ msgstr "{offset:.3g} پیکا"
 
 #. Translators: a message when switching to single line spacing  in Microsoft word
 msgid "Single line spacing"
-msgstr "فاصله‌ی یک‌خطّی"
+msgstr "فاصله‌گذاریِ یک‌خطّی"
 
 #. Translators: a message when switching to double line spacing  in Microsoft word
 msgid "Double line spacing"
-msgstr "فاصله‌ی خطّیِ دوبرابر"
+msgstr "فاصله‌گذاریِ خطّیِ دوبرابر"
 
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
-msgstr "فاصله‌ی یِکُنیم خطّی"
+msgstr "فاصله‌گذاریِ خطّیِ یک و نیم برابر"
 
 #~ msgid "NVDA could not start securely."
 #~ msgstr "NVDA نتوانست با امنیت آغاز شود."
