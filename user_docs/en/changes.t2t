@@ -60,7 +60,8 @@ Please open a GitHub issue if your Add-on has an issue with updating to the new 
 
 
 === Deprecations ===
-- ``NVDAObjects.UIA.winConsoleUIA.WinTerminalUIA`` is deprecated and usage is dscouraged. (#14047)
+- ``NVDAObjects.UIA.winConsoleUIA.WinTerminalUIA`` is deprecated and usage is discouraged. (#14047)
+- ``config.addConfigDirsToPythonPackagePath`` has been moved. Use ``addonHandler.packaging.addDirsToPythonPackagePath`` instead. (#14350)
 -
 
 
@@ -159,7 +160,9 @@ Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documen
 This is a minor release to fix regressions with 2022.3.1 and address a security issue.
 
 == Security Fixes ==
-
+- Prevents possible system level access for unauthenticated users.
+([GHSA-3jj9-295f-h69w https://github.com/nvaccess/nvda/security/advisories/GHSA-3jj9-295f-h69w])
+-
 
 == Bug Fixes ==
 - Fixes a regression from 2022.3.1 where certain functionality was disabled on secure screens. (#14286)

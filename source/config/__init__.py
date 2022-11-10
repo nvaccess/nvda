@@ -74,6 +74,13 @@ def __getattr__(attrName: str) -> Any:
 	if attrName == "RUN_REGKEY" and NVDAState._allowDeprecatedAPI():
 		log.warning("RUN_REGKEY is deprecated, use RegistryKey.RUN instead.")
 		return RegistryKey.RUN.value
+	if attrName == "addConfigDirsToPythonPackagePath" and NVDAState._allowDeprecatedAPI():
+		log.warning(
+			"addConfigDirsToPythonPackagePath is deprecated, "
+			"use addonHandler.packaging.addDirsToPythonPackagePath instead."
+		)
+		from addonHandler.packaging import addDirsToPythonPackagePath
+		return addDirsToPythonPackagePath
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
 
 
@@ -472,35 +479,6 @@ def setStartOnLogonScreen(enable: bool) -> None:
 			wait=True
 		) != 0:
 			raise RuntimeError("Slave failed to set startOnLogonScreen")
-
-
-def addConfigDirsToPythonPackagePath(module, subdir=None):
-	"""Add the configuration directories to the module search path (__path__) of a Python package.
-	C{subdir} is added to each configuration directory. It defaults to the name of the Python package.
-	@param module: The root module of the package.
-	@type module: module
-	@param subdir: The subdirectory to be used, C{None} for the name of C{module}.
-	@type subdir: str
-	"""
-	if isAppX or globalVars.appArgs.disableAddons:
-		return
-	# FIXME: this should not be coupled to the config module....
-	import addonHandler
-	for addon in addonHandler.getRunningAddons():
-		addon.addToPackagePath(module)
-	if globalVars.appArgs.secure or not conf['development']['enableScratchpadDir']:
-		return
-	if not subdir:
-		subdir = module.__name__
-	fullPath=os.path.join(getScratchpadDir(),subdir)
-	# Ensure this directory exists otherwise pkgutil.iter_importers may emit None for missing paths.
-	if not os.path.isdir(fullPath):
-		os.makedirs(fullPath)
-	# Insert this path at the beginning  of the module's search paths.
-	# The module's search paths may not be a mutable  list, so replace it with a new one 
-	pathList=[fullPath]
-	pathList.extend(module.__path__)
-	module.__path__=pathList
 
 
 def _transformSpec(spec: ConfigObj):

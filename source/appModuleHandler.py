@@ -361,7 +361,6 @@ def reloadAppModules():
 def initialize():
 	"""Initializes the appModule subsystem. 
 	"""
-	config.addConfigDirsToPythonPackagePath(appModules)
 	if not initialize._alreadyInitialized:
 		initialize._alreadyInitialized = True
 
