@@ -94,6 +94,15 @@ Por favor consulta [la guía del desarrollador https://www.nvaccess.org/files/nv
 - ``core.post_windowMessageReceipt`` está obsoleto, utiliza ``winAPI.messageWindow.pre_handleWindowMessage`` en su lugar.
 - ``winKernel.SYSTEM_POWER_STATUS`` está obsoleto y se desaconseja su uso, esto se ha movido a ``winAPI._powerTracking.SystemPowerStatus``.
 - Las constantes ``winUser.SM_*`` están obsoletas, utiliza ``winAPI.winUser.constants.SystemMetrics`` en su lugar.
+= 2022.3.2 =
+Esta es una versión menor para corregir regresiones con 2022.3.1 y para abordar un problema de seguridad.
+
+== Correcciones de Seguridad ==
+
+
+== Corrección de Fallos ==
+- Se corrige una regresión de 2022.3.1 donde ciertas funcionalidades se deshabilitaban en pantallas seguras. (#14286)
+- Se corrige una regresión de 2022.3.1 donde ciertas funcionalidades se deshabilitaban después de autentificarse si NVDA se iniciaba en la pantalla de bloqueo. (#14301)
 -
 
 

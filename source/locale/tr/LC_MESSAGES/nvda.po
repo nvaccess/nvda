@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-24 00:11+0000\n"
+"POT-Creation-Date: 2022-11-04 00:02+0000\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Umut KORKMAZ <umutkork@gmail.com>\n"
+"Last-Translator: Burak Yüksek <burakyuksek94@gmail.com>\n"
 "Language-Team: \n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
@@ -2386,6 +2386,15 @@ msgstr ""
 
 msgid "gesture map File Error"
 msgstr "gesture map dosyasında hata"
+
+#. Translators: Message when NVDA is having an issue starting up
+#, python-format
+msgid ""
+"NVDA is failing to fetch the foreground window. If this continues, NVDA will "
+"quit starting in %d seconds."
+msgstr ""
+"NVDA odaklanılan pencereyi algılayamıyor. Bu durum devam ederse NVDA %d "
+"saniye içerisinde kapanacak."
 
 #. Translators: This is spoken when NVDA is starting.
 msgid "Loading NVDA. Please wait..."
@@ -10272,13 +10281,13 @@ msgstr ""
 #. panel to have NVDA decide whether to register
 #. selectively or globally for UI Automation events.
 msgid "Automatic (prefer selective)"
-msgstr "Otomatik (seçiciyi tercih et)"
+msgstr "Otomatik (seçimliyi tercih et)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA register selectively for UI Automation events
 #. (i.e. not to request events for objects outside immediate focus).
 msgid "Selective"
-msgstr "Seçici"
+msgstr "Seçimli"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA register for all UI Automation events
@@ -10297,7 +10306,7 @@ msgstr ""
 #. in the Advanced settings panel.
 msgctxt "advanced.uiaWithMSWord"
 msgid "Default (Where suitable)"
-msgstr "Varsayılan (Evet)"
+msgstr "Varsayılan (uygun olduğunda)"
 
 #. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
 msgctxt "advanced.uiaWithMSWord"
@@ -10333,7 +10342,7 @@ msgstr "Windows K&onsol desteği:"
 #. panel to have NVDA determine its Windows Console implementation
 #. automatically.
 msgid "Automatic (prefer UIA)"
-msgstr "Otomatik (UIA'yı tercih edin)"
+msgstr "Otomatik (UIA'yı tercih et)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA use UIA in the Windows Console when available.
@@ -10440,8 +10449,8 @@ msgid ""
 "Use enhanced t&yped character support in legacy Windows Console when "
 "available"
 msgstr ""
-"Mevcut olduğunda, eski Windows Konsolunda &geliştirilmiş yazı yazılı "
-"karakter desteğini kullan"
+"Mevcut olduğunda, eski Windows Konsolunda &geliştirilmiş yazılı karakter "
+"desteğini kullan"
 
 #. Translators: This is the label for a combo box for selecting a
 #. method of detecting changed content in terminals in the advanced
@@ -10454,7 +10463,7 @@ msgstr "&Diff algoritması:"
 #. panel to have NVDA determine the method of detecting changed
 #. content in terminals automatically.
 msgid "Automatic (prefer Diff Match Patch)"
-msgstr "Otomatik (prefer Diff Match Patch)"
+msgstr "Otomatik (Diff Match Patch'i tercih et)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA detect changes in terminals
@@ -10508,7 +10517,7 @@ msgstr "Etkin günlük kategorileri"
 
 #. Translators: Label for the Play a sound for logged errors combobox, in the Advanced settings panel.
 msgid "Play a sound for logged e&rrors:"
-msgstr "Loglanan &hatalar için ses çal:"
+msgstr "Günlüğe kaydedilen &hatalar için ses çal:"
 
 #. Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
 msgctxt "advanced.playErrorSound"
@@ -11542,7 +11551,7 @@ msgstr "Güç durumu bilinmiyor"
 #. Translators: This is presented when there is no battery such as desktop computers
 #. and laptops with battery pack removed.
 msgid "No system battery"
-msgstr "Batarya yok"
+msgstr "Pil yok"
 
 #. Translators: Reported when the battery is plugged in, and now is charging.
 msgid "Charging battery"
