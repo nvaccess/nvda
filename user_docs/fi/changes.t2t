@@ -5,19 +5,19 @@
 
 = 2022.4 =
 Tämä julkaisu sisältää useita uusia näppäinkomentoja, mukaan lukien taulukon jatkuva luku.
-Käyttöoppaaseen on lisätty "Pika-aloitusopas"-kappale.
+Käyttöoppaaseen on lisätty "Pika-aloitusopas"-osio.
 Useita bugikorjauksia on myös tehty.
 
 eSpeak ja LibLouis on päivitetty.
 Lisätty uusia kiinalaisia, ruotsalaisia, gandalaisia ja ruandalaisia pistetaulukoita.
 
 == Uudet ominaisuudet ==
-- Lisätty käyttöoppaaseen "Pika-aloitusopas"-kappale. (#13934)
+- Käyttöoppaaseen lisätty "Pika-aloitusopas"-osio. (#13934)
 - Lisätty uusi komento aktiivisen kohdan näppäinkomennon tarkistamiseen. (#13960)
-  - Pöytäkone: ``Vaihto+laskimen 2``.
+  - Pöytäkone: ``Vaihto+Laskinnäppäimistön 2``.
   - Kannettava: ``NVDA+Ctrl+Vaihto+.``.
   -
-- Lisätty uusia komentoja tarkastelukohdistimen siirtämiseen sivu kerrallaan sellaisissa sovelluksissa, jotka sitä tukevat. (#14021)
+- Lisätty uudet komennot tarkastelukohdistimen siirtämiseen sivu kerrallaan sellaisissa sovelluksissa, jotka sitä tukevat. (#14021)
   - Siirry edelliselle sivulle:
     - Pöytäkone: ``NVDA+Page up``.
     - Kannettava: ``NVDA+Vaihto+Page up``.
@@ -84,6 +84,18 @@ Huomaa, että Chromessa ja Edgessä on edelleen tunnettuja ongelmia. (#13254)
 
 == Muutokset kehittäjille ==
 Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/changes.html]
+
+
+= 2022.3.2 =
+Tämä on pieni julkaisu, joka korjaa 2022.3.1:n regressioita ja ratkaisee tietoturvaongelman.
+
+== Tietoturvakorjaukset ==
+
+
+== Bugikorjaukset ==
+- Korjaa regression versiosta 2022.3.1, jossa tietyt toiminnot poistettiin käytöstä suojatuilla ruuduilla. (#14286)
+- Korjaa regression versiosta 2022.3.1, jossa tietyt toiminnot poistettiin käytöstä sisäänkirjautumisen jälkeen, jos NVDA käynnistyi lukitusnäytöltä. (#14301)
+ -
 
 
 = 2022.3.1 =
@@ -317,8 +329,8 @@ Huomaa:
   -
 - NVDA ilmoittaa valinnan ja yhdistetyt solut LibreOffice Calc 7.3:ssa ja uudemmissa. (#9310, #6897)
 - Yhteinen Unicode-kielitietovarasto (CLDR) päivitetty versioksi 40.0. (#12999)
-- ``NVDA+Laskimen Del`` -näppäinkomento ilmoittaa oletusarvoisesti järjestelmäkohdistimen tai aktiivisen objektin sijainnin. (#13060)
-- ``NVDA+Vaihto+laskinnäppäimistön Del`` ilmoittaa tarkastelukohdistimen sijainnin. (#13060)
+- ``NVDA+Laskinnäppäimistön Del`` -näppäinkomento ilmoittaa oletusarvoisesti järjestelmäkohdistimen tai aktiivisen objektin sijainnin. (#13060)
+- ``NVDA+Vaihto+Laskinnäppäimistön Del`` ilmoittaa tarkastelukohdistimen sijainnin. (#13060)
 - Lisätty  Freedom Scientificin pistenäytöille oletusnäppäinkomennot muokkausnäppäimien käyttöönottoon ja käytöstä poistamiseen. (#13152)
 - Lue tekstin muotoilutiedot -komentoa (``NVDA+F``) käytettäessä ei enää ilmoiteta "perusviiva". (#11815)
 - Pitkän kuvauksen näyttävällä komennolla ei enää ole määritettyä oletusarvoista näppäinkomentoa. (#13380)
@@ -2710,7 +2722,7 @@ Tämän version tärkeimpiä uusia ominaisuuksia ovat merkittävät välimerkkej
  
 
 == Muutokset ==
-- Järjestelmäkohdistin siirretään nyt tarkastelukohdistimen kohdalle painamalla Siirrä kohdistus navigointiobjektiin -komentoa (pöytäkoneissa NVDA+Shift+laskinnäppäimistön miinus, kannettavissa NVDA+Shift+askelpalautin) kaksi kertaa nopeasti peräkkäin. Tämä vapauttaa lisää näppäimiä muuhun käyttöön. (#837)
+- Järjestelmäkohdistin siirretään nyt tarkastelukohdistimen kohdalle painamalla Siirrä kohdistus navigointiobjektiin -komentoa (pöytäkoneissa NVDA+Shift+Laskinnäppäimistön miinus, kannettavissa NVDA+Shift+askelpalautin) kaksi kertaa nopeasti peräkkäin. Tämä vapauttaa lisää näppäimiä muuhun käyttöön. (#837)
 - Tarkastelukohdistimen alla olevan merkin desimaali- ja heksadesimaaliarvot luetaan nyt painamalla Lue nykyinen merkki -komentoa kolme kertaa kahden sijasta, koska kahdesti painaminen lukee merkin kuvauksen.
 - eSpeak-puhesyntetisaattori päivitetty versioksi 1.45.03. (#1465)
 - Asettelutaulukoita ei enää lueta Mozilla Gecko -sovelluksissa siirrettäessä kohdistusta vuorovaikutustilassa tai pois asiakirjasta.
@@ -2911,15 +2923,15 @@ Tämän version merkittävimpiä uusia ominaisuuksia ovat huomattavasti yksinker
 - Taulukon rivien ja sarakkeiden otsikoiden lukeminen on nyt mahdollista. Asetus on määritettävissä Asiakirjojen muotoiluasetukset -valintaikkunasta.
  - Tätä tuetaan toistaiseksi vain Mozilla-sovelluksissa (Firefox 3.6.11 tai uudempi ja Thunderbird 3.1.5 tai uudempi). (#361)
 - Otettu käyttöön kokonaistarkastelun komennot: (#58)
- - NVDA+laskinnäppäimistön 7: siirtää kokonaistarkasteluun ja sijoittaa tarkastelukohdistimen nykyisen objektin kohdalle, mikä mahdollistaa koko ruudun tai asiakirjan lukemisen tekstintarkastelukomennoilla.
- - NVDA+laskinnäppäimistön 1: siirtää tarkastelukohdistimen sen kohdalla olevan tekstin sisältävään objektiin, mikä mahdollistaa objekti kerrallaan liikkumisen kyseisestä kohdasta lähtien.
+ - NVDA+Laskinnäppäimistön 7: siirtää kokonaistarkasteluun ja sijoittaa tarkastelukohdistimen nykyisen objektin kohdalle, mikä mahdollistaa koko ruudun tai asiakirjan lukemisen tekstintarkastelukomennoilla.
+ - NVDA+Laskinnäppäimistön 1: siirtää tarkastelukohdistimen sen kohdalla olevan tekstin sisältävään objektiin, mikä mahdollistaa objekti kerrallaan liikkumisen kyseisestä kohdasta lähtien.
 - NVDA:n nykyiset asetukset voidaan kopioida suojatuissa ruuduissa käytettäväksi (esim. kirjautumisikkuna ja käyttäjätilien valvonnan kehotteet) painamalla Yleiset asetukset -valintaikkunassa olevaa painiketta.
 - Tuki Mozilla Firefox 4:lle.
 - Tuki Internet Explorer 9:lle.
 
 
 == Muutokset ==
-- Navigointiobjektia käyttävä jatkuva luku -komento (NVDA+laskinnäppäimistön plus) sekä seuraavaan ja edelliseen objektipuun objektiin siirtävät komennot (NVDA+Shift+laskinnäppäimistön 6, NVDA+Shift+laskinnäppäimistön 4) on poistettu virheiden vuoksi ja näppäinten vapauttamiseksi muita ominaisuuksia varten.
+- Navigointiobjektia käyttävä jatkuva luku -komento (NVDA+Laskinnäppäimistön plus) sekä seuraavaan ja edelliseen objektipuun objektiin siirtävät komennot (NVDA+Shift+Laskinnäppäimistön 6, NVDA+Shift+Laskinnäppäimistön 4) on poistettu virheiden vuoksi ja näppäinten vapauttamiseksi muita ominaisuuksia varten.
 - NVDA:n Syntetisaattori-valintaikkunassa näytetään nyt vain syntetisaattorin näyttönimi. Aiemmin etuliitteenä näytettiin käytettävän ajurin nimi, josta ei ole hyötyä normaalikäyttäjälle.
 - Upotetuista sovelluksista ja sisäkkäisistä näennäispuskureista (esim. Flash) voidaan nyt siirtyä pois ja takaisin asiakirjaan (esim. verkkosivulle), jossa ne ovat painamalla NVDA+Ctrl+välilyönti. Aiemmin tähän käytettiin näppäinyhdistelmää NVDA+välilyönti, jota käytetään nyt vain näennäispuskureiden selaus- ja vuorovaikutustilojen välillä vaihtamiseen.
 - Jos kohdistus siirtyy puheentarkasteluikkunaan (otetaan käyttöön Työkalut-valikosta) esim. siksi, että sitä napsautettiin hiirellä, ikkunaan ei ilmesty uutta tekstiä ennen kuin kohdistus siirtyy siitä pois. Tämä mahdollistaa helpomman tekstin valitsemisen esim. kopiointia varten.
@@ -2977,8 +2989,8 @@ Tämä julkaisu keskittyy pääasiassa virheiden korjaamiseen ja käyttökokemuk
 - Tekstiä voidaan nyt selata ja lukea nuolinäppäimillä Web Formator -sovelluksessa. (#452)
 - NVDA:ssa on nyt tuki Microsoft Office Outlookin osoitekirjan yhteystietoluettelolle.
 - Paranneltu tuki upotetuille muokattaville asiakirjoille Internet Explorerissa. (#402)
-- Lisätty komento NVDA+Shift+laskinnäppäimistön miinus, joka siirtää kohdistuksen nykyiseen navigointiobjektiin.
-- Lisätty komennot vasemman ja oikean hiiripainikkeen lukitsemiseksi ja lukituksen vapauttamiseksi. Näistä  on hyötyä esim. vedä ja pudota -toiminnoissa. Shift+laskinnäppäimistön / lukitsee tai vapauttaa vasemman hiiripainikkeen ja Shift+laskinnäppäimistön - oikean.
+- Lisätty komento NVDA+Shift+Laskinnäppäimistön miinus, joka siirtää kohdistuksen nykyiseen navigointiobjektiin.
+- Lisätty komennot vasemman ja oikean hiiripainikkeen lukitsemiseksi ja lukituksen vapauttamiseksi. Näistä  on hyötyä esim. vedä ja pudota -toiminnoissa. Shift+Laskinnäppäimistön / lukitsee tai vapauttaa vasemman hiiripainikkeen ja Shift+Laskinnäppäimistön - oikean.
 - Lisätty uusia pistetaulukkoja: saksalainen 8 pisteen tietokonemerkistö, saksalainen taso 2, suomalainen 8 pisteen tietokonemerkistö, kiinalaiset (kantoni, Hong Kong ja mandariini, Taiwan). (#344, #369, #415, #450)
 - NVDA:ta asennettaessa on nyt mahdollista valita, luodaanko työpöydälle kuvake vai ei. Jos kuvaketta ei luoda, NVDA:n käynnistävä pikanäppäinkään ei ole käytettävissä. (#518)
 - NVDA voi nyt käyttää IAccessible2-rajapintaa 64-bittisissä sovelluksissa. (#479)
@@ -3077,8 +3089,8 @@ Tämän version tärkeimpiä uusia ominaisuuksia ovat tuki 64-bittisille Windows
 - Edistymispalkkien ilmoittamista on paranneltu. NVDA voidaan nyt määrittää ilmaisemaan muutokset samaan aikaan sekä puheena että äänimerkeillä.
 - Joitakin yleisiä rooleja, kuten ruutu, sovellus ja kehys, ei enää lueta kohdistettaessa, ellei säädinlla ole nimeä.
 - Tekstin kopiointikomento (NVDA+F10) ottaa nyt huomioon myös loppumerkin kohdalla olevan merkin. Tämä mahdollistaa rivin viimeisen merkin kopioimisen, mikä ei aiemmin ollut mahdollista. (#430)
-- Missä olen -komento (Ctrl+NVDA+laskinnäppäimistön 5) on poistettu. Tämä näppäinyhdistelmä ei toiminut joillakin näppäimistöillä, eikä komento ollut edes kovin hyödyllinen.
-- Navigointiobjektin sijainnin ilmoittava komento on uudelleenmääritelty näppäimiin NVDA+laskinnäppäimistön delete. Entinen näppäinyhdistelmä ei toiminut joillakin näppäimistöillä. Tämä komento ilmoittaa nyt objektin oikean reunan ja alareunan koordinaattien sijasta objektin leveyden ja korkeuden.
+- Missä olen -komento (Ctrl+NVDA+Laskinnäppäimistön 5) on poistettu. Tämä näppäinyhdistelmä ei toiminut joillakin näppäimistöillä, eikä komento ollut edes kovin hyödyllinen.
+- Navigointiobjektin sijainnin ilmoittava komento on uudelleenmääritelty näppäimiin NVDA+Laskinnäppäimistön delete. Entinen näppäinyhdistelmä ei toiminut joillakin näppäimistöillä. Tämä komento ilmoittaa nyt objektin oikean reunan ja alareunan koordinaattien sijasta objektin leveyden ja korkeuden.
 - Suorituskykyä paranneltu erityisesti minikannettavissa, kun useita äänimerkkejä esiintyy peräkkäin, esim.  liikutettaessa hiirtä nopeasti äänikoordinaattien ilmaisemisen ollessa käytössä. (#396)
 - Virheestä ilmoittavaa ääntä ei enää toisteta NVDA:n release candidate- ja lopullisissa versioissa. Virheiden tiedot kirjataan edelleen lokiin.
 
@@ -3237,7 +3249,7 @@ Tämän version tärkeimpiä uusia ominaisuuksia ovat tuki 64-bittisille Windows
 - Tehty jonkin verran parannuksia, jotka auttavat käyttämään ARIA:ta hyödyntäviä verkkosovelluksia, kuten Google Docs:ia
 - Näennäispuskurista kopioitavaan tekstiin ei enää lisätä ylimääräisiä tyhjiä rivejä
 - Välilyöntinäppäin ei enää avaa linkkiluettelon linkkejä. Sitä voidaan nyt käyttää kuten muitakin merkkejä jonkin tietyn linkin kohdalle siirtymiseen kirjoittamalla osa sen nimestä.
-- Hiiren navigointiobjektiin siirtävä komento (NVDA+laskinnäppäimistön /) siirtää nyt hiiren navigointiobjektin keskelle vasemman yläreunan sijasta.
+- Hiiren navigointiobjektiin siirtävä komento (NVDA+Laskinnäppäimistön /) siirtää nyt hiiren navigointiobjektin keskelle vasemman yläreunan sijasta.
 - Lisätty komennot hiiren vasemman ja oikean painikkeen napsautukselle (laskinnäppäimistön / ja laskinnäppäimistön *)
 - Windowsin ilmoitusalueen käyttöä paranneltu. Kohdistuksen ei enää pitäisi hypätä takaisin johonkin tiettyyn kohtaan. (#10)
 - Suorituskykyä paranneltu sekä estetty NVDA:ta lukemasta Ylimääräistä tekstiä pidettäessä nuolinäppäintä alhaalla ja tultaessa tekstin loppuun muokkauskentässä.
@@ -3315,7 +3327,7 @@ Tämän version tärkeimpiä uusia ominaisuuksia ovat tuki 64-bittisille Windows
 
 
 === Näppäinkomennot ===
-- Näppäimet NVDA+Shift+laskinnäppäimistön 6 ja NVDA+Shift+laskinnäppäimistön 4 mahdollistavat siirtymisen eteen- ja taaksepäin koko objektihierarkiassa. Tämä tarkoittaa, että sovelluksen ikkunan kaikkia osia voidaan selata tarvitsematta siirtyä ylempään tai ensimmäiseen alemman tason objektiin. Jos hierarkian taso vaihtuu näitä komentoja käytettäessä, siitä ilmoitetaan äänimerkeillä.
+- Näppäimet NVDA+Shift+Laskinnäppäimistön 6 ja NVDA+Shift+Laskinnäppäimistön 4 mahdollistavat siirtymisen eteen- ja taaksepäin koko objektihierarkiassa. Tämä tarkoittaa, että sovelluksen ikkunan kaikkia osia voidaan selata tarvitsematta siirtyä ylempään tai ensimmäiseen alemman tason objektiin. Jos hierarkian taso vaihtuu näitä komentoja käytettäessä, siitä ilmoitetaan äänimerkeillä.
 - Ääniasetukset voidaan nyt määrittää myös avaamatta Ääniasetukset-valintaikkunaa puhesyntetisaattorin asetusrenkaan avulla. Haluttu asetus (puheääni, äänenkorkeus jne).) valitaan painamalla Ctrl+NVDA+Nuoli oikealle tai Ctrl+NVDA+Nuoli vasemmalle, ja valitun asetuksen arvoa muutetaan painamalla Ctrl+NVDA+Nuoli ylös tai Ctrl+NVDA+Nuoli alas.
 - Lisätty komento nykyisen valinnan lukemiseen muokkauskentissä (NVDA+shift+Nuoli ylös).
 - Melko monet jotain tekstiä puhuttavat NVDA:n komennot (sellaiset kuin nykyisen rivin lukeminen jne.) voivat nyt tavata tekstin, jos niitä painetaan kolme kertaa nopeasti.
