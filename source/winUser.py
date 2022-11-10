@@ -500,7 +500,7 @@ def sendMessage(hwnd,msg,param1,param2):
 	return user32.SendMessageW(hwnd,msg,param1,param2)
 
 
-def getWindowThreadProcessID(hwnd: HWND) -> Tuple[int, int]:
+def getWindowThreadProcessID(hwnd: HWNDVal) -> Tuple[int, int]:
 	"""Returns a tuple of (processID, threadID)"""
 	processID=c_int()
 	threadID=user32.GetWindowThreadProcessId(hwnd,byref(processID))

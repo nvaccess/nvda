@@ -21,6 +21,4 @@ class WindowMessage(enum.IntEnum):
 	"""
 	WM_WTSSESSION_CHANGE
 	Windows Message for when a Session State Changes.
-	Receiving these messages is registered by sessionTracking.register.
-	handleSessionChange handles these messages.
 	"""

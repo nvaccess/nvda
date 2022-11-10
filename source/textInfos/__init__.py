@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2021 NV Access Limited, Babbage B.V., Accessolutions, Julien Cochuyt
+# Copyright (C) 2006-2022 NV Access Limited, Babbage B.V., Accessolutions, Julien Cochuyt
 
 """Framework for accessing text content in widgets.
 The core component of this framework is the L{TextInfo} class.
@@ -32,6 +32,7 @@ from logHandler import log
 
 if typing.TYPE_CHECKING:
 	import NVDAObjects
+	import treeInterceptorHandler  # noqa: F401 used for type checking only
 
 SpeechSequence = List[Union[Any, str]]
 
@@ -287,6 +288,9 @@ def _logBadSequenceTypes(sequence: SpeechSequence, shouldRaise: bool = True):
 	return speech.types.logBadSequenceTypes(sequence, raiseExceptionOnError=shouldRaise)
 
 
+TextInfoObjT = Union["NVDAObjects.NVDAObject", "treeInterceptorHandler.TreeInterceptor"]
+
+
 class TextInfo(baseObject.AutoPropertyObject):
 	"""Provides information about a range of text in an object and facilitates access to all text in the widget.
 	A TextInfo represents a specific range of text, providing access to the text itself, as well as information about the text such as its formatting and any associated controls.
@@ -307,7 +311,11 @@ class TextInfo(baseObject.AutoPropertyObject):
 	@type bookmark: L{Bookmark}
 	"""
 
-	def __init__(self,obj,position):
+	def __init__(
+			self,
+			obj: TextInfoObjT,
+			position
+	):
 		"""Constructor.
 		Subclasses must extend this, calling the superclass method first.
 		@param position: The initial position of this range; one of the POSITION_* constants or a position object supported by the implementation.
@@ -338,9 +346,9 @@ class TextInfo(baseObject.AutoPropertyObject):
 		self.end.moveTo(otherEndpoint)
 
 	#: Typing information for auto-property: _get_obj
-	obj: "NVDAObjects.NVDAObject"
+	obj: TextInfoObjT
 
-	def _get_obj(self) -> "NVDAObjects.NVDAObject":
+	def _get_obj(self) -> TextInfoObjT:
 		"""The object containing the range of text being represented."""
 		return self._obj()
 

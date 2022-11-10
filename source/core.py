@@ -601,7 +601,6 @@ def main():
 		wx.CallAfter(audioDucking.initialize)
 
 	from winAPI.messageWindow import WindowMessage
-	from winAPI import sessionTracking
 	import winUser
 	# #3763: In wxPython 3, the class name of frame windows changed from wxWindowClassNR to wxWindowNR.
 	# NVDA uses the main frame to check for and quit another instance of NVDA.
@@ -630,27 +629,12 @@ def main():
 			self.orientationCoordsCache = (0,0)
 			self.handlePowerStatusChange()
 
-			# Call must be paired with a call to sessionTracking.unregister
-			if not sessionTracking.register(self.handle):
-				import utils.security
-				wx.CallAfter(utils.security.warnSessionLockStateUnknown)
-
-		def destroy(self):
-			"""
-			NVDA must unregister session tracking before destroying the message window.
-			"""
-			# Requires an active message window and a handle to unregister.
-			sessionTracking.unregister(self.handle)
-			super().destroy()
-
 		def windowProc(self, hwnd, msg, wParam, lParam):
 			post_windowMessageReceipt.notify(msg=msg, wParam=wParam, lParam=lParam)
 			if msg == WindowMessage.POWER_BROADCAST and wParam == self.PBT_APMPOWERSTATUSCHANGE:
 				self.handlePowerStatusChange()
 			elif msg == winUser.WM_DISPLAYCHANGE:
 				self.handleScreenOrientationChange(lParam)
-			elif msg == WindowMessage.WTS_SESSION_CHANGE:
-				sessionTracking.handleSessionChange(sessionTracking.WindowsTrackedSession(wParam), lParam)
 
 		def handleScreenOrientationChange(self, lParam):
 			# TODO: move to winAPI
@@ -809,7 +793,8 @@ def main():
 				mouseHandler.pumpAll()
 				braille.pumpAll()
 				vision.pumpAll()
-			except:
+				sessionTracking.pumpAll()
+			except Exception:
 				log.exception("errors in this core pump cycle")
 			baseObject.AutoPropertyObject.invalidateCaches()
 			watchdog.asleep()
@@ -831,6 +816,9 @@ def main():
 	else:
 		log.debug("initializing updateCheck")
 		updateCheck.initialize()
+
+	from winAPI import sessionTracking
+	sessionTracking.initialize()
 
 	_TrackNVDAInitialization.markInitializationComplete()
 

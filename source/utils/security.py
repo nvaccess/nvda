@@ -14,13 +14,14 @@ from winAPI.sessionTracking import isWindowsLocked
 import winUser
 
 if typing.TYPE_CHECKING:
-	import appModuleHandler
+	import appModuleHandler  # noqa: F401, use for typing
 	import scriptHandler  # noqa: F401, use for typing
-	import NVDAObjects
+	import NVDAObjects  # noqa: F401, use for typing
 
 
 postSessionLockStateChanged = extensionPoints.Action()
 """
+# TODO: maintain backwards compat
 Notifies when a session lock or unlock event occurs.
 
 Usage:
@@ -141,7 +142,13 @@ def _isSecureObjectWhileLockScreenActivated(
 	As such, NVDA must prevent accessing and reading objects outside of the lockscreen when Windows is locked.
 	@return: C{True} if the Windows 10/11 lockscreen is active and C{obj} is outside of the lock screen.
 	"""
-	if isWindowsLocked() and not isObjectAboveLockScreen(obj):
+	try:
+		isObjectInSecure = isWindowsLocked() and not isObjectAboveLockScreen(obj)
+	except Exception:
+		log.exception()
+		return False
+
+	if isObjectInSecure:
 		if shouldLog and log.isEnabledFor(log.DEBUG):
 			devInfo = '\n'.join(obj.devInfo)
 			log.debug(f"Attempt at navigating to a secure object: {devInfo}")
@@ -155,7 +162,6 @@ def isObjectAboveLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 	When Windows is locked, the foreground Window is usually LockApp,
 	but other Windows can be focused (e.g. Windows Magnifier).
 	"""
-	import appModuleHandler
 	from IAccessibleHandler import SecureDesktopNVDAObject
 	from NVDAObjects.IAccessible import TaskListIcon
 
@@ -176,19 +182,44 @@ def isObjectAboveLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 		or isinstance(obj, SecureDesktopNVDAObject)
 	):
 		return True
+	return _isObjectAboveLockScreenCheckZOrder(obj)
 
+
+def _isObjectAboveLockScreenCheckZOrder(obj: "NVDAObjects.NVDAObject") -> bool:
+	"""
+	This is a risky hack.
+	If the order is incorrectly detected,
+	the Windows UX may become inaccessible
+	or secure information may become accessible.
+
+	If these functions fail, where possible,
+	NVDA should make NVDA objects accessible.
+	"""
+	import appModuleHandler
+	from NVDAObjects.window import Window
+	if not isinstance(obj, Window):
+		# must be a window to get its HWNDVal
+		return True
 	runningAppModules = appModuleHandler.runningTable.values()
 	lockAppModule = next(filter(_isLockAppAndAlive, runningAppModules), None)
 
 	if lockAppModule is None:
 		# lockAppModule not running/registered by NVDA yet
-		log.debugWarning(
+		log.debug(
 			"lockAppModule not detected when Windows is locked. "
-			"Cannot detect if object is in lock app, considering object as insecure. "
+			"Cannot detect if object is in lock app, considering object as safe. "
 		)
-	elif lockAppModule is not None and obj.processID == lockAppModule.processID:
 		return True
 
+	desktopWindow = winUser.getDesktopWindow()
+	nextWindow = winUser.getTopWindow(desktopWindow)
+	while nextWindow:
+		windowProcessId = winUser.getWindowThreadProcessID(nextWindow)
+		if nextWindow == obj.windowHandle:
+			return True
+		elif windowProcessId == lockAppModule.processID:
+			return False
+		nextWindow = winUser.getWindow(nextWindow, winUser.GW_HWNDNEXT)
 	return False
 
 
