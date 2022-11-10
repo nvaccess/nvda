@@ -444,32 +444,6 @@ def _initializeObjectCaches():
 	api.setMouseObject(desktopObject)
 
 
-class _TrackNVDAInitialization:
-	"""
-	During NVDA initialization,
-	core._initializeObjectCaches needs to cache the desktop object,
-	regardless of lock state.
-	Security checks may cause the desktop object to not be set if NVDA starts on the lock screen.
-	As such, during initialization, NVDA should behave as if Windows is unlocked,
-	i.e. winAPI.sessionTracking.isWindowsLocked should return False.
-
-	TODO: move to NVDAState module
-	"""
-
-	_isNVDAInitialized = False
-	"""When False, isWindowsLocked is forced to return False.
-	"""
-
-	@staticmethod
-	def markInitializationComplete():
-		assert not _TrackNVDAInitialization._isNVDAInitialized
-		_TrackNVDAInitialization._isNVDAInitialized = True
-
-	@staticmethod
-	def isInitializationComplete() -> bool:
-		return _TrackNVDAInitialization._isNVDAInitialized
-
-
 def main():
 	"""NVDA's core main loop.
 	This initializes all modules such as audio, IAccessible, keyboard, mouse, and GUI.
@@ -601,7 +575,6 @@ def main():
 		wx.CallAfter(audioDucking.initialize)
 
 	from winAPI.messageWindow import WindowMessage
-	from winAPI import sessionTracking
 	import winUser
 	# #3763: In wxPython 3, the class name of frame windows changed from wxWindowClassNR to wxWindowNR.
 	# NVDA uses the main frame to check for and quit another instance of NVDA.
@@ -630,27 +603,12 @@ def main():
 			self.orientationCoordsCache = (0,0)
 			self.handlePowerStatusChange()
 
-			# Call must be paired with a call to sessionTracking.unregister
-			if not sessionTracking.register(self.handle):
-				import utils.security
-				wx.CallAfter(utils.security.warnSessionLockStateUnknown)
-
-		def destroy(self):
-			"""
-			NVDA must unregister session tracking before destroying the message window.
-			"""
-			# Requires an active message window and a handle to unregister.
-			sessionTracking.unregister(self.handle)
-			super().destroy()
-
 		def windowProc(self, hwnd, msg, wParam, lParam):
 			post_windowMessageReceipt.notify(msg=msg, wParam=wParam, lParam=lParam)
 			if msg == WindowMessage.POWER_BROADCAST and wParam == self.PBT_APMPOWERSTATUSCHANGE:
 				self.handlePowerStatusChange()
 			elif msg == winUser.WM_DISPLAYCHANGE:
 				self.handleScreenOrientationChange(lParam)
-			elif msg == WindowMessage.WTS_SESSION_CHANGE:
-				sessionTracking.handleSessionChange(sessionTracking.WindowsTrackedSession(wParam), lParam)
 
 		def handleScreenOrientationChange(self, lParam):
 			# TODO: move to winAPI
@@ -832,7 +790,8 @@ def main():
 		log.debug("initializing updateCheck")
 		updateCheck.initialize()
 
-	_TrackNVDAInitialization.markInitializationComplete()
+	from winAPI import sessionTracking
+	sessionTracking.initialize()
 
 	log.info("NVDA initialized")
 
