@@ -1,10 +1,11 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2022 NV Access Limited
+# Copyright (C) 2022 NV Access Limited, Cyrille Bougot
 import enum
 import typing
 import unittest
+import io
 
 import configobj
 import configobj.validate
@@ -16,6 +17,12 @@ from config.featureFlag import (
 from config.featureFlagEnums import (
 	getAvailableEnums,
 	BoolFlag,
+)
+from config.profileUpgradeSteps import (
+	_upgradeConfigFrom_8_to_9_lineIndent,
+	_upgradeConfigFrom_8_to_9_cellBorders,
+	_upgradeConfigFrom_8_to_9_showMessages,
+	_upgradeConfigFrom_8_to_9_tetherTo,
 )
 from utils.displayString import (
 	DisplayStringEnum
@@ -342,3 +349,106 @@ class Config_FeatureFlag_with_CustomEnum(unittest.TestCase):
 		self.assertTrue(defaultAlways == CustomEnum.ALWAYS)
 		self.assertTrue(defaultAlways == always)
 		self.assertTrue(defaultNever == CustomEnum.NEVER)
+
+
+class Config_profileUpgradeSteps_upgradeConfigFrom_8_to_9_showMessages(unittest.TestCase):
+
+	@staticmethod
+	def _loadProfile(configString):
+		fn = io.StringIO(configString)
+		profile = configobj.ConfigObj(fn, indent_type="\t", encoding="UTF-8", file_error=False)
+		# Python converts \r\n to \n when reading files in Windows, so ConfigObj can't determine the true line ending.
+		profile.newlines = "\r\n"
+		return profile
+
+	def test_DefaultProfile_Unmodified(self):
+		"""No Braille Show message or Message timeout option modified in default config."""
+		
+		configString = "[braille]"
+		profile = self._loadProfile(configString)
+		_upgradeConfigFrom_8_to_9_showMessages(profile)
+		with self.assertRaises(KeyError):
+			profile['braille']['showMessages']
+		with self.assertRaises(KeyError):
+			profile['braille']['messageTimeout']
+		with self.assertRaises(KeyError):
+			profile['braille']['noMessageTimeout']
+	
+	def test_DefaultProfile_ShowMessageDisabled(self):
+		"""Braille Show message option set to Disabled in default config."""
+		
+		configString = """
+[braille]
+	messageTimeout = 0
+"""
+		profile = self._loadProfile(configString)
+		_upgradeConfigFrom_8_to_9_showMessages(profile)
+		self.assertEqual(profile['braille']['showMessages'], 0)
+		with self.assertRaises(KeyError):
+			profile['braille']['messageTimeout']
+		with self.assertRaises(KeyError):
+			profile['braille']['noMessageTimeout']
+
+	def test_DefaultProfile_ShowMessageIndefinitely(self):
+		"""Braille Show message option set to Show indefinitely in default config."""
+		
+		configString = """
+[braille]
+	noMessageTimeout = True
+"""
+		profile = self._loadProfile(configString)
+		_upgradeConfigFrom_8_to_9_showMessages(profile)
+		self.assertEqual(profile['braille']['showMessages'], 2)
+		with self.assertRaises(KeyError):
+			profile['braille']['messageTimeout']
+		with self.assertRaises(KeyError):
+			profile['braille']['noMessageTimeout']
+	
+	def test_DefaultProfile_ShowMessageExplicitUseTimeout(self):
+		"""Braille Show message option explicitely set to Use timeout in default config
+		after having been set to Show indefinitely.
+		"""
+		
+		configString = """
+[braille]
+	noMessageTimeout = False
+"""
+		profile = self._loadProfile(configString)
+		_upgradeConfigFrom_8_to_9_showMessages(profile)
+		self.assertEqual(profile['braille']['showMessages'], 1)
+		with self.assertRaises(KeyError):
+			profile['braille']['messageTimeout']
+		with self.assertRaises(KeyError):
+			profile['braille']['noMessageTimeout']
+	
+	def test_DefaultProfile_UseTimeout1s(self):
+		"""Braille Message timeout option set to 1 second in default config."""
+		
+		configString = """
+[braille]
+	messageTimeout = 1
+"""
+		profile = self._loadProfile(configString)
+		_upgradeConfigFrom_8_to_9_showMessages(profile)
+		with self.assertRaises(KeyError):
+			profile['braille']['showMessages']
+		self.assertEqual(profile['braille']['messageTimeout'], '1')
+		with self.assertRaises(KeyError):
+			profile['braille']['noMessageTimeout']
+	
+	def test_DefaultProfile_RestoreUseTimeout4s(self):
+		"""Braille Message timeout option explicitely restored to 4 second (default value) in default config
+		after having been set to a different value.
+		"""
+		
+		configString = """
+[braille]
+	messageTimeout = 4
+"""
+		profile = self._loadProfile(configString)
+		_upgradeConfigFrom_8_to_9_showMessages(profile)
+		with self.assertRaises(KeyError):
+			profile['braille']['showMessages']
+		self.assertEqual(profile['braille']['messageTimeout'], '4')
+		with self.assertRaises(KeyError):
+			profile['braille']['noMessageTimeout']
