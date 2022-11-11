@@ -5,7 +5,9 @@
 
 """Constants for Tivomatic Caiku Albatross 46 and 80 display driver.
 Classes:
-- Key
+- L{Keys}
+- L{KeyLayouts}
+- L{RoutingKeyRange}
 
 Summary of important constants:
 
@@ -14,8 +16,6 @@ the display continuously sends L{INIT_START_BYTE} followed by the settings byte.
 The number of these packets is arbitrary. L{INIT_START_BYTE} is \xff.
 Settings byte can be from \x00 to \xff.
 It is limited to be at most L{MAX_SETTINGS_BYTE} to reliably detect init packets.
-Part of values causes failure during automatic detection for other driver with the
-same PID&VID.
 - L{ESTABLISHED}; driver sends this to confirm connection, and
 display stops sending init packets
 - all data to show on display has to be enclosed with L{START_BYTE} and
@@ -26,7 +26,7 @@ within approximately 2 seconds. L{KC_INTERVAL} defines suitable time which
 in turn is used by timer.
 - part of display buttons L{Keys} are control keys used to compose key
 combinations. See also L{CONTROL_KEY_CODES}.
-- L{LEFT_SIDE_BUTTON_CODES} and L{RIGHT_SIDE_BUTTON_CODES} are used
+- L{LEFT_SIDE_KEY_CODES} and L{RIGHT_SIDE_KEY_CODES} are used
 when handling custom key layouts.
 - L{RESET_COUNT} defines how many times port buffer reset is done before
 trying to establish connection.
@@ -46,7 +46,9 @@ from typing import (
 )
 
 BAUD_RATE: Tuple[int] = (19200, 9600)
-"""Because 19200 is the display default, it is tried at first."""
+"""Possible baud rates.
+Because 19200 is the display default, it is tried at first.
+"""
 
 READ_TIMEOUT = 0.2
 WRITE_TIMEOUT = 0
@@ -78,6 +80,9 @@ WRITE_QUEUE_LENGTH = 20
 
 
 class Keys(IntEnum):
+	"""Defines key names and values.
+	For routing keys see L{RoutingKeyRange}.
+"""
 	attribute1 = 1
 	attribute2 = 42
 	f1 = 83
@@ -151,7 +156,7 @@ CONTROL_KEY_CODES: Set[Keys] = {
 }
 """Ctrl keys which may start key combination."""
 
-LEFT_SIDE_BUTTON_CODES: Tuple[Keys] = (
+LEFT_SIDE_KEY_CODES: Tuple[Keys] = (
 	Keys.attribute1,
 	Keys.attribute2,
 	Keys.f1,
@@ -173,9 +178,12 @@ LEFT_SIDE_BUTTON_CODES: Tuple[Keys] = (
 	Keys.lWheelUp,
 	Keys.lWheelDown,
 )
-"""Left side buttons codes; used with custom key layouts."""
+"""Left side key codes; used with custom key layouts.
+The order and number of keys must be same in both L{LEFT_SIDE_KEY_CODES}
+and L{RIGHT_SIDE_KEY_CODES}.
+"""
 
-RIGHT_SIDE_BUTTON_CODES: Tuple[Keys] = (
+RIGHT_SIDE_KEY_CODES: Tuple[Keys] = (
 	Keys.attribute3,
 	Keys.attribute4,
 	Keys.f9,
@@ -197,19 +205,46 @@ RIGHT_SIDE_BUTTON_CODES: Tuple[Keys] = (
 	Keys.rWheelUp,
 	Keys.rWheelDown,
 )
-"""Right side buttons codes; used with custom key layouts."""
+"""Right side key codes; used with custom key layouts.
+The order and number of keys must be same in both L{LEFT_SIDE_KEY_CODES}
+and L{RIGHT_SIDE_KEY_CODES}.
+"""
+
+KEY_LAYOUT_MASK = 5
+"""Used to extract bits 1 - 3 from settings byte to determine key layout.
+See L{KeyLayouts}.
+"""
 
 
-class ButtonActions(IntEnum):
+class KeyLayouts(IntEnum):
+	"""Defines possible key layouts.
+	From settings byte bits 1 - 3 (MSB 0 scheme) are extracted and bit 2 is
+	set to 0 (it represents side of status cells which NVDA does not use).
+	The result is then compared with variables below to determine what key
+	layout should be used.
+
+	Switching layout does not affect on Left, right, down3, up2, routing and
+	secondRouting keys. Up2 and down3 are also ignored because they are in the
+	middle of the front panel of 80 model so they do not logically belong to
+	left or right side.
+
+	See also L{KEY_LAYOUT_MASK}.
+	"""
 	normal = 0
 	bothAsRight = 1
 	switched = 4
 	bothAsLeft = 5
-	mask = 5
 
 
 @dataclass(frozen=True)
 class RoutingKeyRange:
+	"""Defines structure of items in L{ROUTING_KEY_RANGES}.
+	Albatross has both routing and secondRouting key rows so L{name} is "routing"
+	or "secondRouting". Due to hardware design there are 4 address ranges: 2
+	for each rows which means 4 L{start} L{end} pairs. There are also 4
+	L{indexOffset} which are used to get real button index on the row.
+	See also L{ROUTING_KEY_RANGES}.
+	"""
 	name: str
 	start: int
 	end: int
@@ -224,12 +259,13 @@ ROUTING_KEY_RANGES: Set[RoutingKeyRange] = frozenset(
 		RoutingKeyRange("secondRouting", 152, 191, indexOffset=112)
 	}
 )
+"""Defines routing key ranges. See L{RoutingKeyRange}."""
 
 ESTABLISHED = b"\xfe\xfd\xfe\xfd"
 """Send this to Albatross to confirm that connection is established."""
 
 INIT_START_BYTE = b"\xff"
-"""
+"""Starts every init packet.
 If no connection, Albatross sends continuously byte \xff followed by byte
 containing various settings like number of cells.
 """
@@ -263,22 +299,18 @@ and key repeat which can be slow or fast.
 There are other devices with same PID&VID. When automatic braille display
 detection is used, other displays with same PID&VID are tried before Albatross.
 Those drivers try to send queries to the port to detect their own displays.
-These queries may cause Albatross to send unexpected init packets which in turn
-could disturb this driver - it could get inappropriate settings byte.
+These queries may cause Albatross to send unexpected init packets which in
+turn could disturb this driver - it could get inappropriate settings byte.
+This is tried to prevent by resetting I/O buffers so that strange packets
+would be discarded.
 
-Part of Albatross settings byte values get the other driver to infinite loop
-in its detection procedure.
-
-For both problems the simplest solution is to manually select Albatross from
-the display list. If the problem is other driver infinite loop, Albatross
-internal settings can be changed until problem disappears. When there is no
-connection, it is important to switch display off and back on if used internal
-menu, before trying new connection.
+If however, there are still strange init packets, Albatross should be
+manually selected from the display list.
 """
 
 MAX_STATUS_CELLS_ALLOWED = 14
-"""Used to inform user how many status cells can be used
-see L{MAX_SETTINGS_BYTE}.
+"""To inform user how many status cells can be used.
+See L{MAX_SETTINGS_BYTE}.
 """
 
 START_BYTE = b"\xfb"

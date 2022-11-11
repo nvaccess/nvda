@@ -50,9 +50,10 @@ from .constants import (
 	WRITE_QUEUE_LENGTH,
 	MAX_COMBINATION_KEYS,
 	CONTROL_KEY_CODES,
-	LEFT_SIDE_BUTTON_CODES,
-	RIGHT_SIDE_BUTTON_CODES,
-	ButtonActions,
+	LEFT_SIDE_KEY_CODES,
+	RIGHT_SIDE_KEY_CODES,
+	KEY_LAYOUT_MASK,
+	KeyLayouts,
 	ESTABLISHED,
 	INIT_START_BYTE,
 	MAX_SETTINGS_BYTE,
@@ -89,8 +90,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		super().__init__()
 		# Number of cells is received when initializing connection.
 		self.numCells = 0
-		# Store settings how left and right pads should act.
-		self._buttonSettings: int
+		# Used key layout
+		self._keyLayout: int
 		# Keep old display data, only changed content is sent.
 		self._oldCells: List[int] = []
 		# After reconnection and when user exits from device menu, display may not
@@ -598,21 +599,21 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		which cannot be changed. This is the most important setting, and it
 		must be applied.
 		- bit 1: switch left side and right side keys; 0 = no, 1 = yes.
-		Left, Right, Down3, Up2, Routing and secondRouting keys are not affected.
-		Up2 and Down3 are ignored because they are in the middle of the front
+		Left, right, down3, up2, routing and secondRouting keys are not affected.
+		Up2 and down3 are ignored because they are in the middle of the front
 		panel of 80 model so they do not logically belong to left or right side.
 		All other keys are switched with corresponding other side keys.
 		- bit 2: place of status cells; 0 = left, 1 = right. Not implemented.
 		NVDA does not use status cells at the moment.
 		- bit 3: all keys act as right side keys; 0 = no, 1 = yes.
-		Left, Right, Down3, Up2, Routing and secondRouting keys are not affected.
-		Up2 and Down3 are ignored because they are in the middle of the front
+		Left, right, down3, up2, routing and secondRouting keys are not affected.
+		Up2 and down3 are ignored because they are in the middle of the front
 		panel of 80 model so they do not logically belong to left or right side.
 		All other left side keys are assigned to corresponding right side keys.
 		- bit 1 = 0 and bit 3 = 0: normal key layout.
 		- bit 1 = 1 and bit 3 = 1: all keys act as corresponding left side keys.
-		Left, Right, Down3, Up2, Routing and secondRouting keys are not affected.
-		Up2 and Down3 are ignored because they are in the middle of the front
+		Left, right, down3, up2, routing and secondRouting keys are not affected.
+		Up2 and down3 are ignored because they are in the middle of the front
 		panel of 80 model so they do not logically belong to left or right side.
 		All other right side keys are assigned to corresponding left side keys.
 		- bits 4 - 7: number of status cells. Not implemented.
@@ -622,10 +623,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		@type data: bytes
 		"""
 		self.numCells = 80 if ord(data) >> 7 == 1 else 46
-		self._buttonSettings = ord(data) >> 4 & ButtonActions.mask
+		self._keyLayout = ord(data) >> 4 & KEY_LAYOUT_MASK
 		log.debug(
 			f"Current settings: number of cells {self.numCells}, "
-			f"buttons {ButtonActions(self._buttonSettings).name}")
+			f"key layout {KeyLayouts(self._keyLayout).name}")
 
 	def _handleKeyPresses(self, data: bytes):
 		"""Handles display button presses.
@@ -665,8 +666,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					self._partialCtrlPacket = None
 					log.debug(f"Not valid key combination, ignoring {data}")
 					return
-		if self._buttonSettings != ButtonActions.normal:
-			# Using different key layout
+		if self._keyLayout != KeyLayouts.normal:
+			# Using custom key layout
 			data = self._changeKeyValues(
 				bytearray(data)
 			)
@@ -692,23 +693,23 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		@rtype: bytes
 		"""
 		for i, key in enumerate(data):
-			if self._buttonSettings == ButtonActions.switched:
-				if key in LEFT_SIDE_BUTTON_CODES:
-					j = LEFT_SIDE_BUTTON_CODES.index(key)
-					data[i] = RIGHT_SIDE_BUTTON_CODES[j]
-				elif key in RIGHT_SIDE_BUTTON_CODES:
-					j = RIGHT_SIDE_BUTTON_CODES.index(key)
-					data[i] = LEFT_SIDE_BUTTON_CODES[j]
+			if self._keyLayout == KeyLayouts.switched:
+				if key in LEFT_SIDE_KEY_CODES:
+					j = LEFT_SIDE_KEY_CODES.index(key)
+					data[i] = RIGHT_SIDE_KEY_CODES[j]
+				elif key in RIGHT_SIDE_KEY_CODES:
+					j = RIGHT_SIDE_KEY_CODES.index(key)
+					data[i] = LEFT_SIDE_KEY_CODES[j]
 				continue
-			if self._buttonSettings == ButtonActions.bothAsLeft:
-				if key in RIGHT_SIDE_BUTTON_CODES:
-					j = RIGHT_SIDE_BUTTON_CODES.index(key)
-					data[i] = LEFT_SIDE_BUTTON_CODES[j]
+			if self._keyLayout == KeyLayouts.bothAsLeft:
+				if key in RIGHT_SIDE_KEY_CODES:
+					j = RIGHT_SIDE_KEY_CODES.index(key)
+					data[i] = LEFT_SIDE_KEY_CODES[j]
 				continue
-			if self._buttonSettings == ButtonActions.bothAsRight:
-				if key in LEFT_SIDE_BUTTON_CODES:
-					j = LEFT_SIDE_BUTTON_CODES.index(key)
-					data[i] = RIGHT_SIDE_BUTTON_CODES[j]
+			if self._keyLayout == KeyLayouts.bothAsRight:
+				if key in LEFT_SIDE_KEY_CODES:
+					j = LEFT_SIDE_KEY_CODES.index(key)
+					data[i] = RIGHT_SIDE_KEY_CODES[j]
 		return bytes(data)
 
 	def _keepConnected(self):
