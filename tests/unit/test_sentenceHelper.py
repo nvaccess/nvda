@@ -4,7 +4,7 @@
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 import unittest
-import documentNavigation.sentenceHelper as sentenceHelper
+from documentNavigation import sentenceHelper
 
 
 class TestSentenceHelper(unittest.TestCase):

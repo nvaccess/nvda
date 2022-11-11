@@ -102,7 +102,7 @@ def _splitParagraphIntoChunks(paragraph: str) -> Generator[str, None, None]:
 		yield paragraph[chunkStart:]
 
 
-def speakParagraph(ti: textInfos.TextInfo) -> None:
+def speakSingleLineBreakParagraph(ti: textInfos.TextInfo) -> None:
 	paragraph = ""
 	numLines = 0
 	tempTi = ti.copy()
@@ -135,7 +135,7 @@ def _notFoundMessage(nextParagraph: bool):
 		ui.message("No previous paragraph")
 
 
-def _moveTextInfoToParagraph(nextParagraph: bool, ti: textInfos.TextInfo) -> bool:
+def _moveTextInfoToSingleLineBreakParagraph(nextParagraph: bool, ti: textInfos.TextInfo) -> bool:
 	moved = False
 	ti.expand(textInfos.UNIT_LINE)
 	ti.collapse()  # move to start of line
@@ -176,13 +176,13 @@ def _moveTextInfoToParagraph(nextParagraph: bool, ti: textInfos.TextInfo) -> boo
 	return moved
 
 
-def moveToParagraph(
+def moveToSingleLineBreakParagraph(
 		nextParagraph: bool,
 		speakNew: bool,
 		ti: textInfos.TextInfo = None
 ) -> Tuple[bool, bool]:
 	"""
-	Moves to the previous or next normal paragraph, delimited by a single line break.
+	Moves to the previous or next paragraph which is delimited by a single line break.
 	@param nextParagraph: bool indicating desired direction of movement,
 	True for next paragraph, False for previous paragraph
 	@param speakNew: bool indicating if new paragraph should be spoken after navigating
@@ -196,7 +196,7 @@ def moveToParagraph(
 		ti = _getTextInfoAtCaret()
 	if (ti is None) or (not _isAcceptableTextInfo(ti)):
 		return (True, False)
-	moved = _moveTextInfoToParagraph(nextParagraph, ti)
+	moved = _moveTextInfoToSingleLineBreakParagraph(nextParagraph, ti)
 	if moved:
 		ti.updateCaret()
 		from NVDAObjects.UIA import UIATextInfo
@@ -204,13 +204,13 @@ def moveToParagraph(
 			# Updating caret position in UIATextInfo does not scroll the display. Force it to scroll here.
 			ti._rangeObj.ScrollIntoView(False)
 		if speakNew:
-			speakParagraph(ti)
+			speakSingleLineBreakParagraph(ti)
 	else:
 		_notFoundMessage(nextParagraph)
 	return (False, moved)
 
 
-def speakBlockParagraph(ti: textInfos.TextInfo) -> None:
+def speakMultiLineBreakParagraph(ti: textInfos.TextInfo) -> None:
 	paragraph = ""
 	numLines = 0
 	tempTi = ti.copy()
@@ -229,7 +229,7 @@ def speakBlockParagraph(ti: textInfos.TextInfo) -> None:
 		speech.speakMessage(chunk)
 
 
-def _moveTextInfoToBlockParagraph(nextParagraph: bool, ti: textInfos.TextInfo) -> bool:
+def _moveTextInfoToMultiLineBreakParagraph(nextParagraph: bool, ti: textInfos.TextInfo) -> bool:
 	moved = False
 	lookingForBlank = True
 	moveOffset: _Offset = _Offset.NEXT_LINE if nextParagraph else _Offset.PREVIOUS_LINE
@@ -265,13 +265,13 @@ def _moveTextInfoToBlockParagraph(nextParagraph: bool, ti: textInfos.TextInfo) -
 	return moved
 
 
-def moveToBlockParagraph(
+def moveToMultiLineBreakParagraph(
 		nextParagraph: bool,
 		speakNew: bool,
 		ti: textInfos.TextInfo = None
 ) -> Tuple[bool, bool]:
 	"""
-	Moves to the previous or next block paragraph, delineated by a blank line.
+	Moves to the previous or next paragraph delineated by one or more blank lines.
 	@param nextParagraph: bool indicating desired direction of movement,
 	True for next paragraph, False for previous paragraph
 	@param speakNew: bool indicating if new paragraph should be spoken after navigating
@@ -286,7 +286,7 @@ def moveToBlockParagraph(
 		ti = _getTextInfoAtCaret()
 	if (ti is None) or (not _isAcceptableTextInfo(ti)):
 		return (True, False)
-	moved = _moveTextInfoToBlockParagraph(nextParagraph, ti)
+	moved = _moveTextInfoToMultiLineBreakParagraph(nextParagraph, ti)
 	if moved:
 		ti.updateCaret()
 		from NVDAObjects.UIA import UIATextInfo
@@ -294,7 +294,7 @@ def moveToBlockParagraph(
 			# Updating caret position in UIATextInfo does not scroll the display. Force it to scroll here.
 			ti._rangeObj.ScrollIntoView(False)
 		if speakNew:
-			speakBlockParagraph(ti)
+			speakMultiLineBreakParagraph(ti)
 	else:
 		_notFoundMessage(nextParagraph)
 

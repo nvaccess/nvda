@@ -276,9 +276,9 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 		):
 			self._caretMovementScriptHelper(gesture, textInfos.UNIT_PARAGRAPH, 1 if nextParagraph else -1)
 		elif flag.calculated() == ParagraphNavigationFlag.DOUBLE_LINE_BREAK:
-			from documentNavigation.paragraphHelper import moveToBlockParagraph
+			from documentNavigation.paragraphHelper import moveToMultiLineBreakParagraph
 			ti = self.makeTextInfo(textInfos.POSITION_SELECTION)
-			passKey, moved = moveToBlockParagraph(
+			passKey, moved = moveToMultiLineBreakParagraph(
 				nextParagraph=nextParagraph,
 				speakNew=not willSayAllResume(gesture),
 				ti=ti)
