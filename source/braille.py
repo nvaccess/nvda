@@ -212,6 +212,8 @@ roleLabels: typing.Dict[controlTypes.Role, str] = {
 	controlTypes.Role.SUGGESTION: _("sggstn"),
 	# Translators: Displayed in braille when an object is a definition.
 	controlTypes.Role.DEFINITION: _("definition"),
+	# Translators: Displayed in braille when an object is a switch control
+	controlTypes.Role.SWITCH: _("swtch"),
 }
 
 positiveStateLabels = {
@@ -255,6 +257,8 @@ positiveStateLabels = {
 	controlTypes.State.HASFORMULA: _("frml"),
 	# Translators: Displayed in braille when there is a comment for a spreadsheet cell or piece of text in a document.
 	controlTypes.State.HASCOMMENT: _("cmnt"),
+	# Translators: Displayed in braille when a control is switched on
+	controlTypes.State.ON: "⣏⣿⣹",
 }
 negativeStateLabels = {
 	# Translators: Displayed in braille when an object is not selected.
@@ -263,6 +267,8 @@ negativeStateLabels = {
 	controlTypes.State.PRESSED: u"⢎⣀⡱",
 	# Displayed in braille when an object (e.g. a check box) is not checked.
 	controlTypes.State.CHECKED: u"⣏⣀⣹",
+	# Displayed in braille when an object (e.g. a switch control) is switched off.
+	controlTypes.State.ON: "⣏⣀⣹",
 }
 
 landmarkLabels = {
@@ -1790,7 +1796,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		brailleViewer.postBrailleViewerToolToggledAction.register(self._onBrailleViewerChangedState)
 
 	def terminate(self):
-		bgThreadStopTimeout = 2.5 if self._detectionEnabled else None
 		self._disableDetection()
 		if self._messageCallLater:
 			self._messageCallLater.Stop()
@@ -1802,7 +1807,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if self.display:
 			self.display.terminate()
 			self.display = None
-		_BgThread.stop(timeout=bgThreadStopTimeout)
+		_BgThread.stop()
 		louisHelper.terminate()
 
 	def getTether(self):
@@ -1892,9 +1897,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 					# Re-initialize with supported kwargs.
 					extensionPoints.callWithSupportedKwargs(newDisplay.__init__, **kwargs)
 			else:
-				if newDisplay.isThreadSafe and not detected:
+				if newDisplay.isThreadSafe:
 					# Start the thread if it wasn't already.
-					# Auto detection implies the thread is already started.
 					_BgThread.start()
 				try:
 					newDisplay = newDisplay(**kwargs)
@@ -1952,7 +1956,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		blinkRate = config.conf["braille"]["cursorBlinkRate"]
 		if cursorShouldBlink and blinkRate:
 			self._cursorBlinkTimer = gui.NonReEntrantTimer(self._blink)
-			# This is called from the background thread when a display is auto detected.
+			# This is called from another thread when a display is auto detected.
 			# Make sure we start the blink timer from the main thread to avoid wx assertions
 			wx.CallAfter(self._cursorBlinkTimer.Start,blinkRate)
 
@@ -2274,7 +2278,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if self._detectionEnabled and self._detector:
 			self._detector.rescan(usb=usb, bluetooth=bluetooth, limitToDevices=limitToDevices)
 			return
-		_BgThread.start()
 		config.conf["braille"]["display"] = AUTO_DISPLAY_NAME
 		if not keepCurrentDisplay:
 			self.setDisplayByName("noBraille", isFallback=True)
@@ -2314,6 +2317,8 @@ class _BgThread:
 
 	@classmethod
 	def queueApc(cls, func, param=0):
+		# Ensure the thread is running
+		cls.start()
 		ctypes.windll.kernel32.QueueUserAPC(func, cls.handle, param)
 
 	@classmethod
@@ -2395,7 +2400,6 @@ handler: BrailleHandler
 
 def initialize():
 	global handler
-	config.addConfigDirsToPythonPackagePath(brailleDisplayDrivers)
 	log.info("Using liblouis version %s" % louis.version())
 	import serial
 	log.info("Using pySerial version %s"%serial.VERSION)

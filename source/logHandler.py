@@ -328,6 +328,17 @@ class Formatter(logging.Formatter):
 	def formatException(self, ex):
 		return stripBasePathFromTracebackText(super(Formatter, self).formatException(ex))
 
+	def format(self, record: logging.LogRecord) -> str:
+		# NVDA's log calls provide / generate a special 'codepath' record attribute.
+		# Which is a clean and friendly module.class.function string.
+		# However, as NVDA's logger is also installed as the root logger to catch logging from other libraries,
+		# log calls outside of NVDA will not provide codepath.
+		if not hasattr(record, 'codepath'):
+			# #14315: codepath was not provided,
+			# So make up a simple one from standard record attributes we know will exist.
+			record.codepath = "{name}.{funcName}".format(**record.__dict__)
+		return super().format(record)
+
 	def formatTime(self, record: logging.LogRecord, datefmt: Optional[str] = None) -> str:
 		"""Custom implementation of `formatTime` which avoids `time.localtime`
 		since it causes a crash under some versions of Universal CRT when Python locale

@@ -375,7 +375,6 @@ _audioOutputDevice = None
 
 
 def initialize():
-	config.addConfigDirsToPythonPackagePath(synthDrivers)
 	config.post_configProfileSwitch.register(handlePostConfigProfileSwitch)
 
 

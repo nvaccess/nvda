@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-21 00:02+0000\n"
-"PO-Revision-Date: 2022-10-21 10:33+0200\n"
+"POT-Creation-Date: 2022-11-04 00:02+0000\n"
+"PO-Revision-Date: 2022-11-08 23:15+0100\n"
 "Last-Translator: Juan C. Buño <oprisniki@gmail.com>\n"
 "Language-Team: equipo de traducción al español de NVDA <oprisniki@gmail."
 "com>\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
@@ -2395,6 +2395,15 @@ msgstr ""
 
 msgid "gesture map File Error"
 msgstr "error de fichero de mapa de gestos"
+
+#. Translators: Message when NVDA is having an issue starting up
+#, python-format
+msgid ""
+"NVDA is failing to fetch the foreground window. If this continues, NVDA will "
+"quit starting in %d seconds."
+msgstr ""
+"NVDA está fallando al obtener la ventana en primer plano. Si esto continúa, "
+"NVDA dejará de funcionar en %d segundos."
 
 #. Translators: This is spoken when NVDA is starting.
 msgid "Loading NVDA. Please wait..."
