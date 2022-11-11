@@ -98,6 +98,7 @@ JABStatesToNVDAStates={
 	"multi_line":controlTypes.State.MULTILINE,
 	"focusable":controlTypes.State.FOCUSABLE,
 	"editable":controlTypes.State.EDITABLE,
+	"selectable": controlTypes.State.SELECTABLE,
 }
 
 
