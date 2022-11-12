@@ -50,8 +50,7 @@ from .constants import (
 	WRITE_QUEUE_LENGTH,
 	MAX_COMBINATION_KEYS,
 	CONTROL_KEY_CODES,
-	LEFT_SIDE_KEY_CODES,
-	RIGHT_SIDE_KEY_CODES,
+	LEFT_RIGHT_KEY_CODES,
 	KEY_LAYOUT_MASK,
 	KeyLayouts,
 	ESTABLISHED,
@@ -694,22 +693,28 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		"""
 		for i, key in enumerate(data):
 			if self._keyLayout == KeyLayouts.switched:
-				if key in LEFT_SIDE_KEY_CODES:
-					j = LEFT_SIDE_KEY_CODES.index(key)
-					data[i] = RIGHT_SIDE_KEY_CODES[j]
-				elif key in RIGHT_SIDE_KEY_CODES:
-					j = RIGHT_SIDE_KEY_CODES.index(key)
-					data[i] = LEFT_SIDE_KEY_CODES[j]
+				if key in LEFT_RIGHT_KEY_CODES.keys():
+					data[i] = LEFT_RIGHT_KEY_CODES[key]
+				elif key in LEFT_RIGHT_KEY_CODES.values():
+					j = list(
+						LEFT_RIGHT_KEY_CODES.values()
+					).index(key)
+					data[i] = list(
+						LEFT_RIGHT_KEY_CODES.keys()
+					)[j]
 				continue
-			if self._keyLayout == KeyLayouts.bothAsLeft:
-				if key in RIGHT_SIDE_KEY_CODES:
-					j = RIGHT_SIDE_KEY_CODES.index(key)
-					data[i] = LEFT_SIDE_KEY_CODES[j]
+			if self._keyLayout == KeyLayouts.bothSidesAsRight:
+				if key in LEFT_RIGHT_KEY_CODES.keys():
+					data[i] = LEFT_RIGHT_KEY_CODES[key]
 				continue
-			if self._keyLayout == KeyLayouts.bothAsRight:
-				if key in LEFT_SIDE_KEY_CODES:
-					j = LEFT_SIDE_KEY_CODES.index(key)
-					data[i] = RIGHT_SIDE_KEY_CODES[j]
+			if self._keyLayout == KeyLayouts.bothSidesAsLeft:
+				if key in LEFT_RIGHT_KEY_CODES.values():
+					j = list(
+						LEFT_RIGHT_KEY_CODES.values()
+					).index(key)
+					data[i] = list(
+						LEFT_RIGHT_KEY_CODES.keys()
+					)[j]
 		return bytes(data)
 
 	def _keepConnected(self):

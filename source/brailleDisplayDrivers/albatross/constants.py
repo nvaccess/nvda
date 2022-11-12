@@ -26,8 +26,7 @@ within approximately 2 seconds. L{KC_INTERVAL} defines suitable time which
 in turn is used by timer.
 - part of display buttons L{Keys} are control keys used to compose key
 combinations. See also L{CONTROL_KEY_CODES}.
-- L{LEFT_SIDE_KEY_CODES} and L{RIGHT_SIDE_KEY_CODES} are used
-when handling custom key layouts.
+- L{LEFT_RIGHT_KEY_CODES} is used when handling custom key layouts.
 - L{RESET_COUNT} defines how many times port buffer reset is done before
 trying to establish connection.
 There are many I/O buffers between device and driver so several
@@ -41,6 +40,7 @@ can be safely ignored.
 from dataclasses import dataclass
 from enum import IntEnum
 from typing import (
+	Dict,
 	Set,
 	Tuple,
 )
@@ -156,58 +156,31 @@ CONTROL_KEY_CODES: Set[Keys] = {
 }
 """Ctrl keys which may start key combination."""
 
-LEFT_SIDE_KEY_CODES: Tuple[Keys] = (
-	Keys.attribute1,
-	Keys.attribute2,
-	Keys.f1,
-	Keys.f2,
-	Keys.f3,
-	Keys.f4,
-	Keys.f5,
-	Keys.f6,
-	Keys.f7,
-	Keys.f8,
-	Keys.home1,
-	Keys.end1,
-	Keys.eCursor1,
-	Keys.cursor1,
-	Keys.up1,
-	Keys.down1,
-	Keys.lWheelRight,
-	Keys.lWheelLeft,
-	Keys.lWheelUp,
-	Keys.lWheelDown,
-)
-"""Left side key codes; used with custom key layouts.
-The order and number of keys must be same in both L{LEFT_SIDE_KEY_CODES}
-and L{RIGHT_SIDE_KEY_CODES}.
-"""
-
-RIGHT_SIDE_KEY_CODES: Tuple[Keys] = (
-	Keys.attribute3,
-	Keys.attribute4,
-	Keys.f9,
-	Keys.f10,
-	Keys.f11,
-	Keys.f12,
-	Keys.f13,
-	Keys.f14,
-	Keys.f15,
-	Keys.f16,
-	Keys.home2,
-	Keys.end2,
-	Keys.eCursor2,
-	Keys.cursor2,
-	Keys.up3,
-	Keys.down2,
-	Keys.rWheelRight,
-	Keys.rWheelLeft,
-	Keys.rWheelUp,
-	Keys.rWheelDown,
-)
-"""Right side key codes; used with custom key layouts.
-The order and number of keys must be same in both L{LEFT_SIDE_KEY_CODES}
-and L{RIGHT_SIDE_KEY_CODES}.
+LEFT_RIGHT_KEY_CODES: Dict[Keys, Keys] = {
+	Keys.attribute1: Keys.attribute3,
+	Keys.attribute2: Keys.attribute4,
+	Keys.f1: Keys.f9,
+	Keys.f2: Keys.f10,
+	Keys.f3: Keys.f11,
+	Keys.f4: Keys.f12,
+	Keys.f5: Keys.f13,
+	Keys.f6: Keys.f14,
+	Keys.f7: Keys.f15,
+	Keys.f8: Keys.f16,
+	Keys.home1: Keys.home2,
+	Keys.end1: Keys.end2,
+	Keys.eCursor1: Keys.eCursor2,
+	Keys.cursor1: Keys.cursor2,
+	Keys.up1: Keys.up3,
+	Keys.down1: Keys.down2,
+	Keys.lWheelRight: Keys.rWheelRight,
+	Keys.lWheelLeft: Keys.rWheelLeft,
+	Keys.lWheelUp: Keys.rWheelUp,
+	Keys.lWheelDown: Keys.rWheelDown,
+}
+"""Connects corresponding left and right side keys.
+Dictionary keys are left side keys values, and dictionary values are
+corresponding right side keys values. Used with custom key layouts.
 """
 
 KEY_LAYOUT_MASK = 5
@@ -231,9 +204,9 @@ class KeyLayouts(IntEnum):
 	See also L{KEY_LAYOUT_MASK}.
 	"""
 	normal = 0
-	bothAsRight = 1
+	bothSidesAsRight = 1
 	switched = 4
-	bothAsLeft = 5
+	bothSidesAsLeft = 5
 
 
 @dataclass(frozen=True)
