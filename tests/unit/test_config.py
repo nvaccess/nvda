@@ -351,7 +351,7 @@ class Config_FeatureFlag_with_CustomEnum(unittest.TestCase):
 		self.assertTrue(defaultNever == CustomEnum.NEVER)
 
 
-def _loadProfile(configString):
+def _loadProfile(configString: str) -> configobj.ConfigObj:
 	fn = io.StringIO(configString)
 	profile = configobj.ConfigObj(fn, indent_type="\t", encoding="UTF-8", file_error=False)
 	# Python converts \r\n to \n when reading files in Windows, so ConfigObj can't determine
@@ -432,7 +432,7 @@ class Config_profileUpgradeSteps__upgradeConfigFrom_8_to_9_lineIndent(unittest.T
 
 class Config_profileUpgradeSteps_upgradeConfigFrom_8_to_9_cellBorders(unittest.TestCase):
 
-	def _checkOldKeysRemoved(self, profile):
+	def _checkOldKeysRemoved(self, profile: configobj.ConfigObj) -> None:
 		with self.assertRaises(KeyError):
 			profile['documentFormatting']['reportBorderStyle']
 		with self.assertRaises(KeyError):
@@ -510,7 +510,7 @@ class Config_profileUpgradeSteps_upgradeConfigFrom_8_to_9_cellBorders(unittest.T
 
 class Config_profileUpgradeSteps_upgradeConfigFrom_8_to_9_showMessages(unittest.TestCase):
 
-	def _checkOldKeyRemoved(self, profile):
+	def _checkOldKeyRemoved(self, profile: configobj.ConfigObj) -> None:
 		with self.assertRaises(KeyError):
 			profile['braille']['noMessageTimeout']
 
@@ -603,7 +603,7 @@ class Config_profileUpgradeSteps_upgradeConfigFrom_8_to_9_showMessages(unittest.
 
 class Config_profileUpgradeSteps_upgradeConfigFrom_8_to_9_tetherTo(unittest.TestCase):
 
-	def _checkOldKeyRemoved(self, profile):
+	def _checkOldKeyRemoved(self, profile: configobj.ConfigObj) -> None:
 		with self.assertRaises(KeyError):
 			profile['braille']['autoTether']
 
