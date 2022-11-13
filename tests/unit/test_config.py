@@ -497,6 +497,7 @@ class Config_profileUpgradeSteps_upgradeConfigFrom_8_to_9_cellBorders(unittest.T
 		since reportBorderStyle is the same as default profile.
 		"""
 		
+		# Note that this config is not possible in default profile
 		configString = """
 [documentFormatting]
 	reportBorderColor = True
@@ -508,7 +509,6 @@ class Config_profileUpgradeSteps_upgradeConfigFrom_8_to_9_cellBorders(unittest.T
 
 
 class Config_profileUpgradeSteps_upgradeConfigFrom_8_to_9_showMessages(unittest.TestCase):
-
 
 	def _checkOldKeyRemoved(self, profile):
 		with self.assertRaises(KeyError):
@@ -656,3 +656,22 @@ class Config_profileUpgradeSteps_upgradeConfigFrom_8_to_9_tetherTo(unittest.Test
 		_upgradeConfigFrom_8_to_9_tetherTo(profile)
 		self._checkOldKeyRemoved(profile)
 		self.assertEqual(profile['braille']['tetherTo'], 'auto')
+
+	def test_ManualProfile_TetherToReview(self):
+		"""Braille Tether Braille option set on:
+		- Review in manually activated profile
+		- Focus in default profile
+		when manually activated profile is activated on top of default profile.
+		Thus the configuration for manually activated profile only specifies tetherTo key
+		since autoTether is the same as default profile.
+		"""
+		
+		# Note that this config is not possible in default profile
+		configString = """
+[braille]
+	tetherTo = review
+"""
+		profile = _loadProfile(configString)
+		_upgradeConfigFrom_8_to_9_tetherTo(profile)
+		self._checkOldKeyRemoved(profile)
+		self.assertEqual(profile['braille']['tetherTo'], 'review')
