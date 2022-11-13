@@ -297,6 +297,6 @@ def _upgradeConfigFrom_8_to_9_tetherTo(profile: ConfigObj) -> None:
 			profile["braille"]["tetherTo"] = TetherTo.FOCUS.value
 	else:  # both values present in config
 		if autoTetherVal:
-			profile["braille"]["tetherTo"] = TetherTo.FOCUS.value
+			profile["braille"]["tetherTo"] = TetherTo.AUTO.value
 		else:
 			profile["braille"]["tetherTo"] = tetherToVal
