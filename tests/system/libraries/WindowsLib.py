@@ -70,6 +70,7 @@ def taskSwitchToItemMatching(targetWindowNamePattern: _re.Pattern, maxWindowsToT
 	builtIn.log(f"Looking for window: {targetWindowNamePattern}", level="DEBUG")
 	startOfTaskSwitcherSpeech = _tryOpenTaskSwitcher()
 	if startOfTaskSwitcherSpeech is None:
+		builtIn.log("No speech for opening the task switcher, trying again", level="DEBUG")
 		# Try opening the task switcher again
 		spy.emulateKeyPress('escape')
 		# Hack: using 'sleep' is error-prone.
@@ -79,36 +80,37 @@ def taskSwitchToItemMatching(targetWindowNamePattern: _re.Pattern, maxWindowsToT
 
 		startOfTaskSwitcherSpeech = _tryOpenTaskSwitcher()
 		if startOfTaskSwitcherSpeech is None:
+			builtIn.log("No speech for opening the task switcher again", level="DEBUG")
+			spy.emulateKeyPress('escape')
 			raise AssertionError("Tried twice to open task switcher and failed.")
 
 	spy.wait_for_speech_to_finish(speechStartedIndex=startOfTaskSwitcherSpeech)
 	speech = spy.get_speech_at_index_until_now(startOfTaskSwitcherSpeech)
-	# if there is only one application open, it will already be selected:
-	firstItemPattern = _re.compile(r"row 1\s+column 1")
-	atFirstItemAlready = bool(firstItemPattern.search(speech))
+	builtIn.log(f"Open task switch speech: '{speech}'", level="DEBUG")
+	# If there is only one application open, it will already be selected:
+	# Match "row 1  column 1" not "row 2  column 1" and not "column 1"
+	firstRowColPattern = _re.compile(r"row 1\s\scolumn 1")
+	atFirstItemAlready = bool(firstRowColPattern.search(speech))
 
-	if not atFirstItemAlready:
-		# The second item (in the task switcher) is normally selected initially (when there are multiple windows),
-		# the nominal case is that the first item is the required target.
-		nextIndex = spy.get_next_speech_index()
-		spy.emulateKeyPress('leftArrow')  # So move back to the first.
-		spy.wait_for_speech_to_finish(speechStartedIndex=nextIndex)
-		speech = spy.get_speech_at_index_until_now(nextIndex)
-		builtIn.log(f"First window: {speech}", level="DEBUG")
-
-		# ensure this is now the first item
-		if not firstItemPattern.search(speech):
-			raise AssertionError("Didn't return to the first item with left arrow")
+	# Match only "column 1" not "row 1  column 1" and not "row 2  column 1"
+	firstColPattern = _re.compile(r"(?<!row \d\s\s)column 1")
+	# For a single row of items, returning to the first item will not report the row again.
+	returnToFirstItemPattern = firstColPattern
+	# When there are many items, cycling through items will result in row changes.
+	# Match "row 2  column 1" but not "row 1  column 1" and not "column 1"
+	rowChangedPattern = _re.compile(r"row [2-9]\s\scolumn 1")
 
 	found = False
 	if targetWindowNamePattern.search(speech):
+		builtIn.log("Found target window in first item.", level="DEBUG")
 		found = True
 
 	speech = ""
 	windowsTested = 1
 	while (
 		not found
-		and not firstItemPattern.search(speech)
+		and not atFirstItemAlready  # no point navigating through items if there is only one.
+		and not returnToFirstItemPattern.search(speech)
 		# In most cases it is expected that the target Window is close to the top of the z-order.
 		# On CI there should not be many windows open.
 		# A sanity check on the max windows to test ensures the test does not get stuck cycling through the
@@ -119,12 +121,18 @@ def taskSwitchToItemMatching(targetWindowNamePattern: _re.Pattern, maxWindowsToT
 		spy.emulateKeyPress('rightArrow')  # move to the next task switcher item
 		spy.wait_for_speech_to_finish(speechStartedIndex=nextIndex)
 		speech = spy.get_speech_at_index_until_now(nextIndex)
-		builtIn.log(f"next window: {speech}", level="DEBUG")
+		builtIn.log(f"next window: '{speech}'", level="DEBUG")
 		if targetWindowNamePattern.search(speech):
+			builtIn.log(f"Found target window at item {windowsTested}", level="DEBUG")
 			found = True
+		elif rowChangedPattern.search(speech):
+			builtIn.log("Multiple task switch rows detected.", level="DEBUG")
+			# Once in a row > 1, row and column will be reported when returning to the first row.
+			returnToFirstItemPattern = firstRowColPattern
 		windowsTested += 1
 
 	if not found:
+		builtIn.log("Not found, attempting to close task switcher.", level="DEBUG")
 		nextIndex = spy.get_next_speech_index()
 		spy.emulateKeyPress("escape")
 		spy.wait_for_speech_to_finish(speechStartedIndex=nextIndex)
@@ -133,11 +141,12 @@ def taskSwitchToItemMatching(targetWindowNamePattern: _re.Pattern, maxWindowsToT
 			"See NVDA log for dump of all speech."
 		)
 	else:
+		builtIn.log(f"Found, attempting to select.", level="DEBUG")
 		nextIndex = spy.get_next_speech_index()
 		spy.emulateKeyPress("enter")
 		if not spy.wait_for_speech_to_finish(speechStartedIndex=nextIndex, errorMessage=None):
 			AssertionError(
-				f"Expected some speech after enter press."
+				"Expected some speech after enter press."
 				f" Speech at index: {nextIndex}"
 				f", nextIndex: {spy.get_next_speech_index()}"
 				f", speech in range: {spy.get_speech_at_index_until_now(nextIndex)}"
