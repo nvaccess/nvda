@@ -1,6 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2012-2022 Rui Batista, NV Access Limited, Noelia Ruiz Martínez,
-# Joseph Lee, Babbage B.V., Arnold Loubriat, Łukasz Golonka
+# Joseph Lee, Babbage B.V., Arnold Loubriat, Łukasz Golonka, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -21,7 +21,7 @@ import globalVars
 import zipfile
 from configobj import ConfigObj
 from configobj.validate import Validator
-from .packaging import initializeModulePackagePaths
+from .packaging import initializeAddonsNamespacePackage, initializeModulePackagePaths
 import config
 import languageHandler
 from logHandler import log
@@ -30,6 +30,7 @@ import addonAPIVersion
 from . import addonVersionCheck
 from .addonVersionCheck import isAddonCompatible
 import extensionPoints
+from types import ModuleType
 
 
 MANIFEST_FILENAME = "manifest.ini"
@@ -168,6 +169,7 @@ def initialize():
 	getAvailableAddons(refresh=True, isFirstLoad=True)
 	state.cleanupRemovedDisabledAddons()
 	state.save()
+	initializeAddonsNamespacePackage()
 	initializeModulePackagePaths()
 
 
@@ -395,7 +397,7 @@ class Addon(AddonBase):
 		_blockedAddons.discard(self.name)
 		state.save()
 
-	def addToPackagePath(self, package):
+	def addToPackagePath(self, package: ModuleType):
 		""" Adds this L{Addon} extensions to the specific package path if those exist.
 		This allows the addon to "run" / be available because the package is able to search its path,
 		looking for particular modules. This is used by the following:
@@ -403,8 +405,8 @@ class Addon(AddonBase):
 		- `appModules`
 		- `synthDrivers`
 		- `brailleDisplayDrivers`
+		- `visionEnhancementProviders`
 		@param package: the python module representing the package.
-		@type package: python module.
 		"""
 		# #3090: Ensure that we don't add disabled / blocked add-ons to package path.
 		# By returning here the addon does not "run"/ become active / registered.
