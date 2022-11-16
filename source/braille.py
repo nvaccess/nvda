@@ -2323,6 +2323,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		else:
 			if self.display.receivesAckPackets:
 				self.display._awaitingAck = True
+				# Wait twice the display driver timeout for acknowledgement packets
+				# Note: timeout is in seconds whereas setWaitableTimer expects milliseconds
 				winKernel.setWaitableTimer(
 					self.ackTimerHandle,
 					int(self.display.timeout * 2000),
