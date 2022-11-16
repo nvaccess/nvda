@@ -76,13 +76,13 @@ class ParagraphNavigationFlag(DisplayStringEnum):
 			# Translators: Label for a paragraph style in NVDA settings.
 			self.SINGLE_LINE_BREAK: _("Single line break"),
 			# Translators: Label for a paragraph style in NVDA settings.
-			self.DOUBLE_LINE_BREAK: _("Double line break")
+			self.MULTI_LINE_BREAK: _("Multi line break")
 		}
 
 	DEFAULT = enum.auto()
 	APPLICATION = enum.auto()
 	SINGLE_LINE_BREAK = enum.auto()
-	DOUBLE_LINE_BREAK = enum.auto()
+	MULTI_LINE_BREAK = enum.auto()
 
 
 class WindowsTerminalStrategyFlag(DisplayStringEnum):

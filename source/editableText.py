@@ -308,7 +308,7 @@ class EditableText(TextContainerObject,ScriptableObject):
 			)
 			if passKey:
 				self.script_caret_moveByParagraph(gesture)
-		elif flag.calculated() == ParagraphNavigationFlag.DOUBLE_LINE_BREAK:
+		elif flag.calculated() == ParagraphNavigationFlag.MULTI_LINE_BREAK:
 			from documentNavigation.paragraphHelper import moveToMultiLineBreakParagraph
 			passKey, moved = moveToMultiLineBreakParagraph(
 				nextParagraph=nextParagraph,
