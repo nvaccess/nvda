@@ -24,6 +24,12 @@ from config.profileUpgradeSteps import (
 	_upgradeConfigFrom_8_to_9_showMessages,
 	_upgradeConfigFrom_8_to_9_tetherTo,
 )
+from config.configFlags import (
+	ShowMessages,
+	ReportLineIndentation,
+	ReportCellBorders,
+	TetherTo,
+)
 from utils.displayString import (
 	DisplayStringEnum
 )
@@ -385,7 +391,7 @@ class Config_profileUpgradeSteps__upgradeConfigFrom_8_to_9_lineIndent(unittest.T
 """
 		profile = _loadProfile(configString)
 		_upgradeConfigFrom_8_to_9_lineIndent(profile)
-		self.assertEqual(profile['documentFormatting']['reportLineIndentation'], 0)
+		self.assertEqual(profile['documentFormatting']['reportLineIndentation'], ReportLineIndentation.OFF.value)
 		with self.assertRaises(KeyError):
 			profile['documentFormatting']['reportLineIndentationWithTones']
 	
@@ -398,7 +404,7 @@ class Config_profileUpgradeSteps__upgradeConfigFrom_8_to_9_lineIndent(unittest.T
 """
 		profile = _loadProfile(configString)
 		_upgradeConfigFrom_8_to_9_lineIndent(profile)
-		self.assertEqual(profile['documentFormatting']['reportLineIndentation'], 1)
+		self.assertEqual(profile['documentFormatting']['reportLineIndentation'], ReportLineIndentation.SPEECH.value)
 		with self.assertRaises(KeyError):
 			profile['documentFormatting']['reportLineIndentationWithTones']
 
@@ -411,7 +417,7 @@ class Config_profileUpgradeSteps__upgradeConfigFrom_8_to_9_lineIndent(unittest.T
 """
 		profile = _loadProfile(configString)
 		_upgradeConfigFrom_8_to_9_lineIndent(profile)
-		self.assertEqual(profile['documentFormatting']['reportLineIndentation'], 2)
+		self.assertEqual(profile['documentFormatting']['reportLineIndentation'], ReportLineIndentation.TONES.value)
 		with self.assertRaises(KeyError):
 			profile['documentFormatting']['reportLineIndentationWithTones']
 
@@ -425,7 +431,10 @@ class Config_profileUpgradeSteps__upgradeConfigFrom_8_to_9_lineIndent(unittest.T
 """
 		profile = _loadProfile(configString)
 		_upgradeConfigFrom_8_to_9_lineIndent(profile)
-		self.assertEqual(profile['documentFormatting']['reportLineIndentation'], 3)
+		self.assertEqual(
+			profile['documentFormatting']['reportLineIndentation'],
+			ReportLineIndentation.SPEECH_AND_TONES.value,
+		)
 		with self.assertRaises(KeyError):
 			profile['documentFormatting']['reportLineIndentationWithTones']
 
@@ -457,7 +466,7 @@ class Config_profileUpgradeSteps_upgradeConfigFrom_8_to_9_cellBorders(unittest.T
 """
 		profile = _loadProfile(configString)
 		_upgradeConfigFrom_8_to_9_cellBorders(profile)
-		self.assertEqual(profile["documentFormatting"]["reportCellBorders"], 1)
+		self.assertEqual(profile["documentFormatting"]["reportCellBorders"], ReportCellBorders.STYLE.value)
 		self._checkOldKeysRemoved(profile)
 
 	def test_DefaultProfile_CellBordersColorAndStyle(self):
@@ -470,7 +479,10 @@ class Config_profileUpgradeSteps_upgradeConfigFrom_8_to_9_cellBorders(unittest.T
 """
 		profile = _loadProfile(configString)
 		_upgradeConfigFrom_8_to_9_cellBorders(profile)
-		self.assertEqual(profile["documentFormatting"]["reportCellBorders"], 2)
+		self.assertEqual(
+			profile["documentFormatting"]["reportCellBorders"],
+			ReportCellBorders.COLOR_AND_STYLE.value,
+		)
 		self._checkOldKeysRemoved(profile)
 
 	def test_DefaultProfile_CellBordersRestoreOff(self):
@@ -485,7 +497,7 @@ class Config_profileUpgradeSteps_upgradeConfigFrom_8_to_9_cellBorders(unittest.T
 """
 		profile = _loadProfile(configString)
 		_upgradeConfigFrom_8_to_9_cellBorders(profile)
-		self.assertEqual(profile["documentFormatting"]["reportCellBorders"], 0)
+		self.assertEqual(profile["documentFormatting"]["reportCellBorders"], ReportCellBorders.OFF.value)
 		self._checkOldKeysRemoved(profile)
 
 	def test_ManualProfile_CellBordersColorAndStyle(self):
@@ -504,7 +516,10 @@ class Config_profileUpgradeSteps_upgradeConfigFrom_8_to_9_cellBorders(unittest.T
 """
 		profile = _loadProfile(configString)
 		_upgradeConfigFrom_8_to_9_cellBorders(profile)
-		self.assertEqual(profile["documentFormatting"]["reportCellBorders"], 2)
+		self.assertEqual(
+			profile["documentFormatting"]["reportCellBorders"],
+			ReportCellBorders.COLOR_AND_STYLE.value,
+		)
 		self._checkOldKeysRemoved(profile)
 
 
@@ -536,7 +551,7 @@ class Config_profileUpgradeSteps_upgradeConfigFrom_8_to_9_showMessages(unittest.
 		profile = _loadProfile(configString)
 		_upgradeConfigFrom_8_to_9_showMessages(profile)
 		self._checkOldKeyRemoved(profile)
-		self.assertEqual(profile['braille']['showMessages'], 0)
+		self.assertEqual(profile['braille']['showMessages'], ShowMessages.DISABLED.value)
 		with self.assertRaises(KeyError):
 			profile['braille']['messageTimeout']
 
@@ -550,7 +565,7 @@ class Config_profileUpgradeSteps_upgradeConfigFrom_8_to_9_showMessages(unittest.
 		profile = _loadProfile(configString)
 		_upgradeConfigFrom_8_to_9_showMessages(profile)
 		self._checkOldKeyRemoved(profile)
-		self.assertEqual(profile['braille']['showMessages'], 2)
+		self.assertEqual(profile['braille']['showMessages'], ShowMessages.SHOW_INDEFINITELY.value)
 		with self.assertRaises(KeyError):
 			profile['braille']['messageTimeout']
 	
@@ -566,7 +581,7 @@ class Config_profileUpgradeSteps_upgradeConfigFrom_8_to_9_showMessages(unittest.
 		profile = _loadProfile(configString)
 		_upgradeConfigFrom_8_to_9_showMessages(profile)
 		self._checkOldKeyRemoved(profile)
-		self.assertEqual(profile['braille']['showMessages'], 1)
+		self.assertEqual(profile['braille']['showMessages'], ShowMessages.USE_TIMEOUT.value)
 		with self.assertRaises(KeyError):
 			profile['braille']['messageTimeout']
 	
@@ -628,7 +643,7 @@ class Config_profileUpgradeSteps_upgradeConfigFrom_8_to_9_tetherTo(unittest.Test
 		profile = _loadProfile(configString)
 		_upgradeConfigFrom_8_to_9_tetherTo(profile)
 		self._checkOldKeyRemoved(profile)
-		self.assertEqual(profile['braille']['tetherTo'], 'focus')
+		self.assertEqual(profile['braille']['tetherTo'], TetherTo.FOCUS.value)
 
 	def test_DefaultProfile_TetherToReview(self):
 		"""Braille Tether Braille option set on Review in default profile."""
@@ -641,7 +656,7 @@ class Config_profileUpgradeSteps_upgradeConfigFrom_8_to_9_tetherTo(unittest.Test
 		profile = _loadProfile(configString)
 		_upgradeConfigFrom_8_to_9_tetherTo(profile)
 		self._checkOldKeyRemoved(profile)
-		self.assertEqual(profile['braille']['tetherTo'], 'review')
+		self.assertEqual(profile['braille']['tetherTo'], TetherTo.REVIEW.value)
 
 	def test_DefaultProfile_TetherToRestoreAuto(self):
 		"""Braille Tether Braille option explicitely restored on Automatic in default profile,
@@ -655,7 +670,7 @@ class Config_profileUpgradeSteps_upgradeConfigFrom_8_to_9_tetherTo(unittest.Test
 		profile = _loadProfile(configString)
 		_upgradeConfigFrom_8_to_9_tetherTo(profile)
 		self._checkOldKeyRemoved(profile)
-		self.assertEqual(profile['braille']['tetherTo'], 'auto')
+		self.assertEqual(profile['braille']['tetherTo'], TetherTo.AUTO.value)
 
 	def test_ManualProfile_TetherToReview(self):
 		"""Braille Tether Braille option set on:
@@ -674,4 +689,4 @@ class Config_profileUpgradeSteps_upgradeConfigFrom_8_to_9_tetherTo(unittest.Test
 		profile = _loadProfile(configString)
 		_upgradeConfigFrom_8_to_9_tetherTo(profile)
 		self._checkOldKeyRemoved(profile)
-		self.assertEqual(profile['braille']['tetherTo'], 'review')
+		self.assertEqual(profile['braille']['tetherTo'], TetherTo.REVIEW.value)
