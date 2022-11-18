@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA_georgian_translation\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-04 00:02+0000\n"
-"PO-Revision-Date: 2022-11-10 16:05+0400\n"
+"POT-Creation-Date: 2022-11-15 00:02+0000\n"
+"PO-Revision-Date: 2022-11-12 20:06+0400\n"
 "Last-Translator: Dragan Ratkovich\n"
 "Language-Team: Georgian translation team <admin@gozaltech.org>\n"
 "Language: ka\n"
@@ -2394,15 +2394,6 @@ msgstr ""
 msgid "gesture map File Error"
 msgstr "ჟესტების დამაკავშირებელი ფაილის შეცდომა"
 
-#. Translators: Message when NVDA is having an issue starting up
-#, python-format
-msgid ""
-"NVDA is failing to fetch the foreground window. If this continues, NVDA will "
-"quit starting in %d seconds."
-msgstr ""
-"NVDA ვერ ახერხებს წინა პლანის ფანჯრის მოძიებას. თუ აღნიშნული კვლავ "
-"გაგრძელდება, NVDA მუშაობის დაწყებას შეწყვეტს %d წამში."
-
 #. Translators: This is spoken when NVDA is starting.
 msgid "Loading NVDA. Please wait..."
 msgstr "NVDA იტვირთება. გთხოვთ, დაელოდოთ..."
@@ -2509,14 +2500,14 @@ msgid ""
 "Reads the row horizontally from the current cell rightwards to the last cell "
 "in the row."
 msgstr ""
-"კითხულობს ხაზს ჰორიზონტალურად მიმდინარე უჯრიდან მარჯვნივ, ხაზის ბოლო უჯრამდე."
+"კითხულობს ხაზს ჰორიზონტალურად მიმდინარე უჯრიდან მარჯვნივ, ხაზის ბოლო უჯრამდე"
 
 #. Translators: the description for the sayAll row command
 msgid ""
 "Reads the column vertically from the current cell downwards to the last cell "
 "in the column."
 msgstr ""
-"კითხულობს სვეტს ვერტიკალურად მიმდინარე უჯრიდან ქვევით სვეტის ბოლო უჯრამდე."
+"კითხულობს სვეტს ვერტიკალურად მიმდინარე უჯრიდან ქვევით სვეტის ბოლო უჯრამდე"
 
 #. Translators: the description for the speak row command
 msgid ""
@@ -2524,7 +2515,7 @@ msgid ""
 "system caret."
 msgstr ""
 "კითხულობს მიმდინარე ხაზს ჰორიზონტალურად მარცხნიდან მარჯვნივ, სისტემური "
-"კურსორის გადაადგილების გარეშე."
+"კურსორის გადაადგილების გარეშე"
 
 #. Translators: the description for the speak column command
 msgid ""
@@ -2532,7 +2523,7 @@ msgid ""
 "system caret."
 msgstr ""
 "კითხულობს მიმდინარე სვეტს ვერტიკალურად, ზევიდან ქვევით, სისტემური კურსორის "
-"გადაადგილების გარეშე."
+"გადაადგილების გარეშე"
 
 #. Translators: The message announced when toggling the include layout tables browse mode setting.
 msgid "layout tables off"
@@ -6278,6 +6269,33 @@ msgstr "ყველა თითის შეხება"
 msgctxt "touch action"
 msgid "hover up"
 msgstr "ყველა თითის გასრიალება ზემოთ"
+
+#. Translators: This is the message for a warning shown if NVDA cannot open a browsable message window
+#. when Windows is on a secure screen (sign-on screen / UAC prompt).
+msgid ""
+"This feature is unavailable while on secure screens such as the sign-on "
+"screen or UAC prompt."
+msgstr ""
+"ეს ფუნქცია მიუწვდომელია დაცულ ეკრანებზე, როგორიცაა შესვლის ეკრანი ან UAC "
+"მოთხოვნა."
+
+#. Translators: This is the message for a warning shown if NVDA cannot open a browsable message window
+#. when Windows is on a secure screen (sign-on screen / UAC prompt). This prompt includes the title
+#. of the Window that could not be opened for context.
+#. The {title} will be replaced with the title.
+#. The title may be something like "Formatting".
+#, python-brace-format
+msgid ""
+"This feature ({title}) is unavailable while on secure screens such as the "
+"sign-on screen or UAC prompt."
+msgstr ""
+"ეს ფუნქცია ({title}) მიუწვდომელია დაცულ ეკრანებზე, როგორიცაა შესვლის ეკრანი "
+"ან UAC მოთხოვნა."
+
+#. Translators: This is the title for a warning dialog, shown if NVDA cannot open a browsable message
+#. dialog.
+msgid "Feature unavailable."
+msgstr "ფუნქცია მიუწვდომელია."
 
 #. Translators: The title for the dialog used to present general NVDA messages in browse mode.
 msgid "NVDA Message"
@@ -13334,6 +13352,13 @@ msgstr "ხაზებს შორის ინტერვალი ორმ
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "ხაზებს შორის ინტერვალი 1.5"
+
+#~ msgid ""
+#~ "NVDA is failing to fetch the foreground window. If this continues, NVDA "
+#~ "will quit starting in %d seconds."
+#~ msgstr ""
+#~ "NVDA ვერ ახერხებს წინა პლანის ფანჯრის მოძიებას. თუ აღნიშნული კვლავ "
+#~ "გაგრძელდება, NVDA მუშაობის დაწყებას შეწყვეტს %d წამში."
 
 #~ msgid "NVDA could not start securely."
 #~ msgstr "NVDA-ს უსაფრთხოდ გაშვება ვერ მოხერხდა."
