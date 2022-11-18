@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-04 00:02+0000\n"
-"PO-Revision-Date: 2022-11-08 23:15+0100\n"
+"POT-Creation-Date: 2022-11-15 00:02+0000\n"
+"PO-Revision-Date: 2022-11-11 09:18+0100\n"
 "Last-Translator: Juan C. Buño <oprisniki@gmail.com>\n"
 "Language-Team: equipo de traducción al español de NVDA <oprisniki@gmail."
 "com>\n"
@@ -2395,15 +2395,6 @@ msgstr ""
 
 msgid "gesture map File Error"
 msgstr "error de fichero de mapa de gestos"
-
-#. Translators: Message when NVDA is having an issue starting up
-#, python-format
-msgid ""
-"NVDA is failing to fetch the foreground window. If this continues, NVDA will "
-"quit starting in %d seconds."
-msgstr ""
-"NVDA está fallando al obtener la ventana en primer plano. Si esto continúa, "
-"NVDA dejará de funcionar en %d segundos."
 
 #. Translators: This is spoken when NVDA is starting.
 msgid "Loading NVDA. Please wait..."
@@ -6282,6 +6273,34 @@ msgstr "desplazar tocando"
 msgctxt "touch action"
 msgid "hover up"
 msgstr "dejar de desplazar tocando"
+
+#. Translators: This is the message for a warning shown if NVDA cannot open a browsable message window
+#. when Windows is on a secure screen (sign-on screen / UAC prompt).
+msgid ""
+"This feature is unavailable while on secure screens such as the sign-on "
+"screen or UAC prompt."
+msgstr ""
+"Esta característica no está disponible mientras se esté en pantallas seguras "
+"tales como la pantalla de inicio de sesión o el indicativo del UAC."
+
+#. Translators: This is the message for a warning shown if NVDA cannot open a browsable message window
+#. when Windows is on a secure screen (sign-on screen / UAC prompt). This prompt includes the title
+#. of the Window that could not be opened for context.
+#. The {title} will be replaced with the title.
+#. The title may be something like "Formatting".
+#, python-brace-format
+msgid ""
+"This feature ({title}) is unavailable while on secure screens such as the "
+"sign-on screen or UAC prompt."
+msgstr ""
+"Esta característica ({title}) no está disponible mientras se esté en "
+"pantallas seguras tales como la pantalla de inicio de sesión o el indicativo "
+"del UAC."
+
+#. Translators: This is the title for a warning dialog, shown if NVDA cannot open a browsable message
+#. dialog.
+msgid "Feature unavailable."
+msgstr "Característica no disponible."
 
 #. Translators: The title for the dialog used to present general NVDA messages in browse mode.
 msgid "NVDA Message"
@@ -13353,6 +13372,13 @@ msgstr "Espaciado de línea doble"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "espaciado de línea a 1.5"
+
+#~ msgid ""
+#~ "NVDA is failing to fetch the foreground window. If this continues, NVDA "
+#~ "will quit starting in %d seconds."
+#~ msgstr ""
+#~ "NVDA está fallando al obtener la ventana en primer plano. Si esto "
+#~ "continúa, NVDA dejará de funcionar en %d segundos."
 
 #~ msgid "NVDA could not start securely."
 #~ msgstr "NVDA no pudo iniciarse de forma segura."

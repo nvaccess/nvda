@@ -79,6 +79,7 @@ Huomaa, että Chromessa ja Edgessä on edelleen tunnettuja ongelmia. (#13254)
 - NVDA ilmoittaa kohteiden vetämisestä näytöllä esim. uudelleenjärjesteltäessä Windows 10:n Käynnistä-valikon ruutuja ja virtuaalisia työpöytiä Windows 11:ssä. (#12271, #14081)
 - Lisäasetusten "Ilmaise lokiin tallennetut virheet toistamalla ääni" -asetus palautetaan nyt asianmukaisesti oletusarvoonsa painettaessa "Palauta oletukset" -painiketta. (#14149)
 - NVDA voi nyt valita tekstiä Java-sovelluksissa ``NVDA+F10``-pikanäppäintä käyttäen. (#14163)
+- NVDA ei enää juutu valikkoon liikuttaessa nuolilla ylös ja alas Microsoft Teamsin ketjutetuissa keskusteluissa. (#14355)
 -
 
 
@@ -90,7 +91,8 @@ Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/change
 Tämä on pieni julkaisu, joka korjaa 2022.3.1:n regressioita ja ratkaisee tietoturvaongelman.
 
 == Tietoturvakorjaukset ==
-
+- Estää todentamattomilta käyttäjiltä mahdollisen järjestelmätason pääsyn. ([GHSA-3jj9-295f-h69w https://github.com/nvaccess/nvda/security/advisories/GHSA-3jj9-295f-h69w])
+-
 
 == Bugikorjaukset ==
 - Korjaa regression versiosta 2022.3.1, jossa tietyt toiminnot poistettiin käytöstä suojatuilla ruuduilla. (#14286)

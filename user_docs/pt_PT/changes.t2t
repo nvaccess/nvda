@@ -3,6 +3,132 @@ Traduzido pela Equipa portuguesa do NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2022.4 =
+Esta versão  tem como principais destaques:
+- Vários novos comandos, incluindo leitura contínua em tabelas;
+- Adicionada uma secção, "Guia de Início Rápido", ao Manual do Utilizador;
+- Várias correcções de bugs;
+- Actualizados o eSpeak e o LibLouis;
+- Novas tabelas Braille chinesas, suecas, Luganda e Kinyarwanda.
+
+== Novas funcionalidades ==
+- Adicionada uma secção, "Guia de Início Rápido", ao Guia do Utilizador. (#13934)
+- Introduzido um novo comando para conhecer a tecla de atalho do foco actual. (#13960)
+  - Desktop: ``shift+numpad2```.
+  - Laptop: ``NVDA+ctrl+shift+.``.
+  -
+- Introduzidos novos comandos para mover o cursor de revisão por página quando a aplicação o permite. (#14021)
+  - Ir para a página anterior:
+    - Desktop: ``NVDA+pageUp```.
+    - Laptop: ``NVDA+shift+pageUp```.
+    -
+  - Ir para a página seguinte:
+    - Desktop: ``NVDA+pageDown```.
+    - Laptop: ``NVDA+shift+pageDown```.
+    -
+  -
+- Adicionados os seguintes comandos de tabela. (#14070)
+  - Leitura contínua na coluna: NVDA+control+alt+downArrow````
+  - Leitura contínua na linha: ``NVDA+control+alt+rightArrow```
+  - Ler a coluna inteira: ``NVDA+control+alt+upArrow```
+  - Ler linha inteira: ``NVDA+control+alt+leftArrow```
+  -
+- Microsoft Excel via UI Automation: O NVDA já anuncia quando sai de uma tabela numa folha de cálculo. (#14165)
+- O anúncio de cabeçalhos de tabelas já pode ser configurado separadamente para linhas e colunas. (#14075)
+-
+
+
+== Alterações ===
+- O eSpeak NG foi actualizado para a versão 1.52-dev commit ``735ecdb8```. (#14060, #14079, #14118, #14203)
+  - Corrigido o anúncio de caracteres latinos quando se utiliza o mandarim. (#12952, #13572, #14197)
+  -
+- Conversor LibLouis braille actualizado para a [versão 3.23.0 https://github.com/liblouis/liblouis/releases/tag/v3.23.0]. (#14112)
+- Adicionadas as tabelas Braille:
+    - Braille chinês comum (caracteres chineses simplificados)
+    - Braille literário de Kinyarwanda
+    - Braille literário de Luganda
+    - Braille sueco não contraído
+    - Braille sueco parcialmente contraído
+    - Braille sueco contraído
+    - Chinês (China, Mandarim) Sistema Braille actual (sem tons) (#14138)
+    -
+- O NVDA inclui agora a arquitectura do sistema operativo como parte dos dados estatísticos dos utilizadores. (#14019)
+-
+
+
+== Correcção de erros ==
+- Ao actualizar o NVDA utilizando o Windows Package Manager CLI (aka winget), uma versão definitiva do NVDA já não é tratada como mais recente do que qualquer versão alfa que esteja instalada. (#12469)
+- O NVDA irá agora anunciar correctamente as caixas de grupo em aplicações Java. (#13962)
+- O cursor segue correctamente o texto falado durante a leitura contínua em aplicações tais como Bookworm, WordPad, ou o visualizador de logs NVDA. (#13420, #9179)
+- Nos programas que utilizam a UI Automation, as caixas de verificação parcialmente marcadas serão anunciadas correctamente. (#13975)
+- Melhor desempenho e estabilidade no Microsoft Visual Studio, Windows Terminal, e outras aplicações baseadas na UI Automation. (#11077, #11209)
+  - Estas correcções aplicam-se ao Windows 11 Sun Valley 2 (versão 22H2) e posteriores;
+  - O registo selectivo para eventos da UI Automation e alterações de propriedade passa a ser activado por padrão;
+  -
+- Anúncio de texto, saída em Braille e supressão de palavra-passe já funcionam como esperado no Terminal Windows incorporado no Visual Studio 2022. (#14194)
+- O NVDA passa a estar consciente da DPI quando utiliza múltiplos monitores.
+Feitas várias correcções para a utilização de uma definição de DPI superior a 100% ou múltiplos monitores.
+Ainda podem existir problemas com versões do Windows mais antigas que Windows 10 1809.
+Para que estas correcções funcionem, as aplicações com as quais a NVDA interage também precisam de estar atentas à DPI.
+Note-se que ainda existem problemas conhecidos com o Chrome e Edge. (#13254)
+  - As molduras de realce visual devem agora ser correctamente colocadas na maioria das aplicações. (#13370, #3875, #12070)
+  - A interacção por ecrã táctil já deve ser mais precisa para a maioria das aplicações. (#7083)
+  - O seguimento do rato já deve funcionar para a maioria das aplicações. (#6722)
+  -
+- As alterações da orientação (paisagem/retrato) já são correctamente ignoradas quando não há alterações (por exemplo, mudança de monitor). (#14035)
+- O NVDA anunciará o arrasto de itens no ecrã em locais como o rearranjo dos mosaicos do  menu iniciar do Windows 10 e ambientes de trabalho virtuais no Windows 11. (#12271, #14081)
+- Em configurações avançadas, a opção "Reproduzir um som para erros registados" é agora correctamente restaurada para o seu valor padrão ao pressionar o botão "Restaurar padrões". (#14149)
+- O NVDA já pode seleccionar texto utilizando o atalho de teclado ``NVDA+f10`` nas aplicações Java. (#14163)
+- O NVDA já não fica preso num menu ao nos deslocarmos com as setas pelas conversas agrupadas  no Microsoft Teams. (#14355)
+-
+
+
+== Alterações para Desenvolvedores ==
+Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] for information on NVDA's API deprecation and removal process.
+
+- The [NVDA API Announcement mailing list https://groups.google.com/a/nvaccess.org/g/nvda-api/about] was created. (#13999)
+- NVDA no longer processes ``textChange`` events for most UI Automation applications due to their extreme negative performance impact. (#11002, #14067)
+-
+
+
+=== Futuras remoções ===
+- ``core.post_windowMessageReceipt`` is deprecated, use ``winAPI.messageWindow.pre_handleWindowMessage`` instead.
+- ``winKernel.SYSTEM_POWER_STATUS`` is deprecated and usage is discouraged, this has been moved to ``winAPI._powerTracking.SystemPowerStatus``.
+- ``winUser.SM_*`` constants are deprecated, use ``winAPI.winUser.constants.SystemMetrics`` instead.
+
+
+= 2022.3.2 =
+Esta é uma versão lançada para corrigir regressões na versão 2022.3.1 e resolver uma questão de segurança.
+
+== Security Fixes ==
+- Prevents possible system level access for unauthenticated users.
+([GHSA-3jj9-295f-h69w https://github.com/nvaccess/nvda/security/advisories/GHSA-3jj9-295f-h69w])
+-
+
+== Bug Fixes ==
+- Fixes a regression from 2022.3.1 where certain functionality was disabled on secure screens. (#14286)
+- Fixes a regression from 2022.3.1 where certain functionality was disabled after sign-in, if NVDA started on the lock screen. (#14301)
+-
+
+
+= 2022.3.1 =
+Esta é uma versão lançada para corrigir vários problemas de segurança.
+Please responsibly disclose security issues to info@nvaccess.org.
+
+== Security Fixes ==
+- Fixed exploit where it was possible to elevate from user to system privileges.
+([GHSA-q7c2-pgqm-vvw5 https://github.com/nvaccess/nvda/security/advisories/GHSA-q7c2-pgqm-vvw5])
+- Fixed a security issue allowing access to the python console on the lock screen via a race condition for NVDA startup.
+([GHSA-72mj-mqhj-qh4w https://github.com/nvaccess/nvda/security/advisories/GHSA-72mj-mqhj-qh4w])
+- Fixed issue where speech viewer text is cached when locking Windows.
+([GHSA-grvr-j2h8-3qm4 https://github.com/nvaccess/nvda/security/advisories/GHSA-grvr-j2h8-3qm4])
+-
+
+== Bug Fixes ==
+- Prevent an unauthenticated user from updating settings for speech and Braille viewer on the lock screen. ([GHSA-grvr-j2h8-3qm4 https://github.com/nvaccess/nvda/security/advisories/GHSA-grvr-j2h8-3qm4])
+-
+
+
 = 2022.3 =
 A comunidade de desenvolvimento do NVDA contribuiu para parte significativa desta versão, incluindo a descrição desfasada dos caracteres e suporte melhorado da consola do Windows.
 
@@ -72,7 +198,7 @@ There are no deprecations proposed in 2022.3.
 Esta é uma versão menor que corrige uma acidental quebra de compatibilidade introduzida na versão 2022.2.1.
 
 == Correcção de erros ==
-- Corrigida uma falha que fazia que o NVDA não anunciasse "Ambiente de trabalho seguro" ao entrar num ambiente de trabalho seguro.
+- Corrigida uma falha que fazia que o NVDA não anunciasse "Desktop seguro" ao entrar num Desktop seguro.
 Isto fazia com que o NVDA remote não reconhecesse ambientes de trabalho seguros. (#14094)
 -
 
@@ -829,7 +955,7 @@ Muitas outras correcções e melhorias importantes.
 - Já não é anunciado "lista" em cada linha duma  lista no Google Docs ou outro conteúdo editável no Google Chrome. (#7562)
 - Ao navegar por caracter ou palavra, de um item de lista para outro, em conteúdo editável na web, a entrada no novo item de lista passa a ser anunciada. (#11569)
 - O NVDA já lê a linha correcta quando o cursor de inserção é colocado no fim de um  link no fim de um item de lista no Google Docs ou em outro conteúdo editável na web. (#11606)
-- No Windows 7, ao abrir ou fechar o Menu Iniciar a partir do ambiente de trabalho, o foco já é o correcto. (#10567)
+- No Windows 7, ao abrir ou fechar o Menu Iniciar a partir do Desktop, o foco já é o correcto. (#10567)
 - Quando "Tentar cancelar a voz para eventos de foco expirados" está activado, o título dos separadores é novamente anunciado ao mudar de separadores no Firefox. (#11397)
 - O NVDA já não falha ao anunciar um item de lista, depois de digitar a primeira letra numa lista usando as vozes SAPI5 Ivona. (#11651)
 - Quando se usa as vozes SAPI5 da Ivona, harposoftware.com, o NVDA já pode guardar as configurações, mudar de sintetizador e já não ficará mudo ao reiniciar. (#11650)
@@ -2393,7 +2519,7 @@ Os destaques desta versão incluem o modo de navegação para documentos no Micr
  - No Mozilla Firefox e outros navegadores baseados em Gecko, o novo conteúdo numa região live será anunciado mesmo que o novo conteúdo tenha um tipo usável de ARIA live diferente do região live superior. E.g. Conteúdo marcado  como assertive é adicionado a uma região live marcada como polite. (#4169).
  - No Internet Explorer e outros controlos MSHTML, no caso de um documento estar contido noutro documento já não causa a impedimento de leitura do documento, nomeadamente da frameset inserida noutra frameset (#4418)
  - O NVDA já não cracha ao tentar usar uma linha Braille Handy Tech. (#3709)
-- No Windows Vista, um falso diálogo de "Ponto de Entrada Não Encontrado" já não é exibido em várias situações, tais como ao iniciar o NVDA pelo atalho do Ambiente de trabalho ou via pela tecla de atalho. (#4235)
+- No Windows Vista, um falso diálogo de "Ponto de Entrada Não Encontrado" já não é exibido em várias situações, tais como ao iniciar o NVDA pelo atalho do Desktop ou via pela tecla de atalho. (#4235)
 - Problemas sérios com controlos de texto editável em diálogos de versões recentes do Eclipse foram resolvidos. (#3872)
 - No Outlook 2010, a movimentação do cursor agora funciona como esperado nos campos de eventos e marcação de reuniões. (#4126)
 - Dentro de uma região Live, o conteúdo marcado como não sendo live, (e.g. aria-live="off") é agora correctamente  ignorado. (#4405)
