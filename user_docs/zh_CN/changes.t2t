@@ -106,6 +106,39 @@ NVDA 更新日志
 - ``winUser.SM_*`` 常量已弃用，请用 ``winAPI.winUser.constants.SystemMetrics`` 来代替.
 -
 
+
+= 2022.3.2 =
+这是一个修复了 2022.3.1 中引入的回归并解决安全问题的小版本。
+
+== 安全修复 ==
+- 防止未经身份验证的用户可能存在的系统级访问。
+([GHSA-3jj9-295f-h69w https://github.com/nvaccess/nvda/security/advisories/GHSA-3jj9-295f-h69w])
+-
+
+== 错误修复 ==
+- 修复了从 2022.3.1 中引入的回归，某些功能在安全屏幕上被意外禁用。 (#14286)
+- 修复了从 2022.3.1 的回归，如果 NVDA 在锁屏界面启动，则登录后某些功能会被意外禁用。 (#14301)
+-
+
+
+= 2022.3.1 =
+这是一个小版本，修复了发现的几个安全问题。
+请遵循负责任的披露原则像 NV Access （info@nvaccess.org） 提交您发现的安全问题。
+
+== 安全修复 ==
+- 修复了可以从用户提权到系统级权限的漏洞。
+([GHSA-q7c2-pgqm-vvw5 https://github.com/nvaccess/nvda/security/advisories/GHSA-q7c2-pgqm-vvw5])
+- 修复了一个安全问题，可以利用 NVDA 启动的竞争危害（Race Condition）访问锁屏界面上的 python 控制台。
+([GHSA-72mj-mqhj-qh4w https://github.com/nvaccess/nvda/security/advisories/GHSA-72mj-mqhj-qh4w])
+- 修复了锁定 Windows 时会缓存语音查看器文本的问题。
+([GHSA-grvr-j2h8-3qm4 https://github.com/nvaccess/nvda/security/advisories/GHSA-grvr-j2h8-3qm4])
+-
+
+== 错误修复 ==
+- 防止未经身份验证的用户在锁屏界面改变语音和盲文查看器的设置。 ([GHSA-grvr-j2h8-3qm4 https://github.com/nvaccess/nvda/security/advisories/GHSA-grvr-j2h8-3qm4])
+-
+
+
 = 2022.3 =
 此版本的大部分内容是由 NVDA 社区开发者贡献的。
 这包括光标移动时的延迟字符描述以及对 windows 控制台的增强支持。
