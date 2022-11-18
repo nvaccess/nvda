@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA R3935\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-04 00:02+0000\n"
+"POT-Creation-Date: 2022-11-15 00:02+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Nikola Jović <wwenikola123@gmail.com>\n"
 "Language-Team: NVDA Serbian translation\n"
@@ -1288,7 +1288,7 @@ msgstr "Yakut stepen 1"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Swedish 8 dot computer braille"
-msgstr "Švetski osmotačkasti brajev kod"
+msgstr "Švedski osmotačkasti brajev kod"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1323,17 +1323,17 @@ msgstr "srpski stepen 1"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Swedish uncontracted braille"
-msgstr "Švetski brajev kod"
+msgstr "Švedski brajev kod"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Swedish partially contracted braille"
-msgstr "Švetski brajev kod delimičnog kratkopisa"
+msgstr "Švedski brajev kod delimičnog kratkopisa"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Swedish contracted braille"
-msgstr "Švetski kratkopis"
+msgstr "Švedski kratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2391,15 +2391,6 @@ msgstr ""
 
 msgid "gesture map File Error"
 msgstr "greška u datoteci sa rasporedom komandi"
-
-#. Translators: Message when NVDA is having an issue starting up
-#, python-format
-msgid ""
-"NVDA is failing to fetch the foreground window. If this continues, NVDA will "
-"quit starting in %d seconds."
-msgstr ""
-"NVDA ne može da preuzme trenutni prozor. Ako se ovo nastavi, NVDA će se "
-"zatvoriti za %d sekundi."
 
 #. Translators: This is spoken when NVDA is starting.
 msgid "Loading NVDA. Please wait..."
@@ -6244,6 +6235,33 @@ msgctxt "touch action"
 msgid "hover up"
 msgstr "Povuči gore"
 
+#. Translators: This is the message for a warning shown if NVDA cannot open a browsable message window
+#. when Windows is on a secure screen (sign-on screen / UAC prompt).
+msgid ""
+"This feature is unavailable while on secure screens such as the sign-on "
+"screen or UAC prompt."
+msgstr ""
+"Ova opcija nije dostupna kada ste na bezbednim ekranima kao što su ekran za "
+"prijavljivanje ili ekran kontrole korisničkog naloga."
+
+#. Translators: This is the message for a warning shown if NVDA cannot open a browsable message window
+#. when Windows is on a secure screen (sign-on screen / UAC prompt). This prompt includes the title
+#. of the Window that could not be opened for context.
+#. The {title} will be replaced with the title.
+#. The title may be something like "Formatting".
+#, python-brace-format
+msgid ""
+"This feature ({title}) is unavailable while on secure screens such as the "
+"sign-on screen or UAC prompt."
+msgstr ""
+"Opcija ({title}) je nedostupna kada ste na bezbednim ekranima kao što su "
+"ekran za prijavljivanje ili ekran kontrole korisničkog naloga."
+
+#. Translators: This is the title for a warning dialog, shown if NVDA cannot open a browsable message
+#. dialog.
+msgid "Feature unavailable."
+msgstr "Opcija nedostupna"
+
 #. Translators: The title for the dialog used to present general NVDA messages in browse mode.
 msgid "NVDA Message"
 msgstr "NVDA poruka"
@@ -8450,7 +8468,7 @@ msgstr "&Ulazne komande..."
 
 #. Translators: The label for Preferences submenu in NVDA menu.
 msgid "&Preferences"
-msgstr "O&pcije"
+msgstr "&Opcije"
 
 #. Translators: The label for the menu item to open NVDA Log Viewer.
 msgid "View log"
@@ -8529,7 +8547,7 @@ msgstr "O programu..."
 
 #. Translators: The label for the Help submenu in NVDA menu.
 msgid "&Help"
-msgstr "Pom&oć"
+msgstr "&Pomoć"
 
 #. Translators: The label for the menu item to open donate page.
 msgid "Donate"
@@ -8589,7 +8607,7 @@ msgstr ""
 
 #. Translators: The label for the menu item to open the Configuration Profiles dialog.
 msgid "&Configuration profiles..."
-msgstr "&Profili podešavanja..."
+msgstr "P&rofili podešavanja..."
 
 #. Translators: The label for the menu item to revert to saved configuration.
 msgid "&Revert to saved configuration"
@@ -10347,7 +10365,7 @@ msgstr "Selektivna"
 #. panel to have NVDA register for all UI Automation events
 #. in all cases.
 msgid "Global"
-msgstr "Globalno"
+msgstr "Globalna"
 
 #. Translators: Label for the Use UIA with MS Word combobox, in the Advanced settings panel.
 msgctxt "advanced.uiaWithMSWord"
@@ -13271,6 +13289,13 @@ msgstr "odvajanje više redova "
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5 odvajanje redova"
+
+#~ msgid ""
+#~ "NVDA is failing to fetch the foreground window. If this continues, NVDA "
+#~ "will quit starting in %d seconds."
+#~ msgstr ""
+#~ "NVDA ne može da preuzme trenutni prozor. Ako se ovo nastavi, NVDA će se "
+#~ "zatvoriti za %d sekundi."
 
 #~ msgid "NVDA could not start securely."
 #~ msgstr "NVDA nije mogao da se bezbedno pokrene."
