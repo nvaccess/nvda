@@ -3,7 +3,12 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-"""Flags used for the configuration."""
+"""Flags used to define the possible values for an option in the configuration.
+Use Flag.MEMBER.value to set a new value or compare with an option in the config;
+use Flag.MEMBER.displayString in the UI for a translatable description of this member.
+
+When creating new parameter options, consider using F{FeatureFlag} which explicitely defines the default value.
+"""
 
 from enum import unique
 from utils.displayString import DisplayStringIntEnum, DisplayStringStrEnum
@@ -79,16 +84,16 @@ class ReportLineIndentation(DisplayStringIntEnum):
 	def _displayStringLabels(self):
 		return {
 			# Translators: A choice in a combo box in the document formatting dialog to report No line Indentation.
-			ReportLineIndentation.OFF: _("Off"),
+			ReportLineIndentation.OFF: pgettext('line indentation setting', "Off"),
 			# Translators: A choice in a combo box in the document formatting dialog to report indentation
 			# with Speech.
 			ReportLineIndentation.SPEECH: pgettext('line indentation setting', "Speech"),
 			# Translators: A choice in a combo box in the document formatting dialog to report indentation
 			# with tones.
-			ReportLineIndentation.TONES: _("Tones"),
+			ReportLineIndentation.TONES: pgettext('line indentation setting', "Tones"),
 			# Translators: A choice in a combo box in the document formatting dialog to report indentation with both
 			# Speech and tones.
-			ReportLineIndentation.SPEECH_AND_TONES: _("Both Speech and Tones"),
+			ReportLineIndentation.SPEECH_AND_TONES: pgettext('line indentation setting', "Both Speech and Tones"),
 		}
 
 
