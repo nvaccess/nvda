@@ -63,9 +63,9 @@ class IoThread(threading.Thread):
 		@winKernel.PAPCFUNC
 		def apc(param: int):
 			with self.autoDeleteApcReference(apcUuid):
+				if self.exit:
+					return
 				try:
-					if self.exit:
-						return
 					func(param)
 				except Exception:
 					log.error("Error in APC function queued to IoThread", exc_info=True)
