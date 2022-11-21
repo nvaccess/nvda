@@ -7,7 +7,8 @@
 Use Flag.MEMBER.value to set a new value or compare with an option in the config;
 use Flag.MEMBER.displayString in the UI for a translatable description of this member.
 
-When creating new parameter options, consider using F{FeatureFlag} which explicitely defines the default value.
+When creating new parameter options, consider using F{FeatureFlag} which explicitely defines
+the default value.
 """
 
 from enum import unique
