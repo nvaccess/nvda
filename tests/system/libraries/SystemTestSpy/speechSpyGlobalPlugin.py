@@ -173,9 +173,9 @@ class NVDASpyLib:
 		from queueHandler import queueFunction, eventQueue
 		queueFunction(eventQueue, _crashNVDA)
 
-	def queueNVDABrailleThreadCrash(self):
-		from braille import _BgThread
-		_BgThread.queueApc(ctypes.windll.Kernel32.DebugBreak)
+	def queueNVDAIoThreadCrash(self):
+		from hwIo import bgThread
+		bgThread.queueAsApc(lambda param: _crashNVDA())
 
 	def queueNVDAUIAHandlerThreadCrash(self):
 		from UIAHandler import handler
