@@ -54,6 +54,10 @@ This functionality is now available generically via ``behaviours.EditableText`` 
   -
 - NVDA can now be fully compiled with Visual Studio 2022, no longer requiring the Visual Studio 2019 build tools.
 - More detailed logging for NVDA freezes to aid debugging. (#14309)
+- The singleton ``braille._BgThread`` class has been replaced with ``hwIo.ioThread.IoThread``. (#14130)
+  - A single instance ``hwIo.bgThread`` (in NVDA core) of this class provides background i/o for thread safe braille display drivers.
+  - This new class is not a singleton by design, add-on authors are encouraged to use their own instance when doing hardware i/o.
+  -
 -
 
 === API Breaking Changes ===

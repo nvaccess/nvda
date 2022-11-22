@@ -212,6 +212,7 @@ def resetConfiguration(factoryDefaults=False):
 	import speech
 	import vision
 	import inputCore
+	import hwIo
 	import tones
 	log.debug("Terminating vision")
 	vision.terminate()
@@ -223,6 +224,8 @@ def resetConfiguration(factoryDefaults=False):
 	speech.terminate()
 	log.debug("terminating tones")
 	tones.terminate()
+	log.debug("Terminating background i/o")
+	hwIo.terminate()
 	log.debug("terminating addonHandler")
 	addonHandler.terminate()
 	log.debug("Reloading config")
@@ -237,6 +240,9 @@ def resetConfiguration(factoryDefaults=False):
 	languageHandler.setLanguage(lang)
 	# Addons
 	addonHandler.initialize()
+	# Hardware background i/o
+	log.debug("initializing background i/o")
+	hwIo.initialize()
 	# Tones
 	tones.initialize()
 	#Speech
@@ -538,6 +544,9 @@ def main():
 	import NVDAHelper
 	log.debug("Initializing NVDAHelper")
 	NVDAHelper.initialize()
+	log.debug("initializing background i/o")
+	import hwIo
+	hwIo.initialize()
 	log.debug("Initializing tones")
 	import tones
 	tones.initialize()
@@ -804,6 +813,7 @@ def main():
 	_terminate(brailleInput)
 	_terminate(braille)
 	_terminate(speech)
+	_terminate(hwIo)
 	_terminate(addonHandler)
 	_terminate(garbageHandler)
 	# DMP is only started if needed.
