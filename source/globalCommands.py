@@ -31,6 +31,7 @@ from logHandler import log
 import gui
 import wx
 import config
+from config.configFlags import TetherTo
 import winUser
 import appModuleHandler
 import winKernel
@@ -595,29 +596,14 @@ class GlobalCommands(ScriptableObject):
 		description=_("Cycles through line indentation settings"),
 		category=SCRCAT_DOCUMENTFORMATTING
 	)
-	def script_toggleReportLineIndentation(self,gesture):
-		lineIndentationSpeech = config.conf["documentFormatting"]["reportLineIndentation"]
-		lineIndentationTones = config.conf["documentFormatting"]["reportLineIndentationWithTones"]
-		if not lineIndentationSpeech and not lineIndentationTones:
-			# Translators: A message reported when cycling through line indentation settings.
-			ui.message(_("Report line indentation with speech"))
-			lineIndentationSpeech = True
-		elif lineIndentationSpeech and not lineIndentationTones:
-			# Translators: A message reported when cycling through line indentation settings.
-			ui.message(_("Report line indentation with tones"))
-			lineIndentationSpeech = False
-			lineIndentationTones = True
-		elif not lineIndentationSpeech and lineIndentationTones:
-			# Translators: A message reported when cycling through line indentation settings.
-			ui.message(_("Report line indentation with speech and tones"))
-			lineIndentationSpeech = True
-		else:
-			# Translators: A message reported when cycling through line indentation settings.
-			ui.message(_("Report line indentation off"))
-			lineIndentationSpeech = False
-			lineIndentationTones = False
-		config.conf["documentFormatting"]["reportLineIndentation"] = lineIndentationSpeech
-		config.conf["documentFormatting"]["reportLineIndentationWithTones"] = lineIndentationTones
+	def script_toggleReportLineIndentation(self, gesture: inputCore.InputGesture):
+		ReportLineIndentation = config.configFlags.ReportLineIndentation
+		numVals = len(ReportLineIndentation)
+		state = ReportLineIndentation((config.conf["documentFormatting"]["reportLineIndentation"] + 1) % numVals)
+		config.conf["documentFormatting"]["reportLineIndentation"] = state.value
+		# Translators: A message reported when cycling through line indentation settings.
+		# {mode} will be replaced with the mode; i.e. Off, Speech, Tones or Both Speech and Tones.
+		ui.message(_("Report line indentation {mode}").format(mode=state.displayString))
 
 	@script(
 		# Translators: Input help mode message for toggle report paragraph indentation command.
@@ -702,26 +688,14 @@ class GlobalCommands(ScriptableObject):
 		description=_("Cycles through the cell border reporting settings"),
 		category=SCRCAT_DOCUMENTFORMATTING,
 	)
-	def script_toggleReportCellBorders(self, gesture):
-		if (
-			not config.conf["documentFormatting"]["reportBorderStyle"]
-			and not config.conf["documentFormatting"]["reportBorderColor"]
-		):
-			# Translators: A message reported when cycling through cell borders settings.
-			ui.message(_("Report styles of cell borders"))
-			config.conf["documentFormatting"]["reportBorderStyle"] = True
-		elif (
-			config.conf["documentFormatting"]["reportBorderStyle"]
-			and not config.conf["documentFormatting"]["reportBorderColor"]
-		):
-			# Translators: A message reported when cycling through cell borders settings.
-			ui.message(_("Report colors and styles of cell borders"))
-			config.conf["documentFormatting"]["reportBorderColor"] = True
-		else:
-			# Translators: A message reported when cycling through cell borders settings.
-			ui.message(_("Report cell borders off."))
-			config.conf["documentFormatting"]["reportBorderStyle"] = False
-			config.conf["documentFormatting"]["reportBorderColor"] = False
+	def script_toggleReportCellBorders(self, gesture: inputCore.InputGesture):
+		ReportCellBorders = config.configFlags.ReportCellBorders
+		numVals = len(ReportCellBorders)
+		state = ReportCellBorders((config.conf["documentFormatting"]["reportCellBorders"] + 1) % numVals)
+		config.conf["documentFormatting"]["reportCellBorders"] = state.value
+		# Translators: Reported when the user cycles through report cell border modes.
+		# {mode} will be replaced with the mode; e.g. Off, Styles and Colors and styles.
+		ui.message(_("Report cell borders {mode}").format(mode=state.displayString))
 
 	@script(
 		# Translators: Input help mode message for toggle report links command.
@@ -1042,7 +1016,7 @@ class GlobalCommands(ScriptableObject):
 			ui.reviewMessage(label)
 			pos=api.getReviewPosition().copy()
 			pos.expand(textInfos.UNIT_LINE)
-			braille.handler.setTether(braille.handler.TETHER_REVIEW, auto=True)
+			braille.handler.setTether(TetherTo.REVIEW.value, auto=True)
 			speech.speakTextInfo(pos)
 		else:
 			# Translators: reported when there are no other available review modes for this object 
@@ -1063,7 +1037,7 @@ class GlobalCommands(ScriptableObject):
 			ui.reviewMessage(label)
 			pos=api.getReviewPosition().copy()
 			pos.expand(textInfos.UNIT_LINE)
-			braille.handler.setTether(braille.handler.TETHER_REVIEW, auto=True)
+			braille.handler.setTether(TetherTo.REVIEW.value, auto=True)
 			speech.speakTextInfo(pos)
 		else:
 			# Translators: reported when there are no other available review modes for this object 
@@ -2159,8 +2133,7 @@ class GlobalCommands(ScriptableObject):
 			"reportLineIndentation",
 			"reportParagraphIndentation",
 			"reportLineSpacing",
-			"reportBorderStyle",
-			"reportBorderColor",
+			"reportCellBorders",
 		)
 
 		# Create a dictionary to replace the config section that would normally be
@@ -3129,29 +3102,21 @@ class GlobalCommands(ScriptableObject):
 		gesture="kb:NVDA+control+t"
 	)
 	def script_braille_toggleTether(self, gesture):
-		values = [x[0] for x in braille.handler.tetherValues]
-		labels = [x[1] for x in braille.handler.tetherValues]
-		try:
-			index = values.index(
-				braille.handler.TETHER_AUTO if config.conf["braille"]["autoTether"] else config.conf["braille"]["tetherTo"]
-			)
-		except:
-			index=0
+		values = [x.value for x in TetherTo]
+		index = values.index(config.conf["braille"]["tetherTo"])
 		newIndex = (index+1) % len(values)
 		newTetherChoice = values[newIndex]
-		if newTetherChoice==braille.handler.TETHER_AUTO:
-			config.conf["braille"]["autoTether"] = True
-			config.conf["braille"]["tetherTo"] = braille.handler.TETHER_FOCUS
+		if newTetherChoice == TetherTo.AUTO.value:
+			config.conf["braille"]["tetherTo"] = TetherTo.AUTO.value
 		else:
-			config.conf["braille"]["autoTether"] = False
 			braille.handler.setTether(newTetherChoice, auto=False)
-			if newTetherChoice==braille.handler.TETHER_REVIEW:
+			if newTetherChoice == TetherTo.REVIEW.value:
 				braille.handler.handleReviewMove(shouldAutoTether=False)
 			else:
 				braille.handler.handleGainFocus(api.getFocusObject(),shouldAutoTether=False)
 		# Translators: Reports which position braille is tethered to
 		# (braille can be tethered automatically or to either focus or review position).
-		ui.message(_("Braille tethered %s") % labels[newIndex])
+		ui.message(_("Braille tethered %s") % TetherTo(newTetherChoice).displayString)
 
 	@script(
 		# Translators: Input help mode message for toggle braille focus context presentation command.
@@ -3201,7 +3166,7 @@ class GlobalCommands(ScriptableObject):
 			ui.message(_("Braille cursor is turned off"))
 			return
 		shapes = [s[0] for s in braille.CURSOR_SHAPES]
-		if braille.handler.getTether() == braille.handler.TETHER_FOCUS:
+		if braille.handler.getTether() == TetherTo.FOCUS.value:
 			cursorShape = "cursorShapeFocus"
 		else:
 			cursorShape = "cursorShapeReview"
@@ -3433,8 +3398,8 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_BRAILLE
 	)
 	def script_braille_toFocus(self, gesture):
-		braille.handler.setTether(braille.handler.TETHER_FOCUS, auto=True)
-		if braille.handler.getTether() == braille.handler.TETHER_REVIEW:
+		braille.handler.setTether(TetherTo.FOCUS.value, auto=True)
+		if braille.handler.getTether() == TetherTo.REVIEW.value:
 			self.script_navigatorObject_toFocus(gesture)
 		else:
 			obj = api.getFocusObject()

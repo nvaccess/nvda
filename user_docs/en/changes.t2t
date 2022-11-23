@@ -36,6 +36,15 @@ What's New in NVDA
 - A landmark or region's name is always automatically spoken when jumping inside from outside using quick navigation or focus in browse mode. (#13307)
 - When beep or announce 'cap' for capitals is enabled with delayed character descriptions, NVDA no longer beeps or announces 'cap' twice. (#14239)
 - Controls in tables in Java applications will now be announced more accurately by NVDA. (#14347)
+- Some settings will no longer be unexpectedly different when used with multiple profiles. (#14170)
+  - The following settings have been addressed:
+    - Line indentation in Document formatting settings.
+    - Cell borders in doc formatting settings
+    - Show messages in braille settings
+    - Tether Braille in braille settings
+  - In some rare cases, these settings used in profiles may be unexpectedly modified when installing this version of NVDA.
+  - Please check these options in your profiles after upgrading NVDA to this version.
+  -
 -
 
 
@@ -63,11 +72,25 @@ This functionality is now available generically via ``behaviours.EditableText`` 
 === API Breaking Changes ===
 These are breaking API changes.
 Please open a GitHub issue if your Add-on has an issue with updating to the new API.
+- The configuration specification has been altered, keys have been removed or modified (#14233).
+  - In ``[documentFormatting]`` section:
+    - ``reportLineIndentation`` stores an int value (0 to 3) instead of a boolean
+    - ``reportLineIndentationWithTones`` has been removed.
+    - ``reportBorderStyle`` and ``reportBorderColor`` have been removed and are replaced by ``reportCellBorders``.
+    -
+  - In ``[braille]`` section:
+    - ``noMessageTimeout`` has been removed, replaced by a value for ``showMessages``.
+    - ``messageTimeout`` cannot take the value 0 anymore, replaced by a value for ``showMessages``.
+    - ``autoTether`` has been removed; ``tetherTo`` can now take the value "auto" instead.
+    -
+  -
+-
 
 
 === Deprecations ===
 - ``NVDAObjects.UIA.winConsoleUIA.WinTerminalUIA`` is deprecated and usage is discouraged. (#14047)
 - ``config.addConfigDirsToPythonPackagePath`` has been moved. Use ``addonHandler.packaging.addDirsToPythonPackagePath`` instead. (#14350)
+- ``braille.BrailleHandler.TETHER_*`` are deprecated. Please use ``configFlags.TetherTo.*.value`` instead. (#14233)
 -
 
 

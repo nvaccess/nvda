@@ -579,6 +579,8 @@ class SpeechSymbolProcessor(object):
 			symbol = self.computedSymbols[text[0]]
 			if self._level >= symbol.level:
 				return "  {count} {char} ".format(count=len(text), char=symbol.replacement)
+			elif symbol.preserve in [SYMPRES_ALWAYS, SYMPRES_NOREP]:
+				return text
 			else:
 				return " "
 
