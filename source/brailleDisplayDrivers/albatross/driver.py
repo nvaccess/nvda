@@ -762,7 +762,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 						)
 					)
 			writeBytes.append(END_BYTE)
-			if len(writeBytes) == len(BOTH_BYTES):  # Only START_BYTE and END_BYTE
+			if writeBytes == [START_BYTE, END_BYTE]:  # No updated cell content
 				return
 			self._writeQueue.append(b"".join(writeBytes))
 			log.debug(f"Write: enqueued {b''.join(writeBytes)}")
