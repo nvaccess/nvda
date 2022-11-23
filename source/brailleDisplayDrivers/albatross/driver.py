@@ -114,6 +114,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self._exitEvent = Event()
 		# Thread for read
 		self._handleRead = None
+		# Display function is called manually when display is switched back on
+		# or exited from internal menu. Ensuring data integrity.
+		self._displayLock = Lock()
+		# For proper write operations because calls may be from different threads
 		self._writeLock = Lock()
 		# Timer to keep connection (see KC_INTERVAL).
 		self._kc = None
@@ -572,10 +576,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			and len(self._oldCells) == len(self._currentCells)
 		):
 			self._clearOldCells()
-			with braille._BgThread.queuedWriteLock:
-				braille._BgThread.queuedWrite = self._currentCells
-			# Queue a call to the background thread.
-			braille._BgThread.queueApc(braille._BgThread.executor)
+			self.display(self._currentCells)
 			log.debug(
 				"Updating display content after reconnection or display menu exit"
 			)
@@ -735,33 +736,36 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		@param cells: List of cells content
 		@type cells: List[int]
 		"""
-		# Keep _currentCells up to date for reconnection regardless
-		# of connection state of driver.
-		self._currentCells = cells.copy()
-		# No connection
-		if self._tryToConnect or not self.numCells:
-			return
-		writeBytes: List[bytes] = [START_BYTE, ]
-		# Only changed content is sent (cell index and data).
-		for i, cell in enumerate(cells):
-			if cell != self._oldCells[i]:
-				self._oldCells[i] = cell
-				# display indexing starts from 1
-				writeBytes.append((i + 1).to_bytes(1, 'big'))
-				# Bits have to be reversed.
-				writeBytes.append(
-					int(
-						'{:08b}'.format(cell)[::-1], 2
+		# Using lock because called also manually when display is switched back on
+		# or exited from internal menu.
+		with self ._displayLock:
+			# Keep _currentCells up to date for reconnection regardless
+			# of connection state of driver.
+			self._currentCells = cells.copy()
+			# No connection
+			if self._tryToConnect or not self.numCells:
+				return
+			writeBytes: List[bytes] = [START_BYTE, ]
+			# Only changed content is sent (cell index and data).
+			for i, cell in enumerate(cells):
+				if cell != self._oldCells[i]:
+					self._oldCells[i] = cell
+					# display indexing starts from 1
+					writeBytes.append((i + 1).to_bytes(1, 'big'))
+					# Bits have to be reversed.
+					writeBytes.append(
+						int(
+							'{:08b}'.format(cell)[::-1], 2
+						)
+						.to_bytes(
+							1, 'big'
+						)
 					)
-					.to_bytes(
-						1, 'big'
-					)
-				)
-		writeBytes.append(END_BYTE)
-		if len(writeBytes) < 3:  # Only START_BYTE and END_BYTE
-			return
-		self._writeQueue.append(b"".join(writeBytes))
-		log.debug(f"Write: enqueued {b''.join(writeBytes)}")
+			writeBytes.append(END_BYTE)
+			if len(writeBytes) == len(BOTH_BYTES):  # Only START_BYTE and END_BYTE
+				return
+			self._writeQueue.append(b"".join(writeBytes))
+			log.debug(f"Write: enqueued {b''.join(writeBytes)}")
 		self._somethingToWrite()
 
 	gestureMap = _gestureMap
