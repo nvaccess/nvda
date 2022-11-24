@@ -79,6 +79,7 @@ Ten en cuenta que todavía hay fallos conocidos con Chrome y Edge. (#13254)
 - NVDA anunciará elementos arrastrables en la pantalla en lugares tales como en la reorganización de los mosaicos del menú Inicio en Windows 10 y en los escritorios virtuales en Windows 11. (#12271, #14081)
 - En las opciones avanzadas, la opción "reproducir un sonido para registro de errores" ahora se restaura correctamente a este valor predeterminado al pulsar el botón "Restaurar predeterminados". (#14149)
 - NVDA ahora puede seleccionar texto utilizando el atajo de teclado ``NVDA+f10`` en aplicaciones Java. (#14163)
+- NVDA ya no se atascará en un menú al subir y bajar con las flechas por un hilo de conversaciones en Microsoft Teams. (#14355)
 -
 
 
@@ -98,7 +99,9 @@ Por favor consulta [la guía del desarrollador https://www.nvaccess.org/files/nv
 Esta es una versión menor para corregir regresiones con 2022.3.1 y para abordar un problema de seguridad.
 
 == Correcciones de Seguridad ==
-
+- Evita el posible acceso a nivel de sistema para usuarios no autentificados.
+([GHSA-3jj9-295f-h69w https://github.com/nvaccess/nvda/security/advisories/GHSA-3jj9-295f-h69w])
+-
 
 == Corrección de Fallos ==
 - Se corrige una regresión de 2022.3.1 donde ciertas funcionalidades se deshabilitaban en pantallas seguras. (#14286)

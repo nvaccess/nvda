@@ -79,6 +79,7 @@ Beachten Sie, dass es immer noch bekannte Probleme mit Google Chrome und Microso
 - NVDA teilt mit, dass das Ziehen von Elementen auf dem Bildschirm an Stellen wie der Neuanordnung von Kacheln im Startmenü von Windows 10 und virtuellen Desktops in Windows 11 möglich ist. (#12271, #14081)
 - In den erweiterten Einstellungen wird die Option "Bei protokollierten Fehlern einen Signalton wiedergeben" nun korrekt auf den Standardwert zurückgesetzt, wenn die Schaltfläche "Standardwerte wiederherstellen" betätigt wird. (#14149)
 - NVDA kann nun Text mit dem Tastaturkürzel ``NVDA+F10`` in Java-Anwendungen auswählen. (#14163)
+- NVDA bleibt nicht mehr in einem Menü hängen, wenn Sie in Microsoft Teams mit den Pfeiltasten nach oben oder unten durch die Unterhaltungen gehen. (#14355)
 -
 
 
@@ -101,6 +102,10 @@ Bitte lesen Sie das [Entwicklerhandbuch https://www.nvaccess.org/files/nvda/docu
 Dies ist eine kleinere Version, die Probleme mit 2022.3.1 behebt und eine Sicherheitslücke schließt.
 
 == Sicherheitsproblembehebungen ==
+- Verhindert den möglichen Zugriff auf Systemebene für nicht authentifizierte Benutzer. ([GHSA-3jj9-295f-h69w https://github.com/nvaccess/nvda/security/advisories/GHSA-3jj9-295f-h69w])
+-
+
+== Fehlerbehebungen ==
 - Behebt ein Problem aus 2022.3.1, bei der bestimmte Funktionen während der Anzeige von Sicherheitsmeldungen deaktiviert wurden. (#14286)
 - Behebt ein Problem aus 2022.3.1, bei der bestimmte Funktionen nach der Anmeldung deaktiviert wurden, sobald NVDA auf dem Sperrbildschirm gestartet wurde. (#14301)
 -

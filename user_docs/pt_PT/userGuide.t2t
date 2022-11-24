@@ -17,6 +17,8 @@ O NVDA é desenvolvido pela [NV Access https://www.nvaccess.org/], com contribui
 ++ Características Gerais ++[GeneralFeatures]
 O NVDA permite às pessoas com deficiência visual acederem e interagirem com o sistema operativo Windows e diversas aplicações.
 
+Um pequeno vídeo de demonstração, ["O que é o NVDA?" https://www.youtube.com/watch?v=tCFyyqy9mqo] está disponível no canal do YouTube da NV Access.
+
 As características principais são:
 - Suporte a aplicações populares, incluindo navegadores de Internet, clientes de e-mail, programas de conversa na Internet e pacotes de escritório;
 - Sintetizador de voz embutido, que suporta mais de oitenta idiomas;
@@ -33,6 +35,15 @@ As características principais são:
 - Suporta a Linha de Comandos do Windows e aplicações de consola;
 - Possibilidade de realçar o foco do sistema.
 -
+
++++ Requisitos do sistema ++[SystemRequirements]
+- Sistemas operativos: Todas as versões, 32-bit ou 64-bit, do Windows 7, Windows 8, Windows 8.1, Windows 10, Windows 11 e todas as versões do Windows Server a partir da 2008 R2.
+ - Para Windows 7, o NVDA requer o Service Pack 1 ou superior;
+ - Para Windows Server 2008 R2, o NVDA requer o Service Pack 1 ou superior.
+ -
+- Pelo menos 150 MB de espaço de armazenamento.
+-
+
 
 ++ Internacionalização ++[Internationalization]
 É importante que todos os indivíduos tenham o mesmo acesso às tecnologias, em qualquer parte do mundo, independentemente do idioma que falem.
@@ -65,40 +76,54 @@ Isto aplica-se a todas as cópias, originais e modificadas, deste software, bem 
 Para mais detalhes, pode [ver a licença completa. https://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 Para detalhes sobre as exceções, aceda o documento da licença no menu Ajuda do NVDA.
 
-+ Requisitos Do Sistema +[SystemRequirements]
-- Sistemas Operativos: Todas as versões 32-bit e 64-bit do Windows 7, Windows 8, Windows 8.1, Windows 10 e Windows 11, e todas as versões Server a partir do Windows Server 2008 R2.
-- Para Windows 7, o NVDA requer o Service Pack 1 ou superior.
-- Para Windows Server 2008 R2, o NVDA requer o Service Pack 1 ou superior.
-- Pelo menos 150 MB de espaço livre.
+
++ Guia de início rápido do NVDA +[NVDAQuickStartGuide]
+
+Este guia de início rápido contém três secções principais: download, configuração inicial e execução do NVDA.
+Estas são seguidas por informações sobre como ajustar preferências, participar na comunidade e obter ajuda.
+A informação neste guia é condensada a partir de outras partes do Guia do Utilizador NVDA.
+Por favor consulte o Guia do Utilizador completo para informações mais detalhadas sobre cada tópico.
+
+++ Descarregar o NVDA ++[GettingAndSettingUpNVDA]
+O NVDA é completamente gratuito para qualquer pessoa utilizar.
+Não há autorização com que se preocupar nem assinatura para pagar.
+O NVDA é actualizado, em média, quatro vezes por ano.
+A última versão do NVDA está sempre disponível a partir da página "Download" do [sítio web da NV Access NVDA_URL].].
+
+O NVDA funciona com todas as versões recentes do Microsoft Windows.
+Leia os [Requisitos de sistema # SystemRequirements] para mais detalhes.
+
++++ Passos para Descarregar o NVDA +++[StepsForDownloadingNVDA]
+Estas etapas assumem alguma familiaridade com a navegação de uma página web.
+
+- Abra o seu navegador (pressione a tecla "Windows", escreva o nome do seu navegador, por exemplo "Chrome", sem aspas, e pressione "Enter");
+- Abra a página de downloads da NV Access (Pressione "alt+d"`, escreva o seguinte endereço e pressione "Enter"):
+https://www.nvaccess.org/download
+- Active o botão "Download";
+- O navegador pode ou não solicitar uma acção após o download, e depois iniciar o download;
+- Dependendo do navegador, o ficheiro pode ser executado automaticamente após o seu download;
+- Se o ficheiro precisar de ser executado manualmente, pressione "alt+n" para passar para a área de notificação, depois "alt+r" para executar o ficheiro (ou os passos para o seu browser).
 -
 
-+ Obter e Instalar O NVDA +[GettingAndSettingUpNVDA]
-Se ainda não tem uma cópia do NVDA, pode descarregá-la da [página web da NV Access NVDA_URL].
-
-Entre na secção "download" e encontrará o link para transferir a última versão do NVDA.
+++ Configurar o NVDA ++[SettingUpNVDA]
 
 Ao executar o ficheiro descarregado, irá iniciar uma cópia temporária do NVDA.
 Será então questionado se deseja instalar o NVDA, criar uma cópia portátil ou apenas continuar a usar a cópia temporária.
 
-Se planear usar sempre o NVDA no computador em que o está a executar agora, deverá escolher "instalar o NVDA".
-Isto permitir-lhe-á usufruir de funcionalidades adicionais como início automático após iniciar sessão, leitura da janela de início de sessão e [outras em ambiente seguro do Windows #SecureScreens] (o que não pode ser feito com cópias portáteis ou temporárias), bem como a criação automática de atalhos, no menu iniciar e no ambiente de trabalho.
-A partir da cópia instalada, terá a possibilidade de criar uma cópia portátil, em qualquer altura.
+O NVDA não necessita de acesso à Internet para correr ou instalar uma vez descarregado o instalador.
+Se disponível, uma ligação à Internet permite que o NVDA verifique periodicamente se há actualizações.
 
-Se quer levar o NVDA consigo, numa pen USB ou noutro dispositivo que permita a escrita, então deverá escolher "criar uma cópia portátil".
-A cópia portátil é igualmente capaz de se instalar a si mesma, em qualquer computador, mais tarde.
-Porém, se deseja copiar o NVDA para um suporte apenas de leitura, como um CD, deverá copiar somente o pacote descarregado.
-A execução automática da versão portátil, a partir de dispositivos apenas de leitura, actualmente não é suportada.
++++ Passos para executar o instalador descarregado +++[StepsForRunningTheDownloadLauncher]
 
-Usar a cópia temporária do NVDA é também uma opção (por exemplo, com a finalidade de demonstração); contudo, iniciar sempre o NVDA deste modo poderá consumir bastante tempo.
-
-++ Restrições das versões Portáteis e Temporárias ++[PortableAndTemporaryCopyRestrictions]
-Para além da impossibilidade de arrancar automaticamente com o Windows, as cópias portáteis e temporárias do NVDA têm também as seguintes restrições:
-- Impossibilidade de interagir com aplicações executadas com privilégios de administrador, a menos que o NVDA esteja também a ser executado com os mesmos privilégios, (o que não é recomendado);
-- Impossibilidade de ler as janelas do Controlo de Conta de Utilizador (UAC), ao tentar iniciar uma aplicação com privilégios de administrador;
-- Windows 8 e seguintes: Impossibilidade de suportar introdução de texto pelo ecrã táctil;
-- Windows 8 e seguintes: Impossibilidade de usar as funcionalidades de modo de navegação e de anunciar os caracteres escritos nas aplicações Windows Store.
-- Windows 8 e seguintes: O Modo de diminuição do volume não é suportado.
--
+O ficheiro de configuração é chamado "nvda_2022.1.exe" ou semelhante.
+O ano e a versão muda entre actualizações para reflectir a versão actual.
++Execute o ficheiro descarregado.
+Será ouvida uma música enquanto uma cópia temporária do NVDA é carregada.
+Após o carregamento, o NVDA falará durante todo o resto do processo.
++ A janela de instalação do NVDA aparece com o acordo de licença.
+Pressione ``Seta abaixo``` para ler o acordo de licença, se desejar.
++ Pressione "tab" para passar à caixa de verificação "Aceito" e pressione a "barra de espaços" para a marcar.
++ Pressione "tab" para se mover através das opções, depois pressione "Enter" na opção desejada.
 
 ++ Instalar O NVDA ++[InstallingNVDA]
 Se está a instalar o NVDA directamente do pacote descarregado, pressione o botão "instalar o NVDA".

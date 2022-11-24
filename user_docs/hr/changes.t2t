@@ -79,11 +79,24 @@ Imajte na umu da postoje problemi sa Chrome i Edge preglednicima. (#13254)
 - NVDA će obavještavati o spuštanju stavaka na zaslonu kao što su to mjesta premještanja Windows 10 ploćica u izborniku start i virtualnim radnim površinama u Windows 11. (#12271, #14081)
 - U naprednim postavkama, opcija opcija "reproduciraj zvuk za zapisane greške" sada se ispravno vraća na svoje podrazumjevane vrijednsti prilikom pritiska gumba "vrati na zadano". (#14149)
 - NVDA sada može označavati tekst koristeći ``NVDA+f10`` tipkovnički prečac u java aplikacijama. (#14163)
+- NVDA se više neće zaglavljivati u izborniku pri kretanju strelicama u тематским раѕговорима. (#14355)
 -
 
 
 == Izmjene za razvojne programere ==
 Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
+= 2022.3.2 =
+Ova inačica ispravlja regresije u inačici 2022.3.1 te ispravlja sigurnosnu ranjivost.
+
+== Ispravke sigurnosti ==
+- Onemogućen je mogući pristup na razini sustava za neautorizirane korisnike.
+([GHSA-3jj9-295f-h69w https://github.com/nvaccess/nvda/security/advisories/GHSA-3jj9-295f-h69w])
+-
+
+== Ispravke grešaka ==
+- Ispravljena regresija iz inačice 2022.3.1 u kojoj su neke funkcionalnosti bile isključene na sigurnim zaslonima. (#14286)
+- Ispravljena regresija iz inačice 2022.3.1 u kojoj su neke funkcije poslije prijave, bile nedostupne ako se NVDA pokrenuo sa zaslona zaključavanja. (#14301)
+-
 
 
 = 2022.3.1 =
