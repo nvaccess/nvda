@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited, Aleksey Sadovoy, Babbage B.V., Joseph Lee, Łukasz Golonka
+# Copyright (C) 2006-2022 NV Access Limited, Aleksey Sadovoy, Babbage B.V., Joseph Lee, Łukasz Golonka, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -261,7 +261,12 @@ if oldAppWindowHandle and not globalVars.appArgs.easeOfAccess:
 		_log.debug(f"Terminating oldAppWindowHandle: {oldAppWindowHandle}")
 		terminateRunningNVDA(oldAppWindowHandle)
 	except Exception as e:
-		parser.error(f"Couldn't terminate existing NVDA process, abandoning start:\nException: {e}")
+		winUser.MessageBox(
+			0,
+			f"Couldn't terminate existing NVDA process, abandoning start:\nException: {e}",
+			"Error",
+			winUser.MB_OK
+		)
 
 if globalVars.appArgs.quit or (oldAppWindowHandle and globalVars.appArgs.easeOfAccess):
 	_log.debug("Quitting")
