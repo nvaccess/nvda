@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:11331\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-14 00:02+0000\n"
-"PO-Revision-Date: 2022-10-20 17:29+0200\n"
+"POT-Creation-Date: 2022-11-15 00:02+0000\n"
+"PO-Revision-Date: 2022-11-14 08:45+0100\n"
 "Last-Translator: Michel Such <michelsuch93@gmail.com>\n"
 "Language-Team: fra <LL@li.org>\n"
 "Language: fr_FR\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.0\n"
+"X-Generator: Poedit 3.2\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
@@ -6257,6 +6257,33 @@ msgctxt "touch action"
 msgid "hover up"
 msgstr "fin de survol"
 
+#. Translators: This is the message for a warning shown if NVDA cannot open a browsable message window
+#. when Windows is on a secure screen (sign-on screen / UAC prompt).
+msgid ""
+"This feature is unavailable while on secure screens such as the sign-on "
+"screen or UAC prompt."
+msgstr ""
+"Cette fonctionnalité n'est pas disponible sur les écrans sécurisés tels que "
+"l'écran de connexion ou l'invite UAC."
+
+#. Translators: This is the message for a warning shown if NVDA cannot open a browsable message window
+#. when Windows is on a secure screen (sign-on screen / UAC prompt). This prompt includes the title
+#. of the Window that could not be opened for context.
+#. The {title} will be replaced with the title.
+#. The title may be something like "Formatting".
+#, python-brace-format
+msgid ""
+"This feature ({title}) is unavailable while on secure screens such as the "
+"sign-on screen or UAC prompt."
+msgstr ""
+"Cette fonctionnalité ({title}) n'est pas disponible sur les écrans sécurisés "
+"tels que l'écran de connexion ou l'invite UAC."
+
+#. Translators: This is the title for a warning dialog, shown if NVDA cannot open a browsable message
+#. dialog.
+msgid "Feature unavailable."
+msgstr "Fonctionnalité non disponible"
+
 #. Translators: The title for the dialog used to present general NVDA messages in browse mode.
 msgid "NVDA Message"
 msgstr "Message de NVDA"
@@ -11543,6 +11570,26 @@ msgstr "{curPercent:.0f}%"
 msgid "at {x}, {y}"
 msgstr "à {x}, {y}"
 
+#. Translators: This is the message for a warning shown if NVDA cannot determine if
+#. Windows is locked.
+msgid ""
+"NVDA is unable to determine if Windows is locked. While this instance of "
+"NVDA is running, your desktop will not be secure when Windows is locked. "
+"Restarting Windows may address this. If this error is ongoing then disabling "
+"the Windows lock screen is recommended."
+msgstr ""
+"NVDA est incapable de déterminer si Windows est verrouillé. Pendant que "
+"cette instance de NVDA est en cours d'exécution, votre bureau ne sera pas "
+"sécurisé lorsque Windows sera verrouillé. Le redémarrage de Windows peut "
+"résoudre ce problème. Si cette erreur persiste, il est recommandé de "
+"désactiver l'écran de verrouillage Windows."
+
+#. Translators: This is the title for a warning dialog, shown if NVDA cannot determine if
+#. Windows is locked.
+msgid "Lock screen not secure while using NVDA"
+msgstr ""
+"L'écran de verrouillage n'est pas sécurisé lors de l'utilisation de NVDA"
+
 #. Translators: Reported when a page reloads (example: after refreshing a webpage).
 msgid "Refreshed"
 msgstr "Réactualisé"
@@ -11648,22 +11695,6 @@ msgstr "Chargeur déconnecté"
 #, python-brace-format
 msgid "{hours:d} hours and {minutes:d} minutes remaining"
 msgstr "Temps restant {hours:d} heures et {minutes:d} minutes"
-
-#. Translators: This is a warning to users, shown if NVDA cannot determine if
-#. Windows is locked.
-msgid ""
-"NVDA failed to register session tracking. While this instance of NVDA is "
-"running, your desktop will not be secure when Windows is locked. Restart "
-"NVDA? "
-msgstr ""
-"Échec de l'enregistrement du suivi de session. Tant que cette instance de "
-"NVDA est en cours d'exécution, votre bureau ne sera pas sécurisé lorsque "
-"Windows sera verrouillé. Voulez-vous redémarrer NVDA ?"
-
-#. Translators: This is a warning to users, shown if NVDA cannot determine if
-#. Windows is locked.
-msgid "NVDA could not start securely."
-msgstr "NVDA n'a pas pu démarrer en toute sécurité."
 
 msgid "Taskbar"
 msgstr "Barre des tâches"
@@ -13324,6 +13355,9 @@ msgstr "Interligne double"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Interligne 1.5"
+
+#~ msgid "NVDA could not start securely."
+#~ msgstr "NVDA n'a pas pu démarrer en toute sécurité."
 
 #~ msgid "Swedish grade 1"
 #~ msgstr "Suédois intégral"

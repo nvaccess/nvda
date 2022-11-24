@@ -44,13 +44,13 @@ Một số lỗi cũng đã được sửa.
   -
 - Đã cập nhật thư viện phiên dịch chữ nổi LibLouis lên [3.23.0 https://github.com/liblouis/liblouis/releases/tag/v3.23.0]. (#14112)
   - Thêm các bảng chữ nổi:
-    - Chinese common braille (simplified Chinese characters)
-    - Kinyarwanda literary braille
-    - Luganda literary braille
-    - Swedish uncontracted braille
-    - Swedish partially contracted braille
-    - Swedish contracted braille
-    - Chinese (China, Mandarin) Current Braille System (no tones) (#14138)
+    - Trung Quốc chữ nổi phổ thông (chữ Trung giãn thể)
+    - Kinyarwanda chữ nổi văn học
+    - Luganda chữ nổi văn học
+    - Thụy Điển chữ nổi đầy đủ
+    - Thụy Điển chữ nổi tắt một phần
+    - Thụy Điển Chữ nổi tắt
+    - Trung Quốc (Trung Quốc, Quan Thoại) hệ thống chữ nổi hiện tại (no tones)
     -
 - NVDA giờ đây đã bao gồm kiểu hệ điều hành trong việc thống kê thông tin người dùng. (#14019)
 -
@@ -79,6 +79,7 @@ Lưu ý là vẫn còn những lỗi được tìm thấy với Chrome và Edge.
  NVDA sẽ thông báo các thành phần đang được kéo trên màn hình ở những nơi như sắp xếp lại trong kiểu Windows 10 Start menu và desktop ảo trong Windows 11. (#12271, #14081)
 - Trong cài đặt nâng cao, tùy chọn "Phát âm thanh cho lỗi log" giờ đây đã trả lại giá trị mặc định của nó khi bấm vào nút "Trả về mặc định". (#14149)
 - NVDA giờ đây có thể chọn văn bản bằng phím lệnh ``NVDA+f10``trên các ứng dụng Java. (#14163)
+- NVDA sẽ không còn bị vướng lại trong một trình đơn khi bấm mũi tên lên / xuống ở chủ đề đàm thoại trong Microsoft Teams. (#14355)
 -
 
 
@@ -90,7 +91,9 @@ Phần này không được dịch. Vui lòng xem bản tiếng Anh changes.t2t 
 Đây là bản phát hành phụ nhằm sửa lỗi hồi quy với 2022.3.1 và giải quyết một lỗi bảo mật.
 
 == các sửa lỗi bảo mật ==
-
+- Ngăn chặn truy cập vào các cấp độ hệ thống với các tài khoản không xác thực.
+([GHSA-3jj9-295f-h69w https://github.com/nvaccess/nvda/security/advisories/GHSA-3jj9-295f-h69w])
+-
 
 == Sửa lỗi ==
 - Sửa lỗi hồi quy từ bản 2022.3.1 làm cho vài chức năng bị vô hiệu ở các màn hình bảo vệ. (#14286)

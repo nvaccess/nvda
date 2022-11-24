@@ -12,9 +12,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-28 00:02+0000\n"
-"PO-Revision-Date: 2022-10-30 14:19+0100\n"
-"Last-Translator: Milo Ivir <mail@milotype.de>\n"
+"POT-Creation-Date: 2022-11-15 00:02+0000\n"
+"PO-Revision-Date: 2022-11-15 08:05+0100\n"
+"Last-Translator: Zvonimir Stanecic <zvonimirek222@yandex.com>\n"
 "Language-Team: Hr Zvonimir Stanecic <9a5dsz@gozaltech.org>\n"
 "Language: hr\n"
 "MIME-Version: 1.0\n"
@@ -23,7 +23,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 3.0\n"
+"X-Generator: Poedit 3.2\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 msgid "Native input"
@@ -6330,6 +6330,33 @@ msgstr "kliži"
 msgctxt "touch action"
 msgid "hover up"
 msgstr "prekini klizati"
+
+#. Translators: This is the message for a warning shown if NVDA cannot open a browsable message window
+#. when Windows is on a secure screen (sign-on screen / UAC prompt).
+msgid ""
+"This feature is unavailable while on secure screens such as the sign-on "
+"screen or UAC prompt."
+msgstr ""
+"Ova značajka nije dostupna kada se nalazite na sigurnim zaslonima kao što su "
+"zaslon za prijavu ili UAC zaslon."
+
+#. Translators: This is the message for a warning shown if NVDA cannot open a browsable message window
+#. when Windows is on a secure screen (sign-on screen / UAC prompt). This prompt includes the title
+#. of the Window that could not be opened for context.
+#. The {title} will be replaced with the title.
+#. The title may be something like "Formatting".
+#, python-brace-format
+msgid ""
+"This feature ({title}) is unavailable while on secure screens such as the "
+"sign-on screen or UAC prompt."
+msgstr ""
+"Ova značajka ({title}) nije dostupna kada se nalazitena sigurnim zaslonima "
+"kao što su zaslon za prijavu ili UAC zaslon."
+
+#. Translators: This is the title for a warning dialog, shown if NVDA cannot open a browsable message
+#. dialog.
+msgid "Feature unavailable."
+msgstr "Značajka nije dostupna."
 
 #. Translators: The title for the dialog used to present general NVDA messages in browse mode.
 msgid "NVDA Message"

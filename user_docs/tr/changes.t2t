@@ -75,11 +75,11 @@ Chrome ve Edge ile ilgili hâlen bilinen sorunların olduğunu unutmayın. (#132
   - Çoğu uygulamada dokunmatik ekran etkileşimi düzgün bir şekilde çalışacaktır. (#7083)
   - Çoğu uygulamada fare izleme çalışacaktır.  (#6722)
   -
-
 - Ekran yönü durumu (yatay/dikey) değişiklikleri, monitör değişikliği gibi bir durum olmadığında düzgün bir şekilde yoksayılıyor. (#14035)
 - Windows 11'de NVDA, başlat menüsünde pencere kutucuklarını ve sanal masa üstlerini düzenleme gibi durumlarda ekranda sürüklenen öğeleri bildirecek.  (#12271, #14081)
 - Gelişmiş ayarlarda varsayılanlara geri dön düğmesine basıldığında "Günlüğe kaydedilen hatalar için ses çal" ayarı düzgün bir şekilde varsayılan değerine döndürülüyor. (#14149)
 - Java uygulamalarında ``NVDA+f10`` kısayol tuşu kullanılarak NVDA ile metin seçimi yapılabiliyor. (#14163)
+- Microsoft Teams'te yukarı ve aşağı ok tuşlarıyla gruplanmış sohbetler arasında dolaşırken, NVDA artık menüde takılmayacak. (#14355)
 -
 
 
@@ -95,6 +95,17 @@ Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documen
 - ``core.post_windowMessageReceipt`` is deprecated, use ``winAPI.messageWindow.pre_handleWindowMessage`` instead.
 - ``winKernel.SYSTEM_POWER_STATUS`` is deprecated and usage is discouraged, this has been moved to ``winAPI._powerTracking.SystemPowerStatus``.
 - ``winUser.SM_*`` constants are deprecated, use ``winAPI.winUser.constants.SystemMetrics`` instead.
+= 2022.3.2 =
+2022.3.1 sürümünde ortaya çıkan hataları ve bir güvenlik sorununu düzeltmek için yayınlanan küçük bir güncellemedir.
+
+== Güvenlik düzeltmeleri ==
+- İzni olmayan kullanıcıların da sahip olabildiği sistem seviyesi erişim engellendi.
+([GHSA-3jj9-295f-h69w https://github.com/nvaccess/nvda/security/advisories/GHSA-3jj9-295f-h69w])
+-
+
+== Hata düzeltmeleri ==
+- 2022.3.1 sürümünde ortaya çıkan, güvenli ekranlarda bazı işlevlerin çalışmamasına neden olan bir hata düzeltildi. (#14286)
+- 2021.3.1 sürümünde ortaya çıkan, NVDA kilit ekranında açıldığında, oturum açıldıktan sonra bazı işlevlerin çalışmamasına neden olan bir hata düzeltildi. (#14301)
 -
 
 
