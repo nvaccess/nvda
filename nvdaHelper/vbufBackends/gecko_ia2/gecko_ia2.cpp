@@ -407,6 +407,10 @@ void GeckoVBufBackend_t::fillVBufAriaDetails(
 		auto detailsChildNode = buffer.getControlFieldNodeWithIdentifier(docHandle, detailsId.value());
 		if (detailsChildNode != nullptr) {
 			detailsRole = detailsChildNode->getAttribute(L"role");
+			if (!detailsRole.has_value()) {
+				// This is not an error, the target may not have a role listed in its attributes.
+				LOG_DEBUG(L"Couldn't find attribute: '" << roleName << '\'');
+			}
 		}
 	}
 	if (detailsForId.has_value()) {
