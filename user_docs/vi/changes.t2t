@@ -44,7 +44,7 @@ Một số lỗi cũng đã được sửa.
   -
 - Đã cập nhật thư viện phiên dịch chữ nổi LibLouis lên [3.23.0 https://github.com/liblouis/liblouis/releases/tag/v3.23.0]. (#14112)
   - Thêm các bảng chữ nổi:
-    - Trung Quốc chữ nổi phổ thông (chữ Trung giãn thể)
+    - Trung Quốc chữ nổi phổ thông (chữ Trung giản thể)
     - Kinyarwanda chữ nổi văn học
     - Luganda chữ nổi văn học
     - Thụy Điển chữ nổi đầy đủ
@@ -1084,7 +1084,7 @@ Xin xem các thay đổi  dưới đây để biết thêm chi tiết về đi�
 
 == Sửa lỗi ==
 - Khi dùng bộ đọc OneCore trên Windows 10 April 2018 Update trở lên, không còn tình trạng nhiều khoảng lặng bị chèn vào giữa các câu nói. (#8985)
-- Khi di chuyển bằng kí tự trong   các điều khiển văn bản đơn giản (như là Notepad) hay trong chế độ duyệt, các kí tự biểu tượng cảm xúc 32 bit  gồm hai điểm mã UTF-16  (như ðŸ¤¦) giờ đây sẽ được đọc đúng cách. (#8782)
+- Khi di chuyển bằng kí tự trong   các điều khiển văn bản ` (như là Notepad) hay trong chế độ duyệt, các kí tự biểu tượng cảm xúc 32 bit  gồm hai điểm mã UTF-16  (như ðŸ¤¦) giờ đây sẽ được đọc đúng cách. (#8782)
 - Cải thiện hộp thoại xác nhận khởi động lại sau khi thay đổi ngôn ngữ giao diện người dùng của NVDA. Nội dung và nhãn của các nút giờ đây sẽ rõ ràng và dễ hiểu hơn. (#6416)
 - Nếu không gọi được một bộ đọc nào đó của bên thứ ba, NVDA sẽ gọi trở lại bộ đọc Windows OneCore trên Windows 10, thay vì là espeak. (#9025)
 - Gỡ bỏ mục "Hộp thoại chào mừng" trong thực đơn của NVDA khi ở  trong các màn hình bảo vệ. (#8520)

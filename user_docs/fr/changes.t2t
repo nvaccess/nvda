@@ -8,7 +8,7 @@ Cette version intègre beaucoup de nouvelles touches de commandes, incluant des 
 Une section "Guide de Démarrage Rapide" a été ajoutée au guide utilisateur.
 Sont également présents un bon nombre de correctifs.
 
-eSpeak et Libloouis ont été mis à jour.
+eSpeak et Liblouis ont été mis à jour.
 De nouvelles tables Braille Chinoises, Suédoises, Luganda et Kinyarwanda sont incluses.
 
 == Nouvelles Fonctionnalités ==
@@ -28,18 +28,18 @@ De nouvelles tables Braille Chinoises, Suédoises, Luganda et Kinyarwanda sont i
     -
   -
 - Ajout des commandes de tableau suivantes. (#14070)
-  - Dire tout dans la colonne : ``NVDA+contrôle+alt+flèche basse``
+  - Dire tout dans la colonne : ``NVDA+contrôle+alt+flèche bas``
   - Dire tout dans la ligne : ``NVDA+contrôle+alt+flèche droite``
-  - Lire la colonne entière : ``NVDA+contrôle+alt+flèche haute``
+  - Lire la colonne entière : ``NVDA+contrôle+alt+flèche haut``
   - Lire la ligne entière : ``NVDA+contrôle+alt+flèche gauche``
   -
-- Microsoft Excel via UI Automation : NVDA annonce désormais lors de la sortie d'un tableau dans une feuille de calcul. (#14165)
+- Microsoft Excel via UI Automation : NVDA annonce désormais lorsqu'on quitte un tableau dans une feuille de calcul. (#14165)
 - L'annonce des en-têtes de tableau peut maintenant être configurée séparément pour les lignes et colonnes. (#14075)
 -
 
 
 == Changements ==
-- eSpeak NG a été mis à jour en version 1.52-dev révision ``735ecdb8``. (#14060, #14079, #14118, #14203)
+- eSpeak NG a été mis à jour à la version 1.52-dev révision ``735ecdb8``. (#14060, #14079, #14118, #14203)
   - Correction de l'annonce des caractères latins lors de l'utilisation du Mandarin. (#12952, #13572, #14197)
   -
 - Mise à jour du transcripteur Braille Liblouis à la version [3.23.0 https://github.com/liblouis/liblouis/releases/tag/v3.23.0]. (#14112)
@@ -72,14 +72,14 @@ Des problèmes peuvent toujours exister sur les versions de Windows inférieures
 Pour que ces correctifs fonctionnent, les applications avec lesquelles NVDA interagit doivent également avoir connaissance du DPI.
 Notez qu'il subsiste des problèmes connus avec Chrome et Edge. (#13254)
   - Le cadre de mise en évidence visuelle devrait maintenant être correctement placé dans plus d'applications. (#13370, #3875, #12070)
-  - L'interaction tactile devrait maintenant être opérationelle dans plus d'applications. (#7083)
+  - L'interaction tactile devrait maintenant être opérationnelle dans plus d'applications. (#7083)
   - Le suivi de la souris devrait maintenant fonctionner dans plus d'applications. (#6722)
   -
 - Les changements d'état d'orientation (paysage/portrait) sont maintenant correctement ignorés lorsqu'inexistants, par exemple en cas de changement d'écran. (#14035)
 - NVDA annoncera les éléments glissés/déposés sur l'écran tels que lors du réarrangement des vignettes du menu démarrer de Windows 10 ou des bureaux virtuels sous Windows 11. (#12271, #14081)
 - Dans les paramètres avancés, l'option "Jouer un son pour les erreurs journalisées" est maintenant correctement rétablie à sa valeur d'origine lors de l'appui sur le bouton "Rétablir les paramètres par défaut". (#14149)
 - NVDA peut désormais sélectionner du texte en utilisant le raccourcis clavier NVDA+F10 dans les applications Java. (#14163)
-- NVDA ne sera plus bloqué dans un menu lors de l'utilisation des flèches hautes et basses dans le filtre des conversations de Microsoft Teams. (#14355)
+- NVDA ne sera plus bloqué dans un menu lors de l'utilisation des flèches haut et bas dans le filtre des conversations de Microsoft Teams. (#14355)
 -
 
 
@@ -99,7 +99,7 @@ Veuillez vous référer au [guide du développeur https://www.nvaccess.org/files
 
 
 = 2022.3.2 =
-Ceci est une version mineure pour corriger une régression introduite en 2023.3.1 et corriger une faille de sécurité.
+Ceci est une version mineure pour corriger des régressions introduites dans la 2022.3.1 et corriger une faille de sécurité.
 
 == Corrections de sécurité ==
 - Évite un potentiel accès privilégié pour des utilisateurs non authentifiés.
@@ -109,22 +109,23 @@ Ceci est une version mineure pour corriger une régression introduite en 2023.3.
 == Corrections de bogues ==
 - Correction d'une régression en 2022.3.1 où certaines fonctionnalités étaient indisponibles sur les écrans sécurisés. (#14286)
 - Correction d'une régression en 2022.3.1 où certaines fonctionnalités étaient désactivées après la connexion, si NVDA démarre sur l'écran de connexion. (#14301)
+-
 
 = 2022.3.1 =
 Ceci est une version mineure pour corriger plusieurs failles de sécurité.
 Veuillez signaler de manière responsable les problèmes de sécurité à info@nvaccess.org.
 
 == Corrections de sécurité ==
-- Correction d'un exploit où il été possible de passer d'utilisateur aux privilèges système.
+- Correction d'un exploit où il été possible de passer des privilèges utilisateur aux privilèges système.
 ([GHSA-q7c2-pgqm-vvw5 https://github.com/nvaccess/nvda/security/advisories/GHSA-q7c2-pgqm-vvw5])
 - Correction d'une faille où il été possible d'accéder à la console Python sur l'écran de connexion via une condition dans le démarrage de NVDA.
 ([GHSA-72mj-mqhj-qh4w https://github.com/nvaccess/nvda/security/advisories/GHSA-72mj-mqhj-qh4w])
-- Correction d'un problème où le texte de la visionneuse de parole est masqué lors du verrouillage de Windows.
+- Correction d'un problème où le texte de la visionneuse de parole est disponible lors du verrouillage de Windows.
 ([GHSA-grvr-j2h8-3qm4 https://github.com/nvaccess/nvda/security/advisories/GHSA-grvr-j2h8-3qm4])
 -
 
 == Corrections de bogues ==
-- Empêche un utilisateur non authentifié de modifier des paramètres pour la visionneuse Braille ou visionneuse de paroles depuis l'écran de verrouillag. ([GHSA-grvr-j2h8-3qm4 https://github.com/nvaccess/nvda/security/advisories/GHSA-grvr-j2h8-3qm4])
+- Empêche un utilisateur non authentifié de modifier des paramètres pour la visionneuse Braille ou visionneuse de paroles depuis l'écran de verrouillage. ([GHSA-grvr-j2h8-3qm4 https://github.com/nvaccess/nvda/security/advisories/GHSA-grvr-j2h8-3qm4])
 -
 
 
