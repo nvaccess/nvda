@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-14 00:02+0000\n"
-"PO-Revision-Date: 2022-10-16 18:58+0530\n"
+"POT-Creation-Date: 2022-11-18 00:02+0000\n"
+"PO-Revision-Date: 2022-11-18 19:50+0530\n"
 "Last-Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language-Team: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language: ta\n"
@@ -4535,7 +4535,7 @@ msgstr "ஆவணமாக்கல்"
 
 #. Translators: The label of the Start Menu item to open the Commands Quick Reference document.
 msgid "Commands Quick Reference"
-msgstr "கட்டளைகளுக்கான விரைவுக் குறிப்பு"
+msgstr "கட்டளைகள் விரைவுப் பார்வை"
 
 #. Translators: A label for a shortcut in start menu to open NVDA user guide.
 msgid "User Guide"
@@ -6199,6 +6199,32 @@ msgstr "பாவுதல்"
 msgctxt "touch action"
 msgid "hover up"
 msgstr "பாவுதல்ல் விலக்கப்பட்டது"
+
+#. Translators: This is the message for a warning shown if NVDA cannot open a browsable message window
+#. when Windows is on a secure screen (sign-on screen / UAC prompt).
+msgid ""
+"This feature is unavailable while on secure screens such as the sign-on "
+"screen or UAC prompt."
+msgstr ""
+"புகுபதிவு, அல்லது பயனர் கணக்கு கட்டுப்பாடு போன்ற பாதுகாப்பான திரைகளில் தகவல்களை உலாவு "
+"நிலையில் திறக்கவியலாது."
+
+#. Translators: This is the message for a warning shown if NVDA cannot open a browsable message window
+#. when Windows is on a secure screen (sign-on screen / UAC prompt). This prompt includes the title
+#. of the Window that could not be opened for context.
+#. The {title} will be replaced with the title.
+#. The title may be something like "Formatting".
+msgid ""
+"This feature ({title}) is unavailable while on secure screens such as the "
+"sign-on screen or UAC prompt."
+msgstr ""
+"புகுபதிவு, அல்லது பயனர் கணக்கு கட்டுப்பாடு போன்ற பாதுகாப்பான திரைகளில் ({title}) "
+"தகவல்களை உலாவு நிலையில் திறக்கவியலாது."
+
+#. Translators: This is the title for a warning dialog, shown if NVDA cannot open a browsable message
+#. dialog.
+msgid "Feature unavailable."
+msgstr "உலாவு நிலைத் தகவல் கிடைப்பிலில்லை"
 
 #. Translators: The title for the dialog used to present general NVDA messages in browse mode.
 msgid "NVDA Message"
@@ -11386,6 +11412,25 @@ msgstr "{curPercent:.0f}%"
 msgid "at {x}, {y}"
 msgstr "தற்போதைய திரையின் நிலை {x},{y} படவணுக்கள்"
 
+#. Translators: This is the message for a warning shown if NVDA cannot determine if
+#. Windows is locked.
+msgid ""
+"NVDA is unable to determine if Windows is locked. While this instance of "
+"NVDA is running, your desktop will not be secure when Windows is locked. "
+"Restarting Windows may address this. If this error is ongoing then disabling "
+"the Windows lock screen is recommended."
+msgstr ""
+"விண்டோஸ் பூட்டப்பட்டிருக்கிறதா என்பதை கண்டறிய என்விடிஏவினால் இயலவில்லை. விண்டோஸ் "
+"பூட்டப்பட்டிருக்கும் நிலையில் என்விடிஏவின் இந்நிகழ்வு இயங்கிக்கொண்டிருக்கும்பொழுது, தங்களின் "
+"மேசைத்தளம் பாதுகாப்பாக இருக்காது. விண்டோஸை மறுதுவக்குவது இப்பிரச்சினையைத் தீர்க்கலாம். "
+"இப்பிரச்சினை தொடர்ந்து நிலைத்திருந்தால், விண்டோஸின் திரைப் பூட்டை முடக்க "
+"பரிந்துரைக்கப்படுகிறது. "
+
+#. Translators: This is the title for a warning dialog, shown if NVDA cannot determine if
+#. Windows is locked.
+msgid "Lock screen not secure while using NVDA"
+msgstr "என்விடிஏவைப் பயன்படுத்தும்பொழுது திரைப் பூட்டு பாதுகாப்பானதல்ல"
+
 #. Translators: Reported when a page reloads (example: after refreshing a webpage).
 msgid "Refreshed"
 msgstr "புத்தாக்கப்பட்டது"
@@ -11490,22 +11535,6 @@ msgstr "மாறுதிசை மின்னோட்டம் துண்�
 #. Translators: This is the estimated remaining runtime of the laptop battery.
 msgid "{hours:d} hours and {minutes:d} minutes remaining"
 msgstr "{hours:d} மணி நேரம், {minutes:d} நிமிடங்கள் எஞ்சியுள்ளன"
-
-#. Translators: This is a warning to users, shown if NVDA cannot determine if
-#. Windows is locked.
-msgid ""
-"NVDA failed to register session tracking. While this instance of NVDA is "
-"running, your desktop will not be secure when Windows is locked. Restart "
-"NVDA? "
-msgstr ""
-"அமர்வுக் கண்காணிப்பை பதிய என்விடிஏ தவறிவிட்டது. என்விடிஏவின் இந்நிகழ்வு "
-"இயங்கிக்கொண்டிருந்தால், விண்டோஸ் பூட்டப்பட்ட நிலையில் தங்களின் மேசைத்தளம் பாதுகாப்பாக "
-"இருக்காது. என்விடிஏவை மறுதுவக்க வேண்டுமா?"
-
-#. Translators: This is a warning to users, shown if NVDA cannot determine if
-#. Windows is locked.
-msgid "NVDA could not start securely."
-msgstr "என்விடிஏவால் பாதுகாப்பாகத் துவங்க இயலவில்லை."
 
 msgid "Taskbar"
 msgstr "பணிப்பட்டை"
@@ -13076,6 +13105,9 @@ msgstr "இரட்டை வரி இடைவெளி"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "ஒன்றரை வரி இடைவெளி"
+
+#~ msgid "NVDA could not start securely."
+#~ msgstr "என்விடிஏவால் பாதுகாப்பாகத் துவங்க இயலவில்லை."
 
 #~ msgid "Swedish grade 1"
 #~ msgstr "சுவீடிஷ் படிநிலை 1"
