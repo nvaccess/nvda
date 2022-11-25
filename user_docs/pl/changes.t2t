@@ -4,117 +4,117 @@
 %!includeconf: ../changes.t2tconf
 
 = 2022.4 =
-This release includes several new key commands, including table say all commands.
-A "Quick Start Guide" section has been added to the User Guide.
-There are also several bug fixes.
+To wydanie w sobie zawiera kilka nowych skrótów klawiszowych, włączając w to skróty do czytania całych tabel.
+Do podręcznika użytkownika został dodany rozdział "szybki start".
+Naprawiono także niektóre błędy.
 
-eSpeak has been updated and LibLouis has been updated.
-There are new Chinese, Swedish, Luganda and Kinyarwanda braille tables.
+Liblouis i Espeak-ng zostały zaktualizowane.
+Dodano nowe tablice brajlowskie dla chińskiego, szwedzkiego, języka luganda i języka Kinyarwanda.
 
-== New Features ==
-- Added a "Quick Start Guide" section to the User Guide. (#13934)
-- Introduced a new command to check the keyboard shortcut of the current focus. (#13960)
-  - Desktop: ``shift+numpad2``.
-  - Laptop: ``NVDA+ctrl+shift+.``.
+== Nowe funkcje ==
+- Dodano rozdział "szybki start" do podręcznika użytkownika. (#13934)
+- Dodano nowy skrót klawiszowy do sprawdzania skrótu klawiszowego bieżącego obiektu pod fokusem. (#13960)
+  - Skrót dla komputerów stacjonarnych: ``shift+numeryczny2``.
+  - Skrót dla komputerów przenośnych: ``NVDA+ctrl+shift+.``.
   -
-- Introduced new commands to move the review cursor by page where supported by the application. (#14021)
-  - Move to previous page:
-    - Desktop: ``NVDA+pageUp``.
-    - Laptop: ``NVDA+shift+pageUp``.
+- Dodano nowe skróty do przemieszczania kursoru przeglądu po stronie gdzie jest to wspierane przez program. (#14021)
+  - Przechodzi do poprzedniej strony:
+    - Skrót dla komputerów stacjonarnych: ``NVDA+pageUp``.
+    - Skrót dla komputerów przenośnych: ``NVDA+shift+pageUp``.
     -
-  - Move to next page:
-    - Desktop: ``NVDA+pageDown``.
-    - Laptop: ``NVDA+shift+pageDown``.
+  - Przechodzi do następnej strony:
+    - Skrót dla komputerów stacjonarnych: ``NVDA+pageDown``.
+    - Skrót dla komputerów przenośnych: ``NVDA+shift+pageDown``.
     -
   -
-- Added the following table commands. (#14070)
-  - Say all in column: ``NVDA+control+alt+downArrow``
-  - Say all in row: ``NVDA+control+alt+rightArrow``
-  - Read entire column: ``NVDA+control+alt+upArrow``
-  - Read entire row: ``NVDA+control+alt+leftArrow``
+- Dodano następujące skróty klawiszowe do tabel. (#14070)
+  - Czytaj wszystko w kolumnie: ``NVDA+control+alt+strzałka w dół``
+  - Czytaj wszystko w wierszu: ``NVDA+control+alt+strzałka w prawo``
+  - Czytaj całą kolumnę: ``NVDA+control+alt+strzałka w górę``
+  - Czytaj cały wiersz: ``NVDA+control+alt+Strzałka w lewo``
   -
-- Microsoft Excel via UI Automation: NVDA now announces when moving out of a table within a spreadsheet. (#14165)
-- Reporting table headers can now be configured separately for rows and columns. (#14075)
+- W Microsoft Excel który jest używany za pomocą interfejsu Ui Automation, NVDA od teraz ogłasza przemieszczenie spoza tabelą arkusza kalkulacyjnego. (#14165)
+- Czytanie nagłówków tabeli od teraz może być oddzielnie konfigurowane dla kolumn i wierszy. (#14075)
 -
 
 
-== Changes ==
-- eSpeak NG has been updated to 1.52-dev commit ``735ecdb8``. (#14060, #14079, #14118, #14203)
-  - Fixed reporting of Latin characters when using Mandarin. (#12952, #13572, #14197)
+== Zmiany ==
+- eSpeak NG został zaktualizowany do wersji 1.52-dev commit ``735ecdb8``. (#14060, #14079, #14118, #14203)
+  - Naprawiono czytanie znaków alfabetu łacińskiego podczas używania języka mandaryńskiego. (#12952, #13572, #14197)
   -
-- Updated LibLouis braille translator to [3.23.0 https://github.com/liblouis/liblouis/releases/tag/v3.23.0]. (#14112)
-  - Added braille tables:
-    - Chinese common braille (simplified Chinese characters)
-    - Kinyarwanda literary braille
-    - Luganda literary braille
-    - Swedish uncontracted braille
-    - Swedish partially contracted braille
-    - Swedish contracted braille
-    - Chinese (China, Mandarin) Current Braille System (no tones) (#14138)
+- Zaktualizowany LibLouis tłumacz znaków brajlowskich do wersji [3.23.0 https://github.com/liblouis/liblouis/releases/tag/v3.23.0]. (#14112)
+  - Dodano następujące tablice brajlowskie:
+    - Chiński ogólny alfabet Braille'a (uproszczone chińskie znaki)
+    - Kinyarwanda brajl literacki
+    - Luganda brajl literacki
+    - Szwedzkie pismo podstawowe
+    - Szwedzkie pismo pełne
+    - Szwedzkie skróty
+    - Chiński (Chiny, mandaryński) aktualny standard brajlowski (bez tonów) (#14138)
     -
-- NVDA now includes the architecture of the operating system as part of user statistics tracking. (#14019)
+- NVDA od teraz włącza do statystyki użytkowania architekturę systemu operacyjnego. (#14019)
 -
 
 
-== Bug Fixes ==
-- When updating NVDA using the Windows Package Manager CLI (aka winget), a released version of NVDA is no longer always treated as newer than whatever alpha version is installed. (#12469)
-- NVDA will now correctly announce Group boxes in Java applications. (#13962)
-- Caret properly follows spoken text during "say all" in applications such as Bookworm, WordPad, or the NVDA log viewer. (#13420, #9179)
-- In programs using UI Automation, partially checked checkboxes will be reported correctly. (#13975)
-- Improved performance and stability in Microsoft Visual Studio, Windows Terminal, and other UI Automation based applications. (#11077, #11209)
-  - These fixes apply to Windows 11 Sun Valley 2 (version 22H2) and later.
-  - Selective registration for UI Automation events and property changes now enabled by default.
+== Poprawki błędów ==
+- Podczas aktualizowania NVDA przy użyciu menedżeru pakietów systemu Windows z poziomu wiersza poleceń, czyli winget, stabilna wersja NVDA więcej nie jest zawsze traktowana jako nowsza niż jakakolwiek wersja Alpha zainstalowana w systemie. (#12469)
+- NVDA od teraz poprawnie odczytuje grupowania w aplikacjach Java. (#13962)
+- Kursor od teraz sprawnie śledzi wymawiany tekst podczas ciągłego czytania w aplikacjach takich jak Bookworm, WordPad, lub NVDA podglądu loga. (#13420, #9179)
+- W programach używających UI Automation, połowicznei zaznaczone pola wyboru od teraz będą zgłaszane poprawnie. (#13975)
+- Ulepszona wydajność i stabilność w programach: Microsoft Visual Studio, Windows Terminal, a także innych programach używających interfejsu UI automation. (#11077, #11209)
+  - Te poprawki błędów stosowane są do wersji Windows 11 Sun Valley 2 (versja 22H2) i nowszych.
+  - Rejestracja selektywna dla zmian właściwości i zdarzeń UIA od teraz jest domyślnie włączona.
   -
-- Text reporting, Braille output, and password suppression now work as expected in the embedded Windows Terminal control in Visual Studio 2022. (#14194)
-- NVDA is now DPI aware when using multiple monitors.
-There are several fixes for using a DPI setting higher than 100% or multiple monitors.
-Issues may still exist with versions of Windows older than Windows 10 1809.
-For these fixes to work, applications which NVDA interacts with also need to be DPI aware.
-Note there are still known issues with Chrome and Edge. (#13254)
-  - Visual highlighting frames should now be correctly placed in most applications. (#13370, #3875, #12070)
-  - Touch screen interaction should now be accurate for most applications. (#7083)
-  - Mouse tracking should now work for most applications. (#6722)
+- Odczytywanie tekstu, wyjście brajla, a także nieodczytywanie haseł od teraz działają poprawnie w zagnieżdżonej kontrolce Windows terminal w programie Visual Studio 2022. (#14194)
+- NVDA od teraz jest DPI świadomy podczas używania więcej niż jednego monitora.
+Wdrożono kilka poprawek dla używania ustawienia DPI wyższego niż 100% oraz używania więcej monitorów.
+Mogą jeszcze pojawiać się problemy w wersjach systemu operacyjnego Windows starszych niż Windows 10 1809.
+Aby te poprawki działały, aplikacje z którymi NVDA współpracuje także powinne być DPI świadome.
+Trzeba mieć na uwadzę, że nadal istnieją problemy z przeglądarkami Chrome i Edge. (#13254)
+  - Ramki podświetlenia wizualnego od teraz powinny się poprawnie umieszczać w większości aplikacji. (#13370, #3875, #12070)
+  - Współpraca z ekranami dotykowymi od teraz powina być dokładniejsza dla większości programów. (#7083)
+  - Śledzenie myszy od teraz powinno być dokładniejsze dla większości programów. (#6722)
   -
-- Orientation state (landscape/portrait) changes are now correctly ignored when there is no change (e.g. monitor changes). (#14035)
-- NVDA will announce dragging items on screen in places such as rearranging Windows 10 Start menu tiles and virtual desktops in Windows 11. (#12271, #14081)
-- In advanced settings, "Play a sound for logged errors" option is now correctly restored to its default value when pressing the "Restore defaults" button. (#14149)
-- NVDA can now select text using the ``NVDA+f10`` keyboard shortcut on Java applications. (#14163)
-- NVDA will no longer get stuck in a menu when arrowing up and down threaded conversations in Microsoft Teams. (#14355)
+- Zmiany stanu orientacji (pionowa/pozioma) od teraz są poprawnie ignorowane gdy nie ma żadnych zmian (na przykład, zmiany monitora). (#14035)
+- NVDA od teraz będzie oznajmiał przeciąganie elementów na ekranie w miejscach, takich jak przemieszczanie kafelek w Menu start w systemie operacyjnym Windows 10 i pulpitów wirtualnych w systemie Windows 11. (#12271, #14081)
+- W ustawieniach zaawansowanych, opcja "Odtwarzaj dźwięk do zapisanych błędów" jest teraz prawidłowo resetowana do domyślnej wartości po naciśnięciu przycisku "Przywróć do ustawień domyślnych". (#14149)
+- NVDA od teraz może zaznaczać tekst używając skrótu ``NVDA+f10`` w aplikacjach Java. (#14163)
+- NVDA od teraz nie będzie się zawieszac w menu podczas poruszania się strzałkami w górę i w dół w konwersachach wątkowanych w programie  Microsoft Teams. (#14355)
 -
 
 
 == Zmiany dla programistów ==
 Informacje techniczne nie zostały przetłumaczone, proszę zajrzeć do [Angielskiej listy zmian ../en/changes.html], aby je przeczytać.
 = 2022.3.2 =
-This is a minor release to fix regressions with 2022.3.1 and address a security issue.
+Jest to pomniejsze wydanie naprawiające regresje z wersji 2022.3.1 i naprawiające incydenty bezpieczeństwa.
 
-== Security Fixes ==
-- Prevents possible system level access for unauthenticated users.
+== Poprawki bezpieczeństwa ==
+- Zapobiega możliwemu dostępowi na poziomie systemowym dla użytkowników nieuwierzytelnionych.
 ([GHSA-3jj9-295f-h69w https://github.com/nvaccess/nvda/security/advisories/GHSA-3jj9-295f-h69w])
 -
 
 
-== Bug Fixes ==
-- Fixes a regression from 2022.3.1 where certain functionality was disabled on secure screens. (#14286)
-- Fixes a regression from 2022.3.1 where certain functionality was disabled after sign-in, if NVDA started on the lock screen. (#14301)
+== Poprawki błędów ==
+- Naprawiono regresję z wersji NVDA 2022.3.1 w której większość wyłączono na bezpiecznych ekranach. (#14286)
+- Naprawiono regresję z wersji NVDA 2022.3.1 w której większość funkcjonalności było wyłączone po zalogowaniu, jeżeli NVDA została uruchomiona na ekranie blokady. (#14301)
 -
 
 
 = 2022.3.1 =
-This is a minor release to fix several security issues.
-Please responsibly disclose security issues to info@nvaccess.org.
+Jest to pomniejsze wydanie naprawiające kilka incydentów bezpieczeństwa.
+Prosimy o odpowiednie zgłoszenie incydentów bezpieczeństwa na adres info@nvaccess.org.
 
-== Security Fixes ==
-- Fixed exploit where it was possible to elevate from user to system privileges.
+== Poprawki bezpieczeństwa ==
+- Naprawiono eksploit za pomocą którego można było podnieść uprawnienia z użytkownika do systemu.
 ([GHSA-q7c2-pgqm-vvw5 https://github.com/nvaccess/nvda/security/advisories/GHSA-q7c2-pgqm-vvw5])
-- Fixed a security issue allowing access to the python console on the lock screen via a race condition for NVDA startup.
+- Naprawiono incydent bezpieczeństwa umożliwiający dostępu do konsoli Pythona na ekranie logowania poprzez hazard uruchomienia NVDA.
 ([GHSA-72mj-mqhj-qh4w https://github.com/nvaccess/nvda/security/advisories/GHSA-72mj-mqhj-qh4w])
-- Fixed issue where speech viewer text is cached when locking Windows.
+- Naprawiono problem w którym tekst przeglądu mowy był przechowywany w pamięci poczas blokowania systemu operacyjnego.
 ([GHSA-grvr-j2h8-3qm4 https://github.com/nvaccess/nvda/security/advisories/GHSA-grvr-j2h8-3qm4])
 -
 
-== Bug Fixes ==
-- Prevent an unauthenticated user from updating settings for speech and Braille viewer on the lock screen. ([GHSA-grvr-j2h8-3qm4 https://github.com/nvaccess/nvda/security/advisories/GHSA-grvr-j2h8-3qm4])
+== Poprawki błędów ==
+- Od teraz zapobiegane jest zmienianie ustawień  przeglądu brajla i mowy na ekranie blokady przez nieuprawnionego użytkownika. ([GHSA-grvr-j2h8-3qm4 https://github.com/nvaccess/nvda/security/advisories/GHSA-grvr-j2h8-3qm4])
 -
 
 
