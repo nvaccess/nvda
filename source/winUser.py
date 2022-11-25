@@ -622,6 +622,7 @@ def FindWindow(className, windowName):
 		raise WinError()
 	return res
 
+
 MB_OK = 0
 MB_RETRYCANCEL=5
 MB_ICONERROR=0x10
