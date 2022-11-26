@@ -701,7 +701,7 @@ class AppModule(baseObject.ScriptableObject):
 			processMachineInfo = _PROCESS_MACHINE_INFORMATION()
 			# Constant comes from PROCESS_INFORMATION_CLASS enumeration.
 			ProcessMachineTypeInfo = 9
-			winKernel.kernel32.GetProcessInformation(
+			ctypes.windll.kernel32.GetProcessInformation(
 				self.processHandle,
 				ProcessMachineTypeInfo,
 				ctypes.byref(processMachineInfo),
