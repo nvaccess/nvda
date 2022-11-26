@@ -679,7 +679,7 @@ class AppModule(baseObject.ScriptableObject):
 			self.isRunningUnderDifferentLogonSession = False
 		return self.isRunningUnderDifferentLogonSession
 
-	def _get_appArchitecture(self):
+	def _get_appArchitecture(self) -> str:
 		"""Returns the target architecture for the specified app.
 		This is useful for detecting X86/X64 apps running on ARM64 releases of Windows 10.
 		The following strings are returned:
