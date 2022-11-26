@@ -79,6 +79,14 @@ class processEntry32W(ctypes.Structure):
 	]
 
 
+class _PROCESS_MACHINE_INFORMATION(ctypes.Structure):
+	_fields_ = [
+		("ProcessMachine", ctypes.wintypes.USHORT),
+		("Res0", ctypes.wintypes.USHORT),
+		("MachineAttributes", ctypes.wintypes.DWORD)
+	]
+
+
 def __getattr__(attrName: str) -> Any:
 	"""Module level `__getattr__` used to preserve backward compatibility.
 	The module level variable `NVDAProcessID` is deprecated
