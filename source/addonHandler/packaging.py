@@ -7,7 +7,10 @@
 """
 
 import os.path
-from typing import Optional, List
+from typing import (
+	List,
+	Optional,
+)
 from types import ModuleType
 import globalVars
 import config
