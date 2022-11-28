@@ -79,9 +79,7 @@ class InputGestureKeys(braille.BrailleDisplayGesture):
 	def __init__(self, keys: Set[int], name: str):
 		"""Constructor.
 		@param key: set of pressed keys
-		@type key: Set[int]
 		@param name: identifies gestures from this display
-		@type name: str
 		"""
 		super().__init__()
 		self.source = name
@@ -103,14 +101,12 @@ class InputGestureKeys(braille.BrailleDisplayGesture):
 			self.script = self._get_script()
 
 	def _getRoutingIndex(self, key: int) -> Optional[Tuple[str, int]]:
-		"""Get the routing index, if the key is in a routing index range, returns the name of the range and the
-		index within that range.
+		"""Get the routing index, if the key is in a routing index range,
+		returns the name of the range and the index within that range.
 		See L{ROUTING_KEY_RANGES}.
 		@param key: key which index to check
-		@type key: int
 		@return: if the key is in a routing index range, returns the name of the
 		range and the index within that range
-		@rtype: Optional[Tuple[str, int]]
 		"""
 		for routingKeyRange in ROUTING_KEY_RANGES:
 			if routingKeyRange.start <= key <= routingKeyRange.end:

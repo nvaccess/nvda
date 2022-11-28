@@ -85,12 +85,6 @@ these operations.
 
 Driver has modular structure:
 
-- `__init__.py`
-- `constants.py`
-- `driver.py`
-- `gestures.py`
-- `_threading.py`
-
 `constants.py` contains all the constant definitions, for example button
 values and names.
 

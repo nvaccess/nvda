@@ -4,10 +4,6 @@
 # Copyright (C) 2022 NV Access Limited, Burman's Computer and Education Ltd.
 
 """Constants for Tivomatic Caiku Albatross 46 and 80 display driver.
-Classes:
-- L{Keys}
-- L{KeyLayouts}
-- L{RoutingKeyRange}
 
 Summary of important constants:
 
@@ -16,17 +12,23 @@ the display continuously sends L{INIT_START_BYTE} followed by the settings byte.
 The number of these packets is arbitrary. L{INIT_START_BYTE} is \xff.
 Settings byte can be from \x00 to \xff.
 It is limited to be at most L{MAX_SETTINGS_BYTE} to reliably detect init packets.
+
 - L{ESTABLISHED}; driver sends this to confirm connection, and
 display stops sending init packets
+
 - all data to show on display has to be enclosed with L{START_BYTE} and
 L{END_BYTE}
+
 - L{BOTH_BYTES} is used to keep connection; display falls back to
 "wait for connection state" if it does not get appropriate data packet
 within approximately 2 seconds. L{KC_INTERVAL} defines suitable time which
 in turn is used by timer.
+
 - part of display buttons L{Keys} are control keys used to compose key
 combinations. See also L{CONTROL_KEY_CODES}.
+
 - L{LEFT_RIGHT_KEY_CODES} is used when handling custom key layouts.
+
 - L{RESET_COUNT} defines how many times port buffer reset is done before
 trying to establish connection.
 There are many I/O buffers between device and driver so several
@@ -82,7 +84,7 @@ WRITE_QUEUE_LENGTH = 20
 class Keys(IntEnum):
 	"""Defines key names and values.
 	For routing keys see L{RoutingKeyRange}.
-"""
+	"""
 	attribute1 = 1
 	attribute2 = 42
 	f1 = 83
@@ -185,11 +187,11 @@ corresponding right side keys values. Used with custom key layouts.
 
 KEY_LAYOUT_MASK = 5
 """Used to extract bits 1 - 3 from settings byte to determine key layout.
-See L{KeyLayouts}.
+See L{KeyLayout}.
 """
 
 
-class KeyLayouts(IntEnum):
+class KeyLayout(IntEnum):
 	"""Defines possible key layouts.
 	From settings byte bits 1 - 3 (MSB 0 scheme) are extracted and bit 2 is
 	set to 0 (it represents side of status cells which NVDA does not use).

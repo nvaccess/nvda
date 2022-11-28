@@ -52,7 +52,7 @@ from .constants import (
 	CONTROL_KEY_CODES,
 	LEFT_RIGHT_KEY_CODES,
 	KEY_LAYOUT_MASK,
-	KeyLayouts,
+	KeyLayout,
 	ESTABLISHED,
 	INIT_START_BYTE,
 	MAX_SETTINGS_BYTE,
@@ -156,7 +156,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def _searchPorts(self, port: str):
 		"""Search ports where display can be connected.
 		@param port: port name as string
-		@type port: str
 """
 		for self._baudRate in BAUD_RATE:
 			for portType, portId, port, portInfo in self._getTryPorts(port):
@@ -207,7 +206,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		followed by byte containing various settings like number of cells.
 
 		@return: C{True} on success, C{False} on failure
-		@rtype: bool
 		"""
 		for i in range(MAX_INIT_RETRIES):
 			if not self._dev:
@@ -232,9 +230,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def _initPort(self, i: int = MAX_INIT_RETRIES - 1) -> bool:
 		"""Initializes port.
 		@param i: Just for logging retries.
-		@type i: int
 		@return: C{True} on success, C{False} on failure
-		@rtype: bool
 		"""
 		try:
 			self._dev = serial.Serial(
@@ -264,9 +260,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def _openPort(self, i: int = MAX_INIT_RETRIES - 1) -> bool:
 		"""Opens port.
 		@param i: Just for logging retries.
-		@type i: int
 		@return: C{True} on success, C{False} on failure
-		@rtype: bool
 		"""
 		try:
 			self._dev.open()
@@ -293,7 +287,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def _readInitByte(self) -> bool:
 		"""Reads init byte.
 		@return: C{True} on success, C{False} on failure
-		@rtype: bool
 		"""
 		# If ClearCommError fails, in_waiting raises SerialException
 		try:
@@ -329,7 +322,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def _readSettingsByte(self) -> bool:
 		"""Reads settings byte.
 		@return: C{True} on success, C{False} on failure
-		@rtype: bool
 		"""
 		try:
 			# If ClearCommError fails, in_waiting raises SerialException
@@ -359,7 +351,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		"""Resets I/O buffers.
 		Reset is done L{RESET_COUNT} times to get better results.
 		@return: C{True} on success, C{False} on failure
-		@rtype: bool
 		"""
 		try:
 			for j in range(RESET_COUNT):
@@ -426,7 +417,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def _somethingToRead(self) -> Optional[bytes]:
 		"""All but connecting/reconnecting related read operations.
 		@return: on success returns data, on failure C{None}
-		@rtype: Optional[bytes]
 """
 		try:
 			# If ClearCommError fails, in_waiting raises SerialException
@@ -448,9 +438,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def _skipRedundantInitPackets(self, data: bytes) -> bool:
 		"""Filters redundant init packets.
 		@param data: Bytes read from display.
-		@type data: bytes
 		@return: C{True} on success, C{False} on failure
-		@rtype: bool
 		"""
 		settingsByte = None
 		for i in data:
@@ -535,13 +523,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					self._handleKeyPresses(data)
 
 	def _handleInitPackets(self, data: bytes):
-		"""
-		Handles init packets.
+		"""Handles init packets.
 		Display also starts to send init packets when exited internal menu or when
 		delay sending data to display causes its fallback to 'wait for connection'
 		state.
+
 		@param data: one byte which can be L{INIT_START_BYTE} or settings byte
-		@type data: bytes
 		"""
 		if not self._waitingSettingsByte:
 			if data != INIT_START_BYTE:
@@ -585,7 +572,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	def _handleSettingsByte(self, data: bytes):
 		"""Extract current settings from settings byte.
-
 		All other settings except number of cells are only notes to screenreader,
 		and it is screenreader or driver job to use them when applicable.
 		For example, there are no separate status cells in the device but if
@@ -598,42 +584,46 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		- bit 0: number of cells; 0 = 46, 1 = 80. This is model based value
 		which cannot be changed. This is the most important setting, and it
 		must be applied.
+
 		- bit 1: switch left side and right side keys; 0 = no, 1 = yes.
 		Left, right, down3, up2, routing and secondRouting keys are not affected.
 		Up2 and down3 are ignored because they are in the middle of the front
 		panel of 80 model so they do not logically belong to left or right side.
 		All other keys are switched with corresponding other side keys.
+
 		- bit 2: place of status cells; 0 = left, 1 = right. Not implemented.
 		NVDA does not use status cells at the moment.
+
 		- bit 3: all keys act as right side keys; 0 = no, 1 = yes.
 		Left, right, down3, up2, routing and secondRouting keys are not affected.
 		Up2 and down3 are ignored because they are in the middle of the front
 		panel of 80 model so they do not logically belong to left or right side.
 		All other left side keys are assigned to corresponding right side keys.
+
 		- bit 1 = 0 and bit 3 = 0: normal key layout.
+
 		- bit 1 = 1 and bit 3 = 1: all keys act as corresponding left side keys.
 		Left, right, down3, up2, routing and secondRouting keys are not affected.
 		Up2 and down3 are ignored because they are in the middle of the front
 		panel of 80 model so they do not logically belong to left or right side.
 		All other right side keys are assigned to corresponding left side keys.
+
 		- bits 4 - 7: number of status cells. Not implemented.
 		NVDA does not use status cells at the moment.
 
 		@param data: Settings byte
-		@type data: bytes
 		"""
 		self.numCells = 80 if ord(data) >> 7 == 1 else 46
 		self._keyLayout = ord(data) >> 4 & KEY_LAYOUT_MASK
 		log.debug(
 			f"Current settings: number of cells {self.numCells}, "
-			f"key layout {KeyLayouts(self._keyLayout).name}")
+			f"key layout {KeyLayout(self._keyLayout).name}")
 
 	def _handleKeyPresses(self, data: bytes):
 		"""Handles display button presses.
 		in single ctrl-key presses and ctrl-key combinations the first key is
 		resent as last one.
 		@param data: single byte which may be whole or partial key press
-		@type data: bytes
 		"""
 		if ord(data) in CONTROL_KEY_CODES or self._waitingCtrlPacket:
 			# at most MAX_COMBINATION_KEYS keys.
@@ -666,7 +656,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					self._partialCtrlPacket = None
 					log.debug(f"Not valid key combination, ignoring {data}")
 					return
-		if self._keyLayout != KeyLayouts.normal:
+		if self._keyLayout != KeyLayout.normal:
 			# Using custom key layout
 			data = self._changeKeyValues(
 				bytearray(data)
@@ -688,12 +678,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def _changeKeyValues(self, data: bytearray) -> bytes:
 		"""Changes pressed keys values according to current key layout.
 		@param data: pressed keys values.
-		@type data: bytearray
 		@return: pressed keys values based on current key layout.
-		@rtype: bytes
 		"""
 		for i, key in enumerate(data):
-			if self._keyLayout == KeyLayouts.switched:
+			if self._keyLayout == KeyLayout.switched:
 				if key in LEFT_RIGHT_KEY_CODES.keys():
 					data[i] = LEFT_RIGHT_KEY_CODES[key]
 				elif key in LEFT_RIGHT_KEY_CODES.values():
@@ -704,11 +692,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 						LEFT_RIGHT_KEY_CODES.keys()
 					)[j]
 				continue
-			if self._keyLayout == KeyLayouts.bothSidesAsRight:
+			if self._keyLayout == KeyLayout.bothSidesAsRight:
 				if key in LEFT_RIGHT_KEY_CODES.keys():
 					data[i] = LEFT_RIGHT_KEY_CODES[key]
 				continue
-			if self._keyLayout == KeyLayouts.bothSidesAsLeft:
+			if self._keyLayout == KeyLayout.bothSidesAsLeft:
 				if key in LEFT_RIGHT_KEY_CODES.values():
 					j = list(
 						LEFT_RIGHT_KEY_CODES.values()
@@ -734,7 +722,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def display(self, cells: List[int]):
 		"""Prepare cell content for display.
 		@param cells: List of cells content
-		@type cells: List[int]
 		"""
 		# Using lock because called also manually when display is switched back on
 		# or exited from internal menu.
