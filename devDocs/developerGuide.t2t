@@ -827,6 +827,7 @@ The following plugins and drivers can be included in an add-on:
 - Braille display drivers: Place them in a brailleDisplayDrivers directory in the archive.
 - Global plugins: Place them in a globalPlugins directory in the archive.
 - Synthesizer drivers: Place them in a synthDrivers directory in the archive.
+- Vision enhancement providers: Place them in a visionEnhancementProviders directory in the archive.
 -
 
 ++ Optional install / Uninstall code ++
@@ -844,6 +845,20 @@ If this function raises an exception, the installation of the add-on will fail a
 NVDA will look for and execute an onUninstall function in installTasks.py when NVDA is restarted after the user has chosen to remove the add-on.
 After this function completes, the add-on's directory will automatically be removed.
 As this happens on NVDA startup before other components are initialized, this function cannot request input from the user.
+
+++ Optional plugin independent code ++
+In NVDA 2023.1 and above, it is possible to bundle plugin independent code with an add-on.
+This can be used to bundle base classes, constants, etc. that have to be available to multiple plugins in the add-on.
+This is especially useful if your add-on bundles an appModule and a globalPlugin and both plugins need to access the same class bundled with the add-on, for example.
+
+Plugin independent code can be accessed from the addons namespace, for example under addons.myTestAddon.
+If your add-on has a folder called ``lib`` in its root directory that contains a python module called ``constants.py``, the constants module can be imported and used as follows:
+```
+from addons.myTestAddon.lib import constants
+
+if constants.SOME_BOOLEAN_CONSTANT is True:
+	# perform action
+```
 
 ++ Localizing Add-ons ++
 It is possible to provide locale-specific information and messages for your add-on.
