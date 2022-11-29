@@ -51,6 +51,8 @@ def reloadGlobalPlugins():
 	for mod in mods:
 		del sys.modules[mod]
 	import globalPlugins
+	from addonHandler.packaging import addDirsToPythonPackagePath
+	addDirsToPythonPackagePath(globalPlugins)
 	initialize()
 
 class GlobalPlugin(baseObject.ScriptableObject):
