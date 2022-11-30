@@ -849,7 +849,7 @@ As this happens on NVDA startup before other components are initialized, this fu
 ++ Optional plugin independent code ++
 In NVDA 2023.1 and above, it is possible to bundle plugin independent code with an add-on.
 This can be used to bundle base classes, constants, etc. that have to be available to multiple plugins in the add-on.
-This is especially useful if your add-on bundles an appModule and a globalPlugin and both plugins need to access the same class bundled with the add-on, for example.
+This is especially useful if your add-on bundles an appModule and a globalPlugin and both plugins need to access the same class bundled with the add-on.
 
 Plugin independent code can be accessed from the addons namespace, for example under addons.myTestAddon.
 If your add-on has a folder called ``lib`` in its root directory that contains a python module called ``constants.py``, the constants module can be imported and used as follows:
