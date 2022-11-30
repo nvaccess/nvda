@@ -21,15 +21,15 @@ from serial.win32 import (
 	PURGE_TXABORT,
 	PURGE_RXCLEAR,
 	PURGE_TXCLEAR,
-	PurgeComm
+	PurgeComm,
 )
 from threading import (
 	Event,
-	Lock
+	Lock,
 )
 from typing import (
 	List,
-	Optional
+	Optional,
 )
 
 import braille
@@ -60,7 +60,7 @@ from .constants import (
 	START_BYTE,
 	END_BYTE,
 	BOTH_BYTES,
-	KC_INTERVAL
+	KC_INTERVAL,
 )
 from .gestures import _gestureMap
 
@@ -74,7 +74,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	- L{_somethingToWrite}; manages all write operations
 	- L{display}; prepares data which should be displayed on braille so
 	that display can show it properly
-"""
+	"""
 
 	name = "albatross"
 	# Translators: Names of braille displays.
