@@ -703,13 +703,16 @@ class AppModule(baseObject.ScriptableObject):
 			processMachineInfo = _PROCESS_MACHINE_INFORMATION()
 			# Constant comes from PROCESS_INFORMATION_CLASS enumeration.
 			ProcessMachineTypeInfo = 9
-			ctypes.windll.kernel32.GetProcessInformation(
+			# Sometimes getProcessInformation may fail, so say "unknown".
+			if not ctypes.windll.kernel32.GetProcessInformation(
 				self.processHandle,
 				ProcessMachineTypeInfo,
 				ctypes.byref(processMachineInfo),
 				ctypes.sizeof(_PROCESS_MACHINE_INFORMATION)
-			)
-			self.appArchitecture = archValues2ArchNames[processMachineInfo.ProcessMachine]
+			):
+				self.appArchitecture = "unknown"
+			else:
+				self.appArchitecture = archValues2ArchNames.get(processMachineInfo.ProcessMachine, "unknown")
 		else:
 			# IsWow64Process2 can be used on Windows 10 Version 1511 (build 10586) and later.
 			# Just assume this is an x64 (AMD64) app.
