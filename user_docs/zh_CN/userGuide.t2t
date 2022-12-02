@@ -34,6 +34,14 @@ NVDA 可供盲人和低视力人群使用 Windows 操作系统，以及与众多
 - 支持 Windows 命令提示符和其他控制台程序。
 -
 
++ 系统需求 +[SystemRequirements]
+- 操作系统：所有 32 位或者 64 位的 Windows 7 Sp1、Windows 8、Windows 8.1、Windows 10，Windows 11（从 2008 R2 起的所有服务器系统）。
+- 对于 Windows 7 版本，NVDA 要求 SP1 以上。
+- 对于 Windows Server 2008 R2 服务器操作系统，NVDA 要求 SP1 或者更高。
+- 大约需要 150 MB 的磁盘空间。
+-
+
+
 ++ 国际化 ++[Internationalization]
 让世界上所有的人，无论使用何种语言，都可以公平且无障碍的使用辅助工具是非常重要的。
 除了英语之外，NVDA 还被翻译成 54 种语言，包括：南非荷兰语，阿尔巴尼亚语，阿姆哈拉语，阿拉伯语，阿拉贡语，保加利亚语，加泰罗尼亚语，中文（繁体和简体），克罗地亚语，捷克语，丹麦语，荷兰语，波斯语，芬兰语，法语，加利西亚语，希腊语，格鲁吉亚语，德语（德国和瑞士），希伯来语，印地语，匈牙利语，冰岛语，爱尔兰语，意大利语，日本语，韩语，尼泊尔语，挪威语，波兰语，蒙古语，葡萄牙语（巴西和葡萄牙），旁遮普语，罗马尼亚语，俄语，塞尔维亚语，斯洛伐克语，斯洛文尼亚语，西班牙语（哥伦比亚和西班牙），瑞典语，泰米尔语，泰语，土耳其语，乌克兰语和越南语。
@@ -65,11 +73,278 @@ NVDA 还使用了其他协议的开源免费软件。
 想要了解更详细的信息，请查看[完整的授权协议 https://www.gnu.org/licenses/old-licenses/gpl-2.0.html]。
 如果想要了解例外情况，请在NVDA菜单帮助部分里查看完整的授权协议。
 
-+ 系统需求 +[SystemRequirements]
-- 操作系统：所有 32 位或者 64 位的 Windows 7 Sp1、Windows 8、Windows 8.1、Windows 10，Windows 11（从 2008 R2 起的所有服务器系统）。
-- 对于 Windows 7 版本，NVDA 要求 SP1 以上。
-- 对于 Windows Server 2008 R2 服务器操作系统，NVDA 要求 SP1 或者更高。
-- 大约需要 150 MB 的磁盘空间。
+
++ NVDA 快速入门指南 +[NVDAQuickStartGuide]
+
+这份快速入门指南包括三个主要部分：NVDA 的下载、初始配置及运行。
+在这些内容之后是关于如何调整首选项的设置，以及加入 NVDA 社区并获取帮助的说明。
+本指南的内容由 NVDA 用户指南的相关章节提炼而来。
+请参考完整的用户指南以了解每个主题的详细信息。
+
+++ 下载 NVDA ++[GettingAndSettingUpNVDA]
+任何人都可以完全免费地使用 NVDA。
+无须为许可证密钥而担忧，也不用为昂贵的订阅而支付费用。
+NVDA 平均每年更新四次。
+最新版本的 NVDA 可从 [NV Access NVDA_URL]的“下载”页面获取。
+译者注：简体中文用户也可以从 [NVDA 中文站 https://nvdacn.com/] 下载。
+NVDA 在所有最新版本的 Windows 上都可运行。
+可参阅[“系统需求” #SystemRequirements]获取全部的详细信息。
+
++++ 下载 NVDA 的步骤 +++[StepsForDownloadingNVDA]
+
+如果熟悉一些网页导航的基本操作，便可以参考这些步骤。
+
+- 打开网页浏览器（按下 ``Windows`` 键，键入“internet”——不用加引号，按 ``enter`` 键）。
+- 加载NV Access（或 NVDA 中文站）的下载页面（按 ``alt+d``，键入以下网址并按 ``enter`` 键）：
+https://www.nvaccess.org/download（官网）；
+https://nvdacn.com/index.php/nvda.html（中文站）。
+- 点击“下载”按钮。
+- 浏览器可能会提示有下载任务进行（有的浏览器可能没有此提示），并开始下载。
+- 根据浏览器的不同，下载到的文件可能会自动运行。
+- 如果下载的文件需要手动运行，请按``alt+n`` 转到通知栏，然后按 ``alt+r`` 运行该文件（也可使用适合您的浏览器的方法）。
+-
+
+++ 配置 NVDA ++[SettingUpNVDA]
+
+运行您刚刚下载的文件，会启动一个 NVDA 的临时副本。
+然后您将被询问是否要安装 NVDA，创建便携版本，或只是继续使用临时副本。
+
+一旦 NVDA 安装程序包下载完成后，NVDA 的安装和运行并不需要连网。
+如果可以连接到互联网，NVDA 则可以定期检查可用更新。
+
++++ 运行下载的安装程序包 +++[StepsForRunningTheDownloadLauncher]
+
+安装文件名为“nvda_2022.1.exe”或与之类似的名称。
+年份和表示版本信息的其它数字会随更新而改变，以反应最近发布的版本
++ 运行下载的文件。
+音乐响起，NVDA 临时副本也同时加载。
+一旦临时副本加载完成，NVDA 就会全程朗读之后的操作过程。
++ 出现 NVDA 安装程序窗口，并显示许可协议。
+如果愿意，可以按``下光标``键来阅读许可协议。
++ 按 ``tab`` 键转到“我同意”复选框并按``空格``键将其选中。
++ 按 ``tab`` 键在各选项间切换，切换到想要选中的选项时按下 ``enter`` 键。
++
+
+这些选项是：
+- “在此计算机上安装 NVDA”：这是主流选项，大多数用户都会选择它以轻松使用 NVDA。
+- “创建便携版本”：便携版本允许 NVDA 在任何文件夹中运行，无须安装到计算机上。
+在没有管理员权限的计算机，或随身携带的记忆棒上，这个选项很有用。
+选择了这个选项，NVDA 会按步骤创建便携版本。
+重要的事情是 NVDA 需要知道创建便携版本的文件夹。
+- “继续运行”：这个选项保持 NVDA 临时副本继续运行。
+这可以用于在安装之前测试新版本的特性。
+选择了此选项，应用程序窗口就会关闭，而 NVDA 临时副本继续运行，直到它被关闭或关机为止。
+注意：使用临时副本时，对设置所做的更改不会被保存。
+- “取消”：这个选项会关闭 NVDA 并不执行任何操作。
+-
+
+
+如果您想一直在此计算机上使用 NVDA，您需要选择安装 NVDA。
+安装了 NVDA 就可以使用更多功能，如在 Windows 登录时自动启动 NVDA ，朗读 Windows 的欢迎界面和[安全界面 #SecureScreens]。
+这些功能无法在便携版本和临时副本中使用。
+请参阅[便携版本和临时副本的限制 #PortableAndTemporaryCopyRestrictions]以获取运行便携版本或临时副本的限制的所有详细信息。
+安装版本还提供创建开始菜单和桌面快捷方式功能，并允许按下 ``control+alt+n`` 启动 NVDA。
+
++++ 从安装程序包安装 NVDA 的步骤 +++[StepsForInstallingNVDAFromTheLauncher]
+这些步骤涉及最常用的安装选项。
+要获取有关可用选项的更详细信息，请参阅“安装 NVDA”中的[安装选项 #InstallingNVDA]。
+
++ 确保应用程序窗口的同意许可协议的复选框被选中。
++ 用 ``tab`` 切换到“在此计算机上安装 NVDA”按钮并激活它。
++ 接下来是 Windows 登录时启动 NVDA，以及创建桌面快捷方式的选项。
+这些选项默认是选中状态。
+如果愿意，可以用 ``tab`` 及``空格``键更改任何选项，或保持默认。
++ 按下 ``enter`` 继续。
++ 系统会弹出 Windows 用户账户控制（UAC）对话框并询问“您是否允许此应用对您的计算机做出更改？”。
++ 按下 ``alt+y`` 接受此 UAC 提示。
++ 随着安装的进行，会有一个不断被填充的进度栏提示 NVDA 的安装进度。
+在这个过程中，NVDA 会发出音调不断升高的嘟嘟声。
+安装过程一般很快，而且可能不会被注意到。
++ 弹出一个对话框，证实 NVDA 已经成功安装。
+其中的消息提示“点击确定以启动安装好的副本。”
+按下 ``enter`` 启动安装好的副本。
++ 随着 NVDA 朗读出表示欢迎的消息，“欢迎使用 NVDA”的对话框出现了。
+此时的焦点位于“键盘配置”组合框。
+默认采用“台式机”键盘配置，执行一些功能要用到数字键盘（小键盘）。
+如果愿意，可以按``下光标``选择“笔记本”键盘配置，将数字键盘的功能分配到其它按键上。
++ 按 ``tab`` 切换到“用 ``大小写锁定``（``capsLock``）作为 NVDA 键之一”。
+``插入``键（``Insert``）默认被设置为 NVDA 键。
+按``空格``选择``大小写锁定``键作为一个 NVDA 键。
+注意：键盘配置和 NVDA 键的设置不会相互影响。
+此后，NVDA 键和键盘配置还可以在键盘设置中被修改。
++ 用 ``tab`` 和``空格``对屏幕上的其它选项进行调整。
+这些选项用来设置 NVDA 是否自动启动。
++ 按 ``enter`` 关闭对话框，NVDA 现在就运行了。
++
+
+++ 运行 NVDA ++[RunningNVDA]
+
+完整的用户指南包含所有 NVDA 命令，它们分布在不同章节以供参考。
+在“热键快速参考”中也可以找到 NVDA 的命令表。
+“Basic Training for NVDA（NVDA 基础训练）”是一个 NVDA 的训练模块，这里对每一个命令都有一步接一步的深入训练。
+“Basic Training for NVDA”可在 NV Access 的 [NV Access Shop http://www.nvaccess.org/shop] 中找到。
+
+下面是一些常用的基本命令。
+所有命令都是可以配置的，这里仅是它们的基本按键。
+
++++ NVDA 键 +++[NVDAModifierKey]
+默认的 NVDA 键为 ``数字键盘0``（仅当数字锁定为关闭状态时），以及``插入``键（位于 ``delete``，``home`` 及 ``end`` 键附近）。
+NVDA 键也可以设定为``大小写锁定``键。
+
++++ 输入帮助 +++[InputHelp]
+可以按 ``NVDA+1`` 打开输入帮助，来学习和熟悉按键的位置。
+在输入帮助模式下，执行任何输入手势（如按键或触摸手势）就会朗读所执行的动作，并描述所要完成的功能（如果有的话）。
+在输入帮助模式下，实际的手势则不会被执行。
+
++++ 启动和退出 NVDA +++[StartingAndStoppingNVDA]
+|| 名称 | 台式机键盘 | 笔记本键盘 | 描述 |
+| 启动 NVDA | ``control+alt+n`` | ``control+alt+n`` | 启动或重启 NVDA。 |
+| 退出 NVDA | ``NVDA+q``, 然后按 ``enter`` | ``NVDA+q``, 然后按 ``enter`` | 退出 NVDA。 |
+| 暂停或恢复语音 | ``shift`` | ``shift`` | 立即暂停朗读。再次按下会从刚刚停止的地方继续朗读。 |
+| 停止朗读 | ``control`` | ``control`` | 立即停止朗读。 |
+
++++ 朗读文本 +++[ReadingText]
+|| 名称 | 台式机键盘 | 笔记本键盘 | 描述 |
+| 全文朗读 | ``NVDA+下光标`` | ``NVDA+a`` | 从当前位置开始朗读，并随朗读向下移动焦点。 |
+| 朗读当前行 | ``NVDA+上光标`` | ``NVDA+l`` | 朗读当前行。连按两次拼读该行。连按三次用字符解释的方式拼读该行（如  |Alpha，Bravo，Charlie 等。一个的一——译者注） |
+| 朗读选择的文本 | ``NVDA+shift+上光标`` | ``NVDA+shift+s`` | 朗读选择的所有文本。 |
+| 朗读剪贴板文本 | ``NVDA+c`` | ``NVDA+c`` | 朗读剪贴板中的任何文本。 |
+
++++ 朗读位置和其它信息 +++[ReportingLocation]
+|| 名称 | 台式机键盘 | 笔记本键盘 | 描述 |
+| 朗读窗口标题 | ``NVDA+t`` | ``NVDA+t`` | 朗读当前激活窗口的标题。连按两次会拼读此信息。连按三次会复制此信息到剪贴板。 |
+| 朗读焦点 | ``NVDA+tab`` | ``NVDA+tab`` | 朗读当前焦点所在的控件。连按两次会拼读此信息。 |
+| 朗读窗口 | ``NVDA+b`` | ``NVDA+b`` | 朗读整个当前窗口（用于对话框）。 |
+| 朗读状态栏 | ``NVDA+end`` | ``NVDA+shift+end`` | 如果 NVDA 能找到状态栏则朗读它。连按两次会拼读此信息。连按三次会复制此信息到剪贴板。 |
+| 读出当前所聚焦对象的快捷键 | ``shift+数字键盘2`` | ``NVDA+control+shift+.`` | 读出当前所聚焦对象的快捷键（或加速键） |
+| 朗读时间 | ``NVDA+f12`` | ``NVDA+f12`` | 按一次读出当前时间。连按两次读出日期。 |
+| 朗读文本格式 | ``NVDA+f`` | ``NVDA+f`` | 朗读文本的格式信息。连按两次在一个窗口中显示此信息。 |
+
++++ 切换哪些信息需要 NVDA 读出 +++[ToggleWhichInformationNVDAReads]
+|| 名称 | 台式机键盘 | 笔记本键盘 | 描述 |
+| 朗读输入字符 | ``NVDA+2`` | ``NVDA+2`` | 如果启用，NVDA 会朗读您在键盘上输入的所有字符。 |
+| 朗读输入单词 | ``NVDA+3`` | ``NVDA+3`` | 如果启用，NVDA 会朗读您在键盘上输入的单词。 |
+| 朗读命令键 | ``NVDA+4`` | ``NVDA+4`` | 如果启用，NVDA 会读出您在键盘上键入的所有飞字符按键。也包括组合键，例如 control 加其他字母。 |
+| 启用鼠标导航 | ``NVDA+m`` | ``NVDA+m`` | 如果启用，当您在屏幕上移动鼠标时，NVDA 会朗读指针当前所指的文本。这允许您确实通过移动鼠标来寻找屏幕上的东西，而不是尝试通过对象导航来寻找它们。 |
+
++++ 合成器设置 +++[TheSynthSettingsRing]
+|| 名称 | 台式机键盘 | 笔记本键盘 | 描述 |
+| 移动到下一个合成器设置 | ``NVDA+control+右光标`` | ``NVDA+shift+control+右光标`` | 移动到当前设置的下一个可用的语音设置，移动到最后一个设置后会再次循环至第一个。 |
+| 移动到上一个合成器设置 | ``NVDA+control+左光标`` | ``NVDA+shift+control+左光标`` | 移动到当前设置的上一个可用的语音设置，移动到第一个设置后会再次循环至最后一个。。 |
+| 增大当前合成器设置的值 | ``NVDA+control+上光标`` | ``NVDA+shift+control+上光标`` | 增大当前所在语音设置的值，例如加快速度，选择下一个语音，增大音量。 |
+| 减小当前合成器设置的值 | ``NVDA+control+下光标`` | ``NVDA+shift+control+下光标`` | 减小当前所在语音设置的值，例如减慢速度，选择上一个语音，减小音量。 |
+
++++ 网页导航 +++[WebNavigation]
+完整的单字母导航键的列表位于用户指南的[浏览模式 #BrowseMode]部分。
+|| 命令 | 按键 | 描述 |
+| 标题 | ``h`` | 移动到下一个标题。 |
+| 1、2或3级标题 | ``1``, ``2``, ``3`` | 移动到下一个指定级别的标题。 |
+| 表单区域 | ``f`` | 移动到下一个表单区域（如编辑框，按钮等）。 |
+| 链接 | ``k`` | 移动到下一个链接。 |
+| 路标 | ``d`` | 移动到下一个路标。 |
+| 列表 | ``l`` | 移动到下一个列表。 |
+| 表格 | ``t`` | 移动到下一个表格。 |
+| 反向移动 | ``shift``+ 字母 | 按 ``shift`` 加上面列出的任意字母可移动到前一个相同类型的元素。 |
+| 元素列表 | ``NVDA+f7`` | 列出各种元素的列表，如标题和链接等。 |
+
+++ 首选项 ++[Preferences]
+
+大多数 NVDA 功能可通过设置来启用或更改。
+设置和其它选项都可以通过 NVDA 菜单来使用。
+按 ``NVDA+n`` 就可以打开 NVDA 菜单。
+按 ``NVDA+control+g`` 可以直接打开 NVDA 常规设置对话框。
+许多 NVDA 设置界面都有直接打开它们的按键，例如 ``NVDA+control+s`` 打开合成器对话框，``NVDA+control+v`` 可以打开其它语音设置的界面。
+
+++ 社区 ++[Community]
+NVDA 具有生机勃勃的社区。
+NVDA 的创立者——NV Access，活跃于 [Twitter https://twitter.com/nvaccess] 以及 [Facebook https://www.facebook.com/NVAccess]。
+NV Access  还有一个定期的 [In-Process blog https://www.nvaccess.org/category/in-process/]（进行时博客）。
+
+另一个是 [NVDA Certified Expert https://certification.nvaccess.org/]（NVDA 认证专家）项目。
+这是一个在线测试，您可以完成它以证实您的 NVDA 技能。
+[NVDA Certified Experts  https://certification.nvaccess.org/] 可以列出与他们有联系或相关的详细商务信息。
+
+++ 获取帮助 ++[GettingHelp]
+
+要获取 NVDA 的帮助，请按 ``NVDA+n`` 打开 NVDA 菜单，然后按 ``h`` 键展开帮助菜单。
+在这个子菜单中您可以访问用户指南，热键快速参考，更新日志及更多内容。
+前三个选项在默认浏览器中就能打开。
+[NV Access Shop https://www.nvaccess.org/shop] 有更全更多的培训资料可用。
+
+我们推荐您参加 Basic Training for NVDA 模块。
+这个模块包含从网页浏览、对象导航开始的若干理论。
+可用的资源有：
+- [电子文档 https://www.nvaccess.org/product/basic-training-for-nvda-ebook/]，包括 Word 文档（docx），网页版（html），eBook（ePub），及 Kindle（KFX）等格式。
+- [真人朗读 mp3 音频 https://www.nvaccess.org/product/basic-training-for-nvda-downloadable-audio/]。
+- [纸质 UEB 盲文 https://www.nvaccess.org/product/basic-training-for-nvda-braille-hard-copy/]可以邮寄到世界各地。
+-
+其它模块和优惠活动：[NVDA Productivity Bundle https://www.nvaccess.org/product/nvda-productivity-bundle/]，[NV Access Shop https://www.nvaccess.org/shop]。
+
+NV Access 还出售[电话支持 https://www.nvaccess.org/product/nvda-telephone-support/]，既可以批量出售，也可以作为 [NVDA Productivity Bundle https://www.nvaccess.org/product/nvda-productivity-bundle/] 的一部分销售。。
+电话支持包含澳大利亚和美国的电话区号。
+
+还有一个[电子邮件用户组 https://github.com/nvaccess/nvda-community/wiki/Connect] 是寻求社区帮助的重要来源[经过认证的 NVDA 专家 https://certification.nvaccess.org/]也是如此。
+
++ 更多安装选项 +[MoreSetupOptions]
+
+++ 安装选项 ++[InstallingNVDA]
+
+如果直接从下载的安装程序包安装 NVDA，就点击安装 NVDA 按钮。
+如果您已经关闭了这个窗口，或者想从便携版本安装，请在 NVDA 菜单中找到工具，选择下面的安装 NVDA 菜单项。
+
+弹出的安装对话框会让您确认是否要安装 NVDA，并提示您先前版本的 NVDA 将被此安装程序更新。
+点击继续按钮会开始安装 NVDA。
+这个对话框中还有一些选项会在下面讲解。
+一旦安装完成，会出现一个消息框，告知您安装成功。
+此时点击确定就会重新启动新安装的 NVDA。
+
++++ 插件不兼容的警告 +++[InstallWithIncompatibleAddons]
+如果您已经安装了插件，可能会出现一个警告，告知不兼容的插件将被禁用。
+您必须使用复选框确认您了解这些插件将被禁用之后才可以点击继续按钮。
+还会显示一个按钮来查看将被禁用的插件。
+请参阅[不兼容的插件对话框 #incompatibleAddonsManager]以了解关于这个按钮的详细帮助。
+
++++ 进入 Windows 欢迎界面时启用 NVDA +++[StartAtWindowsLogon]
+此选项允许您选择是否在 Windows 欢迎界面，即在输入密码之前自动启动 NVDA。
+这也包括用户账户控制对话框和[其它安全界面 #SecureScreens]。
+全新安装时这个选项默认选中。
+
++++ 创建桌面快捷方式 (ctrl+alt+n) +++[CreateDesktopShortcut]
+此选项允许您选择是否在桌面上创建一个快捷方式来启动 NVDA。
+如果创建，这个快捷方式还被分配一个快捷键：``control+alt+n``，允许您在任何时候用此快捷键启动 NVDA。
+
++++ 拷贝便携版本配置到当前用户账户 +++[CopyPortableConfigurationToCurrentUserAccount]
+这个选项允许您选择是否将用户配置从正在运行的 NVDA 拷贝到当前登录用户使用的安装版 NVDA。
+此选项不会为此系统上的其他用户拷贝配置，也不会将配置应用于 Windows 欢迎界面和[其它安全界面 #SecureScreens]。
+该选项只在由便携版本安装时可用，使用下载的安装程序包直接安装时则不能。
+
+++ 创建一个便携版本 ++[CreatingAPortableCopy]
+如果直接从下载的 NVDA 安装程序包创建便携版本，则点击创建便携版本按钮。
+如果您已经关闭了此对话框或者您正运行安装版本的 NVDA，可在 NVDA 菜单中找到工具，选择下面的创建便携版本菜单项。
+
+弹出的对话框允许您选择存放便携版本的位置。
+可以是您的硬盘驱动器中的一个目录，U盘的某一位置，或其它便携媒体。
+这里还有一个选项，可以选择是否将登录用户 NVDA 的当前配置拷贝到新创建的便携版本。
+此选项只在由安装版本创建便携版本时才可用，从下载的安装程序包创建时则不能。
+点击继续就会创建便携版本。
+一旦创建完成，会出现一个消息框，告知您创建成功。
+点击确定关闭这个对话框。
+
+
+++ 便携版和临时副本的限制 ++[PortableAndTemporaryCopyRestrictions]
+如果您想将 NVDA 放在U盘或其它便携媒体中随身携带，您可以选择创建一个便携版本。
+安装版本还可以随时创建它自己的便携副本。
+创建以后，便携版本还能复制自己并安装到任何计算机上。
+然而，如果您希望把 NVDA 复制到像CD那样的只读媒体上，您只能复制下载的安装程序包。
+目前还不支持从只读媒体上直接运行便携版本。
+选择使用 NVDA 临时副本（如为了演示的目的）也是可以的，然而总是用这种方式启动 NVDA 会造成非常大的时间消耗。
+
+除了不能在登录期间和/或其后自动启动，NVDA 的便携版和临时副本还有以下限制：
+- 无法与使用管理员权限运行的应用程序进行交互，当然，除非 NVDA 本身也已经运行在管理员权限之下(不推荐)。
+- 尝试启动具有管理权限的应用程序时无法读取用户帐户控制(UAC)界面。
+- Windows8 及以上：无法支持使用触摸屏进行输入。
+- Windows8 及以上：无法在 Windows 商店应用中提供诸如浏览模式和朗读输入字符等功能。
+- Windows8 及以上：无法支持音频闪避功能。
 -
 
 + 获取和配置 NVDA +[GettingAndSettingUpNVDA]
@@ -99,50 +374,6 @@ NVDA 还使用了其他协议的开源免费软件。
 - Windows 8：无法在 Windows 商店应用提供诸如浏览模式和朗读输入字符的特性。
 - Windows 8 或其后版本：无法提供音频闪避特性。
 -
-
-++ 安装 NVDA ++[InstallingNVDA]
-如果直接从下载的文件中安装 NVDA，请直接点击“安装”按钮。
-如果您已经关闭了该对话框，或者希望从便携版本的 NVDA 进行安装，请从 NVDA 的“工具”菜单选择“安装 NVDA”。
-
-显示的“安装”对话框将确认您是否真的要安装 NVDA 并提示您，先前版本的 NVDA 将被此安装程序升级。
-点击“继续”按钮将开始 NVDA 的安装。
-这里还有一些附加选项，将在下面一一介绍。
-一旦安装完成，将弹出消息提示您，安装已经成功。
-再此点击“确定”按钮，将启动更新版本的 NVDA。
-
-+++ 插件不兼容的警告 +++[InstallWithIncompatibleAddons]
-如果已经安装了不兼容的插件，NVDA 可能还会发出警告，说明不兼容的插件将被禁用。
-您必须使用复选框确认您了解这些插件将被禁用之后才可以按确认按钮继续安装。
-还将显示一个按钮来查看将被禁用的插件。
-请看[管理不兼容的插件 #incompatibleAddonsManager]这一节了解详细情况。
-
-+++ 在 Windows 启动时运行 NVDA +++[StartAtWindowsLogon]
-此选项将允许您选择是否在 Windows 欢迎屏幕（即在输入密码之前）启动 NVDA。
-此选项还可应用于用户账户控制（UAC）和[其他安全界面 #SecureScreens]。
-全新安装时默认启用这个选项。
-
-+++ 创建桌面快捷方式（ctrl+alt+n） +++[CreateDesktopShortcut]
-此选项允许您选择，是否要在桌面上创建一个快捷方式启动 NVDA。
-如果创建，此快捷方式将富有 control+alt+n 的快捷键属性，您可以在任何时候使用此快捷键启动 NVDA。
-
-+++ 复制便携版配置到当前用户账户 +++[CopyPortableConfigurationToCurrentUserAccount]
-此选项将允许您选择，是否允许为 NVDA 的安装版从正在运行的 NVDA 的用户配置中拷贝配置到当前登录用户的用户配置。
-此选项将不会为在此系统上的其他用户拷贝配置，也不会应用于 Windows 欢迎屏幕和[其他安全界面 #SecureScreens]。
-此选项仅在从便携版本的 NVDA 安装时才可用，不会在从下载的安装程序包中安装时出现。
-
-++ 创建一个便携版 ++[CreatingAPortableCopy]
-如果希望从下载的安装包中直接创建便携版本，点击“创建便携版本”菜单项目便可简单完成。
-如果您已经关闭了此对话框或者您正运行着安装版本的 NVDA，请在 NVDA 的“工具”菜单中选择“创建便携版本”菜单项目。
-
-弹出的对话框允许您选择存放便携版本的位置。
-您可在硬盘驱动器、U 盘或其它便携式媒体的位置之间作出选择。
-还有一个选项选择，是否允许 NVDA 拷贝当前登录的用户的配置到新的便携版本。
-此选项仅当您从安装版本的 NVDA 中创建便携版本时才可用，并不适用于从下载的安装包创建的时候。
-点击“继续”将创建便携版。
-当创建完成之后会显示一条消息通知您，创建已经成功。
-点击“确定”关闭此对话框。
-
-+ 开始使用 NVDA +[GettingStartedWithNVDA]
 
 ++ 运行 NVDA ++[LaunchingNVDA]
 如果您已安装了 NVDA 安装版，最简单的打开方式是按下快捷键 control+alt+n，或从“开始菜单”中的“程序中找到 NVDA。
@@ -279,7 +510,7 @@ NVDA 菜单允许您控制 NVDA 设置、访问帮助、保存或者恢复您的
 | 停止朗读 | Control | control | 双指点击 | 立即停止朗读 |
 | 暂停朗读 | shift | shift | 无 | 立即暂停朗读，再次按下便会从刚刚停止的地方继续朗读(如果当前合成器可以支持暂停的话)。 |
 | NVDA 菜单 | NVDA+n | NVDA+n | 双指双击 | 弹出的 NVDA 菜单允许您访问“选项”、“工具”、“帮助”等。 |
-| 切换声音模式 | NVDA+s | NVDA+s | 无 | 把声音模式在朗读、提示音和关闭之间切换。 |
+| 切换声音模式 | NVDA+s | NVDA+s | 无 | 将声音模式在关闭语音、提示音和正常朗读之间切换。 |
 | 切换输入帮助模式 | NVDA+1 | NVDA+1 | 无 | 在此模式之下，按下任何按键都将读出其名称和与其关联的 NVDA 命令。 |
 | 退出 NVDA | NVDA+q | NVDA+q | 无 | 退出 NVDA |
 | 跳过下一个按键 | NVDA+f2 | NVDA+f2 | 无 | 告诉 NVDA：忽略下一次按键动作，使其能直接发送到激活的程序，即使它是 NVDA 的命令也不例外。 |
@@ -307,7 +538,7 @@ NVDA 允许您使用多种方式对系统进行浏览和导航，包括传统交
 
 使用 NVDA 在 Windows 系统中导航的最常用方法是使用标准的系统键盘命令简单的移动系统焦点，如使用 Tab 或者 Shift+Tab 在控件之间前后移动、按下 Alt 转到菜单栏后使用方向键在菜单中导航和使用 Alt+Tab 在正在运行的程序之间切换。
 当您这样操作时，NVDA 通常会读出焦点所在对象的相关信息，包括：名称、格式、数值、状态、描述、快捷键及位置信息等等。 
-当 [高亮显示系统焦点 #VisionFocusHighlight] 开启时，当前系统焦点的位置也将以视觉方式显示。
+当[高亮显示系统焦点 #VisionFocusHighlight]开启时，当前系统焦点的位置也将以视觉方式显示。
 
 下面是一些在移动系统焦点时很有用的键盘命令：
 %kc:beginInclude
@@ -346,6 +577,10 @@ NVDA 提供下列与系统输入焦点相关的快捷命令：
 | 移动到最后一列 | control+alt+行尾 | 移动输入焦点到最后一列(仍在同一行内)。 |
 | 移动到第一行 | control+alt+上翻页 | 移动输入焦点到第一行(仍在同一列内)。 |
 | 移动到最后一行 | control+alt+下翻页 | 移动输入焦点到最后一行(仍在同一列内)。 |
+| 朗读当前列 | ``NVDA+control+alt+下光标`` |从当前单元格开始垂直向下朗读至当前列的最后一个单元格。 |
+| 朗读当前行 | ``NVDA+control+alt+右光标`` | 从当前单元格开始水平向右朗读至当前行的最后一个单元格。 |
+| 朗读当前列（不移动输入焦点） | ``NVDA+control+alt+上光标`` | 在不移动输入焦点的情况下，从上到下垂直朗读当前列。 |
+| 朗读当前行（不移动输入焦点） | ``NVDA+control+alt+左光标`` | 在不移动输入焦点的情况下，从左到右水平朗读当前行。 |
 %kc:endInclude
 
 ++ 对象导航 ++[ObjectNavigation]
@@ -368,7 +603,7 @@ NVDA 提供下列与系统输入焦点相关的快捷命令：
 
 当前查看的对象被称为浏览对象。
 一旦您浏览到了一个对象，您可以使用[对象浏览模式 #ObjectReview]的[文本查看命令 #ReviewingText]进行查看。
-当 [高亮显示导航对象 #VisionFocusHighlight] 开启时，当前浏览对象的位置也将以视觉方式显示。
+当[高亮显示导航对象 #VisionFocusHighlight]开启时，当前浏览对象的位置也将以视觉方式显示。
 默认情况下，浏览对象会随着系统焦点而移动，此行为可以在设置里开关。
 
 请注意，想要盲文光标跟随浏览对象可以在[盲文光标跟随 #BrailleTether]设置里修改。
@@ -418,6 +653,8 @@ NVDA 允许您按照字、词、行的方式朗读[屏幕 #ScreenReview]、当�
 | 朗读查看对象的当前字 | 数字键盘2 | NVDA+. | 无 | 朗读浏览光标所在行的当前字符，连按两次读出该字符的描述或范例，连按三次读出字符的十进制和十六进制值。 |
 | 移动到当前查看对象的下一个字 | 数字键盘3 | NVDA+右光标 | 向右滑动(文本模式) | 移动浏览光标到文本的当前行的下一个字符 |
 | 移动到查看对象的行尾 | shift+数字键盘3 | NVDA+行尾 | 无 | 移动浏览光标到文本的当前行的行尾。 |
+| 移动到查看对象的上一页 | ``NVDA+上翻页`` | ``NVDA+shift+上翻页`` | 无 | 如果应用程序支持，将浏览光标移动到当前查看对象的上一页并将其读出。 |
+| 移动到查看对象的下一页 | ``NVDA+下翻页`` | ``NVDA+shift+下翻页`` | 无 | 如果应用程序支持，将浏览光标移动到当前查看对象的下一页并将其读出。 |
 | 导航对象全文朗读 | 数字键盘加号 | NVDA+shift+a | 三个手指向下滑动(文本模式) | 从浏览光标所在位置开始朗读并随之移动。 |
 | 拷贝浏览光标从 | NVDA+f9 | NVDA+f9 | 无 | 设定当前浏览光标所在位置为开始点，实际的复制并不会执行，除非您告诉 NVDA 范围的结束点在哪里。 |
 | 拷贝浏览光标到 | NVDA+f10 | NVDA+f10 | 无 | 按一次，选择开始点和结束点之间的文本；连按两次，把“拷贝浏览光标从”和“拷贝浏览光标到”之间的文本拷贝到剪贴板。如果系统输入焦点可以移动到结束点，当您按下此键时，文本将被真正的拷贝到 Windows 剪贴板。 |
@@ -511,7 +748,7 @@ NVDA支持以下应用中的文档
 
 在浏览模式中，文档的内容将可以以平面的形式用浏览光标快捷键进行浏览，前提是它是传统的文本文档。
 所有 NVDA 的[系统输入焦点 #SystemCaret]快捷键都可以正常的在此模式下工作，例如全文朗读、朗读格式、表格导航快捷键等等。
-当 [高亮显示浏览光标 #VisionFocusHighlight] 开启时，浏览模式虚拟光标的位置也会以视觉方式显示。
+当[高亮显示浏览光标 #VisionFocusHighlight]开启时，浏览模式虚拟光标的位置也会以视觉方式显示。
 关于这些文本是否属于链接、标题等信息，会随着移动而被读出。
 
 有些时候，您可能必须与文档上的这些控件进行直接交互。
@@ -625,7 +862,7 @@ NVDA 能够阅读 Microsoft Word 365/2016 build 14326 及更高版本软件中�
 方法是选中每个要转换的公式并在上下文菜单中选择 “Equation” 对象 -> 转换为 Office Math。
 在执行该操作之前，请确保您的 MathType 已更新到最新版本。
 Microsoft Word 提供了基于线性格式的数学公式导航支持， 同时支持使用包括 LateX 在内的多种语法输入数学公式。
-有关详细信息，请参考 [在 Word 中使用 UnicodeMath 和 LaTeX 的线性格式公式 https://support.microsoft.com/zh-cn/office/word-%E4%B8%AD%E4%BD%BF%E7%94%A8-unicodemath-%E5%92%8C-latex-%E7%9A%84%E7%BA%BF%E6%80%A7%E6%A0%BC%E5%BC%8F%E5%85%AC%E5%BC%8F-2e00618d-b1fd-49d8-8cb4-8d17f25754f8]
+有关详细信息，请参考[在 Word 中使用 UnicodeMath 和 LaTeX 的线性格式公式 https://support.microsoft.com/zh-cn/office/word-%E4%B8%AD%E4%BD%BF%E7%94%A8-unicodemath-%E5%92%8C-latex-%E7%9A%84%E7%BA%BF%E6%80%A7%E6%A0%BC%E5%BC%8F%E5%85%AC%E5%BC%8F-2e00618d-b1fd-49d8-8cb4-8d17f25754f8]
 - Microsoft Powerpoint 和旧版 Microsoft Word 中的数学公式：
 NVDA 支持在 Microsoft Powerpoint 和 Microsoft word 中阅读和导航 MathType 公式。
 您必须先安装 MathType 软件才可以使用该功能。
@@ -769,7 +1006,7 @@ NVDA 支持在 Kindle for PC 中阅读和导航包含可访问性数学内容的
 
 ++ 盲文输入 ++[BrailleInput]
 NVDA支持从点显器输入简写以及非简写盲文。
-您可以使用 [NVDA设置 #NVDASettings] 对话框中“盲文”类别的 [输入表 #BrailleSettingsInputTable] 将盲文转成文本。
+您可以使用 [NVDA设置 #NVDASettings] 对话框中“盲文”类别的[输入表 #BrailleSettingsInputTable]将盲文转成文本。
 
 若您使用的是非简写盲文，则在输入后会立即转为文本。
 若您使用的是简写盲文，则需要在输入一个字后按空格键或Enter，才会转为文本。 
@@ -788,7 +1025,7 @@ NVDA 支持使用盲文点显器按下键盘上的快捷键和模拟按键。
 
 常用的按键（例如箭头键或按 Alt 进入菜单栏）可以直接映射到盲文键盘。
 每一款盲文点显器的驱动程序都预先设置了一些键盘映射方案。
-您可以在 [按键与手势对话框 #InputGestures] 中修改这些键盘映射或者添加新的模拟按键。
+您可以在[按键与手势对话框 #InputGestures]中修改这些键盘映射或者添加新的模拟按键。
 
 虽然这种方法对于常用键或唯一键（例如 Tab）很有用，
 但您可能不会为每个键盘快捷键都分配一组模拟按键。
@@ -813,9 +1050,9 @@ NVDA提供了几种内置的视觉增强提供程序。
 这些功能的设置在[NVDA 设置对话框 #NVDASettings][视觉增强 #VisionSettings]那一栏里面。
 
 ++ 高亮显示 ++[VisionFocusHighlight]
-这个功能可以高亮显示 [系统焦点 #SystemFocus], [导航对象 #ObjectNavigation] 以及 [浏览光标 #BrowseMode]，从而方便低视力用户在屏幕上定位它们。
+这个功能可以高亮显示[系统焦点 #SystemFocus]，[导航对象 #ObjectNavigation]以及[浏览光标 #BrowseMode]，从而方便低视力用户在屏幕上定位它们。
 这些位置以彩色矩形轮廓突出显示。
--蓝色实线表示导航对象和系统焦点重合(通常是开启了 [导航对象跟随系统焦点移动 #ReviewCursorFollowFocus]才会呈现这种视觉效果)。
+-蓝色实线表示导航对象和系统焦点重合(通常是开启了[导航对象跟随系统焦点移动 #ReviewCursorFollowFocus]才会呈现这种视觉效果)。
 - 蓝色虚线表示系统焦点
 - 粉色实线表示导航对象
 - 黄色虚线表示浏览模式的虚拟光标（通常是在浏览器里面出现）
@@ -1176,7 +1413,7 @@ NVDA更新服务器只根据您的IP判断用户在哪国使用NVDA，并不会�
 这个分类包含以下选项
 
 ==== 更改 按钮 ====[SpeechSettingsChange]
-这个分类第一个选项就是 更改 按钮 点击它可以打开 [选择语音合成器 #SelectSynthesizer]对话框，您可以在其中更改语音合成器以及语音输出设备。
+这个分类第一个选项就是 更改 按钮 点击它可以打开[选择语音合成器 #SelectSynthesizer]对话框，您可以在其中更改语音合成器以及语音输出设备。
 这个对话框会出现在NVDA设置对话框上面。
 保存或者更改合成器设置之后，会回到NVDA设置对话框。
 
@@ -1231,7 +1468,7 @@ NVDA更新服务器只根据您的IP判断用户在哪国使用NVDA，并不会�
 
 ==== 处理字符和符号时包含Unicode联盟提供的数据（包括表情符号） ====[SpeechSettingsCLDR]
 启用此复选框后，NVDA将在拼读字符和符号时包含其他符号发音词典。
-这些词典包含[Unicode 联盟 https://www.unicode.org/consortium/consort.html] 在 [通用本地化数据库 http://cldr.unicode.org/]中提供的一部分符号（特别是表情符号）的描述。
+这些词典包含[Unicode 联盟 https://www.unicode.org/consortium/consort.html] 在[通用本地化数据库 http://cldr.unicode.org/]中提供的一部分符号（特别是表情符号）的描述。
 如果您希望NVDA根据此数据拼读表情符号以及其他字符的描述，则应启用此选项。
 但是，如果您使用的语音合成器本身支持表情符号，您可以关闭这个选项。
 
@@ -1476,18 +1713,18 @@ NVDA 正在运行的时候，如果您想在不进入“语音设置”对话框
 因此，建议依次只连接一个类型 / 制造商的点显器。
 
 +++ 视觉辅助 +++[VisionSettings]
-NVDA设置对话框中的视觉辅助类别允许您启用，禁用和配置 [视觉辅助 #Vision].
+NVDA设置对话框中的视觉辅助类别允许您启用，禁用和配置[视觉辅助 #Vision]。
 
 安装提供视觉辅助功能的[NVDA插件 #AddonsManager]可以在这个分类内增加更多选项
 默认情况下，此类别包含以下选项：
 
 ==== 焦点高亮显示 ====[VisionSettingsFocusHighlight]
-这一组复选框控制NVDA内置的 [高亮显示功能 #VisionFocusHighlight]。
+这一组复选框控制NVDA内置的[高亮显示功能 #VisionFocusHighlight]。
 
 - 启用高亮显示: 开启/关闭高亮显示功能
-- 高亮显示系统焦点: 切换是否高亮显示 [系统焦点 #SystemFocus] will be highlighted.
-- 高亮显示导航对象: 切换是否高亮显示 [导航对象 #ObjectNavigation]
-- 高亮显示浏览光标: 切换是否高亮显示 [浏览光标 #BrowseMode]
+- 高亮显示系统焦点: 切换是否高亮显示[系统焦点 #SystemFocus]。
+- 高亮显示导航对象: 切换是否高亮显示[导航对象 #ObjectNavigation]。
+- 高亮显示浏览光标: 切换是否高亮显示[浏览光标 #BrowseMode]。
 -
 
 请注意，选中或取消选中“启用高亮显示”复选框也将相应地更改其他三个复选框的状态。
@@ -1495,7 +1732,7 @@ NVDA设置对话框中的视觉辅助类别允许您启用，禁用和配置 [�
 如果只选中“高亮显示系统焦点”，而不选中“高亮显示导航对象”和“高亮显示浏览光标”，则“启用高亮显示”复选框的状态将变为“部分选中”。
 
 ==== 黑屏 ====[VisionSettingsScreenCurtain]
-选中立即黑屏复选框就可以启用 [黑屏 #VisionScreenCurtain]功能。
+选中立即黑屏复选框就可以启用[黑屏 #VisionScreenCurtain]功能。
 NVDA将显示警告，提示您的屏幕将在激活这个选项后变黑。
 在继续操作（选择“是”）之前，请确保已启用语音/盲文功能，并且能够在不使用屏幕的情况下控制计算机。
 如果您不再希望启用黑屏，请选择“否”。
@@ -1808,7 +2045,7 @@ NVDA设置对话框中的“鼠标设置”分类允许NVDA跟踪鼠标，用嘟
 启用此选项可能会以性能和稳定性为代价改善对某些网站的支持。
 
 +++ 文档格式设置 (NVDA+control+d) +++[DocumentFormattingSettings]
-“文档格式...”这个分类下面的大多数复选框都是用来配置，在您用光标浏览整个文档时朗读什么类型的格式信息。
+“文档格式...”这个分类下面的大多数选项都是用来配置，在您用光标浏览整个文档时朗读什么类型的格式信息。
 例如，如果您选择了“朗读字体名称”复选框，每次您用光标进入拥有不同字体的文本时，字体名称就会被读出。
 
 文档格式信息已经被编成组了。
@@ -1830,15 +2067,15 @@ NVDA设置对话框中的“鼠标设置”分类允许NVDA跟踪鼠标，用嘟
 - 页面和间距
  - 页码
  - 行号
- - 行首缩进提示方式 [(关闭，语音，声音，语音和声音) #DocumentFormattingSettingsLineIndentation]
+ - 行缩进提示[(关闭，语音，声音，语音和声音) #DocumentFormattingSettingsLineIndentation]
  - 段落缩进 (例如 悬挂式缩进，首行缩进)
  - 行间距 (单倍行距，双倍行距等)
  - 对齐方式
 - 表格信息
  - 表格
- - 行/列标题
- - 单元格坐标
- - 单元格边框 (关闭, 边框样式, 边框颜色和样式)
+ - 行/列标题朗读（关闭, 行标题和列标题, 行标题, 列标题）
+ - 表格的单元格坐标
+ - 单元格边界 (关闭, 边框样式, 边框颜色和样式)
 - 元素
  - 标题
  - 链接
@@ -1874,7 +2111,7 @@ NVDA设置对话框中的“鼠标设置”分类允许NVDA跟踪鼠标，用嘟
 -
 
 +++ Windows 10 光学字符识别 设置 +++[Win10OcrSettings]
-这个部分允许你设置 [Windows 光学字符识别 #Win10Ocr].
+这个部分允许你设置 [Windows 光学字符识别 #Win10Ocr]。
 这个分类包含以下选项
 
 ==== 识别用语言 ====[Win10OcrSettingsRecognitionLanguage]
@@ -1903,12 +2140,22 @@ NVDA设置对话框中的“鼠标设置”分类允许NVDA跟踪鼠标，用嘟
 此按钮可打开开发者实验目录。
 仅当用户允许从开发者实验目录加载代码时，才会启用此按钮。
 
-==== 启用选择性注册 UIA 事件和属性改变 ====[AdvancedSettingsSelectiveUIAEventRegistration]
-此选项会改变 NVDA 接收哪些 Microsoft UIA 事件。
-禁用此选项后，NVDA将注册更多的UIA事件，这些事件将在NVDA本身内处理并丢弃。
-这会对性能产生重大负面影响，尤其是在像Microsoft Visual Studio这样的应用程序中。
-因此，启用此选项后，对于大多数事件，NVDA会将事件注册限制到系统焦点。
-如果您在一个或多个应用程序中遇到性能问题，我们建议您尝试使用此功能以查看性能是否有所提高。
+==== 注册 UIA 事件和属性改变 ====[AdvancedSettingsSelectiveUIAEventRegistration]
+: 默认
+  自动
+: 选项
+  自动, 选择性注册, 全局
+:
+
+此选项可以改变 NVDA 接收 Microsoft UIA 事件的方式。
+注册 UIA 事件和属性改变组合框中有三个选项：
+- 自动：在 Windows 11 Sun Valley 2（版本 22H2）及更高版本的操作系统上为“选择性注册”，否则为“全局”。
+- 选择性注册：对于大多数事件，NVDA 会将事件注册限制在系统焦点上。
+如果您在一个或多个应用程序中被性能问题所困扰，我们建议您尝试此功能以查看性能是否有所提高。
+但是，在旧版 Windows 上，NVDA 可能无法跟踪某些控件焦点（例如任务管理器和表情符号面板）。
+- 全局：NVDA 会注册很多由自身处理并丢弃的 UIA 事件。
+虽然焦点跟踪在某些情况下更稳定，但可能会降低性能，尤其是在 Microsoft Visual Studio 等应用程序中。
+-
 
 ==== 在Word 中启用 UIA 接口 ====[MSWordUIA]
 配置 NVDA 是否应该使用 UIA 接口来访问 Microsoft Word 文档，而不是旧的 Microsoft Word 对象模型。
@@ -1929,7 +2176,7 @@ NVDA设置对话框中的“鼠标设置”分类允许NVDA跟踪鼠标，用嘟
 
 该选项用于选择如何与命令提示符，PowerShell 以及 Linux 子系统的 Windows 控制台进行交互。
 这个选项不会影响新的 Windows Terminal 应用。
-在 Windows 10 版本 1709 中，Microsoft [向控制台添加了 UIA  接口的支持 https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators- update/]，这一举措显著的改善了屏幕阅读器的性能和稳定性。
+在 Windows 10 版本 1709 中，Microsoft[向控制台添加了 UIA  接口的支持 https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators- update/]，这一举措显著的改善了屏幕阅读器的性能和稳定性。
 在 UIA 接口不可用，或者已知存在影响用户体验的问题时，NVDA 旧版控制台的支持方式可作为备用。
 该选项的组合框中包含三个选项
 - 自动：在 Windows 11 22H2 及更高版本中的 Windows 控制台中使用 UIA 接口。
@@ -1983,7 +2230,7 @@ Microsoft Excel 的 UI Automation 接口实现不断变化，早于 16.0.13522.1
 -
 
 ==== 在所有的增强终端读出密码 ====[AdvancedSettingsWinConsoleSpeakPasswords]
-此设置控制在某些终端程序（例如启用了 UIA 和 Mintty 的 Windows 控制台）屏幕不更新的情况下（例如密码输入）的场景，是否[读出输入字符 #KeyboardSettingsSpeakTypedCharacters] 或 [读出输入单词 #KeyboardSettingsSpeakTypedWords]。
+此设置控制在某些终端程序（例如启用了 UIA 和 Mintty 的 Windows 控制台）屏幕不更新的情况下（例如密码输入）的场景，是否[读出输入字符 #KeyboardSettingsSpeakTypedCharacters] 或[读出输入单词 #KeyboardSettingsSpeakTypedWords]。
 出于安全考虑，应禁用此设置。
 但是，如果您在控制台中遇到性能问题，或者输入字符和/或单词朗读不正常，亦或在您信任的环境下工作且更喜欢读出密码，您可能希望启用该选项。
 
@@ -2299,7 +2546,7 @@ NVDA 的语音字典比之单词替换更为强大。
 
 ++ Python 控制台 ++[PythonConsole]
 NVDA工具菜单下面的 NVDA Python 控制台是调试NVDA、了解NVDA内部原理、以及查看其他软件无障碍支持情况的工具
-想详细了解请查看下面链接里的英文文档 [NVDA开发文档 https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
+想详细了解请查看下面链接里的英文文档 [NVDA开发文档 https://www.nvaccess.org/files/nvda/documentation/developerGuide.html]。
 
 ++ 插件管理器 ++[AddonsManager]
 您可以通过 NVDA 的“工具”菜单的“插件管理器”访问插件管理器，插件管理器允许您安装、移除、启用或停用 NVDA 的插件。
@@ -2405,22 +2652,22 @@ eSpeak NG 支持超过43种不同的语言。
 ++ Microsoft Speech API version 4 (SAPI 4) ++[SAPI4]
 SAPI 4 是一个很有历史的微软软件语音合成器标准。
 许多在此标准下编译的语音合成器可以在各种各样的公司或网站购买或免费下载。
-当在 NVDA 使用此合成器时，“可用的语音”(访问[语音设置对话框 #VoiceSettings]或者通过 [循环切换合成器设置 #SynthSettingsRing])将包含所有安装在系统的 SAPI4 的语音合成器引擎的所有语音。
+当在 NVDA 使用此合成器时，“可用的语音”(访问[语音设置对话框 #VoiceSettings]或者通过[循环切换合成器设置 #SynthSettingsRing])将包含所有安装在系统的 SAPI4 的语音合成器引擎的所有语音。
 
 如果您已经安装了 SAPI 4语音，但合成器并未出现在 NVDA 的合成器列表，请安装 SAPI 4运行接口，请访问[这个链接 https://activex.microsoft.com/activex/controls/sapi/spchapi.exe]。
 
 ++ Microsoft Speech API version 5 (SAPI 5) ++[SAPI5]
 SAPI 5 是一个微软软件语音合成器标准。
 许多在此标准下编译的语音合成器可以在各种各样的公司或网站购买或免费下载。您的系统可能已经预装有最少一个 SAPI 5 语音。
-当在 NVDA 使用此合成器时，“可用的语音”(访问[语音设置对话框 #VoiceSettings]或者通过 [循环切换合成器设置 #SynthSettingsRing])将包含所有安装在系统的 SAPI5 的语音合成器引擎的所有语音。
+当在 NVDA 使用此合成器时，“可用的语音”(访问[语音设置对话框 #VoiceSettings]或者通过[循环切换合成器设置 #SynthSettingsRing])将包含所有安装在系统的 SAPI5 的语音合成器引擎的所有语音。
 
 ++ Microsoft Speech Platform ++[MicrosoftSpeechPlatform]
 Microsoft Speech Platform (微软语音平台)包含许多语言的声音，它通常用来进行基础语音应用程序服务的开发。
 此语音也可用于 NVDA。
 
 要想使用此语音，您必须安装以下两种组件：
-- Microsoft Speech Platform 运行库 - [第11版32位运行库链接 https://www.microsoft.com/download/en/details.aspx?id=27225]
-- Microsoft Speech Platform 语音包 - [第11版语音包链接 https://www.microsoft.com/download/en/details.aspx?id=27224]
+- Microsoft Speech Platform 运行库 - [第11版32位运行库 https://www.microsoft.com/download/en/details.aspx?id=27225]
+- Microsoft Speech Platform 语音包 - [第11版语音包 https://www.microsoft.com/download/en/details.aspx?id=27224]
  - 此页面包含了许多用于语音识别和文字转语音的文件。
  为您希望的语言和语音选择包含 TTS 数据的文件。
  例如，文件 MSSpeech_TTS_en-US_ZiraPro.msi 是一个美国英语的语音包。
@@ -3389,7 +3636,7 @@ NVDA 可以使用[命令行选项 #CommandLineOptions] ``-s`` 以安全模式运
 
 - 将配置和其他设置信息保存到磁盘。
 - 将按键与手势设置保存到磁盘。
-- [配置文件 #ConfigurationProfiles] 功能，例如创建、删除、重命名配置文件等。
+-[配置文件 #ConfigurationProfiles]功能，例如创建、删除、重命名配置文件等。
 - 更新 NVDA 以及创建便携版。
 -  [NVDA Python 控制台 #PythonConsole]。
 - [日志查看器 #LogViewer] 和日志记录。
@@ -3404,7 +3651,7 @@ NVDA 在安全界面使用系统配置文件作为首选项。
 安全界面包括：
 
 - Windows 登录界面。
-- 用户访问控制对话框，在以管理员权限执行程序时显示。
+- 用户账户控制对话框，在以管理员权限执行程序时显示。
   - 包括安装程序
   -
 -
@@ -3465,7 +3712,7 @@ nvda -q
 注册表接受下面这些配置:
 || 名称 | 类型 | 数值 | 描述 |
 | configInLocalAppData | DWORD | 0（默认）禁用，1 启用 | 启用这个选项会让NVDA把配置保存到“本地”应用程序配置文件夹(比如 "C:\Users\<用户名>\AppData\Local") |
-| serviceDebug | DWORD | 0（默认）禁用，1 启用 | 启用这个选项，会让 NVDA 在 [安全界面 #SecureScreens]禁用[安全模式 #SecureMode]。由于存在一些严重的安全隐患，强烈建议不要使用该选项。 |
+| serviceDebug | DWORD | 0（默认）禁用，1 启用 | 启用这个选项，会让 NVDA 在[安全界面 #SecureScreens]禁用[安全模式 #SecureMode]。由于存在一些严重的安全隐患，强烈建议不要使用该选项。 |
 
 
 + 更多信息 +[FurtherInformation]
