@@ -87,9 +87,9 @@ class Test_getWindowZIndex_dynamic(_Test_getWindowZIndex):
 
 	def test_prev_windowMoves_pastTarget(self):
 		"""A previous window is moved past the target window. This does not affect the z-order."""
-		self._startIndex = 2
-		self._endIndex = 9
-		self._triggerIndex = 5
+		self._startIndex = 2  # A window at this index
+		self._endIndex = 9  # is moved to this index
+		self._triggerIndex = 5  # when this index is reached
 		targetWindow = 7
 		expectedIndex = targetWindow - 1
 		self.assertEqual(expectedIndex, _getWindowZIndex(self._windowMatches(targetWindow)))
@@ -104,7 +104,7 @@ class Test_getWindowZIndex_dynamic(_Test_getWindowZIndex):
 		self.assertEqual(expectedIndex, _getWindowZIndex(self._windowMatches(targetWindow)))
 
 	def test_active_windowMoves_pastTarget(self):
-		"""The window we are looking at moves past the match, skipping our target window"""
+		"""A window we are looking at moves past the match, skipping our target window."""
 		self._startIndex = 3
 		self._endIndex = 8
 		self._triggerIndex = 3
