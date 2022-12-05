@@ -30,6 +30,7 @@ from treeInterceptorHandler import (
 	TreeInterceptor,
 )
 import braille
+from utils.security import _isObjectAboveLockScreen
 import vision
 import globalPluginHandler
 import brailleInput
@@ -1433,3 +1434,11 @@ This code is executed if a gain focus event is received by this object.
 		For performance, this method will only count up to the given maxCount number, and if there is one more above that, then sys.maxint is returned stating that many items are selected.
 		"""
 		return 0
+
+	#: Type definition for auto prop '_get_isAboveLockScreen'
+	isAboveLockScreen: bool
+
+	def _get_isAboveLockScreen(self) -> bool:
+		if not isWindowsLocked():
+			return True
+		return _isObjectAboveLockScreen(self)

@@ -5,6 +5,8 @@
 
 import typing
 from typing import (
+	Callable,
+	Optional,
 	Set,
 )
 
@@ -143,7 +145,7 @@ def _isSecureObjectWhileLockScreenActivated(
 	@return: C{True} if the Windows 10/11 lockscreen is active and C{obj} is outside of the lock screen.
 	"""
 	try:
-		isObjectInSecure = isWindowsLocked() and not isObjectAboveLockScreen(obj)
+		isObjectInSecure = isWindowsLocked() and not obj.isAboveLockScreen
 	except Exception:
 		log.exception()
 		return False
@@ -157,7 +159,7 @@ def _isSecureObjectWhileLockScreenActivated(
 	return False
 
 
-def isObjectAboveLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
+def _isObjectAboveLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 	"""
 	When Windows is locked, the foreground Window is usually LockApp,
 	but other Windows can be focused (e.g. Windows Magnifier).
@@ -182,24 +184,8 @@ def isObjectAboveLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 		or isinstance(obj, SecureDesktopNVDAObject)
 	):
 		return True
-	return _isObjectAboveLockScreenCheckZOrder(obj)
 
-
-def _isObjectAboveLockScreenCheckZOrder(obj: "NVDAObjects.NVDAObject") -> bool:
-	"""
-	This is a risky hack.
-	If the order is incorrectly detected,
-	the Windows UX may become inaccessible
-	or secure information may become accessible.
-
-	If these functions fail, where possible,
-	NVDA should make NVDA objects accessible.
-	"""
 	import appModuleHandler
-	from NVDAObjects.window import Window
-	if not isinstance(obj, Window):
-		# must be a window to get its HWNDVal
-		return True
 	runningAppModules = appModuleHandler.runningTable.values()
 	lockAppModule = next(filter(_isLockAppAndAlive, runningAppModules), None)
 
@@ -211,16 +197,76 @@ def _isObjectAboveLockScreenCheckZOrder(obj: "NVDAObjects.NVDAObject") -> bool:
 		)
 		return True
 
+	from NVDAObjects.window import Window
+	if not isinstance(obj, Window):
+		# must be a window to get its HWNDVal
+		return True
+
+	return _isObjectAboveLockScreenCheckZOrder(obj.windowHandle, lockAppModule.processID)
+
+
+def _isObjectAboveLockScreenCheckZOrder(objWindowHandle: int, lockAppModuleProcessId: int) -> bool:
+	"""
+	This is a risky hack.
+	If the order is incorrectly detected,
+	the Windows UX may become inaccessible
+	or secure information may become accessible.
+
+	If these functions fail, where possible,
+	NVDA should make NVDA objects accessible.
+	"""
+
+	def _isWindowLockApp(hwnd: winUser.HWNDVal) -> bool:
+		windowProcessId, _threadId = winUser.getWindowThreadProcessID(hwnd)
+		return windowProcessId == lockAppModuleProcessId
+
+	def _isNVDAObjectWindow(hwnd: winUser.HWNDVal) -> bool:
+		return hwnd == objWindowHandle
+
+	lockAppZIndex = _getWindowZIndex(_isWindowLockApp)
+	objectZIndex = _getWindowZIndex(_isNVDAObjectWindow)
+	lockAppZIndexCheck = _getWindowZIndex(_isWindowLockApp)
+	objectZIndexCheck = _getWindowZIndex(_isNVDAObjectWindow)
+	if lockAppZIndex != lockAppZIndexCheck or objectZIndex != objectZIndexCheck:
+		log.debugWarning("Order of Windows has changed during execution")
+
+	if lockAppZIndex is None or lockAppZIndexCheck is None:
+		# this is an unexpected state
+		# err on accessibility
+		log.error("Couldn't find lock screen")
+		return True
+	elif objectZIndex is None or objectZIndexCheck is None:
+		# this is an unexpected state
+		# err on accessibility
+		log.error("Couldn't find NVDA object's window")
+		return True
+	elif lockAppZIndex > objectZIndex and lockAppZIndexCheck > objectZIndexCheck:
+		# object is behind the lock screen, hide it from the user
+		return False
+	elif lockAppZIndex <= objectZIndex and lockAppZIndexCheck <= objectZIndexCheck:
+		# object is above the lock screen, show it to the user
+		return True
+	else:
+		log.debugWarning("Z-index of Windows has changed, unable to determine z-order")
+		# mixed state between checks
+		# err on accessibility
+		return True
+
+
+def _getWindowZIndex(matchCond: Callable[[winUser.HWNDVal], bool]) -> Optional[int]:
+	"""
+	Z-order can change while this is being checked.
+	This means this may not always return the correct result.
+	"""
 	desktopWindow = winUser.getDesktopWindow()
 	nextWindow = winUser.getTopWindow(desktopWindow)
+	index = 0
 	while nextWindow:
-		windowProcessId = winUser.getWindowThreadProcessID(nextWindow)
-		if nextWindow == obj.windowHandle:
-			return True
-		elif windowProcessId == lockAppModule.processID:
-			return False
+		if matchCond(nextWindow):
+			return index
 		nextWindow = winUser.getWindow(nextWindow, winUser.GW_HWNDNEXT)
-	return False
+		index += 1
+	return None
 
 
 _hasSessionLockStateUnknownWarningBeenGiven = False
