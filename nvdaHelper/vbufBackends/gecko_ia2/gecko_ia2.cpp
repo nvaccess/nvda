@@ -392,33 +392,34 @@ void GeckoVBufBackend_t::fillVBufAriaDetails(
 	int docHandle,
 	CComPtr<IAccessible2> pacc,
 	VBufStorage_buffer_t& buffer,
-	VBufStorage_controlFieldNode_t& parentNode,
-	const std::wstring& roleAttr
+	VBufStorage_controlFieldNode_t& nodeBeingFilled,
+	const std::wstring& nodeBeingFilledRole
 ){
 	/* Set the details role by checking for both IA2_RELATION_DETAILS and IA2_RELATION_DETAILS_FOR as one
-	of the nodes in the relationship will not be in the buffer yet */
-	std::optional<int> detailsId = getRelationId(IA2_RELATION_DETAILS, pacc);
-	std::optional<int> detailsForId = getRelationId(IA2_RELATION_DETAILS_FOR, pacc);
-	VBufStorage_controlFieldNode_t* detailsParentNode = nullptr;
-	std::optional<std::wstring> detailsRole;
-	if (detailsId.has_value()) {
-		parentNode.addAttribute(L"hasDetails", L"true");
-		detailsParentNode = &parentNode;
-		auto detailsChildNode = buffer.getControlFieldNodeWithIdentifier(docHandle, detailsId.value());
-		if (detailsChildNode != nullptr) {
-			detailsRole = detailsChildNode->getAttribute(L"role");
-			if (!detailsRole.has_value()) {
+	of the nodes in the relationship will not be in the buffer yet
+	It is possible that nodeBeingFilled is both the target and origin of multiple details relations.
+	*/
+	std::optional<int> idOfDetailsTarget = getRelationId(IA2_RELATION_DETAILS, pacc);
+	std::optional<int> idOfDetailsOrigin = getRelationId(IA2_RELATION_DETAILS_FOR, pacc);
+
+	if (idOfDetailsTarget.has_value()) {  // handle case where nodeBeingFilled is the origin of a details relation.
+		nodeBeingFilled.addAttribute(L"hasDetails", L"true");
+		auto detailsTargetNode = buffer.getControlFieldNodeWithIdentifier(docHandle, idOfDetailsTarget.value());
+		if (detailsTargetNode != nullptr) {
+			const std::wstring roleName = L"role";
+			auto targetDetailsRole = detailsTargetNode->getAttribute(roleName);
+			if (targetDetailsRole.has_value()) {
+				nodeBeingFilled.addAttribute(L"detailsRole", targetDetailsRole.value());
+			}
+			else {
 				// This is not an error, the target may not have a role listed in its attributes.
 				LOG_DEBUG(L"Couldn't find attribute: '" << roleName << '\'');
 			}
 		}
 	}
-	if (detailsForId.has_value()) {
-		detailsParentNode = buffer.getControlFieldNodeWithIdentifier(docHandle, detailsForId.value());
-		detailsRole = roleAttr;
-	}
-	if (detailsParentNode != nullptr && detailsRole.has_value()) {
-		detailsParentNode->addAttribute(L"detailsRole", detailsRole.value());
+	if (idOfDetailsOrigin.has_value()) {  // handle case where nodeBeingFilled is the target of a details relation.
+		auto detailsOriginNode = buffer.getControlFieldNodeWithIdentifier(docHandle, idOfDetailsOrigin.value());
+		detailsOriginNode->addAttribute(L"detailsRole", nodeBeingFilledRole);
 	}
 }
 

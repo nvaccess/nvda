@@ -33,12 +33,20 @@ class GeckoVBufBackend_t: public VBufBackend_t {
 		bool ignoreInteractiveUnlabelledGraphics=false
 	);
 
+	/* Fill the virtual buffer with information required for aria details (annotations) information.
+	 * @note: Expected to be called by fillVBuf
+	 * @param docHandle: The handle of the current document, required to identify target/origin of an annotation relationship.
+	 * @param pacc: The IAccessible for the nodeBeingFilled
+	 * @param buffer: The virtual buffer that is being filled, used to get the other side of the relationship (target/origin)
+	 * @param nodeBeingFilled: The current node being filled. This maybe a target, origin, or neither.
+	 * @param nodeBeingFilledRole: The role of the parentNode, used to set the detailsRole in the origin of the annotation relationship.
+	 */
 	void fillVBufAriaDetails(
 		int docHandle,
 		CComPtr<IAccessible2> pacc,
 		VBufStorage_buffer_t& buffer,
-		VBufStorage_controlFieldNode_t& parentNode,
-		const std::wstring& roleAttr
+		VBufStorage_controlFieldNode_t& nodeBeingFilled,
+		const std::wstring& nodeBeingFilledRole
 	);
 
 	void versionSpecificInit(IAccessible2* pacc);
