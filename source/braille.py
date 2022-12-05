@@ -581,12 +581,15 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 		textList.append(description)
 	hasDetails = propertyValues.get("hasDetails")
 	if hasDetails:
-		detailsRole: Optional[controlTypes.Role] = propertyValues.get("detailsRole")
-		if detailsRole is not None:
-			detailsRoleLabel = roleLabels.get(detailsRole, detailsRole.displayString)
+		detailsRoles: typing.Set[controlTypes.Role] = set(propertyValues.get("detailsRoles", []))
+		if detailsRoles:
+			detailsRoleLabels = (
+				roleLabels.get(role, role.displayString) if role else _("details")
+				for role in detailsRoles
+			)
 			# Translators: Braille when there are further details/annotations that can be fetched manually.
-			# %s specifies the type of details (e.g. comment, suggestion)
-			textList.append(_("has %s") % detailsRoleLabel)
+			# %s specifies the type of details (e.g. "has comment suggestion")
+			textList.append(_("has %s") % " ".join(detailsRoleLabels))  # no comma to save cells on braille display
 		else:
 			textList.append(
 				# Translators: Braille when there are further details/annotations that can be fetched manually.
@@ -768,9 +771,9 @@ def getControlFieldBraille(  # noqa: C901
 	placeholder=field.get('placeholder', None)
 	hasDetails = field.get('hasDetails', False) and config.conf["annotations"]["reportDetails"]
 	if config.conf["annotations"]["reportDetails"]:
-		detailsRole: Optional[controlTypes.Role] = field.get('detailsRole')
+		detailsRoles: typing.Set[None, controlTypes.Role] = field.get('detailsRoles')
 	else:
-		detailsRole = None
+		detailsRoles = set()
 
 	roleText = field.get('roleTextBraille', field.get('roleText'))
 	landmark = field.get("landmark")
@@ -803,7 +806,7 @@ def getControlFieldBraille(  # noqa: C901
 			"current": current,
 			"description": description,
 			"hasDetails": hasDetails,
-			"detailsRole": detailsRole,
+			"detailsRoles": detailsRoles,
 		}
 		if reportTableHeaders in (ReportTableHeaders.ROWS_AND_COLUMNS, ReportTableHeaders.COLUMNS):
 			props["columnHeaderText"] = field.get("table-columnheadertext")
@@ -821,7 +824,7 @@ def getControlFieldBraille(  # noqa: C901
 			"roleText": roleText,
 			"description": description,
 			"hasDetails": hasDetails,
-			"detailsRole": detailsRole,
+			"detailsRoles": detailsRoles,
 		}
 		if field.get('alwaysReportName', False):
 			# Ensure that the name of the field gets presented even if normally it wouldn't.

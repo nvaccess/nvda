@@ -539,8 +539,10 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		"""
 		return bool(self.annotations)
 
-	#: Typing information for auto property _get_detailsRole
 	detailsRole: typing.Optional[controlTypes.Role]
+	"""Typing information for auto property _get_detailsRole
+	Deprecated, use self.annotations.roles instead.
+	"""
 
 	def _get_detailsRole(self) -> typing.Optional[controlTypes.Role]:
 		if config.conf["debugLog"]["annotations"]:

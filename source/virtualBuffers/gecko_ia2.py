@@ -170,33 +170,41 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 		if landmark:
 			attrs["landmark"]=landmark
 
-		detailsRole = attrs.get('detailsRole')
-		if detailsRole is not None:
-			attrs['detailsRole'] = self._normalizeDetailsRole(detailsRole)
+		detailsRoles = attrs.get('detailsRoles')
+		if detailsRoles is not None:
+			attrs['detailsRoles'] = set(self._normalizeDetailsRole(detailsRoles))
+			log.debug(f"detailsRoles: {attrs['detailsRoles']}")
 		return super()._normalizeControlField(attrs)
 
-	def _normalizeDetailsRole(self, detailsRole: str) -> typing.Optional[controlTypes.Role]:
+	def _normalizeDetailsRole(self, detailsRoles: str) -> typing.Iterable[controlTypes.Role]:
 		"""
-		The attribute has been added directly to the buffer as a string, either as a role string or a role integer.
+		The attribute has been added directly to the buffer as a string, containing a comma separated list
+		of values, each value is either:
+		- role string
+		- role integer
 		Ensures the returned role is a fully supported by the details-roles attribute.
 		Braille and speech needs consistent normalization for translation and reporting.
+
 		"""
 		# Can't import at module level as chromium imports from this module
 		from NVDAObjects.IAccessible.chromium import supportedAriaDetailsRoles
 		if config.conf["debugLog"]["annotations"]:
-			log.debug(f"detailsRole: {repr(detailsRole)}")
-
-		if detailsRole.isdigit():
-			# get a role, but it may be unsupported
-			detailsRole = IAccessibleHandler.IAccessibleRolesToNVDARoles.get(int(detailsRole))
-			# return a supported details role
-			if detailsRole not in supportedAriaDetailsRoles.values():
-				detailsRole = None
-		else:
-			# return a supported details role
-			detailsRole = supportedAriaDetailsRoles.get(detailsRole)
-
-		return detailsRole
+			log.debug(f"detailsRoles: {repr(detailsRoles)}")
+		detailsRolesValues = detailsRoles.split(',')
+		for detailsRole in detailsRolesValues:
+			if detailsRole.isdigit():
+				detailsRoleInt = int(detailsRole)
+				# get a role, but it may be unsupported
+				detailsRole = IAccessibleHandler.IAccessibleRolesToNVDARoles.get(detailsRoleInt)
+				# return a supported details role
+				if detailsRole in supportedAriaDetailsRoles.values():
+					yield detailsRole
+				else:
+					yield None
+			else:
+				# return a supported details role
+				detailsRole = supportedAriaDetailsRoles.get(detailsRole)
+				yield detailsRole
 
 	def _normalizeFormatField(self, attrs):
 		normalizeIA2TextFormatField(attrs)

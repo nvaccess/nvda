@@ -55,7 +55,15 @@ class GeckoVBufBackend_t: public VBufBackend_t {
 
 	std::wstring toolkitName;
 
-	std::optional<int> getRelationId(LPCOLESTR ia2TargetRelation, IAccessible2* pacc2);
+	/* Get the IAccessible IDs for all relation targets of the specified relation type.
+	* @param ia2TargetRelation: The type of relation to fetch. Use IA2_RELATION_* constants
+			from 'include/ia2/api/AccessibleRelation.idl' becomes 'build/<arch>/ia2.h'
+	* @param pacc2: The element to fetch relations for.
+	*/
+	std::vector<int> getAllRelationIdsForRelationType(LPCOLESTR ia2TargetRelation, IAccessible2* pacc2);
+
+	/*
+	*/
 	std::optional< LabelInfo > getLabelInfo(IAccessible2* pacc2);
 
 	/* Get relation elements of the type.
@@ -89,5 +97,6 @@ class GeckoVBufBackend_t: public VBufBackend_t {
 	GeckoVBufBackend_t(int docHandle, int ID);
 
 };
+
 
 #endif

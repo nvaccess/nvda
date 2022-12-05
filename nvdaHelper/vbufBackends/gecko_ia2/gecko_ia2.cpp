@@ -249,11 +249,16 @@ void GeckoVBufBackend_t::versionSpecificInit(IAccessible2* pacc) {
 
 optional<int>
 getIAccessible2UniqueID(IAccessible2* targetAcc) {
-	int ID = 0;
+	if (targetAcc == nullptr) {
+		LOG_ERROR(L"targetAcc is null, can't getIAccessible2UniqueID");
+		return {};
+	}
+
 	//Get ID -- IAccessible2 uniqueID
-	if (targetAcc->get_uniqueID((long*)&ID) != S_OK) {
-		LOG_DEBUG(L"pacc->get_uniqueID failed");
-		return optional<int>();
+	long ID = 0l;
+	if (targetAcc->get_uniqueID(&ID) != S_OK) {
+		LOG_DEBUG(L"targetAcc->get_uniqueID failed");
+		return {};
 	}
 	return ID;
 }
@@ -285,21 +290,21 @@ OptionalLabelInfo GeckoVBufBackend_t::getLabelInfo(IAccessible2* pacc2) {
 	return LabelInfo { isVisible, ID } ;
 }
 
-std::optional<int> GeckoVBufBackend_t::getRelationId(LPCOLESTR ia2TargetRelation, IAccessible2* pacc2) {
+std::vector<int> GeckoVBufBackend_t::getAllRelationIdsForRelationType(LPCOLESTR ia2TargetRelation, IAccessible2* pacc2) {
 	CComQIPtr<IAccessible2_2> pacc2_2 = pacc2;
 	if (pacc2_2 == nullptr) {
 		return {};
 	}
 	auto accTargets = getRelationElementsOfType(ia2TargetRelation, pacc2_2);
-	if (1 > accTargets.size()) {
-		return {};
+	std::vector<int> ids;
+	for (auto& accTarget : accTargets) {
+		auto ID = getIAccessible2UniqueID(accTarget);
+		if (ID.has_value()) {
+			ids.push_back(ID.value());
+		}
 	}
-	auto& accTarget = accTargets[0];
-	if (accTarget == nullptr) {
-		return {};
-	}
-	auto ID = getIAccessible2UniqueID(accTarget);
-	return ID;
+
+	return ids;
 }
 
 long getChildCount(const bool isAriaHidden, IAccessible2 * const pacc){
@@ -430,6 +435,19 @@ const vector<wstring>ATTRLIST_ROLES(1, L"IAccessible2::attribute_xml-roles");
 const wregex REGEX_PRESENTATION_ROLE(L"IAccessible2\\\\:\\\\:attribute_xml-roles:.*\\bpresentation\\b.*;");
 
 
+void _extendDetailsRolesAttribute(VBufStorage_controlFieldNode_t& node, const std::wstring& detailsRole)
+{
+	std::wstringstream ss;
+	auto roles = node.getAttribute(L"detailsRoles");
+	if (roles) {
+		ss << *roles << ',' << detailsRole;
+	}
+	else {
+		ss << detailsRole;
+	}
+	node.addAttribute(L"detailsRoles", ss.str());  // addAttribute will replace an attribute that already exists
+}
+
 void GeckoVBufBackend_t::fillVBufAriaDetails(
 	int docHandle,
 	CComPtr<IAccessible2> pacc,
@@ -441,27 +459,38 @@ void GeckoVBufBackend_t::fillVBufAriaDetails(
 	of the nodes in the relationship will not be in the buffer yet
 	It is possible that nodeBeingFilled is both the target and origin of multiple details relations.
 	*/
-	std::optional<int> idOfDetailsTarget = getRelationId(IA2_RELATION_DETAILS, pacc);
-	std::optional<int> idOfDetailsOrigin = getRelationId(IA2_RELATION_DETAILS_FOR, pacc);
-
-	if (idOfDetailsTarget.has_value()) {  // handle case where nodeBeingFilled is the origin of a details relation.
+	// handle case where nodeBeingFilled is the origin of a details relation.
+	auto idOfDetailsTargets = getAllRelationIdsForRelationType(IA2_RELATION_DETAILS, pacc);
+	if (0 < idOfDetailsTargets.size()) {
 		nodeBeingFilled.addAttribute(L"hasDetails", L"true");
-		auto detailsTargetNode = buffer.getControlFieldNodeWithIdentifier(docHandle, idOfDetailsTarget.value());
-		if (detailsTargetNode != nullptr) {
-			const std::wstring roleName = L"role";
-			auto targetDetailsRole = detailsTargetNode->getAttribute(roleName);
-			if (targetDetailsRole.has_value()) {
-				nodeBeingFilled.addAttribute(L"detailsRole", targetDetailsRole.value());
-			}
-			else {
-				// This is not an error, the target may not have a role listed in its attributes.
-				LOG_DEBUG(L"Couldn't find attribute: '" << roleName << '\'');
+		for (const auto idOfDetailsTarget : idOfDetailsTargets) {
+			auto detailsTargetNode = buffer.getControlFieldNodeWithIdentifier(docHandle, idOfDetailsTarget);
+			if (detailsTargetNode != nullptr) {
+				const std::wstring roleName = L"role";
+				auto targetDetailsRole = detailsTargetNode->getAttribute(roleName);
+				if (targetDetailsRole.has_value()) {
+					_extendDetailsRolesAttribute(nodeBeingFilled, *targetDetailsRole);
+				}
+				else {
+					// This is not an error, the target may not have a role listed in its attributes.
+					/* todo: Add "details" to the ariaDetailsRoles. Explanation:
+						hasDetail=True is not enough to describe the scenario when there multiple details
+						relations but one has a generic role, EG. a comment and an 'unknown' role.
+						This would then produce 'hasDetail=True detailsRoles="comment"'
+						Instead of the preferred 'hasDetail=True detailsRoles="comment, details"'
+					*/
+					LOG_DEBUG(L"Couldn't find attribute: '" << roleName << '\'');
+				}
 			}
 		}
 	}
-	if (idOfDetailsOrigin.has_value()) {  // handle case where nodeBeingFilled is the target of a details relation.
-		auto detailsOriginNode = buffer.getControlFieldNodeWithIdentifier(docHandle, idOfDetailsOrigin.value());
-		detailsOriginNode->addAttribute(L"detailsRole", nodeBeingFilledRole);
+	// handle case where nodeBeingFilled is the target of a details relation.
+	auto idOfDetailsOrigins = getAllRelationIdsForRelationType(IA2_RELATION_DETAILS_FOR, pacc);
+	for(const auto idOfDetailsOrigin : idOfDetailsOrigins){
+		auto detailsOriginNode = buffer.getControlFieldNodeWithIdentifier(docHandle, idOfDetailsOrigin);
+		if (detailsOriginNode != nullptr) {
+			_extendDetailsRolesAttribute(*detailsOriginNode, nodeBeingFilledRole);
+		}
 	}
 }
 

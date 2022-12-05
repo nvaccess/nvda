@@ -24,6 +24,11 @@ class AnnotationTarget:
 
 
 class AnnotationOrigin:
+	""" Annotation relation information.
+	Each origin may have many annotation targets.
+	Targets can have different roles.
+	This class encapsulates the relation.
+	"""
 	def __init__(self, originObj: "NVDAObject"):
 		self._originObj: "NVDAObject" = originObj
 
