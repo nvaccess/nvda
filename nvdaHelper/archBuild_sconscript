@@ -87,8 +87,11 @@ env.Append(
 	CPPDEFINES=[
 		'UNICODE',
 		'_CRT_SECURE_NO_DEPRECATE',
-		('LOGLEVEL','${nvdaHelperLogLevel}'),
-		('_WIN32_WINNT','_WIN32_WINNT_WIN7')
+		('LOGLEVEL', '${nvdaHelperLogLevel}'),
+		('_WIN32_WINNT', '_WIN32_WINNT_WIN7'),
+		# NOMINMAX: prevent minwindef.h min/max macro definition, which unexpectedly override developer
+		# expectations
+		'NOMINMAX',
 	]
 )
 
