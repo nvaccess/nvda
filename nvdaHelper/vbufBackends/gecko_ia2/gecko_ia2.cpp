@@ -13,6 +13,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
 #include <memory>
+#include <numeric>
 #include <functional>
 #include <vector>
 #include <map>
@@ -47,43 +48,71 @@ bool hasXmlRoleAttribContainingValue(const map<wstring,wstring>& attribsMap, con
 	return attribsMapIt != attribsMap.end() && attribsMapIt->second.find(roleName) != wstring::npos;
 }
 
-CComPtr<IAccessible2> GeckoVBufBackend_t::getRelationElement(
+std::vector<CComQIPtr<IAccessible2>> GeckoVBufBackend_t::getRelationElementsOfType(
 	LPCOLESTR ia2TargetRelation,
-	IAccessible2_2* element
+	IAccessible2_2* element,
+	const std::optional<std::size_t> numRelations
 ) {
-	IUnknown** ppUnk=nullptr;
-	long nTargets=0;
-	// We only need to request one relation target
-	int numRelations=1;
-	// However, a bug in Chrome causes a buffer overrun if numRelations is less than the total number of targets the node has.
-	// Therefore, If this is Chrome, request all targets (by setting numRelations to 0) as this works around the bug.
-	// There is no major performance hit to fetch all targets in Chrome as Chrome is already fetching all targets either way.
-	// In Firefox there would be extra cross-proc calls.
-	if(this->toolkitName.compare(L"Chrome")==0) {
-		numRelations=0;
+	constexpr long FETCH_ALL = 0l;  // See docs of relationTargetsOfType.
+	long nTargets = static_cast<long>(
+		min<size_t>(
+			numRelations.value_or(FETCH_ALL),  // Default is to fetch all relations.
+			static_cast<size_t>(numeric_limits<long>::max())
+		)
+	);
+
+	const bool isChrome = this->toolkitName.compare(L"Chrome") == 0;
+	if (isChrome) {
+		// A bug in Chrome causes a buffer overrun if numRelations is less than the total number of targets the node has.
+		// As a work around, request all targets (by setting numRelations to 0).
+		// There is no major performance hit to fetch all targets in Chrome as Chrome is already fetching all targets either way.
+		// In Firefox there would be extra cross-process calls.
+		nTargets = FETCH_ALL;
 	}
 	// the relation type string *must* be passed correctly as a BSTR otherwise we can see crashes in 32 bit Firefox.
 	CComBSTR relationAsBSTR(ia2TargetRelation);
+
+	IUnknown** targets = nullptr;
+	/*
+	relationTargetsOfType(
+		// type: use IA2_RELATION_* constants
+		// from 'include/ia2/api/AccessibleRelation.idl' becomes 'build/<arch>/ia2.h'
+		[in] BSTR type,
+		[in] long maxTargets, // 0 means all.
+		[out, size_is(,*nTargets)] IUnknown ***targets, // targets data.
+		[out, retval] long *nTargets // number targets fetched
+	)*/
 	HRESULT res = element->get_relationTargetsOfType(
 		relationAsBSTR,
-		numRelations,
-		&ppUnk,
+		nTargets,
+		&targets,
 		&nTargets
 	);
-	if(res!=S_OK) return nullptr;
-	// Grab all the returned IUnknowns and store them as smart pointers within a smart pointer array 
-	// so that any further returns will correctly release all the objects. 
-	auto ppUnk_smart=make_unique<CComPtr<IUnknown>[]>(nTargets);
-	for(int i=0;i<nTargets;++i) {
-		ppUnk_smart[i].Attach(ppUnk[i]);
+	if (res != S_OK	) {
+		// Return early on failure. Due to failure, there is no need to CoTaskMemFree
+		// the targets parameter can be considered invalid.
+		return {};
+	}
+	// Grab all the returned IUnknowns and store them as a collection of smart pointers
+	// so that any further returns will correctly release all the objects.
+	const std::size_t numFetched = static_cast<std::size_t>(nTargets >= 0 ? nTargets : 0);  // handle negative numbers for signed conversion.
+	const std::size_t numToReturn = std::min<std::size_t>(  // Limit to numRelations, the amount expected by the caller.
+		numRelations.value_or(numFetched),
+		numFetched
+	);
+	std::vector< CComQIPtr<IAccessible2>> smartTargets;
+	for(std::size_t i = 0; i < numToReturn; ++i) {
+		CComPtr<IUnknown> punk;
+		punk.Attach(targets[i]);
+		smartTargets.emplace_back(punk);
 	}
 	// we can now free the memory that Gecko  allocated to give us  the IUnknowns
-	CoTaskMemFree(ppUnk);
+	CoTaskMemFree(targets);
 	if(nTargets==0) {
 		LOG_DEBUG(L"relationTargetsOfType for " << relationAsBSTR.m_str << L" found no targets");
-		return nullptr;
+		return {};
 	}
-	return CComQIPtr<IAccessible2>(ppUnk_smart[0]);
+	return(smartTargets);
 }
 
 const wchar_t EMBEDDED_OBJ_CHAR = 0xFFFC;
@@ -239,24 +268,37 @@ using OptionalLabelInfo = optional< LabelInfo >;
 OptionalLabelInfo GeckoVBufBackend_t::getLabelInfo(IAccessible2* pacc2) {
 	CComQIPtr<IAccessible2_2> pacc2_2=pacc2;
 	if (!pacc2_2) return OptionalLabelInfo();
-	auto targetAcc = getRelationElement(IA2_RELATION_LABELLED_BY, pacc2_2);
-	if(!targetAcc) return OptionalLabelInfo();
+	constexpr std::size_t maxRelationsToFetch = 1;
+	auto accTargets = getRelationElementsOfType(IA2_RELATION_LABELLED_BY, pacc2_2, maxRelationsToFetch);
+
+	if (1 > accTargets.size()) {
+		return OptionalLabelInfo();
+	}
+	auto firstAccTarget = accTargets[0];
 	CComVariant child;
 	child.vt = VT_I4;
 	child.lVal = 0;
 	CComVariant state;
-	HRESULT res = targetAcc->get_accState(child, &state);
+	HRESULT res = firstAccTarget->get_accState(child, &state);
 	bool isVisible = res == S_OK && !(state.lVal & STATE_SYSTEM_INVISIBLE);
-	auto ID = getIAccessible2UniqueID(targetAcc);
+	auto ID = getIAccessible2UniqueID(firstAccTarget);
 	return LabelInfo { isVisible, ID } ;
 }
 
 std::optional<int> GeckoVBufBackend_t::getRelationId(LPCOLESTR ia2TargetRelation, IAccessible2* pacc2) {
 	CComQIPtr<IAccessible2_2> pacc2_2 = pacc2;
-	if (pacc2_2 == nullptr) return std::optional<int>();
-	auto targetAcc = getRelationElement(ia2TargetRelation, pacc2_2);
-	if (targetAcc == nullptr) return std::optional<int>();
-	auto ID = getIAccessible2UniqueID(targetAcc);
+	if (pacc2_2 == nullptr) {
+		return {};
+	}
+	auto accTargets = getRelationElementsOfType(ia2TargetRelation, pacc2_2);
+	if (1 > accTargets.size()) {
+		return {};
+	}
+	auto& accTarget = accTargets[0];
+	if (accTarget == nullptr) {
+		return {};
+	}
+	auto ID = getIAccessible2UniqueID(accTarget);
 	return ID;
 }
 
