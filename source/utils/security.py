@@ -23,7 +23,6 @@ if typing.TYPE_CHECKING:
 
 postSessionLockStateChanged = extensionPoints.Action()
 """
-# TODO: maintain backwards compat
 Notifies when a session lock or unlock event occurs.
 
 Usage:
@@ -145,18 +144,27 @@ def _isSecureObjectWhileLockScreenActivated(
 	@return: C{True} if the Windows 10/11 lockscreen is active and C{obj} is outside of the lock screen.
 	"""
 	try:
-		isObjectInSecure = isWindowsLocked() and not obj.isAboveLockScreen
+		isObjectBelowLockScreen = isWindowsLocked() and not obj.isAboveLockScreen
 	except Exception:
 		log.exception()
 		return False
 
-	if isObjectInSecure:
+	if isObjectBelowLockScreen:
 		if shouldLog and log.isEnabledFor(log.DEBUG):
 			devInfo = '\n'.join(obj.devInfo)
-			log.debug(f"Attempt at navigating to a secure object: {devInfo}")
+			log.debug(f"Attempt at navigating to an object below the lock screen: {devInfo}")
 		return True
 
 	return False
+
+
+def isObjectAboveLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
+	# TODO: improve deprecation practice on beta/master merges
+	log.error(
+		"This function is deprecated. "
+		"Instead use obj.isAboveLockScreen. "
+	)
+	return obj.isAboveLockScreen
 
 
 def _isObjectAboveLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
@@ -199,6 +207,9 @@ def _isObjectAboveLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 
 	from NVDAObjects.window import Window
 	if not isinstance(obj, Window):
+		log.debug(
+			"Cannot detect if object is in lock app, considering object as safe. "
+		)
 		# must be a window to get its HWNDVal
 		return True
 
@@ -257,6 +268,8 @@ def _getWindowZIndex(matchCond: Callable[[winUser.HWNDVal], bool]) -> Optional[i
 	"""
 	Z-order can change while this is being checked.
 	This means this may not always return the correct result.
+
+	Refer to test_security.Test_getWindowZIndex_dynamic for behaviour.
 	"""
 	desktopWindow = winUser.getDesktopWindow()
 	nextWindow = winUser.getTopWindow(desktopWindow)

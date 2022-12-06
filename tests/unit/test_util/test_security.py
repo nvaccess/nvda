@@ -21,13 +21,18 @@ import winUser
 
 @dataclass
 class _MoveWindow:
+	"""Used to move a window from one index to another when a specific index is reached."""
 	startIndex: int  # A window at this index
 	endIndex: int  # is moved to this index
 	triggerIndex: int  # when this index is reached
-	triggered = False
+	triggered = False  # If the move has been triggered
 
 
 class _Test_getWindowZIndex(unittest.TestCase):
+	"""
+	Base class to patch winUser functions used in _getWindowZIndex.
+	Navigating windows is replaced by a list of fake HWNDs.
+	"""
 	def _getWindow_patched(self, hwnd: winUser.HWNDVal, relation: int) -> int:
 		"""Fetch current window, find adjacent window by relation."""
 		currentWindowIndex = self._windows.index(hwnd)
@@ -68,6 +73,7 @@ class _Test_getWindowZIndex(unittest.TestCase):
 
 
 class Test_getWindowZIndex_static(_Test_getWindowZIndex):
+	"""Test fetching a z-index when the order of window does not change"""
 	def test_noMatch(self):
 		self.assertIsNone(_getWindowZIndex(lambda x: False))
 
@@ -83,6 +89,7 @@ class Test_getWindowZIndex_static(_Test_getWindowZIndex):
 
 
 class Test_getWindowZIndex_dynamic(_Test_getWindowZIndex):
+	"""Test fetching a z-index when a window moves during the operation"""
 	_queuedMove: Optional[_MoveWindow] = None
 
 	def _getWindow_patched(self, hwnd: winUser.HWNDVal, relation: int) -> int:
