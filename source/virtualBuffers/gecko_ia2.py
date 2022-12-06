@@ -176,7 +176,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			log.debug(f"detailsRoles: {attrs['detailsRoles']}")
 		return super()._normalizeControlField(attrs)
 
-	def _normalizeDetailsRole(self, detailsRoles: str) -> typing.Iterable[controlTypes.Role]:
+	def _normalizeDetailsRole(self, detailsRoles: str) -> typing.Iterable[typing.Optional[controlTypes.Role]]:
 		"""
 		The attribute has been added directly to the buffer as a string, containing a comma separated list
 		of values, each value is either:
@@ -203,6 +203,9 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 					yield None
 			else:
 				# return a supported details role
+				# Note, "unknown" is used when the target has no role.
+				if detailsRole == "unknown":
+					log.debug("Found unknown aria details role")
 				detailsRole = supportedAriaDetailsRoles.get(detailsRole)
 				yield detailsRole
 

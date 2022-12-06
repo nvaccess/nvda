@@ -472,14 +472,18 @@ void GeckoVBufBackend_t::fillVBufAriaDetails(
 					_extendDetailsRolesAttribute(nodeBeingFilled, *targetDetailsRole);
 				}
 				else {
-					// This is not an error, the target may not have a role listed in its attributes.
-					/* todo: Add "details" to the ariaDetailsRoles. Explanation:
-						hasDetail=True is not enough to describe the scenario when there multiple details
-						relations but one has a generic role, EG. a comment and an 'unknown' role.
-						This would then produce 'hasDetail=True detailsRoles="comment"'
-						Instead of the preferred 'hasDetail=True detailsRoles="comment, details"'
+					/*
+					This is not an error, the target may not have a role listed in its attributes.
+					Add "unknown" to the ariaDetailsRoles.
+					Explanation:
+					hasDetail=True is not enough to describe the scenario when there multiple details
+					relations but one has a generic role, EG. a comment and an 'unknown' role.
+					This would then produce attributes 'hasDetail=True detailsRoles="comment"',
+					reported as "has comment" since only one role is listed.
+					Instead prefer 'hasDetail=True detailsRoles="comment, unknown"',
+					reported as "has comment has details" since both roles are listed.
 					*/
-					LOG_DEBUG(L"Couldn't find attribute: '" << roleName << '\'');
+					_extendDetailsRolesAttribute(nodeBeingFilled, L"unknown");
 				}
 			}
 		}
