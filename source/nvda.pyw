@@ -154,11 +154,10 @@ parser.add_argument(
 	'--log-level',
 	dest='logLevel',
 	type=int,
-	default=20,
+	default=0,  # 0 means unspecified in command line.
 	choices=[10, 12, 15, 20, 100],
 	help=(
 		"The lowest level of message logged (debug 10, input/output 12, debugwarning 15, info 20, off 100),"
-		" default is 20 (info)"
 	),
 )
 parser.add_argument('-c','--config-path',dest='configPath',default=None,type=str,help="The path where all settings for NVDA are stored")
