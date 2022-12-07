@@ -8,6 +8,7 @@
 
 from dataclasses import dataclass
 from typing import (
+	List,
 	Optional,
 )
 import unittest
@@ -31,7 +32,11 @@ class _MoveWindow:
 class _Test_getWindowZIndex(unittest.TestCase):
 	"""
 	Base class to patch winUser functions used in _getWindowZIndex.
+
 	Navigating windows is replaced by a list of fake HWNDs.
+	HWNDs are represented by integers (1-10).
+	The initial relative z-order of HWNDs is defined by the order of the HWND value in the self._windows list.
+	A HWND value at index 0, should be considered to have a z-order "above" a HWND value at index 1.
 	"""
 	def _getWindow_patched(self, hwnd: winUser.HWNDVal, relation: int) -> int:
 		"""Fetch current window, find adjacent window by relation."""
@@ -62,7 +67,11 @@ class _Test_getWindowZIndex(unittest.TestCase):
 		self._getDesktopWindowPatch.start()
 		self._getTopWindowPatch.start()
 		self._getWindowPatch.start()
-		self._windows = list(range(1, 11))  # must be 1 indexed
+		self._windows: List[winUser.HWNDVal] = list(range(1, 11))
+		"""
+		List of fake HWNDs, given an ordered index to make testing easier.
+		Must be 1 indexed as a HWND of 0 is treated an error.
+		"""
 		return super().setUp()
 
 	def tearDown(self) -> None:
@@ -89,7 +98,15 @@ class Test_getWindowZIndex_static(_Test_getWindowZIndex):
 
 
 class Test_getWindowZIndex_dynamic(_Test_getWindowZIndex):
-	"""Test fetching a z-index when a window moves during the operation"""
+	"""
+	Test fetching a z-index when a window moves during the operation.
+
+	To model changes in z-order, a _MoveWindow is used to describe the change.
+	When the getWindow is called with the triggerIndex, the value at start index is moved
+	"in front" of the window at end index.
+	Effectively this means that before getting the window at the triggerIndex, the order of
+	windows will change.
+	"""
 	_queuedMove: Optional[_MoveWindow] = None
 
 	def _getWindow_patched(self, hwnd: winUser.HWNDVal, relation: int) -> int:

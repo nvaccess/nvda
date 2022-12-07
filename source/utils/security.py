@@ -249,7 +249,7 @@ def _isObjectAboveLockScreenCheckZOrder(objWindowHandle: int, lockAppModuleProce
 	elif objectZIndex is None or objectZIndexCheck is None:
 		# this is an unexpected state
 		# err on accessibility
-		log.error("Couldn't find NVDA object's window")
+		log.debugWarning("Couldn't find NVDA object's window")
 		return True
 	elif lockAppZIndex > objectZIndex and lockAppZIndexCheck > objectZIndexCheck:
 		# object is behind the lock screen, hide it from the user
