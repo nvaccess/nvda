@@ -31,8 +31,9 @@ import locationHelper
 from logHandler import log
 
 if typing.TYPE_CHECKING:
+	import documentBase  # noqa: F401 used for type checking only
 	import NVDAObjects
-	import treeInterceptorHandler  # noqa: F401 used for type checking only
+
 
 SpeechSequence = List[Union[Any, str]]
 
@@ -288,9 +289,6 @@ def _logBadSequenceTypes(sequence: SpeechSequence, shouldRaise: bool = True):
 	return speech.types.logBadSequenceTypes(sequence, raiseExceptionOnError=shouldRaise)
 
 
-TextInfoObjT = Union["NVDAObjects.NVDAObject", "treeInterceptorHandler.TreeInterceptor"]
-
-
 class TextInfo(baseObject.AutoPropertyObject):
 	"""Provides information about a range of text in an object and facilitates access to all text in the widget.
 	A TextInfo represents a specific range of text, providing access to the text itself, as well as information about the text such as its formatting and any associated controls.
@@ -313,7 +311,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 
 	def __init__(
 			self,
-			obj: TextInfoObjT,
+			obj: "documentBase.TextContainerObject",
 			position
 	):
 		"""Constructor.
@@ -346,9 +344,9 @@ class TextInfo(baseObject.AutoPropertyObject):
 		self.end.moveTo(otherEndpoint)
 
 	#: Typing information for auto-property: _get_obj
-	obj: TextInfoObjT
+	obj: "documentBase.TextContainerObject"
 
-	def _get_obj(self) -> TextInfoObjT:
+	def _get_obj(self) -> "documentBase.TextContainerObject":
 		"""The object containing the range of text being represented."""
 		return self._obj()
 
