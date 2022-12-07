@@ -941,12 +941,14 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 						previousNode->addAttribute(L"ia2TextStartOffset", s.str());
 						s.str(L"");
 						// Add text attributes.
-						for(map<wstring,wstring>::const_iterator it=textAttribs.begin();it!=textAttribs.end();++it)
-							previousNode->addAttribute(it->first,it->second);
-						#define copyObjectAttribute(attr) if ((IA2AttribsMapIt = IA2AttribsMap.find(attr)) != IA2AttribsMap.end()) \
-							previousNode->addAttribute(attr, IA2AttribsMapIt->second);
-						copyObjectAttribute(L"text-align");
-						#undef copyObjectAttribute
+						for (map<wstring, wstring>::const_iterator it = textAttribs.begin(); it != textAttribs.end(); ++it) {
+							previousNode->addAttribute(it->first, it->second);
+						}
+						const std::wstring textAlign = L"text-align";
+						IA2AttribsMapIt = IA2AttribsMap.find(textAlign);
+						if (IA2AttribsMapIt != IA2AttribsMap.end()) {
+							previousNode->addAttribute(textAlign, IA2AttribsMapIt->second);
+						}
 					}
 				}
 				if(i==IA2TextLength)
