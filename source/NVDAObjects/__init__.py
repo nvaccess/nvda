@@ -16,6 +16,7 @@ from annotation import (
 	AnnotationOrigin,
 )
 from logHandler import log
+import warnings
 import review
 import eventHandler
 from displayModel import DisplayModelTextInfo
@@ -524,12 +525,20 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 			)
 		return None
 
-	#: Typing information for auto property _get_detailsSummary
 	detailsSummary: typing.Optional[str]
+	""" Typing information for auto property _get_detailsSummary
+	Deprecated, use self.annotations.roles instead.
+	"""
 
 	def _get_detailsSummary(self) -> typing.Optional[str]:
-		if config.conf["debugLog"]["annotations"]:
-			log.debugWarning(f"Fetching details summary not supported on: {self.__class__.__qualname__}")
+		warnings.warn(
+			"NVDAObject.detailsSummary is deprecated. Use NVDAObject.annotations instead.",
+			category=DeprecationWarning,
+			# Stack level is used to point to the callers code.
+			# Rather than this method, point to the code that called the deprecated method.
+			# 4 levels required due to autoProperty wrappers
+			stacklevel=4
+		)
 		return None
 
 	@property
@@ -537,6 +546,14 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		"""Default implementation is based on the result of _get_detailsSummary
 		In most instances this should be optimised.
 		"""
+		warnings.warn(
+			"NVDAObject.hasDetails is deprecated. Use NVDAObject.annotations instead.",
+			category=DeprecationWarning,
+			# Stack level is used to point to the callers code.
+			# Rather than this method, point to the code that called the deprecated method.
+			# 4 levels required due to autoProperty wrappers
+			stacklevel=4
+		)
 		return bool(self.annotations)
 
 	detailsRole: typing.Optional[controlTypes.Role]
@@ -545,6 +562,14 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 	"""
 
 	def _get_detailsRole(self) -> typing.Optional[controlTypes.Role]:
+		warnings.warn(
+			"NVDAObject.detailsRole is deprecated. Use NVDAObject.annotations instead.",
+			category=DeprecationWarning,
+			# Stack level is used to point to the callers code.
+			# Rather than this method, point to the code that called the deprecated method.
+			# 4 levels required due to autoProperty wrappers
+			stacklevel=4
+		)
 		if config.conf["debugLog"]["annotations"]:
 			log.debugWarning(f"Fetching details summary not supported on: {self.__class__.__qualname__}")
 		return None

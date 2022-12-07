@@ -494,7 +494,7 @@ def getObjectPropertiesSpeech(  # noqa: C901
 			newPropertyValues['current'] = obj.isCurrent
 
 		elif value and name == "hasDetails":
-			newPropertyValues['hasDetails'] = obj.hasDetails
+			newPropertyValues['hasDetails'] = bool(obj.annotations)
 		elif value and name == "detailsRoles":
 			newPropertyValues["detailsRoles"] = set(obj.annotations.roles if obj.annotations else [])
 		elif value and name == "descriptionFrom" and (

@@ -155,7 +155,7 @@ class CompoundTextInfo(textInfos.TextInfo):
 		field['roleText'] = obj.roleText
 		field['description'] = obj.description
 		field['_description-from'] = obj.descriptionFrom
-		field['hasDetails'] = obj.hasDetails
+		field['hasDetails'] = bool(obj.annotations)
 		field["detailsRoles"] = set(obj.annotations.roles if obj.annotations else [])
 		# The user doesn't care about certain states, as they are obvious.
 		states.discard(controlTypes.State.EDITABLE)

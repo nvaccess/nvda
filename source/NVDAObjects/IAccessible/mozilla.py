@@ -14,6 +14,7 @@ import winUser
 import controlTypes
 from . import IAccessible, WindowRoot
 from logHandler import log
+import warnings
 from NVDAObjects.behaviors import RowWithFakeNavigation
 from . import ia2Web
 from typing import (
@@ -140,17 +141,41 @@ class Mozilla(ia2Web.Ia2Web):
 		return annotationOrigin
 
 	def _get_detailsSummary(self) -> Optional[str]:
+		warnings.warn(
+			"NVDAObject.detailsSummary is deprecated. Use NVDAObject.annotations instead.",
+			category=DeprecationWarning,
+			# Stack level is used to point to the callers code.
+			# Rather than this method, point to the code that called the deprecated method.
+			# 4 levels required due to autoProperty wrappers
+			stacklevel=4
+		)
 		for summary in self.annotations.summaries:
 			# just take the first for now.
 			return summary
 
 	def _get_detailsRole(self) -> Optional[controlTypes.Role]:
+		warnings.warn(
+			"NVDAObject.detailsRole is deprecated. Use NVDAObject.annotations instead.",
+			category=DeprecationWarning,
+			# Stack level is used to point to the callers code.
+			# Rather than this method, point to the code that called the deprecated method.
+			# 4 levels required due to autoProperty wrappers
+			stacklevel=4
+		)
 		for role in self.annotations.roles:
 			# just take the first target for now.
 			return role
 
 	@property
 	def hasDetails(self) -> bool:
+		warnings.warn(
+			"NVDAObject.hasDetails is deprecated. Use NVDAObject.annotations instead.",
+			category=DeprecationWarning,
+			# Stack level is used to point to the callers code.
+			# Rather than this method, point to the code that called the deprecated method.
+			# 4 levels required due to autoProperty wrappers
+			stacklevel=4
+		)
 		return bool(self.annotations)
 
 

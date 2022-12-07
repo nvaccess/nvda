@@ -688,15 +688,15 @@ class NVDAObjectRegion(Region):
 			)
 		)
 		description = obj.description if _shouldUseDescription else None
-
+		detailsRoles = obj.annotations.roles if obj.annotations else None
 		text = getPropertiesBraille(
 			name=name,
 			role=role,
 			roleText=obj.roleTextBraille,
 			current=obj.isCurrent,
 			placeholder=placeholderValue,
-			hasDetails=obj.hasDetails,
-			detailsRole=obj.detailsRole,
+			hasDetails=bool(obj.annotations),
+			detailsRoles=detailsRoles,
 			value=obj.value if not NVDAObjectHasUsefulText(obj) else None ,
 			states=obj.states,
 			description=description,

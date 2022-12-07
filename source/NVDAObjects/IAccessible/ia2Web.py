@@ -17,6 +17,7 @@ from annotation import (
 from comInterfaces import IAccessible2Lib as IA2
 import controlTypes
 from logHandler import log
+import warnings
 from documentBase import DocumentWithTableNavigation
 from NVDAObjects.behaviors import Dialog, WebDialog 
 from . import IAccessible, Groupbox
@@ -142,15 +143,39 @@ class Ia2Web(IAccessible):
 		return annotationOrigin
 
 	def _get_detailsSummary(self) -> typing.Optional[str]:
+		warnings.warn(
+			"NVDAObject.detailsSummary is deprecated. Use NVDAObject.annotations instead.",
+			category=DeprecationWarning,
+			# Stack level is used to point to the callers code.
+			# Rather than this method, point to the code that called the deprecated method.
+			# 4 levels required due to autoProperty wrappers
+			stacklevel=4
+		)
 		for summary in self.annotations.summaries:
 			# just take the first for now.
 			return summary
 
 	@property
 	def hasDetails(self) -> bool:
+		warnings.warn(
+			"NVDAObject.hasDetails is deprecated. Use NVDAObject.annotations instead.",
+			category=DeprecationWarning,
+			# Stack level is used to point to the callers code.
+			# Rather than this method, point to the code that called the deprecated method.
+			# 4 levels required due to autoProperty wrappers
+			stacklevel=4
+		)
 		return bool(self.annotations)
 
 	def _get_detailsRole(self) -> typing.Optional[controlTypes.Role]:
+		warnings.warn(
+			"NVDAObject.detailsRole is deprecated. Use NVDAObject.annotations instead.",
+			category=DeprecationWarning,
+			# Stack level is used to point to the callers code.
+			# Rather than this method, point to the code that called the deprecated method.
+			# 4 levels required due to autoProperty wrappers
+			stacklevel=4
+		)
 		for role in self.annotations.roles:
 			# just take the first for now.
 			return role
