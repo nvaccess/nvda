@@ -132,10 +132,17 @@ GA_ROOTOWNER=3
 GWL_ID=-12
 GWL_STYLE=-16
 GWL_EXSTYLE=-20
-#getWindow
+
+# getWindow: TODO turn to enum
 GW_HWNDNEXT=2
 GW_HWNDPREV=3
 GW_OWNER=4
+GW_RESULT_NOT_FOUND = 0
+"""
+When GetWindow returns 0, it means the window has not been found.
+For example the last window has been reached, or an error has occurred.
+"""
+
 # SetLayeredWindowAttributes
 LWA_ALPHA = 2
 LWA_COLORKEY = 1

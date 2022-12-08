@@ -43,19 +43,13 @@ class _Test_isWindowAboveWindowMatchesCond(unittest.TestCase):
 		"""Fetch current window, find adjacent window by relation."""
 		currentWindowIndex = self._windows.index(hwnd)
 		if relation == winUser.GW_HWNDNEXT:
-			try:
 				nextIndex = currentWindowIndex + 1
-			except IndexError:
-				return 0
 		elif relation == winUser.GW_HWNDPREV:
-			try:
 				nextIndex = currentWindowIndex - 1
-			except IndexError:
-				return 0
 		else:
-			return 0
+			return winUser.GW_RESULT_NOT_FOUND
 		if nextIndex >= len(self._windows) or nextIndex < 0:
-			return 0
+			return winUser.GW_RESULT_NOT_FOUND
 		return self._windows[nextIndex]
 
 	def _windowMatches(self, expectedWindow: int):

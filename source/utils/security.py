@@ -167,6 +167,29 @@ def isObjectAboveLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 	return obj.isAboveLockScreen
 
 
+def _checkWindowsForAppModules():
+	from ctypes import c_bool, WINFUNCTYPE, c_int, POINTER, windll  # TODO move and order
+	from ctypes.wintypes import LPARAM
+	import appModuleHandler
+	# BOOL CALLBACK EnumWindowsProc _In_ HWND,_In_ LPARAM
+	# HWND as a pointer creates confusion, treat as an int
+	# http://makble.com/the-story-of-lpclong
+	@WINFUNCTYPE(c_bool, c_int, POINTER(c_int))
+	def _appModuleHandlerUpdate(hwnd: winUser.HWNDVal, _lParam: LPARAM) -> bool:
+		processID, _threadID = winUser.getWindowThreadProcessID(hwnd)
+		appModuleHandler.update(processID)
+		return True
+
+	if not windll.user32.EnumWindows(_appModuleHandlerUpdate, 0):
+		log.error("Failed search for lockapp App Module")
+
+
+def _findLockAppModule() -> Optional["appModuleHandler.AppModule"]:
+	import appModuleHandler
+	runningAppModules = appModuleHandler.runningTable.values()
+	return next(filter(_isLockAppAndAlive, runningAppModules), None)
+
+
 def _isObjectAboveLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 	"""
 	When Windows is locked, the foreground Window is usually LockApp,
@@ -193,10 +216,10 @@ def _isObjectAboveLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 	):
 		return True
 
-	import appModuleHandler
-	runningAppModules = appModuleHandler.runningTable.values()
-	lockAppModule = next(filter(_isLockAppAndAlive, runningAppModules), None)
-
+	lockAppModule = _findLockAppModule()
+	if lockAppModule is None:
+		_checkWindowsForAppModules()
+		lockAppModule = _findLockAppModule()
 	if lockAppModule is None:
 		# lockAppModule not running/registered by NVDA yet
 		log.debug(
@@ -253,14 +276,17 @@ def _isWindowAboveWindowMatchesCond(
 	"""
 	aboveWindow = winUser.getWindow(targetWindow, winUser.GW_HWNDPREV)
 	belowWindow = winUser.getWindow(targetWindow, winUser.GW_HWNDNEXT)
-	while aboveWindow or belowWindow:
+	while (
+		aboveWindow != winUser.GW_RESULT_NOT_FOUND
+		or belowWindow != winUser.GW_RESULT_NOT_FOUND
+	):
 		if matchCond(belowWindow):  # target window is above the found window
 			return True
 		elif matchCond(aboveWindow):  # found window is above the target window
 			return False
-		if aboveWindow:
+		if aboveWindow != winUser.GW_RESULT_NOT_FOUND:
 			aboveWindow = winUser.getWindow(aboveWindow, winUser.GW_HWNDPREV)
-		if belowWindow:
+		if belowWindow != winUser.GW_RESULT_NOT_FOUND:
 			belowWindow = winUser.getWindow(belowWindow, winUser.GW_HWNDNEXT)
 	raise _WindowNotFoundError(f"Window not found matching condition {matchCond}")
 

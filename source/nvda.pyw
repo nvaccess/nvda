@@ -357,6 +357,7 @@ def _serviceDebugEnabled() -> bool:
 		if winreg.QueryValueEx(k, "serviceDebug")[0]:
 			return True
 	except WindowsError:
+		# Expected state by default, serviceDebug parameter not set
 		pass
 	return False
 
