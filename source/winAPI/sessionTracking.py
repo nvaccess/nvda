@@ -63,7 +63,6 @@ https://docs.microsoft.com/en-us/windows/win32/sync/synchronization-object-secur
 Unused in NVDA core, duplicate of winKernel.SYNCHRONIZE.
 """
 
-_initializationLockState: Optional[bool] = None
 _lockStateTracker: Optional["_WindowsLockedState"] = None
 _windowsWasPreviouslyLocked = False
 
@@ -122,20 +121,15 @@ def isWindowsLocked() -> bool:
 	Not to be confused with the Windows sign-in screen, a secure screen.
 	"""
 	from core import _TrackNVDAInitialization
-	from winAPI.sessionTracking import _isWindowsLocked_checkViaSessionQuery
 	from systemUtils import _isSecureDesktop
 	if not _TrackNVDAInitialization.isInitializationComplete():
 		return False
 	if _isSecureDesktop():
 		return False
-	global _initializationLockState
-	if _lockStateTracker is not None:
-		_isWindowsLocked = _lockStateTracker.isWindowsLocked
-	else:
-		if _initializationLockState is None:
-			_initializationLockState = _isWindowsLocked_checkViaSessionQuery()
-		_isWindowsLocked = _initializationLockState
-	return _isWindowsLocked
+	if _lockStateTracker is None:
+		log.error("_TrackNVDAInitialization.markInitializationComplete was called before sessionTracking.initialize")
+		return False
+	return _lockStateTracker.isWindowsLocked
 
 
 def _isWindowsLocked_checkViaSessionQuery() -> bool:
