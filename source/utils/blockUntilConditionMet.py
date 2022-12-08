@@ -19,10 +19,10 @@ from typing import (
 EvaluatorWasMetT = bool
 GetValueResultT = Any
 
-DEFAULT_INTERVAL_BETWEEN_EVAL_SECONDS = 0.3
+DEFAULT_INTERVAL_BETWEEN_EVAL_SECONDS = 0.1
 """The default interval (in seconds) between calls to the evaluator."""
 
-_MIN_INTERVAL_BETWEEN_EVAL_SECONDS = 0.1
+_MIN_INTERVAL_BETWEEN_EVAL_SECONDS = 0.01
 """The minimum interval (in seconds) between calls to the evaluator.
 Small values for the interval can starve NVDA core, preventing it
 from being able to process queued events.
