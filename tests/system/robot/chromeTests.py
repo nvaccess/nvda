@@ -240,7 +240,7 @@ def test_mark_aria_details_role():
 			"edt ",
 			# the role doc-endnote is unsupported as an IA2 role
 			# The role "ROLE_LIST_ITEM" is used instead
-			"details",
+			"has details",
 			"doc-endnote,",
 			" ",  # space between spans
 			"has fnote",
@@ -251,11 +251,11 @@ def test_mark_aria_details_role():
 			" ",  # space between spans
 			# the role definition is unsupported as an IA2 role
 			# The role "ROLE_PARAGRAPH" is used instead
-			"details",
+			"has details",
 			"definition,",
 			" ",  # space between spans
-			"details",
-			"definition,",
+			"has details",
+			"d",  # definition
 			# The role "form" is deliberately unsupported
 			# "details",
 			# "form",
@@ -296,7 +296,7 @@ def test_mark_aria_details_role():
 			# no "mln edt"
 			# the role doc-endnote is unsupported as an IA2 role
 			# The role "ROLE_LIST_ITEM" is used instead
-			"details",
+			"has details",
 			"doc-endnote,",
 			" ",  # space between spans
 			"has fnote",
@@ -307,13 +307,11 @@ def test_mark_aria_details_role():
 			" ",  # space between spans
 			# the role definition is unsupported as an IA2 role
 			# The role "ROLE_PARAGRAPH" is used instead
-			"details",
+			"has details",
 			"definition,",
 			" ",  # space between spans
-			"details",
-			"definition,",
-			" ",  # space between spans
-			"d"  # Is this the start of the word 'details' with the rest cut-off?
+			"has details",
+			"d",  # definition doesn't finish
 			# The role "form" is deliberately unsupported
 			# "details",
 			# "form",

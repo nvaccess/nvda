@@ -584,7 +584,8 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 		detailsRoles: typing.Set[controlTypes.Role] = set(propertyValues.get("detailsRoles", []))
 		if detailsRoles:
 			detailsRoleLabels = (
-				roleLabels.get(role, role.displayString) if role else _("details")
+				roleLabels.get(role, role.displayString)
+				if role else _("details")  # handle the generic case.
 				for role in detailsRoles
 			)
 			# Translators: Braille when there are further details/annotations that can be fetched manually.
@@ -593,7 +594,7 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 		else:
 			textList.append(
 				# Translators: Braille when there are further details/annotations that can be fetched manually.
-				_("details")
+				_("has details")  # be consistent with reporting the generic case.
 			)
 	keyboardShortcut = propertyValues.get("keyboardShortcut")
 	if keyboardShortcut:
