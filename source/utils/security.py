@@ -220,8 +220,7 @@ def _isObjectAboveLockScreenCheckZOrder(objWindowHandle: int, lockAppModuleProce
 	"""
 	This is a risky hack.
 	If the order is incorrectly detected,
-	the Windows UX may become inaccessible
-	or secure information may become accessible.
+	secure information may become accessible.
 
 	If these functions fail, where possible,
 	NVDA should make NVDA objects accessible.
@@ -231,55 +230,39 @@ def _isObjectAboveLockScreenCheckZOrder(objWindowHandle: int, lockAppModuleProce
 		windowProcessId, _threadId = winUser.getWindowThreadProcessID(hwnd)
 		return windowProcessId == lockAppModuleProcessId
 
-	def _isNVDAObjectWindow(hwnd: winUser.HWNDVal) -> bool:
-		return hwnd == objWindowHandle
-
-	lockAppZIndex = _getWindowZIndex(_isWindowLockApp)
-	objectZIndex = _getWindowZIndex(_isNVDAObjectWindow)
-	lockAppZIndexCheck = _getWindowZIndex(_isWindowLockApp)
-	objectZIndexCheck = _getWindowZIndex(_isNVDAObjectWindow)
-	if lockAppZIndex != lockAppZIndexCheck or objectZIndex != objectZIndexCheck:
-		log.debugWarning("Order of Windows has changed during execution")
-
-	if lockAppZIndex is None or lockAppZIndexCheck is None:
-		# this is an unexpected state
-		# err on accessibility
-		log.error("Couldn't find lock screen")
-		return True
-	elif objectZIndex is None or objectZIndexCheck is None:
-		# this is an unexpected state
-		# err on accessibility
-		log.debugWarning("Couldn't find NVDA object's window")
-		return True
-	elif lockAppZIndex > objectZIndex and lockAppZIndexCheck > objectZIndexCheck:
-		# object is behind the lock screen, hide it from the user
-		return False
-	elif lockAppZIndex <= objectZIndex and lockAppZIndexCheck <= objectZIndexCheck:
-		# object is above the lock screen, show it to the user
-		return True
-	else:
-		log.debugWarning("Z-index of Windows has changed, unable to determine z-order")
-		# mixed state between checks
-		# err on accessibility
+	try:
+		return _isWindowAboveWindowMatchesCond(objWindowHandle, _isWindowLockApp)
+	except _WindowNotFoundError:
+		log.debugWarning("Couldn't find lock screen")
 		return True
 
 
-def _getWindowZIndex(matchCond: Callable[[winUser.HWNDVal], bool]) -> Optional[int]:
+class _WindowNotFoundError(Exception):
 	"""
-	Z-order can change while this is being checked.
-	This means this may not always return the correct result.
-
-	Refer to test_security.Test_getWindowZIndex_dynamic for behaviour.
+	Raised when a window which matches the expected condition
+	is not found by  _isWindowAboveWindowMatchesCond
 	"""
-	desktopWindow = winUser.getDesktopWindow()
-	nextWindow = winUser.getTopWindow(desktopWindow)
-	index = 0
-	while nextWindow:
-		if matchCond(nextWindow):
-			return index
-		nextWindow = winUser.getWindow(nextWindow, winUser.GW_HWNDNEXT)
-		index += 1
-	return None
+	pass
+
+
+def _isWindowAboveWindowMatchesCond(
+		targetWindow: winUser.HWNDVal,
+		matchCond: Callable[[winUser.HWNDVal], bool]
+) -> bool:
+	""" Returns True if targetWindow is above a window that matches the match condition.
+	"""
+	aboveWindow = winUser.getWindow(targetWindow, winUser.GW_HWNDPREV)
+	belowWindow = winUser.getWindow(targetWindow, winUser.GW_HWNDNEXT)
+	while aboveWindow or belowWindow:
+		if matchCond(belowWindow):  # target window is above the found window
+			return True
+		elif matchCond(aboveWindow):  # found window is above the target window
+			return False
+		if aboveWindow:
+			aboveWindow = winUser.getWindow(aboveWindow, winUser.GW_HWNDPREV)
+		if belowWindow:
+			belowWindow = winUser.getWindow(belowWindow, winUser.GW_HWNDNEXT)
+	raise _WindowNotFoundError(f"Window not found matching condition {matchCond}")
 
 
 _hasSessionLockStateUnknownWarningBeenGiven = False
