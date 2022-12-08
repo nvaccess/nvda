@@ -259,3 +259,46 @@ class Test_isWindowAboveWindowMatchesCond_dynamic(_Test_isWindowAboveWindowMatch
 			triggerIndex=3
 		)
 		self.assertTrue(_isWindowAboveWindowMatchesCond(startWindow, self._windowMatches(targetWindow)))
+
+	def test_startWindow_windowMoves_pastTarget(self):
+		"""
+		Start window moves towards, and past the target window.
+		This means the relative z-order has changed, but the change is not detected.
+		The relative z-order of the start of the search is returned.
+		"""
+		startWindow = 2
+		targetWindow = 6
+		self._queuedMove = _MoveWindow(
+			startIndex=startWindow - 1,
+			endIndex=8,
+			triggerIndex=3
+		)
+		self.assertTrue(_isWindowAboveWindowMatchesCond(startWindow, self._windowMatches(targetWindow)))
+
+	def test_startWindow_windowMoves_beforeTarget(self):
+		"""
+		Start window moves towards, but before the target window.
+		This does not affect the relative z-order.
+		"""
+		startWindow = 2
+		targetWindow = 8
+		self._queuedMove = _MoveWindow(
+			startIndex=startWindow - 1,
+			endIndex=6,
+			triggerIndex=3
+		)
+		self.assertTrue(_isWindowAboveWindowMatchesCond(startWindow, self._windowMatches(targetWindow)))
+
+	def test_StartWindow_windowMoves_awayFromTarget(self):
+		"""
+		Start window moves in the opposite direction the target window.
+		This does not affect the relative z-order.
+		"""
+		startWindow = 2
+		targetWindow = 8
+		self._queuedMove = _MoveWindow(
+			startIndex=startWindow - 1,
+			endIndex=1,
+			triggerIndex=3
+		)
+		self.assertTrue(_isWindowAboveWindowMatchesCond(startWindow, self._windowMatches(targetWindow)))
