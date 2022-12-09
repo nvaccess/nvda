@@ -224,6 +224,8 @@ def test_mark_aria_details_role():
 		"has details",
 		"form",
 	])
+	_spy: NVDASpyLib = _NvdaLib.getSpyLib()
+	_spy.setBrailleCellCount(400)
 
 	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey('downArrow')
 
@@ -240,7 +242,7 @@ def test_mark_aria_details_role():
 			"edt ",
 			# the role doc-endnote is unsupported as an IA2 role
 			# The role "ROLE_LIST_ITEM" is used instead
-			"has details",
+			"details",
 			"doc-endnote,",
 			" ",  # space between spans
 			"has fnote",
@@ -251,15 +253,15 @@ def test_mark_aria_details_role():
 			" ",  # space between spans
 			# the role definition is unsupported as an IA2 role
 			# The role "ROLE_PARAGRAPH" is used instead
-			"has details",
+			"details",
 			"definition,",
 			" ",  # space between spans
-			"has details",
-			"d",  # definition
-			# The role "form" is deliberately unsupported
-			# "details",
-			# "form",
-			# "edt end",
+			"details",
+			"definition,",
+			" ",
+			"details",
+			"form",
+			"edt end",
 		])
 	)
 	
@@ -296,7 +298,7 @@ def test_mark_aria_details_role():
 			# no "mln edt"
 			# the role doc-endnote is unsupported as an IA2 role
 			# The role "ROLE_LIST_ITEM" is used instead
-			"has details",
+			"details",
 			"doc-endnote,",
 			" ",  # space between spans
 			"has fnote",
@@ -307,14 +309,14 @@ def test_mark_aria_details_role():
 			" ",  # space between spans
 			# the role definition is unsupported as an IA2 role
 			# The role "ROLE_PARAGRAPH" is used instead
-			"has details",
+			"details",
 			"definition,",
 			" ",  # space between spans
-			"has details",
-			"d",  # definition doesn't finish
-			# The role "form" is deliberately unsupported
-			# "details",
-			# "form",
+			"details",
+			"definition,",
+			" ",
+			"details",
+			"form",
 			# "edt end",
 		])
 	)

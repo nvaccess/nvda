@@ -581,21 +581,29 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 		textList.append(description)
 	hasDetails = propertyValues.get("hasDetails")
 	if hasDetails:
-		detailsRoles: typing.Set[controlTypes.Role] = set(propertyValues.get("detailsRoles", []))
-		if detailsRoles:
-			detailsRoleLabels = (
-				roleLabels.get(role, role.displayString)
-				if role else _("details")  # handle the generic case.
-				for role in detailsRoles
+		# Translators: Braille when there are further details/annotations that can be fetched manually.
+		genericDetailsRole = _("details")
+		detailsRoles: typing.Set[None, controlTypes.Role] = set(propertyValues.get("detailsRoles", []))
+		if not detailsRoles:
+			log.debugWarning(
+				"There should always be detailsRoles (at least a single None value) when hasDetails is true."
 			)
+			textList.append(
+				genericDetailsRole
+			)
+		else:
 			# Translators: Braille when there are further details/annotations that can be fetched manually.
 			# %s specifies the type of details (e.g. "has comment suggestion")
-			textList.append(_("has %s") % " ".join(detailsRoleLabels))  # no comma to save cells on braille display
-		else:
-			textList.append(
-				# Translators: Braille when there are further details/annotations that can be fetched manually.
-				_("has details")  # be consistent with reporting the generic case.
-			)
+			hasDetailsRoleTemplate = _("has %s")
+			rolesLabels = list((
+				hasDetailsRoleTemplate % roleLabels.get(role, role.displayString)
+				for role in detailsRoles
+				if role  # handle none case without the "has X" grammar.
+			))
+			if None in detailsRoles:
+				rolesLabels.insert(0, genericDetailsRole)
+			textList.append(" ".join(rolesLabels))  # no comma to save cells on braille display
+
 	keyboardShortcut = propertyValues.get("keyboardShortcut")
 	if keyboardShortcut:
 		textList.append(keyboardShortcut)
