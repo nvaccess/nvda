@@ -7,7 +7,6 @@
 
 import time
 import os
-import sys
 import threading
 import ctypes
 import wx
@@ -49,9 +48,10 @@ from . import logViewer
 import speechViewer
 import winUser
 import api
+import NVDAState
 
 
-if globalVars._allowDeprecatedAPI:
+if NVDAState._allowDeprecatedAPI():
 	def quit():
 		"""
 		Deprecated, use `wx.CallAfter(mainFrame.onExitCommand, None)` directly instead.
@@ -480,7 +480,7 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 			# Translators: The label of a menu item to open the Add-on store
 			item = menu_tools.Append(wx.ID_ANY, _("Add-on &store..."))
 			self.Bind(wx.EVT_MENU, frame.onAddonStoreCommand, item)
-		if not globalVars.appArgs.secure and not config.isAppX and getattr(sys,'frozen',None):
+		if not globalVars.appArgs.secure and not config.isAppX and not NVDAState.isRunningAsSource():
 			# Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
 			item = menu_tools.Append(wx.ID_ANY, _("Create portable copy..."))
 			self.Bind(wx.EVT_MENU, frame.onCreatePortableCopyCommand, item)
@@ -703,15 +703,16 @@ class ExecAndPump(threading.Thread):
 			self.threadExc=e
 			log.debugWarning("task had errors",exc_info=True)
 
+
 class IndeterminateProgressDialog(wx.ProgressDialog):
 
-	def __init__(self, parent, title, message):
-		super(IndeterminateProgressDialog, self).__init__(title, message, parent=parent)
+	def __init__(self, parent: wx.Window, title: str, message: str):
+		super().__init__(title, message, parent=parent)
 		self._speechCounter = -1
 		self.timer = wx.PyTimer(self.Pulse)
 		self.timer.Start(1000)
-		self.Raise()
 		self.CentreOnScreen()
+		self.Raise()
 
 	def Pulse(self):
 		super(IndeterminateProgressDialog, self).Pulse()

@@ -96,6 +96,8 @@ class State(DisplayStringIntEnum):
 	# indeterminate progress bar, aka busy indicator. No specific state label.
 	# when combined with role of 'progress bar', role is mutated to 'busy indicator'
 	INDETERMINATE = setBit(44)
+	HALF_PRESSED = setBit(45)
+	ON = setBit(46)
 
 
 STATES_SORTED = frozenset([State.SORTED, State.SORTED_ASCENDING, State.SORTED_DESCENDING])
@@ -116,6 +118,8 @@ _stateLabels: Dict[State, str] = {
 	State.CHECKED: _("checked"),
 	# Translators: This is presented when a three state check box is half checked.
 	State.HALFCHECKED: _("half checked"),
+	# Translators: This is presented when a three state toggle button is half pressed.
+	State.HALF_PRESSED: _("half pressed"),
 	# Translators: This is presented when the control is a read-only control such as read-only edit box.
 	State.READONLY: _("read only"),
 	# Translators: This is presented when a tree view or submenu item is expanded.
@@ -185,6 +189,9 @@ _stateLabels: Dict[State, str] = {
 	State.UNLOCKED: _("unlocked"),
 	# Translators: a state that denotes the existence of a note.
 	State.HASNOTE: _("has note"),
+	# Translators: a state that denotes a control is currently on
+	# E.g. a switch control.
+	State.ON: _("on"),
 }
 
 
@@ -198,4 +205,6 @@ _negativeStateLabels: Dict[State, str] = {
 	# Translators: This is presented when drag and drop is finished.
 	# This is only reported for objects which support accessible drag and drop.
 	State.DROPTARGET: _("done dragging"),
+	# Translators: This is presented when a switch control is off.
+	State.ON: _("off"),
 }

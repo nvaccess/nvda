@@ -35,6 +35,7 @@ import globalPluginHandler
 import brailleInput
 import locationHelper
 import aria
+from winAPI.sessionTracking import isWindowsLocked
 
 
 class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
@@ -111,6 +112,12 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 					log.exception(f"Exception in chooseNVDAObjectOverlayClasses for {plugin}")
 					pass
 
+		# After all other mutation has finished,
+		# add LockScreenObject if Windows is locked.
+		# LockScreenObject must become the first class to be resolved,
+		# i.e. insertion order of 0.
+		self._insertLockScreenObject(clsList)
+
 		# Determine the bases for the new class.
 		bases=[]
 		for index in range(len(clsList)):
@@ -168,6 +175,16 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 		This should be called when a plugin is unloaded so that any used overlay classes in the unloaded plugin can be garbage collected.
 		"""
 		cls._dynamicClassCache.clear()
+
+	def _insertLockScreenObject(self, clsList: typing.List["NVDAObject"]) -> None:
+		"""
+		Inserts LockScreenObject to the start of the clsList if Windows is locked.
+		"""
+		from .lockscreen import LockScreenObject
+		if isWindowsLocked():
+			# This must be resolved first to prevent object navigation outside of the lockscreen.
+			clsList.insert(0, LockScreenObject)
+
 
 class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, metaclass=DynamicNVDAObjectType):
 	"""NVDA's representation of a single control/widget.
@@ -258,19 +275,26 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		@rtype: boolean
 		"""
 		raise NotImplementedError
- 
 
-	def findOverlayClasses(self, clsList):
-		"""Chooses overlay classes which should be added to this object's class structure after the object has been initially instantiated.
-		After an NVDAObject class (normally an API-level class) is instantiated, this method is called on the instance to choose appropriate overlay classes.
+	def findOverlayClasses(self, clsList: typing.List["NVDAObject"]) -> None:
+		"""
+		Chooses overlay classes which should be added to this object's class structure,
+		after the object has been initially instantiated.
+		After an NVDAObject class (normally an API-level class) is instantiated,
+		this method is called on the instance to choose appropriate overlay classes.
+
 		This method may use properties, etc. on the instance to make this choice.
 		The object's class structure is then mutated to contain these classes.
+
 		L{initOverlayClass} is then called for each class which was not part of the initially instantiated object.
 		This process allows an NVDAObject to be dynamically created using the most appropriate NVDAObject subclass at each API level.
-		Classes should be listed with subclasses first. That is, subclasses should generally call super and then append their own classes to the list.
-		For example: Called on an IAccessible NVDAObjectThe list might contain DialogIaccessible (a subclass of IAccessible), Edit (a subclass of Window).
+		Classes should be listed with subclasses first.
+		That is, subclasses should generally call super and then append their own classes to the list.
+
+		For example: Called on an IAccessible NVDAObject, the list might contain:
+		"DialogIAccessible (a subclass of IAccessible), Edit (a subclass of Window)".
+
 		@param clsList: The list of classes, which will be modified by this method if appropriate.
-		@type clsList: list of L{NVDAObject}
 		"""
 		clsList.append(NVDAObject)
 
@@ -985,9 +1009,11 @@ Tries to force this object to take the focus.
 		"""
 		return {}
 
-	def _get_processID(self):
-		"""Retrieves an identifyer of the process this object is a part of.
-		@rtype: int
+	#: Type definition for auto prop '_get_processID'
+	processID: int
+
+	def _get_processID(self) -> int:
+		"""Retrieves an identifier of the process this object is a part of.
 		"""
 		raise NotImplementedError
 
@@ -1067,6 +1093,10 @@ Tries to force this object to take the focus.
 		"""
 		speech.speakObject(self, reason=controlTypes.OutputReason.FOCUS)
 
+	def isDescendantOf(self, obj: "NVDAObject") -> bool:
+		"""  is this object a descendant of obj? """
+		raise NotImplementedError
+
 	def _get_placeholder(self):
 		"""If it exists for this object get the value of the placeholder text.
 		For example this might be the aria-placeholder text for a field in a web page.
@@ -1119,7 +1149,9 @@ Tries to force this object to take the focus.
 			import tones
 			tones.beep(3000,40)
 
-	def event_mouseMove(self,x,y):
+	def event_mouseMove(self, x: int, y: int) -> None:
+		from utils.security import objectBelowLockScreenAndWindowsIsLocked
+
 		if not self._mouseEntered and config.conf['mouse']['reportObjectRoleOnMouseEnter']:
 			speech.cancelSpeech()
 			speech.speakObjectProperties(self,role=True)
@@ -1134,6 +1166,12 @@ Tries to force this object to take the focus.
 			info=NVDAObjectTextInfo(self,textInfos.POSITION_FIRST)
 		except LookupError:
 			return
+
+		# This event may fire on the lock screen, as such
+		# ensure the target TextInfo does not contain secure information.
+		if objectBelowLockScreenAndWindowsIsLocked(info.obj):
+			return
+
 		if config.conf["reviewCursor"]["followMouse"]:
 			api.setReviewPosition(info, isCaret=True)
 		info.expand(info.unit_mouseChunk)
@@ -1151,8 +1189,42 @@ Tries to force this object to take the focus.
 					speech.cancelSpeech()
 				speech.speakText(text)
 
+	def event_selection(self):
+		# This object has been selected.
+		# If this object's container / parent is being controlled by the focus,
+		# then report this selection.
+		focus = api.getFocusObject()
+		controls = focus.controllerFor
+		for control in controls:
+			# The focus is controling one or more objects.
+			# If possible, check if this object is a descendant of the object being controlled.
+			try:
+				isDescendant = self.isDescendantOf(control)
+			except NotImplementedError:
+				isDescendant = False
+			if isDescendant:
+				speech.cancelSpeech()
+				if api.setNavigatorObject(self, isFocus=True):
+					self.reportFocus()
+					# Display results as flash messages.
+					braille.handler.message(braille.getPropertiesBraille(
+						name=self.name, role=self.role, positionInfo=self.positionInfo
+					))
+		self.event_stateChange()
+
 	def event_stateChange(self):
-		if self is api.getFocusObject():
+		# Automatically announce state changes for certain objects.
+		inFocus = (
+			# this is the current focus:
+			# E.g. announcing the checked state of a checkbox
+			self is api.getFocusObject()
+			# this is a focus ancestor:
+			# Including the ancestors supports scenarios such as
+			# when pressing a focused button changes the state of an ancestor container,
+			# E.g. a button inside a column header that changes the sorting state of the column (#10890)
+			or any(self is obj for obj in api.getFocusAncestors())
+		)
+		if inFocus:
 			speech.speakObjectProperties(self, states=True, reason=controlTypes.OutputReason.CHANGE)
 		braille.handler.handleUpdate(self)
 		vision.handler.handleUpdate(self, property="states")
@@ -1176,6 +1248,10 @@ This code is executed if a gain focus event is received by this object.
 	def event_loseFocus(self):
 		# Forget the word currently being typed as focus is moving to a new control. 
 		speech.clearTypedWordBuffer()
+
+	def event_focusExited(self):
+		# In the general case, NVDA should not announce anything when focus exits an ancestor control.
+		pass
 
 	def event_foreground(self):
 		"""Called when the foreground window changes.
@@ -1215,6 +1291,9 @@ This code is executed if a gain focus event is received by this object.
 			speech.speakObjectProperties(self, description=True, reason=controlTypes.OutputReason.CHANGE)
 		braille.handler.handleUpdate(self)
 		vision.handler.handleUpdate(self, property="description")
+
+	def event_controllerForChange(self):
+		pass
 
 	def event_caret(self):
 		if self is api.getFocusObject() and not eventHandler.isPendingEvents("gainFocus"):
@@ -1297,6 +1376,7 @@ This code is executed if a gain focus event is received by this object.
 		info.append("name: %s" % ret)
 		ret = self.role
 		info.append("role: %s" % ret)
+		info.append(f"processID: {self.processID}")
 		try:
 			ret = repr(self.roleText)
 		except Exception as e:

@@ -23,6 +23,7 @@ from comtypes import COMError
 import aria
 import config
 from NVDAObjects.IAccessible import normalizeIA2TextFormatField, IA2TextTextInfo
+import documentBase
 
 
 def _getNormalizedCurrentAttrs(attrs: textInfos.ControlField) -> typing.Dict[str, typing.Any]:
@@ -154,10 +155,14 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			role = controlTypes.Role.REGION
 		elif xmlRoles[0] == "switch":
 			# role="switch" gets mapped to IA2_ROLE_TOGGLE_BUTTON, but it uses the
-			# checked state instead of pressed. The simplest way to deal with this
-			# identity crisis is to map it to a check box.
-			role = controlTypes.Role.CHECKBOX
+			# checked state instead of pressed.
+			# We want to map this to our own Switch role and On state.
+			role = controlTypes.Role.SWITCH
 			states.discard(controlTypes.State.PRESSED)
+			states.discard(controlTypes.State.CHECKABLE)
+			if controlTypes.State.CHECKED in states:
+				states.discard(controlTypes.State.CHECKED)
+				states.add(controlTypes.State.ON)
 		attrs['role']=role
 		attrs['states']=states
 		if level != "" and level is not None:
@@ -548,26 +553,13 @@ class Gecko_ia2(VirtualBuffer):
 
 	def _getNearestTableCell(
 			self,
-			tableID,
-			startPos,
-			origRow,
-			origCol,
-			origRowSpan,
-			origColSpan,
-			movement,
-			axis,
-	):
+			startPos: textInfos.TextInfo,
+			cell: documentBase._TableCell,
+			movement: documentBase._Movement,
+			axis: documentBase._Axis,
+	) -> textInfos.TextInfo:
 		# Skip the VirtualBuffer implementation as the base BrowseMode implementation is good enough for us here.
-		return super(VirtualBuffer, self)._getNearestTableCell(
-			tableID,
-			startPos,
-			origRow,
-			origCol,
-			origRowSpan,
-			origColSpan,
-			movement,
-			axis
-		)
+		return super(VirtualBuffer, self)._getNearestTableCell(startPos, cell, movement, axis)
 
 	def _get_documentConstantIdentifier(self):
 		try:

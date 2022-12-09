@@ -332,7 +332,7 @@ NVDA omogućuje korištenje sljedećih prečaca u svezi s kursorom sustava:
 | Čitaj trenutačni redak | NVDA+strelicaGore | NVDA+l | Čita trenutačni redak gdje je kursor sustava pozicioniran. Kad se pritisne dvaput, NVDA slovka taj redak. Kad se pritisne tri puta, NVDA slovka redak fonetski. |
 | Čitaj trenutačno označeni tekst | NVDA+šift+strelicaGore | NVDA+šift+s | Čita bilo koji trenutačno označen tekst |
 | Izvijesti o oblikovanju teksta | NVDA+f | NVDA+f | Izgovara svojstva oblikovanja teksta na mjestu gdje se kursor sustava nalazi. Kada se pritisne dva put pokazuje informaciju u modusu čitanja |
-| Izvijesti o poziciji kursora sustava | NVDA+numpadDelete | NVDA+delete | nema | Čita informacije o tekstu ili objektu pod kursorom sustava. Na primjer, ovo može biti postotak u dokumentu, udaljenost od ruba stranice ili točna pozicija na zaslonu. Kada se pritisne dva puta može dati više detalja. |
+| Izvjesti o poziciji kursora sustava | NVDA+numeričkiDelete | NVDA+delete | Čita informacije o lokaciji teksta ili objekta na poziciji kursora sustava. Na primjer, ovo može uuključivati postotak diljem dokumenta, udaljenost od ruba stranice ili točnu lokaciju na zaslonu. Kada se pritisne dvaput postoji mogućnost dobivanja više detalja. |
 | Sljedeća rečenica | alt+Strelicadolje | alt+StrelicaDolje | Premješta kursor na sljedeću rečenicu, a potom je izgovara. (Podržano u Microsoft Wordu i Outlooku) |
 | Prethodna rečenica | alt+StrelicaGore | alt+StrelicaGore | Premješta kursor na prethodnu rečenicu, a potom je izgovara. (Podržano u Microsoft Wordu i Outlooku) |
 
@@ -1052,10 +1052,11 @@ Kad se nalazite u tabličnom pregledu dodanih knjiga:
 NVDA pruža podršku za Windowsov naredbeni redak, kojeg koristi aplikacija naredbenog retka, PowerShell i Windows podsustav za Linux.
 Prozor naredbenog retka je fiksne veličine, tipično mnogo manje od spremnika koji sadrži informaciju.
 Tijekom zapisivanja novog teksta, sadržaj kliže prema gore i raniji tekst se više ne vidi. 
-Tekst koji nije vidljiv u prozoru, nije dostupan pomoću NVDA naredbi za pregled teksta.
-Stoga je potrebno klizati po prozor naredbenog retka, kako bi se pročitao raniji tekst.
+U inačicama sustava Windows koje sežu sve do Windows 11 22H2, ali ne uključivo s tom inačicom, tekst u naredbenom redku koji nije vidljiv nije pristupačan sa prečacima preglednog kursora NVDA.
+Stoga je potrebno spuštati se po prozoru naredbenog retka, kako bi se pročitao raniji tekst.
+U novim inačicama konzole te Windows terminala, sada je moguće pregledati cjelovit spremnik teksta slobodno bez potrebe za podizanjem ili spuštanjem prozora.
 %kc:beginInclude
-Sljedeći ugrađeni tipkovnički prečaci naredbenog retka mogu biti korisni za [Pregledavanje teksta #ReviewingText] pomoću NVDA čitača:
+Sljedeći ugrađeni tipkovnički prečaci naredbenog retka mogu biti korisni za [Pregledavanje teksta #ReviewingText] pomoću NVDA čitača zaslona u starijim inačicama Windowsove konzole:
 || Naziv | Tipka | Opis |
 | Kliži gore | kontrol+strelicaGore | Kliže po prozoru naredbenog retka gore, tako da se raniji tekst može čitati. |
 | Kliži dolje | kontrol+StrelicaDolje | Kliže po prozoru naredbenog retka dolje, tako da se kasniji tekst može čitati. |
@@ -1260,6 +1261,20 @@ Ova opcija bi općenito trebala biti aktivirana.
 Međutim, u nekim Microsoft Speech API govornim jedinicama ova se opcija ne primijenjuje pravilno i one se ponašaju čudno kad je ova opcija aktivirana.
 Ako imate problem s izgovorom pojedinačnih znakova, pokušajte s deaktiviranom opcijom.
 
+==== Opis znakova koji kasni prilikom pomicanja kursora ====[delayedCharacterDescriptions]
+: podrazumjevano
+  Onemogućeno
+: Opcije
+  Omogućeno, Onemogućeno
+:
+
+Kada je ova postavka odabrana, NVDA će izgovoriti opis znaka prilikom pomicanja znak po znak.
+
+na primjer, prilikom čitanja redka znak po znak, kada se izgovori slovo "b" će izgovoriti "Biokovo" poslije zadrške od jedne sekunde.
+Ovo može biti korisno ako je teško razaznati razliku između izgovorenih znakova ili isto može biti korisno korisnicima s oštećenjima sluha.
+
+Opis znakova koji kasni biti će obustavljen ako je drugi tekst izgovoren u tom vremenskom intervalu, ili ako pritisnete tipku ``ctrl``.
+
 +++ Odaberi govornu jedinicu (NVDA+kontrol+s) +++[SelectSynthesizer]
 Dijaloški okvir Govorna jedinica, koji se otvara na pritiskom gumba "Promijeni …" u kategoriji za govor u dijaloškom okviru NVDA Postavke, omogućuje promjenu govorne jedinice koju će NVDA koristiti.
 Kad odaberete govornu jedinicu, pritisnite gumb U redu i NVDA će učitati odabranu govornu jedinicu.
@@ -1408,7 +1423,22 @@ Ako se postavi opcija za prikaz konteksta fokusa, tako da se kontekst prikazuje 
 Dakle, u gornjem primjeru, NVDA će prikazati da ste fokusirali stavku popisa.
 Međutim, da biste pročitali kontekst, (npr. da se nalazite u popisu i da je taj popis dio dijaloškog okvira), morat ćete klizati po brajičnom retku natrag.
 
-Kako biste se mijenjali prikaz konteksta fokusa s bilo kojeg mjesta, dodijelite prilagođeni prečac pomoću dijaloškog okvira [Ulazne geste #InputGestures].
+Kako biste mijenjali prikaz konteksta fokusa s bilo kojeg mjesta, dodijelite prilagođeni prečac pomoću dijaloškog okvira [Ulazne geste #InputGestures].
+
+==== Prekini govor prilikom pomicanja teksta na brajičnom redku ====[BrailleSettingsInterruptSpeech]
+: Podrazumjevano
+  Aktivirano
+: Options
+  Podrazumjevano (Omogućeno), omogućeno, onemogućeno
+:
+
+Ova opcija regulira treba li govor biti prekinut prilikom prilikom pomicanja brajičnog redka za redak u naprijed ili u nazad.
+Prečaci za pomicanje na prethodni redak ili sljedeći redak uvijek prekidaju govor.
+
+Prilikom čitanja brajice, dolazni govor može odvlaćiti pažnju korisnika.
+Iz tog razloga opcija je uključena podrazumjevano, tako da će govor biti svaki puta prekinut kada se pomakne brajični redak za jedan redak.
+
+Kada se onemogući ova opcija goći ćete istovremeno čuti govor i čitati brajicu.
 
 +++ Odaberi brajični redak (NVDA+kontrol+a) +++[SelectBrailleDisplay]
 Dijaloški okvir Odaberi brajični redak, koji se može otvoriti koristeći gumb "Promijeni …" u kategoriji Brajica u dijaloškom okviru NVDA Postavke, omogućuje odabir brajičnog retka koji će se koristiti.
@@ -1888,8 +1918,25 @@ Ova postavka sadrži sljedeće vrijednosti:
 - Svugdje: Gdjegod da je UI automation dostupan u Microsoft wordu (bez obzira na kompletnost).
 -
 
-==== Koristi UI Automation za pristup windows naredbenom retku kada je to dostupno ====[AdvancedSettingsConsoleUIA]
-Kada je ova opcija uključena, NVDA će koristiti nove, u toku razvoja [unapređenja pristupačnosti koje je napravio Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Ova je značajka još uvijek eksperimentalna, te njeno korištenje se ne preporučuje. Međutim, ista će podrazumjevano postati standard, kada se isprave sve pogreške.
+==== Podrška Windows naredbenog redka ====[AdvancedSettingsConsoleUIA]
+: Podrazumjevano
+  automatski
+: opcije
+  Automatski, UIA kada je dostupno, zastarjelo
+:
+
+Ova opcija utječe na to kako NVDA radi u korištenom Windows naredbenom redku kojeg koristi stari naredbeni redak, PowerShell, i podsustav linux za sustav Windows.
+Ovo ne utjeće na suvremeni Windows terminal.
+U Windowsima 10 inačici 1709, Microsoft [je dodao podršku za svoj UI automation API u naredbeni redak https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/], koji donosi unapređenje u stabilnosti i performansama za čitače zaslona koji ga podržavaju.
+U situacijama u kojima UI automation nije dostupan ili je poznato da će prouzrokovati nedovoljno korisničko iskustvo, dostupna je zastarjela NVDA podrška kao povratna opcija.
+Odabirni okvir podrška za Windows naredbene redke ima tri opcije:
+- Automatski: koristi UI automation u inačicama Windowsovog naredbenog redka koji dolazi sa Windowsima 11 inačicom 22H2 i novijima.
+Ova je opcija preporučena i podrazumjevano uključena.
+- UIA kada je dostupno: Koristi UI automation u naredbenim redcima kada je to moguće, čak za nekompletne ili neispravne implementacije.
+Iako ova funkcionalnost može biti korisna, (i čak dostatna za vaše korištenje), korištenje ove opcije prepušteno je vašem riziku te podrška za nju neće bit pružena.
+- Zastarjela: UI Automation u Windows naredbenom redku bit će potpuno isključen.
+Zastarjela povratna opcija biti će uvijek korištena čak u situacijama gdje bi UI automation pružio superiornije korisničko iskustvo.
+Stoga, odabir ove opcije nije preporučljiv osim ako znate što radite.
 
 ==== Koristi UIA u Microsoft Edgeu i drugim preglednicima baziranim na Chromium platformi kad je to moguće ====[ChromiumUIA]
 Omogućuje određivanje kada će se UIA koristiti kada je dostupna u preglednicima baziranim na Chromium platformi kao što je to Microsoft Edge.

@@ -3,6 +3,107 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2022.3 =
+Значний внесок у цю версію зробила спільнота розробників NVDA.
+Вона включає відкладені описи символів і поліпшену підтримку консолі Windows.
+
+Ця версія також містить кілька виправлень помилок.
+Зокрема, тепер найновіші версії Adobe Acrobat/Reader більше не завершують роботу аварійно під час читання PDF-документа.
+
+Оновлено eSpeak, до якого додано 3 нові мови: білоруську, люксембурзьку та Totontepec Mixe.
+
+== Нові можливості ==
+- У хості консолі Windows, який використовують командний рядок, PowerShell і підсистема Windows для Linux у Windows 11 версії 22H2 (Sun Valley 2) і новіших версіях:
+  - Значно поліпшено продуктивність і стабільність. (#10964)
+  - При натисканні ``control+f`` для пошуку тексту позиція переглядового курсора оновлюється відповідно до знайденого терміну. (#11172)
+  - Озвучення введеного тексту, який не відображається на екрані (наприклад, паролі), початково вимкнено.
+Його можна повторно ввімкнути в панелі додаткових налаштувань NVDA. (#11554)
+  - Текст, який прокручується за межі екрана, можна переглядати без прокручування вікна консолі. (#12669)
+  - Доступна детальніша інформація про форматування тексту. ([microsoft/terminal PR 10336 https://github.com/microsoft/terminal/pull/10336])
+  -
+- У налаштування мовлення додано новий параметр для читання описів символів після затримки. (#13509)
+- У налаштування брайля додано новий параметр, який дозволяє вказати, чи повинно перериватися мовлення  прокруткою дисплея вперед/назад. (#2124)
+-
+
+
+== Зміни ==
+- eSpeak NG оновлено до 1.52-dev commit ``9de65fcb``. (#13295)
+  - Додано мови:
+    - білоруську
+    - Люксембурзьку
+    - Totontepec Mixe
+    -
+  -
+- Під час використання UI Automation для доступу до елементів керування електронною таблицею Microsoft Excel NVDA тепер може повідомляти про об’єднання комірок. (#12843)
+- Замість повідомлення «містить подробиці» вказується призначення подробиць, де це можливо, наприклад «містить коментар». (#13649)
+- Розмір встановленої NVDA тепер відображається в розділі програм і засобів Windows. (#13909)
+-
+
+
+== Виправлення помилок ==
+- Adobe Acrobat / Reader 64 bit більше не завершує роботу аварійно під час читання PDF-документа. (#12920)
+  - Зауважте, що для уникнення збою також потрібна найновіша версія Adobe Acrobat / Reader.
+  -
+- Вимірювання розміру шрифту тепер можна перекладати в NVDA. (#13573)
+- Ігноруються події Java Access Bridge, коли не можна знайти дескриптор вікна для програм Java.
+Це поліпшить продуктивність деяких програм Java, зокрема IntelliJ IDEA. (#13039)
+- Оголошення вибраних комірок у LibreOffice Calc стало ефективнішим і більше не призводить до зависання Calc, коли вибрано багато комірок. (#13232)
+- Під час роботи під іншим користувачем Microsoft Edge більше не є недоступним. (#13032)
+- Коли додаткове прискорення вимкнено, швидкість eSpeak більше не падає між 99% і 100%. (#13876)
+- Виправлено помилку, через яку відкривалися 2 діалоги жестів вводу. (#13854)
+-
+
+
+== Зміни для розробників (англ) ==
+- Updated Comtypes to version 1.1.11. (#12953)
+- In builds of Windows Console (``conhost.exe``) with an NVDA API level of 2 (``FORMATTED``) or greater, such as those included with Windows 11 version 22H2 (Sun Valley 2), UI Automation is now used by default. (#10964)
+  - This can be overridden by changing the "Windows Console support" setting in NVDA's advanced settings panel.
+  - To find your Windows Console's NVDA API level, set "Windows Console support" to "UIA when available", then check the NVDA+F1 log opened from a running Windows Console instance.
+  -
+- The Chromium virtual buffer is now loaded even when the document object has the MSAA ``STATE_SYSTEM_BUSY`` exposed via IA2. (#13306)
+- A config spec type ``featureFlag`` has been created for use with experimental features in NVDA. See ``devDocs/featureFlag.md`` for more information. (#13859)
+-
+
+
+=== Deprecations ===
+There are no deprecations proposed in 2022.3.
+
+= 2022.2.3 =
+Це патч для виправлення випадкової поломки API, яка виникла в 2022.2.1.
+
+== Виправлення помилок ==
+- Виправлено помилку, коли NVDA не оголошувала «Захищений робочий стіл» при вході в захищений робочий стіл.
+Це призводило до того, що NVDA remote не розпізнавав захищених робочих столів. (#14094)
+-
+
+= 2022.2.2 =
+Ця версія містить виправлення помилки, яка виникла у 2022.2.1 із жестами вводу.
+
+== Виправлення помилок ==
+- Виправлено помилку, через яку жести вводу працювали не завжди. (#14065)
+-
+
+= 2022.2.1 =
+Це незначний випуск для вирішення проблеми безпеки.
+Будь ласка, відповідально повідомляйте про проблеми безпеки на адресу info@nvaccess.org.
+
+== Виправлення безпеки ==
+- Виправлено експлойт, через який можна було запустити консоль Python із екрана блокування. (GHSA-rmq3-vvhq-gp32)
+- Виправлено експлойт, через який можна було вийти з екрану блокування за допомогою об’єктної навігації. (GHSA-rmq3-vvhq-gp32)
+-
+
+== Зміни для розробників (англ) ==
+
+=== Deprecations ===
+These deprecations are currently not scheduled for removal.
+The deprecated aliases will remain until further notice.
+Please test the new API and provide feedback.
+For add-on authors, please open a GitHub issue if these changes stop the API from meeting your needs.
+
+- ``appModules.lockapp.LockAppObject`` should be replaced with ``NVDAObjects.lockscreen.LockScreenObject``. (GHSA-rmq3-vvhq-gp32)
+- ``appModules.lockapp.AppModule.SAFE_SCRIPTS`` should be replaced with ``utils.security.getSafeScripts()``. (GHSA-rmq3-vvhq-gp32)
+-
+
 = 2022.2 =
 У цій версії виправлено багато проблем.
 Зокрема, є значні покращення у роботі з програмами на базі Java, брайлівськими дисплеями й функціями Windows.

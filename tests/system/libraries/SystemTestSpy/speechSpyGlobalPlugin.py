@@ -15,10 +15,14 @@ from typing import (
 	Tuple,
 )
 
+import core
 import extensionPoints
 import globalPluginHandler
 import threading
-from .blockUntilConditionMet import _blockUntilConditionMet
+from .blockUntilConditionMet import (
+	_blockUntilConditionMet,
+	DEFAULT_INTERVAL_BETWEEN_EVAL_SECONDS,
+)
 from logHandler import log
 from time import perf_counter as _timer
 from keyboardHandler import KeyboardInputGesture
@@ -30,6 +34,7 @@ import ctypes
 import sys
 import os
 
+SpeechIndexT = int
 
 def _importRobotRemoteServer() -> typing.Type:
 	log.debug(f"before path mod: {sys.path}")
@@ -73,7 +78,7 @@ class NVDASpyLib:
 	Used to determine if NVDA has finished starting, and various ways of getting speech output.
 	All public methods are part of the Robot Library
 	"""
-	SPEECH_HAS_FINISHED_SECONDS: float = 0.5
+	SPEECH_HAS_FINISHED_SECONDS: float = 1.0
 
 	def __init__(self):
 		# speech cache is ordered temporally, oldest at low indexes, most recent at highest index.
@@ -111,7 +116,15 @@ class NVDASpyLib:
 		self._brailleSpy = BrailleViewerSpy()
 		self._brailleSpy.postBrailleUpdate.register(self._onNvdaBraille)
 
-	def set_configValue(self, keyPath: typing.List[str], val: typing.Union[str, bool, int]):
+	ConfKeyPath = typing.List[str]
+	ConfKeyVal = typing.Union[str, bool, int]
+	NVDAConfMods = typing.List[typing.Tuple[ConfKeyPath, ConfKeyVal]]
+
+	def modifyNVDAConfig(self, confMods: NVDAConfMods):
+		for keyPath, keyVal in confMods:
+			self.set_configValue(keyPath, keyVal)
+
+	def set_configValue(self, keyPath: ConfKeyPath, val: ConfKeyVal):
 		import config
 		if not keyPath or len(keyPath) < 1:
 			raise ValueError("Key path not provided")
@@ -160,9 +173,9 @@ class NVDASpyLib:
 		from queueHandler import queueFunction, eventQueue
 		queueFunction(eventQueue, _crashNVDA)
 
-	def queueNVDABrailleThreadCrash(self):
-		from braille import _BgThread
-		_BgThread.queueApc(ctypes.windll.Kernel32.DebugBreak)
+	def queueNVDAIoThreadCrash(self):
+		from hwIo import bgThread
+		bgThread.queueAsApc(lambda param: _crashNVDA())
 
 	def queueNVDAUIAHandlerThreadCrash(self):
 		from UIAHandler import handler
@@ -182,6 +195,7 @@ class NVDASpyLib:
 		if not isinstance(rawText, str):
 			raise TypeError(f"rawText expected as str, got: {type(rawText)}, {rawText!r}")
 		with self._brailleLock:
+			log.debug(f"Appending to braille spy at index {len(self._nvdaBraille_requiresLock)}")
 			self._nvdaBraille_requiresLock.append(rawText)
 
 	def _onNvdaSpeech(self, speechSequence=None):
@@ -189,6 +203,7 @@ class NVDASpyLib:
 			return
 		with self._speechLock:
 			self._lastSpeechTime_requiresLock = _timer()
+			log.debug(f"Appending to speech spy at index {len(self._nvdaSpeech_requiresLock)}")
 			self._nvdaSpeech_requiresLock.append(speechSequence)
 
 	@staticmethod
@@ -230,8 +245,15 @@ class NVDASpyLib:
 
 	def _hasSpeechFinished(self, speechStartedIndex: Optional[int] = None):
 		with self._speechLock:
-			started = speechStartedIndex is None or speechStartedIndex < self.get_next_speech_index()
-			finished = self.SPEECH_HAS_FINISHED_SECONDS < _timer() - self._lastSpeechTime_requiresLock
+			nextIndex = self.get_next_speech_index()
+			started = speechStartedIndex is None or speechStartedIndex < nextIndex
+			elapsed = _timer() - self._lastSpeechTime_requiresLock
+			log.debug(
+				f"started: {started}"
+				f" (speechStartedIndex: {speechStartedIndex}, nextIndex: {nextIndex})"
+				f" elapsedSinceLastSpeech: {elapsed}"
+			)
+			finished = self.SPEECH_HAS_FINISHED_SECONDS < elapsed
 			return started and finished
 
 	def setBrailleCellCount(self, brailleCellCount: int):
@@ -256,6 +278,9 @@ class NVDASpyLib:
 			return len(self._nvdaBraille_requiresLock) - 1
 
 	def _devInfoToLog(self):
+		"""Should only be called on main thread"""
+		if threading.get_ident() != core.mainThreadId:
+			log.warning("RF lib error, must be called on main thread.")
 		import api
 		obj = api.getNavigatorObject()
 		if hasattr(obj, "devInfo"):
@@ -263,7 +288,10 @@ class NVDASpyLib:
 		else:
 			log.info("No developer info for navigator object")
 
-	def dump_speech_to_log(self):
+	def _dump_speech_to_log(self):
+		"""Should only be called on main thread"""
+		if threading.get_ident() != core.mainThreadId:
+			log.warning("RF lib error, must be called on main thread.")
 		log.debug("dump_speech_to_log.")
 		with self._speechLock:
 			try:
@@ -275,13 +303,24 @@ class NVDASpyLib:
 			except Exception:
 				log.error("Unable to log speech")
 
-	def dump_braille_to_log(self):
+	def _dump_braille_to_log(self):
+		"""Should only be called on main thread"""
+		if threading.get_ident() != core.mainThreadId:
+			log.warning("RF lib error, must be called on main thread.")
 		log.debug("dump_braille_to_log.")
 		with self._brailleLock:
 			try:
 				log.debug(f"All braille:\n{repr(self._nvdaBraille_requiresLock)}")
 			except Exception:
 				log.error("Unable to log braille")
+
+	def dump_speech_to_log(self):
+		# must be called on mainThread queue that to happen
+		core.callLater(0, self._dump_speech_to_log)
+
+	def dump_braille_to_log(self):
+		# must be called on mainThread queue that to happen
+		core.callLater(0, self._dump_speech_to_log)
 
 	def _minTimeout(self, timeout: float) -> float:
 		"""Helper to get the minimum value, the timeout passed in, or self._maxKeywordDuration"""
@@ -314,7 +353,7 @@ class NVDASpyLib:
 		self._allSpeechStartIndex = self.get_last_speech_index()
 		return self._allSpeechStartIndex
 
-	def get_next_speech_index(self) -> int:
+	def get_next_speech_index(self) -> SpeechIndexT:
 		""" @return: the next index that will be used.
 		"""
 		return self.get_last_speech_index() + 1
@@ -341,12 +380,36 @@ class NVDASpyLib:
 			errorMessage=None
 		)
 
+	def wait_for_specific_speech_no_raise(
+			self,
+			speech: str,
+			afterIndex: Optional[int] = None,
+			maxWaitSeconds: float = 5.0,
+			intervalBetweenSeconds: float = DEFAULT_INTERVAL_BETWEEN_EVAL_SECONDS,
+	) -> Optional[int]:
+		"""
+		@param speech: The speech to expect.
+		@param afterIndex: The speech should come after this index. The index is exclusive.
+		@param maxWaitSeconds: The amount of time to wait in seconds.
+		@param intervalBetweenSeconds: The amount of time to wait between checking speech, in seconds.
+		@return: the index of the speech.
+		"""
+		success, speechIndex = self._has_speech_occurred_before_timeout(
+			speech,
+			afterIndex,
+			maxWaitSeconds,
+			intervalBetweenSeconds
+		)
+		if not success:
+			return None
+		return speechIndex
+
 	def wait_for_specific_speech(
 			self,
 			speech: str,
 			afterIndex: Optional[int] = None,
 			maxWaitSeconds: float = 5.0,
-			intervalBetweenSeconds: float = 0.1,
+			intervalBetweenSeconds: float = DEFAULT_INTERVAL_BETWEEN_EVAL_SECONDS,
 	) -> int:
 		"""
 		@param speech: The speech to expect.
@@ -374,7 +437,7 @@ class NVDASpyLib:
 			speech: str,
 			afterIndex: Optional[int] = None,
 			maxWaitSeconds: float = SPEECH_HAS_FINISHED_SECONDS,
-			intervalBetweenSeconds: float = 0.1,
+			intervalBetweenSeconds: float = DEFAULT_INTERVAL_BETWEEN_EVAL_SECONDS,
 	) -> None:
 		"""
 		@param speech: The speech to check for.
@@ -400,13 +463,18 @@ class NVDASpyLib:
 	def wait_for_speech_to_finish(
 			self,
 			maxWaitSeconds=5.0,
-			speechStartedIndex: Optional[int] = None
-	):
-		_blockUntilConditionMet(
+			speechStartedIndex: Optional[int] = None,
+			errorMessage: Optional[str] = "Speech did not finish before timeout"
+	) -> bool:
+		"""speechStartedIndex should generally be fetched with get_next_speech_index
+		@param errorMessage: Supply None to bypass assert.
+		"""
+		success, _value = _blockUntilConditionMet(
 			getValue=lambda: self._hasSpeechFinished(speechStartedIndex=speechStartedIndex),
 			giveUpAfterSeconds=self._minTimeout(maxWaitSeconds),
-			errorMessage="Speech did not finish before timeout"
+			errorMessage=errorMessage,
 		)
+		return success
 
 	def wait_for_braille_update(
 			self,
@@ -441,6 +509,7 @@ class NVDASpyLib:
 		E.g. control+shift+downArrow.
 		See vkCodes.py in the NVDA source directory for valid key names.
 		"""
+		log.debug(f"Sending gesture {kbIdentifier}")
 		gesture = KeyboardInputGesture.fromName(kbIdentifier)
 		inputCore.manager.emulateGesture(gesture)
 		if blockUntilProcessed:
@@ -452,20 +521,24 @@ class NVDASpyLib:
 				nonlocal queueProcessed
 				queueProcessed = True
 
+			log.debug("Waiting for gesture to be processed")
 			queueHandler.queueFunction(queueHandler.eventQueue, _setQueueProcessed)
 			_blockUntilConditionMet(
 				getValue=lambda: queueProcessed,
 				giveUpAfterSeconds=self._minTimeout(5),
 				errorMessage="Timed out waiting for key to be processed",
 			)
+
 			# We know that by now the core will have woken up and processed the scripts, events and our own function.
 			# Wait for the core to go to sleep,
 			# Which means there is no more things the core is currently processing.
+			log.debug("Waiting for core to sleep, to ensure all resulting events have been processed.")
 			_blockUntilConditionMet(
 				getValue=lambda: watchdog.isCoreAsleep(),
 				giveUpAfterSeconds=self._minTimeout(5),
 				errorMessage="Timed out waiting for core to sleep again",
 			)
+			log.debug("Core sleeping")
 
 
 class SystemTestSpyServer(globalPluginHandler.GlobalPlugin):
@@ -493,6 +566,11 @@ class SystemTestSpyServer(globalPluginHandler.GlobalPlugin):
 
 
 def _crashNVDA():
+	# Causes a breakpoint exception to occur in the current process.
+	# This allows the calling thread to signal the debugger to handle the exception.
+	#
+	# This may be caught by a "postmortem debugger", which would prevent the application from exiting.
+	# https://docs.microsoft.com/en-us/windows-hardware/drivers/debugger/enabling-postmortem-debugging
 	ctypes.windll.Kernel32.DebugBreak()
 
 

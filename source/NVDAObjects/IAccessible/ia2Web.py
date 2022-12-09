@@ -21,10 +21,26 @@ import aria
 import api
 import speech
 import config
+import NVDAObjects
+
 
 class Ia2Web(IAccessible):
 	IAccessibleTableUsesTableCellIndexAttrib=True
 	caretMovementDetectionUsesEvents = False
+
+	def isDescendantOf(self, obj: "NVDAObjects.NVDAObject") -> bool:
+		if obj.windowHandle != self.windowHandle:
+			# Only supported on the same window.
+			raise NotImplementedError
+		if not isinstance(obj, Ia2Web):
+			# #4080: Input composition NVDAObjects are the same window but not IAccessible2!
+			raise NotImplementedError
+		accId = obj.IA2UniqueID
+		try:
+			res = obj.IAccessibleObject.accChild(accId)
+		except COMError:
+			return False
+		return bool(res)
 
 	def _get_positionInfo(self):
 		info=super(Ia2Web,self).positionInfo
@@ -258,11 +274,15 @@ class Switch(Ia2Web):
 	# role="switch" gets mapped to IA2_ROLE_TOGGLE_BUTTON, but it uses the
 	# checked state instead of pressed. The simplest way to deal with this
 	# identity crisis is to map it to a check box.
-	role = controlTypes.Role.CHECKBOX
+	role = controlTypes.Role.SWITCH
 
 	def _get_states(self):
 		states = super().states
 		states.discard(controlTypes.State.PRESSED)
+		states.discard(controlTypes.State.CHECKABLE)
+		if controlTypes.State.CHECKED in states:
+			states.discard(controlTypes.State.CHECKED)
+			states.add(controlTypes.State.ON)
 		return states
 
 

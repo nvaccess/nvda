@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -7,7 +6,15 @@
 import itertools
 import os
 import typing
-from typing import Iterable, Union, Tuple, List, Optional
+from typing import (
+	TYPE_CHECKING,
+	Generator,
+	Iterable,
+	List,
+	Optional,
+	Tuple,
+	Union,
+)
 from locale import strxfrm
 
 import driverHandler
@@ -24,6 +31,11 @@ import winKernel
 import keyboardHandler
 import baseObject
 import config
+from config.configFlags import (
+	ShowMessages,
+	TetherTo,
+	ReportTableHeaders,
+)
 from logHandler import log
 import controlTypes
 import api
@@ -40,6 +52,11 @@ import bdDetect
 import queueHandler
 import brailleViewer
 from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting
+from utils.security import objectBelowLockScreenAndWindowsIsLocked
+import hwIo
+
+if TYPE_CHECKING:
+	from NVDAObjects import NVDAObject
 
 
 roleLabels: typing.Dict[controlTypes.Role, str] = {
@@ -195,6 +212,8 @@ roleLabels: typing.Dict[controlTypes.Role, str] = {
 	controlTypes.Role.SUGGESTION: _("sggstn"),
 	# Translators: Displayed in braille when an object is a definition.
 	controlTypes.Role.DEFINITION: _("definition"),
+	# Translators: Displayed in braille when an object is a switch control
+	controlTypes.Role.SWITCH: _("swtch"),
 }
 
 positiveStateLabels = {
@@ -202,6 +221,8 @@ positiveStateLabels = {
 	controlTypes.State.SELECTED: _("sel"),
 	# Displayed in braille when an object (e.g. a toggle button) is pressed.
 	controlTypes.State.PRESSED: u"⢎⣿⡱",
+	# Displayed in braille when an object (e.g. a toggle button) is half pressed.
+	controlTypes.State.HALF_PRESSED: u"⢎⣸⡱",
 	# Displayed in braille when an object (e.g. a check box) is checked.
 	controlTypes.State.CHECKED: u"⣏⣿⣹",
 	# Displayed in braille when an object (e.g. a check box) is half checked.
@@ -236,6 +257,8 @@ positiveStateLabels = {
 	controlTypes.State.HASFORMULA: _("frml"),
 	# Translators: Displayed in braille when there is a comment for a spreadsheet cell or piece of text in a document.
 	controlTypes.State.HASCOMMENT: _("cmnt"),
+	# Translators: Displayed in braille when a control is switched on
+	controlTypes.State.ON: "⣏⣿⣹",
 }
 negativeStateLabels = {
 	# Translators: Displayed in braille when an object is not selected.
@@ -244,6 +267,8 @@ negativeStateLabels = {
 	controlTypes.State.PRESSED: u"⢎⣀⡱",
 	# Displayed in braille when an object (e.g. a check box) is not checked.
 	controlTypes.State.CHECKED: u"⣏⣀⣹",
+	# Displayed in braille when an object (e.g. a switch control) is switched off.
+	controlTypes.State.ON: "⣏⣀⣹",
 }
 
 landmarkLabels = {
@@ -327,7 +352,10 @@ USB_PORT =  ("usb", _("USB"))
 # Translators: String representing the Bluetooth port selection for braille displays.
 BLUETOOTH_PORT =  ("bluetooth", _("Bluetooth"))
 
-def NVDAObjectHasUsefulText(obj):
+
+def NVDAObjectHasUsefulText(obj: "NVDAObject") -> bool:
+	if objectBelowLockScreenAndWindowsIsLocked(obj):
+		return False
 	import displayModel
 	if issubclass(obj.TextInfo,displayModel.DisplayModelTextInfo):
 		# #1711: Flat review (using displayModel) should always be presented on the braille display
@@ -335,6 +363,7 @@ def NVDAObjectHasUsefulText(obj):
 	else:
 		# Let the NVDAObject choose if the text should be presented
 		return obj._hasNavigableText
+
 
 def _getDisplayDriver(moduleName, caseSensitive=True):
 	try:
@@ -620,14 +649,14 @@ class NVDAObjectRegion(Region):
 	A cursor routing request will activate the object's default action.
 	"""
 
-	def __init__(self, obj, appendText=""):
+	def __init__(self, obj: "NVDAObject", appendText: str = ""):
 		"""Constructor.
 		@param obj: The associated NVDAObject.
-		@type obj: L{NVDAObjects.NVDAObject}
 		@param appendText: Text which should always be appended to the NVDAObject text, useful if this region will always precede other regions.
-		@type appendText: str
 		"""
-		super(NVDAObjectRegion, self).__init__()
+		if objectBelowLockScreenAndWindowsIsLocked(obj):
+			raise RuntimeError("NVDA object is secure and should not be initialized as a braille region")
+		super().__init__()
 		self.obj = obj
 		self.appendText = appendText
 
@@ -776,7 +805,7 @@ def getControlFieldBraille(  # noqa: C901
 			"hasDetails": hasDetails,
 			"detailsRole": detailsRole,
 		}
-		if reportTableHeaders:
+		if reportTableHeaders in (ReportTableHeaders.ROWS_AND_COLUMNS, ReportTableHeaders.COLUMNS):
 			props["columnHeaderText"] = field.get("table-columnheadertext")
 		return getPropertiesBraille(**props)
 
@@ -896,8 +925,10 @@ class TextInfoRegion(Region):
 	pendingCaretUpdate=False #: True if the cursor should be updated for this region on the display
 	allowPageTurns=True #: True if a page turn should be tried when a TextInfo cannot move anymore and the object supports page turns.
 
-	def __init__(self, obj):
-		super(TextInfoRegion, self).__init__()
+	def __init__(self, obj: "NVDAObject"):
+		if objectBelowLockScreenAndWindowsIsLocked(obj):
+			raise RuntimeError("NVDA object is secure and should not be initialized as a braille region")
+		super().__init__()
 		self.obj = obj
 
 	def _isMultiline(self):
@@ -1604,7 +1635,13 @@ def invalidateCachedFocusAncestors(index):
 	# There could be multiple calls to this function before getFocusContextRegions() is called.
 	_cachedFocusAncestorsEnd = min(_cachedFocusAncestorsEnd, index)
 
-def getFocusContextRegions(obj, oldFocusRegions=None):
+
+def getFocusContextRegions(
+		obj: "NVDAObject",
+		oldFocusRegions: Optional[List[Region]] = None,
+) -> Generator[Region, None, None]:
+	if objectBelowLockScreenAndWindowsIsLocked(obj):
+		return
 	global _cachedFocusAncestorsEnd
 	# Late import to avoid circular import.
 	from treeInterceptorHandler import TreeInterceptor
@@ -1671,7 +1708,13 @@ def getFocusContextRegions(obj, oldFocusRegions=None):
 
 	_cachedFocusAncestorsEnd = ancestorsEnd
 
-def getFocusRegions(obj, review=False):
+
+def getFocusRegions(
+		obj: "NVDAObject",
+		review: bool = False,
+) -> Generator[Region, None, None]:
+	if objectBelowLockScreenAndWindowsIsLocked(obj):
+		return
 	# Allow objects to override normal behaviour.
 	try:
 		regions = obj.getBrailleRegions(review=review)
@@ -1702,6 +1745,7 @@ def getFocusRegions(obj, review=False):
 		region2.update()
 		yield region2
 
+
 def formatCellsForLog(cells: List[int]) -> str:
 	"""Formats a sequence of braille cells so that it is suitable for logging.
 	The output contains the dot numbers for each cell, with each cell separated by a space.
@@ -1718,18 +1762,16 @@ def formatCellsForLog(cells: List[int]) -> str:
 		for cell in cells])
 
 class BrailleHandler(baseObject.AutoPropertyObject):
-	TETHER_AUTO = "auto"
-	TETHER_FOCUS = "focus"
-	TETHER_REVIEW = "review"
-	tetherValues=[
-		# Translators: The label for a braille setting indicating that braille should be
-		# tethered to focus or review cursor automatically.
-		(TETHER_AUTO,_("automatically")),
-		# Translators: The label for a braille setting indicating that braille should be tethered to focus.
-		(TETHER_FOCUS,_("to focus")),
-		# Translators: The label for a braille setting indicating that braille should be tethered to the review cursor.
-		(TETHER_REVIEW,_("to review"))
-	]
+	# TETHER_AUTO, TETHER_FOCUS, TETHER_REVIEW and tetherValues
+	# are deprecated, but remain to retain API backwards compatibility
+	TETHER_AUTO = TetherTo.AUTO.value
+	TETHER_FOCUS = TetherTo.FOCUS.value
+	TETHER_REVIEW = TetherTo.REVIEW.value
+	tetherValues = [(v.value, v.displayString) for v in TetherTo]
+
+	queuedWrite: Optional[List[int]] = None
+	queuedWriteLock: threading.Lock
+	ackTimerHandle: int
 
 	def __init__(self):
 		louisHelper.initialize()
@@ -1747,15 +1789,21 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._cells = []
 		self._cursorBlinkTimer = None
 		config.post_configProfileSwitch.register(self.handlePostConfigProfileSwitch)
-		self._tether = config.conf["braille"]["tetherTo"]
+		if config.conf["braille"]["tetherTo"] == TetherTo.AUTO.value:
+			self._tether = TetherTo.FOCUS.value
+		else:
+			self._tether = config.conf["braille"]["tetherTo"]
 		self._detectionEnabled = False
 		self._detector = None
 		self._rawText = u""
 
+		self.queuedWriteLock = threading.Lock()
+		self.ackTimerHandle = winKernel.createWaitableTimer()
+		self._ackTimeoutResetterApc = winKernel.PAPCFUNC(self._ackTimeoutResetter)
+
 		brailleViewer.postBrailleViewerToolToggledAction.register(self._onBrailleViewerChangedState)
 
 	def terminate(self):
-		bgThreadStopTimeout = 2.5 if self._detectionEnabled else None
 		self._disableDetection()
 		if self._messageCallLater:
 			self._messageCallLater.Stop()
@@ -1767,7 +1815,11 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if self.display:
 			self.display.terminate()
 			self.display = None
-		_BgThread.stop(timeout=bgThreadStopTimeout)
+		if self.ackTimerHandle:
+			if not ctypes.windll.kernel32.CancelWaitableTimer(self.ackTimerHandle):
+				raise ctypes.WinError()
+			winKernel.closeHandle(self.ackTimerHandle)
+			self.ackTimerHandle = None
 		louisHelper.terminate()
 
 	def getTether(self):
@@ -1783,8 +1835,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._tether = tether
 		self.mainBuffer.clear()
 
-	def _get_shouldAutoTether(self):
-		return self.enabled and config.conf["braille"]["autoTether"]
+	def _get_shouldAutoTether(self) -> bool:
+		return self.enabled and config.conf["braille"]["tetherTo"] == TetherTo.AUTO.value
 
 	displaySize: int
 
@@ -1857,10 +1909,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 					# Re-initialize with supported kwargs.
 					extensionPoints.callWithSupportedKwargs(newDisplay.__init__, **kwargs)
 			else:
-				if newDisplay.isThreadSafe and not detected:
-					# Start the thread if it wasn't already.
-					# Auto detection implies the thread is already started.
-					_BgThread.start()
 				try:
 					newDisplay = newDisplay(**kwargs)
 				except TypeError:
@@ -1917,11 +1965,11 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		blinkRate = config.conf["braille"]["cursorBlinkRate"]
 		if cursorShouldBlink and blinkRate:
 			self._cursorBlinkTimer = gui.NonReEntrantTimer(self._blink)
-			# This is called from the background thread when a display is auto detected.
+			# This is called from another thread when a display is auto detected.
 			# Make sure we start the blink timer from the main thread to avoid wx assertions
 			wx.CallAfter(self._cursorBlinkTimer.Start,blinkRate)
 
-	def _writeCells(self, cells):
+	def _writeCells(self, cells: List[int]):
 		brailleViewer.update(cells, self._rawText)
 		if not self.display.isThreadSafe:
 			try:
@@ -1930,23 +1978,28 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 				log.error("Error displaying cells. Disabling display", exc_info=True)
 				self.handleDisplayUnavailable()
 			return
-		with _BgThread.queuedWriteLock:
-			alreadyQueued = _BgThread.queuedWrite
-			_BgThread.queuedWrite = cells
+		with self.queuedWriteLock:
+			alreadyQueued: Optional[List[int]] = self.queuedWrite
+			self.queuedWrite = cells
 		# If a write was already queued, we don't need to queue another;
 		# we just replace the data.
 		# This means that if multiple writes occur while an earlier write is still in progress,
 		# we skip all but the last.
 		if not alreadyQueued and not self.display._awaitingAck:
 			# Queue a call to the background thread.
-			_BgThread.queueApc(_BgThread.executor)
+			self._writeCellsInBackground()
+
+	def _writeCellsInBackground(self):
+		"""Writes cells to a braille display in the background by queuing a function to the i/o thread.
+		"""
+		hwIo.bgThread.queueAsApc(self._bgThreadExecutor)
 
 	def _displayWithCursor(self):
 		if not self._cells:
 			return
 		cells = list(self._cells)
 		if self._cursorPos is not None and self._cursorBlinkUp:
-			if self.getTether() == self.TETHER_FOCUS:
+			if self.getTether() == TetherTo.FOCUS.value:
 				cells[self._cursorPos] |= config.conf["braille"]["cursorShapeFocus"]
 			else:
 				cells[self._cursorPos] |= config.conf["braille"]["cursorShapeReview"]
@@ -1994,7 +2047,11 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		If a key is pressed the message will be dismissed by the next text being written to the display.
 		@postcondition: The message is displayed.
 		"""
-		if not self.enabled or config.conf["braille"]["messageTimeout"] == 0 or text is None:
+		if (
+			not self.enabled
+			or config.conf["braille"]["showMessages"] == ShowMessages.DISABLED
+			or text is None
+		):
 			return
 		if self.buffer is self.messageBuffer:
 			self.buffer.clear()
@@ -2012,7 +2069,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		"""Reset the message timeout.
 		@precondition: A message is currently being displayed.
 		"""
-		if config.conf["braille"]["noMessageTimeout"]:
+		if config.conf["braille"]["showMessages"] == ShowMessages.SHOW_INDEFINITELY:
 			return
 		# Configured timeout is in seconds.
 		timeout = config.conf["braille"]["messageTimeout"] * 1000
@@ -2033,12 +2090,14 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self._messageCallLater = None
 		self.update()
 
-	def handleGainFocus(self, obj, shouldAutoTether=True):
+	def handleGainFocus(self, obj: "NVDAObject", shouldAutoTether: bool = True) -> None:
 		if not self.enabled:
 			return
+		if objectBelowLockScreenAndWindowsIsLocked(obj):
+			return
 		if shouldAutoTether:
-			self.setTether(self.TETHER_FOCUS, auto=True)
-		if self._tether != self.TETHER_FOCUS:
+			self.setTether(TetherTo.FOCUS.value, auto=True)
+		if self._tether != TetherTo.FOCUS.value:
 			return
 		if getattr(obj, "treeInterceptor", None) and not obj.treeInterceptor.passThrough and obj.treeInterceptor.isReady:
 			obj = obj.treeInterceptor
@@ -2048,7 +2107,10 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.mainBuffer.clear()
 		focusToHardLeftSet = False
 		for region in regions:
-			if self.getTether() == self.TETHER_FOCUS and config.conf["braille"]["focusContextPresentation"]==CONTEXTPRES_CHANGEDCONTEXT:
+			if (
+				self.getTether() == TetherTo.FOCUS.value
+				and config.conf["braille"]["focusContextPresentation"] == CONTEXTPRES_CHANGEDCONTEXT
+			):
 				# Check focusToHardLeft for every region.
 				# If noone of the regions has focusToHardLeft set to True, set it for the first focus region.
 				if region.focusToHardLeft:
@@ -2069,18 +2131,24 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		elif self.buffer is self.messageBuffer and keyboardHandler.keyCounter>self._keyCountForLastMessage:
 			self._dismissMessage()
 
-	def handleCaretMove(self, obj, shouldAutoTether=True):
+	def handleCaretMove(
+			self,
+			obj: "NVDAObject",
+			shouldAutoTether: bool = True
+	) -> None:
 		if not self.enabled:
+			return
+		if objectBelowLockScreenAndWindowsIsLocked(obj):
 			return
 		prevTether = self._tether
 		if shouldAutoTether:
-			self.setTether(self.TETHER_FOCUS, auto=True)
-		if self._tether != self.TETHER_FOCUS:
+			self.setTether(TetherTo.FOCUS.value, auto=True)
+		if self._tether != TetherTo.FOCUS.value:
 			return
 		region = self.mainBuffer.regions[-1] if self.mainBuffer.regions else None
 		if region and region.obj==obj:
 			region.pendingCaretUpdate=True
-		elif prevTether == self.TETHER_REVIEW:
+		elif prevTether == TetherTo.REVIEW.value:
 			# The caret moved in a different object than the review position.
 			self._doNewObject(getFocusRegions(obj, review=False))
 
@@ -2117,7 +2185,12 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 	# #6862: The value change of a progress bar change often goes together with changes of other objects in the dialog,
 	# e.g. the time remaining. Therefore, update the dialog when a contained progress bar changes.
-	def _handleProgressBarUpdate(self, obj):
+	def _handleProgressBarUpdate(
+			self,
+			obj: "NVDAObject",
+	) -> None:
+		if objectBelowLockScreenAndWindowsIsLocked(obj):
+			return
 		oldTime = getattr(self, "_lastProgressBarUpdateTime", None)
 		newTime = time.time()
 		if oldTime and newTime - oldTime < 1:
@@ -2129,8 +2202,10 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 				self.handleUpdate(obj)
 				return
 
-	def handleUpdate(self, obj):
+	def handleUpdate(self, obj: "NVDAObject") -> None:
 		if not self.enabled:
+			return
+		if objectBelowLockScreenAndWindowsIsLocked(obj):
 			return
 		# Optimisation: It is very likely that it is the focus object that is being updated.
 		# If the focus object is in the braille buffer, it will be the last region, so scan the regions backwards.
@@ -2142,7 +2217,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			# There are some objects that require special update behavior even if they have no region.
 			# This only applies when tethered to focus, because tethering to review shows only one object at a time,
 			# which always has a braille region associated with it.
-			if self._tether != self.TETHER_FOCUS:
+			if self._tether != TetherTo.FOCUS.value:
 				return
 			# Late import to avoid circular import.
 			from NVDAObjects import NVDAObject
@@ -2163,8 +2238,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			return
 		reviewPos = api.getReviewPosition()
 		if shouldAutoTether:
-			self.setTether(self.TETHER_REVIEW, auto=True)
-		if self._tether != self.TETHER_REVIEW:
+			self.setTether(TetherTo.REVIEW.value, auto=True)
+		if self._tether != TetherTo.REVIEW.value:
 			return
 		region = self.mainBuffer.regions[-1] if self.mainBuffer.regions else None
 		if region and region.obj == reviewPos.obj:
@@ -2178,7 +2253,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			# Braille is disabled or focus/review hasn't yet been initialised.
 			return
 		try:
-			if self.getTether() == self.TETHER_FOCUS:
+			if self.getTether() == TetherTo.FOCUS.value:
 				self.handleGainFocus(api.getFocusObject(), shouldAutoTether=False)
 			else:
 				self.handleReviewMove(shouldAutoTether=False)
@@ -2217,7 +2292,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if self._detectionEnabled and self._detector:
 			self._detector.rescan(usb=usb, bluetooth=bluetooth, limitToDevices=limitToDevices)
 			return
-		_BgThread.start()
 		config.conf["braille"]["display"] = AUTO_DISPLAY_NAME
 		if not keepCurrentDisplay:
 			self.setDisplayByName("noBraille", isFallback=True)
@@ -2233,95 +2307,49 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self._detector = None
 		self._detectionEnabled = False
 
-class _BgThread:
-	"""A singleton background thread used for background writes and raw braille display I/O.
-	"""
-
-	thread = None
-	exit = False
-	queuedWrite = None
-
-	@classmethod
-	def start(cls):
-		if cls.thread:
-			return
-		cls.queuedWriteLock = threading.Lock()
-		thread = cls.thread = threading.Thread(
-			name=f"{cls.__module__}.{cls.__qualname__}",
-			target=cls.func
-		)
-		thread.daemon = True
-		thread.start()
-		cls.handle = ctypes.windll.kernel32.OpenThread(winKernel.THREAD_SET_CONTEXT, False, thread.ident)
-		cls.ackTimerHandle = winKernel.createWaitableTimer()
-
-	@classmethod
-	def queueApc(cls, func, param=0):
-		ctypes.windll.kernel32.QueueUserAPC(func, cls.handle, param)
-
-	@classmethod
-	def stop(cls, timeout=None):
-		if not cls.thread:
-			return
-		cls.exit = True
-		if not ctypes.windll.kernel32.CancelWaitableTimer(cls.ackTimerHandle):
-			raise ctypes.WinError()
-		winKernel.closeHandle(cls.ackTimerHandle)
-		cls.ackTimerHandle = None
-		# Wake up the thread. It will exit when it sees exit is True.
-		cls.queueApc(cls.executor)
-		cls.thread.join(timeout)
-		cls.exit = False
-		winKernel.closeHandle(cls.handle)
-		cls.handle = None
-		cls.thread = None
-
-	@winKernel.PAPCFUNC
-	def executor(param):
-		if _BgThread.exit:
-			# func will see this and exit.
-			return
-		if not handler.display:
-			# Sometimes, the executor is triggered when a display is not fully initialized.
+	def _bgThreadExecutor(self, param: int):
+		"""Executed as APC when cells have to be written to a display asynchronously.
+		"""
+		if not self.display:
+			# Sometimes, the bg thread executor is triggered when a display is not fully initialized.
 			# For example, this happens when handling an ACK during initialisation.
 			# We can safely ignore this.
 			return
-		if handler.display._awaitingAck:
+		if self.display._awaitingAck:
 			# Do not write cells when we are awaiting an ACK
 			return
-		with _BgThread.queuedWriteLock:
-			data = _BgThread.queuedWrite
-			_BgThread.queuedWrite = None
+		with self.queuedWriteLock:
+			data: Optional[List[int]] = self.queuedWrite
+			self.queuedWrite = None
 		if not data:
 			return
 		try:
-			handler.display.display(data)
+			self.display.display(data)
 		except:
 			log.error("Error displaying cells. Disabling display", exc_info=True)
-			handler.handleDisplayUnavailable()
+			self.handleDisplayUnavailable()
 		else:
-			if handler.display.receivesAckPackets:
-				handler.display._awaitingAck = True
+			if self.display.receivesAckPackets:
+				self.display._awaitingAck = True
+				SECOND_TO_MS = 1000
 				winKernel.setWaitableTimer(
-					_BgThread.ackTimerHandle,
-					int(handler.display.timeout*2000),
+					self.ackTimerHandle,
+					# Wait twice the display driver timeout for acknowledgement packets
+					# Note: timeout is in seconds whereas setWaitableTimer expects milliseconds
+					int(self.display.timeout * 2 * SECOND_TO_MS),
 					0,
-					_BgThread.ackTimeoutResetter
+					self._ackTimeoutResetterApc
 				)
 
-	@winKernel.PAPCFUNC
-	def ackTimeoutResetter(param):
-		if handler.display.receivesAckPackets and handler.display._awaitingAck:
-			log.debugWarning("Waiting for %s ACK packet timed out"%handler.display.name)
-			handler.display._awaitingAck = False
-			_BgThread.queueApc(_BgThread.executor)
-
-	@classmethod
-	def func(cls):
-		while True:
-			ctypes.windll.kernel32.SleepEx(winKernel.INFINITE, True)
-			if cls.exit:
-				break
+	def _ackTimeoutResetter(self, param: int):
+		if (
+			self.display
+			and self.display.receivesAckPackets
+			and self.display._awaitingAck
+		):
+			log.debugWarning(f"Waiting for {self.display.name} ACK packet timed out")
+			self.display._awaitingAck = False
+			self._writeCellsInBackground()
 
 
 # Maps old braille display driver names to new drivers that supersede old drivers.
@@ -2338,7 +2366,6 @@ handler: BrailleHandler
 
 def initialize():
 	global handler
-	config.addConfigDirsToPythonPackagePath(brailleDisplayDrivers)
 	log.info("Using liblouis version %s" % louis.version())
 	import serial
 	log.info("Using pySerial version %s"%serial.VERSION)
@@ -2411,9 +2438,8 @@ class BrailleDisplayDriver(driverHandler.Driver):
 	_awaitingAck = False
 	#: Maximum timeout to use for communication with a device (in seconds).
 	#: This can be used for serial connections.
-	#: Furthermore, it is used by L{_BgThread} to stop waiting for missed acknowledgement packets.
-	#: @type: float
-	timeout = 0.2
+	#: Furthermore, it is used to stop waiting for missed acknowledgement packets.
+	timeout: float = 0.2
 
 	def __init__(self, port: typing.Union[None, str, bdDetect.DeviceMatch] = None):
 		"""Constructor
@@ -2578,8 +2604,7 @@ class BrailleDisplayDriver(driverHandler.Driver):
 					yield match
 
 	#: Global input gesture map for this display driver.
-	#: @type: L{inputCore.GlobalGestureMap}
-	gestureMap = None
+	gestureMap: Optional[inputCore.GlobalGestureMap] = None
 
 	@classmethod
 	def _getModifierGestures(cls, model=None):
@@ -2611,10 +2636,10 @@ class BrailleDisplayDriver(driverHandler.Driver):
 		"""Base implementation to handle acknowledgement packets."""
 		if not self.receivesAckPackets:
 			raise NotImplementedError("This display driver does not support ACK packet handling")
-		if not ctypes.windll.kernel32.CancelWaitableTimer(_BgThread.ackTimerHandle):
+		if not ctypes.windll.kernel32.CancelWaitableTimer(handler.ackTimerHandle):
 			raise ctypes.WinError()
 		self._awaitingAck = False
-		_BgThread.queueApc(_BgThread.executor)
+		handler._writeCellsInBackground()
 
 	@classmethod
 	def DotFirmnessSetting(cls,defaultVal,minVal,maxVal,useConfig=False):

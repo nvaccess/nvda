@@ -3,9 +3,11 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+"""
+When working on this file, consider moving to winAPI.
+"""
+
 import threading
-import comtypes.client
-import time
 from ctypes import *
 from ctypes.wintypes import *
 import watchdog

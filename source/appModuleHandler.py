@@ -33,6 +33,7 @@ import comtypes.client
 import baseObject
 from logHandler import log
 import NVDAHelper
+import NVDAState
 import winKernel
 import config
 import NVDAObjects #Catches errors before loading default appModule
@@ -86,7 +87,7 @@ def __getattr__(attrName: str) -> Any:
 	since add-ons are initialized before `appModuleHandler`
 	and when `appModuleHandler` was not yet initialized the variable was set to `None`.
 	"""
-	if attrName == "NVDAProcessID" and globalVars._allowDeprecatedAPI:
+	if attrName == "NVDAProcessID" and NVDAState._allowDeprecatedAPI():
 		log.warning("appModuleHandler.NVDAProcessID is deprecated, use globalVars.appPid instead.")
 		if initialize._alreadyInitialized:
 			return globalVars.appPid
@@ -114,7 +115,7 @@ def _warnDeprecatedAliasAppModule() -> None:
 			f" instead import appModules.{replacementModName}."
 		)
 		log.warning(deprecatedImportWarning)
-		if not globalVars._allowDeprecatedAPI:
+		if not NVDAState._allowDeprecatedAPI():
 			raise ModuleNotFoundError(deprecatedImportWarning)
 
 
@@ -340,6 +341,8 @@ def reloadAppModules():
 	for mod in mods:
 		del sys.modules[mod]
 	import appModules
+	from addonHandler.packaging import addDirsToPythonPackagePath
+	addDirsToPythonPackagePath(appModules)
 	initialize()
 	for entry in state:
 		pid = entry.pop("processID")
@@ -360,7 +363,6 @@ def reloadAppModules():
 def initialize():
 	"""Initializes the appModule subsystem. 
 	"""
-	config.addConfigDirsToPythonPackagePath(appModules)
 	if not initialize._alreadyInitialized:
 		initialize._alreadyInitialized = True
 
