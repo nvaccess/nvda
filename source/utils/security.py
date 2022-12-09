@@ -6,6 +6,7 @@
 import typing
 from typing import (
 	Callable,
+	List,
 	Optional,
 	Set,
 )
@@ -220,13 +221,13 @@ def _isObjectAboveLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 	if lockAppModule is None:
 		_checkWindowsForAppModules()
 		lockAppModule = _findLockAppModule()
-	if lockAppModule is None:
-		# lockAppModule not running/registered by NVDA yet
-		log.debug(
-			"lockAppModule not detected when Windows is locked. "
-			"Cannot detect if object is in lock app, considering object as safe. "
-		)
-		return True
+		if lockAppModule is None:
+			# lockAppModule not running/registered by NVDA yet
+			log.debug(
+				"lockAppModule not detected when Windows is locked. "
+				"Cannot detect if object is in lock app, considering object as safe. "
+			)
+			return True
 
 	from NVDAObjects.window import Window
 	if not isinstance(obj, Window):
@@ -236,7 +237,9 @@ def _isObjectAboveLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 		# must be a window to get its HWNDVal
 		return True
 
-	return _isObjectAboveLockScreenCheckZOrder(obj.windowHandle, lockAppModule.processID)
+	topLevelWindowHandle = winUser.getAncestor(obj.windowHandle, winUser.GA_ROOT)
+	# TODO: time this
+	return _isObjectAboveLockScreenCheckZOrder(topLevelWindowHandle, lockAppModule.processID)
 
 
 def _isObjectAboveLockScreenCheckZOrder(objWindowHandle: int, lockAppModuleProcessId: int) -> bool:
@@ -255,12 +258,12 @@ def _isObjectAboveLockScreenCheckZOrder(objWindowHandle: int, lockAppModuleProce
 
 	try:
 		return _isWindowAboveWindowMatchesCond(objWindowHandle, _isWindowLockApp)
-	except _WindowNotFoundError:
+	except _UnexpectedWindowCountError:
 		log.debugWarning("Couldn't find lock screen")
 		return True
 
 
-class _WindowNotFoundError(Exception):
+class _UnexpectedWindowCountError(Exception):
 	"""
 	Raised when a window which matches the expected condition
 	is not found by  _isWindowAboveWindowMatchesCond
@@ -269,26 +272,38 @@ class _WindowNotFoundError(Exception):
 
 
 def _isWindowAboveWindowMatchesCond(
-		targetWindow: winUser.HWNDVal,
+		window: winUser.HWNDVal,
 		matchCond: Callable[[winUser.HWNDVal], bool]
 ) -> bool:
 	""" Returns True if targetWindow is above a window that matches the match condition.
 	"""
-	aboveWindow = winUser.getWindow(targetWindow, winUser.GW_HWNDPREV)
-	belowWindow = winUser.getWindow(targetWindow, winUser.GW_HWNDNEXT)
-	while (
-		aboveWindow != winUser.GW_RESULT_NOT_FOUND
-		or belowWindow != winUser.GW_RESULT_NOT_FOUND
-	):
-		if matchCond(belowWindow):  # target window is above the found window
-			return True
-		elif matchCond(aboveWindow):  # found window is above the target window
-			return False
-		if aboveWindow != winUser.GW_RESULT_NOT_FOUND:
-			aboveWindow = winUser.getWindow(aboveWindow, winUser.GW_HWNDPREV)
-		if belowWindow != winUser.GW_RESULT_NOT_FOUND:
-			belowWindow = winUser.getWindow(belowWindow, winUser.GW_HWNDNEXT)
-	raise _WindowNotFoundError(f"Window not found matching condition {matchCond}")
+	desktopWindow = winUser.getDesktopWindow()
+	topLevelWindow = winUser.getTopWindow(desktopWindow)
+	bottomWindow = winUser.getWindow(topLevelWindow, winUser.GW_HWNDLAST)
+	currentWindow = bottomWindow
+	currentIndex = 0  # 0 is the last/lowest window
+	window1Indexes: List[int] = []
+	window2Indexes: List[int] = []
+	while currentWindow != winUser.GW_RESULT_NOT_FOUND:
+		if currentWindow == window:
+			window1Indexes.append(currentIndex)
+		if matchCond(currentWindow):
+			window2Indexes.append(currentIndex)
+		currentWindow = winUser.getWindow(currentWindow, winUser.GW_HWNDPREV)
+		currentIndex += 1
+	if len(window1Indexes) != 1 or len(window2Indexes) == 0:
+		raise _UnexpectedWindowCountError(
+			"Windows found\n"
+			f" - window 1 indexes: {window1Indexes} (expects len 1)\n"
+			f" - window 2 indexes: {window2Indexes} (expects len >= 1)\n"
+		)
+	lowestWin2Window = min(window2Indexes)
+	highestWin1Window = max(window1Indexes)
+	if highestWin1Window >= lowestWin2Window:
+		# this means it is above the lockscreen
+		return True
+	else:
+		return False
 
 
 _hasSessionLockStateUnknownWarningBeenGiven = False

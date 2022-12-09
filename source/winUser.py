@@ -133,10 +133,14 @@ GWL_ID=-12
 GWL_STYLE=-16
 GWL_EXSTYLE=-20
 
-# getWindow: TODO turn to enum
+# getWindow relationship parameters: TODO turn to enum
+GW_HWNDFIRST = 0
+GW_HWNDLAST = 1
 GW_HWNDNEXT=2
 GW_HWNDPREV=3
 GW_OWNER=4
+
+# getWindow results
 GW_RESULT_NOT_FOUND = 0
 """
 When GetWindow returns 0, it means the window has not been found.
