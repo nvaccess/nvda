@@ -172,9 +172,11 @@ def _checkWindowsForAppModules():
 	from ctypes import c_bool, WINFUNCTYPE, c_int, POINTER, windll  # TODO move and order
 	from ctypes.wintypes import LPARAM
 	import appModuleHandler
+
 	# BOOL CALLBACK EnumWindowsProc _In_ HWND,_In_ LPARAM
 	# HWND as a pointer creates confusion, treat as an int
 	# http://makble.com/the-story-of-lpclong
+
 	@WINFUNCTYPE(c_bool, c_int, POINTER(c_int))
 	def _appModuleHandlerUpdate(hwnd: winUser.HWNDVal, _lParam: LPARAM) -> bool:
 		processID, _threadID = winUser.getWindowThreadProcessID(hwnd)
@@ -275,7 +277,9 @@ def _isWindowAboveWindowMatchesCond(
 		window: winUser.HWNDVal,
 		matchCond: Callable[[winUser.HWNDVal], bool]
 ) -> bool:
-	""" Returns True if targetWindow is above a window that matches the match condition.
+	""" Returns True if window is above a window that matches matchCond.
+	If the first window is not found, but the second window is,
+	it is assumed that the first window is above the second window.
 	"""
 	desktopWindow = winUser.getDesktopWindow()
 	topLevelWindow = winUser.getTopWindow(desktopWindow)
@@ -283,24 +287,24 @@ def _isWindowAboveWindowMatchesCond(
 	currentWindow = bottomWindow
 	currentIndex = 0  # 0 is the last/lowest window
 	window1Indexes: List[int] = []
-	window2Indexes: List[int] = []
+	window2Index: Optional[int] = None
 	while currentWindow != winUser.GW_RESULT_NOT_FOUND:
 		if currentWindow == window:
 			window1Indexes.append(currentIndex)
 		if matchCond(currentWindow):
-			window2Indexes.append(currentIndex)
+			if not window1Indexes:
+				return True
+			window2Index = currentIndex
+			break
 		currentWindow = winUser.getWindow(currentWindow, winUser.GW_HWNDPREV)
 		currentIndex += 1
-	if len(window1Indexes) != 1 or len(window2Indexes) == 0:
+	if len(window1Indexes) != 1 or window2Index is None:
 		raise _UnexpectedWindowCountError(
 			"Windows found\n"
 			f" - window 1 indexes: {window1Indexes} (expects len 1)\n"
-			f" - window 2 indexes: {window2Indexes} (expects len >= 1)\n"
+			f" - window 2 index: {window2Index}\n"
 		)
-	lowestWin2Window = min(window2Indexes)
-	highestWin1Window = max(window1Indexes)
-	if highestWin1Window >= lowestWin2Window:
-		# this means it is above the lockscreen
+	if window1Indexes[0] >= window2Index:
 		return True
 	else:
 		return False

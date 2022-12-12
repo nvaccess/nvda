@@ -127,7 +127,10 @@ def isWindowsLocked() -> bool:
 	if _isSecureDesktop():
 		return False
 	if _lockStateTracker is None:
-		log.error("_TrackNVDAInitialization.markInitializationComplete was called before sessionTracking.initialize")
+		log.error(
+			"_TrackNVDAInitialization.markInitializationComplete was called "
+			"before sessionTracking.initialize"
+		)
 		return False
 	return _lockStateTracker.isWindowsLocked
 

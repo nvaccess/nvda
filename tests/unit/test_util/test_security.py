@@ -10,12 +10,13 @@ from dataclasses import dataclass
 from typing import (
 	List,
 	Optional,
+	Type,
 )
 import unittest
 from unittest.mock import patch
 
 from utils.security import (
-	_WindowNotFoundError,
+	_UnexpectedWindowCountError,
 	_isWindowAboveWindowMatchesCond,
 )
 import winUser
@@ -24,9 +25,9 @@ import winUser
 @dataclass
 class _MoveWindow:
 	"""Used to move a window from one index to another when a specific index is reached."""
-	startIndex: int  # A window at this index
-	endIndex: int  # is moved to this index
-	triggerIndex: int  # when this index is reached
+	HWNDToMove: winUser.HWNDVal  # This window
+	insertBelowHWND: winUser.HWNDVal  # is moved to below this window
+	triggerHWND: winUser.HWNDVal  # when this window is reached
 	triggered = False  # If the move has been triggered
 
 
@@ -40,12 +41,19 @@ class _Test_isWindowAboveWindowMatchesCond(unittest.TestCase):
 	A HWND value at index 0, should be considered to have a z-order "above" a HWND value at index 1.
 	"""
 	def _getWindow_patched(self, hwnd: winUser.HWNDVal, relation: int) -> int:
-		"""Fetch current window, find adjacent window by relation."""
+		"""
+		Fetch current window, find adjacent window by relation.
+		The top level window has the highest index.
+		"""
 		currentWindowIndex = self._windows.index(hwnd)
 		if relation == winUser.GW_HWNDNEXT:
-				nextIndex = currentWindowIndex + 1
+			nextIndex = currentWindowIndex - 1
 		elif relation == winUser.GW_HWNDPREV:
-				nextIndex = currentWindowIndex - 1
+			nextIndex = currentWindowIndex + 1
+		elif relation == winUser.GW_HWNDFIRST:
+			nextIndex = len(self._windows) - 1
+		elif relation == winUser.GW_HWNDLAST:
+			nextIndex = 0
 		else:
 			return winUser.GW_RESULT_NOT_FOUND
 		if nextIndex >= len(self._windows) or nextIndex < 0:
@@ -59,34 +67,46 @@ class _Test_isWindowAboveWindowMatchesCond(unittest.TestCase):
 
 	def setUp(self) -> None:
 		self._getWindowPatch = patch("winUser.getWindow", self._getWindow_patched)
+		self._getDesktopWindowPatch = patch("winUser.getDesktopWindow", lambda: 0)
+		self._getTopWindowPatch = patch("winUser.getTopWindow", lambda _: self._windows[0])
 		self._getWindowPatch.start()
-		self._windows: List[winUser.HWNDVal] = list(range(1, 11))
+		self._getTopWindowPatch.start()
+		self._getDesktopWindowPatch.start()
+		self._generateWindows()
+		return super().setUp()
+
+	def _generateWindows(self):
 		"""
 		List of fake HWNDs, given an ordered index to make testing easier.
 		Must be 1 indexed as a HWND of 0 is treated an error.
 		"""
-		return super().setUp()
+		self._windows: List[winUser.HWNDVal] = list(range(1, 11))
 
 	def tearDown(self) -> None:
 		self._getWindowPatch.stop()
+		self._getTopWindowPatch.stop()
+		self._getDesktopWindowPatch.stop()
 		return super().tearDown()
 
 
 class Test_isWindowAboveWindowMatchesCond_static(_Test_isWindowAboveWindowMatchesCond):
 	"""Test fetching a z-index when the order of window does not change"""
-	def test_windowNotFound(self):
-		startWindow = len(self._windows) // 2
-		with self.assertRaises(_WindowNotFoundError):
-			_isWindowAboveWindowMatchesCond(startWindow, lambda x: False)
+	def test_secondWindowNotFound(self):
+		with self.assertRaises(_UnexpectedWindowCountError):
+			# Errors are handled as if window is above
+			_isWindowAboveWindowMatchesCond(5, lambda x: False)
+
+	def test_firstWindowNotFound(self):
+		self.assertTrue(_isWindowAboveWindowMatchesCond(-1, lambda x: x == 5))
 
 	def test_isAbove(self):
-		aboveIndex = 1
-		belowIndex = 2
+		aboveIndex = 2
+		belowIndex = 1
 		self.assertTrue(_isWindowAboveWindowMatchesCond(aboveIndex, self._windowMatches(belowIndex)))
 
 	def test_isBelow(self):
-		aboveIndex = 1
-		belowIndex = 2
+		aboveIndex = 2
+		belowIndex = 1
 		self.assertFalse(_isWindowAboveWindowMatchesCond(belowIndex, self._windowMatches(aboveIndex)))
 
 
@@ -95,204 +115,320 @@ class Test_isWindowAboveWindowMatchesCond_dynamic(_Test_isWindowAboveWindowMatch
 	Test fetching comparing the relative order of 2 windows,
 	where a window moves during the operation.
 
-	This test models changes when performing a bi-direction search that expects the
-	start window to be before/above the end window.
-	By symmetry, the same test results are expected if the search goes the other way,
-	expecting it to return False, rather than True.
-
 	To model changes in z-order, a _MoveWindow is used to describe the change.
-	When the getWindow is called with the triggerIndex, the value at start index is moved
-	"in front" of the window at end index.
 	Effectively this means that before getting the window at the triggerIndex, the order of
 	windows will change.
 	"""
 	_queuedMove: Optional[_MoveWindow] = None
 
 	def _getWindow_patched(self, hwnd: winUser.HWNDVal, relation: int) -> int:
-		self._moveIndexToNewIndexAtIndexOnce(self._windows.index(hwnd))
+		self._triggerQueuedMove(hwnd)
 		result = super()._getWindow_patched(hwnd, relation)
 		return result
 
-	def _moveIndexToNewIndexAtIndexOnce(self, currentIndex: int):
+	def _triggerQueuedMove(self, currentHWND: winUser.HWNDVal):
 		from logging import getLogger
 		
-		getLogger().error(f"Current index {currentIndex}, {self._windows}")
+		getLogger().debug(f"Current HWND {currentHWND}, {self._windows}")
 		if (
 			self._queuedMove
-			and currentIndex == self._queuedMove.triggerIndex
+			and currentHWND == self._queuedMove.triggerHWND
 			and not self._queuedMove.triggered
 		):
 			self._queuedMove.triggered = True
-			window = self._windows.pop(self._queuedMove.startIndex)
-			self._windows.insert(self._queuedMove.endIndex, window)
+			self._windows.remove(self._queuedMove.HWNDToMove)
+			insertIndex = self._windows.index(self._queuedMove.insertBelowHWND)
+			self._windows.insert(insertIndex, self._queuedMove.HWNDToMove)
 
-	def test_visited_windowMoves_pastTarget(self):
+	def _test_windowWithMove(
+			self,
+			move: _MoveWindow,
+			aboveWindow: winUser.HWNDVal,
+			belowWindow: winUser.HWNDVal,
+			aboveRaises: Optional[Type[Exception]] = None,
+			belowRaises: Optional[Type[Exception]] = None,
+			aboveExpectFailure: bool = False,
+			belowExpectFailure: bool = False,
+	):
 		"""
-		A visited window is moved past the target window.
-		This does not affect the relative z-order.
+		Compares the relative z-order of two windows.
+		Checks the inverse behaviour:
+		i.e. swaps the order of the window, expect the result to be the opposite.
+		For the expected "above is true" case, if aboveRaises is provided, expect the exception.
+		If aboveExpectFailure is provided, expect the "above is false", i.e. an incorrect result.
+		Similarly is true for the "below is true" case.
+		@param move: move a window when another window is reached
+		@param aboveWindow: expected above window
+		@param belowWindow: expected below window
+		@param aboveRaises: if provided, expect the exception to be raised when checking the "above is true"
+		@param belowRaises: if provided, expect the exception to be raised when checking the "below is true"
+		@param aboveExpectFailure: if True, expect a failure when checking the "above is true"
+		@param belowExpectFailure: if True, expect a failure when checking the "below is true"
 		"""
-		startWindow = 2
-		targetWindow = 5
-		self._queuedMove = _MoveWindow(
-			startIndex=3,
-			endIndex=6,
-			triggerIndex=4
+		self._queuedMove = move
+
+		# Check aboveWindow is above belowWindow
+		isAbove = True
+		if aboveExpectFailure:
+			isAbove = not isAbove
+		if aboveRaises is None:
+			self.assertEqual(isAbove, _isWindowAboveWindowMatchesCond(aboveWindow, self._windowMatches(belowWindow)))
+		else:
+			with self.assertRaises(aboveRaises):
+				_isWindowAboveWindowMatchesCond(aboveWindow, self._windowMatches(belowWindow))
+		
+		# Reset the window list
+		self._generateWindows()
+		# Reset the move
+		self._queuedMove.triggered = False
+
+		# Check belowWindow is below aboveWindow
+		isAbove = False
+		if belowExpectFailure:
+			isAbove = not isAbove
+		if belowRaises is None:
+			self.assertEqual(isAbove, _isWindowAboveWindowMatchesCond(belowWindow, self._windowMatches(aboveWindow)))
+		else:
+			with self.assertRaises(belowRaises):
+				_isWindowAboveWindowMatchesCond(belowWindow, self._windowMatches(aboveWindow))
+
+	def test_visited_windowMoves_aboveTargets(self):
+		"""
+		A visited window is moved above the target windows.
+		This does not affect the relative z-order of the target windows.
+		"""
+		self._test_windowWithMove(
+			move=_MoveWindow(
+				HWNDToMove=3,
+				insertBelowHWND=6,
+				triggerHWND=4
+			),
+			aboveWindow=5,
+			belowWindow=2,
 		)
-		self.assertTrue(_isWindowAboveWindowMatchesCond(startWindow, self._windowMatches(targetWindow)))
 
-	def test_visited_windowMoves_beforeTarget(self):
+	def test_visited_windowMoves_betweenTargets(self):
 		"""
-		A visited window is moved towards but before the target window.
+		A visited window is moved between the target windows.
 		It is counted twice.
-		This does not affect the relative z-order.
+		This does not affect the relative z-order of the target windows.
 		"""
-		startWindow = 2
-		targetWindow = 6
-		self._queuedMove = _MoveWindow(
-			startIndex=3,
-			endIndex=5,
-			triggerIndex=4
+		self._test_windowWithMove(
+			move=_MoveWindow(
+				HWNDToMove=3,
+				insertBelowHWND=5,
+				triggerHWND=4
+			),
+			aboveWindow=6,
+			belowWindow=2
 		)
-		self.assertTrue(_isWindowAboveWindowMatchesCond(startWindow, self._windowMatches(targetWindow)))
 
-	def test_visited_windowMoves_awayFromTarget(self):
+	def test_visited_windowMoves_belowTargets(self):
 		"""
-		A visited window is moved in the opposite direction from the target window.
-		This does not affect the relative z-order.
+		A visited window is moved in the opposite direction from the target windows.
+		This does not affect the relative z-order of the target windows.
 		"""
-		startWindow = 2
-		targetWindow = 6
-		self._queuedMove = _MoveWindow(
-			startIndex=3,
-			endIndex=1,
-			triggerIndex=4
+		self._test_windowWithMove(
+			move=_MoveWindow(
+				HWNDToMove=3,
+				insertBelowHWND=1,
+				triggerHWND=4
+			),
+			aboveWindow=5,
+			belowWindow=2,
 		)
-		self.assertTrue(_isWindowAboveWindowMatchesCond(startWindow, self._windowMatches(targetWindow)))
 
-	def test_active_windowMoves_pastTarget(self):
+	def test_active_windowMoves_betweenTargets(self):
 		"""
-		A window we are currently visiting moves past the target window.
-		This causes the search to skip the target window.
+		A window we are currently visiting moves between target windows.
+		This causes the search to skip the first window.
+		This can cause a false negative (i.e. content becomes accessible when it should be secure).
 		"""
-		startWindow = 2
-		targetWindow = 5
-		self._queuedMove = _MoveWindow(
-			startIndex=3,
-			endIndex=7,
-			triggerIndex=3
+		self._test_windowWithMove(
+			move=_MoveWindow(
+				HWNDToMove=3,
+				insertBelowHWND=8,
+				triggerHWND=3
+			),
+			aboveWindow=10,
+			belowWindow=6,
+			aboveRaises=_UnexpectedWindowCountError,  # handled as if window is above
+			belowExpectFailure=True  # handled as if window is above
 		)
-		with self.assertRaises(_WindowNotFoundError):
-			_isWindowAboveWindowMatchesCond(startWindow, self._windowMatches(targetWindow))
 
-	def test_active_windowMoves_beforeTarget(self):
+	def test_active_windowMoves_beforeTargets(self):
 		"""
-		A window we are currently visiting moves towards but before the target window.
-		This does not affect the relative z-order.
+		A window we are currently visiting moves before the target windows.
+		This does not affect the relative z-order of the target windows.
 		"""
-		startWindow = 2
-		targetWindow = 10
-		self._queuedMove = _MoveWindow(
-			startIndex=3,
-			endIndex=5,
-			triggerIndex=3
+		self._test_windowWithMove(
+			move=_MoveWindow(
+				HWNDToMove=3,
+				insertBelowHWND=5,
+				triggerHWND=3
+			),
+			aboveWindow=10,
+			belowWindow=6,
 		)
-		self.assertTrue(_isWindowAboveWindowMatchesCond(startWindow, self._windowMatches(targetWindow)))
 
-	def test_active_windowMoves_awayFromTarget(self):
+	def test_active_windowMoves_belowTargets(self):
 		"""
-		A window we are currently visiting moves in the opposite direction to the target window.
-		This does not affect the relative z-order.
+		A window we are currently visiting moves in the opposite direction
+		from the target windows.
+		This does not affect the relative z-order of the target windows.
 		"""
-		startWindow = 2
-		targetWindow = 10
-		self._queuedMove = _MoveWindow(
-			startIndex=3,
-			endIndex=1,
-			triggerIndex=3
+		self._test_windowWithMove(
+			_MoveWindow(
+				HWNDToMove=3,
+				insertBelowHWND=1,
+				triggerHWND=3
+			),
+			aboveWindow=10,
+			belowWindow=6
 		)
-		self.assertTrue(_isWindowAboveWindowMatchesCond(startWindow, self._windowMatches(targetWindow)))
 
-	def test_unvisited_windowMoves_pastTarget(self):
+	def test_unvisited_windowMoves_aboveTargets(self):
 		"""
-		An unvisited window moves towards, and past the target window.
-		This does not affect the relative z-order.
+		An unvisited window moves above the target windows.
+		This does not affect the relative z-order of the target windows.
 		"""
-		startWindow = 2
-		targetWindow = 6
-		self._queuedMove = _MoveWindow(
-			startIndex=4,
-			endIndex=8,
-			triggerIndex=3
+		self._test_windowWithMove(
+			move=_MoveWindow(
+				HWNDToMove=5,
+				insertBelowHWND=8,
+				triggerHWND=3
+			),
+			aboveWindow=6,
+			belowWindow=2
 		)
-		self.assertTrue(_isWindowAboveWindowMatchesCond(startWindow, self._windowMatches(targetWindow)))
 
-	def test_unvisited_windowMoves_beforeTarget(self):
+	def test_unvisited_windowMoves_betweenTargets(self):
 		"""
-		An unvisited window moves towards, but before the target window.
-		This does not affect the relative z-order.
+		An unvisited window moves between the target windows.
+		This does not affect the relative z-order of the target windows.
 		"""
-		startWindow = 2
-		targetWindow = 8
-		self._queuedMove = _MoveWindow(
-			startIndex=4,
-			endIndex=6,
-			triggerIndex=3
+		self._test_windowWithMove(
+			move=_MoveWindow(
+				HWNDToMove=4,
+				insertBelowHWND=6,
+				triggerHWND=3
+			),
+			aboveWindow=8,
+			belowWindow=2
 		)
-		self.assertTrue(_isWindowAboveWindowMatchesCond(startWindow, self._windowMatches(targetWindow)))
 
-	def test_unvisited_windowMoves_awayFromTarget(self):
+	def test_unvisited_windowMoves_belowTargets(self):
 		"""
-		An unvisited window moves in the opposite direction the target window.
-		This does not affect the relative z-order.
+		An unvisited window moves in the opposite direction from the target windows.
+		This does not affect the relative z-order of the target windows.
 		"""
-		startWindow = 2
-		targetWindow = 8
-		self._queuedMove = _MoveWindow(
-			startIndex=4,
-			endIndex=1,
-			triggerIndex=3
+		self._test_windowWithMove(
+			move=_MoveWindow(
+				HWNDToMove=4,
+				insertBelowHWND=1,
+				triggerHWND=3
+			),
+			aboveWindow=8,
+			belowWindow=2
 		)
-		self.assertTrue(_isWindowAboveWindowMatchesCond(startWindow, self._windowMatches(targetWindow)))
 
-	def test_startWindow_windowMoves_pastTarget(self):
+	def test_belowWindow_windowMoves_aboveAboveWindow(self):
 		"""
-		Start window moves towards, and past the target window.
+		Below window moves above the above window.
 		This means the relative z-order has changed, but the change is not detected.
-		The relative z-order of the start of the search is returned.
+		The initial relative z-order is returned.
 		"""
-		startWindow = 2
-		targetWindow = 6
-		self._queuedMove = _MoveWindow(
-			startIndex=startWindow - 1,
-			endIndex=8,
-			triggerIndex=3
+		belowWindow = 2
+		self._test_windowWithMove(
+			move=_MoveWindow(
+				HWNDToMove=belowWindow,
+				insertBelowHWND=8,
+				triggerHWND=3
+			),
+			aboveWindow=6,
+			belowWindow=belowWindow
 		)
-		self.assertTrue(_isWindowAboveWindowMatchesCond(startWindow, self._windowMatches(targetWindow)))
 
-	def test_startWindow_windowMoves_beforeTarget(self):
+	def test_belowWindow_windowMoves_towardsAboveWindow(self):
 		"""
-		Start window moves towards, but before the target window.
-		This does not affect the relative z-order.
+		Below window moves towards the above window.
+		This causes the window to be counted twice.
+		This does not affect the relative z-order of the target windows.
 		"""
-		startWindow = 2
-		targetWindow = 8
-		self._queuedMove = _MoveWindow(
-			startIndex=startWindow - 1,
-			endIndex=6,
-			triggerIndex=3
+		belowWindow = 2
+		self._test_windowWithMove(
+			move=_MoveWindow(
+				HWNDToMove=belowWindow,
+				insertBelowHWND=6,
+				triggerHWND=3
+			),
+			aboveWindow=8,
+			belowWindow=belowWindow,
+			belowRaises=_UnexpectedWindowCountError,  # handled as if window is above
 		)
-		self.assertTrue(_isWindowAboveWindowMatchesCond(startWindow, self._windowMatches(targetWindow)))
 
-	def test_StartWindow_windowMoves_awayFromTarget(self):
+	def test_belowWindow_windowMoves_furtherBelow(self):
 		"""
-		Start window moves in the opposite direction the target window.
-		This does not affect the relative z-order.
+		The below window moves away from the above window.
+		This does not affect the relative z-order of the target windows.
 		"""
-		startWindow = 2
-		targetWindow = 8
-		self._queuedMove = _MoveWindow(
-			startIndex=startWindow - 1,
-			endIndex=1,
-			triggerIndex=3
+		belowWindow = 2
+		self._test_windowWithMove(
+			move=_MoveWindow(
+				HWNDToMove=belowWindow,
+				insertBelowHWND=1,
+				triggerHWND=3
+			),
+			aboveWindow=8,
+			belowWindow=belowWindow
 		)
-		self.assertTrue(_isWindowAboveWindowMatchesCond(startWindow, self._windowMatches(targetWindow)))
+
+	def test_aboveWindow_windowMoves_furtherAbove(self):
+		"""
+		Above window moves further above
+		This does not affect the relative z-order of the target windows.
+		"""
+		aboveWindow = 6
+		self._test_windowWithMove(
+			move=_MoveWindow(
+				HWNDToMove=aboveWindow,
+				insertBelowHWND=8,
+				triggerHWND=3
+			),
+			aboveWindow=aboveWindow,
+			belowWindow=2
+		)
+
+	def test_aboveWindow_windowMoves_towardsBelowWindow(self):
+		"""
+		Above window moves towards, but above the below window.
+		This does not affect the relative z-order of the target windows.
+		"""
+		aboveWindow = 8
+		self._test_windowWithMove(
+			move=_MoveWindow(
+				HWNDToMove=aboveWindow,
+				insertBelowHWND=6,
+				triggerHWND=3
+			),
+			aboveWindow=aboveWindow,
+			belowWindow=2
+		)
+
+	def test_aboveWindow_windowMoves_belowBelowWindow(self):
+		"""
+		Above window moves in the opposite direction of the above window.
+		This means the relative z-order has changed, but the change is not detected.
+		The initial relative z-order is returned.
+		"""
+		aboveWindow = 8
+		self._test_windowWithMove(
+			move=_MoveWindow(
+				HWNDToMove=aboveWindow,
+				insertBelowHWND=1,
+				triggerHWND=3
+			),
+			aboveWindow=aboveWindow,
+			belowWindow=2,
+			belowRaises=_UnexpectedWindowCountError  # handled as if window is above
+		)
