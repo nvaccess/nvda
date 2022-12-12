@@ -56,7 +56,7 @@ class AddonVirtualList(
 			autoSizeColumn=1,
 		)
 
-		self.SetMinSize(self.scaleSize((400, 600)))
+		self.SetMinSize(self.scaleSize((550, 600)))
 
 		# Translators: The name of the column that contains names of addons. In the add-on store dialog.
 		self.InsertColumn(0, pgettext("addonStore", "Name"))
@@ -64,9 +64,14 @@ class AddonVirtualList(
 		self.InsertColumn(1, pgettext("addonStore", "Version"))
 		# Translators: The name of the column that contains the addons publisher. In the add-on store dialog.
 		self.InsertColumn(2, pgettext("addonStore", "Publisher"))
-		# Translators: The name of the column that contains the status of the addon (E.G. available, downloading
-		# installing). In the add-on store dialog.
-		self.InsertColumn(3, pgettext("addonStore", "Status"))
+		self.InsertColumn(
+			3,
+			# Translators: The name of the column that contains the status of the addon (E.G. available, downloading
+			# installing). In the add-on store dialog.
+			pgettext("addonStore", "Status"),
+			# Enough space for the longer contents, eg: "Installed, restart required"
+			width=self.scaleSize(150)
+		)
 
 		self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.OnItemSelected)
 		self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.OnItemActivated)
@@ -285,10 +290,10 @@ class AddonDetails(
 		)
 		self.contents.Add(self.descriptionLabel, flag=wx.EXPAND)
 		self.descriptionLabel.Show(False)
-
+		descriptionWidth = 500
 		self.descriptionTextCtrl = ExpandoTextCtrl(
 			self,
-			size=(self.scaleSize(400), -1),
+			size=(self.scaleSize(descriptionWidth), -1),
 			style=(
 				0  # purely to allow subsequent items to line up.
 				| wx.TE_MULTILINE  # details will require multiple lines
@@ -321,7 +326,7 @@ class AddonDetails(
 		self.otherDetailsLabel.Show(False)
 		self.otherDetailsTextCtrl = wx.TextCtrl(
 			self,
-			size=self.scaleSize((400, 400)),
+			size=self.scaleSize((descriptionWidth, 400)),
 			style=(
 				0  # purely to allow subsequent items to line up.
 				| wx.TE_MULTILINE  # details will require multiple lines
