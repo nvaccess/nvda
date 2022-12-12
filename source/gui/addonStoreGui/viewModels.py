@@ -40,27 +40,16 @@ class AvailableAddonStatus(DisplayStringEnum):
 	""" Values to represent the status of add-ons within the NVDA add-on store.
 	Although related, these are independent of the states in L{addonHandler}
 	"""
-	# noinspection PyArgumentList
 	AVAILABLE = enum.auto()
-	# noinspection PyArgumentList
 	UPDATE = enum.auto()
-	# noinspection PyArgumentList
 	INCOMPATIBLE = enum.auto()
-	# noinspection PyArgumentList
 	DOWNLOADING = enum.auto()
-	# noinspection PyArgumentList
 	DOWNLOAD_FAILED = enum.auto()
-	# noinspection PyArgumentList
 	DOWNLOAD_SUCCESS = enum.auto()
-	# noinspection PyArgumentList
 	INSTALLING = enum.auto()
-	# noinspection PyArgumentList
 	INSTALL_FAILED = enum.auto()
-	# noinspection PyArgumentList
 	INSTALLED = enum.auto()  # installed, requires restart
-	# noinspection PyArgumentList
 	ENABLED = enum.auto()  # enabled after restart
-	# noinspection PyArgumentList
 	RUNNING = enum.auto()  # enabled / active.
 
 	@property
@@ -127,6 +116,9 @@ class AddonListItemVM:
 	def Id(self) -> Optional[str]:
 		return self._model.addonId
 
+	def __repr__(self) -> str:
+		return f"{self.__class__.__name__}: {self.Id}, {self.status}"
+
 
 class AddonDetailsVM:
 	def __init__(self, listItem: Optional[AddonListItemVM] = None):
@@ -154,12 +146,12 @@ class AddonDetailsVM:
 
 
 class AddonListVM:
-	presentedAttributes = [
+	presentedAttributes = (
 		"displayName",
 		"versionName",
 		"publisher",
 		"status",  # NVDA state for this addon, see L{AvailableAddonStatus}
-	]
+	)
 
 	def __init__(
 			self,
@@ -186,10 +178,10 @@ class AddonListVM:
 
 	def _itemDataUpdated(self, addonListItemVM: AddonListItemVM):
 		addonId: str = addonListItemVM.Id
-		log.debug(f"status: {addonListItemVM.status}")
+		log.debug(f"Item updated: {addonListItemVM!r}")
 		assert addonListItemVM == self._addons[addonId], "Must be the same instance."
 		if addonId in self._addonsFilteredOrdered:
-			log.debug("calling")
+			log.debug("Notifying of update")
 			index = self._addonsFilteredOrdered.index(addonId)
 			# ensure calling on the main thread.
 			core.callLater(delay=0, callable=self.itemUpdated.notify, index=index)
@@ -320,7 +312,7 @@ class AddonListVM:
 			approxNewIndex = int(oldIndexNorm * newMaxIndex)
 			newSelectedIndex = max(0, min(approxNewIndex, newMaxIndex))
 			log.debug(
-				f"Approximate from position "
+				"Approximate from position "
 				f"oldSelectedIndex: {selectedIndex}, "
 				f"oldMaxIndex: {oldMaxIndex}, "
 				f"newSelectedIndex: {newSelectedIndex}, "
@@ -585,7 +577,7 @@ class AddonStoreVM:
 class TranslatedError(Exception):
 	def __init__(self, displayMessage: str):
 		"""
-		@param displayMessage: A translated message, to be display to the user.
+		@param displayMessage: A translated message, to be displayed to the user.
 		"""
 		self.displayMessage = displayMessage
 

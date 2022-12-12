@@ -18,9 +18,9 @@ import gui
 from gui import (
 	guiHelper,
 	nvdaControls,
-	DpiScalingHelperMixinWithoutInit,
 	addonGui,
 )
+from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 from gui.settingsDialogs import SettingsDialog
 from logHandler import log
 

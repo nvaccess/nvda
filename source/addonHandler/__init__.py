@@ -335,11 +335,11 @@ class AddonBase(ABC):
 		return self.manifest['version']
 
 	@property
-	def minimumNVDAVersion(self) -> typing.Tuple[int, int, int]:
+	def minimumNVDAVersion(self) -> addonAPIVersion.AddonApiVersionT:
 		return self.manifest.get('minimumNVDAVersion')
 
 	@property
-	def lastTestedNVDAVersion(self) -> typing.Tuple[int, int, int]:
+	def lastTestedNVDAVersion(self) -> addonAPIVersion.AddonApiVersionT:
 		return self.manifest.get('lastTestedNVDAVersion')
 
 	@property

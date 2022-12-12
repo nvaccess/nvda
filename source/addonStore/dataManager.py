@@ -13,6 +13,7 @@ from concurrent.futures import (
 )
 from datetime import datetime, timedelta
 
+import buildVersion
 from logHandler import log
 import requests
 
@@ -37,8 +38,26 @@ class Channel(str, enum.Enum):
 	ALL = "all"
 
 
+def _workAroundForDevNVDAVersion() -> addonAPIVersion.AddonApiVersionT:
+	"""When a 'latest' endpoint is created, this workaround method can be removed.
+	"""
+	log.debugWarning(
+		"Workaround for Dev NVDA Version support with add-on store still in-place."
+		"This workaround should be removed before merging to master / beta / rc"
+	)
+	version = buildVersion.version
+	isNotPreMergeVersion = version[0].isdigit() or "alpha" in version or "beta" in version
+	if isNotPreMergeVersion:
+		# check if this gets merged accidentally.
+		log.error("Fix the addonStore version used for API endpoint")
+	return 2022, 2, 0  # hard-code for testing purposes.
+
+
 def _getCurrentApiVersionForURL() -> str:
-	currentVersion = addonAPIVersion.CURRENT
+	# todo: replace with `currentVersion = addonAPIVersion.CURRENT`
+	# The version is manually overridden until a 'latest' endpoint can be used for 'pre-release' versions
+	# of NVDA
+	currentVersion = _workAroundForDevNVDAVersion()
 	year, major, minor = currentVersion
 	return f"{year}.{major}.{minor}"
 
