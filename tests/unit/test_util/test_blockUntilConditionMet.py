@@ -23,7 +23,7 @@ class _FakeTimer():
 	Patches sleeping and getting the current time,
 	so that the module under test is not dependent on real world time.
 	"""
-	POLL_INTERVAL = 0.2
+	POLL_INTERVAL = 0.1
 
 	def __init__(self) -> None:
 		self._fakeTime: float = 0.0
