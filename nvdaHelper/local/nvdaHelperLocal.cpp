@@ -106,7 +106,7 @@ DWORD WINAPI bgSendMessageThreadProc(LPVOID param) {
 				bgSendMessageData.error = ERROR_CANCELLED;
 				break;
 			}
-			if (SendMessageTimeoutW(bgSendMessageData.hwnd, bgSendMessageData.Msg, bgSendMessageData.wParam, bgSendMessageData.lParam, bgSendMessageData.fuFlags, min(remainingTimeout, CANCELSENDMESSAGE_CHECK_INTERVAL), &bgSendMessageData.dwResult) != 0) {
+			if (SendMessageTimeoutW(bgSendMessageData.hwnd, bgSendMessageData.Msg, bgSendMessageData.wParam, bgSendMessageData.lParam, bgSendMessageData.fuFlags, std::min(remainingTimeout, CANCELSENDMESSAGE_CHECK_INTERVAL), &bgSendMessageData.dwResult) != 0) {
 				// Success.
 				bgSendMessageData.error = 0;
 				break;
@@ -167,7 +167,7 @@ LRESULT cancellableSendMessageTimeout(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM
 				SetLastError(ERROR_CANCELLED);
 				return 0;
 			}
-			if ((ret = SendMessageTimeoutW(hwnd, Msg, wParam, lParam, fuFlags, min(remainingTimeout, CANCELSENDMESSAGE_CHECK_INTERVAL), lpdwResult)) != 0 || GetLastError() != ERROR_TIMEOUT) {
+			if ((ret = SendMessageTimeoutW(hwnd, Msg, wParam, lParam, fuFlags, std::min(remainingTimeout, CANCELSENDMESSAGE_CHECK_INTERVAL), lpdwResult)) != 0 || GetLastError() != ERROR_TIMEOUT) {
 				// Success or error other than timeout.
 				return ret;
 			}
