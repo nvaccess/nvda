@@ -24,7 +24,7 @@ import winUser
 
 @dataclass
 class _MoveWindow:
-	"""Used to move a window from one index to another when a specific index is reached."""
+	"""Used to move a window from one spot to another when a specific window is reached."""
 	HWNDToMove: winUser.HWNDVal  # This window
 	insertBelowHWND: winUser.HWNDVal  # is moved to below this window
 	triggerHWND: winUser.HWNDVal  # when this window is reached
