@@ -15,6 +15,7 @@ import wx.lib.newevent
 from wx.lib.expando import ExpandoTextCtrl
 
 import gui
+import winVersion
 from gui import (
 	guiHelper,
 	nvdaControls,
@@ -462,11 +463,19 @@ class AddonDetails(
 		labelSpace = " "  # em space, wider than regular space, for visual layout.
 
 		if URL:
-			detailsTextCtrl.SetDefaultStyle(self.urlStyle)
-			detailsTextCtrl.AppendText(labelSpace)
-			self._urlQueue.append(
-				lambda: _insertLinkForLabelWithTomViaComIDispatch(detailsTextCtrl, label, value, URL)
-			)
+			if winVersion.getWinVer() < winVersion.WIN8:
+				# ITextRange2 is not available before Windows 8, instead just insert the URL as text
+				detailsTextCtrl.SetDefaultStyle(self.defaultStyle)
+				detailsTextCtrl.AppendText(labelSpace)
+				detailsTextCtrl.AppendText(value)
+				if value != URL:  # don't insert the URL twice.
+					detailsTextCtrl.AppendText(f" ({URL})")
+			else:
+				detailsTextCtrl.SetDefaultStyle(self.urlStyle)
+				detailsTextCtrl.AppendText(labelSpace)
+				self._urlQueue.append(
+					lambda: _insertLinkForLabelWithTomViaComIDispatch(detailsTextCtrl, label, value, URL)
+				)
 		else:
 			detailsTextCtrl.SetDefaultStyle(self.defaultStyle)
 			detailsTextCtrl.AppendText(labelSpace)
