@@ -238,10 +238,20 @@ def setReviewPosition(
 	@param isMouse: Whether the review position is changed due to mouse following.
 	"""
 	reviewObj = reviewPosition.obj
-	if isinstance(reviewObj, treeInterceptorHandler.TreeInterceptor):
+
+	if isinstance(reviewObj, treeInterceptorHandler.DocumentTreeInterceptor):
+		# reviewPosition.obj can be a number of classes, e.g.
+		# CursorManager, DocumentWithTableNavigation, EditableText.
+		# We can only handle the NVDAObject case.
 		reviewObj = reviewObj.rootNVDAObject
-	if _isSecureObjectWhileLockScreenActivated(reviewObj):
-		return False
+
+	if isinstance(reviewObj, NVDAObjects.NVDAObject):
+		# reviewPosition.obj can be a number of classes, e.g.
+		# CursorManager, DocumentWithTableNavigation, EditableText.
+		# We can only handle the NVDAObject case.
+		if _isSecureObjectWhileLockScreenActivated(reviewObj):
+			return False
+
 	globalVars.reviewPosition=reviewPosition.copy()
 	globalVars.reviewPositionObj=reviewPosition.obj
 	if clearNavigatorObject: globalVars.navigatorObject=None

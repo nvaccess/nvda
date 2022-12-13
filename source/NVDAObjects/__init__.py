@@ -1441,4 +1441,5 @@ This code is executed if a gain focus event is received by this object.
 	def _get_isAboveLockScreen(self) -> bool:
 		if not isWindowsLocked():
 			return True
+		# TODO time _isObjectAbovelockScreen
 		return _isObjectAboveLockScreen(self)

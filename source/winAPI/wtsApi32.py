@@ -178,7 +178,16 @@ WTSQuerySessionInformation.restype = BOOL  # On Failure, the return value is zer
 
 
 class _WTS_LockState(IntEnum):
-	"""WtsApi32.h#L437"""
+	"""
+	In some cases, -0x1 is also a known state returned when queried (#14379).
+	WTSINFOEX_LEVEL1_W.SessionFlags returns a flag state.
+	This means that the following is a valid state according to the winAPI:
+	WTS_SESSIONSTATE_UNKNOWN | WTS_SESSIONSTATE_LOCK | WTS_SESSIONSTATE_UNLOCK.
+	As mixed states imply an unknown state,
+	WTS_LockState is an IntEnum rather than an IntFlag and mixed state flags are unexpected enum values.
+
+	WtsApi32.h#L437
+	"""
 	WTS_SESSIONSTATE_UNKNOWN = 0xFFFFFFFF  # dec(4294967295)
 	"""The session state is not known."""
 

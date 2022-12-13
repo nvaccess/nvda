@@ -312,12 +312,11 @@ class TextInfo(baseObject.AutoPropertyObject):
 	def __init__(
 			self,
 			obj: "documentBase.TextContainerObject",
-			position
+			position: Union[int, Tuple, str],
 	):
 		"""Constructor.
 		Subclasses must extend this, calling the superclass method first.
 		@param position: The initial position of this range; one of the POSITION_* constants or a position object supported by the implementation.
-		@type position: int, tuple or string
 		@param obj: The object containing the range of text being represented.
 		"""
 		super(TextInfo,self).__init__()

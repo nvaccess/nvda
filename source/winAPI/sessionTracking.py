@@ -64,7 +64,7 @@ Unused in NVDA core, duplicate of winKernel.SYNCHRONIZE.
 """
 
 _lockStateTracker: Optional["_WindowsLockedState"] = None
-_windowsWasPreviouslyLocked = False
+_wasLockedPreviousPumpAll = False
 
 
 class WindowsTrackedSession(enum.IntEnum):
@@ -107,11 +107,11 @@ def initialize():
 
 
 def pumpAll():
-	global _windowsWasPreviouslyLocked
+	global _wasLockedPreviousPumpAll
 	from utils.security import postSessionLockStateChanged
 	windowsIsNowLocked = isWindowsLocked()
-	if windowsIsNowLocked != _windowsWasPreviouslyLocked:
-		_windowsWasPreviouslyLocked = windowsIsNowLocked
+	if windowsIsNowLocked != _wasLockedPreviousPumpAll:
+		_wasLockedPreviousPumpAll = windowsIsNowLocked
 		postSessionLockStateChanged.notify(isNowLocked=windowsIsNowLocked)
 
 
@@ -143,6 +143,7 @@ def _isWindowsLocked_checkViaSessionQuery() -> bool:
 	try:
 		sessionQueryLockState = _getSessionLockedValue()
 	except RuntimeError:
+		log.exception("Failure querying session locked state")
 		return False
 	if sessionQueryLockState == WTS_LockState.WTS_SESSIONSTATE_UNKNOWN:
 		log.error(
@@ -160,7 +161,7 @@ def isLockStateSuccessfullyTracked() -> bool:
 	"""
 	# TODO: improve deprecation practice on beta/master merges
 	log.error(
-		"NVDA no longer registers session tracking notifications. "
+		"NVDA no longer registers to receive session tracking notifications. "
 		"This function is deprecated, for removal in 2023.1. "
 		"It was never expected that add-on authors would use this function"
 	)
@@ -170,7 +171,7 @@ def isLockStateSuccessfullyTracked() -> bool:
 def register(handle: int) -> bool:
 	# TODO: improve deprecation practice on beta/master merges
 	log.error(
-		"NVDA no longer registers session tracking notifications. "
+		"NVDA no longer registers to receive session tracking notifications. "
 		"This function is deprecated, for removal in 2023.1. "
 		"It was never expected that add-on authors would use this function"
 	)
@@ -180,7 +181,7 @@ def register(handle: int) -> bool:
 def unregister(handle: HWND) -> None:
 	# TODO: improve deprecation practice on beta/master merges
 	log.error(
-		"NVDA no longer registers session tracking notifications. "
+		"NVDA no longer registers to receive session tracking notifications. "
 		"This function is deprecated, for removal in 2023.1. "
 		"It was never expected that add-on authors would use this function"
 	)
@@ -189,7 +190,7 @@ def unregister(handle: HWND) -> None:
 def handleSessionChange(newState: WindowsTrackedSession, sessionId: int) -> None:
 	# TODO: improve deprecation practice on beta/master merges
 	log.error(
-		"NVDA no longer registers session tracking notifications. "
+		"NVDA no longer registers to receive session tracking notifications. "
 		"This function is deprecated, for removal in 2023.1. "
 		"It was never expected that add-on authors would use this function"
 	)
@@ -199,6 +200,7 @@ def handleSessionChange(newState: WindowsTrackedSession, sessionId: int) -> None
 def WTSCurrentSessionInfoEx() -> contextlib.AbstractContextManager[ctypes.pointer[WTSINFOEXW]]:
 	"""Context manager to get the WTSINFOEXW for the current server/session or raises a RuntimeError.
 	Handles freeing the memory when usage is complete.
+	@raises RuntimeError: On failure
 	"""
 	info = _getCurrentSessionInfoEx()
 	try:
@@ -210,11 +212,13 @@ def WTSCurrentSessionInfoEx() -> contextlib.AbstractContextManager[ctypes.pointe
 
 
 def _getCurrentSessionInfoEx() -> ctypes.POINTER(WTSINFOEXW):
-	""" Gets the WTSINFOEXW for the current server/session or raises a RuntimeError
+	"""
+	Gets the WTSINFOEXW for the current server/session or raises a RuntimeError
 	on failure.
 	On RuntimeError memory is first freed.
 	In other cases use WTSFreeMemory.
 	Ideally use the WTSCurrentSessionInfoEx context manager which will handle freeing the memory.
+	@raises RuntimeError: On failure
 	"""
 	ppBuffer = ctypes.wintypes.LPWSTR(None)
 	pBytesReturned = ctypes.wintypes.DWORD(0)
@@ -264,6 +268,7 @@ def _getCurrentSessionInfoEx() -> ctypes.POINTER(WTSINFOEXW):
 
 def _getSessionLockedValue() -> WTS_LockState:
 	"""Get the WTS_LockState for the current server/session or raises a RuntimeError
+	@raises RuntimeError: if fetching the session info fails.
 	"""
 	with WTSCurrentSessionInfoEx() as info:
 		infoEx: WTSINFOEX_LEVEL1_W = info.contents.Data.WTSInfoExLevel1
@@ -271,5 +276,12 @@ def _getSessionLockedValue() -> WTS_LockState:
 		try:
 			lockState = WTS_LockState(sessionFlags)
 		except ValueError:
+			# If an unexpected flag value is provided,
+			# the WTS_LockState enum will not be constructed and will raise ValueError.
+			# In some cases sessionFlags=-0x1 is returned (#14379).
+			# Also, SessionFlags returns a flag state. This means that the following is a valid result:
+			# sessionFlags=WTS_SESSIONSTATE_UNKNOWN | WTS_SESSIONSTATE_LOCK | WTS_SESSIONSTATE_UNLOCK.
+			# As mixed states imply an unknown state,
+			# WTS_LockState is an IntEnum rather than an IntFlag and mixed state flags are unexpected enum values.
 			return WTS_LockState.WTS_SESSIONSTATE_UNKNOWN
 		return lockState

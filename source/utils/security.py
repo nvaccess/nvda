@@ -227,16 +227,16 @@ def _isObjectAboveLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 			# lockAppModule not running/registered by NVDA yet
 			log.debug(
 				"lockAppModule not detected when Windows is locked. "
-				"Cannot detect if object is in lock app, considering object as safe. "
+				"Cannot detect if object is above lock app, considering object as safe. "
 			)
 			return True
 
 	from NVDAObjects.window import Window
 	if not isinstance(obj, Window):
 		log.debug(
-			"Cannot detect if object is in lock app, considering object as safe. "
+			"Cannot detect if object is above lock app, considering object as safe. "
 		)
-		# must be a window to get its HWNDVal
+		# Must be a window instance to get the HWNDVal, other NVDAObjects do not support this.
 		return True
 
 	topLevelWindowHandle = winUser.getAncestor(obj.windowHandle, winUser.GA_ROOT)
