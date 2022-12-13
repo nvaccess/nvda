@@ -15,19 +15,21 @@ Used to:
 """
 
 from __future__ import annotations
-import contextlib
 import ctypes
 from contextlib import contextmanager
 from ctypes.wintypes import (
+	DWORD,
 	HWND,
+	LPWSTR,
 )
 import enum
 from typing import (
+	Generator,
 	Optional,
 )
 
 from baseObject import AutoPropertyObject
-from winAPI.wtsApi32 import (
+from winAPI._wtsApi32 import (
 	WTSINFOEXW,
 	WTSQuerySessionInformation,
 	WTS_CURRENT_SERVER_HANDLE,
@@ -35,7 +37,6 @@ from winAPI.wtsApi32 import (
 	WTS_INFO_CLASS,
 	WTSFreeMemory,
 	WTS_LockState,
-	WTSINFOEX_LEVEL1_W,
 )
 from logHandler import log
 
@@ -64,7 +65,14 @@ Unused in NVDA core, duplicate of winKernel.SYNCHRONIZE.
 """
 
 _lockStateTracker: Optional["_WindowsLockedState"] = None
+"""
+Caches the Windows lock state as an auto property object.
+"""
 _wasLockedPreviousPumpAll = False
+"""
+Each core pump cycle, the Windows lock state is updated.
+The previous value is tracked, so that changes to the lock state can be detected.
+"""
 
 
 class WindowsTrackedSession(enum.IntEnum):
@@ -75,6 +83,8 @@ class WindowsTrackedSession(enum.IntEnum):
 	Values from: https://learn.microsoft.com/en-us/windows/win32/termserv/wm-wtssession-change
 	Context:
 	https://docs.microsoft.com/en-us/windows/win32/api/wtsapi32/nf-wtsapi32-wtsregistersessionnotification
+	
+	Unused in NVDA core.
 	"""
 	CONSOLE_CONNECT = 1
 	CONSOLE_DISCONNECT = 2
@@ -90,6 +100,9 @@ class WindowsTrackedSession(enum.IntEnum):
 
 
 class _WindowsLockedState(AutoPropertyObject):
+	"""
+	Class to encapsulate caching the Windows lock state.
+	"""
 	# Refer to AutoPropertyObject for notes on caching
 	_cache_isWindowsLocked = True
 	
@@ -107,6 +120,7 @@ def initialize():
 
 
 def pumpAll():
+	"""Used to track the session lock state every core cycle, and detect changes."""
 	global _wasLockedPreviousPumpAll
 	from utils.security import postSessionLockStateChanged
 	windowsIsNowLocked = isWindowsLocked()
@@ -117,8 +131,12 @@ def pumpAll():
 
 def isWindowsLocked() -> bool:
 	"""
+	TODO: rename to isWindowsLockscreenActive
+
 	Checks if the Window lockscreen is active.
 	Not to be confused with the Windows sign-in screen, a secure screen.
+	Includes temporary locked desktops,
+	such as the PIN workflow reset and the Out Of Box Experience.
 	"""
 	from core import _TrackNVDAInitialization
 	from systemUtils import _isSecureDesktop
@@ -137,7 +155,7 @@ def isWindowsLocked() -> bool:
 
 def _isWindowsLocked_checkViaSessionQuery() -> bool:
 	""" Use a session query to check if the session is locked
-	@return: True is the session is locked.
+	@returns: True is the session is locked.
 	Also returns False if the lock state can not be determined via a Session Query.
 	"""
 	try:
@@ -155,10 +173,6 @@ def _isWindowsLocked_checkViaSessionQuery() -> bool:
 
 
 def isLockStateSuccessfullyTracked() -> bool:
-	"""Check if the lock state is successfully tracked.
-	I.E. Registered for session tracking AND initial value set correctly.
-	@return: True when successfully tracked.
-	"""
 	# TODO: improve deprecation practice on beta/master merges
 	log.error(
 		"NVDA no longer registers to receive session tracking notifications. "
@@ -196,13 +210,18 @@ def handleSessionChange(newState: WindowsTrackedSession, sessionId: int) -> None
 	)
 
 
+_WTS_INFO_POINTER_T = ctypes.POINTER(WTSINFOEXW)
+
+
 @contextmanager
-def WTSCurrentSessionInfoEx() -> contextlib.AbstractContextManager[ctypes.pointer[WTSINFOEXW]]:
+def WTSCurrentSessionInfoEx() -> Generator[_WTS_INFO_POINTER_T, None, None]:
 	"""Context manager to get the WTSINFOEXW for the current server/session or raises a RuntimeError.
 	Handles freeing the memory when usage is complete.
 	@raises RuntimeError: On failure
 	"""
 	info = _getCurrentSessionInfoEx()
+	if info is None:
+		return
 	try:
 		yield info
 	finally:
@@ -211,7 +230,7 @@ def WTSCurrentSessionInfoEx() -> contextlib.AbstractContextManager[ctypes.pointe
 		)
 
 
-def _getCurrentSessionInfoEx() -> ctypes.POINTER(WTSINFOEXW):
+def _getCurrentSessionInfoEx() -> Optional[_WTS_INFO_POINTER_T]:
 	"""
 	Gets the WTSINFOEXW for the current server/session or raises a RuntimeError
 	on failure.
@@ -220,8 +239,9 @@ def _getCurrentSessionInfoEx() -> ctypes.POINTER(WTSINFOEXW):
 	Ideally use the WTSCurrentSessionInfoEx context manager which will handle freeing the memory.
 	@raises RuntimeError: On failure
 	"""
-	ppBuffer = ctypes.wintypes.LPWSTR(None)
-	pBytesReturned = ctypes.wintypes.DWORD(0)
+	ppBuffer = LPWSTR(None)
+	pBytesReturned = DWORD(0)
+	info = None
 
 	res = WTSQuerySessionInformation(
 		WTS_CURRENT_SERVER_HANDLE,  # WTS_CURRENT_SERVER_HANDLE to indicate the RD Session Host server on
@@ -246,7 +266,7 @@ def _getCurrentSessionInfoEx() -> ctypes.POINTER(WTSINFOEXW):
 			)
 		info = ctypes.cast(
 			ppBuffer,
-			ctypes.POINTER(WTSINFOEXW)
+			_WTS_INFO_POINTER_T
 		)
 		if (
 			not info.contents
@@ -261,26 +281,27 @@ def _getCurrentSessionInfoEx() -> ctypes.POINTER(WTSINFOEXW):
 		return info
 	except Exception as e:
 		log.exception("Unexpected WTSQuerySessionInformation value:", exc_info=e)
-		WTSFreeMemory(
+		WTSFreeMemory(  # should this be moved to a finally block?
 			ctypes.cast(ppBuffer, ctypes.c_void_p),
 		)
+		return None
 
 
 def _getSessionLockedValue() -> WTS_LockState:
-	"""Get the WTS_LockState for the current server/session or raises a RuntimeError
+	"""Get the WTS_LockState for the current server/session.
 	@raises RuntimeError: if fetching the session info fails.
 	"""
 	with WTSCurrentSessionInfoEx() as info:
-		infoEx: WTSINFOEX_LEVEL1_W = info.contents.Data.WTSInfoExLevel1
-		sessionFlags: ctypes.wintypes.LONG = infoEx.SessionFlags
+		infoEx = info.contents.Data.WTSInfoExLevel1
+		sessionFlags = infoEx.SessionFlags
 		try:
 			lockState = WTS_LockState(sessionFlags)
 		except ValueError:
 			# If an unexpected flag value is provided,
 			# the WTS_LockState enum will not be constructed and will raise ValueError.
-			# In some cases sessionFlags=-0x1 is returned (#14379).
+			# In some cases sessionFlags = -0x1 is returned (#14379).
 			# Also, SessionFlags returns a flag state. This means that the following is a valid result:
-			# sessionFlags=WTS_SESSIONSTATE_UNKNOWN | WTS_SESSIONSTATE_LOCK | WTS_SESSIONSTATE_UNLOCK.
+			# sessionFlags = WTS_SESSIONSTATE_UNKNOWN | WTS_SESSIONSTATE_LOCK | WTS_SESSIONSTATE_UNLOCK.
 			# As mixed states imply an unknown state,
 			# WTS_LockState is an IntEnum rather than an IntFlag and mixed state flags are unexpected enum values.
 			return WTS_LockState.WTS_SESSIONSTATE_UNKNOWN

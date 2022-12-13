@@ -251,6 +251,8 @@ def setReviewPosition(
 		# We can only handle the NVDAObject case.
 		if _isSecureObjectWhileLockScreenActivated(reviewObj):
 			return False
+	else:
+		log.debug(f"Unhandled reviewObj type {type(reviewObj)} when checking security of reviewObj")
 
 	globalVars.reviewPosition=reviewPosition.copy()
 	globalVars.reviewPositionObj=reviewPosition.obj

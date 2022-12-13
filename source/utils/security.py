@@ -142,7 +142,7 @@ def _isSecureObjectWhileLockScreenActivated(
 	"""
 	While Windows is locked, Windows 10 and 11 doesn't prevent object navigation outside of the lockscreen.
 	As such, NVDA must prevent accessing and reading objects outside of the lockscreen when Windows is locked.
-	@return: C{True} if the Windows 10/11 lockscreen is active and C{obj} is outside of the lock screen.
+	@return: C{True} if the Windows 10/11 lockscreen is active and C{obj} is below the lock screen.
 	"""
 	try:
 		isObjectBelowLockScreen = isWindowsLocked() and not obj.isAboveLockScreen
@@ -169,6 +169,10 @@ def isObjectAboveLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 
 
 def _checkWindowsForAppModules():
+	"""
+	Updates the appModuleHandler with the process from all top level windows.
+	Adds any missing processes.
+	"""
 	from ctypes import c_bool, WINFUNCTYPE, c_int, POINTER, windll  # TODO move and order
 	from ctypes.wintypes import LPARAM
 	import appModuleHandler
@@ -180,11 +184,12 @@ def _checkWindowsForAppModules():
 	@WINFUNCTYPE(c_bool, c_int, POINTER(c_int))
 	def _appModuleHandlerUpdate(hwnd: winUser.HWNDVal, _lParam: LPARAM) -> bool:
 		processID, _threadID = winUser.getWindowThreadProcessID(hwnd)
-		appModuleHandler.update(processID)
+		if processID not in appModuleHandler.runningTable:
+			appModuleHandler.update(processID)
 		return True
 
 	if not windll.user32.EnumWindows(_appModuleHandlerUpdate, 0):
-		log.error("Failed search for lockapp App Module")
+		log.error("Failed to refresh app modules")
 
 
 def _findLockAppModule() -> Optional["appModuleHandler.AppModule"]:
@@ -196,7 +201,7 @@ def _findLockAppModule() -> Optional["appModuleHandler.AppModule"]:
 def _isObjectAboveLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 	"""
 	When Windows is locked, the foreground Window is usually LockApp,
-	but other Windows can be focused (e.g. Windows Magnifier).
+	but other Windows can be focused (e.g. Windows Magnifier, reset PIN workflow).
 	"""
 	from IAccessibleHandler import SecureDesktopNVDAObject
 	from NVDAObjects.IAccessible import TaskListIcon
@@ -240,7 +245,6 @@ def _isObjectAboveLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 		return True
 
 	topLevelWindowHandle = winUser.getAncestor(obj.windowHandle, winUser.GA_ROOT)
-	# TODO: time this
 	return _isObjectAboveLockScreenCheckZOrder(topLevelWindowHandle, lockAppModule.processID)
 
 
@@ -268,7 +272,7 @@ def _isObjectAboveLockScreenCheckZOrder(objWindowHandle: int, lockAppModuleProce
 class _UnexpectedWindowCountError(Exception):
 	"""
 	Raised when a window which matches the expected condition
-	is not found by  _isWindowAboveWindowMatchesCond
+	is not found by _isWindowAboveWindowMatchesCond
 	"""
 	pass
 
@@ -277,7 +281,11 @@ def _isWindowAboveWindowMatchesCond(
 		window: winUser.HWNDVal,
 		matchCond: Callable[[winUser.HWNDVal], bool]
 ) -> bool:
-	""" Returns True if window is above a window that matches matchCond.
+	"""
+	This is a risky hack.
+	The order may be incorrectly detected.
+
+	@returns: True if window is above a window that matches matchCond.
 	If the first window is not found, but the second window is,
 	it is assumed that the first window is above the second window.
 	"""
