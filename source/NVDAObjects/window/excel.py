@@ -1,5 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2020 NV Access Limited, Dinesh Kaushal, Siddhartha Gupta, Accessolutions, Julien Cochuyt
+# Copyright (C) 2006-2022 NV Access Limited, Dinesh Kaushal, Siddhartha Gupta, Accessolutions, Julien Cochuyt,
+# Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -24,6 +25,7 @@ import ui
 import speech
 from tableUtils import HeaderCellInfo, HeaderCellTracker
 import config
+from config.configFlags import ReportCellBorders
 import textInfos
 import colors
 import eventHandler
@@ -32,6 +34,8 @@ from logHandler import log
 import gui
 import gui.contextHelp
 import winUser
+from winAPI.winUser.functions import GetSysColor
+from winAPI.winUser.constants import SysColorIndex
 import mouseHandler
 from displayModel import DisplayModelTextInfo
 import controlTypes
@@ -994,7 +998,8 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 		if formatConfig['reportFontName']:
 			formatField['font-name']=fontObj.name
 		if formatConfig['reportFontSize']:
-			formatField['font-size']=str(fontObj.size)
+			# Translators: Abbreviation for points, a measurement of font size.
+			formatField['font-size'] = pgettext("font size", "%s pt") % fontObj.size
 		if formatConfig['reportFontAttributes']:
 			formatField['bold']=fontObj.bold
 			formatField['italic']=fontObj.italic
@@ -1034,7 +1039,7 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 					formatField['background-color']=colors.RGB.fromCOLORREF(int(cellObj.interior.color))
 			except COMError:
 				pass
-		if formatConfig["reportBorderStyle"]:
+		if formatConfig["reportCellBorders"] != ReportCellBorders.OFF:
 			borders = None
 			hasMergedCells = self.obj.excelCellObject.mergeCells
 			if hasMergedCells:
@@ -1046,7 +1051,10 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 			else:
 				borders = cellObj.borders
 			try:
-				formatField['border-style']=getCellBorderStyleDescription(borders,reportBorderColor=formatConfig['reportBorderColor'])
+				formatField['border-style'] = getCellBorderStyleDescription(
+					borders,
+					reportBorderColor=formatConfig['reportCellBorders'] == ReportCellBorders.COLOR_AND_STYLE,
+				)
 			except COMError:
 				pass
 		return formatField,(self._startOffset,self._endOffset)
@@ -1271,10 +1279,6 @@ class ExcelCell(ExcelBase):
 		gesture="kb:NVDA+shift+c")
 	def script_setColumnHeader(self,gesture):
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
-		if not config.conf['documentFormatting']['reportTableHeaders']:
-			# Translators: a message reported in the SetColumnHeader script for Excel.
-			ui.message(_("Cannot set headers. Please enable reporting of table headers in Document Formatting Settings"))
-			return
 		if scriptCount==0:
 			if self.parent.setAsHeaderCell(self,isColumnHeader=True,isRowHeader=False):
 				# Translators: a message reported in the SetColumnHeader script for Excel.
@@ -1297,10 +1301,6 @@ class ExcelCell(ExcelBase):
 		gesture="kb:NVDA+shift+r")
 	def script_setRowHeader(self,gesture):
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
-		if not config.conf['documentFormatting']['reportTableHeaders']:
-			# Translators: a message reported in the SetRowHeader script for Excel.
-			ui.message(_("Cannot set headers. Please enable reporting of table headers in Document Formatting Settings"))
-			return
 		if scriptCount==0:
 			if self.parent.setAsHeaderCell(self,isColumnHeader=False,isRowHeader=True):
 				# Translators: a message reported in the SetRowHeader script for Excel.
@@ -1624,8 +1624,8 @@ class ExcelDropdown(Window):
 	excelCell=None
 
 	def _get__highlightColors(self):
-		background=colors.RGB.fromCOLORREF(winUser.user32.GetSysColor(13))
-		foreground=colors.RGB.fromCOLORREF(winUser.user32.GetSysColor(14))
+		background = colors.RGB.fromCOLORREF(GetSysColor(SysColorIndex.HIGHLIGHT))
+		foreground = colors.RGB.fromCOLORREF(GetSysColor(SysColorIndex.HIGHLIGHT_TEXT))
 		self._highlightColors=(background,foreground)
 		return self._highlightColors
 

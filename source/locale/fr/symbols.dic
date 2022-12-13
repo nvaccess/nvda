@@ -57,6 +57,7 @@ n°	\1 \2 	most	norep	# numéro
 \r	retour chariot
  	espace
  	espace insécable	char	# espace insécable
+\v	tabulation verticale	char	never	# 
 
 # Standard punctuation/symbols
 !	point d'exclamation
@@ -75,6 +76,8 @@ $	dollar
 )	parenthèse droite
 *	astérisque
 ,	virgule
+、	virgule idéographique	all	always
+،	virgule arabe	all	always
 -	tiret
 .	point
 |	bar	most
@@ -82,9 +85,11 @@ $	dollar
 /	barre oblique
 :	deux points
 ;	point virgule
+؛	point-virgule arabe	most
 <	inférieur
 =	égal
 ?	point d'interrogation
+؟	point d’interrogation arabe
 @	arobase	none
 [	crochet gauche
 ]	crochet droit

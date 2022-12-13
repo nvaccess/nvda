@@ -1,11 +1,13 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2021 NV Access Limited, Babbage B.V.
+# Copyright (C) 2006-2022 NV Access Limited, Babbage B.V.
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
+
 import typing
 from typing import (
 	Optional,
 	Union,
+	List,
 )
 
 from comtypes.automation import IEnumVARIANT, VARIANT
@@ -46,6 +48,7 @@ import api
 import config
 import controlTypes
 from controlTypes import TextPosition
+from controlTypes.formatFields import FontSize
 from NVDAObjects.window import Window
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo, InvalidNVDAObject
 import NVDAObjects.JAB
@@ -140,6 +143,10 @@ def normalizeIA2TextFormatField(formatField):
 		formatField["text-position"] = TextPosition(formatField.pop("text-position"))
 	except KeyError:
 		formatField["text-position"] = TextPosition.BASELINE
+
+	fontSize = formatField.get("font-size")
+	if fontSize is not None:
+		formatField["font-size"] = FontSize.translateFromAttribute(fontSize)
 
 class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 
@@ -502,7 +509,7 @@ the NVDAObject for IAccessible
 				from .winword import SpellCheckErrorField
 				clsList.append(SpellCheckErrorField)
 			else:
-				from .winword import WordDocument_WwN
+				from NVDAObjects.window.winword import WordDocument_WwN
 				clsList.append(WordDocument_WwN)
 		elif windowClassName=="DirectUIHWND" and role==oleacc.ROLE_SYSTEM_TOOLBAR:
 			parentWindow=winUser.getAncestor(self.windowHandle,winUser.GA_PARENT)
@@ -1590,6 +1597,12 @@ the NVDAObject for IAccessible
 	#: Type definition for auto prop '_get_detailsRelations'
 	detailsRelations: typing.Iterable["IAccessible"]
 
+	def _get_controllerFor(self) -> List[NVDAObject]:
+		control = self._getIA2RelationFirstTarget(IAccessibleHandler.RelationType.CONTROLLER_FOR)
+		if control:
+			return [control]
+		return []
+
 	def _get_detailsRelations(self) -> typing.Iterable["IAccessible"]:
 		relationTarget = self._getIA2RelationFirstTarget(IAccessibleHandler.RelationType.DETAILS)
 		if not relationTarget:
@@ -1648,9 +1661,6 @@ the NVDAObject for IAccessible
 			return None
 		else:
 			return super(IAccessible,self)._get_groupName()
-
-	def event_selection(self):
-		return self.event_stateChange()
 
 	def event_selectionAdd(self):
 		return self.event_stateChange()

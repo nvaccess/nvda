@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2021 NV Access Limited, Łukasz Golonka, Leonard de Ruijter
+# Copyright (C) 2006-2022 NV Access Limited, Łukasz Golonka, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -184,6 +184,8 @@ IAccessibleRolesToNVDARoles: Dict[Union[int, str], controlTypes.Role] = {
 	IA2.IA2_ROLE_BLOCK_QUOTE: controlTypes.Role.BLOCKQUOTE,
 	IA2.IA2_ROLE_LANDMARK: controlTypes.Role.LANDMARK,
 	IA2.IA2_ROLE_MARK: controlTypes.Role.MARKED_CONTENT,
+	IA2.IA2_ROLE_COMMENT: controlTypes.Role.COMMENT,
+	IA2.IA2_ROLE_SUGGESTION: controlTypes.Role.SUGGESTION,
 	# some common string roles
 	"frame": controlTypes.Role.FRAME,
 	"iframe": controlTypes.Role.INTERNALFRAME,
@@ -556,7 +558,7 @@ def winEventToNVDAEvent(  # noqa: C901
 			)
 		return None
 	# We do not support MSAA object proxied from native UIA
-	if UIAHandler.handler and UIAHandler.handler.isUIAWindow(window):
+	if UIAHandler.handler and UIAHandler.handler.isUIAWindow(window, isDebug=isMSAADebugLoggingEnabled()):
 		if isMSAADebugLoggingEnabled():
 			log.debug(
 				f"Native UIA window. Dropping winEvent {getWinEventLogInfo(window, objectID, childID, eventID)}"
@@ -772,6 +774,19 @@ def processFocusNVDAEvent(obj, force=False):
 
 
 class SecureDesktopNVDAObject(NVDAObjects.window.Desktop):
+	"""
+	Used to indicate to the user and to API consumers (including NVDA remote),
+	that the user has switched to a secure desktop.
+	This is triggered when Windows notification EVENT_SYSTEM_DESKTOPSWITCH
+	notifies that the desktop has changed, and is handled via a gainFocus event.
+	The gainFocus event causes NVDA to enter sleep mode as the secure mode
+	NVDA instance starts on the secure screen.
+
+	This object is backed by a valid MSAA object.
+	However, as information from the Secure Desktop object should not be accessed via this instance of NVDA,
+	getting related objects returns None.
+	This object must remain a Desktop subclass to retain backwards compatibility.
+	"""
 
 	def findOverlayClasses(self, clsList):
 		clsList.append(SecureDesktopNVDAObject)
@@ -785,9 +800,35 @@ class SecureDesktopNVDAObject(NVDAObjects.window.Desktop):
 		return controlTypes.Role.PANE
 
 	def event_gainFocus(self):
-		super(SecureDesktopNVDAObject, self).event_gainFocus()
+		from speech.speech import cancelSpeech
+		# NVDA announces the secure desktop when handling the gainFocus event.
+		# Before announcing the secure desktop and entering sleep mode,
+		# cancel speech so that speech does not overlap with the new instance of NVDA
+		# started on the secure desktop.
+		# Cancelling speech was previously handled by a foreground event,
+		# fired when focusing SecureDesktopNVDAObject.
+		# The foreground event would incorrectly fire on the foreground window of the user desktop.
+		# This foreground event is now explicitly prevented due to the security concerns of
+		# setting the foreground object to an object 'below the lock screen'.
+		cancelSpeech()
+		super().event_gainFocus()
 		# After handling the focus, NVDA should sleep while the secure desktop is active.
 		self.sleepMode = self.SLEEP_FULL
+
+	def _get_next(self) -> None:
+		return None
+
+	def _get_previous(self) -> None:
+		return None
+
+	def _get_firstChild(self) -> None:
+		return None
+
+	def _get_lastChild(self) -> None:
+		return None
+
+	def _get_parent(self) -> None:
+		return None
 
 
 def processDesktopSwitchWinEvent(window, objectID, childID):

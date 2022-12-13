@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2021 NV Access Limited, Aleksey Sadovoy, Babbage B.V., Joseph Lee, Łukasz Golonka
+# Copyright (C) 2006-2022 NV Access Limited, Aleksey Sadovoy, Babbage B.V., Joseph Lee, Łukasz Golonka,
+# Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -18,6 +19,8 @@ import globalVars
 import ctypes
 from ctypes import wintypes
 import monkeyPatches
+import NVDAState
+
 
 monkeyPatches.applyMonkeyPatches()
 
@@ -28,13 +31,7 @@ _log = logging.Logger(name="preStartup", level=logging.INFO)
 _log.addHandler(logging.NullHandler(level=logging.INFO))
 
 customVenvDetected = False
-if getattr(sys, "frozen", None):
-	# We are running as an executable.
-	# Append the path of the executable to sys so we can import modules from the dist dir.
-	sys.path.append(sys.prefix)
-	appDir = sys.prefix
-else:
-	# we are running from source
+if NVDAState.isRunningAsSource():
 	# Ensure we are inside the NVDA build system's Python virtual environment.
 	nvdaVenv = os.getenv("NVDA_VENV")
 	virtualEnv = os.getenv("VIRTUAL_ENV")
@@ -51,9 +48,15 @@ else:
 	import sourceEnv
 	#We should always change directory to the location of this module (nvda.pyw), don't rely on sys.path[0]
 	appDir = os.path.normpath(os.path.dirname(__file__))
+else:
+	# Append the path of the executable to sys so we can import modules from the dist dir.
+	sys.path.append(sys.prefix)
+	appDir = sys.prefix
+
 appDir = os.path.abspath(appDir)
 os.chdir(appDir)
 globalVars.appDir = appDir
+globalVars.appPid = os.getpid()
 
 
 import locale
@@ -104,7 +107,9 @@ class NoConsoleOptionParser(argparse.ArgumentParser):
 		winUser.MessageBox(0, out, u"Error", 0)
 		sys.exit(2)
 
-globalVars.startTime=time.time()
+
+NVDAState._initializeStartTime()
+
 
 # Check OS version requirements
 import winVersion
@@ -157,7 +162,16 @@ parser.add_argument(
 	)
 )
 parser.add_argument('-m','--minimal',action="store_true",dest='minimal',default=False,help="No sounds, no interface, no start message etc")
-parser.add_argument('-s','--secure',action="store_true",dest='secure',default=False,help="Secure mode (disable Python console)")
+# --secure is used to force secure mode.
+# Documented in the userGuide in #SecureMode.
+parser.add_argument(
+	'-s',
+	'--secure',
+	action="store_true",
+	dest='secure',
+	default=False,
+	help="Starts NVDA in secure mode",
+)
 parser.add_argument('--disable-addons',action="store_true",dest='disableAddons',default=False,help="Disable all add-ons")
 parser.add_argument('--debug-logging',action="store_true",dest='debugLogging',default=False,help="Enable debug level logging just for this run. This setting will override any other log level (--loglevel, -l) argument given, as well as no logging option.")
 parser.add_argument('--no-logging',action="store_true",dest='noLogging',default=False,help="Disable logging completely for this run. This setting can be overwritten with other log level (--loglevel, -l) switch or if debug logging is specified.")
@@ -248,7 +262,12 @@ if oldAppWindowHandle and not globalVars.appArgs.easeOfAccess:
 		_log.debug(f"Terminating oldAppWindowHandle: {oldAppWindowHandle}")
 		terminateRunningNVDA(oldAppWindowHandle)
 	except Exception as e:
-		parser.error(f"Couldn't terminate existing NVDA process, abandoning start:\nException: {e}")
+		winUser.MessageBox(
+			0,
+			f"Couldn't terminate existing NVDA process, abandoning start:\nException: {e}",
+			"Error",
+			winUser.MB_OK
+		)
 
 if globalVars.appArgs.quit or (oldAppWindowHandle and globalVars.appArgs.easeOfAccess):
 	_log.debug("Quitting")
@@ -259,16 +278,11 @@ elif globalVars.appArgs.check_running:
 	_log.debug("Exiting")
 	sys.exit(1)
 
-UOI_NAME = 2
-def getDesktopName():
-	desktop = ctypes.windll.user32.GetThreadDesktop(ctypes.windll.kernel32.GetCurrentThreadId())
-	name = ctypes.create_unicode_buffer(256)
-	ctypes.windll.user32.GetUserObjectInformationW(desktop, UOI_NAME, ctypes.byref(name), ctypes.sizeof(name), None)
-	return name.value
 
-
+# Suppress E402 (module level import not at top of file)
+from systemUtils import _getDesktopName, _isSecureDesktop  # noqa: E402
 # Ensure multiple instances are not fully started by using a mutex
-desktopName = getDesktopName()
+desktopName = _getDesktopName()
 _log.info(f"DesktopName: {desktopName}")
 
 
@@ -344,8 +358,8 @@ if mutex is None:
 	_log.error(f"Unknown mutex acquisition error. Exiting")
 	sys.exit(1)
 
-isSecureDesktop = desktopName == "Winlogon"
-if isSecureDesktop:
+
+if _isSecureDesktop():
 	import winreg
 	try:
 		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\NVDA")
@@ -381,7 +395,7 @@ if not ctypes.windll.user32.ChangeWindowMessageFilter(winUser.WM_QUIT, winUser.M
 	raise winUser.WinError()
 # Make this the last application to be shut down and don't display a retry dialog box.
 winKernel.SetProcessShutdownParameters(0x100, winKernel.SHUTDOWN_NORETRY)
-if not isSecureDesktop and not config.isAppX:
+if not _isSecureDesktop() and not config.isAppX:
 	import easeOfAccess
 	easeOfAccess.notify(3)
 try:
@@ -391,7 +405,7 @@ except:
 	log.critical("core failure",exc_info=True)
 	sys.exit(1)
 finally:
-	if not isSecureDesktop and not config.isAppX:
+	if not _isSecureDesktop() and not config.isAppX:
 		easeOfAccess.notify(2)
 	if globalVars.appArgs.changeScreenReaderFlag:
 		winUser.setSystemScreenReaderFlag(False)
@@ -411,4 +425,4 @@ finally:
 		log.error(f"Unable to close mutex handle, last error: {winUser.WinError(error)}")
 
 log.info("NVDA exit")
-sys.exit(globalVars.exitCode)
+sys.exit(NVDAState._getExitCode())

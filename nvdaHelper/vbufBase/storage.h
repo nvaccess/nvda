@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2006-2010 NVDA contributers.
+Copyright 2006-2022 NVDA contributors.
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -21,6 +21,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <list>
 #include <vector>
 #include <regex>
+#include <optional>
 
 /**
  * values to indicate a direction for searching
@@ -265,6 +266,13 @@ class VBufStorage_fieldNode_t {
  * @return true if the attribute was added, false if there was an error.
  */
 	bool addAttribute(const std::wstring& name, const std::wstring& value);
+
+	/**
+	 * Gets an attribute value for this field.
+	 * @param name the name of the attribute
+	 * @return the attribute if the attribute exists, NULL if it doesn't exist.
+	 */
+	std::optional<std::wstring> getAttribute(const std::wstring& name);
 
 /**
  * @return a string of all the attributes in this field, format of name:value pares separated by a semi colon.

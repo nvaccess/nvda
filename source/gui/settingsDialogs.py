@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2021 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
+# Copyright (C) 2006-2022 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
 # Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter,
 # Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Bill Dengler, Thomas Stivers,
 # Julien Cochuyt, Peter Vágner, Cyrille Bougot, Mesar Hameed, Łukasz Golonka, Aaron Cannon,
@@ -8,7 +8,6 @@
 # jakubl7545, mltony
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-
 import logging
 from abc import ABCMeta, abstractmethod
 import copy
@@ -17,6 +16,7 @@ from enum import IntEnum
 
 import typing
 import wx
+
 from vision.providerBase import VisionEnhancementProviderSettings
 from wx.lib.expando import ExpandoTextCtrl
 import wx.lib.newevent
@@ -25,6 +25,13 @@ import logHandler
 import installer
 from synthDriverHandler import changeVoice, getSynth, getSynthList, setSynth, SynthDriver
 import config
+from config.configFlags import (
+	ShowMessages,
+	TetherTo,
+	ReportLineIndentation,
+	ReportTableHeaders,
+	ReportCellBorders,
+)
 import languageHandler
 import speech
 import gui
@@ -1560,6 +1567,8 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		)
 		self.includeCLDRCheckbox.SetValue(config.conf["speech"]["includeCLDR"])
 
+		self._appendDelayedCharacterDescriptions(settingsSizerHelper)
+
 		minPitchChange = int(config.conf.getConfigValidation(
 			("speech", self.driver.name, "capPitchChange")
 		).kwargs["min"])
@@ -1618,6 +1627,17 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 			config.conf["speech"][self.driver.name]["useSpellingFunctionality"]
 		)
 
+	def _appendDelayedCharacterDescriptions(self, settingsSizerHelper: guiHelper.BoxSizerHelper) -> None:
+		# Translators: This is the label for a checkbox in the voice settings panel.
+		delayedCharacterDescriptionsText = _("&Delayed descriptions for characters on cursor movement")
+		self.delayedCharacterDescriptionsCheckBox = settingsSizerHelper.addItem(
+			wx.CheckBox(self, label=delayedCharacterDescriptionsText)
+		)
+		self.bindHelpEvent("delayedCharacterDescriptions", self.delayedCharacterDescriptionsCheckBox)
+		self.delayedCharacterDescriptionsCheckBox.SetValue(
+			config.conf["speech"]["delayedCharacterDescriptions"]
+		)
+
 	def onSave(self):
 		AutoSettingsMixin.onSave(self)
 
@@ -1632,6 +1652,8 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		if currentIncludeCLDR is not newIncludeCldr:
 			# Either included or excluded CLDR data, so clear the cache.
 			characterProcessing.clearSpeechSymbols()
+		delayedDescriptions = self.delayedCharacterDescriptionsCheckBox.IsChecked()
+		config.conf["speech"]["delayedCharacterDescriptions"] = delayedDescriptions
 		config.conf["speech"][self.driver.name]["capPitchChange"]=self.capPitchChangeEdit.Value
 		config.conf["speech"][self.driver.name]["sayCapForCapitals"]=self.sayCapForCapsCheckBox.IsChecked()
 		config.conf["speech"][self.driver.name]["beepForCapitals"]=self.beepForCapsCheckBox.IsChecked()
@@ -2325,28 +2347,20 @@ class DocumentFormattingPanel(SettingsPanel):
 		self.lineNumberCheckBox = pageAndSpaceGroup.addItem(wx.CheckBox(pageAndSpaceBox, label=lineText))
 		self.lineNumberCheckBox.SetValue(config.conf["documentFormatting"]["reportLineNumber"])
 
-		# Translators: This is the label for a combobox controlling the reporting of line indentation in the
-		# Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
-		lineIndentationText = _("Line &indentation reporting:")
-		indentChoices=[
-			#Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
-			_("Off"),
-			#Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
-			pgettext('line indentation setting', "Speech"),
-			#Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
-			_("Tones"),
-			#Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
-			_("Both Speech and Tones")
-		]
-		self.lineIndentationCombo = pageAndSpaceGroup.addLabeledControl(lineIndentationText, wx.Choice, choices=indentChoices)
+		lineIndentationChoices = [i.displayString for i in ReportLineIndentation]
+		self.lineIndentationCombo = pageAndSpaceGroup.addLabeledControl(
+			# Translators: This is the label for a combobox controlling the reporting of line indentation in the
+			# Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
+			_("Line &indentation reporting:"),
+			wx.Choice,
+			choices=lineIndentationChoices,
+		)
 		self.bindHelpEvent(
 			"DocumentFormattingSettingsLineIndentation",
 			self.lineIndentationCombo
 		)
-		#We use bitwise operations because it saves us a four way if statement.
-		curChoice = config.conf["documentFormatting"]["reportLineIndentationWithTones"] << 1 |  config.conf["documentFormatting"]["reportLineIndentation"]
-		self.lineIndentationCombo.SetSelection(curChoice)
-
+		self.lineIndentationCombo.SetSelection(config.conf['documentFormatting']['reportLineIndentation'])
+		
 		# Translators: This message is presented in the document formatting settings panelue
 		# If this option is selected, NVDA will report paragraph indentation if available. 
 		paragraphIndentationText = _("&Paragraph indentation")
@@ -2380,11 +2394,15 @@ class DocumentFormattingPanel(SettingsPanel):
 		self.tablesCheckBox = tablesGroup.addItem(wx.CheckBox(tablesGroupBox, label=_("&Tables")))
 		self.tablesCheckBox.SetValue(config.conf["documentFormatting"]["reportTables"])
 
-		# Translators: This is the label for a checkbox in the
-		# document formatting settings panel.
-		_tableHeadersCheckBox = wx.CheckBox(tablesGroupBox, label=_("Row/column h&eaders"))
-		self.tableHeadersCheckBox = tablesGroup.addItem(_tableHeadersCheckBox)
-		self.tableHeadersCheckBox.SetValue(config.conf["documentFormatting"]["reportTableHeaders"])
+		tableHeaderChoices = [i.displayString for i in ReportTableHeaders]
+		self.tableHeadersComboBox = tablesGroup.addLabeledControl(
+			# Translators: This is the label for a combobox in the
+			# document formatting settings panel.
+			_("H&eaders"),
+			wx.Choice,
+			choices=tableHeaderChoices,
+		)
+		self.tableHeadersComboBox.SetSelection(config.conf['documentFormatting']['reportTableHeaders'])
 
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
@@ -2392,17 +2410,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		self.tableCellCoordsCheckBox = tablesGroup.addItem(_tableCellCoordsCheckBox)
 		self.tableCellCoordsCheckBox.SetValue(config.conf["documentFormatting"]["reportTableCellCoords"])
 
-		borderChoices=[
-			# Translators: This is the label for a combobox in the
-			# document formatting settings panel.
-			_("Off"),
-			# Translators: This is the label for a combobox in the
-			# document formatting settings panel.
-			_("Styles"),
-			# Translators: This is the label for a combobox in the
-			# document formatting settings panel.
-			_("Both Colors and Styles"),
-		]
+		borderChoices = [i.displayString for i in ReportCellBorders]
 		self.borderComboBox = tablesGroup.addLabeledControl(
 			# Translators: This is the label for a combobox in the
 			# document formatting settings panel.
@@ -2410,13 +2418,7 @@ class DocumentFormattingPanel(SettingsPanel):
 			wx.Choice,
 			choices=borderChoices
 		)
-		curChoice = 0
-		if config.conf["documentFormatting"]["reportBorderStyle"]:
-			if config.conf["documentFormatting"]["reportBorderColor"]:
-				curChoice = 2
-			else:
-				curChoice = 1
-		self.borderComboBox.SetSelection(curChoice)
+		self.borderComboBox.SetSelection(config.conf["documentFormatting"]["reportCellBorders"])
 
 		# Translators: This is the label for a group of document formatting options in the 
 		# document formatting settings panel
@@ -2509,17 +2511,13 @@ class DocumentFormattingPanel(SettingsPanel):
 		config.conf["documentFormatting"]["reportSpellingErrors"]=self.spellingErrorsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportPage"]=self.pageCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLineNumber"]=self.lineNumberCheckBox.IsChecked()
-		choice = self.lineIndentationCombo.GetSelection()
-		config.conf["documentFormatting"]["reportLineIndentation"] = choice in (1, 3)
-		config.conf["documentFormatting"]["reportLineIndentationWithTones"] = choice in (2, 3)
+		config.conf["documentFormatting"]["reportLineIndentation"] = self.lineIndentationCombo.GetSelection()
 		config.conf["documentFormatting"]["reportParagraphIndentation"]=self.paragraphIndentationCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLineSpacing"]=self.lineSpacingCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportTables"]=self.tablesCheckBox.IsChecked()
-		config.conf["documentFormatting"]["reportTableHeaders"]=self.tableHeadersCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportTableHeaders"] = self.tableHeadersComboBox.GetSelection()
 		config.conf["documentFormatting"]["reportTableCellCoords"]=self.tableCellCoordsCheckBox.IsChecked()
-		choice = self.borderComboBox.GetSelection()
-		config.conf["documentFormatting"]["reportBorderStyle"] = choice in (1,2)
-		config.conf["documentFormatting"]["reportBorderColor"] = (choice == 2)
+		config.conf["documentFormatting"]["reportCellBorders"] = self.borderComboBox.GetSelection()
 		config.conf["documentFormatting"]["reportLinks"]=self.linksCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportGraphics"] = self.graphicsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportHeadings"]=self.headingsCheckBox.IsChecked()
@@ -2639,23 +2637,52 @@ class AdvancedPanelControls(
 		UIAGroup = guiHelper.BoxSizerHelper(self, sizer=UIASizer)
 		sHelper.addItem(UIAGroup)
 
-		# Translators: This is the label for a checkbox in the
-		#  Advanced settings panel.
-		label = _("Enable &selective registration for UI Automation events and property changes")
-		self.selectiveUIAEventRegistrationCheckBox = UIAGroup.addItem(wx.CheckBox(UIABox, label=label))
+		# Translators: This is the label for a combo box for selecting the
+		# means of registering for UI Automation events in the advanced settings panel.
+		# Choices are automatic, selective, and global.
+		selectiveUIAEventRegistrationComboText = _("Regi&stration for UI Automation events and property changes:")
+		selectiveUIAEventRegistrationChoices = [
+			# Translators: A choice in a combo box in the advanced settings
+			# panel to have NVDA decide whether to register
+			# selectively or globally for UI Automation events.
+			_("Automatic (prefer selective)"),
+			# Translators: A choice in a combo box in the advanced settings
+			# panel to have NVDA register selectively for UI Automation events
+			# (i.e. not to request events for objects outside immediate focus).
+			_("Selective"),
+			# Translators: A choice in a combo box in the advanced settings
+			# panel to have NVDA register for all UI Automation events
+			# in all cases.
+			_("Global")
+		]
+		#: The possible event registration config values, in the order they appear
+		#: in the combo box.
+		self.selectiveUIAEventRegistrationVals = (
+			"auto",
+			"selective",
+			"global"
+		)
+		self.selectiveUIAEventRegistrationCombo = UIAGroup.addLabeledControl(
+			selectiveUIAEventRegistrationComboText,
+			wx.Choice,
+			choices=selectiveUIAEventRegistrationChoices
+		)
 		self.bindHelpEvent(
 			"AdvancedSettingsSelectiveUIAEventRegistration",
-			self.selectiveUIAEventRegistrationCheckBox
+			self.selectiveUIAEventRegistrationCombo
 		)
-		self.selectiveUIAEventRegistrationCheckBox.SetValue(config.conf["UIA"]["selectiveEventRegistration"])
-		self.selectiveUIAEventRegistrationCheckBox.defaultValue = (
-			self._getDefaultValue(["UIA", "selectiveEventRegistration"])
+		curChoice = self.selectiveUIAEventRegistrationVals.index(
+			config.conf['UIA']['eventRegistration']
+		)
+		self.selectiveUIAEventRegistrationCombo.SetSelection(curChoice)
+		self.selectiveUIAEventRegistrationCombo.defaultValue = self.selectiveUIAEventRegistrationVals.index(
+			self._getDefaultValue(["UIA", "eventRegistration"])
 		)
 
 		label = pgettext(
 			"advanced.uiaWithMSWord",
 			# Translators: Label for the Use UIA with MS Word combobox, in the Advanced settings panel.
-			"Use UI Automation to access Microsoft Word document controls"
+			"Use UI Automation to access Microsoft &Word document controls"
 		)
 		wordChoices = (
 			# Translators: Label for the default value of the Use UIA with MS Word combobox,
@@ -2680,15 +2707,39 @@ class AdvancedPanelControls(
 		self.bindHelpEvent("UseUiaForExcel", self.UIAInMSExcelCheckBox)
 		self.UIAInMSExcelCheckBox.SetValue(config.conf["UIA"]["useInMSExcelWhenAvailable"])
 		self.UIAInMSExcelCheckBox.defaultValue = self._getDefaultValue(["UIA", "useInMSExcelWhenAvailable"])
-
-		# Translators: This is the label for a checkbox in the
-		#  Advanced settings panel.
-		label = _("Use UI Automation to access the Windows C&onsole when available")
-		consoleUIADevMap = True if config.conf['UIA']['winConsoleImplementation'] == 'UIA' else False
-		self.ConsoleUIACheckBox = UIAGroup.addItem(wx.CheckBox(UIABox, label=label))
-		self.bindHelpEvent("AdvancedSettingsConsoleUIA", self.ConsoleUIACheckBox)
-		self.ConsoleUIACheckBox.SetValue(consoleUIADevMap)
-		self.ConsoleUIACheckBox.defaultValue = self._getDefaultValue(["UIA", "winConsoleImplementation"])
+		# Translators: This is the label for a combo box for selecting the
+		# active console implementation in the advanced settings panel.
+		# Choices are automatic, UIA when available, and legacy.
+		consoleComboText = _("Windows C&onsole support:")
+		consoleChoices = [
+			# Translators: A choice in a combo box in the advanced settings
+			# panel to have NVDA determine its Windows Console implementation
+			# automatically.
+			_("Automatic (prefer UIA)"),
+			# Translators: A choice in a combo box in the advanced settings
+			# panel to have NVDA use UIA in the Windows Console when available.
+			_("UIA when available"),
+			# Translators: A choice in a combo box in the advanced settings
+			# panel to have NVDA use its legacy Windows Console support
+			# in all cases.
+			_("Legacy")
+		]
+		#: The possible console config values, in the order they appear
+		#: in the combo box.
+		self.consoleVals = (
+			"auto",
+			"UIA",
+			"legacy"
+		)
+		self.consoleCombo = UIAGroup.addLabeledControl(consoleComboText, wx.Choice, choices=consoleChoices)
+		self.bindHelpEvent("AdvancedSettingsConsoleUIA", self.consoleCombo)
+		curChoice = self.consoleVals.index(
+			config.conf['UIA']['winConsoleImplementation']
+		)
+		self.consoleCombo.SetSelection(curChoice)
+		self.consoleCombo.defaultValue = self.consoleVals.index(
+			self._getDefaultValue(["UIA", "winConsoleImplementation"])
+		)
 
 		label = pgettext(
 			"advanced.uiaWithChromium",
@@ -2832,6 +2883,17 @@ class AdvancedPanelControls(
 			self._getDefaultValue(["terminals", "diffAlgo"])
 		)
 
+		self.wtStrategyCombo: nvdaControls.FeatureFlagCombo = terminalsGroup.addLabeledControl(
+			labelText=_(
+				# Translators: This is the label for a combo-box in the Advanced settings panel.
+				"Speak new text in Windows Terminal via:"
+			),
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["terminals", "wtStrategy"],
+			conf=config.conf,
+		)
+		self.bindHelpEvent("WtStrategy", self.wtStrategyCombo)
+
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
 		label = _("Speech")
@@ -2864,6 +2926,23 @@ class AdvancedPanelControls(
 		)
 		self.cancelExpiredFocusSpeechCombo.defaultValue = self._getDefaultValue(
 			["featureFlag", "cancelExpiredFocusSpeech"]
+		)
+
+		# Translators: This is the label for a group of advanced options in the
+		#  Advanced settings panel
+		label = _("Virtual Buffers")
+		vBufSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=label)
+		vBufGroup = guiHelper.BoxSizerHelper(vBufSizer, sizer=vBufSizer)
+		sHelper.addItem(vBufGroup)
+
+		self.loadChromeVBufWhenBusyCombo: nvdaControls.FeatureFlagCombo = vBufGroup.addLabeledControl(
+			labelText=_(
+				# Translators: This is the label for a combo-box in the Advanced settings panel.
+				"Load Chromium virtual buffer when document busy."
+			),
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["virtualBuffers", "loadChromiumVBufOnBusyState"],
+			conf=config.conf,
 		)
 
 		# Translators: This is the label for a group of advanced options in the
@@ -2928,6 +3007,7 @@ class AdvancedPanelControls(
 			"synthDriver",
 			"nvwave",
 			"annotations",
+			"events",
 		]
 		# Translators: This is the label for a list in the
 		#  Advanced settings panel
@@ -2975,55 +3055,66 @@ class AdvancedPanelControls(
 			self._defaultsRestored
 			and self.scratchpadCheckBox.IsChecked() == self.scratchpadCheckBox.defaultValue
 			and (
-				self.selectiveUIAEventRegistrationCheckBox.IsChecked()
-				== self.selectiveUIAEventRegistrationCheckBox.defaultValue
+				self.selectiveUIAEventRegistrationCombo.GetSelection()
+				== self.selectiveUIAEventRegistrationCombo.defaultValue
 			)
 			and self.UIAInMSWordCombo.GetSelection() == self.UIAInMSWordCombo.defaultValue
 			and self.UIAInMSExcelCheckBox.IsChecked() == self.UIAInMSExcelCheckBox.defaultValue
-			and self.ConsoleUIACheckBox.IsChecked() == (self.ConsoleUIACheckBox.defaultValue == 'UIA')
-			and self.cancelExpiredFocusSpeechCombo.GetSelection() == self.cancelExpiredFocusSpeechCombo.defaultValue
+			and self.consoleCombo.GetSelection() == self.consoleCombo.defaultValue
 			and self.UIAInChromiumCombo.GetSelection() == self.UIAInChromiumCombo.defaultValue
-			and self.winConsoleSpeakPasswordsCheckBox.IsChecked() == self.winConsoleSpeakPasswordsCheckBox.defaultValue
-			and self.keyboardSupportInLegacyCheckBox.IsChecked() == self.keyboardSupportInLegacyCheckBox.defaultValue
-			and self.diffAlgoCombo.GetSelection() == self.diffAlgoCombo.defaultValue
-			and self.caretMoveTimeoutSpinControl.GetValue() == self.caretMoveTimeoutSpinControl.defaultValue
-			and self.reportTransparentColorCheckBox.GetValue() == self.reportTransparentColorCheckBox.defaultValue
-			and set(self.logCategoriesList.CheckedItems) == set(self.logCategoriesList.defaultCheckedItems)
 			and self.annotationsDetailsCheckBox.IsChecked() == self.annotationsDetailsCheckBox.defaultValue
 			and self.ariaDescCheckBox.IsChecked() == self.ariaDescCheckBox.defaultValue
 			and self.supportHidBrailleCombo.GetSelection() == self.supportHidBrailleCombo.defaultValue
+			and self.keyboardSupportInLegacyCheckBox.IsChecked() == self.keyboardSupportInLegacyCheckBox.defaultValue
+			and self.winConsoleSpeakPasswordsCheckBox.IsChecked() == self.winConsoleSpeakPasswordsCheckBox.defaultValue
+			and self.diffAlgoCombo.GetSelection() == self.diffAlgoCombo.defaultValue
+			and self.wtStrategyCombo.isValueConfigSpecDefault()
+			and self.cancelExpiredFocusSpeechCombo.GetSelection() == self.cancelExpiredFocusSpeechCombo.defaultValue
+			and self.loadChromeVBufWhenBusyCombo.isValueConfigSpecDefault()
+			and self.caretMoveTimeoutSpinControl.GetValue() == self.caretMoveTimeoutSpinControl.defaultValue
+			and self.reportTransparentColorCheckBox.GetValue() == self.reportTransparentColorCheckBox.defaultValue
+			and set(self.logCategoriesList.CheckedItems) == set(self.logCategoriesList.defaultCheckedItems)
+			and self.playErrorSoundCombo.GetSelection() == self.playErrorSoundCombo.defaultValue
 			and True  # reduce noise in diff when the list is extended.
 		)
 
 	def restoreToDefaults(self):
 		self.scratchpadCheckBox.SetValue(self.scratchpadCheckBox.defaultValue)
-		self.selectiveUIAEventRegistrationCheckBox.SetValue(self.selectiveUIAEventRegistrationCheckBox.defaultValue)
+		self.selectiveUIAEventRegistrationCombo.SetSelection(
+			self.selectiveUIAEventRegistrationCombo.defaultValue == 'auto'
+		)
 		self.UIAInMSWordCombo.SetSelection(self.UIAInMSWordCombo.defaultValue)
 		self.UIAInMSExcelCheckBox.SetValue(self.UIAInMSExcelCheckBox.defaultValue)
-		self.ConsoleUIACheckBox.SetValue(self.ConsoleUIACheckBox.defaultValue == 'UIA')
+		self.consoleCombo.SetSelection(self.consoleCombo.defaultValue == 'auto')
 		self.UIAInChromiumCombo.SetSelection(self.UIAInChromiumCombo.defaultValue)
-		self.cancelExpiredFocusSpeechCombo.SetSelection(self.cancelExpiredFocusSpeechCombo.defaultValue)
-		self.winConsoleSpeakPasswordsCheckBox.SetValue(self.winConsoleSpeakPasswordsCheckBox.defaultValue)
-		self.keyboardSupportInLegacyCheckBox.SetValue(self.keyboardSupportInLegacyCheckBox.defaultValue)
-		self.diffAlgoCombo.SetSelection(self.diffAlgoCombo.defaultValue == 'auto')
-		self.caretMoveTimeoutSpinControl.SetValue(self.caretMoveTimeoutSpinControl.defaultValue)
 		self.annotationsDetailsCheckBox.SetValue(self.annotationsDetailsCheckBox.defaultValue)
 		self.ariaDescCheckBox.SetValue(self.ariaDescCheckBox.defaultValue)
 		self.supportHidBrailleCombo.SetSelection(self.supportHidBrailleCombo.defaultValue)
+		self.winConsoleSpeakPasswordsCheckBox.SetValue(self.winConsoleSpeakPasswordsCheckBox.defaultValue)
+		self.keyboardSupportInLegacyCheckBox.SetValue(self.keyboardSupportInLegacyCheckBox.defaultValue)
+		self.diffAlgoCombo.SetSelection(self.diffAlgoCombo.defaultValue == 'auto')
+		self.wtStrategyCombo.resetToConfigSpecDefault()
+		self.cancelExpiredFocusSpeechCombo.SetSelection(self.cancelExpiredFocusSpeechCombo.defaultValue)
+		self.loadChromeVBufWhenBusyCombo.resetToConfigSpecDefault()
+		self.caretMoveTimeoutSpinControl.SetValue(self.caretMoveTimeoutSpinControl.defaultValue)
 		self.reportTransparentColorCheckBox.SetValue(self.reportTransparentColorCheckBox.defaultValue)
 		self.logCategoriesList.CheckedItems = self.logCategoriesList.defaultCheckedItems
+		self.playErrorSoundCombo.SetSelection(self.playErrorSoundCombo.defaultValue)
 		self._defaultsRestored = True
 
 	def onSave(self):
 		log.debug("Saving advanced config")
 		config.conf["development"]["enableScratchpadDir"]=self.scratchpadCheckBox.IsChecked()
-		config.conf["UIA"]["selectiveEventRegistration"] = self.selectiveUIAEventRegistrationCheckBox.IsChecked()
+		selectiveUIAEventRegistrationChoice = self.selectiveUIAEventRegistrationCombo.GetSelection()
+		config.conf['UIA']['eventRegistration'] = (
+			self.selectiveUIAEventRegistrationVals[selectiveUIAEventRegistrationChoice]
+		)
 		config.conf["UIA"]["allowInMSWord"] = self.UIAInMSWordCombo.GetSelection()
 		config.conf["UIA"]["useInMSExcelWhenAvailable"] = self.UIAInMSExcelCheckBox.IsChecked()
-		if self.ConsoleUIACheckBox.IsChecked():
-			config.conf['UIA']['winConsoleImplementation'] = "UIA"
-		else:
-			config.conf['UIA']['winConsoleImplementation'] = "auto"
+		consoleChoice = self.consoleCombo.GetSelection()
+		config.conf['UIA']['winConsoleImplementation'] = (
+			self.consoleVals[consoleChoice]
+		)
 		config.conf["featureFlag"]["cancelExpiredFocusSpeech"] = self.cancelExpiredFocusSpeechCombo.GetSelection()
 		config.conf["UIA"]["allowInChromium"] = self.UIAInChromiumCombo.GetSelection()
 		config.conf["terminals"]["speakPasswords"] = self.winConsoleSpeakPasswordsCheckBox.IsChecked()
@@ -3032,6 +3123,7 @@ class AdvancedPanelControls(
 		config.conf['terminals']['diffAlgo'] = (
 			self.diffAlgoVals[diffAlgoChoice]
 		)
+		self.wtStrategyCombo.saveCurrentValueToConf()
 		config.conf["editableText"]["caretMoveTimeoutMs"]=self.caretMoveTimeoutSpinControl.GetValue()
 		config.conf["documentFormatting"]["reportTransparentColor"] = (
 			self.reportTransparentColorCheckBox.IsChecked()
@@ -3039,6 +3131,7 @@ class AdvancedPanelControls(
 		config.conf["annotations"]["reportDetails"] = self.annotationsDetailsCheckBox.IsChecked()
 		config.conf["annotations"]["reportAriaDescription"] = self.ariaDescCheckBox.IsChecked()
 		config.conf["braille"]["enableHidBrailleSupport"] = self.supportHidBrailleCombo.GetSelection()
+		self.loadChromeVBufWhenBusyCombo.saveCurrentValueToConf()
 
 		for index,key in enumerate(self.logCategories):
 			config.conf['debugLog'][key]=self.logCategoriesList.IsChecked(index)
@@ -3441,37 +3534,22 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		if gui._isDebug():
 			log.debug("Loading cursor settings completed, now at %.2f seconds from start"%(time.time() - startTime))
 
-		SHOW_MESSAGES_LABELS = [
-			# Translators: One of the show states of braille messages
-			# (the disabled mode turns off showing of braille messages completely).
-			_("Disabled"),
-			# Translators: One of the show states of braille messages
-			# (the timeout mode shows messages for the specific time).
-			_("Use timeout"),
-			# Translators: One of the show states of braille messages
-			# (the indefinitely mode prevents braille messages from disappearing automatically).
-			_("Show indefinitely"),
-		]
 		# Translators: The label for a setting in braille settings to combobox enabling user
 		# to decide if braille messages should be shown and automatically disappear from braille display.
 		showMessagesText = _("Show messages")
+		showMessagesChoices = [i.displayString for i in ShowMessages]
 		self.showMessagesList = sHelper.addLabeledControl(
 			showMessagesText,
 			wx.Choice,
-			choices=SHOW_MESSAGES_LABELS
+			choices=showMessagesChoices,
 		)
 		self.bindHelpEvent("BrailleSettingsShowMessages", self.showMessagesList)
 		self.showMessagesList.Bind(wx.EVT_CHOICE, self.onShowMessagesChange)
-		if config.conf["braille"]["messageTimeout"] == 0:
-			self.showMessagesList.SetSelection(0)
-		elif config.conf["braille"]["noMessageTimeout"] == 0:
-			self.showMessagesList.SetSelection(1)
-		else:
-			self.showMessagesList.SetSelection(2)
-
-		# Minimal timeout value possible here is 1, because 0 disables showing of braille messages
-		# and is set using showMessagesList
-		minTimeout = 1
+		self.showMessagesList.SetSelection(config.conf['braille']['showMessages'])
+		
+		minTimeout = int(config.conf.getConfigValidation(
+			("braille", "messageTimeout")
+		).kwargs["min"])
 		maxTimeOut = int(config.conf.getConfigValidation(
 			("braille", "messageTimeout")
 		).kwargs["max"])
@@ -3485,7 +3563,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			initial=config.conf["braille"]["messageTimeout"]
 		)
 		self.bindHelpEvent("BrailleSettingsMessageTimeout", self.messageTimeoutEdit)
-		if self.showMessagesList.GetSelection() != 1:
+		if self.showMessagesList.GetSelection() != ShowMessages.USE_TIMEOUT:
 			self.messageTimeoutEdit.Disable()
 
 		if gui._isDebug():
@@ -3497,12 +3575,9 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		tetherChoices = [x[1] for x in braille.handler.tetherValues]
 		self.tetherList = sHelper.addLabeledControl(tetherListText, wx.Choice, choices=tetherChoices)
 		self.bindHelpEvent("BrailleTether", self.tetherList)
-		tetherChoice=braille.handler.TETHER_AUTO if config.conf["braille"]["autoTether"] else config.conf["braille"]["tetherTo"]
-		selection = next((x for x,y in enumerate(braille.handler.tetherValues) if y[0]==tetherChoice))
-		try:
-			self.tetherList.SetSelection(selection)
-		except:
-			pass
+		tetherChoice = config.conf["braille"]["tetherTo"]
+		selection = [x.value for x in TetherTo].index(tetherChoice)
+		self.tetherList.SetSelection(selection)
 		if gui._isDebug():
 			log.debug("Loading tether settings completed, now at %.2f seconds from start"%(time.time() - startTime))
 
@@ -3528,6 +3603,18 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		except:
 			index=0
 		self.focusContextPresentationList.SetSelection(index)
+
+		self.brailleInterruptSpeechCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
+			labelText=_(
+				# Translators: This is a label for a combo-box in the Braille settings panel.
+				"I&nterrupt speech while scrolling"
+			),
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["braille", "interruptSpeechWhileScrolling"],
+			conf=config.conf,
+		)
+		self.bindHelpEvent("BrailleSettingsInterruptSpeech", self.brailleInterruptSpeechCombo)
+
 		if gui._isDebug():
 			log.debug("Finished making settings, now at %.2f seconds from start"%(time.time() - startTime))
 
@@ -3541,21 +3628,17 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		config.conf["braille"]["cursorBlinkRate"] = self.cursorBlinkRateEdit.GetValue()
 		config.conf["braille"]["cursorShapeFocus"] = self.cursorShapes[self.cursorShapeFocusList.GetSelection()]
 		config.conf["braille"]["cursorShapeReview"] = self.cursorShapes[self.cursorShapeReviewList.GetSelection()]
-		config.conf["braille"]["noMessageTimeout"] = self.showMessagesList.GetSelection() == 2
-		if self.showMessagesList.GetSelection() == 0:
-			config.conf["braille"]["messageTimeout"] = 0
+		config.conf["braille"]["showMessages"] = self.showMessagesList.GetSelection()
+		config.conf["braille"]["messageTimeout"] = self.messageTimeoutEdit.GetValue()
+		tetherChoice = [x.value for x in TetherTo][self.tetherList.GetSelection()]
+		if tetherChoice == TetherTo.AUTO.value:
+			config.conf["braille"]["tetherTo"] = TetherTo.AUTO.value
 		else:
-			config.conf["braille"]["messageTimeout"] = self.messageTimeoutEdit.GetValue()
-		tetherChoice = braille.handler.tetherValues[self.tetherList.GetSelection()][0]
-		if tetherChoice==braille.handler.TETHER_AUTO:
-			config.conf["braille"]["autoTether"] = True
-			config.conf["braille"]["tetherTo"] = braille.handler.TETHER_FOCUS
-		else:
-			config.conf["braille"]["autoTether"] = False
 			braille.handler.setTether(tetherChoice, auto=False)
 		config.conf["braille"]["readByParagraph"] = self.readByParagraphCheckBox.Value
 		config.conf["braille"]["wordWrap"] = self.wordWrapCheckBox.Value
 		config.conf["braille"]["focusContextPresentation"] = self.focusContextPresentationValues[self.focusContextPresentationList.GetSelection()]
+		self.brailleInterruptSpeechCombo.saveCurrentValueToConf()
 
 	def onShowCursorChange(self, evt):
 		self.cursorBlinkCheckBox.Enable(evt.IsChecked())

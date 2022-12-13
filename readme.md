@@ -13,13 +13,14 @@ Whether you are a beginner, an advanced user, a new or a long time developer; or
 * [NVDA User Guide](https://www.nvaccess.org/files/nvda/documentation/userGuide.html)
 * [NVDA Developer Guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html)
 * [NVDA Add-ons Development Internals](https://github.com/nvdaaddons/DevGuide/wiki)
-* [NVDA ControllerClient manual](https://github.com/nvaccess/nvda/tree/master/extras/controllerClient)
+* [NVDA ControllerClient manual (NVDA API for external applications to directly speak or braille messages, etc.)](https://github.com/nvaccess/nvda/tree/master/extras/controllerClient)
 * Further documentation is available in the NVDA repository's [Wiki](https://github.com/nvaccess/nvda/wiki), and in the [Community Wiki](https://github.com/nvaccess/nvda-community/wiki)
 
 ### Communication channels
 * [NVDA Users Mailing List](https://nvda.groups.io/g/nvda)
 * [NVDA Developers Mailing List](https://groups.io/g/nvda-devel)
 * [NVDA Add-ons Mailing List](https://groups.io/g/nvda-addons)
+* [NVDA Add-on API Mailing List](https://groups.google.com/a/nvaccess.org/g/nvda-api)
 * [Instant Messaging channel for NVDA Support](https://gitter.im/nvaccess/NVDA)
 * [Other sources including groups and profiles on social media channels, language specific websites and mailing lists etc.](https://github.com/nvaccess/nvda-community/wiki/Connect)
 
@@ -33,7 +34,6 @@ You can also get  direct support from NV Access. See the [NV Access](http://www.
 * [NVDA Add-ons coordination and support center](https://github.com/nvdaaddons): all about NVDA's addons environment
 * [NVDA Add-ons Template](https://github.com/nvdaaddons/AddonTemplate): A repository for generating the Add-ons template
 * [Translating NVDA](https://github.com/nvaccess/nvda/wiki/Translating): Information about how to translate NVDA into another language
-* [NVDA Controller Client](http://www.nvda-project.org/nvdaControllerClient/nvdaControllerClient_20100219.7z) (2010-02-19): NVDA API for external applications to directly speak or braille messages, etc.
 * [Contributing to NVDA](https://github.com/nvaccess/nvda/wiki/Contributing): Guidelines for contributing to the NVDA source code
 * [NVDA commits email list](https://lists.sourceforge.net/lists/listinfo/nvda-commits): Notifications for all commits to the Git repository
 * [Old email archives](http://nabble.nvda-project.org/Development-f1.html): contain discussions about NVDA development
@@ -66,8 +66,7 @@ The following dependencies need to be installed on your system:
 		* When you are intending to use the Visual Studio IDE (not required for NVDA development), you can download [the community version](https://aka.ms/vs/16/release/vs_Community.exe), which is also used by appveyor
 		* The Professional and Enterprise versions are also supported
 		* Preview versions are *not* supported
-		* Building with Visual Studio 2022 explicitly requires the MSVC v142 - VS 2019 C++ build tools to be installed (see below)
-	* When installing Visual Studio, you need to enable the following:
+	* When installing Visual Studio 2019, you need to enable the following:
 		* In the list  on the Workloads tab
 			* in the Windows grouping:
 				* Desktop development with C++
@@ -79,7 +78,7 @@ The following dependencies need to be installed on your system:
 		* On the Individual components tab, ensure the following items are selected:
 			* MSVC v142 - VS 2019 C++ ARM64 build tools
 			* C++ ATL for v142 build tools (ARM64)
-
+	* If installing Visual Studio 2022: choose all the same above components as for 2019, but V143 variants, rather than V142. 
 
 ### Git Submodules
 Some of the dependencies are contained in Git submodules.
@@ -89,11 +88,11 @@ If you aren't sure, run `git submodule update` after every git pull, merge or ch
 
 For reference, the following run time dependencies are included in Git submodules:
 
-* [eSpeak NG](https://github.com/espeak-ng/espeak-ng), version 1.51-dev commit 7e5457f91e10
-* [Sonic](https://github.com/waywardgeek/sonic), commit 4f8c1d11
+* [eSpeak NG](https://github.com/espeak-ng/espeak-ng), version 1.52-dev commit `b17ed2d6`
+* [Sonic](https://github.com/waywardgeek/sonic), commit 1d705135
 * [IAccessible2](https://wiki.linuxfoundation.org/accessibility/iaccessible2/start), commit cbc1f29631780
-* [liblouis](http://www.liblouis.org/), version 3.21.0
-* [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/), version 40.0
+* [liblouis](http://www.liblouis.org/), version 3.23.0
+* [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/), version 42.0
 * NVDA images and sounds
 * [Adobe Acrobat accessibility interface, version XI](https://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)
 * [Microsoft Detours](https://github.com/microsoft/Detours), commit 45a76a3
@@ -112,7 +111,7 @@ Additionally, the following build time dependencies are included in the miscDeps
 * xgettext and msgfmt from [GNU gettext](https://sourceforge.net/projects/cppcms/files/boost_locale/gettext_for_windows/)
 
 The following dependencies aren't needed by most people, and are not included in Git submodules:
-* To generate developer documentation for nvdaHelper: [Doxygen Windows installer](http://www.doxygen.nl/download.html), version 1.8.15:
+* To generate [developer documentation for nvdaHelper](#building-nvdahelper-developer-documentation): [Doxygen Windows installer](http://www.doxygen.nl/download.html), version 1.8.15:
 * When you are using Visual Studio Code as your integrated development environment of preference, you can make use of our [prepopulated workspace configuration](https://github.com/nvaccess/vscode-nvda/) for [Visual Studio Code](https://code.visualstudio.com/).
 	While this VSCode project is not included as a submodule in the NVDA repository, you can easily check out the workspace configuration in your repository by executing the following from the root of the repository.
 
@@ -213,6 +212,8 @@ scons devDocs
 
 The documentation will be placed in the `NVDA` folder in the output directory.
 
+#### Building nvdaHelper developer documentation
+
 To generate developer documentation for nvdaHelper (not included in the devDocs target):
 
 ```
@@ -220,6 +221,7 @@ scons devDocs_nvdaHelper
 ```
 
 The documentation will be placed in the `devDocs\nvdaHelper` folder in the output directory.
+This requires having Doxygen installed.
 
 ### Generate debug symbols archive
 To generate an archive of debug symbols for the various dll/exe binaries, type:
@@ -306,7 +308,8 @@ Any arguments given to rununittests.bat are forwarded onto Nose.
 Please refer to Nose's own documentation on how to filter tests etc.
 
 ### System Tests
-System tests can be run with the `runsystemtests.bat` script.
+System tests can be run with the `runsystemtests.bat --include <TAG>` script.
+To run all tests standard tests for developers use `runsystemtests.bat --include NVDA`.
 Internally this script uses the Robot  test framework to execute the tests.
 Any arguments given to runsystemtests.bat are forwarded onto Robot.
 For more details (including filtering and exclusion of tests) see `tests/system/readme.md`.

@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2021 NV Access Limited
+# Copyright (C) 2006-2022 NV Access Limited
 
 """Base classes with common support for browsers exposing IAccessible2.
 """
@@ -21,10 +21,26 @@ import aria
 import api
 import speech
 import config
+import NVDAObjects
+
 
 class Ia2Web(IAccessible):
 	IAccessibleTableUsesTableCellIndexAttrib=True
 	caretMovementDetectionUsesEvents = False
+
+	def isDescendantOf(self, obj: "NVDAObjects.NVDAObject") -> bool:
+		if obj.windowHandle != self.windowHandle:
+			# Only supported on the same window.
+			raise NotImplementedError
+		if not isinstance(obj, Ia2Web):
+			# #4080: Input composition NVDAObjects are the same window but not IAccessible2!
+			raise NotImplementedError
+		accId = obj.IA2UniqueID
+		try:
+			res = obj.IAccessibleObject.accChild(accId)
+		except COMError:
+			return False
+		return bool(res)
 
 	def _get_positionInfo(self):
 		info=super(Ia2Web,self).positionInfo
@@ -61,6 +77,25 @@ class Ia2Web(IAccessible):
 	@property
 	def hasDetails(self) -> bool:
 		return bool(self.IA2Attributes.get("details-roles"))
+
+	def _get_detailsRole(self) -> typing.Optional[controlTypes.Role]:
+		from .chromium import supportedAriaDetailsRoles
+		# Currently only defined in Chrome as of May 2022
+		# Refer to ComputeDetailsRoles
+		# https://chromium.googlesource.com/chromium/src/+/main/ui/accessibility/platform/ax_platform_node_base.cc#2419
+		detailsRoles = self.IA2Attributes.get("details-roles")
+		if not detailsRoles:
+			if config.conf["debugLog"]["annotations"]:
+				log.debug("details-roles not found")
+			return None
+		
+		firstDetailsRole = detailsRoles.split(" ")[0]
+		# return a supported details role
+		detailsRole = supportedAriaDetailsRoles.get(firstDetailsRole)
+		if config.conf["debugLog"]["annotations"]:
+			log.debug(f"detailsRole: {repr(detailsRole)}")
+		return detailsRole
+
 
 	def _get_isCurrent(self) -> controlTypes.IsCurrent:
 		ia2attrCurrent: str = self.IA2Attributes.get("current", "false")
@@ -239,11 +274,15 @@ class Switch(Ia2Web):
 	# role="switch" gets mapped to IA2_ROLE_TOGGLE_BUTTON, but it uses the
 	# checked state instead of pressed. The simplest way to deal with this
 	# identity crisis is to map it to a check box.
-	role = controlTypes.Role.CHECKBOX
+	role = controlTypes.Role.SWITCH
 
 	def _get_states(self):
 		states = super().states
 		states.discard(controlTypes.State.PRESSED)
+		states.discard(controlTypes.State.CHECKABLE)
+		if controlTypes.State.CHECKED in states:
+			states.discard(controlTypes.State.CHECKED)
+			states.add(controlTypes.State.ON)
 		return states
 
 

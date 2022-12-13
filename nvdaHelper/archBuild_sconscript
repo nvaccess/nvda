@@ -87,17 +87,13 @@ env.Append(
 	CPPDEFINES=[
 		'UNICODE',
 		'_CRT_SECURE_NO_DEPRECATE',
-		('LOGLEVEL','${nvdaHelperLogLevel}'),
-		('_WIN32_WINNT','_WIN32_WINNT_WIN7')
+		('LOGLEVEL', '${nvdaHelperLogLevel}'),
+		('_WIN32_WINNT', '_WIN32_WINNT_WIN7'),
+		# NOMINMAX: prevent minwindef.h min/max macro definition, which unexpectedly override developer
+		# expectations
+		'NOMINMAX',
 	]
 )
-env.Append(CCFLAGS=[
-	'/std:c++17',
-	# '/showIncludes': Useful to understand which file causes some other file to be included.
-	# It will output a list of the include files.
-	# The option also displays nested include files, that is, the files
-	# included by the files that you include.
-])
 
 env.Append(CXXFLAGS=['/EHsc'])
 
@@ -144,13 +140,14 @@ if 'RTC' in debug:
 env.Append(PDB='${TARGET}.pdb')
 env.Append(LINKFLAGS='/OPT:REF') #having symbols usually turns this off but we have no need for unused symbols
 
-# Ignoring Flake8 F821: 'undefined name' due to nonstandard SCons import
-win10env = env.Clone()  # noqa: F821
-# Swap C++17 for C++20 for co-routine support, used by C++/WinRT.
-win10env.Replace(CCFLAGS=[
+env.Append(CCFLAGS=[
 	'/std:c++20',
+	'/permissive-',
+	# '/showIncludes': Useful to understand which file causes some other file to be included.
+	# It will output a list of the include files.
+	# The option also displays nested include files, that is, the files
+	# included by the files that you include.
 ])
-Export('win10env')
 
 if 'debugCRT' in debug:
 	env.Append(CCFLAGS=['/MTd'])

@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2021 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner,
+# Copyright (C) 2006-2022 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner,
 # Derek Riemer, Babbage B.V., Zahari Yurukov, Łukasz Golonka
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -8,7 +8,11 @@
 
 
 from dataclasses import dataclass
-from typing import List, Optional
+from typing import (
+	Any,
+	List,
+	Optional,
+)
 import comtypes
 import sys
 import winVersion
@@ -24,6 +28,21 @@ from logHandler import log
 import addonHandler
 import extensionPoints
 import garbageHandler
+import NVDAState
+
+
+def __getattr__(attrName: str) -> Any:
+	"""Module level `__getattr__` used to preserve backward compatibility.
+	"""
+	if attrName == "post_windowMessageReceipt" and NVDAState._allowDeprecatedAPI():
+		from winAPI.messageWindow import pre_handleWindowMessage
+		log.warning(
+			"core.post_windowMessageReceipt is deprecated, "
+			"use winAPI.messageWindow.pre_handleWindowMessage instead."
+		)
+		return pre_handleWindowMessage
+	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+
 
 
 # inform those who want to know that NVDA has finished starting up.
@@ -33,18 +52,6 @@ PUMP_MAX_DELAY = 10
 
 #: The thread identifier of the main thread.
 mainThreadId = threading.get_ident()
-
-#: Notifies when a window message has been received by NVDA.
-#: This allows components to perform an action when several system events occur,
-#: such as power, screen orientation and hardware changes.
-#: Handlers are called with three arguments.
-#: @param msg: The window message.
-#: @type msg: int
-#: @param wParam: Additional message information.
-#: @type wParam: int
-#: @param lParam: Additional message information.
-#: @type lParam: int
-post_windowMessageReceipt = extensionPoints.Action()
 
 _pump = None
 _isPumpPending = False
@@ -156,7 +163,7 @@ def restartUnsafely():
 		except ValueError:
 			pass
 	options = []
-	if not hasattr(sys, "frozen"):
+	if NVDAState.isRunningAsSource():
 		options.append(os.path.basename(sys.argv[0]))
 	_startNewInstance(NewNVDAInstance(
 		sys.executable,
@@ -168,7 +175,7 @@ def restartUnsafely():
 def restart(disableAddons=False, debugLogging=False):
 	"""Restarts NVDA by starting a new copy."""
 	if globalVars.appArgs.launcher:
-		globalVars.exitCode=3
+		NVDAState._setExitCode(3)
 		if not triggerNVDAExit():
 			log.error("NVDA already in process of exiting, this indicates a logic error.")
 		return
@@ -181,7 +188,7 @@ def restart(disableAddons=False, debugLogging=False):
 		except ValueError:
 			pass
 	options = []
-	if not hasattr(sys, "frozen"):
+	if NVDAState.isRunningAsSource():
 		options.append(os.path.basename(sys.argv[0]))
 	if disableAddons:
 		options.append('--disable-addons')
@@ -205,6 +212,7 @@ def resetConfiguration(factoryDefaults=False):
 	import speech
 	import vision
 	import inputCore
+	import hwIo
 	import tones
 	log.debug("Terminating vision")
 	vision.terminate()
@@ -216,6 +224,8 @@ def resetConfiguration(factoryDefaults=False):
 	speech.terminate()
 	log.debug("terminating tones")
 	tones.terminate()
+	log.debug("Terminating background i/o")
+	hwIo.terminate()
 	log.debug("terminating addonHandler")
 	addonHandler.terminate()
 	log.debug("Reloading config")
@@ -230,6 +240,9 @@ def resetConfiguration(factoryDefaults=False):
 	languageHandler.setLanguage(lang)
 	# Addons
 	addonHandler.initialize()
+	# Hardware background i/o
+	log.debug("initializing background i/o")
+	hwIo.initialize()
 	# Tones
 	tones.initialize()
 	#Speech
@@ -415,6 +428,68 @@ def _handleNVDAModuleCleanupBeforeGUIExit():
 	brailleViewer.destroyBrailleViewer()
 
 
+def _initializeObjectCaches():
+	"""
+	Caches the desktop object.
+	This may make information from the desktop window available on the lock screen,
+	however no known exploit is known for this.
+	2023.1 plans to ensure the desktopObject is available only when signed-in.
+
+	The desktop object must be used, as setting the object caches has side effects,
+	such as focus events.
+	Side effects from events generated while setting these objects may require NVDA to be finished initializing.
+	E.G. An app module for a lockScreen window.
+	The desktop object is an NVDA object without event handlers associated with it.
+	"""
+	import api
+	import NVDAObjects
+	import winUser
+
+	desktopObject = NVDAObjects.window.Window(windowHandle=winUser.getDesktopWindow())
+	api.setDesktopObject(desktopObject)
+	api.setForegroundObject(desktopObject)
+	api.setFocusObject(desktopObject)
+	api.setNavigatorObject(desktopObject)
+	api.setMouseObject(desktopObject)
+
+
+class _TrackNVDAInitialization:
+	"""
+	During NVDA initialization,
+	core._initializeObjectCaches needs to cache the desktop object,
+	regardless of lock state.
+	Security checks may cause the desktop object to not be set if NVDA starts on the lock screen.
+	As such, during initialization, NVDA should behave as if Windows is unlocked,
+	i.e. winAPI.sessionTracking.isWindowsLocked should return False.
+
+	TODO: move to NVDAState module
+	"""
+
+	_isNVDAInitialized = False
+	"""When False, isWindowsLocked is forced to return False.
+	"""
+
+	@staticmethod
+	def markInitializationComplete():
+		assert not _TrackNVDAInitialization._isNVDAInitialized
+		_TrackNVDAInitialization._isNVDAInitialized = True
+
+	@staticmethod
+	def isInitializationComplete() -> bool:
+		return _TrackNVDAInitialization._isNVDAInitialized
+
+
+def _doLoseFocus():
+	import api
+	focusObject = api.getFocusObject()
+	if focusObject and hasattr(focusObject, "event_loseFocus"):
+		log.debug("calling lose focus on object with focus")
+		try:
+			focusObject.event_loseFocus()
+		except Exception:
+			log.exception("Lose focus error")
+
+
 def main():
 	"""NVDA's core main loop.
 	This initializes all modules such as audio, IAccessible, keyboard, mouse, and GUI.
@@ -423,8 +498,10 @@ def main():
 	Finally, it starts the wx main loop.
 	"""
 	log.debug("Core starting")
-
-	ctypes.windll.user32.SetProcessDPIAware()
+	if NVDAState.isRunningAsSource():
+		# When running as packaged version, DPI awareness is set via the app manifest.
+		from winAPI.dpiAwareness import setDPIAwareness
+		setDPIAwareness()
 
 	import config
 	if not globalVars.appArgs.configPath:
@@ -467,6 +544,9 @@ def main():
 	import NVDAHelper
 	log.debug("Initializing NVDAHelper")
 	NVDAHelper.initialize()
+	log.debug("initializing background i/o")
+	import hwIo
+	hwIo.initialize()
 	log.debug("Initializing tones")
 	import tones
 	tones.initialize()
@@ -479,8 +559,9 @@ def main():
 	import mathPres
 	log.debug("Initializing MathPlayer")
 	mathPres.initialize()
-	if not globalVars.appArgs.minimal and (time.time()-globalVars.startTime)>5:
-		log.debugWarning("Slow starting core (%.2f sec)" % (time.time()-globalVars.startTime))
+	timeSinceStart = time.time() - NVDAState.getStartTime()
+	if not globalVars.appArgs.minimal and timeSinceStart > 5:
+		log.debugWarning("Slow starting core (%.2f sec)" % timeSinceStart)
 		# Translators: This is spoken when NVDA is starting.
 		speech.speakMessage(_("Loading NVDA. Please wait..."))
 	import wx
@@ -545,90 +626,14 @@ def main():
 		# the GUI mainloop must be running for this to work so delay it
 		wx.CallAfter(audioDucking.initialize)
 
-	# #3763: In wxPython 3, the class name of frame windows changed from wxWindowClassNR to wxWindowNR.
-	# NVDA uses the main frame to check for and quit another instance of NVDA.
-	# To remain compatible with older versions of NVDA, create our own wxWindowClassNR.
-	# We don't need to do anything else because wx handles WM_QUIT for all windows.
-	import windowUtils
-	class MessageWindow(windowUtils.CustomWindow):
-		className = u"wxWindowClassNR"
-		# Windows constants for power / display changes
-		WM_POWERBROADCAST = 0x218
-		PBT_APMPOWERSTATUSCHANGE = 0xA
-		UNKNOWN_BATTERY_STATUS = 0xFF
-		AC_ONLINE = 0X1
-		NO_SYSTEM_BATTERY = 0X80
-		#States for screen orientation
-		ORIENTATION_NOT_INITIALIZED = 0
-		ORIENTATION_PORTRAIT = 1
-		ORIENTATION_LANDSCAPE = 2
-
-		def __init__(self, windowName=None):
-			super(MessageWindow, self).__init__(windowName)
-			self.oldBatteryStatus = None
-			self.orientationStateCache = self.ORIENTATION_NOT_INITIALIZED
-			self.orientationCoordsCache = (0,0)
-			self.handlePowerStatusChange()
-
-		def windowProc(self, hwnd, msg, wParam, lParam):
-			post_windowMessageReceipt.notify(msg=msg, wParam=wParam, lParam=lParam)
-			if msg == self.WM_POWERBROADCAST and wParam == self.PBT_APMPOWERSTATUSCHANGE:
-				self.handlePowerStatusChange()
-			elif msg == winUser.WM_DISPLAYCHANGE:
-				self.handleScreenOrientationChange(lParam)
-
-		def handleScreenOrientationChange(self, lParam):
-			import ui
-			import winUser
-			# Resolution detection comes from an article found at https://msdn.microsoft.com/en-us/library/ms812142.aspx.
-			#The low word is the width and hiword is height.
-			width = winUser.LOWORD(lParam)
-			height = winUser.HIWORD(lParam)
-			self.orientationCoordsCache = (width,height)
-			if width > height:
-				# If the height and width are the same, it's actually a screen flip, and we do want to alert of those!
-				if self.orientationStateCache == self.ORIENTATION_LANDSCAPE and self.orientationCoordsCache != (width,height):
-					return
-				#Translators: The screen is oriented so that it is wider than it is tall.
-				ui.message(_("Landscape" ))
-				self.orientationStateCache = self.ORIENTATION_LANDSCAPE
-			else:
-				if self.orientationStateCache == self.ORIENTATION_PORTRAIT and self.orientationCoordsCache != (width,height):
-					return
-				#Translators: The screen is oriented in such a way that the height is taller than it is wide.
-				ui.message(_("Portrait"))
-				self.orientationStateCache = self.ORIENTATION_PORTRAIT
-
-		def handlePowerStatusChange(self):
-			#Mostly taken from script_say_battery_status, but modified.
-			import ui
-			import winKernel
-			sps = winKernel.SYSTEM_POWER_STATUS()
-			if not winKernel.GetSystemPowerStatus(sps) or sps.BatteryFlag is self.UNKNOWN_BATTERY_STATUS:
-				return
-			if sps.BatteryFlag & self.NO_SYSTEM_BATTERY:
-				return
-			if self.oldBatteryStatus is None:
-				#Just initializing the cache, do not report anything.
-				self.oldBatteryStatus = sps.ACLineStatus
-				return
-			if sps.ACLineStatus == self.oldBatteryStatus:
-				#Sometimes, this double fires. This also fires when the battery level decreases by 3%.
-				return
-			self.oldBatteryStatus = sps.ACLineStatus
-			if sps.ACLineStatus & self.AC_ONLINE:
-				#Translators: Reported when the battery is plugged in, and now is charging.
-				ui.message(_("Charging battery. %d percent") % sps.BatteryLifePercent)
-			else:
-				#Translators: Reported when the battery is no longer plugged in, and now is not charging.
-				ui.message(_("Not charging battery. %d percent") %sps.BatteryLifePercent)
+	from winAPI.messageWindow import _MessageWindow
 	import versionInfo
-	messageWindow = MessageWindow(versionInfo.name)
+	messageWindow = _MessageWindow(versionInfo.name)
 
 	# initialize wxpython localization support
 	wxLocaleObj = wx.Locale()
 	wxLang = getWxLangOrNone()
-	if hasattr(sys,'frozen'):
+	if not NVDAState.isRunningAsSource():
 		wxLocaleObj.AddCatalogLookupPathPrefix(os.path.join(globalVars.appDir, "locale"))
 	if wxLang:
 		try:
@@ -642,14 +647,8 @@ def main():
 	log.debug("Initializing garbageHandler")
 	garbageHandler.initialize()
 
-	import api
-	import winUser
-	import NVDAObjects.window
-	desktopObject=NVDAObjects.window.Window(windowHandle=winUser.getDesktopWindow())
-	api.setDesktopObject(desktopObject)
-	api.setFocusObject(desktopObject)
-	api.setNavigatorObject(desktopObject)
-	api.setMouseObject(desktopObject)
+	_initializeObjectCaches()
+
 	import JABHandler
 	log.debug("initializing Java Access Bridge support")
 	try:
@@ -761,6 +760,9 @@ def main():
 	else:
 		log.debug("initializing updateCheck")
 		updateCheck.initialize()
+
+	_TrackNVDAInitialization.markInitializationComplete()
+
 	log.info("NVDA initialized")
 
 	# Queue the firing of the postNVDAStartup notification.
@@ -787,12 +789,8 @@ def main():
 	_terminate(gui)
 	config.saveOnExit()
 
-	try:
-		if globalVars.focusObject and hasattr(globalVars.focusObject,"event_loseFocus"):
-			log.debug("calling lose focus on object with focus")
-			globalVars.focusObject.event_loseFocus()
-	except:
-		log.exception("Lose focus error")
+	_doLoseFocus()
+
 	try:
 		speech.cancelSpeech()
 	except:
@@ -815,6 +813,7 @@ def main():
 	_terminate(brailleInput)
 	_terminate(braille)
 	_terminate(speech)
+	_terminate(hwIo)
 	_terminate(addonHandler)
 	_terminate(garbageHandler)
 	# DMP is only started if needed.
@@ -866,13 +865,22 @@ def requestPump():
 	import wx
 	wx.CallAfter(_pump.Start,PUMP_MAX_DELAY, True)
 
+
+class NVDANotInitializedError(Exception):
+	pass
+
+
 def callLater(delay, callable, *args, **kwargs):
 	"""Call a callable once after the specified number of milliseconds.
 	As the call is executed within NVDA's core queue, it is possible that execution will take place slightly after the requested time.
 	This function should never be used to execute code that brings up a modal UI as it will cause NVDA's core to block.
-	This function can be safely called from any thread.
+	This function can be safely called from any thread once NVDA has been initialized.
 	"""
 	import wx
+	if wx.GetApp() is None:
+		# If NVDA has not fully initialized yet, the wxApp may not be initialized.
+		# wx.CallLater and wx.CallAfter requires the wxApp to be initialized.
+		raise NVDANotInitializedError("Cannot schedule callable, wx.App is not initialized")
 	if threading.get_ident() == mainThreadId:
 		return wx.CallLater(delay, _callLaterExec, callable, args, kwargs)
 	else:

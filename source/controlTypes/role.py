@@ -1,10 +1,9 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2007-2021 NV Access Limited, Babbage B.V.
+# Copyright (C) 2007-2022 NV Access Limited, Babbage B.V.
 
 from enum import (
-	auto,
 	unique,
 )
 from typing import Dict, Set
@@ -14,162 +13,195 @@ from utils.displayString import DisplayStringIntEnum
 
 @unique
 class Role(DisplayStringIntEnum):
+	"""
+	Add-on authors are recommended not to depend on values and use a `Role` directly.
+	From a string, this can be done as `controlTypes.Role[nameOfRole]` e.g. `Role["CHECKBOX"]`.
+	Although unlikely to change, if names/values changing represents a significant risk for your add-on,
+	then consider decoupling, and maintain an internal mapping of `Role` to add-on internal roles.
+
+	As add-on authors may still rely on the values, new members of `Role` should continue
+	the previous pattern of incrementing.
+	Using `enum.auto` may backfill role values and should be avoided.
+	Refer to `test_controlTypes.TestBackCompat.test_rolesValues` for compatibility requirements.
+
+	Some behaviour of treating roles as their integer values is already unsupported.
+	```
+	# Former constants
+	ROLE_GRAPHIC: int = controlTypes.Role.GRAPHIC.value
+	ROLE_GRAPHIC is 16
+	True
+
+	# New aliases
+	ROLE_GRAPHIC: controlTypes.Role = controlTypes.Role.GRAPHIC
+	ROLE_GRAPHIC is 16
+	False
+	```
+	"""
 	@property
 	def _displayStringLabels(self):
 		return _roleLabels
 
-	UNKNOWN = auto()
-	WINDOW = auto()
-	TITLEBAR = auto()
-	PANE = auto()
-	DIALOG = auto()
-	CHECKBOX = auto()
-	RADIOBUTTON = auto()
-	STATICTEXT = auto()
-	EDITABLETEXT = auto()
-	BUTTON = auto()
-	MENUBAR = auto()
-	MENUITEM = auto()
-	POPUPMENU = auto()
-	COMBOBOX = auto()
-	LIST = auto()
-	LISTITEM = auto()
-	GRAPHIC = auto()
-	HELPBALLOON = auto()
-	TOOLTIP = auto()
-	LINK = auto()
-	TREEVIEW = auto()
-	TREEVIEWITEM = auto()
-	TAB = auto()
-	TABCONTROL = auto()
-	SLIDER = auto()
-	PROGRESSBAR = auto()
-	SCROLLBAR = auto()
-	STATUSBAR = auto()
-	TABLE = auto()
-	TABLECELL = auto()
-	TABLECOLUMN = auto()
-	TABLEROW = auto()
-	TABLECOLUMNHEADER = auto()
-	TABLEROWHEADER = auto()
-	FRAME = auto()
-	TOOLBAR = auto()
-	DROPDOWNBUTTON = auto()
-	CLOCK = auto()
-	SEPARATOR = auto()
-	FORM = auto()
-	HEADING = auto()
-	HEADING1 = auto()
-	HEADING2 = auto()
-	HEADING3 = auto()
-	HEADING4 = auto()
-	HEADING5 = auto()
-	HEADING6 = auto()
-	PARAGRAPH = auto()
-	BLOCKQUOTE = auto()
-	TABLEHEADER = auto()
-	TABLEBODY = auto()
-	TABLEFOOTER = auto()
-	DOCUMENT = auto()
-	ANIMATION = auto()
-	APPLICATION = auto()
-	BOX = auto()
-	GROUPING = auto()
-	PROPERTYPAGE = auto()
-	CANVAS = auto()
-	CAPTION = auto()
-	CHECKMENUITEM = auto()
-	DATEEDITOR = auto()
-	ICON = auto()
-	DIRECTORYPANE = auto()
-	EMBEDDEDOBJECT = auto()
-	ENDNOTE = auto()
-	FOOTER = auto()
-	FOOTNOTE = auto()
-	GLASSPANE = auto()
-	HEADER = auto()
-	IMAGEMAP = auto()
-	INPUTWINDOW = auto()
-	LABEL = auto()
-	NOTE = auto()
-	PAGE = auto()
-	RADIOMENUITEM = auto()
-	LAYEREDPANE = auto()
-	REDUNDANTOBJECT = auto()
-	ROOTPANE = auto()
-	EDITBAR = auto()
-	TERMINAL = auto()
-	RICHEDIT = auto()
-	RULER = auto()
-	SCROLLPANE = auto()
-	SECTION = auto()
-	SHAPE = auto()
-	SPLITPANE = auto()
-	VIEWPORT = auto()
-	TEAROFFMENU = auto()
-	TEXTFRAME = auto()
-	TOGGLEBUTTON = auto()
-	BORDER = auto()
-	CARET = auto()
-	CHARACTER = auto()
-	CHART = auto()
-	CURSOR = auto()
-	DIAGRAM = auto()
-	DIAL = auto()
-	DROPLIST = auto()
-	SPLITBUTTON = auto()
-	MENUBUTTON = auto()
-	DROPDOWNBUTTONGRID = auto()
-	MATH = auto()
-	GRIP = auto()
-	HOTKEYFIELD = auto()
-	INDICATOR = auto()
-	SPINBUTTON = auto()
-	SOUND = auto()
-	WHITESPACE = auto()
-	TREEVIEWBUTTON = auto()
-	IPADDRESS = auto()
-	DESKTOPICON = auto()
-	INTERNALFRAME = auto()
-	DESKTOPPANE = auto()
-	OPTIONPANE = auto()
-	COLORCHOOSER = auto()
-	FILECHOOSER = auto()
-	FILLER = auto()
-	MENU = auto()
-	PANEL = auto()
-	PASSWORDEDIT = auto()
-	FONTCHOOSER = auto()
-	LINE = auto()
-	FONTNAME = auto()
-	FONTSIZE = auto()
-	BOLD = auto()
-	ITALIC = auto()
-	UNDERLINE = auto()
-	FGCOLOR = auto()
-	BGCOLOR = auto()
-	SUPERSCRIPT = auto()
-	SUBSCRIPT = auto()
-	STYLE = auto()
-	INDENT = auto()
-	ALIGNMENT = auto()
-	ALERT = auto()
-	DATAGRID = auto()
-	DATAITEM = auto()
-	HEADERITEM = auto()
-	THUMB = auto()
-	CALENDAR = auto()
-	VIDEO = auto()
-	AUDIO = auto()
-	CHARTELEMENT = auto()
-	DELETED_CONTENT = auto()
-	INSERTED_CONTENT = auto()
-	LANDMARK = auto()
-	ARTICLE = auto()
-	REGION = auto()
-	FIGURE = auto()
-	MARKED_CONTENT = auto()
-	BUSY_INDICATOR = auto()  # Used for progress bars with indeterminate state
+	# To maintain backwards compatibility, these Roles must maintain their values.
+	UNKNOWN = 0
+	WINDOW = 1
+	TITLEBAR = 2
+	PANE = 3
+	DIALOG = 4
+	CHECKBOX = 5
+	RADIOBUTTON = 6
+	STATICTEXT = 7
+	EDITABLETEXT = 8
+	BUTTON = 9
+	MENUBAR = 10
+	MENUITEM = 11
+	POPUPMENU = 12
+	COMBOBOX = 13
+	LIST = 14
+	LISTITEM = 15
+	GRAPHIC = 16
+	HELPBALLOON = 17
+	TOOLTIP = 18
+	LINK = 19
+	TREEVIEW = 20
+	TREEVIEWITEM = 21
+	TAB = 22
+	TABCONTROL = 23
+	SLIDER = 24
+	PROGRESSBAR = 25
+	SCROLLBAR = 26
+	STATUSBAR = 27
+	TABLE = 28
+	TABLECELL = 29
+	TABLECOLUMN = 30
+	TABLEROW = 31
+	TABLECOLUMNHEADER = 32
+	TABLEROWHEADER = 33
+	FRAME = 34
+	TOOLBAR = 35
+	DROPDOWNBUTTON = 36
+	CLOCK = 37
+	SEPARATOR = 38
+	FORM = 39
+	HEADING = 40
+	HEADING1 = 41
+	HEADING2 = 42
+	HEADING3 = 43
+	HEADING4 = 44
+	HEADING5 = 45
+	HEADING6 = 46
+	PARAGRAPH = 47
+	BLOCKQUOTE = 48
+	TABLEHEADER = 49
+	TABLEBODY = 50
+	TABLEFOOTER = 51
+	DOCUMENT = 52
+	ANIMATION = 53
+	APPLICATION = 54
+	BOX = 55
+	GROUPING = 56
+	PROPERTYPAGE = 57
+	CANVAS = 58
+	CAPTION = 59
+	CHECKMENUITEM = 60
+	DATEEDITOR = 61
+	ICON = 62
+	DIRECTORYPANE = 63
+	EMBEDDEDOBJECT = 64
+	ENDNOTE = 65
+	FOOTER = 66
+	FOOTNOTE = 67
+	# note 68 missing
+	GLASSPANE = 69
+	HEADER = 70
+	IMAGEMAP = 71
+	INPUTWINDOW = 72
+	LABEL = 73
+	NOTE = 74
+	PAGE = 75
+	RADIOMENUITEM = 76
+	LAYEREDPANE = 77
+	REDUNDANTOBJECT = 78
+	ROOTPANE = 79
+	EDITBAR = 80
+	# note 81 is missing
+	TERMINAL = 82
+	RICHEDIT = 83
+	RULER = 84
+	SCROLLPANE = 85
+	SECTION = 86
+	SHAPE = 87
+	SPLITPANE = 88
+	VIEWPORT = 89
+	TEAROFFMENU = 90
+	TEXTFRAME = 91
+	TOGGLEBUTTON = 92
+	BORDER = 93
+	CARET = 94
+	CHARACTER = 95
+	CHART = 96
+	CURSOR = 97
+	DIAGRAM = 98
+	DIAL = 99
+	DROPLIST = 100
+	SPLITBUTTON = 101
+	MENUBUTTON = 102
+	DROPDOWNBUTTONGRID = 103
+	MATH = 104
+	GRIP = 105
+	HOTKEYFIELD = 106
+	INDICATOR = 107
+	SPINBUTTON = 108
+	SOUND = 109
+	WHITESPACE = 110
+	TREEVIEWBUTTON = 111
+	IPADDRESS = 112
+	DESKTOPICON = 113
+	# note 114 is missing
+	INTERNALFRAME = 115
+	DESKTOPPANE = 116
+	OPTIONPANE = 117
+	COLORCHOOSER = 118
+	FILECHOOSER = 119
+	FILLER = 120
+	MENU = 121
+	PANEL = 122
+	PASSWORDEDIT = 123
+	FONTCHOOSER = 124
+	LINE = 125
+	FONTNAME = 126
+	FONTSIZE = 127
+	BOLD = 128
+	ITALIC = 129
+	UNDERLINE = 130
+	FGCOLOR = 131
+	BGCOLOR = 132
+	SUPERSCRIPT = 133
+	SUBSCRIPT = 134
+	STYLE = 135
+	INDENT = 136
+	ALIGNMENT = 137
+	ALERT = 138
+	DATAGRID = 139
+	DATAITEM = 140
+	HEADERITEM = 141
+	THUMB = 142
+	CALENDAR = 143
+	VIDEO = 144
+	AUDIO = 145
+	CHARTELEMENT = 146
+	DELETED_CONTENT = 147
+	INSERTED_CONTENT = 148
+	LANDMARK = 149
+	ARTICLE = 150
+	REGION = 151
+	FIGURE = 152
+	MARKED_CONTENT = 153
+	BUSY_INDICATOR = 154  # Used for progress bars with indeterminate state
+	# To maintain backwards compatibility, above Roles must maintain their values.
+	COMMENT = 155
+	SUGGESTION = 156
+	DEFINITION = 157
+	SWITCH = 158
 
 
 _roleLabels: Dict[Role, str] = {
@@ -316,7 +348,7 @@ _roleLabels: Dict[Role, str] = {
 	Role.ENDNOTE: _("end note"),
 	# Translators: Identifies a footer (usually text).
 	Role.FOOTER: _("footer"),
-	# Translators: Identifies a foot note (text at the end of a passage or used for anotations).
+	# Translators: Identifies a foot note (text at the end of a passage or used for annotations).
 	Role.FOOTNOTE: _("foot note"),
 	# Translators: Reported for an object which is a glass pane; i.e.
 	# a pane that is guaranteed to be on top of all panes beneath it.
@@ -491,6 +523,15 @@ _roleLabels: Dict[Role, str] = {
 	Role.MARKED_CONTENT: _("highlighted"),
 	# Translators: Identifies a progress bar with indeterminate state, I.E. progress can not be determined.
 	Role.BUSY_INDICATOR: _("busy indicator"),
+	# Translators: Identifies a comment.
+	Role.COMMENT: _("comment"),
+	# Translators: Identifies a suggestion.
+	Role.SUGGESTION: _("suggestion"),
+	# Translators: Identifies a definition.
+	Role.DEFINITION: _("definition"),
+	# Translators: The word role for a switch control
+	# I.e. a control that can be switched on or off.
+	Role.SWITCH: _("switch"),
 }
 
 

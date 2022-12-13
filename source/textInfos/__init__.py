@@ -119,6 +119,7 @@ class ControlField(Field):
 				controlTypes.Role.BUTTON, 
 				controlTypes.Role.RADIOBUTTON, 
 				controlTypes.Role.CHECKBOX, 
+				controlTypes.Role.SWITCH,
 				controlTypes.Role.GRAPHIC, 
 				controlTypes.Role.CHART, 
 				controlTypes.Role.MENUITEM, 
@@ -360,7 +361,8 @@ class TextInfo(baseObject.AutoPropertyObject):
 		"""
 		raise NotImplementedError
 
-	TextWithFieldsT = List[Union[str, FieldCommand]]
+	TextOrFieldsT = Union[str, FieldCommand]
+	TextWithFieldsT = List[TextOrFieldsT]
 
 	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> "TextInfo.TextWithFieldsT":
 		"""Retrieves the text in this range, as well as any control/format fields associated therewith.

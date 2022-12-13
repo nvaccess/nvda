@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2020 NV Access Limited, Manish Agrawal, Derek Riemer, Babbage B.V.
+# Copyright (C) 2006-2022 NV Access Limited, Manish Agrawal, Derek Riemer, Babbage B.V.
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -14,10 +14,6 @@ from typing import (
 from comtypes import COMError, GUID, BSTR
 import comtypes.client
 import comtypes.automation
-import uuid
-import operator
-import locale
-import collections
 import colorsys
 import eventHandler
 import braille
@@ -29,7 +25,6 @@ import XMLFormatting
 from logHandler import log
 import winUser
 import oleacc
-import globalVars
 import speech
 import config
 import textInfos
@@ -900,6 +895,10 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		bullet=field.get('line-prefix')
 		if bullet and len(bullet)==1:
 			field['line-prefix']=mapPUAToUnicode.get(bullet,bullet)
+		fontSize = field.get("font-size")
+		if fontSize is not None:
+			# Translators: Abbreviation for points, a measurement of font size.
+			field["font-size"] = pgettext("font size", "%s pt") % fontSize
 		return field
 
 	def expand(self,unit):
@@ -1188,7 +1187,7 @@ class WordDocument(Window):
 			return colors.RGB.fromCOLORREF(val).name
 		elif (val&0xffffffff)==0xff000000:
 			# Translators: the default (automatic) color in Microsoft Word
-			return _("default color")
+			return _("automatic color")
 		elif ((val>>28)&0xf)==0xd and ((val>>16)&0xff)==0x00:
 			# An MS word color index Plus intencity
 			# Made up of MS Word Theme Color index, hsv value ratio (MS Word darker percentage) and hsv saturation ratio (MS Word lighter percentage)
@@ -1476,8 +1475,8 @@ class WordDocument(Window):
 				# Translators: a measurement in Microsoft Word
 				return _("{offset:.3g} millimeters").format(offset=offset)
 			elif unit==wdPoints:
-				# Translators: a measurement in Microsoft Word
-				return _("{offset:.3g} points").format(offset=offset)
+				# Translators: a measurement in Microsoft Word (points)
+				return _("{offset:.3g} pt").format(offset=offset)
 			elif unit==wdPicas:
 				offset=offset/12.0
 				# Translators: a measurement in Microsoft Word

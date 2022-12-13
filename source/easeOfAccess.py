@@ -6,10 +6,11 @@
 """Utilities for working with the Windows Ease of Access Center.
 """
 
-from buildVersion import version_year
 from enum import Enum, IntEnum
-from typing import List
+from typing import Any, List
+
 from logHandler import log
+import NVDAState
 import winreg
 import winUser
 import winVersion
@@ -18,6 +19,20 @@ import winVersion
 # Windows >= 8
 canConfigTerminateOnDesktopSwitch: bool = winVersion.getWinVer() >= winVersion.WIN8
 _APP_KEY_NAME = "nvda_nvda_v1"
+
+
+def __getattr__(attrName: str) -> Any:
+	"""Module level `__getattr__` used to preserve backward compatibility."""
+	if attrName == "ROOT_KEY" and NVDAState._allowDeprecatedAPI():
+		log.warning("ROOT_KEY is deprecated, use RegistryKey.ROOT instead.")
+		return RegistryKey.ROOT.value
+	if attrName == "APP_KEY_PATH" and NVDAState._allowDeprecatedAPI():
+		log.warning("APP_KEY_PATH is deprecated, use RegistryKey.APP instead.")
+		return RegistryKey.APP.value
+	if attrName == "APP_KEY_NAME" and NVDAState._allowDeprecatedAPI():
+		log.warning("APP_KEY_NAME is deprecated.")
+		return _APP_KEY_NAME
+	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
 
 
 class RegistryKey(str, Enum):
@@ -30,23 +45,6 @@ class AutoStartContext(IntEnum):
 	"""Registry HKEY used for tracking when NVDA starts automatically"""
 	ON_LOGON_SCREEN = winreg.HKEY_LOCAL_MACHINE
 	AFTER_LOGON = winreg.HKEY_CURRENT_USER
-
-
-if version_year < 2023:
-	ROOT_KEY = RegistryKey.ROOT.value
-	"""
-	Deprecated, for removal in 2023.
-	Use L{RegistryKey.ROOT} instead.
-	"""
-
-	APP_KEY_NAME = _APP_KEY_NAME
-	"""Deprecated, for removal in 2023"""
-
-	APP_KEY_PATH = RegistryKey.APP.value
-	"""
-	Deprecated, for removal in 2023.
-	Use L{RegistryKey.APP} instead.
-	"""
 
 
 def isRegistered() -> bool:

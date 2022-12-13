@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2020 NV Access Limited, Peter Vágner, Leonard de Ruijter
+# Copyright (C) 2006-2022 NV Access Limited, Peter Vágner, Leonard de Ruijter, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -8,19 +8,17 @@ from ctypes import *
 import ctypes
 from ctypes.wintypes import *
 from comtypes import BSTR
-import oleacc
 import NVDAHelper
 import watchdog
 import controlTypes
-import speech
 import api
 import eventHandler
 import winKernel
 from . import IAccessible, List
 from ..window import Window
-import watchdog
 from NVDAObjects.behaviors import RowWithoutCellObjects, RowWithFakeNavigation
 import config
+from config.configFlags import ReportTableHeaders
 from locationHelper import RectLTRB
 from logHandler import log
 from typing import Optional
@@ -220,7 +218,10 @@ class List(List):
 	def _get_rowCount(self):
 		return watchdog.cancellableSendMessage(self.windowHandle, LVM_GETITEMCOUNT, 0, 0)
 
-	def _get_columnCount(self):
+	columnCount: int
+	"""Typing information for auto-property: _get_columnCount"""
+
+	def _get_columnCount(self) -> int:
 		if not self.isMultiColumn:
 			return 0
 		headerHwnd= watchdog.cancellableSendMessage(self.windowHandle,LVM_GETHEADER,0,0)
@@ -229,7 +230,12 @@ class List(List):
 			return 1
 		return count
 
-	def _getColumnOrderArrayRaw(self, columnCount: int) -> Optional[ctypes.Array]:
+	def _getColumnOrderArrayRawInProc(self, columnCount: int) -> Optional[ctypes.Array]:
+		"""Retrieves a list of column indexes for a given list control.
+		See `_getColumnOrderArrayRaw` for more comments.
+		Note that this method operates in process and cannot be used in situations where NVDA cannot inject
+		i.e when running as a Windows Store application or when no focus event was received on startup.
+		"""
 		columnOrderArray = (ctypes.c_int * columnCount)()
 		res = watchdog.cancellableExecute(
 			NVDAHelper.localLib.nvdaInProcUtils_sysListView32_getColumnOrderArray,
@@ -243,11 +249,21 @@ class List(List):
 		return columnOrderArray
 
 	def _getColumnOrderArrayRawOutProc(self, columnCount: int) -> Optional[ctypes.Array]:
+		"""Retrieves a list of column indexes for a given list control.
+		See `_getColumnOrderArrayRaw` for more comments.
+		Note that this method operates out of process and has to reserve memory inside a given application.
+		As a consequence it may fail when reserved memory is above the range available
+		for 32-bit processes.
+		Use only when in process injection is not possible.
+		"""
 		coa = (ctypes.c_int * columnCount)()
 		processHandle=self.processHandle
 		internalCoa=winKernel.virtualAllocEx(processHandle,None,sizeof(coa),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
 		try:
 			winKernel.writeProcessMemory(processHandle,internalCoa,byref(coa),sizeof(coa),None)
+			# The meaning of the return value depends on the message sent, for LVM_GETCOLUMNORDERARRAY,
+			# it returns nonzero if successful, or 0 otherwise.
+			# https://docs.microsoft.com/en-us/windows/win32/controls/lvm-getcolumnorderarray#return-value
 			res = watchdog.cancellableSendMessage(
 				self.windowHandle,
 				LVM_GETCOLUMNORDERARRAY,
@@ -257,15 +273,45 @@ class List(List):
 			if res:
 				winKernel.readProcessMemory(processHandle,internalCoa,byref(coa),sizeof(coa),None)
 			else:
-				log.debugWarning("LVM_GETCOLUMNORDERARRAY failed for list")
+				coa = None
+				log.debugWarning(
+					f"LVM_GETCOLUMNORDERARRAY failed for list. "
+					f"Windows Error: {ctypes.GetLastError()}, Handle: {self.windowHandle}"
+				)
 		finally:
 			winKernel.virtualFreeEx(processHandle,internalCoa,0,winKernel.MEM_RELEASE)
 		return coa
 
-	def _get__columnOrderArray(self) -> Optional[ctypes.Array]:
-		if not self.appModule.helperLocalBindingHandle:
-			return self._getColumnOrderArrayRawOutProc(self.columnCount)
-		return self._getColumnOrderArrayRaw(self.columnCount)
+	def _getColumnOrderArrayRaw(self, columnCount: int) -> Optional[ctypes.Array]:
+		"""Retrieves an array of column indexes for a given list.
+		The indexes are placed in order in which columns are displayed on screen from left to right.
+		Note that when columns are reordered the indexes remain the same - only their order differs.
+		"""
+		if self.appModule.helperLocalBindingHandle is None:
+			return self._getColumnOrderArrayRawOutProc(columnCount)
+		return self._getColumnOrderArrayRawInProc(columnCount)
+
+	def _getMappedColumn(self, presentationIndex: int) -> Optional[int]:
+		"""
+		Multi-column SysListViews can have their columns re-ordered.
+		To keep a consistent internal mapping, a column order array is used
+		to map a presentation index to a consistent internal index.
+		For single-column SysListViews, the mapping is not necessary.
+		If the column order array cannot be fetched from a multi-column SysListView,
+		this returns None.
+
+		@param presentationIndex: One based index for the column as presented to the user.
+		@return: The internal / logical column zero based index for the column.
+		None if the mapped column cannot be determined.
+		"""
+		if presentationIndex == 1 and self.columnCount == 1:
+			# Use an implied default column mapping for single column list views
+			return 0
+		columnOrderArray = self._getColumnOrderArrayRaw(self.columnCount)
+		if columnOrderArray is None:
+			log.error("Cannot fetch column as column order array is unknown")
+			return None
+		return columnOrderArray[presentationIndex - 1]
 
 
 class GroupingItem(Window):
@@ -344,9 +390,15 @@ class ListItemWithoutColumnSupport(IAccessible):
 		if self.hasFocus:
 			super(ListItemWithoutColumnSupport,self).event_stateChange()
 
-class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColumnSupport):
 
-	def _getColumnLocationRaw(self, index: int) -> ctypes.wintypes.RECT:
+class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColumnSupport):
+	parent: List
+
+	def _getColumnLocationRawInProc(self, index: int) -> ctypes.wintypes.RECT:
+		"""Retrieves rectangle containing coordinates for a given column.
+		Note that this method operates in process and cannot be used in situations where NVDA cannot inject
+		i.e when running as a Windows Store application or when no focus event was received on startup.
+		"""
 		item = self.IAccessibleChildID - 1
 		subItem = index
 		rect = ctypes.wintypes.RECT()
@@ -362,6 +414,12 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 		return rect
 
 	def _getColumnLocationRawOutProc(self, index: int) -> ctypes.wintypes.RECT:
+		"""Retrieves rectangle containing coordinates for a given column.
+		Note that this method operates out of process and has to reserve memory inside a given application.
+		As a consequence it may fail when reserved memory is above the range available
+		for 32-bit processes.
+		Use only when in process injection is not possible.
+		"""
 		processHandle=self.processHandle
 		# LVM_GETSUBITEMRECT requires a pointer to a RECT structure that will receive the subitem bounding rectangle information.
 		localRect=RECT(
@@ -395,12 +453,11 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 			return None
 		return localRect
 
-	def _getColumnLocation(self, column: int) -> Optional[RectLTRB]:
-		index = self.parent._columnOrderArray[column - 1]
+	def _getColumnLocationRaw(self, index: int) -> Optional[RectLTRB]:
 		if not self.appModule.helperLocalBindingHandle:
 			rect = self._getColumnLocationRawOutProc(index)
 		else:
-			rect = self._getColumnLocationRaw(index)
+			rect = self._getColumnLocationRawInProc(index)
 		if rect is None:
 			return None
 		# #8268: this might be a malformed rectangle
@@ -417,7 +474,17 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 			top = bottom
 		return RectLTRB(left, top, right, bottom).toScreen(self.windowHandle).toLTWH()
 
-	def _getColumnContentRaw(self, index: int) -> Optional[str]:
+	def _getColumnLocation(self, column: int) -> Optional[RectLTRB]:
+		mappedColumn = self.parent._getMappedColumn(column)
+		if mappedColumn is None:
+			return None
+		return self._getColumnLocationRaw(mappedColumn)
+
+	def _getColumnContentRawInProc(self, index: int) -> Optional[str]:
+		"""Retrieves text for a given column.
+		Note that this method operates in process and cannot be used in situations where NVDA cannot inject
+		i.e when running as a Windows Store application or when no focus event was received on startup.
+		"""
 		item = self.IAccessibleChildID - 1
 		subItem = index
 		text = AutoFreeBSTR()
@@ -433,6 +500,12 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 		return text.value
 
 	def _getColumnContentRawOutProc(self, index: int) -> Optional[str]:
+		"""Retrieves text for a given column.
+		Note that this method operates out of process and has to reserve memory inside a given application.
+		As a consequence it may fail when reserved memory is above the range available
+		for 32-bit processes.
+		Use only when in process injection is not possible.
+		"""
 		buffer=None
 		processHandle=self.processHandle
 		internalItem=winKernel.virtualAllocEx(processHandle,None,sizeof(self.LVITEM),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
@@ -452,11 +525,16 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 			winKernel.virtualFreeEx(processHandle,internalItem,0,winKernel.MEM_RELEASE)
 		return buffer.value if buffer else None
 
-	def _getColumnContent(self, column: int) -> Optional[str]:
-		index = self.parent._columnOrderArray[column - 1]
+	def _getColumnContentRaw(self, index: int) -> Optional[str]:
 		if not self.appModule.helperLocalBindingHandle:
 			return self._getColumnContentRawOutProc(index)
-		return self._getColumnContentRaw(index)
+		return self._getColumnContentRawInProc(index)
+
+	def _getColumnContent(self, column: int) -> Optional[str]:
+		mappedColumn = self.parent._getMappedColumn(column)
+		if mappedColumn is None:
+			return None
+		return self._getColumnContentRaw(mappedColumn)
 
 	def _getColumnImageIDRaw(self, index):
 		processHandle=self.processHandle
@@ -473,9 +551,18 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 		return item.iImage
 
 	def _getColumnImageID(self, column):
-		return self._getColumnImageIDRaw(self.parent._columnOrderArray[column - 1])
+		mappedColumn = self.parent._getMappedColumn(column)
+		if mappedColumn is None:
+			return None
+		return self._getColumnImageIDRaw(mappedColumn)
 
 	def _getColumnHeaderRawOutProc(self, index: int) -> Optional[str]:
+		"""Retrieves text of the header for the given column.
+		Note that this method operates out of process and has to reserve memory inside a given application.
+		As a consequence it may fail when reserved memory is above the range available
+		for 32-bit processes.
+		Use only when in process injection is not possible.
+		"""
 		buffer=None
 		processHandle=self.processHandle
 		internalColumn=winKernel.virtualAllocEx(processHandle,None,sizeof(self.LVCOLUMN),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
@@ -495,7 +582,11 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 			winKernel.virtualFreeEx(processHandle,internalColumn,0,winKernel.MEM_RELEASE)
 		return buffer.value if buffer else None
 
-	def _getColumnHeaderRaw(self, index: int) -> Optional[str]:
+	def _getColumnHeaderRawInProc(self, index: int) -> Optional[str]:
+		"""Retrieves text of the header for the given column.
+		Note that this method operates in process and cannot be used in situations where NVDA cannot inject
+		i.e when running as a Windows Store application or when no focus event was received on startup.
+		"""
 		subItem = index
 		text = AutoFreeBSTR()
 		if watchdog.cancellableExecute(
@@ -508,11 +599,16 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 			return None
 		return text.value
 
-	def _getColumnHeader(self, column: int) -> Optional[str]:
-		index = self.parent._columnOrderArray[column - 1]
+	def _getColumnHeaderRaw(self, index: int) -> Optional[str]:
 		if not self.appModule.helperLocalBindingHandle:
 			return self._getColumnHeaderRawOutProc(index)
-		return self._getColumnHeaderRaw(index)
+		return self._getColumnHeaderRawInProc(index)
+
+	def _getColumnHeader(self, column: int) -> Optional[str]:
+		mappedColumn = self.parent._getMappedColumn(column)
+		if mappedColumn is None:
+			return None
+		return self._getColumnHeaderRaw(mappedColumn)
 
 	def _get_name(self):
 		parent = self.parent
@@ -531,7 +627,10 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 			content = self._getColumnContent(col)
 			if not content:
 				continue
-			if config.conf["documentFormatting"]["reportTableHeaders"] and col != 1:
+			if config.conf["documentFormatting"]["reportTableHeaders"] in (
+				ReportTableHeaders.ROWS_AND_COLUMNS,
+				ReportTableHeaders.COLUMNS,
+			) and col != 1:
 				header = self._getColumnHeader(col)
 			else:
 				header = None

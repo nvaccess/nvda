@@ -1,5 +1,16 @@
 $ErrorActionPreference = "Stop";
-# iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+
+# Accessing Windows build worker via Remote Desktop (RDP)
+# To enable:
+# Set an RDP password (before triggering the build), ensure password requirements are met.
+# Remove the password after the RDP connection params are shown in the build output.
+# For passwords requirements and instructions for setting, see the appveyor docs:
+# https://www.appveyor.com/docs/how-to/rdp-to-build-worker/
+if ($env:APPVEYOR_RDP_PASSWORD) {
+	$rdpScriptURL = 'https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'
+	iex ((new-object net.webclient).DownloadString($rdpScriptURL))
+}
+
 $pythonVersion = (py --version)
 echo $pythonVersion
 if ($env:APPVEYOR_REPO_TAG_NAME -and $env:APPVEYOR_REPO_TAG_NAME.StartsWith("release-")) {
