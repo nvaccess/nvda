@@ -373,11 +373,16 @@ class SpeechSymbols(object):
 		return u"\t".join(fields)
 
 _noSymbolLocalesCache = set()
+_noCLDRLocalesCache = set()
 
 
 def _getSpeechSymbolsForLocale(locale: str) -> Tuple[SpeechSymbols, SpeechSymbols]:
-	if locale in _noSymbolLocalesCache:
+	if (
+		locale in _noSymbolLocalesCache
+		and (locale in _noCLDRLocalesCache or not config.conf['speech']['includeCLDR'])
+	):
 		raise LookupError
+	builtinDataImported = False
 	builtin = SpeechSymbols()
 	if config.conf['speech']['includeCLDR']:
 		# Try to load CLDR data when processing is on.
@@ -388,12 +393,17 @@ def _getSpeechSymbolsForLocale(locale: str) -> Tuple[SpeechSymbols, SpeechSymbol
 				os.path.join(globalVars.appDir, "locale", locale, "cldr.dic"),
 				allowComplexSymbols=False
 			)
+			builtinDataImported = True
 		except IOError:
+			_noCLDRLocalesCache.add(locale)
 			log.debugWarning("No CLDR data for locale %s" % locale)
 	try:
 		builtin.load(os.path.join(globalVars.appDir, "locale", locale, "symbols.dic"))
+		builtinDataImported = True
 	except IOError:
 		_noSymbolLocalesCache.add(locale)
+		log.debugWarning("No symbol data for locale %s" % locale)
+	if not builtinDataImported:
 		raise LookupError("No symbol information for locale %s" % locale)
 	user = SpeechSymbols()
 	try:
