@@ -13,7 +13,7 @@ from typing import (
 
 import extensionPoints
 from logHandler import log
-from winAPI.sessionTracking import isWindowsLocked
+from winAPI.sessionTracking import _isLockScreenModeActive
 import winUser
 
 if typing.TYPE_CHECKING:
@@ -145,7 +145,7 @@ def _isSecureObjectWhileLockScreenActivated(
 	@return: C{True} if the Windows 10/11 lockscreen is active and C{obj} is below the lock screen.
 	"""
 	try:
-		isObjectBelowLockScreen = isWindowsLocked() and not obj.isAboveLockScreen
+		isObjectBelowLockScreen = _isLockScreenModeActive() and not obj.isAboveLockScreen
 	except Exception:
 		log.exception()
 		return False
@@ -166,30 +166,6 @@ def isObjectAboveLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 		"Instead use obj.isAboveLockScreen. "
 	)
 	return obj.isAboveLockScreen
-
-
-def _checkWindowsForAppModules():
-	"""
-	Updates the appModuleHandler with the process from all top level windows.
-	Adds any missing processes.
-	"""
-	from ctypes import c_bool, WINFUNCTYPE, c_int, POINTER, windll  # TODO move and order
-	from ctypes.wintypes import LPARAM
-	import appModuleHandler
-
-	# BOOL CALLBACK EnumWindowsProc _In_ HWND,_In_ LPARAM
-	# HWND as a pointer creates confusion, treat as an int
-	# http://makble.com/the-story-of-lpclong
-
-	@WINFUNCTYPE(c_bool, c_int, POINTER(c_int))
-	def _appModuleHandlerUpdate(hwnd: winUser.HWNDVal, _lParam: LPARAM) -> bool:
-		processID, _threadID = winUser.getWindowThreadProcessID(hwnd)
-		if processID not in appModuleHandler.runningTable:
-			appModuleHandler.update(processID)
-		return True
-
-	if not windll.user32.EnumWindows(_appModuleHandlerUpdate, 0):
-		log.error("Failed to refresh app modules")
 
 
 def _findLockAppModule() -> Optional["appModuleHandler.AppModule"]:
@@ -224,6 +200,7 @@ def _isObjectAboveLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 	):
 		return True
 
+	from appModuleHandler import _checkWindowsForAppModules
 	lockAppModule = _findLockAppModule()
 	if lockAppModule is None:
 		_checkWindowsForAppModules()
@@ -288,6 +265,18 @@ def _isWindowAboveWindowMatchesCond(
 	@returns: True if window is above a window that matches matchCond.
 	If the first window is not found, but the second window is,
 	it is assumed that the first window is above the second window.
+
+	In the context of _isObjectAboveLockScreenCheckZOrder, NVDA starts at the lowest window,
+	and searches up towards the closest/lowest lock screen window.
+	If the lock screen window is found before the NVDAobject, the object should be made accessible.
+	This is because if the NVDAObject is not present, we want to make it accessible by default.
+	If the lock screen window is not present, we also want to make the NVDAObject accessible,
+	so the lock screen window must be comprehensively searched for.
+	If the NVDAObject is found, and then a lock screen window,
+	the object is not made accessible as it is below the lock screen.
+	Edge cases and failures should be handled by making the object accessible.
+
+	Refer to test_security for testing cases which demonstrate this behaviour.
 	"""
 	desktopWindow = winUser.getDesktopWindow()
 	topLevelWindow = winUser.getTopWindow(desktopWindow)

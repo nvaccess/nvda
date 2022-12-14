@@ -123,26 +123,27 @@ def pumpAll():
 	"""Used to track the session lock state every core cycle, and detect changes."""
 	global _wasLockedPreviousPumpAll
 	from utils.security import postSessionLockStateChanged
-	windowsIsNowLocked = isWindowsLocked()
+	windowsIsNowLocked = _isWindowsLocked()
 	if windowsIsNowLocked != _wasLockedPreviousPumpAll:
 		_wasLockedPreviousPumpAll = windowsIsNowLocked
 		postSessionLockStateChanged.notify(isNowLocked=windowsIsNowLocked)
 
 
 def isWindowsLocked() -> bool:
-	"""
-	TODO: rename to isWindowsLockscreenActive
+	# TODO: improve deprecation practice on beta/master merges
+	log.error(
+		"This function is deprecated, for removal in 2023.1. "
+		"It was never expected that add-on authors would use this function"
+	)
+	return _isWindowsLocked()
 
-	Checks if the Window lockscreen is active.
-	Not to be confused with the Windows sign-in screen, a secure screen.
-	Includes temporary locked desktops,
-	such as the PIN workflow reset and the Out Of Box Experience.
-	"""
+
+def _isWindowsLocked() -> bool:
 	from core import _TrackNVDAInitialization
-	from systemUtils import _isSecureDesktop
 	if not _TrackNVDAInitialization.isInitializationComplete():
-		return False
-	if _isSecureDesktop():
+		# Wait until initialization is complete,
+		# so NVDA and other consumers can register the lock state
+		# via postSessionLockStateChanged.
 		return False
 	if _lockStateTracker is None:
 		log.error(
@@ -151,6 +152,20 @@ def isWindowsLocked() -> bool:
 		)
 		return False
 	return _lockStateTracker.isWindowsLocked
+
+
+def _isLockScreenModeActive() -> bool:
+	"""
+	Checks if the Window lock screen is active.
+	Not to be confused with the Windows sign-in screen, a secure screen.
+	Includes temporary locked desktops,
+	such as the PIN workflow reset and the Out Of Box Experience.
+	"""
+	from systemUtils import _isSecureDesktop
+	if _isSecureDesktop():
+		# Use secure mode instead if on the secure desktop
+		return False
+	return _isWindowsLocked()
 
 
 def _isWindowsLocked_checkViaSessionQuery() -> bool:

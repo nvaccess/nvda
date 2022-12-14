@@ -832,3 +832,28 @@ def getWmiProcessInfo(processId):
 	except:
 		raise LookupError("Couldn't get process information using WMI")
 	raise LookupError("No such process")
+
+
+def _checkWindowsForAppModules():
+	"""
+	Updates the appModuleHandler with the process from all top level windows.
+	Adds any missing processes.
+	"""
+	import winUser
+
+	# BOOL CALLBACK EnumWindowsProc _In_ HWND,_In_ LPARAM
+	# HWND as a pointer creates confusion, treat as an int
+	# http://makble.com/the-story-of-lpclong
+
+	@ctypes.WINFUNCTYPE(ctypes.c_bool, ctypes.c_int, ctypes.POINTER(ctypes.c_int))
+	def _appModuleHandlerUpdate(
+			hwnd: winUser.HWNDVal,
+			_lParam: ctypes.wintypes.LPARAM
+	) -> bool:
+		processID, _threadID = winUser.getWindowThreadProcessID(hwnd)
+		if processID not in runningTable:
+			update(processID)
+		return True
+
+	if not ctypes.windll.user32.EnumWindows(_appModuleHandlerUpdate, 0):
+		log.error("Failed to refresh app modules")

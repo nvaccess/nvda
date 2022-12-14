@@ -36,7 +36,7 @@ import globalPluginHandler
 import brailleInput
 import locationHelper
 import aria
-from winAPI.sessionTracking import isWindowsLocked
+from winAPI.sessionTracking import _isLockScreenModeActive
 
 
 class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
@@ -182,7 +182,7 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 		Inserts LockScreenObject to the start of the clsList if Windows is locked.
 		"""
 		from .lockscreen import LockScreenObject
-		if isWindowsLocked():
+		if _isLockScreenModeActive():
 			# This must be resolved first to prevent object navigation outside of the lockscreen.
 			clsList.insert(0, LockScreenObject)
 
@@ -1439,7 +1439,6 @@ This code is executed if a gain focus event is received by this object.
 	isAboveLockScreen: bool
 
 	def _get_isAboveLockScreen(self) -> bool:
-		if not isWindowsLocked():
+		if not _isLockScreenModeActive():
 			return True
-		# TODO time _isObjectAbovelockScreen
 		return _isObjectAboveLockScreen(self)

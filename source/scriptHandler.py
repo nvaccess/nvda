@@ -95,11 +95,11 @@ def getGlobalMapScripts(gesture: "inputCore.InputGesture") -> List["inputCore.In
 
 def findScript(gesture: "inputCore.InputGesture") -> Optional[_ScriptFunctionT]:
 	from utils.security import getSafeScripts
-	from winAPI.sessionTracking import isWindowsLocked
+	from winAPI.sessionTracking import _isLockScreenModeActive
 	foundScript = _findScript(gesture)
 	if (
 		foundScript is not None
-		and isWindowsLocked()
+		and _isLockScreenModeActive()
 		and foundScript not in getSafeScripts()
 	):
 		return None
