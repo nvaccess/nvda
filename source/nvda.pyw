@@ -164,7 +164,7 @@ parser.add_argument('-c','--config-path',dest='configPath',default=None,type=str
 parser.add_argument(
 	'--lang',
 	dest='language',
-	default="Windows",
+	default="en",
 	type=stringToLang,
 	help=(
 		"Override the configured NVDA language."
