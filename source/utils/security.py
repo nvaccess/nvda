@@ -174,6 +174,14 @@ def _findLockAppModule() -> Optional["appModuleHandler.AppModule"]:
 	return next(filter(_isLockAppAndAlive, runningAppModules), None)
 
 
+def _searchForLockAppModule():
+	from appModuleHandler import _checkWindowsForAppModules
+	if _isLockScreenModeActive():
+		lockAppModule = _findLockAppModule()
+		if lockAppModule is None:
+			_checkWindowsForAppModules()
+
+
 def _isObjectAboveLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 	"""
 	When Windows is locked, the foreground Window is usually LockApp,
@@ -200,18 +208,15 @@ def _isObjectAboveLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 	):
 		return True
 
-	from appModuleHandler import _checkWindowsForAppModules
 	lockAppModule = _findLockAppModule()
 	if lockAppModule is None:
-		_checkWindowsForAppModules()
-		lockAppModule = _findLockAppModule()
-		if lockAppModule is None:
-			# lockAppModule not running/registered by NVDA yet
-			log.debug(
-				"lockAppModule not detected when Windows is locked. "
-				"Cannot detect if object is above lock app, considering object as safe. "
-			)
-			return True
+		# lockAppModule not running/registered by NVDA yet.
+		# This is not an expected state.
+		log.error(
+			"lockAppModule not detected when Windows is locked. "
+			"Cannot detect if object is above lock app, considering object as safe. "
+		)
+		return True
 
 	from NVDAObjects.window import Window
 	if not isinstance(obj, Window):

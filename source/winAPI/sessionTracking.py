@@ -122,11 +122,12 @@ def initialize():
 def pumpAll():
 	"""Used to track the session lock state every core cycle, and detect changes."""
 	global _wasLockedPreviousPumpAll
-	from utils.security import postSessionLockStateChanged
+	from utils.security import postSessionLockStateChanged, _searchForLockAppModule
 	windowsIsNowLocked = _isWindowsLocked()
 	if windowsIsNowLocked != _wasLockedPreviousPumpAll:
 		_wasLockedPreviousPumpAll = windowsIsNowLocked
 		postSessionLockStateChanged.notify(isNowLocked=windowsIsNowLocked)
+	_searchForLockAppModule()
 
 
 def isWindowsLocked() -> bool:
@@ -165,6 +166,14 @@ def _isLockScreenModeActive() -> bool:
 	if _isSecureDesktop():
 		# Use secure mode instead if on the secure desktop
 		return False
+
+	import winVersion
+	if winVersion.getWinVer() < winVersion.WIN10:
+		# On Windows 8 and Earlier, the lock screen runs on
+		# the secure desktop.
+		# Lock screen mode is not supported on these Windows versions.
+		return False
+
 	return _isWindowsLocked()
 
 
