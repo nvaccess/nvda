@@ -17,7 +17,7 @@ from unittest.mock import patch
 
 from utils.security import (
 	_UnexpectedWindowCountError,
-	_isWindowAboveWindowMatchesCond,
+	_isWindowBelowWindowMatchesCond,
 )
 import winUser
 
@@ -33,7 +33,7 @@ class _MoveWindow:
 
 class _Test_isWindowAboveWindowMatchesCond(unittest.TestCase):
 	"""
-	Base class to patch winUser functions used in _isWindowAboveWindowMatchesCond.
+	Base class to patch winUser functions used in _isWindowBelowWindowMatchesCond.
 
 	Navigating windows is replaced by a list of fake HWNDs.
 	HWNDs are represented by integers (1-10).
@@ -94,20 +94,20 @@ class Test_isWindowAboveWindowMatchesCond_static(_Test_isWindowAboveWindowMatche
 	def test_secondWindowNotFound(self):
 		with self.assertRaises(_UnexpectedWindowCountError):
 			# Errors are handled as if window is above
-			_isWindowAboveWindowMatchesCond(5, lambda x: False)
+			_isWindowBelowWindowMatchesCond(5, lambda x: False)
 
 	def test_firstWindowNotFound(self):
-		self.assertTrue(_isWindowAboveWindowMatchesCond(-1, lambda x: x == 5))
+		self.assertFalse(_isWindowBelowWindowMatchesCond(-1, lambda x: x == 5))
 
 	def test_isAbove(self):
 		aboveIndex = 2
 		belowIndex = 1
-		self.assertTrue(_isWindowAboveWindowMatchesCond(aboveIndex, self._windowMatches(belowIndex)))
+		self.assertFalse(_isWindowBelowWindowMatchesCond(aboveIndex, self._windowMatches(belowIndex)))
 
 	def test_isBelow(self):
 		aboveIndex = 2
 		belowIndex = 1
-		self.assertFalse(_isWindowAboveWindowMatchesCond(belowIndex, self._windowMatches(aboveIndex)))
+		self.assertTrue(_isWindowBelowWindowMatchesCond(belowIndex, self._windowMatches(aboveIndex)))
 
 
 class Test_isWindowAboveWindowMatchesCond_dynamic(_Test_isWindowAboveWindowMatchesCond):
@@ -168,14 +168,14 @@ class Test_isWindowAboveWindowMatchesCond_dynamic(_Test_isWindowAboveWindowMatch
 		self._queuedMove = move
 
 		# Check aboveWindow is above belowWindow
-		isAbove = True
+		isBelow = False
 		if aboveExpectFailure:
-			isAbove = not isAbove
+			isBelow = not isBelow
 		if aboveRaises is None:
-			self.assertEqual(isAbove, _isWindowAboveWindowMatchesCond(aboveWindow, self._windowMatches(belowWindow)))
+			self.assertEqual(isBelow, _isWindowBelowWindowMatchesCond(aboveWindow, self._windowMatches(belowWindow)))
 		else:
 			with self.assertRaises(aboveRaises):
-				_isWindowAboveWindowMatchesCond(aboveWindow, self._windowMatches(belowWindow))
+				_isWindowBelowWindowMatchesCond(aboveWindow, self._windowMatches(belowWindow))
 		
 		# Reset the window list
 		self._generateWindows()
@@ -183,14 +183,14 @@ class Test_isWindowAboveWindowMatchesCond_dynamic(_Test_isWindowAboveWindowMatch
 		self._queuedMove.triggered = False
 
 		# Check belowWindow is below aboveWindow
-		isAbove = False
+		isBelow = True
 		if belowExpectFailure:
-			isAbove = not isAbove
+			isBelow = not isBelow
 		if belowRaises is None:
-			self.assertEqual(isAbove, _isWindowAboveWindowMatchesCond(belowWindow, self._windowMatches(aboveWindow)))
+			self.assertEqual(isBelow, _isWindowBelowWindowMatchesCond(belowWindow, self._windowMatches(aboveWindow)))
 		else:
 			with self.assertRaises(belowRaises):
-				_isWindowAboveWindowMatchesCond(belowWindow, self._windowMatches(aboveWindow))
+				_isWindowBelowWindowMatchesCond(belowWindow, self._windowMatches(aboveWindow))
 
 	def test_visited_windowMoves_aboveTargets(self):
 		"""
