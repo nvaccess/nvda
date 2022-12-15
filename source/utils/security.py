@@ -267,7 +267,7 @@ def _isWindowBelowWindowMatchesCond(
 
 	@returns: True if window is below a window that matches matchCond.
 	If the first window is not found, but the second window is,
-	it is assumed that the first window is below the second window.
+	it is assumed that the first window is above the second window.
 
 	In the context of _isObjectBelowLockScreenCheckZOrder, NVDA starts at the lowest window,
 	and searches up towards the closest/lowest lock screen window.
