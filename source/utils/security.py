@@ -273,7 +273,7 @@ def _isWindowBelowWindowMatchesCond(
 	and searches up towards the closest/lowest lock screen window.
 	If the lock screen window is found before the NVDAobject, the object should be made accessible.
 	This is because if the NVDAObject is not present, we want to make it accessible by default.
-	If the lock screen window is not present, we also want to make the NVDAObject accessible,
+	If the lock screen window is not present at all, we also want to make the NVDAObject accessible,
 	so the lock screen window must be comprehensively searched for.
 	If the NVDAObject is found, and then a lock screen window,
 	the object is not made accessible as it is below the lock screen.
