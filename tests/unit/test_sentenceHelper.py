@@ -117,6 +117,16 @@ class TestSentenceHelper(unittest.TestCase):
 		res = sentenceHelper._findEndOfSentence(sentences, 0)
 		self.assertEqual(res, secondOffset)
 
+	def test_mixedWesternAndFullWidthSentences(self):
+		western = "Test sentence number one, ending with a period."
+		fullWidth = "Test sentence number one with period\u3002"
+		combined = f"{western} {fullWidth}"
+		res = sentenceHelper._findEndOfSentence(combined, 0)
+		self.assertEqual(res, len(western) + 1)
+		combined = f"{fullWidth}{western}"
+		res = sentenceHelper._findEndOfSentence(combined, 0)
+		self.assertEqual(res, len(fullWidth))
+
 	def test_notASentence(self):
 		notASentence = "this is a string of words which is not a sentence"
 		res = sentenceHelper._findEndOfSentence(notASentence, 0)
