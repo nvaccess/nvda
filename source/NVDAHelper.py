@@ -7,6 +7,7 @@
 import os
 import winreg
 import msvcrt
+import winVersion
 import versionInfo
 import winKernel
 import config
@@ -32,19 +33,20 @@ import NVDAState
 
 
 versionedLibPath = os.path.join(globalVars.appDir, 'lib')
-if os.environ.get('PROCESSOR_ARCHITEW6432') == 'ARM64':
-	versionedLib64Path = os.path.join(globalVars.appDir, 'libArm64')
-else:
-	versionedLib64Path = os.path.join(globalVars.appDir, 'lib64')
+versionedLibARM64Path = os.path.join(globalVars.appDir, 'libArm64')
+versionedLibAMD64Path = os.path.join(globalVars.appDir, 'lib64')
 
 
 if not NVDAState.isRunningAsSource():
 	# When running as a py2exe build, libraries are in a version-specific directory
 	versionedLibPath=os.path.join(versionedLibPath,versionInfo.version)
-	versionedLib64Path=os.path.join(versionedLib64Path,versionInfo.version)
+	versionedLibAMD64Path = os.path.join(versionedLibAMD64Path, versionInfo.version)
+	versionedLibARM64Path = os.path.join(versionedLibARM64Path, versionInfo.version)
+
 
 _remoteLib=None
-_remoteLoader64=None
+_remoteLoaderAMD64 = None
+_remoteLoaderARM64 = None
 localLib=None
 generateBeep=None
 VBuf_getTextInRange=None
@@ -481,9 +483,9 @@ def nvdaControllerInternal_openConfigDirectory():
 	return 0
 
 
-class RemoteLoader64(object):
+class RemoteLoader(object):
 
-	def __init__(self):
+	def __init__(self, loaderDir: str):
 		# Create a pipe so we can write to stdin of the loader process.
 		pipeReadOrig, self._pipeWrite = winKernel.CreatePipe(None, 0)
 		# Make the read end of the pipe inheritable.
@@ -501,7 +503,9 @@ class RemoteLoader64(object):
 		# Therefore, explicitly specify our own process token, which causes them to be inherited.
 		token = winKernel.OpenProcessToken(winKernel.GetCurrentProcess(), winKernel.MAXIMUM_ALLOWED)
 		try:
-			winKernel.CreateProcessAsUser(token, None, os.path.join(versionedLib64Path,u"nvdaHelperRemoteLoader.exe"), None, None, True, None, None, None, si, pi)
+			loaderPath = os.path.join(loaderDir, "nvdaHelperRemoteLoader.exe")
+			log.debug(f"Starting {loaderPath}")
+			winKernel.CreateProcessAsUser(token, None, loaderPath, None, None, True, None, None, None, si, pi)
 			# We don't need the thread handle.
 			winKernel.closeHandle(pi.hThread)
 			self._process = pi.hProcess
@@ -524,7 +528,8 @@ class RemoteLoader64(object):
 		winKernel.closeHandle(self._process)
 
 def initialize():
-	global _remoteLib, _remoteLoader64, localLib, generateBeep, VBuf_getTextInRange, lastLanguageID, lastLayoutString
+	global _remoteLib, _remoteLoaderAMD64, _remoteLoaderARM64
+	global localLib, generateBeep, VBuf_getTextInRange, lastLanguageID, lastLayoutString
 	hkl=c_ulong(windll.User32.GetKeyboardLayout(0)).value
 	lastLanguageID=winUser.LOWORD(hkl)
 	KL_NAMELENGTH=9
@@ -588,20 +593,33 @@ def initialize():
 		log.error("Error installing IA2 support")
 	#Manually start the in-process manager thread for this NVDA main thread now, as a slow system can cause this action to confuse WX
 	_remoteLib.initInprocManagerThreadIfNeeded()
-	if os.environ.get('PROCESSOR_ARCHITEW6432') in ('AMD64', 'ARM64'):
-		_remoteLoader64=RemoteLoader64()
+	versionedLibARM64Path
+	arch = os.environ.get('PROCESSOR_ARCHITEW6432')
+	if arch == 'AMD64':
+		_remoteLoaderAMD64 = RemoteLoader(versionedLibAMD64Path)
+	elif arch == 'ARM64':
+		_remoteLoaderARM64 = RemoteLoader(versionedLibARM64Path)
+		# Windows on ARM from Windows 11 supports running AMD64 apps.
+		# Thus we also need to be able to inject into these.
+		if winVersion.getWinVer() >= winVersion.WIN11:
+			_remoteLoaderAMD64 = RemoteLoader(versionedLibAMD64Path)
+
 
 def terminate():
-	global _remoteLib, _remoteLoader64, localLib, generateBeep, VBuf_getTextInRange
+	global _remoteLib, _remoteLoaderAMD64, _remoteLoaderARM64
+	global localLib, generateBeep, VBuf_getTextInRange
 	if not config.isAppX:
 		if not _remoteLib.uninstallIA2Support():
 			log.debugWarning("Error uninstalling IA2 support")
 		if _remoteLib.injection_terminate() == 0:
 			raise RuntimeError("Error terminating NVDAHelperRemote")
 		_remoteLib=None
-		if _remoteLoader64:
-			_remoteLoader64.terminate()
-			_remoteLoader64=None
+		if _remoteLoaderAMD64:
+			_remoteLoaderAMD64.terminate()
+			_remoteLoaderAMD64 = None
+		if _remoteLoaderARM64:
+			_remoteLoaderARM64.terminate()
+			_remoteLoaderARM64 = None
 	generateBeep=None
 	VBuf_getTextInRange=None
 	localLib.nvdaHelperLocal_terminate()
