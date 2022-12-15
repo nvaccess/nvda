@@ -132,9 +132,7 @@ def _isLockAppAndAlive(appModule: "appModuleHandler.AppModule") -> bool:
 	return appModule.appName == "lockapp" and appModule.isAlive
 
 
-# TODO: mark this API as public when it becomes stable (i.e. remove the underscore).
-# Add-on authors may require this function to make their code secure.
-# Consider renaming (e.g. objectOutsideOfLockScreenAndWindowsIsLocked).
+# TODO: Consider renaming to _objectBelowLockScreenAndWindowsIsLocked.
 def _isSecureObjectWhileLockScreenActivated(
 		obj: "NVDAObjects.NVDAObject",
 		shouldLog: bool = True,
@@ -145,7 +143,7 @@ def _isSecureObjectWhileLockScreenActivated(
 	@return: C{True} if the Windows 10/11 lockscreen is active and C{obj} is below the lock screen.
 	"""
 	try:
-		isObjectBelowLockScreen = _isLockScreenModeActive() and not obj.isAboveLockScreen
+		isObjectBelowLockScreen = _isLockScreenModeActive() and obj.isBelowLockScreen
 	except Exception:
 		log.exception()
 		return False
@@ -163,9 +161,9 @@ def isObjectAboveLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 	# TODO: improve deprecation practice on beta/master merges
 	log.error(
 		"This function is deprecated. "
-		"Instead use obj.isAboveLockScreen. "
+		"Instead use obj.isBelowLockScreen. "
 	)
-	return obj.isAboveLockScreen
+	return not obj.isBelowLockScreen
 
 
 def _findLockAppModule() -> Optional["appModuleHandler.AppModule"]:
@@ -182,7 +180,7 @@ def _searchForLockAppModule():
 			_checkWindowsForAppModules()
 
 
-def _isObjectAboveLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
+def _isObjectBelowLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 	"""
 	When Windows is locked, the foreground Window is usually LockApp,
 	but other Windows can be focused (e.g. Windows Magnifier, reset PIN workflow).
@@ -194,7 +192,7 @@ def _isObjectAboveLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 	foregroundProcessID, _foregroundThreadID = winUser.getWindowThreadProcessID(foregroundWindow)
 
 	if obj.processID == foregroundProcessID:
-		return True
+		return False
 
 	if (
 		# alt+tab task switcher item.
@@ -206,7 +204,7 @@ def _isObjectAboveLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 		# that the user has switched to a secure desktop.
 		or isinstance(obj, SecureDesktopNVDAObject)
 	):
-		return True
+		return False
 
 	lockAppModule = _findLockAppModule()
 	if lockAppModule is None:
@@ -214,23 +212,23 @@ def _isObjectAboveLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 		# This is not an expected state.
 		log.error(
 			"lockAppModule not detected when Windows is locked. "
-			"Cannot detect if object is above lock app, considering object as safe. "
+			"Cannot detect if object is below lock app, considering object as safe. "
 		)
-		return True
+		return False
 
 	from NVDAObjects.window import Window
 	if not isinstance(obj, Window):
 		log.debug(
-			"Cannot detect if object is above lock app, considering object as safe. "
+			"Cannot detect if object is below lock app, considering object as safe. "
 		)
 		# Must be a window instance to get the HWNDVal, other NVDAObjects do not support this.
-		return True
+		return False
 
 	topLevelWindowHandle = winUser.getAncestor(obj.windowHandle, winUser.GA_ROOT)
-	return _isObjectAboveLockScreenCheckZOrder(topLevelWindowHandle, lockAppModule.processID)
+	return _isObjectBelowLockScreenCheckZOrder(topLevelWindowHandle, lockAppModule.processID)
 
 
-def _isObjectAboveLockScreenCheckZOrder(objWindowHandle: int, lockAppModuleProcessId: int) -> bool:
+def _isObjectBelowLockScreenCheckZOrder(objWindowHandle: int, lockAppModuleProcessId: int) -> bool:
 	"""
 	This is a risky hack.
 	If the order is incorrectly detected,
@@ -245,21 +243,21 @@ def _isObjectAboveLockScreenCheckZOrder(objWindowHandle: int, lockAppModuleProce
 		return windowProcessId == lockAppModuleProcessId
 
 	try:
-		return _isWindowAboveWindowMatchesCond(objWindowHandle, _isWindowLockApp)
+		return _isWindowBelowWindowMatchesCond(objWindowHandle, _isWindowLockApp)
 	except _UnexpectedWindowCountError:
 		log.debugWarning("Couldn't find lock screen")
-		return True
+		return False
 
 
 class _UnexpectedWindowCountError(Exception):
 	"""
 	Raised when a window which matches the expected condition
-	is not found by _isWindowAboveWindowMatchesCond
+	is not found by _isWindowBelowWindowMatchesCond
 	"""
 	pass
 
 
-def _isWindowAboveWindowMatchesCond(
+def _isWindowBelowWindowMatchesCond(
 		window: winUser.HWNDVal,
 		matchCond: Callable[[winUser.HWNDVal], bool]
 ) -> bool:
@@ -267,11 +265,11 @@ def _isWindowAboveWindowMatchesCond(
 	This is a risky hack.
 	The order may be incorrectly detected.
 
-	@returns: True if window is above a window that matches matchCond.
+	@returns: True if window is below a window that matches matchCond.
 	If the first window is not found, but the second window is,
-	it is assumed that the first window is above the second window.
+	it is assumed that the first window is below the second window.
 
-	In the context of _isObjectAboveLockScreenCheckZOrder, NVDA starts at the lowest window,
+	In the context of _isObjectBelowLockScreenCheckZOrder, NVDA starts at the lowest window,
 	and searches up towards the closest/lowest lock screen window.
 	If the lock screen window is found before the NVDAobject, the object should be made accessible.
 	This is because if the NVDAObject is not present, we want to make it accessible by default.
@@ -295,7 +293,7 @@ def _isWindowAboveWindowMatchesCond(
 			window1Indexes.append(currentIndex)
 		if matchCond(currentWindow):
 			if not window1Indexes:
-				return True
+				return False
 			window2Index = currentIndex
 			break
 		currentWindow = winUser.getWindow(currentWindow, winUser.GW_HWNDPREV)
@@ -307,9 +305,9 @@ def _isWindowAboveWindowMatchesCond(
 			f" - window 2 index: {window2Index}\n"
 		)
 	if window1Indexes[0] >= window2Index:
-		return True
-	else:
 		return False
+	else:
+		return True
 
 
 _hasSessionLockStateUnknownWarningBeenGiven = False

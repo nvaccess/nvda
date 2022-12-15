@@ -30,7 +30,7 @@ from treeInterceptorHandler import (
 	TreeInterceptor,
 )
 import braille
-from utils.security import _isObjectAboveLockScreen
+from utils.security import _isObjectBelowLockScreen
 import vision
 import globalPluginHandler
 import brailleInput
@@ -1435,10 +1435,10 @@ This code is executed if a gain focus event is received by this object.
 		"""
 		return 0
 
-	#: Type definition for auto prop '_get_isAboveLockScreen'
-	isAboveLockScreen: bool
+	#: Type definition for auto prop '_get_isBelowLockScreen'
+	isBelowLockScreen: bool
 
-	def _get_isAboveLockScreen(self) -> bool:
+	def _get_isBelowLockScreen(self) -> bool:
 		if not _isLockScreenModeActive():
-			return True
-		return _isObjectAboveLockScreen(self)
+			return False
+		return _isObjectBelowLockScreen(self)
