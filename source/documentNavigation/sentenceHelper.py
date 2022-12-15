@@ -7,8 +7,9 @@
 import re
 from typing import Optional
 
-WESTERN_TERMINATORS_PATTERN: re.Pattern = re.compile("[.?!](?: |\r|\n|$)+")
-FULL_WIDTH_TERMINATORS_PATTERN: re.Pattern = re.compile("[。！？](?:\r|\n)*")
+WESTERN_TERMINATORS = "[.?!](?: |\r|\n|$)+"
+FULL_WIDTH_TERMINATORS = "[。！？](?:\r|\n)*"
+TERMINATORS_PATTERN: re.Pattern = re.compile(WESTERN_TERMINATORS + "|" + FULL_WIDTH_TERMINATORS)
 
 
 def _findEndOfSentence(sentence: str, offset: int) -> Optional[int]:
@@ -26,9 +27,7 @@ def _findEndOfSentence(sentence: str, offset: int) -> Optional[int]:
 	res = None
 	if not len(sentence):
 		return res  # do nothing if empty string
-	m = re.search(FULL_WIDTH_TERMINATORS_PATTERN, sentence[offset:])
-	if not m:
-		m = re.search(WESTERN_TERMINATORS_PATTERN, sentence[offset:])
+	m = re.search(TERMINATORS_PATTERN, sentence[offset:])
 	if m:
 		res = m.end() + offset
 	return res
