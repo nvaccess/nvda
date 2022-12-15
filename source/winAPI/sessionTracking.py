@@ -124,10 +124,12 @@ def pumpAll():
 	global _wasLockedPreviousPumpAll
 	from utils.security import postSessionLockStateChanged, _searchForLockAppModule
 	windowsIsNowLocked = _isWindowsLocked()
+	# search for lock app module once lock state is known,
+	# but before triggering callbacks via postSessionLockStateChanged
+	_searchForLockAppModule()
 	if windowsIsNowLocked != _wasLockedPreviousPumpAll:
 		_wasLockedPreviousPumpAll = windowsIsNowLocked
 		postSessionLockStateChanged.notify(isNowLocked=windowsIsNowLocked)
-	_searchForLockAppModule()
 
 
 def isWindowsLocked() -> bool:
