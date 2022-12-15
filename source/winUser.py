@@ -517,10 +517,12 @@ def getWindowThreadProcessID(hwnd: HWNDVal) -> Tuple[int, int]:
 	threadID=user32.GetWindowThreadProcessId(hwnd,byref(processID))
 	return (processID.value, threadID)
 
-def getClassName(window):
+
+def getClassName(window: HWNDVal) -> str:
 	buf=create_unicode_buffer(256)
 	user32.GetClassNameW(window,buf,255)
 	return buf.value
+
 
 def keybd_event(*args):
 	return user32.keybd_event(*args)

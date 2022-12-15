@@ -122,11 +122,10 @@ def initialize():
 def pumpAll():
 	"""Used to track the session lock state every core cycle, and detect changes."""
 	global _wasLockedPreviousPumpAll
-	from utils.security import postSessionLockStateChanged, _searchForLockAppModule
+	from utils.security import postSessionLockStateChanged
 	windowsIsNowLocked = _isWindowsLocked()
 	# search for lock app module once lock state is known,
 	# but before triggering callbacks via postSessionLockStateChanged
-	_searchForLockAppModule()
 	if windowsIsNowLocked != _wasLockedPreviousPumpAll:
 		_wasLockedPreviousPumpAll = windowsIsNowLocked
 		postSessionLockStateChanged.notify(isNowLocked=windowsIsNowLocked)

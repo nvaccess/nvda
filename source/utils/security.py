@@ -128,10 +128,6 @@ def getSafeScripts() -> Set["scriptHandler._ScriptFunctionT"]:
 	}
 
 
-def _isLockAppAndAlive(appModule: "appModuleHandler.AppModule") -> bool:
-	return appModule.appName == "lockapp" and appModule.isAlive
-
-
 # TODO: Consider renaming to _objectBelowLockScreenAndWindowsIsLocked.
 def _isSecureObjectWhileLockScreenActivated(
 		obj: "NVDAObjects.NVDAObject",
@@ -166,20 +162,6 @@ def isObjectAboveLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 	return not obj.isBelowLockScreen
 
 
-def _findLockAppModule() -> Optional["appModuleHandler.AppModule"]:
-	import appModuleHandler
-	runningAppModules = appModuleHandler.runningTable.values()
-	return next(filter(_isLockAppAndAlive, runningAppModules), None)
-
-
-def _searchForLockAppModule():
-	from appModuleHandler import _checkWindowsForAppModules
-	if _isLockScreenModeActive():
-		lockAppModule = _findLockAppModule()
-		if lockAppModule is None:
-			_checkWindowsForAppModules()
-
-
 def _isObjectBelowLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 	"""
 	When Windows is locked, the foreground Window is usually LockApp,
@@ -206,16 +188,6 @@ def _isObjectBelowLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 	):
 		return False
 
-	lockAppModule = _findLockAppModule()
-	if lockAppModule is None:
-		# lockAppModule not running/registered by NVDA yet.
-		# This is not an expected state.
-		log.error(
-			"lockAppModule not detected when Windows is locked. "
-			"Cannot detect if object is below lock app, considering object as safe. "
-		)
-		return False
-
 	from NVDAObjects.window import Window
 	if not isinstance(obj, Window):
 		log.debug(
@@ -225,10 +197,10 @@ def _isObjectBelowLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 		return False
 
 	topLevelWindowHandle = winUser.getAncestor(obj.windowHandle, winUser.GA_ROOT)
-	return _isObjectBelowLockScreenCheckZOrder(topLevelWindowHandle, lockAppModule.processID)
+	return _isObjectBelowLockScreenCheckZOrder(topLevelWindowHandle)
 
 
-def _isObjectBelowLockScreenCheckZOrder(objWindowHandle: int, lockAppModuleProcessId: int) -> bool:
+def _isObjectBelowLockScreenCheckZOrder(objWindowHandle: int) -> bool:
 	"""
 	This is a risky hack.
 	If the order is incorrectly detected,
@@ -238,14 +210,24 @@ def _isObjectBelowLockScreenCheckZOrder(objWindowHandle: int, lockAppModuleProce
 	NVDA should make NVDA objects accessible.
 	"""
 
-	def _isWindowLockApp(hwnd: winUser.HWNDVal) -> bool:
-		windowProcessId, _threadId = winUser.getWindowThreadProcessID(hwnd)
-		return windowProcessId == lockAppModuleProcessId
+	def _isWindowLockScreen(hwnd: winUser.HWNDVal) -> bool:
+		"""
+		This is a hack/risk, lock screen window class names may change in future.
+		Unfortunately the lockApp appModule is not detected on "forgot my PIN" workflow screen.
+		However, these lock screen windows are available.
+		"""
+		lockScreenWindowClasses = {
+			"LockScreenInputOcclusionFrame",
+			"LockScreenControllerProxyWindow",
+			"LockScreenBackstopFrame",
+		}
+
+		return winUser.getClassName(hwnd) in lockScreenWindowClasses
 
 	try:
-		return _isWindowBelowWindowMatchesCond(objWindowHandle, _isWindowLockApp)
+		return _isWindowBelowWindowMatchesCond(objWindowHandle, _isWindowLockScreen)
 	except _UnexpectedWindowCountError:
-		log.debugWarning("Couldn't find lock screen")
+		log.error("Couldn't find lock screen")
 		return False
 
 
