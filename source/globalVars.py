@@ -94,7 +94,7 @@ mouseObject: Optional['NVDAObjects.NVDAObject'] = None
 navigatorObject: Optional['NVDAObjects.NVDAObject'] = None
 """Deprecated, use ``setNavigatorObject|getNavigatorObject`` from `api` instead"""
 
-reviewPosition: Optional["documentBase.TextContainerObject"]  = None
+reviewPosition: Optional["documentBase.TextContainerObject"] = None
 """Deprecated, use ``getReviewPosition|setReviewPosition`` from `api` instead"""
 
 reviewPositionObj: Optional["NVDAObjects.NVDAObject"] = None
