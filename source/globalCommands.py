@@ -4012,10 +4012,11 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Toggles through paragraph navigation styles",
+			"Cycles through paragraph navigation styles",
 		),
+		category=SCRCAT_SYSTEMCARET
 	)
-	def script_toggleParagraphStyle(self, gesture: "inputCore.InputGesture") -> None:
+	def script_cycleParagraphStyle(self, gesture: "inputCore.InputGesture") -> None:
 		from documentNavigation.paragraphHelper import nextParagraphStyle
 		newFlag: config.featureFlag.FeatureFlag = nextParagraphStyle()
 		config.conf["documentNavigation"]["paragraphStyle"] = newFlag.name
