@@ -14,31 +14,38 @@ import ui
 # A named tuple for holding the elapsed and total playing times from Foobar2000's status bar
 statusBarTimes = collections.namedtuple('StatusBarTimes', ['elapsed', 'total'])
 
-def getParsingFormat(interval):
-	"""Attempts to find a suitable parsing format string for a HH:MM:SS, MM:SS or SS -style time interval."""
-	timeParts = len(interval.split(":"))
+
+def parseIntervalToTimestamp(interval):
+	"""Parses a D HH:MM:SS, HH:MM:SS, MM:SS or SS -style interval to a timestamp."""
+	timeParts = len(interval.strip().replace(" ", ":").split(":"))
+	# day is automatically set to 1
+	# if no day is provided, remove 86400 seconds from parsed time
 	if timeParts == 1:
-		return "%S"
+		return calendar.timegm(time.strptime(interval.strip(), "%S")) - 86400
 	elif timeParts == 2:
-		return "%M:%S"
+		return calendar.timegm(time.strptime(interval.strip(), "%M:%S")) - 86400
 	elif timeParts == 3:
-		return "%H:%M:%S"
+		return calendar.timegm(time.strptime(interval.strip(), "%H:%M:%S")) - 86400
+	elif timeParts == 4:
+		return calendar.timegm(time.strptime(interval.strip(), "%dd %H:%M:%S"))
 	else:
 		return None
 
-def getOutputFormat(seconds):
-	"""Returns a format string for the given number of seconds with the least leading zeros."""
-	if seconds < 60:
-		return "%S"
-	elif seconds < 3600:
-		return "%M:%S"
-	else:
-		return "%H:%M:%S"
 
-def parseIntervalToTimestamp(interval):
-	"""Parses a HH:MM:SS, MM:SS or SS -style interval to a timestamp."""
-	format = getParsingFormat(interval)
-	return calendar.timegm(time.strptime(interval.strip(), format))
+def getRemainingTime(parsedElapsedTime, parsedTotalTime):
+	"""Returns the difference between two times."""
+	remainingTime = parsedTotalTime - parsedElapsedTime
+	if remainingTime < 60:
+		return time.strftime("%S", time.gmtime(remainingTime))
+	elif remainingTime < 3600:
+		return time.strftime("%M:%S", time.gmtime(remainingTime))
+	elif remainingTime < 86400:
+		return time.strftime("%H:%M:%S", time.gmtime(remainingTime))
+	elif remainingTime < 172800:
+		return time.strftime("%#d day %H:%M:%S", time.gmtime(remainingTime - 86400))
+	else:
+		return time.strftime("%#d days %H:%M:%S", time.gmtime(remainingTime - 86400))
+
 
 class AppModule(appModuleHandler.AppModule):
 	_statusBar = None
@@ -77,10 +84,9 @@ class AppModule(appModuleHandler.AppModule):
 			# Translators: Reported if the remaining time can not be calculated in Foobar2000
 			msg = _("Unable to determine remaining time")
 		else:
-			parsedElapsedTime = parseIntervalToTimestamp(elapsedTime)
 			parsedTotalTime = parseIntervalToTimestamp(totalTime)
-			remainingTime = parsedTotalTime - parsedElapsedTime
-			msg = time.strftime(getOutputFormat(remainingTime), time.gmtime(remainingTime))
+			parsedElapsedTime = parseIntervalToTimestamp(elapsedTime)
+			msg = getRemainingTime(parsedElapsedTime, parsedTotalTime) + " remaining"
 		ui.message(msg)
 	# Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 	script_reportRemainingTime.__doc__ = _("Reports the remaining time of the currently playing track, if any")
@@ -88,14 +94,17 @@ class AppModule(appModuleHandler.AppModule):
 	def script_reportElapsedTime(self,gesture):
 		elapsedTime = self.getElapsedAndTotalIfPlaying()[0]
 		if elapsedTime is not None:
-			ui.message(elapsedTime)
+			ui.message(elapsedTime + " elapsed")
+		else:
+			# Translators: Reported if the elapsed time is not available in Foobar2000
+			ui.message(_("Elapsed time not available"))
 	# Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
 	script_reportElapsedTime.__doc__ = _("Reports the elapsed time of the currently playing track, if any")
 
 	def script_reportTotalTime(self,gesture):
 		totalTime = self.getElapsedAndTotalIfPlaying()[1]
 		if totalTime is not None:
-			ui.message(totalTime)
+			ui.message(totalTime + " total")
 		else:
 			# Translators: Reported if the total time is not available in Foobar2000
 			ui.message(_("Total time not available"))
