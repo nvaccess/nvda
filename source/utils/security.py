@@ -5,6 +5,7 @@
 
 import typing
 from typing import (
+	Any,
 	Callable,
 	List,
 	Optional,
@@ -17,7 +18,6 @@ from winAPI.sessionTracking import _isLockScreenModeActive
 import winUser
 
 if typing.TYPE_CHECKING:
-	import appModuleHandler  # noqa: F401, use for typing
 	import scriptHandler  # noqa: F401, use for typing
 	import NVDAObjects  # noqa: F401, use for typing
 
@@ -161,8 +161,19 @@ def objectBelowLockScreenAndWindowsIsLocked(
 	return False
 
 
-def isObjectAboveLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
-	# TODO: improve deprecation practice on beta/master merges
+def __getattr__(attrName: str) -> Any:
+	import NVDAState
+	"""Module level `__getattr__` used to preserve backward compatibility."""
+	if attrName == "isObjectAboveLockScreen" and NVDAState._allowDeprecatedAPI():
+		log.warning(
+			"Importing isObjectAboveLockScreen(obj) is deprecated. "
+			"Instead use obj.isBelowLockScreen. "
+		)
+		return _isObjectAboveLockScreen
+	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+
+
+def _isObjectAboveLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 	log.error(
 		"This function is deprecated. "
 		"Instead use obj.isBelowLockScreen. "
