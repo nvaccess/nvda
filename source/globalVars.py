@@ -20,6 +20,7 @@ import os
 import typing
 
 if typing.TYPE_CHECKING:
+	import documentBase  # noqa: F401 used for type checking only
 	import NVDAObjects  # noqa: F401 used for type checking only
 
 
@@ -70,7 +71,7 @@ mouseOldX=None
 mouseOldY=None
 navigatorObject: typing.Optional['NVDAObjects.NVDAObject'] = None
 reviewPosition=None
-reviewPositionObj=None
+reviewPositionObj: typing.Optional["documentBase.TextContainerObject"] = None
 lastProgressValue=0
 appArgs = DefaultAppArgs()
 unknownAppArgs: typing.List[str] = []

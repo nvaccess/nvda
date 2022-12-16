@@ -5,18 +5,21 @@
 
 import typing
 from typing import (
+	Callable,
+	List,
+	Optional,
 	Set,
 )
 
 import extensionPoints
 from logHandler import log
-from winAPI.sessionTracking import isWindowsLocked
+from winAPI.sessionTracking import _isLockScreenModeActive
 import winUser
 
 if typing.TYPE_CHECKING:
-	import appModuleHandler
+	import appModuleHandler  # noqa: F401, use for typing
 	import scriptHandler  # noqa: F401, use for typing
-	import NVDAObjects
+	import NVDAObjects  # noqa: F401, use for typing
 
 
 postSessionLockStateChanged = extensionPoints.Action()
@@ -125,13 +128,7 @@ def getSafeScripts() -> Set["scriptHandler._ScriptFunctionT"]:
 	}
 
 
-def _isLockAppAndAlive(appModule: "appModuleHandler.AppModule") -> bool:
-	return appModule.appName == "lockapp" and appModule.isAlive
-
-
-# TODO: mark this API as public when it becomes stable (i.e. remove the underscore).
-# Add-on authors may require this function to make their code secure.
-# Consider renaming (e.g. objectOutsideOfLockScreenAndWindowsIsLocked).
+# TODO: Consider renaming to _objectBelowLockScreenAndWindowsIsLocked.
 def _isSecureObjectWhileLockScreenActivated(
 		obj: "NVDAObjects.NVDAObject",
 		shouldLog: bool = True,
@@ -139,23 +136,37 @@ def _isSecureObjectWhileLockScreenActivated(
 	"""
 	While Windows is locked, Windows 10 and 11 doesn't prevent object navigation outside of the lockscreen.
 	As such, NVDA must prevent accessing and reading objects outside of the lockscreen when Windows is locked.
-	@return: C{True} if the Windows 10/11 lockscreen is active and C{obj} is outside of the lock screen.
+	@return: C{True} if the Windows 10/11 lockscreen is active and C{obj} is below the lock screen.
 	"""
-	if isWindowsLocked() and not isObjectAboveLockScreen(obj):
+	try:
+		isObjectBelowLockScreen = _isLockScreenModeActive() and obj.isBelowLockScreen
+	except Exception:
+		log.exception()
+		return False
+
+	if isObjectBelowLockScreen:
 		if shouldLog and log.isEnabledFor(log.DEBUG):
 			devInfo = '\n'.join(obj.devInfo)
-			log.debug(f"Attempt at navigating to a secure object: {devInfo}")
+			log.debug(f"Attempt at navigating to an object below the lock screen: {devInfo}")
 		return True
 
 	return False
 
 
 def isObjectAboveLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
+	# TODO: improve deprecation practice on beta/master merges
+	log.error(
+		"This function is deprecated. "
+		"Instead use obj.isBelowLockScreen. "
+	)
+	return not obj.isBelowLockScreen
+
+
+def _isObjectBelowLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 	"""
 	When Windows is locked, the foreground Window is usually LockApp,
-	but other Windows can be focused (e.g. Windows Magnifier).
+	but other Windows can be focused (e.g. Windows Magnifier, reset PIN workflow).
 	"""
-	import appModuleHandler
 	from IAccessibleHandler import SecureDesktopNVDAObject
 	from NVDAObjects.IAccessible import TaskListIcon
 
@@ -163,7 +174,7 @@ def isObjectAboveLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 	foregroundProcessID, _foregroundThreadID = winUser.getWindowThreadProcessID(foregroundWindow)
 
 	if obj.processID == foregroundProcessID:
-		return True
+		return False
 
 	if (
 		# alt+tab task switcher item.
@@ -175,21 +186,113 @@ def isObjectAboveLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 		# that the user has switched to a secure desktop.
 		or isinstance(obj, SecureDesktopNVDAObject)
 	):
-		return True
+		return False
 
-	runningAppModules = appModuleHandler.runningTable.values()
-	lockAppModule = next(filter(_isLockAppAndAlive, runningAppModules), None)
-
-	if lockAppModule is None:
-		# lockAppModule not running/registered by NVDA yet
-		log.debugWarning(
-			"lockAppModule not detected when Windows is locked. "
-			"Cannot detect if object is in lock app, considering object as insecure. "
+	from NVDAObjects.window import Window
+	if not isinstance(obj, Window):
+		log.debug(
+			"Cannot detect if object is below lock app, considering object as safe. "
 		)
-	elif lockAppModule is not None and obj.processID == lockAppModule.processID:
-		return True
+		# Must be a window instance to get the HWNDVal, other NVDAObjects do not support this.
+		return False
 
-	return False
+	topLevelWindowHandle = winUser.getAncestor(obj.windowHandle, winUser.GA_ROOT)
+	return _isObjectBelowLockScreenCheckZOrder(topLevelWindowHandle)
+
+
+def _isObjectBelowLockScreenCheckZOrder(objWindowHandle: int) -> bool:
+	"""
+	This is a risky hack.
+	If the order is incorrectly detected,
+	secure information may become accessible.
+
+	If these functions fail, where possible,
+	NVDA should make NVDA objects accessible.
+	"""
+
+	def _isWindowLockScreen(hwnd: winUser.HWNDVal) -> bool:
+		"""
+		This is a hack/risk, lock screen window class names may change in future.
+		Unfortunately the lockApp appModule is not detected on "forgot my PIN" workflow screen.
+		However, these lock screen windows are available.
+		"""
+		lockScreenWindowClasses = {
+			"LockScreenInputOcclusionFrame",
+			"LockScreenControllerProxyWindow",
+			"LockScreenBackstopFrame",
+		}
+
+		return winUser.getClassName(hwnd) in lockScreenWindowClasses
+
+	try:
+		return _isWindowBelowWindowMatchesCond(objWindowHandle, _isWindowLockScreen)
+	except _UnexpectedWindowCountError:
+		log.exception("Couldn't find lock screen")
+		return False
+
+
+class _UnexpectedWindowCountError(Exception):
+	"""
+	Raised when a window which matches the expected condition
+	is not found by _isWindowBelowWindowMatchesCond
+	"""
+	pass
+
+
+def _isWindowBelowWindowMatchesCond(
+		window: winUser.HWNDVal,
+		matchCond: Callable[[winUser.HWNDVal], bool]
+) -> bool:
+	"""
+	This is a risky hack.
+	The order may be incorrectly detected.
+
+	@returns: True if window is below a window that matches matchCond.
+	If the first window is not found, but the second window is,
+	it is assumed that the first window is above the second window.
+
+	In the context of _isObjectBelowLockScreenCheckZOrder, NVDA starts at the lowest window,
+	and searches up towards the closest/lowest lock screen window.
+	If the lock screen window is found before the NVDAObject,
+	then the NVDAObject is above the lock screen,
+	or not present at all,
+	and therefore the NVDAObject should be made accessible.
+	This is because if the NVDAObject is not present, we want to make it accessible by default.
+	If the lock screen window is not present at all, we also want to make the NVDAObject accessible,
+	so the lock screen window must be comprehensively searched for.
+	If the NVDAObject is found, and then a lock screen window,
+	the object is not made accessible as it is below the lock screen.
+	Edge cases and failures should be handled by making the object accessible.
+
+	Refer to test_security for testing cases which demonstrate this behaviour.
+	"""
+	desktopWindow = winUser.getDesktopWindow()
+	topLevelWindow = winUser.getTopWindow(desktopWindow)
+	bottomWindow = winUser.getWindow(topLevelWindow, winUser.GW_HWNDLAST)
+	currentWindow = bottomWindow
+	currentIndex = 0  # 0 is the last/lowest window
+	window1Indexes: List[int] = []
+	window2Index: Optional[int] = None
+	while currentWindow != winUser.GW_RESULT_NOT_FOUND:
+		if currentWindow == window:
+			window1Indexes.append(currentIndex)
+		if matchCond(currentWindow):
+			if not window1Indexes:
+				return False
+			window2Index = currentIndex
+			break
+		currentWindow = winUser.getWindow(currentWindow, winUser.GW_HWNDPREV)
+		currentIndex += 1
+	if len(window1Indexes) != 1 or window2Index is None:
+		raise _UnexpectedWindowCountError(
+			"Windows found\n"
+			f" - window 1 indexes: {window1Indexes} (expects len 1)\n"
+			f" - window 2 index: {window2Index}\n"
+		)
+	if window1Indexes[0] >= window2Index:
+		return False
+	else:
+		return True
 
 
 _hasSessionLockStateUnknownWarningBeenGiven = False

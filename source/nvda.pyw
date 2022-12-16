@@ -350,13 +350,20 @@ if mutex is None:
 	sys.exit(1)
 
 
-if _isSecureDesktop():
+def _serviceDebugEnabled() -> bool:
 	import winreg
 	try:
 		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\NVDA")
-		if not winreg.QueryValueEx(k, u"serviceDebug")[0]:
-			globalVars.appArgs.secure = True
+		if winreg.QueryValueEx(k, "serviceDebug")[0]:
+			return True
 	except WindowsError:
+		# Expected state by default, serviceDebug parameter not set
+		pass
+	return False
+
+
+if _isSecureDesktop():
+	if not _serviceDebugEnabled():
 		globalVars.appArgs.secure = True
 	globalVars.appArgs.changeScreenReaderFlag = False
 	globalVars.appArgs.minimal = True

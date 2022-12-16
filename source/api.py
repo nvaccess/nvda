@@ -237,8 +237,23 @@ def setReviewPosition(
 	@param isCaret: Whether the review position is changed due to caret following.
 	@param isMouse: Whether the review position is changed due to mouse following.
 	"""
-	if _isSecureObjectWhileLockScreenActivated(reviewPosition.obj):
-		return False
+	reviewObj = reviewPosition.obj
+
+	if isinstance(reviewObj, treeInterceptorHandler.DocumentTreeInterceptor):
+		# reviewPosition.obj can be a number of classes, e.g.
+		# CursorManager, DocumentWithTableNavigation, EditableText.
+		# We can only handle the NVDAObject case.
+		reviewObj = reviewObj.rootNVDAObject
+
+	if isinstance(reviewObj, NVDAObjects.NVDAObject):
+		# reviewPosition.obj can be a number of classes, e.g.
+		# CursorManager, DocumentWithTableNavigation, EditableText.
+		# We can only handle the NVDAObject case.
+		if _isSecureObjectWhileLockScreenActivated(reviewObj):
+			return False
+	else:
+		log.debug(f"Unhandled reviewObj type {type(reviewObj)} when checking security of reviewObj")
+
 	globalVars.reviewPosition=reviewPosition.copy()
 	globalVars.reviewPositionObj=reviewPosition.obj
 	if clearNavigatorObject: globalVars.navigatorObject=None
