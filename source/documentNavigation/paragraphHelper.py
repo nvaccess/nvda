@@ -74,16 +74,16 @@ def _splitParagraphIntoChunks(paragraph: str) -> Generator[str, None, None]:
 	If this function fails to break the paragraph into chunks, functionality will likely be fine,
 	though responsiveness may not be optimal.
 	"""
-	from documentNavigation.sentenceHelper import _findEndOfSentence
+	from documentNavigation.sentenceHelper import _findNextEndOfSentence
 	paragraphLen = len(paragraph)
 	if paragraphLen <= PREFERRED_CHUNK_SIZE:
 		yield paragraph
 		return
 	sentenceEndPoints: List[int] = []
-	endPoint = _findEndOfSentence(paragraph, 0)
+	endPoint = _findNextEndOfSentence(paragraph, 0)
 	while endPoint is not None:
 		sentenceEndPoints.append(endPoint)
-		endPoint = _findEndOfSentence(paragraph, endPoint)
+		endPoint = _findNextEndOfSentence(paragraph, endPoint)
 	chunkStart = chunkEnd = startIndex = endIndex = 0
 	while endIndex < len(sentenceEndPoints):
 		chunkLength = sentenceEndPoints[endIndex] - chunkStart
