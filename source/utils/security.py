@@ -227,7 +227,7 @@ def _isObjectBelowLockScreenCheckZOrder(objWindowHandle: int) -> bool:
 	try:
 		return _isWindowBelowWindowMatchesCond(objWindowHandle, _isWindowLockScreen)
 	except _UnexpectedWindowCountError:
-		log.error("Couldn't find lock screen")
+		log.exception("Couldn't find lock screen")
 		return False
 
 
