@@ -21,7 +21,7 @@ import globalVars
 import zipfile
 from configobj import ConfigObj
 from configobj.validate import Validator
-
+from .packaging import initializeModulePackagePaths
 import config
 import languageHandler
 from logHandler import log
@@ -168,6 +168,7 @@ def initialize():
 	getAvailableAddons(refresh=True, isFirstLoad=True)
 	state.cleanupRemovedDisabledAddons()
 	state.save()
+	initializeModulePackagePaths()
 
 
 def terminate():

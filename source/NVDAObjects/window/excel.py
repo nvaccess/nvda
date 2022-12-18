@@ -25,6 +25,7 @@ import ui
 import speech
 from tableUtils import HeaderCellInfo, HeaderCellTracker
 import config
+from config.configFlags import ReportCellBorders
 import textInfos
 import colors
 import eventHandler
@@ -1038,7 +1039,7 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 					formatField['background-color']=colors.RGB.fromCOLORREF(int(cellObj.interior.color))
 			except COMError:
 				pass
-		if formatConfig["reportBorderStyle"]:
+		if formatConfig["reportCellBorders"] != ReportCellBorders.OFF:
 			borders = None
 			hasMergedCells = self.obj.excelCellObject.mergeCells
 			if hasMergedCells:
@@ -1050,7 +1051,10 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 			else:
 				borders = cellObj.borders
 			try:
-				formatField['border-style']=getCellBorderStyleDescription(borders,reportBorderColor=formatConfig['reportBorderColor'])
+				formatField['border-style'] = getCellBorderStyleDescription(
+					borders,
+					reportBorderColor=formatConfig['reportCellBorders'] == ReportCellBorders.COLOR_AND_STYLE,
+				)
 			except COMError:
 				pass
 		return formatField,(self._startOffset,self._endOffset)

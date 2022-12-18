@@ -27,7 +27,6 @@ def listPlugins():
 		yield plugin
 
 def initialize():
-	config.addConfigDirsToPythonPackagePath(globalPlugins)
 	for plugin in listPlugins():
 		try:
 			runningPlugins.add(plugin())
@@ -52,6 +51,8 @@ def reloadGlobalPlugins():
 	for mod in mods:
 		del sys.modules[mod]
 	import globalPlugins
+	from addonHandler.packaging import addDirsToPythonPackagePath
+	addDirsToPythonPackagePath(globalPlugins)
 	initialize()
 
 class GlobalPlugin(baseObject.ScriptableObject):

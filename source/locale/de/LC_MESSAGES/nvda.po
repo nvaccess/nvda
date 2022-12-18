@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-21 00:02+0000\n"
+"POT-Creation-Date: 2022-11-15 00:02+0000\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Bernd Dorer <mail@bdorer.de>\n"
+"Last-Translator: Karl Eick <hozosch@web.de>\n"
 "Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 msgid "Native input"
@@ -1801,7 +1801,7 @@ msgstr "Springt zur nächsten Trennlinie"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next separator"
-msgstr "Keine vorherige Trennlinie"
+msgstr "Keine weitere Trennlinie"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous separator"
@@ -1841,7 +1841,7 @@ msgstr "Springt zum vorherigen Kombinationsfeld"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous combo box"
-msgstr "Kein weiteres Kombinationsfeld"
+msgstr "Kein vorheriges Kombinationsfeld"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next check box"
@@ -1857,7 +1857,7 @@ msgstr "Springt zum vorherigen Kontrollfeld"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous check box"
-msgstr "Kein weiteres Kontrollfeld"
+msgstr "Kein vorheriges Kontrollfeld"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next graphic"
@@ -1953,7 +1953,7 @@ msgstr "Springt zur vorherigen Anmerkung"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous annotation"
-msgstr "Keine weitere Anmerkung"
+msgstr "Keine vorherige Anmerkung"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next error"
@@ -4948,13 +4948,13 @@ msgid "unknown %s"
 msgstr "%s ist unbekannt"
 
 msgid "on"
-msgstr "Eingeschaltet"
+msgstr "eingeschaltet"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
 msgid "off"
-msgstr "Ausgeschaltet"
+msgstr "ausgeschaltet"
 
 #. Translators: Used when describing keys on the system keyboard with a particular layout.
 #. %s is replaced with the layout name.
@@ -6277,6 +6277,35 @@ msgstr "wischen"
 msgctxt "touch action"
 msgid "hover up"
 msgstr "Nach oben wischen"
+
+#. Translators: This is the message for a warning shown if NVDA cannot open a browsable message window
+#. when Windows is on a secure screen (sign-on screen / UAC prompt).
+msgid ""
+"This feature is unavailable while on secure screens such as the sign-on "
+"screen or UAC prompt."
+msgstr ""
+"Diese Funktion steht in geschützten Bildschirmen wie dem Anmeldebildschirm "
+"oder der Eingabeaufforderung von der Benutzerkontensteuerung nicht zur "
+"Verfügung."
+
+#. Translators: This is the message for a warning shown if NVDA cannot open a browsable message window
+#. when Windows is on a secure screen (sign-on screen / UAC prompt). This prompt includes the title
+#. of the Window that could not be opened for context.
+#. The {title} will be replaced with the title.
+#. The title may be something like "Formatting".
+#, python-brace-format
+msgid ""
+"This feature ({title}) is unavailable while on secure screens such as the "
+"sign-on screen or UAC prompt."
+msgstr ""
+"Diese Funktion ({title}) steht in geschützten Bildschirmen, wie dem "
+"Anmeldebildschirm oder der Eingabeaufforderung von der "
+"Benutzerkontensteuerung, nicht zur Verfügung."
+
+#. Translators: This is the title for a warning dialog, shown if NVDA cannot open a browsable message
+#. dialog.
+msgid "Feature unavailable."
+msgstr "Die Funktion steht nicht zur Verfügung."
 
 #. Translators: The title for the dialog used to present general NVDA messages in browse mode.
 msgid "NVDA Message"
@@ -10533,7 +10562,7 @@ msgstr "Anmerkungen"
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
 msgid "Report 'has details' for structured annotations"
-msgstr "\"enthält Details\" mitteilen für strukturierte Anmerkungen"
+msgstr "Für strukturierte Anmerkungen \"enthält Details\" mitteilen"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -13372,7 +13401,7 @@ msgstr "{offset:.3g} Millimeter"
 #. Translators: a measurement in Microsoft Word (points)
 #, python-brace-format
 msgid "{offset:.3g} pt"
-msgstr "{offset:.3g} pt"
+msgstr "{offset:.3g} Punkt"
 
 #. Translators: a measurement in Microsoft Word
 #. See http://support.microsoft.com/kb/76388 for details.

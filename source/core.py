@@ -212,6 +212,7 @@ def resetConfiguration(factoryDefaults=False):
 	import speech
 	import vision
 	import inputCore
+	import hwIo
 	import tones
 	log.debug("Terminating vision")
 	vision.terminate()
@@ -223,6 +224,8 @@ def resetConfiguration(factoryDefaults=False):
 	speech.terminate()
 	log.debug("terminating tones")
 	tones.terminate()
+	log.debug("Terminating background i/o")
+	hwIo.terminate()
 	log.debug("terminating addonHandler")
 	addonHandler.terminate()
 	log.debug("Reloading config")
@@ -237,6 +240,9 @@ def resetConfiguration(factoryDefaults=False):
 	languageHandler.setLanguage(lang)
 	# Addons
 	addonHandler.initialize()
+	# Hardware background i/o
+	log.debug("initializing background i/o")
+	hwIo.initialize()
 	# Tones
 	tones.initialize()
 	#Speech
@@ -422,52 +428,6 @@ def _handleNVDAModuleCleanupBeforeGUIExit():
 	brailleViewer.destroyBrailleViewer()
 
 
-def _pollForForegroundHWND() -> int:
-	"""
-	@note: The foreground window should usually be fetched on the first try,
-	however it may take longer if Windows is taking a long time changing window focus.
-	Times out after 20 seconds (MAX_WAIT_TIME_SECS).
-	After timing out, NVDA will give up trying to start and exit.
-	"""
-	import ui
-	from utils.blockUntilConditionMet import blockUntilConditionMet
-	import winUser
-
-	# winUser.getForegroundWindow may return NULL in certain circumstances,
-	# such as when a window is losing activation.
-	# This should not remain the case for an extended period of time.
-	# If NVDA is taking longer than expected to fetch the foreground window, perform a warning.
-	# We must wait a long time after this warning to
-	# allow for braille / speech to be understood before exiting.
-	# Unfortunately we cannot block with a dialog as NVDA cannot read dialogs yet.
-	WARN_AFTER_SECS = 5
-	MAX_WAIT_TIME_SECS = 20
-
-	success, foregroundHWND = blockUntilConditionMet(
-		getValue=winUser.getForegroundWindow,
-		giveUpAfterSeconds=WARN_AFTER_SECS,
-	)
-	if success:
-		return foregroundHWND
-
-	exitAfterWarningSecs = MAX_WAIT_TIME_SECS - WARN_AFTER_SECS
-	ui.message(_(
-		# Translators: Message when NVDA is having an issue starting up
-		"NVDA is failing to fetch the foreground window. "
-		"If this continues, NVDA will quit starting in %d seconds." % exitAfterWarningSecs
-	))
-
-	success, foregroundHWND = blockUntilConditionMet(
-		getValue=winUser.getForegroundWindow,
-		giveUpAfterSeconds=exitAfterWarningSecs,
-	)
-	if success:
-		return foregroundHWND
-	log.critical("NVDA could not fetch the foreground window. Exiting NVDA.")
-	# Raising exception here causes core.main to exit and NVDA to fail to start
-	raise NVDANotInitializedError("Could not fetch foreground window")
-
-
 def _initializeObjectCaches():
 	"""
 	Caches the desktop object.
@@ -475,18 +435,11 @@ def _initializeObjectCaches():
 	however no known exploit is known for this.
 	2023.1 plans to ensure the desktopObject is available only when signed-in.
 
-	Also initializes other object caches to the foreground window.
-	Previously the object that was cached was the desktopObject,
-	however this may leak secure information to the lock screen.
-	The foreground window is set as the object cache,
-	as the foreground window would already be accessible on the lock screen (e.g. Magnifier).
-	It also is more intuitive that NVDA focuses the foreground window,
-	as opposed to the desktop object.
-
-	@note: The foreground window should usually be fetched on the first try,
-	however it may take longer if Windows is taking a long time changing window focus.
-	Times out after 20 seconds (MAX_WAIT_TIME_SECS in _pollForForegroundHWND).
-	After timing out, NVDA will give up trying to start and exit.
+	The desktop object must be used, as setting the object caches has side effects,
+	such as focus events.
+	Side effects from events generated while setting these objects may require NVDA to be finished initializing.
+	E.G. An app module for a lockScreen window.
+	The desktop object is an NVDA object without event handlers associated with it.
 	"""
 	import api
 	import NVDAObjects
@@ -494,13 +447,47 @@ def _initializeObjectCaches():
 
 	desktopObject = NVDAObjects.window.Window(windowHandle=winUser.getDesktopWindow())
 	api.setDesktopObject(desktopObject)
+	api.setForegroundObject(desktopObject)
+	api.setFocusObject(desktopObject)
+	api.setNavigatorObject(desktopObject)
+	api.setMouseObject(desktopObject)
 
-	foregroundHWND = _pollForForegroundHWND()
-	foregroundObject = NVDAObjects.window.Window(windowHandle=foregroundHWND)
-	api.setForegroundObject(foregroundObject)
-	api.setFocusObject(foregroundObject)
-	api.setNavigatorObject(foregroundObject)
-	api.setMouseObject(foregroundObject)
+
+class _TrackNVDAInitialization:
+	"""
+	During NVDA initialization,
+	core._initializeObjectCaches needs to cache the desktop object,
+	regardless of lock state.
+	Security checks may cause the desktop object to not be set if NVDA starts on the lock screen.
+	As such, during initialization, NVDA should behave as if Windows is unlocked,
+	i.e. winAPI.sessionTracking.isWindowsLocked should return False.
+
+	TODO: move to NVDAState module
+	"""
+
+	_isNVDAInitialized = False
+	"""When False, isWindowsLocked is forced to return False.
+	"""
+
+	@staticmethod
+	def markInitializationComplete():
+		assert not _TrackNVDAInitialization._isNVDAInitialized
+		_TrackNVDAInitialization._isNVDAInitialized = True
+
+	@staticmethod
+	def isInitializationComplete() -> bool:
+		return _TrackNVDAInitialization._isNVDAInitialized
+
+
+def _doLoseFocus():
+	import api
+	focusObject = api.getFocusObject()
+	if focusObject and hasattr(focusObject, "event_loseFocus"):
+		log.debug("calling lose focus on object with focus")
+		try:
+			focusObject.event_loseFocus()
+		except Exception:
+			log.exception("Lose focus error")
 
 
 def main():
@@ -557,6 +544,9 @@ def main():
 	import NVDAHelper
 	log.debug("Initializing NVDAHelper")
 	NVDAHelper.initialize()
+	log.debug("initializing background i/o")
+	import hwIo
+	hwIo.initialize()
 	log.debug("Initializing tones")
 	import tones
 	tones.initialize()
@@ -770,6 +760,9 @@ def main():
 	else:
 		log.debug("initializing updateCheck")
 		updateCheck.initialize()
+
+	_TrackNVDAInitialization.markInitializationComplete()
+
 	log.info("NVDA initialized")
 
 	# Queue the firing of the postNVDAStartup notification.
@@ -796,13 +789,8 @@ def main():
 	_terminate(gui)
 	config.saveOnExit()
 
-	try:
-		focusObject = api.getFocusObject()
-		if focusObject and hasattr(focusObject, "event_loseFocus"):
-			log.debug("calling lose focus on object with focus")
-			focusObject.event_loseFocus()
-	except:
-		log.exception("Lose focus error")
+	_doLoseFocus()
+
 	try:
 		speech.cancelSpeech()
 	except:
@@ -825,6 +813,7 @@ def main():
 	_terminate(brailleInput)
 	_terminate(braille)
 	_terminate(speech)
+	_terminate(hwIo)
 	_terminate(addonHandler)
 	_terminate(garbageHandler)
 	# DMP is only started if needed.

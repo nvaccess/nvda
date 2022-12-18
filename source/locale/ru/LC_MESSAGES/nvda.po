@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Russian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-21 00:02+0000\n"
-"PO-Revision-Date: 2022-10-23 20:02+0800\n"
+"POT-Creation-Date: 2022-11-15 00:02+0000\n"
+"PO-Revision-Date: 2022-11-17 03:45+0800\n"
 "Last-Translator: Kvark <kvark128@yandex.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -2492,25 +2492,25 @@ msgstr "переходит на последний столбец таблицы
 msgid ""
 "Reads the row horizontally from the current cell rightwards to the last cell "
 "in the row."
-msgstr ""
+msgstr "Читает строку вправо от текущей ячейки до последней ячейки в строке"
 
 #. Translators: the description for the sayAll row command
 msgid ""
 "Reads the column vertically from the current cell downwards to the last cell "
 "in the column."
-msgstr ""
+msgstr "Читает столбец вниз от текущей ячейки до последней ячейки в столбце"
 
 #. Translators: the description for the speak row command
 msgid ""
 "Reads the current row horizontally from left to right without moving the "
 "system caret."
-msgstr ""
+msgstr "Читает текущую строку слева направо, не перемещая системную каретку"
 
 #. Translators: the description for the speak column command
 msgid ""
 "Reads the current column vertically from top to bottom without moving the "
 "system caret."
-msgstr ""
+msgstr "Читает текущий столбец сверху вниз, не перемещая системную каретку"
 
 #. Translators: The message announced when toggling the include layout tables browse mode setting.
 msgid "layout tables off"
@@ -6246,6 +6246,33 @@ msgctxt "touch action"
 msgid "hover up"
 msgstr "скольжение вверх"
 
+#. Translators: This is the message for a warning shown if NVDA cannot open a browsable message window
+#. when Windows is on a secure screen (sign-on screen / UAC prompt).
+msgid ""
+"This feature is unavailable while on secure screens such as the sign-on "
+"screen or UAC prompt."
+msgstr ""
+"Эта функция недоступна на защищённых экранах, таких как экран входа в "
+"систему или диалог контроля учётных записей."
+
+#. Translators: This is the message for a warning shown if NVDA cannot open a browsable message window
+#. when Windows is on a secure screen (sign-on screen / UAC prompt). This prompt includes the title
+#. of the Window that could not be opened for context.
+#. The {title} will be replaced with the title.
+#. The title may be something like "Formatting".
+#, python-brace-format
+msgid ""
+"This feature ({title}) is unavailable while on secure screens such as the "
+"sign-on screen or UAC prompt."
+msgstr ""
+"Эта функция ({title}) недоступна на защищённых экранах, таких как экран "
+"входа в систему или диалог контроля учётных записей."
+
+#. Translators: This is the title for a warning dialog, shown if NVDA cannot open a browsable message
+#. dialog.
+msgid "Feature unavailable."
+msgstr "Функция недоступна"
+
 #. Translators: The title for the dialog used to present general NVDA messages in browse mode.
 msgid "NVDA Message"
 msgstr "Сообщение NVDA"
@@ -7451,19 +7478,19 @@ msgstr "%s пикселей"
 #, python-format
 msgctxt "font size"
 msgid "%s em"
-msgstr ""
+msgstr "%s em"
 
 #. Translators: A measurement unit of font size.
 #, python-format
 msgctxt "font size"
 msgid "%s ex"
-msgstr ""
+msgstr "%s ex"
 
 #. Translators: Abbreviation for relative em, a measurement of font size.
 #, python-format
 msgctxt "font size"
 msgid "%s rem"
-msgstr ""
+msgstr "%s rem"
 
 #. Translators: Font size measured as a percentage
 #, python-format
@@ -11528,11 +11555,15 @@ msgid ""
 "Restarting Windows may address this. If this error is ongoing then disabling "
 "the Windows lock screen is recommended."
 msgstr ""
+"NVDA не может определить, заблокирована ли Windows. Пока этот экземпляр NVDA "
+"работает, ваш рабочий стол не будет защищён, когда Windows заблокирована. "
+"Перезагрузка Windows может решить эту проблему. Если эта ошибка повторяется, "
+"рекомендуется отключить экран блокировки Windows."
 
 #. Translators: This is the title for a warning dialog, shown if NVDA cannot determine if
 #. Windows is locked.
 msgid "Lock screen not secure while using NVDA"
-msgstr ""
+msgstr "Экран блокировки не защищён при использовании NVDA"
 
 #. Translators: Reported when a page reloads (example: after refreshing a webpage).
 msgid "Refreshed"
@@ -12452,7 +12483,7 @@ msgstr "нет изменений в точке {previousIndex}, "
 #. Translators: For line charts, indicates an increase from the previous data point on the left
 #, python-brace-format
 msgid "increased by {incrementValue} from point {previousIndex}, "
-msgstr ""
+msgstr "увеличено на {incrementValue} с точки {previousIndex}, "
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
 #, python-brace-format
@@ -13309,6 +13340,13 @@ msgstr "Двойной междустрочный интервал"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Полуторный междустрочный интервал"
+
+#~ msgid ""
+#~ "NVDA is failing to fetch the foreground window. If this continues, NVDA "
+#~ "will quit starting in %d seconds."
+#~ msgstr ""
+#~ "NVDA не может получить окно переднего плана. Если это продолжится, NVDA "
+#~ "прекратит запуск через %d секунд."
 
 #~ msgid "NVDA could not start securely."
 #~ msgstr "NVDA не удалось запустить безопасно"

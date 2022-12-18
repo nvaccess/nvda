@@ -79,7 +79,7 @@ Ten en conta que aínda hai fallos coñecidos con Chrome e Edge. (#13254)
 - O NVDA anunciará elementos arrastrables na pantalla en lugares coma na reorganización dos mosaicos do menú Inicio en Windows 10 e nos escritorios virtuais en Windows 11. (#12271, #14081)
 - Nas opcións avanzadas, a opción "reproducir un son para rexistro de erros" agora restáurase correctamente a este valor predeterminado ao premer o botón "Restaurar predeterminados". (#14149)
 - O NVDA agora pode selecionar texto usando o atallo de teclado ``NVDA+f10`` en aplicacións Java. (#14163)
--
+- O NVDA xa non se atascará nun menú ao subir e baixar coas frechas por un fío de conversacións en Microsoft Teams. (#14355)-
 
 
 == Cambios para Desenvolvedores ==
@@ -94,6 +94,17 @@ Por favor consulta [a guía do desenvolvedor https://www.nvaccess.org/files/nvda
 - ``core.post_windowMessageReceipt`` está obsoleto, usa ``winAPI.messageWindow.pre_handleWindowMessage`` a cambio.
 - ``winKernel.SYSTEM_POWER_STATUS`` está obsoleto e desaconséllase o seu uso, esto moveuse a ``winAPI._powerTracking.SystemPowerStatus``.
 - As constantes ``winUser.SM_*`` están obsoletas, usa ``winAPI.winUser.constants.SystemMetrics`` a cambio.
+= 2022.3.2 =
+Esta é unha versión menor para arranxar regresións con 2022.3.1 e para abordar un problema de seguridade.
+
+== Arranxos de Seguridade ==
+- Evita o posible aceso a nivel de sistema para usuarios non autentificados.
+([GHSA-3jj9-295f-h69w https://github.com/nvaccess/nvda/security/advisories/GHSA-3jj9-295f-h69w])
+-
+
+== Arranxo de Erros ==
+- Arránxase unha regresión de 2022.3.1 onde certas funcionalidades deshabilitábanse en pantallas seguras. (#14286)
+- Arránxase unha regresión de 2022.3.1 onde certas funcionalidades desabilitábanse despois de autentificarse se o NVDA se iniciaba na pantalla de bloqueo. (#14301)
 -
 
 
