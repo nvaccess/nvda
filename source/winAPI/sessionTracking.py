@@ -19,17 +19,20 @@ import ctypes
 from contextlib import contextmanager
 from ctypes.wintypes import (
 	DWORD,
-	HWND,
 	LPWSTR,
 )
 import enum
 from typing import (
+	Any,
 	Generator,
 	Optional,
 )
 
 from baseObject import AutoPropertyObject
-from winAPI._wtsApi32 import (
+from logHandler import log
+
+from .types import HWNDValT
+from ._wtsApi32 import (
 	WTSINFOEXW,
 	WTSQuerySessionInformation,
 	WTS_CURRENT_SERVER_HANDLE,
@@ -38,7 +41,6 @@ from winAPI._wtsApi32 import (
 	WTSFreeMemory,
 	WTS_LockState,
 )
-from logHandler import log
 
 RPC_S_INVALID_BINDING = 0x6A6
 """
@@ -131,8 +133,42 @@ def pumpAll():
 		postSessionLockStateChanged.notify(isNowLocked=windowsIsNowLocked)
 
 
+def __getattr__(attrName: str) -> Any:
+	"""Module level `__getattr__` used to preserve backward compatibility."""
+	from buildVersion import version_year
+	import NVDAState
+	if not NVDAState._allowDeprecatedAPI():
+		return
+	if version_year < 2023:
+		if attrName == "isWindowsLocked":
+			log.warning(
+				"isWindowsLocked is deprecated for removal in 2023.1"
+			)
+			return _isWindowsLocked
+		elif attrName == "isLockStateSuccessfullyTracked":
+			log.warning(
+				"isLockStateSuccessfullyTracked is deprecated for removal in 2023.1"
+			)
+			return _isLockStateSuccessfullyTracked
+		elif attrName == "register":
+			log.warning(
+				"sessionTracking.register is deprecated for removal in 2023.1"
+			)
+			return _register
+		elif attrName == "unregister":
+			log.warning(
+				"sessionTracking.register is deprecated for removal in 2023.1"
+			)
+			return _unregister
+		elif attrName == "handleSessionChange":
+			log.warning(
+				"sessionTracking.handleSessionChange is deprecated for removal in 2023.1"
+			)
+			return _handleSessionChange
+	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+
+
 def isWindowsLocked() -> bool:
-	# TODO: improve deprecation practice on beta/master merges
 	log.error(
 		"This function is deprecated, for removal in 2023.1. "
 		"It was never expected that add-on authors would use this function"
@@ -197,8 +233,7 @@ def _isWindowsLocked_checkViaSessionQuery() -> bool:
 	return sessionQueryLockState == WTS_LockState.WTS_SESSIONSTATE_LOCK
 
 
-def isLockStateSuccessfullyTracked() -> bool:
-	# TODO: improve deprecation practice on beta/master merges
+def _isLockStateSuccessfullyTracked() -> bool:
 	log.error(
 		"NVDA no longer registers to receive session tracking notifications. "
 		"This function is deprecated, for removal in 2023.1. "
@@ -207,8 +242,7 @@ def isLockStateSuccessfullyTracked() -> bool:
 	return True
 
 
-def register(handle: int) -> bool:
-	# TODO: improve deprecation practice on beta/master merges
+def _register(handle: HWNDValT) -> bool:
 	log.error(
 		"NVDA no longer registers to receive session tracking notifications. "
 		"This function is deprecated, for removal in 2023.1. "
@@ -217,8 +251,7 @@ def register(handle: int) -> bool:
 	return True
 
 
-def unregister(handle: HWND) -> None:
-	# TODO: improve deprecation practice on beta/master merges
+def _unregister(handle: HWNDValT) -> None:
 	log.error(
 		"NVDA no longer registers to receive session tracking notifications. "
 		"This function is deprecated, for removal in 2023.1. "
@@ -226,8 +259,7 @@ def unregister(handle: HWND) -> None:
 	)
 
 
-def handleSessionChange(newState: WindowsTrackedSession, sessionId: int) -> None:
-	# TODO: improve deprecation practice on beta/master merges
+def _handleSessionChange(newState: WindowsTrackedSession, sessionId: int) -> None:
 	log.error(
 		"NVDA no longer registers to receive session tracking notifications. "
 		"This function is deprecated, for removal in 2023.1. "

@@ -1,10 +1,12 @@
-#windowUtils.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2013 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2013 NV Access Limited
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
-"""Utilities for working with windows (HWNDs).
+"""
+Utilities for working with windows (HWNDs).
+
+When working on this file, consider moving to winAPI.
 """
 
 import ctypes

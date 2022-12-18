@@ -5,6 +5,7 @@
 
 import typing
 from typing import (
+	Any,
 	Callable,
 	List,
 	Optional,
@@ -17,7 +18,6 @@ from winAPI.sessionTracking import _isLockScreenModeActive
 import winUser
 
 if typing.TYPE_CHECKING:
-	import appModuleHandler  # noqa: F401, use for typing
 	import scriptHandler  # noqa: F401, use for typing
 	import NVDAObjects  # noqa: F401, use for typing
 
@@ -128,14 +128,22 @@ def getSafeScripts() -> Set["scriptHandler._ScriptFunctionT"]:
 	}
 
 
-# TODO: Consider renaming to _objectBelowLockScreenAndWindowsIsLocked.
-def _isSecureObjectWhileLockScreenActivated(
+def objectBelowLockScreenAndWindowsIsLocked(
 		obj: "NVDAObjects.NVDAObject",
 		shouldLog: bool = True,
 ) -> bool:
 	"""
-	While Windows is locked, Windows 10 and 11 doesn't prevent object navigation outside of the lockscreen.
-	As such, NVDA must prevent accessing and reading objects outside of the lockscreen when Windows is locked.
+	While Windows is locked, the current user session is still running, and below the lock screen
+	exists the current user's desktop.
+
+	Windows 10 and 11 doesn't prevent object navigation below the lock screen.
+
+	If an object is above the lock screen, it is accessible and visible to the user
+	through the Windows UX while Windows is locked.
+	An object below the lock screen should only be accessible when Windows is unlocked,
+	as it may contain sensitive information.
+
+	As such, NVDA must prevent accessing and reading objects below the lock screen when Windows is locked.
 	@return: C{True} if the Windows 10/11 lockscreen is active and C{obj} is below the lock screen.
 	"""
 	try:
@@ -153,8 +161,19 @@ def _isSecureObjectWhileLockScreenActivated(
 	return False
 
 
-def isObjectAboveLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
-	# TODO: improve deprecation practice on beta/master merges
+def __getattr__(attrName: str) -> Any:
+	import NVDAState
+	"""Module level `__getattr__` used to preserve backward compatibility."""
+	if attrName == "isObjectAboveLockScreen" and NVDAState._allowDeprecatedAPI():
+		log.warning(
+			"Importing isObjectAboveLockScreen(obj) is deprecated. "
+			"Instead use obj.isBelowLockScreen. "
+		)
+		return _isObjectAboveLockScreen
+	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+
+
+def _isObjectAboveLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 	log.error(
 		"This function is deprecated. "
 		"Instead use obj.isBelowLockScreen. "
@@ -164,8 +183,16 @@ def isObjectAboveLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 
 def _isObjectBelowLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 	"""
+	While Windows is locked, the current user session is still running, and below the lockscreen
+	exists the current user's desktop.
+
 	When Windows is locked, the foreground Window is usually LockApp,
 	but other Windows can be focused (e.g. Windows Magnifier, reset PIN workflow).
+
+	If an object is above the lockscreen, it is accessible and visible to the user
+	through the Windows UX while Windows is locked.
+	An object below the lockscreen should only be accessible when Windows is unlocked,
+	as it may contain sensitive information.
 	"""
 	from IAccessibleHandler import SecureDesktopNVDAObject
 	from NVDAObjects.IAccessible import TaskListIcon

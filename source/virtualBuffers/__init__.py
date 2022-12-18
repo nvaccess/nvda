@@ -2,7 +2,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2007-2022 NV Access Limited, Peter Vágner
+# Copyright (C) 2007-2022 NV Access Limited, Peter Vágner, Cyrille Bougot
 
 import time
 import threading
@@ -38,6 +38,8 @@ import aria
 import treeInterceptorHandler
 import watchdog
 from abc import abstractmethod
+import documentBase
+
 
 VBufStorage_findDirection_forward=0
 VBufStorage_findDirection_back=1
@@ -640,15 +642,14 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 
 	def _getNearestTableCell(
 			self,
-			tableID,
-			startPos,
-			origRow,
-			origCol,
-			origRowSpan,
-			origColSpan,
-			movement,
-			axis
-	):
+			startPos: textInfos.TextInfo,
+			cell: documentBase._TableCell,
+			movement: documentBase._Movement,
+			axis: documentBase._Axis,
+	) -> textInfos.TextInfo:
+		tableID, origRow, origCol, origRowSpan, origColSpan = (
+			cell.tableID, cell.row, cell.col, cell.rowSpan, cell.colSpan
+		)
 		# Determine destination row and column.
 		destRow = origRow
 		destCol = origCol
@@ -670,10 +671,13 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 
 		# Cells are grouped by row, so in most cases, we simply need to search in the right direction.
 		for info in self._iterTableCells(tableID, direction=movement, startPos=startPos):
-			_ignore, row, col, rowSpan, colSpan = self._getTableCellCoords(info)
-			if row <= destRow < row + rowSpan and col <= destCol < col + colSpan:
+			cell = self._getTableCellCoords(info)
+			if (
+				cell.row <= destRow < (cell.row + cell.rowSpan)
+				and cell.col <= destCol < (cell.col + cell.colSpan)
+			):
 				return info
-			elif row > destRow and movement == "next":
+			elif cell.row > destRow and movement == "next":
 				# Optimisation: We've gone forward past destRow, so we know we won't find the cell.
 				# We can't reverse this logic when moving backwards because there might be a prior cell on an earlier row which spans multiple rows.
 				break
@@ -687,8 +691,11 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 			# In this case, there might be a cell on an earlier row which spans multiple rows.
 			# Therefore, try searching backwards.
 			for info in self._iterTableCells(tableID, direction="previous", startPos=startPos):
-				_ignore, row, col, rowSpan, colSpan = self._getTableCellCoords(info)
-				if row <= destRow < row + rowSpan and col <= destCol < col + colSpan:
+				cell = self._getTableCellCoords(info)
+			if (
+				cell.row <= destRow < (cell.row + cell.rowSpan)
+				and cell.col <= destCol < (cell.col + cell.colSpan)
+			):
 					return info
 			else:
 				raise LookupError

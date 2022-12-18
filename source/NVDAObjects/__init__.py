@@ -1204,6 +1204,10 @@ This code is executed if a gain focus event is received by this object.
 		# Forget the word currently being typed as focus is moving to a new control. 
 		speech.clearTypedWordBuffer()
 
+	def event_focusExited(self):
+		# In the general case, NVDA should not announce anything when focus exits an ancestor control.
+		pass
+
 	def event_foreground(self):
 		"""Called when the foreground window changes.
 		This method should only perform tasks specific to the foreground window changing.

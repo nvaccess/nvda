@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA R3935\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-19 00:02+0000\n"
+"POT-Creation-Date: 2022-11-15 00:02+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Nikola Jović <wwenikola123@gmail.com>\n"
 "Language-Team: NVDA Serbian translation\n"
@@ -1102,6 +1102,11 @@ msgstr "kašmirski stepen 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Luganda literary braille"
+msgstr "Luganda književni brajev kod"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Lithuanian 8 dot"
 msgstr "Litvanski osmotačkasti"
 
@@ -1267,6 +1272,11 @@ msgstr "Ruski brajev kratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Kinyarwanda literary braille"
+msgstr "Kinyarwanda književni brajev kod"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Sanskrit grade 1"
 msgstr "Sanskrit jezik stepen 1"
 
@@ -1278,12 +1288,7 @@ msgstr "Yakut stepen 1"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Swedish 8 dot computer braille"
-msgstr "Švetski osmotačkasti brajev kod"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "Swedish grade 1"
-msgstr "švedski stepen 1"
+msgstr "Švedski osmotačkasti brajev kod"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1314,6 +1319,21 @@ msgstr "Sesotho stepen 2"
 #. braille settings dialog.
 msgid "Serbian grade 1"
 msgstr "srpski stepen 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swedish uncontracted braille"
+msgstr "Švedski brajev kod"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swedish partially contracted braille"
+msgstr "Švedski brajev kod delimičnog kratkopisa"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swedish contracted braille"
+msgstr "Švedski kratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1414,6 +1434,18 @@ msgstr "Xhosa stepen 1"
 #. braille settings dialog.
 msgid "Xhosa grade 2"
 msgstr "Xhosa stepen 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#. This should be translated to '中文中国汉语通用盲文' in Mandarin.
+msgid "Chinese common braille (simplified Chinese characters)"
+msgstr "Kineski zajednički brajev kod (Pojednostavljeni Kineski znakovi)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#. This should be translated to '中文中国汉语现行盲文（无声调）' in Mandarin.
+msgid "Chinese (China, Mandarin) Current Braille System (no tones)"
+msgstr "Kineski (Kina, Mandarinski) trenutni brajev sistem (bez tonova)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2364,40 +2396,6 @@ msgstr "greška u datoteci sa rasporedom komandi"
 msgid "Loading NVDA. Please wait..."
 msgstr "Učitavanje NVDA. Molimo sačekajte..."
 
-#. Translators: This is a warning to users, shown if NVDA cannot determine if
-#. Windows is locked.
-msgid ""
-"NVDA failed to register session tracking. While this instance of NVDA is "
-"running, your desktop will not be secure when Windows is locked. Restart "
-"NVDA? "
-msgstr ""
-"NVDA nije uspeo da registruje praćenje sesije. Dok je ovaj NVDA pokrenut, "
-"vaša radna površina neće biti bezbedna dok je Windows pokrenut. Ponovo "
-"pokrenuti NVDA? "
-
-#. Translators: This is a warning to users, shown if NVDA cannot determine if
-#. Windows is locked.
-msgid "NVDA could not start securely."
-msgstr "NVDA nije mogao da se bezbedno pokrene."
-
-#. Translators: The screen is oriented so that it is wider than it is tall.
-msgid "Landscape"
-msgstr "Horizontalno"
-
-#. Translators: The screen is oriented in such a way that the height is taller than it is wide.
-msgid "Portrait"
-msgstr "Uspravno"
-
-#. Translators: Reported when the battery is plugged in, and now is charging.
-#, python-format
-msgid "Charging battery. %d percent"
-msgstr "%d procenata, punjenje baterije."
-
-#. Translators: Reported when the battery is no longer plugged in, and now is not charging.
-#, python-format
-msgid "Not charging battery. %d percent"
-msgstr "%d procenata, punjenje baterije zaustavljeno."
-
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 msgid "NVDA started"
 msgstr "NVDA pokrenut"
@@ -2494,6 +2492,37 @@ msgstr "premešta se na prvu kolonu tabele"
 #. Translators: the description for the last table column script on browseMode documents.
 msgid "moves to the last table column"
 msgstr "premešta se na poslednju kolonu tabele"
+
+#. Translators: the description for the sayAll row command
+msgid ""
+"Reads the row horizontally from the current cell rightwards to the last cell "
+"in the row."
+msgstr ""
+"Čita red horizontalno od trenutne ćelije na desno do poslednje ćelije u redu."
+
+#. Translators: the description for the sayAll row command
+msgid ""
+"Reads the column vertically from the current cell downwards to the last cell "
+"in the column."
+msgstr ""
+"Čita kolonu vertikalno od trenutne ćelije na dole do poslednje ćelije u "
+"koloni."
+
+#. Translators: the description for the speak row command
+msgid ""
+"Reads the current row horizontally from left to right without moving the "
+"system caret."
+msgstr ""
+"Čita trenutni red horizontalno s leva na desno bez pomeranja sistemskog "
+"kursora."
+
+#. Translators: the description for the speak column command
+msgid ""
+"Reads the current column vertically from top to bottom without moving the "
+"system caret."
+msgstr ""
+"Čita trenutnu kolonu vertikalno od vrha do dna bez pomeranja sistemskog "
+"kursora."
 
 #. Translators: The message announced when toggling the include layout tables browse mode setting.
 msgid "layout tables off"
@@ -2942,16 +2971,15 @@ msgid "report tables on"
 msgstr "uključeno prijavljivanje tabela"
 
 #. Translators: Input help mode message for toggle report table row/column headers command.
-msgid "Toggles on and off the reporting of table row and column headers"
-msgstr "Uključuje i isključuje prijavljivanje zaglavlja redova i kolona tabele"
+msgid "Cycle through the possible modes to report table row and column headers"
+msgstr ""
+"Kruži kroz moguće režime prijavljivanja zaglavlja redova i kolona tabela"
 
-#. Translators: The message announced when toggling the report table row/column headers document formatting setting.
-msgid "report table row and column headers off"
-msgstr "isključeno prijavljivanje zaglavlja redova i kolona tabele"
-
-#. Translators: The message announced when toggling the report table row/column headers document formatting setting.
-msgid "report table row and column headers on"
-msgstr "uključeno prijavljivanje zaglavlja redova i kolona tabele"
+#. Translators: Reported when the user cycles through report table header modes.
+#. {mode} will be replaced with the mode; e.g. None, Rows and columns, Rows or Columns.
+#, python-brace-format
+msgid "Report table headers {mode}"
+msgstr "Prijavljivanje zaglavlja tabela {mode}"
 
 #. Translators: Input help mode message for toggle report table cell coordinates command.
 msgid "Toggles on and off the reporting of table cell coordinates"
@@ -3387,6 +3415,26 @@ msgstr ""
 "Pomera pregledni kursor na naredni red trenutnog navigacijskog objekta i "
 "izgovara je"
 
+#. Translators: Input help mode message for move review cursor to previous page command.
+msgid ""
+"Moves the review cursor to the previous page of the current navigator object "
+"and speaks it"
+msgstr ""
+"Pomera pregledni kursor na prethodnu stranicu trenutnog navigacionog objekta "
+"i izgovara je"
+
+#. Translators: a message reported when movement by page is unsupported
+msgid "Movement by page not supported"
+msgstr "Pomeranje po stranicama nije podržano"
+
+#. Translators: Input help mode message for move review cursor to next page command.
+msgid ""
+"Moves the review cursor to the next page of the current navigator object and "
+"speaks it"
+msgstr ""
+"Pomera pregledni kursor na sledeću stranicu trenutnog navigacionog objekta i "
+"izgovara je"
+
 #. Translators: Input help mode message for move review cursor to bottom line command.
 msgid ""
 "Moves the review cursor to the bottom line of the current navigator object "
@@ -3674,6 +3722,16 @@ msgstr ""
 "informaciju. Ako se pritisne tri puta, kopira statusnu traku u privremenu "
 "memoriju."
 
+#. Translators: Description for a keyboard command which reports the
+#. accelerator key of the currently focused object.
+msgid "Reports the shortcut key of the currently focused object"
+msgstr "Prijavljuje tastersku prečicu trenutno fokusiranog objekta"
+
+#. Translators: reported when a user requests the accelerator key
+#. of the currently focused object, but there is none set.
+msgid "No shortcut key"
+msgstr "Nema tasterske prečice"
+
 #. Translators: Input help mode message for toggle mouse tracking command.
 msgid "Toggles the reporting of information as the mouse moves"
 msgstr "Uključuje ili isključuje prijavljivanje informacija dok se miš pomera"
@@ -3865,24 +3923,6 @@ msgstr ""
 msgid "Reports battery status and time remaining if AC is not plugged in"
 msgstr ""
 "obaveštava o statusu baterije i preostalom vremenu ako punjač nije uključen"
-
-#. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
-msgid "No system battery"
-msgstr "nema sistemske baterije"
-
-#. Translators: This is presented to inform the user of the current battery percentage.
-#, python-format
-msgid "%d percent"
-msgstr "%d  procenata"
-
-#. Translators: This is presented when AC power is connected such as when recharging a laptop battery.
-msgid "AC power on"
-msgstr "punjač uključen"
-
-#. Translators: This is the estimated remaining runtime of the laptop battery.
-#, python-brace-format
-msgid "{hours:d} hours and {minutes:d} minutes remaining"
-msgstr "{hours:d} sati i {minutes:d} minuta preostalo"
 
 #. Translators: Input help mode message for pass next key through command.
 msgid ""
@@ -6195,6 +6235,33 @@ msgctxt "touch action"
 msgid "hover up"
 msgstr "Povuči gore"
 
+#. Translators: This is the message for a warning shown if NVDA cannot open a browsable message window
+#. when Windows is on a secure screen (sign-on screen / UAC prompt).
+msgid ""
+"This feature is unavailable while on secure screens such as the sign-on "
+"screen or UAC prompt."
+msgstr ""
+"Ova opcija nije dostupna kada ste na bezbednim ekranima kao što su ekran za "
+"prijavljivanje ili ekran kontrole korisničkog naloga."
+
+#. Translators: This is the message for a warning shown if NVDA cannot open a browsable message window
+#. when Windows is on a secure screen (sign-on screen / UAC prompt). This prompt includes the title
+#. of the Window that could not be opened for context.
+#. The {title} will be replaced with the title.
+#. The title may be something like "Formatting".
+#, python-brace-format
+msgid ""
+"This feature ({title}) is unavailable while on secure screens such as the "
+"sign-on screen or UAC prompt."
+msgstr ""
+"Opcija ({title}) je nedostupna kada ste na bezbednim ekranima kao što su "
+"ekran za prijavljivanje ili ekran kontrole korisničkog naloga."
+
+#. Translators: This is the title for a warning dialog, shown if NVDA cannot open a browsable message
+#. dialog.
+msgid "Feature unavailable."
+msgstr "Opcija nedostupna"
+
 #. Translators: The title for the dialog used to present general NVDA messages in browse mode.
 msgid "NVDA Message"
 msgstr "NVDA poruka"
@@ -6422,7 +6489,7 @@ msgstr "Autorsko pravo (C) {years} NVDA saradnici"
 #, python-brace-format
 msgid ""
 "{longName} ({name})\n"
-"Version: {version}\n"
+"Version: {version} ({version_detailed})\n"
 "URL: {url}\n"
 "{copyright}\n"
 "\n"
@@ -6443,7 +6510,7 @@ msgid ""
 "menu."
 msgstr ""
 "{longName} ({name}) \n"
-"Verzija :{version}\n"
+"Verzija :{version} ({version_detailed})\n"
 "URL: {url}\n"
 "{copyright}\n"
 "\n"
@@ -6485,6 +6552,12 @@ msgstr ""
 "Ivice objekta pozicionirane {left:.1f} procenata od leve ivice ekrana, "
 "{top:.1f} procenata od vrha ekrana, širina je {width:.1f} procenata ekrana, "
 "visina je {height:.1f} procenata ekrana"
+
+#. Translators: This is presented to inform the user of a progress bar percentage.
+#. Translators: This is presented to inform the user of the current battery percentage.
+#, python-format
+msgid "%d percent"
+msgstr "%d  procenata"
 
 #. Translators: a message announcing a candidate's character and description.
 #, python-brace-format
@@ -7303,6 +7376,29 @@ msgstr "&Prikaži preglednik brajevog reda pri pokretanju"
 msgid "&Hover for cell routing"
 msgstr "&prevlačenje za prebacivanje na ćeliju"
 
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+#. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Off"
+msgstr "Isključeno"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Rows and columns"
+msgstr "Redovi i kolone"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Rows"
+msgstr "Redovi"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Columns"
+msgstr "Kolone"
+
 #. Translators: Label for an option in NVDA settings.
 #. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
 #. Translators: One of the show states of braille messages
@@ -8117,6 +8213,10 @@ msgstr "označeno"
 msgid "half checked"
 msgstr "polovično označeno"
 
+#. Translators: This is presented when a three state toggle button is half pressed.
+msgid "half pressed"
+msgstr "Polovično pritisnuto"
+
 #. Translators: This is presented when the control is a read-only control such as read-only edit box.
 msgid "read only"
 msgstr "samo za čitanje"
@@ -8368,7 +8468,7 @@ msgstr "&Ulazne komande..."
 
 #. Translators: The label for Preferences submenu in NVDA menu.
 msgid "&Preferences"
-msgstr "O&pcije"
+msgstr "&Opcije"
 
 #. Translators: The label for the menu item to open NVDA Log Viewer.
 msgid "View log"
@@ -8447,7 +8547,7 @@ msgstr "O programu..."
 
 #. Translators: The label for the Help submenu in NVDA menu.
 msgid "&Help"
-msgstr "Pom&oć"
+msgstr "&Pomoć"
 
 #. Translators: The label for the menu item to open donate page.
 msgid "Donate"
@@ -8507,7 +8607,7 @@ msgstr ""
 
 #. Translators: The label for the menu item to open the Configuration Profiles dialog.
 msgid "&Configuration profiles..."
-msgstr "&Profili podešavanja..."
+msgstr "P&rofili podešavanja..."
 
 #. Translators: The label for the menu item to revert to saved configuration.
 msgid "&Revert to saved configuration"
@@ -10088,12 +10188,6 @@ msgstr "broj red&ova"
 msgid "Line &indentation reporting:"
 msgstr "Prijavi uv&lačenje reda:"
 
-#. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
-#. Translators: This is the label for a combobox in the
-#. document formatting settings panel.
-msgid "Off"
-msgstr "Isključeno"
-
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
 msgctxt "line indentation setting"
 msgid "Speech"
@@ -10132,10 +10226,10 @@ msgstr "Informacije o tabelama"
 msgid "&Tables"
 msgstr "&Tabele"
 
-#. Translators: This is the label for a checkbox in the
+#. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
-msgid "Row/column h&eaders"
-msgstr "&Zaglavlja kolona/redova"
+msgid "H&eaders"
+msgstr "&Zaglavlja"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -10249,13 +10343,29 @@ msgstr "Otvori developer scratchpad folder"
 msgid "Microsoft UI Automation"
 msgstr "Microsoft UI Automation"
 
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid ""
-"Enable &selective registration for UI Automation events and property changes"
-msgstr ""
-"Omogući &selektivnu registraciju za UI Automation događaje i promene "
-"svojstava"
+#. Translators: This is the label for a combo box for selecting the
+#. means of registering for UI Automation events in the advanced settings panel.
+#. Choices are automatic, selective, and global.
+msgid "Regi&stration for UI Automation events and property changes:"
+msgstr "Regi&stracija za promene UI Automation događaja i svojstava:"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA decide whether to register
+#. selectively or globally for UI Automation events.
+msgid "Automatic (prefer selective)"
+msgstr "Automatska (preferiraj selektivnu)"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA register selectively for UI Automation events
+#. (i.e. not to request events for objects outside immediate focus).
+msgid "Selective"
+msgstr "Selektivna"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA register for all UI Automation events
+#. in all cases.
+msgid "Global"
+msgstr "Globalna"
 
 #. Translators: Label for the Use UIA with MS Word combobox, in the Advanced settings panel.
 msgctxt "advanced.uiaWithMSWord"
@@ -11406,6 +11516,24 @@ msgstr "{curPercent:.0f}%"
 msgid "at {x}, {y}"
 msgstr "u {x}, {y}"
 
+#. Translators: This is the message for a warning shown if NVDA cannot determine if
+#. Windows is locked.
+msgid ""
+"NVDA is unable to determine if Windows is locked. While this instance of "
+"NVDA is running, your desktop will not be secure when Windows is locked. "
+"Restarting Windows may address this. If this error is ongoing then disabling "
+"the Windows lock screen is recommended."
+msgstr ""
+"NVDA ne može da odredi da li je Windows zaključan. Dok je ova NVDA kopija "
+"pokrenuta, vaša radna površina neće biti bezbedna dok je Windows zaključan. "
+"Ponovno pokretanje Windowsa može ovo rešiti. Ako se ova greška nastavi "
+"preporučuje se da onemogućite Windows zaključani ekran."
+
+#. Translators: This is the title for a warning dialog, shown if NVDA cannot determine if
+#. Windows is locked.
+msgid "Lock screen not secure while using NVDA"
+msgstr "Zaključan ekran nije bezbedan dok se koristi NVDA"
+
 #. Translators: Reported when a page reloads (example: after refreshing a webpage).
 msgid "Refreshed"
 msgstr "Osveženo"
@@ -11483,6 +11611,36 @@ msgstr ""
 msgid "Make screen black (immediate effect)"
 msgstr "Učini da ekran bude crn(primenjuje se odmah)"
 
+#. Translators: The screen is oriented so that it is wider than it is tall.
+msgid "Landscape"
+msgstr "Horizontalno"
+
+#. Translators: The screen is oriented in such a way that the height is taller than it is wide.
+msgid "Portrait"
+msgstr "Uspravno"
+
+#. Translators: This is presented when there is an error retrieving the battery status.
+msgid "Unknown power status"
+msgstr "Nepoznat status napajanja"
+
+#. Translators: This is presented when there is no battery such as desktop computers
+#. and laptops with battery pack removed.
+msgid "No system battery"
+msgstr "nema sistemske baterije"
+
+#. Translators: Reported when the battery is plugged in, and now is charging.
+msgid "Charging battery"
+msgstr "Punjenje baterije"
+
+#. Translators: Reported when the battery is no longer plugged in, and now is not charging.
+msgid "AC disconnected"
+msgstr "Punjač nije povezan"
+
+#. Translators: This is the estimated remaining runtime of the laptop battery.
+#, python-brace-format
+msgid "{hours:d} hours and {minutes:d} minutes remaining"
+msgstr "{hours:d} sati i {minutes:d} minuta preostalo"
+
 msgid "Taskbar"
 msgstr "Programska traka"
 
@@ -11494,17 +11652,6 @@ msgstr "RGB crvena {rgb.red}, zelena {rgb.green}, plava {rgb.blue}"
 #, python-format
 msgid "%s items"
 msgstr "%s stavki"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#. Translators: a message reported in the SetColumnHeader script for Excel.
-#. Translators: a message reported in the SetRowHeader script for Excel.
-msgid ""
-"Cannot set headers. Please enable reporting of table headers in Document "
-"Formatting Settings"
-msgstr ""
-"Zaglavlja ne mogu biti postavljena. Molimo vac da uključite izveštavanje o "
-"zaglavljima tabele u podešavanjima formatiranja dokumenta."
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #, python-brace-format
@@ -11739,6 +11886,10 @@ msgstr "Tema komentara: {comment}  od strane {author} sa {numReplies} odgovora"
 #. Translators: A message in Excel when there is no comment thread
 msgid "No comment thread on this cell"
 msgstr "Nema teme komentara na ovoj ćeliji"
+
+#. Translators: announced when moving outside of a table in an Excel spreadsheet.
+msgid "Out of table"
+msgstr "Van tabele"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -12285,8 +12436,8 @@ msgstr "nema promena od tačke {previousIndex}, "
 
 #. Translators: For line charts, indicates an increase from the previous data point on the left
 #, python-brace-format
-msgid "Increased by {incrementValue} from point {previousIndex}, "
-msgstr "povećano za {incrementValue} od tačke {previousIndex}, "
+msgid "increased by {incrementValue} from point {previousIndex}, "
+msgstr "Povećano za {incrementValue} od tačke {previousIndex}, "
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
 #, python-brace-format
@@ -13138,6 +13289,41 @@ msgstr "odvajanje više redova "
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5 odvajanje redova"
+
+#~ msgid ""
+#~ "NVDA is failing to fetch the foreground window. If this continues, NVDA "
+#~ "will quit starting in %d seconds."
+#~ msgstr ""
+#~ "NVDA ne može da preuzme trenutni prozor. Ako se ovo nastavi, NVDA će se "
+#~ "zatvoriti za %d sekundi."
+
+#~ msgid "NVDA could not start securely."
+#~ msgstr "NVDA nije mogao da se bezbedno pokrene."
+
+#~ msgid "Swedish grade 1"
+#~ msgstr "švedski stepen 1"
+
+#~ msgid "Not charging battery. %d percent"
+#~ msgstr "%d procenata, punjenje baterije zaustavljeno."
+
+#~ msgid "report table row and column headers off"
+#~ msgstr "isključeno prijavljivanje zaglavlja redova i kolona tabele"
+
+#~ msgid "report table row and column headers on"
+#~ msgstr "uključeno prijavljivanje zaglavlja redova i kolona tabele"
+
+#~ msgid "AC power on"
+#~ msgstr "punjač uključen"
+
+#~ msgid "Row/column h&eaders"
+#~ msgstr "&Zaglavlja kolona/redova"
+
+#~ msgid ""
+#~ "Cannot set headers. Please enable reporting of table headers in Document "
+#~ "Formatting Settings"
+#~ msgstr ""
+#~ "Zaglavlja ne mogu biti postavljena. Molimo vac da uključite izveštavanje "
+#~ "o zaglavljima tabele u podešavanjima formatiranja dokumenta."
 
 #~ msgid "Use UI Automation to access the Windows C&onsole when available"
 #~ msgstr "Koristi UI Automation za pristup Windows k&onzoli kada je dostupan"

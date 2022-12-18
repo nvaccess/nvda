@@ -3,17 +3,27 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-"""Functions that wrap Windows API functions from user32.dll"""
+"""
+Functions that wrap Windows API functions from user32.dll.
+
+When working on this file, consider moving to winAPI.
+"""
 
 import contextlib
 from ctypes import *
 from ctypes import byref, WinError, Structure, c_int, c_char
 from ctypes.wintypes import *
 from ctypes.wintypes import HWND, RECT, DWORD
-from typing import Tuple
+from typing import (
+	Any,
+	Tuple,
+)
+
 import winKernel
 from textUtils import WCHAR_ENCODING
 import enum
+import NVDAState
+from logHandler import log
 
 #dll handles
 user32=windll.user32
@@ -32,6 +42,29 @@ CS_HREDRAW = 0x0002
 CS_VREDRAW = 0x0001
 
 WNDPROC=WINFUNCTYPE(LRESULT,HWND,c_uint,WPARAM,LPARAM)
+
+
+def __getattr__(attrName: str) -> Any:
+	from winAPI.winUser.constants import SystemMetrics
+	_deprecatedConstantsMap = {
+		"SM_CXSCREEN": SystemMetrics.CX_SCREEN,
+		"SM_CYSCREEN": SystemMetrics.CY_SCREEN,
+		"SM_SWAPBUTTON": SystemMetrics.SWAP_BUTTON,
+		"SM_XVIRTUALSCREEN": SystemMetrics.X_VIRTUAL_SCREEN,
+		"SM_YVIRTUALSCREEN": SystemMetrics.Y_VIRTUAL_SCREEN,
+		"SM_CXVIRTUALSCREEN": SystemMetrics.CX_VIRTUAL_SCREEN,
+		"SM_CYVIRTUALSCREEN": SystemMetrics.CY_VIRTUAL_SCREEN,
+	}
+	"""Module level `__getattr__` used to preserve backward compatibility."""
+	if attrName in _deprecatedConstantsMap and NVDAState._allowDeprecatedAPI():
+		replacementSymbol = _deprecatedConstantsMap[attrName]
+		log.warning(
+			f"Importing {attrName} from here is deprecated. "
+			f"Import {replacementSymbol.name} from winAPI.winUser.constants instead. "
+		)
+		return replacementSymbol
+	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+
 
 class WNDCLASSEXW(Structure):
 	_fields_=[
@@ -373,22 +406,6 @@ RDW_UPDATENOW = 0x0100
 # MsgWaitForMultipleObjectsEx
 QS_ALLINPUT = 0x04ff
 MWMO_ALERTABLE = 0x0002
-
-# GetSystemMetrics constants
-# The width of the screen of the primary display monitor, in pixels.
-SM_CXSCREEN = 0
-# The height of the screen of the primary display monitor, in pixels.
-SM_CYSCREEN = 1
-# Whether the left and right mouse buttons are swapped
-SM_SWAPBUTTON = 23
-# The coordinates for the left side of the virtual screen.
-SM_XVIRTUALSCREEN = 76
-# The coordinates for the top of the virtual screen.
-SM_YVIRTUALSCREEN = 77
-# The width of the virtual screen, in pixels.
-SM_CXVIRTUALSCREEN = 78
-# The height of the virtual screen, in pixels.
-SM_CYVIRTUALSCREEN = 79
 
 
 class MSGFLT(enum.IntEnum):

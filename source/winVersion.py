@@ -6,6 +6,8 @@
 """A module used to record Windows versions.
 It is also used to define feature checks such as
 making sure NVDA can run on a minimum supported version of Windows.
+
+When working on this file, consider moving to winAPI.
 """
 
 from typing import Optional
@@ -32,8 +34,10 @@ _BUILDS_TO_RELEASE_NAMES = {
 	19042: "Windows 10 20H2",
 	19043: "Windows 10 21H1",
 	19044: "Windows 10 21H2",
+	19045: "Windows 10 22H2",
 	20348: "Windows Server 2022",
 	22000: "Windows 11 21H2",
+	22621: "Windows 11 22H2",
 }
 
 
@@ -152,8 +156,10 @@ WIN10_2004 = WinVersion(major=10, minor=0, build=19041)
 WIN10_20H2 = WinVersion(major=10, minor=0, build=19042)
 WIN10_21H1 = WinVersion(major=10, minor=0, build=19043)
 WIN10_21H2 = WinVersion(major=10, minor=0, build=19044)
+WIN10_22H2 = WinVersion(major=10, minor=0, build=19045)
 WINSERVER_2022 = WinVersion(major=10, minor=0, build=20348)
 WIN11 = WIN11_21H2 = WinVersion(major=10, minor=0, build=22000)
+WIN11_22H2 = WinVersion(major=10, minor=0, build=22621)
 
 
 @functools.lru_cache(maxsize=1)
