@@ -227,7 +227,10 @@ def _isObjectBelowLockScreenCheckZOrder(objWindowHandle: int) -> bool:
 	try:
 		return _isWindowBelowWindowMatchesCond(objWindowHandle, _isWindowLockScreen)
 	except _UnexpectedWindowCountError:
-		log.exception("Couldn't find lock screen")
+		log.debugWarning(
+			"Couldn't determine lock screen and NVDA object relative z-order",
+			exc_info=True
+		)
 		return False
 
 
