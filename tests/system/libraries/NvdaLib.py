@@ -428,7 +428,8 @@ def getSpeechAfterKey(key, maxWaitSeconds: _Optional[float] = None) -> str:
 	nextSpeechIndex = spy.get_next_speech_index()
 	spy.emulateKeyPress(key)
 	if maxWaitSeconds is None:
-		maxWaitSeconds = spy._SPEECH_HAS_FINISHED_SECONDS_MAX
+		from SystemTestSpy.speechSpyGlobalPlugin import NVDASpyLib
+		maxWaitSeconds = NVDASpyLib._SPEECH_HAS_FINISHED_SECONDS_MAX
 	spy.wait_for_speech_to_finish(
 		speechStartedIndex=nextSpeechIndex,
 		maxWaitSeconds=maxWaitSeconds
