@@ -14,7 +14,7 @@ eSpeak ve LibLouis güncellendi.
 == Yeni özellikler ==
 - Kullanıcı rehberine "hızlı başlangıç rehberi" bölümü eklendi. (#13934)
 - Üzerinde bulunulan öğenin klavye kısayol tuşunu öğrenmek için klavye komutu eklendi. (#13960)
-  - Masa üstü: ``şift+numpad2``.
+  - Masa üstü: ``şift+numaratör2``.
   - Dizüstü: ``NVDA+ctrl+şift+.``.
   -
 - Uygulama tarafından desteklendiğinde, inceleme imlecini bir sayfa ileri ve geri hareket ettirme komutları eklendi. (#14021)
@@ -57,7 +57,7 @@ eSpeak ve LibLouis güncellendi.
 
 
 == Hata düzeltmeleri ==
-NVDA'yı Windows paket yöneticisi komut satırından güncellerken (Winget olarak da bilinir), NVDA çıkış sürümü artık her zaman kurulu Alpha sürümden daha yeni olarak tanınmıyor. (#12469)
+- NVDA'yı Windows paket yöneticisi komut satırından güncellerken (Winget olarak da bilinir), NVDA çıkış sürümü artık her zaman kurulu Alpha sürümden daha yeni olarak tanınmıyor. (#12469)
 - NVDA Java uygulamalarında grup kutularını doğru şekilde seslendirecek. (#13962)
 - Bookworm, WordPad veya NVDA log görüntüleyicisi gibi uygulamalarda, imleç tümünü okuma işlemi sırasında okunan metni düzgün bir şekilde takip ediyor. (#13420, #9179)
 - UI otomasyonu kullanan uygulamalarda, kısmen işaretli onay kutuları düzgün bir şekilde seslendirilecek. (#13975)
@@ -95,6 +95,8 @@ Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documen
 - ``core.post_windowMessageReceipt`` is deprecated, use ``winAPI.messageWindow.pre_handleWindowMessage`` instead.
 - ``winKernel.SYSTEM_POWER_STATUS`` is deprecated and usage is discouraged, this has been moved to ``winAPI._powerTracking.SystemPowerStatus``.
 - ``winUser.SM_*`` constants are deprecated, use ``winAPI.winUser.constants.SystemMetrics`` instead.
+- 
+
 = 2022.3.2 =
 2022.3.1 sürümünde ortaya çıkan hataları ve bir güvenlik sorununu düzeltmek için yayınlanan küçük bir güncellemedir.
 
@@ -411,8 +413,8 @@ eSpeak-NG ve LibLouis'in güncellenmesi ile Japonca, Almanca ve Katalanca Braill
   - 
 - Artık NVDA, LibreOffice Calc 7.3 ve üzeri sürümlerde seçimi ve birleştirilmiş hücreleri bildiriyor. (#9310, (#6897)
 - Unicode Common Locale Data Repository (CLDR)  40.0 sürümüne güncellendi. (#12999)
-- ``NVDA+Numpad Delete`` varsayılan olarak düzenleme imlecinin veya odaklanan nesnenin konumunu bildirir. (#13060)
-- ``NVDA+Shift+Numpad Sil`` inceleme imlecinin konumunu bildirir. (#13060)
+- ``NVDA+numaratör Delete`` varsayılan olarak düzenleme imlecinin veya odaklanan nesnenin konumunu bildirir. (#13060)
+- ``NVDA+Shift+numaratör Sil`` inceleme imlecinin konumunu bildirir. (#13060)
 - Freedom Scientific Braille ekranlarda değişken tuşlarını açıp kapatmak için varsayılan komutlar eklendi (#13152)
 - “Temel hiza” artık metin biçimlendirmelerini bildirme komutu olan NVDA+f tuşuyla bildirilmiyor. (#11815)
 - Artık Uzun açıklamaları etkinleştir ayarısı için varsayılan bir girdi hareketi yoktur. (#13380)

@@ -3,54 +3,83 @@ Nyheder i NVDA
 
 %!includeconf: ../changes.t2tconf
 
-= 2022.3 =
- En markant del af denne version af NVDA er medtaget bidrag fra fællesskabet.
- Dette omfatter bl.a. en indstilling der forsinker beskrivelser af tegn, samt forbedret understøttelse til Windows konsol.
- 
- Denne version indeholder også nogle fejlrettelser.
-Opdaterede versioner af Adobe Reader vil ikke længere gå ned, når du forsøger at læse et PDF-dokument.
+= 2022.4 =
+Denne udgivelse indeholder flere nye nøglekommandoer, bl.a. tabelkommandoer til kontinuerlig læsning.
+En "Hurtigstartguide" er blevet tilføjet til brugervejledningen.
+Der er også flere fejlrettelser.
 
-eSpeak er blevet opdateret, hvilket introducerer 3 nye sprog: hviderussisk, luxembourgsk og Totontepec Mixe.
+eSpeak er blevet opdateret, og LibLouis er blevet opdateret.
+Der er nye kinesiske, svenske, Luganda og Kinyarwanda punktskriftstabeller.
 
 == Nye funktioner ==
-- I Windows-konsollen brugt af kommandoprompt, PowerShell, og Windows Subsystem for Linux i Windows 11 version 22H2 (Sun Valley 2) og nyere:
-  - Væsentligt forbedret ydeevne og stabilitet. (#10964)
-  - Når du bruger Ctrl+F til at søge efter tekst, vil læsemarkøren flytte sig til søgeresultatet. (#11172)
-  - Annoncering af tekst, der ikke vises på skærmen (eksempelvis adgangskoder) er deaktiveret som standard.
-Dette kan aktiveres ved at gå til NVDAs indstillinger under "Avanceret". (#11554)
-  - Tekst, der er rullet af skærmen, kan nu læses ved brug af læsemarkøren uden at rulle i konsolvinduet. (#12669)
-  - Flere detaljerede tekstformateringsoplysninger er nu tilgængelige. ([microsoft/terminal PR 10336 https://github.com/microsoft/terminal/pull/10336])
+- Tilføjede en hurtigstartguide til brugervejledningen. (#13934)
+- Tilføjede en ny kommando til at få genvejstasten for det aktuelle element i fokus oplyst. (#13960)
+  - Desktop: ``shift+numpad2``.
+  - Laptop: ``NVDA+ctrl+shift+.``.
   -
-- En ny indstilling er nu blevet tilføjet i taleindstillinger, der lader dig få beskrivelser af tegn oplæst efter en forsinkelse. (#13509)
-- En ny indstilling er blevet tilføjet i punktindstillinger. Denne lader dig bestemme om panorerering af dit punktdisplay skal afbryde talen. (#2124)
+- Tilføjede en ny kommando, der lader læsemarkøren navigere efter sider, hvis dette understøttes af det aktuelle program. (#14021)
+  - Flyt til forrige side:
+    - Desktop: ``NVDA+side op``.
+    - Laptop: ``NVDA+shift+Side op``.
+    -
+  - Flyt til næste side:
+    - Desktop: ``NVDA+Side ned``.
+    - Laptop: ``NVDA+shift+Side ned``.
+    -
+  -
+- Tilføjede følgende kommandoer til brug i tabeller. (#14070)
+  - Sig alt i kolonne: ``NVDA+Ctrl+alt+pil ned``
+  - Sig alt i række: ``NVDA+ctrl+alt+højre pil``
+  - Læs hel kolonne: ``NVDA+Ctrl+alt+Pil op``
+  - Læs hel række: ``NVDA+Ctrl+alt+venstre pil``
+  -
+- Microsoft Excel med UI Automation: NVDA fortæller nu, når du bevæger dig udenfor en tabel i et regneark. (#14165)
+- Rapportering af overskrifter i tabeller kan nu indstilles særskilt for både rækker og kolonner. (#14075)
 -
 
 
 == Ændringer ==
-- eSpeak NG er blevet opdateret til 1.52-dev commit ``9de65fcb``. (#13295)
-  - Tilføjede sprog:
-    - Hviderussisk
-    - Luxembourgsk
-    - Totontepec Mixe
-    -
+- eSpeak NG er blevet opdateret til 1.52-dev commit ``735ecdb8``. (#14060, #14079, #14118, #14203)
+  - Rettede oplæsning af latinske tegn, når man brugte Mandarin. (#12952, #13572, #14197)
   -
-- Når du bruger NVDA med Microsoft Excel og UIA aktiveret, kan NVDA nu oplyse, hvis den valgte celle er flettet. (#12843)
-- I stedet for altid at oplyse "har detaljer", når dette er tilfældet, vil NVDA forsøge at oplyse den korrekte form for detalje, eksempelvis "har kommentar". (#13649)
-- NVDAs størrelse efter installation vises nu i Windows Programmer og Funktioner. (#13909)
+- Opdaterede LibLouis-punktoversættelse til [3.23.0 https://github.com/liblouis/liblouis/releases/tag/v3.23.0]. (#14112)
+  - Tilføjede følgende punkttabeller:
+    - Kinesisk almindelig braille (forenklede kinesiske tegn)
+    - Kinyarwanda litterær punktskrift
+    - Luganda litterær punktskrift
+    - Svensk uforkortet puntkskrift
+    - Svensk delvist forkortet punktskrift
+    - Svensk forkortet punktskrift
+    - Kinesisk (Kina, Mandarin) nuværende punktskriftssystem (ingen toner) (#14138)
+    -
+- NVDA inkluderer nu operativsystemets processorarkitektur som en del af sporing af brugerstatistik. (#14019)
 -
 
 
 == Fejlrettelser ==
-- Adobe Reader 64 bit vil ikke længere gå ned, når du læser et PDF-dokument. (#12920)
-  - Bemærk, at du skal sørge for, at Adobe Reader er opdateret.
+- Når du opdaterer NVDA via Windows Pakkemanager fra kommandolinjen (winget), vil en udgivet version af NVDA ikke længere forekomme som en nyere version af NVDA. Dette var før tilfældet, selv hvis du installerede en nyere alpha-version. (#12469)
+- NVDA vil nu korrekt oplyse gruppebokse i Java-programmer. (#13962)
+- Markøren følger nu korrekt talen med funktionen "Sig alt" aktiv i programmer som  Bookworm, WordPad, eller logviseren i NVDA. (#13420, #9179)
+- Delvist markerede check bokse vil nu oplyses korrekt i programmer, hvor UI Automation er aktiveret. (#13975)
+- Forbedrede ydeevne og stabilitet i Microsoft Visual Studio, Windows Terminal, og andre programmer baseret på UI Automation. (#11077, #11209)
+  - Disse rettelser gælder Windows 11 Sun Valley 2 (version 22H2) og nyere.
+  - Selektiv registrering af UIA-hændelser og egenskabsændringer er nu aktiveret som standard.
   -
-- Måleenheder for skrifttypens størrelse kan nu oversættes i NVDA. (#13573)
-- Ignorer Java Access Bridge events, hvor ingen window handle kan findes for Java-applikationer.
-Dette vil forbedre ydeevnen for nogle Java-applikationer, herunder IntelliJ IDEA. (#13039)
-- NVDA er bedre i stand til at oplyse informationer om de valgte celler i Libre Calc. Dette vil ikke længere forårsage et nedbrud af Libre Office Calc, hvis mange celler er valgt. (#13232)
-- Når Microsoft Edge køres under en anden bruger, vil programmet ikke længere være utilgængeligt. (#13032)
-- Når "Forøg hastighed" er slået fra, vil eSpeaks talehastighed ikke længere skiftevis ændre sig til 99% og 100%. (#13876)
-- Rettet en fejl, hvor to dialoger til håndtering af kommandoer kunne åbnes samtidigt. (#13854)
+- Tekstrapportering, punktskriftsoutput og adgangskodeundertrykkelse fungerer nu som forventet i den indlejrede Windows Terminal-kontrol i Visual Studio 2022. (#14194)
+- NVDA benytter nu DPI, når du bruger flere skærme.
+Der er flere rettelser, når der bruges en DPI-indstilling højere end 100 % eller flere skærme.
+Problemer kan stadig eksistere med versioner af Windows ældre end Windows 10 1809.
+For at disse rettelser skal virke, skal applikationer, som NVDA interagerer med, også være DPI-bevidste.
+Bemærk, at der stadig er kendte problemer med Chrome og Edge. (#13254)
+  - Rammer til brug ved visuel fremhævning skulle nu være mere korrekt placerede i de fleste programmer. (#13370, #3875, #12070)
+  - Brugen af en touchskærm bør være mere præcis og pålidelig i de fleste programmer. (#7083)
+  - Sporing af musen bør nu virke i de fleste programmer. (#6722)
+  -
+- Ændring af orienteringen (stående/liggende) vil nu blive ignoreret, hvis der er tale om ændringer i forhold til tilkoblede skærme. (#14035)
+- NVDA vil oplyse, når du trækker elementer rundt på skærmen som omarrangering af Windows 10 Start-menufelter og virtuelle skriveborde i Windows 11. (#12271, #14081)
+- Indstillingen "Afspil en lyd, når fejl opstår" i NVDAs avancerede indstillinger gendannes nu korrekt, når knappen "Gendan standarder" aktiveres. (#14149)
+- NVDA kan nu vælge tekst i Java-programmer, når du bruger ``NVDA+f10``. (#14163)
+- NVDA vil ikke længere sidde fast i menuen, når du piler op og ned i en samtaletråd i Microsoft Teams. (#14355)
 -
 
 

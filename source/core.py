@@ -460,13 +460,13 @@ class _TrackNVDAInitialization:
 	regardless of lock state.
 	Security checks may cause the desktop object to not be set if NVDA starts on the lock screen.
 	As such, during initialization, NVDA should behave as if Windows is unlocked,
-	i.e. winAPI.sessionTracking.isWindowsLocked should return False.
+	i.e. winAPI.sessionTracking._isLockScreenModeActive should return False.
 
 	TODO: move to NVDAState module
 	"""
 
 	_isNVDAInitialized = False
-	"""When False, isWindowsLocked is forced to return False.
+	"""When False, _isLockScreenModeActive is forced to return False.
 	"""
 
 	@staticmethod
@@ -738,7 +738,8 @@ def main():
 				mouseHandler.pumpAll()
 				braille.pumpAll()
 				vision.pumpAll()
-			except:
+				sessionTracking.pumpAll()
+			except Exception:
 				log.exception("errors in this core pump cycle")
 			baseObject.AutoPropertyObject.invalidateCaches()
 			watchdog.asleep()
@@ -760,6 +761,9 @@ def main():
 	else:
 		log.debug("initializing updateCheck")
 		updateCheck.initialize()
+
+	from winAPI import sessionTracking
+	sessionTracking.initialize()
 
 	_TrackNVDAInitialization.markInitializationComplete()
 
