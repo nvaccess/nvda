@@ -108,6 +108,8 @@ This is a minor release to fix issues with 2022.3.2, 2022.3.1 and 2022.3.
 -
 
 == Changes for Developers ==
+
+=== Deprecations ===
 - ``utils.security.isObjectAboveLockScreen(obj)`` is deprecated, instead use ``obj.isBelowLockScreen``. (#14416)
 - The following functions in ``winAPI.sessionTracking`` are deprecated for removal in 2023.1. (#14416)
   - ``isWindowsLocked``
@@ -117,8 +119,6 @@ This is a minor release to fix issues with 2022.3.2, 2022.3.1 and 2022.3.
   - ``isLockStateSuccessfullyTracked``
   - 
 - 
-
-=== Deprecations ===
 
 
 = 2022.3.2 =
