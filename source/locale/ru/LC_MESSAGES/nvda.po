@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Russian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-15 00:02+0000\n"
-"PO-Revision-Date: 2022-11-17 03:45+0800\n"
+"POT-Creation-Date: 2022-11-25 00:02+0000\n"
+"PO-Revision-Date: 2022-11-27 05:54+0800\n"
 "Last-Translator: Kvark <kvark128@yandex.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -392,7 +392,7 @@ msgstr "⠏⠗⠑⠙⠇"
 #. Translators: Displayed in braille when an object is a definition.
 #. Translators: Identifies a definition.
 msgid "definition"
-msgstr ""
+msgstr "определение"
 
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
@@ -554,7 +554,7 @@ msgstr "содержит %s"
 
 #. Translators: Braille when there are further details/annotations that can be fetched manually.
 msgid "details"
-msgstr ""
+msgstr "подробности"
 
 #. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
@@ -1435,13 +1435,13 @@ msgstr "Ко́са (вторая ступень)"
 #. braille settings dialog.
 #. This should be translated to '中文中国汉语通用盲文' in Mandarin.
 msgid "Chinese common braille (simplified Chinese characters)"
-msgstr ""
+msgstr "Китайский стандартный брайль (упрощённые китайские иероглифы)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #. This should be translated to '中文中国汉语现行盲文（无声调）' in Mandarin.
 msgid "Chinese (China, Mandarin) Current Braille System (no tones)"
-msgstr ""
+msgstr "Китайский (Китай, Мандарин) текущая система брайля (без тонов)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9798,7 +9798,7 @@ msgstr ""
 #. Translators: This is a label for a setting in voice settings (an edit box to change
 #. voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
-msgstr "Процент смены высоты для заглавных"
+msgstr "Процент изменения высоты для заглавных:"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel.
@@ -10063,12 +10063,12 @@ msgstr "Режим обзора"
 #. Translators: This is the label for a textfield in the
 #. browse mode settings panel.
 msgid "&Maximum number of characters on one line"
-msgstr "&Максимальное число символов на строку"
+msgstr "&Максимальное число символов на строку:"
 
 #. Translators: This is the label for a textfield in the
 #. browse mode settings panel.
 msgid "&Number of lines per page"
-msgstr "Число &строк на страницу"
+msgstr "Число &строк на страницу:"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
@@ -10600,7 +10600,7 @@ msgstr "Редактирование текста"
 #. Translators: This is the label for a numeric control in the
 #. Advanced settings panel.
 msgid "Caret movement timeout (in ms)"
-msgstr "Тайм-аут перемещения каретки (мс)"
+msgstr "Тайм-аут перемещения каретки (мс):"
 
 #. Translators: This is the label for a checkbox control in the
 #. Advanced settings panel.
@@ -10712,7 +10712,7 @@ msgstr "Мигание курсора"
 
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
-msgstr "Скорость мигания курсора (мс)"
+msgstr "Скорость мигания курсора (мс):"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape when tethered to focus.
 msgid "Cursor shape for &focus:"
@@ -10735,11 +10735,11 @@ msgstr "Показывать бесконечно"
 #. Translators: The label for a setting in braille settings to combobox enabling user
 #. to decide if braille messages should be shown and automatically disappear from braille display.
 msgid "Show messages"
-msgstr "Показывать сообщения"
+msgstr "Показывать сообщения:"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message &timeout (sec)"
-msgstr "&Тайм-аут для сообщений (сек)"
+msgstr "&Тайм-аут для сообщений (сек):"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
 msgid "Tether B&raille:"
@@ -10880,15 +10880,15 @@ msgstr "Изменение выбранного символа"
 #. Translators: This is a label for an edit field in add dictionary entry dialog
 #. and in punctuation/symbol pronunciation dialog.
 msgid "&Replacement"
-msgstr "&Замена"
+msgstr "&Замена:"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"
-msgstr "&Уровень"
+msgstr "&Уровень:"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
 msgid "&Send actual symbol to synthesizer"
-msgstr "Передавать &фактический символ на синтезатор"
+msgstr "Передавать &фактический символ на синтезатор:"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
 msgid "Re&move"
@@ -13340,42 +13340,3 @@ msgstr "Двойной междустрочный интервал"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Полуторный междустрочный интервал"
-
-#~ msgid ""
-#~ "NVDA is failing to fetch the foreground window. If this continues, NVDA "
-#~ "will quit starting in %d seconds."
-#~ msgstr ""
-#~ "NVDA не может получить окно переднего плана. Если это продолжится, NVDA "
-#~ "прекратит запуск через %d секунд."
-
-#~ msgid "NVDA could not start securely."
-#~ msgstr "NVDA не удалось запустить безопасно"
-
-#~ msgid "Swedish grade 1"
-#~ msgstr "Шведский (первая ступень)"
-
-#~ msgid "Not charging battery. %d percent"
-#~ msgstr "Питание отключено. %d процент"
-
-#~ msgid "report table row and column headers off"
-#~ msgstr "чтение заголовков строк и столбцов выключено"
-
-#~ msgid "report table row and column headers on"
-#~ msgstr "чтение заголовков строк и столбцов включено"
-
-#~ msgid "AC power on"
-#~ msgstr "Питание от электросети"
-
-#~ msgid "Row/column h&eaders"
-#~ msgstr "Заголовки с&трок и столбцов"
-
-#~ msgid ""
-#~ "Cannot set headers. Please enable reporting of table headers in Document "
-#~ "Formatting Settings"
-#~ msgstr ""
-#~ "Не удаётся установить заголовки. Пожалуйста, в настройках форматирования "
-#~ "документа включите чтение заголовков строк и столбцов в таблицах"
-
-#~ msgid "Use UI Automation to access the Windows C&onsole when available"
-#~ msgstr ""
-#~ "Использовать UI Automation для доступа к Windows C&onsole (если возможно)"

@@ -190,6 +190,30 @@ Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documen
 - ``winUser.SM_*`` constants are deprecated, use ``winAPI.winUser.constants.SystemMetrics`` instead.
 - 
 
+= 2022.3.3 =
+This is a minor release to fix issues with 2022.3.2, 2022.3.1 and 2022.3.
+
+== Bug Fixes ==
+- Fixed bug where if NVDA freezes when locking, NVDA will allow access to the users desktop while on the Windows lock screen. (#14416)
+- Fixed bug where if NVDA freezes when locking, NVDA will not behave correctly, as if the device was still locked. (#14416)
+- Fixed accessibility issues with the Windows "forgot my PIN" process and Windows update/install experience. (#14368)
+- Fixed bug when trying to install NVDA in some Windows environments, e.g. Windows Server. (#14379)
+-
+
+== Changes for Developers ==
+
+=== Deprecations ===
+- ``utils.security.isObjectAboveLockScreen(obj)`` is deprecated, instead use ``obj.isBelowLockScreen``. (#14416)
+- The following functions in ``winAPI.sessionTracking`` are deprecated for removal in 2023.1. (#14416)
+  - ``isWindowsLocked``
+  - ``handleSessionChange``
+  - ``unregister``
+  - ``register``
+  - ``isLockStateSuccessfullyTracked``
+  - 
+- 
+
+
 = 2022.3.2 =
 This is a minor release to fix regressions with 2022.3.1 and address a security issue.
 
