@@ -4,6 +4,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+from typing import Optional
 import os
 import winreg
 import msvcrt
@@ -44,8 +45,8 @@ if not NVDAState.isRunningAsSource():
 
 
 _remoteLib=None
-_remoteLoaderAMD64 = None
-_remoteLoaderARM64 = None
+_remoteLoaderAMD64: "Optional[_RemoteLoader]" = None
+_remoteLoaderARM64: "Optional[_RemoteLoader]" = None
 localLib=None
 generateBeep=None
 VBuf_getTextInRange=None
@@ -482,7 +483,7 @@ def nvdaControllerInternal_openConfigDirectory():
 	return 0
 
 
-class RemoteLoader(object):
+class _RemoteLoader:
 
 	def __init__(self, loaderDir: str):
 		# Create a pipe so we can write to stdin of the loader process.
@@ -525,6 +526,7 @@ class RemoteLoader(object):
 		# Wait until it's dead.
 		winKernel.waitForSingleObject(self._process, winKernel.INFINITE)
 		winKernel.closeHandle(self._process)
+
 
 def initialize():
 	global _remoteLib, _remoteLoaderAMD64, _remoteLoaderARM64
@@ -595,13 +597,13 @@ def initialize():
 	versionedLibARM64Path
 	arch = os.environ.get('PROCESSOR_ARCHITEW6432')
 	if arch == 'AMD64':
-		_remoteLoaderAMD64 = RemoteLoader(versionedLibAMD64Path)
+		_remoteLoaderAMD64 = _RemoteLoader(versionedLibAMD64Path)
 	elif arch == 'ARM64':
-		_remoteLoaderARM64 = RemoteLoader(versionedLibARM64Path)
+		_remoteLoaderARM64 = _RemoteLoader(versionedLibARM64Path)
 		# Windows on ARM from Windows 11 supports running AMD64 apps.
 		# Thus we also need to be able to inject into these.
 		if winVersion.getWinVer() >= winVersion.WIN11:
-			_remoteLoaderAMD64 = RemoteLoader(versionedLibAMD64Path)
+			_remoteLoaderAMD64 = _RemoteLoader(versionedLibAMD64Path)
 
 
 def terminate():
