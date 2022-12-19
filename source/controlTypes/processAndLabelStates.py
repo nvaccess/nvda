@@ -128,6 +128,8 @@ def _processNegativeStates(
 		speakNegatives.add(State.CHECKED)
 	if role == Role.TOGGLEBUTTON and State.HALF_PRESSED not in states:
 		speakNegatives.add(State.PRESSED)
+	if role is Role.SWITCH and State.ON not in states:
+		speakNegatives.add(State.ON)
 	if reason == OutputReason.CHANGE:
 		# We want to speak this state only if it is changing to negative.
 		speakNegatives.add(State.DROPTARGET)

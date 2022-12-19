@@ -19,8 +19,9 @@ from SystemTestSpy import (
 from SystemTestSpy.windows import (
 	GetForegroundWindowTitle,
 	GetVisibleWindowTitles,
-	GetForegroundHwnd,
+	GetForegroundHwnd as _getForegroundHwnd,
 	GetWindowWithTitle,
+	Window as _Window,
 )
 import re
 from robot.libraries.BuiltIn import BuiltIn
@@ -30,11 +31,13 @@ from robot.libraries.OperatingSystem import OperatingSystem as _OpSysLib
 from robot.libraries.Process import Process as _ProcessLib
 from AssertsLib import AssertsLib as _AssertsLib
 import NvdaLib as _NvdaLib
+import WindowsLib as _WindowsLib
 
 builtIn: BuiltIn = BuiltIn()
 opSys: _OpSysLib = _getLib('OperatingSystem')
 process: _ProcessLib = _getLib('Process')
 assertsLib: _AssertsLib = _getLib('AssertsLib')
+windowsLib: _WindowsLib = _getLib('WindowsLib')
 
 
 # In Robot libraries, class name must match the name of the module. Use caps for both.
@@ -42,28 +45,62 @@ class NotepadLib:
 	_testFileStagingPath = _tempfile.mkdtemp()
 	_testCaseTitle = "test"
 
-	def __init__(self):
-		self.notepadHandle: _Optional[int] = None
+	# Use class variables for state that should be tied to the RF library instance.
+	# These variables will be available in the teardown
+	notepadWindow: _Optional[_Window] = None
+	processRFHandleForStart: _Optional[int] = None
 
 	@staticmethod
 	def _getTestCasePath(filename):
 		return _pJoin(NotepadLib._testFileStagingPath, filename)
 
 	def exit_notepad(self):
+		builtIn.log(
+			# True is expected due to /wait argument.
+			"Is Start process still running (True expected): "
+			f"{process.is_process_running(NotepadLib.processRFHandleForStart)}"
+		)
 		spy = _NvdaLib.getSpyLib()
-		spy.emulateKeyPress('alt+f4')
-		process.wait_for_process(self.notepadHandle, timeout="1 minute", on_timeout="continue")
+		if _getForegroundHwnd() == NotepadLib.notepadWindow.hwndVal:
+			builtIn.log("Test case in foreground, trying to close")
+			spy.emulateKeyPress('alt+f4')
+			process.wait_for_process(
+				NotepadLib.processRFHandleForStart,
+				timeout="10 seconds",
+				on_timeout="continue"
+			)
+		else:
+			builtIn.log("Test case not in foreground, can't close it.")
+		builtIn.log(
+			# False is expected, notepad should have allowed "Start" to exit.
+			"Is Start process still running (False expected): "
+			f"{process.is_process_running(NotepadLib.processRFHandleForStart)}"
+		)
 
-	def start_notepad(self, filePath):
+	def start_notepad(self, filePath: str, expectedTitlePattern: re.Pattern) -> _Window:
 		builtIn.log(f"starting notepad: {filePath}")
-		self.notepadHandle = process.start_process(
-			"start notepad"
+		NotepadLib.processRFHandleForStart = process.start_process(
+			"start"  # windows utility to start a process
+			# https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/start
+			" /wait"  # Starts an application and waits for it to end.
+			" notepad"
 			f' "{filePath}"',
 			shell=True,
 			alias='NotepadAlias',
 		)
-		process.process_should_be_running(self.notepadHandle)
-		return self.notepadHandle
+		process.process_should_be_running(NotepadLib.processRFHandleForStart)
+
+		success, NotepadLib.notepadWindow = _blockUntilConditionMet(
+			getValue=lambda: GetWindowWithTitle(expectedTitlePattern, lambda message: builtIn.log(message, "DEBUG")),
+			giveUpAfterSeconds=3,
+			shouldStopEvaluator=lambda _window: _window is not None,
+			intervalBetweenSeconds=0.5,
+			errorMessage="Unable to get notepad window"
+		)
+
+		if not success or NotepadLib.notepadWindow is None:
+			builtIn.fatal_error("Unable to get notepad window")
+		return NotepadLib.notepadWindow
 
 	@staticmethod
 	def getUniqueTestCaseTitle(testCaseHash: int) -> str:
@@ -92,7 +129,7 @@ class NotepadLib:
 			notepadWindow = GetWindowWithTitle(startsWithTestCaseTitle, builtIn.log)
 			if notepadWindow is None:
 				return False
-			return notepadWindow.hwndVal == GetForegroundHwnd()
+			return notepadWindow.hwndVal == _getForegroundHwnd()
 
 		success, _success = _blockUntilConditionMet(
 			getValue=_isNotepadInForeground,
@@ -112,6 +149,12 @@ class NotepadLib:
 			f"{windowInformation}"
 		)
 
+	def canNotepadTitleBeReported(self, notepadTitleSpeechPattern: re.Pattern) -> bool:
+		titleSpeech = _NvdaLib.getSpeechAfterKey('NVDA+t')
+		return bool(
+			notepadTitleSpeechPattern.search(titleSpeech)
+		)
+
 	def prepareNotepad(self, testCase: str) -> None:
 		"""
 		Starts Notepad opening a file containing the plaintext sample.
@@ -126,8 +169,19 @@ class NotepadLib:
 		path = self._writeTestFile(testCase, self.getUniqueTestCaseTitle(_testCaseHash))
 
 		spy.wait_for_speech_to_finish()
-		self.start_notepad(path)
+		self.start_notepad(path, expectedTitlePattern=uniqueTitleRegex)
+
+		windowsLib.logForegroundWindowTitle()
+		testCaseNotepadTitleSpeech = re.compile(
+			# Unlike getUniqueTestCaseTitleRegex, this speech does not have to be at the start of the string.
+			f"{NotepadLib._testCaseTitle} \\({abs(_testCaseHash)}\\)"
+		)
+		if not self.canNotepadTitleBeReported(notepadTitleSpeechPattern=testCaseNotepadTitleSpeech):
+			builtIn.log("Trying to switch to notepad Window")
+			windowsLib.taskSwitchToItemMatching(targetWindowNamePattern=testCaseNotepadTitleSpeech)
+			windowsLib.logForegroundWindowTitle()
+
 		self._waitForNotepadFocus(uniqueTitleRegex)
+		windowsLib.logForegroundWindowTitle()
 		# Move to the start of file
-		spy.emulateKeyPress('home')
-		spy.wait_for_speech_to_finish()
+		_NvdaLib.getSpeechAfterKey('home')

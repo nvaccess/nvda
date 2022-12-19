@@ -17,6 +17,8 @@ NVDA wordt ontwikkeld door [NV Access https://www.nvaccess.org/], met bijdragen 
 ++ Algemene kenmerken ++[GeneralFeatures]
 NVDA stelt blinden en slechtzienden in staat om te werken met het Windows besturingssysteem en veel toepassingen van derden.
 
+Een kort videofilmpje, ["Wat is NVDA?" https://www.youtube.com/watch?v=tCFyyqy9mqo] is available from the NV Access YouTube channel.
+
 Belangrijke functies en mogelijkheden:
 - Ondersteuning voor populaire toepassingen zoals webbrowsers, emailprogramma’s, chatprogramma’s en kantoorapplicaties
 - Ingebouwde spraakmodule met ondersteuning voor meer dan 80 talen
@@ -35,6 +37,15 @@ Belangrijke functies en mogelijkheden:
 - Mogelijkheid de systeemfocus uit te lichten
 -
 
+++ Systeemvereisten ++[SystemRequirements]
+- Besturingssystemen: alle 32-bit en 64-bit edities van Windows 7, Windows 8, Windows 8.1, Windows 10, Windows 11 alsmede alle Server-besturingssystemen vanaf Windows Server 2008 R2.
+- Voor Windows 7, heeft NVDA Service Pack 1 of hoger nodig.
+- Voor Windows Server 2008 R2, heeft NVDA Service Pack 1 of hoger nodig.
+
+- tenminste 150 mb aan opslagruimte.
+-
+
+
 ++ Internationalisering ++[Internationalization]
 Het is belangrijk dat mensen overal ter wereld, ongeacht de taal die zij spreken, gelijke toegang krijgen tot technologie.
 Behalve de Engelse versie van NVDA is het programma beschikbaar in nog 54 andere talen, waaronder Afrikaans, Albanees, Amherisch, Arabisch, Aragonees, bulgaars, Birmees, Catalaans, Chinees (Vereenvoudigd en Traditioneel), Croatisch, Deens, Duits (Duitsland en Zwitserland), Fins, Frans, Galisisch, Georgisch, Grieks, Hebreeuws, Hindi, Hongaars, Iers, IJslands, Italiaans, Japans, Kannada, Koreaans, Kyrgyzisch, Litouws, Macedonisch, Mongools, Nederlands, Nepalees, Noors, Oekraïens, Pharsi, Pools, Portugees (Brazilië en Portugal), Punjabi, Roemeens, Russisch, Servisch, Sloveens, Slowaaks, Spaans (Spanje en Columbië), Tamil, Thai, Tsjechisch, Turks, Viëtnamees en Zweeds.
@@ -49,7 +60,7 @@ Informatie over andere door NVDA ondersteunde spraaksynthesizers is te vinden on
 
 ++ Brailleondersteuning ++[BrailleSupport]
 Gebruikers van Brailleleesregels kunnen met NVDA informatie in braille uitlezen.
-Brailleïnvoer, zowel onverkort als verkort braille, door middel van een brailletoetsenbord wordt ook ondersteund.
+Braille-invoer, zowel onverkort als verkort braille, door middel van een brailletoetsenbord wordt ook ondersteund.
 Bovendien herkent NVDA standaard veel brailleleesregels automatisch.
 Voor de ondersteunde leesregels, zie [Ondersteunde brailleleesregels#SupportedBrailleDisplays]
 
@@ -68,53 +79,233 @@ Dit is van toepassing voor zowel originele als aangepaste kopieën van de softwa
 Voor verdere bijzonderheden kunt u  de volledige licentie [raadplegen. https://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 Voor details betreffende uitzonderingen kunt u het licentiedocument raadplegen in het NVDA-menu onder "help".
 
-+ Systeemvereisten +[SystemRequirements]
-- Besturingssystemen: alle 32-bit en 64-bit edities van Windows 7, Windows 8, Windows 8.1, Windows 10, Windows 11 alsmede alle Server-besturingssystemen vanaf Windows Server 2008 R2.
-- Voor Windows 7, heeft NVDA Service Pack 1 of hoger nodig.
-- Voor Windows Server 2008 R2, heeft NVDA Service Pack 1 of hoger nodig.
-- tenminste 150 mb aan opslagruimte.
+
++ Snel aan de Slag met NVDA +[NVDAQuickStartGuide]
+
+Deze snelstartgids heeft drie hoofdrubrieken: downloaden, instellen voor gebruik en NVDA draaien.
+Daarna volgt informatie over het wijzigen van Voorkeuren, participeren in de (NVDA-)gemeenschap en over het verkrijgen van hulp.
+De informatie in deze snelstartgids is de beknopte weergave van wat elders in de gebruikershandleiding van NVDA uitgebreid aan bod komt.
+Raadpleeg de volledige gebruikershandleiding voor meer gedetailleerde informatie over de afzonderlijke onderwerpen.
+
+++ NVDA Downloaden ++[GettingAndSettingUpNVDA]
+Iedereen kan NVDA gratis gebruiken.
+Geen zorgen over de aanschaf van een licentie of duur abonnement.
+Gemiddeld krijgt NVDA vier keer per jaar een update.
+De laatste versie van NVDA is altijd beschikbaar op de "Download"-pagina van de [NV Access website NVDA_URL].
+
+NVDA is geschikt voor alle recente versies van Microsoft Windows.
+Raadpleeg [Systeemvereisten #SystemRequirements] voor alle bijzonderheden.
+
++++ NVDA Download-procedure +++[StepsForDownloadingNVDA]
+ 
+-Ga naar de download-pagina waar u een link vindt om de nieuwste versie van NVDA te kunnen downloaden.
+Er wordt hier van uitgegaan dat u enigszins bekend bentmet het navigeren op een webpagina.
+
+- Open uw webbrowser (Druk op de ``Windows-toets``, typ het woord "internet" zonder aanhalingstekens en druk op ``enter``)
+- Laad de download-pagina van NV Access (Druk ``alt+d`` in, typ het volgende adres en druk vervolgens op ``enter``): 
+https://www.nvaccess.org/download 
+- Activeer de "download-knop"
+- Na het downloaden krijgt u al dan niet een prompt van de browser om verder te gaan waarna u de  download start
+- Afhankelijk van de gebruikte browser, zal het bestand automatisch worden uitgevoerd nadat het downloaden is voltooid
+- Als het bestand handmatig geactiveerd moet worden druk dan ``alt+n`` in om naar het notificatiepaneel te gaan, dan ``alt+r`` indrukken om het bestand uit te voeren (of de aanwijzingen voor uw browser)
 -
 
-+ NVDA downloaden en uitvoeren +[GettingAndSettingUpNVDA]
-Als u het programma nog niet heeft, kunt u het downloaden van [NV Access website NVDA_URL].
-
-Op de downloadpagina vindt u de link naar de nieuwste versie van NVDA.
+++ NVDA instellen voor gebruik ++[SettingUpNVDA]
 
 Door het bestand dat u zojuist heeft gedownload uit te voeren wordt er een tijdelijke kopie van NVDA gestart.
 Vervolgens wordt u gevraagd of u NVDA wilt installeren, een draagbare kopie wilt aanmaken of de tijdelijke kopie wilt blijven gebruiken.
 
-Als u van plan bent NVDA altijd op deze computer te gebruiken, kiest u voor installeren.
-Een geïnstalleerde versie biedt extra functionaliteit, zoals het automatisch starten van het programma na aanmelding bij Windows en de mogelijkheid het Windows Aanmeldvenster en [Beveiligingsschermen #SecureScreens] uit te lezen, wat met een draagbare of tijdelijke kopie niet mogelijk is.
-Ook kunt u er snelkoppelingen mee aanmaken voor het Menu Start en het bureaublad. 
-Met de geïnstalleerde versie van NVDA kunt u te allen tijde een draagbare kopie aanmaken.
+Als het uitvoerbestand eenmaal is gedownload,  is verbinding met het Internet om NVDA te draaien of te installeren niet langer nodig.
+Met een beschikbare internetverbinding kan NVDA regelmatig op updates controleren.
 
-Als u NVDA wilt meenemen op een USB stick of op andere beschrijfbare media, dan moet u kiezen voor het aanmaken van een draagbare kopie.
-Met de draagbare kopie zelf kunt u op elk gewenst moment NVDA op een PC installeren.
-Als u NVDA echter naar media met het kenmerk alleen-lezen, zoals een CD, wilt kopiëren, moet u het downloadbestand daarvoor gebruiken.
-Op dit moment kan de draagbare versie niet rechtstreeks van media met het kenmerk alleen-lezen worden uitgevoerd.
++++ Gebruiksmogelijkheden van het gedownloade uitvoerbestand +++[StepsForRunningTheDownloadLauncher]
 
-De tijdelijke kopie van NVDA gebruiken is ook een optie, bij voorbeeld om het programma te demonstreren, maar het kost wel veel tijd als u NVDA telkens op deze manier moet starten.
+Het setup-bestand  heeft als naam "nvda_2022.1.exe" of iets dergelijks.
+Het jaar en de versie verschilt al naar gelang van de betreffende update.
++ Het gedownloade bestanduitvoeren 
+Er klinkt een muziekje terwijl er een tijdelijke  kopie van NVDA wordt geladen.
+Als deze eenmaal geladen is, biedt NVDA spraakondersteuning gedurende het verdere verloop van het proces.
++ Tegelijk met het  NVDA dialoogvenster van de Launcher verschijnt de licentieovereenkomst.
+Druk op ``PijlOmlaag`` om, desgewenst, de licentieovereenkomst te lezen.
++ Druk op ``tab`` om naar het "Ik ga akkoord" selectievakje te gaan. Druk nu op de ``spatiebalk`` om dit vakje aan te kruisen.
++ Druk ``tab`` om de verschillende opties te verkennen, druk dan ``enter`` bij de gewenste optie.
++
 
-++ Beperkingen van de draagbare en tijdelijke versie van NVDA ++[PortableAndTemporaryCopyRestrictions]
-Behalve dat bij gebruik van de draagbare of tijdelijke versie van NVDA het programma niet automatisch gestart kan worden tijdens en / of na aanmelding bij Windows, gelden bovendien de volgende beperkingen:
-- Werken met toepassingen die met beheerdersrechten worden uitgevoerd is niet mogelijk, tenzij NVDA ook met deze rechten wordt uitgevoerd natuurlijk, (niet aan te bevelen),
-- UAC-schermen (User Account Control) kunnen niet worden voorgelezen bij het starten van toepassingen die met beheerdersrechten worden uitgevoerd,
-- Windows 8 en later: Geen ondersteuning voor invoer via het aanraakscherm,
-		- Windows 8 en later: Mogelijkheden zoals bladermodus en het uitspreken van getypte karakters bij apps uit de Windows Store zijn niet beschikbaar.
-- Windows 8 en later: Audio ducking (volume van het ene audiosignaal verlagen t.o.v. het andere) wordt niet ondersteund.
+De opties zijn: 
+- "Installeer NVDA op deze computer": dit is de meest gekozen optie met veel gebruiksgemak. 
+- "Maak draagbare kopie aan": Hiermee kunt u NVDA in elke willekeurige map opslaan voor gebruik zonder het programma te installeren.
+Dit is handig op computers waar u niet over admin-rechten beschikt, of op een  geheugen-stick die u meeneemt.
+Als u hiervoor kiest, voert NVDA u stapsgewijs door het proces voor het aanmaken van een draagbare kopie.
+Het belangrijkste dat NVDA moet weten is in welke map de draagbare kopie moet worden ondergebracht. 
+- Doorgaan": Dit zorgt ervoor dat de tijdelijke kopie van NVDA actief blijft.
+Dit is nuttig  als u features in een nieuwe versie wilt testen voordat u overgaat tot installatie.
+Als u hiervoor kiest, zal het launcher-venster worden gesloten en blijft de tijdelijke kopie van NVDA actief totdat u deze afsluit of u de PC uitzet.
+Merk op dat eventuele wijzigingen in de instellingen niet worden opgeslagen.  
+- "Annuleren": Hiermee wordt NVDA afgesloten zonder verdere actie.
 -
 
 
-++ NVDA installeren ++[InstallingNVDA]
-Als u NVDA direct vanuit het downloadbestand installeert, drukt u op de knop NVDA Installeren.
-Als u het dialoogvenster reeds gesloten hebt of als u een installatie wilt uitvoeren vanuit een draagbare kopie, kiest u NVDA Installeren wat u vindt onder Extra in het NVDA menu.
+Als u van plan bent NVDA altijd op deze computer, te gebruiken, zult u er zeer waarschijnlijk voor kiezen om NVDA te installeren.
+Een geïnstalleerde versie biedt extra functionaliteit, zoals het automatisch starten van het programma na aanmelding bij Windows en de mogelijkheid het Windows Aanmeldvenster en [Beveiligingsschermen #SecureScreens] uit te lezen.
+Met een draagbare en / of tijdelijke kopie is dit alles niet mogelijk.
+Voor alle bijzonderheden  betreffende de beperkingen die samenhangen met het gebruik van een draagbare of tijdelijke kopie van  NVDA, raadpleegt uBeperkingen van Draagbare en Tijdelijke Kopieën #PortableAndTemporaryCopyRestrictions].
 
-In het dialoogvenster dat wordt geopend kunt u bevestigen dat u NVDA wilt installeren en voor zover van toepassing wordt vermeld of een reeds eerder geïnstalleerde versie van NVDA wordt bijgewerkt. 
-Zodra u op Doorgaan drukt, wordt de installatie gestart. 
-In dit dialoogvenster treft u enkele opties aan die hieronder worden uitgelegd. 
-Als de installatie voltooid is, wordt gemeld dat deze gelukt is. 
-Door nu op OK te drukken wordt de zojuist geïnstalleerde versie van NVDA opgestart.
+Door te Installeren wordt u ook de mogelijkheid geboden sneltoetsen voor Start Menu en  het bureaublad aan te maken, en tevens kunt u NVDA inschakelen met ``control+alt+n``.
 
++++ Procedure voor het installeren  van NVDA vanaf de launcher +++[StepsForInstallingNVDAFromTheLauncher]
+Hierbij komen de meest gebruikelijk setup opties aan de orde.
+Raadpleeg voor meer details betreffende  de beschikbare opties [Installatie-opties #InstallingNVDA].
+
++ Zorg dat het selectievakje van het dialoogvenster van de launcher, waarmee u aangeeft akkoord te gaan met de licentieovereenkomst, is aangevinkt.
++ ``Tab`` naar, en activeer de knop "Installeer NVDA op deze computer".
++ Vervolgens komen er opties om NVDA te gebruiken voor aanmelding bij Windows en om een snelkoppeling voor het bureaublad aan te maken.
+Deze opties staan standaard aan.
+Als u wilt, kunt u met ``tab`` en de ``spatiebalk`` deze opties, aanpassen of de standaardinstellingen  laten staan.
++ Druk op ``enter`` om verder te gaan.
++ Er verschijnt nueen UAC(User Account Control)"-dialoogvenster  met de vraag Wilt u toestaan dat deze app wijzigingen aan uw PC? aanbrengt".
++ Druk op ``alt+`j`` om de UAC-prompt te accepteren.
++ Het verloop van de installatie wordt via een voortgangsbalk weergegeven.
+Tijdens dit proces laat NVDA een in hoogte toenemend piepsignaal horen.
+Dit proces verloopt vaak snel  en mogelijk zonder dat u het opmerkt.
++ Er verschijnt een  dialoogvenster  met de mededeling dat de installatie van NVDA geslaagd is.
+U wordt aangeraden op OK te drukken om de geïnstalleerde kopie" te starten.
+Druk op ``enter`` om de geïnstalleerde kopie te starten.
++ U komt nu in het scherm "Welkom bij NVDA" en u krijgt een welkomsboodschap te horen.
+De focus staat op het vervolgkeuzemenu  "Toetsenbordindeling".
+Standaard gebruikt de "Desktop-toetsenbordindeling" het numerieke deel van het toetsenbord voor bepaalde functies.
+Desgewenst kunt u met 'PijlOmlaag' kiezen voor "Laptop-toetsenbordindeling" om functies van het numerieke toetsenbord toe te wijzen aan andere toetsen.
++ Druk op ``tab`` om naar "Gebruik ``capsLock`` als een NVDA-programmatoets" te gaan.
+``Insert`` staat standaard ingesteld als de NVDA-programmatoets.
+Druk op de ``spatiebalk`` om ``capsLock`` als een extra programmatoets te selecteren.
+Merk op dat de toetsenbordindeling en de NVDA-programmatoets afzonderlijk worden ingesteld.
+De NVDA-toets  en de toetsenbordindeling kunnen later via het menuonderdeel toetsenbordinstellingen worden gewijzigd.
++ Gebruik ``tab`` en ``spatiebalk`` om de verdere opties op dit scherm aan te passen.
+Hiermee stelt u in of NVDA automatisch moet opstarten.
++ NVDA is nu actief en door op ``enter`` te drukken zal het dialoogvenster worden gesloten.
++
+
+++ Werken met  NVDA ++[RunningNVDA]
+
+De volledige  gebruikershandleiding van NVDA bevat een gerubriceerd Overzicht met NVDA-commando's.
+De tabellen met commando's zijn ook te vinden in het "Overzicht Commando's".
+De module "Basis training voor NVDA" gaat dieper in op afzonderlijke commando's met daarbij behorende gestructureerde activiteiten.
+"Basistraining voor NVDA" is verkrijgbaar  in de [NV Access Shop http://www.nvaccess.org/shop].
+
+Hieronder enkele vaak gebruikte basiscommando's.
+Alle commando's zijn individueel instelbaar dus  dit zijn de standaard toetscombinaties voor de vermelde functies.
+
++++ De NVDA-programmatoets +++[NVDAModifierKey]
+De standaard NVDA-programmatoets is of wel de ``numrieke Nul``, met ``numLock`` UIT), of de ``insert-toets``, nabij de toetsen ``delete``, ``home`` en ``end``.
+Als NVDA-programmatoets kunt u ook de  ``capsLock-toets`` gebruiken.
+
++++ Invoerhulp +++[InputHelp]
+Om  plaats en rol van toetsen te leren kennen, drukt u op ``NVDA+1`` waarmee u Invoerhulp inschakelt.
+Zo lang u in de Invoerhulp-modus bent, zult u van elke invoerhandeling (het indrukken van een toets dan wel  een veeg- of tikgebaar) te horen krijgen om welke handeling het gaat, voor zover die is toegekend, en waartoe deze dient.
+Het eigenlijke commando wordt niet uitgevoerd wanneer u in de Invoerhulpmodus bent. 
+
++++ NVDA Starten en stoppen +++[StartingAndStoppingNVDA]
+|| Naam | Desktop-toets | Laptop-toets | Omschrijvingn |
+| NVDA starten | ``control+alt+n`` | ``control+alt+n`` | Start of herstart NVDA |
+| NVDA afsluiten | ``NVDA+q``, dan ``enter`` | ``NVDA+q``, dan ``enter`` | Beëindigt NVDA |
+| Pauzeert of hervatt spraakuitvoer | ``shift`` | ``shift`` | Hiermee wordt de spraak onderbroken, bij nogmaals indrukken gaat spraakuitvoer weer verder |
+| Spraak stoppen | ``control`` | ``control`` | Stopt de spraak onmiddellijk |
+
++++ tekst lezen +++[ReadingText]
+|| Naam | Desktop-toets | Laptop-toets | Omschrijving |
+| Alles lezen | ``NVDA+pijlOmlaag`` | ``NVDA+a`` | Starts Lezen begint vanaf de huidige positie en dat stopt als er niets meer te lezen is.  |
+| Huidige regel lezen | ``NVDA+pijlOmhoog`` | ``NVDA+l`` | Regel wordt voorgelezen. Druk 2maal om regel te laten spellen. Druk 3maal om regel te laten spellen met gebruik van spellingalfabet (Alpha, Bravo, Charlie, etc) |
+| Geselecteerde tekst lezen | ``NVDA+shift+pijlOmhoog`` | ``NVDA+shift+s`` | Wat er aan geselecteerde tekst is, wordt voorgelezen |
+| Tekst van het klembord lezen | ``NVDA+c`` | ``NVDA+c`` | Tekst die op het klembord staat wordt gelezen  |
+
++++ locatie en andere informatie melden +++[ReportingLocation]
+|| Naam | Desktop-toets | Laptop-toets | Omschrijving |
+| Venstertitel | ``NVDA+t`` | ``NVDA+t`` | Meldt de titel (naam) van het venster dat momenteel actief is. Pressing twice will spell the information. Pressing three times will copy it to the clipboard |
+| Focus melden | ``NVDA+tab`` | ``NVDA+tab`` | Meldt het besturingselement dat focus.  heet, druk 2maal om de informatie te laten spellen |
+| Venster uitlezen | ``NVDA+b`` | ``NVDA+b`` | Hiermee wordt het hele, huidige venster uitgelezen (useful for dialogs) |
+| Statusbalk lezen | ``NVDA+end`` | ``NVDA+shift+end`` | Melden van  de Statusbalk als NVDA er 1 vindte. Druk 2maal de informatie te laten spellen. Pressing three times will copy it to the clipboard |
+| Tijd melden | ``NVDA+f12`` | ``NVDA+f12`` | Eenmaal drukken meldt de huidige tjd, tweemaal drukken meldt datum |
+| Textopmaak melden | ``NVDA+f`` | ``NVDA+f`` | Tekstopmaak wordt gemeld. Pressing twice shows the information in a window |
+
++++ Instellen welke informatie NVDA voorleest +++[ToggleWhichInformationNVDAReads]
+|| Naam | Desktop-toets | Laptop-toets | Omschrijving |
+| Getypte lettertekens uitspreken | ``NVDA+2`` | ``NVDA+2`` | Deze instelling zorgt ervoor dat NVDA elk()e letter, cijfer of symbool die / dat u typt uitspreekt. |
+| Getypte woorden uitspreken | ``NVDA+3`` | ``NVDA+3`` | Deze instelling zorgt ervoor dat NVDA elke woord dat u typt uitspreekt. |
+| Commandotoetsen uitspreken | ``NVDA+4`` | ``NVDA+4`` | Deze instelling zorgt ervoor dat NVDA de toetsen die niet dienen om letters, cijfers of symbolen te typen, uitspreekt. Hieronder vallen ook toetscombinaties zoals control plus een andere letter. |
+| Muis volgen AAN | ``NVDA+m`` | ``NVDA+m`` | Deze instelling zorgt ervoor dat NVDA de tekst onder de muisaanwijzer, voorleest terwijl de muis over het scherm wordt verplaatst. Zo kunt u naar iets zoeken op het scherm door de muis met de hand te verplaatsen in plaats van te proberen iets te vinden door middel van objectnavigatie. |
+
++++ The synth settings ring +++[TheSynthSettingsRing]
+|| Naam | Desktop-toets | Laptop-toets | Omschrijving |
+| Ga naar  volgende synth setting | ``NVDA+control+pijlRechts`` | ``NVDA+shift+control+pijlRechts`` | Gaat verder naar de eerstvolgend beschikbare spraakinstelling na de momenteel ingestelde, en begint weer bij de eerste instelling nadat de laatste is gepasseerd |
+| Ga naar vorige synth setting | ``NVDA+control+pijlLinks`` | ``NVDA+shift+control+pijlLinks`` | Gaat naar de eerstvolgend beschikbare spraakinstelling die aan de huidige vooraf gaat en springt verder naar de laatste instelling  na het passeren van de eerste |
+| Huidige synth setting stapsgewijs verhogen | ``NVDA+control+pijlOmhoog`` | ``NVDA+shift+control+pijlOmhoog`` | Verhoogt of wijzigt de actuele instelling voor spraak. De spreeksnelheid wordt bijvoorbeeld verhoogd, volgende stem wordt gekozen, volume  gaat omhoog |
+| Huidige synth setting stapsgewijs verlagen | ``NVDA+control+pijlOmlaag`` | ``NVDA+shift+control+pijlOmlaag`` | Verlaagt of wijzigt de actuele instelling voor spraak. De spreeksnelheid wordt bijvoorbeeld verlaagd, vorige stem wordt gekozen, volume  gaat omlaag |
+
++++ Navigeren op het Web +++[WebNavigation]
+De volledige lijst met de Letternavigatietoetsen  staat in de rubriek  [Bladermodus #BrowseMode] van de gebruikershandleiding.
+|| Commandotoets | Omschrijving |
+| Heading (Kop) | ``h`` | Ga naar de volgende kop |
+| Heading level 1, 2, of 3 | ``1``, ``2``, ``3`` | Ga naar  de kop van het aangegeven niveau |
+| Formulierveld | ``f`` | Ga naar het volgende formulierveld (edit box, button, etc) |
+| Link | ``k`` | Ga naar de volgende link |
+| Landmark (herkenningspunt) | ``d`` | Ga naar het volgende herkenningspunt |
+| Lijst | ``l`` | Ga naar de volgende lijst |
+| Tabel | ``t`` | Ga naar de volgende tabel |
+| Achteruit gaan | ``shift+letter`` | Druk op ``shift`` en een van de letters hierboven om naar het vorige element van het bijbehorende type te gaan |
+| Elementenlijst | ``NVDA+f7`` | Opsomming van verscheidene elementtypes zoals links en headings |
+]
+++ Voorkeuren ++[Preferences]
+
+De meeste NVDA-functies kunnen via de NVDA-instellingen worden geactiveerd of aangepast.
+Instellingen, en andere opties, zijn via het NVDA-menu te bereiken.
+Om het NVDA-menu, te openen drukt u op ``NVDA+n``.
+Om het dialoogvenster met de algemene instellingen van NVDA rechtstreeks te openen drukt u op ``NVDA+control+g``.
+Veel schermen  met instellingen kunnen met toetscombinaties rechtstreeks geopend worden, bijvoorbeeld ``NVDA+control+s`` voor een synthesizer, of  ``NVDA+control+v`` for andere stemmen met bijbehorende opties.
+
+++ Community ++[Community]
+
+NVDA kent een levendige gebruikersgemeenschap.  There is a main [English language email list https://nvda.groups.io/g/nvda] and a page full of [local language groups https://github.com/nvaccess/nvda-community/wiki/Connect].
+NV Access, makers van NVDA, zijn actief op [Twitter https://twitter.com/nvaccess] en [Facebook https://www.facebook.com/NVAccess].
+NV Access post ook regelmatig via het  [In-Process blog https://www.nvaccess.org/category/in-process/].
+
+Er bestaat ook een door [NVDA Gecertificeerd Expert programma https://certification.nvaccess.org/].
+Dit is een online examen dat u kunt afleggen om te laten zien hoe vaardig u bent met NVDA.
+[NVDA Certified Experts https://certification.nvaccess.org/] can list their contact and relevant business details.
+
+++ Hulp vragen ++[GettingHelp]
+
+Om naar Help te gaan van  NVDA, drukt u op ``NVDA+n`` om het  menu,  te openen, vervolgens op ``h`` voor hulp.
+Via dit submenu hebt u toegang tot de Gebruikershandleiding, een commandooverzicht, de geschiedenis van vernieuwingen / verbeteringen en meer.
+Deze drie opties worden geopend in de standaard web-browser.
+Er  is ook nog meer uitgebreid Trainingsmateriaal beschikbaar  in de [NV Access Shop https://www.nvaccess.org/shop].
+
+We raden aan te beginnen  met de module  "Basistraining voor NVDA".
+Deze module behandelt uiteenlopende onderwerpen van hoe begin ik tot surfen op het web en objectnavigatie gebruiken.
+De module  is beschikbaar als:
+- [Electronische tekst https://www.nvaccess.org/product/basic-training-for-nvda-ebook/], which includes Word DOCX, Web page HTML, eBook ePub and Kindle KFX formats.
+- [Ingesproken MP3 audio https://www.nvaccess.org/product/basic-training-for-nvda-downloadable-audio/]
+- [UEB Brailleboek https://www.nvaccess.org/product/basic-training-for-nvda-braille-hard-copy/] with delivery included anywhere in the world.
+ -
+Andere  modules, en, tegen gereduceerde prijs,  de [NVDA Productivity Bundle https://www.nvaccess.org/product/nvda-productivity-bundle/], are available in the [NV Access Shop https://www.nvaccess.org/shop/].
+
+NV Access biedt ook betaalde  [telefonische ondersteuning aan https://www.nvaccess.org/product/nvda-telephone-support/], hetzij in blokken, of als onderdeel van de [NVDA Productivity Bundle https://www.nvaccess.org/product/nvda-productivity-bundle/].
+Telefonische ondersteuning is met inbegrip van lokale nummers in Australië en de Verenigde Staten.
+ 
+De [email-gebruikersgroepen https://github.com/nvaccess/nvda-community/wiki/Connect] are a great source of community help, as are [certified NVDA experts https://certification.nvaccess.org/].
+
+
++ Meer Setup-opties +[MoreSetupOptions]
+ 
+++ InstallatieOpties ++[InstallingNVDA]
+
+als u NVDA rechtstreeks vanuit de gedownloade NVDA-launcher installeert , drukt u  de knop Installeer NVDA in.
+Als u dit dialoogvenster al gesloten hebt of als u de installatie wilt uitvoeren vanuit een draagbare kopie, kies dan  voor NVDA Installeren   via het menu;  in het NVDA-menu onder Extra.
+ 
+In het dialoogvenster dat verschijnt, wordt bevestigd dat  u NVDA wilt gaan installeren en er wordt in gemeld of het bij deze installatie gaat om het bijwerken van een eerdere installatie.
+ Met het indrukken van de knop Doorgaan wordt de installatie van NVDA gestart.
+ In dit dialoogvenster staan nog enkele opties  die hieronder worden verklaard.
+ Zodra de  installatie voltooid is, verschijnt er een melding dat die  succesvol was.
+ Door nu op OK te drukken zal de zojuist geïnstalleerde kopie van NVDA worden gestart.
+ 
 +++ Waarschuwing voor Incompatibele add-ons +++[InstallWithIncompatibleAddons]
 Als u reeds add-ons geïnstalleerd hebt, dan kunt u een waarschuwing krijgen dat incompatibele add-ons worden uitgeschakeld.
 Voordat u op de knop Doorgaan  kunt drukken dient u het selectievakje aan te vinken om aan te geven dat u begrijpt dat deze add-ons zullen worden uitgeschakeld.
@@ -128,7 +319,7 @@ In geval van een nieuwe (of her-)installatie is deze optie standaard ingeschakel
 
 +++ Snelkoppeling voor het bureaublad aanmaken (ctrl+alt+n) +++[CreateDesktopShortcut]
 Met deze optie kunt u bepalen of er een snelkoppeling voor het bureaublad moet worden aangemaakt waarmee u NVDA kunt starten. 
-Als u ervoor kiest de snelkoppeling aan te maken, dient deze tevens als sneltoetscombinatie , Ctrl+Alt+n, waarmee u NVDA ook altijd kunt starten
+Als u ervoor kiest de snelkoppeling aan te maken, dient deze tevens als sneltoetscombinatie , "Ctrl+Alt+n", waarmee u NVDA ook altijd kunt starten
 
 +++ De Draagbare Configuratie naar Account van Huidige Gebruiker kopiëren +++[CopyPortableConfigurationToCurrentUserAccount]
 Met deze optie kunt u bepalen of de gebruikte instellingen van de NVDA kopie die momenteel actief is, moeten worden gekopieerd naar de configuratie van momenteel aangemelde gebruiker van de geïnstalleerde versie van NVDA. 
@@ -146,6 +337,26 @@ Deze optie is alleen beschikbaar wanneer de draagbare kopie wordt aangemaakt van
 Door op de knop Doorgaan te drukken wordt de draagbare kopie aangemaakt.
 Zodra het aanmaken is voltooid, hoort u de melding dat dit gelukt is. 
 Druk nu op OK om het dialoogvenster te sluiten.
+
+
+++ Beperkingen van de draagbare en tijdelijke kopie van NVDA ++[PortableAndTemporaryCopyRestrictions]
+
+Als u NVDA wilt meenemen op een USB stick of op andere beschrijfbare media, dan moet u kiezen voor het aanmaken van een draagbare kopie.
+Met de geïnstalleerde kopie kan ook altijd een draagbare kopie worden aangemaakt.
+Met de draagbare kopie zelf kunt u op elk gewenst moment NVDA op een PC installeren.
+Als u NVDA echter naar media met het kenmerk alleen-lezen, zoals een CD, wilt kopiëren, moet u het downloadbestand daarvoor gebruiken.
+Op dit moment kan de draagbare versie niet rechtstreeks van media met het kenmerk alleen-lezen worden uitgevoerd.
+
+De tijdelijke kopie van NVDA gebruiken is ook een optie, bij voorbeeld om het programma te demonstreren, maar het kost wel veel tijd als u NVDA telkens op deze manier moet starten.
+
+Behalve dat bij gebruik van de draagbare of tijdelijke kopie van NVDA het programma niet automatisch gestart kan worden tijdens en / of na aanmelding bij Windows, gelden bovendien de volgende beperkingen:
+- Werken met toepassingen die met beheerdersrechten worden uitgevoerd is niet mogelijk, tenzij NVDA ook met deze rechten wordt uitgevoerd natuurlijk, (niet aan te bevelen),
+- UAC-schermen (User Account Control) kunnen niet worden voorgelezen bij het starten van toepassingen die met beheerdersrechten worden uitgevoerd,
+- Windows 8 en later: Geen ondersteuning voor invoer via het aanraakscherm,
+- Windows 8 en later: Mogelijkheden zoals bladermodus en het uitspreken van getypte karakters bij apps uit de Windows Store zijn niet beschikbaar.
+- Windows 8 en later: Audio ducking (volume van het ene audiosignaal verlagen t.o.v. het andere) wordt niet ondersteund.
+-
+
 
 + Aan de slag met NVDA +[GettingStartedWithNVDA]
 
@@ -325,6 +536,7 @@ Enkele toetscommando’s die van pas komen bij het verplaatsen van de systeemfoc
 | Titel/naam melden | NVDA+t | NVDA+t | Laat horen hoe het momenteel actieve venster heet. Bij tweemaal indrukken wordt de informatie gespeld. Bij driemaal indrukken wordt deze naar het klembord gekopieerd. |
 | Actieve venster voorlezen | NVDA+b | NVDA+b | Leest de inhoud (knoppen, vervolgkeuzenenu’s,selectievakjes, etc.) voor. Handig voor dialoogvensters |
 | Statusbalk voorlezen | NVDA+End | NVDA+Shift+End | Leest de statusbalk als NVDA deze kan vinden. Bij tweemaal indrukken wordt de informatie gespeld. Driemaal drukken zorgt ervoor dat deze naar het klembord wordt gekopieerd. |
+| Sneltoets melden | ``shift+numpad2`` | ``NVDA+control+shift+.`` | Meldt de sneltoets voor het object dat momenteel de focus heeft |
 %kc:endInclude
 
 ++ Navigeren met de systeemcursor ++[SystemCaret]
@@ -355,6 +567,10 @@ Binnen een tabel kunt u ook de volgende toetscommando’s gebruiken:
 | Ga naar laatste kolom | control+alt+end | Verplaatst de systeemcursor naar de laatste kolom (van dezelfde rij) |
 | Ga naar eerste rij | control+alt+pageUp | Verplaatst de systeemcursor naar de eerste rij (van dezelfde kolom) |
 | Ga naar laatste rij | control+alt+pageDown | Verplaatst de systeemcursor naar de laatste rij (van dezelfde kolom) |
+| Alles lezen in kolom | ``NVDA+control+alt+pijlOmlaag`` | Kolom wordt vertikaal vanaf de huidige cel neerwaarts tot de laatste cel in de kolom gelezen. |
+| Alles in rij lezen | ``NVDA+control+alt+pijlRechts`` | De rij wordt horizontaal vanaf de huidige cel naar rechts tot de laatste cel in de rij gelezen. |
+| Hele kolom  lezen | ``NVDA+control+alt+pijlOmhoog`` | De huidige kolom wordt in zijn geheel van boven naar beneden gelezen zonder dat de systeemcursor wordt verplaatst. |
+| Hele rij  lezen | ``NVDA+control+alt+pijlLinks`` | Huidige rij wordt horizontaal van links naar rechts gelezen zonder dat de systeemcursor wordt verplaatst. |
 %kc:endInclude
 
 ++ Objectnavigatie ++[ObjectNavigation]
@@ -427,6 +643,8 @@ Voor het nalezen van tekst kunt u de volgende toetscombinaties gebruiken:
 | Huidige karakter onder de leescursor weergeven | numeriek2 | NVDA+punt | geen | Noemt het huidige karakter in de tekstregel waar de leescursor zich bevindt. Tweemaal drukken geeft een omschrijving of voorbeeld van het karakter. Drie maal drukken geeft de numerieke waarde in decimalen en hexadecimalen. |
 | In de leesmodus naar het volgende karakter gaan | numeriek3 | NVDA+pijl rechts | Veeg rechts (tekstmodus) | De leescursor wordt naar het volgende karakter verplaatst in de huidige tekstregel|
 | In de leesmodus naar het einde van de regel gaan | shift+numeriek3 | NVDA+End | geen | De leescursor wordt naar het einde van de huidige tekstregel verplaatst |
+| In de leesmodus naar vorige pagina gaan | ``NVDA+pageUp`` | ``NVDA+shift+pageUp`` | geen | Verplaatst leescursor naar vorige pagina met tekst als de toepassing dit ondersteunt |
+| In de leesmodus naar volgende pagina gaan | ``NVDA+pageDown`` | ``NVDA+shift+pageDown`` | geen | Verplaatst leescursor naar volgende pagina met tekst als de toepassing dit ondersteunt |
 | Alles voorlezen in leesmodus | numeriek Plus | NVDA+shift+a | Veeg omlaag met 3 vingers (tekstmodus) | Leest vanaf de huidige positie van de leescursor waarbij de leescursor zich mee beweegt. |
 | Selecteer, kopieer dan vanaf leescursor | NVDA+f9 | NVDA+f9 | geen | Start het selectie- en daaropvolgend kopieerproces vanaf de huidige positie van de leescursor. De feitelijke actie wordt pas uitgevoerd zodra aan NVDA wordt doorgegeven waar het tekstgebied eindigt. |
 | Selecteer, kopieer dan tot leescursor | NVDA+f10 | NVDA+f10 | geen | Bij de eerste maal drukken wordt tekst geselecteerd vanaf het eerder ingestelde beginpunt tot einde inclusief de huidige positie van de leescursor. Als de systeemcursor bij de tekst kan komen, zal die naar de geselecteerde tekst worden verplaatst. Nadat de toetscombinatie de 2de keer wordt ingedrukt wordt de tekst naar het klembord gekopieerd. |
@@ -1826,7 +2044,7 @@ De focus zal evenwel alsnog naar een bepaald element worden verplaatst zodra er 
 Het inschakelen van deze optie kan ondersteuing voor sommige websites verbeteren ten koste van de prestatie en de stabiliteit.
 
 +++ Documentopmaak (NVDA+control+d) +++[DocumentFormattingSettings]
-U kunt de meeste selectievakjes in deze categorie gebruiken om te bepalen welke informatie over de opmaak van een document u wilt horen als u de cursor in het document verplaatst.
+U kunt de meeste opties in deze categorie gebruiken om te bepalen welke informatie over de opmaak van een document u wilt horen als u de cursor in het document verplaatst.
 Als u bij voorbeeld Lettertype vermelden inschakelt, wordt de naam hiervan gemeld telkens wanneer u bij een ander lettertype terecht komt.
 
 De documentopmaakinstellingen zijn onderverdeeld in groepen. 
@@ -1854,7 +2072,7 @@ U kunt de vermelding laten horen van:
  - Uitlijning
 - Tabelinformatie
  - Tabellen
- - Rij- en kolomkoppen
+  - Rij-/kolmkoppen (UITf, Rijen, kolommen, Rijen en kolommen)
  - Celcoördinaten
  - Celranden (Uit, Stijlen, Zowel kleuren als stijlen
  - Celranden (Uit, Stijlen, Zowel kleuren als stijlen
@@ -1922,12 +2140,22 @@ Met deze knop opent u de directory waar u aangepaste code kunt bewaren terwijl u
 Deze knop is eerst dan ingeschakeld als NVDA zo is ingesteld dat het laden van aangepaste code uit ontwikkelaarskladblokmap geactiveerd is.
 - 
 
-==== Selectief registrreren inschakelen betreffende gebeurtenissen en aanpassingen  in UI Automation  ====[AdvancedSettingsSelectiveUIAEventRegistration]
+==== Registratie betreffende gebeurtenissen en wijzigingen  in UI Automation  ====[AdvancedSettingsSelectiveUIAEventRegistration]
+: Standaard
+  Automatisch
+: Opties
+  Automatisch, Selectiefe, Globaal
+:
+
 Met deze optie kunt u bepalen hoe NVDA gebeurtenissen (events) die door de UI Automation accessibility API van Microsoft worden gegenereerd, moeten worden geregistreerd.
-Wanneer deze optie uit staat, zal NVDA registratietaken uitvoeren  voor veel  UIA-gebeurtenissen die binnen NVDA zelf verlopen en beëindigd worden.
-Het gevolg is dat de prestatie flink nadelig wordt beïnvloed, vooral bij  toepassingen zoals Microsoft Visual Studio.
-Daarom zal NVDA,wanneer deze optie is ingeschakeld, registratie van gebeurtenissen  grotendeels beperken tot de systeemfocus.
+Het vervolgkeuzemenu registratie mbt UI Automation-gebeurtenissen en kenmerkbepalende  wijzigingen heeft drie opties:
+- Automatisch: "selectief" in Windows 11 Sun Valley 2 (versie 22H2) en later, anders "globaal".
+- Selectief: NVDA beperkt registratie van gebeurtenissen tot de systeemfocus voor de meeste events.
 Als u te kampen hebt met prestatieproblemen bij één of meer toepassingen, raden we u aan deze functionaliteit uit te proberen om te zien of de prestaties verbeteren.
+Het is echter wel mogelijk dat in oudere versies van Windows, NVDA moeite kan hebben met het volgen van de focus voor sommige besturingselementenzoals taakbeheer en emoji-paneel).
+- Globaal: NVDA voert registratietaken uit voor veel UIA events die innen NVDA zelf behandeld en beëindigd worden.
+Ofschoon het volgen van de focus in toenemende mate betrouwbaarder is geworden, is de prestatie nog duidelijk onder de maat in toepassingen zoals Microsoft Visual Studio.
+-
 
 ==== UI automation gebruiken voor toegang tot besturingselementen van Microsoft Word-documenten ====[MSWordUIA]
 Hiermee stelt u in of NVDA al dan niet de UI (= User Interface) Automation accessibility API moet gebruiken voor  toegang tot Microsoft Word-documenten, in plaats van het oudere Microsoft Word object-model.

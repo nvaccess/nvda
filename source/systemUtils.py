@@ -1,11 +1,17 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2020-2021 NV Access Limited, Łukasz Golonka
+# Copyright (C) 2020-2022 NV Access Limited, Łukasz Golonka
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 """ System related functions."""
 import ctypes
+from ctypes import (
+	byref,
+	create_unicode_buffer,
+	sizeof,
+	windll,
+)
 import winKernel
 import shellapi
 import winUser
@@ -142,3 +148,34 @@ def execElevated(path, params=None, wait=False, handleAlreadyElevated=False):
 			return winKernel.GetExitCodeProcess(sei.hProcess)
 		finally:
 			winKernel.closeHandle(sei.hProcess)
+
+
+@functools.lru_cache(maxsize=1)
+def _getDesktopName() -> str:
+	UOI_NAME = 2  # The name of the object, as a string
+	desktop = windll.user32.GetThreadDesktop(windll.kernel32.GetCurrentThreadId())
+	name = create_unicode_buffer(256)
+	windll.user32.GetUserObjectInformationW(
+		desktop,
+		UOI_NAME,
+		byref(name),
+		sizeof(name),
+		None
+	)
+	return name.value
+
+
+def _isSecureDesktop() -> bool:
+	"""
+	When NVDA is running on a secure screen,
+	it is running on the secure desktop.
+	When the serviceDebug parameter is not set,
+	NVDA should run in secure mode when on the secure desktop.
+	globalVars.appArgs.secure being set to True means NVDA is running in secure mode.
+
+	For more information, refer to devDocs/technicalDesignOverview.md 'Logging in secure mode'
+	and the following userGuide sections:
+	 - SystemWideParameters (information on the serviceDebug parameter)
+	 - SecureMode and SecureScreens
+	"""
+	return _getDesktopName() == "Winlogon"

@@ -341,6 +341,8 @@ def reloadAppModules():
 	for mod in mods:
 		del sys.modules[mod]
 	import appModules
+	from addonHandler.packaging import addDirsToPythonPackagePath
+	addDirsToPythonPackagePath(appModules)
 	initialize()
 	for entry in state:
 		pid = entry.pop("processID")
@@ -361,7 +363,6 @@ def reloadAppModules():
 def initialize():
 	"""Initializes the appModule subsystem. 
 	"""
-	config.addConfigDirsToPythonPackagePath(appModules)
 	if not initialize._alreadyInitialized:
 		initialize._alreadyInitialized = True
 

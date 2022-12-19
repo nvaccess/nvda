@@ -1,10 +1,11 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2022 NV Access Limited
+# Copyright (C) 2022 NV Access Limited, Cyrille Bougot
 import enum
 import typing
 import unittest
+import io
 
 import configobj
 import configobj.validate
@@ -16,6 +17,18 @@ from config.featureFlag import (
 from config.featureFlagEnums import (
 	getAvailableEnums,
 	BoolFlag,
+)
+from config.profileUpgradeSteps import (
+	_upgradeConfigFrom_8_to_9_lineIndent,
+	_upgradeConfigFrom_8_to_9_cellBorders,
+	_upgradeConfigFrom_8_to_9_showMessages,
+	_upgradeConfigFrom_8_to_9_tetherTo,
+)
+from config.configFlags import (
+	ShowMessages,
+	ReportLineIndentation,
+	ReportCellBorders,
+	TetherTo,
 )
 from utils.displayString import (
 	DisplayStringEnum
@@ -342,3 +355,338 @@ class Config_FeatureFlag_with_CustomEnum(unittest.TestCase):
 		self.assertTrue(defaultAlways == CustomEnum.ALWAYS)
 		self.assertTrue(defaultAlways == always)
 		self.assertTrue(defaultNever == CustomEnum.NEVER)
+
+
+def _loadProfile(configString: str) -> configobj.ConfigObj:
+	fn = io.StringIO(configString)
+	profile = configobj.ConfigObj(fn, indent_type="\t", encoding="UTF-8", file_error=False)
+	# Python converts \r\n to \n when reading files in Windows, so ConfigObj can't determine
+	# the true line ending.
+	profile.newlines = "\r\n"
+	return profile
+
+
+class Config_profileUpgradeSteps__upgradeConfigFrom_8_to_9_lineIndent(unittest.TestCase):
+
+	def test_DefaultProfile_Unmodified(self):
+		"""Document formatting Line indentation reporting option not modified in default profile."""
+		
+		configString = "[documentFormatting]"
+		profile = _loadProfile(configString)
+		_upgradeConfigFrom_8_to_9_lineIndent(profile)
+		with self.assertRaises(KeyError):
+			profile['documentFormatting']['reportLineIndentation']
+		with self.assertRaises(KeyError):
+			profile['documentFormatting']['reportLineIndentationWithTones']
+
+	def test_DefaultProfile_LineIndentationRestoredToOff(self):
+		"""Document formatting Line indentation reporting option explicitely restored to off in default profile
+		after having previously selected speech and tones.
+		"""
+		
+		configString = """
+[documentFormatting]
+	reportLineIndentation = False
+	reportLineIndentationWithTones = False
+"""
+		profile = _loadProfile(configString)
+		_upgradeConfigFrom_8_to_9_lineIndent(profile)
+		self.assertEqual(profile['documentFormatting']['reportLineIndentation'], ReportLineIndentation.OFF.value)
+		with self.assertRaises(KeyError):
+			profile['documentFormatting']['reportLineIndentationWithTones']
+	
+	def test_DefaultProfile_LineIndentationSpeech(self):
+		"""Document formatting Line indentation reporting option set to Speech in default profile."""
+		
+		configString = """
+[documentFormatting]
+	reportLineIndentation = True
+"""
+		profile = _loadProfile(configString)
+		_upgradeConfigFrom_8_to_9_lineIndent(profile)
+		self.assertEqual(profile['documentFormatting']['reportLineIndentation'], ReportLineIndentation.SPEECH.value)
+		with self.assertRaises(KeyError):
+			profile['documentFormatting']['reportLineIndentationWithTones']
+
+	def test_DefaultProfile_LineIndentationTones(self):
+		"""Document formatting Line indentation reporting option set to tones in default profile."""
+		
+		configString = """
+[documentFormatting]
+	reportLineIndentationWithTones = True
+"""
+		profile = _loadProfile(configString)
+		_upgradeConfigFrom_8_to_9_lineIndent(profile)
+		self.assertEqual(profile['documentFormatting']['reportLineIndentation'], ReportLineIndentation.TONES.value)
+		with self.assertRaises(KeyError):
+			profile['documentFormatting']['reportLineIndentationWithTones']
+
+	def test_DefaultProfile_LineIndentationSpeechAndTones(self):
+		"""Document formatting Line indentation reporting option set to Speech and tones in default profile."""
+		
+		configString = """
+[documentFormatting]
+	reportLineIndentation = True
+	reportLineIndentationWithTones = True
+"""
+		profile = _loadProfile(configString)
+		_upgradeConfigFrom_8_to_9_lineIndent(profile)
+		self.assertEqual(
+			profile['documentFormatting']['reportLineIndentation'],
+			ReportLineIndentation.SPEECH_AND_TONES.value,
+		)
+		with self.assertRaises(KeyError):
+			profile['documentFormatting']['reportLineIndentationWithTones']
+
+
+class Config_profileUpgradeSteps_upgradeConfigFrom_8_to_9_cellBorders(unittest.TestCase):
+
+	def _checkOldKeysRemoved(self, profile: configobj.ConfigObj) -> None:
+		with self.assertRaises(KeyError):
+			profile['documentFormatting']['reportBorderStyle']
+		with self.assertRaises(KeyError):
+			profile['documentFormatting']['reportBorderColor']
+
+	def test_DefaultProfile_Unmodified(self):
+		"""Document formatting Cell borders option not modified in default profile."""
+		
+		configString = "[documentFormatting]"
+		profile = _loadProfile(configString)
+		_upgradeConfigFrom_8_to_9_cellBorders(profile)
+		with self.assertRaises(KeyError):
+			profile["documentFormatting"]["reportCellBorders"]
+		self._checkOldKeysRemoved(profile)
+
+	def test_DefaultProfile_CellBordersStyle(self):
+		"""Document formatting Cell borders option set on style in default profile."""
+		
+		configString = """
+[documentFormatting]
+	reportBorderStyle = True
+"""
+		profile = _loadProfile(configString)
+		_upgradeConfigFrom_8_to_9_cellBorders(profile)
+		self.assertEqual(profile["documentFormatting"]["reportCellBorders"], ReportCellBorders.STYLE.value)
+		self._checkOldKeysRemoved(profile)
+
+	def test_DefaultProfile_CellBordersColorAndStyle(self):
+		"""Document formatting Cell borders option set on Both color and style in default profile."""
+		
+		configString = """
+[documentFormatting]
+	reportBorderStyle = True
+	reportBorderColor = True
+"""
+		profile = _loadProfile(configString)
+		_upgradeConfigFrom_8_to_9_cellBorders(profile)
+		self.assertEqual(
+			profile["documentFormatting"]["reportCellBorders"],
+			ReportCellBorders.COLOR_AND_STYLE.value,
+		)
+		self._checkOldKeysRemoved(profile)
+
+	def test_DefaultProfile_CellBordersRestoreOff(self):
+		"""Document formatting Cell borders option explicitely restored to Off after having been set
+		on Both color and style in default profile.
+		"""
+		
+		configString = """
+[documentFormatting]
+	reportBorderStyle = False
+	reportBorderColor = False
+"""
+		profile = _loadProfile(configString)
+		_upgradeConfigFrom_8_to_9_cellBorders(profile)
+		self.assertEqual(profile["documentFormatting"]["reportCellBorders"], ReportCellBorders.OFF.value)
+		self._checkOldKeysRemoved(profile)
+
+	def test_ManualProfile_CellBordersColorAndStyle(self):
+		"""Document formatting Cell borders option set on:
+		- Both color and style in manually activated profile
+		- Style in default profile
+		when manually activated profile is activated on top of default profile.
+		Thus the configuration for manually activated profile only specifies the reportBorderColor key
+		since reportBorderStyle is the same as default profile.
+		"""
+		
+		# Note that this config is not possible in default profile
+		configString = """
+[documentFormatting]
+	reportBorderColor = True
+"""
+		profile = _loadProfile(configString)
+		_upgradeConfigFrom_8_to_9_cellBorders(profile)
+		self.assertEqual(
+			profile["documentFormatting"]["reportCellBorders"],
+			ReportCellBorders.COLOR_AND_STYLE.value,
+		)
+		self._checkOldKeysRemoved(profile)
+
+
+class Config_profileUpgradeSteps_upgradeConfigFrom_8_to_9_showMessages(unittest.TestCase):
+
+	def _checkOldKeyRemoved(self, profile: configobj.ConfigObj) -> None:
+		with self.assertRaises(KeyError):
+			profile['braille']['noMessageTimeout']
+
+	def test_DefaultProfile_Unmodified(self):
+		"""Braille Show message and Message timeout option not modified in default profile."""
+		
+		configString = "[braille]"
+		profile = _loadProfile(configString)
+		_upgradeConfigFrom_8_to_9_showMessages(profile)
+		self._checkOldKeyRemoved(profile)
+		with self.assertRaises(KeyError):
+			profile['braille']['showMessages']
+		with self.assertRaises(KeyError):
+			profile['braille']['messageTimeout']
+
+	def test_DefaultProfile_ShowMessageDisabled(self):
+		"""Braille Show message option set to Disabled in default profile."""
+		
+		configString = """
+[braille]
+	messageTimeout = 0
+"""
+		profile = _loadProfile(configString)
+		_upgradeConfigFrom_8_to_9_showMessages(profile)
+		self._checkOldKeyRemoved(profile)
+		self.assertEqual(profile['braille']['showMessages'], ShowMessages.DISABLED.value)
+		with self.assertRaises(KeyError):
+			profile['braille']['messageTimeout']
+
+	def test_DefaultProfile_ShowMessageIndefinitely(self):
+		"""Braille Show message option set to Show indefinitely in default profile."""
+		
+		configString = """
+[braille]
+	noMessageTimeout = True
+"""
+		profile = _loadProfile(configString)
+		_upgradeConfigFrom_8_to_9_showMessages(profile)
+		self._checkOldKeyRemoved(profile)
+		self.assertEqual(profile['braille']['showMessages'], ShowMessages.SHOW_INDEFINITELY.value)
+		with self.assertRaises(KeyError):
+			profile['braille']['messageTimeout']
+	
+	def test_DefaultProfile_ShowMessageRestoreUseTimeout(self):
+		"""Braille Show message option explicitely restored to Use timeout in default profile
+		after having been set to Show indefinitely.
+		"""
+		
+		configString = """
+[braille]
+	noMessageTimeout = False
+"""
+		profile = _loadProfile(configString)
+		_upgradeConfigFrom_8_to_9_showMessages(profile)
+		self._checkOldKeyRemoved(profile)
+		self.assertEqual(profile['braille']['showMessages'], ShowMessages.USE_TIMEOUT.value)
+		with self.assertRaises(KeyError):
+			profile['braille']['messageTimeout']
+	
+	def test_DefaultProfile_UseTimeout1s(self):
+		"""Braille Message timeout option set to 1 second in default profile."""
+		
+		configString = """
+[braille]
+	messageTimeout = 1
+"""
+		profile = _loadProfile(configString)
+		_upgradeConfigFrom_8_to_9_showMessages(profile)
+		self._checkOldKeyRemoved(profile)
+		with self.assertRaises(KeyError):
+			profile['braille']['showMessages']
+		self.assertEqual(profile['braille']['messageTimeout'], '1')
+	
+	def test_DefaultProfile_RestoreUseTimeout4s(self):
+		"""Braille Message timeout option explicitely restored to 4 second (default value) in default profile
+		after having been set to a different value.
+		"""
+		
+		configString = """
+[braille]
+	messageTimeout = 4
+"""
+		profile = _loadProfile(configString)
+		_upgradeConfigFrom_8_to_9_showMessages(profile)
+		self._checkOldKeyRemoved(profile)
+		with self.assertRaises(KeyError):
+			profile['braille']['showMessages']
+		self.assertEqual(profile['braille']['messageTimeout'], '4')
+
+
+class Config_profileUpgradeSteps_upgradeConfigFrom_8_to_9_tetherTo(unittest.TestCase):
+
+	def _checkOldKeyRemoved(self, profile: configobj.ConfigObj) -> None:
+		with self.assertRaises(KeyError):
+			profile['braille']['autoTether']
+
+	def test_DefaultProfile_Unmodified(self):
+		"""Braille Tether Braille option not modified in default profile."""
+		
+		configString = "[braille]"
+		profile = _loadProfile(configString)
+		_upgradeConfigFrom_8_to_9_tetherTo(profile)
+		with self.assertRaises(KeyError):
+			profile['braille']['autoTether']
+		with self.assertRaises(KeyError):
+			profile['braille']['tetherTo']
+
+	def test_DefaultProfile_TetherToFocus(self):
+		"""Braille Tether Braille option set on Focus in default profile."""
+		
+		configString = """
+[braille]
+	autoTether = False
+"""
+		profile = _loadProfile(configString)
+		_upgradeConfigFrom_8_to_9_tetherTo(profile)
+		self._checkOldKeyRemoved(profile)
+		self.assertEqual(profile['braille']['tetherTo'], TetherTo.FOCUS.value)
+
+	def test_DefaultProfile_TetherToReview(self):
+		"""Braille Tether Braille option set on Review in default profile."""
+		
+		configString = """
+[braille]
+	tetherTo = review
+	autoTether = False
+"""
+		profile = _loadProfile(configString)
+		_upgradeConfigFrom_8_to_9_tetherTo(profile)
+		self._checkOldKeyRemoved(profile)
+		self.assertEqual(profile['braille']['tetherTo'], TetherTo.REVIEW.value)
+
+	def test_DefaultProfile_TetherToRestoreAuto(self):
+		"""Braille Tether Braille option explicitely restored on Automatic in default profile,
+		after having been set on Review."""
+		
+		configString = """
+[braille]
+	tetherTo = focus
+	autoTether = True
+"""
+		profile = _loadProfile(configString)
+		_upgradeConfigFrom_8_to_9_tetherTo(profile)
+		self._checkOldKeyRemoved(profile)
+		self.assertEqual(profile['braille']['tetherTo'], TetherTo.AUTO.value)
+
+	def test_ManualProfile_TetherToReview(self):
+		"""Braille Tether Braille option set on:
+		- Review in manually activated profile
+		- Focus in default profile
+		when manually activated profile is activated on top of default profile.
+		Thus the configuration for manually activated profile only specifies tetherTo key
+		since autoTether is the same as default profile.
+		"""
+		
+		# Note that this config is not possible in default profile
+		configString = """
+[braille]
+	tetherTo = review
+"""
+		profile = _loadProfile(configString)
+		_upgradeConfigFrom_8_to_9_tetherTo(profile)
+		self._checkOldKeyRemoved(profile)
+		self.assertEqual(profile['braille']['tetherTo'], TetherTo.REVIEW.value)

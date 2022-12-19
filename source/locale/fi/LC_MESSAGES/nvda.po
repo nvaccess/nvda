@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-19 00:02+0000\n"
-"PO-Revision-Date: 2022-08-19 14:42+0200\n"
+"POT-Creation-Date: 2022-11-15 00:02+0000\n"
+"PO-Revision-Date: 2022-11-12 16:02+0200\n"
 "Last-Translator: Jani Kinnunen <janikinnunen340@gmail.com>\n"
 "Language-Team: janikinnunen340@gmail.com\n"
 "Language: fi_FI\n"
@@ -1099,6 +1099,11 @@ msgstr "kashmiri, taso 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Luganda literary braille"
+msgstr "gandalainen kaunokirjallinen pistekirjoitus"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Lithuanian 8 dot"
 msgstr "liettua, 8 pisteen merkistö"
 
@@ -1264,6 +1269,11 @@ msgstr "venäläinen lyhennekirjoitus"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Kinyarwanda literary braille"
+msgstr "ruandalainen kaunokirjallinen pistekirjoitus"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Sanskrit grade 1"
 msgstr "sanskrit, taso 1"
 
@@ -1276,11 +1286,6 @@ msgstr "jakuutti, taso 1"
 #. braille settings dialog.
 msgid "Swedish 8 dot computer braille"
 msgstr "ruotsi, 8 pisteen tietokonemerkistö"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "Swedish grade 1"
-msgstr "ruotsi, taso 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1311,6 +1316,21 @@ msgstr "sesotho, taso 2"
 #. braille settings dialog.
 msgid "Serbian grade 1"
 msgstr "serbia, taso 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swedish uncontracted braille"
+msgstr "ruotsalainen lyhentämätön pistekirjoitus"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swedish partially contracted braille"
+msgstr "ruotsalainen osittainen lyhennekirjoitus"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swedish contracted braille"
+msgstr "ruotsalainen lyhennekirjoitus"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1411,6 +1431,20 @@ msgstr "xhosa, taso 1"
 #. braille settings dialog.
 msgid "Xhosa grade 2"
 msgstr "xhosa, taso 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#. This should be translated to '中文中国汉语通用盲文' in Mandarin.
+msgid "Chinese common braille (simplified Chinese characters)"
+msgstr "yleinen kiinalainen pistekirjoitus (yksinkertaistetut merkit)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#. This should be translated to '中文中国汉语现行盲文（无声调）' in Mandarin.
+msgid "Chinese (China, Mandarin) Current Braille System (no tones)"
+msgstr ""
+"kiinalainen (Kiina, mandariini), nykyinen pistekirjoitusjärjestelmä (ei "
+"tooneja)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2362,40 +2396,6 @@ msgstr "Virhe näppäinkomentotiedostossa"
 msgid "Loading NVDA. Please wait..."
 msgstr "Käynnistetään NVDA, odota..."
 
-#. Translators: This is a warning to users, shown if NVDA cannot determine if
-#. Windows is locked.
-msgid ""
-"NVDA failed to register session tracking. While this instance of NVDA is "
-"running, your desktop will not be secure when Windows is locked. Restart "
-"NVDA? "
-msgstr ""
-"NVDA ei voinut rekisteröidä istunnon seurantaa. Työpöytäsi ei ole suojattu, "
-"kun tämä NVDA-esiintymä on käynnissä Windowsin ollessa lukittuna. "
-"Käynnistetäänkö NVDA uudelleen?"
-
-#. Translators: This is a warning to users, shown if NVDA cannot determine if
-#. Windows is locked.
-msgid "NVDA could not start securely."
-msgstr "NVDA ei voinut käynnistyä suojatusti."
-
-#. Translators: The screen is oriented so that it is wider than it is tall.
-msgid "Landscape"
-msgstr "Vaaka"
-
-#. Translators: The screen is oriented in such a way that the height is taller than it is wide.
-msgid "Portrait"
-msgstr "Pysty"
-
-#. Translators: Reported when the battery is plugged in, and now is charging.
-#, python-format
-msgid "Charging battery. %d percent"
-msgstr "Akkua ladataan. %d prosenttia"
-
-#. Translators: Reported when the battery is no longer plugged in, and now is not charging.
-#, python-format
-msgid "Not charging battery. %d percent"
-msgstr "Akkua ei ladata. %d prosenttia"
-
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 msgid "NVDA started"
 msgstr "NVDA käynnissä"
@@ -2492,6 +2492,34 @@ msgstr "Siirtää ensimmäiseen taulukon sarakkeeseen"
 #. Translators: the description for the last table column script on browseMode documents.
 msgid "moves to the last table column"
 msgstr "Siirtää viimeiseen taulukon sarakkeeseen"
+
+#. Translators: the description for the sayAll row command
+msgid ""
+"Reads the row horizontally from the current cell rightwards to the last cell "
+"in the row."
+msgstr "Lukee rivin vaakasuunnassa oikealle nykyisestä solusta viimeiseen."
+
+#. Translators: the description for the sayAll row command
+msgid ""
+"Reads the column vertically from the current cell downwards to the last cell "
+"in the column."
+msgstr "Lukee sarakkeen pystysuunnassa alaspäin nykyisestä solusta viimeiseen."
+
+#. Translators: the description for the speak row command
+msgid ""
+"Reads the current row horizontally from left to right without moving the "
+"system caret."
+msgstr ""
+"Lukee nykyisen rivin vaakasuunnassa vasemmalta oikealle siirtämättä "
+"järjestelmäkohdistinta."
+
+#. Translators: the description for the speak column command
+msgid ""
+"Reads the current column vertically from top to bottom without moving the "
+"system caret."
+msgstr ""
+"Lukee nykyisen sarakkeen pystysuunnassa ylhäältä alas siirtämättä "
+"järjestelmäkohdistinta."
 
 #. Translators: The message announced when toggling the include layout tables browse mode setting.
 msgid "layout tables off"
@@ -2952,18 +2980,14 @@ msgid "report tables on"
 msgstr "Taulukoiden ilmaiseminen käytössä"
 
 #. Translators: Input help mode message for toggle report table row/column headers command.
-msgid "Toggles on and off the reporting of table row and column headers"
-msgstr ""
-"Ottaa käyttöön taulukon rivi- ja sarakeotsikoiden ilmaisemisen tai poistaa "
-"sen käytöstä."
+msgid "Cycle through the possible modes to report table row and column headers"
+msgstr "Vaihtaa taulukon rivi- ja sarakeotsikoiden ilmaisemisen tilaa."
 
-#. Translators: The message announced when toggling the report table row/column headers document formatting setting.
-msgid "report table row and column headers off"
-msgstr "Taulukon rivi- ja sarakeotsikoiden ilmaiseminen pois"
-
-#. Translators: The message announced when toggling the report table row/column headers document formatting setting.
-msgid "report table row and column headers on"
-msgstr "Taulukon rivi- ja sarakeotsikoiden ilmaiseminen käytössä"
+#. Translators: Reported when the user cycles through report table header modes.
+#. {mode} will be replaced with the mode; e.g. None, Rows and columns, Rows or Columns.
+#, python-brace-format
+msgid "Report table headers {mode}"
+msgstr "Taulukko-otsikoiden ilmaiseminen {mode}"
 
 #. Translators: Input help mode message for toggle report table cell coordinates command.
 msgid "Toggles on and off the reporting of table cell coordinates"
@@ -3402,6 +3426,26 @@ msgstr ""
 "Siirtää tarkastelukohdistimen nykyisen navigointiobjektin seuraavalle "
 "riville ja lukee sen."
 
+#. Translators: Input help mode message for move review cursor to previous page command.
+msgid ""
+"Moves the review cursor to the previous page of the current navigator object "
+"and speaks it"
+msgstr ""
+"Siirtää tarkastelukohdistimen nykyisen navigointiobjektin edelliselle "
+"sivulle ja lukee sen."
+
+#. Translators: a message reported when movement by page is unsupported
+msgid "Movement by page not supported"
+msgstr "Sivu kerrallaan siirtymistä ei tueta"
+
+#. Translators: Input help mode message for move review cursor to next page command.
+msgid ""
+"Moves the review cursor to the next page of the current navigator object and "
+"speaks it"
+msgstr ""
+"Siirtää tarkastelukohdistimen nykyisen navigointiobjektin seuraavalle "
+"sivulle ja lukee sen."
+
 #. Translators: Input help mode message for move review cursor to bottom line command.
 msgid ""
 "Moves the review cursor to the bottom line of the current navigator object "
@@ -3685,6 +3729,16 @@ msgstr ""
 "Lukee nykyisen sovelluksen tilarivin. Kahdesti painettaessa tiedot tavataan "
 "ja kolmesti painettaessa ne kopioidaan leikepöydälle."
 
+#. Translators: Description for a keyboard command which reports the
+#. accelerator key of the currently focused object.
+msgid "Reports the shortcut key of the currently focused object"
+msgstr "Ilmoittaa aktiivisen objektin pikanäppäimen."
+
+#. Translators: reported when a user requests the accelerator key
+#. of the currently focused object, but there is none set.
+msgid "No shortcut key"
+msgstr "Ei pikanäppäintä"
+
 #. Translators: Input help mode message for toggle mouse tracking command.
 msgid "Toggles the reporting of information as the mouse moves"
 msgstr ""
@@ -3876,24 +3930,6 @@ msgid "Reports battery status and time remaining if AC is not plugged in"
 msgstr ""
 "Ilmoittaa akun tilan ja jäljellä olevan ajan, jos verkkovirta ei ole "
 "käytössä."
-
-#. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
-msgid "No system battery"
-msgstr "Järjestelmässä ei akkua"
-
-#. Translators: This is presented to inform the user of the current battery percentage.
-#, python-format
-msgid "%d percent"
-msgstr "%d prosenttia"
-
-#. Translators: This is presented when AC power is connected such as when recharging a laptop battery.
-msgid "AC power on"
-msgstr "verkkovirta käytössä"
-
-#. Translators: This is the estimated remaining runtime of the laptop battery.
-#, python-brace-format
-msgid "{hours:d} hours and {minutes:d} minutes remaining"
-msgstr "{hours:d} tuntia ja {minutes:d} minuuttia jäljellä"
 
 #. Translators: Input help mode message for pass next key through command.
 msgid ""
@@ -6207,6 +6243,33 @@ msgctxt "touch action"
 msgid "hover up"
 msgstr "liu'uta ylös"
 
+#. Translators: This is the message for a warning shown if NVDA cannot open a browsable message window
+#. when Windows is on a secure screen (sign-on screen / UAC prompt).
+msgid ""
+"This feature is unavailable while on secure screens such as the sign-on "
+"screen or UAC prompt."
+msgstr ""
+"Tämä ominaisuus ei ole käytettävissä suojatuissa ruuduissa, kuten "
+"sisäänkirjautumisikkuna tai käyttäjätilien valvonnan kehote."
+
+#. Translators: This is the message for a warning shown if NVDA cannot open a browsable message window
+#. when Windows is on a secure screen (sign-on screen / UAC prompt). This prompt includes the title
+#. of the Window that could not be opened for context.
+#. The {title} will be replaced with the title.
+#. The title may be something like "Formatting".
+#, python-brace-format
+msgid ""
+"This feature ({title}) is unavailable while on secure screens such as the "
+"sign-on screen or UAC prompt."
+msgstr ""
+"Tämä ominaisuus ({title}) ei ole käytettävissä suojatuissa ruuduissa, kuten "
+"sisäänkirjautumisikkuna tai käyttäjätilien valvonnan kehote."
+
+#. Translators: This is the title for a warning dialog, shown if NVDA cannot open a browsable message
+#. dialog.
+msgid "Feature unavailable."
+msgstr "Ominaisuus ei käytettävissä"
+
 #. Translators: The title for the dialog used to present general NVDA messages in browse mode.
 msgid "NVDA Message"
 msgstr "NVDA:n ilmoitus"
@@ -6436,7 +6499,7 @@ msgstr "Copyright (C) {years} NVDA:n tekijät"
 #, python-brace-format
 msgid ""
 "{longName} ({name})\n"
-"Version: {version}\n"
+"Version: {version} ({version_detailed})\n"
 "URL: {url}\n"
 "{copyright}\n"
 "\n"
@@ -6457,16 +6520,16 @@ msgid ""
 "menu."
 msgstr ""
 "{longName} ({name})\n"
-"Versio: {version}\n"
+"Versio: {version} ({version_detailed})\n"
 "URL: {url}\n"
 "{copyright}\n"
 "\n"
 "{name} on suojattu GNU GPL 2.0 -lisenssillä. Voit vapaasti jakaa tai muuttaa "
 "tätä ohjelmistoa, kunhan toimitat lisenssin sen mukana ja pidät lähdekoodin "
 "kaikkien saatavilla. Tämä koskee sekä alkuperäisiä että muokattuja "
-"ohjelmistokopioita ja kaikkia johdannaisia.\n"
-"Voit tarkastella lisenssiä Ohje-valikosta saadaksesi lisätietoja.\n"
-"Lisenssi on luettavissa myös verkossa osoitteessa: http://www.gnu.org/"
+"ohjelmistokopioita kuten myös kaikkia johdannaisia.\n"
+"Saat lisätietoja tarkastelemalla lisenssiä Ohje-valikosta.\n"
+"Lisenssi on luettavissa myös verkossa osoitteessa: https://www.gnu.org/"
 "licenses/old-licenses/gpl-2.0.html\n"
 "\n"
 "{name}:ta kehittää NV Access, voittoa tavoittelematon organisaatio, joka on "
@@ -6500,6 +6563,12 @@ msgstr ""
 "reunasta, {top:.1f} prosenttia ruudun yläreunasta, leveys on {width:.1f} "
 "prosenttia ruudun leveydestä, korkeus on {height:.1f} prosenttia ruudun "
 "korkeudesta"
+
+#. Translators: This is presented to inform the user of a progress bar percentage.
+#. Translators: This is presented to inform the user of the current battery percentage.
+#, python-format
+msgid "%d percent"
+msgstr "%d prosenttia"
 
 #. Translators: a message announcing a candidate's character and description.
 #, python-brace-format
@@ -7315,6 +7384,29 @@ msgstr "&Näytä pistekirjoituksen tarkastelu käynnistettäessä"
 msgid "&Hover for cell routing"
 msgstr "&Hiiren vieminen merkin päälle siirtää kyseiseen soluun"
 
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+#. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Off"
+msgstr "Ei käytössä"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Rows and columns"
+msgstr "Rivit ja sarakkeet"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Rows"
+msgstr "Rivit"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Columns"
+msgstr "Sarakkeet"
+
 #. Translators: Label for an option in NVDA settings.
 #. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
 #. Translators: One of the show states of braille messages
@@ -8129,6 +8221,10 @@ msgstr "valittu"
 msgid "half checked"
 msgstr "osittain valittu"
 
+#. Translators: This is presented when a three state toggle button is half pressed.
+msgid "half pressed"
+msgstr "osittain painettu"
+
 #. Translators: This is presented when the control is a read-only control such as read-only edit box.
 msgid "read only"
 msgstr "vain luku"
@@ -8351,8 +8447,9 @@ msgid ""
 "The COM Registration Fixing tool has finished. It is highly recommended that "
 "you restart your computer now, to make sure the changes take full effect."
 msgstr ""
-"COM-rekisteröintien korjaustyökalu on suoritettu. On erittäin suositeltavaa "
-"käynnistää tietokone uudelleen nyt, jotta muutokset tulevat voimaan."
+"COM-rekisteröintien korjaustyökalu on suoritettu. Tietokoneen "
+"uudelleenkäynnistäminen on erittäin suositeltavaa, jotta muutokset tulevat "
+"voimaan."
 
 #. Translators: The label for the menu item to open NVDA Settings dialog.
 msgid "&Settings..."
@@ -10090,12 +10187,6 @@ msgstr "Rivi&numerot"
 msgid "Line &indentation reporting:"
 msgstr "Rivien &sisennysten ilmaiseminen:"
 
-#. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
-#. Translators: This is the label for a combobox in the
-#. document formatting settings panel.
-msgid "Off"
-msgstr "Ei käytössä"
-
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
 msgctxt "line indentation setting"
 msgid "Speech"
@@ -10134,10 +10225,10 @@ msgstr "Taulukon tiedot"
 msgid "&Tables"
 msgstr "Ta&ulukot"
 
-#. Translators: This is the label for a checkbox in the
+#. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
-msgid "Row/column h&eaders"
-msgstr "Rivi- ja sarak&eotsikot"
+msgid "H&eaders"
+msgstr "O&tsikot"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -10251,13 +10342,29 @@ msgstr "Avaa kehittäjien scratchpad-hakemisto"
 msgid "Microsoft UI Automation"
 msgstr "Microsoft UI Automation"
 
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid ""
-"Enable &selective registration for UI Automation events and property changes"
-msgstr ""
-"Ota käyttöön UI Automation -tapahtumien ja ominaisuusmuutosten &valikoiva "
-"rekisteröinti"
+#. Translators: This is the label for a combo box for selecting the
+#. means of registering for UI Automation events in the advanced settings panel.
+#. Choices are automatic, selective, and global.
+msgid "Regi&stration for UI Automation events and property changes:"
+msgstr "UI Automation -tapahtumien ja ominaisuusmuutosten &rekisteröinti:"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA decide whether to register
+#. selectively or globally for UI Automation events.
+msgid "Automatic (prefer selective)"
+msgstr "Automaattinen (etusijalla valikoiva)"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA register selectively for UI Automation events
+#. (i.e. not to request events for objects outside immediate focus).
+msgid "Selective"
+msgstr "Valikoiva"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA register for all UI Automation events
+#. in all cases.
+msgid "Global"
+msgstr "Yleinen"
 
 #. Translators: Label for the Use UIA with MS Word combobox, in the Advanced settings panel.
 msgctxt "advanced.uiaWithMSWord"
@@ -10904,7 +11011,7 @@ msgstr "Luo &massamuistiversio"
 #. Translators: The label of the button in NVDA installation program
 #. to continue using the installation program as a temporary copy of NVDA.
 msgid "&Continue running"
-msgstr "&Jatka tilapäisversion käyttöä"
+msgstr "&Jatka käyttöä"
 
 #. Translators: The label of the license text which will be shown when NVDA installation program starts.
 msgid "License Agreement"
@@ -11401,6 +11508,24 @@ msgstr "{curPercent:.0f}%"
 msgid "at {x}, {y}"
 msgstr "kohdassa {x}, {y}"
 
+#. Translators: This is the message for a warning shown if NVDA cannot determine if
+#. Windows is locked.
+msgid ""
+"NVDA is unable to determine if Windows is locked. While this instance of "
+"NVDA is running, your desktop will not be secure when Windows is locked. "
+"Restarting Windows may address this. If this error is ongoing then disabling "
+"the Windows lock screen is recommended."
+msgstr ""
+"NVDA ei pysty määrittämään, onko Windows lukittu. Kun tämä NVDA-esiintymä on "
+"käynnissä, työpöytäsi ei ole suojattu, kun Windows on lukittuna. Windowsin "
+"uudelleenkäynnistys saattaa ratkaista ongelman. Mikäli tämä virhe jatkuu, "
+"Windowsin lukitusnäytön poistaminen käytöstä on suositeltavaa."
+
+#. Translators: This is the title for a warning dialog, shown if NVDA cannot determine if
+#. Windows is locked.
+msgid "Lock screen not secure while using NVDA"
+msgstr "Lukitusnäyttö ei ole turvallinen NVDA:ta käytettäessä"
+
 #. Translators: Reported when a page reloads (example: after refreshing a webpage).
 msgid "Refreshed"
 msgstr "Päivitetty"
@@ -11477,6 +11602,36 @@ msgstr ""
 msgid "Make screen black (immediate effect)"
 msgstr "Pimennä ruutu (vaikuttaa välittömästi)"
 
+#. Translators: The screen is oriented so that it is wider than it is tall.
+msgid "Landscape"
+msgstr "Vaaka"
+
+#. Translators: The screen is oriented in such a way that the height is taller than it is wide.
+msgid "Portrait"
+msgstr "Pysty"
+
+#. Translators: This is presented when there is an error retrieving the battery status.
+msgid "Unknown power status"
+msgstr "Tuntematon virran tila"
+
+#. Translators: This is presented when there is no battery such as desktop computers
+#. and laptops with battery pack removed.
+msgid "No system battery"
+msgstr "Järjestelmässä ei akkua"
+
+#. Translators: Reported when the battery is plugged in, and now is charging.
+msgid "Charging battery"
+msgstr "Akkua ladataan"
+
+#. Translators: Reported when the battery is no longer plugged in, and now is not charging.
+msgid "AC disconnected"
+msgstr "Irrotettu verkkovirrasta"
+
+#. Translators: This is the estimated remaining runtime of the laptop battery.
+#, python-brace-format
+msgid "{hours:d} hours and {minutes:d} minutes remaining"
+msgstr "{hours:d} tuntia ja {minutes:d} minuuttia jäljellä"
+
 msgid "Taskbar"
 msgstr "Tehtäväpalkki"
 
@@ -11488,17 +11643,6 @@ msgstr "RGB: punainen {rgb.red}, vihreä {rgb.green}, sininen {rgb.blue}"
 #, python-format
 msgid "%s items"
 msgstr "%s kohdetta"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#. Translators: a message reported in the SetColumnHeader script for Excel.
-#. Translators: a message reported in the SetRowHeader script for Excel.
-msgid ""
-"Cannot set headers. Please enable reporting of table headers in Document "
-"Formatting Settings"
-msgstr ""
-"Otsikoita ei voi määrittää. Ota käyttöön taulukon otsikoiden lukeminen "
-"asiakirjojen muotoiluasetuksista."
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #, python-brace-format
@@ -11732,6 +11876,10 @@ msgstr "Kommenttiketju: {comment}, tekijä {author}, {numReplies} vastausta"
 #. Translators: A message in Excel when there is no comment thread
 msgid "No comment thread on this cell"
 msgstr "Tässä solussa ei ole kommenttiketjua"
+
+#. Translators: announced when moving outside of a table in an Excel spreadsheet.
+msgid "Out of table"
+msgstr "Taulukon loppu"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -12278,8 +12426,8 @@ msgstr "ei muutosta pisteestä {previousIndex}, "
 
 #. Translators: For line charts, indicates an increase from the previous data point on the left
 #, python-brace-format
-msgid "Increased by {incrementValue} from point {previousIndex}, "
-msgstr "Nousua {incrementValue} pistettä pisteestä {previousIndex}, "
+msgid "increased by {incrementValue} from point {previousIndex}, "
+msgstr "nousua {incrementValue} pistettä pisteestä {previousIndex}, "
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
 #, python-brace-format
@@ -13133,6 +13281,41 @@ msgstr "Kaksinkertainen riviväli"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Riviväli 1,5"
+
+#~ msgid ""
+#~ "NVDA is failing to fetch the foreground window. If this continues, NVDA "
+#~ "will quit starting in %d seconds."
+#~ msgstr ""
+#~ "NVDA ei pysty hakemaan etualan ikkunaa. Jos tämä jatkuu, NVDA sulkeutuu "
+#~ "%d sekunnin kuluttua."
+
+#~ msgid "NVDA could not start securely."
+#~ msgstr "NVDA ei voinut käynnistyä suojatusti."
+
+#~ msgid "Swedish grade 1"
+#~ msgstr "ruotsi, taso 1"
+
+#~ msgid "Not charging battery. %d percent"
+#~ msgstr "Akkua ei ladata. %d prosenttia"
+
+#~ msgid "report table row and column headers off"
+#~ msgstr "Taulukon rivi- ja sarakeotsikoiden ilmaiseminen pois"
+
+#~ msgid "report table row and column headers on"
+#~ msgstr "Taulukon rivi- ja sarakeotsikoiden ilmaiseminen käytössä"
+
+#~ msgid "AC power on"
+#~ msgstr "verkkovirta käytössä"
+
+#~ msgid "Row/column h&eaders"
+#~ msgstr "Rivi- ja sarak&eotsikot"
+
+#~ msgid ""
+#~ "Cannot set headers. Please enable reporting of table headers in Document "
+#~ "Formatting Settings"
+#~ msgstr ""
+#~ "Otsikoita ei voi määrittää. Ota käyttöön taulukon otsikoiden lukeminen "
+#~ "asiakirjojen muotoiluasetuksista."
 
 #~ msgid "Use UI Automation to access the Windows C&onsole when available"
 #~ msgstr ""

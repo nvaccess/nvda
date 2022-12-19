@@ -2231,6 +2231,25 @@ This setting may stabilize reading of incoming text in some applications.
 However, in terminals, when inserting or deleting a character in the middle of a line, the text after the caret will be read out.
 -
 
+==== Speak new text in Windows Terminal via ====[WtStrategy]
+: Default
+  Diffing
+: Options
+  Diffing, UIA notifications
+:
+
+This option selects how NVDA determines what text is "new" (and thus what to speak when "report dynamic content changes" is enabled) in Windows Terminal and the WPF Windows Terminal control used in Visual Studio 2022.
+It does not affect the Windows Console (``conhost.exe``).
+The Speak new text in Windows Terminal combo box has three options:
+- Default: This option is currently equivalent to "diffing", but it is anticipated to change once support for UIA notifications is further developed.
+- Diffing: This option uses the selected diff algorithm to calculate changes each time the terminal renders new text.
+This is identical to NVDA's behaviour in versions 2022.4 and earlier.
+- UIA notifications: This option defers the responsibility of determining what text to speak to Windows Terminal itself, meanning that NVDA no longer has to determine what text currently on-screen is "new".
+This should markedly improve performance and stability of Windows Terminal, but this feature is not yet complete.
+In particular, typed characters that are not displayed on-screen, such as passwords, are reported when this option is selected.
+Additionally, contiguous spans of output of over 1,000 characters may not be reported accurately.
+-
+
 ==== Attempt to cancel speech for expired focus events ====[CancelExpiredFocusSpeech]
 This option enables behaviour which attempts to cancel speech for expired focus events.
 In particular moving quickly through messages in Gmail with Chrome can cause NVDA to speak outdated information.
@@ -3656,7 +3675,7 @@ Following are the command line options for NVDA:
 | -q | --quit | Quit already running copy of NVDA |
 | -k | --check-running | Report whether NVDA is running via the exit code; 0 if running, 1 if not running |
 | -f LOGFILENAME | --log-file=LOGFILENAME | The file where log messages should be written to |
-| -l LOGLEVEL | --log-level=LOGLEVEL | The lowest level of message logged (debug 10, input/output 12, debug warning 15, info 20, warning 30, error 40, critical 50, disabled 100), default is warning |
+| -l LOGLEVEL | --log-level=LOGLEVEL | The lowest level of message logged (debug 10, input/output 12, debug warning 15, info 20, disabled 100) |
 | -c CONFIGPATH | --config-path=CONFIGPATH | The path where all settings for NVDA are stored |
 | None | --lang=LANGUAGE | Override the configured NVDA language. Set to "Windows" for current user default, "en" for English, etc. |
 | -m | --minimal | No sounds, no interface, no start message, etc. |
