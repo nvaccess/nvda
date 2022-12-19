@@ -11,7 +11,7 @@ This file refers to this header with the convention `WtsApi32.h#L36` meaning lin
 """
 
 from enum import (
-	IntEnum
+	IntEnum,
 )
 from typing import (
 	Callable,
@@ -133,6 +133,8 @@ class WTSINFOEX_LEVEL1_W(ctypes.Structure):
 		("OutgoingCompressedBytes", DWORD),
 	)
 
+	SessionFlags: LONG
+
 
 class WTSINFOEX_LEVEL_W(ctypes.Union):
 	""" WtsApi32.h#L483
@@ -141,6 +143,8 @@ class WTSINFOEX_LEVEL_W(ctypes.Union):
 	_fields_ = (
 		("WTSInfoExLevel1", WTSINFOEX_LEVEL1_W),
 	)
+
+	WTSInfoExLevel1: WTSINFOEX_LEVEL1_W
 
 
 class WTSINFOEXW(ctypes.Structure):
@@ -151,6 +155,9 @@ class WTSINFOEXW(ctypes.Structure):
 		('Level', DWORD),
 		('Data', WTSINFOEX_LEVEL_W),
 	)
+
+	Level: DWORD
+	Data: WTSINFOEX_LEVEL_W
 
 
 # WTSQuerySessionInformationW Definition
@@ -178,7 +185,9 @@ WTSQuerySessionInformation.restype = BOOL  # On Failure, the return value is zer
 
 
 class _WTS_LockState(IntEnum):
-	"""WtsApi32.h#L437"""
+	"""
+	WtsApi32.h#L437
+	"""
 	WTS_SESSIONSTATE_UNKNOWN = 0xFFFFFFFF  # dec(4294967295)
 	"""The session state is not known."""
 
@@ -212,6 +221,15 @@ def _setWTS_LockState() -> Type[Union[_WTS_LockState, _WTS_LockState_Win7]]:
 	return _WTS_LockState_Win7 if (winVersion.getWinVer() < winVersion.WIN8) else _WTS_LockState
 
 
-WTS_LockState: Type[_WTS_LockState] = _setWTS_LockState()
-"""Contains WTS_SESSIONSTATE_LOCK, WTS_SESSIONSTATE_UNLOCK, WTS_SESSIONSTATE_UNKNOWN
+WTS_LockState: Type[Union[_WTS_LockState, _WTS_LockState_Win7]] = _setWTS_LockState()
+"""
+Set of known session states that NVDA can handle.
+These values are different on different versions of Windows.
+
+In some cases, other states such as -0x1 are returned when queried (#14379).
+Generally, WTSINFOEX_LEVEL1_W.SessionFlags returns a flag state.
+This means that the following is a valid state according to the winAPI:
+WTS_SESSIONSTATE_UNKNOWN | WTS_SESSIONSTATE_LOCK | WTS_SESSIONSTATE_UNLOCK.
+As mixed states imply an unknown state,
+_WTS_LockStateT is an IntEnum rather than an IntFlag and mixed state flags are unexpected enum values.
 """

@@ -165,10 +165,21 @@ GA_ROOTOWNER=3
 GWL_ID=-12
 GWL_STYLE=-16
 GWL_EXSTYLE=-20
-#getWindow
+
+# getWindow relationship parameters: TODO turn to enum
+GW_HWNDFIRST = 0
+GW_HWNDLAST = 1
 GW_HWNDNEXT=2
 GW_HWNDPREV=3
 GW_OWNER=4
+
+# getWindow results
+GW_RESULT_NOT_FOUND = 0
+"""
+When GetWindow returns 0, it means the window has not been found.
+For example the last window has been reached, or an error has occurred.
+"""
+
 # SetLayeredWindowAttributes
 LWA_ALPHA = 2
 LWA_COLORKEY = 1
@@ -517,16 +528,18 @@ def sendMessage(hwnd,msg,param1,param2):
 	return user32.SendMessageW(hwnd,msg,param1,param2)
 
 
-def getWindowThreadProcessID(hwnd: HWND) -> Tuple[int, int]:
+def getWindowThreadProcessID(hwnd: HWNDVal) -> Tuple[int, int]:
 	"""Returns a tuple of (processID, threadID)"""
 	processID=c_int()
 	threadID=user32.GetWindowThreadProcessId(hwnd,byref(processID))
 	return (processID.value, threadID)
 
-def getClassName(window):
+
+def getClassName(window: HWNDVal) -> str:
 	buf=create_unicode_buffer(256)
 	user32.GetClassNameW(window,buf,255)
 	return buf.value
+
 
 def keybd_event(*args):
 	return user32.keybd_event(*args)
