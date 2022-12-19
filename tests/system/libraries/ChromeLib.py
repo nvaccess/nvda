@@ -67,7 +67,7 @@ class ChromeLib:
 			f"{process.is_process_running(ChromeLib._processRFHandleForStart)}"
 		)
 
-		if not windowsLib.isWindowInForeground(ChromeLib._chromeWindow):
+		if ChromeLib._chromeWindow and not windowsLib.isWindowInForeground(ChromeLib._chromeWindow):
 			builtIn.log(
 				"Unable to close tab, window not in foreground: "
 				f"({ChromeLib._chromeWindow.title} - {ChromeLib._chromeWindow.hwndVal})"
@@ -96,7 +96,7 @@ class ChromeLib:
 		if _window is not None:
 			res = CloseWindow(_window)
 			if not res:
-				builtIn.log(f"Unable to task kill chrome hwnd: {ChromeLib._chromeWindow.hwndVal}", level="ERROR")
+				builtIn.log(f"Unable to task kill chrome hwnd: {_window.hwndVal}", level="ERROR")
 			else:
 				ChromeLib._chromeWindow = _window = None
 		else:
@@ -250,7 +250,8 @@ class ChromeLib:
 			if not _chromeLib.canChromeTitleBeReported(chromeTitleSpeechPattern):
 				raise AssertionError("NVDA unable to report chrome title")
 
-		spy.wait_for_speech_to_finish()
+		# May take some time for chrome to focus
+		spy.wait_for_speech_to_finish(maxWaitSeconds=10.0)
 
 		if not self._waitForStartMarker():
 			builtIn.fail(

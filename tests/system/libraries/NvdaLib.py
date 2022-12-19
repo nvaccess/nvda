@@ -419,7 +419,7 @@ def getSpyLib() -> "NVDASpyLib":
 	return spy
 
 
-def getSpeechAfterKey(key, maxWaitSeconds: _Optional[float] = None) -> str:
+def getSpeechAfterKey(key: str, maxWaitSeconds: _Optional[float] = None) -> str:
 	"""Ensure speech has stopped, press key, and get speech until it stops.
 	@return: The speech after key press.
 	"""
@@ -427,12 +427,9 @@ def getSpeechAfterKey(key, maxWaitSeconds: _Optional[float] = None) -> str:
 	spy.wait_for_speech_to_finish()
 	nextSpeechIndex = spy.get_next_speech_index()
 	spy.emulateKeyPress(key)
-	if maxWaitSeconds is None:
-		from SystemTestSpy.speechSpyGlobalPlugin import NVDASpyLib
-		maxWaitSeconds = NVDASpyLib._SPEECH_HAS_FINISHED_SECONDS_MAX
 	spy.wait_for_speech_to_finish(
+		maxWaitSeconds=maxWaitSeconds,
 		speechStartedIndex=nextSpeechIndex,
-		maxWaitSeconds=maxWaitSeconds
 	)
 	speech = spy.get_speech_at_index_until_now(nextSpeechIndex)
 	return speech
