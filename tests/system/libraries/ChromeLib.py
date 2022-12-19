@@ -182,7 +182,12 @@ class ChromeLib:
 				)
 				return False
 
-		afterControlF6Speech = _NvdaLib.getSpeechAfterKey('control+F6')  # focus web content, chrome shortcut.
+		afterControlF6Speech = _NvdaLib.getSpeechAfterKey(
+			# focus web content, chrome shortcut.
+			'control+F6',
+			# Chrome may take longer to handle this key
+			maxWaitSeconds=10.0,
+		)
 		documentDescriptor = f"document\n{ChromeLib._beforeMarker}"
 		if documentDescriptor not in afterControlF6Speech:
 			builtIn.log(
