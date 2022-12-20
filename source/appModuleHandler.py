@@ -249,7 +249,11 @@ def getAppModuleForNVDAObject(obj: NVDAObjects.NVDAObject) -> AppModule:
 	mod = getAppModuleFromProcessID(obj.processID)
 	# #14403: some apps report process handle of 0, causing process information and other functions to fial.
 	if mod.processHandle == 0:
-		mod.processHandle = obj.processHandle
+		# Sometimes process handle for the NVDA object may not be defined, more so when running tests.
+		try:
+			mod.processHandle = obj.processHandle
+		except AttributeError:
+			pass
 	return mod
 
 
