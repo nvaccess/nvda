@@ -1,6 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2012-2022 Rui Batista, NV Access Limited, Noelia Ruiz Martínez,
-# Joseph Lee, Babbage B.V., Arnold Loubriat, Łukasz Golonka
+# Joseph Lee, Babbage B.V., Arnold Loubriat, Łukasz Golonka, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -547,6 +547,10 @@ class Addon(AddonBase):
 			if os.path.isfile(docFile):
 				return docFile
 		return None
+
+	def __repr__(self):
+		return f"{self.__class__.__name__} ({self.name!r}, running={self.isRunning!r})"
+
 
 def getCodeAddon(obj=None, frameDist=1):
 	""" Returns the L{Addon} where C{obj} is defined. If obj is None the caller code frame is assumed to allow simple retrieval of "current calling addon".
