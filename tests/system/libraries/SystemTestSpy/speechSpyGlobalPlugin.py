@@ -79,7 +79,6 @@ class NVDASpyLib:
 	All public methods are part of the Robot Library
 	"""
 	SPEECH_HAS_FINISHED_SECONDS: float = 1.0
-	_SPEECH_HAS_FINISHED_SECONDS_MAX: float = 1.0
 
 	def __init__(self):
 		# speech cache is ordered temporally, oldest at low indexes, most recent at highest index.
@@ -470,8 +469,9 @@ class NVDASpyLib:
 		"""speechStartedIndex should generally be fetched with get_next_speech_index
 		@param errorMessage: Supply None to bypass assert.
 		"""
+		DEFAULT_MAX_WAIT_SECONDS = 5.0
 		if not maxWaitSeconds:
-			maxWaitSeconds = NVDASpyLib._SPEECH_HAS_FINISHED_SECONDS_MAX
+			maxWaitSeconds = DEFAULT_MAX_WAIT_SECONDS
 		success, _value = _blockUntilConditionMet(
 			getValue=lambda: self._hasSpeechFinished(speechStartedIndex=speechStartedIndex),
 			giveUpAfterSeconds=self._minTimeout(maxWaitSeconds),
