@@ -15,6 +15,7 @@ import sys
 import os
 import functools
 import winreg
+import platform
 
 
 # Records a mapping between Windows builds and release names.
@@ -191,7 +192,8 @@ def getWinVer():
 		build=winVer.build,
 		releaseName=releaseName,
 		servicePack=winVer.service_pack,
-		productType=("workstation", "domain controller", "server")[winVer.product_type - 1]
+		productType=("workstation", "domain controller", "server")[winVer.product_type - 1],
+		processorArchitecture=platform.machine()
 	)
 
 
