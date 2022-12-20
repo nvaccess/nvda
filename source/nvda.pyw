@@ -154,18 +154,17 @@ parser.add_argument(
 	'--log-level',
 	dest='logLevel',
 	type=int,
-	default=20,
+	default=0,  # 0 means unspecified in command line.
 	choices=[10, 12, 15, 20, 100],
 	help=(
 		"The lowest level of message logged (debug 10, input/output 12, debugwarning 15, info 20, off 100),"
-		" default is 20 (info)"
 	),
 )
 parser.add_argument('-c','--config-path',dest='configPath',default=None,type=str,help="The path where all settings for NVDA are stored")
 parser.add_argument(
 	'--lang',
 	dest='language',
-	default="Windows",
+	default="en",
 	type=stringToLang,
 	help=(
 		"Override the configured NVDA language."
@@ -370,13 +369,20 @@ if mutex is None:
 	sys.exit(1)
 
 
-if _isSecureDesktop():
+def _serviceDebugEnabled() -> bool:
 	import winreg
 	try:
 		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\NVDA")
-		if not winreg.QueryValueEx(k, u"serviceDebug")[0]:
-			globalVars.appArgs.secure = True
+		if winreg.QueryValueEx(k, "serviceDebug")[0]:
+			return True
 	except WindowsError:
+		# Expected state by default, serviceDebug parameter not set
+		pass
+	return False
+
+
+if _isSecureDesktop():
+	if not _serviceDebugEnabled():
 		globalVars.appArgs.secure = True
 	globalVars.appArgs.changeScreenReaderFlag = False
 	globalVars.appArgs.minimal = True

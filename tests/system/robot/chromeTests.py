@@ -225,30 +225,6 @@ def test_mark_aria_details_role():
 		"form",
 	])
 
-	# TODO: fix known bug with braille not announcing details #13815
-	expectedBraille = " ".join([  # noqa: F841
-		"mln",
-		"edit",
-		# the role doc-endnote is unsupported as an IA2 role
-		# The role "ROLE_LIST_ITEM" is used instead
-		"details",
-		"doc endnote,",
-		"has fnote",
-		"doc footnote,",
-		"has cmnt",
-		"comment,",
-		# the role definition is unsupported as an IA2 role
-		# The role "ROLE_PARAGRAPH" is used instead
-		"details",
-		"definition,",
-		"details",
-		"definition,",
-		# The role "form" is deliberately unsupported
-		"details",
-		"form",
-		"edt end",
-	])
-
 	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey('downArrow')
 
 	_asserts.speech_matches(
@@ -257,11 +233,34 @@ def test_mark_aria_details_role():
 		message="Browse mode speech: Read line with different aria details roles."
 	)
 	_asserts.braille_matches(
-		actualBraille,
-		# TODO: fix known bug with braille not announcing details #13815
-		# expectedBraille,
-		"mln edt doc-endnote, doc-footnote, comment, definition, definition, form edt end",
 		message="Browse mode braille: Read line with different aria details roles.",
+		actual=actualBraille,
+		expected=" ".join([
+			"mln",
+			"edt ",
+			# the role doc-endnote is unsupported as an IA2 role
+			# The role "ROLE_LIST_ITEM" is used instead
+			"details",
+			"doc-endnote,",
+			" ",  # space between spans
+			"has fnote",
+			"doc-footnote,",
+			" ",  # space between spans
+			"has cmnt",
+			"comment,",
+			" ",  # space between spans
+			# the role definition is unsupported as an IA2 role
+			# The role "ROLE_PARAGRAPH" is used instead
+			"details",
+			"definition,",
+			" ",  # space between spans
+			"details",
+			"definition,",
+			# The role "form" is deliberately unsupported
+			# "details",
+			# "form",
+			# "edt end",
+		])
 	)
 	
 	# Reset caret
@@ -291,11 +290,35 @@ def test_mark_aria_details_role():
 		message="Focus mode speech: Read line with different aria details roles"
 	)
 	_asserts.braille_matches(
-		actualBraille,
-		# TODO: fix known bug with braille not announcing details #13815
-		# expectedBraille,
-		"doc-endnote, doc-footnote, comment, definition, definition, form",
 		message="Focus mode braille: Read line with different aria details roles",
+		actual=actualBraille,
+		expected=" ".join([
+			# no "mln edt"
+			# the role doc-endnote is unsupported as an IA2 role
+			# The role "ROLE_LIST_ITEM" is used instead
+			"details",
+			"doc-endnote,",
+			" ",  # space between spans
+			"has fnote",
+			"doc-footnote,",
+			" ",  # space between spans
+			"has cmnt",
+			"comment,",
+			" ",  # space between spans
+			# the role definition is unsupported as an IA2 role
+			# The role "ROLE_PARAGRAPH" is used instead
+			"details",
+			"definition,",
+			" ",  # space between spans
+			"details",
+			"definition,",
+			" ",  # space between spans
+			"d"  # Is this the start of the word 'details' with the rest cut-off?
+			# The role "form" is deliberately unsupported
+			# "details",
+			# "form",
+			# "edt end",
+		])
 	)
 
 

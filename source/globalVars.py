@@ -31,6 +31,7 @@ from typing import (
 from typing_extensions import Literal
 
 if TYPE_CHECKING:
+	import documentBase  # noqa: F401 used for type checking only
 	import NVDAObjects  # noqa: F401 used for type checking only
 
 
@@ -93,7 +94,7 @@ mouseObject: Optional['NVDAObjects.NVDAObject'] = None
 navigatorObject: Optional['NVDAObjects.NVDAObject'] = None
 """Deprecated, use ``setNavigatorObject|getNavigatorObject`` from `api` instead"""
 
-reviewPosition: Optional["NVDAObjects.NVDAObject"] = None
+reviewPosition: Optional["documentBase.TextContainerObject"] = None
 """Deprecated, use ``getReviewPosition|setReviewPosition`` from `api` instead"""
 
 reviewPositionObj: Optional["NVDAObjects.NVDAObject"] = None

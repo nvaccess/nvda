@@ -40,6 +40,7 @@ Major highlights include:
 - Operating Systems: all 32-bit and 64-bit editions of Windows 7, Windows 8, Windows 8.1, Windows 10, Windows 11, and all Server Operating Systems starting from Windows Server 2008 R2.
   - For Windows 7, NVDA requires Service Pack 1 or higher.
   - For Windows Server 2008 R2, NVDA requires Service Pack 1 or higher.
+  - both AMD64 and ARM64 variants of Windows are supported.
   -
 - at least 150 MB of storage space.
 -
@@ -3675,7 +3676,7 @@ Following are the command line options for NVDA:
 | -q | --quit | Quit already running copy of NVDA |
 | -k | --check-running | Report whether NVDA is running via the exit code; 0 if running, 1 if not running |
 | -f LOGFILENAME | --log-file=LOGFILENAME | The file where log messages should be written to |
-| -l LOGLEVEL | --log-level=LOGLEVEL | The lowest level of message logged (debug 10, input/output 12, debug warning 15, info 20, warning 30, error 40, critical 50, disabled 100), default is warning |
+| -l LOGLEVEL | --log-level=LOGLEVEL | The lowest level of message logged (debug 10, input/output 12, debug warning 15, info 20, disabled 100) |
 | -c CONFIGPATH | --config-path=CONFIGPATH | The path where all settings for NVDA are stored |
 | None | --lang=LANGUAGE | Override the configured NVDA language. Set to "Windows" for current user default, "en" for English, etc. |
 | -m | --minimal | No sounds, no interface, no start message, etc. |

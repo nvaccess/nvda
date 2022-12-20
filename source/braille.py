@@ -785,6 +785,8 @@ def getControlFieldBraille(  # noqa: C901
 			text.append(getPropertiesBraille(description=description))
 		if current:
 			text.append(getPropertiesBraille(current=current))
+		if hasDetails:
+			text.append(getPropertiesBraille(hasDetails=hasDetails, detailsRole=detailsRole))
 		if role == controlTypes.Role.GRAPHIC and content:
 			text.append(content)
 		return TEXT_SEPARATOR.join(text) if len(text) != 0 else None

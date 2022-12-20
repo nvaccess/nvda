@@ -31,7 +31,7 @@ Tärkeimpiä ominaisuuksia ovat:
 - Tuki moderneille Windows-käyttöjärjestelmille, sekä 32- että 64-bittiset versiot mukaan lukien
 - Mahdollisuus käyttää Windowsin sisäänkirjautumisen aikana sekä [muissa suojatuissa ruuduissa #SecureScreens].
 - Säätimien ja tekstin puhuminen kosketuseleitä käytettäessä
-- Tuki yleisille esteettömyysrajapinnoille, kuten Microsoft Active Accessibility, Java Access Bridge, IAccessible2 sekä UI Automation
+- Tuki yleisille saavutettavuusrajapinnoille, kuten Microsoft Active Accessibility, Java Access Bridge, IAccessible2 sekä UI Automation
 - Tuki Windowsin komentokehotteelle ja konsolisovelluksille
 - Mahdollisuus kohdistuksen korostamiseen
 -
@@ -822,7 +822,7 @@ Sivut voivat sisältää monipuolista sisältöä, jossa käytetään sellaisia 
 Kun selaustilassa tullaan niiden kohdalle, NVDA ilmoittaa "upotettu objekti", "sovellus" tai "valintaikkuna".
 Niihin voidaan siirtyä nopeasti käyttäen upotettuihin objekteihin siirtäviä pikaselausnäppäimiä O ja Vaihto+O.
 Näiden objektien kanssa voidaan olla vuorovaikutuksessa painamalla Enteriä niiden kohdalla.
-Jos objekti on esteetön, siinä voidaan liikkua sarkaimella ja olla sen kanssa vuorovaikutuksessa kuten missä tahansa muussakin sovelluksessa.
+Jos objekti on saavutettava, siinä voidaan liikkua sarkaimella ja olla sen kanssa vuorovaikutuksessa kuten missä tahansa muussakin sovelluksessa.
 Seuraavalla näppäinkomennolla voidaan palata alkuperäiselle upotetun objektin sisältävälle sivulle:
 %kc:beginInclude
 || Nimi | Näppäinkomento | Kuvaus |
@@ -852,7 +852,7 @@ Sen voi ladata osoitteesta https://www.dessci.com/en/products/mathtype/
 - Adobe Reader:
 Huom: Tämä ei ole vielä virallinen standardi, joten sisältöä tuottavaa ohjelmistoa ei ole julkisesti saatavilla.
 - Kindle Reader for PC:
-NVDA voi lukea kirjojen esteetöntä matemaattista sisältöä Kindle for PC:ssä.
+NVDA voi lukea kirjojen saavutettavaa matemaattista sisältöä Kindle for PC:ssä.
 -
 
 NVDA puhuu aina asiakirjaa luettaessa kaiken siinä mahdollisesti olevan tuetun matemaattisen sisällön.
@@ -1163,7 +1163,7 @@ Excelin perinteiset kommentit on nimetty uudelleen "muistiinpanoiksi" Microsoft 
 Kaikki laskentataulukossa olevat muistiinpanot voidaan näyttää myös elementtilistassa painamalla NVDA+F7.
 
 NVDA voi myös näyttää erityisen muistiinpanojen lisäämiseen tai muokkaamiseen tarkoitetun valintaikkunan.
-NVDA korvaa natiivin MS Excelin muistiinpanojen muokkausalueen esteettömyysrajoitteiden takia, mutta valintaikkunan näyttämisen näppäinkomento periytyy Exceliltä, joten se toimii myös ilman NVDA:ta.
+NVDA korvaa natiivin MS Excelin muistiinpanojen muokkausalueen saavutettavuusrajoitteiden takia, mutta valintaikkunan näyttämisen näppäinkomento periytyy Exceliltä, joten se toimii myös ilman NVDA:ta.
 %kc:beginInclude
 Voit lisätä tai muokata muistiinpanoa kohdistetussa solussa painamalla Vaihto+F2.
 %kc:endInclude
@@ -1174,7 +1174,7 @@ Huom: Muistiinpanojen muokkausalue on mahdollista avata Excelissä myös laskent
 Tämä avaa kuitenkin esteellisen muokkausalueen eikä NVDA-kohtaista muokkausvalintaikkunaa.
 
 Microsoft Office 2016:een, 365:een ja uudempiin on lisätty uudentyylinen kommenttivalintaikkuna.
-Se on esteetön ja tarjoaa enemmän ominaisuuksia, kuten kommentteihin vastaamisen jne.
+Se on saavutettava ja tarjoaa enemmän ominaisuuksia, kuten kommentteihin vastaamisen jne.
 Se voidaan avata myös solun pikavalikosta.
 Uuden kommenttivalintaikkunan avulla soluihin lisätyt kommentit eivät liity muistiinpanoihin.
 
@@ -1233,7 +1233,7 @@ Seuraavalle sivulle voidaan kääntää manuaalisesti painamalla Page down- ja e
 Pikaselausta tuetaan linkeille ja grafiikoille, mutta vain nykyisellä sivulla.
 Linkkeihin siirtyminen sisältää myös alaviitteet.
 
-NVDA tarjoaa alkeellisen tuen kirjojen esteettömän matemaattisen sisällön lukemiselle ja vuorovaikutteiselle selaukselle.
+NVDA tarjoaa alkeellisen tuen kirjojen saavutettavan matemaattisen sisällön lukemiselle ja vuorovaikutteiselle selaukselle.
 Lisätietoja on [Matemaattisen sisällön lukeminen #ReadingMath] -osiossa.
 
 +++ Tekstin valitseminen +++[KindleTextSelection]
@@ -2126,7 +2126,7 @@ Se on käytettävissä vain, jos NVDA on määritetty lataamaan mukautettua kood
   Automaattinen, Valikoiva, Yleinen
 :
 
-Tämä asetus muuttaa tapaa, jolla NVDA rekisteröi Microsoft UI Automation -esteettömyysrajapinnan käynnistämiä tapahtumia.
+Tämä asetus muuttaa tapaa, jolla NVDA rekisteröi Microsoft UI Automation -saavutettavuusrajapinnan käynnistämiä tapahtumia.
 UI Automation -tapahtumien ja ominaisuusmuutosten rekisteröinti -yhdistelmäruudussa on kolme vaihtoehtoa:
 - Automaattinen: "valikoiva" Windows 11 Sun Valley 2:ssa (versio 22H2) ja sitä uudemmissa, muutoin "yleinen".
 - Valikoiva: NVDA rajoittaa useimpien tapahtumien rekisteröinnin järjestelmän kohdistukseen.
@@ -2137,7 +2137,7 @@ Vaikka kohdistuksen seuranta on luotettavampaa useammissa tilanteissa, suoritusk
 -
 
 ==== Käytä UI automation -rajapintaa Microsoft Wordin asiakirjasäätimissä ====[MSWordUIA]
-Määrittää, käyttääkö NVDA UI Automation -esteettömyysrajapintaa Microsoft Word -asiakirjoille vanhemman objektimallin asemesta.
+Määrittää, käyttääkö NVDA UI Automation -saavutettavuusrajapintaa Microsoft Word -asiakirjoille vanhemman objektimallin asemesta.
 Tämä koskee itsensä Microsoft wordin asiakirjojen lisäksi Microsoft Outlookin viestejä.
 Asetus sisältää seuraavat arvot:
 - Oletus (kun käytettävissä)
@@ -2199,7 +2199,7 @@ Seuraavat vaihtoehdot ovat käytettävissä:
 -
 
 ==== Käytä UI Automation -rajapintaa Microsoft Excelin laskentataulukkosäätimissä, kun käytettävissä ====[UseUiaForExcel]
-Kun tämä asetus on käytössä, NVDA yrittää käyttää Microsoft UI Automation -esteettömyysrajapintaa tietojen hakemiseen Microsoft Excelin laskentataulukkosäätimistä.
+Kun tämä asetus on käytössä, NVDA yrittää käyttää Microsoft UI Automation -saavutettavuusrajapintaa tietojen hakemiseen Microsoft Excelin laskentataulukkosäätimistä.
 Tämä on kokeellinen ominaisuus, eivätkä jotkin Microsoft Excelin toiminnot välttämättä ole käytettävissä tässä tilassa.
 Esimerkiksi NVDA:n elementtilista kaavojen ja kommenttien näyttämiseen ja selaustilan pikaselauskomento laskentataulukon lomakekenttään siirtämiseen eivät ole käytettävissä.
 Alkeelliseen laskentataulukossa liikkumiseen/muokkaamiseen tämä asetus voi kuitenkin tarjota valtavan suorituskyvyn parannuksen.
@@ -2520,7 +2520,7 @@ Solu on aluksi vaaleankeltainen, muuttuu sitten oranssiksi ja äkkiä vihreäksi
 Ota pistekirjoituksen tarkastelu käyttöön tai poista se käytöstä mistä tahansa määrittämällä sille oma näppäinkomento [Näppäinkomennot-valintaikkunaa #InputGestures] käyttäen.
 
 ++ Python-konsoli ++[PythonConsole]
-NVDA:n Python-konsoli, joka löytyy NVDA-valikon Työkalut-alivalikosta, on kehitystyökalu, joka on hyödyllinen virheiden etsinnässä, yleisessä NVDA:n sisäisen toiminnan tai sovelluksen esteettömyyshierarkian tutkimisessa.
+NVDA:n Python-konsoli, joka löytyy NVDA-valikon Työkalut-alivalikosta, on kehitystyökalu, joka on hyödyllinen virheiden etsinnässä, yleisessä NVDA:n sisäisen toiminnan tai sovelluksen saavutettavuushierarkian tutkimisessa.
 Lisätietoja on [NVDA-kehittäjän oppaassa. https://www.nvaccess.org/files/nvda/documentation/developerGuide.html]
 
 ++ Lisäosien hallinta ++[AddonsManager]

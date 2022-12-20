@@ -30,12 +30,13 @@ from treeInterceptorHandler import (
 	TreeInterceptor,
 )
 import braille
+from utils.security import _isObjectBelowLockScreen
 import vision
 import globalPluginHandler
 import brailleInput
 import locationHelper
 import aria
-from winAPI.sessionTracking import isWindowsLocked
+from winAPI.sessionTracking import _isLockScreenModeActive
 
 
 class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
@@ -181,7 +182,7 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 		Inserts LockScreenObject to the start of the clsList if Windows is locked.
 		"""
 		from .lockscreen import LockScreenObject
-		if isWindowsLocked():
+		if _isLockScreenModeActive():
 			# This must be resolved first to prevent object navigation outside of the lockscreen.
 			clsList.insert(0, LockScreenObject)
 
@@ -1486,3 +1487,11 @@ This code is executed if a gain focus event is received by this object.
 		For performance, this method will only count up to the given maxCount number, and if there is one more above that, then sys.maxint is returned stating that many items are selected.
 		"""
 		return 0
+
+	#: Type definition for auto prop '_get_isBelowLockScreen'
+	isBelowLockScreen: bool
+
+	def _get_isBelowLockScreen(self) -> bool:
+		if not _isLockScreenModeActive():
+			return False
+		return _isObjectBelowLockScreen(self)
