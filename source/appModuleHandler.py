@@ -243,10 +243,14 @@ def getAppNameFromProcessID(processID: int, includeExt: bool = False) -> str:
 	return appName
 
 
-def getAppModuleForNVDAObject(obj):
-	if not isinstance(obj,NVDAObjects.NVDAObject):
+def getAppModuleForNVDAObject(obj: NVDAObjects.NVDAObject) -> AppModule:
+	if not isinstance(obj, NVDAObjects.NVDAObject):
 		return
-	return getAppModuleFromProcessID(obj.processID)
+	mod = getAppModuleFromProcessID(obj.processID)
+	# #14403: some apps report process handle of 0, causing process information and other functions to fial.
+	if mod.processHandle == 0:
+		mod.processHandle = obj.processHandle
+	return mod
 
 
 def getAppModuleFromProcessID(processID: int) -> AppModule:
