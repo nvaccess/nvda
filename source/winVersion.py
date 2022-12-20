@@ -68,7 +68,7 @@ def _getRunningVersionNameFromWinReg() -> str:
 class WinVersion(object):
 	"""
 	Represents a Windows release.
-	Includes version major, minor, build, service pack information,
+	Includes version major, minor, build, service pack information, machine architecture,
 	as well as tools such as checking for specific Windows 10 releases.
 	"""
 
@@ -79,7 +79,8 @@ class WinVersion(object):
 			build: int = 0,
 			releaseName: Optional[str] = None,
 			servicePack: str = "",
-			productType: str = ""
+			productType: str = "",
+			processorArchitecture: str = ""
 	):
 		self.major = major
 		self.minor = minor
@@ -90,6 +91,7 @@ class WinVersion(object):
 			self.releaseName = self._getWindowsReleaseName()
 		self.servicePack = servicePack
 		self.productType = productType
+		self.processorArchitecture = processorArchitecture
 
 	def _getWindowsReleaseName(self) -> str:
 		"""Returns the public release name for a given Windows release based on major, minor, and build.
