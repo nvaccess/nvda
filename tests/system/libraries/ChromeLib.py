@@ -67,7 +67,10 @@ class ChromeLib:
 			f"{process.is_process_running(ChromeLib._processRFHandleForStart)}"
 		)
 
-		if ChromeLib._chromeWindow and not windowsLib.isWindowInForeground(ChromeLib._chromeWindow):
+		if (
+			not ChromeLib._chromeWindow
+			or not windowsLib.isWindowInForeground(ChromeLib._chromeWindow)
+		):
 			builtIn.log(
 				"Unable to close tab, window not in foreground: "
 				f"({ChromeLib._chromeWindow.title} - {ChromeLib._chromeWindow.hwndVal})"
