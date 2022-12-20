@@ -125,6 +125,8 @@ class WinVersion(object):
 			winVersionText.append(f"service pack {self.servicePack}")
 		if self.productType != "":
 			winVersionText.append(self.productType)
+		if self.processorArchitecture != "":
+			winVersionText.append(self.processorArchitecture)
 		return " ".join(winVersionText)
 
 	def __eq__(self, other):
