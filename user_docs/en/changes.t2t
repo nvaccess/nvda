@@ -73,6 +73,7 @@ This functionality is now available generically via ``behaviours.EditableText`` 
   - A single instance ``hwIo.bgThread`` (in NVDA core) of this class provides background i/o for thread safe braille display drivers.
   - This new class is not a singleton by design, add-on authors are encouraged to use their own instance when doing hardware i/o.
   -
+- The processor architecture for the computer can be queried from ``winVersion.WinVersion.processorArchitecture attribute.`` (#14439)
 -
 
 === API Breaking Changes ===
