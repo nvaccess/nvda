@@ -1,7 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2008-2022 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau
+# Copyright (C) 2008-2022 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau,
+# Leonard de Ruijter
 
 import itertools
 import os
@@ -2497,6 +2498,9 @@ class BrailleDisplayDriver(driverHandler.Driver):
 		@return: The number of cells.
 		"""
 		return 0
+
+	def __repr__(self):
+		return f"{self.__class__.__name__}({self.name!r}, numCells={self.numCells!r})"
 
 	def display(self, cells):
 		"""Display the given braille cells.

@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2022 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Joseph Lee,
-# Babbage B.V., Mozilla Corporation, Julien Cochuyt
+# Babbage B.V., Mozilla Corporation, Julien Cochuyt, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -579,7 +579,10 @@ class AppModule(baseObject.ScriptableObject):
 		return self.productVersion
 
 	def __repr__(self):
-		return "<%r (appName %r, process ID %s) at address %x>"%(self.appModuleName,self.appName,self.processID,id(self))
+		return (
+			f"{self.__class__.__name__}"
+			f"({self.appModuleName}, appName={self.appName!r}, processID={self.processID!r})"
+		)
 
 	def _get_appModuleName(self):
 		return self.__class__.__module__.split('.')[-1]

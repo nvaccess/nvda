@@ -70,6 +70,7 @@ This functionality is now available generically via ``behaviours.EditableText`` 
   - Now uses the C++20 standard, was C++17.
   - Now uses the '/permissive-' compiler flag which disables permissive behaviors, and sets the '/Zc' compiler options for strict conformance.
   -
+- Some plugin objects (e.g. drivers and add-ons) now have a more informative description in the NVDA python console. (#14463)
 - NVDA can now be fully compiled with Visual Studio 2022, no longer requiring the Visual Studio 2019 build tools.
 - More detailed logging for NVDA freezes to aid debugging. (#14309)
 - The singleton ``braille._BgThread`` class has been replaced with ``hwIo.ioThread.IoThread``. (#14130)
