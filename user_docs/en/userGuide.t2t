@@ -40,6 +40,7 @@ Major highlights include:
 - Operating Systems: all 32-bit and 64-bit editions of Windows 7, Windows 8, Windows 8.1, Windows 10, Windows 11, and all Server Operating Systems starting from Windows Server 2008 R2.
   - For Windows 7, NVDA requires Service Pack 1 or higher.
   - For Windows Server 2008 R2, NVDA requires Service Pack 1 or higher.
+  - both AMD64 and ARM64 variants of Windows are supported.
   -
 - at least 150 MB of storage space.
 -
@@ -2088,6 +2089,29 @@ The Report line indentation with combo box has four options.
 The tone will increase in pitch every space, and for a tab, it will increase in pitch the equivalent of 4 spaces.
 - Both Speech and Tones: This option reads indentation using both of the above methods.
 -
+
++++ Document Navigation +++[DocumentNavigation]
+This category allows you to adjust various aspects of document navigation.
+
+==== Paragraph Style ====[ParagraphStyle]
+: Default
+  Handled by application
+: Options
+  Default (Handled by application), Handled by application, Single line break, Multi line break
+:
+
+This combo box allows you to select the paragraph style to be used when navigating by paragraphs with ``control+upArrow`` and ``control+downArrow``.
+The available paragraph styles are:
+- Handled by application: NVDA will let the application determine the previous or next paragraph, and NVDA will read the new paragraph when navigating.
+This style works best when the application supports paragraph navigation natively, and is the default.
+- Single line break: NVDA will attempt to determine the previous or next paragraph using a single line break as the paragraph indicator.
+This style works best when reading documents in an application which does not natively support paragraph navigation, and paragraphs in the document are marked by a single press of the ``enter`` key.
+- Multi line break: NVDA will attempt to determine the previous or next paragraph using at least one blank line (two presses of the ``enter`` key) as the paragraph indicator.
+This style works best when working with documents which use block paragraphs.
+Note that this paragraph style cannot be used in Microsoft Word or Microsoft Outlook, unless you are using UIA to access Microsoft Word controls.
+-
+
+You may toggle through the available paragraph styles from anywhere by assigning a key in the [Input Gestures dialog #InputGestures].
 
 +++ Windows OCR Settings +++[Win10OcrSettings]
 The settings in this category allow you to configure [Windows OCR #Win10Ocr].
