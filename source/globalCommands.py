@@ -4,7 +4,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2006-2022 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee,
 # Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Łukasz Golonka, Accessolutions,
-# Julien Cochuyt, Jakub Lukowicz, Bill Dengler, Cyrille Bougot
+# Julien Cochuyt, Jakub Lukowicz, Bill Dengler, Cyrille Bougot, Rob Meredith
 
 import itertools
 
@@ -3973,6 +3973,19 @@ class GlobalCommands(ScriptableObject):
 				)
 			else:
 				_enableScreenCurtain()
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Cycles through paragraph navigation styles",
+		),
+		category=SCRCAT_SYSTEMCARET
+	)
+	def script_cycleParagraphStyle(self, gesture: "inputCore.InputGesture") -> None:
+		from documentNavigation.paragraphHelper import nextParagraphStyle
+		newFlag: config.featureFlag.FeatureFlag = nextParagraphStyle()
+		config.conf["documentNavigation"]["paragraphStyle"] = newFlag.name
+		ui.message(newFlag.displayString)
 
 
 #: The single global commands instance.

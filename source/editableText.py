@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2021 NV Access Limited, Davy Kager, Julien Cochuyt
+# Copyright (C) 2006-2022 NV Access Limited, Davy Kager, Julien Cochuyt, Rob Meredith
 
 """Common support for editable text.
 @note: If you want editable text functionality for an NVDAObject,
@@ -21,6 +21,7 @@ import eventHandler
 from scriptHandler import isScriptWaiting, willSayAllResume
 import textInfos
 import controlTypes
+from inputCore import InputGesture
 from logHandler import log
 
 class EditableText(TextContainerObject,ScriptableObject):
@@ -294,6 +295,38 @@ class EditableText(TextContainerObject,ScriptableObject):
 	def script_caret_deleteWord(self, gesture):
 		self._deleteScriptHelper(textInfos.UNIT_WORD, gesture)
 
+	def _handleParagraphNavigation(self, gesture: InputGesture, nextParagraph: bool) -> None:
+		from config.featureFlagEnums import ParagraphNavigationFlag
+		flag: config.featureFlag.FeatureFlag = config.conf["documentNavigation"]["paragraphStyle"]
+		if flag.calculated() == ParagraphNavigationFlag.APPLICATION:
+			self.script_caret_moveByParagraph(gesture)
+		elif flag.calculated() == ParagraphNavigationFlag.SINGLE_LINE_BREAK:
+			from documentNavigation.paragraphHelper import moveToSingleLineBreakParagraph
+			passKey, moved = moveToSingleLineBreakParagraph(
+				nextParagraph=nextParagraph,
+				speakNew=not willSayAllResume(gesture)
+			)
+			if passKey:
+				self.script_caret_moveByParagraph(gesture)
+		elif flag.calculated() == ParagraphNavigationFlag.MULTI_LINE_BREAK:
+			from documentNavigation.paragraphHelper import moveToMultiLineBreakParagraph
+			passKey, moved = moveToMultiLineBreakParagraph(
+				nextParagraph=nextParagraph,
+				speakNew=not willSayAllResume(gesture)
+			)
+			if passKey:
+				self.script_caret_moveByParagraph(gesture)
+		else:
+			log.error(f"Unexpected ParagraphNavigationFlag value {flag.value}")
+
+	def script_caret_previousParagraph(self, gesture: InputGesture) -> None:
+		self._handleParagraphNavigation(gesture, False)
+	script_caret_previousParagraph.resumeSayAllMode = sayAll.CURSOR.CARET
+
+	def script_caret_nextParagraph(self, gesture: InputGesture) -> None:
+		self._handleParagraphNavigation(gesture, True)
+	script_caret_nextParagraph.resumeSayAllMode = sayAll.CURSOR.CARET
+	
 	__gestures = {
 		"kb:upArrow": "caret_moveByLine",
 		"kb:downArrow": "caret_moveByLine",
@@ -303,8 +336,8 @@ class EditableText(TextContainerObject,ScriptableObject):
 		"kb:pageDown": "caret_moveByLine",
 		"kb:control+leftArrow": "caret_moveByWord",
 		"kb:control+rightArrow": "caret_moveByWord",
-		"kb:control+upArrow": "caret_moveByParagraph",
-		"kb:control+downArrow": "caret_moveByParagraph",
+		"kb:control+upArrow": "caret_previousParagraph",
+		"kb:control+downArrow": "caret_nextParagraph",
 		"kb:alt+upArrow": "caret_previousSentence",
 		"kb:alt+downArrow": "caret_nextSentence",
 		"kb:home": "caret_moveByCharacter",
