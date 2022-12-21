@@ -704,7 +704,7 @@ class AppModule(baseObject.ScriptableObject):
 			0x014c: "x86",  # I386-32
 			0x8664: "AMD64",  # X86-64
 			0x01c0: "ARM",  # 32-bit ARM
-			0xaa64: "ARM64"  # 64-bit ARM
+			0xaa64: "ARM64",  # 64-bit ARM
 		}
 		# #14403: GetProcessInformation can be called from Windows 11 and later to obtain process machine.
 		if winVersion.getWinVer() >= winVersion.WIN11:
