@@ -1,8 +1,7 @@
-#cursorManager.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2018 NV Access Limited, Joseph Lee, Derek Riemer, Davy Kager
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2022 NV Access Limited, Joseph Lee, Derek Riemer, Davy Kager, Rob Meredith
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 """
 Implementation of cursor managers.
@@ -26,9 +25,13 @@ import config
 import braille
 import vision
 import controlTypes
-from inputCore import SCRCAT_BROWSEMODE
+from inputCore import (
+	SCRCAT_BROWSEMODE,
+	InputGesture,
+)
 import ui
 from textInfos import DocumentWithPageTurns
+from logHandler import log
 
 
 class FindDialog(
@@ -264,12 +267,35 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 		self._caretMovementScriptHelper(gesture,textInfos.UNIT_SENTENCE,1)
 	script_moveBySentence_forward.resumeSayAllMode = sayAll.CURSOR.CARET
 
-	def script_moveByParagraph_back(self,gesture):
-		self._caretMovementScriptHelper(gesture,textInfos.UNIT_PARAGRAPH,-1)
+	def _handleParagraphNavigation(self, gesture: InputGesture, nextParagraph: bool) -> None:
+		from config.featureFlagEnums import ParagraphNavigationFlag
+		flag: config.featureFlag.FeatureFlag = config.conf["documentNavigation"]["paragraphStyle"]
+		if (
+			flag.calculated() == ParagraphNavigationFlag.APPLICATION
+			or flag.calculated() == ParagraphNavigationFlag.SINGLE_LINE_BREAK
+		):
+			self._caretMovementScriptHelper(gesture, textInfos.UNIT_PARAGRAPH, 1 if nextParagraph else -1)
+		elif flag.calculated() == ParagraphNavigationFlag.MULTI_LINE_BREAK:
+			from documentNavigation.paragraphHelper import moveToMultiLineBreakParagraph
+			ti = self.makeTextInfo(textInfos.POSITION_SELECTION)
+			passKey, moved = moveToMultiLineBreakParagraph(
+				nextParagraph=nextParagraph,
+				speakNew=not willSayAllResume(gesture),
+				ti=ti)
+			if moved:
+				self.selection = ti
+			elif passKey:
+				# fail over to default behavior
+				self._caretMovementScriptHelper(gesture, textInfos.UNIT_PARAGRAPH, 1 if nextParagraph else -1)
+		else:
+			log.error(f"Unexpected ParagraphNavigationFlag value {flag.value}")
+
+	def script_moveByParagraph_back(self, gesture: InputGesture):
+		self._handleParagraphNavigation(gesture, False)
 	script_moveByParagraph_back.resumeSayAllMode = sayAll.CURSOR.CARET
 
-	def script_moveByParagraph_forward(self,gesture):
-		self._caretMovementScriptHelper(gesture,textInfos.UNIT_PARAGRAPH,1)
+	def script_moveByParagraph_forward(self, gesture: InputGesture):
+		self._handleParagraphNavigation(gesture, True)
 	script_moveByParagraph_forward.resumeSayAllMode = sayAll.CURSOR.CARET
 
 	def script_startOfLine(self,gesture):

@@ -5,7 +5,7 @@
 # Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Bill Dengler, Thomas Stivers,
 # Julien Cochuyt, Peter Vágner, Cyrille Bougot, Mesar Hameed, Łukasz Golonka, Aaron Cannon,
 # Adriani90, André-Abush Clause, Dawid Pieper, Heiko Folkerts, Takuya Nishimoto, Thomas Stivers,
-# jakubl7545, mltony
+# jakubl7545, mltony, Rob Meredith
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 import logging
@@ -2529,6 +2529,28 @@ class DocumentFormattingPanel(SettingsPanel):
 		config.conf["documentFormatting"]["reportFrames"]=self.framesCheckBox.Value
 		config.conf["documentFormatting"]["reportClickable"]=self.clickableCheckBox.Value
 
+
+class DocumentNavigationPanel(SettingsPanel):
+	# Translators: This is the label for the document navigation settings panel.
+	title = _("Document Navigation")
+	helpId = "DocumentNavigation"
+
+	def makeSettings(self, settingsSizer: wx.BoxSizer) -> None:
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+		# Translators: This is a label for the paragraph navigation style in the document navigation dialog
+		paragraphStyleLabel = _("&Paragraph style:")
+		self.paragraphStyleCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
+			labelText=paragraphStyleLabel,
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["documentNavigation", "paragraphStyle"],
+			conf=config.conf
+		)
+		self.bindHelpEvent("ParagraphStyle", self.paragraphStyleCombo)
+
+	def onSave(self):
+		self.paragraphStyleCombo.saveCurrentValueToConf()
+
+
 class TouchInteractionPanel(SettingsPanel):
 	# Translators: This is the label for the touch interaction settings panel.
 	title = _("Touch Interaction")
@@ -4083,6 +4105,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		ObjectPresentationPanel,
 		BrowseModePanel,
 		DocumentFormattingPanel,
+		DocumentNavigationPanel,
 	]
 	if touchHandler.touchSupported():
 		categoryClasses.append(TouchInteractionPanel)

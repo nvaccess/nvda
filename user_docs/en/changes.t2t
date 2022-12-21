@@ -14,6 +14,10 @@ What's New in NVDA
 - Added an experimental option to leverage the UIA notification support in Windows Terminal to report new or changed text in the terminal, resulting in improved stability and responsivity. (#13781)
  - Consult the user guide for limitations of this experimental option.
  - 
+- On Windows 11 ARM64, browse mode is now available in AMD64 apps such as Firefox, Google Chrome and 1Password. (#14397)
+- A new option has been added, "Paragraph Style" in "Document Navigation".
+This adds support for single line break (normal) and multi line break (block) paragraph navigation.
+This can be used with text editors that do not support paragraph navigation natively, such as Notepad and Notepad++. (#13797)
 -
 
 
@@ -86,6 +90,7 @@ Please open a GitHub issue if your Add-on has an issue with updating to the new 
     - ``autoTether`` has been removed; ``tetherTo`` can now take the value "auto" instead.
     -
   -
+- The ``NVDAHelper.RemoteLoader64`` class has been removed with no replacement. (#14449)
 -
 
 
