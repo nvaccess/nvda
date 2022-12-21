@@ -79,6 +79,14 @@ class processEntry32W(ctypes.Structure):
 	]
 
 
+class _PROCESS_MACHINE_INFORMATION(ctypes.Structure):
+	_fields_ = [
+		("ProcessMachine", ctypes.wintypes.USHORT),
+		("Res0", ctypes.wintypes.USHORT),
+		("MachineAttributes", ctypes.wintypes.DWORD)
+	]
+
+
 def __getattr__(attrName: str) -> Any:
 	"""Module level `__getattr__` used to preserve backward compatibility.
 	The module level variable `NVDAProcessID` is deprecated
@@ -235,10 +243,18 @@ def getAppNameFromProcessID(processID: int, includeExt: bool = False) -> str:
 	return appName
 
 
-def getAppModuleForNVDAObject(obj):
-	if not isinstance(obj,NVDAObjects.NVDAObject):
+def getAppModuleForNVDAObject(obj: NVDAObjects.NVDAObject) -> AppModule:
+	if not isinstance(obj, NVDAObjects.NVDAObject):
 		return
-	return getAppModuleFromProcessID(obj.processID)
+	mod = getAppModuleFromProcessID(obj.processID)
+	# #14403: some apps report process handle of 0, causing process information and other functions to fial.
+	if mod.processHandle == 0:
+		# Sometimes process handle for the NVDA object may not be defined, more so when running tests.
+		try:
+			mod.processHandle = obj.processHandle
+		except AttributeError:
+			pass
+	return mod
 
 
 def getAppModuleFromProcessID(processID: int) -> AppModule:
@@ -673,7 +689,7 @@ class AppModule(baseObject.ScriptableObject):
 			self.isRunningUnderDifferentLogonSession = False
 		return self.isRunningUnderDifferentLogonSession
 
-	def _get_appArchitecture(self):
+	def _get_appArchitecture(self) -> str:
 		"""Returns the target architecture for the specified app.
 		This is useful for detecting X86/X64 apps running on ARM64 releases of Windows 10.
 		The following strings are returned:
@@ -684,28 +700,43 @@ class AppModule(baseObject.ScriptableObject):
 		@rtype: str
 		"""
 		# Details: https://docs.microsoft.com/en-us/windows/desktop/SysInfo/image-file-machine-constants
-		# The only value missing is ARM64 (AA64)
-		# because it is only applicable if ARM64 app is running on ARM64 machines.
 		archValues2ArchNames = {
 			0x014c: "x86",  # I386-32
 			0x8664: "AMD64",  # X86-64
-			0x01c0: "ARM"  # 32-bit ARM
+			0x01c0: "ARM",  # 32-bit ARM
+			0xaa64: "ARM64",  # 64-bit ARM
 		}
-		# IsWow64Process2 can be used on Windows 10 Version 1511 (build 10586) and later.
-		# Just assume this is an x64 (AMD64) app.
-		# if this is a64-bit app running on 7 through 10 Version 1507 (build 10240).
-		try:
-			# If a native app is running (such as x64 app on x64 machines), app architecture value is not set.
-			processMachine = ctypes.wintypes.USHORT()
-			ctypes.windll.kernel32.IsWow64Process2(self.processHandle, ctypes.byref(processMachine), None)
-			if not processMachine.value:
-				self.appArchitecture = os.environ.get("PROCESSOR_ARCHITEW6432")
+		# #14403: GetProcessInformation can be called from Windows 11 and later to obtain process machine.
+		if winVersion.getWinVer() >= winVersion.WIN11:
+			processMachineInfo = _PROCESS_MACHINE_INFORMATION()
+			# Constant comes from PROCESS_INFORMATION_CLASS enumeration.
+			ProcessMachineTypeInfo = 9
+			# Sometimes getProcessInformation may fail, so say "unknown".
+			if not ctypes.windll.kernel32.GetProcessInformation(
+				self.processHandle,
+				ProcessMachineTypeInfo,
+				ctypes.byref(processMachineInfo),
+				ctypes.sizeof(_PROCESS_MACHINE_INFORMATION)
+			):
+				self.appArchitecture = "unknown"
 			else:
-				# On ARM64, two 32-bit architectures are supported: x86 (via emulation) and ARM (natively).
-				self.appArchitecture = archValues2ArchNames[processMachine.value]
-		except AttributeError:
-			# Windows 10 Version 1507 (build 10240) and earlier.
-			self.appArchitecture = "AMD64" if self.is64BitProcess else "x86"
+				self.appArchitecture = archValues2ArchNames.get(processMachineInfo.ProcessMachine, "unknown")
+		else:
+			# IsWow64Process2 can be used on Windows 10 Version 1511 (build 10586) and later.
+			# Just assume this is an x64 (AMD64) app.
+			# if this is a64-bit app running on 7 through 10 Version 1507 (build 10240).
+			try:
+				# If a native app is running (such as x64 app on x64 machines), app architecture value is not set.
+				processMachine = ctypes.wintypes.USHORT()
+				ctypes.windll.kernel32.IsWow64Process2(self.processHandle, ctypes.byref(processMachine), None)
+				if not processMachine.value:
+					self.appArchitecture = os.environ.get("PROCESSOR_ARCHITEW6432")
+				else:
+					# On ARM64, two 32-bit architectures are supported: x86 (via emulation) and ARM (natively).
+					self.appArchitecture = archValues2ArchNames[processMachine.value]
+			except AttributeError:
+				# Windows 10 Version 1507 (build 10240) and earlier.
+				self.appArchitecture = "AMD64" if self.is64BitProcess else "x86"
 		return self.appArchitecture
 
 	def isGoodUIAWindow(self,hwnd):
