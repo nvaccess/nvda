@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-29 00:02+0000\n"
-"PO-Revision-Date: 2022-04-30 12:06+0100\n"
+"POT-Creation-Date: 2022-12-22 00:04+0000\n"
+"PO-Revision-Date: 2022-12-20 12:07+0100\n"
 "Last-Translator: \n"
 "Language-Team: NVDA Honosítási project <nvda@nvda.hu>\n"
 "Language: hu_HU\n"
@@ -235,6 +235,11 @@ msgstr "fül"
 msgid "prgbar"
 msgstr "foly"
 
+#. Translators: Displayed in braille for an object which is an
+#. indeterminate progress bar, aka busy indicator.
+msgid "bsyind"
+msgstr "foly"
+
 #. Translators: Displayed in braille for an object which is a
 #. scroll bar.
 msgid "scrlbar"
@@ -373,6 +378,21 @@ msgstr "alzt"
 msgid "hlght"
 msgstr "kiem"
 
+#. Translators: Displayed in braille when an object is a comment.
+#. Translators: Displayed in braille when there is a comment for a spreadsheet cell or piece of text in a document.
+#. Translators: Brailled when text contains a generic comment.
+msgid "cmnt"
+msgstr "megj"
+
+#. Translators: Displayed in braille when an object is a suggestion.
+msgid "sggstn"
+msgstr "ajnl"
+
+#. Translators: Displayed in braille when an object is a definition.
+#. Translators: Identifies a definition.
+msgid "definition"
+msgstr "Meghatározás"
+
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
 msgstr "kij"
@@ -432,11 +452,6 @@ msgstr "hleir"
 #. Translators: Displayed in braille when there is a formula on a spreadsheet cell.
 msgid "frml"
 msgstr "képl"
-
-#. Translators: Displayed in braille when there is a comment for a spreadsheet cell or piece of text in a document.
-#. Translators: Brailled when text contains a generic comment.
-msgid "cmnt"
-msgstr "megj"
 
 #. Translators: Displayed in braille when an object is not selected.
 msgid "nsel"
@@ -527,6 +542,18 @@ msgstr "c%s"
 #. Translators: Displayed in braille for a link which has been visited.
 msgid "vlnk"
 msgstr "mhv"
+
+#. Translators: Braille when there are further details/annotations that can be fetched manually.
+#. %s specifies the type of details (e.g. comment, suggestion)
+#. Translators: Speaks when there are further details/annotations that can be fetched manually.
+#. %s specifies the type of details (e.g. comment, suggestion)
+#, python-format
+msgid "has %s"
+msgstr "van %s"
+
+#. Translators: Braille when there are further details/annotations that can be fetched manually.
+msgid "details"
+msgstr "rsl"
 
 #. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
@@ -820,6 +847,11 @@ msgstr "Német, rövidítési fokozat 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "German grade 2 (detailed)"
+msgstr "Német, rövidítési fokozat 2 (részletes)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Greek (Greece)"
 msgstr "Görög, ((görögországi)"
 
@@ -1065,6 +1097,11 @@ msgstr "kasmíri, rövidítési fokozat 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Luganda literary braille"
+msgstr "Lugandai irodalmi braille"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Lithuanian 8 dot"
 msgstr "Litván 8 pontos"
 
@@ -1230,6 +1267,11 @@ msgstr "Orosz rövidírásos braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Kinyarwanda literary braille"
+msgstr "Ruandai irodalmi braille"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Sanskrit grade 1"
 msgstr "Szanszkrit, rövidítési fokozat 1"
 
@@ -1242,11 +1284,6 @@ msgstr "Jakut, rövidítési fokozat 1"
 #. braille settings dialog.
 msgid "Swedish 8 dot computer braille"
 msgstr "Svéd 8 pontos számítógépes braille"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "Swedish grade 1"
-msgstr "Svéd, rövidítési fokozat 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1277,6 +1314,21 @@ msgstr "Déli-szoto, rövidítési fokozat 2"
 #. braille settings dialog.
 msgid "Serbian grade 1"
 msgstr "Szerb, rövidítési fokozat 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swedish uncontracted braille"
+msgstr "Svéd rövidítési fokozat 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swedish partially contracted braille"
+msgstr "Svéd részben rövidírásos Braille"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swedish contracted braille"
+msgstr "Svéd rövidítési fokozat 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1380,13 +1432,28 @@ msgstr "Xhosza rövidítési fokozat 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Chinese (China, Mandarin) grade 1"
-msgstr "Kínai (Kína, Mandarin) rövidítési fokozat 1"
+#. This should be translated to '中文中国汉语通用盲文' in Mandarin.
+msgid "Chinese common braille (simplified Chinese characters)"
+msgstr "Kínai általános Braille (egyszerűsített kínai írásjelek)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Chinese (China, Mandarin) grade 2"
-msgstr "Kínai (Kína, Mandarin) rövidítési fokozat 2"
+#. This should be translated to '中文中国汉语现行盲文（无声调）' in Mandarin.
+msgid "Chinese (China, Mandarin) Current Braille System (no tones)"
+msgstr ""
+"Kínai (Kína, mandarin) hagyományos Braille írásrendszer (hangzás nélkül)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#. This should be translated to '中文中国汉语现行盲文' in Mandarin.
+msgid "Chinese (China, Mandarin) Current Braille System"
+msgstr "Kínai (Kína, mandarin) hagyományos Braille írásrendszer"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#. This should be translated to '中文中国汉语双拼盲文' in Mandarin.
+msgid "Chinese (China, Mandarin) Double-phonic Braille System"
+msgstr "Kínai (Kína, mandarin) kétcellás Braille írásrendszer"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2327,24 +2394,6 @@ msgstr "NVDA parancsfájl hiba"
 msgid "Loading NVDA. Please wait..."
 msgstr "Az NVDA betöltése folyamatban, kérem, várjon..."
 
-#. Translators: The screen is oriented so that it is wider than it is tall.
-msgid "Landscape"
-msgstr "Fekvő"
-
-#. Translators: The screen is oriented in such a way that the height is taller than it is wide.
-msgid "Portrait"
-msgstr "Álló"
-
-#. Translators: Reported when the battery is plugged in, and now is charging.
-#, python-format
-msgid "Charging battery. %d percent"
-msgstr "Akkumulátortöltés %d százalék"
-
-#. Translators: Reported when the battery is no longer plugged in, and now is not charging.
-#, python-format
-msgid "Not charging battery. %d percent"
-msgstr "A töltő leválasztva %d százalék"
-
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 msgid "NVDA started"
 msgstr "Az NVDA elindult."
@@ -2393,6 +2442,12 @@ msgstr ""
 msgid "No selection"
 msgstr "nincs kijelölés"
 
+#. Translators: Abbreviation for points, a measurement of font size.
+#, python-format
+msgctxt "font size"
+msgid "%s pt"
+msgstr "%s pt"
+
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
 #. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
@@ -2419,6 +2474,50 @@ msgstr "A táblázat következő oszlopához lép."
 #. Translators: the description for the previous table column script on browseMode documents.
 msgid "moves to the previous table column"
 msgstr "A táblázat előző oszlopához lép."
+
+#. Translators: the description for the first table row script on browseMode documents.
+msgid "moves to the first table row"
+msgstr "A táblázat első sorához lép."
+
+#. Translators: the description for the last table row script on browseMode documents.
+msgid "moves to the last table row"
+msgstr "A táblázat utolsó sorához lép."
+
+#. Translators: the description for the first table column script on browseMode documents.
+msgid "moves to the first table column"
+msgstr "A táblázat első oszlopához lép."
+
+#. Translators: the description for the last table column script on browseMode documents.
+msgid "moves to the last table column"
+msgstr "A táblázat utolsó oszlopához lép."
+
+#. Translators: the description for the sayAll row command
+msgid ""
+"Reads the row horizontally from the current cell rightwards to the last cell "
+"in the row."
+msgstr ""
+"A sor olvasása balról jobbra, az aktuális cellától a sor utolsó cellájáig."
+
+#. Translators: the description for the sayAll row command
+msgid ""
+"Reads the column vertically from the current cell downwards to the last cell "
+"in the column."
+msgstr ""
+"Az oszlop olvasása fentről lefelé, az aktuális cellától az oszlop utolsó "
+"cellájáig."
+
+#. Translators: the description for the speak row command
+msgid ""
+"Reads the current row horizontally from left to right without moving the "
+"system caret."
+msgstr "A teljes sor olvasása balról jobbra a rendszerkurzor mozgatása nélkül"
+
+#. Translators: the description for the speak column command
+msgid ""
+"Reads the current column vertically from top to bottom without moving the "
+"system caret."
+msgstr ""
+"A teljes oszlop olvasása fentről lefelé, a rendszerkurzor mozgatása nélkül."
 
 #. Translators: The message announced when toggling the include layout tables browse mode setting.
 msgid "layout tables off"
@@ -2571,26 +2670,9 @@ msgstr "jobb egérkattintás"
 msgid "Locks or unlocks the left mouse button"
 msgstr "Bal egérgomb lenyomva tartása vagy felengedése"
 
-#. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
-msgid "Left mouse button unlock"
-msgstr "bal egérgomb felengedve"
-
-#. Translators: This is presented when the left mouse button is locked down (used for drag and drop).
-msgid "Left mouse button lock"
-msgstr "bal egérgomb lenyomva"
-
 #. Translators: Input help mode message for right mouse lock/unlock command.
 msgid "Locks or unlocks the right mouse button"
 msgstr "Jobb egérgomb lenyomva tartása vagy felengedése"
-
-#. Translators: This is presented when the right mouse button lock is released (used for drag and drop).
-msgid "Right mouse button unlock"
-msgstr "jobb egérgomb felengedve"
-
-# ezt a típusú változtatást máshol már indokoltam
-#. Translators: This is presented when the right mouse button is locked down (used for drag and drop).
-msgid "Right mouse button lock"
-msgstr "jobb egérgomb lenyomva"
 
 #. Translators: Input help mode message for report current selection command.
 msgid ""
@@ -2885,16 +2967,14 @@ msgid "report tables on"
 msgstr "Táblázatok jelzése bekapcsolva"
 
 #. Translators: Input help mode message for toggle report table row/column headers command.
-msgid "Toggles on and off the reporting of table row and column headers"
-msgstr "Táblázat fejléceinek bemondása be és kikapcsolása"
+msgid "Cycle through the possible modes to report table row and column headers"
+msgstr "Táblázatok sor- és oszlopfejléceinek bemondási módjának beállítása"
 
-#. Translators: The message announced when toggling the report table row/column headers document formatting setting.
-msgid "report table row and column headers off"
-msgstr "A táblázat fejléceinek bemondása kikapcsolva"
-
-#. Translators: The message announced when toggling the report table row/column headers document formatting setting.
-msgid "report table row and column headers on"
-msgstr "A táblázat fejléceinek bemondása bekapcsolva"
+#. Translators: Reported when the user cycles through report table header modes.
+#. {mode} will be replaced with the mode; e.g. None, Rows and columns, Rows or Columns.
+#, python-brace-format
+msgid "Report table headers {mode}"
+msgstr "Táblázatfejléc {mode}"
 
 #. Translators: Input help mode message for toggle report table cell coordinates command.
 msgid "Toggles on and off the reporting of table cell coordinates"
@@ -3059,6 +3139,26 @@ msgstr "Jelzés ha kattintható kikapcsolva"
 #. Translators: The message announced when toggling the report if clickable document formatting setting.
 msgid "report if clickable on"
 msgstr "Jelzés ha kattintható bekapcsolva"
+
+#. Translators: Input help mode message for cycle through automatic language switching mode command.
+msgid ""
+"Cycles through speech modes for automatic language switching: off, language "
+"only and language and dialect."
+msgstr ""
+"Automatikus nyelvváltás beállítása. Lehetőségek: ki, csak nyelv, nyelv és "
+"dialektus."
+
+#. Translators: A message reported when executing the cycle automatic language switching mode command.
+msgid "Automatic language switching off"
+msgstr "Automatikus nyelvváltás kikapcsolva"
+
+#. Translators: A message reported when executing the cycle automatic language switching mode command.
+msgid "Automatic language and dialect switching on"
+msgstr "Automatikus nyelv- és dialektusváltás bekapcsolva"
+
+#. Translators: A message reported when executing the cycle automatic language switching mode command.
+msgid "Automatic language switching on"
+msgstr "Automatikus nyelvváltás bekapcsolva"
 
 #. Translators: Input help mode message for cycle speech symbol level command.
 msgid ""
@@ -3312,6 +3412,26 @@ msgid ""
 "speaks it"
 msgstr ""
 "Az áttekintő kurzort a navigátor kurzornál lévő elem következő sorához "
+"helyezi"
+
+#. Translators: Input help mode message for move review cursor to previous page command.
+msgid ""
+"Moves the review cursor to the previous page of the current navigator object "
+"and speaks it"
+msgstr ""
+"Az áttekintő kurzort a navigátor kurzornál lévő elem előző oldalához helyezi "
+"és bemondja"
+
+#. Translators: a message reported when movement by page is unsupported
+msgid "Movement by page not supported"
+msgstr "Az oldalankénti navigálás nem támogatott"
+
+#. Translators: Input help mode message for move review cursor to next page command.
+msgid ""
+"Moves the review cursor to the next page of the current navigator object and "
+"speaks it"
+msgstr ""
+"Az áttekintő kurzort a navigátor kurzornál lévő elem következő oldalához "
 "helyezi"
 
 #. Translators: Input help mode message for move review cursor to bottom line command.
@@ -3590,6 +3710,16 @@ msgstr ""
 "Bemondja az aktív alkalmazás állapotsorát. Kétszeri megnyomásra betűzi azt. "
 "Háromszori megnyomásra az állapotsor szövegét a vágólapra másolja."
 
+#. Translators: Description for a keyboard command which reports the
+#. accelerator key of the currently focused object.
+msgid "Reports the shortcut key of the currently focused object"
+msgstr "Az aktív elemhez tartozó gyorsbillentyű bemondása"
+
+#. Translators: reported when a user requests the accelerator key
+#. of the currently focused object, but there is none set.
+msgid "No shortcut key"
+msgstr "Nincs gyorsbillentyű az aktív elemhez."
+
 #. Translators: Input help mode message for toggle mouse tracking command.
 msgid "Toggles the reporting of information as the mouse moves"
 msgstr "Be- és kikapcsolja az elemek bemondását az egérmutató mozgása közben."
@@ -3777,24 +3907,6 @@ msgid "Reports battery status and time remaining if AC is not plugged in"
 msgstr ""
 "Akkumulátor használatakor bemondja az akkumulátor töltöttségi szintjét és a "
 "hátralévő időt."
-
-#. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
-msgid "No system battery"
-msgstr "Nincs akkumulátor."
-
-#. Translators: This is presented to inform the user of the current battery percentage.
-#, python-format
-msgid "%d percent"
-msgstr "%d százalék"
-
-#. Translators: This is presented when AC power is connected such as when recharging a laptop battery.
-msgid "AC power on"
-msgstr "Hálózatról üzemel"
-
-#. Translators: This is the estimated remaining runtime of the laptop battery.
-#, python-brace-format
-msgid "{hours:d} hours and {minutes:d} minutes remaining"
-msgstr "{hours:d} óra és {minutes:d} perc van hátra"
 
 #. Translators: Input help mode message for pass next key through command.
 msgid ""
@@ -4830,6 +4942,23 @@ msgstr "Szomáli"
 #, python-format
 msgid "%s cursor"
 msgstr "%s kurzor"
+
+#. Translators: This is presented when the left mouse button is locked down (used for drag and drop).
+msgid "Left mouse button lock"
+msgstr "bal egérgomb lenyomva"
+
+#. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
+msgid "Left mouse button unlock"
+msgstr "bal egérgomb felengedve"
+
+# ezt a típusú változtatást máshol már indokoltam
+#. Translators: This is presented when the right mouse button is locked down (used for drag and drop).
+msgid "Right mouse button lock"
+msgstr "jobb egérgomb lenyomva"
+
+#. Translators: This is presented when the right mouse button lock is released (used for drag and drop).
+msgid "Right mouse button unlock"
+msgstr "jobb egérgomb felengedve"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6084,6 +6213,29 @@ msgctxt "touch action"
 msgid "hover up"
 msgstr "felderítés vége"
 
+#. Translators: This is the message for a warning shown if NVDA cannot open a browsable message window
+#. when Windows is on a secure screen (sign-on screen / UAC prompt).
+msgid ""
+"This feature is unavailable while on secure screens such as the sign-on "
+"screen or UAC prompt."
+msgstr "Ez a funkció nem érhető el a biztonsági képernyőn."
+
+#. Translators: This is the message for a warning shown if NVDA cannot open a browsable message window
+#. when Windows is on a secure screen (sign-on screen / UAC prompt). This prompt includes the title
+#. of the Window that could not be opened for context.
+#. The {title} will be replaced with the title.
+#. The title may be something like "Formatting".
+#, python-brace-format
+msgid ""
+"This feature ({title}) is unavailable while on secure screens such as the "
+"sign-on screen or UAC prompt."
+msgstr "Ez a funkció  ({title}) nem érhető el a biztonsági képernyőn."
+
+#. Translators: This is the title for a warning dialog, shown if NVDA cannot open a browsable message
+#. dialog.
+msgid "Feature unavailable."
+msgstr "A funkció nem érhető el"
+
 #. Translators: The title for the dialog used to present general NVDA messages in browse mode.
 msgid "NVDA Message"
 msgstr "NVDA üzenet"
@@ -6322,7 +6474,7 @@ msgstr "Copyright (C) {years} NVDA Közreműködők"
 #, python-brace-format
 msgid ""
 "{longName} ({name})\n"
-"Version: {version}\n"
+"Version: {version} ({version_detailed})\n"
 "URL: {url}\n"
 "{copyright}\n"
 "\n"
@@ -6343,7 +6495,7 @@ msgid ""
 "menu."
 msgstr ""
 "{longName} ({name})\n"
-"Verzió: {version}\n"
+"Verzió: {version} ({version_detailed})\n"
 "URL: {url}\n"
 "{copyright}\n"
 "\n"
@@ -6395,6 +6547,12 @@ msgstr ""
 "képernyő felső szélétől, a szélessége {width:.1f} százaléka, a magassága "
 "{height:.1f} százaléka a képernyőnek"
 
+#. Translators: This is presented to inform the user of a progress bar percentage.
+#. Translators: This is presented to inform the user of the current battery percentage.
+#, python-format
+msgid "%d percent"
+msgstr "%d százalék"
+
 #. Translators: a message announcing a candidate's character and description.
 #, python-brace-format
 msgid "{symbol} as in {description}"
@@ -6423,6 +6581,26 @@ msgstr ""
 msgid "Moves the navigator object and focus to the previous row"
 msgstr ""
 "A navigátor kurzort az előző sorra állítja, és ez lesz egyben az aktív elem "
+"is."
+
+#. Translators: The description of an NVDA command.
+msgid "Moves the navigator object to the first column"
+msgstr "A navigátor kurzort az első oszlophoz helyezi"
+
+#. Translators: The description of an NVDA command.
+msgid "Moves the navigator object to the last column"
+msgstr "A navigátor kurzort az utolsó oszlophoz helyezi"
+
+#. Translators: The description of an NVDA command.
+msgid "Moves the navigator object and focus to the first row"
+msgstr ""
+"A navigátor kurzort az első sorra állítja, és ez lesz egyben az aktív elem "
+"is."
+
+#. Translators: The description of an NVDA command.
+msgid "Moves the navigator object and focus to the last row"
+msgstr ""
+"A navigátor kurzort az utolsó sorra állítja, és ez lesz egyben az aktív elem "
 "is."
 
 #. Translators: Announced in braille when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
@@ -6491,7 +6669,7 @@ msgid "Tries to read documentation for the selected autocompletion item."
 msgstr "Dokumentáció megnyitása a kijelölt automatikus kiegészítés elemhez."
 
 #. Translators: When the help popup cannot be found for the selected autocompletion item
-msgid "Cann't find the documentation window."
+msgid "Can't find the documentation window."
 msgstr "Nem található a súgó ablak."
 
 #. Translators: Reported when no track is playing in Foobar 2000.
@@ -7192,6 +7370,41 @@ msgstr "A braille-néző &mutatása a program indulásakor"
 msgid "&Hover for cell routing"
 msgstr "cellák görgetése az egérhelyzet alapján"
 
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+#. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Off"
+msgstr "kikapcsolva"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Rows and columns"
+msgstr "Sorok és oszlopok"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Rows"
+msgstr "Sorok"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Columns"
+msgstr "Oszlopok"
+
+#. Translators: Label for an option in NVDA settings.
+#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
+#. Translators: One of the show states of braille messages
+#. (the disabled mode turns off showing of braille messages completely).
+msgid "Disabled"
+msgstr "Letiltva"
+
+#. Translators: Label for an option in NVDA settings.
+#. Translators: The status shown for an addon when its currently running in NVDA.
+msgid "Enabled"
+msgstr "Engedélyezve"
+
 #. Translators: The title of the document used to present the result of content recognition.
 msgid "Result"
 msgstr "A felismerés eredménye"
@@ -7235,6 +7448,86 @@ msgstr "alsó index"
 #. Translators: Describes text formatting.
 msgid "superscript"
 msgstr "felső index"
+
+#. Translators: Abbreviation for pixels, a measurement of font size.
+#, python-format
+msgctxt "font size"
+msgid "%s px"
+msgstr "%s px"
+
+#. Translators: A measurement unit of font size.
+#, python-format
+msgctxt "font size"
+msgid "%s em"
+msgstr "%s em"
+
+#. Translators: A measurement unit of font size.
+#, python-format
+msgctxt "font size"
+msgid "%s ex"
+msgstr "%s ex"
+
+#. Translators: Abbreviation for relative em, a measurement of font size.
+#, python-format
+msgctxt "font size"
+msgid "%s rem"
+msgstr "%s rem"
+
+#. Translators: Font size measured as a percentage
+#, python-format
+msgctxt "font size"
+msgid "%s%%"
+msgstr "%s%%"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "xx-small"
+msgstr "nagyon nagyon kicsi"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "x-small"
+msgstr "nagyon kicsi"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "small"
+msgstr "kicsi"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "medium"
+msgstr "közepes"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "large"
+msgstr "nagy"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "x-large"
+msgstr "nagyon nagy"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "xx-large"
+msgstr "nagyon nagyon nagy"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "xxx-large"
+msgstr "nagyon nagyon nagyon nagy"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "larger"
+msgstr "nagyobb"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "smaller"
+msgstr "kisebb"
 
 #. Translators: Presented when an item is marked as current in a collection of items
 msgid "current"
@@ -7537,7 +7830,7 @@ msgstr "végjegyzet"
 msgid "footer"
 msgstr "lábléc"
 
-#. Translators: Identifies a foot note (text at the end of a passage or used for anotations).
+#. Translators: Identifies a foot note (text at the end of a passage or used for annotations).
 msgid "foot note"
 msgstr "lábjegyzet"
 
@@ -7866,6 +8159,18 @@ msgstr "Alakzat"
 msgid "highlighted"
 msgstr "kiemelve"
 
+#. Translators: Identifies a progress bar with indeterminate state, I.E. progress can not be determined.
+msgid "busy indicator"
+msgstr "Folyamatban"
+
+#. Translators: Identifies a comment.
+msgid "comment"
+msgstr "megjegyzés"
+
+#. Translators: Identifies a suggestion.
+msgid "suggestion"
+msgstr "javaslat"
+
 #. Translators: Indicates that a particular state of an object is negated.
 #. Separate strings have now been defined for commonly negated states (e.g. not selected and not
 #. checked), but this still might be used in some other cases.
@@ -7901,6 +8206,10 @@ msgstr "bejelölve"
 #. Translators: This is presented when a three state check box is half checked.
 msgid "half checked"
 msgstr "félig bejelölve"
+
+#. Translators: This is presented when a three state toggle button is half pressed.
+msgid "half pressed"
+msgstr "félig lenyomva"
 
 #. Translators: This is presented when the control is a read-only control such as read-only edit box.
 msgid "read only"
@@ -8040,7 +8349,7 @@ msgstr "átlóg"
 msgid "unlocked"
 msgstr "Zárolt"
 
-#. Translators: a state that denotes the existance of a note.
+#. Translators: a state that denotes the existence of a note.
 msgid "has note"
 msgstr "Jegyzet"
 
@@ -8068,10 +8377,6 @@ msgstr "A beállítások betöltve."
 #. Translators: Reported when configuration has been restored to defaults by using restore configuration to factory defaults item in NVDA menu.
 msgid "Configuration restored to factory defaults"
 msgstr "A beállítások visszaállítva az alapértelmezett értékekre"
-
-#. Translators: Reported when current configuration cannot be saved while NVDA is running in secure mode such as in Windows login screen.
-msgid "Cannot save configuration - NVDA in secure mode"
-msgstr "A beállítások elmentése nem lehetséges, az NVDA biztonsági módban van"
 
 #. Translators: Reported when current configuration has been saved.
 msgid "Configuration saved"
@@ -8139,37 +8444,6 @@ msgstr "&Beállítások"
 #. Translators: The description for the menu item to open NVDA Settings dialog.
 msgid "NVDA settings"
 msgstr "Az NVDA beállításai"
-
-#. Translators: The label for the menu item to open Default speech dictionary dialog.
-msgid "&Default dictionary..."
-msgstr "&Alapértelmezett kivételszótár"
-
-#. Translators: The help text for the menu item to open Default speech dictionary dialog.
-msgid ""
-"A dialog where you can set default dictionary by adding dictionary entries "
-"to the list"
-msgstr "Az alapértelmezett kivételszótár beállítására szolgáló párbeszédablak"
-
-#. Translators: The label for the menu item to open Voice specific speech dictionary dialog.
-msgid "&Voice dictionary..."
-msgstr "&Hangkarakter kivételszótár"
-
-#. Translators: The help text for the menu item
-#. to open Voice specific speech dictionary dialog.
-msgid ""
-"A dialog where you can set voice-specific dictionary by adding dictionary "
-"entries to the list"
-msgstr "A hangkarakter kivételszótár beállítására szolgáló párbeszédablak."
-
-#. Translators: The label for the menu item to open Temporary speech dictionary dialog.
-msgid "&Temporary dictionary..."
-msgstr "&Ideiglenes kivételszótár..."
-
-#. Translators: The help text for the menu item to open Temporary speech dictionary dialog.
-msgid ""
-"A dialog where you can set temporary dictionary by adding dictionary entries "
-"to the edit box"
-msgstr "Az ideiglenes kivételszótár beállítására szolgáló párbeszédablak."
 
 #. Translators: The label for a submenu under NvDA Preferences menu to select speech dictionaries.
 msgid "Speech &dictionaries"
@@ -8266,32 +8540,6 @@ msgstr "Névjegy..."
 msgid "&Help"
 msgstr "&súgó"
 
-#. Translators: The label for the menu item to open the Configuration Profiles dialog.
-msgid "&Configuration profiles..."
-msgstr "&Profilok testreszabása"
-
-#. Translators: The label for the menu item to revert to saved configuration.
-msgid "&Revert to saved configuration"
-msgstr "Az elmentett beállítások &visszaállítása"
-
-msgid "Reset all settings to saved state"
-msgstr "Az elmentett beállítások visszaállítása"
-
-#. Translators: The label for the menu item to reset settings to default settings.
-#. Here, default settings means settings that were there when the user first used NVDA.
-msgid "&Reset configuration to factory defaults"
-msgstr "A &gyári beállítások visszaállítása"
-
-msgid "Reset all settings to default state"
-msgstr "Az alapértelmezett beállítások visszaállítása"
-
-#. Translators: The label for the menu item to save current settings.
-msgid "&Save configuration"
-msgstr "A beállítások el&mentése"
-
-msgid "Write the current configuration to nvda.ini"
-msgstr "A beállítások elmentése az nvda.ini fájlba"
-
 #. Translators: The label for the menu item to open donate page.
 msgid "Donate"
 msgstr "Adományozás"
@@ -8311,47 +8559,66 @@ msgstr "&kilépés"
 msgid "Exit NVDA"
 msgstr "kilépés az NVDA-ból"
 
-#. Translators: An option in the combo box to choose exit action.
-msgid "Exit"
-msgstr "Kilépés"
+#. Translators: The label for the menu item to open Default speech dictionary dialog.
+msgid "&Default dictionary..."
+msgstr "&Alapértelmezett kivételszótár"
 
-#. Translators: An option in the combo box to choose exit action.
-msgid "Restart"
-msgstr "Újraindítás"
-
-#. Translators: An option in the combo box to choose exit action.
-msgid "Restart with add-ons disabled"
-msgstr "Újraindítás letiltott bővítményekkel"
-
-#. Translators: An option in the combo box to choose exit action.
-msgid "Restart with debug logging enabled"
-msgstr "Újraindítás nyomkövetés naplózási szinttel"
-
-#. Translators: An option in the combo box to choose exit action.
-msgid "Install pending update"
-msgstr "Frissítés telepítése"
-
-#. Translators: A message in the exit Dialog shown when all add-ons are disabled.
+#. Translators: The help text for the menu item to open Default speech dictionary dialog.
 msgid ""
-"All add-ons are now disabled. They will be re-enabled on the next restart "
-"unless you choose to disable them again."
-msgstr ""
-"Az NVDA-t kiegészítők nélkül indította el. Ha újraindítja a képernyőolvasót, "
-"a kiegészítők betöltődnek, kivéve, ha ismét letiltja őket.kapcsolja őket."
+"A dialog where you can set default dictionary by adding dictionary entries "
+"to the list"
+msgstr "Az alapértelmezett kivételszótár beállítására szolgáló párbeszédablak"
 
-#. Translators: A message in the exit Dialog shown when NVDA language has been
-#. overwritten from the command line.
+#. Translators: The label for the menu item to open Voice specific speech dictionary dialog.
+msgid "&Voice dictionary..."
+msgstr "&Hangkarakter kivételszótár"
+
+#. Translators: The help text for the menu item
+#. to open Voice specific speech dictionary dialog.
 msgid ""
-"NVDA's interface language is now forced from the command line. On the next "
-"restart, the language  saved in NVDA's configuration will be used instead."
-msgstr ""
-"Az NVDA felületének nyelve parancssori paraméterrel lett beállítva. A "
-"program következő indításakor ismét a beállításokban megadott nyelven fog "
-"futni."
+"A dialog where you can set voice-specific dictionary by adding dictionary "
+"entries to the list"
+msgstr "A hangkarakter kivételszótár beállítására szolgáló párbeszédablak."
 
-#. Translators: The label for actions list in the Exit dialog.
-msgid "What would you like to &do?"
-msgstr "Mit szeretne &tenni?"
+#. Translators: The label for the menu item to open Temporary speech dictionary dialog.
+msgid "&Temporary dictionary..."
+msgstr "&Ideiglenes kivételszótár..."
+
+#. Translators: The help text for the menu item to open Temporary speech dictionary dialog.
+msgid ""
+"A dialog where you can set temporary dictionary by adding dictionary entries "
+"to the edit box"
+msgstr "Az ideiglenes kivételszótár beállítására szolgáló párbeszédablak."
+
+#. Translators: The label for the menu item to open the Configuration Profiles dialog.
+msgid "&Configuration profiles..."
+msgstr "&Profilok testreszabása"
+
+#. Translators: The label for the menu item to revert to saved configuration.
+msgid "&Revert to saved configuration"
+msgstr "Az elmentett beállítások &visszaállítása"
+
+#. Translators: The help text for the menu item to revert to saved configuration.
+msgid "Reset all settings to saved state"
+msgstr "Az elmentett beállítások visszaállítása"
+
+#. Translators: The label for the menu item to reset settings to default settings.
+#. Here, default settings means settings that were there when the user first used NVDA.
+msgid "&Reset configuration to factory defaults"
+msgstr "A &gyári beállítások visszaállítása"
+
+#. Translators: The help text for the menu item to reset settings to default settings.
+#. Here, default settings means settings that were there when the user first used NVDA.
+msgid "Reset all settings to default state"
+msgstr "Az alapértelmezett beállítások visszaállítása"
+
+#. Translators: The label for the menu item to save current settings.
+msgid "&Save configuration"
+msgstr "A beállítások el&mentése"
+
+#. Translators: The help text for the menu item to save current settings.
+msgid "Write the current configuration to nvda.ini"
+msgstr "A beállítások elmentése az nvda.ini fájlba"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -8521,19 +8788,9 @@ msgstr "Bővítmény eltávolítása"
 msgid "Incompatible"
 msgstr "Nem kompatibilis"
 
-#. Translators: The status shown for an addon when its currently running in NVDA.
-msgid "Enabled"
-msgstr "Engedélyezve"
-
 #. Translators: The status shown for a newly installed addon before NVDA is restarted.
 msgid "Install"
 msgstr "Telepítés"
-
-#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
-#. Translators: One of the show states of braille messages
-#. (the disabled mode turns off showing of braille messages completely).
-msgid "Disabled"
-msgstr "Letiltva"
 
 #. Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
 msgid "Removed after restart"
@@ -8685,6 +8942,24 @@ msgid ""
 "An updated version of this add-on is required. The minimum supported API "
 "version is now {}"
 msgstr "Nem támogatott bővítmény verzió, {} vagy újabb szükséges."
+
+#. Translators: Reported when an action cannot be performed because NVDA is in a secure screen
+msgid "Action unavailable in secure context"
+msgstr "Ez a művelet nem hajtható végre a biztonsági képernyőn."
+
+#. Translators: Reported when an action cannot be performed because NVDA has been installed
+#. from the Windows Store.
+msgid "Action unavailable in NVDA Windows Store version"
+msgstr ""
+"Ez a művelet nem hajtható végre az NVDA Microsoft Storeból elérhető "
+"verziójában."
+
+#. Translators: Reported when an action cannot be performed because NVDA is waiting
+#. for a response from a modal dialog
+msgid "Action unavailable while a dialog requires a response"
+msgstr ""
+"Ez a művelet nem hajtható végre, amíg az NVDA egy párbeszédablaka "
+"beavatkozásra vár."
 
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
@@ -8877,6 +9152,48 @@ msgstr "Az elemhez nem tartozik súgó"
 #. indicating that	the user guide could not be found.
 msgid "No user guide found."
 msgstr "nem található felhasználói útmutató"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Exit"
+msgstr "Kilépés"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart"
+msgstr "Újraindítás"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with add-ons disabled"
+msgstr "Újraindítás letiltott bővítményekkel"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with debug logging enabled"
+msgstr "Újraindítás nyomkövetés naplózási szinttel"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Install pending update"
+msgstr "Frissítés telepítése"
+
+#. Translators: A message in the exit Dialog shown when all add-ons are disabled.
+msgid ""
+"All add-ons are now disabled. They will be re-enabled on the next restart "
+"unless you choose to disable them again."
+msgstr ""
+"Az NVDA-t kiegészítők nélkül indította el. Ha újraindítja a képernyőolvasót, "
+"a kiegészítők betöltődnek, kivéve, ha ismét letiltja őket.kapcsolja őket."
+
+#. Translators: A message in the exit Dialog shown when NVDA language has been
+#. overwritten from the command line.
+msgid ""
+"NVDA's interface language is now forced from the command line. On the next "
+"restart, the language  saved in NVDA's configuration will be used instead."
+msgstr ""
+"Az NVDA felületének nyelve parancssori paraméterrel lett beállítva. A "
+"program következő indításakor ismét a beállításokban megadott nyelven fog "
+"futni."
+
+#. Translators: The label for actions list in the Exit dialog.
+msgid "What would you like to &do?"
+msgstr "Mit szeretne &tenni?"
 
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
@@ -9186,6 +9503,13 @@ msgstr "A napló nem áll rendelkezésre"
 msgid "Cancel"
 msgstr "Mégse"
 
+#. Translators: Label for the default option for some feature-flag combo boxes
+#. Such as, in the Advanced settings panel option, 'Load Chromium virtual buffer when document busy.'
+#. The placeholder {} is replaced with the label of the option which describes current default behavior
+#. in NVDA. EG "Default (Yes)".
+msgid "Default ({})"
+msgstr "Alapértelmezett"
+
 #. Translators: The label for the list of categories in a multi category settings dialog.
 msgid "&Categories:"
 msgstr "&Kategóriák"
@@ -9445,6 +9769,10 @@ msgstr "Nag&ybetűk jelzése hangjelzéssel"
 #. voice settings panel.
 msgid "Use &spelling functionality if supported"
 msgstr "&Betűzés használata, ha támogatott"
+
+#. Translators: This is the label for a checkbox in the voice settings panel.
+msgid "&Delayed descriptions for characters on cursor movement"
+msgstr "Késleltetett betűzés a kurzor mozgásakor"
 
 #. Translators: This is the label for the keyboard settings panel.
 msgid "Keyboard"
@@ -9844,12 +10172,6 @@ msgstr "So&rszámok"
 msgid "Line &indentation reporting:"
 msgstr "&Behúzások jelzése"
 
-#. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
-#. Translators: This is the label for a combobox in the
-#. document formatting settings panel.
-msgid "Off"
-msgstr "kikapcsolva"
-
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
 msgctxt "line indentation setting"
 msgid "Speech"
@@ -9888,10 +10210,10 @@ msgstr "Táblázat"
 msgid "&Tables"
 msgstr "&Táblázatok"
 
-#. Translators: This is the label for a checkbox in the
+#. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
-msgid "Row/column h&eaders"
-msgstr "Sor/oszlop &fejlécek"
+msgid "H&eaders"
+msgstr "&Fejlécek"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -10007,13 +10329,29 @@ msgstr "Fejlesztési könyvtár megnyitása"
 msgid "Microsoft UI Automation"
 msgstr "Microsoft UI Automation"
 
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid ""
-"Enable &selective registration for UI Automation events and property changes"
-msgstr ""
-"Csak az UI Automation események és tulajdonságváltozások egy részének "
-"kezelése"
+#. Translators: This is the label for a combo box for selecting the
+#. means of registering for UI Automation events in the advanced settings panel.
+#. Choices are automatic, selective, and global.
+msgid "Regi&stration for UI Automation events and property changes:"
+msgstr "UI Automation események és tulajdonságváltozások &regisztrálása"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA decide whether to register
+#. selectively or globally for UI Automation events.
+msgid "Automatic (prefer selective)"
+msgstr "Automatikus (szelektív preferálása)"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA register selectively for UI Automation events
+#. (i.e. not to request events for objects outside immediate focus).
+msgid "Selective"
+msgstr "szelektív"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA register for all UI Automation events
+#. in all cases.
+msgid "Global"
+msgstr "Általános"
 
 #. Translators: Label for the Use UIA with MS Word combobox, in the Advanced settings panel.
 msgctxt "advanced.uiaWithMSWord"
@@ -10050,10 +10388,28 @@ msgstr ""
 "UI Automation használata a Microsoft &Excel dokumentumvezérlőihez, ha "
 "lehetséges."
 
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid "Use UI Automation to access the Windows C&onsole when available"
-msgstr "UI Automation használata a Windows konzol eléréséhez, ha lehetséges"
+#. Translators: This is the label for a combo box for selecting the
+#. active console implementation in the advanced settings panel.
+#. Choices are automatic, UIA when available, and legacy.
+msgid "Windows C&onsole support:"
+msgstr "Windows &konzol támogatása"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA determine its Windows Console implementation
+#. automatically.
+msgid "Automatic (prefer UIA)"
+msgstr "Automatikus (UIA preferálása)"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA use UIA in the Windows Console when available.
+msgid "UIA when available"
+msgstr "UIA, ha elérhető"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA use its legacy Windows Console support
+#. in all cases.
+msgid "Legacy"
+msgstr "Korábbi viselkedés"
 
 #. Translators: Label for the Use UIA with Chromium combobox, in the Advanced settings panel.
 #. Note the '\n' is used to split this long label approximately in half.
@@ -10181,6 +10537,15 @@ msgstr "Difflib"
 #. Translators: This is the label for combobox in the Advanced settings panel.
 msgid "Attempt to cancel speech for expired focus events:"
 msgstr "Beszéd megszakítása az időközben lejárt fókuszeseményeknél"
+
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
+msgid "Virtual Buffers"
+msgstr "Virtuális pufferek"
+
+#. Translators: This is the label for a combo-box in the Advanced settings panel.
+msgid "Load Chromium virtual buffer when document busy."
+msgstr "Chromium virtuális puffer használata a dokumentumok betöltéséhez"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -10346,6 +10711,10 @@ msgstr "&Szöveg tördelése a kijelző végénél"
 #. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
 msgid "Focus context presentation:"
 msgstr "Információk az aktív elemről"
+
+#. Translators: This is a label for a combo-box in the Braille settings panel.
+msgid "I&nterrupt speech while scrolling"
+msgstr "Beszéd meg&szakítása görgetéskor"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load a single vision enhancement provider.
@@ -10615,10 +10984,6 @@ msgstr "A &CapsLock billentyű használata NVDA gombként"
 msgid "&Show this dialog when NVDA starts"
 msgstr "&Jelenjen meg ez a párbeszédpanel az NVDA minden indításakor"
 
-#. Translators: The label of the license text which will be shown when NVDA installation program starts.
-msgid "License Agreement"
-msgstr "Licensz Szerződés"
-
 #. Translators: The label for a checkbox in NvDA installation program to agree to the license agreement.
 msgid "I &agree"
 msgstr "&Elfogadom"
@@ -10635,6 +11000,10 @@ msgstr "&Hordozható verzió készítése"
 #. to continue using the installation program as a temporary copy of NVDA.
 msgid "&Continue running"
 msgstr "&Futtatás telepítés nélkül"
+
+#. Translators: The label of the license text which will be shown when NVDA installation program starts.
+msgid "License Agreement"
+msgstr "Licensz Szerződés"
 
 #. Translators: The title of the dialog asking if usage data can be collected
 msgid "NVDA  Usage Data Collection"
@@ -10756,7 +11125,7 @@ msgstr "%s oszloppal"
 msgid "with %s rows"
 msgstr "%s sorral"
 
-#. Translators: Speaks when there a further details/annotations that can be fetched manually.
+#. Translators: Speaks when there are further details/annotations that can be fetched manually.
 msgid "has details"
 msgstr "Bővebb leírás"
 
@@ -11129,6 +11498,23 @@ msgstr "{curPercent:.0f}%"
 msgid "at {x}, {y}"
 msgstr "pozíció: {x}; {y}"
 
+#. Translators: This is the message for a warning shown if NVDA cannot determine if
+#. Windows is locked.
+msgid ""
+"NVDA is unable to determine if Windows is locked. While this instance of "
+"NVDA is running, your desktop will not be secure when Windows is locked. "
+"Restarting Windows may address this. If this error is ongoing then disabling "
+"the Windows lock screen is recommended."
+msgstr ""
+"Az NVDA nem tudja megállapítani, hogy a Windows zárolva van-e. Az NVDA ezen "
+"példányának futása közben a számítógépe nem lesz biztonságos a Windows "
+"zárolt állapotában. A Windows újraindítása orvosolhatja a problémát."
+
+#. Translators: This is the title for a warning dialog, shown if NVDA cannot determine if
+#. Windows is locked.
+msgid "Lock screen not secure while using NVDA"
+msgstr "A zárolási képernyő nem biztonságos az NVDA használatával"
+
 #. Translators: Reported when a page reloads (example: after refreshing a webpage).
 msgid "Refreshed"
 msgstr "Frissítve"
@@ -11205,6 +11591,36 @@ msgstr ""
 msgid "Make screen black (immediate effect)"
 msgstr "A képernyő elsötétítése"
 
+#. Translators: The screen is oriented so that it is wider than it is tall.
+msgid "Landscape"
+msgstr "Fekvő"
+
+#. Translators: The screen is oriented in such a way that the height is taller than it is wide.
+msgid "Portrait"
+msgstr "Álló"
+
+#. Translators: This is presented when there is an error retrieving the battery status.
+msgid "Unknown power status"
+msgstr "Az akkumulátor állapota ismeretlen"
+
+#. Translators: This is presented when there is no battery such as desktop computers
+#. and laptops with battery pack removed.
+msgid "No system battery"
+msgstr "Nincs akkumulátor."
+
+#. Translators: Reported when the battery is plugged in, and now is charging.
+msgid "Charging battery"
+msgstr "Akkumulátortöltés %d százalék"
+
+#. Translators: Reported when the battery is no longer plugged in, and now is not charging.
+msgid "AC disconnected"
+msgstr "Nincs töltés"
+
+#. Translators: This is the estimated remaining runtime of the laptop battery.
+#, python-brace-format
+msgid "{hours:d} hours and {minutes:d} minutes remaining"
+msgstr "{hours:d} óra és {minutes:d} perc van hátra"
+
 msgid "Taskbar"
 msgstr "tálca"
 
@@ -11216,17 +11632,6 @@ msgstr "RGB vörös {rgb.red}, zöld {rgb.green}, kék {rgb.blue}"
 #, python-format
 msgid "%s items"
 msgstr "%s elem"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#. Translators: a message reported in the SetColumnHeader script for Excel.
-#. Translators: a message reported in the SetRowHeader script for Excel.
-msgid ""
-"Cannot set headers. Please enable reporting of table headers in Document "
-"Formatting Settings"
-msgstr ""
-"Nem állíthatóak be a fejlécek. Kérem engedélyezze a táblázat sor/oszlop "
-"fejléceinek bemondását a dokumentum formázás párbeszédpanelen."
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #, python-brace-format
@@ -11425,11 +11830,17 @@ msgstr "Hiba: {errorText}"
 msgid "{author} is editing"
 msgstr "{author} éppen szerkeszti"
 
-#. Translators: Excel, report range of cell coordinates
+#. Translators: Excel, report selected range of cell coordinates
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "{firstAddress} {firstValue} through {lastAddress} {lastValue}"
 msgstr "{firstAddress} {firstValue} tól {lastAddress} {lastValue} ig"
+
+#. Translators: Excel, report merged range of cell coordinates
+#, python-brace-format
+msgctxt "excel-UIA"
+msgid "{firstAddress} through {lastAddress}"
+msgstr "{firstAddress} és {lastAddress} között"
 
 #. Translators: the description  for a script for Excel
 msgid "Reports the note or comment thread on the current cell"
@@ -11457,6 +11868,10 @@ msgstr "Megjegyzés: {comment} - {author} által, {numReplies} válasz"
 #. Translators: A message in Excel when there is no comment thread
 msgid "No comment thread on this cell"
 msgstr "Nincs megjegyzés ehhez a cellához."
+
+#. Translators: announced when moving outside of a table in an Excel spreadsheet.
+msgid "Out of table"
+msgstr "a táblázat vége"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -12003,8 +12418,8 @@ msgstr "Nincs változás a {previousIndex}. adatponthoz képest"
 
 #. Translators: For line charts, indicates an increase from the previous data point on the left
 #, python-brace-format
-msgid "Increased by {incrementValue} from point {previousIndex}, "
-msgstr "A növekedés {incrementValue} a {previousIndex}. adatponthoz képest"
+msgid "increased by {incrementValue} from point {previousIndex}, "
+msgstr "A növekedés {incrementValue} a(z) {previousIndex} ponthoz képest, "
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
 #, python-brace-format
@@ -12836,10 +13251,10 @@ msgstr "{offset:.3g} centiméter"
 msgid "{offset:.3g} millimeters"
 msgstr "{offset:.3g} milliméter"
 
-#. Translators: a measurement in Microsoft Word
+#. Translators: a measurement in Microsoft Word (points)
 #, python-brace-format
-msgid "{offset:.3g} points"
-msgstr "{offset:.3g} pont"
+msgid "{offset:.3g} pt"
+msgstr "{offset:.3g} pt"
 
 #. Translators: a measurement in Microsoft Word
 #. See http://support.microsoft.com/kb/76388 for details.
@@ -12859,8 +13274,48 @@ msgstr "dupla sorköz"
 msgid "1.5 line spacing"
 msgstr "1,5-es sorköz"
 
-#~ msgid "details"
-#~ msgstr "rsl"
+#~ msgid "Swedish grade 1"
+#~ msgstr "Svéd, rövidítési fokozat 1"
+
+#~ msgid "Not charging battery. %d percent"
+#~ msgstr "A töltő leválasztva %d százalék"
+
+#~ msgid "report table row and column headers off"
+#~ msgstr "A táblázat fejléceinek bemondása kikapcsolva"
+
+#~ msgid "report table row and column headers on"
+#~ msgstr "A táblázat fejléceinek bemondása bekapcsolva"
+
+#~ msgid "AC power on"
+#~ msgstr "Hálózatról üzemel"
+
+#~ msgid "Row/column h&eaders"
+#~ msgstr "Sor/oszlop &fejlécek"
+
+#~ msgid ""
+#~ "Cannot set headers. Please enable reporting of table headers in Document "
+#~ "Formatting Settings"
+#~ msgstr ""
+#~ "Nem állíthatóak be a fejlécek. Kérem engedélyezze a táblázat sor/oszlop "
+#~ "fejléceinek bemondását a dokumentum formázás párbeszédpanelen."
+
+#~ msgid "Use UI Automation to access the Windows C&onsole when available"
+#~ msgstr "UI Automation használata a Windows konzol eléréséhez, ha lehetséges"
+
+#, fuzzy
+#~ msgid "Moves the navigator object to the first row"
+#~ msgstr "A navigátor kurzort a következő elemhez helyezi"
+
+#, fuzzy
+#~ msgid "Moves the navigator object to the last row"
+#~ msgstr "A navigátor kurzort a következő elemhez helyezi"
+
+#~ msgid "Chinese (China, Mandarin) grade 2"
+#~ msgstr "Kínai (Kína, Mandarin) rövidítési fokozat 2"
+
+#~ msgid "Cannot save configuration - NVDA in secure mode"
+#~ msgstr ""
+#~ "A beállítások elmentése nem lehetséges, az NVDA biztonsági módban van"
 
 #~ msgid "{modifier} pressed"
 #~ msgstr "{modifier} lenyomva"
