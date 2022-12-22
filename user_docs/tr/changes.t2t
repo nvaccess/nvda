@@ -97,6 +97,30 @@ Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documen
 - ``winUser.SM_*`` constants are deprecated, use ``winAPI.winUser.constants.SystemMetrics`` instead.
 - 
 
+= 2022.3.3 =
+2022.3.2, 2022.3.1 ve 2022.3 sürümlerindeki sorunları düzeltmek için yayınlanan küçük bir güncellemedir.
+
+== Hata düzeltmeleri ==
+- NVDA Windows kilitlenirken donduğunda, NVDA'nın windows kilit ekranındayken kullanıcının masa üstüne erişime izin vermesine neden olan bir hata düzeltildi. (#14416)
+- NVDA Windows kilitlenirken donduğunda, cihazın kilidi açıldığında NVDA'nın cihaz hâlâ kilitliymiş gibi yanlış hareket etmesine neden olan bir hata düzeltildi. (#14416)
+- Windows "pinimi unuttum" süreci ve Windows güncelleme/kurulum deneyimiyle ilgili erişilebilirlik sorunları giderildi. (#14368)
+- Windows Server gibi bazı Windows çevrelerinde NVDA kurulumu yaparken meydana gelen bir sorun düzeltildi. (#14379)
+-
+
+== Changes for Developers ==
+
+=== Deprecations ===
+- ``utils.security.isObjectAboveLockScreen(obj)`` is deprecated, instead use ``obj.isBelowLockScreen``. (#14416)
+- The following functions in ``winAPI.sessionTracking`` are deprecated for removal in 2023.1. (#14416)
+  - ``isWindowsLocked``
+  - ``handleSessionChange``
+  - ``unregister``
+  - ``register``
+  - ``isLockStateSuccessfullyTracked``
+  - 
+- 
+
+
 = 2022.3.2 =
 2022.3.1 sürümünde ortaya çıkan hataları ve bir güvenlik sorununu düzeltmek için yayınlanan küçük bir güncellemedir.
 
