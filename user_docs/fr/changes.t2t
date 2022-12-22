@@ -97,6 +97,29 @@ Veuillez vous référer au [guide du développeur https://www.nvaccess.org/files
 - Les constantes ``winUser.SM_*`` sont obsolètes, utilisez ``winAPI.winUser.constants.SystemMetrics`` à la place.
 -
 
++= 2022.3.3 =
+Il s'agit d'une version mineure pour résoudre des problèmes dans les versions 2022.3.2, 2022.3.1 et 2022.3.
+
+== Corrections de Bogues ==
+- Correction d'un bug où quand NVDA se fige lors du verrouillage, NVDA autorise l'accès au bureau de l'utilisateur sur l'écran de verrouillage Windows. (#14416)
+- Correction d'un bug où quand NVDA se fige lors du verrouillage, NVDA ne se comporte pas correctement, comme si l'appareil était toujours verrouillé. (#14416)
+- Correction des problèmes d'accessibilité avec le processus Windows "J'ai oublié mon code PIN" et l'expérience de mise à jour/installation de Windows. (#14368)
+- Correction d'un bug lors de la tentative d'installation de NVDA dans certains environnements Windows, par ex. Serveur Windows. (#14379)
+-
+
+== Changements pour les Développeurs ==
+
+=== Dépréciations ===
+- ``utils.security.isObjectAboveLockScreen(obj)`` est obsolète, utilisez plutôt ``obj.isBelowLockScreen``. (#14416)
+- Les fonctions suivantes dans ``winAPI.sessionTracking`` sont obsolètes pour suppression dans 2023.1. (#14416)
+  - ``isWindowsLocked``
+  - ``handleSessionChange``
+  - ``unregister``
+  - ``register``
+  - ``isLockStateSuccessfullyTracked``
+  - 
+- 
+
 
 = 2022.3.2 =
 Ceci est une version mineure pour corriger des régressions introduites dans la 2022.3.1 et corriger une faille de sécurité.

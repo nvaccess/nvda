@@ -109,6 +109,30 @@ NVDA 更新日志
 -
 
 
+= 2022.3.3 =
+这是一个小版本，用于修复 2022.3.2、2022.3.1 和 2022.3 中存在的问题。
+
+== 错误修复 ==
+- 修复了如果 NVDA 在 Windows 锁屏界面无响应后可通过锁屏界面访问用户桌面的错误。（#14416）
+- 修复了如果 NVDA 在锁屏上无响应，NVDA 会无法正常运行的错误，就好像设备仍处于锁定状态一样。（#14416）
+- 修复了 Windows“忘记了我的 PIN”过程和 Windows 更新/安装体验的辅助功能问题。（#14368）
+- 修复了在某些环境中尝试安装 NVDA 时出现的错误，例如 Windows 服务器。（#14379）
+-
+
+== 插件以及 NVDA 核心开发者需要了解的变动 ==
+
+=== 弃用 ===
+- ``utils.security.isObjectAboveLockScreen(obj)`` 已被弃用，请使用 ``obj.isBelowLockScreen``代替。（#14416）
+- ``winAPI.sessionTracking`` 在2023.1中已被弃用并删除。（#14416）
+  - ``isWindowsLocked``
+  - ``handleSessionChange``
+  - ``unregister``
+  - ``register``
+  - ``isLockStateSuccessfullyTracked``
+  - 
+- 
+
+
 = 2022.3.2 =
 这是一个修复了 2022.3.1 中引入的回归并解决安全问题的小版本。
 

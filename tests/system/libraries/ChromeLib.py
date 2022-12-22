@@ -67,6 +67,13 @@ class ChromeLib:
 			f"{process.is_process_running(ChromeLib._processRFHandleForStart)}"
 		)
 
+		if not ChromeLib._chromeWindow:
+			builtIn.log(
+				"Unable to close tab, Chrome window not initialised correctly.",
+				level="WARN"
+			)
+			return
+
 		if not windowsLib.isWindowInForeground(ChromeLib._chromeWindow):
 			builtIn.log(
 				"Unable to close tab, window not in foreground: "
@@ -96,7 +103,7 @@ class ChromeLib:
 		if _window is not None:
 			res = CloseWindow(_window)
 			if not res:
-				builtIn.log(f"Unable to task kill chrome hwnd: {ChromeLib._chromeWindow.hwndVal}", level="ERROR")
+				builtIn.log(f"Unable to task kill chrome hwnd: {_window.hwndVal}", level="ERROR")
 			else:
 				ChromeLib._chromeWindow = _window = None
 		else:

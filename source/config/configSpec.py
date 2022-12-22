@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2022 NV Access Limited, Babbage B.V., Davy Kager, Bill Dengler, Julien Cochuyt,
-# Joseph Lee, Dawid Pieper, mltony, Bram Duvigneau, Cyrille Bougot
+# Joseph Lee, Dawid Pieper, mltony, Bram Duvigneau, Cyrille Bougot, Rob Meredith
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -224,6 +224,9 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	reportArticles = boolean(default=false)
 	reportFrames = boolean(default=true)
 	reportClickable = boolean(default=true)
+
+[documentNavigation]
+	paragraphStyle = featureFlag(optionsEnum="ParagraphNavigationFlag", behaviorOfDefault="application")
 
 [reviewCursor]
 	simpleReviewMode = boolean(default=True)
