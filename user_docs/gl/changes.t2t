@@ -80,6 +80,7 @@ Ten en conta que aínda hai fallos coñecidos con Chrome e Edge. (#13254)
 - Nas opcións avanzadas, a opción "reproducir un son para rexistro de erros" agora restáurase correctamente a este valor predeterminado ao premer o botón "Restaurar predeterminados". (#14149)
 - O NVDA agora pode selecionar texto usando o atallo de teclado ``NVDA+f10`` en aplicacións Java. (#14163)
 - O NVDA xa non se atascará nun menú ao subir e baixar coas frechas por un fío de conversacións en Microsoft Teams. (#14355)-
+-
 
 
 == Cambios para Desenvolvedores ==
@@ -95,6 +96,30 @@ Por favor consulta [a guía do desenvolvedor https://www.nvaccess.org/files/nvda
 - ``winKernel.SYSTEM_POWER_STATUS`` está obsoleto e desaconséllase o seu uso, esto moveuse a ``winAPI._powerTracking.SystemPowerStatus``.
 - As constantes ``winUser.SM_*`` están obsoletas, usa ``winAPI.winUser.constants.SystemMetrics`` a cambio.
 - 
+
+= 2022.3.3 =
+Esta é unha versión menor para arranxar problemas con 2022.3.2, 2022.3.1 e 2022.3.
+
+== Arranxo de Erros ==
+- Arranxado un erro no que se o NVDA conxélase cando se bloquea, o NVDA permitirá accesar aos usuarios do escritorio mentres se estea na pantalla de bloqueo de Windows. (#14416)
+- Arranxado un erro no que se o NVDA conxélase cando se bloquea, o NVDA non se comportará correctamente, coma se o dispositivo seguira aínda bloqueado. (#14416)
+- Arranxados problemas de accesibilidade co proceso de Windows "olvidei o meu PIN" e coa experiencia de actualizar ou instalar Windows. (#14368)
+- Arranxado un erro ao intentar instalar o NVDA nalgúns ambentes de Windows, por exemplo en Windows Server. (#14379)
+-
+
+== Cambios para Desenvolvedores ==
+
+=== Obsolescencias ===
+- ``utils.security.isObjectAboveLockScreen(obj)`` está obsoleto, a cambio usa ``obj.isBelowLockScreen``. (#14416)
+- As seguintes funcións en ``winAPI.sessionTracking`` están obsoletas para a súa eliminación en 2023.1. (#14416)
+  - ``isWindowsLocked``
+  - ``handleSessionChange``
+  - ``unregister``
+  - ``register``
+  - ``isLockStateSuccessfullyTracked``
+  - 
+- 
+
 
 = 2022.3.2 =
 Esta é unha versión menor para arranxar regresións con 2022.3.1 e para abordar un problema de seguridade.

@@ -98,6 +98,30 @@ Bitte lesen Sie das [Entwicklerhandbuch https://www.nvaccess.org/files/nvda/docu
 -
 
 
+= 2022.3.3 =
+Dies ist eine kleinere Version, die Fehler in 2022.3.2, 2022.3.1 und 2022.3 behebt.
+
+== Fehlerbehebungen ==
+- Wenn NVDA beim Sperren einfriert, erlaubt NVDA den Zugriff auf den Desktop des Benutzers, während der Windows-Sperrbildschirm angezeigt wird. (#14416)
+- Fehler behoben, bei dem NVDA sich nicht korrekt verhält, wenn es beim Sperren einfriert, als ob das Gerät noch gesperrt wäre. (#14416)
+- Zugänglichkeitsprobleme mit dem Windows-Prozess "PIN vergessen" und der Windows-Update-/Installationserfahrung wurden behoben. (#14368)
+- Fehler bei der NVDA-Installation in einigen Windows-Umgebungen, z. B. Windows Server, behoben. (#14379)
+-
+
+== Änderungen für Entwickler ==
+
+=== Veraltete Funktionen ===
+- ``utils.security.isObjectAboveLockScreen(obj)`` ist veraltet, verwenden Sie stattdessen ``obj.isBelowLockScreen``. (#14416)
+- Die folgenden Funktionen in ``winAPI.sessionTracking`` sind veraltet und werden in 2023.1 entfernt. (#14416)
+  - ``isWindowsLocked``
+  - ``handleSessionChange``
+  - ``unregister``
+  - ``register``
+  - ``isLockStateSuccessfullyTracked``
+  - 
+- 
+
+
 = 2022.3.2 =
 Dies ist eine kleinere Version, die Probleme mit 2022.3.1 behebt und eine Sicherheitslücke schließt.
 

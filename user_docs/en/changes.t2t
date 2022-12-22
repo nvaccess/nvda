@@ -202,6 +202,12 @@ Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documen
 
 = 2022.3.3 =
 This is a minor release to fix issues with 2022.3.2, 2022.3.1 and 2022.3.
+This also addresses a security issue.
+
+== Security Fixes ==
+- Prevents possible system access (e.g. NVDA Python console) for unauthenticated users.
+([GHSA-fpwc-2gxx-j9v7 https://github.com/nvaccess/nvda/security/advisories/GHSA-fpwc-2gxx-j9v7])
+-
 
 == Bug Fixes ==
 - Fixed bug where if NVDA freezes when locking, NVDA will allow access to the users desktop while on the Windows lock screen. (#14416)
