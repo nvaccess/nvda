@@ -96,6 +96,38 @@ Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documen
 - ``core.post_windowMessageReceipt`` is deprecated, use ``winAPI.messageWindow.pre_handleWindowMessage`` instead.
 - ``winKernel.SYSTEM_POWER_STATUS`` is deprecated and usage is discouraged, this has been moved to ``winAPI._powerTracking.SystemPowerStatus``.
 - ``winUser.SM_*`` constants are deprecated, use ``winAPI.winUser.constants.SystemMetrics`` instead.
+
+
+= 2022.3.3 =
+Si tratta di una versione minore che risolve alcuni problemi inerenti le versioni 2022.3.2, 2022.3.1 e 2022.3.
+Viene anche sistemato un problema di sicurezza.
+
+== Correzioni di sicurezza ==
+- Impedisce ad utenti non autorizzati possibili accessi al sistema (ad esempio la Console Python di NVDA.
+([GHSA-fpwc-2gxx-j9v7 https://github.com/nvaccess/nvda/security/advisories/GHSA-fpwc-2gxx-j9v7])
+-
+
+== Bug Corretti ==
+- Risolto un bug per cui se NVDA si bloccava quando contestualmente si accedeva alla schermata di lock screen, lo screen reader permetteva l'accesso al desktop dell'utente nonostante ci si trovasse nella schermata di blocco. (#14416)
+- Risolto un bug per cui se NVDA si bloccava quando contestualmente si accedeva alla lock screen, lo screen reader non reagiva correttamente, nonpermettendo una gestione ideale della schermata di blocco. (#14416)
+- Risolti i problemi di accessibilità con il processo "Ho dimenticato il PIN" di Windows e l'esperienza di aggiornamento/installazione del sistema operativo. (#14368)
+- Risolto un bug che si manifestava nel tentare di installare NVDA in alcuni ambienti Windows particolari, ad esempio Windows Server. (#14379)
+-
+
+== Cambiamenti per gli sviluppatori ==
+
+=== Deprecations ===
+- ``utils.security.isObjectAboveLockScreen(obj)`` is deprecated, instead use ``obj.isBelowLockScreen``. (#14416)
+- The following functions in ``winAPI.sessionTracking`` are deprecated for removal in 2023.1. (#14416)
+  - ``isWindowsLocked``
+  - ``handleSessionChange``
+  - ``unregister``
+  - ``register``
+  - ``isLockStateSuccessfullyTracked``
+  - 
+- 
+
+
 = 2022.3.2 =
 Questa è una versione minore per correggere un problema con la 2022.3.1 e risolvere un problema di sicurezza.
 
