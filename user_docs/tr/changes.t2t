@@ -99,6 +99,12 @@ Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documen
 
 = 2022.3.3 =
 2022.3.2, 2022.3.1 ve 2022.3 sürümlerindeki sorunları düzeltmek için yayınlanan küçük bir güncellemedir.
+Ayrıca bir güvenlik sorunu da düzeltilmiştir.
+
+== Güvenlik düzeltmeleri ==
+- İzinsiz kullanıcılar için mümkün olabilen sistem erişimi (Örn. NVDA Python konsolu) engellendi.
+([GHSA-fpwc-2gxx-j9v7 https://github.com/nvaccess/nvda/security/advisories/GHSA-fpwc-2gxx-j9v7])
+-
 
 == Hata düzeltmeleri ==
 - NVDA Windows kilitlenirken donduğunda, NVDA'nın windows kilit ekranındayken kullanıcının masa üstüne erişime izin vermesine neden olan bir hata düzeltildi. (#14416)

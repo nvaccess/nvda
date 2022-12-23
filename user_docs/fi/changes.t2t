@@ -87,6 +87,24 @@ Huomaa, että Chromessa ja Edgessä on edelleen tunnettuja ongelmia. (#13254)
 Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/changes.html]
 
 
+= 2022.3.3 =
+Tämä on pieni julkaisu, joka korjaa 2022.3.2:ssa, 2022.3.1:ssä ja 2022.3:ssa ilmenneitä ongelmia.
+Tämä versio korjaa myös tietoturvaongelman.
+
+== Tietoturvakorjaukset ==
+- Estää todentamattomien käyttäjien mahdollisen pääsyn järjestelmään (esim. NVDA:n Python-konsolin avulla). ([GHSA-fpwc-2gxx-j9v7 https://github.com/nvaccess/nvda/security/advisories/GHSA-fpwc-2gxx-j9v7])
+-
+
+== Bugikorjaukset ==
+- Korjattu bugi, joka aiheutti sen, että jos NVDA jää jumiin järjestelmää lukittaessa, NVDA sallii pääsyn työpöydälle Windowsin lukitusnäytöllä oltaessa. (#14416)
+- Korjattu bugi, joka aiheutti sen, että jos NVDA jää jumiin järjestelmää lukittaessa, NVDA ei toimi oikein, ikään kuin laite olisi edelleen lukittu. (#14416)
+- Korjattu Windowsin "unohdin PIN-koodini" -prosessin sekä päivitys/asennuskokemuksen saavutettavuusongelmia. (#14368)
+- Korjattu bugi yritettäessä asentaa NVDA:ta joissakin Windows-ympäristöissä, esim. palvelinversiossa. (#14379)
+-
+
+== Muutokset kehittäjille ==
+
+
 = 2022.3.2 =
 Tämä on pieni julkaisu, joka korjaa 2022.3.1:n regressioita ja ratkaisee tietoturvaongelman.
 
