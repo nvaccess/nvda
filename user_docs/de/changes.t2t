@@ -90,7 +90,6 @@ Bitte lesen Sie das [Entwicklerhandbuch https://www.nvaccess.org/files/nvda/docu
 - NVDA verarbeitet keine ``TextChange``-Ereignisse mehr für die meisten UIA-Anwendungen, da diese extrem negative Auswirkungen auf die Leistung haben. (#11002, #14067)
 -
 
-
 === Veraltete Funktionen ===
 - ``core.post_windowMessageReceipt`` ist veraltet, verwenden Sie stattdessen ``winAPI.messageWindow.pre_handleWindowMessage``.
 - ``winKernel.SYSTEM_POWER_STATUS`` ist veraltet und es wird von der Verwendung abgeraten, dies wurde nach ``winAPI._powerTracking.SystemPowerStatus`` verschoben.
@@ -100,6 +99,11 @@ Bitte lesen Sie das [Entwicklerhandbuch https://www.nvaccess.org/files/nvda/docu
 
 = 2022.3.3 =
 Dies ist eine kleinere Version, die Fehler in 2022.3.2, 2022.3.1 und 2022.3 behebt.
+Damit wird auch ein Sicherheitsproblem gelöst.
+
+== Sicherheitsproblembehebungen ==
+- Verhindert den möglichen Systemzugang (z. B. durch die Python-Konsole in NVDA) für nicht authentifizierte Benutzer. ([GHSA-fpwc-2gxx-j9v7 https://github.com/nvaccess/nvda/security/advisories/GHSA-fpwc-2gxx-j9v7])
+-
 
 == Fehlerbehebungen ==
 - Wenn NVDA beim Sperren einfriert, erlaubt NVDA den Zugriff auf den Desktop des Benutzers, während der Windows-Sperrbildschirm angezeigt wird. (#14416)
