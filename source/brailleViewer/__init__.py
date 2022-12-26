@@ -1,6 +1,5 @@
-# brailleViewer.py
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2014-2019 NV Access Limited
+# Copyright (C) 2014-2023 NV Access Limited, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 from typing import Optional, List
@@ -65,10 +64,11 @@ def isBrailleViewerActive() -> bool:
 
 def update(cells: List[int], rawText: str):
 	if _brailleGui:
+		import braille  # imported late to avoid a circular import.
 		_brailleGui.updateBrailleDisplayed(
 			cells,
 			rawText,
-			_getDisplaySize()
+			braille.handler.displaySize
 		)
 
 
@@ -77,6 +77,9 @@ def destroyBrailleViewer():
 	d: Optional[BrailleViewerFrame] = _brailleGui
 	_brailleGui = None  # protect against re-entrance
 	if d and not d.isDestroyed:
+		import braille  # imported late to avoid a circular import.
+		braille.handler.pre_writeCells.unregister(update)
+		braille.handler.filter_displaySize.unregister(_getDisplaySize)
 		d.saveInfoAndDestroy()
 
 
@@ -91,9 +94,7 @@ def _onGuiDestroyed():
 	postBrailleViewerToolToggledAction.notify(created=False)
 
 
-def _getDisplaySize():
-	import braille  # imported late to avoid a circular import.
-	numCells = braille.handler.displaySize
+def _getDisplaySize(numCells: int):
 	return numCells if numCells > 0 else DEFAULT_NUM_CELLS
 
 
@@ -105,12 +106,15 @@ def createBrailleViewerTool():
 	if not braille.handler:
 		raise RuntimeError("Can not initialise the BrailleViewerGui: braille.handler not yet initialised")
 
+	braille.handler.filter_displaySize.register(_getDisplaySize)
+	braille.handler.pre_writeCells.register(update)
+
 	global _brailleGui
 	if _brailleGui:
 		destroyBrailleViewer()
 
 	_brailleGui = BrailleViewerFrame(
-		_getDisplaySize(),
+		braille.handler.displaySize,
 		_onGuiDestroyed
 	)
 

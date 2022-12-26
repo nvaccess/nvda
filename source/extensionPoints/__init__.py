@@ -80,7 +80,7 @@ class Filter(HandlerRegistrar):
 	>>> messageFilter.register(filterMessage)
 
 	When filtering is desired, all registered handlers are called to filter the data, see L{util.callWithSupportedKwargs}
-	for how args passed to notify are mapped to the handler:
+	for how args passed to apply are mapped to the handler:
 
 	>>> messageFilter.apply("This is a message", someArg=42)
 	'This is a message which has been filtered'
@@ -125,7 +125,7 @@ class Decider(HandlerRegistrar):
 
 	When the decision is to be made, registered handlers are called until
 	a handler returns False, see L{util.callWithSupportedKwargs}
-	for how args passed to notify are mapped to the handler:
+	for how args passed to decide are mapped to the handler:
 
 	>>> doSomething.decide(someArg=42)
 	False
@@ -175,9 +175,9 @@ class AccumulatingDecider(HandlerRegistrar):
 	...
 	>>> doSomething.register(shouldDoSomething)
 
-	When the decision is to be made registered handlers are called and they return values are collected,
+	When the decision is to be made registered handlers are called and their return values are collected,
 	see L{util.callWithSupportedKwargs}
-	for how args passed to notify are mapped to the handler:
+	for how args passed to decide are mapped to the handler:
 
 	>>> doSomething.decide(someArg=42)
 	False
