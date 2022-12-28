@@ -482,23 +482,36 @@ class Addon(AddonBase):
 		@param name: the module name
 		"""
 		splitName = name.split('.')
-		moduleName = splitName[-1]
-		path = os.path.join(self.path, *splitName[:-1])
 		if any(n for n in splitName if not n.isidentifier() or iskeyword(n)):
 			raise ValueError(f"{name} is an invalid python module name")
 		log.debug(f"Importing module {name} from plugin {self!r}")
 		# Create a qualified full name to avoid modules with the same name on sys.modules.
 		fullName = f"addons.{self.name}.{name}"
-		if fullName in sys.modules:
+		# If the given name contains dots (i.e. it is a submodule import), ensure the top module is created correctly.
+		# After that, the import mechanism will be able to resolve the submodule automatically.
+		fullNameTop = f"addons.{self.name}.{splitName[0]}"
+		if fullNameTop in sys.modules:
+			# The module can safely be imported, since the top level module is known.
 			return importlib.import_module(fullName)
-		spec = importlib.machinery.PathFinder.find_spec(fullName, [path])
+		# Ensure the new module is resolvable by the import system.
+		# For this, all packages in the tree have to be available in sys.modules.
+		# We add mock modules for the addons package and the addon itself.
+		# If we don't do this, namespace packages can't be imported correctly.
+		for parentName in ("addons", f"addons.{self.name}"):
+			if parentName in sys.modules:
+				# Parent package already initialized
+				continue
+			parentSpec = importlib._bootstrap.ModuleSpec(parentName, None, is_package=True)
+			parentModule = importlib.util.module_from_spec(parentSpec)
+			sys.modules[parentModule.__name__] = parentModule
+		spec = importlib.machinery.PathFinder.find_spec(fullNameTop, [self.path])
 		if not spec:
 			return None
 		mod = importlib.util.module_from_spec(spec)
-		sys.modules[fullName] = mod
+		sys.modules[fullNameTop] = mod
 		if spec.loader:
 			spec.loader.exec_module(mod)
-		return mod
+		return mod if fullNameTop == fullName else importlib.import_module(fullName)
 
 	def getTranslationsInstance(self, domain='nvda'):
 		""" Gets the gettext translation instance for this add-on.
