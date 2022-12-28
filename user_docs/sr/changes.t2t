@@ -87,6 +87,22 @@ Napomena da još uvek postoje poznati problemi sa Chromeom i Edgeom. (#13254)
 -
 
 
+= 2022.3.3 =
+Ovo je manje ažuriranje kako bi se ispravili problemi u verzijama 2022.3.2, 2022.3.1 i 2022.3.
+Takođe ispravlja bezbednosni problem.
+
+== Bezbednosne ispravke ==
+- Sprečava mogućnost sistemskog pristupa (na primer NVDA Python konzolu) za neprijavljene korisnike.
+([GHSA-fpwc-2gxx-j9v7 https://github.com/nvaccess/nvda/security/advisories/GHSA-fpwc-2gxx-j9v7])
+-
+
+== Ispravljene greške ==
+- Ispravljena greška u kojoj ako se NVDA zamrzne prilikom zaključavanja, NVDA dozvoljava pristup korisničkoj radnoj površini sa zaključanog ekrana. (#14416)
+- Ispravljena greška u kojoj ako se NVDA zamrzne prilikom zaključavanja, NVDA se ne ponaša ispravno, kao da je uređaj još uvek zaključan. (#14416)
+- Ispravljeni problemi u pristupačnosti Windows ekrana zaboravljenog PIN-a kao i u korišćenju instalacije Windows ažuriranja. (#14368)
+- Ispravljena greška sa NVDA instalacijom na određenim Windows okruženjima, na primer Windows Server. (#14379)
+-
+
 = 2022.3.2 =
 Ovo je manje ažuriranje kako bi se ispravila pogoršanja koja je izazvala verzija 2022.3.1 i kako bi se ispravio bezbednosni problem.
 

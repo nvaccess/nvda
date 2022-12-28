@@ -3,6 +3,90 @@ Wat is Nieuw in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2022.4 =
+Deze release bevat verschillende nieuwe toetscommando's, waaronder Alles lezen commando's voor tabellen.
+Er is een sectie "Snelstartgids" toegevoegd aan de gebruikershandleiding.
+Er zijn ook verschillende bugfixes.
+
+eSpeak is bijgewerkt en LibLouis is bijgewerkt.
+Er zijn nieuwe Chinese, Zweedse, Luganda en Kinyarwanda brailletabellen.
+
+== Nieuwe functies ==
+- Een sectie "Snelstartgids" toegevoegd aan de gebruikershandleiding. (#13934)
+- Een nieuwe opdracht toegevoegd om de sneltoets van de huidige focus te controleren. (#13960)
+  - Desktop: ``shift+numpad2``.
+  - Laptop: ``NVDA+ctrl+shift+.``.
+  -
+- Nieuwe commando's toegevoegd om de leescursor per pagina te verplaatsen, waar ondersteund door de applicatie. (#14021)
+  - Ga naar de vorige pagina:
+    - Desktop: ``NVDA+pageUp``.
+    - Laptop: ``NVDA+shift+pageUp``.
+    -
+  - Ga naar de volgende pagina:
+    - Desktop: ``NVDA+pageDown``.
+    - Laptop: ``NVDA+shift+pageDown``.
+    -
+  -
+- De volgende tabelopdrachten toegevoegd. (#14070)
+  - Alles lezen in kolom: ``NVDA+control+alt+pijl omlaag``
+  - Alles lezen in rij: ``NVDA+control+alt+rightArrow``
+  - Lees hele kolom: ``NVDA+control+alt+pijl omhoog``
+  - Lees hele rij: ``NVDA+control+alt+linkerpijl``
+  -
+- Microsoft Excel via UI-automatisering: NVDA Meldt nu  het verlaten van een tabel binnen een spreadsheet. (#14165)
+- Het melden van tabelkoppen kan nu afzonderlijk worden geconfigureerd voor rijen en kolommen. (#14075)
+-
+
+
+== Veranderingen ==
+- eSpeak NG is bijgewerkt naar 1.52-dev commit ``735ecdb8``. (#14060, #14079, #14118, #14203)
+  - Rapportage van Latijnse karakters bij gebruik van Mandarijn opgelost. (#12952, #13572, #14197)
+  -
+- LibLouis braillevertaler Bijgewerkt naar [3.23.0 https://github.com/liblouis/liblouis/releases/tag/v3.23.0]. (#14112)
+  - Brailletabellen toegevoegd:
+    - Chinese gewone braille (vereenvoudigde Chinese karakters)
+    - Kinyarwanda literaire braille
+    - Luganda literaire braille
+    - Zweeds niet-samengetrokken braille
+    - Zweeds gedeeltelijk samengetrokken braille
+    - Zweeds contract braille
+    - Chinees (China, Mandarijn) huidig braillesysteem (geen tonen) (#14138)
+    -
+- NVDA neemt nu de architectuur van het besturingssysteem mee bij het bijhouden van gebruikersstatistieken. (#14019)
+-
+
+
+== Opgeloste problemen ==
+- Bij het updaten van NVDA met behulp van de Windows Package Manager CLI (ook wel winget genoemd), wordt een uitgebrachte versie van NVDA niet langer altijd als nieuwer behandeld dan de geïnstalleerde alfaversie. (#12469)
+- NVDA kondigt nu correct Groepsboxen aan in Java-toepassingen. (#13962)
+- De cursor volgt de gesproken tekst correct tijdens "alles lezen in toepassingen zoals Bookworm, WordPad of de NVDA-logviewer. (#13420, #9179)
+- In programma's die UI-automatisering gebruiken, worden gedeeltelijk aangevinkte selectievakjes correct gerapporteerd. (#13975)
+- Verbeterde prestaties en stabiliteit in Microsoft Visual Studio, Windows Terminal en andere op UI Automation gebaseerde applicaties. (#11077, #11209)
+  - Deze fixes zijn van toepassing op Windows 11 Sun Valley 2 (versie 22H2) en hoger.
+  - Selectieve registratie voor UI Automation-gebeurtenissen en eigenschapswijzigingen nu standaard ingeschakeld.
+  -
+- Tekstrapportage, braille-uitvoer en wachtwoordonderdrukking werken nu zoals verwacht in het ingebouwde Windows Terminal-besturingselement in Visual Studio 2022. (#14194)
+- NVDA is nu DPI-bewust bij gebruik van meerdere monitoren.
+Er zijn verschillende oplossingen voor het gebruik van een DPI-instelling hoger dan 100% of meerdere monitoren.
+Er kunnen nog steeds problemen optreden met versies van Windows ouder dan Windows 10 1809.
+Om deze fixes te laten werken, moeten applicaties waarmee NVDA communiceert ook DPI-bewust zijn.
+Let op: er zijn nog steeds bekende problemen met Chrome en Edge. (#13254)
+  - Visuele markeringskaders moeten nu in de meeste toepassingen correct worden geplaatst. (#13370, #3875, #12070)
+  - Interactie met het aanraakscherm zou nu nauwkeurig moeten zijn voor de meeste toepassingen. (#7083)
+  - Muis volgen zou nu voor de meeste applicaties moeten werken. (#6722)
+  -
+- Veranderingen in de oriëntatiestatus (liggend/portret) worden nu correct genegeerd als er geen verandering is (bijv. monitorveranderingen). (#14035)
+- NVDA kondigt het slepen van items op het scherm aan op plaatsen zoals het herschikken van Windows 10 Start-menutegels en virtuele desktops in Windows 11. (#12271, #14081)
+- In geavanceerde instellingen wordt de optie "Speel een geluid af voor gelogde fouten" nu correct hersteld naar de standaardwaarde wanneer op de knop "Standaardinstellingen herstellen" wordt gedrukt. (#14149)
+- NVDA kan nu tekst selecteren met behulp van de sneltoets ``NVDA+f10`` in Java-toepassingen. (#14163)
+- NVDA blijft niet langer vastzitten in een menu bij het omhoog en omlaag bewegen van conversaties in Microsoft Teams. (#14355)
+-
+
+
+== Veranderingen voor ontwikkelaars ==
+Deze zijn niet vertaald. We verwijzen naar [de Engelstalige versie van dit document ../en/changes.html].
+
+
 = 2021.3.1 =
 
 == Veranderingen ==

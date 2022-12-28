@@ -42,7 +42,7 @@
 - eSpeak NG оновлено до 1.52-dev commit ``735ecdb8``. (#14060, #14079, #14118, #14203)
   - Виправлено промовляння латинських символів під час використання мандаринської мови. (#12952, #13572, #14197)
   -
-- бібліотеку брайлівського введення/виведення Updated  оновлено до [3.23.0 https://github.com/liblouis/liblouis/releases/tag/v3.23.0]. (#14112)
+- бібліотеку брайлівського введення/виведення LibLouis оновлено до [3.23.0 https://github.com/liblouis/liblouis/releases/tag/v3.23.0]. (#14112)
   - Додано брайлівські таблиці:
     - Chinese common braille (simplified Chinese characters)
     - Kinyarwanda literary braille
@@ -95,6 +95,35 @@ Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documen
 - ``core.post_windowMessageReceipt`` is deprecated, use ``winAPI.messageWindow.pre_handleWindowMessage`` instead.
 - ``winKernel.SYSTEM_POWER_STATUS`` is deprecated and usage is discouraged, this has been moved to ``winAPI._powerTracking.SystemPowerStatus``.
 - ``winUser.SM_*`` constants are deprecated, use ``winAPI.winUser.constants.SystemMetrics`` instead.
+- 
+
+= 2022.3.3 =
+Це незначний реліз, який виправляє проблеми з 2022.3.2, 2022.3.1 і 2022.3.
+Це також вирішує проблему безпеки.
+
+== Виправлення безпеки ==
+- Запобігає можливому доступу до системи (наприклад, до консолі NVDA Python) для неавторизованих користувачів.
+([GHSA-fpwc-2gxx-j9v7 https://github.com/nvaccess/nvda/security/advisories/GHSA-fpwc-2gxx-j9v7])
+-
+
+== Виправлення ==
+- Виправлено помилку, через яку, якщо NVDA зависала під час блокування, NVDA дозволяла доступ до робочого столу користувача, перебуваючи на екрані блокування Windows. (#14416)
+- Виправлено помилку, за якої, якщо NVDA зависала під час блокування, NVDA поводилася некоректно, так наче  пристрій все ще заблоковано. (#14416)
+- Виправлено проблему доступності процесу «забув свій PIN-код» у Windows, а також з процесом оновлення/встановлення Windows. (#14368)
+- Виправлено помилку при спробі встановлення NVDA в деяких середовищах Windows, наприклад, Windows Server. (#14379)
+-
+
+== Зміни для розробників (англ) ==
+
+=== Deprecations ===
+- ``utils.security.isObjectAboveLockScreen(obj)`` is deprecated, instead use ``obj.isBelowLockScreen``. (#14416)
+- The following functions in ``winAPI.sessionTracking`` are deprecated for removal in 2023.1. (#14416)
+  - ``isWindowsLocked``
+  - ``handleSessionChange``
+  - ``unregister``
+  - ``register``
+  - ``isLockStateSuccessfullyTracked``
+  - 
 - 
 
 = 2022.3.2 =

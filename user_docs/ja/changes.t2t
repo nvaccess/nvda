@@ -97,6 +97,36 @@ NVDA の API の非推奨と廃止については [the developer guide https://w
 - ``winUser.SM_*`` 定数は非推奨です。 ``winAPI.winUser.constants.SystemMetrics`` を使います。
 -
 
+= 2022.3.3 =
+これは 2022.3.2, 2022.3.1, 2022.3 で発生した不具合を修正するリリースです。
+セキュリティに関する修正が含まれています。
+
+== セキュリティ修正 ==
+- 権限のないユーザーによる(NVDA Python console 経由の)システムレベルのアクセスに関する問題を修正しました。
+([GHSA-fpwc-2gxx-j9v7 https://github.com/nvaccess/nvda/security/advisories/GHSA-fpwc-2gxx-j9v7])
+-
+
+== バグ修正 ==
+- Windows ロック画面において NVDA がフリーズするとユーザーのデスクトップ画面へのアクセスを制限できなかった不具合を修正しました。(#14416)
+- Windows ロック画面において NVDA がフリーズすると NVDA が正しく動作しなくなることがある不具合を修正しました。 (#14416)
+- Windowsの「PINを忘れた場合」や Windows Update/Install エクスペリエンスにおけるアクセシビリティの不具合を修正しました。 (#14368)
+- 一部の Windows 環境 (Windows Server) における NVDA のインストールの不具合を修正しました。 (#14379)
+-
+
+== 開発者向けの変更 ==
+
+=== 非推奨となったAPI ===
+- ``utils.security.isObjectAboveLockScreen(obj)`` は非推奨です。 ``obj.isBelowLockScreen`` を使います。 (#14416)
+- ``winAPI.sessionTracking`` の以下の関数は非推奨です。これらは 2023.1 で削除されます。 (#14416)
+  - ``isWindowsLocked``
+  - ``handleSessionChange``
+  - ``unregister``
+  - ``register``
+  - ``isLockStateSuccessfullyTracked``
+  - 
+- 
+
+
 = 2022.3.2 =
 これはセキュリティ問題と、2022.3.1で発生した不具合を修正するためのリリースです。
 

@@ -97,6 +97,36 @@ Consulte [o guia do desenvolvedor https://www.nvaccess.org/files/nvda/documentat
 - As constantes ``winUser.SM_*`` estão obsoletas, use ``winAPI.winUser.constants.SystemMetrics`` em seu lugar.
 -
 
+= 2022.3.3 =
+Esta é uma versão menor para corrigir problemas com 2022.3.2, 2022.3.1 e 2022.3.
+Também resolve um problema de segurança.
+
+== Correções de Segurança ==
+- Impede possível acesso ao sistema (por exemplo, console NVDA Python) para usuários não autenticados.
+([GHSA-fpwc-2gxx-j9v7 https://github.com/nvaccess/nvda/security/advisories/GHSA-fpwc-2gxx-j9v7])
+-
+
+== Correção de Falhas ==
+- Corrigido falha em que, se o NVDA congelar ao bloquear, o NVDA permitirá o acesso à área de trabalho do usuário enquanto estiver na tela de bloqueio do Windows. (#14416)
+- Corrigido falha onde se o NVDA congela ao bloquear, o NVDA não irá se comportar corretamente, como se o dispositivo ainda estivesse bloqueado. (#14416)
+- Corrigidos problemas de acessibilidade com o processo "esqueci meu PIN" do Windows e a experiência de atualização/instalação do Windows. (#14368)
+- Corrigido falha ao tentar instalar o NVDA em alguns ambientes Windows, por exemplo, Windows Server. (#14379)
+-
+
+== Alterações para Desenvolvedores ==
+
+=== Obsolescências ===
+- ``utils.security.isObjectAboveLockScreen(obj)`` está obsoleto, em vez disso use ``obj.isBelowLockScreen``. (#14416)
+- As seguintes funções em ``winAPI.sessionTracking`` são obsoletas para remoção em 2023.1. (#14416)
+  - ``isWindowsLocked``
+  - ``handleSessionChange``
+  - ``unregister``
+  - ``register``
+  - ``isLockStateSuccessfullyTracked``
+  -
+-
+
+
 = 2022.3.2 =
 Esta é uma versão menor para corrigir regressões com 2022.3.1 e resolver um problema de segurança.
 
