@@ -481,13 +481,10 @@ class Addon(AddonBase):
 		""" loads a python module from the addon directory
 		@param name: the module name
 		"""
-		path = self.path
-		moduleName = name
-		if '.' in name:
-			splitName = name.split('.')
-			moduleName = splitName[-1]
-			path = os.path.join(path, *splitName[:-1])
-		if not moduleName.isidentifier() or iskeyword(moduleName):
+		splitName = name.split('.')
+		moduleName = splitName[-1]
+		path = os.path.join(self.path, *splitName[:-1])
+		if any(n for n in splitName if not n.isidentifier() or iskeyword(n)):
 			raise ValueError(f"{name} is an invalid python module name")
 		log.debug(f"Importing module {name} from plugin {self!r}")
 		# Create a qualified full name to avoid modules with the same name on sys.modules.
