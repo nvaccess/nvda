@@ -11,7 +11,6 @@ import tempfile
 import inspect
 import itertools
 import collections
-import pkgutil
 import shutil
 from io import StringIO
 import pickle
@@ -29,7 +28,10 @@ import winKernel
 import addonAPIVersion
 from . import addonVersionCheck
 from .addonVersionCheck import isAddonCompatible
+import importlib
+from types import ModuleType
 import extensionPoints
+from keyword import iskeyword
 
 
 MANIFEST_FILENAME = "manifest.ini"
@@ -475,25 +477,31 @@ class Addon(AddonBase):
 		extension_path = os.path.join(self.path, package.__name__)
 		return extension_path
 
-	def loadModule(self, name):
+	def loadModule(self, name: str) -> ModuleType:
 		""" loads a python module from the addon directory
 		@param name: the module name
-		@type name: string
-		@returns the python module with C{name}
-		@rtype python module
 		"""
-		log.debug("Importing module %s from plugin %s", name, self.name)
-		importer = pkgutil.ImpImporter(self.path)
-		loader = importer.find_module(name)
-		if not loader:
-			return None
+		path = self.path
+		moduleName = name
+		if '.' in name:
+			splitName = name.split('.')
+			moduleName = splitName[-1]
+			path = os.path.join(path, *splitName[:-1])
+		if not moduleName.isidentifier() or iskeyword(moduleName):
+			raise ValueError(f"{name} is an invalid python module name")
+		log.debug(f"Importing module {name} from plugin {self!r}")
 		# Create a qualified full name to avoid modules with the same name on sys.modules.
-		fullname = "addons.%s.%s" % (self.name, name)
-		try:
-			return loader.load_module(fullname)
-		except ImportError:
-			# in this case return None, any other error throw to be handled elsewhere
+		fullName = f"addons.{self.name}.{name}"
+		if fullName in sys.modules:
+			return importlib.import_module(fullName)
+		spec = importlib.machinery.PathFinder.find_spec(fullName, [path])
+		if not spec:
 			return None
+		mod = importlib.util.module_from_spec(spec)
+		sys.modules[fullName] = mod
+		if spec.loader:
+			spec.loader.exec_module(mod)
+		return mod
 
 	def getTranslationsInstance(self, domain='nvda'):
 		""" Gets the gettext translation instance for this add-on.
