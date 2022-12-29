@@ -21,14 +21,14 @@ so NVDA should enter sleep mode while it is active.
 
 Usage:
 ```
-def onSecureDesktopChange(_isSecureDesktop: bool):
+def onSecureDesktopChange(isSecureDesktop: bool):
 	'''
-	@param _isSecureDesktop: True if the new desktop is the secure desktop.
+	@param isSecureDesktop: True if the new desktop is the secure desktop.
 	'''
 	pass
 
 post_secureDesktopStateChange.register(onSecureDesktopChange)
-post_secureDesktopStateChange.notify(_isSecureDesktop=True)
+post_secureDesktopStateChange.notify(isSecureDesktop=True)
 post_secureDesktopStateChange.unregister(onSecureDesktopChange)
 ```
 """
