@@ -290,7 +290,8 @@ elif globalVars.appArgs.check_running:
 
 
 # Suppress E402 (module level import not at top of file)
-from systemUtils import _getDesktopName, _isSecureDesktop  # noqa: E402
+from systemUtils import _getDesktopName  # noqa: E402
+from winAPI.secureDesktop import _isSecureDesktop  # noqa: E402
 # Ensure multiple instances are not fully started by using a mutex
 desktopName = _getDesktopName()
 _log.info(f"DesktopName: {desktopName}")

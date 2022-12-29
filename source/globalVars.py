@@ -48,7 +48,7 @@ class DefaultAppArgs(argparse.Namespace):
 	When this is True, NVDA is running in secure mode.
 	This is set to True when NVDA starts with the --secure parameter.
 	This is also set to True when NVDA is running on a secure screen
-	(systemUtils._isSecureDesktop() returns True)
+	(winAPI.secureDesktop._isSecureDesktop() returns True)
 	and the serviceDebug parameter is not set.
 
 	For more information, refer to devDocs/technicalDesignOverview.md 'Logging in secure mode'

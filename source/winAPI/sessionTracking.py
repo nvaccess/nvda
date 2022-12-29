@@ -199,7 +199,7 @@ def _isLockScreenModeActive() -> bool:
 	Includes temporary locked desktops,
 	such as the PIN workflow reset and the Out Of Box Experience.
 	"""
-	from systemUtils import _isSecureDesktop
+	from winAPI.secureDesktop import _isSecureDesktop
 	if _isSecureDesktop():
 		# Use secure mode instead if on the secure desktop
 		return False

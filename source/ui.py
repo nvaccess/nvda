@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2008-2020 NV Access Limited, James Teh, Dinesh Kaushal, Davy Kager, André-Abush Clause,
+# Copyright (C) 2008-2022 NV Access Limited, James Teh, Dinesh Kaushal, Davy Kager, André-Abush Clause,
 # Babbage B.V., Leonard de Ruijter, Michael Curran, Accessolutions, Julien Cochuyt
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
@@ -11,10 +11,9 @@ See L{gui} for the graphical user interface.
 """
 
 import os
-import sys
 from ctypes import windll, byref, POINTER, addressof
 from comtypes import IUnknown
-from comtypes import automation 
+from comtypes import automation
 from html import escape
 from logHandler import log
 import gui
@@ -24,7 +23,7 @@ from config.configFlags import TetherTo
 import globalVars
 from typing import Optional
 
-from systemUtils import _isSecureDesktop
+from winAPI.secureDesktop import _isSecureDesktop
 
 # From urlmon.h
 URL_MK_UNIFORM = 1
