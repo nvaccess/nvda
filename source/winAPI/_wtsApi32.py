@@ -89,9 +89,8 @@ class WTS_INFO_CLASS(IntEnum):
 	WTSConfigInfo = 26
 	WTSValidationInfo = 27  # Info Class value used to fetch Validation Information
 	# through the WTSQuerySessionInformation
-	WTSQuerySessionInformation = 28
-	WTSSessionAddressV4 = 29
-	WTSIsRemoteSession = 30
+	WTSSessionAddressV4 = 28
+	WTSIsRemoteSession = 29
 
 
 WTS_CONNECTSTATE_CLASS = c_int
