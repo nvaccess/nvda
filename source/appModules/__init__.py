@@ -65,4 +65,6 @@ This mapping is needed since:
 - Names of some programs are incompatible with the Python's import system (they contain a dot or a plus)
 - Sometimes it is necessary to map one module to multiple executables - this map saves us from adding multiple
  appModules in such cases.
+
+Names should be handled in a case-insensitive manner and lowercase.
 """

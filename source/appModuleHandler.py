@@ -112,7 +112,7 @@ def _warnDeprecatedAliasAppModule() -> None:
 	# Since the current frame belongs to the calling function inside `appModuleHandler`
 	# we need to retrieve the file name from the preceding frame which belongs to the module in which this
 	# function is executed.
-	currModName = os.path.splitext(os.path.basename(inspect.stack()[1].filename))[0]
+	currModName = os.path.splitext(os.path.basename(inspect.stack()[1].filename))[0].lower()
 	try:
 		replacementModName = appModules.EXECUTABLE_NAMES_TO_APP_MODS[currModName]
 	except KeyError:
@@ -149,6 +149,7 @@ def _getPossibleAppModuleNamesForExecutable(executableName: str) -> Tuple[str, .
 	- Just the name of the executable to cover a standard appModule named the same as the executable
 	- The alias from `appModules.EXECUTABLE_NAMES_TO_APP_MODS` if it exists.
 	"""
+	executableName = executableName.lower()
 	return tuple(
 		aliasName for aliasName in (
 			_executableNamesToAppModsAddons.get(executableName),
@@ -168,6 +169,7 @@ def doesAppModuleExist(name: str, ignoreDeprecatedAliases: bool = False) -> bool
 	:param ignoreDeprecatedAliases: used for backward compatibility, so that by default alias modules
 	are not excluded.
 	"""
+	name = name.lower()
 	try:
 		modSpec = importlib.util.find_spec(f"appModules.{name}", package=appModules)
 	except ImportError:
