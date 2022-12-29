@@ -100,8 +100,12 @@ Please open a GitHub issue if your Add-on has an issue with updating to the new 
 
 === Deprecations ===
 - ``NVDAObjects.UIA.winConsoleUIA.WinTerminalUIA`` is deprecated and usage is discouraged. (#14047)
-- ``config.addConfigDirsToPythonPackagePath`` has been moved. Use ``addonHandler.packaging.addDirsToPythonPackagePath`` instead. (#14350)
-- ``braille.BrailleHandler.TETHER_*`` are deprecated. Please use ``configFlags.TetherTo.*.value`` instead. (#14233)
+- ``config.addConfigDirsToPythonPackagePath`` has been moved.
+Use ``addonHandler.packaging.addDirsToPythonPackagePath`` instead. (#14350)
+- ``braille.BrailleHandler.TETHER_*`` are deprecated.
+Please use ``configFlags.TetherTo.*.value`` instead. (#14233)
+- ``utils.security.postSessionLockStateChanged`` is deprecated.
+Please use ``utils.security.post_sessionLockStateChanged`` instead. (#14486)
 -
 
 
