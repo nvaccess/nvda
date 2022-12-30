@@ -95,6 +95,13 @@ Please open a GitHub issue if your Add-on has an issue with updating to the new 
     -
   -
 - The ``NVDAHelper.RemoteLoader64`` class has been removed with no replacement. (#14449)
+- The following functions in ``winAPI.sessionTracking`` are removed with no replacement. (#14416, #14490)
+  - ``isWindowsLocked``
+  - ``handleSessionChange``
+  - ``unregister``
+  - ``register``
+  - ``isLockStateSuccessfullyTracked``
+  - 
 -
 
 
