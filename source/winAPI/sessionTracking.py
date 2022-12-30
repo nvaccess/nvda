@@ -30,6 +30,7 @@ from typing import (
 
 from baseObject import AutoPropertyObject
 from logHandler import log
+from NVDAState import _TrackNVDAInitialization
 
 from .types import HWNDValT
 from ._wtsApi32 import (
@@ -177,7 +178,6 @@ def isWindowsLocked() -> bool:
 
 
 def _isWindowsLocked() -> bool:
-	from core import _TrackNVDAInitialization
 	if not _TrackNVDAInitialization.isInitializationComplete():
 		# Wait until initialization is complete,
 		# so NVDA and other consumers can register the lock state
