@@ -87,6 +87,26 @@ Lưu ý là vẫn còn những lỗi được tìm thấy với Chrome và Edge.
 Phần này không được dịch. Vui lòng xem bản tiếng Anh changes.t2t để biết thêm thông tin.
 
 
+= 2022.3.3 =
+Đây là bản phát hành phụ nhằm sửa lỗi với 2022.3.2, 2022.3.1 và 2022.3.
+bản này cũng tìm ra một lỗi bảo mật.
+
+== Sửa lỗi bảo mật ==
+- Ngăn chặn truy cập hệ thống (ví dụ: NVDA Python console) với những người dùng không được xác thực.
+([GHSA-fpwc-2gxx-j9v7 https://github.com/nvaccess/nvda/security/advisories/GHSA-fpwc-2gxx-j9v7])
+-
+
+== Sửa lỗi ==
+- Sửa lỗi NVDA bị đóng băng khi khóa máy, NVDA sẽ cho phép truy cập Desktop người dùng khi ở trong màn hình khóa của Windows. (#14416)
+- Sửa lỗi NVDA bị đóng băng khi khóa máy, NVDA sẽ không vận hành như vậy khi thiết bị còn đang bị khóa. (#14416)
+- Sửa lỗi tiếp cận với Windows "forgot my PIN" process và Windows update/install experience. (#14368)
+- Sửa lỗi khi cố gắng cài NVDA trong vài môi trường Windows, Windows Server chẳng hạn. (#14379)
+-
+
+== Các thay đổi cho nhà phát triển ==
+Phần này không được dịch. Vui lòng xem bản tiếng Anh changes.t2t để biết thêm thông tin.
+
+
 = 2022.3.2 =
 Đây là bản phát hành phụ nhằm sửa lỗi hồi quy với 2022.3.1 và giải quyết một lỗi bảo mật.
 

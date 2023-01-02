@@ -99,6 +99,12 @@ Por favor consulta [a guía do desenvolvedor https://www.nvaccess.org/files/nvda
 
 = 2022.3.3 =
 Esta é unha versión menor para arranxar problemas con 2022.3.2, 2022.3.1 e 2022.3.
+Esto tamén aborda un problema de seguridade.
+
+== Arranxos de Seguridade ==
+- Evita un posible aceso ao sistema (por exemplo: na consola Python de NVDA) para usuarios non autenticados.
+([GHSA-fpwc-2gxx-j9v7 https://github.com/nvaccess/nvda/security/advisories/GHSA-fpwc-2gxx-j9v7])
+-
 
 == Arranxo de Erros ==
 - Arranxado un erro no que se o NVDA conxélase cando se bloquea, o NVDA permitirá accesar aos usuarios do escritorio mentres se estea na pantalla de bloqueo de Windows. (#14416)

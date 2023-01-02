@@ -99,6 +99,12 @@ Por favor consulta [la guía del desarrollador https://www.nvaccess.org/files/nv
 
 = 2022.3.3 =
 Esta es una versión menor para corregir problemas con 2022.3.2, 2022.3.1 y 2022.3.
+Esto también aborda un problema de seguridad.
+
+== Correcciones de Seguridad ==
+- Evita un posible acceso al sistema (por ejemplo: en la consola Python de NVDA) para usuarios no autenticados.
+([GHSA-fpwc-2gxx-j9v7 https://github.com/nvaccess/nvda/security/advisories/GHSA-fpwc-2gxx-j9v7])
+-
 
 == Corrección de Fallos ==
 - Corregido un fallo en el que si NVDA se congela cuando se bloquea, NVDA permitirá acceder a los usuarios de escritorio mientras se esté en la pantalla de bloqueo de Windows. (#14416)

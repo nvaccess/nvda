@@ -307,11 +307,11 @@ def _getCurrentSessionInfoEx() -> Optional[_WTS_INFO_POINTER_T]:
 		# (or the current session) specify WTS_CURRENT_SESSION
 		WTS_INFO_CLASS.WTSSessionInfoEx,  # Indicates the type of session information to retrieve
 		# Fetch a WTSINFOEXW containing a WTSINFOEX_LEVEL1 structure.
-		ctypes.pointer(ppBuffer),  # A pointer to a variable that receives a pointer to the requested information.
+		ctypes.byref(ppBuffer),  # A pointer to a variable that receives a pointer to the requested information.
 		# The format and contents of the data depend on the information class specified in the WTSInfoClass
 		# parameter.
 		# To free the returned buffer, call the WTSFreeMemory function.
-		ctypes.pointer(pBytesReturned),  # A pointer to a variable that receives the size, in bytes, of the data
+		ctypes.byref(pBytesReturned),  # A pointer to a variable that receives the size, in bytes, of the data
 		# returned in ppBuffer.
 	)
 	try:
