@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2012-2022 Rui Batista, NV Access Limited, Noelia Ruiz Martínez,
+# Copyright (C) 2012-2023 Rui Batista, NV Access Limited, Noelia Ruiz Martínez,
 # Joseph Lee, Babbage B.V., Arnold Loubriat, Łukasz Golonka, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -487,7 +487,8 @@ class Addon(AddonBase):
 		log.debug(f"Importing module {name} from plugin {self!r}")
 		# Create a qualified full name to avoid modules with the same name on sys.modules.
 		fullName = f"addons.{self.name}.{name}"
-		# If the given name contains dots (i.e. it is a submodule import), ensure the top module is created correctly.
+		# If the given name contains dots (i.e. it is a submodule import),
+		# ensure the module at the top of the hierarchy is created correctly.
 		# After that, the import mechanism will be able to resolve the submodule automatically.
 		fullNameTop = f"addons.{self.name}.{splitName[0]}"
 		if fullNameTop in sys.modules:
