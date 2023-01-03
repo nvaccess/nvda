@@ -91,10 +91,15 @@ import braille
 # Disable auto detection of braille displays when unit testing.
 config.conf['braille']['display'] = "noBraille"
 braille.initialize()
-# For braille unit tests, we need to construct a fake braille display as well as enable the braille handler
+
+# For braille unit tests, we need to enable the braille handler by providing it a  cell count
 # Give the display 40 cells
-braille.handler.displaySize=40
-braille.handler.enabled = True
+def getFakeCellCount(numCells: int) ->int:
+	return 40
+
+
+braille.handler.filter_displaySize.register(getFakeCellCount)
+
 # The focus and navigator objects need to be initialized to something.
 from .objectProvider import PlaceholderNVDAObject,NVDAObjectWithRole
 phObj = PlaceholderNVDAObject()
