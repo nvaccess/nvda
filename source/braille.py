@@ -734,6 +734,109 @@ class NVDAObjectRegion(Region):
 			pass
 
 
+def getControlFieldBraille(
+		info: textInfos.TextInfo,
+		field: textInfos.Field,
+		ancestors: typing.List[textInfos.Field],
+		reportStart: bool,
+		formatConfig: config.AggregatedSection
+) -> Optional[str]:
+	presCat = field.getPresentationCategory(ancestors, formatConfig)
+	# Cache this for later use.
+	field._presCat = presCat
+	role = field.get("role", controlTypes.Role.UNKNOWN)
+	if reportStart:
+		# If this is a container, only report it if this is the start of the node.
+		if presCat == field.PRESCAT_CONTAINER and not field.get("_startOfNode"):
+			return None
+	else:
+		# We only report ends for containers that are not landmarks/regions
+		# and only if this is the end of the node.
+		if (
+			presCat != field.PRESCAT_CONTAINER
+			or not field.get("_endOfNode")
+			or role == controlTypes.Role.LANDMARK
+		):
+			return None
+
+	description = None
+	_descriptionFrom: controlTypes.DescriptionFrom = field.get("_description-from")
+	_descriptionIsContent: bool = field.get("descriptionIsContent", False)
+	if (
+		not _descriptionIsContent
+		# Note "reportObjectDescriptions" is not a reason to include description,
+		# "Object" implies focus/object nav, getControlFieldBraille calculates text for Browse mode.
+		# There is no way to identify getControlFieldBraille being called for reason focus, as is done in speech.
+		and (
+			config.conf["annotations"]["reportAriaDescription"]
+			and _descriptionFrom == controlTypes.DescriptionFrom.ARIA_DESCRIPTION
+		)
+	):
+		description = field.get("description", None)
+
+	states = field.get("states", set())
+	value=field.get('value',None)
+	current = field.get('current', controlTypes.IsCurrent.NO)
+	placeholder=field.get('placeholder', None)
+	hasDetails = field.get('hasDetails', False) and config.conf["annotations"]["reportDetails"]
+	if config.conf["annotations"]["reportDetails"]:
+		detailsRoles: Set[Union[None, controlTypes.Role]] = field.get('detailsRoles')
+	else:
+		detailsRoles = set()
+
+	roleText = field.get('roleTextBraille', field.get('roleText'))
+	landmark = field.get("landmark")
+	if not roleText and role == controlTypes.Role.LANDMARK and landmark:
+		roleText = f"{roleLabels[controlTypes.Role.LANDMARK]} {landmarkLabels[landmark]}"
+
+	content = field.get("content")
+
+	if presCat == field.PRESCAT_LAYOUT:
+		return _getControlFieldForLayoutPresentation(
+			description=description,
+			current=current,
+			hasDetails=hasDetails,
+			detailsRoles=detailsRoles,
+			role=role,
+			content=content,
+		)
+
+	elif role in (controlTypes.Role.TABLECELL, controlTypes.Role.TABLECOLUMNHEADER, controlTypes.Role.TABLEROWHEADER) and field.get("table-id"):
+		return _getControlFieldForTableCell(
+			description=description,
+			current=current,
+			hasDetails=hasDetails,
+			detailsRoles=detailsRoles,
+			field=field,
+			formatConfig=formatConfig,
+			states=states,
+		)
+
+	elif reportStart:
+		return _getControlFieldForReportStart(
+			description=description,
+			current=current,
+			hasDetails=hasDetails,
+			detailsRoles=detailsRoles,
+			field=field,
+			role=role,
+			states=states,
+			content=content,
+			info=info,
+			value=value,
+			roleText=roleText,
+			placeholder=placeholder,
+		)
+
+	else:
+		# Translators: Displayed in braille at the end of a control field such as a list or table.
+		# %s is replaced with the control's role.
+		return (_("%s end") % getPropertiesBraille(
+			role=role,
+			roleText=roleText
+		))
+
+
 def _getControlFieldForLayoutPresentation(
 		description: Optional[str],
 		current: controlTypes.IsCurrent,
@@ -848,109 +951,6 @@ def _getControlFieldForReportStart(
 			except (NotImplementedError, LookupError):
 				pass
 	return text
-
-
-def getControlFieldBraille(
-		info: textInfos.TextInfo,
-		field: textInfos.Field,
-		ancestors: typing.List[textInfos.Field],
-		reportStart: bool,
-		formatConfig: config.AggregatedSection
-) -> Optional[str]:
-	presCat = field.getPresentationCategory(ancestors, formatConfig)
-	# Cache this for later use.
-	field._presCat = presCat
-	role = field.get("role", controlTypes.Role.UNKNOWN)
-	if reportStart:
-		# If this is a container, only report it if this is the start of the node.
-		if presCat == field.PRESCAT_CONTAINER and not field.get("_startOfNode"):
-			return None
-	else:
-		# We only report ends for containers that are not landmarks/regions
-		# and only if this is the end of the node.
-		if (
-			presCat != field.PRESCAT_CONTAINER
-			or not field.get("_endOfNode")
-			or role == controlTypes.Role.LANDMARK
-		):
-			return None
-
-	description = None
-	_descriptionFrom: controlTypes.DescriptionFrom = field.get("_description-from")
-	_descriptionIsContent: bool = field.get("descriptionIsContent", False)
-	if (
-		not _descriptionIsContent
-		# Note "reportObjectDescriptions" is not a reason to include description,
-		# "Object" implies focus/object nav, getControlFieldBraille calculates text for Browse mode.
-		# There is no way to identify getControlFieldBraille being called for reason focus, as is done in speech.
-		and (
-			config.conf["annotations"]["reportAriaDescription"]
-			and _descriptionFrom == controlTypes.DescriptionFrom.ARIA_DESCRIPTION
-		)
-	):
-		description = field.get("description", None)
-
-	states = field.get("states", set())
-	value=field.get('value',None)
-	current = field.get('current', controlTypes.IsCurrent.NO)
-	placeholder=field.get('placeholder', None)
-	hasDetails = field.get('hasDetails', False) and config.conf["annotations"]["reportDetails"]
-	if config.conf["annotations"]["reportDetails"]:
-		detailsRoles: Set[Union[None, controlTypes.Role]] = field.get('detailsRoles')
-	else:
-		detailsRoles = set()
-
-	roleText = field.get('roleTextBraille', field.get('roleText'))
-	landmark = field.get("landmark")
-	if not roleText and role == controlTypes.Role.LANDMARK and landmark:
-		roleText = f"{roleLabels[controlTypes.Role.LANDMARK]} {landmarkLabels[landmark]}"
-
-	content = field.get("content")
-
-	if presCat == field.PRESCAT_LAYOUT:
-		return _getControlFieldForLayoutPresentation(
-			description=description,
-			current=current,
-			hasDetails=hasDetails,
-			detailsRoles=detailsRoles,
-			role=role,
-			content=content,
-		)
-
-	elif role in (controlTypes.Role.TABLECELL, controlTypes.Role.TABLECOLUMNHEADER, controlTypes.Role.TABLEROWHEADER) and field.get("table-id"):
-		return _getControlFieldForTableCell(
-			description=description,
-			current=current,
-			hasDetails=hasDetails,
-			detailsRoles=detailsRoles,
-			field=field,
-			formatConfig=formatConfig,
-			states=states,
-		)
-
-	elif reportStart:
-		return _getControlFieldForReportStart(
-			description=description,
-			current=current,
-			hasDetails=hasDetails,
-			detailsRoles=detailsRoles,
-			field=field,
-			role=role,
-			states=states,
-			content=content,
-			info=info,
-			value=value,
-			roleText=roleText,
-			placeholder=placeholder,
-		)
-
-	else:
-		# Translators: Displayed in braille at the end of a control field such as a list or table.
-		# %s is replaced with the control's role.
-		return (_("%s end") % getPropertiesBraille(
-			role=role,
-			roleText=roleText
-		))
 
 
 def getFormatFieldBraille(field, fieldCache, isAtStart, formatConfig):
