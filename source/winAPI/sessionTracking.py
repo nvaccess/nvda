@@ -23,15 +23,14 @@ from ctypes.wintypes import (
 )
 import enum
 from typing import (
-	Any,
 	Generator,
 	Optional,
 )
 
 from baseObject import AutoPropertyObject
 from logHandler import log
+from NVDAState import _TrackNVDAInitialization
 
-from .types import HWNDValT
 from ._wtsApi32 import (
 	WTSINFOEXW,
 	WTSQuerySessionInformation,
@@ -124,64 +123,20 @@ def initialize():
 def pumpAll():
 	"""Used to track the session lock state every core cycle, and detect changes."""
 	global _wasLockedPreviousPumpAll
-	from utils.security import postSessionLockStateChanged
+	from utils.security import post_sessionLockStateChanged
 	windowsIsNowLocked = _isWindowsLocked()
 	# search for lock app module once lock state is known,
-	# but before triggering callbacks via postSessionLockStateChanged
+	# but before triggering callbacks via post_sessionLockStateChanged
 	if windowsIsNowLocked != _wasLockedPreviousPumpAll:
 		_wasLockedPreviousPumpAll = windowsIsNowLocked
-		postSessionLockStateChanged.notify(isNowLocked=windowsIsNowLocked)
-
-
-def __getattr__(attrName: str) -> Any:
-	"""Module level `__getattr__` used to preserve backward compatibility."""
-	from buildVersion import version_year
-	import NVDAState
-	if not NVDAState._allowDeprecatedAPI():
-		return
-	if version_year < 2023:
-		if attrName == "isWindowsLocked":
-			log.warning(
-				"isWindowsLocked is deprecated for removal in 2023.1"
-			)
-			return _isWindowsLocked
-		elif attrName == "isLockStateSuccessfullyTracked":
-			log.warning(
-				"isLockStateSuccessfullyTracked is deprecated for removal in 2023.1"
-			)
-			return _isLockStateSuccessfullyTracked
-		elif attrName == "register":
-			log.warning(
-				"sessionTracking.register is deprecated for removal in 2023.1"
-			)
-			return _register
-		elif attrName == "unregister":
-			log.warning(
-				"sessionTracking.register is deprecated for removal in 2023.1"
-			)
-			return _unregister
-		elif attrName == "handleSessionChange":
-			log.warning(
-				"sessionTracking.handleSessionChange is deprecated for removal in 2023.1"
-			)
-			return _handleSessionChange
-	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
-
-
-def isWindowsLocked() -> bool:
-	log.error(
-		"This function is deprecated, for removal in 2023.1. "
-		"It was never expected that add-on authors would use this function"
-	)
-	return _isWindowsLocked()
+		post_sessionLockStateChanged.notify(isNowLocked=windowsIsNowLocked)
 
 
 def _isWindowsLocked() -> bool:
-	from core import _TrackNVDAInitialization
 	if not _TrackNVDAInitialization.isInitializationComplete():
 		# Wait until initialization is complete,
 		# so NVDA and other consumers can register the lock state
-		# via postSessionLockStateChanged.
+		# via post_sessionLockStateChanged.
 		return False
 	if _lockStateTracker is None:
 		log.error(
@@ -231,40 +186,6 @@ def _isWindowsLocked_checkViaSessionQuery() -> bool:
 		)
 		return False
 	return sessionQueryLockState == WTS_LockState.WTS_SESSIONSTATE_LOCK
-
-
-def _isLockStateSuccessfullyTracked() -> bool:
-	log.error(
-		"NVDA no longer registers to receive session tracking notifications. "
-		"This function is deprecated, for removal in 2023.1. "
-		"It was never expected that add-on authors would use this function"
-	)
-	return True
-
-
-def _register(handle: HWNDValT) -> bool:
-	log.error(
-		"NVDA no longer registers to receive session tracking notifications. "
-		"This function is deprecated, for removal in 2023.1. "
-		"It was never expected that add-on authors would use this function"
-	)
-	return True
-
-
-def _unregister(handle: HWNDValT) -> None:
-	log.error(
-		"NVDA no longer registers to receive session tracking notifications. "
-		"This function is deprecated, for removal in 2023.1. "
-		"It was never expected that add-on authors would use this function"
-	)
-
-
-def _handleSessionChange(newState: WindowsTrackedSession, sessionId: int) -> None:
-	log.error(
-		"NVDA no longer registers to receive session tracking notifications. "
-		"This function is deprecated, for removal in 2023.1. "
-		"It was never expected that add-on authors would use this function"
-	)
 
 
 _WTS_INFO_POINTER_T = ctypes.POINTER(WTSINFOEXW)
