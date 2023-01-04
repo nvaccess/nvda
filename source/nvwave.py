@@ -651,7 +651,7 @@ def playWaveFile(
 	@param fileName: the path to the wave file, usually absolute.
 	@param asynchronous: whether the wave file should be played asynchronously
 		If C{False}, the calling thread is blocked until the wave has finished playing.
-	@param isSPeechWaveFileCommand: whether this wave is played as part of a speech sequence.
+	@param isSpeechWaveFileCommand: whether this wave is played as part of a speech sequence.
 	"""
 	global fileWavePlayer, fileWavePlayerThread
 	f = wave.open(fileName,"r")
@@ -661,7 +661,7 @@ def playWaveFile(
 	if not decide_playWaveFile.decide(
 		fileName=fileName,
 		asynchronous=asynchronous,
-		isSPeechWaveFileCommand=isSPeechWaveFileCommand
+		isSpeechWaveFileCommand=isSpeechWaveFileCommand
 	):
 		log.debug(
 			"Playing wave file canceled by handler registered to decide_playWaveFile extension point"

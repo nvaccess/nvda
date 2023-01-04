@@ -357,7 +357,7 @@ class BeepCommand(BaseCallbackCommand):
 			self.length,
 			left=self.left,
 			right=self.right,
-			isSPeechBeepCommand=True
+			isSpeechBeepCommand=True
 		)
 
 	def __repr__(self):
@@ -373,7 +373,7 @@ class WaveFileCommand(BaseCallbackCommand):
 
 	def run(self):
 		import nvwave
-		nvwave.playWaveFile(self.fileName, asynchronous=True, isSPeechWaveFileCommand=True)
+		nvwave.playWaveFile(self.fileName, asynchronous=True, isSpeechWaveFileCommand=True)
 
 	def __repr__(self):
 		return "WaveFileCommand(%r)" % self.fileName

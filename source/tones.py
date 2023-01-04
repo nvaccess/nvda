@@ -61,7 +61,7 @@ def beep(
 	@param length: length of the tone in ms
 	@param left: volume of the left channel (0 to 100)
 	@param right: volume of the right channel (0 to 100)
-	@param isSPeechBeepCommand: whether this beep is created as part of a speech sequence
+	@param isSpeechBeepCommand: whether this beep is created as part of a speech sequence
 	"""
 	log.io("Beep at pitch %s, for %s ms, left volume %s, right volume %s"%(hz,length,left,right))
 	if not decide_beep.decide(
@@ -69,7 +69,7 @@ def beep(
 		length=length,
 		left=left,
 		right=right,
-		isSPeechBeepCommand=isSPeechBeepCommand
+		isSpeechBeepCommand=isSpeechBeepCommand
 	):
 		log.debug(
 			"Beep canceled by handler registered to decide_beep extension point"
