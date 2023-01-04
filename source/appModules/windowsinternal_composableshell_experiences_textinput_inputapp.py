@@ -308,7 +308,11 @@ class AppModule(appModuleHandler.AppModule):
 					)
 					and obj.parent.parent.UIAAutomationId == "IME_Candidate_Window"
 				)
-				or obj.parent.UIAAutomationId in ("IME_Candidate_Window", "IME_Prediction_Window")
+				or obj.parent.UIAAutomationId in (
+					"IME_Candidate_Window",
+					"IME_Prediction_Window",
+					"TEMPLATE_PART_CandidatePanel",
+				)
 			):
 				clsList.insert(0, ImeCandidateItem)
 			elif obj.role == controlTypes.Role.PANE and obj.UIAAutomationId in (
