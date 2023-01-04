@@ -33,7 +33,11 @@ This can be used with text editors that do not support paragraph navigation nati
 
 
 == Bug Fixes ==
-- In Windows 11, NVDA will announce search highlights when opening Start menu. (#13841)
+- Windows 11 fixes:
+  - NVDA will announce search highlights when opening Start menu. (#13841)
+  - On ARM, x64 apps are no longer identified as ARM64 applications. (#14403)
+  - Clipboard history menu items such as "pin item" can be accessed. (#14508)
+  -
 - Suggestions are reported when typing an @mention in in Microsoft Excel comments. (#13764)
 - In the Google Chrome location bar, suggestion controls (switch to tab, remove suggestion etc) are now reported when selected. (#13522)
 - When requesting formatting information, colors are now explicitly reported in Wordpad or log viewer, rather than only "Default color". (#13959)
@@ -56,7 +60,6 @@ This can be used with text editors that do not support paragraph navigation nati
   -
 - Emojis should now be reported in more languages. (#14433)
 - The presence of an annotation is no longer missing in braille for some elements. (#13815)
-- In Windows 11 on ARM, x64 apps are no longer identified as ARM64 applications. (#14403)
 -
 
 
