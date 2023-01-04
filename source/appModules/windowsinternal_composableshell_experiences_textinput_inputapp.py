@@ -111,6 +111,9 @@ class AppModule(appModuleHandler.AppModule):
 
 	# Cache the most recently selected item.
 	_recentlySelected = None
+	# In Windows 11, clipboard history is seen as a web document.
+	# Turn off browse mode by default so clipboard history entry menu items can be announced when tabbed to.
+	disableBrowseModeByDefault: bool = True
 
 	def event_UIA_elementSelected(self, obj, nextHandler):
 		# Logic for IME candidate items is handled all within its own object
