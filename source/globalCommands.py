@@ -2349,7 +2349,6 @@ class GlobalCommands(ScriptableObject):
 			For now, we minimise this risk by only reporting details at the current location.
 		"""
 		_isDebugLogCatEnabled = config.conf["debugLog"]["annotations"]
-	
 		objWithAnnotation = self._getNvdaObjWithAnnotationUnderCaret()
 		if (
 			not objWithAnnotation
