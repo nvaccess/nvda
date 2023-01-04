@@ -205,6 +205,11 @@ def _isObjectBelowLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 	"""
 	from IAccessibleHandler import SecureDesktopNVDAObject
 	from NVDAObjects.IAccessible import TaskListIcon
+	import config
+
+	if not config.isInstalledCopy():
+		# If NVDA is not installed, it cannot read below the lock screen
+		return False
 
 	foregroundWindow = winUser.getForegroundWindow()
 	foregroundProcessID, _foregroundThreadID = winUser.getWindowThreadProcessID(foregroundWindow)
