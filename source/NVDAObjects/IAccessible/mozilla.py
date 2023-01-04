@@ -144,17 +144,29 @@ class Mozilla(ia2Web.Ia2Web):
 		return annotationOrigin
 
 	def _get_detailsSummary(self) -> Optional[str]:
+		log.warning(
+			"NVDAObject.detailsSummary is deprecated. Use NVDAObject.annotations instead.",
+			stack_info=True,
+		)
 		for summary in self.annotations.summaries:
 			# just take the first for now.
 			return summary
 
 	def _get_detailsRole(self) -> Optional[controlTypes.Role]:
+		log.warning(
+			"NVDAObject.detailsRole is deprecated. Use NVDAObject.annotations instead.",
+			stack_info=True,
+		)
 		for role in self.annotations.roles:
 			# just take the first target for now.
 			return role
 
 	@property
 	def hasDetails(self) -> bool:
+		log.warning(
+			"NVDAObject.hasDetails is deprecated. Use NVDAObject.annotations instead.",
+			stack_info=True,
+		)
 		return bool(self.annotations)
 
 

@@ -224,6 +224,8 @@ def test_mark_aria_details_role():
 		"has details",
 		"form",
 	])
+	_spy: NVDASpyLib = _NvdaLib.getSpyLib()
+	_spy.setBrailleCellCount(400)
 
 	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey('downArrow')
 
@@ -256,10 +258,10 @@ def test_mark_aria_details_role():
 			" ",  # space between spans
 			"details",
 			"definition,",
-			# The role "form" is deliberately unsupported
-			# "details",
-			# "form",
-			# "edt end",
+			" ",
+			"details",
+			"form",
+			"edt end",
 		])
 	)
 	
@@ -312,11 +314,9 @@ def test_mark_aria_details_role():
 			" ",  # space between spans
 			"details",
 			"definition,",
-			" ",  # space between spans
-			"d"  # Is this the start of the word 'details' with the rest cut-off?
-			# The role "form" is deliberately unsupported
-			# "details",
-			# "form",
+			" ",
+			"details",
+			"form",
 			# "edt end",
 		])
 	)

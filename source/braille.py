@@ -13,11 +13,13 @@ from typing import (
 	Iterable,
 	List,
 	Optional,
+	Set,
 	Tuple,
 	Union,
 )
 from locale import strxfrm
 
+from annotation import _AnnotationRolesT
 import driverHandler
 import pkgutil
 import importlib
@@ -582,17 +584,29 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 		textList.append(description)
 	hasDetails = propertyValues.get("hasDetails")
 	if hasDetails:
-		detailsRole: Optional[controlTypes.Role] = propertyValues.get("detailsRole")
-		if detailsRole is not None:
-			detailsRoleLabel = roleLabels.get(detailsRole, detailsRole.displayString)
-			# Translators: Braille when there are further details/annotations that can be fetched manually.
-			# %s specifies the type of details (e.g. comment, suggestion)
-			textList.append(_("has %s") % detailsRoleLabel)
-		else:
-			textList.append(
-				# Translators: Braille when there are further details/annotations that can be fetched manually.
-				_("details")
+		# Translators: Braille when there are further details/annotations that can be fetched manually.
+		genericDetailsRole = _("details")
+		detailsRoles: _AnnotationRolesT = set(propertyValues.get("detailsRoles", []))
+		if not detailsRoles:
+			log.debugWarning(
+				"There should always be detailsRoles (at least a single None value) when hasDetails is true."
 			)
+			textList.append(
+				genericDetailsRole
+			)
+		else:
+			# Translators: Braille when there are further details/annotations that can be fetched manually.
+			# %s specifies the type of details (e.g. "has comment suggestion")
+			hasDetailsRoleTemplate = _("has %s")
+			rolesLabels = list((
+				hasDetailsRoleTemplate % roleLabels.get(role, role.displayString)
+				for role in detailsRoles
+				if role  # handle None case without the "has X" grammar.
+			))
+			if None in detailsRoles:
+				rolesLabels.insert(0, genericDetailsRole)
+			textList.append(" ".join(rolesLabels))  # no comma to save cells on braille display
+
 	keyboardShortcut = propertyValues.get("keyboardShortcut")
 	if keyboardShortcut:
 		textList.append(keyboardShortcut)
@@ -686,15 +700,15 @@ class NVDAObjectRegion(Region):
 			)
 		)
 		description = obj.description if _shouldUseDescription else None
-
+		detailsRoles = obj.annotations.roles if obj.annotations else None
 		text = getPropertiesBraille(
 			name=name,
 			role=role,
 			roleText=obj.roleTextBraille,
 			current=obj.isCurrent,
 			placeholder=placeholderValue,
-			hasDetails=obj.hasDetails,
-			detailsRole=obj.detailsRole,
+			hasDetails=bool(obj.annotations),
+			detailsRoles=detailsRoles,
 			value=obj.value if not NVDAObjectHasUsefulText(obj) else None ,
 			states=obj.states,
 			description=description,
@@ -720,16 +734,129 @@ class NVDAObjectRegion(Region):
 			pass
 
 
-#  C901 'getControlFieldBraille' is too complex
-# Note: when working on getControlFieldBraille, look for opportunities to simplify
-# and move logic out into smaller helper functions.
-def getControlFieldBraille(  # noqa: C901
+def _getControlFieldForLayoutPresentation(
+		description: Optional[str],
+		current: controlTypes.IsCurrent,
+		hasDetails: bool,
+		detailsRoles: _AnnotationRolesT,
+		role: controlTypes.Role,
+		content: Optional[str],
+) -> Optional[str]:
+	text = []
+	if description:
+		text.append(getPropertiesBraille(description=description))
+	if current:
+		text.append(getPropertiesBraille(current=current))
+	if hasDetails:
+		text.append(getPropertiesBraille(hasDetails=hasDetails, detailsRoles=detailsRoles))
+	if role == controlTypes.Role.GRAPHIC and content:
+		text.append(content)
+
+	if text:
+		return TEXT_SEPARATOR.join(text)
+	return None
+
+
+def _getControlFieldForTableCell(
+		description: Optional[str],
+		current: controlTypes.IsCurrent,
+		hasDetails: bool,
+		detailsRoles: _AnnotationRolesT,
+		field: textInfos.Field,
+		formatConfig: config.AggregatedSection,
+		states: Set[controlTypes.State],
+) -> str:
+	reportTableHeaders = formatConfig["reportTableHeaders"]
+	reportTableCellCoords = formatConfig["reportTableCellCoords"]
+	props = {
+		"states": states,
+		"rowNumber": (field.get("table-rownumber-presentational") or field.get("table-rownumber")),
+		"columnNumber": (field.get("table-columnnumber-presentational") or field.get("table-columnnumber")),
+		"rowSpan": field.get("table-rowsspanned"),
+		"columnSpan": field.get("table-columnsspanned"),
+		"includeTableCellCoords": reportTableCellCoords,
+		"current": current,
+		"description": description,
+		"hasDetails": hasDetails,
+		"detailsRoles": detailsRoles,
+	}
+	if reportTableHeaders in (ReportTableHeaders.ROWS_AND_COLUMNS, ReportTableHeaders.COLUMNS):
+		props["columnHeaderText"] = field.get("table-columnheadertext")
+	return getPropertiesBraille(**props)
+
+
+def _getControlFieldForReportStart(
+		description: Optional[str],
+		current: controlTypes.IsCurrent,
+		hasDetails: bool,
+		detailsRoles: _AnnotationRolesT,
+		field: textInfos.Field,
+		role: controlTypes.Role,
+		states: Set[controlTypes.State],
+		content: Optional[str],
+		info: textInfos.TextInfo,
+		value: Optional[str],
+		roleText: str,
+		placeholder: Optional[str],
+) -> str:
+	props = {
+		"states": states,
+		"value": value,
+		"current": current,
+		"placeholder": placeholder,
+		"roleText": roleText,
+		"description": description,
+		"hasDetails": hasDetails,
+		"detailsRoles": detailsRoles,
+	}
+
+	if role == controlTypes.Role.MATH:
+		# Don't report the role for math here.
+		# However, we still need to pass it (hence "_role").
+		props["_role"] = role
+	else:
+		props["role"] = role
+
+	if field.get('alwaysReportName', False):
+		# Ensure that the name of the field gets presented even if normally it wouldn't.
+		name = field.get("name")
+		if name:
+			props["name"] = name
+
+	if config.conf["presentation"]["reportKeyboardShortcuts"]:
+		kbShortcut = field.get("keyboardShortcut")
+		if kbShortcut:
+			props["keyboardShortcut"] = kbShortcut
+
+	level = field.get("level")
+	if level:
+		props["positionInfo"] = {"level": level}
+
+	text = getPropertiesBraille(**props)
+	if content:
+		if text:
+			text += TEXT_SEPARATOR
+		text += content
+	elif role == controlTypes.Role.MATH:
+		import mathPres
+		if mathPres.brailleProvider:
+			try:
+				if text:
+					text += TEXT_SEPARATOR
+				text += mathPres.brailleProvider.getBrailleForMathMl(
+					info.getMathMl(field))
+			except (NotImplementedError, LookupError):
+				pass
+	return text
+
+
+def getControlFieldBraille(
 		info: textInfos.TextInfo,
 		field: textInfos.Field,
 		ancestors: typing.List[textInfos.Field],
 		reportStart: bool,
 		formatConfig: config.AggregatedSection
-):
+) -> Optional[str]:
 	presCat = field.getPresentationCategory(ancestors, formatConfig)
 	# Cache this for later use.
 	field._presCat = presCat
@@ -769,9 +896,9 @@ def getControlFieldBraille(  # noqa: C901
 	placeholder=field.get('placeholder', None)
 	hasDetails = field.get('hasDetails', False) and config.conf["annotations"]["reportDetails"]
 	if config.conf["annotations"]["reportDetails"]:
-		detailsRole: Optional[controlTypes.Role] = field.get('detailsRole')
+		detailsRoles: Set[Union[None, controlTypes.Role]] = field.get('detailsRoles')
 	else:
-		detailsRole = None
+		detailsRoles = set()
 
 	roleText = field.get('roleTextBraille', field.get('roleText'))
 	landmark = field.get("landmark")
@@ -781,79 +908,42 @@ def getControlFieldBraille(  # noqa: C901
 	content = field.get("content")
 
 	if presCat == field.PRESCAT_LAYOUT:
-		text = []
-		if description:
-			text.append(getPropertiesBraille(description=description))
-		if current:
-			text.append(getPropertiesBraille(current=current))
-		if hasDetails:
-			text.append(getPropertiesBraille(hasDetails=hasDetails, detailsRole=detailsRole))
-		if role == controlTypes.Role.GRAPHIC and content:
-			text.append(content)
-		return TEXT_SEPARATOR.join(text) if len(text) != 0 else None
+		return _getControlFieldForLayoutPresentation(
+			description=description,
+			current=current,
+			hasDetails=hasDetails,
+			detailsRoles=detailsRoles,
+			role=role,
+			content=content,
+		)
 
 	elif role in (controlTypes.Role.TABLECELL, controlTypes.Role.TABLECOLUMNHEADER, controlTypes.Role.TABLEROWHEADER) and field.get("table-id"):
-		# Table cell.
-		reportTableHeaders = formatConfig["reportTableHeaders"]
-		reportTableCellCoords = formatConfig["reportTableCellCoords"]
-		props = {
-			"states": states,
-			"rowNumber": (field.get("table-rownumber-presentational") or field.get("table-rownumber")),
-			"columnNumber": (field.get("table-columnnumber-presentational") or field.get("table-columnnumber")),
-			"rowSpan": field.get("table-rowsspanned"),
-			"columnSpan": field.get("table-columnsspanned"),
-			"includeTableCellCoords": reportTableCellCoords,
-			"current": current,
-			"description": description,
-			"hasDetails": hasDetails,
-			"detailsRole": detailsRole,
-		}
-		if reportTableHeaders in (ReportTableHeaders.ROWS_AND_COLUMNS, ReportTableHeaders.COLUMNS):
-			props["columnHeaderText"] = field.get("table-columnheadertext")
-		return getPropertiesBraille(**props)
+		return _getControlFieldForTableCell(
+			description=description,
+			current=current,
+			hasDetails=hasDetails,
+			detailsRoles=detailsRoles,
+			field=field,
+			formatConfig=formatConfig,
+			states=states,
+		)
 
 	elif reportStart:
-		props = {
-			# Don't report the role for math here.
-			# However, we still need to pass it (hence "_role").
-			"_role" if role == controlTypes.Role.MATH else "role": role,
-			"states": states,
-			"value": value,
-			"current": current,
-			"placeholder": placeholder,
-			"roleText": roleText,
-			"description": description,
-			"hasDetails": hasDetails,
-			"detailsRole": detailsRole,
-		}
-		if field.get('alwaysReportName', False):
-			# Ensure that the name of the field gets presented even if normally it wouldn't.
-			name = field.get("name")
-			if name:
-				props["name"] = name
-		if config.conf["presentation"]["reportKeyboardShortcuts"]:
-			kbShortcut = field.get("keyboardShortcut")
-			if kbShortcut:
-				props["keyboardShortcut"] = kbShortcut
-		level = field.get("level")
-		if level:
-			props["positionInfo"] = {"level": level}
-		text = getPropertiesBraille(**props)
-		if content:
-			if text:
-				text += TEXT_SEPARATOR
-			text += content
-		elif role == controlTypes.Role.MATH:
-			import mathPres
-			if mathPres.brailleProvider:
-				try:
-					if text:
-						text += TEXT_SEPARATOR
-					text += mathPres.brailleProvider.getBrailleForMathMl(
-						info.getMathMl(field))
-				except (NotImplementedError, LookupError):
-					pass
-		return text
+		return _getControlFieldForReportStart(
+			description=description,
+			current=current,
+			hasDetails=hasDetails,
+			detailsRoles=detailsRoles,
+			field=field,
+			role=role,
+			states=states,
+			content=content,
+			info=info,
+			value=value,
+			roleText=roleText,
+			placeholder=placeholder,
+		)
+
 	else:
 		# Translators: Displayed in braille at the end of a control field such as a list or table.
 		# %s is replaced with the control's role.
