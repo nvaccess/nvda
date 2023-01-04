@@ -54,7 +54,7 @@ def beep(
 		length: int,
 		left: int = 50,
 		right: int = 50,
-		isSPeechBeepCommand: bool = False
+		isSpeechBeepCommand: bool = False
 ):
 	"""Plays a tone at the given hz, length, and stereo balance.
 	@param hz: pitch in hz of the tone

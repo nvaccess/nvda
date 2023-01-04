@@ -645,7 +645,7 @@ fileWavePlayerThread = None
 def playWaveFile(
 		fileName: str,
 		asynchronous: bool = True,
-		isSPeechWaveFileCommand: bool = False
+		isSpeechWaveFileCommand: bool = False
 ):
 	"""plays a specified wave file.
 	@param fileName: the path to the wave file, usually absolute.
