@@ -9,6 +9,8 @@ import os
 import typing
 from typing import (
 	TYPE_CHECKING,
+	Any,
+	Dict,
 	Generator,
 	Iterable,
 	List,
@@ -522,6 +524,31 @@ class TextRegion(Region):
 		self.rawText = text
 
 
+def _getAnnotationProperty(
+		propertyValues: Dict[str, Any]
+) -> str:
+	# Translators: Braille when there are further details/annotations that can be fetched manually.
+	genericDetailsRole = _("details")
+	detailsRoles: _AnnotationRolesT = set(propertyValues.get("detailsRoles", []))
+	if not detailsRoles:
+		log.debugWarning(
+			"There should always be detailsRoles (at least a single None value) when hasDetails is true."
+		)
+		return genericDetailsRole
+	else:
+		# Translators: Braille when there are further details/annotations that can be fetched manually.
+		# %s specifies the type of details (e.g. "has comment suggestion")
+		hasDetailsRoleTemplate = _("has %s")
+		rolesLabels = list((
+			hasDetailsRoleTemplate % roleLabels.get(role, role.displayString)
+			for role in detailsRoles
+			if role  # handle None case without the "has X" grammar.
+		))
+		if None in detailsRoles:
+			rolesLabels.insert(0, genericDetailsRole)
+		return " ".join(rolesLabels)  # no comma to save cells on braille display
+
+
 # C901 'getPropertiesBraille' is too complex
 # Note: when working on getPropertiesBraille, look for opportunities to simplify
 # and move logic out into smaller helper functions.
@@ -584,29 +611,7 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 		textList.append(description)
 	hasDetails = propertyValues.get("hasDetails")
 	if hasDetails:
-		# Translators: Braille when there are further details/annotations that can be fetched manually.
-		genericDetailsRole = _("details")
-		detailsRoles: _AnnotationRolesT = set(propertyValues.get("detailsRoles", []))
-		if not detailsRoles:
-			log.debugWarning(
-				"There should always be detailsRoles (at least a single None value) when hasDetails is true."
-			)
-			textList.append(
-				genericDetailsRole
-			)
-		else:
-			# Translators: Braille when there are further details/annotations that can be fetched manually.
-			# %s specifies the type of details (e.g. "has comment suggestion")
-			hasDetailsRoleTemplate = _("has %s")
-			rolesLabels = list((
-				hasDetailsRoleTemplate % roleLabels.get(role, role.displayString)
-				for role in detailsRoles
-				if role  # handle None case without the "has X" grammar.
-			))
-			if None in detailsRoles:
-				rolesLabels.insert(0, genericDetailsRole)
-			textList.append(" ".join(rolesLabels))  # no comma to save cells on braille display
-
+		textList.append(_getAnnotationProperty(propertyValues))
 	keyboardShortcut = propertyValues.get("keyboardShortcut")
 	if keyboardShortcut:
 		textList.append(keyboardShortcut)
