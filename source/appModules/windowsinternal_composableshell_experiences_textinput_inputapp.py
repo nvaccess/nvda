@@ -315,9 +315,13 @@ class AppModule(appModuleHandler.AppModule):
 				)
 			):
 				clsList.insert(0, ImeCandidateItem)
-			elif obj.role == controlTypes.Role.PANE and obj.UIAAutomationId in (
-				"IME_Candidate_Window",
-				"IME_Prediction_Window"
+			elif (
+				obj.role in (controlTypes.Role.PANE, controlTypes.Role.LIST, controlTypes.Role.POPUPMENU)
+				and obj.UIAAutomationId in (
+					"IME_Candidate_Window",
+					"IME_Prediction_Window",
+					"TEMPLATE_PART_CandidatePanel",
+				)
 			):
 				clsList.insert(0, ImeCandidateUI)
 			# #13104: newer revisions of Windows 11 build 22000 moves focus to emoji search field.
