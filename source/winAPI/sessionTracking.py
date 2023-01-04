@@ -125,13 +125,13 @@ def initialize():
 def pumpAll():
 	"""Used to track the session lock state every core cycle, and detect changes."""
 	global _wasLockedPreviousPumpAll
-	from utils.security import postSessionLockStateChanged
+	from utils.security import post_sessionLockStateChanged
 	windowsIsNowLocked = _isWindowsLocked()
 	# search for lock app module once lock state is known,
-	# but before triggering callbacks via postSessionLockStateChanged
+	# but before triggering callbacks via post_sessionLockStateChanged
 	if windowsIsNowLocked != _wasLockedPreviousPumpAll:
 		_wasLockedPreviousPumpAll = windowsIsNowLocked
-		postSessionLockStateChanged.notify(isNowLocked=windowsIsNowLocked)
+		post_sessionLockStateChanged.notify(isNowLocked=windowsIsNowLocked)
 
 
 def __getattr__(attrName: str) -> Any:
@@ -181,7 +181,7 @@ def _isWindowsLocked() -> bool:
 	if not _TrackNVDAInitialization.isInitializationComplete():
 		# Wait until initialization is complete,
 		# so NVDA and other consumers can register the lock state
-		# via postSessionLockStateChanged.
+		# via post_sessionLockStateChanged.
 		return False
 	if _lockStateTracker is None:
 		log.error(
