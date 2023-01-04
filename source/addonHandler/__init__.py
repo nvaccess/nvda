@@ -28,10 +28,10 @@ import winKernel
 import addonAPIVersion
 from . import addonVersionCheck
 from .addonVersionCheck import isAddonCompatible
+from .packaging import isModuleName
 import importlib
 from types import ModuleType
 import extensionPoints
-from keyword import iskeyword
 
 
 MANIFEST_FILENAME = "manifest.ini"
@@ -480,9 +480,10 @@ class Addon(AddonBase):
 	def loadModule(self, name: str) -> ModuleType:
 		""" loads a python module from the addon directory
 		@param name: the module name
+		@raises: Any exception that can be raised when importing a module, such as NameError, AttributeError, ImportError, etc.
+			a ValueError is raised when the module name is invalid.
 		"""
-		splitName = name.split('.')
-		if any(n for n in splitName if not n.isidentifier() or iskeyword(n)):
+		if not isModuleName(name):
 			raise ValueError(f"{name} is an invalid python module name")
 		log.debug(f"Importing module {name} from plugin {self!r}")
 		# Create a qualified full name to avoid modules with the same name on sys.modules.
@@ -490,6 +491,7 @@ class Addon(AddonBase):
 		# If the given name contains dots (i.e. it is a submodule import),
 		# ensure the module at the top of the hierarchy is created correctly.
 		# After that, the import mechanism will be able to resolve the submodule automatically.
+		splitName = name.split('.')
 		fullNameTop = f"addons.{self.name}.{splitName[0]}"
 		if fullNameTop in sys.modules:
 			# The module can safely be imported, since the top level module is known.
@@ -507,7 +509,7 @@ class Addon(AddonBase):
 			sys.modules[parentModule.__name__] = parentModule
 		spec = importlib.machinery.PathFinder.find_spec(fullNameTop, [self.path])
 		if not spec:
-			return None
+			raise ModuleNotFoundError(importlib._bootstrap._ERR_MSG.format(name), name=name)
 		mod = importlib.util.module_from_spec(spec)
 		sys.modules[fullNameTop] = mod
 		if spec.loader:
@@ -530,7 +532,11 @@ class Addon(AddonBase):
 		in the add-on's installTasks module if it exists.
 		"""
 		if not hasattr(self,'_installTasksModule'):
-			self._installTasksModule=self.loadModule('installTasks')
+			try:
+				installTasksModule = self.loadModule('installTasks')
+			except ModuleNotFoundError:
+				installTasksModule = None
+			self._installTasksModule = installTasksModule
 		if self._installTasksModule:
 			func=getattr(self._installTasksModule,taskName,None)
 			if func:
