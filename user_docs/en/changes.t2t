@@ -7,13 +7,14 @@ What's New in NVDA
 
 == New Features ==
 - Microsoft Excel via UI Automation: Automatic reporting of column and row headers in tables. (#14228)
- - Note this is referring to tables formatted via Insert -> Table on the Ribon, where the table has a header row, and or a special first column.
- - This is not referring to screen reader specific headers via named ranges, which is currently not supported via UI automation.
- -
+  - Note: This is referring to tables formatted via the "Table" button on the Insert pane of the Ribbon.
+  "First Column" and "Header Row" in "Table Style Options" correspond to column and row headers respectively.
+  - This is not referring to screen reader specific headers via named ranges, which is currently not supported via UI Automation.
+  -
 - An unassigned script has been added to toggle delayed character descriptions. (#14267)
 - Added an experimental option to leverage the UIA notification support in Windows Terminal to report new or changed text in the terminal, resulting in improved stability and responsivity. (#13781)
- - Consult the user guide for limitations of this experimental option.
- - 
+  - Consult the user guide for limitations of this experimental option.
+  - 
 - On Windows 11 ARM64, browse mode is now available in AMD64 apps such as Firefox, Google Chrome and 1Password. (#14397)
 - A new option has been added, "Paragraph Style" in "Document Navigation".
 This adds support for single line break (normal) and multi line break (block) paragraph navigation.
@@ -24,12 +25,19 @@ This can be used with text editors that do not support paragraph navigation nati
 == Changes ==
 - Updated Sonic rate boost library to commit ``1d70513``. (#14180)
 - CLDR has been updated to version 42.0. (#14273)
+- eSpeak NG has been updated to 1.52-dev commit ``a51235aa``. (#14281)
+  - Fixed reporting of large numbers. (#14241)
+  -
 - Java applications with controls using the selectable state will now announce when an item is not selected rather than when the item is selected. (#14336)
 -
 
 
 == Bug Fixes ==
-- In Windows 11, NVDA will announce search highlights when opening Start menu. (#13841)
+- Windows 11 fixes:
+  - NVDA will announce search highlights when opening Start menu. (#13841)
+  - On ARM, x64 apps are no longer identified as ARM64 applications. (#14403)
+  - Clipboard history menu items such as "pin item" can be accessed. (#14508)
+  -
 - Suggestions are reported when typing an @mention in in Microsoft Excel comments. (#13764)
 - In the Google Chrome location bar, suggestion controls (switch to tab, remove suggestion etc) are now reported when selected. (#13522)
 - When requesting formatting information, colors are now explicitly reported in Wordpad or log viewer, rather than only "Default color". (#13959)
@@ -46,12 +54,12 @@ This can be used with text editors that do not support paragraph navigation nati
     - Cell borders in doc formatting settings
     - Show messages in braille settings
     - Tether Braille in braille settings
+    -
   - In some rare cases, these settings used in profiles may be unexpectedly modified when installing this version of NVDA.
   - Please check these options in your profiles after upgrading NVDA to this version.
   -
 - Emojis should now be reported in more languages. (#14433)
 - The presence of an annotation is no longer missing in braille for some elements. (#13815)
-- In Windows 11 on ARM, x64 apps are no longer identified as ARM64 applications. (#14403)
 -
 
 
@@ -97,13 +105,24 @@ Please open a GitHub issue if your Add-on has an issue with updating to the new 
 - The ``NVDAHelper.RemoteLoader64`` class has been removed with no replacement. (#14449)
 - ``SecureDesktopNVDAObject`` has been removed.
 Instead, when NVDA is running on the user profile, track the existence of the secure desktop with the extension point: ``winAPI.secureDesktop.post_secureDesktopStateChange``. (#14488)
+- The following functions in ``winAPI.sessionTracking`` are removed with no replacement. (#14416, #14490)
+  - ``isWindowsLocked``
+  - ``handleSessionChange``
+  - ``unregister``
+  - ``register``
+  - ``isLockStateSuccessfullyTracked``
+  - 
 -
 
 
 === Deprecations ===
 - ``NVDAObjects.UIA.winConsoleUIA.WinTerminalUIA`` is deprecated and usage is discouraged. (#14047)
-- ``config.addConfigDirsToPythonPackagePath`` has been moved. Use ``addonHandler.packaging.addDirsToPythonPackagePath`` instead. (#14350)
-- ``braille.BrailleHandler.TETHER_*`` are deprecated. Please use ``configFlags.TetherTo.*.value`` instead. (#14233)
+- ``config.addConfigDirsToPythonPackagePath`` has been moved.
+Use ``addonHandler.packaging.addDirsToPythonPackagePath`` instead. (#14350)
+- ``braille.BrailleHandler.TETHER_*`` are deprecated.
+Please use ``configFlags.TetherTo.*.value`` instead. (#14233)
+- ``utils.security.postSessionLockStateChanged`` is deprecated.
+Please use ``utils.security.post_sessionLockStateChanged`` instead. (#14486)
 -
 
 

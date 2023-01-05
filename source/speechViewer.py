@@ -13,7 +13,7 @@ import config
 from logHandler import log
 from speech import SpeechSequence
 import gui.contextHelp
-from utils.security import _isLockScreenModeActive, postSessionLockStateChanged
+from utils.security import _isLockScreenModeActive, post_sessionLockStateChanged
 
 
 # Inherit from wx.Frame because these windows show in the alt+tab menu (where miniFrame does not)
@@ -45,7 +45,7 @@ class SpeechViewerFrame(
 			pos=dialogPos,
 			style=wx.CAPTION | wx.CLOSE_BOX | wx.RESIZE_BORDER | wx.STAY_ON_TOP
 		)
-		postSessionLockStateChanged.register(self.onSessionLockStateChange)
+		post_sessionLockStateChanged.register(self.onSessionLockStateChange)
 		self._isDestroyed = False
 		self.onDestroyCallBack = onDestroyCallBack
 		self.Bind(wx.EVT_CLOSE, self.onClose)
@@ -126,7 +126,7 @@ class SpeechViewerFrame(
 
 	def onDestroy(self, evt: wx.Event):
 		self._isDestroyed = True
-		postSessionLockStateChanged.unregister(self.onSessionLockStateChange)
+		post_sessionLockStateChanged.unregister(self.onSessionLockStateChange)
 		log.debug("SpeechViewer destroyed")
 		self.onDestroyCallBack()
 		evt.Skip()
