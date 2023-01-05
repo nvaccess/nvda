@@ -334,9 +334,7 @@ class SynthDriver(SynthDriver):
 				textList.append(langChangeXML)
 				langChanged = True
 			elif isinstance(item, BreakCommand):
-				# Break commands are ignored at the start of speech unless strength is specified.
-				# Refer to eSpeak issue: https://github.com/espeak-ng/espeak-ng/issues/1232
-				textList.append(f'<break time="{item.time}ms" strength="1" />')
+				textList.append(f'<break time="{item.time}ms" />')
 			elif type(item) in self.PROSODY_ATTRS:
 				if prosody:
 					# Close previous prosody tag.
