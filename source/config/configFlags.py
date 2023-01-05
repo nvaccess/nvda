@@ -13,6 +13,30 @@ the default value.
 
 from enum import unique
 from utils.displayString import DisplayStringIntEnum, DisplayStringStrEnum
+from keyLabels import localizedKeyLabels
+
+
+@unique
+class NVDAKey(DisplayStringIntEnum):
+	"""Enumeration containing the possible config values for "Select NVDA Modifier Keys" option in keyboard
+	settings.
+	
+	Use NVDAKey.MEMBER.value to compare with the config;
+	the config stores a bitwise combination of one or more of these values.
+	use NVDAKey.MEMBER.displayString in the UI for a translatable description of this member.
+	"""
+	
+	CAPS_LOCK = 1
+	NUMPAD_INSERT = 2
+	EXTENDED_INSERT = 4
+	
+	@property
+	def _displayStringLabels(self):
+		return {
+			NVDAKey.CAPS_LOCK: localizedKeyLabels['capslock'],
+			NVDAKey.NUMPAD_INSERT: localizedKeyLabels['numpadinsert'],
+			NVDAKey.EXTENDED_INSERT: localizedKeyLabels['insert'],
+		}
 
 
 @unique

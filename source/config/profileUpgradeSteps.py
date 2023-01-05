@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2016-2022 NV Access Limited, Bill Dengler, Cyrille Bougot, Łukasz Golonka
+# Copyright (C) 2016-2023 NV Access Limited, Bill Dengler, Cyrille Bougot, Łukasz Golonka
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -16,6 +16,7 @@ that no information is lost, while updating the ConfigObj to meet the requiremen
 
 from logHandler import log
 from config.configFlags import (
+	NVDAKey,
 	ShowMessages,
 	TetherTo,
 	ReportLineIndentation,
@@ -300,3 +301,56 @@ def _upgradeConfigFrom_8_to_9_tetherTo(profile: ConfigObj) -> None:
 			profile["braille"]["tetherTo"] = TetherTo.AUTO.value
 		else:
 			profile["braille"]["tetherTo"] = tetherToVal
+
+
+def upgradeConfigFrom_9_to_10(profile: ConfigObj) -> None:
+	"""In NVDA config, use only one value to store NVDA keys rather than 3 distinct values.
+	"""
+	
+	anySettingInConfig = False
+	try:
+		capsLock: str = profile['keyboard']['useCapsLockAsNVDAModifierKey']
+		del profile['keyboard']['useCapsLockAsNVDAModifierKey']
+		anySettingInConfig = True
+	except KeyError:
+		capsLock = False
+	try:
+		numpadInsert: str = profile['keyboard']['useNumpadInsertAsNVDAModifierKey']
+		del profile['keyboard']['useNumpadInsertAsNVDAModifierKey']
+		anySettingInConfig = True
+	except KeyError:
+		numpadInsert = True
+	try:
+		extendedInsert: str = profile['keyboard']['useExtendedInsertAsNVDAModifierKey']
+		del profile['keyboard']['useExtendedInsertAsNVDAModifierKey']
+		anySettingInConfig = True
+	except KeyError:
+		extendedInsert = True
+	if anySettingInConfig:
+		val = 0
+		if configobj.validate.is_boolean(capsLock):
+			val |= NVDAKey.CAPS_LOCK.value
+		if configobj.validate.is_boolean(numpadInsert):
+			val |= NVDAKey.NUMPAD_INSERT.value
+		if configobj.validate.is_boolean(extendedInsert):
+			val |= NVDAKey.EXTENDED_INSERT.value
+		if val == 0:
+			# val may be 0 if:
+			# 1: The default profile has caps lock enabled and the currently upgraded profile has ext insert and
+			# numpad insert disabled. In the current profile's config this leads to:
+			# - useNumpadInsertAsNVDAModifierKey = False
+			# - useExtendedInsertAsNVDAModifierKey = False
+			# - useCapsLockAsNVDAModifierKey not present (True inherited from default config)
+			# (see issue #14527 for full description)
+			# or
+			# 2: Someone did disabled all 3 possible NVDA key in config manually, e.g. modifying nvda.ini or via the
+			# Python console.
+			# Thus we consider case 1 which is the only use case reachable by the user via NVDA's GUI.
+			log.debug(
+				"No True value for any of 'use*AsNVDAModifierKey',"
+				" restore caps lock (only possible case via NVDA's GUI)."
+			)
+			val = NVDAKey.CAPS_LOCK.value
+		profile['keyboard']['NVDAModifierKeys'] = val
+	else:
+		log.debug("['use*AsNVDAModifierKey'] values not present, no action taken.")

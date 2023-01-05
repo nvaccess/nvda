@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
+# Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
 # Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter,
 # Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Bill Dengler, Thomas Stivers,
 # Julien Cochuyt, Peter Vágner, Cyrille Bougot, Mesar Hameed, Łukasz Golonka, Aaron Cannon,
@@ -26,6 +26,7 @@ import installer
 from synthDriverHandler import changeVoice, getSynth, getSynthList, setSynth, SynthDriver
 import config
 from config.configFlags import (
+	NVDAKey,
 	ShowMessages,
 	TetherTo,
 	ReportLineIndentation,
@@ -1683,16 +1684,12 @@ class KeyboardSettingsPanel(SettingsPanel):
 		#Translators: This is the label for a list of checkboxes
 		# controlling which keys are NVDA modifier keys.
 		modifierBoxLabel = _("&Select NVDA Modifier Keys")
-		self.modifierChoices = [keyLabels.localizedKeyLabels[key] for key in keyboardHandler.SUPPORTED_NVDA_MODIFIER_KEYS]
+		self.modifierChoices = [key.displayString for key in NVDAKey]
 		self.modifierList=sHelper.addLabeledControl(modifierBoxLabel, nvdaControls.CustomCheckListBox, choices=self.modifierChoices)
 		checkedItems = []
-		if config.conf["keyboard"]["useNumpadInsertAsNVDAModifierKey"]:
-			checkedItems.append(keyboardHandler.SUPPORTED_NVDA_MODIFIER_KEYS.index("numpadinsert"))
-
-		if config.conf["keyboard"]["useExtendedInsertAsNVDAModifierKey"]:
-			checkedItems.append(keyboardHandler.SUPPORTED_NVDA_MODIFIER_KEYS.index("insert"))
-		if config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"]:
-			checkedItems.append(keyboardHandler.SUPPORTED_NVDA_MODIFIER_KEYS.index("capslock"))
+		for (n, key) in enumerate(NVDAKey):
+			if config.conf["keyboard"]["NVDAModifierKeys"] & key.value:
+				checkedItems.append(n)
 		self.modifierList.CheckedItems = checkedItems
 		self.modifierList.Select(0)
 
@@ -1781,9 +1778,9 @@ class KeyboardSettingsPanel(SettingsPanel):
 	def onSave(self):
 		layout=self.kbdNames[self.kbdList.GetSelection()]
 		config.conf['keyboard']['keyboardLayout']=layout
-		config.conf["keyboard"]["useNumpadInsertAsNVDAModifierKey"]= self.modifierList.IsChecked(keyboardHandler.SUPPORTED_NVDA_MODIFIER_KEYS.index("numpadinsert"))
-		config.conf["keyboard"]["useExtendedInsertAsNVDAModifierKey"] = self.modifierList.IsChecked(keyboardHandler.SUPPORTED_NVDA_MODIFIER_KEYS.index("insert"))
-		config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"] = self.modifierList.IsChecked(keyboardHandler.SUPPORTED_NVDA_MODIFIER_KEYS.index("capslock"))
+		config.conf["keyboard"]["NVDAModifierKeys"] = sum([
+			key.value for (n, key) in enumerate(NVDAKey) if self.modifierList.IsChecked(n)
+		])
 		config.conf["keyboard"]["speakTypedCharacters"]=self.charsCheckBox.IsChecked()
 		config.conf["keyboard"]["speakTypedWords"]=self.wordsCheckBox.IsChecked()
 		config.conf["keyboard"]["speechInterruptForCharacters"]=self.speechInterruptForCharsCheckBox.IsChecked()

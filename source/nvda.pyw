@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited, Aleksey Sadovoy, Babbage B.V., Joseph Lee, Łukasz Golonka,
+# Copyright (C) 2006-2023 NV Access Limited, Aleksey Sadovoy, Babbage B.V., Joseph Lee, Łukasz Golonka,
 # Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -15,11 +15,13 @@ import os
 
 import typing
 
+import builtins
 import globalVars
 import ctypes
 from ctypes import wintypes
 import monkeyPatches
 import NVDAState
+from languageHandler import makePgettext
 
 
 monkeyPatches.applyMonkeyPatches()
@@ -63,13 +65,16 @@ import locale
 import gettext
 
 try:
-	gettext.translation(
+	trans = gettext.translation(
 		'nvda',
 		localedir=os.path.join(globalVars.appDir, 'locale'),
 		languages=[locale.getdefaultlocale()[0]]
-	).install(True)
+	)
+	trans.install(True)
 except:
 	gettext.install('nvda')
+# Install our pgettext function.
+builtins.pgettext = makePgettext(trans)
 
 import time
 import argparse

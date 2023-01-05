@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2021 NV Access Limited, Łukasz Golonka
+# Copyright (C) 2006-2023 NV Access Limited, Łukasz Golonka, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -9,6 +9,7 @@ import weakref
 import wx
 
 import config
+from config.configFlags import NVDAKey
 import core
 from documentationUtils import getDocFilePath
 import globalVars
@@ -76,7 +77,7 @@ class WelcomeDialog(
 		# Translators: The label of a checkbox in the Welcome dialog.
 		capsAsNVDAModifierText = _("&Use CapsLock as an NVDA modifier key")
 		self.capsAsNVDAModifierCheckBox = sHelper.addItem(wx.CheckBox(optionsBox, label=capsAsNVDAModifierText))
-		self.capsAsNVDAModifierCheckBox.SetValue(config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"])
+		self.capsAsNVDAModifierCheckBox.SetValue(config.conf["keyboard"]["NVDAModifierKeys"] & NVDAKey.CAPS_LOCK)
 		# Translators: The label of a checkbox in the Welcome dialog.
 		startAfterLogonText = _("St&art NVDA after I sign in")
 		self.startAfterLogonCheckBox = sHelper.addItem(wx.CheckBox(optionsBox, label=startAfterLogonText))
@@ -104,7 +105,11 @@ class WelcomeDialog(
 	def onOk(self, evt):
 		layout = self.kbdNames[self.kbdList.GetSelection()]
 		config.conf["keyboard"]["keyboardLayout"] = layout
-		config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"] = self.capsAsNVDAModifierCheckBox.IsChecked()
+		config.conf["keyboard"]["NVDAModifierKeys"] = (
+			(NVDAKey.CAPS_LOCK.value if self.capsAsNVDAModifierCheckBox.IsChecked() else 0)
+			| (config.conf["keyboard"]["NVDAModifierKeys"] & NVDAKey.NUMPAD_INSERT.value)
+			| (config.conf["keyboard"]["NVDAModifierKeys"] & NVDAKey.EXTENDED_INSERT.value)
+		)
 		if self.startAfterLogonCheckBox.Enabled:
 			config.setStartAfterLogon(self.startAfterLogonCheckBox.Value)
 		config.conf["general"]["showWelcomeDialogAtStartup"] = self.showWelcomeDialogAtStartupCheckBox.IsChecked()

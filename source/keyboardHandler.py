@@ -1,9 +1,9 @@
 # -*- coding: UTF-8 -*-
-#keyboardHandler.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V.
+# keyboardHandler.py
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Cyrille Bougot
 
 """Keyboard support"""
 
@@ -12,6 +12,7 @@ import sys
 import time
 import re
 import typing
+from typing import Any
 
 import wx
 import winVersion
@@ -24,11 +25,13 @@ from keyLabels import localizedKeyLabels
 from logHandler import log
 import queueHandler
 import config
+from config.configFlags import NVDAKey
 import api
 import winInputHook
 import inputCore
 import tones
 import core
+import NVDAState
 from contextlib import contextmanager
 import threading
 
@@ -84,11 +87,22 @@ def passNextKeyThrough():
 		passKeyThroughCount=0
 
 def isNVDAModifierKey(vkCode,extended):
-	if config.conf["keyboard"]["useNumpadInsertAsNVDAModifierKey"] and vkCode==winUser.VK_INSERT and not extended:
+	if (
+		(config.conf["keyboard"]["NVDAModifierKeys"] & NVDAKey.NUMPAD_INSERT)
+		and vkCode == winUser.VK_INSERT
+		and not extended
+	):
 		return True
-	elif config.conf["keyboard"]["useExtendedInsertAsNVDAModifierKey"] and vkCode==winUser.VK_INSERT and extended:
+	elif (
+		(config.conf["keyboard"]["NVDAModifierKeys"] & NVDAKey.EXTENDED_INSERT)
+		and vkCode == winUser.VK_INSERT
+		and extended
+	):
 		return True
-	elif config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"] and vkCode==winUser.VK_CAPITAL:
+	elif (
+		(config.conf["keyboard"]["NVDAModifierKeys"] & NVDAKey.CAPS_LOCK)
+		and vkCode == winUser.VK_CAPITAL
+	):
 		return True
 	else:
 		return False
@@ -97,11 +111,11 @@ SUPPORTED_NVDA_MODIFIER_KEYS = ("capslock", "numpadinsert", "insert")
 
 def getNVDAModifierKeys():
 	keys=[]
-	if config.conf["keyboard"]["useExtendedInsertAsNVDAModifierKey"]:
+	if config.conf["keyboard"]["NVDAModifierKeys"] & NVDAKey.EXTENDED_INSERT:
 		keys.append(vkCodes.byName["insert"])
-	if config.conf["keyboard"]["useNumpadInsertAsNVDAModifierKey"]:
+	if config.conf["keyboard"]["NVDAModifierKeys"] & NVDAKey.NUMPAD_INSERT:
 		keys.append(vkCodes.byName["numpadinsert"])
-	if config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"]:
+	if config.conf["keyboard"]["NVDAModifierKeys"] & NVDAKey.CAPS_LOCK:
 		keys.append(vkCodes.byName["capslock"])
 	return keys
 
