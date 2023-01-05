@@ -79,6 +79,7 @@ class NVDASpyLib:
 	All public methods are part of the Robot Library
 	"""
 	SPEECH_HAS_FINISHED_SECONDS: float = 1.0
+	_brailleCellCount: int = 120
 
 	def __init__(self):
 		# speech cache is ordered temporally, oldest at low indexes, most recent at highest index.
@@ -257,8 +258,11 @@ class NVDASpyLib:
 			finished = self.SPEECH_HAS_FINISHED_SECONDS < elapsed
 			return started and finished
 
+	def setBrailleCellCount(self, brailleCellCount: int):
+		self._brailleCellCount = brailleCellCount
+
 	def getBrailleCellCount(self, currentCellCount: int):
-		return 120
+		return self._brailleCellCount
 
 	def _getBrailleAtIndex(self, brailleIndex: int) -> str:
 		with self._brailleLock:
