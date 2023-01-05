@@ -154,31 +154,31 @@ addTable("cs-g1.ctb", _("Czech grade 1"))
 
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("da-dk-g08.ctb", _("Danish 8 dot computer braille (2022)"))
+addTable("da-dk-g08.ctb", _("Danish 8 dot computer braille"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("da-dk-g08_1993.ctb", _("Danish 8 dot computer braille (1993)"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("da-dk-g16.ctb", _("Danish 6 dot grade 1 (2022)"))
+addTable("da-dk-g16.ctb", _("Danish 6 dot grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("da-dk-g16_1993.ctb", _("Danish 6 dot grade 1 (1993)"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("da-dk-g18.ctb", _("Danish 8 dot grade 1 (2022)"))
+addTable("da-dk-g18.ctb", _("Danish 8 dot grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("da-dk-g18_1993.ctb", _("Danish 8 dot grade 1 (1993)"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("da-dk-g26.ctb", _("Danish 6 dot grade 2 (2022)"), contracted=True)
+addTable("da-dk-g26.ctb", _("Danish 6 dot grade 2"), contracted=True)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("da-dk-g26_1993.ctb", _("Danish 6 dot grade 2 (1993)"), contracted=True)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("da-dk-g28.ctb", _("Danish 8 dot grade 2 (2022)"), contracted=True)
+addTable("da-dk-g28.ctb", _("Danish 8 dot grade 2"), contracted=True)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("da-dk-g28_1993.ctb", _("Danish 8 dot grade 2 (1993)"), contracted=True)
