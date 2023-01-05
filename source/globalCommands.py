@@ -2307,7 +2307,8 @@ class GlobalCommands(ScriptableObject):
 			log.debug(f"Trying with nvdaObject : {objAtStart}")
 
 		if objAtStart.detailsSummary:
-			log.debug(f"NVDAObjectAtStart of caret has details: {objAtStart.detailsSummary}")
+			if _isDebugLogCatEnabled:
+				log.debug(f"NVDAObjectAtStart of caret has details: {objAtStart.detailsSummary}")
 			return objAtStart
 		elif api.getFocusObject():
 			# If fetching from the caret position fails, try via the focus object
@@ -2347,7 +2348,7 @@ class GlobalCommands(ScriptableObject):
 			relation' in that range, and we don't yet have a way for the user to select which one to report.
 			For now, we minimise this risk by only reporting details at the current location.
 		"""
-		log.debug("Report annotation details summary at current location.")
+		_isDebugLogCatEnabled = config.conf["debugLog"]["annotations"]
 		objWithAnnotation = self._getNvdaObjWithAnnotationUnderCaret()
 		if (
 			not objWithAnnotation
@@ -2358,10 +2359,14 @@ class GlobalCommands(ScriptableObject):
 			return
 
 		targets = list(objWithAnnotation.annotations.targets)
-		log.debug(f"Number of targets: {len(targets)}")
+		if _isDebugLogCatEnabled:
+			log.debug(f"Number of targets: {len(targets)}")
+
 		if 1 > len(targets):
-			log.debugWarning("Expected some annotation targets, none retrieved.")
+			if _isDebugLogCatEnabled:
+				log.debugWarning("Expected some annotation targets, none retrieved.")
 			return
+
 		if (
 			self._annotationNav.lastReported
 			and objWithAnnotation == self._annotationNav.lastReported.origin
@@ -2370,10 +2375,12 @@ class GlobalCommands(ScriptableObject):
 			last = self._annotationNav.lastReported.indexOfLastReportedSummary
 			indexOfNextTarget = (last + 1) % len(targets)
 		else:
-			log.debug(
-				f"No prior target summary reported:"
-				f" lastReported: {self._annotationNav.lastReported}")
-			if self._annotationNav.lastReported:
+			if _isDebugLogCatEnabled:
+				log.debug(
+					"No prior target summary reported:"
+					f" lastReported: {self._annotationNav.lastReported}"
+				)
+			if self._annotationNav.lastReported and _isDebugLogCatEnabled:
 				log.debug(
 					f" objWithAnnotation == self._annotationNav.lastReported.origin: "
 					f"{objWithAnnotation == self._annotationNav.lastReported.origin}"
@@ -2381,6 +2388,7 @@ class GlobalCommands(ScriptableObject):
 					f"{self._annotationNav.lastReported.indexOfLastReportedSummary}"
 				)
 			indexOfNextTarget = 0
+
 		targetToReport = targets[indexOfNextTarget]
 		ui.message(targetToReport.summary)
 		self._annotationNav.lastReported = _AnnotationNavigationNode(

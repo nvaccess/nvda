@@ -1548,7 +1548,8 @@ the NVDAObject for IAccessible
 			# https://crbug.com/1399184
 			maxRelations
 		)
-		log.debug(f"Got {count} relations, given maxRelations: {maxRelations}")
+		if config.conf["debugLog"]["annotations"]:
+			log.debug(f"Got {count} relations, given maxRelations: {maxRelations}")
 		if count == 0:
 			return
 		yield from (
@@ -1619,7 +1620,8 @@ the NVDAObject for IAccessible
 		try:
 			# rather than fetch all the relations and querying the type, do that in process for performance reasons
 			# Bug in Chrome, Chrome does not respect maxRelations param.
-			# https://crbug.com/1399184. In future, uncomment the next line.
+			# https://crbug.com/1399184.
+			# In future, uncomment the next line.
 			# maxRelsToFetch = self.IAccessibleObject.nRelations  # they may or may not all match 'relationType'
 			maxRelsToFetch = 10
 			targetsGen = self._getIA2TargetsForRelationsOfType(relationType, maxRelations=maxRelsToFetch)

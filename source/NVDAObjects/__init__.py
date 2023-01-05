@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Babbage B.V.,
+# Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Babbage B.V.,
 # Davy Kager
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -525,12 +525,17 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 			)
 		return None
 
-	#: Typing information for auto property _get_detailsSummary
 	detailsSummary: typing.Optional[str]
+	"""
+	Typing information for auto property _get_detailsSummary
+	Deprecated, use self.annotations.roles instead.
+	"""
 
 	def _get_detailsSummary(self) -> typing.Optional[str]:
-		if config.conf["debugLog"]["annotations"]:
-			log.debugWarning(f"Fetching details summary not supported on: {self.__class__.__qualname__}")
+		log.warning(
+			"NVDAObject.detailsSummary is deprecated. Use NVDAObject.annotations instead.",
+			stack_info=True
+		)
 		return None
 
 	@property
@@ -538,12 +543,22 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		"""Default implementation is based on the result of _get_detailsSummary
 		In most instances this should be optimised.
 		"""
+		log.warning(
+			"NVDAObject.hasDetails is deprecated. Use NVDAObject.annotations instead.",
+			stack_info=True
+		)
 		return bool(self.annotations)
 
-	#: Typing information for auto property _get_detailsRole
 	detailsRole: typing.Optional[controlTypes.Role]
+	"""Typing information for auto property _get_detailsRole
+	Deprecated, use self.annotations.roles instead.
+	"""
 
 	def _get_detailsRole(self) -> typing.Optional[controlTypes.Role]:
+		log.warning(
+			"NVDAObject.detailsRole is deprecated. Use NVDAObject.annotations instead.",
+			stack_info=True
+		)
 		if config.conf["debugLog"]["annotations"]:
 			log.debugWarning(f"Fetching details summary not supported on: {self.__class__.__qualname__}")
 		return None

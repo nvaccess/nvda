@@ -16,11 +16,16 @@ from typing import (
 	Iterable,
 	List,
 	Optional,
+	Set,
+	Union,
 )
 
 if TYPE_CHECKING:
 	import controlTypes
 	from NVDAObjects import NVDAObject
+
+
+_AnnotationRolesT = Set[Union[None, "controlTypes.Role"]]
 
 
 class AnnotationTarget:
@@ -45,7 +50,10 @@ class AnnotationTarget:
 class AnnotationOrigin:
 	"""
 	Structured information of an annotation origin.
+	Each origin may have many annotation targets.
+	Targets can have different roles.
 	For example, a phrase with a footnote and comments associated with it.
+	This class encapsulates the relation.
 	"""
 
 	def __init__(self, originObj: "NVDAObject"):

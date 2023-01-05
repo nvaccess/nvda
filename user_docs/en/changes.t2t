@@ -19,6 +19,9 @@ What's New in NVDA
 - A new option has been added, "Paragraph Style" in "Document Navigation".
 This adds support for single line break (normal) and multi line break (block) paragraph navigation.
 This can be used with text editors that do not support paragraph navigation natively, such as Notepad and Notepad++. (#13797)
+- The presence of multiple annotations are now reported.
+``nvda+d`` now cycles through reporting the summary of each annotation target for origins with multiple annotation targets.
+For example, when text has a comment and a footnote associated with it. (#14507, #14480)
 -
 
 
@@ -118,9 +121,11 @@ Please open a GitHub issue if your Add-on has an issue with updating to the new 
 - ``config.addConfigDirsToPythonPackagePath`` has been moved.
 Use ``addonHandler.packaging.addDirsToPythonPackagePath`` instead. (#14350)
 - ``braille.BrailleHandler.TETHER_*`` are deprecated.
-Please use ``configFlags.TetherTo.*.value`` instead. (#14233)
+Use ``configFlags.TetherTo.*.value`` instead. (#14233)
 - ``utils.security.postSessionLockStateChanged`` is deprecated.
-Please use ``utils.security.post_sessionLockStateChanged`` instead. (#14486)
+Use ``utils.security.post_sessionLockStateChanged`` instead. (#14486)
+- ``NVDAObject.hasDetails``, ``NVDAObject.detailsSummary``, ``NVDAObject.detailsRole`` has been deprecated.
+Use ``NVDAObject.annotations`` instead. (#14507)
 -
 
 
