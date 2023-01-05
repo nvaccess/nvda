@@ -88,7 +88,13 @@ class AssertsLib:
 			ignore_case: bool = False,
 			message: str = ""
 	):
-		AssertsLib.string_contains_strings(actual, expectedSpeechParts, ignore_case, comparison="speech", message=message)
+		AssertsLib.string_contains_strings(
+			actual,
+			expectedSpeechParts,
+			ignore_case,
+			comparison="speech",
+			message=message
+		)
 
 	@staticmethod
 	def braille_matches(actual, expected, ignore_case=False, message=""):
@@ -101,4 +107,10 @@ class AssertsLib:
 			ignore_case: bool = False,
 			message: str = ""
 	):
-		AssertsLib.string_contains_strings(actual, expectedBrailleParts, ignore_case, comparison="braille", message=message)
+		AssertsLib.string_contains_strings(
+			actual,
+			expectedBrailleParts,
+			ignore_case,
+			comparison="braille",
+			message=message
+		)
