@@ -62,24 +62,16 @@ def isBrailleViewerActive() -> bool:
 	return bool(_brailleGui)
 
 
-def update(cells: List[int], rawText: str):
-	if _brailleGui:
-		import braille  # imported late to avoid a circular import.
-		_brailleGui.updateBrailleDisplayed(
-			cells,
-			rawText,
-			braille.handler.displaySize
-		)
-
-
 def destroyBrailleViewer():
 	global _brailleGui
 	d: Optional[BrailleViewerFrame] = _brailleGui
 	_brailleGui = None  # protect against re-entrance
 	if d and not d.isDestroyed:
 		import braille  # imported late to avoid a circular import.
-		braille.handler.pre_writeCells.unregister(update)
-		braille.handler.filter_displaySize.unregister(_getDisplaySize)
+		updateBrailleDisplayedUnregistered = braille.handler.pre_writeCells.unregister(d.updateBrailleDisplayed)
+		assert updateBrailleDisplayedUnregistered
+		getDisplaySizeUnregistered = braille.handler.filter_displaySize.unregister(_getDisplaySize)
+		assert getDisplaySizeUnregistered
 		d.saveInfoAndDestroy()
 
 
@@ -107,7 +99,6 @@ def createBrailleViewerTool():
 		raise RuntimeError("Can not initialise the BrailleViewerGui: braille.handler not yet initialised")
 
 	braille.handler.filter_displaySize.register(_getDisplaySize)
-	braille.handler.pre_writeCells.register(update)
 
 	global _brailleGui
 	if _brailleGui:
@@ -117,5 +108,5 @@ def createBrailleViewerTool():
 		braille.handler.displaySize,
 		_onGuiDestroyed
 	)
-
+	braille.handler.pre_writeCells.register(_brailleGui.updateBrailleDisplayed)
 	postBrailleViewerToolToggledAction.notify(created=True)

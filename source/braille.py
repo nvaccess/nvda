@@ -1911,6 +1911,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		#: @type cells: [int]
 		#: @param rawText: The raw text that corresponds with the cells.
 		#: @type rawText: str
+		#: @param currentCellCount: The current number of cells
+		#: @type currentCellCount: bool
 		self.pre_writeCells = extensionPoints.Action()
 
 		#: Filter that allows components or add-ons to change the display size used for braille output.
@@ -1962,6 +1964,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		return self.enabled and config.conf["braille"]["tetherTo"] == TetherTo.AUTO.value
 
 	displaySize: int
+	_cache_displaySize = True
 
 	def _get_displaySize(self):
 		"""Returns the display size to use for braille output.
@@ -1982,6 +1985,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		)
 
 	enabled: bool
+	_cache_enabled = True
 
 	def _get_enabled(self):
 		"""Returns whether braille is enabled.
@@ -2113,9 +2117,9 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			wx.CallAfter(self._cursorBlinkTimer.Start,blinkRate)
 
 	def _writeCells(self, cells: List[int]):
-		self.pre_writeCells.notify(cells=cells, rawText=self._rawText)
-		displayCellCount = self.display.numCells
 		handlerCellCount = self.displaySize
+		self.pre_writeCells.notify(cells=cells, rawText=self._rawText, currentCellCount=handlerCellCount)
+		displayCellCount = self.display.numCells
 		if not displayCellCount:
 			# No physical display to write to
 			return
