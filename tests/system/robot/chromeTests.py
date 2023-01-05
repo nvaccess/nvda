@@ -611,6 +611,102 @@ def exercise_mark_aria_details(nvdaConfValues: "NVDASpyLib.NVDAConfMods"):
 	)
 
 
+def test_annotations_multi_target():
+	_chrome.prepareChrome(
+		"""
+		<div class="editor" contenteditable spellcheck="false" role="textbox" aria-multiline="true">
+			<span aria-details="footnote-details comment-details form-details">example origin</span>
+		</div>
+		<div>
+			<p>
+				<div id="footnote-details" role="doc-footnote">example footnote</div>
+				<div id="comment-details" role="comment">example comment</div>
+				<div id="form-details" role="form">example form</div>
+			</p>
+		</div>
+		"""
+	)
+	expectedSpeechParts = [
+		"has foot note",
+		"has comment",
+		"has details",  # The role "form" is deliberately unsupported
+		"example origin",
+	]
+	expectedBrailleParts = [
+		"has fnote",
+		"has cmnt",
+		"details",  # The role "form" is deliberately unsupported
+		"example origin",
+	]
+	_spy: NVDASpyLib = _NvdaLib.getSpyLib()
+	_spy.setBrailleCellCount(400)
+
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey('downArrow')
+
+	# Order of annotation announcement is non-deterministic, so do not consider order with testing
+	_asserts.speech_contains(
+		actualSpeech,
+		expectedSpeechParts,
+		message="Browse mode speech: Read line with different aria details roles."
+	)
+	_asserts.braille_contains(
+		actualBraille,
+		expectedBrailleParts,
+		message="Browse mode braille: Read line with different aria details roles.",
+	)
+	
+	# Reset caret
+	actualSpeech = _NvdaLib.getSpeechAfterKey("upArrow")
+	_asserts.speech_matches(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"out of edit",
+			"Test page load complete",
+		]),
+		message="reset caret",
+	)
+
+	# Force focus mode
+	actualSpeech = _NvdaLib.getSpeechAfterKey("NVDA+space")
+	_asserts.speech_matches(
+		actualSpeech,
+		"Focus mode",
+		message="force focus mode",
+	)
+
+	# Tab into the contenteditable
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("tab")
+	# Order of annotation announcement is non-deterministic, so do not consider order with testing
+	_asserts.speech_contains(
+		actualSpeech,
+		expectedSpeechParts,
+		message="Focus mode speech: Read line with different aria details roles"
+	)
+	_asserts.braille_contains(
+		actualBraille,
+		expectedBrailleParts,
+		message="Focus mode braille: Read line with different aria details roles",
+	)
+
+	# Order of annotation announcement is non-deterministic, so do not consider order with testing
+	collectedSpeech = []
+	collectedBraille = []
+	expectedSummaries = [f"example {x}" for x in ("footnote", "comment", "form")]
+	for _ in range(len(expectedSummaries)):
+		actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey(READ_DETAILS_GESTURE)
+		collectedSpeech.append(actualSpeech)
+		collectedBraille.append(actualBraille)
+	
+	_builtIn.should_be_equal(
+		sorted(collectedSpeech),
+		sorted(expectedSummaries),
+	)
+	_builtIn.should_be_equal(
+		sorted(collectedBraille),
+		sorted(expectedSummaries),
+	)
+
+
 def announce_list_item_when_moving_by_word_or_character():
 	_chrome.prepareChrome(
 		r"""
