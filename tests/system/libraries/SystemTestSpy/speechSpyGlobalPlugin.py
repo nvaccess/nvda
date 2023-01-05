@@ -186,7 +186,8 @@ class NVDASpyLib:
 		self._isNvdaStartupComplete = True
 		import brailleViewer
 		brailleViewer._brailleGui = self._brailleSpy
-		self.setBrailleCellCount(120)
+		import braille
+		braille.handler.filter_displaySize.register(self.getBrailleCellCount)
 		brailleViewer.postBrailleViewerToolToggledAction.notify(created=True)
 
 	def _onNvdaBraille(self, rawText: str):
@@ -256,9 +257,8 @@ class NVDASpyLib:
 			finished = self.SPEECH_HAS_FINISHED_SECONDS < elapsed
 			return started and finished
 
-	def setBrailleCellCount(self, brailleCellCount: int):
-		import brailleViewer
-		brailleViewer.DEFAULT_NUM_CELLS = brailleCellCount
+	def getBrailleCellCount(self, currentCellCount: int):
+		return 120
 
 	def _getBrailleAtIndex(self, brailleIndex: int) -> str:
 		with self._brailleLock:
