@@ -121,6 +121,7 @@ class ControlField(Field):
 				controlTypes.Role.BUTTON, 
 				controlTypes.Role.RADIOBUTTON, 
 				controlTypes.Role.CHECKBOX, 
+				controlTypes.Role.SWITCH,
 				controlTypes.Role.GRAPHIC, 
 				controlTypes.Role.CHART, 
 				controlTypes.Role.MENUITEM, 

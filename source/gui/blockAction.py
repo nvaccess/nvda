@@ -38,6 +38,11 @@ class Context(_Context, Enum):
 		# for a response from a modal dialog
 		_("Action unavailable while a dialog requires a response"),
 	)
+	WINDOWS_LOCKED = (
+		lambda: globalVars.appArgs.secure,
+		# Translators: Reported when an action cannot be performed because Windows is locked.
+		_("Action unavailable while Windows is locked"),
+	)
 
 
 def when(*contexts: Context):

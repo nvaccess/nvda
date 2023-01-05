@@ -25,6 +25,7 @@ import ui
 import speech
 from tableUtils import HeaderCellInfo, HeaderCellTracker
 import config
+from config.configFlags import ReportCellBorders
 import textInfos
 import colors
 import eventHandler
@@ -33,6 +34,8 @@ from logHandler import log
 import gui
 import gui.contextHelp
 import winUser
+from winAPI.winUser.functions import GetSysColor
+from winAPI.winUser.constants import SysColorIndex
 import mouseHandler
 from displayModel import DisplayModelTextInfo
 import controlTypes
@@ -1036,7 +1039,7 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 					formatField['background-color']=colors.RGB.fromCOLORREF(int(cellObj.interior.color))
 			except COMError:
 				pass
-		if formatConfig["reportBorderStyle"]:
+		if formatConfig["reportCellBorders"] != ReportCellBorders.OFF:
 			borders = None
 			hasMergedCells = self.obj.excelCellObject.mergeCells
 			if hasMergedCells:
@@ -1048,7 +1051,10 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 			else:
 				borders = cellObj.borders
 			try:
-				formatField['border-style']=getCellBorderStyleDescription(borders,reportBorderColor=formatConfig['reportBorderColor'])
+				formatField['border-style'] = getCellBorderStyleDescription(
+					borders,
+					reportBorderColor=formatConfig['reportCellBorders'] == ReportCellBorders.COLOR_AND_STYLE,
+				)
 			except COMError:
 				pass
 		return formatField,(self._startOffset,self._endOffset)
@@ -1618,8 +1624,8 @@ class ExcelDropdown(Window):
 	excelCell=None
 
 	def _get__highlightColors(self):
-		background=colors.RGB.fromCOLORREF(winUser.user32.GetSysColor(13))
-		foreground=colors.RGB.fromCOLORREF(winUser.user32.GetSysColor(14))
+		background = colors.RGB.fromCOLORREF(GetSysColor(SysColorIndex.HIGHLIGHT))
+		foreground = colors.RGB.fromCOLORREF(GetSysColor(SysColorIndex.HIGHLIGHT_TEXT))
 		self._highlightColors=(background,foreground)
 		return self._highlightColors
 

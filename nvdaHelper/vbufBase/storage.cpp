@@ -18,7 +18,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <map>
 #include <list>
 #include <set>
-#include <sstream>
+#include <iterator>
 #include <regex>
 #include <vector>
 #include <sstream>
@@ -328,7 +328,6 @@ std::optional<std::wstring> VBufStorage_fieldNode_t::getAttribute(const std::wst
 	if (foundAttrib != attributes.end()) {
 		return foundAttrib->second;
 	}
-	LOG_ERROR(L"Couldn't find attribute " << name);
 	return std::nullopt;
 }
 
@@ -997,8 +996,9 @@ VBufStorage_fieldNode_t* VBufStorage_buffer_t::findNodeByAttributes(int offset, 
 	}
 	// Split attribs at spaces.
 	vector<wstring> attribsList;
-	copy(istream_iterator<wstring, wchar_t, std::char_traits<wchar_t>>(wistringstream(attribs)),
-		istream_iterator<wstring, wchar_t, std::char_traits<wchar_t>>(),
+	wistringstream s(attribs);
+	copy(istream_iterator<wstring, wchar_t>(s),
+		istream_iterator<wstring, wchar_t>(),
 		back_inserter<vector<wstring> >(attribsList));
 	wregex regexObj;
 	try {

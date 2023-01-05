@@ -14,6 +14,7 @@ import unicodedata
 import time
 import colors
 import api
+from annotation import _AnnotationRolesT
 import controlTypes
 from controlTypes import OutputReason, TextPosition
 import tones
@@ -55,7 +56,11 @@ from typing import (
 )
 from logHandler import log
 import config
-from config.configFlags import ReportTableHeaders
+from config.configFlags import (
+	ReportLineIndentation,
+	ReportTableHeaders,
+	ReportCellBorders,
+)
 import aria
 from .priorities import Spri
 from enum import IntEnum
@@ -350,7 +355,7 @@ def _getSpellingSpeechWithoutCharMode(
 
 def getSingleCharDescriptionDelayMS() -> int:
 	"""
-	@returns: 1 second, a default delay.
+	@returns: 1 second, a default delay for delayed character descriptions.
 	In the future, this should fetch its value from a user defined NVDA idle time.
 	Blocked by: https://github.com/nvaccess/nvda/issues/13915
 	"""
@@ -361,12 +366,17 @@ def getSingleCharDescription(
 		text: str,
 		locale: Optional[str] = None,
 ) -> Generator[SequenceItemT, None, None]:
+	"""
+	Returns a speech sequence:
+	a pause, the length determined by getSingleCharDescriptionDelayMS,
+	followed by the character description.
+	"""
 	# This should only be used for single chars.
 	if not len(text) == 1:
 		return
 	synth = getSynth()
 	synthConfig = config.conf["speech"][synth.name]
-	if synth.isSupported("pitch"):
+	if synth.isSupported("pitch") and text.isupper():
 		capPitchChange = synthConfig["capPitchChange"]
 	else:
 		capPitchChange = 0
@@ -375,9 +385,18 @@ def getSingleCharDescription(
 		text,
 		locale,
 		useCharacterDescriptions=True,
-		sayCapForCapitals=text.isupper() and synthConfig["sayCapForCapitals"],
-		capPitchChange=(capPitchChange if text.isupper() else 0),
-		beepForCapitals=text.isupper() and synthConfig["beepForCapitals"],
+		# The pitch change may be useful,
+		# as a pitch change may be harder to notice,
+		# and continuing the shifted pitch
+		# is more intuitive.
+		capPitchChange=capPitchChange,
+		# #14239: When navigating by character,
+		# there is already a beep or "cap" announcement.
+		# There is no need for a secondary beep
+		# or "cap" announcement when announcing the
+		# the delayed character description.
+		beepForCapitals=False,
+		sayCapForCapitals=False,
 		fallbackToCharIfNoDescription=False,
 	)
 
@@ -476,9 +495,9 @@ def getObjectPropertiesSpeech(  # noqa: C901
 			newPropertyValues['current'] = obj.isCurrent
 
 		elif value and name == "hasDetails":
-			newPropertyValues['hasDetails'] = obj.hasDetails
-		elif value and name == "detailsRole":
-			newPropertyValues["detailsRole"] = obj.detailsRole
+			newPropertyValues['hasDetails'] = bool(obj.annotations)
+		elif value and name == "detailsRoles":
+			newPropertyValues["detailsRoles"] = set(obj.annotations.roles if obj.annotations else [])
 		elif value and name == "descriptionFrom" and (
 			obj.descriptionFrom == controlTypes.DescriptionFrom.ARIA_DESCRIPTION
 		):
@@ -691,7 +710,7 @@ def _objectSpeech_calculateAllowedProps(reason, shouldReportTextContent):
 		'value': True,
 		'description': True,
 		'hasDetails': config.conf["annotations"]["reportDetails"],
-		"detailsRole": config.conf["annotations"]["reportDetails"],
+		"detailsRoles": config.conf["annotations"]["reportDetails"],
 		'descriptionFrom': config.conf["annotations"]["reportAriaDescription"],
 		'keyboardShortcut': True,
 		'positionInfo_level': True,
@@ -799,9 +818,15 @@ def getIndentationSpeech(indentation: str, formatConfig: Dict[str, bool]) -> Spe
 	@param indentation: The string of indentation.
 	@param formatConfig: The configuration to use.
 	"""
-	speechIndentConfig = formatConfig["reportLineIndentation"]
+	speechIndentConfig = formatConfig["reportLineIndentation"] in (
+		ReportLineIndentation.SPEECH,
+		ReportLineIndentation.SPEECH_AND_TONES
+	)
 	toneIndentConfig = (
-		formatConfig["reportLineIndentationWithTones"]
+		formatConfig["reportLineIndentation"] in (
+			ReportLineIndentation.TONES,
+			ReportLineIndentation.SPEECH_AND_TONES
+		)
 		and _speechState.speechMode == SpeechMode.talk
 	)
 	indentSequence: SpeechSequence = []
@@ -1234,7 +1259,10 @@ def getTextInfoSpeech(  # noqa: C901
 	formatConfig=formatConfig.copy()
 	if extraDetail:
 		formatConfig['extraDetail']=True
-	reportIndentation=unit==textInfos.UNIT_LINE and ( formatConfig["reportLineIndentation"] or formatConfig["reportLineIndentationWithTones"])
+	reportIndentation = (
+		unit == textInfos.UNIT_LINE
+		and formatConfig["reportLineIndentation"] != ReportLineIndentation.OFF
+	)
 	# For performance reasons, when navigating by paragraph or table cell, spelling errors will not be announced.
 	if unit in (textInfos.UNIT_PARAGRAPH, textInfos.UNIT_CELL) and reason == OutputReason.CARET:
 		formatConfig['reportSpellingErrors']=False
@@ -1786,13 +1814,15 @@ def getPropertiesSpeech(  # noqa: C901
 	# are there further details
 	hasDetails = propertyValues.get('hasDetails', False)
 	if hasDetails:
-		detailsRole: Optional[controlTypes.Role] = propertyValues.get("detailsRole")
-		if detailsRole is not None:
-			textList.append(
-				# Translators: Speaks when there are further details/annotations that can be fetched manually.
-				# %s specifies the type of details (e.g. comment, suggestion)
-				_("has %s" % detailsRole.displayString)
-			)
+		detailsRoles: _AnnotationRolesT = propertyValues.get("detailsRoles", set())
+		if detailsRoles:
+			roleStrings = (role.displayString if role else _("details") for role in detailsRoles)
+			for roleString in roleStrings:
+				textList.append(
+					# Translators: Speaks when there are further details/annotations that can be fetched manually.
+					# %s specifies the type of details (e.g. "comment, suggestion, details")
+					_("has %s" % roleString)
+				)
 		else:
 			textList.append(
 				# Translators: Speaks when there are further details/annotations that can be fetched manually.
@@ -1899,7 +1929,7 @@ def getControlFieldSpeech(  # noqa: C901
 	keyboardShortcut=attrs.get('keyboardShortcut', "")
 	isCurrent = attrs.get('current', controlTypes.IsCurrent.NO)
 	hasDetails = attrs.get('hasDetails', False)
-	detailsRole: Optional[controlTypes.Role] = attrs.get("detailsRole")
+	detailsRoles: _AnnotationRolesT = set(attrs.get("detailsRoles", []))
 	placeholderValue=attrs.get('placeholder', None)
 	value=attrs.get('value',"")
 
@@ -1959,7 +1989,7 @@ def getControlFieldSpeech(  # noqa: C901
 			reason=reason, keyboardShortcut=keyboardShortcut
 		)
 	isCurrentSequence = getPropertiesSpeech(reason=reason, current=isCurrent)
-	hasDetailsSequence = getPropertiesSpeech(reason=reason, hasDetails=hasDetails, detailsRole=detailsRole)
+	hasDetailsSequence = getPropertiesSpeech(reason=reason, hasDetails=hasDetails, detailsRoles=detailsRoles)
 	placeholderSequence = getPropertiesSpeech(reason=reason, placeholder=placeholderValue)
 	nameSequence = getPropertiesSpeech(reason=reason, name=name)
 	valueSequence = getPropertiesSpeech(reason=reason, value=value, _role=role)
@@ -2032,9 +2062,15 @@ def getControlFieldSpeech(  # noqa: C901
 		nameSequence
 		and reason in [OutputReason.FOCUS, OutputReason.QUICKNAV]
 		and fieldType == "start_addedToControlFieldStack"
-		and role in (controlTypes.Role.GROUPING, controlTypes.Role.PROPERTYPAGE)
+		and role in (
+			controlTypes.Role.GROUPING,
+			controlTypes.Role.PROPERTYPAGE,
+			controlTypes.Role.LANDMARK,
+			controlTypes.Role.REGION,
+		)
 	):
 		# #10095, #3321, #709: Report the name and description of groupings (such as fieldsets) and tab pages
+		# #13307: report the label for landmarks and regions
 		nameAndRole = nameSequence[:]
 		nameAndRole.extend(roleTextSequence)
 		types.logBadSequenceTypes(nameAndRole)
@@ -2294,7 +2330,7 @@ def getFormatFieldSpeech(  # noqa: C901
 				# A style is a collection of formatting settings and depends on the application.
 				text=_("default style")
 			textList.append(text)
-	if  formatConfig["reportBorderStyle"]:
+	if formatConfig["reportCellBorders"] != ReportCellBorders.OFF:
 		borderStyle=attrs.get("border-style")
 		oldBorderStyle=attrsCache.get("border-style") if attrsCache is not None else None
 		if borderStyle!=oldBorderStyle:

@@ -13,6 +13,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
 #include <map>
+#include <algorithm>
 #include <windows.h>
 #include <wchar.h>
 #include <msctf.h>
@@ -500,10 +501,12 @@ STDMETHODIMP TsfSink::OnEndEdit(
 		return S_OK;
 	}
 	inComposition=true;
-	wchar_t buf[256];
+	constexpr unsigned long BUF_SIZE = 256;
+	wchar_t buf[BUF_SIZE];
 	ULONG len = ARRAYSIZE(buf) - 1;
 	pRange->GetText(cookie, 0, buf, len, &len);
-	buf[min(len,255)]=L'\0';
+	const ULONG strNullCharIndex = std::min(len, BUF_SIZE - 1);
+	buf[strNullCharIndex] = L'\0';
 	long compStart=0;
 	fetchRangeExtent(pRange,&compStart,&len);
 	long selStart=compStart;
@@ -515,8 +518,8 @@ STDMETHODIMP TsfSink::OnEndEdit(
 		}
 		tfSelection.range->Release();
 	}
-	selStart=max(0,selStart-compStart);
-	selEnd=max(0,selEnd-compStart);
+	selStart = std::max(0l, selStart-compStart);
+	selEnd = std::max(0l, selEnd-compStart);
 	nvdaControllerInternal_inputCompositionUpdate(buf,selStart,selEnd,0);
 	return S_OK;
 }
