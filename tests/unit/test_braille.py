@@ -1,8 +1,7 @@
-#tests/unit/test_braille.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2017-2019 NV Access Limited, Babbage B.V.
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2017-2023 NV Access Limited, Babbage B.V., Leonard de Ruijter
 
 """Unit tests for the braille module.
 """
@@ -14,6 +13,9 @@ import controlTypes
 from config import conf
 import api
 import globalVars
+from typing import List
+from .extensionPointTestHelpers import actionTester, filterTester, deciderTester
+
 
 class TestFocusContextPresentation(unittest.TestCase):
 	"""A test for the different focus context presentation options."""
@@ -122,4 +124,48 @@ class TestDisplayTextForGestureIdentifier(unittest.TestCase):
 		self.assertEqual(
 			braille.BrailleDisplayGesture.getDisplayTextForIdentifier('br(noBraille):noKey1+noKey2'),
 			(u'No braille', 'noKey1+noKey2')
+		)
+
+
+class TestHandlerExtensionPoints(unittest.TestCase):
+	"""A test for the several extension points on the braille handler."""
+
+	def test_pre_writeCells(self):
+		cells = [0] * braille.handler.displaySize
+		braille.handler._rawText = " " * braille.handler.displaySize
+		expectedKwargs = dict(
+			cells=cells,
+			rawText=braille.handler._rawText,
+			currentCellCount=braille.handler.displaySize
+		)
+
+		with actionTester(self, braille.handler.pre_writeCells, **expectedKwargs):
+			braille.handler._writeCells(cells)
+
+	def test_displaySizeChanged(self):
+		expectedKwargs = dict(
+			displaySize=braille.handler.displaySize
+		)
+
+		with actionTester(self, braille.handler.displaySizeChanged, **expectedKwargs):
+			# Change the attribute that is compared with the value coming from filter_displaySize
+			braille.handler._displaySize = 0
+			# The getter should now trigger the action.
+			braille.handler._get_displaySize()
+
+	def test_filter_displaySize(self):
+		filterTester(
+			self,
+			braille.handler.filter_displaySize,
+			braille.handler._displaySize,  # The currently cached display size
+			20,   # The filter handler should change the display size to 40
+			braille.handler._get_displaySize
+		)
+
+	def test_decide_enabled(self):
+		deciderTester(
+			self,
+			braille.handler.decide_enabled,
+			False,
+			braille.handler._get_enabled
 		)
