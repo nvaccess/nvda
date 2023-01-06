@@ -2118,7 +2118,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 				self._enableDetection(bluetooth=False, keepCurrentDisplay=True, limitToDevices=[name])
 			# #14503: optimization, avoid notifications of unnecessary re-initialization
 			# of the noBraille display
-			# When setDisplayByName is refactored, ensure that braille display detection no longer triggers a reinit of noBraille.
+			# When setDisplayByName is refactored, ensure that braille display detection no longer triggers
+			# an unnecessary reinit of noBraille.
 			if not (sameDisplayReinit and newDisplay.name == "noBraille"):
 				self.displayChanged.notify(display=newDisplay, isFallback=isFallback, detected=detected)
 			return True
