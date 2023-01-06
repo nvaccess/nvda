@@ -1876,9 +1876,54 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	queuedWriteLock: threading.Lock
 	ackTimerHandle: int
 
+	#: Notifies when cells are about to be written to a braille display.
+	#: This allows components and add-ons to perform an action.
+	#: For example, when a system is controlled by a braille enabled remote system,
+	#: the remote system should know what cells to show on its display.
+	#: @param cells: The list of braille cells.
+	#: @type cells: [int]
+	#: @param rawText: The raw text that corresponds with the cells.
+	#: @type rawText: str
+	#: @param currentCellCount: The current number of cells
+	#: @type currentCellCount: bool
+	pre_writeCells: extensionPoints.Action
+	#: Filter that allows components or add-ons to change the display size used for braille output.
+	#: For example, when a system is controlled by a remote system while having a 80 cells display connected,
+	#: the display size should be lowered to 40 whenever the remote system has a 40 cells display connected.
+	#: @param value: the number of cells of the current display.
+	#: @type value: int
+	filter_displaySize: extensionPoints.Filter
+	#: Action that allows components or add-ons to be notified of display size changes.
+	#: For example, when a system is controlled by a remote system and the remote system swaps displays,
+	#: The local system should be notified about display size changes at the remote system.
+	#: @param displaySize: The current display size used by the braille handler.
+	#: @type displaySize: int
+	displaySizeChanged: extensionPoints.Action
+	#: Action that allows components or add-ons to be notified of braille display changes.
+	#: For example, when a system is controlled by a remote system and the remote system swaps displays,
+	#: The local system should be notified about display parameters at the remote system,
+	#: e.g. name and cellcount.
+	#: @param display: The new braille display driver
+	#: @type display: L{BrailleDisplayDriver}
+	#: @param isFallback: Whether the display is set as fallback display due to another display's failure
+	#: @type isFallback: bool
+	#: @param detected: If the display was set by auto detection, the device match that matched the driver
+	#: @type detected: bdDetect.DeviceMatch or C{None}
+	displayChanged: extensionPoints.Action
+	#: Allows components or add-ons to decide whether the braille handler should be forcefully disabled.
+	#: For example, when a system is controlling a remote system with braille,
+	#: the local braille handler should be disabled as long as the system is in control of the remote system.
+	#: Handlers are called without arguments.
+	decide_enabled: extensionPoints.Decider
+
 	def __init__(self):
 		louisHelper.initialize()
 		self.display: Optional[BrailleDisplayDriver] = None
+		#: Internal cache for the displaySize property.
+		#: This attribute is used to compare the displaySize output by l{filterDisplaySize}
+		#: with its previous output.
+		#: If the value differs, L{displaySizeChanged} is notified.
+		self._displaySize: int = 0
 		self.mainBuffer = BrailleBuffer(self)
 		self.messageBuffer = BrailleBuffer(self)
 		self._messageCallLater = None
@@ -1903,29 +1948,10 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 		brailleViewer.postBrailleViewerToolToggledAction.register(self._onBrailleViewerChangedState)
 
-		#: Notifies when cells are about to be written to a braille display.
-		#: This allows components and add-ons to perform an action.
-		#: For example, when a system is controlled by a braille enabled remote system,
-		#: the remote system should know what cells to show on its display.
-		#: @param cells: The list of braille cells.
-		#: @type cells: [int]
-		#: @param rawText: The raw text that corresponds with the cells.
-		#: @type rawText: str
-		#: @param currentCellCount: The current number of cells
-		#: @type currentCellCount: bool
 		self.pre_writeCells = extensionPoints.Action()
-
-		#: Filter that allows components or add-ons to change the display size used for braille output.
-		#: For example, when a system is controlled by a remote system while having a 80 cells display connected,
-		#: the display size should be lowered to 40 whenever the remote system has a 40 cells display connected.
-		#: @param value: the number of cells of the current display.
-		#: @type value: int
 		self.filter_displaySize = extensionPoints.Filter()
-
-		#: Allows components or add-ons to decide whether the braille handler should be forcefully disabled.
-		#: For example, when a system is controlling a remote system with braille,
-		#: the local braille handler should be disabled as long as the system is in control of the remote system.
-		#: Handlers are called without arguments.
+		self.displaySizeChanged = extensionPoints.Action()
+		self.displayChanged = extensionPoints.Action()
 		self.decide_enabled = extensionPoints.Decider()
 
 	def terminate(self):
@@ -1972,7 +1998,11 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		Therefore, this is a read only property and can't be set.
 		"""
 		numCells = self.display.numCells if self.display else 0
-		return self.filter_displaySize.apply(numCells)
+		currentDisplaySize = self.filter_displaySize.apply(numCells)
+		if self._displaySize != currentDisplaySize:
+			self.displaySizeChanged.notify(displaySize=currentDisplaySize)
+			self._displaySize = currentDisplaySize
+		return currentDisplaySize
 
 	def _set_displaySize(self, value):
 		"""While the display size can be changed while a display is connected
@@ -2046,7 +2076,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			oldDisplay = self.display
 			if detected and bdDetect._isDebug():
 				log.debug("Possibly detected display '%s'" % newDisplay.description)
-			if newDisplay == oldDisplay.__class__:
+			sameDisplayReinit = newDisplay == oldDisplay.__class__
+			if sameDisplayReinit:
 				# This is the same driver as was already set, so just re-initialise it.
 				log.debug("Reinitializing %s braille display"%name)
 				oldDisplay.terminate()
@@ -2085,6 +2116,11 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			queueHandler.queueFunction(queueHandler.eventQueue, self.initialDisplay)
 			if detected and 'bluetoothName' in detected.deviceInfo:
 				self._enableDetection(bluetooth=False, keepCurrentDisplay=True, limitToDevices=[name])
+			# #14503: optimization, avoid notifications of unnecessary re-initialization
+			# of the noBraille display
+			# When setDisplayByName is refactored, ensure that braille display detection no longer triggers a reinit of noBraille.
+			if not (sameDisplayReinit and newDisplay.name == "noBraille"):
+				self.displayChanged.notify(display=newDisplay, isFallback=isFallback, detected=detected)
 			return True
 		except:
 			# For auto display detection, logging an error for every failure is too obnoxious.
