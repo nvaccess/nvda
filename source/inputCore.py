@@ -437,6 +437,15 @@ class InputManager(baseObject.AutoPropertyObject):
 	#: @type: bool
 	lastModifierWasInSayAll=False
 
+	#: Notifies when a gesture is about to be executed,
+	#: and allows components or add-ons to decide whether or not to execute a gesture.
+	#: For example, when controlling a remote system with a connected local braille display,
+	#: braille display gestures should not be executed locally.
+	#: Handlers are called with one argument:
+	#: @param gesture: The gesture that is about to be executed.
+	#: @type gesture: L{InputGesture}
+	decide_executeGesture: extensionPoints.Decider
+
 	def __init__(self):
 		#: The function to call when capturing gestures.
 		#: If it returns C{False}, normal execution will be prevented.
@@ -452,13 +461,6 @@ class InputManager(baseObject.AutoPropertyObject):
 		self.loadUserGestureMap()
 		self._lastInputTime = None
 
-		#: Notifies when a gesture is about to be executed,
-		#: and allows components or add-ons to decide whether or not to execute a gesture.
-		#: For example, when controlling a remote system with a connected local braille display,
-		#: braille display gestures should not be executed locally.
-		#: Handlers are called with one argument:
-		#: @param gesture: The gesture that is about to be executed.
-		#: @type gesture: L{InputGesture}
 		self.decide_executeGesture = extensionPoints.Decider()
 
 	def executeGesture(self, gesture):
