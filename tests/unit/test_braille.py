@@ -13,7 +13,6 @@ import controlTypes
 from config import conf
 import api
 import globalVars
-from typing import List
 from .extensionPointTestHelpers import actionTester, filterTester, deciderTester
 
 
@@ -152,6 +151,18 @@ class TestHandlerExtensionPoints(unittest.TestCase):
 			braille.handler._displaySize = 0
 			# The getter should now trigger the action.
 			braille.handler._get_displaySize()
+
+	def test_displayChanged(self):
+		expectedKwargs = dict(
+			isFallback=False,
+			detected=None
+		)
+
+		with actionTester(self, braille.handler.displayChanged, useAssertDictContainsSubset=True, **expectedKwargs):
+			# Terminate the current noBraille instance to ensure that the action is triggered when choosing it again.
+			braille.handler.display.terminate()
+			braille.handler.display = None
+			braille.handler.setDisplayByName("noBraille")
 
 	def test_filter_displaySize(self):
 		filterTester(

@@ -13,13 +13,18 @@ from typing import Callable, Optional
 
 @contextmanager
 def actionTester(
-	testCase: unittest.TestCase,
-	action: Action,
-	**expectedKwargs
+		testCase: unittest.TestCase,
+		action: Action,
+		useAssertDictContainsSubset: bool = False,
+		**expectedKwargs
 ):
 	"""A context manager that allows testing an Action.
 	@param testCase: The test case to apply assertions on.
 	@param action: The action that will be triggered by the test case.
+	@param useAssertDictContainsSubset: Whether to use L{unittest.TestCase.assertDictContainsSubset} instead of
+		L{unittest.TestCase.assertDictEqual}
+		This can be used if an action is notified with dictionary values that can't be predicted at test time,
+		such as a driver instance.
 	@param expectedKwargs: The kwargs that are expected to be passed to the action
 	"""
 	actualKwargs = {}
@@ -32,14 +37,15 @@ def actionTester(
 		yield
 	finally:
 		action.unregister(handler)
-		testCase.assertDictEqual(expectedKwargs, actualKwargs)
+		testFunc = testCase.assertDictContainsSubset if useAssertDictContainsSubset else testCase.assertDictEqual
+		testFunc(expectedKwargs, actualKwargs)
 
 
 def deciderTester(
-	testCase: unittest.TestCase,
-	decider: Decider,
-	expectedDecision: bool,
-	actualDecisionGetter: Callable[[], bool],
+		testCase: unittest.TestCase,
+		decider: Decider,
+		expectedDecision: bool,
+		actualDecisionGetter: Callable[[], bool],
 ):
 	"""A function that allows testing a Decider.
 	@param testCase: The test case to apply the assertion on.
@@ -58,11 +64,11 @@ def deciderTester(
 
 
 def filterTester(
-	testCase: unittest.TestCase,
-	filter: Filter,
-	expectedInput: FilterValueTypeT,
-	expectedOutput: FilterValueTypeT,
-	actualOutputGetter: Callable[[], FilterValueTypeT],
+		testCase: unittest.TestCase,
+		filter: Filter,
+		expectedInput: FilterValueTypeT,
+		expectedOutput: FilterValueTypeT,
+		actualOutputGetter: Callable[[], FilterValueTypeT],
 ):
 	"""A function that allows testing a Filter.
 	@param testCase: The test case to apply the assertion on.
