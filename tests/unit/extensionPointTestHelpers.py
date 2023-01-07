@@ -8,7 +8,7 @@
 from extensionPoints import Action, Decider, Filter, FilterValueTypeT
 import unittest
 from contextlib import contextmanager
-from typing import Callable, Optional
+from typing import Optional
 
 
 @contextmanager
