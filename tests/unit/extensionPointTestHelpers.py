@@ -41,19 +41,19 @@ def actionTester(
 		testFunc(expectedKwargs, actualKwargs)
 
 
+@contextmanager
 def deciderTester(
 		testCase: unittest.TestCase,
 		decider: Decider,
 		expectedDecision: bool,
-		actualDecisionGetter: Callable[[], bool],
 		useAssertDictContainsSubset: bool = False,
 		**expectedKwargs
 ):
-	"""A function that allows testing a Decider.
+	"""A context manager that allows testing a Decider.
 	@param testCase: The test case to apply the assertion on.
 	@param decider: The Decider that will be consulted by the test case.
 	@param expectedDecision: The expected decision as returned by L{Decider.decide}
-	@param actualDecisionGetter: A callable that returns the actual decision
+		it will also be yielded by the context manager.
 	@param useAssertDictContainsSubset: Whether to use L{unittest.TestCase.assertDictContainsSubset} instead of
 		L{unittest.TestCase.assertDictEqual}
 		This can be used if a decider is consulted with dictionary values that can't be predicted at test time,
@@ -68,19 +68,19 @@ def deciderTester(
 
 	decider.register(handler)
 	try:
-		testCase.assertEqual(expectedDecision, actualDecisionGetter())
+		yield expectedDecision
 	finally:
 		decider.unregister(handler)
 		testFunc = testCase.assertDictContainsSubset if useAssertDictContainsSubset else testCase.assertDictEqual
 		testFunc(expectedKwargs, actualKwargs)
 
 
+@contextmanager
 def filterTester(
 		testCase: unittest.TestCase,
 		filter: Filter,
 		expectedInput: FilterValueTypeT,
 		expectedOutput: FilterValueTypeT,
-		actualOutputGetter: Callable[[], FilterValueTypeT],
 		useAssertDictContainsSubset: bool = False,
 		**expectedKwargs
 ):
@@ -89,7 +89,7 @@ def filterTester(
 	@param filter: The filter that will be applied by the test case.
 	@param expectedInput: The expected input as entering the filter handler.
 	@param expectedOutput: The expected output as returned by L{Filter.apply}
-	@param actualOutputGetter: A callable that returns the actual output
+		it will also be yielded by the context manager
 	@param useAssertDictContainsSubset: Whether to use L{unittest.TestCase.assertDictContainsSubset} instead of
 		L{unittest.TestCase.assertDictEqual}
 		This can be used if a filter is applied with dictionary values that can't be predicted at test time,
@@ -111,9 +111,9 @@ def filterTester(
 
 	filter.register(handler)
 	try:
-		testCase.assertEqual(expectedOutput, actualOutputGetter())
-		testCase.assertEqual(expectedInput, container.value)
+		yield expectedOutput
 	finally:
 		filter.unregister(handler)
+		testCase.assertEqual(expectedInput, container.value)
 		testFunc = testCase.assertDictContainsSubset if useAssertDictContainsSubset else testCase.assertDictEqual
 		testFunc(expectedKwargs, actualKwargs)

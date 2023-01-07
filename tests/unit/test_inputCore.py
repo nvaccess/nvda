@@ -12,7 +12,7 @@ import keyboardHandler
 from .extensionPointTestHelpers import deciderTester
 
 
-class TestHandlerExtensionPoints(unittest.TestCase):
+class TestInputManagerExtensionPoints(unittest.TestCase):
 	"""A test for the extension points on the input manager."""
 
 	def setUp(self) -> None:
@@ -23,10 +23,10 @@ class TestHandlerExtensionPoints(unittest.TestCase):
 
 	def test_decide_executeGesture(self):
 		gesture = keyboardHandler.KeyboardInputGesture.fromName("NVDA+T")
-		deciderTester(
+		with deciderTester(
 			self,
 			inputCore.manager.decide_executeGesture,
-			None,
-			lambda: inputCore.manager.executeGesture(gesture),
+			False,
 			gesture=gesture
-		)
+		):
+			inputCore.manager.executeGesture(gesture)

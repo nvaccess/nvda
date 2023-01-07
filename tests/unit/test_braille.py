@@ -165,18 +165,18 @@ class TestHandlerExtensionPoints(unittest.TestCase):
 			braille.handler.setDisplayByName("noBraille")
 
 	def test_filter_displaySize(self):
-		filterTester(
+		with filterTester(
 			self,
 			braille.handler.filter_displaySize,
 			braille.handler._displaySize,  # The currently cached display size
 			20,   # The filter handler should change the display size to 40
-			braille.handler._get_displaySize
-		)
+		) as expectedOutput:
+			self.assertEqual(braille.handler.displaySize, expectedOutput)
 
 	def test_decide_enabled(self):
-		deciderTester(
+		with deciderTester(
 			self,
 			braille.handler.decide_enabled,
 			False,
-			braille.handler._get_enabled
-		)
+		) as expectedDecision:
+			self.assertEqual(braille.handler.enabled, expectedDecision)
