@@ -2112,7 +2112,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 				config.conf["braille"]["display"] = name
 			else: # detected:
 				self._disableDetection()
-			log.info("Loaded braille display driver %s, current display has %d cells." %(name, self.displaySize))
+			log.info(f"Loaded braille display driver {name!r}, current display has {newDisplay.numCells} cells.")
 			queueHandler.queueFunction(queueHandler.eventQueue, self.initialDisplay)
 			if detected and 'bluetoothName' in detected.deviceInfo:
 				self._enableDetection(bluetooth=False, keepCurrentDisplay=True, limitToDevices=[name])
