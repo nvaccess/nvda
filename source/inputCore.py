@@ -478,7 +478,8 @@ class InputManager(baseObject.AutoPropertyObject):
 		if not self.decide_executeGesture.decide(gesture=gesture):
 			# A registered handler decided that this gesture shouldn't be executed.
 			# Purposely do not raise a NoInputGestureAction here, as that could
-			# lead to unexpected behavior for gesture emulation.
+			# lead to unexpected behavior for gesture emulation, i.e. the gesture will be send to the system
+			# when the decider decided not to execute it.
 			log.debug(
 				"Gesture execution canceled by handler registered to decide_executeGesture extension point"
 			)
