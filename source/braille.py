@@ -1985,7 +1985,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			if not isFallback:
 				if not detected:
 					config.conf["braille"]["display"] = newDisplayClass.name
-				elif 'bluetoothName' in detected.deviceInfo:
+				elif 'bluetoothName' in detected.deviceInfo or detected.deviceInfo.get("provider") == "bluetooth":
 					# As USB devices have priority over Bluetooth, keep a detector running to switch to USB when connected.
 					# Note that the detector should always be running in this situation, so we can trigger a rescan.
 					self._detector.rescan(bluetooth=False, limitToDevices=[newDisplayClass.name])
