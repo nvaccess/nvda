@@ -1834,7 +1834,7 @@ def getFocusRegions(
 	from NVDAObjects import NVDAObject
 	if isinstance(obj, CursorManager):
 		region2 = (ReviewTextInfoRegion if review else CursorManagerRegion)(obj)
-	elif isinstance(obj, DocumentTreeInterceptor) or (isinstance(obj,NVDAObject) and NVDAObjectHasUsefulText(obj)): 
+	elif isinstance(obj, DocumentTreeInterceptor) or (isinstance(obj,NVDAObject) and NVDAObjectHasUsefulText(obj)):
 		region2 = (ReviewTextInfoRegion if review else TextInfoRegion)(obj)
 	else:
 		region2 = None
@@ -1981,7 +1981,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 		try:
 			newDisplayClass = _getDisplayDriver(name)
-			self._setDisplay(newDisplayClass)
+			self._setDisplay(newDisplayClass, isFallback=isFallback, detected=detected)
 			if not isFallback:
 				if not detected:
 					config.conf["braille"]["display"] = newDisplayClass.name
@@ -2001,7 +2001,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			fallbackDisplayClass = _getDisplayDriver(NO_BRAILLE_DISPLAY_NAME)
 			# Only initialize the fallback if it is not already set
 			if self.display.__class__ == fallbackDisplayClass:
-				self._setDisplay(fallbackDisplayClass)
+				self._setDisplay(fallbackDisplayClass, isFallback=False)
 			return False
 
 	def _switchDisplay(
@@ -2032,6 +2032,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	def _setDisplay(
 			self,
 			newDisplayClass: Type["BrailleDisplayDriver"],
+			isFallback: bool = False,
 			detected: typing.Optional[bdDetect.DeviceMatch] = None,
 	):
 		kwargs = {}
