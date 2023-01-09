@@ -5,12 +5,17 @@
 import enum
 import typing
 import unittest
+from unittest.mock import MagicMock
 import io
 
 import configobj
 import configobj.validate
 
-from config import featureFlag
+from config import (
+	AggregatedSection,
+	ConfigManager,
+	featureFlag,
+)
 from config.featureFlag import (
 	FeatureFlag,
 )
@@ -690,3 +695,54 @@ class Config_profileUpgradeSteps_upgradeConfigFrom_8_to_9_tetherTo(unittest.Test
 		_upgradeConfigFrom_8_to_9_tetherTo(profile)
 		self._checkOldKeyRemoved(profile)
 		self.assertEqual(profile['braille']['tetherTo'], TetherTo.REVIEW.value)
+
+
+class Config_AggregatedSection_getitem(unittest.TestCase):
+	def setUp(self):
+		manager = MagicMock(ConfigManager())
+		spec = MagicMock(configobj.ConfigObj())
+		self.testSection = AggregatedSection(
+			manager=manager,
+			path=(),
+			spec=spec,
+			profiles=[],
+		)
+
+	def test_cached(self):
+		self.testSection._cache["foo"] = "bar"
+		self.assertEqual(self.testSection["foo"], "bar")
+
+	def test_KeyError(self):
+		self.testSection._cache["foo"] = KeyError
+		with self.assertRaises(KeyError):
+			self.testSection["foo"]
+
+
+class Config_AggregatedSection_setitem(unittest.TestCase):
+	def setUp(self):
+		manager = MagicMock(ConfigManager())
+		spec = MagicMock(configobj.ConfigObj())
+		profile = MagicMock(configobj.ConfigObj())
+		self.testSection = AggregatedSection(
+			manager=manager,
+			path=(),
+			spec=spec,
+			profiles=[profile],
+		)
+
+	def test_update_str(self):
+		self.testSection._cache["foo"] = "bar"
+		self.testSection["foo"] = "zoo"
+		self.assertEqual(self.testSection["foo"], "zoo")
+
+	def test_update_FeatureFlag_defaultValue_fromValueOfDefault(self):
+		"""
+		Documents bug raised in #14133,
+		where the config did not update when changing from the value of the default to the default value
+		"""
+		valueOfDefaultFlag = FeatureFlag(value=CustomEnum.NEVER, behaviorOfDefault=CustomEnum.NEVER)
+		defaultFlag = FeatureFlag(value=CustomEnum.DEFAULT, behaviorOfDefault=CustomEnum.NEVER)
+		self.testSection["foo"] = defaultFlag
+		self.assertIs(self.testSection["foo"], defaultFlag)
+		self.testSection["foo"] = valueOfDefaultFlag
+		self.assertIs(self.testSection["foo"], valueOfDefaultFlag)
