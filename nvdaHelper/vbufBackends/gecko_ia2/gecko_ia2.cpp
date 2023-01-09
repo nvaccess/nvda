@@ -63,9 +63,7 @@ std::vector<CComQIPtr<IAccessible2>> GeckoVBufBackend_t::getRelationElementsOfTy
 
 	const bool isChrome = this->toolkitName.compare(L"Chrome") == 0;
 	if (isChrome) {
-		// A bug in Chrome causes a buffer overrun if numRelations is less than the total number of targets the node has.
-		// TODO: has this been reported?
-		// numRelations cannot be correctly determined due to another bug: https://crbug.com/1399184
+		// Due to a bug in Chrome, nTargets is not respected https://crbug.com/1399184
 		// As a work around, request all targets (by setting numRelations to 0).
 		// There is no major performance hit to fetch all targets in Chrome as Chrome is already fetching all targets either way.
 		// In Firefox there would be extra cross-process calls.
