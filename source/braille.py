@@ -1834,7 +1834,11 @@ def getFocusRegions(
 	from NVDAObjects import NVDAObject
 	if isinstance(obj, CursorManager):
 		region2 = (ReviewTextInfoRegion if review else CursorManagerRegion)(obj)
-	elif isinstance(obj, DocumentTreeInterceptor) or (isinstance(obj,NVDAObject) and NVDAObjectHasUsefulText(obj)):
+	elif (
+		isinstance(obj, DocumentTreeInterceptor) or (
+			isinstance(obj, NVDAObject) and NVDAObjectHasUsefulText(obj)
+		)
+	):
 		region2 = (ReviewTextInfoRegion if review else TextInfoRegion)(obj)
 	else:
 		region2 = None
