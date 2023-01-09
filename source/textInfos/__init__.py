@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2021 NV Access Limited, Babbage B.V., Accessolutions, Julien Cochuyt
+# Copyright (C) 2006-2022 NV Access Limited, Babbage B.V., Accessolutions, Julien Cochuyt
 
 """Framework for accessing text content in widgets.
 The core component of this framework is the L{TextInfo} class.
@@ -31,7 +31,9 @@ import locationHelper
 from logHandler import log
 
 if typing.TYPE_CHECKING:
+	import documentBase  # noqa: F401 used for type checking only
 	import NVDAObjects
+
 
 SpeechSequence = List[Union[Any, str]]
 
@@ -119,6 +121,7 @@ class ControlField(Field):
 				controlTypes.Role.BUTTON, 
 				controlTypes.Role.RADIOBUTTON, 
 				controlTypes.Role.CHECKBOX, 
+				controlTypes.Role.SWITCH,
 				controlTypes.Role.GRAPHIC, 
 				controlTypes.Role.CHART, 
 				controlTypes.Role.MENUITEM, 
@@ -307,11 +310,14 @@ class TextInfo(baseObject.AutoPropertyObject):
 	@type bookmark: L{Bookmark}
 	"""
 
-	def __init__(self,obj,position):
+	def __init__(
+			self,
+			obj: "documentBase.TextContainerObject",
+			position: Union[int, Tuple, str],
+	):
 		"""Constructor.
 		Subclasses must extend this, calling the superclass method first.
 		@param position: The initial position of this range; one of the POSITION_* constants or a position object supported by the implementation.
-		@type position: int, tuple or string
 		@param obj: The object containing the range of text being represented.
 		"""
 		super(TextInfo,self).__init__()
@@ -338,9 +344,9 @@ class TextInfo(baseObject.AutoPropertyObject):
 		self.end.moveTo(otherEndpoint)
 
 	#: Typing information for auto-property: _get_obj
-	obj: "NVDAObjects.NVDAObject"
+	obj: "documentBase.TextContainerObject"
 
-	def _get_obj(self) -> "NVDAObjects.NVDAObject":
+	def _get_obj(self) -> "documentBase.TextContainerObject":
 		"""The object containing the range of text being represented."""
 		return self._obj()
 

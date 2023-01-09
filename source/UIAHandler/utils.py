@@ -6,9 +6,11 @@
 import operator
 from comtypes import COMError
 import config
+from config.featureFlagEnums import WindowsTerminalStrategyFlag
 import ctypes
 import UIAHandler
 import weakref
+import winVersion
 from functools import lru_cache
 from logHandler import log
 from .constants import WinConsoleAPILevel
@@ -350,3 +352,19 @@ def _getConhostAPILevel(hwnd: int) -> WinConsoleAPILevel:
 	except (COMError, ValueError):
 		log.exception()
 		return WinConsoleAPILevel.END_INCLUSIVE
+
+
+def _shouldSelectivelyRegister() -> bool:
+	"Determines whether to register for UIA events selectively or globally."
+	setting = config.conf['UIA']['eventRegistration']
+	if setting == "selective":
+		return True
+	elif setting == "global":
+		return False
+	else:
+		return winVersion.getWinVer() >= winVersion.WIN11_22H2
+
+
+def _shouldUseWindowsTerminalNotifications() -> bool:
+	"Determines whether to use notifications for new text reporting in Windows Terminal."
+	return config.conf["terminals"]["wtStrategy"] == WindowsTerminalStrategyFlag.NOTIFICATIONS

@@ -113,6 +113,10 @@ This section should tell us what you expect to happen when these steps are taken
 > NVDA Speech:
 > "checkbox enable sound"
 
+### NVDA logs, crash dumps and other attachments
+
+Refer to [Attachments / Images](#attachments--images).
+
 ### System configuration:
 
 This section has several sub-sections.

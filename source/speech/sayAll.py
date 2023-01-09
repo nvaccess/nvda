@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2021 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
+# Copyright (C) 2006-2022 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
 # Julien Cochuyt
 
 from abc import ABCMeta, abstractmethod
@@ -16,6 +16,7 @@ import api
 import textInfos
 import queueHandler
 import winKernel
+from utils.security import objectBelowLockScreenAndWindowsIsLocked
 
 from .commands import CallbackCommand, EndUtteranceCommand
 from .speechWithoutPauses import SpeechWithoutPauses
@@ -142,7 +143,11 @@ class _ObjectsReader(garbageHandler.TrackedObject):
 			return
 		if self.prevObj:
 			# We just started speaking this object, so move the navigator to it.
-			api.setNavigatorObject(self.prevObj, isFocus=self.handler.lastSayAllMode == CURSOR.CARET)
+			if not api.setNavigatorObject(
+				self.prevObj,
+				isFocus=self.handler.lastSayAllMode == CURSOR.CARET
+			):
+				return
 			winKernel.SetThreadExecutionState(winKernel.ES_SYSTEM_REQUIRED)
 		# Move onto the next object.
 		self.prevObj = obj = next(self.walker, None)
@@ -183,6 +188,7 @@ class _TextReader(garbageHandler.TrackedObject, metaclass=ABCMeta):
 	MAX_BUFFERED_LINES = 10
 
 	def __init__(self, handler: _SayAllHandler):
+		self.reader = None
 		self.handler = handler
 		self.trigger = SayAllProfileTrigger()
 		self.reader = self.getInitialTextInfo()
@@ -208,15 +214,6 @@ class _TextReader(garbageHandler.TrackedObject, metaclass=ABCMeta):
 		Advances cursor to the next reading chunk (e.g. paragraph).
 		@return: C{True} if advanced successfully, C{False} otherwise.
 		"""
-		# Collapse to the end of this line, ready to read the next.
-		try:
-			self.reader.collapse(end=True)
-		except RuntimeError:
-			# This occurs in Microsoft Word when the range covers the end of the document.
-			# without this exception to indicate that further collapsing is not possible,
-			# say all could enter an infinite loop.
-
-			return False
 		# Expand to the current line.
 		# We use move end rather than expand
 		# because the user might start in the middle of a line
@@ -235,16 +232,39 @@ class _TextReader(garbageHandler.TrackedObject, metaclass=ABCMeta):
 			return False
 		return True
 
+	def collapseLineImpl(self) -> bool:
+		"""
+		Collapses to the end of this line, ready to read the next.
+		@return: C{True} if collapsed successfully, C{False} otherwise.
+		"""
+		try:
+			self.reader.collapse(end=True)
+			return True
+		except RuntimeError:
+			# This occurs in Microsoft Word when the range covers the end of the document.
+			# without this exception to indicate that further collapsing is not possible,
+			# say all could enter an infinite loop.
+			self.finish()
+			return False
+
 	def nextLine(self):
 		if not self.reader:
 			log.debug("no self.reader")
 			# We were stopped.
 			return
-		if not self.reader.obj:
-			log.debug("no self.reader.obj")
+
+		if (
 			# The object died, so we should too.
+			not self.reader.obj
+			# SayAll is available on the lock screen via getSafeScripts, as such
+			# ensure the say all reader does not contain secure information
+			# before continuing
+			or objectBelowLockScreenAndWindowsIsLocked(self.reader.obj)
+		):
+			log.debug("no self.reader.obj")
 			self.finish()
 			return
+
 		if not self.initialIteration or not self.shouldReadInitialPosition():
 			if not self.nextLineImpl():
 				self.finish()
@@ -281,6 +301,9 @@ class _TextReader(garbageHandler.TrackedObject, metaclass=ABCMeta):
 		spoke = self.handler.speechWithoutPausesInstance.speakWithoutPauses(seq)
 		# Update the textInfo state ready for when speaking the next line.
 		self.speakTextInfoState = state.copy()
+
+		if not self.collapseLineImpl():
+			return
 
 		if not spoke:
 			# This line didn't include a natural pause, so nothing was spoken.
@@ -386,6 +409,9 @@ class _TableTextReader(_CaretTextReader):
 			return True
 		except StopIteration:
 			return False
+
+	def collapseLineImpl(self) -> bool:
+		return True
 
 	def shouldReadInitialPosition(self) -> bool:
 		return True

@@ -1,17 +1,21 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2020 NV Access Limited, Babbage B.V., Julien Cochuyt
+# Copyright (C) 2007-2022 NV Access Limited, Babbage B.V., Julien Cochuyt, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 from typing import (
-	Optional,
+	Callable,
+	Generator,
 	Iterator,
 	List,
+	Optional,
+	Tuple,
 )
 import time
 import weakref
 import types
 import config
+import NVDAObjects
 from speech import sayAll
 import api
 import queueHandler
@@ -21,6 +25,17 @@ import globalPluginHandler
 import braille
 import vision
 import baseObject
+
+
+_ScriptFunctionT = Callable[["inputCore.InputGesture"], None]
+_ScriptFilterT = Callable[
+	[
+		Optional[_ScriptFunctionT],
+		"NVDAObjects.NVDAObject",
+		"inputCore.InputGesture"
+	],
+	Optional[_ScriptFunctionT]
+]
 
 _numScriptsQueued=0 #Number of scripts that are queued to be executed
 #: Number of scripts that send their gestures on that are queued to be executed or are currently being executed.
@@ -39,7 +54,17 @@ def _makeKbEmulateScript(scriptName):
 	func.__doc__ = _("Emulates pressing %s on the system keyboard") % emuGesture.displayName
 	return func
 
-def _getObjScript(obj, gesture, globalMapScripts):
+
+def _getObjScript(
+		obj: "NVDAObjects.NVDAObject",
+		gesture: "inputCore.InputGesture",
+		globalMapScripts: List["inputCore.InputGestureScriptT"],
+) -> Optional[_ScriptFunctionT]:
+	"""
+	@param globalMapScripts: An ordered list of scripts.
+	The list is ordered by resolution priority,
+	the first map in the list should be used to resolve the script first.
+	"""
 	# Search the scripts from the global gesture maps.
 	for cls, scriptName in globalMapScripts:
 		if isinstance(obj, cls):
@@ -60,17 +85,14 @@ def _getObjScript(obj, gesture, globalMapScripts):
 	except Exception:  # Prevent a faulty add-on from breaking script handling altogether (#5446)
 		log.exception()
 
-def findScript(gesture):
-	focus = api.getFocusObject()
-	if not focus:
-		return None
 
-	# Import late to avoid circular import.
-	# We need to import this here because this might be the first import of this module
-	# and it might be needed by global maps.
-	import globalCommands
-
-	globalMapScripts = []
+def getGlobalMapScripts(gesture: "inputCore.InputGesture") -> List["inputCore.InputGestureScriptT"]:
+	"""
+	@returns: An ordered list of scripts.
+	The list is ordered by resolution priority,
+	the first map in the list should be used to resolve scripts first.
+	"""
+	globalMapScripts: List["inputCore.InputGestureScriptT"] = []
 	globalMaps = [inputCore.manager.userGestureMap, inputCore.manager.localeGestureMap]
 	globalMap = braille.handler.display.gestureMap if braille.handler and braille.handler.display else None
 	if globalMap:
@@ -78,74 +100,125 @@ def findScript(gesture):
 	for globalMap in globalMaps:
 		for identifier in gesture.normalizedIdentifiers:
 			globalMapScripts.extend(globalMap.getScriptsForGesture(identifier))
+	return globalMapScripts
 
-	# Gesture specific scriptable object.
-	obj = gesture.scriptableObject
-	if obj:
-		func = _getObjScript(obj, gesture, globalMapScripts)
-		if func:
-			return func
 
-	# Global plugin level.
-	for plugin in globalPluginHandler.runningPlugins:
-		func = _getObjScript(plugin, gesture, globalMapScripts)
-		if func:
-			return func
+def findScript(gesture: "inputCore.InputGesture") -> Optional[_ScriptFunctionT]:
+	from utils.security import getSafeScripts
+	from winAPI.sessionTracking import _isLockScreenModeActive
+	foundScript = _findScript(gesture)
+	if (
+		foundScript is not None
+		and _isLockScreenModeActive()
+		and foundScript not in getSafeScripts()
+	):
+		return None
+	return foundScript
 
-	# App module level.
-	app = focus.appModule
-	if app:
-		func = _getObjScript(app, gesture, globalMapScripts)
-		if func:
-			return func
 
-	# Braille display level
+def _findScript(gesture: "inputCore.InputGesture") -> Optional[_ScriptFunctionT]:
+	focus = api.getFocusObject()
+	if not focus:
+		return None
+
+	globalMapScripts = getGlobalMapScripts(gesture)
+
+	for obj, filterFunc in _yieldObjectsForFindScript(gesture):
+		if obj:
+			func = _getObjScript(obj, gesture, globalMapScripts)
+			if filterFunc is not None:
+				func = filterFunc(func, obj, gesture)
+			if func:
+				return func
+
+	return None
+
+
+def _getTreeModeInterceptorScript(
+		func: Optional[_ScriptFunctionT],
+		obj: "NVDAObjects.NVDAObject",
+		gesture: "inputCore.InputGesture",
+) -> Optional[_ScriptFunctionT]:
+	"""
+	A filtering function used with _yieldObjectsForFindScript, to ensure a tree interceptor
+	should propagate scripts and therefore handle the input gesture.
+	"""
+	from browseMode import BrowseModeTreeInterceptor
+	if isinstance(obj, BrowseModeTreeInterceptor):
+		func = obj.getAlternativeScript(gesture, func)
+	if func and (not obj.passThrough or getattr(func, "ignoreTreeInterceptorPassThrough", False)):
+		return func
+	return None
+
+
+def _getFocusAncestorScript(
+		func: Optional[_ScriptFunctionT],
+		obj: "NVDAObjects.NVDAObject",
+		gesture: "inputCore.InputGesture",
+) -> Optional[_ScriptFunctionT]:
+	"""
+	A filtering function used with _yieldObjectsForFindScript, to ensure a focus ancestor
+	should propagate scripts and therefore handle the input gesture.
+	"""
+	if func and getattr(func, 'canPropagate', False):
+		return func
+	return None
+
+
+def _yieldObjectsForFindScript(
+		gesture: "inputCore.InputGesture"
+) -> Generator[Tuple["NVDAObjects.NVDAObject", Optional[_ScriptFilterT]], None, None]:
+	"""
+	This generator is used to determine which NVDAObject to perform an input gesture on,
+	in order of priority.
+	For example, if the first yielded object has an associated script for the given gesture, findScript
+	will use that script.
+	@yields: A tuple, which includes
+	 - an NVDAObject, to check if there is an associated script
+	 - an optional function to handle any further filtering required after checking for an associated script
+	"""
+	# Import late to avoid circular import.
+	# We need to import this here because this might be the first import of this module
+	# and it might be needed by global maps.
+	import globalCommands
+	focus = api.getFocusObject()
+
+	# Gesture specific scriptable object
+	yield gesture.scriptableObject, None
+	# Global plugins
+	yield from ((p, None) for p in globalPluginHandler.runningPlugins)
+	# App module
+	yield focus.appModule, None
+
+	# Braille display
 	if (
 		braille.handler
 		and isinstance(braille.handler.display, baseObject.ScriptableObject)
 	):
-		func = _getObjScript(braille.handler.display, gesture, globalMapScripts)
-		if func:
-			return func
+		yield braille.handler.display, None
 
-	# Vision enhancement provider level
+	# Vision enhancement provider
 	if vision.handler:
 		for provider in vision.handler.getActiveProviderInstances():
 			if isinstance(provider, baseObject.ScriptableObject):
-				func = _getObjScript(provider, gesture, globalMapScripts)
-				if func:
-					return func
+				yield provider, None
 
-	# Tree interceptor level.
+	# Tree interceptor
 	treeInterceptor = focus.treeInterceptor
 	if treeInterceptor and treeInterceptor.isReady:
-		func = _getObjScript(treeInterceptor, gesture, globalMapScripts)
-		from browseMode import BrowseModeTreeInterceptor
-		if isinstance(treeInterceptor,BrowseModeTreeInterceptor):
-			func=treeInterceptor.getAlternativeScript(gesture,func)
-		if func and (not treeInterceptor.passThrough or getattr(func,"ignoreTreeInterceptorPassThrough",False)):
-			return func
+		yield treeInterceptor, _getTreeModeInterceptorScript
 
-	# NVDAObject level.
-	func = _getObjScript(focus, gesture, globalMapScripts)
-	if func:
-		return func
-	for obj in reversed(api.getFocusAncestors()):
-		func = _getObjScript(obj, gesture, globalMapScripts)
-		if func and getattr(func, 'canPropagate', False):
-			return func
+	# NVDAObject
+	yield focus, None
+
+	# Focus ancestors
+	yield from ((a, _getFocusAncestorScript) for a in reversed(api.getFocusAncestors()))
 
 	# Configuration profile activation scripts
-	func = _getObjScript(globalCommands.configProfileActivationCommands, gesture, globalMapScripts)
-	if func:
-		return func
+	yield globalCommands.configProfileActivationCommands, None
+	# Global commands
+	yield globalCommands.commands, None
 
-	# Global commands.
-	func = _getObjScript(globalCommands.commands, gesture, globalMapScripts)
-	if func:
-		return func
-
-	return None
 
 def getScriptName(script):
 	return script.__name__[7:]
