@@ -177,6 +177,7 @@ class EndUtteranceCommand(SpeechCommand):
 	def __repr__(self):
 		return "EndUtteranceCommand()"
 
+
 class BaseProsodyCommand(SynthParamCommand):
 	"""Base class for commands which change voice prosody; i.e. pitch, rate, etc.
 	The change to the setting is specified using either an offset or a multiplier, but not both.
