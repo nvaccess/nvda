@@ -1979,29 +1979,18 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			if not detected:
 				self._disableDetection()
 
-		kwargs = {}
-		if detected:
-			kwargs["port"] = detected
-		else:
-			# See if the user has defined a specific port to connect to
-			try:
-				kwargs["port"] = config.conf["braille"][name]["port"]
-			except KeyError:
-				pass
-
 		try:
 			newDisplayClass = _getDisplayDriver(name)
-			if bdDetect._isDebug() and detected:
-				log.debug(f"Possibly detected display {newDisplayClass.description!r}")
-			self._setDisplay(newDisplayClass, **kwargs)
-			if not isFallback and not detected:
-				config.conf["braille"]["display"] = newDisplayClass.name
-			elif 'bluetoothName' in detected.deviceInfo:
-				# As USB devices have priority over Bluetooth, keep a detector running to switch to USB when connected.
-				# Note that the detector should always be running in this situation, so we can trigger a rescan.
-				self._detector.rescan(bluetooth=False, limitToDevices=[newDisplayClass.name])
-			else:
-				self._disableDetection()
+			self._setDisplay(newDisplayClass)
+			if not isFallback:
+				if not detected:
+					config.conf["braille"]["display"] = newDisplayClass.name
+				elif 'bluetoothName' in detected.deviceInfo:
+					# As USB devices have priority over Bluetooth, keep a detector running to switch to USB when connected.
+					# Note that the detector should always be running in this situation, so we can trigger a rescan.
+					self._detector.rescan(bluetooth=False, limitToDevices=[newDisplayClass.name])
+				else:
+					self._disableDetection()
 			return True
 		except Exception:
 			# For auto display detection, logging an error for every failure is too obnoxious.
@@ -2043,8 +2032,20 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	def _setDisplay(
 			self,
 			newDisplayClass: Type["BrailleDisplayDriver"],
-			**kwargs
+			detected: typing.Optional[bdDetect.DeviceMatch] = None,
 	):
+		kwargs = {}
+		if detected:
+			kwargs["port"] = detected
+		else:
+			# See if the user has defined a specific port to connect to
+			try:
+				kwargs["port"] = config.conf["braille"][newDisplayClass.name]["port"]
+			except KeyError:
+				pass
+
+		if bdDetect._isDebug() and detected:
+			log.debug(f"Possibly detected display {newDisplayClass.description!r}")
 		oldDisplay = self.display
 		newDisplay = self._switchDisplay(oldDisplay, newDisplayClass, **kwargs)
 		self.display = newDisplay
