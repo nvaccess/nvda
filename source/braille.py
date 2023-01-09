@@ -1895,7 +1895,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self._tether = TetherTo.FOCUS.value
 		else:
 			self._tether = config.conf["braille"]["tetherTo"]
-		self._detectionEnabled = False
 		self._detector = None
 		self._rawText = u""
 
@@ -1969,14 +1968,16 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			isFallback: bool = False,
 			detected: typing.Optional[bdDetect.DeviceMatch] = None,
 	):
-		if not isFallback:
+		if name == AUTO_DISPLAY_NAME:
+			# Calling _enableDetection will set the display to noBraille until a display is detected.
+			# Note that L{isFallback} is ignored in these cases.
+			self._enableDetection()
+			return True
+		elif not isFallback:
 			# #8032: Take note of the display requested, even if it is going to fail.
 			self._lastRequestedDisplayName = name
-		if name == AUTO_DISPLAY_NAME:
-			self._enableDetection(keepCurrentDisplay=False)
-			return True
-		elif not isFallback and not detected:
-			self._disableDetection()
+			if not detected:
+				self._disableDetection()
 
 		kwargs = {}
 		if detected:
@@ -2368,15 +2369,25 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			log.debugWarning("Error in initial display", exc_info=True)
 
 	def handlePostConfigProfileSwitch(self):
-		display = config.conf["braille"]["display"]
+		displayName = config.conf["braille"]["display"]
+		try:
+			port = config.conf["braille"][displayName]["port"]
+		except KeyError:
+			port = None
+		coveredByAutoDetect = (
+			displayName == AUTO_DISPLAY_NAME
+			and bdDetect.driverSupportsAutoDetection(self.display.name)
+		)
 		# Do not choose a new display if:
 		if not (
 			# The display in the new profile is equal to the last requested display name
-			display == self._lastRequestedDisplayName
-			# or the new profile uses auto detection, which supports detection of the currently active display.
-			or (display == AUTO_DISPLAY_NAME and bdDetect.driverSupportsAutoDetection(self.display.name))
+			# and it has no explicit port defined
+			displayName == self._lastRequestedDisplayName and port is None
+			# or the new profile uses auto detection,
+			# and the currently active display is supported by auto detection.
+			or coveredByAutoDetect
 		):
-			self.setDisplayByName(display)
+			self.setDisplayByName(displayName)
 		self._tether = config.conf["braille"]["tetherTo"]
 
 	def handleDisplayUnavailable(self):
@@ -2393,28 +2404,23 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		)
 		self.setDisplayByName(newDisplay, isFallback=True)
 
-	def _enableDetection(self, usb=True, bluetooth=True, keepCurrentDisplay=False, limitToDevices=None):
+	def _enableDetection(self, usb=True, bluetooth=True, limitToDevices=None):
 		"""Enables automatic detection of braille displays.
 		When auto detection is already active, this will force a rescan for devices.
 		This should also be executed when auto detection should be resumed due to loss of display connectivity.
 		"""
-		if self._detectionEnabled and self._detector:
+		self.setDisplayByName("noBraille", isFallback=True)
+		if self._detector:
 			self._detector.rescan(usb=usb, bluetooth=bluetooth, limitToDevices=limitToDevices)
 			return
 		config.conf["braille"]["display"] = AUTO_DISPLAY_NAME
-		if not keepCurrentDisplay:
-			self.setDisplayByName("noBraille", isFallback=True)
 		self._detector = bdDetect.Detector(usb=usb, bluetooth=bluetooth, limitToDevices=limitToDevices)
-		self._detectionEnabled = True
 
 	def _disableDetection(self):
 		"""Disables automatic detection of braille displays."""
-		if not self._detectionEnabled:
-			return
 		if self._detector:
 			self._detector.terminate()
 			self._detector = None
-		self._detectionEnabled = False
 
 	def _bgThreadExecutor(self, param: int):
 		"""Executed as APC when cells have to be written to a display asynchronously.
