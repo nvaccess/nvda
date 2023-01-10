@@ -519,7 +519,7 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 		try:
 			self.menu.Remove(self.installPendingUpdateMenuItem)
 		except Exception:
-			log.debug("Error while removing  pending update menu item", exc_info=True)
+			log.debug("Error while removing pending update menu item", exc_info=True)
 		if not globalVars.appArgs.secure and updateCheck and updateCheck.isPendingUpdate():
 			self.menu.Insert(self.installPendingUpdateMenuItemPos, self.installPendingUpdateMenuItem)
 	
