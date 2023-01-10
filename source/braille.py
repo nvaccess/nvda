@@ -2379,10 +2379,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 	def handlePostConfigProfileSwitch(self):
 		displayName = config.conf["braille"]["display"]
-		try:
-			port = config.conf["braille"][displayName]["port"]
-		except KeyError:
-			port = None
 		coveredByAutoDetect = (
 			displayName == AUTO_DISPLAY_NAME
 			and bdDetect.driverSupportsAutoDetection(self.display.name)
@@ -2390,8 +2386,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		# Do not choose a new display if:
 		if not (
 			# The display in the new profile is equal to the last requested display name
-			# and it has no explicit port defined
-			displayName == self._lastRequestedDisplayName and port is None
+			displayName == self._lastRequestedDisplayName
 			# or the new profile uses auto detection,
 			# and the currently active display is supported by auto detection.
 			or coveredByAutoDetect
