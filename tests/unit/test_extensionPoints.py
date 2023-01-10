@@ -1022,3 +1022,106 @@ class TestAccumulatingDecider(unittest.TestCase):
 		decision = decider.decide()
 		self.assertEqual(value, 36)
 		self.assertEqual(decision, True)
+
+
+class TestChain(unittest.TestCase):
+	chain: extensionPoints.Chain
+
+	def setUp(self):
+		self.chain = extensionPoints.Chain()
+
+	def test_noHandlers(self):
+		with self.assertRaises(StopIteration):
+			next(self.chain.iter())
+
+	def test_oneHandler(self):
+		def handler():
+			yield 1
+		self.chain.register(handler)
+		generator = self.chain.iter()
+		self.assertEqual(next(generator), 1)
+		with self.assertRaises(StopIteration):
+			next(generator)
+
+	def test_twoHandlers(self):
+		def handler1():
+			yield 1
+
+		def handler2():
+			yield 2
+		self.chain.register(handler1)
+		self.chain.register(handler2)
+		generator = self.chain.iter()
+		self.assertEqual(next(generator), 1)
+		self.assertEqual(next(generator), 2)
+		with self.assertRaises(StopIteration):
+			next(generator)
+
+	def test_instanceMethodHandler(self):
+		""" Test that a instance method function is called as expected
+		"""
+
+		class handlerClass():
+			def handlerMethod(self, **kwargs):
+				return kwargs.items()
+
+		h = handlerClass()
+		self.chain.register(h.handlerMethod)
+		generator = self.chain.iter(a='a value')
+		self.assertEqual({k: v for k, v in generator}, {'a': 'a value'})
+
+	def test_handlerException(self):
+		"""Test that a handler which raises an exception doesn't affect later handlers.
+		"""
+		def handler1():
+			raise Exception("barf")
+
+		def handler2():
+			yield 2
+
+		self.chain.register(handler1)
+		self.chain.register(handler2)
+		generator = self.chain.iter()
+		self.assertEqual(next(generator), 2)
+
+	def test_handlerAcceptsKwargs(self):
+		""" Test that a handler that accepts **kwargs receives all arguments
+		"""
+		def handler(**kwargs):
+			return kwargs.items()
+
+		self.chain.register(handler)
+		gen = self.chain.iter(a='a value')
+		self.assertEqual({k: v for k, v in gen}, {'a': 'a value'})
+
+	def test_handlerParamsWithoutDefault(self):
+		""" Test that a handler that accepts params without a default receives arguments
+		"""
+		calledKwargs = {}
+
+		def handler(a):
+			yield ("a", a)
+
+		self.chain.register(handler)
+		gen = self.chain.iter(a='a value')
+		self.assertEqual(next(gen), ('a', 'a value'))
+
+	def test_handlerParamsWithDefault(self):
+		""" Test that a handler that accepts params with a default receives arguments
+		"""
+		def handler(a=0):
+			yield ("a", a)
+
+		self.chain.register(handler)
+		generator = self.chain.iter(a=1)
+		self.assertEqual(next(generator), ('a', 1))
+
+	def test_handlerParamsWithRequiredKwarg(self):
+		""" Test that a handler that accepts required keyword arguments receives arguments
+		"""
+		def handler(*, a):
+			yield ("a", a)
+
+		self.chain.register(handler)
+		gen = self.chain.iter(a='a value')
+		self.assertEqual(next(gen), ('a', 'a value'))
