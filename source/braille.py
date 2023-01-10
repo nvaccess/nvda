@@ -18,7 +18,7 @@ from typing import (
 	Set,
 	Tuple,
 	Union,
-	Type
+	Type,
 )
 from locale import strxfrm
 
@@ -349,9 +349,10 @@ AUTOMATIC_PORT = ("auto", _("Automatic"))
 #: braille displays should be automatically detected and used.
 #: @type: str
 AUTO_DISPLAY_NAME = AUTOMATIC_PORT[0]
+
 #: The name of the noBraille display driver
-#: @type: str
-NO_BRAILLE_DISPLAY_NAME = "noBraille"
+NO_BRAILLE_DISPLAY_NAME: str = "noBraille"
+
 #: A port name which indicates that USB should be used.
 #: @type: tuple
 # Translators: String representing the USB port selection for braille displays.
@@ -1835,8 +1836,10 @@ def getFocusRegions(
 	if isinstance(obj, CursorManager):
 		region2 = (ReviewTextInfoRegion if review else CursorManagerRegion)(obj)
 	elif (
-		isinstance(obj, DocumentTreeInterceptor) or (
-			isinstance(obj, NVDAObject) and NVDAObjectHasUsefulText(obj)
+		isinstance(obj, DocumentTreeInterceptor)
+		or (
+			isinstance(obj, NVDAObject)
+			and NVDAObjectHasUsefulText(obj)
 		)
 	):
 		region2 = (ReviewTextInfoRegion if review else TextInfoRegion)(obj)
@@ -1971,7 +1974,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			name: str,
 			isFallback: bool = False,
 			detected: typing.Optional[bdDetect.DeviceMatch] = None,
-	):
+	) -> bool:
 		if name == AUTO_DISPLAY_NAME:
 			# Calling _enableDetection will set the display to noBraille until a display is detected.
 			# Note that L{isFallback} is ignored in these cases.
