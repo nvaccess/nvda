@@ -7,7 +7,8 @@
 """
 import typing
 from typing import (
-	Iterable,
+	Generator,
+	Optional,
 )
 from ctypes import c_short
 from comtypes import COMError, BSTR
@@ -57,7 +58,7 @@ class IA2WebAnnotation(AnnotationOrigin):
 		)
 
 	@property
-	def targets(self) -> Iterable[AnnotationTarget]:
+	def targets(self) -> Generator[AnnotationTarget, None, None]:
 		if not bool(self):
 			# optimisation that avoids having to fetch details relations which may be a more costly procedure.
 			if config.conf["debugLog"]["annotations"]:
@@ -71,7 +72,7 @@ class IA2WebAnnotation(AnnotationOrigin):
 		yield from ia2WebAnnotationTargetsGen
 
 	@property
-	def roles(self) -> Iterable[controlTypes.Role]:
+	def roles(self) -> Generator[Optional[controlTypes.Role], None, None]:
 		"""
 		Since Chromium exposes the roles via the "details-roles" IA2Attributes, an optimisation can be used
 		to return them.
@@ -96,7 +97,7 @@ class IA2WebAnnotation(AnnotationOrigin):
 			yield detailsRole
 
 	@property
-	def summaries(self) -> Iterable[str]:
+	def summaries(self) -> Generator[str, None, None]:
 		for target in self.targets:
 			yield target.summary
 

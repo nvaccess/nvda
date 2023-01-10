@@ -5,7 +5,7 @@
 # Copyright (C) 2006-2022 NV Access Limited, Peter Vágner
 
 from typing import (
-	Iterable,
+	Generator,
 	Optional,
 )
 
@@ -34,7 +34,7 @@ class MozAnnotationTarget(AnnotationTarget):
 		return self._target.summarizeInProcess()
 
 	@property
-	def role(self) -> controlTypes.Role:
+	def role(self) -> Optional[controlTypes.Role]:
 		# details-roles is currently only defined in Chromium
 		# this may diverge in Firefox in the future.
 		from .chromium import supportedAriaDetailsRoles
@@ -46,7 +46,10 @@ class MozAnnotationTarget(AnnotationTarget):
 			log.debug(f"detailsRole: {repr(detailsRole)}")
 		if detailsRole in supportedAriaDetailsRoles.values():
 			return detailsRole
-		raise ValueError(f"Unsupported aria details role: {detailsRole}")
+
+		if config.conf["debugLog"]["annotations"]:
+			log.warning(f"Unsupported aria details role: {detailsRole}")
+		return None
 
 	@property
 	def targetObject(self) -> IAccessible:
@@ -68,25 +71,24 @@ class MozAnnotation(AnnotationOrigin):
 		)
 
 	@property
-	def targets(self) -> Iterable[MozAnnotationTarget]:
+	def targets(self) -> Generator[MozAnnotationTarget, None, None]:
 		detailsRelations = self._originObj.detailsRelations
 		for rel in detailsRelations:
 			yield MozAnnotationTarget(rel)
 
 	@property
-	def roles(self) -> Iterable[controlTypes.Role]:
+	def roles(self) -> Generator[Optional[controlTypes.Role], None, None]:
 		# Unlike base Ia2Web implementation, the details-roles
 		# IA2 attribute is not exposed in Firefox.
 		# Although slower, we have to fetch the details relations instead.
 		for target in self.targets:
-			# just take the first target for now.
 			try:
 				yield target.role
 			except ValueError:
 				log.error("Error getting role.", exc_info=True)
 
 	@property
-	def summaries(self) -> Iterable[str]:
+	def summaries(self) -> Generator[str, None, None]:
 		for target in self.targets:
 			yield target.summary
 

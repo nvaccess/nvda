@@ -13,7 +13,7 @@ https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Annotations
 from dataclasses import dataclass
 from typing import (
 	TYPE_CHECKING,
-	Iterable,
+	Generator,
 	List,
 	Optional,
 	Set,
@@ -35,7 +35,7 @@ class AnnotationTarget:
 	"""
 
 	@property
-	def role(self) -> "controlTypes.Role":
+	def role(self) -> Optional["controlTypes.Role"]:
 		raise NotImplementedError
 
 	@property
@@ -65,15 +65,15 @@ class AnnotationOrigin:
 		raise NotImplementedError
 
 	@property
-	def targets(self) -> Iterable[AnnotationTarget]:
+	def targets(self) -> Generator[AnnotationTarget, None, None]:
 		raise NotImplementedError
 
 	@property
-	def roles(self) -> Iterable["controlTypes.Role"]:
+	def roles(self) -> Generator[Optional["controlTypes.Role"], None, None]:
 		raise NotImplementedError
 
 	@property
-	def summaries(self) -> Iterable[str]:
+	def summaries(self) -> Generator[str, None, None]:
 		raise NotImplementedError
 
 
