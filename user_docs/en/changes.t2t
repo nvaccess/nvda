@@ -19,10 +19,18 @@ What's New in NVDA
 - A new option has been added, "Paragraph Style" in "Document Navigation".
 This adds support for single line break (normal) and multi line break (block) paragraph navigation.
 This can be used with text editors that do not support paragraph navigation natively, such as Notepad and Notepad++. (#13797)
+- The presence of multiple annotations are now reported.
+``nvda+d`` now cycles through reporting the summary of each annotation target for origins with multiple annotation targets.
+For example, when text has a comment and a footnote associated with it. (#14507, #14480)
 -
 
 
 == Changes ==
+- Updated LibLouis braille translator to [3.24.0 https://github.com/liblouis/liblouis/releases/tag/v3.24.0]. (#14436)
+  - Major updates to Hungarian, UEB, and Chinese bopomofo braille.
+  - Support for the Danish braille standard 2022.
+  - New braille tables for Georgian literary braille, Swahili (Kenya) and Chichewa (Malawi).
+  -
 - Updated Sonic rate boost library to commit ``1d70513``. (#14180)
 - CLDR has been updated to version 42.0. (#14273)
 - eSpeak NG has been updated to 1.52-dev commit ``a51235aa``. (#14281)
@@ -33,7 +41,11 @@ This can be used with text editors that do not support paragraph navigation nati
 
 
 == Bug Fixes ==
-- In Windows 11, NVDA will announce search highlights when opening Start menu. (#13841)
+- Windows 11 fixes:
+  - NVDA will announce search highlights when opening Start menu. (#13841)
+  - On ARM, x64 apps are no longer identified as ARM64 applications. (#14403)
+  - Clipboard history menu items such as "pin item" can be accessed. (#14508)
+  -
 - Suggestions are reported when typing an @mention in in Microsoft Excel comments. (#13764)
 - In the Google Chrome location bar, suggestion controls (switch to tab, remove suggestion etc) are now reported when selected. (#13522)
 - When requesting formatting information, colors are now explicitly reported in Wordpad or log viewer, rather than only "Default color". (#13959)
@@ -56,7 +68,7 @@ This can be used with text editors that do not support paragraph navigation nati
   -
 - Emojis should now be reported in more languages. (#14433)
 - The presence of an annotation is no longer missing in braille for some elements. (#13815)
-- In Windows 11 on ARM, x64 apps are no longer identified as ARM64 applications. (#14403)
+- Fixed an issue where config changes not save correctly when changing between a "Default" option and the value of the "Default" option. (#14133)
 -
 
 
@@ -115,9 +127,11 @@ Please open a GitHub issue if your Add-on has an issue with updating to the new 
 - ``config.addConfigDirsToPythonPackagePath`` has been moved.
 Use ``addonHandler.packaging.addDirsToPythonPackagePath`` instead. (#14350)
 - ``braille.BrailleHandler.TETHER_*`` are deprecated.
-Please use ``configFlags.TetherTo.*.value`` instead. (#14233)
+Use ``configFlags.TetherTo.*.value`` instead. (#14233)
 - ``utils.security.postSessionLockStateChanged`` is deprecated.
-Please use ``utils.security.post_sessionLockStateChanged`` instead. (#14486)
+Use ``utils.security.post_sessionLockStateChanged`` instead. (#14486)
+- ``NVDAObject.hasDetails``, ``NVDAObject.detailsSummary``, ``NVDAObject.detailsRole`` has been deprecated.
+Use ``NVDAObject.annotations`` instead. (#14507)
 -
 
 
