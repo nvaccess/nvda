@@ -76,7 +76,6 @@ class MozAnnotation(AnnotationOrigin):
 	def targets(self) -> Tuple[MozAnnotationTarget]:
 		return tuple(MozAnnotationTarget(rel) for rel in self._originObj.detailsRelations)
 
-
 	@property
 	def roles(self) -> _AnnotationRolesT:
 		return tuple(self._rolesGenerator)
