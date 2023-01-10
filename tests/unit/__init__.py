@@ -93,7 +93,7 @@ config.conf['braille']['display'] = "noBraille"
 braille.initialize()
 
 
-# For braille unit tests, we need to enable the braille handler by providing it a  cell count
+# For braille unit tests, we need to enable the braille handler by providing it a cell count
 # Give the display 40 cells
 def getFakeCellCount(numCells: int) -> int:
 	return 40

@@ -304,10 +304,12 @@ CURSOR_SHAPES = (
 )
 SELECTION_SHAPE = 0xC0 #: Dots 7 and 8
 
-#: The braille shape shown on a braille display when
-#: the number of cells used by the braille handler is lower than the actual number of cells.
-#: The 0 based position of the shape is equal to the number of cells used by the braille handler.
 END_OF_BRAILLE_OUTPUT_SHAPE = 0xFF  # All dots
+"""
+The braille shape shown on a braille display when
+the number of cells used by the braille handler is lower than the actual number of cells.
+The 0 based position of the shape is equal to the number of cells used by the braille handler.
+"""
 
 #: Unicode braille indicator at the start of untranslated braille input.
 INPUT_START_IND = u"⣏"
@@ -1881,7 +1883,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	#: For example, when a system is controlled by a braille enabled remote system,
 	#: the remote system should know what cells to show on its display.
 	#: @param cells: The list of braille cells.
-	#: @type cells: [int]
+	#: @type cells: List[int]
 	#: @param rawText: The raw text that corresponds with the cells.
 	#: @type rawText: str
 	#: @param currentCellCount: The current number of cells
