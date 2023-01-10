@@ -350,8 +350,8 @@ AUTOMATIC_PORT = ("auto", _("Automatic"))
 #: @type: str
 AUTO_DISPLAY_NAME = AUTOMATIC_PORT[0]
 
-#: The name of the noBraille display driver
 NO_BRAILLE_DISPLAY_NAME: str = "noBraille"
+"""The name of the noBraille display driver."""
 
 #: A port name which indicates that USB should be used.
 #: @type: tuple
@@ -2017,8 +2017,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			newDisplayClass: Type["BrailleDisplayDriver"],
 			**kwargs
 	) -> "BrailleDisplayDriver":
-		sameDisplayReinit = newDisplayClass == oldDisplay.__class__
-		if sameDisplayReinit:
+		sameDisplayReInit = newDisplayClass == oldDisplay.__class__
+		if sameDisplayReInit:
 			# This is the same driver as was already set, so just re-initialize it.
 			log.debug(f"Reinitializing {newDisplayClass.name!r} braille display")
 			oldDisplay.terminate()
@@ -2026,7 +2026,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		else:
 			newDisplay = newDisplayClass.__new__(newDisplayClass)
 		extensionPoints.callWithSupportedKwargs(newDisplay.__init__, **kwargs)
-		if not sameDisplayReinit:
+		if not sameDisplayReInit:
 			if oldDisplay:
 				log.debug(f"Switching braille display from {oldDisplay.name!r} to {newDisplay.name!r}")
 				try:
@@ -2413,12 +2413,24 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		)
 		self.setDisplayByName(newDisplay, isFallback=True)
 
-	def _enableDetection(self, usb=True, bluetooth=True, limitToDevices=None):
+	def _enableDetection(
+			self,
+			usb: bool = True,
+			bluetooth: bool = True,
+			limitToDevices: Optional[List[str]] = None
+	):
 		"""Enables automatic detection of braille displays.
 		When auto detection is already active, this will force a rescan for devices.
 		This should also be executed when auto detection should be resumed due to loss of display connectivity.
+		In that case, it is triggered by L{setDisplayByname}.
+		@param usb: Whether to scan for USB devices
+		@param Bluetooth: WWhether to scan for Bluetooth devices.
+		@param limitToDevices: An optional list of driver names a scan should be limited to.
+			This is used when a Bluetooth device is detected, in order to switch to USB
+			when an USB device for the same driver is found.
+			C{None} if no driver filtering should occur.
 		"""
-		self.setDisplayByName("noBraille", isFallback=True)
+		self.setDisplayByName(NO_BRAILLE_DISPLAY_NAME, isFallback=True)
 		if self._detector:
 			self._detector.rescan(usb=usb, bluetooth=bluetooth, limitToDevices=limitToDevices)
 			return
