@@ -2136,7 +2136,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			# of the noBraille display
 			# When setDisplayByName is refactored, ensure that braille display detection no longer triggers
 			# an unnecessary reinit of noBraille.
-			if not (sameDisplayReinit and newDisplay.name == "noBraille"):
+			if not (sameDisplayReInit and newDisplay.name == "noBraille"):
 				self.displayChanged.notify(display=newDisplay, isFallback=isFallback, detected=detected)
 			return True
 		except:
