@@ -437,14 +437,16 @@ class InputManager(baseObject.AutoPropertyObject):
 	#: @type: bool
 	lastModifierWasInSayAll=False
 
-	#: Notifies when a gesture is about to be executed,
-	#: and allows components or add-ons to decide whether or not to execute a gesture.
-	#: For example, when controlling a remote system with a connected local braille display,
-	#: braille display gestures should not be executed locally.
-	#: Handlers are called with one argument:
-	#: @param gesture: The gesture that is about to be executed.
-	#: @type gesture: L{InputGesture}
 	decide_executeGesture: extensionPoints.Decider
+	"""
+	Notifies when a gesture is about to be executed,
+	and allows components or add-ons to decide whether or not to execute a gesture.
+	For example, when controlling a remote system with a connected local braille display,
+	braille display gestures should not be executed locally.
+	Handlers are called with one argument:
+	@param gesture: The gesture that is about to be executed.
+	@type gesture: L{InputGesture}
+	"""
 
 	def __init__(self):
 		#: The function to call when capturing gestures.
@@ -530,7 +532,7 @@ class InputManager(baseObject.AutoPropertyObject):
 			queueHandler.queueFunction(queueHandler.eventQueue, speech.speakMessage, gesture.displayName)
 
 		gesture.reportExtra()
-		
+
 		# #2953: if an intercepted command Script (script that sends a gesture) is queued
 		# then queue all following gestures (that don't have a script) with a fake script so that they remain in order.
 		if not script and scriptHandler._numIncompleteInterceptedCommandScripts:
@@ -797,7 +799,7 @@ class _AllGestureMappingsRetriever(object):
 
 class AllGesturesScriptInfo(object):
 	__slots__ = ("cls", "scriptName", "category", "displayName", "gestures")
-	
+
 	def __init__(self, cls, scriptName):
 		self.cls = cls
 		self.scriptName = scriptName

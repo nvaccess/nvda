@@ -40,13 +40,15 @@ def terminate():
 	player = None
 
 
-#: Notifies when a beep is about to be generated and played,
-#: and allows components or add-ons to decide whether the beep should actually be played.
-#: For example, when controlling a remote system,
-#: the remote system must be notified of beeps played on the local system.
-#: Also, registrars should be able to suppress playing beeps if desired.
-#: Handlers are called with the same arguments as L{beep} as keyword arguments.
 decide_beep = extensionPoints.Decider()
+"""
+Notifies when a beep is about to be generated and played,
+and allows components or add-ons to decide whether the beep should actually be played.
+For example, when controlling a remote system,
+the remote system must be notified of beeps played on the local system.
+Also, registrars should be able to suppress playing beeps if desired.
+Handlers are called with the same arguments as L{beep} as keyword arguments.
+"""
 
 
 def beep(

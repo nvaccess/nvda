@@ -54,13 +54,16 @@ winmm = windll.winmm
 HWAVEOUT = HANDLE
 LPHWAVEOUT = POINTER(HWAVEOUT)
 
-#: Notifies when a wave file is about to be played,
-#: and allows components or add-ons to decide whether the wave file should be played.
-#: For example, when controlling a remote system,
-#: the remote system must be notified of sounds played on the local system.
-#: Also, registrars should be able to suppress playing sounds if desired.
-#: Handlers are called with the same arguments as L{playWaveFile} as keyword arguments.
 decide_playWaveFile = extensionPoints.Decider()
+"""
+Notifies when a wave file is about to be played,
+and allows components or add-ons to decide whether the wave file should be played.
+For example, when controlling a remote system,
+the remote system must be notified of sounds played on the local system.
+Also, registrars should be able to suppress playing sounds if desired.
+Handlers are called with the same arguments as L{playWaveFile} as keyword arguments.
+"""
+
 
 class WAVEFORMATEX(Structure):
 	_fields_ = [

@@ -1152,7 +1152,7 @@ class TextInfoRegion(Region):
 						if not inClickable and formatConfig['reportClickable']:
 							states=field.get('states')
 							if states and controlTypes.State.CLICKABLE in states:
-								# We have entered an outer most clickable or entered a new clickable after exiting a previous one 
+								# We have entered an outer most clickable or entered a new clickable after exiting a previous one
 								# Report it if there is nothing else interesting about the field
 								field._presCat=presCat=field.getPresentationCategory(ctrlFields,formatConfig)
 								if not presCat or presCat is field.PRESCAT_LAYOUT:
@@ -1558,7 +1558,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		"""Sets the end position for the braille window and recalculates the window start position based on several variables.
 		1. Braille display size.
 		2. Whether one of the regions should be shown hard left on the braille display;
-			i.e. because of The configuration setting for focus context representation 
+			i.e. because of The configuration setting for focus context representation
 			or whether the braille region that corresponds with the focus represents a multi line edit box.
 		3. Whether word wrap is enabled."""
 		startPos = endPos - self.handler.displaySize
@@ -1878,45 +1878,59 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	queuedWriteLock: threading.Lock
 	ackTimerHandle: int
 
-	#: Notifies when cells are about to be written to a braille display.
-	#: This allows components and add-ons to perform an action.
-	#: For example, when a system is controlled by a braille enabled remote system,
-	#: the remote system should know what cells to show on its display.
-	#: @param cells: The list of braille cells.
-	#: @type cells: List[int]
-	#: @param rawText: The raw text that corresponds with the cells.
-	#: @type rawText: str
-	#: @param currentCellCount: The current number of cells
-	#: @type currentCellCount: bool
 	pre_writeCells: extensionPoints.Action
-	#: Filter that allows components or add-ons to change the display size used for braille output.
-	#: For example, when a system is controlled by a remote system while having a 80 cells display connected,
-	#: the display size should be lowered to 40 whenever the remote system has a 40 cells display connected.
-	#: @param value: the number of cells of the current display.
-	#: @type value: int
+	"""
+	Notifies when cells are about to be written to a braille display.
+	This allows components and add-ons to perform an action.
+	For example, when a system is controlled by a braille enabled remote system,
+	the remote system should know what cells to show on its display.
+	@param cells: The list of braille cells.
+	@type cells: List[int]
+	@param rawText: The raw text that corresponds with the cells.
+	@type rawText: str
+	@param currentCellCount: The current number of cells
+	@type currentCellCount: bool
+	"""
+
 	filter_displaySize: extensionPoints.Filter
-	#: Action that allows components or add-ons to be notified of display size changes.
-	#: For example, when a system is controlled by a remote system and the remote system swaps displays,
-	#: The local system should be notified about display size changes at the remote system.
-	#: @param displaySize: The current display size used by the braille handler.
-	#: @type displaySize: int
+	"""
+	Filter that allows components or add-ons to change the display size used for braille output.
+	For example, when a system is controlled by a remote system while having a 80 cells display connected,
+	the display size should be lowered to 40 whenever the remote system has a 40 cells display connected.
+	@param value: the number of cells of the current display.
+	@type value: int
+	"""
+
 	displaySizeChanged: extensionPoints.Action
-	#: Action that allows components or add-ons to be notified of braille display changes.
-	#: For example, when a system is controlled by a remote system and the remote system swaps displays,
-	#: The local system should be notified about display parameters at the remote system,
-	#: e.g. name and cellcount.
-	#: @param display: The new braille display driver
-	#: @type display: L{BrailleDisplayDriver}
-	#: @param isFallback: Whether the display is set as fallback display due to another display's failure
-	#: @type isFallback: bool
-	#: @param detected: If the display was set by auto detection, the device match that matched the driver
-	#: @type detected: bdDetect.DeviceMatch or C{None}
+	"""
+	Action that allows components or add-ons to be notified of display size changes.
+	For example, when a system is controlled by a remote system and the remote system swaps displays,
+	The local system should be notified about display size changes at the remote system.
+	@param displaySize: The current display size used by the braille handler.
+	@type displaySize: int
+	"""
+
 	displayChanged: extensionPoints.Action
-	#: Allows components or add-ons to decide whether the braille handler should be forcefully disabled.
-	#: For example, when a system is controlling a remote system with braille,
-	#: the local braille handler should be disabled as long as the system is in control of the remote system.
-	#: Handlers are called without arguments.
+	"""
+	Action that allows components or add-ons to be notified of braille display changes.
+	For example, when a system is controlled by a remote system and the remote system swaps displays,
+	The local system should be notified about display parameters at the remote system,
+	e.g. name and cellcount.
+	@param display: The new braille display driver
+	@type display: L{BrailleDisplayDriver}
+	@param isFallback: Whether the display is set as fallback display due to another display's failure
+	@type isFallback: bool
+	@param detected: If the display was set by auto detection, the device match that matched the driver
+	@type detected: bdDetect.DeviceMatch or C{None}
+	"""
+
 	decide_enabled: extensionPoints.Decider
+	"""
+	Allows components or add-ons to decide whether the braille handler should be forcefully disabled.
+	For example, when a system is controlling a remote system with braille,
+	the local braille handler should be disabled as long as the system is in control of the remote system.
+	Handlers are called without arguments.
+	"""
 
 	def __init__(self):
 		louisHelper.initialize()
