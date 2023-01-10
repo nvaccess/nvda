@@ -480,7 +480,8 @@ class Addon(AddonBase):
 	def loadModule(self, name: str) -> ModuleType:
 		""" loads a python module from the addon directory
 		@param name: the module name
-		@raises: Any exception that can be raised when importing a module, such as NameError, AttributeError, ImportError, etc.
+		@raises: Any exception that can be raised when importing a module,
+			such as NameError, AttributeError, ImportError, etc.
 			a ValueError is raised when the module name is invalid.
 		"""
 		if not isModuleName(name):
