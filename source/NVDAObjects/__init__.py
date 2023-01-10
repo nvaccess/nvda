@@ -528,7 +528,7 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 	detailsSummary: typing.Optional[str]
 	"""
 	Typing information for auto property _get_detailsSummary
-	Deprecated, use self.annotations.roles instead.
+	Deprecated, use self.annotations.summaries instead.
 	"""
 
 	def _get_detailsSummary(self) -> typing.Optional[str]:
