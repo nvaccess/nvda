@@ -101,10 +101,6 @@ class IA2WebAnnotation(AnnotationOrigin):
 				log.debug(f"detailsRole: {repr(detailsRole)}")
 			yield detailsRole
 
-	@property
-	def summaries(self) -> Tuple[str]:
-		return (target.summary for target in self.targets)
-
 
 class Ia2Web(IAccessible):
 	IAccessibleTableUsesTableCellIndexAttrib=True
@@ -154,9 +150,8 @@ class Ia2Web(IAccessible):
 			"NVDAObject.detailsSummary is deprecated. Use NVDAObject.annotations instead.",
 			stack_info=True,
 		)
-		for summary in self.annotations.summaries:
-			# just take the first for now.
-			return summary
+		# just take the first for now.
+		return self.annotations.targets[0].summary
 
 	@property
 	def hasDetails(self) -> bool:
@@ -171,9 +166,8 @@ class Ia2Web(IAccessible):
 			"NVDAObject.detailsRole is deprecated. Use NVDAObject.annotations instead.",
 			stack_info=True,
 		)
-		for role in self.annotations.roles:
-			# just take the first for now.
-			return role
+		# just take the first for now.
+		return self.annotations.roles[0]
 
 	def _get_isCurrent(self) -> controlTypes.IsCurrent:
 		ia2attrCurrent: str = self.IA2Attributes.get("current", "false")

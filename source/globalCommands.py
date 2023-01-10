@@ -2358,7 +2358,7 @@ class GlobalCommands(ScriptableObject):
 			ui.message(_("No additional details"))
 			return
 
-		targets = list(objWithAnnotation.annotations.targets)
+		targets = objWithAnnotation.annotations.targets
 		if _isDebugLogCatEnabled:
 			log.debug(f"Number of targets: {len(targets)}")
 

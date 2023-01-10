@@ -70,10 +70,6 @@ class AnnotationOrigin:
 	def roles(self) -> _AnnotationRolesT:
 		raise NotImplementedError
 
-	@property
-	def summaries(self) -> Tuple[str]:
-		raise NotImplementedError
-
 
 @dataclass
 class _AnnotationNavigationNode:

@@ -92,10 +92,6 @@ class MozAnnotation(AnnotationOrigin):
 			except ValueError:
 				log.error("Error getting role.", exc_info=True)
 
-	@property
-	def summaries(self) -> Tuple[str]:
-		return (target.summary for target in self.targets)
-
 
 class Mozilla(ia2Web.Ia2Web):
 
@@ -154,18 +150,16 @@ class Mozilla(ia2Web.Ia2Web):
 			"NVDAObject.detailsSummary is deprecated. Use NVDAObject.annotations instead.",
 			stack_info=True,
 		)
-		for summary in self.annotations.summaries:
-			# just take the first for now.
-			return summary
+		# just take the first for now.
+		return self.annotations.targets[0].summary
 
 	def _get_detailsRole(self) -> Optional[controlTypes.Role]:
 		log.warning(
 			"NVDAObject.detailsRole is deprecated. Use NVDAObject.annotations instead.",
 			stack_info=True,
 		)
-		for role in self.annotations.roles:
-			# just take the first target for now.
-			return role
+		# just take the first target for now.
+		return self.annotations.roles[0]
 
 	@property
 	def hasDetails(self) -> bool:
