@@ -61,6 +61,12 @@ def _handleSecureDesktopChange():
 	# We don't receive key up events for any keys down before switching to a secure desktop,
 	# so clear our recorded modifiers.
 	keyboardHandler.currentModifiers.clear()
+
+	# Before entering sleep mode,
+	# cancel speech so that speech does not overlap with the new instance of NVDA
+	# started on the secure desktop.
+	cancelSpeech()
+
 	# Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 	ui.message(_("Secure Desktop"), speechPriority=SpeechPriority.NOW)
 
@@ -73,15 +79,10 @@ def _handleSecureDesktopChange():
 		# Must be implemented to instantiate.
 		processID = None
 
-		def event_gainFocus(self):
-			# Before entering sleep mode,
-			# cancel speech so that speech does not overlap with the new instance of NVDA
-			# started on the secure desktop.
-			cancelSpeech()
-			# NVDA should sleep while the secure desktop is active.
-			# If the desktop changes again, a new object will be focused,
-			# ending sleep mode.
-			self.sleepMode = self.SLEEP_FULL
+		# NVDA should sleep while the secure desktop is active.
+		# If the desktop changes again, a new object will be focused,
+		# ending sleep mode.
+		sleepMode = NVDAObject.SLEEP_FULL
 
 	secureDesktopObject = _SecureDesktopNVDAObject()
 	api.setFocusObject(secureDesktopObject)
