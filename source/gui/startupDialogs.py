@@ -105,11 +105,26 @@ class WelcomeDialog(
 	def onOk(self, evt):
 		layout = self.kbdNames[self.kbdList.GetSelection()]
 		config.conf["keyboard"]["keyboardLayout"] = layout
-		config.conf["keyboard"]["NVDAModifierKeys"] = (
+		NVDAKeysVal = (
 			(NVDAKey.CAPS_LOCK.value if self.capsAsNVDAModifierCheckBox.IsChecked() else 0)
 			| (config.conf["keyboard"]["NVDAModifierKeys"] & NVDAKey.NUMPAD_INSERT.value)
 			| (config.conf["keyboard"]["NVDAModifierKeys"] & NVDAKey.EXTENDED_INSERT.value)
 		)
+		if NVDAKeysVal == 0:
+			log.debugWarning("No NVDA key set")
+			gui.messageBox(
+				_(
+					# Translators: The title of an error message box displayed when validating the startup dialog
+					"Despite your choice, caps lock will remain used as NVDA modifier key"
+					" since no other possible key is currently configured as NVDA modifier key."
+				),
+				# Translators: The title of an error message box displayed when validating the startup dialog
+				_("Error"),
+				wx.OK | wx.ICON_ERROR,
+				self,
+			)
+		else:
+			config.conf["keyboard"]["NVDAModifierKeys"] = NVDAKeysVal
 		if self.startAfterLogonCheckBox.Enabled:
 			config.setStartAfterLogon(self.startAfterLogonCheckBox.Value)
 		config.conf["general"]["showWelcomeDialogAtStartup"] = self.showWelcomeDialogAtStartupCheckBox.IsChecked()

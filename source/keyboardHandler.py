@@ -12,7 +12,6 @@ import sys
 import time
 import re
 import typing
-from typing import Any
 
 import wx
 import winVersion
@@ -31,7 +30,6 @@ import winInputHook
 import inputCore
 import tones
 import core
-import NVDAState
 from contextlib import contextmanager
 import threading
 
