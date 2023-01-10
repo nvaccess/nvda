@@ -177,6 +177,6 @@ class TestHandlerExtensionPoints(unittest.TestCase):
 		with deciderTester(
 			self,
 			braille.handler.decide_enabled,
-			False,
+			expectedDecision=False,
 		) as expectedDecision:
 			self.assertEqual(braille.handler.enabled, expectedDecision)

@@ -31,7 +31,7 @@ class TestTonesExtensionPoints(unittest.TestCase):
 		with deciderTester(
 			self,
 			tones.decide_beep,
-			False,
+			expectedDecision=False,
 			**kwargs
 		):
 			tones.beep(**kwargs)

@@ -25,7 +25,7 @@ class TestNVWaveExtensionPoints(unittest.TestCase):
 		with deciderTester(
 			self,
 			nvwave.decide_playWaveFile,
-			False,
+			expectedDecision=False,
 			**kwargs
 		):
 			nvwave.playWaveFile(**kwargs)
