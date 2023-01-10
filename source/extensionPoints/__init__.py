@@ -12,7 +12,7 @@ See the L{Action}, L{Filter}, L{Decider} and L{AccumulatingDecider} classes.
 """
 from logHandler import log
 from .util import HandlerRegistrar, callWithSupportedKwargs, BoundMethodWeakref
-from typing import Set, TypeVar, Generic, Generator, Callable, Iterable
+from typing import Set, TypeVar, Generic, Generator, Iterable
 
 
 class Action(HandlerRegistrar):

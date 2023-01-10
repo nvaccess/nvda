@@ -1097,8 +1097,6 @@ class TestChain(unittest.TestCase):
 	def test_handlerParamsWithoutDefault(self):
 		""" Test that a handler that accepts params without a default receives arguments
 		"""
-		calledKwargs = {}
-
 		def handler(a):
 			yield ("a", a)
 
