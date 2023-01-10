@@ -2378,20 +2378,15 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			log.debugWarning("Error in initial display", exc_info=True)
 
 	def handlePostConfigProfileSwitch(self):
-		displayName = config.conf["braille"]["display"]
-		coveredByAutoDetect = (
-			displayName == AUTO_DISPLAY_NAME
-			and bdDetect.driverSupportsAutoDetection(self.display.name)
-		)
+		display = config.conf["braille"]["display"]
 		# Do not choose a new display if:
 		if not (
 			# The display in the new profile is equal to the last requested display name
-			displayName == self._lastRequestedDisplayName
-			# or the new profile uses auto detection,
-			# and the currently active display is supported by auto detection.
-			or coveredByAutoDetect
+			display == self._lastRequestedDisplayName
+			# or the new profile uses auto detection, which supports detection of the currently active display.
+			or (display == AUTO_DISPLAY_NAME and bdDetect.driverSupportsAutoDetection(self.display.name))
 		):
-			self.setDisplayByName(displayName)
+			self.setDisplayByName(display)
 		self._tether = config.conf["braille"]["tetherTo"]
 
 	def handleDisplayUnavailable(self):
