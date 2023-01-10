@@ -67,7 +67,7 @@ class IA2WebAnnotation(AnnotationOrigin):
 				log.debug("no annotations available")
 			return
 
-		return (
+		return tuple(
 			IA2WebAnnotationTarget(rel)
 			for rel in self._originObj.detailsRelations
 		)
