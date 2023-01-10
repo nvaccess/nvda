@@ -12,7 +12,8 @@ See the L{Action}, L{Filter}, L{Decider} and L{AccumulatingDecider} classes.
 """
 from logHandler import log
 from .util import HandlerRegistrar, callWithSupportedKwargs, BoundMethodWeakref
-from typing import Set
+from typing import Set, TypeVar, Generic, Iterator, Callable
+import itertools
 
 
 class Action(HandlerRegistrar):
@@ -161,7 +162,7 @@ class AccumulatingDecider(HandlerRegistrar):
 	For example, normally user should be warned about all command line parameters
 	which are unknown to NVDA, but this extension point can be used to pass each unknown parameter
 	to all add-ons since one of them may want to process some command line arguments.
-	
+
 	First, a AccumulatingDecider is created with a default decision  :
 
 	>>> doSomething = AccumulatingDecider(defaultDecision=True)
@@ -208,3 +209,41 @@ class AccumulatingDecider(HandlerRegistrar):
 		if (not self.defaultDecision) in decisions:
 			return (not self.defaultDecision)
 		return self.defaultDecision
+
+
+ChainValueTypeT = TypeVar("ChainValueTypeT")
+
+
+class Chain(HandlerRegistrar, Generic[ChainValueTypeT]):
+	"""Allows creating a chain of registered handlers.
+	The handlers should return an iterator, e.g. they are usually generator functions.
+
+	First, a Chain is created:
+
+	>>> chainOfNumbers = extensionPoints.Chain()
+
+	Interested parties then register to be iterated.
+	See L{register} docstring for details of the type of handlers that can be
+	registered:
+
+	>>> def yieldSomeNumbers(someArg=None):
+		... 	yield 1
+		... 	yield 2
+		... 	yield 3
+	...
+	>>> def yieldMoreNumbers(someArg=42):
+		... 	yield 4
+		... 	yield 5
+		... 	yield 6
+	...
+	>>> chainOfNumbers.register(yieldSomeNumbers)
+	>>> chainOfNumbers.register(yieldMoreNumbers)
+
+	When the chain is evaluated, a chain is created of registered handlers,
+	see L{util.callWithSupportedKwargs} for how args passed to evaluate are mapped to the handler:
+
+	>>> chainOfNumbers.evaluate(someArg=42)
+	"""
+
+	def evaluate(self, **kwargs) -> Iterator[ChainValueTypeT]:
+		retyrn itertools.chain.from_iterable(h(**kwargs) for h in self.handlers)

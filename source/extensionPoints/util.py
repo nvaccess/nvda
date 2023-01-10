@@ -77,10 +77,11 @@ class HandlerRegistrar(object):
 		#: and the values are weak references.
 		self._handlers = collections.OrderedDict()
 
-	def register(self, handler):
+	def register(self, handler, last: bool = True):
 		"""You can register functions, bound instance methods, class methods, static methods or lambdas.
-		However, the callable must be kept alive by your code otherwise it will be de-registered. This is due to the use
-		of weak references. This is especially relevant when using lambdas.
+		However, the callable must be kept alive by your code otherwise it will be de-registered.
+		This is due to the use of weak references.
+		This is especially relevant when using lambdas.
 		"""
 		if inspect.isfunction(handler):
 			sig = inspect.signature(handler)
@@ -94,6 +95,23 @@ class HandlerRegistrar(object):
 		# Store the key on the weakref so we can remove the handler when it dies.
 		weak.handlerKey = key
 		self._handlers[key] = weak
+
+	def moveToEnd(self, handler, last: bool = False) -> bool:
+		"""Move a registered handlers to the start or end of the collection with registered handlers.
+		This can be used to modify the order in which handlers are called.
+		@param last: Whether to move the handler to the end.
+			If C{False} (default), the handler is moved to the start.
+		@returns: Whether the handler was found.
+		"""
+		if isinstance(handler, (AnnotatableWeakref, BoundMethodWeakref)):
+			key = handler.handlerKey
+		else:
+			key = _getHandlerKey(handler)
+		try:
+			self._handlers.move_to_end(key=key, last=last)
+		except KeyError:
+			return False
+		return True
 
 	def unregister(self, handler):
 		if isinstance(handler, (AnnotatableWeakref, BoundMethodWeakref)):
