@@ -89,7 +89,7 @@ class State(DisplayStringIntEnum):
 	OVERFLOWING = setBit(40)
 	UNLOCKED = setBit(41)
 	# HAS_ARIA_DETAILS is not used internally.
-	# See instead NVDAObject.annotations introduced with commit aa351c55ada5254e061957097a9e0e638091b13d
+	# See instead refer to NVDAObject.annotations
 	# This enum value was initially added to controlTypes.py in commit d6787b8f47861f5e76aba68da7a13a217404196f
 	HAS_ARIA_DETAILS = setBit(42)  # Restored for backwards compat only.
 	HASNOTE = setBit(43)

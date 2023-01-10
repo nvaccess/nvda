@@ -5,16 +5,18 @@
 
 """Base classes with common support for browsers exposing IAccessible2.
 """
-import typing
+
 from typing import (
 	Generator,
 	Optional,
+	Tuple,
 )
 from ctypes import c_short
 from comtypes import COMError, BSTR
 
 import oleacc
 from annotation import (
+	_AnnotationRolesT,
 	AnnotationTarget,
 	AnnotationOrigin,
 )
@@ -58,21 +60,24 @@ class IA2WebAnnotation(AnnotationOrigin):
 		)
 
 	@property
-	def targets(self) -> Generator[AnnotationTarget, None, None]:
+	def targets(self) -> Tuple[AnnotationTarget]:
 		if not bool(self):
 			# optimisation that avoids having to fetch details relations which may be a more costly procedure.
 			if config.conf["debugLog"]["annotations"]:
 				log.debug("no annotations available")
 			return
 
-		ia2WebAnnotationTargetsGen = (
+		return (
 			IA2WebAnnotationTarget(rel)
 			for rel in self._originObj.detailsRelations
 		)
-		yield from ia2WebAnnotationTargetsGen
 
 	@property
-	def roles(self) -> Generator[Optional[controlTypes.Role], None, None]:
+	def roles(self) -> _AnnotationRolesT:
+		return tuple(self._rolesGenerator)
+
+	@property
+	def _rolesGenerator(self) -> Generator[Optional[controlTypes.Role], None, None]:
 		"""
 		Since Chromium exposes the roles via the "details-roles" IA2Attributes, an optimisation can be used
 		to return them.
@@ -97,9 +102,8 @@ class IA2WebAnnotation(AnnotationOrigin):
 			yield detailsRole
 
 	@property
-	def summaries(self) -> Generator[str, None, None]:
-		for target in self.targets:
-			yield target.summary
+	def summaries(self) -> Tuple[str]:
+		return (target.summary for target in self.targets)
 
 
 class Ia2Web(IAccessible):
@@ -130,7 +134,7 @@ class Ia2Web(IAccessible):
 		return info
 
 	def _get_descriptionFrom(self) -> controlTypes.DescriptionFrom:
-		ia2attrDescriptionFrom: typing.Optional[str] = self.IA2Attributes.get("description-from")
+		ia2attrDescriptionFrom: Optional[str] = self.IA2Attributes.get("description-from")
 		try:
 			return controlTypes.DescriptionFrom(ia2attrDescriptionFrom)
 		except ValueError:
@@ -145,7 +149,7 @@ class Ia2Web(IAccessible):
 		annotationOrigin = IA2WebAnnotation(self)
 		return annotationOrigin
 
-	def _get_detailsSummary(self) -> typing.Optional[str]:
+	def _get_detailsSummary(self) -> Optional[str]:
 		log.warning(
 			"NVDAObject.detailsSummary is deprecated. Use NVDAObject.annotations instead.",
 			stack_info=True,
@@ -162,7 +166,7 @@ class Ia2Web(IAccessible):
 		)
 		return bool(self.annotations)
 
-	def _get_detailsRole(self) -> typing.Optional[controlTypes.Role]:
+	def _get_detailsRole(self) -> Optional[controlTypes.Role]:
 		log.warning(
 			"NVDAObject.detailsRole is deprecated. Use NVDAObject.annotations instead.",
 			stack_info=True,

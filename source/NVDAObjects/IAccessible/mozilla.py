@@ -7,9 +7,11 @@
 from typing import (
 	Generator,
 	Optional,
+	Tuple,
 )
 
 from annotation import (
+	_AnnotationRolesT,
 	AnnotationTarget,
 	AnnotationOrigin,
 )
@@ -71,13 +73,16 @@ class MozAnnotation(AnnotationOrigin):
 		)
 
 	@property
-	def targets(self) -> Generator[MozAnnotationTarget, None, None]:
-		detailsRelations = self._originObj.detailsRelations
-		for rel in detailsRelations:
-			yield MozAnnotationTarget(rel)
+	def targets(self) -> Tuple[MozAnnotationTarget]:
+		return (MozAnnotationTarget(rel) for rel in self._originObj.detailsRelations)
+
 
 	@property
-	def roles(self) -> Generator[Optional[controlTypes.Role], None, None]:
+	def roles(self) -> _AnnotationRolesT:
+		return tuple(self._rolesGenerator)
+
+	@property
+	def _rolesGenerator(self) -> Generator[Optional[controlTypes.Role], None, None]:
 		# Unlike base Ia2Web implementation, the details-roles
 		# IA2 attribute is not exposed in Firefox.
 		# Although slower, we have to fetch the details relations instead.
@@ -88,9 +93,8 @@ class MozAnnotation(AnnotationOrigin):
 				log.error("Error getting role.", exc_info=True)
 
 	@property
-	def summaries(self) -> Generator[str, None, None]:
-		for target in self.targets:
-			yield target.summary
+	def summaries(self) -> Tuple[str]:
+		return (target.summary for target in self.targets)
 
 
 class Mozilla(ia2Web.Ia2Web):

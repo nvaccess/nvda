@@ -13,11 +13,9 @@ https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Annotations
 from dataclasses import dataclass
 from typing import (
 	TYPE_CHECKING,
-	Generator,
 	List,
 	Optional,
-	Set,
-	Union,
+	Tuple,
 )
 
 if TYPE_CHECKING:
@@ -25,7 +23,7 @@ if TYPE_CHECKING:
 	from NVDAObjects import NVDAObject
 
 
-_AnnotationRolesT = Set[Union[None, "controlTypes.Role"]]
+_AnnotationRolesT = Tuple[Optional["controlTypes.Role"]]
 
 
 class AnnotationTarget:
@@ -65,15 +63,15 @@ class AnnotationOrigin:
 		raise NotImplementedError
 
 	@property
-	def targets(self) -> Generator[AnnotationTarget, None, None]:
+	def targets(self) -> Tuple[AnnotationTarget]:
 		raise NotImplementedError
 
 	@property
-	def roles(self) -> Generator[Optional["controlTypes.Role"], None, None]:
+	def roles(self) -> _AnnotationRolesT:
 		raise NotImplementedError
 
 	@property
-	def summaries(self) -> Generator[str, None, None]:
+	def summaries(self) -> Tuple[str]:
 		raise NotImplementedError
 
 
