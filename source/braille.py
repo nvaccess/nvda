@@ -2092,8 +2092,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			oldDisplay = self.display
 			if detected and bdDetect._isDebug():
 				log.debug("Possibly detected display '%s'" % newDisplay.description)
-			sameDisplayReinit = newDisplay == oldDisplay.__class__
-			if sameDisplayReinit:
+			sameDisplayReInit = newDisplay == oldDisplay.__class__
+			if sameDisplayReInit:
 				# This is the same driver as was already set, so just re-initialise it.
 				log.debug("Reinitializing %s braille display"%name)
 				oldDisplay.terminate()
