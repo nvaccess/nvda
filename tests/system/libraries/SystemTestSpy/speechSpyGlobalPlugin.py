@@ -47,38 +47,13 @@ def _importRobotRemoteServer() -> typing.Type:
 	return RobotRemoteServer
 
 
-class BrailleViewerSpy:
-	postBrailleUpdate = extensionPoints.Action()
-
-	def __init__(self):
-		self._last = ""
-
-	def updateBrailleDisplayed(
-			self,
-			cells,  # ignored
-			rawText,
-			currentCellCount,  # ignored
-	):
-		rawText = rawText.strip()
-		if rawText and rawText != self._last:
-			self._last = rawText
-			self.postBrailleUpdate.notify(rawText=rawText)
-
-	isDestroyed: bool = False
-
-	def saveInfoAndDestroy(self):
-		if not self.isDestroyed:
-			self.isDestroyed = True
-			import brailleViewer
-			brailleViewer._onGuiDestroyed()
-
-
 class NVDASpyLib:
 	""" Robot Framework Library to spy on NVDA during system tests.
 	Used to determine if NVDA has finished starting, and various ways of getting speech output.
 	All public methods are part of the Robot Library
 	"""
 	SPEECH_HAS_FINISHED_SECONDS: float = 1.0
+	_brailleCellCount: int = 120
 
 	def __init__(self):
 		# speech cache is ordered temporally, oldest at low indexes, most recent at highest index.
@@ -88,7 +63,7 @@ class NVDASpyLib:
 		self._lastSpeechTime_requiresLock = _timer()
 		#: Lock to protect members that are written to in _onNvdaSpeech.
 		self._speechLock = threading.RLock()
-
+		self._lastRawText = ""
 		# braille raw text (not dots) cache is ordered temporally,
 		# oldest at low indexes, most recent at highest index.
 		self._nvdaBraille_requiresLock = [  # requires thread locking before read/write
@@ -112,9 +87,6 @@ class NVDASpyLib:
 		# Import path must be valid after `speechSpySynthDriver.py` is moved to "scratchpad/synthDrivers/"
 		from synthDrivers.speechSpySynthDriver import post_speech
 		post_speech.register(self._onNvdaSpeech)
-
-		self._brailleSpy = BrailleViewerSpy()
-		self._brailleSpy.postBrailleUpdate.register(self._onNvdaBraille)
 
 	ConfKeyPath = typing.List[str]
 	ConfKeyVal = typing.Union[str, bool, int]
@@ -184,16 +156,19 @@ class NVDASpyLib:
 	# callbacks for extension points
 	def _onNvdaStartupComplete(self):
 		self._isNvdaStartupComplete = True
-		import brailleViewer
-		brailleViewer._brailleGui = self._brailleSpy
-		self.setBrailleCellCount(120)
-		brailleViewer.postBrailleViewerToolToggledAction.notify(created=True)
+		import braille
+		braille.handler.filter_displaySize.register(self.getBrailleCellCount)
+		braille.handler.pre_writeCells.register(self._onNvdaBraille)
 
 	def _onNvdaBraille(self, rawText: str):
 		if not rawText:
 			return
 		if not isinstance(rawText, str):
 			raise TypeError(f"rawText expected as str, got: {type(rawText)}, {rawText!r}")
+		rawText = rawText.strip()
+		if rawText == self._lastRawText:
+			return
+		self._lastRawText = rawText
 		with self._brailleLock:
 			log.debug(f"Appending to braille spy at index {len(self._nvdaBraille_requiresLock)}")
 			self._nvdaBraille_requiresLock.append(rawText)
@@ -257,8 +232,10 @@ class NVDASpyLib:
 			return started and finished
 
 	def setBrailleCellCount(self, brailleCellCount: int):
-		import brailleViewer
-		brailleViewer.DEFAULT_NUM_CELLS = brailleCellCount
+		self._brailleCellCount = brailleCellCount
+
+	def getBrailleCellCount(self, value: int):
+		return self._brailleCellCount
 
 	def _getBrailleAtIndex(self, brailleIndex: int) -> str:
 		with self._brailleLock:

@@ -68,6 +68,7 @@ For example, when text has a comment and a footnote associated with it. (#14507,
   -
 - Emojis should now be reported in more languages. (#14433)
 - The presence of an annotation is no longer missing in braille for some elements. (#13815)
+- Fixed an issue where config changes not save correctly when changing between a "Default" option and the value of the "Default" option. (#14133)
 -
 
 
@@ -93,6 +94,16 @@ This functionality is now available generically via ``behaviours.EditableText`` 
   - This new class is not a singleton by design, add-on authors are encouraged to use their own instance when doing hardware i/o.
   -
 - The processor architecture for the computer can be queried from ``winVersion.WinVersion.processorArchitecture attribute.`` (#14439)
+- New extension points have be added. (#14503)
+  - ``inputCore.manager.decide_executeGesture``
+  - ``tones.decide_beep``
+  - ``nvwave.decide_playWaveFile``
+  - ``braille.handler.pre_writeCells``
+  - ``braille.handler.filter_displaySize``
+  - ``braille.handler.decide_enabled``
+  - ``braille.handler.displayChanged``
+  - ``braille.handler.displaySizeChanged``
+  - 
 -
 
 === API Breaking Changes ===
@@ -118,6 +129,11 @@ Please open a GitHub issue if your Add-on has an issue with updating to the new 
   - ``register``
   - ``isLockStateSuccessfullyTracked``
   - 
+- It is no longer possible to enable/disable the braille handler by setting ``braille.handler.enabled``.
+To disable the braille handler programatically, register a handler to ``braille.handler.decide_enabled``. (#14503)
+- It is no longer possible to update the display size of the handler by setting ``braille.handler.displaySize``.
+To update the displaySize programatically, register a handler to ``braille.handler.filter_displaySize``.
+Refer to ``brailleViewer`` for an example on how to do this. (#14503)
 -
 
 

@@ -40,6 +40,7 @@ import globalVars
 import languageHandler
 import controlTypes
 import winKernel
+import extensionPoints
 
 
 InputGestureBindingClassT = TypeVar("InputGestureBindingClassT")
@@ -253,19 +254,21 @@ class GlobalGestureMap(object):
 		self._map.clear()
 		self.lastUpdateContainedError = False
 
-	def add(self, gesture, module, className, script,replace=False):
+	def add(
+			self,
+			gesture: str,
+			module: str,
+			className: str,
+			script: Optional[str],
+			replace: bool = False
+	):
 		"""Add a gesture mapping.
 		@param gesture: The gesture identifier.
-		@type gesture: str
 		@param module: The name of the Python module containing the target script.
-		@type module: str
 		@param className: The name of the class in L{module} containing the target script.
-		@type className: str
 		@param script: The name of the target script
 			or C{None} to unbind the gesture for this class.
-		@type script: str
 		@param replace: if true replaces all existing bindings for this gesture with the given script, otherwise only appends this binding.
-		@type replace: boolean
 		"""
 		gesture = normalizeGestureIdentifier(gesture)
 		try:
@@ -434,6 +437,17 @@ class InputManager(baseObject.AutoPropertyObject):
 	#: @type: bool
 	lastModifierWasInSayAll=False
 
+	decide_executeGesture: extensionPoints.Decider
+	"""
+	Notifies when a gesture is about to be executed,
+	and allows components or add-ons to decide whether or not to execute a gesture.
+	For example, when controlling a remote system with a connected local braille display,
+	braille display gestures should not be executed locally.
+	Handlers are called with one argument:
+	@param gesture: The gesture that is about to be executed.
+	@type gesture: L{InputGesture}
+	"""
+
 	def __init__(self):
 		#: The function to call when capturing gestures.
 		#: If it returns C{False}, normal execution will be prevented.
@@ -449,6 +463,8 @@ class InputManager(baseObject.AutoPropertyObject):
 		self.loadUserGestureMap()
 		self._lastInputTime = None
 
+		self.decide_executeGesture = extensionPoints.Decider()
+
 	def executeGesture(self, gesture):
 		"""Perform the action associated with a gesture.
 		@param gesture: The gesture to execute.
@@ -460,6 +476,16 @@ class InputManager(baseObject.AutoPropertyObject):
 			# This lets gestures pass through unhindered where possible,
 			# as well as stopping a flood of actions when the core revives.
 			raise NoInputGestureAction
+
+		if not self.decide_executeGesture.decide(gesture=gesture):
+			# A registered handler decided that this gesture shouldn't be executed.
+			# Purposely do not raise a NoInputGestureAction here, as that could
+			# lead to unexpected behavior for gesture emulation, i.e. the gesture will be send to the system
+			# when the decider decided not to execute it.
+			log.debug(
+				"Gesture execution canceled by handler registered to decide_executeGesture extension point"
+			)
+			return
 
 		script = gesture.script
 		focus = api.getFocusObject()
@@ -506,7 +532,7 @@ class InputManager(baseObject.AutoPropertyObject):
 			queueHandler.queueFunction(queueHandler.eventQueue, speech.speakMessage, gesture.displayName)
 
 		gesture.reportExtra()
-		
+
 		# #2953: if an intercepted command Script (script that sends a gesture) is queued
 		# then queue all following gestures (that don't have a script) with a fake script so that they remain in order.
 		if not script and scriptHandler._numIncompleteInterceptedCommandScripts:
@@ -773,7 +799,7 @@ class _AllGestureMappingsRetriever(object):
 
 class AllGesturesScriptInfo(object):
 	__slots__ = ("cls", "scriptName", "category", "displayName", "gestures")
-	
+
 	def __init__(self, cls, scriptName):
 		self.cls = cls
 		self.scriptName = scriptName

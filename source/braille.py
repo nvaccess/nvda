@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2008-2022 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau,
+# Copyright (C) 2008-2023 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau,
 # Leonard de Ruijter
 
 import itertools
@@ -304,6 +304,13 @@ CURSOR_SHAPES = (
 	(0xFF, _("All dots")),
 )
 SELECTION_SHAPE = 0xC0 #: Dots 7 and 8
+
+END_OF_BRAILLE_OUTPUT_SHAPE = 0xFF  # All dots
+"""
+The braille shape shown on a braille display when
+the number of cells used by the braille handler is lower than the actual number of cells.
+The 0 based position of the shape is equal to the number of cells used by the braille handler.
+"""
 
 #: Unicode braille indicator at the start of untranslated braille input.
 INPUT_START_IND = u"⣏"
@@ -1882,12 +1889,71 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	queuedWriteLock: threading.Lock
 	ackTimerHandle: int
 
+	pre_writeCells: extensionPoints.Action
+	"""
+	Notifies when cells are about to be written to a braille display.
+	This allows components and add-ons to perform an action.
+	For example, when a system is controlled by a braille enabled remote system,
+	the remote system should know what cells to show on its display.
+	@param cells: The list of braille cells.
+	@type cells: List[int]
+	@param rawText: The raw text that corresponds with the cells.
+	@type rawText: str
+	@param currentCellCount: The current number of cells
+	@type currentCellCount: bool
+	"""
+
+	filter_displaySize: extensionPoints.Filter
+	"""
+	Filter that allows components or add-ons to change the display size used for braille output.
+	For example, when a system is controlled by a remote system while having a 80 cells display connected,
+	the display size should be lowered to 40 whenever the remote system has a 40 cells display connected.
+	@param value: the number of cells of the current display.
+	@type value: int
+	"""
+
+	displaySizeChanged: extensionPoints.Action
+	"""
+	Action that allows components or add-ons to be notified of display size changes.
+	For example, when a system is controlled by a remote system and the remote system swaps displays,
+	The local system should be notified about display size changes at the remote system.
+	@param displaySize: The current display size used by the braille handler.
+	@type displaySize: int
+	"""
+
+	displayChanged: extensionPoints.Action
+	"""
+	Action that allows components or add-ons to be notified of braille display changes.
+	For example, when a system is controlled by a remote system and the remote system swaps displays,
+	The local system should be notified about display parameters at the remote system,
+	e.g. name and cellcount.
+	@param display: The new braille display driver
+	@type display: L{BrailleDisplayDriver}
+	@param isFallback: Whether the display is set as fallback display due to another display's failure
+	@type isFallback: bool
+	@param detected: If the display was set by auto detection, the device match that matched the driver
+	@type detected: bdDetect.DeviceMatch or C{None}
+	"""
+
+	decide_enabled: extensionPoints.Decider
+	"""
+	Allows components or add-ons to decide whether the braille handler should be forcefully disabled.
+	For example, when a system is controlling a remote system with braille,
+	the local braille handler should be disabled as long as the system is in control of the remote system.
+	Handlers are called without arguments.
+	"""
+
 	def __init__(self):
 		louisHelper.initialize()
 		self.display: Optional[BrailleDisplayDriver] = None
-		#: Number of cells the connected device (or if no device connected, what braille viewer has)
-		#: Zero cells disables braille. See L{_get_enabled}
 		self._displaySize: int = 0
+		"""
+		Internal cache for the displaySize property.
+		This attribute is used to compare the displaySize output by l{filterDisplaySize}
+		with its previous output.
+		If the value differs, L{displaySizeChanged} is notified.
+		"""
+
 		self.mainBuffer = BrailleBuffer(self)
 		self.messageBuffer = BrailleBuffer(self)
 		self._messageCallLater = None
@@ -1910,6 +1976,12 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._ackTimeoutResetterApc = winKernel.PAPCFUNC(self._ackTimeoutResetter)
 
 		brailleViewer.postBrailleViewerToolToggledAction.register(self._onBrailleViewerChangedState)
+
+		self.pre_writeCells = extensionPoints.Action()
+		self.filter_displaySize = extensionPoints.Filter()
+		self.displaySizeChanged = extensionPoints.Action()
+		self.displayChanged = extensionPoints.Action()
+		self.decide_enabled = extensionPoints.Decider()
 
 	def terminate(self):
 		self._disableDetection()
@@ -1947,22 +2019,49 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		return self.enabled and config.conf["braille"]["tetherTo"] == TetherTo.AUTO.value
 
 	displaySize: int
+	_cache_displaySize = True
 
 	def _get_displaySize(self):
-		if self._displaySize == 0 and brailleViewer.isBrailleViewerActive():
-			return brailleViewer.DEFAULT_NUM_CELLS
-		return self._displaySize
-
-	def _set_displaySize(self, numCells):
-		"""The display size can be changed while a display is connected, for instance
-			see L{brailleDisplayDrivers.alva.BrailleDisplayDriver} split point feature.
+		"""Returns the display size to use for braille output.
+		Handlers can register themselves to L{filter_displaySize} to change this value on the fly.
+		Therefore, this is a read only property and can't be set.
 		"""
-		self._displaySize = numCells
+		numCells = self.display.numCells if self.display else 0
+		currentDisplaySize = self.filter_displaySize.apply(numCells)
+		if self._displaySize != currentDisplaySize:
+			self.displaySizeChanged.notify(displaySize=currentDisplaySize)
+			self._displaySize = currentDisplaySize
+		return currentDisplaySize
+
+	def _set_displaySize(self, value):
+		"""While the display size can be changed while a display is connected
+		(for instance see L{brailleDisplayDrivers.alva.BrailleDisplayDriver} split point feature),
+		it is not possible to override the display size using this property.
+		Consider registering a handler to L{filter_displaySize} instead.
+		"""
+		raise AttributeError(
+			f"Can't set displaySize to {value}, consider registering a handler to filter_displaySize"
+		)
 
 	enabled: bool
+	_cache_enabled = True
 
 	def _get_enabled(self):
-		return bool(self.displaySize)
+		"""Returns whether braille is enabled.
+		Handlers can register themselves to L{decide_enabled} and return C{False}
+		to forcefully disable the braille handler.
+		If components need to change the state from disabled to enabled instead,
+		they should register to L{filter_displaySize}.
+		By default, the enabled/disabled state is based on the boolean value of L{displaySize},
+		and thus is C{True} when the display size is greater than 0.
+		This is a read only property and can't be set.
+		"""
+		return bool(self.displaySize) and self.decide_enabled.decide()
+
+	def _set_enabled(self, value):
+		raise AttributeError(
+			f"Can't set enabled to {value}, consider registering a handler to decide_enabled or filter_displaySize"
+		)
 
 	_lastRequestedDisplayName = None
 	"""The name of the last requested braille display driver with setDisplayByName,
@@ -2057,10 +2156,10 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		oldDisplay = self.display
 		newDisplay = self._switchDisplay(oldDisplay, newDisplayClass, **kwargs)
 		self.display = newDisplay
-		self._displaySize = newDisplay.numCells
 		log.info(
 			f"Loaded braille display driver {newDisplay.name!r}, current display has {newDisplay.numCells} cells."
 		)
+		self.displayChanged.notify(display=newDisplay, isFallback=isFallback, detected=detected)
 		queueHandler.queueFunction(queueHandler.eventQueue, self.initialDisplay)
 
 	def _onBrailleViewerChangedState(self, created):
@@ -2085,7 +2184,26 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			wx.CallAfter(self._cursorBlinkTimer.Start,blinkRate)
 
 	def _writeCells(self, cells: List[int]):
-		brailleViewer.update(cells, self._rawText)
+		handlerCellCount = self.displaySize
+		self.pre_writeCells.notify(cells=cells, rawText=self._rawText, currentCellCount=handlerCellCount)
+		displayCellCount = self.display.numCells
+		if not displayCellCount:
+			# No physical display to write to
+			return
+		# Braille displays expect cells to be padded up to displayCellCount.
+		# However, the braille handler uses handlerCellCount to calculate the number of cells.
+		cellCountDif = displayCellCount - len(cells)
+		if cellCountDif < 0:
+			# There are more cells than the connected display could take.
+			log.warning(
+				f"Connected display {self.display.name!r} has {displayCellCount} cells, "
+				f"while braille handler is using {handlerCellCount} cells"
+			)
+			cells = cells[:displayCellCount]
+		elif cellCountDif > 0:
+			# The connected display could take more cells than the braille handler produces.
+			# Displays expect cells to be padded up to the number of cells.
+			cells += [END_OF_BRAILLE_OUTPUT_SHAPE] + [0] * (cellCountDif - 1)
 		if not self.display.isThreadSafe:
 			try:
 				self.display.display(cells)
