@@ -510,7 +510,7 @@ class Addon(AddonBase):
 			sys.modules[parentModule.__name__] = parentModule
 		spec = importlib.machinery.PathFinder.find_spec(fullNameTop, [self.path])
 		if not spec:
-			raise ModuleNotFoundError(importlib._bootstrap._ERR_MSG.format(name), name=name)
+			raise ModuleNotFoundError(f"No module named {name!r}", name=name)
 		mod = importlib.util.module_from_spec(spec)
 		sys.modules[fullNameTop] = mod
 		if spec.loader:
