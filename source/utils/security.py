@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022 NV Access Limited
+# Copyright (C) 2022-2023 NV Access Limited, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -26,17 +26,16 @@ def __getattr__(attrName: str) -> Any:
 	"""Module level `__getattr__` used to preserve backward compatibility.
 	"""
 	import NVDAState
-	if not NVDAState._allowDeprecatedAPI():
-		log.debug(f"Deprecated {attrName} imported while _allowDeprecatedAPI is False")
-	elif attrName == "isObjectAboveLockScreen":
-		log.warning(
-			"Importing isObjectAboveLockScreen(obj) is deprecated. "
-			"Instead use obj.isBelowLockScreen. "
-		)
-		return _isObjectAboveLockScreen
-	elif attrName == "postSessionLockStateChanged":
-		log.warning("postSessionLockStateChanged is deprecated, use post_sessionLockStateChanged instead.")
-		return post_sessionLockStateChanged
+	if NVDAState._allowDeprecatedAPI():
+		if attrName == "isObjectAboveLockScreen":
+			log.warning(
+				"Importing isObjectAboveLockScreen(obj) is deprecated. "
+				"Instead use obj.isBelowLockScreen. "
+			)
+			return _isObjectAboveLockScreen
+		if attrName == "postSessionLockStateChanged":
+			log.warning("postSessionLockStateChanged is deprecated, use post_sessionLockStateChanged instead.")
+			return post_sessionLockStateChanged
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
 
 
