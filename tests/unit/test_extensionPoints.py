@@ -1092,8 +1092,10 @@ class TestChain(unittest.TestCase):
 		""" Test that a lambda can be used as a handler.
 		Note: the lambda must be kept alive, since register uses a weak reference to it.
 		"""
-		l = lambda a: iter([("a", a)])
-		self.chain.register(l)
+		# E731 do not assign a lambda expression, use a def
+		# Ignored because a lambda is used on purpose in this test.
+		la = lambda a: iter([("a", a)])  # NOQA: E731
+		self.chain.register(la)
 		generator = self.chain.iter(a='a value')
 		self.assertEqual({k: v for k, v in generator}, {'a': 'a value'})
 

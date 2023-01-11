@@ -90,7 +90,10 @@ class HandlerRegistrar(Generic[HandlerT]):
 		#: Registered handler functions.
 		#: This is an OrderedDict where the keys are unique identifiers (as returned by _getHandlerKey)
 		#: and the values are weak references.
-		self._handlers = OrderedDict[HandlerKeyT, Union[BoundMethodWeakref[HandlerT], AnnotatableWeakref[HandlerT]]]()
+		self._handlers = OrderedDict[
+			HandlerKeyT,
+			Union[BoundMethodWeakref[HandlerT], AnnotatableWeakref[HandlerT]]
+		]()
 
 	def register(self, handler: HandlerT):
 		"""You can register functions, bound instance methods, class methods, static methods or lambdas.

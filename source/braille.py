@@ -1837,7 +1837,7 @@ def getFocusRegions(
 	from NVDAObjects import NVDAObject
 	if isinstance(obj, CursorManager):
 		region2 = (ReviewTextInfoRegion if review else CursorManagerRegion)(obj)
-	elif isinstance(obj, DocumentTreeInterceptor) or (isinstance(obj,NVDAObject) and NVDAObjectHasUsefulText(obj)):
+	elif isinstance(obj, DocumentTreeInterceptor) or (isinstance(obj,NVDAObject) and NVDAObjectHasUsefulText(obj)): 
 		region2 = (ReviewTextInfoRegion if review else TextInfoRegion)(obj)
 	else:
 		region2 = None
@@ -1933,7 +1933,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 	def __init__(self):
 		louisHelper.initialize()
-		self.filter_displaySize.register
 		self.display: Optional[BrailleDisplayDriver] = None
 		self._displaySize: int = 0
 		"""
@@ -2017,7 +2016,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		Therefore, this is a read only property and can't be set.
 		"""
 		numCells = self.display.numCells if self.display else 0
-		currentDisplaySize = self.filter_displaySize.apply((numCells)
+		currentDisplaySize = self.filter_displaySize.apply(numCells)
 		if self._displaySize != currentDisplaySize:
 			self.displaySizeChanged.notify(displaySize=currentDisplaySize)
 			self._displaySize = currentDisplaySize
@@ -2089,7 +2088,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			# or situations where the user hasn't set any port.
 			if port:
 				kwargs["port"] = port
-
 		try:
 			newDisplay = _getDisplayDriver(name)
 			oldDisplay = self.display
@@ -2517,8 +2515,9 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		config.conf["braille"]["display"] = AUTO_DISPLAY_NAME
 		if not keepCurrentDisplay:
 			self.setDisplayByName("noBraille", isFallback=True)
-		self._detector = bdDetect.Detector(usb=usb, bluetooth=bluetooth, limitToDevices=limitToDevices)
+		self._detector = bdDetect.Detector()
 		self._detectionEnabled = True
+		self._detector._queueBgScan(usb=usb, bluetooth=bluetooth, limitToDevices=limitToDevices)
 
 	def _disableDetection(self):
 		"""Disables automatic detection of braille displays."""
@@ -2596,7 +2595,6 @@ def initialize():
 	newTableName = brailleTables.RENAMED_TABLES.get(oldTableName)
 	if newTableName:
 		config.conf["braille"]["translationTable"] = newTableName
-	bdDetect.initializeDetectionData()
 	handler = BrailleHandler()
 	# #7459: the syncBraille has been dropped in favor of the native hims driver.
 	# Migrate to renamed drivers as smoothly as possible.

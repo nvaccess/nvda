@@ -73,14 +73,18 @@ class Action(HandlerRegistrar[Callable[..., None]]):
 FilterValueTypeT = TypeVar("FilterValueTypeT")
 
 
-# Typing doesn't allow us to typehint a Callable with one required argument and several kwargs
-# Therefore support both, thereby accepting the downside of handlers without value parameter accepted as valid.
-class Filter(HandlerRegistrar[Union[Callable[..., FilterValueTypeT], Callable[[FilterValueTypeT], FilterValueTypeT]]], Generic[FilterValueTypeT]):
+# Typing doesn't allow us to typehint a Callable with one required argument and several kwargs.
+# Using a typing_extensions.Protocol for this results in false negatives.
+class Filter(
+		HandlerRegistrar[Union[Callable[..., FilterValueTypeT], Callable[[FilterValueTypeT], FilterValueTypeT]]],
+		Generic[FilterValueTypeT]
+):
 	"""Allows interested parties to register to modify a specific kind of data.
 	For example, this might be used to allow modification of spoken messages before they are passed to the synthesizer.
 
 	First, a Filter is created:
 
+	>>> import extensionPoints
 	>>> messageFilter = extensionPoints.Filter[str]()
 
 	Interested parties then register to filter the data, see

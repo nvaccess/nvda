@@ -36,6 +36,7 @@ DBT_DEVNODES_CHANGED=7
 _driverDevices = OrderedDict()
 USB_ID_REGEX = re.compile(r"^VID_[0-9A-F]{4}&PID_[0-9A-F]{4}$", re.U)
 
+
 class DeviceMatch(typing.NamedTuple):
 	"""Represents a detected device.
 	"""
@@ -260,40 +261,27 @@ class _DeviceInfoFetcher(AutoPropertyObject):
 	def _get_hidDevices(self) -> typing.List[typing.Dict]:
 		return list(hwPortUtils.listHidDevices(onlyAvailable=True))
 
-#: The single instance of the device info fetcher.
-#: @type: L{_DeviceInfoFetcher}
-deviceInfoFetcher = _DeviceInfoFetcher()
+
+deviceInfoFetcher: _DeviceInfoFetcher
+
 
 class Detector(object):
 	"""Detector class used to automatically detect braille displays.
 	This should only be used by the L{braille} module.
 	"""
 
-	def __init__(
-			self,
-			usb: bool = True,
-			bluetooth: bool = True,
-			limitToDevices: typing.Optional[typing.List[str]] = None
-	):
+	def __init__(self):
 		"""Constructor.
-		The keyword arguments initialize the detector in a particular state.
-		On an initialized instance, these initial arguments can be overridden by calling
-		L{_queueBgScan} or L{rescan}.
-		@param usb: Whether this instance should detect USB devices initially.
-		@param bluetooth: Whether this instance should detect Bluetooth devices initially.
-		@param limitToDevices: Drivers to which detection should be limited initially.
-			C{None} if no driver filtering should occur.
+		After construction, a scan should be queued with L{queueBgScan}.
 		"""
 		self._executor = ThreadPoolExecutor(1)
 		self._queuedFuture: typing.Optional[Future] = None
 		messageWindow.pre_handleWindowMessage.register(self.handleWindowMessage)
 		appModuleHandler.post_appSwitch.register(self.pollBluetoothDevices)
 		self._stopEvent = threading.Event()
-		self._detectUsb = usb
-		self._detectBluetooth = bluetooth
-		self._limitToDevices = limitToDevices
-		# Perform initial scan.
-		self._queueBgScan(usb=usb, bluetooth=bluetooth, limitToDevices=limitToDevices)
+		self._detectUsb = True
+		self._detectBluetooth = True
+		self._limitToDevices = None
 
 	def _queueBgScan(
 			self,
@@ -428,11 +416,9 @@ class Detector(object):
 		appModuleHandler.post_appSwitch.unregister(self.pollBluetoothDevices)
 		messageWindow.pre_handleWindowMessage.unregister(self.handleWindowMessage)
 		self._stopBgScan()
+		# Clear the cache of bluetooth devices so new devices can be picked up with a new instance.
+		_DeviceInfoFetcher.btDevsCache = None
 		self._executor.shutdown(wait=False)
-
-
-scanForDevices.register(Detector._bgScanUsb)
-scanForDevices.register(Detector._bgScanBluetooth)
 
 
 def getConnectedUsbDevicesForDriver(driver) -> typing.Iterator[DeviceMatch]:
@@ -515,12 +501,19 @@ def driverSupportsAutoDetection(driver):
 	return driver in _driverDevices
 
 
-def initializeDetectionData():
-	""" Initialize detection data.
+def initialize():
+	""" Initializes bdDetect, such as detection data.
 	Calls to addUsbDevices, and addBluetoothDevices.
 	Specify the requirements for a detected device to be considered a
 	match for a specific driver.
 	"""
+	global deviceInfoFetcher
+	deviceInfoFetcher = _DeviceInfoFetcher()
+
+	scanForDevices.register(Detector._bgScanUsb)
+	scanForDevices.register(Detector._bgScanBluetooth)
+
+	# Add devices
 	# alva
 	addUsbDevices("alva", KEY_HID, {
 		"VID_0798&PID_0640",  # BC640
@@ -769,3 +762,11 @@ def initializeDetectionData():
 		"seikantk",
 		isSeikaBluetoothDeviceMatch
 	)
+
+
+def terminate():
+	global deviceInfoFetcher
+	_driverDevices.clear()
+	scanForDevices.unregister(Detector._bgScanBluetooth)
+	scanForDevices.unregister(Detector._bgScanUsb)
+	del deviceInfoFetcher
