@@ -201,6 +201,9 @@ class MainFrame(wx.Frame):
 			else:
 				updateCheck.executePendingUpdate()
 
+	def evaluateUpdatePendingUpdateMenuItemCommand(self):
+		self.sysTrayIcon.evaluateUpdatePendingUpdateMenuItemCommand()
+	
 	@blockAction.when(blockAction.Context.MODAL_DIALOG_OPEN)
 	def onExitCommand(self, evt):
 		if config.conf["general"]["askToExit"]:
