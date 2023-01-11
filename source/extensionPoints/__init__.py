@@ -12,10 +12,20 @@ See the L{Action}, L{Filter}, L{Decider} and L{AccumulatingDecider} classes.
 """
 from logHandler import log
 from .util import HandlerRegistrar, callWithSupportedKwargs, BoundMethodWeakref
-from typing import Set, TypeVar, Generic, Generator, Iterable
+from typing import (
+	Callable,
+	Generator,
+	Generic,
+	Iterable,
+	Set,
+	TypeVar,
+)
 
 
-class Action(HandlerRegistrar):
+ActionHandlerT = Callable[..., None]
+
+
+class Action(HandlerRegistrar[ActionHandlerT]):
 	"""Allows interested parties to register to be notified when some action occurs.
 	For example, this might be used to notify that the configuration profile has been switched.
 
@@ -62,7 +72,12 @@ class Action(HandlerRegistrar):
 				log.exception(f"Error running handler {handler} for {self}. Exception {e}")
 
 
-class Filter(HandlerRegistrar):
+FilterValueTypeT = TypeVar("FilterValueTypeT")
+# Typing doesn't allow us to typehint a Callable with one required argument and several kwargs
+FilterHandlerT = Callable[[FilterValueTypeT], FilterValueTypeT]
+
+
+class Filter(HandlerRegistrar[FilterHandlerT], Generic[FilterValueTypeT]):
 	"""Allows interested parties to register to modify a specific kind of data.
 	For example, this might be used to allow modification of spoken messages before they are passed to the synthesizer.
 
@@ -80,13 +95,13 @@ class Filter(HandlerRegistrar):
 	>>> messageFilter.register(filterMessage)
 
 	When filtering is desired, all registered handlers are called to filter the data, see L{util.callWithSupportedKwargs}
-	for how args passed to notify are mapped to the handler:
+	for how args passed to apply are mapped to the handler:
 
 	>>> messageFilter.apply("This is a message", someArg=42)
 	'This is a message which has been filtered'
 	"""
 
-	def apply(self, value, **kwargs):
+	def apply(self, value: FilterValueTypeT, **kwargs) -> FilterValueTypeT:
 		"""Pass a value to be filtered through all registered handlers.
 		The value is passed to the first handler
 		and the return value from that handler is passed to the next handler.
@@ -103,7 +118,11 @@ class Filter(HandlerRegistrar):
 				log.exception("Error running handler %r for %r" % (handler, self))
 		return value
 
-class Decider(HandlerRegistrar):
+
+DeciderHandlerT = Callable[..., bool]
+
+
+class Decider(HandlerRegistrar[DeciderHandlerT]):
 	"""Allows interested parties to participate in deciding whether something
 	should be done.
 	For example, input gestures are normally executed,
@@ -125,7 +144,7 @@ class Decider(HandlerRegistrar):
 
 	When the decision is to be made, registered handlers are called until
 	a handler returns False, see L{util.callWithSupportedKwargs}
-	for how args passed to notify are mapped to the handler:
+	for how args passed to decide are mapped to the handler:
 
 	>>> doSomething.decide(someArg=42)
 	False
@@ -154,7 +173,10 @@ class Decider(HandlerRegistrar):
 		return True
 
 
-class AccumulatingDecider(HandlerRegistrar):
+DeciderHandlerT = Callable[..., bool]
+
+
+class AccumulatingDecider(HandlerRegistrar[DeciderHandlerT]):
 	"""Allows interested parties to participate in deciding whether something
 	should be done.
 	In contrast with L{Decider} all handlers are executed and then results are returned.
@@ -175,9 +197,9 @@ class AccumulatingDecider(HandlerRegistrar):
 	...
 	>>> doSomething.register(shouldDoSomething)
 
-	When the decision is to be made registered handlers are called and they return values are collected,
+	When the decision is to be made registered handlers are called and their return values are collected,
 	see L{util.callWithSupportedKwargs}
-	for how args passed to notify are mapped to the handler:
+	for how args passed to decide are mapped to the handler:
 
 	>>> doSomething.decide(someArg=42)
 	False
@@ -211,9 +233,10 @@ class AccumulatingDecider(HandlerRegistrar):
 
 
 ChainValueTypeT = TypeVar("ChainValueTypeT")
+ChainHandlerT = Callable[..., Iterable[ChainValueTypeT]]
 
 
-class Chain(HandlerRegistrar, Generic[ChainValueTypeT]):
+class Chain(HandlerRegistrar[ChainHandlerT], Generic[ChainValueTypeT]):
 	"""Allows creating a chain of registered handlers.
 	The handlers should return an iterable, e.g. they are usually generator functions,
 	but returning a list is also supported.

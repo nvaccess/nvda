@@ -11,7 +11,9 @@ from NVDAObjects import NVDAObject
 import controlTypes
 
 class PlaceholderNVDAObject(NVDAObject):
-	processID = None # Must be implemented to instantiate.
+	processID = None  # Must be implemented to instantiate.
+	windowThreadID = None  # Must be implemented for inputCore tests
+
 
 class NVDAObjectWithRole(PlaceholderNVDAObject):
 	"""An object that accepts a role as one of its construction parameters.
