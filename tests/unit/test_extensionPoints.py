@@ -399,6 +399,24 @@ class TestHandlerRegistrar(unittest.TestCase):
 		actual = list(self.reg.handlers)
 		self.assertEqual(actual, [inst1.method, inst2.method, inst3.method])
 
+	def test_registerWithMoveToEnd(self):
+		"""Test that moveToEnd can reorder registered handlers.
+		"""
+		inst3 = ExampleClass()
+		inst2 = ExampleClass()
+		inst1 = ExampleClass()
+		self.reg.register(inst1.method)
+		self.reg.register(inst2.method)
+		self.reg.register(inst3.method)
+		actual1 = list(self.reg.handlers)
+		self.assertEqual(actual1, [inst1.method, inst2.method, inst3.method])
+		self.reg.moveToEnd(inst2.method, last=False)
+		actual2 = list(self.reg.handlers)
+		self.assertEqual(actual2, [inst2.method, inst1.method, inst3.method])
+		self.reg.moveToEnd(inst2.method, last=True)
+		actual3 = list(self.reg.handlers)
+		self.assertEqual(actual3, [inst1.method, inst3.method, inst2.method])
+
 	def test_unregisterMiddle(self):
 		"""Test behaviour when unregistering a handler registered between of other handlers.
 		"""
@@ -1067,6 +1085,15 @@ class TestChain(unittest.TestCase):
 
 		h = handlerClass()
 		self.chain.register(h.handlerMethod)
+		generator = self.chain.iter(a='a value')
+		self.assertEqual({k: v for k, v in generator}, {'a': 'a value'})
+
+	def test_lambdaHandler(self):
+		""" Test that a lambda can be used as a handler.
+		Note: the lambda must be kept alive, since register uses a weak reference to it.
+		"""
+		l = lambda a: iter([("a", a)])
+		self.chain.register(l)
 		generator = self.chain.iter(a='a value')
 		self.assertEqual({k: v for k, v in generator}, {'a': 'a value'})
 
