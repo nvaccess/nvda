@@ -224,6 +224,24 @@ class _DeviceInfoFetcher(AutoPropertyObject):
 	"""Utility class that caches fetched info for available devices for the duration of one core pump cycle."""
 	cachePropertiesByDefault = True
 
+	def __init__(self):
+		self._btDevsLock = threading.Lock
+		self._btDevsCache: typing.Optional[typing.Tuple[str, DeviceMatch]] = None
+
+	#: Type info for auto property: _get_btDevsCache
+	btDevsCache: typing.Optional[typing.List[typing.Tuple[str, DeviceMatch]]]
+
+	def _get_btDevsCache(self):
+		with self._btDevsLock():
+			return self._btDevsCache
+
+	def _set_btDevsCache(
+			self,
+			cache: typing.Optional[typing.List[typing.Tuple[str, DeviceMatch]]]
+	):
+		with self._btDevsLock():
+			self._btDevsCache = cache
+
 	#: Type info for auto property: _get_comPorts
 	comPorts: typing.List[typing.Dict]
 
@@ -267,11 +285,7 @@ class Detector(object):
 			C{None} if no driver filtering should occur.
 		"""
 		self._executor = ThreadPoolExecutor(1)
-		self._btDevsLock = threading.Lock()
-		self._btDevs: typing.Optional[typing.Tuple[str, DeviceMatch]] = None
 		self._queuedFuture: typing.Optional[Future] = None
-		scanForDevices.register(self._bgScanUsb)
-		scanForDevices.register(self._bgScanBluetooth)
 		messageWindow.pre_handleWindowMessage.register(self.handleWindowMessage)
 		appModuleHandler.post_appSwitch.register(self.pollBluetoothDevices)
 		self._stopEvent = threading.Event()
@@ -312,8 +326,8 @@ class Detector(object):
 			# If this future belongs to a scan that is currently running or finished, this does nothing.
 			self._queuedFuture.cancel()
 
+	@staticmethod
 	def _bgScanUsb(
-			self,
 			detectUsb: bool = True,
 			limitToDevices: typing.Optional[typing.List[str]] = None,
 	):
@@ -327,8 +341,8 @@ class Detector(object):
 				continue
 			yield (driver, match)
 
+	@staticmethod
 	def _bgScanBluetooth(
-			self,
 			detectBluetooth: bool = True,
 			limitToDevices: typing.Optional[typing.List[str]] = None,
 	):
@@ -337,14 +351,13 @@ class Detector(object):
 		"""
 		if not detectBluetooth:
 			return
-		with self._btDevsLock:
-			if self._btDevs is None:
-				btDevs = getDriversForPossibleBluetoothDevices()
-				# Cache Bluetooth devices for next time.
-				btDevsCache = []
-			else:
-				btDevs = self._btDevs
-				btDevsCache = btDevs
+		btDevs: typing.Optional[typing.Iterable[typing.Tuple[str, DeviceMatch]]] = _DeviceInfoFetcher.btDevsCache
+		if btDevs is None:
+			btDevs = getDriversForPossibleBluetoothDevices()
+			# Cache Bluetooth devices for next time.
+			btDevsCache = []
+		else:
+			btDevsCache = btDevs
 		for driver, match in btDevs:
 			if limitToDevices and driver not in limitToDevices:
 				continue
@@ -352,8 +365,7 @@ class Detector(object):
 				btDevsCache.append((driver, match))
 			yield (driver, match)
 		if btDevsCache is not btDevs:
-			with self._btDevsLock:
-				self._btDevs = btDevsCache
+			_DeviceInfoFetcher.btDevsCache = btDevsCache
 
 	def _bgScan(
 			self,
@@ -394,9 +406,8 @@ class Detector(object):
 			C{None} if no driver filtering should occur.
 		"""
 		self._stopBgScan()
-		with self._btDevsLock:
-			# A Bluetooth com port or HID device might have been added.
-			self._btDevs = None
+		# Clear the cache of bluetooth devices so new devices can be picked up.
+		_DeviceInfoFetcher.btDevsCache = None
 		self._queueBgScan(usb=usb, bluetooth=bluetooth, limitToDevices=limitToDevices)
 
 	def handleWindowMessage(self, msg=None, wParam=None):
@@ -409,18 +420,19 @@ class Detector(object):
 		if not self._detectBluetooth:
 			# Do not poll bluetooth devices at all when bluetooth is disabled.
 			return
-		with self._btDevsLock:
-			if not self._btDevs:
-				return
+		if not _DeviceInfoFetcher.btDevsCache:
+			return
 		self._queueBgScan(bluetooth=self._detectBluetooth, limitToDevices=self._limitToDevices)
 
 	def terminate(self):
 		appModuleHandler.post_appSwitch.unregister(self.pollBluetoothDevices)
 		messageWindow.pre_handleWindowMessage.unregister(self.handleWindowMessage)
-		scanForDevices.unregister(self._bgScanBluetooth)
-		scanForDevices.unregister(self._bgScanUsb)
 		self._stopBgScan()
 		self._executor.shutdown(wait=False)
+
+
+scanForDevices.register(Detector._bgScanUsb)
+scanForDevices.register(Detector._bgScanBluetooth)
 
 
 def getConnectedUsbDevicesForDriver(driver) -> typing.Iterator[DeviceMatch]:
