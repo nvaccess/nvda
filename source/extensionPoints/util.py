@@ -13,6 +13,7 @@ from typing import (
 	Callable,
 	Generator,
 	Generic,
+	Optional,
 	OrderedDict,
 	Tuple,
 	TypeVar,
@@ -50,7 +51,7 @@ class BoundMethodWeakref(Generic[HandlerT]):
 		self.weakInst = weakref.ref(inst, onRefDelete)
 		self.weakFunc = weakref.ref(func, onRefDelete)
 
-	def __call__(self):
+	def __call__(self) -> Optional[HandlerT]:
 		inst = self.weakInst()
 		if not inst:
 			return

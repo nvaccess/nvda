@@ -19,6 +19,7 @@ from typing import (
 	Iterable,
 	Set,
 	TypeVar,
+	Union,
 )
 
 
@@ -74,7 +75,8 @@ class Action(HandlerRegistrar[ActionHandlerT]):
 
 FilterValueTypeT = TypeVar("FilterValueTypeT")
 # Typing doesn't allow us to typehint a Callable with one required argument and several kwargs
-FilterHandlerT = Callable[[FilterValueTypeT], FilterValueTypeT]
+# Therefore support both, thereby accepting the downside of handlers without value parameter accepted as valid.
+FilterHandlerT = Union[Callable[..., FilterValueTypeT], Callable[[FilterValueTypeT], FilterValueTypeT]]
 
 
 class Filter(HandlerRegistrar[FilterHandlerT], Generic[FilterValueTypeT]):
@@ -83,13 +85,13 @@ class Filter(HandlerRegistrar[FilterHandlerT], Generic[FilterValueTypeT]):
 
 	First, a Filter is created:
 
-	>>> messageFilter = extensionPoints.Filter()
+	>>> messageFilter = extensionPoints.Filter[str]()
 
 	Interested parties then register to filter the data, see
 	L{register} docstring for details of the type of handlers that can be
 	registered:
 
-	>>> def filterMessage(message, someArg=None):
+	>>> def filterMessage(message: str, someArg=None) -> str:
 	... 	return message + " which has been filtered."
 	...
 	>>> messageFilter.register(filterMessage)
@@ -243,18 +245,18 @@ class Chain(HandlerRegistrar[ChainHandlerT], Generic[ChainValueTypeT]):
 
 	First, a Chain is created:
 
-	>>> chainOfNumbers = extensionPoints.Chain()
+	>>> chainOfNumbers = extensionPoints.Chain[int]()
 
 	Interested parties then register to be iterated.
 	See L{register} docstring for details of the type of handlers that can be
 	registered:
 
-	>>> def yieldSomeNumbers(someArg=None):
+	>>> def yieldSomeNumbers(someArg=None) -> Generator[int, None, None]:
 		... 	yield 1
 		... 	yield 2
 		... 	yield 3
 	...
-	>>> def yieldMoreNumbers(someArg=42):
+	>>> def yieldMoreNumbers(someArg=42) -> Generator[int, None, None]:
 		... 	yield 4
 		... 	yield 5
 		... 	yield 6

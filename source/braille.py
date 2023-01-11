@@ -1837,7 +1837,7 @@ def getFocusRegions(
 	from NVDAObjects import NVDAObject
 	if isinstance(obj, CursorManager):
 		region2 = (ReviewTextInfoRegion if review else CursorManagerRegion)(obj)
-	elif isinstance(obj, DocumentTreeInterceptor) or (isinstance(obj,NVDAObject) and NVDAObjectHasUsefulText(obj)): 
+	elif isinstance(obj, DocumentTreeInterceptor) or (isinstance(obj,NVDAObject) and NVDAObjectHasUsefulText(obj)):
 		region2 = (ReviewTextInfoRegion if review else TextInfoRegion)(obj)
 	else:
 		region2 = None
@@ -1892,7 +1892,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	@type currentCellCount: bool
 	"""
 
-	filter_displaySize: extensionPoints.Filter
+	filter_displaySize: extensionPoints.Filter[int]
 	"""
 	Filter that allows components or add-ons to change the display size used for braille output.
 	For example, when a system is controlled by a remote system while having a 80 cells display connected,
@@ -2017,7 +2017,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		Therefore, this is a read only property and can't be set.
 		"""
 		numCells = self.display.numCells if self.display else 0
-		currentDisplaySize = self.filter_displaySize.apply(numCells)
+		currentDisplaySize = self.filter_displaySize.apply((numCells)
 		if self._displaySize != currentDisplaySize:
 			self.displaySizeChanged.notify(displaySize=currentDisplaySize)
 			self._displaySize = currentDisplaySize

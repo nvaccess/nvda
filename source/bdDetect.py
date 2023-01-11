@@ -13,7 +13,7 @@ For drivers in add-ons, this must be done in a global plugin.
 """
 
 import itertools
-from collections import namedtuple, defaultdict, OrderedDict
+from collections import defaultdict, OrderedDict
 import threading
 from concurrent.futures import ThreadPoolExecutor, Future
 import typing
@@ -31,8 +31,25 @@ import extensionPoints
 
 HID_USAGE_PAGE_BRAILLE = 0x41
 
+DBT_DEVNODES_CHANGED=7
 
-scanForDevices = extensionPoints.Chain()
+_driverDevices = OrderedDict()
+USB_ID_REGEX = re.compile(r"^VID_[0-9A-F]{4}&PID_[0-9A-F]{4}$", re.U)
+
+class DeviceMatch(typing.NamedTuple):
+	"""Represents a detected device.
+	"""
+	type: str
+	"""The type of the device."""
+	id: str
+	"""The identifier of the device."""
+	port: str
+	"""The port that can be used by a driver to communicate with a device."""
+	deviceInfo: typing.Dict[str, str]
+	"""all known information about a device."""
+
+
+scanForDevices = extensionPoints.Chain[typing.Tuple[str, DeviceMatch]]()
 """
 A Chain that can be iterated to scan for devices.
 Registered handlers should yield a tuple containing a driver name as str and DeviceMatch
@@ -45,23 +62,6 @@ Handlers are called with these keyword arguments:
 	C{None} if no driver filtering should occur.
 """
 
-DBT_DEVNODES_CHANGED=7
-
-_driverDevices = OrderedDict()
-USB_ID_REGEX = re.compile(r"^VID_[0-9A-F]{4}&PID_[0-9A-F]{4}$", re.U)
-
-class DeviceMatch(
-	namedtuple("DeviceMatch", ("type","id", "port", "deviceInfo"))
-):
-	"""Represents a detected device.
-	@ivar id: The identifier of the device.
-	@type id: str
-	@ivar port: The port that can be used by a driver to communicate with a device.
-	@type port: str
-	@ivar deviceInfo: all known information about a device.
-	@type deviceInfo: dict
-	"""
-	__slots__ = ()
 
 # Device type constants
 #: Key constant for HID devices
