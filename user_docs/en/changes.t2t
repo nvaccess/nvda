@@ -134,7 +134,7 @@ To disable the braille handler programatically, register a handler to ``braille.
 - It is no longer possible to update the display size of the handler by setting ``braille.handler.displaySize``.
 To update the displaySize programatically, register a handler to ``braille.handler.filter_displaySize``.
 Refer to ``brailleViewer`` for an example on how to do this. (#14503)
-- There has been changes to the usage of ``addonHandler.Addon.loadModule``. (#14481)
+- There have been changes to the usage of ``addonHandler.Addon.loadModule``. (#14481)
   - ``loadModule`` now expects dot as a separator, rather than backslash.
   For example "lib.example" instead of "lib\example".
   - ``loadModule`` now raises an exception when a module can't be loaded or has errors, instead of silently returning ``None`` without giving information about the cause.
