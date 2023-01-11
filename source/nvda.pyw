@@ -71,10 +71,12 @@ try:
 		languages=[locale.getdefaultlocale()[0]]
 	)
 	trans.install(True)
+	# Install our pgettext function.
+	builtins.pgettext = makePgettext(trans)
 except:
 	gettext.install('nvda')
-# Install our pgettext function.
-builtins.pgettext = makePgettext(trans)
+	# Install our pgettext function.
+	builtins.pgettext = lambda ctx, msg: msg
 
 import time
 import argparse
