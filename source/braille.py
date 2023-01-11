@@ -1935,11 +1935,14 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	def __init__(self):
 		louisHelper.initialize()
 		self.display: Optional[BrailleDisplayDriver] = None
-		#: Internal cache for the displaySize property.
-		#: This attribute is used to compare the displaySize output by l{filterDisplaySize}
-		#: with its previous output.
-		#: If the value differs, L{displaySizeChanged} is notified.
 		self._displaySize: int = 0
+		"""
+		Internal cache for the displaySize property.
+		This attribute is used to compare the displaySize output by l{filterDisplaySize}
+		with its previous output.
+		If the value differs, L{displaySizeChanged} is notified.
+		"""
+
 		self.mainBuffer = BrailleBuffer(self)
 		self.messageBuffer = BrailleBuffer(self)
 		self._messageCallLater = None
