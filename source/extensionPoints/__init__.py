@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2017-2021 NV Access Limited, Joseph Lee, Łukasz Golonka
+# Copyright (C) 2017-2021 NV Access Limited, Joseph Lee, Łukasz Golonka, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -12,7 +12,11 @@ See the L{Action}, L{Filter}, L{Decider} and L{AccumulatingDecider} classes.
 """
 from logHandler import log
 from .util import HandlerRegistrar, callWithSupportedKwargs, BoundMethodWeakref
-from typing import Set
+from typing import (
+	Generic,
+	Set,
+	TypeVar,
+)
 
 
 class Action(HandlerRegistrar):
@@ -62,7 +66,10 @@ class Action(HandlerRegistrar):
 				log.exception(f"Error running handler {handler} for {self}. Exception {e}")
 
 
-class Filter(HandlerRegistrar):
+FilterValueTypeT = TypeVar("FilterOutputTypeT")
+
+
+class Filter(HandlerRegistrar, Generic[FilterValueTypeT]):
 	"""Allows interested parties to register to modify a specific kind of data.
 	For example, this might be used to allow modification of spoken messages before they are passed to the synthesizer.
 
@@ -80,13 +87,13 @@ class Filter(HandlerRegistrar):
 	>>> messageFilter.register(filterMessage)
 
 	When filtering is desired, all registered handlers are called to filter the data, see L{util.callWithSupportedKwargs}
-	for how args passed to notify are mapped to the handler:
+	for how args passed to apply are mapped to the handler:
 
 	>>> messageFilter.apply("This is a message", someArg=42)
 	'This is a message which has been filtered'
 	"""
 
-	def apply(self, value, **kwargs):
+	def apply(self, value: FilterValueTypeT, **kwargs) -> FilterValueTypeT:
 		"""Pass a value to be filtered through all registered handlers.
 		The value is passed to the first handler
 		and the return value from that handler is passed to the next handler.
@@ -102,6 +109,7 @@ class Filter(HandlerRegistrar):
 			except:
 				log.exception("Error running handler %r for %r" % (handler, self))
 		return value
+
 
 class Decider(HandlerRegistrar):
 	"""Allows interested parties to participate in deciding whether something
@@ -125,7 +133,7 @@ class Decider(HandlerRegistrar):
 
 	When the decision is to be made, registered handlers are called until
 	a handler returns False, see L{util.callWithSupportedKwargs}
-	for how args passed to notify are mapped to the handler:
+	for how args passed to decide are mapped to the handler:
 
 	>>> doSomething.decide(someArg=42)
 	False
@@ -161,7 +169,7 @@ class AccumulatingDecider(HandlerRegistrar):
 	For example, normally user should be warned about all command line parameters
 	which are unknown to NVDA, but this extension point can be used to pass each unknown parameter
 	to all add-ons since one of them may want to process some command line arguments.
-	
+
 	First, a AccumulatingDecider is created with a default decision  :
 
 	>>> doSomething = AccumulatingDecider(defaultDecision=True)
@@ -175,9 +183,9 @@ class AccumulatingDecider(HandlerRegistrar):
 	...
 	>>> doSomething.register(shouldDoSomething)
 
-	When the decision is to be made registered handlers are called and they return values are collected,
+	When the decision is to be made registered handlers are called and their return values are collected,
 	see L{util.callWithSupportedKwargs}
-	for how args passed to notify are mapped to the handler:
+	for how args passed to decide are mapped to the handler:
 
 	>>> doSomething.decide(someArg=42)
 	False
