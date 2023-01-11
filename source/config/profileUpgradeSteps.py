@@ -353,4 +353,4 @@ def upgradeConfigFrom_9_to_10(profile: ConfigObj) -> None:
 			val = NVDAKey.CAPS_LOCK.value
 		profile['keyboard']['NVDAModifierKeys'] = val
 	else:
-		log.debug("['use*AsNVDAModifierKey'] values not present, no action taken.")
+		log.debug("use*AsNVDAModifierKey values not present, no action taken.")
