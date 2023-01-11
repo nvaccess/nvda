@@ -2068,6 +2068,7 @@ def getControlFieldSpeech(  # noqa: C901
 			controlTypes.Role.LANDMARK,
 			controlTypes.Role.REGION,
 		)
+		and config.conf["documentFormatting"]["reportLandmarks"]
 	):
 		# #10095, #3321, #709: Report the name and description of groupings (such as fieldsets) and tab pages
 		# #13307: report the label for landmarks and regions
