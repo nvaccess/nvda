@@ -23,10 +23,7 @@ from typing import (
 )
 
 
-ActionHandlerT = Callable[..., None]
-
-
-class Action(HandlerRegistrar[ActionHandlerT]):
+class Action(HandlerRegistrar[Callable[..., None]]):
 	"""Allows interested parties to register to be notified when some action occurs.
 	For example, this might be used to notify that the configuration profile has been switched.
 
@@ -74,12 +71,11 @@ class Action(HandlerRegistrar[ActionHandlerT]):
 
 
 FilterValueTypeT = TypeVar("FilterValueTypeT")
+
+
 # Typing doesn't allow us to typehint a Callable with one required argument and several kwargs
 # Therefore support both, thereby accepting the downside of handlers without value parameter accepted as valid.
-FilterHandlerT = Union[Callable[..., FilterValueTypeT], Callable[[FilterValueTypeT], FilterValueTypeT]]
-
-
-class Filter(HandlerRegistrar[FilterHandlerT], Generic[FilterValueTypeT]):
+class Filter(HandlerRegistrar[Union[Callable[..., FilterValueTypeT], Callable[[FilterValueTypeT], FilterValueTypeT]]], Generic[FilterValueTypeT]):
 	"""Allows interested parties to register to modify a specific kind of data.
 	For example, this might be used to allow modification of spoken messages before they are passed to the synthesizer.
 
@@ -121,10 +117,7 @@ class Filter(HandlerRegistrar[FilterHandlerT], Generic[FilterValueTypeT]):
 		return value
 
 
-DeciderHandlerT = Callable[..., bool]
-
-
-class Decider(HandlerRegistrar[DeciderHandlerT]):
+class Decider(HandlerRegistrar[Callable[..., bool]]):
 	"""Allows interested parties to participate in deciding whether something
 	should be done.
 	For example, input gestures are normally executed,
@@ -175,10 +168,7 @@ class Decider(HandlerRegistrar[DeciderHandlerT]):
 		return True
 
 
-DeciderHandlerT = Callable[..., bool]
-
-
-class AccumulatingDecider(HandlerRegistrar[DeciderHandlerT]):
+class AccumulatingDecider(HandlerRegistrar[Callable[..., bool]]):
 	"""Allows interested parties to participate in deciding whether something
 	should be done.
 	In contrast with L{Decider} all handlers are executed and then results are returned.
@@ -235,10 +225,9 @@ class AccumulatingDecider(HandlerRegistrar[DeciderHandlerT]):
 
 
 ChainValueTypeT = TypeVar("ChainValueTypeT")
-ChainHandlerT = Callable[..., Iterable[ChainValueTypeT]]
 
 
-class Chain(HandlerRegistrar[ChainHandlerT], Generic[ChainValueTypeT]):
+class Chain(HandlerRegistrar[Callable[..., Iterable[ChainValueTypeT]]], Generic[ChainValueTypeT]):
 	"""Allows creating a chain of registered handlers.
 	The handlers should return an iterable, e.g. they are usually generator functions,
 	but returning a list is also supported.

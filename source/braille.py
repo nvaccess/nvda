@@ -1900,7 +1900,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	@param value: the number of cells of the current display.
 	@type value: int
 	"""
-
 	displaySizeChanged: extensionPoints.Action
 	"""
 	Action that allows components or add-ons to be notified of display size changes.
@@ -1934,6 +1933,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 	def __init__(self):
 		louisHelper.initialize()
+		self.filter_displaySize.register
 		self.display: Optional[BrailleDisplayDriver] = None
 		self._displaySize: int = 0
 		"""
