@@ -47,7 +47,7 @@ class DeviceMatch(typing.NamedTuple):
 	port: str
 	"""The port that can be used by a driver to communicate with a device."""
 	deviceInfo: typing.Dict[str, str]
-	"""all known information about a device."""
+	"""All known information about a device."""
 
 
 scanForDevices = extensionPoints.Chain[typing.Tuple[str, DeviceMatch]]()
@@ -55,10 +55,10 @@ scanForDevices = extensionPoints.Chain[typing.Tuple[str, DeviceMatch]]()
 A Chain that can be iterated to scan for devices.
 Registered handlers should yield a tuple containing a driver name as str and DeviceMatch
 Handlers are called with these keyword arguments:
-@param detectUsb: Whether the handler is expected to yield USB devices.
-@type detectUsb: bool
-@param detectBluetooth: Whether the handler is expected to yield USB devices.
-@type detectBluetooth: bool
+@param Usb: Whether the handler is expected to yield USB devices.
+@type usb: bool
+@param Bluetooth: Whether the handler is expected to yield USB devices.
+@type Bluetooth: bool
 @param limitToDevices: Drivers to which detection should be limited.
 	C{None} if no driver filtering should occur.
 """
@@ -316,13 +316,13 @@ class Detector(object):
 
 	@staticmethod
 	def _bgScanUsb(
-			detectUsb: bool = True,
+			usb: bool = True,
 			limitToDevices: typing.Optional[typing.List[str]] = None,
 	):
 		"""Handler for L{scanForDevices} that yields USB devices.
 		See the L{scanForDevices} documentation for information about the parameters.
 		"""
-		if not detectUsb:
+		if not usb:
 			return
 		for driver, match in getDriversForConnectedUsbDevices():
 			if limitToDevices and driver not in limitToDevices:
@@ -331,13 +331,13 @@ class Detector(object):
 
 	@staticmethod
 	def _bgScanBluetooth(
-			detectBluetooth: bool = True,
+			bluetooth: bool = True,
 			limitToDevices: typing.Optional[typing.List[str]] = None,
 	):
 		"""Handler for L{scanForDevices} that yields Bluetooth devices and keeps an internal cache of devices.
 		See the L{scanForDevices} documentation for information about the parameters.
 		"""
-		if not detectBluetooth:
+		if not bluetooth:
 			return
 		btDevs: typing.Optional[typing.Iterable[typing.Tuple[str, DeviceMatch]]] = _DeviceInfoFetcher.btDevsCache
 		if btDevs is None:
@@ -357,8 +357,8 @@ class Detector(object):
 
 	def _bgScan(
 			self,
-			detectUsb: bool,
-			detectBluetooth: bool,
+			usb: bool,
+			bluetooth: bool,
 			limitToDevices: typing.Optional[typing.List[str]]
 	):
 		"""Performs the actual background scan.
@@ -372,8 +372,8 @@ class Detector(object):
 		# Since a scan can take some time to complete, another thread can set the stop event to cancel it.
 		self._stopEvent.clear()
 		iterator = scanForDevices.iter(
-			detectUsb=detectUsb,
-			detectBluetooth=detectBluetooth,
+			usb=usb,
+			bluetooth=bluetooth,
 			limitToDevices=limitToDevices,
 		)
 		for driver, match in iterator:
@@ -384,7 +384,12 @@ class Detector(object):
 			if self._stopEvent.is_set():
 				return
 
-	def rescan(self, usb=True, bluetooth=True, limitToDevices=None):
+	def rescan(
+		self,
+		usb: bool = True,
+		bluetooth: bool = True,
+		limitToDevices: typing.Optional[typing.List[str]] = None,
+	):
 		"""Stop a current scan when in progress, and start scanning from scratch.
 		@param usb: Whether USB devices should be detected for this and subsequent scans.
 		@type usb: bool
