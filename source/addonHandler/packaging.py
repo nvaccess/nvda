@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2009-2022 NV Access Limited, Rui Batista, Zahari Yurukov, Leonard de Ruijter
+# Copyright (C) 2009-2023 NV Access Limited, Rui Batista, Zahari Yurukov, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -11,6 +11,7 @@ from typing import Optional
 from types import ModuleType
 import globalVars
 import config
+from keyword import iskeyword
 
 
 def initializeModulePackagePaths():
@@ -60,3 +61,16 @@ def addDirsToPythonPackagePath(module: ModuleType, subdir: Optional[str] = None)
 	pathList = [fullPath]
 	pathList.extend(module.__path__)
 	module.__path__ = pathList
+
+
+def isModuleName(name: str) -> bool:
+	"""When adding a module to sys.modules, it is important to check module name validity.
+	the L{str.isidentifier} method checks whether a string is a valid python identifier,
+	however this includes identifiers like 'def' and 'class', which are definitely invalid module names.
+	Therefore a valid module name should be an identifier but not a keyword.
+	A valid module name can also contain dots, but a dot is considered invalid in identifiers.
+	Therefore, use dot as a split separator and check all the name parts independently.
+	@param moduleName: De module name to check for naming conventions.
+	@returns: Whether the module name is valid.
+	"""
+	return all(n.isidentifier() and not iskeyword(n) for n in name.split("."))

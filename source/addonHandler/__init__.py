@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2012-2022 Rui Batista, NV Access Limited, Noelia Ruiz Martínez,
+# Copyright (C) 2012-2023 Rui Batista, NV Access Limited, Noelia Ruiz Martínez,
 # Joseph Lee, Babbage B.V., Arnold Loubriat, Łukasz Golonka, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -11,7 +11,6 @@ import tempfile
 import inspect
 import itertools
 import collections
-import pkgutil
 import shutil
 from io import StringIO
 import pickle
@@ -29,6 +28,9 @@ import winKernel
 import addonAPIVersion
 from . import addonVersionCheck
 from .addonVersionCheck import isAddonCompatible
+from .packaging import isModuleName
+import importlib
+from types import ModuleType
 import extensionPoints
 
 
@@ -475,25 +477,45 @@ class Addon(AddonBase):
 		extension_path = os.path.join(self.path, package.__name__)
 		return extension_path
 
-	def loadModule(self, name):
+	def loadModule(self, name: str) -> ModuleType:
 		""" loads a python module from the addon directory
 		@param name: the module name
-		@type name: string
-		@returns the python module with C{name}
-		@rtype python module
+		@raises: Any exception that can be raised when importing a module,
+			such as NameError, AttributeError, ImportError, etc.
+			a ValueError is raised when the module name is invalid.
 		"""
-		log.debug("Importing module %s from plugin %s", name, self.name)
-		importer = pkgutil.ImpImporter(self.path)
-		loader = importer.find_module(name)
-		if not loader:
-			return None
+		if not isModuleName(name):
+			raise ValueError(f"{name} is an invalid python module name")
+		log.debug(f"Importing module {name} from plugin {self!r}")
 		# Create a qualified full name to avoid modules with the same name on sys.modules.
-		fullname = "addons.%s.%s" % (self.name, name)
-		try:
-			return loader.load_module(fullname)
-		except ImportError:
-			# in this case return None, any other error throw to be handled elsewhere
-			return None
+		fullName = f"addons.{self.name}.{name}"
+		# If the given name contains dots (i.e. it is a submodule import),
+		# ensure the module at the top of the hierarchy is created correctly.
+		# After that, the import mechanism will be able to resolve the submodule automatically.
+		splitName = name.split('.')
+		fullNameTop = f"addons.{self.name}.{splitName[0]}"
+		if fullNameTop in sys.modules:
+			# The module can safely be imported, since the top level module is known.
+			return importlib.import_module(fullName)
+		# Ensure the new module is resolvable by the import system.
+		# For this, all packages in the tree have to be available in sys.modules.
+		# We add mock modules for the addons package and the addon itself.
+		# If we don't do this, namespace packages can't be imported correctly.
+		for parentName in ("addons", f"addons.{self.name}"):
+			if parentName in sys.modules:
+				# Parent package already initialized
+				continue
+			parentSpec = importlib._bootstrap.ModuleSpec(parentName, None, is_package=True)
+			parentModule = importlib.util.module_from_spec(parentSpec)
+			sys.modules[parentModule.__name__] = parentModule
+		spec = importlib.machinery.PathFinder.find_spec(fullNameTop, [self.path])
+		if not spec:
+			raise ModuleNotFoundError(f"No module named {name!r}", name=name)
+		mod = importlib.util.module_from_spec(spec)
+		sys.modules[fullNameTop] = mod
+		if spec.loader:
+			spec.loader.exec_module(mod)
+		return mod if fullNameTop == fullName else importlib.import_module(fullName)
 
 	def getTranslationsInstance(self, domain='nvda'):
 		""" Gets the gettext translation instance for this add-on.
@@ -511,7 +533,11 @@ class Addon(AddonBase):
 		in the add-on's installTasks module if it exists.
 		"""
 		if not hasattr(self,'_installTasksModule'):
-			self._installTasksModule=self.loadModule('installTasks')
+			try:
+				installTasksModule = self.loadModule('installTasks')
+			except ModuleNotFoundError:
+				installTasksModule = None
+			self._installTasksModule = installTasksModule
 		if self._installTasksModule:
 			func=getattr(self._installTasksModule,taskName,None)
 			if func:
