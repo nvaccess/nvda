@@ -202,7 +202,13 @@ class MainFrame(wx.Frame):
 				updateCheck.executePendingUpdate()
 
 	def evaluateUpdatePendingUpdateMenuItemCommand(self):
+		log.warning(
+			"MainFrame.evaluateUpdatePendingUpdateMenuItemCommand is deprecated. "
+			"Use SysTrayIcon.evaluateUpdatePendingUpdateMenuItemCommand instead.",
+			stack_info=True,
+		)
 		self.sysTrayIcon.evaluateUpdatePendingUpdateMenuItemCommand()
+		
 	
 	@blockAction.when(blockAction.Context.MODAL_DIALOG_OPEN)
 	def onExitCommand(self, evt):
