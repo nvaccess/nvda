@@ -385,10 +385,10 @@ class Detector(object):
 				return
 
 	def rescan(
-		self,
-		usb: bool = True,
-		bluetooth: bool = True,
-		limitToDevices: typing.Optional[typing.List[str]] = None,
+			self,
+			usb: bool = True,
+			bluetooth: bool = True,
+			limitToDevices: typing.Optional[typing.List[str]] = None,
 	):
 		"""Stop a current scan when in progress, and start scanning from scratch.
 		@param usb: Whether USB devices should be detected for this and subsequent scans.
