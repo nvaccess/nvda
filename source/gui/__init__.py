@@ -208,7 +208,6 @@ class MainFrame(wx.Frame):
 			stack_info=True,
 		)
 		self.sysTrayIcon.evaluateUpdatePendingUpdateMenuItemCommand()
-		
 	
 	@blockAction.when(blockAction.Context.MODAL_DIALOG_OPEN)
 	def onExitCommand(self, evt):
