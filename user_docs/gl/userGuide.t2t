@@ -40,7 +40,9 @@ O máis subliñable inclúe:
 - Sistemas operativos: todas as edicións de 32 e 64 bits do Windows 7, Windows 8, Windows 8.1, Windows 10 Windows 11 e todos os sistemas operativos servidor comezando dende o Windows Server 2008 R2..
  - Para o Windows 7, NVDA require do Service Pack 1 ou superior.
  - Para o Windows Server 2008 R2, NVDA require do Service Pack 1 ou superior.
-- Polo menos 150 MB de espazo de almacenamento.
+ - As variantes AMD64 e ARM64 de Windows están soportadas.
+ -
+- - Polo menos 150 MB de espazo de almacenamento.
 -
 
 ++ Internacionalización ++[Internationalization]
@@ -2094,6 +2096,29 @@ O ton incrementarase en intensidade para cada espazo, e para o tabulador,increme
 - Voz e Tons: esta opción le a sangría usando ambo-los dous métodos de máis arriba.
 -
 
++++ Navegación de Documento +++[DocumentNavigation]
+Esta categoría permíteche axustar varios aspectos da navegación de documento.
+
+==== Estilo de Parágrafo ====[ParagraphStyle]
+: Predeterminado
+  Manexado pola aplicación
+: Opcións
+  Predeterminado (manexado pola aplicación), Manexado pola aplicación, salto de unha única liña, salto multiliña
+:
+
+Esta caixa combinada permíteche selecionar o estilo de parágrafo a usar cando se navegue por parágrafos con ``control+frecha arriba`` e ``control+frecha abaixo``.
+Os estilos de parágrafo dispoñibles son:
+- Manexado pola aplicación: O NVDA permitirá á aplicación determinar o parágrafo anterior ou posterior, e o NVDA lerá o parágrafo novo ao navegar.
+Este estilo funciona mellor cando a aplicación admite a navegación por parágrafos nativamente, e é o predeterminado.
+- Salto de unha única liña: O NVDA tentará determinar o parágrafo anterior e posterior usando o salto de unha única liña coma indicador de parágrafo.
+Este estilo funciona mellor cando se lean documentos nunha aplicación que non admita a navegación de parágrafos nativamente, e os parágrafos márcanse no documento cunha única pulsación da tecla ``intro``.
+- Salto multiliña: O NVDA tentará determinar o parágrafo anterior e posterior usando polo menos unha liña en branco (dúas pulsacións da tecla ``intro``) coma indicador de parágrafo.
+Este estilo funciona mellor cando se traballe con documentos que usen bloques de parágrafos.
+Ten en conta que este estilo de parágrafo non pode usarse en Microsoft Word ou Microsoft Outlook, a menos que esteas usando UIA para acesar a controis de Microsoft Word.
+-
+
+Podes cambiar entre os estilos de parágrafo dispoñibles dende calquera lugar asignando unha tecla no [diálogo Xestos de Entrada #InputGestures].
+
 +++ Opcións do OCR de Windows +++[Win10OcrSettings]
 As opcións nesta categoría permítenche configurar [o OCR de Windows #Win10Ocr].
 Esta categoría contén as seguintes opcións:
@@ -2235,6 +2260,25 @@ Sen embargo, nalgunhas aplicacións, a lectura de texto novo pode ser entrecorta
 É idéntico ao comportamento do NVDA na versión 2020.4 e anteriores.
 Esta opción pode estabilizar a lectura do texto entrante nalgunhas aplicacións.
 Sen embargo, nas terminais, ao insertar ou borrar un carácter no medio dunha liña, lerase o texto despois do cursor.
+-
+
+==== Falar texto novo na Terminal de Windows ====[WtStrategy]
+: Predeterminado
+  Difusión
+: Opcións
+  Difusión, notificacións UIA
+:
+
+Esta opción seleciona como determina o NVDA que texto é "novo" (e que falar cando "anunciar cambios de contido dinámico" estea habilitado) na Terminal de Windows e no control WPF da Terminal de Windows utilizado en Visual Studio 2022.
+Non afecta á Consola de Windows (``conhost.exe``).
+A caixa combinada falar texto novo na Terminal de Windows ten tres opcións:
+- Predeterminado: esta opción actualmente equivale a "difusión", pero prevese que cambie unha vez que se desenvolva máis a compatibilidade coas notificacións UIA.
+- Difusión: esta opción usa o algoritmo diff selecionado para calcular os cambios cada vez que a terminal amose o novo texto.
+Esto é idéntico ao comportamento do NVDA nas versións 2022.4 e anteriores.
+- Notificacións UIA: esta opción desvía a responsabilidade de determinar que texto falar á propria Terminal de Windows, o que significa que o NVDA xa non ten que determinar que texto é actualmente "novo" en pantalla.
+Esto debería mellorar notablemente o rendemento e a estabilidade da Terminal de Windows, pero esta función aínda non está compreta.
+En particular, os caracteres escrebidos que non se amosen en pantalla, coma as contrasinais, anúncianse cando esta opción estea selecionada.
+Ademáis, é posible que os tramos contiguos de saída de máis de 1000 caracteres non se anuncien con exactitude.
 -
 
 ==== Tentar cancelar voz para eventos de foco caducados ====[CancelExpiredFocusSpeech]
@@ -3661,7 +3705,7 @@ Seguidamente van as opcións de liña de ordes para o NVDA:
 | -q | --quit | Sae da copia que xa se estea a executar do NVDA |
 | -k | --check-running | Informa se NVDA está en execución a través do código de saída; 0 se está en execución, 1 se non está en execución |
 | -f LOGFILENAME | --log-file=LOGFILENAME | O ficheiro onde se deberían escreber as mesaxes de rexistro |
-| -l LOGLEVEL | --log-level=LOGLEVEL | O nivel máis baixo de mensaxe rexistrada (debug 10, input/output 12, debug warning 15, info 20, warning 30, error 40, critical 50, disabled 100), default is warning |
+| -l LOGLEVEL | --log-level=LOGLEVEL | O nivel máis baixo de mensaxe rexistrada (debug 10, input/output 12, debug warning 15, info 20, disabled 100) |
 | -c CONFIGPATH | --config-path=CONFIGPATH | A vía  onde se almacenan todos os axustes para o NVDA |
 | No | --lang=LANGUAGE | Sobrescribe a lingua configurada do NVDA. Estabrece "Windows" para o usuario actual por defecto, "en" para Inglés, etc. |
 | -m | --minimal | Sen sons, sen interface, sen mesaxe de inicio etc |

@@ -3,6 +3,132 @@ Was ist neu in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2023.1 =
+
+== Neue Features ==
+- Microsoft Excel über UIA: Automatische Mitteilung von Spalten- und Zeilenüberschriften in Tabellen. (#14228)
+  - Hinweis: Dies bezieht sich auf Tabellen, die über die Schaltfläche "Tabelle" im Bereich "Einfügen" der Multifunktionsleiste formatiert werden.
+  "Erste Spalte" und "Kopfzeile" in "Tabellen-Eigenschaftens-Optionen" entsprechen den Spalten- bzw. Zeilenköpfen.
+  - Dies bezieht sich nicht auf Screenreader-spezifische Überschriften über benannte Bereiche, die derzeit von UIA nicht unterstützt werden.
+  -
+- Ein nicht zugewiesenes Skript wurde hinzugefügt, um verzögerte Zeichen-Beschreibungen umzuschalten. (#14267)
+- Es wurde eine experimentelle Option zur Nutzung der UIA-Benachrichtigungsunterstützung in Windows-Terminal hinzugefügt, um neuen oder geänderten Text im Terminal mitzuteilen, was zu einer verbesserten Stabilität und Reaktionsfähigkeit führt. (#13781)
+  - Informationen zu den Einschränkungen dieser experimentellen Option finden Sie im Benutzerhandbuch.
+  - 
+- Unter Windows 11 ARM64 ist der Browse-Modus jetzt in AMD64-Anwendungen wie Mozilla Firefox, Google Chrome und 1Password verfügbar. (#14397)
+- Eine neue Option wurde hinzugefügt, "Absatz-Eigenschaften" in "Dokument-Navigation".
+Damit wird die Absatz-Navigation mit einfachem Zeilenumbruch (normal) und mehrzeiligem Umbruch (Block) unterstützt.
+Dies kann mit Text-Editoren verwendet werden, die die Absatz-Navigation nicht nativ unterstützen, wie Editor und Notepad++. (#13797)
+- Das Vorhandensein von mehreren Anmerkungen wird nun mitgeteilt.
+Die Tastenkombination ``NVDA+D`` durchläuft nun die Zusammenfassung jedes Anmerkungsziels für Ursprünge mit mehreren Anmerkungszielen.
+Zum Beispiel, wenn der Text mit einem Kommentar und einer Fußnote versehen ist. (#14507, #14480)
+-
+
+
+== Änderungen ==
+- Aktualisierte Sonic-Rate-Boost-Bibliothek auf Commit ``1d70513``. (#14180)
+- CLDR wurde auf Version 42.0 aktualisiert. (#14273)
+- Die Sprachausgabe eSpeak NG wurde auf 1.52-dev Commit ``a51235aa`` aktualisiert. (#14281)
+  - Die Ansage  von großen Zahlen wurde korrigiert. (#14241)
+  -
+- Java-Anwendungen mit Steuerelementen, die den auswählbaren Zustand verwenden, melden jetzt, wenn ein Element nicht ausgewählt ist, anstatt wenn das Element ausgewählt ist. (#14336)
+-
+
+
+== Fehlerbehebungen ==
+- Für Windows 11:
+  - NVDA zeigt beim Öffnen des Startmenüs die Highlights der Suche an. (#13841)
+  - Auf ARM werden x64-Anwendungen nicht mehr als ARM64-Anwendungen erkannt. (#14403)
+  - Auf Menüpunkte der Zwischenablage wie z. B. "Element anheften" kann zugegriffen werden. (#14508)
+  -
+- Vorschläge werden beim Eingeben einer @Erwähnung in Microsoft Excel-Kommentaren gemeldet. (#13764)
+- In der Standortleiste von Google Chrome werden die Steuerelemente für Vorschläge (zu einer Registerkarte wechseln, Vorschlag entfernen, etc.) nun mitgeteilt, wenn sie ausgewählt werden. (#13522)
+- Bei der Abfrage von Formatierungsinformationen werden die Farben nun explizit in WordPad oder im Protokoll-Betrachter angezeigt und nicht mehr nur "Standardfarbe". (#13959)
+- In Mozilla Firefox funktioniert die Aktivierung der Schaltfläche "Optionen anzeigen" auf GitHub-Ausgabeseiten nun zuverlässig. (#14269)
+- Die Steuerelemente für die Datumsauswahl im Dialogfeld für die Erweiterte Suche von Outlook 2016 / 365 teilt nun deren Bezeichnung und Wert mit. (#12726)
+- ARIA-Switch-Steuerelemente werden in Firefox, Chrome und Edge jetzt tatsächlich als Schalter und nicht mehr als Kontrollkästchen angezeigt. (#11310)
+- NVDA teilt automatisch den Sortierstatus einer HTML-Tabellenspaltenüberschrift mit, wenn dieser durch Drücken einer inneren Schaltfläche geändert wird. (#10890)
+- Der Name eines Wahrzeichens oder einer Region wird immer automatisch gesprochen, wenn man von außen nach innen springt, indem man die Schnellnavigation oder den Fokus im Lesemodus verwendet. (#13307)
+- Wenn der Signalton oder die Ansage von "Groß" für Großbuchstaben mit verzögerten Zeichen-Beschreibungen aktiviert ist, wird nicht mehr zweimal angesagt in NVDA "Groß" oder gibt hierbei keinen Signalton mehr doppelt wieder. (#14239)
+- Steuerelemente in Tabellen in Java-Anwendungen werden jetzt von NVDA präziser angezeigt. (#14347)
+- Einige Einstellungen werden nicht mehr unerwartet unterschiedlich sein, wenn sie mit mehreren Profilen verwendet werden. (#14170)
+  - Die folgenden Einstellungen wurden berücksichtigt:
+    - Zeileneinrückungen in den Einstellungen für die Dokument-Formatierungen.
+    - Zellrahmen in den Einstellungen für die Dokument-Formatierungen
+    - Anzeigen von Benachrichtigungen in Braille-Einstellungen
+    - Braille-Kopplung in den Braille-Einstellungen
+    -
+  - In einigen seltenen Fällen können diese in Profilen verwendeten Einstellungen bei der Installation dieser NVDA-Version unerwartet geändert werden.
+  - Bitte überprüfen Sie diese Optionen in Ihren Profilen, nachdem Sie NVDA auf diese Version aktualisiert haben.
+  -
+- Emojis sollten nun in mehreren Sprachen mitgeteilt werden. (#14433)
+- Das Vorhandensein einer Anmerkung fehlt auf der braillezeile bei einigen Elementen nicht mehr. (#13815)
+-
+
+
+== Änderungen für Entwickler ==
+Hinweis: Dies ist eine Version, die die Kompatibilität der API für NVDA-Erweiterungen verändert.
+Die NVDA-Erweiterungen müssen erneut getestet werden und die Manifest-Datei muss aktualisiert werden.
+Bitte lesen Sie das [Entwicklerhandbuch https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] für Informationen über den Abkündigungs- und Entfernungsprozess für die API in NVDA.
+
+- Der Systemtest sollte nun erfolgreich sein, wenn er lokal auf nicht-englischen Systemen ausgeführt wird. (#13362)
+- In Windows 11 auf ARM werden x64-Anwendungen nicht mehr als ARM64-Anwendungen erkannt. (#14403)
+- Es ist nicht mehr notwendig, ``SearchField`` und ``SuggestionListItem`` ``UIA`` ``NVDAObjects`` in neuen UIA-Szenarien zu verwenden, in denen automatisch Suchvorschläge mitgeteilt werden und in denen die Eingabe über UIA mit dem Muster ``ControllerFor`` ausgesetzt wurde.
+Diese Funktionalität ist nun generisch über ``behaviours.EditableText`` bzw. die Basis ``NVDAObject`` verfügbar.
+- Die UIA-Debug-Protokollierungskategorie, wenn sie aktiviert ist, erzeugt nun deutlich mehr Details in der Protokollierung für UIA-Ereignishandler und -Hilfsprogramme. (#14256)
+- Die NVDAHelper-Build-Standards wurden aktualisiert. (#13072)
+  - Verwendet nun den C++20-Standard, vorher war es C++17.
+  - Nun wird der Compiler-Flag "/permissive-" verwendet, das das permissive Verhalten deaktiviert und die Compiler-Optionen "/Zc" für strikte Konformität gesetzt.
+  -
+- Einige Plugin-Objekte (z. B. Treiber und NVDA-Erweiterungen) haben nun eine informativere Beschreibung in der NVDA-Python-Konsole. (#14463)
+- NVDA kann nun vollständig mit Visual Studio 2022 kompiliert werden und benötigt keine Visual Studio 2019 Build-Tools.
+- Detailliertere Protokollierung für Einfrierungen von NVDA zur Unterstützung der Fehlersuche. (#14309)
+- Die Singleton-Klasse ``braille._BgThread`` wurde durch ``hwIo.ioThread.IoThread`` ersetzt. (#14130)
+  - Eine einzelne Instanz ``hwIo.bgThread`` (im NVDA-Kern) dieser Klasse bietet Hintergrund-Informationen für Ein- und Ausgaben bei Thread-sichere Braillezeilen-Treiber.
+  - Diese neue Klasse ist nicht als Singleton konzipiert, Entwickler von NVDA-Erweiterungen sind aufgefordert, ihre eigene Instanz zu verwenden, wenn sie Hardware-Eingabe bzw. -Ausgabe verwenden.
+  -
+- Die Prozessor-Architektur des Computers kann über das Attribut ``winVersion.WinVersion.processorArchitecture`` abgefragt werden (#14439)
+-
+
+=== API-Änderungen ===
+Dies sind die neuen API-Änderungen.
+Bitte öffnen Sie ein Ticket auf GitHub, wenn eine NVDA-Erweiterung ein Problem mit der Aktualisierung auf die neue API hat.
+- Die Konfigurationsspezifikation wurde geändert, Schlüssel wurden entfernt oder geändert. (#14233)
+  - Im Abschnitt ``[documentFormatting]``:
+    - ``reportLineIndentation`` speichert einen INT-Wert (0 bis 3) anstelle eines booleschen Wertes
+    - ``reportLineIndentationWithTones`` wurde entfernt.
+    - ``reportBorderStyle`` und ``reportBorderColor`` wurden entfernt und sind durch ``reportCellBorders`` ersetzt worden.
+    -
+  - Im Abschnitt ``[Braille]``:
+    - ``noMessageTimeout`` wurde entfernt und durch einen Wert für ``showMessages`` ersetzt.
+    - ``noMessageTimeout`` wurde entfernt und durch einen Wert für ``showMessages`` ersetzt. a``messageTimeout`` kann nicht mehr den Wert 0 annehmen und wurde durch einen Wert für ``showMessages`` ersetzt.
+    - ``autoTether`` wurde entfernt; ``tetherTo`` kann nun stattdessen den Wert "auto" annehmen.
+    -
+  -
+- Die Klasse ``NVDAHelper.RemoteLoader64`` wurde ersatzlos entfernt. (#14449)
+- Die folgenden Funktionen in ``winAPI.sessionTracking`` werden ersatzlos entfernt. (#14416, #14490)
+  - ``isWindowsLocked``
+  - ``handleSessionChange``
+  - ``unregister``
+  - ``register``
+  - ``isLockStateSuccessfullyTracked``
+  - 
+-
+
+
+=== Veraltete Funktionen ===
+- ``NVDAObjects.UIA.winConsoleUIA.WinTerminalUIA`` ist veraltet und es wird von der Verwendung abgeraten. (#14047)
+- ``config.addConfigDirsToPythonPackagePath`` wurde verschoben.
+Verwenden Sie stattdessen ``addonHandler.packaging.addDirsToPythonPackagePath``. (#14350)
+- ``braille.BrailleHandler.TETHER_*`` sind veraltet.
+Verwenden Sie stattdessen ``configFlags.TetherTo.*.value``. (#14233)
+- ``utils.security.postSessionLockStateChanged`` ist veraltet.
+Verwenden Sie stattdessen ``utils.security.post_sessionLockStateChanged``. (#14486)
+- ``NVDAObject.hasDetails``, ``NVDAObject.detailsSummary``, ``NVDAObject.detailsRole`` sind veraltet.
+Verwenden Sie stattdessen ``NVDAObject.annotations``. (#14507)
+-
+
+
 = 2022.4 =
 Diese Version enthält mehrere neue Tastenkombinationen, darunter die Tastenbefehle für das Vorlesen von Tabellen.
 Das Benutzerhandbuch wurde um den Abschnitt "Schnellstartanleitung" erweitert.
@@ -3192,7 +3318,7 @@ Die wichtigsten neuerungen sind u. a. das automatische Wechseln der Synthesizers
 - Im Internet Explorer und anderen MSHTML-Dokumenten werden nun keine Numerierungen oder Aufzählungszeichen mehr angezeigt, wenn der Autor des Dokuments dies ausdrücklich untersagt hat (beispielsweise durch setzen des Attributes "Style" auf "none") (#1671)
 - Wenn Sie NVDA neu starten (beispielsweise durch Drücken von Strg+Alt+N wird die laufende Instanz ordnungsgemäß geschlossen, bevor eine neue gestartet wird.
 - Das Drücken der Pfeiltasten oder der Rücktaste führt nun nicht mehr zu unerwarteten Ergebnissen. (#1612)
-- In Kombinationsfeldern, die keine Texteingabe erlauben und ui automation verwenden, wird nun der aktuell ausgewählte Eintrag korrekt angegeben.
+- In Kombinationsfeldern, die keine Texteingabe erlauben und UIA verwenden, wird nun der aktuell ausgewählte Eintrag korrekt angegeben.
 - Im Adobe Reader können sie nun innerhalb einer Tabelle von der Überschrift aus zur nächsten Zeile (und umgekehrt) navigieren, indem Sie die Tabellennavigationsbefehle verwenden. Die Überschriften werden auch nicht mehr als "Zeile 0" angegeben. (#1731)
 - Im Adobe Reader kann jetzt im Lesemodus auch auf leere Tabellenzellen (und darüber hinaus) navigiert werden.
 - In Braille werden keine Positionsangaben mehr ausgegeben, die ins Leere führen (wie z. B. 0 von 0 Ebene 0)
@@ -3310,8 +3436,8 @@ Die wichtigsten Neuerungen in dieser Version beinhalten umfangreiche Verbesserun
 - Es ist nun nicht mehr möglich, versehentlich mehrere NVDA-Instanzen zu starten. (#507)
 - Auf langsamen Systemen zeigt NVDA nun nicht mehr sein Hauptfenster ständig an. (#726)
 - Beim Start von WPF-Anwendungen unter Windows XP stürzt NVDA nun nicht mehr ab. (#1437)
-- Die Funktionen zum Lesen eines kompletten Dokuments arbeiten jetzt auch bei Verwendung von UI automation korrekt (z. B. in XPS-Dokumenten)
-- In manchen Listenfeldern in Outlook Express oder Windows Live Mail (wie z. B. in der Liste der Nachrichtenregeln) werden nun die Kontrollfelder korrekt angezeigt. (#576)
+- Die Funktionen zum Lesen eines kompletten Dokuments arbeiten nun auch bei Verwendung von UIA korrekt (z. B. in XPS-Dokumenten)
+- In einigen Listenfeldern in Outlook Express oder Windows Live Mail (wie z. B. in der Liste der Nachrichtenregeln) werden nun die Kontrollfelder korrekt angezeigt. (#576)
 - Kombinationsfeldern wird nun nicht mehr unterstellt, sie hätten ein Untermenü.
 - NVDA zeigt nun die Empfänger in den Feldern "Kopie" und "Blindkopie" korrekt an. (#421)
 - Problem behoben, wonach im Dialogfeld für die Stimmen-Einstellung manchmal die Bildlaufleisten nicht richtig angezeigt wurden, wenn man Einstellungen geändert hat (#1411)
@@ -3591,7 +3717,7 @@ Diese Version enthält überwiegend Fehlerbehebungen und Verbesserungen
 
 
 == Fehlerbehebungen ==
-- Der Start von NVDA wird nun nicht mehr fehlschlagen, wenn UI automation zwar vorhanden ist, dessen Iinitialisierung jedoch aus irgendeinem Grund fehlschlug. (#483)
+- Der Start von NVDA wird nun nicht mehr fehlschlagen, wenn UIA zwar vorhanden ist, dessen Iinitialisierung jedoch aus irgendeinem Grund fehlschlug. (#483)
 - Es wird nun nicht mehr der gesamte Tabelleninhalt angezeigt, wenn sie sich in Mozilla-anwendungen zwischen Tabellenzellen bewegen. (#482)
 - NVDA wird sich nun nicht mehr aufhängen, wenn sie einen Baumknoten erweitern, der sehr viele Unterknoten enthält.
 - Im Synthesizer-Einstellungsring und im Dialogfeld für die Stimmen-Einstellungen werden nun fehlerhaft installierte SAPI5-Stimmen von der Auswahl ausgeschlossen. Vormals konnte der SAPI5-Treiber nicht geladen werden, wenn auch nur eine Stimme fehlerhaft installiert war.
