@@ -40,6 +40,7 @@ Zu den wichtigsten Funktionen gehören:
 - Betriebssysteme: Alle 32-Bit- und 64-Bit-Versionen von Windows 7, Windows 8, Windows 8.1, Windows 10, Windows 11 und alle Server-Versionen ab Windows Server 2008 R2.
   - Für NVDA unter Windows 7 wird Service Pack 1 oder höher benötigt.
   - Für NVDA unter Windows Server 2008 R2 wird Service Pack 1 oder höher benötigt.
+  - Es werden sowohl AMD64- als auch ARM64-Varianten von Windows unterstützt.
   -
 - Mindestens 150 MB Speicherplatz.
 -
@@ -2080,12 +2081,35 @@ Schalten Sie diese Option nur dann ein, wenn beim Lesen in einem WordPad-Dokumen
 Mit dieser Option legen Sie fest, wie Zeileneinrückungen durch NVDA wiedergegeben werden sollen.
 Das Kombinationsfeld enthält vier Einträge:
 
-- Aus: NVDA wird Zeileneinrückungen in keiner Weise gesondert ausgeben
+- Ausgeschaltet: NVDA wird Zeileneinrückungen in keiner Weise gesondert ausgeben
 - Sprache: Diese Einstellung bringt NVDA dazu die Anzahl von Zeichen anzusagen, mit denen eine Zeile eingerückt wurde (z. B. 12 Leerzeichen oder 4 Tabulatoren)
 - Signaltöne: Diese Einstellung bringt NVDA dazu, die Einrückung mit Hilfe von Signaltönen anzugeben. Wenn sich die Einrückung ändert, wird der Signalton höher, je stärker eine Zeile eingerückt ist.
 Die Einrückung um einen Tabulator entspricht hierbei der Einrückung um vier Leerzeichen.
-- Beides: Dies ist eine Kombination der beiden obigen Optionen.
+- Sowohl Sprache und Signaltöne: Dies ist eine Kombination der beiden obigen Optionen.
 -
+
++++ Dokument-Navigation +++[DocumentNavigation]
+In dieser Kategorie können Sie verschiedene Aspekte der Dokument-Navigation anpassen.
+
+==== Absatz-Eigenschaften ====[ParagraphStyle]
+: Standard
+  Wird von der Anwendung behandelt
+: Optionen
+  Standard (Wird von der Anwendung behandelt), Wird von der Anwendung behandelt, Einfacher Zeilenumbruch, Mehrfacher Zeilenumbruch
+:
+
+Dieses Kombinationsfeld ermöglicht die Absatz-Eigenschaft auszuwählen, der bei der Navigation durch Absätze mit ``STRG+Pfeiltaste nach oben`` und ``STRG+Pfeiltaste nach unten`` verwendet werden soll.
+Die verfügbaren Absatzformate sind:
+- Wird von der Anwendung behandelt: NVDA überlässt es der Anwendung, den vorherigen oder nächsten Absatz zu bestimmen, und NVDA liest den neuen Absatz beim Navigieren.
+Dies funktioniert am besten, wenn die Anwendung die Absatznavigation von Haus aus unterstützt, und ist die Standardeinstellung.
+- Einfacher Zeilenumbruch: NVDA versucht, den vorherigen oder nächsten Absatz anhand eines einzelnen Zeilenumbruchs als Absatz-Indikator zu bestimmen.
+Dies funktioniert am besten, wenn Dokumente in einer Anwendung gelesen werden, die nicht von Haus aus die Absatznavigation unterstützt, und Absätze im Dokument durch einmaliges Drücken der ``Eingabetaste`` markiert werden.
+- Mehrfache Zeilenumbrüche: NVDA versucht, den vorherigen oder nächsten Absatz anhand von mindestens einer Leerzeile (zweimaliges Drücken der ``Eingabetaste``) als Absatz-Indikator zu bestimmen.
+Dies funktioniert am besten bei Dokumente, die Blockabsätze verwenden.
+Beachten Sie, dass dieses Absatzformat nicht in Microsoft Word oder Microsoft Outlook verwendet werden kann, es sei denn, Sie verwenden UIA für den Zugriff bei Steuerelementen in Microsoft Word.
+-
+
+Sie können von überall aus zwischen den verfügbaren Absatz-Eigenschaften umschalten, indem Sie eine Taste im Dialogfeld für die [Tastenbefehle #InputGestures] zuweisen.
 
 +++ Einstellungen der Windows-Texterkennung +++[Win10OcrSettings]
 Mit den Einstellungen in dieser Kategorie können Sie die [Windows-Texterkennung #Win10Ocr] konfigurieren.
@@ -2228,6 +2252,25 @@ Bei einigen Anwendungen kann das Lesen von neuem Text jedoch abgehackt oder inko
 Es ist identisch mit dem Verhalten von NVDA in den Versionen 2020.4 und älter.
 Diese Einstellung kann das Lesen von eingehendem Text in einigen Anwendungen stabilisieren.
 In Terminals wird jedoch beim Einfügen oder Löschen eines Zeichens in der Mitte einer Zeile der Text nach dem System-cursor vorgelesen.
+-
+
+==== Neuen Text in Windows-Terminal mitteilen via ====[WtStrategy]
+: Standard
+  Abweichend
+: Optionen
+  Abweichend, UIA-Benachrichtigungen
+:
+
+Mit dieser Option wird festgelegt, wie NVDA bestimmt, welcher Text "neu" ist (und somit, was mitgeteilt werden soll, wenn "Änderungen dynamischer Inhalte mitteilen" aktiviert ist) in Windows-Terminal und dem WPF-Windows-Terminal-Steuerelement, das in Visual Studio 2022 verwendet wird.
+Die Windows-Konsole (``conhost.exe``) ist davon nicht betroffen.
+Dieses Kombinationsfeld hat drei Optionen:
+- Standard: Diese Option ist derzeit gleichwertig mit "diffing", wird sich aber voraussichtlich ändern, sobald die Unterstützung für UIA-Benachrichtigungen weiter entwickelt wurde.
+- Abweichend: Bei dieser Option wird der ausgewählte Diff-Algorithmus verwendet, um die Änderungen jedes Mal zu berechnen, wenn das Terminal neuen Text rendert.
+Dies ist identisch mit dem Verhalten von NVDA in den Versionen 2022.4 und älter.
+- UIA-Benachrichtigungen: Mit dieser Option wird die Entscheidung, welcher Text mitgeteilt werden soll, an das Windows-Terminal übertragen, d. h., NVDA muss nicht mehr feststellen, welcher Text auf dem Bildschirm "neu" ist.
+Dies sollte die Leistung und Stabilität im Windows-Terminal deutlich verbessern, aber diese Funktion ist noch nicht vollständig.
+Insbesondere werden Zeichen während der Eingabe, die nicht auf dem Bildschirm angezeigt werden, wie z. B. Kennwörter, mitgeteilt, wenn diese Option ausgewählt ist.
+Außerdem kann es vorkommen, dass zusammenhängende Abschnitte mit mehr als 1.000 Zeichen nicht korrekt mitgeteilt werden.
 -
 
 ==== Sprachausgabe unterbrechen, wenn das Ereignis für den Fokus abgelaufen ist: ====[CancelExpiredFocusSpeech]
@@ -3653,7 +3696,7 @@ Folgende Kommandozeilenoptionen stehen zur Verfügung:
 | -q | --quit | Beendet eine laufende Instanz von NVDA. |
 | -k | --check-running | Prüft, ob NVDA bereits ausgeführt wird. Falls ja, wird ein Fehlercode 0 zurückgegeben, anderenfalls wird 1 zurückgegeben. |
 | -f <Protokolldateiname> | --log-file=<Protokolldateiname> | Legt die Datei fest, in der die Protokollierung stattfinden soll. |
-| -l <Protokollierungsstufe> | --log-level=<Protokollierungsstufe> | Die niedrigste Stufe der protokollierten Meldungen (10 = Debug, 12 = Ein-/Ausgaben, 15 = Debug-Warnmeldungen, 20 = Informationen, 30 = Warnungen, 40 = Fehlermeldungen, 50 = Kritische Meldungen, 100 = Deaktiviert), Standard ist Warnungen. |
+| -l <Protokollierungsstufe> | --log-level=<Protokollierungsstufe> | Die niedrigste Stufe der protokollierten Meldung (Debug 10, Eingabe/Ausgabe 12, Debug-Warnungen 15, Info 20, Ausgeschaltet 100). |
 | -c <Konfigurationspfad> | --config-path=<KonfigurationsPfad> | Gibt den Ordner an, in dem alle NVDA-Einstellungen gespeichert werden sollen. |
 | Keine | --lang=<Sprache> | Setzen Sie die konfigurierte NVDA-Sprache außer Kraft. Setzen Sie "Windows" als Standard für den aktuellen Benutzer, "de" für Deutsch, etc. |
 | -m | --minimal | Startet NVDA minimalistisch (keine Klänge, keine Benutzeroberfläche). |
