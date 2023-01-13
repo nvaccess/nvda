@@ -75,8 +75,8 @@ try:
 	builtins.pgettext = makePgettext(trans)
 except:
 	gettext.install('nvda')
-	# Install our pgettext function.
-	builtins.pgettext = lambda ctx, msg: msg
+	# Install a no-translation pgettext function
+	builtins.pgettext = lambda context, message: message
 
 import time
 import argparse

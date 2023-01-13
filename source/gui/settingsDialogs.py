@@ -1778,9 +1778,9 @@ class KeyboardSettingsPanel(SettingsPanel):
 	def onSave(self):
 		layout=self.kbdNames[self.kbdList.GetSelection()]
 		config.conf['keyboard']['keyboardLayout']=layout
-		config.conf["keyboard"]["NVDAModifierKeys"] = sum([
+		config.conf["keyboard"]["NVDAModifierKeys"] = sum(
 			key.value for (n, key) in enumerate(NVDAKey) if self.modifierList.IsChecked(n)
-		])
+		)
 		config.conf["keyboard"]["speakTypedCharacters"]=self.charsCheckBox.IsChecked()
 		config.conf["keyboard"]["speakTypedWords"]=self.wordsCheckBox.IsChecked()
 		config.conf["keyboard"]["speechInterruptForCharacters"]=self.speechInterruptForCharsCheckBox.IsChecked()

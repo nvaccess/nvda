@@ -12,6 +12,11 @@ import sys
 import time
 import re
 import typing
+from typing import (
+	Tuple,
+	List,
+	Optional,
+)
 
 import wx
 import winVersion
@@ -84,7 +89,8 @@ def passNextKeyThrough():
 	if passKeyThroughCount==-1:
 		passKeyThroughCount=0
 
-def isNVDAModifierKey(vkCode,extended):
+
+def isNVDAModifierKey(vkCode: int, extended: bool) -> bool:
 	if (
 		(config.conf["keyboard"]["NVDAModifierKeys"] & NVDAKey.NUMPAD_INSERT)
 		and vkCode == winUser.VK_INSERT
@@ -107,7 +113,8 @@ def isNVDAModifierKey(vkCode,extended):
 
 SUPPORTED_NVDA_MODIFIER_KEYS = ("capslock", "numpadinsert", "insert")
 
-def getNVDAModifierKeys():
+
+def getNVDAModifierKeys() -> List[Tuple[int, Optional[bool]]]:
 	keys=[]
 	if config.conf["keyboard"]["NVDAModifierKeys"] & NVDAKey.EXTENDED_INSERT:
 		keys.append(vkCodes.byName["insert"])
