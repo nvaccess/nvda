@@ -2073,11 +2073,11 @@ def getControlFieldSpeech(  # noqa: C901
 		# #13307: report the label for landmarks and regions
 		nameAndRole = nameSequence[:]
 		if (
-			role in (
+			role not in (
 				controlTypes.Role.LANDMARK,
 				controlTypes.Role.REGION,
 			)
-			and config.conf["documentFormatting"]["reportLandmarks"]
+			or config.conf["documentFormatting"]["reportLandmarks"]
 		):
 			nameAndRole.extend(roleTextSequence)
 		types.logBadSequenceTypes(nameAndRole)
