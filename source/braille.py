@@ -1938,10 +1938,18 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._displaySize: int = 0
 		"""
 		Internal cache for the displaySize property.
-		This attribute is used to compare the displaySize output by l{filterDisplaySize}
+		This attribute is used to compare the displaySize output by l{filter_displaySize}
 		with its previous output.
 		If the value differs, L{displaySizeChanged} is notified.
 		"""
+		self._enabled: bool = False
+		"""
+		Internal cache for the enabled property.
+		This attribute is used to compare the enabled output by l{decide_enabled}
+		with its previous output.
+		If L{decide_enabled} decides to disable the handler, pending output should be cleared.
+		"""
+
 
 		self.mainBuffer = BrailleBuffer(self)
 		self.messageBuffer = BrailleBuffer(self)
@@ -2046,12 +2054,28 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		and thus is C{True} when the display size is greater than 0.
 		This is a read only property and can't be set.
 		"""
-		return bool(self.displaySize) and self.decide_enabled.decide()
+		currentEnabled = bool(self.displaySize) and self.decide_enabled.decide()
+		if self._enabled != currentEnabled:
+			self._enabled = currentEnabled
+			if currentEnabled is False:
+				wx.CallAfter(self._handleEnabledDecisionFalse)
+		return currentEnabled
 
 	def _set_enabled(self, value):
 		raise AttributeError(
 			f"Can't set enabled to {value}, consider registering a handler to decide_enabled or filter_displaySize"
 		)
+
+	def _handleEnabledDecisionFalse(self):
+		"""When a decider handler decides to disable the braille handler, ensure braille doesn't continue.
+		This should be called from the main thread to avoid wx assertions.
+		"""
+		if self._cursorBlinkTimer:
+			# A blinking cursor should be stopped
+			self._cursorBlinkTimer.Stop()
+			self._cursorBlinkTimer = None
+		if self.buffer is self.messageBuffer:
+			self._dismissMessage(shouldUpdate=False)
 
 	_lastRequestedDisplayName = None
 	"""The name of the last requested braille display driver with setDisplayByName,
@@ -2300,8 +2324,9 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		else:
 			self._messageCallLater = wx.CallLater(timeout, self._dismissMessage)
 
-	def _dismissMessage(self):
+	def _dismissMessage(self, shouldUpdate: bool = True):
 		"""Dismiss the current message.
+		@param shouldUpdate: Whether to call update after dismissing.
 		@precondition: A message is currently being displayed.
 		@postcondition: The display returns to the main buffer.
 		"""
@@ -2310,7 +2335,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if self._messageCallLater:
 			self._messageCallLater.Stop()
 			self._messageCallLater = None
-		self.update()
+		if shouldUpdate:
+			self.update()
 
 	def handleGainFocus(self, obj: "NVDAObject", shouldAutoTether: bool = True) -> None:
 		if not self.enabled:
