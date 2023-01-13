@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-15 00:02+0000\n"
-"PO-Revision-Date: 2022-11-17 15:13+0900\n"
+"POT-Creation-Date: 2023-01-06 00:02+0000\n"
+"PO-Revision-Date: 2023-01-11 17:44+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -15,7 +15,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 3.2\n"
+"X-Generator: Poedit 3.2.2\n"
+"X-Poedit-Bookmarks: -1,2672,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 msgid "Native input"
@@ -396,6 +397,10 @@ msgstr "候補"
 msgid "definition"
 msgstr "定義"
 
+#. Translators: Displayed in braille when an object is a switch control
+msgid "swtch"
+msgstr "スイッチ"
+
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
 msgstr "選択"
@@ -536,6 +541,18 @@ msgstr "USB"
 msgid "Bluetooth"
 msgstr "Bluetooth"
 
+#. Translators: Braille when there are further details/annotations that can be fetched manually.
+msgid "details"
+msgstr "詳細"
+
+#. Translators: Braille when there are further details/annotations that can be fetched manually.
+#. %s specifies the type of details (e.g. "has comment suggestion")
+#. Translators: Speaks when there are further details/annotations that can be fetched manually.
+#. %s specifies the type of details (e.g. "comment, suggestion, details")
+#, python-format
+msgid "has %s"
+msgstr "%sあり"
+
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
 #, python-format
@@ -545,18 +562,6 @@ msgstr "見出しレベル %s"
 #. Translators: Displayed in braille for a link which has been visited.
 msgid "vlnk"
 msgstr "既読"
-
-#. Translators: Braille when there are further details/annotations that can be fetched manually.
-#. %s specifies the type of details (e.g. comment, suggestion)
-#. Translators: Speaks when there are further details/annotations that can be fetched manually.
-#. %s specifies the type of details (e.g. comment, suggestion)
-#, python-format
-msgid "has %s"
-msgstr "%sあり"
-
-#. Translators: Braille when there are further details/annotations that can be fetched manually.
-msgid "details"
-msgstr "詳細"
 
 #. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
@@ -615,19 +620,6 @@ msgstr "解決したコメント"
 #. Translators: brailled when text contains a bookmark
 msgid "bkmk"
 msgstr "ブックマーク"
-
-#. Translators: The label for a braille setting indicating that braille should be
-#. tethered to focus or review cursor automatically.
-msgid "automatically"
-msgstr "自動"
-
-#. Translators: The label for a braille setting indicating that braille should be tethered to focus.
-msgid "to focus"
-msgstr "フォーカス"
-
-#. Translators: The label for a braille setting indicating that braille should be tethered to the review cursor.
-msgid "to review"
-msgstr "レビュー"
 
 #. Translators: Label for a setting in braille settings dialog.
 msgid "Dot firm&ness"
@@ -2896,20 +2888,10 @@ msgid "Cycles through line indentation settings"
 msgstr "行インデントの報告の切り替え"
 
 #. Translators: A message reported when cycling through line indentation settings.
-msgid "Report line indentation with speech"
-msgstr "行インデントを読み上げで報告"
-
-#. Translators: A message reported when cycling through line indentation settings.
-msgid "Report line indentation with tones"
-msgstr "行インデントをビープ音で報告"
-
-#. Translators: A message reported when cycling through line indentation settings.
-msgid "Report line indentation with speech and tones"
-msgstr "行インデントをビープ音と読み上げで報告"
-
-#. Translators: A message reported when cycling through line indentation settings.
-msgid "Report line indentation off"
-msgstr "行インデントの報告なし"
+#. {mode} will be replaced with the mode; i.e. Off, Speech, Tones or Both Speech and Tones.
+#, python-brace-format
+msgid "Report line indentation {mode}"
+msgstr "行インデントの報告 {mode}"
 
 #. Translators: Input help mode message for toggle report paragraph indentation command.
 msgid "Toggles on and off the reporting of paragraph indentation"
@@ -2973,17 +2955,11 @@ msgstr "テーブルのセル番地を報告する"
 msgid "Cycles through the cell border reporting settings"
 msgstr "セルの罫線の報告の切り替え"
 
-#. Translators: A message reported when cycling through cell borders settings.
-msgid "Report styles of cell borders"
-msgstr "セルの罫線を報告する"
-
-#. Translators: A message reported when cycling through cell borders settings.
-msgid "Report colors and styles of cell borders"
-msgstr "セルの罫線の色とスタイルを報告する"
-
-#. Translators: A message reported when cycling through cell borders settings.
-msgid "Report cell borders off."
-msgstr "セルの罫線を報告しない"
+#. Translators: Reported when the user cycles through report cell border modes.
+#. {mode} will be replaced with the mode; e.g. Off, Styles and Colors and styles.
+#, python-brace-format
+msgid "Report cell borders {mode}"
+msgstr "セルの罫線の報告 {mode}"
 
 #. Translators: Input help mode message for toggle report links command.
 msgid "Toggles on and off the reporting of links"
@@ -3146,6 +3122,19 @@ msgstr "記号の読み上げレベルの選択"
 #, python-format
 msgid "Symbol level %s"
 msgstr "記号%s"
+
+#. Translators: Input help mode message for toggle delayed character description command.
+msgid ""
+"Toggles on and off delayed descriptions for characters on cursor movement"
+msgstr "テキストカーソル移動のすこし後での文字の説明の切り替え"
+
+#. Translators: The message announced when toggling the delayed character description setting.
+msgid "delayed character descriptions on"
+msgstr "テキストカーソル移動のすこし後で文字を説明する"
+
+#. Translators: The message announced when toggling the delayed character description setting.
+msgid "delayed character descriptions off"
+msgstr "テキストカーソル移動のすこし後で文字を説明しない"
 
 #. Translators: Input help mode message for move mouse to navigator object command.
 msgid "Moves the mouse pointer to the current navigator object"
@@ -4407,6 +4396,10 @@ msgstr "次の再起動まで一時的にスクリーンカーテンが有効"
 msgid "Could not enable screen curtain"
 msgstr "スクリーンカーテンを有効にできません"
 
+#. Translators: Describes a command.
+msgid "Cycles through paragraph navigation styles"
+msgstr "段落ナビゲーションの切り替え"
+
 #. Translators: a message indicating that configuration profiles can't be activated using gestures,
 #. due to profile activation being suspended.
 msgid "Can't change the active profile while an NVDA dialog is open"
@@ -4804,9 +4797,12 @@ msgstr "ラップトップ"
 msgid "unknown %s"
 msgstr "不明 %s"
 
+#. Translators: a state that denotes a control is currently on
+#. E.g. a switch control.
 msgid "on"
 msgstr "オン"
 
+#. Translators: This is presented when a switch control is off.
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
@@ -6464,6 +6460,11 @@ msgstr ""
 msgid "%d percent"
 msgstr "%dパーセント"
 
+#. Translators: Announced in braille when suggestions appear when search term is entered
+#. in various search fields such as Start search box in Windows 10.
+msgid "Suggestions"
+msgstr "候補"
+
 #. Translators: a message announcing a candidate's character and description.
 #, python-brace-format
 msgid "{symbol} as in {description}"
@@ -6505,10 +6506,6 @@ msgstr "ナビゲーターオブジェクトとフォーカスを最初の行に
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object and focus to the last row"
 msgstr "ナビゲーターオブジェクトとフォーカスを最後の行に移動"
-
-#. Translators: Announced in braille when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
-msgid "Suggestions"
-msgstr "候補"
 
 #. Translators: The label for a 'composition' Window that appears when the user is typing one or more east-Asian characters into a document.
 msgid "Composition"
@@ -7273,9 +7270,60 @@ msgstr "NVDA起動時に点字ビューアーを表示(&S)"
 msgid "&Hover for cell routing"
 msgstr "マウスホバーでタッチカーソル操作(&H)"
 
-#. Translators: This is the label for a combobox in the
-#. document formatting settings panel.
-#. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+#. Translators: One of the show states of braille messages
+#. (the disabled mode turns off showing of braille messages completely).
+#. Translators: Label for an option in NVDA settings.
+#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
+msgid "Disabled"
+msgstr "無効"
+
+#. Translators: One of the show states of braille messages
+#. (the timeout mode shows messages for the specific time).
+msgid "Use timeout"
+msgstr "タイムアウトで表示を終了"
+
+#. Translators: One of the show states of braille messages
+#. (the indefinitely mode prevents braille messages from disappearing automatically).
+msgid "Show indefinitely"
+msgstr "表示を終了させない"
+
+#. Translators: The label for a braille setting indicating that braille should be
+#. tethered to focus or review cursor automatically.
+msgid "automatically"
+msgstr "自動"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered to focus.
+msgid "to focus"
+msgstr "フォーカス"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered
+#. to the review cursor.
+msgid "to review"
+msgstr "レビュー"
+
+#. Translators: A choice in a combo box in the document formatting dialog to report No line Indentation.
+msgctxt "line indentation setting"
+msgid "Off"
+msgstr "なし"
+
+#. Translators: A choice in a combo box in the document formatting dialog to report indentation
+#. with Speech.
+msgctxt "line indentation setting"
+msgid "Speech"
+msgstr "読み上げ"
+
+#. Translators: A choice in a combo box in the document formatting dialog to report indentation
+#. with tones.
+msgctxt "line indentation setting"
+msgid "Tones"
+msgstr "ビープ音"
+
+#. Translators: A choice in a combo box in the document formatting dialog to report indentation with both
+#. Speech and tones.
+msgctxt "line indentation setting"
+msgid "Both Speech and Tones"
+msgstr "ビープ音と読み上げ"
+
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
 msgid "Off"
@@ -7296,17 +7344,40 @@ msgstr "行"
 msgid "Columns"
 msgstr "列"
 
-#. Translators: Label for an option in NVDA settings.
-#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
-#. Translators: One of the show states of braille messages
-#. (the disabled mode turns off showing of braille messages completely).
-msgid "Disabled"
-msgstr "無効"
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Styles"
+msgstr "スタイル"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Both Colors and Styles"
+msgstr "色とスタイル"
 
 #. Translators: Label for an option in NVDA settings.
 #. Translators: The status shown for an addon when its currently running in NVDA.
 msgid "Enabled"
 msgstr "有効"
+
+#. Translators: Label for a paragraph style in NVDA settings.
+msgid "Handled by application"
+msgstr "アプリによる処理"
+
+#. Translators: Label for a paragraph style in NVDA settings.
+msgid "Single line break"
+msgstr "1行"
+
+#. Translators: Label for a paragraph style in NVDA settings.
+msgid "Multi line break"
+msgstr "複数行"
+
+#. Translators: Label for an option in NVDA settings.
+msgid "Diffing"
+msgstr "差分"
+
+#. Translators: Label for an option in NVDA settings.
+msgid "UIA notifications"
+msgstr "UIオートメーションの通知"
 
 #. Translators: The title of the document used to present the result of content recognition.
 msgid "Result"
@@ -8074,6 +8145,11 @@ msgstr "コメント"
 msgid "suggestion"
 msgstr "候補"
 
+#. Translators: The word role for a switch control
+#. I.e. a control that can be switched on or off.
+msgid "switch"
+msgstr "スイッチ"
+
 #. Translators: Indicates that a particular state of an object is negated.
 #. Separate strings have now been defined for commonly negated states (e.g. not selected and not
 #. checked), but this still might be used in some other cases.
@@ -8272,6 +8348,13 @@ msgstr "チェックなし"
 #. This is only reported for objects which support accessible drag and drop.
 msgid "done dragging"
 msgstr "ドラッグ終了"
+
+#. Translators: This is spoken when a paragraph is considered blank.
+#. Translators: This is spoken when the line is considered blank.
+#. Translators: This is spoken when NVDA moves to an empty line.
+#. Translators: This is spoken when the line is considered blank.
+msgid "blank"
+msgstr "ブランク"
 
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 msgid "Configuration applied"
@@ -8855,6 +8938,10 @@ msgstr "Microsoft Store版NVDAでは使用できません"
 msgid "Action unavailable while a dialog requires a response"
 msgstr "ダイアログが開いている間は使用できません"
 
+#. Translators: Reported when an action cannot be performed because Windows is locked.
+msgid "Action unavailable while Windows is locked"
+msgstr "Windowsがロックされている間は使用できません"
+
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
 msgstr "設定プロファイル"
@@ -8906,8 +8993,10 @@ msgid "Error activating profile."
 msgstr "プロファイルのアクティブ化のエラーです。"
 
 #. Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
-msgid "This profile will be permanently deleted. This action cannot be undone."
-msgstr "このプロファイルを削除すると元に戻すことはできません"
+#. The placeholder {} is replaced with the name of the configuration profile that will be deleted.
+msgid ""
+"The profile {} will be permanently deleted. This action cannot be undone."
+msgstr "プロファイル {} は完全に削除されます。この操作は取り消しできません。"
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 msgid "Confirm Deletion"
@@ -10060,19 +10149,6 @@ msgstr "行番号(&N)"
 msgid "Line &indentation reporting:"
 msgstr "行インデント(&I)"
 
-#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
-msgctxt "line indentation setting"
-msgid "Speech"
-msgstr "読み上げ"
-
-#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
-msgid "Tones"
-msgstr "ビープ音"
-
-#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
-msgid "Both Speech and Tones"
-msgstr "ビープ音と読み上げ"
-
 #. Translators: This message is presented in the document formatting settings panelue
 #. If this option is selected, NVDA will report paragraph indentation if available.
 msgid "&Paragraph indentation"
@@ -10107,16 +10183,6 @@ msgstr "ヘッダー(&E)"
 #. document formatting settings panel.
 msgid "Cell c&oordinates"
 msgstr "セル番地(&O)"
-
-#. Translators: This is the label for a combobox in the
-#. document formatting settings panel.
-msgid "Styles"
-msgstr "スタイル"
-
-#. Translators: This is the label for a combobox in the
-#. document formatting settings panel.
-msgid "Both Colors and Styles"
-msgstr "色とスタイル"
 
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
@@ -10172,6 +10238,14 @@ msgstr "クリック可能(&C)"
 #. document formatting settings panel.
 msgid "Report formatting chan&ges after the cursor (can cause a lag)"
 msgstr "テキストカーソル移動後に書式の変化を報告(&G)"
+
+#. Translators: This is the label for the document navigation settings panel.
+msgid "Document Navigation"
+msgstr "ドキュメントナビゲーション"
+
+#. Translators: This is a label for the paragraph navigation style in the document navigation dialog
+msgid "&Paragraph style:"
+msgstr "段落プロパティ(&P)"
 
 #. Translators: This is the label for the touch interaction settings panel.
 msgid "Touch Interaction"
@@ -10415,6 +10489,10 @@ msgstr "ディフマッチパッチ"
 msgid "Difflib"
 msgstr "ディフリブ"
 
+#. Translators: This is the label for a combo-box in the Advanced settings panel.
+msgid "Speak new text in Windows Terminal via:"
+msgstr "Windows ターミナルで新しいテキストを読み上げる方法:"
+
 #. Translators: This is the label for combobox in the Advanced settings panel.
 msgid "Attempt to cancel speech for expired focus events:"
 msgstr "失効したフォーカス イベントの読み上げを停止"
@@ -10557,16 +10635,6 @@ msgstr "フォーカス追従のカーソルの形(&F)"
 #. Translators: The label for a setting in braille settings to select the cursor shape when tethered to review.
 msgid "Cursor shape for &review:"
 msgstr "レビューカーソル追従のカーソルの形(&R)"
-
-#. Translators: One of the show states of braille messages
-#. (the timeout mode shows messages for the specific time).
-msgid "Use timeout"
-msgstr "タイムアウトで表示を終了"
-
-#. Translators: One of the show states of braille messages
-#. (the indefinitely mode prevents braille messages from disappearing automatically).
-msgid "Show indefinitely"
-msgstr "表示を終了させない"
 
 #. Translators: The label for a setting in braille settings to combobox enabling user
 #. to decide if braille messages should be shown and automatically disappear from braille display.
@@ -10919,12 +10987,6 @@ msgstr "数式の操作を終了"
 #. but math interaction is not supported.
 msgid "Math interaction not supported."
 msgstr "数式の操作はサポートされていません"
-
-#. Translators: This is spoken when the line is considered blank.
-#. Translators: This is spoken when NVDA moves to an empty line.
-#. Translators: This is spoken when the line is considered blank.
-msgid "blank"
-msgstr "ブランク"
 
 #. Translators: cap will be spoken before the given letter when it is capitalized.
 #, python-format
@@ -12454,11 +12516,13 @@ msgstr "凡例項目 {legendEntryIndex} の {legendEntryCount}"
 msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr "系列{seriesName}の凡例キー {seriesIndex}の{seriesCount}"
 
-#. Translators: The default color of text when a color has not been set by the author.
-#. Translators: The default background color  when a color has not been set by the author.
-#. Translators: the default (automatic) color in Microsoft Word
-msgid "default color"
-msgstr "既定の色"
+#. Translators: The text color as reported in Wordpad (Automatic) or NVDA log viewer.
+#. Translators: The background color as reported in Wordpad (Automatic) or NVDA log viewer.
+#. Translators: The text color as reported in Wordpad (Automatic) or NVDA log viewer.
+#. Translators: The background color as reported in Wordpad (Automatic) or NVDA log viewer.
+#, python-brace-format
+msgid "{color} (default color)"
+msgstr "{color} (既定の色)"
 
 #. Translators: The color of text cannot be detected.
 #. Translators: The background color cannot be detected.
@@ -12998,6 +13062,10 @@ msgstr "%.1f 行"
 msgid "Table description"
 msgstr "テーブルの説明"
 
+#. Translators: the default (automatic) color in Microsoft Word
+msgid "automatic color"
+msgstr "自動 (既定の色)"
+
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Bold on"
 msgstr "太字にする"
@@ -13128,6 +13196,3 @@ msgstr "2行の行間"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5行の行間"
-
-#~ msgid "NVDA could not start securely."
-#~ msgstr "NVDAを正常に起動できませんでした"
