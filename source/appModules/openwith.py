@@ -40,7 +40,7 @@ class AppModule(appModuleHandler.AppModule):
 			elif automationId == "ImmersiveOpenWithFlyout":
 				clsList.insert(0, ImmersiveOpenWithFlyout)
 
-	def isGoodUIAWindow(self, hwnd):
+	def isGoodUIAWindow(self, hwnd: int) -> bool:
 		if winUser.getClassName(hwnd) in (
 			# #11335: Open With dialog isn't read in Windows 10 Version 2004 (May 2020 Update).
 			# Note that treating the below window as a UIA window will make NVDA no longer announce "pane".
