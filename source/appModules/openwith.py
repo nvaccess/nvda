@@ -41,8 +41,13 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.insert(0, ImmersiveOpenWithFlyout)
 
 	def isGoodUIAWindow(self, hwnd):
-		# #11335: Open With dialog isn't read in Windows 10 Version 2004 (May 2020 Update).
-		# Note that treating the below window as a UIA window will make NVDA no longer announce "pane".
-		if winUser.getClassName(hwnd) == "Shell_Flyout":
+		if winUser.getClassName(hwnd) in (
+			# #11335: Open With dialog isn't read in Windows 10 Version 2004 (May 2020 Update).
+			# Note that treating the below window as a UIA window will make NVDA no longer announce "pane".
+			"Shell_Flyout",
+			# #14538: Windows 11 Version 22H2 (2022 Update) comes with a modernized Open With dialog
+			# but prevents proper mouse and touch interaction.
+			"Open With",
+		):
 			return True
 		return False
