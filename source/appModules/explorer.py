@@ -504,7 +504,7 @@ class AppModule(appModuleHandler.AppModule):
 
 		nextHandler()
 
-	def isGoodUIAWindow(self, hwnd):
+	def isGoodUIAWindow(self, hwnd: int) -> bool:
 		currentWinVer = winVersion.getWinVer()
 		# #9204: shell raises window open event for emoji panel in build 18305 and later.
 		if (
