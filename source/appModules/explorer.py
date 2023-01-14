@@ -528,6 +528,7 @@ class AppModule(appModuleHandler.AppModule):
 				# Top-level window class names from Windows 11 shell features
 				"Shell_InputSwitchTopLevelWindow",  # Language switcher
 				"XamlExplorerHostIslandWindow",  # Task View and Snap Layouts
+				"TopLevelWindowForOverflowXamlIsland",  # #14539: redesigned systray overflow in 22H2
 			)
 			# #13717: on some systems, Windows 11 shell elements are reported as IAccessible,
 			# notably Start button, causing IAccessible handler to report attribute error when handling events.
