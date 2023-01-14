@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee,
+# Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee,
 # Thomas Stivers, Babbage B.V., Accessolutions, Julien Cochuyt, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -136,7 +136,6 @@ class MainFrame(wx.Frame):
 		# Therefore, move the mouse to the center of the screen so that the menu will always pop up there.
 		location = api.getDesktopObject().location
 		winUser.setCursorPos(*location.center)
-		self.evaluateUpdatePendingUpdateMenuItemCommand()
 		self.sysTrayIcon.onActivate(None)
 
 	def onRevertToSavedConfigurationCommand(self,evt):
@@ -203,14 +202,13 @@ class MainFrame(wx.Frame):
 				updateCheck.executePendingUpdate()
 
 	def evaluateUpdatePendingUpdateMenuItemCommand(self):
-		try:
-			self.sysTrayIcon.menu.Remove(self.sysTrayIcon.installPendingUpdateMenuItem)
-		except:
-			log.debug("Error while removing  pending update menu item", exc_info=True)
-			pass
-		if not globalVars.appArgs.secure and updateCheck and updateCheck.isPendingUpdate():
-			self.sysTrayIcon.menu.Insert(self.sysTrayIcon.installPendingUpdateMenuItemPos,self.sysTrayIcon.installPendingUpdateMenuItem)
-
+		log.warning(
+			"MainFrame.evaluateUpdatePendingUpdateMenuItemCommand is deprecated. "
+			"Use SysTrayIcon.evaluateUpdatePendingUpdateMenuItemCommand instead.",
+			stack_info=True,
+		)
+		self.sysTrayIcon.evaluateUpdatePendingUpdateMenuItemCommand()
+	
 	@blockAction.when(blockAction.Context.MODAL_DIALOG_OPEN)
 	def onExitCommand(self, evt):
 		if config.conf["general"]["askToExit"]:
@@ -524,8 +522,17 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 
 		self.Bind(wx.adv.EVT_TASKBAR_LEFT_DOWN, self.onActivate)
 		self.Bind(wx.adv.EVT_TASKBAR_RIGHT_DOWN, self.onActivate)
-
+	
+	def evaluateUpdatePendingUpdateMenuItemCommand(self):
+		try:
+			self.menu.Remove(self.installPendingUpdateMenuItem)
+		except Exception:
+			log.debug("Error while removing pending update menu item", exc_info=True)
+		if not globalVars.appArgs.secure and updateCheck and updateCheck.isPendingUpdate():
+			self.menu.Insert(self.installPendingUpdateMenuItemPos, self.installPendingUpdateMenuItem)
+	
 	def onActivate(self, evt):
+		self.evaluateUpdatePendingUpdateMenuItemCommand()
 		mainFrame.prePopup()
 		import appModules.nvda
 		if not appModules.nvda.nvdaMenuIaIdentity:

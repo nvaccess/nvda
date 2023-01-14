@@ -536,7 +536,7 @@ def _getAnnotationProperty(
 ) -> str:
 	# Translators: Braille when there are further details/annotations that can be fetched manually.
 	genericDetailsRole = _("details")
-	detailsRoles: _AnnotationRolesT = set(propertyValues.get("detailsRoles", []))
+	detailsRoles: _AnnotationRolesT = propertyValues.get("detailsRoles", tuple())
 	if not detailsRoles:
 		log.debugWarning(
 			"There should always be detailsRoles (at least a single None value) when hasDetails is true."
