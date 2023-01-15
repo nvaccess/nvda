@@ -115,7 +115,8 @@ class SpeechDict(list):
 def processText(text: str) -> str:
 	"""Calls dictionaries.sub on a text string for each defined dictionary, if dictionary processing is enabled.
 	"""
-	if not globalVars.speechDictionaryProcessing:
+	# If dictionary processing is turned off, or we have no dictionaries to process, return the text
+	if not globalVars.speechDictionaryProcessing or len(dictTypes) == 0:
 		return text
 	for type in dictTypes:
 		newText = dictionaries[type].sub(text)
