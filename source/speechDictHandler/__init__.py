@@ -112,7 +112,9 @@ class SpeechDict(list):
 				del self[index]
 		return text
 
-def processText(text):
+def processText(text: str) -> str:
+	"""Calls dictionaries.sub on a text string for each defined dictionary, if dictionary processing is enabled.
+	"""
 	if not globalVars.speechDictionaryProcessing:
 		return text
 	for type in dictTypes:
