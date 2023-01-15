@@ -116,8 +116,11 @@ def processText(text):
 	if not globalVars.speechDictionaryProcessing:
 		return text
 	for type in dictTypes:
-		text=dictionaries[type].sub(text)
-	return text
+		newText = dictionaries[type].sub(text)
+		# To stop intra-dictionary and inter-dictionary cascade replacements, break on successful replacement
+		if newText != text:
+			break
+	return newText
 
 def initialize():
 	for type in dictTypes:
