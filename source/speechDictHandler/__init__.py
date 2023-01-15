@@ -1,8 +1,8 @@
-#speechDictHandler.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2023 NVDA Contributors <http://www.nvda-project.org/>
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# speechDictHandler.py
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2023 NVDA Contributors <http://www.nvda-project.org/>
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import re
 import globalVars
@@ -112,6 +112,7 @@ class SpeechDict(list):
 				del self[index]
 		return text
 
+
 def processText(text: str) -> str:
 	"""Calls dictionaries.sub on a text string for each defined dictionary, if dictionary processing is enabled.
 	"""
@@ -124,6 +125,7 @@ def processText(text: str) -> str:
 		if newText != text:
 			break
 	return newText
+
 
 def initialize():
 	for type in dictTypes:
