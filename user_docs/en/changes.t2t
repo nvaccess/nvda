@@ -96,15 +96,15 @@ This functionality is now available generically via ``behaviours.EditableText`` 
   - This new class is not a singleton by design, add-on authors are encouraged to use their own instance when doing hardware i/o.
   -
 - The processor architecture for the computer can be queried from ``winVersion.WinVersion.processorArchitecture attribute.`` (#14439)
-- New extension points have be added. (#14503)
-  - ``inputCore.manager.decide_executeGesture``
+- New extension points have been added. (#14503)
+  - ``inputCore.decide_executeGesture``
   - ``tones.decide_beep``
   - ``nvwave.decide_playWaveFile``
-  - ``braille.handler.pre_writeCells``
-  - ``braille.handler.filter_displaySize``
-  - ``braille.handler.decide_enabled``
-  - ``braille.handler.displayChanged``
-  - ``braille.handler.displaySizeChanged``
+  - ``braille.pre_writeCells``
+  - ``braille.filter_displaySize``
+  - ``braille.decide_enabled``
+  - ``braille.displayChanged``
+  - ``braille.displaySizeChanged``
   - 
 -
 
