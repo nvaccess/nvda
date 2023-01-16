@@ -29,7 +29,7 @@ def __getattr__(attrName: str) -> Any:
 	if NVDAState._allowDeprecatedAPI():
 		if attrName == "isObjectAboveLockScreen":
 			log.warning(
-				"Importing isObjectAboveLockScreen(obj) is deprecated. "
+				"isObjectAboveLockScreen(obj) is deprecated. "
 				"Instead use obj.isBelowLockScreen. "
 			)
 			return _isObjectAboveLockScreen
