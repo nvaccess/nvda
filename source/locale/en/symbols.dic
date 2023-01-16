@@ -1,7 +1,6 @@
-﻿#locale/en/symbols.dic
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2011-2017 NVDA Contributors
-#This file is covered by the GNU General Public License.
+﻿# A part of NonVisual Desktop Access (NVDA)
+# Copyright (c) 2011-2023 NVDA Contributors
+# This file is covered by the GNU General Public License.
 
 complexSymbols:
 # identifier	regexp
@@ -17,8 +16,8 @@ decimal point	(?<![^\d -])\.(?=\d)
 in-word '	(?<=[^\W_])['’]
 negative number	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
 # Unicode braille sequences
-braille sequence start	(?<=[^\s\u2800-\u28FF])(?=[\u2800-\u28FF])
-braille sequence end	(?<=[\u2800-\u28FF])(?=[^\s\u2800-\u28FF])
+braille sequence start	(^(?=[\u2800-\u28FF])|(?<=[^\s\u2800-\u28FF])(?=[\u2800-\u28FF]))
+braille sequence end	((?<=[\u2800-\u28FF])$|(?<=[\u2800-\u28FF])(?=[^\s\u2800-\u28FF]))
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -372,259 +371,259 @@ braille sequence end	end Unicode braille	all	always
 ## 6-dot cell
 ### note: the character on the next line is U+2800 (braille space), not U+0020 (ASCII space)
 ⠀	space
-⠁	dot 1
-⠂	dot 2
-⠃	dot 1 2
-⠄	dot 3
-⠅	dot 1 3
-⠆	dot 2 3
-⠇	dot 1 2 3
-⠈	dot 4
-⠉	dot 1 4
-⠊	dot 2 4
-⠋	dot 1 2 4
-⠌	dot 3 4
-⠍	dot 1 3 4
-⠎	dot 2 3 4
-⠏	dot 1 2 3 4
-⠐	dot 5
-⠑	dot 1 5
-⠒	dot 2 5
-⠓	dot 1 2 5
-⠔	dot 3 5
-⠕	dot 1 3 5
-⠖	dot 2 3 5
-⠗	dot 1 2 3 5
-⠘	dot 4 5
-⠙	dot 1 4 5
-⠚	dot 2 4 5
-⠛	dot 1 2 4 5
-⠜	dot 3 4 5
-⠝	dot 1 3 4 5
-⠞	dot 2 3 4 5
-⠟	dot 1 2 3 4 5
-⠠	dot 6
-⠡	dot 1 6
-⠢	dot 2 6
-⠣	dot 1 2 6
-⠤	dot 3 6
-⠥	dot 1 3 6
-⠦	dot 2 3 6
-⠧	dot 1 2 3 6
-⠨	dot 4 6
-⠩	dot 1 4 6
-⠪	dot 2 4 6
-⠫	dot 1 2 4 6
-⠬	dot 3 4 6
-⠭	dot 1 3 4 6
-⠮	dot 2 3 4 6
-⠯	dot 1 2 3 4 6
-⠰	dot 5 6
-⠱	dot 1 5 6
-⠲	dot 2 5 6
-⠳	dot 1 2 5 6
-⠴	dot 3 5 6
-⠵	dot 1 3 5 6
-⠶	dot 2 3 5 6
-⠷	dot 1 2 3 5 6
-⠸	dot 1 2 3
-⠹	dot 1 4 5 6
-⠺	dot 2 4 5 6
-⠻	dot 1 2 4 5 6
-⠼	dot 3 4 5 6
-⠽	dot 1 3 4 5 6
-⠾	dot 2 3 4 5 6
-⠿	dot 1 2 3 4 5 6
+⠁	1 dot
+⠂	2 dot
+⠃	1 2 dot
+⠄	3 dot
+⠅	1 3 dot
+⠆	2 3 dot
+⠇	1 2 3 dot
+⠈	4 dot
+⠉	1 4 dot
+⠊	2 4 dot
+⠋	1 2 4 dot
+⠌	3 4 dot
+⠍	1 3 4 dot
+⠎	2 3 4 dot
+⠏	1 2 3 4 dot
+⠐	5 dot
+⠑	1 5 dot
+⠒	2 5 dot
+⠓	1 2 5 dot
+⠔	3 5 dot
+⠕	1 3 5 dot
+⠖	2 3 5 dot
+⠗	1 2 3 5 dot
+⠘	4 5 dot
+⠙	1 4 5 dot
+⠚	2 4 5 dot
+⠛	1 2 4 5 dot
+⠜	3 4 5 dot
+⠝	1 3 4 5 dot
+⠞	2 3 4 5 dot
+⠟	1 2 3 4 5 dot
+⠠	6 dot
+⠡	1 6 dot
+⠢	2 6 dot
+⠣	1 2 6 dot
+⠤	3 6 dot
+⠥	1 3 6 dot
+⠦	2 3 6 dot
+⠧	1 2 3 6 dot
+⠨	4 6 dot
+⠩	1 4 6 dot
+⠪	2 4 6 dot
+⠫	1 2 4 6 dot
+⠬	3 4 6 dot
+⠭	1 3 4 6 dot
+⠮	2 3 4 6 dot
+⠯	1 2 3 4 6 dot
+⠰	5 6 dot
+⠱	1 5 6 dot
+⠲	2 5 6 dot
+⠳	1 2 5 6 dot
+⠴	3 5 6 dot
+⠵	1 3 5 6 dot
+⠶	2 3 5 6 dot
+⠷	1 2 3 5 6 dot
+⠸	1 2 3 dot
+⠹	1 4 5 6 dot
+⠺	2 4 5 6 dot
+⠻	1 2 4 5 6 dot
+⠼	3 4 5 6 dot
+⠽	1 3 4 5 6 dot
+⠾	2 3 4 5 6 dot
+⠿	1 2 3 4 5 6 dot
 ## 8-dot cell
-⡀	dot 7
-⡁	dot 1 7
-⡂	dot 2 7
-⡃	dot 1 2 7
-⡄	dot 3 7
-⡅	dot 1 3 7
-⡆	dot 2 3 7
-⡇	dot 1 2 3 7
-⡈	dot 4 7
-⡉	dot 1 4 7
-⡊	dot 2 4 7
-⡋	dot 1 2 4 7
-⡌	dot 3 4 7
-⡍	dot 1 3 4 7
-⡎	dot 2 3 4 7
-⡏	dot 1 2 3 4 7
-⡐	dot 5 7
-⡑	dot 1 5 7
-⡒	dot 2 5 7
-⡓	dot 1 2 5 7
-⡔	dot 3 5 7
-⡕	dot 1 3 5 7
-⡖	dot 2 3 5 7
-⡗	dot 1 2 3 5 7
-⡘	dot 4 5 7
-⡙	dot 1 4 5 7
-⡚	dot 2 4 5 7
-⡛	dot 1 2 4 5 7
-⡜	dot 3 4 5 7
-⡝	dot 1 3 4 5 7
-⡞	dot 2 3 4 5 7
-⡟	dot 1 2 3 4 5 7
-⡠	dot 6 7
-⡡	dot 1 6 7
-⡢	dot 2 6 7
-⡣	dot 1 2 6 7
-⡤	dot 3 6 7
-⡥	dot 1 3 6 7
-⡦	dot 2 3 6 7
-⡧	dot 1 2 3 6 7
-⡨	dot 4 6 7
-⡩	dot 1 4 6 7
-⡪	dot 2 4 6 7
-⡫	dot 1 2 4 6 7
-⡬	dot 3 4 6 7
-⡭	dot 1 3 4 6 7
-⡮	dot 2 3 4 6 7
-⡯	dot 1 2 3 4 6 7
-⡰	dot 5 6 7
-⡱	dot 1 5 6 7
-⡲	dot 2 5 6 7
-⡳	dot 1 2 5 6 7
-⡴	dot 3 5 6 7
-⡵	dot 1 3 5 6 7
-⡶	dot 2 3 5 6 7
-⡷	dot 1 2 3 5 6 7
-⡸	dot 1 2 3 7
-⡹	dot 1 4 5 6 7
-⡺	dot 2 4 5 6 7
-⡻	dot 1 2 4 5 6 7
-⡼	dot 3 4 5 6 7
-⡽	dot 1 3 4 5 6 7
-⡾	dot 2 3 4 5 6 7
-⡿	dot 1 2 3 4 5 6 7
-⢀	dot 8
-⢁	dot 1 8
-⢂	dot 2 8
-⢃	dot 1 2 8
-⢄	dot 3 8
-⢅	dot 1 3 8
-⢆	dot 2 3 8
-⢇	dot 1 2 3 8
-⢈	dot 4 8
-⢉	dot 1 4 8
-⢊	dot 2 4 8
-⢋	dot 1 2 4 8
-⢌	dot 3 4 8
-⢍	dot 1 3 4 8
-⢎	dot 2 3 4 8
-⢏	dot 1 2 3 4 8
-⢐	dot 5 8
-⢑	dot 1 5 8
-⢒	dot 2 5 8
-⢓	dot 1 2 5 8
-⢔	dot 3 5 8
-⢕	dot 1 3 5 8
-⢖	dot 2 3 5 8
-⢗	dot 1 2 3 5 8
-⢘	dot 4 5 8
-⢙	dot 1 4 5 8
-⢚	dot 2 4 5 8
-⢛	dot 1 2 4 5 8
-⢜	dot 3 4 5 8
-⢝	dot 1 3 4 5 8
-⢞	dot 2 3 4 5 8
-⢟	dot 1 2 3 4 5 8
-⢠	dot 6 8
-⢡	dot 1 6 8
-⢢	dot 2 6 8
-⢣	dot 1 2 6 8
-⢤	dot 3 6 8
-⢥	dot 1 3 6 8
-⢦	dot 2 3 6 8
-⢧	dot 1 2 3 6 8
-⢨	dot 4 6 8
-⢩	dot 1 4 6 8
-⢪	dot 2 4 6 8
-⢫	dot 1 2 4 6 8
-⢬	dot 3 4 6 8
-⢭	dot 1 3 4 6 8
-⢮	dot 2 3 4 6 8
-⢯	dot 1 2 3 4 6 8
-⢰	dot 5 6 8
-⢱	dot 1 5 6 8
-⢲	dot 2 5 6 8
-⢳	dot 1 2 5 6 8
-⢴	dot 3 5 6 8
-⢵	dot 1 3 5 6 8
-⢶	dot 2 3 5 6 8
-⢷	dot 1 2 3 5 6 8
-⢸	dot 1 2 3 8
-⢹	dot 1 4 5 6 8
-⢺	dot 2 4 5 6 8
-⢻	dot 1 2 4 5 6 8
-⢼	dot 3 4 5 6 8
-⢽	dot 1 3 4 5 6 8
-⢾	dot 2 3 4 5 6 8
-⢿	dot 1 2 3 4 5 6 8
-⣀	dot 7 8
-⣁	dot 1 7 8
-⣂	dot 2 7 8
-⣃	dot 1 2 7 8
-⣄	dot 3 7 8
-⣅	dot 1 3 7 8
-⣆	dot 2 3 7 8
-⣇	dot 1 2 3 7 8
-⣈	dot 4 7 8
-⣉	dot 1 4 7 8
-⣊	dot 2 4 7 8
-⣋	dot 1 2 4 7 8
-⣌	dot 3 4 7 8
-⣍	dot 1 3 4 7 8
-⣎	dot 2 3 4 7 8
-⣏	dot 1 2 3 4 7 8
-⣐	dot 5 7 8
-⣑	dot 1 5 7 8
-⣒	dot 2 5 7 8
-⣓	dot 1 2 5 7 8
-⣔	dot 3 5 7 8
-⣕	dot 1 3 5 7 8
-⣖	dot 2 3 5 7 8
-⣗	dot 1 2 3 5 7 8
-⣘	dot 4 5 7 8
-⣙	dot 1 4 5 7 8
-⣚	dot 2 4 5 7 8
-⣛	dot 1 2 4 5 7 8
-⣜	dot 3 4 5 7 8
-⣝	dot 1 3 4 5 7 8
-⣞	dot 2 3 4 5 7 8
-⣟	dot 1 2 3 4 5 7 8
-⣠	dot 6 7 8
-⣡	dot 1 6 7 8
-⣢	dot 2 6 7 8
-⣣	dot 1 2 6 7 8
-⣤	dot 3 6 7 8
-⣥	dot 1 3 6 7 8
-⣦	dot 2 3 6 7 8
-⣧	dot 1 2 3 6 7 8
-⣨	dot 4 6 7 8
-⣩	dot 1 4 6 7 8
-⣪	dot 2 4 6 7 8
-⣫	dot 1 2 4 6 7 8
-⣬	dot 3 4 6 7 8
-⣭	dot 1 3 4 6 7 8
-⣮	dot 2 3 4 6 7 8
-⣯	dot 1 2 3 4 6 7 8
-⣰	dot 5 6 7 8
-⣱	dot 1 5 6 7 8
-⣲	dot 2 5 6 7 8
-⣳	dot 1 2 5 6 7 8
-⣴	dot 3 5 6 7 8
-⣵	dot 1 3 5 6 7 8
-⣶	dot 2 3 5 6 7 8
-⣷	dot 1 2 3 5 6 7 8
-⣸	dot 1 2 3 7 8
-⣹	dot 1 4 5 6 7 8
-⣺	dot 2 4 5 6 7 8
-⣻	dot 1 2 4 5 6 7 8
-⣼	dot 3 4 5 6 7 8
-⣽	dot 1 3 4 5 6 7 8
-⣾	dot 2 3 4 5 6 7 8
-⣿	dot 1 2 3 4 5 6 7 8
+⡀	7 dot
+⡁	1 7 dot
+⡂	2 7 dot
+⡃	1 2 7 dot
+⡄	3 7 dot
+⡅	1 3 7 dot
+⡆	2 3 7 dot
+⡇	1 2 3 7 dot
+⡈	4 7 dot
+⡉	1 4 7 dot
+⡊	2 4 7 dot
+⡋	1 2 4 7 dot
+⡌	3 4 7 dot
+⡍	1 3 4 7 dot
+⡎	2 3 4 7 dot
+⡏	1 2 3 4 7 dot
+⡐	5 7 dot
+⡑	1 5 7 dot
+⡒	2 5 7 dot
+⡓	1 2 5 7 dot
+⡔	3 5 7 dot
+⡕	1 3 5 7 dot
+⡖	2 3 5 7 dot
+⡗	1 2 3 5 7 dot
+⡘	4 5 7 dot
+⡙	1 4 5 7 dot
+⡚	2 4 5 7 dot
+⡛	1 2 4 5 7 dot
+⡜	3 4 5 7 dot
+⡝	1 3 4 5 7 dot
+⡞	2 3 4 5 7 dot
+⡟	1 2 3 4 5 7 dot
+⡠	6 7 dot
+⡡	1 6 7 dot
+⡢	2 6 7 dot
+⡣	1 2 6 7 dot
+⡤	3 6 7 dot
+⡥	1 3 6 7 dot
+⡦	2 3 6 7 dot
+⡧	1 2 3 6 7 dot
+⡨	4 6 7 dot
+⡩	1 4 6 7 dot
+⡪	2 4 6 7 dot
+⡫	1 2 4 6 7 dot
+⡬	3 4 6 7 dot
+⡭	1 3 4 6 7 dot
+⡮	2 3 4 6 7 dot
+⡯	1 2 3 4 6 7 dot
+⡰	5 6 7 dot
+⡱	1 5 6 7 dot
+⡲	2 5 6 7 dot
+⡳	1 2 5 6 7 dot
+⡴	3 5 6 7 dot
+⡵	1 3 5 6 7 dot
+⡶	2 3 5 6 7 dot
+⡷	1 2 3 5 6 7 dot
+⡸	1 2 3 7 dot
+⡹	1 4 5 6 7 dot
+⡺	2 4 5 6 7 dot
+⡻	1 2 4 5 6 7 dot
+⡼	3 4 5 6 7 dot
+⡽	1 3 4 5 6 7 dot
+⡾	2 3 4 5 6 7 dot
+⡿	1 2 3 4 5 6 7 dot
+⢀	8 dot
+⢁	1 8 dot
+⢂	2 8 dot
+⢃	1 2 8 dot
+⢄	3 8 dot
+⢅	1 3 8 dot
+⢆	2 3 8 dot
+⢇	1 2 3 8 dot
+⢈	4 8 dot
+⢉	1 4 8 dot
+⢊	2 4 8 dot
+⢋	1 2 4 8 dot
+⢌	3 4 8 dot
+⢍	1 3 4 8 dot
+⢎	2 3 4 8 dot
+⢏	1 2 3 4 8 dot
+⢐	5 8 dot
+⢑	1 5 8 dot
+⢒	2 5 8 dot
+⢓	1 2 5 8 dot
+⢔	3 5 8 dot
+⢕	1 3 5 8 dot
+⢖	2 3 5 8 dot
+⢗	1 2 3 5 8 dot
+⢘	4 5 8 dot
+⢙	1 4 5 8 dot
+⢚	2 4 5 8 dot
+⢛	1 2 4 5 8 dot
+⢜	3 4 5 8 dot
+⢝	1 3 4 5 8 dot
+⢞	2 3 4 5 8 dot
+⢟	1 2 3 4 5 8 dot
+⢠	6 8 dot
+⢡	1 6 8 dot
+⢢	2 6 8 dot
+⢣	1 2 6 8 dot
+⢤	3 6 8 dot
+⢥	1 3 6 8 dot
+⢦	2 3 6 8 dot
+⢧	1 2 3 6 8 dot
+⢨	4 6 8 dot
+⢩	1 4 6 8 dot
+⢪	2 4 6 8 dot
+⢫	1 2 4 6 8 dot
+⢬	3 4 6 8 dot
+⢭	1 3 4 6 8 dot
+⢮	2 3 4 6 8 dot
+⢯	1 2 3 4 6 8 dot
+⢰	5 6 8 dot
+⢱	1 5 6 8 dot
+⢲	2 5 6 8 dot
+⢳	1 2 5 6 8 dot
+⢴	3 5 6 8 dot
+⢵	1 3 5 6 8 dot
+⢶	2 3 5 6 8 dot
+⢷	1 2 3 5 6 8 dot
+⢸	1 2 3 8 dot
+⢹	1 4 5 6 8 dot
+⢺	2 4 5 6 8 dot
+⢻	1 2 4 5 6 8 dot
+⢼	3 4 5 6 8 dot
+⢽	1 3 4 5 6 8 dot
+⢾	2 3 4 5 6 8 dot
+⢿	1 2 3 4 5 6 8 dot
+⣀	7 8 dot
+⣁	1 7 8 dot
+⣂	2 7 8 dot
+⣃	1 2 7 8 dot
+⣄	3 7 8 dot
+⣅	1 3 7 8 dot
+⣆	2 3 7 8 dot
+⣇	1 2 3 7 8 dot
+⣈	4 7 8 dot
+⣉	1 4 7 8 dot
+⣊	2 4 7 8 dot
+⣋	1 2 4 7 8 dot
+⣌	3 4 7 8 dot
+⣍	1 3 4 7 8 dot
+⣎	2 3 4 7 8 dot
+⣏	1 2 3 4 7 8 dot
+⣐	5 7 8 dot
+⣑	1 5 7 8 dot
+⣒	2 5 7 8 dot
+⣓	1 2 5 7 8 dot
+⣔	3 5 7 8 dot
+⣕	1 3 5 7 8 dot
+⣖	2 3 5 7 8 dot
+⣗	1 2 3 5 7 8 dot
+⣘	4 5 7 8 dot
+⣙	1 4 5 7 8 dot
+⣚	2 4 5 7 8 dot
+⣛	1 2 4 5 7 8 dot
+⣜	3 4 5 7 8 dot
+⣝	1 3 4 5 7 8 dot
+⣞	2 3 4 5 7 8 dot
+⣟	1 2 3 4 5 7 8 dot
+⣠	6 7 8 dot
+⣡	1 6 7 8 dot
+⣢	2 6 7 8 dot
+⣣	1 2 6 7 8 dot
+⣤	3 6 7 8 dot
+⣥	1 3 6 7 8 dot
+⣦	2 3 6 7 8 dot
+⣧	1 2 3 6 7 8 dot
+⣨	4 6 7 8 dot
+⣩	1 4 6 7 8 dot
+⣪	2 4 6 7 8 dot
+⣫	1 2 4 6 7 8 dot
+⣬	3 4 6 7 8 dot
+⣭	1 3 4 6 7 8 dot
+⣮	2 3 4 6 7 8 dot
+⣯	1 2 3 4 6 7 8 dot
+⣰	5 6 7 8 dot
+⣱	1 5 6 7 8 dot
+⣲	2 5 6 7 8 dot
+⣳	1 2 5 6 7 8 dot
+⣴	3 5 6 7 8 dot
+⣵	1 3 5 6 7 8 dot
+⣶	2 3 5 6 7 8 dot
+⣷	1 2 3 5 6 7 8 dot
+⣸	1 2 3 7 8 dot
+⣹	1 4 5 6 7 8 dot
+⣺	2 4 5 6 7 8 dot
+⣻	1 2 4 5 6 7 8 dot
+⣼	3 4 5 6 7 8 dot
+⣽	1 3 4 5 6 7 8 dot
+⣾	2 3 4 5 6 7 8 dot
+⣿	1 2 3 4 5 6 7 8 dot
