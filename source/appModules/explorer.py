@@ -23,6 +23,7 @@ from NVDAObjects.UIA import UIA
 from NVDAObjects.behaviors import ToolTip
 from NVDAObjects.window.edit import RichEdit50, EditTextInfo
 import config
+from winAPI.types import HWNDValT
 
 
 # Suppress incorrect Win 10 Task switching window focus
@@ -504,7 +505,6 @@ class AppModule(appModuleHandler.AppModule):
 
 		nextHandler()
 
-	from winAPI.types import HWNDValT
 	def isGoodUIAWindow(self, hwnd: HWNDValT) -> bool:
 		currentWinVer = winVersion.getWinVer()
 		# #9204: shell raises window open event for emoji panel in build 18305 and later.
