@@ -27,10 +27,12 @@ def actionTester(
 		such as a driver instance.
 	@param expectedKwargs: The kwargs that are expected to be passed to the action
 	"""
+	expectedKwargs["_called"] = True
 	actualKwargs = {}
 
 	def handler(**kwargs):
 		actualKwargs.update(kwargs)
+		actualKwargs["_called"] = True
 
 	action.register(handler)
 	try:
@@ -60,10 +62,12 @@ def deciderTester(
 		such as a driver instance.
 	@param expectedKwargs: The kwargs that are expected to be passed to the decider handler
 	"""
+	expectedKwargs["_called"] = True
 	actualKwargs = {}
 
 	def handler(**kwargs):
 		actualKwargs.update(kwargs)
+		actualKwargs["_called"] = True
 		return expectedDecision
 
 	decider.register(handler)
@@ -96,17 +100,14 @@ def filterTester(
 		such as a driver instance.
 	@param expectedKwargs: The kwargs that are expected to be passed to the filter handler.
 	"""
+	expectedKwargs["_called"] = True
+	expectedKwargs["_value"] = expectedInput
 	actualKwargs = {}
 
-	class InputValueContainer:
-		"""A class to propagate the input value entering the handler to the filterTester"""
-		value: Optional[FilterValueTypeT] = None
-
-	container = InputValueContainer()
-
-	def handler(inputVal: FilterValueTypeT, **kwargs):
-		container.value = inputVal
+	def handler(value: FilterValueTypeT, **kwargs):
 		actualKwargs.update(kwargs)
+		actualKwargs["_called"] = True
+		actualKwargs["_value"] = value
 		return expectedOutput
 
 	filter.register(handler)
@@ -114,6 +115,5 @@ def filterTester(
 		yield expectedOutput
 	finally:
 		filter.unregister(handler)
-		testCase.assertEqual(expectedInput, container.value)
 		testFunc = testCase.assertDictContainsSubset if useAssertDictContainsSubset else testCase.assertDictEqual
 		testFunc(expectedKwargs, actualKwargs)
