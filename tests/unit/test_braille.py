@@ -179,4 +179,7 @@ class TestHandlerExtensionPoints(unittest.TestCase):
 			braille.handler.decide_enabled,
 			expectedDecision=False,
 		) as expectedDecision:
+			# Ensure that disabling braille by the decider doesn't try to call _handleEnabledDecisionFalse,
+			# as that relies on wx.
+			braille.handler._enabled = False
 			self.assertEqual(braille.handler.enabled, expectedDecision)

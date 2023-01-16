@@ -45,6 +45,7 @@ For example, when text has a comment and a footnote associated with it. (#14507,
   - NVDA will announce search highlights when opening Start menu. (#13841)
   - On ARM, x64 apps are no longer identified as ARM64 applications. (#14403)
   - Clipboard history menu items such as "pin item" can be accessed. (#14508)
+  - In Windows 11 22H2 and newer, it is again possible to use mouse and touch interaction to interact with areas such as the system tray overflow window and "Open With" dialog. (#14538, #14539)
   -
 - Suggestions are reported when typing an @mention in in Microsoft Excel comments. (#13764)
 - In the Google Chrome location bar, suggestion controls (switch to tab, remove suggestion etc) are now reported when selected. (#13522)
@@ -69,6 +70,7 @@ For example, when text has a comment and a footnote associated with it. (#14507,
 - Emojis should now be reported in more languages. (#14433)
 - The presence of an annotation is no longer missing in braille for some elements. (#13815)
 - Fixed an issue where config changes not save correctly when changing between a "Default" option and the value of the "Default" option. (#14133)
+- When accessing the NVDA menu via the notification area, NVDA will not suggest a pending update anymore when no update is available. (#14523)
 -
 
 
@@ -152,6 +154,8 @@ Use ``configFlags.TetherTo.*.value`` instead. (#14233)
 Use ``utils.security.post_sessionLockStateChanged`` instead. (#14486)
 - ``NVDAObject.hasDetails``, ``NVDAObject.detailsSummary``, ``NVDAObject.detailsRole`` has been deprecated.
 Use ``NVDAObject.annotations`` instead. (#14507)
+- ``gui.MainFrame.evaluateUpdatePendingUpdateMenuItemCommand`` has been deprecated.
+Use ``gui.MainFrame.SysTrayIcon.evaluateUpdatePendingUpdateMenuItemCommand`` instead. (#14523)
 -
 
 
