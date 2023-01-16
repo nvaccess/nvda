@@ -115,8 +115,8 @@ class WelcomeDialog(
 			gui.messageBox(
 				_(
 					# Translators: The title of an error message box displayed when validating the startup dialog
-					"At least one NVDA modifier key should be selected. "
-					"As a consequence it has not been possible to disable the caps lock key."
+					"At least one NVDA modifier key must be set. "
+					"Caps lock will remain as an NVDA modifier key. "
 				),
 				# Translators: The title of an error message box displayed when validating the startup dialog
 				_("Error"),
