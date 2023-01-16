@@ -15,7 +15,7 @@ from extensionPoints import (
 )
 import unittest
 from contextlib import contextmanager
-from typing import Iterable, Optional
+from typing import Iterable
 
 
 @contextmanager

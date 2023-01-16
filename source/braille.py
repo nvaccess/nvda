@@ -1900,6 +1900,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	@param value: the number of cells of the current display.
 	@type value: int
 	"""
+
 	displaySizeChanged: extensionPoints.Action
 	"""
 	Action that allows components or add-ons to be notified of display size changes.
@@ -2112,6 +2113,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			# or situations where the user hasn't set any port.
 			if port:
 				kwargs["port"] = port
+
 		try:
 			newDisplay = _getDisplayDriver(name)
 			oldDisplay = self.display
@@ -2541,7 +2543,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		config.conf["braille"]["display"] = AUTO_DISPLAY_NAME
 		if not keepCurrentDisplay:
 			self.setDisplayByName("noBraille", isFallback=True)
-		self._detector = bdDetect.Detector()
+		self._detector = bdDetect._Detector()
 		self._detectionEnabled = True
 		self._detector._queueBgScan(usb=usb, bluetooth=bluetooth, limitToDevices=limitToDevices)
 

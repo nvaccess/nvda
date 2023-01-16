@@ -13,14 +13,25 @@ For drivers in add-ons, this must be done in a global plugin.
 """
 
 import itertools
-from collections import defaultdict, OrderedDict
 import threading
 from concurrent.futures import ThreadPoolExecutor, Future
-import typing
+from typing import (
+	Callable,
+	DefaultDict,
+	Dict,
+	Iterable,
+	Iterator,
+	List,
+	NamedTuple,
+	Optional,
+	OrderedDict,
+	Set,
+	Tuple,
+	Union,
+)
 import hwPortUtils
 import braille
 import winUser
-from logHandler import log
 import config
 import appModuleHandler
 from baseObject import AutoPropertyObject
@@ -31,13 +42,12 @@ import extensionPoints
 
 HID_USAGE_PAGE_BRAILLE = 0x41
 
-DBT_DEVNODES_CHANGED=7
+DBT_DEVNODES_CHANGED = 7
 
-_driverDevices = OrderedDict()
 USB_ID_REGEX = re.compile(r"^VID_[0-9A-F]{4}&PID_[0-9A-F]{4}$", re.U)
 
 
-class DeviceMatch(typing.NamedTuple):
+class DeviceMatch(NamedTuple):
 	"""Represents a detected device.
 	"""
 	type: str
@@ -46,11 +56,16 @@ class DeviceMatch(typing.NamedTuple):
 	"""The identifier of the device."""
 	port: str
 	"""The port that can be used by a driver to communicate with a device."""
-	deviceInfo: typing.Dict[str, str]
+	deviceInfo: Dict[str, str]
 	"""All known information about a device."""
 
 
-scanForDevices = extensionPoints.Chain[typing.Tuple[str, DeviceMatch]]()
+MatchFuncT = Callable[[DeviceMatch], bool]
+DriverDictT = DefaultDict[str, Union[Set[str], MatchFuncT]]
+
+_driverDevices = OrderedDict[str, DriverDictT]()
+
+scanForDevices = extensionPoints.Chain[Tuple[str, DeviceMatch]]()
 """
 A Chain that can be iterated to scan for devices.
 Registered handlers should yield a tuple containing a driver name as str and DeviceMatch
@@ -80,49 +95,50 @@ KEY_BLUETOOTH = "bluetooth"
 DETECT_USB = 1
 DETECT_BLUETOOTH = 2
 
+
 def _isDebug():
 	return config.conf["debugLog"]["hwIo"]
 
-def _getDriver(driver):
+
+def _getDriver(driver: str) -> DriverDictT:
 	try:
 		return _driverDevices[driver]
 	except KeyError:
-		ret = _driverDevices[driver] = defaultdict(set)
+		ret = _driverDevices[driver] = DriverDictT(set)
 		return ret
 
-def addUsbDevices(driver, type, ids):
+
+def addUsbDevices(driver: str, type: str, ids: Set[str]):
 	"""Associate USB devices with a driver.
 	@param driver: The name of the driver.
-	@type driver: str
 	@param type: The type of the driver, either C{KEY_HID}, C{KEY_SERIAL} or C{KEY_CUSTOM}.
-	@type type: str
 	@param ids: A set of USB IDs in the form C{"VID_xxxx&PID_XXXX"}.
 		Note that alphabetical characters in hexadecimal numbers should be uppercase.
-	@type ids: set of str
 	@raise ValueError: When one of the provided IDs is malformed.
 	"""
 	malformedIds = [id for id in ids if not isinstance(id, str) or not USB_ID_REGEX.match(id)]
 	if malformedIds:
-		raise ValueError("Invalid IDs provided for driver %s, type %s: %s"
-			% (driver, type, u", ".join(malformedIds)))
+		raise ValueError(
+			f"Invalid IDs provided for driver {driver!r}, type {type!r}: "
+			f"{', '.join(malformedIds)}"
+		)
 	devs = _getDriver(driver)
 	driverUsb = devs[type]
 	driverUsb.update(ids)
 
-def addBluetoothDevices(driver, matchFunc):
+
+def addBluetoothDevices(driver: str, matchFunc: MatchFuncT):
 	"""Associate Bluetooth HID or COM ports with a driver.
 	@param driver: The name of the driver.
-	@type driver: str
 	@param matchFunc: A function which determines whether a given Bluetooth device matches.
 		It takes a L{DeviceMatch} as its only argument
 		and returns a C{bool} indicating whether it matched.
-	@type matchFunc: callable
 	"""
 	devs = _getDriver(driver)
 	devs[KEY_BLUETOOTH] = matchFunc
 
 
-def getDriversForConnectedUsbDevices() -> typing.Iterator[typing.Tuple[str, DeviceMatch]]:
+def getDriversForConnectedUsbDevices() -> Iterator[Tuple[str, DeviceMatch]]:
 	"""Get any matching drivers for connected USB devices.
 	Looks for (and yields) custom drivers first, then considers if the device is may be compatible with the
 	Standard HID Braille spec.
@@ -150,7 +166,7 @@ def getDriversForConnectedUsbDevices() -> typing.Iterator[typing.Tuple[str, Devi
 	for match in itertools.chain(usbCustomDeviceMatches, usbHidDeviceMatchesForCustom, usbComDeviceMatches):
 		for driver, devs in _driverDevices.items():
 			for type, ids in devs.items():
-				if match.type==type and match.id in ids:
+				if match.type == type and match.id in ids:
 					yield driver, match
 
 	if _isHidBrailleStandardSupported():
@@ -182,7 +198,7 @@ def _isHIDBrailleMatch(match: DeviceMatch) -> bool:
 	return match.type == KEY_HID and match.deviceInfo.get('HIDUsagePage') == HID_USAGE_PAGE_BRAILLE
 
 
-def getDriversForPossibleBluetoothDevices() -> typing.Iterator[typing.Tuple[str, DeviceMatch]]:
+def getDriversForPossibleBluetoothDevices() -> Iterator[Tuple[str, DeviceMatch]]:
 	"""Get any matching drivers for possible Bluetooth devices.
 	Looks for (and yields) custom drivers first, then considers if the device is may be compatible with the
 	Standard HID Braille spec.
@@ -223,6 +239,9 @@ def getDriversForPossibleBluetoothDevices() -> typing.Iterator[typing.Tuple[str,
 				)
 
 
+btDevsCacheT = Optional[List[Tuple[str, DeviceMatch]]]
+
+
 class _DeviceInfoFetcher(AutoPropertyObject):
 	"""Utility class that caches fetched info for available devices for the duration of one core pump cycle."""
 	cachePropertiesByDefault = True
@@ -232,35 +251,35 @@ class _DeviceInfoFetcher(AutoPropertyObject):
 		self._btDevsCache: Optional[List[Tuple[str, DeviceMatch]]] = None
 
 	#: Type info for auto property: _get_btDevsCache
-	btDevsCache: typing.Optional[typing.List[typing.Tuple[str, DeviceMatch]]]
+	btDevsCache: btDevsCacheT
 
-	def _get_btDevsCache(self):
-		with self._btDevsLock():
+	def _get_btDevsCache(self) -> btDevsCacheT:
+		with self._btDevsLock:
 			return self._btDevsCache
 
 	def _set_btDevsCache(
 			self,
-			cache: typing.Optional[typing.List[typing.Tuple[str, DeviceMatch]]]
+			cache: btDevsCacheT,
 	):
-		with self._btDevsLock():
+		with self._btDevsLock:
 			self._btDevsCache = cache
 
 	#: Type info for auto property: _get_comPorts
-	comPorts: typing.List[typing.Dict]
+	comPorts: List[Dict]
 
-	def _get_comPorts(self) -> typing.List[typing.Dict]:
+	def _get_comPorts(self) -> List[Dict]:
 		return list(hwPortUtils.listComPorts(onlyAvailable=True))
 
 	#: Type info for auto property: _get_usbDevices
-	usbDevices: typing.List[typing.Dict]
+	usbDevices: List[Dict]
 
-	def _get_usbDevices(self) -> typing.List[typing.Dict]:
+	def _get_usbDevices(self) -> List[Dict]:
 		return list(hwPortUtils.listUsbDevices(onlyAvailable=True))
 
 	#: Type info for auto property: _get_hidDevices
-	hidDevices: typing.List[typing.Dict]
+	hidDevices: List[Dict]
 
-	def _get_hidDevices(self) -> typing.List[typing.Dict]:
+	def _get_hidDevices(self) -> List[Dict]:
 		return list(hwPortUtils.listHidDevices(onlyAvailable=True))
 
 
@@ -277,19 +296,19 @@ class _Detector:
 		After construction, a scan should be queued with L{queueBgScan}.
 		"""
 		self._executor = ThreadPoolExecutor(1)
-		self._queuedFuture: typing.Optional[Future] = None
+		self._queuedFuture: Optional[Future] = None
 		messageWindow.pre_handleWindowMessage.register(self.handleWindowMessage)
 		appModuleHandler.post_appSwitch.register(self.pollBluetoothDevices)
 		self._stopEvent = threading.Event()
 		self._detectUsb = True
 		self._detectBluetooth = True
-		self._limitToDevices = None
+		self._limitToDevices: Optional[List[str]] = None
 
 	def _queueBgScan(
 			self,
 			usb: bool = False,
 			bluetooth: bool = False,
-			limitToDevices: typing.Optional[typing.List[str]] = None
+			limitToDevices: Optional[List[str]] = None
 	):
 		"""Queues a scan for devices.
 		If a scan is already in progress, a new scan will be queued after the current scan.
@@ -319,7 +338,7 @@ class _Detector:
 	@staticmethod
 	def _bgScanUsb(
 			usb: bool = True,
-			limitToDevices: typing.Optional[typing.List[str]] = None,
+			limitToDevices: Optional[List[str]] = None,
 	):
 		"""Handler for L{scanForDevices} that yields USB devices.
 		See the L{scanForDevices} documentation for information about the parameters.
@@ -334,14 +353,14 @@ class _Detector:
 	@staticmethod
 	def _bgScanBluetooth(
 			bluetooth: bool = True,
-			limitToDevices: typing.Optional[typing.List[str]] = None,
+			limitToDevices: Optional[List[str]] = None,
 	):
 		"""Handler for L{scanForDevices} that yields Bluetooth devices and keeps an internal cache of devices.
 		See the L{scanForDevices} documentation for information about the parameters.
 		"""
 		if not bluetooth:
 			return
-		btDevs: typing.Optional[typing.Iterable[typing.Tuple[str, DeviceMatch]]] = _DeviceInfoFetcher.btDevsCache
+		btDevs: Optional[Iterable[Tuple[str, DeviceMatch]]] = _DeviceInfoFetcher.btDevsCache
 		if btDevs is None:
 			btDevs = getDriversForPossibleBluetoothDevices()
 			# Cache Bluetooth devices for next time.
@@ -361,7 +380,7 @@ class _Detector:
 			self,
 			usb: bool,
 			bluetooth: bool,
-			limitToDevices: typing.Optional[typing.List[str]]
+			limitToDevices: Optional[List[str]]
 	):
 		"""Performs the actual background scan.
 		this function should be run on a background thread.
@@ -390,7 +409,7 @@ class _Detector:
 			self,
 			usb: bool = True,
 			bluetooth: bool = True,
-			limitToDevices: typing.Optional[typing.List[str]] = None,
+			limitToDevices: Optional[List[str]] = None,
 	):
 		"""Stop a current scan when in progress, and start scanning from scratch.
 		@param usb: Whether USB devices should be detected for this and subsequent scans.
@@ -428,20 +447,25 @@ class _Detector:
 		self._executor.shutdown(wait=False)
 
 
-def getConnectedUsbDevicesForDriver(driver) -> typing.Iterator[DeviceMatch]:
+def getConnectedUsbDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
 	"""Get any connected USB devices associated with a particular driver.
 	@param driver: The name of the driver.
-	@type driver: str
 	@return: Device information for each device.
 	@raise LookupError: If there is no detection data for this driver.
 	"""
 	usbDevs = itertools.chain(
-		(DeviceMatch(KEY_CUSTOM, port["usbID"], port["devicePath"], port)
-			for port in deviceInfoFetcher.usbDevices),
-		(DeviceMatch(KEY_HID, port["usbID"], port["devicePath"], port)
-			for port in deviceInfoFetcher.hidDevices if port["provider"]=="usb"),
-		(DeviceMatch(KEY_SERIAL, port["usbID"], port["port"], port)
-			for port in deviceInfoFetcher.comPorts if "usbID" in port)
+		(
+			DeviceMatch(KEY_CUSTOM, port["usbID"], port["devicePath"], port)
+			for port in deviceInfoFetcher.usbDevices
+		),
+		(
+			DeviceMatch(KEY_HID, port["usbID"], port["devicePath"], port)
+			for port in deviceInfoFetcher.hidDevices if port["provider"] == "usb"
+		),
+		(
+			DeviceMatch(KEY_SERIAL, port["usbID"], port["port"], port)
+			for port in deviceInfoFetcher.comPorts if "usbID" in port
+		)
 	)
 	for match in usbDevs:
 		if driver == _getStandardHidDriverName():
@@ -457,10 +481,9 @@ def getConnectedUsbDevicesForDriver(driver) -> typing.Iterator[DeviceMatch]:
 					yield match
 
 
-def getPossibleBluetoothDevicesForDriver(driver) -> typing.Iterator[DeviceMatch]:
+def getPossibleBluetoothDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
 	"""Get any possible Bluetooth devices associated with a particular driver.
 	@param driver: The name of the driver.
-	@type driver: str
 	@return: Port information for each port.
 	@raise LookupError: If there is no detection data for this driver.
 	"""
@@ -475,22 +498,25 @@ def getPossibleBluetoothDevicesForDriver(driver) -> typing.Iterator[DeviceMatch]
 		if not callable(matchFunc):
 			return
 	btDevs = itertools.chain(
-		(DeviceMatch(KEY_SERIAL, port["bluetoothName"], port["port"], port)
+		(
+			DeviceMatch(KEY_SERIAL, port["bluetoothName"], port["port"], port)
 			for port in deviceInfoFetcher.comPorts
-			if "bluetoothName" in port),
-		(DeviceMatch(KEY_HID, port["hardwareID"], port["devicePath"], port)
-			for port in deviceInfoFetcher.hidDevices if port["provider"]=="bluetooth"),
+			if "bluetoothName" in port
+		),
+		(
+			DeviceMatch(KEY_HID, port["hardwareID"], port["devicePath"], port)
+			for port in deviceInfoFetcher.hidDevices if port["provider"] == "bluetooth"
+		),
 	)
 	for match in btDevs:
 		if matchFunc(match):
 			yield match
 
-def driverHasPossibleDevices(driver):
+
+def driverHasPossibleDevices(driver: str) -> bool:
 	"""Determine whether there are any possible devices associated with a given driver.
 	@param driver: The name of the driver.
-	@type driver: str
 	@return: C{True} if there are possible devices, C{False} otherwise.
-	@rtype: bool
 	@raise LookupError: If there is no detection data for this driver.
 	"""
 	return bool(next(itertools.chain(
@@ -498,12 +524,11 @@ def driverHasPossibleDevices(driver):
 		getPossibleBluetoothDevicesForDriver(driver)
 	), None))
 
-def driverSupportsAutoDetection(driver):
+
+def driverSupportsAutoDetection(driver: str) -> bool:
 	"""Returns whether the provided driver supports automatic detection of displays.
 	@param driver: The name of the driver.
-	@type driver: str
 	@return: C{True} if de driver supports auto detection, C{False} otherwise.
-	@rtype: bool
 	"""
 	return driver in _driverDevices
 
@@ -517,8 +542,8 @@ def initialize():
 	global deviceInfoFetcher
 	deviceInfoFetcher = _DeviceInfoFetcher()
 
-	scanForDevices.register(Detector._bgScanUsb)
-	scanForDevices.register(Detector._bgScanBluetooth)
+	scanForDevices.register(_Detector._bgScanUsb)
+	scanForDevices.register(_Detector._bgScanBluetooth)
 
 	# Add devices
 	# alva
@@ -774,6 +799,6 @@ def initialize():
 def terminate():
 	global deviceInfoFetcher
 	_driverDevices.clear()
-	scanForDevices.unregister(Detector._bgScanBluetooth)
-	scanForDevices.unregister(Detector._bgScanUsb)
-	del deviceInfoFetcher
+	scanForDevices.unregister(_Detector._bgScanBluetooth)
+	scanForDevices.unregister(_Detector._bgScanUsb)
+	deviceInfoFetcher = None
