@@ -55,11 +55,13 @@ scanForDevices = extensionPoints.Chain[typing.Tuple[str, DeviceMatch]]()
 A Chain that can be iterated to scan for devices.
 Registered handlers should yield a tuple containing a driver name as str and DeviceMatch
 Handlers are called with these keyword arguments:
-@param Usb: Whether the handler is expected to yield USB devices.
+@param usb: Whether the handler is expected to yield USB devices.
 @type usb: bool
-@param Bluetooth: Whether the handler is expected to yield USB devices.
-@type Bluetooth: bool
+@param bluetooth: Whether the handler is expected to yield USB devices.
+@type bluetooth: bool
 @param limitToDevices: Drivers to which detection should be limited.
+	C{None} if no driver filtering should occur.
+@type limitToDevices: Optional[List[str]]
 	C{None} if no driver filtering should occur.
 """
 
@@ -226,8 +228,8 @@ class _DeviceInfoFetcher(AutoPropertyObject):
 	cachePropertiesByDefault = True
 
 	def __init__(self):
-		self._btDevsLock = threading.Lock
-		self._btDevsCache: typing.Optional[typing.Tuple[str, DeviceMatch]] = None
+		self._btDevsLock = threading.Lock()
+		self._btDevsCache: Optional[List[Tuple[str, DeviceMatch]]] = None
 
 	#: Type info for auto property: _get_btDevsCache
 	btDevsCache: typing.Optional[typing.List[typing.Tuple[str, DeviceMatch]]]
@@ -262,10 +264,10 @@ class _DeviceInfoFetcher(AutoPropertyObject):
 		return list(hwPortUtils.listHidDevices(onlyAvailable=True))
 
 
-deviceInfoFetcher: _DeviceInfoFetcher
+deviceInfoFetcher: Optional[_DeviceInfoFetcher] = None
 
 
-class Detector(object):
+class _Detector:
 	"""Detector class used to automatically detect braille displays.
 	This should only be used by the L{braille} module.
 	"""
