@@ -1,13 +1,12 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee,
+# Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee,
 # Thomas Stivers, Babbage B.V., Accessolutions, Julien Cochuyt, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 import time
 import os
-import sys
 import threading
 import ctypes
 import wx
@@ -46,14 +45,13 @@ from . import logViewer
 import speechViewer
 import winUser
 import api
-from buildVersion import version_year
+import NVDAState
 
 
-if version_year < 2023:
+if NVDAState._allowDeprecatedAPI():
 	def quit():
 		"""
-		Deprecated, for removal in 2023.1.
-		Use `wx.CallAfter(mainFrame.onExitCommand, None)` directly instead.
+		Deprecated, use `wx.CallAfter(mainFrame.onExitCommand, None)` directly instead.
 		"""
 		log.debugWarning("Deprecated function called: gui.quit", stack_info=True)
 		wx.CallAfter(mainFrame.onExitCommand, None)
@@ -107,17 +105,17 @@ class MainFrame(wx.Frame):
 		L{postPopup} should be called after the dialog or menu has been shown.
 		@postcondition: A dialog or menu may be shown.
 		"""
-		nvdaPid = os.getpid()
 		focus = api.getFocusObject()
 		# Do not set prevFocus if the focus is on a control rendered by NVDA itself, such as the NVDA menu.
 		# This allows to refer to the control that had focus before opening the menu while still using NVDA
-		# on its own controls. The L{nvdaPid} check can be bypassed by setting the optional attribute
+		# on its own controls.
+		# The check for NVDA process ID can be bypassed by setting the optional attribute
 		# L{isPrevFocusOnNvdaPopup} to L{True} when a NVDA dialog offers customizable bound gestures,
 		# eg. the NVDA Python Console.
-		if focus.processID != nvdaPid or getattr(focus, "isPrevFocusOnNvdaPopup", False):
+		if focus.processID != globalVars.appPid or getattr(focus, "isPrevFocusOnNvdaPopup", False):
 			self.prevFocus = focus
 			self.prevFocusAncestors = api.getFocusAncestors()
-		if winUser.getWindowThreadProcessID(winUser.getForegroundWindow())[0] != nvdaPid:
+		if winUser.getWindowThreadProcessID(winUser.getForegroundWindow())[0] != globalVars.appPid:
 			# This process is not the foreground process, so bring it to the foreground.
 			self.Raise()
 
@@ -138,7 +136,6 @@ class MainFrame(wx.Frame):
 		# Therefore, move the mouse to the center of the screen so that the menu will always pop up there.
 		location = api.getDesktopObject().location
 		winUser.setCursorPos(*location.center)
-		self.evaluateUpdatePendingUpdateMenuItemCommand()
 		self.sysTrayIcon.onActivate(None)
 
 	def onRevertToSavedConfigurationCommand(self,evt):
@@ -205,14 +202,13 @@ class MainFrame(wx.Frame):
 				updateCheck.executePendingUpdate()
 
 	def evaluateUpdatePendingUpdateMenuItemCommand(self):
-		try:
-			self.sysTrayIcon.menu.Remove(self.sysTrayIcon.installPendingUpdateMenuItem)
-		except:
-			log.debug("Error while removing  pending update menu item", exc_info=True)
-			pass
-		if not globalVars.appArgs.secure and updateCheck and updateCheck.isPendingUpdate():
-			self.sysTrayIcon.menu.Insert(self.sysTrayIcon.installPendingUpdateMenuItemPos,self.sysTrayIcon.installPendingUpdateMenuItem)
-
+		log.warning(
+			"MainFrame.evaluateUpdatePendingUpdateMenuItemCommand is deprecated. "
+			"Use SysTrayIcon.evaluateUpdatePendingUpdateMenuItemCommand instead.",
+			stack_info=True,
+		)
+		self.sysTrayIcon.evaluateUpdatePendingUpdateMenuItemCommand()
+	
 	@blockAction.when(blockAction.Context.MODAL_DIALOG_OPEN)
 	def onExitCommand(self, evt):
 		if config.conf["general"]["askToExit"]:
@@ -455,7 +451,7 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 			# Translators: The label of a menu item to open the Add-ons Manager.
 			item = menu_tools.Append(wx.ID_ANY, _("Manage &add-ons..."))
 			self.Bind(wx.EVT_MENU, frame.onAddonsManagerCommand, item)
-		if not globalVars.appArgs.secure and not config.isAppX and getattr(sys,'frozen',None):
+		if not globalVars.appArgs.secure and not config.isAppX and not NVDAState.isRunningAsSource():
 			# Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
 			item = menu_tools.Append(wx.ID_ANY, _("Create portable copy..."))
 			self.Bind(wx.EVT_MENU, frame.onCreatePortableCopyCommand, item)
@@ -526,8 +522,17 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 
 		self.Bind(wx.adv.EVT_TASKBAR_LEFT_DOWN, self.onActivate)
 		self.Bind(wx.adv.EVT_TASKBAR_RIGHT_DOWN, self.onActivate)
-
+	
+	def evaluateUpdatePendingUpdateMenuItemCommand(self):
+		try:
+			self.menu.Remove(self.installPendingUpdateMenuItem)
+		except Exception:
+			log.debug("Error while removing pending update menu item", exc_info=True)
+		if not globalVars.appArgs.secure and updateCheck and updateCheck.isPendingUpdate():
+			self.menu.Insert(self.installPendingUpdateMenuItemPos, self.installPendingUpdateMenuItem)
+	
 	def onActivate(self, evt):
+		self.evaluateUpdatePendingUpdateMenuItemCommand()
 		mainFrame.prePopup()
 		import appModules.nvda
 		if not appModules.nvda.nvdaMenuIaIdentity:
@@ -678,15 +683,16 @@ class ExecAndPump(threading.Thread):
 			self.threadExc=e
 			log.debugWarning("task had errors",exc_info=True)
 
+
 class IndeterminateProgressDialog(wx.ProgressDialog):
 
-	def __init__(self, parent, title, message):
-		super(IndeterminateProgressDialog, self).__init__(title, message, parent=parent)
+	def __init__(self, parent: wx.Window, title: str, message: str):
+		super().__init__(title, message, parent=parent)
 		self._speechCounter = -1
 		self.timer = wx.PyTimer(self.Pulse)
 		self.timer.Start(1000)
-		self.Raise()
 		self.CentreOnScreen()
+		self.Raise()
 
 	def Pulse(self):
 		super(IndeterminateProgressDialog, self).Pulse()

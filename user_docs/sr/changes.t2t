@@ -7,6 +7,290 @@
 Da biste pročitali promene koje su bitne za programere, molimo pogledajte [Englesku verziju ovog dokumenta ../en/changes.html].
 
 
+= 2022.4 =
+Ova verzija uključuje nekoliko novih ključnih komandi, uključujući komande za režim izgovori sve u tabelama.
+Sekcija "vodič za brz početak" je dodata u korisničko uputstvo.
+Ispravljeno je takođe nekoliko grešaka.
+
+eSpeak i LibLouis su ažurirani.
+Dodate su nove Kineske, Švedske, Luganda i Kinyarwanda brajeve tabele.
+
+== Nove karakteristike ==
+- Dodata sekcija "vodič za brz početak" u korisničko uputstvo. (#13934)
+- Dodata nova komanda za proveru tasterske prečice trenutnog fokusa. (#13960)
+  - Desktop: ``šift+numeričko2``.
+  - Laptop: ``NVDA+ctrl+šift+.``.
+  -
+- Dodate nove komande za pomeranje preglednog kursora po stranicama kada je podržano od aplikacije. (#14021)
+  - Pomeri se na prethodnu stranicu:
+    - Desktop: ``NVDA+pageUp``.
+    - Laptop: ``NVDA+šift+pageUp``.
+    -
+  - Pomeri se na sledeću stranicu:
+    - Desktop: ``NVDA+pageDown``.
+    - Laptop: ``NVDA+šift+pageDown``.
+    -
+  -
+- Dodate sledeće komande za tabele. (#14070)
+  - Izgovori sve u koloni: ``NVDA+kontrol+alt+strelicaDole``
+  - Izgovori sve u redu: ``NVDA+kontrol+alt+strelicaDesno``
+  - Pročitaj celu kolonu: ``NVDA+kontrol+alt+strelicaGore``
+  - Pročitaj ceo red: ``NVDA+kontrol+alt+strelicaLevo``
+  -
+- Microsoft Excel uz UI Automation: NVDA sada izgovara kada izađete iz tabele u okviru radnog lista. (#14165)
+- Prijavljivanje zaglavlja u tabeli se sada može podesiti odvojeno za redove i kolone. (#14075)
+-
+
+
+== Promene ==
+- eSpeak NG je ažuriran na 1.52-dev commit ``735ecdb8``. (#14060, #14079, #14118, #14203)
+  - Ispravljeno prijavljivanje latiničnih znakova kada se koristi Mandarinski. (#12952, #13572, #14197)
+  -
+- Ažuriran LibLouis brajev prevodilac na [3.23.0 https://github.com/liblouis/liblouis/releases/tag/v3.23.0]. (#14112)
+  - Dodate brajeve tabele:
+    - Kineski zajednički brajev kod (znakovi pojednostavljenog Kineskog)
+    - Kinyarwanda književni brajev kod
+    - Luganda književni brajev kod
+    - Švedski brajev kod
+    - Švedski polovičan kratkopis
+    - Švedski kratkopis
+    - Kineski (Kina, Mandarinski) trenutni brajev sistem (bez tonova) (#14138)
+    -
+- NVDA sada uključuje arhitekturu operativnog sistema kao deo praćenja statistika korišćenja. (#14019)
+-
+
+
+== Ispravljene greške ==
+- Kada se NVDA ažurira korišćenjem interfejsa komandne linije Windows menadžera paketa (winget), stabilna NVDA verzija neće uvek biti tretirana kao novija od bilo koje alfa verzije koja je instalirana. (#12469)
+- NVDA će sada ispravno izgovarati grupisana polja u Java aplikacijama. (#13962)
+- Kursor ispravno prati izgovoreni tekst kada se koristi režim "izgovori sve" u aplikacijama kao što su Bookworm, WordPad, ili u NVDA pregledniku dnevnika. (#13420, #9179)
+- U programima koji koriste UI Automation, izborna polja koja su polovično označena biće ispravno prijavljena. (#13975)
+- Poboljšane performanse i stabilnost u  Microsoft Visual Studiju, Windows Terminalu, i drugim  aplikacijama zasnovanim na UI Automation. (#11077, #11209)
+  - Ove ispravke se primenjuju na Windowsu 11 Sun Valley 2 (verzija 22H2) i novijim.
+  - Selektivna registracija za promene UI Automation  događaja i svojstava je sada podrazumevano omogućena.
+  -
+- Prijavljivanje teksta, brajev izlaz i sprečavanje izgovora lozinki sada rade kako je očekivano u umetnutoj kontroli Windows terminala u Visual Studiju 2022. (#14194)
+- NVDA sada obraća pažnju na DPI podešavanje kada se koristi na više monitora.
+Ispravljeno je nekoliko grešaka kada se koristi DPI podešavanje veće od 100% ili kada se koristi više monitora.
+Problemi još uvek mogu postojati kada se koriste Windows verzije starije od Windowsa 10 1809.
+Kako bi ove ispravke radile, aplikacije sa kojima NVDA vrši interakciju takođe moraju da obraćaju pažnju na DPI.
+Napomena da još uvek postoje poznati problemi sa Chromeom i Edgeom. (#13254)
+  - Vizuelni okviri za označavanje bi  trebali da se postavljaju ispravno u većini aplikacija. (#13370, #3875, #12070)
+  - Interakcija sa ekranom osetljivim na dodir bi trebala da bude precizna u većini aplikacija. (#7083)
+  - Praćenje miša bi trebalo da radi u većini aplikacija. (#6722)
+  -
+- Promene orijentacije (horizontalno/uspravno) se sada ispravno ignorišu kada nema promene (na primer prilikom promene monitora). (#14035)
+- NVDA će izgovarati prevlačenje stavki na ekranu na mestima kao što su premeštanje pločica start menija Windowsa 10 i virtuelnih radnih površina u Windowsu 11. (#12271, #14081)
+- U naprednim podešavanjima, podešavanje "Reprodukuj zvuk za evidentirane greške" se sada ispravno vraća na svoju podrazumevanu vrednost kada pritisnete dugme "Vrati na podrazumevana". (#14149)
+- NVDA sada može da izabere tekst korišćenjem prečice ``NVDA+f10`` u Java aplikacijama. (#14163)
+- NVDA se više neće zaglavljivati u meniju kada se strelicama gore i dole krećete po  konverzacijama u nizu u Microsoft Teamsu. (#14355)
+-
+
+
+= 2022.3.3 =
+Ovo je manje ažuriranje kako bi se ispravili problemi u verzijama 2022.3.2, 2022.3.1 i 2022.3.
+Takođe ispravlja bezbednosni problem.
+
+== Bezbednosne ispravke ==
+- Sprečava mogućnost sistemskog pristupa (na primer NVDA Python konzolu) za neprijavljene korisnike.
+([GHSA-fpwc-2gxx-j9v7 https://github.com/nvaccess/nvda/security/advisories/GHSA-fpwc-2gxx-j9v7])
+-
+
+== Ispravljene greške ==
+- Ispravljena greška u kojoj ako se NVDA zamrzne prilikom zaključavanja, NVDA dozvoljava pristup korisničkoj radnoj površini sa zaključanog ekrana. (#14416)
+- Ispravljena greška u kojoj ako se NVDA zamrzne prilikom zaključavanja, NVDA se ne ponaša ispravno, kao da je uređaj još uvek zaključan. (#14416)
+- Ispravljeni problemi u pristupačnosti Windows ekrana zaboravljenog PIN-a kao i u korišćenju instalacije Windows ažuriranja. (#14368)
+- Ispravljena greška sa NVDA instalacijom na određenim Windows okruženjima, na primer Windows Server. (#14379)
+-
+
+= 2022.3.2 =
+Ovo je manje ažuriranje kako bi se ispravila pogoršanja koja je izazvala verzija 2022.3.1 i kako bi se ispravio bezbednosni problem.
+
+== Bezbednosne ispravke ==
+- Sprečava mogućnost pristupa na sistemskom nivou za korisnike koji nemaju autentikaciju.
+([GHSA-3jj9-295f-h69w https://github.com/nvaccess/nvda/security/advisories/GHSA-3jj9-295f-h69w])
+-
+
+== Ispravljene greške ==
+- Ispravljeno pogoršanje iz verzije 2022.3.1 koje je izazvalo onemogućavanje određenih funkcija na bezbednim ekranima. (#14286)
+- Ispravljeno pogoršanje iz verzije 2022.3.1 koje je izazvalo onemogućavanje određenih funkcija nakon prijave, ako je NVDA pokrenut na zaključanom ekranu. (#14301)
+ -
+ 
+ 
+= 2022.3.1 =
+Ovo je manje ažuriranje kako bi se ispravilo nekoliko bezbednosnih problema.
+Molimo odgovorno prijavite bezbednosne probleme na info@nvaccess.org.
+
+== Bezbednosne ispravke ==
+- Ispravljen propust koji je dozvoljavao da dobijete sistemske privilegije umesto korisničkih.
+([GHSA-q7c2-pgqm-vvw5 https://github.com/nvaccess/nvda/security/advisories/GHSA-q7c2-pgqm-vvw5])
+- Ispravljen bezbednosni problem koji je dozvoljavao pristup Python konzoli na zaključanom ekranu uz posebni uslov pri NVDA pokretanju.
+([GHSA-72mj-mqhj-qh4w https://github.com/nvaccess/nvda/security/advisories/GHSA-72mj-mqhj-qh4w])
+- Ispravljen problem koji je izazvao keširanje teksta preglednika govora kada se zaključa Windows.
+([GHSA-grvr-j2h8-3qm4 https://github.com/nvaccess/nvda/security/advisories/GHSA-grvr-j2h8-3qm4])
+-
+
+== Ispravljene greške ==
+- Sprečavanje korisnika bez autentikacije da ažurira podešavanja za preglednike govora i brajevih redova na zaključanom ekranu. ([GHSA-grvr-j2h8-3qm4 https://github.com/nvaccess/nvda/security/advisories/GHSA-grvr-j2h8-3qm4])
+-
+
+
+= 2022.3 =
+Ogroman deo ove verzije je doprinela zajednica NVDA programera.
+Ovo uključuje odložene opise znakova i poboljšanu podršku za Windows konzolu.
+
+Ova verzija takođe uključuje nekoliko ispravljenih grešaka.
+Od važnijih, najnovije verzije programa Adobe Acrobat/Reader se više neće rušiti pri čitanju PDF dokumenata.
+
+eSpeak je ažuriran, i sada uključuje 3 nova jezika: Beloruski, Luksemburški i Totontepec Mixe.
+
+== Nove karakteristike ==
+- U Windows Console Hostu kojeg koriste komandna linija, PowerShell, i Windows podsistem za Linux na Windowsu 11 verzija 22H2 (Sun Valley 2) i novije:
+  - Značajno poboljšana brzina i stabilnost. (#10964)
+  - Kada se pritisne ``kontrol+f`` da pretražite tekst, pozicija preglednog kursora će biti ažurirana kako bi pratila pronađeni termin. (#11172)
+  - Prijavljivanje upisanog teksta koji se ne pojavljuje na ekranu (kao što su lozinke) je podrazumevano onemogućeno.
+Može se ponovo omogućiti u NVDA panelu naprednih podešavanja. (#11554)
+  - Tekst koji je van ekrana se može pregledati bez potrebe za pomeranjem prozora konzole. (#12669)
+  - Dostupne su detaljnije informacije o formatiranju teksta. ([microsoft/terminal PR 10336 https://github.com/microsoft/terminal/pull/10336])
+  -
+- Dodata je nova opcija u podešavanjima govora za čitanje opisa znakova uz odlaganje. (#13509)
+- Dodata je nova opcija za brajeve redove koja određuje da li će pomeranje brajevog reda napred i nazad prekinuti govor. (#2124)
+-
+
+
+== Promene ==
+- eSpeak NG je ažuriran na 1.52-dev commit ``9de65fcb``. (#13295)
+  - Dodati jezici:
+    - Beloruski
+    - Luksemburški
+    - Totontepec Mixe
+    -
+  -
+- Kada se koristi UI Automation za pristup kontrolama u programu Microsoft Excel, NVDA sada može da prijavi kada je ćelija spojena. (#12843)
+- Umesto prijavljivanja "ima detalje" biće prijavljena svrha detalja kada je moguće, na primer "ima komentar". (#13649)
+- Veličina instalacije programa NVDA se sada prikazuje u Windows programima i funkcijama. (#13909)
+-
+
+
+== Ispravljene greške ==
+- Adobe Acrobat / Reader 64 bitni se više neće rušiti pri čitanju PDF dokumenata. (#12920)
+  - Napomena da je najnovija verzija programa Adobe Acrobat / Reader takođe neophodna kako bi se izbeglo rušenje.
+  -
+- Java access bridge događaji će biti ignorisani kada se ne može pronaći window handle u Java aplikacijama.
+Ovo će poboljšati brzinu u nekim Java aplikacijama kao što je IntelliJ IDEA. (#13039)
+- Izgovor izabranih ćelija u programu LibreOffice Calc je efikasniji i više neće smrzavati Calc kada je puno ćelija izabrano. (#13232)
+- Kada je pokrenut od strane drugog korisnika, Microsoft Edge više nije nepristupačan. (#13032)
+- Kada je povećanje brzine isključeno, brzina sintetizatora ESpeak više ne pada između brzina 99% i 100%. (#13876)
+- Ispravljena greška koja je dozvoljavala otvaranje dva dijaloga ulaznih komandi. (#13854)
+-
+
+
+= 2022.2.4 =
+Ovo je manje ažuriranje kako bi se ispravio bezbednosni problem.
+
+== Ispravljene greške ==
+- Ispravljen propust koji je dozvoljavao da otvorite NVDA python konzolu putem preglednika dnevnika na zaključanom ekranu.
+([GHSA-585m-rpvv-93qg https://github.com/nvaccess/nvda/security/advisories/GHSA-585m-rpvv-93qg])
+-
+
+= 2022.2.3 =
+Ovo je manje ažuriranje kako bi se ispravio API problem u verziji 2022.2.1.
+
+== Ispravljene greške ==
+- Ispravljena greška koja je izazvala da NVDA ne izgovori "Bezbedna radna površina" kada uđe na bezbednu radnu površinu.
+Ovo je izazvalo da NVDA Remote ne prepoznaje bezbedne radne površine. (#14094)
+-
+
+= 2022.2.2 =
+Ova verzija ispravlja grešku iz verzije 2022.2.1 sa ulaznim komandama.
+
+== Ispravljene greške ==
+- Ispravljena greška koja je izazvala da ulazne komande ne rade uvek. (#14065)
+-
+
+= 2022.2.1 =
+Ovo je manje ažuriranje kako bi se ispravio bezbednosni problem.
+Molimo odgovorno prijavite bezbednosne probleme na info@nvaccess.org.
+
+== Bezbednosne ispravke ==
+- Ispravljen propust koji je dozvoljavao pokretanje Python konzole sa zaključanog ekrana. (GHSA-rmq3-vvhq-gp32)
+- Ispravljen propust koji je dozvoljavao da napustite zaključani ekran objektnom navigacijom. (GHSA-rmq3-vvhq-gp32)
+-
+
+= 2022.2 =
+Mnoge greške su ispravljene u ovoj verziji.
+Od važnijih, dodata su brojna poboljšanja u Java aplikacijama, za brajeve redove i Windows opcije.
+
+Dodate su nove komande za navigaciju kroz tabele.
+Unicode CLDR je ažuriran.
+LibLouis je ažuriran, što uključuje novu Nemačku brajevu tabelu.
+
+== Nove karakteristike ==
+- Podrška za interakciju sa Microsoft Loop komponentama u Microsoft Office proizvodima. (#13617)
+- Dodate su nove komande za navigaciju kroz tabele. (#957)
+ - ``kontrol+alt+home/end`` da biste se prebacili na prvu/poslednju kolonu.
+ - ``kontrol+alt+pageUp/pageDown`` da biste se prebacili na prvi/poslednji red.
+ -
+- Dodata je skripta bez podrazumevane komande za prebacivanje između različitih nivoa automatskog menanja jezika i dijalekta. (#10253)
+-
+
+== Promene ==
+- NSIS je ažuriran na verziju 3.08. (#9134)
+- CLDR je ažuriran na verziju 41.0. (#13582)
+- Ažuriran LibLouis brajev prevodilac na [3.22.0 https://github.com/liblouis/liblouis/releases/tag/v3.22.0]. (#13775)
+  - Nova brajeva tabela: Nemački stepen 2 (detailed)
+  -
+- Dodato novo ime za kontrole "Zauzet pokazivač". (#10644)
+- NVDA sada izgovara kada neka NVDA radnja ne može biti izvršena. (#13500)
+  - Ovo uključuje sledeće:
+    - Korišćenje NVDA verzije iz Windows prodavnice.
+    - Na bezbednim ekranima.
+    - Kada dijalog čeka odgovor.
+    -
+  -
+-
+
+
+== Ispravljene greške ==
+- Ispravljene greške u Java aplikacijama:
+  - NVDA će sada izgovoriti ako je kontrola samo za čitanje. (#13692)
+  - NVDA će sada ispravno izgovoriti ako je kontrola onemogućena/omogućena. (#10993)
+  - NVDA će sada izgovoriti prečice funkcijskih tastera. (#13643)
+  - NVDA sada može da pišti i izgovara trake napredovanja. (#13594)
+  - NVDA više neće neispravno uklanjati tekst iz vidžeta kada se oni prikazuju korisnicima. (#13102)
+    - NVDA će sada izgovoriti stanje za dugme prekidača. (#9728)
+  - NVDA će sada prepoznati prozor u Java aplikaciji sa više prozora. (#9184)
+  - NVDA će sada izgovoriti informacije o poziciji za kontrole kartica. (#13744)
+-
+- Ispravljene greške za brajeve redove:
+  - Ispravljen brajev izlaz kada se krećete kroz određene tekstove u Mozilla obogaćenim kontrolama za pisanje, kao što su čuvanje poruke kao nacrt u programu Thunderbird. (#12542)
+  - Kada je vezivanje brajevog reda podešeno na automatski i miš se pomera uz omogućeno praćenje miša,
+  komande pregleda teksta sada ažuriraju brajev red sa izgovorenim sadržajem. (#11519)
+  - Sada je moguće pomerati brajev red kroz sadržaja nakon korišćenja komandi za pregled teksta. (#8682)
+  -
+- NVDA instalacija se sada može pokrenuti iz foldera koji imaju posebne znakove. (#13270)
+- U pretraživaču Firefox, NVDA više ne greši u čitanju stavki na Web stranicama kada su aria-rowindex, aria-colindex, aria-rowcount ili aria-colcount atributi neispravni. (#13405)
+- Kursor više ne menja red ili kolonu kada se koriste komande za navigaciju kroz tabele kako biste se kretali kroz spojene ćelije. (#7278)
+- Kada se čitaju PDF datoteke sa kojima nije moguća interakcija u programu Adobe Reader, vrsta i stanje polja za unos (kao što su izborna polja i radio dugmad) sada se prijavljuju. (#13285)
+- Sada je moguće pristupiti opciji "Vrati podešavanja na fabričke vrednosti" u bezbednom načinu rada. (#13547)
+- Bilo koji zaključani tasteri miša će biti otključani kada se izađe iz programa NVDA, ranije je taster na mišu ostao zaključan. (#13410)
+- Visual Studio sada prijavljuje brojeve redova. (#13604)
+  - Napomena da kako bi prijavljivanje broja redova radilo, prikazivanje brojeva redova mora biti omogućeno u programu Visual Studio kao i u programu  NVDA.
+  -
+- Visual Studio sada ispravno prijavljuje uvlačenje redova. (#13574)
+- NVDA će ponovo izgovarati detalje rezultata pretrage u start meniju na novijim Windows 10 i 11 verzijama. (#13544)
+- U Windows 10 i 11 Kalkulatoru verziji 10.1908 i novijim,
+NVDA će izgovarati rezultate kada se koristi više komandi, kao što su komande iz naučnog režima. (#13383)
+- Na Windowsu 11, ponovo je moguće kretati se i vršiti interakciju sa elementima korisničkog interfejsa,
+kao što su programska traka ili prikaz zadataka korišćenjem miša ili ekrana osetljivog na dodir. (#13506)
+- NVDA će izgovarati sadržaj statusne trake u Windows 11 verziji programa Notepad. (#13688)
+- Označavanje navigacionog objekta se sada prikazuje odmah nakon aktiviranja ove opcije. (#13641)
+- Ispravljeno čitanje stavki liste koje imaju samo jednu kolonu. (#13659, #13735)
+- Ispravljena eSpeak automatska promena jezika za Engleski i Francuski vraćanjem na Britanski Engleski i Francuski (Francuska). (#13727)
+- Ispravljena OneCore automatska promena jezika pri pokušaju promene na jezik koji je ranije bio instaliran. (#13732)
+-
+
+
 = 2022.1 =
 Ova verzija uključuje veća poboljšanja za UIA podršku u paketu MS Office.
 Za Microsoft Office 16.0.15000 i novije verzije na Windowsu 11, NVDA će podrazumevano koristiti UI Automation za pristup dokumentima programa Microsoft Word.

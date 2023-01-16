@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2020 NV Access Limited
+# Copyright (C) 2020-2022 NV Access Limited, Cyrille Bougot
 
 """Unit tests for the characterProcessing module.
 """
@@ -11,6 +11,7 @@ import re
 from characterProcessing import SpeechSymbolProcessor
 from characterProcessing import SymbolLevel
 from characterProcessing import processSpeechSymbols as process
+from characterProcessing import processSpeechSymbol
 
 
 class TestComplex(unittest.TestCase):
@@ -128,3 +129,56 @@ class TestComplex(unittest.TestCase):
 		self.assertEqual(replaced, "Le  03 point 04 point 05  point.")
 		replaced = process("fr_FR", "Le 03/04/05.", SymbolLevel.ALL)
 		self.assertEqual(replaced, "Le  03 barre oblique 04 barre oblique 05  point.")
+
+
+# A character in CLDR file but not in symbol file
+CHAR_IN_CLDR_FILE = '☺'
+CHAR_IN_CLDR_FILE_DESC = 'smiling face'
+# A character in symbol file but not in CLDR file
+CHAR_IN_SYMB_FILE = ' '
+CHAR_IN_SYMB_FILE_DESC = 'space'
+# A character in both CLDR and symbol file
+CHAR_IN_BOTH_FILES = '.'
+CHAR_IN_BOTH_FILES_DESC = 'dot'
+
+
+class TestUsingCLDR(unittest.TestCase):
+
+	def test_processSpeechSymbol_withoutSymbolFile(self):
+		"""Test processSpeechSymbol with languages that have CLDR file but no symbol file.
+		"""
+		
+		languagesWithoutSymbolFile = [
+			# The real list is:
+			# 'af_ZA', 'am', 'as', 'gu', 'id', 'kok', 'ml', 'mni', 'ne', 'te', 'th', 'ur'
+			# But 'mni' has only a few symbols in CLDR (and not the smiling face)
+			'af_ZA', 'am', 'as', 'gu', 'id', 'kok', 'ml', 'ne', 'te', 'th', 'ur'
+		]
+		for locale in languagesWithoutSymbolFile:
+			self.assertNotEqual(
+				processSpeechSymbol(locale, CHAR_IN_CLDR_FILE),
+				CHAR_IN_CLDR_FILE_DESC,
+				msg=f'Test failure for locale={locale} with "{CHAR_IN_CLDR_FILE_DESC}"',
+			)
+			self.assertEqual(
+				processSpeechSymbol(locale, CHAR_IN_SYMB_FILE),
+				CHAR_IN_SYMB_FILE_DESC,
+				msg=f'Test failure for locale={locale} with "{CHAR_IN_SYMB_FILE_DESC}"',
+			)
+
+	def test_processSpeechSymbol_withSymbolFile(self):
+		"""Test processSpeechSymbol with languages that have both CLDR and symbol file.
+		"""
+		
+		languagesWithSymbolFileAndCLDR = ['fr_FR']
+		for locale in languagesWithSymbolFileAndCLDR:
+			self.assertNotEqual(
+				processSpeechSymbol(locale, CHAR_IN_CLDR_FILE),
+				CHAR_IN_CLDR_FILE_DESC,
+				msg=f'Test failure for locale={locale} with "{CHAR_IN_CLDR_FILE_DESC}"',
+			)
+			self.assertNotEqual(
+				processSpeechSymbol(locale, CHAR_IN_SYMB_FILE),
+				CHAR_IN_SYMB_FILE_DESC,
+				msg=f'Test failure for locale={locale} with "{CHAR_IN_SYMB_FILE_DESC}"',
+			)

@@ -1,8 +1,12 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2008-2022 NV Access Limited, Babbage B.V., Mozilla Corporation, Accessolutions, Julien Cochuyt
+# Copyright (C) 2008-2023 NV Access Limited, Babbage B.V., Mozilla Corporation, Accessolutions, Julien Cochuyt
 
+from typing import (
+	Iterable,
+	Optional,
+)
 import typing
 import weakref
 from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word, VBufStorage_findMatch_notEmpty
@@ -23,6 +27,8 @@ from comtypes import COMError
 import aria
 import config
 from NVDAObjects.IAccessible import normalizeIA2TextFormatField, IA2TextTextInfo
+import documentBase
+
 
 def _getNormalizedCurrentAttrs(attrs: textInfos.ControlField) -> typing.Dict[str, typing.Any]:
 	valForCurrent = attrs.get("IAccessible2::attribute_current", "false")
@@ -153,17 +159,59 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			role = controlTypes.Role.REGION
 		elif xmlRoles[0] == "switch":
 			# role="switch" gets mapped to IA2_ROLE_TOGGLE_BUTTON, but it uses the
-			# checked state instead of pressed. The simplest way to deal with this
-			# identity crisis is to map it to a check box.
-			role = controlTypes.Role.CHECKBOX
+			# checked state instead of pressed.
+			# We want to map this to our own Switch role and On state.
+			role = controlTypes.Role.SWITCH
 			states.discard(controlTypes.State.PRESSED)
+			states.discard(controlTypes.State.CHECKABLE)
+			if controlTypes.State.CHECKED in states:
+				states.discard(controlTypes.State.CHECKED)
+				states.add(controlTypes.State.ON)
 		attrs['role']=role
 		attrs['states']=states
 		if level != "" and level is not None:
 			attrs['level']=level
 		if landmark:
 			attrs["landmark"]=landmark
-		return super(Gecko_ia2_TextInfo,self)._normalizeControlField(attrs)
+
+		detailsRoles = attrs.get('detailsRoles')
+		if detailsRoles is not None:
+			attrs['detailsRoles'] = set(self._normalizeDetailsRole(detailsRoles))
+			if config.conf["debugLog"]["annotations"]:
+				log.debug(f"detailsRoles: {attrs['detailsRoles']}")
+		return super()._normalizeControlField(attrs)
+
+	def _normalizeDetailsRole(self, detailsRoles: str) -> Iterable[Optional[controlTypes.Role]]:
+		"""
+		The attribute has been added directly to the buffer as a string, containing a comma separated list
+		of values, each value is either:
+		- role string
+		- role integer
+		Ensures the returned role is a fully supported by the details-roles attribute.
+		Braille and speech needs consistent normalization for translation and reporting.
+		"""
+		# Can't import at module level as chromium imports from this module
+		from NVDAObjects.IAccessible.chromium import supportedAriaDetailsRoles
+		if config.conf["debugLog"]["annotations"]:
+			log.debug(f"detailsRoles: {repr(detailsRoles)}")
+		detailsRolesValues = detailsRoles.split(',')
+		for detailsRole in detailsRolesValues:
+			if detailsRole.isdigit():
+				detailsRoleInt = int(detailsRole)
+				# get a role, but it may be unsupported
+				detailsRole = IAccessibleHandler.IAccessibleRolesToNVDARoles.get(detailsRoleInt)
+				# return a supported details role
+				if detailsRole in supportedAriaDetailsRoles.values():
+					yield detailsRole
+				else:
+					yield None
+			else:
+				# return a supported details role
+				# Note, "unknown" is used when the target has no role.
+				if detailsRole == "unknown" and config.conf["debugLog"]["annotations"]:
+					log.debug("Found unknown aria details role")
+				detailsRole = supportedAriaDetailsRoles.get(detailsRole)
+				yield detailsRole
 
 	def _normalizeFormatField(self, attrs):
 		normalizeIA2TextFormatField(attrs)
@@ -518,9 +566,15 @@ class Gecko_ia2(VirtualBuffer):
 		except (COMError, RuntimeError):
 			raise LookupError
 
-	def _getNearestTableCell(self, tableID, startPos, origRow, origCol, origRowSpan, origColSpan, movement, axis):
+	def _getNearestTableCell(
+			self,
+			startPos: textInfos.TextInfo,
+			cell: documentBase._TableCell,
+			movement: documentBase._Movement,
+			axis: documentBase._Axis,
+	) -> textInfos.TextInfo:
 		# Skip the VirtualBuffer implementation as the base BrowseMode implementation is good enough for us here.
-		return super(VirtualBuffer,self)._getNearestTableCell(tableID, startPos, origRow, origCol, origRowSpan, origColSpan, movement, axis)
+		return super(VirtualBuffer, self)._getNearestTableCell(startPos, cell, movement, axis)
 
 	def _get_documentConstantIdentifier(self):
 		try:

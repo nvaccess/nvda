@@ -1,19 +1,44 @@
-#NVDAObjects/IAccessible/chromium.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-# Copyright (C) 2010-2013 NV Access Limited
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2010-2022 NV Access Limited
 
 """NVDAObjects for the Chromium browser project
 """
-
+import typing
+from typing import Dict, Optional
 from comtypes import COMError
-import oleacc
+
+import config
 import controlTypes
 from NVDAObjects.IAccessible import IAccessible
 from virtualBuffers.gecko_ia2 import Gecko_ia2 as GeckoVBuf, Gecko_ia2_TextInfo as GeckoVBufTextInfo
 from . import ia2Web
 from logHandler import log
+
+if typing.TYPE_CHECKING:
+	# F401 imported but unused, actually used as a string within type annotation (to avoid having to import
+	# at run time)
+	from treeInterceptorHandler import TreeInterceptor  # noqa: F401
+
+supportedAriaDetailsRoles: Dict[str, Optional[controlTypes.Role]] = {
+	"unknown": None,  # no explicit role, should be reported as "details"
+	"comment": controlTypes.Role.COMMENT,
+	"doc-footnote": controlTypes.Role.FOOTNOTE,
+	# These roles are current unsupported by IAccessible2,
+	# and as such, have not been fully implemented in NVDA.
+	# They can only be fetched via the IA2Attribute "details-roles",
+	# which is only supported in Chrome.
+	# Currently maps to the IA2 role ROLE_LIST_ITEM
+	"doc-endnote": None,  # controlTypes.Role.ENDNOTE
+	# Currently maps to the IA2 role ROLE_PARAGRAPH
+	"definition": None,  # controlTypes.Role.DEFINITION
+}
+"""
+details-roles attribute is only defined in Chrome as of May 2022.
+Refer to ComputeDetailsRoles:
+https://chromium.googlesource.com/chromium/src/+/main/ui/accessibility/platform/ax_platform_node_base.cc#2419
+"""
 
 
 class ChromeVBufTextInfo(GeckoVBufTextInfo):
@@ -64,11 +89,28 @@ class ChromeVBuf(GeckoVBuf):
 
 class Document(ia2Web.Document):
 
-	def _get_treeInterceptorClass(self):
-		states = self.states
-		if controlTypes.State.EDITABLE not in states and controlTypes.State.BUSY not in states:
-			return ChromeVBuf
-		return super(Document, self).treeInterceptorClass
+	def _get_treeInterceptorClass(self) -> typing.Type["TreeInterceptor"]:
+		shouldLoadVBufOnBusyFeatureFlag = bool(
+			config.conf["virtualBuffers"]["loadChromiumVBufOnBusyState"]
+		)
+		vBufUnavailableStates = {  # if any of these are in states, don't return ChromeVBuf
+			controlTypes.State.EDITABLE,
+		}
+		if not shouldLoadVBufOnBusyFeatureFlag:
+			log.debug(
+				f"loadChromiumVBufOnBusyState feature flag is {shouldLoadVBufOnBusyFeatureFlag},"
+				" vBuf WILL NOT be loaded when state of the document is busy."
+			)
+			vBufUnavailableStates.add(controlTypes.State.BUSY)
+		else:
+			log.debug(
+				f"loadChromiumVBufOnBusyState feature flag is {shouldLoadVBufOnBusyFeatureFlag},"
+				" vBuf WILL be loaded when state of the document is busy."
+			)
+		if self.states.intersection(vBufUnavailableStates):
+			return super().treeInterceptorClass
+		return ChromeVBuf
+
 
 class ComboboxListItem(IAccessible):
 	"""

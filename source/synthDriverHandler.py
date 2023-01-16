@@ -251,6 +251,10 @@ class SynthDriver(driverHandler.Driver):
 			self._availableVoices = self._getAvailableVoices()
 		return self._availableVoices
 
+	#: Typing information for auto-property: _get_rate
+	rate: int
+	"""Between 0-100"""
+
 	def _get_rate(self):
 		return 0
 
@@ -371,7 +375,6 @@ _audioOutputDevice = None
 
 
 def initialize():
-	config.addConfigDirsToPythonPackagePath(synthDrivers)
 	config.post_configProfileSwitch.register(handlePostConfigProfileSwitch)
 
 

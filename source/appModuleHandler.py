@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2022 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Joseph Lee,
-# Babbage B.V., Mozilla Corporation, Julien Cochuyt
+# Babbage B.V., Mozilla Corporation, Julien Cochuyt, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -17,23 +17,23 @@ import os
 import sys
 from types import ModuleType
 from typing import (
+	Any,
 	Dict,
 	List,
 	Optional,
 	Tuple,
-	Union,
 )
-import zipimport
 
 import winVersion
-import pkgutil
 import importlib
+import importlib.util
 import threading
 import tempfile
 import comtypes.client
 import baseObject
 from logHandler import log
 import NVDAHelper
+import NVDAState
 import winKernel
 import config
 import NVDAObjects #Catches errors before loading default appModule
@@ -42,14 +42,13 @@ import appModules
 import exceptions
 import extensionPoints
 from fileUtils import getFileVersionInfo
+import globalVars
+from systemUtils import getCurrentProcessLogonSessionId, getProcessLogonSessionId
 
-_KNOWN_IMPORTERS_T = Union[importlib.machinery.FileFinder, zipimport.zipimporter]
+
 # Dictionary of processID:appModule pairs used to hold the currently running modules
 runningTable: Dict[int, AppModule] = {}
-#: The process ID of NVDA itself.
-NVDAProcessID=None
 _CORE_APP_MODULES_PATH: os.PathLike = appModules.__path__[0]
-_importers: Optional[List[_KNOWN_IMPORTERS_T]] = None
 _getAppModuleLock=threading.RLock()
 #: Notifies when another application is taking foreground.
 #: This allows components to react upon application switches.
@@ -80,6 +79,30 @@ class processEntry32W(ctypes.Structure):
 	]
 
 
+class _PROCESS_MACHINE_INFORMATION(ctypes.Structure):
+	_fields_ = [
+		("ProcessMachine", ctypes.wintypes.USHORT),
+		("Res0", ctypes.wintypes.USHORT),
+		("MachineAttributes", ctypes.wintypes.DWORD)
+	]
+
+
+def __getattr__(attrName: str) -> Any:
+	"""Module level `__getattr__` used to preserve backward compatibility.
+	The module level variable `NVDAProcessID` is deprecated
+	and usages should be replaced with `globalVars.appPid`.
+	We cannot simply assign the value from `globalVars` to the old attribute
+	since add-ons are initialized before `appModuleHandler`
+	and when `appModuleHandler` was not yet initialized the variable was set to `None`.
+	"""
+	if attrName == "NVDAProcessID" and NVDAState._allowDeprecatedAPI():
+		log.warning("appModuleHandler.NVDAProcessID is deprecated, use globalVars.appPid instead.")
+		if initialize._alreadyInitialized:
+			return globalVars.appPid
+		return None
+	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+
+
 def _warnDeprecatedAliasAppModule() -> None:
 	"""This function should be executed at the top level of an alias App Module,
 	to log a deprecation warning when the module is imported.
@@ -95,12 +118,13 @@ def _warnDeprecatedAliasAppModule() -> None:
 	except KeyError:
 		raise RuntimeError("This function can be executed only inside an alias App Module.") from None
 	else:
-		log.warning(
-			(
-				f"Importing from appModules.{currModName} is deprecated,"
-				f" you should import from appModules.{replacementModName}."
-			)
+		deprecatedImportWarning = (
+			f"Importing appModules.{currModName} is deprecated,"
+			f" instead import appModules.{replacementModName}."
 		)
+		log.warning(deprecatedImportWarning)
+		if not NVDAState._allowDeprecatedAPI():
+			raise ModuleNotFoundError(deprecatedImportWarning)
 
 
 def registerExecutableWithAppModule(executableName: str, appModName: str) -> None:
@@ -118,16 +142,6 @@ def unregisterExecutable(executableName: str) -> None:
 		log.error(f"Executable {executableName} was not previously registered.")
 
 
-def _getPathFromImporter(importer: _KNOWN_IMPORTERS_T) -> os.PathLike:
-	try:  # Standard `FileFinder` instance
-		return importer.path
-	except AttributeError:
-		try:  # Special case for `zipimporter`
-			return os.path.normpath(os.path.join(importer.archive, importer.prefix))
-		except AttributeError:
-			raise TypeError(f"Cannot retrieve path from {repr(importer)}") from None
-
-
 def _getPossibleAppModuleNamesForExecutable(executableName: str) -> Tuple[str, ...]:
 	"""Returns list of the appModule names for a given executable.
 	The names in the tuple are placed in order in which import of these aliases should be attempted that is:
@@ -138,7 +152,12 @@ def _getPossibleAppModuleNamesForExecutable(executableName: str) -> Tuple[str, .
 	return tuple(
 		aliasName for aliasName in (
 			_executableNamesToAppModsAddons.get(executableName),
-			executableName,
+			# #5323: Certain executables contain dots as part of their file names.
+			# Since Python treats dot as a package separator we replace it with an underscore
+			# in the name of the Python module.
+			# For new App Modules consider adding an alias to `appModule.EXECUTABLE_NAMES_TO_APP_MODS`
+			# rather than rely on the fact that dots are replaced.
+			executableName.replace(".", "_"),
 			appModules.EXECUTABLE_NAMES_TO_APP_MODS.get(executableName)
 		) if aliasName is not None
 	)
@@ -149,27 +168,29 @@ def doesAppModuleExist(name: str, ignoreDeprecatedAliases: bool = False) -> bool
 	:param ignoreDeprecatedAliases: used for backward compatibility, so that by default alias modules
 	are not excluded.
 	"""
-	for importer in _importers:
-		modExists = importer.find_module(f"appModules.{name}")
-		if modExists:
-			# While the module has been found it is possible tis is just a deprecated alias.
-			# Before PR #13366 the only possibility to map a single app module to multiple executables
-			# was to create a alias app module and import everything from the main module into it.
-			# Now the preferred solution is to add an entry into `appModules.EXECUTABLE_NAMES_TO_APP_MODS`,
-			# but old alias modules have to stay to preserve backwards compatibility.
-			# We cannot import the alias module since they show a deprecation warning on import.
-			# To determine if the module should be imported or not we check if:
-			# - it is placed in the core appModules package, and
-			# - it has an alias defined in `appModules.EXECUTABLE_NAMES_TO_APP_MODS`.
-			# If both of these are true the module should not be imported in core.
-			if (
-				ignoreDeprecatedAliases
-				and name in appModules.EXECUTABLE_NAMES_TO_APP_MODS
-				and _getPathFromImporter(importer) == _CORE_APP_MODULES_PATH
-			):
-				continue
-			return True
-	return False  # None of the aliases exists
+	try:
+		modSpec = importlib.util.find_spec(f"appModules.{name}", package=appModules)
+	except ImportError:
+		modSpec = None
+	if modSpec is None:
+		return False
+	# While the module has been found it is possible this is a deprecated alias.
+	# Before PR #13366 the only possibility to map a single app module to multiple executables
+	# was to create an alias app module and import everything from the main module into it.
+	# Now the preferred solution is to add an entry into `appModules.EXECUTABLE_NAMES_TO_APP_MODS`,
+	# but old alias modules have to stay to preserve backwards compatibility.
+	# We cannot import the alias module since they show a deprecation warning on import.
+	# To determine if the module should be imported or not we check if:
+	# - it is placed in the core appModules package, and
+	# - it has an alias defined in `appModules.EXECUTABLE_NAMES_TO_APP_MODS`.
+	# If both of these are true the module should not be imported in core.
+	if (
+		ignoreDeprecatedAliases
+		and name in appModules.EXECUTABLE_NAMES_TO_APP_MODS
+		and os.path.dirname(modSpec.origin) == _CORE_APP_MODULES_PATH
+	):
+		return False
+	return True
 
 
 def _importAppModuleForExecutable(executableName: str) -> Optional[ModuleType]:
@@ -195,7 +216,7 @@ def getAppNameFromProcessID(processID: int, includeExt: bool = False) -> str:
 	C{False} to exclude it.
 	@returns: application name
 	"""
-	if processID==NVDAProcessID:
+	if processID == globalVars.appPid:
 		return "nvda.exe" if includeExt else "nvda"
 	FSnapshotHandle = winKernel.kernel32.CreateToolhelp32Snapshot (2,0)
 	FProcessEntry32 = processEntry32W()
@@ -222,10 +243,18 @@ def getAppNameFromProcessID(processID: int, includeExt: bool = False) -> str:
 	return appName
 
 
-def getAppModuleForNVDAObject(obj):
-	if not isinstance(obj,NVDAObjects.NVDAObject):
+def getAppModuleForNVDAObject(obj: NVDAObjects.NVDAObject) -> AppModule:
+	if not isinstance(obj, NVDAObjects.NVDAObject):
 		return
-	return getAppModuleFromProcessID(obj.processID)
+	mod = getAppModuleFromProcessID(obj.processID)
+	# #14403: some apps report process handle of 0, causing process information and other functions to fial.
+	if mod.processHandle == 0:
+		# Sometimes process handle for the NVDA object may not be defined, more so when running tests.
+		try:
+			mod.processHandle = obj.processHandle
+		except AttributeError:
+			pass
+	return mod
 
 
 def getAppModuleFromProcessID(processID: int) -> AppModule:
@@ -236,8 +265,7 @@ def getAppModuleFromProcessID(processID: int) -> AppModule:
 	with _getAppModuleLock:
 		mod=runningTable.get(processID)
 		if not mod:
-			# #5323: Certain executables contain dots as part of their file names.
-			appName=getAppNameFromProcessID(processID).replace(".","_")
+			appName = getAppNameFromProcessID(processID)
 			mod=fetchAppModule(processID,appName)
 			if not mod:
 				raise RuntimeError("error fetching default appModule")
@@ -329,6 +357,8 @@ def reloadAppModules():
 	for mod in mods:
 		del sys.modules[mod]
 	import appModules
+	from addonHandler.packaging import addDirsToPythonPackagePath
+	addDirsToPythonPackagePath(appModules)
 	initialize()
 	for entry in state:
 		pid = entry.pop("processID")
@@ -345,13 +375,16 @@ def reloadAppModules():
 		# Fetch and cache right away; the process could die any time.
 		obj.appModule
 
+
 def initialize():
 	"""Initializes the appModule subsystem. 
 	"""
-	global NVDAProcessID,_importers
-	NVDAProcessID=os.getpid()
-	config.addConfigDirsToPythonPackagePath(appModules)
-	_importers=list(pkgutil.iter_importers("appModules.__init__"))
+	if not initialize._alreadyInitialized:
+		initialize._alreadyInitialized = True
+
+
+initialize._alreadyInitialized = False
+
 
 def terminate():
 	for processID, app in runningTable.items():
@@ -546,7 +579,10 @@ class AppModule(baseObject.ScriptableObject):
 		return self.productVersion
 
 	def __repr__(self):
-		return "<%r (appName %r, process ID %s) at address %x>"%(self.appModuleName,self.appName,self.processID,id(self))
+		return (
+			f"{self.__class__.__name__}"
+			f"({self.appModuleName}, appName={self.appName!r}, processID={self.processID!r})"
+		)
 
 	def _get_appModuleName(self):
 		return self.__class__.__module__.split('.')[-1]
@@ -642,7 +678,21 @@ class AppModule(baseObject.ScriptableObject):
 		self.isWindowsStoreApp = False
 		return self.isWindowsStoreApp
 
-	def _get_appArchitecture(self):
+	def _get_isRunningUnderDifferentLogonSession(self) -> bool:
+		"""Returns whether the application for this appModule was started under a different logon session.
+		This applies to applications started with the Windows runas command
+		or when choosing "run as a different user" from an application's (shortcut) context menu.
+		"""
+		try:
+			self.isRunningUnderDifferentLogonSession = (
+				getCurrentProcessLogonSessionId() != getProcessLogonSessionId(self.processHandle)
+			)
+		except WindowsError:
+			log.error(f"Couldn't compare logon session ID for {self}", exc_info=True)
+			self.isRunningUnderDifferentLogonSession = False
+		return self.isRunningUnderDifferentLogonSession
+
+	def _get_appArchitecture(self) -> str:
 		"""Returns the target architecture for the specified app.
 		This is useful for detecting X86/X64 apps running on ARM64 releases of Windows 10.
 		The following strings are returned:
@@ -653,28 +703,43 @@ class AppModule(baseObject.ScriptableObject):
 		@rtype: str
 		"""
 		# Details: https://docs.microsoft.com/en-us/windows/desktop/SysInfo/image-file-machine-constants
-		# The only value missing is ARM64 (AA64)
-		# because it is only applicable if ARM64 app is running on ARM64 machines.
 		archValues2ArchNames = {
 			0x014c: "x86",  # I386-32
 			0x8664: "AMD64",  # X86-64
-			0x01c0: "ARM"  # 32-bit ARM
+			0x01c0: "ARM",  # 32-bit ARM
+			0xaa64: "ARM64",  # 64-bit ARM
 		}
-		# IsWow64Process2 can be used on Windows 10 Version 1511 (build 10586) and later.
-		# Just assume this is an x64 (AMD64) app.
-		# if this is a64-bit app running on 7 through 10 Version 1507 (build 10240).
-		try:
-			# If a native app is running (such as x64 app on x64 machines), app architecture value is not set.
-			processMachine = ctypes.wintypes.USHORT()
-			ctypes.windll.kernel32.IsWow64Process2(self.processHandle, ctypes.byref(processMachine), None)
-			if not processMachine.value:
-				self.appArchitecture = os.environ.get("PROCESSOR_ARCHITEW6432")
+		# #14403: GetProcessInformation can be called from Windows 11 and later to obtain process machine.
+		if winVersion.getWinVer() >= winVersion.WIN11:
+			processMachineInfo = _PROCESS_MACHINE_INFORMATION()
+			# Constant comes from PROCESS_INFORMATION_CLASS enumeration.
+			ProcessMachineTypeInfo = 9
+			# Sometimes getProcessInformation may fail, so say "unknown".
+			if not ctypes.windll.kernel32.GetProcessInformation(
+				self.processHandle,
+				ProcessMachineTypeInfo,
+				ctypes.byref(processMachineInfo),
+				ctypes.sizeof(_PROCESS_MACHINE_INFORMATION)
+			):
+				self.appArchitecture = "unknown"
 			else:
-				# On ARM64, two 32-bit architectures are supported: x86 (via emulation) and ARM (natively).
-				self.appArchitecture = archValues2ArchNames[processMachine.value]
-		except AttributeError:
-			# Windows 10 Version 1507 (build 10240) and earlier.
-			self.appArchitecture = "AMD64" if self.is64BitProcess else "x86"
+				self.appArchitecture = archValues2ArchNames.get(processMachineInfo.ProcessMachine, "unknown")
+		else:
+			# IsWow64Process2 can be used on Windows 10 Version 1511 (build 10586) and later.
+			# Just assume this is an x64 (AMD64) app.
+			# if this is a64-bit app running on 7 through 10 Version 1507 (build 10240).
+			try:
+				# If a native app is running (such as x64 app on x64 machines), app architecture value is not set.
+				processMachine = ctypes.wintypes.USHORT()
+				ctypes.windll.kernel32.IsWow64Process2(self.processHandle, ctypes.byref(processMachine), None)
+				if not processMachine.value:
+					self.appArchitecture = os.environ.get("PROCESSOR_ARCHITEW6432")
+				else:
+					# On ARM64, two 32-bit architectures are supported: x86 (via emulation) and ARM (natively).
+					self.appArchitecture = archValues2ArchNames[processMachine.value]
+			except AttributeError:
+				# Windows 10 Version 1507 (build 10240) and earlier.
+				self.appArchitecture = "AMD64" if self.is64BitProcess else "x86"
 		return self.appArchitecture
 
 	def isGoodUIAWindow(self,hwnd):

@@ -17,5 +17,6 @@ This information will help us triage your report more quickly.
 * Impact of the issue, including what an attacker can achieve by exploiting the issue
 * Potential workarounds to mitigate the issue
 * Indicators of compromise caused by the issue
+* If there is a known solution or approach to fixing this issue
 
 Examples of handled security issues in NVDA can be found in the [NVDA GitHub Security Advisories page](https://github.com/nvaccess/nvda/security/advisories).
