@@ -2532,7 +2532,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		This should also be executed when auto detection should be resumed due to loss of display connectivity.
 		In that case, it is triggered by L{setDisplayByname}.
 		@param usb: Whether to scan for USB devices
-		@param Bluetooth: WWhether to scan for Bluetooth devices.
+		@param bluetooth: Whether to scan for Bluetooth devices.
 		@param limitToDevices: An optional list of driver names a scan should be limited to.
 			This is used when a Bluetooth device is detected, in order to switch to USB
 			when an USB device for the same driver is found.
