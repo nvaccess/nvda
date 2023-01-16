@@ -783,6 +783,14 @@ def processDesktopSwitchWinEvent(window, objectID, childID):
 		windll.user32.CloseDesktop(hDesk)
 		core.callLater(200, _handleUserDesktop)
 	else:
+		# When hDesk == 0, the active desktop has changed.
+		# This is usually means the secure desktop has been launched,
+		# but the new desktop can also be a secondary desktop created through the Windows API.
+		# https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-createdesktopa
+		# This secondary desktop has some bugs, and as such is not properly supported (#14395).
+		# It is not immediately clear how to differentiate changing to a secondary desktop and the secure desktop.
+		# When looking to support the secondary desktop,
+		# the UX should be updated to announce "desktop change" rather than "Secure Desktop".
 		_handleSecureDesktopChange()
 
 
