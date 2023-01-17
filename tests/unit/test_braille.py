@@ -138,7 +138,7 @@ class TestHandlerExtensionPoints(unittest.TestCase):
 			currentCellCount=braille.handler.displaySize
 		)
 
-		with actionTester(self, braille.handler.pre_writeCells, **expectedKwargs):
+		with actionTester(self, braille.pre_writeCells, **expectedKwargs):
 			braille.handler._writeCells(cells)
 
 	def test_displaySizeChanged(self):
@@ -146,7 +146,7 @@ class TestHandlerExtensionPoints(unittest.TestCase):
 			displaySize=braille.handler.displaySize
 		)
 
-		with actionTester(self, braille.handler.displaySizeChanged, **expectedKwargs):
+		with actionTester(self, braille.displaySizeChanged, **expectedKwargs):
 			# Change the attribute that is compared with the value coming from filter_displaySize
 			braille.handler._displaySize = 0
 			# The getter should now trigger the action.
@@ -158,7 +158,7 @@ class TestHandlerExtensionPoints(unittest.TestCase):
 			detected=None
 		)
 
-		with actionTester(self, braille.handler.displayChanged, useAssertDictContainsSubset=True, **expectedKwargs):
+		with actionTester(self, braille.displayChanged, useAssertDictContainsSubset=True, **expectedKwargs):
 			# Terminate the current noBraille instance to ensure that the action is triggered when choosing it again.
 			braille.handler.display.terminate()
 			braille.handler.display = None
@@ -167,7 +167,7 @@ class TestHandlerExtensionPoints(unittest.TestCase):
 	def test_filter_displaySize(self):
 		with filterTester(
 			self,
-			braille.handler.filter_displaySize,
+			braille.filter_displaySize,
 			braille.handler._displaySize,  # The currently cached display size
 			20,   # The filter handler should change the display size to 40
 		) as expectedOutput:
@@ -176,7 +176,10 @@ class TestHandlerExtensionPoints(unittest.TestCase):
 	def test_decide_enabled(self):
 		with deciderTester(
 			self,
-			braille.handler.decide_enabled,
+			braille.decide_enabled,
 			expectedDecision=False,
 		) as expectedDecision:
+			# Ensure that disabling braille by the decider doesn't try to call _handleEnabledDecisionFalse,
+			# as that relies on wx.
+			braille.handler._enabled = False
 			self.assertEqual(braille.handler.enabled, expectedDecision)

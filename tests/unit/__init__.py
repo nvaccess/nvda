@@ -99,7 +99,7 @@ def getFakeCellCount(numCells: int) -> int:
 	return 40
 
 
-braille.handler.filter_displaySize.register(getFakeCellCount)
+braille.filter_displaySize.register(getFakeCellCount)
 
 # The focus and navigator objects need to be initialized to something.
 from .objectProvider import PlaceholderNVDAObject,NVDAObjectWithRole

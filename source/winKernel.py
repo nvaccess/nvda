@@ -27,9 +27,9 @@ if TYPE_CHECKING:
 
 
 def __getattr__(attrName: str) -> Any:
-	import NVDAState
 	"""Module level `__getattr__` used to preserve backward compatibility.
 	"""
+	import NVDAState
 	if attrName == "SYSTEM_POWER_STATUS" and NVDAState._allowDeprecatedAPI():
 		from logHandler import log
 		from winAPI._powerTracking import SystemPowerStatus

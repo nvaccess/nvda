@@ -45,6 +45,7 @@ For example, when text has a comment and a footnote associated with it. (#14507,
   - NVDA will announce search highlights when opening Start menu. (#13841)
   - On ARM, x64 apps are no longer identified as ARM64 applications. (#14403)
   - Clipboard history menu items such as "pin item" can be accessed. (#14508)
+  - In Windows 11 22H2 and newer, it is again possible to use mouse and touch interaction to interact with areas such as the system tray overflow window and "Open With" dialog. (#14538, #14539)
   -
 - Suggestions are reported when typing an @mention in in Microsoft Excel comments. (#13764)
 - In the Google Chrome location bar, suggestion controls (switch to tab, remove suggestion etc) are now reported when selected. (#13522)
@@ -95,15 +96,15 @@ This functionality is now available generically via ``behaviours.EditableText`` 
   - This new class is not a singleton by design, add-on authors are encouraged to use their own instance when doing hardware i/o.
   -
 - The processor architecture for the computer can be queried from ``winVersion.WinVersion.processorArchitecture attribute.`` (#14439)
-- New extension points have be added. (#14503)
-  - ``inputCore.manager.decide_executeGesture``
+- New extension points have been added. (#14503)
+  - ``inputCore.decide_executeGesture``
   - ``tones.decide_beep``
   - ``nvwave.decide_playWaveFile``
-  - ``braille.handler.pre_writeCells``
-  - ``braille.handler.filter_displaySize``
-  - ``braille.handler.decide_enabled``
-  - ``braille.handler.displayChanged``
-  - ``braille.handler.displaySizeChanged``
+  - ``braille.pre_writeCells``
+  - ``braille.filter_displaySize``
+  - ``braille.decide_enabled``
+  - ``braille.displayChanged``
+  - ``braille.displaySizeChanged``
   - 
 -
 
