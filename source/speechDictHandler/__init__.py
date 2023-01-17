@@ -1,8 +1,8 @@
-#speechDictHandler.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NVDA Contributors <http://www.nvda-project.org/>
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# speechDictHandler.py
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2023 NVDA Contributors <http://www.nvda-project.org/>
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import re
 import globalVars
@@ -42,7 +42,10 @@ class SpeechDictEntry:
 		self.type=type
 
 	def sub(self, text):
-		replacement=self.replacement
+		if self.type == ENTRY_TYPE_REGEXP:
+			replacement = self.replacement
+		else:
+			replacement = re.escape(self.replacement)
 		return self.compiled.sub(replacement, text)
 
 class SpeechDict(list):
