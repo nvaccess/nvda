@@ -16,6 +16,7 @@ from typing import (
 	Tuple,
 	List,
 	Optional,
+	Any,
 )
 
 import wx
@@ -35,6 +36,7 @@ import winInputHook
 import inputCore
 import tones
 import core
+import NVDAState
 from contextlib import contextmanager
 import threading
 
@@ -111,7 +113,16 @@ def isNVDAModifierKey(vkCode: int, extended: bool) -> bool:
 	else:
 		return False
 
-SUPPORTED_NVDA_MODIFIER_KEYS = ("capslock", "numpadinsert", "insert")
+
+def __getattr__(attrName: str) -> Any:
+	"""Module level `__getattr__` used to preserve backward compatibility."""
+	if attrName == "SUPPORTED_NVDA_MODIFIER_KEYS" and NVDAState._allowDeprecatedAPI():
+		log.warning(
+			"keyboardHandler.SUPPORTED_NVDA_MODIFIER_KEYS is deprecated with no direct replacement. "
+			"Consider using the class config.configFlags.NVDAKey instead."
+		)
+		return ("capslock", "numpadinsert", "insert")
+	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
 
 
 def getNVDAModifierKeys() -> List[Tuple[int, Optional[bool]]]:
