@@ -145,10 +145,12 @@ def chainTester(
 		such as a driver instance.
 	@param expectedKwargs: The kwargs that are expected to be passed to the Chain handler.
 	"""
+	expectedKwargs["_called"] = True
 	actualKwargs = {}
 
 	def handler(**kwargs):
 		actualKwargs.update(kwargs)
+		actualKwargs["_called"] = True
 		return expectedOutput
 
 	chain.register(handler)
