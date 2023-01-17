@@ -493,6 +493,8 @@ def normalizeLanguage(lang: str) -> Optional[str]:
 def useImperialMeasurements() -> bool:
 	"""
 	Whether or not measurements should be reported as imperial, rather than metric.
+
+	Note: this is currently unused by NVDA core but retained in case it is useful in future.
 	"""
 	bufLength = 2
 	buf = ctypes.create_unicode_buffer(bufLength)
