@@ -389,24 +389,14 @@ class UIATextInfo(textInfos.TextInfo):
 		return formatField
 	
 	@staticmethod
-	def _getIndentValueDisplayString(val: float) -> str:
+	def _getIndentValueDisplayString(indentSizePt: float) -> str:
 		"""A function returning the string to display in formatting info.
 		@param val: an indent value measured in points, fetched via
 			an UIAHandler.UIA_Indentation*AttributeId attribute.
 		@return: The string used in formatting information to report the length of an indentation.
 		"""
-		
-		# convert points to inches (1pt = 1/72 in)
-		val /= 72.0
-		if languageHandler.useImperialMeasurements():
-			# Translators: a measurement in inches
-			valText = _("{val:.2f} in").format(val=val)
-		else:
-			# Convert from inches to centimetres
-			val *= 2.54
-			# Translators: a measurement in centimetres
-			valText = _("{val:.2f} cm").format(val=val)
-		return valText
+		# Translators: Abbreviation for points, a measurement of font size.
+		return pgettext("font size", "%s pt") % indentSizePt
 	
 	# C901 '__init__' is too complex
 	# Note: when working on getPropertiesBraille, look for opportunities to simplify
