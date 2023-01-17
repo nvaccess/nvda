@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2017-2022 NV Access Limited, Joseph Lee
+# Copyright (C) 2017-2023 NV Access Limited, Joseph Lee
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -111,6 +111,10 @@ class AppModule(appModuleHandler.AppModule):
 
 	# Cache the most recently selected item.
 	_recentlySelected = None
+
+	# In Windows 11, clipboard history is seen as a web document.
+	# Turn off browse mode by default so clipboard history entry menu items can be announced when tabbed to.
+	disableBrowseModeByDefault: bool = True
 
 	def event_UIA_elementSelected(self, obj, nextHandler):
 		# Logic for IME candidate items is handled all within its own object

@@ -1,10 +1,13 @@
-# treeInterceptorHandler.py
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2020 NV Access Limited, Davy Kager, Accessolutions, Julien Cochuyt
+# Copyright (C) 2006-2022 NV Access Limited, Davy Kager, Accessolutions, Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from typing import Optional, Dict
+from typing import (
+	TYPE_CHECKING,
+	Dict,
+	Optional,
+)
 
 from logHandler import log
 import baseObject
@@ -17,6 +20,10 @@ import braille
 import vision
 from speech.types import SpeechSequence
 from controlTypes import OutputReason
+
+if TYPE_CHECKING:
+	import NVDAObjects
+
 
 runningTable=set()
 
@@ -84,12 +91,11 @@ class TreeInterceptor(baseObject.ScriptableObject):
 
 	shouldTrapNonCommandGestures=False #: If true then gestures that do not have a script and are not a command gesture should be trapped from going through to Windows.
 
-	def __init__(self, rootNVDAObject):
+	def __init__(self, rootNVDAObject: "NVDAObjects.NVDAObject"):
 		super(TreeInterceptor, self).__init__()
 		self._passThrough = False
 		#: The root object of the tree wherein events and scripts are intercepted.
-		#: @type: L{NVDAObjects.NVDAObject}
-		self.rootNVDAObject = rootNVDAObject
+		self.rootNVDAObject: "NVDAObjects.NVDAObject" = rootNVDAObject
 
 	def terminate(self):
 		"""Terminate this interceptor.

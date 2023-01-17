@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-15 00:02+0000\n"
+"POT-Creation-Date: 2022-12-23 00:02+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Karl Eick <hozosch@web.de>\n"
 "Language-Team: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 msgid "Native input"
@@ -132,7 +132,7 @@ msgstr "Niemals"
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
 msgid "Duck when outputting speech and sounds"
-msgstr "Während des Sprechens und bei Wiedergabe der Signaltöne"
+msgstr "Nur beim Vorlesen und bei Sounds"
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
@@ -367,7 +367,7 @@ msgstr "art"
 
 #. Translators: Displayed in braille for an object which is a region.
 msgid "rgn"
-msgstr "Rgn"
+msgstr "rgn"
 
 #. Translators: Displayed in braille for an object which is a figure.
 msgid "fig"
@@ -506,13 +506,13 @@ msgstr "Alle Punkte"
 #. Translators: The label for a braille focus context presentation setting that
 #. only shows as much as possible focus context information when the context has changed.
 msgid "Fill display for context changes"
-msgstr "Bei Kontextänderungen komplette Brailleanzeige füllen"
+msgstr "Bei Kontextänderungen komplette Braille-Anzeige füllen"
 
 #. Translators: The label for a braille focus context presentation setting that
 #. shows as much as possible focus context information if the focus object doesn't fill up the whole display.
 #. This was the pre NVDA 2017.3 default.
 msgid "Always fill display"
-msgstr "Immer füllen"
+msgstr "Immer Braille-Anzeige füllen"
 
 #. Translators: The label for a braille focus context presentation setting that
 #. always shows the object with focus at the very left of the braille display
@@ -6534,7 +6534,7 @@ msgstr "Ein kostenloser und quelloffener Screenreader für Microsoft Windows"
 
 #, python-brace-format
 msgid "Copyright (C) {years} NVDA Contributors"
-msgstr "Copyright (C) {years} NVDA-Mitwirkende"
+msgstr "© {years} NVDA-Mitwirkende"
 
 #. Translators: "About NVDA" dialog box message
 #, python-brace-format
@@ -6616,7 +6616,7 @@ msgstr "%d Prozent"
 #. Translators: a message announcing a candidate's character and description.
 #, python-brace-format
 msgid "{symbol} as in {description}"
-msgstr "{symbol} wie {description}"
+msgstr "{symbol} wie in {description}"
 
 #. Translators: a formatted message announcing a candidate's number and candidate text.
 #, python-brace-format
