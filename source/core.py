@@ -453,32 +453,6 @@ def _initializeObjectCaches():
 	api.setMouseObject(desktopObject)
 
 
-class _TrackNVDAInitialization:
-	"""
-	During NVDA initialization,
-	core._initializeObjectCaches needs to cache the desktop object,
-	regardless of lock state.
-	Security checks may cause the desktop object to not be set if NVDA starts on the lock screen.
-	As such, during initialization, NVDA should behave as if Windows is unlocked,
-	i.e. winAPI.sessionTracking._isLockScreenModeActive should return False.
-
-	TODO: move to NVDAState module
-	"""
-
-	_isNVDAInitialized = False
-	"""When False, _isLockScreenModeActive is forced to return False.
-	"""
-
-	@staticmethod
-	def markInitializationComplete():
-		assert not _TrackNVDAInitialization._isNVDAInitialized
-		_TrackNVDAInitialization._isNVDAInitialized = True
-
-	@staticmethod
-	def isInitializationComplete() -> bool:
-		return _TrackNVDAInitialization._isNVDAInitialized
-
-
 def _doLoseFocus():
 	import api
 	focusObject = api.getFocusObject()
@@ -765,7 +739,7 @@ def main():
 	from winAPI import sessionTracking
 	sessionTracking.initialize()
 
-	_TrackNVDAInitialization.markInitializationComplete()
+	NVDAState._TrackNVDAInitialization.markInitializationComplete()
 
 	log.info("NVDA initialized")
 

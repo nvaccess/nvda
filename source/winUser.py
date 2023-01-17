@@ -45,6 +45,7 @@ WNDPROC=WINFUNCTYPE(LRESULT,HWND,c_uint,WPARAM,LPARAM)
 
 
 def __getattr__(attrName: str) -> Any:
+	"""Module level `__getattr__` used to preserve backward compatibility."""
 	from winAPI.winUser.constants import SystemMetrics
 	_deprecatedConstantsMap = {
 		"SM_CXSCREEN": SystemMetrics.CX_SCREEN,
@@ -55,7 +56,6 @@ def __getattr__(attrName: str) -> Any:
 		"SM_CXVIRTUALSCREEN": SystemMetrics.CX_VIRTUAL_SCREEN,
 		"SM_CYVIRTUALSCREEN": SystemMetrics.CY_VIRTUAL_SCREEN,
 	}
-	"""Module level `__getattr__` used to preserve backward compatibility."""
 	if attrName in _deprecatedConstantsMap and NVDAState._allowDeprecatedAPI():
 		replacementSymbol = _deprecatedConstantsMap[attrName]
 		log.warning(

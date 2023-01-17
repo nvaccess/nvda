@@ -15,6 +15,7 @@ import sys
 import os
 import functools
 import winreg
+import platform
 
 
 # Records a mapping between Windows builds and release names.
@@ -68,7 +69,7 @@ def _getRunningVersionNameFromWinReg() -> str:
 class WinVersion(object):
 	"""
 	Represents a Windows release.
-	Includes version major, minor, build, service pack information,
+	Includes version major, minor, build, service pack information, machine architecture,
 	as well as tools such as checking for specific Windows 10 releases.
 	"""
 
@@ -79,7 +80,8 @@ class WinVersion(object):
 			build: int = 0,
 			releaseName: Optional[str] = None,
 			servicePack: str = "",
-			productType: str = ""
+			productType: str = "",
+			processorArchitecture: str = ""
 	):
 		self.major = major
 		self.minor = minor
@@ -90,6 +92,7 @@ class WinVersion(object):
 			self.releaseName = self._getWindowsReleaseName()
 		self.servicePack = servicePack
 		self.productType = productType
+		self.processorArchitecture = processorArchitecture
 
 	def _getWindowsReleaseName(self) -> str:
 		"""Returns the public release name for a given Windows release based on major, minor, and build.
@@ -123,6 +126,8 @@ class WinVersion(object):
 			winVersionText.append(f"service pack {self.servicePack}")
 		if self.productType != "":
 			winVersionText.append(self.productType)
+		if self.processorArchitecture != "":
+			winVersionText.append(self.processorArchitecture)
 		return " ".join(winVersionText)
 
 	def __eq__(self, other):
@@ -187,7 +192,8 @@ def getWinVer():
 		build=winVer.build,
 		releaseName=releaseName,
 		servicePack=winVer.service_pack,
-		productType=("workstation", "domain controller", "server")[winVer.product_type - 1]
+		productType=("workstation", "domain controller", "server")[winVer.product_type - 1],
+		processorArchitecture=platform.machine()
 	)
 
 

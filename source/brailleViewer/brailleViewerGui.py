@@ -17,7 +17,7 @@ from logHandler import log
 import fonts
 import inputCore
 import gui.contextHelp
-from utils.security import _isLockScreenModeActive, postSessionLockStateChanged
+from utils.security import _isLockScreenModeActive, post_sessionLockStateChanged
 
 BRAILLE_UNICODE_PATTERNS_START = 0x2800
 BRAILLE_SPACE_CHARACTER = chr(BRAILLE_UNICODE_PATTERNS_START)
@@ -287,7 +287,7 @@ class BrailleViewerFrame(
 			pos=dialogPos,
 			style=wx.CAPTION | wx.CLOSE_BOX | wx.STAY_ON_TOP
 		)
-		postSessionLockStateChanged.register(self.onSessionLockStateChange)
+		post_sessionLockStateChanged.register(self.onSessionLockStateChange)
 		self.Bind(wx.EVT_CLOSE, self._onClose)
 		self.Bind(wx.EVT_WINDOW_DESTROY, self._onDestroy)
 
@@ -557,7 +557,7 @@ class BrailleViewerFrame(
 
 	def _onDestroy(self, evt: wx.Event):
 		log.debug("braille viewer gui onDestroy")
-		postSessionLockStateChanged.unregister(self.onSessionLockStateChange)
+		post_sessionLockStateChanged.unregister(self.onSessionLockStateChange)
 		self.isDestroyed = True
 		self._notifyOfDestroyed()
 		evt.Skip()

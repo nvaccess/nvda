@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022 NV Access Limited
+# Copyright (C) 2022-2023 NV Access Limited, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -22,7 +22,24 @@ if typing.TYPE_CHECKING:
 	import NVDAObjects  # noqa: F401, use for typing
 
 
-postSessionLockStateChanged = extensionPoints.Action()
+def __getattr__(attrName: str) -> Any:
+	"""Module level `__getattr__` used to preserve backward compatibility.
+	"""
+	import NVDAState
+	if NVDAState._allowDeprecatedAPI():
+		if attrName == "isObjectAboveLockScreen":
+			log.warning(
+				"isObjectAboveLockScreen(obj) is deprecated. "
+				"Instead use obj.isBelowLockScreen. "
+			)
+			return _isObjectAboveLockScreen
+		if attrName == "postSessionLockStateChanged":
+			log.warning("postSessionLockStateChanged is deprecated, use post_sessionLockStateChanged instead.")
+			return post_sessionLockStateChanged
+	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+
+
+post_sessionLockStateChanged = extensionPoints.Action()
 """
 Notifies when a session lock or unlock event occurs.
 
@@ -34,9 +51,9 @@ def onSessionLockStateChange(isNowLocked: bool):
 	'''
 	pass
 
-postSessionLockStateChanged.register(onSessionLockStateChange)
-postSessionLockStateChanged.notify(isNowLocked=False)
-postSessionLockStateChanged.unregister(onSessionLockStateChange)
+post_sessionLockStateChanged.register(onSessionLockStateChange)
+post_sessionLockStateChanged.notify(isNowLocked=False)
+post_sessionLockStateChanged.unregister(onSessionLockStateChange)
 ```
 """
 
@@ -164,18 +181,6 @@ def objectBelowLockScreenAndWindowsIsLocked(
 	return False
 
 
-def __getattr__(attrName: str) -> Any:
-	import NVDAState
-	"""Module level `__getattr__` used to preserve backward compatibility."""
-	if attrName == "isObjectAboveLockScreen" and NVDAState._allowDeprecatedAPI():
-		log.warning(
-			"Importing isObjectAboveLockScreen(obj) is deprecated. "
-			"Instead use obj.isBelowLockScreen. "
-		)
-		return _isObjectAboveLockScreen
-	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
-
-
 def _isObjectAboveLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 	log.error(
 		"This function is deprecated. "
@@ -199,6 +204,11 @@ def _isObjectBelowLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 	"""
 	from IAccessibleHandler import SecureDesktopNVDAObject
 	from NVDAObjects.IAccessible import TaskListIcon
+	import systemUtils
+
+	if not systemUtils.hasUiAccess():
+		# If NVDA does not have UIAccess, it cannot read below the lock screen
+		return False
 
 	foregroundWindow = winUser.getForegroundWindow()
 	foregroundProcessID, _foregroundThreadID = winUser.getWindowThreadProcessID(foregroundWindow)
@@ -257,7 +267,10 @@ def _isObjectBelowLockScreenCheckZOrder(objWindowHandle: int) -> bool:
 	try:
 		return _isWindowBelowWindowMatchesCond(objWindowHandle, _isWindowLockScreen)
 	except _UnexpectedWindowCountError:
-		log.exception("Couldn't find lock screen")
+		log.debugWarning(
+			"Couldn't determine lock screen and NVDA object relative z-order",
+			exc_info=True
+		)
 		return False
 
 

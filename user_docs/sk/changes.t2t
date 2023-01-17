@@ -84,6 +84,23 @@ Pozor, stále sú známe problémy s prehliadačmi Chrome a Edge. (#13254)
 -
 
 
+= 2022.3.3 =
+Táto drobná aktualizácia prináša opravy chýb, ktoré boli spôsobené vo verziách 2022.3.2, 2022.3.1 a 2022.3.
+Oprava zahŕňa aj jednu bezpečnostnú záplatu.
+
+== Bezpečnostné opravy ==
+- Odteraz viac nie je možné používať Python konzolu, ak používateľ nie je prihlásený.
+([GHSA-fpwc-2gxx-j9v7 https://github.com/nvaccess/nvda/security/advisories/GHSA-fpwc-2gxx-j9v7])
+-
+
+== Opravy ==
+- Opravená chyba, ktorá spôsobovala, že ak NVDA zamrzlo pri zamykaní systému, bolo možné získať prístup k pracovnej ploche používateľa aj ak bol systém už zamknutý. (#14416)
+- Opravená chyba, ktorá spôsobovala, že ak NVDA zamrzlo počas zamykania systému, správalo sa neštandardne, ako keby bol systém stále zamknutý a to aj po opätovnom odomknutí. (#14416)
+- Opravené problémy s prístupnosťou v časti "zabudnutý pin" a tiež počas inštalácie a aktualizácie. (#14368)
+- Opravené problémy s inštaláciou NVDA v niektorých prostrediach, napríklad Windows Server. (#14379)
+-
+
+
 = 2022.3.2 =
 Toto je drobná aktualizácia, ktorá opravuje problémy vzniknuté vo verzii 2022.3.1 a rieši jeden bezpečnostný problém.
 

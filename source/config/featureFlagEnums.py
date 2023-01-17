@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022 NV Access Limited, Bill Dengler
+# Copyright (C) 2022 NV Access Limited, Bill Dengler, Rob Meredith
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -65,6 +65,24 @@ class BoolFlag(DisplayStringEnum):
 				", DEFAULT must be combined with a 'behavior for default' to be Truthy or Falsy"
 			)
 		return self == BoolFlag.ENABLED
+
+
+class ParagraphNavigationFlag(DisplayStringEnum):
+	@property
+	def _displayStringLabels(self):
+		return {
+			# Translators: Label for a paragraph style in NVDA settings.
+			self.APPLICATION: _("Handled by application"),
+			# Translators: Label for a paragraph style in NVDA settings.
+			self.SINGLE_LINE_BREAK: _("Single line break"),
+			# Translators: Label for a paragraph style in NVDA settings.
+			self.MULTI_LINE_BREAK: _("Multi line break")
+		}
+
+	DEFAULT = enum.auto()
+	APPLICATION = enum.auto()
+	SINGLE_LINE_BREAK = enum.auto()
+	MULTI_LINE_BREAK = enum.auto()
 
 
 class WindowsTerminalStrategyFlag(DisplayStringEnum):
