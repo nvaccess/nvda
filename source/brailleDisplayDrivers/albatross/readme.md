@@ -2,26 +2,18 @@
 
 This module contains driver for Caiku Albatross 46 and 80 braille displays.
 
-### Files
-
-- `__init.py__`
-- `constants.py`
-- `driver.py`
-- `gestures.py`
-- `_threading.py`
-
 ### General
 
-Opposite to many other displays Albatross models do not wait that driver
-sends query of their presence to them. In stead, they send continuously
-init packets until driver sends to them quit that connection has been
+Different to many other displays, Albatross models do not wait for the driver
+to send a query of their presence to the device. Instead, the device continuously sends
+initialization packets until driver requests to them quit, as the connection has been
 established.
 
-These displays also require that they get some data within approximately
-2 seconds, otherwise they fall back to "wait for connection state" and
-start again send their init packets until driver sends quit packet.
+These displays also expect regular data packets, with frequency of at least one every
+2 seconds. Otherwise they fall back to "wait for connection state" and
+start sending the initialization packets until the driver sends a quit packet.
 
-Similarly, if user enters device internal menu, then after exit init packets
+Similarly, if the user enters the device internal menu, after exiting, initialization packets
 are continuously sent until driver sends quit packet.
 
 Init packets are also sent when device is powered off and then on.
@@ -43,8 +35,8 @@ Because init packets may be sent also during session (user exits display
 internal menu for example), it is essential to know if byte is button press
 or part of init packet.
 
-Because display when it is in "wait for connection" state sends init packets
-continuously, there may be hundreds of bytes to handle. There are several
+When display is in "wait for connection" state, it sends init packets continuously.
+As such, there may be hundreds of bytes to handle. There are several
 rx buffers between device and driver which seems to cause situation that all
 data cannot be read with one read operation. It cannot be known when all data
 has been read. This is the case with init packets but also with key

@@ -107,7 +107,9 @@ class ReadThread(Thread):
 						break
 					log.debug(f"GetOverLappedResult failed {ctypes.WinError()}")
 					self._disableFunction()
-			# See comment in _somethingToRead
+		# Considering situation where "albatross_read" thread is about to read
+		# but writing to display fails during it - or vice versa - AttributeError
+		# or TypeError might raise.
 			except (OSError, AttributeError, TypeError):
 				if self._event.isSet():
 					break

@@ -43,7 +43,7 @@ from dataclasses import dataclass
 from enum import IntEnum
 from typing import (
 	Dict,
-	Set,
+	FrozenSet,
 	Tuple,
 )
 
@@ -134,28 +134,30 @@ class Keys(IntEnum):
 MAX_COMBINATION_KEYS = 4
 """Maximum number of keys in key combination."""
 
-CONTROL_KEY_CODES: Set[Keys] = {
-	Keys.attribute1,
-	Keys.attribute2,
-	Keys.f1,
-	Keys.f2,
-	Keys.f7,
-	Keys.f8,
-	Keys.home1,
-	Keys.end1,
-	Keys.eCursor1,
-	Keys.cursor1,
-	Keys.attribute3,
-	Keys.attribute4,
-	Keys.f9,
-	Keys.f10,
-	Keys.f15,
-	Keys.f16,
-	Keys.home2,
-	Keys.end2,
-	Keys.eCursor2,
-	Keys.cursor2,
-}
+CONTROL_KEY_CODES: FrozenSet[Keys] = frozenset(
+	{
+		Keys.attribute1,
+		Keys.attribute2,
+		Keys.f1,
+		Keys.f2,
+		Keys.f7,
+		Keys.f8,
+		Keys.home1,
+		Keys.end1,
+		Keys.eCursor1,
+		Keys.cursor1,
+		Keys.attribute3,
+		Keys.attribute4,
+		Keys.f9,
+		Keys.f10,
+		Keys.f15,
+		Keys.f16,
+		Keys.home2,
+		Keys.end2,
+		Keys.eCursor2,
+		Keys.cursor2,
+	}
+)
 """Ctrl keys which may start key combination."""
 
 LEFT_RIGHT_KEY_CODES: Dict[Keys, Keys] = {
@@ -226,7 +228,7 @@ class RoutingKeyRange:
 	indexOffset: int
 
 
-ROUTING_KEY_RANGES: Set[RoutingKeyRange] = frozenset(
+ROUTING_KEY_RANGES: FrozenSet[RoutingKeyRange] = frozenset(
 	{
 		RoutingKeyRange("routing", 2, 41, indexOffset=2),
 		RoutingKeyRange("secondRouting", 43, 82, indexOffset=43),
