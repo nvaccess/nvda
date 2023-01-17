@@ -70,7 +70,7 @@ try:
 		localedir=os.path.join(globalVars.appDir, 'locale'),
 		languages=[locale.getdefaultlocale()[0]]
 	)
-	trans.install(True)
+	trans.install()
 	# Install our pgettext function.
 	builtins.pgettext = makePgettext(trans)
 except:
