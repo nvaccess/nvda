@@ -106,12 +106,12 @@ class DictionaryEntryDialog(
 				entryType,
 			)
 		except RegexpError as e:
-			log.debugWarning("Could not add dictionary entry due to (regex error in the pattern field) : %s" % e)
+			log.debugWarning(f"Could not add dictionary entry due to regex error in the pattern field : {e}")
 			if entryType != speechDictHandler.ENTRY_TYPE_REGEXP:
 				raise(e)
 			gui.messageBox(
 				# Translators: This is an error message to let the user know that the dictionary entry is not valid.
-				_("Regular Expression error in the pattern field: \"%s\".") % e,
+				_(f"Regular Expression error in the pattern field: \"{e}\"."),
 				# Translators: The title of an error message raised by the Dictionary Entry dialog
 				_("Dictionary Entry Error"),
 				wx.OK | wx.ICON_WARNING,
@@ -121,12 +121,12 @@ class DictionaryEntryDialog(
 		try:
 			dictEntry.sub("test")  # Ensure there are no grouping error (#11407)
 		except RegexpError as e:
-			log.debugWarning("Could not add dictionary entry due to (regex error in the replacement field) : %s" % e)
+			log.debugWarning(f"Could not add dictionary entry due to regex error in the replacement field : {e}")
 			if entryType != speechDictHandler.ENTRY_TYPE_REGEXP:
 				raise(e)
 			gui.messageBox(
 				# Translators: This is an error message to let the user know that the dictionary entry is not valid.
-				_("Regular Expression error in the replacement field: \"%s\".") % e,
+				_("Regular Expression error in the replacement field: \"{e}\"."),
 				# Translators: The title of an error message raised by the Dictionary Entry dialog
 				_("Dictionary Entry Error"),
 				wx.OK | wx.ICON_WARNING,
