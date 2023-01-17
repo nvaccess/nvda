@@ -70,14 +70,12 @@ class Action(HandlerRegistrar[Callable[..., None]]):
 				log.exception(f"Error running handler {handler} for {self}. Exception {e}")
 
 
-FilterValueTypeT = TypeVar("FilterValueTypeT")
+FilterValueT = TypeVar("FilterValueT")
 
 
-# Typing doesn't allow us to typehint a Callable with one required argument and several kwargs.
-# Using a typing_extensions.Protocol for this results in false negatives.
 class Filter(
-		HandlerRegistrar[Union[Callable[..., FilterValueTypeT], Callable[[FilterValueTypeT], FilterValueTypeT]]],
-		Generic[FilterValueTypeT]
+		HandlerRegistrar[Union[Callable[..., FilterValueT], Callable[[FilterValueT], FilterValueT]]],
+		Generic[FilterValueT]
 ):
 	"""Allows interested parties to register to modify a specific kind of data.
 	For example, this might be used to allow modification of spoken messages before they are passed to the synthesizer.
@@ -103,7 +101,7 @@ class Filter(
 	'This is a message which has been filtered'
 	"""
 
-	def apply(self, value: FilterValueTypeT, **kwargs) -> FilterValueTypeT:
+	def apply(self, value: FilterValueT, **kwargs) -> FilterValueT:
 		"""Pass a value to be filtered through all registered handlers.
 		The value is passed to the first handler
 		and the return value from that handler is passed to the next handler.
