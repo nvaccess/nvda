@@ -632,7 +632,7 @@ class AppModule(baseObject.ScriptableObject):
 		"""Whether the underlying process is a 64 bit process.
 		@rtype: bool
 		"""
-		if os.environ.get("PROCESSOR_ARCHITEW6432") not in ("AMD64","ARM64"):
+		if winVersion.getWinVer().processorArchitecture not in ("AMD64","ARM64"):
 			# This is 32 bit Windows.
 			self.is64BitProcess = False
 			return False
@@ -733,7 +733,7 @@ class AppModule(baseObject.ScriptableObject):
 				processMachine = ctypes.wintypes.USHORT()
 				ctypes.windll.kernel32.IsWow64Process2(self.processHandle, ctypes.byref(processMachine), None)
 				if not processMachine.value:
-					self.appArchitecture = os.environ.get("PROCESSOR_ARCHITEW6432")
+					self.appArchitecture = winVersion.getWinVer().processorArchitecture
 				else:
 					# On ARM64, two 32-bit architectures are supported: x86 (via emulation) and ARM (natively).
 					self.appArchitecture = archValues2ArchNames[processMachine.value]
