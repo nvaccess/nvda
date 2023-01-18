@@ -595,7 +595,7 @@ def initialize():
 	#Manually start the in-process manager thread for this NVDA main thread now, as a slow system can cause this action to confuse WX
 	_remoteLib.initInprocManagerThreadIfNeeded()
 	versionedLibARM64Path
-	arch = os.environ.get('PROCESSOR_ARCHITEW6432')
+	arch = winVersion.getWinVer().processorArchitecture
 	if arch == 'AMD64':
 		_remoteLoaderAMD64 = _RemoteLoader(versionedLibAMD64Path)
 	elif arch == 'ARM64':
