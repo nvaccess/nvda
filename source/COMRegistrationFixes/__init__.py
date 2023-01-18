@@ -114,9 +114,9 @@ def fixCOMRegistrations():
 	"""Registers most common COM proxies, in case they have accidentally been unregistered or overwritten by
 	3rd party software installs or uninstalls.
 	"""
-	is64bit = os.environ.get("PROCESSOR_ARCHITEW6432", "").endswith("64")
 	winVer = winVersion.getWinVer()
 	OSMajorMinor = (winVer.major, winVer.minor)
+	is64bit = winVer.processorArchitecture.endswith("64")
 	log.debug(
 		f"Fixing COM registrations for Windows {OSMajorMinor[0]}.{OSMajorMinor[1]}, "
 		"{} bit.".format("64" if is64bit else "32")
