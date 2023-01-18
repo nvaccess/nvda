@@ -117,6 +117,7 @@ class DictionaryEntryDialog(
 				wx.OK | wx.ICON_WARNING,
 				self
 			)
+			self.patternTextCtrl.SetFocus()
 			return
 		try:
 			dictEntry.sub("test")  # Ensure there are no grouping error (#11407)
@@ -132,6 +133,7 @@ class DictionaryEntryDialog(
 				wx.OK | wx.ICON_WARNING,
 				self
 			)
+			self.replacementTextCtrl.SetFocus()
 			return
 		evt.Skip()
 
