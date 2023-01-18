@@ -632,7 +632,7 @@ class AppModule(baseObject.ScriptableObject):
 		"""Whether the underlying process is a 64 bit process.
 		@rtype: bool
 		"""
-		if winVersion.getWinVer().processorArchitecture not in ("AMD64","ARM64"):
+		if winVersion.getWinVer().processorArchitecture not in ("AMD64", "ARM64"):
 			# This is 32 bit Windows.
 			self.is64BitProcess = False
 			return False
