@@ -1688,7 +1688,7 @@ the NVDAObject for IAccessible
 			return
 		return super(IAccessible, self).event_valueChange()
 
-	def event_alert(self):
+	def event_alert(self) -> None:
 		if self.role != controlTypes.Role.ALERT:
 			# Ignore alert events on objects that aren't alerts.
 			return
