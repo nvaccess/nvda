@@ -110,7 +110,7 @@ def apply64bitRegistryPatch(fileName: str) -> None:
 		log.debug(f"Applied 64-bit registry patch from {fileName}")
 
 
-def fixCOMRegistrations():
+def fixCOMRegistrations() -> None:
 	"""Registers most common COM proxies, in case they have accidentally been unregistered or overwritten by
 	3rd party software installs or uninstalls.
 	"""

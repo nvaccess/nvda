@@ -628,7 +628,7 @@ class AppModule(baseObject.ScriptableObject):
 		self.appPath = path.value if path else None
 		return self.appPath
 
-	def _get_is64BitProcess(self):
+	def _get_is64BitProcess(self) -> bool:
 		"""Whether the underlying process is a 64 bit process.
 		@rtype: bool
 		"""

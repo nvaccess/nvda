@@ -528,7 +528,7 @@ class _RemoteLoader:
 		winKernel.closeHandle(self._process)
 
 
-def initialize():
+def initialize() -> None:
 	global _remoteLib, _remoteLoaderAMD64, _remoteLoaderARM64
 	global localLib, generateBeep, VBuf_getTextInRange, lastLanguageID, lastLayoutString
 	hkl=c_ulong(windll.User32.GetKeyboardLayout(0)).value
