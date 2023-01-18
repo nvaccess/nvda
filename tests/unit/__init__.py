@@ -2,7 +2,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2017-2019 NV Access Limited, Babbage B.V.
+# Copyright (C) 2017-2023 NV Access Limited, Babbage B.V., Cyrille Bougot
 
 """NVDA unit testing.
 All unit tests should reside within this package and should be
@@ -19,10 +19,12 @@ import sys
 
 import locale
 import gettext
+import builtins
 #Localization settings
 locale.setlocale(locale.LC_ALL,'')
 translations = gettext.NullTranslations()
 translations.install()
+builtins.pgettext = lambda context, message: message
 
 # The path to the unit tests.
 UNIT_DIR = os.path.dirname(os.path.abspath(__file__))
