@@ -1,8 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2009-2022 NV Access Limited, Joseph Lee, Mohammad Suliman,
-# Babbage B.V., Leonard de Ruijter, Bill Dengler
+# Copyright (C) 2009-2023 NV Access Limited, Joseph Lee, Mohammad Suliman, Babbage B.V., Leonard de Ruijter,
+# Bill Dengler, Cyrille Bougot
 
 """Support for UI Automation (UIA) controls."""
 import typing
@@ -388,8 +388,8 @@ class UIATextInfo(textInfos.TextInfo):
 			formatField['right-indent'] = self._getIndentValueDisplayString(uiaIndentTrailing)
 		return formatField
 	
-	@staticmethod
-	def _getIndentValueDisplayString(val: float) -> str:
+	# @staticmethod
+	def _getIndentValueDisplayString(self, val: float) -> str:
 		"""A function returning the string to display in formatting info.
 		@param val: an indent value measured in points, fetched via
 			an UIAHandler.UIA_Indentation*AttributeId attribute.
