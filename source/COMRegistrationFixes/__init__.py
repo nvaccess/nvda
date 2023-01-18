@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2018-2021 NV Access Limited, Luke Davis (Open Source Systems, Ltd.)
+# Copyright (C) 2018-2023 NV Access Limited, Luke Davis (Open Source Systems, Ltd.)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
