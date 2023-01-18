@@ -256,7 +256,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				return False
 			log.debug(
 				f"Port {self._currentPort} not initialized, sleeping {SLEEP_TIMEOUT} seconds "
-				f"before try {i + 2} / {MAX_INIT_RETRIES}", exc_info=True
+				f"before try {i + 2} / {MAX_INIT_RETRIES}",
+				exc_info=True
 			)
 			time.sleep(SLEEP_TIMEOUT)
 			return False
@@ -284,7 +285,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				return False
 			log.debug(
 				f"Port {self._currentPort} not opened, sleeping {SLEEP_TIMEOUT} seconds "
-				f"before try {i + 2} / {MAX_INIT_RETRIES}", exc_info=True
+				f"before try {i + 2} / {MAX_INIT_RETRIES}",
+				exc_info=True
 			)
 			time.sleep(SLEEP_TIMEOUT)
 			return False
@@ -320,7 +322,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			self._disableConnection()
 			log.debug(
 				f"INIT_START_BYTE {INIT_START_BYTE} read failed, "
-				"trying to reconnect", exc_info=True
+				"trying to reconnect",
+				exc_info=True
 			)
 			return False
 
@@ -422,7 +425,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def _somethingToRead(self) -> Optional[bytes]:
 		"""All but connecting/reconnecting related read operations.
 		@return: on success returns data, on failure C{None}
-"""
+		"""
 		try:
 			# If ClearCommError fails, in_waiting raises SerialException
 			if not self._dev.in_waiting:

@@ -10,7 +10,7 @@ initialization packets until driver requests to them quit, as the connection has
 established.
 
 These displays also expect regular data packets, with frequency of at least one every
-2 seconds. Otherwise they fall back to "wait for connection state" and
+2 seconds. Otherwise they fall back to "wait for connection" state and
 start sending the initialization packets until the driver sends a quit packet.
 
 Similarly, if the user enters the device internal menu, after exiting, initialization packets
@@ -19,7 +19,7 @@ are continuously sent until driver sends quit packet.
 Init packets are also sent when device is powered off and then on.
 
 Display init packets consist of two bytes: the first one is \xff which tells
-that this is an init packet. The second one is settings byte which contains
+that this is an init packet. The second one is a settings byte which contains
 display settings like length of display and number of status cells.
 The most meaningful setting is the length of display. Other settings
 contained by settings byte can be regarded as notes to screenreader, and it
@@ -27,7 +27,7 @@ is screenreader or driver job to use them when applicable. For example,
 there are no separate status cells in the device but if screenreader
 supports using status cells, it can be notified to use them by settings byte.
 
-Settings byte can be anything between \x00 and \xff. Thus it could be the
+The settings byte can be anything between \x00 and \xff. Thus it could be the
 same as init byte.
 
 It is possible that settings byte may have same value with any display buttons.

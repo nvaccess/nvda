@@ -97,7 +97,8 @@ class ReadThread(Thread):
 				result = ctypes.windll.kernel32.GetOverlappedResult(
 					self._dev._port_handle,
 					byref(self._dev._overlapped_read),
-					byref(data), True
+					byref(data),
+					True
 				)
 				if result:
 					log.debug(f"Calling function {self._readFunction.__name__} for read")
@@ -107,9 +108,9 @@ class ReadThread(Thread):
 						break
 					log.debug(f"GetOverLappedResult failed {ctypes.WinError()}")
 					self._disableFunction()
-		# Considering situation where "albatross_read" thread is about to read
-		# but writing to display fails during it - or vice versa - AttributeError
-		# or TypeError might raise.
+			# Considering situation where "albatross_read" thread is about to read
+			# but writing to display fails during it - or vice versa - AttributeError
+			# or TypeError might raise.
 			except (OSError, AttributeError, TypeError):
 				if self._event.isSet():
 					break
