@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2008-2022 NV Access Limited, Peter Vagner, Davy Kager, Mozilla Corporation, Google LLC,
+# Copyright (C) 2008-2023 NV Access Limited, Peter Vagner, Davy Kager, Mozilla Corporation, Google LLC,
 # Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -528,7 +528,7 @@ class _RemoteLoader:
 		winKernel.closeHandle(self._process)
 
 
-def initialize():
+def initialize() -> None:
 	global _remoteLib, _remoteLoaderAMD64, _remoteLoaderARM64
 	global localLib, generateBeep, VBuf_getTextInRange, lastLanguageID, lastLayoutString
 	hkl=c_ulong(windll.User32.GetKeyboardLayout(0)).value
@@ -595,7 +595,7 @@ def initialize():
 	#Manually start the in-process manager thread for this NVDA main thread now, as a slow system can cause this action to confuse WX
 	_remoteLib.initInprocManagerThreadIfNeeded()
 	versionedLibARM64Path
-	arch = os.environ.get('PROCESSOR_ARCHITEW6432')
+	arch = winVersion.getWinVer().processorArchitecture
 	if arch == 'AMD64':
 		_remoteLoaderAMD64 = _RemoteLoader(versionedLibAMD64Path)
 	elif arch == 'ARM64':

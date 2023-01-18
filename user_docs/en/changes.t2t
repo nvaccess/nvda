@@ -70,6 +70,7 @@ For example, when text has a comment and a footnote associated with it. (#14507,
 - Emojis should now be reported in more languages. (#14433)
 - The presence of an annotation is no longer missing in braille for some elements. (#13815)
 - Fixed an issue where config changes not save correctly when changing between a "Default" option and the value of the "Default" option. (#14133)
+- When configuring NVDA there will always be at least one key is defined as a NVDA key. (#14527)
 - When accessing the NVDA menu via the notification area, NVDA will not suggest a pending update anymore when no update is available. (#14523)
 -
 
@@ -111,16 +112,20 @@ This functionality is now available generically via ``behaviours.EditableText`` 
 === API Breaking Changes ===
 These are breaking API changes.
 Please open a GitHub issue if your Add-on has an issue with updating to the new API.
-- The configuration specification has been altered, keys have been removed or modified (#14233).
-  - In ``[documentFormatting]`` section:
+- The configuration specification has been altered, keys have been removed or modified:
+  - In ``[documentFormatting]`` section (#14233):
     - ``reportLineIndentation`` stores an int value (0 to 3) instead of a boolean
     - ``reportLineIndentationWithTones`` has been removed.
     - ``reportBorderStyle`` and ``reportBorderColor`` have been removed and are replaced by ``reportCellBorders``.
     -
-  - In ``[braille]`` section:
+  - In ``[braille]`` section (#14233):
     - ``noMessageTimeout`` has been removed, replaced by a value for ``showMessages``.
     - ``messageTimeout`` cannot take the value 0 anymore, replaced by a value for ``showMessages``.
     - ``autoTether`` has been removed; ``tetherTo`` can now take the value "auto" instead.
+    -
+  - In ``[keyboard]`` section  (#14528):
+    - ``useCapsLockAsNVDAModifierKey``, ``useNumpadInsertAsNVDAModifierKey``, ``useExtendedInsertAsNVDAModifierKey`` has been removed.
+    They are replaced by ``NVDAModifierKeys``.
     -
   -
 - The ``NVDAHelper.RemoteLoader64`` class has been removed with no replacement. (#14449)
@@ -154,6 +159,8 @@ Use ``configFlags.TetherTo.*.value`` instead. (#14233)
 Use ``utils.security.post_sessionLockStateChanged`` instead. (#14486)
 - ``NVDAObject.hasDetails``, ``NVDAObject.detailsSummary``, ``NVDAObject.detailsRole`` has been deprecated.
 Use ``NVDAObject.annotations`` instead. (#14507)
+- ``keyboardHandler.SUPPORTED_NVDA_MODIFIER_KEYS`` is deprecated with no direct replacement.
+Consider using the class ``config.configFlags.NVDAKey`` instead. (#14528)
 - ``gui.MainFrame.evaluateUpdatePendingUpdateMenuItemCommand`` has been deprecated.
 Use ``gui.MainFrame.SysTrayIcon.evaluateUpdatePendingUpdateMenuItemCommand`` instead. (#14523)
 -
