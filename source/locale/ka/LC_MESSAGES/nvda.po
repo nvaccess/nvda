@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA_georgian_translation\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-30 00:02+0000\n"
-"PO-Revision-Date: 2022-10-06 13:54+0400\n"
+"POT-Creation-Date: 2022-12-22 00:04+0000\n"
+"PO-Revision-Date: 2022-12-22 13:54+0400\n"
 "Last-Translator: Dragan Ratkovich\n"
 "Language-Team: Georgian translation team <admin@gozaltech.org>\n"
 "Language: ka\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Initial-Author: Beqa Gozalishvili <beqaprogger@gmail.com>\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 msgid "Native input"
@@ -391,7 +391,7 @@ msgstr "sggstn"
 #. Translators: Displayed in braille when an object is a definition.
 #. Translators: Identifies a definition.
 msgid "definition"
-msgstr "განსაზღვრა"
+msgstr "definition"
 
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
@@ -1097,6 +1097,11 @@ msgstr "ქაშმირული (1 დონე)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Luganda literary braille"
+msgstr "ლუგანდა ლიტერატურული ბრაილი"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Lithuanian 8 dot"
 msgstr "ლიტვური 8 წერტილიანი"
 
@@ -1262,6 +1267,11 @@ msgstr "რუსული შეთანხმებული ბრაილ�
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Kinyarwanda literary braille"
+msgstr "კინიარუანდა ლიტერატურული ბრაილი"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Sanskrit grade 1"
 msgstr "სანსკრიტული (1 დონე)"
 
@@ -1274,11 +1284,6 @@ msgstr "იაკუტი (1 დონე)"
 #. braille settings dialog.
 msgid "Swedish 8 dot computer braille"
 msgstr "შვედური 8 წერტილიანი კომპიუტერული ბრაილი"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "Swedish grade 1"
-msgstr "შვედური (1 დონე)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1309,6 +1314,21 @@ msgstr "სესოთო (2 დონე)"
 #. braille settings dialog.
 msgid "Serbian grade 1"
 msgstr "სერბული (1 დონე)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swedish uncontracted braille"
+msgstr "შვედური შეუთანხმებელი ბრაილი"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swedish partially contracted braille"
+msgstr "შვედური ნახევრად შეთანხმებული ბრაილი"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swedish contracted braille"
+msgstr "შვედური შეთანხმებული ბრაილი"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1409,6 +1429,19 @@ msgstr "ქსოზა (1 დონე)"
 #. braille settings dialog.
 msgid "Xhosa grade 2"
 msgstr "ქსოზა (2 დონე)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#. This should be translated to '中文中国汉语通用盲文' in Mandarin.
+msgid "Chinese common braille (simplified Chinese characters)"
+msgstr "ჩინური ბრაილი (გამარტივებული ჩინური იეროგლიფები)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#. This should be translated to '中文中国汉语现行盲文（无声调）' in Mandarin.
+msgid "Chinese (China, Mandarin) Current Braille System (no tones)"
+msgstr ""
+"ჩინური (ჩინეთი, მანდარინი) ბრაილის ამჟამინდელი სისტემა (ტონების გარეშე)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2365,40 +2398,6 @@ msgstr "ჟესტების დამაკავშირებელი �
 msgid "Loading NVDA. Please wait..."
 msgstr "NVDA იტვირთება. გთხოვთ, დაელოდოთ..."
 
-#. Translators: This is a warning to users, shown if NVDA cannot determine if
-#. Windows is locked.
-msgid ""
-"NVDA failed to register session tracking. While this instance of NVDA is "
-"running, your desktop will not be secure when Windows is locked. Restart "
-"NVDA? "
-msgstr ""
-"NVDA-მ ვერ დაარეგისტრირა სესიის თვალყურის დევნება. სანამ NVDA-ს ეს ასლი "
-"მუშაობს, Windows-ის დაბლოკვისას თქვენი სამუშაო მაგიდა არ იქნება დაცული. "
-"გსურთ რომ გადაიტვირთოს NVDA?"
-
-#. Translators: This is a warning to users, shown if NVDA cannot determine if
-#. Windows is locked.
-msgid "NVDA could not start securely."
-msgstr "NVDA-ს უსაფრთხოდ გაშვება ვერ მოხერხდა."
-
-#. Translators: The screen is oriented so that it is wider than it is tall.
-msgid "Landscape"
-msgstr "პეიზაჟი"
-
-#. Translators: The screen is oriented in such a way that the height is taller than it is wide.
-msgid "Portrait"
-msgstr "პორტრეტი"
-
-#. Translators: Reported when the battery is plugged in, and now is charging.
-#, python-format
-msgid "Charging battery. %d percent"
-msgstr "დატენვა დაწყებულია. %d პროცენტი"
-
-#. Translators: Reported when the battery is no longer plugged in, and now is not charging.
-#, python-format
-msgid "Not charging battery. %d percent"
-msgstr "დატენვა შეჩერებულია. %d პროცენტი"
-
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 msgid "NVDA started"
 msgstr "NVDA ჩართულია"
@@ -2495,6 +2494,36 @@ msgstr "გადადის ცხრილის პირველ სვე
 #. Translators: the description for the last table column script on browseMode documents.
 msgid "moves to the last table column"
 msgstr "გადადის ცხრილის ბოლო სვეტზე"
+
+#. Translators: the description for the sayAll row command
+msgid ""
+"Reads the row horizontally from the current cell rightwards to the last cell "
+"in the row."
+msgstr ""
+"კითხულობს ხაზს ჰორიზონტალურად მიმდინარე უჯრიდან მარჯვნივ, ხაზის ბოლო უჯრამდე"
+
+#. Translators: the description for the sayAll row command
+msgid ""
+"Reads the column vertically from the current cell downwards to the last cell "
+"in the column."
+msgstr ""
+"კითხულობს სვეტს ვერტიკალურად მიმდინარე უჯრიდან ქვევით სვეტის ბოლო უჯრამდე"
+
+#. Translators: the description for the speak row command
+msgid ""
+"Reads the current row horizontally from left to right without moving the "
+"system caret."
+msgstr ""
+"კითხულობს მიმდინარე ხაზს ჰორიზონტალურად მარცხნიდან მარჯვნივ, სისტემური "
+"კურსორის გადაადგილების გარეშე"
+
+#. Translators: the description for the speak column command
+msgid ""
+"Reads the current column vertically from top to bottom without moving the "
+"system caret."
+msgstr ""
+"კითხულობს მიმდინარე სვეტს ვერტიკალურად, ზევიდან ქვევით, სისტემური კურსორის "
+"გადაადგილების გარეშე"
 
 #. Translators: The message announced when toggling the include layout tables browse mode setting.
 msgid "layout tables off"
@@ -2624,7 +2653,7 @@ msgid ""
 "using character descriptions."
 msgstr ""
 "კითხულობს აპლიკაციის კურსორის ქვეშ მყოფ მიმდინარე ხაზს. ამ ღილაკის ორჯერ "
-"დაჭერით კითხულობს ასო-ასო. სამჯერ დაჭერისას კი – ამ ხაზს წაიკითხავს ასოების "
+"დაჭერით კითხულობს ასო-ასო. სამჯერ დაჭერისას კი – ხაზს წაიკითხავს ასოების "
 "აღწერით."
 
 #. Translators: Input help mode message for left mouse click command.
@@ -2944,17 +2973,16 @@ msgid "report tables on"
 msgstr "ცხრილების გახმოვანება ჩართულია"
 
 #. Translators: Input help mode message for toggle report table row/column headers command.
-msgid "Toggles on and off the reporting of table row and column headers"
+msgid "Cycle through the possible modes to report table row and column headers"
 msgstr ""
-"ჩართავს და გამორთავს ცხრილის ხაზებისა და სვეტების სათაურის გახმოვანებას"
+"გადართავს შესაძლო რეჟიმებს ცხრილის ხაზებისა და სვეტების სათაურის "
+"გახმოვანებისთვის"
 
-#. Translators: The message announced when toggling the report table row/column headers document formatting setting.
-msgid "report table row and column headers off"
-msgstr "ცხრილის ხაზებისა და სვეტების სათაურის გახმოვანება გამორთულია"
-
-#. Translators: The message announced when toggling the report table row/column headers document formatting setting.
-msgid "report table row and column headers on"
-msgstr "ცხრილის ხაზებისა და სვეტების სათაურის გახმოვანება ჩართულია"
+#. Translators: Reported when the user cycles through report table header modes.
+#. {mode} will be replaced with the mode; e.g. None, Rows and columns, Rows or Columns.
+#, python-brace-format
+msgid "Report table headers {mode}"
+msgstr "ცხრილის სათაურების გახმოვანება {mode}"
 
 #. Translators: Input help mode message for toggle report table cell coordinates command.
 msgid "Toggles on and off the reporting of table cell coordinates"
@@ -3396,6 +3424,26 @@ msgstr ""
 "გადააქვს მიმოხილვის კურსორი მიმდინარე ნავიგატორის ობიექტის შემდეგ ხაზზე და "
 "ახმოვანებს მას"
 
+#. Translators: Input help mode message for move review cursor to previous page command.
+msgid ""
+"Moves the review cursor to the previous page of the current navigator object "
+"and speaks it"
+msgstr ""
+"გადააქვს მიმოხილვის კურსორი მიმდინარე ნავიგატორის ობიექტის წინა გვერდზე და "
+"ახმოვანებს მას"
+
+#. Translators: a message reported when movement by page is unsupported
+msgid "Movement by page not supported"
+msgstr "გვერდის მიხედვით ნავიგაცია არ არის მხარდაჭერილი"
+
+#. Translators: Input help mode message for move review cursor to next page command.
+msgid ""
+"Moves the review cursor to the next page of the current navigator object and "
+"speaks it"
+msgstr ""
+"გადააქვს მიმოხილვის კურსორი მიმდინარე ნავიგატორის ობიექტის შემდეგ გვერდზე და "
+"ახმოვანებს მას"
+
 #. Translators: Input help mode message for move review cursor to bottom line command.
 msgid ""
 "Moves the review cursor to the bottom line of the current navigator object "
@@ -3684,6 +3732,16 @@ msgstr ""
 "ზოლს კითხულობს ასო-ასო, ხოლო სამჯერ დაჭერით – მდგომარეობის ზოლს აკოპირებს "
 "ბუფერში"
 
+#. Translators: Description for a keyboard command which reports the
+#. accelerator key of the currently focused object.
+msgid "Reports the shortcut key of the currently focused object"
+msgstr "ახმოვანებს ფოკუსირებული ობიექტის ცხელ ღილაკს"
+
+#. Translators: reported when a user requests the accelerator key
+#. of the currently focused object, but there is none set.
+msgid "No shortcut key"
+msgstr "ცხელი ღილაკი არ არის"
+
 #. Translators: Input help mode message for toggle mouse tracking command.
 msgid "Toggles the reporting of information as the mouse moves"
 msgstr "გადართავს მაუსის მოძრაობისას ინფორმაციის გახმოვანებას"
@@ -3879,24 +3937,6 @@ msgstr ""
 "ახმოვანებს ბატარეის მდგომარეობასა და დარჩენილ დროს, როდესაც ელექტროქსელიდან "
 "კვება არ არის მიერთებული"
 
-#. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
-msgid "No system battery"
-msgstr "არ არის სისტემური აკუმულატორი"
-
-#. Translators: This is presented to inform the user of the current battery percentage.
-#, python-format
-msgid "%d percent"
-msgstr "%d პროცენტი"
-
-#. Translators: This is presented when AC power is connected such as when recharging a laptop battery.
-msgid "AC power on"
-msgstr "ელექტრო ქსელიდან კვება ჩართულია"
-
-#. Translators: This is the estimated remaining runtime of the laptop battery.
-#, python-brace-format
-msgid "{hours:d} hours and {minutes:d} minutes remaining"
-msgstr "დარჩენილია {hours:d} საათი და {minutes:d} წუთი"
-
 #. Translators: Input help mode message for pass next key through command.
 msgid ""
 "The next key that is pressed will not be handled at all by NVDA, it will be "
@@ -4043,7 +4083,7 @@ msgid ""
 "all the text that NVDA is currently speaking"
 msgstr ""
 "რთავს NVDA-ს მეტყველების მნახველს, მოძრავ ფანჯარას, რომელიც საშუალებას "
-"გაძლევთ ნახოთ ყველა ტექსტი, რომელსაც ამჟამად NVDA ახმოვანებს"
+"გაძლევთ, ნახოთ ყველა ტექსტი, რომელსაც ამჟამად NVDA ახმოვანებს"
 
 #. Translators: The message announced when disabling speech viewer.
 msgid "speech viewer disabled"
@@ -4058,7 +4098,7 @@ msgid ""
 "Toggles the NVDA Braille viewer, a floating window that allows you to view "
 "braille output, and the text equivalent for each braille character"
 msgstr ""
-"რთავს NVDA-ს ბრაილის მნახველს, მოძრავ ფანჯარას, რომელიც საშუალებას გაძლევთ "
+"რთავს NVDA-ს ბრაილის მნახველს, მოძრავ ფანჯარას, რომელიც საშუალებას გაძლევთ, "
 "ნახოთ ბრაილით გამოსული ნებისმიერი ინფორმაცია და ტექსტის ექვივალენტი თითოეული "
 "ბრაილის სიმბოლოსთვის"
 
@@ -6230,6 +6270,33 @@ msgctxt "touch action"
 msgid "hover up"
 msgstr "ყველა თითის გასრიალება ზემოთ"
 
+#. Translators: This is the message for a warning shown if NVDA cannot open a browsable message window
+#. when Windows is on a secure screen (sign-on screen / UAC prompt).
+msgid ""
+"This feature is unavailable while on secure screens such as the sign-on "
+"screen or UAC prompt."
+msgstr ""
+"ეს ფუნქცია მიუწვდომელია დაცულ ეკრანებზე, როგორიცაა შესვლის ეკრანი ან UAC "
+"მოთხოვნა."
+
+#. Translators: This is the message for a warning shown if NVDA cannot open a browsable message window
+#. when Windows is on a secure screen (sign-on screen / UAC prompt). This prompt includes the title
+#. of the Window that could not be opened for context.
+#. The {title} will be replaced with the title.
+#. The title may be something like "Formatting".
+#, python-brace-format
+msgid ""
+"This feature ({title}) is unavailable while on secure screens such as the "
+"sign-on screen or UAC prompt."
+msgstr ""
+"ეს ფუნქცია ({title}) მიუწვდომელია დაცულ ეკრანებზე, როგორიცაა შესვლის ეკრანი "
+"ან UAC მოთხოვნა."
+
+#. Translators: This is the title for a warning dialog, shown if NVDA cannot open a browsable message
+#. dialog.
+msgid "Feature unavailable."
+msgstr "ფუნქცია მიუწვდომელია."
+
 #. Translators: The title for the dialog used to present general NVDA messages in browse mode.
 msgid "NVDA Message"
 msgstr "NVDA-ს შეტყობინება"
@@ -6459,7 +6526,7 @@ msgstr "საავტორო უფლება (C) {years} NVDA დამ�
 #, python-brace-format
 msgid ""
 "{longName} ({name})\n"
-"Version: {version}\n"
+"Version: {version} ({version_detailed})\n"
 "URL: {url}\n"
 "{copyright}\n"
 "\n"
@@ -6480,7 +6547,7 @@ msgid ""
 "menu."
 msgstr ""
 "{longName} ({name})\n"
-"ვერსია: {version}\n"
+"ვერსია: {version} ({version_detailed})\n"
 "URL: {url}\n"
 "{copyright}\n"
 "\n"
@@ -6523,6 +6590,12 @@ msgstr ""
 "ობიექტის კუთხეები განლაგებულია {left:.1f} პროცენტით  ეკრანის მარცხენა "
 "კუთხიდან, {top:.1f} პროცენტით ეკრანის ზედა კუთხიდან , სიგანეა {width:.1f} "
 "პროცენტით ეკრანიდან, სიმაღლე, {height:.1f} პროცენტით ეკრანიდან"
+
+#. Translators: This is presented to inform the user of a progress bar percentage.
+#. Translators: This is presented to inform the user of the current battery percentage.
+#, python-format
+msgid "%d percent"
+msgstr "%d პროცენტი"
 
 #. Translators: a message announcing a candidate's character and description.
 #, python-brace-format
@@ -7336,6 +7409,29 @@ msgstr "ბრაილის მნახველის ჩართვის�
 #. whether hovering mouse routes to the cell.
 msgid "&Hover for cell routing"
 msgstr "მაუსის უჯრედებზე გადატანისას მა&რშრუტირება"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+#. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Off"
+msgstr "გამორთულია"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Rows and columns"
+msgstr "ხაზები და სვეტები"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Rows"
+msgstr "ხაზები"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Columns"
+msgstr "სვეტები"
 
 #. Translators: Label for an option in NVDA settings.
 #. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
@@ -8154,6 +8250,10 @@ msgstr "მონიშნულია"
 msgid "half checked"
 msgstr "მონიშნულია ნაწილობრივ"
 
+#. Translators: This is presented when a three state toggle button is half pressed.
+msgid "half pressed"
+msgstr "დაჭერილია ნახევრად"
+
 #. Translators: This is presented when the control is a read-only control such as read-only edit box.
 msgid "read only"
 msgstr "მხოლოდ კითხვისთვის"
@@ -8349,11 +8449,11 @@ msgid ""
 "access. Are you sure you wish to proceed?"
 msgstr ""
 "თქვენ აპირებთ  COM რეგისტრაციის გამოსწორების ინსტრუმენტის გაშვებას. ეს "
-"ინსტრუმენტი შეეცდება გამოასწოროს საერთო სისტემური პრობლემები, რომლებიც ხელს "
-"უშლის NVDA-ს წვდომას მრავალი პროგრამის შიგთავსზე როგორიცაა Firefox და "
-"Internet Explorer. ამ ინსტრუმენტმა უნდა შეიტანოს ცვლილებები სისტემის "
-"რეესტრში და ამიტომ მოითხოვს ადმინისტრაციულ წვდომას. დარწმუნებული ხართ, რომ "
-"გსურთ გაგრძელება?"
+"ინსტრუმენტი შეეცდება, გამოასწოროს საერთო სისტემური პრობლემები, რომლებიც ხელს "
+"უშლის NVDA-ს, ჰქონდეს წვდომა მრავალი პროგრამის შიგთავსზე, როგორიცაა Firefox "
+"და Internet Explorer. ამ ინსტრუმენტმა უნდა შეიტანოს ცვლილებები სისტემის "
+"რეესტრში, შესაბამისად, მოითხოვს ადმინისტრაციულ პრივილეგიებს. დარწმუნებული "
+"ხართ, რომ გსურთ გაგრძელება?"
 
 #. Translators: The title of the warning dialog displayed when launching the COM Registration Fixing tool
 #. Translators: The title of a warning dialog.
@@ -9466,7 +9566,7 @@ msgstr "&კატეგორიები:"
 
 #. Translators: This is the label for the general settings panel.
 msgid "General"
-msgstr "ზოგადი პარამეტრები"
+msgstr "ზოგადი"
 
 #. Translators: One of the log levels of NVDA (the disabled mode turns off logging completely).
 msgid "disabled"
@@ -10126,12 +10226,6 @@ msgstr "ხაზის &ნომრები"
 msgid "Line &indentation reporting:"
 msgstr "ხაზების &სწორების გახმოვანება:"
 
-#. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
-#. Translators: This is the label for a combobox in the
-#. document formatting settings panel.
-msgid "Off"
-msgstr "გამორთულია"
-
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
 msgctxt "line indentation setting"
 msgid "Speech"
@@ -10170,10 +10264,10 @@ msgstr "ინფორმაცია ცხრილის შესახე�
 msgid "&Tables"
 msgstr "&ცხრილები"
 
-#. Translators: This is the label for a checkbox in the
+#. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
-msgid "Row/column h&eaders"
-msgstr "ხაზების/სვეტების ს&ათაურები"
+msgid "H&eaders"
+msgstr "&სათაურები:"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -10292,13 +10386,30 @@ msgstr "დამმუშავებლის scratchpad ფოლდერი
 msgid "Microsoft UI Automation"
 msgstr "Microsoft UI ავტომატიზაცია"
 
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid ""
-"Enable &selective registration for UI Automation events and property changes"
+#. Translators: This is the label for a combo box for selecting the
+#. means of registering for UI Automation events in the advanced settings panel.
+#. Choices are automatic, selective, and global.
+msgid "Regi&stration for UI Automation events and property changes:"
 msgstr ""
-"UI ავტომატიზაციის მოვლენებისა და მახასიათებლების ცვლილებების შერჩევითი "
-"რეგისტრაცი&ის ჩართვა"
+"UI ავტომატიზაციის მოვლენებისა და მახასიათებლების ცვლილებების რ&ეგისტრაცია:"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA decide whether to register
+#. selectively or globally for UI Automation events.
+msgid "Automatic (prefer selective)"
+msgstr "ავტომატურად (უპირატესობა შერჩევითზე)"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA register selectively for UI Automation events
+#. (i.e. not to request events for objects outside immediate focus).
+msgid "Selective"
+msgstr "შერჩევითი"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA register for all UI Automation events
+#. in all cases.
+msgid "Global"
+msgstr "გლობალური"
 
 #. Translators: Label for the Use UIA with MS Word combobox, in the Advanced settings panel.
 msgctxt "advanced.uiaWithMSWord"
@@ -10505,7 +10616,7 @@ msgstr "რედაქტირებადი ტექსტი"
 #. Translators: This is the label for a numeric control in the
 #. Advanced settings panel.
 msgid "Caret movement timeout (in ms)"
-msgstr "ფოკუსის მოძრაობის ლოდინის დრო (მილიწამებში)"
+msgstr "კურსორის მოძრაობის ლოდინის დრო (მილიწამებში)"
 
 #. Translators: This is the label for a checkbox control in the
 #. Advanced settings panel.
@@ -10815,7 +10926,7 @@ msgstr "მთლიანი &სიტყვა"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "Regular &expression"
-msgstr "რეგულარული გამოთქმა"
+msgstr "&რეგულარული გამოთქმა"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
@@ -11196,7 +11307,7 @@ msgstr "ფონის ფერი {backgroundColor}"
 
 #, python-brace-format
 msgid "background pattern {pattern}"
-msgstr "ნიმუში {pattern}"
+msgstr "ფონის ნიმუში {pattern}"
 
 #. Translators: Indicates the line number of the text.
 #. %s will be replaced with the line number.
@@ -11452,6 +11563,24 @@ msgstr "{curPercent:.0f}%"
 msgid "at {x}, {y}"
 msgstr "{x}, {y}ზე"
 
+#. Translators: This is the message for a warning shown if NVDA cannot determine if
+#. Windows is locked.
+msgid ""
+"NVDA is unable to determine if Windows is locked. While this instance of "
+"NVDA is running, your desktop will not be secure when Windows is locked. "
+"Restarting Windows may address this. If this error is ongoing then disabling "
+"the Windows lock screen is recommended."
+msgstr ""
+"NVDAმ ვერ დაადგინა, დაბლოკილია თუ არა Windows. სანამ NVDAს ეს ასლი მუშაობს, "
+"Windows-ის დაბლოკვისას, თქვენი სამუშაო მაგიდა არ იქნება დაცული. Windows-ის "
+"გადატვირთვამ შესაძლოა მოაგვაროს ეს პრობლემა. თუ ეს შეცდომა გრძელდება, "
+"რეკომენდებულია Windows-ის დაბლოკვის ეკრანის გამორთვა."
+
+#. Translators: This is the title for a warning dialog, shown if NVDA cannot determine if
+#. Windows is locked.
+msgid "Lock screen not secure while using NVDA"
+msgstr "დაბლოკვის ეკრანი არ არის დაცული NVDAს გამოყენებისას"
+
 #. Translators: Reported when a page reloads (example: after refreshing a webpage).
 msgid "Refreshed"
 msgstr "განახლდა"
@@ -11466,11 +11595,11 @@ msgstr "განაახლებს დოკუმენტის შიგ�
 
 #. Translators: Presented when use screen layout option is toggled.
 msgid "Use screen layout on"
-msgstr "ეკრანის წარმოდგენის გამოყენება ჩართულია"
+msgstr "ეკრანის განლაგების გამოყენება ჩართულია"
 
 #. Translators: Presented when use screen layout option is toggled.
 msgid "Use screen layout off"
-msgstr "ეკრანის წარმოდგენის გამოყენება გამორთულია"
+msgstr "ეკრანის განლაგების გამოყენება გამორთულია"
 
 #. Translators: shown for a highlighter setting that toggles
 #. highlighting the system focus.
@@ -11520,13 +11649,43 @@ msgid ""
 "Do you wish to continue?"
 msgstr ""
 "ეკრანის ჩაბნელების ჩართვა თქვენი კომპიუტერის ეკრანს მთლიანად გააშავებს. "
-"გაგრძელებამდე დარწმუნდით რომ შეძლებთ ეკრანის გარეშე ნავიგაციას. \n"
+"გაგრძელებამდე დარწმუნდით, რომ შეძლებთ ეკრანის გარეშე ნავიგაციას. \n"
 "\n"
 "გსურთ გაგრძელება?"
 
 #. Translators: option to enable screen curtain in the vision settings panel
 msgid "Make screen black (immediate effect)"
 msgstr "ეკრანის გაშავება (მომენტალური ეფექტი)"
+
+#. Translators: The screen is oriented so that it is wider than it is tall.
+msgid "Landscape"
+msgstr "პეიზაჟი"
+
+#. Translators: The screen is oriented in such a way that the height is taller than it is wide.
+msgid "Portrait"
+msgstr "პორტრეტი"
+
+#. Translators: This is presented when there is an error retrieving the battery status.
+msgid "Unknown power status"
+msgstr "კვების მდგომარეობა უცნობია"
+
+#. Translators: This is presented when there is no battery such as desktop computers
+#. and laptops with battery pack removed.
+msgid "No system battery"
+msgstr "არ არის სისტემური აკუმულატორი"
+
+#. Translators: Reported when the battery is plugged in, and now is charging.
+msgid "Charging battery"
+msgstr "დატენვა დაწყებულია"
+
+#. Translators: Reported when the battery is no longer plugged in, and now is not charging.
+msgid "AC disconnected"
+msgstr "ელექტროქსელიდან კვება გამორთულია"
+
+#. Translators: This is the estimated remaining runtime of the laptop battery.
+#, python-brace-format
+msgid "{hours:d} hours and {minutes:d} minutes remaining"
+msgstr "დარჩენილია {hours:d} საათი და {minutes:d} წუთი"
 
 msgid "Taskbar"
 msgstr "ამოცანების პანელი"
@@ -11539,17 +11698,6 @@ msgstr "RGB წითელი {rgb.red}, მწვანე {rgb.green}, ლუ
 #, python-format
 msgid "%s items"
 msgstr "%s ელემენტი"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#. Translators: a message reported in the SetColumnHeader script for Excel.
-#. Translators: a message reported in the SetRowHeader script for Excel.
-msgid ""
-"Cannot set headers. Please enable reporting of table headers in Document "
-"Formatting Settings"
-msgstr ""
-"სათაურების დაყენება შეუძლებელია, გთხოვთ, ჩართოთ სათაურების გახმოვანება "
-"დოკუმენტის ფორმატირების პარამეტრებიდან"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #, python-brace-format
@@ -11786,6 +11934,10 @@ msgstr "კომენტარის თემა: {author} – {comment} {num
 #. Translators: A message in Excel when there is no comment thread
 msgid "No comment thread on this cell"
 msgstr "ამ უჯრაში კომენტარის თემა არ არის"
+
+#. Translators: announced when moving outside of a table in an Excel spreadsheet.
+msgid "Out of table"
+msgstr "ცხრილს გარეთ"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -12343,13 +12495,13 @@ msgstr "არაა ცვლილებები წერტილში {pr
 
 #. Translators: For line charts, indicates an increase from the previous data point on the left
 #, python-brace-format
-msgid "Increased by {incrementValue} from point {previousIndex}, "
-msgstr "გაიზარდა {incrementValue}-ით წერტილში {previousIndex}, "
+msgid "increased by {incrementValue} from point {previousIndex}, "
+msgstr "გაიზარდა {incrementValue}-ით {previousIndex} წერტილიდან, "
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
 #, python-brace-format
 msgid "decreased by {decrementValue} from point {previousIndex}, "
-msgstr "შემცირდა {decrementValue}-ით წერტილში {previousIndex}, "
+msgstr "შემცირდა {decrementValue}-ით {previousIndex} წერტილიდან, "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
@@ -13200,6 +13352,41 @@ msgstr "ხაზებს შორის ინტერვალი ორმ
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "ხაზებს შორის ინტერვალი 1.5"
+
+#~ msgid ""
+#~ "NVDA is failing to fetch the foreground window. If this continues, NVDA "
+#~ "will quit starting in %d seconds."
+#~ msgstr ""
+#~ "NVDA ვერ ახერხებს წინა პლანის ფანჯრის მოძიებას. თუ აღნიშნული კვლავ "
+#~ "გაგრძელდება, NVDA მუშაობის დაწყებას შეწყვეტს %d წამში."
+
+#~ msgid "NVDA could not start securely."
+#~ msgstr "NVDA-ს უსაფრთხოდ გაშვება ვერ მოხერხდა."
+
+#~ msgid "Swedish grade 1"
+#~ msgstr "შვედური (1 დონე)"
+
+#~ msgid "Not charging battery. %d percent"
+#~ msgstr "დატენვა შეჩერებულია. %d პროცენტი"
+
+#~ msgid "report table row and column headers off"
+#~ msgstr "ცხრილის ხაზებისა და სვეტების სათაურის გახმოვანება გამორთულია"
+
+#~ msgid "report table row and column headers on"
+#~ msgstr "ცხრილის ხაზებისა და სვეტების სათაურის გახმოვანება ჩართულია"
+
+#~ msgid "AC power on"
+#~ msgstr "ელექტრო ქსელიდან კვება ჩართულია"
+
+#~ msgid "Row/column h&eaders"
+#~ msgstr "ხაზების/სვეტების ს&ათაურები"
+
+#~ msgid ""
+#~ "Cannot set headers. Please enable reporting of table headers in Document "
+#~ "Formatting Settings"
+#~ msgstr ""
+#~ "სათაურების დაყენება შეუძლებელია, გთხოვთ, ჩართოთ სათაურების გახმოვანება "
+#~ "დოკუმენტის ფორმატირების პარამეტრებიდან"
 
 #, fuzzy
 #~ msgid "Moves the navigator object to the first row"

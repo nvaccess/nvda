@@ -16,6 +16,7 @@ import api
 import textInfos
 import queueHandler
 import winKernel
+from utils.security import objectBelowLockScreenAndWindowsIsLocked
 
 from .commands import CallbackCommand, EndUtteranceCommand
 from .speechWithoutPauses import SpeechWithoutPauses
@@ -251,11 +252,19 @@ class _TextReader(garbageHandler.TrackedObject, metaclass=ABCMeta):
 			log.debug("no self.reader")
 			# We were stopped.
 			return
-		if not self.reader.obj:
-			log.debug("no self.reader.obj")
+
+		if (
 			# The object died, so we should too.
+			not self.reader.obj
+			# SayAll is available on the lock screen via getSafeScripts, as such
+			# ensure the say all reader does not contain secure information
+			# before continuing
+			or objectBelowLockScreenAndWindowsIsLocked(self.reader.obj)
+		):
+			log.debug("no self.reader.obj")
 			self.finish()
 			return
+
 		if not self.initialIteration or not self.shouldReadInitialPosition():
 			if not self.nextLineImpl():
 				self.finish()

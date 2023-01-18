@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Babbage B.V.,
+# Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Babbage B.V.,
 # Davy Kager
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -12,6 +12,9 @@ import time
 import typing
 import weakref
 import textUtils
+from annotation import (
+	AnnotationOrigin,
+)
 from logHandler import log
 import review
 import eventHandler
@@ -30,12 +33,13 @@ from treeInterceptorHandler import (
 	TreeInterceptor,
 )
 import braille
+from utils.security import _isObjectBelowLockScreen
 import vision
 import globalPluginHandler
 import brailleInput
 import locationHelper
 import aria
-from winAPI.sessionTracking import isWindowsLocked
+from winAPI.sessionTracking import _isLockScreenModeActive
 
 
 class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
@@ -181,7 +185,7 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 		Inserts LockScreenObject to the start of the clsList if Windows is locked.
 		"""
 		from .lockscreen import LockScreenObject
-		if isWindowsLocked():
+		if _isLockScreenModeActive():
 			# This must be resolved first to prevent object navigation outside of the lockscreen.
 			clsList.insert(0, LockScreenObject)
 
@@ -510,12 +514,28 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 	def _get_descriptionFrom(self) -> controlTypes.DescriptionFrom:
 		return controlTypes.DescriptionFrom.UNKNOWN
 
-	#: Typing information for auto property _get_detailsSummary
+	annotations: AnnotationOrigin
+	"""Typing information for auto property _get_annotations
+	"""
+
+	def _get_annotations(self) -> typing.Optional[AnnotationOrigin]:
+		if config.conf["debugLog"]["annotations"]:
+			log.debugWarning(
+				f"Fetching annotations not supported on: {self.__class__.__qualname__}"
+			)
+		return None
+
 	detailsSummary: typing.Optional[str]
+	"""
+	Typing information for auto property _get_detailsSummary
+	Deprecated, use self.annotations.targets instead.
+	"""
 
 	def _get_detailsSummary(self) -> typing.Optional[str]:
-		if config.conf["debugLog"]["annotations"]:
-			log.debugWarning(f"Fetching details summary not supported on: {self.__class__.__qualname__}")
+		log.warning(
+			"NVDAObject.detailsSummary is deprecated. Use NVDAObject.annotations instead.",
+			stack_info=True
+		)
 		return None
 
 	@property
@@ -523,12 +543,22 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		"""Default implementation is based on the result of _get_detailsSummary
 		In most instances this should be optimised.
 		"""
-		return bool(self.detailsSummary)
+		log.warning(
+			"NVDAObject.hasDetails is deprecated. Use NVDAObject.annotations instead.",
+			stack_info=True
+		)
+		return bool(self.annotations)
 
-	#: Typing information for auto property _get_detailsRole
 	detailsRole: typing.Optional[controlTypes.Role]
+	"""Typing information for auto property _get_detailsRole
+	Deprecated, use self.annotations.roles instead.
+	"""
 
 	def _get_detailsRole(self) -> typing.Optional[controlTypes.Role]:
+		log.warning(
+			"NVDAObject.detailsRole is deprecated. Use NVDAObject.annotations instead.",
+			stack_info=True
+		)
 		if config.conf["debugLog"]["annotations"]:
 			log.debugWarning(f"Fetching details summary not supported on: {self.__class__.__qualname__}")
 		return None
@@ -1093,6 +1123,10 @@ Tries to force this object to take the focus.
 		"""
 		speech.speakObject(self, reason=controlTypes.OutputReason.FOCUS)
 
+	def isDescendantOf(self, obj: "NVDAObject") -> bool:
+		"""  is this object a descendant of obj? """
+		raise NotImplementedError
+
 	def _get_placeholder(self):
 		"""If it exists for this object get the value of the placeholder text.
 		For example this might be the aria-placeholder text for a field in a web page.
@@ -1145,7 +1179,9 @@ Tries to force this object to take the focus.
 			import tones
 			tones.beep(3000,40)
 
-	def event_mouseMove(self,x,y):
+	def event_mouseMove(self, x: int, y: int) -> None:
+		from utils.security import objectBelowLockScreenAndWindowsIsLocked
+
 		if not self._mouseEntered and config.conf['mouse']['reportObjectRoleOnMouseEnter']:
 			speech.cancelSpeech()
 			speech.speakObjectProperties(self,role=True)
@@ -1160,6 +1196,12 @@ Tries to force this object to take the focus.
 			info=NVDAObjectTextInfo(self,textInfos.POSITION_FIRST)
 		except LookupError:
 			return
+
+		# This event may fire on the lock screen, as such
+		# ensure the target TextInfo does not contain secure information.
+		if objectBelowLockScreenAndWindowsIsLocked(info.obj):
+			return
+
 		if config.conf["reviewCursor"]["followMouse"]:
 			api.setReviewPosition(info, isCaret=True)
 		info.expand(info.unit_mouseChunk)
@@ -1177,8 +1219,42 @@ Tries to force this object to take the focus.
 					speech.cancelSpeech()
 				speech.speakText(text)
 
+	def event_selection(self):
+		# This object has been selected.
+		# If this object's container / parent is being controlled by the focus,
+		# then report this selection.
+		focus = api.getFocusObject()
+		controls = focus.controllerFor
+		for control in controls:
+			# The focus is controling one or more objects.
+			# If possible, check if this object is a descendant of the object being controlled.
+			try:
+				isDescendant = self.isDescendantOf(control)
+			except NotImplementedError:
+				isDescendant = False
+			if isDescendant:
+				speech.cancelSpeech()
+				if api.setNavigatorObject(self, isFocus=True):
+					self.reportFocus()
+					# Display results as flash messages.
+					braille.handler.message(braille.getPropertiesBraille(
+						name=self.name, role=self.role, positionInfo=self.positionInfo
+					))
+		self.event_stateChange()
+
 	def event_stateChange(self):
-		if self is api.getFocusObject():
+		# Automatically announce state changes for certain objects.
+		inFocus = (
+			# this is the current focus:
+			# E.g. announcing the checked state of a checkbox
+			self is api.getFocusObject()
+			# this is a focus ancestor:
+			# Including the ancestors supports scenarios such as
+			# when pressing a focused button changes the state of an ancestor container,
+			# E.g. a button inside a column header that changes the sorting state of the column (#10890)
+			or any(self is obj for obj in api.getFocusAncestors())
+		)
+		if inFocus:
 			speech.speakObjectProperties(self, states=True, reason=controlTypes.OutputReason.CHANGE)
 		braille.handler.handleUpdate(self)
 		vision.handler.handleUpdate(self, property="states")
@@ -1245,6 +1321,9 @@ This code is executed if a gain focus event is received by this object.
 			speech.speakObjectProperties(self, description=True, reason=controlTypes.OutputReason.CHANGE)
 		braille.handler.handleUpdate(self)
 		vision.handler.handleUpdate(self, property="description")
+
+	def event_controllerForChange(self):
+		pass
 
 	def event_caret(self):
 		if self is api.getFocusObject() and not eventHandler.isPendingEvents("gainFocus"):
@@ -1437,3 +1516,11 @@ This code is executed if a gain focus event is received by this object.
 		For performance, this method will only count up to the given maxCount number, and if there is one more above that, then sys.maxint is returned stating that many items are selected.
 		"""
 		return 0
+
+	#: Type definition for auto prop '_get_isBelowLockScreen'
+	isBelowLockScreen: bool
+
+	def _get_isBelowLockScreen(self) -> bool:
+		if not _isLockScreenModeActive():
+			return False
+		return _isObjectBelowLockScreen(self)

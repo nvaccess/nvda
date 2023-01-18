@@ -64,13 +64,15 @@ class IoBase(object):
 		self._ioDoneInst = LPOVERLAPPED_COMPLETION_ROUTINE(self._ioDone)
 		self._writeOl = OVERLAPPED()
 		# Do the initial read.
-		@winKernel.PAPCFUNC
-		def init(param):
-			self._initApc = None
-			self._asyncRead()
-		# Ensure the APC stays alive until it runs.
-		self._initApc = init
-		braille._BgThread.queueApc(init)
+		self._initialRead()
+
+	def _initialRead(self):
+		"""Performs the initial background read by queuing it as an APC to the IO background thread.
+		This method is tied to the built-in i/o thread.
+		It can be overridden to do an initial read on a different thread.
+		"""
+		from . import bgThread
+		bgThread.queueAsApc(lambda param: self._asyncRead())
 
 	def waitForRead(self, timeout:Union[int, float]) -> bool:
 		"""Wait for a chunk of data to be received and processed.

@@ -3,6 +3,174 @@ NVDA 更新日志
 
 %!includeconf: ../changes.t2tconf
 
+= 2022.4 =
+本版新增了一些重要的功能命令，涵盖表格的逐行/逐列导航、朗读等快捷键。
+还在用户指南中新增了“快速入门指南”部分。
+其次是一些外部依赖库更新和 Bug 修复。
+
+一如既往的对 eSpeak 和 LibLouis 进行了更新。
+值得一提的是 LibLouis 又更新/新增了中文、瑞典文、卢干达文和基尼亚卢旺达文盲文表，让 NVDA 对盲文点显器的支持再上一层楼。
+译者注：中文增加了“国家通用盲文”和“现行盲文（不标调）”两份盲文表。
+
+== 新特性 ==
+- 在用户指南中新增了“快速入门指南”部分。（#13934）
+- 新增了一个命令来读出当前所聚焦对象的快捷键。（#13960）
+  - 台式机：``shift+数字键盘2``。
+  - 笔记本：``NVDA+ctrl+shift+.``。
+  -
+- 新增了一个命令，在应用程序支持的情况下逐页移动浏览光标。（#14021）
+  - 移动到上一页：
+    - 台式机：``NVDA+上翻页``。
+    - 笔记本：``NVDA+shift+上翻页``。
+    -
+  - 移动到下一页：
+    - 台式机：``NVDA+下翻页``。
+    - 笔记本：``NVDA+shift+下翻页``。
+    -
+  -
+- 针对表格新增了以下命令。（#14070）
+  - 从当前单元格开始垂直向下朗读至当前列的最后一个单元格：``NVDA+control+alt+下光标``。
+  - 从当前单元格开始水平向右朗读至当前行的最后一个单元格：``NVDA+control+alt+右光标``。
+  - 在不移动输入焦点的情况下，从上到下垂直朗读当前列：``NVDA+control+alt+上光标``。
+  - 在不移动输入焦点的情况下，从左到右水平朗读当前行：``NVDA+control+alt+左光标``。
+  -
+- NVDA 支持 Excel 在启用了 UIA 的情况下读出“离开表格”。（#14165）
+- 支持单独开关读出行标题或列标题。（#14075）
+-
+
+
+== 改进 ==
+- 将 eSpeak NG 更新至 1.52-dev commit ``735ecdb8``。（#14060、#14079、#14118、#14203）
+  - 修正了中文普通话的发音问题。（#12952、#13572、#14197）
+  -
+- 将 LibLouis 更新至 [3.23.0 https://github.com/liblouis/liblouis/releases/tag/v3.23.0]。（#14112）
+  - 新增了以下盲文表：
+    - 中文中国汉语通用盲文
+    - 卢旺达语文学盲文
+    - 卢干达语文学盲文
+    - 瑞典语非简写盲文
+    - 瑞典语部分简写盲文
+    - 瑞典语简写盲文
+    - 中文中国汉语现行盲文（不标调）（#14138）
+    -
+- NVDA 将操作系统架构信息纳入用户使用情况统计跟踪的一部分。（#14019）
+  - 译者注：系统架构信息即 32 位还是 64 位。
+-
+
+
+== 错误修复 ==
+- 使用 Windows 包管理器 CLI（又名 winget）更新 NVDA 时，Alpha 版本不会被误识别低于已发布的正式版。（#12469）
+- 支持在 Java 应用程序中正确读出分组框。（#13962）
+- 在 Bookworm、写字板或 NVDA 日志查看器等应用程序中，系统光标在“全文朗读”期间可以正确跟随。（#13420、#9179）
+- 可以正确读出 UIA 程序中，支持部分选中的复选框选中状态。（#13975）
+- 改进了 Microsoft Visual Studio、Windows Terminal 和其他基于 UIA 的应用程序的性能和稳定性。（#11077、#11209）
+  - 这些改进适用于 Windows 11 Sun Valley 2（版本 22H2）及更高版本。
+  - 现在会默认选择性注册 UIA 事件和属性改变。
+  -
+- 文本朗读、盲文输出和密码保护现在可以在 Visual Studio 2022 的嵌入式 Windows 终端控件中正常工作。（#14194）
+- NVDA 支持在使用多显示器时自动检测 DPI。
+使用高于 100% 的 DPI 设置或使用多显示器时有以下修复。
+系统版本低于 Windows 10 1809 可能仍然存在问题。
+这些修复要求与 NVDA 交互的应用程序也需要具有 DPI 感知能力。
+另请注意，Chrome 和 Edge 仍然存在已知的问题。（#13254）
+  - 可以在大多数应用程序中正确绘制视觉高亮边框。（#13370、#3875、#12070）
+  - 对于大多数应用程序，触摸屏交互现在会更加准确。（#7083）
+  - 对于大多数应用程序，鼠标导航现在会更加准确。（#6722）
+  -
+- 可以正确忽略没有状态改变（如显示器改变）时读出的方向状态（横向/纵向）。（#14035）
+- 支持读出在拖动项目过程中的状态变化，例如重新排列 Windows 10 开始菜单磁贴和 Windows 11 中的虚拟桌面。（#12271、#14081）
+- 修复了在高级设置面板中，“日志记录后播放错误提示音”选项按下“恢复默认值”按钮时未正确恢复为其默认值的错误。（#14149）
+- 修复了 在 Java 应用程序中无法使用“NVDA+f10”选择文本的错误。（#14163）
+- 修复了在 Microsoft Teams 中使用上/下箭头切换对话时会卡在菜单内的 Bug。（#14355）
+-
+
+
+== 简体中文本地化更改 ==
+- “帮助”菜单内的“最近更新”菜单项改为“升级日志”与本文档标题保持一致。
+- 盲文表：由 Cary-Rowen 和 Frank 制作并贡献的“中文中国汉语通用盲文”。
+- 盲文表：由 Cary-Rowen 添加的“中文中国汉语现行盲文（不标调）”。
+- eSpeak NG 语音：由黄冠能改进的中文普通话发音。
+- 符号：由 Cary-Rowen 添加的一系列打印相关数字符号朗读支持。
+- 由其他社区贡献者提出的若干翻译错误改进。
+
+
+== 插件以及 NVDA 核心开发者需要了解的变动 ==
+请参阅[开发人员指南 https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API]以了解有关 NVDA 的 API 弃用和删除信息。
+
+- 创建了 [NVDA API 公告邮件列表 https://groups.google.com/a/nvaccess.org/g/nvda-api/about]。（#13999）
+- NVDA 不再处理大多数 UIA 应用程序的 ``textChange`` 事件，因为这些事件会对性能产生极大的负面影响。（#11002、#14067）
+-
+
+
+=== 弃用 ===
+- ``core.post_windowMessageReceipt`` 已弃用，请用 ``winAPI.messageWindow.pre_handleWindowMessage`` 来代替。
+- ``winKernel.SYSTEM_POWER_STATUS`` 已弃用并且不鼓励使用，已移动到 ``winAPI._powerTracking.SystemPowerStatus``。
+- ``winUser.SM_*`` 常量已弃用，请用 ``winAPI.winUser.constants.SystemMetrics`` 来代替.
+-
+
+
+= 2022.3.3 =
+这是一个小版本，用于修复 2022.3.2、2022.3.1 和 2022.3 中存在的问题。
+同时还修复了一个存在的安全隐患。
+
+== 安全修复 ==
+- - 防止未经身份验证的用户可能存在的系统级访问（如 NVDA Python 控制台）。
+([GHSA-fpwc-2gxx-j9v7 https://github.com/nvaccess/nvda/security/advisories/GHSA-fpwc-2gxx-j9v7])
+-
+
+== 错误修复 ==
+- 修复了如果 NVDA 在 Windows 锁屏界面无响应后可通过锁屏界面访问用户桌面的错误。（#14416）
+- 修复了如果 NVDA 在锁屏上无响应，NVDA 会无法正常运行的错误，就好像设备仍处于锁定状态一样。（#14416）
+- 修复了 Windows“忘记了我的 PIN”过程和 Windows 更新/安装体验的辅助功能问题。（#14368）
+- 修复了在某些环境中尝试安装 NVDA 时出现的错误，例如 Windows 服务器。（#14379）
+-
+
+== 插件以及 NVDA 核心开发者需要了解的变动 ==
+
+=== 弃用 ===
+- ``utils.security.isObjectAboveLockScreen(obj)`` 已被弃用，请使用 ``obj.isBelowLockScreen``代替。（#14416）
+- ``winAPI.sessionTracking`` 在2023.1中已被弃用并删除。（#14416）
+  - ``isWindowsLocked``
+  - ``handleSessionChange``
+  - ``unregister``
+  - ``register``
+  - ``isLockStateSuccessfullyTracked``
+  - 
+- 
+
+
+= 2022.3.2 =
+这是一个修复了 2022.3.1 中引入的回归并解决安全问题的小版本。
+
+== 安全修复 ==
+- 防止未经身份验证的用户可能存在的系统级访问。
+([GHSA-3jj9-295f-h69w https://github.com/nvaccess/nvda/security/advisories/GHSA-3jj9-295f-h69w])
+-
+
+== 错误修复 ==
+- 修复了从 2022.3.1 中引入的回归，某些功能在安全屏幕上被意外禁用。 (#14286)
+- 修复了从 2022.3.1 的回归，如果 NVDA 在锁屏界面启动，则登录后某些功能会被意外禁用。 (#14301)
+-
+
+
+= 2022.3.1 =
+这是一个小版本，修复了发现的几个安全问题。
+请遵循负责任的披露原则像 NV Access （info@nvaccess.org） 提交您发现的安全问题。
+
+== 安全修复 ==
+- 修复了可以从用户提权到系统级权限的漏洞。
+([GHSA-q7c2-pgqm-vvw5 https://github.com/nvaccess/nvda/security/advisories/GHSA-q7c2-pgqm-vvw5])
+- 修复了一个安全问题，可以利用 NVDA 启动的竞争危害（Race Condition）访问锁屏界面上的 python 控制台。
+([GHSA-72mj-mqhj-qh4w https://github.com/nvaccess/nvda/security/advisories/GHSA-72mj-mqhj-qh4w])
+- 修复了锁定 Windows 时会缓存语音查看器文本的问题。
+([GHSA-grvr-j2h8-3qm4 https://github.com/nvaccess/nvda/security/advisories/GHSA-grvr-j2h8-3qm4])
+-
+
+== 错误修复 ==
+- 防止未经身份验证的用户在锁屏界面改变语音和盲文查看器的设置。 ([GHSA-grvr-j2h8-3qm4 https://github.com/nvaccess/nvda/security/advisories/GHSA-grvr-j2h8-3qm4])
+-
+
+
 = 2022.3 =
 此版本的大部分内容是由 NVDA 社区开发者贡献的。
 这包括光标移动时的延迟字符描述以及对 windows 控制台的增强支持。

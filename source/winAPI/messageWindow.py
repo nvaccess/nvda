@@ -14,16 +14,13 @@ from typing import (
 	Optional,
 )
 
-import wx
 
 from . import (
 	_displayTracking,
 	_powerTracking,
-	sessionTracking,
 )
 from .types import HWNDValT
 import extensionPoints
-import gui
 import windowUtils
 
 
@@ -72,10 +69,6 @@ class WindowMessage(IntEnum):
 	WM_WTSSESSION_CHANGE
 
 	Windows Message for when a Session State Changes.
-	Receiving these messages is registered by sessionTracking.register.
-	handleSessionChange handles these messages.
-
-	https://docs.microsoft.com/en-us/windows/win32/api/wtsapi32/nf-wtsapi32-wtsregistersessionnotification
 	"""
 
 
@@ -92,43 +85,6 @@ class _MessageWindow(windowUtils.CustomWindow):
 		super().__init__(windowName)
 		_displayTracking.initialize()
 		_powerTracking.initialize()
-
-		# Call must be paired with a call to sessionTracking.unregister
-		self._isSessionTrackingRegistered = sessionTracking.register(self.handle)
-
-	def warnIfSessionTrackingNotRegistered(self) -> None:
-		if self._isSessionTrackingRegistered:
-			return
-		failedToRegisterMsg = _(
-			# Translators: This is a warning to users, shown if NVDA cannot determine if
-			# Windows is locked.
-			"NVDA failed to register session tracking. "
-			"While this instance of NVDA is running, "
-			"your desktop will not be secure when Windows is locked. "
-			"Restart NVDA? "
-		)
-		if wx.YES == gui.messageBox(
-			failedToRegisterMsg,
-			# Translators: This is a warning to users, shown if NVDA cannot determine if
-			# Windows is locked.
-			caption=_("NVDA could not start securely."),
-			style=wx.ICON_ERROR | wx.YES_NO,
-		):
-			import core
-			core.restart()
-
-	def destroy(self):
-		"""
-		NVDA must unregister session tracking before destroying the message window.
-
-		Windows API states that every registration of session tracking must be paired with
-		de-registering session tracking.
-		We cannot deregister session tracking after the message window has been destroyed.
-		"""
-		if self._isSessionTrackingRegistered:
-			# Requires an active message window and a handle to unregister.
-			sessionTracking.unregister(self.handle)
-		super().destroy()
 
 	def windowProc(self, hwnd: HWNDValT, msg: int, wParam: int, lParam: int) -> None:
 		"""
@@ -151,6 +107,3 @@ class _MessageWindow(windowUtils.CustomWindow):
 				_powerTracking.reportACStateChange()
 		elif msg == WindowMessage.DISPLAY_CHANGE:
 			_displayTracking.reportScreenOrientationChange(lParam)
-		elif msg == WindowMessage.WTS_SESSION_CHANGE:
-			# If we are receiving WTS_SESSION_CHANGE events, _isSessionTrackingRegistered should be True
-			sessionTracking.handleSessionChange(sessionTracking.WindowsTrackedSession(wParam), lParam)

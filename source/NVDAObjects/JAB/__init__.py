@@ -98,6 +98,7 @@ JABStatesToNVDAStates={
 	"multi_line":controlTypes.State.MULTILINE,
 	"focusable":controlTypes.State.FOCUSABLE,
 	"editable":controlTypes.State.EDITABLE,
+	"selectable": controlTypes.State.SELECTABLE,
 }
 
 
@@ -313,12 +314,14 @@ class JAB(Window):
 
 	def _get_role(self):
 		role = JABRolesToNVDARoles.get(self.JABRole,controlTypes.Role.UNKNOWN)
-		if role in ( controlTypes.Role.LABEL, controlTypes.Role.PANEL) and self.parent:
+		if role in (controlTypes.Role.LABEL, controlTypes.Role.PANEL, controlTypes.Role.UNKNOWN) and self.parent:
 			parentRole = self.parent.role
 			if parentRole == controlTypes.Role.LIST:
 				return controlTypes.Role.LISTITEM
 			elif parentRole in (controlTypes.Role.TREEVIEW, controlTypes.Role.TREEVIEWITEM):
 				return controlTypes.Role.TREEVIEWITEM
+			elif parentRole == controlTypes.Role.TABLE:
+				return controlTypes.Role.TABLECELL
 		if role==controlTypes.Role.LABEL:
 			return controlTypes.Role.STATICTEXT
 		return role
@@ -649,8 +652,6 @@ class Table(JAB):
 		return self._jabTableInfo.jabTable.accContext.value
 
 class TableCell(JAB):
-
-	role=controlTypes.Role.TABLECELL
 
 	def _get_table(self):
 		if self.parent and isinstance(self.parent,Table):

@@ -89,7 +89,7 @@ class State(DisplayStringIntEnum):
 	OVERFLOWING = setBit(40)
 	UNLOCKED = setBit(41)
 	# HAS_ARIA_DETAILS is not used internally.
-	# See instead NVDAObject.hasDetails introduced with commit aa351c55ada5254e061957097a9e0e638091b13d
+	# See instead refer to NVDAObject.annotations
 	# This enum value was initially added to controlTypes.py in commit d6787b8f47861f5e76aba68da7a13a217404196f
 	HAS_ARIA_DETAILS = setBit(42)  # Restored for backwards compat only.
 	HASNOTE = setBit(43)
@@ -97,6 +97,7 @@ class State(DisplayStringIntEnum):
 	# when combined with role of 'progress bar', role is mutated to 'busy indicator'
 	INDETERMINATE = setBit(44)
 	HALF_PRESSED = setBit(45)
+	ON = setBit(46)
 
 
 STATES_SORTED = frozenset([State.SORTED, State.SORTED_ASCENDING, State.SORTED_DESCENDING])
@@ -188,6 +189,9 @@ _stateLabels: Dict[State, str] = {
 	State.UNLOCKED: _("unlocked"),
 	# Translators: a state that denotes the existence of a note.
 	State.HASNOTE: _("has note"),
+	# Translators: a state that denotes a control is currently on
+	# E.g. a switch control.
+	State.ON: _("on"),
 }
 
 
@@ -201,4 +205,6 @@ _negativeStateLabels: Dict[State, str] = {
 	# Translators: This is presented when drag and drop is finished.
 	# This is only reported for objects which support accessible drag and drop.
 	State.DROPTARGET: _("done dragging"),
+	# Translators: This is presented when a switch control is off.
+	State.ON: _("off"),
 }

@@ -28,6 +28,10 @@ from logHandler import log
 #dll handles
 user32=windll.user32
 
+# rather than using the ctypes.c_void_p type, which may encourage attempting to dereference
+# what may be an invalid or illegal pointer, we'll treat it as an opaque value.
+HWNDVal = int
+
 LRESULT=c_long
 HCURSOR=c_long
 
@@ -41,6 +45,7 @@ WNDPROC=WINFUNCTYPE(LRESULT,HWND,c_uint,WPARAM,LPARAM)
 
 
 def __getattr__(attrName: str) -> Any:
+	"""Module level `__getattr__` used to preserve backward compatibility."""
 	from winAPI.winUser.constants import SystemMetrics
 	_deprecatedConstantsMap = {
 		"SM_CXSCREEN": SystemMetrics.CX_SCREEN,
@@ -51,7 +56,6 @@ def __getattr__(attrName: str) -> Any:
 		"SM_CXVIRTUALSCREEN": SystemMetrics.CX_VIRTUAL_SCREEN,
 		"SM_CYVIRTUALSCREEN": SystemMetrics.CY_VIRTUAL_SCREEN,
 	}
-	"""Module level `__getattr__` used to preserve backward compatibility."""
 	if attrName in _deprecatedConstantsMap and NVDAState._allowDeprecatedAPI():
 		replacementSymbol = _deprecatedConstantsMap[attrName]
 		log.warning(
@@ -161,10 +165,21 @@ GA_ROOTOWNER=3
 GWL_ID=-12
 GWL_STYLE=-16
 GWL_EXSTYLE=-20
-#getWindow
+
+# getWindow relationship parameters: TODO turn to enum
+GW_HWNDFIRST = 0
+GW_HWNDLAST = 1
 GW_HWNDNEXT=2
 GW_HWNDPREV=3
 GW_OWNER=4
+
+# getWindow results
+GW_RESULT_NOT_FOUND = 0
+"""
+When GetWindow returns 0, it means the window has not been found.
+For example the last window has been reached, or an error has occurred.
+"""
+
 # SetLayeredWindowAttributes
 LWA_ALPHA = 2
 LWA_COLORKEY = 1
@@ -475,7 +490,7 @@ def isDescendantWindow(parentHwnd,childHwnd):
 		return False
 
 
-def getForegroundWindow() -> HWND:
+def getForegroundWindow() -> HWNDVal:
 	return user32.GetForegroundWindow()
 
 def setForegroundWindow(hwnd):
@@ -484,8 +499,10 @@ def setForegroundWindow(hwnd):
 def setFocus(hwnd):
 	user32.SetFocus(hwnd)
 
-def getDesktopWindow():
+
+def getDesktopWindow() -> HWNDVal:
 	return user32.GetDesktopWindow()
+
 
 def getControlID(hwnd):
 	return user32.GetWindowLongW(hwnd,GWL_ID)
@@ -511,16 +528,18 @@ def sendMessage(hwnd,msg,param1,param2):
 	return user32.SendMessageW(hwnd,msg,param1,param2)
 
 
-def getWindowThreadProcessID(hwnd: HWND) -> Tuple[int, int]:
+def getWindowThreadProcessID(hwnd: HWNDVal) -> Tuple[int, int]:
 	"""Returns a tuple of (processID, threadID)"""
 	processID=c_int()
 	threadID=user32.GetWindowThreadProcessId(hwnd,byref(processID))
 	return (processID.value, threadID)
 
-def getClassName(window):
+
+def getClassName(window: HWNDVal) -> str:
 	buf=create_unicode_buffer(256)
 	user32.GetClassNameW(window,buf,255)
 	return buf.value
+
 
 def keybd_event(*args):
 	return user32.keybd_event(*args)
@@ -616,6 +635,8 @@ def FindWindow(className, windowName):
 		raise WinError()
 	return res
 
+
+MB_OK = 0
 MB_RETRYCANCEL=5
 MB_ICONERROR=0x10
 MB_SYSTEMMODAL=0x1000

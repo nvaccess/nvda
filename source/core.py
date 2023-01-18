@@ -212,6 +212,7 @@ def resetConfiguration(factoryDefaults=False):
 	import speech
 	import vision
 	import inputCore
+	import hwIo
 	import tones
 	log.debug("Terminating vision")
 	vision.terminate()
@@ -223,6 +224,8 @@ def resetConfiguration(factoryDefaults=False):
 	speech.terminate()
 	log.debug("terminating tones")
 	tones.terminate()
+	log.debug("Terminating background i/o")
+	hwIo.terminate()
 	log.debug("terminating addonHandler")
 	addonHandler.terminate()
 	log.debug("Reloading config")
@@ -237,6 +240,9 @@ def resetConfiguration(factoryDefaults=False):
 	languageHandler.setLanguage(lang)
 	# Addons
 	addonHandler.initialize()
+	# Hardware background i/o
+	log.debug("initializing background i/o")
+	hwIo.initialize()
 	# Tones
 	tones.initialize()
 	#Speech
@@ -422,6 +428,42 @@ def _handleNVDAModuleCleanupBeforeGUIExit():
 	brailleViewer.destroyBrailleViewer()
 
 
+def _initializeObjectCaches():
+	"""
+	Caches the desktop object.
+	This may make information from the desktop window available on the lock screen,
+	however no known exploit is known for this.
+	2023.1 plans to ensure the desktopObject is available only when signed-in.
+
+	The desktop object must be used, as setting the object caches has side effects,
+	such as focus events.
+	Side effects from events generated while setting these objects may require NVDA to be finished initializing.
+	E.G. An app module for a lockScreen window.
+	The desktop object is an NVDA object without event handlers associated with it.
+	"""
+	import api
+	import NVDAObjects
+	import winUser
+
+	desktopObject = NVDAObjects.window.Window(windowHandle=winUser.getDesktopWindow())
+	api.setDesktopObject(desktopObject)
+	api.setForegroundObject(desktopObject)
+	api.setFocusObject(desktopObject)
+	api.setNavigatorObject(desktopObject)
+	api.setMouseObject(desktopObject)
+
+
+def _doLoseFocus():
+	import api
+	focusObject = api.getFocusObject()
+	if focusObject and hasattr(focusObject, "event_loseFocus"):
+		log.debug("calling lose focus on object with focus")
+		try:
+			focusObject.event_loseFocus()
+		except Exception:
+			log.exception("Lose focus error")
+
+
 def main():
 	"""NVDA's core main loop.
 	This initializes all modules such as audio, IAccessible, keyboard, mouse, and GUI.
@@ -476,6 +518,9 @@ def main():
 	import NVDAHelper
 	log.debug("Initializing NVDAHelper")
 	NVDAHelper.initialize()
+	log.debug("initializing background i/o")
+	import hwIo
+	hwIo.initialize()
 	log.debug("Initializing tones")
 	import tones
 	tones.initialize()
@@ -576,14 +621,8 @@ def main():
 	log.debug("Initializing garbageHandler")
 	garbageHandler.initialize()
 
-	import api
-	import winUser
-	import NVDAObjects.window
-	desktopObject=NVDAObjects.window.Window(windowHandle=winUser.getDesktopWindow())
-	api.setDesktopObject(desktopObject)
-	api.setFocusObject(desktopObject)
-	api.setNavigatorObject(desktopObject)
-	api.setMouseObject(desktopObject)
+	_initializeObjectCaches()
+
 	import JABHandler
 	log.debug("initializing Java Access Bridge support")
 	try:
@@ -673,7 +712,8 @@ def main():
 				mouseHandler.pumpAll()
 				braille.pumpAll()
 				vision.pumpAll()
-			except:
+				sessionTracking.pumpAll()
+			except Exception:
 				log.exception("errors in this core pump cycle")
 			baseObject.AutoPropertyObject.invalidateCaches()
 			watchdog.asleep()
@@ -695,6 +735,12 @@ def main():
 	else:
 		log.debug("initializing updateCheck")
 		updateCheck.initialize()
+
+	from winAPI import sessionTracking
+	sessionTracking.initialize()
+
+	NVDAState._TrackNVDAInitialization.markInitializationComplete()
+
 	log.info("NVDA initialized")
 
 	# Queue the firing of the postNVDAStartup notification.
@@ -707,8 +753,6 @@ def main():
 	queueHandler.queueFunction(queueHandler.eventQueue, _doPostNvdaStartupAction)
 
 	log.debug("entering wx application main loop")
-	# Warn here as NVDA must be ready before providing a gui message
-	messageWindow.warnIfSessionTrackingNotRegistered()
 	app.MainLoop()
 
 	log.info("Exiting")
@@ -723,13 +767,8 @@ def main():
 	_terminate(gui)
 	config.saveOnExit()
 
-	try:
-		focusObject = api.getFocusObject()
-		if focusObject and hasattr(focusObject, "event_loseFocus"):
-			log.debug("calling lose focus on object with focus")
-			focusObject.event_loseFocus()
-	except:
-		log.exception("Lose focus error")
+	_doLoseFocus()
+
 	try:
 		speech.cancelSpeech()
 	except:
@@ -752,6 +791,7 @@ def main():
 	_terminate(brailleInput)
 	_terminate(braille)
 	_terminate(speech)
+	_terminate(hwIo)
 	_terminate(addonHandler)
 	_terminate(garbageHandler)
 	# DMP is only started if needed.
