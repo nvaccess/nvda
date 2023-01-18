@@ -77,7 +77,6 @@ Handlers are called with these keyword arguments:
 @param limitToDevices: Drivers to which detection should be limited.
 	C{None} if no driver filtering should occur.
 @type limitToDevices: Optional[List[str]]
-	C{None} if no driver filtering should occur.
 """
 
 
@@ -248,21 +247,21 @@ class _DeviceInfoFetcher(AutoPropertyObject):
 
 	def __init__(self):
 		self._btDevsLock = threading.Lock()
-		self._btDevsCache: Optional[List[Tuple[str, DeviceMatch]]] = None
+		self._btDevsCache: btDevsCacheT = None
 
 	#: Type info for auto property: _get_btDevsCache
 	btDevsCache: btDevsCacheT
 
 	def _get_btDevsCache(self) -> btDevsCacheT:
 		with self._btDevsLock:
-			return self._btDevsCache
+			return self._btDevsCache.copy() if self._btDevsCache else None
 
 	def _set_btDevsCache(
 			self,
 			cache: btDevsCacheT,
 	):
 		with self._btDevsLock:
-			self._btDevsCache = cache
+			self._btDevsCache = cache.copy() if cache else None
 
 	#: Type info for auto property: _get_comPorts
 	comPorts: List[Dict]
