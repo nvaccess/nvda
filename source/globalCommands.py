@@ -2306,9 +2306,9 @@ class GlobalCommands(ScriptableObject):
 		if _isDebugLogCatEnabled:
 			log.debug(f"Trying with nvdaObject : {objAtStart}")
 
-		if objAtStart.detailsSummary:
+		if objAtStart.annotations:
 			if _isDebugLogCatEnabled:
-				log.debug(f"NVDAObjectAtStart of caret has details: {objAtStart.detailsSummary}")
+				log.debug(f"NVDAObjectAtStart of caret has details")
 			return objAtStart
 		elif api.getFocusObject():
 			# If fetching from the caret position fails, try via the focus object
@@ -2320,7 +2320,7 @@ class GlobalCommands(ScriptableObject):
 			if _isDebugLogCatEnabled:
 				log.debug(f"Trying focus object: {focus}")
 
-			if focus.detailsSummary:
+			if objAtStart.annotations:
 				if _isDebugLogCatEnabled:
 					log.debug("focus object has details, able to proceed")
 				return focus
@@ -2358,7 +2358,7 @@ class GlobalCommands(ScriptableObject):
 			ui.message(_("No additional details"))
 			return
 
-		targets = list(objWithAnnotation.annotations.targets)
+		targets = objWithAnnotation.annotations.targets
 		if _isDebugLogCatEnabled:
 			log.debug(f"Number of targets: {len(targets)}")
 
