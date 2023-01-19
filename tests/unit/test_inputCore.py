@@ -25,7 +25,7 @@ class TestInputManagerExtensionPoints(unittest.TestCase):
 		gesture = keyboardHandler.KeyboardInputGesture.fromName("NVDA+T")
 		with deciderTester(
 			self,
-			inputCore.manager.decide_executeGesture,
+			inputCore.decide_executeGesture,
 			expectedDecision=False,
 			gesture=gesture
 		):

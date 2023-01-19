@@ -497,7 +497,7 @@ def getObjectPropertiesSpeech(  # noqa: C901
 		elif value and name == "hasDetails":
 			newPropertyValues['hasDetails'] = bool(obj.annotations)
 		elif value and name == "detailsRoles":
-			newPropertyValues["detailsRoles"] = set(obj.annotations.roles if obj.annotations else [])
+			newPropertyValues["detailsRoles"] = obj.annotations.roles if obj.annotations else tuple()
 		elif value and name == "descriptionFrom" and (
 			obj.descriptionFrom == controlTypes.DescriptionFrom.ARIA_DESCRIPTION
 		):
@@ -1814,7 +1814,7 @@ def getPropertiesSpeech(  # noqa: C901
 	# are there further details
 	hasDetails = propertyValues.get('hasDetails', False)
 	if hasDetails:
-		detailsRoles: _AnnotationRolesT = propertyValues.get("detailsRoles", set())
+		detailsRoles: _AnnotationRolesT = propertyValues.get("detailsRoles", tuple())
 		if detailsRoles:
 			roleStrings = (role.displayString if role else _("details") for role in detailsRoles)
 			for roleString in roleStrings:
@@ -1929,7 +1929,7 @@ def getControlFieldSpeech(  # noqa: C901
 	keyboardShortcut=attrs.get('keyboardShortcut', "")
 	isCurrent = attrs.get('current', controlTypes.IsCurrent.NO)
 	hasDetails = attrs.get('hasDetails', False)
-	detailsRoles: _AnnotationRolesT = set(attrs.get("detailsRoles", []))
+	detailsRoles: _AnnotationRolesT = attrs.get("detailsRoles", tuple())
 	placeholderValue=attrs.get('placeholder', None)
 	value=attrs.get('value',"")
 

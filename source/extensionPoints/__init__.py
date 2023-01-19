@@ -66,10 +66,10 @@ class Action(HandlerRegistrar):
 				log.exception(f"Error running handler {handler} for {self}. Exception {e}")
 
 
-FilterValueTypeT = TypeVar("FilterOutputTypeT")
+FilterValueT = TypeVar("FilterValueT")
 
 
-class Filter(HandlerRegistrar, Generic[FilterValueTypeT]):
+class Filter(HandlerRegistrar, Generic[FilterValueT]):
 	"""Allows interested parties to register to modify a specific kind of data.
 	For example, this might be used to allow modification of spoken messages before they are passed to the synthesizer.
 
@@ -93,7 +93,7 @@ class Filter(HandlerRegistrar, Generic[FilterValueTypeT]):
 	'This is a message which has been filtered'
 	"""
 
-	def apply(self, value: FilterValueTypeT, **kwargs) -> FilterValueTypeT:
+	def apply(self, value: FilterValueT, **kwargs) -> FilterValueT:
 		"""Pass a value to be filtered through all registered handlers.
 		The value is passed to the first handler
 		and the return value from that handler is passed to the next handler.
