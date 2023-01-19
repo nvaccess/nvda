@@ -61,12 +61,8 @@ class TimeOutputFormat(DisplayStringEnum):
 	@staticmethod
 	def parseTimeDeltaToFormatted(td: timedelta) -> str:
 		outputFormat = TimeOutputFormat.convertTimeDeltaToTimeOutputFormat(td)
-		if outputFormat not in (TimeOutputFormat.DAY, TimeOutputFormat.DAYS):
-			parsedDay = 0
-		else:
-			parsedDay = td.days
 		return outputFormat.displayString.format(
-			D=parsedDay,
+			D=td.days,
 			H=td.seconds // 3600,
 			M=(td.seconds // 60) % 60,
 			S=td.seconds % 60,
