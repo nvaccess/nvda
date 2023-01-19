@@ -4,6 +4,18 @@ What's New in NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2023.1 =
+A new option has been added, "Paragraph Style" in "Document Navigation".
+This can be used with text editors that do not support paragraph navigation natively, such as Notepad and Notepad++.
+
+Support for annotated web content (such as comments and footnotes) has improved.
+Press ``nvda+d`` to cycle through summaries when annotations are reported (e.g. "has comment, has footnote").
+
+Tivomatic Caiku Albatross 46/80 braille displays are now supported.
+
+There are many bug fixes, notably Windows 11 fixes.
+
+eSpeak, LibLouis, Sonic rate boost and Unicode CLDR has been updated.
+There are new Georgian, Swahili (Kenya) and Chichewa (Malawi) braille tables.
 
 == New Features ==
 - Microsoft Excel via UI Automation: Automatic reporting of column and row headers in tables. (#14228)
