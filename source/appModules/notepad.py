@@ -34,7 +34,8 @@ class AppModule(appModuleHandler.AppModule):
 			raise NotImplementedError()
 		# Look for a specific child as some children report the same UIA properties such as class name.
 		# Make sure to look for a foreground UIA element which hosts status bar content if visible.
-		notepadStatusBarIndex = 7
+		# #14573: status bar is the second to last item in Notepad UIA tree.
+		notepadStatusBarIndex = -2
 		statusBar = api.getForegroundObject().children[notepadStatusBarIndex].firstChild
 		# No location for a disabled status bar i.e. location is 0 (x, y, width, height).
 		if not any(statusBar.location):
