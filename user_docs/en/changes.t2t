@@ -71,6 +71,7 @@ For example, when text has a comment and a footnote associated with it. (#14507,
 - The presence of an annotation is no longer missing in braille for some elements. (#13815)
 - Fixed an issue where config changes not save correctly when changing between a "Default" option and the value of the "Default" option. (#14133)
 - When accessing the NVDA menu via the notification area, NVDA will not suggest a pending update anymore when no update is available. (#14523)
+- Remaining, elapsed and total time is now reported correctly for audio files over a day long in foobar200. (#14127)
 -
 
 
@@ -140,6 +141,12 @@ Refer to ``brailleViewer`` for an example on how to do this. (#14503)
   - ``loadModule`` now expects dot as a separator, rather than backslash.
   For example "lib.example" instead of "lib\example".
   - ``loadModule`` now raises an exception when a module can't be loaded or has errors, instead of silently returning ``None`` without giving information about the cause.
+  -
+- The following symbols have been removed from ``appModules.foobar2000`` with no direct replacement. (#14570)
+  - ``statusBarTimes``
+  - ``parseIntervalToTimestamp``
+  - ``getOutputFormat``
+  - ``getParsingFormat``
   -
 -
 
