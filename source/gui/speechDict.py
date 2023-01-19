@@ -111,7 +111,7 @@ class DictionaryEntryDialog(
 				raise(e)
 			gui.messageBox(
 				# Translators: This is an error message to let the user know that the dictionary entry is not valid.
-				_("Regular Expression error in the pattern field: \"%s\".") % e,
+				_("Regular Expression error in the pattern field: \"{error}\".").format(error=e),
 				# Translators: The title of an error message raised by the Dictionary Entry dialog
 				_("Dictionary Entry Error"),
 				wx.OK | wx.ICON_WARNING,
@@ -127,7 +127,7 @@ class DictionaryEntryDialog(
 				raise(e)
 			gui.messageBox(
 				# Translators: This is an error message to let the user know that the dictionary entry is not valid.
-				_("Regular Expression error in the replacement field: \"%s\".") % e,
+				_("Regular Expression error in the replacement field: \"{error}\".").format(error=e),
 				# Translators: The title of an error message raised by the Dictionary Entry dialog
 				_("Dictionary Entry Error"),
 				wx.OK | wx.ICON_WARNING,
