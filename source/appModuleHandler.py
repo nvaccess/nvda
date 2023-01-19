@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Joseph Lee,
+# Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Joseph Lee,
 # Babbage B.V., Mozilla Corporation, Julien Cochuyt, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -628,11 +628,11 @@ class AppModule(baseObject.ScriptableObject):
 		self.appPath = path.value if path else None
 		return self.appPath
 
-	def _get_is64BitProcess(self):
+	def _get_is64BitProcess(self) -> bool:
 		"""Whether the underlying process is a 64 bit process.
 		@rtype: bool
 		"""
-		if os.environ.get("PROCESSOR_ARCHITEW6432") not in ("AMD64","ARM64"):
+		if winVersion.getWinVer().processorArchitecture not in ("AMD64", "ARM64"):
 			# This is 32 bit Windows.
 			self.is64BitProcess = False
 			return False
@@ -733,7 +733,7 @@ class AppModule(baseObject.ScriptableObject):
 				processMachine = ctypes.wintypes.USHORT()
 				ctypes.windll.kernel32.IsWow64Process2(self.processHandle, ctypes.byref(processMachine), None)
 				if not processMachine.value:
-					self.appArchitecture = os.environ.get("PROCESSOR_ARCHITEW6432")
+					self.appArchitecture = winVersion.getWinVer().processorArchitecture
 				else:
 					# On ARM64, two 32-bit architectures are supported: x86 (via emulation) and ARM (natively).
 					self.appArchitecture = archValues2ArchNames[processMachine.value]

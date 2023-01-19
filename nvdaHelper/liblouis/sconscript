@@ -59,11 +59,6 @@ env['CC'] = 'clang-cl'
 if 'analyze' in env['nvdaHelperDebugFlags']:
 	env.Append(CCFLAGS='/analyze-')
 
-# Starting from Clang 15, the -Wint-conversion warning diagnostic for implicit int <-> pointer conversions
-# now defaults to an error in all C language modes.
-# Downgrade this to a warning so we can still build.
-env.Append(CCFLAGS='-Wno-error=int-conversion')
-
 env.Append(CPPDEFINES=[
 	# The Visual C++ C Runtime deprecates standard POSIX APIs that conflict with
 	# reserved ISO C names (like strdup) in favour of non-portable conforming
