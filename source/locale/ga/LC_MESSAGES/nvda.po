@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA 2022.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-06 00:02+0000\n"
-"PO-Revision-Date: 2023-01-10 09:46+0000\n"
+"POT-Creation-Date: 2023-01-13 00:02+0000\n"
+"PO-Revision-Date: 2023-01-18 21:53+0000\n"
 "Last-Translator: Ronan McGuirk <ronan.mcguirk@gmail.com>\n"
 "Language-Team: Gaeilge <ga@li.org>\n"
 "Language: ga\n"
@@ -844,9 +844,8 @@ msgstr "Gearmáinis, grád 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "German grade 2 (detailed)"
-msgstr "Gearmáinis, grád 0  mionsonraithe"
+msgstr "Gearmáinis, grád 2  mionsonraithe"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2982,9 +2981,9 @@ msgstr "Sainroghanna Déantar tuairisc ar roghanna teorainneacha na gceall"
 
 #. Translators: Reported when the user cycles through report cell border modes.
 #. {mode} will be replaced with the mode; e.g. Off, Styles and Colors and styles.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Report cell borders {mode}"
-msgstr "Ná Tabhair tuairisc ar theorainneacha na gceall "
+msgstr "Tabhair tuairisc ar imlínte cille {mode} "
 
 #. Translators: Input help mode message for toggle report links command.
 msgid "Toggles on and off the reporting of links"
@@ -3123,6 +3122,8 @@ msgid ""
 "Cycles through speech modes for automatic language switching: off, language "
 "only and language and dialect."
 msgstr ""
+"Scrólláiltear trí móid urlabhra maidir le hathrú uathoibríoch  teanga: as "
+"feidhm, teanga amháin, nó teanga agus canúint"
 
 #. Translators: A message reported when executing the cycle automatic language switching mode command.
 msgid "Automatic language switching off"
@@ -4520,9 +4521,8 @@ msgid "Could not enable screen curtain"
 msgstr "Níorbh fhéidir cuirtín scáileáin a chumasú"
 
 #. Translators: Describes a command.
-#, fuzzy
 msgid "Cycles through paragraph navigation styles"
-msgstr "Sainroghanna eanguithe"
+msgstr "Scrolláiltear trí stíleanna nascleanúna  paragraf  "
 
 #. Translators: a message indicating that configuration profiles can't be activated using gestures,
 #. due to profile activation being suspended.
@@ -6612,24 +6612,20 @@ msgid "Moves the navigator object and focus to the previous row"
 msgstr "Bog an réad nascleantóra agus an fócas go dtí an ró roimhe seo"
 
 #. Translators: The description of an NVDA command.
-#, fuzzy
 msgid "Moves the navigator object to the first column"
-msgstr "Bog an réad nascleantóra go dtí an chéad cholún eile"
+msgstr "Bogtar an oibiacht nascleanúna go dtí an chéad colún."
 
 #. Translators: The description of an NVDA command.
-#, fuzzy
 msgid "Moves the navigator object to the last column"
-msgstr "Bog an réad nascleantóra go dtí an chéad cholún eile"
+msgstr "Bogtar an oibiacht nascleantóra go dtí an colún deireanach."
 
 #. Translators: The description of an NVDA command.
-#, fuzzy
 msgid "Moves the navigator object and focus to the first row"
-msgstr "Bog an réad nascleantóra agus an fócas go dtí an chéad ró eile"
+msgstr "Bogtar an oibiacht nascleanúna agus an fócas go dtí an chéad ró."
 
 #. Translators: The description of an NVDA command.
-#, fuzzy
 msgid "Moves the navigator object and focus to the last row"
-msgstr "Bog an réad nascleantóra agus an fócas go dtí an chéad ró eile"
+msgstr "Bogtar an oibiacht nascleanúna agus an fócas go dtí an ró deireanach."
 
 #. Translators: The label for a 'composition' Window that appears when the user is typing one or more east-Asian characters into a document.
 msgid "Composition"
@@ -7493,9 +7489,8 @@ msgid "Enabled"
 msgstr "Cumasaithe"
 
 #. Translators: Label for a paragraph style in NVDA settings.
-#, fuzzy
 msgid "Handled by application"
-msgstr "Láimsigh eochr&acha ó fheidhmchláir eile"
+msgstr "Láimsithe ag an bhfeidhmchlár"
 
 #. Translators: Label for a paragraph style in NVDA settings.
 #, fuzzy
@@ -7568,16 +7563,16 @@ msgid "%s px"
 msgstr "%s px"
 
 #. Translators: A measurement unit of font size.
-#, fuzzy, python-format
+#, python-format
 msgctxt "font size"
 msgid "%s em"
-msgstr "deir %s"
+msgstr "%s em"
 
 #. Translators: A measurement unit of font size.
-#, fuzzy, python-format
+#, python-format
 msgctxt "font size"
 msgid "%s ex"
-msgstr "deir %s"
+msgstr "%s ex"
 
 #. Translators: Abbreviation for relative em, a measurement of font size.
 #, python-format
@@ -7594,12 +7589,12 @@ msgstr "%s%%"
 #. Translators: A measurement unit of font size.
 msgctxt "font size"
 msgid "xx-small"
-msgstr ""
+msgstr "xx-bheag"
 
 #. Translators: A measurement unit of font size.
 msgctxt "font size"
 msgid "x-small"
-msgstr ""
+msgstr "x-bheag"
 
 #. Translators: A measurement unit of font size.
 msgctxt "font size"
@@ -7625,23 +7620,22 @@ msgstr "ollmhór"
 #. Translators: A measurement unit of font size.
 msgctxt "font size"
 msgid "xx-large"
-msgstr ""
+msgstr "xx-mór"
 
 #. Translators: A measurement unit of font size.
 msgctxt "font size"
 msgid "xxx-large"
-msgstr ""
+msgstr "xx-mór"
 
 #. Translators: A measurement unit of font size.
 msgctxt "font size"
 msgid "larger"
-msgstr ""
+msgstr "níos mó"
 
 #. Translators: A measurement unit of font size.
-#, fuzzy
 msgctxt "font size"
 msgid "smaller"
-msgstr "líontóir"
+msgstr "Níos lú"
 
 #. Translators: Presented when an item is marked as current in a collection of items
 msgid "current"
@@ -9084,13 +9078,12 @@ msgstr ""
 
 #. Translators: Reported when an action cannot be performed because NVDA is in a secure screen
 msgid "Action unavailable in secure context"
-msgstr ""
+msgstr "Níl an gníomh seo ar fáil i gcomhthéacs slán."
 
 #. Translators: Reported when an action cannot be performed because NVDA has been installed
 #. from the Windows Store.
-#, fuzzy
 msgid "Action unavailable in NVDA Windows Store version"
-msgstr "Ní féidir breiseáin a shuiteáil i leagan Windows Stor de NVDA"
+msgstr "Níl an gníomh seo ar fáil i leagan Windows Stór de NVDA."
 
 #. Translators: Reported when an action cannot be performed because NVDA is waiting
 #. for a response from a modal dialog
@@ -10495,7 +10488,7 @@ msgstr "roghnaithe"
 #. panel to have NVDA register for all UI Automation events
 #. in all cases.
 msgid "Global"
-msgstr ""
+msgstr "Uilíoch"
 
 #. Translators: Label for the Use UIA with MS Word combobox, in the Advanced settings panel.
 msgctxt "advanced.uiaWithMSWord"
@@ -10541,7 +10534,7 @@ msgstr ""
 #. active console implementation in the advanced settings panel.
 #. Choices are automatic, UIA when available, and legacy.
 msgid "Windows C&onsole support:"
-msgstr ""
+msgstr "Tacaíocht do chonsól Windows"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA determine its Windows Console implementation
@@ -10560,7 +10553,7 @@ msgstr "dofhaighte"
 #. panel to have NVDA use its legacy Windows Console support
 #. in all cases.
 msgid "Legacy"
-msgstr ""
+msgstr "Oidhreacht"
 
 #. Translators: Label for the Use UIA with Chromium combobox, in the Advanced settings panel.
 #. Note the '\n' is used to split this long label approximately in half.
@@ -10657,13 +10650,12 @@ msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#, fuzzy
 msgid ""
 "Use enhanced t&yped character support in legacy Windows Console when "
 "available"
 msgstr ""
-"Más féidir, bain úsáid as an tacaíocht nua do charachtair chlóscríofa i "
-"gconsól Windows."
+"Bain úsáid as tacaíocht feabhsaithe do charachtair chlóscríofa i gconsól "
+"oidhreachta  Windows, nuair atá sí ar fáil."
 
 #. Translators: This is the label for a combo box for selecting a
 #. method of detecting changed content in terminals in the advanced
@@ -10705,11 +10697,11 @@ msgstr ""
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 msgid "Virtual Buffers"
-msgstr ""
+msgstr "maoláin fhíorúla"
 
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
 msgid "Load Chromium virtual buffer when document busy."
-msgstr ""
+msgstr "Lódáil maolán fíorúil Chromium nuair atá an doiciméad gnóthach "
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
