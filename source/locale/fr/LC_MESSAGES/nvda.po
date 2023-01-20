@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:11331\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-15 00:02+0000\n"
-"PO-Revision-Date: 2022-11-14 08:45+0100\n"
+"POT-Creation-Date: 2023-01-13 00:02+0000\n"
+"PO-Revision-Date: 2023-01-19 14:27+0100\n"
 "Last-Translator: Michel Such <michelsuch93@gmail.com>\n"
 "Language-Team: fra <LL@li.org>\n"
 "Language: fr_FR\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.2\n"
+"X-Generator: Poedit 3.0\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
@@ -396,6 +396,10 @@ msgstr "sggstn"
 msgid "definition"
 msgstr "Définition"
 
+#. Translators: Displayed in braille when an object is a switch control
+msgid "swtch"
+msgstr ""
+
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
 msgstr "sél"
@@ -536,6 +540,18 @@ msgstr "USB"
 msgid "Bluetooth"
 msgstr "Bluetooth"
 
+#. Translators: Braille when there are further details/annotations that can be fetched manually.
+msgid "details"
+msgstr "détails"
+
+#. Translators: Braille when there are further details/annotations that can be fetched manually.
+#. %s specifies the type of details (e.g. "has comment suggestion")
+#. Translators: Speaks when there are further details/annotations that can be fetched manually.
+#. %s specifies the type of details (e.g. "comment, suggestion, details")
+#, python-format
+msgid "has %s"
+msgstr "a %s"
+
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
 #, python-format
@@ -545,18 +561,6 @@ msgstr "t%s"
 #. Translators: Displayed in braille for a link which has been visited.
 msgid "vlnk"
 msgstr "lnv"
-
-#. Translators: Braille when there are further details/annotations that can be fetched manually.
-#. %s specifies the type of details (e.g. comment, suggestion)
-#. Translators: Speaks when there are further details/annotations that can be fetched manually.
-#. %s specifies the type of details (e.g. comment, suggestion)
-#, python-format
-msgid "has %s"
-msgstr "a %s"
-
-#. Translators: Braille when there are further details/annotations that can be fetched manually.
-msgid "details"
-msgstr "détails"
 
 #. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
@@ -615,19 +619,6 @@ msgstr "cmt rsl"
 #. Translators: brailled when text contains a bookmark
 msgid "bkmk"
 msgstr "sgn"
-
-#. Translators: The label for a braille setting indicating that braille should be
-#. tethered to focus or review cursor automatically.
-msgid "automatically"
-msgstr "automatiquement"
-
-#. Translators: The label for a braille setting indicating that braille should be tethered to focus.
-msgid "to focus"
-msgstr "le focus"
-
-#. Translators: The label for a braille setting indicating that braille should be tethered to the review cursor.
-msgid "to review"
-msgstr "la revue"
 
 #. Translators: Label for a setting in braille settings dialog.
 msgid "Dot firm&ness"
@@ -2923,19 +2914,9 @@ msgid "Cycles through line indentation settings"
 msgstr "Faire défiler les paramètres de retrait des lignes"
 
 #. Translators: A message reported when cycling through line indentation settings.
-msgid "Report line indentation with speech"
-msgstr "Annoncer la mise en retrait des lignes par la parole"
-
-#. Translators: A message reported when cycling through line indentation settings.
-msgid "Report line indentation with tones"
-msgstr "Annoncer la mise en retrait des lignes par des sons"
-
-#. Translators: A message reported when cycling through line indentation settings.
-msgid "Report line indentation with speech and tones"
-msgstr "Annoncer la mise en retrait des lignes par la parole et des sons"
-
-#. Translators: A message reported when cycling through line indentation settings.
-msgid "Report line indentation off"
+#. {mode} will be replaced with the mode; i.e. Off, Speech, Tones or Both Speech and Tones.
+#, fuzzy, python-brace-format
+msgid "Report line indentation {mode}"
 msgstr "annonce du retrait des lignes désactivée"
 
 #. Translators: Input help mode message for toggle report paragraph indentation command.
@@ -3002,16 +2983,10 @@ msgstr "annonce des coordonnées des cellules activée"
 msgid "Cycles through the cell border reporting settings"
 msgstr "Faire défiler les paramètres d'annonce des bordures de cellules"
 
-#. Translators: A message reported when cycling through cell borders settings.
-msgid "Report styles of cell borders"
-msgstr "Annoncer le style des bordures de cellules"
-
-#. Translators: A message reported when cycling through cell borders settings.
-msgid "Report colors and styles of cell borders"
-msgstr "Annoncer la couleur et le style des bordures de cellules"
-
-#. Translators: A message reported when cycling through cell borders settings.
-msgid "Report cell borders off."
+#. Translators: Reported when the user cycles through report cell border modes.
+#. {mode} will be replaced with the mode; e.g. Off, Styles and Colors and styles.
+#, fuzzy, python-brace-format
+msgid "Report cell borders {mode}"
 msgstr "annonce des bordures de cellules désactivée"
 
 #. Translators: Input help mode message for toggle report links command.
@@ -3179,6 +3154,22 @@ msgstr ""
 #, python-format
 msgid "Symbol level %s"
 msgstr "Niveau de symbole %s"
+
+#. Translators: Input help mode message for toggle delayed character description command.
+#, fuzzy
+msgid ""
+"Toggles on and off delayed descriptions for characters on cursor movement"
+msgstr "D&escription différée des caractères lors du mouvement du curseur"
+
+#. Translators: The message announced when toggling the delayed character description setting.
+#, fuzzy
+msgid "delayed character descriptions on"
+msgstr "écho clavier par caractère activé"
+
+#. Translators: The message announced when toggling the delayed character description setting.
+#, fuzzy
+msgid "delayed character descriptions off"
+msgstr "écho clavier par caractère désactivé"
 
 #. Translators: Input help mode message for move mouse to navigator object command.
 msgid "Moves the mouse pointer to the current navigator object"
@@ -4533,6 +4524,11 @@ msgstr "Rideau d'écran temporaire, activé jusqu'au prochain redémarrage"
 msgid "Could not enable screen curtain"
 msgstr "Impossible d'activer le rideau d'écran"
 
+#. Translators: Describes a command.
+#, fuzzy
+msgid "Cycles through paragraph navigation styles"
+msgstr "Faire défiler les paramètres de retrait des lignes"
+
 #. Translators: a message indicating that configuration profiles can't be activated using gestures,
 #. due to profile activation being suspended.
 msgid "Can't change the active profile while an NVDA dialog is open"
@@ -4930,9 +4926,12 @@ msgstr "ordinateur portable"
 msgid "unknown %s"
 msgstr "%s inconnu"
 
+#. Translators: a state that denotes a control is currently on
+#. E.g. a switch control.
 msgid "on"
 msgstr "activé"
 
+#. Translators: This is presented when a switch control is off.
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
@@ -6584,6 +6583,11 @@ msgstr ""
 msgid "%d percent"
 msgstr "%d pour cent"
 
+#. Translators: Announced in braille when suggestions appear when search term is entered
+#. in various search fields such as Start search box in Windows 10.
+msgid "Suggestions"
+msgstr "Suggestions"
+
 #. Translators: a message announcing a candidate's character and description.
 #, python-brace-format
 msgid "{symbol} as in {description}"
@@ -6625,10 +6629,6 @@ msgstr "Amener l'objet navigateur et le focus à la première ligne"
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object and focus to the last row"
 msgstr "Amener l'objet navigateur et le focus à la dernière ligne"
-
-#. Translators: Announced in braille when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
-msgid "Suggestions"
-msgstr "Suggestions"
 
 #. Translators: The label for a 'composition' Window that appears when the user is typing one or more east-Asian characters into a document.
 msgid "Composition"
@@ -7397,9 +7397,63 @@ msgstr "&Montrer la Visionneuse Braille au démarrage"
 msgid "&Hover for cell routing"
 msgstr "&Survol pour routage vers une cellule"
 
-#. Translators: This is the label for a combobox in the
-#. document formatting settings panel.
-#. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+#. Translators: One of the show states of braille messages
+#. (the disabled mode turns off showing of braille messages completely).
+#. Translators: Label for an option in NVDA settings.
+#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
+msgid "Disabled"
+msgstr "Désactivé"
+
+#. Translators: One of the show states of braille messages
+#. (the timeout mode shows messages for the specific time).
+msgid "Use timeout"
+msgstr "Définir une durée maximale"
+
+#. Translators: One of the show states of braille messages
+#. (the indefinitely mode prevents braille messages from disappearing automatically).
+msgid "Show indefinitely"
+msgstr "Afficher indéfiniment"
+
+#. Translators: The label for a braille setting indicating that braille should be
+#. tethered to focus or review cursor automatically.
+msgid "automatically"
+msgstr "automatiquement"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered to focus.
+msgid "to focus"
+msgstr "le focus"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered
+#. to the review cursor.
+msgid "to review"
+msgstr "la revue"
+
+#. Translators: A choice in a combo box in the document formatting dialog to report No line Indentation.
+#, fuzzy
+msgctxt "line indentation setting"
+msgid "Off"
+msgstr "Désactivé"
+
+#. Translators: A choice in a combo box in the document formatting dialog to report indentation
+#. with Speech.
+msgctxt "line indentation setting"
+msgid "Speech"
+msgstr "Parole"
+
+#. Translators: A choice in a combo box in the document formatting dialog to report indentation
+#. with tones.
+#, fuzzy
+msgctxt "line indentation setting"
+msgid "Tones"
+msgstr "Des sons"
+
+#. Translators: A choice in a combo box in the document formatting dialog to report indentation with both
+#. Speech and tones.
+#, fuzzy
+msgctxt "line indentation setting"
+msgid "Both Speech and Tones"
+msgstr "La Parole et des Sons"
+
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
 msgid "Off"
@@ -7420,17 +7474,45 @@ msgstr "Lignes"
 msgid "Columns"
 msgstr "Colonnes"
 
-#. Translators: Label for an option in NVDA settings.
-#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
-#. Translators: One of the show states of braille messages
-#. (the disabled mode turns off showing of braille messages completely).
-msgid "Disabled"
-msgstr "Désactivé"
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Styles"
+msgstr "Styles"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Both Colors and Styles"
+msgstr "Couleurs et Styles"
 
 #. Translators: Label for an option in NVDA settings.
 #. Translators: The status shown for an addon when its currently running in NVDA.
 msgid "Enabled"
 msgstr "Activée"
+
+#. Translators: Label for a paragraph style in NVDA settings.
+#, fuzzy
+msgid "Handled by application"
+msgstr "Exécuter les touches d'autres &applications"
+
+#. Translators: Label for a paragraph style in NVDA settings.
+#, fuzzy
+msgid "Single line break"
+msgstr "Interligne simple"
+
+#. Translators: Label for a paragraph style in NVDA settings.
+#, fuzzy
+msgid "Multi line break"
+msgstr "multiligne"
+
+#. Translators: Label for an option in NVDA settings.
+#, fuzzy
+msgid "Diffing"
+msgstr "Difflib"
+
+#. Translators: Label for an option in NVDA settings.
+#, fuzzy
+msgid "UIA notifications"
+msgstr "Annoncer les &notifications"
 
 #. Translators: The title of the document used to present the result of content recognition.
 msgid "Result"
@@ -8198,6 +8280,12 @@ msgstr "un commentaire"
 msgid "suggestion"
 msgstr "une suggestion"
 
+#. Translators: The word role for a switch control
+#. I.e. a control that can be switched on or off.
+#, fuzzy
+msgid "switch"
+msgstr "Hauteur"
+
 #. Translators: Indicates that a particular state of an object is negated.
 #. Separate strings have now been defined for commonly negated states (e.g. not selected and not
 #. checked), but this still might be used in some other cases.
@@ -8396,6 +8484,13 @@ msgstr "non coché"
 #. This is only reported for objects which support accessible drag and drop.
 msgid "done dragging"
 msgstr "glissage terminé"
+
+#. Translators: This is spoken when a paragraph is considered blank.
+#. Translators: This is spoken when the line is considered blank.
+#. Translators: This is spoken when NVDA moves to an empty line.
+#. Translators: This is spoken when the line is considered blank.
+msgid "blank"
+msgstr "vide"
 
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 msgid "Configuration applied"
@@ -8999,6 +9094,11 @@ msgstr "Action non disponible dans la version Windows Store de NVDA"
 msgid "Action unavailable while a dialog requires a response"
 msgstr "Action indisponible lorsqu'une boîte de dialogue nécessite une réponse"
 
+#. Translators: Reported when an action cannot be performed because Windows is locked.
+#, fuzzy
+msgid "Action unavailable while Windows is locked"
+msgstr "Action indisponible lorsqu'une boîte de dialogue nécessite une réponse"
+
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
 msgstr "Profils de Configuration"
@@ -9050,7 +9150,10 @@ msgid "Error activating profile."
 msgstr "Erreur à l'activation du profil."
 
 #. Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
-msgid "This profile will be permanently deleted. This action cannot be undone."
+#. The placeholder {} is replaced with the name of the configuration profile that will be deleted.
+#, fuzzy
+msgid ""
+"The profile {} will be permanently deleted. This action cannot be undone."
 msgstr "Ce profil sera effacé définitivement. Cette action est irréversible."
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
@@ -10235,19 +10338,6 @@ msgstr "Numéros de &ligne"
 msgid "Line &indentation reporting:"
 msgstr "Annonce de la mise en retrait des li&gnes :"
 
-#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
-msgctxt "line indentation setting"
-msgid "Speech"
-msgstr "Parole"
-
-#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
-msgid "Tones"
-msgstr "Des sons"
-
-#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
-msgid "Both Speech and Tones"
-msgstr "La Parole et des Sons"
-
 #. Translators: This message is presented in the document formatting settings panelue
 #. If this option is selected, NVDA will report paragraph indentation if available.
 msgid "&Paragraph indentation"
@@ -10282,16 +10372,6 @@ msgstr "&En-têtes"
 #. document formatting settings panel.
 msgid "Cell c&oordinates"
 msgstr "C&oordonnées des cellules"
-
-#. Translators: This is the label for a combobox in the
-#. document formatting settings panel.
-msgid "Styles"
-msgstr "Styles"
-
-#. Translators: This is the label for a combobox in the
-#. document formatting settings panel.
-msgid "Both Colors and Styles"
-msgstr "Couleurs et Styles"
 
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
@@ -10349,6 +10429,16 @@ msgid "Report formatting chan&ges after the cursor (can cause a lag)"
 msgstr ""
 "Signaler les chan&gements de mise en forme après le curseur (peut dégrader "
 "les performances)"
+
+#. Translators: This is the label for the document navigation settings panel.
+#, fuzzy
+msgid "Document Navigation"
+msgstr "Documentation"
+
+#. Translators: This is a label for the paragraph navigation style in the document navigation dialog
+#, fuzzy
+msgid "&Paragraph style:"
+msgstr "propriété de paragraphe"
 
 #. Translators: This is the label for the touch interaction settings panel.
 msgid "Touch Interaction"
@@ -10601,6 +10691,10 @@ msgstr "Diff Match Patch"
 msgid "Difflib"
 msgstr "Difflib"
 
+#. Translators: This is the label for a combo-box in the Advanced settings panel.
+msgid "Speak new text in Windows Terminal via:"
+msgstr ""
+
 #. Translators: This is the label for combobox in the Advanced settings panel.
 msgid "Attempt to cancel speech for expired focus events:"
 msgstr "Essayer de couper la parole pour les événements de focus expirés :"
@@ -10743,16 +10837,6 @@ msgstr "Forme du curseur pour le mode &focus :"
 #. Translators: The label for a setting in braille settings to select the cursor shape when tethered to review.
 msgid "Cursor shape for &review:"
 msgstr "Forme du curseur pour le mode &revue :"
-
-#. Translators: One of the show states of braille messages
-#. (the timeout mode shows messages for the specific time).
-msgid "Use timeout"
-msgstr "Définir une durée maximale"
-
-#. Translators: One of the show states of braille messages
-#. (the indefinitely mode prevents braille messages from disappearing automatically).
-msgid "Show indefinitely"
-msgstr "Afficher indéfiniment"
 
 #. Translators: The label for a setting in braille settings to combobox enabling user
 #. to decide if braille messages should be shown and automatically disappear from braille display.
@@ -10932,7 +11016,7 @@ msgstr "Mot &entier"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "Regular &expression"
-msgstr "expression &régulière"
+msgstr "E&xpression régulière"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
@@ -11116,12 +11200,6 @@ msgstr "Quitter l'interaction mathématique"
 #. but math interaction is not supported.
 msgid "Math interaction not supported."
 msgstr "Interaction mathématique non supportée."
-
-#. Translators: This is spoken when the line is considered blank.
-#. Translators: This is spoken when NVDA moves to an empty line.
-#. Translators: This is spoken when the line is considered blank.
-msgid "blank"
-msgstr "vide"
 
 #. Translators: cap will be spoken before the given letter when it is capitalized.
 #, python-format
@@ -12678,10 +12756,12 @@ msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr ""
 "Clé de légendes pour les séries {seriesName}, {seriesIndex} de {seriesCount}"
 
-#. Translators: The default color of text when a color has not been set by the author.
-#. Translators: The default background color  when a color has not been set by the author.
-#. Translators: the default (automatic) color in Microsoft Word
-msgid "default color"
+#. Translators: The text color as reported in Wordpad (Automatic) or NVDA log viewer.
+#. Translators: The background color as reported in Wordpad (Automatic) or NVDA log viewer.
+#. Translators: The text color as reported in Wordpad (Automatic) or NVDA log viewer.
+#. Translators: The background color as reported in Wordpad (Automatic) or NVDA log viewer.
+#, fuzzy, python-brace-format
+msgid "{color} (default color)"
 msgstr "couleur par défaut"
 
 #. Translators: The color of text cannot be detected.
@@ -13225,6 +13305,11 @@ msgstr "%.1f lignes"
 msgid "Table description"
 msgstr "Description de tableau"
 
+#. Translators: the default (automatic) color in Microsoft Word
+#, fuzzy
+msgid "automatic color"
+msgstr "automatique"
+
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Bold on"
 msgstr "Gras activé"
@@ -13355,6 +13440,21 @@ msgstr "Interligne double"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Interligne 1.5"
+
+#~ msgid "Report line indentation with speech"
+#~ msgstr "Annoncer la mise en retrait des lignes par la parole"
+
+#~ msgid "Report line indentation with tones"
+#~ msgstr "Annoncer la mise en retrait des lignes par des sons"
+
+#~ msgid "Report line indentation with speech and tones"
+#~ msgstr "Annoncer la mise en retrait des lignes par la parole et des sons"
+
+#~ msgid "Report styles of cell borders"
+#~ msgstr "Annoncer le style des bordures de cellules"
+
+#~ msgid "Report colors and styles of cell borders"
+#~ msgstr "Annoncer la couleur et le style des bordures de cellules"
 
 #~ msgid "NVDA could not start securely."
 #~ msgstr "NVDA n'a pas pu démarrer en toute sécurité."
