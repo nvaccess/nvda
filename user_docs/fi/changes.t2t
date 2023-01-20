@@ -3,6 +3,73 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2023.1 =
+
+== Uudet ominaisuudet ==
+- Microsoft Excel UI Automation -rajapinnan kautta: Automaattinen sarake- ja riviotsikoiden lukeminen taulukoissa. (#14228)
+  - Huom: Tämä tarkoittaa taulukoita, jotka on muotoiltu valintanauhan Lisää-ruudun "Taulukko"-painikkeella.
+  Taulukkotyyliasetuksissa "Ensimmäinen sarake" ja "Otsikkorivi" vastaavat sarake- ja riviotsikoita.
+  - Tämä ei tarkoita ruudunlukijakohtaisia otsikoita nimettyjen alueiden kautta, joita UI Automation ei tällä hetkellä tue.
+  -
+- Lisätty määrittämätön komento viivästettyjen merkkikuvausten käyttöön ottamiseen ja käytöstä poistamiseen. (#14267)
+- Lisätty kokeellinen asetus UIA-ilmoitustuen hyödyntämiseen Windows Terminalissa päätteen uuden tai muuttuneen tekstin lukemista varten, mikä parantaa vakautta ja reagointikykyä. (#13781)
+  - Katso tämän kokeellisen asetuksen rajoitukset käyttöoppaasta.
+  - 
+- Selaustila on nyt käytettävissä Windows 11 ARM64:ssä AMD64-sovelluksissa, kuten Firefox, Google Chrome ja 1Password. (#14397)
+- Lisätty uusi "Kappaletyyli"-asetus Asiakirjan selaus -kategoriaan.
+Tämä lisää tuen yhdellä (normaali) ja usealla rivinvaihdolla (lohko) eroteltujen kappaleiden välillä liikkumiseen.
+Tätä voidaan käyttää sellaisissa tekstieditoreissa, jotka eivät tue natiivisti kappaleittain liikkumista, kuten Notepad ja Notepad++. (#13797)
+- Useat merkinnät ilmoitetaan.
+``NVDA+D`` vaihtaa nyt kunkin merkintäkohteen yhteenvedon ilmoittamisen välillä useiden merkintäkohteiden alkuperän osalta.
+Esimerkiksi kun tekstiin liittyy kommentti ja alaviite. (#14507, #14480)
+-
+
+
+== Muutokset ==
+- Päivitetty Sonic-nopeudenlisäyskirjasto muutokseen ``1d70513``. (#14180)
+- CLDR on päivitetty versioksi 42.0. (#14273)
+- eSpeak NG on päivitetty versioksi 1.52-dev muutos ``a51235aa``. (#14281)
+  - Korjattu suurten lukujen puhuminen. (#14241)
+  -
+- Java-sovellukset, joissa käytetään valittavissa-tilan sisältäviä säätimiä, ilmoittavat nyt, kun kohde ei ole valittavissa  sen sijaan, että ilmoittaisivat, kun se on valittu. (#14336)
+-
+
+
+== Bugikorjaukset ==
+- Windows 11 -korjaukset:
+  - NVDA ilmoittaa hakuehdotukset Käynnistä-valikkoa avattaessa. (#13841)
+  - ARM-pohjaisissa järjestelmissä ei enää tunnisteta x64-sovelluksia ARM64-sovelluksiksi. (#14403)
+  - Leikepöydän historian valikkokohteita, kuten "Kiinnitä kohde", voidaan nyt käyttää. (#14508)
+  -
+- Ehdotukset puhutaan, kun Microsoft Excelin kommentteihin kirjoitetaan @mention. (#13764)
+- Ehdotussäätimet (Siirry välilehteen, Poista ehdotus jne.) puhutaan valittaessa Google Chromen sijaintipalkissa. (#13522)
+- Värit ilmoitetaan nyt selkeästi "oletusvärin" asemesta Wordpadissa tai Näytä loki -sovelluksessa muotoilutietoja pyydettäessä. (#13959)
+- GitHubin ongelmasivujen "Show options" -painikkeen painaminen toimii nyt luotettavasti Firefoxissa. (#14269)
+- Päivämäärän valitsinsäätimet ilmoittavat nyt nimensä ja arvonsa Outlook 2016:n / 365:n Edistynyt haku -valintaikkunassa. (#12726)
+- ARIA-valitsinsäätimet ilmoitetaan nyt Firefoxissa, Chromessa ja Edgessä valintaruutujen asemesta valitsimina. (#11310)
+- NVDA ilmoittaa automaattisesti HTML -taulukon sarakeotsikon lajittelutilan, kun sitä muutetaan sisäpainiketta painamalla. (#10890)
+- Kiintopiste tai alueen nimi puhutaan aina automaattisesti siirryttäessä ulkopuolelta sisään pikaselausta tai selaustilassa kohdistusta käyttäen. (#13307)
+- NVDA ei enää anna äänimerkkiä tai sano kahdesti "iso", kun Ilmaise isot kirjaimet äänimerkillä- tai Ilmaise isot kirjaimet sanomalla "iso" -asetukset ovat käytössä samaan aikaan viivästettyjen merkkikuvausten kanssa. (#14239)
+- NVDA puhuu nyt tarkemmin taulukoiden säätimet Java-sovelluksissa. (#14347)
+- Jotkut asetukset eivät enää ole odottamattomasti erilaisia, kun niitä käytetään useissa profiileissa. (#14170)
+  - Seuraavien asetusten toiminta on korjattu:
+    - Rivien sisennykset asiakirjojen muotoiluasetuksissa
+    - Solun reunat asiakirjojen muotoiluasetuksissa.
+    - Näytä ilmoitukset pistekirjoitusasetuksissa
+    - Pistenäyttö seuraa pistekirjoitusasetuksissa
+    -
+  - Joissakin harvinaisissa tapauksissa näitä profiileissa käytettyjä asetuksia voidaan muuttaa yllättäen tätä NVDA-versiota asennettaessa.
+  - Tarkista nämä asetukset profiileissasi päivitettyäsi tähän NVDA-versioon.
+  -
+- Emojit puhutaan nyt useammalla kielellä. (#14433)
+- Merkinnän olemassaoloa ei enää puutu pistekirjoituksella joistakin elementeistä. (#13815)
+-
+
+
+== Muutokset kehittäjille ==
+Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/changes.html]
+
+
 = 2022.4 =
 Tämä julkaisu sisältää useita uusia näppäinkomentoja, mukaan lukien taulukon jatkuva luku.
 Käyttöoppaaseen on lisätty "Pika-aloitusopas"-osio.
