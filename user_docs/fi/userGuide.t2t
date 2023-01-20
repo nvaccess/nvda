@@ -40,6 +40,7 @@ Tärkeimpiä ominaisuuksia ovat:
 - Käyttöjärjestelmät: kaikki 32- ja 64-bittiset Windows 7:n, Windows 8:n, Windows 8.1:n, Windows 10:n ja Windows 11:n versiot sekä palvelinversiot Windows Server 2008 R2:sta alkaen.
   - Windows 7:ssä on oltava asennettuna Service Pack 1 tai uudempi.
   - Windows Server 2008 R2:ssa on oltava asennettuna Service Pack 1 tai uudempi.
+  - Sekä AMD64- että ARM64-versioita tuetaan.
   -
 - Vähintään 150 Mt tallennustilaa.
 -
@@ -2089,6 +2090,29 @@ Ilmaise rivien sisennykset -yhdistelmäruudussa on neljä vaihtoehtoa.
 - puheella ja äänimerkeillä: Tämän ollessa valittuna sisennykset ilmoitetaan molempia yllä olevia vaihtoehtoja käyttäen.
 -
 
++++ Asiakirjan selaus +++[DocumentNavigation]
+Tästä kategoriasta voit säätää asiakirjan selauksen asetuksia.
+
+==== Kappaletyyli ====[ParagraphStyle]
+: Oletus
+  Sovelluksen määrittämä
+: Vaihtoehdot
+  Oletus (Sovelluksen määrittämä), Sovelluksen määrittämä, Yksi rivinvaihto, Useita rivinvaihtoja
+:
+
+Tästä yhdistelmäruudusta voit valita kappaletyylin, jota käytetään kappaleittain liikuttaessa näppäinkomennoilla ``Ctrl+Nuoli ylös`` ja ``Ctrl+Nuoli alas``.
+Seuraavat kappaletyylit ovat käytettävissä:
+- Sovelluksen määrittämä: NVDA antaa sovelluksen määrittää edellisen tai seuraavan kappaleen, ja lukee uuden kappaleen siirryttäessä siihen.
+Tämä tyyli, joka on käytössä oletusarvoisesti, toimii parhaiten, kun sovellus tukee kappaleittain liikkumista.
+- Yksi rivinvaihto: NVDA yrittää määrittää edellisen tai seuraavan kappaleen käyttäen yhtä rivinvaihtoa kappaleenilmaisimena.
+Tämä tyyli toimii parhaiten, kun asiakirjoja luetaan sovelluksessa, joka ei tue kappaleittain liikkumista ja asiakirjan kappaleet on merkitty yhdellä Enter-näppäimen painalluksella.
+- Useita rivinvaihtoja: NVDA yrittää määrittää edellisen tai seuraavan kappaleen käyttäen ainakin yhtä tyhjää riviä (kaksi ``Enter``-näppäimen painallusta) kappaleenilmaisimena.
+Tämä tyyli toimii parhaiten asiakirjoissa, joissa käytetään lohkokappaleita.
+Huom: Tätä tyyliä ei voi käyttää Microsoft Wordissa eikä Outlookissa, ellei "Käytä UI Automation -rajapintaa Microsoft Wordin asiakirjasäätimissä" -asetus ole käytössä.
+-
+
+Voit vaihtaa käytettävissä olevien kappaletyylien välillä mistä tahansa määrittämällä näppäinkomennon [Näppäinkomennot-valintaikkunassa #InputGestures].
+
 +++ Windowsin tekstintunnistusasetukset +++[Win10OcrSettings]
 Tämän kategorian asetuksilla voit vaikuttaa [Windowsin tekstintunnistuksen #Win10Ocr] toimintaan.
 Kategoria sisältää seuraavat asetukset:
@@ -2229,6 +2253,25 @@ Joissakin sovelluksissa uuden tekstin lukeminen voi kuitenkin olla nykivää tai
 Tämä vastaa NVDA:n toiminnallisuutta versiossa 2020.4 ja sitä vanhemmissa.
 Tämä asetus saattaa vakauttaa saapuvan tekstin lukemista joissakin sovelluksissa.
 Kohdistimen jälkeinen teksti kuitenkin luetaan päätteissä, kun rivin keskelle lisätään tai siitä poistetaan merkki.
+-
+
+==== Uuden tekstin puhumismenetelmä Windows Terminalissa ====[WtStrategy]
+: Oletus
+  Muutosten havaitseminen
+: Vaihtoehdot
+  Muutosten havaitseminen, UIA-ilmoitukset
+:
+
+Tämä asetus valitsee, miten NVDA määrittää "uuden" tekstin (ja näin ollen sen, mitä puhutaan "Lue dynaamisen sisällön muutokset" -asetuksen ollessa käytössä) Windows Terminalissa ja Windows Terminalin WPF-säätimessä, jota käytetään Visual Studio 2022:ssa.
+Asetus ei vaikuta Windows-konsoliin (``conhost.exe``).
+Uuden tekstin puhumismenetelmä Windows Terminalissa -yhdistelmäruudussa on kolme vaihtoehtoa:
+- Oletus: Tämä asetus vastaa tällä hetkellä "muutosten havaitsemista", mutta sen odotetaan muuttuvan, kun UIA-ilmoitusten tukea kehitetään edelleen.
+- Muutosten havaitseminen: Tämä asetus käyttää valittua muutostenhavaitsemismenetelmää muutosten laskemiseen joka kerta, kun päätteeseen ilmestyy uutta tekstiä.
+Tämä toimii samoin kuin NVDA 2022.4:ssä ja sitä vanhemmissa versioissa.
+- UIA-ilmoitukset: Tämä asetus siirtää vastuun puhuttavan tekstin määrittämisestä Windows Terminalille itselleen, mikä tarkoittaa, että NVDA: n ei enää tarvitse määrittää, mikä ruudulla oleva teksti on "uutta".
+Tämän pitäisi parantaa huomattavasti Windows Terminalin suorituskykyä ja vakautta, mutta ominaisuus ei ole vielä valmis.
+Erityisesti kirjoitetut merkit, joita ei näytetä ruudulla, kuten salasanat, puhutaan tämän ollessa valittuna.
+Lisäksi jatkuvia yli 1000 merkin tulosteita ei välttämättä puhuta tarkasti.
 -
 
 ==== Yritä perua vanhentuneiden kohdistustapahtumien puhe ====[CancelExpiredFocusSpeech]
@@ -3656,7 +3699,7 @@ Seuraavassa on luettelo NVDA:n komentorivivalitsimista:
 | -q | --quit | Sulkee jo käynnissä olevan NVDA:n version. |
 | -k | --check-running | Ilmoittaa lopetuskoodilla, onko NVDA käynnissä, 0 = jos käynnissä tai 1 = jos ei käynnissä. |
 | -f LOKITIEDOSTO | --log-file=LOKITIEDOSTO | Tiedosto, johon lokiviestit tallennetaan. |
-| -l LOKITASO | --log-level=LOKITASO | Alin taso, jonka ilmoitukset tallennetaan lokiin (virheenkorjaus = 10, syöttö/tulostus = 12, virheenkorjausvaroitus = 15, tiedot = 20, varoitus = 30, virhe = 40, kriittinen = 50, ei käytössä = 100). Oletustaso on "varoitus". |
+| -l LOKITASO | --log-level=LOKITASO | Alin taso, jonka ilmoitukset tallennetaan lokiin (virheenkorjaus = 10, syöttö/tulostus = 12, virheenkorjausvaroitus = 15, tiedot = 20, ei käytössä = 100) |
 | -c ASETUSPOLKU | --config-path=ASETUSPOLKU | Hakemistopolku, johon kaikki NVDA:n asetukset tallennetaan. |
 | Ei mitään | --lang=KIELI | Ohita NVDA:n asetuksissa määritetty kieli. Määritä kieleksi "Windows" käyttääksesi nykyistä käyttäjän oletusarvoa, "en" englantia jne. |
 | -m | --minimal | Ei ääniä, käyttöliittymää tai käynnistysilmoitusta jne. |
