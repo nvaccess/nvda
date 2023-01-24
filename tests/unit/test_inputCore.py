@@ -30,3 +30,14 @@ class TestInputManagerExtensionPoints(unittest.TestCase):
 			gesture=gesture
 		):
 			inputCore.manager.executeGesture(gesture)
+
+
+class TestGlobalGestureMap(unittest.TestCase):
+	"""Test to ensure that importing an exported global gesture map results in the same map.
+	The gesture map for the Hims braille display driver is used for reference."""
+
+	def test_exportAndUpdateAreEqual(self):
+		from brailleDisplayDrivers.hims import BrailleDisplayDriver as HimsDriver
+		exported = HimsDriver.gestureMap.export()
+		newMap = inputCore.GlobalGestureMap(exported)
+		self.assertDictEqual(HimsDriver.gestureMap._map, newMap._map)
