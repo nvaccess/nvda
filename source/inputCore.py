@@ -440,6 +440,11 @@ class GlobalGestureMap:
 		with FaultTolerantFile(out.filename) as f:
 			out.write(f)
 
+	def __eq__(self, other):
+		if isinstance(other, GlobalGestureMap):
+			return self._map == other._map
+		return NotImplemented
+
 
 decide_executeGesture = extensionPoints.Decider()
 """

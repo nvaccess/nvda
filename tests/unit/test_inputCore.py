@@ -40,4 +40,5 @@ class TestGlobalGestureMap(unittest.TestCase):
 		from brailleDisplayDrivers.hims import BrailleDisplayDriver as HimsDriver
 		exported = HimsDriver.gestureMap.export()
 		newMap = inputCore.GlobalGestureMap(exported)
+		self.assertEqual(HimsDriver.gestureMap, newMap)
 		self.assertDictEqual(HimsDriver.gestureMap._map, newMap._map)
