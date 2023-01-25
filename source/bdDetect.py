@@ -806,4 +806,3 @@ def terminate():
 	scanForDevices.unregister(_Detector._bgScanBluetooth)
 	scanForDevices.unregister(_Detector._bgScanUsb)
 	deviceInfoFetcher = None
-
