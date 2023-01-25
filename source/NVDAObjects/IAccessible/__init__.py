@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited, Babbage B.V.
+# Copyright (C) 2006-2023 NV Access Limited, Babbage B.V.
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -1688,7 +1688,7 @@ the NVDAObject for IAccessible
 			return
 		return super(IAccessible, self).event_valueChange()
 
-	def event_alert(self):
+	def event_alert(self) -> None:
 		if self.role != controlTypes.Role.ALERT:
 			# Ignore alert events on objects that aren't alerts.
 			return
@@ -1702,9 +1702,11 @@ the NVDAObject for IAccessible
 		if self in api.getFocusAncestors():
 			return
 		speech.speakObject(self, reason=controlTypes.OutputReason.FOCUS, priority=speech.Spri.NOW)
+		braille.handler.message(braille.getPropertiesBraille(name=self.name, role=self.role))
 		for child in self.recursiveDescendants:
 			if controlTypes.State.FOCUSABLE in child.states:
 				speech.speakObject(child, reason=controlTypes.OutputReason.FOCUS, priority=speech.Spri.NOW)
+				braille.handler.message(braille.getPropertiesBraille(name=self.name, role=self.role))
 
 	def event_caret(self):
 		focus = api.getFocusObject()

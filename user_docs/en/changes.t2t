@@ -22,6 +22,7 @@ This can be used with text editors that do not support paragraph navigation nati
 - The presence of multiple annotations are now reported.
 ``nvda+d`` now cycles through reporting the summary of each annotation target for origins with multiple annotation targets.
 For example, when text has a comment and a footnote associated with it. (#14507, #14480)
+- Added support for Tivomatic Caiku Albatross 46/80 braille displays. (#13045)
 -
 
 
@@ -72,6 +73,7 @@ For example, when text has a comment and a footnote associated with it. (#14507,
 - Fixed an issue where config changes not save correctly when changing between a "Default" option and the value of the "Default" option. (#14133)
 - When configuring NVDA there will always be at least one key is defined as a NVDA key. (#14527)
 - When accessing the NVDA menu via the notification area, NVDA will not suggest a pending update anymore when no update is available. (#14523)
+- In web browsers such as Chrome and Firefox, alerts such as file downloads are shown in braille in addition to being spoken. (#14562)
 -
 
 
