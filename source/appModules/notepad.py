@@ -24,6 +24,7 @@ class AppModule(appModuleHandler.AppModule):
 			and not eventHandler.isPendingEvents("UIA_elementSelected") and controlTypes.State.SELECTED in obj.states):
 			speech.cancelSpeech()
 			speech.speakObject(obj, reason=controlTypes.OutputReason.FOCUS)
+		nextHandler()
 
 	def _get_statusBar(self):
 		"""Retrieves Windows 11 Notepad status bar.
