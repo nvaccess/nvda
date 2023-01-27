@@ -22,10 +22,16 @@ Tätä voidaan käyttää sellaisissa tekstieditoreissa, jotka eivät tue natiiv
 - Useat merkinnät ilmoitetaan.
 ``NVDA+D`` vaihtaa nyt kunkin merkintäkohteen yhteenvedon ilmoittamisen välillä useiden merkintäkohteiden alkuperän osalta.
 Esimerkiksi kun tekstiin liittyy kommentti ja alaviite. (#14507, #14480)
+- Lisätty tuki Tivomaticin Caiku Albatross 46/80 -pistenäytöille. (#13045)
 -
 
 
 == Muutokset ==
+- Päivitetty LibLouis-pistekirjoituskääntäjä versioksi [3.24.0 https://github.com/liblouis/liblouis/releases/tag/v3.24.0]. (#14436)
+  - Merkittäviä päivityksiä unkarilaiseen, UEB- ja kiinalaiseen bopomofopistekirjoitukseen.
+  - Tuki tanskalaiselle 2022-pistekirjoitusstandardille.
+  - Uusia pistetaulukoita georgialaiselle kaunokirjalliselle pistekirjoitukselle, swahilille (Kenia) sekä njandžalle (Malawi).
+  -
 - Päivitetty Sonic-nopeudenlisäyskirjasto muutokseen ``1d70513``. (#14180)
 - CLDR on päivitetty versioksi 42.0. (#14273)
 - eSpeak NG on päivitetty versioksi 1.52-dev muutos ``a51235aa``. (#14281)
@@ -40,6 +46,7 @@ Esimerkiksi kun tekstiin liittyy kommentti ja alaviite. (#14507, #14480)
   - NVDA ilmoittaa hakuehdotukset Käynnistä-valikkoa avattaessa. (#13841)
   - ARM-pohjaisissa järjestelmissä ei enää tunnisteta x64-sovelluksia ARM64-sovelluksiksi. (#14403)
   - Leikepöydän historian valikkokohteita, kuten "Kiinnitä kohde", voidaan nyt käyttää. (#14508)
+  - Windows 11 22H2:ssa ja uudemmissa on jälleen mahdollista käyttää hiirtä ja kosketusvuorovaikutusta vuorovaikutukseen sellaisissa alueissa kuten ilmaisinalueen ylivuotoikkuna ja "Avaa sovelluksessa" -valintaikkuna. (#14538, #14539)
   -
 - Ehdotukset puhutaan, kun Microsoft Excelin kommentteihin kirjoitetaan @mention. (#13764)
 - Ehdotussäätimet (Siirry välilehteen, Poista ehdotus jne.) puhutaan valittaessa Google Chromen sijaintipalkissa. (#13522)
@@ -63,6 +70,10 @@ Esimerkiksi kun tekstiin liittyy kommentti ja alaviite. (#14507, #14480)
   -
 - Emojit puhutaan nyt useammalla kielellä. (#14433)
 - Merkinnän olemassaoloa ei enää puutu pistekirjoituksella joistakin elementeistä. (#13815)
+- Korjattu ongelma, jossa asetusmuutokset eivät tallennu oikein vaihdettaessa "Oletus"-vaihtoehdon ja "Oletus"-vaihtoehdon arvon välillä. (#14133)
+- Kun NVDA:n asetuksia määritetään, NVDA-näppäimeksi on nyt aina määritettynä vähintään yksi näppäin. (#14527)
+- Kun NVDA-valikko avataan ilmoitusalueen kautta, NVDA ei enää ehdota odottavaa päivitystä, kun päivitystä ei ole saatavilla. (#14523)
+- Ilmoitukset, kuten tiedostolataukset, näytetään verkkoselaimissa kuten Chromessa ja Firefoxissa pistekirjoituksella sen lisäksi että ne puhutaan. (#14562)
 -
 
 
