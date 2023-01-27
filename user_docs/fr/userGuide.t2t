@@ -40,6 +40,7 @@ Ses points forts sont :
 - Systèmes d'Exploitation : toutes les éditions 32-bit et 64-bit de Windows 7, Windows 8, Windows 8.1, Windows 10, Windows 11, et toutes les versions serveur à partir de Windows Server 2008 R2.
   - Pour Windows 7, NVDA requiert le Service Pack 1 ou ultérieur.
   - Pour Windows Server 2008 R2, NVDA requiert le Service Pack 1 ou ultérieur.
+  - les variantes AMD64 et ARM64 de Windows sont prises en charge.
   -
 - au moins 150 Mo d'espace de stockage.
 -
@@ -2087,6 +2088,30 @@ La hauteur du son montera pour chaque espace, et pour une tabulation, la hauteur
 - Parole et sons : Cette option indique les retraits en utilisant les deux méthodes ci-dessus.
 -
 
++++ Navigation dans les Documents +++[DocumentNavigation]
+Cette catégorie vous permet d'ajuster divers aspects de la navigation dans les documents.
+
+==== Style des paragraphes ====[ParagraphStyle]
+: Défaut
+  Géré par l'application
+: Options
+  Défaut (Géré par l' application), géré par l' application, Saut de ligne unique, Saut de ligne multiple
+:
+
+Cette liste déroulante vous permet de sélectionner le style de paragraphe à utiliser lors de la navigation par paragraphes avec ``contrôle+flècheHaut`` et ``contrôle+flècheBas``.
+Les styles de paragraphe disponibles sont :
+- Géré par l'application : NVDA laissera l'application déterminer le paragraphe précédent ou suivant, et NVDA lira le nouveau paragraphe lors de la navigation.
+Ce style fonctionne mieux lorsque l'application prend en charge la navigation dans les paragraphes de manière native et est la valeur par défaut.
+- Saut de ligne simple : NVDA tentera de déterminer le paragraphe précédent ou suivant en utilisant un saut de ligne simple comme indicateur de paragraphe.
+Ce style fonctionne mieux lors de la lecture de documents dans une application qui ne prend pas en charge nativement la navigation dans les paragraphes, et dont les paragraphes du document sont marqués par une simple pression sur la touche ``entrer``.
+- Saut de ligne multiple : NVDA tentera de déterminer le paragraphe précédent ou suivant en utilisant au moins une ligne vierge (deux appuis sur la touche ``entrer``) comme indicateur de paragraphe.
+Ce style fonctionne mieux lorsque vous travaillez avec des documents qui utilisent des paragraphes de bloc.
+Notez que ce style de paragraphe ne peut pas être utilisé dans Microsoft Word ou Microsoft Outlook, sauf si vous utilisez l'UIA pour accéder aux contrôles de Microsoft Word.
+-
+
+You may toggle through the available paragraph styles from anywhere by assigning a key in the [Input Gestures dialog #InputGestures].
+Vous pouvez basculer entre les styles de paragraphe disponibles de n'importe où en attribuant une touche dans la [boîte de dialogue Gestes de commandes #InputGestures].
+
 +++ Reconnaissance Optique de Caractères de Windows +++[Win10OcrSettings]
 Les paramètres de cette catégorie vous permettent de configurer la [Reconnaissance de Caractères de Windows #Win10Ocr].
 Elle contient les options suivantes :
@@ -2227,6 +2252,25 @@ Cependant, dans certaines applications, la lecture d'un nouveau texte peut être
 Ce comportement est identique à celui de NVDA en version 2020.4 et antérieures.
 Ce paramètre peut stabiliser la lecture du texte entrant dans certaines applications.
 Cependant, dans les terminaux, lors de l'insertion ou de la suppression d'un caractère au milieu d'une ligne, le texte après le curseur sera lu.
+-
+
+==== Annoncez un nouveau texte dans le terminal Windows via ====[WtStrategy]
+: Défaut
+  Différence
+: Options
+  Différence, notifications UIA
+:
+
+Cette option sélectionne la façon dont NVDA détermine quel texte est "nouveau" (et donc ce qu'il faut prononcer lorsque "signaler les changements de contenu dynamique" est activé) dans Windows Terminal et le contrôle WPF Windows Terminal utilisé dans Visual Studio 2022.
+Elle n'affecte pas la console Windows (``conhost.exe``).
+La liste déroulante annoncer le nouveau texte dans le terminal Windows comporte trois options :
+- Par défaut : cette option est actuellement équivalente à "différence", mais il est prévu qu'elle change une fois que la prise en charge des notifications UIA sera développée davantage.
+- Différence : cette option utilise l'algorithme de comparaison sélectionné pour calculer les changements à chaque fois que le terminal affiche un nouveau texte.
+Ceci est identique au comportement de NVDA dans les versions 2022.4 et antérieures.
+- Notifications UIA : Cette option reporte la responsabilité de déterminer quel texte parler au terminal Windows lui-même, ce qui signifie que NVDA n'a plus à déterminer quel texte actuellement à l'écran est "nouveau".
+Cela devrait nettement améliorer les performances et la stabilité de Windows Terminal, mais cette fonctionnalité n'est pas encore complète.
+En particulier, les caractères saisis qui ne s'affichent pas à l'écran, tels que les mots de passe, sont signalés lorsque cette option est sélectionnée.
+De plus, les étendues contiguës d'affichage de plus de 1 000 caractères peuvent ne pas être rapportées avec précision.
 -
 
 ==== Tenter d'interrompre la parole pour les événements de focus expirés ====[CancelExpiredFocusSpeech]
@@ -2682,6 +2726,7 @@ Les terminaux suivants supportent cette fonctionnalité de détection automatiqu
 - Terminaux Eurobraille Esys/Esytime/Iris
 - Afficheurs Nattiq nBraille
 - Seika Notetaker: MiniSeika (16, 24 cellules), V6, et V6Pro (40 cellules)
+- Afficheurs Tivomatic Caiku Albatross 46/80
 - N'importe quel afficheur supportant le protocole standard HID Braille
 -
 
@@ -3564,6 +3609,63 @@ Veuillez consulter les [listes des assignations des touches de BRLTTY http://mie
 | Aller à la cellule braille | route (amener le curseur au caractère) |
 %kc:endInclude
 
+++ Tivomatic Caiku Albatross 46/80 ++[Albatross]
+Les terminaux Caiku Albatross, qui étaient fabriqués par Tivomatic et disponibles en Finlande, peuvent être connectés via USB ou série.
+Vous n'avez pas besoin d'installer de pilote spécifique pour utiliser ces afficheurs.
+Branchez simplement l'afficheur et configurez NVDA pour l'utiliser.
+
+Remarque : Un débit de 19 200 bauds est fortement recommandé.
+Si nécessaire, réglez la valeur du débit en bauds sur 19200 dans le menu de l'afficheur braille.
+Bien que le pilote prenne en charge un débit en bauds de 9600, il n'a aucun moyen de contrôler le débit en bauds utilisé par l'affichage.
+Parce que 19200 est le débit en bauds par défaut de l'affichage, le pilote l'essaie d'abord.
+Si les débits en bauds ne sont pas les mêmes, le pilote peut se comporter de manière inattendue.
+
+Voici les affectations de touches pour ces afficheurs avec NVDA.
+Veuillez consulter la documentation de l'afficheur pour savoir où trouver ces touches.
+%kc:beginInclude
+|| Nom | Touche |
+| Aller à la première lige en mode revue | ``home1``, ``home2`` |
+| Aller à la dernière ligne en mode revue | ``end1``, ``end2`` |
+| Amener l'objet navigateur au focus courant | ``eCursor1``, ``eCursor2`` |
+| Aller au focus courant | ``cursor1``, ``cursor2`` |
+| Amener le pointeur souris à l'objet navigateur courant | ``home1+home2`` |
+| Amener l'objet navigateur à l'objet sous le pointeur souris et l'annoncer | ``end1+end2`` |
+| Amener le focus à l'objet navigateur courant | ``eCursor1+eCursor2`` |
+| Basculer le suivi braille | ``cursor1+cursor2`` |
+| Amener l'affichage braille à la ligne précédente | ``up1``, ``up2``, ``up3`` |
+| Amener l'affichage braille à la ligne suivante | ``down1``, ``down2``, ``down3`` |
+| Faire défiler l'affichage braille en arrière | ``left``, ``lWheelLeft``, ``rWheelLeft`` |
+| Faire défiler l'affichage braille en avant | ``right``, ``lWheelRight``, ``rWheelRight`` |
+| Aller à la cellule braille | ``routing`` |
+| Annoncer la mise en forme du texte sous la cellule braille | ``secondary routing`` |
+| Choisir la manière dont l'information contextuelle est présentée en braille | ``attribute1+attribute3`` |
+| Choisir entre les modes de parole désactivé, bip and parole | ``attribute2+attribute4`` |
+| Passer au mode de revue précédent (ex : objet, document ou écran) | ``f1`` |
+| Passer au mode de revue suivant (ex : objet, document ou écran) | ``f2`` |
+| Amener l'objet navigateur à l'objet le contenant | ``f3`` |
+| Amener l'objet navigateur au premier objet qu'il contient | ``f4`` |
+| Amener l'objet navigateur à l'objet précédent | ``f5`` |
+| Amener l'objet navigateur à l'objet suivant | ``f6`` |
+| Annoncer l'objet navigateur courant | ``f7`` |
+| Annoncer l'information de position du texte ou de l'objet sous le curseur de revue | ``f8`` |
+| Exécuter l'action par défaut sur l'objet navigateur courant | ``f7+f8`` |
+| Annoncer date/heure | ``f9`` |
+| Annoncer le niveau de batterie et le temps restant si l'alimentation n'est pas branchée | ``f10`` |
+| Annoncer le titre | ``f11`` |
+| Annoncer la barre d'état | ``f12`` |
+| Annoncer la ligne courante sous le curseur d'application | ``f13`` |
+| Dire tout | ``f14`` |
+| Annoncer le caractère courant sous le curseur de revue | ``f15`` |
+| Annoncer la ligne de l'objet navigateur courant où se situe le curseur de revue | ``f16`` |
+| Dir le mot de l'objet navigateur courant où se situe le curseur de revue | ``f15+f16`` |
+| Amener le curseur de revue à la ligne précédente de l'objet navigateur courant et l'annoncer | ``lWheelUp``, ``rWheelUp`` |
+| Amener le curseur de revue à la ligne suivante de l'objet navigateur courant et l'annoncer | ``lWheelDown``, ``rWheelDown`` |
+| Touche ``Windows+d`` (minimiser toutes les applications) | ``attribute1`` |
+| Touche ``Windows+e`` (Ce PC) | ``attribute2`` |
+| Touche ``Windows+b`` (focus dans la barre d'état) | ``attribute3`` |
+| Touche ``Windows+i`` (Paramètres Windows) | ``attribute4`` |
+%kc:endInclude
+ 
 ++ Afficheurs braille au standard HID ++[HIDBraille]
 Il s'agit d'un pilote expérimental pour la nouvelle spécification standard HID Braille, convenue en 2018 par Microsoft, Google, Apple et plusieurs sociétés de technologie d'assistance, dont NV Access.
 L'espoir est que tous les futurs modèles d'afficheurs Braille créés par n'importe quel fabricant utiliseront ce protocole standard qui supprimera le besoin de pilotes Braille spécifiques au fabricant.
@@ -3654,7 +3756,7 @@ Voici les options de ligne de commande de NVDA :
 | -q | --quit | Quitte la copie en cours d'exécution de NVDA |
 | -k | --check-running | Indique si NVDA est en cours d'exécution via le code retour; 0 si oui, 1 si non |
 | -f NOMDUFICHIERJOURNAL | --log-file=NOMDUFICHIERJOURNAL | Le fichier où les messages du journal doivent être écrits |
-| -l NIVEAUDEJOURNALISATION | --log-level=NIVEAUDEJOURNALISATION | Le niveau minimal de messages journalisés (débogage 10, info 20, avertissement 30, erreur 40, critique 50, désactivé 100), le défaut est avertissement |
+| -l NIVEAUDEJOURNALISATION | --log-level=NIVEAUDEJOURNALISATION | Le niveau minimal de messages journalisés (débogage 10, entrées/sorties 12, avertissements de débogage 15, info 20, désactivé 100) |
 | -c CHEMINDECONFIG | --config-path=CHEMINDECONFIG | Le chemin vers lequel tous les paramètres de NVDA sont stockés |
 | Aucun | --lang=LANGUAGE | Remplacer la langue NVDA configurée. Choisissez "Windows" pour la langue en cours par défaut, "en" pour Anglais, etc. |
 | -m | --minimal | Pas de sons, pas d'interface, pas de message de démarrage etc. |
