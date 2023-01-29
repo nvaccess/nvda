@@ -733,3 +733,8 @@ def initializeDetectionData():
 		"seikantk",
 		isSeikaBluetoothDeviceMatch
 	)
+
+	# albatross
+	addUsbDevices("albatross", KEY_SERIAL, {
+		"VID_0403&PID_6001",  # Caiku Albatross 46/80
+	})

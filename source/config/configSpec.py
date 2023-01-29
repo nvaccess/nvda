@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited, Babbage B.V., Davy Kager, Bill Dengler, Julien Cochuyt,
+# Copyright (C) 2006-2023 NV Access Limited, Babbage B.V., Davy Kager, Bill Dengler, Julien Cochuyt,
 # Joseph Lee, Dawid Pieper, mltony, Bram Duvigneau, Cyrille Bougot, Rob Meredith
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -12,7 +12,7 @@ from configobj import ConfigObj
 #: provide an upgrade step (@see profileUpgradeSteps.py). An upgrade step does not need to be added when
 #: just adding a new element to (or removing from) the schema, only when old versions of the config 
 #: (conforming to old schema versions) will not work correctly with the new schema.
-latestSchemaVersion = 9
+latestSchemaVersion = 10
 
 #: The configuration specification string
 #: @type: String
@@ -151,9 +151,12 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 #Keyboard settings
 [keyboard]
-	useCapsLockAsNVDAModifierKey = boolean(default=false)
-	useNumpadInsertAsNVDAModifierKey = boolean(default=true)
-	useExtendedInsertAsNVDAModifierKey = boolean(default=true)
+	# NVDAModifierKeys: Integer value combining single-bit value:
+	# 1: CapsLock
+	# 2: NumpadInsert
+	# 4: ExtendedInsert
+	# Default = 6: NumpadInsert + ExtendedInsert
+	NVDAModifierKeys = integer(1, 7, default=6)
 	keyboardLayout = string(default="desktop")
 	speakTypedCharacters = boolean(default=true)
 	speakTypedWords = boolean(default=false)

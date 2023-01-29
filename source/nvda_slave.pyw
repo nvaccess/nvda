@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2009-2022 NV Access Limited
+# Copyright (C) 2009-2023 NV Access Limited, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -9,9 +9,11 @@ Performs miscellaneous tasks which need to be performed in a separate process.
 
 import sys
 import os
+import builtins
 import globalVars
 import monkeyPatches.comtypesMonkeyPatches
 import NVDAState
+from languageHandler import makePgettext
 
 
 # Ensure that slave uses generated comInterfaces by adding our comInterfaces to `comtypes.gen` search path.
@@ -35,13 +37,18 @@ import gettext
 import locale
 #Localization settings
 try:
-	gettext.translation(
+	trans = gettext.translation(
 		'nvda',
 		localedir=os.path.join(globalVars.appDir, 'locale'),
 		languages=[locale.getdefaultlocale()[0]]
-	).install()
+	)
+	trans.install()
+	# Install our pgettext function.
+	builtins.pgettext = makePgettext(trans)
 except:
 	gettext.install('nvda')
+	# Install a no-translation pgettext function
+	builtins.pgettext = lambda context, message: message
 
 
 import logHandler

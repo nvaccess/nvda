@@ -5,10 +5,9 @@
 
 """Helper functions to test extension points."""
 
-from extensionPoints import Action, Decider, Filter, FilterValueTypeT
+from extensionPoints import Action, Decider, Filter, FilterValueT
 import unittest
 from contextlib import contextmanager
-from typing import Optional
 
 
 @contextmanager
@@ -83,8 +82,8 @@ def deciderTester(
 def filterTester(
 		testCase: unittest.TestCase,
 		filter: Filter,
-		expectedInput: FilterValueTypeT,
-		expectedOutput: FilterValueTypeT,
+		expectedInput: FilterValueT,
+		expectedOutput: FilterValueT,
 		useAssertDictContainsSubset: bool = False,
 		**expectedKwargs
 ):
@@ -104,7 +103,7 @@ def filterTester(
 	expectedKwargs["_value"] = expectedInput
 	actualKwargs = {}
 
-	def handler(value: FilterValueTypeT, **kwargs):
+	def handler(value: FilterValueT, **kwargs):
 		actualKwargs.update(kwargs)
 		actualKwargs["_called"] = True
 		actualKwargs["_value"] = value
