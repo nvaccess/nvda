@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA 2022.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-20 00:02+0000\n"
-"PO-Revision-Date: 2023-01-23 17:13+0000\n"
+"POT-Creation-Date: 2023-01-27 00:03+0000\n"
+"PO-Revision-Date: 2023-01-30 16:32+0000\n"
 "Last-Translator: Ronan McGuirk <ronan.mcguirk@gmail.com>\n"
 "Language-Team: Gaeilge <ga@li.org>\n"
 "Language: ga\n"
@@ -1236,9 +1236,8 @@ msgstr "Seipidis, grád 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Chichewa (Malawi) literary braille"
-msgstr "Braille Bealarúisise liteartha "
+msgstr "Siséivis (An Mhaláiv) Braille liteartha "
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1302,9 +1301,8 @@ msgstr "Braille  Rúisis  gearraithe"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Kinyarwanda literary braille"
-msgstr "Braille Rúisise liteartha "
+msgstr "Braille liteartha Ciniaruaindise"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1505,23 +1503,20 @@ msgstr "Gnáthbhraille Síneach (carachtair simplithe)."
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #. This should be translated to '中文中国汉语现行盲文（无声调）' in Mandarin.
-#, fuzzy
 msgid "Chinese (China, Mandarin) Current Braille System (no tones)"
-msgstr "Sínis (An tSín Mandairínis) Grád 1"
+msgstr "Sínis (An tSín Mandairínis) córas reatha gan tóin"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #. This should be translated to '中文中国汉语现行盲文' in Mandarin.
-#, fuzzy
 msgid "Chinese (China, Mandarin) Current Braille System"
-msgstr "Sínis (An tSín Mandairínis) Grád 1"
+msgstr "Sínis (An tSín Mandairínis) córas Braille reatha "
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #. This should be translated to '中文中国汉语双拼盲文' in Mandarin.
-#, fuzzy
 msgid "Chinese (China, Mandarin) Double-phonic Braille System"
-msgstr "Sínis (An tSín Mandairínis) Grád 1"
+msgstr "Sínis (An tSín Mandairínis) Córas Braille fónach dúbalta "
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -3018,9 +3013,9 @@ msgid "report tables on"
 msgstr "Tabhair tuairisc ar táblaí"
 
 #. Translators: Input help mode message for toggle report table row/column headers command.
-#, fuzzy
 msgid "Cycle through the possible modes to report table row and column headers"
-msgstr "Tuairiscigh nó ná tuairiscigh ceanntáisc I dtáblaí"
+msgstr ""
+"Scrolláil trí na móid chun tuairisc a thabhairt ar  cheanntásca táblaí."
 
 #. Translators: Reported when the user cycles through report table header modes.
 #. {mode} will be replaced with the mode; e.g. None, Rows and columns, Rows or Columns.
@@ -3217,19 +3212,18 @@ msgid "Symbol level %s"
 msgstr "leibhéal siombalach %s"
 
 #. Translators: Input help mode message for toggle delayed character description command.
-#, fuzzy
 msgid ""
 "Toggles on and off delayed descriptions for characters on cursor movement"
-msgstr "Scorántar tuairisciú carachtair CLDR leithéidí emoji."
+msgstr ""
+"Scorántar moill  ar siúl ar chur síos carachtar nuair a bhogtar an cúrsóir."
 
 #. Translators: The message announced when toggling the delayed character description setting.
 msgid "delayed character descriptions on"
 msgstr "Tá moill ar siúl  ar chur síos na gcarachtar."
 
 #. Translators: The message announced when toggling the delayed character description setting.
-#, fuzzy
 msgid "delayed character descriptions off"
-msgstr "ná léigh carachtair chlóscríofa"
+msgstr "Cur síos ar charachtair gan mhoill"
 
 #. Translators: Input help mode message for move mouse to navigator object command.
 msgid "Moves the mouse pointer to the current navigator object"
@@ -3310,11 +3304,13 @@ msgstr "Gan faisnéis súiomh"
 
 #. Translators: Description for a keyboard command which reports location of the
 #. review cursor, falling back to the location of navigator object if needed.
-#, fuzzy
 msgid ""
 "Reports information about the location of the text at the review cursor, or "
 "location of the navigator object if there is no text under review cursor."
-msgstr "Tuairiscítear eolas ar áit an téacs nó áit na hoibiachta ag cúrsóir an"
+msgstr ""
+"Tugtar eolas faoi shuíomh an téacs ag an gcúrsóir athbhreithnithe nó faoi "
+"shuíomh na hoibiachta nascleantóra, mura bhfuil aon téacs ag an gcúrsóir "
+"athbhreithnithe."
 
 #. Translators: Description for a keyboard command which reports location of the navigator object.
 msgid "Reports information about the location of the current navigator object."
@@ -3322,17 +3318,17 @@ msgstr "Tugtar eolas faoi shuíomh na hoibiachta nascleanúna reatha."
 
 #. Translators: Description for a keyboard command which reports location of the
 #. current caret position falling back to the location of focused object if needed.
-#, fuzzy
 msgid ""
 "Reports information about the location of the text at the caret, or location "
 "of the currently focused object if there is no caret."
-msgstr "Tuairiscítear eolas ar áit an téacs nó áit na hoibiachta ag cúrsóir an"
+msgstr ""
+"Tugtar eolas faoi shuíomh an téacs ag an gcarat, nó faoi shuíomh na "
+"hoibiachta nascleantóra reatha, mura bhfuil aon téacs ag an  gcarat."
 
 #. Translators: Description for a keyboard command which reports location of the
 #. currently focused object.
-#, fuzzy
 msgid "Reports information about the location of the currently focused object."
-msgstr "Tuairiscítear eolas ar áit an téacs nó áit na hoibiachta ag cúrsóir an"
+msgstr "Tugtar eolas faoi shuíomh an oibiacht atá fócasaithe."
 
 #. Translators: Description for report review cursor location command.
 msgid ""
@@ -3343,11 +3339,12 @@ msgstr "Tuairiscítear eolas ar áit an téacs nó áit na hoibiachta ag cúrsó
 #. Translators: Description for a keyboard command
 #. which reports location of the text at the caret position
 #. or object with focus if there is no caret.
-#, fuzzy
 msgid ""
 "Reports information about the location of the text or object at the position "
 "of system caret. Pressing twice may provide further detail."
-msgstr "Tuairiscítear eolas ar áit an téacs nó áit na hoibiachta ag cúrsóir an"
+msgstr ""
+"Tugtar eolas faoi shuíomh an téacs   nó na hoibiachta ag suíomh  charat an "
+"chórais."
 
 #. Translators: Input help mode message for move navigator object to current focus command.
 msgid ""
@@ -3780,15 +3777,13 @@ msgstr ""
 
 #. Translators: Description for a keyboard command which reports the
 #. accelerator key of the currently focused object.
-#, fuzzy
 msgid "Reports the shortcut key of the currently focused object"
-msgstr "Tuairiscítear eolas ar áit an téacs nó áit na hoibiachta ag cúrsóir an"
+msgstr "Tuairiscítear eochair aicearra na hoibiachta reatha  atá fócasaithe."
 
 #. Translators: reported when a user requests the accelerator key
 #. of the currently focused object, but there is none set.
-#, fuzzy
 msgid "No shortcut key"
-msgstr "Tuairiscigh &eochracha aicearra na h-oibiachta"
+msgstr "Níl eochair aicearra ar fáil."
 
 #. Translators: Input help mode message for toggle mouse tracking command.
 msgid "Toggles the reporting of information as the mouse moves"
@@ -4361,58 +4356,53 @@ msgstr ""
 "méarchláir le hionchur Braille    "
 
 #. Translators: Input help mode message for a braille command.
-#, fuzzy
 msgid ""
 "Virtually toggles the control and shift keys to emulate a keyboard shortcut "
 "with braille input"
 msgstr ""
-"Scorántar an eochair rialúcháin go fíorúil, chun aithris a dhéanamh ar "
-"aicearra méarchláir le hionchur Braille   "
+"Scorántar an eochair rialúcháin agus an eochair iomlaoide go fíorúil, chun "
+"aithris a dhéanamh ar aicearra méarchláir le hionchur Braille.   "
 
 #. Translators: Input help mode message for a braille command.
-#, fuzzy
 msgid ""
 "Virtually toggles the alt and shift keys to emulate a keyboard shortcut with "
 "braille input"
 msgstr ""
-"Scorántar an eochair iomlaoide go fíorúil, chun aithris a dhéanamh ar "
-"aicearra méarchláir le hionchur Braille    "
+"Scorántar na heochracha alt agus na heochracha iomlaoide chun aithris a "
+"dhéanamh ar eochair eacearra le hionchur Braille."
 
 #. Translators: Input help mode message for a braille command.
-#, fuzzy
 msgid ""
 "Virtually toggles the left windows and shift keys to emulate a keyboard "
 "shortcut with braille input"
 msgstr ""
-"Scorántar an eochair Windows ar chlé go fíorúil, chun aithris a dhéanamh ar "
-"aicearra méarchláir le hionchur Braille   "
+"Scorántar an eochair Windows ar chlé agus an eochair iomlaoide  go fíorúil, "
+"chun aithris a dhéanamh ar aicearra méarchláir le hionchur Braille   "
 
 #. Translators: Input help mode message for a braille command.
-#, fuzzy
 msgid ""
 "Virtually toggles the NVDA and shift keys to emulate a keyboard shortcut "
 "with braille input"
 msgstr ""
-"Scorántar an eochair iomlaoide go fíorúil, chun aithris a dhéanamh ar "
-"aicearra méarchláir le hionchur Braille    "
+"Scorántar na heochracha NVDA agus na heochracha iomlaoide go fíorúil chun "
+"aithris a dhéanamh ar eochair eacearra le hionchur Braille."
 
 #. Translators: Input help mode message for a braille command.
-#, fuzzy
 msgid ""
 "Virtually toggles the control and alt keys to emulate a keyboard shortcut "
 "with braille input"
 msgstr ""
-"Scorántar an eochair rialúcháin go fíorúil, chun aithris a dhéanamh ar "
-"aicearra méarchláir le hionchur Braille   "
+"Scorántar an eochair rialúcháin agus an eochair alt go fíorúil, chun aithris "
+"a dhéanamh ar aicearra méarchláir le hionchur Braille   "
 
 #. Translators: Input help mode message for a braille command.
-#, fuzzy
 msgid ""
 "Virtually toggles the control, alt, and shift keys to emulate a keyboard "
 "shortcut with braille input"
 msgstr ""
-"Scorántar an eochair rialúcháin go fíorúil, chun aithris a dhéanamh ar "
-"aicearra méarchláir le hionchur Braille   "
+"Scorántar an eochair rialúcháin, an eochair alt agus an eochair iomlaoide   "
+"go fíorúil, chun aithris a dhéanamh ar aicearra méarchláir le hionchur "
+"Braille   "
 
 #. Translators: Input help mode message for reload plugins command.
 msgid ""
@@ -7506,17 +7496,15 @@ msgstr "Urlabhra"
 
 #. Translators: A choice in a combo box in the document formatting dialog to report indentation
 #. with tones.
-#, fuzzy
 msgctxt "line indentation setting"
 msgid "Tones"
 msgstr "Toin"
 
 #. Translators: A choice in a combo box in the document formatting dialog to report indentation with both
 #. Speech and tones.
-#, fuzzy
 msgctxt "line indentation setting"
 msgid "Both Speech and Tones"
-msgstr "Urlabhra agus tóin araon"
+msgstr "Urlabhra agus tóin araon."
 
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
@@ -7566,14 +7554,12 @@ msgid "Multi line break"
 msgstr "briseadh il-líne"
 
 #. Translators: Label for an option in NVDA settings.
-#, fuzzy
 msgid "Diffing"
-msgstr "Bain úsáid as DIFFLIB"
+msgstr "ag baint úsáid as DIFFLIB."
 
 #. Translators: Label for an option in NVDA settings.
-#, fuzzy
 msgid "UIA notifications"
-msgstr "Tabhair tuairisc ar fhógraí"
+msgstr "Fógraí UI"
 
 #. Translators: The title of the document used to present the result of content recognition.
 msgid "Result"
@@ -8383,9 +8369,8 @@ msgid "half checked"
 msgstr "leath-thiceáilte"
 
 #. Translators: This is presented when a three state toggle button is half pressed.
-#, fuzzy
 msgid "half pressed"
-msgstr "brúite"
+msgstr "leathbhrúite"
 
 #. Translators: This is presented when the control is a read-only control such as read-only edit box.
 msgid "read only"
@@ -10526,18 +10511,16 @@ msgstr "Uathoibriú UI Microsoft"
 #. Translators: This is the label for a combo box for selecting the
 #. means of registering for UI Automation events in the advanced settings panel.
 #. Choices are automatic, selective, and global.
-#, fuzzy
 msgid "Regi&stration for UI Automation events and property changes:"
 msgstr ""
-"Cumasaigh clárúchán roghnaitheach le haghaidh teagmhais UI uathoibrithe agus "
-"le haghaidh athruithe airíonna "
+"Clárúchán le haghaidh teagmhais UI uathoibrithe agus le haghaidh athruithe "
+"airíonna"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA decide whether to register
 #. selectively or globally for UI Automation events.
-#, fuzzy
 msgid "Automatic (prefer selective)"
-msgstr "Paiste Diff Uathoibríoch"
+msgstr "Uathoibríoch – (roghnaigh roghnaitheach)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA register selectively for UI Automation events
@@ -10600,9 +10583,8 @@ msgstr "Tacaíocht do chonsól Windows"
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA determine its Windows Console implementation
 #. automatically.
-#, fuzzy
 msgid "Automatic (prefer UIA)"
-msgstr "Paiste Diff Uathoibríoch"
+msgstr "fUathoibríoch – (roghnaigh UI)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA use UIA in the Windows Console when available.
@@ -10656,9 +10638,8 @@ msgstr "&Anótáil"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#, fuzzy
 msgid "Report 'has details' for structured annotations"
-msgstr "Tuairiscigh aon nóta do na haistritheoirí"
+msgstr "Tuairiscigh ‘le sonraí” le haghaidh fógraí struchtúrtha"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -10727,9 +10708,8 @@ msgstr "algartam diff"
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA determine the method of detecting changed
 #. content in terminals automatically.
-#, fuzzy
 msgid "Automatic (prefer Diff Match Patch)"
-msgstr "Paiste Diff Uathoibríoch"
+msgstr "Uathoibríoch – (roghnaigh paiste  diff)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA detect changes in terminals
@@ -10745,7 +10725,7 @@ msgstr "Bain úsáid as DIFFLIB"
 
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
 msgid "Speak new text in Windows Terminal via:"
-msgstr ""
+msgstr "Léigh téacs nua i Teirminéal Windows trí:"
 
 #. Translators: This is the label for combobox in the Advanced settings panel.
 msgid "Attempt to cancel speech for expired focus events:"
@@ -11197,11 +11177,12 @@ msgid "&Show this dialog when NVDA starts"
 msgstr "Taispeáin an dialóg &seo nuair a thosaíonn NVDA"
 
 #. Translators: The title of an error message box displayed when validating the startup dialog
-#, fuzzy
 msgid ""
 "At least one NVDA modifier key must be set. Caps lock will remain as an NVDA "
 "modifier key. "
-msgstr "Ní foláir duit eochar a úsáid mar eochar NVDA."
+msgstr ""
+"Ní foláir eochair mhionathraithe NVDA amháin ar a laghad a shocrú. Fanfar le "
+"Glas Ceannlitreacha mar eochair mhionathraithe NVDA."
 
 #. Translators: The label for a checkbox in NvDA installation program to agree to the license agreement.
 msgid "I &agree"
@@ -11717,6 +11698,10 @@ msgid ""
 "Restarting Windows may address this. If this error is ongoing then disabling "
 "the Windows lock screen is recommended."
 msgstr ""
+"Ní féidir le NVDA a fháil amach an bhfuil Windows glasáilte nó nach bhfuil. "
+"Ní bheidh do dheasc slán fad is a bheidh an t-ásc seo ar siúl agus Windows "
+"faoi ghlas. Seans gur féidir é seo a réiteach le hatosú Windows. Moltar "
+"glasáil scáileáin Windows a dhíchumasú."
 
 #. Translators: This is the title for a warning dialog, shown if NVDA cannot determine if
 #. Windows is locked.
@@ -12042,7 +12027,7 @@ msgid "{firstAddress} {firstValue} through {lastAddress} {lastValue}"
 msgstr "{firstAddress} {firstValue} go dtí {lastAddress} {lastValue}"
 
 #. Translators: Excel, report merged range of cell coordinates
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgctxt "excel-UIA"
 msgid "{firstAddress} through {lastAddress}"
 msgstr "{firstAddress} go dtí {lastAddress}"
@@ -12622,9 +12607,9 @@ msgid "no change from point {previousIndex}, "
 msgstr "Níl aon athrú on bpointe  {previousIndex}"
 
 #. Translators: For line charts, indicates an increase from the previous data point on the left
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "increased by {incrementValue} from point {previousIndex}, "
-msgstr "Méadaithe {incrementValue} ó  {previousIndex},  "
+msgstr "Ardaithe {incrementValue} ó phointe {previousIndex},"
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
 #, python-brace-format
@@ -13461,9 +13446,9 @@ msgid "{offset:.3g} millimeters"
 msgstr "{offset:.3g} milliméadar"
 
 #. Translators: a measurement in Microsoft Word (points)
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "{offset:.3g} pt"
-msgstr "{offset:.3g} pointe"
+msgstr "{offset:.3g} phointe"
 
 #. Translators: a measurement in Microsoft Word
 #. See http://support.microsoft.com/kb/76388 for details.
@@ -13485,7 +13470,7 @@ msgstr "spásáil línte 1.5"
 
 #. Translators: Names of braille displays.
 msgid "Caiku Albatross 46/80"
-msgstr ""
+msgstr "Caiku Albatross 46/80"
 
 #. Translators: A message when number of status cells must be changed
 #. for a braille display driver
@@ -13493,6 +13478,8 @@ msgid ""
 "To use Albatross with NVDA: change number of status cells in Albatross "
 "internal menu at most "
 msgstr ""
+"Chun Albatross a úsáid le NVDA, athraigh líon na gceall stádais sa roghchlár "
+"inmheánach"
 
 #~ msgid "Report line indentation with speech"
 #~ msgstr "Tabhair tuairisc ar eangú trí urlabhra "
