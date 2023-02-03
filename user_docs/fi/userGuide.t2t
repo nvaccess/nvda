@@ -3611,15 +3611,15 @@ Katso [BRLTTY:n näppäinsidosluetteloista http://mielke.cc/brltty/doc/KeyBindin
 %kc:endInclude
 
 ++ Tivomatic Caiku Albatross 46/80 ++[Albatross]
-Tivomaticin Caiku Albatross -pistenäyttöjä voidaan käyttää joko USB:n tai perinteisen sarjaportin kautta.
+Suomalaisia Tivomaticin Caiku Albatross -pistenäyttöjä voidaan käyttää joko USB:n tai sarjaportin kautta.
 Laitteita varten ei tarvitse asentaa ajureita.
 Yhdistä vain laite tietokoneeseen ja määritä NVDA käyttämään sitä.
 
-Huom: Vain 19200 baudin siirtonopeutta tuetaan.
-Vaihda tarvittaessa siirtonopeudeksi 19200 pistenäytön sisäisestä valikosta ennen kuin käytät laitetta NVDA:n kanssa.
-Vaikka ajuri tukee 9600 baudin siirtonopeutta, se ei voi määrittää, mitä siirtonopeutta laite käyttää.
-Koska 19200 on näytön oletusarvoinen siirtonopeus, ajuri yrittää käyttää aluksi sitä.
-Mikäli siirtonopeudet eivät täsmää, ajuri saattaa toimia arvaamattomasti.
+Huom: Siirtonopeuden 19200 käyttöä suositellaan vahvasti.
+Vaihda tarvittaessa siirtonopeudeksi 19200 pistenäytön valikosta.
+Vaikka ajuri tukee 9600 baudin siirtonopeutta, se ei voi vaikuttaa pistenäytön käyttämään siirtonopeuteen.
+Koska 19200 on pistenäytön oletussiirtonopeus, ajuri kokeilee sitä ensin.
+Jos siirtonopeudet eivät ole samat, ajuri voi käyttäytyä odottamattomasti.
 
 Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
 Katso laitteen käyttöohjeesta kuvaukset näppäinten paikoista.
@@ -3627,20 +3627,20 @@ Katso laitteen käyttöohjeesta kuvaukset näppäinten paikoista.
 || Nimi | Näppäinkomento |
 | Siirrä ylimmälle riville | ``home1``, ``home2`` |
 | Siirrä alimmalle riville | ``end1``, ``end2`` |
-| Siirrä navigointiobjekti nykyiseen kohdistukseen | ``lisäkohdistin1``, ``lisäkohdistin2`` |
-| Siirrä nykyiseen kohdistukseen | ``kohdistin1``, ``kohdistin2`` |
-| Siirrä hiiri nykyiseen navigointiobjektiin | ``home1+home2`` |
-| Siirrä navigointiobjekti hiiren alla olevaan objektiin ja puhu se | ``end1+end2`` |
-| Siirrä kohdistus nykyiseen navigointiobjektiin | ``lisäkohdistin1+lisäkohdistin2`` |
-| Vaihda Pistenäyttö seuraa -asetusta | ``kohdistin1+kohdistin2`` |
-| Siirrä edelliselle riville | ``ylös1``, ``ylös2``, ``ylös3`` |
-| Siirrä seuraavalle riville | ``alas1``, ``alas2``, ``alas3`` |
-| Vieritä taaksepäin | ``vasen``, ``vasen vieritysrulla vasemmalle``, ``oikea vieritysrulla vasemmalle`` |
-| Vieritä eteenpäin | ``oikea``, ``vasen vieritysrulla oikealle``, ``oikea vieritysrulla oikealle`` |
+| Siirrä aktiiviseen objektiin | ``eCursor1``, ``eCursor2`` |
+| Siirrä nykyiseen kohdistukseen | ``cursor1``, ``cursor2`` |
+| Siirtää hiiren nykyiseen navigointiobjektiin | ``home1+home2`` |
+| Siirtää navigointiobjektin hiiren alla olevaan objektiin ja lukee sen | ``end1+end2`` |
+| Siirrä järjestelmän kohdistus tai -kohdistin tarkastelukohtaan | ``eCursor1+eCursor2`` |
+| Vaihda Pistenäyttö seuraa -asetusta | ``cursor1+cursor2`` |
+| Siirrä edelliselle riville | ``up1``, ``up2``, ``up3`` |
+| Siirrä seuraavalle riville | ``down1``, ``down2``, ``down3`` |
+| Vieritä taaksepäin | ``left``, ``lWheelLeft``, ``rWheelLeft`` |
+| Vieritä eteenpäin | ``right``, ``lWheelRight``, ``rWheelRight`` |
 | Siirrä pistesoluun | ``kosketuskohdistinnäppäin`` |
 | Ilmoita muotoilutiedot pistesolusta | ``toissijainen kosketuskohdistinnäppäin`` |
-| Vaihda tapaa, jolla kontekstitiedot näytetään pistenäytöllä | ``attribuutti1+attribuutti3`` |
-| Vaihda puhetilaa | ``attribuutti2+attribuutti4`` |
+| Vaihda tapaa, jolla kontekstitiedot näytetään pistenäytöllä | ``attribute1+attribute3`` |
+| Vaihda puhetilaa | ``attribute2+attribute4`` |
 | Vaihda edelliseen tarkastelutilaan | ``f1`` |
 | Vaihda seuraavaan tarkastelutilaan | ``f2`` |
 | Siirrä säilöobjektiin | ``f3`` |
@@ -3649,23 +3649,23 @@ Katso laitteen käyttöohjeesta kuvaukset näppäinten paikoista.
 | Siirrä seuraavaan objektiin | ``f6`` |
 | Lue nykyinen objekti | ``f7`` |
 | Lue tarkastelukohdistimen kohdalla olevan tekstin tai objektin sijaintitiedot | ``f8`` |
-| Suorita oletustoiminto nykyisessä navigointiobjektissa | ``f7+f8`` |
+| Aktivoi nykyinen navigointiobjekti | ``f7+f8`` |
 | Lue päiväys/aika | ``f9`` |
-| Lue akun tila ja jäljellä oleva aika, mikäli ei ole kytketty verkkovirtaan | ``f10`` |
+| Ilmoittaa akun tilan ja jäljellä olevan ajan, jos verkkovirta ei ole käytössä | ``f10`` |
 | Lue ikkunan nimi | ``f11`` |
 | Lue tilarivi | ``f12`` |
-| Puhu nykyinen rivi | ``f13`` |
-| Jatkuva luku | ``f14`` |
-| Puhu nykyinen merkki | ``f15`` |
-| Puhu nykyinen navigointiobjektin rivi, jolla tarkastelukohdistin on | ``f16`` |
-| Puhu nykyinen navigointiobjektin sana, jossa tarkastelukohdistin on | ``f15+f16`` |
-| Siirrä tarkastelukohdistin nykyisen navigointiobjektin edelliselle riville ja puhu se | ``vasen vieritysrulla ylös``, ``oikea vieritysrulla ylös`` |
-| Siirrä tarkastelukohdistin nykyisen navigointiobjektin seuraavalle riville ja puhu se | ``vasen vieritysrulla alas``, ``oikea vieritysrulla alas`` |
-| ``Windows+D``-näppäinyhdistelmä (pienennä kaikki sovellukset) | ``attribuutti1`` |
-| ``Windows+E``-näppäinyhdistelmä (tämä tietokone) | ``attribuutti2`` |
-| ``Windows+B``-näppäinyhdistelmä (siirrä kohdistus ilmoitusalueelle) | ``attribuutti3`` |
-| ``Windows+I``-näppäinyhdistelmä (Windowsin asetukset) | ``attribuutti4`` |
-+%kc:endInclude
+| Lue nykyinen rivi | ``f13`` |
+| Lue nykyinen teksti loppuun saakka järjestelmäkohdistimesta lähtien siirtäen samalla sitä | ``f14`` |
+| Lue merkki, jonka kohdalla tarkastelukohdistin on nykyisessä navigointiobjektissa | ``f15`` |
+| Lue nykyisen navigointiobjektin rivi, jolla tarkastelukohdistin on | ``f16`` |
+| Lue nykyisen navigointiobjektin sana, jonka kohdalla tarkastelukohdistin on | ``f15+f16`` |
+| Siirrä tarkastelukohdistin nykyisen navigointiobjektin edelliselle riville ja lue se | ``lWheelUp``, ``rWheelUp`` |
+| Siirrä tarkastelukohdistin nykyisen navigointiobjektin seuraavalle riville ja lue se | ``lWheelDown``, ``rWheelDown`` |
+| ``windows+d`` (pienennä kaikki sovellukset) | ``attribute1`` |
+| ``windows+e`` (tämä tietokone) | ``attribute2`` |
+| ``windows+b`` (siirrä kohdistus ilmaisinalueelle) | ``attribute3`` |
+| ``windows+i`` (Windowsin asetukset) | ``attribute4`` |
+%kc:endInclude
  
 ++ HID Braille -pistenäytöt ++[HIDBraille]
 Tämä on kokeellinen ajuri uudelle HID Braille -protokollalle, josta Microsoft, Google, Apple ja useat avustavan teknologian yritykset, mukaan lukien NV Access, sopivat vuonna 2018.
