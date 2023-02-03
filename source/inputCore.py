@@ -1,7 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2010-2023 NV Access Limited, Babbage B.V., Mozilla Corporation, Leonard de Ruijter
+# Copyright (C) 2010-2023 NV Access Limited, Babbage B.V., Mozilla Corporation, Cyrille Bougot,
+# Leonard de Ruijter
 
 """Core framework for handling input from the user.
 Every piece of input from the user (e.g. a key press) is represented by an L{InputGesture}.
@@ -746,9 +747,12 @@ class _AllGestureMappingsRetriever(object):
 					try:
 						script = getattr(cls, "script_%s" % scriptName)
 					except AttributeError:
+						log.debugWarning(f"Unable to bind gesture: script '{scriptName}' not found in class {cls}.")
+						self.handledGestures.remove(key)
 						continue
 					scriptInfo = self.makeNormalScriptInfo(cls, scriptName, script)
 					if not scriptInfo:
+						# Scripts with no description are not displayed in the Input gesture dialog.
 						continue
 				self.addResult(scriptInfo)
 			scriptInfo.gestures.append(gesture)
