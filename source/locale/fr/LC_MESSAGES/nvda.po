@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:11331\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-20 00:02+0000\n"
-"PO-Revision-Date: 2023-01-25 17:28+0100\n"
+"POT-Creation-Date: 2023-01-27 00:03+0000\n"
+"PO-Revision-Date: 2023-02-01 10:21+0100\n"
 "Last-Translator: Michel Such <michelsuch93@gmail.com>\n"
 "Language-Team: fra <LL@li.org>\n"
 "Language: fr_FR\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.2\n"
+"X-Generator: Poedit 3.0\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
@@ -7505,14 +7505,12 @@ msgstr "Parole"
 
 #. Translators: A choice in a combo box in the document formatting dialog to report indentation
 #. with tones.
-#, fuzzy
 msgctxt "line indentation setting"
 msgid "Tones"
 msgstr "Des sons"
 
 #. Translators: A choice in a combo box in the document formatting dialog to report indentation with both
 #. Speech and tones.
-#, fuzzy
 msgctxt "line indentation setting"
 msgid "Both Speech and Tones"
 msgstr "La Parole et des Sons"
@@ -7557,23 +7555,20 @@ msgid "Handled by application"
 msgstr "Géré par l'application"
 
 #. Translators: Label for a paragraph style in NVDA settings.
-#, fuzzy
 msgid "Single line break"
-msgstr "Interligne simple"
+msgstr "Un saut de ligne"
 
 #. Translators: Label for a paragraph style in NVDA settings.
-#, fuzzy
 msgid "Multi line break"
-msgstr "multiligne"
+msgstr "Saut de plusieurs lignes"
 
 #. Translators: Label for an option in NVDA settings.
-#, fuzzy
 msgid "Diffing"
-msgstr "Difflib"
+msgstr "Comparaison du texte"
 
 #. Translators: Label for an option in NVDA settings.
 msgid "UIA notifications"
-msgstr "notifications UIA"
+msgstr "Notifications UIA"
 
 #. Translators: The title of the document used to present the result of content recognition.
 msgid "Result"
@@ -9182,7 +9177,7 @@ msgstr "&Déclencheurs..."
 
 #. Translators: The label of a checkbox in the Configuration Profiles dialog.
 msgid "Temporarily d&isable all triggers"
-msgstr "d&ésactiver temporairement tous les déclencheurs"
+msgstr "D&ésactiver temporairement tous les déclencheurs"
 
 #. Translators: The item to select the user's normal configuration
 #. in the profile list in the Configuration Profiles dialog.
@@ -9269,12 +9264,12 @@ msgstr "Dire tout"
 msgid ""
 "Error saving configuration profile triggers - probably read only file system."
 msgstr ""
-"Impossible de sauvegarder les déclencheurs du profil de configuration : le "
+"Impossible de sauvegarder les déclencheurs de profil de configuration : le "
 "système de fichiers est probablement protégé en écriture"
 
 #. Translators: The title of the configuration profile triggers dialog.
 msgid "Profile Triggers"
-msgstr "Déclencheurs du Profil"
+msgstr "Déclencheurs de Profil"
 
 #. Translators: Displayed for a configuration profile trigger for an application.
 #. %s is replaced by the application executable name.
@@ -9326,7 +9321,7 @@ msgstr "Vous devez choisir un nom pour ce profil."
 msgid "Error creating profile - probably read only file system."
 msgstr ""
 "Erreur à la création du profil : le système de fichiers est probablement "
-"protégé en écriture"
+"protégé en écriture."
 
 #. Translators: The prompt asking the user whether they wish to
 #. manually activate a configuration profile that has just been created.
@@ -10491,7 +10486,7 @@ msgstr ""
 
 #. Translators: This is the label for the document navigation settings panel.
 msgid "Document Navigation"
-msgstr "Navigation dans le document"
+msgstr "Navigation dans les documents"
 
 #. Translators: This is a label for the paragraph navigation style in the document navigation dialog
 msgid "&Paragraph style:"
@@ -10728,7 +10723,7 @@ msgstr ""
 #. settings panel.
 #. Choices are automatic, Diff Match Patch, and Difflib.
 msgid "&Diff algorithm:"
-msgstr "Algorithme de &diff :"
+msgstr "Algorithme de comparaison &du texte :"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA determine the method of detecting changed
@@ -10750,7 +10745,7 @@ msgstr "Difflib"
 
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
 msgid "Speak new text in Windows Terminal via:"
-msgstr "Dire le nouveau texte dans le Terminal Windows via :"
+msgstr "Annoncer le nouveau texte dans le Terminal Windows via :"
 
 #. Translators: This is the label for combobox in the Advanced settings panel.
 msgid "Attempt to cancel speech for expired focus events:"
