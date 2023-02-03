@@ -220,25 +220,25 @@ WdThemeColorIndexToMsoThemeColorSchemeIndex={
 }
 
 # map index from wdColorIndex to decimal values in wdColor
-highlightColors={
-	-1: None, #wdByAuthor (for Options.RevisedPropertiesColor; for reference only)
-	0: -16777216, #wdColorAutomatic/wdNoHighlight (for reference only)
-	1: 0, #wdColorBlack
-	2: 16711680, #wdColorBlue
-	3: 16776960, #wdColorTurquoise
-	4: 65280, #wdColorBrightGreen
-	5: 16711935, #wdColorPink
-	6: 255, #wdColorRed
-	7: 65535, #wdColorYellow
-	8: 16777215, #wdColorWhite
-	9: 8388608, #wdColorDarkBlue
-	10: 8421376, #wdColorTeal
-	11: 32768, #wdColorGreen
-	12: 8388736, #wdColorViolet
-	13: 128, #wdColorDarkRed
-	14: 32896, #wdColorDarkYellow
-	15: 8421504, #wdColorGray50
-	16: 12632256, #wdColorGray25
+highlightColors = {
+	-1: None,  # wdByAuthor (for Options.RevisedPropertiesColor; for reference only)
+	0: -16777216,  # wdColorAutomatic/wdNoHighlight (for reference only)
+	1: 0,  # wdColorBlack
+	2: 16711680,  # wdColorBlue
+	3: 16776960,  # wdColorTurquoise
+	4: 65280,  # wdColorBrightGreen
+	5: 16711935,  # wdColorPink
+	6: 255,  # wdColorRed
+	7: 65535,  # wdColorYellow
+	8: 16777215,  # wdColorWhite
+	9: 8388608,  # wdColorDarkBlue
+	10: 8421376,  # wdColorTeal
+	11: 32768,  # wdColorGreen
+	12: 8388736,  # wdColorViolet
+	13: 128,  # wdColorDarkRed
+	14: 32896,  # wdColorDarkYellow
+	15: 8421504,  # wdColorGray50
+	16: 12632256,  # wdColorGray25
 }
 
 wdRevisionTypeLabels={
@@ -899,20 +899,20 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		color=field.pop('color',None)
 		if color is not None:
 			field['color']=self.obj.winwordColorToNVDAColor(int(color))
-		bgColor=field.pop('background-color',None)
+		bgColor = field.pop('background-color', None)
 		if bgColor is not None:
-			field['background-color']=self.obj.winwordColorToNVDAColor(int(bgColor))
-		hlColorIndex=field.pop('highlight-color-index',None)
+			field['background-color'] = self.obj.winwordColorToNVDAColor(int(bgColor))
+		hlColorIndex = field.pop('highlight-color-index', None)
 		if hlColorIndex is not None:
-			hlColor=None
+			hlColor = None
 			try:
-				val=highlightColors[int(hlColorIndex)]
-				hlColor=self.obj.winwordColorToNVDAColor(val)
+				val = highlightColors[int(hlColorIndex)]
+				hlColor = self.obj.winwordColorToNVDAColor(val)
 			except (KeyError, ValueError):
-				log.debugWarning("highlight color error",exc_info=True)
+				log.debugWarning("highlight color error", exc_info=True)
 				pass
 			if hlColor is not None:
-				field['highlight-color']=hlColor
+				field['highlight-color'] = hlColor
 		try:
 			languageId = int(field.pop('wdLanguageId',0))
 			if languageId:
