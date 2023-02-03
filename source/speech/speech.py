@@ -2447,8 +2447,8 @@ def getFormatFieldSpeech(  # noqa: C901
 		oldHlColor = attrsCache.get("highlight-color") if attrsCache is not None else None
 		if (hlColor or oldHlColor is not None) and hlColor != oldHlColor:
 			colorName = hlColor.name if isinstance(hlColor, colors.RGB) else hlColor
-			# Translators: Reported when text is color-highlighted
 			text = (
+				# Translators: Reported when text is color-highlighted
 				_("highlighted in {color}").format(color=colorName) if hlColor
 				# Translators: Reported when text is no longer marked
 				else _("not highlighted"))
