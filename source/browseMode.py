@@ -1637,12 +1637,12 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		if not self._hadFirstGainFocus or previousFocusObjIsDefunct:
 			# still initializing  or the old focus is dead.
 			isOverlapping = False
-		elif  config.conf["virtualBuffers"]["autoFocusFocusableElements"]:
+		elif config.conf["virtualBuffers"]["autoFocusFocusableElements"]:
 			# if this focus event was caused by NVDA setting the focus itself
 			# Due to auto focus focusable elements option being enabled,
 			# And we detect that the caret was already positioned within the focus.
 			# Note that this is not the default and may be removed in future.
-			caretInfo=self.makeTextInfo(textInfos.POSITION_CARET)
+			caretInfo = self.makeTextInfo(textInfos.POSITION_CARET)
 			# Expand to one character, as isOverlapping() doesn't treat, for example, (4,4) and (4,5) as overlapping.
 			caretInfo.expand(textInfos.UNIT_CHARACTER)
 			isOverlapping = focusInfo.isOverlapping(caretInfo)
@@ -1651,7 +1651,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			# due to activation or applications key etc.
 			isOverlapping = (obj == objPendingFocusBeforeActivate)
 
-		if not  isOverlapping:
+		if not isOverlapping:
 			# The virtual caret is not within the focus node.
 			oldPassThrough=self.passThrough
 			passThrough = self.shouldPassThrough(obj, reason=OutputReason.FOCUS)
