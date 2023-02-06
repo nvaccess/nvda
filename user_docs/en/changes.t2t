@@ -23,6 +23,8 @@ This can be used with text editors that do not support paragraph navigation nati
 ``nvda+d`` now cycles through reporting the summary of each annotation target for origins with multiple annotation targets.
 For example, when text has a comment and a footnote associated with it. (#14507, #14480)
 - Added support for Tivomatic Caiku Albatross 46/80 braille displays. (#13045)
+- New global command: Report link destination (NVDA+k). Pressed once will speak/braille the destination of the link that is in the navigator object. Pressing twice will show it in a window, for more detailed review. (#14583)
+- New unmapped global command (Tools category): Report link destination in a window. Same as pressing NVDA+k twice, but may be more useful for braille users. (#14583)
 -
 
 
