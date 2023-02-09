@@ -548,4 +548,3 @@ The local system should be notified about synth parameters at the remote system.
 @param isFallback: Whether the synth is set as fallback synth due to another synth's failure
 @type isFallback: bool
 """
-
