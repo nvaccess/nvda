@@ -123,6 +123,7 @@ class IoBase(object):
 		if _isDebug():
 			log.debug("Closing")
 		self._onReceive = None
+		self._onReadError = None
 		if hasattr(self, "_file") and self._file is not INVALID_HANDLE_VALUE:
 			ctypes.windll.kernel32.CancelIoEx(self._file, byref(self._readOl))
 		if hasattr(self, "_writeFile") and self._writeFile not in (self._file, INVALID_HANDLE_VALUE):
