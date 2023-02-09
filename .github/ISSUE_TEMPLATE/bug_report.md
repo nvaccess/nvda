@@ -30,6 +30,24 @@ You may additionally include an explanation.
 -->
 
 ### NVDA logs, crash dumps and other attachments:
+#### NVDA logs
+<!--
+In case NVDA is freezing, crashing or you encounter errors while using NVDA, we need the NVDA log file to investigate where the issue comes from. In the NVDA settings under "general settings" you can enable debugging . Make sure you set the logging level to "debug" before reproducing your issue.
+* After reproducing your issue with logging level set to "debug", press nvda key+f1 and save the log file as txt file. Then attach the log file to this issue.
+* The NVDA key can be the capslock key or the insert key or both.
+* Finally you can disable the logging level entirely in the NVDA general settings.
+In case NVDA is crashing completely, you need to restart NVDA or NVDA is restarting itself automatically, you find the old log file in the temp folder. Press Windows key+r, type "%temp%" and find the file called nvda_old.log. Save that as .txt file and attach that file to this issue.
+-->
+
+#### Crash dumps
+<!--
+If NVDA is crashing completely, restarting itself automatically or another application on your system is crashing while running NVDA, then a crash dump file will be generated. Please attach the crash dump files as follows:
+* NVDA crashed: Press Windows key+r, type "%temp%" and find the file called nvda_crash.dmp. Attach that file to this issue.
+* Another application chrashed while NVDA is running: press Windows key+r, type "%localappdata%" and navigate to the folder called "crash dumps". If you find a .dmp file for the application that crashed inside that folder, attach that file to this issue.
+-->
+
+#### Other attachments
+You can help us investigate your issue by adding other attachments such as test documents (i.e. for issues in Microsoft Office or other software), html files for browser issues, test applications etc.
 
 ### System configuration
 #### NVDA installed/portable/running from source:
@@ -50,3 +68,8 @@ You may additionally include an explanation.
 #### If NVDA add-ons are disabled, is your problem still occurring?
 
 #### Does the issue still occur after you run the COM Registration Fixing Tool in NVDA's tools menu?
+
+#### in case your issue is related to a browser (i.e. Chrome), did you test the behavior of NVDA also in other browsers (i.e. Firefox or Microsoft Edge)? What are your findings in other browsers?
+
+#### In case your issue is related to web design and DOM - document object model - (HTML elements, Aria spec, Java script, CSS etc.)
+If possible, please attach a minimal test case as HTML file or provide a link to a codepen. This will make investigation much more  efficient and will save us hours of investigation work.
