@@ -119,7 +119,7 @@ class test_synthDriverHandler(unittest.TestCase):
 		synthDriverHandler.setSynth("auto")
 		self.assertEqual(synthDriverHandler.getSynth().name, "espeak")
 
-	def test_synthChanged(self):
+	def test_synthChangedExtensionPoint(self):
 		expectedKwargs = dict(
 			isFallback=False,
 			audioOutputDevice = "default"
