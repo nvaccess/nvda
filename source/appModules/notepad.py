@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022 NV Access Limited, Joseph Lee
+# Copyright (C) 2022-2023 NV Access Limited, Joseph Lee
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -16,7 +16,7 @@ from NVDAObjects import NVDAObject
 
 class AppModule(appModuleHandler.AppModule):
 
-	def _get_statusBar(self):
+	def _get_statusBar(self) -> NVDAObject:
 		"""Retrieves Windows 11 Notepad status bar.
 		In Windows 10 and earlier, status bar can be obtained by looking at the bottom of the screen.
 		Windows 11 Notepad uses Windows 11 UI design (top-level window is labeled "DesktopWindowXamlSource",
