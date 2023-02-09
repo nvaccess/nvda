@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022 NV Access Limited, Joseph Lee
+# Copyright (C) 2022-2023 NV Access Limited, Joseph Lee
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -7,13 +7,15 @@
 While this app module also covers older Notepad releases,
 this module provides workarounds for Windows 11 Notepad."""
 
+from typing import Optional
 import appModuleHandler
 import api
+import NVDAObjects
 
 
 class AppModule(appModuleHandler.AppModule):
 
-	def _get_statusBar(self):
+	def _get_statusBar(self) -> Optional[NVDAObjects.NVDAObject]:
 		"""Retrieves Windows 11 Notepad status bar.
 		In Windows 10 and earlier, status bar can be obtained by looking at the bottom of the screen.
 		Windows 11 Notepad uses Windows 11 UI design (top-level window is labeled "DesktopWindowXamlSource",
@@ -34,7 +36,8 @@ class AppModule(appModuleHandler.AppModule):
 			raise NotImplementedError()
 		# Look for a specific child as some children report the same UIA properties such as class name.
 		# Make sure to look for a foreground UIA element which hosts status bar content if visible.
-		notepadStatusBarIndex = 7
+		# #14573: status bar is the second to last item in Notepad UIA tree.
+		notepadStatusBarIndex = -2
 		statusBar = api.getForegroundObject().children[notepadStatusBarIndex].firstChild
 		# No location for a disabled status bar i.e. location is 0 (x, y, width, height).
 		if not any(statusBar.location):
