@@ -9,6 +9,9 @@ this module provides workarounds for Windows 11 Notepad."""
 
 import appModuleHandler
 import api
+import UIAHandler
+from NVDAObjects.UIA import UIA
+from NVDAObjects import NVDAObject
 
 
 class AppModule(appModuleHandler.AppModule):
@@ -32,10 +35,23 @@ class AppModule(appModuleHandler.AppModule):
 		# Thankfully, of all the UIA objects encountered, document window has a unique window class name.
 		if api.getFocusObject().windowClassName != "RichEditD2DPT":
 			raise NotImplementedError()
-		# Look for a specific child as some children report the same UIA properties such as class name.
-		# Make sure to look for a foreground UIA element which hosts status bar content if visible.
-		notepadStatusBarIndex = 7
-		statusBar = api.getForegroundObject().children[notepadStatusBarIndex].firstChild
+		# Obtain status bar text across Notepad 11 releases.
+		clientObject = UIAHandler.handler.clientObject
+		condition = clientObject.CreatePropertyCondition(UIAHandler.UIA_AutomationIdPropertyId, "ContentTextBlock")
+		uiItemWindow = clientObject.ElementFromHandleBuildCache(
+			api.getForegroundObject().windowHandle, UIAHandler.handler.baseCacheRequest
+		)
+		# Instantiate UIA object directly.
+		# In order for this to work, a valid UIA pointer must be returned.
+		try:
+			statusBarText = UIA(
+				UIAElement=uiItemWindow.FindFirstBuildCache(
+					UIAHandler.TreeScope_Descendants, condition, UIAHandler.handler.baseCacheRequest
+				)
+			)
+		except ValueError:
+			raise NotImplementedError()
+		statusBar = statusBarText.parent
 		# No location for a disabled status bar i.e. location is 0 (x, y, width, height).
 		if not any(statusBar.location):
 			raise NotImplementedError()
