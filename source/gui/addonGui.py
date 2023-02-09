@@ -44,15 +44,17 @@ def promptUserForRestart():
 		core.restart()
 
 
-class ConfirmAddonInstallDialog(nvdaControls.MessageDialog):
-	def __init__(self, parent, title, message, showAddonInfoFunction, showAddonDocFunction):
+class BaseAddonInstallDialog(nvdaControls.MessageDialog):
+	"""A common base class for add-on install dialogs (confirm or error)"""
+
+	def __init__(self, parent, title, message, dialogType, showAddonInfoFunction, showAddonDocFunction):
 		self._showAddonInfoFunction = showAddonInfoFunction
 		self._showAddonDocFunction = showAddonDocFunction
-		super(ConfirmAddonInstallDialog, self).__init__(
+		super().__init__(
 			parent,
 			title,
 			message,
-			dialogType=nvdaControls.MessageDialog.DIALOG_TYPE_WARNING
+			dialogType=dialogType,
 		)
 	
 	def _addButtons(self, buttonHelper):
@@ -74,7 +76,21 @@ class ConfirmAddonInstallDialog(nvdaControls.MessageDialog):
 			addonDocButton.Bind(wx.EVT_BUTTON, lambda evt: self._showAddonDocFunction())
 		else:
 			addonDocButton.Disable()
-		
+
+
+class ConfirmAddonInstallDialog(BaseAddonInstallDialog):
+	def __init__(self, parent, title, message, showAddonInfoFunction, showAddonDocFunction):
+		super().__init__(
+			parent,
+			title,
+			message,
+			dialogType=nvdaControls.MessageDialog.DIALOG_TYPE_WARNING,
+			showAddonInfoFunction=showAddonInfoFunction,
+			showAddonDocFunction=showAddonDocFunction,
+		)
+	
+	def _addButtons(self, buttonHelper):
+		super()._addButtons(buttonHelper)
 		yesButton = buttonHelper.addButton(
 			self,
 			id=wx.ID_YES,
@@ -95,25 +111,19 @@ class ConfirmAddonInstallDialog(nvdaControls.MessageDialog):
 		noButton.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.NO))
 
 
-class ErrorAddonInstallDialog(nvdaControls.MessageDialog):
-	def __init__(self, parent, title, message, showAddonInfoFunction):
-		super(ErrorAddonInstallDialog, self).__init__(
+class ErrorAddonInstallDialog(BaseAddonInstallDialog):
+	def __init__(self, parent, title, message, showAddonInfoFunction, showAddonDocFunction):
+		super().__init__(
 			parent,
 			title,
 			message,
-			dialogType=nvdaControls.MessageDialog.DIALOG_TYPE_ERROR
+			dialogType=nvdaControls.MessageDialog.DIALOG_TYPE_ERROR,
+			showAddonInfoFunction=showAddonInfoFunction,
+			showAddonDocFunction=showAddonDocFunction,
 		)
-		self._showAddonInfoFunction = showAddonInfoFunction
 
 	def _addButtons(self, buttonHelper):
-		addonInfoButton = buttonHelper.addButton(
-			self,
-			# Translators: A button in the addon installation warning / blocked dialog which shows
-			# more information about the addon
-			label=_("&About...")
-		)
-		addonInfoButton.Bind(wx.EVT_BUTTON, lambda evt: self._showAddonInfoFunction())
-
+		super()._addButtons(buttonHelper)
 		okButton = buttonHelper.addButton(
 			self,
 			id=wx.ID_OK,
@@ -639,12 +649,15 @@ def _showAddonRequiresNVDAUpdateDialog(parent, bundle):
 		minimumNVDAVersion=addonAPIVersion.formatForGUI(bundle.minimumNVDAVersion),
 		NVDAVersion=addonAPIVersion.formatForGUI(addonAPIVersion.CURRENT)
 	)
+	
+	docPath = bundle.getDocFilePathInBundle()
 	ErrorAddonInstallDialog(
 		parent=parent,
 		# Translators: The title of a dialog presented when an error occurs.
 		title=_("Add-on not compatible"),
 		message=incompatibleMessage,
-		showAddonInfoFunction=lambda: _showAddonInfo(bundle)
+		showAddonInfoFunction=lambda: _showAddonInfo(bundle),
+		showAddonDocFunction=(lambda: _showAddonDoc(bundle, docPath)) if docPath else None,
 	).ShowModal()
 
 
@@ -659,12 +672,15 @@ def _showAddonTooOldDialog(parent, bundle):
 		backCompatToAPIVersion=addonAPIVersion.formatForGUI(addonAPIVersion.BACK_COMPAT_TO),
 		**bundle.manifest
 	)
+	
+	docPath = bundle.getDocFilePathInBundle()
 	ErrorAddonInstallDialog(
 		parent=parent,
 		# Translators: The title of a dialog presented when an error occurs.
 		title=_("Add-on not compatible"),
 		message=confirmInstallMessage,
-		showAddonInfoFunction=lambda: _showAddonInfo(bundle)
+		showAddonInfoFunction=lambda: _showAddonInfo(bundle),
+		showAddonDocFunction=(lambda: _showAddonDoc(bundle, docPath)) if docPath else None,
 	).ShowModal()
 
 def _showConfirmAddonInstallDialog(parent, bundle):
@@ -676,7 +692,6 @@ def _showConfirmAddonInstallDialog(parent, bundle):
 	).format(**bundle.manifest)
 	
 	docPath = bundle.getDocFilePathInBundle()
-	
 	return ConfirmAddonInstallDialog(
 		parent=parent,
 		# Translators: Title for message asking if the user really wishes to install an Addon.
