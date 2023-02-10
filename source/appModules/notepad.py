@@ -7,6 +7,7 @@
 While this app module also covers older Notepad releases,
 this module provides workarounds for Windows 11 Notepad."""
 
+from comtypes import COMError
 import appModuleHandler
 import api
 import UIAHandler
@@ -37,21 +38,15 @@ class AppModule(appModuleHandler.AppModule):
 			raise NotImplementedError()
 		# Obtain status bar text across Notepad 11 releases.
 		clientObject = UIAHandler.handler.clientObject
-		condition = clientObject.CreatePropertyCondition(UIAHandler.UIA_AutomationIdPropertyId, "ContentTextBlock")
-		notepadWindow = clientObject.ElementFromHandleBuildCache(
-			api.getForegroundObject().windowHandle, UIAHandler.handler.baseCacheRequest
-		)
-		# Instantiate UIA object directly.
-		# In order for this to work, a valid UIA pointer must be returned.
+		condition = clientObject.createPropertyCondition(UIAHandler.UIA_AutomationIdPropertyId, "ContentTextBlock")
+		walker = clientObject.createTreeWalker(condition)
+		notepadWindow = UIAHandler.handler.clientObject.elementFromHandle(api.getForegroundObject().windowHandle)
 		try:
-			statusBarText = UIA(
-				UIAElement=notepadWindow.FindFirstBuildCache(
-					UIAHandler.TreeScope_Descendants, condition, UIAHandler.handler.baseCacheRequest
-				)
-			)
-		except ValueError:
-			raise NotImplementedError()
-		statusBar = statusBarText.parent
+			element = walker.getFirstChildElement(notepadWindow)
+		except COMError:
+			raise NotImplementedError
+		element = element.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
+		statusBar = UIA(UIAElement=element).parent
 		# No location for a disabled status bar i.e. location is 0 (x, y, width, height).
 		if not any(statusBar.location):
 			raise NotImplementedError()
