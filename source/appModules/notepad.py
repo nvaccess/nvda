@@ -48,7 +48,4 @@ class AppModule(appModuleHandler.AppModule):
 		except (ValueError, COMError):
 			raise NotImplementedError
 		statusBar = UIA(UIAElement=element).parent
-		# No location for a disabled status bar i.e. location is 0 (x, y, width, height).
-		if not any(statusBar.location):
-			raise NotImplementedError()
 		return statusBar
