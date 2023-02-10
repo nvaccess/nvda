@@ -38,14 +38,14 @@ class AppModule(appModuleHandler.AppModule):
 		# Obtain status bar text across Notepad 11 releases.
 		clientObject = UIAHandler.handler.clientObject
 		condition = clientObject.CreatePropertyCondition(UIAHandler.UIA_AutomationIdPropertyId, "ContentTextBlock")
-		uiItemWindow = clientObject.ElementFromHandleBuildCache(
+		notepadWindow = clientObject.ElementFromHandleBuildCache(
 			api.getForegroundObject().windowHandle, UIAHandler.handler.baseCacheRequest
 		)
 		# Instantiate UIA object directly.
 		# In order for this to work, a valid UIA pointer must be returned.
 		try:
 			statusBarText = UIA(
-				UIAElement=uiItemWindow.FindFirstBuildCache(
+				UIAElement=notepadWindow.FindFirstBuildCache(
 					UIAHandler.TreeScope_Descendants, condition, UIAHandler.handler.baseCacheRequest
 				)
 			)
