@@ -465,7 +465,7 @@ class WordDocumentTextInfo(UIATextInfo):
 		
 		# If Word object model is not available, we just fallback to general UIA case, i.e. use Windows regional
 		# settings.
-		super()._getIndentValueDisplayString(val)
+		return super()._getIndentValueDisplayString(val)
 
 
 class WordBrowseModeDocument(UIABrowseModeDocument):

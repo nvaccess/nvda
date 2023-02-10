@@ -388,7 +388,6 @@ class UIATextInfo(textInfos.TextInfo):
 			formatField['right-indent'] = self._getIndentValueDisplayString(uiaIndentTrailing)
 		return formatField
 	
-	# @staticmethod
 	def _getIndentValueDisplayString(self, val: float) -> str:
 		"""A function returning the string to display in formatting info.
 		@param val: an indent value measured in points, fetched via
