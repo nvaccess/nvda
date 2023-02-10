@@ -40,7 +40,7 @@ class AppModule(appModuleHandler.AppModule):
 		clientObject = UIAHandler.handler.clientObject
 		condition = clientObject.createPropertyCondition(UIAHandler.UIA_AutomationIdPropertyId, "ContentTextBlock")
 		walker = clientObject.createTreeWalker(condition)
-		notepadWindow = UIAHandler.handler.clientObject.elementFromHandle(api.getForegroundObject().windowHandle)
+		notepadWindow = clientObject.elementFromHandle(api.getForegroundObject().windowHandle)
 		try:
 			element = walker.getFirstChildElement(notepadWindow)
 			# Is status bar even showing?
