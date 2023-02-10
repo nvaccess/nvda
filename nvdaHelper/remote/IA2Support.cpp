@@ -71,7 +71,7 @@ pair<map<DWORD, IA2InstallData>::iterator, bool> installIA2Support(DWORD threadI
 bool uninstallIA2Support(DWORD threadID) {
 	auto it = IA2InstallMap.find(threadID);
 	if (it == IA2InstallMap.end()) {
-		return FALSE;
+		return false;
 	}
 	auto& data = it->second;
 	if (data.ISimpleDOMProxyRegistration && !unregisterCOMProxy(data.ISimpleDOMProxyRegistration)) {
@@ -84,7 +84,7 @@ bool uninstallIA2Support(DWORD threadID) {
 	} else {
 		data.IA2ProxyRegistration = nullptr;
 	}
-	return TRUE;
+	return true;
 }
 
 void CALLBACK IA2Support_winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) { 
@@ -180,7 +180,7 @@ void IA2Support_inProcess_terminate() {
 	registerWindowsHook(WH_GETMESSAGE, IA2Support_uninstallerHook);
 	for (auto& [threadId, data] : IA2InstallMap) {
 		//Check if the UI thread is still alive, if not there's nothing for us to do
-		if(WaitForSingleObject(data.uiThreadHandle, 0) == 0) {
+		if (WaitForSingleObject(data.uiThreadHandle, 0) == 0) {
 			continue;
 		}
 		//Instruct the UI thread to uninstall IA2
@@ -189,7 +189,7 @@ void IA2Support_inProcess_terminate() {
 			// unable to create the event, can't continue
 			continue;
 		}
-		PostThreadMessage(threadId, wm_uninstallIA2Support,0, 0);
+		PostThreadMessage(threadId, wm_uninstallIA2Support, 0, 0);
 		HANDLE waitHandles[2] = {data.uiThreadUninstalledEvent, data.uiThreadHandle};
 		int res = WaitForMultipleObjects(2, waitHandles, false, 10000);
 		if (res != WAIT_OBJECT_0 && res != WAIT_OBJECT_0 + 1) {
