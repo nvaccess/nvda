@@ -43,9 +43,10 @@ class AppModule(appModuleHandler.AppModule):
 		notepadWindow = UIAHandler.handler.clientObject.elementFromHandle(api.getForegroundObject().windowHandle)
 		try:
 			element = walker.getFirstChildElement(notepadWindow)
-		except COMError:
+			# Is status bar even showing?
+			element = element.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
+		except (ValueError, COMError):
 			raise NotImplementedError
-		element = element.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
 		statusBar = UIA(UIAElement=element).parent
 		# No location for a disabled status bar i.e. location is 0 (x, y, width, height).
 		if not any(statusBar.location):
