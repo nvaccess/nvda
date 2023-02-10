@@ -2734,6 +2734,7 @@ As seguintes pantallas admiten esta funcionalidade de detección automática.
 - Pantallas Eurobraille Esys/Esytime/Iris
 - Pantallas Nattiq nBraille
 - Seika Notetaker: MiniSeika (16, 24 celdas V6, e6Pro (40 celdas
+- Pantallas Tivomatic Caiku Albatross 46/80
 - Calquera Pantalla que admita o protocolo braille estándar HID
 -
 
@@ -3615,6 +3616,63 @@ Por favor consulta as [listas de claves de vínculos de BRLTTY http://mielke.cc/
 | Guiar á celda braille | route (leva o cursor ao caracter) |
 %kc:endInclude
 
+++ Tivomatic Caiku Albatross 46/80 ++[Albatross]
+Os dispositivos Caiku Albatross, que foron fabricados por Tivomatic e están dispoñibles en Finlandia, poden conectarse ou por USB ou por serie.
+Non necesitas ningún controlador en especial a instalar para usar estas pantallas.
+Só enchufa a pantalla e configura ao NVDA para usala.
+
+Nota: recoméndase encarecidamente unha velocidade de 19200 baudios.
+Se se require, cambia o valor da opción de velocidade a 19200 baudios dende o menú do dispositivo braille.
+Aíndaque o controlador admite unha velocidade de 9600 baudios, non ten xeito de controlar a velocidade que usa a pantalla.
+Dado que 19200 é a velocidade en baudios predeterminada da pantalla, o controlador inténtao ao comezo.
+Se as velocidades en baudios non son as mesmas, o controlador pode comportarse de xeito inesperado.
+
+Seguidamente van as asignacións de teclas para estas pantallas co NVDA.
+Por favor consulta a documentación da pantalla para descripcións de onde se atopan estas teclas.
+%kc:beginInclude
+|| Nome | Tecla |
+| Moverse á liña superior en revisión | ``inicio1``, ``inicio2`` |
+| Moverse á liña inferior en revisión | ``fin1``, ``fin2`` |
+| Poñer o navegador de obxectos no foco actual | ``eCursor1``, ``eCursor2`` |
+| Moverse ao foco actual  | ``cursor1``, ``cursor2`` |
+| Mover o punteiro do rato ao navegador de obxectos actual  | ``inicio1+inicio2`` |
+| poñer o navegador de obxectos no obxecto actual baixo o punteiro do rato e falalo | ``fin1+fin2`` |
+| Mover o foco ao navegador de obxectos actual  | ``eCursor1+eCursor2`` |
+| Conmutar o seguemento do braille | ``cursor1+cursor2`` |
+| Mover pantalla braille á liña anterior | ``arriba1``, ``arriba2``, ``arriba3`` |
+| Mover pantalla braille á liña seguinte | ``abaixo1``, ``abaixo2``, ``abaixo3`` |
+| Desprazar a pantalla braille cara atrás | ``esquerda``, ``lRodaEsquerda``, ``rRodaEsquerda`` |
+| Desprazar a pantalla braille cara adiante | ``dereita``, ``lRodaDereita``, ``rRodaDereita`` |
+| Ir á celda braille | ``sensor`` |
+| Anunciar formato de texto baixo a celda braille | ``sensor secundario`` |
+| Conmutar a forma de presentar a información de contexto en braille | ``attributo1+attributo3`` |
+| Conmutar entre os modos de voz desactivado, pitar e falar | ``attributo2+attributo4`` |
+| Cambiar ao modo de revisión anterior (por exemplo, obxecto, documento ou pantalla)  | ``f1`` |
+| Cambiar ao modo de revisión seguinte (por exemplo, obxecto, documento ou pantalla) | ``f2`` |
+| Mover o navegador de obxectos ao obxecto que o contén | ``f3`` |
+| Mover o navegador de obxectos ao primeiro obxecto dentro del | ``f4`` |
+| Mover o navegador de obxectos ao obxecto anterior | ``f5`` |
+| Mover o navegador de obxectos ao obxecto seguinte | ``f6`` |
+| Anunciar o navegador de obxectos actual | ``f7`` |
+| Anunciar información acerca da localización do texto ou obxecto no cursor de revisión | ``f8`` |
+| Realizar a ación predeterminada no navegador de obxectos actual | ``f7+f8`` |
+| Anunciar data e hora | ``f9`` |
+| Anunciar estado da batería e tempo restante se a alimentación non está enchufada | ``f10`` |
+| Anunciar título | ``f11`` |
+| Anunciar barra de estado | ``f12`` |
+| Anunciar a liña actual baixo o cursor da aplicación | ``f13`` |
+| Falar todo | ``f14`` |
+| Anunciar o carácter actual baixo o cursor de revisión | ``f15`` |
+| Anunciar a liña do navegador de obxectos actual onde estea situado o cursor de revisión | ``f16`` |
+| Falar a palabra do navegador de obxectos actual onde  estea situado o cursor de revisión | ``f15+f16`` |
+| Mover o cursor de revisión á liña anterior do navegador de obxectos actual e falala | ``lRodaArriba``, ``rRodaArriba`` |
+| Mover o cursor de revisión á seguinte liña do actual navegador de obxectos e falala | ``lRodaAbaixo``, ``rRodaAbaixo`` |
+| Tecla ``Windows+d`` (minimizar todas as aplicacións) | ``attributo1`` |
+| Tecla ``Windows+e`` (este equipo) | ``attributo2`` |
+| Tecla ``Windows+b`` (foco á bandexa do sistema) | ``attributo3`` |
+| Tecla ``Windows+i`` (configuración de Windows) | ``attributo4`` |
+%kc:endInclude
+ 
 ++ Pantallas HID Braille estándar ++[HIDBraille]
 Este é un controlador experimental para a nova Especificación Estándar HID Braille, acordada en 2018 por Microsoft, Google, Apple e varias empresas de tecnoloxía de asistencia, incluindo NV Access. 
 A esperanza é que todos os futuros modelos de pantallas Braille creados por calquer fabricante, usen este protocolo estándar que eliminará a necesidade de controladores Braille específicos do fabricante.

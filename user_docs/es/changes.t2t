@@ -22,10 +22,16 @@ Esto puede utilizarse con editores de texto que no admitan la navegación por p�
 - Ahora se  anuncia la presencia de varias anotaciones.
 ``nvda+d`` ahora recorre el sumario de cada anotación anunciando el objetivo para los orígenes con varios objetivos de anotaciones.
 Por ejemplo, cuando el texto tiene un comentario y una nota al pie asociada con ella. (#14507, #14480)
+- Se añadió el soporte para las pantallas braille Tivomatic Caiku Albatross 46/80. (#13045)
 -
 
 
 == Cambios ==
+- Se actualizó el transcriptor braille LibLouis a [3.24.0 https://github.com/liblouis/liblouis/releases/tag/v3.24.0]. (#14436)
+  - Actualizaciones grandes al braille úngaro, UEB y Chino bopomofo.
+  - Soporte para el braille danés estándar 2022.
+  - Nuebas tablas braille para braille georgiano literario, Swahili (Kenya) y Chichewa (Malawi).
+  -
 - Se actualizó Sonic rate boost library a commit ``1d70513``. (#14180)
 - CLDR se ha actualizado a la versión 42.0. (#14273)
 - eSpeak NG se ha actualizado a 1.52-dev commit ``a51235aa``. (#14281)
@@ -40,6 +46,7 @@ Por ejemplo, cuando el texto tiene un comentario y una nota al pie asociada con 
   - NVDA anunciará los elementos resaltados de la búsqueda al abrir el menú Inicio. (#13841)
   - En ARM, las aplicaciones x64 ya no se identifican como aplicaciones ARM64. (#14403)
   - Se puede acceder a los elementos de menú del historial del portapapeles como "elemento anclado". (#14508)
+  - En Windows 11 22H2 y más modernos, es posible de nuevo utilizar el ratón y la interactuación táctil para interactuar con áreas tales como la ventana de desbordamiento de la bandeja del sistema y el diálogo "Abrir Ccon". (#14538, #14539)
   -
 - Se anuncian las sugerencias al escribir una @mención en los comentarios en Microsoft Excel. (#13764)
 - En la barra de ubicaciones de Google Chrome, los controles de sugerencias (cambiar a pestaña, eliminar sugerencia etc) ahora se anuncian cuando se seleccionen. (#13522)
@@ -63,6 +70,10 @@ Por ejemplo, cuando el texto tiene un comentario y una nota al pie asociada con 
   -
 - Los Emojis ahora deberían anunciarse en más idiomas. (#14433)
 - La presencia de una anotación ya no falta en braille para algunos elementos. (#13815)
+- Corregido un problema donde los cambios de configuración no se guardaban correctamente al cambiar entre una opción "Predeterminada" y el valor de la opción "predeterminada". (#14133)
+- Al configurar NVDA siempre habrá al menos una tecla que se defina como tecla NVDA. (#14527)
+- Al acceder al menú NVDA a través del área de notificaciones, NVDA ahora no sugerirá una actualización pendiente cuando no haya ya ninguna disponible. (#14523)
+- En navegadores web como Chrome y Firefox, las alertas como descargas de ficheros se muestran en braille además de ser verbalizadas. (#14562)
 -
 
 
@@ -88,21 +99,35 @@ Esta funcionalidad ahora está disponible genéricamente a través de ``behaviou
   - Esta nueva clase no es un singleton por diseño, se recomienda a los autores de complementos que utilicen su propia instancia cuando realicen entrada/salida hardware.
   -
 - La arquitectura del procesador del ordenador puede consultarse a partir del atributo ``winVersion.WinVersion.processorArchitecture.`` (#14439)
+- Se han añadido nuevos puntos de extensión. (#14503)
+  - ``inputCore.decide_executeGesture``
+  - ``tones.decide_beep``
+  - ``nvwave.decide_playWaveFile``
+  - ``braille.pre_writeCells``
+  - ``braille.filter_displaySize``
+  - ``braille.decide_enabled``
+  - ``braille.displayChanged``
+  - ``braille.displaySizeChanged``
+  - 
 -
 
 === Cambios de Ruptura de la API ===
 Son cambios de última hora en la API.
 Por favor abre una incidencia en GitHub si tu complemento tiene un problema con la actualización a la nueva API.
-- Se ha alterado la especificación de configuración, se han eliminado o modificado claves (#14233).
-  - En la sección ``[documentFormatting]``:
+- Se ha alterado la especificación de configuración, se han eliminado o modificado claves (#
+  - En la sección ``[documentFormatting]``: 14233).
     - ``reportLineIndentation`` almacena un valor entero (de 0 a 3) en lugar de un booleano
     - ``reportLineIndentationWithTones`` se ha eliminado.
     - ``reportBorderStyle`` y ``reportBorderColor`` se han eliminado y se han remplazado por ``reportCellBorders``.
     -
-  - En la sección ``[braille]``:
+  - En la sección ``[braille]``: (#14233):
     - ``noMessageTimeout`` se ha eliminado, remplazado por un valor para ``showMessages``.
     - ``messageTimeout`` no puede tomar el valor 0 nunca más, se remplazó por un valor para ``showMessages``.
     - ``autoTether`` se ha eliminado; ``tetherTo`` ahora puede tomar el valor "auto" en su lugar.
+    -
+  - En la sección ``[keyboard]`` (#14528):
+    - ``useCapsLockAsNVDAModifierKey``, ``useNumpadInsertAsNVDAModifierKey``, ``useExtendedInsertAsNVDAModifierKey`` se han eliminado.
+    Se remplazaron por ``NVDAModifierKeys``.
     -
   -
 - La clase ``NVDAHelper.RemoteLoader64`` ha sido eliminada sin remplazo. (#14449)
@@ -112,6 +137,23 @@ Por favor abre una incidencia en GitHub si tu complemento tiene un problema con 
   - ``unregister``
   - ``register``
   - ``isLockStateSuccessfullyTracked``
+  - 
+- Ya no es posible habilitar o deshabilitar el manejador braille con la opción ``braille.handler.enabled``.
+Para deshabilitar el manejador braille por programa, registra un manejador a ``braille.handler.decide_enabled``. (#14503)
+- Ya no es posible actualizar el tamaño de la pantalla del manejador configurando ``braille.handler.displaySize``.
+Para actualizar el tamaño de la pantalla por programa, registra un manejador a ``braille.handler.filter_displaySize``.
+Consulta ``brailleViewer`` para ver un ejemplo de cómo hacerlo. (#14503)
+- Ha habido cambios en la utilización de ``addonHandler.Addon.loadModule``. (#14481)
+  - ``loadModule`` ahora espera el punto como un separador, en lugar de la barra inversa.
+  Por ejemplo "lib.example" en lugar de "lib\example".
+  - ``loadModule`` ahora lanza una excepción cuando un módulo no se pueda cargar  o tenga errores, en lugar de devolver silenciosamente ``None`` sin dar información sobre la causa.
+  -
+- Los siguientes ya no son singletons - su método get ha sido eliminado.
+El uso de ``Example.get()`` ahora es ``Example()``. (#14248)
+  - ``UIAHandler.customAnnotations.CustomAnnotationTypesCommon``
+  - ``UIAHandler.customProps.CustomPropertiesCommon``
+  - ``NVDAObjects.UIA.excel.ExcelCustomProperties``
+  - ``NVDAObjects.UIA.excel.ExcelCustomAnnotationTypes``
   - 
 -
 
@@ -126,6 +168,10 @@ Utiliza ``configFlags.TetherTo.*.value`` en su lugar. (#14233)
 Utiliza ``utils.security.post_sessionLockStateChanged`` en su lugar. (#14486)
 - ``NVDAObject.hasDetails``, ``NVDAObject.detailsSummary``, ``NVDAObject.detailsRole`` están obsoletos.
 Utiliza ``NVDAObject.annotations`` en su lugar. (#14507)
+- ``keyboardHandler.SUPPORTED_NVDA_MODIFIER_KEYS`` está obsoleta sin ningún remplazo directo.
+Considera utilizar la clase ``config.configFlags.NVDAKey`` en su lugar. (#14528)
+- ``gui.MainFrame.evaluateUpdatePendingUpdateMenuItemCommand`` ha quedado obsoleto.
+Utiliza ``gui.MainFrame.SysTrayIcon.evaluateUpdatePendingUpdateMenuItemCommand`` en su lugar. (#14523)
 -
 
 
