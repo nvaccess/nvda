@@ -69,7 +69,7 @@ You can help us investigate your issue by adding other attachments such as test 
 
 #### Does the issue still occur after you run the COM Registration Fixing Tool in NVDA's tools menu?
 
-#### in case your issue is related to a browser (i.e. Chrome), did you test the behavior of NVDA also in other browsers (i.e. Firefox or Microsoft Edge)? What are your findings in other browsers?
+#### in case your issue is related to a browser (e.g. Chrome), did you test the behavior of NVDA also in other browsers (e.g. Firefox or Microsoft Edge)? What are your findings in other browsers?
 
 #### In case your issue is related to web design and DOM - document object model - (HTML elements, Aria spec, Java script, CSS etc.)
 If possible, please attach a minimal test case as HTML file or provide a link to a codepen. This will make investigation much more  efficient and will save us hours of investigation work.
