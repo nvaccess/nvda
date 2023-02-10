@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited, Aleksey Sadovoy, Babbage B.V., Joseph Lee, Łukasz Golonka,
+# Copyright (C) 2006-2023 NV Access Limited, Aleksey Sadovoy, Babbage B.V., Joseph Lee, Łukasz Golonka,
 # Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -15,11 +15,13 @@ import os
 
 import typing
 
+import builtins
 import globalVars
 import ctypes
 from ctypes import wintypes
 import monkeyPatches
 import NVDAState
+from languageHandler import makePgettext
 
 
 monkeyPatches.applyMonkeyPatches()
@@ -63,13 +65,18 @@ import locale
 import gettext
 
 try:
-	gettext.translation(
+	trans = gettext.translation(
 		'nvda',
 		localedir=os.path.join(globalVars.appDir, 'locale'),
 		languages=[locale.getdefaultlocale()[0]]
-	).install(True)
+	)
+	trans.install()
+	# Install our pgettext function.
+	builtins.pgettext = makePgettext(trans)
 except:
 	gettext.install('nvda')
+	# Install a no-translation pgettext function
+	builtins.pgettext = lambda context, message: message
 
 import time
 import argparse
@@ -149,7 +156,17 @@ quitGroup = parser.add_mutually_exclusive_group()
 quitGroup.add_argument('-q','--quit',action="store_true",dest='quit',default=False,help="Quit already running copy of NVDA")
 parser.add_argument('-k','--check-running',action="store_true",dest='check_running',default=False,help="Report whether NVDA is running via the exit code; 0 if running, 1 if not running")
 parser.add_argument('-f','--log-file',dest='logFileName',type=str,help="The file where log messages should be written to")
-parser.add_argument('-l','--log-level',dest='logLevel',type=int,default=0,choices=[10, 12, 15, 20, 30, 40, 50, 100],help="The lowest level of message logged (debug 10, input/output 12, debugwarning 15, info 20, warning 30, error 40, critical 50, off 100), default is info")
+parser.add_argument(
+	'-l',
+	'--log-level',
+	dest='logLevel',
+	type=int,
+	default=0,  # 0 means unspecified in command line.
+	choices=[10, 12, 15, 20, 100],
+	help=(
+		"The lowest level of message logged (debug 10, input/output 12, debugwarning 15, info 20, off 100),"
+	),
+)
 parser.add_argument('-c','--config-path',dest='configPath',default=None,type=str,help="The path where all settings for NVDA are stored")
 parser.add_argument(
 	'--lang',
@@ -359,13 +376,20 @@ if mutex is None:
 	sys.exit(1)
 
 
-if _isSecureDesktop():
+def _serviceDebugEnabled() -> bool:
 	import winreg
 	try:
 		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\NVDA")
-		if not winreg.QueryValueEx(k, u"serviceDebug")[0]:
-			globalVars.appArgs.secure = True
+		if winreg.QueryValueEx(k, "serviceDebug")[0]:
+			return True
 	except WindowsError:
+		# Expected state by default, serviceDebug parameter not set
+		pass
+	return False
+
+
+if _isSecureDesktop():
+	if not _serviceDebugEnabled():
 		globalVars.appArgs.secure = True
 	globalVars.appArgs.changeScreenReaderFlag = False
 	globalVars.appArgs.minimal = True

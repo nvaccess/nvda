@@ -17,7 +17,7 @@ from logHandler import log
 import fonts
 import inputCore
 import gui.contextHelp
-from utils.security import isWindowsLocked, postSessionLockStateChanged
+from utils.security import _isLockScreenModeActive, post_sessionLockStateChanged
 
 BRAILLE_UNICODE_PATTERNS_START = 0x2800
 BRAILLE_SPACE_CHARACTER = chr(BRAILLE_UNICODE_PATTERNS_START)
@@ -287,7 +287,7 @@ class BrailleViewerFrame(
 			pos=dialogPos,
 			style=wx.CAPTION | wx.CLOSE_BOX | wx.STAY_ON_TOP
 		)
-		postSessionLockStateChanged.register(self.onSessionLockStateChange)
+		post_sessionLockStateChanged.register(self.onSessionLockStateChange)
 		self.Bind(wx.EVT_CLOSE, self._onClose)
 		self.Bind(wx.EVT_WINDOW_DESTROY, self._onDestroy)
 
@@ -398,7 +398,7 @@ class BrailleViewerFrame(
 		self._shouldShowOnStartupCheckBox.SetValue(config.conf["brailleViewer"]["showBrailleViewerAtStartup"])
 		self._shouldShowOnStartupCheckBox.Bind(wx.EVT_CHECKBOX, self._onShouldShowOnStartupChanged)
 		optionsSizer.Add(self._shouldShowOnStartupCheckBox)
-		if isWindowsLocked():
+		if _isLockScreenModeActive():
 			self._shouldShowOnStartupCheckBox.Disable()
 
 		# Translators: The label for a setting in the braille viewer that controls
@@ -415,11 +415,11 @@ class BrailleViewerFrame(
 		sizer.Add(optionsSizer, flag=wx.EXPAND | wx.TOP, border=5)
 
 	def _onShouldShowOnStartupChanged(self, evt: wx.CommandEvent):
-		if not isWindowsLocked():
+		if not _isLockScreenModeActive():
 			config.conf["brailleViewer"]["showBrailleViewerAtStartup"] = self._shouldShowOnStartupCheckBox.IsChecked()
 
 	def _onShouldHoverRouteToCellCheckBoxChanged(self, evt: wx.CommandEvent):
-		if not isWindowsLocked():
+		if not _isLockScreenModeActive():
 			config.conf["brailleViewer"]["shouldHoverRouteToCell"] = self._shouldHoverRouteToCellCheckBox.IsChecked()
 		self._updateMouseOverBinding(self._shouldHoverRouteToCellCheckBox.IsChecked())
 
@@ -557,7 +557,7 @@ class BrailleViewerFrame(
 
 	def _onDestroy(self, evt: wx.Event):
 		log.debug("braille viewer gui onDestroy")
-		postSessionLockStateChanged.unregister(self.onSessionLockStateChange)
+		post_sessionLockStateChanged.unregister(self.onSessionLockStateChange)
 		self.isDestroyed = True
 		self._notifyOfDestroyed()
 		evt.Skip()

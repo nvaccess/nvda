@@ -328,7 +328,6 @@ std::optional<std::wstring> VBufStorage_fieldNode_t::getAttribute(const std::wst
 	if (foundAttrib != attributes.end()) {
 		return foundAttrib->second;
 	}
-	LOG_ERROR(L"Couldn't find attribute " << name);
 	return std::nullopt;
 }
 

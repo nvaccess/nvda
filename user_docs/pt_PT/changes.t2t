@@ -97,6 +97,30 @@ Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documen
 - ``winUser.SM_*`` constants are deprecated, use ``winAPI.winUser.constants.SystemMetrics`` instead.
 
 
+= 2022.3.3 =
+Esta é uma versão menor para corrigir problemas com 2022.3.2, 2022.3.1 e 2022.3.
+
+== Correcção de erros ==
+- Corrigido o bug em que se o NVDA congelar ao bloquear, o NVDA permitirá o acesso ao ambiente de trabalho dos utilizadores enquanto estiver no ecrã de bloqueio do Windows. (#14416)
+- Corrigido o bug em que se o NVDA congela ao bloquear, o NVDA não se comportará correctamente, como se o dispositivo ainda estivesse bloqueado. (#14416)
+- Corrigidos problemas de acessibilidade com os processos Windows "esqueci-me do meu PIN" e actualização/experiência de instalação do Windows. (#14368)
+- Corrigido um erro ao tentar instalar o NVDA em alguns ambientes Windows, por exemplo, Windows Server. (#14379)
+-
+
+== Alterações para Desenvolvedores ==
+
+=== Deprecations ===
+- ``utils.security.isObjectAboveLockScreen(obj)`` is deprecated, instead use ``obj.isBelowLockScreen``. (#14416)
+- The following functions in ``winAPI.sessionTracking`` are deprecated for removal in 2023.1. (#14416)
+  - ``isWindowsLocked````
+  - "handleSessionChange
+  - ``unregister``
+  - ``register``
+  - "isLockStateStateSuccessfullyTracked
+  - 
+- 
+
+
 = 2022.3.2 =
 Esta é uma versão lançada para corrigir regressões na versão 2022.3.1 e resolver uma questão de segurança.
 

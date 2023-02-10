@@ -143,6 +143,9 @@ focus mode is turned on on focused read-only list item
 ARIA details role
 	[Documentation]	Test aria details roles being announced on discovery
 	test_mark_aria_details_role
+multiple ARIA details targets
+	[Documentation]	Test multiple aria details targets being announced
+	test_annotations_multi_target
 i10890
 	[Documentation]	Test sort state is announced on column header when changed with inner button
 	test_i10890

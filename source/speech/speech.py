@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2022 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
+# Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
 # Julien Cochuyt, Derek Riemer, Cyrille Bougot
 
 """High-level functions to speak information.
@@ -14,6 +14,7 @@ import unicodedata
 import time
 import colors
 import api
+from annotation import _AnnotationRolesT
 import controlTypes
 from controlTypes import OutputReason, TextPosition
 import tones
@@ -494,9 +495,9 @@ def getObjectPropertiesSpeech(  # noqa: C901
 			newPropertyValues['current'] = obj.isCurrent
 
 		elif value and name == "hasDetails":
-			newPropertyValues['hasDetails'] = obj.hasDetails
-		elif value and name == "detailsRole":
-			newPropertyValues["detailsRole"] = obj.detailsRole
+			newPropertyValues['hasDetails'] = bool(obj.annotations)
+		elif value and name == "detailsRoles":
+			newPropertyValues["detailsRoles"] = obj.annotations.roles if obj.annotations else tuple()
 		elif value and name == "descriptionFrom" and (
 			obj.descriptionFrom == controlTypes.DescriptionFrom.ARIA_DESCRIPTION
 		):
@@ -709,7 +710,7 @@ def _objectSpeech_calculateAllowedProps(reason, shouldReportTextContent):
 		'value': True,
 		'description': True,
 		'hasDetails': config.conf["annotations"]["reportDetails"],
-		"detailsRole": config.conf["annotations"]["reportDetails"],
+		"detailsRoles": config.conf["annotations"]["reportDetails"],
 		'descriptionFrom': config.conf["annotations"]["reportAriaDescription"],
 		'keyboardShortcut': True,
 		'positionInfo_level': True,
@@ -1754,7 +1755,7 @@ def getPropertiesSpeech(  # noqa: C901
 				textList.append(rowNumberTranslation)
 				if rowSpan>1 and columnSpan<=1:
 					# Translators: Speaks the row span added to the current row number (example output: through 5).
-					rowSpanAddedTranslation: str = _("through %s") % (rowNumber + rowSpan - 1)
+					rowSpanAddedTranslation: str = _("through {endRow}").format(endRow=rowNumber + rowSpan - 1)
 					textList.append(rowSpanAddedTranslation)
 			_speechState.oldRowNumber = rowNumber
 			_speechState.oldRowSpan = rowSpan
@@ -1772,7 +1773,7 @@ def getPropertiesSpeech(  # noqa: C901
 				textList.append(colNumberTranslation)
 				if columnSpan>1 and rowSpan<=1:
 					# Translators: Speaks the column span added to the current column number (example output: through 5).
-					colSpanAddedTranslation: str = _("through %s") % (columnNumber + columnSpan - 1)
+					colSpanAddedTranslation: str = _("through {endCol}").format(endCol=columnNumber + columnSpan - 1)
 					textList.append(colSpanAddedTranslation)
 			_speechState.oldColumnNumber = columnNumber
 			_speechState.oldColumnSpan = columnSpan
@@ -1813,13 +1814,15 @@ def getPropertiesSpeech(  # noqa: C901
 	# are there further details
 	hasDetails = propertyValues.get('hasDetails', False)
 	if hasDetails:
-		detailsRole: Optional[controlTypes.Role] = propertyValues.get("detailsRole")
-		if detailsRole is not None:
-			textList.append(
-				# Translators: Speaks when there are further details/annotations that can be fetched manually.
-				# %s specifies the type of details (e.g. comment, suggestion)
-				_("has %s" % detailsRole.displayString)
-			)
+		detailsRoles: _AnnotationRolesT = propertyValues.get("detailsRoles", tuple())
+		if detailsRoles:
+			roleStrings = (role.displayString if role else _("details") for role in detailsRoles)
+			for roleString in roleStrings:
+				textList.append(
+					# Translators: Speaks when there are further details/annotations that can be fetched manually.
+					# %s specifies the type of details (e.g. "comment, suggestion, details")
+					_("has %s" % roleString)
+				)
 		else:
 			textList.append(
 				# Translators: Speaks when there are further details/annotations that can be fetched manually.
@@ -1926,7 +1929,7 @@ def getControlFieldSpeech(  # noqa: C901
 	keyboardShortcut=attrs.get('keyboardShortcut', "")
 	isCurrent = attrs.get('current', controlTypes.IsCurrent.NO)
 	hasDetails = attrs.get('hasDetails', False)
-	detailsRole: Optional[controlTypes.Role] = attrs.get("detailsRole")
+	detailsRoles: _AnnotationRolesT = attrs.get("detailsRoles", tuple())
 	placeholderValue=attrs.get('placeholder', None)
 	value=attrs.get('value',"")
 
@@ -1986,7 +1989,7 @@ def getControlFieldSpeech(  # noqa: C901
 			reason=reason, keyboardShortcut=keyboardShortcut
 		)
 	isCurrentSequence = getPropertiesSpeech(reason=reason, current=isCurrent)
-	hasDetailsSequence = getPropertiesSpeech(reason=reason, hasDetails=hasDetails, detailsRole=detailsRole)
+	hasDetailsSequence = getPropertiesSpeech(reason=reason, hasDetails=hasDetails, detailsRoles=detailsRoles)
 	placeholderSequence = getPropertiesSpeech(reason=reason, placeholder=placeholderValue)
 	nameSequence = getPropertiesSpeech(reason=reason, name=name)
 	valueSequence = getPropertiesSpeech(reason=reason, value=value, _role=role)
@@ -2069,7 +2072,14 @@ def getControlFieldSpeech(  # noqa: C901
 		# #10095, #3321, #709: Report the name and description of groupings (such as fieldsets) and tab pages
 		# #13307: report the label for landmarks and regions
 		nameAndRole = nameSequence[:]
-		nameAndRole.extend(roleTextSequence)
+		if (
+			role not in (
+				controlTypes.Role.LANDMARK,
+				controlTypes.Role.REGION,
+			)
+			or config.conf["documentFormatting"]["reportLandmarks"]
+		):
+			nameAndRole.extend(roleTextSequence)
 		types.logBadSequenceTypes(nameAndRole)
 		return nameAndRole
 	elif (

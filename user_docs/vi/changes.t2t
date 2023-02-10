@@ -44,13 +44,13 @@ Một số lỗi cũng đã được sửa.
   -
 - Đã cập nhật thư viện phiên dịch chữ nổi LibLouis lên [3.23.0 https://github.com/liblouis/liblouis/releases/tag/v3.23.0]. (#14112)
   - Thêm các bảng chữ nổi:
-    - Trung Quốc chữ nổi phổ thông (chữ Trung giãn thể)
+    - Trung Quốc chữ nổi phổ thông (chữ Trung giản thể)
     - Kinyarwanda chữ nổi văn học
     - Luganda chữ nổi văn học
     - Thụy Điển chữ nổi đầy đủ
     - Thụy Điển chữ nổi tắt một phần
     - Thụy Điển Chữ nổi tắt
-    - Trung Quốc (Trung Quốc, Quan Thoại) hệ thống chữ nổi hiện tại (no tones)
+    - Trung Quốc (Trung Quốc, Quan Thoại) hệ thống chữ nổi hiện tại (không có mực)
     -
 - NVDA giờ đây đã bao gồm kiểu hệ điều hành trong việc thống kê thông tin người dùng. (#14019)
 -
@@ -82,6 +82,26 @@ Lưu ý là vẫn còn những lỗi được tìm thấy với Chrome và Edge.
 - NVDA sẽ không còn bị vướng lại trong một trình đơn khi bấm mũi tên lên / xuống ở chủ đề đàm thoại trong Microsoft Teams. (#14355)
 -
 
+
+== Các thay đổi cho nhà phát triển ==
+Phần này không được dịch. Vui lòng xem bản tiếng Anh changes.t2t để biết thêm thông tin.
+
+
+= 2022.3.3 =
+Đây là bản phát hành phụ nhằm sửa lỗi với 2022.3.2, 2022.3.1 và 2022.3.
+bản này cũng tìm ra một lỗi bảo mật.
+
+== Sửa lỗi bảo mật ==
+- Ngăn chặn truy cập hệ thống (ví dụ: NVDA Python console) với những người dùng không được xác thực.
+([GHSA-fpwc-2gxx-j9v7 https://github.com/nvaccess/nvda/security/advisories/GHSA-fpwc-2gxx-j9v7])
+-
+
+== Sửa lỗi ==
+- Sửa lỗi NVDA bị đóng băng khi khóa máy, NVDA sẽ cho phép truy cập Desktop người dùng khi ở trong màn hình khóa của Windows. (#14416)
+- Sửa lỗi NVDA bị đóng băng khi khóa máy, NVDA sẽ không vận hành như vậy khi thiết bị còn đang bị khóa. (#14416)
+- Sửa lỗi tiếp cận với Windows "forgot my PIN" process và Windows update/install experience. (#14368)
+- Sửa lỗi khi cố gắng cài NVDA trong vài môi trường Windows, Windows Server chẳng hạn. (#14379)
+-
 
 == Các thay đổi cho nhà phát triển ==
 Phần này không được dịch. Vui lòng xem bản tiếng Anh changes.t2t để biết thêm thông tin.
@@ -1084,7 +1104,7 @@ Xin xem các thay đổi  dưới đây để biết thêm chi tiết về đi�
 
 == Sửa lỗi ==
 - Khi dùng bộ đọc OneCore trên Windows 10 April 2018 Update trở lên, không còn tình trạng nhiều khoảng lặng bị chèn vào giữa các câu nói. (#8985)
-- Khi di chuyển bằng kí tự trong   các điều khiển văn bản đơn giản (như là Notepad) hay trong chế độ duyệt, các kí tự biểu tượng cảm xúc 32 bit  gồm hai điểm mã UTF-16  (như ðŸ¤¦) giờ đây sẽ được đọc đúng cách. (#8782)
+- Khi di chuyển bằng kí tự trong   các điều khiển văn bản ` (như là Notepad) hay trong chế độ duyệt, các kí tự biểu tượng cảm xúc 32 bit  gồm hai điểm mã UTF-16  (như ðŸ¤¦) giờ đây sẽ được đọc đúng cách. (#8782)
 - Cải thiện hộp thoại xác nhận khởi động lại sau khi thay đổi ngôn ngữ giao diện người dùng của NVDA. Nội dung và nhãn của các nút giờ đây sẽ rõ ràng và dễ hiểu hơn. (#6416)
 - Nếu không gọi được một bộ đọc nào đó của bên thứ ba, NVDA sẽ gọi trở lại bộ đọc Windows OneCore trên Windows 10, thay vì là espeak. (#9025)
 - Gỡ bỏ mục "Hộp thoại chào mừng" trong thực đơn của NVDA khi ở  trong các màn hình bảo vệ. (#8520)
