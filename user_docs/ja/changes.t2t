@@ -3,6 +3,178 @@ NVDA最新情報
 
 %!includeconf: ../changes.t2tconf
 
+= 2023.1 =
+
+== 新機能 ==
+- UI オートメーションで Microsoft Excel を使うときにテーブルの行や列の見出しの自動報告が可能になりました。 (#14228)
+  - 注意: リボンの「挿入」「テーブル」ボタンでフォーマットされたテーブルが対象です。
+  「テーブルの書式オプション」の「最初の列」および「先頭行」が行見出しと列見出しにそれぞれ対応します。
+  - 「名前の定義」を使うスクリーンリーダー独自の見出し読み上げ機能とは異なります。こちらは UI オートメーションでは未対応です。
+  -
+- 「テキストカーソル移動のすこし後で文字を説明」を切り替えるジェスチャー未割り当てのスクリプトが利用可能になりました。 (#14267)
+- 実験的な機能に「Windows ターミナルで新しいテキストを読み上げる方法」を追加しました。この設定は安定性や性能の改善に役立つ可能性があります。 (#13781)
+  - この機能の制約についてはユーザーガイドを参照してください。
+  - 
+- Windows 11 ARM64 環境で、Firefox, Google Chrome および 1Password などの AMD64 アプリのブラウズモードが利用可能になりました。 (#14397)
+- 設定「ドキュメントナビゲーション」の「段落ナビゲーションスタイル」オプションが追加されました。
+段落の区切りと解釈するものを改行または1行以上の連続する空白行に切り替えることができます。
+アプリが段落単位のナビゲーションを独自に実装していないテキストエディター、例えばメモ帳や Notepad++ などで有用です。 (#13797)
+- 複数の注釈の存在を報告できるようになりました。
+``NVDA+D`` は複数の注釈がつけられた場所で、それぞれの注釈を順番に報告する操作となります。
+例えば、ある1カ所のテキストにコメントと脚注がある場合などです。 (#14507, #14480)
+- Tivomatic Caiku Albatross 46/80 点字ディスプレイに対応しました。 (#13045)
+-
+
+
+== 変更点 ==
+- LibLouis 点訳エンジンを [3.24.0 https://github.com/liblouis/liblouis/releases/tag/v3.24.0] に更新しました。 (#14436)
+  - ハンガリー語、UEB、中国語ボポモフォ注音符号の大幅な更新
+  - デンマーク語点字標準 2022 への対応
+  - ジョージア語非縮約点字、スワヒリ語(ケニア)、チェワ語(マラウイ)の点字テーブルの追加
+  -
+- Sonic 音声速度変換ライブラリを commit ``1d70513`` に更新しました。 (#14180)
+- CLDR をバージョン 42.0 に更新しました。 (#14273)
+- eSpeak NG を 1.52-dev commit ``a51235aa`` に更新しました。 (#14281)
+  - 大きな数の読み上げに関する修正 (#14241)
+  -
+- 選択可能な状態を取り得るコントロールを持つJavaアプリは、項目が選択されたときではなく、選択されていないときに通知するようになりました。 (#14336)
+-
+
+
+== バグ修正 ==
+- Windows 11 対応の改善:
+  - NVDA は、スタートメニューを開くと、検索のハイライトを報告します。 (#13841)
+  - ARM 環境において、x64 アプリが ARM64 アプリとして識別されなくなりました。 (#14403)
+  - クリップボード履歴で「アイテムの固定」などにアクセスできるようになりました。(#14508)
+  - Windows 11 22H2 とそれ以降において、マウスとタッチを使用して、システムトレイのオーバーフローウィンドウや「プログラムから開く」のダイアログボックスなどを操作できなかった問題を修正しました。 (#14538, #14539)
+  -
+- Microsoft Excel のコメントで@メンションを入力すると、提案が報告されます。(#13764) 
+- Google Chrome ロケーションバーで提案コントロール(タブへの切り替え、提案の削除など)を選択したときに報告されるようになりました。 (#13522)
+- ワードパッドやログビューアーの書式情報において、色を明示的に報告するようになりました。従来は「既定の色」と報告していました。 (#13959)
+- Firefox で GitHub issues ページの "Show options" ボタンをアクティブ化するときの動作がより確実になりました。 (#14269)
+- Outlook 2016/365 の詳細検索ダイアログの日付選択コントロールにおいて、ラベルと値を報告するようになりました。 (#12726)
+- Firefox、Chrome および Edge において、ARIA switch コントロールはチェックボックスではなく、実際にスイッチと報告されるようになりました。 (#11310)
+- NVDA は HTML テーブルの列ヘッダーで内側のボタンを押してソート状態を変更すると、自動的に報告します。 (#10890)
+- ブラウズモードで1文字ナビゲーションまたはフォーカスを使用してランドマークまたはリージョンの外から中にジャンプすると、その名前が常に自動的に読み上げられます。 (#13307)
+- 「テキストカーソル移動のすこし後で文字を説明」で大文字のビープ音または報告が有効になっている場合、NVDA はビープ音または「大文字」の報告を2回行わなくなりました。 (#14239)
+- NVDA はJavaアプリのテーブル内のコントロールをより正確に報告するようになりました。 (#14347)
+- 複数のプロファイルを使用したときに、一部の設定が予想外に異なることがなくなりました。 (#14170)
+  - 次の設定が修正されました:
+    - 書式とドキュメント情報の「行インデント」
+    - 書式とドキュメント情報の「セルの罫線」
+    - 点字の「メッセージの表示」
+    - 点字の「点字表示切り替え」
+    -
+  - このバージョンのNVDAをインストールすると、プロファイルで使用されているこれらの設定が予期せず変更されることがあります。
+  - NVDAをこのバージョンに更新した後で、プロファイルのこれらのオプションを確認してください。
+  -
+- 絵文字がより多くの言語で報告されるようになりました。 (#14433)
+- 一部の要素で、点字で注釈が表示されなかった不具合を修正しました。 (#13815)
+- 設定の変更において「既定」オプションと既定の値を切り替えたときに正しく保存されない問題を修正しました。 (#14133)
+- NVDAを設定する場合、少なくとも1つのキーが常にNVDAキーとして定義されます。 (#14527)
+- 通知領域からNVDAメニューを開くとき、利用可能な更新がないにも関わらず保留中の更新を提示していた問題を修正しました。 (#14523)
+- ChromeやFirefoxなどのWebブラウザで、ファイルのダウンロードなどのアラートが、音声だけでなく点字でも表示されるようになりました。 (#14562)
+-
+
+
+== 開発者向けの変更 ==
+注意: このリリースでは、既存のアドオンとの互換性が失われています。
+アドオンは再テストとマニフェストの更新を行う必要があります。
+NVDA の API 廃止および削除のプロセスについては [the developer guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] を参照してください。
+
+- 非英語の環境でシステムテストが失敗しないようになりました。 (#13362)
+- Windows 11 on ARM において x64 apps は ARM64 アプリと判定されないようになりました。 (#14403)
+- 新しい UI オートメーションのシナリオでは ``SearchField`` および ``SuggestionListItem`` ``UIA`` ``NVDAObjects`` は不要です。検索候補の自動報告と文字入力は ``controllerFor`` パターンで通知されます。
+この機能は現在 ``behaviours.EditableText`` またはそのベースクラス ``NVDAObject`` を介して使用できます。
+- UIA debug logging カテゴリは有効化すると UIA イベントハンドラやユーティリティのログを従来よりも多く出力します。 (#14256)
+- NVDAHelper ビルドの標準の更新 (#13072)
+  - C++17 から C++20 標準に移行しました。
+  - '/permissive-' コンパイラーフラグを指定しています。より厳格に標準に準拠する '/Zc' が設定されます。
+  -
+- ドライバーやアドオンなどのプラグインオブジェクトについて NVDA Python コンソールで得られる情報が改善されました。 (#14463)
+- NVDA は Visual Studio 2022 でコンパイルできるようになりました。 Visual Studio 2019 build tools は不要となりました。
+- NVDA がフリーズした場合に得られるログが詳細になり、デバッグしやすくなりました。 (#14309)
+- シングルトン ``braille._BgThread`` クラスが ``hwIo.ioThread.IoThread`` に変更されました。 (#14130)
+  - このクラスの単一のインスタンス ``hwIo.bgThread`` (NVDA core 内) はスレッドセーフな点字ディスプレイドライバーのためのバックグラウンド I/O を提供します。
+  - 新しいクラスはシングルトンとして設計されていません。アドオン開発者はハードウェア I/O を行う場合にそれぞれインスタンスを作る必要があります。
+  -
+- PC のプロセッサーアーキテクチャーは ``winVersion.WinVersion.processorArchitecture`` attribute から取得できます。(#14439)
+- 以下の extension point が追加されました。 (#14503)
+  - ``inputCore.decide_executeGesture``
+  - ``tones.decide_beep``
+  - ``nvwave.decide_playWaveFile``
+  - ``braille.pre_writeCells``
+  - ``braille.filter_displaySize``
+  - ``braille.decide_enabled``
+  - ``braille.displayChanged``
+  - ``braille.displaySizeChanged``
+  - 
+-
+
+=== API の重大な変更 ===
+API の重大な変更があります。
+あなたがアドオン開発者で新しいAPIへの移行において問題がある場合は GitHub issue を作成してください。
+- 設定ファイルの仕様を変更しました。キーの削除や変更があります:
+  - ``[documentFormatting]`` セクション (#14233):
+    - ``reportLineIndentation`` の値は boolean から int value (0 to 3) に変更されました。
+    - ``reportLineIndentationWithTones`` は削除されました。
+    - ``reportBorderStyle`` と ``reportBorderColor`` は削除されました。かわりに ``reportCellBorders`` を使用します。
+    -
+  - ``[braille]`` セクション (#14233):
+    - ``noMessageTimeout`` は削除されました。かわりに ``showMessages`` を使います。
+    - ``messageTimeout`` が 0 の値を取ることはなくなりました。かわりに ``showMessages`` を使います。
+    - ``autoTether`` は削除されました。 ``tetherTo`` は "auto" の値を取ることができます。
+    -
+  - ``[keyboard]`` セクション (#14528):
+    - ``useCapsLockAsNVDAModifierKey``, ``useNumpadInsertAsNVDAModifierKey``, ``useExtendedInsertAsNVDAModifierKey`` は削除されました。
+    かわりに ``NVDAModifierKeys`` を使います。
+    -
+  -
+- ``NVDAHelper.RemoteLoader64`` クラスは削除されました。代替はありません。 (#14449)
+- ``winAPI.sessionTracking`` から以下の関数が削除されました。代替はありません。(#14416, #14490)
+  - ``isWindowsLocked``
+  - ``handleSessionChange``
+  - ``unregister``
+  - ``register``
+  - ``isLockStateSuccessfullyTracked``
+  - 
+- braille handler を ``braille.handler.enabled`` で有効化／無効化できなくなりました。
+braille handler を無効化したい場合は ``braille.handler.decide_enabled`` にハンドラーを登録します。 (#14503)
+- braille handler の display size を ``braille.handler.displaySize`` で変更できなくなりました。
+displaySize を変更したい場合は ``braille.handler.filter_displaySize`` にハンドラーを登録します。
+実装方法の例は ``brailleViewer`` を参照してください。 (#14503)
+- ``addonHandler.Addon.loadModule`` に関する仕様を変更しました。 (#14481)
+  - ``loadModule`` は backslash ではなく dot を区切り文字として使います。
+  例えば "lib\example" は "lib.example" となります。
+  - ``loadModule`` はモジュールの読み込み失敗やエラーで例外を投げます。従来は理由を通知せずに ``None`` を返していました。
+  -
+- 以下はシングルトンではなくなりました。これらの get メソッドは削除されました。
+``Example.get()`` のようなコードは ``Example()`` のように書きます。 (#14248)
+  - ``UIAHandler.customAnnotations.CustomAnnotationTypesCommon``
+  - ``UIAHandler.customProps.CustomPropertiesCommon``
+  - ``NVDAObjects.UIA.excel.ExcelCustomProperties``
+  - ``NVDAObjects.UIA.excel.ExcelCustomAnnotationTypes``
+  - 
+-
+
+
+=== 非推奨となったAPI ===
+- ``NVDAObjects.UIA.winConsoleUIA.WinTerminalUIA`` は非推奨です。 (#14047)
+- ``config.addConfigDirsToPythonPackagePath`` は変更されました。
+かわりに ``addonHandler.packaging.addDirsToPythonPackagePath`` を使います。 (#14350)
+- ``braille.BrailleHandler.TETHER_*`` は非推奨です。
+かわりに ``configFlags.TetherTo.*.value`` を使います。 (#14233)
+- ``utils.security.postSessionLockStateChanged`` は非推奨です。
+かわりに ``utils.security.post_sessionLockStateChanged`` を使います。 (#14486)
+- ``NVDAObject.hasDetails``, ``NVDAObject.detailsSummary``, ``NVDAObject.detailsRole`` は非推奨です。
+かわりに ``NVDAObject.annotations`` を使います。 (#14507)
+- ``keyboardHandler.SUPPORTED_NVDA_MODIFIER_KEYS`` は非推奨です。直接の代替はありません。
+``config.configFlags.NVDAKey`` に移行してください。 (#14528)
+- ``gui.MainFrame.evaluateUpdatePendingUpdateMenuItemCommand`` は非推奨です。
+かわりに ``gui.MainFrame.SysTrayIcon.evaluateUpdatePendingUpdateMenuItemCommand`` を使います。 (#14523)
+-
+
+
 = 2022.4 =
 このリリースではテーブルの行や列の読み上げなど、新しいコマンドが追加されました。
 ユーザーガイドに「クイックスタートガイド」を追加しました。
@@ -402,7 +574,7 @@ Microsoft Office 16.0.15000 およびそれ以降と Windows 11 の組み合わ�
 清華 Notetaker、Papenmeier、HID 点字仕様などの点字ディスプレイドライバを改善しました。
 また、電卓、コンソール、ターミナル、メール、絵文字パネルなどのさまざまな Windows 11 のアプリに対応するバグ修正を行いました。
 
-eSpeak-NG と LibLouis を更新し、新しい日本語（6点漢点字）、ドイツ語、カタロニア語の点字テーブルを追加しました。
+eSpeak-NG と LibLouis を更新し、新しい日本語（漢点字）、ドイツ語、カタロニア語の点字テーブルを追加しました。
 
 注意:
  - このリリースでは、既存のアドオンとの互換性が失われています。
@@ -437,7 +609,7 @@ eSpeak-NG と LibLouis を更新し、新しい日本語（6点漢点字）、�
 == 変更点 ==
 - Espeak-ng をバージョン 1.51-dev commit ``7e5457f91e10`` に更新しました。 (#12950)
 - liblouis 点訳エンジンを [3.21.0 https://github.com/liblouis/liblouis/releases/tag/v3.21.0] に更新しました。 (#13141, #13438)
-  - 新しいテーブル: 日本語6点漢点字
+  - 新しいテーブル: 日本語漢点字
   - 新しいテーブル: ドイツ語6点コンピューター点字
   - 新しいテーブル: カタロニア語1級点字 (#13408)
   - 
@@ -3333,10 +3505,10 @@ NVDA 2019.3は非常に重要なリリースです。Python 2からPython 3へ�
 % - This allows for embedded indexes, parameter changes, etc.
 % - Drivers should implement SynthDriver.speak() instead of SynthDriver.speakText() and SynthDriver.speakCharacter().
 % - The old methods will be used if SynthDriver.speak() is not implemented, but they are deprecated and will be removed in a future release.
-%- gui.execute() has been removed. wx.CallAfter() should be used instead.
+%- gui.execute() has been removed. wx.CallAfter() should be used を使います。
 %- gui.scriptUI has been removed.
 % - For message dialogs, use wx.CallAfter(gui.messageBox, ...).
-% - For all other dialogs, real wx dialogs should be used instead.
+% - For all other dialogs, real wx dialogs should be used を使います。
 % - A new gui.runScriptModalDialog() function simplifies using modal dialogs from scripts.
 %- Synth drivers can now support boolean settings. See SynthDriverHandler.BooleanSynthSetting.
 %- SCons now accepts a certTimestampServer variable specifying the URL of a timestamping server to use to timestamp authenticode signatures. (#1644)
