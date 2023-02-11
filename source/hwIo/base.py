@@ -70,7 +70,6 @@ class IoBase(object):
 		self._recvEvt = winKernel.createEvent()
 		self._ioDoneInst = LPOVERLAPPED_COMPLETION_ROUTINE(self._ioDone)
 		self._writeOl = OVERLAPPED()
-		# Do the initial read.
 		if ioThread is None:
 			from . import bgThread as ioThread
 		self._ioThreadRef = weakref.ref(ioThread)
