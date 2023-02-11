@@ -25,8 +25,9 @@ from logHandler import log
 import config
 import time
 from .ioThread import IoThread
+# LPOVERLAPPED_COMPLETION_ROUTINE is imported for backwards compatibility.
+from .ioThread import LPOVERLAPPED_COMPLETION_ROUTINE  # NOQA: F401
 
-LPOVERLAPPED_COMPLETION_ROUTINE = ctypes.WINFUNCTYPE(None, DWORD, DWORD, serial.win32.LPOVERLAPPED)
 
 def _isDebug():
 	return config.conf["debugLog"]["hwIo"]
@@ -68,7 +69,6 @@ class IoBase(object):
 		self._readBuf = ctypes.create_string_buffer(onReceiveSize)
 		self._readOl = OVERLAPPED()
 		self._recvEvt = winKernel.createEvent()
-		self._ioDoneInst = LPOVERLAPPED_COMPLETION_ROUTINE(self._ioDone)
 		self._writeOl = OVERLAPPED()
 		if ioThread is None:
 			from . import bgThread as ioThread
@@ -149,10 +149,19 @@ class IoBase(object):
 				log.debugWarning("Couldn't delete object gracefully", exc_info=True)
 
 	def _asyncRead(self):
+		ioThread = self._ioThreadRef()
+		if not ioThread:
+			raise RuntimeError("I/O thread is no longer available")
 		# Wait for _readSize bytes of data.
 		# _ioDone will call onReceive once it is received.
 		# onReceive can then optionally read additional bytes if it knows these are coming.
-		ctypes.windll.kernel32.ReadFileEx(self._file, self._readBuf, self._readSize, byref(self._readOl), self._ioDoneInst)
+		ctypes.windll.kernel32.ReadFileEx(
+			self._file,
+			self._readBuf,
+			self._readSize,
+			byref(self._readOl),
+			ioThread.queueCompletionRoutine(self._ioDone)
+		)
 
 	def _ioDone(self, error, numberOfBytes: int, overlapped):
 		if not self._onReceive:

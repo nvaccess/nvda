@@ -10,10 +10,19 @@ import threading
 import winKernel
 import typing
 from logHandler import log
+import serial.win32
 import extensionPoints
 import uuid
 from contextlib import contextmanager
+from extensionPoints.util import AnnotatableWeakref, BoundMethodWeakref
+from inspect import ismethod
 
+LPOVERLAPPED_COMPLETION_ROUTINE = ctypes.WINFUNCTYPE(
+	None,
+	ctypes.wintypes.DWORD,
+	ctypes.wintypes.DWORD,
+	serial.win32.LPOVERLAPPED
+)
 pre_IoThreadStop = extensionPoints.Action()
 """
 Executed when the i/o thread is to be stopped.
@@ -59,19 +68,56 @@ class IoThread(threading.Thread):
 
 		# generate an UUID that will be used to cleanup the APC when it is finished
 		apcUuid = uuid.uuid4()
+		# Generate a weak reference to the function
+		reference = BoundMethodWeakref(func) if ismethod(func) else AnnotatableWeakref(func)
+		reference.funcName = repr(func)
 
 		@winKernel.PAPCFUNC
 		def apc(param: int):
 			with self.autoDeleteApcReference(apcUuid):
 				if self.exit:
 					return
+				function = reference()
+				if not function:
+					log.error(f"Not executing queued APC {reference.funcName} because reference died")
+					return
 				try:
-					func(param)
+					function(param)
 				except Exception:
-					log.error("Error in APC function queued to IoThread", exc_info=True)
+					log.error(f"Error in APC function {function!r} queued to IoThread", exc_info=True)
 
 		self._apcReferences[apcUuid] = apc
 		ctypes.windll.kernel32.QueueUserAPC(apc, self.handle, param)
+
+	def queueCompletionRoutine(
+			self,
+			func: typing.Callable[[int, int, serial.win32.LPOVERLAPPED], None],
+	):
+		if not self.is_alive():
+			raise RuntimeError("Thread is not running")
+
+		# generate an UUID that will be used to cleanup the func when it is finished
+		ocrUuid = uuid.uuid4()
+		# Generate a weak reference to the function
+		reference = BoundMethodWeakref(func) if ismethod(func) else AnnotatableWeakref(func)
+		reference.funcName = repr(func)
+
+		@LPOVERLAPPED_COMPLETION_ROUTINE
+		def overlappedCompletionRoutine(error: int, numberOfBytes: int, overlapped: serial.win32.LPOVERLAPPED):
+			with self.autoDeleteApcReference(ocrUuid):
+				if self.exit:
+					return
+				function = reference()
+				if not function:
+					log.error(f"Not executing completion routine {reference.funcName} because reference died")
+					return
+				try:
+					function(error, numberOfBytes, overlapped)
+				except Exception:
+					log.error(f"Error in overlapped completion routine {func!r}", exc_info=True)
+
+		self._apcReferences[ocrUuid] = overlappedCompletionRoutine
+		return overlappedCompletionRoutine
 
 	def stop(self, timeout: typing.Optional[float] = None):
 		if not self.is_alive():

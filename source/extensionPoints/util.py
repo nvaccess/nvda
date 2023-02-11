@@ -27,11 +27,14 @@ class BoundMethodWeakref(object):
 	To get the actual method, you call an instance as you would a weakref.ref.
 	"""
 
-	def __init__(self, target, onDelete):
-		def onRefDelete(weak):
-			"""Calls onDelete for our BoundMethodWeakref when one of the individual weakrefs (instance or function) dies.
-			"""
-			onDelete(self)
+	def __init__(self, target, onDelete=None):
+		if onDelete:
+			def onRefDelete(weak):
+				"""Calls onDelete for our BoundMethodWeakref when one of the individual weakrefs (instance or function) dies.
+				"""
+				onDelete(self)
+		else:
+			onRefDelete = None
 		inst = target.__self__
 		func = target.__func__
 		self.weakInst = weakref.ref(inst, onRefDelete)
