@@ -74,6 +74,8 @@ class IoBase(object):
 		if ioThread is None:
 			from . import bgThread as ioThread
 		self._ioThreadRef = weakref.ref(ioThread)
+		# Do the initial read.
+		self._initialRead()
 
 	def _initialRead(self):
 		"""Performs the initial background read by queuing it as an APC to the IO background thread
