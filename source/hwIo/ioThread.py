@@ -13,7 +13,7 @@ from logHandler import log
 import serial.win32
 import extensionPoints
 import uuid
-wfrom contextlib import contextmanager
+from contextlib import contextmanager
 from extensionPoints.util import AnnotatableWeakref, BoundMethodWeakref
 from inspect import ismethod
 
