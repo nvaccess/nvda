@@ -7,11 +7,14 @@ What's New in NVDA
 A new option has been added, "Paragraph Style" in "Document Navigation".
 This can be used with text editors that do not support paragraph navigation natively, such as Notepad and Notepad++.
 
+There is a new global command to report the destination of a link, mapped to ``NVDA+k``.
+
 Support for annotated web content (such as comments and footnotes) has improved.
-Press ``nvda+d`` to cycle through summaries when annotations are reported (e.g. "has comment, has footnote").
+Press ``NVDA+d`` to cycle through summaries when annotations are reported (e.g. "has comment, has footnote").
 
 Tivomatic Caiku Albatross 46/80 braille displays are now supported.
 
+Support for ARM64 and AMD64 versions of Windows has improved.
 There are many bug fixes, notably Windows 11 fixes.
 
 eSpeak, LibLouis, Sonic rate boost and Unicode CLDR has been updated.
@@ -32,11 +35,14 @@ There are new Georgian, Swahili (Kenya) and Chichewa (Malawi) braille tables.
 This adds support for single line break (normal) and multi line break (block) paragraph navigation.
 This can be used with text editors that do not support paragraph navigation natively, such as Notepad and Notepad++. (#13797)
 - The presence of multiple annotations are now reported.
-``nvda+d`` now cycles through reporting the summary of each annotation target for origins with multiple annotation targets.
+``NVDA+d`` now cycles through reporting the summary of each annotation target for origins with multiple annotation targets.
 For example, when text has a comment and a footnote associated with it. (#14507, #14480)
 - Added support for Tivomatic Caiku Albatross 46/80 braille displays. (#13045)
-- New global command: Report link destination (NVDA+k). Pressed once will speak/braille the destination of the link that is in the navigator object. Pressing twice will show it in a window, for more detailed review. (#14583)
-- New unmapped global command (Tools category): Report link destination in a window. Same as pressing NVDA+k twice, but may be more useful for braille users. (#14583)
+- New global command: Report link destination (``NVDA+k``).
+Pressed once will speak/braille the destination of the link that is in the navigator object.
+Pressing twice will show it in a window, for more detailed review. (#14583)
+- New unmapped global command (Tools category): Report link destination in a window.
+Same as pressing ``NVDA+k`` twice, but may be more useful for braille users. (#14583)
 -
 
 
@@ -90,7 +96,7 @@ For example, when text has a comment and a footnote associated with it. (#14507,
 - Remaining, elapsed and total time is now reported correctly for audio files over a day long in foobar2000. (#14127)
 - In web browsers such as Chrome and Firefox, alerts such as file downloads are shown in braille in addition to being spoken. (#14562)
 - Bug fixed when navigating to the first and last column in a table in Firefox (#14554)
-- When NVDA is launched with --lang=Windows parameter, it is again possible to open NVDA's General settings dialog. (#14407)
+- When NVDA is launched with ``--lang=Windows`` parameter, it is again possible to open NVDA's General settings dialog. (#14407)
 -
 
 
@@ -102,14 +108,14 @@ Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documen
 - System test should now pass when run locally on non-English systems. (#13362)
 - In Windows 11 on ARM, x64 apps are no longer identified as ARM64 applications. (#14403)
 - It is no longer necessary to use ``SearchField`` and ``SuggestionListItem`` ``UIA`` ``NVDAObjects`` in new UI Automation scenarios, where automatic reporting of search suggestions, and where typing has been exposed via UI Automation with the ``controllerFor`` pattern.
-This functionality is now available generically via ``behaviours.EditableText`` and the base ``NVDAObject`` respectively.
-- the UIA debug logging category when enabled now produces significantly more logging for UIA event handlers and utilities. (#14256)
+This functionality is now available generically via ``behaviours.EditableText`` and the base ``NVDAObject`` respectively. (#14222)
+- The UIA debug logging category when enabled now produces significantly more logging for UIA event handlers and utilities. (#14256)
 - NVDAHelper build standards updated. (#13072)
   - Now uses the C++20 standard, was C++17.
-  - Now uses the '/permissive-' compiler flag which disables permissive behaviors, and sets the '/Zc' compiler options for strict conformance.
+  - Now uses the ``/permissive-`` compiler flag which disables permissive behaviors, and sets the ``/Zc`` compiler options for strict conformance.
   -
 - Some plugin objects (e.g. drivers and add-ons) now have a more informative description in the NVDA python console. (#14463)
-- NVDA can now be fully compiled with Visual Studio 2022, no longer requiring the Visual Studio 2019 build tools.
+- NVDA can now be fully compiled with Visual Studio 2022, no longer requiring the Visual Studio 2019 build tools. (#14326)
 - More detailed logging for NVDA freezes to aid debugging. (#14309)
 - The singleton ``braille._BgThread`` class has been replaced with ``hwIo.ioThread.IoThread``. (#14130)
   - A single instance ``hwIo.bgThread`` (in NVDA core) of this class provides background i/o for thread safe braille display drivers.
