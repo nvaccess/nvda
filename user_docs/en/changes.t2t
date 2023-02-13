@@ -35,6 +35,8 @@ This can be used with text editors that do not support paragraph navigation nati
 ``nvda+d`` now cycles through reporting the summary of each annotation target for origins with multiple annotation targets.
 For example, when text has a comment and a footnote associated with it. (#14507, #14480)
 - Added support for Tivomatic Caiku Albatross 46/80 braille displays. (#13045)
+- New global command: Report link destination (NVDA+k). Pressed once will speak/braille the destination of the link that is in the navigator object. Pressing twice will show it in a window, for more detailed review. (#14583)
+- New unmapped global command (Tools category): Report link destination in a window. Same as pressing NVDA+k twice, but may be more useful for braille users. (#14583)
 -
 
 
@@ -85,7 +87,10 @@ For example, when text has a comment and a footnote associated with it. (#14507,
 - Fixed an issue where config changes not save correctly when changing between a "Default" option and the value of the "Default" option. (#14133)
 - When configuring NVDA there will always be at least one key is defined as a NVDA key. (#14527)
 - When accessing the NVDA menu via the notification area, NVDA will not suggest a pending update anymore when no update is available. (#14523)
+- Remaining, elapsed and total time is now reported correctly for audio files over a day long in foobar2000. (#14127)
 - In web browsers such as Chrome and Firefox, alerts such as file downloads are shown in braille in addition to being spoken. (#14562)
+- Bug fixed when navigating to the first and last column in a table in Firefox (#14554)
+- When NVDA is launched with --lang=Windows parameter, it is again possible to open NVDA's General settings dialog. (#14407)
 -
 
 
@@ -121,6 +126,7 @@ This functionality is now available generically via ``behaviours.EditableText`` 
   - ``braille.displayChanged``
   - ``braille.displaySizeChanged``
   - 
+- It is possible to set useConfig to False on supported settings for a synthesizer driver. (#14601)
 -
 
 === API Breaking Changes ===
@@ -159,6 +165,12 @@ Refer to ``brailleViewer`` for an example on how to do this. (#14503)
   - ``loadModule`` now expects dot as a separator, rather than backslash.
   For example "lib.example" instead of "lib\example".
   - ``loadModule`` now raises an exception when a module can't be loaded or has errors, instead of silently returning ``None`` without giving information about the cause.
+  -
+- The following symbols have been removed from ``appModules.foobar2000`` with no direct replacement. (#14570)
+  - ``statusBarTimes``
+  - ``parseIntervalToTimestamp``
+  - ``getOutputFormat``
+  - ``getParsingFormat``
   -
 - The following are no longer singletons - their get method has been removed.
 Usage of ``Example.get()`` is now ``Example()``. (#14248)
