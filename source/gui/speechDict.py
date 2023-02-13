@@ -108,7 +108,7 @@ class DictionaryEntryDialog(
 		except RegexpError as e:
 			log.debugWarning(f"Could not add dictionary entry due to regex error in the pattern field : {e}")
 			if entryType != speechDictHandler.ENTRY_TYPE_REGEXP:
-				raise(e)
+				raise e
 			gui.messageBox(
 				# Translators: This is an error message to let the user know that the dictionary entry is not valid.
 				_("Regular Expression error in the pattern field: \"{error}\".").format(error=e),
@@ -124,7 +124,7 @@ class DictionaryEntryDialog(
 		except RegexpError as e:
 			log.debugWarning(f"Could not add dictionary entry due to regex error in the replacement field : {e}")
 			if entryType != speechDictHandler.ENTRY_TYPE_REGEXP:
-				raise(e)
+				raise e
 			gui.messageBox(
 				# Translators: This is an error message to let the user know that the dictionary entry is not valid.
 				_("Regular Expression error in the replacement field: \"{error}\".").format(error=e),
