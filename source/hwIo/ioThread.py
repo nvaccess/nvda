@@ -79,7 +79,7 @@ class IoThread(threading.Thread):
 					return
 				function = reference()
 				if not function:
-					log.error(f"Not executing queued APC {reference.funcName} because reference died")
+					log.debugWarning(f"Not executing queued APC {reference.funcName} because reference died")
 					return
 				try:
 					function(param)
@@ -109,7 +109,7 @@ class IoThread(threading.Thread):
 					return
 				function = reference()
 				if not function:
-					log.error(f"Not executing completion routine {reference.funcName} because reference died")
+					log.debugWarning(f"Not executing completion routine {reference.funcName} because reference died")
 					return
 				try:
 					function(error, numberOfBytes, overlapped)
