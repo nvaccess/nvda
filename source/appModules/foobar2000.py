@@ -44,9 +44,9 @@ def _getTimeOutputFormat(timeStr: str) -> Optional[TimeOutputFormat]:
 	timestampRe = re.compile(
 		r"^"
 		r"(?:(?P<D>[0-9]+)d )?"
-		r"(?:(?P<HH_MM>[0-9]{2}):)?"  # if both HH_MM and MM match, the time is HH_MM:MM:SS in HH:MM:SS format
-		r"(?:(?P<MM>[0-9]{2}):)?"  # if HH_MM matches and not MM, the time is HH_MM:SS in MM:SS format
-		r"(?P<SS>[0-9]{2})"
+		r"(?:(?P<HH_MM>[0-9]{1,2}):)?"  # if both HH_MM and MM match, the time is HH_MM:MM:SS in HH:MM:SS format
+		r"(?:(?P<MM>[0-9]{1,2}):)?"  # if HH_MM matches and not MM, the time is HH_MM:SS in MM:SS format
+		r"(?P<SS>[0-9]{1,2})"
 		r"$",
 	)
 	match = timestampRe.match(timeStr)
