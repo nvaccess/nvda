@@ -30,6 +30,7 @@ class TestBgThreadApc(unittest.TestCase):
 		# Initially, our event isn't set
 		self.assertFalse(self.event.is_set())
 		# Queue a lambda as APC that sets the event
-		hwIo.bgThread.queueAsApc(lambda param: self.event.set())
+		setter = lambda param: self.event.set()
+		hwIo.bgThread.queueAsApc(setter)
 		# Wait for atmost 2 seconds for the event to be set
 		self.assertTrue(self.event.wait(2))

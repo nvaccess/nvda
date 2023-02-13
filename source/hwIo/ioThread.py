@@ -13,7 +13,7 @@ from logHandler import log
 import serial.win32
 import extensionPoints
 import uuid
-from contextlib import contextmanager
+wfrom contextlib import contextmanager
 from extensionPoints.util import AnnotatableWeakref, BoundMethodWeakref
 from inspect import ismethod
 
@@ -126,7 +126,8 @@ class IoThread(threading.Thread):
 		# Wake up the thread. It will exit when it sees exit is True.
 		# We do this by queuing a fake lambda that does nothing.
 		# L{queueAsApc} will ensure that the APC exits early when the thread is about to exit.
-		self.queueAsApc(lambda param: None)
+		fakeApc = lambda param: None
+		self.queueAsApc(fakeApc)
 		self.join(timeout)
 		self.exit = False
 		winKernel.closeHandle(self.handle)

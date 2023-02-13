@@ -83,7 +83,7 @@ class IoBase(object):
 		ioThread = self._ioThreadRef()
 		if not ioThread:
 			raise RuntimeError("I/O thread is no longer available")
-		ioThread.queueAsApc(lambda param: self._asyncRead())
+		ioThread.queueAsApc(self._asyncRead)
 
 	def waitForRead(self, timeout:Union[int, float]) -> bool:
 		"""Wait for a chunk of data to be received and processed.
@@ -148,7 +148,7 @@ class IoBase(object):
 			if _isDebug():
 				log.debugWarning("Couldn't delete object gracefully", exc_info=True)
 
-	def _asyncRead(self):
+	def _asyncRead(self, param: Optional[int] = None):
 		ioThread = self._ioThreadRef()
 		if not ioThread:
 			raise RuntimeError("I/O thread is no longer available")
