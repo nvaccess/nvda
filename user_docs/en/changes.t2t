@@ -12,6 +12,10 @@ What's New in NVDA
 
 
 == Bug Fixes ==
+- NVDA will no longer unnecessarily switch to no braille multiple times during auto detection, resulting in a cleaner log and less overhead. (#14524)
+- NVDA will now switch back to USB if a HID Bluetooth device (such as the HumanWare Brailliant or APH Mantis) is automatically detected and an USB connection becomes available.
+This only worked for Bluetooth Serial ports before. (#14524)
+-
 
 
 == Changes for Developers ==
