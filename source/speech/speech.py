@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2022 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
+# Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
 # Julien Cochuyt, Derek Riemer, Cyrille Bougot
 
 """High-level functions to speak information.
@@ -1755,7 +1755,7 @@ def getPropertiesSpeech(  # noqa: C901
 				textList.append(rowNumberTranslation)
 				if rowSpan>1 and columnSpan<=1:
 					# Translators: Speaks the row span added to the current row number (example output: through 5).
-					rowSpanAddedTranslation: str = _("through %s") % (rowNumber + rowSpan - 1)
+					rowSpanAddedTranslation: str = _("through {endRow}").format(endRow=rowNumber + rowSpan - 1)
 					textList.append(rowSpanAddedTranslation)
 			_speechState.oldRowNumber = rowNumber
 			_speechState.oldRowSpan = rowSpan
@@ -1773,7 +1773,7 @@ def getPropertiesSpeech(  # noqa: C901
 				textList.append(colNumberTranslation)
 				if columnSpan>1 and rowSpan<=1:
 					# Translators: Speaks the column span added to the current column number (example output: through 5).
-					colSpanAddedTranslation: str = _("through %s") % (columnNumber + columnSpan - 1)
+					colSpanAddedTranslation: str = _("through {endCol}").format(endCol=columnNumber + columnSpan - 1)
 					textList.append(colSpanAddedTranslation)
 			_speechState.oldColumnNumber = columnNumber
 			_speechState.oldColumnSpan = columnSpan
@@ -2072,7 +2072,14 @@ def getControlFieldSpeech(  # noqa: C901
 		# #10095, #3321, #709: Report the name and description of groupings (such as fieldsets) and tab pages
 		# #13307: report the label for landmarks and regions
 		nameAndRole = nameSequence[:]
-		nameAndRole.extend(roleTextSequence)
+		if (
+			role not in (
+				controlTypes.Role.LANDMARK,
+				controlTypes.Role.REGION,
+			)
+			or config.conf["documentFormatting"]["reportLandmarks"]
+		):
+			nameAndRole.extend(roleTextSequence)
 		types.logBadSequenceTypes(nameAndRole)
 		return nameAndRole
 	elif (
