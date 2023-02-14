@@ -32,9 +32,24 @@ import baseObject
 import easeOfAccess
 from fileUtils import FaultTolerantFile
 import extensionPoints
+
 from . import profileUpgrader
+from . import aggregatedSection
 from .configSpec import confspec
-from typing import Any, Dict, List, Optional, Set
+from .featureFlag import (
+	_transformSpec_AddFeatureFlagDefault,
+	_validateConfig_featureFlag,
+)
+from typing import (
+	Any,
+	Dict,
+	List,
+	Optional,
+	Set,
+	Tuple,
+)
+import NVDAState
+
 
 #: True if NVDA is running as a Windows Store Desktop Bridge application
 isAppX=False
@@ -62,12 +77,19 @@ post_configReset = extensionPoints.Action()
 
 def __getattr__(attrName: str) -> Any:
 	"""Module level `__getattr__` used to preserve backward compatibility."""
-	if attrName == "NVDA_REGKEY" and globalVars._allowDeprecatedAPI:
+	if attrName == "NVDA_REGKEY" and NVDAState._allowDeprecatedAPI():
 		log.warning("NVDA_REGKEY is deprecated, use RegistryKey.NVDA instead.")
 		return RegistryKey.NVDA.value
-	if attrName == "RUN_REGKEY" and globalVars._allowDeprecatedAPI:
+	if attrName == "RUN_REGKEY" and NVDAState._allowDeprecatedAPI():
 		log.warning("RUN_REGKEY is deprecated, use RegistryKey.RUN instead.")
 		return RegistryKey.RUN.value
+	if attrName == "addConfigDirsToPythonPackagePath" and NVDAState._allowDeprecatedAPI():
+		log.warning(
+			"addConfigDirsToPythonPackagePath is deprecated, "
+			"use addonHandler.packaging.addDirsToPythonPackagePath instead."
+		)
+		from addonHandler.packaging import addDirsToPythonPackagePath
+		return addDirsToPythonPackagePath
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
 
 
@@ -468,33 +490,18 @@ def setStartOnLogonScreen(enable: bool) -> None:
 			raise RuntimeError("Slave failed to set startOnLogonScreen")
 
 
-def addConfigDirsToPythonPackagePath(module, subdir=None):
-	"""Add the configuration directories to the module search path (__path__) of a Python package.
-	C{subdir} is added to each configuration directory. It defaults to the name of the Python package.
-	@param module: The root module of the package.
-	@type module: module
-	@param subdir: The subdirectory to be used, C{None} for the name of C{module}.
-	@type subdir: str
+def _transformSpec(spec: ConfigObj):
+	"""To make the spec less verbose, transform the spec:
+	- Add default="default" to all featureFlag items. This is required so that the key can be read,
+	even if it is missing from the config.
 	"""
-	if isAppX or globalVars.appArgs.disableAddons:
-		return
-	# FIXME: this should not be coupled to the config module....
-	import addonHandler
-	for addon in addonHandler.getRunningAddons():
-		addon.addToPackagePath(module)
-	if globalVars.appArgs.secure or not conf['development']['enableScratchpadDir']:
-		return
-	if not subdir:
-		subdir = module.__name__
-	fullPath=os.path.join(getScratchpadDir(),subdir)
-	# Ensure this directory exists otherwise pkgutil.iter_importers may emit None for missing paths.
-	if not os.path.isdir(fullPath):
-		os.makedirs(fullPath)
-	# Insert this path at the beginning  of the module's search paths.
-	# The module's search paths may not be a mutable  list, so replace it with a new one 
-	pathList=[fullPath]
-	pathList.extend(module.__path__)
-	module.__path__=pathList
+	spec.configspec = spec
+	spec.validate(
+		Validator({
+			"featureFlag": _transformSpec_AddFeatureFlagDefault,
+		}), preserve_errors=True,
+	)
+
 
 class ConfigManager(object):
 	"""Manages and provides access to configuration.
@@ -517,13 +524,16 @@ class ConfigManager(object):
 
 	def __init__(self):
 		self.spec = confspec
+		_transformSpec(self.spec)
 		#: All loaded profiles by name.
 		self._profileCache: Optional[Dict[Optional[str], ConfigObj]] = {}
 		#: The active profiles.
 		self.profiles: List[ConfigObj] = []
 		#: Whether profile triggers are enabled (read-only).
 		self.profileTriggersEnabled: bool = True
-		self.validator: Validator = Validator()
+		self.validator: Validator = Validator({
+			"_featureFlag": _validateConfig_featureFlag
+		})
 		self.rootSection: Optional[AggregatedSection] = None
 		self._shouldHandleProfileSwitch: bool = True
 		self._pendingHandleProfileSwitch: bool = False
@@ -1033,19 +1043,36 @@ class ConfigValidationData(object):
 	# the default value, used when config is missing.
 	default = None  # converted to the appropriate type
 
-class AggregatedSection(object):
+
+class AggregatedSection:
 	"""A view of a section of configuration which aggregates settings from all active profiles.
 	"""
+	# TODO: move to config.aggregatedSection
 
-	def __init__(self, manager, path, spec, profiles):
+	def __init__(
+			self,
+			manager: ConfigManager,
+			path: Tuple[str],
+			spec: ConfigObj,
+			profiles: List[ConfigObj]
+	):
 		self.manager = manager
 		self.path = path
 		self._spec = spec
 		#: The relevant section in all of the profiles.
 		self.profiles = profiles
-		self._cache = {}
+		self._cache: aggregatedSection._cacheT = {}
 
-	def __getitem__(self, key, checkValidity=True):
+	@staticmethod
+	def _isSection(val: Any) -> bool:
+		"""Checks if a given value or spec is a section of a config profile."""
+		return isinstance(val, dict)
+
+	def __getitem__(
+			self,
+			key: aggregatedSection._cacheKeyT,
+			checkValidity: bool = True
+	):
 		# Try the cache first.
 		try:
 			val = self._cache[key]
@@ -1059,7 +1086,7 @@ class AggregatedSection(object):
 
 		spec = self._spec.get(key)
 		foundSection = False
-		if isinstance(spec, dict):
+		if self._isSection(spec):
 			foundSection = True
 
 		# Walk through the profiles looking for the key.
@@ -1072,7 +1099,7 @@ class AggregatedSection(object):
 				# Indicate that this key doesn't exist in this profile.
 				subProfiles.append(None)
 				continue
-			if isinstance(val, dict):
+			if self._isSection(val):
 				foundSection = True
 				subProfiles.append(val)
 			else:
@@ -1183,13 +1210,16 @@ class AggregatedSection(object):
 			newdict[key] = value
 		return newdict
 
-	def __setitem__(self, key, val):
+	def __setitem__(
+			self,
+			key: aggregatedSection._cacheKeyT,
+			val: aggregatedSection._cacheValueT
+	):
 		spec = self._spec.get(key) if self.spec else None
-		if isinstance(spec, dict) and not isinstance(val, dict):
+		if self._isSection(spec) and not self._isSection(val):
 			raise ValueError("Value must be a section")
 
-		if isinstance(spec, dict) or isinstance(val, dict):
-			# The value is a section.
+		if self._isSection(spec) or self._isSection(val):
 			# Update the profile.
 			updateSect = self._getUpdateSection()
 			updateSect[key] = val
@@ -1220,8 +1250,13 @@ class AggregatedSection(object):
 		except KeyError:
 			pass
 		else:
-			if val == curVal:
-				# The value isn't different, so there's nothing to do.
+			if self._isSection(val) or self._isSection(curVal):
+				# If value is a section, continue to update
+				pass
+			elif str(val) == str(curVal):
+				# Check str comparison as this is what is written to the config.
+				# If the value is unchanged, do not update
+				# or mark the profile as dirty.
 				return
 
 		# Set this value in the most recently activated profile.

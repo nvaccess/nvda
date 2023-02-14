@@ -59,17 +59,22 @@ $	долар	all	norep
 %	відсоток	some
 ‰	проміле	some
 &	амперсанд	some
-'	апостроф	all
+'	апостроф	all	always
+ʼ	апостроф	all	always
 (	ліва дужка	most
 )	права дужка	most
 *	зірочка	some
 ,	кома	all	always
+、	ідеографічна кома	all	always
+،	арабська кома	all	always
 -	дефіс	most
 .	крапка	some
 /	слеш	some
 :	двокрапка	most	norep
 ;	крапка з комою	most
+؛	арабська крапка з комою	most
 ?	знак питання	all	always
+؟	арабський знак питання	all
 @	песик	some
 [	ліва квадратна дужка	most
 ]	права квадратна дужка	most
@@ -98,8 +103,8 @@ _	підкреслення	most
 	маркер	some
 “	ліва лапка	most
 ”	права лапка	most
-‘	лівий апостроф	most
-’	правий апостроф	most
+‘	лівий апостроф	most	always
+’	правий апостроф	most	always
 –	коротке тире	most
 —	довге тире	most
 ⁃	маркер-дефіс	none
@@ -177,9 +182,9 @@ _	підкреслення	most
 ‡	подвійний кинджал	some
 ‣	трикутна точка	none
 ✗	позначка у формі ікс	none
-⊕	circled plus	none
-⊖	circled minus	none
-⇄	right arrow over left arrow	none
+⊕	плюс у колі	none
+⊖	мінус у колі	none
+⇄	еквівалентність	none
 
 #Arithmetic operators
 +	плюс	some

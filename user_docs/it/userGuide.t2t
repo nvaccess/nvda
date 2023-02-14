@@ -17,10 +17,12 @@ Lo screen reader è sviluppato da [NV Access https://www.nvaccess.org/], con con
 ++ Caratteristiche principali ++[GeneralFeatures]
 NVDA permette alle persone non vedenti di accedere ed interagire con il sistema operativo Windows e con diverse applicazioni di terze parti.
 
+Un breve video di presentazione in inglese, ["What is NVDA?" https://www.youtube.com/watch?v=tCFyyqy9mqo] is available from the NV Access YouTube channel.
+
 Le caratteristiche principali possono essere riassunte nei seguenti punti:
 - Supporto alle applicazioni più comuni come browser web, posta elettronica, wordprocessor e software per chattare.
 - sintesi vocale incorporata capace di parlare più di 80 lingue
-- Annuncio automatico della formattazione dei caratteri, ad esempio stile, dimensione, nome e errori ortografici
+- annuncio della formattazione del testo , ove disponibile, come nome e dimensione del carattere, errori di stile e di ortografia
 - Annuncio automatico del testo sul quale è posizionato il mouse, con possibilità opzionale di conoscere la posizione del mouse stesso sullo schermo
 - Supporto per molti Display Braille, compresa la possibilità di immettere testo usando la tastiera della barra braille se presente, e il riconoscimento automatico di un gran numero di modelli di barre.
 - Capacità di funzionare interamente da una chiavetta USB o altri dispositivi portatili senza bisogno di installazione
@@ -28,12 +30,22 @@ Le caratteristiche principali possono essere riassunte nei seguenti punti:
 - Tradotto in 54 lingue
 - Supporto ai sistemi operativi più moderni, comprese le edizioni a 32 e 64 bit
 - Supporto al prompt dei comandi di Windows e alle applicazioni lanciate da console
-- Gestione delle schermate di accesso utente e quelle relative alla sicurezza
+- Gestione delle schermate di accesso utente e quelle [relative alla sicurezza #SecureScreens]
 - Lettura di testo e controlli  mentre si utilizza un touch screen.
 - Supporto alle interfacce più comuni per l'accessibilità, come Microsoft Active Accessibility, Java Access Bridge, IAccessible2 e UI Automation.
 - Capacità di evidenziare il focus di sistema.
 -
   
+++ Requisiti di sistema +[SystemRequirements]
+- Sistemi operativi: tutte le versioni a 32 e 64 bit dei Sistemi Windows 7, Windows8, Windows8.1, Windows10, Windows11 e tutte le edizioni Server a partire da Windows Server 2008 r2.
+ - Per Windows 7, NVDA richiede Service Pack 1 o successivo.
+ - Per Windows Server 2008 R2, NVDA richiede Service Pack 1 o successivo.
+ - sono supportate entrambe le varianti AMD64 e ARM64 di Windows.
+  -
+- Circa 150 Megabytes di spazio disco.
+-
+
+
 ++ Internazionalizzazione ++[Internationalization]
 è importante che tutte le persone del mondo, indipendentemente dalla loro nazionalità e dalla lingua parlata, abbiano eguale accesso alle informazioni.
 Oltre all'inglese, NVDA è stato tradotto in 54 lingue ossia Afrikaans, Albanese, Amharico, Arabo, Aragonese, Bulgaro, Burmese, Catalano, Cinese (semplificato e tradizionale), croato, Ceco, Coreano, Danese, Olandese, persiano, finlandese, Francese, Galiziano, Georgiano, tedesco (svizzero e tedesco, Greco, Ebraico, Hindi, Ungherese, Islandese, Irlandese, italiano, giapponese, Kannada, Coreano, Kyrgy, Lituano, Macedone, Mongolo, Nepalese, Norvegese, Polacco, portoghese (brasiliano e portoghese), Punjabi, Rumeno, russo, Serbo, slovacco, sloveno, Spagnolo (colombiano e spagnolo), Svedese, Tamil, Thai, Turco, ucraino e vietnamita.
@@ -65,50 +77,229 @@ Questo si applica a copie originali e modificate del software ed a qualsiasi pro
 Per maggiori informazioni è possibile [Leggere l'intera licenza. https://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 Per i dettagli relativi alle eccezioni, accedere al documento di licenza dal menu NVDA nella sezione "Guida".
 
-+ Requisiti di sistema +[SystemRequirements]
-- Sistemi operativi: tutte le versioni a 32 e 64 bit dei Sistemi Windows 7, Windows8, Windows8.1, Windows10, Windows11 e tutte le edizioni Server a partire da Windows Server 2008 r2.
- - Per Windows 7, NVDA richiede Service Pack 1 o successivo.
- - Per Windows Server 2008 R2, NVDA richiede Service Pack 1 o successivo.
-- Circa 150 Megabytes di spazio disco.
+
++ Guida rapida di NVDA +[NVDAQuickStartGuide]
+
+Questa guida rapida contiene tre sezioni principali: download, configurazione iniziale ed esecuzione di NVDA.
+Seguiranno poi informazioni sulla regolazione delle preferenze, su come partecipare alla community e ottenere aiuto.
+Le informazioni in questa guida rapida fanno riferimento a ciò che viene indicato nel presente manuale in forma estesa.
+Fare riferimento alla Guida utente completa per informazioni più dettagliate su ciascun argomento.
+
+++ Scaricare NVDA ++[GettingAndSettingUpNVDA]
+NVDA è completamente gratuito all'uso da parte di chiunque.
+Non ci sono chiavi di licenza di cui preoccuparsi o abbonamenti costosi da pagare.
+NVDA viene aggiornato, in media, quattro volte all'anno.
+L'ultima versione di NVDA è sempre disponibile alla "pagina di Download" del [sito web NVAccess NVDA_URL].
+
+NVDA funziona con tutte le versioni recenti di Microsoft Windows.
+Controllare la sezione sui [Requisiti di sistema #SystemRequirements] per tutti i dettagli.
+
++++ Procedimento passo passo per scaricare NVDA +++[StepsForDownloadingNVDA]
+
+Questi passaggi presuppongono una certa familiarità con la navigazione in una pagina web.
+
+- Aprire il browser web (Premere il tasto ``Windows``, digitare la parola "browser" senza le virgolette, e premere ``invio``)
+- Caricare l'apposita pagina web di download di NV Access (Premere ``alt+d``, digitare l'indirizzo seguente e premere ``invio``): 
+https://www.nvaccess.org/download 
+- Attivare il pulsante "download"
+- Il browser potrebbe richiedere o meno un'azione inerente il download, accettare la richiesta ed avviare lo scaricamento
+- A seconda del browser, il file potrebbe essere eseguito automaticamente dopo il download
+- Se il file deve essere avviato manualmente, premere ``alt+n`` per passare all'area di notifica, quindi ``alt+e`` per eseguire il file (o i passaggi per il proprio browser)
 -
 
-+ Scaricare e configurare NVDA +[GettingAndSettingUpNVDA]
-Se non si possiede ancora una copia di NVDA, è possibile scaricarla dal sito originale all'indirizzo [www.nvaccess.org NVDA_URL].
+++ Configurazione di NVDA ++[SettingUpNVDA]
 
-Accedere alla sezione download e si troverà l'apposito link per scaricarlo. In alternativa è anche possibile prelevare il software dal [sito della comunità italiana: https://www.nvda.it]
+L'esecuzione del file appena scaricato avvierà una copia temporanea di NVDA.
+Verrà quindi chiesto se si desidera installare NVDA, creare una copia portable o semplicemente continuare a utilizzare la copia temporanea.
 
-Una volta che si esegue il file appena scaricato, verrà lanciata una copia temporanea di NVDA.
-In seguito verrà richiesto se installare NVDA sul disco fisso, se creare una versione portable, oppure continuare ad utilizzare la copia in esecuzione dello screen reader.
+NVDA non ha bisogno dell'accesso a Internet per l'esecuzione o l'installazione una volta che si è scaricato il programma.
+Se disponibile, la connessione ad Internet consente a NVDA di verificare periodicamente la presenza di aggiornamenti.
 
-Se si desidera utilizzare spesso NVDA sul computer, è consigliabile scegliere di installare NVDA nel sistema.
-L'installazione comporta alcuni vantaggi, come la possibilità di avviarsi automaticamente dopo il login dell'utente, la lettura delle finestre di accesso e le schermate generate dal controllo utente per la sicurezza (UAC), ed inoltre verrà creata  un'icona sul desktop e una voce sul menu avvio, tutte caratteristiche non presenti nella versione portable.
-Si ricorda che una volta installato NVDA, sarà sempre possibile creare una copia portable in qualsiasi momento.
++++ Procedimento passo passo per eseguire il programma d'avvio appena scaricato +++[StepsForRunningTheDownloadLauncher]
 
-Se invece si desidera utilizzare NVDA in una chiavetta USB o su altri tipi di supporti scrivibili, allora è necessario selezionare l'opzione che permette di creare una copia portable.
-Questa versione portable potrà, in futuro, essere installata in un computer in qualsiasi momento.
-Comunque, se si desidera utilizzare NVDA in un dispositivo di sola lettura come un CD, basterà copiare il pacchetto scaricato dalla rete. 
-L'esecuzione della versione portable su questo tipo di dispositivi non è supportata al momento.
+Il file di installazione è chiamato "nvda_2022.1.exe" o simile.
+L'anno e la versione sono diversi ad ogni aggiornamento in modo da adeguarsi man mano alle nuove release.
++ Eseguire il file scaricato.
+Viene riprodotta una breve introduzione sonora durante il caricamento di una copia temporanea di NVDA.
+Una volta caricato, NVDA parlerà per l'intera durata della procedura.
++ Viene visualizzata la finestra di NVDA con il contratto di licenza.
+Premere ``freccia giù`` per leggere il contratto di licenza, se lo si desidera.
++ Premere ``tab`` per passare alla casella di controllo "Accetto", quindi premere la ``barra spaziatrice`` per selezionarla.
++ Premere ``tab`` per spostarsi tra le opzioni, quindi premere ``invio`` sull'opzione desiderata.
++
 
-Infine, c'è la possibilità di avvalersi  della copia temporanea di NVDA appena lanciata, questa può essere una buona idea soprattutto  per dimostrazioni o rapidi test, tuttavia non è certo un'opzione da prendere in considerazione per l'utente che usa NVDA quotidianamente, in quanto i tempi di avvio risultano più lunghi.
-
-++ Restrizioni nelle versioni portable o temporanee ++[PortableAndTemporaryCopyRestrictions]
-Oltre al fatto di non poter essere eseguite all'avvio automatico del sistema o dopo la finestra di login, le versioni temporanee o portable di NVDA presentano le seguenti limitazioni:
-- Incapacità di interagire con programmi eseguiti con privilegi di amministratore, a meno che naturalmente lo stesso NVDA non venga eseguito con privilegi amministrativi (non consigliato).
-- Impossibilità di leggere le schermate del controllo Utente (UAC), quando si cerca di avviare un'applicazione con privilegi amministrativi.
-- Windows 8 e successivi: impossibilità di gestire la scrittura o qualsiasi operazione effettuata tramite Touch Screen.
-- Windows 8 e successivi: impossibilità di fornire le caratteristiche di ripetizione dei caratteri digitati e l'utilizzo della modalità navigazione in Windows Store.
-- Windows 8 e successivi: la funzione di attenuazione audio non è supportata.
+Le opzioni sono:
+- "Installa NVDA su questo computer": questa è l'opzione principale che la maggior parte degli utenti seleziona per un utilizzo facile ed immediato di NVDA.
+- "Crea copia portable": consente di configurare ed estrarre NVDA in una cartella qualsiasi senza installarlo.
+Questo è utile su computer senza diritti di amministratore o su un supporto di memoria da portare con sè.
+Una volta selezionato, NVDA segue i passaggi per creare una copia portable.
+La cosa principale che NVDA deve conoscere è la cartella in cui impostare la copia portable.
+- "Continua l'esecuzione": Ciò mantiene in esecuzione la copia temporanea di NVDA.
+Risulta utile per testare le funzionalità in una nuova versione prima di installarla.
+Quando viene selezionata, la finestra di avvio si chiude e la copia temporanea di NVDA continua a funzionare finché non viene chiusa o il PC viene spento.
+Si noti che le modifiche alle impostazioni non vengono salvate.
+- "Annulla": questo chiude NVDA senza eseguire alcuna azione.
 -
 
-++ Installazione di NVDA ++[InstallingNVDA]
-Se si installa NVDA direttamente dal pacchetto principale, sarà sufficiente premere il pulsante Installa NVDA.
-Se invece lo si vuole installare da una copia portable, basterà andare al menu strumenti e selezionare la voce Installa NVDA.
 
-La finestra di dialogo che apparirà richiede una conferma del fatto che si vuole installare NVDA, ed inoltre permette di aggiornare un'eventuale versione dello screen reader già presente sul computer.
-La pressione del pulsante "Continua" darà inizio al processo di installazione.
-Vi sono delle altre opzioni in questa finestra, che analizzeremo più in basso.
-Una volta completata l'installazione, apparirà un messaggio di conferma.
-Premere a questo punto il pulsante OK per far avviare la versione di NVDA appena installata.
+Se si prevede di utilizzare sempre NVDA sul computer, è decisamente consigliabile installare NVDA.
+L'installazione di NVDA consentirà funzionalità aggiuntive come l'avvio automatico dopo l'accesso, la possibilità di leggere le schermate di login e di accesso a Windows e [schermate protette #SecureScreens].
+Tali caratteristiche non sono disponibili con copie portatili e temporanee.
+Per conoscere tutte le limitazioni durante l'esecuzione di una copia portable o temporanea di NVDA, vedere [Restrizioni delle copie portable e temporanee #PortableAndTemporaryCopyRestrictions].
+
+L'installazione offre anche la creazione di una voce nel menu avvio e dei collegamenti sul desktop, oltre a consentire l'avvio di NVDA con ``control+alt+n``.
+
++++ Procedura passo passo per installare NVDA dal programma appena scaricato +++[StepsForInstallingNVDAFromTheLauncher]
+Questi passaggi illustrano le opzioni di configurazione più comuni.
+Per maggiori dettagli sulle opzioni disponibili, vedere [Opzioni di installazione #InstallingNVDA].
+
++ Dal programma di installazione, assicurarsi che la casella di controllo per accettare la licenza sia selezionata.
++ Spostarsi con il tasto ``Tab`` e attivare il pulsante "Installa NVDA su questo computer".
++ Successivamente, ci sono le opzioni per utilizzare NVDA durante l'accesso a Windows e per creare un collegamento sul desktop.
+Esse sono già selezionate per impostazione predefinita.
+Se lo si desidera, premere ``tab`` e ``barra spaziatrice`` per modificare una qualsiasi di queste opzioni, o lasciarle al valore predefinito.
++ Premere ``invio`` per continuare.
++ Viene visualizzata una finestra di dialogo "Controllo account utente (UAC)" di Windows con una richiesta simile a questa: "Vuoi consentire a questa app di apportare modifiche al tuo PC?".
++ Premere ``alt+s`` per accettare.
++ Durante l'installazione di NVDA, apparirà una barra di avanzamento che si riempie sino al termine.
+Durante questo processo NVDA emette un segnale acustico sempre più acuto.
+Questo processo è spesso veloce e potrebbe non essere notato.
++ Viene visualizzata una finestra di dialogo per confermare che l'installazione di NVDA è andata a buon fine.
+Il messaggio consiglia di "Premere OK per avviare la copia installata".
+Premere ``invio`` per avviare la copia installata.
++ Viene visualizzata la finestra di dialogo "Benvenuto in NVDA" e lo screen reader ne leggerà il contenuto.
+Il focus si trova sulla casella combinata "Layout tastiera".
+Per impostazione predefinita, il layout della tastiera "Desktop" utilizza il tastierino numerico per alcune funzioni.
+Se lo si desidera, premere ``freccia giù`` per scegliere il layout della tastiera "Laptop" in modo da assegnare automaticamente le funzioni del tastierino numerico ad altri tasti.
++ Premere ``tab`` per spostarsi su  "Utilizza ``Blocca maiuscole`` come tasto NVDA".
+Per impostazioni predefinita, il tasto NVDA è assegnato a ``Insert``.
+Premere ``Barra spazio`` per selezionare ``blocca maiuscole`` come tasto NVDA.
+Si noti che le impostazioni sul layout della tastiera funzionano separatamente rispetto al tasto NVDA.
+Il tasto NVDA e il layout della tastiera possono essere modificati in seguito dalle Impostazioni tastiera.
++ Utilizzare ``tab`` e ``barra spazio`` per regolare le altre opzioni su questa schermata.
+Si tratta di stabilire se NVDA debba avviarsi automaticamente.
++ Premere ``invio`` per chiudere la finestra di dialogo con NVDA ora in esecuzione.
++
+
+++ Esecuzione di NVDA ++[RunningNVDA]
+
+La guida utente completa di NVDA contiene tutti i comandi del lettore di schermo, suddivisi in diverse sezioni per ottenere un facile riferimento.
+Le tabelle dei comandi sono disponibili anche nella "Guida rapida ai comandi".
+In inglese è stato prodotto del materiale formativo a pagamento che include esempi e ulteriori dettagli.
+"Il materiale formativo di base per NVDA" è disponibile in inglese dal [negozio NV Access http://www.nvaccess.org/shop].
+
+Ecco alcuni comandi di base che vengono utilizzati frequentemente.
+Tutti i comandi sono configurabili, quindi queste sono le sequenze di tasti predefinite per queste funzioni.
+
++++ Il tasto funzione NVDA +++[NVDAModifierKey]
+Per impostazioni predefinite il tasto funzione NVDA è assegnato  allo ``zero del tastierino numerico``, (con ``tastierino`` spento), oppure al tasto ``insert``, vicino al gruppo di sei tasti dove si trovano anche ``cancella``, ``inizio`` e ``fine``.
+Il tasto funzione NVDA può anche essere assegnato al ``blocca maiuscole``.
+
++++ Aiuto immissione +++[InputHelp]
+Per imparare ed esercitarsi sulla posizione dei tasti, premere ``NVDA+1`` per attivare l'Aiuto immissione.
+Con la modalità di aiuto immissione attivata, sarà possibile eseguire qualsiasi gesto (sia pressione di tasti o azioni sul touch screen) e lo screen reader annuncerà ciò che è stato premuto e la relativa azione associata (se presente).
+I comandi effettivi non verranno eseguiti nella modalità di aiuto immissione.
+
++++ Avviare e chiudere NVDA +++[StartingAndStoppingNVDA]
+|| Nome | Tasto Desktop | tasto Laptop | Descrizione |
+| Eseguire NVDA | ``control+alt+n`` | ``control+alt+n`` | Avvia o riavvia NVDA |
+| Uscire da NVDA | ``NVDA+q``, poi ``invio`` | ``NVDA+q``, poi ``invio`` | Esce da NVDA |
+| Pausa sintesi vocale | ``maiusc`` | ``maiusc`` | Mette in pausa all'istante la sintesi vocale. Ripremendo il tasto riprende da dove si era interrotto |
+| Stop Sintesi vocale | ``control`` | ``control`` | Ferma immediatamente la sintesi vocale |
+
++++ Leggere il testo +++[ReadingText]
+|| Nome | Tasto Desktop | Tasto Laptop | Descrizione |
+| Dire Tutto | ``NVDA+Freccia Giù`` | ``NVDA+a`` | Inizia a leggere dalla posizione del cursore di sistema sino alla fine del documento, spostando il cursore man mano che la lettura continua |
+| Legge Riga Corrente | ``NVDA+freccia su`` | ``NVDA+l`` | Legge la riga sulla quale si trova il cursore di sistema. Premendo la combinazione due volte viene effettuato lo spelling della riga. La tripla pressione effettuerà lo spelling utilizzando la descrizione dei caratteri (ancona, bari, como, domodossola, etc|
+| Legge Selezione corrente | ``NVDA+Shift+freccia su`` | ``NVDA+shift+s`` | Legge il testo selezionato, se presente. |
+| Legge testo negli appunti | ``NVDA+c`` | ``NVDA+c`` | Annuncia il testo contenuto negli appunti, se presente. |
+
++++ informazioni su posizione ed altro +++[ReportingLocation]
+|| Nome | Tasto Desktop | Tasto Laptop | Descrizione |
+| Legge il titolo | ``NVDA+t`` | ``NVDA+t`` | Legge il titolo della finestra attiva in quel momento. Premendo la combinazione due volte ne verrà fatto lo spelling. Premendo per tre volte il contenuto verrà copiato negli appunti. |
+| Legge il focus | ``NVDA+tab`` | ``NVDA+tab`` | Annuncia l'oggetto o il controllo attualmente focalizzato. Premendo la combinazione due volte ne verrà fatto lo spelling  |
+| Legge la Finestra Attiva | ``NVDA+b`` | ``NVDA+b`` | Legge il contenuto della finestra in primo piano (utile nelle finestre di dialogo). |
+| Legge la barra di stato | ``NVDA+fine`` | ``NVDA+maiusc+fine`` | Legge la barra di stato nel caso in cui NVDA sia in grado di individuarla. Una doppia pressione provocherà lo spelling delle informazioni. Una tripla pressione copierà il contenuto della barra di stato negli appunti |
+| Annuncia data/Ora | ``NVDA+f12`` | ``NVDA+f12`` | Premendo una volta viene annunciato l'orario corrente, mentre premendo due volte verrà annunciata la data |
+| Annuncia formattazione | ``NVDA+f`` | ``NVDA+f`` | Legge la formattazione del testo; Una doppia pressione visualizzerà le informazioni in una finestra di dialogo |
+
++++ Stabilire quali informazioni NVDA debba leggere +++[ToggleWhichInformationNVDAReads]
+|| Nome | Tasto Desktop | Tasto Laptop | Descrizione |
+| Legge i caratteri digitati | ``NVDA+2`` | ``NVDA+2`` | Quando abilitato, NVDA annuncerà tutti i caratteri digitati sulla tastiera. |
+| Legge le parole digitate | ``NVDA+3`` | ``NVDA+3`` | Quando abilitato, NVDA annuncerà tutte le parole digitate sulla tastiera. |
+| Legge i tasti di comando | ``NVDA+4`` | ``NVDA+4`` | Quando attivato, NVDA leggerà tutti i tasti digitati che non rappresentano un carattere. Ciò comprende anche combinazioni di tasti quali control e un'altra lettera. |
+| Abilita tracciamento del mouse | ``NVDA+m`` | ``NVDA+m`` | Quando attivata, istruisce NVDA ad annunciare il testo sul quale è posizionato il puntatore, mentre ci si sposta con esso sullo schermo. Questo permette di individuare gli elementi con una rappresentazione fisica e reale su come essi siano disposti sul video, piuttosto che utilizzare la navigazione ad oggetti. |
+
++++ Impostare al volo il sintetizzatore +++[TheSynthSettingsRing]
+|| Nome | Tasto Desktop | Tasto Laptop | Descrizione |
+| Spostarsi al parametro successivo del sintetizzatore | ``NVDA+control+FrecciaDestra`` | ``NVDA+Maiusc+control+FrecciaDestra`` | Si sposta al prossimo parametro disponibile inerente la sintesi vocale e nel caso si sia raggiunto l'ultimo dell'elenco tornerà al primo |
+| Spostarsi al parametro precedente del sintetizzatore | ``NVDA+control+FrecciaSinistra`` | ``NVDA+Maiusc+control+FrecciaSinistra`` | Si sposta al parametro precedente disponibile inerente la sintesi vocale e nel caso si sia raggiunto l'ultimo dell'elenco tornerà al primo |
+| Aumentare il parametro corrente del sintetizzatore | ``NVDA+Control+Freccia su`` | ``NVDA+Maiusc+Control+Freccia su`` | Aumenta il valore del parametro sul quale si è posizionati. Ad esempio si aumenta la velocità, poi ci si sposta all'impostazione successiva, si aumenta il volume etc |
+| Diminuire il parametro corrente del sintetizzatore | ``NVDA+Control+Freccia giù`` | ``NVDA+Shift+Control+Freccia giù`` | Diminuisce il valore del parametro sul quale si è posizionati. Ad esempio si diminuisce la velocità, poi ci si sposta all'impostazione successiva, si diminuisce il volume etc |
+
++++ Navigazione web +++[WebNavigation]
+L'elenco completo dei tasti di navigazione a lettere singole è disponibile nella sezione [Modalità di navigazione #BrowseMode] della guida utente.
+|| Comando | tasto | Descrizione |
+| Intestazione | ``h`` | Va all'intestazione successiva |
+| Livello intestazione 1, 2, o 3 | ``1``, ``2``, ``3`` | Va all'intestazione successiva del livello specificato |
+| Campo form | ``f`` | Va al campo form successivo (campo editazione, pulsante, etc) |
+| Link | ``k`` | Va al prossimo link |
+| Punto di riferimento | ``d`` | Va al prossimo punto di riferimento |
+| Elenco | ``l`` | Va all'elenco successivo |
+| Tabella | ``t`` | Va alla tabella successiva |
+| Spostarsi all'indietro | ``Maiusc+lettera`` | Premere ``maiusc`` e una qualsiasi delle lettere viste sopra per passare all'elemento precedente di quel tipo |
+| Elenco elementi | ``NVDA+f7`` | Elenca vari tipi di elementi, come collegamenti e intestazioni |
+
+++ Preferenze ++[Preferences]
+
+La maggior parte delle funzioni di NVDA può essere abilitata o modificata tramite le impostazioni del lettore di schermo.
+Le impostazioni e altre opzioni sono disponibili tramite il menu di NVDA.
+Per aprire il menu di NVDA, premere ``NVDA+n``.
+Per aprire direttamente la finestra di dialogo delle impostazioni generali di NVDA, premere ``NVDA+control+g``.
+Molte schermate delle impostazioni hanno sequenze di tasti per aprirle direttamente, come ``NVDA+control+s`` per sintetizzatore o ``NVDA+control+v`` per altre opzioni inerenti la voce.
+
+++ Comunità ++[Community]
+
+NVDA dispone di una vivace comunità di utenti. In primo luogo, esiste il [gruppo di discussione in italiano https://groups.io/g/nvda-it], [quello internazionale https://nvda.groups.io/g/nvda] oltre ad una pagina con [le liste di discussione in varie lingue https://github.com/nvaccess/nvda-community/wiki/Connect].
+La NV Access, ossia chi sviluppa NVDA, è molto attiva su [Twitter https://twitter.com/nvaccess] e [Facebook https://www.facebook.com/NVAccess].
+Inoltre questa organizzazione dispone di un [blog con le ultime novità https://www.nvaccess.org/category/in-process/].
+
+Esiste, sempre in inglese, un programma per acquisire la [certificazione di esperto NVDA https://certification.nvaccess.org/].
+Si tratta di un esame online che è possibile completare per dimostrare le proprie competenze con NVDA.
+[Gli esperti in NVDA con questo certificato https://certification.nvaccess.org/] hanno la possibilità di inserire i loro contatti e altre informazioni aziendali.
+
+++ Ottenere aiuto ++[GettingHelp]
+
+Per ottenere aiuto su NVDA, premere ``NVDA+n`` per aprire il menu, quindi ``a`` per aiuto.
+Da questo sottomenu sarà possibile consultare il presente manuale, un documento contenente tutti i comandi rapidi, oppure la cronologia delle nuove funzionalità e altro ancora.
+Queste prime tre opzioni si aprono nel browser Web predefinito.
+Esiste anche del materiale aggiuntivo solo in inglese nel [Negozio NV Access https://www.nvaccess.org/shop].
+
+In merito a tale materiale, risulta sicuramente utile quello denominato "Basic Training for NVDA module".
+Tale modulo copre diversi concetti a partire dalle prime operazioni di base con NVDA, passando poi per l'esplorazione web fino alla navigazione ad oggetti.
+è disponibile in:
+- [Testo elettronico https://www.nvaccess.org/product/basic-training-for-nvda-ebook/], che include i formati Word DOCX, pagine Web HTML, eBook ePub e Kindle KFX.
+- [Letto da voce umana, audio MP3 https://www.nvaccess.org/product/basic-training-for-nvda-downloadable-audio/]
+- [Copia cartacea in braille inglese unificato ueb https://www.nvaccess.org/product/basic-training-for-nvda-braille-hard-copy/] con consegna inclusa ovunque nel mondo.
+- Altri moduli, oltre al [Pacchetto produttività NVDA https://www.nvaccess.org/product/nvda-productivity-bundle/] scontato, sono reperibili nel [Negozio NV Access https://www.nvaccess.org/shop/].
+
+La NV Access rivende anche il [supporto telefonico in inglese https://www.nvaccess.org/product/nvda-telephone-support/], in blocchi o come parte del [NVDA Productivity Bundle https://www.nvaccess.org/product/nvda-productivity-bundle/].
+Il supporto telefonico include i numeri locali in Australia e negli Stati Uniti.
+ 
+I [gruppi di utenti e-mail https://github.com/nvaccess/nvda-community/wiki/Connect] sono un'ottima fonte di aiuto per la comunità, così come gli [esperti con certificazione NVDA https://certification.nvaccess.org/].
+
+
++ Altre opzioni di configurazione +[MoreSetupOptions]
+
+++ Opzioni di installazione ++[InstallingNVDA]
+
+Se si installa NVDA direttamente dall'eseguibile appena scaricato, premere il pulsante Installa NVDA.
+Se invece è già stata chiusa questa finestra di dialogo o si desidera eseguire l'installazione da una copia portable, scegiere la voce di menu Installa NVDA situata in Strumenti nel menu NVDA.
+
+La finestra di dialogo che appare consente di stabilire se si desidera installare NVDA ed effettuerà un controllo nel caso in cui questa installazione debba aggiornare una versione precedente.
+Premendo il pulsante Continua verrà avviata l'installazione di NVDA.
+Ci sono anche alcune opzioni in questa finestra di dialogo che sono spiegate di seguito.
+Una volta completata l'installazione, verrà visualizzato un messaggio che informa del buon esito dell'operazione.
 
 +++ Avviso sui componenti aggiuntivi non compatibili +++[InstallWithIncompatibleAddons]
 Se vi sono già installati componenti aggiuntivi, è possibile che venga visualizzato un messaggio che avverte l'utente dell'imminente disabilitazione dei componenti non compatibili.
@@ -116,9 +307,9 @@ Prima di poter premere il pulsante continua, è necessario selezionare la casell
 è presente anche un pulsante che consente di controllare quali componenti aggiuntivi verranno disabilitati.
 Si veda la [sezione componenti aggiuntivi non compatibili #incompatibleAddonsManager] per maggiori informazioni su questo pulsante.
 
-+++ Avvia all'accesso utente +++[StartAtWindowsLogon]
-Questa opzione permette di stabilire se NVDA debba automaticamente avviarsi o meno alla finestra di logon di Windows, prima di inserire la password.
-Inoltre, questo permette la lettura delle finestre controllo account utente e di altri controlli sulla sicurezza.
++++ Utilizza NVDA durante l'accesso +++[StartAtWindowsLogon]
+Questa opzione permette di stabilire se NVDA debba automaticamente avviarsi o meno alla finestra di accesso a Windows, prima di inserire la password.
+Inoltre, questo permette la lettura delle finestre controllo account utente e di [altri controlli sulla sicurezza #SecureScreens].
 Questa opzione è abilitata di default per le nuove installazioni.
 
 +++ Crea collegamento per il desktop e il tasto rapido (Control+alt+n) +++[CreateDesktopShortcut]
@@ -127,7 +318,7 @@ Inoltre, se viene creato tale collegamento, verrà assegnato un tasto rapido cor
 
 +++ Copia la configurazione portable nelle impostazioni dell'utente attuale +++[CopyPortableConfigurationToCurrentUserAccount]
 Questa opzione permette di selezionare se NVDA debba copiare o meno la configurazione utente, dalla copia in esecuzione di NVDA, nelle impostazioni dell'utente loggato per la copia installata dello screen reader.
-Tali impostazioni non verranno copiate per eventuali altri utenti, e nemmeno per la configurazione di sistema, ossia  tutto ciò che riguarda il logon di Windows e le schermate inerenti la sicurezza.
+Tali impostazioni non verranno copiate per eventuali altri utenti, e nemmeno per la configurazione di sistema, ossia  tutto ciò che riguarda il logon di Windows e le [schermate inerenti la sicurezza #SecureScreens].
 L'opzione è disponibile soltanto quando si installa da una copia portable, non quindi se si installa direttamente dal pacchetto scaricato.
 
 ++ Creazione di una copia portable ++[CreatingAPortableCopy]
@@ -142,7 +333,25 @@ La pressione del pulsante "Continua" darà inizio al processo di creazione della
 Una volta terminata l'operazione, apparirà un messaggio di conferma.
 Premere a questo punto il pulsante OK per chiudere questa finestra.
   
-+ Iniziare con NVDA +[GettingStartedWithNVDA]
+
+++ Restrizioni nelle versioni portable o temporanee ++[PortableAndTemporaryCopyRestrictions]
+Se si desidera copiare NVDA in un supporto rimovibile come una chiavetta USB e portarlo con sé, si consiglia di creare una copia portable.
+La copia installata è anche in grado di creare una copia portable di se stessa in qualsiasi momento.
+Allo stesso modo, la copia portable dispone anche della capacità di installarsi su qualsiasi computer in un secondo momento.
+Tuttavia, se invece si desidera copiare NVDA su un supporto di sola lettura come un CD, si dovrà semplicemente copiare il file contenente il pacchetto scaricato in precedenza.
+Si tenga presente che non è possibile al momento eseguire una versione portable in un supporto di sola lettura.
+Anche l'utilizzo della copia temporanea di NVDA è un'opzione (ad es. a scopo dimostrativo), sebbene avviare NVDA in questo modo ogni volta possa richiedere molto tempo.
+
+Oltre al fatto di non poter essere eseguite all'avvio automatico del sistema o dopo la finestra di accesso, le versioni temporanee o portable di NVDA presentano le seguenti limitazioni:
+- Incapacità di interagire con programmi eseguiti con privilegi di amministratore, a meno che naturalmente lo stesso NVDA non venga eseguito con privilegi amministrativi (non consigliato).
+- Impossibilità di leggere le schermate del controllo Utente (UAC), quando si cerca di avviare un'applicazione con privilegi amministrativi.
+- Windows 8 e successivi: impossibilità di gestire la scrittura o qualsiasi operazione effettuata tramite Touch Screen.
+- Windows 8 e successivi: impossibilità di fornire le caratteristiche di ripetizione dei caratteri digitati e l'utilizzo della modalità navigazione in Windows Store.
+- Windows 8 e successivi: la funzione di attenuazione audio non è supportata.
+-
+
+
++ Utilizzare NVDA +[GettingStartedWithNVDA]
 
 ++ Avviare NVDA ++[LaunchingNVDA]
 Se si è installato NVDA tramite l'installer, per avviarlo basta premere semplicemente control+alt+n, o scegliere la voce NVDA dal menu NVDA sotto programmi del menu avvio. 
@@ -154,8 +363,8 @@ Nelle versioni installate, NVDA salva i file di configurazione nella cartella ro
 è possibile modificare questo parametro in modo tale che NVDA carichi la configurazione dalla cartella local application data.
 Vedere la sezione inerente [parametri di sistema #SystemWideParameters] per maggiori dettagli.
 
- Per avviare la versione portable, spostarsi nella cartella nella quale si è scompattato NVDA e premere invio o far doppio click su NVDA.exe.
- Se NVDA risulta già in esecuzione, esso verrà chiuso e poi sarà eseguita la copia portable.
+Per avviare la versione portable, spostarsi nella cartella nella quale si è scompattato NVDA e premere invio o far doppio click su NVDA.exe.
+Se NVDA risulta già in esecuzione, esso verrà chiuso e poi sarà eseguita la copia portable.
  
 Appena NVDA si avvia, si udiranno una serie di suoni ascendenti (segno che NVDA si sta caricando). Si dovrebbe poi sentire il messaggio“NVDA attivato. 
 A seconda della velocità del proprio computer o che si stia lanciando NVDA da una chiavetta USB o da qualsiasi altro supporto lento, NVDA potrebbe richiedere più tempo per avviarsi. 
@@ -316,6 +525,7 @@ Esistono alcuni comandi da tastiera utili per seguire il focus:
 | Legge il Titolo | NVDA+t | NVDA+t | Legge il titolo della finestra attiva in quel momento. Premendo la combinazione due volte ne verrà fatto lo spelling. Premendo per tre volte il contenuto verrà copiato negli appunti. |
 | Legge la Finestra Attiva | NVDA+b | NVDA+b | Legge il contenuto della finestra in primo piano (utile nelle finestre di dialogo). |
 | Legge la barra di stato | NVDA+fine | NVDA+shift+fine | Legge la barra di stato nel caso in cui NVDA sia in grado di individuarla. Una doppia pressione provocherà lo spelling delle informazioni. Una tripla pressione copierà il contenuto della barra di stato negli appunti |
+| Legge tasto di scelta rapida | ``maiusc+numpad2`` | ``NVDA+control+maiusc+.`` | Legge il tasto di scelta rapida dell'oggetto su cui si trova il focus |
 %kc:endInclude
 
 ++ Esplorare con il cursore di sistema ++[SystemCaret]
@@ -332,7 +542,7 @@ NVDA fornisce i seguenti comandi quando si lavora con il cursore di sistema:
 | Legge Riga Corrente | NVDA+freccia su | NVDA+l | Legge la riga sulla quale si trova il cursore di sistema. Premendo la combinazione due volte viene effettuato lo spelling della riga. La tripla pressione effettuerà lo spelling utilizzando la descrizione dei caratteri (ancona, bari, como, domodossola, etc|
 | Legge Selezione corrente | NVDA+Shift+freccia su | NVDA+shift+s | Legge il testo selezionato ammesso che ve ne sia uno. |
 | Annuncia formattazione testo | NVDA+f | NVDA+f | Legge la formattazione del testo alla posizione del cursore di sistema. Una doppia pressione visualizzerà le informazioni in modalità navigazione |
-| Legge posizione cursore | NVDA+Canc tastierino numerico | NVDA+canc | none | Fornisce informazioni inerenti il testo o l'oggetto su cui è situato il cursore di sistema. Ad esempio, ciò potrebbe includere la percentuale in un documento, la distanza dal bordo della pagina o la posizione esatta dello schermo. Premendo due volte si possono ottenere ulteriori dettagli. |
+| Legge posizione cursore | NVDA+Canc tastierino numerico | NVDA+canc | Fornisce informazioni inerenti il testo o l'oggetto su cui è situato il cursore di sistema. Ad esempio, ciò potrebbe includere la percentuale in un documento, la distanza dal bordo della pagina o la posizione esatta dello schermo. Premendo due volte si possono ottenere ulteriori dettagli. |
 | frase successiva | alt+freccia Giù | alt+freccia Giù | Sposta il cursore sulla frase successiva e la legge. (Supportato solo in Microsoft Word e Outlook) |
 | frase precedente | alt+freccia Su | alt+freccia Su | Sposta il cursore sulla frase precedente e la legge. (Supportato solo in Microsoft Word e Outlook) |
 
@@ -342,6 +552,14 @@ Se ci si trova all'interno di una tabella, sono disponibili i seguenti comandi:
 | Spostarsi alla colonna successiva | control+alt+freccia destra | Sposta il cursore di sistema alla colonna successiva della riga |
 | Spostarsi alla riga precedente | control+alt+Freccia Su | Sposta il cursore di sistema alla riga precedente (Rimanendo nella stessa colonna) |
 | Spostarsi alla riga successiva | control+alt+Freccia Giù | Sposta il cursore di sistema alla riga successiva (Rimanendo nella stessa colonna) |
+| Spostarsi alla prima colonna | control+alt+inizio | Sposta il cursore di sistema sulla prima colonna (rimanendo nella stessa riga) |
+| Spostarsi all'ultima colonna | control+alt+fine | Sposta il cursore di sistema sull'ultima colonna (rimanendo nella stessa riga) |
+| Spostarsi alla prima riga | control+alt+PaginaSu | Sposta il cursore di sistema alla prima riga (rimanendo nella stessa colonna) |
+| Spostarsi all'ultima riga | control+alt+PaginaGiù | Sposta il cursore di sistema all'ultima riga (rimanendo nella stessa colonna) |
+\ Dire tutto per colonna | ``NVDA+control+alt+frecciagiù`` | Legge la colonna verticalmente dalla cella corrente verso il basso fino all'ultima cella della colonna. |
+| Dire tutto per riga | ``NVDA+control+alt+frecciaDestra`` | Legge la riga orizzontalmente dalla cella corrente verso destra fino all'ultima cella della riga. |
+| Legge colonna intera | ``NVDA+control+alt+frecciaSu`` | Legge la colonna corrente verticalmente dall'alto verso il basso senza spostare il cursore di sistema. |
+| Legge riga intera | ``NVDA+control+alt+frecciaSinistra`` | Legge la riga corrente orizzontalmente da sinistra a destra senza spostare il cursore di sistema. |
 %kc:endInclude
 
 ++ Navigazione ad oggetti ++[ObjectNavigation]
@@ -414,6 +632,8 @@ Sono disponibili i seguenti tasti caldi per esplorare il testo:
 | Legge il carattere corrente, modalità esplorazione | 2 del tastierino numerico | NVDA+. | Nessuno | Annuncia il carattere del testo sul quale è posizionato il cursore di controllo. Se premuto due volte effettua lo spelling mediante la sua descrizione. Se premuto tre volte fornisce il valore numerico del carattere in decimale e esadecimale. |
 | Spostarsi al carattere successivo, modalità esplorazione | 3 del tastierino numerico | NVDA+freccia destra | Scorrimento a destra (modo testo) | Sposta il cursore di controllo al carattere di testo successivo nella riga corrente |
 | Spostarsi alla fine della riga, modalità esplorazione | shift+3 del tastierino numerico | NVDA+fine | Nessuno | Sposta il cursore di controllo alla fine della riga di testo corrente |
+| Spostarsi alla pagina precedente, modalità esplorazione | ``NVDA+paginaSu`` | ``NVDA+maiusc+paginaSu`` | nessuno | Sposta il cursore di controllo alla pagina precedente contenente testo se supportato dall'applicazione |
+| Spostarsi alla pagina successiva, modalità esplorazione | ``NVDA+paginaGiù`` | ``NVDA+maiusc+paginaGiù`` | nessuno | Sposta il cursore di controllo alla pagina successiva contenente testo se supportato dall'applicazione |
 | Dire tutto, modalità esplorazione | Più del tastierino numerico | NVDA+shift+a | Scorrimento in basso con tre dita (modo testo) | Legge il testo dalla posizione attuale del cursore di controllo, spostando tale cursore man mano che la lettura continua |
 | Selezionare e poi copiare dalla posizione  del cursore di controllo | NVDA+f9 | NVDA+f9 | Nessuno | Dà inizio al processo di selezione e copia a partire dalla posizione del cursore di controllo. Si noti che NVDA non effettuerà alcuna operazione fino a quando non verrà specificato il punto di fine |
 | Selezionare e copiare fino al cursore di controllo | NVDA+f10 | NVDA+f10 | Nessuno | Una singola pressione seleziona il testo dalla posizione iniziale impostata in precedenza fino alla posizione attuale del cursore di controllo, incluso il carattere in cui si trova. Se possibile, il cursore di sistema si sposterà al testo selezionato.  Una seconda pressione copierà il testo negli appunti di Windows |
@@ -618,8 +838,11 @@ NVDA supporta la matematica nei seguenti formati:
 - MathML in Mozilla Firefox, Microsoft Internet Explorer e Google Chrome.
 - Le equazioni generate tramite lo strumento apposito di Microsoft Word 365 con UI automation attiva:
 NVDA è in grado di leggere e interagire con le equazioni matematiche in Microsoft Word 365/2016 build 14326 e versioni successive.
-Si noti tuttavia che qualsiasi equazione creata in precedenza con MathType dovrà essere convertita nel formato Office, selezionandola e scegliendo opzioni equazione - converti in matematica Office, dal menu contestuale. è bene assicurarsi di disporre dell'ultima versione di MathType  prima di farlo.
-Microsoft Word ora fornisce anche la navigazione in linea delle formule basata su simboli e supporta l'immissione di matematica utilizzando diverse sintassi, incluso LateX. Per ulteriori informazioni, si veda [Equazioni in formato Lineare che usano UnicodeMath e LaTeX in Word https://support.microsoft.com/it-it/office/equazioni-in-formato-lineare-che-usano-unicodemath-e-latex-in-word-2e00618d-b1fd-49d8-8cb4-8d17f25754f8#:~:text=Equazioni%20in%20formato%20Lineare%20che%20usano%20UnicodeMath%20e%20LaTeX%20in%20Word,-Word%20per%20Microsoft&text=Per%20inserire%20un'equazione%20usando,usando%20Correzione%20automatica%20simboli%20matematici.]
+Si noti tuttavia che qualsiasi equazione creata in precedenza con MathType dovrà essere convertita nel formato Office.
+Ciò può essere effettuato selezionandola e scegliendo opzioni equazione - converti in matematica Office, dal menu contestuale.
+è bene assicurarsi di disporre dell'ultima versione di MathType  prima di farlo.
+Microsoft Word ora fornisce anche la navigazione in linea delle formule basata su simboli e supporta l'immissione di matematica utilizzando diverse sintassi, incluso LateX.
+Per ulteriori informazioni, si veda [Equazioni in formato Lineare che usano UnicodeMath e LaTeX in Word https://support.microsoft.com/it-it/office/equazioni-in-formato-lineare-che-usano-unicodemath-e-latex-in-word-2e00618d-b1fd-49d8-8cb4-8d17f25754f8#:~:text=Equazioni%20in%20formato%20Lineare%20che%20usano%20UnicodeMath%20e%20LaTeX%20in%20Word,-Word%20per%20Microsoft&text=Per%20inserire%20un'equazione%20usando,usando%20Correzione%20automatica%20simboli%20matematici.]
 - Microsoft Powerpoint, e le versioni meno recenti di Microsoft Word: 
 NVDA è in grado di leggere e di navigare tra le equazioni Mathtype sia in Powerpoint che in Microsoft Word.
 Si noti che MathType dev'essere installato affinché il supporto funzioni correttamente.
@@ -707,6 +930,7 @@ Per far stare più informazioni possibili su di un display braille, sono state d
 | mnuitem | Elemento menu |
 | Riq | Riquadro |
 | prgbar | Barra di avanzamento |
+| bsyind | indicatore di occupato |
 | rbtn | pulsante radio |
 | scrlbar | barra di scorrimento |
 | sect | sezione |
@@ -785,7 +1009,8 @@ Il driver di ogni display Braille è già dotato di alcune di queste assegnazion
 
 Sebbene questo approccio risulti utile per tasti singoli o comunque premuti di frequente (ad esempio Tab), si potrebbe non voler assegnare un set univoco di tasti a ciascuna scorciatoia da tastiera.
 Per consentire l'emulazione di combinazioni per le quali è necessario tener premuti i tasti modificatori, NVDA fornisce comandi per attivare/disattivare control, alt, shift, windows, eNVDA, oltre ad altri comandi per alcune combinazioni di quei tasti.
-Per utilizzare questi interruttori, innanzitutto è necessario attivare il comando (o la sequenza di comandi) per i tasti modificatori che si desidera rimangano premuti, quindi inserire il carattere che fa parte della scorciatoia da tastiera voluta.
+Per utilizzare questi interruttori, innanzitutto è necessario attivare il comando (o la sequenza di comandi) per i tasti modificatori che si desidera rimangano premuti.
+Quindi, inserire il carattere che fa parte della scorciatoia da tastiera voluta.
 Per esempio, per ottenere control+f, usare il comando "attiva/disattiva tasto control" e poi digitare una f,
 e per inserire control+alt+t, servirsi o dei comandi "attiva/disattiva tasto control" e "Attiva/disattiva tasto alt", nell'ordine che si preferisce, oppure del comando "Attiva/disattiva tasti control e alt", per poi digitare la t.
 
@@ -1044,10 +1269,11 @@ Quando ci si trova nella visualizzazione della tabella dei libri aggiunti:
 NVDA fornisce supporto per la console di Windows utilizzata da Prompt dei comandi, PowerShell e il sottosistema Windows per Linux.
 La finestra della console ha dimensioni fisse, in genere molto più piccole del buffer che contiene l'output.
 Man mano che viene aggiunto del testo, il contenuto scorre verso l'alto e il testo precedente non è più visibile.
-NVDA non può più quindi leggere del testo che non risulta più visibile nella finestra con i comandi standard di revisione.
+Nelle versioni di Windows precedenti a Windows11 22H2, NVDA non è in grado di leggere il testo che non risulta più visibile nella finestra con i comandi standard di revisione.
 Pertanto, è necessario scorrere la finestra della console per rileggere del testo precedente.
+Nelle versioni più recenti della console e nel terminale di Windows, è possibile riesaminare l'intero buffer di testo liberamente senza la necessità di scorrere la finestra.
 %kc:beginInclude
-Le seguenti scorciatoie da tastiera integrate nella Console di Windows possono essere utili quando si [esplora del testo #ReviewingText] con NVDA:
+Le seguenti scorciatoie da tastiera integrate nella Console possono essere utili quando si [esplora del testo #ReviewingText] con NVDA nelle versioni precedenti della console di Windows:
 || Nome | Tasto | Descrizione |
 | Scorri verso l'alto | control+freccia su | Scorre la finestra della console verso l'alto, in modo da poter leggere il testo precedente. |
 | Scorri verso il basso | control+freccia giù | Scorre la finestra della console verso il basso, in modo da poter leggere il testo successivo. |
@@ -1126,7 +1352,7 @@ Se si dispone di un sistema nel quale bisogna inserire nome e password per acced
 Questa opzione è disponibile soltanto nelle versioni Installer.
 
 ==== Utilizza le impostazioni salvate nella finestra di Accesso ====[GeneralSettingsCopySettings]
-La pressione di questo tasto copierà le proprie impostazioni utente di NVDA nella cartella delle configurazioni di sistema, di modo che NVDA le possa utilizzare nelle schermate di Accesso utente, nei controlli UAC e così via.
+La pressione di questo tasto copierà le proprie impostazioni utente di NVDA nella cartella delle configurazioni di sistema, di modo che NVDA le possa utilizzare nelle schermate di Accesso utente, nei controlli UAC e nelle altre [schermate di sicurezza #SecureScreens].
 Per precauzione, se si vuole essere certi che le proprie impostazioni vengano copiate correttamente, conviene salvare la configurazione con il comando Control+NVDA+c, oppure andare alla voce Salva Configurazione nel menu di NVDA.
 Questa opzione è disponibile soltanto nelle versioni Installer.
 
@@ -1251,6 +1477,20 @@ La maggior parte dei sintetizzatori supportano questa funzione.
 Generalmente, si consiglia di abilitare questa impostazione.
 Talvolta, può succedere che alcune sintesi Microsoft Speech Api si comportino in modo strano nell'eseguire lo spelling.
 In caso ciò avvenga, consigliamo di disattivare questa caratteristica.
+
+==== Descrizione ritardata dei caratteri al movimento del cursore ====
+: Default
+  Disabilitata
+: Opzioni
+  Abilitata, disabilitata
+:
+
+Quando questa impostazione viene attivata, NVDA pronuncerà una descrizione del carattere man mano che ci si sposta lettera per lettera.
+
+Per esempio, se si sta esaminando una riga carattere per carattere, e ci troviamo sulla lettera b, NVDA pronuncerà "Bologna" dopo un secondo di ritardo.
+Questo può essere utile nel caso in cui si incontrino difficoltà nella comprensione dei simboli, o per le persone con problemi di udito..
+
+Tale funzione verrà inibita nel caso in cui venga letto del testo durante il secondo di ritardo, oppure se viene premuto il tasto control..
 
 +++ Seleziona sintetizzatore (NVDA+control+s) +++[SelectSynthesizer]
 La finestra Sintetizzatore, che si apre premendo il pulsante cambia... dalla categoria voce della finestra impostazioni di NVDA, consente di selezionare con quale sintesi vocale NVDA debba parlare.
@@ -1401,6 +1641,21 @@ Così, sempre riferendosi all'esempio di prima, NVDA visualizzerà che è stato 
 Comunque, se si desidera leggere il contesto (ossia che ci si trova in un elenco e che tale elenco fa parte di una finestra di dialogo), sarà necessario scorrere il proprio display braille indietro.
 
 Per modificare la presentazione delle informazioni di contesto da qualsiasi punto ci si trovi, è necessario assegnare un nuovo gesto o tasto rapido utilizzando la [finestra di dialogo tasti e gesti di immissione #InputGestures].
+
+==== Interrompi la voce durante lo scorrimento ====[BrailleSettingsInterruptSpeech]
+: Default
+  Abilitato
+: Opzioni
+  Default (Abilitato), Abilitato, Disabilitato
+:
+
+Questa impostazione determina se la sintesi vocale debba interrompersi quando si scorre il display braille indietro o avanti..
+I comandi riga precedente/successiva interrompono sempre la sintesi.
+
+Per alcune persone la voce che legge di continuo potrebbe essere fonte di distrazione se si è concentrati sul braille.
+Per questo motivo l'opzione è abilitata di default, interrompendo il parlato durante lo scorrimento del braille.
+
+La disattivazione di questa opzione consente di ascoltare la sintesi indipendentemente dallo scorrimento del  display braille.
 
 +++ Selezione display braille (NVDA+control+a) +++[SelectBrailleDisplay]
 La finestra di dialogo Selezione display Braille, che si apre tramite il pulsante "cambia..." nella categoria Braille delle impostazioni di NVDA, permette di scegliere quale barra braille NVDA dovrà usare.
@@ -1710,10 +1965,14 @@ Sebbene il buffer virtuale non sia costituito da pagine, questo campo modifica i
 ==== Usa il layout dello schermo, quando supportato ====[BrowseModeSettingsScreenLayout]
 Tasto: NVDA+v
 
-Questa opzione consente di specificare se, in modalità navigazione, elementi quali pulsanti, link e campi debbano occupare un'unica riga o se debbano mantenere per quanto possibile il flusso di testo più simile alla visualizzazione reale. Tenere presente che questa opzione non si applica alle app di Microsoft Office come Outlook e Word, che utilizzano sempre il layout dello schermo.
-In sostanza, se la casella di controllo viene attivata, tali elementi vengono presentati all'utente esattamente come essi sono visualizzati sullo schermo, quindi, ad esempio, possono esservi più link in una stessa riga. Se invece la casella di controllo è disattivata, ciascun elemento sarà posto in una riga differente, permettendo una navigazione più comoda ma meno simile alla disposizione reale degli oggetti. 
-  
-==== Attiva modalità navigazione al caricamento della pagina ====
+Questa opzione consente di specificare se, in modalità navigazione, elementi quali pulsanti, link e campi debbano occupare un'unica riga o se debbano mantenere per quanto possibile il flusso di testo più simile alla visualizzazione reale.
+Tenere presente che questa opzione non si applica alle app di Microsoft Office come Outlook e Word, che utilizzano sempre il layout dello schermo.
+In sostanza, se la casella di controllo viene attivata, tali elementi vengono presentati all'utente esattamente come essi sono visualizzati sullo schermo.
+Ad esempio, una riga che visivamente è formata da più collegamenti verrà presentata in braille o tramite sintesi vocale con tutti i link nella stessa riga.
+Se invece la casella di controllo è disattivata, ciascun elemento sarà posto in una riga differente.
+Questo per alcuni utenti si traduce in una navigazione più comoda ma meno simile alla disposizione reale degli oggetti.
+
+  ==== Attiva modalità navigazione al caricamento della pagina ====
 Questa casella abilita o disabilita la modalità navigazione automatica al caricamento di una pagina.
 Quando questa opzione è disabilitata, la modalità di navigazione può ancora essere attivata manualmente sulle pagine o nei documenti in cui essa è supportata.
 Si veda la [sezione modalità navigazione #BrowseMode] per l'elenco delle applicazioni compatibili.
@@ -1764,7 +2023,7 @@ Il focus verrà ancora aggiornato sull'elemento quando si interagisce con esso (
 L'abilitazione di questa opzione può migliorare il supporto per alcuni siti Web a scapito delle prestazioni e della stabilità.
 
 +++ Formato documento (NVDA+Control+d) +++[documentFormattingSettings]
-la maggior parte delle caselle di controllo in questa categoria servono a configurare quali informazioni inerente la formattazione NVDA dovrà pronunciare quando si scorre un documento con le frecce. 
+la maggior parte delle opzioni in questa categoria servono a configurare quali informazioni inerente la formattazione NVDA dovrà pronunciare quando si scorre un documento con le frecce. 
 Ad esempio, se attiviamo la casella di controllo "Leggi il nome del font", NVDA annuncerà tale cambiamento ogni qualvolta se ne incontrerà uno, muovendosi con i tasti cursore in un documento.
 
 Le opzioni di formattazione documento sono divise in gruppi.
@@ -1792,7 +2051,7 @@ Le opzioni di formattazione documento sono divise in gruppi.
  - Allineamento
 - Informazioni tabella
  - tabelle
- - intestazioni riga/colonna delle tabelle
+ - intestazioni riga/colonna (disattivato, righe, colonne, righe e colonne)
  - Coordinate delle celle delle tabelle
  - Bordi delle celle [(Disattivo, stili, sia colori che stili)
 - Elementi
@@ -1829,6 +2088,29 @@ Il segnale acustico aumenterà di altezza ad ogni spazio, mentre per una tabulaz
 - Sia voce che beep: con questa opzione attiva i rientri saranno letti utilizzando entrambi i metodi spiegati sopra.
 -
 
++++ Navigazione documento+++[DocumentNavigation]
+Questa categoria consente di regolare vari aspetti della navigazione del documento.
+
+==== Stile Paragrafo ====[ParagraphStyle]
+: Predefinito
+  Gestito dall'applicazione
+: Opzioni
+  Predefinito (Gestito dall'applicazione), Gestito dall'applicazione, Interruzione riga singola, Interruzione di più righe
+:
+
+Questa casella combinata permette di selezionare lo stile del paragrafo da utilizzare quando si naviga tra gli stessi tramite "control+freccia su" e "control+freccia giù".
+Gli stili di paragrafo disponibili sono:
+- Gestito dall'applicazione: NVDA consentirà all'applicazione di determinare il paragrafo precedente o successivo; conseguentemente lo screen reader leggerà il nuovo paragrafo durante la navigazione.
+Questo stile funziona al meglio quando l'applicazione supporta nativamente la navigazione tra paragrafi ed è l'impostazione predefinita.
+- Interruzione riga singola: NVDA tenterà di determinare il paragrafo precedente o successivo utilizzando un'interruzione di una sola riga come indicatore di paragrafo.
+Questo stile funziona meglio quando si leggono documenti in un'applicazione che non supporta nativamente la navigazione tra paragrafi, e i paragrafi nel documento sono contrassegnati da una singola pressione del ``tasto invio``.
+- Interruzione di più righe: NVDA tenterà di determinare il paragrafo precedente o successivo utilizzando almeno una riga vuota (due pressioni del tasto ``invio``) come indicatore di paragrafo.
+Questo stile funziona meglio quando si lavora con documenti che utilizzano paragrafi a blocchi.
+Si noti che questo stile di paragrafo non può essere utilizzato in Microsoft Word o Microsoft Outlook, a meno che non si utilizzi UIA per accedere ai controlli di Microsoft Word.
+-
+
+è possibile passare tra gli stili di paragrafo disponibili da qualsiasi luogo assegnando una combinazione di tasti nella finestra [Tasti e gesti di immissione #InputGestures].
+
 +++ OCR Windows +++[Win10OcrSettings]
 Questa categoria di impostazioni permette di configurare [l'OCR di Windows #Win10Ocr].
 Contiene le seguenti opzioni:
@@ -1859,12 +2141,22 @@ Se si desidera  distribuire codice personalizzato ad altri, è necessario creare
 Questo pulsante apre la cartella all'interno della quale è possibile  inserire il codice personalizzato mentre si sviluppa.
 Il bottone risulta attivo solo nel caso in cui NVDA sia configurato per caricare codice personalizzato dalla cartella scratchpad dello sviluppatore.
 
-==== Abilita la registrazione selettiva per eventi UI Automation e cambiamenti di proprietà ====[AdvancedSettingsSelectiveUIAEventRegistration]
+==== Registrazione per eventi UI Automation e cambiamenti di proprietà ====[AdvancedSettingsSelectiveUIAEventRegistration]
+: Default
+  Automatica
+: Opzioni
+  Automatica, Selettiva, Globale
+:
+
 Questa opzione modifica il modo in cui NVDA registra gli eventi attivati dall'API di accessibilità di Microsoft UI Automation.
-Se la funzione è disabilitata, NVDA terrà traccia di molti eventi UIA, che per lo più sono gestiti e scartati da NVDA stesso.
-Questo può risultare molto dispendioso in termini di risorse soprattutto in applicazioni  quali Microsoft Visual Studio.
-Invece, se l'opzione risulta attivata, NVDA si limiterà a tener conto degli eventi UIA che riguardano unicamente il focus.
+La casella combinata "Registrazione per eventi UI Automation e cambiamenti di proprietà" contiene tre opzioni:
+- Automatica: "selettiva" per Windows 11 Sun Valley 2 (versione 22H2) e successive, altrimenti "globale".
+- Selettiva: NVDA si limiterà a tener conto degli eventi UIA che riguardano unicamente il focus.
 Nel caso in cui si riscontrino problemi di stabilità o di prestazioni, si consiglia di attivare la funzione per vedere se il problema può risolversi.
+Tuttavia, nelle versioni più vecchie di Windows, NVDA potrebbe avere problemi a seguire il focus in alcuni controlli (come il task manager e il pannello emoji).
+- Globale: NVDA terrà traccia di molti eventi UIA, che per lo più sono gestiti e scartati da NVDA stesso.
+Sebbene la gestione del focus risulti più affidabile, questo può risultare molto dispendioso in termini di risorse soprattutto in applicazioni  quali Microsoft Visual Studio.
+-
 
 ==== Utilizza UI Automation per accedere ai controlli dei documenti Microsoft Word ====[MSWordUIA]
 Stabilisce se NVDA debba utilizzare o meno l'API di accessibilità UI Automation per accedere ai documenti di Microsoft Word, anziché il vecchio modello a oggetti  precedente.
@@ -1879,6 +2171,27 @@ Questa impostazione contiene i seguenti valori:
 ==== Utilizza UI Automation per accedere alla console di Windows quando disponibile ====[AdvancedSettingsConsoleUIA]
 Quando questa opzione è abilitata, NVDA utilizzerà una nuova versione ancora in sviluppo del suo supporto per il prompt dei comandi e la console di Windows che sfrutta i [miglioramenti dell'accessibilità apportati da Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Questa funzione è altamente sperimentale ed è ancora incompleta, quindi il suo uso non è ancora raccomandato. Tuttavia, una volta completato, si prevede che questo nuovo supporto diventerà quello predefinito, migliorando le prestazioni e la stabilità di NVDA nel prompt dei comandi e nelle console di Windows.
 
+==== Supporto alla Console di Windows ====[AdvancedSettingsConsoleUIA]
+: Default
+  Automatico
+: Opzioni
+  Automatico, UIA se disponibile, Meno recenti
+:
+
+Questa opzione permette di selezionare la modalità con cui NVDA interagisce con la console di Windows utilizzata dal prompt dei comandi, PowerShell e il sottosistema Windows per Linux.
+Non influisce sul più moderno Terminale di Windows.
+In Windows 10 versione 1709, Microsoft [ha aggiunto il supporto per la sua UI Automation API alla console https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/], offrendo prestazioni e stabilità notevolmente migliorate per gli screen reader che lo supportano.
+Nelle situazioni in cui l'interfaccia UIA non risulti disponibile oppure offra un'esperienza utente non soddisfacente, NVDA passerà automaticamente al supporto più vecchio per le console..
+La casella combinata supporto di Windows Console ha tre opzioni:
+- Automatico: Utilizza UIA Automation nella versione di Windows Console inclusa con Windows 11 versione 22H2 e successive.
+Questa opzione è consigliata e impostata per impostazione predefinita.
+- UIA quando disponibile: Utilizza UI Automation nella console se disponibile, anche per versioni incompatibili o con bug conosciuti..
+Sebbene questa funzionalità limitata possa essere utile (e sufficiente per un utilizzo standard), l'uso di questa opzione è interamente a proprio rischio e non verrà fornito alcun supporto per essa.
+- Meno recente: verrà completamente disabilitato l'uso di UI Automation nella console di Windows..
+Si tenga presente che in questo modo il supporto a UI Automation non verrà mai usato, anche quando l'esperienza utente sarebbe migliore.
+Pertanto, la selezione di questa opzione non è consigliata a meno che non si sappia ciò che si sta facendo.
+-
+ 
 ==== Utilizza UIA con Microsoft Edge e altri Browser basati su Chromium quando disponibile ====[ChromiumUIA]
 Consente di specificare se servirsi della tecnologia UIA quando disponibile nei browser basati su Chromium come Microsoft Edge.
 Il supporto UIA per i browser basati su Chromium è in fase di sviluppo e potrebbe non fornire lo stesso livello di accessibilità di IA2.
@@ -1941,6 +2254,25 @@ Tuttavia, potrebbe essere incompatibile con alcune applicazioni, con la lettura 
 È identico al comportamento di NVDA nelle versioni 2020.4 e precedenti.
 Questa impostazione può rendere più stabile la lettura del testo in arrivo per alcune applicazioni.
 Tuttavia, nei terminali, quando si inserisce o si elimina un carattere nel mezzo di una riga, verrà sempre letto anche il testo situato dopo il cursore.
+-
+
+==== Leggi nuovo testo in Windows Terminal tramite ====[WtStrategy]
+: Predefinito
+  Diffing
+: Opzioni
+  Diffing, Notifiche UIA
+:
+
+Questa opzione determina il metodo utilizzato da NVDA per stabilire quale testo risulti "nuovo" (e quindi cosa pronunciare quando l'opzione "Leggi i cambiamenti dei contenuti dinamici" è abilitata) nella finestra del terminale di Windows e nel controllo WPF Windows Terminal utilizzato in Visual Studio 2022.
+Non influisce sulla console di Windows (``conhost.exe``).
+La casella combinata Leggi nuovo testo nel terminale di Windows ha tre opzioni:
+- Default: Questa opzione è attualmente equivalente a "diffing", ma si prevede che verrà cambiata una volta sviluppato ulteriormente il supporto per le notifiche UIA.
+- Diffing: Questa opzione utilizza l'algoritmo diff selezionato per calcolare le modifiche ogni volta che il terminale esegue il rendering di un nuovo testo.
+Questo risulta identico al comportamento di NVDA nelle versioni 2022.4 e precedenti.
+- Notifiche UIA: Questa opzione lascia il compito di gestire cosa dovrà essere letto al terminale di Windows stesso, il che significa che NVDA non dovrà più controllare e calcolare quale testo risulti "nuovo" sullo schermo.
+Ciò dovrebbe migliorare notevolmente le prestazioni e la stabilità di Windows Terminal, ma questa funzionalità non è ancora completa.
+In particolare, quando questa opzione è selezionata, vengono letti i caratteri digitati che non sono visualizzati sullo schermo, come le password.
+Inoltre, gli intervalli contigui di output di oltre 1.000 caratteri potrebbero non essere segnalati in modo accurato.
 -
 
 ==== Tenta di non leggere informazioni obsolete concernenti il focus ====[CancelExpiredFocusSpeech]
@@ -3308,6 +3640,34 @@ Di seguito sono riportate le assegnazioni dei tasti per questi display.
 
 + Argomenti avanzati +[AdvancedTopics]
 
+++ Modalità protetta ++[SecureMode]
+NVDA può essere avviato in modalità protetta con [l'opzione a riga di comando #CommandLineOptions] ``-s``. [
+NVDA viene avviato in modalità protetta quando eseguito nelle [schermate protette #SecureScreens], a meno che non sia abilitato il [parametro a livello di sistema #SystemWideParameters] ``serviceDebug``..
+
+La modalità protetta disabilita:
+
+- Il salvataggio della configurazione e di altre impostazioni su disco
+- Il salvataggio della mappa dei gesti su disco
+- Le funzionalità dei [profili di configurazione #ConfigurationProfiles] come la creazione, l'eliminazione, la ridenominazione dei profili,  etc.
+- L'aggiornamento di NVDA e creazione di copie portable
+- La [console Python #PythonConsole]
+- Il [visualizzatore log #LogViewer] e le funzionalità di log
+-
+
+++ Schermate protette ++[SecureScreens]
+NVDA viene avviato in modalità protetta quando eseguito nelle [schermate protette #SecureScreens], a meno che non sia abilitato il [parametro a livello di sistema #SystemWideParameters] ``serviceDebug``..
+
+Quando NVDA è in modalità protetta, lo screen reader utilizza un particolare profilo di sistema per le preferenze.
+Le preferenze dell'utente possono essere copiate [per essere utilizzate nelle schermate protette #GeneralSettingsCopySettings].
+
+Le schermate protette comprendono:
+
+- La schermata di accesso di Windows
+- La finestra di dialogo Controllo accesso utente, attiva quando si esegue un'azione come amministratore
+  - Ciò comprende l'installazione di programmi
+  -
+-
+
 ++ Opzioni a riga di comando ++[CommandLineOptions]
 NVDA è in grado di accettare alcune opzioni a riga di comando per modificarne il comportamento all'avvio.
 Si possono inserire tutti i parametri che si desiderano.
@@ -3337,11 +3697,11 @@ Ecco l'elenco dei parametri a riga di comando di NVDA:
 | -q | --quit | Chiude eventuali copie in esecuzione di NVDA |
 | -k | --check-running | Notifica se NVDA è in esecuzione tramite exit code; 0 se in esecuzione, 1 se non lo è |
 | -f LOGFILENAME | --log-file=LOGFILENAME | Il file nel quale verrà scritto il log |
-| -l LOGLEVEL | --log-level=LOGLEVEL | Il livello più basso di un messaggio loggato ((debug 10, input/output 12, debug warning 15, info 20, warning 30, error 40, critical 50, disabled 100), default è warning |
+| -l LOGLEVEL | --log-level=LOGLEVEL | Il livello più basso di un messaggio loggato (debug 10, input/output 12, debug warning 15, info 20, disabled 100) |
 | -c CONFIGPATH | --config-path=CONFIGPATH | Il percorso ove sono salvate tutte le impostazioni di NVDA |
 | None | --lang=LANGUAGE | Sovrascrive la lingua configurata per NVDA. Impostarla a "Windows" per la lingua predefinita dell'utente, "en" per Inglese, etc. |
 | -m | --minimal | Niente suoni, niente interfaccia, niente messaggio all'avvio etc |
-| -s | --secure | Modalità protetta (disabilita Python console e qualsiasi log) |
+| -s | --secure | Avvia NVDA in [modalità protetta #SecureMode] |
 | None | --disable-addons | I componenti aggiuntivi non avranno alcun effetto |
 | None | --debug-logging | Abilita il debug nei log solo per la presente istanza. Questa impostazione ha la precedenza su qualsiasi altro livello di log ( ""--loglevel"", -l), compresa la funzione no logging |
 | None | --no-logging | Disabilita completamente le funzioni di log durante l'uso di NVDA. Questa impostazione può essere sovrascritta se viene specificato un livello di log ( ""--loglevel"", -l) dalla riga di comando o se la funzione debug logging è attiva. |
@@ -3356,7 +3716,7 @@ Ecco l'elenco dei parametri a riga di comando di NVDA:
 
 ++ Parametri di sistema++[SystemWideParameters] 
 NVDA consente di impostare alcuni valori nel registro di sistema che andranno ad influenzare il comportamento dello screen reader.
-Tali valori sono registrati nel registro in una delle seguenti chiavi:
+Tali valori sono salvati nel registro in una delle seguenti chiavi:
 - sistemi a 32-bit: "HKEY_LOCAL_MACHINE\SOFTWARE\nvda"
 - Sistemi a 64-bit: "HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\nvda"
 -
@@ -3364,7 +3724,7 @@ Tali valori sono registrati nel registro in una delle seguenti chiavi:
 Di seguito vengono elencati i valori modificabili con queste chiavi di registro:
 || Nome | Tipo | Valori ammessi | Descrizione |
 | configInLocalAppData | DWORD | 0 (predefinito) per disabilitare, 1 per abilitare | Se attivato, salva la configurazione utente di NVDA nella cartella locale dell'applicazione invece che in roaming application data |
-| serviceDebug | DWORD | 0 (predefinito) per disabilitare, 1 per abilitare | Se attivato, disattiva la modalità protetta di Windows Secure Desktop, permettendo l'utilizzo della console python e la visualizzazione dei log. A causa di alcune importanti implicazioni per la sicurezza, l'uso di questa opzione è fortemente sconsigliata |
+| serviceDebug | DWORD | 0 (predefinito) per disabilitare, 1 per abilitare | Se abilitata, disattiva la [Modalità protetta #SecureMode] nelle  [Schermate protette #SecureScreens]. A causa di diverse importanti implicazioni sulla sicurezza, l'uso di questa opzione è fortemente sconsigliato |
 
 + Ulteriori Informazioni +[FurtherInformation]
 Se si vogliono trovare maggiori informazioni o richiedere assistenza riguardo NVDA, si prega di visitare o il sito internazionale in lingua inglese su NVDA_URL, oppure quello relativo alla comunità italiana all'indirizzo www.nvda.it.

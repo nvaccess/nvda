@@ -26,6 +26,7 @@ negative number	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
 after-number %	(?<=\d)(\s?\%)(?=\W|$)
 n°	\b([nN])(°)
 
+
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 
@@ -76,6 +77,8 @@ $	dollar
 )	parenthèse droite
 *	astérisque
 ,	virgule
+、	virgule idéographique	all	always
+،	virgule arabe	all	always
 -	tiret
 .	point
 |	bar	most
@@ -83,9 +86,11 @@ $	dollar
 /	barre oblique
 :	deux points
 ;	point virgule
+؛	point-virgule arabe	most
 <	inférieur
 =	égal
 ?	point d'interrogation
+؟	point d’interrogation arabe
 @	arobase	none
 [	crochet gauche
 ]	crochet droit

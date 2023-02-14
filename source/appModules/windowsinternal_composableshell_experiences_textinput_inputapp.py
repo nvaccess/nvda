@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2017-2022 NV Access Limited, Joseph Lee
+# Copyright (C) 2017-2023 NV Access Limited, Joseph Lee
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -92,7 +92,8 @@ class ImeCandidateItem(CandidateItemBehavior, UIA):
 		if isinstance(oldNav, ImeCandidateItem) and self.name == oldNav.name:
 			# Duplicate selection event fired on the candidate item. Ignore it.
 			return
-		api.setNavigatorObject(self)
+		if not api.setNavigatorObject(self):
+			return
 		speech.cancelSpeech()
 		# Report the entire current page of candidate items if it is newly shown  or it has changed.
 		if config.conf["inputComposition"]["autoReportAllCandidates"]:
@@ -110,6 +111,10 @@ class AppModule(appModuleHandler.AppModule):
 
 	# Cache the most recently selected item.
 	_recentlySelected = None
+
+	# In Windows 11, clipboard history is seen as a web document.
+	# Turn off browse mode by default so clipboard history entry menu items can be announced when tabbed to.
+	disableBrowseModeByDefault: bool = True
 
 	def event_UIA_elementSelected(self, obj, nextHandler):
 		# Logic for IME candidate items is handled all within its own object
@@ -149,8 +154,7 @@ class AppModule(appModuleHandler.AppModule):
 				# Emoji categories list.
 				ui.message(candidate.name)
 				obj = candidate.firstChild
-		if obj is not None:
-			api.setNavigatorObject(obj)
+		if obj is not None and api.setNavigatorObject(obj):
 			obj.reportFocus()
 			braille.handler.message(braille.getPropertiesBraille(
 				name=obj.name,

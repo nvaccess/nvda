@@ -7,6 +7,7 @@ import sys
 import os
 import traceback
 import time
+from time import perf_counter as _timer
 import threading
 import inspect
 from ctypes import windll, oledll
@@ -21,22 +22,24 @@ import core
 import exceptions
 import NVDAHelper
 
-#settings
-#: The minimum time to wait for the core to be alive.
-MIN_CORE_ALIVE_TIMEOUT=0.5
-#: How long to wait for the core to be alive under normal circumstances.
-#: This must be a multiple of MIN_CORE_ALIVE_TIMEOUT.
-NORMAL_CORE_ALIVE_TIMEOUT=10
-#: How long to wait between recovery attempts
+MIN_CORE_ALIVE_TIMEOUT = 0.5
+"""The minimum time (seconds) to wait for the core to be alive.
+"""
+NORMAL_CORE_ALIVE_TIMEOUT = 10
+""" Seconds to wait for the core to be alive under normal circumstances.
+"""
 RECOVER_ATTEMPT_INTERVAL = 0.05
-#: The amount of time before the core should be considered severely frozen and a warning logged.
+""" Seconds to wait between recovery attempts
+"""
 FROZEN_WARNING_TIMEOUT = 15
+""" Seconds before the core should be considered severely frozen and a warning logged.
+"""
 
-safeWindowClassSet=set([
+safeWindowClassSet = {
 	'Internet Explorer_Server',
 	'_WwG',
 	'EXCEL7',
-])
+}
 
 isRunning=False
 isAttemptingRecovery: bool = False
@@ -74,8 +77,20 @@ def alive():
 	windll.kernel32.ResetEvent(_cancelCallEvent)
 	# Set the timer so the watcher will take action in MIN_CORE_ALIVE_TIMEOUT
 	# if this function or asleep() isn't called.
-	windll.kernel32.SetWaitableTimer(_coreDeadTimer,
-		ctypes.byref(ctypes.wintypes.LARGE_INTEGER(-int(10000000 * MIN_CORE_ALIVE_TIMEOUT))),
+	SECOND_TO_100_NANOSECOND = 10 ** 7  # nanosecond is 10^9, 10^7 is hundreds of nanoseconds
+	windll.kernel32.SetWaitableTimer(
+		_coreDeadTimer,
+		ctypes.byref(ctypes.wintypes.LARGE_INTEGER(
+			# The time after which the state of the timer is to be set to signaled,
+			# in 100 nanosecond intervals.
+			# Use the format described by the FILETIME structure.
+			# Positive values indicate absolute time.
+			# Be sure to use a UTC-based absolute time, as the system uses UTC-based time internally.
+			# Negative values indicate relative time.
+			# The actual timer accuracy depends on the capability of your hardware.
+			# For more information about UTC-based time, see System Time.
+			-int(SECOND_TO_100_NANOSECOND * MIN_CORE_ALIVE_TIMEOUT)
+		)),
 		0, None, None, False)
 
 def asleep():
@@ -104,47 +119,78 @@ def _isAlive():
 	# This will stop recovery if it has started and allow the watcher to terminate.
 	return not isRunning or winKernel.waitForSingleObject(_coreDeadTimer, 0) != 0
 
+
+def _waitUntilNormalCoreAliveTimeout(waitedSince: float):
+	logged = False
+	while (
+		_timer() - waitedSince < NORMAL_CORE_ALIVE_TIMEOUT
+		and not _isAlive()
+		and not _shouldRecoverAfterMinTimeout()
+	):
+		if not logged:
+			logged = True
+			log.debug(f"Potential freeze, waiting up to {NORMAL_CORE_ALIVE_TIMEOUT} seconds.")
+		# The core is still dead and fast recovery doesn't apply.
+		# Wait up to NORMAL_ALIVE_TIMEOUT in increments of MIN_CORE_ALIVE_TIMEOUT
+		time.sleep(MIN_CORE_ALIVE_TIMEOUT)
+
+	if logged and _isAlive():
+		log.debug(f"Recovered from potential freeze after {_timer() - waitedSince} seconds.")
+
+
 def _watcher():
 	global isAttemptingRecovery
 	while True:
 		# Wait for the core to die.
 		winKernel.waitForSingleObject(_coreDeadTimer, winKernel.INFINITE)
+
 		if not isRunning:
+			# NVDA has shutdown, exit the watcher.
 			return
+
 		# The core hasn't reported alive for MIN_CORE_ALIVE_TIMEOUT.
-		waited = MIN_CORE_ALIVE_TIMEOUT
-		while not _isAlive() and not _shouldRecoverAfterMinTimeout():
-			# The core is still dead and fast recovery doesn't apply.
-			# Wait up to NORMAL_ALIVE_TIMEOUT.
-			time.sleep(MIN_CORE_ALIVE_TIMEOUT)
-			waited += MIN_CORE_ALIVE_TIMEOUT
-			if waited >= NORMAL_CORE_ALIVE_TIMEOUT:
-				break
+		waitedSince = _timer() - MIN_CORE_ALIVE_TIMEOUT  # already waiting this long via _coreDeadTimer
+		_waitUntilNormalCoreAliveTimeout(waitedSince)
 		if _isAlive():
 			continue
-		if log.isEnabledFor(log.DEBUGWARNING):
+		else:
+			isAttemptingRecovery = True
+			waitForFreezeRecovery(waitedSince)
+			isAttemptingRecovery = False
+
+
+def waitForFreezeRecovery(waitedSince: float):
+	log.info(f"Starting freeze recovery after {_timer() - waitedSince} seconds.")
+	if log.isEnabledFor(log.DEBUGWARNING):
+		stacks = getFormattedStacksForAllThreads()
+		log.debugWarning(
+			f"Listing stacks for Python threads:\n{stacks}"
+		)
+
+	# After every FROZEN_WARNING_TIMEOUT seconds have elapsed
+	# log each threads stack trace
+	lastTime = _timer()
+
+	# Cancel calls until the core is alive.
+	# This event will be reset by alive().
+	windll.kernel32.SetEvent(_cancelCallEvent)
+
+	# Some calls have to be killed individually.
+	while not _isAlive():
+		curTime = _timer()
+		if curTime - lastTime > FROZEN_WARNING_TIMEOUT:
+			lastTime = curTime
+			# Core is completely frozen.
+			# Collect formatted stacks for all Python threads.
+			log.error(f"Core frozen in stack! ({curTime - waitedSince} seconds)")
 			stacks = getFormattedStacksForAllThreads()
-			log.debugWarning(f"Trying to recover from freeze. Listing stacks for Python threads:\n{stacks}")
-		lastTime=time.time()
-		isAttemptingRecovery = True
-		# Cancel calls until the core is alive.
-		# This event will be reset by alive().
-		windll.kernel32.SetEvent(_cancelCallEvent)
-		# Some calls have to be killed individually.
-		while True:
-			curTime=time.time()
-			if curTime-lastTime>FROZEN_WARNING_TIMEOUT:
-				lastTime=curTime
-				# Core is completely frozen.
-				# Collect formatted stacks for all Python threads.
-				log.error("Core frozen in stack!")
-				stacks = getFormattedStacksForAllThreads()
-				log.info(f"Listing stacks for Python threads:\n{stacks}")
-			_recoverAttempt()
-			time.sleep(RECOVER_ATTEMPT_INTERVAL)
-			if _isAlive():
-				break
-		isAttemptingRecovery = False
+			log.info(f"Listing stacks for Python threads:\n{stacks}")
+		_recoverAttempt()
+		time.sleep(RECOVER_ATTEMPT_INTERVAL)
+
+	log.info(
+		f"Recovered from freeze after {_timer() - waitedSince} seconds."
+	)
 
 def _shouldRecoverAfterMinTimeout():
 	info=winUser.getGUIThreadInfo(0)

@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited, Joseph Lee, Łukasz Golonka, Julien Cochuyt
+# Copyright (C) 2006-2023 NV Access Limited, Joseph Lee, Łukasz Golonka, Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -18,12 +18,12 @@ import api
 import speech
 import eventHandler
 import mouseHandler
-from NVDAObjects.window import Window
 from NVDAObjects.IAccessible import IAccessible, List
 from NVDAObjects.UIA import UIA
 from NVDAObjects.behaviors import ToolTip
 from NVDAObjects.window.edit import RichEdit50, EditTextInfo
 import config
+from winAPI.types import HWNDValT
 
 
 # Suppress incorrect Win 10 Task switching window focus
@@ -46,9 +46,9 @@ class SuggestionListItem(UIA):
 
 	def event_UIA_elementSelected(self):
 		speech.cancelSpeech()
-		api.setNavigatorObject(self, isFocus=True)
-		self.reportFocus()
-		super(SuggestionListItem,self).event_UIA_elementSelected()
+		if api.setNavigatorObject(self, isFocus=True):
+			self.reportFocus()
+			super().event_UIA_elementSelected()
 
 
 # Windows 8 hack: Class to disable incorrect focus on windows 8 search box (containing the already correctly focused edit field)
@@ -505,7 +505,7 @@ class AppModule(appModuleHandler.AppModule):
 
 		nextHandler()
 
-	def isGoodUIAWindow(self, hwnd):
+	def isGoodUIAWindow(self, hwnd: HWNDValT) -> bool:
 		currentWinVer = winVersion.getWinVer()
 		# #9204: shell raises window open event for emoji panel in build 18305 and later.
 		if (
@@ -529,6 +529,7 @@ class AppModule(appModuleHandler.AppModule):
 				# Top-level window class names from Windows 11 shell features
 				"Shell_InputSwitchTopLevelWindow",  # Language switcher
 				"XamlExplorerHostIslandWindow",  # Task View and Snap Layouts
+				"TopLevelWindowForOverflowXamlIsland",  # #14539: redesigned systray overflow in 22H2
 			)
 			# #13717: on some systems, Windows 11 shell elements are reported as IAccessible,
 			# notably Start button, causing IAccessible handler to report attribute error when handling events.

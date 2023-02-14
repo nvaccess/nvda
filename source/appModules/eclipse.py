@@ -1,8 +1,7 @@
-#appModules/eclipse.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2010-2014 NV Access Limited
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2010-2022 NV Access Limited
 
 import controlTypes
 import appModuleHandler
@@ -13,7 +12,6 @@ import braille
 import ui
 import api
 from speech import sayAll
-import eventHandler
 import keyboardHandler
 from scriptHandler import script
 
@@ -79,8 +77,11 @@ class EclipseTextArea(EditableTextWithSuggestions, IAccessible):
 				pass
 
 		# Check if this object is from the same appModule
-		if rootDocumentationWindow and rootDocumentationWindow.appModule == self.appModule:
-			api.setNavigatorObject(rootDocumentationWindow)
+		if (
+			rootDocumentationWindow
+			and rootDocumentationWindow.appModule == self.appModule
+			and api.setNavigatorObject(rootDocumentationWindow)
+		):
 			
 			documentObj = rootDocumentationWindow
 
@@ -105,7 +106,7 @@ class EclipseTextArea(EditableTextWithSuggestions, IAccessible):
 
 		else:
 			# Translators: When the help popup cannot be found for the selected autocompletion item
-			ui.message(_("Cann't find the documentation window."))
+			ui.message(_("Can't find the documentation window."))
 
 	@script(
 		gesture="kb:tab"

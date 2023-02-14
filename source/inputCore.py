@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2010-2022 NV Access Limited, Babbage B.V., Mozilla Corporation
+# Copyright (C) 2010-2023 NV Access Limited, Babbage B.V., Mozilla Corporation, Cyrille Bougot
 
 """Core framework for handling input from the user.
 Every piece of input from the user (e.g. a key press) is represented by an L{InputGesture}.
@@ -13,7 +13,16 @@ import sys
 import os
 import weakref
 import time
-from typing import Dict, Any, Tuple, List, Union
+from typing import (
+	Any,
+	Dict,
+	Generator,
+	List,
+	Optional,
+	Tuple,
+	TypeVar,
+	Union,
+)
 from gui import blockAction
 import configobj
 from speech import sayAll
@@ -31,6 +40,16 @@ import globalVars
 import languageHandler
 import controlTypes
 import winKernel
+import extensionPoints
+
+
+InputGestureBindingClassT = TypeVar("InputGestureBindingClassT")
+ScriptNameT = str
+InputGestureScriptT = Tuple[InputGestureBindingClassT, Optional[ScriptNameT]]
+"""
+The Python class and script name for each script;
+the script name may be C{None} indicating that the gesture should be unbound for this class.
+"""
 
 #: Script category for emulated keyboard keys.
 # Translators: The name of a category of NVDA commands.
@@ -163,11 +182,13 @@ class InputGesture(baseObject.AutoPropertyObject):
 		"""
 		raise NotImplementedError
 
-	def _get_scriptableObject(self):
+	#: typing information for autoproperty _get_scriptableObject
+	scriptableObject: Optional[baseObject.ScriptableObject]
+
+	def _get_scriptableObject(self) -> Optional[baseObject.ScriptableObject]:
 		"""An object which contains scripts specific to this  gesture or type of gesture.
 		This object will be searched for scripts before any other object when handling this gesture.
 		@return: The gesture specific scriptable object or C{None} if there is none.
-		@rtype: L{baseObject.ScriptableObject}
 		"""
 		return None
 
@@ -233,19 +254,21 @@ class GlobalGestureMap(object):
 		self._map.clear()
 		self.lastUpdateContainedError = False
 
-	def add(self, gesture, module, className, script,replace=False):
+	def add(
+			self,
+			gesture: str,
+			module: str,
+			className: str,
+			script: Optional[str],
+			replace: bool = False
+	):
 		"""Add a gesture mapping.
 		@param gesture: The gesture identifier.
-		@type gesture: str
 		@param module: The name of the Python module containing the target script.
-		@type module: str
 		@param className: The name of the class in L{module} containing the target script.
-		@type className: str
 		@param script: The name of the target script
 			or C{None} to unbind the gesture for this class.
-		@type script: str
 		@param replace: if true replaces all existing bindings for this gesture with the given script, otherwise only appends this binding.
-		@type replace: boolean
 		"""
 		gesture = normalizeGestureIdentifier(gesture)
 		try:
@@ -321,13 +344,11 @@ class GlobalGestureMap(object):
 						self.lastUpdateContainedError = True
 						continue
 
-	def getScriptsForGesture(self, gesture):
+	def getScriptsForGesture(self, gesture: str) -> Generator[InputGestureScriptT, None, None]:
 		"""Get the scripts associated with a particular gesture.
 		@param gesture: The gesture identifier.
-		@type gesture: str
 		@return: The Python class and script name for each script;
 			the script name may be C{None} indicating that the gesture should be unbound for this class.
-		@rtype: generator of (class, str)
 		"""
 		try:
 			scripts = self._map[gesture]
@@ -407,6 +428,19 @@ class GlobalGestureMap(object):
 		with FaultTolerantFile(out.filename) as f:
 			out.write(f)
 
+
+decide_executeGesture = extensionPoints.Decider()
+"""
+Notifies when a gesture is about to be executed,
+and allows components or add-ons to decide whether or not to execute a gesture.
+For example, when controlling a remote system with a connected local braille display,
+braille display gestures should not be executed locally.
+Handlers are called with one argument:
+@param gesture: The gesture that is about to be executed.
+@type gesture: L{InputGesture}
+"""
+
+
 class InputManager(baseObject.AutoPropertyObject):
 	"""Manages functionality related to input from the user.
 	Input includes key presses on the keyboard, as well as key presses on Braille displays, etc.
@@ -442,6 +476,16 @@ class InputManager(baseObject.AutoPropertyObject):
 			# This lets gestures pass through unhindered where possible,
 			# as well as stopping a flood of actions when the core revives.
 			raise NoInputGestureAction
+
+		if not decide_executeGesture.decide(gesture=gesture):
+			# A registered handler decided that this gesture shouldn't be executed.
+			# Purposely do not raise a NoInputGestureAction here, as that could
+			# lead to unexpected behavior for gesture emulation, i.e. the gesture will be send to the system
+			# when the decider decided not to execute it.
+			log.debug(
+				"Gesture execution canceled by handler registered to decide_executeGesture extension point"
+			)
+			return
 
 		script = gesture.script
 		focus = api.getFocusObject()
@@ -488,7 +532,7 @@ class InputManager(baseObject.AutoPropertyObject):
 			queueHandler.queueFunction(queueHandler.eventQueue, speech.speakMessage, gesture.displayName)
 
 		gesture.reportExtra()
-		
+
 		# #2953: if an intercepted command Script (script that sends a gesture) is queued
 		# then queue all following gestures (that don't have a script) with a fake script so that they remain in order.
 		if not script and scriptHandler._numIncompleteInterceptedCommandScripts:
@@ -685,9 +729,12 @@ class _AllGestureMappingsRetriever(object):
 					try:
 						script = getattr(cls, "script_%s" % scriptName)
 					except AttributeError:
+						log.debugWarning(f"Unable to bind gesture: script '{scriptName}' not found in class {cls}.")
+						self.handledGestures.remove(key)
 						continue
 					scriptInfo = self.makeNormalScriptInfo(cls, scriptName, script)
 					if not scriptInfo:
+						# Scripts with no description are not displayed in the Input gesture dialog.
 						continue
 				self.addResult(scriptInfo)
 			scriptInfo.gestures.append(gesture)
@@ -755,7 +802,7 @@ class _AllGestureMappingsRetriever(object):
 
 class AllGesturesScriptInfo(object):
 	__slots__ = ("cls", "scriptName", "category", "displayName", "gestures")
-	
+
 	def __init__(self, cls, scriptName):
 		self.cls = cls
 		self.scriptName = scriptName
@@ -845,9 +892,10 @@ def getDisplayTextForGestureIdentifier(identifier):
 		raise
 		raise LookupError("Couldn't get display text for identifier: %s" % identifier)
 
+
 #: The singleton input manager instance.
-#: @type: L{InputManager}
-manager = None
+manager: Optional[InputManager] = None
+
 
 def initialize():
 	"""Initializes input core, creating a global L{InputManager} singleton.

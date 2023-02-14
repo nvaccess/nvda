@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2021 NV Access Limited
+# Copyright (C) 2021-2022 NV Access Limited
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -274,6 +274,55 @@ def test_moveByChar():
 			'line feed',  # on Windows/notepad newline is \r\n
 		],
 	)
+
+
+_CHARACTER_DESCRIPTIONS = {
+	# english character descriptions.
+	'a': 'Alfa',
+	'b': 'Bravo',
+	'c': 'Charlie',
+}
+
+
+def _getDelayedDescriptionsTestSample() -> str:
+	return "".join(_CHARACTER_DESCRIPTIONS.keys())
+
+
+def _testDelayedDescription(expectDescription: bool = True) -> None:
+	"""
+	Perform delayed character descriptions tests with with the specified parameters:
+	@param expectDescription: whether or not a delayed description should be announced
+	"""
+	spoken = _NvdaLib.getSpeechAfterKey(Move.CARET_CHAR.value).split("\n")
+	if not spoken:
+		raise AssertionError(f"Nothing spoken after character press")
+	if spoken[0] not in _CHARACTER_DESCRIPTIONS:
+		raise AssertionError(
+			f"First piece of speech not an expected character; got: '{spoken[0]}'"
+		)
+	if expectDescription:
+		if len(spoken) != 2:
+			raise AssertionError(
+				f"Expected character with description; got: '{spoken}'"
+			)
+		_asserts.strings_match(spoken[1], _CHARACTER_DESCRIPTIONS[spoken[0]])
+	else:
+		if len(spoken) != 1:
+			raise AssertionError(
+				f"Expected single character; got: '{spoken}'"
+			)
+
+
+def test_delayedDescriptions():
+	_notepad.prepareNotepad(_getDelayedDescriptionsTestSample())
+	# Ensure this feature is disabled by default.
+	_testDelayedDescription(expectDescription=False)
+
+	# Activate delayed descriptions feature to do the next test.
+	spy = _NvdaLib.getSpyLib()
+	spy.set_configValue(['speech', 'delayedCharacterDescriptions'], True)
+
+	_testDelayedDescription()
 
 
 def test_selByWord():

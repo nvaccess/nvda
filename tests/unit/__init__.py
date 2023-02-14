@@ -2,7 +2,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2017-2019 NV Access Limited, Babbage B.V.
+# Copyright (C) 2017-2023 NV Access Limited, Babbage B.V., Cyrille Bougot
 
 """NVDA unit testing.
 All unit tests should reside within this package and should be
@@ -19,10 +19,12 @@ import sys
 
 import locale
 import gettext
+import builtins
 #Localization settings
 locale.setlocale(locale.LC_ALL,'')
 translations = gettext.NullTranslations()
 translations.install()
+builtins.pgettext = lambda context, message: message
 
 # The path to the unit tests.
 UNIT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -91,10 +93,16 @@ import braille
 # Disable auto detection of braille displays when unit testing.
 config.conf['braille']['display'] = "noBraille"
 braille.initialize()
-# For braille unit tests, we need to construct a fake braille display as well as enable the braille handler
+
+
+# For braille unit tests, we need to enable the braille handler by providing it a cell count
 # Give the display 40 cells
-braille.handler.displaySize=40
-braille.handler.enabled = True
+def getFakeCellCount(numCells: int) -> int:
+	return 40
+
+
+braille.filter_displaySize.register(getFakeCellCount)
+
 # The focus and navigator objects need to be initialized to something.
 from .objectProvider import PlaceholderNVDAObject,NVDAObjectWithRole
 phObj = PlaceholderNVDAObject()

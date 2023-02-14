@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (c) 2011-2017 NVDA Contributors
 #This file is covered by the GNU General Public License.
-#Edited by NVDA-Taiwan Volunteers Team and reviewed by Dr. Jan Li Wang, 2021/11/15
+#Edited by NVDA-Taiwan Volunteers Team
 # 在本檔案內，當一個符號的解釋出現多音字（或破音字）時，為使其報讀正確，得用另一同音字代替，以避免混淆。
 
 complexSymbols:
@@ -61,12 +61,15 @@ $	錢號	all	norep
 )	半形右括號	most	always
 *	star	some
 ,	comma	all	always
+،	阿拉伯逗號	all	always
 -	dash	most
 .	dot	some
 /	slash	some
 :	colon	most	norep
 ;	semi	most
+؛	阿拉伯冒號	most
 ?	question	all
+؟	阿拉伯問號	all
 @	小老鼠	some
 [	半形左中括號	most	always
 ]	半形右中括號	most	always
@@ -1160,5 +1163,4 @@ _	半形底線	most
 ⿓	龍	none
 ⿔	龜	none
 ⿕	龠	none
-
 #End of file
