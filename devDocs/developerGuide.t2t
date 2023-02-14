@@ -17,7 +17,7 @@ The NVDA Add-on API includes all NVDA internals, except symbols that are prefixe
 
 The NVDA Add-on API changes over time, such as removals, deprecations and new features.
 Important changes to the API are announced on the [NVDA API mailing list https://groups.google.com/a/nvaccess.org/g/nvda-api/about].
-Changes relevant to developers are also announced via the [NVDA changes file](https://www.nvaccess.org/files/nvda/documentation/changes.html).
+Changes relevant to developers are also announced via the [NVDA changes file https://www.nvaccess.org/files/nvda/documentation/changes.html].
 Any changes to the API policy outlined in this section will be conveyed via these two channels.
 
 API breaking releases happen at most once per year, these are ``.1`` releases, e.g. ``2022.1``.
@@ -38,14 +38,14 @@ Documentation and other resources related to the Python language can be found at
 ++ C++ ++
 Some of NVDA is written in C++, EG nvdaHelper.
 For an overview of nvdaHelper, including how to configure Visual Studio to enable intellisense see the
-[nvdaHelper readme nvdaHelper_readme.md]
+[nvdaHelper readme https://github.com/nvaccess/nvda/blob/master/nvdaHelper/readme.md]
 
 
 + Translation +
 In order to support multiple languages/locales, NVDA must be translated and data specific to the locale must be provided.
 This section only includes information on custom NVDA file formats required for translation.
 Other items need to be translated, such as the NVDA user interface and documentation, but these use standard file formats.
-For complete documentation about translating NVDA, please see https://github.com/nvaccess/nvda/wiki/Translating
+For complete documentation about translating NVDA, please see the [Translating wiki page https://github.com/nvaccess/nvda/wiki/Translating]
 
 ++ Character Descriptions ++
 Sometimes, it can be very difficult or even impossible to distinguish one character from another.
@@ -859,8 +859,7 @@ All other fields will be ignored.
 Each language directory can also contain gettext information, which is the system used to translate the rest of NVDA's user interface and reported messages.
 As with the rest of NVDA, an nvda.mo compiled gettext database file should be placed in the LC_MESSAGES directory within this directory.
 To allow plugins in your add-on to access gettext message information via calls to _(), you must initialize translations at the top of each Python module by calling addonHandler.initTranslation().
-For more information about gettext and NVDA translation in general, please read
-https://github.com/nvaccess/nvda/wiki/Translating
+For more information about gettext and NVDA translation in general, please read the [Translating NVDA wiki page https://github.com/nvaccess/nvda/wiki/Translating]
 
 ++ Add-on Documentation ++[AddonDoc]
 Documentation for an add-on should be placed in a doc directory in the archive.
