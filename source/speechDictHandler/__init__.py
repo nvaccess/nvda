@@ -40,7 +40,7 @@ class SpeechDictEntry:
 		self.caseSensitive=caseSensitive
 		self.type=type
 
-	def sub(self, text):
+	def sub(self, text: str) -> str:
 		if self.type == ENTRY_TYPE_REGEXP:
 			replacement = self.replacement
 		else:
