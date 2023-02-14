@@ -58,11 +58,20 @@ class IoThread(threading.Thread):
 		finally:
 			del self._apcReferences[apcUuid]
 
-	def queueAsApc(
+	def _getApc(
 			self,
 			func: typing.Callable[[int], None],
 			param: int = 0
-	):
+	) -> winKernel.PAPCFUNC:
+		"""Internal method to safely wrap a python function in an Asynchronous Procedure Call (APC).
+		The generated APC is saved in a cache on the IoThread instance
+		and automatically cleaned when the call is complete.
+		The wrapped python function is weakly referenced, therefore the caller should
+		keep a reference to the python function (not the APC itself).
+		@param func: The function to be wrapped in an APC.
+		@param param: The parameter passed to the APC when called.
+		@returns: The wrapped APC.
+		"""
 		if not self.is_alive():
 			raise RuntimeError("Thread is not running")
 
@@ -87,12 +96,57 @@ class IoThread(threading.Thread):
 					log.error(f"Error in APC function {function!r} queued to IoThread", exc_info=True)
 
 		self._apcReferences[apcUuid] = apc
+		return apc
+
+	def queueAsApc(
+			self,
+			func: typing.Callable[[int], None],
+			param: int = 0
+	):
+		"""safely queues an Asynchronous Procedure Call (APC) created from a python function.
+		The generated APC is saved in a cache on the IoThread instance
+		and automatically cleaned when the call is complete.
+		The wrapped python function is weakly referenced, therefore the caller should
+		keep a reference to the python function.
+		@param func: The function to be wrapped in an APC.
+		@param param: The parameter passed to the APC when called.
+		"""
+		apc = self._getApc(func, param)
 		ctypes.windll.kernel32.QueueUserAPC(apc, self.handle, param)
 
-	def queueCompletionRoutine(
+	def setWaitableTimer(
+			self,
+			handle: typing.Union[int, ctypes.wintypes.HANDLE],
+			dueTime: int,
+			func: typing.Callable[[int], None],
+			param: int = 0
+	):
+		""""Safe wrapper around winKernel.setWaitableTimer to ensure that the queued APC
+		is available when called.
+		The generated APC is saved in a cache on the IoThread instance
+		and automatically cleaned when the call is complete.
+		The wrapped python function is weakly referenced, therefore the caller should
+		keep a reference to the python function.
+		@param handle: A handle to the timer object.
+		@param dueTime: Relative time (in miliseconds).
+		@param func: The function to be executed when the timer elapses.
+		@param param: The parameter passed to the APC when called.
+		"""
+		apc = self._getApc(func, param)
+		winKernel.setWaitableTimer(handle, dueTime, completionRoutine=apc, arg=param)
+
+	def getCompletionRoutine(
 			self,
 			func: typing.Callable[[int, int, serial.win32.LPOVERLAPPED], None],
 	):
+		"""Safely wraps a python function in an overlapped completion routine.
+		The generated routine is saved in a cache on the IoThread instance
+		and automatically cleaned when the call is complete.
+		The wrapped python function is weakly referenced, therefore the caller should
+		keep a reference to the python function (not the completion routine itself).
+		@param func: The function to be wrapped in a completion routine.
+		@returns: The wrapped completion routine.
+		"""
 		if not self.is_alive():
 			raise RuntimeError("Thread is not running")
 
@@ -126,7 +180,9 @@ class IoThread(threading.Thread):
 		# Wake up the thread. It will exit when it sees exit is True.
 		# We do this by queuing a fake lambda that does nothing.
 		# L{queueAsApc} will ensure that the APC exits early when the thread is about to exit.
-		fakeApc = lambda param: None
+
+		def fakeApc(param):
+			return None
 		self.queueAsApc(fakeApc)
 		self.join(timeout)
 		self.exit = False

@@ -160,7 +160,7 @@ class IoBase(object):
 			self._readBuf,
 			self._readSize,
 			byref(self._readOl),
-			ioThread.queueCompletionRoutine(self._ioDone)
+			ioThread.getCompletionRoutine(self._ioDone)
 		)
 
 	def _ioDone(self, error, numberOfBytes: int, overlapped):
