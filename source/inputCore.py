@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2010-2022 NV Access Limited, Babbage B.V., Mozilla Corporation
+# Copyright (C) 2010-2023 NV Access Limited, Babbage B.V., Mozilla Corporation, Cyrille Bougot
 
 """Core framework for handling input from the user.
 Every piece of input from the user (e.g. a key press) is represented by an L{InputGesture}.
@@ -428,6 +428,19 @@ class GlobalGestureMap(object):
 		with FaultTolerantFile(out.filename) as f:
 			out.write(f)
 
+
+decide_executeGesture = extensionPoints.Decider()
+"""
+Notifies when a gesture is about to be executed,
+and allows components or add-ons to decide whether or not to execute a gesture.
+For example, when controlling a remote system with a connected local braille display,
+braille display gestures should not be executed locally.
+Handlers are called with one argument:
+@param gesture: The gesture that is about to be executed.
+@type gesture: L{InputGesture}
+"""
+
+
 class InputManager(baseObject.AutoPropertyObject):
 	"""Manages functionality related to input from the user.
 	Input includes key presses on the keyboard, as well as key presses on Braille displays, etc.
@@ -436,17 +449,6 @@ class InputManager(baseObject.AutoPropertyObject):
 	#: a modifier gesture was just executed while sayAll was running
 	#: @type: bool
 	lastModifierWasInSayAll=False
-
-	decide_executeGesture: extensionPoints.Decider
-	"""
-	Notifies when a gesture is about to be executed,
-	and allows components or add-ons to decide whether or not to execute a gesture.
-	For example, when controlling a remote system with a connected local braille display,
-	braille display gestures should not be executed locally.
-	Handlers are called with one argument:
-	@param gesture: The gesture that is about to be executed.
-	@type gesture: L{InputGesture}
-	"""
 
 	def __init__(self):
 		#: The function to call when capturing gestures.
@@ -463,8 +465,6 @@ class InputManager(baseObject.AutoPropertyObject):
 		self.loadUserGestureMap()
 		self._lastInputTime = None
 
-		self.decide_executeGesture = extensionPoints.Decider()
-
 	def executeGesture(self, gesture):
 		"""Perform the action associated with a gesture.
 		@param gesture: The gesture to execute.
@@ -477,7 +477,7 @@ class InputManager(baseObject.AutoPropertyObject):
 			# as well as stopping a flood of actions when the core revives.
 			raise NoInputGestureAction
 
-		if not self.decide_executeGesture.decide(gesture=gesture):
+		if not decide_executeGesture.decide(gesture=gesture):
 			# A registered handler decided that this gesture shouldn't be executed.
 			# Purposely do not raise a NoInputGestureAction here, as that could
 			# lead to unexpected behavior for gesture emulation, i.e. the gesture will be send to the system
@@ -729,9 +729,12 @@ class _AllGestureMappingsRetriever(object):
 					try:
 						script = getattr(cls, "script_%s" % scriptName)
 					except AttributeError:
+						log.debugWarning(f"Unable to bind gesture: script '{scriptName}' not found in class {cls}.")
+						self.handledGestures.remove(key)
 						continue
 					scriptInfo = self.makeNormalScriptInfo(cls, scriptName, script)
 					if not scriptInfo:
+						# Scripts with no description are not displayed in the Input gesture dialog.
 						continue
 				self.addResult(scriptInfo)
 			scriptInfo.gestures.append(gesture)

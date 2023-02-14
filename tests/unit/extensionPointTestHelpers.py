@@ -5,10 +5,17 @@
 
 """Helper functions to test extension points."""
 
-from extensionPoints import Action, Decider, Filter, FilterValueTypeT
+from extensionPoints import (
+	Action,
+	Chain,
+	ChainValueTypeT,
+	Decider,
+	Filter,
+	FilterValueT,
+)
 import unittest
 from contextlib import contextmanager
-from typing import Optional
+from typing import Iterable
 
 
 @contextmanager
@@ -83,12 +90,12 @@ def deciderTester(
 def filterTester(
 		testCase: unittest.TestCase,
 		filter: Filter,
-		expectedInput: FilterValueTypeT,
-		expectedOutput: FilterValueTypeT,
+		expectedInput: FilterValueT,
+		expectedOutput: FilterValueT,
 		useAssertDictContainsSubset: bool = False,
 		**expectedKwargs
 ):
-	"""A function that allows testing a Filter.
+	"""A context manager that allows testing a Filter.
 	@param testCase: The test case to apply the assertion on.
 	@param filter: The filter that will be applied by the test case.
 	@param expectedInput: The expected input as entering the filter handler.
@@ -104,7 +111,7 @@ def filterTester(
 	expectedKwargs["_value"] = expectedInput
 	actualKwargs = {}
 
-	def handler(value: FilterValueTypeT, **kwargs):
+	def handler(value: FilterValueT, **kwargs):
 		actualKwargs.update(kwargs)
 		actualKwargs["_called"] = True
 		actualKwargs["_value"] = value
@@ -115,5 +122,41 @@ def filterTester(
 		yield expectedOutput
 	finally:
 		filter.unregister(handler)
+		testFunc = testCase.assertDictContainsSubset if useAssertDictContainsSubset else testCase.assertDictEqual
+		testFunc(expectedKwargs, actualKwargs)
+
+
+@contextmanager
+def chainTester(
+		testCase: unittest.TestCase,
+		chain: Chain,
+		expectedOutput: Iterable[ChainValueTypeT],
+		useAssertDictContainsSubset: bool = False,
+		**expectedKwargs
+):
+	"""A context manager that allows testing a Filter.
+	@param testCase: The test case to apply the assertion on.
+	@param chain: The Chain that will be iterated by the test case.
+	@param expectedOutput: The expected output as returned by L{Chain.iter}
+		it will also be yielded by the context manager
+	@param useAssertDictContainsSubset: Whether to use L{unittest.TestCase.assertDictContainsSubset} instead of
+		L{unittest.TestCase.assertDictEqual}
+		This can be used if a Chain is iterated with dictionary values that can't be predicted at test time,
+		such as a driver instance.
+	@param expectedKwargs: The kwargs that are expected to be passed to the Chain handler.
+	"""
+	expectedKwargs["_called"] = True
+	actualKwargs = {}
+
+	def handler(**kwargs):
+		actualKwargs.update(kwargs)
+		actualKwargs["_called"] = True
+		return expectedOutput
+
+	chain.register(handler)
+	try:
+		yield expectedOutput
+	finally:
+		chain.unregister(handler)
 		testFunc = testCase.assertDictContainsSubset if useAssertDictContainsSubset else testCase.assertDictEqual
 		testFunc(expectedKwargs, actualKwargs)

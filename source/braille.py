@@ -18,6 +18,7 @@ from typing import (
 	Set,
 	Tuple,
 	Union,
+	Type,
 )
 from locale import strxfrm
 
@@ -355,6 +356,10 @@ AUTOMATIC_PORT = ("auto", _("Automatic"))
 #: braille displays should be automatically detected and used.
 #: @type: str
 AUTO_DISPLAY_NAME = AUTOMATIC_PORT[0]
+
+NO_BRAILLE_DISPLAY_NAME: str = "noBraille"
+"""The name of the noBraille display driver."""
+
 #: A port name which indicates that USB should be used.
 #: @type: tuple
 # Translators: String representing the USB port selection for braille displays.
@@ -377,7 +382,7 @@ def NVDAObjectHasUsefulText(obj: "NVDAObject") -> bool:
 		return obj._hasNavigableText
 
 
-def _getDisplayDriver(moduleName, caseSensitive=True):
+def _getDisplayDriver(moduleName: str, caseSensitive: bool = True) -> Type["BrailleDisplayDriver"]:
 	try:
 		return importlib.import_module("brailleDisplayDrivers.%s" % moduleName, package="brailleDisplayDrivers").BrailleDisplayDriver
 	except ImportError as initialException:
@@ -1837,7 +1842,13 @@ def getFocusRegions(
 	from NVDAObjects import NVDAObject
 	if isinstance(obj, CursorManager):
 		region2 = (ReviewTextInfoRegion if review else CursorManagerRegion)(obj)
-	elif isinstance(obj, DocumentTreeInterceptor) or (isinstance(obj,NVDAObject) and NVDAObjectHasUsefulText(obj)): 
+	elif (
+		isinstance(obj, DocumentTreeInterceptor)
+		or (
+			isinstance(obj, NVDAObject)
+			and NVDAObjectHasUsefulText(obj)
+		)
+	):
 		region2 = (ReviewTextInfoRegion if review else TextInfoRegion)(obj)
 	else:
 		region2 = None
@@ -1866,6 +1877,62 @@ def formatCellsForLog(cells: List[int]) -> str:
 		if cell else "-"
 		for cell in cells])
 
+
+pre_writeCells = extensionPoints.Action()
+"""
+Notifies when cells are about to be written to a braille display.
+This allows components and add-ons to perform an action.
+For example, when a system is controlled by a braille enabled remote system,
+the remote system should know what cells to show on its display.
+@param cells: The list of braille cells.
+@type cells: List[int]
+@param rawText: The raw text that corresponds with the cells.
+@type rawText: str
+@param currentCellCount: The current number of cells
+@type currentCellCount: bool
+"""
+
+filter_displaySize = extensionPoints.Filter()
+"""
+Filter that allows components or add-ons to change the display size used for braille output.
+For example, when a system is controlled by a remote system while having a 80 cells display connected,
+the display size should be lowered to 40 whenever the remote system has a 40 cells display connected.
+@param value: the number of cells of the current display.
+@type value: int
+"""
+
+displaySizeChanged = extensionPoints.Action()
+"""
+Action that allows components or add-ons to be notified of display size changes.
+For example, when a system is controlled by a remote system and the remote system swaps displays,
+The local system should be notified about display size changes at the remote system.
+@param displaySize: The current display size used by the braille handler.
+@type displaySize: int
+"""
+
+displayChanged = extensionPoints.Action()
+"""
+Action that allows components or add-ons to be notified of braille display changes.
+For example, when a system is controlled by a remote system and the remote system swaps displays,
+The local system should be notified about display parameters at the remote system,
+e.g. name and cellcount.
+@param display: The new braille display driver
+@type display: L{BrailleDisplayDriver}
+@param isFallback: Whether the display is set as fallback display due to another display's failure
+@type isFallback: bool
+@param detected: If the display was set by auto detection, the device match that matched the driver
+@type detected: bdDetect.DeviceMatch or C{None}
+"""
+
+decide_enabled = extensionPoints.Decider()
+"""
+Allows components or add-ons to decide whether the braille handler should be forcefully disabled.
+For example, when a system is controlling a remote system with braille,
+the local braille handler should be disabled as long as the system is in control of the remote system.
+Handlers are called without arguments.
+"""
+
+
 class BrailleHandler(baseObject.AutoPropertyObject):
 	# TETHER_AUTO, TETHER_FOCUS, TETHER_REVIEW and tetherValues
 	# are deprecated, but remain to retain API backwards compatibility
@@ -1877,60 +1944,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	queuedWrite: Optional[List[int]] = None
 	queuedWriteLock: threading.Lock
 	ackTimerHandle: int
-
-	pre_writeCells: extensionPoints.Action
-	"""
-	Notifies when cells are about to be written to a braille display.
-	This allows components and add-ons to perform an action.
-	For example, when a system is controlled by a braille enabled remote system,
-	the remote system should know what cells to show on its display.
-	@param cells: The list of braille cells.
-	@type cells: List[int]
-	@param rawText: The raw text that corresponds with the cells.
-	@type rawText: str
-	@param currentCellCount: The current number of cells
-	@type currentCellCount: bool
-	"""
-
-	filter_displaySize: extensionPoints.Filter
-	"""
-	Filter that allows components or add-ons to change the display size used for braille output.
-	For example, when a system is controlled by a remote system while having a 80 cells display connected,
-	the display size should be lowered to 40 whenever the remote system has a 40 cells display connected.
-	@param value: the number of cells of the current display.
-	@type value: int
-	"""
-
-	displaySizeChanged: extensionPoints.Action
-	"""
-	Action that allows components or add-ons to be notified of display size changes.
-	For example, when a system is controlled by a remote system and the remote system swaps displays,
-	The local system should be notified about display size changes at the remote system.
-	@param displaySize: The current display size used by the braille handler.
-	@type displaySize: int
-	"""
-
-	displayChanged: extensionPoints.Action
-	"""
-	Action that allows components or add-ons to be notified of braille display changes.
-	For example, when a system is controlled by a remote system and the remote system swaps displays,
-	The local system should be notified about display parameters at the remote system,
-	e.g. name and cellcount.
-	@param display: The new braille display driver
-	@type display: L{BrailleDisplayDriver}
-	@param isFallback: Whether the display is set as fallback display due to another display's failure
-	@type isFallback: bool
-	@param detected: If the display was set by auto detection, the device match that matched the driver
-	@type detected: bdDetect.DeviceMatch or C{None}
-	"""
-
-	decide_enabled: extensionPoints.Decider
-	"""
-	Allows components or add-ons to decide whether the braille handler should be forcefully disabled.
-	For example, when a system is controlling a remote system with braille,
-	the local braille handler should be disabled as long as the system is in control of the remote system.
-	Handlers are called without arguments.
-	"""
 
 	def __init__(self):
 		louisHelper.initialize()
@@ -1965,7 +1978,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self._tether = TetherTo.FOCUS.value
 		else:
 			self._tether = config.conf["braille"]["tetherTo"]
-		self._detectionEnabled = False
 		self._detector = None
 		self._rawText = u""
 
@@ -1974,12 +1986,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._ackTimeoutResetterApc = winKernel.PAPCFUNC(self._ackTimeoutResetter)
 
 		brailleViewer.postBrailleViewerToolToggledAction.register(self._onBrailleViewerChangedState)
-
-		self.pre_writeCells = extensionPoints.Action()
-		self.filter_displaySize = extensionPoints.Filter()
-		self.displaySizeChanged = extensionPoints.Action()
-		self.displayChanged = extensionPoints.Action()
-		self.decide_enabled = extensionPoints.Decider()
 
 	def terminate(self):
 		self._disableDetection()
@@ -2025,9 +2031,9 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		Therefore, this is a read only property and can't be set.
 		"""
 		numCells = self.display.numCells if self.display else 0
-		currentDisplaySize = self.filter_displaySize.apply(numCells)
+		currentDisplaySize = filter_displaySize.apply(numCells)
 		if self._displaySize != currentDisplaySize:
-			self.displaySizeChanged.notify(displaySize=currentDisplaySize)
+			displaySizeChanged.notify(displaySize=currentDisplaySize)
 			self._displaySize = currentDisplaySize
 		return currentDisplaySize
 
@@ -2054,7 +2060,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		and thus is C{True} when the display size is greater than 0.
 		This is a read only property and can't be set.
 		"""
-		currentEnabled = bool(self.displaySize) and self.decide_enabled.decide()
+		currentEnabled = bool(self.displaySize) and decide_enabled.decide()
 		if self._enabled != currentEnabled:
 			self._enabled = currentEnabled
 			if currentEnabled is False:
@@ -2082,98 +2088,99 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	even if it failed and has fallen back to no braille.
 	"""
 
-	# C901 'setDisplayByName' is too complex
-	# Note: when working on setDisplayByName, look for opportunities to simplify
-	# and move logic out into smaller helper functions.
-	def setDisplayByName(  # noqa: C901
+	def setDisplayByName(
 			self,
 			name: str,
-			isFallback=False,
+			isFallback: bool = False,
+			detected: typing.Optional[bdDetect.DeviceMatch] = None,
+	) -> bool:
+		if name == AUTO_DISPLAY_NAME:
+			# Calling _enableDetection will set the display to noBraille until a display is detected.
+			# Note that L{isFallback} is ignored in these cases.
+			self._enableDetection()
+			return True
+		elif not isFallback:
+			# #8032: Take note of the display requested, even if it is going to fail.
+			self._lastRequestedDisplayName = name
+			if not detected:
+				self._disableDetection()
+
+		try:
+			newDisplayClass = _getDisplayDriver(name)
+			self._setDisplay(newDisplayClass, isFallback=isFallback, detected=detected)
+			if not isFallback:
+				if not detected:
+					config.conf["braille"]["display"] = newDisplayClass.name
+				elif 'bluetoothName' in detected.deviceInfo or detected.deviceInfo.get("provider") == "bluetooth":
+					# As USB devices have priority over Bluetooth, keep a detector running to switch to USB when connected.
+					# Note that the detector should always be running in this situation, so we can trigger a rescan.
+					self._detector.rescan(bluetooth=False, limitToDevices=[newDisplayClass.name])
+				else:
+					self._disableDetection()
+			return True
+		except Exception:
+			# For auto display detection, logging an error for every failure is too obnoxious.
+			if not detected:
+				log.error(f"Error initializing display driver {name!r}", exc_info=True)
+			elif bdDetect._isDebug():
+				log.debugWarning(f"Couldn't initialize display driver {name!r}", exc_info=True)
+			fallbackDisplayClass = _getDisplayDriver(NO_BRAILLE_DISPLAY_NAME)
+			# Only initialize the fallback if it is not already set
+			if self.display.__class__ == fallbackDisplayClass:
+				self._setDisplay(fallbackDisplayClass, isFallback=False)
+			return False
+
+	def _switchDisplay(
+			self,
+			oldDisplay: Optional["BrailleDisplayDriver"],
+			newDisplayClass: Type["BrailleDisplayDriver"],
+			**kwargs
+	) -> "BrailleDisplayDriver":
+		sameDisplayReInit = newDisplayClass == oldDisplay.__class__
+		if sameDisplayReInit:
+			# This is the same driver as was already set, so just re-initialize it.
+			log.debug(f"Reinitializing {newDisplayClass.name!r} braille display")
+			oldDisplay.terminate()
+			newDisplay = oldDisplay
+		else:
+			newDisplay = newDisplayClass.__new__(newDisplayClass)
+		extensionPoints.callWithSupportedKwargs(newDisplay.__init__, **kwargs)
+		if not sameDisplayReInit:
+			if oldDisplay:
+				log.debug(f"Switching braille display from {oldDisplay.name!r} to {newDisplay.name!r}")
+				try:
+					oldDisplay.terminate()
+				except Exception:
+					log.error("Error terminating previous display driver", exc_info=True)
+		newDisplay.initSettings()
+		return newDisplay
+
+	def _setDisplay(
+			self,
+			newDisplayClass: Type["BrailleDisplayDriver"],
+			isFallback: bool = False,
 			detected: typing.Optional[bdDetect.DeviceMatch] = None,
 	):
-		if not isFallback:
-			# #8032: Take note of the display requested, even if it is going to fail.
-			self._lastRequestedDisplayName=name
-		if name == AUTO_DISPLAY_NAME:
-			self._enableDetection(keepCurrentDisplay=False)
-			return True
-		elif not isFallback and not detected:
-			self._disableDetection()
-
 		kwargs = {}
 		if detected:
 			kwargs["port"] = detected
 		else:
 			# See if the user has defined a specific port to connect to
 			try:
-				port = config.conf["braille"][name]["port"]
+				kwargs["port"] = config.conf["braille"][newDisplayClass.name]["port"]
 			except KeyError:
-				port = None
-			# Here we try to keep compatible with old drivers that don't support port setting
-			# or situations where the user hasn't set any port.
-			if port:
-				kwargs["port"] = port
+				pass
 
-		try:
-			newDisplay = _getDisplayDriver(name)
-			oldDisplay = self.display
-			if detected and bdDetect._isDebug():
-				log.debug("Possibly detected display '%s'" % newDisplay.description)
-			sameDisplayReInit = newDisplay == oldDisplay.__class__
-			if sameDisplayReInit:
-				# This is the same driver as was already set, so just re-initialise it.
-				log.debug("Reinitializing %s braille display"%name)
-				oldDisplay.terminate()
-				newDisplay = oldDisplay
-				try:
-					newDisplay.__init__(**kwargs)
-				except TypeError:
-					# Re-initialize with supported kwargs.
-					extensionPoints.callWithSupportedKwargs(newDisplay.__init__, **kwargs)
-			else:
-				try:
-					newDisplay = newDisplay(**kwargs)
-				except TypeError:
-					newDisplay = newDisplay.__new__(newDisplay)
-					# initialize with supported kwargs.
-					extensionPoints.callWithSupportedKwargs(newDisplay.__init__, **kwargs)
-				if self.display:
-					log.debug("Switching braille display from %s to %s"%(self.display.name,name))
-					try:
-						self.display.terminate()
-					except:
-						log.error("Error terminating previous display driver", exc_info=True)
-				self.display = newDisplay
-			newDisplay.initSettings()
-			if isFallback:
-				if self._detectionEnabled and not self._detector:
-					# As this is the fallback display, which is usually noBraille,
-					# we can keep the current display when enabling detection.
-					# Note that in this case, L{_detectionEnabled} is set by L{handleDisplayUnavailable}
-					self._enableDetection(keepCurrentDisplay=True)
-			elif not detected:
-				config.conf["braille"]["display"] = name
-			else: # detected:
-				self._disableDetection()
-			log.info(f"Loaded braille display driver {name!r}, current display has {newDisplay.numCells} cells.")
-			queueHandler.queueFunction(queueHandler.eventQueue, self.initialDisplay)
-			if detected and 'bluetoothName' in detected.deviceInfo:
-				self._enableDetection(bluetooth=False, keepCurrentDisplay=True, limitToDevices=[name])
-			# #14503: optimization, avoid notifications of unnecessary re-initialization
-			# of the noBraille display
-			# When setDisplayByName is refactored, ensure that braille display detection no longer triggers
-			# an unnecessary reinit of noBraille.
-			if not (sameDisplayReInit and newDisplay.name == "noBraille"):
-				self.displayChanged.notify(display=newDisplay, isFallback=isFallback, detected=detected)
-			return True
-		except:
-			# For auto display detection, logging an error for every failure is too obnoxious.
-			if not detected:
-				log.error("Error initializing display driver %s for kwargs %r"%(name,kwargs), exc_info=True)
-			elif bdDetect._isDebug():
-				log.debugWarning("Couldn't initialize display driver for kwargs %r"%(kwargs,), exc_info=True)
-			self.setDisplayByName("noBraille", isFallback=True)
-			return False
+		if bdDetect._isDebug() and detected:
+			log.debug(f"Possibly detected display {newDisplayClass.description!r}")
+		oldDisplay = self.display
+		newDisplay = self._switchDisplay(oldDisplay, newDisplayClass, **kwargs)
+		self.display = newDisplay
+		log.info(
+			f"Loaded braille display driver {newDisplay.name!r}, current display has {newDisplay.numCells} cells."
+		)
+		displayChanged.notify(display=newDisplay, isFallback=isFallback, detected=detected)
+		queueHandler.queueFunction(queueHandler.eventQueue, self.initialDisplay)
 
 	def _onBrailleViewerChangedState(self, created):
 		if created:
@@ -2198,7 +2205,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 	def _writeCells(self, cells: List[int]):
 		handlerCellCount = self.displaySize
-		self.pre_writeCells.notify(cells=cells, rawText=self._rawText, currentCellCount=handlerCellCount)
+		pre_writeCells.notify(cells=cells, rawText=self._rawText, currentCellCount=handlerCellCount)
 		displayCellCount = self.display.numCells
 		if not displayCellCount:
 			# No physical display to write to
@@ -2529,31 +2536,43 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		but drivers can also call it themselves if appropriate.
 		"""
 		log.error("Braille display unavailable. Disabling", exc_info=True)
-		self._detectionEnabled = config.conf["braille"]["display"] == AUTO_DISPLAY_NAME
-		self.setDisplayByName("noBraille", isFallback=True)
+		newDisplay = (
+			AUTO_DISPLAY_NAME
+			if config.conf["braille"]["display"] == AUTO_DISPLAY_NAME
+			else NO_BRAILLE_DISPLAY_NAME
+		)
+		self.setDisplayByName(newDisplay, isFallback=True)
 
-	def _enableDetection(self, usb=True, bluetooth=True, keepCurrentDisplay=False, limitToDevices=None):
+	def _enableDetection(
+			self,
+			usb: bool = True,
+			bluetooth: bool = True,
+			limitToDevices: Optional[List[str]] = None
+	):
 		"""Enables automatic detection of braille displays.
 		When auto detection is already active, this will force a rescan for devices.
 		This should also be executed when auto detection should be resumed due to loss of display connectivity.
+		In that case, it is triggered by L{setDisplayByname}.
+		@param usb: Whether to scan for USB devices
+		@param bluetooth: Whether to scan for Bluetooth devices.
+		@param limitToDevices: An optional list of driver names a scan should be limited to.
+			This is used when a Bluetooth device is detected, in order to switch to USB
+			when an USB device for the same driver is found.
+			C{None} if no driver filtering should occur.
 		"""
-		if self._detectionEnabled and self._detector:
+		self.setDisplayByName(NO_BRAILLE_DISPLAY_NAME, isFallback=True)
+		if self._detector:
 			self._detector.rescan(usb=usb, bluetooth=bluetooth, limitToDevices=limitToDevices)
 			return
 		config.conf["braille"]["display"] = AUTO_DISPLAY_NAME
-		if not keepCurrentDisplay:
-			self.setDisplayByName("noBraille", isFallback=True)
-		self._detector = bdDetect.Detector(usb=usb, bluetooth=bluetooth, limitToDevices=limitToDevices)
-		self._detectionEnabled = True
+		self._detector = bdDetect._Detector()
+		self._detector._queueBgScan(usb=usb, bluetooth=bluetooth, limitToDevices=limitToDevices)
 
 	def _disableDetection(self):
 		"""Disables automatic detection of braille displays."""
-		if not self._detectionEnabled:
-			return
 		if self._detector:
 			self._detector.terminate()
 			self._detector = None
-		self._detectionEnabled = False
 
 	def _bgThreadExecutor(self, param: int):
 		"""Executed as APC when cells have to be written to a display asynchronously.
@@ -2622,7 +2641,6 @@ def initialize():
 	newTableName = brailleTables.RENAMED_TABLES.get(oldTableName)
 	if newTableName:
 		config.conf["braille"]["translationTable"] = newTableName
-	bdDetect.initializeDetectionData()
 	handler = BrailleHandler()
 	# #7459: the syncBraille has been dropped in favor of the native hims driver.
 	# Migrate to renamed drivers as smoothly as possible.
