@@ -10,6 +10,9 @@ as well as the associated TextInfo class."""
 
 import time
 import typing
+from typing import (
+	Optional,
+)
 import weakref
 import textUtils
 from annotation import (
@@ -1096,10 +1099,12 @@ Tries to force this object to take the focus.
 			return False
 		return True
 
-	def _get_statusBar(self):
+	#: Type definition for auto prop '_get_statusBar'
+	statusBar: Optional["NVDAObject"]
+
+	def _get_statusBar(self) -> Optional["NVDAObject"]:
 		"""Finds the closest status bar in relation to this object.
 		@return: the found status bar else None
-		@rtype: L{NVDAObject} or None
 		"""
 		return None
 
