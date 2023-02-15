@@ -40,6 +40,7 @@ Le caratteristiche principali possono essere riassunte nei seguenti punti:
 - Sistemi operativi: tutte le versioni a 32 e 64 bit dei Sistemi Windows 7, Windows8, Windows8.1, Windows10, Windows11 e tutte le edizioni Server a partire da Windows Server 2008 r2.
  - Per Windows 7, NVDA richiede Service Pack 1 o successivo.
  - Per Windows Server 2008 R2, NVDA richiede Service Pack 1 o successivo.
+ - sono supportate entrambe le varianti AMD64 e ARM64 di Windows.
   -
 - Circa 150 Megabytes di spazio disco.
 -
@@ -2087,6 +2088,29 @@ Il segnale acustico aumenterà di altezza ad ogni spazio, mentre per una tabulaz
 - Sia voce che beep: con questa opzione attiva i rientri saranno letti utilizzando entrambi i metodi spiegati sopra.
 -
 
++++ Navigazione documento+++[DocumentNavigation]
+Questa categoria consente di regolare vari aspetti della navigazione del documento.
+
+==== Stile Paragrafo ====[ParagraphStyle]
+: Predefinito
+  Gestito dall'applicazione
+: Opzioni
+  Predefinito (Gestito dall'applicazione), Gestito dall'applicazione, Interruzione riga singola, Interruzione di più righe
+:
+
+Questa casella combinata permette di selezionare lo stile del paragrafo da utilizzare quando si naviga tra gli stessi tramite "control+freccia su" e "control+freccia giù".
+Gli stili di paragrafo disponibili sono:
+- Gestito dall'applicazione: NVDA consentirà all'applicazione di determinare il paragrafo precedente o successivo; conseguentemente lo screen reader leggerà il nuovo paragrafo durante la navigazione.
+Questo stile funziona al meglio quando l'applicazione supporta nativamente la navigazione tra paragrafi ed è l'impostazione predefinita.
+- Interruzione riga singola: NVDA tenterà di determinare il paragrafo precedente o successivo utilizzando un'interruzione di una sola riga come indicatore di paragrafo.
+Questo stile funziona meglio quando si leggono documenti in un'applicazione che non supporta nativamente la navigazione tra paragrafi, e i paragrafi nel documento sono contrassegnati da una singola pressione del ``tasto invio``.
+- Interruzione di più righe: NVDA tenterà di determinare il paragrafo precedente o successivo utilizzando almeno una riga vuota (due pressioni del tasto ``invio``) come indicatore di paragrafo.
+Questo stile funziona meglio quando si lavora con documenti che utilizzano paragrafi a blocchi.
+Si noti che questo stile di paragrafo non può essere utilizzato in Microsoft Word o Microsoft Outlook, a meno che non si utilizzi UIA per accedere ai controlli di Microsoft Word.
+-
+
+è possibile passare tra gli stili di paragrafo disponibili da qualsiasi luogo assegnando una combinazione di tasti nella finestra [Tasti e gesti di immissione #InputGestures].
+
 +++ OCR Windows +++[Win10OcrSettings]
 Questa categoria di impostazioni permette di configurare [l'OCR di Windows #Win10Ocr].
 Contiene le seguenti opzioni:
@@ -2230,6 +2254,25 @@ Tuttavia, potrebbe essere incompatibile con alcune applicazioni, con la lettura 
 È identico al comportamento di NVDA nelle versioni 2020.4 e precedenti.
 Questa impostazione può rendere più stabile la lettura del testo in arrivo per alcune applicazioni.
 Tuttavia, nei terminali, quando si inserisce o si elimina un carattere nel mezzo di una riga, verrà sempre letto anche il testo situato dopo il cursore.
+-
+
+==== Leggi nuovo testo in Windows Terminal tramite ====[WtStrategy]
+: Predefinito
+  Diffing
+: Opzioni
+  Diffing, Notifiche UIA
+:
+
+Questa opzione determina il metodo utilizzato da NVDA per stabilire quale testo risulti "nuovo" (e quindi cosa pronunciare quando l'opzione "Leggi i cambiamenti dei contenuti dinamici" è abilitata) nella finestra del terminale di Windows e nel controllo WPF Windows Terminal utilizzato in Visual Studio 2022.
+Non influisce sulla console di Windows (``conhost.exe``).
+La casella combinata Leggi nuovo testo nel terminale di Windows ha tre opzioni:
+- Default: Questa opzione è attualmente equivalente a "diffing", ma si prevede che verrà cambiata una volta sviluppato ulteriormente il supporto per le notifiche UIA.
+- Diffing: Questa opzione utilizza l'algoritmo diff selezionato per calcolare le modifiche ogni volta che il terminale esegue il rendering di un nuovo testo.
+Questo risulta identico al comportamento di NVDA nelle versioni 2022.4 e precedenti.
+- Notifiche UIA: Questa opzione lascia il compito di gestire cosa dovrà essere letto al terminale di Windows stesso, il che significa che NVDA non dovrà più controllare e calcolare quale testo risulti "nuovo" sullo schermo.
+Ciò dovrebbe migliorare notevolmente le prestazioni e la stabilità di Windows Terminal, ma questa funzionalità non è ancora completa.
+In particolare, quando questa opzione è selezionata, vengono letti i caratteri digitati che non sono visualizzati sullo schermo, come le password.
+Inoltre, gli intervalli contigui di output di oltre 1.000 caratteri potrebbero non essere segnalati in modo accurato.
 -
 
 ==== Tenta di non leggere informazioni obsolete concernenti il focus ====[CancelExpiredFocusSpeech]
@@ -3654,7 +3697,7 @@ Ecco l'elenco dei parametri a riga di comando di NVDA:
 | -q | --quit | Chiude eventuali copie in esecuzione di NVDA |
 | -k | --check-running | Notifica se NVDA è in esecuzione tramite exit code; 0 se in esecuzione, 1 se non lo è |
 | -f LOGFILENAME | --log-file=LOGFILENAME | Il file nel quale verrà scritto il log |
-| -l LOGLEVEL | --log-level=LOGLEVEL | Il livello più basso di un messaggio loggato ((debug 10, input/output 12, debug warning 15, info 20, warning 30, error 40, critical 50, disabled 100), default è warning |
+| -l LOGLEVEL | --log-level=LOGLEVEL | Il livello più basso di un messaggio loggato (debug 10, input/output 12, debug warning 15, info 20, disabled 100) |
 | -c CONFIGPATH | --config-path=CONFIGPATH | Il percorso ove sono salvate tutte le impostazioni di NVDA |
 | None | --lang=LANGUAGE | Sovrascrive la lingua configurata per NVDA. Impostarla a "Windows" per la lingua predefinita dell'utente, "en" per Inglese, etc. |
 | -m | --minimal | Niente suoni, niente interfaccia, niente messaggio all'avvio etc |

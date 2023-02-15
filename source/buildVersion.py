@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited
+# Copyright (C) 2006-2023 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -66,7 +66,7 @@ def formatVersionForGUI(year, major, minor):
 # Version information for NVDA
 name = "NVDA"
 version_year = 2023
-version_major = 1
+version_major = 2
 version_minor = 0
 version_build = 0  # Should not be set manually. Set in 'sconscript' provided by 'appVeyor.yml'
 version=_formatDevVersionString()
