@@ -465,7 +465,7 @@ def test_selByChar():
 				'left paren', 'right paren',  # Expect parens named
 				'quote', 'tick',  # Expect quote and apostrophe named
 				'e', 'comma',  # Expect comma named
-				'right dash-pointing arrow', 't dash-shirt',
+				'right-pointing arrow', 't-shirt',
 				'tab',  # Expect tab named
 				'',  # Expect Windows/notepad newline is \r\n
 			]
@@ -485,7 +485,7 @@ def test_selByChar():
 				'quote', 'tick',  # Expect quote and apostrophe named
 				'e', 'comma',  # Expect comma named
 				# todo: Expect no replacement with word 'dash' i.e. expect 'right-pointing arrow', 't-shirt'
-				'right dash pointing arrow', 't dash shirt',
+				'right dash-pointing arrow', 't dash-shirt',
 				'tab',  # Expect whitespace named.
 				'',  # on Windows/notepad newline is \r\n
 			]
