@@ -170,16 +170,16 @@ def test_moveByWord():
 			'left paren(quietly right paren)',  # Expect: parenthesis are named
 			'quote Hello comma,', 'Jim', 'quote  dot.',  # Expect: quote, comma and dot are named
 			'don tick t',  # Expect: mid-word symbol substituted
-			'right-pointing arrow', 't-shirt',
+			'right dash-pointing arrow', 't dash-shirt',
 			# Expect no empty words:
 			'1', 'bar', '2', 'bar  bar', '3', 'at  caret  star  line', '4',
 			# end of first line
 			'blank',  # single space and newline
 			'tab',  # tab and newline
 			'blank',  # 4 spaces and newline
-			'right-pointing arrow',
-			't-shirt',
-			't-shirt',
+			'right dash-pointing arrow',
+			't dash-shirt',
+			't dash-shirt',
 			'blank'  # end of doc
 		]
 	)
@@ -266,7 +266,7 @@ def test_moveByChar():
 			'quote', 'tick',  # Expect quote and apostrophe named
 			'e', 'comma',  # Expect comma named
 			# todo: Expect no replacement with word 'dash' i.e. expect 'right-pointing arrow', 't-shirt'
-			'right dash pointing arrow', 't dash shirt',
+			'right dash-pointing arrow', 't dash-shirt',
 			'tab',  # Expect whitespace named.
 			'carriage return',  # on Windows/notepad newline is \r\n
 			'line feed',  # on Windows/notepad newline is \r\n
@@ -372,7 +372,7 @@ def test_selByWord():
 				'left paren(quietly right paren) ',  # Expect: parenthesis are named
 				'quote Hello comma, ', 'Jim ', 'quote  dot. ',  # Expect: quote, comma and dot are named
 				'don tick t ',  # Expect: mid-word symbol substituted
-				'right-pointing arrow  ', 't-shirt  ',  # Expect dash symbol not to be replaced with word.
+				'right dash-pointing arrow  ', 't dash-shirt  ',
 				# end of first line
 				'',  # newline  todo: There should not be any "empty" words.
 				# Expect no empty words:
@@ -382,11 +382,11 @@ def test_selByWord():
 				'tab ',  # newline and tab
 				'',  # newline and 4 spaces
 				'',  # newline
-				'right-pointing arrow',
+				'right dash-pointing arrow',
 				'',  # newline  todo: There should not be any "empty" words.
-				't-shirt',
+				't dash-shirt',
 				'',  # newline  todo: There should not be any "empty" words.
-				't-shirt',
+				't dash-shirt',
 				# end of doc
 			]
 		))
@@ -465,7 +465,7 @@ def test_selByChar():
 				'left paren', 'right paren',  # Expect parens named
 				'quote', 'tick',  # Expect quote and apostrophe named
 				'e', 'comma',  # Expect comma named
-				'right-pointing arrow', 't-shirt',
+				'right dash-pointing arrow', 't dash-shirt',
 				'tab',  # Expect tab named
 				'',  # Expect Windows/notepad newline is \r\n
 			]
