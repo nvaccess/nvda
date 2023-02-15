@@ -7,6 +7,7 @@
 used, however for more advanced requirements these utilities can be used directly.
 """
 
+from __future__ import annotations
 import weakref
 import inspect
 from typing import (
