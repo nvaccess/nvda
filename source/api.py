@@ -402,10 +402,10 @@ def getClipData():
 	with winUser.openClipboard(gui.mainFrame.Handle):
 		return winUser.getClipboardData(winUser.CF_UNICODETEXT) or u""
 
-def getStatusBar():
+
+def getStatusBar() -> Optional[NVDAObjects.NVDAObject]:
 	"""Obtain the status bar for the current foreground object.
 	@return: The status bar object or C{None} if no status bar was found.
-	@rtype: L{NVDAObjects.NVDAObject}
 	"""
 	foreground = getForegroundObject()
 	try:
