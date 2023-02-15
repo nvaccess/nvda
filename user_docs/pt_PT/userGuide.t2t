@@ -39,7 +39,8 @@ As características principais são:
 +++ Requisitos do sistema ++[SystemRequirements]
 - Sistemas operativos: Todas as versões, 32-bit ou 64-bit, do Windows 7, Windows 8, Windows 8.1, Windows 10, Windows 11 e todas as versões do Windows Server a partir da 2008 R2.
  - Para Windows 7, o NVDA requer o Service Pack 1 ou superior;
- - Para Windows Server 2008 R2, o NVDA requer o Service Pack 1 ou superior.
+ - Para Windows Server 2008 R2, o NVDA requer o Service Pack 1 ou superior;
+ - As variantes AMD64 e ARM64 do Windows são suportadas.
  -
 - Pelo menos 150 MB de espaço de armazenamento.
 -
@@ -376,9 +377,9 @@ Por favor, consulte as páginas on-line do NVDA, para saber como deve proceder.
 
 +++ Diálogo de Boas Vindas +++[WelcomeDialog]
 Quando o NVDA for executado pela primeira vez, ser-lhe-á apresentado um diálogo que lhe fornecerá alguma informação básica sobre a tecla modificadora do NVDA e como aceder ao menu deste leitor de ecrã.
-O diálogo contém ainda uma caixa combinada e três caixas de verificação.
+O diálogo contém ainda uma caixa de combinação e três caixas de verificação.
 Por favor, veja as secções seguintes, para mais informações sobre estes tópicos.
-na caixa combinada, poderá seleccionar qual o esquema de teclado a utilizar.
+na caixa de combinação, poderá seleccionar qual o esquema de teclado a utilizar.
 A primeira caixa de verificação permite-lhe definir se o NVDA utiliza o CapsLock como uma tecla modificadora do NVDA.
 A segunda permite-lhe especificar se o NVDA deverá ser executado automaticamente, ao iniciar sessão no Windows; esta caixa de verificação só estará disponível em cópias instaladas do NVDA.
 E a  terceira permite-lhe definir se este diálogo de boas vindas aparecerá sempre que o NVDA for iniciado.
@@ -403,7 +404,7 @@ Se pretender que uma das teclas modificadoras do NVDA actue com a sua função o
 
 +++ Esquemas de Teclado +++[KeyboardLayouts]
 Actualmente, o NVDA vem com dois conjuntos de comandos, conhecidos como Esquemas de teclado. O esquema Desktop, para computadores de secretária, e o esquema Laptop, para computadores portáteis.
-Por padrão, o NVDA está definido para utilizar o esquema de Computadores de Secretária, embora possa alternar para o esquema de Computador Portátil, na secção Teclado, que pode encontrar no diálogo de [configurações #NVDASettings] aberto através do Menu NVDA, "Preferências", "Configurações".
+Por padrão, o NVDA está definido para utilizar o esquema de Computadores de Secretária, embora possa mudar para o esquema de Computador Portátil, na secção Teclado, que pode encontrar no diálogo de [configurações #NVDASettings] aberto através do Menu NVDA, "Preferências", "Configurações".
 
 O esquema de Desktop faz uso intensivo do bloco numérico (com o NumLock desligado).
 Embora a maioria dos computadores portáteis não tenham um bloco numérico físico, alguns conseguem simulá-lo, mantendo pressionada a tecla FN e pressionando as letras e números, na parte direita do teclado (7 8 9 u i o j k l etc.).
@@ -459,7 +460,7 @@ Para alternar entre modos de toque, realize um toque com três dedos.
 
 +++ Teclado táctil +++[TouchKeyboard]
 O teclado táctil é utilizado para escrever ou dar comandos, a partir dum ecrã táctil.
-Se estiver um campo de edição em foco, pode activar o teclado táctil com dois toques no ícone do mesmo na Área de notificações.
+Se um campo de edição estiver em foco, pode activar o teclado táctil com dois toques no ícone do mesmo na Área de notificações.
 Em tablets como o Microsoft Surface Pro, o teclado táctil está sempre disponível se o teclado físico não estiver ligado.
 Para sair do teclado táctil, dê dois toques no seu ícone ou saia do campo de edição.
 
@@ -485,7 +486,7 @@ Quando o menu surgir, pode usar as setas direccionais para navegar pelo mesmo e 
 ++ Comandos Básicos do NVDA ++[BasicNVDACommands]
 %kc:beginInclude
 || Nome | Comando de Teclado de Desktop | Comando de Teclado de Laptop | Toque | Descrição |
-| Iniciar ou reiniciar o NVDA | Control+alt+n | Control+alt+n | none | Inicia ou reinicia o NVDA pelo ícone no Ambiente de trabalho, se este atalho do Windows for activado na instalação do NVDA. Este é um atalho do Windows, por isso não pode ser alterado no diálogo "Definir comandos" do NVDA. |
+| Iniciar ou reiniciar o NVDA | Control+alt+n | Control+alt+n | nenhum | Inicia ou reinicia o NVDA pelo ícone no Ambiente de trabalho, se este atalho do Windows for activado na instalação do NVDA. Este é um atalho do Windows, por isso não pode ser alterado no diálogo "Definir comandos" do NVDA. |
 | Parar a voz | Control | Control | Toque com dois dedos | Pára instantaneamente a voz |
 | Pausar a voz | shift | shift | nenhum | Pausa instantaneamente a voz. Se pressionar novamente, recomeçará a falar, desde onde parou (se a pausa for suportada pelo sintetizador actual) |
 | Menu do NVDA | NVDA+n | NVDA+n | Toque duplo com dois dedos | Mostra o Menu do NVDA, que lhe permite aceder às preferências, ferramentas, ajuda, etc. |
@@ -683,7 +684,7 @@ Isto é semelhante ao modo de revisão do ecrã, ou cursor do rato, encontrado n
 Ao mudar para o modo de revisão do ecrã, o cursor de revisão é colocado na posição no ecrã do [objecto de navegação #ObjectNavigation] actual.
 Quando se mover pelo ecrã com os comandos de revisão, o objecto de navegação é automaticamente actualizado para o objecto encontrado na posição no ecrã do cursor de revisão.
 
-Note que, em algumas aplicações mais recentes, o NVDA poderá não reportar algum, ou todo o texto presente no ecrã, devido ao uso de novas tecnologias de desenho no ecrã, impossíveis de suportar de momento. Nestes casos, tente a navegação por objectos.
+Note que, em algumas aplicações mais recentes, o NVDA poderá não anunciar algum, ou todo o texto presente no ecrã, devido ao uso de novas tecnologias de desenho no ecrã, impossíveis de suportar de momento. Nestes casos, tente a navegação por objectos.
   
 ++ Navegar com o Rato ++[NavigatingWithTheMouse]
 Quando move o ponteiro do rato, por padrão, o NVDA anuncia o texto directamente sob ele, enquanto  vai sendo movido pelo ecrã.
@@ -697,7 +698,7 @@ Quanto mais para cima estiver o rato no ecrã, mais aguda será a entoação dos
 Quanto mais à esquerda ou à direita estiver o rato no ecrã, mais à esquerda ou à direita o som será tocado (assumindo-se que o utilizador tem colunas stereo ou auscultadores).
 
 Estas funcionalidades adicionais do NVDA não se encontram activas por padrão.
-Se pretender utilizar as mesmas, pode configurá-las na secção [configurações do rato #MouseSettings], que pode encontrar no diálogo [Configurações #NVDASettings] aberto através do Menu NVDA, "Preferências", "Configurações".
+Se pretender utilizar as mesmas, pode configurá-las na secção configurações do [Rato #MouseSettings], que encontra no diálogo [Configurações #NVDASettings] aberto através do Menu NVDA, "Preferências", "Configurações".
 
 Apesar de um rato físico, ou um touchpad, terem de ser utilizados para navegar com o rato, o NVDA fornece alguns comandos relacionados com o rato:
 %kc:beginInclude
@@ -889,7 +890,7 @@ A saída Braille também pode ser mostrada no ecrã usando o [Visualizador Brail
 
 para informações sobre os dispositivos suportados, por favor leia a secção [Linhas Braille Suportadas#SupportedBrailleDisplays].
 Esta secção também contém informação sobre que linhas Braille suportam a detecção automática do NVDA.
-Pode configurar o Braille na secção [Braille #BrailleSettings], que pode encontrar no diálogo [Configurações #NVDASettings] aberto através do Menu NVDA, "Preferências", "Configurações".
+Pode configurar o Braille na secção [Braille #BrailleSettings], que encontra no diálogo [Configurações #NVDASettings] aberto através do Menu NVDA, "Preferências", "Configurações".
 
 ++ Abreviaturas Braille para tipos e estados de controlos e marcas ++[BrailleAbbreviations]
 Para que caiba o máximo de informaçãon possível na linha Braille, as seguintes abreviaturas são usadas para indicar os tipos e estados de controlos e as marcas.
@@ -986,7 +987,7 @@ Finalmente, as seguintes abreviaturas para tipos de marcas foram definidas:
 
 ++ Escrita Braille ++[BrailleInput]
 O NVDA suporta a introdução de texto através de um teclado Braille quer seja por Braille normal ou abreviado.
-Pode seleccionar a tabela Braille usando a caixa combinada [Tabela de Escrita #BrailleSettingsInputTable] na secção Braille do diálogo [Configurações do NVDA, #NVDASettings].
+Pode seleccionar a tabela Braille usando a caixa de combinação [Tabela de Escrita #BrailleSettingsInputTable] na secção Braille do diálogo [Configurações do NVDA, #NVDASettings].
 
 Quando se usa o Braille normal, o texto é automaticamente introduzido assim que é escrito.
 Ao usar o Braille abreviado, o texto só é introduzido ao pressionar Espaço ou Enter, no fim de uma palavra.
@@ -1547,7 +1548,7 @@ A tabela seleccionada será usada para converter texto em Braille, para ser most
 Pode mover-se de tabela Braille em tabela Braille, na lista, utilizando as Setas.
 
 ==== Tabela de Escrita ====[BrailleSettingsInputTable]
-Complementando a opção anterior, o próximo controlo é a caixa combinada "Tabela de escrita".
+Complementando a opção anterior, o próximo controlo é a caixa de combinação "Tabela de escrita".
 A tabela escolhida será usada para converter o Braille introduzido, através do teclado Braille da sua linha, em texto.
 Pode mover-se de tabela Braille em tabela Braille, na lista, utilizando as Setas.
 
@@ -1664,7 +1665,7 @@ Após escolher a sua linha Braille, pode pressionar "OK" e o NVDA carregará os 
 Se houver um erro, ao carregar o driver, o NVDA notificará com uma mensagem e continuará a usar o dispositivo anterior, ou continuará sem Braille.
 
 ==== Linha Braille ====[SelectBrailleDisplayDisplay]
-Esta caixa combinada contém diversas opções, que dependem dos drivers de linhas Braille disponíveis no seu sistema.
+Esta caixa de combinação contém diversas opções, que dependem dos drivers de linhas Braille disponíveis no seu sistema.
 Utilize as setas para se mover pelas mesmas.
 
 A primeira opção, "Automático", indica ao NVDA para pesquisar, em segundo plano, pelos vários modelos de linha Braille suportados pela detecção automática.
@@ -1676,7 +1677,7 @@ Por favor, consulte a secção [Linhas Braille Suportadas#SupportedBrailleDispla
 
 ==== Porta ====[SelectBrailleDisplayPort]
 Esta opção, se disponível, permite escolher que porta, ou tipo de ligação, será usada para comunicar com a linha Braille que seleccionou.
-É uma caixa combinada, contendo as opções possíveis para a sua linha Braille.
+É uma caixa de combinação, contendo as opções possíveis para a sua linha Braille.
 
 Por padrão, o NVDA utiliza a detecção automática da porta, o que significa que a ligação com a linha Braille será automaticamente estabelecida, após pesquisa das ligações disponíveis no sistema, quer sejam USB ou Bluetooth.
 Contudo, para algumas linhas Braille, pode explicitamente escolher qual a porta a ser usada.
@@ -2080,7 +2081,7 @@ Active esta opção, enquanto verifica documentos em aplicações como o Microso
 
 ==== Anúncio da indentação das linhas ====[DocumentFormattingSettingsLineIndentation]
 Esta opção permite configurar como a indentação no início da linha é anunciada.
-A caixa combinada tem 4 opções:
+A caixa de combinação tem 4 opções:
 
 - Desligado: O NVDA não anunciará a indentação;
 - Voz: Quando a indentação variar, o NVDA anunciará algo como "doze espaços" ou "quatro tabs";
@@ -2089,12 +2090,35 @@ O som aumentará a tonalidade cada espaço e para cada Tab aumentará o equivale
 - Voz e sons: O NVDA usará, em simultâneo, os dois métodos acima descritos.
 -
 
++++ Navegação em documentos +++[DocumentNavigation]
+Esta secção permite ajustar vários aspectos da navegação em documentos.
+
+==== Estilo do parágrafo ====[ParagraphStyle]
+: Predefinição
+  Tratado pela aplicação
+: Opções
+  Predifinição (Tratado pela aplicação), Tratado pela aplicação, Quebra de linha única, Quebra de várias linhas
+:
+
+Esta caixa de combinação permite seleccionar o estilo de parágrafo para ser usado ao navegar por parágrafos com "control+seta acima" ou "control+seta abaixo".
+Os estilos de parágrafo disponíveis são:
+- Tratado pela aplicação: O NVDA deixa a aplicação determinar o parágrafo anterior ou seguinte, e o novo parágrafo será lido ao ser atingido.
+Este estilo funciona melhor quando a aplicação suporta a navegação por parágrafo nativamente, e é a predefinição.
+- Quebra de linha única: O NVDA utilizará uma quebra de linha como identificadora do início de um parágrafo.
+Este estilo funciona melhor quando lemos documentos numa aplicação que não suporta nativamente a navegação por parágrafos, e os parágrafos estão marcados apenas por uma quebra de linha.
+- Quebra de várias linhas: O NVDA tentará identificar os parágrafos pela existência de, pelo menos, uma linha em branco (criada por duplo pressionar da tecla "Enter").
+Este estilo funciona melhor quando lemos documentos com os parágrafos em blocos.
+Note que este estilo não pode ser usado no Microsoft Word ou Microsoft Outlook, a menos que esteja a usar a UIA para aceder aos controlos do Microsoft Word.
+-
+
+Pode alternar entre os estilos de parágrafo disponíveis associando um comando através do [diálogo "Definir comandos" #InputGestures].
+
 +++ configurações do OCR do Windows +++[Win10OcrSettings]
 Esta secção permite configurar o [OCR do Windows #Win10Ocr].
 Actualmente, só contém uma opção:
 
 ==== Idioma de reconhecimento ====[Win10OcrSettingsRecognitionLanguage]
-Esta caixa combinada permite seleccionar qual o idioma a ser usado no reconhecimento de texto.
+Esta caixa de combinação permite seleccionar qual o idioma a ser usado no reconhecimento de texto.
 
 +++ Configurações Avançadas +++[AdvancedSettings]
 Aviso! As configurações desta secção são para utilizadores avançados e podem fazer com que o NVDA não funcione correctamente se configurado de maneira errada.
@@ -2157,7 +2181,7 @@ Esta opção selecciona a forma como o NVDA interage com a Consola Windows utili
 Não afecta o Terminal Windows moderno.
 No Windows 10 versão 1709, a Microsoft [adicionou suporte à UI Automation API à consola https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/], trazendo melhorias na performance e estabilidade para os leitores de ecrã que a suportem.
  Em situações em que a UI Automation  não está disponível ou é conhecida por resultar numa experiência de utilização inferior, o antigo suporte do NVDA  à consola Windows está disponível como último recurso.
-A caixa combinada "Suporte à consola Windows" tem três opções:
+A caixa de combinação "Suporte à consola Windows" tem três opções:
 - Automático: Utiliza a UI Automation na versão da Consola Windows incluída com o Windows 11 versão 22H2 e posteriores.
 Esta opção é recomendada e definida por padrão.
 - UIA quando disponível: Utiliza a UI Automation em consolas se disponível, mesmo para versões com implementações incompletas ou ainda com erros.
@@ -2170,7 +2194,7 @@ Por isso, a selecção desta opção não é recomendada, a menos que se saiba o
 ==== Usar UIA com Microsoft Edge e outros navegadores baseados em chromium quando disponível: ====[ChromiumUIA]
 Permite especificar quando UIA será usado, se disponível, nos navegadores baseados em Chromium, tais como o Microsoft Edge.
 O suporte UIA para os navegadores baseados em Chromium está no início do desenvolvimento e pode não proporcionar o mesmo nível de acessibilidade que a IA2.
-A caixa combinada tem as seguintes opções:
+A caixa de combinação tem as seguintes opções:
 - Predefinição (Apenas quando necessário);
 - Apenas quando necessário;
 - Sim: se o navegador disponibilizar UIA o NVDA usá-la-á;
@@ -2230,8 +2254,27 @@ Esta configuração pode estabilizar a leitura do texto recebido em algumas apli
 No entanto, em terminais, ao inserir ou apagar um caractere no meio de uma linha, o texto após o caractere será lido.
 -
 
+==== Falar novo texto no Terminal Windows via ====[WtStrategy]
+: Predefinição
+ Diffing
+: Opções
+ Diffing, notificações UIA
+:
+
+Esta opção define como o NVDA determina que texto é "novo" (e portanto o que falar quando a opção "Anunciar alterações de conteúdo dinâmico" está activada) no Terminal Windows e no controlo WPF do Terminal Windows utilizado no Visual Studio 2022.
+Não afecta a Consola do Windows (``conhost.exe```).
+A caixa de combinação "Falar novo texto no Terminal Windows via:" tem três opções:
+- Predefinição: Esta opção é actualmente equivalente a "diffing", mas prevê-se que mude assim que o suporte para notificações UIA estiver mais desenvolvido.
+- Diffing: Esta opção utiliza o algoritmo Diff seleccionado para calcular as alterações cada vez que o terminal apresenta um novo texto.
+- Isto é idêntico ao comportamento do NVDA nas versões 2022.4 e anteriores.
+- Notificações UIA: Esta opção transfere a responsabilidade de determinar que texto será falado para o próprio Terminal Windows, o que significa que o NVDA já não tem de determinar que texto actualmente no ecrã é "novo".
+Isto deverá melhorar acentuadamente o desempenho e a estabilidade do Terminal Windows, mas esta funcionalidade ainda não está completa.
+Em particular, caracteres digitados que não são mostrados no ecrã, tais como palavras-passe, são anunciados quando esta opção está seleccionada.
+Adicionalmente, intervalos de saída contíguos de mais de 1.000 caracteres podem não ser anunciados com precisão.
+-
+
 ==== Tentar cancelar a voz para eventos de foco expirados ====[CancelExpiredFocusSpeech]
-Esta opção activa a funcionalidade que tenta cancelar a fala para eventos de foco expoirados.
+Esta opção activa a funcionalidade que tenta cancelar a fala para eventos de foco expirados.
 Em especial, mover-se rapidamente pelas  mensagens no GMail usando o Chrome, pode fazer com que o NVDA anuncie informação desactualizada.
 Esta funcionalidade é activada por padrão a partir do NVDA 2021.1.
 
@@ -2377,7 +2420,7 @@ Os comandos de teclado do NVDA, que se seguem, também podem ser usados:
 
 ++ Perfis de Configuração ++[ConfigurationProfiles]
 Por vezes, pode querer ter configurações diferentes para situações diferentes.
-Por exemplo, pode querer que seja reportada a indentação, enquanto está a editar um documento, ou os atributos do texto enquanto está a rever um documento.
+Por exemplo, pode querer que seja anunciada a indentação, enquanto está a editar um documento, ou os atributos do texto enquanto está a rever um documento.
 O NVDA permite esta funcionalidade através dos Perfis de Configuração.
 
 Os perfis de configuração contêm apenas as configurações que foram alteradas durante a sua edição.
@@ -2684,6 +2727,7 @@ Estas são as linhas que suportam a funcionalidade de detecção automática:
 - Linhas Eurobraille das séries Esys/Esytime/Iris;
 - Linhas NBraille da Nattiq;
 - Blocos de notas Seika: MiniSeika (16 e 24 células), V6 e V6Pro (40 células)
+- Linhas Braille Tivomatic Caiku Albatross 46/80
 - Qualquer linha Braille que suporte o protocolo HID padrão.
 -
 
@@ -3159,7 +3203,7 @@ A maioria dos dispositivos têm uma barra de acesso fácil, EAB - Easy access ba
 A EAB pode ser movida em quatro direcções, em que cada direcção tem, geralmente, dois interruptores.
 A série-c É a única excepção a esta regra.
 
-A série-C e e algumas outras linhas têm duas linhas de encaminhamento, em que a linha superior é usada para reportar informação de formatação.
+A série-C e e algumas outras linhas têm duas linhas de encaminhamento, em que a linha superior é usada para anunciar informação de formatação.
 Mantendo pressionado um dos butões de encaminhamento superiores, e pressionando a EAB nos dispositivos da série-C, simula o segundo estado do interruptor.
 A série Live tem apenas uma linha de encaminhamento e a EAB tem apenas um passo por direção.
 O segundo passo pode ser simulado pressionando um dos cursores de encaminhamento e pressionando a EAB na direção correspondente.
@@ -3567,6 +3611,63 @@ Por favor, consulte na documentação do BRLTTY as [tabelas de associação de t
 | Encaminhar para a célula braille | route (bring cursor to character) |
 %kc:endInclude
 
+++ Tivomatic Caiku Albatross 46/80 ++[Albatross]
+As linhas Braille Caiku Albatross, que foram fabricadas pela Tivomatic e que estiveram disponíveis na Finlândia, podem ser ligadas ao PC via USB ou serial.
+Não é necessário instalar nenhum driver específico para utilizar estas linhas.
+Basta ligar o dispositivo e configurar o NVDA para o utilizar.
+
+Nota: Baud rate 19200 é fortemente recomendado
+Se necessário, configure o Baud rate para 19200, nas configurações da linha Braille.
+Embora o driver suporte um baud rate de 9600, não consegue controlar que nível de baud rate está configurado no dispositivo.
+Por 19200 ser o baud rate predefinido, o driver irá usá-lo primeiro.
+Se os baud rates não forem iguais o driver pode funcionar mal.
+
+Seguem-se as associações de comandos destas linhas com o NVDA.
+Por favor, consulte a documentação destas linhas Braille para obter a descrição de onde estas teclas podem ser encontradas.
+%kc:beginInclude
+|| Nome | Tecla |
+| mover para a primeira linha em revisão | ``home1``, ``home2`` |
+| mover para a última linha em revisão | ``end1``, ``end2`` |
+| Mover para o objecto em foco | ``eCursor1``, ``eCursor2`` |
+| Mover a linha Braille para o foco actual | ``cursor1``, ``cursor2`` |
+| Mover o rato para o objecto de navegação actual | ``home1+home2`` |
+| Navegar para o objecto sob o rato | ``end1+end2`` |
+| Mover o foco do sistema ou o cursor para o objecto actual da revisão | ``eCursor1+eCursor2`` |
+| Alternar "Braille segue:" | ``cursor1+cursor2`` |
+| Move a linha braille para a linha anterior | ``up1``, ``up2``, ``up3`` |
+| Move a linha braille para a linha seguinte | ``down1``, ``down2``, ``down3`` |
+| Deslocar a linha braille para trás | ``left``, ``lWheelLeft``, ``rWheelLeft`` |
+| Deslocar a linha braille para a frente | ``right``, ``lWheelRight``, ``rWheelRight`` |
+| Encaminhar para a célula braille | ``routing`` |
+| Anunciar formatação do caracter da célula Braille | secondary routing |
+| Alternar Apresentação do contexto do foco: ``attribute1+attribute3`` |
+| Alternar entre os Modos de Voz | ``attribute2+attribute4`` |
+| Muda para o modo de revisão anterior | ``f1`` |
+| Muda para o modo de revisão seguinte | ``f2`` |
+| Mover para o objecto ascendente | ``f3`` |
+| Mover para o primeiro objecto descendente | ``f4`` |
+| Mover para o objecto anterior | ``f5`` |
+| Mover para o objecto seguinte | ``f6`` |
+| Anunciar o objecto de navegação actual | ``f7`` |
+| Anunciar localização do cursor de revisão | ``f8`` |
+| Activar o objecto de navegação actual | ``f7+f8`` |
+| Anunciar hora/data | ``f9`` |
+| Anunciar o estado da bateria e tempo restante se não ligada à corrente | ``f10`` |
+| Anunciar o título | ``f11`` |
+| Anunciar a Barra de Estado | ``f12`` |
+| Anunciar a linha actual | ``f13`` |
+| Leitura contínua | ``f14`` |
+| Anunciar o caracter actual em revisão | ``f15`` |
+| Anunciar a linha actual em revisão | ``f16`` |
+| Anunciar a palavra actual em revisão | ``f15+f16`` |
+| Mover para a linha anterior em revisão | ``lWheelUp``, ``rWheelUp`` |
+| Mover para a próxima linha em revisão | ``lWheelDown``, ``rWheelDown`` |
+| Teclas windows+d (minimizar todas as aplicações) | ``attribute1`` |
+| Teclas Windows+e (Este PC) | ``attribute2`` |
+| Teclas windows+b (Mover para a Área de notificações) | ``attribute3`` |
+| Teclas Windows+i (Definições do Windows) | ``attribute4`` |
+%kc:endInclude
+
 ++ Linhas Braille com protocolo HID ++[HIDBraille]
 Este é um driver experimental para o novo protocolo Braille HID, aprovado em 2018 por Microsoft, Google, Apple e várias entidades de tecnologia assistiva, incluindo a NV Access. 
 Espera-se que todos os dispositivos Braille futuros, desenvolvidos por qualquer fabricante utilize este protocolo, o que dispensará drivers específicos de cada fabricante.
@@ -3594,7 +3695,7 @@ Seguem-se as associações de teclas para este protocolo.
 | Tecla Windows | space+dot3+dot4 |
 | Tecla alt+tab | space+dot2+dot3+dot4+dot5 (space+t) |
 | Menu NVDA | space+dot1+dot3+dot4+dot5 (space+n) |
-| windows+d key (minimize all applications) | space+dot1+dot4+dot5 (space+d) |
+| Teclas windows+d (minimizar todas as aplicações) | | space+dot1+dot4+dot5 (space+d) |
 | Ler tudo | space+dot1+dot2+dot3+dot4+dot5+dot6 |
 %kc:endInclude
  
@@ -3657,7 +3758,7 @@ Seguidamente, apresentam-se as opções para a linha de comando para o NVDA
 | -q | --quit | Sai da cópia em execução do NVDA |
 | -k | --check-running | Anuncia se o NVDA está em execução via código de saída; 0 se em execução, 1 se não em execução |
 | -f NomeDoFicheiroDeRegisto | --log-file=NomeDoFicheiroDeRegisto | Especifica em que ficheiro devem ser escritas as informações de registo |
-| -l NivelDeRegisto | --log-level=NivelDeRegisto | O nível mais baixo de mensagens registadas (depuração 10, info 20, aviso 30, erro 40, crítico 50), o padrão é aviso |
+| -l LOGLEVEL | --log-level=LOGLEVEL | O nível mais baixo de mensagens registadas (depuração 10, input/output 12, aviso de depuração 15, info 20, desactivado 100) |
 | -c CAMINHO | --config-path=CAMINHO | O caminho para onde estão as configurações do NVDA |
 | None | --lang=LANGUAGE | Sobreõe-se ao idioma  configurado no NVDA. "Windows" para o padrão do utilizador actual, "pt_PT" para português, etc. |
 | -m | --minimal | Sem sons, sem interface, sem mensagem de início, etc |
