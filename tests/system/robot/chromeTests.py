@@ -409,7 +409,7 @@ def exercise_mark_aria_details(nvdaConfValues: "NVDASpyLib.NVDAConfMods"):
 	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey(READ_DETAILS_GESTURE)
 	_asserts.speech_matches(
 		actualSpeech,
-		"Cats go woof BTW  Jonathon Commentor No they don't  Zara",
+		"Cats go woof BTW  Jonathon Commentor No they don't —Zara",
 		message="Browse mode: Report details on word with details"
 	)
 	_asserts.braille_matches(
@@ -564,7 +564,7 @@ def exercise_mark_aria_details(nvdaConfValues: "NVDASpyLib.NVDAConfMods"):
 	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey(READ_DETAILS_GESTURE)
 	_asserts.speech_matches(
 		actualSpeech,
-		"Cats go woof BTW  Jonathon Commentor No they don't  Zara",
+		"Cats go woof BTW  Jonathon Commentor No they don't —Zara",
 		message="Focus mode:  Report details on word with details.",
 	)
 	_asserts.braille_matches(
