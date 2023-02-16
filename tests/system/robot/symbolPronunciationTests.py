@@ -372,7 +372,7 @@ def test_selByWord():
 				'left paren(quietly right paren) ',  # Expect: parenthesis are named
 				'quote Hello comma, ', 'Jim ', 'quote  dot. ',  # Expect: quote, comma and dot are named
 				'don tick t ',  # Expect: mid-word symbol substituted
-				'right dash-pointing arrow  ', 't dash-shirt  ',
+				'right-pointing arrow  ', 't-shirt  ',
 				# end of first line
 				'',  # newline  todo: There should not be any "empty" words.
 				# Expect no empty words:
