@@ -12,6 +12,7 @@ What's New in NVDA
 
 == Changes ==
 - Dash and em-dash symbols will always be sent to the synthesizer. (#13830)
+- Distance reported in Microsoft Word will now honour the unit defined in Word's advanced options even when using UIA to access Word documents. (#14542)
 -
 
 
@@ -20,6 +21,8 @@ What's New in NVDA
 - NVDA will now switch back to USB if a HID Bluetooth device (such as the HumanWare Brailliant or APH Mantis) is automatically detected and an USB connection becomes available.
 This only worked for Bluetooth Serial ports before. (#14524)
 - It is now possible to use the backslash character in the replacement field of a dictionaries entry, when the type is not set to regular expression. (#14556)
+- In Browse mode, NVDA will no longer incorrectly ignore focus moving to a parent or child control e.g. moving from a control to its parent list item or gridcell. (#14611)
+  - Note however that this fix only applies when the Automatically set focus to focusable elements" option in Browse Mode settings is turned off (which is the default).
 -
 
 
