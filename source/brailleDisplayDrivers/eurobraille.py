@@ -3,10 +3,11 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2017-2019 NV Access Limited, Babbage B.V., Eurobraille
+#Copyright (C) 2017-2023 NV Access Limited, Babbage B.V., Eurobraille
 
 from collections import OrderedDict, defaultdict
-from typing import Dict, Any, List, Union
+from typing import Dict, Any, List, Union, Iterator
+import re
 
 from io import BytesIO
 import serial
@@ -23,6 +24,7 @@ import threading
 from globalCommands import SCRCAT_BRAILLE
 import ui
 import time
+import hwPortUtils
 
 BAUD_RATE = 9600
 
@@ -65,7 +67,7 @@ KEYS_STICK = OrderedDict({
 	0x20000: "joystick1Down",
 	0x40000: "joystick1Right",
 	0x80000: "joystick1Left",
-	0x100000: "joystick1Center",    
+	0x100000: "joystick1Center",
 	0x1000000: "joystick2Up",
 	0x2000000: "joystick2Down",
 	0x4000000: "joystick2Right",
@@ -114,6 +116,9 @@ KEYS_ESITIME = OrderedDict({
 })
 KEYS_ESITIME.update(KEYS_STICK)
 
+KEYS_BNOTE = KEYS_ESYS
+KEYS_BBOOK = KEYS_ESITIME
+
 DEVICE_TYPES={
 	0x01:"Iris 20",
 	0x02:"Iris 40",
@@ -132,6 +137,10 @@ DEVICE_TYPES={
 	0x0f:"Esytime 32 standard",
 	0x10:"Esytime evo 32",
 	0x11:"Esytime evo 32 standard",
+	0x12:"b.note",
+	0x13:"b.note 2",
+	0x14:"b.book",
+	0x15:"b.book 2"
 }
 
 
@@ -139,6 +148,8 @@ def bytesToInt(byteData: bytes):
 	"""Converts bytes to its integral equivalent."""
 	return int.from_bytes(byteData, byteorder="big", signed=False)
 
+# regex for detecting the correct interface for the composite USB port of the b.note
+INTERFACE_REGEX = re.compile(r"MI_00")
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	_dev: hwIo.IoBase
@@ -146,7 +157,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	_awaitingFrameReceipts: Dict[int, Any]
 	name = "eurobraille"
 	# Translators: Names of braille displays.
-	description = _("Eurobraille Esys/Esytime/Iris displays")
+	description = _("Eurobraille Esys/Esytime/Iris/b.note/b.book displays")
 	isThreadSafe = True
 	timeout = 0.2
 	supportedSettings = (
@@ -313,6 +324,20 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				self.keys = KEYS_ESYS
 			elif 0x0e <= deviceType <= 0x11:  # Esitime
 				self.keys = KEYS_ESITIME
+			elif 0x12 <= deviceType <= 0x13:
+				# the joystick1 left/right keys on the b.note should be braille scroll functions instead of
+				# moving the review
+				self.gestureMap.add("br(eurobraille):joystick1Left", "globalCommands", "GlobalCommands",
+									"braille_scrollBack")
+				self.gestureMap.add("br(eurobraille):joystick1Right", "globalCommands", "GlobalCommands",
+									"braille_scrollForward")
+				self.gestureMap.remove("br(eurobraille):joystick1Left", "globalCommands", "GlobalCommands",
+									   "review_previousCharacter")
+				self.gestureMap.remove("br(eurobraille):joystick1Right", "globalCommands", "GlobalCommands",
+									   "review_nextCharacter")
+				self.keys = KEYS_BNOTE
+			elif 0x14 <= deviceType <= 0x15:
+				self.keys = KEYS_BBOOK
 			else:
 				log.debugWarning("Unknown device identifier %r"%data)
 		elif packetType == EB_SYSTEM_DISPLAY_LENGTH:
@@ -471,7 +496,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				"br(eurobraille):switch1Left+switch1Right", "br(eurobraille):switch2Left+switch2Right",
 				"br(eurobraille):switch3Left+switch3Right", "br(eurobraille):switch4Left+switch4Right",
 				"br(eurobraille):switch5Left+switch5Right", "br(eurobraille):switch6Left+switch6Right",
-				"br(eurobraille):l1+l8", 
+				"br(eurobraille):l1+l8",
 			),
 			"review_previousLine": ("br(eurobraille):joystick1Up",),
 			"review_nextLine": ("br(eurobraille):joystick1Down",),
@@ -581,6 +606,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 		super(InputGesture, self).__init__()
 		self.model = display.deviceType.lower().split(" ")[0]
 		keysDown = dict(display.keysDown)
+
 		self.keyNames = names = []
 		for group, groupKeysDown in keysDown.items():
 			if group == EB_KEY_BRAILLE:
