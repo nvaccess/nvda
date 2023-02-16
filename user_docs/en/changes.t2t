@@ -31,6 +31,7 @@ Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documen
 - Added a new extension point type called ``Chain``, which can be used to iterate over iterables returned by registered handlers. (#14531)
 - Added the ``bdDetect.scanForDevices`` extension point.
 Handlers can be registered that yield ``BrailleDisplayDriver/DeviceMatch`` pairs that don't fit in existing categories, like USB or Bluetooth. (#14531)
+- Added extension point: ``synthDriverHandler.synthChanged``. (#14618)
 -
 
 === Deprecations ===
