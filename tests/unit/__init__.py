@@ -103,6 +103,11 @@ def getFakeCellCount(numCells: int) -> int:
 
 braille.filter_displaySize.register(getFakeCellCount)
 
+# Changing braille displays might call braille.handler.disableDetection(),
+# which requires the bdDetect.deviceInfoFetcher to be set.
+import bdDetect  # noqa: E402
+bdDetect.deviceInfoFetcher = bdDetect._DeviceInfoFetcher()
+
 # The focus and navigator objects need to be initialized to something.
 from .objectProvider import PlaceholderNVDAObject,NVDAObjectWithRole
 phObj = PlaceholderNVDAObject()
