@@ -4,6 +4,25 @@ Qué hay de Nuevo en NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2023.1 =
+Se ha añadido una nueva orden "Estilo de Párrafo" en la "navegación de Documento".
+Esto puede utilizarse con editores de texto que no admitan la navegación por párrafos nativamente, tales como el Bloc de Notas y Notepad++.
+
+Hay una nueva orden global para anunciar el destino de un enlace, mapeada a ``NVDA+k``.
+
+El soporte para el contenido web anotado (como los comentarios y las notas al pie) ha sido mejorado.
+Pulsa ``NVDA+d`` para recorrer los resúmenes cuando se anuncien las anotaciones (por ejemplo, "tiene comentario, tiene nota al pie").
+
+Ahora se admiten las pantallas braille Tivomatic Caiku Albatross 46/80.
+
+Se ha mejorado el soporte para versiones ARM64 y AMD64 de Windows.
+Hay muchas correcciones de fallos, en particular correcciones de Windows 11.
+
+Se han actualizado eSpeak, LibLouis, Sonic rate boost y Unicode CLDR.
+Hay nuevas tablas braille para Georgiano, Swahili (Kenya) y Chichewa (Malawi).
+
+Nota:
+- Esta versión rompe la compatibilidad con los complementos existentes.
+-
 
 == Nuevas Características ==
 - Microsoft Excel a través de UI Automation: anunciado automático de encabezados de fila y columna en tablas. (#14228)
@@ -23,6 +42,11 @@ Esto puede utilizarse con editores de texto que no admitan la navegación por p�
 ``nvda+d`` ahora recorre el sumario de cada anotación anunciando el objetivo para los orígenes con varios objetivos de anotaciones.
 Por ejemplo, cuando el texto tiene un comentario y una nota al pie asociada con ella. (#14507, #14480)
 - Se añadió el soporte para las pantallas braille Tivomatic Caiku Albatross 46/80. (#13045)
+- Nueva orden global: anunciar destino del enlace (``NVDA+k``).
+Pulsándola una vez verbalizará y mostrará en braille el destino del enlace que esté en el navegador de objetos.
+Pulsándola dos veces la mostrará en una ventana para una revisión más detallada. (#14583)
+- Una nueva orden global no mapeada (Categoría Herramientas): anuncia el destino del enlace en una ventana.
+Lo mismo que pulsar ``NVDA+k`` dos veces, pero puede ser más útil para usuarios de braille. (#14583)
 -
 
 
@@ -73,7 +97,10 @@ Por ejemplo, cuando el texto tiene un comentario y una nota al pie asociada con 
 - Corregido un problema donde los cambios de configuración no se guardaban correctamente al cambiar entre una opción "Predeterminada" y el valor de la opción "predeterminada". (#14133)
 - Al configurar NVDA siempre habrá al menos una tecla que se defina como tecla NVDA. (#14527)
 - Al acceder al menú NVDA a través del área de notificaciones, NVDA ahora no sugerirá una actualización pendiente cuando no haya ya ninguna disponible. (#14523)
+- El tiempo restante, transcurrido y total ahora se anuncia correctamente para ficheros de audio de más de un día en foobar2000. (#14127)
 - En navegadores web como Chrome y Firefox, las alertas como descargas de ficheros se muestran en braille además de ser verbalizadas. (#14562)
+- Corregido un fallo al navegar a la primera y última columna en una tabla en Firefox (#14554)
+- Cuando NVDA se lance con el parámetro ``--lang=Windows``, es posible de nuevo abrir el diálogo Opciones Generales de NVDA. (#14407)
 -
 
 
@@ -109,6 +136,7 @@ Esta funcionalidad ahora está disponible genéricamente a través de ``behaviou
   - ``braille.displayChanged``
   - ``braille.displaySizeChanged``
   - 
+- Es posible ajustar useConfig a  False en las opciones soportadas para un controlador de sintetizador. (#14601)
 -
 
 === Cambios de Ruptura de la API ===
@@ -147,6 +175,12 @@ Consulta ``brailleViewer`` para ver un ejemplo de cómo hacerlo. (#14503)
   - ``loadModule`` ahora espera el punto como un separador, en lugar de la barra inversa.
   Por ejemplo "lib.example" en lugar de "lib\example".
   - ``loadModule`` ahora lanza una excepción cuando un módulo no se pueda cargar  o tenga errores, en lugar de devolver silenciosamente ``None`` sin dar información sobre la causa.
+  -
+- Los siguientes símbolos se han eliminado de ``appModules.foobar2000`` sin un remplazo directo. (#14570)
+  - ``statusBarTimes``
+  - ``parseIntervalToTimestamp``
+  - ``getOutputFormat``
+  - ``getParsingFormat``
   -
 - Los siguientes ya no son singletons - su método get ha sido eliminado.
 El uso de ``Example.get()`` ahora es ``Example()``. (#14248)
