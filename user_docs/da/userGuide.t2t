@@ -40,6 +40,7 @@ Af væsentlige funktioner kan nævnes:
 - Operativsystemer: alle 32-bit og 64-bit versioner af Windows 7, Windows 8, Windows 8.1, Windows 10, Windows 11 samt alle serverstyresystemer fra Server 2008 R2.
   - For Windows 7 kræver NVDA Service Pack 1 eller højere.
   - For Windows Server 2008  R2 kræver NVDA Service Pack 1 eller højere.
+  - Både AMD64 og ARM64 varianter af Windows understøttes.
   -
 - Mindst 150 MB lagerplads.
 -
@@ -2089,6 +2090,29 @@ Tonens toneleje vil forøges ved hvert mellemrum, og for tab vil tonen forøges 
 - Både Tale og Toner: Denne mulighed vil læse indrykningen ved brug af begge metoder.
 -
 
++++ Document Navigation +++[DocumentNavigation]
+Denne kategori lader dig justere forskellige indstillinger der anvendes, når du navigere rundt i dokumenter.
+
+==== Navigering af afsnit ====[ParagraphStyle]
+: Standard
+  Håndteret af det aktuelle program
+: Indstillinger
+  Standard (Håndteret af det aktuelle program), Håndteret af det aktuelle program, Enkelt linjeskift, Flere linjeskift
+:
+
+Disse indstillinger lader dig bestemme, hvordan du vil navigere gennem afsnit, når du bruger Ctrl+pil op og ned.
+De tilgængelige indstillinger er følgende:
+- Håndteret af det aktuelle program: NVDA vil lade programmet i brug bestemme, hvordan der navigeres mellem afsnit. NVDA vil læse det nye afsnit, når du navigere.
+Denne indstilling fungere bedst, når selve programmet understøtter navigering mellem afsnit. Dette er standardindstillingen.
+- Enkelt linjeskift: Med denne indstilling vil NVDA forsøge at gætte, hvornår et nyt afsnit begynder i en tekst. Dette gøres udelukkende ved brug af blanke linjer, der indsættes i en tekst ved brug af enter-tasten.
+Denne indstilling fungerer bedst, når du læser et dokument i et program, der ikke selv understøtter navigering mellem afsnit.
+- Flere linjeskift: NVDA vil selv forsøge at genkende, når der er afsnit i en tekst. Dette gøres ved hjælp af mindst én blank linje (to tryk på enter-tasten).
+Denne indstilling fungerer bedst, når du arbejder med dokumenter, der anvender blokafsnit.
+Bemærk, at du ikke kan benytte denne indstilling i Microsoft Word eller Outlook, hvis UIA ikke er aktiveret i NVDA-indstillingerne>Avanceret.
+-
+
+Du kan skifte mellem disse indstillinger fra hvor som helst, hvis du tilknytter en kommando til funktionen via [dialogen Håndter kommandoer #InputGestures].
+
 +++ Windows Tekstgenkendelse +++[Win10OcrSettings]
 Indstillingerne i denne kategori lader dig konfigurere [Windows Tekstgenkendelse #Win10Ocr].
 Denne kategori indeholder følgende indstillinger:
@@ -2205,14 +2229,14 @@ Dette er en eksperimental funktion, og nogle funktioner vil ikke være tilgænge
 Du kan f.eks. ikke bruge elementlisten til at vise formularer og kommentarer, og du kan heller ikke benytte bogstavnavigation i gennemsynstilstand til at springe til formularfelter i et regneark.
 Denne funktion kan dog forbedre ydeevnen, når du navigere og redigere celler.
 Vi anbefaler dog ikke at størstedelen af brugere benytter denne indstilling, men vi ønsker feedback fra brugere med Microsoft Excel  build 16.0.13522.10000 eller nyere.
-Implementeringen af UIA i Microsoft Office er under konstant revidering, og ældre versioner af Office end 16.0.13522.10000 vil muligvis ikke vise nok information til at være brugbart.
+Implementeringen af UIA i Microsoft Excel er under konstant revidering, og ældre versioner af Office end 16.0.13522.10000 vil muligvis ikke vise nok information til at være brugbart.
 
 ==== Udtal adgangskoder i alle forbedrede konsoller ====[AdvancedSettingsWinConsoleSpeakPasswords]
 Denne funktion bestemmer om tegn udtales ved brug af indstillingen [sig indtastede tegn #KeyboardSettingsSpeakTypedCharacters] eller [sig indtastede ord #KeyboardSettingsSpeakTypedWords]. Dette kan evt. være nyttigt i situationer hvor skærmen ikke opdateres (som ved indtastning af adgangskoder i konsolvinduer), i nogle terminalprogrammer som Windows-konsollen med understøttelse for UIA aktiveret og Mintty.
 På grund af sikkerhedsårsager bør denne indstilling forblive deaktiveret.
 Du kan dog ønske at aktivere indstillingen, hvis du oplever problemer med udtale af indtastede ord og tegn eller arbejder i et sikkert miljø.
 
-==== Benyt den nye understøttelse for indtastede tegn i Windows-konsoller, når denne er tilgængelig ====[AdvancedSettingsKeyboardSupportInLegacy]
+==== Benyt forbedret understøttelse af indtastede tegn i forældede Windows-konsoller, når denne er tilgængelig ====[AdvancedSettingsKeyboardSupportInLegacy]
 Denne indstilling aktivere en alternative metode til at opdage indtastede tegn i forældede Windows-konsoller.
 Selvom denne indstilling kan forbedre ydeevnen og forhindre at noget konsolindhold staves, kan denne indstilling forekomme inkompatibel med nogle terminalprogrammer.
 Denne funktion kan aktiveres i Windows 10 version 1607 og nyere versioner af Windows 10, hvor UI Automation ikke er tilgængelig.
@@ -2230,6 +2254,24 @@ Indstillingen kan dog i nogle tilfælde forårsage, at læsning af ny tekst i pr
 Dette er identiskt med NVDAs adfærd i NVDA 2020.4 og tidligere.
 Indstillingen kan forbedre læsning af ny tekst i nogle tilfælde.
 Dette vil dog gøre, at teksten foran systemmarkøren vil blive læst, når du indsætter eller sletter tekst midt på en linje i terminaler.
+-
+==== Sig ny tekst i Windows-terminaler via ====[WtStrategy]
+: Standard
+  Diffing
+: Muligheder
+  Diffing, UIA-meddelelser
+:
+
+Denne indstilling bestemmer, hvordan NVDA skal opfatte teksten i et terminalvindue som "ny" (og henholdsvis, hvad der skal læses op, når indstillingen "Dynamisk indhold" er slået til) i Windows Terminal og WPF Windows Terminal brugt i Visual Studio 2022.
+Det påvirker ikke adfærden i Windows-konsollen (``conhost.exe``).
+Der er tre muligheder:
+- Standard: Denne indstilling er i øjeblikket det samme som "diffing", men dette formodes at blive ændret, når udviklingen af UIA-meddelelser er skredet længere frem.
+- Diffing: Denne indstilling benytter den valgte diff-algoritme til at kalkulere ændringerne, hver gang terminalen gengiver den nye tekst.
+Dette er identisk med NVDAs adfærd i 2022.4 og ældre.
+- UIA-meddelelser: Denne mulighed udskyder ansvaret for at bestemme, hvilken tekst der skal tale til selve Windows Terminal, hvilket betyder, at NVDA ikke længere skal bestemme, hvilken tekst på skærmen, der i øjeblikket er "ny".
+Dette skulle markant forbedre ydeevnen og stabiliteten af Windows Terminal, men denne funktion er endnu ikke færdig.
+Især indskrevne tegn, der ikke vises på skærmen, såsom adgangskoder, rapporteres, når denne indstilling er valgt.
+Derudover rapporteres sammenhængende outputspænd på over 1.000 tegn muligvis ikke nøjagtigt.
 -
 
 ==== Forsøg at annullere tale for udløbne fokushændelser ====[CancelExpiredFocusSpeech]
