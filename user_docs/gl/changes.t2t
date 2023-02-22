@@ -4,6 +4,25 @@ Que hai de Novo no NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2023.1 =
+Engadiuse unha nova orde "Estilo de Parágrafo" na "navegación de Documento".
+Esto pode usarse con editores de texto que non admitan a navegación por parágrafos nativamente, coma o Bloc de Notas e Notepad++.
+
+Hai unha nova orde global para anunciar o destiño dunha ligazón, mapeada a ``NVDA+k``.
+
+O soporte para o contido web anotado (coma os comentarios e as notas ao pe) foi mellorado.
+Preme ``NVDA+d`` para percorrer os resumos cando se anuncien as anotacións (por exemplo, "ten comentario, ten nota ao pe").
+
+Agora admítense as pantallas braille Tivomatic Caiku Albatross 46/80.
+
+Mellorouse o soporte para versións ARM64 e AMD64 de Windows.
+Hai moitos arranxos de erros, en particular arranxos de Windows 11.
+
+Actualizáronse eSpeak, LibLouis, Sonic rate boost e Unicode CLDR.
+Hai novas táboas braille para xeorxiano, Swahili (Kenya) e Chichewa (Malawi).
+
+Nota:
+- Esta versión rompe a compatibilidade cos complementos existentes.
+-
 
 == Novas Características ==
 - Microsoft Excel a través de UI Automation: anunciado automático de cabeceiras de fila e columna en táboas. (#14228)
@@ -23,6 +42,11 @@ Esto pode usarse con editores de texto que non admitan a navegación por parágr
 ``nvda+d`` agora percorre o sumario de cada anotación anunciando o obxectivo para os orixes con varios obxectivos de anotacións.
 Por exemplo, cando o texto ten un comentario e unha nota ao pe asociada con ela. (#14507, #14480)
 - Engadiuse o soporte para as pantallas braille Tivomatic Caiku Albatross 46/80. (#13045)
+- Nova orde global: anunciar destiño da ligazón (``NVDA+k``).
+Preméndoa unha vez falará e amosará en braille o destiño da ligazón que estea no navegador de obxectos.
+Preméndoa dúas veces amosaráa nunha ventá para unha revisión máis detallada. (#14583)
+- Unha nova orde global non mapeada (Categoría Ferramentas): anuncia o destiño da ligazón nunha ventá.
+O mesmo que premer ``NVDA+k`` dúas veces, pero pode ser máis útil para usuarios de braille. (#14583)
 -
 
 
@@ -73,7 +97,10 @@ Actualizouse o transcriptor braille LibLouis a [3.24.0 https://github.com/liblou
 - Arranxado un problema onde os cambios de configuración non se gardaban correctamente ao cambiar entre unha opción "Predeterminada" e o valor da opción "predeterminada". (#14133)
 - Ao se configurar o NVDA sempre haberá ao menos unha tecla que se defina coma tecla NVDA. (#14527)
 - Ao acesar ao menú NVDA a través da área de notificacións, o NVDA agora non suxerirá unha actualización pendente cando non haxa xa ningunha dispoñible. (#14523)
+- O tempo restante, transcorrido e total agora anúnciase correctamente para ficheiros de audio de máis dun día en foobar2000. (#14127)
 - En navegadores web coma Chrome e Firefox, as alertas coma descargas de ficheiros amósanse en braille ademáis de seren faladas. (#14562)
+- Arranxado un erro ao navegar á primeira e última columna nunha táboa en Firefox (#14554)
+- Cando o NVDA se lance co parámetro ``--lang=Windows``, é posible de novo abrir o diálogo Opcións Xerais de NVDA. (#14407)
 -
 
 
@@ -109,6 +136,7 @@ Esta funcionalidad agora está dispoñible xenéricamente a través de ``behavio
   - ``braille.displayChanged``
   - ``braille.displaySizeChanged``
   - 
+- É posible axustar useConfig a  False nas opcións soportadas para un controlador de sintetizador. (#14601)
 -
 
 === Cambios de Ruptura da API ===
@@ -147,6 +175,12 @@ Consulta ``brailleViewer`` para ver un exemplo de cómo facelo. (#14503)
   - ``loadModule`` agora espera o punto coma un separador, en lugar da barra inversa.
   Por exemplo "lib.example" a cambio de "lib\example".
   - ``loadModule`` agora lanza unha excepción cando un módulo non se poda cargar  ou teña erros, en lugar de devolver silenciosamente ``None`` sen dar información sobre a causa.
+  -
+- Os seguintes símbolos borráronse de ``appModules.foobar2000`` sen un remplazo directo. (#14570)
+  - ``statusBarTimes``
+  - ``parseIntervalToTimestamp``
+  - ``getOutputFormat``
+  - ``getParsingFormat``
   -
 - Os seguintes xa non son singletons - o seu método get foi borrado.
 O uso de ``Example.get()`` agora é ``Example()``. (#14248)

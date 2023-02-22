@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-20 00:02+0000\n"
+"POT-Creation-Date: 2023-02-14 00:37+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Karl Eick <hozosch@web.de>\n"
 "Language-Team: \n"
@@ -4435,6 +4435,32 @@ msgstr ""
 msgid "Plugins reloaded"
 msgstr "Module wurden neu geladen"
 
+#. Translators: input help mode message for Report destination URL of navigator link command
+msgid ""
+"Report the destination URL of the link in the navigator object. If pressed "
+"twice, shows the URL in a window for easier review."
+msgstr ""
+"Teilt die Ziel-URL des Links im Navigator-Objekt mit. Bei zweimaligem "
+"Drücken wird die URL zur leichteren Überprüfung in einem Fenster angezeigt."
+
+#. Translators: Informs the user that the window contains the destination of the
+#. link with given title
+#, python-brace-format
+msgid "Destination of: {name}"
+msgstr "Ziel von: {name}"
+
+#. Translators: Tell user that the command has been run on something that is not a link
+msgid "Not a link."
+msgstr "Kein Link."
+
+#. Translators: input help mode message for Report URL of navigator link in a window command
+msgid ""
+"Reports the destination URL of the link in the navigator object in a window, "
+"instead of just speaking it. May be preferred by braille users."
+msgstr ""
+"Teilt die Ziel-URL des Links im Navigator-Objekt in einem Fenster mit, "
+"anstatt sie nur vorzulesen. Kann von Braille-Nutzern bevorzugt werden."
+
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Moves to the next object in a flattened view of the object navigation "
@@ -6796,18 +6822,37 @@ msgstr "Das Fenster für die Dokumentation konnte nicht gefunden werden."
 msgid "No track playing"
 msgstr "Kein Titel wird gerade wiedergegeben"
 
+#. Translators: Reported remaining time in Foobar2000
+#, python-brace-format
+msgid "{remainingTimeFormatted} remaining"
+msgstr "{remainingTimeFormatted} verbleiben"
+
 #. Translators: Reported if the remaining time can not be calculated in Foobar2000
-msgid "Unable to determine remaining time"
-msgstr "Restzeit konnte nicht ermittelt werden"
+msgid "Remaining time not available"
+msgstr "Verbleibende Zeit nicht verfügbar"
 
 #. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Zeigt die Restlaufzeit des aktuellen Titels an, falls vorhanden"
 
+#. Translators: Reported elapsed time in Foobar2000
+#, python-brace-format
+msgid "{elapsedTime} elapsed"
+msgstr "{elapsedTime} verstrichen"
+
+#. Translators: Reported if the elapsed time is not available in Foobar2000
+msgid "Elapsed time not available"
+msgstr "Verstrichene Zeit nicht verfügbar"
+
 #. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
 msgid "Reports the elapsed time of the currently playing track, if any"
 msgstr ""
 "Zeigt die bisherige Spieldauer des aktuellen Titels an, falls vorhanden"
+
+#. Translators: Reported remaining time in Foobar2000
+#, python-brace-format
+msgid "{totalTime} total"
+msgstr "Insgesamt {totalTime}"
 
 #. Translators: Reported if the total time is not available in Foobar2000
 msgid "Total time not available"
@@ -11355,15 +11400,19 @@ msgid "row %s"
 msgstr "Reihe %s"
 
 #. Translators: Speaks the row span added to the current row number (example output: through 5).
-#. Translators: Speaks the column span added to the current column number (example output: through 5).
-#, python-format
-msgid "through %s"
-msgstr "bis %s"
+#, python-brace-format
+msgid "through {endRow}"
+msgstr "bis {endRow}"
 
 #. Translators: Speaks current column number (example output: column 3).
 #, python-format
 msgid "column %s"
 msgstr "Spalte %s"
+
+#. Translators: Speaks the column span added to the current column number (example output: through 5).
+#, python-brace-format
+msgid "through {endCol}"
+msgstr "bis {endCol}"
 
 #. Translators: Speaks the row and column span added to the current row and column numbers
 #. (example output: through row 5 column 3).
@@ -11760,6 +11809,41 @@ msgstr "{curPercent:.0f} Prozent"
 #, python-brace-format
 msgid "at {x}, {y}"
 msgstr "bei {x}, {y}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds
+#, python-brace-format
+msgctxt "time format"
+msgid "{S}"
+msgstr "{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes
+#, python-brace-format
+msgctxt "time format"
+msgid "{M}:{S}"
+msgstr "{M}:{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes, {H} hours
+#, python-brace-format
+msgctxt "time format"
+msgid "{H}:{M}:{S}"
+msgstr "{H}:{M}:{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes, {H} hours, {D} day
+#, python-brace-format
+msgctxt "time format"
+msgid "{D} day {H}:{M}:{S}"
+msgstr "{D} Tag {H}:{M}:{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes, {H} hours, {D} days
+#, python-brace-format
+msgctxt "time format"
+msgid "{D} days {H}:{M}:{S}"
+msgstr "{D} Tage {H}:{M}:{S}"
 
 #. Translators: This is the message for a warning shown if NVDA cannot determine if
 #. Windows is locked.
@@ -13578,6 +13662,12 @@ msgid ""
 msgstr ""
 "Um Albatross mit NVDA zu nutzen: Ändern Sie maximal die Anzahl der "
 "Statuszellen im Albatross-internen Menü "
+
+#~ msgid "Unable to determine remaining time"
+#~ msgstr "Restzeit konnte nicht ermittelt werden"
+
+#~ msgid "through %s"
+#~ msgstr "bis %s"
 
 #~ msgid "Report line indentation with speech"
 #~ msgstr "Zeileneinrückungen ansagen"

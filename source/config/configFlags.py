@@ -17,7 +17,6 @@ from utils.displayString import (
 	DisplayStringStrEnum,
 	DisplayStringIntFlag,
 )
-from keyLabels import localizedKeyLabels
 
 
 @unique
@@ -36,6 +35,8 @@ class NVDAKey(DisplayStringIntFlag):
 	
 	@property
 	def _displayStringLabels(self):
+		# Imported lazily since this module is imported before gettext translation is installed.
+		from keyLabels import localizedKeyLabels
 		return {
 			NVDAKey.CAPS_LOCK: localizedKeyLabels['capslock'],
 			NVDAKey.NUMPAD_INSERT: localizedKeyLabels['numpadinsert'],

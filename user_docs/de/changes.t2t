@@ -4,6 +4,25 @@ Was ist neu in NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2023.1 =
+Eine neue Option wurde hinzugefügt, "Absatzstil" in "Dokument-Navigation".
+Dies kann mit Text-Editoren verwendet werden, die die Absatznavigation nicht von Haus aus unterstützen, wie Notepad und Notepad++.
+
+Es gibt einen neuen globalen Befehl, um das Ziel eines Links mitzuteilen, der über ``NVDA+K`` abgerufen werden kann.
+
+Die Unterstützung für kommentierte Webinhalte (wie Kommentare und Fußnoten) wurde verbessert.
+Drücken Sie ``NVDA+D``, um durch die Zusammenfassungen zu navigieren, wenn Anmerkungen mitgeteilt werden (z. B. "enthält Kommentar, enthält Fußnote").
+
+Die Braillezeilen Tivomatic Caiku Albatross 46 und 80 werden nun unterstützt.
+
+Die Unterstützung für ARM64- und AMD64-Versionen von Windows wurde verbessert.
+Es gibt viele Fehlerkorrekturen, vor allem für Windows 11.
+
+eSpeak, LibLouis, Sonic Rate Boost und Unicode CLDR wurden aktualisiert.
+Es gibt neue Braille-Tabellen für Georgisch, Swahili (Kenia) und Chichewa (Malawi).
+
+Hinweis:
+- In dieser Version müssen die Kompatibilitätsanforderungen mit bestehenden NVDA-Erweiterungen überprüft werden.
+-
 
 == Neue Features ==
 - Microsoft Excel über UIA: Automatische Mitteilung von Spalten- und Zeilenüberschriften in Tabellen. (#14228)
@@ -23,6 +42,11 @@ Dies kann mit Text-Editoren verwendet werden, die die Absatz-Navigation nicht na
 Die Tastenkombination ``NVDA+D`` durchläuft nun die Zusammenfassung jedes Anmerkungsziels für Ursprünge mit mehreren Anmerkungszielen.
 Zum Beispiel, wenn der Text mit einem Kommentar und einer Fußnote versehen ist. (#14507, #14480)
 - Unterstützung für Braillezeilen Tivomatic Caiku Albatross 46/80 hinzugefügt. (#13045)
+- Neuer globaler Befehl: Link-Ziel mitteilen (``NVDA+K``).
+Einmaliges Drücken wird das Ziel des Links im Navigator-Objekt mitgeteilt.
+Zweimaliges Drücken zeigt die Information in einem Fenster an, welches eine genauere Überprüfung ermöglicht. (#14583)
+- Neuer, nicht zugeordneter globaler Befehl (Kategorie Werkzeuge): Link-Ziel in einem Fenster mitteilen.
+Entspricht dem zweimaligen Drücken von ``NVDA+K``, kann aber für Braille-Nutzer nützlicher sein. (#14583)
 -
 
 
@@ -73,7 +97,10 @@ Zum Beispiel, wenn der Text mit einem Kommentar und einer Fußnote versehen ist.
 - Ein Problem wurde behoben, bei dem Änderung in der Konfiguration nicht korrekt gespeichert wurden, wenn zwischen einer "Standard"-Option und dem Wert der "Standard"-Option gewechselt wurde. (#14133)
 - Bei der Konfiguration von NVDA wird immer mindestens eine Taste als NVDA-Taste definiert. (#14527)
 - Wenn Sie das NVDA-Menü über den Infobereich aufrufen, schlägt NVDA kein ausstehendes Update mehr vor, wenn kein Update verfügbar ist. (#14523)
+- Die verbleibende, verstrichene und gesamte Zeit wird nun für Audiodateien, die mehr als einen Tag lang sind, in Foobar2000 korrekt angezeigt. (#14127)
 - In Web-Browsern wie Google Chrome und Mozilla Firefox werden Warnmeldungen, z. B. zum Herunterladen von Dateien, nicht nur gesprochen, sondern auch in Braille-Schrift angezeigt. (#14562)
+- Fehler beim Navigieren zur ersten und letzten Spalte in einer Tabelle in Firefox behoben. (#14554)
+- Wenn NVDA mit dem Parameter ``--lang=Windows`` gestartet wird, ist es wieder möglich, den Dialog Allgemeine Einstellungen von NVDA zu öffnen. (#14407)
 -
 
 
@@ -85,14 +112,14 @@ Bitte lesen Sie das [Entwicklerhandbuch https://www.nvaccess.org/files/nvda/docu
 - Der Systemtest sollte nun erfolgreich sein, wenn er lokal auf nicht-englischen Systemen ausgeführt wird. (#13362)
 - In Windows 11 auf ARM werden x64-Anwendungen nicht mehr als ARM64-Anwendungen erkannt. (#14403)
 - Es ist nicht mehr notwendig, ``SearchField`` und ``SuggestionListItem`` ``UIA`` ``NVDAObjects`` in neuen UIA-Szenarien zu verwenden, in denen automatisch Suchvorschläge mitgeteilt werden und in denen die Eingabe über UIA mit dem Muster ``ControllerFor`` ausgesetzt wurde.
-Diese Funktionalität ist nun generisch über ``behaviours.EditableText`` bzw. die Basis ``NVDAObject`` verfügbar.
-- Die UIA-Debug-Protokollierungskategorie, wenn sie aktiviert ist, erzeugt nun deutlich mehr Details in der Protokollierung für UIA-Ereignishandler und -Hilfsprogramme. (#14256)
+Diese Funktionalität ist nun generisch über ``behaviours.EditableText`` bzw. die Basis ``NVDAObject`` verfügbar. (#14222)
+- Wenn die UIA-Debug-Protokollierungskategorie aktiviert ist, wird jetzt deutlich mehr Protokollierung für UIA-Ereignishandler und Dienstprogramme erzeugt. (#14256)
 - Die NVDAHelper-Build-Standards wurden aktualisiert. (#13072)
   - Verwendet nun den C++20-Standard, vorher war es C++17.
-  - Nun wird der Compiler-Flag "/permissive-" verwendet, das das permissive Verhalten deaktiviert und die Compiler-Optionen "/Zc" für strikte Konformität gesetzt.
+  - Nun wird der Compiler-Flag ``/permissive-`` verwendet, das das permissive Verhalten deaktiviert und die Compiler-Optionen "/Zc" für strikte Konformität gesetzt.
   -
 - Einige Plugin-Objekte (z. B. Treiber und NVDA-Erweiterungen) haben nun eine informativere Beschreibung in der NVDA-Python-Konsole. (#14463)
-- NVDA kann nun vollständig mit Visual Studio 2022 kompiliert werden und benötigt keine Visual Studio 2019 Build-Tools.
+- NVDA kann nun vollständig mit Visual Studio 2022 kompiliert werden und benötigt keine Visual Studio 2019 Build-Tools mehr.  (#14326)
 - Detailliertere Protokollierung für Einfrierungen von NVDA zur Unterstützung der Fehlersuche. (#14309)
 - Die Singleton-Klasse ``braille._BgThread`` wurde durch ``hwIo.ioThread.IoThread`` ersetzt. (#14130)
   - Eine einzelne Instanz ``hwIo.bgThread`` (im NVDA-Kern) dieser Klasse bietet Hintergrund-Informationen für Ein- und Ausgaben bei Thread-sichere Braillezeilen-Treiber.
@@ -108,7 +135,8 @@ Diese Funktionalität ist nun generisch über ``behaviours.EditableText`` bzw. d
   - ``braille.decide_enabled``
   - ``braille.displayChanged``
   - ``braille.displaySizeChanged``
-  - 
+  -
+- Es ist möglich, useConfig bei unterstützten Einstellungen für einen Synthesizer-Treiber auf False zu setzen. (#14601)
 -
 
 === API-Änderungen ===
@@ -147,6 +175,12 @@ Siehe ``brailleViewer`` für ein Beispiel, wie das erledigt werden kann. (#14503
   - ``loadModule`` erwartet nun einen Punkt als Trennzeichen, statt eines Backslashs.
   Zum Beispiel "lib.example" anstelle von "lib\example".
   - ``loadModule`` löst nun eine Exception aus, wenn ein Modul nicht geladen werden kann oder Fehler aufweist, anstatt ``None`` zurückzugeben, ohne Informationen über die Ursache zu geben.
+  -
+- Die folgenden Symbole wurden aus der Datei ``appModules.foobar2000`` entfernt und nicht direkt ersetzt. (#14570)
+  - ``statusBarTimes``
+  - ``parseIntervalToTimestamp``
+  - ``getOutputFormat``
+  - ``getParsingFormat``
   -
 - Die Folgenden sind keine Singletons mehr - deren get-Methode wurde entfernt.
 Die Verwendung von ``Example.get()`` ist jetzt ``Example()``. (#14248)
