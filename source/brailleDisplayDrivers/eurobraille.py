@@ -57,6 +57,7 @@ EB_IRIS_TEST = b'T' # 0x54
 EB_IRIS_TEST_sub = b'L' # 0x4c
 EB_VISU = b'V' # 0x56
 EB_VISU_DOT = b'D' # 0x44
+EB_CONNECTION_NAME = b'n'
 
 # The eurobraille protocol uses real number characters as boolean values, so 0 (0x30) and 1 (0x31)
 EB_FALSE = b'0' # 0x30
@@ -143,13 +144,130 @@ DEVICE_TYPES={
 	0x15:"b.book 2"
 }
 
+defaultGestureMapEntries = {
+	"globalCommands.GlobalCommands": {
+		"braille_routeTo": ("br(eurobraille):routing",),
+		"braille_reportFormatting": ("br(eurobraille):doubleRouting",),
+		"braille_scrollBack": (
+			"br(eurobraille):switch1Left",
+			"br(eurobraille):l1",
+		),
+		"braille_scrollForward": (
+			"br(eurobraille):switch1Right",
+			"br(eurobraille):l8",
+		),
+		"braille_toFocus": (
+			"br(eurobraille):switch1Left+switch1Right", "br(eurobraille):switch2Left+switch2Right",
+			"br(eurobraille):switch3Left+switch3Right", "br(eurobraille):switch4Left+switch4Right",
+			"br(eurobraille):switch5Left+switch5Right", "br(eurobraille):switch6Left+switch6Right",
+			"br(eurobraille):l1+l8",
+		),
+		"review_previousLine": ("br(eurobraille):joystick1Up",),
+		"review_nextLine": ("br(eurobraille):joystick1Down",),
+		"review_previousCharacter": ("br(eurobraille):joystick1Left",),
+		"review_nextCharacter": ("br(eurobraille):joystick1Right",),
+		"reviewMode_previous": ("br(eurobraille):joystick1Left+joystick1Up",),
+		"reviewMode_next": ("br(eurobraille):joystick1Right+joystick1Down",),
+		# Esys and esytime have a dedicated key for backspace and combines backspace and space to perform a return.
+		"braille_eraseLastCell": ("br(eurobraille):backSpace",),
+		"braille_enter": ("br(eurobraille):backSpace+space",),
+		"kb:insert": (
+			"br(eurobraille):dot1+dot3+dot5+space",
+			"br(eurobraille):dot3+dot4+dot5+space",
+		),
+		"kb:delete": ("br(eurobraille):dot3+dot6+space",),
+		"kb:home": ("br(eurobraille):dot1+dot2+dot3+space"),
+		"kb:end": ("br(eurobraille):dot4+dot5+dot6+space",),
+		"kb:leftArrow": (
+			"br(eurobraille):dot2+space",
+			"br(eurobraille):joystick2Left",
+			"br(eurobraille):leftArrow",
+		),
+		"kb:rightArrow": (
+			"br(eurobraille):dot5+space",
+			"br(eurobraille):joystick2Right",
+			"br(eurobraille):rightArrow",
+		),
+		"kb:upArrow": (
+			"br(eurobraille):dot1+space",
+			"br(eurobraille):joystick2Up",
+			"br(eurobraille):upArrow",
+		),
+		"kb:downArrow": (
+			"br(eurobraille):dot6+space",
+			"br(eurobraille):joystick2Down",
+			"br(eurobraille):downArrow",
+		),
+		"kb:enter": ("br(eurobraille):joystick2Center",),
+		"kb:pageUp": ("br(eurobraille):dot1+dot3+space",),
+		"kb:pageDown": ("br(eurobraille):dot4+dot6+space",),
+		"kb:numpad1": ("br(eurobraille):dot1+dot6+backspace",),
+		"kb:numpad2": ("br(eurobraille):dot1+dot2+dot6+backspace",),
+		"kb:numpad3": ("br(eurobraille):dot1+dot4+dot6+backspace",),
+		"kb:numpad4": ("br(eurobraille):dot1+dot4+dot5+dot6+backspace",),
+		"kb:numpad5": ("br(eurobraille):dot1+dot5+dot6+backspace",),
+		"kb:numpad6": ("br(eurobraille):dot1+dot2+dot4+dot6+backspace",),
+		"kb:numpad7": ("br(eurobraille):dot1+dot2+dot4+dot5+dot6+backspace",),
+		"kb:numpad8": ("br(eurobraille):dot1+dot2+dot5+dot6+backspace",),
+		"kb:numpad9": ("br(eurobraille):dot2+dot4+dot6+backspace",),
+		"kb:numpadInsert": ("br(eurobraille):dot3+dot4+dot5+dot6+backspace",),
+		"kb:numpadDecimal": ("br(eurobraille):dot2+backspace",),
+		"kb:numpadDivide": ("br(eurobraille):dot3+dot4+backspace",),
+		"kb:numpadMultiply": ("br(eurobraille):dot3+dot5+backspace",),
+		"kb:numpadMinus": ("br(eurobraille):dot3+dot6+backspace",),
+		"kb:numpadPlus": ("br(eurobraille):dot2+dot3+dot5+backspace",),
+		"kb:numpadEnter": ("br(eurobraille):dot3+dot4+dot5+backspace",),
+		"kb:escape": (
+			"br(eurobraille):dot1+dot2+dot4+dot5+space",
+			"br(eurobraille):l2",
+		),
+		"kb:tab": (
+			"br(eurobraille):dot2+dot5+dot6+space",
+			"br(eurobraille):l3",
+		),
+		"kb:shift+tab": ("br(eurobraille):dot2+dot3+dot5+space",),
+		"kb:printScreen": ("br(eurobraille):dot1+dot3+dot4+dot6+space",),
+		"kb:pause": ("br(eurobraille):dot1+dot4+space",),
+		"kb:applications": ("br(eurobraille):dot5+dot6+backspace",),
+		"kb:f1": ("br(eurobraille):dot1+backspace",),
+		"kb:f2": ("br(eurobraille):dot1+dot2+backspace",),
+		"kb:f3": ("br(eurobraille):dot1+dot4+backspace",),
+		"kb:f4": ("br(eurobraille):dot1+dot4+dot5+backspace",),
+		"kb:f5": ("br(eurobraille):dot1+dot5+backspace",),
+		"kb:f6": ("br(eurobraille):dot1+dot2+dot4+backspace",),
+		"kb:f7": ("br(eurobraille):dot1+dot2+dot4+dot5+backspace",),
+		"kb:f8": ("br(eurobraille):dot1+dot2+dot5+backspace",),
+		"kb:f9": ("br(eurobraille):dot2+dot4+backspace",),
+		"kb:f10": ("br(eurobraille):dot2+dot4+dot5+backspace",),
+		"kb:f11": ("br(eurobraille):dot1+dot3+backspace",),
+		"kb:f12": ("br(eurobraille):dot1+dot2+dot3+backspace",),
+		"kb:windows": ("br(eurobraille):dot1+dot2+dot4+dot5+dot6+space",),
+		"kb:capsLock": ("br(eurobraille):dot7+backspace", "br(eurobraille):dot8+backspace",),
+		"kb:numLock": ("br(eurobraille):dot3+backspace", "br(eurobraille):dot6+backspace",),
+		"kb:shift": ("br(eurobraille):dot1+dot7+space", "br(eurobraille):dot4+dot7+space",),
+		"braille_toggleShift": ("br(eurobraille):dot7+space","br(eurobraille):l4",),
+		"kb:control": ("br(eurobraille):dot1+dot7+dot8+space", "br(eurobraille):dot4+dot7+dot8+space",),
+		"braille_toggleControl": ("br(eurobraille):dot7+dot8+space","br(eurobraille):l5",),
+		"kb:alt": ("br(eurobraille):dot1+dot8+space", "br(eurobraille):dot4+dot8+space"),
+		"braille_toggleAlt": ("br(eurobraille):dot8+space", "br(eurobraille):l6"),
+		"braille_toggleNVDAKey" : ("br(eurobraille):l7", "br(eurobraille):dot3+dot5+space"),
+		"kb:control+home" : ("br(eurobraille):joystick2left+joystick2up", "br(eurobraille):l1+l2+l3", "br(eurobraille):l2+l3+l4",),
+		"kb:control+end" : ("br(eurobraille):joystick2right+joystick2up", "br(eurobraille):l6+l7+l8", "br(eurobraille):l5+l6+l7",),
+		"braille_toggleWindows" : ("br(eurobraille):backspace+dot1+dot2+dot3+dot4", "br(eurobraille):dot2+dot4+dot5+dot6+space",),
+		"kb:control+shift+e" : ("br(eurobraille):dot1+dot5+space",),
+	},
+}
+default_GestureMap = inputCore.GlobalGestureMap(defaultGestureMapEntries)
+bnote_GestureMap = inputCore.GlobalGestureMap(defaultGestureMapEntries)
+bnote_GestureMap.add("br(eurobraille):joystick1Left", "globalCommands", "GlobalCommands", "braille_scrollBack")
+bnote_GestureMap.add("br(eurobraille):joystick1Right", "globalCommands", "GlobalCommands", "braille_scrollForward")
+bnote_GestureMap.remove("br(eurobraille):joystick1Left", "globalCommands", "GlobalCommands", "review_previousCharacter")
+bnote_GestureMap.remove("br(eurobraille):joystick1Right", "globalCommands", "GlobalCommands", "review_nextCharacter")
 
 def bytesToInt(byteData: bytes):
 	"""Converts bytes to its integral equivalent."""
 	return int.from_bytes(byteData, byteorder="big", signed=False)
 
-# regex for detecting the correct interface for the composite USB port of the b.note
-INTERFACE_REGEX = re.compile(r"MI_00")
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	_dev: hwIo.IoBase
@@ -157,7 +275,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	_awaitingFrameReceipts: Dict[int, Any]
 	name = "eurobraille"
 	# Translators: Names of braille displays.
-	description = _("Eurobraille Esys/Esytime/Iris/b.note/b.book displays")
+	description = _("Eurobraille displays")
 	isThreadSafe = True
 	timeout = 0.2
 	supportedSettings = (
@@ -222,6 +340,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				# A display responded.
 				log.info("Found {device} connected via {type} ({port})".format(
 					device=self.deviceType, type=portType, port=port))
+				if self.deviceType.startswith(("b.note", "b.book")):
+					# send identifier to bnote / bbook with current COM port
+					comportNumber = f'{int(re.match(".*?([0-9]+)$", port).group(1)):02d}'
+					identifier = f"NVDA/{comportNumber}".encode()
+					log.debugWarning(f"sending {identifier} to eurobraille display")
+					self._sendPacket(EB_SYSTEM, EB_CONNECTION_NAME, identifier)
 				break
 			self._dev.close()
 
@@ -233,6 +357,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 	def terminate(self):
 		try:
+			if self.deviceType.startswith(("b.note", "b.book")):
+				# reset identifier to bnote / bbook with current COM port
+				self._sendPacket(EB_SYSTEM, EB_CONNECTION_NAME, b'')
 			super(BrailleDisplayDriver, self).terminate()
 		finally:
 			# We must sleep before closing the port as not doing this can leave the display in a bad state where it can not be re-initialized.
@@ -325,16 +452,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			elif 0x0e <= deviceType <= 0x11:  # Esitime
 				self.keys = KEYS_ESITIME
 			elif 0x12 <= deviceType <= 0x13:
-				# the joystick1 left/right keys on the b.note should be braille scroll functions instead of
-				# moving the review
-				self.gestureMap.add("br(eurobraille):joystick1Left", "globalCommands", "GlobalCommands",
-									"braille_scrollBack")
-				self.gestureMap.add("br(eurobraille):joystick1Right", "globalCommands", "GlobalCommands",
-									"braille_scrollForward")
-				self.gestureMap.remove("br(eurobraille):joystick1Left", "globalCommands", "GlobalCommands",
-									   "review_previousCharacter")
-				self.gestureMap.remove("br(eurobraille):joystick1Right", "globalCommands", "GlobalCommands",
-									   "review_nextCharacter")
+				self.gestureMap = bnote_GestureMap
 				self.keys = KEYS_BNOTE
 			elif 0x14 <= deviceType <= 0x15:
 				self.keys = KEYS_BBOOK
@@ -478,125 +596,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		"br(eurobraille):switch1Left+joystick1Down": "toggleHidKeyboardInput",
 		"br(eurobraille.esytime):l8+joystick1Down": "toggleHidKeyboardInput",
 		"br(eurobraille):switch1Right+joystick1Down": "toggleHidKeyboardInput",
-	}
+	}\
 
-	gestureMap = inputCore.GlobalGestureMap({
-		"globalCommands.GlobalCommands": {
-			"braille_routeTo": ("br(eurobraille):routing",),
-			"braille_reportFormatting": ("br(eurobraille):doubleRouting",),
-			"braille_scrollBack": (
-				"br(eurobraille):switch1Left",
-				"br(eurobraille):l1",
-			),
-			"braille_scrollForward": (
-				"br(eurobraille):switch1Right",
-				"br(eurobraille):l8",
-			),
-			"braille_toFocus": (
-				"br(eurobraille):switch1Left+switch1Right", "br(eurobraille):switch2Left+switch2Right",
-				"br(eurobraille):switch3Left+switch3Right", "br(eurobraille):switch4Left+switch4Right",
-				"br(eurobraille):switch5Left+switch5Right", "br(eurobraille):switch6Left+switch6Right",
-				"br(eurobraille):l1+l8",
-			),
-			"review_previousLine": ("br(eurobraille):joystick1Up",),
-			"review_nextLine": ("br(eurobraille):joystick1Down",),
-			"review_previousCharacter": ("br(eurobraille):joystick1Left",),
-			"review_nextCharacter": ("br(eurobraille):joystick1Right",),
-			"reviewMode_previous": ("br(eurobraille):joystick1Left+joystick1Up",),
-			"reviewMode_next": ("br(eurobraille):joystick1Right+joystick1Down",),
-			# Esys and esytime have a dedicated key for backspace and combines backspace and space to perform a return.
-			"braille_eraseLastCell": ("br(eurobraille):backSpace",),
-			"braille_enter": ("br(eurobraille):backSpace+space",),
-			"kb:insert": (
-				"br(eurobraille):dot3+dot5+space",
-				"br(eurobraille):l7",
-			),
-			"kb:delete": ("br(eurobraille):dot3+dot6+space",),
-			"kb:home": ("br(eurobraille):dot1+dot2+dot3+space", "br(eurobraille):joystick2Left+joystick2Up",),
-			"kb:end": ("br(eurobraille):dot4+dot5+dot6+space", "br(eurobraille):joystick2Right+joystick2Down",),
-			"kb:leftArrow": (
-				"br(eurobraille):dot2+space",
-				"br(eurobraille):joystick2Left",
-				"br(eurobraille):leftArrow",
-			),
-			"kb:rightArrow": (
-				"br(eurobraille):dot5+space",
-				"br(eurobraille):joystick2Right",
-				"br(eurobraille):rightArrow",
-			),
-			"kb:upArrow": (
-				"br(eurobraille):dot1+space",
-				"br(eurobraille):joystick2Up",
-				"br(eurobraille):upArrow",
-			),
-			"kb:downArrow": (
-				"br(eurobraille):dot6+space",
-				"br(eurobraille):joystick2Down",
-				"br(eurobraille):downArrow",
-			),
-			"kb:enter": ("br(eurobraille):joystick2Center",),
-			"kb:pageUp": ("br(eurobraille):dot1+dot3+space",),
-			"kb:pageDown": ("br(eurobraille):dot4+dot6+space",),
-			"kb:numpad1": ("br(eurobraille):dot1+dot6+backspace",),
-			"kb:numpad2": ("br(eurobraille):dot1+dot2+dot6+backspace",),
-			"kb:numpad3": ("br(eurobraille):dot1+dot4+dot6+backspace",),
-			"kb:numpad4": ("br(eurobraille):dot1+dot4+dot5+dot6+backspace",),
-			"kb:numpad5": ("br(eurobraille):dot1+dot5+dot6+backspace",),
-			"kb:numpad6": ("br(eurobraille):dot1+dot2+dot4+dot6+backspace",),
-			"kb:numpad7": ("br(eurobraille):dot1+dot2+dot4+dot5+dot6+backspace",),
-			"kb:numpad8": ("br(eurobraille):dot1+dot2+dot5+dot6+backspace",),
-			"kb:numpad9": ("br(eurobraille):dot2+dot4+dot6+backspace",),
-			"kb:numpadInsert": ("br(eurobraille):dot3+dot4+dot5+dot6+backspace",),
-			"kb:numpadDecimal": ("br(eurobraille):dot2+backspace",),
-			"kb:numpadDivide": ("br(eurobraille):dot3+dot4+backspace",),
-			"kb:numpadMultiply": ("br(eurobraille):dot3+dot5+backspace",),
-			"kb:numpadMinus": ("br(eurobraille):dot3+dot6+backspace",),
-			"kb:numpadPlus": ("br(eurobraille):dot2+dot3+dot5+backspace",),
-			"kb:numpadEnter": ("br(eurobraille):dot3+dot4+dot5+backspace",),
-			"kb:escape": (
-				"br(eurobraille):dot1+dot2+dot4+dot5+space",
-				"br(eurobraille):l2",
-			),
-			"kb:tab": (
-				"br(eurobraille):dot2+dot5+dot6+space",
-				"br(eurobraille):l3",
-			),
-			"kb:shift+tab": ("br(eurobraille):dot2+dot3+dot5+space",),
-			"kb:printScreen": ("br(eurobraille):dot1+dot3+dot4+dot6+space",),
-			"kb:pause": ("br(eurobraille):dot1+dot4+space",),
-			"kb:applications": ("br(eurobraille):dot5+dot6+backspace",),
-			"kb:f1": ("br(eurobraille):dot1+backspace",),
-			"kb:f2": ("br(eurobraille):dot1+dot2+backspace",),
-			"kb:f3": ("br(eurobraille):dot1+dot4+backspace",),
-			"kb:f4": ("br(eurobraille):dot1+dot4+dot5+backspace",),
-			"kb:f5": ("br(eurobraille):dot1+dot5+backspace",),
-			"kb:f6": ("br(eurobraille):dot1+dot2+dot4+backspace",),
-			"kb:f7": ("br(eurobraille):dot1+dot2+dot4+dot5+backspace",),
-			"kb:f8": ("br(eurobraille):dot1+dot2+dot5+backspace",),
-			"kb:f9": ("br(eurobraille):dot2+dot4+backspace",),
-			"kb:f10": ("br(eurobraille):dot2+dot4+dot5+backspace",),
-			"kb:f11": ("br(eurobraille):dot1+dot3+backspace",),
-			"kb:f12": ("br(eurobraille):dot1+dot2+dot3+backspace",),
-			"kb:windows": ("br(eurobraille):dot1+dot2+dot3+dot4+backspace",),
-			"kb:capsLock": ("br(eurobraille):dot7+backspace", "br(eurobraille):dot8+backspace",),
-			"kb:numLock": ("br(eurobraille):dot3+backspace", "br(eurobraille):dot6+backspace",),
-			"kb:shift": (
-				"br(eurobraille):dot7+space",
-				"br(eurobraille):l4",
-			),
-			"braille_toggleShift": ("br(eurobraille):dot1+dot7+space", "br(eurobraille):dot4+dot7+space",),
-			"kb:control": (
-				"br(eurobraille):dot7+dot8+space",
-				"br(eurobraille):l5",
-			),
-			"braille_toggleControl": ("br(eurobraille):dot1+dot7+dot8+space", "br(eurobraille):dot4+dot7+dot8+space",),
-			"kb:alt": (
-				"br(eurobraille):dot8+space",
-				"br(eurobraille):l6",
-			),
-			"braille_toggleAlt": ("br(eurobraille):dot1+dot8+space", "br(eurobraille):dot4+dot8+space",),
-		},
-	})
+	gestureMap = default_GestureMap
+
+
 
 class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
 
