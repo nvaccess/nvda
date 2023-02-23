@@ -158,6 +158,15 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 			&& isInBackgroundTab(pacc2, hwnd)) {
 		return;
 	}
+	long ia2States = 0;
+	pacc2->get_states(&ia2States);
+	if (ia2States & IA2_STATE_EDITABLE) {
+		// This is editable text. Editable text should never be a live region, as
+		// this causes typed characters to be echoed when they shouldn't, etc.
+		// Nevertheless, some authors misguidedly set aria-live on editable text.
+		// We explicitly ignore this here.
+		return;
+	}
 	wstring politeness = i->second;
 	i=attribsMap.find(L"container-busy");
 	bool busy=(i!=attribsMap.end()&&i->second.compare(L"true")==0);
