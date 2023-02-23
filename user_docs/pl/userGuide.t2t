@@ -40,6 +40,7 @@ Najważniejsze właściwości NVDA to:
 - Systemy operacyjne: wsparcie wszystkich 32-bitowych i 64-bitowych wersji systemu Windows 7, Windows 8, Windows 8.1, Windows 10 i Windows 11 (w tym systemów operacyjnych dla serwerów od Windows Server 2008 R2).
  - Dla Windows 7, NVDA wymaga Service Pack 1 lub wyższego.
  - Dla Windows Server 2008 R2, NVDA wymaga Service Pack 1 lub wyższego.
+  - Obie architektury AMD64 jak i ARM64 systemu Windows są wspierane.
 - Co najmniej 150 MB wolnej przestrzeni dyskowej.
 -
 
@@ -74,7 +75,7 @@ Dotyczy to zarówno oryginalnej wersji programu, jak i jego zmienionych kopii, a
 Dokładne brzmienie licencji znajdziesz online: [Pełna treść licencji. https://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 Dla szczegółowych informacji dotyczących wyjątków, skonsultuj się z dokumentem dostępnym w menu NVDA w podmenu "pomoc".
 
-++ NVDA szybki start +[NVDAQuickStartGuide]
+++ NVDA szybki start ++[NVDAQuickStartGuide]
 
 Ten szybki start zawiera trzy główne rozdziały: pobieranie, podstawowe konfigurowanie, i uruchamianie NVDA.
 Po tych rozdziałach zawarta jest informacja o zmianie ustawień, uczestnictwie w społeczeństwie, a także informacje o tym, jak dostać pomoc.
@@ -2086,6 +2087,29 @@ Wysokość dźwięku będzie wzrastać dla każdej spacji, a dla tabulatora przy
 - Mowa i dźwięki: ta opcja zgłosi wcięcia przy użyciu obu powyższych metod.
 -
 
++++ Nawigacja po dokumencie +++[DocumentNavigation]
+Ta kategoria umożliwia różne opcje związane z nawigacją po dokumentach.
+
+==== Styl akapitu ====[ParagraphStyle]
+: Domyślny
+  Zarządzane przez aplikację
+: Opcje
+  Domyślnie (zarządzane przez aplikacje), zarządzane przez aplikacje, jeden rozdział wiersza, rozdział wielowierszowy
+:
+
+To pole wyboru umożliwia wybór stylu akapitu, który ma być użyty podczas nawigacji używając skrótów ``control+strzałka w górę`` i ``control+strzałka w dół``.
+Dostępne style akapitów to:
+- Zarządzane przez aplikacje: NVDA pozwoli aplikacji określanie następnego lub poprzedniego akapitu, a NVDA potem przeczyta następny lub poprzedni akapit podczas nawigacji.
+Ten styl działa najlepiej w przypadku natywnego wsparcia nawigacji po akapitach, i jest to opcja domyślna.
+- Jeden rozdział wiersza: NVDA spróbuje wykryć poprzedni lub następny akapit używając jednej pustej linii jako indykatora.
+Ten styl najlepiej działa w aplikacjach, które nie wspierają natywną nawigację po akapitach, a akapity zostały oznaczone jednym naciśnięciem przycisku ``enter``.
+- rozdział wielowierszowy: NVDA spróbuje określić poprzebny lub następny akapit używając conajmniej jedną pustą linię (dwa naciśnięcia klawisza ``enter`` ) jako indykatora akapitu.
+Ten styl najlepiej działa gdy pracujemy z dokumentami, w których używane są akapity blokowe.
+Miejcie na uwadze, że ten styl akapitu nie może być używany w programach Microsoft Word i Microsoft Outlook, chyba że włączone jest wsparcie UIA dla dostępu do kontrolek Microsoft Word.
+-
+
+Style akapitów można przełączać z jakiegokolwiek miejsca przydzielając skrót klawiszowy w [oknie dialogowym zdarzenia wejścia #InputGestures].
+
 +++ Ustawienia Windows OCR +++[Win10OcrSettings]
 Ta kategoria ustawień NVDA pozwala skonfigurować [Windows OCR #Win10Ocr].
 Zawiera następujące ustawienia:
@@ -2226,6 +2250,25 @@ Jednakże, w niektórych aplikacjach, odczyt nowego tekstu może być częsciowy
 Jest to identyczne zachowywanie z wersjami 2020.4 i starszymi.
 To ustawienie może ustabilizować czytanie w niektórych aplikacjach.
 Jednakże, w wierszach poleceń, podczas wstawiania lub usuwania znaku w środku wiersza, tekst po kursorze będzie przeczytany.
+-
+
+==== Czytaj nowy tekst w terminalu Windows za pomocą ====[WtStrategy]
+: Domyślnie
+  Różnicowanie
+: Opcje
+  różnicowanie, powiadomienia UIA
+:
+
+Ta opcja określa, który tekst jest nowy dla NVDA i jaki tekst ma być wymówiony gdy opcja "informuj o dynamicznych zmianach treści" jest włączona) w Windows Terminalu i oknach wpf używanych w Visual Studio 2022.
+Nie wplynie to na konsolę systemu windows (``conhost.exe``).
+Lista rozwijana Czytaj nowy tekst w terminalu Windows za pomocą posiada trzy opcji:
+- Domyślnie: ta opcja jest teraz równoznaczna z "różnicowaniem", ale może się zmienić w momencie, gdy wsparcie dla powiadomień UIA będzie jeszcze bardziej rozbudowane.
+- Różnicowanie: Ta opcja używa wybrany algorytm do różnicowania do wyliczania zmian w każdej chwili, w której nowy tekst pokazywany jest w oknie konsoli.
+Jest to identyczne z zachowaniem programu NVDA w wersjach 2022.4 i starszych.
+- Powiadomienia UIA: ta opcja oddaje odpowiedzialność określania wodczytu nowego tekstu do samej konsoli, co oznacza, że NVDA więcej nie musi określać nowy tekst.
+To powinno znacząco polepszyć wydajność i stabilność terminala, ale ta funkcja jeszcze nie jest dokończona.
+Ogólnie, wpisywane znaki, któe nie są widoczne na ekranie, takie jak hasła, są odczytywane, gdy ta opcja jest włączona.
+Dodatkowo, ciągłe wyjście tekstowe, przekraczające ponad 1000 znaków może być nieprawidłowo odczytane.
 -
 
 ==== Próba zatrzymywania mowy dla przestarzałych zdarzeń fokusu ====[CancelExpiredFocusSpeech]
@@ -3651,7 +3694,7 @@ Poniżej wymieniono wszystkie opcje linii poleceń dla NVDA:
 | -q | --quit | Zakończ aktualnie uruchomioną kopię NVDA |
 | -k | --check-running | Poinformuj kodem wyjścia, czy NVDA jest uruchomiony; 0 jeśli uruchomiony, 1 jeśli nie uruchomiony |
 | -f LOGFILENAME | --log-file=LOGFILENAME | Plik, do którego powinny być zapisywane informacje logu |
-| -l poziom | --log-level=poziom | Najniższy poziom zapisywanych informacji logu (debugowanie 10, wejście/wyjście 12, ostrzeżenie debugowania 15, informacje 20, ostrzeżenia 30, błędy 40, krytyczne 50, wyłączone 100), domyślnie ostrzeżenia |
+| -l PożiomLogowania | --log-level=LOGLEVEL | Najniższy poziom zapisywanych zdarzeń do podglądu logu (debugowanie 10, wejście/wyjście 12, debugowanie powiadomienie 15, info 20, wyłączone 100) |
 | -c ścieżka | --config-path=ścieżka | Ścieżka folderu, w którym zapisane są wszystkie ustawienia NVDA |
 | Brak | --lang=LANGUAGE | Nadpisuje domyślny język NVDA. Ustawiony na "Windows" dla bieżacego użytkownika, "en" dla angielskiego, itd. |
 | -m | --minimal | Bez dźwięku, interfejsu, informacji początkowej etc |

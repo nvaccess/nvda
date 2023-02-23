@@ -1,7 +1,7 @@
 # This file is covered by the GNU General Public License.
 # A part of NonVisual Desktop Access (NVDA)
 # See the file COPYING for more details.
-# Copyright (C) 2016-2022 NV Access Limited, Joseph Lee, Jakub Lukowicz
+# Copyright (C) 2016-2023 NV Access Limited, Joseph Lee, Jakub Lukowicz, Cyrille Bougot
 
 from typing import (
 	Optional,
@@ -448,6 +448,24 @@ class WordDocumentTextInfo(UIATextInfo):
 					if isinstance(textColumnNumber, int):
 						formatField.field['text-column-number'] = textColumnNumber
 		return formatField
+	
+	def _getIndentValueDisplayString(self, val: float) -> str:
+		"""A function returning the string to display in formatting info in Word documents.
+		@param val: an indent value measured in points, fetched via
+			an UIAHandler.UIA_Indentation*AttributeId attribute.
+		@return: The string used in formatting information to report the length of an indentation.
+		"""
+		
+		if self.obj.WinwordApplicationObject:
+			# When Word object model is available we honour Word's options to report distances so that what is
+			# reported by NVDA matches Word's UI (rulers, paragraph formatting dialog, etc.)
+			# Default seem to be inch or centimeters for Western countries localization of Word and characters for
+			# east Asian localisations.
+			return self.obj.getLocalizedMeasurementTextForPointSize(val)
+		
+		# If Word object model is not available, we just fallback to general UIA case, i.e. use Windows regional
+		# settings.
+		return super()._getIndentValueDisplayString(val)
 
 
 class WordBrowseModeDocument(UIABrowseModeDocument):
