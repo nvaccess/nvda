@@ -240,6 +240,8 @@ class OffsetsTextInfo(textInfos.TextInfo):
 					locationHelper.RectLTWH.fromPoint(startLocation)
 				)
 			else:
+				if isinstance(startLocation, locationHelper.RectLTRB):
+					startLocation = startLocation.toLTWH()
 				rects.append(startLocation)
 		intersectedRects = []
 		for rect in rects:
