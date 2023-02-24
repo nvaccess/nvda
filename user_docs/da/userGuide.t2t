@@ -222,6 +222,7 @@ De faktiske kommandoer vil ikke udføres, når tastaturhjælpen er slået til. T
 | Læs statuslinjen | ``NVDA+end`` | ``NVDA+shift+end`` | Læser statuslinjen, såfremt NVDA kan finde den. To tryk staver informationen. Ved et tredje tryk kopieres informationen til udklipsholderen |
 | Læs tid | ``NVDA+f12`` | ``NVDA+f12`` | Ved ét tryk oplyses tiden. Hvis du trykker to gange, vil du få datoen oplyst |
 | Oplys tekstformattering | ``NVDA+f`` | ``NVDA+f`` | Denne kommando oplyser formatteringsoplysninger for den aktuelle tekst. Ved to tryk vises disse informationer i et vindue |
+| Oplys adresse for link | ``NVDA+k`` | ``NVDA+k`` | Oplyser webadressen for linket ved navigatorobjektet. Hvis der trykkes to gange, vises linket i et vindue for lettere gennemgang. |
 
 +++ Vælg, hvilke informationer NVDA skal læse +++[ToggleWhichInformationNVDAReads]
 || Navn | Desktop tast | Laptop tast | Beskrivelse |
@@ -2268,10 +2269,10 @@ Der er tre muligheder:
 - Standard: Denne indstilling er i øjeblikket det samme som "diffing", men dette formodes at blive ændret, når udviklingen af UIA-meddelelser er skredet længere frem.
 - Diffing: Denne indstilling benytter den valgte diff-algoritme til at kalkulere ændringerne, hver gang terminalen gengiver den nye tekst.
 Dette er identisk med NVDAs adfærd i 2022.4 og ældre.
-- UIA-meddelelser: Denne mulighed udskyder ansvaret for at bestemme, hvilken tekst der skal tale til selve Windows Terminal, hvilket betyder, at NVDA ikke længere skal bestemme, hvilken tekst på skærmen, der i øjeblikket er "ny".
+- UIA-meddelelser: Denne mulighed gør, at Windows-terminalen bestemmer, hvilken tekst der anses som "ny".
 Dette skulle markant forbedre ydeevnen og stabiliteten af Windows Terminal, men denne funktion er endnu ikke færdig.
-Især indskrevne tegn, der ikke vises på skærmen, såsom adgangskoder, rapporteres, når denne indstilling er valgt.
-Derudover rapporteres sammenhængende outputspænd på over 1.000 tegn muligvis ikke nøjagtigt.
+Især indskrevne tegn, der ikke vises på skærmen (såsom adgangskoder) rapporteres, når denne indstilling er valgt.
+Dette kan dog medføre, at lange output af tekst på over 1.000 tegn muligvis ikke oplæses nøjagtigt.
 -
 
 ==== Forsøg at annullere tale for udløbne fokushændelser ====[CancelExpiredFocusSpeech]
@@ -2727,6 +2728,7 @@ Følgende displays understøtter denne funktionalitet:
 - Eurobraille Esys/Esytime/Iris displays
 - Nattiq nBraille displays
 - Seika Notetaker: MiniSeika (16, 24 celler), V6, og V6Pro (40 celler)
+- Tivomatic Caiku Albatross 46/80 displays
 - Ethvert punktdisplay, der understøtter HID Braille-protokollen.
 -
 
@@ -3119,6 +3121,7 @@ Følgende Seika punktdisplays fra Nippon Telesoft understøttes af NVDA. Disse d
 - [MiniSeika (16, 24 celler), V6, og V6Pro (40 celler) #SeikaNotetaker]
 -
 Du kan finde yderligere information om disse displays på siden https://en.seika-braille.com/down/index.html.
+
 
 +++ Seika Version 3, 4, and 5 (40 cells), Seika80 (80 cells) +++[SeikaBrailleDisplays]
 - Disse displays understøtter ikke NVDAs automatiske tilkobling af punktdisplays.
@@ -3608,6 +3611,63 @@ Se venligst [BRLTTY dokumentationen for tastekombinationer http://mielke.cc/brlt
 | Flyt til punktcelle | fly (bring markør til tegn) |
 %kc:endInclude
 
+++ Tivomatic Caiku Albatross 46/80 ++[Albatross]
+Caiku Albatross-enhederne, som fremstilles af Tivomatic og er tilgængelige i Finland, kan tilsluttes enten via USB eller seriel.
+Det er ikke nødvendigt at installere en særlig enhedsdriver, før du kan bruge disse displays.
+Du skal blot koble displayet til din enhed og herefter konfigurere NVDA til at bruge punktdisplayet.
+
+Bemærk: Baud rate 19200 anbefales på det kraftigste.
+Skift om nødvendigt indstillingsværdien for Baud-hastighed til 19200 fra punktdisplayets menu.
+Selvom driveren understøtter 9600 baud rate, har den ingen måde at kontrollere, hvilken baud rate displayet bruger.
+Fordi 19200 er displayets standard baudhastighed, vil driveren automatisk benytte denne hastighed.
+Hvis baud-hastighederne ikke er de samme, kan driveren opføre sig uhensigtsmæssigt.
+
+Følgende er tastekombinationerne til disse displays ved brug af NVDA.
+Læs venligst dokumentationen for det pågældende display der beskriver, hvor disse taster findes.
+%kc:beginInclude
+|| Navn | Tast |
+| Flyt til øverste linje med læsemarkøren | ``home1``, ``home2`` |
+| Flyt til nederste linje med læsemarkøren | ``end1``, ``end2`` |
+| Flytter navigatorobjektet til det aktuelle fokus | ``eCursor1``, ``eCursor2`` |
+| Flyt til aktuelle fokus | ``cursor1``, ``cursor2`` |
+| Flytter musemarkøren til det aktuelle navigatorobjekt | ``home1+home2`` |
+| Flytter musemarkøren til det aktuelle navigatorobjekt og læser det op | ``end1+end2`` |
+| Flytter fokus til det aktuelle navigatorobjekt | ``eCursor1+eCursor2`` |
+| Skifter indstillingen for "punkt følger" | ``cursor1+cursor2`` |
+| Flyt punktdisplay til forrige linje | ``up1``, ``up2``, ``up3`` |
+| Flyt punktdisplay til næste linje | ``down1``, ``down2``, ``down3`` |
+| Panorer punktdisplay tilbage | ``left``, ``lWheelLeft``, ``rWheelLeft`` |
+| Panorer punktdisplay fremad | ``right``, ``lWheelRight``, ``rWheelRight`` |
+| Flyt til punktcelle | ``markørknapper`` |
+| Oplys tekstformattering under den aktuelle punktcelle | ``sekundære markørknapper`` |
+| Skift måden kontekstoplysninger vises på punkt | ``attribute1+attribute3`` |
+| Skift mellem de forskellige taleindstillinger bip, fra og tal | ``attribute2+attribute4`` |
+| Skift til forrige læsetilstand (f.eks. objekt, dokument eller skærm) | ``f1`` |
+| Skift til næste læsetilstand | ``f2`` |
+| Flyt navigatorojektet til det objekt, der indeholder det | ``f3`` |
+| Flytter navigatorobjektet til det første objekt inde i det | ``f4`` |
+| Flytter navigatorobjektet til det forrige objekt | ``f5`` |
+| Flytter navigatorobjektet til det næste objekt | ``f6`` |
+| Oplyser det aktuelle navigatorobjekt | ``f7`` |
+| Oplyser oplysninger om placeringen af teksten eller objektet ved læsemarkøren | ``f8`` |
+| Udfører standardhandlingen for det aktuelle navigatorobjekt | ``f7+f8`` |
+| Få dato/tid oplyst | ``f9`` |
+| Få batteriet oplyst | ``f10`` |
+| Få titlen oplyst | ``f11`` |
+| Oplys statuslinje | ``f12`` |
+| Oplys den aktuele linje under markøren | ``f13`` |
+| Sig alt | ``f14`` |
+| Oplys det aktuelle tegn under læsemarkøren | ``f15`` |
+| Oplys den aktuelle linje for det navigatorobjekt, hvor læsemarkøren befinder sig | ``f16`` |
+| Oplys det aktuelle ord for det navigatorobjekt, hvor læsemarkøren befinder sig | ``f15+f16`` |
+| Flytter læsemarkøren til den forrige linje i det aktuelle navigatorobjekt og læser det op | ``lWheelUp``, ``rWheelUp`` |
+| Flytter læsemarkøren til den næste linje i det aktuelle navigatorobjekt og læser det op | ``lWheelDown``, ``rWheelDown`` |
+| Tasterne ``Windows+d`` (minimér alle programmer) | ``attribute1`` |
+| Tasterne ``Windows+e`` (Denne PC) | ``attribute2`` |
+| Tasterne ``Windows+b`` (flyt fokus til systembakken) | ``attribute3`` |
+| Tasterne ``Windows+i`` (Windows-indstillinger) | ``attribute4`` |
+%kc:endInclude
+
 ++ Standard HID Braille displays ++[HIDBraille]
 Dette er en eksperimentel driver for den nye HID Braille standard, som firmaerne Microsoft, Google, Apple samt flere virksomheder bag hjælpeteknologier nåede til enighed om, herunder NV Access.
 Håbet er, at denne standard vil blive vedtaget og benyttet af fremtidige fabrikanter af punktdisplays, hvilket vil fjerne behovet for særskilte drivere.
@@ -3698,7 +3758,7 @@ De mulige kommandolinjeparametre til NVDA er følgende:
 | -q | --quit | Afslut den nuværende kopi af NVDA |
 | -k | --check-running | Fortæl via exitkoden, om NVDA kører (0 hvis NVDA kører, 1 hvis den ikke gør) |
 | -f LOGFILENAME | --log-file=loggens filnavn | Filen hvor NVDAs log skal gemmes |
-| -l LOGLEVEL | --log-level=LOGNINGSNIVEAU | Det laveste niveau af meddelelser, som skal logges (fejlfinding 10, input/output 12, fejlfinding og advarsler 15, info 20, advarsler 30, fejl 40, kritiske fejl 50, deaktiveret 100). Standard er advarsler. |
+| -l LOGLEVEL | --log-level=LOGNINGSNIVEAU | Det laveste niveau af meddelelser, som skal logges (fejlfinding 10, input/output 12, fejlfinding og advarsler 15, info 20, deaktiveret 100) |
 | -c CONFIGPATH | --config-path=KONFIGURATIONSSTI | Stien, hvor alle indstillinger i NVDA skal gemmes |
 | None | --lang=SPROG | Brug et specifikt sprog uanset NVDAs konfiguration. Skriv "Windows" for standardsprog, "en" for engelsk, osv. |
 | -m | --minimal | Ingen lyde, ingen brugergrænseflade, ingen opstartsmeddelelser osv. |
