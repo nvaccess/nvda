@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Russian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-14 00:37+0000\n"
-"PO-Revision-Date: 2023-02-14 19:42+0800\n"
+"POT-Creation-Date: 2023-02-17 00:01+0000\n"
+"PO-Revision-Date: 2023-02-21 04:24+0800\n"
 "Last-Translator: Kvark <kvark128@yandex.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -2964,7 +2964,7 @@ msgstr "Циклически переключает способы озвучи�
 #. {mode} will be replaced with the mode; i.e. Off, Speech, Tones or Both Speech and Tones.
 #, python-brace-format
 msgid "Report line indentation {mode}"
-msgstr "Объявление отступов строк: {mode}"
+msgstr "Чтение отступов строк: {mode}"
 
 #. Translators: Input help mode message for toggle report paragraph indentation command.
 msgid "Toggles on and off the reporting of paragraph indentation"
@@ -4402,12 +4402,14 @@ msgid ""
 "Report the destination URL of the link in the navigator object. If pressed "
 "twice, shows the URL in a window for easier review."
 msgstr ""
+"Сообщает URL-адрес ссылки в объекте навигатора. Если нажато дважды, "
+"показывает этот адрес в отдельном окне для удобного просмотра"
 
 #. Translators: Informs the user that the window contains the destination of the
 #. link with given title
 #, python-brace-format
 msgid "Destination of: {name}"
-msgstr ""
+msgstr "Адрес для ссылки «{name}»"
 
 #. Translators: Tell user that the command has been run on something that is not a link
 msgid "Not a link."
@@ -4418,6 +4420,9 @@ msgid ""
 "Reports the destination URL of the link in the navigator object in a window, "
 "instead of just speaking it. May be preferred by braille users."
 msgstr ""
+"Показывает URL-адрес ссылки в объекте навигатора в отдельном окне, вместо "
+"его чтения синтезатором речи. Это может быть полезно для пользователей с "
+"брайлевским дисплеем"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -11212,6 +11217,8 @@ msgid ""
 "At least one NVDA modifier key must be set. Caps lock will remain as an NVDA "
 "modifier key. "
 msgstr ""
+"В NVDA должна быть установлена хотя бы одна клавиша-модификатор. Поэтому "
+"CapsLock всё равно останется клавишей-модификатором NVDA."
 
 #. Translators: The label for a checkbox in NvDA installation program to agree to the license agreement.
 msgid "I &agree"
