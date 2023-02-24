@@ -7,11 +7,11 @@ Quoi de Neuf dans NVDA
 Une nouvelle option a été ajoutée, "Style de paragraphe" dans "Navigation dans les documents".
 Cela peut être utilisé avec les éditeurs de texte ne supportant pas nativement les paragraphes, comme le Bloc-Notes ou Notepad++.
 
-Il existe une nouvelle commande globale pour connaître la destination d'un lien, assignée sur  ``NVDA+k``.
+Il existe une nouvelle commande globale pour connaître la destination d'un lien, assignée à ``NVDA+k``.
 
 Le support des contenus web annotés (tels que les commentaires et les notes de bas de page) a été amélioré.
 
-Pressez ``NVDA+d`` pour naviguer entre les résumés lorsque les annotations sont reportées (par exemple "contient un commentaire, contient une note de bas de page").
+Appuyez sur ``NVDA+d`` pour naviguer entre les résumés lorsque les annotations sont reportées (par exemple "contient un commentaire, contient une note de bas de page").
 
 Les afficheurs Braille Tivomatic Caiku Albatross 46/80 sont désormais supportés.
 
@@ -26,10 +26,10 @@ Note :
 -
 
 == Nouvelles Fonctionnalités ==
-- Microsoft Excel via UI Automation : report automatique des en-têtes de lignes et colonnes dans les tableaux. (#14228)
-  - Note : Ceci se réfère aux tableaux formatés via le bouton "Tableau" dans l'onglet Insertion du ruban.
+- Microsoft Excel via UI Automation : annonce automatique des en-têtes de lignes et colonnes dans les tableaux. (#14228)
+  - Note : Ceci fait référence aux tableaux formatés via le bouton "Tableau" dans l'onglet Insertion du ruban.
   "Première colonne" et "En-tête de ligne" dans "Options de style du tableau" correspondent respectivement aux en-têtes de colonne et ligne.
-  - Cela ne fait pas référence aux en-têtes spécifiques au lecteur d'écran via des rangs nommés, qui ne sont actuellement pas pris en charge via UI Automation.
+  - Cela ne fait pas référence aux en-têtes spécifiques au lecteur d'écran via des plages nommés, qui ne sont actuellement pas pris en charge via UI Automation.
   -
 - Un script non assigné a été ajouté pour basculer l'annonce de la description différée des caractères. (#14267)
 - Ajout d'une option expérimentale pour prendre en charge des notifications UIA dans le terminal Windows pour signaler du texte ajouté ou modifié dans le terminal, ce qui améliore la stabilité et la réactivité. (#13781)
@@ -37,24 +37,24 @@ Note :
   - 
 - Sous Windows 11 ARM64, le mode navigation est maintenant disponible dans les applications AMD64 comme Firefox, Google Chrome et 1Password. (#14397)
 - Une nouvelle option a été ajoutée, "Style de paragraphe" dans "Navigation dans les documents".
-Ceci ajoute le support pour la navigation dans les paragraphes via un saut de ligne (normal) et le saut de plusieurs lignes (bloc).
+Ceci ajoute la prise en charge de la navigation par paragraphes via un saut de ligne (normal) et le saut de plusieurs lignes (bloc).
 Cela peut être utilisé dans les éditeurs de texte ne supportant pas nativement la navigation par paragraphe, tels que le Bloc-Notes ou Notepad++. (#13797)
-- La présence de plusieurs annotations est maintenant reportée.
+- La présence de plusieurs annotations est maintenant annoncée.
 ``NVDA+d`` navigue maintenant entre le résumé de chaque cible d'annotation pour les origines avec plusieurs cibles d'annotation.
 Par exemple, lorsqu'un texte a un commentaire et une note de bas de page associés avec lui. (#14507, #14480)
 - Ajout du support des afficheurs Braille Tivomatic Caiku Albatross 46/80. (#13045)
 - Nouvelle commande globale : annoncer la destination d'un lien (``NVDA+k``).
-Presser une fois annoncera et affichera en Braille la destination du lien sous l'objet navigateur courant.
-Presser 2 fois l'affichera dans une fenêtre, pour une meilleure revue détaillée. (#14583)
+Appuyer une fois annoncera et affichera en Braille la destination du lien sous l'objet navigateur courant.
+Appuyer 2 fois l'affichera dans une fenêtre, pour une revue plus détaillée. (#14583)
 - Nouvelle commande globale non assignée (catégorie Outils) : Indiquer l'URL du lien dans une fenêtre.
-Revient à presser NVDA+K deux fois, mais pourrait être plus utile pour les utilisateurs Braille. (#14583)
+Revient à appuyer sur ``NVDA+K`` deux fois, mais pourrait être plus utile pour les utilisateurs Braille. (#14583)
 -
 
 
 == Changements ==
 - Mise à jour du transcripteur Braille LibLouis à la version [3.24.0 https://github.com/liblouis/liblouis/releases/tag/v3.24.0]. (#14436)
-  - Mise à jour majeure pour les tables Hongroisses, UEB, et Chinois bopomofo.
-  - Support pour le Braille Danois standard 2022.
+  - Mise à jour majeure pour les tables Hongroises, UEB, et Chinois bopomofo.
+  - Prise en charge du Braille Danois standard 2022.
   - Nouvelles table Braille Géorgien Braille littéraire, Swahili (Kenya) et Chichewa (Malawi).
   -
 - Mise à jour de la librairie Sonic rate boost à la révision ``1d70513``. (#14180)
@@ -74,21 +74,21 @@ Revient à presser NVDA+K deux fois, mais pourrait être plus utile pour les uti
   - Sous Windows 11 22H2 et plus récent, il est à nouveau possible d'utiliser la souris et l'interaction tactile pour interagir avec certaines zones telles que la zone de dépassement de la barre d'état système ou le dialogue "Ouvrir avec". (#14538, #14539)
   -
 - Les suggestions sont annoncées lors de la saisie d'une @mention dans les commentaires de Microsoft Excel. (#13764)
-- Dans la barre d'adresse de Google Chrome, les contrôles des suggestions (basculer vers l'onglet, supprimer la suggestion etc) sont maintenant annoncés lorsque sélectionnés. (#13522)
+- Dans la barre d'adresse de Google Chrome, les contrôles des suggestions (basculer vers l'onglet, supprimer la suggestion, etc.) sont maintenant annoncés lorsque sélectionnés. (#13522)
 - Lors de l'annonce des informations de mise en forme, les couleurs sont désormais explicitement rapportées dans WordPad ou la visionneuse du journal, au lieu de simplement "Couleur par défaut". (#13959)
 - Dans Firefox, l'activation du bouton "Show options" dans les pages d'issues sur GitHub fonctionne maintenant correctement. (#14269)
 - Les sélecteurs de date dans le dialogue de recherche avancée de Outlook 2016 / 365 indiquent désormais leur nom et valeur. (#12726)
 - Les contrôles ARIA à bascule sont maintenant réellement annoncés comme des bascules dans Firefox, Chrome et Edge, au lieu de cases à cocher. (#11310)
 - NVDA annoncera automatiquement l'état du tri sur un en-tête de colonne de tableau HTML lorsqu'il est modifié par l'appui sur un bouton interne. (#10890)
-- Le nom d'un point de repère ou d'une région est toujours prononcé automatiquement lors de l'entrée à l'intérieur en utilisant la navigation rapide ou le focus en mode navigation. (#13307)
+- Le nom d'une région ou d'une région labélisée est toujours prononcé automatiquement lors de l'entrée à l'intérieur en utilisant la navigation rapide ou le focus en mode navigation. (#13307)
 - Lorsque les bips ou l'annonce de "majuscule" pour les caractères est activé avec la description différée des caractères, NVDA ne bip ou n'annonce plus "majuscule" deux fois. (#14239)
 - Les contrôles dans les tableaux des applications Java seront désormais annoncés plus fréquemment par NVDA. (#14347)
 - Certains paramètres ne seront plus anormalement différents lorsqu'utilisés avec plusieurs profils. (#14170)
   - Les paramètres suivants ont été corrigés :
-    - La mise en retrait des lignes dans les paramètres de mise en forme des documents.
-    - Les bordures de cellules dans les paramètres de mise en forme des documents
-    - L'affichage des messages dans les paramètres Braille
-    - Le suivi du Braille dans les paramètres Braille
+    - Mise en retrait des lignes dans les paramètres de mise en forme des documents.
+    - Bordures de cellules dans les paramètres de mise en forme des documents
+    - Affichage des messages dans les paramètres Braille
+    - Suivi du Braille dans les paramètres Braille
     -
   - Dans certains cas rares, ces paramètres utilisés dans des profils pourraient être inopinément modifiés lors de l'installation de cette version de NVDA.
   - Veuillez vérifier ces options dans vos profils après la mise à jour de NVDA vers cette version.
@@ -110,18 +110,18 @@ Note : il s'agit d'une version de rupture de compatibilité de l'API des extens
 Les extensions devront être testées à nouveau et leur manifeste mis à jour.
 Veuillez vous référer au [guide de développement https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] pour plus d'informations sur le processus de dépréciation et de suppression de l'API de NVDA.
 
-- Le test système devrait maintenant réussir lorsqu'il est exécuté localement sur des systèmes non anglais. (#13362)
+- Les tests système devrait maintenant réussir lorsqu'ils sont exécuté localement sur des systèmes non anglais. (#13362)
 - Dans Windows 11 sur ARM, les applications x64 ne sont plus identifiées comme des applications ARM64. (#14403)
-- Il n'est plus nécessaire d'utiliser ``SearchField`` et ``SuggestionListItem`` ``UIA`` ``NVDAObjects`` dans les nouveaux scénarios d'automatisation de l'interface utilisateur, où le rapport automatique des suggestions de recherche et où la saisie a été exposée via l'interface utilisateur Automatisation avec le motif ``controllerFor``.
-Cette fonctionnalité est désormais disponible de manière générique via ``behaviours.EditableText`` et la base ``NVDAObject`` respectivement. (#14222)
+- Il n'est plus nécessaire d'utiliser ``NVDAObjects.UIA.SearchField`` et ``NVDAObjects.UIA.SuggestionListItem`` dans les nouveaux scénarios UI Automation où l'annonce automatique des suggestions de recherche et où le type a été exposé via UI Automation avec le motif ``controllerFor``.
+Cette fonctionnalité est désormais disponible de manière générique via ``behaviours.EditableText`` et le ``NVDAObject`` de base respectivement. (#14222)
 - La catégorie de journalisation de débogage UIA, lorsqu'elle est activée, produit désormais beaucoup plus de journalisation pour les gestionnaires d'événements et les utilitaires UIA. (#14256)
 - Mise à jour des normes de construction de NVDAHelper. (#13072)
   - Utilise maintenant la norme C++20, au lieu de C++17.
   - Utilise maintenant le drapeau de compilateur ``/permissive-`` qui désactive les comportements permissifs et définit les options de compilateur ``/Zc`` pour une conformité stricte.
   -
-- Certains objets de plugin (par exemple, les pilotes et les extensions) ont maintenant une description plus informative dans la console python NVDA. (#14463)
+- Certains objets plugin (par exemple, les pilotes et les extensions) ont maintenant une description plus informative dans la console python NVDA. (#14463)
 - NVDA peut maintenant être entièrement compilé avec Visual Studio 2022, ne nécessitant plus les outils de construction de Visual Studio 2019. (#14326)
-- Une journalisation plus détaillée pour NVDA se fige pour faciliter le débogage. (#14309)
+- Une journalisation plus détaillée lorsque NVDA se fige pour faciliter le débogage. (#14309)
 - La classe singleton ``braille._BgThread`` a été remplacée par ``hwIo.ioThread.IoThread``. (#14130)
   - Une seule instance ``hwIo.bgThread`` (dans le noyau NVDA) de cette classe fournit des entrées/sorties en arrière-plan pour les pilotes d'affichage braille thread-safe.
   - Cette nouvelle classe n'est pas un singleton de par sa conception, les auteurs d'extensions sont encouragés à utiliser leur propre instance lors des E/S matérielles.
@@ -141,23 +141,24 @@ Cette fonctionnalité est désormais disponible de manière générique via ``be
 -
 
 === Changements avec rupture de l'API ===
-Ces changements de l'API peuvent empêcher le fonctionnement d'une extension.
-Veuillez ouvrir un problème GitHub si votre module complémentaire a un problème avec la mise à jour vers la nouvelle API.
+Ces changements modifient l'API des extensions.
+Veuillez ouvrir un problème GitHub si votre extension a un problème avec la mise à jour vers la nouvelle API.
 - La spécification de configuration a été altérée, des clés ont été supprimées ou modifiées :
- - Dans la section ``[documentFormatting]`` (#14233):
- - ``reportLineIndentation`` stocke une valeur int (0 à 3) au lieu d'un booléen
- - ``reportLineIndentationWithTones`` a été supprimé.
- - ``reportBorderStyle`` et ``reportBorderColor`` ont été supprimés et sont remplacés par ``reportCellBorders``.
- -
- - Dans la section ``[braille]`` (#14233):
- - ``noMessageTimeout`` a été supprimé, remplacé par une valeur pour ``showMessages``.
- - ``messageTimeout`` ne peut plus prendre la valeur 0, remplacée par une valeur pour ``showMessages``.
- - ``autoTether`` a été supprimé ; ``tetherTo`` peut maintenant prendre la valeur "auto" à la place.
- -
- - Dans la section ``[clavier]`` (#14528):
- - ``useCapsLockAsNVDAModifierKey``, ``useNumpadInsertAsNVDAModifierKey``, ``useExtendedInsertAsNVDAModifierKey`` a été supprimé.
- Ils sont remplacés par ``NVDAModifierKeys``.
- -
+  - Dans la section ``[documentFormatting]`` (#14233):
+    - ``reportLineIndentation`` stocke une valeur int (0 à 3) au lieu d'un booléen
+    - ``reportLineIndentationWithTones`` a été supprimé.
+    - ``reportBorderStyle`` et ``reportBorderColor`` ont été supprimés et sont remplacés par ``reportCellBorders``.
+    -
+  - Dans la section ``[braille]`` (#14233):
+    - ``noMessageTimeout`` a été supprimé, remplacé par une valeur pour ``showMessages``.
+    - ``messageTimeout`` ne peut plus prendre la valeur 0, remplacée par une valeur pour ``showMessages``.
+    - ``autoTether`` a été supprimé ; ``tetherTo`` peut maintenant prendre la valeur "auto" à la place.
+    -
+  - Dans la section ``[clavier]`` (#14528):
+    - ``useCapsLockAsNVDAModifierKey``, ``useNumpadInsertAsNVDAModifierKey``, ``useExtendedInsertAsNVDAModifierKey`` ont été supprimés.
+    Ils sont remplacés par ``NVDAModifierKeys``.
+    -
+  -
 - La classe ``NVDAHelper.RemoteLoader64`` a été supprimée sans remplacement. (#14449)
 - Les fonctions suivantes dans ``winAPI.sessionTracking`` sont supprimées sans remplacement. (#14416, #14490)
   - ``isWindowsLocked``
@@ -172,10 +173,10 @@ Pour désactiver le gestionnaire de braille par programmation, enregistrez un ge
 Pour mettre à jour displaySize par programme, enregistrez un gestionnaire sur ``braille.handler.filter_displaySize``.
 Reportez-vous à ``brailleViewer`` pour un exemple sur la façon de procéder. (#14503)
 - Il y a eu des changements dans l'utilisation de ``addonHandler.Addon.loadModule``. (#14481)
- - ``loadModule`` attend maintenant un point comme séparateur, plutôt qu'une barre oblique inverse.
- Par exemple "lib.example" au lieu de "lib\example".
- - ``loadModule`` renvoie maintenant une exception lorsqu'un module ne peut pas être chargé ou a des erreurs, au lieu de retourner silencieusement ``None`` sans donner d'informations sur la cause.
- -
+  - ``loadModule`` attend maintenant un point comme séparateur, plutôt qu'une barre oblique inverse.
+  Par exemple "lib.example" au lieu de "lib\example".
+  - ``loadModule`` renvoie maintenant une exception lorsqu'un module ne peut pas être chargé ou a des erreurs, au lieu de retourner silencieusement ``None`` sans donner d'informations sur la cause.
+  -
 - Les symboles suivants ont été supprimés de ``appModules.foobar2000`` sans remplacement direct. (#14570)
   - ``statusBarTimes``
   - ``parseIntervalToTimestamp``
