@@ -40,6 +40,7 @@ NV Access YouTube 頻道上有一段簡短的影片展示[「What is NVDA?」 ht
 - 作業系統：32 和 64 位元的 Microsoft Windows 7、Windows 8、Windows 8.1、Windows 10、Windows 11 及 Windows Server 2008 R2 以上的所有伺服器作業系統。
  - 使用 Windows 7，NVDA 需要 SP 1 以上的版本。
  - 使用 Windows Server 2008 R2，NVDA 需要 SP 1 以上的版本。
+ - 支援 AMD64 與 ARM64 架構下執行的 Windows。
  -
 - 至少 150 MB 的儲存空間。
 -
@@ -221,6 +222,7 @@ capsLock 鍵也可以設定為 NVDA 組合鍵。
 | 讀出狀態列 | NVDA+end | NVDA+shift+end | 如果 NVDA 找到狀態列則讀出，連按兩下拼讀資訊，連按三下複製內容到剪貼簿。 |
 | 讀出時間 | NVDA+F12 | 按一下讀出目前時間，連按兩下讀出日期。 |
 | 讀出文字格式 | NVDA+F | NVDA+F | 讀出游標所在的文字格式，按兩下以視窗顯示資訊 |
+| 讀出連結目標 | NVDA+K | NVDA+K | 按一下讀出[導覽物件 #ObjectNavigation]所在連結的目標 URL，連按兩下將它顯示在一個視窗中便於仔細瀏覽。 |
 
 +++ 切換 NVDA 讀出的資訊 +++[ToggleWhichInformationNVDAReads]
 || 名稱 | 桌電快速鍵 | 筆電快速鍵 | 說明 |
@@ -1200,7 +1202,7 @@ Excel 工作表可以含有表單欄位，
 %kc:beginInclude
 || 名稱 | 快速鍵 | 說明 |
 | 讀出剩餘時間 | control+shift+r | 如果有的話，讀出目前播放曲目的剩餘時間。 |
-| 讀出已撥放時間 | control+shift+e | 如果有的話，讀出目前播放曲目的已撥放時間。 |
+| 讀出經過時間 | control+shift+e | 如果有的話，讀出目前播放曲目的經過時間。 |
 | 讀出曲目長度 | control+shift+t | 如果有的話，讀出目前播放曲目的長度。 |
 %kc:endInclude
 
@@ -1269,7 +1271,7 @@ Kindle 允許您對選取的文字執行各種功能，包括查字典、添加�
 ++ Windows 主控台 ++[WinConsole]
 NVDA 支援 Windows 命令主控台，包括命令提示字元、PowerShell 及 Windows Subsystem for Linux (wsl)。
 主控台視窗大小是固定的，通常會比輸出內容的範圍還要小，
-當輸入新的文字時，先前的文字會被向上捲動至視窗外而看不到，
+當輸入新文字時，先前的文字會被向上捲動至視窗外而看不到，
 在 Windows 11 22H2 之前的版本，沒有顯示在視窗中的文字無法利用 NVDA 的文字檢閱指令讀出，
 因此必須捲動主控台視窗才能讀到先前的文字，
 在新版的主控台及 Windows 終端機中，可以自由地檢閱所有文字緩衝區而不需要捲動視窗。
@@ -2089,6 +2091,29 @@ NVDA 設定對話框中的「瀏覽模式」類別用於設定當您閱讀和導
 - 語音及提示音： NVDA 將以上述兩種方式讀出縮排。
 -
 
++++ 文件導覽 +++[DocumentNavigation]
+此類別允許您針對文件導覽的部分進行調整。
+
+==== 段落樣式 ====[ParagraphStyle]
+: 預設
+  由應用程式處理
+: 選項
+  預設 (由應用程式處理)、由應用程式處理、單一換行、多個換行
+:
+
+此下拉式方塊允許您選擇在使用「Ctrl+向上鍵」及「Ctrl+向下鍵」按段落導覽時要使用的段落樣式，
+可用的段落樣式有：
+- 由應用程式處理：NVDA 會讓應用程式來決定上一個或下一個段落，並在導覽時讀出新段落，
+當應用程式本身支援段落導覽時此樣式效果最好，並設為預設值。
+- 單一換行：NVDA 將嘗試使用單一換行作為分段依據來決定上一個或下一個段落，
+在本身不支援段落導覽的應用程式中讀取文件時此樣式效果最好，文件中的段落透過按一下 Enter 鍵來標記。
+- 多個換行：NVDA 將嘗試使用至少一個空白行 (按兩下 Enter 鍵) 作為分段依據來決定上一個或下一個段落，
+此樣式在處理使用區塊段落的文件時效果最好。
+附註：此段落樣式不能在 Microsoft Word 或 Microsoft Outlook 中使用，除非您正在使用 UIA 處理 Microsoft Word 控制項。
+-
+
+您可以在[輸入手勢對話框 #InputGestures]中指派快速鍵來在任何地方循環切換可用的段落樣式。
+
 +++ Windows OCR 設定 +++[Win10OcrSettings]
 此類別的設定允許您對 [Windows OCR #Win10Ocr] 進行設定，
 此類別包含以下選項：
@@ -2219,16 +2244,35 @@ Microsoft Excel 的 UI automation 實作不斷改變，而 Microsoft Office 版�
 在不受信任的環境下輸入密碼時您可以暫時停用[讀出輸入字元 #KeyboardSettingsSpeakTypedCharacters]及[讀出輸入單字 #KeyboardSettingsSpeakTypedWords]兩個選項。
 
 ==== 內容差異分析 ====[DiffAlgo]
-此設定控制 NVDA 如何讀出在終端機中的新增文字，
+此設定控制 NVDA 在終端機中如何判斷要讀出的新文字，
 「內容差異分析」下拉式方塊有 3 個選項：
 - 自動：此選項讓 NVDA 在大多數情況下優先使用字元分析，在一些有問題的應用程式如舊版 Windows 主控台和 Mintty 則回到使用單行分析。
 - 字元分析：此選項讓 NVDA 以逐字的方式來分析終端機中文字內容的改變，即使是在不建議使用的情況下。
 當有大量文字填入主控台時可能會提高效能，以及當在一行文字的中間有文字改變時能夠更精準地讀出，
-不過在某些應用程式中讀出新的文字可能會斷斷續續或不連貫。
+不過在某些應用程式中讀出新文字可能會斷斷續續或不連貫。
 - 單行分析：此選項讓 NVDA 以逐行的方式來分析終端機中文字內容的改變，即使是在不建議使用的情況下，
 這與 NVDA 2020.4 及之前版本的預設作法相同。
 此設定可能在某些應用程式中讀出傳入的文字時更加穩定，
 不過在終端機中當編輯或刪除某行中間的字元時，其後的文字會被讀出來。
+-
+
+==== 在 Windows 終端機讀出新文字方式 ====[WtStrategy]
+: 預設
+  單行分析
+: 選項
+  單行分析、UIA 通知
+:
+
+此選項選擇 NVDA 在 Windows 終端機及 Visual Studio 2022 使用的 WPF Windows 終端機控製項中如何判斷哪些文字是「新的」 (以及當啟用「讀出動態內容變化」時要讀出哪些文字)，
+但不會影響 Windows 主控台 (conhost.exe)。
+「在 Windows 終端機讀出新文字方式」下拉式方塊有三個選項：
+- 預設：此選項目前等同於「單行分析」，但預計在進一步開發對 UIA 通知的支援後會有改變。
+- 單行分析：此選項使用所選的差異分析來計算每次終端機顯示新文字時的變化，
+這與 NVDA 在 2022.4 及更早版本中的行為相同。
+- UIA 通知：此選項將要讀出哪些文字的責任交給 Windows 終端機本身，表示 NVDA 不再需要判斷目前螢幕上的文字是否是「新的」。
+這應該能夠顯著提高 Windows 終端機的效能及穩定性，但此功能尚未完成，
+特別是，當選擇此選項，不會在螢幕上顯示的輸入文字例如密碼會被讀出來。
+此外，連續輸出超過 1,000 個字元可能無法準確讀出。
 -
 
 ==== 嘗試將已過期焦點事件的語音取消 ====[CancelExpiredFocusSpeech]
@@ -2684,6 +2728,7 @@ NVDA 擁有透過 USB 或藍牙在背景自動偵測到許多點顯器的能力�
 - Eurobraille Esys/Esytime/Iris 點顯器
 - Nattiq nBraille 點顯器
 - Seika Notetaker: MiniSeika (16, 24 方), V6, 與 V6Pro (40 方)
+- Tivomatic Caiku Albatross 46/80 點顯器
 - 任何支援標準 HID 通訊協定的點顯器
 -
 
@@ -3566,6 +3611,63 @@ BRLTTY 不支援 NVDA 點顯器背景自動偵側的功能。
 | Route to braille cell | route (bring cursor to character) |
 %kc:endInclude
 
+++ Tivomatic Caiku Albatross 46/80 ++[Albatross]
+由 Tivomatic 製造並在芬蘭流通的 Caiku Albatross 裝置可以透過 USB 或串列埠連接，
+您不需要安裝任何特定的驅動程式即可使用這些點顯器，
+只要插上點顯器並設定 NVDA 即可使用。
+
+附註：強烈建議將傳輸速率設為 19200，
+若有需要，可從點顯器裝置的選單中將傳輸速率設定值切換為 19200。
+雖然驅動程式支援 9600 傳輸速率，但是無法控制顯示器使用哪種傳輸速率，
+因為 19200 是點顯器的預設傳輸速率，驅動程式會先以此嘗試，
+如果傳輸速率不同，驅動程式可能會出現非預期行為。
+
+以下是此點顯器在 NVDA 的按鍵指派，
+這些按鍵的實際位置請參見點顯器的說明文件。
+%kc:beginInclude
+|| 名稱 | 按鍵 |
+| Move to top line in review | ``home1``, ``home2`` |
+| Move to bottom line in review | ``end1``, ``end2`` |
+| Sets the navigator object to the current focus | ``eCursor1``, ``eCursor2`` |
+| Move to current focus | ``cursor1``, ``cursor2`` |
+| Moves the mouse pointer to the current navigator object | ``home1+home2`` |
+| Sets the navigator object to the current object under the mouse pointer and speaks it | ``end1+end2`` |
+| Moves focus to current navigator object | ``eCursor1+eCursor2`` |
+| Toggle braille tethered to | ``cursor1+cursor2`` |
+| Move braille display to previous line | ``up1``, ``up2``, ``up3`` |
+| Move braille display to next line | ``down1``, ``down2``, ``down3`` |
+| Scroll braille display back | ``left``, ``lWheelLeft``, ``rWheelLeft`` |
+| Scroll braille display forward | ``right``, ``lWheelRight``, ``rWheelRight`` |
+| Route to braille cell | ``routing`` |
+| Report text formatting under braille cell | ``secondary routing`` |
+| Toggle the way context information is presented in braille | ``attribute1+attribute3`` |
+| Toggles between the speech modes of off, beep and talk | ``attribute2+attribute4`` |
+| Switches to the previous review mode (e.g. object, document or screen) | ``f1`` |
+| Switches to the next review mode (e.g. object, document or screen) | ``f2`` |
+| Moves the navigator object to the object containing it | ``f3`` |
+| Moves the navigator object to the first object inside it | ``f4`` |
+| Moves the navigator object to the previous object | ``f5`` |
+| Moves the navigator object to the next object | ``f6`` |
+| Reports the current navigator object | ``f7`` |
+| Reports information about the location of the text or object at the review cursor | ``f8`` |
+| Performs the default action on the current navigator object | ``f7+f8`` |
+| Reports date/time | ``f9`` |
+| Reports battery status and time remaining if AC is not plugged in | ``f10`` |
+| Reports title | ``f11`` |
+| Reports status bar | ``f12`` |
+| Reports the current line under the application cursor | ``f13`` |
+| Say all | ``f14`` |
+| Reports current character under review cursor | ``f15`` |
+| Reports the line of the current navigator object where the review cursor is situated | ``f16`` |
+| Speaks the word of the current navigator object where the review cursor is situated | ``f15+f16`` |
+| Moves the review cursor to the previous line of the current navigator object and speaks it | ``lWheelUp``, ``rWheelUp`` |
+| Moves the review cursor to the next line of the current navigator object and speaks it | ``lWheelDown``, ``rWheelDown`` |
+| ``Windows+d`` key (minimize all applications) | ``attribute1`` |
+| ``Windows+e`` key (this computer) | ``attribute2`` |
+| ``Windows+b`` key (focus system tray) | ``attribute3`` |
+| ``Windows+i`` key (Windows settings) | ``attribute4`` |
+%kc:endInclude
+ 
 ++ 標準 HID 點顯器 ++[HIDBraille]
 這是由 Microsoft、Google、Apple 和包括 NV Access 在內的幾家輔助科技公司於 2018 年所達成的新標準 HID 點顯器規範的實驗性驅動程式，
 希望所有未來任何製造商製造的點顯器均使用此標準通訊協定，從而消除對特定點顯器驅動程式的需求。
@@ -3656,7 +3758,7 @@ nvda -q
 | -q | --quit | 結束已在執行的 NVDA |
 | -k | --check-running | 報告 NVDA 是否正在執行的結束代碼，若是 0 則代表執行中，若是 1 則代表沒有執行 |
 | -f LOGFILENAME | --log-file=LOGFILENAME | 應將事件記錄寫入的檔案 |
-| -l LOGLEVEL | --log-level=LOGLEVEL | 事件記錄最低等級 (偵錯 10；輸入/輸出 12；偵錯警告 15；資訊 20；警告 30；錯誤 40；嚴重錯誤 50；停用 100)，預設是警告 |
+| -l LOGLEVEL | --log-level=LOGLEVEL | 事件記錄最低等級 (偵錯 10；輸入/輸出 12；偵錯警告 15；資訊 20；停用 100) |
 | None | --lang=LANGUAGE | 覆寫所設定的 NVDA 語言，設為「Windows」來使用目前使用者預設、設為「en」來使用英文等。 |
 | -c CONFIGPATH | --config-path=CONFIGPATH | 儲存 NVDA 所有設定的路徑 |
 | -m | --minimal | 沒有音效、沒有介面、沒有啟動資訊等 |
