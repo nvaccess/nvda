@@ -3,6 +3,109 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2023.1 =
+Đã thêm một tùy chọn mới, "Kiểu đoạn" trong "Điều hướng tài liệu".
+Tính năng này có thể dùng trong các trình soạn thảo văn bản không hỗ trợ điều hướng theo đoạn một cách tự nhiên, như Notepad và Notepad++.
+
+Thêm một lệnh toàn cục mới để thông báo đường dẫn của liên kết, phím lệnh là ``NVDA+k``.
+
+Đã cải thiện hỗ trợ cho các loại ghi chú trong nội dung web (như chú thích và chú thích chân trang).
+Bấm ``NVDA+d`` để chuyển qua lại giữa các thông điệp  tổng hợp khi được thông báo có chú thích("có chú thích, có chú thích chân trang").
+
+Đã hỗ trợ các màn hình chữ nổi Tivomatic Caiku Albatross 46/80.
+
+Đã cải thiện hỗ trợ cho các phiên bản ARM64 và AMD64 của Windows.
+Đã sửa được nhiều lỗi, đáng chú ý là các lỗi trên Windows 11.
+
+Đã cập nhật eSpeak, LibLouis, Sonic rate boost và Unicode CLDR.
+Có các bảng chữ nổi mới: Georgian, Swahili (Kenya) và Chichewa (Malawi).
+
+Lưu ý:
+- Bản phát hành này không tương thích với các add-on hiện tại.
+
+
+== Tính năng mới ==
+- Microsoft Excel thông qua UI Automation: tự động đọc tiêu đề cột và dòng trong bảng biểu. (#14228)
+  - Lưu ý: chức năng này đang đề cập đến định dạng bảng biểu thông qua nút "Table" trên thẻ Insert của Ribbon.
+  "First Column" và "Header Row" trong "Table Style Options" tương ứng với tiêu đề cột và dòng.
+  - Chức năng này không liên quan đến hỗ trợ xác định tiêu đề của trình đọc màn hình bằng vùng được đặt tên (named ranges), vốn không được hỗ trợ thông qua UI Automation.
+  -
+- Một kịch bản chưa gán thao tác đã được thêm vào để bật tắt tính năng chờ đọc mô tả kí tự. (#14267)
+- Đã thêm một tùy chọn thử nghiệm để tận dụng hỗ trợ thông báo UIA trong Windows Terminal để thông báo các văn bản mới hoặc văn bản đã thay đổi trong terminal, kết quả là cải thiện tính ổn định và khả năng phản hồi. (#13781)
+  - Tham khảo hướng dẫn sử dụng để biết giới hạn của tùy chọn thử nghiệm này.
+  - 
+- Trên Windows 11 ARM64, chế độ duyệt đã có trong các ứng dụng AMD64 như Firefox, Google Chrome và 1Password. (#14397)
+- Đã thêm một tùy chọn mới, "Kiểu đoạn" trong "Điều hướng tài liệu".
+Tùy chọn này hỗ trợ cho việc điều hướng qua đoạn bằng một dấu xuống dòng  (kiểu bình thường) và nhiều dấu xuống dòng (điều hướng theo khối).
+Tính năng này có thể dùng trong các trình soạn thảo văn bản không hỗ trợ điều hướng theo đoạn một cách tự nhiên, như Notepad và Notepad++. (#13797)
+- Việc trình bày nhiều loại ghi chú giờ đây đã được thông báo.
+``nvda+d`` giờ đây sẽ chuyển qua lại giữa các loại thông báo ghi chú được tổng hợp  với nhiều loại thông báo khác nhau.
+Ví dụ, khi văn bản có bao gồm chú thích hoặc chú thích chân trang. (#14507, #14480)
+- Đã thêm hỗ trợ cho các màn hình chữ nổi Tivomatic Caiku Albatross 46/80. (#13045)
+- Lệnh toàn cục mới: Thông báo đường dẫn liên kết (``NVDA+k``).
+Bấm một lần sẽ đọc hoặc hiển thị đường dẫn của liên kết tại đối tượng điều hướng trên màn hình chữ nổi.
+Bấm hai lần sẽ hiển thị trên một cửa sổ để dễ xem chi tiết hơn. (#14583)
+- Thêm lệnh mới chưa gán thao tác (phân loại Công Cụ): thông báo đường dẫn liên kết trên một cửa sổ.
+Giống như bấm ``NVDA+k`` hai lần, nhưng có thể tiện hơn cho người dùng chữ nổi. (#14583)
+-
+
+
+== Các thay đổi ==
+- Đã cập nhật thư viện phiên dịch chữ nổi LibLouis lên [3.24.0 https://github.com/liblouis/liblouis/releases/tag/v3.24.0]. (#14436)
+  - Có các cập nhật chính cho tiếng Hungarian, UEB,  và chữ nổi bopomofo của Trung Hoa.
+  - Hỗ trợ chữ nổi tiêu chuẩn Đan Mạch 2022.
+  - Các bảng chữ nổi mới cho tiếng Georgian chữ nổi văn học, Swahili (Kenya) và Chichewa (Malawi).
+  -
+- Đã cập nhật thư viện tăng tốc độ Sonic lên commit ``1d70513``. (#14180)
+- CLDR đã được cập nhật lên phiên bản 42.0. (#14273)
+- eSpeak NG đã được cập nhật lên 1.52-dev commit ``a51235aa``. (#14281)
+  - Sửa lỗi đọc nhiều số. (#14241)
+  -
+- Các ứng dụng Java với các điều khiển sử dụng trạng thái chọn (selectable state) giờ đây sẽ được thông báo khi một thành phần không được chọn, thay vì chỉ thông báo khi nó được chọn. (#14336)
+-
+
+
+== Sửa lỗi ==
+- Các sửa lỗi cho Windows 11:
+  - NVDA sẽ thông báo  tìm kiếm được làm nổi khi mở Start menu. (#13841)
+  - Trên ARM, các ứng dụng x64 không còn bị cho là ứng dụng ARM64 nữa. (#14403)
+  - Đã có thể tiếp cận các thành phần trong trình đơn của clipboard history (lịch sử bộ nhớ tạm) như là "pin item". (#14508)
+  - Trong Windows 11 22H2 và mới hơn, lại có thể dùng chuột hoặc tương tác cảm ứng để tiếp cận các khu vực như khay hệ thống và hộp thoại "Open With". (#14538, #14539)
++  -
+- Gợi ý đã được đọc lên khi gõ kiểu @nhắc đến trong các chú thích của Microsoft Excel. (#13764)
+- Trong thanh vị trí của Google Chrome (Google Chrome location bar), các điều khiển dạng gợi ý (switch to tab - chuyển sang thẻ mới, remove suggestion - xóa gợi ý v...v...) giờ đây đã được đọc lên khi được chọn. (#13522)
+- Khi yêu cầu thông tin định dạng, màu sắc giờ đây đã được thông báo rõ ràng trong Wordpad hay trình xem log, thay vì chỉ báo là "Màu mặc định". (#13959)
+- Trong Firefox, Kích hoạt nút "Show options" trên  các trang GitHub issue - tạm dịch: trang bỏ phiếu của Github giờ đây đã làm việc một cách đáng tin hơn. (#14269)
+- Điều khiển date picker (chọn ngày) trong hộp thoại Advanced search của Outlook 2016 / 365 giờ đây đã đọc được nhãn và giá trị của nó. (#12726)
+- Các điều khiển dạng chuyển trạng thái (switch) ARIA giờ đây đã được thông báo là chuyển trong Firefox, Chrome và Edge, thay vì chỉ báo là hộp kiểm. (#11310)
+- NVDA sẽ tự thông báo trạng thái sắp xếp trên tiêu đề cột trong bảng biểu  HTML  khi thay đổi bằng cách bấm nút bên trong. (#10890)
+- Tên của một cột mốc hay vùng giờ đây sẽ luôn tự đọc lên khi đi vào trong từ bên ngoài bằng điều hướng nhanh hoặc focus trong chế độ duyệt. (#13307)
+- Khi bật chế độ beep hoặc nói chữ hoa cùng với tính năng chờ để mô tả kí tự, NVDA không còn phát tiếng beep hoặc thông báo chữ 'hoa' hai lần. (#14239)
+- Các điều khiển trong bảng biểu trong các ứng dụng Java giờ đây sẽ được thông báo chính xác hơn bởi NVDA. (#14347)
+- Sẽ không còn tình trạng vài thiết lập  hoạt động khác nhau khi dùng nhiều hồ sơ cấu hình. (#14170)
+  - Đã khắc phục lỗi này cho các thiết lập sau:
+    - Thụt đầu dòng trong Cài đặt định dạng tài liệu.
+    - Đường viền ô trong Cài đặt định dạng tài liệu
+    - Hiện thông điệp trong cài đặt chữ nổi
+    - Đưa theo braille trong cài đặt chữ nổi
+    -
+  - Ở vài trường hợp ít gặp, việc sử dụng các thiết lập này  trong hồ sơ cấu hình có thể bị thay đổi ngoài ý muốn khi cài phiên bản NVDA này.
+  - Vui lòng kiểm tra các tùy chọn này trong hồ sơ của bạn sau khi cập nhật NVDA lên phiên bản này.
+  -
+- Biểu tượng cảm xúc giờ đây sẽ được đọc ở nhiều ngôn ngữ hơn. (#14433)
+- Việc trình bày của một chú thích sẽ không bị thiếu trong chữ nổi với vài thành phần. (#13815)
+- Sửa một lỗi làm cho các thay đổi cấu hình không được lưu một cách chính xác khi thay đổi giữa một tùy chọn "Mặc định" và giá trị của tùy chọn "Mặc định". (#14133)
+- Khi cấu hình NVDA, sẽ luôn  có tối thiểu một phím được chỉ định là phím NVDA. (#14527)
+- Khi truy cập trình đơn NVDA  từ vùng thông báo, NVDA sẽ không gợi ý cập nhật đang chờ khi không có bản cập nhật nào. (#14523)
+- Thời gian còn lại, thời gian trôi qua và tổng thời gian giờ đây đã được đọc chính xác cho các tập tin âm thanh dài hơn một ngày trong foobar2000. (#14127)
+- Trong các trình duyệt web như Chrome và Firefox, ngoài việc đọc lên, các thông báo như  tải  tập tin đã hiển thị trong chữ nổi. (#14562)
+-
+
+
+== Các thay đổi cho nhà phát triển ==
+Phần này không được dịch. Vui lòng xem bản tiếng Anh changes.t2t để biết thêm thông tin.
+
+
 = 2022.4 =
 Bản phát hành này tích hợp vài phím lệnh mới, bao gồm các lệnh đọc tất cả trong bảng biểu.
 Đã thêm phần "Hướng Dẫn Nhanh" vào tài liệu hướng dẫn sử dụng.

@@ -3,6 +3,105 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2023.1 =
+Pridané nové nastavenie, ktoré umožňuje určiť, ako sú definované odseky. Pozrite Nastavenia, časť navigácia v dokumente.
+Aktuálne je teda možné používať navigáciu po odsekoch aj v aplikáciách, ktoré ju natívne nepodporujú, ako napríklad Notepad and Notepad++.
+
+Pridaná nová klávesová skratka, ktorá umožňuje zisťiť URL adresu odkazu, na ktorom je kurzor. Skratka je predvolene ``NVDA+k``.
+
+Vylepšená podpora pre anotácie vo webových dokumentoch (komentáre a poznámky).
+Ak NVDA ohlási, že prvok má komentár alebo poznámku, je možné si prečítať podrobnosti skratkou ``NVDA+d``.
+
+Pridaná podpora pre braillové riadky Tivomatic Caiku Albatross 46/80.
+
+Vylepšená podpora pre operačné systémy Windows vo variantoch ARM64 a AMD64.
+Mnohé opravy sa týkajú hlavne systému Windows 11.
+
+Aktualizované knižnice eSpeak, LibLouis, funkcionalita dvojnásobnej rýchlosti a databáza Unicode CLDR.
+Pridané nové braillové tabuľky pre jazyky Gruzínčina, Svahilčina (Keňa) a Chichewa (Malawi).
+
+Upozornenie:
+- Táto verzia nie je kompatibilná so staršími doplnkami.
+-
+
+== Nové vlastnosti ==
+- Podpora pre MS Excel cez rozhranie UIA: Pridané automatické oznamovanie hlavičiek riadkov a stĺpcov tabuľky. (#14228)
+  - Upozorňujeme, že toto sa týka len tabuliek, ktoré sú formátované cez panel tabuľka v rybbon menu.
+  Je potrebné správne nastaviť "Prvý stĺpec" a "riadok hlavičky" v časti "Možnosti štýlu tabuľky".
+  - Toto sa netýka možnosti definovať hlavičky pre čítače obrazovky. Toto v súčasnosti cez UIA nie je podporované.
+  -
+- Automatické fonetické hláskovanie je aktuálne možné zapínať a vypínať aj pomocou klávesovej skratky. Skratka nie je predvolene definovaná a je ju možné nastaviť v dialógu klávesové skratky. (#14267)
+- Pridaná možnosť automatického oznamovania nového textu v konzolách Windows terminálu cez rozhranie UIA, čo zlepšuje odozvu a stabilitu. (#13781)
+  - Podrobnosti a nedostatky sú vysvetlené v používateľskej príručke NVDA.
+  -
+- V systéme Windows 11 vo variante ARM64 je možné používať režim prehliadania v aplikáciách AMD64, ako Firefox, Google Chrome a 1Password. (#14397)
+- Pridaná nová sekcia Navigácia v dokumentoch a aktuálne jedno nové nastavenie: Za odsek považovať.
+umožňuje nastaviť, čo je považované za odseky. Možnosti sú jeden alebo viacero zlomov riadka.
+Takto je možné prechádzať po odsekoch aj v aplikáciách, ktoré to predvolene nepodporujú, ako napríklad Poznámkový blok a Notepad++. (#13797)
+- Ak je dostupných viacero anotácií, NVDA na túto skutočnosť upozorní.
+Skratkou ``NVDA+d`` je možné postupne prečítať všetky dostupné anotácie pre zameraný prvok. Napríklad ak text obsahuje komentár a poznámku pod čiarou. (#14507, #14480)
+- Pridaná podpora pre brailový riadok Tivomatic Caiku Albatross 46/80. (#13045)
+- Nová klávesová skratka: Oznámiť URL adresu zameraného odkazu (``NVDA+k``).
+Oznámi resp. zobrazí na braillovom riadku URL adresu odkazu, na ktorom je navigačný objekt.
+Stlačené dvakrát zobrazí URL adresu v samostatnom okne, v ktorom je možné adresu podrobne prezerať.
+- Pribudla tiež možnosť definovať klávesovú skratku, ktorá zobrazí URL adresu hneď v samostatnom okne. Skratku je potrebné definovať v dialógu klávesové skratky.
+Funkcia je rovnaká, ako keď stlačíte NVDA+K dvakrát za sebou, ale definovanie novej skratky môže byť užitočné pre používateľov braillových riadkov. (#14583)
+-
+
+
+== Zmeny ==
+- Braillová prekladová tabuľka LibLouis aktualizovaná na verziu [3.24.0 https://github.com/liblouis/liblouis/releases/tag/v3.24.0]. (#14436)
+  - Aktualizované tabuľky pre Maďarčinu, UEB a tiež čínske znaky bopomofo.
+  - Pridaná podpora pre dánsky Braillový štandard 2022.
+  - Pridané nové braillové tabuľky pre Gruzínsky kodifikovaný braill, Svahilčinu (Keňa) a Chichewa (Malawi).
+- Aktualizovaná knižnica Sonic rate boost na zdvojnásobenie rýchlosti na commit ``1d70513``. (#14180)
+- Databáza Unicode znakov CLDR aktualizovaná na 42.0. (#14273)
+- Hlasový výstup eSpeak NG aktualizovaný na 1.52-dev commit ``a51235aa``. (#14281)
+  - Opravené oznamovanie veľkých čísel. (#14241)
+  -
+- V Java aplikáciách s prvkami, ktoré majú možnosť výberu oznamuje NVDA stav, keď položka nie je vybratá a nie, keď je položka vybratá. (#14336)
+-
+
+
+== Opravy ==
+- Opravy pre Windows 11:
+  - NVDA oznamuje návrhy vyhľadávania po otvorení menu štart. (#13841)
+  - V architektúre ARM nie sú viac 64-bitové aplikácie identifikované ako aplikácie ARM64. (#14403)
+  - Odteraz je možné dostať sa k funkciám v menu histórie schránky, ako napríklad pripnúť položku. (#14508)
+  - Vo Windows 11 od verzie 22H2 je možné používať ovládanie myšy a dotykové ovládanie aj v oknách systémového panela a dialógu otvoriť v programe. (#14538, #14539)
+  -
+- V MS Excely sú zobrazované návrhy mien používateľov na spomenutie, ak do poľa s komentárom napíšete znak @. (#13764)
+- V panely s adresou Google Chrome sú oznamované po zameraní dostupné prvky (napríklad prechod na záložku, odstrániť návrh a podobne). (#13522)
+- Pri oznamovaní formátovania sú farby správne oznamované aj v aplikáciách Wordpad alebo zobrazovač logu. (#13959)
+- V prehliadači Firefox na stránke Gidhub, správne funguje aktivovanie tlačidla Show options (zobraziť možnosti). (#14269)
+- Prvky na výber dátumu v MS Outlooku 2016/365 v pokročilých možnostiach hľadania správne oznamujú popis a hodnoty. (#12726)
+- Aria začiarkávacie tlačidlá sú v prehliadačoch Edge, Chrome a Firefox oznamované ako začiarkávacie tlačidlá a nie začiarkávacie políčka. (#11310)
+- NVDA odteraz automaticky oznamuje zoradenie v hlavičkách v HTML tabuľkách, ak zmeníte spôsob zoradenia stlačením príslušného tlačidla. (#10890)
+- Oblasť stránky alebo orientačný bod je oznámený, ak pomocou rýchlej navigácie alebo fokusu prejdete do vnútra oblasti alebo orientačného bodu. (#13307)
+- Ak je zapnuté oznamovanie veľkých písmen slovom "veľké" alebo pípnutím, NVDA viac nepípa a neoznamuje "veľké" aj pri automatickom fonetickom hláskovaní. (#14239)
+- Prvky v tabuľkách v Java aplikáciách sú odteraz oznamované presnejšie. (#14347)
+- Niektoré nastavenia viac nie sú rôzne pri používaní viacerých profilov. (#14170)
+  - Týka sa to konkrétne týchto nastavení:
+    - Oznamovanie zarovnania riadka v nastaveniach čítania textu.
+    - Oznamovanie orámovania buniek tabuľky v nastaveniach čítania textu.
+    - Interval zobrazovania správ v nastaveniach braillu.
+    - Braillový kurzor zviazaný s v nastaveniach braillu.
+    -
+  - Môže sa stať, že tieto nastavenia budú zmenené po inštalácii tejto verzie NVDA.
+  - Po aktualizácii NVDA odporúčame skontrolovať vyššie spomenuté nastavenia.
+  -
+- Oznamovanie symbolov Emoji je odteraz podporované v ďalších jazykoch. (#14433)
+- Informácia o dostupných anotáciách je dostupná vždy aj na braillovom riadku. (#13815)
+- Opravené problémy s ukladaním nastavení, ak bola vybratá predvolená možnosť a následne bola vybratá tá istá možnosť priamo. (#14133)
+- Pri nastavovaní je zaručené, že bude vždy aktívny aspoň jeden kláves NVDA. (#14527)
+- Ak otvoríte menu NVDA zo systémového panela, NVDA viac nehlási, že je dostupná aktualizácia v prípadoch, že skutočne nie je dostupná aktualizácia. (#14523)
+- V prehrávači Foobar 2000 sú správne oznamované časy súborov dlhších ako deň. (#14127)
+- Upozornenia prehliadačov Chrome a Firefox (napríklad o stiahnutom súbore) sú tiež zobrazované na braillovom riadku. (#14562)
+- Opravená chyba, ktorá nastávala pri prechode na prvý a posledný stĺpec v tabuľke v prehliadači Mozilla Firefox. (#14554)
+- Ak je NVDA spustené s parametrom ``--lang=Windows``, je opäť možné otvoriť aj v tomto prípade nastavenia NVDA. (#14407)
+-
+
+
 = 2022.4 =
 Táto verzia obsahuje viacero nových klávesových skratiek, napríklad na plynulé čítanie riadkov a stĺpcov v tabuľkách.
 Do používateľskej príručky sme pridali sekciu, ako začať.
