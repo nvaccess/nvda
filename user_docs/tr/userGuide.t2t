@@ -38,9 +38,11 @@ NVDA'nın kısaca tanıtıldığı şu [videoya (ingilizce) https://www.youtube.
 
 + Sistem Gereksinimleri +[SystemRequirements]
 - İşletim Sistemleri: Windows 7, windows 8, Windows 8.1, Windows 10, Windows 11 ve Windows Server 2008 R2'den itibaren Server işletim sistemleri dahil, işletim sistemlerinin tüm 32 ve 64 bit sürümleri.
-- Windows 7 için, NVDA Service Pack 1 veya daha yüksek bir sürüme ihtiyaç duyar.
-- Windows Server 2008 için, NVDA Service Pack 1 veya daha yüksek bir sürüme ihtiyaç duyar.
-- en az 150 MB depolama alanı.
+  - Windows 7 için, NVDA Service Pack 1 veya daha yüksek bir sürüme ihtiyaç duyar.
+  - Windows Server 2008 için, NVDA Service Pack 1 veya daha yüksek bir sürüme ihtiyaç duyar.
+  - .Windows'un AMD64 ve ARM64 olmak üzere iki sürümü de desteklenir.
+  -
+  - en az 150 MB depolama alanı.
 -
 
 
@@ -2085,6 +2087,29 @@ Satır girintilerinin bildirimi seçim kutusunda dört seçenek bulunmaktadır.
 - Konuşarak ve ses çalarak: Bu seçenek girintinin yukarıdaki iki yolla da bildirimini sağlar.
 -
 
++++ Belge dolaşımı +++[DocumentNavigation]
+Bu kategori belge dolaşımı ile ilgili çeşitli ayarlamaları yapmanıza yarar
+
+==== Paragraf kipi ====[ParagraphStyle]
+: Varsayılan
+  Uygulama tarafından kontrol edilir
+: Seçenekler
+  Varsayılan (Uygulama tarafından kontrol edilir), Uygulama tarafından kontrol edilir, Tek satır sonu, Çoklu satır sonu
+:
+
+Bu seçim kutusu, ``kontrol+yukarı ok`` ve ``kontrol+aşağı ok`` tuşları ile paragraflarda gezinirken kullanılacak paragraf kipini seçmenize olanak tanır.
+Kullanılabilir paragraf kipleri şunlardır:
+- Uygulama tarafından kontrol edilir: NVDA mevcut uygulamanın bir önceki veya sonraki paragrafı belirlemesine izin verir ve gezinirken paragrafı okur. 
+Bu seçenek varsayılan olarak seçilidir ve uygulamaların varsayılan olarak paragraf dolaşımını desteklediği durumlarda en iyi biçimde çalışır.
+- Tek satır sonu: NVDA, paragraf göstergesi olarak tek bir satır sonu kullanarak önceki veya sonraki paragrafı belirlemeye çalışır.
+Bu, Varsayılan olarak paragraf gezinmeyi desteklemeyen bir uygulamada belgeleri okurken en iyi biçimde çalışır ve belgedeki paragraflar "enter" tuşuna bir kez basılarak işaretlenir.
+- Çoklu satır sonu: NVDA, paragrafları en az bir boş satır ("enter" tuşuna iki kez basılması) ile önceki veya sonraki paragrafı belirlemeye çalışır.
+Bu seçenek, blok paragraflar kullanan belgelerle çalışırken en iyi biçimde çalışır.
+Microsoft Word denetimlerine erişmek için UIA kullanmıyorsanız, bu paragraf stilinin Microsoft Word veya Microsoft Outlook'ta kullanılamayacağını unutmayın.
+-
+
+Mevcut paragraf kipleri arasında hızlıca geçiş yapmak için [Girdi hareketleri iletişim kutusu #InputGestures] üzerinden bir kısayol atayabilirsiniz. 
+
 +++ Windows OCR Ayarları +++[Win10OcrSettings]
 Bu kategori altındaki seçenekler [Windows OCR ayarlarını #Win10Ocr] yapılandırmanızı sağlar.
 Kategori aşağıdaki seçenekleri içerir:
@@ -2682,6 +2707,7 @@ Aşağıdaki ekranlar otomatik algılama işlevini destekler.
 - Eurobraille Esys/Esytime/Iris displays
 - Nattiq nBraille displays
 - Seika Notetaker: MiniSeika (16, 24 cells), V6, and V6Pro (40 cells)
+- Tivomatic Caiku Albatross 46/80 ekranlar
 - Standart HID Braille protokolünü destekleyen herhangi bir Ekran
 -
 
@@ -3562,6 +3588,63 @@ Lütfen [BRLTTY tuş komutları listesine http://mielke.cc/brltty/doc/KeyBinding
 | Braille ekranı önceki satıra götürme | lnup (bir satır yukarı git) |
 | Braille ekranı sonraki satıra götürme | lndn (bir satır aşağı git) |
 | imleci parmağın üzerinde bulunduğu Braille hücresine taşıma | route (imleci karektere götür) |
+%kc:endInclude
+
+++ Tivomatic Caiku Albatross 46/80 ++[Albatross]
+Tivomatic tarafından üretilen ve Finlandiya'da satışa sunulan Caiku Albatross cihazları USB veya seri olarak bağlanabilmektedir.
+Bu ekranları kullanmak için herhangi bir özel sürücünün yüklenmesi gerekmez.
+Ekranı bağlamanız ve sonrasında gerekli ayarları yapmanız yeterli olacaktır.
+
+Not: Baud hızının 19200 olması önerilir.
+Gerekirse braille ekran menüsünden Baud hızını 19200 olarak değiştirin.
+Sürücü 9600 baud hızını desteklese de, ekranın kullandığı baud hızını kontrol etmenin bir yolu yoktur.
+Ekranın varsayılan baud hızı 19200 olduğundan, sürücü önce bunu dener.
+Eğer baud hızları eşit olmazsa, sürücü beklenmedik şekilde davranabilir.
++
++Aşağıda braille ekranı NVDA ile hangi tuşlarla kullanabileceğinizi bulabilirsiniz.
++Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
++%kc:beginInclude
++|| Ad | Kısayol |
++| Move to top line in review | ``home1``, ``home2`` |
++| Move to bottom line in review | ``end1``, ``end2`` |
++| Sets the navigator object to the current focus | ``eCursor1``, ``eCursor2`` |
++| Move to current focus | ``cursor1``, ``cursor2`` |
++| Moves the mouse pointer to the current navigator object | ``home1+home2`` |
++| Sets the navigator object to the current object under the mouse pointer and speaks it | ``end1+end2`` |
++| Moves focus to current navigator object | ``eCursor1+eCursor2`` |
++| Toggle braille tethered to | ``cursor1+cursor2`` |
++| Move braille display to previous line | ``up1``, ``up2``, ``up3`` |
++| Move braille display to next line | ``down1``, ``down2``, ``down3`` |
++| Scroll braille display back | ``left``, ``lWheelLeft``, ``rWheelLeft`` |
++| Scroll braille display forward | ``right``, ``lWheelRight``, ``rWheelRight`` |
++| Route to braille cell | ``routing`` |
++| Report text formatting under braille cell | ``secondary routing`` |
++| Toggle the way context information is presented in braille | ``attribute1+attribute3`` |
++| Toggles between the speech modes of off, beep and talk | ``attribute2+attribute4`` |
++| Switches to the previous review mode (e.g. object, document or screen) | ``f1`` |
++| Switches to the next review mode (e.g. object, document or screen) | ``f2`` |
++| Moves the navigator object to the object containing it | ``f3`` |
++| Moves the navigator object to the first object inside it | ``f4`` |
++| Moves the navigator object to the previous object | ``f5`` |
+| Moves the navigator object to the next object | ``f6`` |
+| Reports the current navigator object | ``f7`` |
+| Reports information about the location of the text or object at the review cursor | ``f8`` |
+| Performs the default action on the current navigator object | ``f7+f8`` |
+| Reports date/time | ``f9`` |
+| Reports battery status and time remaining if AC is not plugged in | ``f10`` |
+| Reports title | ``f11`` |
+| Reports status bar | ``f12`` |
+| Reports the current line under the application cursor | ``f13`` |
+| Say all | ``f14`` |
+| Reports current character under review cursor | ``f15`` |
+| Reports the line of the current navigator object where the review cursor is situated | ``f16`` |
+| Speaks the word of the current navigator object where the review cursor is situated | ``f15+f16`` |
+| Moves the review cursor to the previous line of the current navigator object and speaks it | ``lWheelUp``, ``rWheelUp`` |
+| Moves the review cursor to the next line of the current navigator object and speaks it | ``lWheelDown``, ``rWheelDown`` |
+| ``Windows+d`` key (minimize all applications) | ``attribute1`` |
+| ``Windows+e`` key (this computer) | ``attribute2`` |
+| ``Windows+b`` key (focus system tray) | ``attribute3`` |
+| ``Windows+i`` key (Windows settings) | ``attribute4`` |
 %kc:endInclude
 
 ++ Standard HID Braille displays ++[HIDBraille]
