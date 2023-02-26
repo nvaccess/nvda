@@ -17,6 +17,8 @@ NVDA 由 [NV Access https://www.nvaccess.org/] 和其他贡献者共同开发（
 ++ 主要功能 ++[GeneralFeatures]
 NVDA 可供盲人和低视力人群使用 Windows 操作系统，以及与众多第三方应用程序进行交互。
 
+可以在 NV Access YouTube 频道观看一个简短的视频演示，[“什么是 NVDA？” https://www.youtube.com/watch?v=tCFyyqy9mqo]。
+
 主要特色包括：
 - 支持包括网页浏览器、电子邮件客户端、互联网聊天程序和 Office 套件在内的主流应用程序。
 - 集成的语音合成器（eSpeak NG）支持超过 80 种语言。
@@ -30,15 +32,17 @@ NVDA 可供盲人和低视力人群使用 Windows 操作系统，以及与众多
 - 能够在 Windows 登录界面和[其他安全界面 #SecureScreens]运行。
 - 支持使用触摸手势浏览屏幕时朗读控件和文本信息。
 - 支持常见的辅助功能接口，如 Microsoft Active Accessibility（MSAA）、Java Access Bridge、IAccessible2 和 UI automation。
-- 能够以高亮突出显示各种焦点。
 - 支持 Windows 命令提示符和其他控制台程序。
+- 能够以高亮突出显示各种焦点。
 -
 
-+ 系统需求 +[SystemRequirements]
+++ 系统需求 ++[SystemRequirements]
 - 操作系统：所有 32 位或者 64 位的 Windows 7 Sp1、Windows 8、Windows 8.1、Windows 10，Windows 11（从 2008 R2 起的所有服务器系统）。
-- 对于 Windows 7 版本，NVDA 要求 SP1 以上。
-- 对于 Windows Server 2008 R2 服务器操作系统，NVDA 要求 SP1 或者更高。
-- 大约需要 150 MB 的磁盘空间。
+  - 对于 Windows 7 版本，NVDA 要求 SP1 或更高。
+  - 对于 Windows Server 2008 R2 服务器操作系统，NVDA 要求 SP1 或更高。
+  - 支持 Windows 的 AMD64 和 ARM64 平台。
+  -
+- 至少需要 150 MB 的磁盘空间。
 -
 
 
@@ -347,39 +351,13 @@ NV Access 还出售[电话支持 https://www.nvaccess.org/product/nvda-telephone
 - Windows8 及以上：无法支持音频闪避功能。
 -
 
-+ 获取和配置 NVDA +[GettingAndSettingUpNVDA]
-如果您还没有 NVDA 的副本，请从 [NVDA 官方网站 NVDA_URL]下载它（译者注：中文相关的教程和资讯，也可访问：[NVDA 中文站 https://www.nvdacn.com/]获取）。
-
-转到下载区域，您将发现一个可下载最新版本 NVDA 的链接。
-
-运行您刚刚下载的文件，会打开一个临时的 NVDA 副本。
-您将被询问，是否要安装 NVDA、创建便携版本或者仅运行临时副本。
-
-如果您打算一直在这台计算机上使用 NVDA，您需要选择“安装 NVDA”。
-只有安装 NVDA 后，才能使用以下功能：在 Windows 登录时自动启动 NVDA，朗读 Windows 的登录界面或者其他[安全界面 #SecureScreens]，在开始菜单或桌面创建快捷方式（以上功能无法在便携版和临时副本中启用）。
-安装版本的 NVDA 允许您在任何时候创建便携版本。
-
-如果您希望让 NVDA 运行在 U 盘或其他可擦写的存储设备上，您应该选择“创建便携版本”。
-您之后随时可以把便携版本安装到电脑上。
-您如果只是想把 NVDA 拷贝到如 CD 等只读存储设备上，您只需要拷贝下载的文件即可。
-在只读媒体上直接运行便携版本的 NVDA 在目前是不受支持的。
-
-如果只想试用，可选择使用临时的 NVDA 副本，虽然每次以这种方式启动 NVDA 非常麻烦。
-
-++ 便携版和临时副本的限制 ++[PortableAndTemporaryCopyRestrictions]
-除了不能在登录期间和/或其后自动启动，NVDA 的便携版和临时副本还有以下限制：
-- 无法与使用管理员权限运行的应用程序进行交互，当然，除非 NVDA 本身也已经运行在管理员权限之下（不推荐）。
-- 读取用户帐户控制（UAC）界面时，不能尝试启动具有管理员权限的应用程序。
-- Windows 8：无法使用触摸屏进行输入。
-- Windows 8：无法在 Windows 商店应用提供诸如浏览模式和朗读输入字符的特性。
-- Windows 8 或其后版本：无法提供音频闪避特性。
--
++ 使用 NVDA +[GettingStartedWithNVDA]
 
 ++ 运行 NVDA ++[LaunchingNVDA]
 如果您已安装了 NVDA 安装版，最简单的打开方式是按下快捷键 control+alt+n，或从“开始菜单”中的“程序中找到 NVDA。
-您也可以在“开始菜单” 中的“运行”对话框中输入 NVDA，然后再按回车启动 NVDA。
+您也可以在“开始菜单” 中的“运行”对话框中输入 NVDA，然后按回车启动 NVDA。
 如果 NVDA 已经在运行，它将重新启动。
-您也可以使用一些[命令行选项 #CommandLineOptions]，他们允许您退出 NVDA（-q）、停用插件（--disable-addons）等。
+您也可以使用一些[命令行选项 #CommandLineOptions]，使用这些命令行选项可以退出 NVDA（-q）、停用插件（--disable-addons）等。
 
 NVDA 安装版的配置在“漫游”应用程序配置文件夹（比如 "C:\Users\<用户名>\AppData\Roaming"）。
 可以更改注册表把安装版的配置存放在“本地”应用程序配置文件夹（比如 "C:\Users\<用户名>\AppData\Local"）。
@@ -392,7 +370,7 @@ NVDA 安装版的配置在“漫游”应用程序配置文件夹（比如 "C:\U
 根据您电脑速度的不同，或者如果您正在 U 盘或其他低速媒体设备运行，将需要更多的时间来启动。
 如果启动时间较长，将提示“正在载入 NVDA，请稍后...”
 
-如果您没有听到以上语音提示，而听到的是 Windows 错误提示音，或是一串下沉的声音，那就代表 NVDA 加载没有成功，您需要重新查看可能引发的原因或向 NVDA 开发者报告此状况。
+如果您没有听到以上语音提示，而听到的是 Windows 错误提示音，或是一串下沉的声音，那就代表 NVDA 加载没有成功，您需要重新查看可能引发的原因或向 NVDA 开发者报告此情况。
 请打开 NVDA 网站获取与如何报告此问题相关的信息。
 
 +++ 欢迎对话框 +++[WelcomeDialog]
