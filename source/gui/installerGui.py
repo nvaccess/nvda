@@ -404,34 +404,48 @@ class PortableCreaterDialog(
 
 	def onCreatePortable(self, evt):
 		if not self.portableDirectoryEdit.Value:
-			# Translators: The message displayed when the user has not specified a destination directory
-			# in the Create Portable NVDA dialog.
-			gui.messageBox(_("Please specify a directory in which to create the portable copy."),
-				_("Error"),
-				wx.OK | wx.ICON_ERROR)
-			return
-		if not os.path.isabs(self.portableDirectoryEdit.Value):
 			gui.messageBox(
-				# Translators: The message displayed when the user has not specified an absolute destination directory
+				# Translators: The message displayed when the user has not specified a destination directory
 				# in the Create Portable NVDA dialog.
-				_("Please specify an absolute path (including drive letter)  in which to create the portable copy."),
-				# Translators: The message title displayed
-				# when the user has not specified an absolute destination directory
-				# in the Create Portable NVDA dialog.
+				_("Please specify a directory in which to create the portable copy."),
+				# Translators: the title of an error dialog.
 				_("Error"),
 				wx.OK | wx.ICON_ERROR
 			)
 			return
-		drv=os.path.splitdrive(self.portableDirectoryEdit.Value)[0]
-		if drv and not os.path.isdir(drv):
-			# Translators: The message displayed when the user specifies an invalid destination drive
-			# in the Create Portable NVDA dialog.
-			gui.messageBox(_("Invalid drive %s")%drv,
+		expandedPortableDirectory = os.path.expandvars(self.portableDirectoryEdit.Value)
+		if not os.path.isabs(expandedPortableDirectory):
+			gui.messageBox(
+				_(
+					# Translators: The message displayed when the user has not specified an absolute destination directory
+					# in the Create Portable NVDA dialog.
+					"Please specify the absolute path where the portable copy should be created. "
+					"It may include system variables (%temp%, %homepath%, etc.)."
+				),
+				# Translators: The message title displayed when the user has not specified an absolute
+				# destination directory in the Create Portable NVDA dialog.
 				_("Error"),
-				wx.OK | wx.ICON_ERROR)
+				wx.OK | wx.ICON_ERROR
+			)
+			return
+		drv = os.path.splitdrive(expandedPortableDirectory)[0]
+		if drv and not os.path.isdir(drv):
+			gui.messageBox(
+				# Translators: The message displayed when the user specifies an invalid destination drive
+				# in the Create Portable NVDA dialog.
+				_("Invalid drive ({drive}).").format(drive=drv),
+				# Translators: the title of an error dialog.
+				_("Error"),
+				wx.OK | wx.ICON_ERROR
+			)
 			return
 		self.Hide()
-		doCreatePortable(self.portableDirectoryEdit.Value,self.copyUserConfigCheckbox.Value,False,self.startAfterCreateCheckbox.Value)
+		doCreatePortable(
+			expandedPortableDirectory,
+			self.copyUserConfigCheckbox.Value,
+			False,
+			self.startAfterCreateCheckbox.Value
+		)
 		self.Destroy()
 
 	def onCancel(self, evt):
