@@ -23,6 +23,7 @@ This only worked for Bluetooth Serial ports before. (#14524)
 - It is now possible to use the backslash character in the replacement field of a dictionaries entry, when the type is not set to regular expression. (#14556)
 - In Browse mode, NVDA will no longer incorrectly ignore focus moving to a parent or child control e.g. moving from a control to its parent list item or gridcell. (#14611)
   - Note however that this fix only applies when the Automatically set focus to focusable elements" option in Browse Mode settings is turned off (which is the default).
+- NVDA no longer occasionally causes Mozilla Firefox to crash or stop responding. (#14647)
 -
 
 
