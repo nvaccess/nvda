@@ -526,14 +526,24 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 	if((formatConfig&formatConfig_reportLineNumber)&&(_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdFirstCharacterLineNumber)==S_OK)) {
 		formatAttribsStream<<L"line-number=\""<<iVal<<L"\" ";
 	}
-	if((formatConfig&formatConfig_reportColor)||(formatConfig&formatConfig_reportAlignment)||(formatConfig&formatConfig_reportParagraphIndentation)||(formatConfig&formatConfig_reportLineSpacing)) {
+	if (
+		(formatConfig & formatConfig_reportColor)
+		|| (formatConfig & formatConfig_reportAlignment)
+		|| (formatConfig & formatConfig_reportParagraphIndentation)
+		|| (formatConfig & formatConfig_reportLineSpacing)
+	) {
 		IDispatchPtr pDispatchParagraphFormat=NULL;
 		if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_PARAGRAPHFORMAT,VT_DISPATCH,&pDispatchParagraphFormat)==S_OK&&pDispatchParagraphFormat) {
-			if(formatConfig&formatConfig_reportColor) {
-				IDispatchPtr pDispatchParagraphFormatShading=NULL;
-				if(_com_dispatch_raw_propget(pDispatchParagraphFormat,wdDISPID_PARAGRAPHFORMAT_SHADING,VT_DISPATCH,&pDispatchParagraphFormatShading)==S_OK&&pDispatchParagraphFormatShading) {
-					int bgColor=0;
-					if(_com_dispatch_raw_propget(pDispatchParagraphFormatShading,wdDISPID_SHADING_BACKGROUNDPATTERNCOLOR,VT_I4,&bgColor)==S_OK) {
+			if (formatConfig & formatConfig_reportColor) {
+				IDispatchPtr pDispatchParagraphFormatShading = NULL;
+				if (
+					_com_dispatch_raw_propget(pDispatchParagraphFormat, wdDISPID_PARAGRAPHFORMAT_SHADING, VT_DISPATCH, &pDispatchParagraphFormatShading) == S_OK
+					&& pDispatchParagraphFormatShading
+				) {
+					int bgColor = 0;
+					if (
+						_com_dispatch_raw_propget(pDispatchParagraphFormatShading, wdDISPID_SHADING_BACKGROUNDPATTERNCOLOR, VT_I4, &bgColor) == S_OK
+					) {
 						formatAttribsStream<<L"background-color=\"" << bgColor <<L"\" ";
 					}
 				}
@@ -664,8 +674,12 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 			}
 		}
 	}
-	int hlColorIndex=0;
-	if((formatConfig&formatConfig_reportHighlightColor)&&(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_HIGHLIGHTCOLORINDEX,VT_I4,&hlColorIndex)==S_OK)&&hlColorIndex>0) {
+	int hlColorIndex = 0;
+	if (
+		(formatConfig & formatConfig_reportHighlightColor)
+		&& (_com_dispatch_raw_propget(pDispatchRange, wdDISPID_RANGE_HIGHLIGHTCOLORINDEX, VT_I4, &hlColorIndex) == S_OK)
+		&& hlColorIndex>0
+	) {
 		formatAttribsStream<<L"highlight-color-index=\""<<hlColorIndex<<L"\" ";
 	}
 	if (formatConfig&formatConfig_reportLanguage) {
