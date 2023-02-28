@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Babbage B.V.,
+# Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Babbage B.V.,
 # Davy Kager
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -10,8 +10,14 @@ as well as the associated TextInfo class."""
 
 import time
 import typing
+from typing import (
+	Optional,
+)
 import weakref
 import textUtils
+from annotation import (
+	AnnotationOrigin,
+)
 from logHandler import log
 import review
 import eventHandler
@@ -30,12 +36,13 @@ from treeInterceptorHandler import (
 	TreeInterceptor,
 )
 import braille
+from utils.security import _isObjectBelowLockScreen
 import vision
 import globalPluginHandler
 import brailleInput
 import locationHelper
 import aria
-from winAPI.sessionTracking import isWindowsLocked
+from winAPI.sessionTracking import _isLockScreenModeActive
 
 
 class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
@@ -181,7 +188,7 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 		Inserts LockScreenObject to the start of the clsList if Windows is locked.
 		"""
 		from .lockscreen import LockScreenObject
-		if isWindowsLocked():
+		if _isLockScreenModeActive():
 			# This must be resolved first to prevent object navigation outside of the lockscreen.
 			clsList.insert(0, LockScreenObject)
 
@@ -510,12 +517,28 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 	def _get_descriptionFrom(self) -> controlTypes.DescriptionFrom:
 		return controlTypes.DescriptionFrom.UNKNOWN
 
-	#: Typing information for auto property _get_detailsSummary
+	annotations: AnnotationOrigin
+	"""Typing information for auto property _get_annotations
+	"""
+
+	def _get_annotations(self) -> typing.Optional[AnnotationOrigin]:
+		if config.conf["debugLog"]["annotations"]:
+			log.debugWarning(
+				f"Fetching annotations not supported on: {self.__class__.__qualname__}"
+			)
+		return None
+
 	detailsSummary: typing.Optional[str]
+	"""
+	Typing information for auto property _get_detailsSummary
+	Deprecated, use self.annotations.targets instead.
+	"""
 
 	def _get_detailsSummary(self) -> typing.Optional[str]:
-		if config.conf["debugLog"]["annotations"]:
-			log.debugWarning(f"Fetching details summary not supported on: {self.__class__.__qualname__}")
+		log.warning(
+			"NVDAObject.detailsSummary is deprecated. Use NVDAObject.annotations instead.",
+			stack_info=True
+		)
 		return None
 
 	@property
@@ -523,12 +546,22 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		"""Default implementation is based on the result of _get_detailsSummary
 		In most instances this should be optimised.
 		"""
-		return bool(self.detailsSummary)
+		log.warning(
+			"NVDAObject.hasDetails is deprecated. Use NVDAObject.annotations instead.",
+			stack_info=True
+		)
+		return bool(self.annotations)
 
-	#: Typing information for auto property _get_detailsRole
 	detailsRole: typing.Optional[controlTypes.Role]
+	"""Typing information for auto property _get_detailsRole
+	Deprecated, use self.annotations.roles instead.
+	"""
 
 	def _get_detailsRole(self) -> typing.Optional[controlTypes.Role]:
+		log.warning(
+			"NVDAObject.detailsRole is deprecated. Use NVDAObject.annotations instead.",
+			stack_info=True
+		)
 		if config.conf["debugLog"]["annotations"]:
 			log.debugWarning(f"Fetching details summary not supported on: {self.__class__.__qualname__}")
 		return None
@@ -1066,10 +1099,12 @@ Tries to force this object to take the focus.
 			return False
 		return True
 
-	def _get_statusBar(self):
+	#: Type definition for auto prop '_get_statusBar'
+	statusBar: Optional["NVDAObject"]
+
+	def _get_statusBar(self) -> Optional["NVDAObject"]:
 		"""Finds the closest status bar in relation to this object.
 		@return: the found status bar else None
-		@rtype: L{NVDAObject} or None
 		"""
 		return None
 
@@ -1486,3 +1521,11 @@ This code is executed if a gain focus event is received by this object.
 		For performance, this method will only count up to the given maxCount number, and if there is one more above that, then sys.maxint is returned stating that many items are selected.
 		"""
 		return 0
+
+	#: Type definition for auto prop '_get_isBelowLockScreen'
+	isBelowLockScreen: bool
+
+	def _get_isBelowLockScreen(self) -> bool:
+		if not _isLockScreenModeActive():
+			return False
+		return _isObjectBelowLockScreen(self)

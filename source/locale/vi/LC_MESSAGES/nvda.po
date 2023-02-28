@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Vietnamese Language for NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-15 00:02+0000\n"
-"PO-Revision-Date: 2022-11-15 16:30+0700\n"
+"POT-Creation-Date: 2023-02-17 00:01+0000\n"
+"PO-Revision-Date: 2023-02-21 16:38+0700\n"
 "Last-Translator: Dang Manh Cuong <dangmanhcuong@gmail.com>\n"
 "Language-Team: Sao Mai Center for the Blind <danghoaiphuc@gmail.com>\n"
 "Language: vi_VN\n"
@@ -395,6 +395,10 @@ msgstr "sggstn"
 msgid "definition"
 msgstr "định nghĩa kiểu"
 
+#. Translators: Displayed in braille when an object is a switch control
+msgid "swtch"
+msgstr "swtch"
+
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
 msgstr "sel"
@@ -535,6 +539,18 @@ msgstr "USB"
 msgid "Bluetooth"
 msgstr "Bluetooth"
 
+#. Translators: Braille when there are further details/annotations that can be fetched manually.
+msgid "details"
+msgstr "các chi tiết"
+
+#. Translators: Braille when there are further details/annotations that can be fetched manually.
+#. %s specifies the type of details (e.g. "has comment suggestion")
+#. Translators: Speaks when there are further details/annotations that can be fetched manually.
+#. %s specifies the type of details (e.g. "comment, suggestion, details")
+#, python-format
+msgid "has %s"
+msgstr "có chứa %s"
+
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
 #, python-format
@@ -544,18 +560,6 @@ msgstr "h%s"
 #. Translators: Displayed in braille for a link which has been visited.
 msgid "vlnk"
 msgstr "vlnk"
-
-#. Translators: Braille when there are further details/annotations that can be fetched manually.
-#. %s specifies the type of details (e.g. comment, suggestion)
-#. Translators: Speaks when there are further details/annotations that can be fetched manually.
-#. %s specifies the type of details (e.g. comment, suggestion)
-#, python-format
-msgid "has %s"
-msgstr "có chứa %s"
-
-#. Translators: Braille when there are further details/annotations that can be fetched manually.
-msgid "details"
-msgstr "các chi tiết"
 
 #. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
@@ -614,19 +618,6 @@ msgstr "rslvd cmnt"
 #. Translators: brailled when text contains a bookmark
 msgid "bkmk"
 msgstr "bkmk"
-
-#. Translators: The label for a braille setting indicating that braille should be
-#. tethered to focus or review cursor automatically.
-msgid "automatically"
-msgstr "tự động"
-
-#. Translators: The label for a braille setting indicating that braille should be tethered to focus.
-msgid "to focus"
-msgstr "đến focus"
-
-#. Translators: The label for a braille setting indicating that braille should be tethered to the review cursor.
-msgid "to review"
-msgstr "đến con trỏ duyệt"
 
 #. Translators: Label for a setting in braille settings dialog.
 msgid "Dot firm&ness"
@@ -794,8 +785,18 @@ msgstr "Đan Mạch 8 chấm chữ nổi máy tính"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Danish 8 dot computer braille (1993)"
+msgstr "Đan Mạch 8 chấm chữ nổi máy tính (1993)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Danish 6 dot grade 1"
 msgstr "Đan Mạch 6 chấm cấp 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Danish 6 dot grade 1 (1993)"
+msgstr "Đan Mạch 6 chấm cấp 1 (1993)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -804,13 +805,28 @@ msgstr "Đan Mạch 8 chấm cấp 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Danish 8 dot grade 1 (1993)"
+msgstr "Đan Mạch 8 chấm cấp 1 (1993)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Danish 6 dot grade 2"
 msgstr "Đan Mạch 6 chấm cấp 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Danish 6 dot grade 2 (1993)"
+msgstr "Đan Mạch 6 chấm cấp 2 (1993)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Danish 8 dot grade 2"
 msgstr "Đan Mạch 8 chấm cấp 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Danish 8 dot grade 2 (1993)"
+msgstr "Đan Mạch 8 chấm cấp 2 (1993)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1059,6 +1075,11 @@ msgstr "Kannada cấp 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Georgian literary braille"
+msgstr "Georgian chữ nổi văn học"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Kazakh grade 1"
 msgstr "Kazakhstan cấp 1"
 
@@ -1209,6 +1230,11 @@ msgstr "Sepedi cấp 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Chichewa (Malawi) literary braille"
+msgstr "Chichewa (chữ nổi văn học)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Oriya grade 1"
 msgstr "Oriya cấp 1"
 
@@ -1334,6 +1360,36 @@ msgstr "Thụy Điển Chữ nổi tắt"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Swahili (Kenya) grade 1"
+msgstr "Swahili (Kenya) cấp 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) grade 1.2"
+msgstr "Swahili (Kenya) cấp 1.2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) grade 1.3"
+msgstr "Swahili (Kenya) cấp 1.3"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) grade 1.4"
+msgstr "Swahili (Kenya) cấp 1.4"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) grade 1.5"
+msgstr "Swahili (Kenya) cấp 1.5"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) Grade 2"
+msgstr "Swahili (Kenya) cấp 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Tamil grade 1"
 msgstr "Tamil cấp 1"
 
@@ -1436,14 +1492,14 @@ msgstr "Xhosa cấp 2"
 #. braille settings dialog.
 #. This should be translated to '中文中国汉语通用盲文' in Mandarin.
 msgid "Chinese common braille (simplified Chinese characters)"
-msgstr "Trung Quốc chữ nổi phổ thông (chữ Trung giãn thể)"
+msgstr "Trung Quốc chữ nổi phổ thông (chữ Trung giản thể)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #. This should be translated to '中文中国汉语现行盲文（无声调）' in Mandarin.
 msgid "Chinese (China, Mandarin) Current Braille System (no tones)"
 msgstr ""
-"Trung Quốc (Trung Quốc, Quan Thoại) hệ thống chữ nổi hiện tại (no tones)"
+"Trung Quốc (Trung Quốc, Quan Thoại) hệ thống chữ nổi hiện tại (không có mực)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2902,20 +2958,10 @@ msgid "Cycles through line indentation settings"
 msgstr "Chuyển giữa các thiết lập thụt đầu dòng"
 
 #. Translators: A message reported when cycling through line indentation settings.
-msgid "Report line indentation with speech"
-msgstr "Báo thụt đầu dòng bằng giọng đọc"
-
-#. Translators: A message reported when cycling through line indentation settings.
-msgid "Report line indentation with tones"
-msgstr "Báo thụt đầu dòng bằng âm thanh"
-
-#. Translators: A message reported when cycling through line indentation settings.
-msgid "Report line indentation with speech and tones"
-msgstr "Báo thụt đầu dòng bằng âm thanh và giọng đọc"
-
-#. Translators: A message reported when cycling through line indentation settings.
-msgid "Report line indentation off"
-msgstr "Tắt báo thụt đầu dòng"
+#. {mode} will be replaced with the mode; i.e. Off, Speech, Tones or Both Speech and Tones.
+#, python-brace-format
+msgid "Report line indentation {mode}"
+msgstr "Báo thụt đầu dòng {mode}"
 
 #. Translators: Input help mode message for toggle report paragraph indentation command.
 msgid "Toggles on and off the reporting of paragraph indentation"
@@ -2979,17 +3025,11 @@ msgstr "bật báo vị trí ô"
 msgid "Cycles through the cell border reporting settings"
 msgstr "Chuyển giữa các thiết lập thông báo đường viền ô"
 
-#. Translators: A message reported when cycling through cell borders settings.
-msgid "Report styles of cell borders"
-msgstr "Thông báo kiểu đường viền ô"
-
-#. Translators: A message reported when cycling through cell borders settings.
-msgid "Report colors and styles of cell borders"
-msgstr "Báo màu và kiểu đường viền ô"
-
-#. Translators: A message reported when cycling through cell borders settings.
-msgid "Report cell borders off."
-msgstr "tắt báo đường viền ô"
+#. Translators: Reported when the user cycles through report cell border modes.
+#. {mode} will be replaced with the mode; e.g. Off, Styles and Colors and styles.
+#, python-brace-format
+msgid "Report cell borders {mode}"
+msgstr "Báo đường viền ô {mode}"
 
 #. Translators: Input help mode message for toggle report links command.
 msgid "Toggles on and off the reporting of links"
@@ -3154,6 +3194,19 @@ msgstr "Duyệt qua các chế độ đọc ký hiệu"
 #, python-format
 msgid "Symbol level %s"
 msgstr "Cấp độ ký hiệu %s"
+
+#. Translators: Input help mode message for toggle delayed character description command.
+msgid ""
+"Toggles on and off delayed descriptions for characters on cursor movement"
+msgstr "bật / tắt chờ để mô tả cho kí tự khi di chuyển con trỏ"
+
+#. Translators: The message announced when toggling the delayed character description setting.
+msgid "delayed character descriptions on"
+msgstr "bật chờ để mô tả kí tự"
+
+#. Translators: The message announced when toggling the delayed character description setting.
+msgid "delayed character descriptions off"
+msgstr "tắt chờ để mô tả kí tự"
 
 #. Translators: Input help mode message for move mouse to navigator object command.
 msgid "Moves the mouse pointer to the current navigator object"
@@ -4292,6 +4345,32 @@ msgstr ""
 msgid "Plugins reloaded"
 msgstr "Các mô đun mở rộng đã được cập nhật"
 
+#. Translators: input help mode message for Report destination URL of navigator link command
+msgid ""
+"Report the destination URL of the link in the navigator object. If pressed "
+"twice, shows the URL in a window for easier review."
+msgstr ""
+"Thông báo đường dẫn URL của liên kết tại đối tượng điều hướng. Bấm hai lần "
+"sẽ hiển thị URL trên một cửa sổ để dễ xem lại hơn."
+
+#. Translators: Informs the user that the window contains the destination of the
+#. link with given title
+#, python-brace-format
+msgid "Destination of: {name}"
+msgstr "Vị trí của: {name}"
+
+#. Translators: Tell user that the command has been run on something that is not a link
+msgid "Not a link."
+msgstr "Không phải liên kết."
+
+#. Translators: input help mode message for Report URL of navigator link in a window command
+msgid ""
+"Reports the destination URL of the link in the navigator object in a window, "
+"instead of just speaking it. May be preferred by braille users."
+msgstr ""
+"Thông báo đường dẫn URL của liên kết tại đối tượng điều hướng trong một cửa "
+"sổ, thay vì chỉ đọc nó lên. Có thể người dùng chữ nổi chuộng cái này."
+
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Moves to the next object in a flattened view of the object navigation "
@@ -4440,6 +4519,10 @@ msgstr "Che màn hình tạm thời, có hiệu lực đến lần khởi độn
 #. Translators: Reported when the screen curtain could not be enabled.
 msgid "Could not enable screen curtain"
 msgstr "Không thể bật che màn hình"
+
+#. Translators: Describes a command.
+msgid "Cycles through paragraph navigation styles"
+msgstr "Chuyển giữa các kiểu điều hướng đoạn"
 
 #. Translators: a message indicating that configuration profiles can't be activated using gestures,
 #. due to profile activation being suspended.
@@ -4837,9 +4920,12 @@ msgstr "laptop"
 msgid "unknown %s"
 msgstr "không xác định %s"
 
+#. Translators: a state that denotes a control is currently on
+#. E.g. a switch control.
 msgid "on"
 msgstr "bật"
 
+#. Translators: This is presented when a switch control is off.
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
@@ -6240,6 +6326,7 @@ msgstr "Lỗi kiểm tra cập nhật."
 #. Translators: The title of the message box
 #. Translators: The title of the error dialog displayed when there is an error showing the GUI
 #. for a vision enhancement provider
+#. Translators: The title of an error message box displayed when validating the startup dialog
 msgid "Error"
 msgstr "Lỗi"
 
@@ -6488,6 +6575,11 @@ msgstr ""
 msgid "%d percent"
 msgstr "%d phần trăm"
 
+#. Translators: Announced in braille when suggestions appear when search term is entered
+#. in various search fields such as Start search box in Windows 10.
+msgid "Suggestions"
+msgstr "Gợi ý"
+
 #. Translators: a message announcing a candidate's character and description.
 #, python-brace-format
 msgid "{symbol} as in {description}"
@@ -6529,10 +6621,6 @@ msgstr "Chuyển đối tượng điều hướng và con trỏ đến dòng đ�
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object and focus to the last row"
 msgstr "Chuyển đối tượng điều hướng và con trỏ đến dòng cuối cùng"
-
-#. Translators: Announced in braille when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
-msgid "Suggestions"
-msgstr "Gợi ý"
 
 #. Translators: The label for a 'composition' Window that appears when the user is typing one or more east-Asian characters into a document.
 msgid "Composition"
@@ -6603,17 +6691,36 @@ msgstr "Không tìm thấy cửa sổ tài lieu."
 msgid "No track playing"
 msgstr "Không có bài nào đang phát"
 
+#. Translators: Reported remaining time in Foobar2000
+#, python-brace-format
+msgid "{remainingTimeFormatted} remaining"
+msgstr " còn lại {remainingTimeFormatted}"
+
 #. Translators: Reported if the remaining time can not be calculated in Foobar2000
-msgid "Unable to determine remaining time"
-msgstr "Không thể xác định thời gian còn lại"
+msgid "Remaining time not available"
+msgstr "Không có thời gian còn lại"
 
 #. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Thông báo thời gian còn lại của bản nhạc đang chơi, nếu có"
 
+#. Translators: Reported elapsed time in Foobar2000
+#, python-brace-format
+msgid "{elapsedTime} elapsed"
+msgstr "đẫ qua {elapsedTime}"
+
+#. Translators: Reported if the elapsed time is not available in Foobar2000
+msgid "Elapsed time not available"
+msgstr "Không có thời gian đã trôi qua"
+
 #. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
 msgid "Reports the elapsed time of the currently playing track, if any"
 msgstr "Thông báo thời gian đã phát của bản nhạc hiện tại, nếu có"
+
+#. Translators: Reported remaining time in Foobar2000
+#, python-brace-format
+msgid "{totalTime} total"
+msgstr "{totalTime} tổng thời gian"
 
 #. Translators: Reported if the total time is not available in Foobar2000
 msgid "Total time not available"
@@ -7299,9 +7406,60 @@ msgstr "&Hiển thị trình xem chữ nổi khi khởi động"
 msgid "&Hover for cell routing"
 msgstr "&Lướt để đưa đến ô"
 
-#. Translators: This is the label for a combobox in the
-#. document formatting settings panel.
-#. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+#. Translators: One of the show states of braille messages
+#. (the disabled mode turns off showing of braille messages completely).
+#. Translators: Label for an option in NVDA settings.
+#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
+msgid "Disabled"
+msgstr "Đã tắt"
+
+#. Translators: One of the show states of braille messages
+#. (the timeout mode shows messages for the specific time).
+msgid "Use timeout"
+msgstr "Dùng thời gian chờ"
+
+#. Translators: One of the show states of braille messages
+#. (the indefinitely mode prevents braille messages from disappearing automatically).
+msgid "Show indefinitely"
+msgstr "Hiển thị vô thời hạn"
+
+#. Translators: The label for a braille setting indicating that braille should be
+#. tethered to focus or review cursor automatically.
+msgid "automatically"
+msgstr "tự động"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered to focus.
+msgid "to focus"
+msgstr "đến focus"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered
+#. to the review cursor.
+msgid "to review"
+msgstr "đến con trỏ duyệt"
+
+#. Translators: A choice in a combo box in the document formatting dialog to report No line Indentation.
+msgctxt "line indentation setting"
+msgid "Off"
+msgstr "Tắt"
+
+#. Translators: A choice in a combo box in the document formatting dialog to report indentation
+#. with Speech.
+msgctxt "line indentation setting"
+msgid "Speech"
+msgstr "Đọc"
+
+#. Translators: A choice in a combo box in the document formatting dialog to report indentation
+#. with tones.
+msgctxt "line indentation setting"
+msgid "Tones"
+msgstr "Âm thanh"
+
+#. Translators: A choice in a combo box in the document formatting dialog to report indentation with both
+#. Speech and tones.
+msgctxt "line indentation setting"
+msgid "Both Speech and Tones"
+msgstr "Cả đọc và âm thanh"
+
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
 msgid "Off"
@@ -7322,17 +7480,40 @@ msgstr "Dòng"
 msgid "Columns"
 msgstr "Cột"
 
-#. Translators: Label for an option in NVDA settings.
-#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
-#. Translators: One of the show states of braille messages
-#. (the disabled mode turns off showing of braille messages completely).
-msgid "Disabled"
-msgstr "Đã tắt"
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Styles"
+msgstr "Kiểu dáng"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Both Colors and Styles"
+msgstr "Cả Màu và Kiểu Dáng"
 
 #. Translators: Label for an option in NVDA settings.
 #. Translators: The status shown for an addon when its currently running in NVDA.
 msgid "Enabled"
 msgstr "Đã bật"
+
+#. Translators: Label for a paragraph style in NVDA settings.
+msgid "Handled by application"
+msgstr "Quản lý bởi ứng dụng"
+
+#. Translators: Label for a paragraph style in NVDA settings.
+msgid "Single line break"
+msgstr "Một dấu xuống dòng"
+
+#. Translators: Label for a paragraph style in NVDA settings.
+msgid "Multi line break"
+msgstr "Nhiều dấu xuống dòng"
+
+#. Translators: Label for an option in NVDA settings.
+msgid "Diffing"
+msgstr "Diffing"
+
+#. Translators: Label for an option in NVDA settings.
+msgid "UIA notifications"
+msgstr "Các thông báo UIA"
 
 #. Translators: The title of the document used to present the result of content recognition.
 msgid "Result"
@@ -8100,6 +8281,11 @@ msgstr "chú thích"
 msgid "suggestion"
 msgstr "gợi ý"
 
+#. Translators: The word role for a switch control
+#. I.e. a control that can be switched on or off.
+msgid "switch"
+msgstr "nút chuyển"
+
 #. Translators: Indicates that a particular state of an object is negated.
 #. Separate strings have now been defined for commonly negated states (e.g. not selected and not
 #. checked), but this still might be used in some other cases.
@@ -8298,6 +8484,13 @@ msgstr "chưa chọn"
 #. This is only reported for objects which support accessible drag and drop.
 msgid "done dragging"
 msgstr "thả xong"
+
+#. Translators: This is spoken when a paragraph is considered blank.
+#. Translators: This is spoken when the line is considered blank.
+#. Translators: This is spoken when NVDA moves to an empty line.
+#. Translators: This is spoken when the line is considered blank.
+msgid "blank"
+msgstr "dòng trắng"
 
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 msgid "Configuration applied"
@@ -8883,6 +9076,10 @@ msgstr "Hành động không sẵn sàng trong phiên bản Windows Store của 
 msgid "Action unavailable while a dialog requires a response"
 msgstr "Hành động không sẵn sàng khi một hộp thoại yêu cầu phản hồi"
 
+#. Translators: Reported when an action cannot be performed because Windows is locked.
+msgid "Action unavailable while Windows is locked"
+msgstr "Hành động không sẵn sàng khi Windows bị khóa"
+
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
 msgstr "Hồ Sơ Cấu Hình"
@@ -8934,8 +9131,10 @@ msgid "Error activating profile."
 msgstr "Lỗi kích hoạt hồ sơ."
 
 #. Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
-msgid "This profile will be permanently deleted. This action cannot be undone."
-msgstr "Hồ sơ sẽ bị xóa vĩnh viễn. Bạn không thể phục hồi lại thao tác này."
+#. The placeholder {} is replaced with the name of the configuration profile that will be deleted.
+msgid ""
+"The profile {} will be permanently deleted. This action cannot be undone."
+msgstr "Hồ sơ {} sẽ bị xóa vĩnh viễn. Thao tác này không thể phục hồi."
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 msgid "Confirm Deletion"
@@ -10086,19 +10285,6 @@ msgstr "Số &dòng"
 msgid "Line &indentation reporting:"
 msgstr "Thông báo &thụt lề dòng:"
 
-#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
-msgctxt "line indentation setting"
-msgid "Speech"
-msgstr "Đọc"
-
-#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
-msgid "Tones"
-msgstr "Âm thanh"
-
-#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
-msgid "Both Speech and Tones"
-msgstr "Cả âm thanh và đọc"
-
 #. Translators: This message is presented in the document formatting settings panelue
 #. If this option is selected, NVDA will report paragraph indentation if available.
 msgid "&Paragraph indentation"
@@ -10133,16 +10319,6 @@ msgstr "&Phần đầu"
 #. document formatting settings panel.
 msgid "Cell c&oordinates"
 msgstr "Vị &trí ô"
-
-#. Translators: This is the label for a combobox in the
-#. document formatting settings panel.
-msgid "Styles"
-msgstr "Kiểu dáng"
-
-#. Translators: This is the label for a combobox in the
-#. document formatting settings panel.
-msgid "Both Colors and Styles"
-msgstr "Cả Màu và Kiểu Dáng"
 
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
@@ -10198,6 +10374,14 @@ msgstr "Có thể clic&k"
 #. document formatting settings panel.
 msgid "Report formatting chan&ges after the cursor (can cause a lag)"
 msgstr "&Thông báo các thay đổi định dạng sau con trỏ (có thể gây ra độ trễ)"
+
+#. Translators: This is the label for the document navigation settings panel.
+msgid "Document Navigation"
+msgstr "Điều hướng tài liệu"
+
+#. Translators: This is a label for the paragraph navigation style in the document navigation dialog
+msgid "&Paragraph style:"
+msgstr "&Kiểu đoạn:"
 
 #. Translators: This is the label for the touch interaction settings panel.
 msgid "Touch Interaction"
@@ -10443,6 +10627,10 @@ msgstr "Diff Match Patch"
 msgid "Difflib"
 msgstr "Difflib"
 
+#. Translators: This is the label for a combo-box in the Advanced settings panel.
+msgid "Speak new text in Windows Terminal via:"
+msgstr "Đọc văn bản mới trong Windows Terminal thông qua:"
+
 #. Translators: This is the label for combobox in the Advanced settings panel.
 msgid "Attempt to cancel speech for expired focus events:"
 msgstr "Cố gắng không đọc các sự kiện lỗi thời của focus:"
@@ -10586,16 +10774,6 @@ msgstr "Hình con trỏ &focus:"
 #. Translators: The label for a setting in braille settings to select the cursor shape when tethered to review.
 msgid "Cursor shape for &review:"
 msgstr "Hình con trỏ &duyệt:"
-
-#. Translators: One of the show states of braille messages
-#. (the timeout mode shows messages for the specific time).
-msgid "Use timeout"
-msgstr "Dùng thời gian chờ"
-
-#. Translators: One of the show states of braille messages
-#. (the indefinitely mode prevents braille messages from disappearing automatically).
-msgid "Show indefinitely"
-msgstr "Hiển thị vô thời hạn"
 
 #. Translators: The label for a setting in braille settings to combobox enabling user
 #. to decide if braille messages should be shown and automatically disappear from braille display.
@@ -10893,6 +11071,14 @@ msgstr "&Sử dụng phím Khóa Hoa làm phím bổ trợ NVDA"
 msgid "&Show this dialog when NVDA starts"
 msgstr "&Hiển thị hộp thoại này khi khởi động NVDA"
 
+#. Translators: The title of an error message box displayed when validating the startup dialog
+msgid ""
+"At least one NVDA modifier key must be set. Caps lock will remain as an NVDA "
+"modifier key. "
+msgstr ""
+"Phải chọn ít nhất 1 phím làm phím bổ trợ NVDA. Phím khóa hoa sẽ là phím bổ "
+"trợ NVDA. "
+
 #. Translators: The label for a checkbox in NvDA installation program to agree to the license agreement.
 msgid "I &agree"
 msgstr "Tôi đồ&ng ý"
@@ -10953,12 +11139,6 @@ msgstr "Thoát tương tác với Toán"
 msgid "Math interaction not supported."
 msgstr "Không hỗ trợ tương tác với Toán."
 
-#. Translators: This is spoken when the line is considered blank.
-#. Translators: This is spoken when NVDA moves to an empty line.
-#. Translators: This is spoken when the line is considered blank.
-msgid "blank"
-msgstr "dòng trắng"
-
 #. Translators: cap will be spoken before the given letter when it is capitalized.
 #, python-format
 msgid "cap %s"
@@ -11002,15 +11182,19 @@ msgid "row %s"
 msgstr "dòng %s"
 
 #. Translators: Speaks the row span added to the current row number (example output: through 5).
-#. Translators: Speaks the column span added to the current column number (example output: through 5).
-#, python-format
-msgid "through %s"
-msgstr "đến %s"
+#, python-brace-format
+msgid "through {endRow}"
+msgstr "qua {endRow}"
 
 #. Translators: Speaks current column number (example output: column 3).
 #, python-format
 msgid "column %s"
 msgstr "cột %s"
+
+#. Translators: Speaks the column span added to the current column number (example output: through 5).
+#, python-brace-format
+msgid "through {endCol}"
+msgstr "qua {endCol}"
 
 #. Translators: Speaks the row and column span added to the current row and column numbers
 #. (example output: through row 5 column 3).
@@ -11405,6 +11589,41 @@ msgstr "{curPercent:.0f}%"
 #, python-brace-format
 msgid "at {x}, {y}"
 msgstr "tại {x}, {y}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds
+#, python-brace-format
+msgctxt "time format"
+msgid "{S}"
+msgstr "{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes
+#, python-brace-format
+msgctxt "time format"
+msgid "{M}:{S}"
+msgstr "{M}:{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes, {H} hours
+#, python-brace-format
+msgctxt "time format"
+msgid "{H}:{M}:{S}"
+msgstr "{H}:{M}:{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes, {H} hours, {D} day
+#, python-brace-format
+msgctxt "time format"
+msgid "{D} day {H}:{M}:{S}"
+msgstr "{D} day {H}:{M}:{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes, {H} hours, {D} days
+#, python-brace-format
+msgctxt "time format"
+msgid "{D} days {H}:{M}:{S}"
+msgstr "{D} days {H}:{M}:{S}"
 
 #. Translators: This is the message for a warning shown if NVDA cannot determine if
 #. Windows is locked.
@@ -12500,11 +12719,13 @@ msgstr "Mục nhập legend {legendEntryIndex} của {legendEntryCount}"
 msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
 
-#. Translators: The default color of text when a color has not been set by the author.
-#. Translators: The default background color  when a color has not been set by the author.
-#. Translators: the default (automatic) color in Microsoft Word
-msgid "default color"
-msgstr "màu mặc định"
+#. Translators: The text color as reported in Wordpad (Automatic) or NVDA log viewer.
+#. Translators: The background color as reported in Wordpad (Automatic) or NVDA log viewer.
+#. Translators: The text color as reported in Wordpad (Automatic) or NVDA log viewer.
+#. Translators: The background color as reported in Wordpad (Automatic) or NVDA log viewer.
+#, python-brace-format
+msgid "{color} (default color)"
+msgstr "{color} (màu mặc định)"
 
 #. Translators: The color of text cannot be detected.
 #. Translators: The background color cannot be detected.
@@ -12651,7 +12872,7 @@ msgstr "&Bảng tính"
 #. Translators: Used to express an address range in excel.
 #, python-brace-format
 msgid "{start} through {end}"
-msgstr "{start} through {end}"
+msgstr "{start} qua {end}"
 
 #. Translators: the description  for a script for Excel
 msgid "opens a dropdown item at the current cell"
@@ -13044,6 +13265,10 @@ msgstr "%.1f dòng"
 msgid "Table description"
 msgstr "Mô tả bảng"
 
+#. Translators: the default (automatic) color in Microsoft Word
+msgid "automatic color"
+msgstr "màu tự động"
+
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Bold on"
 msgstr "Bật in đậm"
@@ -13174,6 +13399,40 @@ msgstr "Phân cách dòng đôi"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Phân cách dòng 1.5"
+
+#. Translators: Names of braille displays.
+msgid "Caiku Albatross 46/80"
+msgstr "Caiku Albatross 46/80"
+
+#. Translators: A message when number of status cells must be changed
+#. for a braille display driver
+msgid ""
+"To use Albatross with NVDA: change number of status cells in Albatross "
+"internal menu at most "
+msgstr ""
+"Để dùng Albatross với NVDA: hãy thay đổi số trạng thái ô trong trình đơn "
+"Albatross internal thành hầu hết "
+
+#~ msgid "Unable to determine remaining time"
+#~ msgstr "Không thể xác định thời gian còn lại"
+
+#~ msgid "through %s"
+#~ msgstr "đến %s"
+
+#~ msgid "Report line indentation with speech"
+#~ msgstr "Báo thụt đầu dòng bằng giọng đọc"
+
+#~ msgid "Report line indentation with tones"
+#~ msgstr "Báo thụt đầu dòng bằng âm thanh"
+
+#~ msgid "Report line indentation with speech and tones"
+#~ msgstr "Báo thụt đầu dòng bằng âm thanh và giọng đọc"
+
+#~ msgid "Report styles of cell borders"
+#~ msgstr "Thông báo kiểu đường viền ô"
+
+#~ msgid "Report colors and styles of cell borders"
+#~ msgstr "Báo màu và kiểu đường viền ô"
 
 #~ msgid "NVDA could not start securely."
 #~ msgstr "Không thể khởi động NVDA một cách an toàn."

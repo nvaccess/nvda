@@ -26,6 +26,7 @@ negative number	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
 after-number %	(?<=\d)(\s?\%)(?=\W|$)
 n°	\b([nN])(°)
 
+
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 
@@ -89,6 +90,7 @@ $	dollar
 <	inférieur
 =	égal
 ?	point d'interrogation
+⸮	point d'interrogation réfléchi	some
 ؟	point d’interrogation arabe
 @	arobase	none
 [	crochet gauche

@@ -17,6 +17,8 @@ NVDA razvija organizacija [NV Access https://www.nvaccess.org/], uz doprinose za
 ++ Glavne značajke ++[GeneralFeatures]
 NVDA omogućuje slijepim i slabovidnim osobama pristup i interakciju s operacijskom sustavu Windows te mnogim aplikacijama trećih strana.
 
+Kratka video demonstracija, ["što je NVDA?" https://www.youtube.com/watch?v=tCFyyqy9mqo] dostupna je na NV Access youtube kanalu.
+
 Glavne značajke uključuju:
 - podrška za poznate programe uključujući web preglednike, klijente elektroničke pošte, programe za čavrljanje putem interneta i uredske pakete
 - ugrađena govorna jedinica koja podržava preko 80 jezika
@@ -32,6 +34,13 @@ Glavne značajke uključuju:
 - podrška za uobičajena sučelja za pristupačnost, kao što su Microsoft Active Accessibility, Java Access Bridge, IAccessible2 i UI Automation
 - podrška za Windowsov naredbeni redak i druge aplikacije koje rade u naredbenom retku
 - mogućnost isticanja fokusa sustava
+-
+
++ Preduvjeti za pokretanje NVDA čitača +[SystemRequirements]
+- Operacijski sustavi: sva 32-bitna i 64-bitna izdanja sustava Windows 7, Windows 8, Windows 8.1, Windows 10, Windows 11 i svih serverskih operacijskih sustava, počevši od Windows Server 2008 R2.
+ - Za Windows 7, NVDA treba servisni paket 1 ili noviji.
+ - Za Windows Server 2008 R2, NVDA treba servisni paket 1 ili noviji.
+- Najmanje 150 MB prostora na tvrdom disku.
 -
 
 ++ Internacionalizacija ++[Internationalization]
@@ -65,42 +74,222 @@ Ovo se odnosi na originalni i promijenjeni softver, kao i na rad koji je iz toga
 Za pojedinosti [pogledajte cijelu licencu. https://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 Za detalje o iznimkama, molimo pročitajte dokument licence kojeg možete naći u NVDA izborniku u podizborniku "pomoć".
 
-+ Preduvjeti za pokretanje NVDA čitača +[SystemRequirements]
-- Operacijski sustavi: sva 32-bitna i 64-bitna izdanja sustava Windows 7, Windows 8, Windows 8.1, Windows 10, Windows 11 i svih serverskih operacijskih sustava, počevši od Windows Server 2008 R2.
- - Za Windows 7, NVDA treba servisni paket 1 ili noviji.
- - Za Windows Server 2008 R2, NVDA treba servisni paket 1 ili noviji.
-- Najmanje 150 MB prostora na tvrdom disku.
++ NVDA vodič za brzo pokretanje +[NVDAQuickStartGuide]
+
+Ovaj vodič za brzo pokreanje sadrži tri glavna poglavlja: preuzimanje, početno postavljanje, te pokretanje NVDA.
+Poslje tih poglavlja slijede informacije o prilagođavanju postavki, sudjelovanje u zajednici te kako dobiti pomoć.
+Informacije u ovom vodiču skupljene su iz drugih djelova priručnika za NVDA.
+ZA više detaljnijih informacija, molimo pogledajte priručnik za korisnike i svaku njegovu rubriku.
+
+++ Preuzimanje NVDA ++[GettingAndSettingUpNVDA]
+NVDA je putpuno besplatan za svakog tko ga želi koristiti.
+Ne postoji niti licenčni ključ o kojem trebate brinuti, niti skupa pretplata koju trebate plaćati.
+NVDA se u prosjeku ažurira tri puta godišnje.
+Posljednja NVDA inačica je dostupna na "stranici Download" glavne web stranice  [NV Access website NVDA_URL], organizacije koja razvija NVDA.
+
+NVDA radi u svim posljednjim verzijama operacijskog sustava Windows.
+Za više detalja, molimo pogledajte [Preduvjete za pokretanje #SystemRequirements].
+
++++ Koraci za preuzimanje NVDA +++[StepsForDownloadingNVDA]
+ 
+Ovi koraci podrazumjevaju da ste upoznati sa načinom kretanja po web stranici.
+
+- Otvorite vaš internetski preglednik (pritisnite ``Windows`` tipku, napišite riječ "internet" bez navodnika, te pritisnite ``enter``)
+- Otvorite NV Access stranicu za preuzimanje (pritisnite ``alt+d``, napišite the sljedeću adresu i pritisnite ``enter``): 
+https://www.nvaccess.org/download 
+- Aktivirajte gumb "download"
+- Preglednik može, ali i ne mora prikazati dijaloški okvir u kojem ćete biti pitani za akciju koja će se izvršiti nakon preuzimanja, te će će preuzimanje započeti
+- Ovisno o internetskom pregledniku, datoteka se može automatski pokrenuti poslije preuzimanja
+- Ako datoteka mora biti ručno pokrenuta, pritisnite ``alt+n`` kako biste se premjestili na područje obavijesti, a potom ``alt+r`` kako biste pokrenuli datoteku (ili slične korake koji se primjenjuju u vašem web pregledniku)
 -
 
-+ Preuzimanje i postavljanje NVDA čitača +[GettingAndSettingUpNVDA]
-Ako još niste preuzeli svoju kopiju NVDA čitača, možete je preuzeti s [NV Access web stranice NVDA_URL].
-
-Pronađite odjeljak Preuzimanje (engl. Download) gdje ćete pronaći najnoviju verziju NVDA čitača.
+++ Postavljanje NVDA ++[SettingUpNVDA]
 
 Pokrenete li datoteku koju ste upravo preuzeli, pokrenut će se privremena kopija NVDA čitača.
 Tada će vas NVDA pitati želite li instalirati NVDA, izraditi prijenosnu kopiju ili nastaviti koristiti privremenu kopiju.
 
-Ako planirate stalno koristiti NVDA na ovom računalu, htjeti ćete instalirati NVDA.
-Instalacija NVDA će omogućiti dodatne funkcije poput automatskog pokretanja prilikom prijave, mogućnost čitanja prijave u operacijski sustav Windows te drugih [zaslona za prijavu #SecureScreens] (što se ne može učiniti sa prijenosnim i privremenim kopijama) te stvaranje prečaca na radnoj površini i u izborniku start.
-Prijenosnu kopiju možete stvoriti iz instalirane kopije u bilo kojem trenutku.
+Jednom kada se pokrene NVDA program za pokretanje, internetski pristup nije više potreban.
+Ako je internetska veza dostupna, biti ćete u mogućnosti nadograđivati NVDA.
 
-Ako želite nositi NVDA sa sobom na USB sticku ili na drugom mediju koji podržava zapisivanje, morate odabrati izradu prijenosne kopije.
-Prijenosna kopija se može kasnije instalirati na bilo kojem računalu.
-Međutim, ako želite kopirati NVDA na medij koji je samo za čitanje kao što je CD, morate samo kopirati instalacijsku datoteku koju ste preuzeli.
-Trenutačno se ne podržava pokretanje prijenosne kopije s medija koji su samo za čitanje.
++++ Koraci za pokretanje preuzetog programa za pokretanje +++[StepsForRunningTheDownloadLauncher]
 
-Korištenje privremene kopije je također moguće (npr. za potrebe prezentacije), međutim pokretanje NVDA čitača kao privremene kopije može potrajati.
+Datoteka nosi ime "nvda_2022.1.exe" ili slično.
+Godina i verzija se mijenjaju, kako bi ste znali da se izmjene odnose baš na tu verziju.
++ Pokrenite preuzetu datoteku.
+Prilikom pokretanja instalacijskog programa, začut ćete glazbenu datoteku.
+Jednom kada se pokrene, NVDA će govoriti tijekom cijelog procesa.
++ Pojavit će se proces NVDA programa za pokretanje sa tekstom licencnog ugovora.
+Pritišćite ``strelicu dolje`` kako biste pročitali licencni ugovor ako želite.
++ Pritišćite ``tab`` kako biste se pomaknuli na potvrdni okvir "Prihvaćam", a potom pritisnite ``razmaknicu`` kako biste ga odabrali.
++ Pritišćite ``tab`` kako biste se premještali između opcija, a potom pritisnite ``enter`` na željenoj opciji.
++
 
-++ Ograničenja prijenosne i privremene kopije ++[PortableAndTemporaryCopyRestrictions]
-Osim nemogućnosti automatskog pokretanja tijekom i-ili nakon prijave, prijenosne i privremene kopije NVDA čitača imaju još sljedeća ograničenja:
-- Nemogućnost korištenja aplikacija koje zahtijevaju administratorska prava, ukoliko naravno sam NVDA nije pokrenut s istim pravima (ne preporučuje se).
-- Nemogućnost čitanja ekrana kontrole korisničkog računa (UAC) kad se pokušava pokrenuti aplikacija s administratorskim pravima.
-- Windows 8 i noviji: nemogućnost unosa znakova pomoću ekrana osjetljivog na dodir.
-- Windows 8 i noviji: nemogućnost pružanja funkcija poput modusa čitanja i izgovoranja znakova u Windows Store aplikacijama.
-- Windows 8 i noviji: stišavanje zvuka nije podržano.
+Opcije su slijedeće: 
+- "Instaliraj NVDA na ovom računalu": Ovo je opcija koju većina korisnika želi zbog jednostavnog korištenja NVDA. 
+- "Stvori prijenosnu kopiju": Ovo omogućuje postavljenje NVAD u bilo koju mapu bez instalacije.
+Ovo je korisno na računalima bez administratorskih prava, te na Usb stickovima u svrhu nošenja sa sobom.
+Kada ej ova opcija označena, NVDA će vas voditi kroz korake za stvaranje prijenosne kopije.
+Glavna informacija koja je potrebna NVDA je mapa u kojoj će biti smještena njegova prijenosna kopija. 
+- "Nastavi pokretanje": Ovo ostavlja pokrenutu privremenu kopiju.
+Ovo je korisno prilikom testiranja novih značajki nove verzije prije instalacije.
+Kada je ova opcija odabrana, prozor programa za pokretanje se zatvara a privremena kopija NVDA nastavlja s radom sve dok ne bude ugašena ili računalo ne bude isključeno.
+Imajte na umu da se postavke neće sačuvati u ovoj kopiji. 
+- "Odustani": Ovo zatvara NVDA bez izvođenja bilo koje radnje.
 -
 
-++ Instaliranje NVDA ++[InstallingNVDA]
+
+Ako planirate koristiti NVDA na ovom računalu, htjeti ćete ga instalirati.
+Kada instalirate NVDA, dobit ćete značajke poput automatskog pokretanja poslije prijave, mogućnost čitanja zaslona za prijavu i druge [sigurne zaslone #SecureScreens].
+Ovo nije moguće u prijenosnim i privremenim kopijama.
+Za više informacija o ograničenjima prijenosnih i privremenih kopija NVDA, molimo pogledajte poglavlje [Ograničenja prijenosne i privremene kopije #PortableAndTemporaryCopyRestrictions].
+
+Instalacija također omogućuje automatsko pokretanje NVDA, te također omogućuje pokretanje koristeći prečac ``control+alt+f5``.
+
++++ Koraci za instalaciju NVDA iz programa za pokretanje +++[StepsForInstallingNVDAFromTheLauncher]
+Ovi će vas koraci voditi kroz najuobičajenijih opcija za postavljanje.
+Za više informacija o dostupnim opcijama, molimo pogledajte [Opcije instalacije #InstallingNVDA].
+
++ Uvjerite se da je potvrdni okvir za prihvaćanje licence odabran.
++ ``Pritišćite tab`` te aktivirajte gumb "Instaliraj NVDA na ovo računalo".
++ Slijede opcije za stvaranje prečaca na radnoj površini, te za automatsko pokretanje NVDA.
+One su podrazumjevano odabrane.
+Ako želite, pritišćite ``tab`` i ``razmaknicu`` za promjenu bilo koje od tih opcija, ili ih ostavite na podrazumjevanim vrijednostima.
++ Pritisnite ``enter`` za nastavak.
++ Dijaloški okvir kontrole korisničkog računa (UAC)" pojavit će se s pitanjem "Želite li dozvoliti ovoj aplikaciji vršenje izmjena na na ovom računalu?".
++ Pritisnite ``alt+d`` kako biste prihvatili upit dialoškog okvira UAC.
++ Traka napredka se popunjava tijekom NVDA instalacije.
+U toku tog procesa, NVDA reproducira zvučni signal povišene frekvencije.
+Ovaj proces je često brz i i neprimjetno brz.
++ Pojavljuje se dijaloški okvir koji obavještava korisnika o uspješnoj instalaciji.
+U poruci se savjetuje korisnika da "pritisne Ok kako bi pokrenuo instaliranu kopiju".
+Pritisnite ``enter`` kako biste pokrenuli instaliranu kopiju.
++ Pojavljuje se dijaloški okvir "Dobrodošli u NVDA" te NVDA čita poruku dobrodošlice.
+Fokus se nalazi u polju raspored tipkovnice.
+Podrazumjevano, "raspored za stolna računala" koristi numeričku tipkovnicu za većinu funkcija.
+Ako želite, pritisnite ``strelicu dolje`` kako biste odabrali "raspored za prijenosna računala" kako biste funkcijama na numeričkom dijelu dodjelili druge tipke.
++ Pritisnite ``tab`` kako biste se premjestili na opciju "Koristi ``capsLock`` kao NVDA modifikacijsku tipku".
+``Insert`` ke postavljen kao zadana modifikacijska tipka.
+Pritisnite ``razmaknicu`` kako biste odabrali ``capsLock`` kao alternativnu modifikacijsku tipku.
+Imajte na umu da se raspored tipkovnice postavlja odvojeno od NVDA modifikacijske tipke.
+NVDA tipka i raspored tipkovnice mogu se kasnije promijeniti u postavkama tipkovnice.
++ Koristite ``tab`` i ``razmaknicu`` kako biste prilagodili ostale opcije na tom zaslonu.
+One određuju način automatskog pokretanja.
++ Pritisnite ``enter`` kako biste zatvorili dijaloški okvir sa pokrenutim programom NVDA.
++
+
+++ Pokretanje NVDA ++[RunningNVDA]
+
+Potpun vodič za korisnike sadrži sve prečace programa NVDA, podijejljene po raznim kategorijama za lakše čitanje.
+Tablice sa prečacima su također dostupne u "brzom prikazu NVDA prečaca".
+Modul "Osnovna obuka za korištenje NVDA" detaljno opisuje kroz svaki prečac sa aktivnostima korak po korak.
+"Osnovna obuka za korištenje NVDA" dostupna je u [NV Access trgovini http://www.nvaccess.org/shop].
+
+Ovdje se nalaze često korišteni prečaci.
+Svi su prečaci podesivi, što zčači da su ovo podrazumjevani prečaci.
+
++++ NVDA modifikacijska tipka +++[NVDAModifierKey]
+NVDA modifikacijska tipka je jedna od sljedećih tipki: Tipka ``uumerička nula``, (sa isključenim ``numLockom``), ili ``insert`` tipka, blizu tipke ``delete``, ``home`` i ``end`` tipki.
+``capsLock`` tipka može biti postavljena kao NVDA modifikacijska tipka.
+
++++ Pomoć tipkovnice +++[InputHelp]
+Kako biste naučili raspored svake tipke, pritisnite ``NVDA+1`` kako biste uključili pomoć tipkovnice.
+Sve dok se nalazite u načinu pomoći tipkovnice, izvođenje bilo koje ulazne geste, poput pritiska tipke ili izvođenja dodirne geste) će izgovoriti koju radnju izvršava (ako je pridjeljena).
+Prečaci se neće izvršavati sve dok se nalazite u ovom načinu. 
+
++++ Pokretanje i zaustavljanje NVDA +++[StartingAndStoppingNVDA]
+|| Naziv | Prečac za stolna računala | Prečac za prijenosna računala | opis |
+| Pokreni NVDA | ``control+alt+f5`` | ``control+alt+f5`` | Pokreće ili ponovno pokreće NVDA |
+| Zaustavljanej programa NVDA | ``NVDA+q``, potom ``enter`` | ``NVDA+q``, potom ``enter`` | izlazi iz programa NVDA |
+| Pauzira ili ponovno pokreće govor | ``shift`` | ``shift`` | Brzo pauzira govor. Ponovnim pritiskom govor nastavlja tamo gdje je stao |
+| Zaustavlja govor | ``control`` | ``control`` | Brzo zaustavlja govor |
+
++++ Čitanje teksta +++[ReadingText]
+|| Naziv | Prečac za stolna računala | Prečac za prijenosna računala | opis |
+| Čitaj sve | ``NVDA+strelica dolje`` | ``NVDA+a`` | Čita sve istovremeno pomičući kursor |
+| Čitaj trenutni redak | ``NVDA+strelica gore`` | ``NVDA+l`` | Čita redak. Kada se pritisne dvaput, redak se slovka. Kada se pritisne tri puta slovka redak fonetski (alan, biokovo, cavtat, itd) |
+| Čitaj označeno | ``NVDA+shift+strelica gore`` | ``NVDA+shift+s`` | Čita bilo koji označeni tekst |
+| Čitaj tekst u međuspremniku | ``NVDA+c`` | ``NVDA+c`` | Čita bilo koji tekst u međuspremniku |
+
++++ Čitanje lokacije i drugih informacija +++[ReportingLocation]
+|| Naziv | Prečac za stolna računala | Prečac za prijenosna računala | opis |
+| Naslovna traka | ``NVDA+t`` | ``NVDA+t`` | Čita naslovnu traku trenutno aktivnog prozora. Pressing Kada se pritisne dvaput, informacija će biti slovkana. Kada se pritisne tri put, informacija će biti kopirana u međuspremnik |
+| Izgovori fokus | ``NVDA+tab`` | ``NVDA+tab`` | Izgovara trenutnu kontrolu u fokusu.  Kada se pritisne dvaput, slovka informaciju |
+| Pročitaj prozor | ``NVDA+b`` | ``NVDA+b`` | Čita cijeli trenutni prozor (korisno za dijaloške okvire) |
+| Pročitaj traku stanja | ``NVDA+end`` | ``NVDA+shift+end`` | Čita traku stanja ako ju NVDA pronađe. Kada se pritisne dva puta, informacija će biti slovkana. Kada se pritisne tri put, informacija će biti kop8irana u međuspremnik |
+| Pročitaj vrijeme | ``NVDA+f12`` | ``NVDA+f12`` | Pressing Kada se pritisne jedamput, izgovara trenutno vrijeme, kada se pritisne dvaput, izgovara datum |
+| Pročitaj informacije o oblikovanju teksta | ``NVDA+f`` | ``NVDA+f`` | Čita informacije o oblikovanju teksta. Kada se pritisne dva put, informacija se prikazuje u prozoru |
+
++++ Regulacija informacija koje čita NVDA +++[ToggleWhichInformationNVDAReads]
+|| Naziv | Prečac za stolna računala | Prečac za prijenosna računala | opis |
+| Čitaj upisane znakove | ``NVDA+2`` | ``NVDA+2`` | kadae je ova opcija uključena, NVDA če izgovarati sve upisane znakove na tipkovnici. |
+| Izgovaraj upsane riječi | ``NVDA+3`` | ``NVDA+3`` | Kada je ova opcija uključena, NVDA će izgovarati sve riječi napisane na tipkovnici. |
+| Čitaj naredbene tipke | ``NVDA+4`` | ``NVDA+4`` | Kada je ova opcija uključena, NVDA će izgovarati sve naredbene tipke na tipkovnici. Ovo uključuje kombinacije tipaka kao što su to control plus neko slovo. |
+| Uključi prećenje miša | ``NVDA+m`` | ``NVDA+m`` | Kaa je ova opcija uključena, NVDA će izgovarati tekst pod pokazivačem miša, u isto vrijeme kada ga pomićete. Ovo vam omogućuje nalaženje opcija na zaslonu fizički pomičući miša umjesto traženja opcija objektnom navigacijom. |
+
++++ Prsten govorne jedinice +++[TheSynthSettingsRing]
+|| Naziv | Prečac za stolna računala | Prečac za prijenosna računala | opis |
+| Premjesti se na sljedeću postavku govorne jedinice | ``NVDA+control+Strelica desno`` | ``NVDA+shift+control+strelica desno`` | Premješta na sljedeću postavku govorne jedinice poslije aktivne postavke, ponovno se vraćajući na prvu postavku poslije posljednje |
+| Premjesti se na prethodnu postavku govorne jedinice | ``NVDA+control+strelica lijevo`` | ``NVDA+shift+control+strelica lijevo`` | Premješta na sljedeću postavku govorne jedinice prije aktivne postavke, ponovno se vraćajući na prvu postavku poslije posljednje |
+| Povećaj vrijednost postavke govorne jedinice | ``NVDA+control+strelica gore`` | ``NVDA+shift+control+strelica gore`` | Povećava vrijednost trenutne postavke govorne jedinice na kojoj se nalazite. Npr: Povećava brzinu, bira sljedeći glas, povećava glasnoću |
+| Smanji vrijednost postavke govorne jedinice | ``NVDA+control+strelica dolje`` | ``NVDA+shift+control+strelica dolje`` | smanjuje vrijednost trenutne postavke govorne jedinice na kojoj se nalazite. Npr: smanjuje brzinu, bira prethodni glas, smanjuje glasnoću |
+
++++ Kretanje po Web stranicama +++[WebNavigation]
+Puni se popis brzih tipki nalazi u poglavlju [Modus pregleda #BrowseMode] korisničkog priručnika.
+|| Komanda | Prečac | Opis |
+| Naslov | ``h`` | Premještava na sljedeći naslov |
+| Naslov razine 1, 2, ili 3 | ``1``, ``2``, ``3`` | Premješta na naslov određene razine |
+| Polje obrasca | ``f`` | Premješta an sljedeće polje obrasca (polje za uređivanje, gumb, itd) |
+| veza | ``k`` | Premješta na sljedeću poveznicu |
+| orjentir | ``d`` | premještava an sljedeći orjentir |
+| popis | ``l`` | premješta na sljedeći popis |
+| Tablica | ``t`` | Premješat na sljedeću tablicu |
+| Premješta u nazad | ``shift+slovo`` | Pritisnite ``shift`` i bilo koje od slóva kako biste se premjestili na prethodni element tog tipa |
+| Popis elemenata | ``NVDA+f7`` | Popisuje razne tipove elemenata, poput poveznica i naslova |
+
+++ Postavke ++[Preferences]
+
+Većina NVDA funkcija može biti omogućena ili izmjenjena uz pomoć NVDA postavki.
+Postavke i druge opcije dostupne su u NVDA izborniku.
+Kako biste otvorili NVDA izbornik, pritisnite ``NVDA+n``.
+Kako biste izravno otvorili NVDA opće postavke, pritisnite ``NVDA+control+g``.
+Većina NVDA ekrana postavki ima pripadajuće prečace za izravno otvaranje, kao što je to ``NVDA+control+s`` za postavke govorne jedinice, ili ``NVDA+control+v`` za ostale glasovne postavke.
+
+++ Zajednica ++[Community]
+
+NVDA ima živu zajednicu korisnika.  Postoji glavna [Mailing lista na engleskom jeziku https://nvda.groups.io/g/nvda] te stranica koja sadrži puno [grupa na lokalnim jezicima https://github.com/nvaccess/nvda-community/wiki/Connect].
+NV Access, tvorci NVDA, aktivni su na [Twitteru https://twitter.com/nvaccess] i [Facebooku https://www.facebook.com/NVAccess].
+Članovi organizacije NV Access također vode [Blog s novostima https://www.nvaccess.org/category/in-process/].
+
+Također postoji program [Certifikacije NVDA eksperata https://certification.nvaccess.org/].
+To je On-line ispit koji možete položiti kako biste polazali svoje znanje i vještine u korištenju NVDA.
+[NVDA certificirani eksperti https://certification.nvaccess.org/] mogu objaviti svoje kontakt podatke i detalje o svom poslovanju.
+
+++ Dobivanje pomoći ++[GettingHelp]
+
+Kako biste dobili pomoć za NVDA, pritisnite ``NVDA+n`` kako biste otvorili NVDA izbornik, a potom ``p`` za pomoć.
+Iz ovog podizbornika možete dobiti pristup korisničkom vodiču, brzom ispisu tipkovničkih prečaca, povjesti svih promjena i novih značajki, te još puno toga.
+Ove tri opcije otvaraju se u podrazumjevanom web pregledniku.
+Postoji također mpuno opširnihi materijal za obuku dostupan u [NV Access trgovini https://www.nvaccess.org/shop].
+
+Preporučujemo vam započeti sa "Osnovnom obukom za korištenje NVDA".
+Ovaj modul pokriva teme od početka korištenja pa sve do surfanja internetom i korištenja objektne navigacije.
+Ovaj je modul dostupan u obliku:
+- [elektronskog teksta https://www.nvaccess.org/product/basic-training-for-nvda-ebook/], koji uključuje word DOCX, web stranicu HTML, e-knjigu ePub i Kindle KFX formate.
+- [Audio koji čita čovjek https://www.nvaccess.org/product/basic-training-for-nvda-downloadable-audio/]
+- [Kopija napisana Unificiranim engleskim brajevim pismom u tvrdom uvezu https://www.nvaccess.org/product/basic-training-for-nvda-braille-hard-copy/] s isporukom u cijelom svijetu.
+ -
+Ostali moduli, i  NVDA komplet za produktivnost po sniženoj cijeni https://www.nvaccess.org/product/nvda-productivity-bundle/], su dostupni u [NV Access trgovini https://www.nvaccess.org/shop/].
+
+NV Access također prodaje [Telefonsku podršku https://www.nvaccess.org/product/nvda-telephone-support/], u blokovima, ili kao dio [NVDA kompleta za produktivnost https://www.nvaccess.org/product/nvda-productivity-bundle/].
+Telefonska podrška uključuje telefonske brojeve u Australiji i Sad-u.
+ 
+[Korisničke mailing liste https://github.com/nvaccess/nvda-community/wiki/Connect] su odličan izvor dobivanja pomoći, kao i [certificirani NVDA eksperti https://certification.nvaccess.org/].
+
+
++ Više opcija za postavljanje +[MoreSetupOptions]
+
+++ Opcije instalacije ++[InstallingNVDA]
+
 Ako instalirate NVDA izravno pokrečući preuzeti instalacijski paket, pritisnite gumb Instaliraj NVDA.
 Ako ste već zatvorili ovaj dijaloški okvir ili želite instalirati iz prijenosne kopije, odaberite stavku izbornika Instaliraj NVDA koju možete pronaći u podizborniku Alati u NVDA izborniku.
 
@@ -142,7 +331,26 @@ Kad pritisnete Nastavi, započet ćete proces izrade prijenosne kopije.
 Kad proces izrade završi, prikazat će se poruka da je izrada prijenosne kopije uspjela.
 Pritisnite U redu da biste zatvorili ovaj dijaloški okvir.
 
-+ Prvi koraci s NVDA čitačem +[GettingStartedWithNVDA]
+
+++ Ograničenje privremene i prijenosne kopije ++[PortableAndTemporaryCopyRestrictions]
+
+Ako želite nVDA nositi sa sobom na USB sticku ili drugom zapisivom mediju, tada trebate odabrati stvaranje prijenosne kopije.
+Instalirana kopija može stvoriti prijenosnu kopiju u bilo kojem trenutku. 
+Prijenosna kopija također posjeduje mogućnost instalacije na bilo koje računalo u neko dogledno vrijeme.
+Međutim, ako želite kopirati NVDA na medij koji je samo za čitanje kao što je to CD, trebate samo kopirati preuzeti paket.
+Izravno pokretanje prijenosne verzije sa nosača koji je samo za čitanje nije podržano u ovom trenutku.
+Korištenje privremene kopije NVDA je također opcija (na primjer. u demonstracijske svrhe), iako pokretanje NVDA na takav način može biti jako sporo.
+
+Osim nemogućnosti automatskog pokretanja prije i poslije prijave, privremene i prijenosne kopije imaju sljedeća ograničenja:
+- Nemogućnost interakcije aplikacija sa administrativnim privilegijama, osim ako NVDA nije pokrenut s istima (nije preporučeno).
+- Nemogućnost čitanja zaslone kontrole korisničkih računa (UAC) prilikom pokušaja pokretanja aplikacije s administratorskim pravima.
+- Windows 8 i noviji: nemogućnost korištenja dodirnika.
+- Windows 8 i novije: nemogućnost podrške značajki poput modusa pregleda, čitanje upisanih znakova u Windows Store aplikacijama.
+- Windows 8 i novije: utišavanje zvuka nije podržano.
+- 
+
+
++ Korištenje NVDA +[GettingStartedWithNVDA]
 
 ++ Pokretanje NVDA čitača ++[LaunchingNVDA]
 Ako ste instalirali NVDA pomoću instalacijskog programa, tada se NVDA jednostavno pokreće pritiskom kontrol+alt+f5 ili odabirom NVDA iz NVDA izbornika u podizborniku Programi u izborniku Start.
@@ -316,6 +524,7 @@ Postoji nekoliko tipkovničkih prečaca koji su korisni za kretanje po objektima
 | Izvijesti o naslovu | NVDA+t | NVDA+t | Izvještava o naslovu trenutačnog prozora. Kad pritisnete dvaput, NVDA će slovkati izgovoreno. Kad pritisnete triput naslov se kopira u međuspremnik. |
 | Pročitaj trenutačni prozor | NVDA+b | NVDA+b | Čita sve kontrole u trenutačno aktivnom prozoru (korisno za dijaloške okvire) |
 | Izvijesti o traci stanja | NVDA+end | NVDA+šift+end | Izvještava o traci stanja, ako je NVDA pronađe. Kad se pritisne dvaput, informacije na traci stanja se slovkaju, a kad se pritisne triput, kopiraju se u međuspremnik. |
+| pročitaj tipkovnički prečac | ``shift+numerički2`` | ``NVDA+control+shift+.`` | Izgovara tipkovnički prečac aktivnog NVDA objekta |
 %kc:endInclude
 
 ++ Kretanje pomoću kursora sustava ++[SystemCaret]
@@ -346,6 +555,10 @@ Unutar tablice su dostupni i sljedeći prečaci:
 | Premjesti se na zadnji stupac | ctrl+alt+end | pomiće kursor na zadnji stupac (ostajući u istom redku) |
 | Premjesti se na prvi redak | ctrl+alt+pageUp | Pomiće kursor sustava u prvi redak (ostajući u istom stupcu) |
 | Premjesti se na zadnji redak | ctrl+alt+pageDown | pomiće kursor sustava na zadnji redak (ostajući u istom stupcu) |
+| Čitaj sve u stupcu | ``NVDA+control+alt+strelica dolje`` | Čita stupac vertikalno od trenutne ćelije prema dolje do zadnje ćelije u stupcu. |
+| Čitaj sve u redku | ``NVDA+control+alt+strelica desno`` | Čita redak horizontalno od trenutne ćelije prema desno do zadnje ćelije u redku. |
+| Čitaj cijeli stupac | ``NVDA+control+alt+strelica gore`` | Čita trenutni redak vertikalno od gore prema dolje bez pomicanja kursora sustava. |
+| Čitaj cijeli redak | ``NVDA+control+alt+strelica lijevo`` | Čita trenutni redak horizontalno s lijeva na desno bez pomicanja kursora sustava. |
 %kc:endInclude
 
 ++ Kretanje po objektima ++[ObjectNavigation]
@@ -418,6 +631,8 @@ Sljedeći prečaci su dostupni za pregledavanje teksta:
 | Izvijesti o trenutačnom znaku pod preglednim kursorom | num2 | NVDA+. | nema | Izvještava o trenutačnom znaku u retku teksta gdje je pozicioniran pregledni kursor. Kad se pritisne dvaput, izvještava o opisu ili primjer tog znaka. Kad se pritisne triput, izgovara brojčanu vrijednost znaka u decimalnom i heksadecimalnom obliku. |
 | Premjesti se na sljedeći znak u pregledu | num3 | NVDA+strelicaDesno | klizni desno (tekstualni modus) | Premjesti kursor pregleda na idući znak na trenutačnom retku teksta |
 | Premjesti se na kraj retka u pregledu | šift+num3 | NVDA+end | nema | Pomiče pregledni kursor na kraj u trenutačnom retku teksta |
+| Čitaj prethodnu stranicu u pregledu | ``NVDA+pageUp`` | ``NVDA+shift+pageUp`` | nema | Premješta na prethodnu stranicu teksta, ako podržava program |
+| Premjesti na sljedeću stranicu pregleda | ``NVDA+pageDown`` | ``NVDA+shift+pageDown`` | nema | Premješta pregledni kursor na sljedeću stranicu teksta, ako to podržava program |
 | Izgovori sve pomoću pregleda | numPlus | NVDA+šift+a | klizni s tri prsta prema dolje (tekstualni modus) | Čita od trenutačne pozicije preglednog kursora, pomičući se s pomićanjem kursora |
 | Odaberi i potom kopiraj od preglednog kursora | insert+f9 | insert+f9 | nema | Započinje proces biranja, a zatim kopiranja od trenutačne pozicije preglednog kursora. Sama radnja se ne izvodi sve dok ne kažete NVDA-u gdje se nalazi kraj teksta |
 | Odaberi i potom kopiraj do preglednog kursora | NVDA+f10 | NVDA+f10 | nema | Prilikom prvog pritiska, tekst je označen od pozicije od prije poznate kao početni marker sve do i uključujući poziciju preglednog kursora. Ako kursor sustava može dohvatiti tekst, isti će biti premješten na označeni tekst. Poslje pritiska prečaca drugi put, tekst će biti kopiran u windowsow međuspremnik |
@@ -1834,7 +2049,7 @@ Možete podesiti izvještavanje o sljedećim elementima:
  - poravnanje retka
 - informacije o tablici
  - tablice
- - zaglavlja redaka ili stupaca
+ - Zaglavlja redaka ili stupaca (isključeno, redci, stupci, redci i stupci)
  - koordinate ćelija
  - rubovi ćelija (Isključeno, Stilovi, Boje i stilovi)
 - elementi
@@ -1901,12 +2116,22 @@ Ako želite distribuirati prilagođeni kod drugima, spakirajte ga kao NVDA dodat
 Ovaj gumb otvara mapu gdje je smješten prilagođeni kod kojeg trenutačno razvijate.
 Ovaj gumb postoji samo kad je uključena opcija "omogući bilježnicu razvojnog programera NVDA".
 
-==== Omogući selektivnu registraciju UIA događaja i izmjena svojstva ====[AdvancedSettingsSelectiveUIAEventRegistration]
+==== Registracija za događaje automatizacije korisničkog sučelja i promjene svojstava ====[AdvancedSettingsSelectiveUIAEventRegistration]
+: podrazumjevano
+  Automatska
+: Opcije
+  Automatska, selektivna, globalna
+:
+
 Ova opcija mijenja način na koji NVDA registrira događaje UI automation sučelja za pristupačnost.
-Ako je ova opcija onemogućena, NVDA registrira više UIA događaja koji su procesuirani i odmah uništavani u samom NVDA čitaču.
-Ovo ima veliki negativni utjecaj na performanse, pogotovo na Microsoft visual studio.
-Stoga, ako je ova opcija uključena, NVDA će ograničiti registraciju događaja samo na fokus sustava za većinu događaja.
+Odabirni okvir Registracija za događaje automatizacije korisničkog sučelja i promjene svojstava sadrži tri opcije:
+- Automatska: "selektivna" u Windowsima 11 Sun Valley 2 (verzija 22H2) i novijim, u suprotnom "globalna".
+- Selektivna: NVDA će ograničiti registraciju događaja na fokus sustava za većinu događaja.
 Ako vam smetaju problemi sa performansama u jednoj ili više aplikacija, preporučujemo vam da isprobate ovu funkciju i vidite postoji li poboljšanje u performansama.
+Međutim, u starijim inačicama sustava Windows, NVDA može imati probleme sa sljeđenjem fokusa u nekim kontrolama poput upravitelja zadataka i panela za emoji).
+- Globalna: NVDA registrira puno UIA događaja koji su procesirani i uništavani u NVDA čitaču.
+Iako je sljeđenje fokusa pouzdanije u više situacija, performanse su značajno degradirane, naročito u  Microsoft Visual Studiu.
+-
 
 ==== Koristi UI automation za pristup Microsoft Word dokumentima ====[MSWordUIA]
 Regulira treba li  NVDA koristiti UI Automation API za pristupačnost za pristup Microsoft Word dokumentima, umjesto starog Microsoft Word modela objekata.

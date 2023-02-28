@@ -240,8 +240,23 @@ def setReviewPosition(
 	@param isCaret: Whether the review position is changed due to caret following.
 	@param isMouse: Whether the review position is changed due to mouse following.
 	"""
-	if objectBelowLockScreenAndWindowsIsLocked(reviewPosition.obj):
-		return False
+	reviewObj = reviewPosition.obj
+
+	if isinstance(reviewObj, treeInterceptorHandler.DocumentTreeInterceptor):
+		# reviewPosition.obj can be a number of classes, e.g.
+		# CursorManager, DocumentWithTableNavigation, EditableText.
+		# We can only handle the NVDAObject case.
+		reviewObj = reviewObj.rootNVDAObject
+
+	if isinstance(reviewObj, NVDAObjects.NVDAObject):
+		# reviewPosition.obj can be a number of classes, e.g.
+		# CursorManager, DocumentWithTableNavigation, EditableText.
+		# We can only handle the NVDAObject case.
+		if objectBelowLockScreenAndWindowsIsLocked(reviewObj):
+			return False
+	else:
+		log.debug(f"Unhandled reviewObj type {type(reviewObj)} when checking security of reviewObj")
+
 	globalVars.reviewPosition=reviewPosition.copy()
 	globalVars.reviewPositionObj=reviewPosition.obj
 	if clearNavigatorObject: globalVars.navigatorObject=None
@@ -387,10 +402,10 @@ def getClipData():
 	with winUser.openClipboard(gui.mainFrame.Handle):
 		return winUser.getClipboardData(winUser.CF_UNICODETEXT) or u""
 
-def getStatusBar():
+
+def getStatusBar() -> Optional[NVDAObjects.NVDAObject]:
 	"""Obtain the status bar for the current foreground object.
 	@return: The status bar object or C{None} if no status bar was found.
-	@rtype: L{NVDAObjects.NVDAObject}
 	"""
 	foreground = getForegroundObject()
 	try:

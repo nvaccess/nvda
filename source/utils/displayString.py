@@ -1,10 +1,15 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2021 NV Access Limited.
+# Copyright (C) 2021-2023 NV Access Limited, Cyrille Bougot
 
 from abc import ABC, ABCMeta, abstractproperty
-from enum import Enum, EnumMeta, IntEnum
+from enum import (
+	Enum,
+	EnumMeta,
+	IntEnum,
+	IntFlag,
+)
 from typing import Dict
 
 from logHandler import log
@@ -68,4 +73,9 @@ class DisplayStringStrEnum(_DisplayStringEnumMixin, str, Enum, metaclass=_Displa
 
 class DisplayStringIntEnum(_DisplayStringEnumMixin, IntEnum, metaclass=_DisplayStringEnumMixinMeta):
 	"""An IntEnum class that adds a displayString property defined by _displayStringLabels"""
+	pass
+
+
+class DisplayStringIntFlag(_DisplayStringEnumMixin, IntFlag, metaclass=_DisplayStringEnumMixinMeta):
+	"""An IntFlag class that adds a displayString property defined by _displayStringLabels"""
 	pass

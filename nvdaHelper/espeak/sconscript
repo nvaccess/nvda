@@ -101,9 +101,9 @@ env.Append(
 		# errors when winsock2 is included by espeak\src\include\compat\endian.h
 		'/DWIN32_LEAN_AND_MEAN',
 		# Preprocessor definitions. Espeak Features
-		'/DINCLUDE_SPEECHPLAYER=1',
-		'/DINCLUDE_KLATT=1',
-		'/DHAVE_SONIC_H=1',
+		'/DUSE_SPEECHPLAYER=1',
+		'/DUSE_KLATT=1',
+		'/DUSE_LIBSONIC=1',
 	])
 
 env.Append(
@@ -395,6 +395,7 @@ espeakLib=env.SharedLibrary(
 		"espeak_api.c",
 		"ieee80.c",
 		"intonation.c",
+		"langopts.c",
 		"klatt.c", # we do use KLATT, this is a compile option in espeak
 #		"mbrowrap.c", # we don't use MBROLA, this is a compile option in espeak
 		"mnemonics.c",

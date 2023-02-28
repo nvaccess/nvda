@@ -2,16 +2,20 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2022 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee,
+# Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee,
 # Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Łukasz Golonka, Accessolutions,
-# Julien Cochuyt, Jakub Lukowicz, Bill Dengler, Cyrille Bougot
+# Julien Cochuyt, Jakub Lukowicz, Bill Dengler, Cyrille Bougot, Rob Meredith, Luke Davis
 
 import itertools
-
 from typing import (
+	List,
 	Optional,
 	Tuple,
 	Union,
+)
+from annotation import (
+	_AnnotationNavigation,
+	_AnnotationNavigationNode,
 )
 
 import audioDucking
@@ -934,7 +938,7 @@ class GlobalCommands(ScriptableObject):
 			# Translators: The message announced when toggling the delayed character description setting.
 			state = _("delayed character descriptions off")
 		ui.message(state)
-	
+
 	@script(
 		# Translators: Input help mode message for move mouse to navigator object command.
 		description=_("Moves the mouse pointer to the current navigator object"),
@@ -2279,6 +2283,54 @@ class GlobalCommands(ScriptableObject):
 		elif repeats == 1:
 			self.script_showFormattingAtCaret(gesture)
 
+	def _getNvdaObjWithAnnotationUnderCaret(self) -> Optional[NVDAObject]:
+		"""If it has an annotation, get the NVDA object for the single character under the caret or the object
+		with system focus.
+		@note: It is tempting to try to report any annotation details that exists in the range formed by prior
+			and current location. This would be a new paradigm in NVDA, and may feel natural when moving by line
+			to be able to more quickly have the 'details' reported. However, there may be more than one 'details
+			relation' in that range, and we don't yet have a way for the user to select which one to report.
+			For now, we minimise this risk by only reporting details at the current location.
+		"""
+		try:
+			# Common cases use Caret Position: vbuf available or object supports text range
+			# Eg editable text, or regular web content
+			# Firefox and Chromium support this even in a button within a role=application.
+			caret: textInfos.TextInfo = api.getCaretPosition()
+		except RuntimeError:
+			log.debugWarning("Unable to get the caret position.", exc_info=True)
+			return None
+		caret.expand(textInfos.UNIT_CHARACTER)
+		objAtStart: NVDAObject = caret.NVDAObjectAtStart
+		_isDebugLogCatEnabled = bool(config.conf["debugLog"]["annotations"])
+		if _isDebugLogCatEnabled:
+			log.debug(f"Trying with nvdaObject : {objAtStart}")
+
+		if objAtStart.annotations:
+			if _isDebugLogCatEnabled:
+				log.debug(f"NVDAObjectAtStart of caret has details")
+			return objAtStart
+		elif api.getFocusObject():
+			# If fetching from the caret position fails, try via the focus object
+			# This case is to support where there is no virtual buffer or text interface and a caret position can
+			# not be fetched.
+			# There may still be an object with focus that has details.
+			# There isn't a known test case for this, however there isn't a known downside to attempt this.
+			focus = api.getFocusObject()
+			if _isDebugLogCatEnabled:
+				log.debug(f"Trying focus object: {focus}")
+
+			if objAtStart.annotations:
+				if _isDebugLogCatEnabled:
+					log.debug("focus object has details, able to proceed")
+				return focus
+
+		if _isDebugLogCatEnabled:
+			log.debug("no details annotation found")
+		return None
+
+	_annotationNav = _AnnotationNavigation()
+
 	@script(
 		gesture="kb:NVDA+d",
 		description=_(
@@ -2287,7 +2339,7 @@ class GlobalCommands(ScriptableObject):
 		),
 		category=SCRCAT_SYSTEMCARET,
 	)
-	def script_reportDetailsSummary(self, gesture):
+	def script_reportDetailsSummary(self, gesture: inputCore.InputGesture):
 		"""Report the annotation details summary for the single character under the caret or the object with
 		system focus.
 		@note: It is tempting to try to report any annotation details that exists in the range formed by prior
@@ -2296,45 +2348,53 @@ class GlobalCommands(ScriptableObject):
 			relation' in that range, and we don't yet have a way for the user to select which one to report.
 			For now, we minimise this risk by only reporting details at the current location.
 		"""
-		log.debug("Report annotation details summary at current location.")
-		try:
-			# Common cases use Caret Position: vbuf available or object supports text range
-			# Eg editable text, or regular web content
-			# Firefox and Chromium support this even in a button within a role=application.
-			caret: textInfos.TextInfo = api.getCaretPosition()
-		except RuntimeError:
-			log.debugWarning("Unable to get the caret position.", exc_info=True)
-			return
-		caret.expand(textInfos.UNIT_CHARACTER)
-		nvdaObject: NVDAObject = caret.NVDAObjectAtStart
-		if config.conf["debugLog"]["annotations"]:
-			log.debug(f"Trying with nvdaObject : {nvdaObject}")
-
-		annotation: Optional[str] = nvdaObject.detailsSummary
-		if annotation:
-			log.debug("NVDAObjectAtStart of caret has details.")
-		elif api.getFocusObject():
-			# If fetching from the caret position fails, try via the focus object
-			# This case is to support where there is no virtual buffer or text interface and a caret position can
-			# not be fetched.
-			# There may still be an object with focus that has details.
-			# There isn't a known test case for this, however there isn't a known downside to attempt this.
-			focus = api.getFocusObject()
-			if config.conf["debugLog"]["annotations"]:
-				log.debug(f"Trying focus object: {focus}")
-			annotation = focus.detailsSummary
-			if annotation:
-				if config.conf["debugLog"]["annotations"]:
-					log.debug("focus object has details, able to proceed")
-
-		if not annotation:
-			if config.conf["debugLog"]["annotations"]:
-				log.debug("no details annotation found")
+		_isDebugLogCatEnabled = config.conf["debugLog"]["annotations"]
+		objWithAnnotation = self._getNvdaObjWithAnnotationUnderCaret()
+		if (
+			not objWithAnnotation
+			or not objWithAnnotation.annotations
+		):
 			# Translators: message given when there is no annotation details for the reportDetailsSummary script.
 			ui.message(_("No additional details"))
 			return
 
-		ui.message(annotation)
+		targets = objWithAnnotation.annotations.targets
+		if _isDebugLogCatEnabled:
+			log.debug(f"Number of targets: {len(targets)}")
+
+		if 1 > len(targets):
+			if _isDebugLogCatEnabled:
+				log.debugWarning("Expected some annotation targets, none retrieved.")
+			return
+
+		if (
+			self._annotationNav.lastReported
+			and objWithAnnotation == self._annotationNav.lastReported.origin
+			and None is not self._annotationNav.lastReported.indexOfLastReportedSummary
+		):
+			last = self._annotationNav.lastReported.indexOfLastReportedSummary
+			indexOfNextTarget = (last + 1) % len(targets)
+		else:
+			if _isDebugLogCatEnabled:
+				log.debug(
+					"No prior target summary reported:"
+					f" lastReported: {self._annotationNav.lastReported}"
+				)
+			if self._annotationNav.lastReported and _isDebugLogCatEnabled:
+				log.debug(
+					f" objWithAnnotation == self._annotationNav.lastReported.origin: "
+					f"{objWithAnnotation == self._annotationNav.lastReported.origin}"
+					f" self._annotationNav.lastReported.indexOfLastReportedSummary: "
+					f"{self._annotationNav.lastReported.indexOfLastReportedSummary}"
+				)
+			indexOfNextTarget = 0
+
+		targetToReport = targets[indexOfNextTarget]
+		ui.message(targetToReport.summary)
+		self._annotationNav.lastReported = _AnnotationNavigationNode(
+			origin=objWithAnnotation,
+			indexOfLastReportedSummary=indexOfNextTarget
+		)
 		return
 
 	@script(
@@ -3569,6 +3629,57 @@ class GlobalCommands(ScriptableObject):
 		ui.message(_("Plugins reloaded"))
 
 	@script(
+		description=_(
+			# Translators: input help mode message for Report destination URL of navigator link command
+			"Report the destination URL of the link in the navigator object. "
+			"If pressed twice, shows the URL in a window for easier review."
+		),
+		gesture="kb:NVDA+k",
+		category=SCRCAT_TOOLS
+	)
+	def script_reportLinkDestination(
+			self, gesture: inputCore.InputGesture, forceBrowseable: bool = False
+	) -> None:
+		"""Generates a ui.message or ui.browseableMessage of a link's destination, if the navigator
+		object is a link, or an element with an included link such as a graphic.
+		@param forceBrowseable: skips the press once check, and displays the browseableMessage version.
+		"""
+		obj = api.getNavigatorObject()
+		presses = scriptHandler.getLastScriptRepeatCount()
+		if (
+			obj.role == controlTypes.role.Role.LINK  # If it's a link, or
+			or controlTypes.state.State.LINKED in obj.states  # if it isn't a link but contains one
+		):
+			if (
+				presses == 1  # If pressed twice, or
+				or forceBrowseable  # if a browseable message is preferred unconditionally
+			):
+				# Translators: Informs the user that the window contains the destination of the
+				# link with given title
+				ui.browseableMessage(obj.value, title=_("Destination of: {name}").format(name=obj.name))
+			elif presses == 0:  # One press
+				ui.message(obj.value)  # Speak the link
+			else:  # Some other number of presses
+				return  # Do nothing
+		else:
+			# Translators: Tell user that the command has been run on something that is not a link
+			ui.message(_("Not a link."))
+
+	@script(
+		description=_(
+			# Translators: input help mode message for Report URL of navigator link in a window command
+			"Reports the destination URL of the link in the navigator object in a window, "
+			"instead of just speaking it. May be preferred by braille users."
+		),
+		category=SCRCAT_TOOLS
+	)
+	def script_reportLinkDestinationInWindow(self, gesture: inputCore.InputGesture) -> None:
+		"""Uses the forceBrowseable flag of script_reportLinkDestination, to generate a
+		ui.browseableMessage of a link's destination.
+		"""
+		self.script_reportLinkDestination(gesture, True)
+
+	@script(
 		# Translators: Input help mode message for a touchscreen gesture.
 		description=_("Moves to the next object in a flattened view of the object navigation hierarchy"),
 		category=SCRCAT_OBJECTNAVIGATION,
@@ -3973,6 +4084,19 @@ class GlobalCommands(ScriptableObject):
 				)
 			else:
 				_enableScreenCurtain()
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Cycles through paragraph navigation styles",
+		),
+		category=SCRCAT_SYSTEMCARET
+	)
+	def script_cycleParagraphStyle(self, gesture: "inputCore.InputGesture") -> None:
+		from documentNavigation.paragraphHelper import nextParagraphStyle
+		newFlag: config.featureFlag.FeatureFlag = nextParagraphStyle()
+		config.conf["documentNavigation"]["paragraphStyle"] = newFlag.name
+		ui.message(newFlag.displayString)
 
 
 #: The single global commands instance.

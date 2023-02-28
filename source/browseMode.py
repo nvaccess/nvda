@@ -1406,6 +1406,11 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				followBrowseModeFocus = config.conf["virtualBuffers"]["autoFocusFocusableElements"]
 				if followBrowseModeFocus or self.passThrough:
 					focusObj.setFocus()
+					# Track this object as NVDA having just requested setting focus to it
+					# So that when NVDA does receive the focus event for it
+					# It can handle it quietly rather than speaking the new focus.
+					if followBrowseModeFocus:
+						self._objPendingFocusBeforeActivate = obj
 			# Queue the reporting of pass through mode so that it will be spoken after the actual content.
 			queueHandler.queueFunction(queueHandler.eventQueue, reportPassThrough, self)
 
@@ -1623,12 +1628,30 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				self._replayFocusEnteredEvents()
 			return nextHandler()
 
-		#We only want to update the caret and speak the field if we're not in the same one as before
-		caretInfo=self.makeTextInfo(textInfos.POSITION_CARET)
-		# Expand to one character, as isOverlapping() doesn't treat, for example, (4,4) and (4,5) as overlapping.
-		caretInfo.expand(textInfos.UNIT_CHARACTER)
-		isOverlapping = focusInfo.isOverlapping(caretInfo)
-		if not self._hadFirstGainFocus or not isOverlapping or (isOverlapping and previousFocusObjIsDefunct):
+		# Save off and clear any previous object that was focused by NVDA
+		# and waiting on a focus event.
+		objPendingFocusBeforeActivate = self._objPendingFocusBeforeActivate
+		self._objPendingFocusBeforeActivate = None
+
+		# We do not want to speak the new focus and update the caret if...
+		if not self._hadFirstGainFocus or previousFocusObjIsDefunct:
+			# still initializing  or the old focus is dead.
+			isOverlapping = False
+		elif config.conf["virtualBuffers"]["autoFocusFocusableElements"]:
+			# if this focus event was caused by NVDA setting the focus itself
+			# Due to auto focus focusable elements option being enabled,
+			# And we detect that the caret was already positioned within the focus.
+			# Note that this is not the default and may be removed in future.
+			caretInfo = self.makeTextInfo(textInfos.POSITION_CARET)
+			# Expand to one character, as isOverlapping() doesn't treat, for example, (4,4) and (4,5) as overlapping.
+			caretInfo.expand(textInfos.UNIT_CHARACTER)
+			isOverlapping = focusInfo.isOverlapping(caretInfo)
+		else:
+			# if this focus event was caused by NVDA setting the focus itself
+			# due to activation or applications key etc.
+			isOverlapping = (obj == objPendingFocusBeforeActivate)
+
+		if not isOverlapping:
 			# The virtual caret is not within the focus node.
 			oldPassThrough=self.passThrough
 			passThrough = self.shouldPassThrough(obj, reason=OutputReason.FOCUS)
@@ -1666,9 +1689,9 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 					# Note: this is usually called after the caret movement.
 					vision.handler.handleGainFocus(obj)
 				elif (
-					self._objPendingFocusBeforeActivate
-					and obj == self._objPendingFocusBeforeActivate
-					and obj is not self._objPendingFocusBeforeActivate
+					objPendingFocusBeforeActivate
+					and obj == objPendingFocusBeforeActivate
+					and obj is not objPendingFocusBeforeActivate
 				):
 					# With auto focus focusable elements disabled, when the user activates
 					# an element (e.g. by pressing enter) or presses a key which we pass
@@ -1680,10 +1703,9 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 					# the properties before the activation/key, so use that to speak any
 					# changes.
 					speech.speakObject(
-						self._objPendingFocusBeforeActivate,
+						objPendingFocusBeforeActivate,
 						OutputReason.CHANGE
 					)
-					self._objPendingFocusBeforeActivate = None
 			else:
 				self._replayFocusEnteredEvents()
 				return nextHandler()

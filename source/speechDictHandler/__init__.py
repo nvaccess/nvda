@@ -1,8 +1,7 @@
-#speechDictHandler.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NVDA Contributors <http://www.nvda-project.org/>
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2023 NVDA Contributors <http://www.nvda-project.org/>
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import re
 import globalVars
@@ -41,8 +40,12 @@ class SpeechDictEntry:
 		self.caseSensitive=caseSensitive
 		self.type=type
 
-	def sub(self, text):
-		replacement=self.replacement
+	def sub(self, text: str) -> str:
+		if self.type == ENTRY_TYPE_REGEXP:
+			replacement = self.replacement
+		else:
+			# Escape the backslashes for non-regexp replacements
+			replacement = self.replacement.replace('\\', '\\\\')
 		return self.compiled.sub(replacement, text)
 
 class SpeechDict(list):

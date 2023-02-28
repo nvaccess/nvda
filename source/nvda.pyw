@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited, Aleksey Sadovoy, Babbage B.V., Joseph Lee, Łukasz Golonka,
+# Copyright (C) 2006-2023 NV Access Limited, Aleksey Sadovoy, Babbage B.V., Joseph Lee, Łukasz Golonka,
 # Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -15,11 +15,13 @@ import os
 
 import typing
 
+import builtins
 import globalVars
 import ctypes
 from ctypes import wintypes
 import monkeyPatches
 import NVDAState
+from languageHandler import makePgettext
 
 
 monkeyPatches.applyMonkeyPatches()
@@ -63,13 +65,18 @@ import locale
 import gettext
 
 try:
-	gettext.translation(
+	trans = gettext.translation(
 		'nvda',
 		localedir=os.path.join(globalVars.appDir, 'locale'),
 		languages=[locale.getdefaultlocale()[0]]
-	).install(True)
+	)
+	trans.install()
+	# Install our pgettext function.
+	builtins.pgettext = makePgettext(trans)
 except:
 	gettext.install('nvda')
+	# Install a no-translation pgettext function
+	builtins.pgettext = lambda context, message: message
 
 import time
 import argparse
@@ -154,18 +161,17 @@ parser.add_argument(
 	'--log-level',
 	dest='logLevel',
 	type=int,
-	default=20,
+	default=0,  # 0 means unspecified in command line.
 	choices=[10, 12, 15, 20, 100],
 	help=(
 		"The lowest level of message logged (debug 10, input/output 12, debugwarning 15, info 20, off 100),"
-		" default is 20 (info)"
 	),
 )
 parser.add_argument('-c','--config-path',dest='configPath',default=None,type=str,help="The path where all settings for NVDA are stored")
 parser.add_argument(
 	'--lang',
 	dest='language',
-	default="Windows",
+	default="en",
 	type=stringToLang,
 	help=(
 		"Override the configured NVDA language."
@@ -370,13 +376,20 @@ if mutex is None:
 	sys.exit(1)
 
 
-if _isSecureDesktop():
+def _serviceDebugEnabled() -> bool:
 	import winreg
 	try:
 		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\NVDA")
-		if not winreg.QueryValueEx(k, u"serviceDebug")[0]:
-			globalVars.appArgs.secure = True
+		if winreg.QueryValueEx(k, "serviceDebug")[0]:
+			return True
 	except WindowsError:
+		# Expected state by default, serviceDebug parameter not set
+		pass
+	return False
+
+
+if _isSecureDesktop():
+	if not _serviceDebugEnabled():
 		globalVars.appArgs.secure = True
 	globalVars.appArgs.changeScreenReaderFlag = False
 	globalVars.appArgs.minimal = True

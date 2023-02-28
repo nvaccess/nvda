@@ -212,6 +212,7 @@ def resetConfiguration(factoryDefaults=False):
 	import speech
 	import vision
 	import inputCore
+	import bdDetect
 	import hwIo
 	import tones
 	log.debug("Terminating vision")
@@ -224,6 +225,8 @@ def resetConfiguration(factoryDefaults=False):
 	speech.terminate()
 	log.debug("terminating tones")
 	tones.terminate()
+	log.debug("Terminating background braille display detection")
+	bdDetect.terminate()
 	log.debug("Terminating background i/o")
 	hwIo.terminate()
 	log.debug("terminating addonHandler")
@@ -243,6 +246,8 @@ def resetConfiguration(factoryDefaults=False):
 	# Hardware background i/o
 	log.debug("initializing background i/o")
 	hwIo.initialize()
+	log.debug("Initializing background braille display detection")
+	bdDetect.initialize()
 	# Tones
 	tones.initialize()
 	#Speech
@@ -453,32 +458,6 @@ def _initializeObjectCaches():
 	api.setMouseObject(desktopObject)
 
 
-class _TrackNVDAInitialization:
-	"""
-	During NVDA initialization,
-	core._initializeObjectCaches needs to cache the desktop object,
-	regardless of lock state.
-	Security checks may cause the desktop object to not be set if NVDA starts on the lock screen.
-	As such, during initialization, NVDA should behave as if Windows is unlocked,
-	i.e. winAPI.sessionTracking.isWindowsLocked should return False.
-
-	TODO: move to NVDAState module
-	"""
-
-	_isNVDAInitialized = False
-	"""When False, isWindowsLocked is forced to return False.
-	"""
-
-	@staticmethod
-	def markInitializationComplete():
-		assert not _TrackNVDAInitialization._isNVDAInitialized
-		_TrackNVDAInitialization._isNVDAInitialized = True
-
-	@staticmethod
-	def isInitializationComplete() -> bool:
-		return _TrackNVDAInitialization._isNVDAInitialized
-
-
 def _doLoseFocus():
 	import api
 	focusObject = api.getFocusObject()
@@ -547,6 +526,9 @@ def main():
 	log.debug("initializing background i/o")
 	import hwIo
 	hwIo.initialize()
+	log.debug("Initializing background braille display detection")
+	import bdDetect
+	bdDetect.initialize()
 	log.debug("Initializing tones")
 	import tones
 	tones.initialize()
@@ -738,7 +720,8 @@ def main():
 				mouseHandler.pumpAll()
 				braille.pumpAll()
 				vision.pumpAll()
-			except:
+				sessionTracking.pumpAll()
+			except Exception:
 				log.exception("errors in this core pump cycle")
 			baseObject.AutoPropertyObject.invalidateCaches()
 			watchdog.asleep()
@@ -761,7 +744,10 @@ def main():
 		log.debug("initializing updateCheck")
 		updateCheck.initialize()
 
-	_TrackNVDAInitialization.markInitializationComplete()
+	from winAPI import sessionTracking
+	sessionTracking.initialize()
+
+	NVDAState._TrackNVDAInitialization.markInitializationComplete()
 
 	log.info("NVDA initialized")
 
@@ -813,6 +799,7 @@ def main():
 	_terminate(brailleInput)
 	_terminate(braille)
 	_terminate(speech)
+	_terminate(bdDetect)
 	_terminate(hwIo)
 	_terminate(addonHandler)
 	_terminate(garbageHandler)
