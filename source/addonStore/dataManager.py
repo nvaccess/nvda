@@ -35,30 +35,17 @@ from .models import (
 class Channel(str, enum.Enum):
 	STABLE = "stable"
 	BETA = "beta"
+	DEV = "dev"
 	ALL = "all"
 
 
-def _workAroundForDevNVDAVersion() -> addonAPIVersion.AddonApiVersionT:
-	"""When a 'latest' endpoint is created, this workaround method can be removed.
-	"""
-	log.debugWarning(
-		"Workaround for Dev NVDA Version support with add-on store still in-place."
-		"This workaround should be removed before merging to master / beta / rc"
-	)
-	version = buildVersion.version
-	isNotPreMergeVersion = version[0].isdigit() or "alpha" in version or "beta" in version
-	if isNotPreMergeVersion:
-		# check if this gets merged accidentally.
-		log.error("Fix the addonStore version used for API endpoint")
-	return 2022, 2, 0  # hard-code for testing purposes.
-
-
 def _getCurrentApiVersionForURL() -> str:
-	# todo: replace with `currentVersion = addonAPIVersion.CURRENT`
-	# The version is manually overridden until a 'latest' endpoint can be used for 'pre-release' versions
-	# of NVDA
-	currentVersion = _workAroundForDevNVDAVersion()
-	year, major, minor = currentVersion
+	"""Returns 'latest' when on a test version of NVDA.
+	This allows add-on users to test add-ons with the alpha/beta of a breaking release.
+	"""
+	if buildVersion.isPreReleaseVersion:
+		return "latest"
+	year, major, minor = addonAPIVersion.CURRENT
 	return f"{year}.{major}.{minor}"
 
 
