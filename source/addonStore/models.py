@@ -2,9 +2,15 @@
 # Copyright (C) 2022 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
+
 import dataclasses
 import json
-import typing
+from typing import (
+    Any,
+    Dict,
+    List,
+    Optional,
+)
 
 import addonAPIVersion
 
@@ -19,9 +25,9 @@ class AddonDetailsModel:
 	publisher: str
 	versionName: str
 	channel: str
-	homepage: str
+	homepage: Optional[str]
 	licenseName: str
-	licenseUrl: str
+	licenseUrl: Optional[str]
 	sourceUrl: str
 	addonURL: str
 	fileSHA: str
@@ -31,19 +37,19 @@ class AddonDetailsModel:
 	"""Deviates from name in JSON, in order to match name required for addonAPIVersion"""
 
 
-def _createAddonApiVersion(versionDict: typing.Dict[str, int]) -> addonAPIVersion.AddonApiVersionT:
+def _createAddonApiVersion(versionDict: Dict[str, int]) -> addonAPIVersion.AddonApiVersionT:
 	"""
 	@param versionDict: expected to contain a Dict like: {"major": 2019, "minor": 3, "patch": 0}
 	"""
 	return versionDict["major"], versionDict["minor"], versionDict["patch"]
 
 
-def _createModelFromData(jsonData: str) -> typing.List[AddonDetailsModel]:
+def _createModelFromData(jsonData: str) -> List[AddonDetailsModel]:
 	"""Use json string to construct a listing of available addons.
 	See https://github.com/nvaccess/addon-datastore#api-data-generation-details
 	for details of the data.
 	"""
-	data = json.loads(jsonData)
+	data: List[Dict[str, Any]] = json.loads(jsonData)
 	return [
 		AddonDetailsModel(
 			addonId=addon["addonId"],
@@ -52,9 +58,9 @@ def _createModelFromData(jsonData: str) -> typing.List[AddonDetailsModel]:
 			publisher=addon["publisher"],
 			channel=addon["channel"],
 			versionName=addon["addonVersionName"],
-			homepage=addon["homepage"],
+			homepage=addon.get("homepage"),
 			licenseName=addon["license"],
-			licenseUrl=addon["licenseURL"],
+			licenseUrl=addon.get("licenseURL"),
 			sourceUrl=addon["sourceURL"],
 			addonURL=addon["URL"],
 			fileSHA=addon["sha256"],

@@ -424,11 +424,12 @@ class AddonDetails(
 					pgettext("addonStore", "Channel:"),
 					details.channel
 				)
-				self._appendDetailsLabelValue(
-					# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
-					pgettext("addonStore", "Homepage:"),
-					details.homepage, URL=details.homepage
-				)
+				if details.homepage:
+					self._appendDetailsLabelValue(
+						# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+						pgettext("addonStore", "Homepage:"),
+						details.homepage, URL=details.homepage
+					)
 				self._appendDetailsLabelValue(
 					# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 					pgettext("addonStore", "License:"),
@@ -447,13 +448,13 @@ class AddonDetails(
 		# Set caret/insertion point at the beginning so that NVDA users can more easily read from the start.
 		self.otherDetailsTextCtrl.SetInsertionPoint(0)
 
-	def _addDetailsLabel(self, label):
+	def _addDetailsLabel(self, label: str):
 		detailsTextCtrl = self.otherDetailsTextCtrl
 		detailsTextCtrl.SetDefaultStyle(self.labelStyle)
 		detailsTextCtrl.AppendText(label)
 		detailsTextCtrl.SetDefaultStyle(self.defaultStyle)
 
-	def _appendDetailsLabelValue(self, label, value, URL: Optional[str] = None):
+	def _appendDetailsLabelValue(self, label: str, value: str, URL: Optional[str] = None):
 		detailsTextCtrl = self.otherDetailsTextCtrl
 
 		if detailsTextCtrl.GetValue():
