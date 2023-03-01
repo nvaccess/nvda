@@ -41,6 +41,8 @@ from . import Window
 from ..behaviors import EditableTextWithoutAutoSelectDetection
 from . import _msOfficeChart
 import locationHelper
+from enum import IntEnum
+from typing import Dict
 
 #Word constants
 
@@ -219,26 +221,54 @@ WdThemeColorIndexToMsoThemeColorSchemeIndex={
 	wdThemeColorText2:msoThemeDark2,
 }
 
-# map index from wdColorIndex to decimal values in wdColor
-highlightColors = {
-	-1: None,  # wdByAuthor (for Options.RevisedPropertiesColor; for reference only)
-	0: -16777216,  # wdColorAutomatic/wdNoHighlight (for reference only)
-	1: 0,  # wdColorBlack
-	2: 16711680,  # wdColorBlue
-	3: 16776960,  # wdColorTurquoise
-	4: 65280,  # wdColorBrightGreen
-	5: 16711935,  # wdColorPink
-	6: 255,  # wdColorRed
-	7: 65535,  # wdColorYellow
-	8: 16777215,  # wdColorWhite
-	9: 8388608,  # wdColorDarkBlue
-	10: 8421376,  # wdColorTeal
-	11: 32768,  # wdColorGreen
-	12: 8388736,  # wdColorViolet
-	13: 128,  # wdColorDarkRed
-	14: 32896,  # wdColorDarkYellow
-	15: 8421504,  # wdColorGray50
-	16: 12632256,  # wdColorGray25
+
+# document useful values from:
+# https://learn.microsoft.com/en-us/office/vba/api/word.wdcolorindex
+class WinWordColorIndex(IntEnum):
+
+	wdBlack = 1
+	wdBlue = 2
+	wdBrightGreen = 4
+	wdDarkBlue = 9
+	wdDarkRed = 13
+	wdDarkYellow = 14
+	wdGray25 = 16
+	wdGray50 = 15
+	wdGreen = 11
+	wdPink = 5
+	wdRed = 6
+	wdTeal = 10
+	wdTurquoise = 3
+	wdViolet = 12
+	wdWhite = 8
+	wdYellow = 7
+
+
+# document useful values from:
+# https://learn.microsoft.com/en-us/office/vba/api/word.wdcolor
+class WinWordColor(IntEnum):
+
+	wdBlack = 0
+	wdBlue = 16711680
+	wdBrightGreen = 65280
+	wdDarkBlue = 8388608
+	wdDarkRed = 128
+	wdDarkYellow = 32896
+	wdGray25 = 12632256
+	wdGray50 = 8421504
+	wdGreen = 32768
+	wdPink = 16711935
+	wdRed = 255
+	wdTeal = 8421376
+	wdTurquoise = 16776960
+	wdViolet = 8388736
+	wdWhite = 16777215
+	wdYellow = 65535
+
+
+# map (highlighting) color index to color decimal value
+_colorIndexToColor: Dict[WinWordColorIndex, WinWordColor] = {
+	colorIndex.value: WinWordColor[colorIndex.name].value for colorIndex in WinWordColorIndex
 }
 
 wdRevisionTypeLabels={
@@ -906,7 +936,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		if hlColorIndex is not None:
 			hlColor = None
 			try:
-				val = highlightColors[int(hlColorIndex)]
+				val = _colorIndexToColor[int(hlColorIndex)]
 				hlColor = self.obj.winwordColorToNVDAColor(val)
 			except (KeyError, ValueError):
 				log.debugWarning("highlight color error", exc_info=True)
