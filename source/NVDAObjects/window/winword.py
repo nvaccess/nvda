@@ -42,7 +42,6 @@ from ..behaviors import EditableTextWithoutAutoSelectDetection
 from . import _msOfficeChart
 import locationHelper
 from enum import IntEnum
-from typing import Dict
 
 #Word constants
 
