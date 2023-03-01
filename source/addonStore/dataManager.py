@@ -71,6 +71,7 @@ def _getAddonStoreURL(channel: Channel, lang: str, nvdaApiVersion: str) -> str:
 class CachedAddonModel:
 	availableAddons: List[AddonDetailsModel]
 	cachedAt: datetime
+	nvdaAPIVersion: addonAPIVersion.AddonApiVersionT
 
 
 class AddonFileDownloader:
@@ -218,7 +219,8 @@ class DataManager:
 			return
 		cacheData = {
 			"cacheDate": fetchTime.isoformat(),
-			"data": addonData
+			"data": addonData,
+			"nvdaAPIVersion": addonAPIVersion.CURRENT,
 		}
 		with open(self._cacheFile, 'w') as cacheFile:
 			json.dump(cacheData, cacheFile, ensure_ascii=False)
@@ -234,11 +236,13 @@ class DataManager:
 		return CachedAddonModel(
 			availableAddons=_createModelFromData(cacheData["data"]),
 			cachedAt=fetchTime,
+			nvdaAPIVersion=cacheData["nvdaAPIVersion"],
 		)
 
 	def getLatestAvailableAddons(self) -> List[AddonDetailsModel]:
 		shouldRefreshData = (
 			not self._availableAddonCache
+			or self._availableAddonCache.nvdaAPIVersion != addonAPIVersion.CURRENT
 			or DataManager._cachePeriod < (datetime.now() - self._availableAddonCache.cachedAt)
 		)
 		if shouldRefreshData:
@@ -250,5 +254,6 @@ class DataManager:
 				self._availableAddonCache = CachedAddonModel(
 					availableAddons=_createModelFromData(decodedApiData),
 					cachedAt=fetchTime,
+					nvdaAPIVersion=addonAPIVersion.CURRENT,
 				)
 		return self._availableAddonCache.availableAddons
