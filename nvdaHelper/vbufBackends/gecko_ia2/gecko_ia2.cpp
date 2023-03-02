@@ -1303,6 +1303,21 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 	return parentNode;
 }
 
+bool GeckoVBufBackend_t::isRootDocAlive() {
+	if (!this->pendingInvalidSubtreesList.empty()) {
+		// There is a pending update. We only want to check this once per update tick
+		// to avoid unnecessary COM calls.
+		return true;
+	}
+	AccessibleStates states;
+	if (!this->rootDocAcc || FAILED(this->rootDocAcc->get_states(&states)) ||
+			states & IA2_STATE_DEFUNCT) {
+		this->rootDocAcc = nullptr;
+		return false;
+	}
+	return true;
+}
+
 void CALLBACK GeckoVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) {
 	switch(eventID) {
 		case EVENT_OBJECT_FOCUS:
@@ -1361,6 +1376,18 @@ void CALLBACK GeckoVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK ho
 		VBufStorage_controlFieldNode_t* node=backend->getControlFieldNodeWithIdentifier(docHandle,ID);
 		if(!node)
 			continue;
+
+		auto* geckoBackend = static_cast<GeckoVBufBackend_t*>(backend);
+		if (!geckoBackend->isRootDocAlive()) {
+			// The root doc is dead, but NVDA hasn't realised yet and so hasn't killed
+			// this buffer. That means this id is now in a different document! Trying to
+			// render this could cause a broken tree. At this point, we may as well
+			// clear the buffer.
+			LOG_DEBUG(L"Root doc is dead. Clearing buffer.");
+			backend->clearBuffer();
+			continue;
+		}
+
 		if (eventID == EVENT_OBJECT_HIDE) {
 			// When an accessible is moved, events are fired as if the accessible were
 			// removed and then inserted. The insertion events are fired as if it were
@@ -1381,6 +1408,7 @@ void CALLBACK GeckoVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK ho
 void GeckoVBufBackend_t::renderThread_initialize() {
 	registerWinEventHook(renderThread_winEventProcHook);
 	VBufBackend_t::renderThread_initialize();
+	this->rootDocAcc = IAccessible2FromIdentifier(this->rootDocHandle, this->rootID);
 }
 
 void GeckoVBufBackend_t::renderThread_terminate() {
