@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2006-2021 NV Access Limited
+Copyright 2006-2023 NV Access Limited, Leonard de Ruijter
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -14,7 +14,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #include <cstdio>
 #include <cwchar>
-#define WIN32_LEAN_AND_MEAN 
+#define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <objbase.h>
 #include <wil/resource.h>
@@ -38,13 +38,18 @@ using namespace std;
 LONG WINAPI GetCurrentApplicationUserModelId(UINT32* pBufSize,PWSTR buf);
 
 
-UINT wm_uninstallIA2Support = RegisterWindowMessage(L"wm_uninstallIA2Support");
+UINT wm_uninstallIA2Support = 0;
 bool isIA2SupportDisabled=false;
 
 map<DWORD, IA2InstallData> IA2InstallMap;
 
 pair<map<DWORD, IA2InstallData>::iterator, bool> installIA2Support(DWORD threadID) {
+	if (wm_uninstallIA2Support == 0) {
+		// Register our window message the first time we initialize IA2 support in a process
+		wm_uninstallIA2Support = RegisterWindowMessage(L"wm_uninstallIA2Support");
+	}
 	if (IA2InstallMap.find(threadID) != IA2InstallMap.end()) {
+		// Support already installed for this thread
 		return {IA2InstallMap.end(), false};
 	}
 	APTTYPE appType;
@@ -69,6 +74,10 @@ pair<map<DWORD, IA2InstallData>::iterator, bool> installIA2Support(DWORD threadI
 }
 
 bool uninstallIA2Support(DWORD threadID) {
+	if (wm_uninstallIA2Support == 0) {
+		// IA2 support was never installed
+		return false;
+	}
 	auto it = IA2InstallMap.find(threadID);
 	if (it == IA2InstallMap.end()) {
 		return false;
@@ -87,7 +96,7 @@ bool uninstallIA2Support(DWORD threadID) {
 	return true;
 }
 
-void CALLBACK IA2Support_winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) { 
+void CALLBACK IA2Support_winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) {
 	if (eventID != EVENT_SYSTEM_FOREGROUND && eventID != EVENT_OBJECT_FOCUS) {
 		return;
 	}
@@ -116,7 +125,7 @@ bool isSuspendableProcess() {
 	wil::unique_hmodule kernel32Handle {LoadLibrary(L"kernel32.dll")};
 	if(!kernel32Handle) {
 		LOG_ERROR(L"Can't load kernel32.dll");
-		return false; 
+		return false;
 	}
 	// Macro from wil/win32_helpers.h
 	auto GetCurrentApplicationUserModelId_fp = GetProcAddressByFunctionDeclaration(kernel32Handle.get(), GetCurrentApplicationUserModelId);
@@ -129,7 +138,7 @@ bool isSuspendableProcess() {
 	LONG res=GetCurrentApplicationUserModelId_fp(&bufSize,buf.data());
 	if(res != ERROR_SUCCESS) {
 		return false;
-	} 
+	}
 	return true;
 }
 
@@ -190,8 +199,10 @@ void IA2Support_inProcess_terminate() {
 			continue;
 		}
 		PostThreadMessage(threadId, wm_uninstallIA2Support, 0, 0);
-		HANDLE waitHandles[2] = {data.uiThreadUninstalledEvent, data.uiThreadHandle};
-		int res = WaitForMultipleObjects(2, waitHandles, false, 10000);
+		const UINT WAIT_HANDLE_COUNT = 2;
+		HANDLE waitHandles[WAIT_HANDLE_COUNT] = {data.uiThreadUninstalledEvent, data.uiThreadHandle};
+		const UINT MAX_WAIT_TIME = 10000; // 10 seconds
+		int res = WaitForMultipleObjects(WAIT_HANDLE_COUNT, waitHandles, false, MAX_WAIT_TIME);
 		if (res != WAIT_OBJECT_0 && res != WAIT_OBJECT_0 + 1) {
 			LOG_DEBUGWARNING(L"WaitForMultipleObjects returned "<<res);
 		}
@@ -241,7 +252,7 @@ bool findContentDescendant(IAccessible2* pacc2, long what, long* descendantID, l
 				break;
 		}
 		paccText->Release();
-		if(offset==-1) return false; 
+		if(offset==-1) return false;
 		IAccessibleHypertext* paccHypertext=NULL;
 		pacc2->QueryInterface(IID_IAccessibleHypertext,(void**)&paccHypertext);
 		if(paccHypertext) {
@@ -318,7 +329,7 @@ CComPtr<IAccessible2> getIA2(const HWND hwnd, const long parentID) {
 		void** ppvObject = reinterpret_cast<void**>(&pacc2.p);
 		pserv->QueryService(IID_IAccessible, IID_IAccessible2, ppvObject);
 	}
-	
+
 	return pacc2;
 }
 
