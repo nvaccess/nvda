@@ -189,7 +189,7 @@ defaultGestureMapEntries = {
 			"br(eurobraille):rightArrow",
 		),
 		"kb:upArrow": (
-			"br(eurobraille):dot1+space",
+			"br(eurobraille):dot4+space",
 			"br(eurobraille):joystick2Up",
 			"br(eurobraille):upArrow",
 		),
