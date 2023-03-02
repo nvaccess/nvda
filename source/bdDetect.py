@@ -545,11 +545,6 @@ def initialize():
 	scanForDevices.register(_Detector._bgScanBluetooth)
 
 	# Add devices
-	# albatross
-	addUsbDevices("albatross", KEY_SERIAL, {
-		"VID_0403&PID_6001",  # Caiku Albatross 46/80
-	})
-
 	# alva
 	addUsbDevices("alva", KEY_HID, {
 		"VID_0798&PID_0640",  # BC640
@@ -804,6 +799,11 @@ def initialize():
 		"seikantk",
 		isSeikaBluetoothDeviceMatch
 	)
+
+	# albatross
+	addUsbDevices("albatross", KEY_SERIAL, {
+		"VID_0403&PID_6001",  # Caiku Albatross 46/80
+	})
 
 
 def terminate():

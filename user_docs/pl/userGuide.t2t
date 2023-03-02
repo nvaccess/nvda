@@ -219,6 +219,7 @@ Polecenia nie będą wykonywane, gdy pomoc klawiatury jest aktywna.
 | Czytaj pasek stanu | ``NVDA+end`` | ``NVDA+shift+end`` | Odczytuje pasek stanu, jeżeli NVDA go znajdzie. Dwukrotnie naciśnięcie spowoduje literowanie przeczytanej informacji. Potrójne naciśnięcie skopiuje informacje do schowka. |
 | Odczytaj czas | ``NVDA+f12`` | ``NVDA+f12`` | Naciśnięcie jeden raz spowoduje odczyt aktualnego czasu, dwukrotnie naciśnięcie spowoduje odczyt aktualnej daty |
 | Odczytaj formatowanie tekstu | ``NVDA+f`` | ``NVDA+f`` | Odczytuje informacje o formatowaniu tekstu. Dwukrotne naciśnięcie spowoduje pokazanie tej informacji w oknie |
+| Odczytaj lokalizacje linku | ``NVDA+k`` | ``NVDA+k`` | Gdy jest naciśnięte jeden raz, wymawia lokalizację, adres  URL linku w  [obiekcie nawigatora #ObjectNavigation]. Gdy jest naciśnięte dwukrotnie, pokazuje w oknie w celu bardziej rzetelnego przeglądu |
 
 +++ Kontrola przeczytanej informacji przez NVDA +++[ToggleWhichInformationNVDAReads]
 || Nazwa | Polecenie dla komputerów stacjonarnych | Polecenie dla komputerów przenośnych | opis |
@@ -2724,6 +2725,7 @@ Poniższe linijki brajlowskie mogą być automatycznie wykrywane.
 - Eurobraille Esys/Esytime/Iris
 - Monitory brajlowskie Nattiq nBraille
 - Seika Notetaker: MiniSeika (16, 24 znakowe), V6, i V6Pro (40 znakowe)
+- Monitory brajlowskie Tivomatic Caiku Albatross 46/80
 - Jakikolwiek monitor brajlowski wspierający standardowy HID protokół brajlowski
 -
 
@@ -3604,7 +3606,64 @@ Zobacz [tabele klawiszy w dokumentacji brltty http://mielke.cc/brltty/doc/KeyBin
 | Przywołaj do komórki brajla | route (przenieś kursor do znaku) |
 %kc:endInclude
 
-++ Standardowe monitory brajlowskei HID ++[HIDBraille]
+++ Monitory brajlowskie Tivomatic Caiku Albatross 46/80 ++[Albatross]
+Monitory brajlowskie Caiku Albatross, które były produkowane  i dostępne w Finlandii, mogą być połączone za pomocą portu USB lub portu szeregowego.
+Nie są potrzebne sterowniki specjalne żeby używać tych monitoró brajlowskich.
+Wystarczy tylko połączyć monitor brajlowski i ustawić NVDA do jego używania.
+
+Uwaga: szybkość transmisji w bodach  19200 jest najbardziej zalecana.
+Jeżeli jest to wymagane, przełącz wartość ustawienia szybkość transmisji w bodach na wartość 19200 z poziomu menu monitora brajlowskiego.
+Choć sterownik wspiera szybkość transmisji w bodach 9600, nie istnieje możliwość sterowania używaną szybkością transmisji.
+Z powodu tego, że domyślną szybkością transmisji w bodach jest 19200, ta szybkość jest najpierw używana przez sterownik.
+Jeżeli szybkości transmisji nie są takie same, sterownik może się zachowywać w nieoczekiwany dla nas sposób.
+
+Poniżej podane są przydzielone klawisze dla tego monitora brajlowskiego.
+Prisimy zajrzeć do dokumentacji monitora brajlowskiego w celu sprawdzienia opisu i lokalizacji klawiszy.
+%kc:beginInclude
+|| Nazwa | Klawisz |
+| Przejdź do początkowej linii w przeglądzie | ``home1``, ``home2`` |
+| Przejdź do końcowej linii w przeglądzie | ``end1``, ``end2`` |
+| Ustawia bieżący obiekt nawigatora do fokusu | ``eCursor1``, ``eCursor2`` |
+| Przenosi do bieżącego fokusu | ``cursor1``, ``cursor2`` |
+| Przemieszcza wskażnik myszy do bieżącego obiektu nawigatora | ``home1+home2`` |
+| Ustawia bieżacy obiekt nawigatora do bieżącego obiektu pod myszą i wymawia go | ``end1+end2`` |
+| Ustawia fokus do bieżącego obiektu nawigatora | ``eCursor1+eCursor2`` |
+| Przełącza przywiązanie brajla | ``cursor1+cursor2`` |
+| Przemieszcza monitor brajlowski do poprzedniej linii | ``up1``, ``up2``, ``up3`` |
+| Przemieszcza monitor brajlowski do następnej linii | ``down1``, ``down2``, ``down3`` |
+| Przemieszcza monitor brajlowski do poprzedniego fragmentu tekstu | ``left``, ``lWheelLeft``, ``rWheelLeft`` |
+| Przemieszcza monitor brajlowski do następnego fragmentu tekstu | ``right``, ``lWheelRight``, ``rWheelRight`` |
+| przywołuje monitor brajlowski do komórki brajlowskiej | ``routing`` |
+| Odczytuje formatowanie tekstu pod kursorem brajlowskim | ``secondary routing`` |
+| przełącza między sposobami pokazywania informacji kontekstowej | ``attribute1+attribute3`` |
+| Przełącza między trbami mowy wyłączony, sygnały i mowa | ``attribute2+attribute4`` |
+| Przełącza do poprzedniego trybu przeglądania (np. obiekt, dokument lub ekran) | ``f1`` |
+| Przełącza do następnego trybu przeglądania (np. obiekt, dokument lub ekran) | ``f2`` |
+| Przenosi obiekt nawigatora na obiekt, któy go zawiera | ``f3`` |
+| przenosi obiekt nawigatora do pierwszego obiektu wewnętrznego | ``f4`` |
+| Przenosi obiekt nawigatora do poprzedniego obiektu | ``f5`` |
+| Przenosi obiekt nawigatora do następnego obiektu | ``f6`` |
+| Odczytuje bieżacy obiekt nawigatora | ``f7`` |
+| Odczytuje informację o położeniu tekstu lub obiektu nawigatora pod kursorem przeglądu | ``f8`` |
+| Wywołuje domyślną akcję na bieżącym obiekcie nawigatora | ``f7+f8`` |
+| odczytuje date/czas | ``f9`` |
+| Odczytuje stan baterii jeżeli ładowarka nie jest włączona | ``f10`` |
+| Odczytuję tytuł okna | ``f11`` |
+| Odczytuje pasek stanu | ``f12`` |
+| Odczytuje bieżącą linię pod kursorem | ``f13`` |
+| Czytaj wszystko | ``f14`` |
+| Odczytuje bieżący znak pod kursorem przeglądu | ``f15`` |
+| Odczytuje bieżącą linie na miejscu na którym znajduje się kursor przeglądu | ``f16`` |
+| Odczytuje słowo na miejscu na którym znajduje się kursor przeglądu | ``f15+f16`` |
+| przenosi kursor przeglądu do poprzedniej linii bieżącego obiektu nawigatora i wymawia ją | ``lWheelUp``, ``rWheelUp`` |
+| przenosi kursor przeglądu do następnej linii bieżącego obiektu nawigatora i wymawia ją | ``lWheelDown``, ``rWheelDown`` |
+| ``Klawisz Windows+d`` (minimalizuje wszystkie aplikacje) | ``attribute1`` |
+| klawisz ``Windows+e`` (ten komputer) | ``attribute2`` |
+| klawisz ``Windows+b`` (przenosi fokus do obszaru powiadomień) | ``attribute3`` |
+| klawisz ``Windows+i`` (ustawienia systemu windows) | ``attribute4`` |
+%kc:endInclude
+
+++ Standardowe monitory brajlowskie HID ++[HIDBraille]
 Jest to eksperymentalny sterownik dla monitorów brajlowskich zrobionych według specyfikacji HID, którą przyjeli w roku 2018 Microsoft, Google, Apple i niektóre inne firmy produkujące technologie wspomagające włączając w to NV Access. 
 Mamy nadzieję, że przyszłe monitory brajlowskie stworzone przez jakiegokolwiek producenta będą wspierane będą używali ten protokół co wyeliminuje potrzebę dla specyficznych sterowników.
 
