@@ -15,6 +15,7 @@ Pulsa ``NVDA+d`` para recorrer los resúmenes cuando se anuncien las anotaciones
 Ahora se admiten las pantallas braille Tivomatic Caiku Albatross 46/80.
 
 Se ha mejorado el soporte para versiones ARM64 y AMD64 de Windows.
+
 Hay muchas correcciones de fallos, en particular correcciones de Windows 11.
 
 Se han actualizado eSpeak, LibLouis, Sonic rate boost y Unicode CLDR.
@@ -58,7 +59,7 @@ Lo mismo que pulsar ``NVDA+k`` dos veces, pero puede ser más útil para usuario
   -
 - Se actualizó Sonic rate boost library a commit ``1d70513``. (#14180)
 - CLDR se ha actualizado a la versión 42.0. (#14273)
-- eSpeak NG se ha actualizado a 1.52-dev commit ``a51235aa``. (#14281)
+- eSpeak NG se ha actualizado a 1.52-dev commit ``f520fecb``. (#14281, #14675)
   - Corregido el anunciado de números grandes. (#14241)
   -
 - Las aplicaciones Java con controles que utilicen el estado seleccionable ahora anunciarán cuando un elemento no esté seleccionado en lugar de cuando el elemento esté seleccionado. (#14336)

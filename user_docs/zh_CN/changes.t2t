@@ -109,6 +109,107 @@ NVDA 更新日志
 插件需要重新测试并更新其清单。
 请参阅 [开发人员指南 https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] 了解有关 NVDA API 的弃用和移除信息。
 
+- 在非英语系统环境下，本地运行的系统测试，现在可顺利通过。 (#13362)
+- 在 ARM 架构的 Windows 11 系统中， x64 的应用将不再被识别为 ARM64应用程序。 (#14403)
+- 在新的 UIA scenarios 中，不必使用  ``SearchField`` 和 ``SuggestionListItem`` ``UIA`` ``NVDAObjects``， 因为将通过 UIA 的 ``controllerFor`` 样式暴露键入的内容和搜索建议。
+此特性现可通过  ``behaviours.EditableText`` 和 基于 ``NVDAObject`` 分别调用。 (#14222)
+- UIA 调试日志类启用后，将为 UIA event handlers 和 utilies 生成更多重要日志。  (#14256)
+- NVDAHelper build standards 已更新。 (#13072)
+  - 现在使用 C++20标准（过去是C++17）。
+    - 现在使用 ``/permissive-`` 编译器标志禁用宽容行为，并设置 ``/Zc`` 编译器选项以实现严格一致性。
+
+  -
+- 某些插件对象（如驱动或者附加组件）可在 NVDA Python 控制台获取更多详细信息。  (#14463)
+- 现在，NVDA 可完全使用 Visual Studio 2022进行编译，不再请求 Visual Studio 2019 build tools。 (#14326)
+- NVDA 冻结后，将产生更详尽的调试日志以方便救援。 (#14309)
+- 单例的  ``braille._BgThread`` 类 已被 ``hwIo.ioThread.IoThread`` 代替。 (#14130)
+  - 此类 ``hwIo.bgThread`` 的一个单独的实例(在 NVDA 核心)为后台 I/O 的点显器驱动提供安全的线程。 
+  - 此类并不为单利而设计，其他驱动程序可以用自己的实例来进行 I/O。
+  -
+- 可以从 ``winVersion.WinVersion.processorArchitecture`` 属性查询计算机的处理器架构。 (#14439)
+
+- 添加了新的扩展点。 (#14503)
+  - ``inputCore.decide_executeGesture``
+  - ``tones.decide_beep``
+  - ``nvwave.decide_playWaveFile``
+  - ``braille.pre_writeCells``
+  - ``braille.filter_displaySize``
+  - ``braille.decide_enabled``
+  - ``braille.displayChanged``
+  - ``braille.displaySizeChanged``
+  - 
+- 现在，可通过设置 useconfig  来欺骗合成器驱动已经支持此设置。 (#14601)
+-
+
+=== API 的破坏性修改 ===
+这里是所有的 API 破坏性修改。
+如您的附加组件使用新的 API 更新后遇到问题，请在 github 开新的issue。
+- 配置详述已被改变，关键字已经被移除或修改为：
+  -  ``[documentFormatting]`` 部分 (#14233):
+    - ``reportLineIndentation`` 存储着一个整数 （0 到 3） 而不是一个布尔值。
+    - ``reportLineIndentationWithTones`` 已经被移除。
+    - ``reportBorderStyle`` 和 ``reportBorderColor`` 已经被移除 并被替换为 ``reportCellBorders``。
+    -
+  -  ``[braille]`` 部分 (#14233):
+    - ``noMessageTimeout`` 已经被移除， 代替他的是一个 ``showMessages`` 的值。
+    - ``messageTimeout`` 再也不能为  0， 代替以 ``showMessages`` 的值。
+    - ``autoTether`` 已经被移除，； ``tetherTo`` 的值可用 "auto" 来代替。
+    -
+  -  ``[keyboard]`` 部分  (#14528):
+    - ``useCapsLockAsNVDAModifierKey``、 ``useNumpadInsertAsNVDAModifierKey``、 ``useExtendedInsertAsNVDAModifierKey`` 已经被移除。
+    他们被 ``NVDAModifierKeys`` 代替。
+    -
+  -
+-  ``NVDAHelper.RemoteLoader64`` 已经被移除且没有可替代的方案。 (#14449)
+-  ``winAPI.sessionTracking`` 的下列函数在未有替换的情况下被移除。 (#14416, #14490)
+  - ``isWindowsLocked``
+  - ``handleSessionChange``
+  - ``unregister``
+  - ``register``
+  - ``isLockStateSuccessfullyTracked``
+  - 
+- 不再允许设置  ``braille.handler.enabled`` 与否来判断点显器句柄的启用/禁用状态。
+要想禁用点显器句柄，请 注册一个句柄到 ``braille.handler.decide_enabled``。 (#14503)
+- 不再允许设置  ``braille.handler.displaySize``来改变句柄的显示大小。
+要想更新 显示大小，请注册一个句柄 到 ``braille.handler.filter_displaySize``。
+参看 ``brailleViewer``以获取如何进行的例子。 (#14503)
+- 下面的情况需要使用  ``addonHandler.Addon.loadModule``。 (#14481)
+  - ``loadModule`` 现在用点分割，而不是反斜杠。
+  如用 "lib.example" 代替 "lib\example".
+  - 当使用 ``loadModule`` 加载 module 时，遇到无法加载或抛出错误时，将抛出一个异常 而不会在不包含任何产生原因的情况下，仅仅静默的返回一个 ``None``。
+  -
+- 下面的标志已经在没有任何直接替代的前提下从 ``appModules.foobar2000`` 中移除。 (#14570)
+  - ``statusBarTimes``
+  - ``parseIntervalToTimestamp``
+  - ``getOutputFormat``
+  - ``getParsingFormat``
+  -
+- 下面的，都不是单例了，且其对应的获取函数也已经被移除。
+ ``Example.get()`` 已经变为  ``Example()``。 (#14248)
+  - ``UIAHandler.customAnnotations.CustomAnnotationTypesCommon``
+  - ``UIAHandler.customProps.CustomPropertiesCommon``
+  - ``NVDAObjects.UIA.excel.ExcelCustomProperties``
+  - ``NVDAObjects.UIA.excel.ExcelCustomAnnotationTypes``
+  - 
+-
+
+
+=== 即将弃用 ===
+- ``NVDAObjects.UIA.winConsoleUIA.WinTerminalUIA`` 不推荐使用，将弃用。 (#14047)
+- ``config.addConfigDirsToPythonPackagePath`` 已经被移动。
+请用 ``addonHandler.packaging.addDirsToPythonPackagePath`` 代替。 (#14350)
+- ``braille.BrailleHandler.TETHER_*`` 均不推荐使用。
+请使用 ``configFlags.TetherTo.*.value`` 代替 (#14233)
+- ``utils.security.postSessionLockStateChanged`` 不推荐使用。
+请用 ``utils.security.post_sessionLockStateChanged`` 代替。 (#14486)
+- ``NVDAObject.hasDetails``, ``NVDAObject.detailsSummary``, ``NVDAObject.detailsRole`` 不推荐使用。
+请用 ``NVDAObject.annotations`` 代替。 (#14507)
+- ``keyboardHandler.SUPPORTED_NVDA_MODIFIER_KEYS`` 不推荐使用，且无直接替代方案。
+请考虑使用 class ``config.configFlags.NVDAKey`` 代替。 (#14528)
+- ``gui.MainFrame.evaluateUpdatePendingUpdateMenuItemCommand`` 不推荐使用。
+请使用 ``gui.MainFrame.SysTrayIcon.evaluateUpdatePendingUpdateMenuItemCommand`` 代替。 (#14523)
+-
+
 
 = 2022.4 =
 本版新增了一些重要的功能命令，涵盖表格的逐行/逐列导航、朗读等快捷键。
