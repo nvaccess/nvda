@@ -3,9 +3,14 @@
 # Joseph Lee, Babbage B.V., Arnold Loubriat, Łukasz Golonka, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
+
 import enum
 from abc import abstractmethod, ABC
 import sys
+from typing import (
+	TYPE_CHECKING,
+)
+
 import os.path
 import gettext
 import tempfile
@@ -33,6 +38,9 @@ from .packaging import isModuleName
 import importlib
 from types import ModuleType
 import extensionPoints
+
+if TYPE_CHECKING:
+	from addonStore.models import Channel  # noqa: F401 used for typing
 
 
 MANIFEST_FILENAME = "manifest.ini"
@@ -343,6 +351,14 @@ class AddonBase(ABC):
 	@property
 	def lastTestedNVDAVersion(self) -> addonAPIVersion.AddonApiVersionT:
 		return self.manifest.get('lastTestedNVDAVersion')
+
+	@property
+	def channel(self) -> typing.Optional["Channel"]:
+		"""
+		Channel is used in the new add-on data store.
+		The "None" case must be handled for side-loaded add-ons.
+		"""
+		return None
 
 	@property
 	@abstractmethod

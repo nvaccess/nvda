@@ -558,7 +558,7 @@ class AddonStoreVM:
 
 	def _getAddonsInBG(self):
 		log.debug("getting addons in the background")
-		addons = self._dataManager.getLatestAvailableAddons()
+		addons = [a for a in self._dataManager.getLatestAvailableAddons() if addonVersionCheck.isAddonCompatible(a)]
 		log.debug("completed getting addons in the background")
 		if self._addons == addons:  # no change
 			log.debug("no change in addons")

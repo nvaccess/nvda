@@ -1,9 +1,9 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022 NV Access Limited
+# Copyright (C) 2022-2023 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
+
 import dataclasses
-import enum
 import json
 import os
 import pathlib
@@ -27,16 +27,10 @@ from typing import (
 	Tuple,
 )
 from .models import (
+	Channel,
 	_createModelFromData,
 	AddonDetailsModel,
 )
-
-
-class Channel(str, enum.Enum):
-	STABLE = "stable"
-	BETA = "beta"
-	DEV = "dev"
-	ALL = "all"
 
 
 def _getCurrentApiVersionForURL() -> str:

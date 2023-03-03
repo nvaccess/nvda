@@ -1,18 +1,26 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022 NV Access Limited
+# Copyright (C) 2022-2023 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 import dataclasses
+from enum import Enum
 import json
 from typing import (
-    Any,
-    Dict,
-    List,
-    Optional,
+	Any,
+	Dict,
+	List,
+	Optional,
 )
 
 import addonAPIVersion
+
+
+class Channel(str, Enum):
+	STABLE = "stable"
+	BETA = "beta"
+	DEV = "dev"
+	ALL = "all"
 
 
 @dataclasses.dataclass(frozen=True)  # once created, it should not be modified.
@@ -24,7 +32,7 @@ class AddonDetailsModel:
 	description: str
 	publisher: str
 	versionName: str
-	channel: str
+	channel: Channel
 	homepage: Optional[str]
 	licenseName: str
 	licenseUrl: Optional[str]
@@ -56,7 +64,7 @@ def _createModelFromData(jsonData: str) -> List[AddonDetailsModel]:
 			displayName=addon["displayName"],
 			description=addon["description"],
 			publisher=addon["publisher"],
-			channel=addon["channel"],
+			channel=Channel(addon["channel"]),
 			versionName=addon["addonVersionName"],
 			homepage=addon.get("homepage"),
 			licenseName=addon["license"],
