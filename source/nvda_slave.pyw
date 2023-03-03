@@ -9,11 +9,10 @@ Performs miscellaneous tasks which need to be performed in a separate process.
 
 import sys
 import os
-import builtins
 import globalVars
+import logHandler
 import monkeyPatches.comtypesMonkeyPatches
 import NVDAState
-from languageHandler import makePgettext
 
 
 # Ensure that slave uses generated comInterfaces by adding our comInterfaces to `comtypes.gen` search path.
@@ -31,27 +30,6 @@ else:
 # #2391: some functions may still require the current directory to be set to NVDA's app dir
 os.chdir(globalVars.appDir)
 globalVars.appPid = os.getpid()
-
-
-import gettext
-import locale
-#Localization settings
-try:
-	trans = gettext.translation(
-		'nvda',
-		localedir=os.path.join(globalVars.appDir, 'locale'),
-		languages=[locale.getdefaultlocale()[0]]
-	)
-	trans.install()
-	# Install our pgettext function.
-	builtins.pgettext = makePgettext(trans)
-except:
-	gettext.install('nvda')
-	# Install a no-translation pgettext function
-	builtins.pgettext = lambda context, message: message
-
-
-import logHandler
 
 
 def getNvdaHelperRemote():

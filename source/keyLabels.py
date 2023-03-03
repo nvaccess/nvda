@@ -4,6 +4,13 @@
 #See the file COPYING for more details.
 #Copyright (C) 2008-2016 NV Access Limited, Aleksey Sadovoy, Babbage B.v.
 
+"""Contains mapping from the Windows key names to their localized labels.
+
+As there are localizable strings at module level,
+this can only be imported once localization is set up via `languageHandler.initialize`.
+"""
+
+
 localizedKeyLabels = {
 	# Translators: This is the name of the back key found on multimedia keyboards for controlling the web-browser.
 	'browserback': _("back"),

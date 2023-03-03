@@ -359,7 +359,7 @@ class _Detector:
 		"""
 		if not bluetooth:
 			return
-		btDevs: Optional[Iterable[Tuple[str, DeviceMatch]]] = _DeviceInfoFetcher.btDevsCache
+		btDevs: Optional[Iterable[Tuple[str, DeviceMatch]]] = deviceInfoFetcher.btDevsCache
 		if btDevs is None:
 			btDevs = getDriversForPossibleBluetoothDevices()
 			# Cache Bluetooth devices for next time.
@@ -373,7 +373,7 @@ class _Detector:
 				btDevsCache.append((driver, match))
 			yield (driver, match)
 		if btDevsCache is not btDevs:
-			_DeviceInfoFetcher.btDevsCache = btDevsCache
+			deviceInfoFetcher.btDevsCache = btDevsCache
 
 	def _bgScan(
 			self,
@@ -420,7 +420,7 @@ class _Detector:
 		"""
 		self._stopBgScan()
 		# Clear the cache of bluetooth devices so new devices can be picked up.
-		_DeviceInfoFetcher.btDevsCache = None
+		deviceInfoFetcher.btDevsCache = None
 		self._queueBgScan(usb=usb, bluetooth=bluetooth, limitToDevices=limitToDevices)
 
 	def handleWindowMessage(self, msg=None, wParam=None):
@@ -433,7 +433,7 @@ class _Detector:
 		if not self._detectBluetooth:
 			# Do not poll bluetooth devices at all when bluetooth is disabled.
 			return
-		if not _DeviceInfoFetcher.btDevsCache:
+		if not deviceInfoFetcher.btDevsCache:
 			return
 		self._queueBgScan(bluetooth=self._detectBluetooth, limitToDevices=self._limitToDevices)
 
@@ -442,7 +442,7 @@ class _Detector:
 		messageWindow.pre_handleWindowMessage.unregister(self.handleWindowMessage)
 		self._stopBgScan()
 		# Clear the cache of bluetooth devices so new devices can be picked up with a new instance.
-		_DeviceInfoFetcher.btDevsCache = None
+		deviceInfoFetcher.btDevsCache = None
 		self._executor.shutdown(wait=False)
 
 
@@ -545,11 +545,6 @@ def initialize():
 	scanForDevices.register(_Detector._bgScanBluetooth)
 
 	# Add devices
-	# albatross
-	addUsbDevices("albatross", KEY_SERIAL, {
-		"VID_0403&PID_6001",  # Caiku Albatross 46/80
-	})
-
 	# alva
 	addUsbDevices("alva", KEY_HID, {
 		"VID_0798&PID_0640",  # BC640
@@ -798,6 +793,11 @@ def initialize():
 		"seikantk",
 		isSeikaBluetoothDeviceMatch
 	)
+
+	# albatross
+	addUsbDevices("albatross", KEY_SERIAL, {
+		"VID_0403&PID_6001",  # Caiku Albatross 46/80
+	})
 
 
 def terminate():

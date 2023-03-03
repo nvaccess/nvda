@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-20 00:02+0000\n"
-"PO-Revision-Date: 2023-01-20 11:24+0200\n"
+"POT-Creation-Date: 2023-02-14 00:37+0000\n"
+"PO-Revision-Date: 2023-02-14 10:30+0200\n"
 "Last-Translator: Jani Kinnunen <janikinnunen340@gmail.com>\n"
 "Language-Team: janikinnunen340@gmail.com\n"
 "Language: fi_FI\n"
@@ -549,7 +549,7 @@ msgstr "Lisätiedot"
 #. %s specifies the type of details (e.g. "comment, suggestion, details")
 #, python-format
 msgid "has %s"
-msgstr "sisältää lisätiedon %s"
+msgstr "sisältää tiedon %s"
 
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
@@ -4419,6 +4419,34 @@ msgstr ""
 msgid "Plugins reloaded"
 msgstr "Liitännäiset ladattu uudelleen"
 
+#. Translators: input help mode message for Report destination URL of navigator link command
+msgid ""
+"Report the destination URL of the link in the navigator object. If pressed "
+"twice, shows the URL in a window for easier review."
+msgstr ""
+"Ilmoittaa navigointiobjektissa olevan linkin kohteen URL:n. Kahdesti "
+"painettaessa se näytetään erillisessä ikkunassa, jotta sitä on helpompi "
+"tarkastella."
+
+#. Translators: Informs the user that the window contains the destination of the
+#. link with given title
+#, python-brace-format
+msgid "Destination of: {name}"
+msgstr "Kohde: {name}"
+
+#. Translators: Tell user that the command has been run on something that is not a link
+msgid "Not a link."
+msgstr "Ei ole linkki."
+
+#. Translators: input help mode message for Report URL of navigator link in a window command
+msgid ""
+"Reports the destination URL of the link in the navigator object in a window, "
+"instead of just speaking it. May be preferred by braille users."
+msgstr ""
+"Näyttää navigointiobjektissa olevan linkin kohteen URL:n erillisessä "
+"ikkunassa pelkän puhumisen sijaan. Pistekirjoituksen käyttäjät saattavat "
+"pitää tästä enemmän."
+
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Moves to the next object in a flattened view of the object navigation "
@@ -6749,21 +6777,40 @@ msgstr "Ohjeikkunaa ei löydy."
 msgid "No track playing"
 msgstr "Kappaleen toisto ei ole käynnissä"
 
+#. Translators: Reported remaining time in Foobar2000
+#, python-brace-format
+msgid "{remainingTimeFormatted} remaining"
+msgstr "{remainingTimeFormatted} jäljellä"
+
 #. Translators: Reported if the remaining time can not be calculated in Foobar2000
-msgid "Unable to determine remaining time"
-msgstr "Jäljellä olevaa aikaa ei voida selvittää"
+msgid "Remaining time not available"
+msgstr "Jäljellä olevaa aikaa ei saatavilla"
 
 #. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Ilmoittaa toistettavan kappaleen jäljellä olevan ajan."
 
+#. Translators: Reported elapsed time in Foobar2000
+#, python-brace-format
+msgid "{elapsedTime} elapsed"
+msgstr "{elapsedTime} kulunut"
+
+#. Translators: Reported if the elapsed time is not available in Foobar2000
+msgid "Elapsed time not available"
+msgstr "Kulunutta aikaa ei saatavilla"
+
 #. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
 msgid "Reports the elapsed time of the currently playing track, if any"
 msgstr "Ilmoittaa toistettavan kappaleen kuluneen ajan."
 
+#. Translators: Reported remaining time in Foobar2000
+#, python-brace-format
+msgid "{totalTime} total"
+msgstr "Kokonaisaika {totalTime}"
+
 #. Translators: Reported if the total time is not available in Foobar2000
 msgid "Total time not available"
-msgstr "Kokonaisaika ei ole käytettävissä"
+msgstr "Kokonaisaikaa ei saatavilla"
 
 #. Translators: The description of an NVDA command for reading the length of the currently playing track in Foobar 2000.
 msgid "Reports the length of the currently playing track, if any"
@@ -11241,15 +11288,19 @@ msgid "row %s"
 msgstr "rivi %s"
 
 #. Translators: Speaks the row span added to the current row number (example output: through 5).
-#. Translators: Speaks the column span added to the current column number (example output: through 5).
-#, python-format
-msgid "through %s"
-msgstr "jakaantunut %s"
+#, python-brace-format
+msgid "through {endRow}"
+msgstr "ja {endRow}"
 
 #. Translators: Speaks current column number (example output: column 3).
 #, python-format
 msgid "column %s"
 msgstr "sarake %s"
+
+#. Translators: Speaks the column span added to the current column number (example output: through 5).
+#, python-brace-format
+msgid "through {endCol}"
+msgstr "ja {endCol}"
 
 #. Translators: Speaks the row and column span added to the current row and column numbers
 #. (example output: through row 5 column 3).
@@ -11644,6 +11695,41 @@ msgstr "{curPercent:.0f}%"
 #, python-brace-format
 msgid "at {x}, {y}"
 msgstr "kohdassa {x}, {y}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds
+#, python-brace-format
+msgctxt "time format"
+msgid "{S}"
+msgstr "{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes
+#, python-brace-format
+msgctxt "time format"
+msgid "{M}:{S}"
+msgstr "{M}:{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes, {H} hours
+#, python-brace-format
+msgctxt "time format"
+msgid "{H}:{M}:{S}"
+msgstr "{H}:{M}:{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes, {H} hours, {D} day
+#, python-brace-format
+msgctxt "time format"
+msgid "{D} day {H}:{M}:{S}"
+msgstr "{D} päivä {H}:{M}:{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes, {H} hours, {D} days
+#, python-brace-format
+msgctxt "time format"
+msgid "{D} days {H}:{M}:{S}"
+msgstr "{D} päivää {H}:{M}:{S}"
 
 #. Translators: This is the message for a warning shown if NVDA cannot determine if
 #. Windows is locked.
@@ -13437,6 +13523,12 @@ msgid ""
 msgstr ""
 "Käytä Albatrossia NVDA:n kanssa muuttamalla laitteen sisäisestä valikosta "
 "tilasolujen määräksi korkeintaan "
+
+#~ msgid "Unable to determine remaining time"
+#~ msgstr "Jäljellä olevaa aikaa ei voida selvittää"
+
+#~ msgid "through %s"
+#~ msgstr "jakaantunut %s"
 
 #~ msgid "Report line indentation with speech"
 #~ msgstr "Ilmaise rivien sisennykset puheella"

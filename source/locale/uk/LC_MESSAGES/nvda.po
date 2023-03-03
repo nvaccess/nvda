@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-27 00:03+0000\n"
-"PO-Revision-Date: 2023-02-01 19:04+0200\n"
+"POT-Creation-Date: 2023-02-14 00:37+0000\n"
+"PO-Revision-Date: 2023-02-15 19:32+0200\n"
 "Last-Translator: Ukrainian NVDA Community <vp88.mobile@gmail.com>\n"
 "Language-Team: Volodymyr Pyrih <vp88.mobile@gmail.com>\n"
 "Language: uk\n"
@@ -2978,15 +2978,15 @@ msgstr "Повідомляти про відступ рядка {mode}"
 
 #. Translators: Input help mode message for toggle report paragraph indentation command.
 msgid "Toggles on and off the reporting of paragraph indentation"
-msgstr "Вмикає й вимикає промовляння відступів абзаца"
+msgstr "Вмикає й вимикає промовляння відступів абзацу"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation off"
-msgstr "промовляння відступу абзаца вимкнено"
+msgstr "промовляння відступу абзацу вимкнено"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation on"
-msgstr "промовляння відступу абзаца вимкнено"
+msgstr "промовляння відступу абзацу вимкнено"
 
 #. Translators: Input help mode message for toggle report line spacing command.
 msgid "Toggles on and off the reporting of line spacing"
@@ -4395,6 +4395,32 @@ msgstr ""
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
 msgstr "Плагіни перезавантажено"
+
+#. Translators: input help mode message for Report destination URL of navigator link command
+msgid ""
+"Report the destination URL of the link in the navigator object. If pressed "
+"twice, shows the URL in a window for easier review."
+msgstr ""
+"Повідомляє призначення URL у посиланні в об’єкті навігатора. Якщо натиснути "
+"двічі, показує URL у вікні для легкого перегляду."
+
+#. Translators: Informs the user that the window contains the destination of the
+#. link with given title
+#, python-brace-format
+msgid "Destination of: {name}"
+msgstr "Призначення: {name}"
+
+#. Translators: Tell user that the command has been run on something that is not a link
+msgid "Not a link."
+msgstr "Не посилання."
+
+#. Translators: input help mode message for Report URL of navigator link in a window command
+msgid ""
+"Reports the destination URL of the link in the navigator object in a window, "
+"instead of just speaking it. May be preferred by braille users."
+msgstr ""
+"Повідомляє призначення URL у посиланні в об’єкті навігатора у вікні, замість "
+"того, щоб просто його промовляти. Може бути кращим для користувачів Брайля."
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -6730,17 +6756,36 @@ msgstr "Неможливо знайти вікно документації."
 msgid "No track playing"
 msgstr "Немає трека, який відтворюється"
 
+#. Translators: Reported remaining time in Foobar2000
+#, python-brace-format
+msgid "{remainingTimeFormatted} remaining"
+msgstr "залишилося {remainingTimeFormatted}"
+
 #. Translators: Reported if the remaining time can not be calculated in Foobar2000
-msgid "Unable to determine remaining time"
-msgstr "Не вдалося визначити залишок часу"
+msgid "Remaining time not available"
+msgstr "Залишок часу недоступний"
 
 #. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Повідомляє про залишок часу звучання поточного трека"
 
+#. Translators: Reported elapsed time in Foobar2000
+#, python-brace-format
+msgid "{elapsedTime} elapsed"
+msgstr "минуло {elapsedTime}"
+
+#. Translators: Reported if the elapsed time is not available in Foobar2000
+msgid "Elapsed time not available"
+msgstr "Минулий час недоступний"
+
 #. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
 msgid "Reports the elapsed time of the currently playing track, if any"
 msgstr "Повідомляє витрачений час поточного трека, якщо доступно"
+
+#. Translators: Reported remaining time in Foobar2000
+#, python-brace-format
+msgid "{totalTime} total"
+msgstr "загалом {totalTime}"
 
 #. Translators: Reported if the total time is not available in Foobar2000
 msgid "Total time not available"
@@ -10326,7 +10371,7 @@ msgstr "Повідомляти про &відступ рядка:"
 #. Translators: This message is presented in the document formatting settings panelue
 #. If this option is selected, NVDA will report paragraph indentation if available.
 msgid "&Paragraph indentation"
-msgstr "&Відступ абзаца"
+msgstr "&Відступ абзацу"
 
 #. Translators: This message is presented in the document formatting settings panelue
 #. If this option is selected, NVDA will report line spacing if available.
@@ -10420,7 +10465,7 @@ msgstr "Навігація в документі"
 
 #. Translators: This is a label for the paragraph navigation style in the document navigation dialog
 msgid "&Paragraph style:"
-msgstr "&Стиль абзаца:"
+msgstr "&Стиль абзацу:"
 
 #. Translators: This is the label for the touch interaction settings panel.
 msgid "Touch Interaction"
@@ -11232,15 +11277,19 @@ msgid "row %s"
 msgstr "рядок %s"
 
 #. Translators: Speaks the row span added to the current row number (example output: through 5).
-#. Translators: Speaks the column span added to the current column number (example output: through 5).
-#, python-format
-msgid "through %s"
-msgstr "по %s"
+#, python-brace-format
+msgid "through {endRow}"
+msgstr "через {endRow}"
 
 #. Translators: Speaks current column number (example output: column 3).
 #, python-format
 msgid "column %s"
 msgstr "стовпець %s"
+
+#. Translators: Speaks the column span added to the current column number (example output: through 5).
+#, python-brace-format
+msgid "through {endCol}"
+msgstr "через {endCol}"
 
 #. Translators: Speaks the row and column span added to the current row and column numbers
 #. (example output: through row 5 column 3).
@@ -11635,6 +11684,41 @@ msgstr "{curPercent:.0f}%"
 #, python-brace-format
 msgid "at {x}, {y}"
 msgstr "координати {x}, {y}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds
+#, python-brace-format
+msgctxt "time format"
+msgid "{S}"
+msgstr "{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes
+#, python-brace-format
+msgctxt "time format"
+msgid "{M}:{S}"
+msgstr "{M}:{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes, {H} hours
+#, python-brace-format
+msgctxt "time format"
+msgid "{H}:{M}:{S}"
+msgstr "{H}:{M}:{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes, {H} hours, {D} day
+#, python-brace-format
+msgctxt "time format"
+msgid "{D} day {H}:{M}:{S}"
+msgstr "{D} день {H}:{M}:{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes, {H} hours, {D} days
+#, python-brace-format
+msgctxt "time format"
+msgid "{D} days {H}:{M}:{S}"
+msgstr "{D} днів {H}:{M}:{S}"
 
 #. Translators: This is the message for a warning shown if NVDA cannot determine if
 #. Windows is locked.
@@ -13146,7 +13230,7 @@ msgstr "властивість"
 
 #. Translators: a Microsoft Word revision type (changed paragraph number)
 msgid "paragraph number"
-msgstr "номер абзаца"
+msgstr "номер абзацу"
 
 #. Translators: a Microsoft Word revision type (display field)
 msgid "display field"
@@ -13166,7 +13250,7 @@ msgstr "заміна"
 
 #. Translators: a Microsoft Word revision type (changed paragraph property, e.g. alignment)
 msgid "paragraph property"
-msgstr "властивості абзаца"
+msgstr "властивості абзацу"
 
 #. Translators: a Microsoft Word revision type (table)
 msgid "table property"
@@ -13354,7 +13438,7 @@ msgstr "Переміщено нижче %s"
 
 #. Translators: a message reported when a paragraph is moved below a blank paragraph
 msgid "Moved below blank paragraph"
-msgstr "Переміщено нижче порожнього абзаца"
+msgstr "Переміщено нижче порожнього абзацу"
 
 #. Translators: a message reported when a paragraph is moved above another paragraph
 #, python-format
@@ -13363,7 +13447,7 @@ msgstr "Переміщено вище %s"
 
 #. Translators: a message reported when a paragraph is moved above a blank paragraph
 msgid "Moved above blank paragraph"
-msgstr "Переміщено вище порожнього абзаца"
+msgstr "Переміщено вище порожнього абзацу"
 
 #. Translators: the message when the outline level / style is changed in Microsoft word
 #, python-brace-format
@@ -13438,6 +13522,12 @@ msgid ""
 msgstr ""
 "Щоб використовувати Albatross із NVDA: змініть якнайбільшу кількість "
 "клітинок стану у внутрішньому меню Albatross "
+
+#~ msgid "Unable to determine remaining time"
+#~ msgstr "Не вдалося визначити залишок часу"
+
+#~ msgid "through %s"
+#~ msgstr "по %s"
 
 #~ msgid "Report line indentation with speech"
 #~ msgstr "Повідомляти про відступ рядка за допомогою мовлення"
