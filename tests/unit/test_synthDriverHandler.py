@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2021 NV Access Limited
+# Copyright (C) 2021-2023 NV Access Limited, Leonard de RUijter
 
 """Unit tests for the synthDriverHandler
 """
@@ -12,6 +12,7 @@ import synthDriverHandler
 from synthDrivers.oneCore import SynthDriver as OneCoreSynthDriver
 from typing import Callable
 import unittest
+from .extensionPointTestHelpers import actionTester
 
 FAKE_DEFAULT_LANG = "fakeDefault"
 FAKE_DEFAULT_SYNTH_NAME = "defaultSynth"
@@ -117,3 +118,17 @@ class test_synthDriverHandler(unittest.TestCase):
 		synthDriverHandler.setSynth(None)  # reset the synth so there is no fallback
 		synthDriverHandler.setSynth("auto")
 		self.assertEqual(synthDriverHandler.getSynth().name, "espeak")
+
+	def test_synthChangedExtensionPoint(self):
+		expectedKwargs = dict(
+			isFallback=False,
+			audioOutputDevice="default"
+		)
+
+		with actionTester(
+			self,
+			synthDriverHandler.synthChanged,
+			useAssertDictContainsSubset=True,
+			**expectedKwargs
+		):
+			synthDriverHandler.setSynth("auto")

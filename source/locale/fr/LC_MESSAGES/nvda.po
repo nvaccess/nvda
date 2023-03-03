@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:11331\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-27 00:03+0000\n"
-"PO-Revision-Date: 2023-02-01 10:21+0100\n"
+"POT-Creation-Date: 2023-02-17 00:01+0000\n"
+"PO-Revision-Date: 2023-02-20 12:17+0100\n"
 "Last-Translator: Michel Such <michelsuch93@gmail.com>\n"
 "Language-Team: fra <LL@li.org>\n"
 "Language: fr_FR\n"
@@ -4429,6 +4429,33 @@ msgstr ""
 msgid "Plugins reloaded"
 msgstr "Extensions rechargées"
 
+#. Translators: input help mode message for Report destination URL of navigator link command
+msgid ""
+"Report the destination URL of the link in the navigator object. If pressed "
+"twice, shows the URL in a window for easier review."
+msgstr ""
+"Indique l'URL de destination du lien dans l'objet navigateur. Un double "
+"appui affiche l'URL dans une fenêtre pour un examen plus facile."
+
+#. Translators: Informs the user that the window contains the destination of the
+#. link with given title
+#, python-brace-format
+msgid "Destination of: {name}"
+msgstr "Destination de : {name}"
+
+#. Translators: Tell user that the command has been run on something that is not a link
+msgid "Not a link."
+msgstr "Pas un lien."
+
+#. Translators: input help mode message for Report URL of navigator link in a window command
+msgid ""
+"Reports the destination URL of the link in the navigator object in a window, "
+"instead of just speaking it. May be preferred by braille users."
+msgstr ""
+"Indique l'URL de destination du lien dans l'objet navigateur dans une "
+"fenêtre, au lieu de simplement l'énoncer. Peut être préféré par les "
+"utilisateurs de braille."
+
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Moves to the next object in a flattened view of the object navigation "
@@ -6540,7 +6567,8 @@ msgstr ""
 "Si seulement 10$ sont donnés à chaque téléchargement, nous pourrons couvrir "
 "les coûts de développement du projet.\n"
 "Tous les dons sont reçus par NV Access, l'organisation à but non lucratif "
-"qui développe NVDA. Merci pour votre soutien."
+"qui développe NVDA.\n"
+"Merci pour votre soutien."
 
 #. Translators: The title of the dialog requesting donations from users.
 msgid "Please Donate"
@@ -6764,17 +6792,36 @@ msgstr "Impossible de trouver la fenêtre de documentation."
 msgid "No track playing"
 msgstr "Pas de piste en cours"
 
+#. Translators: Reported remaining time in Foobar2000
+#, python-brace-format
+msgid "{remainingTimeFormatted} remaining"
+msgstr "{remainingTimeFormatted} restant"
+
 #. Translators: Reported if the remaining time can not be calculated in Foobar2000
-msgid "Unable to determine remaining time"
-msgstr "Impossible de déterminer le temps restant"
+msgid "Remaining time not available"
+msgstr "Temps restant indisponible"
 
 #. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Annoncer le temps restant de la piste en cours, s'il y a lieu"
 
+#. Translators: Reported elapsed time in Foobar2000
+#, python-brace-format
+msgid "{elapsedTime} elapsed"
+msgstr "{elapsedTime} écoulé"
+
+#. Translators: Reported if the elapsed time is not available in Foobar2000
+msgid "Elapsed time not available"
+msgstr "Temps écoulé indisponible"
+
 #. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
 msgid "Reports the elapsed time of the currently playing track, if any"
 msgstr "Annoncer le temps écoulé de la piste en cours, si disponible"
+
+#. Translators: Reported remaining time in Foobar2000
+#, python-brace-format
+msgid "{totalTime} total"
+msgstr "{totalTime} au total"
 
 #. Translators: Reported if the total time is not available in Foobar2000
 msgid "Total time not available"
@@ -11304,15 +11351,19 @@ msgid "row %s"
 msgstr "ligne %s"
 
 #. Translators: Speaks the row span added to the current row number (example output: through 5).
-#. Translators: Speaks the column span added to the current column number (example output: through 5).
-#, python-format
-msgid "through %s"
-msgstr "à %s"
+#, python-brace-format
+msgid "through {endRow}"
+msgstr "à {endRow}"
 
 #. Translators: Speaks current column number (example output: column 3).
 #, python-format
 msgid "column %s"
 msgstr "colonne %s"
+
+#. Translators: Speaks the column span added to the current column number (example output: through 5).
+#, python-brace-format
+msgid "through {endCol}"
+msgstr "à {endCol}"
 
 #. Translators: Speaks the row and column span added to the current row and column numbers
 #. (example output: through row 5 column 3).
@@ -11707,6 +11758,41 @@ msgstr "{curPercent:.0f}%"
 #, python-brace-format
 msgid "at {x}, {y}"
 msgstr "à {x}, {y}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds
+#, python-brace-format
+msgctxt "time format"
+msgid "{S}"
+msgstr "{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes
+#, python-brace-format
+msgctxt "time format"
+msgid "{M}:{S}"
+msgstr "{M}:{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes, {H} hours
+#, python-brace-format
+msgctxt "time format"
+msgid "{H}:{M}:{S}"
+msgstr "{H}:{M}:{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes, {H} hours, {D} day
+#, python-brace-format
+msgctxt "time format"
+msgid "{D} day {H}:{M}:{S}"
+msgstr "{D} jour {H}:{M}:{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes, {H} hours, {D} days
+#, python-brace-format
+msgctxt "time format"
+msgid "{D} days {H}:{M}:{S}"
+msgstr "{D} jours {H}:{M}:{S}"
 
 #. Translators: This is the message for a warning shown if NVDA cannot determine if
 #. Windows is locked.
@@ -13512,47 +13598,3 @@ msgid ""
 msgstr ""
 "Pour utiliser Albatross avec NVDA : modifiez au maximum le nombre de "
 "cellules d'état dans le menu interne d'Albatross"
-
-#~ msgid "Report line indentation with speech"
-#~ msgstr "Annoncer la mise en retrait des lignes par la parole"
-
-#~ msgid "Report line indentation with tones"
-#~ msgstr "Annoncer la mise en retrait des lignes par des sons"
-
-#~ msgid "Report line indentation with speech and tones"
-#~ msgstr "Annoncer la mise en retrait des lignes par la parole et des sons"
-
-#~ msgid "Report styles of cell borders"
-#~ msgstr "Annoncer le style des bordures de cellules"
-
-#~ msgid "Report colors and styles of cell borders"
-#~ msgstr "Annoncer la couleur et le style des bordures de cellules"
-
-#~ msgid "NVDA could not start securely."
-#~ msgstr "NVDA n'a pas pu démarrer en toute sécurité."
-
-#~ msgid "Swedish grade 1"
-#~ msgstr "Suédois intégral"
-
-#~ msgid "Not charging battery. %d percent"
-#~ msgstr "Batterie hors charge. %d pour cent"
-
-#~ msgid "report table row and column headers off"
-#~ msgstr "annonce des titres de lignes et de colonnes désactivée"
-
-#~ msgid "report table row and column headers on"
-#~ msgstr "annonce des titres de lignes et de colonnes activée"
-
-#~ msgid "AC power on"
-#~ msgstr "Adaptateur secteur connecté"
-
-#~ msgid "Row/column h&eaders"
-#~ msgstr "&En-têtes de ligne et de colonne"
-
-#~ msgid ""
-#~ "Cannot set headers. Please enable reporting of table headers in Document "
-#~ "Formatting Settings"
-#~ msgstr ""
-#~ "Impossible de définir les titres. Veuillez activer l'annonce des titre "
-#~ "des lignes et colonnes des tableaux dans les paramètres de Mise en Forme "
-#~ "des Documents"
