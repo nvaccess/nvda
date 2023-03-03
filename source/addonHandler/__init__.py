@@ -8,6 +8,7 @@ import enum
 from abc import abstractmethod, ABC
 import sys
 from typing import (
+	Optional,
 	TYPE_CHECKING,
 )
 
@@ -353,7 +354,7 @@ class AddonBase(ABC):
 		return self.manifest.get('lastTestedNVDAVersion')
 
 	@property
-	def channel(self) -> typing.Optional["Channel"]:
+	def channel(self) -> Optional["Channel"]:
 		"""
 		Channel is used in the new add-on data store.
 		The "None" case must be handled for side-loaded add-ons.

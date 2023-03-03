@@ -11,6 +11,7 @@ from typing_extensions import Protocol  # Python 3.8 adds native support
 
 import addonAPIVersion
 from addonStore.models import Channel
+from buildVersion import isPreReleaseVersion
 
 
 class SupportsVersionCheck(Protocol):
@@ -43,7 +44,6 @@ def isAddonTested(
 	"""
 	if addon.channel == Channel.DEV:
 		# Allow dev add-ons for pre-release versions
-		from buildVersion import isPreReleaseVersion
 		return isPreReleaseVersion
 	return addon.lastTestedNVDAVersion >= backwardsCompatToVersion
 
