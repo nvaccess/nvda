@@ -221,6 +221,7 @@ Girdi yardımı açıkken komutlar farklı uygulamalara gönderilmez.
 | Durum çubuğunu oku | ``NVDA+end`` | ``NVDA+şift+end`` | Eğer saptanırsa, NVDA durum çubuğu bilgisini bildirir. İki kez basıldığında, bilgi hecelenerek okunur. Üç kere basıldığında metin panoya kopyalanır |
 | Saati oku | ``NVDA+f12`` | ``NVDA+f12`` | Bir kez basmak geçerli saati, iki kez basmak tarihi bildirir |
 | Metin biçimini oku | ``NVDA+f`` | ``NVDA+f`` | Metin biçimlendirmesini bildirir. İki kez basıldığında bilgileri bir pencerede gösterir |
+| Link hedefini bildir | ``NVDA+k`` | ``NVDA+k`` | Nesne sunucusunun üzerinde bulunduğu linkin yönlendirdiği web adresini okur. İki kez basıldığında daha kolay incelenebilmesi için web adresini bir pencerede gösterir |
 
 +++ NVDA'nın hangi bilgileri okumasını değiştirme+++[ToggleWhichInformationNVDAReads]
 || işlev | Masa üstü kısayolu | Dizüstü Kısayolu | Açıklama |
@@ -242,12 +243,12 @@ Tek Tuşla Dolaşım komut listesine kullanıcı rehberinin [Tarama kipi #Browse
 | Başlık | ``h`` | Sonraki başlığa git |
 | Başlık seviyesi 1, 2 veya 3 | ``1``, ``2``, ``3`` | Belirtilen düzeyde bir sonraki başlığa git |
 | Form alanı | ``f`` | Sonraki form alanına gider (yazma kutuları, düğmeler vb.) |
-| Bağlantı | ``k`` | Sonraki bağlantıya git |
+| Link | ``k`` | Sonraki linke git |
 | Sınır imi | ``d`` | Sonraki sınır imine git |
 | Liste | ``l`` | Sonraki listeye git |
 | Tablo | ``t`` | Sonraki tabloya git |
 | Geri git | ``şift+Harf`` | basılan türde önceki öğeye gitmek için ``şift`` tuşuna ve yukarıdaki harflerden herhangi birine basın |
-| Öğe listesi | ``NVDA+f7`` | Bağlantılar ve başlıklar gibi çeşitli öğe türlerini listeler |
+| Öğe listesi | ``NVDA+f7`` | Linkler ve başlıklar gibi çeşitli öğe türlerini listeler |
 
 ++ tercihler ++[Preferences]
 
@@ -728,7 +729,7 @@ Tarama kipi aynı zamanda Microsoft Word için karmaşık belgelerde dolaşılı
 Tarama kipi, web sayfası gibi bir içeriğin bir metin dosyası gibi sunulduğu bir inceleme alanıdır ve içerik içinde yön tuşlarıyla dolaşılabilir.
 NVDA'nın [sistem düzenleme imleci #SystemCaret] için geçerli olan hepsini okuma, tablo inceleme, yazı biçimini raporlama gibi komutları bu kip için de geçerlidir.
 [Görsel vurgu #VisionFocusHighlight] etkinleştirildiğinde, tarama kipi imlecinin konumu  görsel olarak da gösterilir.
-Metin içinde hareket ettikçe, okunan metnin bir bağlantı veya başlık olup olmadığı gibi bilgiler de belirtilir.
+Metin içinde hareket ettikçe, okunan metnin bir link veya başlık olup olmadığı gibi bilgiler de belirtilir.
 
 Bazen, belge içindeki kontrollerle doğrudan etkileşim içinde olmanız gerekebilir.
 Örneğin, yazılabilir alanlar ve liste kutularında giriş yapabilmeniz ya da imleci hareket ettirerek liste ögeleri arasında seçim yapabilmeniz için kontrolle etkileşim içinde olmanız gerekir.
@@ -759,11 +760,11 @@ Aşağıdaki tuşlara kendi başlarına basıldığında bir sonraki ögeye gidi
 - l: liste
 - i: liste ögesi
 - t: tablo
-- k: bağlantı
-- n: bağlantı dışı metin
+- k: link
+- n: link dışı metin
 - f: form alanı
-- u: ziyaret edilmemiş bağlantı
-- v: ziyaret edilmiş bağlantı
+- u: ziyaret edilmemiş link
+- v: ziyaret edilmiş link
 - e: yazı alanı
 - b: düğme
 - x: onay kutusu
@@ -793,7 +794,7 @@ Mevcut belge için tek tuşla dolaşımı açıp kapatmak için, NVDA+shift+aral
 
 ++ Öğe Listesi ++[ElementsList]
 Öğe listesi, uygulamaya bağlı olarak değişen, belgedeki çeşitli ögelerin listesine erişminizi sağlamaktadır.
-Örneğin, web tarayıcıları için bunlar, bağlantı, başlık, form alanı, düğme ya da sınır imi olabilir.
+Örneğin, web tarayıcıları için bunlar, link, başlık, form alanı, düğme ya da sınır imi olabilir.
 Seçim düğmeleri, bu öge türlerinden hangilerinin gösterileceğini belirlemenizi sağlar.
 İletişim kutusuna, bir de sayfada aradığınız şeye göre listeyi daraltabileceğiniz bir yazı alanı eklenmiştir.
 İlgilendiğiniz ögeyi belirledikten sonra, iletişim kutusundaki düğmeleri kullanarak imleci ögenin üzerine taşıyabilir veya ögeyi etkinleştirebilirsiniz.
@@ -918,8 +919,8 @@ Braille ekranaa mümkün olduğunca fazla bilgi sığdırmak amacıyla, kontrol 
 | bN | başlık seviyesi n, Örneğin, b1, b2. |
 | yrd | yardım balonu |
 | snrimi | sınırimi |
-| bln | bağlantı |
-| zbln | ziyaret edilmiş bağlantı |
+| lnk | link |
+| zlnk | ziyaret edilmiş link |
 | lst | liste |
 | mnu | menu |
 | mçb | menü çubuğu |
@@ -1108,7 +1109,7 @@ Tarama kipi ve tek tuşla dolaşım hakkında daha fazla bilgi için, [Tarama Ki
 %kc:beginInclude
 Microsoft Word'de tarama kipi etkinken, öğe listesine NVDA+F7 tuşlarına basarak ulaşabilirsiniz.
 %kc:endInclude
-Öğe Listesi başlıkları, bağlantıları, yazım hatalarını ve (bilgi notları ve belgede yapılmış değişiklikleri içeren) açıklamaları listeleyebilir.
+Öğe Listesi başlıkları, linkleri, yazım hatalarını, (bilgi notları ve belgede yapılmış değişiklikleri içeren) açıklamaları listeleyebilir.
 
 +++ Açıklamaların Bildirimi +++[WordReportingComments]
 %kc:beginInclude
@@ -1964,12 +1965,12 @@ Bu değer, önceki sayfa ve sonraki sayfa tuşlarıyla tarama kipinde gösterile
 ==== Destekleniyorsa Ekran Düzenini Kullan ====[BrowseModeSettingsScreenLayout]
 Tuş: NVDA+v
 
-Bu seçenek, tarama kipinin tıklanabilir içeriği (bağlantılar, düğmeler ve alanlar) ayrı satırlara  mı yerleştirmesi yoksa görsel olarak ekranda görüldüğü gibi metin akışında mı tutması gerektiğini belirlemenizi sağlar. 
+Bu seçenek, tarama kipinin tıklanabilir içeriği (linkler, düğmeler ve alanlar) ayrı satırlara  mı yerleştirmesi yoksa görsel olarak ekranda görüldüğü gibi metin akışında mı tutması gerektiğini belirlemenizi sağlar. 
 Bu seçeneğin, her zaman ekran düzenini kullanan Outlook ve Word gibi Microsoft Office uygulamaları için geçerli olmadığını unutmayın.
-Örneğin, birden çok bağlantıdan oluşan bir satırda bağlantılar aynı satırda farklı farklı bağlantılar şeklinde gösterilecektir.
+Örneğin, birden çok linkten oluşan bir satırda linkler aynı satırda farklı farklı linkler olarak gösterilecektir.
 Eğer bu seçenek aktif değilse, bğlantılar orijinal halleriyle görüntülenecektir.
 Bu, satır satır gezinme sırasında	 anlaşılmayı kolaylaştırabilir ve bazı kullanıcılar için öğelerle etkileşim kurmayı kolaylaştırabilir.
-Ekran düzeni etkinleştirildiğinde, sayfa öğeleri görsel olarak gösterildiği gibi kalacaktır. Örneğin, birden çok bağlantının gösterildiği bir satır, konuşmaya ve braille'e de aynı şekilde aktarılır. Devre dışı bırakılırsa, öğeler ayrı satırlara yerleştirilecektir; bu, satır satır dolaşılırken  öğeler arasındaki farkı daha anlaşılabilir kılar ve bazı kullanıcılar için öğelerle etkileşimi kolaylaştırabilir.
+Ekran düzeni etkinleştirildiğinde, sayfa öğeleri görsel olarak gösterildiği gibi kalacaktır. Örneğin, birden çok linkin gösterildiği bir satır, konuşmaya ve braille'e de aynı şekilde aktarılır. Devre dışı bırakılırsa, öğeler ayrı satırlara yerleştirilecektir; bu, satır satır dolaşılırken  öğeler arasındaki farkı daha anlaşılabilir kılar ve bazı kullanıcılar için öğelerle etkileşimi kolaylaştırabilir.
 
 ==== Sayfa yüklendiğinde tarama kipini etkinleştir ====[BrowseModeSettingsEnableOnPageLoad]
 Bu onay kutusu, bir sayfa yüklendiğinde tarama kipinin otomatik olarak etkinleştirilip etkinleştirilmeyeceğini belirler.
@@ -1991,8 +1992,8 @@ Bu seçenek varsayılan olarak kapalıdır.
 
 Herhangi bir yerde düzen tablolarının dahil edilmesini açıp kapatmak için, [girdi hareketleri iletişim kutusunu #InputGestures] kullanarak özel bir komut belirleyebilirsiniz.
 
-==== Başlık ve Bağlantı gibi alanların belirtilmesini ayarlama ====[BrowseModeLinksAndHeadings]
-Başlıklar, bağlantılar, tablolar ve listeler gibi kontrollerin seslendirilmesiyle ilgili ayarlar için, lütfen [Belge Formatları İletişim Kutusu #DocumentFormattingSettings] içerisindeki seçeneklere bakın.
+==== Başlık ve Link gibi alanların belirtilmesini ayarlama ====[BrowseModeLinksAndHeadings]
+Başlıklar, linkler, tablolar ve listeler gibi kontrollerin seslendirilmesiyle ilgili ayarlar için, lütfen [Belge Formatları İletişim Kutusu #DocumentFormattingSettings] içerisindeki seçeneklere bakın.
 
 ==== Odak Değişiminde Otomatik Odak Kipi ====[BrowseModeSettingsAutoPassThroughOnFocusChange]
 Bu seçenek, odak değişiminde odak kipinin açılmasını sağlar.
@@ -2015,7 +2016,7 @@ Bu durumda NVDA, Windows’a bu türden  bir tuşa basıldığında varsayılan 
 ==== Sistem Odağı Tarama Kipi İmlecini Takip Etsin ====[BrowseModeSettingsAutoFocusFocusableElements]
 Tuş: NVDA+8
 
-Varsayılan olarak devre dışı bırakılan bu seçenek, tarama kipi imleciyle dolaşılırken sistem odağının otomatik olarak (bağlantılar, form alanları vb.) odaklanılabilecek öğelere taşınıp taşınmayacağını belirlemenize olanak tanır.
+Varsayılan olarak devre dışı bırakılan bu seçenek, tarama kipi imleciyle dolaşılırken sistem odağının otomatik olarak (linkler, form alanları vb.) odaklanılabilecek öğelere taşınıp taşınmayacağını belirlemenize olanak tanır.
 Bu seçenek  devre dışı bırakılırsa, tarama kipi imleci ile üzerlerine gelindiğinde sistem imleci odaklanabilir öğelere otomatik olarak taşınmayacaktır.
 Bu, daha hızlı tarama deneyimine ve tarama kipinde daha iyi yanıt verme hızına neden olabilir.
 Yine de bir öğeyle etkileşim kurulduğunda (bir düğmeye basmak ya da bir onay kutusunu işaretlemek vb) sistem odağı otomatik olarak taşınır.
@@ -2055,7 +2056,7 @@ Belge biçimlendirme seçenekleri gruplar halinde düzenlenmiştir.
  - Hücre kenarlıkları [(Kapalı, stiller, renk ve stiller)
 - Öğeler
  - Başlıklar
- - Bağlantılar
+ - Linkler
   - Grafikler
  - Listeler
  - Alıntılar
@@ -2441,7 +2442,7 @@ Tamam tuşuna basarak profili oluşturup yeni profili düzenlemek üzere konfig�
 +++ Manuel Etkinleştirme +++[ConfigProfileManual]
 Manuel olarak etkinleştir düğmesine basarak bir profili elle etkinleştirebilirsiniz.
 Etkinleştirildiğinde, başka profiller de tetikleyiciler nedeniyle aktifleştirilebilecektir, ama elle seçilen profildeki ayarlar tetiklenen profildeki ayarlardan farklıysa geçerli olan elle seçilen profildeki ayarlardır.
-Örneğin, mevcut uygulama tarafından bir profil tetiklendiyse ve bağlantıların bildirimi bu profilde etkinleştirildiği halde manuel olarak etkinleştirilmiş profilde bildirim kapalıysa, bağlantıların bildirimi yapılmayacaktır.
+Örneğin, mevcut uygulama tarafından bir profil tetiklendiyse ve linklerin bildirimi bu profilde etkinleştirildiği halde manuel olarak etkinleştirilmiş profilde bildirim kapalıysa, linklerin bildirimi yapılmayacaktır.
 Öte yandan, tetiklenen profilde normal konfigürasyondan farklı bir konuşmacı ayarladığınız halde manuel olarak etkinleştirdiğiniz profilde bu tür bir ayar yapmamışsanız, tetiklenen profildeki konuşmacı kullanılacaktır.
 Bu arada, yapacağınız bir ayar değişikliği manuel profil için kaydedilecektir.
 Manuel olarak aktifleştirilmiş profili devre dışı bırakmak için, profili konfigürasyon profilleri iletişim kutusunda seçtikten sonra Manuel devre dışı bırak düğmesine basın.
