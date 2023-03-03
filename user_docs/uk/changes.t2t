@@ -15,6 +15,7 @@
 Додано підтримку брайлівських дисплеїв Tivomatic Caiku Albatross 46/80.
 
 Поліпшено підтримку ARM64 та AMD64 версій Windows.
+
 Виправлено багато помилок, зокрема у Windows 11.
 
 Оновлено eSpeak, LibLouis, Sonic rate boost і Unicode CLDR.
@@ -58,7 +59,7 @@
   -
 - Оновлено бібліотеку прискорення мовлення Sonic до коміту ``1d70513``. (#14180)
 - CLDR оновлено до версії 42.0. (#14273)
-- eSpeak NG оновлено до версії 1.52-dev зі змінами у коміті ``a51235aa``. (#14281)
+- eSpeak NG оновлено до версії 1.52-dev зі змінами у коміті ``f520fecb``. (#14281, #14675). (#14281)
   - Виправлено промовляння великих чисел. (#14241)
   -
 - Java-застосунки з елементами керування, що використовують стан вибору, тепер повідомлятимуть про те, що елемент не вибрано, а не про те, що його вибрано. (#14336)
@@ -109,7 +110,7 @@ Note: this is an Add-on API compatibility breaking release.
 Add-ons will need to be re-tested and have their manifest updated.
 Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] for information on NVDA's API deprecation and removal process.
 
-- System test should now pass when run locally on non-English systems. (#13362)
+- System tests should now pass when run locally on non-English systems. (#13362)
 - In Windows 11 on ARM, x64 apps are no longer identified as ARM64 applications. (#14403)
 - It is no longer necessary to use ``SearchField`` and ``SuggestionListItem`` ``UIA`` ``NVDAObjects`` in new UI Automation scenarios, where automatic reporting of search suggestions, and where typing has been exposed via UI Automation with the ``controllerFor`` pattern.
 This functionality is now available generically via ``behaviours.EditableText`` and the base ``NVDAObject`` respectively. (#14222)
@@ -154,7 +155,7 @@ Please open a GitHub issue if your Add-on has an issue with updating to the new 
     - ``autoTether`` has been removed; ``tetherTo`` can now take the value "auto" instead.
     -
   - In ``[keyboard]`` section  (#14528):
-    - ``useCapsLockAsNVDAModifierKey``, ``useNumpadInsertAsNVDAModifierKey``, ``useExtendedInsertAsNVDAModifierKey`` has been removed.
+    - ``useCapsLockAsNVDAModifierKey``, ``useNumpadInsertAsNVDAModifierKey``, ``useExtendedInsertAsNVDAModifierKey`` have been removed.
     They are replaced by ``NVDAModifierKeys``.
     -
   -
