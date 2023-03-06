@@ -33,7 +33,7 @@ Uwaga:
 - Microsoft Excel z UI Automation: Automatyczny odczyt nagłówków kolumn i wierszy w tabelach. (#14228)
   - Uwaga: dotyczy to tabel formatowanych za pomocą  przycisku "tabela" na karcie właściwości wstaw wstążki.
   Opcje "pierwsza kolumna" i "nagłówek wiersza" w "opcjach stylu tabeli" równoznaczne są z nagłówkami kolumn i wierszy.
-  - Nie odnosi się to do nagłówków specyficznych dla czytnika ekranu, używających nazwanych  rozpiętości.
+  - Nie odnosi się to do nagłówków specyficznych dla czytnika ekranu, które używają nazwanych  rozpiętości.
   -
 - Dodano nieprzydzielone zdarzenie wejścia do włączania i wyłączania opisów znaków po ruchu kursora. (#14267)
 - Dodano eksperymentalną opcję do używania wsparcia powiadomie UIA w programie Windows terminal w celu odczytu nowego oraz zmienionego tekstu w konsoli, skutkując lepszą stabilnością i wydajnością. (#13781)
@@ -49,7 +49,7 @@ Na przykład, gdy tekst zawiera komentarz i przypis końcowy związany z nim. (#
 - Dodano wsparcie dla monitorów brajlowskich Tivomatic Caiku Albatross 46/80. (#13045)
 - Nowe polecenie globalne: odczytaj docelową lokalizacje linku (``NVDA+k``).
 Gdy skrót jest naciśnięty jeden raz lokalizacja linku w obiekcie nawigatora będzie pokazana na monitorze brajlowskim i wymówiona.
-Gdy skrót jest naciśnięty dwukrotnie, docelowa lokalizacja będzie pokazana w oknie w celu dokłądniejszego odczytu. (#14583)
+Gdy skrót jest naciśnięty dwukrotnie, docelowa lokalizacja będzie pokazana w oknie w celu dokładniejszego odczytu. (#14583)
 - Dodano nowe nieprzydzielone polecenie (kategoria narzędzia): pokaż lokalizację linku w oknie.
 To polecenie jest równoważne dwukrotnym naciśnięciem skrótu ``NVDA+k`` ale z tą różnicą, że może być bardziej użyteczne dla użytkowników monitorów brajlowskich. (#14583)
 -
@@ -66,7 +66,7 @@ To polecenie jest równoważne dwukrotnym naciśnięciem skrótu ``NVDA+k`` ale 
 - eSpeak NG zostałzaktualizowany do wersji 1.52-dev commit ``f520fecb``. (#14281, #14675)
   - Naprawiono odczyt wielkich liczb. (#14241)
   -
-- Aplikacje java z kontrolkami używającymi  stanu zaznaczenia od teraz będą zgłąszały stan elementu niezaznaczony zamiast stanu zaznaczonego. (#14336)
+- Aplikacje java z kontrolkami używającymi  stanu zaznaczenia od teraz będą zgłaszały stan elementu niezaznaczony zamiast stanu zaznaczonego. (#14336)
 -
 
 
@@ -75,9 +75,9 @@ To polecenie jest równoważne dwukrotnym naciśnięciem skrótu ``NVDA+k`` ale 
   - NVDA od teraz odczyta podpowiedzi wyszukiwania podczas otwierania menu start. (#13841)
   - Na architekturze ARM, aplikacje x64 już nie są identyfikowane jako aplikacje ARM64. (#14403)
   - Elementy menu historii schowka , takie jak ""przypnij element" od teraz są osiągalne. (#14508)
-  - W systemie Windows 11 22H2 i nowszych wersjach, od teraz znowu możliwa jest interakcja za pomoca myszy i klawiatury z elementami takie jak obszar powiadomień dodatkowych i okno dialogowe "otwórz za pomocą". (#14538, #14539)
+  - W systemie Windows 11 22H2 i nowszych wersjach, od teraz znowu możliwa jest interakcja za pomocą myszy i klawiatury z elementami takie jak obszar powiadomień dodatkowych i okno dialogowe "otwórz za pomocą". (#14538, #14539)
   -
-- Od teraz dostępne są podpowiedzi podczas wpisywania @wzmianki w komentarzach Microsoft Excel. (#13764)
+- Od teraz dostępne są podpowiedzi podczas wpisywania @wzmianek w komentarzach Microsoft Excel. (#13764)
 - Na pasku adresu Google Chrome, kontrolki podpowiedzi takie jak (przełącz do karty, usuń podpowiedź itd.) od teraz są odczytywane po zaznaczeniu. (#13522)
 - Podczas dostarczania informacji o formatowaniu, kolory są ściśle odczytywane w programach Wordpad i podglądzie logu, co jest lepsze niż odczyt "kolor domyślny". (#13959)
 - W przeglądarce Firefox, aktywowanie przycisku "Show options" na stronach problemów Github od teraz działa niezawodnie. (#14269)
@@ -111,7 +111,7 @@ To polecenie jest równoważne dwukrotnym naciśnięciem skrótu ``NVDA+k`` ale 
 
 = 2022.4 =
 To wydanie w sobie zawiera kilka nowych skrótów klawiszowych, włączając w to skróty do czytania całych tabel.
-Do podręcznika użytkownika został dodany rozdział "szybki start".
+Do podręcznika użytkownika został dodany roździał "szybki start".
 Naprawiono także niektóre błędy.
 
 Liblouis i Espeak-ng zostały zaktualizowane.
