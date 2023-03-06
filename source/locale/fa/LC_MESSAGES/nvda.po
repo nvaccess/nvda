@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master-9280,3350d74\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-15 00:02+0000\n"
-"PO-Revision-Date: 2022-11-15 22:53+0330\n"
+"POT-Creation-Date: 2023-03-03 00:01+0000\n"
+"PO-Revision-Date: 2023-03-04 22:44+0330\n"
 "Last-Translator: Mohammadreza Rashad <mohammadreza5712@gmail.com>\n"
 "Language-Team: NVDA Translation Team <nvda-translations@groups.io>\n"
 "Language: fa\n"
@@ -393,6 +393,10 @@ msgstr "پنهد"
 msgid "definition"
 msgstr "تعریف"
 
+#. Translators: Displayed in braille when an object is a switch control
+msgid "swtch"
+msgstr "سویچ"
+
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
 msgstr "نخ"
@@ -533,6 +537,18 @@ msgstr "یو‌اس‌بی"
 msgid "Bluetooth"
 msgstr "بلوتوث"
 
+#. Translators: Braille when there are further details/annotations that can be fetched manually.
+msgid "details"
+msgstr "جزئیات"
+
+#. Translators: Braille when there are further details/annotations that can be fetched manually.
+#. %s specifies the type of details (e.g. "has comment suggestion")
+#. Translators: Speaks when there are further details/annotations that can be fetched manually.
+#. %s specifies the type of details (e.g. "comment, suggestion, details")
+#, python-format
+msgid "has %s"
+msgstr "%s دارد"
+
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
 #, python-format
@@ -542,18 +558,6 @@ msgstr "سر%s"
 #. Translators: Displayed in braille for a link which has been visited.
 msgid "vlnk"
 msgstr "لد"
-
-#. Translators: Braille when there are further details/annotations that can be fetched manually.
-#. %s specifies the type of details (e.g. comment, suggestion)
-#. Translators: Speaks when there are further details/annotations that can be fetched manually.
-#. %s specifies the type of details (e.g. comment, suggestion)
-#, python-format
-msgid "has %s"
-msgstr "%s دارد"
-
-#. Translators: Braille when there are further details/annotations that can be fetched manually.
-msgid "details"
-msgstr "جزئیات"
 
 #. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
@@ -612,19 +616,6 @@ msgstr "حلدید"
 #. Translators: brailled when text contains a bookmark
 msgid "bkmk"
 msgstr "نشنک"
-
-#. Translators: The label for a braille setting indicating that braille should be
-#. tethered to focus or review cursor automatically.
-msgid "automatically"
-msgstr "خودکار"
-
-#. Translators: The label for a braille setting indicating that braille should be tethered to focus.
-msgid "to focus"
-msgstr "به مکانِ فرمان‌پذیری"
-
-#. Translators: The label for a braille setting indicating that braille should be tethered to the review cursor.
-msgid "to review"
-msgstr "به بازبینی"
 
 #. Translators: Label for a setting in braille settings dialog.
 msgid "Dot firm&ness"
@@ -792,8 +783,18 @@ msgstr "دانمارکی بریلِ 8 نقطه‌ی رایانه"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Danish 8 dot computer braille (1993)"
+msgstr "دانمارکی بریلِ 8 نقطه‌ی رایانه (۱۹۹۳)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Danish 6 dot grade 1"
 msgstr "دانمارکیِ ۶ نقطه، درجه‌ی ۱"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Danish 6 dot grade 1 (1993)"
+msgstr "دانمارکیِ ۶ نقطه، درجه‌ی ۱ (۱۹۹۳)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -802,13 +803,28 @@ msgstr "دانمارکیِ ۸ نقطه، درجه‌ی ۱"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Danish 8 dot grade 1 (1993)"
+msgstr "دانمارکیِ ۸ نقطه، درجه‌ی ۱ (۱۹۹۳)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Danish 6 dot grade 2"
 msgstr "دانمارکیِ ۶ نقطه، درجه‌ی ۲"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Danish 6 dot grade 2 (1993)"
+msgstr "دانمارکیِ ۶ نقطه، درجه‌ی ۲ (۱۹۹۳)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Danish 8 dot grade 2"
 msgstr "دانمارکیِ ۸ نقطه، درجه‌ی ۲"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Danish 8 dot grade 2 (1993)"
+msgstr "دانمارکیِ ۸ نقطه، درجه‌ی ۲ (۱۹۹۳)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1057,6 +1073,11 @@ msgstr "کانادا درجه‌ی 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Georgian literary braille"
+msgstr "گرجی بریلِ معمولی"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Kazakh grade 1"
 msgstr "قزاقی درجه‌ی 1"
 
@@ -1207,6 +1228,11 @@ msgstr "سِپِدیی درجه‌ی ۲"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Chichewa (Malawi) literary braille"
+msgstr "چیچووا (مالاوی) بریلِ معمولی"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Oriya grade 1"
 msgstr "اوریا درجه‌ی 1"
 
@@ -1329,6 +1355,36 @@ msgstr "بریلِ نیمه‌کوتاهنویسیِ سوئدی"
 #. braille settings dialog.
 msgid "Swedish contracted braille"
 msgstr "بریلِ کوتاهنویسیِ سوئدی"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) grade 1"
+msgstr "سواحلی (کنیا) درجه‌ی ۱"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) grade 1.2"
+msgstr "سواحلی (کنیا) درجه‌ی ۱.۲"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) grade 1.3"
+msgstr "سواحلی (کنیا) درجه‌ی ۱.۳"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) grade 1.4"
+msgstr "سواحلی (کنیا) درجه‌ی ۱.۴"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) grade 1.5"
+msgstr "سواحلی (کنیا) درجه‌ی ۱.۵"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) Grade 2"
+msgstr "سواحلی (کنیا) درجه‌ی ۲"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2369,13 +2425,13 @@ msgid ""
 "to factory defaults.\n"
 "More details about the errors can be found in the log file."
 msgstr ""
-"فایلِ پیکره بَندیِ شما دارای خطاهاییست. پیکره بَندیِ شما به پیشفرض تولید‌کننده‌ی "
-"نرم افزار باز‌تنظیم شده است.\n"
+"فایلِ پیکربندیِ شما دارای خطاهاییست. پیکربندیِ شما به پیشفرض تولید‌کننده‌ی نرم "
+"افزار باز‌تنظیم شده است.\n"
 "جزئیاتِ بیشتری درباره خطاها را میتوانید از فایلِ Log بیابید."
 
 #. Translators: The title of the dialog to tell users that there are errors in the configuration file.
 msgid "Configuration File Error"
-msgstr "خطای فایلِ پیکره بندی"
+msgstr "خطای فایلِ پیکربندی"
 
 msgid ""
 "Your gesture map file contains errors.\n"
@@ -2549,11 +2605,11 @@ msgstr "گفتار"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Configuration"
-msgstr "پیکره‌بندی"
+msgstr "پیکربندی"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Configuration profiles"
-msgstr "پروفایل‌های پیکره‌بندی"
+msgstr "پروفایل‌های پیکربندی"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the braille panel
@@ -2905,20 +2961,10 @@ msgid "Cycles through line indentation settings"
 msgstr "تنظیماتِ تورفتگیِ خط را تغییر میدهد."
 
 #. Translators: A message reported when cycling through line indentation settings.
-msgid "Report line indentation with speech"
-msgstr "تورفتگیِ خط با گفتار اعلام میشود."
-
-#. Translators: A message reported when cycling through line indentation settings.
-msgid "Report line indentation with tones"
-msgstr "تورفتگیِ خط با بوق اعلام میشود."
-
-#. Translators: A message reported when cycling through line indentation settings.
-msgid "Report line indentation with speech and tones"
-msgstr "تورفتگیِ خط با گفتار و بوق اعلام میشود."
-
-#. Translators: A message reported when cycling through line indentation settings.
-msgid "Report line indentation off"
-msgstr "تورفتگیِ خط اعلام نمیشود."
+#. {mode} will be replaced with the mode; i.e. Off, Speech, Tones or Both Speech and Tones.
+#, python-brace-format
+msgid "Report line indentation {mode}"
+msgstr "اعلامِ تورفتگیِ خط، {mode}"
 
 #. Translators: Input help mode message for toggle report paragraph indentation command.
 msgid "Toggles on and off the reporting of paragraph indentation"
@@ -2982,17 +3028,11 @@ msgstr "مُختصاتِ خانه‌های جدول اعلام میشوند."
 msgid "Cycles through the cell border reporting settings"
 msgstr "تنظیماتِ اعلامِ حاشیه‌ی خانه‌ها را تغییر میدهد"
 
-#. Translators: A message reported when cycling through cell borders settings.
-msgid "Report styles of cell borders"
-msgstr "سبْک‌های حاشیه‌ی خانه اعلام میشود"
-
-#. Translators: A message reported when cycling through cell borders settings.
-msgid "Report colors and styles of cell borders"
-msgstr "رنگ‌ها و سبْک‌های حاشیه‌ی خانه‌ها اعلام میشوند"
-
-#. Translators: A message reported when cycling through cell borders settings.
-msgid "Report cell borders off."
-msgstr "حاشیه‌ی خانه‌ها اعلام نمیشوند."
+#. Translators: Reported when the user cycles through report cell border modes.
+#. {mode} will be replaced with the mode; e.g. Off, Styles and Colors and styles.
+#, python-brace-format
+msgid "Report cell borders {mode}"
+msgstr "اعلامِ حاشیه‌ی خانه‌ها، {mode}"
 
 #. Translators: Input help mode message for toggle report links command.
 msgid "Toggles on and off the reporting of links"
@@ -3158,6 +3198,20 @@ msgstr ""
 #, python-format
 msgid "Symbol level %s"
 msgstr "سطحِ خوانده شدنِ نمادها، %s"
+
+#. Translators: Input help mode message for toggle delayed character description command.
+msgid ""
+"Toggles on and off delayed descriptions for characters on cursor movement"
+msgstr ""
+"توضیحِ با تأخیر برای نویسه‌ها هنگامِ حرکتِ مکان‌نمارا فعال یا غیرفعال میکند."
+
+#. Translators: The message announced when toggling the delayed character description setting.
+msgid "delayed character descriptions on"
+msgstr "توضیحِ نویسه‌ها با تأخیر، فعال شد."
+
+#. Translators: The message announced when toggling the delayed character description setting.
+msgid "delayed character descriptions off"
+msgstr "توضیحِ نویسه‌ها با تأخیر، غیرفعال شد."
 
 #. Translators: Input help mode message for move mouse to navigator object command.
 msgid "Moves the mouse pointer to the current navigator object"
@@ -3484,7 +3538,7 @@ msgid ""
 "Moves the review cursor to the last character of the line where it is "
 "situated in the current navigator object and speaks it"
 msgstr ""
-"مکان‌نمای بازبینی را روی آخِرین نویسه‌ی خطِّ جاریِ موجود در پِیمایِشگر برده، آن را "
+"مکان‌نمای بازبینی را روی آخرین نویسه‌ی خطِّ جاریِ موجود در پِیمایِشگر برده، آن را "
 "میخوانَد."
 
 #. Translators: Input help mode message for Review Current Symbol command.
@@ -3633,7 +3687,7 @@ msgstr "خلاصه‌ی جزئیاتِ هر یادداشتِ موجود در ن�
 
 #. Translators: message given when there is no annotation details for the reportDetailsSummary script.
 msgid "No additional details"
-msgstr "جزئیات دیگری نیست."
+msgstr "جزئیات بیشتری نیست."
 
 #. Translators: Input help mode message for report current focus command.
 msgid "Reports the object with focus. If pressed twice, spells the information"
@@ -3786,7 +3840,7 @@ msgstr "نمیتوانم کپی کنم."
 
 #. Translators: Input help mode message for Open user configuration directory command.
 msgid "Opens NVDA configuration directory for the current user."
-msgstr "پوشه‌ی پیکره‌بَندیِ کاربرِ جاری را باز میکند."
+msgstr "پوشه‌ی پیکربندیِ کاربرِ جاری را باز میکند."
 
 #. Translators: Input help mode message for toggle progress bar output command.
 msgid ""
@@ -3978,30 +4032,30 @@ msgstr "پنجره‌ی محاوره‌ایِ فرمان‌های ورودیِ N
 
 #. Translators: Input help mode message for the report current configuration profile command.
 msgid "Reports the name of the current NVDA configuration profile"
-msgstr "نامِ پروفایلِ پیکره‌بَندیِ فعلیِ NVDA را اعلام میکند."
+msgstr "نامِ پروفایلِ پیکربندیِ فعلیِ NVDA را اعلام میکند."
 
 #. Translators: Message announced when the command to report the current configuration profile and
 #. the default configuration profile is active.
 msgid "normal configuration profile active"
-msgstr "پروفایلِ پیکره‌بَندیِ معمولی فعال است"
+msgstr "پروفایلِ پیکربندیِ معمولی فعال است"
 
 #. Translators: Message announced when the command to report the current configuration profile
 #. is active. The placeholder '{profilename}' is replaced with the name of the current active profile.
 #, python-brace-format
 msgid "{profileName} configuration profile active"
-msgstr "پروفایلِ پیکره‌بَندیِ {profileName} فعال است"
+msgstr "پروفایلِ پیکربندیِ {profileName} فعال است"
 
 #. Translators: Input help mode message for save current configuration command.
 msgid "Saves the current NVDA configuration"
-msgstr "پیکره‌بَندیِ کنونی NVDA را ذخیره میکند."
+msgstr "پیکربندیِ کنونیِ NVDA را ذخیره میکند."
 
 #. Translators: Input help mode message for apply last saved or default settings command.
 msgid ""
 "Pressing once reverts the current configuration to the most recently saved "
 "state. Pressing three times resets to factory defaults."
 msgstr ""
-"با یک بار فشردن، پیکره‌بَندیِ کنونی را به وضعیتِ آخِرین پیکره‌بَندیِ ذخیره شده "
-"باز‌می‌گردانَد. با سه بار فشردن، پیکره‌بندی به پیش‌فرضِ تولیدکننده‌ی نرم‌افزار "
+"با یک بار فشردن، پیکربندیِ کنونی را به وضعیتِ آخرین پیکربندیِ ذخیره شده "
+"باز‌می‌گردانَد. با سه بار فشردن، پیکربندی به پیش‌فرضِ تولیدکننده‌ی نرم‌افزار "
 "باز‌می‌گردد."
 
 #. Translators: Input help mode message for activate python console command.
@@ -4309,6 +4363,32 @@ msgstr ""
 msgid "Plugins reloaded"
 msgstr "افزونه ها دوباره بارگذاری شدند."
 
+#. Translators: input help mode message for Report destination URL of navigator link command
+msgid ""
+"Report the destination URL of the link in the navigator object. If pressed "
+"twice, shows the URL in a window for easier review."
+msgstr ""
+"URLِ مقصدِ لینکِ موجود در پیمایشگر را اعلام میکند. اگر دو بار فشرده شود، URL را "
+"برای بازبینیِ آسانتر در یک پنجره نشان میدهد."
+
+#. Translators: Informs the user that the window contains the destination of the
+#. link with given title
+#, python-brace-format
+msgid "Destination of: {name}"
+msgstr "مقصدِ: {name}"
+
+#. Translators: Tell user that the command has been run on something that is not a link
+msgid "Not a link."
+msgstr "لینک نیست"
+
+#. Translators: input help mode message for Report URL of navigator link in a window command
+msgid ""
+"Reports the destination URL of the link in the navigator object in a window, "
+"instead of just speaking it. May be preferred by braille users."
+msgstr ""
+"URLِ مقصدِ لینکِ موجود در پیمایشگر را، بجای اینکه تنها بخواند، در یک پنجره نشان "
+"میدهد. کاربرانِ بریل ممکن است این را ترجیح بدهند."
+
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Moves to the next object in a flattened view of the object navigation "
@@ -4372,23 +4452,23 @@ msgstr "شیء هیچ موقعیتی که موس بتواند روی آن قرا
 
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
-msgstr "صفحه‌ی پروفایل‌های پیکره‌بَندیِ NVDA را نشان میدهد."
+msgstr "صفحه‌ی پروفایل‌های پیکربندیِ NVDA را نشان میدهد."
 
 #. Translators: Input help mode message for toggle configuration profile triggers command.
 msgid ""
 "Toggles disabling of all configuration profile triggers. Disabling remains "
 "in effect until NVDA is restarted"
 msgstr ""
-"همه‌ی عملگرهای پروفایلِ پیکره‌بندی را غیرفعال میکند. عملگرها تا راه‌اندازیِ "
+"همه‌ی عملگرهای پروفایلِ پیکربندی را غیرفعال میکند. عملگرها تا راه‌اندازیِ "
 "دوباره‌ی NVDA غیرفعال خواهند ماند."
 
 #. Translators: The message announced when temporarily disabling all configuration profile triggers.
 msgid "Configuration profile triggers disabled"
-msgstr "عملگرهای پروفایلِ پیکره‌بندی غیرفعال شدند"
+msgstr "عملگرهای پروفایلِ پیکربندی غیرفعال شدند"
 
 #. Translators: The message announced when re-enabling all configuration profile triggers.
 msgid "Configuration profile triggers enabled"
-msgstr "عملگرهای پروفایلِ پیکره‌بندی فعال شدند"
+msgstr "عملگرهای پروفایلِ پیکربندی فعال شدند"
 
 #. Translators: Describes a command.
 msgid "Begins interaction with math content"
@@ -4461,11 +4541,15 @@ msgstr "پرده‌ی موقتی. تا راه‌اندازیِ بَعدیِ NVDA
 msgid "Could not enable screen curtain"
 msgstr "نمیتوانم پرده را فعال کنم"
 
+#. Translators: Describes a command.
+msgid "Cycles through paragraph navigation styles"
+msgstr "سبْکِ پیمایشِ پاراگرافی را تغییر میدهد.تنظیماتِ تورفتگیِ خط را تغییر میدهد."
+
 #. Translators: a message indicating that configuration profiles can't be activated using gestures,
 #. due to profile activation being suspended.
 msgid "Can't change the active profile while an NVDA dialog is open"
 msgstr ""
-"نمیتوانم در حالی که پنجره‌ای از NVDA باز است، پروفایلِ پیکره‌بَندیِ فعال را تغییر "
+"نمیتوانم در حالی که پنجره‌ای از NVDA باز است، پروفایلِ پیکربندیِ فعال را تغییر "
 "بدهم."
 
 #. Translators: a message when a configuration profile is manually deactivated.
@@ -4485,7 +4569,7 @@ msgstr "پروفایلِ {profile} فعال شد"
 #. {profile} is replaced with the profile's name.
 #, python-brace-format
 msgid "Activates or deactivates the {profile} configuration profile"
-msgstr "پروفایل پیکره‌بَندیِ {profile} را فعال یا غیرفعال میکند"
+msgstr "پروفایل پیکربندیِ {profile} را فعال یا غیرفعال میکند"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Emulated system keyboard keys"
@@ -4513,7 +4597,7 @@ msgstr "حذفِ نرم‌افزارِ NVDA"
 
 #. Translators: A label for a shortcut item in start menu to open current user's NVDA configuration directory.
 msgid "Explore NVDA user configuration directory"
-msgstr "گشتن در پوشه‌ی پیکره‌بَندیِ کاربرِ NVDA"
+msgstr "گشتن در پوشه‌ی پیکربندیِ کاربرِ NVDA"
 
 #. Translators: The label of the NVDA Documentation menu in the Start Menu.
 msgid "Documentation"
@@ -4858,9 +4942,12 @@ msgstr "لَپ‌تاپ"
 msgid "unknown %s"
 msgstr "%s شناخته نشد"
 
+#. Translators: a state that denotes a control is currently on
+#. E.g. a switch control.
 msgid "on"
 msgstr "روشن"
 
+#. Translators: This is presented when a switch control is off.
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
@@ -6260,6 +6347,7 @@ msgstr "خطا هنگامِ بررسی برای به روزرسانی"
 #. Translators: The title of the message box
 #. Translators: The title of the error dialog displayed when there is an error showing the GUI
 #. for a vision enhancement provider
+#. Translators: The title of an error message box displayed when validating the startup dialog
 msgid "Error"
 msgstr "خطا"
 
@@ -6292,7 +6380,7 @@ msgid ""
 msgstr ""
 "\n"
 "\n"
-"با این حال، پیکره‌بَندیِ NVDAِ شما حاویِ افزونه‌هاییست که با این نگارش از NVDA "
+"با این حال، پیکربندیِ NVDAِ شما حاویِ افزونه‌هاییست که با این نگارش از NVDA "
 "سازگار نیستند. این افزونه‌ها پس از نصب، غیرفعال خواهند شد. چنانچه به این "
 "افزونه‌ها اعتماد میکنید، فهرست را بررسی کنید تا برای نصب آن‌ها تصمیم بگیرید."
 
@@ -6353,7 +6441,7 @@ msgid ""
 "continue with the installation"
 msgstr ""
 "\n"
-"با این حال، پیکره‌بَندیِ NVDAِ شما حاویِ افزونه‌هاییست که با این نگارش از NVDA "
+"با این حال، پیکربندیِ NVDAِ شما حاویِ افزونه‌هاییست که با این نگارش از NVDA "
 "سازگار نیستند. این افزونه‌ها پس از نصب، غیرفعال خواهند شد. چنانچه به این "
 "افزونه‌ها اعتماد میکنید، فهرست را بررسی کنید تا برای نصب آن‌ها تصمیم بگیرید."
 
@@ -6510,6 +6598,11 @@ msgstr ""
 msgid "%d percent"
 msgstr "%d درصد"
 
+#. Translators: Announced in braille when suggestions appear when search term is entered
+#. in various search fields such as Start search box in Windows 10.
+msgid "Suggestions"
+msgstr "پیشنهادها"
+
 #. Translators: a message announcing a candidate's character and description.
 #, python-brace-format
 msgid "{symbol} as in {description}"
@@ -6551,10 +6644,6 @@ msgstr "پِیمایِشگر و فکوس را به اولین سطر میبَر�
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object and focus to the last row"
 msgstr "پِیمایِشگر و فکوس را به آخرین سطر میبَرَد"
-
-#. Translators: Announced in braille when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
-msgid "Suggestions"
-msgstr "پیشنهادها"
 
 #. Translators: The label for a 'composition' Window that appears when the user is typing one or more east-Asian characters into a document.
 msgid "Composition"
@@ -6625,17 +6714,36 @@ msgstr "نمیتوانم پنجره‌ی راهنما را پیدا کنم."
 msgid "No track playing"
 msgstr "هیچ تِرَکی پخش نمی‌شود"
 
+#. Translators: Reported remaining time in Foobar2000
+#, python-brace-format
+msgid "{remainingTimeFormatted} remaining"
+msgstr "{remainingTimeFormatted} باقی مانده"
+
 #. Translators: Reported if the remaining time can not be calculated in Foobar2000
-msgid "Unable to determine remaining time"
-msgstr "نمیتوانم زمانِ باقی‌مانده را تعیین کنم"
+msgid "Remaining time not available"
+msgstr "زمانِ باقیمانده موجود نیست"
 
 #. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "زمانِ باقیمانده‌ی تِرَکِ در حالِ پخش را اعلام میکند."
 
+#. Translators: Reported elapsed time in Foobar2000
+#, python-brace-format
+msgid "{elapsedTime} elapsed"
+msgstr "{elapsedTime} سپری شده"
+
+#. Translators: Reported if the elapsed time is not available in Foobar2000
+msgid "Elapsed time not available"
+msgstr "زمانِ سپری‌شده موجود نیست"
+
 #. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
 msgid "Reports the elapsed time of the currently playing track, if any"
 msgstr "زمانِ سپری‌شده‌ی تِرَکِ در حالِ پخش را اعلام میکند."
+
+#. Translators: Reported remaining time in Foobar2000
+#, python-brace-format
+msgid "{totalTime} total"
+msgstr "{totalTime} زمانِ کل"
 
 #. Translators: Reported if the total time is not available in Foobar2000
 msgid "Total time not available"
@@ -6686,7 +6794,7 @@ msgstr "هنوز پیامی دریافت نشده است"
 
 #. Translators: The description of an NVDA command to view one of the recent messages.
 msgid "Displays one of the recent messages"
-msgstr "یکی از آخِرین پیامها را نمایش میدهد"
+msgstr "یکی از آخرین پیامها را نمایش میدهد"
 
 #. Translators: This Outlook Express message has an attachment
 #. Translators: when an email has attachments
@@ -7324,9 +7432,60 @@ msgstr "&نمایشگرِ بریل را در آغازِ کار نشان بده"
 msgid "&Hover for cell routing"
 msgstr "&نگه‌داشتن موس روی یک خانه برای رفتن به خانه‌ی موردِ نظر"
 
-#. Translators: This is the label for a combobox in the
-#. document formatting settings panel.
-#. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+#. Translators: One of the show states of braille messages
+#. (the disabled mode turns off showing of braille messages completely).
+#. Translators: Label for an option in NVDA settings.
+#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
+msgid "Disabled"
+msgstr "غیرفعال"
+
+#. Translators: One of the show states of braille messages
+#. (the timeout mode shows messages for the specific time).
+msgid "Use timeout"
+msgstr "استفاده از مهلتِ زمانی"
+
+#. Translators: One of the show states of braille messages
+#. (the indefinitely mode prevents braille messages from disappearing automatically).
+msgid "Show indefinitely"
+msgstr "نمایش بطور نامحدود"
+
+#. Translators: The label for a braille setting indicating that braille should be
+#. tethered to focus or review cursor automatically.
+msgid "automatically"
+msgstr "خودکار"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered to focus.
+msgid "to focus"
+msgstr "به مکانِ فرمان‌پذیری"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered
+#. to the review cursor.
+msgid "to review"
+msgstr "به بازبینی"
+
+#. Translators: A choice in a combo box in the document formatting dialog to report No line Indentation.
+msgctxt "line indentation setting"
+msgid "Off"
+msgstr "خاموش"
+
+#. Translators: A choice in a combo box in the document formatting dialog to report indentation
+#. with Speech.
+msgctxt "line indentation setting"
+msgid "Speech"
+msgstr "گفتار"
+
+#. Translators: A choice in a combo box in the document formatting dialog to report indentation
+#. with tones.
+msgctxt "line indentation setting"
+msgid "Tones"
+msgstr "بوق"
+
+#. Translators: A choice in a combo box in the document formatting dialog to report indentation with both
+#. Speech and tones.
+msgctxt "line indentation setting"
+msgid "Both Speech and Tones"
+msgstr "گفتار و بوق با هم"
+
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
 msgid "Off"
@@ -7347,17 +7506,40 @@ msgstr "سطرها"
 msgid "Columns"
 msgstr "ستون‌ها"
 
-#. Translators: Label for an option in NVDA settings.
-#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
-#. Translators: One of the show states of braille messages
-#. (the disabled mode turns off showing of braille messages completely).
-msgid "Disabled"
-msgstr "غیرفعال"
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Styles"
+msgstr "سبْک‌ها"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Both Colors and Styles"
+msgstr "رنگ‌ها و سبْک‌ها"
 
 #. Translators: Label for an option in NVDA settings.
 #. Translators: The status shown for an addon when its currently running in NVDA.
 msgid "Enabled"
 msgstr "فعال"
+
+#. Translators: Label for a paragraph style in NVDA settings.
+msgid "Handled by application"
+msgstr "توسط برنامه مدیریت میشود."
+
+#. Translators: Label for a paragraph style in NVDA settings.
+msgid "Single line break"
+msgstr "تک‌خطّی"
+
+#. Translators: Label for a paragraph style in NVDA settings.
+msgid "Multi line break"
+msgstr "چند‌خطّی"
+
+#. Translators: Label for an option in NVDA settings.
+msgid "Diffing"
+msgstr "Diffing"
+
+#. Translators: Label for an option in NVDA settings.
+msgid "UIA notifications"
+msgstr "اعلان‌های UIA"
 
 #. Translators: The title of the document used to present the result of content recognition.
 msgid "Result"
@@ -8126,6 +8308,11 @@ msgstr "توضیح"
 msgid "suggestion"
 msgstr "پیشنهاد"
 
+#. Translators: The word role for a switch control
+#. I.e. a control that can be switched on or off.
+msgid "switch"
+msgstr "سویچ"
+
 #. Translators: Indicates that a particular state of an object is negated.
 #. Separate strings have now been defined for commonly negated states (e.g. not selected and not
 #. checked), but this still might be used in some other cases.
@@ -8325,13 +8512,20 @@ msgstr "بدونِ علامت"
 msgid "done dragging"
 msgstr "کشاندن انجام شد"
 
+#. Translators: This is spoken when a paragraph is considered blank.
+#. Translators: This is spoken when the line is considered blank.
+#. Translators: This is spoken when NVDA moves to an empty line.
+#. Translators: This is spoken when the line is considered blank.
+msgid "blank"
+msgstr "خالی"
+
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 msgid "Configuration applied"
-msgstr "پیکره‌بندی اِعمال شد."
+msgstr "پیکربندی اِعمال شد."
 
 #. Translators: Reported when configuration has been restored to defaults by using restore configuration to factory defaults item in NVDA menu.
 msgid "Configuration restored to factory defaults"
-msgstr "پیکره‌بندی به پیشفرضِ تولیدکننده بازگشت."
+msgstr "پیکربندی به پیشفرضِ تولیدکننده بازگشت."
 
 #. Translators: Reported when current configuration has been saved.
 msgid "Configuration saved"
@@ -8339,7 +8533,7 @@ msgstr "تنظیمات ذخیره شد."
 
 #. Translators: Message shown when current configuration cannot be saved such as when running NVDA from a CD.
 msgid "Could not save configuration - probably read only file system"
-msgstr "پیکره‌بندی ذخیره نشد. احتمالا فایل سیستم، فقط خواندنیست."
+msgstr "پیکربندی ذخیره نشد. احتمالا فایل سیستم فقط خواندنیست."
 
 #. Translators: Message shown when trying to open an unavailable category of a multi category settings dialog
 #. (example: when trying to open touch interaction settings on an unsupported system).
@@ -8549,11 +8743,11 @@ msgstr ""
 
 #. Translators: The label for the menu item to open the Configuration Profiles dialog.
 msgid "&Configuration profiles..."
-msgstr "&پروفایل‌های پیکره‌بندی..."
+msgstr "&پروفایل‌های پیکربندی..."
 
 #. Translators: The label for the menu item to revert to saved configuration.
 msgid "&Revert to saved configuration"
-msgstr "&بازگشت به پیکره‌بَندیِ ذخیره شده"
+msgstr "&بازگشت به پیکربندیِ ذخیره شده"
 
 #. Translators: The help text for the menu item to revert to saved configuration.
 msgid "Reset all settings to saved state"
@@ -8571,11 +8765,11 @@ msgstr "تمامِ تنظیمات را به وضعیتِ اولیه بازمیگ
 
 #. Translators: The label for the menu item to save current settings.
 msgid "&Save configuration"
-msgstr "&ذخیره‌ی پیکره‌بندی"
+msgstr "&ذخیره‌ی پیکربندی"
 
 #. Translators: The help text for the menu item to save current settings.
 msgid "Write the current configuration to nvda.ini"
-msgstr "پیکره‌بَندیِ جاری را در nvda.ini مینویسد."
+msgstr "پیکربندیِ جاری را در nvda.ini مینویسد."
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -8910,9 +9104,13 @@ msgstr "این کار در نسخه‌ی فروشگاهیِ NVDA در دسترس
 msgid "Action unavailable while a dialog requires a response"
 msgstr "این کار در حالی که پنجره‌ای نیازمندِ پاسخ است در دسترس نیست."
 
+#. Translators: Reported when an action cannot be performed because Windows is locked.
+msgid "Action unavailable while Windows is locked"
+msgstr "این کار در حالی که ویندوز قفل است در دسترس نیست."
+
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
-msgstr "پروفایل‌های پیکره‌بندی"
+msgstr "پروفایل‌های پیکربندی"
 
 #. Translators: The label of a button to create a new configuration profile.
 msgid "&New"
@@ -8939,7 +9137,7 @@ msgstr "&غیرفعال کردنِ موقتیِ همه‌ی عملگرها"
 #. Translators: The item to select the user's normal configuration
 #. in the profile list in the Configuration Profiles dialog.
 msgid "(normal configuration)"
-msgstr "(پیکره‌بَندیِ معمولی)"
+msgstr "(پیکربندیِ معمولی)"
 
 #. Translators: Reported for a profile which is being edited
 #. in the Configuration Profiles dialog.
@@ -8961,7 +9159,9 @@ msgid "Error activating profile."
 msgstr "خطا در فعال کردنِ پروفایل."
 
 #. Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
-msgid "This profile will be permanently deleted. This action cannot be undone."
+#. The placeholder {} is replaced with the name of the configuration profile that will be deleted.
+msgid ""
+"The profile {} will be permanently deleted. This action cannot be undone."
 msgstr "این پروفایل بطور کامل پاک خواهد شد. این کار برگشت‌پذیر نخواهد بود."
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
@@ -9135,7 +9335,7 @@ msgid ""
 "restart, the language  saved in NVDA's configuration will be used instead."
 msgstr ""
 "زبانِ رابطِ کاربریِ NVDA حالا از خطِّ فرمان تعیین شده است. در راه‌اندازیِ بعدی، "
-"زبانِ ذخیره‌شده در پیکره‌بَندیِ NVDA به جایش استفاده خواهد شد."
+"زبانِ ذخیره‌شده در پیکربندیِ NVDA به جایش استفاده خواهد شد."
 
 #. Translators: The label for actions list in the Exit dialog.
 msgid "What would you like to &do?"
@@ -9570,7 +9770,7 @@ msgstr "در حالِ کپیِ تنظیمات"
 #. Translators: The message displayed while settings are being copied
 #. to the system configuration (for use on Windows logon etc)
 msgid "Please wait while settings are copied to the system configuration."
-msgstr "لطفا صبر کنید تا تنظیمات در پیکره بندی سیستم کپی شوند."
+msgstr "لطفا صبر کنید تا تنظیمات در پیکربندیِ سیستم کپی شوند."
 
 #. Translators: a message dialog asking to retry or cancel when copying settings  fails
 msgid ""
@@ -9600,7 +9800,7 @@ msgstr "اِختیاراتِ کافی نیست"
 
 #. Translators: The title of the dialog which appears when the user changed NVDA's interface language.
 msgid "Language Configuration Change"
-msgstr "تغییر در پیکره‌بَندیِ زبان"
+msgstr "تغییر در پیکربندیِ زبان"
 
 #. Translators: The message displayed after NVDA interface language has been changed.
 msgid "NVDA must be restarted for the new language to take effect."
@@ -10113,19 +10313,6 @@ msgstr "&شماره‌ی خط‌ها"
 msgid "Line &indentation reporting:"
 msgstr "اعلامِ &تورفتگیِ خط با"
 
-#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
-msgctxt "line indentation setting"
-msgid "Speech"
-msgstr "گفتار"
-
-#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
-msgid "Tones"
-msgstr "بوق"
-
-#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
-msgid "Both Speech and Tones"
-msgstr "گفتار و بوق با هم"
-
 #. Translators: This message is presented in the document formatting settings panelue
 #. If this option is selected, NVDA will report paragraph indentation if available.
 msgid "&Paragraph indentation"
@@ -10160,16 +10347,6 @@ msgstr "&سرجدول‌ها"
 #. document formatting settings panel.
 msgid "Cell c&oordinates"
 msgstr "&مُختصاتِ خانه‌های جدول"
-
-#. Translators: This is the label for a combobox in the
-#. document formatting settings panel.
-msgid "Styles"
-msgstr "سبْک‌ها"
-
-#. Translators: This is the label for a combobox in the
-#. document formatting settings panel.
-msgid "Both Colors and Styles"
-msgstr "رنگ‌ها و سبْک‌ها"
 
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
@@ -10225,6 +10402,14 @@ msgstr "&کلیک‌شدنی"
 #. document formatting settings panel.
 msgid "Report formatting chan&ges after the cursor (can cause a lag)"
 msgstr "اعلامِ ت&غییراتِ قالب‌بندی بعد از مکان‌نما (میتواند باعثِ کُندی شود)"
+
+#. Translators: This is the label for the document navigation settings panel.
+msgid "Document Navigation"
+msgstr "پیمایش در اسناد"
+
+#. Translators: This is a label for the paragraph navigation style in the document navigation dialog
+msgid "&Paragraph style:"
+msgstr "سبْکِ &پاراگراف"
 
 #. Translators: This is the label for the touch interaction settings panel.
 msgid "Touch Interaction"
@@ -10472,6 +10657,10 @@ msgstr "Diff Match Patch"
 msgid "Difflib"
 msgstr "Difflib"
 
+#. Translators: This is the label for a combo-box in the Advanced settings panel.
+msgid "Speak new text in Windows Terminal via:"
+msgstr "گُفتنِ متنِ جدید در پایانه‌ی ویندوز از طریق:"
+
 #. Translators: This is the label for combobox in the Advanced settings panel.
 msgid "Attempt to cancel speech for expired focus events:"
 msgstr "تلاش برای لغوِ گفتارِ رخدادهای فکوسِ منقضی‌شده"
@@ -10612,16 +10801,6 @@ msgstr "شکلِ مکان‌نمای &فرمان‌پذیری"
 msgid "Cursor shape for &review:"
 msgstr "شکلِ مکان‌نمای &بازبینی"
 
-#. Translators: One of the show states of braille messages
-#. (the timeout mode shows messages for the specific time).
-msgid "Use timeout"
-msgstr "استفاده از مهلتِ زمانی"
-
-#. Translators: One of the show states of braille messages
-#. (the indefinitely mode prevents braille messages from disappearing automatically).
-msgid "Show indefinitely"
-msgstr "نمایش بطور نامحدود"
-
 #. Translators: The label for a setting in braille settings to combobox enabling user
 #. to decide if braille messages should be shown and automatically disappear from braille display.
 msgid "Show messages"
@@ -10690,7 +10869,7 @@ msgstr ""
 
 #. Translators: This is a label appearing on the vision settings panel.
 msgid "Configure visual aids."
-msgstr "دستیارهای بینایی را پیکره‌بندی کنید."
+msgstr "دستیارهای بینایی را پیکربندی کنید."
 
 #. Translators: Enable checkbox on a vision enhancement provider on the vision settings category panel
 msgid "Enable"
@@ -10714,7 +10893,7 @@ msgstr "تنظیماتِ NVDA"
 
 #. Translators: The profile name for normal configuration
 msgid "normal configuration"
-msgstr "پیکره‌بَندیِ معمولی"
+msgstr "پیکربندیِ معمولی"
 
 #. Translators: This is the label for the add symbol dialog.
 msgid "Add Symbol"
@@ -10920,6 +11099,14 @@ msgstr "استفاده از CapsLock به عنوان یک کلیدِ مب&دلِ
 msgid "&Show this dialog when NVDA starts"
 msgstr "نشان دادَنِ این &پنجره هنگامِ شروعِ کارِ NVDA"
 
+#. Translators: The title of an error message box displayed when validating the startup dialog
+msgid ""
+"At least one NVDA modifier key must be set. Caps lock will remain as an NVDA "
+"modifier key. "
+msgstr ""
+"دستِ کم یک کلید باید به عنوانِ کلیدِ NVDA تعیین شود. Caps lock به عنوانِ کلیدِ "
+"مبدلِ NVDA باقی خواهد ماند."
+
 #. Translators: The label for a checkbox in NvDA installation program to agree to the license agreement.
 msgid "I &agree"
 msgstr "&میپذیرم"
@@ -10963,7 +11150,7 @@ msgstr ""
 "داده‌هایی مبتنی بر نحوه استفاده از صفحه‌خوان را جمع‌آوری کند.\n"
 "\n"
 "این داده‌ها مشتمل است بر نگارشِ سیستم‌عامل، نگارشِ NVDA، زبانِ موردِ استفاده، کشورِ "
-"کاربر، بعلاوه‌ی اطلاعاتِ پیکره‌بَندیِ مشخصی از NVDA، مثلِ موتور سخنگو، نمایشگرِ "
+"کاربر، بعلاوه‌ی اطلاعاتِ پیکربندیِ مشخصی از NVDA، مثلِ موتور سخنگو، نمایشگرِ "
 "بریل، و جدولِ بریلِ موردِ استفاده. هیچ محتوای گفتاری یا بریلی به NV Access "
 "فرستاده نخواهد شد. برای دیدنِ فهرستِ داده‌های جمع‌آوری‌شده، به راهنمای کاربر "
 "مراجعه کنید.\n"
@@ -10979,12 +11166,6 @@ msgstr "خروج از تعامل با محتوای ریاضی"
 #. but math interaction is not supported.
 msgid "Math interaction not supported."
 msgstr "تعاملِ ریاضی پشتیبانی نمیشود."
-
-#. Translators: This is spoken when the line is considered blank.
-#. Translators: This is spoken when NVDA moves to an empty line.
-#. Translators: This is spoken when the line is considered blank.
-msgid "blank"
-msgstr "خالی"
 
 #. Translators: cap will be spoken before the given letter when it is capitalized.
 #, python-format
@@ -11029,15 +11210,19 @@ msgid "row %s"
 msgstr "سطرِ %s"
 
 #. Translators: Speaks the row span added to the current row number (example output: through 5).
-#. Translators: Speaks the column span added to the current column number (example output: through 5).
-#, python-format
-msgid "through %s"
-msgstr "تا %s"
+#, python-brace-format
+msgid "through {endRow}"
+msgstr "تا سطرِ {endRow}"
 
 #. Translators: Speaks current column number (example output: column 3).
 #, python-format
 msgid "column %s"
 msgstr "ستونِ %s"
+
+#. Translators: Speaks the column span added to the current column number (example output: through 5).
+#, python-brace-format
+msgid "through {endCol}"
+msgstr "تا ستونِ {endCol}"
 
 #. Translators: Speaks the row and column span added to the current row and column numbers
 #. (example output: through row 5 column 3).
@@ -11432,6 +11617,41 @@ msgstr "{curPercent:.0f}٪"
 #, python-brace-format
 msgid "at {x}, {y}"
 msgstr "در {x}, {y} پیکْسِل"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds
+#, python-brace-format
+msgctxt "time format"
+msgid "{S}"
+msgstr "{S} ثانیه"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes
+#, python-brace-format
+msgctxt "time format"
+msgid "{M}:{S}"
+msgstr "{M} دقیقه، {S} ثانیه"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes, {H} hours
+#, python-brace-format
+msgctxt "time format"
+msgid "{H}:{M}:{S}"
+msgstr "{H} ساعت، {M} دقیقه، {S} ثانیه"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes, {H} hours, {D} day
+#, python-brace-format
+msgctxt "time format"
+msgid "{D} day {H}:{M}:{S}"
+msgstr "{D} روز، {H} ساعت، {M} دقیقه، {S} ثانیه"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes, {H} hours, {D} days
+#, python-brace-format
+msgctxt "time format"
+msgid "{D} days {H}:{M}:{S}"
+msgstr "{D} روز، {H} ساعت، {M} دقیقه، {S} ثانیه"
 
 #. Translators: This is the message for a warning shown if NVDA cannot determine if
 #. Windows is locked.
@@ -12523,11 +12743,13 @@ msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr ""
 "کلید راهنمای علائم برای مجموعه‌ی {seriesName} {seriesIndex} از {seriesCount}"
 
-#. Translators: The default color of text when a color has not been set by the author.
-#. Translators: The default background color  when a color has not been set by the author.
-#. Translators: the default (automatic) color in Microsoft Word
-msgid "default color"
-msgstr "رنگِ پیش‌فرض"
+#. Translators: The text color as reported in Wordpad (Automatic) or NVDA log viewer.
+#. Translators: The background color as reported in Wordpad (Automatic) or NVDA log viewer.
+#. Translators: The text color as reported in Wordpad (Automatic) or NVDA log viewer.
+#. Translators: The background color as reported in Wordpad (Automatic) or NVDA log viewer.
+#, python-brace-format
+msgid "{color} (default color)"
+msgstr "{color} (رنگِ پیش‌فرض)"
 
 #. Translators: The color of text cannot be detected.
 #. Translators: The background color cannot be detected.
@@ -13069,6 +13291,10 @@ msgstr "%.1f خط"
 msgid "Table description"
 msgstr "توضیحِ جدول"
 
+#. Translators: the default (automatic) color in Microsoft Word
+msgid "automatic color"
+msgstr "رنگِ خودکار"
+
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Bold on"
 msgstr "کلفت‌نوشته، روشن"
@@ -13200,6 +13426,40 @@ msgstr "فاصله‌گذاریِ خطّیِ دوبرابر"
 msgid "1.5 line spacing"
 msgstr "فاصله‌گذاریِ خطّیِ یک و نیم برابر"
 
+#. Translators: Names of braille displays.
+msgid "Caiku Albatross 46/80"
+msgstr "Caiku Albatross 46/80"
+
+#. Translators: A message when number of status cells must be changed
+#. for a braille display driver
+msgid ""
+"To use Albatross with NVDA: change number of status cells in Albatross "
+"internal menu at most "
+msgstr ""
+"برای استفاده از Albatross با NVDA: حداکثرِ تعدادِ خانه‌های وضعیت را در منوی "
+"داخلیِ Albatross تغییر دهید."
+
+#~ msgid "Unable to determine remaining time"
+#~ msgstr "نمیتوانم زمانِ باقی‌مانده را تعیین کنم"
+
+#~ msgid "through %s"
+#~ msgstr "تا %s"
+
+#~ msgid "Report line indentation with speech"
+#~ msgstr "تورفتگیِ خط با گفتار اعلام میشود."
+
+#~ msgid "Report line indentation with tones"
+#~ msgstr "تورفتگیِ خط با بوق اعلام میشود."
+
+#~ msgid "Report line indentation with speech and tones"
+#~ msgstr "تورفتگیِ خط با گفتار و بوق اعلام میشود."
+
+#~ msgid "Report styles of cell borders"
+#~ msgstr "سبْک‌های حاشیه‌ی خانه اعلام میشود"
+
+#~ msgid "Report colors and styles of cell borders"
+#~ msgstr "رنگ‌ها و سبْک‌های حاشیه‌ی خانه‌ها اعلام میشوند"
+
 #~ msgid ""
 #~ "NVDA is failing to fetch the foreground window. If this continues, NVDA "
 #~ "will quit starting in %d seconds."
@@ -13252,7 +13512,7 @@ msgstr "فاصله‌گذاریِ خطّیِ یک و نیم برابر"
 #~ msgstr "چینی (چین، ماندارین) درجه ۲"
 
 #~ msgid "Cannot save configuration - NVDA in secure mode"
-#~ msgstr "پیکره‌بندی را نمیتوانم ذخیره کنم. NVDA در حالتِ امن قرار دارد."
+#~ msgstr "پیکربندی را نمیتوانم ذخیره کنم. NVDA در حالتِ امن قرار دارد."
 
 #~ msgid "{modifier} pressed"
 #~ msgstr "{modifier} فشرده شد"
