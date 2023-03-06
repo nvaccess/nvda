@@ -40,7 +40,8 @@ Glavne karakteristike su:
 - Operativni sistemi: sve 32-bitne i 64-bitne verzije operativnih sistema Windows 7, Windows 8, Windows 8.1, Windows 10, Windows 11, i sve server verzije Windows operativnog sistema počevši od Windows Server 2008 R2.
   - za Windows 7, NVDA zahteva servisni paket 1 ili noviji.
   - za Windows Server 2008 R2, NVDA zahteva servisni paket 1 ili noviji.
-  -
+    - AMD64 i ARM64 Windows verzije su podržane.
+-
 - Barem 150 MB memorijskog prostora.
 -
 
@@ -219,6 +220,7 @@ Same komande neće biti izvršene dok ste u režimu pomoći za unos.
 | Čitaj statusnu traku | ``NVDA+end`` | ``NVDA+šift+end`` | Prijavljuje statusnu traku ako je NVDA pronađe. Ako se pritisne dva puta informacija se sriče. Ako se pritisne tri puta informacija se kopira u privremenu memoriju |
 | Čitaj vreme | ``NVDA+f12`` | ``NVDA+f12`` | Ako se pritisne jednom prijavljuje se trenutno vreme, ako se pritisne dva puta prijavljuje se datum |
 | Prijavi formatiranje teksta | ``NVDA+f`` | ``NVDA+f`` | Prijavljuje formatiranje teksta. Ako se pritisne dva puta innformacija se prikazuje u prozoru |
+| Prijavi odredište linka | ``NVDA+k`` | ``NVDA+k`` | Ako se pritisne jednom, prijavljuje odredišnu adresu linka u [navigacionom objektu #ObjectNavigation]. Ako se pritisne dva puta, prikazuje se u prozoru radi pažljivijeg pregleda |
 
 +++ Menjanje informacija koje NVDA čita +++[ToggleWhichInformationNVDAReads]
 || Ime | Desktop taster | Laptop taster | opis |
@@ -2087,6 +2089,29 @@ Ton će povećati visinu za svaki razmak, a za tabulator, povećaće visinu jedn
 - Govor i tonovi: Ova opcija čita uvlačenja koristeći obe opcije.
 -
 
++++ Navigacija kroz dokument +++[DocumentNavigation]
+Ova kategorija vam dozvoljava da promenite različite aspekte navigacije kroz dokument.
+
+==== Stil pasusa ====[ParagraphStyle]
+: Podrazumevani
+  Kontrolisan od strane aplikacije
+: Opcije
+  Podrazumevani (kontrolisan od strane aplikacije), kontrolisan od strane aplikacije, jedan novi red, više novih redova
+:
+
+Ovaj izborni okvir vam dozvoljava da izaberete stil pasusa koji će se koristiti kada se krećete po pasusima prečicama ``kontrol+strelicaGore`` i ``kontrol+strelicaDole``.
+Dostupni stilovi pasusa su:
+- Kontrolisan od strane aplikacije: NVDA će dozvoliti aplikaciji da odredi prethodni i sledeći pasus, i pročitaće novi pasus u toku navigacije.
+Ovaj stil najbolje radi kada aplikacija podržava ugrađenu navigaciju po pasusima, i ovo je podrazumevana opcija.
+- Jedan novi red: NVDA će pokušati da odredi prethodni ili sledeći pasus korišćenjem jednog novog reda kao pokazivača pasusa.
+Ovaj stil najbolje radi kada se čitaju dokumenti u aplikaciji koja ne podržava ugrađenu navigaciju po pasusima, a pasusi u dokumentu su označeni jednim pritiskom tastera ``enter``.
+- Više novih redova: NVDA će pokušati da odredi prethodni ili sledeći pasus korišćenjem bar jednog praznog reda (dva puta pritisnut taster ``enter``) kao pokazivača pasusa.
+Ovaj stil najbolje radi sa dokumentima koji koriste blok pasuse.
+Napomena da se ovaj stil pasusa ne može koristiti u Microsoft Wordu ili Microsoft Outlooku, osim ako koristite UIA za pristup Microsoft Word kontrolama.
+-
+
+Možete se prebacivati između različitih stilova pasusa bilo gde tako što ćete podesiti prečicu u [dijalogu ulaznih komandi #InputGestures].
+
 +++ Windows OCR podešavanja +++[Win10OcrSettings]
 Podešavanja u ovoj kategoriji vam dozvoljavaju da podesite [Windows OCR #Win10Ocr].
 Ova kategorija sadrži sledeće opcije:
@@ -2227,6 +2252,25 @@ Ali, u nekim aplikacijama, čitanje novog teksta može postati isprekidano ili n
 Identična je ponašanju programa NVDA u verziji 2020.4 i starijim.
 Ovo podešavanje može stabilizovati čitanje teksta u nekim aplikacijama.
 Ali, u terminalima, kada se znakovi ubacuju ili brišu u sredini reda, tekst nakon kursora će se pročitati.
+-
+
+==== Izgovaraj novi tekst u Windows terminalu koristeći ====[WtStrategy]
+: Podrazumevano
+  Prepoznavanje razlika
+: Opcije
+  Prepoznavanje razlika, UIA obaveštenja
+:
+
+Ova opcija kontroliše kako NVDA određuje koji tekst je "nov" (i samim tim šta da izgovara kada je "Prijavljivanje dinamičkih promena sadržaja" omogućeno) u Windows terminalu i WPF Windows terminal kontroli koja se koristi u Visual Studiju 2022.
+Ne utiče na Windows konzolu (``conhost.exe``).
+Izborni okvir izgovor teksta u Windows terminalu ima tri opcije:
+- Podrazumevano: ova opcija je trenutno ekvivalentna opciji "Prepoznavanje razlika", ali se očekuje promena nakon što se podrška za UIA obaveštenja dodatno razvije.
+- Prepoznavanje razlika: ova opcija koristi izabrani algoritam prepoznavanja razlika da izračuna promene svaki put kada terminal obradi novi tekst.
+Ovo je identično ponašanju programa NVDA u verziji 2022.4 i starijim.
+- UIA obaveštenja: ova opcija prenosi odgovornost određivanja koji tekst treba izgovoriti samom Windows terminalu, što znači da NVDA ne mora da odredi koji tekst trenutno na ekranu je "novi".
+Ovo će značajno poboljšati stabilnost i brzinu Windows terminala, ali ova opcija još uvek nije potpuna.
+Od posebne važnosti, upisani znakovi koji se ne prikazuju na ekranu, kao što su lozinke, biće prijavljeni kada se izabere ova opcija.
+Takođe, neprekidni redovi izlaznog teksta dužeg od 1,000 znakova možda neće biti ispravno prijavljeni.
 -
 
 ==== Pokušavanje otkazivanja govora za kontrole koje više nisu fokusirane ====[CancelExpiredFocusSpeech]
@@ -2479,20 +2523,20 @@ Korišćenje prečice NVDA plus f1 će otvoriti dnevnik i prikazati informacije 
 Pored čitanja sadržaja, možete takođe sačuvati kopiju datoteke dnevnika, ili da osvežite pregled tako da prikazuje najnovije informacije.
 Ove radnje su dostupne iz menija dnevnika.
 
-++ Pregled govora ++[SpeechViewer]
+++ Preglednik govora ++[SpeechViewer]
 Za programere bez oštećenja vida ili osobe koje pokazuju program NVDA ovakvim osobama, plutajući prozor je dostupan koji vam dozvoljava da vidite sav tekst koji NVDA izgovara.
 
-Da omogućite pregled govora, označite stavku"Pregled govora" u alatima u NVDA meniju.
+Da omogućite preglednik govora, označite stavku"Preglednik govora" u alatima u NVDA meniju.
 Kada stavka nije označena biće onemogućena.
 
-Prozor pregled govora takođe sadrži izborno polje"Prikaži pregled govora pri pokretanju".
-Ako je označeno, pregled govora će se pokrenuti kada se NVDA pokrene.
+Prozor preglednika govora takođe sadrži izborno polje"Prikaži preglednik govora pri pokretanju".
+Ako je označeno, preglednik govora će se pokrenuti kada se NVDA pokrene.
 Ovaj prozor će pokušati da se otvori na istoj lokaciji kao i kada je zatvoren poslednji put.
 
-Dok je pregled govora omogućen, stalno se ažurira da prikaže tekst koji je izgovoren.
-Ali, ako kliknete ili se fokusirate na pregled govora, NVDA će privremeno zaustaviti ažuriranje teksta, kako biste lakše mogli da kopirate postojeći sadržaj.
+Dok je preglednik govora omogućen, stalno se ažurira da prikaže tekst koji je izgovoren.
+Ali, ako kliknete ili se fokusirate na preglednik govora, NVDA će privremeno zaustaviti ažuriranje teksta, kako biste lakše mogli da kopirate postojeći sadržaj.
 
-Da uključite i isključite pregled govora bilo gde, dodajte prilagođenu komandu koristeći [dijalog za ulazne komande #InputGestures].
+Da uključite i isključite preglednik govora bilo gde, dodajte prilagođenu komandu koristeći [dijalog za ulazne komande #InputGestures].
 
 ++ Preglednik brajevog reda ++[BrailleViewer]
 Za programere bez oštećenja vida ili osobe koje pokazuju program NVDA ljudima bez oštećenja vida, dostupan je plutajući prozor koji vam dozvoljava da pregledate brajev izlaz, kao i tekst za svaki brajev znak.
@@ -2683,6 +2727,7 @@ Sledeći redovi podržavaju ovu funkciju automatskog prepoznavanja.
 - Eurobraille Esys/Esytime/Iris redovi
 - Nattiq nBraille redovi
 - Seika beležnica: MiniSeika (16, 24 ćelije), V6, i V6Pro (40 ćelija)
+- Tivomatic Caiku Albatross 46/80 redovi
 - Bilo koji red koji podržava standardni HID brajev protokol
 -
 
@@ -3564,6 +3609,63 @@ Molimo pogledajte [BRLTTY tabele tasterskih prečica http://mielke.cc/brltty/doc
  | Pomeri se na brajevu ćeliju | route (Pomeri kursor na znak) |
 %kc:endInclude
 
+++ Tivomatic Caiku Albatross 46/80 ++[Albatross]
+Caiku Albatross uređaji, koje je proizvela kompanija Tivomatic i koji su dostupni u Finskoj, mogu se povezati putem USB ili serijske veze.
+Ne morate da instalirate određene drajvere da biste koristili ove redove.
+Jednostavno povežite red i podesite NVDA da ga koristi.
+
+Napomena: Baud rate 19200 se posebno preporučuje.
+Ako je neophodno, promenite vrednost podešavanja Baud rate na 19200 iz menija brajevog uređaja.
+Iako drajver podržava 9600 baud rate, nema način da kontroliše koji baud rate red koristi.
+Zato što je 19200 podrazumevani baud rate za red, drajver će ovo prvo pokušati.
+Ako baud rate nisu iste, drajver će se možda ponašati neočekivano.
+
+Slede dodeljene tasterske prečice za ovaj brajev red uz NVDA.
+Molimo pogledajte dokumentaciju brajevog reda za opis gde se ovi tasteri nalaze.
+%kc:beginInclude
+|| Ime | Prečica |
+| Prebaci se na prvi red pregleda | ``home1``, ``home2`` |
+| Prebaci se na poslednji red pregleda | ``end1``, ``end2`` |
+| Prebaci navigacioni objekat na trenutni fokus | ``eKursor1``, ``eKursor2`` |
+| Prebaci se na trenutni fokus | ``kursor1``, ``kursor2`` |
+| Pomera miš na trenutni navigacioni objekat | ``home1+home2`` |
+| Postavlja navigacioni objekat na trenutni objekat ispod pokazivača miša i izgovara ga | ``end1+end2`` |
+| Pomera fokus na trenutni navigacioni objekat | ``eKursor1+eKursor2`` |
+| Menja vezivanje brajevog reda | ``kursor1+kursor2`` |
+| Pomera brajev red na prethodni red | ``gore1``, ``gore2``, ``gore3`` |
+| Pomera brajev red na sledeći red | ``dole1``, ``dole2``, ``dole3`` |
+| Pomera brajev red nazad | ``levo``, ``lTočakLevo``, ``DTočakLevo`` |
+| Pomera brajev red napred | ``desno``, ``lTočakDesno``, ``DTočakDesno`` |
+| Prebaci na brajevu ćeliju | ``Prebacivanje`` |
+| Prijavi formatiranje teksta ispod brajeve ćelije | ``Sekundarno prebacivanje`` |
+| Prebacuje načine predstavljanja sadržaja na brajevom redu | ``atribut1+atribut3`` |
+| Naizmenično uključuje režime govora isključeno, pištanje i priča | ``atribut2+atribut4`` |
+| Prelazi na prethodni režim pregleda (npr. objekat, dokument ili ekran) | ``f1`` |
+| Prelazi na sledeći režim pregleda (npr. objekat, dokument ili ekran) | ``f2`` |
+| Pomera navigacioni objekat na objekat koji ga sadrži | ``f3`` |
+| Pomera navigacioni objekat na prvi objekat unutar njega | ``f4`` |
+| Pomera navigacioni objekat na prethodni objekat | ``f5`` |
+| Pomera navigacioni objekat na sledeći objekat | ``f6`` |
+| Prijavljuje trenutni navigacioni objekat | ``f7`` |
+| Daje informacije o lokaciji teksta ili objekta na poziciji sistemskog kursora | ``f8`` |
+| Izvršava podrazumevanu radnju na trenutnom navigacionom objektu | ``f7+f8`` |
+| Prijavljuje datum/vreme | ``f9`` |
+| obaveštava o statusu baterije i preostalom vremenu ako punjač nije uključen | ``f10`` |
+| Prijavljuje naslov | ``f11`` |
+| Prijavljuje statusnu traku | ``f12`` |
+| Prijavljuje trenutni red ispod kursora za aplikacije | ``f13`` |
+| Izgovori sve | ``f14`` |
+| Prijavljuje trenutni znak preglednog kursora | ``f15`` |
+| Prijavljuje red trenutnog navigacionog objekta gde se nalazi pregledni kursor | ``f16`` |
+| Izgovara reč trenutnog navigacionog objekta gde se nalazi pregledni kursor | ``f15+f16`` |
+| Pomera pregledni kursor na prethodni red trenutnog navigacionog objekta i izgovara ga | ``lTočakGore``, ``dTočakGore`` |
+| Pomera pregledni kursor na naredni red trenutnog navigacionog objekta i izgovara ga | ``lTočakDole``, ``dTočakDole`` |
+| ``Windows+d`` prečica (prebaci se na radnu površinu) | ``atribut1`` |
+| ``Windows+e`` prečica (ovaj računar) | ``atribut2`` |
+| ``Windows+b`` prečica (fokusiranje na sistemsku traku) | ``atribut3`` |
+| ``Windows+i`` prečica (Windows podešavanja) | ``atribut4`` |
+%kc:endInclude
+ 
 ++ Standardni HID brajevi redovi ++[HIDBraille]
 Ovo je eksperimentalan brajev drajver za novi HID brajev standard, na koji su se 2018 složile različite kompanije kao što su Microsoft, Google, Apple i različiti proizvođači asistivnih tehnologija uključujući i NV Access. 
 Cilj je da svi budući brajevi redovi od bilo kog proizvođača, zajedno koriste ovaj protokol što će ukloniti potrebu za posebne drajvere svakog proizvođača.
@@ -3649,27 +3751,27 @@ Ovi parametri se postavljaju nakon opcije odvojeni razmakom, kada se koristi kra
  | nvda --log-level=20 -f c:\nvda.log | Govori programu NVDA da se pokrene sa evidencijom u dnevniku podešenom na informacije i da piše datoteke sa dnevnikom na lokaciji c:\NVDA.log |
 
 Slede opcije komandne linije za NVDA:
- || Kratka | Duga | Opis |
- | -h | --help | Prikaži pomoć komandne linije i izađi |
- | -q | --quit | Izađi iz već pokrenute kopije programa NVDA |
- | -k | --check-running | Prijavi da li je NVDA pokrenut korišćenjem koda izlaza; 0 ako je pokrenut, 1 ako nije pokrenut |
- | -f LOGFILENAME | --log-file=LOGFILENAME | Datoteka u kojoj poruke dnevnika trebaju biti pisane |
- | -l LOGLEVEL | --log-level=LOGLEVEL | Najniži nivo evidencije poruka(otklanjanje grešaka 10, ulaz/izlaz 12, upozorenje o otklanjanju grešaka 15, info 20, upozorenje 30, greška 40, kritično 50, onemogućeno 100), podrazumevano je upozorenje |
- | -c CONFIGPATH | --config-path=CONFIGPATH | Adresa na kojoj podešavanja za NVDA trebaju biti sačuvana |
+|| Kratka | Duga | Opis |
+| -h | --help | Prikaži pomoć komandne linije i izađi |
+| -q | --quit | Izađi iz već pokrenute kopije programa NVDA |
+| -k | --check-running | Prijavi da li je NVDA pokrenut korišćenjem koda izlaza; 0 ako je pokrenut, 1 ako nije pokrenut |
+| -f LOGFILENAME | --log-file=LOGFILENAME | Datoteka u kojoj poruke dnevnika trebaju biti pisane |
+| -l LOGLEVEL | --log-level=LOGLEVEL | Najniži nivo evidencije poruka(otklanjanje grešaka 10, ulaz/izlaz 12, upozorenje o otklanjanju grešaka 15, info 20, onemogućeno 100) |
+| -c CONFIGPATH | --config-path=CONFIGPATH | Adresa na kojoj podešavanja za NVDA trebaju biti sačuvana |
 | Nema | --lang=Jezik | Promena podešenog NVDA jezika. Kada je podešen na "Windows" koristi se trenutni korisnički podrazumevani, "en" za Engleski, i slično. |
- | -m | --minimal | Nema zvukova, nema interfejsa, nema poruka pokretanja i tako dalje |
- | -s | --secure | Pokreće NVDA u [bezbednom načinu rada #SecureMode] |
+| -m | --minimal | Nema zvukova, nema interfejsa, nema poruka pokretanja i tako dalje |
+| -s | --secure | Pokreće NVDA u [bezbednom načinu rada #SecureMode] |
 | Nema | --disable-addons | Dodaci neće imati efekta |
- | Nema | --debug-logging | Omogući evidenciju otklanjanja grešaka za ovo pokretanje. Ovo podešavanje će promeniti ostale nivoe evidencije( ""--loglevel"", -l) uključujući kada je evidentiranje onemogućeno. |
- | Nema | --no-logging | Onemogući evidentiranje dok se NVDA koristi. Ovo podešavanje se može zameniti ako nivo evidentiranja ( ""--loglevel"", -l) bude određen iz komandne linije ili se dnevnici za otklanjanje grešaka uključe. |
- | Nema | --no-sr-flag | Ne menjaj globalnu oznaku čitača ekrana na sistemu |
- | Nema | --install | Instalira NVDA(i pokreće novo instaliranu kopiju) |
- | Nema | --install-silent | Tiha instalacija programa NVDA(ne pokreće novo instaliranu kopiju) |
- | Nema | --enable-start-on-logon=True |False | U toku instalacije, omogući podešavanje [pokreni NVDA na Windows ekranu za prijavljivanje #StartAtWindowsLogon] |
- | Nema | --copy-portable-config | Kada instalirate, kopira podešavanja iz označene adrese (--config-path, -c) u trenutni korisnički nalog |
- | Nema | --create-portable | Pravi prenosivu kopiju programa NVDA (pokreće se automatski nakon pravljenja). Zahteva opciju --portable-path koja određuje adresu kopije |
- | Nema | --create-portable-silent | Pravi prenosivu kopiju programa NVDA (bez pokretanja nakon završetka). Zahteva opciju --portable-path koja određuje adresu kopije |
- | Nema | --portable-path=AdresaKopije | Adresa na kojoj će prenosiva kopija biti napravljena |
+| Nema | --debug-logging | Omogući evidenciju otklanjanja grešaka za ovo pokretanje. Ovo podešavanje će promeniti ostale nivoe evidencije( ""--loglevel"", -l) uključujući kada je evidentiranje onemogućeno. |
+| Nema | --no-logging | Onemogući evidentiranje dok se NVDA koristi. Ovo podešavanje se može zameniti ako nivo evidentiranja ( ""--loglevel"", -l) bude određen iz komandne linije ili se dnevnici za otklanjanje grešaka uključe. |
+| Nema | --no-sr-flag | Ne menjaj globalnu oznaku čitača ekrana na sistemu |
+| Nema | --install | Instalira NVDA(i pokreće novo instaliranu kopiju) |
+| Nema | --install-silent | Tiha instalacija programa NVDA(ne pokreće novo instaliranu kopiju) |
+| Nema | --enable-start-on-logon=True |False | U toku instalacije, omogući podešavanje [pokreni NVDA na Windows ekranu za prijavljivanje #StartAtWindowsLogon] |
+| Nema | --copy-portable-config | Kada instalirate, kopira podešavanja iz označene adrese (--config-path, -c) u trenutni korisnički nalog |
+| Nema | --create-portable | Pravi prenosivu kopiju programa NVDA (pokreće se automatski nakon pravljenja). Zahteva opciju --portable-path koja određuje adresu kopije |
+| Nema | --create-portable-silent | Pravi prenosivu kopiju programa NVDA (bez pokretanja nakon završetka). Zahteva opciju --portable-path koja određuje adresu kopije |
+| Nema | --portable-path=AdresaKopije | Adresa na kojoj će prenosiva kopija biti napravljena |
 
 ++ Sistemski parametri++[SystemWideParameters]
 NVDA dozvoljava promenu određenih vrednosti u sistemskoj registry bazi koje menjaju ponašanje programa NVDA.

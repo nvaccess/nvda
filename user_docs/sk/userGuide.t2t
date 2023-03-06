@@ -40,6 +40,7 @@ Najvýznamnejšie prednosti programu:
 - NVDA spustíte v 32 aj 64 bitových verziách systémov Windows 7, 8, 8.1, 10, Windows 11 a tiež v serverových edíciách Windows od verzie 2008 R2.
   - Vo Windows 7 musí byť nainštalovaný Service Pack 2 alebo novší.
   - V systémoch Windows Server 2008 R2 musí byť nainštalovaný Service Pack 1 alebo novší.
+- Podporované sú AMD64 a ARM64 varianty operačného systému Windows.
   -
 - Mali by ste mať aspoň 150 MB voľného miesta úložného priestoru
 -
@@ -219,6 +220,7 @@ Priradené príkazy sa pri zapnutej nápovede vstupu nebudú spúšťať.
 | Stavový riadok | ``NVDA+end``  | ``NVDA+shift+end`` | Oznámi obsah stavového riadku ak ho NVDA dokáže nájsť. Stlačené dvakrát stavový riadok vyhláskuje. Stlačené trikrát skopíruje obsah stavového riadka do schránky |
 | Čas a dátum | ``NVDA+f12`` | ``NVDA+f12`` | Oznámi čas; stlačené 2 krát rýchlo za sebou oznámi dátum. |
 | Oznámiť formátovanie textu | ``NVDA+f`` | ``NVDA+f`` | Oznámi formátovanie pod textovým kurzorom. Stlačené dvakrát za sebou zobrazí informáciu v režime prehliadania |
+| Oznámiť URL adresu odkazu | ``NVDA+k`` | ``NVDA+k`` | Oznámi URL adresu odkazu, na ktorom je [navigačný objekt #ObjectNavigation]. Stlačené dvakrát za sebou zobrazí URL adresu v samostatnom okne, aby bolo možné ju podrobnejšie prezerať |
 
 +++ Prepínanie čítania informácií +++[ToggleWhichInformationNVDAReads]
 || Názov | Klávesová skratka pre Desktop | Klávesová skratka pre laptop | Popis |
@@ -2086,6 +2088,29 @@ Tón sa zvyšuje pri každej medzere, pri každom tabulátore sa zvyšuje štvor
 - Oznamovať a pípať: Oznamuje odsadenie riadka hlasom aj pípaním podľa pravidiel uvedených vyššie.
 -
 
++++ Navigácia v dokumente +++[DocumentNavigation]
+Táto kategória nastavení umožňuje upraviť rôzne možnosti navigácie v dokumentoch.
+
+==== Za odsek považovať ====[ParagraphStyle]
+: Predvolené
+  Podľa aplikácie
+: Možnosti
+  Predvolené (podľa aplikácie), Podľa aplikácie, jeden zlom riadka, viacero zlomov riadka
+:
+
+Toto nastavenie určuje, čo bude považované za odseky, pri pohybe pomocou skratiek ``ctrl+šípka hore`` a ``ctrl+šípka dole``.
+Dostupné sú tieto možnosti:
+- Podľa aplikácie: NVDA požiada aplikáciu o prechod na predchádzajúci alebo nasledujúci odsek a prejde naň podľa nastavení aplikácie.
+Toto najlepšie funguje v prípadoch, ak samotná aplikácia podporuje navigáciu medzi odsekmi. Toto nastavenie sa používa ako predvolené.
+- Jeden zlom riadka: Nvda bude za oddeľovač odsekov považovať jeden zlom riadka.
+Toto najlepšie funguje v aplikáciách, ktoré predvolene neumožňujú navigáciu po odsekoch a odseky sú oddeľované jedným stlačením klávesu ``enter``.
+- Viacero zlomov riadka: NVDA bude za oddeľovač odsekov považovať jeden prázdny riadok, teda dvojité stlačenie klávesu ``enter``.
+Toto nastavenie najlepšie funguje v prípadoch, ak sa používajú blokové odseky.
+Upozorňujeme, že toto nastavenie nefunguje v aplikáciách Microsoft Word alebo Microsoft Outlook, ak nepoužívate rozhranie UIA na prácu s prvkami MS Word.
+-
+
+Toto nastavenie je možné kdekoľvek meniť aj pomocou klávesových skratiek. Tieto je potrebné definovať v dialógu [Klávesové skratky #InputGestures].
+
 +++ Rozpoznávanie textu windows +++[WinOcrSettings]
 Môžete tu  nastaviť parametre pre rozpoznávanie textu pomocou rozhrania [Windows OCR #WinOcr].
 Kategória obsahuje nasledujúce možnosti:
@@ -2228,6 +2253,25 @@ V niektorých prípadoch však môže byť čítanie textu trhané a nekonzisten
 Takto sa správalo NVDA do verzie 2020.4.
 Tento spôsob môže zlepšiť čítanie textu v niektorých prípadoch.
 Ak však v terminály použijete túto metódu a súčasne odstránite text uprostred riadka, automaticky bude dočítaný text do konca riadka.
+-
+
+==== Oznamovať nový text vo Windows termináloch cez ====[WtStrategy]
+: Predvolené
+  Diffing
+: Možnosti
+  Diffing, Upozornenia rozhrania UIA
+:
+
+Toto nastavenie určuje, ako NVDA identifikuje nový text vo Windows konzole a WPF Windows Termináloch používaných vo Visual Studio 2022. Nový text je potom automaticky oznamovaný, ak je zapnuté oznamovanie dynamicky meneného obsahu.
+Toto nemá vplyv na Windows konzolu(``conhost.exe``).
+Dostupné sú tieto možnosti:
+- Predvolené: Aktuálne sa používa "diffing", keď sa zlepší podpora pre UIA, môže byť nahradené upozorneniami z UIA rozhrania.
+- Diffing: Používa zvolený algoritmus na určovanie rozdielov na výpočet vždy, keď terminál zobrazí nový text.
+Toto je správanie identické do verzie NVDA 2022.4.
+- Upozornenia rozhrania UIA: V tomto prípade rozhoduje priamo Windows konzola, čo je považované za nový text a NVDA len preberá obsah.
+Toto zlepšuje odozvu a stabilitu Windows terminálov, ale funkcionalita v súčasnosti nie je dokončená.
+Aktuálne sú pri tejto metóde oznamované napísané znaky vrátane hesiel.
+Navyše, výstup dlhší ako 1000 znakov nemusí byť oznamovaný správne.
 -
 
 ==== Prerušiť reč po vypršaní zameranej udalosti ====[CancelExpiredFocusSpeech]
@@ -2683,6 +2727,7 @@ Funkcia aktuálne funguje s týmito riadkami:
 - Eurobraille Esys/Esytime/Iris
 - Brailové riadky Nattiq nBraille
 - Zápisníky Seika: MiniSeika (16, 24 buniek), V6, a V6Pro (40 buniek)
+- Riadky Tivomatic Caiku Albatross 46/80
 - Všetky brailové riadky podporujúce štandard HID
 -
 
@@ -3565,6 +3610,63 @@ Prosím prečítajte si [dokumentáciu skratiek  brltty http://mielke.cc/brltty/
 | Prejsť na znak v brailly | route (bring cursor to character) |
 %kc:endInclude
 
+++ Tivomatic Caiku Albatross 46/80 ++[Albatross]
+Zariadenia Caiku Albatross, ktoré vyrábala spoločnosť Tivomatic a boli dostupné hlavne vo Fínsku, môžete pripojiť cez sériový port alebo usb.
+Pre správne fungovanie tohto zariadenia nie je potrebné inštalovať ovládače.
+Jednoducho pripojte riadok a zvoľte ho v nastaveniach NVDA.
+
+Pozor: Odporúčame nastaviť prenosovú rýchlosť (Baud rate) na hodnotu 19200.
+Zmenu prenosovej rýchlosti vykonajte v interných nastaveniach riadka.
+Samotný ovládač podporuje aj rýchlosť 9600, avšak nedokáže zistiť, akú rýchlosť používa samotný riadok.
+Nakoľko rýchlosť 19200 je predvolená, používa sa ako prvá možnosť.
+Ak je prenosová rýchlosť odlišná, môže dochádzať k chybám.
+
+Nasledujú klávesové skratky dostupné pre tento riadok.
+Popis umiestnenia tlačidiel je možné nájsť v dokumentácii k riadku.
+%kc:beginInclude
+|| Názov | Klávesová skratka |
+| Presunúť prezerací kurzor na začiatok | ``home1``, ``home2`` |
+| Presunúť prezerací kurzor na koniec | ``end1``, ``end2`` |
+| Presunúť navigačný objekt na fokus | ``eCursor1``, ``eCursor2`` |
+| Presunúť kurzor na fokus | ``cursor1``, ``cursor2`` |
+| Presunúť myš na navigačný objekt | ``home1+home2`` |
+| Nastaviť navigačný objekt na objekt pod kurzorom myši a oznámiť ho | ``end1+end2`` |
+| Presunúť fokus na navigačný objekt | ``eCursor1+eCursor2`` |
+| Prepínať nastavenie brailový riadok zviazaný s | ``cursor1+cursor2`` |
+| Predchádzajúci riadok | ``up1``, ``up2``, ``up3`` |
+| Nasledujúci riadok | ``down1``, ``down2``, ``down3`` |
+| Posunúť riadok späť | ``left``, ``lWheelLeft``, ``rWheelLeft`` |
+| Posunúť riadok vpred | ``right``, ``lWheelRight``, ``rWheelRight`` |
+| Prejsť na znak v brailly | ``routing`` |
+| Oznámiť informácie o formátovaní pod aktuálnou braillovou bunkou | ``secondary routing`` |
+| Nastaviť prezentovanie kontextu | ``attribute1+attribute3`` |
+| Prepínať režim reči medzi rečou, pípaním a tichom | ``attribute2+attribute4`` |
+| Prejsť na predchádzajúci režim prezerania (objekt, dokument, obrazovka) | ``f1`` |
+| Prejsť na nasledujúci režim prezerania (objekt, dokument, obrazovka) | ``f2`` |
+| Presunúť navigačný objekt na prvý nadradený objekt | ``f3`` |
+| Presunúť navigačný objekt na prvý podradený objekt | ``f4`` |
+| Presunúť navigačný objekt na predchádzajúci objekt | ``f5`` |
+| Presunúť navigačný objekt na nasledujúci objekt | ``f6`` |
+| Oznámiť aktuálny navigačný objekt | ``f7`` |
+| Oznámiť súradnice objektu pod prezeracím kurzorom | ``f8`` |
+| Vykonať predvolenú akciu na navigačnom objekte | ``f7+f8`` |
+| Oznámiť čas a dátum | ``f9`` |
+| Oznámiť stav batérie, zostávajúci čas a stav nabíjania | ``f10`` |
+| Oznámiť názov okna | ``f11`` |
+| Oznámiť stavový riadok | ``f12`` |
+| Oznámiť aktuálny riadok pod kurzorom | ``f13`` |
+| Plynulé čítanie | ``f14`` |
+| Oznámiť aktuálny znak pod prezeracím kurzorom | ``f15`` |
+| Oznámiť riadok, na ktorom sa nachádza kurzor v navigačnom objekte | ``f16`` |
+| Oznámiť slovo, na ktorom sa nachádza prezerací kurzor v navigačnom objekte | ``f15+f16`` |
+| Presunúť kurzor na predchádzajúci riadok v navigačnom objekte a oznámiť ho | ``lWheelUp``, ``rWheelUp`` |
+| Presunúť kurzor na nasledujúci riadok v navigačnom objekte a oznámiť ho | ``lWheelDown``, ``rWheelDown`` |
+| ``Windows+d`` (minimalizovať všetky aplikácie) | ``attribute1`` |
+| ``Windows+e`` (tento počítač) | ``attribute2`` |
+| ``Windows+b`` (prejsť na systémový panel) | ``attribute3`` |
+| ``Windows+i`` (Nastavenia Windows) | ``attribute4`` |
+%kc:endInclude
+
 ++ Riadky podporujúce HID štandard ++[HIDBraille]
 Toto je experimentálny ovládač pre riadky podporujúce nový HID štandard, na ktorom sa v roku 2018 dohodli Microsoft, Google, Apple a viaceré spoločnosti dodávajúce asistívne technológie vrátane NV Access. 
 Cieľom je, aby všetky budúce brailové riadky podporovali tento štandard čím sa odstráni nutnosť mať pre každý riadok samostatný ovládač.
@@ -3655,7 +3757,7 @@ NVDA v súčasnosti podporuje tieto parametre:
 | -q | --quit | Ukončí práve spustenú kópiu NVDA |
 | -k | --check-running | Oznámi, či NVDA beží alebo nie. 0 =beží, 1 =nie |
 | -f c:\esta\k\suboru | --log-file=c:\esta\k\suboru | Cesta k súboru, kde sa má zapisovať log |
-| -l N | --log-level=n | Určuje úroveň záznamu (debug 10, Vstup a výstup 12, debug 15, info 20, upozornenia 30, chyby 40, kritické chyby 50, vypnuté 100), predvolene je úroveň nastavená na upozornenia |
+| -l loglevel | --log-level=loglevel | Určuje úroveň záznamu (debug 10, Vstup a výstup 12, debug 15, info 20, vypnuté 100), predvolene je úroveň nastavená na upozornenia |
 | -c C:\esta\k\profilu | --config-path=C:\esta\k\profilu | určuje cestu, kam sa ukladajú nastavenia NVDA |
 | Nie je | --lang=jazyk | Uprednostniť iné nastavenie jazyka NVDA. Použite parameter Windows, ak chcete nastaviť jazyk NVDA rovnako, ako je nastavený jazyk systému. en pre angličtinu, sk pre slovenčinu, cs pre češtinu a pod. |
 | -m | --minimal | spustí NVDA bez zvukov, bez používateľského rozhrania, bez úvodného dialógu a podobne |
