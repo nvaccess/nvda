@@ -21,6 +21,9 @@ from ctypes import (
 	create_unicode_buffer,
 	sizeof,
 	byref,
+	c_void_p,
+	CFUNCTYPE,
+	string_at,
 )
 from ctypes.wintypes import (
 	HANDLE,
@@ -31,7 +34,10 @@ from ctypes.wintypes import (
 	UINT,
 	LPUINT
 )
+from comtypes import HRESULT, BSTR
+from comtypes.hresult import S_OK
 import atexit
+import weakref
 import garbageHandler
 import winKernel
 import wave
@@ -39,6 +45,7 @@ import config
 from logHandler import log
 import os.path
 import extensionPoints
+import NVDAHelper
 
 
 __all__ = (
@@ -140,7 +147,7 @@ def _isDebugForNvWave():
 	return config.conf["debugLog"]["nvwave"]
 
 
-class WavePlayer(garbageHandler.TrackedObject):
+class WinmmWavePlayer(garbageHandler.TrackedObject):
 	"""Synchronously play a stream of audio.
 	To use, construct an instance and feed it waveform audio using L{feed}.
 	Keeps device open until it is either not available, or WavePlayer is explicitly closed / deleted.
@@ -337,7 +344,8 @@ class WavePlayer(garbageHandler.TrackedObject):
 
 	def feed(
 			self,
-			data: bytes,
+			data: typing.Union[bytes, c_void_p],
+			size: typing.Optional[int] = None,
 			onDone: typing.Optional[typing.Callable] = None
 	) -> None:
 		"""Feed a chunk of audio data to be played.
@@ -348,9 +356,13 @@ class WavePlayer(garbageHandler.TrackedObject):
 		This allows for uninterrupted playback as long as a new chunk is fed before
 		the previous chunk has finished playing.
 		@param data: Waveform audio in the format specified when this instance was constructed.
+		@param size: The size of the data in bytes if data is a ctypes pointer.
+			If data is a Python bytes object, size should be None.
 		@param onDone: Function to call when this chunk has finished playing.
 		@raise WindowsError: If there was an error playing the audio.
 		"""
+		if size is not None:
+			data = string_at(data, size)
 		if not self._minBufferSize:
 			self._feedUnbuffered_handleErrors(data, onDone=onDone)
 			return
@@ -583,6 +595,8 @@ class WavePlayer(garbageHandler.TrackedObject):
 			return False
 
 
+WavePlayer = WinmmWavePlayer
+
 def _getOutputDevices():
 	"""Generator, returning device ID and device Name in device ID order.
 		@note: Depending on number of devices being fetched, this may take some time (~3ms)
@@ -677,17 +691,21 @@ def playWaveFile(
 		outputDevice=config.conf["speech"]["outputDevice"],
 		wantDucking=False
 	)
-	fileWavePlayer.feed(f.readframes(f.getnframes()))
+
+	def play():
+		fileWavePlayer.feed(f.readframes(f.getnframes()))
+		fileWavePlayer.idle()
+
 	if asynchronous:
 		if fileWavePlayerThread is not None:
 			fileWavePlayerThread.join()
 		fileWavePlayerThread = threading.Thread(
 			name=f"{__name__}.playWaveFile({os.path.basename(fileName)})",
-			target=fileWavePlayer.idle
+			target=play
 		)
 		fileWavePlayerThread.start()
 	else:
-		fileWavePlayer.idle()
+		play()
 
 # When exiting, ensure fileWavePlayer is deleted before modules get cleaned up.
 # Otherwise, WavePlayer.__del__ will fail with an exception.
@@ -700,3 +718,215 @@ def _cleanup():
 
 def isInError() -> bool:
 	return WavePlayer.audioDeviceError_static
+
+
+wasPlay_callback = CFUNCTYPE(None, c_void_p, c_uint)
+
+
+def _wasPlay_errcheck(res, func, args):
+	if res != S_OK:
+		raise WindowsError(res)
+
+
+class WasapiWavePlayer(garbageHandler.TrackedObject):
+	"""Synchronously play a stream of audio using WASAPI.
+	To use, construct an instance and feed it waveform audio using L{feed}.
+	Keeps device open until it is either not available, or WavePlayer is explicitly closed / deleted.
+	Will attempt to use the preferred device, if not will fallback to the default device.
+	"""
+	#: Static variable, if any one WavePlayer instance is in error due to a missing / changing audio device
+	# the error applies to all instances
+	audioDeviceError_static: bool = False
+	#: Maps C++ WasapiPlayer instances to Python WasapiWavePlayer instances.
+	#: This allows us to have a single callback in the class rather than on
+	#: each instance, which prevents reference cycles.
+	_instances = weakref.WeakValueDictionary()
+
+	def __init__(
+			self,
+			channels: int,
+			samplesPerSec: int,
+			bitsPerSample: int,
+			outputDevice: typing.Union[str, int] = WAVE_MAPPER,
+			closeWhenIdle: bool = False,
+			wantDucking: bool = True,
+			buffered: bool = False
+	):
+		"""Constructor.
+		@param channels: The number of channels of audio; e.g. 2 for stereo, 1 for mono.
+		@param samplesPerSec: Samples per second (hz).
+		@param bitsPerSample: The number of bits per sample.
+		@param outputDevice: The name of the audio output device to use,
+			WAVE_MAPPER for default.
+		@param closeWhenIdle: Deprecated; ignored.
+		@param wantDucking: if true then background audio will be ducked on Windows 8 and higher
+		@param buffered: Whether to buffer small chunks of audio to prevent audio glitches.
+		@note: If C{outputDevice} is a name and no such device exists, the default device will be used.
+		@raise WindowsError: If there was an error opening the audio output device.
+		"""
+		self.channels = channels
+		self.samplesPerSec = samplesPerSec
+		self.bitsPerSample = bitsPerSample
+		format = self._format = WAVEFORMATEX()
+		format.wFormatTag = WAVE_FORMAT_PCM
+		format.nChannels = channels
+		format.nSamplesPerSec = samplesPerSec
+		format.wBitsPerSample = bitsPerSample
+		format.nBlockAlign: int = bitsPerSample // 8 * channels
+		format.nAvgBytesPerSec = samplesPerSec * format.nBlockAlign
+		self._audioDucker = None
+		if wantDucking:
+			import audioDucking
+			if audioDucking.isAudioDuckingSupported():
+				self._audioDucker = audioDucking.AudioDucker()
+		self._player = NVDAHelper.localLib.wasPlay_create(
+			self._deviceNameToId(outputDevice),
+			format,
+			WasapiWavePlayer._callback)
+		self._doneCallbacks = {}
+		self._instances[self._player] = self
+		self.open()
+
+	@wasPlay_callback
+	def _callback(cppPlayer, feedId):
+		pyPlayer = WasapiWavePlayer._instances[cppPlayer]
+		onDone = pyPlayer._doneCallbacks.pop(feedId, None)
+		if onDone:
+			onDone()
+
+	def __del__(self):
+		if not hasattr(self, "_player"):
+			# This instance failed to construct properly. Let it die gracefully.
+			return
+		if not NVDAHelper.localLib:
+			# This instance is dying after NVDAHelper was terminated. We can't
+			# destroy it in that case, but we're probably exiting anyway.
+			return
+		if self._player:
+			NVDAHelper.localLib.wasPlay_destroy(self._player)
+			del self._instances[self._player]
+			self._player = None
+
+	def open(self):
+		"""Open the output device.
+		This will be called automatically when required.
+		It is not an error if the output device is already open.
+		"""
+		NVDAHelper.localLib.wasPlay_open(self._player)
+
+	def close(self):
+		"""For WASAPI, this just stops playback.
+		"""
+		self.stop()
+
+	def feed(
+			self,
+			data: typing.Union[bytes, c_void_p],
+			size: typing.Optional[int] = None,
+			onDone: typing.Optional[typing.Callable] = None
+	) -> None:
+		"""Feed a chunk of audio data to be played.
+		This will block until there is sufficient space in the buffer.
+		However, it will return well before the audio is finished playing.
+		This allows for uninterrupted playback as long as a new chunk is fed before
+		the previous chunk has finished playing.
+		@param data: Waveform audio in the format specified when this instance was constructed.
+		@param size: The size of the data in bytes if data is a ctypes pointer.
+			If data is a Python bytes object, size should be None.
+		@param onDone: Function to call when this chunk has finished playing.
+		@raise WindowsError: If there was an error playing the audio.
+		"""
+		if self._audioDucker:
+			self._audioDucker.enable()
+		feedId = c_uint() if onDone else None
+		NVDAHelper.localLib.wasPlay_feed(
+			self._player,
+			data,
+			size if size is not None else len(data),
+			byref(feedId) if onDone else None
+		)
+		if onDone:
+			self._doneCallbacks[feedId.value] = onDone
+
+	def sync(self):
+		"""Synchronise with playback.
+		This method blocks until the previously fed chunk of audio has finished playing.
+		"""
+		NVDAHelper.localLib.wasPlay_sync(self._player)
+
+	def idle(self):
+		"""Indicate that this player is now idle; i.e. the current continuous segment  of audio is complete.
+		For WASAPI, this just calls L{sync}.
+		"""
+		self.sync()
+		if self._audioDucker:
+			self._audioDucker.disable()
+
+	def stop(self):
+		"""Stop playback.
+		"""
+		if self._audioDucker:
+			self._audioDucker.disable()
+		NVDAHelper.localLib.wasPlay_stop(self._player)
+		self._doneCallbacks = {}
+
+	def pause(self, switch: bool):
+		"""Pause or unpause playback.
+		@param switch: C{True} to pause playback, C{False} to unpause.
+		"""
+		if self._audioDucker:
+			if switch:
+				self._audioDucker.disable()
+			else:
+				self._audioDucker.enable()
+		if switch:
+			NVDAHelper.localLib.wasPlay_pause(self._player)
+		else:
+			NVDAHelper.localLib.wasPlay_resume(self._player)
+
+	@staticmethod
+	def _getDevices():
+		rawDevs = BSTR()
+		NVDAHelper.localLib.wasPlay_getDevices(byref(rawDevs))
+		chunkIter = iter(rawDevs.value.split("\0"))
+		while True:
+			devId = next(chunkIter)
+			if not devId:
+				break  # Final null.
+			name = next(chunkIter)
+			yield devId, name
+
+	@staticmethod
+	def _deviceNameToId(name):
+		if name == WAVE_MAPPER:
+			return ""
+		for devId, devName in WasapiWavePlayer._getDevices():
+			# WinMM device names are truncated to MAXPNAMELEN characters, so we must
+			# use startswith.
+			if devName.startswith(name):
+				return devId
+		# Check if this is the WinMM sound mapper device, which means default.
+		if name == next(_getOutputDevices())[1]:
+			return ""
+		raise LookupError
+
+
+def initialize():
+	global WavePlayer
+	if not config.conf["audio"]["wasapi"]:
+		return
+	WavePlayer = WasapiWavePlayer
+	NVDAHelper.localLib.wasPlay_create.restype = c_void_p
+	for func in (
+		NVDAHelper.localLib.wasPlay_startup,
+		NVDAHelper.localLib.wasPlay_open,
+		NVDAHelper.localLib.wasPlay_feed,
+		NVDAHelper.localLib.wasPlay_stop,
+		NVDAHelper.localLib.wasPlay_sync,
+		NVDAHelper.localLib.wasPlay_pause,
+		NVDAHelper.localLib.wasPlay_resume,
+		NVDAHelper.localLib.wasPlay_getDevices,
+	):
+		func.restype = HRESULT
+		func.errcheck = _wasPlay_errcheck
+	NVDAHelper.localLib.wasPlay_startup()
