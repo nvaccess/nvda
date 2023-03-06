@@ -219,6 +219,7 @@ Prečaci se neće izvršavati sve dok se nalazite u ovom načinu.
 | Pročitaj traku stanja | ``NVDA+end`` | ``NVDA+shift+end`` | Čita traku stanja ako ju NVDA pronađe. Kada se pritisne dva puta, informacija će biti slovkana. Kada se pritisne tri put, informacija će biti kop8irana u međuspremnik |
 | Pročitaj vrijeme | ``NVDA+f12`` | ``NVDA+f12`` | Pressing Kada se pritisne jedamput, izgovara trenutno vrijeme, kada se pritisne dvaput, izgovara datum |
 | Pročitaj informacije o oblikovanju teksta | ``NVDA+f`` | ``NVDA+f`` | Čita informacije o oblikovanju teksta. Kada se pritisne dva put, informacija se prikazuje u prozoru |
+| Čitaj odredište poveznice | ``NVDA+k`` | ``NVDA+k`` | Kada se pritisne jednom, izgovara poveznicu pod [objektom navigatora #ObjectNavigation]. Kada se pritisne dva put, pokayuje ju u prozoru za pažljiviej čitanje |
 
 +++ Regulacija informacija koje čita NVDA +++[ToggleWhichInformationNVDAReads]
 || Naziv | Prečac za stolna računala | Prečac za prijenosna računala | opis |
@@ -2722,6 +2723,7 @@ Sljedeći brajični redci podržavaju ovu funkcionalnost automatskog prepoznavan
 - Eurobraille Esys/Esytime/Iris brajični redci
 - Nattiq nBraille brajični retci
 - Seika brajična bilježnica: MiniSeika (16, 24 znakova), V6, i V6Pro (40 znakova)
+- Tivomatic Caiku Albatross 46/80 displays
 - Svaki brajični redak koji podržava standardni HID brajični protokol
 -
 
@@ -3604,9 +3606,66 @@ Pogledajte [BRLTTY tablice tipkovničkih prečaca http://mielke.cc/brltty/doc/Ke
 | Premjesti se na brajičnu ćeliju | route (dovedi kursor na znak) |
 %kc:endInclude
 
+++ Tivomatic Caiku Albatross 46/80 ++[Albatross]
+Caiku Albatross uređaji, joje je proizvodila tvrtka  Tivomatic te koji su bili dostupni u Finskoj, mogu se spojiti preko USB ili bluetooth veze.
+Nisu vam potrebni nikakvi upravljački programi za korištenje ovih brajičnih redaka.
+Samo spojite brajični redak i konfigurirajte ga tako da ga NVDA može koristiti.
+
+Upozorenje: brzina transmisiej u bodovima 19200 je preporučena.
+Ako je to potrebno, prebacite brzinu transmisije u bodovima na vrijednost  19200 i unutarnjem izborniku brajičnog redka.
+Iako upravljački program podržava brzinu transmisije u bodovima 9600, ne postoji način kontrole korištene brzine u bodovima.
+Zbog toga što je  19200 podrazumjevana brzina u bodovima, uravljački ju program prvu pokušava koristiti.
+Ako brzine prijenosa u bodovima nisu usklađene, upravlja;ki program se mo\e pona[ati neispravno.
+
+Slijede pridjeljeni prečaci za ovaj brajični redak s NVDA.
+Molimo pogledajte dokumentaciju brajičnog redka, kako biste saznali gdje se nalaze određene tipke.
+%kc:beginInclude
+|| naziv | prečac |
+| premjesti se na prvi redak u pregledu | ``home1``, ``home2`` |
+| premjesti se na zadnji redak u pregledu | ``end1``, ``end2`` |
+| premješta fokus navigatora na trenutni objekt | ``eCursor1``, ``eCursor2`` |
+| premjesti se na trenutni fokus | ``cursor1``, ``cursor2`` |
+| Premjesti pokazivač miša na trenutni objekt navigatora | ``home1+home2`` |
+| premjesti objekt navigatora na objekt pod pokazivačem miša and speaks it | ``end1+end2`` |
+| Premjesti fokuss na trenutni objekt navigatora | ``eCursor1+eCursor2`` |
+| Prebacivanje načina povezanosti brajice | ``cursor1+cursor2`` |
+| Premjesit brajični redak na prethodni redak | ``up1``, ``up2``, ``up3`` |
+| premjesti brajični redak na slijedeći redak | ``down1``, ``down2``, ``down3`` |
+| Premjesti brajični redak u anzad | ``left``, ``lWheelLeft``, ``rWheelLeft`` |
+| premjesti brajični redak u naprijed | ``right``, ``lWheelRight``, ``rWheelRight`` |
+| Premjesti se na brajičnu ćeliju | ``routing`` |
+| Čitaj oblikovanje teksta pod brajičnom ćelijom | ``secondary routing`` |
+| prebacuj način pokazivanja kontekstnih informacija na brajičnom redku | ``attribute1+attribute3`` |
+| Prebacuj se između načina govoraČ isključeno, zvukovi i govor | ``attribute2+attribute4`` |
+| Prebacuje na prethodni modus pregleda (npr. objekt, dokument ili zaslon) | ``f1`` |
+| Prebacuje na slijedeći modus pregleda (npr. objekt, dokument ili zaslon) | ``f2`` |
+| Prebacuje objekt navigatora na objekt koji ga sadrži | ``f3`` |
+| Premješta objekt navigatora na objekt unutar njega | ``f4`` |
+| Premješta objekt navigatora na prethodni objekt | ``f5`` |
+| Premješta objekt navigatora na slijedeći objekt | ``f6`` |
+| čita trenutni objekt navigatora | ``f7`` |
+| izgovara lokaciju trenutnog teksta ili objekta pod kursorom | ``f8`` |
+| Izvodi podrazumjevanu radnju an objektu navigatora | ``f7+f8`` |
+| Izgovara datum ili vrijeme | ``f9`` |
+| Izgovara stanje baterije i preostalo vrijeme ako strujni adapter nije priključen | ``f10`` |
+| izgovara naslov | ``f11`` |
+| izgovara statusnu traku | ``f12`` |
+| čita trenutni redak pod kursorom aplikacije | ``f13`` |
+| čitaj sve | ``f14`` |
+| Čitaj trenutni redak pod kursorom pregleda | ``f15`` |
+| Čita redak trenutnog objekta navigatora gdje se nalazi pregledni kursor | ``f16`` |
+| Čita riječ na kojoj se nalazi objekt navigatora | ``f15+f16`` |
+| Premješta kursor na redak trenutnog objekta navigatora and speaks it | ``lWheelUp``, ``rWheelUp`` |
+| Premješta pregledni kursora na slijedeći redak trenutnog objekta navigatora i izgovara ga | ``lWheelDown``, ``rWheelDown`` |
+| ``Windows+d`` tipka (minimizira sve aplikacije) | ``attribute1`` |
+| ``Windows+e`` tipka (Ovaj Pc) | ``attribute2`` |
+| ``Windows+b`` tipka (fokusiraa područje obavijesti) | ``attribute3`` |
+| ``Windows+i`` tipka (postavke sustava Windows) | ``attribute4`` |
+%kc:endInclude
+
 ++ Standardni HID brajični retci ++[HIDBraille]
 Ovo je eksperimentalni upravljački program za novu standardnu HID specifikaciju, sa kojom su se složili Microsoft, Google, Apple i neke druge tvrtke koje proizvode asistivnu tehnologiju u 2018. godini uključujući i NV Access. 
-Nada mo se da će bilo koji model brajičnog redka kojeg će proizvesti bilo koji proizvođač  koristiti ovaj standardni protokol što će ukloniti potrebu pisanja upravljačkih programa koji su specifični za bilo kojeg proizvođača.
+Nadamo se da će bilo koji model brajičnog redka kojeg će proizvesti bilo koji proizvođač  koristiti ovaj standardni protokol što će ukloniti potrebu pisanja upravljačkih programa koji su specifični za bilo kojeg proizvođača.
 
 NVDA funkcija automatskog prepoznavanja brajičnih redaka će prepoznavati bilo koji brajični redak koji podržava ovaj protokol.
  
