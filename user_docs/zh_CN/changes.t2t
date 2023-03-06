@@ -58,7 +58,7 @@ NVDA 更新日志
   -
 - 更新了 Sonic 速率增强库到 commit ``1d70513``。（#14180）
 - 更新了 CLDR 到 42.0 版。（#14273）
-- 更新了 eSpeak NG 到 1.52-dev commit ``a51235aa``。（#14281）
+- 更新了 eSpeak NG 到 1.52-dev commit ``f520fecb``。（#14281、#14675）
   - 修复了大数的朗读问题。（#14241）
   -
 - 针对于使用了可选择状态控件的 Java 应用程序现在会读出未选中项目而不是已选中项目。（#14336）
@@ -109,26 +109,24 @@ NVDA 更新日志
 插件需要重新测试并更新其清单。
 请参阅 [开发人员指南 https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] 了解有关 NVDA API 的弃用和移除信息。
 
-- 在非英语系统环境下，本地运行的系统测试，现在可顺利通过。 (#13362)
-- 在 ARM 架构的 Windows 11 系统中， x64 的应用将不再被识别为 ARM64应用程序。 (#14403)
-- 在新的 UIA scenarios 中，不必使用  ``SearchField`` 和 ``SuggestionListItem`` ``UIA`` ``NVDAObjects``， 因为将通过 UIA 的 ``controllerFor`` 样式暴露键入的内容和搜索建议。
-此特性现可通过  ``behaviours.EditableText`` 和 基于 ``NVDAObject`` 分别调用。 (#14222)
-- UIA 调试日志类启用后，将为 UIA event handlers 和 utilies 生成更多重要日志。  (#14256)
-- NVDAHelper build standards 已更新。 (#13072)
+- 在非英语系统环境下，运行本地系统测试，现在可顺利通过。（#13362）
+- 在 ARM 架构的 Windows 11 系统中， x64 的应用将不再被识别为 ARM64应用程序。（#14403）
+- 在新的 UIA scenarios 中，不必使用  ``SearchField`` 和 ``SuggestionListItem`` ``UIA`` ``NVDAObjects``， 因为将通过 UIA 的 ``controllerFor`` 样式公开键入的内容和搜索建议。
+此特性现可通过  ``behaviours.EditableText`` 和  ``NVDAObject`` 分别调用。（#14222）
+- UIA 调试日志类启用后，将为 UIA event handlers 和 utilies 生成更多重要日志。 （#14256）
+- 更新了 NVDAHelper 构建标准。（#13072）
   - 现在使用 C++20标准（过去是C++17）。
     - 现在使用 ``/permissive-`` 编译器标志禁用宽容行为，并设置 ``/Zc`` 编译器选项以实现严格一致性。
-
   -
-- 某些插件对象（如驱动或者附加组件）可在 NVDA Python 控制台获取更多详细信息。  (#14463)
-- 现在，NVDA 可完全使用 Visual Studio 2022进行编译，不再请求 Visual Studio 2019 build tools。 (#14326)
-- NVDA 冻结后，将产生更详尽的调试日志以方便救援。 (#14309)
-- 单例的  ``braille._BgThread`` 类 已被 ``hwIo.ioThread.IoThread`` 代替。 (#14130)
-  - 此类 ``hwIo.bgThread`` 的一个单独的实例(在 NVDA 核心)为后台 I/O 的点显器驱动提供安全的线程。 
-  - 此类并不为单利而设计，其他驱动程序可以用自己的实例来进行 I/O。
+- 某些 plugin 对象（如驱动或者插件）可在 NVDA Python 控制台获取到更多详细信息。（#14463）
+- 现在，NVDA 可完全使用 Visual Studio 2022进行编译，不再需要 Visual Studio 2019 构建工具。（#14326）
+- 若 NVDA 卡死，会生成更详尽的调试日志以方便调试。（#14309）
+- 单例的  ``braille._BgThread`` 类 已被 ``hwIo.ioThread.IoThread`` 代替。（#14130）
+  - 此类 ``hwIo.bgThread`` 的一个单独的实例(在 NVDA 核心)为点显器驱动提供线程安全的后台 I/O。 
+  - - 这个类在设计上不是单例的，鼓励插件作者在进行硬件 i/o 时创建自己的实例。
   -
-- 可以从 ``winVersion.WinVersion.processorArchitecture`` 属性查询计算机的处理器架构。 (#14439)
-
-- 添加了新的扩展点。 (#14503)
+- 可以从 ``winVersion.WinVersion.processorArchitecture`` 属性查询计算机的处理器架构。（#14439）
+- 添加了新的扩展点。（#14503）
   - ``inputCore.decide_executeGesture``
   - ``tones.decide_beep``
   - ``nvwave.decide_playWaveFile``
@@ -138,54 +136,54 @@ NVDA 更新日志
   - ``braille.displayChanged``
   - ``braille.displaySizeChanged``
   - 
-- 现在，可通过设置 useconfig  来欺骗合成器驱动已经支持此设置。 (#14601)
+- 可以在合成器驱动支持的设置上将 useConfig 设置为 False。（#14601）
 -
 
 === API 的破坏性修改 ===
 这里是所有的 API 破坏性修改。
-如您的附加组件使用新的 API 更新后遇到问题，请在 github 开新的issue。
-- 配置详述已被改变，关键字已经被移除或修改为：
-  -  ``[documentFormatting]`` 部分 (#14233):
-    - ``reportLineIndentation`` 存储着一个整数 （0 到 3） 而不是一个布尔值。
+如您的插件在使用新 API 后遇到问题，请在 github 打开一个 issue。
+- 更改了配置规范，相关的配置键已被删除或修改：
+  -  ``[documentFormatting]`` 部分（#14233）:
+    - ``reportLineIndentation`` 是一个整数（0 到 3）而不是一个布尔值。
     - ``reportLineIndentationWithTones`` 已经被移除。
     - ``reportBorderStyle`` 和 ``reportBorderColor`` 已经被移除 并被替换为 ``reportCellBorders``。
     -
-  -  ``[braille]`` 部分 (#14233):
+  -  ``[braille]`` 部分（#14233）:
     - ``noMessageTimeout`` 已经被移除， 代替他的是一个 ``showMessages`` 的值。
-    - ``messageTimeout`` 再也不能为  0， 代替以 ``showMessages`` 的值。
-    - ``autoTether`` 已经被移除，； ``tetherTo`` 的值可用 "auto" 来代替。
+    - ``messageTimeout`` 不能取值为 0，而是用 ``showMessages`` 的值来代替。
+    - ``autoTether`` 已被删除； ``tetherTo`` 现可以取值为“auto”。
     -
-  -  ``[keyboard]`` 部分  (#14528):
+  -  ``[keyboard]`` 部分（#14528）：
     - ``useCapsLockAsNVDAModifierKey``、 ``useNumpadInsertAsNVDAModifierKey``、 ``useExtendedInsertAsNVDAModifierKey`` 已经被移除。
-    他们被 ``NVDAModifierKeys`` 代替。
+    而是被 ``NVDAModifierKeys`` 代替。
     -
   -
--  ``NVDAHelper.RemoteLoader64`` 已经被移除且没有可替代的方案。 (#14449)
--  ``winAPI.sessionTracking`` 的下列函数在未有替换的情况下被移除。 (#14416, #14490)
+-  ``NVDAHelper.RemoteLoader64`` 已经被移除且没有可替代的方案。（#14449）
+-  ``winAPI.sessionTracking`` 的下列函数被移除且无对应的替代方案。（#14416、#14490）
   - ``isWindowsLocked``
   - ``handleSessionChange``
   - ``unregister``
   - ``register``
   - ``isLockStateSuccessfullyTracked``
   - 
-- 不再允许设置  ``braille.handler.enabled`` 与否来判断点显器句柄的启用/禁用状态。
-要想禁用点显器句柄，请 注册一个句柄到 ``braille.handler.decide_enabled``。 (#14503)
-- 不再允许设置  ``braille.handler.displaySize``来改变句柄的显示大小。
-要想更新 显示大小，请注册一个句柄 到 ``braille.handler.filter_displaySize``。
-参看 ``brailleViewer``以获取如何进行的例子。 (#14503)
-- 下面的情况需要使用  ``addonHandler.Addon.loadModule``。 (#14481)
+- 现无法通过设置 ``braille.handler.enabled``  来启用/禁用盲文处理程序。
+要以编程方式禁用盲文处理程序，请将处理程序注册到 ``braille.handler.decide_enabled``。（#14503）
+- 不再允许设置 ``braille.handler.displaySize`` 来改变盲文处理程序的显示大小。
+要以编程方式更新 displaySize，请将处理程序注册到 ``braille.handler.filter_displaySize``。
+有关如何执行此操作的示例，请参阅“brailleViewer”。（#14503）
+- ``addonHandler.Addon.loadModule`` 的用法发生了变化。（#14481）
   - ``loadModule`` 现在用点分割，而不是反斜杠。
-  如用 "lib.example" 代替 "lib\example".
-  - 当使用 ``loadModule`` 加载 module 时，遇到无法加载或抛出错误时，将抛出一个异常 而不会在不包含任何产生原因的情况下，仅仅静默的返回一个 ``None``。
+  如用 "lib.example" 代替 "lib\example"。
+  - ``loadModule`` 在无法加载模块或出现错误时引发异常，而不是在不提供有关原因的信息的情况下静默返回 ``None``。
   -
-- 下面的标志已经在没有任何直接替代的前提下从 ``appModules.foobar2000`` 中移除。 (#14570)
+- 以下标志已从 ``appModules.foobar2000`` 中删除，没有同等功能的替换。（#14570）
   - ``statusBarTimes``
   - ``parseIntervalToTimestamp``
   - ``getOutputFormat``
   - ``getParsingFormat``
   -
-- 下面的，都不是单例了，且其对应的获取函数也已经被移除。
- ``Example.get()`` 已经变为  ``Example()``。 (#14248)
+- 以下不再是单例——其对应的 get 方法已被删除。
+``Example.get()`` 已经变为  ``Example()``。（#14248）
   - ``UIAHandler.customAnnotations.CustomAnnotationTypesCommon``
   - ``UIAHandler.customProps.CustomPropertiesCommon``
   - ``NVDAObjects.UIA.excel.ExcelCustomProperties``
@@ -194,20 +192,20 @@ NVDA 更新日志
 -
 
 
-=== 即将弃用 ===
-- ``NVDAObjects.UIA.winConsoleUIA.WinTerminalUIA`` 不推荐使用，将弃用。 (#14047)
+=== 弃用 ===
+- ``NVDAObjects.UIA.winConsoleUIA.WinTerminalUIA`` 不推荐使用，将被弃用。（#14047）
 - ``config.addConfigDirsToPythonPackagePath`` 已经被移动。
-请用 ``addonHandler.packaging.addDirsToPythonPackagePath`` 代替。 (#14350)
+请用 ``addonHandler.packaging.addDirsToPythonPackagePath`` 代替。（#14350）
 - ``braille.BrailleHandler.TETHER_*`` 均不推荐使用。
-请使用 ``configFlags.TetherTo.*.value`` 代替 (#14233)
+请用 ``configFlags.TetherTo.*.value`` 代替。（#14233）
 - ``utils.security.postSessionLockStateChanged`` 不推荐使用。
-请用 ``utils.security.post_sessionLockStateChanged`` 代替。 (#14486)
+请用 ``utils.security.post_sessionLockStateChanged`` 代替。（#14486）
 - ``NVDAObject.hasDetails``, ``NVDAObject.detailsSummary``, ``NVDAObject.detailsRole`` 不推荐使用。
-请用 ``NVDAObject.annotations`` 代替。 (#14507)
+请用 ``NVDAObject.annotations`` 代替。（#14507）
 - ``keyboardHandler.SUPPORTED_NVDA_MODIFIER_KEYS`` 不推荐使用，且无直接替代方案。
-请考虑使用 class ``config.configFlags.NVDAKey`` 代替。 (#14528)
+可以考虑用类 ``config.configFlags.NVDAKey``。（#14528）
 - ``gui.MainFrame.evaluateUpdatePendingUpdateMenuItemCommand`` 不推荐使用。
-请使用 ``gui.MainFrame.SysTrayIcon.evaluateUpdatePendingUpdateMenuItemCommand`` 代替。 (#14523)
+请用 ``gui.MainFrame.SysTrayIcon.evaluateUpdatePendingUpdateMenuItemCommand`` 代替。（#14523）
 -
 
 
@@ -356,8 +354,8 @@ NVDA 更新日志
 -
 
 == 错误修复 ==
-- 修复了从 2022.3.1 中引入的回归，某些功能在安全屏幕上被意外禁用。 (#14286)
-- 修复了从 2022.3.1 的回归，如果 NVDA 在锁屏界面启动，则登录后某些功能会被意外禁用。 (#14301)
+- 修复了从 2022.3.1 中引入的回归，某些功能在安全屏幕上被意外禁用。（#14286）
+- 修复了从 2022.3.1 的回归，如果 NVDA 在锁屏界面启动，则登录后某些功能会被意外禁用。（#14301）
 -
 
 
@@ -390,43 +388,43 @@ eSpeak 又一次得到了更新， 新版的 eSpeak 引入了三种新的语言�
 
 == 新特性 ==
 - - 在 Windows 11 22H2 (Sun Valley 2) 及更高版本的命令提示符，PowerShell 以及 Linux 子系统的 Windows 控制台中：
-  - 极大的提升了性能和稳定性。 (#10964)
-  - 使用 CTRL+f查找字符时，浏览光标位置会更新以跟随找到的关键词。 (#11172)
+  - 极大的提升了性能和稳定性。（#10964）
+  - 使用 CTRL+f查找字符时，浏览光标位置会更新以跟随找到的关键词。（#11172）
   - 默认禁用“朗读屏幕上不显示的字符（如密码等）”。
-可在“高级”面板重新启用此选项。 (#11554)
-  - 支持在不滚动窗口的情况下查看超出屏幕范围的文本。 (#12669)
+可在“高级”面板重新启用此选项。（#11554）
+  - 支持在不滚动窗口的情况下查看超出屏幕范围的文本。（#12669）
   - 提供了更详细的文本格式信息。 ([microsoft/Terminal PR 10336 https://github.com/microsoft/terminal/pull/10336])
   -
-- 增加了一个“延迟字符描述”的语音选项。 (#13509)
-- 增加了一个盲文选项，用以决定向前或向后滚动时是否打断语音朗读。 (#2124)
+- 增加了一个“延迟字符描述”的语音选项。（#13509）
+- 增加了一个盲文选项，用以决定向前或向后滚动时是否打断语音朗读。（#2124）
 -
 
 
 == 改进 ==
-- 将 eSpeak NG 更新到 1.52-dev commit ``9de65fcb``. (#13295)
+- 将 eSpeak NG 更新到 1.52-dev commit ``9de65fcb``。（#13295）
   - 增加的语言：
     - 白俄罗斯与
     - 卢森堡语
     - 混合海地克里奥尔语
     -
   -
-- 在启用了 UIA 接口时，支持读出 Microsoft Excel 表格的单元格合并状态。 (#12843)
-- 现在，可为当前所在的单元提供更详细的描述信息（如包含批注），而不仅仅提示“包含详细信息”。 (#13649)
-- NVDA 的安装大小现在可在 Windows 的“应用和功能”里看到。 (#13909)
+- 在启用了 UIA 接口时，支持读出 Microsoft Excel 表格的单元格合并状态。（#12843）
+- 现在，可为当前所在的单元提供更详细的描述信息（如包含批注），而不仅仅提示“包含详细信息”。（#13649）
+- NVDA 的安装大小现在可在 Windows 的“应用和功能”里看到。（#13909）
 -
 
 
 == 错误修复 ==
-- 使用 Adobe Acrobat / Reader 64 阅读 PDF 文档时不在崩溃。 (#12920)
+- 使用 Adobe Acrobat / Reader 64 阅读 PDF 文档时不在崩溃。（#12920）
   - 同时还需将 Adobe 软件更新到最新版本。
   -
-- NVDA 读出的字体大小尺寸现在可翻译。 (#13573)
+- NVDA 读出的字体大小尺寸现在可翻译。（#13573）
 - 对于 Java 应用程序，找不到窗口句柄的  Java Access Bridge 事件会被忽略。    
-这会提高包括 IntelliJ IDEA 在内的某些 Java 应用程序的性能。 (#13039)
-- 提高了读出 LibreOffice Calc 多选单元格的性能，且 Calc 不会再出现崩溃的情况。 (#13232)
-- 使用不同用户登录 Windows 时， Microsoft Edge 的无障碍支持依然可用。 (#13032)
-- ESpeapk 的语速加倍关闭后，语速的下降不会在 %99 和 %100 之间横跳。 (#13876)
-- 修复可同时打开两个“按键与手势”对话框的 bug。 (#13854)
+这会提高包括 IntelliJ IDEA 在内的某些 Java 应用程序的性能。（#13039）
+- 提高了读出 LibreOffice Calc 多选单元格的性能，且 Calc 不会再出现崩溃的情况。（#13232）
+- 使用不同用户登录 Windows 时， Microsoft Edge 的无障碍支持依然可用。（#13032）
+- ESpeapk 的语速加倍关闭后，语速的下降不会在 %99 和 %100 之间横跳。（#13876）
+- 修复可同时打开两个“按键与手势”对话框的 bug。（#13854）
 -
 
 == 简体中文翻译条目更改 ==
@@ -441,13 +439,13 @@ eSpeak 又一次得到了更新， 新版的 eSpeak 引入了三种新的语言�
 | 移动导航对象到下一个对象 | NVDA + 小键盘数字3 | NVDA + Control + 下翻页 | 移动导航对象到下一个对象（跨越对象层级） |
 
 == 插件以及 NVDA 核心开发者需要了解的变动 ==
-- 升级 Comtypes 版本到 1.1.11. (#12953)
-- 在内置的 Windows 控制台 (``conhost.exe``) 包含 级别  2 或以上版本的 NVDA API (``FORMATTED``) ，或使用 Windows 11 version 22H2 (Sun Valley 2)时， UIA 默认启用。 (#10964)
+- 升级 Comtypes 版本到 1.1.11。（#12953）
+- 在内置的 Windows 控制台 (``conhost.exe``) 包含 级别  2 或以上版本的 NVDA API (``FORMATTED``) ，或使用 Windows 11 version 22H2 (Sun Valley 2)时， UIA 默认启用。（#10964）
   - 可在  NVDA “高级”面板中修改“Windows 控制台支持”选项来改变此设置。。
   - 要想确认当前 Windows 控制台的 NVDA API 级别，可以在选中“启用 UIA支持（如果可用）”选项的前提下打开 Windows 控制台后按下 “NVDA+f1”显示的“NVDA 日志查看器”输出的日志里查看。
   -
-- 在 Chromium 中，即使 IA2 在 MSAA 为文档对象公开 ``STATE_SYSTEM_BUSY`` ，缓冲区依然照常加载。 (#13306)
-- 创建了一个 ``featureFlag`` 的配置类，用来标志实验性特性。 如需了解详情请看 ``devDocs/featureFlag.md``。 (#13859)
+- 在 Chromium 中，即使 IA2 在 MSAA 为文档对象公开 ``STATE_SYSTEM_BUSY`` ，缓冲区依然照常加载。（#13306）
+- 创建了一个 ``featureFlag`` 的配置类，用来标志实验性特性。 如需了解详情请看 ``devDocs/featureFlag.md``。（#13859）
 -
 
 
@@ -467,14 +465,14 @@ eSpeak 又一次得到了更新， 新版的 eSpeak 引入了三种新的语言�
 
 == 错误修复 ==
 - 修复了 NVDA 在进入安全桌面时没有读出“安全桌面”的错误。
-这导致 NVDA 远程插件无法识别安全桌面。 (#14094)
+这导致 NVDA 远程插件无法识别安全桌面。（#14094）
 -
 
 = 2022.2.2 =
 这是一个补丁版本，仅用于修复 2022.2.1 中引入的有关按键与手势的错误。
 
 == 错误修复 ==
-- 修复了偶尔执行按键与手势失败的错误。 (#14065)
+- 修复了偶尔执行按键与手势失败的错误。（#14065）
 -
 
 = 2022.2.1 =
@@ -508,22 +506,22 @@ eSpeak 又一次得到了更新， 新版的 eSpeak 引入了三种新的语言�
 
 
 == 新特性 ==
-- 支持与 Microsoft Office 产品中的 Microsoft Loop Components 进行交互。 (#13617)
-- 添加了新的表格导航快捷键。 (#957)
+- 支持与 Microsoft Office 产品中的 Microsoft Loop Components 进行交互。（#13617）
+- 添加了新的表格导航快捷键。（#957）
  - ``control+alt+home/end`` 移动到第一列/最后一列。
  - ``control+alt+pageUp/pageDown`` 移动到第一行/最后一行。
  -
-- 添加了一个未分配的手势来循环切换语言和方言切换模式开关。 (#10253)
+- 添加了一个未分配的手势来循环切换语言和方言切换模式开关。（#10253）
 -
 
 == 改进 ==
-- 将 NSIS  更新到了 3.08. (#9134)
-- 将 CLDR 更新到了 41.0. (#13582)
-- 将 LibLouis 盲文翻译器更新到了 [3.22.0 https://github.com/liblouis/liblouis/releases/tag/v3.22.0]. (#13775)
+- 将 NSIS  更新到了 3.08。（#9134）
+- 将 CLDR 更新到了 41.0。（#13582）
+- 将 LibLouis 盲文翻译器更新到了 [3.22.0 https://github.com/liblouis/liblouis/releases/tag/v3.22.0]。（#13775）
   - 新盲文表：德语2级（详细）
   -
-- 为“忙碌指示器”控件添加了新角色。 (#10644)
-- NVDA 现在会在无法执行 NVDA 操作时发出通知。 (#13500)
+- 为“忙碌指示器”控件添加了新角色。（#10644）
+- NVDA 现在会在无法执行 NVDA 操作时发出通知。（#13500）
   - 具体如下：
     - 使用了 Windows 应用商店版本的 NVDA。
     - 在安全环境下。
@@ -535,38 +533,38 @@ eSpeak 又一次得到了更新， 新版的 eSpeak 引入了三种新的语言�
 
 == 错误修复 ==
 - 基于 Java 的应用程序中存在的以下问题得到了修复：
-  - 支持读出只读状态。 (#13692)
-  - 支持正确读出启用/禁用状态 (#10993)
-  - 支持读出对象的快捷键。 (#13643)
-  - 支持用语音朗读或提示音指示进度条进度。 (#13594)
-  - 修复了 NVDA 在向用户呈现信息时可能会错误地从 Java 小部件中删除文本的问题。 (#13102)
-  - 支持读出切换按钮的状态。 (#9728)
-  - 支持正确读出包含多窗口的 Java 应用程序的窗口标题。 (#9184)
-  - 支持读出选项卡控件的位置信息。 (#13744)
+  - 支持读出只读状态。（#13692）
+  - 支持正确读出启用/禁用状态。（#10993）
+  - 支持读出对象的快捷键。（#13643）
+  - 支持用语音朗读或提示音指示进度条进度。（#13594）
+  - 修复了 NVDA 在向用户呈现信息时可能会错误地从 Java 小部件中删除文本的问题。（#13102）
+  - 支持读出切换按钮的状态。（#9728）
+  - 支持正确读出包含多窗口的 Java 应用程序的窗口标题。（#9184）
+  - 支持读出选项卡控件的位置信息。（#13744）
   -
 - 盲文相关修复：
-  - 修复了在 Mozilla 富文本编辑控件中导航某些文本时的盲文输出问题，例如在 Thunderbird 中撰写消息。 (#12542)
-  - 当盲文自动连接并在启用鼠标导航的情况下移动鼠标时，文本导航命令会使用语音朗读的内容更新盲文显示。 (#11519)
-  - 支持在使用文本查看命令后正常滚动盲文显示。 (#8682)
+  - 修复了在 Mozilla 富文本编辑控件中导航某些文本时的盲文输出问题，例如在 Thunderbird 中撰写消息。（#12542）
+  - 当盲文自动连接并在启用鼠标导航的情况下移动鼠标时，文本导航命令会使用语音朗读的内容更新盲文显示。（#11519）
+  - 支持在使用文本查看命令后正常滚动盲文显示。（#8682）
   -
-- NVDA 安装程序支持在包含特殊字符的目录中运行。 (#13270)
-- 在 Firefox 中，当 aria-rowindex、aria-colindex、aria-rowcount 或 aria-colcount 属性无效时，NVDA 支持读出网页中的项目。 (#13405)
-- 使用表格导航在合并的单元格中导航时，光标不会再切换行或列。 (#7278)
-- 在 Adobe Reader 中阅读非交互式 PDF 时，现在会读出表单（例如复选框和单选按钮）的类型和状态。 (#13285)
-- 支持在安全模式下使用 NVDA 菜单中的“重置设置为默认值”。 (#13547)
-- 当 NVDA 退出时，会释放所有已锁定的鼠标键，在以前鼠标键将保持锁定状态。 (#13410)
-- 支持在 Visual Studio 中读出行号。 (#13604)
+- NVDA 安装程序支持在包含特殊字符的目录中运行。（#13270）
+- 在 Firefox 中，当 aria-rowindex、aria-colindex、aria-rowcount 或 aria-colcount 属性无效时，NVDA 支持读出网页中的项目。（#13405）
+- 使用表格导航在合并的单元格中导航时，光标不会再切换行或列。（#7278）
+- 在 Adobe Reader 中阅读非交互式 PDF 时，现在会读出表单（例如复选框和单选按钮）的类型和状态。（#13285）
+- 支持在安全模式下使用 NVDA 菜单中的“重置设置为默认值”。（#13547）
+- 当 NVDA 退出时，会释放所有已锁定的鼠标键，在以前鼠标键将保持锁定状态。（#13410）
+- 支持在 Visual Studio 中读出行号。（#13604）
   - 请注意，如果要读出行号，必须在 Visual Studio 和 NVDA 中启用行号。
   -
-- 支持在 Visual Studio 中正确读出行缩进。 (#13574)
-- 支持在最新的 Windows 10 和 11 中读出开始菜单搜索结果的详细信息。 (#13544)
-- 在 Windows 10 和 11 计算器版本 10.1908 及更高版本中，NVDA 会在按下更多命令时读出结果，例如科学计算器模式下的相关命令。 (#13383)
-- 在 Windows 11 中，支持导航某些用户界面元素并与之交互，例如使用鼠标和触摸交互的任务栏和任务视图。 (#13506)
-- 在 Windows 11 的记事本中支持读出状态栏的内容。 (#13688)
-- “高亮显示导航对象”在启用后可以立即生效。 (#13641)
-- 修复了无法朗读某些单列列表视图中的列表项的问题。 (#13659, #13735)
-- 修复了英语和法语的 eSpeak 自动语言切换回退到英国英语和法语（法国）。 (#13727)
-- 在尝试切换到之前安装的语言时修复 OneCore 自动语言切换。 (#13732)
+- 支持在 Visual Studio 中正确读出行缩进。（#13574）
+- 支持在最新的 Windows 10 和 11 中读出开始菜单搜索结果的详细信息。（#13544）
+- 在 Windows 10 和 11 计算器版本 10.1908 及更高版本中，NVDA 会在按下更多命令时读出结果，例如科学计算器模式下的相关命令。（#13383）
+- 在 Windows 11 中，支持导航某些用户界面元素并与之交互，例如使用鼠标和触摸交互的任务栏和任务视图。（#13506）
+- 在 Windows 11 的记事本中支持读出状态栏的内容。（#13688）
+- “高亮显示导航对象”在启用后可以立即生效。（#13641）
+- 修复了无法朗读某些单列列表视图中的列表项的问题。（#13659, #13735）
+- 修复了英语和法语的 eSpeak 自动语言切换回退到英国英语和法语（法国）。（#13727）
+- 在尝试切换到之前安装的语言时修复 OneCore 自动语言切换。（#13732）
 -
 
 
