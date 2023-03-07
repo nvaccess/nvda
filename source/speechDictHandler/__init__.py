@@ -118,6 +118,14 @@ class SpeechDict(list):
 def processText(text):
 	if not globalVars.speechDictionaryProcessing:
 		return text
+	try:
+		# see issue 14689
+		if config.conf["UIA"]["winConsoleImplementation"] == "UIA":
+			stripText = text.rstrip()
+			if len(text)-len(stripText) > 10000:
+				text = stripText
+	except KeyError:
+		pass
 	for type in dictTypes:
 		text=dictionaries[type].sub(text)
 	return text
