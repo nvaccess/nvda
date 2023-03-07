@@ -9,7 +9,6 @@ from logHandler import log
 import os
 import codecs
 import api
-import config
 from . import dictFormatUpgrade
 from .speechDictVars import speechDictsPath
 
@@ -118,14 +117,15 @@ class SpeechDict(list):
 def processText(text):
 	if not globalVars.speechDictionaryProcessing:
 		return text
-	try:
-		# #14689: API level 0 UIA consoles have many blank lines, which slows processing to a halt
-		if config.conf["UIA"]["winConsoleImplementation"] == "UIA":
-			stripText = text.rstrip()
-			if len(text)-len(stripText) > 10000:
-				text = stripText
-	except KeyError:
-		pass
+	# #14689: API level < 2 UIA consoles have many blank lines, which slows processing to a halt
+	# Because from UIAHandler.constants import WinConsoleAPILevel
+	# cause crashes as global import, and probably slowdowns here
+	# use 2 instead of WinConsoleAPILevel.FORMATTED constant
+	focus = api.getFocusObject()
+	if hasattr(focus, "apiLevel") and focus.apiLevel < 2:
+		stripText = text.rstrip()
+		if len(text)-len(stripText) > 10000:
+			text = stripText
 	for type in dictTypes:
 		text=dictionaries[type].sub(text)
 	return text
