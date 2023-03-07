@@ -149,10 +149,12 @@ defaultGestureMapEntries = {
 		"braille_routeTo": ("br(eurobraille):routing",),
 		"braille_reportFormatting": ("br(eurobraille):doubleRouting",),
 		"braille_scrollBack": (
+			"br(eurobraille.b.note):joystick1Left",
 			"br(eurobraille):switch1Left",
 			"br(eurobraille):l1",
 		),
 		"braille_scrollForward": (
+			"br(eurobraille.b.note):joystick1Right",
 			"br(eurobraille):switch1Right",
 			"br(eurobraille):l8",
 		),
@@ -258,11 +260,6 @@ defaultGestureMapEntries = {
 	},
 }
 default_GestureMap = inputCore.GlobalGestureMap(defaultGestureMapEntries)
-bnote_GestureMap = inputCore.GlobalGestureMap(defaultGestureMapEntries)
-bnote_GestureMap.add("br(eurobraille):joystick1Left", "globalCommands", "GlobalCommands", "braille_scrollBack")
-bnote_GestureMap.add("br(eurobraille):joystick1Right", "globalCommands", "GlobalCommands", "braille_scrollForward")
-bnote_GestureMap.remove("br(eurobraille):joystick1Left", "globalCommands", "GlobalCommands", "review_previousCharacter")
-bnote_GestureMap.remove("br(eurobraille):joystick1Right", "globalCommands", "GlobalCommands", "review_nextCharacter")
 
 def bytesToInt(byteData: bytes):
 	"""Converts bytes to its integral equivalent."""
@@ -452,7 +449,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			elif 0x0e <= deviceType <= 0x11:  # Esitime
 				self.keys = KEYS_ESITIME
 			elif 0x12 <= deviceType <= 0x13:
-				self.gestureMap = bnote_GestureMap
 				self.keys = KEYS_BNOTE
 			elif 0x14 <= deviceType <= 0x15:
 				self.keys = KEYS_BBOOK
