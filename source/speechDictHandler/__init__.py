@@ -119,7 +119,7 @@ def processText(text):
 	if not globalVars.speechDictionaryProcessing:
 		return text
 	try:
-		# see issue 14689
+		# #14689: API level 0 UIA consoles have many blank lines, which slows processing to a halt
 		if config.conf["UIA"]["winConsoleImplementation"] == "UIA":
 			stripText = text.rstrip()
 			if len(text)-len(stripText) > 10000:
