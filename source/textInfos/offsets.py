@@ -20,6 +20,7 @@ from typing import (
 	Optional,
 	Tuple,
 	Dict,
+	List,
 )
 from logHandler import log
 
@@ -179,7 +180,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			textList.append(_("at {x}, {y}").format(x=curPoint.x,y=curPoint.y))
 		return ", ".join(textList)
 
-	def _get_boundingRects(self):
+	def _get_boundingRects(self) -> List[locationHelper.RectLTWH]:
 		if self.isCollapsed:
 			return []
 		startOffset = self._startOffset
@@ -235,14 +236,11 @@ class OffsetsTextInfo(textInfos.TextInfo):
 				)
 				offset = inclusiveLineEnd + 1
 		else:
-			if isinstance(startLocation, locationHelper.Point):
-				rects.append(
-					locationHelper.RectLTWH.fromPoint(startLocation)
+			rects.append(
+				locationHelper.RectLTWH.fromCollection(
+					startLocation
 				)
-			else:
-				if isinstance(startLocation, locationHelper.RectLTRB):
-					startLocation = startLocation.toLTWH()
-				rects.append(startLocation)
+			)
 		intersectedRects = []
 		for rect in rects:
 			intersection = rect.intersection(objLocation)
