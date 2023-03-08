@@ -693,8 +693,15 @@ def playWaveFile(
 	)
 
 	def play():
+		global fileWavePlayer
 		fileWavePlayer.feed(f.readframes(f.getnframes()))
 		fileWavePlayer.idle()
+		# #11169: Files might not be played that often. Leaving the device open
+		# until the next file is played really shouldn't be a problem regardless of
+		# how long we wait, but closing the device seems to hang occasionally.
+		# There's no benefit to keeping it open - we're going to create a new
+		# player for the next file anyway - so just destroy it now.
+		fileWavePlayer = None
 
 	if asynchronous:
 		if fileWavePlayerThread is not None:
@@ -897,7 +904,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			yield devId, name
 
 	@staticmethod
-	def _deviceNameToId(name):
+	def _deviceNameToId(name, fallbackToDefault=True):
 		if name == WAVE_MAPPER:
 			return ""
 		for devId, devName in WasapiWavePlayer._getDevices():
@@ -907,6 +914,8 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 				return devId
 		# Check if this is the WinMM sound mapper device, which means default.
 		if name == next(_getOutputDevices())[1]:
+			return ""
+		if fallbackToDefault:
 			return ""
 		raise LookupError
 
