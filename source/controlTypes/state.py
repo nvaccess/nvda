@@ -98,6 +98,10 @@ class State(DisplayStringIntEnum):
 	INDETERMINATE = setBit(44)
 	HALF_PRESSED = setBit(45)
 	ON = setBit(46)
+	HASPOPUP_DIALOG = setBit(47)
+	HASPOPUP_GRID = setBit(48)
+	HASPOPUP_LIST = setBit(49)
+	HASPOPUP_TREE = setBit(50)
 
 
 STATES_SORTED = frozenset([State.SORTED, State.SORTED_ASCENDING, State.SORTED_DESCENDING])
@@ -192,6 +196,14 @@ _stateLabels: Dict[State, str] = {
 	# Translators: a state that denotes a control is currently on
 	# E.g. a switch control.
 	State.ON: _("on"),
+	# Translators: Presented when a control has a pop-up dialog.
+	State.HASPOPUP_DIALOG: _("opens dialog"),
+	# Translators: Presented when a control has a pop-up grid.
+	State.HASPOPUP_GRID: _("opens grid"),
+	# Translators: Presented when a control has a pop-up list box.
+	State.HASPOPUP_LIST: _("opens list"),
+	# Translators: Presented when a control has a pop-up tree.
+	State.HASPOPUP_TREE: _("opens tree"),
 }
 
 

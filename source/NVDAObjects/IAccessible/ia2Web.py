@@ -203,6 +203,13 @@ class Ia2Web(IAccessible):
 		# Google has a custom ARIA attribute to force a node's editable state off (such as in Google Slides).
 		if self.IA2Attributes.get('goog-editable')=="false":
 			states.discard(controlTypes.State.EDITABLE)
+		if controlTypes.State.HASPOPUP in states:
+			popupState = aria.ariaHaspopupValuesToNVDAStates.get(
+				self.IA2Attributes.get("haspopup")
+			)
+			if popupState:
+				states.discard(controlTypes.State.HASPOPUP)
+				states.add(popupState)
 		return states
 
 	def _get_landmark(self):

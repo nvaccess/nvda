@@ -8,12 +8,32 @@ Informacje techniczne nie zostały przetłumaczone, proszę zajrzeć do [Angiels
 
 
 = 2023.1 =
+Dodano nową opcję do kategorii "nawigacja po dokumencie", "styl akapitu".
+Ta opcja może być używana w edytorach tekstu, niewspierających nawigację po akapitach natywnie, na przykład Notepad i Notepad plus plus.
+
+Dodano polecenie globalne do odczytu docelowej lokalizacji linku, ``NVDA+k``.
+
+Ulepszone wsparcie dla adnotowanej treści webowej (takiej jak komentarze i przypisy końcowe).
+Naciśnij ``NVDA+d`` aby przemieszczać się po streszczeniach gdy adnotacje są odczytywane (na przykład: "ma komentarz, ma przypis końcowy").
+
+Monitory brajlowskie Tivomatic Caiku Albatross 46/80 są od teraz wspierane.
+
+Ulepszono wsparcie dla architektur ARM64 i AMD64 wersji systemu operacyjnego Windows.
+
+Naprawiono liczne błędy, zwłaszcza w systemie operacyjnym Windows 11.
+
+eSpeak, LibLouis, Sonic rate boost i Unicode CLDR zostały zaktualizowane.
+Dodano nowe tablice brajlowskie dla języków:  gruzińskiego, Swahili (Kenia) i Cziczewa (Malawi).
+
+Uwaga:
+- W tej wersji istniejące wersje dodatków są niezgodne.
+-
 
 == Nowe funkcje ==
 - Microsoft Excel z UI Automation: Automatyczny odczyt nagłówków kolumn i wierszy w tabelach. (#14228)
   - Uwaga: dotyczy to tabel formatowanych za pomocą  przycisku "tabela" na karcie właściwości wstaw wstążki.
   Opcje "pierwsza kolumna" i "nagłówek wiersza" w "opcjach stylu tabeli" równoznaczne są z nagłówkami kolumn i wierszy.
-  - Nie odnosi się to do nagłówków specyficznych dla czytnika ekranu, używających nazwanych  rozpiętości.
+  - Nie odnosi się to do nagłówków specyficznych dla czytnika ekranu, które używają nazwanych  rozpiętości.
   -
 - Dodano nieprzydzielone zdarzenie wejścia do włączania i wyłączania opisów znaków po ruchu kursora. (#14267)
 - Dodano eksperymentalną opcję do używania wsparcia powiadomie UIA w programie Windows terminal w celu odczytu nowego oraz zmienionego tekstu w konsoli, skutkując lepszą stabilnością i wydajnością. (#13781)
@@ -27,21 +47,26 @@ Ta opcja może być używana z edytorami tekstu, które nie wspierają  natywną
 ``nvda+d`` od teraz przełącza pomiędzy odczytu streszczenia każdego celu adnotacji dla więcej źródeł celnych.
 Na przykład, gdy tekst zawiera komentarz i przypis końcowy związany z nim. (#14507, #14480)
 - Dodano wsparcie dla monitorów brajlowskich Tivomatic Caiku Albatross 46/80. (#13045)
+- Nowe polecenie globalne: odczytaj docelową lokalizacje linku (``NVDA+k``).
+Gdy skrót jest naciśnięty jeden raz lokalizacja linku w obiekcie nawigatora będzie pokazana na monitorze brajlowskim i wymówiona.
+Gdy skrót jest naciśnięty dwukrotnie, docelowa lokalizacja będzie pokazana w oknie w celu dokładniejszego odczytu. (#14583)
+- Dodano nowe nieprzydzielone polecenie (kategoria narzędzia): pokaż lokalizację linku w oknie.
+To polecenie jest równoważne dwukrotnym naciśnięciem skrótu ``NVDA+k`` ale z tą różnicą, że może być bardziej użyteczne dla użytkowników monitorów brajlowskich. (#14583)
 -
 
 
 == Zmiany ==
 - Zaktualizowano LibLouis tłumacz brajla do [wersji 3.24.0 https://github.com/liblouis/liblouis/releases/tag/v3.24.0]. (#14436)
-  - Drastycznie zaktualizowano tablice brajlowskie dla węgierskiego, ujednoliconego anglielskiego brajla, i chińskiego bopomofo.
+  - Drastycznie zaktualizowano tablice brajlowskie dla węgierskiego, ujednoliconego angielskiego brajla, i chińskiego bopomofo.
   - Wsparcie dla nowego duńskiego standartu brajla wydanego w 2022 roku.
   - Nowe tablice brajlowskie dla gruzińskiego brajla literackiego, Swahili (Kenia) i Chichewa (Malawi).
   -
 - Zaktualizowano bibliotekę do przyśpieszania mowy Sonic  do wersji commit ``1d70513``. (#14180)
 - Baza znaków unicode CLDR została zaktualizowana do wersji 42.0. (#14273)
-- eSpeak NG został zaktualizowany do wersji 1.52-dev commit ``a51235aa``. (#14281)
+- eSpeak NG zostałzaktualizowany do wersji 1.52-dev commit ``f520fecb``. (#14281, #14675)
   - Naprawiono odczyt wielkich liczb. (#14241)
   -
-- Aplikacje java z kontrolkami używającymi  stanu zaznaczenia od teraz będą zgłąszały stan elementu niezaznaczony zamiast stanu zaznaczonego. (#14336)
+- Aplikacje java z kontrolkami używającymi  stanu zaznaczenia od teraz będą zgłaszały stan elementu niezaznaczony zamiast stanu zaznaczonego. (#14336)
 -
 
 
@@ -50,9 +75,9 @@ Na przykład, gdy tekst zawiera komentarz i przypis końcowy związany z nim. (#
   - NVDA od teraz odczyta podpowiedzi wyszukiwania podczas otwierania menu start. (#13841)
   - Na architekturze ARM, aplikacje x64 już nie są identyfikowane jako aplikacje ARM64. (#14403)
   - Elementy menu historii schowka , takie jak ""przypnij element" od teraz są osiągalne. (#14508)
-  - W systemie Windows 11 22H2 and nowszych wersjach, od teraz znowu możliwa jest interakcja za pomoca myszy i klawiatury z elementami takie jak obszar powiadomień dodatkowych i okno dialogowe "otwórz za pomocą". (#14538, #14539)
+  - W systemie Windows 11 22H2 i nowszych wersjach, od teraz znowu możliwa jest interakcja za pomocą myszy i klawiatury z elementami takie jak obszar powiadomień dodatkowych i okno dialogowe "otwórz za pomocą". (#14538, #14539)
   -
-- Od teraz dostępne są podpowiedzi podczas wpisywania @wzmianki w komentarzach Microsoft Excel. (#13764)
+- Od teraz dostępne są podpowiedzi podczas wpisywania @wzmianek w komentarzach Microsoft Excel. (#13764)
 - Na pasku adresu Google Chrome, kontrolki podpowiedzi takie jak (przełącz do karty, usuń podpowiedź itd.) od teraz są odczytywane po zaznaczeniu. (#13522)
 - Podczas dostarczania informacji o formatowaniu, kolory są ściśle odczytywane w programach Wordpad i podglądzie logu, co jest lepsze niż odczyt "kolor domyślny". (#13959)
 - W przeglądarce Firefox, aktywowanie przycisku "Show options" na stronach problemów Github od teraz działa niezawodnie. (#14269)
@@ -60,7 +85,7 @@ Na przykład, gdy tekst zawiera komentarz i przypis końcowy związany z nim. (#
 - Kontrolki ARIA przełączników od teraz są rozpoznawane jako przełączniki w przeglądarkach Firefox, Chrome i Edge, co jest dokładniejsze w porównaniu z odczytem tych kontrolek jako pola wyboru. (#11310)
 - NVDA od teraz automatycznie przeczyta stan sortowania w nagłówku kolumny tabeli HTML po zmianie naciskając przycisk wewnętrzny. (#10890)
 - Nazwa regionu oraz punktu orientacyjnego jest automatycznie wymawiana podczas przeskakiwania wewnątrz regionu z zewnątrz używając klawiszy szybkiej nawigacji . (#13307)
-- Gdy opcje Odtwarzaj dźwięk, oraz lub wymawiaj 'duże' przed dużymi literami są włączone w kombinacji z opisami po nazwie liter, NVDA więcej nie odtwarza sygnał dźwiękowy lub odczytuje 'duże' dwukrotnie. (#14239)
+- Gdy opcje Odtwarzaj dźwięk, oraz lub wymawiaj 'duże' przed dużymi literami są włączone w kombinacji z opisami po nazwie liter, NVDA więcej nie odtworzy sygnał dźwiękowy lub odczyta 'duże' dwukrotnie. (#14239)
 - Od teraz kontrolki tabel w aplikacjach Java będą odczytywane precyzyjniej przez NVDA. (#14347)
 - Od teraz niektóre ustawienia już nie będą inne podczas używania więcej profili. (#14170)
   - Następujące ustawienia zostały naprawione:
@@ -77,13 +102,16 @@ Na przykład, gdy tekst zawiera komentarz i przypis końcowy związany z nim. (#
 - Naprawiono błąd który spowodował nie zapisywanie zmian w poprawny sposób, gdy zmieniamy opcje "domyślną" i wartość opcji "domyślnej". (#14133)
 - Podczas konfiguracji NVDA zawsze będzie zdefiniowany jeden klawisz modyfikatora NVDA. (#14527)
 - Podczas otwierania  menu NVDA używając obszaru powiadomień, NVDA już nie pokaże nieistniejącej oczekującej aktualizacji. (#14523)
-- W przeglądarkach, takich jak Chrome i Firefox, alerty o pobieraniu pliku będą także wyświetlane na monitorze brajlowskim. Dotyczy to innych alertó aria. (#14562)
+- W Foobarze 2000, Pozostały, upłyneły i całkowity czas jest od teraz odczytywany prawidłowo w przypadku plików audio trwających ponad jeden dzień. (#14127)
+- W przeglądarkach, takich jak Chrome i Firefox, alerty o pobieraniu pliku będą także wyświetlane na monitorze brajlowskim. Dotyczy to także innych alertów aria. (#14562)
+- Naprawiono błąd niemożliwej nawigacji pomiędzy pierwszej i ostatniej  kolumny w tabelach w przeglądarce Firefox (#14554)
+- Gdy NVDA jest uruchomiony z parametrem ``--lang=Windows``, otwieranie ustawień ogólnych jest znowu możliwe. (#14407)
 -
 
 
 = 2022.4 =
 To wydanie w sobie zawiera kilka nowych skrótów klawiszowych, włączając w to skróty do czytania całych tabel.
-Do podręcznika użytkownika został dodany rozdział "szybki start".
+Do podręcznika użytkownika został dodany roździał "szybki start".
 Naprawiono także niektóre błędy.
 
 Liblouis i Espeak-ng zostały zaktualizowane.

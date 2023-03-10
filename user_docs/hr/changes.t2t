@@ -7,6 +7,108 @@
 Informacije za programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
 
 
+= 2023.1 =
+Dodana je nova opcija, "stil odlomka" u kategoriji "kretanje po dokumentu".
+Ona se može koristiti u tekstualnim editorima koji ne podržavaju nativno kretanje po odlomcima, kao što su to Notepad i Notepad++.
+
+Dodan je novi prečac za čitanje odredišta na koje vodi poveznica, određen kao ``NVDA+k``.
+
+Podrška za anotiran web sadržaj (poput komentara i rubnih bilježaka) je unaprijeđena.
+Pritišćite ``NVDA+d`` kako biste se kretali po sadržajima (na primjer "ima komentar, ima rubnu bilješku").
+
+Tivomatic Caiku Albatross 46/80 brajični redci su sada podržani.
+
+Podrška za ARM64 i AMD64 inačica sustava Windows je unapređena.
+
+Ispravljeno je mnoštvo grešaka, među kojima ispravke za Windows 11 čine većinu.
+
+eSpeak, LibLouis, Sonic povećivač brzine i Unicode su ažurirani.
+Dodane su nove brajične tablice za gruzijski, Swahili (Kenija) i Chichewa (Malawi).
+
+Upozorenje:
+U ovoj inačici narušena je kompatibilnost s postojećim dodacima.
+-
+
+== Nove značajke ==
+- Microsoft Excel s sučeljem UI automation: automatsko čitanje zaglavlja i stupaca tablica. (#14228)
+  - Upozorenje: ovo se odnosi na tablice oblikovane uz pomoć gumba "tablica" na kratici umetanje na ribbonu.
+  "prvi stupac" i "zaglavlje redka" u "opcijama stila tablice" odnose se na zaglavlja redaka i stupaca.
+  - Ovo se ne odnosi na specifična zaglavlja čitača zaslona  uz pomoć imenovanih raspona, koje se ne podržavaju uz pomoć UI automation.
+  -
+- Dodan je nedodijeljen prečac za uključivanje i isključivanje opisa znakova poslije kursora. (#14267)
+- Dodana je podrška za čitanje sadržaja naredbenog redka uz pomoć UIA obavijesti, što ima za cilj unađređenje stabilnosti i responsivnosti. (#13781)
+  - Kako biste saznali koja su ograničenja ove opcije, molimo pogledajte korisnički vodič za više informacija.
+  - 
+- U Windowsima 11 ARM64, modus pregleda je sada dostupan u AMD64 aplikacijama poput Firefoxa, Google Chromea i 1Passworda. (#14397)
+- Nova opcija je dodana, "Stil odlomaka" u kategoriji "kretanje po dokumentu".
+Ovo dodaje podršku za kretanje po pojedinačnim prijelomima redka (normalnim) i višerednim prijelomima redka (blokovnim). 
+Ovo se može koristiti sa editorima teksta koji ne podržavaju kretanje po odlomcima nativno, kao što su to Notepad i Notepad++. (#13797)
+- Izgovarana je prisutnost više anotacija.
+``NVDA+d`` sada prebacuje između izgovora sadržaja svake ciljne anotacije za izvore sa višestrukim ciljnim anotacijama.
+Na primjer, kada tekst sadrži komentar i fusnotu. (#14507, #14480)
+- Dodana je podrška za Tivomatic Caiku Albatross 46/80 brajične redke. (#13045)
+- Novi globalni prečac: Čitaj odredište poveznice (``NVDA+k``).
+Kada se pritisne jednom odredište linka koje se nalazi u objektu navigatora će biti izgovoreno i i prikazano na brajičnom redku.
+Kada se pritisne dvaput, poveznica će biti prikazana u prozoru u svrhu detaljnijeg pregleda. (#14583)
+- Nova nedodijeljena gesta (u kategoriji alati): je dodana prikaži odredište poveznice u prozoru.
+Isto kao pritisak ``NVDA+k`` dvaput, ali može biti korisnije za korisnike brajice. (#14583)
+-
+
+
+== Izmjene ==
+- nadograđen LibLouis brajični prevoditelj na  inačicu [3.24.0 https://github.com/liblouis/liblouis/releases/tag/v3.24.0]. (#14436)
+  - Drastično su osvježene Mađarska, univerzalna engleska, i kineska bopomofo brajična tablica.
+  - Podržan je danski brajični standard, koji se promijenio u  2022 godini.
+  - Nove brajične tablice za gruzijsku literarnu brajicu, Swahili (Kenija) i Chichewa (Malawi).
+  -
+- Nadograđena biblioteka Sonic za ubrzanje govora na inačicu ``1d70513``. (#14180)
+- CLDR je nadograđen na inačicu 42.0. (#14273)
+- eSpeak NG je nadograđen na inačicu 1.52-dev commit ``f520fecb``. (#14281, #14675)
+  - Ispravljeno čitanje velikih brojeva. (#14241)
+  -
+- Java aplikacije sa kontrolama koje koriste status označenosti će izgovarati kada stavka nije označena umjesto obrnutog. (#14336)
+-
+
+
+== Ispravke grešaka ==
+- Ispravke koje se primjenjuju u Windowsima 11:
+  - NVDA će izgovarati rezultate pretrage prilikom otvaranja izbornika start. (#13841)
+  - Na arhitekturi ARM, x64 aplikacije više nisu pogrešno identificirane kao ARM64 aplikacije. (#14403)
+  - Stavkama izbornika povijesti međuspremnika poput "prikvači stavku" može se ponovno pristupiti. (#14508)
+  - U Windowsima 11 22H2 i novijima, moguće je opet koristiti miš i interakciju dodirom kako bi se moglo koristiti područje obavijesti i dijaloški okvir "otvori sa". (#14538, #14539)
+  -
+- Izgovaraju se prijedlozi prilikom upisivanja znaka @osvrta u Microsoft Excel komentarima. (#13764)
+- U Google Chrome adresnoj traci, kontrole prijedloga (prebaci se na karticu, ukloni prijedlog itd) sada se izgovaraju kada su označene. (#13522)
+- Prilikom dohvaćanja informacija o oblikovanju, boje su sada eksplicitno čitane u Wordpadu ili pregledniku zapisnika, umjesto  "podrazumjevana boja". (#13959)
+- U  Firefoxu, aktiviranje opcije "Show options" na stranici za github probleme sada pouzdano radi. (#14269)
+- Kontroke za odabir datuma u Outlooku 2016 / 365 dijaloškom okviru napredne pretrage sada se izgovaraju zajedno sa svojim vrijednostima. (#12726)
+- ARIA switch kontrole sada se točnije izgovaraju kao preklopnici u Firefoxu, Chromeu i Edgeu, umjesto potvrdnih okvira. (#11310)
+- NVDA će automatski izgovoriti status razvrstavanja na HTML zaglavlju stupca tablice kada se promjeni, prilikom pritiska unutrašnjeg gumba. (#10890)
+- Naziv Orijentira i regije sada će se automatski čitati prilikom skananja u kontrolu ili fokusiranjem kontrole u modusu pregleda. (#13307)
+- Kada je uključena opcija reproduciraj zvučni signal ili izgovori  'veliko' za velika slova, sa uključenim opisima znakova poslije kursora, NVDA više ne reproducira zvučni signal, niti ne izgovara  'veliko' dvaput. (#14239)
+- Kontrole u tablicama u Java aplikacijama biti će pročitane točnije. (#14347)
+- Neke postavke više neće biti neočekivano drugaćije kada se koristi više konfiguracijskih profila. (#14170)
+  - Slijedeće postavke su ispravljene:
+    - Uvlačenje redka u postavkama oblikovanja dokumenta.
+    - Rubovi ćelija u postavkama oblikovanja dokumenta
+    - Prikaz poruka u postavkama brajice
+    - Povezivanje brajice u postavkama brajice
+    -
+  - U nekim rijedkim slučajevima, ove postavke korištene u profilima mogu biti neočekivano izmijenjene kada se instalira iva inačica NVDA.
+  - Molimo provjerite ove postavke u vašem profilu poslije nadogradnje na ovu inačicu.
+  -
+- Emoji će se moći čitati na više jezika. (#14433)
+- Prisutnost anotacija više ne nedostaje kada se prikazuju na brajičnom redku za neke elemente. (#13815)
+- Ispravljena je pogreška u kojoj se izmjene ne spremaju ispravno prilikom izmjene "podrazumjevane" opcije i i vrijednosti "podrazumjevane" opcije. (#14133)
+- Prilikom konfiguriranja NVDA uvijek će biti definirana barem jedna tipka kao NVDA modifikacijaka tipka. (#14527)
+- Prilikom pristupanja NVDA izborniku preko popisa obavijesti, NVDA neće predložiti nadogradnju koja se očekuje kada isto nije dostupno. (#14523)
+- Preostalo, proteklo i ukupno vrijeme sada se točno izgovara za audio datoteke čije trajanje prekoračuje jedan dan u foobar2000 programu. (#14127)
+- U preglednicima poput Chromea i Firefoxa, upozorenja kao što su to preuzimanja biti će prikazana i na brajičnom redku. (#14562)
+- Ispravljena je greška prilikom kretanja između prvog i zadnjeg stupca u tablici u Firefoxu (#14554)
+- Kada je NVDA pokrenut sa parametrom naredbenog redka ``--lang=Windows``, sada je ponovo moguće otvoriti prozor općenitih postavki.. (#14407)
+-
+
+
 = 2022.4 =
 U ovoj je inačici dodano nekoliko novih tipkovničkih prečaca, uključujući i prečace za čitanje cijele tablice.
 Dodan je odjeljak "Vodič za brzo upoznavanje sa NVDA" u korisnički priručnik.

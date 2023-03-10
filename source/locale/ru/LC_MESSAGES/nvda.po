@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Russian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-14 00:37+0000\n"
-"PO-Revision-Date: 2023-02-14 19:42+0800\n"
+"POT-Creation-Date: 2023-03-03 00:01+0000\n"
+"PO-Revision-Date: 2023-03-04 07:13+0800\n"
 "Last-Translator: Kvark <kvark128@yandex.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -2964,7 +2964,7 @@ msgstr "Циклически переключает способы озвучи�
 #. {mode} will be replaced with the mode; i.e. Off, Speech, Tones or Both Speech and Tones.
 #, python-brace-format
 msgid "Report line indentation {mode}"
-msgstr "Объявление отступов строк: {mode}"
+msgstr "Чтение отступов строк: {mode}"
 
 #. Translators: Input help mode message for toggle report paragraph indentation command.
 msgid "Toggles on and off the reporting of paragraph indentation"
@@ -4402,12 +4402,14 @@ msgid ""
 "Report the destination URL of the link in the navigator object. If pressed "
 "twice, shows the URL in a window for easier review."
 msgstr ""
+"Сообщает URL-адрес ссылки в объекте навигатора. Если нажато дважды, "
+"показывает этот адрес в отдельном окне для удобного просмотра"
 
 #. Translators: Informs the user that the window contains the destination of the
 #. link with given title
 #, python-brace-format
 msgid "Destination of: {name}"
-msgstr ""
+msgstr "Адрес для ссылки «{name}»"
 
 #. Translators: Tell user that the command has been run on something that is not a link
 msgid "Not a link."
@@ -4418,6 +4420,9 @@ msgid ""
 "Reports the destination URL of the link in the navigator object in a window, "
 "instead of just speaking it. May be preferred by braille users."
 msgstr ""
+"Показывает URL-адрес ссылки в объекте навигатора в отдельном окне, вместо "
+"его чтения синтезатором речи. Это может быть полезно для пользователей с "
+"брайлевским дисплеем"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -4578,7 +4583,7 @@ msgstr "Не удалось включить затемнение экрана"
 
 #. Translators: Describes a command.
 msgid "Cycles through paragraph navigation styles"
-msgstr ""
+msgstr "Циклически переключает стили навигации по абзацам"
 
 #. Translators: a message indicating that configuration profiles can't be activated using gestures,
 #. due to profile activation being suspended.
@@ -6780,7 +6785,7 @@ msgstr "Трек не воспроизводится"
 #. Translators: Reported remaining time in Foobar2000
 #, python-brace-format
 msgid "{remainingTimeFormatted} remaining"
-msgstr ""
+msgstr "оставшееся время {remainingTimeFormatted}"
 
 #. Translators: Reported if the remaining time can not be calculated in Foobar2000
 msgid "Remaining time not available"
@@ -6793,7 +6798,7 @@ msgstr "Сообщает оставшееся время воспроизвод�
 #. Translators: Reported elapsed time in Foobar2000
 #, python-brace-format
 msgid "{elapsedTime} elapsed"
-msgstr ""
+msgstr "прошедшее время {elapsedTime}"
 
 #. Translators: Reported if the elapsed time is not available in Foobar2000
 msgid "Elapsed time not available"
@@ -6806,7 +6811,7 @@ msgstr "Сообщает прошедшее время воспроизводи�
 #. Translators: Reported remaining time in Foobar2000
 #, python-brace-format
 msgid "{totalTime} total"
-msgstr ""
+msgstr "общее время {totalTime}"
 
 #. Translators: Reported if the total time is not available in Foobar2000
 msgid "Total time not available"
@@ -7584,23 +7589,23 @@ msgstr "Включено"
 
 #. Translators: Label for a paragraph style in NVDA settings.
 msgid "Handled by application"
-msgstr ""
+msgstr "Обрабатывается приложением"
 
 #. Translators: Label for a paragraph style in NVDA settings.
 msgid "Single line break"
-msgstr ""
+msgstr "Однострочный разрыв"
 
 #. Translators: Label for a paragraph style in NVDA settings.
 msgid "Multi line break"
-msgstr ""
+msgstr "Многострочный разрыв"
 
 #. Translators: Label for an option in NVDA settings.
 msgid "Diffing"
-msgstr ""
+msgstr "Выбранный diff-алгоритм"
 
 #. Translators: Label for an option in NVDA settings.
 msgid "UIA notifications"
-msgstr ""
+msgstr "Уведомления UIA"
 
 #. Translators: The title of the document used to present the result of content recognition.
 msgid "Result"
@@ -8374,7 +8379,7 @@ msgstr "предложение"
 #. Translators: The word role for a switch control
 #. I.e. a control that can be switched on or off.
 msgid "switch"
-msgstr ""
+msgstr "переключатель"
 
 #. Translators: Indicates that a particular state of an object is negated.
 #. Separate strings have now been defined for commonly negated states (e.g. not selected and not
@@ -10510,7 +10515,7 @@ msgstr "Навигация по документу"
 
 #. Translators: This is a label for the paragraph navigation style in the document navigation dialog
 msgid "&Paragraph style:"
-msgstr ""
+msgstr "Стиль &абзаца:"
 
 #. Translators: This is the label for the touch interaction settings panel.
 msgid "Touch Interaction"
@@ -10761,7 +10766,7 @@ msgstr "Difflib"
 
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
 msgid "Speak new text in Windows Terminal via:"
-msgstr ""
+msgstr "Определять новый текст в Windows Terminal через:"
 
 #. Translators: This is the label for combobox in the Advanced settings panel.
 msgid "Attempt to cancel speech for expired focus events:"
@@ -11212,6 +11217,8 @@ msgid ""
 "At least one NVDA modifier key must be set. Caps lock will remain as an NVDA "
 "modifier key. "
 msgstr ""
+"В NVDA должна быть установлена хотя бы одна клавиша-модификатор. Поэтому "
+"CapsLock всё равно останется клавишей-модификатором NVDA."
 
 #. Translators: The label for a checkbox in NvDA installation program to agree to the license agreement.
 msgid "I &agree"
@@ -11319,7 +11326,7 @@ msgstr "строка %s"
 #. Translators: Speaks the row span added to the current row number (example output: through 5).
 #, python-brace-format
 msgid "through {endRow}"
-msgstr ""
+msgstr "по {endRow}"
 
 #. Translators: Speaks current column number (example output: column 3).
 #, python-format
@@ -11329,7 +11336,7 @@ msgstr "столбец %s"
 #. Translators: Speaks the column span added to the current column number (example output: through 5).
 #, python-brace-format
 msgid "through {endCol}"
-msgstr ""
+msgstr "по {endCol}"
 
 #. Translators: Speaks the row and column span added to the current row and column numbers
 #. (example output: through row 5 column 3).
@@ -11730,35 +11737,35 @@ msgstr "координаты: {x}, {y}"
 #, python-brace-format
 msgctxt "time format"
 msgid "{S}"
-msgstr ""
+msgstr "{S}"
 
 #. Translators: used to format time locally.
 #. substitution rules: {S} seconds, {M} minutes
 #, python-brace-format
 msgctxt "time format"
 msgid "{M}:{S}"
-msgstr ""
+msgstr "{M}:{S}"
 
 #. Translators: used to format time locally.
 #. substitution rules: {S} seconds, {M} minutes, {H} hours
 #, python-brace-format
 msgctxt "time format"
 msgid "{H}:{M}:{S}"
-msgstr ""
+msgstr "{H}:{M}:{S}"
 
 #. Translators: used to format time locally.
 #. substitution rules: {S} seconds, {M} minutes, {H} hours, {D} day
 #, python-brace-format
 msgctxt "time format"
 msgid "{D} day {H}:{M}:{S}"
-msgstr ""
+msgstr "{D} день {H}:{M}:{S}"
 
 #. Translators: used to format time locally.
 #. substitution rules: {S} seconds, {M} minutes, {H} hours, {D} days
 #, python-brace-format
 msgctxt "time format"
 msgid "{D} days {H}:{M}:{S}"
-msgstr ""
+msgstr "{D} дней {H}:{M}:{S}"
 
 #. Translators: This is the message for a warning shown if NVDA cannot determine if
 #. Windows is locked.
@@ -13562,7 +13569,7 @@ msgstr "Полуторный междустрочный интервал"
 
 #. Translators: Names of braille displays.
 msgid "Caiku Albatross 46/80"
-msgstr ""
+msgstr "Caiku Albatross 46/80"
 
 #. Translators: A message when number of status cells must be changed
 #. for a braille display driver
