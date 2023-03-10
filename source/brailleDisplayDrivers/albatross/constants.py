@@ -238,7 +238,7 @@ ROUTING_KEY_RANGES: FrozenSet[RoutingKeyRange] = frozenset(
 )
 """Defines routing key ranges. See L{RoutingKeyRange}."""
 
-ESTABLISHED = b"\xfe\xfd\xfe\xfd"
+ESTABLISHED = b"\xfe\xfd"
 """Send this to Albatross to confirm that connection is established."""
 
 INIT_START_BYTE = b"\xff"
