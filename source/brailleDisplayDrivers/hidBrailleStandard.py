@@ -220,14 +220,28 @@ class HidBrailleDriver(braille.BrailleDisplayDriver):
 				"br(hidBrailleStandard):panRight",
 				"br(hidBrailleStandard):rockerDown",
 			),
-			"braille_previousLine": ("br(hidBrailleStandard):space+dot1",),
-			"braille_nextLine": ("br(hidBrailleStandard):space+dot4",),
 			"braille_routeTo": ("br(hidBrailleStandard):routerSet1_routerKey",),
 			"braille_toggleTether": ("br(hidBrailleStandard):up+down",),
-			"kb:upArrow": ("br(hidBrailleStandard):joystickUp",),
-			"kb:downArrow": ("br(hidBrailleStandard):joystickDown",),
-			"kb:leftArrow": ("br(hidBrailleStandard):space+dot3", "br(hidBrailleStandard):joystickLeft"),
-			"kb:rightArrow": ("br(hidBrailleStandard):space+dot6", "br(hidBrailleStandard):joystickRight"),
+			"kb:upArrow": (
+				"br(hidBrailleStandard):joystickUp",
+				"br(hidBrailleStandard):dpadUp",
+				"br(hidBrailleStandard):space+dot1",
+			),
+			"kb:downArrow": (
+				"br(hidBrailleStandard):joystickDown",
+				"br(hidBrailleStandard):dpadDown",
+				"br(hidBrailleStandard):space+dot4",
+			),
+			"kb:leftArrow": (
+				"br(hidBrailleStandard):space+dot3",
+				"br(hidBrailleStandard):joystickLeft",
+				"br(hidBrailleStandard):dpadLeft",
+			),
+			"kb:rightArrow": (
+				"br(hidBrailleStandard):space+dot6",
+				"br(hidBrailleStandard):joystickRight",
+				"br(hidBrailleStandard):dpadRight",
+			),
 			"showGui": (
 				"br(hidBrailleStandard):space+dot1+dot3+dot4+dot5",
 			),
@@ -235,7 +249,10 @@ class HidBrailleDriver(braille.BrailleDisplayDriver):
 			"kb:tab": ("br(hidBrailleStandard):space+dot4+dot6",),
 			"kb:alt": ("br(hidBrailleStandard):space+dot1+dot3+dot4",),
 			"kb:escape": ("br(hidBrailleStandard):space+dot1+dot5",),
-			"kb:enter": ("br(hidBrailleStandard):joystickCenter"),
+			"kb:enter": (
+				"br(hidBrailleStandard):joystickCenter",
+				"br(hidBrailleStandard):dpadCenter",
+			),
 			"kb:windows+d": (
 				"br(hidBrailleStandard):Space+dot1+dot4+dot5",
 			),
