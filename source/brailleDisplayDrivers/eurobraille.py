@@ -1,12 +1,12 @@
 # -*- coding: UTF-8 -*-
-#brailleDisplayDrivers/esys.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2017-2023 NV Access Limited, Babbage B.V., Eurobraille
+# brailleDisplayDrivers/esys.py
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2017-2023 NV Access Limited, Babbage B.V., Eurobraille
 
 from collections import OrderedDict, defaultdict
-from typing import Dict, Any, List, Union, Iterator
+from typing import Dict, Any, List, Union
 import re
 
 from io import BytesIO
@@ -24,7 +24,6 @@ import threading
 from globalCommands import SCRCAT_BRAILLE
 import ui
 import time
-import hwPortUtils
 
 BAUD_RATE = 9600
 
@@ -138,10 +137,10 @@ DEVICE_TYPES={
 	0x0f:"Esytime 32 standard",
 	0x10:"Esytime evo 32",
 	0x11:"Esytime evo 32 standard",
-	0x12:"b.note",
-	0x13:"b.note 2",
-	0x14:"b.book",
-	0x15:"b.book 2"
+	0x12: "b.note",
+	0x13: "b.note 2",
+	0x14: "b.book",
+	0x15: "b.book 2"
 }
 
 defaultGestureMapEntries = {
@@ -247,16 +246,25 @@ defaultGestureMapEntries = {
 		"kb:capsLock": ("br(eurobraille):dot7+backspace", "br(eurobraille):dot8+backspace",),
 		"kb:numLock": ("br(eurobraille):dot3+backspace", "br(eurobraille):dot6+backspace",),
 		"kb:shift": ("br(eurobraille):dot1+dot7+space", "br(eurobraille):dot4+dot7+space",),
-		"braille_toggleShift": ("br(eurobraille):dot7+space","br(eurobraille):l4",),
+		"braille_toggleShift": ("br(eurobraille):dot7+space", "br(eurobraille):l4",),
 		"kb:control": ("br(eurobraille):dot1+dot7+dot8+space", "br(eurobraille):dot4+dot7+dot8+space",),
-		"braille_toggleControl": ("br(eurobraille):dot7+dot8+space","br(eurobraille):l5",),
+		"braille_toggleControl": ("br(eurobraille):dot7+dot8+space", "br(eurobraille):l5",),
 		"kb:alt": ("br(eurobraille):dot1+dot8+space", "br(eurobraille):dot4+dot8+space"),
 		"braille_toggleAlt": ("br(eurobraille):dot8+space", "br(eurobraille):l6"),
-		"braille_toggleNVDAKey" : ("br(eurobraille):l7", "br(eurobraille):dot3+dot5+space"),
-		"kb:control+home" : ("br(eurobraille):joystick2left+joystick2up", "br(eurobraille):l1+l2+l3", "br(eurobraille):l2+l3+l4",),
-		"kb:control+end" : ("br(eurobraille):joystick2right+joystick2up", "br(eurobraille):l6+l7+l8", "br(eurobraille):l5+l6+l7",),
-		"braille_toggleWindows" : ("br(eurobraille):backspace+dot1+dot2+dot3+dot4", "br(eurobraille):dot2+dot4+dot5+dot6+space",),
-		"kb:control+shift+e" : ("br(eurobraille):dot1+dot5+space",),
+		"braille_toggleNVDAKey": ("br(eurobraille):l7", "br(eurobraille):dot3+dot5+space"),
+		"kb:control+home": (
+			"br(eurobraille):joystick2left+joystick2up",
+			"br(eurobraille):l1+l2+l3", "br(eurobraille):l2+l3+l4",
+		),
+		"kb:control+end": (
+			"br(eurobraille):joystick2right+joystick2up",
+			"br(eurobraille):l6+l7+l8", "br(eurobraille):l5+l6+l7",
+		),
+		"braille_toggleWindows": (
+			"br(eurobraille):backspace+dot1+dot2+dot3+dot4",
+			"br(eurobraille):dot2+dot4+dot5+dot6+space",
+		),
+		"kb:control+shift+e": ("br(eurobraille):dot1+dot5+space",),
 	},
 }
 default_GestureMap = inputCore.GlobalGestureMap(defaultGestureMapEntries)
@@ -592,8 +600,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		"br(eurobraille):switch1Left+joystick1Down": "toggleHidKeyboardInput",
 		"br(eurobraille.esytime):l8+joystick1Down": "toggleHidKeyboardInput",
 		"br(eurobraille):switch1Right+joystick1Down": "toggleHidKeyboardInput",
-	}\
-
+	}
 	gestureMap = default_GestureMap
 
 
