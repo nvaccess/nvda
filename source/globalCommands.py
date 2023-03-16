@@ -3630,8 +3630,8 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		description=_(
-			# Translators: input help mode message for Report destination URL of navigator link command
-			"Report the destination URL of the link in the navigator object. "
+			# Translators: input help mode message for Report destination URL of a link command
+			"Report the destination URL of the link at the current user position. "
 			"If pressed twice, shows the URL in a window for easier review."
 		),
 		gesture="kb:NVDA+k",
@@ -3640,11 +3640,17 @@ class GlobalCommands(ScriptableObject):
 	def script_reportLinkDestination(
 			self, gesture: inputCore.InputGesture, forceBrowseable: bool = False
 	) -> None:
-		"""Generates a ui.message or ui.browseableMessage of a link's destination, if the navigator
-		object is a link, or an element with an included link such as a graphic.
+		"""Generates a ui.message or ui.browseableMessage of a link's destination, if user is positioned on a link,
+		or an element with an included link such as a graphic.
 		@param forceBrowseable: skips the press once check, and displays the browseableMessage version.
 		"""
-		obj = api.getNavigatorObject()
+		try:
+			ti: textInfos.TextInfo = api.getCaretPosition()
+		except RuntimeError:
+			log.debugWarning("Unable to get the caret position.", exc_info=True)
+			ti: textInfos.TextInfo = api.getFocusObject().makeTextInfo(textInfos.POSITION_FIRST)
+		ti.expand(textInfos.UNIT_CHARACTER)
+		obj: NVDAObject = ti.NVDAObjectAtStart
 		presses = scriptHandler.getLastScriptRepeatCount()
 		if (
 			obj.role == controlTypes.role.Role.LINK  # If it's a link, or
@@ -3667,8 +3673,8 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		description=_(
-			# Translators: input help mode message for Report URL of navigator link in a window command
-			"Reports the destination URL of the link in the navigator object in a window, "
+			# Translators: input help mode message for Report URL of a link in a window command
+			"shows the destination URL of the currently focused link in a window, "
 			"instead of just speaking it. May be preferred by braille users."
 		),
 		category=SCRCAT_TOOLS
