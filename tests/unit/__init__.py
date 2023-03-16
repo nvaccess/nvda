@@ -1,4 +1,3 @@
-# tests/unit/__init__.py
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -16,15 +15,6 @@ Methods in test classes should have a C{test_} prefix.
 
 import os
 import sys
-
-import locale
-import gettext
-import builtins
-#Localization settings
-locale.setlocale(locale.LC_ALL,'')
-translations = gettext.NullTranslations()
-translations.install()
-builtins.pgettext = lambda context, message: message
 
 # The path to the unit tests.
 UNIT_DIR = os.path.dirname(os.path.abspath(__file__))
