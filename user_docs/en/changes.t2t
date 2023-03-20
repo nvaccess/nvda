@@ -36,6 +36,7 @@ Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documen
 - Added the ``bdDetect.scanForDevices`` extension point.
 Handlers can be registered that yield ``BrailleDisplayDriver/DeviceMatch`` pairs that don't fit in existing categories, like USB or Bluetooth. (#14531)
 - Added extension point: ``synthDriverHandler.synthChanged``. (#14618)
+- The NVDA Synth Settings Ring now caches available setting values the first time they're needed, rather than when loading the synthesizer. (#14704)
 -
 
 === Deprecations ===
