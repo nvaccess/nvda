@@ -39,9 +39,10 @@ Belangrijke functies en mogelijkheden:
 
 ++ Systeemvereisten ++[SystemRequirements]
 - Besturingssystemen: alle 32-bit en 64-bit edities van Windows 7, Windows 8, Windows 8.1, Windows 10, Windows 11 alsmede alle Server-besturingssystemen vanaf Windows Server 2008 R2.
-- Voor Windows 7, heeft NVDA Service Pack 1 of hoger nodig.
-- Voor Windows Server 2008 R2, heeft NVDA Service Pack 1 of hoger nodig.
-- zowel AMD64- als ARM64-varianten van Windows worden ondersteund.
+  - Voor Windows 7, heeft NVDA Service Pack 1 of hoger nodig.
+  - Voor Windows Server 2008 R2, heeft NVDA Service Pack 1 of hoger nodig.
+  - zowel AMD64- als ARM64-varianten van Windows worden ondersteund.
+  - 
 - tenminste 150 mb aan opslagruimte.
 -
 
@@ -55,13 +56,13 @@ Bovendien is het mogelijk de inhoud van een document te laten voorlezen in een w
 
 De gratis, open source spraakmodule [eSpeak NG https://github.com/espeak-ng/espeak-ng], die over een groot aantal talen beschikt, is standaard in de NVDA screen reader opgenomen.
 
-Informatie over andere door NVDA ondersteunde spraaksynthesizers is te vinden onder [Ondersteunde spraaksynthesizers#SupportedSpeechSynths].
+Onder [Ondersteunde spraaksynthesizers #SupportedSpeechSynths] vindt u informatie over andere door NVDA ondersteunde spraaksynthesizers.
 
 ++ Brailleondersteuning ++[BrailleSupport]
 Gebruikers van Brailleleesregels kunnen met NVDA informatie in braille uitlezen.
 Braille-invoer, zowel onverkort als verkort braille, door middel van een brailletoetsenbord wordt ook ondersteund.
 Bovendien herkent NVDA standaard veel brailleleesregels automatisch.
-Voor de ondersteunde leesregels, zie [Ondersteunde brailleleesregels#SupportedBrailleDisplays]
+Voor de ondersteunde leesregels, zie [Ondersteunde brailleleesregels #SupportedBrailleDisplays]
 
 NVDA ondersteunt Braillecodes in veel talen.
 Het betreft braillecodes voor verkort en onverkort Braille alsmede computerbraille.
@@ -224,6 +225,7 @@ Het eigenlijke commando wordt niet uitgevoerd wanneer u in de Invoerhulpmodus be
 | Statusbalk lezen | ``NVDA+end`` | ``NVDA+shift+end`` | Melden van  de Statusbalk als NVDA er 1 vindte. Druk 2maal de informatie te laten spellen. Pressing three times will copy it to the clipboard |
 | Tijd melden | ``NVDA+f12`` | ``NVDA+f12`` | Eenmaal drukken meldt de huidige tjd, tweemaal drukken meldt datum |
 | Textopmaak melden | ``NVDA+f`` | ``NVDA+f`` | Tekstopmaak wordt gemeld. Pressing twice shows the information in a window |
+| Koppelingsbestemming melden | ``NVDA+k`` | ``NVDA+k`` | Bij 1 keer drukken hoort u naar welke url de koppeling in het [navigatorobject #ObjectNavigation] verwijst. Tweemaal drukken laat deze zien in een venster voor meer duidelijkheid |
 
 +++ Instellen welke informatie NVDA voorleest +++[ToggleWhichInformationNVDAReads]
 || Naam | Desktop-toets | Laptop-toets | Omschrijving |

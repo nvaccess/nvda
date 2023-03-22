@@ -15,6 +15,7 @@ Drücken Sie ``NVDA+D``, um durch die Zusammenfassungen zu navigieren, wenn Anme
 Die Braillezeilen Tivomatic Caiku Albatross 46 und 80 werden nun unterstützt.
 
 Die Unterstützung für ARM64- und AMD64-Versionen von Windows wurde verbessert.
+
 Es gibt viele Fehlerkorrekturen, vor allem für Windows 11.
 
 eSpeak, LibLouis, Sonic Rate Boost und Unicode CLDR wurden aktualisiert.
@@ -56,12 +57,12 @@ Entspricht dem zweimaligen Drücken von ``NVDA+K``, kann aber für Braille-Nutze
   - Unterstützung der dänischen Braille-Schriftnorm 2022.
   - Neue Braille-Tabellen für die georgische Braille-Schrift, Suaheli (Kenia) und Chichewa (Malawi).
   -
-- Aktualisierte Sonic-Rate-Boost-Bibliothek auf Commit ``1d70513``. (#14180)
+- Sonic-Rate-Boost-Bibliothek auf Commit ``1d70513`` aktualisiert. (#14180)
 - CLDR wurde auf Version 42.0 aktualisiert. (#14273)
-- Die Sprachausgabe eSpeak NG wurde auf 1.52-dev Commit ``a51235aa`` aktualisiert. (#14281)
-  - Die Ansage  von großen Zahlen wurde korrigiert. (#14241)
+- eSpeak NG wurde auf 1.52-dev commit ``f520fecb`` aktualisiert. (#14281, #14675)
+  - Die Ansage großer Zahlen wurde korrigiert. (#14241)
   -
-- Java-Anwendungen mit Steuerelementen, die den auswählbaren Zustand verwenden, melden jetzt, wenn ein Element nicht ausgewählt ist, anstatt wenn das Element ausgewählt ist. (#14336)
+- Java-Anwendungen mit Steuerelementen, die den auswählbaren Zustand verwenden, teilen nun mit, wenn ein Element nicht ausgewählt ist, anstatt wenn das Element ausgewählt ist. (#14336)
 -
 
 
@@ -109,7 +110,7 @@ Hinweis: Dies ist eine Version, die die Kompatibilität der API für NVDA-Erweit
 Die NVDA-Erweiterungen müssen erneut getestet werden und die Manifest-Datei muss aktualisiert werden.
 Bitte lesen Sie das [Entwicklerhandbuch https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] für Informationen über den Abkündigungs- und Entfernungsprozess für die API in NVDA.
 
-- Der Systemtest sollte nun erfolgreich sein, wenn er lokal auf nicht-englischen Systemen ausgeführt wird. (#13362)
+- Die Systemtests sollten nun erfolgreich sein, wenn diese lokal auf nicht-englischsprachigen Systemen ausgeführt werden. (#13362)
 - In Windows 11 auf ARM werden x64-Anwendungen nicht mehr als ARM64-Anwendungen erkannt. (#14403)
 - Es ist nicht mehr notwendig, ``SearchField`` und ``SuggestionListItem`` ``UIA`` ``NVDAObjects`` in neuen UIA-Szenarien zu verwenden, in denen automatisch Suchvorschläge mitgeteilt werden und in denen die Eingabe über UIA mit dem Muster ``ControllerFor`` ausgesetzt wurde.
 Diese Funktionalität ist nun generisch über ``behaviours.EditableText`` bzw. die Basis ``NVDAObject`` verfügbar. (#14222)
