@@ -14,6 +14,7 @@ What's New in NVDA
 == Changes ==
 - Dash and em-dash symbols will always be sent to the synthesizer. (#13830)
 - Distance reported in Microsoft Word will now honour the unit defined in Word's advanced options even when using UIA to access Word documents. (#14542)
+- When reporting the review cursor location, the current cursor/caret location is now reported relative to the current page in LibreOffice Writer for LibreOffice versions >= 7.6, similar to what is done for Microsoft Word. (#11696)
 -
 
 
@@ -36,6 +37,7 @@ Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documen
 - Added the ``bdDetect.scanForDevices`` extension point.
 Handlers can be registered that yield ``BrailleDisplayDriver/DeviceMatch`` pairs that don't fit in existing categories, like USB or Bluetooth. (#14531)
 - Added extension point: ``synthDriverHandler.synthChanged``. (#14618)
+- The NVDA Synth Settings Ring now caches available setting values the first time they're needed, rather than when loading the synthesizer. (#14704)
 -
 
 === Deprecations ===
