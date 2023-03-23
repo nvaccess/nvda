@@ -804,18 +804,15 @@ def initialize():
 			state = pickle.load(f)
 	except:
 		log.debugWarning("Couldn't retrieve update state", exc_info=True)
+		state = None
+
+	if state is None:
 		# Defaults.
 		state = {
 			"lastCheck": 0,
 			"dontRemindVersion": None,
 		}
 		_setStateToNone(state)
-
-	if state is None:
-		state = {
-			"lastCheck": 0,
-			"dontRemindVersion": None,
-		}
 
 	# check the pending version against the current version
 	# and make sure that pendingUpdateFile and pendingUpdateVersion are part of the state dictionary.
