@@ -115,3 +115,13 @@ class AriaLivePoliteness(str, Enum):
 	OFF = "off"
 	POLITE = "polite"
 	ASSERTIVE = "assertive"
+
+
+ariaHaspopupValuesToNVDAStates: Dict[str, controlTypes.State] = {
+	"true": controlTypes.State.HASPOPUP,
+	"menu": controlTypes.State.HASPOPUP,
+	"dialog": controlTypes.State.HASPOPUP_DIALOG,
+	"grid": controlTypes.State.HASPOPUP_GRID,
+	"listbox": controlTypes.State.HASPOPUP_LIST,
+	"tree": controlTypes.State.HASPOPUP_TREE,
+}

@@ -103,7 +103,7 @@ def _doTestAriaDetails_NoVBufNoTextInterface(nvdaConfValues: "NVDASpyLib.NVDACon
 	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey(READ_DETAILS_GESTURE)
 	_asserts.speech_matches(
 		actualSpeech,
-		"Press to self destruct",
+		"Press to self-destruct",
 		message="Report details"
 	)
 	_asserts.braille_matches(
@@ -204,10 +204,10 @@ def test_mark_aria_details_role():
 		# the role doc-endnote is unsupported as an IA2 role
 		# The role "ROLE_LIST_ITEM" is used instead
 		"has details",
-		"doc endnote,",
+		"doc-endnote,",
 		"",  # space between spans
 		"has foot note",
-		"doc footnote,",
+		"doc-footnote,",
 		"",  # space between spans
 		"has comment",
 		"comment,",
@@ -409,7 +409,7 @@ def exercise_mark_aria_details(nvdaConfValues: "NVDASpyLib.NVDAConfMods"):
 	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey(READ_DETAILS_GESTURE)
 	_asserts.speech_matches(
 		actualSpeech,
-		"Cats go woof BTW  Jonathon Commentor No they don't  Zara",
+		"Cats go woof BTW —Jonathon Commentor No they don't —Zara",
 		message="Browse mode: Report details on word with details"
 	)
 	_asserts.braille_matches(
@@ -564,7 +564,7 @@ def exercise_mark_aria_details(nvdaConfValues: "NVDASpyLib.NVDAConfMods"):
 	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey(READ_DETAILS_GESTURE)
 	_asserts.speech_matches(
 		actualSpeech,
-		"Cats go woof BTW  Jonathon Commentor No they don't  Zara",
+		"Cats go woof BTW —Jonathon Commentor No they don't —Zara",
 		message="Focus mode:  Report details on word with details.",
 	)
 	_asserts.braille_matches(

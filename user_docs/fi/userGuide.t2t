@@ -40,6 +40,7 @@ Tärkeimpiä ominaisuuksia ovat:
 - Käyttöjärjestelmät: kaikki 32- ja 64-bittiset Windows 7:n, Windows 8:n, Windows 8.1:n, Windows 10:n ja Windows 11:n versiot sekä palvelinversiot Windows Server 2008 R2:sta alkaen.
   - Windows 7:ssä on oltava asennettuna Service Pack 1 tai uudempi.
   - Windows Server 2008 R2:ssa on oltava asennettuna Service Pack 1 tai uudempi.
+  - Sekä AMD64- että ARM64-versioita tuetaan.
   -
 - Vähintään 150 Mt tallennustilaa.
 -
@@ -221,6 +222,7 @@ Varsinaisia komentoja ei suoriteta.
 | Lue tilarivi | ``NVDA+End`` | ``NVDA+Vaihto+End`` | Lukee tilarivin, mikäli sellainen löytyy. Kahdesti painettaessa tiedot tavataan ja kolmesti painettaessa ne kopioidaan leikepöydälle. |
 | Lue kellonaika | ``NVDA+F12`` | ``NVDA+F12`` | Ilmoittaa kerran painettaessa kellonajan ja kahdesti painettaessa päivämäärän. |
 | Lue tekstin muotoilut | ``NVDA+F`` | ``NVDA+F`` | Lukee tekstin muotoilutiedot. Kahdesti painettaessa tiedot näytetään selaustilassa. |
+| Ilmoita linkin kohde | ``NVDA+K`` | ``NVDA+K`` | Kerran painettaessa Puhuu [navigointiobjektissa #ObjectNavigation] olevan linkin kohteen URL:n. Kahdesti painettaessa se näytetään erillisessä ikkunassa tarkempaa tarkastelua varten. |
 
 +++ Valitse, mitä tietoja NVDA lukee +++[ToggleWhichInformationNVDAReads]
 || Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kuvaus |
@@ -2089,6 +2091,29 @@ Ilmaise rivien sisennykset -yhdistelmäruudussa on neljä vaihtoehtoa.
 - puheella ja äänimerkeillä: Tämän ollessa valittuna sisennykset ilmoitetaan molempia yllä olevia vaihtoehtoja käyttäen.
 -
 
++++ Asiakirjan selaus +++[DocumentNavigation]
+Tästä kategoriasta voit säätää asiakirjan selauksen asetuksia.
+
+==== Kappaletyyli ====[ParagraphStyle]
+: Oletus
+  Sovelluksen määrittämä
+: Vaihtoehdot
+  Oletus (Sovelluksen määrittämä), Sovelluksen määrittämä, Yksi rivinvaihto, Useita rivinvaihtoja
+:
+
+Tästä yhdistelmäruudusta voit valita kappaletyylin, jota käytetään kappaleittain liikuttaessa näppäinkomennoilla ``Ctrl+Nuoli ylös`` ja ``Ctrl+Nuoli alas``.
+Seuraavat kappaletyylit ovat käytettävissä:
+- Sovelluksen määrittämä: NVDA antaa sovelluksen määrittää edellisen tai seuraavan kappaleen, ja lukee uuden kappaleen siirryttäessä siihen.
+Tämä tyyli, joka on käytössä oletusarvoisesti, toimii parhaiten, kun sovellus tukee kappaleittain liikkumista.
+- Yksi rivinvaihto: NVDA yrittää määrittää edellisen tai seuraavan kappaleen käyttäen yhtä rivinvaihtoa kappaleenilmaisimena.
+Tämä tyyli toimii parhaiten, kun asiakirjoja luetaan sovelluksessa, joka ei tue kappaleittain liikkumista ja asiakirjan kappaleet on merkitty yhdellä Enter-näppäimen painalluksella.
+- Useita rivinvaihtoja: NVDA yrittää määrittää edellisen tai seuraavan kappaleen käyttäen ainakin yhtä tyhjää riviä (kaksi ``Enter``-näppäimen painallusta) kappaleenilmaisimena.
+Tämä tyyli toimii parhaiten asiakirjoissa, joissa käytetään lohkokappaleita.
+Huom: Tätä tyyliä ei voi käyttää Microsoft Wordissa eikä Outlookissa, ellei "Käytä UI Automation -rajapintaa Microsoft Wordin asiakirjasäätimissä" -asetus ole käytössä.
+-
+
+Voit vaihtaa käytettävissä olevien kappaletyylien välillä mistä tahansa määrittämällä näppäinkomennon [Näppäinkomennot-valintaikkunassa #InputGestures].
+
 +++ Windowsin tekstintunnistusasetukset +++[Win10OcrSettings]
 Tämän kategorian asetuksilla voit vaikuttaa [Windowsin tekstintunnistuksen #Win10Ocr] toimintaan.
 Kategoria sisältää seuraavat asetukset:
@@ -2229,6 +2254,25 @@ Joissakin sovelluksissa uuden tekstin lukeminen voi kuitenkin olla nykivää tai
 Tämä vastaa NVDA:n toiminnallisuutta versiossa 2020.4 ja sitä vanhemmissa.
 Tämä asetus saattaa vakauttaa saapuvan tekstin lukemista joissakin sovelluksissa.
 Kohdistimen jälkeinen teksti kuitenkin luetaan päätteissä, kun rivin keskelle lisätään tai siitä poistetaan merkki.
+-
+
+==== Uuden tekstin puhumismenetelmä Windows Terminalissa ====[WtStrategy]
+: Oletus
+  Muutosten havaitseminen
+: Vaihtoehdot
+  Muutosten havaitseminen, UIA-ilmoitukset
+:
+
+Tämä asetus valitsee, miten NVDA määrittää "uuden" tekstin (ja näin ollen sen, mitä puhutaan "Lue dynaamisen sisällön muutokset" -asetuksen ollessa käytössä) Windows Terminalissa ja Windows Terminalin WPF-säätimessä, jota käytetään Visual Studio 2022:ssa.
+Asetus ei vaikuta Windows-konsoliin (``conhost.exe``).
+Uuden tekstin puhumismenetelmä Windows Terminalissa -yhdistelmäruudussa on kolme vaihtoehtoa:
+- Oletus: Tämä asetus vastaa tällä hetkellä "muutosten havaitsemista", mutta sen odotetaan muuttuvan, kun UIA-ilmoitusten tukea kehitetään edelleen.
+- Muutosten havaitseminen: Tämä asetus käyttää valittua muutostenhavaitsemismenetelmää muutosten laskemiseen joka kerta, kun päätteeseen ilmestyy uutta tekstiä.
+Tämä toimii samoin kuin NVDA 2022.4:ssä ja sitä vanhemmissa versioissa.
+- UIA-ilmoitukset: Tämä asetus siirtää vastuun puhuttavan tekstin määrittämisestä Windows Terminalille itselleen, mikä tarkoittaa, että NVDA: n ei enää tarvitse määrittää, mikä ruudulla oleva teksti on "uutta".
+Tämän pitäisi parantaa huomattavasti Windows Terminalin suorituskykyä ja vakautta, mutta ominaisuus ei ole vielä valmis.
+Erityisesti kirjoitetut merkit, joita ei näytetä ruudulla, kuten salasanat, puhutaan tämän ollessa valittuna.
+Lisäksi jatkuvia yli 1000 merkin tulosteita ei välttämättä puhuta tarkasti.
 -
 
 ==== Yritä perua vanhentuneiden kohdistustapahtumien puhe ====[CancelExpiredFocusSpeech]
@@ -2684,6 +2728,7 @@ Seuraavat näytöt tukevat automaattista tunnistusta.
 - Eurobraille Esys/Esytime/Iris
 - Nattiq nBraille
 - Seika Notetaker: MiniSeika (16 tai 24 solua), V6 ja V6Pro (40 solua)
+- Tivomatic Caiku Albatross 46/80
 - Mikä tahansa HID Braille -protokollaa tukeva näyttö
 -
 
@@ -3566,6 +3611,63 @@ Katso [BRLTTY:n näppäinsidosluetteloista http://mielke.cc/brltty/doc/KeyBindin
 | siirrä pistesoluun | kosketuskohdistinnäppäin (siirrä kohdistin merkin kohdalle) |
 %kc:endInclude
 
+++ Tivomatic Caiku Albatross 46/80 ++[Albatross]
+Suomalaisia Tivomaticin Caiku Albatross -pistenäyttöjä voidaan käyttää joko USB:n tai sarjaportin kautta.
+Laitteita varten ei tarvitse asentaa ajureita.
+Yhdistä vain laite tietokoneeseen ja määritä NVDA käyttämään sitä.
+
+Huom: Siirtonopeuden 19200 käyttöä suositellaan vahvasti.
+Vaihda tarvittaessa siirtonopeudeksi 19200 pistenäytön valikosta.
+Vaikka ajuri tukee 9600 baudin siirtonopeutta, se ei voi vaikuttaa pistenäytön käyttämään siirtonopeuteen.
+Koska 19200 on pistenäytön oletussiirtonopeus, ajuri kokeilee sitä ensin.
+Jos siirtonopeudet eivät ole samat, ajuri voi käyttäytyä odottamattomasti.
+
+Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
+Katso laitteen käyttöohjeesta kuvaukset näppäinten paikoista.
+%kc:beginInclude
+|| Nimi | Näppäinkomento |
+| Siirrä ylimmälle riville | ``home1``, ``home2`` |
+| Siirrä alimmalle riville | ``end1``, ``end2`` |
+| Siirrä aktiiviseen objektiin | ``eCursor1``, ``eCursor2`` |
+| Siirrä nykyiseen kohdistukseen | ``cursor1``, ``cursor2`` |
+| Siirtää hiiren nykyiseen navigointiobjektiin | ``home1+home2`` |
+| Siirtää navigointiobjektin hiiren alla olevaan objektiin ja lukee sen | ``end1+end2`` |
+| Siirrä järjestelmän kohdistus tai -kohdistin tarkastelukohtaan | ``eCursor1+eCursor2`` |
+| Vaihda Pistenäyttö seuraa -asetusta | ``cursor1+cursor2`` |
+| Siirrä edelliselle riville | ``up1``, ``up2``, ``up3`` |
+| Siirrä seuraavalle riville | ``down1``, ``down2``, ``down3`` |
+| Vieritä taaksepäin | ``left``, ``lWheelLeft``, ``rWheelLeft`` |
+| Vieritä eteenpäin | ``right``, ``lWheelRight``, ``rWheelRight`` |
+| Siirrä pistesoluun | ``kosketuskohdistinnäppäin`` |
+| Ilmoita muotoilutiedot pistesolusta | ``toissijainen kosketuskohdistinnäppäin`` |
+| Vaihda tapaa, jolla kontekstitiedot näytetään pistenäytöllä | ``attribute1+attribute3`` |
+| Vaihda puhetilaa | ``attribute2+attribute4`` |
+| Vaihda edelliseen tarkastelutilaan | ``f1`` |
+| Vaihda seuraavaan tarkastelutilaan | ``f2`` |
+| Siirrä säilöobjektiin | ``f3`` |
+| Siirrä ensimmäiseen sisältöobjektiin | ``f4`` |
+| Siirrä edelliseen objektiin | ``f5`` |
+| Siirrä seuraavaan objektiin | ``f6`` |
+| Lue nykyinen objekti | ``f7`` |
+| Lue tarkastelukohdistimen kohdalla olevan tekstin tai objektin sijaintitiedot | ``f8`` |
+| Aktivoi nykyinen navigointiobjekti | ``f7+f8`` |
+| Lue päiväys/aika | ``f9`` |
+| Ilmoittaa akun tilan ja jäljellä olevan ajan, jos verkkovirta ei ole käytössä | ``f10`` |
+| Lue ikkunan nimi | ``f11`` |
+| Lue tilarivi | ``f12`` |
+| Lue nykyinen rivi | ``f13`` |
+| Lue nykyinen teksti loppuun saakka järjestelmäkohdistimesta lähtien siirtäen samalla sitä | ``f14`` |
+| Lue merkki, jonka kohdalla tarkastelukohdistin on nykyisessä navigointiobjektissa | ``f15`` |
+| Lue nykyisen navigointiobjektin rivi, jolla tarkastelukohdistin on | ``f16`` |
+| Lue nykyisen navigointiobjektin sana, jonka kohdalla tarkastelukohdistin on | ``f15+f16`` |
+| Siirrä tarkastelukohdistin nykyisen navigointiobjektin edelliselle riville ja lue se | ``lWheelUp``, ``rWheelUp`` |
+| Siirrä tarkastelukohdistin nykyisen navigointiobjektin seuraavalle riville ja lue se | ``lWheelDown``, ``rWheelDown`` |
+| ``Windows+D`` (pienennä kaikki sovellukset) | ``attribute1`` |
+| ``Windows+E`` (tämä tietokone) | ``attribute2`` |
+| ``Windows+B`` (siirrä kohdistus ilmaisinalueelle) | ``attribute3`` |
+| ``Windows+I`` (Windowsin asetukset) | ``attribute4`` |
+%kc:endInclude
+ 
 ++ HID Braille -pistenäytöt ++[HIDBraille]
 Tämä on kokeellinen ajuri uudelle HID Braille -protokollalle, josta Microsoft, Google, Apple ja useat avustavan teknologian yritykset, mukaan lukien NV Access, sopivat vuonna 2018.
 Toiveissa on, että kaikkien valmistajien tulevat pistenäyttömallit käyttäisivät tätä vakioprotokollaa, joka poistaisi valmistajakohtaisten pistenäyttöajureiden tarpeen.
@@ -3656,7 +3758,7 @@ Seuraavassa on luettelo NVDA:n komentorivivalitsimista:
 | -q | --quit | Sulkee jo käynnissä olevan NVDA:n version. |
 | -k | --check-running | Ilmoittaa lopetuskoodilla, onko NVDA käynnissä, 0 = jos käynnissä tai 1 = jos ei käynnissä. |
 | -f LOKITIEDOSTO | --log-file=LOKITIEDOSTO | Tiedosto, johon lokiviestit tallennetaan. |
-| -l LOKITASO | --log-level=LOKITASO | Alin taso, jonka ilmoitukset tallennetaan lokiin (virheenkorjaus = 10, syöttö/tulostus = 12, virheenkorjausvaroitus = 15, tiedot = 20, varoitus = 30, virhe = 40, kriittinen = 50, ei käytössä = 100). Oletustaso on "varoitus". |
+| -l LOKITASO | --log-level=LOKITASO | Alin taso, jonka ilmoitukset tallennetaan lokiin (virheenkorjaus = 10, syöttö/tulostus = 12, virheenkorjausvaroitus = 15, tiedot = 20, ei käytössä = 100) |
 | -c ASETUSPOLKU | --config-path=ASETUSPOLKU | Hakemistopolku, johon kaikki NVDA:n asetukset tallennetaan. |
 | Ei mitään | --lang=KIELI | Ohita NVDA:n asetuksissa määritetty kieli. Määritä kieleksi "Windows" käyttääksesi nykyistä käyttäjän oletusarvoa, "en" englantia jne. |
 | -m | --minimal | Ei ääniä, käyttöliittymää tai käynnistysilmoitusta jne. |

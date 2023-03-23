@@ -82,7 +82,7 @@ It is divided into several distinct components.
 ### Launcher
 The launcher is the module which the user executes to start NVDA.
 It is contained in the file `nvda.pyw`.
-Refer to [startupShutdown documentation](./devDocs/startupShutdown.md).
+Refer to [startupShutdown documentation](./startupShutdown.md).
 
 ### Core
 The core (in the function `core.main`) loads the configuration, initialises all other components and then enters the main loop.

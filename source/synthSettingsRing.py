@@ -37,10 +37,12 @@ class SynthSetting(baseObject.AutoPropertyObject):
 	def _get_reportValue(self):
 		return self._getReportValue(self.value)
 
+
 class StringSynthSetting(SynthSetting):
-	def __init__(self,synth,setting):
-		self._values=list(getattr(synth,"available%ss"%setting.id.capitalize()).values())
-		super(StringSynthSetting,self).__init__(synth,setting,0,len(self._values)-1)
+
+	def _get__values(self):
+		self._values = list(getattr(self.synth, f"available{self.setting.id.capitalize()}s").values())
+		return self._values
 
 	def _get_value(self):
 		curID=getattr(self.synth,self.setting.id)

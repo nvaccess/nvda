@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2021 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
+# Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
 # Joseph Lee, Arnold Loubriat, Leonard de Ruijter
 
 import pkgutil
@@ -53,7 +53,7 @@ class SynthDriver(driverHandler.Driver):
 	Each synthesizer driver should be a separate Python module in the root synthDrivers directory
 	containing a SynthDriver class
 	which inherits from this base class.
-	
+
 	At a minimum, synth drivers must set L{name} and L{description} and override the L{check} method.
 	The methods L{speak}, L{cancel} and L{pause} should be overridden as appropriate.
 	L{supportedSettings} should be set as appropriate for the settings supported by the synthesiser.
@@ -343,7 +343,7 @@ class SynthDriver(driverHandler.Driver):
 		elif not onlyChanged:
 			changeVoice(self, None)
 		for s in self.supportedSettings:
-			if s.id == "voice" or c[s.id] is None:
+			if not s.useConfig or s.id == "voice" or c[s.id] is None:
 				continue
 			val = c[s.id]
 			if onlyChanged and getattr(self, s.id) == val:
@@ -466,12 +466,13 @@ def setSynth(name: Optional[str], isFallback: bool = False):
 		_curSynth = getSynthInstance(name, asDefault)
 	except:  # noqa: E722 # Legacy bare except
 		log.error(f"setSynth failed for {name}", exc_info=True)
-	
+
 	if _curSynth is not None:
 		_audioOutputDevice = config.conf["speech"]["outputDevice"]
 		if not isFallback:
 			config.conf["speech"]["synth"] = name
 		log.info(f"Loaded synthDriver {_curSynth.name}")
+		synthChanged.notify(synth=_curSynth, audioOutputDevice=_audioOutputDevice, isFallback=isFallback)
 		return True
 	# As there was an error loading this synth:
 	elif prevSynthName:
@@ -534,3 +535,16 @@ synthIndexReached = extensionPoints.Action()
 #: Handlers are called with one keyword argument:
 #: synth: The L{SynthDriver} which reached the index.
 synthDoneSpeaking = extensionPoints.Action()
+
+synthChanged = extensionPoints.Action()
+"""
+Action that allows components or add-ons to be notified of synthesizer changes.
+For example, when a system is controlled by a remote system and the remote system switches synth,
+The local system should be notified about synth parameters at the remote system.
+@param synth: The new synthesizer driver
+@type synth: L{SynthDriver}
+@param audioOutputDevice: The identifier of the audio output device used for this synth.
+@type audioOutputDevice: str
+@param isFallback: Whether the synth is set as fallback synth due to another synth's failure
+@type isFallback: bool
+"""

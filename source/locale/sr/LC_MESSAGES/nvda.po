@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA R3935\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-15 00:02+0000\n"
+"POT-Creation-Date: 2023-02-26 22:33+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Nikola Jović <wwenikola123@gmail.com>\n"
 "Language-Team: NVDA Serbian translation\n"
@@ -398,6 +398,10 @@ msgstr "sggstn"
 msgid "definition"
 msgstr "Definicija"
 
+#. Translators: Displayed in braille when an object is a switch control
+msgid "swtch"
+msgstr "swtch"
+
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
 msgstr "sel"
@@ -538,6 +542,18 @@ msgstr "USB"
 msgid "Bluetooth"
 msgstr "Bluetooth"
 
+#. Translators: Braille when there are further details/annotations that can be fetched manually.
+msgid "details"
+msgstr "Detalji"
+
+#. Translators: Braille when there are further details/annotations that can be fetched manually.
+#. %s specifies the type of details (e.g. "has comment suggestion")
+#. Translators: Speaks when there are further details/annotations that can be fetched manually.
+#. %s specifies the type of details (e.g. "comment, suggestion, details")
+#, python-format
+msgid "has %s"
+msgstr "Ima %s"
+
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
 #, python-format
@@ -547,18 +563,6 @@ msgstr "h%s"
 #. Translators: Displayed in braille for a link which has been visited.
 msgid "vlnk"
 msgstr "vlnk"
-
-#. Translators: Braille when there are further details/annotations that can be fetched manually.
-#. %s specifies the type of details (e.g. comment, suggestion)
-#. Translators: Speaks when there are further details/annotations that can be fetched manually.
-#. %s specifies the type of details (e.g. comment, suggestion)
-#, python-format
-msgid "has %s"
-msgstr "Ima %s"
-
-#. Translators: Braille when there are further details/annotations that can be fetched manually.
-msgid "details"
-msgstr "Detalji"
 
 #. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
@@ -617,19 +621,6 @@ msgstr "rslvd cmnt"
 #. Translators: brailled when text contains a bookmark
 msgid "bkmk"
 msgstr "bkmk"
-
-#. Translators: The label for a braille setting indicating that braille should be
-#. tethered to focus or review cursor automatically.
-msgid "automatically"
-msgstr "automatski"
-
-#. Translators: The label for a braille setting indicating that braille should be tethered to focus.
-msgid "to focus"
-msgstr "Fokus"
-
-#. Translators: The label for a braille setting indicating that braille should be tethered to the review cursor.
-msgid "to review"
-msgstr "Pregled"
 
 #. Translators: Label for a setting in braille settings dialog.
 msgid "Dot firm&ness"
@@ -797,8 +788,18 @@ msgstr "Danski osmotačkasti kompjuterski brajev kod"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Danish 8 dot computer braille (1993)"
+msgstr "Danski osmotačkasti kompjuterski brajev kod (1993)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Danish 6 dot grade 1"
 msgstr "danski šestotačkasti stepen 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Danish 6 dot grade 1 (1993)"
+msgstr "danski šestotačkasti stepen 1 (1993)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -807,13 +808,28 @@ msgstr "danski osmotačkasti stepen 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Danish 8 dot grade 1 (1993)"
+msgstr "danski osmotačkasti stepen 1 (1993)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Danish 6 dot grade 2"
 msgstr "danski šestotačkasti stepen 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Danish 6 dot grade 2 (1993)"
+msgstr "danski šestotačkasti stepen 2 (1993)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Danish 8 dot grade 2"
 msgstr "danski osmotačkasti stepen 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Danish 8 dot grade 2 (1993)"
+msgstr "danski osmotačkasti stepen 2 (1993)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1062,6 +1078,11 @@ msgstr "Kanada jezik stepen1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Georgian literary braille"
+msgstr "Gruzijski književni brajev kod"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Kazakh grade 1"
 msgstr "Kazahstanski stepen1"
 
@@ -1212,6 +1233,11 @@ msgstr "Sepedi stepen 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Chichewa (Malawi) literary braille"
+msgstr "Chichewa (Malawi) književni brajev kod"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Oriya grade 1"
 msgstr "Orija jezik stepen 1"
 
@@ -1334,6 +1360,36 @@ msgstr "Švedski brajev kod delimičnog kratkopisa"
 #. braille settings dialog.
 msgid "Swedish contracted braille"
 msgstr "Švedski kratkopis"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) grade 1"
+msgstr "Swahili (Kenija) stepen  1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) grade 1.2"
+msgstr "Swahili (Kenija) stepen 1.2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) grade 1.3"
+msgstr "Swahili (Kenija) stepen 1.3"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) grade 1.4"
+msgstr "Swahili (Kenija) stepen 1.4"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) grade 1.5"
+msgstr "Swahili (Kenija) stepen 1.5"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) Grade 2"
+msgstr "Swahili (Kenija) stepen 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2745,8 +2801,7 @@ msgstr "uključen izgovor ukucanih reči"
 msgid ""
 "Toggles on and off the speaking of typed keys, that are not specifically "
 "characters"
-msgstr ""
-"Uključuje i isključuje izgovor komandnih tastera, koji nisu određeni znakovi"
+msgstr "Uključuje i isključuje izgovor komandnih tastera, koji nisu znakovi"
 
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
 msgid "speak command keys off"
@@ -2919,20 +2974,10 @@ msgid "Cycles through line indentation settings"
 msgstr "Kruži kroz podešavanja za izgovor uvlačenja reda"
 
 #. Translators: A message reported when cycling through line indentation settings.
-msgid "Report line indentation with speech"
-msgstr "Prijavi uvlačenje reda izgovorom"
-
-#. Translators: A message reported when cycling through line indentation settings.
-msgid "Report line indentation with tones"
-msgstr "Prijavi uvlačenje reda Tonovima"
-
-#. Translators: A message reported when cycling through line indentation settings.
-msgid "Report line indentation with speech and tones"
-msgstr "Prijavi uvlačenje reda izgovaranjem i tonovima"
-
-#. Translators: A message reported when cycling through line indentation settings.
-msgid "Report line indentation off"
-msgstr "isključeno prijavljivanje uvlačenja reda"
+#. {mode} will be replaced with the mode; i.e. Off, Speech, Tones or Both Speech and Tones.
+#, python-brace-format
+msgid "Report line indentation {mode}"
+msgstr "Prijavljivanje uvlačenja reda {mode}"
 
 #. Translators: Input help mode message for toggle report paragraph indentation command.
 msgid "Toggles on and off the reporting of paragraph indentation"
@@ -2997,17 +3042,11 @@ msgstr "uključeno prijavljivanje koordinata ćelija u tabeli"
 msgid "Cycles through the cell border reporting settings"
 msgstr "Kruži kroz podešavanja za prijavljivanje granica ćelija"
 
-#. Translators: A message reported when cycling through cell borders settings.
-msgid "Report styles of cell borders"
-msgstr "Prijavi stilove granica ćelija"
-
-#. Translators: A message reported when cycling through cell borders settings.
-msgid "Report colors and styles of cell borders"
-msgstr "Prijavi boje i stilove granica ćelija"
-
-#. Translators: A message reported when cycling through cell borders settings.
-msgid "Report cell borders off."
-msgstr "isključeno prijavljivanje granica ćelija"
+#. Translators: Reported when the user cycles through report cell border modes.
+#. {mode} will be replaced with the mode; e.g. Off, Styles and Colors and styles.
+#, python-brace-format
+msgid "Report cell borders {mode}"
+msgstr "Prijavljivanje granica ćelija {mode}"
 
 #. Translators: Input help mode message for toggle report links command.
 msgid "Toggles on and off the reporting of links"
@@ -3174,6 +3213,19 @@ msgstr ""
 msgid "Symbol level %s"
 msgstr "nivo simbola %s"
 
+#. Translators: Input help mode message for toggle delayed character description command.
+msgid ""
+"Toggles on and off delayed descriptions for characters on cursor movement"
+msgstr "Uključuje i isključuje odložene opise znakova pri pomeranju kursora"
+
+#. Translators: The message announced when toggling the delayed character description setting.
+msgid "delayed character descriptions on"
+msgstr "Uključeni odloženi opisi znakova"
+
+#. Translators: The message announced when toggling the delayed character description setting.
+msgid "delayed character descriptions off"
+msgstr "Isključeni odloženi opisi znakova"
+
 #. Translators: Input help mode message for move mouse to navigator object command.
 msgid "Moves the mouse pointer to the current navigator object"
 msgstr "Pomera pokazivač miša na trenutni navigacioni objekat"
@@ -3199,7 +3251,7 @@ msgid ""
 "Switches to the next review mode (e.g. object, document or screen) and "
 "positions the review position at the point of the navigator object"
 msgstr ""
-"Prelazi na sledeći režim pregleda (npr. objekat, dokument ili ekran) i "
+"Prelazi na sledeći režim pregleda (na primer objekat, dokument ili ekran) i "
 "postavlja lokaciju za pregled na mesto navigacionog objekta"
 
 #. Translators: reported when there are no other available review modes for this object
@@ -3211,8 +3263,8 @@ msgid ""
 "Switches to the previous review mode (e.g. object, document or screen) and "
 "positions the review position at the point of the navigator object"
 msgstr ""
-"Prelazi na prethodni režim pregleda (npr. objekat, dokument ili ekran) i "
-"postavlja lokaciju za pregled na mesto navigacionog objekta"
+"Prelazi na prethodni režim pregleda (na primer objekat, dokument ili ekran) "
+"i postavlja lokaciju za pregled na mesto navigacionog objekta"
 
 #. Translators: reported when there are no other available review modes for this object
 msgid "No previous review mode"
@@ -3368,7 +3420,7 @@ msgid ""
 "Performs the default action on the current navigator object (example: "
 "presses it if it is a button)."
 msgstr ""
-"Izvršava podrazumevanu radnjuna trenutnom navigacionom objektu (na primer: "
+"Izvršava podrazumevanu radnju na trenutnom navigacionom objektu (na primer: "
 "ako je dugme pritiska ga)."
 
 #. Translators: the message reported when there is no action to perform on the review position or navigator object.
@@ -3380,16 +3432,16 @@ msgid ""
 "Moves the review cursor to the top line of the current navigator object and "
 "speaks it"
 msgstr ""
-"Pomera pregledni kursor na najvišu liniju trenutnog navigacijskog objekta i "
-"izgovara je"
+"Pomera pregledni kursor na prvi red trenutnog navigacionog objekta i "
+"izgovara ga"
 
 #. Translators: Input help mode message for move review cursor to previous line command.
 msgid ""
 "Moves the review cursor to the previous line of the current navigator object "
 "and speaks it"
 msgstr ""
-"Pomera pregledni kursor na prethodnu liniju trenutnog navigacijskog objekta "
-"i izgovara je"
+"Pomera pregledni kursor na prethodni red trenutnog navigacionog objekta i "
+"izgovara ga"
 
 #. Translators: a message reported when review cursor is at the top line of the current navigator object.
 #. Translators: Reported when attempting to move to the previous result in the Python Console
@@ -3404,16 +3456,16 @@ msgid ""
 "Pressing three times will spell the line using character descriptions."
 msgstr ""
 "Prijavljuje red trenutnog navigacionog objekta gde se nalazi pregledni "
-"kursor. Ako se taster dvaput pritisne, trenutni red biće sricana. Ako se "
-"pritisne tri puta sricaće liniju koristeći opise karaktera."
+"kursor. Ako se taster dvaput pritisne, trenutni red biće srican. Ako se "
+"pritisne tri puta sricaće red koristeći opise karaktera."
 
 #. Translators: Input help mode message for move review cursor to next line command.
 msgid ""
 "Moves the review cursor to the next line of the current navigator object and "
 "speaks it"
 msgstr ""
-"Pomera pregledni kursor na naredni red trenutnog navigacijskog objekta i "
-"izgovara je"
+"Pomera pregledni kursor na naredni red trenutnog navigacionog objekta i "
+"izgovara ga"
 
 #. Translators: Input help mode message for move review cursor to previous page command.
 msgid ""
@@ -3440,15 +3492,15 @@ msgid ""
 "Moves the review cursor to the bottom line of the current navigator object "
 "and speaks it"
 msgstr ""
-"Pomera pregledni kursor na najniži red trenutnog navigacijskog objekta i "
-"izgovara je"
+"Pomera pregledni kursor na poslednji red trenutnog navigacionog objekta i "
+"izgovara ga"
 
 #. Translators: Input help mode message for move review cursor to previous word command.
 msgid ""
 "Moves the review cursor to the previous word of the current navigator object "
 "and speaks it"
 msgstr ""
-"Pomera pregledni kursor na prethodnu reč trenutnog navigacijskog objekta i "
+"Pomera pregledni kursor na prethodnu reč trenutnog navigacionog objekta i "
 "izgovara je"
 
 #. Translators: Input help mode message for report current word under review cursor command.
@@ -3457,7 +3509,7 @@ msgid ""
 "situated. Pressing twice spells the word. Pressing three times spells the "
 "word using character descriptions"
 msgstr ""
-"Izgovara reč trenutnog navigacijskog objekta gde se nalazi pregledni kursor. "
+"Izgovara reč trenutnog navigacionog objekta gde se nalazi pregledni kursor. "
 "Ako se taster dvaput pritisne, sriče se reč. Ako se pritisne tri puta sriče "
 "se reč koristeći opise znakova."
 
@@ -3466,7 +3518,7 @@ msgid ""
 "Moves the review cursor to the next word of the current navigator object and "
 "speaks it"
 msgstr ""
-"Pomera pregledni kursor na sledeću reč trenutnog navigacijskog objekta i "
+"Pomera pregledni kursor na sledeću reč trenutnog navigacionog objekta i "
 "izgovara je"
 
 #. Translators: Input help mode message for move review cursor to start of current line command.
@@ -3475,15 +3527,15 @@ msgid ""
 "situated in the current navigator object and speaks it"
 msgstr ""
 "Pomera pregledni kursor na prvi znak reda gde je smešten u trenutnom "
-"navigacijskom objektu i izgovara ga"
+"navigacionom objektu i izgovara ga"
 
 #. Translators: Input help mode message for move review cursor to previous character command.
 msgid ""
 "Moves the review cursor to the previous character of the current navigator "
 "object and speaks it"
 msgstr ""
-"Pomera pregledni kursor na prethodni znak u trenutnom navigacijskom objektu "
-"i izgovara ga"
+"Pomera pregledni kursor na prethodni znak u trenutnom navigacionom objektu i "
+"izgovara ga"
 
 #. Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
 msgid "Left"
@@ -3496,7 +3548,7 @@ msgid ""
 "character. Pressing three times reports the numeric value of the character "
 "in decimal and hexadecimal"
 msgstr ""
-"Prijavljuje znak trenutnog navigacijskog objekta gde se nalazi pregledni "
+"Prijavljuje znak trenutnog navigacionog objekta gde se nalazi pregledni "
 "kursor. Ako se pritisne dvaput, prijavljuje opis ili primer tog znaka. Ako "
 "se pritisne tri puta prijaviće brojčanu vrednost znaka u decimalnom ili "
 "heksadecimalnom zapisu"
@@ -3506,7 +3558,7 @@ msgid ""
 "Moves the review cursor to the next character of the current navigator "
 "object and speaks it"
 msgstr ""
-"Pomera pregledni kursor na naredni znak u trenutnom navigacijskom objektu i "
+"Pomera pregledni kursor na naredni znak u trenutnom navigacionom objektu i "
 "izgovara ga"
 
 #. Translators: a message reported when review cursor is at the rightmost character of the current navigator object's text.
@@ -3519,7 +3571,7 @@ msgid ""
 "situated in the current navigator object and speaks it"
 msgstr ""
 "Pomera pregledni kursor na poslednji znak reda gde je smešten u trenutnom "
-"navigacijskom objektu i izgovara ga"
+"navigacionom objektu i izgovara ga"
 
 #. Translators: Input help mode message for Review Current Symbol command.
 msgid ""
@@ -3788,9 +3840,8 @@ msgid ""
 "Logs information about the current navigator object which is useful to "
 "developers and activates the log viewer so the information can be examined."
 msgstr ""
-"Upisuje informacije, koje su korisne programerima, o trenutnom navigacionom "
-"objektu u pregledni dnevnik i aktivira pregledni prozor tako da se "
-"informacije mogu istražiti."
+"Evidentira informacije o trenutnom navigacionom objektu koje su korisne "
+"programerima i aktivira preglednik dnevnika kako biste istražili informacije."
 
 #. Translators: Input help mode message for a command to delimit then
 #. copy a fragment of the log to clipboard
@@ -4061,24 +4112,24 @@ msgid ""
 "Activates the NVDA Add-ons Manager to install and uninstall add-on packages "
 "for NVDA"
 msgstr ""
-"aktivira menadžer NVDA dodataka koji se koristi za instaliranje i uklanjanje "
-"NVDA dodataka"
+"aktivira upravljač NVDA dodataka koji se koristi za instaliranje i "
+"uklanjanje NVDA dodataka"
 
 #. Translators: Input help mode message for toggle speech viewer command.
 msgid ""
 "Toggles the NVDA Speech viewer, a floating window that allows you to view "
 "all the text that NVDA is currently speaking"
 msgstr ""
-"Uključuje ili isključuje NVDA pregled govora, plutajući prozor koji vam "
+"Uključuje ili isključuje NVDA preglednik govora, plutajući prozor koji vam "
 "dozvoljava da vidite sav tekst koji NVDA izgovara"
 
 #. Translators: The message announced when disabling speech viewer.
 msgid "speech viewer disabled"
-msgstr "Pregled govora onemogućen"
+msgstr "Preglednik govora onemogućen"
 
 #. Translators: The message announced when enabling speech viewer.
 msgid "speech viewer enabled"
-msgstr "Pregled govora omogućen"
+msgstr "Preglednik govora omogućen"
 
 #. Translators: Input help mode message for toggle Braille viewer command.
 msgid ""
@@ -4355,6 +4406,32 @@ msgstr ""
 msgid "Plugins reloaded"
 msgstr "Dodaci ponovo učitani"
 
+#. Translators: input help mode message for Report destination URL of navigator link command
+msgid ""
+"Report the destination URL of the link in the navigator object. If pressed "
+"twice, shows the URL in a window for easier review."
+msgstr ""
+"Prijavljuje odredišnu adresu linka navigacionog objekta. Ako se pritisne dva "
+"puta, prikazuje adresu u prozoru radi lakšeg pregleda."
+
+#. Translators: Informs the user that the window contains the destination of the
+#. link with given title
+#, python-brace-format
+msgid "Destination of: {name}"
+msgstr "Odredište za: {name}"
+
+#. Translators: Tell user that the command has been run on something that is not a link
+msgid "Not a link."
+msgstr "Nije link."
+
+#. Translators: input help mode message for Report URL of navigator link in a window command
+msgid ""
+"Reports the destination URL of the link in the navigator object in a window, "
+"instead of just speaking it. May be preferred by braille users."
+msgstr ""
+"Prikazuje odredišnu adresu linka navigacionog objekta u prozoru, umesto da "
+"je samo izgovori. Može više odgovarati korisnicima brajevih redova."
+
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Moves to the next object in a flattened view of the object navigation "
@@ -4512,6 +4589,10 @@ msgstr "Ekran privremeno zatamnjen, omogućeno do sledećeg ponovnog pokretanja"
 #. Translators: Reported when the screen curtain could not be enabled.
 msgid "Could not enable screen curtain"
 msgstr "Nije moguće omogućiti zatamnjen ekran"
+
+#. Translators: Describes a command.
+msgid "Cycles through paragraph navigation styles"
+msgstr "Kruži kroz stilove navigacije po pasusima"
 
 #. Translators: a message indicating that configuration profiles can't be activated using gestures,
 #. due to profile activation being suspended.
@@ -4908,9 +4989,12 @@ msgstr "laptop"
 msgid "unknown %s"
 msgstr "nepoznato %s"
 
+#. Translators: a state that denotes a control is currently on
+#. E.g. a switch control.
 msgid "on"
 msgstr "uključeno"
 
+#. Translators: This is presented when a switch control is off.
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
@@ -6074,12 +6158,12 @@ msgid "Emulates pressing %s on the system keyboard"
 msgstr "Emulira pritiskanje %s na sistemskoj tastaturi"
 
 msgid "NVDA Speech Viewer"
-msgstr "NVDA pregled govora"
+msgstr "NVDA preglednik govora"
 
 #. Translators: The label for a setting in the speech viewer that controls
 #. whether the speech viewer is shown at startup or not.
 msgid "&Show Speech Viewer on Startup"
-msgstr "&Prikaži pregled govora pri pokretanju "
+msgstr "&Prikaži preglednik govora pri pokretanju "
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Language"
@@ -6310,6 +6394,7 @@ msgstr "Greška pri proveri dostupnih ažuriranja"
 #. Translators: The title of the message box
 #. Translators: The title of the error dialog displayed when there is an error showing the GUI
 #. for a vision enhancement provider
+#. Translators: The title of an error message box displayed when validating the startup dialog
 msgid "Error"
 msgstr "Greška"
 
@@ -6559,6 +6644,11 @@ msgstr ""
 msgid "%d percent"
 msgstr "%d  procenata"
 
+#. Translators: Announced in braille when suggestions appear when search term is entered
+#. in various search fields such as Start search box in Windows 10.
+msgid "Suggestions"
+msgstr "Predlozi"
+
 #. Translators: a message announcing a candidate's character and description.
 #, python-brace-format
 msgid "{symbol} as in {description}"
@@ -6600,10 +6690,6 @@ msgstr "Pomera navigacioni objekat i fokus na prvi red"
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object and focus to the last row"
 msgstr "Pomera navigacioni objekat i fokus na poslednji red"
-
-#. Translators: Announced in braille when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
-msgid "Suggestions"
-msgstr "Predlozi"
 
 #. Translators: The label for a 'composition' Window that appears when the user is typing one or more east-Asian characters into a document.
 msgid "Composition"
@@ -6676,20 +6762,39 @@ msgstr "Nemoguće pronaći prozor sa dokumentacijom."
 msgid "No track playing"
 msgstr "Nijedan zapis se trenutno ne reprodukuje"
 
+#. Translators: Reported remaining time in Foobar2000
+#, python-brace-format
+msgid "{remainingTimeFormatted} remaining"
+msgstr "{remainingTimeFormatted} preostalo"
+
 #. Translators: Reported if the remaining time can not be calculated in Foobar2000
-msgid "Unable to determine remaining time"
-msgstr "Nemoguće odrediti preostalo vreme"
+msgid "Remaining time not available"
+msgstr "Preostalo vreme nije dostupno"
 
 #. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr ""
 "Izveštava o preostalom vremenu trenutno reprodukovanog zapisa, ako ga ima"
 
+#. Translators: Reported elapsed time in Foobar2000
+#, python-brace-format
+msgid "{elapsedTime} elapsed"
+msgstr "{elapsedTime} proteklo"
+
+#. Translators: Reported if the elapsed time is not available in Foobar2000
+msgid "Elapsed time not available"
+msgstr "Proteklo vreme nije dostupno"
+
 #. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
 msgid "Reports the elapsed time of the currently playing track, if any"
 msgstr ""
 "Prijavljuje proteklo vreme zapisa koji se reprodukuje, ako se neki zapis "
 "reprodukuje"
+
+#. Translators: Reported remaining time in Foobar2000
+#, python-brace-format
+msgid "{totalTime} total"
+msgstr "{totalTime} ukupno"
 
 #. Translators: Reported if the total time is not available in Foobar2000
 msgid "Total time not available"
@@ -7376,9 +7481,60 @@ msgstr "&Prikaži preglednik brajevog reda pri pokretanju"
 msgid "&Hover for cell routing"
 msgstr "&prevlačenje za prebacivanje na ćeliju"
 
-#. Translators: This is the label for a combobox in the
-#. document formatting settings panel.
-#. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+#. Translators: One of the show states of braille messages
+#. (the disabled mode turns off showing of braille messages completely).
+#. Translators: Label for an option in NVDA settings.
+#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
+msgid "Disabled"
+msgstr "Onemogućeno"
+
+#. Translators: One of the show states of braille messages
+#. (the timeout mode shows messages for the specific time).
+msgid "Use timeout"
+msgstr "Koristi vreme isteka"
+
+#. Translators: One of the show states of braille messages
+#. (the indefinitely mode prevents braille messages from disappearing automatically).
+msgid "Show indefinitely"
+msgstr "Beskonačno prikazuj"
+
+#. Translators: The label for a braille setting indicating that braille should be
+#. tethered to focus or review cursor automatically.
+msgid "automatically"
+msgstr "automatski"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered to focus.
+msgid "to focus"
+msgstr "Fokus"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered
+#. to the review cursor.
+msgid "to review"
+msgstr "Pregled"
+
+#. Translators: A choice in a combo box in the document formatting dialog to report No line Indentation.
+msgctxt "line indentation setting"
+msgid "Off"
+msgstr "Isključeno"
+
+#. Translators: A choice in a combo box in the document formatting dialog to report indentation
+#. with Speech.
+msgctxt "line indentation setting"
+msgid "Speech"
+msgstr "Govor"
+
+#. Translators: A choice in a combo box in the document formatting dialog to report indentation
+#. with tones.
+msgctxt "line indentation setting"
+msgid "Tones"
+msgstr "Tonovi"
+
+#. Translators: A choice in a combo box in the document formatting dialog to report indentation with both
+#. Speech and tones.
+msgctxt "line indentation setting"
+msgid "Both Speech and Tones"
+msgstr "Govor i tonovi"
+
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
 msgid "Off"
@@ -7399,17 +7555,40 @@ msgstr "Redovi"
 msgid "Columns"
 msgstr "Kolone"
 
-#. Translators: Label for an option in NVDA settings.
-#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
-#. Translators: One of the show states of braille messages
-#. (the disabled mode turns off showing of braille messages completely).
-msgid "Disabled"
-msgstr "Onemogućeno"
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Styles"
+msgstr "Stilovi"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Both Colors and Styles"
+msgstr "Boje i stilovi"
 
 #. Translators: Label for an option in NVDA settings.
 #. Translators: The status shown for an addon when its currently running in NVDA.
 msgid "Enabled"
 msgstr "Omogućeno"
+
+#. Translators: Label for a paragraph style in NVDA settings.
+msgid "Handled by application"
+msgstr "Kontrolisan od strane aplikacije"
+
+#. Translators: Label for a paragraph style in NVDA settings.
+msgid "Single line break"
+msgstr "Jedan novi red"
+
+#. Translators: Label for a paragraph style in NVDA settings.
+msgid "Multi line break"
+msgstr "Više novih redova"
+
+#. Translators: Label for an option in NVDA settings.
+msgid "Diffing"
+msgstr "Prepoznavanje razlika"
+
+#. Translators: Label for an option in NVDA settings.
+msgid "UIA notifications"
+msgstr "UIA obaveštenja"
 
 #. Translators: The title of the document used to present the result of content recognition.
 msgid "Result"
@@ -8177,6 +8356,11 @@ msgstr "Komentar"
 msgid "suggestion"
 msgstr "predlog"
 
+#. Translators: The word role for a switch control
+#. I.e. a control that can be switched on or off.
+msgid "switch"
+msgstr "Prekidač"
+
 #. Translators: Indicates that a particular state of an object is negated.
 #. Separate strings have now been defined for commonly negated states (e.g. not selected and not
 #. checked), but this still might be used in some other cases.
@@ -8376,6 +8560,13 @@ msgstr "nije označeno"
 msgid "done dragging"
 msgstr "završeno prevlačenje"
 
+#. Translators: This is spoken when a paragraph is considered blank.
+#. Translators: This is spoken when the line is considered blank.
+#. Translators: This is spoken when NVDA moves to an empty line.
+#. Translators: This is spoken when the line is considered blank.
+msgid "blank"
+msgstr "prazno"
+
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 msgid "Configuration applied"
 msgstr "Podešavanja primenjena"
@@ -8476,7 +8667,7 @@ msgstr "Pregled dnevnika"
 
 #. Translators: The label for the menu item to toggle Speech Viewer.
 msgid "Speech viewer"
-msgstr "Pregled govora"
+msgstr "Preglednik govora"
 
 #. Translators: The label for the menu item to toggle Braille Viewer.
 msgid "Braille viewer"
@@ -8973,6 +9164,10 @@ msgstr "Radnja nije dostupna u NVDA verziji iz Windows prodavnice"
 msgid "Action unavailable while a dialog requires a response"
 msgstr "Radnja nije dostupna dok dijalog zahteva odgovor"
 
+#. Translators: Reported when an action cannot be performed because Windows is locked.
+msgid "Action unavailable while Windows is locked"
+msgstr "Radnja nije dostupna dok je Windows zaključan"
+
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
 msgstr "Profili podešavanja"
@@ -9024,8 +9219,10 @@ msgid "Error activating profile."
 msgstr "Greška pri aktivaciji profila"
 
 #. Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
-msgid "This profile will be permanently deleted. This action cannot be undone."
-msgstr "Ovaj profil će zauvek biti obrisan. Ova radnja nemože biti poništena."
+#. The placeholder {} is replaced with the name of the configuration profile that will be deleted.
+msgid ""
+"The profile {} will be permanently deleted. This action cannot be undone."
+msgstr "Profil {} će zauvek biti obrisan. Ova radnja nemože biti poništena."
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 msgid "Confirm Deletion"
@@ -10188,19 +10385,6 @@ msgstr "broj red&ova"
 msgid "Line &indentation reporting:"
 msgstr "Prijavi uv&lačenje reda:"
 
-#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
-msgctxt "line indentation setting"
-msgid "Speech"
-msgstr "Govor"
-
-#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
-msgid "Tones"
-msgstr "Tonovi"
-
-#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
-msgid "Both Speech and Tones"
-msgstr "Govor i tonovi"
-
 #. Translators: This message is presented in the document formatting settings panelue
 #. If this option is selected, NVDA will report paragraph indentation if available.
 msgid "&Paragraph indentation"
@@ -10235,16 +10419,6 @@ msgstr "&Zaglavlja"
 #. document formatting settings panel.
 msgid "Cell c&oordinates"
 msgstr "ko&ordinati ćelija u tabeli"
-
-#. Translators: This is the label for a combobox in the
-#. document formatting settings panel.
-msgid "Styles"
-msgstr "Stilovi"
-
-#. Translators: This is the label for a combobox in the
-#. document formatting settings panel.
-msgid "Both Colors and Styles"
-msgstr "Boje i stilovi"
 
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
@@ -10301,6 +10475,14 @@ msgstr "&Klikabilnost"
 msgid "Report formatting chan&ges after the cursor (can cause a lag)"
 msgstr ""
 "Najavi promene u &formatiranju posle kursora (može izazvati usporen rad)"
+
+#. Translators: This is the label for the document navigation settings panel.
+msgid "Document Navigation"
+msgstr "Navigacija kroz dokument"
+
+#. Translators: This is a label for the paragraph navigation style in the document navigation dialog
+msgid "&Paragraph style:"
+msgstr "&Stil pasusa:"
 
 #. Translators: This is the label for the touch interaction settings panel.
 msgid "Touch Interaction"
@@ -10549,6 +10731,10 @@ msgstr "Diff Match Patch"
 msgid "Difflib"
 msgstr "Difflib"
 
+#. Translators: This is the label for a combo-box in the Advanced settings panel.
+msgid "Speak new text in Windows Terminal via:"
+msgstr "Izgovaraj novi tekst u Windows terminalu koristeći:"
+
 #. Translators: This is the label for combobox in the Advanced settings panel.
 msgid "Attempt to cancel speech for expired focus events:"
 msgstr "Pokušavanje otkazivanja govora za kontrole koje više nisu fokusirane:"
@@ -10691,16 +10877,6 @@ msgstr "oblik kursora za &fokus: "
 #. Translators: The label for a setting in braille settings to select the cursor shape when tethered to review.
 msgid "Cursor shape for &review:"
 msgstr "&oblik kursora za pregled: "
-
-#. Translators: One of the show states of braille messages
-#. (the timeout mode shows messages for the specific time).
-msgid "Use timeout"
-msgstr "Koristi vreme isteka"
-
-#. Translators: One of the show states of braille messages
-#. (the indefinitely mode prevents braille messages from disappearing automatically).
-msgid "Show indefinitely"
-msgstr "Beskonačno prikazuj"
 
 #. Translators: The label for a setting in braille settings to combobox enabling user
 #. to decide if braille messages should be shown and automatically disappear from braille display.
@@ -10980,7 +11156,7 @@ msgstr ""
 "Većina komandi za kontrolisanje NVDA zahteva da držite pritisnut NVDA taster "
 "dok pritiskate druge tastere.\n"
 "Po osnovnim podešavanjima, numerički insert i osnovni insert taster mogu "
-"biti korišćeni kao NVDA taster.\n"
+"biti korišćeni kao NVDA tasteri.\n"
 "Možete takođe podesiti NVDA da koristi CapsLock kao NVDA taster.\n"
 "Pritisnite NVDA+n u bilo kom trenutku da aktivirate NVDA meni.\n"
 "Iz ovog menija možete podesiti NVDA, dobiti pomoć i pristupiti drugim NVDA "
@@ -11002,6 +11178,14 @@ msgstr "&Koristite caps lock kao NVDA taster"
 #. Translators: The label of a checkbox in the Welcome dialog.
 msgid "&Show this dialog when NVDA starts"
 msgstr "&Prikaži ovaj dijalog kada se NVDA pokrene"
+
+#. Translators: The title of an error message box displayed when validating the startup dialog
+msgid ""
+"At least one NVDA modifier key must be set. Caps lock will remain as an NVDA "
+"modifier key. "
+msgstr ""
+"Barem jedan NVDA modifikatorski taster mora biti podešen. Taster velika "
+"slova će ostati NVDA taster."
 
 #. Translators: The label for a checkbox in NvDA installation program to agree to the license agreement.
 msgid "I &agree"
@@ -11063,12 +11247,6 @@ msgstr "izlaz iz matematičkog izraza"
 msgid "Math interaction not supported."
 msgstr "interakcija sa Matematičkim izrazom nije podržana"
 
-#. Translators: This is spoken when the line is considered blank.
-#. Translators: This is spoken when NVDA moves to an empty line.
-#. Translators: This is spoken when the line is considered blank.
-msgid "blank"
-msgstr "prazno"
-
 #. Translators: cap will be spoken before the given letter when it is capitalized.
 #, python-format
 msgid "cap %s"
@@ -11112,15 +11290,19 @@ msgid "row %s"
 msgstr "red%s"
 
 #. Translators: Speaks the row span added to the current row number (example output: through 5).
-#. Translators: Speaks the column span added to the current column number (example output: through 5).
-#, python-format
-msgid "through %s"
-msgstr "Kroz%s"
+#, python-brace-format
+msgid "through {endRow}"
+msgstr "do {endRow}"
 
 #. Translators: Speaks current column number (example output: column 3).
 #, python-format
 msgid "column %s"
 msgstr "kolona %s"
+
+#. Translators: Speaks the column span added to the current column number (example output: through 5).
+#, python-brace-format
+msgid "through {endCol}"
+msgstr "do {endCol}"
 
 #. Translators: Speaks the row and column span added to the current row and column numbers
 #. (example output: through row 5 column 3).
@@ -11515,6 +11697,41 @@ msgstr "{curPercent:.0f}%"
 #, python-brace-format
 msgid "at {x}, {y}"
 msgstr "u {x}, {y}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds
+#, python-brace-format
+msgctxt "time format"
+msgid "{S}"
+msgstr "{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes
+#, python-brace-format
+msgctxt "time format"
+msgid "{M}:{S}"
+msgstr "{M}:{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes, {H} hours
+#, python-brace-format
+msgctxt "time format"
+msgid "{H}:{M}:{S}"
+msgstr "{H}:{M}:{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes, {H} hours, {D} day
+#, python-brace-format
+msgctxt "time format"
+msgid "{D} day {H}:{M}:{S}"
+msgstr "{D} dan {H}:{M}:{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes, {H} hours, {D} days
+#, python-brace-format
+msgctxt "time format"
+msgid "{D} days {H}:{M}:{S}"
+msgstr "{D} dana {H}:{M}:{S}"
 
 #. Translators: This is the message for a warning shown if NVDA cannot determine if
 #. Windows is locked.
@@ -12613,11 +12830,13 @@ msgstr "Unos legende{legendEntryIndex} od{legendEntryCount}"
 msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr "Kod u legendi za seriju {seriesName} {seriesIndex} od {seriesCount}"
 
-#. Translators: The default color of text when a color has not been set by the author.
-#. Translators: The default background color  when a color has not been set by the author.
-#. Translators: the default (automatic) color in Microsoft Word
-msgid "default color"
-msgstr "zadana boja"
+#. Translators: The text color as reported in Wordpad (Automatic) or NVDA log viewer.
+#. Translators: The background color as reported in Wordpad (Automatic) or NVDA log viewer.
+#. Translators: The text color as reported in Wordpad (Automatic) or NVDA log viewer.
+#. Translators: The background color as reported in Wordpad (Automatic) or NVDA log viewer.
+#, python-brace-format
+msgid "{color} (default color)"
+msgstr "{color} (podrazumevana boja)"
 
 #. Translators: The color of text cannot be detected.
 #. Translators: The background color cannot be detected.
@@ -13159,6 +13378,10 @@ msgstr "%.1f redova "
 msgid "Table description"
 msgstr "opis tabele "
 
+#. Translators: the default (automatic) color in Microsoft Word
+msgid "automatic color"
+msgstr "Automatska boja"
+
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Bold on"
 msgstr "Podebljanje uključeno"
@@ -13289,6 +13512,40 @@ msgstr "odvajanje više redova "
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5 odvajanje redova"
+
+#. Translators: Names of braille displays.
+msgid "Caiku Albatross 46/80"
+msgstr "Caiku Albatross 46/80"
+
+#. Translators: A message when number of status cells must be changed
+#. for a braille display driver
+msgid ""
+"To use Albatross with NVDA: change number of status cells in Albatross "
+"internal menu at most "
+msgstr ""
+"Da biste koristili Albatross uz NVDA: promenite broj statusnih ćelija u "
+"Albatross internom meniju "
+
+#~ msgid "Unable to determine remaining time"
+#~ msgstr "Nemoguće odrediti preostalo vreme"
+
+#~ msgid "through %s"
+#~ msgstr "Kroz%s"
+
+#~ msgid "Report line indentation with speech"
+#~ msgstr "Prijavi uvlačenje reda izgovorom"
+
+#~ msgid "Report line indentation with tones"
+#~ msgstr "Prijavi uvlačenje reda Tonovima"
+
+#~ msgid "Report line indentation with speech and tones"
+#~ msgstr "Prijavi uvlačenje reda izgovaranjem i tonovima"
+
+#~ msgid "Report styles of cell borders"
+#~ msgstr "Prijavi stilove granica ćelija"
+
+#~ msgid "Report colors and styles of cell borders"
+#~ msgstr "Prijavi boje i stilove granica ćelija"
 
 #~ msgid ""
 #~ "NVDA is failing to fetch the foreground window. If this continues, NVDA "
