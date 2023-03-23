@@ -222,7 +222,7 @@ Chức năng thật sự của thao tác sẽ không được thực thi khi ở
 | Đọc thanh trạng thái | ``NVDA+end`` | ``NVDA+shift+end`` | Đọc thông tin thanh trạng thái nếu NVDA tìm thấy. Bấm hai lần để đánh vần thông tin. Bấm ba lần để chép nó vào bộ nhớ tạm |
 | Đọc giờ | ``NVDA+f12`` | ``NVDA+f12`` | Bấm một lần để đọc giờ hiện tại, bấm hai lần để đọc ngày |
 | Thông báo định dạng văn bản | ``NVDA+f`` | ``NVDA+f`` | Thông báo định dạng văn bản. Bấm hai lần để hiển thị thông tin trên một cửa sổ |
-| Thông báo đường dẫn liên kết | ``NVDA+k`` | ``NVDA+k`` | Bấm một lần để đọc đường dẫn URL của liên kết trong [đối tượng điều hướng #ObjectNavigation]. Bấm hai lần sẽ hiển thị nó trên một cửa sổ để dễ kiểm lại hơn |
+| Thông báo đường dẫn liên kết | ``NVDA+k`` | ``NVDA+k`` | Bấm một lần để đọc đường dẫn URL của liên kết trong [đối tượng điều hướng #ObjectNavigation]. Bấm hai lần sẽ hiển thị nó trên một cửa sổ để dễ xem lại hơn |
 
 +++ Bật / tắt các thông tin được NVDA đọc +++[ToggleWhichInformationNVDAReads]
 || Tên | Phím máy bàn | Phím máy xách tay | Mô tả |
@@ -2271,7 +2271,7 @@ Hộp xổ Đọc văn bản mới trong Windows Terminal có ba tùy chọn:
 - Các thông báo UIA: tùy chọn này thiên về phản hồi của việc Windows Terminal tự xác định  sẽ nói nội dung văn bản nào, nghĩa là NVDA không còn xác định văn bản nào hiển thị trên màn hình là "mới".
 Điều này sẽ cải thiện rõ rệt hiệu  xuất vận hành và tính ổn định của Windows Terminal, nhưng tính năng này chưa hoàn thành.
 Cụ thể, các kí tự nhập vào mà không hiện trên màn hình như mật khẩu chẳng hạn, sẽ được đọc lên khi dùng tùy chọn này.
-Thêm nữa, việc liên tục xuất hiện vượt quá 1,000 kí tự có thể sẽ không được đọc đọc một cách chính xác.
+Thêm nữa, việc liên tục xuất hiện vượt quá 1,000 kí tự có thể sẽ không được đọc một cách chính xác.
 -
 
 ==== Cố gắng không đọc các sự kiện lỗi thời của focus ====[CancelExpiredFocusSpeech]
@@ -3613,7 +3613,7 @@ Vui lòng xem [Danh sách phím kết hợp của BRLTTY http://mielke.cc/brltty
 ++ Tivomatic Caiku Albatross 46/80 ++[Albatross]
 Các thiết bị của Caiku Albatross được sản xuất bởi Tivomatic và có mặt ở phần lan, có thể được kết nối bằng USB hoặc serial.
 bạn không cần cài thêm bất cứ trình điều khiển nào để dùng các màn hình này.
-Chỉ cần cắm màn hình ào và cấu hình NVDA để sử dụng.
+Chỉ cần cắm màn hình vào và cấu hình NVDA để sử dụng.
 
 Lưu ý: tốc độ truyền 19200 được khuyến khích mạnh mẽ.
 Nếu được yêu cầu, hãy chuyển giá trị của thiết lập tốc độ truyền là 19200 từ trình đơn của màn hình nổi.
@@ -3656,7 +3656,7 @@ Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết cá
 | Thông báo thanh trạng thái | ``f12`` |
 | Thông báo dòng hiện tại dưới con trỏ của ứng dụng | ``f13`` |
 | Đọc tất cả | ``f14`` |
-| Thông báo kí tự hiện tài dưới con trỏ duyệt | ``f15`` |
+| Thông báo kí tự hiện tại dưới con trỏ duyệt | ``f15`` |
 | Thông báo dòng ở đối tượng điều hướng hiện tại của con trỏ duyệt | ``f16`` |
 | Đọc từ của đối tượng điều hướng hiện tại ở vị trí con trỏ duyệt | ``f15+f16`` |
 | Chuyển con trỏ duyệt đến dòng trước của đối tượng điều hướng hiện tại và đọc nó lên | ``lWheelUp``, ``rWheelUp`` |

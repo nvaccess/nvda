@@ -167,6 +167,12 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			if controlTypes.State.CHECKED in states:
 				states.discard(controlTypes.State.CHECKED)
 				states.add(controlTypes.State.ON)
+		popupState = aria.ariaHaspopupValuesToNVDAStates.get(
+			attrs.get("IAccessible2::attribute_haspopup")
+		)
+		if popupState:
+			states.discard(controlTypes.State.HASPOPUP)
+			states.add(popupState)
 		attrs['role']=role
 		attrs['states']=states
 		if level != "" and level is not None:
