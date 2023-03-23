@@ -6,7 +6,10 @@ What's New in NVDA
 = 2023.2 =
 
 == New Features ==
-- Added pronunciation of Unicode braille symbols such as "⠐⠣⠃⠗⠇⠐⠜". (#14548)
+- Added pronunciation of Unicode symbols:
+  - braille symbols such as "⠐⠣⠃⠗⠇⠐⠜". (#14548)
+  - Mac Option key symbol "⌥". (#14682)
+  -
 - In Mozilla Firefox and Google Chrome, NVDA now reports when a control opens a dialog, grid, list or tree if the author has specified this using aria-haspopup. (#14709)
 - 
 
@@ -26,6 +29,7 @@ This only worked for Bluetooth Serial ports before. (#14524)
 - It is now possible to use the backslash character in the replacement field of a dictionaries entry, when the type is not set to regular expression. (#14556)
 - In Browse mode, NVDA will no longer incorrectly ignore focus moving to a parent or child control e.g. moving from a control to its parent list item or gridcell. (#14611)
   - Note however that this fix only applies when the Automatically set focus to focusable elements" option in Browse Mode settings is turned off (which is the default).
+  -
 - NVDA no longer occasionally causes Mozilla Firefox to crash or stop responding. (#14647)
 - In Mozilla Firefox and Google Chrome, typed characters are no longer reported in some text boxes even when speak typed characters is disabled. (#14666)
 - You can now use browse mode in Chromium Embedded Controls where it was not possible previously. (#13493, #8553)
