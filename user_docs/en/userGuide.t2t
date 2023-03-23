@@ -2350,6 +2350,7 @@ You can filter the symbols by entering the symbol or a part of the symbol's repl
 
 - The Replacement field allows you to change the text that should be spoken in place of this symbol.
 - Using the Level field, you can adjust the lowest symbol level at which this symbol should be spoken.
+If you set the level on "character", the symbol will not be spoken regardless of the symbol level you are using, except when you navigate by character or when the character is spelt.
 - The Send actual symbol to synthesizer field specifies when the symbol itself (in contrast to its replacement) should be sent to the synthesizer.
 This is useful if the symbol causes the synthesizer to pause or change the inflection of the voice.
 For example, a comma causes the synthesizer to pause.
