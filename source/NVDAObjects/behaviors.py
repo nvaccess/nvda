@@ -446,7 +446,7 @@ class LiveText(NVDAObject):
 						# so ignore it.
 						del outLines[0]
 					if outLines:
-						queueHandler.queueFunction(queueHandler.eventQueue, self._reportNewLines, outLines)
+						queueHandler.queueFunction(queueHandler.eventQueue, self._reportNewLines, outLines, _immediate=True)
 				oldText = newText
 			except:
 				log.exception("Error getting or calculating new text")
