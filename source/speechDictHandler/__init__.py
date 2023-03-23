@@ -44,7 +44,8 @@ class SpeechDictEntry:
 		if self.type == ENTRY_TYPE_REGEXP:
 			replacement = self.replacement
 		else:
-			replacement = re.escape(self.replacement)
+			# Escape the backslashes for non-regexp replacements
+			replacement = self.replacement.replace('\\', '\\\\')
 		return self.compiled.sub(replacement, text)
 
 class SpeechDict(list):

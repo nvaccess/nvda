@@ -4,6 +4,25 @@ Traduzido pela Equipa portuguesa do NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2023.1 =
+Foi adicionada uma nova opção, "Estilo do Parágrafo" em "Navegação em Documentos".
+Esta funcionalidade pode ser utilizada com editores de texto que não suportam a navegação por parágrafo nativamente, tais como o Bloco de Notas e o NotePad++.
+
+Foi adicionado um novo comando global para anunciar o destino de um link, associado a "NVDA+k`".
+
+O suporte para o conteúdo anotado da web (como comentários e notas de rodapé) foi melhorado.
+Pressione "NVDA+d" para alternar entre resumos quando as anotações são anunciadas (por exemplo, "tem comentário, tem nota de rodapé").
+
+As linhas Braille Tivomatic Caiku Albatross 46/80 já são suportadas nativamente.
+
+O suporte para as versões ARM64 e AMD64 do Windows foi melhorado.
+
+Feitas muitas correcções de bugs, nomeadamente correcções para o Windows 11.
+
+eSpeak, LibLouis, Sonic rate boost e Unicode CLDR foram actualizados.
+Existem novas tabelas Braille da Geórgia, Suaíli (Quénia) e Chichewa (Malawi).
+
+Nota:
+Esta versão quebra a compatibilidade com os extras existentes.
 
 == Novas funcionalidades ==
 - Microsoft Excel via UI Automation: Anúncio automático de cabeçalhos de colunas e linhas em tabelas. (#14228)
@@ -23,6 +42,11 @@ Esta funcionalidade pode ser usada com editores de texto que não suportam naveg
 "nvda+d" passa agora a alternar o anúncio do resumo de cada anotação para as origens com múltiplas anotações.
 Por exemplo, quando o texto tem um comentário e uma nota de rodapé a ele associada. (#14507, #14480)
 - Adicionado suporte para as linhas Braille Tivomatic Caiku Albatross 46/80. (#13045)
+- Novo comando global: Anúncio de destino do link ("NVDA+k").
+Pressionado uma vez anuncia em voz e Braille o destino do link no objecto de navegação.
+Pressionando duas vezes, a informação será mostrado numa janela, para uma revisão mais detalhada. (#14583)
+- Novo comando global, sem associação de teclas, (Categoria Ferramentas): Anunciar o destino do link numa janela.
+O mesmo que pressionar ``NVDA+k`` duas vezes, mas pode ser mais útil para os utilizadores de braille. (#14583)-
 -
 
 
@@ -34,7 +58,7 @@ Por exemplo, quando o texto tem um comentário e uma nota de rodapé a ele assoc
   -
 - A biblioteca Sonic rate boost foi actualizada para o commit "1d70513". (#14180)
 - O CLDR foi actualizado para a versão 42.0. (#14273)
-- O eSpeak NG foi actualizado para a versão 1,52-dev commit "a51235aa". (#14281)
+- O eSpeak NG foi actualizado para a versão 1,52-dev commit "f520fecb". (#14281, #14675)
   - Corrigido o anúncio de grandes números. (#14241)
   -
 - As aplicações Java com controlos utilizando o estado seleccionável anunciarão agora quando um item não está seleccionado e não quando o item está seleccionado. (#14336)
@@ -68,12 +92,15 @@ Por exemplo, quando o texto tem um comentário e uma nota de rodapé a ele assoc
   - Em alguns casos raros, estas opções utilizadas em perfis podem ser modificadas inesperadamente aquando da instalação desta versão do NVDA.
   - Por favor verifique estas opções nos seus perfis após actualizar o NVDA para esta versão.
   -
+- Os Emojis devem passar a ser anunciados em mais idiomas. (#14433)
+- A presença de uma anotação já não deixará de aparecer em Braille para alguns elementos. (#13815)
 - Corrigido um problema em que as alterações de configuração não eram guardadas correctamente ao mudar entre uma opção "Predefinição" e o valor da predefinição. (#14133)
 - Ao configurar o NVDA ficará sempre definida, pelo menos, uma tecla NVDA. (#14527)
 - Ao aceder ao menu do NVDA através da área de notificação, o NVDA não sugerirá mais uma actualização pendente quando esta não exista. (#14523)
-- Os Emojis passam a ser anunciados em mais idiomas. (#14433)
-- A presença de uma anotação já não é omitida em braille para alguns elementos. (#13815)
+- O tempo restante, passado e total é agora anunciado correctamente para ficheiros áudio ao longo de um dia no foobar2000. (#14127)
 - Em navegadores web como o Chrome e o Firefox, alertas como downloads de ficheiros são mostrados em braille, para além de serem falados. (#14562)
+- Corrigido o erro ao navegar para a primeira ou última coluna numa tabela no Firefox (#14554)
+- Quando o NVDA é iniciado com o parâmetro ``--lang=Windows```, volta a ser possível abrir o diálogo de Configurações gerais do NVDA. (#14407)
 -
 
 
@@ -82,17 +109,17 @@ Note: this is an Add-on API compatibility breaking release.
 Add-ons will need to be re-tested and have their manifest updated.
 Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] for information on NVDA's API deprecation and removal process.
 
-- System test should now pass when run locally on non-English systems. (#13362)
+- System tests should now pass when run locally on non-English systems. (#13362)
 - In Windows 11 on ARM, x64 apps are no longer identified as ARM64 applications. (#14403)
 - It is no longer necessary to use ``SearchField`` and ``SuggestionListItem`` ``UIA`` ``NVDAObjects`` in new UI Automation scenarios, where automatic reporting of search suggestions, and where typing has been exposed via UI Automation with the ``controllerFor`` pattern.
-This functionality is now available generically via ``behaviours.EditableText`` and the base ``NVDAObject`` respectively.
-- the UIA debug logging category when enabled now produces significantly more logging for UIA event handlers and utilities. (#14256)
+This functionality is now available generically via ``behaviours.EditableText`` and the base ``NVDAObject`` respectively. (#14222)
+- The UIA debug logging category when enabled now produces significantly more logging for UIA event handlers and utilities. (#14256)
 - NVDAHelper build standards updated. (#13072)
   - Now uses the C++20 standard, was C++17.
-  - Now uses the '/permissive-' compiler flag which disables permissive behaviors, and sets the '/Zc' compiler options for strict conformance.
+  - Now uses the ``/permissive-`` compiler flag which disables permissive behaviors, and sets the ``/Zc`` compiler options for strict conformance.
   -
 - Some plugin objects (e.g. drivers and add-ons) now have a more informative description in the NVDA python console. (#14463)
-- NVDA can now be fully compiled with Visual Studio 2022, no longer requiring the Visual Studio 2019 build tools.
+- NVDA can now be fully compiled with Visual Studio 2022, no longer requiring the Visual Studio 2019 build tools. (#14326)
 - More detailed logging for NVDA freezes to aid debugging. (#14309)
 - The singleton ``braille._BgThread`` class has been replaced with ``hwIo.ioThread.IoThread``. (#14130)
   - A single instance ``hwIo.bgThread`` (in NVDA core) of this class provides background i/o for thread safe braille display drivers.
@@ -109,6 +136,7 @@ This functionality is now available generically via ``behaviours.EditableText`` 
   - ``braille.displayChanged``
   - ``braille.displaySizeChanged``
   - 
+- It is possible to set useConfig to False on supported settings for a synthesizer driver. (#14601)
 -
 
 === API Breaking Changes ===
@@ -126,7 +154,7 @@ Please open a GitHub issue if your Add-on has an issue with updating to the new 
     - ``autoTether`` has been removed; ``tetherTo`` can now take the value "auto" instead.
     -
   - In ``[keyboard]`` section  (#14528):
-    - ``useCapsLockAsNVDAModifierKey``, ``useNumpadInsertAsNVDAModifierKey``, ``useExtendedInsertAsNVDAModifierKey`` has been removed.
+    - ``useCapsLockAsNVDAModifierKey``, ``useNumpadInsertAsNVDAModifierKey``, ``useExtendedInsertAsNVDAModifierKey`` have been removed.
     They are replaced by ``NVDAModifierKeys``.
     -
   -
@@ -147,6 +175,12 @@ Refer to ``brailleViewer`` for an example on how to do this. (#14503)
   - ``loadModule`` now expects dot as a separator, rather than backslash.
   For example "lib.example" instead of "lib\example".
   - ``loadModule`` now raises an exception when a module can't be loaded or has errors, instead of silently returning ``None`` without giving information about the cause.
+  -
+- The following symbols have been removed from ``appModules.foobar2000`` with no direct replacement. (#14570)
+  - ``statusBarTimes``
+  - ``parseIntervalToTimestamp``
+  - ``getOutputFormat``
+  - ``getParsingFormat``
   -
 - The following are no longer singletons - their get method has been removed.
 Usage of ``Example.get()`` is now ``Example()``. (#14248)

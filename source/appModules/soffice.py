@@ -16,13 +16,14 @@ import controlTypes
 from controlTypes import TextPosition
 import textInfos
 import colors
-from compoundDocuments import CompoundDocument
+from compoundDocuments import CompoundDocument, TreeCompoundTextInfo
 from NVDAObjects.IAccessible import IAccessible, IA2TextTextInfo
 from NVDAObjects.behaviors import EditableText
 from logHandler import log
 import speech
 import api
 import braille
+import languageHandler
 import vision
 
 
@@ -275,6 +276,43 @@ class SymphonyParagraph(SymphonyText):
 	value=None
 	description=None
 
+
+def getDistanceTextForTwips(twips):
+	"""Returns a text representation of the distance given in twips,
+	converted to the local measurement unit."""
+	if languageHandler.useImperialMeasurements():
+		val = twips / 1440.0
+		# Translators: a measurement in inches
+		valText = _("{val:.2f} inches").format(val=val)
+	else:
+		val = twips * 0.0017638889
+		# Translators: a measurement in centimetres
+		valText = _("{val:.2f} centimetres").format(val=val)
+	return valText
+
+
+class SymphonyDocumentTextInfo(TreeCompoundTextInfo):
+
+	def _get_locationText(self):
+		try:
+			# if present, use document attributes to get cursor position relative to page
+			docAttribs = self.obj.rootNVDAObject.IA2Attributes
+			horizontalPos = int(docAttribs["cursor-position-in-page-horizontal"])
+			horizontalDistanceText = getDistanceTextForTwips(horizontalPos)
+			verticalPos = int(docAttribs["cursor-position-in-page-vertical"])
+			verticalDistanceText = getDistanceTextForTwips(verticalPos)
+			return _(
+				# Translators: LibreOffice, report cursor position in the current page
+				"cursor positioned {horizontalDistance} from left edge of page, {verticalDistance} from top edge of page"
+			).format(horizontalDistance=horizontalDistanceText, verticalDistance=verticalDistanceText)
+		except (AttributeError, KeyError):
+			return super(SymphonyDocumentTextInfo, self)._get_locationText()
+
+
+class SymphonyDocument(CompoundDocument):
+	TextInfo = SymphonyDocumentTextInfo
+
+
 class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
@@ -301,4 +339,4 @@ class AppModule(appModuleHandler.AppModule):
 		if windowClass in ("SALTMPSUBFRAME", "SALFRAME") and obj.role in (controlTypes.Role.DOCUMENT,controlTypes.Role.TEXTFRAME) and obj.description:
 			# This is a word processor document.
 			obj.description = None
-			obj.treeInterceptorClass = CompoundDocument
+			obj.treeInterceptorClass = SymphonyDocument
