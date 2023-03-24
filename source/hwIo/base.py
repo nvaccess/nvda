@@ -24,7 +24,7 @@ import braille
 from logHandler import log
 import config
 import time
-from .ioThread import IoThread
+from .ioThread import IoThread, apcsWillBeStronglyReferenced
 # LPOVERLAPPED_COMPLETION_ROUTINE is imported for backwards compatibility.
 from .ioThread import LPOVERLAPPED_COMPLETION_ROUTINE  # NOQA: F401
 
@@ -83,7 +83,10 @@ class IoBase(object):
 		ioThread = self._ioThreadRef()
 		if not ioThread:
 			raise RuntimeError("I/O thread is no longer available")
-		ioThread.queueAsApc(self._asyncRead)
+		if apcsWillBeStronglyReferenced:
+			ioThread.queueAsApc(self._asyncReadBackwardsCompat)
+		else:
+			ioThread.queueAsApc(self._asyncRead)
 
 	def waitForRead(self, timeout:Union[int, float]) -> bool:
 		"""Wait for a chunk of data to be received and processed.
@@ -162,6 +165,12 @@ class IoBase(object):
 			byref(self._readOl),
 			ioThread.getCompletionRoutine(self._ioDone)
 		)
+
+	if apcsWillBeStronglyReferenced:
+		def _asyncReadBackwardsCompat(self, param: Optional[int] = None):
+			"""Backwards compatible wrapper around L{_asyncRead} that calls it without param.
+			"""
+			self._asyncRead()
 
 	def _ioDone(self, error, numberOfBytes: int, overlapped):
 		if not self._onReceive:

@@ -16,6 +16,8 @@ import uuid
 from contextlib import contextmanager
 from extensionPoints.util import AnnotatableWeakref, BoundMethodWeakref
 from inspect import ismethod
+from buildVersion import version_year
+import NVDAState
 
 LPOVERLAPPED_COMPLETION_ROUTINE = ctypes.WINFUNCTYPE(
 	None,
@@ -23,13 +25,12 @@ LPOVERLAPPED_COMPLETION_ROUTINE = ctypes.WINFUNCTYPE(
 	ctypes.wintypes.DWORD,
 	serial.win32.LPOVERLAPPED
 )
-pre_IoThreadStop = extensionPoints.Action()
+apcsWillBeStronglyReferenced = version_year < 2024 and NVDAState._allowDeprecatedAPI()
 """
-Executed when the i/o thread is to be stopped.
-This allows components and add-ons to clean up or reset state before background thread shut down.
-Handlers are called with one argument.
-@param ioThread: The thread to shut down
-@type ioThread: IoThread
+Starting from NVDA 2024.1, we will weakly reference functions wrapped in an APC.
+This will ensure that objects from which APCs have been queuedwon't be scattering around
+when the APC is never executed.
+Wrapped methods are now strongly referenced due to an oversight in NVDA 2023.1.
 """
 
 
@@ -61,13 +62,14 @@ class IoThread(threading.Thread):
 	def _getApc(
 			self,
 			func: typing.Callable[[int], None],
-			param: int = 0
+			param: int = 0,
+			_alwaysReferenceWeakly: bool = True
 	) -> winKernel.PAPCFUNC:
 		"""Internal method to safely wrap a python function in an Asynchronous Procedure Call (APC).
 		The generated APC is saved in a cache on the IoThread instance
 		and automatically cleaned when the call is complete.
-		The wrapped python function is weakly referenced, therefore the caller should
-		keep a reference to the python function (not the APC itself).
+		Note that starting from NVDA 2024.1, the wrapped python function will be weakly referenced,
+		therefore the caller should keep a reference to the python function (not the APC itself).
 		@param func: The function to be wrapped in an APC.
 		@param param: The parameter passed to the APC when called.
 		@returns: The wrapped APC.
@@ -77,19 +79,25 @@ class IoThread(threading.Thread):
 
 		# generate an UUID that will be used to cleanup the APC when it is finished
 		apcUuid = uuid.uuid4()
-		# Generate a weak reference to the function
-		reference = BoundMethodWeakref(func) if ismethod(func) else AnnotatableWeakref(func)
-		reference.funcName = repr(func)
+		useWeak = _alwaysReferenceWeakly or not apcsWillBeStronglyReferenced
+		if useWeak:
+			# Generate a weak reference to the function
+			reference = BoundMethodWeakref(func) if ismethod(func) else AnnotatableWeakref(func)
+			reference.funcName = repr(func)
 
 		@winKernel.PAPCFUNC
 		def apc(param: int):
 			with self.autoDeleteApcReference(apcUuid):
 				if self.exit:
 					return
-				function = reference()
-				if not function:
-					log.debugWarning(f"Not executing queued APC {reference.funcName} because reference died")
-					return
+				if useWeak:
+					function = reference()
+					if not function:
+						log.debugWarning(f"Not executing queued APC {reference.funcName} because reference died")
+						return
+				else:
+					function = func
+
 				try:
 					function(param)
 				except Exception:
@@ -106,12 +114,12 @@ class IoThread(threading.Thread):
 		"""safely queues an Asynchronous Procedure Call (APC) created from a python function.
 		The generated APC is saved in a cache on the IoThread instance
 		and automatically cleaned when the call is complete.
-		The wrapped python function is weakly referenced, therefore the caller should
-		keep a reference to the python function.
+		Note that starting from NVDA 2024.1, the wrapped python function will be weakly referenced,
+		therefore the caller should keep a reference to the python function.
 		@param func: The function to be wrapped in an APC.
 		@param param: The parameter passed to the APC when called.
 		"""
-		apc = self._getApc(func, param)
+		apc = self._getApc(func, param, _alwaysReferenceWeakly=False)
 		ctypes.windll.kernel32.QueueUserAPC(apc, self.handle, param)
 
 	def setWaitableTimer(
