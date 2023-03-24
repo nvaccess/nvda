@@ -441,7 +441,7 @@ class GlobalGestureMap:
 		with FaultTolerantFile(out.filename) as f:
 			out.write(f)
 
-	def __eq__(self, other):
+	def __eq__(self, other: Any) -> bool:
 		if isinstance(other, GlobalGestureMap):
 			return self._map == other._map
 		return NotImplemented
