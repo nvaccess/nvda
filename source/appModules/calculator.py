@@ -86,7 +86,6 @@ class AppModule(appModuleHandler.AppModule):
 		# The event handler copy is used to handle the overall notification announcement later.
 		doNotAnnounceCalculatorResults = self._noCalculatorResultsGesturePressed
 		self._noCalculatorResultsGesturePressed = False
-		calculatorVersion = int(self.productVersion.split(".")[0])
 		# #12268: for "DisplayUpdated", announce display strings in braille  no matter what they are.
 		# There are other activity Id's such as "MemorySlotAdded" and "MemoryCleared"
 		# but they do not involve number entry.
