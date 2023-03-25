@@ -3665,10 +3665,10 @@ class GlobalCommands(ScriptableObject):
 				presses == 1  # If pressed twice, or
 				or forceBrowseable  # if a browseable message is preferred unconditionally
 			):
-				# Translators: Informs the user that the window contains the destination of the
-				# link with given title
 				ui.browseableMessage(
 					linkDestination,
+					# Translators: Informs the user that the window contains the destination of the
+					# link with given title
 					title=_("Destination of: {name}").format(name=obj.name)
 				)
 			elif presses == 0:  # One press
