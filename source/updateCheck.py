@@ -1,12 +1,17 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2012-2021 NV Access Limited, Zahari Yurukov, Babbage B.V., Joseph Lee
+# Copyright (C) 2012-2023 NV Access Limited, Zahari Yurukov, Babbage B.V., Joseph Lee
 
 """Update checking functionality.
 @note: This module may raise C{RuntimeError} on import if update checking for this build is not supported.
 """
-from typing import Dict, Optional, Tuple
+from typing import (
+	Any,
+	Dict,
+	Optional,
+	Tuple,
+)
 import garbageHandler
 import globalVars
 import config
@@ -68,12 +73,12 @@ except OSError:
 		log.debugWarning("Default download path for updates %s could not be created."%storeUpdatesDir)
 
 #: Persistent state information.
-#: @type: dict
-state = None
-_stateFileName = None
+state: Optional[Dict[str, Any]] = None
+_stateFilename: Optional[str] = None
 #: The single instance of L{AutoUpdateChecker} if automatic update checking is enabled,
 #: C{None} if it is disabled.
-autoChecker = None
+autoChecker: Optional["AutoUpdateChecker"] = None
+
 
 def getQualifiedDriverClassNameForStats(cls):
 	""" fetches the name from a given synthDriver or brailleDisplay class, and appends core for in-built code, the add-on name for code from an add-on, or external for code in the NVDA user profile.
@@ -250,6 +255,7 @@ class UpdateChecker(garbageHandler.TrackedObject):
 
 	def _bg(self):
 		try:
+			assert state is not None
 			info = checkForUpdate(self.AUTO)
 		except:
 			log.debugWarning("Error checking for update", exc_info=True)
@@ -798,6 +804,9 @@ def initialize():
 			state = pickle.load(f)
 	except:
 		log.debugWarning("Couldn't retrieve update state", exc_info=True)
+		state = None
+
+	if state is None:
 		# Defaults.
 		state = {
 			"lastCheck": 0,
@@ -807,7 +816,10 @@ def initialize():
 
 	# check the pending version against the current version
 	# and make sure that pendingUpdateFile and pendingUpdateVersion are part of the state dictionary.
-	if "pendingUpdateVersion" not in state or state["pendingUpdateVersion"] == versionInfo.version:
+	if (
+		"pendingUpdateVersion" not in state
+		or state["pendingUpdateVersion"] == versionInfo.version
+	):
 		_setStateToNone(state)
 	# remove all update files except the one that is currently pending (if any)
 	try:

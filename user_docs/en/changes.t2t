@@ -6,13 +6,23 @@ What's New in NVDA
 = 2023.2 =
 
 == New Features ==
-- Added pronunciation of Unicode braille symbols such as "⠐⠣⠃⠗⠇⠐⠜". (#14548)
+- Added pronunciation of Unicode symbols:
+  - braille symbols such as "⠐⠣⠃⠗⠇⠐⠜". (#14548)
+  - Mac Option key symbol "⌥". (#14682)
+  -
+- In Mozilla Firefox and Google Chrome, NVDA now reports when a control opens a dialog, grid, list or tree if the author has specified this using aria-haspopup. (#14709)
 - 
 
 
 == Changes ==
+- Updated LibLouis braille translator to [3.25.0 https://github.com/liblouis/liblouis/releases/tag/v3.25.0]. (#14719)
 - Dash and em-dash symbols will always be sent to the synthesizer. (#13830)
 - Distance reported in Microsoft Word will now honour the unit defined in Word's advanced options even when using UIA to access Word documents. (#14542)
+- When reporting the review cursor location, the current cursor/caret location is now reported relative to the current page in LibreOffice Writer for LibreOffice versions >= 7.6, similar to what is done for Microsoft Word. (#11696)
+- NVDA now responds slightly faster to commands and focus changes. (#14701)
+- NVDA responds faster when moving the cursor in edit controls. (#14708)
+- Baum Braille driver: addes several Braille chord gestures for performing common keyboard commands such as windows+d, alt+tab etc. Please refer to the NVDA user guide for a full list. (#14714)
+- When using a Braille Display via the Standard HID braille driver, the dpad can be used to emulate the arrow keys and enter. Also space+dot1 and space+dot4 now map to up and down arrow respectively. (#14713)
 -
 
 
@@ -23,9 +33,11 @@ This only worked for Bluetooth Serial ports before. (#14524)
 - It is now possible to use the backslash character in the replacement field of a dictionaries entry, when the type is not set to regular expression. (#14556)
 - In Browse mode, NVDA will no longer incorrectly ignore focus moving to a parent or child control e.g. moving from a control to its parent list item or gridcell. (#14611)
   - Note however that this fix only applies when the Automatically set focus to focusable elements" option in Browse Mode settings is turned off (which is the default).
+  -
 - NVDA no longer occasionally causes Mozilla Firefox to crash or stop responding. (#14647)
 - In Mozilla Firefox and Google Chrome, typed characters are no longer reported in some text boxes even when speak typed characters is disabled. (#14666)
 - You can now use browse mode in Chromium Embedded Controls where it was not possible previously. (#13493, #8553)
+- For symbols which do not have a symbol description in the current locale, the default English symbol level will be used. (#14558, #14417)
 -
 
 
@@ -35,6 +47,7 @@ Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documen
 - Added the ``bdDetect.scanForDevices`` extension point.
 Handlers can be registered that yield ``BrailleDisplayDriver/DeviceMatch`` pairs that don't fit in existing categories, like USB or Bluetooth. (#14531)
 - Added extension point: ``synthDriverHandler.synthChanged``. (#14618)
+- The NVDA Synth Settings Ring now caches available setting values the first time they're needed, rather than when loading the synthesizer. (#14704)
 -
 
 === Deprecations ===
@@ -139,6 +152,7 @@ Same as pressing ``NVDA+k`` twice, but may be more useful for braille users. (#1
 - In web browsers such as Chrome and Firefox, alerts such as file downloads are shown in braille in addition to being spoken. (#14562)
 - Bug fixed when navigating to the first and last column in a table in Firefox (#14554)
 - When NVDA is launched with ``--lang=Windows`` parameter, it is again possible to open NVDA's General settings dialog. (#14407)
+- NVDA no longer fails to continue reading in Kindle for PC after turning the page. (#14390)
 -
 
 
