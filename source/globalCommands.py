@@ -3631,7 +3631,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: input help mode message for Report destination URL of a link command
-			"Report the destination URL of the link at the current user position. "
+			"Report the destination URL of the link at the position of caret or focus. "
 			"If pressed twice, shows the URL in a window for easier review."
 		),
 		gesture="kb:NVDA+k",
@@ -3640,8 +3640,8 @@ class GlobalCommands(ScriptableObject):
 	def script_reportLinkDestination(
 			self, gesture: inputCore.InputGesture, forceBrowseable: bool = False
 	) -> None:
-		"""Generates a ui.message or ui.browseableMessage of a link's destination, if user is positioned on a link,
-		or an element with an included link such as a graphic.
+		"""Generates a ui.message or ui.browseableMessage of a link's destination, if focus or caret is
+		positioned on a link, or an element with an included link such as a graphic.
 		@param forceBrowseable: skips the press once check, and displays the browseableMessage version.
 		"""
 		try:
@@ -3682,7 +3682,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: input help mode message for Report URL of a link in a window command
-			"shows the destination URL of the currently focused link in a window, "
+			"shows the destination URL of the link at the position of caret or focus in a window, "
 			"instead of just speaking it. May be preferred by braille users."
 		),
 		category=SCRCAT_TOOLS
