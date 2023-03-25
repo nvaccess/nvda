@@ -11,7 +11,6 @@ import winKernel
 import typing
 from logHandler import log
 import serial.win32
-import extensionPoints
 import uuid
 from contextlib import contextmanager
 from extensionPoints.util import AnnotatableWeakref, BoundMethodWeakref
