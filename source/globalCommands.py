@@ -3656,15 +3656,23 @@ class GlobalCommands(ScriptableObject):
 			obj.role == controlTypes.role.Role.LINK  # If it's a link, or
 			or controlTypes.state.State.LINKED in obj.states  # if it isn't a link but contains one
 		):
+			linkDestination = obj.value
+			if linkDestination is None:
+				# Translators: Informs the user that the link has no destination
+				ui.message(_("Link has no apparent destination"))
+				return
 			if (
 				presses == 1  # If pressed twice, or
 				or forceBrowseable  # if a browseable message is preferred unconditionally
 			):
 				# Translators: Informs the user that the window contains the destination of the
 				# link with given title
-				ui.browseableMessage(obj.value, title=_("Destination of: {name}").format(name=obj.name))
+				ui.browseableMessage(
+					linkDestination,
+					title=_("Destination of: {name}").format(name=obj.name)
+				)
 			elif presses == 0:  # One press
-				ui.message(obj.value)  # Speak the link
+				ui.message(linkDestination)  # Speak the link
 			else:  # Some other number of presses
 				return  # Do nothing
 		else:
