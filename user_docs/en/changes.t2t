@@ -2,6 +2,7 @@ What's New in NVDA
 
 
 %!includeconf: ../changes.t2tconf
+%!includeconf: ./locale.t2tconf
 
 = 2023.2 =
 
@@ -48,6 +49,8 @@ Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documen
 Handlers can be registered that yield ``BrailleDisplayDriver/DeviceMatch`` pairs that don't fit in existing categories, like USB or Bluetooth. (#14531)
 - Added extension point: ``synthDriverHandler.synthChanged``. (#14618)
 - The NVDA Synth Settings Ring now caches available setting values the first time they're needed, rather than when loading the synthesizer. (#14704)
+- You can now call the export method on a gesture map to export it to a dictionary.
+This dictionary can be imported in another gesture by passing it either to the constructor of ``GlobalGestureMap`` or to the update method on an existing map. (#14582)
 -
 
 === Deprecations ===
