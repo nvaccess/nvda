@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mongolian Translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-03 00:01+0000\n"
-"PO-Revision-Date: 2023-03-05 15:10+0800\n"
+"POT-Creation-Date: 2023-03-10 00:01+0000\n"
+"PO-Revision-Date: 2023-03-11 11:32+0800\n"
 "Last-Translator: \n"
 "Language-Team: MongolianNVDATranslationTeam <mongoliannvdatranslation@gmail."
 "com>\n"
@@ -9563,10 +9563,9 @@ msgid "Create &desktop icon and shortcut key (control+alt+n)"
 msgstr "Дэлгэц дээр болон гарын товчлол үүсгэх (control+alt+n)"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
-#, fuzzy
 msgid "Copy &portable configuration to current user account"
 msgstr ""
-"Одоогийн хэрэглэгчийн бүртгэл рүү зөөврийн хувилбарын тохируулгыг хуулаа"
+"Одоогийн акоунт бүртгэл рүү NVDA зөөврийн хувилбарын тохируулгыг хуулаа"
 
 #. Translators: The label of a button to continue with the operation.
 msgid "&Continue"
@@ -9599,24 +9598,22 @@ msgid ""
 "To create a portable copy of NVDA, please select the path and other options "
 "and then press Continue"
 msgstr ""
-"NVDA-ийн зөөврийн хуулбарыг үүсгэхийн тулд зам болон бусад сонголтыг сонгоод "
-"Үргэлжлүүлэх товчийг дарна уу"
+"NVDA-ийн зөөврийн хуулбарыг үүсгэхийн тулд суулгах зам болон бусад сонголтыг "
+"сонгоод Үргэлжлүүлэх товчийг дарна уу"
 
 #. Translators: The label of a grouping containing controls to select the destination directory
 #. in the Create Portable NVDA dialog.
-#, fuzzy
 msgid "Portable &directory:"
-msgstr "Зөөврийн хувилбарыг суулгах байршил"
+msgstr "NVDA Зөөврийн хувилбарыг суулгах байршлийг сонгох:"
 
 #. Translators: The label of a button to browse for a directory.
-#, fuzzy
 msgid "Browse..."
-msgstr "цааш үзэх..."
+msgstr "Цааш үзэх..."
 
 #. Translators: The title of the dialog presented when browsing for the
 #. destination directory when creating a portable copy of NVDA.
 msgid "Select portable  directory"
-msgstr "Зөөврийн хувилбарыг суулгах байршил сонгох"
+msgstr "Зөөврийн хувилбарыг суулгах байршлыг идэвхжүүлэх"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 msgid "Copy current &user configuration"
@@ -9624,29 +9621,27 @@ msgstr "Одоогийн хэрэглэгчийн тохируулгыг хуу�
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 msgid "&Start the new portable copy after creation"
-msgstr "Үйсгэж дууссаны дараа шинэ зөөврийн хувилбарыг хуулж эхлүүлэх"
+msgstr "Үйсгэж дууссаны дараа шинэ зөөврийн хувилбарыг ажиллуулж эхлүүлэх"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
-#, fuzzy
 msgid "Please specify a directory in which to create the portable copy."
-msgstr "Зөөврийн хувилбарыг үйсгэх байршлыг тодорхой зааж өгнө үү"
+msgstr "Зөөврийн хувилбарыг үйсгэх байршлыг тодорхой зааж өгнө үү."
 
 #. Translators: The message displayed when the user has not specified an absolute destination directory
 #. in the Create Portable NVDA dialog.
-#, fuzzy
 msgid ""
 "Please specify an absolute path (including drive letter)  in which to create "
 "the portable copy."
 msgstr ""
-"Зөөврийн хувилбарыг үйсгэх байршлыг хатуу дискний үсэг оруулан тодорхой зааж "
-"өгнө үү"
+"Зөөврийн хуулбарыг үүсгэх замыг (драйв үсгийг оруулаад) тодорхой зааж өгнө "
+"үү."
 
 #. Translators: The message displayed when the user specifies an invalid destination drive
 #. in the Create Portable NVDA dialog.
-#, fuzzy, python-format
+#, python-format
 msgid "Invalid drive %s"
-msgstr "үйсгэх боломжгүй диск %s"
+msgstr "%s драйв буруу байна"
 
 #. Translators: The title of the dialog presented while a portable copy of NVDA is bieng created.
 msgid "Creating Portable Copy"
@@ -9657,25 +9652,20 @@ msgid "Please wait while a portable copy of NVDA is created."
 msgstr "Монгол NVDA зөөврийн хувилбар бэлэн болохыг түр хүлээнэ үү."
 
 #. Translators: a message dialog asking to retry or cancel when NVDA portable copy creation fails
-#, fuzzy
 msgid "NVDA is unable to remove or overwrite a file."
-msgstr "NVDA суулгац файл ажилсангүй"
+msgstr "NVDA нь файлыг устгах эсвэл дарж бичих боломжгүй."
 
 #. Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
 #. %s will be replaced with the specific error message.
-#, fuzzy, python-format
+#, python-format
 msgid "Failed to create portable copy: %s"
-msgstr ""
-"Зөөврийн хувилбар үйсгэх үйлдэл %s\n"
-"амжилтгүй болсон."
+msgstr "Зөөврийн хуулбарыг үүсгэж чадсангүй: %s"
 
 #. Translators: The message displayed when a portable copy of NVDA has been successfully created.
 #. %s will be replaced with the destination directory.
-#, fuzzy, python-format
+#, python-format
 msgid "Successfully created a portable copy of NVDA at %s"
-msgstr ""
-"Монгол NVDA зөөврийн хувилбарыг %s дээр\n"
-"амжилттай үйсгэлээ."
+msgstr "%s дээр NVDA зөөврийн хуулбарыг амжилттай үүсгэлээ"
 
 #. Translators: The title of the NVDA log viewer window.
 msgid "NVDA Log Viewer"
@@ -9698,14 +9688,13 @@ msgid "Save As"
 msgstr "Өөрөөр Хадгалах"
 
 #. Translators: Dialog text presented when NVDA cannot save a log file.
-#, fuzzy, python-format
+#, python-format
 msgid "Error saving log: %s"
-msgstr "log: %s хадгалах үйлдэлд алдаа гарлаа."
+msgstr "Лог хадгалахад алдаа гарлаа: %s"
 
 #. Translators: A message indicating that log cannot be loaded to LogViewer.
-#, fuzzy
 msgid "Log is unavailable"
-msgstr "Log үйлдэл боломжгүй."
+msgstr "Лог боломжгүй байна"
 
 #. Translators: A cancel button on a message dialog.
 msgid "Cancel"
@@ -9793,8 +9782,7 @@ msgstr "На&майг нэвтэрсний дараа NVDA шууд асах"
 #. needs to enter passwords or if multiple user accounts are present
 #. to allow user to choose the correct account).
 msgid "Use NVDA during sign-in (requires administrator privileges)"
-msgstr ""
-"Нэвтрэх шаардлагатай үед NVDA ашиглах бол  (administrator  эрх шаардлагатай)"
+msgstr "Нэвтрэх үед NVDA ашиглах бол  (administrator  эрх хэрэгтэй болно)"
 
 #. Translators: The label for a button in general settings to copy
 #. current user settings to system settings (to allow current
@@ -9804,8 +9792,8 @@ msgid ""
 "Use currently saved settings during sign-in and on secure screens (requires "
 "administrator privileges)"
 msgstr ""
-"Нэвтрэх үед болон аюулгүй цоожтой дэлгэц дээр хадгалсан тохиргоог ашиглах "
-"бол (administrator эрх шаардлагатай)"
+"Нэвтрэх үед болон аюулгүй цоожтой дэлгэц дээр өөрийн NVDA хадгалсан "
+"тохиргоог ашиглах бол (administrator эрх идэвхжүүлнэ үү)"
 
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
 msgid "Automatically check for &updates to NVDA"
@@ -9819,7 +9807,7 @@ msgstr "NVDA эхлэх бүрт хүлээгдэж байгаа шинэчлэ�
 #. Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
 msgid "Allow the NVDA project to gather NVDA usage statistics"
 msgstr ""
-"NVDA Програмыг сайжруулах зорилгоор ашиглалтын Статистик мэдээлэл цуглуулах"
+"NVDA Програмыг сайжруулах зорилгоор ашиглалтын Статистик мэдээлэл цуглуулна"
 
 #. Translators: A message to warn the user when attempting to copy current
 #. settings to system settings.
@@ -9841,28 +9829,24 @@ msgid "Please wait while settings are copied to the system configuration."
 msgstr "Системийн тохируулга дээр тохируулгуудыг хуулж дуустал түр хүлээнэ үү."
 
 #. Translators: a message dialog asking to retry or cancel when copying settings  fails
-#, fuzzy
 msgid ""
 "Unable to copy a file. Perhaps it is currently being used by another process "
 "or you have run out of disc space on the drive you are copying to."
 msgstr ""
-"файл хуулагдсангүй магадгүй өөр ажиллагаанд ашиглагдах эсхүл дискний "
-"багтаамж дүүрсэн байж болзошгүй"
+"Файл хуулах боломжгүй байна. Магадгүй энэ нь өөр процессоор ашиглагдаж "
+"байгаа эсвэл таны хуулж байгаа дискний багтаамж дүүрсэн байж магадгүй юм."
 
 #. Translators: the title of a retry cancel dialog when copying settings  fails
-#, fuzzy
 msgid "Error Copying"
-msgstr "Хуулах үйлдэлд алдаа гарлаа."
+msgstr "Хуулбарлахад алдаа гарлаа"
 
 #. Translators: The message displayed when errors were found while trying to copy current configuration to system settings.
-#, fuzzy
 msgid "Error copying NVDA user settings"
-msgstr "NVDA хэрэглэгчийн тохиргоог хуулах үйлдэлд алдаа гарлаа."
+msgstr "NVDA хэрэглэгчийн тохиргоог хуулж авахад алдаа гарлаа"
 
 #. Translators: The message displayed when copying configuration to system settings was successful.
-#, fuzzy
 msgid "Successfully copied NVDA user settings"
-msgstr "NVDA хэрэглэгчийн тохиргоог хуулж дууслаа."
+msgstr "NVDA хэрэглэгчийн тохиргоог амжилттай хуулж авлаа"
 
 msgid "This change requires administrator privileges."
 msgstr "Энэ өөрчлөлтийг хийхэд administrator  эрхээр хандана уу."
@@ -9932,9 +9916,8 @@ msgid "Synthesizer Error"
 msgstr "Ярьдаг програмын алдаа гарлаа"
 
 #. Translators: This is the label for the voice settings panel.
-#, fuzzy
 msgid "Voice"
-msgstr "хэл сонгох"
+msgstr "Хэл сонгох"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel (if checked, text will be read using the voice for the language of the text).
@@ -10000,9 +9983,8 @@ msgstr "Компьютерийн гар"
 #. Translators: This is the label for a combobox in the
 #. keyboard settings panel.
 #. Translators: The label of a combobox in the Welcome dialog.
-#, fuzzy
 msgid "&Keyboard layout:"
-msgstr "Гар ашиглах төлөв сонгох"
+msgstr "Гар ашиглах төлөв сонгох:"
 
 #. Translators: This is the label for a list of checkboxes
 #. controlling which keys are NVDA modifier keys.
@@ -10011,9 +9993,8 @@ msgstr "&NVDA програмыг удирдах товч сонгох"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-#, fuzzy
 msgid "Speak typed &characters"
-msgstr "гарын товчнууд дээр дарж үсэг тэмдэгтийг хэлүүлэх"
+msgstr "Бичсэн & үсэг тэмдэгтээр ярих"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -10022,39 +10003,34 @@ msgstr "Зай авах бүрт үг унших"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-#, fuzzy
 msgid "Speech &interrupt for typed characters"
-msgstr "бичих үйлдэлд ярьдаг програм түр зогсох"
+msgstr "Бичих үед тэмдэгтүүдийн яриаг зогсох"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-#, fuzzy
 msgid "Speech i&nterrupt for Enter key"
-msgstr "интэр товчыг дарж яриаг зогсоох"
+msgstr "Inter товчыг дарж яриаг зогсоох"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-#, fuzzy
 msgid "Allow skim &reading in Say All"
-msgstr "бүгдийг бүрэн эхээр уншуулах"
+msgstr "\"Бүгдийг нь хэлэх\" үйлдлийг идэвхжүүлж гүйлгэж уншихыг зөвшөөрнө үү"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-#, fuzzy
 msgid "&Beep if typing lowercase letters when caps lock is on"
-msgstr "Том үсгийн товч асаалттай үед жижиг үсэг давхар дохио дугарах."
+msgstr ""
+"&Том үсгийн товч асаалттай үед жижиг үсгээр бичиж байвал дохио дуугарна"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-#, fuzzy
 msgid "Speak c&ommand keys"
-msgstr "командуудыг яриулах"
+msgstr "Командуудыг яриулах"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-#, fuzzy
 msgid "Play sound for &spelling errors while typing"
-msgstr "зөв бичих дүрмийн алдааг &дуу эгшиг тоглуулж сонсож мэдрэх"
+msgstr "Бичиж байхад зөв бичгийн алдаа гарвал хөгжим тоглуул"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -10063,12 +10039,12 @@ msgstr "Бусад аппликашинд &гарны команд тохиру�
 
 #. Translators: Message to report wrong configuration of the NVDA key
 msgid "At least one key must be used as the NVDA key."
-msgstr "NVDA програм удирдах үйлдэлд ямар нэг товч  ашиглах ёстой."
+msgstr "Заавал нэг товчыг NVDA түлхүүр болгон ашиглах ёстой."
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
 msgid "Report mouse &shape changes"
-msgstr "Хулгана болон хэлбэрийн өөрчлөлтийг мэдээлэх"
+msgstr "Хулганы хэлбэр өөрчлөгдөхийг мэдээлэх"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
@@ -10077,9 +10053,8 @@ msgstr "Хулганы заагч мэдээлэх идэвхжлээ"
 
 #. Translators: This is the label for a combobox in the
 #. mouse settings panel.
-#, fuzzy
 msgid "Text &unit resolution:"
-msgstr "бичвэр болон нэгжийн нягтрал:"
+msgstr "Бичвэр ба нэгжийн нягтрал:"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
@@ -10089,27 +10064,26 @@ msgstr "Хулганы заагчыг хөдөлгөж &объектыг үзэ�
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
 msgid "&Play audio coordinates when mouse moves"
-msgstr "&Дуут дохиогоор хулганы заагч хөдлөх солбицолыг сонсож мэдрэх"
+msgstr "&Хулганы заагч хөдлөх солбицолыг Дуут дохиогоор  сонсох"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
 msgid "&Brightness controls audio coordinates volume"
-msgstr "Дэлгэцийн гэрлийг дууны төвшингийн солбицолоор хянах"
+msgstr "Дэлгэцийн гэрлийг дугаралтын төвшингийн солбицолоор хянах"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
-#, fuzzy
 msgid "Ignore mouse input from other &applications"
-msgstr "Бусад програм хангамжуудыг &хулганы заагчаар удирдахаас татгалзах "
+msgstr "Бусад &аппликейшнүүдийн хулганы оролтыг үл тоомсорлох"
 
 #. Translators: This is the label for the review cursor settings panel.
 msgid "Review Cursor"
-msgstr "Заагч ашиглан үзэх"
+msgstr "Заагчаар үзэх"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings panel.
 msgid "Follow system &focus"
-msgstr "Системийн төлөв дагах"
+msgstr "Системийг дагаж, анхаарлаа төвлөрүүл"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings panel.
@@ -10124,7 +10098,7 @@ msgstr "Хулганы &заагчыг дагах"
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings panel.
 msgid "&Simple review mode"
-msgstr "ингийн үзэх горим Simple review mode"
+msgstr "ингийн горим Simple review mode"
 
 #. Translators: This is the label for the Input Composition settings panel.
 msgid "Input Composition"
@@ -10179,9 +10153,8 @@ msgstr "Ярих"
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which reports progress bar updates by beeping.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#, fuzzy
 msgid "Beep"
-msgstr "дохио өгөх"
+msgstr "Дохио дугарах"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which reports progress bar updates by both speaking and beeping.
@@ -10196,7 +10169,6 @@ msgstr "&Зөвлөмжүүд мэдээлэх"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#, fuzzy
 msgid "Report &notifications"
 msgstr "Мэдэгдлүүдийг мэдээлэх"
 
@@ -10207,19 +10179,18 @@ msgstr "&Объектын файлын холбоосуудыг мэдээлэх
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#, fuzzy
 msgid "Report object &position information"
 msgstr "Объект, байршлын мэдээллийг мэдээлэх"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
 msgid "&Guess object position information when unavailable"
-msgstr "Объектын байршил таамаглах боломжгүй"
+msgstr "Боломжгүй үед объектын байршлын мэдээллийг &Таагаарай"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
 msgid "Report object &descriptions"
-msgstr "Объект болон тодорхойлолт мэдээлэх"
+msgstr "Объект болон тайлбарыг мэдээлэх"
 
 #. Translators: This is the label for a combobox in the
 #. object presentation settings panel.
@@ -10229,35 +10200,31 @@ msgstr "Үйлдлийн явцтай хамт  гаралт:"
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
 msgid "Report backg&round progress bars"
-msgstr "Арын мэдээлэл, үйлдлийн явцыг мэдээлэх"
+msgstr "Арын мэдээлэл, явцын мөрийг мэдээлэх"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#, fuzzy
 msgid "Report dynamic &content changes"
 msgstr "Динамик болон агуулгын өөрчлөлтийг мэдээлэх"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#, fuzzy
 msgid "Play a sound when &auto-suggestions appear"
-msgstr "&Автомат зөвлөмж гарч ирэх үед хөгжим тоглуулах"
+msgstr "&автомат санал зөвлөмж гарч ирэх үед хөгжим тоглуулах"
 
 #. Translators: This is the label for the browse mode settings panel.
 msgid "Browse Mode"
-msgstr "Browse Горим"
+msgstr "Броуз горим"
 
 #. Translators: This is the label for a textfield in the
 #. browse mode settings panel.
-#, fuzzy
 msgid "&Maximum number of characters on one line"
-msgstr "&Нэг мөрөнд багтах хамгийн олон үсэг, тэмдэгтүүдийн тоо"
+msgstr "&Нэг мөрөнд байх үсэг тэмдэгтүүдийн хамгийн их тоо"
 
 #. Translators: This is the label for a textfield in the
 #. browse mode settings panel.
-#, fuzzy
 msgid "&Number of lines per page"
-msgstr "Нэг хуудсан багтах мөрийн тоо"
+msgstr "&Нэг хуудасны мөрийн тоо"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
@@ -10267,12 +10234,12 @@ msgstr "(онцлог нөхцөлд)  &дэлгэцний төлөв ашигл
 #. Translators: The label for a checkbox in browse mode settings to
 #. enable browse mode on page load.
 msgid "&Enable browse mode on page load"
-msgstr "&Хуудас ачаалах үед Browse  буюу үзэх горимыг идэвхжүүлнэ"
+msgstr "&Хуудас ачаалах үед броуз горимыг идэвхжүүлнэ"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
 msgid "Automatic &Say All on page load"
-msgstr "Хуудас ачаалахад автоматаар & Бүгдийг уншиж хэлэх"
+msgstr "Хуудас ачаалахад автоматаар & Бүгдийг хэлэх"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
@@ -10374,9 +10341,8 @@ msgstr "Бичвэрийн"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#, fuzzy
 msgid "No&tes and comments"
-msgstr "тэмдэглэл болон комментууд"
+msgstr "Тэмдэглэлүүд болон сэтгэгдлүүд"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -10514,15 +10480,13 @@ msgid "&Paragraph style:"
 msgstr "&Бичвэрийн догол мөрний хэв маяг:"
 
 #. Translators: This is the label for the touch interaction settings panel.
-#, fuzzy
 msgid "Touch Interaction"
-msgstr "Дэлгэцний мэдэрэгчээр ажиллах "
+msgstr "Дэлгэцний мэдэрэгчээр харилцах"
 
 #. Translators: This is the label for a checkbox in the
 #. touch interaction settings panel.
-#, fuzzy
 msgid "Enable touch interaction support"
-msgstr "Мэдрэгчтэй дэлгэц дээр ажиллах дэмжлэгийг идэвхжүүлэх"
+msgstr "Мэдрэгчтэй дэлгэцээр харилцах дэмжлэгийг идэвхжүүлэх"
 
 #. Translators: This is the label for a checkbox in the
 #. touch interaction settings panel.
@@ -10534,9 +10498,8 @@ msgid "Windows OCR"
 msgstr "Windows үсэг танигч OCR"
 
 #. Translators: Label for an option in the Windows OCR dialog.
-#, fuzzy
 msgid "Recognition &language:"
-msgstr "Үсэг таних үйлдэл болон хэл"
+msgstr "Үсэг таних үйлдэл ба хэл:"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -10545,44 +10508,37 @@ msgstr "NVDA хөгжүүлэлт"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#, fuzzy
 msgid "Enable loading custom code from Developer Scratchpad directory"
 msgstr ""
-"Хөгжүүлэгчийн Scratchpad лавлахаас захиалгат кодыг ачаалахыг идэвхжүүлэх"
+"Хөгжүүлэгчийн Scratchpad байршлаас захиалгат кодыг ачаалахыг идэвхжүүлэх"
 
 #. Translators: the label for a button in the Advanced settings category
-#, fuzzy
 msgid "Open developer scratchpad directory"
-msgstr "Хөгжүүлэгчийн scratchpad лавлахыг нээх"
+msgstr "Хөгжүүлэгчийн scratchpad байршлыг нээх"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#, fuzzy
 msgid "Microsoft UI Automation"
 msgstr "Microsoft UI автоматжуулалт"
 
 #. Translators: This is the label for a combo box for selecting the
 #. means of registering for UI Automation events in the advanced settings panel.
 #. Choices are automatic, selective, and global.
-#, fuzzy
 msgid "Regi&stration for UI Automation events and property changes:"
 msgstr ""
-"UI автоматжуулалтын үйл явдлууд болон шинж чанрын өөрчлөлтийг бүртгэх, "
-"бүртгэл:"
+"UI автоматжуулалтын үйл явдал болон шинж чанрын өөрчлөлтийг бүртгэх, бүртгэл:"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA decide whether to register
 #. selectively or globally for UI Automation events.
-#, fuzzy
 msgid "Automatic (prefer selective)"
 msgstr "Автомат (сонголтыг илүүд үздэг)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA register selectively for UI Automation events
 #. (i.e. not to request events for objects outside immediate focus).
-#, fuzzy
 msgid "Selective"
-msgstr "идэвхтэй"
+msgstr "Сонголт"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA register for all UI Automation events
@@ -10591,45 +10547,41 @@ msgid "Global"
 msgstr "Глобал"
 
 #. Translators: Label for the Use UIA with MS Word combobox, in the Advanced settings panel.
-#, fuzzy
 msgctxt "advanced.uiaWithMSWord"
 msgid "Use UI Automation to access Microsoft &Word document controls"
-msgstr "Microsoft  Word баримт бичиг боловсруулхад UI автоматжуулалтыг ашиглах"
+msgstr ""
+"Microsoft & Word баримт бичгийн удирдлагад хандахын тулд UI автоматжуулалтыг "
+"ашиглана"
 
 #. Translators: Label for the default value of the Use UIA with MS Word combobox,
 #. in the Advanced settings panel.
-#, fuzzy
 msgctxt "advanced.uiaWithMSWord"
 msgid "Default (Where suitable)"
 msgstr "Өгөгдмөл (тохиромжтой тохиолдолд)"
 
 #. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
-#, fuzzy
 msgctxt "advanced.uiaWithMSWord"
 msgid "Only when necessary"
 msgstr "Зөвхөн шаардлагатай үед л"
 
 #. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
-#, fuzzy
 msgctxt "advanced.uiaWithMSWord"
 msgid "Where suitable"
 msgstr "Тохиромжтой газар"
 
 #. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
-#, fuzzy
 msgctxt "advanced.uiaWithMSWord"
 msgid "Always"
-msgstr "байнга"
+msgstr "Байнга"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#, fuzzy
 msgid ""
 "Use UI Automation to access Microsoft &Excel spreadsheet controls when "
 "available"
 msgstr ""
 "Боломжтой үед Microsoft бичвэр боловсруулах Excel хүснэгтэд хандахын тулд UI "
-"автоматжуулалтыг ашиглах "
+"автоматжуулалтыг ашиглах"
 
 #. Translators: This is the label for a combo box for selecting the
 #. active console implementation in the advanced settings panel.
@@ -10640,13 +10592,11 @@ msgstr "Windows Console дэмжлэг:"
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA determine its Windows Console implementation
 #. automatically.
-#, fuzzy
 msgid "Automatic (prefer UIA)"
 msgstr "Автомат (UIA-г илүүд үздэг)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA use UIA in the Windows Console when available.
-#, fuzzy
 msgid "UIA when available"
 msgstr "Боломжтой үед UIA"
 
@@ -10658,33 +10608,29 @@ msgstr "Өв залгамжлал"
 
 #. Translators: Label for the Use UIA with Chromium combobox, in the Advanced settings panel.
 #. Note the '\n' is used to split this long label approximately in half.
-#, fuzzy
 msgctxt "advanced.uiaWithChromium"
 msgid ""
 "Use UIA with Microsoft Edge and other \n"
 "&Chromium based browsers when available:"
 msgstr ""
-"Chromium-д суурилсан хөтчүүд боломжтой үед: \n"
-" Microsoft Edge болон бусад \\n-тэй UIA ашиглана уу"
+"Microsoft Edge болон бусад \\n UIA ашиглана уу\n"
+"&Chromium-д суурилсан хөтчүүд боломжтой үед:"
 
 #. Translators: Label for the default value of the Use UIA with Chromium combobox,
 #. in the Advanced settings panel.
-#, fuzzy
 msgctxt "advanced.uiaWithChromium"
 msgid "Default (Only when necessary)"
 msgstr "Өгөгдмөл (зөвхөн шаардлагатай үед)"
 
 #. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
-#, fuzzy
 msgctxt "advanced.uiaWithChromium"
 msgid "Only when necessary"
 msgstr "Зөвхөн шаардлагатай үед л"
 
 #. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
-#, fuzzy
 msgctxt "advanced.uiaWithChromium"
 msgid "Yes"
-msgstr "Тийм"
+msgstr "Тиймээ"
 
 #. Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
 msgctxt "advanced.uiaWithChromium"
@@ -10693,19 +10639,16 @@ msgstr "Үгүй"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#, fuzzy
 msgid "Annotations"
-msgstr "тайлбар хэлбэрээр бичсэн тэмдэглэл"
+msgstr "Тайлбар хэлбэрээр бичсэн тэмдэглэл"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#, fuzzy
 msgid "Report 'has details' for structured annotations"
 msgstr "Тайлан нь бүтэцлэгдсэн тэмдэглэгээний 'дэлгэрэнгүй мэдээлэлтэй' байна"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#, fuzzy
 msgid "Report aria-description always"
 msgstr "Ариа-тайлбарыг үргэлж мэдээлэх"
 
@@ -10718,7 +10661,6 @@ msgstr "HID Брайлийн стандарт"
 #. in the Advanced settings panel.
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
-#, fuzzy
 msgid "Default (Yes)"
 msgstr "Өгөгдмөл (Тийм)"
 
@@ -10738,13 +10680,11 @@ msgstr "Үгүй"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#, fuzzy
 msgid "Enable support for HID braille"
 msgstr "HID брайлийн дэмжлэгийг идэвхжүүлэх"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#, fuzzy
 msgid "Terminal programs"
 msgstr "Терминал програмууд"
 
@@ -10755,58 +10695,48 @@ msgstr "Speak &passwords in all enhanced terminals (may improve performance)"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#, fuzzy
 msgid ""
 "Use enhanced t&yped character support in legacy Windows Console when "
 "available"
 msgstr ""
-"Use enhanced t&yped character support in legacy Windows Console when "
-"available"
+"Боломжтой үед хуучин Windows консол дээр сайжруулсан бичмэл тэмдэгтийн "
+"дэмжлэгийг ашиглаарай"
 
 #. Translators: This is the label for a combo box for selecting a
 #. method of detecting changed content in terminals in the advanced
 #. settings panel.
 #. Choices are automatic, Diff Match Patch, and Difflib.
-#, fuzzy
 msgid "&Diff algorithm:"
-msgstr "&Diff algorithm:"
+msgstr "&Ялгаа алгоритм:"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA determine the method of detecting changed
 #. content in terminals automatically.
-#, fuzzy
 msgid "Automatic (prefer Diff Match Patch)"
-msgstr "Automatic (prefer Diff Match Patch)"
+msgstr "Автомат (Ялгаатай тааруулах нөхөөсийг илүүд үзнэ)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA detect changes in terminals
 #. by character, using the diff match patch algorithm.
-#, fuzzy
 msgid "Diff Match Patch"
-msgstr "Diff Match Patch"
+msgstr "Diff Match нөхөөс"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA detect changes in terminals
 #. by line, using the difflib algorithm.
-#, fuzzy
 msgid "Difflib"
-msgstr "Эх код: Lib/difflib.py. модуль "
+msgstr "Диффлиб"
 
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
-#, fuzzy
 msgid "Speak new text in Windows Terminal via:"
-msgstr "Windows терминал дээрх шинэ текстийг дараах байдлаар ярина уу:"
+msgstr "Windows терминал дээрх шинэ текстийг дараах байдлаар ярих:"
 
 #. Translators: This is the label for combobox in the Advanced settings panel.
-#, fuzzy
 msgid "Attempt to cancel speech for expired focus events:"
-msgstr ""
-"Хугацаа нь дууссан фокус үйл явдлын  үйлдэл дуусан бол ярьдаг програмын "
-"яриаг  болиулах"
+msgstr "Хугацаа нь дууссан фокус үйл явдлын яриаг цуцлах:"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#, fuzzy
 msgid "Virtual Buffers"
 msgstr "Виртуал буфер"
 
@@ -10821,13 +10751,11 @@ msgstr "Dичвэр засах талбар"
 
 #. Translators: This is the label for a numeric control in the
 #. Advanced settings panel.
-#, fuzzy
 msgid "Caret movement timeout (in ms)"
-msgstr "тэмдэгт шилжих хугацаа хэтэрсэн (in ms)"
+msgstr "Үсэг тэмдэгт завсарлагатай хөдөлгөх (мс-ээр)"
 
 #. Translators: This is the label for a checkbox control in the
 #. Advanced settings panel.
-#, fuzzy
 msgid "Report transparent color values"
 msgstr "Ил тод өнгөний утгыг мэдээлэх"
 
@@ -10838,26 +10766,22 @@ msgstr "Алдаа согог засах logging"
 
 #. Translators: This is the label for a list in the
 #. Advanced settings panel
-#, fuzzy
 msgid "Enabled logging categories"
-msgstr "logging categories ажиллагаатай байна"
+msgstr "Бүртгэлийн ангиллыг идэвхжүүлсэн"
 
 #. Translators: Label for the Play a sound for logged errors combobox, in the Advanced settings panel.
-#, fuzzy
 msgid "Play a sound for logged e&rrors:"
-msgstr "Logged алдаа гарвал хөгжим тоглуулж мэдэх"
+msgstr "Бүртгэгдсэн лог алдаа гарах бүрт хөгжим тоглуулах:"
 
 #. Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
-#, fuzzy
 msgctxt "advanced.playErrorSound"
 msgid "Only in NVDA test versions"
 msgstr "Зөвхөн NVDA туршилтын хувилбаруудад"
 
 #. Translators: Label for a value in the Play a sound for logged errors combobox, in the Advanced settings.
-#, fuzzy
 msgctxt "advanced.playErrorSound"
 msgid "Yes"
-msgstr "Тийм"
+msgstr "Тиймээ"
 
 #. Translators: This is the label for the Advanced settings panel.
 msgid "Advanced"
@@ -10869,24 +10793,23 @@ msgid "Warning!"
 msgstr "Анхааруулга!"
 
 #. Translators: This is a label appearing on the Advanced settings panel.
-#, fuzzy
 msgid ""
 "The following settings are for advanced users. Changing them may cause NVDA "
 "to function incorrectly. Please only change these if you know what you are "
 "doing or have been specifically instructed by NVDA developers."
 msgstr ""
-"Эдгээр тохируулгууд өндөр төвшиний хэрэглэгчдэд хамаатай бөгөөд ямар нэг "
-"өөрчлөлт хийх үед програм ажиллагаагүй болох магдлалтай иймд та зөвхөн "
-"өөрийн мэдэх хөгжүүлэгчдийн өгсөн тодорхой заавараар үйлдэл хйинэ үү"
+"Дараах тохиргоонууд нь ахисан түвшний хэрэглэгчдэд зориулагдсан болно. "
+"Тэдгээрийг өөрчлөх нь NVDA програмыг буруу ажиллуулахад хүргэж болзошгүй. "
+"Хэрэв та юу хийж байгаагаа мэдэж байгаа эсвэл NVDA хөгжүүлэгчдээс тусгайлан "
+"зааварласан тохиолдолд л эдгээрийг өөрчилнө үү."
 
 #. Translators: This is the label for a checkbox in the Advanced settings panel.
-#, fuzzy
 msgid ""
 "I understand that changing these settings may cause NVDA to function "
 "incorrectly."
 msgstr ""
-"Эдгээр тохиргоог өөрчлөх нь NVDA-д алдаа согог, саатал гарч буруу "
-"ажиллуулахад хүргэж болзошгүйг би ойлгож байна."
+"Эдгээр тохиргоог өөрчлөх нь NVDA програмыг буруу ажиллуулахад хүргэж "
+"болзошгүйг би ойлгож байна."
 
 #. Translators: This is the label for a button in the Advanced settings panel
 msgid "Restore defaults"
@@ -10897,9 +10820,8 @@ msgid "Braille &display"
 msgstr "Брайл дэлгэц"
 
 #. Translators: This is the label for the braille display selection dialog.
-#, fuzzy
 msgid "Select Braille Display"
-msgstr "Брайл төхөөрөмж сонгох"
+msgstr "Брайл дэлгэцийг сонгоно уу"
 
 #. Translators: The label for a setting in braille settings to choose a braille display.
 msgid "Braille &display:"
@@ -10983,19 +10905,19 @@ msgstr "Брайлаар унших үед ярьдаг програм зогс�
 
 #. Translators: This message is presented when
 #. NVDA is unable to load a single vision enhancement provider.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Could not load the {providerName} vision enhancement provider"
 msgstr "{providerName} хараа сайжруулах үйлчилгээ үзүүлэгчийг ачаалж чадсангүй"
 
 #. Translators: This message is presented when NVDA is unable to
 #. load multiple vision enhancement providers.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid ""
 "Could not load the following vision enhancement providers:\n"
 "{providerNames}"
 msgstr ""
-"Дараах хараа сайжруулах үйлчилгээ үзүүлэгчдийг ачаалж чадсангүй:\\n\n"
-"{providerNames}"
+"Дараах хараа сайжруулах үйлчилгээ үзүүлэгчдийг ачаалж чадсангүй:"
+"\\n{providerNames}"
 
 #. Translators: The title of the vision enhancement provider error message box.
 msgid "Vision Enhancement Provider Error"
@@ -11003,28 +10925,27 @@ msgstr "Хараа сайжруулах үйлчилгээ үзүүлэгчий�
 
 #. Translators: This message is presented when
 #. NVDA is unable to gracefully terminate a single vision enhancement provider.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid ""
 "Could not gracefully terminate the {providerName} vision enhancement provider"
 msgstr ""
-"{providerName}-н хараа сайжруулах үйлчилгээ үзүүлэгчийг амжилттай зогсоож "
+"{providerName} хараа сайжруулах үйлчилгээ үзүүлэгчийг амжилттай  зогсоож "
 "чадсангүй"
 
 #. Translators: This message is presented when
 #. NVDA is unable to terminate multiple vision enhancement providers.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid ""
 "Could not gracefully terminate the following vision enhancement providers:\n"
 "{providerNames}"
 msgstr ""
 "Дараах хараа сайжруулах үйлчилгээ үзүүлэгчийн үйл ажиллагааг амжилттай "
-"зогсоож чадсангүй:\\n\n"
+"зогсоож чадсангүй:\n"
 "{providerNames}"
 
 #. Translators: This is a label appearing on the vision settings panel.
-#, fuzzy
 msgid "Configure visual aids."
-msgstr "Харааны хэрэгсlүүдийг тохируулах."
+msgstr "Харааны хэрэгслүүдийг тохируулах."
 
 #. Translators: Enable checkbox on a vision enhancement provider on the vision settings category panel
 msgid "Enable"
@@ -11032,17 +10953,15 @@ msgstr "Идэвхжүүл"
 
 #. Translators: Options label on a vision enhancement provider on the vision settings category panel
 #. Translators: The label for a group box containing the NVDA highlighter options.
-#, fuzzy
 msgid "Options:"
-msgstr "Сонголтууд хийх"
+msgstr "Сонголтууд:"
 
 #. Translators: Shown when there is an error showing the GUI for a vision enhancement provider
-#, fuzzy
 msgid ""
 "Unable to configure user interface for Vision Enhancement Provider, it can "
 "not be enabled."
 msgstr ""
-"хараа сайжруулах үйлчилгээ үзүүлэгч-ийн хэрэглэгчийн интерфэйсийг тохируулах "
+"Хараа сайжруулах үйлчилгээ үзүүлэгч-ийн хэрэглэгчийн интерфэйсийг тохируулах "
 "боломжгүй, үүнийг идэвхжүүлээгүй байна ."
 
 #. Translators: This is the label for the NVDA settings dialog.
@@ -11058,9 +10977,8 @@ msgid "Add Symbol"
 msgstr "Цэг тэмдэг нэмэх"
 
 #. Translators: This is the label for the edit field in the add symbol dialog.
-#, fuzzy
 msgid "&Symbol:"
-msgstr "цэг тэмдэгт:"
+msgstr "&Цэг Тэмдэгт:"
 
 #. Translators: This is the label for the symbol pronunciation dialog.
 #. %s is replaced by the language for which symbol pronunciation is being edited.
@@ -11069,10 +10987,9 @@ msgid "Symbol Pronunciation (%s)"
 msgstr "Зөв бичих дүрмээр цэг тэмдэг тавих (%s)"
 
 #. Translators: The label of a text field to search for symbols in the speech symbols dialog.
-#, fuzzy
 msgctxt "speechSymbols"
 msgid "&Filter by:"
-msgstr "тэмдэгт ялгах"
+msgstr "Тэмдэгт ялгах:"
 
 #. Translators: The label for symbols list in symbol pronunciation dialog.
 msgid "&Symbols"
@@ -11086,12 +11003,11 @@ msgstr "Цэг тэмдэг"
 #. Translators: The label for a column in dictionary entries list and in a list of symbols
 #. from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
 msgid "Replacement"
-msgstr "Орлуулж"
+msgstr "Солих"
 
 #. Translators: The label for a column in symbols list used to identify a symbol's speech level (either none, some, most, all or character).
-#, fuzzy
 msgid "Level"
-msgstr "бичиглэлийн төвшин сонгох"
+msgstr "Dичиглэлийн төвшин сонгох"
 
 #. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
 #. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
@@ -11099,9 +11015,8 @@ msgid "Preserve"
 msgstr "Хадгалах"
 
 #. Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
-#, fuzzy
 msgid "Change selected symbol"
-msgstr "идэвхжүүлсэн цэг тэмдэг солих"
+msgstr "Сонгосон цэг тэмдгийг өөрчлөх"
 
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 #. Translators: This is a label for an edit field in add dictionary entry dialog
@@ -11135,9 +11050,8 @@ msgid "Whole &word"
 msgstr "&Бүтэн үгээр"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-#, fuzzy
 msgid "Regular &expression"
-msgstr "&Тогтмол үг хэллэг "
+msgstr "&Тогтмол үг хэллэг"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
@@ -11174,9 +11088,8 @@ msgid "&Dictionary entries"
 msgstr "&Толь бичигт бичилт оруулах"
 
 #. Translators: The label for a column in dictionary entries list used to identify comments for the entry.
-#, fuzzy
 msgid "Comment"
-msgstr "тайлбар"
+msgstr "Тайлбар"
 
 #. Translators: The label for a column in dictionary entries list used to identify pattern
 #. (original word or a pattern).
@@ -11199,9 +11112,8 @@ msgstr "&Засварлах"
 
 #. Translators: The label for a button on the Speech Dictionary dialog.
 #. Translators: The title on a prompt for confirmation on the Speech Dictionary dialog.
-#, fuzzy
 msgid "Remove all"
-msgstr "&Арилга"
+msgstr "Бүгдийг арилгах"
 
 #. Translators: This is the label for the add dictionary entry dialog.
 msgid "Add Dictionary Entry"
@@ -11212,14 +11124,13 @@ msgid "Are you sure you want to remove all the entries in this dictionary?"
 msgstr "Та энэ толь бичгийн бүх оруулгыг устгахдаа итгэлтэй байна уу?"
 
 #. Translators: Title for default speech dictionary dialog.
-#, fuzzy
 msgid "Default dictionary"
-msgstr "Өгөгдмөл толь бичиг "
+msgstr "Өгөгдмөл толь бичиг"
 
 #. Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
-#, fuzzy, python-format
+#, python-format
 msgid "Voice dictionary (%s)"
-msgstr "ярианы толь бичиг (%s)"
+msgstr "Ярианы толь бичиг (%s)"
 
 #. Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long
 #. as NvDA is running).
@@ -11227,7 +11138,6 @@ msgid "Temporary dictionary"
 msgstr "Түр ашиглах толь бичиг"
 
 #. Translators: The main message for the Welcome dialog when the user starts NVDA for the first time.
-#, fuzzy
 msgid ""
 "Most commands for controlling NVDA require you to hold down the NVDA key "
 "while pressing other keys.\n"
@@ -11238,21 +11148,19 @@ msgid ""
 "From this menu, you can configure NVDA, get help and access other NVDA "
 "functions."
 msgstr ""
-"NVDA-г удирдах ихэнх командууд нь бусад товчлууруудыг дарж байхдаа NVDA "
-"товчлуурыг удаан дарахыг шаарддаг.\\n\n"
-"Өгөгдмөлөөр, тоон самбар Insert болон үндсэн Insert товчлууруудыг хоёуланг "
-"нь NVDA товч болгон ашиглаж болно.\\n\n"
-"Та мөн NVDA-г CapsLock-том үсгийн товчыг NVDA товч болгон ашиглахаар "
+"NVDA програмыг удирдах ихэнх командууд нь бусад товчлууруудыг дарж байхдаа "
+"NVDA товчыг хамт удаан дарахыг шаарддаг.\\n\n"
+"Өгөгдмөлөөр, тооны самбарт Insert товч болон үндсэн Insert товчнуудыг "
+"хоёуланг нь NVDA түлхүүр болгон ашиглаж болно.\\n\n"
+"Та мөн NVDA програмыг том үсгийн товчыг NVDA түлхүүр болгон ашиглахаар "
 "тохируулж болно.\\n\n"
-"NVDA цэсийг идэвхжүүлэхийн тулд хүссэн үедээ NVDA+n товчнуудыг давхар дарна."
-"\\n\n"
-"Энэ цэснээс та NVDA-г тохируулах, тусламж авах болон бусад NVDA функцүүдэд "
-"хандаж өөрийн сонголтоор тохируулж ашиглаж болно ."
+"NVDA цэсийг идэвхжүүлэхийн тулд хүссэн үедээ NVDA түлхүүр+n дарна уу.\\n\n"
+"Энэ цэснээс та NVDA програмыг тохируулах, тусламж авах болон бусад NVDA "
+"функцүүдэд хандах боломжтой."
 
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
-#, fuzzy
 msgid "Welcome to NVDA"
-msgstr "Монгол NVDA дэлгэц уншигч  програмд тавтай морилно уу"
+msgstr "Монгол NVDA програмд тавтай морил"
 
 #. Translators: The header for the Welcome dialog when user starts NVDA for the first time.
 #. This is in larger, bold lettering
@@ -11260,50 +11168,40 @@ msgid "Welcome to NVDA!"
 msgstr "Монгол NVDA програмын хэрэглэгч та Тавтай морилно уу!"
 
 #. Translators: The label of a checkbox in the Welcome dialog.
-#, fuzzy
 msgid "&Use CapsLock as an NVDA modifier key"
 msgstr ""
-"&Том үсгийн товчыг NVDA програмыг удирдах нэмэлт товч болгон ашиглаж болно."
+"&Том үсгийн товчыг NVDA програмыг удирдах түлхүүр товч болгон ашиглаж болно"
 
 #. Translators: The label of a checkbox in the Welcome dialog.
-#, fuzzy
 msgid "&Show this dialog when NVDA starts"
-msgstr ""
-"NVDA эхлэх бүрт \n"
-" энэ харилцах цонхыг үзүүлэх"
+msgstr "&NVDA эхлэх үед энэ харилцах цонхыг харуул"
 
 #. Translators: The title of an error message box displayed when validating the startup dialog
-#, fuzzy
 msgid ""
 "At least one NVDA modifier key must be set. Caps lock will remain as an NVDA "
 "modifier key. "
 msgstr ""
-"нэг NVDA програмыг удирдах товч тохируулагдсан байх ёстой. Caps lock том "
-"үсгийн товч  нь NVDA команд товч хэвээр үлдэнэ."
+"NVDA програмыг удирдах түлхүүр товч заавал тохируулсан байх ёстой. том "
+"үсгийн товч  нь NVDA түлхүүр товч хэвээр үлдэнэ. "
 
 #. Translators: The label for a checkbox in NvDA installation program to agree to the license agreement.
-#, fuzzy
 msgid "I &agree"
-msgstr "&Би хүлээн зөвшөөрч байна."
+msgstr "Би зөвшөөрч байна"
 
 #. Translators: The label of the button in NVDA installation program to install NvDA on the user's computer.
-#, fuzzy
 msgid "&Install NVDA on this computer"
 msgstr "&Энэ компьютерт NVDA суулга"
 
 #. Translators: The label of the button in NVDA installation program to create a portable version of NVDA.
-#, fuzzy
 msgid "Create &portable copy"
-msgstr "NVDA зөөврийн хувилбар үйсгэх"
+msgstr "Зөөврийн хуулбар үүсгэх"
 
 #. Translators: The label of the button in NVDA installation program
 #. to continue using the installation program as a temporary copy of NVDA.
-#, fuzzy
 msgid "&Continue running"
 msgstr "&Үргэлжлүүлэн ажиллуулах"
 
 #. Translators: The label of the license text which will be shown when NVDA installation program starts.
-#, fuzzy
 msgid "License Agreement"
 msgstr ""
 "NVDA Програм албан ёсны монгол хэлээр ашиглах зөвшөөрөл\n"
@@ -11312,13 +11210,11 @@ msgstr ""
 "Холбоо барих хаяг, мэйл: idcbinnovation@outlook.com\n"
 "хаяг байршил: Сөүлийн  гудамж 7 Улаанбаатар хотын нийтийн төв номын сан зүүн "
 "блок 207\n"
-"\n"
 "холбоо барих утас:95951122"
 
 #. Translators: The title of the dialog asking if usage data can be collected
-#, fuzzy
 msgid "NVDA  Usage Data Collection"
-msgstr "NVDA програм ашиглалтын мэдээлэл цуглуулах"
+msgstr "NVDA ашиглалтын мэдээллийн цуглуулга"
 
 #. Translators: A message asking the user if they want to allow usage stats gathering
 msgid ""
@@ -11334,8 +11230,8 @@ msgid ""
 "Do you wish to allow NV Access to periodically collect this data in order to "
 "improve NVDA?"
 msgstr ""
-"Ирээдүйд NVDA-г сайжруулахын тулд NV Access нь NVDA-ийн ажиллаж байгаа "
-"хуулбараас ашиглалтын мэдээллийг цуглуулахыг хүсэж байна.\\n\n"
+"Ирээдүйд NVDA програмыг сайжруулахын тулд NV Access нь NVDA-ийн ажиллаж "
+"байгаа хуулбараас ашиглалтын мэдээллийг цуглуулахыг хүсэж байна.\\n\n"
 "\\n\n"
 "үүнд дараах програмын мэдээллүүд багтана\n"
 "\n"
@@ -11355,7 +11251,6 @@ msgstr "Математикийн үйлдлээс гарах"
 
 #. Translators: Reported when the user attempts math interaction
 #. but math interaction is not supported.
-#, fuzzy
 msgid "Math interaction not supported."
 msgstr "Математикийн үйлдэл дэмжигдэхгүй байна."
 
@@ -11383,9 +11278,9 @@ msgid "%s selected"
 msgstr "%s идэвхжлээ"
 
 #. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
-#, fuzzy, python-format
+#, python-format
 msgid "%s unselected"
-msgstr "%s идэвхгүй боллоо."
+msgstr "%s идэвхгүй боллоо"
 
 #. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
 #, python-format
@@ -11393,9 +11288,8 @@ msgid "%s selected instead"
 msgstr "%s сонгогдсон"
 
 #. Translators: Reported when selection is removed.
-#, fuzzy
 msgid "selection removed"
-msgstr "арилгалаа."
+msgstr "арилгалаа"
 
 #. Translators: Speaks current row number (example output: row 3).
 #, python-format
@@ -11424,24 +11318,23 @@ msgid "through row {row} column {column}"
 msgstr "мөр {row} багана {column} байна"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "with {rowCount} rows and {columnCount} columns"
-msgstr "{rowCount} мөр {columnCount} багана"
+msgstr "{rowCount} эгнээ мөрүүдтэй ба {columnCount} баганууд"
 
 #. Translators: Speaks number of columns (example output: with 4 columns).
 #, python-format
 msgid "with %s columns"
-msgstr "%s баганууд"
+msgstr "%s багануудтай"
 
 #. Translators: Speaks number of rows (example output: with 2 rows).
-#, fuzzy, python-format
+#, python-format
 msgid "with %s rows"
-msgstr "%s мөрүүд"
+msgstr "%s мөрүүдтэй"
 
 #. Translators: Speaks when there are further details/annotations that can be fetched manually.
-#, fuzzy
 msgid "has details"
-msgstr "дэлгэрэнгүй мэдээлэл"
+msgstr "дэлгэрэнгүй мэдээлэлтэй"
 
 #. Translators: Speaks the item level in treeviews (example output: level 2).
 #, python-format
@@ -11473,7 +11366,7 @@ msgstr "хэсэг %s"
 #. Translators: Indicates the text column number in a document.
 #. {0} will be replaced with the text column number.
 #. {1} will be replaced with the number of text columns.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "column {0} of {1}"
 msgstr "багана {0} -ийн {1}"
 
@@ -11488,9 +11381,8 @@ msgstr "%s баганууд"
 msgid "column {columnNumber}"
 msgstr "б{columnNumber}"
 
-#, fuzzy
 msgid "continuous section break"
-msgstr "Үргэлжилсэн хэсгийг тусгаарлагч"
+msgstr "үргэлжилсэн хэсгийг тусгаарлагч"
 
 msgid "new column section break"
 msgstr "шинэ багана тусгаарлагч"
@@ -11498,7 +11390,6 @@ msgstr "шинэ багана тусгаарлагч"
 msgid "new page section break"
 msgstr "шинэ хуудас тусгаарлагч"
 
-#, fuzzy
 msgid "even pages section break"
 msgstr "жигд хуудас тусгаарлагч"
 
@@ -11516,7 +11407,7 @@ msgstr "гарчгийн хэмжээ %d"
 #. Translators: Indicates the style of text.
 #. A style is a collection of formatting settings and depends on the application.
 #. %s will be replaced with the name of the style.
-#, fuzzy, python-format
+#, python-format
 msgid "style %s"
 msgstr "хэв маяг %s"
 
@@ -11556,7 +11447,7 @@ msgstr "{color} өнгө"
 msgid "{backgroundColor} background"
 msgstr "{backgroundColor} дэвсгэр өнгө"
 
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "background pattern {pattern}"
 msgstr "арын загвар {pattern}"
 
@@ -11575,24 +11466,22 @@ msgid "not deleted"
 msgstr "устсангүй"
 
 #. Translators: Reported when text is revised.
-#, fuzzy, python-format
+#, python-format
 msgid "revised %s"
-msgstr "засагдсан хянагдсан %s"
+msgstr "засагдаж хянагдсан %s"
 
 #. Translators: Reported when text is not revised.
-#, fuzzy, python-format
+#, python-format
 msgid "no revised %s"
-msgstr "засагдаагүй хянагдаагүй %s"
+msgstr "засагдаж хянагдаагүй %s"
 
 #. Translators: Reported when text is marked
-#, fuzzy
 msgid "marked"
-msgstr "тэмдэг хийгдсэн"
+msgstr "тэмдэг тавигдсан"
 
 #. Translators: Reported when text is no longer marked
-#, fuzzy
 msgid "not marked"
-msgstr "тэмдэг хийгдээгүй"
+msgstr "тэмдэг тавигдаагүй"
 
 #. Translators: Reported when text is marked as strong (e.g. bold)
 msgid "strong"
@@ -11603,12 +11492,10 @@ msgid "not strong"
 msgstr "тод томруун биш"
 
 #. Translators: Reported when text is marked as emphasised
-#, fuzzy
 msgid "emphasised"
 msgstr "онцлох тэмдэг тавьсан"
 
 #. Translators: Reported when text is no longer marked as emphasised
-#, fuzzy
 msgid "not emphasised"
 msgstr "онцлох тэмдэг тавиагүй"
 
@@ -11814,7 +11701,7 @@ msgid "{curPercent:.0f}%"
 msgstr "{curPercent:.0f}%"
 
 #. Translators: the current position's screen coordinates in pixels
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "at {x}, {y}"
 msgstr "{x}, {y} -нд"
 
@@ -11830,28 +11717,28 @@ msgstr "{S} болж байна"
 #, python-brace-format
 msgctxt "time format"
 msgid "{M}:{S}"
-msgstr "{M}:{S} минут секунт болж байна"
+msgstr "{M}:{S} болж байна"
 
 #. Translators: used to format time locally.
 #. substitution rules: {S} seconds, {M} minutes, {H} hours
 #, python-brace-format
 msgctxt "time format"
 msgid "{H}:{M}:{S}"
-msgstr "{H}:{M}:{S} цаг минут болж байна"
+msgstr "{H}:{M}:{S} болж байна"
 
 #. Translators: used to format time locally.
 #. substitution rules: {S} seconds, {M} minutes, {H} hours, {D} day
 #, python-brace-format
 msgctxt "time format"
 msgid "{D} day {H}:{M}:{S}"
-msgstr "{D} day {H}:{M}:{S}"
+msgstr "{D} day {H}:{M}:{S} болж байна"
 
 #. Translators: used to format time locally.
 #. substitution rules: {S} seconds, {M} minutes, {H} hours, {D} days
 #, python-brace-format
 msgctxt "time format"
 msgid "{D} days {H}:{M}:{S}"
-msgstr "{D} days {H}:{M}:{S}"
+msgstr "{D} days {H}:{M}:{S} болж байна"
 
 #. Translators: This is the message for a warning shown if NVDA cannot determine if
 #. Windows is locked.
@@ -11877,53 +11764,44 @@ msgid "Refreshed"
 msgstr "Сэргээгдсэн"
 
 #. Translators: Reported while loading a document.
-#, fuzzy
 msgid "Loading document..."
-msgstr "уншигдаж байна"
+msgstr "Уншигдаж байна..."
 
 #. Translators: the description for the refreshBuffer script on virtualBuffers.
-#, fuzzy
 msgid "Refreshes the document content"
-msgstr "уншигдлаа"
+msgstr "Баримт бичгийн агуулга шинэчлэгдлээ"
 
 #. Translators: Presented when use screen layout option is toggled.
-#, fuzzy
 msgid "Use screen layout on"
-msgstr "Дэлгэцийн төлөв ашиглах асах"
+msgstr "Дэлгэцийн төлөв асах"
 
 #. Translators: Presented when use screen layout option is toggled.
-#, fuzzy
 msgid "Use screen layout off"
-msgstr "Дэлгэцийн төлөв ашиглах унтрах"
+msgstr "Дэлгэцийн төлөв унтрах"
 
 #. Translators: shown for a highlighter setting that toggles
 #. highlighting the system focus.
-#, fuzzy
 msgid "Highlight system fo&cus"
 msgstr "Системийн фокусыг тодруул"
 
 #. Translators: shown for a highlighter setting that toggles
 #. highlighting the browse mode cursor.
-#, fuzzy
 msgid "Highlight browse &mode cursor"
-msgstr "Хайлт  горимын курсорыг тодруулна уу"
+msgstr "Броуз горимын курсорыг тодруулах"
 
 #. Translators: shown for a highlighter setting that toggles
 #. highlighting the navigator object.
-#, fuzzy
 msgid "Highlight navigator &object"
-msgstr "Хөтөч объектыг тодруулна уу"
+msgstr "Навигатор & объектыг тодруулах"
 
 #. Translators: Description for NVDA's built-in screen highlighter.
-#, fuzzy
 msgid "Visual Highlight"
-msgstr "Харааг онцлох"
+msgstr "Харааг тодруулах"
 
 #. Translators: The label for a checkbox that enables / disables focus highlighting
 #. in the NVDA Highlighter vision settings panel.
-#, fuzzy
 msgid "&Enable Highlighting"
-msgstr "Highlighting буюу Тодруулалтыг идэвхжүүл"
+msgstr "Highlighting тодруулахыг идэвхжүүл"
 
 #. Translators: Name for a vision enhancement provider that disables output to the screen,
 #. making it black.
@@ -11932,9 +11810,8 @@ msgstr "Дэлгэцийн Хөшиг"
 
 #. Translators: Description for a Screen Curtain setting that shows a warning when loading
 #. the screen curtain.
-#, fuzzy
 msgid "Always &show a warning when loading Screen Curtain"
-msgstr "Дэлгэцийн хөшиг идэвхжих үед анхааруулга үргэлж  харуул"
+msgstr "Дэлгэцийн хөшиг ачаалах үед үргэлж & анхааруулга харуул"
 
 #. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
 msgid "&Play sound when toggling Screen Curtain"
@@ -11942,7 +11819,6 @@ msgstr "&Дэлгэцийн хөшгийг сэлгэх үед хөгжим то
 
 #. Translators: A warning shown when activating the screen curtain.
 #. the translation of "Screen Curtain" should match the "translated name"
-#, fuzzy
 msgid ""
 "Enabling Screen Curtain will make the screen of your computer completely "
 "black. Ensure you will be able to navigate without any use of your screen "
@@ -11950,10 +11826,9 @@ msgid ""
 "\n"
 "Do you wish to continue?"
 msgstr ""
-"Дэлгэцийн хөшигийг идэвхжүүлснээр таны компьютерийн дэлгэц бүрэн хар өнгөтэй "
-"болно. Үргэлжлүүлэхийн өмнө та дэлгэцээ ашиглахгүйгээр ажиллах боломжтой "
-"эсэхийг шалгаарай. \\n\n"
-"\\n\n"
+"Дэлгэцийн хөшиг идэвхжүүлснээр таны компьютерийн дэлгэц бүрэн хар өнгөтэй "
+"болно. Үргэлжлүүлэхийн өмнө та дэлгэцээ ашиглахгүйгээр NVDA програмыг "
+"ажиллуулах боломжтой эсэхийг шалгаарай. \n"
 "Та үргэлжлүүлэхийг хүсч байна уу?"
 
 #. Translators: option to enable screen curtain in the vision settings panel
@@ -11961,14 +11836,12 @@ msgid "Make screen black (immediate effect)"
 msgstr "Одоо дэлгэц (шууд харална)."
 
 #. Translators: The screen is oriented so that it is wider than it is tall.
-#, fuzzy
 msgid "Landscape"
-msgstr "босоо"
+msgstr "Босоо"
 
 #. Translators: The screen is oriented in such a way that the height is taller than it is wide.
-#, fuzzy
 msgid "Portrait"
-msgstr "хөндөлөн"
+msgstr "Хөндөлөн"
 
 #. Translators: This is presented when there is an error retrieving the battery status.
 msgid "Unknown power status"
@@ -11985,12 +11858,12 @@ msgstr "Батарей цэнэглэгдэж байна"
 
 #. Translators: Reported when the battery is no longer plugged in, and now is not charging.
 msgid "AC disconnected"
-msgstr "Цахилгаан Тэжээлийн залгуур салгагдсан"
+msgstr "Цахилгаан Тэжээлийн залгуур саллаа"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "{hours:d} hours and {minutes:d} minutes remaining"
-msgstr "{hours:d} цаг {minutes:d} минут ажиллах цэнэг байна"
+msgstr "{hours:d} цаг {minutes:d} минут хэрэглэх цэнэг үлдсэн"
 
 msgid "Taskbar"
 msgstr "Ажлын талбар"
@@ -12005,7 +11878,7 @@ msgid "%s items"
 msgstr "%s зүйлс"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
 "{rowNumber} багана{columnNumber} Мөрийг баганын толгойн эхлэл болгон "
@@ -12020,14 +11893,14 @@ msgstr ""
 "тохируулсан"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
-msgstr "{rowNumber} багана{columnNumber} Баганын толгой хэсгээс мөрийг хассан"
+msgstr "Баганын толгой хэсгээс  {rowNumber} багана{columnNumber} мөрийг хассан"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
-msgstr "{rowNumber} багана{columnNumber} Баганын толгой хэсэгт мөр олдсонгүй"
+msgstr "Баганын толгой хэсэгт  {rowNumber} багана{columnNumber} мөр олдсонгүй"
 
 msgid ""
 "Pressing once will set this cell as the first column header for any cells "
@@ -12061,7 +11934,7 @@ msgstr "{rowNumber} багана{columnNumber} Мөрийн толгой хэс�
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 #, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
-msgstr "{rowNumber} багана{columnNumber} Мөрний толгой хэсэгт мөр олдсонгүй"
+msgstr "Мөрний толгой хэсэгт  {rowNumber} багана{columnNumber} мөр олдсонгүй"
 
 msgid ""
 "Pressing once will set this cell as the first row header for any cells lower "
@@ -12073,9 +11946,8 @@ msgstr ""
 "нүдний одоогийн мөрийн толгойг мартна."
 
 #. Translators: a message when there is no comment to report in Microsoft Word
-#, fuzzy
 msgid "No comments"
-msgstr "сэтгэгдлүүд алга"
+msgstr "Сэтгэгдлүүд алга"
 
 #. Translators: a description for a script
 #. Translators: a description for a script that reports the comment at the caret.
@@ -12097,9 +11969,8 @@ msgstr "{val:.2f} дотор"
 msgid "{val:.2f} cm"
 msgstr "{val:.2f} cm"
 
-#, fuzzy
 msgid "invoke"
-msgstr "хүргэх "
+msgstr "хүргэх"
 
 #. Translators: part of the suggestions count message for one suggestion.
 msgid "1 suggestion"
@@ -12119,10 +11990,10 @@ msgstr ""
 "дүүргэлтийн өнгө, эргэлт, хэмжээ зэрэг мэдээллийг жагсаах"
 
 #. Translators: The width of the cell in points
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgctxt "excel-UIA"
 msgid "Cell width: {0.x:.1f} pt"
-msgstr "{0.x:.1f} Нүдний өргөн:pt "
+msgstr "Нүдний өргөн: {0.x:.1f} pt"
 
 #. Translators: The height of the cell in points
 #, python-brace-format
@@ -12131,10 +12002,10 @@ msgid "Cell height: {0.y:.1f} pt"
 msgstr "{0.y:.1f} Нүдний өндөр:pt"
 
 #. Translators: The rotation in degrees of an Excel cell
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgctxt "excel-UIA"
 msgid "Rotation: {0} degrees"
-msgstr "{0}  градус Эргүүлэх: "
+msgstr "Градус : {0} иргэх"
 
 #. Translators: The outline (border) colors of an Excel cell.
 #, python-brace-format
@@ -12163,9 +12034,9 @@ msgid "Fill type: {0}"
 msgstr "Бөглөх төрөл: {0}"
 
 #. Translators: the number format of an Excel cell
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Number format: {0}"
-msgstr "{0} дугаарлах формат: "
+msgstr "{0} тооны формат:"
 
 #. Translators: If an excel cell has data validation set
 msgid "Has data validation"
@@ -12225,23 +12096,22 @@ msgid "No note on this cell"
 msgstr "Энэ нүдэнд тэмдэглэл алга"
 
 #. Translators: a comment on a cell in Microsoft excel.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Comment thread: {comment}  by {author}"
-msgstr "сэтгэгдлүүд: {comment}  болон {author}"
+msgstr "Сэтгэгдлүүд: {comment}  болон {author}"
 
 #. Translators: a comment on a cell in Microsoft excel.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Comment thread: {comment}  by {author} with {numReplies} replies"
-msgstr "сэтгэгдлүүд: {comment}  болон {author} хамт {numReplies} хариултууд"
+msgstr "Сэтгэгдлүүд: {comment}  болон {author} хамт {numReplies} хариултууд"
 
 #. Translators: A message in Excel when there is no comment thread
 msgid "No comment thread on this cell"
 msgstr "Энэ нүдэнд сэтгэгдэл алга"
 
 #. Translators: announced when moving outside of a table in an Excel spreadsheet.
-#, fuzzy
 msgid "Out of table"
-msgstr "хүснэгтээс гарсан байна"
+msgstr "Хүснэгтээс гарсан байна"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -12254,14 +12124,14 @@ msgid "&Errors"
 msgstr "&Алдаанууд"
 
 #. Translators: The label shown for an insertion change
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "insertion: {text}"
-msgstr "Оруулах: insertion  {text}"
+msgstr "оруулах: {text}"
 
 #. Translators: The label shown for a deletion change
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "deletion: {text}"
-msgstr "Устгах: deletion {text}"
+msgstr "устгах: {text}"
 
 #. Translators: The general label shown for track changes
 #, python-brace-format
@@ -12269,23 +12139,21 @@ msgid "track change: {text}"
 msgstr "бичвэр засагч : {text}"
 
 #. Translators: The message reported for a comment in Microsoft Word
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Comment: {comment} by {author}"
-msgstr "сэтгэгдэл: {comment} болон {author}"
+msgstr "Сэтгэгдэл: {comment} болон {author}"
 
 #. Translators: The message reported for a comment in Microsoft Word
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Comment: {comment} by {author} on {date}"
-msgstr "сэтгэгдэл: {comment} болон {author} байна {date}"
+msgstr "Сэтгэгдэл: {comment} болон {author} байна {date}"
 
 #. Translators: a message when navigating by sentence is unavailable in MS Word
-#, fuzzy
 msgid "Navigating by sentence not supported in this document"
-msgstr "Энэ баримт бичигт өөрчлөлт хийх боломжгүй "
+msgstr "Энэ баримт бичигт өгүүлбэрүүдийн өөрчлөлт хийхийг дэмжихгүй байна"
 
-#, fuzzy
 msgid "Desktop"
-msgstr "компьютерийн дэлгэц"
+msgstr "Компьютерийн дэлгэц"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -12354,9 +12222,8 @@ msgstr "Тэсэрсэн 3D бялуу"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-#, fuzzy
 msgid "Area"
-msgstr "хамрах хүрээ "
+msgstr "Хамрах хүрээ"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -12385,15 +12252,13 @@ msgstr "100 хувь Давхардсан баар"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-#, fuzzy
 msgid "Bubble"
 msgstr "Бөмбөлөг"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-#, fuzzy
 msgid "Bubble with 3D effects"
-msgstr "Бөмбөлөг 3D эффект "
+msgstr "Бөмбөлөг 3D эффект"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -12487,13 +12352,11 @@ msgstr "Мөр"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-#, fuzzy
 msgid "Line with Markers"
-msgstr "тэмдгүүд тавьсан мөр"
+msgstr "Тэмдгүүд тавьсан мөр"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-#, fuzzy
 msgid "Stacked Line with Markers"
 msgstr "Давхардсан тэмдгүүд тавьсан мөр"
 
@@ -12569,9 +12432,8 @@ msgstr "Radar Богино долгион"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-#, fuzzy
 msgid "Filled Radar"
-msgstr "дүүрэн богино долгион Radar"
+msgstr "Дүүрэн богино долгион Radar"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -12580,15 +12442,13 @@ msgstr "Radar тэмдгүүд тавьсан мэдээлэл"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-#, fuzzy
 msgid "High-Low-Close"
-msgstr "өндөр-нам-хаах"
+msgstr "Өндөр-нам-хаах"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-#, fuzzy
 msgid "Open-High-Low-Close"
-msgstr "нээх-өндөр-нам-хаах"
+msgstr "Нээх-өндөр-нам-хаах"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -12602,9 +12462,8 @@ msgstr "Volume-Нээлттэй-Өндөр-нам-Хаах"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-#, fuzzy
 msgid "3D Surface"
-msgstr "3D гадаргуу "
+msgstr "3D гадаргуу"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -12623,7 +12482,6 @@ msgstr "3D Гадаргуу  (wireframe)"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-#, fuzzy
 msgid "Scatter"
 msgstr "Тарсан"
 
@@ -12652,10 +12510,9 @@ msgid "slice"
 msgstr "хэрчим"
 
 #. Translators: A column in a column chart.
-#, fuzzy
 msgctxt "chart"
 msgid "column"
-msgstr "Багана"
+msgstr "багана"
 
 #. Translators: A data point in a line chart.
 msgid "data point"
@@ -12699,12 +12556,10 @@ msgid "Drop Lines"
 msgstr "Уналтын мөрүүд"
 
 #. Translators: A type of element in a Microsoft Office chart.
-#, fuzzy
 msgid "Hi Lo Lines"
-msgstr "дээгүүр доогуур мөрүүд"
+msgstr "Дээгүүр доогуур мөрүүд"
 
 #. Translators: A type of element in a Microsoft Office chart.
-#, fuzzy
 msgid "Radar Axis Labels"
 msgstr "Радарын тэнхлэгийн шошго"
 
@@ -12722,9 +12577,8 @@ msgstr "Булангууд"
 
 #. Translators: A type of element in a Microsoft Office chart.
 #. Translators: Data Table will be spoken when chart element Data Table is selected
-#, fuzzy
 msgid "Data Table"
-msgstr "хүснэгтэн мэдээлэл"
+msgstr "Хүснэгтэн Мэдээлэл"
 
 #. Translators: A type of element in a Microsoft Office chart.
 msgid "Floor"
@@ -12739,9 +12593,8 @@ msgid "Walls"
 msgstr "Ханууд"
 
 #. Translators: A type of element in a Microsoft Office chart.
-#, fuzzy
 msgid "Data Label"
-msgstr "мэдээллийн шошго"
+msgstr "Мэдээллийн шошго"
 
 #. Translators: A type of element in a Microsoft Office chart.
 msgid "Error Bars"
@@ -12783,7 +12636,6 @@ msgid "No Series defined."
 msgstr "Тодорхойлолтгүй цуврал."
 
 #. Translators: Speak text chart elements when virtual row of chart elements is reached while navigation
-#, fuzzy
 msgid "Chart Elements"
 msgstr "Chart  Графикийн элементүүд"
 
@@ -12795,14 +12647,14 @@ msgid "{seriesName} series {seriesIndex} of {seriesCount}"
 msgstr "{seriesName} цуврал{seriesIndex} -ийн {seriesCount}"
 
 #. Translators: Message to be spoken to report Slice Color in Pie Chart
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Slice color: {colorName} "
-msgstr "{colorName} Зүсмэлийн өнгө:"
+msgstr "{colorName} зүсмэлийн өнгө: "
 
 #. Translators: For line charts, indicates no change from the previous data point on the left
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "no change from point {previousIndex}, "
-msgstr "{previousIndex} цэгээс өөрчлөгдөөгүй,"
+msgstr "цэгээс өөрчлөгдөөгүй{previousIndex}, "
 
 #. Translators: For line charts, indicates an increase from the previous data point on the left
 #, python-brace-format
@@ -12836,17 +12688,17 @@ msgstr "{valueAxisTitle} {valueAxisData}"
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "value {valueAxisData}"
-msgstr "{valueAxisData} утга"
+msgstr "утга {valueAxisData}"
 
 #. Translators: Details about a slice of a pie chart.
 #. For example, this might report "fraction 25.25 percent slice 1 of 5"
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid ""
 " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
 msgstr ""
-"{fractionValue:.2f} Хувийн зүсмэл{pointIndex} -ийн{pointCount}  бутархай"
+" бутархай{fractionValue:.2f} Хувийн зүсмэл{pointIndex} -ийн{pointCount}"
 
 #. Translators: Details about a segment of a chart.
 #. For example, this might report "column 1 of 5"
@@ -12871,24 +12723,21 @@ msgid "Secondary Value Axis"
 msgstr "Хоёрдогч утгын тэнхлэг"
 
 #. Translators: Indicates Primary Series Axis
-#, fuzzy
 msgid "Primary Series Axis"
 msgstr "Үндсэн цуврал тэнхлэг"
 
 #. Translators: Indicates Secondary Series Axis
-#, fuzzy
 msgid "Secondary Series Axis"
 msgstr "Хоёрдогч цуврал тэнхлэг"
 
 #. Translators: the title of a chart axis
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid " title: {axisTitle}"
-msgstr "{axisTitle}  гарчиг: "
+msgstr " гарчиг: {axisTitle}"
 
 #. Translators: Indicates that trendline type is Exponential
-#, fuzzy
 msgid "Exponential"
-msgstr "илтгэгч функц"
+msgstr "Илтгэгч функц"
 
 #. Translators: Indicates that trendline type is Linear
 msgid "Linear"
@@ -12899,23 +12748,20 @@ msgid "Logarithmic"
 msgstr "Логарифмын"
 
 #. Translators: Indicates that trendline type is Moving Average
-#, fuzzy
 msgid "Moving Average"
-msgstr "дундаж Хөдөлгөөнт "
+msgstr "Дундаж Хөдөлгөөнд"
 
 #. Translators: Indicates that trendline type is Polynomial
 msgid "Polynomial"
 msgstr "Олон гишүүнт"
 
 #. Translators: Indicates that trendline type is Power
-#, fuzzy
 msgid "Power"
-msgstr "цахилгаан тэжээл"
+msgstr "Цахилгаан тэжээл"
 
 #. Translators: Substitute superscript two by square for R square value
-#, fuzzy
 msgid " square "
-msgstr "талбай"
+msgstr " талбай "
 
 #. Translators: Substitute - by minus in trendline equations.
 msgid " minus "
@@ -12955,12 +12801,11 @@ msgstr ""
 "дээд: {chartAreaTop}, зүүн: {chartAreaLeft}"
 
 #. Translators: Indicates the chart area of a Microsoft Office chart.
-#, fuzzy
 msgid "Chart area "
-msgstr "Chart  Графикийн хэсэг"
+msgstr "Chart  Графикийн хэсэг "
 
 #. Translators: Details about the plot area of a Microsoft Office chart.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid ""
 "Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
 "{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
@@ -12968,12 +12813,11 @@ msgid ""
 msgstr ""
 "Талбай, дотор талын өндөр: {plotAreaInsideHeight:.0f}, дотоод өргөн:"
 "{plotAreaInsideWidth:.0f}, дотор дээд:{plotAreaInsideTop:.0f}, зүүн дотор: "
-"{plotAreaInsideLeft:.0f} "
+"{plotAreaInsideLeft:.0f}"
 
 #. Translators: Indicates the plot area of a Microsoft Office chart.
-#, fuzzy
 msgid "Plot area "
-msgstr "Талбайн талбай"
+msgstr "Талбайн талбай "
 
 #. Translators: a message for the legend entry of a chart in MS Office
 #, python-brace-format
@@ -12996,9 +12840,9 @@ msgstr "{seriesName} {seriesIndex} -ийн{seriesCount} Цувралын дом�
 #. Translators: The background color as reported in Wordpad (Automatic) or NVDA log viewer.
 #. Translators: The text color as reported in Wordpad (Automatic) or NVDA log viewer.
 #. Translators: The background color as reported in Wordpad (Automatic) or NVDA log viewer.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "{color} (default color)"
-msgstr "Өгөгдмөл өнгө"
+msgstr "{color} (өгөгдмөл өнгө)"
 
 #. Translators: The color of text cannot be detected.
 #. Translators: The background color cannot be detected.
@@ -13007,9 +12851,8 @@ msgstr "Үл мэдэгдэх өнгө"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Excel controls the pattern.
-#, fuzzy
 msgid "automatic"
-msgstr "Автомат "
+msgstr "автомат"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Checkerboard
@@ -13034,9 +12877,9 @@ msgstr "12.5% саарал"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 25% gray
-#, fuzzy, no-python-format
+#, no-python-format
 msgid "25% gray"
-msgstr "25% саарал "
+msgstr "25% саарал"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 50% gray
@@ -13046,49 +12889,43 @@ msgstr "50% саарал"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% gray
-#, fuzzy, no-python-format
+#, no-python-format
 msgid "75% gray"
-msgstr "75% саарал "
+msgstr "75% саарал"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 6.25% gray
-#, fuzzy, no-python-format
+#, no-python-format
 msgid "6.25% gray"
-msgstr "6.25% саарал "
+msgstr "6.25% саарал"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Grid
-#, fuzzy
 msgid "thin horizontal crosshatch"
 msgstr "нимгэн хэвтээ хөндлөн"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark horizontal lines
-#, fuzzy
 msgid "horizontal stripe"
 msgstr "хэвтээ судал"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light diagonal lines running from the upper left to the lower right
-#, fuzzy
 msgid "thin reverse diagonal stripe"
 msgstr "нимгэн урвуу диагональ судал"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light horizontal lines
-#, fuzzy
 msgid "thin horizontal stripe"
 msgstr "нимгэн хэвтээ судал"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light diagonal lines running from the lower left to the upper right
-#, fuzzy
 msgid "thin diagonal stripe"
 msgstr "нимгэн диагональ судал"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light vertical bars
-#, fuzzy
 msgid "thin vertical stripe"
 msgstr "нимгэн босоо судал"
 
@@ -13109,23 +12946,19 @@ msgstr "хатуу"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the lower left to the upper right
-#, fuzzy
 msgid "diagonal stripe"
 msgstr "диагональ судал"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark vertical bars
-#, fuzzy
 msgid "vertical stripe"
 msgstr "босоо судал"
 
 #. Translators: A type of background pattern in Microsoft Excel.
-#, fuzzy
 msgid "linear gradient"
 msgstr "шугаман градиент gradient"
 
 #. Translators: A type of background pattern in Microsoft Excel.
-#, fuzzy
 msgid "rectangular gradient"
 msgstr "тэгш өнцөгт градиент gradient"
 
@@ -13163,7 +12996,6 @@ msgid "opens a dropdown item at the current cell"
 msgstr "одоогийн нүдэнд хэрэгтэй зүйлийг нээнэ"
 
 #. Translators: the description  for a script for Excel
-#, fuzzy
 msgid "Sets the current cell as start of column header"
 msgstr "Одоогийн нүдийг баганын толгойн эхлэл болгон тохируулна"
 
@@ -13187,7 +13019,6 @@ msgstr "Баганын толгой хэсгээс  {address}  хассан"
 msgid "Cannot find {address}    in column headers"
 msgstr "Баганын толгой хэсгээс  {address} олдсонгүй"
 
-#, fuzzy
 msgid ""
 "Pressing once will set this cell as the first column header for any cells "
 "lower and to the right of it within this region. Pressing twice will forget "
@@ -13198,14 +13029,13 @@ msgstr ""
 "баганын толгойг мартна."
 
 #. Translators: the description  for a script for Excel
-#, fuzzy
 msgid "sets the current cell as start of row header"
-msgstr "Одоогийн нүдийг мөрийн толгойн эхлэл болгон тохируулна"
+msgstr "одоогийн нүдийг мөрийн толгойн эхлэл болгон тохируулна"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Set {address} as start of row headers"
-msgstr "Мөрийн толгойн эхлэл болгон  {address} тохируулах "
+msgstr "Мөрийн толгойн эхлэл болгон  {address} тохируулах"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 #, python-brace-format
@@ -13213,9 +13043,9 @@ msgid "Already set {address} as start of row headers"
 msgstr "Мөрний толгойн эхлэл болгон {address} тохируулсан"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Removed {address}    from row headers"
-msgstr "Мөрийн толгой хэсгээс  {address}  хассан"
+msgstr "Мөрийн толгой хэсгээс  {address} хассан"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 #, python-brace-format
@@ -13236,38 +13066,34 @@ msgstr ""
 msgid "Sheet {0}, {1}"
 msgstr "Хуудас {0}, {1}"
 
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Input Message is {title}: {message}"
 msgstr "Оруулсан мессеж нь{title}: {message}"
 
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Input Message is {message}"
 msgstr "Оруулсан мессеж нь{message}"
 
 #. Translators: the description  for a script for Excel
-#, fuzzy
 msgid "Reports the note on the current cell"
 msgstr "Одоогийн нүдэнд тэмдэглэлийг мэдээлнэ"
 
 #. Translators: A message in Excel when there is no note
-#, fuzzy
 msgid "Not on a note"
 msgstr "Тэмдэглэл дээр биш"
 
 #. Translators: the description  for a script for Excel
-#, fuzzy
 msgid "Opens the note editing dialog"
 msgstr "Тэмдэглэл засах харилцах цонхыг нээнэ"
 
 #. Translators: Dialog text for the note editing dialog
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Editing note for cell {address}"
-msgstr "Нүдэнд зориулсан тэмдэглэлийг засах{address}"
+msgstr "Хүснэгтний нүдэнд зориулсан тэмдэглэлийг засах{address}"
 
 #. Translators: Title for the note editing  dialog
-#, fuzzy
 msgid "Note"
-msgstr "тэмдэглэл хийх"
+msgstr "Тэмдэглэл хийх"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 #. Beware to keep two spaces between the address and the content. Otherwise some synthesizer
@@ -13281,27 +13107,22 @@ msgid "top edge"
 msgstr "дээд ирмэг"
 
 #. Translators: border positions in Microsoft Excel.
-#, fuzzy
 msgid "bottom edge"
-msgstr "Доод ирмэг"
+msgstr "доод ирмэг"
 
 #. Translators: border positions in Microsoft Excel.
-#, fuzzy
 msgid "left edge"
-msgstr "Зүүн ирмэг"
+msgstr "зүүн ирмэг"
 
 #. Translators: border positions in Microsoft Excel.
-#, fuzzy
 msgid "right edge"
-msgstr "Баруун ирмэг"
+msgstr "баруун ирмэг"
 
 #. Translators: border positions in Microsoft Excel.
-#, fuzzy
 msgid "up-right diagonal line"
 msgstr "дээш баруун диагональ шугам"
 
 #. Translators: border positions in Microsoft Excel.
-#, fuzzy
 msgid "down-right diagonal line"
 msgstr "доош баруун диагональ шугам"
 
@@ -13314,34 +13135,28 @@ msgid "vertical borders except outside"
 msgstr "гаднаас бусад босоо хүрээнүүд"
 
 #. Translators: border styles in Microsoft Excel.
-#, fuzzy
 msgid "continuous"
-msgstr "Үргэлжилсэн"
+msgstr "үргэлжилсэн"
 
 #. Translators: border styles in Microsoft Excel.
-#, fuzzy
 msgid "dashed"
-msgstr "Зураас"
+msgstr "зураас"
 
 #. Translators: border styles in Microsoft Excel.
-#, fuzzy
 msgid "dash dot"
-msgstr "Зураастай цэг"
+msgstr "зураастай цэг"
 
 #. Translators: border styles in Microsoft Excel.
-#, fuzzy
 msgid "dash dot dot"
-msgstr "Зураастай цэг цэг"
+msgstr "зураастай цэг цэг"
 
 #. Translators: border styles in Microsoft Excel.
-#, fuzzy
 msgid "dotted"
-msgstr "Цэгтэй"
+msgstr "цэгтэй"
 
 #. Translators: border styles in Microsoft Excel.
-#, fuzzy
 msgid "double"
-msgstr "Давхар"
+msgstr "давхар"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "slanted dash dot"
@@ -13352,34 +13167,28 @@ msgid "hair"
 msgstr "үс"
 
 #. Translators: border styles in Microsoft Excel.
-#, fuzzy
 msgid "thin"
-msgstr "Нэмгэн"
+msgstr "нэмгэн"
 
 #. Translators: border styles in Microsoft Excel.
-#, fuzzy
 msgid "medium"
-msgstr "Дунд"
+msgstr "дунд"
 
 #. Translators: border styles in Microsoft Excel.
-#, fuzzy
 msgid "thick"
-msgstr "Зузаан "
+msgstr "зузаан"
 
 #. Translators: border styles in Microsoft Excel.
-#, fuzzy
 msgid "medium dash dot dot"
 msgstr "дунд зураастай цэг цэг"
 
 #. Translators: border styles in Microsoft Excel.
-#, fuzzy
 msgid "medium dash dot"
-msgstr "дунд зураасан цэг"
+msgstr "дунд зураастай цэг"
 
 #. Translators: border styles in Microsoft Excel.
-#, fuzzy
 msgid "medium dashed"
-msgstr "Дунд зураастай"
+msgstr "дунд зураастай"
 
 #. Translators: border styles in Microsoft Excel.
 #, python-brace-format
@@ -13417,14 +13226,12 @@ msgid "{desc} {position}"
 msgstr "{desc} {position}"
 
 #. Translators: a Microsoft Word revision type (inserted content)
-#, fuzzy
 msgid "insertion"
-msgstr "Оруулалт"
+msgstr "оруулалт"
 
 #. Translators: a Microsoft Word revision type (deleted content)
-#, fuzzy
 msgid "deletion"
-msgstr "Устгалт"
+msgstr "устгалт"
 
 #. Translators: a Microsoft Word revision type (changed content property, e.g. font, color)
 msgid "property"
@@ -13432,22 +13239,19 @@ msgstr "үзүүлэлт"
 
 #. Translators: a Microsoft Word revision type (changed paragraph number)
 msgid "paragraph number"
-msgstr "догол мөрний дугаар"
+msgstr "бичвэрийн догол мөрний дугаар"
 
 #. Translators: a Microsoft Word revision type (display field)
-#, fuzzy
 msgid "display field"
-msgstr "харуулах талбар"
+msgstr "харагдах талбар"
 
 #. Translators: a Microsoft Word revision type (reconcile)
-#, fuzzy
 msgid "reconcile"
-msgstr "Зохицуулах "
+msgstr "зохицуулах"
 
 #. Translators: a Microsoft Word revision type (conflicting revision)
-#, fuzzy
 msgid "conflict"
-msgstr "Зөрчилдөөн "
+msgstr "зөрчилдөөн"
 
 #. Translators: a Microsoft Word revision type (replaced content)
 msgid "replace"
@@ -13458,9 +13262,8 @@ msgid "paragraph property"
 msgstr "догол мөрний бүтэц"
 
 #. Translators: a Microsoft Word revision type (table)
-#, fuzzy
 msgid "table property"
-msgstr "Хүснэгтийн бүтэц"
+msgstr "хүснэгтийн бүтэц"
 
 #. Translators: a Microsoft Word revision type (section property)
 msgid "section property"
@@ -13471,14 +13274,12 @@ msgid "style definition"
 msgstr "загварын тодорхойлолт"
 
 #. Translators: a Microsoft Word revision type (moved from)
-#, fuzzy
 msgid "moved from"
-msgstr "Эндээс шилжих"
+msgstr "эндээс шилжих"
 
 #. Translators: a Microsoft Word revision type (moved to)
-#, fuzzy
 msgid "moved to"
-msgstr "Шилжүүлэх"
+msgstr "шилжүүлэх"
 
 #. Translators: a Microsoft Word revision type (inserted table cell)
 msgid "cell insertion"
@@ -13489,25 +13290,20 @@ msgid "cell deletion"
 msgstr "хүснэгтний нүд устгах"
 
 #. Translators: a Microsoft Word revision type (merged table cells)
-#, fuzzy
 msgid "cell merge"
-msgstr "хүснэгтний нүд нийлүүлэх "
+msgstr "хүснэгтний нүд нийлүүлэх"
 
-#, fuzzy
 msgid "Comments"
-msgstr "сэтгэгдлүүд"
+msgstr "Сэтгэгдлүүд"
 
-#, fuzzy
 msgid "Endnotes"
 msgstr "Төгсгөлийн тайлбарууд"
 
-#, fuzzy
 msgid "Even pages footer"
-msgstr "жигд хуудасны доод хөл хэсэг"
+msgstr "Жигд хуудасны доод хөл хэсэг"
 
-#, fuzzy
 msgid "Even pages header"
-msgstr "жигд хуудасны толгой"
+msgstr "Жигд хуудасны толгой хэсэг"
 
 msgid "First page footer"
 msgstr "Эхний хуудасны доод хөл хэсэг"
@@ -13529,9 +13325,9 @@ msgstr "Бичвэрийн хүрээ"
 
 #. Translators: The label shown for a comment in the NVDA Elements List dialog in Microsoft Word.
 #. {text}, {author} and {date} will be replaced by the corresponding details about the comment.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "comment: {text} by {author} on {date}"
-msgstr "{text} мөн {author} байна {date} сэтгэгдэл: "
+msgstr "{text} мөн {author} байна {date} сэтгэгдэл:"
 
 #. Translators: The label shown for an editor revision (tracked change)  in the NVDA Elements List dialog in Microsoft Word.
 #. {revisionType} will be replaced with the type of revision; e.g. insertion, deletion or property.
@@ -13552,16 +13348,14 @@ msgid "{distance} from top edge of page"
 msgstr "хуудасны дээд ирмэгээс {distance} зайтай"
 
 #. Translators: single line spacing
-#, fuzzy
 msgctxt "line spacing value"
 msgid "single"
 msgstr "нэг мөр"
 
 #. Translators: double line spacing
-#, fuzzy
 msgctxt "line spacing value"
 msgid "double"
-msgstr "Давхар мөр"
+msgstr "давхар мөр"
 
 #. Translators:  line spacing of 1.5 lines
 msgctxt "line spacing value"
@@ -13595,34 +13389,28 @@ msgid "automatic color"
 msgstr "автомат өнгө"
 
 #. Translators: a message when toggling formatting in Microsoft word
-#, fuzzy
 msgid "Bold on"
-msgstr "Тод болгох нээгдлээ."
+msgstr "Тодруулагч нээгдлээ"
 
 #. Translators: a message when toggling formatting in Microsoft word
-#, fuzzy
 msgid "Bold off"
-msgstr "Тод болгох хаагдлаа."
+msgstr "Тодруулагч хаагдлаа"
 
 #. Translators: a message when toggling formatting in Microsoft word
-#, fuzzy
 msgid "Italic on"
-msgstr "Налуу болгох нээгдэв."
+msgstr "Налуулагч нээгдлээ"
 
 #. Translators: a message when toggling formatting in Microsoft word
-#, fuzzy
 msgid "Italic off"
-msgstr "Налуу болгох хаагдав."
+msgstr "Налуулагч хаагдлаа"
 
 #. Translators: a message when toggling formatting in Microsoft word
-#, fuzzy
 msgid "Underline on"
-msgstr "Доогуур зураастай болгох нээгдэв."
+msgstr "Доогуур зураас нээгдлээ"
 
 #. Translators: a message when toggling formatting in Microsoft word
-#, fuzzy
 msgid "Underline off"
-msgstr "Доогуур зураастай болгох хаагдав."
+msgstr "Доогуур зураас хаагдлаа"
 
 #. Translators: a an alignment in Microsoft Word
 msgid "Left aligned"
@@ -13637,19 +13425,16 @@ msgid "Right aligned"
 msgstr "Баруун зэрэгцлээ"
 
 #. Translators: a an alignment in Microsoft Word
-#, fuzzy
 msgid "Justified"
-msgstr "жигдэрлээ."
+msgstr "Жигдэрлээ"
 
 #. Translators: a message when toggling formatting in Microsoft word
-#, fuzzy
 msgid "Superscript"
-msgstr "Мөрний дээд индекс "
+msgstr "Мөрний дээд индекс"
 
 #. Translators: a message when toggling formatting in Microsoft word
-#, fuzzy
 msgid "Subscript"
-msgstr "Мөрний доод индекс "
+msgstr "Мөрний доод индекс"
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Baseline"
@@ -13684,14 +13469,12 @@ msgid "{size:g} point font"
 msgstr "{size:g} үсгийн хэмжээ"
 
 #. Translators: a message when toggling Display Nonprinting Characters in Microsoft word
-#, fuzzy
 msgid "Display nonprinting characters"
-msgstr "хэвлэгдэхгүй үсэг тэмдэгтүүд"
+msgstr "Хэвлэхгүй үсэг тэмдэгтүүдийг харуулах"
 
 #. Translators: a message when toggling Display Nonprinting Characters in Microsoft word
-#, fuzzy
 msgid "Hide nonprinting characters"
-msgstr "хэвлэгдэхгүй үсэг тэмдэгүүдийг далдлах "
+msgstr "Хэвлэхгүй тэмдэгтүүдийг далдлах"
 
 #. Translators: a measurement in Microsoft Word
 #, python-brace-format
