@@ -242,6 +242,42 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			"kb:leftArrow": ("br(baum):left",),
 			"kb:rightArrow": ("br(baum):right",),
 			"kb:enter": ("br(baum):select",),
+			"showGui": (
+				"br(baum):b9+b1+b3+b4+b5",
+				"br(baum):b10+b1+b3+b4+b5",
+			),
+			"kb:shift+tab": (
+				"br(baum):b9+b1+b3",
+				"br(baum):b10+b1+b3",
+			),
+			"kb:tab": (
+				"br(baum):b9+b4+b6",
+				"br(baum):b10+b4+b6",
+			),
+			"kb:alt": (
+				"br(baum):b9+b1+b3+b4",
+				"br(baum):b10+b1+b3+b4",
+			),
+			"kb:escape": (
+				"br(baum):b9+b1+b5",
+				"br(baum):b10+b1+b5",
+			),
+			"kb:windows+d": (
+				"br(baum):b9+b1+b4+b5",
+				"br(baum):b10+b1+b4+b5",
+			),
+			"kb:windows": (
+				"br(baum):b9+b3+b4",
+				"br(baum):b10+b3+b4",
+			),
+			"kb:alt+tab": (
+				"br(baum):b9+b2+b3+b4+b5",
+				"br(baum):b10+b2+b3+b4+b5",
+			),
+			"sayAll": (
+				"br(baum):b9+b1+b2+b3+b4+b5+b6",
+				"br(baum):b10+b1+b2+b3+b4+b5+b6",
+			),
 		},
 	})
 
