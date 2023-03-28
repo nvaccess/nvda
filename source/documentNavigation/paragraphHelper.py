@@ -129,10 +129,10 @@ def speakSingleLineBreakParagraph(ti: textInfos.TextInfo) -> None:
 def _notFoundMessage(nextParagraph: bool):
 	if nextParagraph:
 		# Translators: this message is given when there is no next paragraph when navigating by paragraph
-		ui.message("No next paragraph")
+		ui.message(_("No next paragraph"))
 	else:
 		# Translators: this message is given when there is no previous paragraph when navigating by paragraph
-		ui.message("No previous paragraph")
+		ui.message(_("No previous paragraph"))
 
 
 def _moveTextInfoToSingleLineBreakParagraph(nextParagraph: bool, ti: textInfos.TextInfo) -> bool:
