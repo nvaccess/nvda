@@ -228,7 +228,8 @@ class Serial(IoBase):
 	):
 		"""Constructor.
 		Pass the arguments you would normally pass to L{serial.Serial}.
-		There are also some additional keyword arguments ( the first is required).
+		There are also some additional keyword arguments (the first, onReceive, is required).
+
 		@param onReceive: A callable taking a byte of received data as its only argument.
 			This callable can then call C{read} to get additional data if desired.
 		@param onReadError: If provided, a callback that takes the error code for a failed read
