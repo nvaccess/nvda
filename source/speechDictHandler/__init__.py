@@ -124,7 +124,8 @@ def processText(text):
 	focus = api.getFocusObject()
 	if hasattr(focus, "apiLevel") and focus.apiLevel < 2:
 		stripText = text.rstrip()
-		if len(text) - len(stripText) > 10000:
+		IGNORE_TRAILING_WHITESPACE_LENGTH = 1000
+		if len(text) - len(stripText) > IGNORE_TRAILING_WHITESPACE_LENGTH:
 			text = stripText
 	for type in dictTypes:
 		text=dictionaries[type].sub(text)
