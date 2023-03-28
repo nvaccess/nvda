@@ -2,6 +2,7 @@ What's New in NVDA
 
 
 %!includeconf: ../changes.t2tconf
+%!includeconf: ./locale.t2tconf
 
 = 2023.2 =
 
@@ -38,6 +39,8 @@ This only worked for Bluetooth Serial ports before. (#14524)
 - In Mozilla Firefox and Google Chrome, typed characters are no longer reported in some text boxes even when speak typed characters is disabled. (#14666)
 - You can now use browse mode in Chromium Embedded Controls where it was not possible previously. (#13493, #8553)
 - For symbols which do not have a symbol description in the current locale, the default English symbol level will be used. (#14558, #14417)
+- In newer releases of Windows 11 Notepad, NVDA can once again announce status bar contents. (#14573)
+- In Windows 10 and 11 Calculator, a portable copy of NVDA will no longer do nothing or play error tones when entering expressions in standard calculator in compact overlay mode. (#14679)
 -
 
 
@@ -48,6 +51,8 @@ Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documen
 Handlers can be registered that yield ``BrailleDisplayDriver/DeviceMatch`` pairs that don't fit in existing categories, like USB or Bluetooth. (#14531)
 - Added extension point: ``synthDriverHandler.synthChanged``. (#14618)
 - The NVDA Synth Settings Ring now caches available setting values the first time they're needed, rather than when loading the synthesizer. (#14704)
+- You can now call the export method on a gesture map to export it to a dictionary.
+This dictionary can be imported in another gesture by passing it either to the constructor of ``GlobalGestureMap`` or to the update method on an existing map. (#14582)
 -
 
 === Deprecations ===

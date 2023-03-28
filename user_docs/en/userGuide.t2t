@@ -2,7 +2,9 @@ NVDA NVDA_VERSION User Guide
 
 
 %!includeconf: ../userGuide.t2tconf
+%!includeconf: ./locale.t2tconf
 %kc:title: NVDA NVDA_VERSION Commands Quick Reference
+%kc:includeconf: ./locale.t2tconf
 
 = Table of Contents =[toc]
 %%toc
@@ -2349,7 +2351,11 @@ To change a symbol, first select it in the Symbols list.
 You can filter the symbols by entering the symbol or a part of the symbol's replacement into the Filter by edit box.
 
 - The Replacement field allows you to change the text that should be spoken in place of this symbol.
-- Using the Level field, you can adjust the lowest symbol level at which this symbol should be spoken.
+- Using the Level field, you can adjust the lowest symbol level at which this symbol should be spoken (none, some, most or all).
+You can also set the level to character; in this case the symbol will not be spoken regardless of the symbol level in use, with the following two exceptions:
+ - When navigating character by character.
+ - When NVDA is spelling any text containing that symbol.
+ -
 - The Send actual symbol to synthesizer field specifies when the symbol itself (in contrast to its replacement) should be sent to the synthesizer.
 This is useful if the symbol causes the synthesizer to pause or change the inflection of the voice.
 For example, a comma causes the synthesizer to pause.
