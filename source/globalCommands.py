@@ -3682,7 +3682,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: input help mode message for Report URL of a link in a window command
-			"shows the destination URL of the link at the position of caret or focus in a window, "
+			"Displays the destination URL of the link at the position of caret or focus in a window, "
 			"instead of just speaking it. May be preferred by braille users."
 		),
 		category=SCRCAT_TOOLS
