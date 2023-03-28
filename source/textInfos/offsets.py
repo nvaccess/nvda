@@ -180,7 +180,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			textList.append(_("at {x}, {y}").format(x=curPoint.x,y=curPoint.y))
 		return ", ".join(textList)
 
-	def _get_boundingRects(self) -> List[locationHelper.RectLTWH]:
+	def _get_boundingRects(self) -> List[locationHelper.RectLTWH]:  # noqa: C901
 		if self.isCollapsed:
 			return []
 		startOffset = self._startOffset
