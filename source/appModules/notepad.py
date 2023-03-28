@@ -25,11 +25,18 @@ class AppModule(appModuleHandler.AppModule):
 		if (
 			obj.role == controlTypes.Role.TAB
 			# this is done because 2 selection events are sent for the same object, so to prevent double speaking.
-			and not eventHandler.isPendingEvents("UIA_elementSelected") and controlTypes.State.SELECTED in obj.states):
+			and not eventHandler.isPendingEvents("UIA_elementSelected") and controlTypes.State.SELECTED in obj.states
+		):
 			speech.cancelSpeech()
 			speech.speakObject(obj, reason=controlTypes.OutputReason.FOCUS)
-			braille.handler.message(braille.getPropertiesBraille(
-				name=obj.name, role=obj.role, states=obj.states, positionInfo=obj.positionInfo))
+			braille.handler.message(
+				braille.getPropertiesBraille(
+					name=obj.name,
+					role=obj.role,
+					states=obj.states,
+					positionInfo=obj.positionInfo
+				)
+			)
 		nextHandler()
 
 	def _get_statusBar(self) -> NVDAObjects.NVDAObject:
