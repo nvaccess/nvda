@@ -18,6 +18,9 @@ import NVDAObjects
 import UIAHandler
 from NVDAObjects.UIA import UIA
 from NVDAObjects import NVDAObject
+from typing import Optional
+
+
 class AppModule(appModuleHandler.AppModule):
 	def event_UIA_elementSelected(self, obj, nextHandler):
 		# Announce currently selected tab when it changes.
