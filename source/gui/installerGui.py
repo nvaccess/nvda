@@ -428,17 +428,10 @@ class PortableCreaterDialog(
 				wx.OK | wx.ICON_ERROR
 			)
 			return
-		drv = os.path.splitdrive(expandedPortableDirectory)[0]
-		if drv and not os.path.isdir(drv):
-			gui.messageBox(
-				# Translators: The message displayed when the user specifies an invalid destination drive
-				# in the Create Portable NVDA dialog.
-				_("Invalid drive ({drive}).").format(drive=drv),
-				# Translators: the title of an error dialog.
-				_("Error"),
-				wx.OK | wx.ICON_ERROR
-			)
-			return
+		# We used to separate out the drive letter, check it, and present an error if it was not
+		# its own directory, as a secondary check of path absoluteness.
+		# But if os.path.isabs is convinced, we should just add the drive letter if missing, and carry on. (#14681)
+		expandedPortableDirectory = os.path.abspath(expandedPortableDirectory)
 		self.Hide()
 		doCreatePortable(
 			expandedPortableDirectory,
