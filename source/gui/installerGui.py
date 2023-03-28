@@ -444,6 +444,7 @@ class PortableCreaterDialog(
 	def onCancel(self, evt):
 		self.Destroy()
 
+
 def doCreatePortable(
 		portableDirectory: str,
 		copyUserConfig: bool = False,
