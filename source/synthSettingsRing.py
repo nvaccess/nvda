@@ -44,11 +44,18 @@ class StringSynthSetting(SynthSetting):
 		self._values = list(getattr(self.synth, f"available{self.setting.id.capitalize()}s").values())
 		return self._values
 
+	def _get_max(self):
+		return len(self._values) - 1
+
+	def _set_max(self, value):
+		# Max is set by L{SynthSetting} but should always be a calculated property.
+		pass
+
 	def _get_value(self):
 		curID=getattr(self.synth,self.setting.id)
 		for e,v in enumerate(self._values):
 			if curID==v.id:
-				return e 
+				return e
 
 	def _set_value(self,value):
 		"""Overridden to use code that supports updating speech dicts when changing voice"""
@@ -62,6 +69,7 @@ class StringSynthSetting(SynthSetting):
 
 	def _getReportValue(self, val):
 		return self._values[val].displayName
+
 
 class BooleanSynthSetting(SynthSetting):
 
@@ -100,7 +108,7 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 		return self.settings[self._current].reportValue
 
 	def _set_currentSettingValue(self,value):
-		if self._current is not None: 
+		if self._current is not None:
 			self.settings[_current].value = val
 
 	def next(self):
@@ -118,7 +126,7 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 
 	def increase(self):
 		""" increases the currentSetting and returns its new value """
-		if self._current is not None: 
+		if self._current is not None:
 			return self.settings[self._current].increase()
 		return None
 
