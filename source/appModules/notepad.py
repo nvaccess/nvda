@@ -7,7 +7,7 @@
 While this app module also covers older Notepad releases,
 this module provides workarounds for Windows 11 Notepad."""
 
-from typing import Optional
+from comtypes import COMError
 import appModuleHandler
 import api
 import braille
@@ -15,10 +15,10 @@ import controlTypes
 import eventHandler
 import speech
 import NVDAObjects
-
-
+import UIAHandler
+from NVDAObjects.UIA import UIA
+from NVDAObjects import NVDAObject
 class AppModule(appModuleHandler.AppModule):
-
 	def event_UIA_elementSelected(self, obj, nextHandler):
 		# Announce currently selected tab when it changes.
 		if (
@@ -50,12 +50,16 @@ class AppModule(appModuleHandler.AppModule):
 		# Thankfully, of all the UIA objects encountered, document window has a unique window class name.
 		if api.getFocusObject().windowClassName != "RichEditD2DPT":
 			raise NotImplementedError()
-		# Look for a specific child as some children report the same UIA properties such as class name.
-		# Make sure to look for a foreground UIA element which hosts status bar content if visible.
-		# #14573: status bar is the second to last item in Notepad UIA tree.
-		notepadStatusBarIndex = -2
-		statusBar = api.getForegroundObject().children[notepadStatusBarIndex].firstChild
-		# No location for a disabled status bar i.e. location is 0 (x, y, width, height).
-		if not any(statusBar.location):
-			raise NotImplementedError()
+		# Obtain status bar text across Notepad 11 releases.
+		clientObject = UIAHandler.handler.clientObject
+		condition = clientObject.createPropertyCondition(UIAHandler.UIA_AutomationIdPropertyId, "ContentTextBlock")
+		walker = clientObject.createTreeWalker(condition)
+		notepadWindow = clientObject.elementFromHandle(api.getForegroundObject().windowHandle)
+		try:
+			element = walker.getFirstChildElement(notepadWindow)
+			# Is status bar even showing?
+			element = element.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
+		except (ValueError, COMError):
+			raise NotImplementedError
+		statusBar = UIA(UIAElement=element).parent
 		return statusBar

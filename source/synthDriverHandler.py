@@ -472,6 +472,7 @@ def setSynth(name: Optional[str], isFallback: bool = False):
 		if not isFallback:
 			config.conf["speech"]["synth"] = name
 		log.info(f"Loaded synthDriver {_curSynth.name}")
+		synthChanged.notify(synth=_curSynth, audioOutputDevice=_audioOutputDevice, isFallback=isFallback)
 		return True
 	# As there was an error loading this synth:
 	elif prevSynthName:
@@ -534,3 +535,16 @@ synthIndexReached = extensionPoints.Action()
 #: Handlers are called with one keyword argument:
 #: synth: The L{SynthDriver} which reached the index.
 synthDoneSpeaking = extensionPoints.Action()
+
+synthChanged = extensionPoints.Action()
+"""
+Action that allows components or add-ons to be notified of synthesizer changes.
+For example, when a system is controlled by a remote system and the remote system switches synth,
+The local system should be notified about synth parameters at the remote system.
+@param synth: The new synthesizer driver
+@type synth: L{SynthDriver}
+@param audioOutputDevice: The identifier of the audio output device used for this synth.
+@type audioOutputDevice: str
+@param isFallback: Whether the synth is set as fallback synth due to another synth's failure
+@type isFallback: bool
+"""

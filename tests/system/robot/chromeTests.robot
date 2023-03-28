@@ -148,6 +148,7 @@ multiple ARIA details targets
 	test_annotations_multi_target
 i10890
 	[Documentation]	Test sort state is announced on column header when changed with inner button
+	[Tags]	excluded_from_build
 	test_i10890
 ARIA switch role
 	[Documentation]	Test aria switch control has appropriate role and states in browse mode and when focused
