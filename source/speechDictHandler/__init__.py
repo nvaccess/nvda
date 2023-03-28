@@ -114,6 +114,9 @@ class SpeechDict(list):
 				del self[index]
 		return text
 
+# useful for #14689 (see below)
+IGNORE_TRAILING_WHITESPACE_LENGTH = 100
+
 def processText(text):
 	if not globalVars.speechDictionaryProcessing:
 		return text
@@ -124,7 +127,6 @@ def processText(text):
 	focus = api.getFocusObject()
 	if hasattr(focus, "apiLevel") and focus.apiLevel < 2:
 		stripText = text.rstrip()
-		IGNORE_TRAILING_WHITESPACE_LENGTH = 1000
 		if len(text) - len(stripText) > IGNORE_TRAILING_WHITESPACE_LENGTH:
 			text = stripText
 	for type in dictTypes:
