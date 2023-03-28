@@ -114,6 +114,7 @@ class SpeechDict(list):
 				del self[index]
 		return text
 
+
 # useful for #14689 (see below)
 IGNORE_TRAILING_WHITESPACE_LENGTH = 100
 
