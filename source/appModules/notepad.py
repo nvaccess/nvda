@@ -17,8 +17,6 @@ import speech
 import NVDAObjects
 import UIAHandler
 from NVDAObjects.UIA import UIA
-from NVDAObjects import NVDAObject
-from typing import Optional
 
 
 class AppModule(appModuleHandler.AppModule):
@@ -34,7 +32,7 @@ class AppModule(appModuleHandler.AppModule):
 				name=obj.name, role=obj.role, states=obj.states, positionInfo=obj.positionInfo))
 		nextHandler()
 
-	def _get_statusBar(self) -> Optional[NVDAObjects.NVDAObject]:
+	def _get_statusBar(self) -> NVDAObjects.NVDAObject:
 		"""Retrieves Windows 11 Notepad status bar.
 		In Windows 10 and earlier, status bar can be obtained by looking at the bottom of the screen.
 		Windows 11 Notepad uses Windows 11 UI design (top-level window is labeled "DesktopWindowXamlSource",
