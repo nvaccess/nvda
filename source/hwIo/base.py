@@ -25,8 +25,18 @@ from logHandler import log
 import config
 import time
 from .ioThread import IoThread, apcsWillBeStronglyReferenced
-# LPOVERLAPPED_COMPLETION_ROUTINE is imported for backwards compatibility.
-from .ioThread import LPOVERLAPPED_COMPLETION_ROUTINE  # NOQA: F401
+import NVDAState
+
+def __getattr__(attrName: str) -> Any:
+	"""Module level `__getattr__` used to preserve backward compatibility."""
+	if attrName == "LPOVERLAPPED_COMPLETION_ROUTINE" and NVDAState._allowDeprecatedAPI():
+		log.warning(
+			"Importing LPOVERLAPPED_COMPLETION_ROUTINE from hwIO.base is deprecated. "
+			"Import LPOVERLAPPED_COMPLETION_ROUTINE from hwIo.ioThread instead."
+		)
+		from .ioThread import LPOVERLAPPED_COMPLETION_ROUTINE
+		return LPOVERLAPPED_COMPLETION_ROUTINE
+	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
 
 
 def _isDebug():
