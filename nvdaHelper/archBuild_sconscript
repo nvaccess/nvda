@@ -203,6 +203,9 @@ if TARGET_ARCH=='x86':
 detoursLib = env.SConscript('detours/sconscript')
 Export('detoursLib')
 
+apiHookObj = env.Object("apiHook","common/apiHook.cpp")
+Export('apiHookObj')
+
 if TARGET_ARCH=='x86':
 	localLib=env.SConscript('local/sconscript')
 	Export('localLib')
