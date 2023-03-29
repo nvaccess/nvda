@@ -21,7 +21,6 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 /**
  * Initializes nvdaHelperRemote, and allows it to inject in to processes.
- * @param secureMode 1 specifies that the NVDA process initializing NVDAHelper is in secure mode
  */
 BOOL injection_initialize();
 

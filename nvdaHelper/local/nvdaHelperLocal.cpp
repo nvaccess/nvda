@@ -246,6 +246,10 @@ BOOL WINAPI fake_OpenClipboard(HWND hwndOwner) {
 	return false;
 }
 
+/*
+ * Initializes the NVDAHelper local library
+ * @param secureMode 1 specifies that the NVDA process initializing NVDAHelper is in secure mode
+ */
 void nvdaHelperLocal_initialize(int secureMode) {
 	if(secureMode) {
 		isSecureModeNVDAProcess = true;

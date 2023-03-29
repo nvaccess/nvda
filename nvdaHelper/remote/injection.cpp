@@ -326,7 +326,6 @@ BOOL outprocInitialized=FALSE;
 
 /**
  * Initializes the out-of-process code for NVDAHelper 
- * @param secureMode 1 specifies that NVDA is running in seucre mode, 0 says not.
  */ 
 BOOL injection_initialize() {
 	if(outprocInitialized) {
