@@ -1,21 +1,21 @@
 ###
-#This file is a part of the NVDA project.
-#URL: http://www.nvda-project.org/
-#Copyright 2006-2010 NVDA contributers.
-#This program is free software: you can redistribute it and/or modify
-#it under the terms of the GNU General Public License version 2.0, as published by
-#the Free Software Foundation.
-#This program is distributed in the hope that it will be useful,
-#but WITHOUT ANY WARRANTY; without even the implied warranty of
-#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-#This license can be found at:
-#http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# This file is a part of the NVDA project.
+# URL: http://www.nvda-project.org/
+# Copyright 2006-2021 NVDA contributors.
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License version 2.0, as published by
+# the Free Software Foundation.
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+# This license can be found at:
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 ###
 
 Import([
 	'env',
 	'ia2RPCStubs',
-	'minHookLib',
+	'detoursLib',
 ])
 
 winIPCUtilsObj=env.Object("./winIPCUtils","../common/winIPCUtils.cpp")
@@ -23,7 +23,6 @@ winIPCUtilsObj=env.Object("./winIPCUtils","../common/winIPCUtils.cpp")
 vbufBackendLibs=[
 	env.SConscript('../vbufBase/sconscript'),
 	env.SConscript('../vbufBackends/adobeAcrobat/sconscript'),
-	env.SConscript('../vbufBackends/adobeFlash/sconscript'),
 	env.SConscript('../vbufBackends/lotusNotesRichText/sconscript'),
 	env.SConscript('../vbufBackends/gecko_ia2/sconscript'),
 	env.SConscript('../vbufBackends/mshtml/sconscript'),
@@ -60,16 +59,15 @@ vbufRPCHeader,vbufRPCServerSource=env.MSRPCStubs(
 	MSRPCStubs_prefix="VBufRemote_",
 )
 
-if env["TARGET_ARCH"] != 'arm64':
-	displayModelRPCHeader,displayModelRPCServerSource=env.MSRPCStubs(
-		target="./displayModelRemote",
-		source=[
-			"../interfaces/displayModel/displayModel.idl",
-			"../interfaces/displayModel/displayModel.acf",
-		],
-		MSRPCStubs_noClient=True,
-		MSRPCStubs_prefix="displayModelRemote_",
-	)
+displayModelRPCHeader,displayModelRPCServerSource=env.MSRPCStubs(
+	target="./displayModelRemote",
+	source=[
+		"../interfaces/displayModel/displayModel.idl",
+		"../interfaces/displayModel/displayModel.acf",
+	],
+	MSRPCStubs_noClient=True,
+	MSRPCStubs_prefix="displayModelRemote_",
+)
 
 nvdaInProcUtilsRPCHeader,nvdaInProcUtilsRPCServerSource=env.MSRPCStubs(
 	target="./nvdaInProcUtils",
@@ -96,6 +94,7 @@ source = [
 	"COMProxyRegistration.cpp",
 	"ia2Support.cpp",
 	"ia2LiveRegions.cpp",
+	"textFromIAccessible.cpp",
 	ia2utilsObj,
 	env.Object('_ia2_i',ia2RPCStubs[3]),
 	"rpcSrv.cpp",
@@ -110,9 +109,14 @@ source = [
 	"outlook.cpp",
 	"excel.cpp",
 	nvdaInProcUtilsRPCServerSource,
+	"gdiHooks.cpp",
+	"displayModel.cpp",
+	"displayModelRemote.cpp",
+	displayModelRPCServerSource,
 	"nvdaHelperRemote.def",
 	vbufBackendLibs,
 ]
+
 libs = [
 	"user32",
 	"ole32",
@@ -126,15 +130,9 @@ libs = [
 	"version",
 	"DbgHelp",
 	"gdi32",
+	detoursLib,
 ]
-# MinHook doesn't support ARM64, which means we can't support displayModel on ARM64.
-if env["TARGET_ARCH"] != 'arm64':
-	source.extend((
-		"gdiHooks.cpp",
-		"displayModel.cpp",
-		"displayModelRemote.cpp",
-		displayModelRPCServerSource,
-	))
+
 remoteLib=env.SharedLibrary(
 	target="nvdaHelperRemote",
 	source=source,

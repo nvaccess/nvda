@@ -16,11 +16,17 @@ import os
 import re
 import glob
 from SCons.Tool.MSCommon.vc import find_vc_pdir
+import typing
+from SCons.Environment import Environment
+from SCons.Environment import Base
 
 Import([
-	"env",
+	"thirdPartyEnv",
 	"sourceDir",
 ])
+sourceDir:Base = sourceDir
+thirdPartyEnv: Environment = thirdPartyEnv
+env: Environment = typing.cast(Environment, thirdPartyEnv.Clone())
 
 louisRootDir = env.Dir("#include/liblouis")
 louisSourceDir = louisRootDir.Dir("liblouis")
@@ -37,11 +43,9 @@ def getLouisVersion():
 				return m.group("version")
 	return "unknown"
 
-env = env.Clone()
-
 # Liblouis is build with Clang, as Microsoft Visual C++ is unable to build C99 code.
 clangDirs = glob.glob(os.path.join(
-    find_vc_pdir(env.get("MSVC_VERSION")),
+    find_vc_pdir(env, env.get("MSVC_VERSION")),
     r"Tools\Llvm\bin"
 ))
 if len(clangDirs) == 0:
@@ -49,15 +53,11 @@ if len(clangDirs) == 0:
 		"Could not find the Clang compiler. "
 		"Perhaps the C++ Clang tools for Windows component in visual Studio is not installed"
 	) 
-env['ENV']['PATH'] += "".join(f";{d}" for d in clangDirs)
 env['CC'] = 'clang-cl'
 
 # Don't analyze the code as not our project
 if 'analyze' in env['nvdaHelperDebugFlags']:
 	env.Append(CCFLAGS='/analyze-')
-
-# Ignore some warnings as the code is not ours
-env.Replace(CCFLAGS='/W2')
 
 env.Append(CPPDEFINES=[
 	# The Visual C++ C Runtime deprecates standard POSIX APIs that conflict with

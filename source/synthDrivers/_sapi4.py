@@ -5,9 +5,24 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-from ctypes import *
-from ctypes.wintypes import *
-from comtypes import *
+from ctypes import (
+	cast,
+	c_int,
+	c_uint,
+	c_ulong,
+	c_ulonglong,
+	c_wchar,
+	c_wchar_p,
+	c_void_p,
+	HRESULT,
+	POINTER,
+	sizeof,
+	Structure
+)
+from ctypes.wintypes import BYTE, DWORD, LPCWSTR, WORD
+from comtypes import GUID, IUnknown, STDMETHOD
+
+import winKernel
 
 S_OK=0
 
@@ -37,8 +52,6 @@ class VOICECHARSET(c_int):
     CHARSET_IPAPHONETIC = 1
     CHARSET_ENGINEPHONETIC = 2
 
-class FILETIME(Structure):
-    _fields_ = [("dwLowDateTime", DWORD), ("dwHighDateTime", DWORD)]
 
 class LANGUAGEW(Structure):
     _fields_ = [("LanguageID", LANGID),
@@ -111,7 +124,7 @@ ITTSCentralW._methods_ = [
     STDMETHOD(HRESULT, "Phoneme", [VOICECHARSET, DWORD, SDATA, POINTER(SDATA)]),
     STDMETHOD(HRESULT, "PosnGet", [POINTER(QWORD)]),
     STDMETHOD(HRESULT, "TextData", [VOICECHARSET, DWORD, SDATA, c_void_p, GUID]),
-    STDMETHOD(HRESULT, "ToFileTime", [POINTER(QWORD), POINTER(FILETIME)]),
+    STDMETHOD(HRESULT, "ToFileTime", [POINTER(QWORD), POINTER(winKernel.FILETIME)]),
     STDMETHOD(HRESULT, "AudioPause"),
     STDMETHOD(HRESULT, "AudioResume"),
     STDMETHOD(HRESULT, "AudioReset"),

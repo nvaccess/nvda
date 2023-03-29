@@ -3,9 +3,11 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+"""
+When working on this file, consider moving to winAPI.
+"""
+
 import threading
-import comtypes.client
-import time
 from ctypes import *
 from ctypes.wintypes import *
 import watchdog
@@ -44,7 +46,7 @@ mouseCallback=None
 
 @WINFUNCTYPE(c_long,c_int,WPARAM,LPARAM)
 def keyboardHook(code,wParam,lParam):
-	if watchdog.isAttemptingRecovery or code!=HC_ACTION:
+	if code != HC_ACTION:
 		return windll.user32.CallNextHookEx(0,code,wParam,lParam)
 	kbd=KBDLLHOOKSTRUCT.from_address(lParam)
 	if keyUpCallback and kbd.flags&LLKHF_UP:

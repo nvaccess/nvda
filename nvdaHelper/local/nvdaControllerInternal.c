@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2006-2010 NVDA contributers.
+Copyright 2006-2018 NV Access Limited, rui Batista, Google LLC.
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -12,7 +12,7 @@ This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
-#include "nvdaControllerInternal.h"
+#include <local/nvdaControllerInternal.h>
 
 error_status_t(__stdcall *_nvdaControllerInternal_requestRegistration)(const wchar_t*);
 error_status_t __stdcall nvdaControllerInternal_requestRegistration(const wchar_t* uuidString) {
@@ -24,9 +24,9 @@ error_status_t __stdcall nvdaControllerInternal_inputLangChangeNotify(const long
 	return _nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString);
 }
 
-error_status_t(__stdcall *_nvdaControllerInternal_typedCharacterNotify)(const long, const wchar_t); 
-error_status_t __stdcall nvdaControllerInternal_typedCharacterNotify(const long threadID, const wchar_t ch) {
-	return _nvdaControllerInternal_typedCharacterNotify(threadID,ch);
+error_status_t(__stdcall *_nvdaControllerInternal_typedCharacterNotify)(const wchar_t); 
+error_status_t __stdcall nvdaControllerInternal_typedCharacterNotify(const wchar_t ch) {
+	return _nvdaControllerInternal_typedCharacterNotify(ch);
 }
 
 
@@ -73,4 +73,14 @@ error_status_t __stdcall nvdaControllerInternal_installAddonPackageFromPath(cons
 error_status_t(__stdcall *_nvdaControllerInternal_drawFocusRectNotify)(const long, const long, const long, const long, const long);
 error_status_t __stdcall nvdaControllerInternal_drawFocusRectNotify(const long hwnd, const long left, const long top, const long right, const long bottom) { 
 	return _nvdaControllerInternal_drawFocusRectNotify(hwnd,left,top,right,bottom);
+}
+
+error_status_t(__stdcall *_nvdaControllerInternal_reportLiveRegion)(const wchar_t*, const wchar_t*);
+error_status_t __stdcall nvdaControllerInternal_reportLiveRegion(const wchar_t* text, const wchar_t* politeness) {
+	return _nvdaControllerInternal_reportLiveRegion(text, politeness);
+}
+
+error_status_t(__stdcall *_nvdaControllerInternal_openConfigDirectory)();
+error_status_t __stdcall nvdaControllerInternal_openConfigDirectory() {
+	return _nvdaControllerInternal_openConfigDirectory();
 }

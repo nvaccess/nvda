@@ -1,9 +1,13 @@
-#treeInterceptorHandler.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Davy Kager
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-from typing import Optional, Dict
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2022 NV Access Limited, Davy Kager, Accessolutions, Julien Cochuyt
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+
+from typing import (
+	TYPE_CHECKING,
+	Dict,
+	Optional,
+)
 
 from logHandler import log
 import baseObject
@@ -16,6 +20,10 @@ import braille
 import vision
 from speech.types import SpeechSequence
 from controlTypes import OutputReason
+
+if TYPE_CHECKING:
+	import NVDAObjects
+
 
 runningTable=set()
 
@@ -83,12 +91,11 @@ class TreeInterceptor(baseObject.ScriptableObject):
 
 	shouldTrapNonCommandGestures=False #: If true then gestures that do not have a script and are not a command gesture should be trapped from going through to Windows.
 
-	def __init__(self, rootNVDAObject):
+	def __init__(self, rootNVDAObject: "NVDAObjects.NVDAObject"):
 		super(TreeInterceptor, self).__init__()
 		self._passThrough = False
 		#: The root object of the tree wherein events and scripts are intercepted.
-		#: @type: L{NVDAObjects.NVDAObject}
-		self.rootNVDAObject = rootNVDAObject
+		self.rootNVDAObject: "NVDAObjects.NVDAObject" = rootNVDAObject
 
 	def terminate(self):
 		"""Terminate this interceptor.
@@ -114,6 +121,10 @@ class TreeInterceptor(baseObject.ScriptableObject):
 		"""
 		raise NotImplementedError
 
+	#: Typing for autoproperty _get_passThrough
+	# Whether most scripts should temporarily pass through this interceptor without being intercepted.
+	passThrough: bool
+
 	def _get_passThrough(self):
 		"""Whether most scripts should temporarily pass through this interceptor without being intercepted.
 		"""
@@ -130,7 +141,8 @@ class TreeInterceptor(baseObject.ScriptableObject):
 					if review.getCurrentMode()=='document':
 						# if focus is in this treeInterceptor and review mode is document, turning on passThrough should force object review
 						review.setCurrentMode('object')
-					api.setNavigatorObject(focusObj, isFocus=True)
+					if not api.setNavigatorObject(focusObj, isFocus=True):
+						return
 			focusObj = api.getFocusObject()
 			braille.handler.handleGainFocus(focusObj)
 			vision.handler.handleGainFocus(focusObj)
@@ -188,8 +200,8 @@ class RootProxyTextInfo(textInfos.TextInfo):
 	def _get_locationText(self):
 		return self.innerTextInfo.locationText
 
-	def copyToClipboard(self):
-		return self.innerTextInfo.copyToClipboard()
+	def copyToClipboard(self, notify=False):
+		return self.innerTextInfo.copyToClipboard(notify)
 
 	def find(self,text,caseSensitive=False,reverse=False):
 		return self.innerTextInfo.find(text,caseSensitive,reverse)
@@ -227,7 +239,7 @@ class RootProxyTextInfo(textInfos.TextInfo):
 	def _get_boundingRects(self):
 		return self.innerTextInfo.boundingRects
 
-	def getTextWithFields(self,formatConfig=None):
+	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
 		return self.innerTextInfo.getTextWithFields(formatConfig=formatConfig)
 
 	def expand(self,unit):
@@ -266,3 +278,11 @@ class RootProxyTextInfo(textInfos.TextInfo):
 
 	def _get_pointAtStart(self):
 		return self.innerTextInfo.pointAtStart
+
+	def __eq__(self, other):
+		if isinstance(other, RootProxyTextInfo):
+			other = other.innerTextInfo
+		return self.innerTextInfo.__eq__(other)
+
+	def __hash__(self):
+		return super().__hash__()

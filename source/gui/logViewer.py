@@ -1,8 +1,7 @@
-#gui/logViewer.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-# Copyright (C) 2008-2020 NV Access Limited
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2008-2022 NV Access Limited
 
 """Provides functionality to view the NVDA log.
 """
@@ -10,13 +9,22 @@
 import wx
 import globalVars
 import gui
+import gui.contextHelp
+from gui import blockAction
+
 
 #: The singleton instance of the log viewer UI.
 logViewer = None
 
-class LogViewer(wx.Frame):
+
+class LogViewer(
+		gui.contextHelp.ContextHelpMixin,
+		wx.Frame  # wxPython does not seem to call base class initializer, put last in MRO
+):
 	"""The NVDA log viewer GUI.
 	"""
+	
+	helpId = "LogViewer"
 
 	def __init__(self, parent):
 		# Translators: The title of the NVDA log viewer window.
@@ -95,15 +103,15 @@ class LogViewer(wx.Frame):
 			return
 		evt.Skip()
 
+
+# The log might expose sensitive information and the Save As dialog in the Log Viewer is a security risk.
+@blockAction.when(blockAction.Context.SECURE_MODE)
 def activate():
 	"""Activate the log viewer.
 	If the log viewer has not already been created and opened, this will create and open it.
 	Otherwise, it will be brought to the foreground if possible.
 	"""
 	global logViewer
-	if globalVars.appArgs.secure:
-		# The log might expose sensitive information and the Save As dialog in the Log Viewer is a security risk.
-		return
 	if not logViewer:
 		logViewer = LogViewer(gui.mainFrame)
 	# Check if log was properly initialized

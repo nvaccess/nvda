@@ -1,25 +1,31 @@
-#eventHandler.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2007-2017 NV Access Limited, Babbage B.V.
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2007-2022 NV Access Limited, Babbage B.V.
 
 import threading
+import typing
 from typing import Optional
+from comtypes import COMError
 
+import garbageHandler
 import queueHandler
 import api
 import speech
 from speech.commands import _CancellableSpeechCommand
-import appModuleHandler
 import treeInterceptorHandler
-import globalVars
 import controlTypes
 from logHandler import log
 import globalPluginHandler
 import config
 import winUser
 import extensionPoints
+import oleacc
+from utils.security import objectBelowLockScreenAndWindowsIsLocked
+
+if typing.TYPE_CHECKING:
+	import NVDAObjects
+
 
 #Some dicts to store event counts by name and or obj
 _pendingEventCountsByName={}
@@ -41,7 +47,14 @@ def queueEvent(eventName,obj,**kwargs):
 		_pendingEventCountsByName[eventName]=_pendingEventCountsByName.get(eventName,0)+1
 		_pendingEventCountsByObj[obj]=_pendingEventCountsByObj.get(obj,0)+1
 		_pendingEventCountsByNameAndObj[(eventName,obj)]=_pendingEventCountsByNameAndObj.get((eventName,obj),0)+1
-	queueHandler.queueFunction(queueHandler.eventQueue,_queueEventCallback,eventName,obj,kwargs)
+	queueHandler.queueFunction(
+		queueHandler.eventQueue,
+		_queueEventCallback,
+		eventName,
+		obj,
+		kwargs,
+		_immediate=eventName == "gainFocus"
+	)
 
 
 def _queueEventCallback(eventName,obj,kwargs):
@@ -81,7 +94,8 @@ def isPendingEvents(eventName=None,obj=None):
 	elif eventName and obj:
 		return (eventName,obj) in _pendingEventCountsByNameAndObj
 
-class _EventExecuter(object):
+
+class _EventExecuter(garbageHandler.TrackedObject):
 	"""Facilitates execution of a chain of event functions.
 	L{gen} generates the event functions and positional arguments.
 	L{next} calls the next function in the chain.
@@ -94,7 +108,8 @@ class _EventExecuter(object):
 			self.next()
 		except StopIteration:
 			pass
-		del self._gen
+		finally:
+			del self._gen
 
 	def next(self):
 		func, args = next(self._gen)
@@ -140,66 +155,144 @@ class _EventExecuter(object):
 WAS_GAIN_FOCUS_OBJ_ATTR_NAME = "wasGainFocusObj"
 
 
-def _trackFocusObject(eventName, obj) -> None:
+def _trackFocusObject(eventName: str, obj: "NVDAObjects.NVDAObject") -> None:
 	""" Keeps track of lastQueuedFocusObject and sets wasGainFocusObj attr on objects.
 	:param eventName: the event type, eg "gainFocus"
 	:param obj: the object to track if focused
 	"""
 	global lastQueuedFocusObject
 
-	if eventName == "gainFocus":
+	if (
+		eventName == "gainFocus"
+		and not objectBelowLockScreenAndWindowsIsLocked(
+			obj,
+			shouldLog=config.conf["debugLog"]["events"],
+		)
+	):
 		lastQueuedFocusObject = obj
-		setattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME, True)
-	elif not hasattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME):
-		setattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME, False)
+
+
+class FocusLossCancellableSpeechCommand(_CancellableSpeechCommand):
+	def __init__(self, obj, reportDevInfo: bool):
+		from NVDAObjects import NVDAObject
+		if not isinstance(obj, NVDAObject):
+			log.warning("Unhandled object type. Expected all objects to be descendant from NVDAObject")
+			raise TypeError(f"Unhandled object type: {obj!r}")
+		self._obj = obj
+		super(FocusLossCancellableSpeechCommand, self).__init__(reportDevInfo=reportDevInfo)
+
+		if self.isLastFocusObj():
+			# Objects may be re-used.
+			# WAS_GAIN_FOCUS_OBJ_ATTR_NAME state should be cleared at some point?
+			# perhaps instead keep a weak ref list of obj that had focus, clear on keypress?
+
+			# Assumption: we only process one focus event at a time, so even if several focus events are queued,
+			# all focused objects will still gain this tracking attribute. Otherwise, this may need to be set via
+			# api.setFocusObject when api.getFocusObject is set.
+			setattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME, True)
+		elif not hasattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME):
+			setattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME, False)
+
+	def _checkIfValid(self) -> bool:
+		stillValid = (
+			self.isLastFocusObj()
+			or not self.previouslyHadFocus()
+			or self.isAncestorOfCurrentFocus()
+			# Ensure titles for dialogs gaining focus are reported, EG NVDA Find dialog
+			or self.isForegroundObject()
+			# Ensure menu items are reported when focus is gained to the menu start (see #12624).
+			or self.isMenuItemOfCurrentFocus()
+		)
+		return stillValid
+
+	def _getDevInfo(self) -> str:
+		return (
+			f"isLast: {self.isLastFocusObj()}"
+			f", previouslyHad: {self.previouslyHadFocus()}"
+			f", isAncestorOfCurrentFocus: {self.isAncestorOfCurrentFocus()}"
+			f", is foreground obj {self.isForegroundObject()}"
+			f", isMenuItemOfCurrentFocus: {self.isMenuItemOfCurrentFocus()}"
+		)
+
+	def isLastFocusObj(self):
+		# Use '==' rather than 'is' because obj may have been created multiple times
+		# pointing to the same underlying object.
+		return self._obj == api.getFocusObject()
+
+	def previouslyHadFocus(self):
+		return getattr(self._obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME, False)
+
+	def isAncestorOfCurrentFocus(self):
+		return self._obj in api.getFocusAncestors()
+
+	def isForegroundObject(self):
+		foreground = api.getForegroundObject()
+		return self._obj is foreground or self._obj == foreground
+
+	def isMenuItemOfCurrentFocus(self) -> bool:
+		"""
+		Checks if the current object is a menu item of the current focus.
+		The only known case where this returns True is the following (see #12624):
+		
+		When opening a submenu in certain applications (like Thunderbird 78.12),
+		NVDA can process a menu start event after the first item in the menu is focused.
+		The menu start event causes a focus event on the menu, taking NVDA's focus from the menu item.
+		Additionally, the "menu" parent of the submenu item is not keyboard focusable, and is separate from
+		the menu item which triggered the submenu.
+		The object tree in this case (menu item > submenu (not keyboard focusable) > submenu item).
+		The focus event order after activating the menu item's sub menu is (submenu item, submenu).
+		"""
+		from NVDAObjects import IAccessible
+		lastFocus = api.getFocusObject()
+		_isMenuItemOfCurrentFocus = (
+			self._obj.parent
+			and isinstance(self._obj, IAccessible.IAccessible)
+			and isinstance(lastFocus, IAccessible.IAccessible)
+			and self._obj.IAccessibleRole == oleacc.ROLE_SYSTEM_MENUITEM
+			and lastFocus.IAccessibleRole == oleacc.ROLE_SYSTEM_MENUPOPUP
+			and self._obj.parent == lastFocus
+		)
+		if _isMenuItemOfCurrentFocus:
+			# Change this to log.error for easy debugging
+			log.debugWarning(
+				"This parent menu was not announced properly, "
+				"and should have been focused before the submenu item.\n"
+				f"Object info: {self._obj.devInfo}\n"
+				f"Object parent info: {self._obj.parent.devInfo}\n"
+			)
+		return _isMenuItemOfCurrentFocus
+
 
 def _getFocusLossCancellableSpeechCommand(
 		obj,
 		reason: controlTypes.OutputReason
 ) -> Optional[_CancellableSpeechCommand]:
-	if reason != controlTypes.REASON_FOCUS or not speech.manager._shouldCancelExpiredFocusEvents():
+	if reason != controlTypes.OutputReason.FOCUS or not speech.manager._shouldCancelExpiredFocusEvents():
 		return None
 	from NVDAObjects import NVDAObject
 	if not isinstance(obj, NVDAObject):
 		log.warning("Unhandled object type. Expected all objects to be descendant from NVDAObject")
 		return None
 
-	def previouslyHadFocus():
-		return getattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME, False)
+	shouldReportDevInfo = speech.manager._shouldDoSpeechManagerLogging()
+	return FocusLossCancellableSpeechCommand(obj, reportDevInfo=shouldReportDevInfo)
 
-	def isLastFocusObj():
-		return obj is lastQueuedFocusObject
 
-	def isAncestorOfCurrentFocus():
-		return obj in api.getFocusAncestors()
-
-	def isSpeechStillValid():
-		stillValid = (
-			isLastFocusObj()
-			or not previouslyHadFocus()
-			or isAncestorOfCurrentFocus()
-		)
-		return stillValid
-
-	if not speech.manager._shouldDoSpeechManagerLogging():
-		return _CancellableSpeechCommand(isSpeechStillValid)
-
-	def getDevInfo():
-		return (
-			f"isLast: {isLastFocusObj()}"
-			f", previouslyHad: {previouslyHadFocus()}"
-			f", isAncestorOfCurrentFocus: {isAncestorOfCurrentFocus()}"
-		)
-	return _CancellableSpeechCommand(isSpeechStillValid, getDevInfo)
-
-def executeEvent(eventName, obj, **kwargs):
+def executeEvent(
+		eventName: str,
+		obj: "NVDAObjects.NVDAObject",
+		**kwargs,
+) -> None:
 	"""Executes an NVDA event.
 	@param eventName: the name of the event type (e.g. 'gainFocus', 'nameChange')
-	@type eventName: string
 	@param obj: the object the event is for
-	@type obj: L{NVDAObjects.NVDAObject}
 	@param kwargs: Additional event parameters as keyword arguments.
 	"""
+	if objectBelowLockScreenAndWindowsIsLocked(
+		obj,
+		shouldLog=config.conf["debugLog"]["events"],
+	):
+		return
 	try:
 		isGainFocus = eventName == "gainFocus"
 		# Allow NVDAObjects to redirect focus events to another object of their choosing.
@@ -215,28 +308,43 @@ def executeEvent(eventName, obj, **kwargs):
 	except:
 		log.exception("error executing event: %s on %s with extra args of %s"%(eventName,obj,kwargs))
 
-def doPreGainFocus(obj,sleepMode=False):
-	oldForeground=api.getForegroundObject()
+
+def doPreGainFocus(obj: "NVDAObjects.NVDAObject", sleepMode: bool = False) -> bool:
+	from IAccessibleHandler import SecureDesktopNVDAObject
+
+	if objectBelowLockScreenAndWindowsIsLocked(
+		obj,
+		shouldLog=config.conf["debugLog"]["events"],
+	):
+		return False
 	oldFocus=api.getFocusObject()
 	oldTreeInterceptor=oldFocus.treeInterceptor if oldFocus else None
-	api.setFocusObject(obj)
-
+	if not api.setFocusObject(obj):
+		return False
 	if speech.manager._shouldCancelExpiredFocusEvents():
 		log._speechManagerDebug("executeEvent: Removing cancelled speech commands.")
 		# ask speechManager to check if any of it's queued utterances should be cancelled
 		# Note: Removing cancelled speech commands should happen after all dependencies for the isValid check
 		# have been updated:
-		# - lastQueuedFocusObject
 		# - obj.WAS_GAIN_FOCUS_OBJ_ATTR_NAME
+		# - api.setFocusObject()
 		# - api.getFocusAncestors()
-		# These are updated:
-		# - lastQueuedFocusObject & obj.WAS_GAIN_FOCUS_OBJ_ATTR_NAME
-		#   - Set in stack: _trackFocusObject, eventHandler.queueEvent
-		#   - Which results in executeEvent being called, then doPreGainFocus
+		# When these are updated:
+		# - obj.WAS_GAIN_FOCUS_OBJ_ATTR_NAME
+		#   - Set during creation of the _CancellableSpeechCommand.
 		# - api.getFocusAncestors() via api.setFocusObject() called in doPreGainFocus
 		speech._manager.removeCancelledSpeechCommands()
 
-	if globalVars.focusDifferenceLevel<=1:
+	if (
+		api.getFocusDifferenceLevel() <= 1
+		# This object should not set off a foreground event.
+		# SecureDesktopNVDAObject uses a gainFocus event to trigger NVDA
+		# to sleep as the secure instance of NVDA starts for the
+		# secure desktop.
+		# The newForeground object fetches from the User Desktop,
+		# not the secure desktop.
+		and not isinstance(obj, SecureDesktopNVDAObject)
+	):
 		newForeground=api.getDesktopObject().objectInForeground()
 		if not newForeground:
 			log.debugWarning("Can not get real foreground, resorting to focus ancestors")
@@ -245,11 +353,12 @@ def doPreGainFocus(obj,sleepMode=False):
 				newForeground=ancestors[1]
 			else:
 				newForeground=obj
-		api.setForegroundObject(newForeground)
-		executeEvent('foreground',newForeground)
+		if not api.setForegroundObject(newForeground):
+			return False
+		executeEvent('foreground', newForeground)
 	if sleepMode: return True
 	#Fire focus entered events for all new ancestors of the focus if this is a gainFocus event
-	for parent in globalVars.focusAncestors[globalVars.focusDifferenceLevel:]:
+	for parent in api.getFocusAncestors()[api.getFocusDifferenceLevel():]:
 		executeEvent("focusEntered",parent)
 	if obj.treeInterceptor is not oldTreeInterceptor:
 		if hasattr(oldTreeInterceptor,"event_treeInterceptor_loseFocus"):
@@ -344,8 +453,8 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 
 	# #6713: Edge (and soon all UWP apps) will no longer have windows as descendants of the foreground window.
 	# However, it does look like they are always  equal to or descendants of the "active" window of the input thread. 
+	gi = winUser.getGUIThreadInfo(0)
 	if wClass.startswith('Windows.UI.Core'):
-		gi=winUser.getGUIThreadInfo(0)
 		if winUser.isDescendantWindow(gi.hwndActive,windowHandle):
 			return True
 
@@ -369,4 +478,31 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 		# This window or its root is a topmost window.
 		# This includes menus, combo box pop-ups and the task switching list.
 		return True
+	# This may be an event for a windowless embedded Chrome document
+	# (E.g. Microsoft Loop component).
+	if wClass == "Chrome_RenderWidgetHostHWND":
+		# The event is for a Chromium document
+		if winUser.getClassName(gi.hwndFocus) == "Chrome_WidgetWin_0":
+			# The real win32 focus is on a Chrome embedding window.
+			# See if we can get from the event's Chromium document to the Chrome embedding window
+			# via ancestors in the UIA tree.
+			rootWindowHandle = winUser.getAncestor(windowHandle, winUser.GA_ROOT)
+			import UIAHandler
+			try:
+				rootElement = UIAHandler.handler.clientObject.elementFromHandle(rootWindowHandle)
+			except COMError:
+				log.debugWarning("Could not create UIA element for root of Chromium document", exc_info=True)
+			else:
+				condition = UIAHandler.handler.clientObject.CreatePropertyCondition(
+					UIAHandler.UIA_NativeWindowHandlePropertyId, gi.hwndFocus
+				)
+				try:
+					walker = UIAHandler.handler.clientObject.CreateTreeWalker(condition)
+					ancestorElement = walker.NormalizeElement(rootElement)
+				except COMError:
+					log.debugWarning("Unable to normalize root Chromium element to focused ancestor", exc_info=True)
+					ancestorElement = None
+				if ancestorElement:
+					# The real focused window is an ancestor of the Chromium document in the UIA tree.
+					return True
 	return False

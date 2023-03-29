@@ -1,102 +1,195 @@
 # -*- coding: UTF-8 -*-
-#NVDAObjects/IAccessible/mozilla.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2006-2022 NV Access Limited, Peter Vágner
 
-from collections import namedtuple
+from typing import (
+	Generator,
+	Optional,
+	Tuple,
+)
+
+from annotation import (
+	_AnnotationRolesT,
+	AnnotationTarget,
+	AnnotationOrigin,
+)
 import IAccessibleHandler
+from comInterfaces import IAccessible2Lib as IA2
+import config
 import oleacc
 import winUser
-from comtypes import IServiceProvider, COMError
-import eventHandler
 import controlTypes
-from . import IAccessible, Dialog, WindowRoot
+from . import IAccessible, WindowRoot
 from logHandler import log
-import textInfos.offsets
 from NVDAObjects.behaviors import RowWithFakeNavigation
-from virtualBuffers import VirtualBuffer
-from . import IA2TextTextInfo
 from . import ia2Web
 
-class Mozilla(ia2Web.Ia2Web):
 
-	def _get_parent(self):
-		#Special code to support Mozilla node_child_of relation (for comboboxes)
-		res=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVRELATION_NODE_CHILD_OF)
-		if res and res!=(self.IAccessibleObject,self.IAccessibleChildID):
-			#Gecko can sometimes give back a broken application node with a windowHandle of 0
-			#The application node is annoying, even if it wasn't broken
-			#So only use the node_child_of object if it has a valid IAccessible2 windowHandle
+class MozAnnotationTarget(AnnotationTarget):
+	def __init__(self, target: IAccessible):
+		self._target: IAccessible = target
+
+	@property
+	def summary(self) -> str:
+		return self._target.summarizeInProcess()
+
+	@property
+	def role(self) -> Optional[controlTypes.Role]:
+		# details-roles is currently only defined in Chromium
+		# this may diverge in Firefox in the future.
+		from .chromium import supportedAriaDetailsRoles
+		detailsRole = IAccessibleHandler.IAccessibleRolesToNVDARoles.get(
+			self._target.IAccessibleRole
+		)
+		# return a supported details role
+		if config.conf["debugLog"]["annotations"]:
+			log.debug(f"detailsRole: {repr(detailsRole)}")
+		if detailsRole in supportedAriaDetailsRoles.values():
+			return detailsRole
+
+		if config.conf["debugLog"]["annotations"]:
+			log.warning(f"Unsupported aria details role: {detailsRole}")
+		return None
+
+	@property
+	def targetObject(self) -> IAccessible:
+		return self._target
+
+
+class MozAnnotation(AnnotationOrigin):
+	"""
+	Unlike base Ia2Web implementation, the details-roles IA2 attribute is not exposed in Firefox.
+	"""
+	_originObj: "Mozilla"
+
+	def __bool__(self) -> bool:
+		# Unlike base Ia2Web implementation, the details-roles
+		# IA2 attribute is not exposed in Firefox.
+		# Although slower, we have to fetch the details relations instead.
+		return bool(
+			self._originObj.detailsRelations
+		)
+
+	@property
+	def targets(self) -> Tuple[MozAnnotationTarget]:
+		return tuple(MozAnnotationTarget(rel) for rel in self._originObj.detailsRelations)
+
+	@property
+	def roles(self) -> _AnnotationRolesT:
+		return tuple(self._rolesGenerator)
+
+	@property
+	def _rolesGenerator(self) -> Generator[Optional[controlTypes.Role], None, None]:
+		# Unlike base Ia2Web implementation, the details-roles
+		# IA2 attribute is not exposed in Firefox.
+		# Although slower, we have to fetch the details relations instead.
+		for target in self.targets:
 			try:
-				windowHandle=res[0].windowHandle
-			except (COMError,AttributeError):
-				windowHandle=None
-			if windowHandle:
-				newObj=IAccessible(windowHandle=windowHandle,IAccessibleObject=res[0],IAccessibleChildID=res[1])
-				if newObj:
-					return newObj
-		return super(Mozilla,self).parent
+				yield target.role
+			except ValueError:
+				log.error("Error getting role.", exc_info=True)
+
+
+class Mozilla(ia2Web.Ia2Web):
 
 	def _get_states(self):
 		states = super(Mozilla, self).states
 		if self.IAccessibleStates & oleacc.STATE_SYSTEM_MARQUEED:
-			states.add(controlTypes.STATE_CHECKABLE)
-		if self.IA2Attributes.get("hidden") == "true":
-			states.add(controlTypes.STATE_INVISIBLE)
+			states.add(controlTypes.State.CHECKABLE)
 		return states
+
+	def _get_descriptionFrom(self) -> controlTypes.DescriptionFrom:
+		"""Firefox does not yet support 'description-from' attribute (which informs
+		NVDA of the source of accDescription after the name/description computation
+		is complete. However, a primary use-case can be supported via the IA2attribute
+		'description' which is exposed by Firefox and tells us the value of the "aria-description"
+		attribute. If the value of accDescription matches, we can infer that the source
+		of accDescription is 'aria-description'.
+		Note:
+			At the time of development some 'generic HTML elements' (E.G. 'span') may not be exposed by Firefox,
+			even if the element has an aria-description attribute.
+			Other more significant ARIA attributes such as role may cause the element to be exposed.
+		"""
+		log.debug("Getting mozilla descriptionFrom")
+		ariaDesc = self.IA2Attributes.get("description", "")
+		log.debug(f"description IA2Attribute is: {ariaDesc}")
+		if (
+			ariaDesc == ""  # aria-description is missing or empty
+			# Ensure that aria-description is actually the value used.
+			# I.E. accDescription is sourced from the aria-description attribute as a result of the
+			# name/description computation.
+			# If the values don't match, some other source must have been used.
+			or self.description != ariaDesc
+		):
+			return controlTypes.DescriptionFrom.UNKNOWN
+		else:
+			return controlTypes.DescriptionFrom.ARIA_DESCRIPTION
 
 	def _get_presentationType(self):
 		presType=super(Mozilla,self).presentationType
 		if presType==self.presType_content:
-			if self.role==controlTypes.ROLE_TABLE and self.IA2Attributes.get('layout-guess')=='true':
+			if self.role==controlTypes.Role.TABLE and self.IA2Attributes.get('layout-guess')=='true':
 				presType=self.presType_layout
 			elif self.table and self.table.presentationType==self.presType_layout:
 				presType=self.presType_layout
 		return presType
 
-class Gecko1_9(Mozilla):
-
-	def _get_description(self):
-		rawDescription=super(Mozilla,self).description
-		if isinstance(rawDescription,str) and rawDescription.startswith('Description: '):
-			return rawDescription[13:]
-		else:
-			return ""
-
-	def event_scrollingStart(self):
-		#Firefox 3.6 fires scrollingStart on leaf nodes which is not useful to us.
-		#Bounce the event up to the node's parent so that any possible virtualBuffers will detect it.
-		if self.role==controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_READONLY in self.states:
-			eventHandler.queueEvent("scrollingStart",self.parent)
-
-class BrokenFocusedState(Mozilla):
-	shouldAllowIAccessibleFocusEvent=True
-
-class RootApplication(Mozilla):
-	"""Mozilla exposes a root application accessible as the parent of all top level frames.
-	See MozillaBug:555861.
-	This is non-standard; the top level accessible should be the top level window.
-	NVDA expects the standard behaviour, so we never want to see this object.
+	annotations: MozAnnotation
+	"""Typing information for auto property _get_annotations
 	"""
 
-	def __nonzero__(self):
-		# As far as NVDA is concerned, this is a useless object.
-		return False
+	def _get_annotations(self) -> MozAnnotation:
+		annotationOrigin = MozAnnotation(self)
+		return annotationOrigin
+
+	def _get_detailsSummary(self) -> Optional[str]:
+		log.warning(
+			"NVDAObject.detailsSummary is deprecated. Use NVDAObject.annotations instead.",
+			stack_info=True,
+		)
+		# just take the first for now.
+		return self.annotations.targets[0].summary
+
+	def _get_detailsRole(self) -> Optional[controlTypes.Role]:
+		log.warning(
+			"NVDAObject.detailsRole is deprecated. Use NVDAObject.annotations instead.",
+			stack_info=True,
+		)
+		# just take the first target for now.
+		return self.annotations.roles[0]
+
+	@property
+	def hasDetails(self) -> bool:
+		log.warning(
+			"NVDAObject.hasDetails is deprecated. Use NVDAObject.annotations instead.",
+			stack_info=True,
+		)
+		return bool(self.annotations)
+
 
 class Document(ia2Web.Document):
 
+	def _get_parent(self):
+		res = IAccessibleHandler.accParent(
+			self.IAccessibleObject, self.IAccessibleChildID
+		)
+		if not res:
+			# accParent is broken in Firefox for same-process iframe documents.
+			# Use NODE_CHILD_OF instead.
+			res = IAccessibleHandler.accNavigate(
+				self.IAccessibleObject, self.IAccessibleChildID,
+				IAccessibleHandler.NAVRELATION_NODE_CHILD_OF
+			)
+		if not res:
+			return None
+		return IAccessible(IAccessibleObject=res[0], IAccessibleChildID=res[1])
+
 	def _get_treeInterceptorClass(self):
-		ver=getGeckoVersion(self)
-		if (not ver or ver.full.startswith('1.9')) and self.windowClassName!="MozillaContentWindowClass":
-			return super(Document,self).treeInterceptorClass
-		if controlTypes.STATE_EDITABLE not in self.states:
+		if controlTypes.State.EDITABLE not in self.states:
 			import virtualBuffers.gecko_ia2
-			if ver and ver.major < 14:
-				return virtualBuffers.gecko_ia2.Gecko_ia2Pre14
-			else:
-				return virtualBuffers.gecko_ia2.Gecko_ia2
+			return virtualBuffers.gecko_ia2.Gecko_ia2
 		return super(Document,self).treeInterceptorClass
 
 class EmbeddedObject(Mozilla):
@@ -109,24 +202,6 @@ class EmbeddedObject(Mozilla):
 			return False
 		return super(EmbeddedObject, self).shouldAllowIAccessibleFocusEvent
 
-GeckoVersion = namedtuple("GeckoVersion", ("full", "major"))
-def getGeckoVersion(obj):
-	appMod = obj.appModule
-	try:
-		return appMod._geckoVersion
-	except AttributeError:
-		pass
-	try:
-		full = obj.IAccessibleObject.QueryInterface(IServiceProvider).QueryService(IAccessibleHandler.IAccessibleApplication._iid_, IAccessibleHandler.IAccessibleApplication).toolkitVersion
-	except COMError:
-		return None
-	try:
-		major = int(full.split(".", 1)[0])
-	except ValueError:
-		major = None
-	ver = appMod._geckoVersion = GeckoVersion(full, major)
-	return ver
-
 class GeckoPluginWindowRoot(WindowRoot):
 	parentUsesSuperOnWindowRootIAccessible = False
 
@@ -136,51 +211,42 @@ class GeckoPluginWindowRoot(WindowRoot):
 			# Skip the window wrapping the plugin window,
 			# which doesn't expose a Gecko accessible in Gecko >= 11.
 			parent=parent.parent.parent
-		ver=getGeckoVersion(parent)
-		if ver and ver.major!=1:
-			res=IAccessibleHandler.accNavigate(parent.IAccessibleObject,0,IAccessibleHandler.NAVRELATION_EMBEDS)
-			if res:
-				obj=IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
-				if obj:
-					if controlTypes.STATE_OFFSCREEN not in obj.states:
-						return obj
-					else:
-						log.debugWarning("NAVRELATION_EMBEDS returned an offscreen document, name %r" % obj.name)
+		res = IAccessibleHandler.accNavigate(parent.IAccessibleObject, 0, IAccessibleHandler.NAVRELATION_EMBEDS)
+		if res:
+			obj = IAccessible(IAccessibleObject=res[0], IAccessibleChildID=res[1])
+			if obj:
+				if controlTypes.State.OFFSCREEN not in obj.states:
+					return obj
 				else:
-					log.debugWarning("NAVRELATION_EMBEDS returned an invalid object")
+					log.debugWarning("NAVRELATION_EMBEDS returned an offscreen document, name %r" % obj.name)
 			else:
-				log.debugWarning("NAVRELATION_EMBEDS failed")
+				log.debugWarning("NAVRELATION_EMBEDS returned an invalid object")
+		else:
+			log.debugWarning("NAVRELATION_EMBEDS failed")
 		return parent
 
 class TextLeaf(Mozilla):
-	role = controlTypes.ROLE_STATICTEXT
+	role = controlTypes.Role.STATICTEXT
 	beTransparentToMouse = True
 
 def findExtraOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class if this is a Mozilla object.
 	This works similarly to L{NVDAObjects.NVDAObject.findOverlayClasses} except that it never calls any other findOverlayClasses method.
 	"""
-	if not isinstance(obj.IAccessibleObject, IAccessibleHandler.IAccessible2):
-		# We require IAccessible2; i.e. Gecko >= 1.9.
+	if not isinstance(obj.IAccessibleObject, IA2.IAccessible2):
 		return
 
 	iaRole = obj.IAccessibleRole
 
 	cls = None
-	if iaRole == oleacc.ROLE_SYSTEM_APPLICATION:
-		try:
-			if not obj.IAccessibleObject.windowHandle:
-				cls = RootApplication
-		except COMError:
-			pass
-	elif iaRole == oleacc.ROLE_SYSTEM_TEXT:
+	if iaRole == oleacc.ROLE_SYSTEM_TEXT:
 		# Check if this is a text leaf.
 		iaStates = obj.IAccessibleStates
 		# Text leaves are never focusable.
 		# Not unavailable excludes disabled editable text fields (which also aren't focusable).
 		if not (iaStates & oleacc.STATE_SYSTEM_FOCUSABLE or iaStates & oleacc.STATE_SYSTEM_UNAVAILABLE):
 			# This excludes a non-focusable @role="textbox".
-			if not (obj.IA2States & IAccessibleHandler.IA2_STATE_EDITABLE):
+			if not (obj.IA2States & IA2.IA2_STATE_EDITABLE):
 				cls = TextLeaf
 	if not cls:
 		cls = _IAccessibleRolesToOverlayClasses.get(iaRole)
@@ -202,30 +268,12 @@ def findExtraOverlayClasses(obj, clsList):
 		if hasattr(parent, "IAccessibleTableObject") or hasattr(parent, "IAccessibleTable2Object"):
 			clsList.append(RowWithFakeNavigation)
 
-	if iaRole in _IAccessibleRolesWithBrokenFocusedState:
-		clsList.append(BrokenFocusedState)
-
-	ver = getGeckoVersion(obj)
-	if ver and ver.full.startswith("1.9"):
-		clsList.append(Gecko1_9)
-
 	ia2Web.findExtraOverlayClasses(obj, clsList,
 		baseClass=Mozilla, documentClass=Document)
 
 #: Maps IAccessible roles to NVDAObject overlay classes.
 _IAccessibleRolesToOverlayClasses = {
-	IAccessibleHandler.IA2_ROLE_EMBEDDED_OBJECT: EmbeddedObject,
+	IA2.IA2_ROLE_EMBEDDED_OBJECT: EmbeddedObject,
 	"embed": EmbeddedObject,
 	"object": EmbeddedObject,
 }
-
-#: Roles that mightn't set the focused state when they are focused.
-_IAccessibleRolesWithBrokenFocusedState = frozenset((
-	oleacc.ROLE_SYSTEM_COMBOBOX,
-	oleacc.ROLE_SYSTEM_LIST,
-	oleacc.ROLE_SYSTEM_LISTITEM,
-	oleacc.ROLE_SYSTEM_DOCUMENT,
-	oleacc.ROLE_SYSTEM_APPLICATION,
-	oleacc.ROLE_SYSTEM_TABLE,
-	oleacc.ROLE_SYSTEM_OUTLINE,
-))

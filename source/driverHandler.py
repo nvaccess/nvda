@@ -2,22 +2,10 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2019 NV Access Limited, Leonard de Ruijter
+# Copyright (C) 2006-2022 NV Access Limited, Leonard de Ruijter
 
 """Handler for driver functionality that is global to synthesizers and braille displays."""
 from autoSettingsUtils.autoSettings import AutoSettings
-
-# F401: the following imports, while unused in this file, are provided for backwards compatibility.
-from autoSettingsUtils.driverSetting import (  # noqa: F401
-	DriverSetting,
-	BooleanDriverSetting,
-	NumericDriverSetting,
-	AutoPropertyObject,
-)
-from autoSettingsUtils.utils import (  # noqa: F401
-	UnsupportedConfigParameterError,
-	StringParameterInfo,
-)
 
 
 class Driver(AutoSettings):
@@ -59,6 +47,9 @@ class Driver(AutoSettings):
 		"""
 		self.saveSettings()
 		self._unregisterConfigSaveAction()
+
+	def __repr__(self):
+		return f"{self.__class__.__name__}({self.name!r})"
 
 	@classmethod
 	def check(cls):

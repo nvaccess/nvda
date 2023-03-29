@@ -1,14 +1,21 @@
-#updateCheck.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2012-2019 NV Access Limited, Zahari Yurukov, Babbage B.V., Joseph Lee
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2012-2023 NV Access Limited, Zahari Yurukov, Babbage B.V., Joseph Lee
 
 """Update checking functionality.
 @note: This module may raise C{RuntimeError} on import if update checking for this build is not supported.
 """
+from typing import (
+	Any,
+	Dict,
+	Optional,
+	Tuple,
+)
+import garbageHandler
 import globalVars
 import config
+import core
 if globalVars.appArgs.secure:
 	raise RuntimeError("updates disabled in secure mode")
 elif config.isAppX:
@@ -17,8 +24,10 @@ import versionInfo
 if not versionInfo.updateVersionType:
 	raise RuntimeError("No update version type, update checking not supported")
 import addonAPIVersion
-
-import winVersion
+# Avoid a E402 'module level import not at top of file' warning, because several checks are performed above.
+import gui.contextHelp  # noqa: E402
+from gui.dpiScalingHelper import DpiScalingHelperMixin, DpiScalingHelperMixinWithoutInit  # noqa: E402
+import sys  # noqa: E402
 import os
 import inspect
 import threading
@@ -45,7 +54,6 @@ import shellapi
 import winUser
 import winKernel
 import fileUtils
-from gui.dpiScalingHelper import DpiScalingHelperMixin
 
 #: The URL to use for update checks.
 CHECK_URL = "https://www.nvaccess.org/nvdaUpdateCheck"
@@ -65,12 +73,12 @@ except OSError:
 		log.debugWarning("Default download path for updates %s could not be created."%storeUpdatesDir)
 
 #: Persistent state information.
-#: @type: dict
-state = None
-_stateFileName = None
+state: Optional[Dict[str, Any]] = None
+_stateFilename: Optional[str] = None
 #: The single instance of L{AutoUpdateChecker} if automatic update checking is enabled,
 #: C{None} if it is disabled.
-autoChecker = None
+autoChecker: Optional["AutoUpdateChecker"] = None
+
 
 def getQualifiedDriverClassNameForStats(cls):
 	""" fetches the name from a given synthDriver or brailleDisplay class, and appends core for in-built code, the add-on name for code from an add-on, or external for code in the NVDA user profile.
@@ -92,23 +100,35 @@ def getQualifiedDriverClassNameForStats(cls):
 		return "%s (external)"%name
 	return "%s (core)"%name
 
-def checkForUpdate(auto=False):
+
+def checkForUpdate(auto: bool = False) -> Optional[Dict]:
 	"""Check for an updated version of NVDA.
 	This will block, so it generally shouldn't be called from the main thread.
 	@param auto: Whether this is an automatic check for updates.
-	@type auto: bool
 	@return: Information about the update or C{None} if there is no update.
-	@rtype: dict
 	@raise RuntimeError: If there is an error checking for an update.
 	"""
 	allowUsageStats=config.conf["update"]['allowUsageStats']
+	# #11837: build version string, service pack, and product type manually
+	# because winVersion.getWinVer adds Windows release name.
+	winVersion = sys.getwindowsversion()
+	winVersionText = "{v.major}.{v.minor}.{v.build}".format(v=winVersion)
+	if winVersion.service_pack_major != 0:
+		winVersionText += " service pack %d" % winVersion.service_pack_major
+		if winVersion.service_pack_minor != 0:
+			winVersionText += ".%d" % winVersion.service_pack_minor
+	winVersionText += " %s" % ("workstation", "domain controller", "server")[winVersion.product_type - 1]
 	params = {
 		"autoCheck": auto,
 		"allowUsageStats":allowUsageStats,
 		"version": versionInfo.version,
 		"versionType": versionInfo.updateVersionType,
-		"osVersion": winVersion.winVersionText,
+		"osVersion": winVersionText,
+		# Check if the architecture is the most common: "AMD64"
+		# Available values of PROCESSOR_ARCHITEW6432 found in:
+		# https://docs.microsoft.com/en-gb/windows/win32/winprog64/wow64-implementation-details
 		"x64": os.environ.get("PROCESSOR_ARCHITEW6432") == "AMD64",
+		"osArchitecture": os.environ.get("PROCESSOR_ARCHITEW6432"),
 	}
 	if auto and allowUsageStats:
 		synthDriverClass = synthDriverHandler.getSynth().__class__
@@ -127,7 +147,7 @@ def checkForUpdate(auto=False):
 	try:
 		res = urllib.request.urlopen(url)
 	except IOError as e:
-		if isinstance(e.strerror, ssl.SSLError) and e.strerror.reason == "CERTIFICATE_VERIFY_FAILED":
+		if isinstance(e.reason, ssl.SSLCertVerificationError) and e.reason.reason == "CERTIFICATE_VERIFY_FAILED":
 			# #4803: Windows fetches trusted root certificates on demand.
 			# Python doesn't trigger this fetch (PythonIssue:20916), so try it ourselves
 			_updateWindowsRootCertificates()
@@ -158,9 +178,8 @@ def _setStateToNone(_state):
 	_state["pendingUpdateBackCompatToAPIVersion"] = (0,0,0)
 
 
-def getPendingUpdate():
+def getPendingUpdate() -> Optional[Tuple]:
 	"""Returns a tuple of the path to and version of the pending update, if any. Returns C{None} otherwise.
-	@rtype: tuple
 	"""
 	try:
 		pendingUpdateFile=state["pendingUpdateFile"]
@@ -179,11 +198,12 @@ def getPendingUpdate():
 			_setStateToNone(state)
 	return None
 
-def isPendingUpdate():
+
+def isPendingUpdate() -> bool:
 	"""Returns whether there is a pending update.
-	@rtype: bool
 	"""
-	return bool(getPendingUpdate())
+	return getPendingUpdate() is not None
+
 
 def executePendingUpdate():
 	updateTuple = getPendingUpdate()
@@ -201,21 +221,20 @@ def _executeUpdate(destPath):
 	if config.isInstalledCopy():
 		executeParams = u"--install -m"
 	else:
-		portablePath = os.getcwd()
+		portablePath = globalVars.appDir
 		if os.access(portablePath, os.W_OK):
 			executeParams = u'--create-portable --portable-path "{portablePath}" --config-path "{configPath}" -m'.format(
 				portablePath=portablePath,
-				configPath=os.path.abspath(globalVars.appArgs.configPath)
+				configPath=globalVars.appArgs.configPath
 			)
 		else:
 			executeParams = u"--launcher"
 	# #4475: ensure that the new process shows its first window, by providing SW_SHOWNORMAL
-	shellapi.ShellExecute(None, None,
-		destPath,
-		executeParams,
-		None, winUser.SW_SHOWNORMAL)
+	if not core.triggerNVDAExit(core.NewNVDAInstance(destPath, executeParams)):
+		log.error("NVDA already in process of exiting, this indicates a logic error.")
 
-class UpdateChecker(object):
+
+class UpdateChecker(garbageHandler.TrackedObject):
 	"""Check for an updated version of NVDA, presenting appropriate user interface.
 	The check is performed in the background.
 	This class is for manual update checks.
@@ -236,6 +255,7 @@ class UpdateChecker(object):
 
 	def _bg(self):
 		try:
+			assert state is not None
 			info = checkForUpdate(self.AUTO)
 		except:
 			log.debugWarning("Error checking for update", exc_info=True)
@@ -266,7 +286,7 @@ class UpdateChecker(object):
 			_("Error"),
 			wx.OK | wx.ICON_ERROR)
 
-	def _result(self, info):
+	def _result(self, info: Optional[Dict]) -> None:
 		wx.CallAfter(self._progressDialog.done)
 		self._progressDialog = None
 		wx.CallAfter(UpdateResultDialog, gui.mainFrame, info, False)
@@ -313,23 +333,33 @@ class AutoUpdateChecker(UpdateChecker):
 			return
 		wx.CallAfter(UpdateResultDialog, gui.mainFrame, info, True)
 
-class UpdateResultDialog(wx.Dialog, DpiScalingHelperMixin):
 
-	def __init__(self, parent, updateInfo, auto):
+class UpdateResultDialog(
+		DpiScalingHelperMixinWithoutInit,
+		gui.contextHelp.ContextHelpMixin,
+		wx.Dialog  # wxPython does not seem to call base class initializer, put last in MRO
+):
+	helpId = "GeneralSettingsCheckForUpdates"
+
+	def __init__(self, parent, updateInfo: Optional[Dict], auto: bool) -> None:
 		# Translators: The title of the dialog informing the user about an NVDA update.
-		wx.Dialog.__init__(self, parent, title=_("NVDA Update"))
-		DpiScalingHelperMixin.__init__(self, self.GetHandle())
+		super().__init__(parent, title=_("NVDA Update"))
 
 		self.updateInfo = updateInfo
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 
+		remoteUpdateExists = updateInfo is not None
 		pendingUpdateDetails = getPendingUpdate()
-		canOfferPendingUpdate = isPendingUpdate() and pendingUpdateDetails[1] == updateInfo["version"]
+		canOfferPendingUpdate = (
+			isPendingUpdate()
+			and remoteUpdateExists
+			and pendingUpdateDetails[1] == updateInfo["version"]
+		)
 
 		text = sHelper.addItem(wx.StaticText(self))
 		bHelper = guiHelper.ButtonHelper(wx.HORIZONTAL)
-		if not updateInfo:
+		if not remoteUpdateExists:
 			# Translators: A message indicating that no update to NVDA is available.
 			message = _("No update available.")
 		elif canOfferPendingUpdate:
@@ -440,7 +470,14 @@ class UpdateResultDialog(wx.Dialog, DpiScalingHelperMixin):
 		)
 		incompatibleAddons.ShowModal()
 
-class UpdateAskInstallDialog(wx.Dialog, DpiScalingHelperMixin):
+
+class UpdateAskInstallDialog(
+		DpiScalingHelperMixinWithoutInit,
+		gui.contextHelp.ContextHelpMixin,
+		wx.Dialog,  # wxPython does not seem to call base class initializer, put last in MRO
+):
+
+	helpId = "GeneralSettingsCheckForUpdates"
 
 	def __init__(self, parent, destPath, version, apiVersion, backCompatTo):
 		self.destPath = destPath
@@ -449,8 +486,7 @@ class UpdateAskInstallDialog(wx.Dialog, DpiScalingHelperMixin):
 		self.backCompatTo = backCompatTo
 		self.storeUpdatesDirWritable = os.path.isdir(storeUpdatesDir) and os.access(storeUpdatesDir, os.W_OK)
 		# Translators: The title of the dialog asking the user to Install an NVDA update.
-		wx.Dialog.__init__(self, parent, title=_("NVDA Update"))
-		DpiScalingHelperMixin.__init__(self, self.GetHandle())
+		super().__init__(parent, title=_("NVDA Update"))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 		# Translators: A message indicating that an updated version of NVDA is ready to be installed.
@@ -550,7 +586,8 @@ class UpdateAskInstallDialog(wx.Dialog, DpiScalingHelperMixin):
 		saveState()
 		self.EndModal(wx.ID_CLOSE)
 
-class UpdateDownloader(object):
+
+class UpdateDownloader(garbageHandler.TrackedObject):
 	"""Download and start installation of an updated version of NVDA, presenting appropriate user interface.
 	To use, call L{start} on an instance.
 	"""
@@ -585,6 +622,7 @@ class UpdateDownloader(object):
 			# and waits for the user to press the Close button.
 			style=wx.PD_CAN_ABORT | wx.PD_ELAPSED_TIME | wx.PD_REMAINING_TIME | wx.PD_AUTO_HIDE,
 			parent=gui.mainFrame)
+		self._progressDialog.CentreOnScreen()
 		self._progressDialog.Raise()
 		t = threading.Thread(
 			name=f"{self.__class__.__module__}.{self.start.__qualname__}",
@@ -766,6 +804,9 @@ def initialize():
 			state = pickle.load(f)
 	except:
 		log.debugWarning("Couldn't retrieve update state", exc_info=True)
+		state = None
+
+	if state is None:
 		# Defaults.
 		state = {
 			"lastCheck": 0,
@@ -775,7 +816,10 @@ def initialize():
 
 	# check the pending version against the current version
 	# and make sure that pendingUpdateFile and pendingUpdateVersion are part of the state dictionary.
-	if "pendingUpdateVersion" not in state or state["pendingUpdateVersion"] == versionInfo.version:
+	if (
+		"pendingUpdateVersion" not in state
+		or state["pendingUpdateVersion"] == versionInfo.version
+	):
 		_setStateToNone(state)
 	# remove all update files except the one that is currently pending (if any)
 	try:

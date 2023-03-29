@@ -26,12 +26,12 @@ class IrisTedit(IAccessible):
 class NotesRichText(IAccessible):
 
 	def _get_shouldAllowIAccessibleFocusEvent(self):
-		if not isinstance(self,DisplayModelEditableText) and self.role==controlTypes.ROLE_EDITABLETEXT:
+		if not isinstance(self,DisplayModelEditableText) and self.role==controlTypes.Role.EDITABLETEXT:
 			return False
 		return super(NotesRichText,self).shouldAllowIAccessibleFocusEvent
 
 	def _get_treeInterceptorClass(self):
-		if controlTypes.STATE_READONLY in self.states:
+		if controlTypes.State.READONLY in self.states:
 			return virtualBuffers.lotusNotes.LotusNotesRichText
 		raise NotImplementedError
 
@@ -45,9 +45,9 @@ class AppModule(appModuleHandler.AppModule):
 		windowClassName=obj.windowClassName
 		role=obj.role
 		states=obj.states
-		if windowClassName=="NotesSubprog" and role==controlTypes.ROLE_DOCUMENT:
+		if windowClassName=="NotesSubprog" and role==controlTypes.Role.DOCUMENT:
 			clsList.insert(0,NotesSubprog)
-		elif windowClassName=="NotesRichText" and role in (controlTypes.ROLE_DOCUMENT,controlTypes.ROLE_EDITABLETEXT):
+		elif windowClassName=="NotesRichText" and role in (controlTypes.Role.DOCUMENT,controlTypes.Role.EDITABLETEXT):
 			clsList.insert(0,NotesRichText)
 		elif windowClassName=="IRIS.tedit" and isinstance(obj,IAccessible) and obj.event_objectID==winUser.OBJID_CLIENT: 
 			clsList.insert(0,IrisTedit)

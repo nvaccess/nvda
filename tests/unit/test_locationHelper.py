@@ -1,14 +1,13 @@
-#tests/unit/test_locationHelper.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2017 NV Access Limited, Babbage B.V.
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2017-2021 NV Access Limited, Babbage B.V., Łukasz Golonka
 
 """Unit tests for the locationHelper module.
 """
 
 import unittest
-from locationHelper import *
+from locationHelper import Point, RectLTRB, RectLTWH
 from ctypes.wintypes import RECT, POINT
 
 class TestRectOperators(unittest.TestCase):
@@ -193,3 +192,25 @@ class TestPointOperators(unittest.TestCase):
 		# Equality
 		self.assertEqual(POINT(x=4, y=3), Point(x=4, y=3))
 		self.assertNotEqual(POINT(x=3, y=4), Point(x=4, y=3))
+
+
+class TestFailuresFromUnexpectedTypes(unittest.TestCase):
+
+	def test_PointFailures(self):
+		self.assertRaises(TypeError, Point.fromFloatCollection, 22.22, 22, 33)
+		self.assertRaises(TypeError, Point.fromCompatibleType, 22.22)
+		self.assertRaises(TypeError, Point.fromDWORD, 22.22)
+
+	def test_RectLTRBFailures(self):
+		self.assertRaises(TypeError, RectLTRB.fromFloatCollection, 22, 33.33, 44.44)
+		self.assertRaises(TypeError, RectLTRB.fromCompatibleType, 33.33)
+		self.assertRaises(TypeError, RectLTRB.fromPoint, 33.33)
+		self.assertRaises(TypeError, RectLTRB.fromCollection)
+		self.assertRaises(ValueError, RectLTRB.fromCollection, 22.22)
+
+	def test_RectLTWHFailures(self):
+		self.assertRaises(TypeError, RectLTWH.fromFloatCollection, 22, 33.33, 44.44)
+		self.assertRaises(TypeError, RectLTWH.fromCompatibleType, 33.33)
+		self.assertRaises(TypeError, RectLTWH.fromPoint, 33.33)
+		self.assertRaises(TypeError, RectLTWH.fromCollection)
+		self.assertRaises(ValueError, RectLTWH.fromCollection, 22.22)

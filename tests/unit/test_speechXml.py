@@ -12,6 +12,15 @@ import speechXml
 from speechXml import REPLACEMENT_CHAR
 import speech
 
+from speech.commands import (
+	PitchCommand,
+	VolumeCommand,
+	LangChangeCommand,
+	CharacterModeCommand,
+	IndexCommand,
+	PhonemeCommand,
+)
+
 class TestEscapeXml(unittest.TestCase):
 	"""Test the _escapeXml function.
 	"""
@@ -229,16 +238,16 @@ class TestSsmlConverter(unittest.TestCase):
 		converter = speechXml.SsmlConverter("en_US")
 		xml = converter.convertToXml([
 			"t1",
-			speech.PitchCommand(multiplier=2),
-			speech.VolumeCommand(multiplier=2),
+			PitchCommand(multiplier=2),
+			VolumeCommand(multiplier=2),
 			"t2",
-			speech.PitchCommand(),
-			speech.LangChangeCommand("de_DE"),
-			speech.CharacterModeCommand(True),
-			speech.IndexCommand(1),
+			PitchCommand(),
+			LangChangeCommand("de_DE"),
+			CharacterModeCommand(True),
+			IndexCommand(1),
 			"c",
-			speech.CharacterModeCommand(False),
-			speech.PhonemeCommand("phIpa", text="phText")
+			CharacterModeCommand(False),
+			PhonemeCommand("phIpa", text="phText")
 		])
 		self.assertEqual(xml,
 			'<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="en-US">'

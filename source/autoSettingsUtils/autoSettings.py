@@ -154,8 +154,8 @@ class AutoSettings(AutoPropertyObject):
 		@param settings: The settings to load.
 		"""
 		section = cls._getConfigSection()
-		setingsId = cls.getId()
-		conf = config.conf[section][setingsId]
+		settingsId = cls.getId()
+		conf = config.conf[section][settingsId]
 		for setting in settings:
 			if not setting.useConfig:
 				continue

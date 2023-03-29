@@ -1,14 +1,17 @@
 # -*- coding: UTF-8 -*-
-#mathPlayer.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2014-2015 NV Access Limited
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2014-2022 NV Access Limited
 
 """Support for math presentation using MathPlayer 4.
 """
 
 import re
+from typing import (
+	Generator,
+)
+
 import comtypes.client
 from comtypes import COMError
 from comtypes.gen.MathPlayer import MPInterface, IMathSpeech, IMathSpeechSettings, IMathNavigation, IMathBraille
@@ -17,6 +20,18 @@ from synthDriverHandler import getSynth
 from keyboardHandler import KeyboardInputGesture
 import braille
 import mathPres
+
+from speech.commands import (
+	PitchCommand,
+	VolumeCommand,
+	RateCommand,
+	LangChangeCommand,
+	BreakCommand,
+	CharacterModeCommand,
+	PhonemeCommand,
+)
+from utils.security import objectBelowLockScreenAndWindowsIsLocked
+
 
 RE_MP_SPEECH = re.compile(
 	# Break.
@@ -35,9 +50,9 @@ RE_MP_SPEECH = re.compile(
 	# Actual content.
 	r"|(?P<content>[^<,]+)")
 PROSODY_COMMANDS = {
-	"pitch": speech.PitchCommand,
-	"volume": speech.VolumeCommand,
-	"rate": speech.RateCommand,
+	"pitch": PitchCommand,
+	"volume": VolumeCommand,
+	"rate": RateCommand,
 }
 def _processMpSpeech(text, language):
 	# MathPlayer's default rate is 180 wpm.
@@ -47,16 +62,15 @@ def _processMpSpeech(text, language):
 	breakMulti = 180.0 / wpm
 	out = []
 	if language:
-		out.append(speech.LangChangeCommand(language))
+		out.append(LangChangeCommand(language))
 	resetProsody = set()
 	for m in RE_MP_SPEECH.finditer(text):
 		if m.lastgroup == "break":
-			out.append(speech.BreakCommand(time=int(m.group("break")) * breakMulti))
+			out.append(BreakCommand(time=int(m.group("break")) * breakMulti))
 		elif m.lastgroup == "char":
-			out.extend((speech.CharacterModeCommand(True),
-				m.group("char"), speech.CharacterModeCommand(False)))
+			out.extend((CharacterModeCommand(True), m.group("char"), CharacterModeCommand(False)))
 		elif m.lastgroup == "comma":
-			out.append(speech.BreakCommand(time=100))
+			out.append(BreakCommand(time=100))
 		elif m.lastgroup in PROSODY_COMMANDS:
 			command = PROSODY_COMMANDS[m.lastgroup]
 			out.append(command(multiplier=int(m.group(m.lastgroup)) / 100.0))
@@ -66,12 +80,11 @@ def _processMpSpeech(text, language):
 				out.append(command(multiplier=1))
 			resetProsody.clear()
 		elif m.lastgroup == "phonemeText":
-			out.append(speech.PhonemeCommand(m.group("ipa"),
-				text=m.group("phonemeText")))
+			out.append(PhonemeCommand(m.group("ipa"), text=m.group("phonemeText")))
 		elif m.lastgroup == "content":
 			out.append(m.group(0))
 	if language:
-		out.append(speech.LangChangeCommand(None))
+		out.append(LangChangeCommand(None))
 	return out
 
 class MathPlayerInteraction(mathPres.MathInteractionNVDAObject):
@@ -86,7 +99,12 @@ class MathPlayerInteraction(mathPres.MathInteractionNVDAObject):
 		speech.speak(_processMpSpeech(self.provider._mpSpeech.GetSpokenText(),
 			self.provider._language))
 
-	def getBrailleRegions(self, review=False):
+	def getBrailleRegions(
+			self,
+			review: bool = False,
+	) -> Generator[braille.Region, None, None]:
+		if objectBelowLockScreenAndWindowsIsLocked(self):
+			return
 		yield braille.NVDAObjectRegion(self, appendText=" ")
 		region = braille.Region()
 		region.focusToHardLeft = True

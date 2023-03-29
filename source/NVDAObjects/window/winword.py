@@ -1,22 +1,20 @@
-# -*- coding: UTF-8 -*-
-# NVDAObjects/window/winword.py
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2020 NV Access Limited, Manish Agrawal, Derek Riemer, Babbage B.V.
+# Copyright (C) 2006-2022 NV Access Limited, Manish Agrawal, Derek Riemer, Babbage B.V.
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 
 import ctypes
 import time
+from typing import (
+	Optional,
+	Dict,
+)
+
 from comtypes import COMError, GUID, BSTR
 import comtypes.client
 import comtypes.automation
-import uuid
-import operator
-import locale
-import collections
 import colorsys
-import sayAllHandler
 import eventHandler
 import braille
 from scriptHandler import script
@@ -27,13 +25,13 @@ import XMLFormatting
 from logHandler import log
 import winUser
 import oleacc
-import globalVars
 import speech
 import config
 import textInfos
 import textInfos.offsets
 import colors
 import controlTypes
+from controlTypes import TextPosition
 import treeInterceptorHandler
 import browseMode
 import review
@@ -274,20 +272,20 @@ storyTypeLocalizedLabels={
 }
 
 wdFieldTypesToNVDARoles={
-	wdFieldFormTextInput:controlTypes.ROLE_EDITABLETEXT,
-	wdFieldFormCheckBox:controlTypes.ROLE_CHECKBOX,
-	wdFieldFormDropDown:controlTypes.ROLE_COMBOBOX,
+	wdFieldFormTextInput:controlTypes.Role.EDITABLETEXT,
+	wdFieldFormCheckBox:controlTypes.Role.CHECKBOX,
+	wdFieldFormDropDown:controlTypes.Role.COMBOBOX,
 }
 
 wdContentControlTypesToNVDARoles={
-	wdContentControlRichText:controlTypes.ROLE_EDITABLETEXT,
-	wdContentControlText:controlTypes.ROLE_EDITABLETEXT,
-	wdContentControlPicture:controlTypes.ROLE_GRAPHIC,
-	wdContentControlComboBox:controlTypes.ROLE_COMBOBOX,
-	wdContentControlDropdownList:controlTypes.ROLE_COMBOBOX,
-	wdContentControlDate:controlTypes.ROLE_EDITABLETEXT,
-	wdContentControlGroup:controlTypes.ROLE_GROUPING,
-	wdContentControlCheckBox:controlTypes.ROLE_CHECKBOX,
+	wdContentControlRichText:controlTypes.Role.EDITABLETEXT,
+	wdContentControlText:controlTypes.Role.EDITABLETEXT,
+	wdContentControlPicture:controlTypes.Role.GRAPHIC,
+	wdContentControlComboBox:controlTypes.Role.COMBOBOX,
+	wdContentControlDropdownList:controlTypes.Role.COMBOBOX,
+	wdContentControlDate:controlTypes.Role.EDITABLETEXT,
+	wdContentControlGroup:controlTypes.Role.GROUPING,
+	wdContentControlCheckBox:controlTypes.Role.CHECKBOX,
 }
 
 winwordWindowIid=GUID('{00020962-0000-0000-C000-000000000046}')
@@ -546,8 +544,10 @@ class GraphicWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator
 class TableWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
 	def collectionFromRange(self,rangeObj):
 		return rangeObj.tables
+
 	def filter(self,item):
-		return item.borders.enable
+		return config.conf["documentFormatting"]["includeLayoutTables"] or item.borders.enable
+
 
 class ChartWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
 	quickNavItemClass=WordDocumentChartQuickNavItem
@@ -557,6 +557,31 @@ class ChartWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
 
 	def filter(self,item):
 		return item.type==wdInlineShapeChart
+
+
+class LazyControlField_RowAndColumnHeaderText(textInfos.ControlField):
+
+	def __init__(self, ti):
+		self._ti = ti
+		super().__init__()
+
+	def get(self, name, default=None):
+		if name == "table-rowheadertext":
+			try:
+				cell = self._ti._rangeObj.cells[1]
+			except IndexError:
+				log.debugWarning("no cells for table row, possibly on end of cell mark")
+				return super().get(name, default)
+			return self._ti.obj.fetchAssociatedHeaderCellText(cell, False)
+		elif name == "table-columnheadertext":
+			try:
+				cell = self._ti._rangeObj.cells[1]
+			except IndexError:
+				log.debugWarning("no cells for table row, possibly on end of cell mark")
+				return super().get(name, default)
+			return self._ti.obj.fetchAssociatedHeaderCellText(cell, True)
+		else:
+			return super().get(name, default)
 
 class WordDocumentTextInfo(textInfos.TextInfo):
 
@@ -588,8 +613,10 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		textList.append(_("{distance} from top edge of page").format(distance=distance))
 		return ", ".join(textList)
 
-	def copyToClipboard(self):
+	def copyToClipboard(self, notify):
 		self._rangeObj.copy()
+		if notify:
+			ui.reportTextCopiedToClipboard(self.text)
 		return True
 
 	def find(self,text,caseSensitive=False,reverse=False):
@@ -647,7 +674,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			self.updateCaret()
 			tiCopy = self.copy()
 			tiCopy.expand(textInfos.UNIT_LINE)
-			speech.speakTextInfo(tiCopy,reason=controlTypes.REASON_FOCUS)
+			speech.speakTextInfo(tiCopy, reason=controlTypes.OutputReason.FOCUS)
 			braille.handler.handleCaretMove(self)
 			return
 
@@ -695,7 +722,13 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		else:
 			raise NotImplementedError("position: %s"%position)
 
-	def getTextWithFields(self,formatConfig=None):
+	# C901 'getTextWithFields' is too complex
+	# Note: when working on getTextWithFields, look for opportunities to simplify
+	# and move logic out into smaller helper functions.
+	def getTextWithFields(  # noqa: C901
+		self,
+		formatConfig: Optional[Dict] = None
+	) -> textInfos.TextInfo.TextWithFieldsT:
 		if self.isCollapsed: return []
 		if self.obj.ignoreFormatting:
 			return [self.text]
@@ -739,36 +772,36 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 	def _normalizeControlField(self,field):
 		role=field.pop('role',None)
 		if role=="heading":
-			role=controlTypes.ROLE_HEADING
+			role=controlTypes.Role.HEADING
 		elif role=="table":
-			role=controlTypes.ROLE_TABLE
+			role=controlTypes.Role.TABLE
 			field['table-rowcount']=int(field.get('table-rowcount',0))
 			field['table-columncount']=int(field.get('table-columncount',0))
 		elif role=="tableCell":
-			role=controlTypes.ROLE_TABLECELL
+			role=controlTypes.Role.TABLECELL
 			field['table-rownumber']=int(field.get('table-rownumber',0))
 			field['table-columnnumber']=int(field.get('table-columnnumber',0))
 		elif role=="footnote":
-			role=controlTypes.ROLE_FOOTNOTE
+			role=controlTypes.Role.FOOTNOTE
 		elif role=="endnote":
-			role=controlTypes.ROLE_ENDNOTE
+			role=controlTypes.Role.ENDNOTE
 		elif role=="graphic":
-			role=controlTypes.ROLE_GRAPHIC
+			role=controlTypes.Role.GRAPHIC
 		elif role=="chart":
-			role=controlTypes.ROLE_CHART
+			role=controlTypes.Role.CHART
 		elif role=="object":
 			progid=field.get("progid")
 			if progid and progid.startswith("Equation.DSMT"):
 				# MathType.
-				role=controlTypes.ROLE_MATH
+				role=controlTypes.Role.MATH
 			else:
-				role=controlTypes.ROLE_EMBEDDEDOBJECT
+				role=controlTypes.Role.EMBEDDEDOBJECT
 		else:
 			fieldType=int(field.pop('wdFieldType',-1))
 			if fieldType!=-1:
-				role=wdFieldTypesToNVDARoles.get(fieldType,controlTypes.ROLE_UNKNOWN)
+				role=wdFieldTypesToNVDARoles.get(fieldType,controlTypes.Role.UNKNOWN)
 				if fieldType==wdFieldFormCheckBox and int(field.get('wdFieldResult','0'))>0:
-					field['states']=set([controlTypes.STATE_CHECKED])
+					field['states']=set([controlTypes.State.CHECKED])
 				elif fieldType==wdFieldFormDropDown:
 					field['value']=field.get('wdFieldResult',None)
 			fieldStatusText=field.pop('wdFieldStatusText',None)
@@ -778,45 +811,26 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			else:
 				fieldType=int(field.get('wdContentControlType',-1))
 				if fieldType!=-1:
-					role=wdContentControlTypesToNVDARoles.get(fieldType,controlTypes.ROLE_UNKNOWN)
-					if role==controlTypes.ROLE_CHECKBOX:
+					role=wdContentControlTypesToNVDARoles.get(fieldType,controlTypes.Role.UNKNOWN)
+					if role==controlTypes.Role.CHECKBOX:
 						fieldChecked=bool(int(field.get('wdContentControlChecked','0')))
 						if fieldChecked:
-							field['states']=set([controlTypes.STATE_CHECKED])
+							field['states']=set([controlTypes.State.CHECKED])
 					fieldTitle=field.get('wdContentControlTitle',None)
 					if fieldTitle:
 						field['name']=fieldTitle
 						field['alwaysReportName']=True
 		if role is not None: field['role']=role
-		if role==controlTypes.ROLE_TABLE and field.get('longdescription'):
-			field['states']=set([controlTypes.STATE_HASLONGDESC])
+		if role==controlTypes.Role.TABLE and field.get('longdescription'):
+			field['states']=set([controlTypes.State.HASLONGDESC])
 		storyType=int(field.pop('wdStoryType',0))
 		if storyType:
 			name=storyTypeLocalizedLabels.get(storyType,None)
 			if name:
 				field['name']=name
 				field['alwaysReportName']=True
-				field['role']=controlTypes.ROLE_FRAME
-		# Hack support for lazy fetching of row and column header text values
-		class ControlField(textInfos.ControlField): 
-			def get(d,name,default=None):
-				if name=="table-rowheadertext":
-					try:
-						cell=self._rangeObj.cells[1]
-					except IndexError:
-						log.debugWarning("no cells for table row, possibly on end of cell mark")
-						return super(ControlField,d).get(name,default)
-					return self.obj.fetchAssociatedHeaderCellText(cell,False)
-				elif name=="table-columnheadertext":
-					try:
-						cell=self._rangeObj.cells[1]
-					except IndexError:
-						log.debugWarning("no cells for table row, possibly on end of cell mark")
-						return super(ControlField,d).get(name,default)
-					return self.obj.fetchAssociatedHeaderCellText(cell,True)
-				else:
-					return super(ControlField,d).get(name,default)
-		newField=ControlField()
+				field['role']=controlTypes.Role.FRAME
+		newField = LazyControlField_RowAndColumnHeaderText(self)
 		newField.update(field)
 		return newField
 
@@ -837,8 +851,11 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 				# Translators:  line spacing of 1.5 lines
 				field['line-spacing']=pgettext('line spacing value',"1.5 lines")
 			elif lineSpacingRule==wdLineSpaceExactly:
-				# Translators: exact (minimum) line spacing
-				field['line-spacing']=pgettext('line spacing value',"exact")
+				field['line-spacing'] = pgettext(
+					'line spacing value',
+					# Translators: line spacing of exactly x point
+					"exactly {space:.1f} pt"
+				).format(space=float(lineSpacingVal))
 			elif lineSpacingRule==wdLineSpaceAtLeast:
 				# Translators: line spacing of at least x point
 				field['line-spacing']=pgettext('line spacing value',"at least %.1f pt")%float(lineSpacingVal)
@@ -854,6 +871,8 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			revisionLabel=wdRevisionTypeLabels.get(revisionType,None)
 			if revisionLabel:
 				field['revision']=revisionLabel
+		textPosition = field.pop('text-position', TextPosition.BASELINE)
+		field['text-position'] = TextPosition(textPosition)
 		color=field.pop('color',None)
 		if color is not None:
 			field['color']=self.obj.winwordColorToNVDAColor(int(color))
@@ -876,6 +895,10 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		bullet=field.get('line-prefix')
 		if bullet and len(bullet)==1:
 			field['line-prefix']=mapPUAToUnicode.get(bullet,bullet)
+		fontSize = field.get("font-size")
+		if fontSize is not None:
+			# Translators: Abbreviation for points, a measurement of font size.
+			field["font-size"] = pgettext("font size", "%s pt") % fontSize
 		return field
 
 	def expand(self,unit):
@@ -937,7 +960,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			newEndOffset = self._rangeObj.end
 			# the new endOffset should not have become smaller than the old endOffset, this could cause an infinite loop in
 			# a case where you called move end then collapse until the size of the range is no longer being reduced.
-			# For an example of this see sayAll (specifically readTextHelper_generator in sayAllHandler.py)
+			# For an example of this see sayAll (specifically readTextHelper_generator in sayAll.py)
 			if newEndOffset < oldEndOffset :
 				raise RuntimeError
 
@@ -1164,7 +1187,7 @@ class WordDocument(Window):
 			return colors.RGB.fromCOLORREF(val).name
 		elif (val&0xffffffff)==0xff000000:
 			# Translators: the default (automatic) color in Microsoft Word
-			return _("default color")
+			return _("automatic color")
 		elif ((val>>28)&0xf)==0xd and ((val>>16)&0xff)==0x00:
 			# An MS word color index Plus intencity
 			# Made up of MS Word Theme Color index, hsv value ratio (MS Word darker percentage) and hsv saturation ratio (MS Word lighter percentage)
@@ -1297,6 +1320,22 @@ class WordDocument(Window):
 		if msg:
 			ui.message(msg)
 
+	@script(gestures=["kb:control+m", "kb:control+shift+m", "kb:control+t", "kb:control+shift+t"])
+	def script_changeParagraphLeftIndent(self, gesture):
+		if not self.WinwordSelectionObject:
+			# We cannot fetch the Word object model, so we therefore cannot report the format change.
+			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail,
+			# or it's within Windows Defender Application Guard.
+			# For now, just let the gesture through and don't report anything.
+			return gesture.send()
+		margin = self.WinwordDocumentObject.PageSetup.LeftMargin
+		val = self._WaitForValueChangeForAction(
+			lambda: gesture.send(),
+			lambda: self.WinwordSelectionObject.paragraphFormat.LeftIndent
+		)
+		msg = self.getLocalizedMeasurementTextForPointSize(margin + val)
+		ui.message(msg)
+
 	def script_toggleSuperscriptSubscript(self,gesture):
 		if not self.WinwordSelectionObject:
 			# We cannot fetch the Word object model, so we therefore cannot report the format change.
@@ -1366,24 +1405,6 @@ class WordDocument(Window):
 		# Translators: a message when increasing or decreasing font size in Microsoft Word
 		ui.message(_("{size:g} point font").format(size=val))
 
-	def script_toggleChangeTracking(self, gesture):
-		if not self.WinwordDocumentObject:
-			# We cannot fetch the Word object model, so we therefore cannot report the status change.
-			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail,
-			# or it's within Windows Defender Application Guard.
-			# In this case, just let the gesture through and don't report anything.
-			return gesture.send()
-		val = self._WaitForValueChangeForAction(
-			lambda: gesture.send(),
-			lambda: self.WinwordDocumentObject.TrackRevisions
-		)
-		if val:
-			# Translators: a message when toggling change tracking in Microsoft word
-			ui.message(_("Change tracking on"))
-		else:
-			# Translators: a message when toggling change tracking in Microsoft word
-			ui.message(_("Change tracking off"))
-
 	@script(gesture="kb:control+shift+8")
 	def script_toggleDisplayNonprintingCharacters(self, gesture):
 		if not self.WinwordWindowObject:
@@ -1411,6 +1432,9 @@ class WordDocument(Window):
 		* If not in a table, announces the distance of the caret from the left edge of the document, and any remaining text on that line.
 		"""
 		gesture.send()
+		self.reportTab()
+
+	def reportTab(self):
 		selectionObj=self.WinwordSelectionObject
 		inTable=selectionObj.tables.count>0 if selectionObj else False
 		info=self.makeTextInfo(textInfos.POSITION_SELECTION)
@@ -1419,7 +1443,7 @@ class WordDocument(Window):
 			info.expand(textInfos.UNIT_PARAGRAPH)
 			isCollapsed=info.isCollapsed
 		if not isCollapsed:
-			speech.speakTextInfo(info,reason=controlTypes.REASON_FOCUS)
+			speech.speakTextInfo(info, reason=controlTypes.OutputReason.FOCUS)
 		braille.handler.handleCaretMove(self)
 		if selectionObj and isCollapsed:
 			offset=selectionObj.information(wdHorizontalPositionRelativeToPage)
@@ -1427,7 +1451,7 @@ class WordDocument(Window):
 			ui.message(msg)
 			if selectionObj.paragraphs[1].range.start==selectionObj.start:
 				info.expand(textInfos.UNIT_LINE)
-				speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
+				speech.speakTextInfo(info, unit=textInfos.UNIT_LINE, reason=controlTypes.OutputReason.CARET)
 
 	def getLocalizedMeasurementTextForPointSize(self,offset):
 		options=self.WinwordApplicationObject.options
@@ -1451,8 +1475,8 @@ class WordDocument(Window):
 				# Translators: a measurement in Microsoft Word
 				return _("{offset:.3g} millimeters").format(offset=offset)
 			elif unit==wdPoints:
-				# Translators: a measurement in Microsoft Word
-				return _("{offset:.3g} points").format(offset=offset)
+				# Translators: a measurement in Microsoft Word (points)
+				return _("{offset:.3g} pt").format(offset=offset)
 			elif unit==wdPicas:
 				offset=offset/12.0
 				# Translators: a measurement in Microsoft Word
@@ -1508,7 +1532,6 @@ class WordDocument(Window):
 		"kb:control+1":"changeLineSpacing",
 		"kb:control+2":"changeLineSpacing",
 		"kb:control+5":"changeLineSpacing",
-		"kb:control+shift+e": "toggleChangeTracking",
 		"kb:control+pageUp": "caret_moveByLine",
 		"kb:control+pageDown": "caret_moveByLine",
 	}

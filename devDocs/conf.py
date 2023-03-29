@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2019 NV Access Limited, Leonard de Ruijter
+# Copyright (C) 2019-2020 NV Access Limited, Leonard de Ruijter, Joseph Lee
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -12,24 +12,37 @@ import sys
 sys.path.insert(0, os.path.abspath('../source'))
 import sourceEnv  # noqa: F401, E402
 
+
+# Apply several monkey patches to comtypes.
+# Add our `comInterfaces` to the `comtypes.gen` search path to replicate the behavior at runtime
+# without this patch many modules aren't importable, since they depend on `comInterfaces` being present.
+# When a virtual environment has been created under a different version of Windows than the one
+# used for developer documentation build, "ImportError: Typelib different than module" is raised
+# by comTypes.
+# This patch causes the error to be ignored, which matches the behavior at runtime.
+import monkeyPatches.comtypesMonkeyPatches  # noqa: E402
+monkeyPatches.comtypesMonkeyPatches.replace_check_version()
+monkeyPatches.comtypesMonkeyPatches.appendComInterfacesToGenSearchPath()
+
 # Initialize languageHandler so that sphinx is able to deal with translatable strings.
 import languageHandler  # noqa: E402
 languageHandler.setLanguage("en")
 
-# Initialize globalvars.appArgs to something sensible.
+# Initialize globalVars.appArgs to something sensible.
 import globalVars  # noqa: E402
 
 
-class AppArgs:
-	# Set an empty comnfig path
-	# This is never used as we don't initialize config, but some modules expect this to be set.
-	configPath = ""
-	secure = False
-	disableAddons = True
-	launcher = False
+# Set an empty config path
+# This is never used as we don't initialize config, but some modules expect this to be set.
+globalVars.appArgs.configPath = ""
+globalVars.appArgs.disableAddons = True
 
 
-globalVars.appArgs = AppArgs()
+# #11971: NVDA is not running, therefore app dir is undefined.
+# Therefore tell NVDA that apt source directory is app dir.
+appDir = os.path.join("..", "source")
+globalVars.appDir = os.path.abspath(appDir)
+
 
 # Import NVDA's versionInfo module.
 import versionInfo  # noqa: E402
@@ -79,11 +92,6 @@ exclude_patterns = [
 # The theme to use for HTML and HTML Help pages.
 
 html_theme = "sphinx_rtd_theme"
-
-# Add any paths that contain custom static files (such as style sheets) here,
-# relative to this directory. They are copied after the builtin static files,
-# so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
 
 # -- Extension configuration -------------------------------------------------
 

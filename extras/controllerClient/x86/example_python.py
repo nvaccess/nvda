@@ -11,7 +11,7 @@ if res!=0:
 	ctypes.windll.user32.MessageBoxW(0,u"Error: %s"%errorMessage,u"Error communicating with NVDA",0)
 
 #Speak and braille some messages
-for count in xrange(4):
+for count in range(4):
 	clientLib.nvdaController_speakText(u"This is a test client for NVDA")
 	clientLib.nvdaController_brailleMessage(u"Time: %g seconds"%(0.75*count))
 	time.sleep(0.625)

@@ -2,6 +2,780 @@
 
 
 %!includeconf: ../changes.t2tconf
+
+= 2022.4 =
+Ez a kiadás számos új billentyűparancsot tartalmaz, többek között folyamatos felolvasáshoz táblázatokban.
+A hibajavítások sem maradhattak el.
+
+Frissült az eSpeak és  a LibLouis Braille fordító.
+Új kínai, svéd, Lugandai és ruandai braille táblák.
+
+== Újdonságok ==
+- Az angol nyelvű felhasználói útmutató kibővült egy "Quick Start Guide" szekcióval. (#13934)
+- Új billentyűparancs az aktív elemhez tartozó gyorsbillentyű lekérdezésére. (#13960)
+  - Asztali kiosztás esetén: ``shift+numpad2``.
+  - Laptop kiosztás esetén: ``NVDA+ctrl+shift+.``.
+  -
+- Új billentyűparancsok az áttekintőkurzor oldalankénti mozgatására, ahol ezt az alkalmazás támogatja. (#14021)
+  - Az előző oldalra lép:
+    - Asztali: ``NVDA+pageUp``.
+    - Laptop: ``NVDA+shift+pageUp``.
+    -
+  - A következő oldalra lép:
+    - Asztali: ``NVDA+pageDown``.
+    - Laptop: ``NVDA+shift+pageDown``.
+    -
+  -
+- Új táblázatnavigációs parancsok. (#14070)
+  - Folyamatos felolvasás az oszlopban: ``NVDA+control+alt+downArrow``
+  - Folyamatos felolvasás a sorban: ``NVDA+control+alt+rightArrow``
+  - Teljes oszlop felolvasása: ``NVDA+control+alt+upArrow``
+  - Teljes sor felolvasása: ``NVDA+control+alt+leftArrow``
+  -
+- Microsoft Excel UI Automation használatával: Az NVDA már bejelenti, ha egy munkalapon kilépünk egy táblázatból. (#14165)
+- A táblázatfejlécek bejelentése már külön állítható a sorokhoz és oszlopokhoz. (#14075)
+-
+
+
+== Változások ==
+- Frissült az eSpeak NG, új verzió: 1.52-dev commit ``735ecdb8``. (#14060, #14079, #14118, #14203)
+  - Mandarin nyelv használata esetén javították a latin betűk bemondását. (#12952, #13572, #14197)
+  -
+- Frissült a LibLouis braille fordító, új verzió: [3.23.0 https://github.com/liblouis/liblouis/releases/tag/v3.23.0]. (#14112)
+  - Új Braille táblák:
+    - Kínai általános braille (egyszerűsített kínai írásjelek)
+    - ruandai irodalmi braille
+    - Lugandai irodalmi braille
+    - Svéd, rövidítési fokozat 1
+    - Svéd, részben rövidírásos
+    - Svéd, rövidítési fokozat 2
+    - Kínai (Kína, mandarin) hagyományos Braille írásrendszer (hangzás nélkül) (#14138)
+    -
+- Az NVDA által gyűjtött használati adatok közt most már az operációs rendszer architektúrája is szerepel. (#14019)
+-
+
+
+== Hibajavítások ==
+- Ha az NVDA-t a Windows Package Manager CLI (winget) használatával frissítjük, az NVDA stabil verzióját nem fogja a rendszer indokolatlanul újabbnak érzékelni a tesztelésre szánt alpha verzióknál. (#12469)
+- Java alkalmazások: Az NVDA már helyesen kezeli a csoport dobozokat. (#13962)
+- A rendszerkurzor már helyesen követi a felolvasott szöveget "Folyamatos felolvasás" használatakor az olyan alkalmazásokban mint Bookworm, WordPad vagy az NVDA Naplónéző. (#13420, #9179)
+- UI Automationt használó programokban az NVDA már helyesen jelenti be a félig bejelölt jelölőnégyzeteket. (#13975)
+- Javult a kezelhetőség és a stabilitás Microsoft Visual Studioban, a Windows Terminalban, és más UI Automationt használó alkalmazásokban. (#11077, #11209)
+  - Ezek a hibajavítások a Windows 11 Sun Valley 2 (22H2) és újabb verzióiban jelennek meg.
+  - Haladó beállítások: "UI automation elemek és tulajdonságok regisztrálása" opció alapértelmezett értéke mostantól "Szelektív".
+  -
+- Visual Studio 2022: a szövegfelolvasás , a Braille kimenet és a jelszavak kezelése is már az elvárt módon működik. (#14194)
+- Az NVDA most már DPI képes többmonitoros használat esetén.
+Számos hibajavítás történt, amikor a DPI értéke 100 százaléknál nagyobb, ill. többmonitoros használat esetén.
+A hibák továbbra is fennállhatnak  Windows 10 1809 verziónál régebbi operációs rendszert futtató felhasználóknál.
+Ezek a hibajavítások csak DPI képes alkalmazások kezelése esetén eredményesek.
+Ismert problémák továbbra is fennállnak Chrome és Edge esetében. (#13254)
+  - A vizuális kiemelőkeretek már az elvárt módon jelzik az aktív elemet a legtöbb alkalmazásban. (#13370, #3875, #12070)
+  - Az érintési parancsok most már jól működnek a legtöbb alkalmazásban. Érintőképernyős használat esetén természetesen. (#7083)
+  - Az egérmutató követése már helyesen működik a legtöbb alkalmazásban. (#6722)
+  -
+- A képernyőtájolás (álló/fekvő) állapotát most már nem jelenti be az NVDA, ha nem történik tényleges változás a beállításban, pl. amikor új monitort kapcsolunk a rendszerre. (#14035)
+- Az NVDA már bejelenti a drag & drop művelet eredményét az olyan átrendezhető helyeken, mint pl. a csempék a Windows 10 start menüjében, vagy a Windows 11 virtuális asztalai. (#12271, #14081)
+- Haladó beállítások: Most már a "Hangjelzés naplózási hibánál" opció is visszaáll az alapértelmezett értékre, amikor visszaállítjuk az NVDA gyári beállításait. (#14149)
+- Java alkalmazások: Az NVDA már ki tud jelölni szöveget az ``NVDA+f10`` billentyűparancs segítségével. (#14163)
+- Microsoft Teams: Az NVDA már nem ragad benne egy menüben, amikor a beszélgetések között mozgunk a le- és felnyíl segítségével. (#14355)
+-
+
+
+= 2022.3.2 =
+Ez egy köztes kiadás, melyben javítottak néhány   a 2022.3.1 kiadás által okozott hibát, illetve bezártak egy biztonsági rést is.
+
+== Biztonsági javítások ==
+- Ez a hibajavítás megakadályozza a nem hitelesített felhasználók esetleges rendszerszintű hozzáférését.
+([GHSA-3jj9-295f-h69w https://github.com/nvaccess/nvda/security/advisories/GHSA-3jj9-295f-h69w])
+-
+
+== Hibajavítások ==
+- Javítottak egy a 2022.3.1 kiadás által okozott hibát, mely bizonyos funkciók használatát ellehetetlenítette a biztonsági képernyőn. (#14286)
+- Javítottak egy a 2022.3.1 kiadás által okozott hibát, ami bizonyos funkciók működését ellehetetlenítette a bejelentkezés után,amennyiben az NVDA a zárolási képernyőn indult el. (#14301)
+-
+
+
+= 2022.3.1 =
+Ez egy köztes kiadás, mely néhány biztonsági javítást tartalmaz.
+
+== Biztonsági javítások ==
+- Kiavították azt a sebezhetőséget, amely lehetővé tette, hogy illetéktelen felhasználó rendszerszintű hozzáféréshez jusson.
+([GHSA-q7c2-pgqm-vvw5 https://github.com/nvaccess/nvda/security/advisories/GHSA-q7c2-pgqm-vvw5])
+- Kijavították azt a sebezhetőséget, amely lehetővé tette, hogy egy NVDA indító paraméter segítségével az NVDA hozzáférjen a python konzolhoz a Windows zárolási képernyőjén.
+([GHSA-72mj-mqhj-qh4w https://github.com/nvaccess/nvda/security/advisories/GHSA-72mj-mqhj-qh4w])
+- Kijavították azt a hibát, amely miatt a Beszédnéző tartalma gyorsítótárba került a Windows zárolásakor.
+([GHSA-grvr-j2h8-3qm4 https://github.com/nvaccess/nvda/security/advisories/GHSA-grvr-j2h8-3qm4])
+- Kijavították azt a sebezhetőséget, mely lehetővé tette, hogy egy illetéktelen felhasználó megváltoztassa a Beszédnéző és a Braille néző beállításait a zárolási képernyőn. ([GHSA-grvr-j2h8-3qm4 https://github.com/nvaccess/nvda/security/advisories/GHSA-grvr-j2h8-3qm4])
+-
+
+= 2022.3 =
+E kiadás változásainak és hibajavításainak jelentős része az NVDA fejlesztői közösségének köszönhető.
+Ezek közé tartozik a Késleltetett betűzés a kurzor mozgásakor opció, illetve a Windows konzol hatékonyabb kezelhetősége.
+
+A hibajavítások sem maradhattak el.
+Fontos javítás, hogy az Adobe Acrobat/Reader legújabb verzióit használva már nem okoz problémát egy PDF dokumentum olvasása.
+
+Frissült az eSpeak, 3 új nyelvvel bővült: belarusz, luxemburgi és Totontepec Mixe.
+
+== Újdonságok ==
+- A parancssor, a PowerShell és a Linux futtatására szánt windows alrendszer által használt Windows konzol a Windows 11 22H2 (Sun Valley 2) és újabb verzióiban:
+  - Jelentősen javult a kezelhetőség és a stabilitás. (#10964)
+  - Szöveg keresésére szolgáló parancs (Ctrl+F) használatakor az áttekintő kurzor a találatra ugrik. (#11172)
+  - A képernyőn meg nem jelenő beírt szöveget, pl. jelszót, alapértelmezés szerint már nem mondja be az NVDA.
+Az opció visszakapcsolható az NVDA haladó beállításaiban. (#11554)
+  - A képernyő látható részén kívüli szöveg már áttekinthető az Áttekintő kurzorral a konzol tényleges görgetése nélkül is. (#12669)
+  - A korábbinál jóval részletesebb formázási információkat tud közölni az NVDA. ([microsoft/terminal PR 10336 https://github.com/microsoft/terminal/pull/10336])
+  -
+- Új opció a Beszéd beállításai között: "Késleltetett betűzés a kurzor mozgásakor" (#13509)
+- Új opció a Braille beállítások között: Beszéd megszakítása görgetéskor. (#2124)
+-
+
+
+== Változások ==
+- Frissült az eSpeak NG, új verzió: 1.52-dev commit ``9de65fcb``. (#13295)
+  - Új nyelvek:
+    - belarusz
+    - luxemburgi
+    - Totontepec Mixe
+    -
+  -
+- Microsoft Excel UI Automation használatával: az NVDA már felismeri az egyesített cellákat. (#12843)
+- Ha az NVDA be tudja azonosítani a cella jellegét, akkor mindenképpen azt fogja bemondani, pl. megjegyzés. (#13649)
+- Az NVDA telepítési mérete már olvasható a telepített alkalmazások listáján. (#13909)
+-
+
+
+== Hibajavítások ==
+- Az Adobe Acrobat / Reader 64 bit már nem omlik össze PDF dokumentum megnyitásakor. (#12920)
+  - Fontos tudni, hogy csak az Adobe Acrobat / Reader legújabb verziója esetén lesz zavartalan a PDF olvasás.
+  -
+- A betűméret mérési egységek már lefordíthatók az NVDA-ban. (#13573)
+- az NVDA már figyelmen kívül hagyja az olyan Java Access Bridge eseményeket, amikor a Java alkalmazáshoz nem tartozik kezelőablak.
+Ez javítja bizonyos Java alkalmazások kezelhetőségét, pl. IntelliJ IDEA. (#13039)
+- LibreOffice Calc: Sokat  javult a kijelölt cellák bemondása és már nem okozza a Calc lefagyását, ha egyszerre sok cella van kijelölve. (#13232)
+- Microsoft Edge: Ha másik felhasználóval jelentkezik be, már nem lesz elérhetetlen a böngésző. (#13032)
+- Ha a "Sebességfokozás" opció ki van kapcsolva, az eSpeak beszédsebessége  már nem viselkedik furcsán 99% és 100% közti beállítás változtatásnál. (#13876)
+- Javították azt a hibát, ami lehetővé tette, hogy a beviteli parancsok ablakából kettő is nyitva legyen egyszerre. (#13854)
+-
+
+
+= 2022.2.4 =
+Ez egy köztes kiadás,melyben javítottak egy biztonsági hibát.
+
+
+== Hibajavítások ==
+- Kijavították azt a sebezhetőséget, mely lehetővé tette, hogy illetéktelen felhasználó megnyissa az NVDA python konzolát a Naplónézőből a Windows zárolási képernyőjén.
+([GHSA-585m-rpvv-93qg https://github.com/nvaccess/nvda/security/advisories/GHSA-585m-rpvv-93qg])
+-
+
+= 2022.2.3 =
+Ez egy köztes kiadás, melyben kijavították a 2022.2.1 kiadás által okozott hibát.
+
+== Hibajavítások ==
+- Kijavították azt a hibát, ami miatt az NVDA nem jelentette be  a Biztonsági képernyőt, amikor épp egy olyan képernyőre került a fókusz.
+Ennek hatására az NVDA remote nem volt képes beazonosítani a biztonsági képernyőt. (#14094)
+-
+
+= 2022.2.2 =
+Ez egy köztes kiadás, melyben kijavították a 2022-2.1 kiadás által a beviteli parancsokkal kapcsolatban okozott hibát.
+
+== Hibajavítások ==
+- Kijavították azt a hibát, amely miatt a beviteli parancsok nem mindig működtek. (#14065)
+-
+
+= 2022.2.1 =
+Ez egy köztes kiadás, melyben biztonsági hibákat javítottak.
+
+== Biztonsági javítások ==
+- Felszámolták azt a sebezhetőséget, amely lehetővé tette a python konzol futtatását a Windows zárolási képernyőjén. (GHSA-rmq3-vvhq-gp32)
+- Felszámolták azt a sebezhetőséget, amely miatt elemnavigációval lehetséges volt elnavigálni a zárolási képernyőről jelszó beírása nélkül is. (GHSA-rmq3-vvhq-gp32)
+-
+
+= 2022.2 =
+Ez a kiadás számos hibajavítást tartalmaz.
+ Jelentős javítások a Java alapú alkalmazásokhoz, Braille kijelzőkhöz és a Windows funkcióihoz.
+
+Új táblázatnavigációs parancsokat adtak hozzá.
+Frissült az Unicode CLDR.
+Frissült a LibLouis Braille fordító is, egy új német braille táblát adtak hozzá.
+
+== Újdonságok ==
+- Microsoft Office: támogatás a Microsoft Loop összetevők kezeléséhez. (#13617)
+- Új táblázatnavigációs parancsokat adtak hozzá. (#957)
+ - ``ctrl+alt+home/end`` az első és az utolsó oszlopra ugráshoz.
+ - ``ctrl+alt+pageUp/pageDown`` az első és az utolsó sorra ugráshoz.
+ -
+- Új szkript a nyelv és dialektusváltás beállítására. Alapértelmezés szerint nincs beviteli parancs hozzárendelve. (#10253)
+-
+
+== Változások ==
+- Frissült az NSIS, új verzió: 3.08. (#9134)
+- Frissült a CLDR, új verzió: 41.0. (#13582)
+- Frissült a LibLouis braille fordító, új verzió: [3.22.0 https://github.com/liblouis/liblouis/releases/tag/v3.22.0]. (#13775)
+  - Új Braille tábla: Német rövidítési fokozat 2 (részletes)
+  -
+- Meghatározhatatlan értékű folyamatjelzők kezelése. (#10644)
+- Az NVDA már tudatja a felhasználóval, ha egy művelet nem hajtható végre. (#13500)
+  - Ilyen esetek pl.:
+    - az NVDA Microsoft Storeből telepített kiadásának használata.
+    - Biztonsági képernyőn.
+    - az NVDA egyik párbeszédablaka felhasználói beavatkozásra vár.
+    -
+  -
+-
+
+
+== Hibajavítások ==
+- Javítások Java alapú alkalmazásokhoz:
+  - az NVDA már bejelenti a csak olvasható állapotot. (#13692)
+  - az NVDA már helyesen jelenti be az engedélyezett/letiltott állapotot. (#10993)
+  - az NVDA már bejelenti a funkcióbillentyűkkel végrehajtott parancsokat. (#13643)
+  - az NVDA már képes hangjelzést és beszédbeli visszajelzést is adni a folyamatjelzőkön. (#13594)
+  - az NVDA már nem távolítja el a szöveget a widgetekről. (#13102)
+  - az NVDA már bejelenti a többállapotú gombok állapotát. (#9728)
+  - az NVDA már képes kezelni a többablakos Java alkalmazásokat. (#9184)
+  - az NVDA már képes pozícióinformációkat adni a fülvezérlőkhöz. (#13744)
+  -
+- Braille javítások:
+  - Javították a Braille kimenetet Mozilla rich edit vezérlőben történő navigálás esetén pl. üzenetírás a thunderbirdben. (#12542)
+  - Ha a Braille követés automatikusra van állítva és az egérkövetés is be van kapcsolva, akkor egér mozgatása esetén
+   A szövegáttekintő parancsok használatakor a Braille kijelzőn is megjelennek a kimondott szavak. (#11519)
+  - A Braille kijelzőn át lehet pásztázni a tartalmat szövegáttekintő parancsok használata után. (#8682)
+  -
+- Az NVDA telepítője most már képes olyan mappából is elindulni,aminek a neve tartalmaz speciális karaktereket. (#13270)
+- Firefox: Az NVDA már nem  mulasztja el bejelenteni az olyan elemeket a weblapokon, ahol aria-rowindex, aria-colindex, aria-rowcount és aria-colcount attribútum sincs megadva. (#13405)
+- A kurzor már nem vált kéretlenül sort vagy oszlopot, ha egyesített cellákon navigálunk táblázatnavigációs parancsokkal. (#7278)
+- Adobe Reader: Ha nem interaktív pdf dokumentumokat olvasunk az NVDA már bejelenti az űrlapmezők típusát és állapotát. (pl. jelölőnégyzetek és választógombok) (#13285)
+- "A gyári beállítások visszaállítása" opció már elérhető az NVDA menüjéből, ha az NVDA csökkentett/biztonsági módban van. (#13547)
+- Az NVDA bezárásakor az NVDA egérkezelő parancsaival nyomva tartott állapotba hozott egérgombnak feloldódik a nyomva tartása. Korábban a nyomva tartott állapot megmaradt az NVDA bezárása után is. (#13410)
+- Visual Studio: Az NVDA már be tudja jelenteni a sorok számát. (#13604)
+  - Az opció megfelelő működéséhez be kell kapcsolni a sorszámok megjelenítését mind a Visual Studioban mind az NVDA beállításai között a dokumentumformázás kategóriában.
+  -
+- Visual Studio: Az NVDA már helyesen jelenti be a sorok behúzását. (#13574)
+- Az NVDA ismét megfelelően jelenti be a start menüben történő keresés részleteit mind a windows 10, mind a Windows 11 legújabb verzióiban. (#13544)
+- Windows 10 és 11 Számológép 10.1908 és újabb verziói: Az NVDA már bejelenti az eredményt akkor is, ha több parancs is le van nyomva, pl a tudományos mód parancsai. (#13383)
+- Windows 11: Egérkezelő és érintési parancsokkal ismét kezelhetőek a felhasználói felület bizonyos elemei, a tálca és a feladatnézet. (#13506)
+- Windows 11 Jegyzettömb: Az NVDA már bejelenti az állapotsor tartalmát. (#13688)
+- A navigátor objektum vizuális kiemelése már közvetlenül az opció aktiválása után megjelenik. (#13641)
+- Kijavították az egyoszlopos listanézet elemeinek olvasását. (#13659, #13735)
+- Kijavították az eSpeak automatikus nyelvváltás során fennálló hibáját. Az angol megfelelően vált brit angolra, míg a francia franciaországi franciára. (#13727)
+- Kijavították az OneCore beszédmotor automatikus nyelvváltása során előforduló hibát. (#13732)
+
+
+= 2022.1 =
+Ebben a kiadásban jelentős fejlesztések a Microsoft Office vezérlőinek UI automation használatával történő kezelésében.
+A Microsoft Office 16.0.15000 és újabb verziók esetén Windows 11 alatt az NVDA alapértelmezés szerint már UI Automation használatával kezeli a Microsoft Word dokumentumokat.
+Ez jelentős javulás a korábbi objektum alapú eléréshez képest.
+
+Fejlesztések a következő braille kijelző driverekhez: Seika Notetaker, Papenmeier és HID Braille. 
+Windows 11 hibajavítások a következő alkalmazásokhoz: Számológép, Konzol, Terminal, Posta és Emoji Panel.
+
+Frissült az eSpeak-NG és a  LibLouis Braille fordító. Új Braille táblákat adtak hozzá japán, német és katalán nyelvekhez.
+
+Megjegyzés:
+ - Ez a kiadás  megköveteli a meglévő bővítmények kompatibilitásának elllenőrzését. Előfordulhat, hogy bizonyos bővítmények átmenetileg nem fognak működni.
+ 
+
+
+== Újdonságok ==
+- Ms Excel Ui automation használatával Windows 11 alatt: Az NVDA már bemondja, ha egy cella jegyzetet tartalmaz. (#12861)
+- MS Word UI Automation használatával Windows 11 alatt: Az NVDA már felismeri a dokumentumban a könyvjelzőket, szerkesztés alatt álló megjegyzéseket és a lezárt beszélgetéseket. A visszajelzés beszédben és Braille-ben egyaránt elérhető. (#12861)
+- Az új parancssori paraméter  `"--lang" használatával átmenetileg felülírható az NVDA felületének korábban beállított nyelve. (#10044)
+- Az NVDA már figyelmeztet, ha olyan parancssori paraméterrel indítjuk el, amit nem képes kezelni. (#12795)
+- MS Word UI Automation használatával: az NVDA már képes a mathPlayer-rel kezelni az Office matematikai kifejezéseit. (#12946)
+  - Csak Microsoft Word 365/2016 build 14326 vagy újabb verziók esetén működik. 
+  - A matematikai kifejezéseket manuálisan kell konvertálni Office Math formátumra. Ehhez a helyi menüből válassza az Egyenlet beállításai >> Konvertálás Office Math formátumba lehetőséget.
+  -
+- A Bővebb leírás meglétének jelzését és a kapcsolódó billentyűparancsot frissítették, hogy működjön fókuszmódban is. (#13106)
+- Braille: Az NVDA már képes automatikusan észlelni a Seika Notetaker kijelzőket akkor is, ha USb-n keresztül és akkor is ha bluetooth-on keresztül csatlakoztatja. (#13191, #13142)
+  - Ez az alábbi kijelzőket érinti: MiniSeika (16, 24 cells), V6 és V6Pro (40 cells)
+  - A bluetooth kommunikációs port kézi kiválasztása is lehetségessé vált.
+  -
+- Billentyűparancs rendelhető a Braille-néző ki- és bekapcsolásához. Nincs alapértelmezett billentyűparancs hozzárendelve. (#13258)
+- Braille: Most már módosítóbillentyűk különböző kombinációi is emulálhatók braille kijelzővel. (Ctrl+Alt, Alt+Shift, stb.) (#13152)
+- A kivételszótárak párbeszédablakán most már lehetőség van a kivételszótár minden bejegyzésének egyidejű törlésére. Ehhez használja az új "Minden bejegyzés törlése" gombot. (#11802)
+- Támogatás a Windows 11 Számológép alkalmazásához. (#13212)
+- MS Word UI Automation használatával a  Windows 11 alatt: Az NVDA már bejelenti a sorok és a szakaszok számát. (#13283, #13515)
+- Microsoft Office 16.0.15000 és újabb verzióinál Windows 11 alatt az NVDA most már alapértelmezetten UI automation használatával fér hozzá a dokumentumvezérlőkhöz. Ez jelentős javulást jelent a korábbi objektum-alapú eléréshez képest. (#13437)
+ - Ez a metódus a Microsoft Word dokumentumaiban és az Outlook üzenetek olvasása és írása közben is működik. 
+ -
+-
+
+
+== Változások ==
+- Frissült az Espeak-ng, új verzió: 1.51-dev commit ``7e5457f91e10``. (#12950)
+- Frissült a Liblouis braille fordító, új verzió: [3.21.0 https://github.com/liblouis/liblouis/releases/tag/v3.21.0]. (#13141, #13438)
+  - Új braille táblák: Japán (Kantenji) irodalmi braille, Német 6 pontos számítógépes braille, Katalán rövidítési fokozat 1. (#13408)
+  - 
+- LibreOffice Calc 7.3 és újabb verziói: Az NVDA már bejelenti a kijelölést és az egyesített cellákat. (#9310, #6897)
+- Frissült az Unicode Common Locale Data Repository (CLDR), új verzió: 40.0. (#12999)
+- Az NVDA+Numpad Delete billentyűparancs mostantól alapértelmezés szerint a kurzor vagy az aktív elem pozícióját közli. (#13060)
+- Az NVDA+Shift+Numpad Delete mostantól alapértelmezés szerint az áttekintőkurzor pozícióját közli. (#13060)
+- Braille: Billentyűparancsokat rendeltek módosító billentyűk emulálására a Freedom Scientific braille kijelzőkhöz. (#13152)
+- A Formátum lekérdezésére szolgáló parancs (NVDA+F) már nem jelenti be az alapvonalat a formátum leírásában. (#11815)
+- A "Megmutatja a bővebb leírást" szkripthez most már nincs alapértelmezetten parancs rendelve. (#13380)
+- Új szkript: Összegzett leírás bejelentése a rendszerkurzornál található elemről. Alapértelmezett billentyűparancs: NVDA+d. (#13380)
+- Az NVDA-t újra kell indítani a MathPlayer telepítése után. (#13486)
+-
+
+== Hibajavítások ==
+- MS Office: az Office vágólap már nem ragadja magához kéretlenül a fókuszt a programok megnyitása után. (#12736)
+- Ha a felhasználó a Windows egérbeállítások között felcserélte az egér gombjainak funkcióit, azaz a jobb egérgombot használja az alapértelmezetten a bal egérgombnak szánt funkciókra, akkor az NVDA most már  a felcserélésnek megfelelően jeleníti meg a helyi menüket bizonyos alkalmazásokban, pl.böngészőkben. (#12642)
+- Ha az áttekintőkurzorral bizonyos szöveges vezérlők végéhez navigálunk, pl. a Microsoft Wordben UI Automation használatával, akkor az NVDA most már a korábbinál több esetben jelzi a vezérlő végét. (#12808)
+- A 64 bites windowson futtatott 32 bites alkalmazások esetében az NVDA már bejelenti az alkalmazások nevét és verziószámát. Ez a system32 mappában található futtatható állományokra vonatkozik. (#12943)
+- Javították a Terminál programok kimenetének felolvasását. (#12974)
+  - Bizonyos esetekben,amikor egy sor belsejébe illesztünk be egy karaktert vagy épp törlünk onnan,akkor az NVDA bejelenti a kurzortól jobbra lévő karaktert.
+  -
+- MS word UI Automation használatával: Böngészőmódban a címsorok közti navigáció gyorsbillentyűje már nem eredményezi azt, hogy a program leragadjon a dokumentum utolsó címsorán, illetve ez a címsor sem szerepel már duplán az NVDA elemlistában. (#9540)
+- Windows 8 és újabb verziók: A Fájlkezelő állapotsora elérhető a kapcsolódó billentyűparanccsal. NVDA+end (asztali kiosztás) / NVDA+shift+end (laptop). (#12845)
+- Skype for Business: Az NVDA ismét bejelenti egy beszélgetésben a bejövő üzeneteket. (#9295)
+- Windows 11: A Hangerő-igazítás ismét működik SAPI5 beszédszintetizátor használatakor. (#12913)
+- Windows 10 Számológép: az NVDA már bejelenti az Előzmények és a memória listaelemeinek címkéit. (#11858)
+- HID Braille eszközök: A beviteli parancsok, mint pl a görgetés vagy routing ismét működnek. (#13228)
+- Windows 11 Posta: Ha hosszú e-mailek olvasása közben programok közt váltogatunk, az NVDA már nem ragad le a levél egy soránál. (#13050)
+- HID braille: Összetett beviteli parancsok mint pl. szóköz+4. pont most már végrehajthatók a braille kijelzőről. (#13326)
+- Az NVDA beállítási ablakát már nem lehet több példányban megnyitni egyszerre. (#12818)
+- Braille javítottak egy hibát,ami bizonyos Focus Blue Braille kijelzők működését megakasztotta miután alvó módból visszatért a Windows. (#9830)
+- Az NVDA már nem jelenti be kéretlenül az "Alapvonal" szót a formázási információk között amennyiben a Felső és alsó index jelzése opció be van kapcsolva az NVDA Beállítások >> Dokumentumformázás ablakán. (#11078)
+- Windows 11: A navigáció most már az elvártaknak megfelelően működik az Emoji panelen emodzsik kiválasztásakor. (#13104)
+- Javították azt a hibát,ami miatt az NVDA dupla visszajelzést adott Windows konzol és Terminal használata során. (#13261)
+- Javították azt a hibát,ami miatt bizonyos 64 bites alkalmazásokban (pl. a Reaper zeneszerkesztőben) az NVDA nem tudta megfelelően bejelenteni bizonyos listák elemeit. (#8175)
+- Microsoft Edge: A letöltések listáján az NVDA automatikusan fókuszmódra vált,amikor a legutóbb letöltött elem a listán aktívvá válik. (#13221)
+- Notepad++ 8.3 és újabb verziók: Az NVDA már nem okozza a 64 bites változat összeomlását. (#13311)
+- Adobe Reader: Az NVDA már nem okoz hibát a program indulásakor, ha a védett mód engedélyezve van. (#11568)
+- Kijavítottak egy hibát, mely a Papenmeier Braille kijelző driver kiválasztásakor az NVDA összeomlását okozta. (#13348)
+- Microsoft word UI AUTOMATION használatával: Az NVDA már nem jelenti be kéretlenül az oldalszámot és más formázási információkat olyan esetekben,amikor  egy üres táblázatcellából navigálunk egy tartalommal rendelkező cellába, vagy ha a dokumentum végéről vissza a dokumentum tartalmához. (#13458, #13459)
+- Google Chrome 100: Az NVDA ismét bemondja a címsort és nem kezdi el kéretlenül felolvasni az oldal tartalmát annak betöltődése után. (#13571)
+-
+
+
+= 2021.3.5 =
+Ez egy köztes kiadás,amely biztonsági javítást tartalmaz.
+ Ha a biztonságot érintő hiba jut a tudomására, haladéktalanul jelezze az info@nvaccess.org e-mail címen.
+
+== Biztonsági hibajavítások ==
+- Addressed security advisory ``GHSA-xc5m-v23f-pgr7``.
+  - Az Írásjelkiejtés ablaka le van tiltva csökkentett módban.
+  -
+-
+
+
+= 2021.3.4 =
+Ez egy köztes kiadás,amely néhány biztonsági javítást tartalmaz.
+ Ha a biztonságot érintő hiba jut a tudomására, haladéktalanul jelezze az info@nvaccess.org e-mail címen.
+
+== Biztonsági hibajavítások ==
+- Addressed security advisory ``GHSA-354r-wr4v-cx28``. (#13488)
+  - Ha az NVDA csökkentett módban fut, akkor nem lehet újraindítani Nyomkövetés naplózási szinttel.
+  - Ha az NVDA csökkentett módban fut, nem lehet frissíteni.
+  -
+- Addressed security advisory ``GHSA-wg65-7r23-h6p9``. (#13489)
+  - Ha az NVDA csökkentett módban fut, már nem lehet megnyitni a Beviteli parancsok ablakát.
+  - Ha az NVDA csökkentett módban fut, a kivételszótárak ablakait nem lehet megnyitni.
+  -
+- Addressed security advisory ``GHSA-mvc8-5rv9-w3hx``. (#13487)
+  - A wx GUI inspection tool már le van tiltva, ha az NVDA csökkentett módban fut.
+  -
+-
+
+
+= 2021.3.3 =
+Ez a kiadás megegyezik a 2021.3.2 kiadással
+Egy hiba miatt a 2021.3.2 kiadás 2021.3.1 verziószámmal azonosította magát. 
+Jelen kiadás az elvárásnak megfelelően 2021.3.3 verzióként azonosítja magát.
+
+
+
+= 2021.3.2 =
+Ez egy köztes kiadás,amely néhány biztonsági javítást tartalmaz.
+ Ha a biztonságot érintő hiba jut a tudomására, haladéktalanul jelezze az info@nvaccess.org e-mail címen.
+
+
+== Hibajavítások ==
+- Biztonsági javítás:: Most már elemnavigációval sem lehet a fókuszt kivinni a zárolási képernyőről. Windows 10 és Windows 11 alatt sem. (#13328)
+- Biztonsági javítás: A Bővítménykezelő ablaka le van tiltva a biztonsági képernyőn. (#13059)
+- Biztonsági javítás:: Az NVDA helyzetérzékeny súgója már nem érhető el a biztonsági képernyőn. (#13353)
+-
+
+
+= 2021.3.1 =
+Ez egy köztes kiadás, amely kijavít néhány, a 2021.3 verzió által okozott hibát.
+
+
+== Változások ==
+- Az NVDA nem kényszeríti az új HID Braille protokoll használatát, amennyiben más alkalmas driver is elérhető. (#13153)
+- A HID Braille protokoll már kikapcsolható a Haladó beállítások között. (#13180)
+-
+
+
+== Hibajavítások ==
+- Az NVDA ismét bejelenti a helyjelzőket Braille-ben. (#13158)
+- Kijavították az automatikus felismerés közben fellépő hibát az alábbi kijelzőknél:Humanware Brailliant és APH Mantis Q40. A probléma bluetoothos csatlakoztatás esetén lépett fel. (#13153)
+-
+
+
+= 2021.3 =
+Ez a kiadás már támogatja az új HID Braille specifikációt.
+Ez a specifikáció lehetővé teszi a különböző braille kijelzők egységes kezelését külön-külön driverek nélkül.
+Frissült az eSpeak-NG és a LibLouis Braille fordító, orosz és venda braille táblákat adtak hozzá.
+Egy új haladó beállításnak köszönhetően a hibajelző hangok már engedélyezhetők az NVDA stabil verzióiban is.
+Ha folyamatos felolvasást használunk egy Microsoft Word dokumentumban az NVDA már automatikusan görgeti a dokumentumot, hogy az éppen felolvasott rész mindig látszódjon.
+Számtalan fejlesztés történt az Office programcsomag UI Automationnal való használatában.
+Egy ilyen UIA javítás, hogy az Outlook már többféle rétegződő táblázatot képes figyelmen kívül hagyni.
+
+Fontos megjegyzések:
+
+Az NVDA biztonsági tanusítványának frissítése néhány felhasználónál azt eredményezte, hogy az NVDA 2021.2 hibát jelzett programfrissítés keresésekor.
+Az NVDA mostantól a Windowstól kéri a biztonsági tanusítványának frissítését, ez megelőzi a hasonló hibákat.
+Az érintett felhasználóknak manuálisan kell letölteniük ezt a frissítést, a 2021.3 verziót.
+
+
+== Újdonságok ==
+- Új beviteli parancsot adtak hozzá, mellyel a cellaszegélyek bemondását lehet szabályozni. Szín és stílus, csak stílus, kikapcsolva. (#10408)
+- Új HID Braille specifikáció támogatása, mely lehetővé teszi a Braille kijelzők egységes kezelését. (#12523)
+  - A specifikációt támogató eszközöket az NVDA automatikusan észleli.
+  - A specifikációval kapcsolatos további technikai részletekért keresse fel az alábbi oldalt: https://github.com/nvaccess/nvda/blob/master/devDocs/hidBrailleTechnicalNotes.md
+  -
+- Támogatás a VisioBraille Vario 4 Braille eszközhöz. (#12607)
+- Egy új haladó beállításnak köszönhetően a hibajelző hangok már engedélyezhetők az NVDA stabil verzióiban is. (#12672)
+- Windows 10 és újabb kiadásokban az NVDA már bejelenti a javaslatok számát az olyan alkalmazások keresőmezőinél mint pl. a Gépház vagy a Microsoft Store. (#7330, #12758, #12790)
+- A táblázatnavigáció már támogatott az olyan rácsvezérlőknél, melyeket Out-GridView parancsmag használatával hoztak létre a PowerShellben. (#12928)
+-
+
+
+== Változások ==
+- Frissült az Espeak-ng, új verzió: 1.51-dev commit ``74068b91bcd578bd7030a7a6cde2085114b79b44``. (#12665)
+- Az NVDA alapértelmezés szerint az eSpeak beszédszintetizátorra vált, amennyiben a telepített OneCore hangok között nincs az NVDA-ban beállított nyelvnek megfelelő hangkarakter. (#10451)
+- Amennyiben az OneCore hangok használata folyamatos problémákba ütközik az NVDA automatikusan átvált eSpeak beszédszintetizátorra. (#11544)
+- Az állapotsor bemondása parancs használatakor (Alapértelmezés szerint: NVDA+end), az áttekintőkurzor már nem kerül az állapotsorra.
+Amennyiben mégis szeretné ezt a korábbi viselkedést, beállíthat hozzá külön beviteli parancsot az NVDA beviteli parancsok párbeszédablakán. (#8600)
+-  Ha valamilyen okból egy olyan NVDA beállítási ablakot akarunk megnyitni, amely már nyitva van, az NVDA hibajelzés helyett most már áthelyezi a fókuszt az ablakra. (#5383)
+- Frissült a liblouis braille fordító, új verzió: [3.19.0 https://github.com/liblouis/liblouis/releases/tag/v3.19.0]. (#12810)
+  - Új braille táblák: orosz rövidítési fokozat 1, Venda rövidítési fokozat 1 és 2.  -
+- A megjelölten kiemelt tartalmat mostantól "Kiemelt" tartalomként jelenti be az NVDA. A Braille kijelzőre a "kiem" jelzést küldi. (#12892)
+- Az NVDA már nem záródik be, amennyiben egy párbeszédablaka még felhasználói beavatkozásra vár, pl. egy korábban végrehajtott változás megerősítésére vagy elvetésére. (#12984)
+-
+
+
+== Hibajavítások ==
+- Javult a módosítóbillentyűk kezelése a Watchdog futása közben. (#12609)
+- Újra működik az NVDA frissítések keresése bizonyos rendszereken, pl. tiszta Windows telepítés esetén. (#12729)
+- Microsoft Word UI automation használatával: az NVDA már helyesen jelenti be az üres táblázatcellákat. (#11043)
+- Webböngészés: ARIA adatrács cellákban az ESC gomb lenyomása a tartalom kezelését segíti és nem kapcsolja ki kéretlenül az NVDA fókuszmódját. (#12413)
+- Google Chrome: Egy táblázat fejlécének olvasásakor az NVDA már nem jelenti be kétszer az oszlop nevét. (#10840)
+- Az NVDA már nem jelenti be egy UIA csúszka értékét számként, amennyiben  bizonyos értékeihez szöveges reprezentáció tartozik. (A megfelelő érték bejelentéséhez most már az UIA ValuePattern paramétert veszik alapul a RangeValuePattern paraméter helyett). (#12724)
+- Az NVDA már nem kezeli úgy az UIA csúszkákat, mintha azok csak százalékos értéket vehetnének fel.
+- Microsoft Excel, Windows 11: az NVDA már helyesen jelenti be a cellák helyét UI automation használatával. (#12782)
+- Az NVDA már nem állít be érvénytelen Python lokalizációt. (#12753)
+- Amennyiben egy korábban letiltott bővítményt eltávolítunk majd később újra telepítünk a státusza engedélyezett lesz. Korábban az újratelepítés után az NVDA emlékezett az előzőleg letiltott állapotra, így a használat előtt a felhasználónak engedélyeznie kellett a kérdéses bővítményt. (#12792)
+- Javítottak bizonyos hibákat melyek bővítmények frissítésekor és eltávolításakor léptek fel olyan esetekben, amikor a bővítmény mappáját átnevezték vagy az egyik fájlja éppen használatban volt. (#12792, #12629)
+- Microsoft Excel UI Automation használatával: Az NVDA már nem ad kéretlenül többszöri visszajelzést egy cella kijelöléséről. (#12530)
+- LibreOffice Writer: Az NVDA már több párbeszédablak szövegét képes automatikusan felolvasni, többek között a felhasználó megerősítését kérő párbeszédablakoknál is. (#11687)
+- Microsoft Word UI Automation használatával: Böngészőmódban ha olvasunk vagy navigálunk egy dokumentumban, a Word mostantól már mindig görgetni fogja a dokumentumot úgy, hogy a böngészőmód kurzorának pozíciója mindig látszódjon a képernyőn. Ezen kívül a fókuszmód rendszerkurzora is az elvártaknak megfelelően követi a böngészőmód kurzorát. (#9611)
+- Microsoft Word UI automation használatával: Folyamatos felolvasás közben a program automatikusan görgeti a dokumentumot és a kurzor pozíciója is mindig a felolvasással összhangban frissül. (#9611)
+- Microsoft Outlook UI Automation használatával: E-mailek olvasása közben az NVDA már több táblázatot is rétegződőként azonosít, és alapértelmezés szerint nem jelent be táblázatként. Ez hatékonyabbá teszi a navigációt. (#11430)
+- Javítottak egy audio eszközök váltásakor ritkán fellépő hibát. (#12620)
+- Irodalmi Braille táblák használata esetén a bevitel jobban működik a szerkesztőmezőknél. (#12667)
+- Windows rendszertálca naptára: az NVDA a hét napjait már teljes szóval jelenti be. (#12757)
+- Microsoft Word: Kínai beviteli mód  használatakor a Braille kijelző görgetése során a kijelző nem ugrik vissza folyamatosan a rendszerkurzor korábbi pozíciójához. (#12855)
+- Microsoft Word UI automation használatával: Ismét lehetséges a mondatonkénti navigáció. Navigációs parancs: Alt+Lenyíl és Alt+Felnyíl. (#9254)
+- Microsoft Word UI Automation használatával: Az NVDA már bejelenti a bekezdések behúzását. (#12899)
+- Microsoft Word UI Automation használatával: Az NVDA már ad visszajelzést a szerkesztői változások bejelentését vezérlő szkript és néhány más honosított szkript használatáról. (#12904)
+- Már nem történik kétszeres bejelentés sem szóban, sem Brailleban, amennyiben a leírás paraméter értéke megegyezik a tartalom vagy a név paraméter értékével. (#12888)
+- Microsoft Word UI Automation használatával: az NVDA sokkal pontosabban használja a gépelési hibát jelző hangot írás közben. (#12161)
+- Windows 11: Miközben az Alt+Tab paranccsal váltogatunk a futó programok között az NVDA már nem jelenti be a "terület" szót. (#12648)
+- Microsoft Word UI Automation használata nélkül: Az NVDA már képes kezelni az új, Modern megjegyzés követő terlületet. (#12982)
+-
+
+= 2021.2 =
+Ez a kiadás az első, mely tartalmaz kezdetleges támogatást a Windows 11-hez.
+Noha a Windows 11 hivatalosan még nem jelent meg, ezt a kiadást a Windows 11 bemutatóverzióin tesztelték. 
+Ehhez kapcsolódóan fontos javítást végeztek a Képernyőfüggönyön.
+A Rendszerkonfiguráció-helyreállító eszköz most már több problémát képes megoldani.
+ Frissítették az eSpeak beszédszintetizátort és a LibLouis Braille fordítót.
+Továbbá különböző hibajavítások és fejlesztések a Braille, Windows terminal programok, Számológép, emoji panel és Vágólap előzmények terén.
+
+
+== Fontos megjegyzések ==
+A Windows Nagyító API változásai miatt a képernyőfüggönyt frissíteni kellett, hogy megfelelően működhessen a windows legújabb verzióiban.
+Az NVDA 2021.2 verziótól a képernyőfüggöny már működik a  Windows 10 21H2 (10.0.19044) és újabb verzióiban.
+Ideértve a Windows 10 Insider verzióit és a Windows 11-et.
+Biztonsági okokból a Windows legújabb verziójára való frissítés után ellenőrizze, hogy a Képernyőfüggöny tényleg elsötétíti-e az egész képernyőt!
+
+
+== Újdonságok ==
+- Kezdeti támogatás az ARIA mellékszövegekhez:
+  - Hozzáadtak egy parancsot, amely képes bejelenteni az aria-details tulajdonsággal ellátott objektumokhoz tartozó további részleteket. (#12364)
+  - A haladó beállítások között bekapcsolható a további részletek böngészőmódú megjelenítése. (#12439) 
+  - Windows 10 1909 és újabb verziók (ideértve Windows 11): az NVDA már bejelenti a javaslatok számát, amikor a fájlkezelőben keresünk. (#10341, #12628)
+- Microsoft Word: az NVDA már bejelenti az igazítás és a függő igazítás parancsait végrehajtásuk közben. (#6269)
+
+
+== Változások ==
+- Frissült az Espeak-ng, új verzió: 1.51-dev commit ``ab11439b18238b7a08b965d1d5a6ef31cbb05cbb``. (#12449, #12202, #12280, #12568)
+- Ha a cikkek bejelentése opció be van kapcsolva az NVDA >> Beállítások >> Dokumentumformázás ablakán, akkor a cikk megjelölés most már a tartalom után hangzik el. (#11103)
+- Frissült a liblouis braille fordító, új verzió [3.18.0 https://github.com/liblouis/liblouis/releases/tag/v3.18.0]. (#12526)
+  - Új braille táblák: Bolgár rövidítési fokozat 1, Burmai rövidítési fokozat 1 és 2, Kazah rövidítési fokozat 1, Khmer rövidítési fokozat 1, Észak-Kurd rövidítési fokozat 0, Északi-szoto rövidítési fokozat 1 és 2, Déli-szoto rövidítési fokozat 1 és 2, Csvana rövidítési fokozat 1 és 2, Tatár rövidítési fokozat 1, Vietnami rövidítési fokozat 0 és 2, Dél-vietnami rövidítési fokozat 1, Xhosza  1 és 2, Jakut rövidítési fokozat 1, Zulu rövidítési fokozat 1 és 2
+  - A Windows 10 OCR-t átnevezték, mostantól Windows OCR. (#12690)
+
+
+
+== Hibajavítások ==
+- Windows 10 számológép: az NVDA már képes megjeleníteni a számológép kifejezéseit Braille kijelzőkön. (#12268)
+- terminal programok Windows 10 1607 és újabb verziókon ha karaktereket illesztünk be vagy törlünk egy sor belsejéből, a kurzortól jobbra található karaktert már nem jelenti be kéretlenül az NVDA.  (#3200)
+  - a Diff Match Patch algoritmus mostantól az alapértelmezett. (#12485)
+- A braille bevitel  most már megfelelően működik az alábbi rövidírásos táblákkal: 	Arab rövidítési fokozat 2, Spanyol rövidítési fokozat 2, Urdu rövidítési fokozat 2, Kínai (Kína, Mandarin) rövidítési fokozat 2. (#12541)
+- A Rendszerkonfiguráció-helyreállító eszköz most már több problémát képes megoldani, különösen 64 bites Windowson. (#12560)
+- Nippon Telesoft Seika Notetaker braille kijelző: javult a gombok kezelése. (#12598)
+- Javult a Windows emoji panel és a Vágólap előzmények kezelése. (#11485)
+- Frissítették a Bengáli betűzéshez használt karakterleírásokat. (#12502)
+- Az NVDA biztonságosan bezárul mikor új NVDA folyamatot indítunk. (#12605)
+- A Handy Tech braille kijelző driver újboli kiválasztása már nem okoz hibás működést. (#12618)
+- A Windows 10.0.22000 és későbbi verzióit az NVDA már Windows 11-ként képes azonosítani. (#12626)
+- A képernyőfüggöny opciót javították és tesztelték, már működik Windows 11 alatt is (Windows 10.0.22000). (#12684)
+- Ha az NVDA Beviteli parancsok ablakán nincs a szűrésnek megfelelő megjeleníthető bejegyzés, az ablak most már megfelelően működik tovább. (#12673)
+- Javították azt a hibát, amikor az NVDA elmulasztotta bejelenteni az almenük első elemét. (#12624)
+
+
+= 2021.1 =
+Ebben a kiadásban: Kezdetleges UI Automation támogatás az Excelben és  Chromium alapú böngészőkben.
+Javítások különböző nyelvekhez, ill. a hivatkozások eléréséhez braille kijelzőről.
+Frissült a CLDR és a matematikai jelek adatbázisa, ill. az eSpeak-NG és a LibLouis braille fordító.
+Sok hibajavítás és fejlesztés az OFfice programcsomaghoz a Visual Studiohoz, ill. különböző nyelvekhez.
+Figyelem: Ehhez a kiadáshoz ismét tesztelni és frissíteni kell a bővítményeket. Ez okozhat némi fennakadást bizonyos bővítmények használatában.
+Ettől a kiadástól kezdve az NVDA már nem kezeli az Adobe Flash tartalmakat.
+
+
+== Újdonságok ==
+- Chromium alapú böngészők (pl. Edge): UI Automation Kezdetleges támogatása. (#12025)
+- Microsoft Excel: UI Automation kezdetleges támogatása. Csak Microsoft Excel build 16.0.13522.10000 és újabb verziók esetén ajánlott. (#12210)
+- Könnyebb navigáció az NVDA Python konzol kimenetén. (#9784)
+  - alt+Felnyíl/Lenyíl: Ugrás az előző/következő kimeneti eredményre.
+  - Shift+Alt+Felnyíl/Lenyíl: Kijelölés a kimeneti eredmény elejéig/végéig.  
+  - control+l Törli a kimenetet.
+- Microsoft Outlook: Az NVDA már bejelenti a találkozókhoz rendelt kategóriákat. (#11598)
+
+
+== Változások ==
+- Braille: böngészőmódban a vezérlők már aktiválhatók úgy is, ha a braille kurzort a vezérlők típusához navigáljuk (pl. gb, hv). Ilyen módon könnyebben aktiválhatók a hivatkozások ill. az olyan jelölőnégyzetek, amiknek nincs címkéjük. (#7447)
+- Bekapcsolt képernyőfüggöny esetén az NVDA megakadályozza a Windows 10 OCR használatát. (#11911)
+- Frissült a CLDR (Unicode Common Locale Data Repository), új verzió: 38.1. (#11943)
+- Új matematikai jelekkel bővült az NVDA által felismert szimbólumok köre. (#11467)
+- A felhasználói útmutató, az újdonságok és az NVDA parancsok listájának megjelenése kicsit módosul. (#12027)
+- Az NVDA már bejelenti, ha olyan alkalmazásnál akarjuk aktiválni a Képernyő-elrendezést, ahol ez nem támogatott. A Microsoft Word pl. nem támogatja. (#7297)
+- A Haladó beállítások között a "Beszéd megszakítása az időközben lejárt fókuszeseményeknél" opció mostantól alapértelmezés szerint be van kapcsolva. (#10885)
+  - Ez a viselkedés bármikor kikapcsolható, ezesetben az opció értékét "nem"-re kell állítani.
+  - Webes alkalmazások (pl. Gmail): az NVDA már nem mond be időközben megváltozott információkat amikor gyorsan változtatjuk a fókuszt.
+- Frissült az Espeak-ng, új verzió: 1.51-dev commit cad1c8e87fcccf677a445202e340f61980450a84. (#12202, #12280)
+- Frissült a liblouis braille fordító, új verzió: [3.17.0 https://github.com/liblouis/liblouis/releases/tag/v3.17.0]. (#12137)
+  - Új braille táblák: Fehérorosz irodalmi braille, Fehérorosz számítógépes braille, Urdu rövidítési fokozat 1 és 2.
+- Az NVDA-ból eltávolították  az Adobe Flash tartalmak támogatását, miután már maga az Adobe sem támogatja annak használatát. (#11131)
+- Az NVDA most már akkor is bezáródik, ha nyitva vannak bizonyos párbeszédablakai (pl. a Beállítások vagy a Kivételszótár). A kilépés folyamatába bekerült az esetlegesen nyitva hagyott ablakok bezárása. (#1740)
+- A Beszédnézőt már be lehet zárni az Alt+F4 paranccsal, és kapott egy hagyományos Bezárás gombot is. (#12330)
+- A Braille-néző kapott egy hagyományos Bezárás gombot. (#12328)
+- Elemlista: Bizonyos nyelveknél eltávolították az Aktiválás gombhoz rendelt hívóbetűt, mert ütközött valamely elemkategória hívóbetűjével. Amikor az aktiválás gomb elérhető, továbbra is az a párbeszédablak alapértelmezetten aktív gombja, ezen kívül az egyes elemek közvetlenül a listából is aktiválhatók az enter lenyomásával. (#6167)
+
+
+== Hibajavítások ==
+- Outlook 2010: Az NVDA ismét képes olvasni az üzenetek listáját. (#12241)
+- terminál programok Windows 10 1607 és újabb verziók esetén: Ha egy sorba illesztünk be, vagy onnan törlünk  egy karaktert, az NVDA már nem mondja be kéretlenül a kurzortól jobbra lévő karaktert. (#3200)
+  - Ez a kísérleti opció bekapcsolható az NVDA Haladó beállításai között, a Frissülő tartalom követésénél a Diff Match Patch algoritmus kiválasztásával.
+- MCS Electronics IDE: Javították a szerkesztőmezők kezelhetőségét. (#11966)
+- Outlook: Kijavították azt a hibát, amikor üzenet írása közben Shift+Tab paranccsal visszafelé navigáltunk az üzenet tárgyához, az NVDA kéretlenül egy behúzási távolságértéket jelentett be. (#10254)
+- Python konzol: már támogatott a nem üres beviteli soroknál a tab billentyű használata behúzások/térközök beillesztésére akár a sor elején, akár a közepén. (#11532)
+- A formátuminformációknál és más böngészőmódú üzeneteknél az NVDA már nem mond be üres sorokat, amennyiben a Képernyő-elrendezés használata opció ki van kapcsolva. (#12004)
+- Microsoft Word: az NVDA engedélyezett UIA támogatás esetén már képes olvasni a megjegyzéseket. (#9285)
+- Visual Studio. Javult a kezelhetőség. (#12171)
+- Jobbról balra író nyelvek esetén kijavítottak pár grafikai hibát, pl hiányzó elemeket. (#8859)
+- Az elrendezés iránya most már az NVDA-ban beállított nyelven alapul és nem a Windows honosításán. (#638)
+  - Ismert probléma a jobbról balra író nyelveknél: a vezérlők és címkék az elemcsoportok jobb széléhez igazodnak. (#12181)
+- A python honosítása most már követi az NVDA beállításokban megadott nyelvet. (#12214)
+- A TextInfo.getTextInChunks parancs futtatása már nem okoz fagyást az olyan rich text szerkesztőkben mint az NVDA naplónéző. (#11613)
+- Az NVDA ismét használható olyan nyelveken,melyeknek a nevében _ (aláhúzás) jel szerepel, pl. de_CH. Windows 10 1803 és 1809 verziók esetén. (#12250)
+- WordPad: A felső és alsó index formátum bemondása ismét a beállításnak megfelelően történik. (#12262)
+- Egy weboldal böngészése közben az NVDA már nem mulasztja el bejelenteni az újonnan fókuszba került elemet, amennyiben az a korábban fókuszban lévő elem eltűnése után, annak helyén jelent meg. (#12147)
+- Excel: Az NVDA már bejelenti az áthúzott ill. a felső- és alsó index formátumot a celláknál, amennyiben a kapcsolódó opciók be vannak kapcsolva az NVDA beállítások Dokumentumformázás kategóriájában. (#12264)
+- NVDA hordozható verzió: Kijavították azt a hibát,ami a telepítésnél a konfiguráció másolása közben lépett fel olyan esetben, amikor az alapértelmezett konfigurációs mappa üres volt. (#12071, #12205)
+- Javult bizonyos ékezetes és mellékjeles nagybetűk bejelentése olyankor, amikor be van kapcsolva a Nagybetűk szóbeli jelzése. (#11948)
+- Kijavították a hangmagasság váltásával kapcsolatos problémát a SAPI4 beszédszintetizátorban. (#12311)
+- Az NVDA telepítője már kezeli a --minimal parancssori paramétert és nem játssza le az indító hangot. A telepített és hordozható változat egyaránt így viselkedik. (#12289)
+- MS Word és Outlook: A táblázatok közt navigáló egykarakteres gyorsnavigációs parancs (alapértelmezés szerint T) most már tartalmazza a rétegződő táblázatokat is,amennyiben a megfelelő opció be van kapcsolva. NVDA Beállítások >> Böngészőmód >> Rétegződő táblázatok jelzése. (#11899)
+
+
+= 2020.4 =
+Ebben a kiadásban: Az NVDA elemlista (NVDA+F7) már fókuszmódban is előhívható.
+Az NVDA párbeszédablakain a súgó (F1) mostantól környezetérzékeny.
+Fejlesztések az írásjelkiejtési szabályok megadásánál, a kivételszótáraknál, Braille üzenetek megjelenítésénél, és az átfutó olvasáshoz.
+Hibajavítások és előrelépés Windows 10 Posta, Outlook, Teams, Visual Studio, Azure Data Studio és a Foobar2000 alkalmazások kezelésében.
+Javult a google dokumentumok elérhetősége, ill. tovább fejlődött az Aria támogatás is.
+És még sok más fontos hibajavítás és fejlesztés.
+
+== Újdonságok ==
+- Környezetérzékeny súgó: Az NVDA párbeszédablakain az F1 lenyomására a felhasználói útmutató a kapcsolódó szakasznál nyílik meg. (#7757)
+- Microsoft SQL Server Management Studio plus Visual Studio 2017 és újabb kiadások: Az NVDA már kezeli  az automatikus kiegészítés javaslatait (IntelliSense). (#7504)
+- Írásjelkiejtés: Már támogatott összetett írásjelek megadása, ill. a behelyettesített kifejezésben is használhatók már reguláris kifejezések. (#11107)
+- Az NVDA már figyelmezteti a felhasználókat, amikor a kivételszótárban érvénytelen reguláris kifejezést adnak meg. (#11407)
+  - Kifejezetten a csoportosítási hibákat jelzi a rendszer.
+- Windows 10: Támogatás a kínai (hagyományos) nyelv gyors és Pinyin beviteli módjaihoz. (#11562)
+- A webes dokumentumokon található lapfüleket az NVDA most már az űrlapmezők közt kezeli,  így most már lehet navigálni köztük a kapcsolódó egykarakteres navigációs paranccsal (F). (#10432)
+- Billentyűparancs rendelhető a megjelölten kiemelt szövegek bemondásához. Alapértelmezés szerint nincs hozzárendelve parancs, de a Beviteli parancsok között bármikor beállítható. (#11807)
+- Hozzáadták --a copy-portable-config parancssori paramétert, ami lehetővé teszi, hogy az NVDA háttérben történő telepítése közben a szükséges konfigurációs adatok automatikusan átmásolódjanak a felhasználói fiókba. (#9676)
+- Már támogatott a Braille görgetés. A Braille kijelzőn az az üzenet jelenik meg,amire a Braille-nézőben ráviszik az egérkurzort. (#11804)
+- Humanware Brailliant BI 40X és 20X Braille kijelzőket az NVDA már automatikusan érzékeli USB és Bluetooth kapcsolaton kereztül. (#11819)
+
+
+== Változások ==
+- Frissült a liblouis braille fordító, új verzió: 3.16.1:
+ - Kijavítottak több hibát is.
+ - Új braille tábla: Baskír rövidítési fokozat 1
+ - Új braille tábla: Kopt 8 pontos számítógépes braille
+ - Új braille táblák: Orosz irodalmi braille és Orosz irodalmi braille (részletes).
+ - Eltávolították az orosz rövidítési fokozat 1 Braille táblát
+- Böngészőmódban folyamatos felolvasásnál ha az átfutás engedélyezése opció be van kapcsolva, akkor a következő és az előző keresési találatra ugrás nem állítja le a folyamatos felolvasást. A felolvasás a keresési találatok után következő karakterrel folytatódik, megszakítás nélkül. (#11563)
+- HIMS braille kijelzők: a korábban az F3 paranccsal elérhető opciót most már Szóköz + pontok 148 paranccsal lehet elérni. (#11710)
+- A Braille beállítások között megváltozott az üzenetek megjelenítésének beállítása: Most már az "Üzenetek megjelenítése" címkével ellátott kombinált listamezőből lehet kiválasztani az üzenetek megjelenítésének időkorlátját. Korlátozott ideig és Időkorlát nélkül opciók közül lehet választani. (#11602)
+- A böngészőmódot támogató webböngészőkben és alkalmazásokban az NVDA elemlista (billentyűparancs: NVDA+F7) már fókuszmódban is előhívható. (#10453)
+- Ha a Frissülő tartalom felolvasása opció ki van kapcsolva az NVDA beállítások Objektumok megjelenítése kategóriában, akkor most már az ARIA élő területek frissülő tartalmát sem jelenti be az NVDA. (#9077)
+- Az NVDA "A vágólapra másolva" üzenetet a másolt szöveg előtt jelenti be. (#6757)
+- Javult a Windows Lemezkezelő grafikus táblázatnézetének kezelhetősége. (#10048)
+- Az elérhetetlenné vált vezérlők címkéit nem jelenti be az NVDA. Vizuális megjelenítésben ezek a beszürkülő gombok. (#11809)
+- Frissítették a CLDR emodzsikat, új verzió: 38. (#11817)
+- A beépített fókuszkiemelő opciót átneveztük Vizuális kiemelésre. (#11700)
+
+
+== Hibajavítások ==
+- Fast Log Entry: Az NVDA ismét helyesen kezeli a szerkesztőmezőket. (#8996)
+- Foobar 2000: Ha a teljes időt nem lehet lekérdezni (pl. élő streamek hallgatása közben) a program az eltelt időt jelenti be. (#11337)
+- Az NVDA most már az aria-roledescription attribútumnak megfelelően kezeli a webes dokumentumok szerkeszthető tartalmainak elemeit. (#11607)
+- Google Chrome: Google dokumentumokban és más szerkeszthető webes tartalmaknál az NVDA már nem jelenti be a "lista" elnevezést egy lista minden egyes sorában. (#7562)
+- Ha karakterenkénti vagy szavankénti navigációval lépkedünk egy szerkeszthető webes tartalom listaelemei között, akkor az NVDA már bejelenti az új listaelemeket. (#11569)
+- Google dokumentumok és más szerkeszthető webes tartalmak: Az NVDA már a megfelelő sort olvassa amikor a kurzor egy listaelem végén található link végén áll. (#11606)
+- Windows 7: A start menü megnyitásakor és bezárásakor az NVDA már helyesen kezeli a fókuszt. (#10567)
+- Ha a "Beszéd megszakítása az időközben lejárt fókuszeseményeknél" haladó beállítási opció be van kapcsolva az NVDA ismét felolvassa a Firefoxban a lapfülek címét a lapfülek váltásakor. (#11397)
+- SAPI5 Ivona hangok használatakor az NVDA bejelenti a listaelemet miután egy karaktert viszünk be egy listába. (#11651)
+- Posta alkalmazás Windows 10 16005.13110 és újabb kiadásokban: Levelek olvasásánál ismét működik a böngészőmód. (#11439)
+- A harposoftware.com weboldalon elérhető SAPI5-ös Ivona hangok használatakor az NVDA már elmenti a konfigurációt, képes váltani a különböző szintetizátorok közt ill. az újraindítása után nem némul el. (#11650)
+- HIMS braille kijelzők: Most már be lehet vinni számítógépes Braille használatakor a 6-os számot. (#11710)
+- Azure Data Studio: Jelentős javulás a kezelésben. (#11533, #11715)
+- ha a "Beszéd megszakítása az időközben lejárt fókuszeseményeknél" haladó beállítási opció be van kapcsolva az NVDA ismét felolvassa a keresési párbeszédablak címsorát. (#11632)
+- Az NVDA már nem fagy le ha a számítógép hibernált állapotból visszatérése után a fókusz egy Microsoft Edge dokumentumra kerül. (#11576)
+- Microsoft Edge: helyi menük bezárása után már nincs szükség a tab gomb lenyomására vagy az aktív elem más módon történő megváltoztatására ahhoz, hogy a böngészőmód az elvárásoknak megfelelően működjön. (#11202)
+- Tortoise SVN és más 64 bites alkalmazások: Az NVDA már felolvassa a listaelemeket. (#8175)
+- Böngészőmódban az ARIA treegrids objektumokat már normál táblázatként kezeli az NVDA Firefox és Chrome böngészőben egyaránt. (#9715)
+- Az előző előfordulás keresése szkript (NVDA+Shift+F3) már az elvártaknak megfelelően működik. (#11770)
+- Gyorsan ismételt lenyomást igénylő parancsok már nem aktiválódnak olyan esetekben,amikor a kétszeri lenyomás között egy szkripthez nem rendelt billentyűleütés történik. An NVDA script is no longer treated as being repeated if an unrelated key press happens in between the two executions of the script. (#11388) 
+- Internet Explorer: A szövegek kiemelt állapotát már nem jelzi az NVDA, amennyiben kikapcsoljuk a kiemelt állapot jelzését a Dokumnetumformázás párbeszédablakán. (#11808)
+- Excel: Már nem fordulhat elő pár másodperces megakadás cellák közti navigáció során. (#11818)
+- Microsoft Teams 1.3.00.28xxx verziószámok esetén az NVDA felolvassa az üzeneteket a chaten és a Teams csatornákon. (#11821)
+- Google Chrome: Ha a helyesírás-ellenőrző egy szót egyszerre jelöl meg gépelési és nyelvtani hibaként is, akkor az NVDA már helyesen bejelenti mindkét állapotot. (#11787)
+- Outlook (csak a Francia nyelvű honosítást érinti): A "Válasz mindenkinek" opció billentyűparancsa (control+shift+R) most már az elvárásoknak megfelelően működik. (#11196)
+- Visual Studio: az IntelliSense eszköztippeket már csak egyszer jelenti be az NVDA. (#11611)
+- Windows 10 Számológép: az NVDA már nem jelenti be a számolás folyamatát ha a beírt karakterek bemondása opció ki van kapcsolva. (#9428)
+- Az NVDA már nem okoz hibát, ha az Angol (egyesült államokbeli) rövidítési fokozat 2 braille táblát kiterjesztjük számítógépes braille táblára, olyan esetben amikor a braille kurzor megjelenítése be van kapcsolva ill. a kurzor bizonyos tartalmakon áll, pl egy URL címen. (#11754)
+- Excel: Ismét megfelelően működik a formátuminformációk lekérdezése szkript (NVDA+F) az aktív cellákban. (#11914)
+
+
+= 2020.3 =
+Ebben a kiadásban jelentősen javul az NVDA stabilitása és kezelhetősége. Ez különösen Microsoft Office alkalmazások esetén érhető tetten. Bekerült néhány új opció, mint az érintőmód ki- és bekapcsolása, ill. az ábrák bejelentésének ki- és bekapcsolása.
+Az NVDA már kezeli a kiemelt szövegeket a webes dokumentumokban.
+
+== Újdonságok ==
+- Új opció az NVDA Beállítások dokumentumformázás kategóriájában: Ábrák bejelentésének be- és kikapcsolása. Az ábrákhoz tartozó leírást az NVDA az opció kikapcsolt állapotában is felolvassa. (#4837)
+- Most már ki- és bekapcsolható az érintőmód az érintőkijelzőt használó rendszereken. A beállítások közt az Érintőmód kategória csak az érintőkijelzős rendszereken jelenik meg. Alapértelmezett billentyűparancs: NVDA+ctrl+alt+t. (#9682)
+- Új német braille táblákat adtak hozzá. (#11268)
+- Az NVDA már kezeli a csak olvasható szöveges UIA vezérlőket. (#10494)
+- Az NVDA már kezeli a kiemelt megjelöléssel ellátott szöveget a webes dokumentumokban. Beszéd és braille visszajelzést is képes adni róla. (#11436)
+ - Ez az opció kezelhető az NVDA beállítások dokumentumformázás kategóriájában neve Kiemelés. A korábban kiemelés néven futó opció is megmaradt de mostantól hangsúlyozás néven fut, így talán jobban elkülönülnek az egyes kiemelések.
+- Újabb rendszerbillentyűk emulálására van lehetőség az NVDA beviteli parancsai között. (#6060)
+  - A beállításhoz keresse a Rendszerbillentyűk emulálása kategóriát.
+
+
+== Változások ==
+- A formátuminformációk lekérésére szolgáló szkriptet (NVDA+F) megváltoztatták. Mostantól a rendszerkurzornál található szövegről ad információt. A korábbi viselkedés, miszerint az áttekintőkurzornál található szövegről adott információt, most is elérhető a billentyűparancsa NVDA+Shift+F. (#9505)
+- Az NVDA már nem helyezi a fókuszt automatikusan az aktiválható elemekre. A korábbi viselkedéshez be kell kapcsolni az "Automatikus rendszerfókusz az aktiválható elemekre opciót a böngészőmód beállításainál. De nem ajánlott bekapcsolni, mert az opciót azért változtatták meg, hogy javuljon az NVDA kezelhetősége és stabilitása. (#11190)
+- Frissült a CLDR, új verzió: 37. (#11303)
+- Frissült az eSpeak-NG, az új verzió: 1.51-dev, commit 1fb68ffffea4
+- Már használhatók a táblázatnavigációs parancsok olyan listamezőknél, melyek több oszlopban tartalmaznak bejelölhető elemeket. (#8857)
+- A bővítménykezelőben bővítmények eltávolításakor a párbeszédablakon mostantól a Nem válasz az alapértelmezés szerint aktív lehetőség. Ezzel elkerülhető a kéretlen eltávolítás. (#10015)
+- Microsoft Excel: az elemlistában a képletek már az Excelben beállított nyelvnek megfelelően jelennek meg. Korábban nem vette figyelemmbe a honosítást. (#9144)
+- Az NVDA már képes elkülöníteni az Excel új verzióiban a jegyzeteket és a megjegyzéseket. (#11311)
+- Ha böngészőmódban használjuk az áttekintőkurzor áthelyezése az aktív elemhez parancsot, akkor az áttekintőkurzor mostantól már a böngészőmód virtuális kurzorához fog lépni. (#9622)
+- A formátuminformációk böngészőmódú megjelenítésére szolgáló ablak a korábbinál nagyobb és a képernyő közepére van igazítva. (#9910)
+
+
+== Hibajavítások ==
+- Szavankénti navigációnál az NVDA most már mindig bemondja, a bőbeszédűségi beállításoktól függetlenül, az olyan szimbólumokat, melyeket szóköz követ. (#5133)
+- QT 5.11 és újabb verzióit használó alkalmazásoknál az elemleírásokat ismét bejelenti az NVDA. (#8604)
+- A szavak ctrl+delete paranccsal történő törlésekor az NVDA már az elvárásnak megfelelő visszajelzést ad. (#3298, #11029)
+  - Most már a törölt szótól jobbra található szót jelenti be az NVDA.
+- Az NVDA általános beállításai között a nyelvek listáján most már ABC-sorrendben jelennek meg a választható nyelvek. A sorrendet korábban a nyelvek ISO-kódjai alapján állította fel  a rendszer. (#10348)
+- A beviteli parancsok párbeszédablakán most már sokkal gördülékenyebben működik a szűrés.  (#10307)
+- Most már lehet unicode karaktert bevinni a braille kijelzőről. Korábban ezt csak U+FFFF formátumban jelenítette meg. (#10796)
+- Windows 10 2020 májusi frissítés: Az NVDA ismét tudja kezelni a Hogyan szeretné megnyitni ezt a fájlt? című ablakot, ami olyankor jelenik meg, ha olyan fájltípust akarunk megnyitni,amihez nincs hozzárendelve program. (#11335)
+- Új, kísérleti opció a Haladó beállítások között: Csak az UI Automation események és tulajdonságváltozások egy részének kezelése. Az opció bekapcsolásával jelentősen javítható a Microsoft Visual Studio és más,  UIAutomationt használó alkalmazások kezelhetősége. (#11077, #11209)
+- Bejelölhető listaelemeknél a kijelölve állapotot már nem jelenti be az NVDA ismétlődően. helyette inkább a nincs kijelölve állapotot jelenti be,ahol az a megfelelő. (#8554)
+- Windows 10 2020 májusi frissítés: az NVDA már a Microsoft Sound Mappert is megjeleníti a beszédszintetizátorhoz választható kimeneti hangeszközök listáján. (#11349)
+- Internet Explorer: Az NVDA már helyesen jelenti be a számokat olyan rendezett listák esetében, melyek nem 1-gyel kezdődnek. (#8438)
+- Google Chrome: az NVDA már képes minden nem bejelölt állapotú bejelölhető elem állapotát helyesen bejelenteni. Korábban csak a jelölőnégyzeteknél működött ez. (#11377)
+- Akik az NVDA-t aragóniai nyelven használják mostantól ismét navigálhatnak bizonyos vezérlőkön. (#11384)
+- Microsoft Word: Bekapcsolt braille esetén az NVDA már nem fagy le, amikor gyorsan használjuk a le- és felnyilat ill. gyorsan gépelünk be karaktereket. (#11431, #11425, #11414)
+- Az NVDA már nem tesz kéretlen szóközt a vágólapra másolt navigátor objektum után. (#11438)
+- Az NVDA már nem aktiválja a folyamatos felolvasás profilt, amikor nincs semmilyen felolvasható tartalom. (#10899, #9947)
+- Internet Information Services (IIS) Manager: Az NVDA már képes kezelni a jellemzők listáját. (#11468)
+- Az NVDA mostantól nyitva tartja a kimeneti hangeszközt. Ezzel javult az együttműködés bizonyos hangkártyákkal. (#5172, #10721)
+- Microsoft Word: Az NVDA már nem fagy le és nem is záródik be a ctrl+shift+lenyíl billentyűparancs használatakor. (#9463)
+- A Google Drive webes felületén az NVDA mostantól mindig bejelenti a mappák nyitott és zárt állapotát a navigációs fanézetben. (#11520)
+- Az NVDA már automatikusan felismeri az NLS eReader Humanware braille kijelzőt Bluetooth-on keresztül.  A kijelző Bluethooth neve "NLS eReader Humanware". (#11561)
+
+
+= 2020.2 =
+Ebben a kiadásban: Egy új braille-kijelző támogatása a Nattiqtől; jobb támogatás az Eset Antivirushoz és a windows terminalhoz; sebességi optimalizálás az 1Password jelszókezelő programhoz és a Windows OneCore beszédszintetizátorhoz, és még sok javítás, és optimalizálás.
+
+== Újdonságok ==
+- Bővült a támogatott braille kijelzők köre:
+  - Nattiq nBraille (#10778)
+- Egy beviteli paranccsal megnyitható az NVDA felhasználói beállítások mappája. Alapértelmezés szerint nincs billentyűparancs hozzáadva. (#2214)
+- Javított támogatás az ESET antivirus grafikus felületéhez. (#10894)
+- Windows Terminal támogatása. (#10305)
+- Egy beviteli paranccsal már lekérdezhető az aktív profil neve. Alapértelmezés szerint nincs hozzárendelve billlentyűparancs. (#9325)
+- Felső és alsó index jelzése, beviteli parancs is beállítható az új opcióhoz. (#10985)
+- Webes alkalmazások (pl. Gmail) használatakor az NVDA már nem mond elavult információkat, amikor a fókusz gyorsan változik. (#10885)
+  - Ez a viselkedés egy új, kísérleti opció bekapcsolásával lehetséges. Az NVDA haladó beállításai között található, a neve: "Beszéd megszakítása az időközben lejárt fókuszeseményeknél".
+- Sokkal több írásjelet adtak az alapértelmezett írásjelkiejtés szótárhoz. Ez azt jelenti, hogy a korábbinál több írásjelet tud kezelni az NVDA. (#11105)
+
+
+== Változások ==
+- Frissült a liblouis braille fordító [3.14.0 https://github.com/liblouis/liblouis/releases/tag/v3.14.0] (erről 3.12.0). (#10832, #11221)
+- A felső és alsó indexet már a betűtípus paraméterektől külön kezeli a program. (#10919)
+- VS Code: az NVDA már nem tiltja le alapértelmezés szerint a böngészőmódot kódolás nézetben. (#10888)
+- Eltávolították a "Teteje" és "Alja" állapotjelzést olyankor,amikor az áttekintő kurzor eléri a navigátor objektum legfelső vagy a legalsó sorát. (#9551)
+- Eltávolították a "Bal" és "Jobb" állapotjelzést olyankor,amikor az áttekintő kurzor eléri a navigátor objektum aktuális sorának elejét vagy végét. (#9551)
+
+
+== Hibajavítások ==
+- Az NVDA megfelelően indul akkor is, ha a naplófájlt nem sikerült létrehozni. (#6330)
+- Microsoft Word 365: az NVDA már nem jelenti be a "szó visszatörlése" üzenetet, amikor a dokumentum szerkesztése közben a ctrl+Backspace parancsot használjuk. (#10851)
+- Winamp: az NVDA ismét bejelenti az ismétlés és a véletlen lejátszás be- és kikapcsolását. (#10945)
+- 1Password: az NVDA már nem reagál feltűnően lassan az elemek listáján történő navigáció során. (#10508)
+- A Windows OneCore beszédszintetizátor már nem tart hosszú szüneteket érzelemkifejezések között. (#10721)
+- 1Password: Az NVDA már nem fagy le, amikor megnyitjuk a helyi menüt a rendszer értesítési területen. (#11017)
+- Office 2013 és régebbi verziók:
+  - A szalagmenüt bejelenti az NVDA amikor a fókusz először kerül rá. (#4207)
+  - A helyi menük elemeit ismét helyesen jelenti be az NVDA. (#9252)
+  - A szalagmenü csoportjait következetesen jelenti be az NVDA, amikor Ctrl+nyílbillentyűk paranccsal navigálunk rajtuk. (#7067)
+- Firefox és Chrome: böngészőmódban a szöveg nem jelenik meg kéretlenül külön sorban, ha a weboldal CSS megjelenítést használ inline-flex paraméterrel. (#11075)
+- Böngészőmódban az Automatikus rendszerfókusz az aktiválható elemekre opció kikapcsolt állapotában... 
+  - már aktiválhatók olyan elemek, amik normál esetben nem kerülhetnének fókuszba.
+  - már aktiválhatók azok az elemek, amelyekre a tab billentyűvel navigáltunk. (#8528)
+  - bizonyos elemek aktiválása már az elvárt helyen történik, nem mozdul el a fókusz egy egészen másik helyre. (#9886)
+  - ha az  NVDA+szóköz paranccsal váltunk fókuszmódra, akkor a rendszerkurzornál lévő elem kerül fókuszba. (#11206)
+- Már nem hallható hangjelzés, ha DevExpress szövegvezérlők kerülnek fókuszba. (#10918)
+- Az elemleírások már nem hallhatók a rendszertálcán mozgáskor, amennyiben megegyeznek az ikonjuk nevével. Ezzel kerülhető el a többszörös bemondás. (#6656)
+- Újra lehetséges NVDA-frissítéseket keresni olyany rendszereken, ahol ez korábban problémát okozott, pl. friss Windows telepítéseknél. (#11253)
+- Java alkalmazásokban már nem mozdul el a fókusz , ha a kijelölés megváltozik fókuszban nem lévő fanézetben, táblázatban vagy listában. (#5989)
+
+
 = 2020.1 =
 Ebben a kiadásban: bővült a támogatott braille kijelzők köre a HumanWare és az APH néhány termékével; az NVDA újra kezeli a matematikai kifejezéseket a Microsoft Wordben  MathPlayer vagy MathType használatakor; és még néhány további fontos hibajavítás.
 

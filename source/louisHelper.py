@@ -1,8 +1,8 @@
-#louisHelper.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2018 NV Access Limited, Babbage B.V.
+# louisHelper.py
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2018 NV Access Limited, Babbage B.V.
 
 """Helper module to ease communication to and from liblouis."""
 

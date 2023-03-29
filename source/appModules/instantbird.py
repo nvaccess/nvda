@@ -14,7 +14,7 @@ import controlTypes
 class AppModule(appModuleHandler.AppModule):
 
 	def event_NVDAObject_init(self, obj):
-		if isinstance(obj, NVDAObjects.IAccessible.IAccessible) and obj.windowClassName == "MozillaWindowClass" and not isinstance(obj, NVDAObjects.IAccessible.mozilla.Mozilla) and obj.role == controlTypes.ROLE_UNKNOWN:
+		if isinstance(obj, NVDAObjects.IAccessible.IAccessible) and obj.windowClassName == "MozillaWindowClass" and not isinstance(obj, NVDAObjects.IAccessible.mozilla.Mozilla) and obj.role == controlTypes.Role.UNKNOWN:
 			# #2667: This is a Mozilla accessible that has already died.
 			# Instantbird fires focus on a dead accessible first every time you focus a contact,
 			# so block focus on these to eliminate annoyance.

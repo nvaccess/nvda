@@ -1,10 +1,11 @@
-#virtualBuffers/webKit.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2011-2016 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2011-2021 NV Access Limited
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import ctypes
+import typing
+
 from . import VirtualBuffer, VirtualBufferTextInfo, VBufRemote_nodeHandle_t
 import controlTypes
 import NVDAObjects.IAccessible
@@ -18,22 +19,22 @@ import NVDAHelper
 
 class WebKit_TextInfo(VirtualBufferTextInfo):
 
-	def _normalizeControlField(self,attrs):
+	def _normalizeControlField(self, attrs: textInfos.ControlField):
 		accRole=attrs['IAccessible::role']
 		role = level = None
 		if accRole.isdigit():
 			accRole = int(accRole)
 		else:
 			if "H1" <= accRole <= "H6":
-				role = controlTypes.ROLE_HEADING
+				role = controlTypes.Role.HEADING
 				level = int(accRole[1])
 			else:
 				accRole = accRole.lower()
 
 		if not role:
-			role = IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole, controlTypes.ROLE_UNKNOWN)
-
-		states = set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1 << y for y in range(32)] if int(attrs.get('IAccessible::state_%s' % x, 0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
+			role = IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole, controlTypes.Role.UNKNOWN)
+		states = IAccessibleHandler.getStatesSetFromIAccessibleAttrs(attrs)
+		role, states = controlTypes.transformRoleStates(role, states)
 
 		attrs["role"] = role
 		attrs["states"] = states
@@ -56,7 +57,7 @@ class WebKit(VirtualBuffer):
 		root=self.rootNVDAObject
 		if not root:
 			return False
-		if not winUser.isWindow(root.windowHandle) or root.role == controlTypes.ROLE_UNKNOWN:
+		if not winUser.isWindow(root.windowHandle) or root.role == controlTypes.Role.UNKNOWN:
 			return False
 		return True
 
@@ -119,9 +120,8 @@ class WebKit(VirtualBuffer):
 			return
 		oldX,oldY=winUser.getCursorPos()
 		winUser.setCursorPos(*l.center)
-		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN,0,0)
-		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP,0,0)
+		mouseHandler.doPrimaryClick()
 		winUser.setCursorPos(oldX,oldY)
 
 	def _shouldSetFocusToObj(self,obj):
-		return obj.role!=controlTypes.ROLE_GROUPING and super(WebKit,self)._shouldSetFocusToObj(obj)
+		return obj.role!=controlTypes.Role.GROUPING and super(WebKit,self)._shouldSetFocusToObj(obj)

@@ -14,11 +14,20 @@ They are implemented using the L{ContentRecognizer} class.
 """
 
 from collections import namedtuple
+import garbageHandler
+import cursorManager
 import textInfos.offsets
 from abc import ABCMeta, abstractmethod
 from locationHelper import RectLTWH
 
-class ContentRecognizer(object, metaclass=ABCMeta):
+
+class BaseContentRecogTextInfo(cursorManager._ReviewCursorManagerTextInfo):
+	"""
+	The TextInfo class that all TextInfos emitted by implementations of RecognitionResult must inherit from.
+	"""
+
+
+class ContentRecognizer(garbageHandler.TrackedObject, metaclass=ABCMeta):
 	"""Implementation of a content recognizer.
 	"""
 
@@ -58,6 +67,21 @@ class ContentRecognizer(object, metaclass=ABCMeta):
 		"""Cancel the recognition in progress (if any).
 		"""
 		raise NotImplementedError
+
+	def validateCaptureBounds(self, location: RectLTWH) -> bool:
+		"""Validate the capture coordinates before creating image for content recognition
+		"""
+		return True
+
+	def validateObject(self, nav):
+		"""Validation to be performed on the navigator object before content recognition
+		@param nav: The navigator object to be validated
+		@type nav: L{NVDAObjects.NVDAObject}
+		@return: C{True} or C{False}, depending on whether the navigator object is valid or not.
+			C{True} for no validation.
+		@rtype: bool
+		"""
+		return True
 
 class RecogImageInfo(object):
 	"""Encapsulates information about a recognized image and
@@ -128,7 +152,8 @@ class RecogImageInfo(object):
 		"""
 		return int(height / self.resizeFactor)
 
-class RecognitionResult(object, metaclass=ABCMeta):
+
+class RecognitionResult(garbageHandler.TrackedObject, metaclass=ABCMeta):
 	"""Provides access to the result of recognition by a recognizer.
 	The result is textual, but to facilitate navigation by word, line, etc.
 	and to allow for retrieval of screen coordinates within the text,
@@ -138,13 +163,12 @@ class RecognitionResult(object, metaclass=ABCMeta):
 	"""
 
 	@abstractmethod
-	def makeTextInfo(self, obj, position):
+	def makeTextInfo(self, obj, position) -> BaseContentRecogTextInfo:
 		"""Make a TextInfo within the recognition result text at the requested position.
 		@param obj: The object to return for the C{obj} property of the TextInfo.
 			The TextInfo itself doesn't use this, but NVDA requires it to set the review object, etc.
 		@param position: The requested position; one of the C{textInfos.POSITION_*} constants.
 		@return: The TextInfo at the requested position in the result.
-		@rtype: L{textInfos.TextInfo}
 		"""
 		raise NotImplementedError
 
@@ -215,7 +239,8 @@ class LinesWordsResult(RecognitionResult):
 	def makeTextInfo(self, obj, position):
 		return LwrTextInfo(obj, position, self)
 
-class LwrTextInfo(textInfos.offsets.OffsetsTextInfo):
+
+class LwrTextInfo(BaseContentRecogTextInfo, textInfos.offsets.OffsetsTextInfo):
 	"""TextInfo used by L{LinesWordsResult}.
 	This should only be instantiated by L{LinesWordsResult}.
 	"""
@@ -262,6 +287,7 @@ class LwrTextInfo(textInfos.offsets.OffsetsTextInfo):
 			word = nextWord
 		return RectLTWH(word.left, word.top, word.width, word.height)
 
+
 class SimpleTextResult(RecognitionResult):
 	"""A L{RecognitionResult} which presents a simple text string.
 	This should only be used if the recognizer only returns text
@@ -279,7 +305,8 @@ class SimpleTextResult(RecognitionResult):
 	def makeTextInfo(self, obj, position):
 		return SimpleResultTextInfo(obj, position, self)
 
-class SimpleResultTextInfo(textInfos.offsets.OffsetsTextInfo):
+
+class SimpleResultTextInfo(BaseContentRecogTextInfo, textInfos.offsets.OffsetsTextInfo):
 	"""TextInfo used by L{SimpleTextResult}.
 	This should only be instantiated by L{SimpleTextResult}.
 	"""

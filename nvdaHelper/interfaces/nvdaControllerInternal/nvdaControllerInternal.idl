@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2006-2010 NVDA contributers.
+Copyright 2006-2018 NV Access Limited, rui Batista, Google LLC.
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -15,7 +15,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 cpp_quote("/*")
 cpp_quote("This file is a part of the NVDA project.")
 cpp_quote("URL: http://www.nvda-project.org/")
-cpp_quote("Copyright 2006-2010 NVDA contributers.")
+cpp_quote("Copyright 2006-2018 NV Access Limited, rui Batista, Google LLC.")
 cpp_quote("This program is free software: you can redistribute it and/or modify")
 cpp_quote("it under the terms of the GNU General Public License version 2.0, as published by")
 cpp_quote("the Free Software Foundation.")
@@ -47,10 +47,9 @@ interface NvdaControllerInternal {
 
 /**
  * Notifies NVDA that a character has been typed in this thread.
- * @param threadID the thread the layout change occured in
  * @param ch the character typed.
  */
-	error_status_t __stdcall typedCharacterNotify([in] const long threadID, [in] const wchar_t ch);
+	error_status_t __stdcall typedCharacterNotify([in] const wchar_t ch);
 
 /**
  * Notifies NVDA that text in the given rectangle (in screen coordinates), in the given window, has changed.
@@ -91,4 +90,16 @@ interface NvdaControllerInternal {
  * Notifies NVDA that a focus rect has been drawn in the given window.
  */
 	error_status_t __stdcall drawFocusRectNotify([in] const long hwnd, [in] const long left, [in] const long top, [in] const long right, [in] const long bottom);   
+
+/**
+ * Notifies NVDA that a live region was updated.
+ * @param text the text to report for the live region.
+ * @param level The level of live region, I.E. "polite"
+ */
+	error_status_t __stdcall reportLiveRegion([in,string] const wchar_t* text, [in,string] const wchar_t* level);
+
+/**
+ * Asks NVDA to open currently used configuration directory.
+ */
+	error_status_t __stdcall openConfigDirectory();
 };

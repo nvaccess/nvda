@@ -24,4 +24,6 @@ interface NvdaControllerInternal {
 	[fault_status,comm_status] vbufChangeNotify();
 	[fault_status,comm_status] installAddonPackageFromPath();
 	[fault_status,comm_status] drawFocusRectNotify();
+	[fault_status,comm_status] reportLiveRegion();
+	[fault_status,comm_status] openConfigDirectory();
 }

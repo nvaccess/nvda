@@ -1,11 +1,16 @@
-#NVDAObjects/excel.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2016 NV Access Limited, Dinesh Kaushal, Siddhartha Gupta
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2022 NV Access Limited, Dinesh Kaushal, Siddhartha Gupta, Accessolutions, Julien Cochuyt,
+# Cyrille Bougot
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import abc
 import ctypes
+import enum
+from typing import (
+	Optional, Dict,
+)
+
 from comtypes import COMError, BSTR
 import comtypes.automation
 import wx
@@ -20,19 +25,25 @@ import ui
 import speech
 from tableUtils import HeaderCellInfo, HeaderCellTracker
 import config
+from config.configFlags import ReportCellBorders
 import textInfos
 import colors
 import eventHandler
 import api
 from logHandler import log
 import gui
+import gui.contextHelp
 import winUser
+from winAPI.winUser.functions import GetSysColor
+from winAPI.winUser.constants import SysColorIndex
 import mouseHandler
 from displayModel import DisplayModelTextInfo
 import controlTypes
+from controlTypes import TextPosition
 from . import Window
 from .. import NVDAObjectTextInfo
 import scriptHandler
+from scriptHandler import script
 import browseMode
 import inputCore
 import ctypes
@@ -317,12 +328,13 @@ class ExcelCommentQuickNavItem(ExcelRangeBasedQuickNavItem):
 class ExcelFormulaQuickNavItem(ExcelRangeBasedQuickNavItem):
 
 	def __init__( self , nodeType , document , formulaObject , formulaCollection ):
-		self.label = formulaObject.address(False,False,1,False) + " " + formulaObject.Formula
+		self.label = formulaObject.address(False, False, 1, False) + " " + formulaObject.FormulaLocal
 		super( ExcelFormulaQuickNavItem , self).__init__( nodeType , document , formulaObject , formulaCollection )
 
 class ExcelQuicknavIterator(object):
 	"""
-	Allows iterating over an MS excel collection (e.g. Comments, Formulas or charts) emitting L{QuickNavItem} objects.
+	Allows iterating over an MS excel collection
+	(e.g. notes, Formulas or charts) emitting L{QuickNavItem} objects.
 	"""
 
 	def __init__(self, itemType , document , direction , includeCurrent):
@@ -338,7 +350,8 @@ class ExcelQuicknavIterator(object):
 
 	def collectionFromWorksheet(self,worksheetObject):
 		"""
-		Fetches a Microsoft Excel collection object from a Microsoft excel worksheet object. E.g. charts, comments, or formula.
+		Fetches a Microsoft Excel collection object from a Microsoft excel worksheet object.
+		E.g. charts, notes, or formula.
 		@param worksheetObject: a Microsoft excel worksheet object.
 		@return: a Microsoft excel collection object.
 		"""
@@ -505,27 +518,35 @@ class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
 		cellPosition.Activate()
 		eventHandler.executeEvent('gainFocus',obj)
 
+	@script(gesture="kb:leftArrow")
 	def script_moveLeft(self,gesture):
 		self.navigationHelper("left")
 
+	@script(gesture="kb:rightArrow")
 	def script_moveRight(self,gesture):
 		self.navigationHelper("right")
 
+	@script(gesture="kb:upArrow")
 	def script_moveUp(self,gesture):
 		self.navigationHelper("up")
 
+	@script(gesture="kb:downArrow")
 	def script_moveDown(self,gesture):
 		self.navigationHelper("down")
 
+	@script(gesture="kb:control+upArrow")
 	def script_startOfColumn(self,gesture):
 		self.navigationHelper("startcol")
 
+	@script(gesture="kb:control+leftArrow")
 	def script_startOfRow(self,gesture):
 		self.navigationHelper("startrow")
 
+	@script(gesture="kb:control+rightArrow")
 	def script_endOfRow(self,gesture):
 		self.navigationHelper("endrow")
 
+	@script(gesture="kb:control+downArrow")
 	def script_endOfColumn(self,gesture):
 		self.navigationHelper("endcol")
 
@@ -563,18 +584,9 @@ class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
 	script_elementsList.__doc__ = _("Lists various types of elements in this spreadsheet")
 	script_elementsList.ignoreTreeInterceptorPassThrough=True
 
-	__gestures = {
-		"kb:upArrow": "moveUp",
-		"kb:downArrow":"moveDown",
-		"kb:leftArrow":"moveLeft",
-		"kb:rightArrow":"moveRight",
-		"kb:control+upArrow":"startOfColumn",
-		"kb:control+downArrow":"endOfColumn",
-		"kb:control+leftArrow":"startOfRow",
-		"kb:control+rightArrow":"endOfRow",
-	}
-
 class ElementsListDialog(browseMode.ElementsListDialog):
+
+	helpId = "ExcelElementsList"
 
 	ELEMENT_TYPES=(
 		# Translators: The label of a radio button to select the type of element
@@ -582,7 +594,7 @@ class ElementsListDialog(browseMode.ElementsListDialog):
 		("chart", _("&Charts")),
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
-		("comment", _("C&omments")),
+		("comment", _("N&otes")),
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
 		("formula", _("Fo&rmulas")),
@@ -593,6 +605,14 @@ class ElementsListDialog(browseMode.ElementsListDialog):
 		# in the browse mode Elements List dialog.
 		("sheet", _("&Sheets")),
 	)
+
+
+class EditCommentDialog(
+		gui.contextHelp.ContextHelpMixin,
+		wx.TextEntryDialog,  # wxPython does not seem to call base class initializer, put last in MRO
+):
+	helpId = "ExcelReportingComments"
+
 
 class ExcelBase(Window):
 	"""A base that all Excel NVDAObjects inherit from, which contains some useful methods."""
@@ -693,7 +713,7 @@ class ExcelWorksheet(ExcelBase):
 
 	treeInterceptorClass=ExcelBrowseModeTreeInterceptor
 
-	role=controlTypes.ROLE_TABLE
+	role=controlTypes.Role.TABLE
 
 	def _get_excelApplicationObject(self):
 		self.excelApplicationObject=self.excelWorksheetObject.application
@@ -706,16 +726,16 @@ class ExcelWorksheet(ExcelBase):
 		# Sheet1!
 		# ''Sheet2 (4)'!
 		# 'profit and loss'!
-		u'^((?P<sheet>(\'[^\']+\'|[^!]+))!)?'
+		r"^((?P<sheet>('[^']+'|[^!]+))!)?"
 		# followed by a unique name (not containing spaces). Example:
 		# rowtitle_ab12-cd34-de45
-		u'(?P<name>\w+)'
+		r'(?P<name>\w+)'
 		# Optionally followed by minimum and maximum addresses, starting with a period (.). Example:
 		# .a1.c3
 		# .ab34
-		u'(\.(?P<minAddress>[a-zA-Z]+[0-9]+)?(\.(?P<maxAddress>[a-zA-Z]+[0-9]+)?'
+		r'(\.(?P<minAddress>[a-zA-Z]+[0-9]+)?(\.(?P<maxAddress>[a-zA-Z]+[0-9]+)?'
 		# Optionally followed by a period (.) and extra random data (sometimes produced by other screen readers)
-		u'(\..*)*)?)?$'
+		r'(\..*)*)?)?$'
 	)
 
 	def populateHeaderCellTrackerFromNames(self,headerCellTracker):
@@ -880,7 +900,7 @@ class ExcelWorksheet(ExcelBase):
 	def _get_states(self):
 		states=super(ExcelWorksheet,self).states
 		if self.excelWorksheetObject.ProtectContents:
-			states.add(controlTypes.STATE_PROTECTED)
+			states.add(controlTypes.State.PROTECTED)
 		return states
 
 	@scriptHandler.script(gestures=(
@@ -931,6 +951,7 @@ class ExcelWorksheet(ExcelBase):
 		"kb:control+v",
 		"kb:shift+f11",
 	), canPropagate=True)
+
 	def script_changeSelection(self,gesture):
 		oldSelection=api.getFocusObject()
 		gesture.send()
@@ -977,12 +998,25 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 		if formatConfig['reportFontName']:
 			formatField['font-name']=fontObj.name
 		if formatConfig['reportFontSize']:
-			formatField['font-size']=str(fontObj.size)
+			# Translators: Abbreviation for points, a measurement of font size.
+			formatField['font-size'] = pgettext("font size", "%s pt") % fontObj.size
 		if formatConfig['reportFontAttributes']:
 			formatField['bold']=fontObj.bold
 			formatField['italic']=fontObj.italic
 			underline=fontObj.underline
 			formatField['underline']=False if underline is None or underline==xlUnderlineStyleNone else True
+			formatField['strikethrough'] = fontObj.strikethrough
+		if formatConfig['reportSuperscriptsAndSubscripts']:
+			# For cells, in addition to True and False, fontObj.superscript or fontObj.subscript may have the value
+			# None in case of mixed text position, e.g. characters on baseline and in superscript in the same cell.
+			if fontObj.superscript is True:
+				formatField['text-position'] = TextPosition.SUPERSCRIPT
+			elif fontObj.subscript is True:
+				formatField['text-position'] = TextPosition.SUBSCRIPT
+			elif fontObj.superscript is False and fontObj.subscript is False:
+				formatField['text-position'] = TextPosition.BASELINE
+			else:
+				formatField['text-position'] = TextPosition.UNDEFINED
 		if formatConfig['reportStyle']:
 			try:
 				styleName=self.obj.excelCellObject.style.nameLocal
@@ -1005,7 +1039,7 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 					formatField['background-color']=colors.RGB.fromCOLORREF(int(cellObj.interior.color))
 			except COMError:
 				pass
-		if formatConfig["reportBorderStyle"]:
+		if formatConfig["reportCellBorders"] != ReportCellBorders.OFF:
 			borders = None
 			hasMergedCells = self.obj.excelCellObject.mergeCells
 			if hasMergedCells:
@@ -1017,7 +1051,10 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 			else:
 				borders = cellObj.borders
 			try:
-				formatField['border-style']=getCellBorderStyleDescription(borders,reportBorderColor=formatConfig['reportBorderColor'])
+				formatField['border-style'] = getCellBorderStyleDescription(
+					borders,
+					reportBorderColor=formatConfig['reportCellBorders'] == ReportCellBorders.COLOR_AND_STYLE,
+				)
 			except COMError:
 				pass
 		return formatField,(self._startOffset,self._endOffset)
@@ -1035,13 +1072,42 @@ NVCELLINFOFLAG_COMMENTS=0x40
 NVCELLINFOFLAG_FORMULA=0x80
 NVCELLINFOFLAG_ALL=0xffff
 
+
+class NvCellState(enum.IntEnum):
+	# These values must match NvCellState in `nvdaHelper/remote/excel/constants.h`
+	EXPANDED = 1 << 1,
+	COLLAPSED = 1 << 2,
+	LINKED = 1 << 3,
+	HASPOPUP = 1 << 4,
+	PROTECTED = 1 << 5,
+	HASFORMULA = 1 << 6,
+	HASCOMMENT = 1 << 7,
+	CROPPED = 1 << 8,
+	OVERFLOWING = 1 << 9,
+	UNLOCKED = 1 << 10,
+
+
+_nvCellStatesToStates: Dict[NvCellState, controlTypes.State] = {
+	NvCellState.EXPANDED: controlTypes.State.EXPANDED,
+	NvCellState.COLLAPSED: controlTypes.State.COLLAPSED,
+	NvCellState.LINKED: controlTypes.State.LINKED,
+	NvCellState.HASPOPUP: controlTypes.State.HASPOPUP,
+	NvCellState.PROTECTED: controlTypes.State.PROTECTED,
+	NvCellState.HASFORMULA: controlTypes.State.HASFORMULA,
+	NvCellState.HASCOMMENT: controlTypes.State.HASCOMMENT,
+	NvCellState.CROPPED: controlTypes.State.CROPPED,
+	NvCellState.OVERFLOWING: controlTypes.State.OVERFLOWING,
+	NvCellState.UNLOCKED: controlTypes.State.UNLOCKED,
+}
+
+
 class ExcelCellInfo(ctypes.Structure):
 		_fields_=[
 			('text',comtypes.BSTR),
 			('address',comtypes.BSTR),
 			('inputTitle',comtypes.BSTR),
 			('inputMessage',comtypes.BSTR),
-			('states',ctypes.c_longlong),
+			('nvCellStates', ctypes.c_longlong),  # bitwise OR of the NvCellState enum values.
 			('rowNumber',ctypes.c_long),
 			('rowSpan',ctypes.c_long),
 			('columnNumber',ctypes.c_long),
@@ -1050,6 +1116,7 @@ class ExcelCellInfo(ctypes.Structure):
 			('comments',comtypes.BSTR),
 			('formula',comtypes.BSTR),
 		]
+
 
 class ExcelCellInfoQuickNavItem(browseMode.QuickNavItem):
 
@@ -1157,7 +1224,10 @@ class FormulaExcelCellInfoQuicknavIterator(ExcelCellInfoQuicknavIterator):
 
 class ExcelCell(ExcelBase):
 
-	def _get_excelCellInfo(self):
+	excelCellInfo: Optional[ExcelCellInfo]
+	"""Type info for auto property: _get_excelCellInfo"""
+
+	def _get_excelCellInfo(self) -> Optional[ExcelCellInfo]:
 		if not self.appModule.helperLocalBindingHandle:
 			return None
 		ci=ExcelCellInfo()
@@ -1177,6 +1247,10 @@ class ExcelCell(ExcelBase):
 	def _get_rowHeaderText(self):
 		return self.parent.fetchAssociatedHeaderCellText(self,columnHeader=False)
 
+	@script(
+		# Translators: the description  for a script for Excel
+		description=_("opens a dropdown item at the current cell"),
+		gesture="kb:alt+downArrow")
 	def script_openDropdown(self,gesture):
 		gesture.send()
 		d=None
@@ -1199,12 +1273,12 @@ class ExcelCell(ExcelBase):
 		d.parent=self
 		eventHandler.queueEvent("gainFocus",d)
 
+	@script(
+		# Translators: the description  for a script for Excel
+		description=_("Sets the current cell as start of column header"),
+		gesture="kb:NVDA+shift+c")
 	def script_setColumnHeader(self,gesture):
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
-		if not config.conf['documentFormatting']['reportTableHeaders']:
-			# Translators: a message reported in the SetColumnHeader script for Excel.
-			ui.message(_("Cannot set headers. Please enable reporting of table headers in Document Formatting Settings"))
-			return
 		if scriptCount==0:
 			if self.parent.setAsHeaderCell(self,isColumnHeader=True,isRowHeader=False):
 				# Translators: a message reported in the SetColumnHeader script for Excel.
@@ -1221,12 +1295,12 @@ class ExcelCell(ExcelBase):
 				ui.message(_("Cannot find {address}    in column headers").format(address=self.cellCoordsText))
 	script_setColumnHeader.__doc__=_("Pressing once will set this cell as the first column header for any cells lower and to the right of it within this region. Pressing twice will forget the current column header for this cell.")
 
+	@script(
+		# Translators: the description  for a script for Excel
+		description=_("sets the current cell as start of row header"),
+		gesture="kb:NVDA+shift+r")
 	def script_setRowHeader(self,gesture):
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
-		if not config.conf['documentFormatting']['reportTableHeaders']:
-			# Translators: a message reported in the SetRowHeader script for Excel.
-			ui.message(_("Cannot set headers. Please enable reporting of table headers in Document Formatting Settings"))
-			return
 		if scriptCount==0:
 			if self.parent.setAsHeaderCell(self,isColumnHeader=False,isRowHeader=True):
 				# Translators: a message reported in the SetRowHeader script for Excel.
@@ -1268,9 +1342,9 @@ class ExcelCell(ExcelBase):
 		return self.excelCellObject
 
 	def _get_role(self):
-		if controlTypes.STATE_LINKED in self.states:
-			return controlTypes.ROLE_LINK
-		return controlTypes.ROLE_TABLECELL
+		if controlTypes.State.LINKED in self.states:
+			return controlTypes.Role.LINK
+		return controlTypes.Role.TABLECELL
 
 	TextInfo=ExcelCellTextInfo
 
@@ -1346,17 +1420,21 @@ class ExcelCell(ExcelBase):
 		cellInfo=self.excelCellInfo
 		if not cellInfo:
 			return states
-		stateBits=cellInfo.states
-		for k,v in vars(controlTypes).items():
-			if k.startswith('STATE_') and stateBits&v:
-				states.add(v)
+		nvCellStates = cellInfo.nvCellStates
+
+		for possibleCellState in NvCellState:
+			if nvCellStates & possibleCellState.value:
+				states.add(
+					# intentionally use indexing operator so an error is raised for a missing key
+					_nvCellStatesToStates[possibleCellState]
+				)
 		return states
 
 	def event_typedCharacter(self,ch):
 		# #6570: You cannot type into protected cells.
 		# Apart from speaking characters being miss-leading, Office 2016 protected view doubles characters as well.
 		# Therefore for any character from space upwards (not control characters)  on protected cells, play the default sound rather than speaking the character
-		if ch>=" " and controlTypes.STATE_UNLOCKED not in self.states and controlTypes.STATE_PROTECTED in self.parent.states: 
+		if ch>=" " and controlTypes.State.UNLOCKED not in self.states and controlTypes.State.PROTECTED in self.parent.states: 
 			winsound.PlaySound("Default",winsound.SND_ALIAS|winsound.SND_NOWAIT|winsound.SND_ASYNC)
 			return
 		super(ExcelCell,self).event_typedCharacter(ch)
@@ -1400,24 +1478,33 @@ class ExcelCell(ExcelBase):
 		level=max(self.excelCellInfo.outlineLevel-1,0) or None
 		return {'level':level}
 
+	# In Office 2016, 365 and newer, comments are now called notes.
+	# Thus, messages dialog title and so on should refer to notes.
+	@script(
+		# Translators: the description  for a script for Excel
+		description=_("Reports the note on the current cell"),
+		gesture="kb:NVDA+alt+c")
 	def script_reportComment(self,gesture):
 		commentObj=self.excelCellObject.comment
 		text=commentObj.text() if commentObj else None
 		if text:
 			ui.message(text)
 		else:
-			# Translators: A message in Excel when there is no comment
-			ui.message(_("Not on a comment"))
-	# Translators: the description  for a script for Excel
-	script_reportComment.__doc__=_("Reports the comment on the current cell")
+			# Translators: A message in Excel when there is no note
+			ui.message(_("Not on a note"))
 
+	@script(
+		# Translators: the description  for a script for Excel
+		description=_("Opens the note editing dialog"),
+		gesture="kb:shift+f2")
 	def script_editComment(self,gesture):
 		commentObj=self.excelCellObject.comment
-		d = wx.TextEntryDialog(gui.mainFrame, 
-			# Translators: Dialog text for 
-			_("Editing comment for cell {address}").format(address=self.cellCoordsText),
-			# Translators: Title of a dialog edit an Excel comment 
-			_("Comment"),
+		d = EditCommentDialog(
+			gui.mainFrame,
+			# Translators: Dialog text for the note editing dialog
+			_("Editing note for cell {address}").format(address=self.cellCoordsText),
+			# Translators: Title for the note editing  dialog
+			_("Note"),
 			value=commentObj.text() if commentObj else u"",
 			style=wx.TE_MULTILINE|wx.OK|wx.CANCEL)
 		def callback(result):
@@ -1439,7 +1526,7 @@ class ExcelCell(ExcelBase):
 				formatField.update(field.field)
 		if not hasattr(self.parent,'_formatFieldSpeechCache'):
 			self.parent._formatFieldSpeechCache = textInfos.Field()
-		if formatField:
+		if formatField or self.parent._formatFieldSpeechCache:
 			sequence = speech.getFormatFieldSpeech(
 				formatField,
 				attrsCache=self.parent._formatFieldSpeechCache,
@@ -1448,17 +1535,9 @@ class ExcelCell(ExcelBase):
 			speech.speak(sequence)
 		super(ExcelCell,self).reportFocus()
 
-	__gestures = {
-		"kb:NVDA+shift+c": "setColumnHeader",
-		"kb:NVDA+shift+r": "setRowHeader",
-		"kb:shift+f2":"editComment",
-		"kb:alt+downArrow":"openDropdown",
-		"kb:NVDA+alt+c":"reportComment",
-	}
-
 class ExcelSelection(ExcelBase):
 
-	role=controlTypes.ROLE_TABLECELL
+	role=controlTypes.Role.TABLECELL
 
 	def __init__(self,windowHandle=None,excelWindowObject=None,excelRangeObject=None):
 		self.excelWindowObject=excelWindowObject
@@ -1467,14 +1546,21 @@ class ExcelSelection(ExcelBase):
 
 	def _get_states(self):
 		states=super(ExcelSelection,self).states
-		states.add(controlTypes.STATE_SELECTED)
+		states.add(controlTypes.State.SELECTED)
 		return states
 
 	def _get_name(self):
 		firstCell=self.excelRangeObject.Item(1)
 		lastCell=self.excelRangeObject.Item(self.excelRangeObject.Count)
 		# Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
-		return _("{firstAddress} {firstContent} through {lastAddress} {lastContent}").format(firstAddress=self.getCellAddress(firstCell),firstContent=firstCell.Text,lastAddress=self.getCellAddress(lastCell),lastContent=lastCell.Text)
+		# Beware to keep two spaces between the address and the content. Otherwise some synthesizer
+		# may mix the address and the content when the cell contains a 3-digit number.
+		return _("{firstAddress}  {firstContent} through {lastAddress}  {lastContent}").format(
+			firstAddress=self.getCellAddress(firstCell),
+			firstContent=firstCell.Text,
+			lastAddress=self.getCellAddress(lastCell),
+			lastContent=lastCell.Text
+		)
 
 	def _get_parent(self):
 		worksheet=self.excelRangeObject.Worksheet
@@ -1503,7 +1589,7 @@ class ExcelDropdownItem(Window):
 	firstChild=None
 	lastChild=None
 	children=[]
-	role=controlTypes.ROLE_LISTITEM
+	role=controlTypes.Role.LISTITEM
 
 	def __init__(self,parent=None,name=None,states=None,index=None):
 		self.name=name
@@ -1534,12 +1620,12 @@ class ExcelDropdown(Window):
 	def kwargsFromSuper(cls,kwargs,relation=None):
 		return kwargs
 
-	role=controlTypes.ROLE_LIST
+	role=controlTypes.Role.LIST
 	excelCell=None
 
 	def _get__highlightColors(self):
-		background=colors.RGB.fromCOLORREF(winUser.user32.GetSysColor(13))
-		foreground=colors.RGB.fromCOLORREF(winUser.user32.GetSysColor(14))
+		background = colors.RGB.fromCOLORREF(GetSysColor(SysColorIndex.HIGHLIGHT))
+		foreground = colors.RGB.fromCOLORREF(GetSysColor(SysColorIndex.HIGHLIGHT_TEXT))
 		self._highlightColors=(background,foreground)
 		return self._highlightColors
 
@@ -1549,11 +1635,11 @@ class ExcelDropdown(Window):
 		states=set()
 		for item in DisplayModelTextInfo(self,textInfos.POSITION_ALL).getTextWithFields():
 			if isinstance(item,textInfos.FieldCommand) and item.command=="formatChange":
-				states=set([controlTypes.STATE_SELECTABLE])
+				states=set([controlTypes.State.SELECTABLE])
 				foreground=item.field.get('color',None)
 				background=item.field.get('background-color',None)
 				if (background,foreground)==self._highlightColors:
-					states.add(controlTypes.STATE_SELECTED)
+					states.add(controlTypes.State.SELECTED)
 			if isinstance(item,str):
 				obj=ExcelDropdownItem(parent=self,name=item,states=states,index=index)
 				children.append(obj)
@@ -1570,32 +1656,22 @@ class ExcelDropdown(Window):
 		return self.children[0]
 	def _get_selection(self):
 		for child in self.children:
-			if controlTypes.STATE_SELECTED in child.states:
+			if controlTypes.State.SELECTED in child.states:
 				return child
 
+	@script(
+		gestures=("kb:downArrow", "kb:upArrow", "kb:leftArrow", "kb:rightArrow", "kb:home", "kb:end"),
+		canPropagate=True)
 	def script_selectionChange(self,gesture):
 		gesture.send()
 		newFocus=self.selection or self
 		if eventHandler.lastQueuedFocusObject is newFocus: return
 		eventHandler.queueEvent("gainFocus",newFocus)
-	script_selectionChange.canPropagate=True
 
+	@script(gestures=("kb:escape", "kb:enter", "kb:space"), canPropagate=True)
 	def script_closeDropdown(self,gesture):
 		gesture.send()
 		eventHandler.queueEvent("gainFocus",self.parent)
-	script_closeDropdown.canPropagate=True
-
-	__gestures={
-		"kb:downArrow":"selectionChange",
-		"kb:upArrow":"selectionChange",
-		"kb:leftArrow":"selectionChange",
-		"kb:rightArrow":"selectionChange",
-		"kb:home":"selectionChange",
-		"kb:end":"selectionChange",
-		"kb:escape":"closeDropdown",
-		"kb:enter":"closeDropdown",
-		"kb:space":"closeDropdown",
-	}
 
 	def event_gainFocus(self):
 		child=self.selection
@@ -1621,16 +1697,16 @@ class ExcelMergedCell(ExcelCell):
 class ExcelFormControl(ExcelBase):
 	isFocusable=True
 	_roleMap = {
-		xlButtonControl: controlTypes.ROLE_BUTTON,
-		xlCheckBox: controlTypes.ROLE_CHECKBOX,
-		xlDropDown: controlTypes.ROLE_COMBOBOX,
-		xlEditBox: controlTypes.ROLE_EDITABLETEXT,
-		xlGroupBox: controlTypes.ROLE_BOX,
-		xlLabel: controlTypes.ROLE_LABEL,
-		xlListBox: controlTypes.ROLE_LIST,
-		xlOptionButton: controlTypes.ROLE_RADIOBUTTON,
-		xlScrollBar: controlTypes.ROLE_SCROLLBAR,
-		xlSpinner: controlTypes.ROLE_SPINBUTTON,
+		xlButtonControl: controlTypes.Role.BUTTON,
+		xlCheckBox: controlTypes.Role.CHECKBOX,
+		xlDropDown: controlTypes.Role.COMBOBOX,
+		xlEditBox: controlTypes.Role.EDITABLETEXT,
+		xlGroupBox: controlTypes.Role.BOX,
+		xlLabel: controlTypes.Role.LABEL,
+		xlListBox: controlTypes.Role.LIST,
+		xlOptionButton: controlTypes.Role.RADIOBUTTON,
+		xlScrollBar: controlTypes.Role.SCROLLBAR,
+		xlSpinner: controlTypes.Role.SPINBUTTON,
 	}
 
 	def _get_excelControlFormatObject(self):
@@ -1657,15 +1733,15 @@ class ExcelFormControl(ExcelBase):
 	def _get_states(self):
 		states=super(ExcelFormControl,self).states
 		if self is api.getFocusObject():
-			states.add(controlTypes.STATE_FOCUSED)
+			states.add(controlTypes.State.FOCUSED)
 		newState=None
-		if self.role==controlTypes.ROLE_RADIOBUTTON:
-			newState=controlTypes.STATE_CHECKED if self.excelOLEFormatObject.Value==checked else None
-		elif self.role==controlTypes.ROLE_CHECKBOX:
+		if self.role==controlTypes.Role.RADIOBUTTON:
+			newState=controlTypes.State.CHECKED if self.excelOLEFormatObject.Value==checked else None
+		elif self.role==controlTypes.Role.CHECKBOX:
 			if self.excelOLEFormatObject.Value==checked:
-				newState=controlTypes.STATE_CHECKED
+				newState=controlTypes.State.CHECKED
 			elif self.excelOLEFormatObject.Value==mixed:
-				newState=controlTypes.STATE_HALFCHECKED
+				newState=controlTypes.State.HALFCHECKED
 		if newState:
 			states.add(newState)
 		return states
@@ -1724,24 +1800,17 @@ class ExcelFormControl(ExcelBase):
 			screenBottomRightY=int(Y + (bottomRightCellHeight/2+ bottomRightAddress.Top) * zoomRatio * py / pointsPerInch)
 			return (int(0.5*(screenTopLeftX+screenBottomRightX)), int(0.5*(screenTopLeftY+screenBottomRightY)))
 
+	@script(gestures=("kb:enter", "kb:space", "kb(desktop):numpadEnter"), canPropagate=True)
 	def script_doAction(self,gesture):
 		self.doAction()
-	script_doAction.canPropagate=True
 
 	def doAction(self):
 		(x,y)=self._getFormControlScreenCoordinates()
 		winUser.setCursorPos(x,y)
 		#perform Mouse Left-Click
-		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN,0,0)
-		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP,0,0)
+		mouseHandler.doPrimaryClick()
 		self.invalidateCache()
 		wx.CallLater(100,eventHandler.executeEvent,"stateChange",self)
-
-	__gestures= {
-				"kb:enter":"doAction",
-				"kb:space":"doAction",
-				"kb(desktop):numpadEnter":"doAction",
-				}
 
 class ExcelFormControlQuickNavItem(ExcelQuickNavItem):
 
@@ -1877,9 +1946,9 @@ class ExcelFormControlListBox(ExcelFormControl):
 
 	def getChildAtIndex(self,index):
 		name=str(self.excelOLEFormatObject.List(index+1))
-		states=set([controlTypes.STATE_SELECTABLE])
+		states=set([controlTypes.State.SELECTABLE])
 		if self.excelOLEFormatObject.Selected[index+1]==True:
-			states.add(controlTypes.STATE_SELECTED)
+			states.add(controlTypes.State.SELECTED)
 		return ExcelDropdownItem(parent=self,name=name,states=states,index=index)
 
 	def _get_childCount(self):
@@ -1893,6 +1962,7 @@ class ExcelFormControlListBox(ExcelFormControl):
 		if self.listSize>0:
 			return self.getChildAtIndex(self.listSize-1)
 
+	@script(gesture="kb:upArrow", canPropagate=True)
 	def script_moveUp(self, gesture):
 		if self.selectedItemIndex > 1:
 			self.selectedItemIndex= self.selectedItemIndex - 1
@@ -1904,8 +1974,8 @@ class ExcelFormControlListBox(ExcelFormControl):
 			child=self.getChildAtIndex(self.selectedItemIndex-1)
 			if child:
 				eventHandler.queueEvent("gainFocus",child)
-	script_moveUp.canPropagate=True
 
+	@script(gesture="kb:downArrow", canPropagate=True)
 	def script_moveDown(self, gesture):
 		if self.selectedItemIndex < self.listSize:
 			self.selectedItemIndex= self.selectedItemIndex + 1
@@ -1917,7 +1987,6 @@ class ExcelFormControlListBox(ExcelFormControl):
 			child=self.getChildAtIndex(self.selectedItemIndex-1)
 			if child:
 				eventHandler.queueEvent("gainFocus",child)
-	script_moveDown.canPropagate=True
 
 	def doAction(self):
 		if self.isMultiSelectable:
@@ -1928,11 +1997,6 @@ class ExcelFormControlListBox(ExcelFormControl):
 				return
 			child=self.getChildAtIndex(self.selectedItemIndex-1)
 			eventHandler.queueEvent("gainFocus",child)
-
-	__gestures= {
-		"kb:upArrow": "moveUp",
-		"kb:downArrow":"moveDown",
-	}
 
 class ExcelFormControlDropDown(ExcelFormControl):
 
@@ -1947,28 +2011,23 @@ class ExcelFormControlDropDown(ExcelFormControl):
 		except:
 			self.selectedItemIndex=0
 
+	@script(gesture="kb:upArrow", canPropagate=True)
 	def script_moveUp(self, gesture):
 		if self.selectedItemIndex > 1:
 			self.selectedItemIndex= self.selectedItemIndex - 1
 			self.excelOLEFormatObject.Selected[self.selectedItemIndex] = True
 			eventHandler.queueEvent("valueChange",self)
-	script_moveUp.canPropagate=True
 
+	@script(gesture="kb:downArrow", canPropagate=True)
 	def script_moveDown(self, gesture):
 		if self.selectedItemIndex < self.listSize:
 			self.selectedItemIndex= self.selectedItemIndex + 1
 			self.excelOLEFormatObject.Selected[self.selectedItemIndex] = True
 			eventHandler.queueEvent("valueChange",self)
-	script_moveDown.canPropagate=True
 
 	def _get_value(self):
 		if self.selectedItemIndex < self.listSize:
 			return str(self.excelOLEFormatObject.List(self.selectedItemIndex))
-
-	__gestures= {
-		"kb:upArrow": "moveUp",
-		"kb:downArrow":"moveDown",
-	}
 
 class ExcelFormControlScrollBar(ExcelFormControl):
 
@@ -2009,21 +2068,18 @@ class ExcelFormControlScrollBar(ExcelFormControl):
 		self.excelControlFormatObject.value=newValue
 		eventHandler.queueEvent("valueChange",self)
 
+	@script(gesture="kb:upArrow")
 	def script_moveUpSmall(self,gesture):
 		self.moveValue(True,False)
 
+	@script(gesture="kb:downArrow")
 	def script_moveDownSmall(self,gesture):
 		self.moveValue(False,False)
 
+	@script(gesture="kb:pageUp")
 	def script_moveUpLarge(self,gesture):
 		self.moveValue(True,True)
 
+	@script(gesture="kb:pageDown")
 	def script_moveDownLarge(self,gesture):
 		self.moveValue(False,True)
-
-	__gestures={
-		"kb:upArrow":"moveUpSmall",
-		"kb:downArrow":"moveDownSmall",
-		"kb:pageUp":"moveUpLarge",
-		"kb:pageDown":"moveDownLarge",
-	}

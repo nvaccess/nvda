@@ -16,6 +16,10 @@ import textInfos
 import api
 import config
 import locationHelper
+from typing import (
+	Optional,
+	Dict,
+)
 
 """
 Handler for NVDA's legacy Windows Console support,
@@ -226,7 +230,7 @@ class WinConsoleTextInfo(textInfos.offsets.OffsetsTextInfo):
 			start=end=self._getCaretOffset()
 		return start,end
 
-	def getTextWithFields(self,formatConfig=None):
+	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
 		commands=[]
 		if self.isCollapsed:
 			return commands

@@ -1,14 +1,26 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2020 NV Access Limited, Christopher Toth, Babbage B.V., Julien Cochuyt
+# Copyright (C) 2007-2022 NV Access Limited, Christopher Toth, Babbage B.V., Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 """Contains the base classes that many of NVDA's classes such as NVDAObjects, virtualBuffers, appModules, synthDrivers inherit from. These base classes provide such things as auto properties, and methods and properties for scripting and key binding.
 """
 
+from typing import (
+	Any,
+	Callable,
+	Optional,
+	Set,
+	Union,
+)
 import weakref
+import garbageHandler
 from logHandler import log
 from abc import ABCMeta, abstractproperty
+
+GetterReturnT = Any
+GetterMethodT = Callable[["AutoPropertyObject"], GetterReturnT]
+
 
 class Getter(object):
 
@@ -17,10 +29,14 @@ class Getter(object):
 		if abstract:
 			self._abstract = self.__isabstractmethod__ = abstract
 
-	def __get__(self,instance,owner):
+	def __get__(
+			self,
+			instance: Union[Any, None, "AutoPropertyObject"],
+			owner,
+	) -> Union[GetterReturnT, "Getter"]:
 		if isinstance(self.fget, classmethod):
 			return self.fget.__get__(instance, owner)()
-		elif not instance:
+		elif instance is None:
 			return self
 		return self.fget(instance)
 
@@ -30,15 +46,21 @@ class Getter(object):
 	def deleter(self,func):
 		return (abstractproperty if self._abstract else property)(fget=self.fget,fdel=func)
 
+
 class CachingGetter(Getter):
 
-	def __get__(self, instance, owner):
+	def __get__(
+			self,
+			instance: Union[Any, None, "AutoPropertyObject"],
+			owner,
+	) -> Union[GetterReturnT, "CachingGetter"]:
 		if isinstance(self.fget, classmethod):
 			log.warning("Class properties do not support caching")
 			return self.fget.__get__(instance, owner)()
-		elif not instance:
+		elif instance is None:
 			return self
 		return instance._getPropertyViaCache(self.fget)
+
 
 class AutoPropertyType(ABCMeta):
 
@@ -98,7 +120,8 @@ class AutoPropertyType(ABCMeta):
 			# The __abstractmethods__ set is frozen, therefore we ought to override it.
 			self.__abstractmethods__=(self.__abstractmethods__|newAbstractProps)-oldAbstractProps
 
-class AutoPropertyObject(object, metaclass=AutoPropertyType):
+
+class AutoPropertyObject(garbageHandler.TrackedObject, metaclass=AutoPropertyType):
 	"""A class that dynamically supports properties, by looking up _get_*, _set_*, and _del_* methods at runtime.
 	_get_x will make property x with a getter (you can get its value).
 	_set_x will make a property x with a setter (you can set its value).
@@ -123,6 +146,7 @@ class AutoPropertyObject(object, metaclass=AutoPropertyType):
 	#: @type: bool
 	cachePropertiesByDefault = False
 
+	_propertyCache: Set[GetterMethodT]
 
 	def __new__(cls, *args, **kwargs):
 		self = super(AutoPropertyObject, cls).__new__(cls)
@@ -132,7 +156,7 @@ class AutoPropertyObject(object, metaclass=AutoPropertyType):
 		self.__instances[self]=None
 		return self
 
-	def _getPropertyViaCache(self,getterMethod=None):
+	def _getPropertyViaCache(self, getterMethod: Optional[GetterMethodT] = None) -> GetterReturnT:
 		if not getterMethod:
 			raise ValueError("getterMethod is None")
 		missing=False

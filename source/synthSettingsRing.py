@@ -2,16 +2,17 @@ import baseObject
 import config
 import synthDriverHandler
 import queueHandler
-import driverHandler
+from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting
+
 
 class SynthSetting(baseObject.AutoPropertyObject):
 	"""a numeric synth setting. Has functions to set, get, increase and decrease its value """
 	def __init__(self,synth,setting,min=0,max=100):
 		self.synth = synth
 		self.setting = setting
-		self.min = setting.minVal  if isinstance(setting,driverHandler.NumericDriverSetting) else min
-		self.max = setting.maxVal  if isinstance(setting,driverHandler.NumericDriverSetting) else max
-		self.step = setting.normalStep if isinstance(setting,driverHandler.NumericDriverSetting) else 1
+		self.min = setting.minVal if isinstance(setting, NumericDriverSetting) else min
+		self.max = setting.maxVal if isinstance(setting, NumericDriverSetting) else max
+		self.step = setting.normalStep if isinstance(setting, NumericDriverSetting) else 1
 
 	def increase(self):
 		val = min(self.max,self.value+self.step)
@@ -36,16 +37,25 @@ class SynthSetting(baseObject.AutoPropertyObject):
 	def _get_reportValue(self):
 		return self._getReportValue(self.value)
 
+
 class StringSynthSetting(SynthSetting):
-	def __init__(self,synth,setting):
-		self._values=list(getattr(synth,"available%ss"%setting.id.capitalize()).values())
-		super(StringSynthSetting,self).__init__(synth,setting,0,len(self._values)-1)
+
+	def _get__values(self):
+		self._values = list(getattr(self.synth, f"available{self.setting.id.capitalize()}s").values())
+		return self._values
+
+	def _get_max(self):
+		return len(self._values) - 1
+
+	def _set_max(self, value):
+		# Max is set by L{SynthSetting} but should always be a calculated property.
+		pass
 
 	def _get_value(self):
 		curID=getattr(self.synth,self.setting.id)
 		for e,v in enumerate(self._values):
 			if curID==v.id:
-				return e 
+				return e
 
 	def _set_value(self,value):
 		"""Overridden to use code that supports updating speech dicts when changing voice"""
@@ -59,6 +69,7 @@ class StringSynthSetting(SynthSetting):
 
 	def _getReportValue(self, val):
 		return self._values[val].displayName
+
 
 class BooleanSynthSetting(SynthSetting):
 
@@ -97,7 +108,7 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 		return self.settings[self._current].reportValue
 
 	def _set_currentSettingValue(self,value):
-		if self._current is not None: 
+		if self._current is not None:
 			self.settings[_current].value = val
 
 	def next(self):
@@ -115,7 +126,7 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 
 	def increase(self):
 		""" increases the currentSetting and returns its new value """
-		if self._current is not None: 
+		if self._current is not None:
 			return self.settings[self._current].increase()
 		return None
 
@@ -139,9 +150,9 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 			if not s.availableInSettingsRing: continue
 			if prevID == s.id: #restore the last setting
 				self._current=len(list)
-			if isinstance(s,driverHandler.NumericDriverSetting):
+			if isinstance(s, NumericDriverSetting):
 				cls=SynthSetting
-			elif isinstance(s,driverHandler.BooleanDriverSetting):
+			elif isinstance(s, BooleanDriverSetting):
 				cls=BooleanSynthSetting
 			else:
 				cls=StringSynthSetting

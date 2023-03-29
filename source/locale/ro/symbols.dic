@@ -49,10 +49,34 @@ $	dolar
 £	liră sterlină
 €	euro
 ¢	cent
-¥	yen
-₹	rupie
-₽	rublă
+¥	yen japonez
+₹	rupie indiană
+ƒ	florin
+¤	semn de monedă
+₽	rublă rusă
+؋	afgani
+֏	dram armean
+₼	manat azer
+৳	taka de Bangladesh
+៛	riel de Cambodgia
+₺	liră turcească
+₩	won nord-coreean
+₩	won sud-coreean
+₡	colón costarican
+₱	peso filipinez
+₾	lari georgian
+﷼	rial iranian
+₪	shekel nou israelian
+₸	tenge cazac
+₭	kip laoțian
+₮	tögrög mongol
+₲	guaraní paraguayan
+圓	dolar taiwanez
+฿	baht thailandez
+₴	grivnă ucraineană
+₫	dong vietnamez
 %	procent
+‰	pe milă
 &	ampersand
 '	apostrof
 (	paranteză rotundă deschisă
@@ -81,7 +105,13 @@ _	liniuță joasă
 {	acoladă deschisă
 }	acoladă închisă
 |	bară verticală
+¦	bară tăiată
 ~	tildă
+¡	semnul exclamării inversat
+¿	semnul întrebării inversat
+′	primă
+″	primă dublă
+‴	primă triplă
 
 # Other characters
 •	bulină
@@ -93,31 +123,74 @@ _	liniuță joasă
 ’	apostrof închis
 –	cratimă dublă
 —	linie de dialog
+­	liniuță
+⁃	liniuță cu bulină
 ●	cerc negru
+○	cerc alb
 ¨	tremă
+¯	macron
+´	accent ascuțit
+¸	sedilă
 ‎	marcaj de la stânga la dreapta
 ‏	marcaj de la dreapta la stânga
+¶	paragraf
 ■	pătrat mare negru
 ▪	pătrat mic negru
 ◾	pătrat negru
+□	pătrat alb
 ◦	bulină albă
 ⇒	săgeată dreapta dublă
 ⇨	săgeată dreapta albă
+➔	săgeată dreapta punctată
 ➢	Vârf de Săgeată spre dreapta
+⮚	Vârf de săgeată spre dreapta
 ❖	x alb înconjurat de diamant negru
 ♣	Carte de joc, cruce neagră
 ♦	Diamant negru
+◆	diamant negru
 §	secțiune
 °	grade
 «	ghilimele unghiulare deschise	some
 »	ghilimele unghiulare închise	some
 µ	micro
+º	superscript o
+ª	superscript a
+⁰	superscript 0
 ¹	superscript 1
 ²	superscript 2
 ³	superscript 3
+⁴	superscript 4
+⁵	superscript 5
+⁶	superscript 6
+⁷	superscript 7
+⁸	superscript 8
+⁹	superscript 9
+⁺	superscript plus
+⁻	superscript minus
+⁼	superscript egal
+⁽	superscript paranteză rotundă deschisă
+⁾	superscript paranteză rotundă închisă
+ⁿ	superscript n
+₀	subscript 0
+₁	subscript 1
+₂	subscript 2
+₃	subscript 3
+₄	subscript 4
+₅	subscript 5
+₆	subscript 6
+₇	subscript 7
+₈	subscript 8
+₉	subscript 9
+₊	subscript plus
+₋	subscript minus
+₌	subscript egal
+₍	subscript paranteză rotundă deschisă
+₎	subscript paranteză rotundă închisă
 ®	marcă înregistrată
 ™	marcă neînregistrată
 ©	drepturi de autor
+℠	marcă de serviciu
+
 ±	plus sau minus
 ×	înmulțit
 ÷	împărțit
@@ -129,6 +202,73 @@ _	liniuță joasă
 ✔	bifat
 „	ghilimele deschise	some
 🡺	săgeată dreapta
+†	pumnal
+‡	pumnal dublu
+‣	bulină triunghiulară
+✗	bulină în formă de x
+
+#Arithmetic operators
+⋅	înmulțit	some
+⋅	înmulțit	some
+⨯	înmulțit	none
+∕	împărțit la	some
+⁄	împărțit la	some
+∓	minus sau plus	some
+
+#Set operations
+∖	setare minus	none
+⊍	înmulțire multiplă	none
+𝒫	ansamblul puterilor	none
+𝔓	ansamblul puterii	none
+℘	puterea ansamblului	none
+
+#Set relations and set constructions
+⊄	nu este o submulțime a lui	none
+⊅	nu este o supramulțime a lui	none
+⊈	nu este o submulțime și nici nu este egală cu	none
+⊉	nici nu este o supramulțime și nici nu este egală cu	none
+⊌	mulțime multiplă	none
+
+#Equality signs
+≃	este asimptotic egal cu	none
+≄	nu este asimptotic egal cu	none
+≅	este aproximativ egal cu	none
+≌	totul este egal cu	none
+≍	este echivalent cu	none
+≭	nu este echivalent cu	none
+≎	este geometric echivalent cu	none
+≑	este geometric egal cu	none
+≚	este echiunghiular cu	none
+≬	între	none
+≣	este strict identic cu	none
+≢	nu este identic cu	none
+∼	este asemănător cu	none
+≙	estimează	none
+≟	întrebat egal cu	none
+
+#comparison signs
+≦	mai mic sau egal cu	none
+≪	mult mai mic decât	none
+≧	mai mare sau egal cu	none
+≶	mai mic sau mai mare decât	none
+≷	mai mare sau mai mic decât	none
+≮	nu este mai mic decât	none
+≯	nu este mai mare decât	none
+
+#Functions
+∘	operator inel	none
+
+#Geometry and linear Algebra
+⃗	combinare săgeată dreapta cu cea de sus	none
+△	triunghi	none
+▭	dreptunghi	none
+⊥	perpendicular pe	none
+⟂	ortogonal pe	none
+‖	linie verticală dublă	none
+̂	normalizează	none
+∿	Undă sinusoidală	none
+∡	unghi măsurat	none
+∢	unghi sferic	none
 
 #Mathematical Operators U+2200 to U+220F
 
@@ -176,8 +316,34 @@ _	liniuță joasă
 ⊃	superset a lui
 ⊆	submulțime sau egală cu
 ⊇	superset sau egal cu
+∐	n-ary coproduct	none
+∬	integrală dublă	none
+∭	integrală	 triplănone
+∮	contur integral	none
+∯	suprafață integrală	none
+∰	volum integral	none
+∱	integrală în sensul acelor de ceasornic	none
+∲	contur integral în sensul acelor de ceasornic	none
+∳	contur integral în sens invers al acelor de ceasornic	none
+∹	exces	none
+∺	proporție geometrică	none
+≀	produs de coronament	none
+≏	diferență între	none
+≐	abordează limita	none
+∙	operator bulină	none
+∣	divide pe	none
+∤	nu divide pe	none
+≔	două puncte egal	none
+≕	egal două puncte	none
+≺	precedă pe	none
+≻	succedă pe	none
+⊀	nu precedă pe	none
+⊁	nu succedă pe	none
 
 # Vulgur Fractions U+2150 to U+215E
+¼	un sfert	none
+½	o jumătate	none
+¾	trei sferturi	none
 ⅐	o șeptime	none
 ⅑	o noime	none
 ⅒	o zecime	none
@@ -193,6 +359,20 @@ _	liniuță joasă
 ⅜	trei optimi	none
 ⅝	cinci optimi	none
 ⅞	șapte optimi	none
+
+#Number sets
+𝔸	numere algebrice	none
+ℂ	numere complexe	none
+ℑ	parte imaginară a unui număr complex	none
+ℍ	quaternări	none
+ℕ	numere naturale	none
+𝕁	numere nonnegative (întregi)	none
+ℚ	numere raționale	none
+ℝ	numere reale	none
+ℜ	partea reală a unui număr complex	none
+ℤ	numere întregi	none
+ℵ	număr aleph	none
+ℶ	număr beth	none
 
 # Miscellaneous Technical
 ⌘	tastă de comandă Mac	none

@@ -1,13 +1,13 @@
-# visionEnhancementProviders/NVDAHighlighter.py
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2018-2019 NV Access Limited, Babbage B.V., Takuya Nishimoto
+# Copyright (C) 2018-2022 NV Access Limited, Babbage B.V., Takuya Nishimoto
 
 """Default highlighter based on GDI Plus."""
 from typing import Optional, Tuple
 
 from autoSettingsUtils.autoSettings import SupportedSettingType
+from autoSettingsUtils.driverSetting import BooleanDriverSetting
 import vision
 from vision.constants import Context
 from vision.util import getContextRect
@@ -25,11 +25,11 @@ from mouseHandler import getTotalWidthAndHeightAndMinimumPosition
 from locationHelper import RectLTWH
 from collections import namedtuple
 import threading
+from winAPI.messageWindow import WindowMessage
 import winGDI
 import weakref
 from colors import RGB
 import core
-import driverHandler
 
 
 class HighlightStyle(
@@ -144,7 +144,7 @@ class HighlightWindow(CustomWindow):
 			winUser.user32.PostQuitMessage(0)
 		elif msg == winUser.WM_TIMER:
 			self.refresh()
-		elif msg == winUser.WM_DISPLAYCHANGE:
+		elif msg == WindowMessage.DISPLAY_CHANGE:
 			# wx might not be aware of the display change at this point
 			core.callLater(100, self.updateLocationForDisplays)
 
@@ -225,11 +225,11 @@ class NVDAHighlighterSettings(providerBase.VisionEnhancementProviderSettings):
 	@classmethod
 	def getDisplayName(cls) -> str:
 		# Translators: Description for NVDA's built-in screen highlighter.
-		return _("Focus Highlight")
+		return _("Visual Highlight")
 
 	def _get_supportedSettings(self) -> SupportedSettingType:
 		return [
-			driverHandler.BooleanDriverSetting(
+			BooleanDriverSetting(
 				'highlight%s' % (context[0].upper() + context[1:]),
 				_contextOptionLabelsWithAccelerators[context],
 				defaultVal=True
@@ -242,8 +242,11 @@ class NVDAHighlighterGuiPanel(
 		gui.AutoSettingsMixin,
 		gui.SettingsPanel
 ):
+	
 	_enableCheckSizer: wx.BoxSizer
 	_enabledCheckbox: wx.CheckBox
+	
+	helpId = "VisionSettingsFocusHighlight"
 
 	from gui.settingsDialogs import VisionProviderStateControl
 

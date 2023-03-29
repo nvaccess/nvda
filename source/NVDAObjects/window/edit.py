@@ -1,35 +1,36 @@
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2018 NV Access Limited, Babbage B.V.
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2022 NV Access Limited, Babbage B.V., Cyrille Bougot
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
-import locale
+from typing import (
+	Dict,
+	Optional,
+	Union,
+)
+
 import comtypes.client
-import struct
 import ctypes
 from comtypes import COMError
 import oleTypes
 import colors
-import globalVars
 import NVDAHelper
 import eventHandler
 import comInterfaces.tom
 from logHandler import log
 import languageHandler
 import config
-import speech
 import winKernel
 import api
 import winUser
+from winAPI.winUser.functions import GetSysColor
+from winAPI.winUser.constants import SysColorIndex
+import textInfos
 import textInfos.offsets
-from keyboardHandler import KeyboardInputGesture
-from scriptHandler import isScriptWaiting
-import IAccessibleHandler
 import controlTypes
+from controlTypes import TextPosition
 from . import Window
-from .. import NVDAObjectTextInfo
 from ..behaviors import EditableTextWithAutoSelectDetection
-import braille
 import watchdog
 import locationHelper
 import textUtils
@@ -156,6 +157,7 @@ WB_MOVEWORDRIGHT=5
 WB_LEFTBREAK=6
 WB_RIGHTBREAK=7
 
+
 class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _getPointFromOffset(self,offset):
@@ -239,7 +241,10 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 			self._setSelectionOffsets(oldSel[0],oldSel[1])
 		return charFormat
 
-	def _getFormatFieldAndOffsets(self,offset,formatConfig,calculateOffsets=True):
+	# C901 '_getFormatFieldAndOffsets' is too complex
+	# Note: when working on _getFormatFieldAndOffsets look for opportunities to simplify
+	# and move logic out into smaller helper functions.
+	def _getFormatFieldAndOffsets(self, offset, formatConfig, calculateOffsets=True):  # noqa: C901
 		#Basic edit fields do not support formatting at all.
 		# Formatting for unidentified edit fields is ignored.
 		# Note that unidentified rich edit fields will most likely use L{ITextDocumentTextInfo}.
@@ -257,7 +262,9 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 		if formatConfig["reportFontSize"]:
 			if charFormat is None: charFormat=self._getCharFormat(offset)
 			# Font size is supposed to be an integral value
-			formatField["font-size"]="%spt"%(charFormat.yHeight//20)
+			fontSize = charFormat.yHeight // 20
+			# Translators: Abbreviation for points, a measurement of font size.
+			formatField["font-size"] = pgettext("font size", "%s pt") % fontSize
 		if formatConfig["reportFontAttributes"]:
 			if charFormat is None: charFormat=self._getCharFormat(offset)
 			formatField["bold"]=bool(charFormat.dwEffects&CFE_BOLD)
@@ -265,21 +272,48 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 			formatField["underline"]=bool(charFormat.dwEffects&CFE_UNDERLINE)
 			formatField["strikethrough"]=bool(charFormat.dwEffects&CFE_STRIKEOUT)
 		if formatConfig["reportSuperscriptsAndSubscripts"]:
+			if charFormat is None:
+				charFormat = self._getCharFormat(offset)
 			if charFormat.dwEffects&CFE_SUBSCRIPT:
-				formatField["text-position"]="sub"
+				formatField["text-position"] = TextPosition.SUBSCRIPT
 			elif charFormat.dwEffects&CFE_SUPERSCRIPT:
-				formatField["text-position"]="super"
+				formatField["text-position"] = TextPosition.SUPERSCRIPT
+			else:
+			    formatField["text-position"] = TextPosition.BASELINE
 		if formatConfig["reportColor"]:
 			if charFormat is None: charFormat=self._getCharFormat(offset)
-			formatField["color"]=colors.RGB.fromCOLORREF(charFormat.crTextColor) if not charFormat.dwEffects&CFE_AUTOCOLOR else _("default color")
-			formatField["background-color"]=colors.RGB.fromCOLORREF(charFormat.crBackColor) if not charFormat.dwEffects&CFE_AUTOBACKCOLOR else _("default color")
+			self._setFormatFieldColor(charFormat, formatField)
 		if formatConfig["reportLineNumber"]:
 			formatField["line-number"]=self._getLineNumFromOffset(offset)+1
 		if formatConfig["reportLinks"]:
 			if charFormat is None: charFormat=self._getCharFormat(offset)
 			formatField["link"]=bool(charFormat.dwEffects&CFM_LINK)
 		return formatField,(startOffset,endOffset)
-
+	
+	def _setFormatFieldColor(
+			self,
+			charFormat: Union[CharFormat2AStruct, CharFormat2WStruct],
+			formatField: textInfos.FormatField
+	) -> None:
+		if charFormat.dwEffects & CFE_AUTOCOLOR:
+			rgb = GetSysColor(SysColorIndex.WINDOW_TEXT)
+			# Translators: The text color as reported in Wordpad (Automatic) or NVDA log viewer.
+			formatField["color"] = _("{color} (default color)").format(
+				color=colors.RGB.fromCOLORREF(rgb).name,
+			)
+		else:
+			rgb = charFormat.crTextColor
+			formatField["color"] = colors.RGB.fromCOLORREF(rgb)
+		if charFormat.dwEffects & CFE_AUTOBACKCOLOR:
+			rgb = GetSysColor(SysColorIndex.WINDOW)
+			# Translators: The background color as reported in Wordpad (Automatic) or NVDA log viewer.
+			formatField["background-color"] = _("{color} (default color)").format(
+				color=colors.RGB.fromCOLORREF(rgb).name,
+			)
+		else:
+			rgb = charFormat.crBackColor
+			formatField["background-color"] = colors.RGB.fromCOLORREF(rgb)
+	
 	def _getSelectionOffsets(self):
 		if self.obj.editAPIVersion>=1:
 			charRange=CharRangeStruct()
@@ -321,7 +355,7 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return self._setSelectionOffsets(offset,offset)
 
 	def _getStoryText(self):
-		if controlTypes.STATE_PROTECTED in self.obj.states:
+		if controlTypes.State.PROTECTED in self.obj.states:
 			return u'*' * (self._getStoryLength() - 1)
 		return self.obj.windowText
 
@@ -398,7 +432,7 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 			# #4095: Some protected richEdit controls do not hide their password characters.
 			# We do this specifically.
 			# Note that protected standard edit controls get characters hidden in _getStoryText.
-			if text and controlTypes.STATE_PROTECTED in self.obj.states:
+			if text and controlTypes.State.PROTECTED in self.obj.states:
 				text=u'*'*len(text)
 		else:
 			text = super(EditTextInfo, self)._getTextRange(start, end)
@@ -454,15 +488,16 @@ ITextDocumentUnitsToNVDAUnits={
 	comInterfaces.tom.tomStory:textInfos.UNIT_STORY,
 }
 
-NVDAUnitsToITextDocumentUnits={
-	textInfos.UNIT_CHARACTER:comInterfaces.tom.tomCharacter,
-	textInfos.UNIT_WORD:comInterfaces.tom.tomWord,
-	textInfos.UNIT_LINE:comInterfaces.tom.tomLine,
-	textInfos.UNIT_SENTENCE:comInterfaces.tom.tomSentence,
-	textInfos.UNIT_PARAGRAPH:comInterfaces.tom.tomParagraph,
-	textInfos.UNIT_STORY:comInterfaces.tom.tomStory,
-	textInfos.UNIT_READINGCHUNK:comInterfaces.tom.tomSentence,
+NVDAUnitsToITextDocumentUnits: Dict[str, int] = {
+	textInfos.UNIT_CHARACTER: comInterfaces.tom.tomCharacter,
+	textInfos.UNIT_WORD: comInterfaces.tom.tomWord,
+	textInfos.UNIT_LINE: comInterfaces.tom.tomLine,
+	textInfos.UNIT_SENTENCE: comInterfaces.tom.tomSentence,
+	textInfos.UNIT_PARAGRAPH: comInterfaces.tom.tomParagraph,
+	textInfos.UNIT_STORY: comInterfaces.tom.tomStory,
+	textInfos.UNIT_READINGCHUNK: comInterfaces.tom.tomLine,
 }
+
 
 class ITextDocumentTextInfo(textInfos.TextInfo):
 
@@ -473,7 +508,10 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		else:
 			raise NotImplementedError
 
-	def _getFormatFieldAtRange(self, textRange, formatConfig):
+	# C901 '_getFormatFieldAtRange' is too complex
+	# Note: when working on _getFormatFieldAtRange look for opportunities to simplify
+	# and move logic out into smaller helper functions.
+	def _getFormatFieldAtRange(self, textRange, formatConfig):  # noqa: C901
 		formatField=textInfos.FormatField()
 		fontObj=None
 		paraFormatObj=None
@@ -498,7 +536,8 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		if formatConfig["reportFontSize"]:
 			if not fontObj:
 				fontObj = textRange.font
-			formatField["font-size"]="%spt"%fontObj.size
+			# Translators: Abbreviation for points, a measurement of font size.
+			formatField["font-size"] = pgettext("font size", "%s pt") % fontObj.size
 		if formatConfig["reportFontAttributes"]:
 			if not fontObj:
 				fontObj = textRange.font
@@ -506,10 +545,15 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 			formatField["italic"]=bool(fontObj.italic)
 			formatField["underline"]=bool(fontObj.underline)
 			formatField["strikethrough"]=bool(fontObj.StrikeThrough)
+		if formatConfig["reportSuperscriptsAndSubscripts"]:
+			if not fontObj:
+				fontObj = textRange.font
 			if fontObj.superscript:
-				formatField["text-position"]="super"
+				formatField["text-position"] = TextPosition.SUPERSCRIPT
 			elif fontObj.subscript:
-				formatField["text-position"]="sub"
+				formatField["text-position"] = TextPosition.SUBSCRIPT
+			else:
+			    formatField["text-position"] = TextPosition.BASELINE
 		if formatConfig["reportLinks"]:
 			linkRange = textRange.Duplicate
 			linkRange.Collapse(comInterfaces.tom.tomStart)
@@ -517,26 +561,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		if formatConfig["reportColor"]:
 			if not fontObj:
 				fontObj = textRange.font
-			fgColor=fontObj.foreColor
-			if fgColor==comInterfaces.tom.tomAutoColor:
-				# Translators: The default color of text when a color has not been set by the author. 
-				formatField['color']=_("default color")
-			elif fgColor&0xff000000:
-				# The color is a palet index (we don't know the palet)
-				# Translators: The color of text cannot be detected. 
-				formatField['color']=_("Unknown color")
-			else:
-				formatField["color"]=colors.RGB.fromCOLORREF(fgColor)
-			bkColor=fontObj.backColor
-			if bkColor==comInterfaces.tom.tomAutoColor:
-				# Translators: The default background color  when a color has not been set by the author. 
-				formatField['background-color']=_("default color")
-			elif bkColor&0xff000000:
-				# The color is a palet index (we don't know the palet)
-				# Translators: The background color cannot be detected. 
-				formatField['background-color']=_("Unknown color")
-			else:
-				formatField["background-color"]=colors.RGB.fromCOLORREF(bkColor)
+			self._setFormatFieldColor(fontObj, formatField)
 		if not fontObj:
 			fontObj = textRange.font
 		try:
@@ -548,6 +573,36 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 			pass
 		return formatField
 
+	def _setFormatFieldColor(
+			self,
+			fontObj,
+			formatField: textInfos.FormatField
+	) -> None:
+		fgColor = fontObj.foreColor
+		if fgColor == comInterfaces.tom.tomAutoColor:
+			# Translators: The text color as reported in Wordpad (Automatic) or NVDA log viewer.
+			formatField['color'] = _("{color} (default color)").format(
+				color=colors.RGB.fromCOLORREF(GetSysColor(SysColorIndex.WINDOW_TEXT)).name,
+			)
+		elif fgColor & 0xff000000:
+			# The color is a palet index (we don't know the palet)
+			# Translators: The color of text cannot be detected.
+			formatField['color'] = _("Unknown color")
+		else:
+			formatField["color"] = colors.RGB.fromCOLORREF(fgColor)
+		bkColor = fontObj.backColor
+		if bkColor == comInterfaces.tom.tomAutoColor:
+			# Translators: The background color as reported in Wordpad (Automatic) or NVDA log viewer.
+			formatField['background-color'] = _("{color} (default color)").format(
+				color=colors.RGB.fromCOLORREF(GetSysColor(SysColorIndex.WINDOW)).name,
+			)
+		elif bkColor & 0xff000000:
+			# The color is a palet index (we don't know the palet)
+			# Translators: The background color cannot be detected.
+			formatField['background-color'] = _("Unknown color")
+		else:
+			formatField["background-color"] = colors.RGB.fromCOLORREF(bkColor)
+	
 	def _expandFormatRange(self, textRange, formatConfig):
 		startLimit=self._rangeObj.start
 		endLimit=self._rangeObj.end
@@ -622,12 +677,12 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		bufText=rangeObj.text
 		if not bufText:
 			return u""
-		if controlTypes.STATE_PROTECTED in self.obj.states:
+		if controlTypes.State.PROTECTED in self.obj.states:
 			return u'*'*len(bufText)
 		newTextList=[]
 		start=rangeObj.start
 		for offset in range(len(bufText)):
-			if ord(bufText[offset])==0xfffc:
+			if ord(bufText[offset]) == ord(textUtils.OBJ_REPLACEMENT_CHAR):
 				if embedRangeObj is None: embedRangeObj=rangeObj.duplicate
 				embedRangeObj.setRange(start+offset,start+offset+1)
 				label=self._getEmbeddedObjectLabel(embedRangeObj)
@@ -665,20 +720,28 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		else:
 			raise NotImplementedError("position: %s"%position)
 
-	def getTextWithFields(self,formatConfig=None):
+	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
 		if not formatConfig:
 			formatConfig=config.conf["documentFormatting"]
 		textRange=self._rangeObj.duplicate
 		textRange.collapse(True)
 		if not formatConfig["detectFormatAfterCursor"]:
 			textRange.expand(comInterfaces.tom.tomCharacter)
-			return [textInfos.FieldCommand("formatChange",self._getFormatFieldAtRange(textRange, formatConfig)),
-				self._getTextAtRange(self._rangeObj)]
+			return [
+				textInfos.FieldCommand(
+					"formatChange",
+					self._getFormatFieldAtRange(textRange, formatConfig)
+				),
+				self._getTextAtRange(self._rangeObj)
+			]
 		commandList=[]
 		endLimit=self._rangeObj.end
 		while textRange.end<endLimit:
 			self._expandFormatRange(textRange, formatConfig)
-			commandList.append(textInfos.FieldCommand("formatChange",self._getFormatFieldAtRange(textRange, formatConfig)))
+			commandList.append(textInfos.FieldCommand(
+				"formatChange",
+				self._getFormatFieldAtRange(textRange, formatConfig)
+			))
 			commandList.append(self._getTextAtRange(textRange))
 			end = textRange.end
 			textRange.start = end
@@ -803,7 +866,7 @@ class Edit(EditableTextWithAutoSelectDetection, Window):
 		return None
 
 	def _get_role(self):
-		return controlTypes.ROLE_EDITABLETEXT
+		return controlTypes.Role.EDITABLETEXT
 
 	def event_caret(self):
 		global selOffsetsAtLastCaretEvent
@@ -826,7 +889,7 @@ class Edit(EditableTextWithAutoSelectDetection, Window):
 	def _get_states(self):
 		states = super(Edit, self)._get_states()
 		if self.windowStyle & winUser.ES_MULTILINE:
-			states.add(controlTypes.STATE_MULTILINE)
+			states.add(controlTypes.State.MULTILINE)
 		return states
 
 class RichEdit(Edit):

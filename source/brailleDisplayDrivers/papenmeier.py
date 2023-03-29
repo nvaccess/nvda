@@ -25,9 +25,6 @@ except:
 import hwPortUtils
 import serial
 
-#for brxcom
-import ctypes
-import winreg
 
 #for scripting
 from baseObject import ScriptableObject
@@ -127,26 +124,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		"""should return false if there is a missing dependency"""
 		return True
 
-	def connectBrxCom(self):#connect to brxcom server (provided by papenmeier)
-		try:
-			with winreg.OpenKey(
-					winreg.HKEY_LOCAL_MACHINE,
-					r"SOFTWARE\FHP\BrxCom"
-			) as brxcomkey:
-				value, vtype = winreg.QueryValueEx(brxcomkey, "InstallPath")
-				assert vtype == winreg.REG_SZ # value is of type: str
-			self._brxnvda = ctypes.cdll.LoadLibrary(value + r"\brxnvda.dll")
-			if self._brxnvda.brxnvda_init(value + r"\BrxCom.dll"):
-				self._baud=1 #prevent bluetooth from connecting
-				self.numCells=self._brxnvda.brxnvda_numCells()
-				self._voffset=self._brxnvda.brxnvda_numVertCells()
-				log.info("Found Braille Display connected via BRXCom")
-				self.startTimer()
-				return None
-		except:
-			log.debugWarning("BRXCom is not installed")
-			self._brxnvda = None
-
 	def connectBluetooth(self):
 		"""try to connect to bluetooth device first, bluetooth is only supported on Braillex Trio"""
 		if(self._baud == 0 and self._dev is None):
@@ -162,7 +139,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 							log.debugWarning("connectBluetooth failed")
 
 	def connectUSB(self, devlist: List[bytes]):
-		"""try to connect to usb device,is triggered when BRXCOM is not installed and bluetooth
+		"""Try to connect to usb device, this is triggered when bluetooth
 connection could not be established"""
 		try:
 			self._dev = ftdi2.open_ex(devlist[0])
@@ -183,8 +160,6 @@ connection could not be established"""
 		self._dev = None
 		self._proto = None
 		devlist: List[bytes] = []
-		self.connectBrxCom()
-		if(self._baud == 1): return #brxcom is running, skip bluetooth and USB
 
 		#try to connect to usb device,
 		#if no usb device is found there may be a bluetooth device
@@ -348,16 +323,11 @@ connection could not be established"""
 			self.stopTimer()
 			if(self._dev is not None): self._dev.close()
 			self._dev=None
-			if(self._brxnvda): self._brxnvda.brxnvda_close()
 		except:
 			self._dev=None
 
 	def display(self, cells: List[int]):
 		"""write to braille display"""
-		if(self._brxnvda):
-			newcells = bytes(cells)
-			self._brxnvda.brxnvda_sendToDisplay(newcells)
-			return
 		if(self._dev is None): return
 		try:
 			self._dev.write(brl_out(cells, self._nlk, self._nrk, self._voffset))
@@ -372,11 +342,6 @@ connection could not be established"""
 	def _handleKeyPresses(self):
 		"""handles key presses and performs a gesture"""
 		try:
-			if(self._brxnvda):
-				k: int = self._brxnvda.brxnvda_keyIndex()
-				if(k!=-1):
-					self.executeGesture(InputGesture(k,self))
-				return
 			if(self._dev is None and self._baud>0):
 				try:
 					devlist: List[bytes] = ftdi2.list_devices()
@@ -421,12 +386,60 @@ connection could not be established"""
 			"kb:alt": ("br(papenmeier):lt+d3",),
 			"kb:control": ("br(papenmeier):lt+d2",),
 			"kb:escape": ("br(papenmeier):space+d7",),
-			"kb:control+escape": ("br(papenmeier):lt+d1+d2+d3+d4+d5+d6",),
 			"kb:tab": ("br(papenmeier):space+d3+d7",),
 			"kb:upArrow": ("br(papenmeier):space+d2",),
 			"kb:downArrow": ("br(papenmeier):space+d5",),
 			"kb:leftArrow": ("br(papenmeier):space+d1",),
 			"kb:rightArrow": ("br(papenmeier):space+d4",),
+			
+			"kb:control+escape": ("br(papenmeier):space+d1+d2+d3+d4+d5+d6",),
+			"kb:control+alt+delete": ("br(papenmeier):space+d1+d2+d3+d4+d5+d6+d7+d8",),
+			"kb:enter": ("br(papenmeier):space+d8", "br(papenmeier):d8",),
+			"kb:pageup": ("br(papenmeier):space+d3",),
+			"kb:pagedown": ("br(papenmeier):space+d6",),
+			"kb:backspace": ("br(papenmeier):space+d6+d8", "br(papenmeier):d7",),
+			"kb:home": ("br(papenmeier):space+d1+d2",),
+			"kb:end": ("br(papenmeier):space+d4+d5",),
+			"kb:delete": ("br(papenmeier):space+d5+d6",),
+			
+			"kb:f1": ("br(papenmeier):rt+d1",),
+			"kb:f2": ("br(papenmeier):rt+d1+d2",),
+			"kb:f3": ("br(papenmeier):rt+d1+d4",),
+			"kb:f4": ("br(papenmeier):rt+d1+d4+d5",),
+			"kb:f5": ("br(papenmeier):rt+d1+d5",),
+			"kb:f6": ("br(papenmeier):rt+d1+d2+d4",),
+			"kb:f7": ("br(papenmeier):rt+d1+d2+d4+d5",),
+			"kb:f8": ("br(papenmeier):rt+d1+d2+d5",),
+			"kb:f9": ("br(papenmeier):rt+d2+d4",),
+			"kb:f10": ("br(papenmeier):rt+d2+d4+d5",),
+			"kb:f11": ("br(papenmeier):rt+d1+d3",),
+			"kb:f12": ("br(papenmeier):rt+d1+d2+d3",),
+			"kb:control+a": ("br(papenmeier):d1+d7+d8",),
+			"kb:control+p": ("br(papenmeier):d1+d2+d3+d4+d7+d8",),
+			"kb:control+s": ("br(papenmeier):d2+d3+d4+d7+d8",),
+			"kb:control+b": ("br(papenmeier):d1+d2+d7+d8",),
+			"kb:control+c": ("br(papenmeier):d1+d4+d7+d8",),
+			"kb:control+d": ("br(papenmeier):d1+d4+d5+d7+d8",),
+			"kb:control+e": ("br(papenmeier):d1+d5+d7+d8",),
+			"kb:control+f": ("br(papenmeier):d1+d2+d4+d7+d8",),
+			"kb:control+g": ("br(papenmeier):d1+d2+d4+d5+d7+d8",),
+			"kb:control+h": ("br(papenmeier):d1+d2+d5+d7+d8",),
+			"kb:control+i": ("br(papenmeier):d2+d4+d7+d8",),
+			"kb:control+j": ("br(papenmeier):d2+d4+d5+d7+d8",),
+			"kb:control+k": ("br(papenmeier):d1+d3+d7+d8",),
+			"kb:control+l": ("br(papenmeier):d1+d2+d3+d7+d8",),
+			"kb:control+m": ("br(papenmeier):d1+d3+d4+d7+d8",),
+			"kb:control+n": ("br(papenmeier):d1+d3+d4+d5+d7+d8",),
+			"kb:control+o": ("br(papenmeier):d1+d3+d5+d7+d8",),
+			"kb:control+q": ("br(papenmeier):d1+d2+d3+d4+d5+d7+d8",),
+			"kb:control+r": ("br(papenmeier):d1+d2+d3+d5+d7+d8",),
+			"kb:control+t": ("br(papenmeier):d2+d3+d4+d5+d7+d8",),
+			"kb:control+u": ("br(papenmeier):d1+d3+d6+d7+d8",),
+			"kb:control+v": ("br(papenmeier):d1+d2+d3+d6+d7+d8",),
+			"kb:control+w": ("br(papenmeier):d2+d4+d5+d6+d7+d8",),
+			"kb:control+x": ("br(papenmeier):d1+d3+d4+d6+d7+d8",),
+			"kb:control+y": ("br(papenmeier):d1+d3+d4+d5+d6+d7+d8",),
+			"kb:control+z": ("br(papenmeier):d1+d3+d5+d6+d7+d8",),
 		}
 	})
 
@@ -503,24 +516,6 @@ def brl_join_keys(dec: List[str]) -> str:
 	elif(len(dec) == 2): return dec[1] + "," + dec[0]
 	else: return ''
 
-def brl_keyname_decoded(key: int, rest: str) -> str:
-	"""convert index used by brxcom to keyname"""
-	if(key == 11 or key == 9): return 'l1' + rest
-	elif(key == 12 or key == 10): return 'l2' + rest
-	elif(key == 13 or key == 15): return 'r1' + rest
-	elif(key == 14 or key == 16): return 'r2' + rest
-
-	elif(key == 3): return 'up' + rest
-	elif(key == 7): return 'dn' + rest
-	elif(key == 1): return 'left' + rest
-	elif(key == 5): return 'right' + rest
-
-	elif(key == 4): return 'up2' + rest
-	elif(key == 8): return 'dn2' + rest
-	elif(key == 2): return 'left2' + rest
-	elif(key == 6): return 'right2' + rest
-	else: return ''
-
 
 class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
 	"""Input gesture for papenmeier displays"""
@@ -535,7 +530,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 			self.id=brl_join_keys(brl_decode_key_names_repeat(driver))
 			return
 
-		if driver._baud != 1 and keys[0] == 'L':
+		if keys[0] == ord(b'L'):
 			assert isinstance(keys, bytes)
 			if (keys[3] - 48) >> 3:
 				scancode = keys[5] - 48 << 4 | keys[6] - 48
@@ -564,22 +559,6 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 			elif thumbs == 2: self.space = True
 			else:self.dots = dots
 			return
-
-		if(driver._baud==1):#brxcom
-			assert isinstance(keys, int)
-			if(keys>255 and keys<512):
-				self.routingIndex = keys-256-driver._voffset
-				self.id = "route"
-				return
-			elif(keys>511 and keys <786):
-				self.routingIndex = keys-512-driver._voffset
-				self.id="upperRouting"
-				return
-			else:
-				key1 = (keys & 0xFFFF0000) >> 16
-				key2 = keys & 0x0000FFFF
-				self.id=brl_keyname_decoded(key1, ',')+brl_keyname_decoded(key2, '')
-				return
 
 		if(driver._proto == 'A'):#non trio
 			assert isinstance(keys, bytes)

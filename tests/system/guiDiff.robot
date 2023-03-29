@@ -1,0 +1,8 @@
+--loglevel DEBUG
+--outputdir .\testOutput\system
+--xunit systemTests.xml
+--pythonpath .\tests\system\libraries
+--suite NVDASettings
+--variable whichNVDA:source
+--variable currentVersion:source
+--variable cacheFolder:.\tests\system\settingsCache

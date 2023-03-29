@@ -15,12 +15,12 @@ import eventHandler
 class AppModule(appModuleHandler.AppModule):
 
 	def event_NVDAObject_init(self, obj):
-		if obj.windowClassName == "Chrome_RenderWidgetHostHWND" and isinstance(obj, IAccessible) and obj.IAccessibleChildID < 0 and obj.role == controlTypes.ROLE_UNKNOWN:
+		if obj.windowClassName == "Chrome_RenderWidgetHostHWND" and isinstance(obj, IAccessible) and obj.IAccessibleChildID < 0 and obj.role == controlTypes.Role.UNKNOWN:
 			# #5439: Focus seems to hit Chromium objects that die before we can fetch them.
 			obj.shouldAllowIAccessibleFocusEvent = False
 
 	def event_gainFocus(self, obj, nextHandler):
-		if not eventHandler.isPendingEvents("gainFocus") and obj.windowClassName == "Chrome_WidgetWin_0" and obj.role == controlTypes.ROLE_WINDOW:
+		if not eventHandler.isPendingEvents("gainFocus") and obj.windowClassName == "Chrome_WidgetWin_0" and obj.role == controlTypes.Role.WINDOW:
 			# Spotify doesn't fire focus on the correct object when it gets the foreground.
 			# Instead, it fires focus on a window ancestor.
 			# Try to get the correct focus.

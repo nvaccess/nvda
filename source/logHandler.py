@@ -1,5 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2020 NV Access Limited, Rui Batista, Joseph Lee, Leonard de Ruijter, Babbage B.V.
+# Copyright (C) 2007-2022 NV Access Limited, Rui Batista, Joseph Lee, Leonard de Ruijter, Babbage B.V.,
+# Accessolutions, Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -9,31 +10,36 @@ import os
 import ctypes
 import sys
 import warnings
-from encodings import utf_8
 import logging
 import inspect
 import winsound
 import traceback
-from types import MethodType, FunctionType
+from types import FunctionType
 import globalVars
+import winKernel
 import buildVersion
 from typing import Optional
+import exceptions
+import RPCConstants
+import NVDAState
+
 
 ERROR_INVALID_WINDOW_HANDLE = 1400
 ERROR_TIMEOUT = 1460
-RPC_S_SERVER_UNAVAILABLE = 1722
-RPC_S_CALL_FAILED_DNE = 1727
 EPT_S_NOT_REGISTERED = 1753
 E_ACCESSDENIED = -2147024891
 CO_E_OBJNOTCONNECTED = -2147220995
 EVENT_E_ALL_SUBSCRIBERS_FAILED = -2147220991
-RPC_E_CALL_REJECTED = -2147418111
-RPC_E_DISCONNECTED = -2147417848
 LOAD_WITH_ALTERED_SEARCH_PATH=0x8
 
-def isPathExternalToNVDA(path):
+
+def isPathExternalToNVDA(path: str) -> bool:
 	""" Checks if the given path is external to NVDA (I.e. not pointing to built-in code). """
-	if path[0] != "<" and os.path.isabs(path) and not path.startswith(sys.path[0] + "\\"):
+	if(
+		path[0] != "<"
+		and os.path.isabs(path)
+		and not os.path.normpath(path).startswith(sys.path[0] + "\\")
+	):
 		# This module is external because:
 		# the code comes from a file (fn doesn't begin with "<");
 		# it has an absolute file path (code bundled in binary builds reports relative paths); and
@@ -63,7 +69,15 @@ def getCodePath(f):
 	className=""
 	#Code borrowed from http://mail.python.org/pipermail/python-list/2000-January/020141.html
 	if f.f_code.co_argcount:
-		arg0=f.f_locals[f.f_code.co_varnames[0]]
+		f_locals = f.f_locals
+		arg0 = f_locals[f.f_code.co_varnames[0]]
+		if f.f_code.co_flags & inspect.CO_NEWLOCALS:
+			# Fetching of Frame.f_locals causes a function frames's locals to be cached on the frame for ever.
+			# If an Exception is currently stored as a local variable on that frame,
+			# A reference cycle will be created, holding the frame and all its variables.
+			# Therefore clear f_locals manually.
+			f_locals.clear()
+		del f_locals
 		# #6122: Check if this function is a member of its first argument's class (and specifically which base class if any) 
 		# Rather than an instance member of its first argument.
 		# This stops infinite recursions if fetching data descriptors,
@@ -93,16 +107,36 @@ def getCodePath(f):
 					break
 	return ".".join(x for x in (path,className,funcName) if x)
 
+
+def shouldPlayErrorSound() -> bool:
+	"""Indicates if an error sound should be played when an error is logged.
+	"""
+	import nvwave
+	if nvwave.isInError():
+		if nvwave._isDebugForNvWave():
+			log.debug("No beep for log; nvwave is in error state")
+		return False
+
+	import config
+	# Only play the error sound if this is a test version or if the config states it explicitly.
+	return (
+		buildVersion.isTestVersion
+		# Play error sound: 1 = Yes
+		or (config.conf is not None and config.conf["featureFlag"]["playErrorSound"] == 1)
+	)
+
+
 # Function to strip the base path of our code from traceback text to improve readability.
-if getattr(sys, "frozen", None):
-	# We're running a py2exe build.
-	stripBasePathFromTracebackText = lambda text: text
-else:
+if NVDAState.isRunningAsSource():
 	BASE_PATH = os.path.split(__file__)[0] + os.sep
 	TB_BASE_PATH_PREFIX = '  File "'
 	TB_BASE_PATH_MATCH = TB_BASE_PATH_PREFIX + BASE_PATH
 	def stripBasePathFromTracebackText(text):
 		return text.replace(TB_BASE_PATH_MATCH, TB_BASE_PATH_PREFIX)
+else:
+	def stripBasePathFromTracebackText(text: str) -> str:
+		return text
+
 
 class Logger(logging.Logger):
 	# Import standard levels for convenience.
@@ -112,6 +146,11 @@ class Logger(logging.Logger):
 	IO = 12
 	DEBUGWARNING = 15
 	OFF = 100
+
+	#: The start position of a fragment of the log file as marked with
+	#: L{markFragmentStart} for later retrieval using L{getFragment}.
+	#: @type: C{long}
+	fragmentStart = None
 
 	def _log(self, level, msg, args, exc_info=None, extra=None, codepath=None, activateLogViewer=False, stack_info=None):
 		if not extra:
@@ -124,7 +163,7 @@ class Logger(logging.Logger):
 			codepath=getCodePath(f)
 		extra["codepath"] = codepath
 
-		if not globalVars.appArgs or globalVars.appArgs.secure:
+		if globalVars.appArgs.secure:
 			# The log might expose sensitive information and the Save As dialog in the Log Viewer is a security risk.
 			activateLogViewer = False
 
@@ -171,15 +210,34 @@ class Logger(logging.Logger):
 		However, certain exceptions which aren't considered errors (or aren't errors that we can fix) are expected and will therefore be logged at a lower level.
 		"""
 		import comtypes
-		from core import CallCancelled, RPC_E_CALL_CANCELED
 		if exc_info is True:
 			exc_info = sys.exc_info()
 
 		exc = exc_info[1]
 		if (
-			(isinstance(exc, WindowsError) and exc.winerror in (ERROR_INVALID_WINDOW_HANDLE, ERROR_TIMEOUT, RPC_S_SERVER_UNAVAILABLE, RPC_S_CALL_FAILED_DNE, EPT_S_NOT_REGISTERED, RPC_E_CALL_CANCELED))
-			or (isinstance(exc, comtypes.COMError) and (exc.hresult in (E_ACCESSDENIED, CO_E_OBJNOTCONNECTED, EVENT_E_ALL_SUBSCRIBERS_FAILED, RPC_E_CALL_REJECTED, RPC_E_CALL_CANCELED, RPC_E_DISCONNECTED) or exc.hresult & 0xFFFF == RPC_S_SERVER_UNAVAILABLE))
-			or isinstance(exc, CallCancelled)
+			(
+				isinstance(exc, WindowsError)
+				and exc.winerror in (
+					ERROR_INVALID_WINDOW_HANDLE,
+					ERROR_TIMEOUT,
+					RPCConstants.RPC.S_SERVER_UNAVAILABLE,
+					RPCConstants.RPC.S_CALL_FAILED_DNE,
+					EPT_S_NOT_REGISTERED,
+					RPCConstants.RPC.E_CALL_CANCELED
+				)
+			)
+			or (
+				isinstance(exc, comtypes.COMError)
+				and (
+					exc.hresult in (
+						E_ACCESSDENIED,
+						CO_E_OBJNOTCONNECTED,
+						EVENT_E_ALL_SUBSCRIBERS_FAILED,
+						RPCConstants.RPC.E_CALL_REJECTED,
+						RPCConstants.RPC.E_CALL_CANCELED,
+						RPCConstants.RPC.E_DISCONNECTED
+					) or exc.hresult & 0xFFFF == RPCConstants.RPC.S_SERVER_UNAVAILABLE))
+			or isinstance(exc, exceptions.CallCancelled)
 		):
 			level = self.DEBUGWARNING
 		else:
@@ -189,11 +247,51 @@ class Logger(logging.Logger):
 			return
 		self._log(level, msg, (), exc_info=exc_info, **kwargs)
 
+	def markFragmentStart(self):
+		"""Mark the current end of the log file as the start position of a
+		fragment to be later retrieved by L{getFragment}.
+		@returns: Whether a log file is in use and a position could be marked
+		@rtype: bool
+		"""
+		if (
+			globalVars.appArgs.secure
+			or not globalVars.appArgs.logFileName
+			or not isinstance(logHandler, FileHandler)
+		):
+			return False
+		with open(globalVars.appArgs.logFileName, "r", encoding="UTF-8") as f:
+			# _io.TextIOWrapper.seek: whence=2 -- end of stream
+			f.seek(0, 2)
+			self.fragmentStart = f.tell()
+			return True
+
+	def getFragment(self):
+		"""Retrieve a fragment of the log starting from the position marked using
+		L{markFragmentStart}.
+		If L{fragmentStart} does not point to the current end of the log file, it
+		is reset to C{None} after reading the fragment.
+		@returns: The text of the fragment, or C{None} if L{fragmentStart} is None.
+		@rtype: str
+		"""
+		if (
+			self.fragmentStart is None
+			or globalVars.appArgs.secure
+			or not globalVars.appArgs.logFileName
+			or not isinstance(logHandler, FileHandler)
+		):
+			return None
+		with open(globalVars.appArgs.logFileName, "r", encoding="UTF-8") as f:
+			f.seek(self.fragmentStart)
+			fragment = f.read()
+			if fragment:
+				self.fragmentStart = None
+			return fragment
+
 class RemoteHandler(logging.Handler):
 
 	def __init__(self):
 		#Load nvdaHelperRemote.dll but with an altered search path so it can pick up other dlls in lib
-		path=os.path.abspath(os.path.join(u"lib",buildVersion.version,u"nvdaHelperRemote.dll"))
+		path = os.path.join(globalVars.appDir, "lib", buildVersion.version, "nvdaHelperRemote.dll")
 		h=ctypes.windll.kernel32.LoadLibraryExW(path,0,LOAD_WITH_ALTERED_SEARCH_PATH)
 		if not h:
 			raise OSError("Could not load %s"%path) 
@@ -203,24 +301,22 @@ class RemoteHandler(logging.Handler):
 	def emit(self, record):
 		msg = self.format(record)
 		try:
-			self._remoteLib.nvdaControllerInternal_logMessage(record.levelno, ctypes.windll.kernel32.GetCurrentProcessId(), msg)
+			self._remoteLib.nvdaControllerInternal_logMessage(record.levelno, globalVars.appPid, msg)
 		except WindowsError:
 			pass
 
 class FileHandler(logging.FileHandler):
 
 	def handle(self,record):
-		# Only play the error sound if this is a test version.
-		shouldPlayErrorSound =  buildVersion.isTestVersion
 		if record.levelno>=logging.CRITICAL:
 			try:
-				winsound.PlaySound("SystemHand",winsound.SND_ALIAS)
+				winsound.PlaySound("SystemHand", winsound.SND_ALIAS | winsound.SND_ASYNC)
 			except:
 				pass
-		elif record.levelno>=logging.ERROR and shouldPlayErrorSound:
+		elif record.levelno >= logging.ERROR and shouldPlayErrorSound():
 			import nvwave
 			try:
-				nvwave.playWaveFile("waves\\error.wav")
+				nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "error.wav"))
 			except:
 				pass
 		return super().handle(record)
@@ -231,6 +327,31 @@ class Formatter(logging.Formatter):
 
 	def formatException(self, ex):
 		return stripBasePathFromTracebackText(super(Formatter, self).formatException(ex))
+
+	def format(self, record: logging.LogRecord) -> str:
+		# NVDA's log calls provide / generate a special 'codepath' record attribute.
+		# Which is a clean and friendly module.class.function string.
+		# However, as NVDA's logger is also installed as the root logger to catch logging from other libraries,
+		# log calls outside of NVDA will not provide codepath.
+		if not hasattr(record, 'codepath'):
+			# #14315: codepath was not provided,
+			# So make up a simple one from standard record attributes we know will exist.
+			record.codepath = "{name}.{funcName}".format(**record.__dict__)
+		return super().format(record)
+
+	def formatTime(self, record: logging.LogRecord, datefmt: Optional[str] = None) -> str:
+		"""Custom implementation of `formatTime` which avoids `time.localtime`
+		since it causes a crash under some versions of Universal CRT when Python locale
+		is set to a Unicode one (#12160, Python issue 36792)
+		"""
+		timeAsFileTime = winKernel.time_tToFileTime(record.created)
+		timeAsSystemTime = winKernel.SYSTEMTIME()
+		winKernel.FileTimeToSystemTime(timeAsFileTime, timeAsSystemTime)
+		timeAsLocalTime = winKernel.SYSTEMTIME()
+		winKernel.SystemTimeToTzSpecificLocalTime(None, timeAsSystemTime, timeAsLocalTime)
+		res = f"{timeAsLocalTime.wHour:02d}:{timeAsLocalTime.wMinute:02d}:{timeAsLocalTime.wSecond:02d}"
+		return self.default_msec_format % (res, record.msecs)
+
 
 class StreamRedirector(object):
 	"""Redirects an output stream to a logger.
@@ -272,18 +393,37 @@ log: Logger = logging.getLogger("nvda")
 #: The singleton log handler instance.
 logHandler: Optional[logging.Handler] = None
 
+
 def _getDefaultLogFilePath():
-	if getattr(sys, "frozen", None):
+	if NVDAState.isRunningAsSource():
+		return os.path.join(globalVars.appDir, "nvda.log")
+	else:
 		import tempfile
 		return os.path.join(tempfile.gettempdir(), "nvda.log")
-	else:
-		return ".\\nvda.log"
+
 
 def _excepthook(*exc_info):
 	log.exception(exc_info=exc_info, codepath="unhandled exception")
 
 def _showwarning(message, category, filename, lineno, file=None, line=None):
 	log.debugWarning(warnings.formatwarning(message, category, filename, lineno, line).rstrip(), codepath="Python warning")
+
+
+def _shouldDisableLogging() -> bool:
+	"""Disables logging based on command line options and if secure mode is active.
+	See NoConsoleOptionParser in nvda.pyw, #TODO and #8516.
+
+	Secure mode disables logging.
+	Logging on secure screens could allow keylogging of passwords and retrieval from the SYSTEM user.
+
+	* `--secure` overrides any logging preferences by disabling logging.
+	* `--debug-logging` or `--log-level=X` overrides the user config log level setting.
+	* `--debug-logging` and `--log-level=X` override `--no-logging`.
+	"""
+	logLevelOverridden = globalVars.appArgs.debugLogging or not globalVars.appArgs.logLevel == 0
+	noLoggingRequested = globalVars.appArgs.noLogging and not logLevelOverridden
+	return globalVars.appArgs.secure or noLoggingRequested
+
 
 def initialize(shouldDoRemoteLogging=False):
 	"""Initialize logging.
@@ -304,9 +444,7 @@ def initialize(shouldDoRemoteLogging=False):
 			fmt="{levelname!s} - {codepath!s} ({asctime}) - {threadName} ({thread}):\n{message}",
 			style="{"
 		)
-		if (globalVars.appArgs.secure or globalVars.appArgs.noLogging) and (not globalVars.appArgs.debugLogging and globalVars.appArgs.logLevel == 0):
-			# Don't log in secure mode.
-			# #8516: also if logging is completely turned off.
+		if _shouldDisableLogging():
 			logHandler = logging.NullHandler()
 			# There's no point in logging anything at all, since it'll go nowhere.
 			log.root.setLevel(Logger.OFF)

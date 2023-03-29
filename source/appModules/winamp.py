@@ -11,12 +11,12 @@ from scriptHandler import isScriptWaiting
 from NVDAObjects.IAccessible import IAccessible 
 import appModuleHandler
 import speech
-import locale
 import controlTypes
 import api
 import watchdog
 import braille
 import ui
+import textUtils
 
 # message used to sent many messages to winamp's main window. 
 # most all of the IPC_* messages involve sending the message in the form of:
@@ -116,18 +116,18 @@ class winampPlaylistEditor(winampMainWindow):
 			winKernel.virtualFreeEx(self.processHandle,internalInfo,0,winKernel.MEM_RELEASE)
 		# file title is fetched in the current locale encoding.
 		# We need to decode it to unicode first. 
-		encoding=locale.getlocale()[1]
+		encoding = textUtils.USER_ANSI_CODE_PAGE
 		fileTitle=info.filetitle.decode(encoding,errors="replace")
 		return "%d.\t%s\t%s"%(curIndex+1,fileTitle,info.filelength)
 
 	def _get_role(self):
-		return controlTypes.ROLE_LISTITEM
+		return controlTypes.Role.LISTITEM
 
 	def script_changeItem(self,gesture):
 		gesture.send()
 		if not isScriptWaiting():
 			api.processPendingEvents()
-			speech.speakObject(self,reason=controlTypes.REASON_FOCUS)
+			speech.speakObject(self, reason=controlTypes.OutputReason.FOCUS)
 			braille.handler.handleGainFocus(self)
 
 	def event_nameChange(self):

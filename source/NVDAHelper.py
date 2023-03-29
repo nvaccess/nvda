@@ -1,18 +1,26 @@
-#NVDAHelper.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2008-2019 NV Access Limited, Peter Vagner, Davy Kager, Mozilla Corporation
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2008-2023 NV Access Limited, Peter Vagner, Davy Kager, Mozilla Corporation, Google LLC,
+# Leonard de Ruijter
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
+from typing import Optional
 import os
-import sys
 import winreg
 import msvcrt
+import winVersion
 import versionInfo
 import winKernel
 import config
 
 from ctypes import *
+from ctypes import (
+	WINFUNCTYPE,
+	c_long,
+	c_wchar_p,
+	c_wchar,
+	windll,
+)
 from ctypes.wintypes import *
 from comtypes import BSTR
 import winUser
@@ -21,21 +29,24 @@ import queueHandler
 import api
 import globalVars
 from logHandler import log
-import time
-import globalVars
+import NVDAState
+from utils.security import _isLockScreenModeActive
 
-versionedLibPath='lib'
-if os.environ.get('PROCESSOR_ARCHITEW6432') == 'ARM64':
-	versionedLib64Path = 'libArm64'
-else:
-	versionedLib64Path = 'lib64'
-if getattr(sys,'frozen',None):
-	# Not running from source. Libraries are in a version-specific directory
+versionedLibPath = os.path.join(globalVars.appDir, 'lib')
+versionedLibARM64Path = os.path.join(globalVars.appDir, 'libArm64')
+versionedLibAMD64Path = os.path.join(globalVars.appDir, 'lib64')
+
+
+if not NVDAState.isRunningAsSource():
+	# When running as a py2exe build, libraries are in a version-specific directory
 	versionedLibPath=os.path.join(versionedLibPath,versionInfo.version)
-	versionedLib64Path=os.path.join(versionedLib64Path,versionInfo.version)
+	versionedLibAMD64Path = os.path.join(versionedLibAMD64Path, versionInfo.version)
+	versionedLibARM64Path = os.path.join(versionedLibARM64Path, versionInfo.version)
+
 
 _remoteLib=None
-_remoteLoader64=None
+_remoteLoaderAMD64: "Optional[_RemoteLoader]" = None
+_remoteLoaderARM64: "Optional[_RemoteLoader]" = None
 localLib=None
 generateBeep=None
 VBuf_getTextInRange=None
@@ -114,6 +125,39 @@ def nvdaControllerInternal_requestRegistration(uuidString):
 	queueHandler.queueFunction(queueHandler.eventQueue,appModuleHandler.update,pid,helperLocalBindingHandle=bindingHandle,inprocRegistrationHandle=registrationHandle)
 	return 0
 
+
+@WINFUNCTYPE(c_long, c_wchar_p, c_wchar_p)
+def nvdaControllerInternal_reportLiveRegion(text: str, politeness: str):
+	assert isinstance(text, str), "Text isn't a string"
+	assert isinstance(politeness, str), "Politeness isn't a string"
+	if not config.conf["presentation"]["reportDynamicContentChanges"]:
+		return -1
+	focus = api.getFocusObject()
+	if focus.sleepMode == focus.SLEEP_FULL:
+		return -1
+	import queueHandler
+	import speech
+	from aria import AriaLivePoliteness
+	from speech.priorities import Spri
+	try:
+		politenessValue = AriaLivePoliteness(politeness.lower())
+	except ValueError:
+		log.error(f"nvdaControllerInternal_reportLiveRegion got unknown politeness of {politeness}", exc_info=True)
+		return -1
+	if politenessValue == AriaLivePoliteness.OFF:
+		log.error(f"nvdaControllerInternal_reportLiveRegion got unexpected politeness of {politeness}")
+	queueHandler.queueFunction(
+		queueHandler.eventQueue,
+		speech.speakText,
+		text,
+		priority=(
+			Spri.NEXT
+			if politenessValue == AriaLivePoliteness.ASSERTIVE
+			else Spri.NORMAL
+		)
+	)
+	return 0
+
 @WINFUNCTYPE(c_long,c_long,c_long,c_long,c_long,c_long)
 def nvdaControllerInternal_displayModelTextChangeNotify(hwnd, left, top, right, bottom):
 	import displayModel
@@ -151,10 +195,10 @@ def handleInputCompositionEnd(result):
 	curInputComposition=None
 	if isinstance(focus,InputComposition):
 		curInputComposition=focus
-		oldSpeechMode=speech.speechMode
-		speech.speechMode=speech.speechMode_off
+		oldSpeechMode = speech.getState().speechMode
+		speech.setSpeechMode(speech.SpeechMode.off)
 		eventHandler.executeEvent("gainFocus",focus.parent)
-		speech.speechMode=oldSpeechMode
+		speech.setSpeechMode(oldSpeechMode)
 	elif isinstance(focus.parent,InputComposition):
 		#Candidate list is still up
 		curInputComposition=focus.parent
@@ -170,15 +214,15 @@ def handleInputCompositionEnd(result):
 			# Sometimes InputCompositon object is gone
 			# Correct to container of CandidateItem
 			newFocus=focus.container
-		oldSpeechMode=speech.speechMode
-		speech.speechMode=speech.speechMode_off
+		oldSpeechMode = speech.getState().speechMode
+		speech.setSpeechMode(speech.SpeechMode.off)
 		eventHandler.executeEvent("gainFocus",newFocus)
-		speech.speechMode=oldSpeechMode
+		speech.setSpeechMode(oldSpeechMode)
 
 	if curInputComposition and not result:
 		result=curInputComposition.compositionString.lstrip(u'\u3000 ')
 	if result:
-		speech.speakText(result,symbolLevel=characterProcessing.SYMLVL_ALL)
+		speech.speakText(result, symbolLevel=characterProcessing.SymbolLevel.ALL)
 
 def handleInputCompositionStart(compositionString,selectionStart,selectionEnd,isReading):
 	import speech
@@ -200,11 +244,11 @@ def handleInputCompositionStart(compositionString,selectionStart,selectionEnd,is
 		if parent==focus:
 			parent=focus
 		curInputComposition=InputComposition(parent=parent)
-		oldSpeechMode=speech.speechMode
-		speech.speechMode=speech.speechMode_off
+		oldSpeechMode = speech.getState().speechMode
+		speech.setSpeechMode(speech.SpeechMode.off)
 		eventHandler.executeEvent("gainFocus",curInputComposition)
 		focus=curInputComposition
-		speech.speechMode=oldSpeechMode
+		speech.setSpeechMode(oldSpeechMode)
 	focus.compositionUpdate(compositionString,selectionStart,selectionEnd,isReading)
 
 @WINFUNCTYPE(c_long,c_wchar_p,c_int,c_int,c_int)
@@ -229,10 +273,10 @@ def handleInputCandidateListUpdate(candidatesString,selectionIndex,inputMethod):
 	focus=api.getFocusObject()
 	if not (0<=selectionIndex<len(candidateStrings)):
 		if isinstance(focus,CandidateItem):
-			oldSpeechMode=speech.speechMode
-			speech.speechMode=speech.speechMode_off
+			oldSpeechMode = speech.getState().speechMode
+			speech.setSpeechMode(speech.SpeechMode.off)
 			eventHandler.executeEvent("gainFocus",focus.parent)
-			speech.speechMode=oldSpeechMode
+			speech.setSpeechMode(oldSpeechMode)
 		return
 	oldCandidateItemsText=None
 	if isinstance(focus,CandidateItem):
@@ -346,9 +390,9 @@ def nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString):
 	#But threadIDs for console windows are always wrong so don't ignore for those.
 	if not isinstance(focus,NVDAObjects.window.Window) or (threadID!=focus.windowThreadID and focus.windowClassName!="ConsoleWindowClass"):
 		return 0
-	import sayAllHandler
+	from speech import sayAll
 	#Never announce changes while in sayAll (#1676)
-	if sayAllHandler.isRunning():
+	if sayAll.SayAllHandler.isRunning():
 		return 0
 	import queueHandler
 	import ui
@@ -394,11 +438,12 @@ def nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString):
 	queueHandler.queueFunction(queueHandler.eventQueue,ui.message,msg)
 	return 0
 
-@WINFUNCTYPE(c_long,c_long,c_wchar)
-def nvdaControllerInternal_typedCharacterNotify(threadID,ch):
+
+@WINFUNCTYPE(c_long, c_wchar)
+def nvdaControllerInternal_typedCharacterNotify(ch):
 	focus=api.getFocusObject()
 	if focus.windowClassName!="ConsoleWindowClass":
-		eventHandler.queueEvent("typedCharacter",focus,ch=ch)
+		eventHandler.queueEvent("typedCharacter", focus, ch=ch)
 	return 0
 
 @WINFUNCTYPE(c_long, c_int, c_int)
@@ -410,7 +455,13 @@ def nvdaControllerInternal_vbufChangeNotify(rootDocHandle, rootID):
 @WINFUNCTYPE(c_long, c_wchar_p)
 def nvdaControllerInternal_installAddonPackageFromPath(addonPath):
 	if globalVars.appArgs.launcher:
-		log.debugWarning("Unable to install addon into launcher.")
+		log.debugWarning("Unable to install add-on into launcher.")
+		return
+	if globalVars.appArgs.secure:
+		log.debugWarning("Unable to install add-on into secure copy of NVDA.")
+		return
+	if _isLockScreenModeActive():
+		log.debugWarning("Unable to install add-on while Windows is locked.")
 		return
 	import wx
 	from gui import addonGui
@@ -418,9 +469,23 @@ def nvdaControllerInternal_installAddonPackageFromPath(addonPath):
 	wx.CallAfter(addonGui.handleRemoteAddonInstall, addonPath)
 	return 0
 
-class RemoteLoader64(object):
 
-	def __init__(self):
+@WINFUNCTYPE(c_long)
+def nvdaControllerInternal_openConfigDirectory():
+	if globalVars.appArgs.secure:
+		log.debugWarning("Unable to open user config directory for secure copy of NVDA.")
+		return
+	if _isLockScreenModeActive():
+		log.debugWarning("Unable to open user config directory while Windows is locked.")
+		return
+	import systemUtils
+	systemUtils.openUserConfigurationDirectory()
+	return 0
+
+
+class _RemoteLoader:
+
+	def __init__(self, loaderDir: str):
 		# Create a pipe so we can write to stdin of the loader process.
 		pipeReadOrig, self._pipeWrite = winKernel.CreatePipe(None, 0)
 		# Make the read end of the pipe inheritable.
@@ -438,7 +503,9 @@ class RemoteLoader64(object):
 		# Therefore, explicitly specify our own process token, which causes them to be inherited.
 		token = winKernel.OpenProcessToken(winKernel.GetCurrentProcess(), winKernel.MAXIMUM_ALLOWED)
 		try:
-			winKernel.CreateProcessAsUser(token, None, os.path.join(versionedLib64Path,u"nvdaHelperRemoteLoader.exe"), None, None, True, None, None, None, si, pi)
+			loaderPath = os.path.join(loaderDir, "nvdaHelperRemoteLoader.exe")
+			log.debug(f"Starting {loaderPath}")
+			winKernel.CreateProcessAsUser(token, None, loaderPath, None, None, True, None, None, None, si, pi)
 			# We don't need the thread handle.
 			winKernel.closeHandle(pi.hThread)
 			self._process = pi.hProcess
@@ -460,8 +527,10 @@ class RemoteLoader64(object):
 		winKernel.waitForSingleObject(self._process, winKernel.INFINITE)
 		winKernel.closeHandle(self._process)
 
-def initialize():
-	global _remoteLib, _remoteLoader64, localLib, generateBeep, VBuf_getTextInRange, lastLanguageID, lastLayoutString
+
+def initialize() -> None:
+	global _remoteLib, _remoteLoaderAMD64, _remoteLoaderARM64
+	global localLib, generateBeep, VBuf_getTextInRange, lastLanguageID, lastLayoutString
 	hkl=c_ulong(windll.User32.GetKeyboardLayout(0)).value
 	lastLanguageID=winUser.LOWORD(hkl)
 	KL_NAMELENGTH=9
@@ -475,6 +544,7 @@ def initialize():
 		("nvdaController_cancelSpeech",nvdaController_cancelSpeech),
 		("nvdaController_brailleMessage",nvdaController_brailleMessage),
 		("nvdaControllerInternal_requestRegistration",nvdaControllerInternal_requestRegistration),
+		("nvdaControllerInternal_reportLiveRegion", nvdaControllerInternal_reportLiveRegion),
 		("nvdaControllerInternal_inputLangChangeNotify",nvdaControllerInternal_inputLangChangeNotify),
 		("nvdaControllerInternal_typedCharacterNotify",nvdaControllerInternal_typedCharacterNotify),
 		("nvdaControllerInternal_displayModelTextChangeNotify",nvdaControllerInternal_displayModelTextChangeNotify),
@@ -486,6 +556,7 @@ def initialize():
 		("nvdaControllerInternal_vbufChangeNotify",nvdaControllerInternal_vbufChangeNotify),
 		("nvdaControllerInternal_installAddonPackageFromPath",nvdaControllerInternal_installAddonPackageFromPath),
 		("nvdaControllerInternal_drawFocusRectNotify",nvdaControllerInternal_drawFocusRectNotify),
+		("nvdaControllerInternal_openConfigDirectory", nvdaControllerInternal_openConfigDirectory),
 	]:
 		try:
 			_setDllFuncPointer(localLib,"_%s"%name,func)
@@ -504,8 +575,15 @@ def initialize():
 	if config.isAppX:
 		log.info("Remote injection disabled due to running as a Windows Store Application")
 		return
-	#Load nvdaHelperRemote.dll but with an altered search path so it can pick up other dlls in lib
-	h=windll.kernel32.LoadLibraryExW(os.path.abspath(os.path.join(versionedLibPath,u"nvdaHelperRemote.dll")),0,0x8)
+	# Load nvdaHelperRemote.dll
+	h = windll.kernel32.LoadLibraryExW(
+		os.path.join(versionedLibPath, "nvdaHelperRemote.dll"),
+		0,
+		# Using an altered search path is necessary here
+		# As NVDAHelperRemote needs to locate dependent dlls in the same directory
+		# such as IAccessible2proxy.dll.
+		winKernel.LOAD_WITH_ALTERED_SEARCH_PATH
+	)
 	if not h:
 		log.critical("Error loading nvdaHelperRemote.dll: %s" % WinError())
 		return
@@ -516,20 +594,33 @@ def initialize():
 		log.error("Error installing IA2 support")
 	#Manually start the in-process manager thread for this NVDA main thread now, as a slow system can cause this action to confuse WX
 	_remoteLib.initInprocManagerThreadIfNeeded()
-	if os.environ.get('PROCESSOR_ARCHITEW6432') in ('AMD64', 'ARM64'):
-		_remoteLoader64=RemoteLoader64()
+	versionedLibARM64Path
+	arch = winVersion.getWinVer().processorArchitecture
+	if arch == 'AMD64':
+		_remoteLoaderAMD64 = _RemoteLoader(versionedLibAMD64Path)
+	elif arch == 'ARM64':
+		_remoteLoaderARM64 = _RemoteLoader(versionedLibARM64Path)
+		# Windows on ARM from Windows 11 supports running AMD64 apps.
+		# Thus we also need to be able to inject into these.
+		if winVersion.getWinVer() >= winVersion.WIN11:
+			_remoteLoaderAMD64 = _RemoteLoader(versionedLibAMD64Path)
+
 
 def terminate():
-	global _remoteLib, _remoteLoader64, localLib, generateBeep, VBuf_getTextInRange
+	global _remoteLib, _remoteLoaderAMD64, _remoteLoaderARM64
+	global localLib, generateBeep, VBuf_getTextInRange
 	if not config.isAppX:
 		if not _remoteLib.uninstallIA2Support():
 			log.debugWarning("Error uninstalling IA2 support")
 		if _remoteLib.injection_terminate() == 0:
 			raise RuntimeError("Error terminating NVDAHelperRemote")
 		_remoteLib=None
-		if _remoteLoader64:
-			_remoteLoader64.terminate()
-			_remoteLoader64=None
+		if _remoteLoaderAMD64:
+			_remoteLoaderAMD64.terminate()
+			_remoteLoaderAMD64 = None
+		if _remoteLoaderARM64:
+			_remoteLoaderARM64.terminate()
+			_remoteLoaderARM64 = None
 	generateBeep=None
 	VBuf_getTextInRange=None
 	localLib.nvdaHelperLocal_terminate()

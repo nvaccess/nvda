@@ -5,14 +5,16 @@
 #Copyright (C) 2008-2017 NV Access Limited, Gianluca Casalino, Alberto Benassati, Babbage B.V.
 from typing import Optional, List
 
+import os
+import globalVars
 from logHandler import log
-from ctypes import *
+from ctypes import windll
 import inputCore
 import wx
 import braille
 
 try:
-	lilliDll=windll.LoadLibrary("brailleDisplayDrivers\\lilli.dll")
+	lilliDll = windll.LoadLibrary(os.path.join(globalVars.appDir, "brailleDisplayDrivers", "lilli.dll"))
 except:
 	lilliDll=None
 

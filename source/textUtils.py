@@ -1,9 +1,8 @@
 # -*- coding: UTF-8 -*-
-#textUtils.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2018-2019 NV Access Limited, Babbage B.V.
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2018-2021 NV Access Limited, Babbage B.V., Łukasz Golonka
 
 """
 Classes and utilities to deal with offsets variable width encodings, particularly utf_16.
@@ -18,6 +17,8 @@ import locale
 from logHandler import log
 
 WCHAR_ENCODING = "utf_16_le"
+USER_ANSI_CODE_PAGE = locale.getpreferredencoding()
+
 
 class WideStringOffsetConverter:
 	R"""
@@ -201,7 +202,7 @@ def getTextFromRawBytes(
 		if numChars > 1 and any(buf[numChars:]):
 			encoding = WCHAR_ENCODING
 		else:
-			encoding = locale.getlocale()[1]
+			encoding = USER_ANSI_CODE_PAGE
 	else:
 		encoding = encodings.normalize_encoding(encoding).lower()
 	if encoding.startswith("utf_16"):
@@ -235,3 +236,14 @@ LOW_SURROGATE_LAST = u"\uDFFF"
 def isLowSurrogate(ch: str) -> bool:
 	"""Returns if the given character is a low surrogate UTF-16 character."""
 	return LOW_SURROGATE_FIRST <= ch <= LOW_SURROGATE_LAST
+
+
+#: ￼ OBJECT REPLACEMENT CHARACTER,
+# placeholder in the text for another unspecified object, for example in a compound document.
+# https://en.wikipedia.org/wiki/Specials_(Unicode_block)
+OBJ_REPLACEMENT_CHAR = u"\uFFFC"
+
+#: � REPLACEMENT CHARACTER,
+# used to replace an unknown, unrecognized, or unrepresentable character.
+# https://en.wikipedia.org/wiki/Specials_(Unicode_block)
+REPLACEMENT_CHAR = u"\uFFFD"

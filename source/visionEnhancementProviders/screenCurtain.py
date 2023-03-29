@@ -4,9 +4,11 @@
 # Copyright (C) 2018-2019 NV Access Limited, Babbage B.V., Leonard de Ruijter
 
 """Screen curtain implementation based on the windows magnification API.
-This implementation only works on Windows 8 and above.
+The Magnification API has been marked by MS as unsupported for WOW64 applications such as NVDA. (#12491)
+This module has been tested on Windows versions specified by winVersion.isFullScreenMagnificationAvailable.
 """
 
+import os
 import vision
 from vision import providerBase
 import winVersion
@@ -19,6 +21,7 @@ import gui
 from logHandler import log
 from typing import Optional, Type
 import nvwave
+import globalVars
 
 
 class MAGCOLOREFFECT(Structure):
@@ -27,8 +30,9 @@ class MAGCOLOREFFECT(Structure):
 
 # homogeneous matrix for a 4-space transformation (red, green, blue, opacity).
 # https://docs.microsoft.com/en-gb/windows/win32/gdiplus/-gdiplus-using-a-color-matrix-to-transform-a-single-color-use
-TRANSFORM_BLACK = MAGCOLOREFFECT()
-TRANSFORM_BLACK.transform[4][4] = 1.0
+TRANSFORM_BLACK = MAGCOLOREFFECT()  # empty transformation
+TRANSFORM_BLACK.transform[4][4] = 1.0  # retain as an affine transformation
+TRANSFORM_BLACK.transform[3][3] = 1.0  # retain opacity, while scaling other colours to zero (#12491)
 
 
 def _errCheck(result, func, args):
@@ -217,6 +221,8 @@ class ScreenCurtainGuiPanel(
 
 	_enabledCheckbox: wx.CheckBox
 	_enableCheckSizer: wx.BoxSizer
+	
+	helpId = "VisionSettingsScreenCurtain"
 
 	from gui.settingsDialogs import VisionProviderStateControl
 
@@ -299,6 +305,12 @@ class ScreenCurtainProvider(providerBase.VisionEnhancementProvider):
 
 	@classmethod
 	def canStart(cls):
+		"""
+		While the Magnification API has been marked by MS as unsupported for WOW64 applications such as NVDA.
+		ScreenCurtain's specific usage of the API has been tested to confirm the approach works in released
+		versions of Windows, this may not continue to be true in the future. The Magnification API was
+		introduced by Microsoft with Windows 8.
+		"""
 		return winVersion.isFullScreenMagnificationAvailable()
 
 	@classmethod
@@ -325,7 +337,7 @@ class ScreenCurtainProvider(providerBase.VisionEnhancementProvider):
 			raise e
 		if self.getSettings().playToggleSounds:
 			try:
-				nvwave.playWaveFile(r"waves\screenCurtainOn.wav")
+				nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "screenCurtainOn.wav"))
 			except Exception:
 				log.exception()
 
@@ -338,7 +350,7 @@ class ScreenCurtainProvider(providerBase.VisionEnhancementProvider):
 			Magnification.MagUninitialize()
 			if self.getSettings().playToggleSounds:
 				try:
-					nvwave.playWaveFile(r"waves\screenCurtainOff.wav")
+					nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "screenCurtainOff.wav"))
 				except Exception:
 					log.exception()
 

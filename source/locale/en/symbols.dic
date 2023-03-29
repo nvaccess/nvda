@@ -1,7 +1,6 @@
-﻿#locale/en/symbols.dic
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2011-2017 NVDA Contributors
-#This file is covered by the GNU General Public License.
+﻿# A part of NonVisual Desktop Access (NVDA)
+# Copyright (c) 2011-2023 NVDA Contributors
+# This file is covered by the GNU General Public License.
 
 complexSymbols:
 # identifier	regexp
@@ -46,9 +45,9 @@ negative number	minus	none	norep
 $	dollar	all	norep
 £	pound	all	norep
 €	euro	all	norep
-¢	Cents	all	norep
-¥	Yen	all	norep
-₹	Rupee	some	norep
+¢	cents	all	norep
+¥	yen	all	norep
+₹	rupee	some	norep
 ƒ	florin	all	norep
 ¤	currency sign	all	norep
 %	percent	some
@@ -58,18 +57,17 @@ $	dollar	all	norep
 (	left paren	most	always
 )	right paren	most	always
 *	star	some
-+	plus	some
-−	minus	some
 ,	comma	all	always
--	dash	most
+、	ideographic comma	all	always
+،	arabic comma	all	always
+-	dash	most	always
 .	dot	some
 /	slash	some
 :	colon	most	norep
 ;	semi	most
-<	less	some
->	greater	some
-=	equals	some
+؛	arabic semicolon	most
 ?	question	all
+؟	arabic question mark	all
 @	at	some
 [	left bracket	most
 ]	right bracket	most
@@ -100,7 +98,7 @@ _	line	most
 ‘	left tick	most
 ’	right tick	most
 –	en dash	most	always
-—	em dash	most
+—	em dash	most	always
 ­	soft hyphen	most
 ⁃	hyphen bullet	none
 ●	circle	most
@@ -117,22 +115,18 @@ _	line	most
 ◾	black square	some
 □	white square	some
 ◦	white bullet	some
-⇒	right double arrow	some
 ⇨	right white arrow	some
 ➔	right-pointing arrow	some
 ➢	right arrowhead	some
-⮚	right arrowhead	some
 ❖	black diamond minus white X	some
 ♣	black club	some
 ♦	black diamond	some
 ◆	black diamond	some
 §	section	all
 °	degrees	some
-«	double left pointing angle bracket
-»	double right pointing angle bracket
+«	double left pointing angle bracket	none
+»	double right pointing angle bracket	none
 µ	micro	some
-º	ordinal	some
-ª	superscript a	some
 ⁰	superscript 0	some
 ¹	superscript 1	some
 ²	superscript 2	some
@@ -144,7 +138,6 @@ _	line	most
 ⁸	superscript 8	some
 ⁹	superscript 9	some
 ⁺	superscript plus	some
-⁻	superscript minus	some
 ⁼	superscript equals	some
 ⁽	superscript left paren	some
 ⁾	superscript right paren	some
@@ -165,11 +158,9 @@ _	line	most
 ₍	subscript left paren	some
 ₎	subscript right paren	some
 ®	registered	some
-™	Trademark	some
-©	Copyright	some
-±	Plus or Minus	some
-×	times	some
-÷	divide by	some
+™	trademark	some
+©	copyright	some
+℠	ServiceMark	some
 ←	left arrow	some
 ↑	up arrow	some
 →	right arrow	some
@@ -181,16 +172,109 @@ _	line	most
 ‡	double dagger	some
 ‣	triangular bullet	none
 ✗	x-shaped bullet	none
+⊕	circled plus	none
+⊖	circled minus	none
+⇄	right arrow over left arrow	none
+⇒	double right arrow	none
 
-#Mathematical Operators U+2200 to U+220F
-∀	for all	none
-∁	complement	none
+#Arithmetic operators
++	plus	some
+−	minus	some
+×	times	some
+⋅	times	some
+⨯	times	none
+∕	divided by	some
+⁄	divided by	some
+÷	divide by	some
+∓	minus or plus	some
+±	plus or Minus	some
+
+#Set operations
+∖	set minus	none
+⊍	set union	none
+𝒫	power set of the set	none
+𝔓	power set of the set	none
+℘	power set of the set	none
+∁	complement of the set	none
+
+#Set relations and set constructions
+∅	empty set	none
+⊂	subset of	none
+⊄	not a subset of	none
+⊃	superset of	none
+⊅	not a superset of	none
+⊆	subset of or equal to	none
+⊈	neither a subset of nor equal to	none
+⊇	superset of or equal to	none
+⊉	neither a superset of nor equal to	none
+⊌	multiset	none
+
+#Equality signs
+=	equals	some
+≃	asymptotically equal to	none
+≄	not asymptotically equal to	none
+≅	approximately equal to	none
+≆	approximately but not actually equal to	none
+≈	almost Equal to	none
+≌	all equal to	none
+≍	equivalent to	none
+≭	not equivalent to	none
+≎	geometrically equivalent to	none
+≑	geometrically equal to	none
+≚	equiangular to	none
+≬	between	none
+≠	not equal to	none
+≡	identical to	none
+≣	strictly identical to	none
+≢	not identical to	none
+∼	similar to	none
+≙	estimates	none
+≟	questioned equal to	none
+
+#comparison signs
+<	less	some
+>	greater	some
+≤	less- than or equal to	none
+≦	less- than or equal to	none
+≪	much smaller than	none
+≥	greater-than or equal to	none
+≧	greater-than or equal to	none
+≫	much bigger than	none
+≶	less than or greater than	none
+≷	greater than or less than	none
+≮	not less than	none
+≯	not greater than	none
+
+#Functions
+⁻	inverse	some
+∘	ring Operator	none
 ∂	partial derivative	none
+∇	gradient of	none
+
+#Geometry and linear Algebra
+⃗	vector between	none
+△	triangle	none
+▭	rectangle	none
+∟	right angle	none
+∠	angle	none
+∥	parallel to	none
+∦	not parallel to	none
+⊥	perpendicular to	none
+⟂	ortogonal to	none
+‖	norm of vector	none
+̂	normalizes	none
+∿	sine wave	none
+∡	measured Angle	none
+∢	spherical Angle	none
+
+#Logical operators
+∀	for all	none
 ∃	there exists	none
 ∄	there does not exist	none
-∅	empty set	none
-∆	increment	none
-∇	nabla	none
+⇏	does not imply	none
+⇐	is implied by	none
+
+#Other mathematical Operators
 ∈	element of	none
 ∉	not an element of	none
 ∊	small element of	none
@@ -199,34 +283,45 @@ _	line	most
 ∍	small contains as member	none
 ∎	end of proof	none
 ∏	n-ary product	none
-
-# Miscellaneous Mathematical Operators
+∐	n-ary coproduct	none
 ∑	n-ary summation	none
 √	square root	none
 ∛	cube root	none
 ∜	fourth root	none
 ∝	proportional to	none
 ∞	infinity	none
-∟	right angle	none
-∠	angle	none
-∥	parallel to	none
-∦	not parallel to	none
-∧	logical and	none
-∨	logical or	none
-¬	logical not	none
+∧	and	none
+∨	or	none
+¬	not	none
 ∩	intersection	none
 ∪	union	none
 ∫	integral	none
+∬	double Integral	none
+∭	tripple Integral	none
+∮	contour Integral	none
+∯	surface Integral	none
+∰	volume Integral	none
+∱	clockwise Integral	none
+∲	clockwise contour Integral	none
+∳	anticlockwise Contour Integral	none
 ∴	therefore	none
 ∵	because	none
 ∶	ratio	none
 ∷	proportion	none
-≤	less- than or equal to	none
-≥	greater-than or equal to	none
-⊂	subset of	none
-⊃	superset of	none
-⊆	subset of or equal to	none
-⊇	superset of or equal to	none
+∹	excess	none
+∺	geometric proportion	none
+≀	wreath product	none
+≏	difference between	none
+≐	approaches the limit	none
+∙	bullet Operator	none
+∣	divides	none
+∤	does not divide	none
+≔	colon equals	none
+≕	equals colon	none
+≺	precedes	none
+≻	succeeds	none
+⊀	does not precede	none
+⊁	does not succeed	none
 
 # Vulgur Fractions U+2150 to U+215E
 ¼	one quarter	none
@@ -248,5 +343,280 @@ _	line	most
 ⅝	five eighths	none
 ⅞	seven eighths	none
 
+#Number sets
+𝔸	algebraic numbers	none
+ℂ	complex numbers	none
+ℑ	imaginary part of complex number	none
+ℍ	quaternions	none
+ℕ	natural numbers	none
+𝕁	nonnegative (whole) numbers	none
+ℚ	rational numbers	none
+ℝ	real numbers	none
+ℜ	real part of complex number	none
+ℤ	integers	none
+ℵ	aleph number	none
+ℶ	beth number	none
+
 # Miscellaneous Technical
-⌘	Mac Command key	none
+⌘	mac Command key	none
+⌥	mac Option key	none
+
+## 6-dot cell
+### note: the character on the next line is U+2800 (braille space), not U+0020 (ASCII space)
+⠀	space
+⠁	braille 1
+⠂	braille 2
+⠃	braille 1 2
+⠄	braille 3
+⠅	braille 1 3
+⠆	braille 2 3
+⠇	braille 1 2 3
+⠈	braille 4
+⠉	braille 1 4
+⠊	braille 2 4
+⠋	braille 1 2 4
+⠌	braille 3 4
+⠍	braille 1 3 4
+⠎	braille 2 3 4
+⠏	braille 1 2 3 4
+⠐	braille 5
+⠑	braille 1 5
+⠒	braille 2 5
+⠓	braille 1 2 5
+⠔	braille 3 5
+⠕	braille 1 3 5
+⠖	braille 2 3 5
+⠗	braille 1 2 3 5
+⠘	braille 4 5
+⠙	braille 1 4 5
+⠚	braille 2 4 5
+⠛	braille 1 2 4 5
+⠜	braille 3 4 5
+⠝	braille 1 3 4 5
+⠞	braille 2 3 4 5
+⠟	braille 1 2 3 4 5
+⠠	braille 6
+⠡	braille 1 6
+⠢	braille 2 6
+⠣	braille 1 2 6
+⠤	braille 3 6
+⠥	braille 1 3 6
+⠦	braille 2 3 6
+⠧	braille 1 2 3 6
+⠨	braille 4 6
+⠩	braille 1 4 6
+⠪	braille 2 4 6
+⠫	braille 1 2 4 6
+⠬	braille 3 4 6
+⠭	braille 1 3 4 6
+⠮	braille 2 3 4 6
+⠯	braille 1 2 3 4 6
+⠰	braille 5 6
+⠱	braille 1 5 6
+⠲	braille 2 5 6
+⠳	braille 1 2 5 6
+⠴	braille 3 5 6
+⠵	braille 1 3 5 6
+⠶	braille 2 3 5 6
+⠷	braille 1 2 3 5 6
+⠸	braille 1 2 3
+⠹	braille 1 4 5 6
+⠺	braille 2 4 5 6
+⠻	braille 1 2 4 5 6
+⠼	braille 3 4 5 6
+⠽	braille 1 3 4 5 6
+⠾	braille 2 3 4 5 6
+⠿	braille 1 2 3 4 5 6
+## 8-braille cell
+⡀	braille 7
+⡁	braille 1 7
+⡂	braille 2 7
+⡃	braille 1 2 7
+⡄	braille 3 7
+⡅	braille 1 3 7
+⡆	braille 2 3 7
+⡇	braille 1 2 3 7
+⡈	braille 4 7
+⡉	braille 1 4 7
+⡊	braille 2 4 7
+⡋	braille 1 2 4 7
+⡌	braille 3 4 7
+⡍	braille 1 3 4 7
+⡎	braille 2 3 4 7
+⡏	braille 1 2 3 4 7
+⡐	braille 5 7
+⡑	braille 1 5 7
+⡒	braille 2 5 7
+⡓	braille 1 2 5 7
+⡔	braille 3 5 7
+⡕	braille 1 3 5 7
+⡖	braille 2 3 5 7
+⡗	braille 1 2 3 5 7
+⡘	braille 4 5 7
+⡙	braille 1 4 5 7
+⡚	braille 2 4 5 7
+⡛	braille 1 2 4 5 7
+⡜	braille 3 4 5 7
+⡝	braille 1 3 4 5 7
+⡞	braille 2 3 4 5 7
+⡟	braille 1 2 3 4 5 7
+⡠	braille 6 7
+⡡	braille 1 6 7
+⡢	braille 2 6 7
+⡣	braille 1 2 6 7
+⡤	braille 3 6 7
+⡥	braille 1 3 6 7
+⡦	braille 2 3 6 7
+⡧	braille 1 2 3 6 7
+⡨	braille 4 6 7
+⡩	braille 1 4 6 7
+⡪	braille 2 4 6 7
+⡫	braille 1 2 4 6 7
+⡬	braille 3 4 6 7
+⡭	braille 1 3 4 6 7
+⡮	braille 2 3 4 6 7
+⡯	braille 1 2 3 4 6 7
+⡰	braille 5 6 7
+⡱	braille 1 5 6 7
+⡲	braille 2 5 6 7
+⡳	braille 1 2 5 6 7
+⡴	braille 3 5 6 7
+⡵	braille 1 3 5 6 7
+⡶	braille 2 3 5 6 7
+⡷	braille 1 2 3 5 6 7
+⡸	braille 1 2 3 7
+⡹	braille 1 4 5 6 7
+⡺	braille 2 4 5 6 7
+⡻	braille 1 2 4 5 6 7
+⡼	braille 3 4 5 6 7
+⡽	braille 1 3 4 5 6 7
+⡾	braille 2 3 4 5 6 7
+⡿	braille 1 2 3 4 5 6 7
+⢀	braille 8
+⢁	braille 1 8
+⢂	braille 2 8
+⢃	braille 1 2 8
+⢄	braille 3 8
+⢅	braille 1 3 8
+⢆	braille 2 3 8
+⢇	braille 1 2 3 8
+⢈	braille 4 8
+⢉	braille 1 4 8
+⢊	braille 2 4 8
+⢋	braille 1 2 4 8
+⢌	braille 3 4 8
+⢍	braille 1 3 4 8
+⢎	braille 2 3 4 8
+⢏	braille 1 2 3 4 8
+⢐	braille 5 8
+⢑	braille 1 5 8
+⢒	braille 2 5 8
+⢓	braille 1 2 5 8
+⢔	braille 3 5 8
+⢕	braille 1 3 5 8
+⢖	braille 2 3 5 8
+⢗	braille 1 2 3 5 8
+⢘	braille 4 5 8
+⢙	braille 1 4 5 8
+⢚	braille 2 4 5 8
+⢛	braille 1 2 4 5 8
+⢜	braille 3 4 5 8
+⢝	braille 1 3 4 5 8
+⢞	braille 2 3 4 5 8
+⢟	braille 1 2 3 4 5 8
+⢠	braille 6 8
+⢡	braille 1 6 8
+⢢	braille 2 6 8
+⢣	braille 1 2 6 8
+⢤	braille 3 6 8
+⢥	braille 1 3 6 8
+⢦	braille 2 3 6 8
+⢧	braille 1 2 3 6 8
+⢨	braille 4 6 8
+⢩	braille 1 4 6 8
+⢪	braille 2 4 6 8
+⢫	braille 1 2 4 6 8
+⢬	braille 3 4 6 8
+⢭	braille 1 3 4 6 8
+⢮	braille 2 3 4 6 8
+⢯	braille 1 2 3 4 6 8
+⢰	braille 5 6 8
+⢱	braille 1 5 6 8
+⢲	braille 2 5 6 8
+⢳	braille 1 2 5 6 8
+⢴	braille 3 5 6 8
+⢵	braille 1 3 5 6 8
+⢶	braille 2 3 5 6 8
+⢷	braille 1 2 3 5 6 8
+⢸	braille 1 2 3 8
+⢹	braille 1 4 5 6 8
+⢺	braille 2 4 5 6 8
+⢻	braille 1 2 4 5 6 8
+⢼	braille 3 4 5 6 8
+⢽	braille 1 3 4 5 6 8
+⢾	braille 2 3 4 5 6 8
+⢿	braille 1 2 3 4 5 6 8
+⣀	braille 7 8
+⣁	braille 1 7 8
+⣂	braille 2 7 8
+⣃	braille 1 2 7 8
+⣄	braille 3 7 8
+⣅	braille 1 3 7 8
+⣆	braille 2 3 7 8
+⣇	braille 1 2 3 7 8
+⣈	braille 4 7 8
+⣉	braille 1 4 7 8
+⣊	braille 2 4 7 8
+⣋	braille 1 2 4 7 8
+⣌	braille 3 4 7 8
+⣍	braille 1 3 4 7 8
+⣎	braille 2 3 4 7 8
+⣏	braille 1 2 3 4 7 8
+⣐	braille 5 7 8
+⣑	braille 1 5 7 8
+⣒	braille 2 5 7 8
+⣓	braille 1 2 5 7 8
+⣔	braille 3 5 7 8
+⣕	braille 1 3 5 7 8
+⣖	braille 2 3 5 7 8
+⣗	braille 1 2 3 5 7 8
+⣘	braille 4 5 7 8
+⣙	braille 1 4 5 7 8
+⣚	braille 2 4 5 7 8
+⣛	braille 1 2 4 5 7 8
+⣜	braille 3 4 5 7 8
+⣝	braille 1 3 4 5 7 8
+⣞	braille 2 3 4 5 7 8
+⣟	braille 1 2 3 4 5 7 8
+⣠	braille 6 7 8
+⣡	braille 1 6 7 8
+⣢	braille 2 6 7 8
+⣣	braille 1 2 6 7 8
+⣤	braille 3 6 7 8
+⣥	braille 1 3 6 7 8
+⣦	braille 2 3 6 7 8
+⣧	braille 1 2 3 6 7 8
+⣨	braille 4 6 7 8
+⣩	braille 1 4 6 7 8
+⣪	braille 2 4 6 7 8
+⣫	braille 1 2 4 6 7 8
+⣬	braille 3 4 6 7 8
+⣭	braille 1 3 4 6 7 8
+⣮	braille 2 3 4 6 7 8
+⣯	braille 1 2 3 4 6 7 8
+⣰	braille 5 6 7 8
+⣱	braille 1 5 6 7 8
+⣲	braille 2 5 6 7 8
+⣳	braille 1 2 5 6 7 8
+⣴	braille 3 5 6 7 8
+⣵	braille 1 3 5 6 7 8
+⣶	braille 2 3 5 6 7 8
+⣷	braille 1 2 3 5 6 7 8
+⣸	braille 1 2 3 7 8
+⣹	braille 1 4 5 6 7 8
+⣺	braille 2 4 5 6 7 8
+⣻	braille 1 2 4 5 6 7 8
+⣼	braille 3 4 5 6 7 8
+⣽	braille 1 3 4 5 6 7 8
+⣾	braille 2 3 4 5 6 7 8
+⣿	braille 1 2 3 4 5 6 7 8

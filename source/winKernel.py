@@ -1,17 +1,45 @@
-#winKernel.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2019 NV Access Limited, Rui Batista, Aleksey Sadovoy, Peter Vagner, Mozilla Corporation, Babbage B.V., Joseph Lee
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2022 NV Access Limited, Rui Batista, Aleksey Sadovoy, Peter Vagner,
+# Mozilla Corporation, Babbage B.V., Joseph Lee, Łukasz Golonka
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
-"""Functions that wrap Windows API functions from kernel32.dll and advapi32.dll"""
+"""
+Functions that wrap Windows API functions from kernel32.dll and advapi32.dll.
+
+When working on this file, consider moving to winAPI.
+"""
 
 import contextlib
 import ctypes
 import ctypes.wintypes
-from ctypes import WinError
-from ctypes import *
-from ctypes.wintypes import *
+from ctypes import byref, c_byte, POINTER, sizeof, Structure, windll, WinError
+from ctypes.wintypes import BOOL, DWORD, HANDLE, LARGE_INTEGER, LCID, LPWSTR, LPVOID, WORD
+from typing import (
+	TYPE_CHECKING,
+	Any,
+	Optional,
+	Union,
+)
+
+if TYPE_CHECKING:
+	from winAPI._powerTracking import SystemPowerStatus
+
+
+def __getattr__(attrName: str) -> Any:
+	"""Module level `__getattr__` used to preserve backward compatibility.
+	"""
+	import NVDAState
+	if attrName == "SYSTEM_POWER_STATUS" and NVDAState._allowDeprecatedAPI():
+		from logHandler import log
+		from winAPI._powerTracking import SystemPowerStatus
+		log.warning(
+			"winKernel.SYSTEM_POWER_STATUS is deprecated, "
+			"use winAPI._powerTracking.SystemPowerStatus instead."
+		)
+		return SystemPowerStatus
+	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+
 
 kernel32=ctypes.windll.kernel32
 advapi32 = windll.advapi32
@@ -40,6 +68,8 @@ LOCALE_USER_DEFAULT=0x0400
 LOCALE_NAME_USER_DEFAULT=None
 DATE_LONGDATE=0x00000002 
 TIME_NOSECONDS=0x00000002
+# Create Mutex
+ERROR_ALREADY_EXISTS = 0xb7
 # Wait return types
 WAIT_ABANDONED = 0x00000080
 WAIT_IO_COMPLETION = 0x000000c0
@@ -48,6 +78,9 @@ WAIT_TIMEOUT = 0x00000102
 WAIT_FAILED = 0xffffffff
 # Image file machine constants
 IMAGE_FILE_MACHINE_UNKNOWN = 0
+# LoadLibraryEx constants
+LOAD_WITH_ALTERED_SEARCH_PATH = 0x8
+
 
 def GetStdHandle(handleID):
 	h=kernel32.GetStdHandle(handleID)
@@ -133,17 +166,43 @@ def openProcess(*args):
 def closeHandle(*args):
 	return kernel32.CloseHandle(*args)
 
-#added by Rui Batista to use on Say_battery_status script 
-#copied from platform sdk documentation (with required changes to work in python) 
-class SYSTEM_POWER_STATUS(ctypes.Structure):
-	_fields_ = [("ACLineStatus", ctypes.c_byte), ("BatteryFlag", ctypes.c_byte), ("BatteryLifePercent", ctypes.c_byte), ("Reserved1", ctypes.c_byte), ("BatteryLifeTime", ctypes.wintypes.DWORD), ("BatteryFullLiveTime", ctypes.wintypes.DWORD)]
 
-
-def GetSystemPowerStatus(sps):
+def GetSystemPowerStatus(sps: "SystemPowerStatus") -> int:
 	return kernel32.GetSystemPowerStatus(ctypes.byref(sps))
+
 
 def getThreadLocale():
 	return kernel32.GetThreadLocale()
+
+
+ERROR_INVALID_FUNCTION = 0x1
+
+
+@contextlib.contextmanager
+def suspendWow64Redirection():
+	"""Context manager which disables Wow64 redirection for a section of code and re-enables it afterwards"""
+	oldValue = LPVOID()
+	res = kernel32.Wow64DisableWow64FsRedirection(byref(oldValue))
+	if res == 0:
+		# Disabling redirection failed.
+		# This can occur if we're running on 32-bit Windows (no Wow64 redirection)
+		# or as a 64-bit process on 64-bit Windows (Wow64 redirection not applicable)
+		# In this case failure is expected and there is no reason to raise an exception.
+		# Inspect last error code to determine reason for the failure.
+		errorCode = kernel32.GetLastError()
+		if errorCode == ERROR_INVALID_FUNCTION:  # Redirection not supported or not applicable.
+			redirectionDisabled = False
+		else:
+			raise WinError(errorCode)
+	else:
+		redirectionDisabled = True
+	try:
+		yield
+	finally:
+		if redirectionDisabled:
+			if kernel32.Wow64RevertWow64FsRedirection(oldValue) == 0:
+				raise WinError()
+
 
 class SYSTEMTIME(ctypes.Structure):
 	_fields_ = (
@@ -157,17 +216,62 @@ class SYSTEMTIME(ctypes.Structure):
 		("wMilliseconds", WORD)
 	)
 
-def GetDateFormat(Locale,dwFlags,date,lpFormat):
-	"""@Deprecated: use GetDateFormatEx instead."""
-	if date is not None:
-		date=SYSTEMTIME(date.year,date.month,0,date.day,date.hour,date.minute,date.second,0)
-		lpDate=byref(date)
-	else:
-		lpDate=None
-	bufferLength=kernel32.GetDateFormatW(Locale, dwFlags, lpDate, lpFormat, None, 0)
-	buf=ctypes.create_unicode_buffer("", bufferLength)
-	kernel32.GetDateFormatW(Locale, dwFlags, lpDate, lpFormat, buf, bufferLength)
-	return buf.value
+
+class FILETIME(Structure):
+	_fields_ = (
+		("dwLowDateTime", DWORD),
+		("dwHighDateTime", DWORD)
+	)
+
+
+class TIME_ZONE_INFORMATION(Structure):
+	_fields_ = (
+		("Bias", ctypes.wintypes.LONG),
+		("StandardName", ctypes.wintypes.WCHAR * 32),
+		("StandardDate", SYSTEMTIME),
+		("StandardBias", ctypes.wintypes.LONG),
+		("DaylightName", ctypes.wintypes.WCHAR * 32),
+		("DaylightDate", SYSTEMTIME),
+		("DaylightBias", ctypes.wintypes.LONG)
+	)
+
+
+def time_tToFileTime(time_tToConvert: float) -> FILETIME:
+	"""Converts time_t as returned from `time.time` to a FILETIME structure.
+	Based on a code snipped from:
+	https://docs.microsoft.com/en-us/windows/win32/sysinfo/converting-a-time-t-value-to-a-file-time
+	"""
+	timeAsFileTime = FILETIME()
+	res = (int(time_tToConvert) * 10000000) + 116444736000000000
+	timeAsFileTime.dwLowDateTime = res
+	timeAsFileTime.dwHighDateTime = res >> 32
+	return timeAsFileTime
+
+
+def FileTimeToSystemTime(lpFileTime: FILETIME, lpSystemTime: SYSTEMTIME) -> None:
+	if kernel32.FileTimeToSystemTime(byref(lpFileTime), byref(lpSystemTime)) == 0:
+		raise WinError()
+
+
+def SystemTimeToTzSpecificLocalTime(
+		lpTimeZoneInformation: Union[TIME_ZONE_INFORMATION, None],
+		lpUniversalTime: SYSTEMTIME,
+		lpLocalTime: SYSTEMTIME
+) -> None:
+	"""Wrapper for `SystemTimeToTzSpecificLocalTime` from kernel32.
+	:param lpTimeZoneInformation: Either TIME_ZONE_INFORMATION containing info about the desired time zone
+	or `None` when the current time zone as configured in Windows settings should be used.
+	:param lpUniversalTime: SYSTEMTIME structure containing time in UTC wwhich you wish to convert.
+	: param lpLocalTime: A SYSTEMTIME structure in which time converted to the desired time zone would be placed.
+	:raises WinError
+	"""
+	if lpTimeZoneInformation is not None:
+		lpTimeZoneInformation = byref(lpTimeZoneInformation)
+	if kernel32.SystemTimeToTzSpecificLocalTime(
+		lpTimeZoneInformation, byref(lpUniversalTime), byref(lpLocalTime)
+	) == 0:
+		raise WinError()
+
 
 def GetDateFormatEx(Locale,dwFlags,date,lpFormat):
 	if date is not None:
@@ -178,18 +282,6 @@ def GetDateFormatEx(Locale,dwFlags,date,lpFormat):
 	bufferLength=kernel32.GetDateFormatEx(Locale, dwFlags, lpDate, lpFormat, None, 0, None)
 	buf=ctypes.create_unicode_buffer("", bufferLength)
 	kernel32.GetDateFormatEx(Locale, dwFlags, lpDate, lpFormat, buf, bufferLength, None)
-	return buf.value
-
-def GetTimeFormat(Locale,dwFlags,date,lpFormat):
-	"""@Deprecated: use GetTimeFormatEx instead."""
-	if date is not None:
-		date=SYSTEMTIME(date.year,date.month,0,date.day,date.hour,date.minute,date.second,0)
-		lpTime=byref(date)
-	else:
-		lpTime=None
-	bufferLength=kernel32.GetTimeFormatW(Locale,dwFlags,lpTime,lpFormat, None, 0)
-	buf=ctypes.create_unicode_buffer("", bufferLength)
-	kernel32.GetTimeFormatW(Locale,dwFlags,lpTime,lpFormat, buf, bufferLength)
 	return buf.value
 
 def GetTimeFormatEx(Locale,dwFlags,date,lpFormat):
@@ -203,8 +295,6 @@ def GetTimeFormatEx(Locale,dwFlags,date,lpFormat):
 	kernel32.GetTimeFormatEx(Locale,dwFlags,lpTime,lpFormat, buf, bufferLength)
 	return buf.value
 
-def openProcess(*args):
-	return kernel32.OpenProcess(*args)
 
 def virtualAllocEx(*args):
 	res = kernel32.VirtualAllocEx(*args)
@@ -413,3 +503,23 @@ def SetThreadExecutionState(esFlags):
 	if not res:
 		raise WinError()
 	return res
+
+
+def LCIDToLocaleName(windowsLCID: LCID) -> Optional[str]:
+	# NVDA cannot run with this imported at module level
+	from logHandler import log
+	dwFlags = 0
+	bufferLength = kernel32.LCIDToLocaleName(windowsLCID, None, 0, dwFlags)
+	if bufferLength == 0:
+		# This means that there was an error fetching the LCID.
+		# As the buffer is empty, this indicates that the windowsLCID is invalid.
+		log.debugWarning(f"Invalid LCID {windowsLCID}")
+		return None
+	buffer = ctypes.create_unicode_buffer("", bufferLength)
+	bufferLength = kernel32.LCIDToLocaleName(windowsLCID, buffer, bufferLength, dwFlags)
+	if bufferLength == 0:
+		# This means that there was an error fetching the LCID.
+		# As we have already checked if the LCID is valid by receiveing a non-zero buffer length,
+		# something unexpected has failed.
+		raise ctypes.WinError()
+	return buffer.value

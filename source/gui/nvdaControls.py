@@ -1,21 +1,33 @@
 # -*- coding: UTF-8 -*-
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2016-2018 NV Access Limited, Derek Riemer
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2016-2021 NV Access Limited, Derek Riemer
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+import collections
+import enum
+import typing
+from typing import (
+	List,
+	OrderedDict,
+	Type,
+)
 
-from ctypes.wintypes import BOOL
-from typing import Any, Tuple, Optional
 import wx
-from comtypes import GUID
+from wx.lib import scrolledpanel
 from wx.lib.mixins import listctrl as listmix
-from . import accPropServer
+
+import config
+from config.featureFlag import (
+	FeatureFlag,
+	FlagValueEnum as FeatureFlagEnumT,
+)
 from .dpiScalingHelper import DpiScalingHelperMixin
 from . import guiHelper
-import oleacc
 import winUser
 import winsound
+
 from collections.abc import Callable
+
 
 class AutoWidthColumnListCtrl(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
 	"""
@@ -86,85 +98,35 @@ class SelectOnFocusSpinCtrl(wx.SpinCtrl):
 		self.SetSelection(0, numChars)
 		evt.Skip()
 
-class AccPropertyOverride(accPropServer.IAccPropServer_Impl):
 
-	def __init__(self, control, propertyAnnotations):
-		"""
-		A simple class for overriding specific values on a control
-		:type propertyAnnotations: dict
-		"""
-		super(AccPropertyOverride, self).__init__(
-			control,
-			annotateProperties=list(propertyAnnotations.keys()),
-			annotateChildren=False
-		)
-		self.propertyAnnotations = propertyAnnotations
+class ListCtrlAccessible(wx.Accessible):
+	"""WX Accessible implementation for checkable lists which aren't fully accessible."""
 
-	def _getPropValue(self, pIDString, dwIDStringLen, idProp):
-		control = self.control()  # self.control held as a weak ref, ensure it stays alive for the duration of this method
-		if control is None or not self.propertyAnnotations:
-			return None
+	def GetRole(self, childId):
+		if childId == winUser.CHILDID_SELF:
+			return super().GetRole(childId)
+		return (wx.ACC_OK, wx.ROLE_SYSTEM_CHECKBUTTON)
 
-		try:
-			val = self.propertyAnnotations[idProp]
-			if callable(val):
-				val = val()
-			return self._hasProp(val)
-		except KeyError:
-			pass
+	def GetState(self, childId):
+		if childId == winUser.CHILDID_SELF:
+			return super().GetState(childId)
+		states = wx.ACC_STATE_SYSTEM_SELECTABLE | wx.ACC_STATE_SYSTEM_FOCUSABLE
+		if self.Window.IsChecked(childId - 1):
+			states |= wx.ACC_STATE_SYSTEM_CHECKED
+		if self.Window.IsSelected(childId - 1):
+			# wx doesn't seem to  have a method to check whether a list item is focused.
+			# Therefore, assume that a selected item is focused,which is the case in single select list boxes.
+			states |= wx.ACC_STATE_SYSTEM_SELECTED | wx.ACC_STATE_SYSTEM_FOCUSED
+		return (wx.ACC_OK, states)
 
-		return None
-
-	def _cleanup(self):
-		# could contain references (via lambda) of our owner, set it to None to avoid a circular reference which
-		# would block destruction.
-		self.propertyAnnotations = None
-		super(AccPropertyOverride, self)._cleanup()
-
-class ListCtrlAccPropServer(accPropServer.IAccPropServer_Impl):
-	"""AccPropServer for wx checkable lists which aren't fully accessible."""
-
-	def __init__(self, control):
-		super(ListCtrlAccPropServer, self).__init__(
-			control,
-			annotateProperties=[
-				oleacc.PROPID_ACC_ROLE,  # supposed to be checkbox, rather than list item
-				oleacc.PROPID_ACC_STATE  # should include the checkable state and checked state if the item is checked.
-			],
-			annotateChildren=True
-		)
-
-	def _getPropValue(self, pIDString: str, dwIDStringLen: int, idProp: GUID) -> Optional[Tuple[BOOL, Any]]:
-		control = self.control()  # self.control held as a weak ref, ensure it stays alive for the duration of this method
-		if control is None:
-			return None
-
-		# Import late to prevent circular import.
-		from IAccessibleHandler import accPropServices
-		handle, objid, childid = accPropServices.DecomposeHwndIdentityString(pIDString, dwIDStringLen)
-		if childid == winUser.CHILDID_SELF:
-			return None
-
-		if idProp == oleacc.PROPID_ACC_ROLE:
-			return self._hasProp(oleacc.ROLE_SYSTEM_CHECKBUTTON)
-
-		if idProp == oleacc.PROPID_ACC_STATE:
-			states = oleacc.STATE_SYSTEM_SELECTABLE|oleacc.STATE_SYSTEM_FOCUSABLE
-			if control.IsChecked(childid-1):
-				states |= oleacc.STATE_SYSTEM_CHECKED
-			if control.IsSelected(childid-1):
-				# wx doesn't seem to  have a method to check whether a list item is focused.
-				# Therefore, assume that a selected item is focused,which is the case in single select list boxes.
-				states |= oleacc.STATE_SYSTEM_SELECTED | oleacc.STATE_SYSTEM_FOCUSED
-			return self._hasProp(states)
 
 class CustomCheckListBox(wx.CheckListBox):
 	"""Custom checkable list to fix a11y bugs in the standard wx checkable list box."""
 
 	def __init__(self, *args, **kwargs):
 		super(CustomCheckListBox, self).__init__(*args, **kwargs)
-		# Register object with COM to fix accessibility bugs in wx.
-		self.server = ListCtrlAccPropServer(self)
+		# Register a custom wx.Accessible implementation to fix accessibility incompleties
+		self.SetAccessible(ListCtrlAccessible(self))
 		# Register ourself with ourself's selected event, so that we can notify winEvent of the state change.
 		self.Bind(wx.EVT_CHECKLISTBOX, self.notifyIAccessible)
 
@@ -189,8 +151,8 @@ class AutoWidthColumnCheckListCtrl(AutoWidthColumnListCtrl, listmix.CheckListCtr
 	):
 		AutoWidthColumnListCtrl.__init__(self, parent, id=id, pos=pos, size=size, style=style, autoSizeColumn=autoSizeColumn)
 		listmix.CheckListCtrlMixin.__init__(self, check_image, uncheck_image, imgsz)
-		# Register object with COM to fix accessibility bugs in wx.
-		self.server = ListCtrlAccPropServer(self)
+		# Register a custom wx.Accessible implementation to fix accessibility incompleties
+		self.SetAccessible(ListCtrlAccessible(self))
 		# Register our hook to check/uncheck items with space.
 		# Use wx.EVT_CHAR_HOOK, because EVT_LIST_KEY_DOWN isn't triggered for space.
 		self.Bind(wx.EVT_CHAR_HOOK, self.onCharHook)
@@ -406,3 +368,166 @@ class EnhancedInputSlider(wx.Slider):
 			evt.Skip()
 			return
 		self.SetValue(newValue)
+
+
+class TabbableScrolledPanel(scrolledpanel.ScrolledPanel):
+	"""
+	This class was created to ensure a ScrolledPanel scrolls to nested children of the panel when navigating
+	with tabs (#12224). A PR to wxPython implementing this fix can be tracked on
+	https://github.com/wxWidgets/Phoenix/pull/1950
+	"""
+	def GetChildRectRelativeToSelf(self, child: wx.Window) -> wx.Rect:
+		"""
+		window.GetRect returns the size of a window, and its position relative to its parent.
+		When calculating ScrollChildIntoView, the position relative to its parent is not relevant unless the
+		parent is the ScrolledPanel itself. Instead, calculate the position relative to scrolledPanel
+		"""
+		childRectRelativeToScreen = child.GetScreenRect()
+		scrolledPanelScreenPosition = self.GetScreenPosition()
+		return wx.Rect(
+			childRectRelativeToScreen.x - scrolledPanelScreenPosition.x,
+			childRectRelativeToScreen.y - scrolledPanelScreenPosition.y,
+			childRectRelativeToScreen.width,
+			childRectRelativeToScreen.height
+		)
+
+	def ScrollChildIntoView(self, child: wx.Window) -> None:
+		"""
+		Overrides child.GetRect with `GetChildRectRelativeToSelf` before calling
+		`super().ScrollChildIntoView`. `super().ScrollChildIntoView` incorrectly uses child.GetRect to
+		navigate scrolling, which is relative to the parent, where it should instead be relative to this
+		ScrolledPanel.
+		"""
+		oldChildGetRectFunction = child.GetRect
+		child.GetRect = lambda: self.GetChildRectRelativeToSelf(child)
+		try:
+			super().ScrollChildIntoView(child)
+		finally:
+			# ensure child.GetRect is reset properly even if super().ScrollChildIntoView throws an exception
+			child.GetRect = oldChildGetRectFunction
+
+
+class FeatureFlagCombo(wx.Choice):
+	"""Creates a combobox (wx.Choice) with a list of feature flags.
+	"""
+	def __init__(
+			self,
+			parent: wx.Window,
+			keyPath: List[str],
+			conf: config.ConfigManager,
+			pos=wx.DefaultPosition,
+			size=wx.DefaultSize,
+			style=0,
+			validator=wx.DefaultValidator,
+			name=wx.ChoiceNameStr,
+	):
+		"""
+		@param parent: The parent window.
+		@param keyPath: The list of keys required to get to the config value.
+		@param conf: The config.conf object.
+		@param pos: The position of the control. Forwarded to wx.Choice
+		@param size: The size of the control. Forwarded to wx.Choice
+		@param style: The style of the control. Forwarded to wx.Choice
+		@param validator: The validator for the control. Forwarded to wx.Choice
+		@param name: The name of the control. Forwarded to wx.Choice
+		"""
+		self._confPath = keyPath
+		self._conf = conf
+		configValue = self._getConfigValue()
+		self._optionsEnumClass: Type[FeatureFlagEnumT] = configValue.enumClassType
+		translatedOptions: typing.OrderedDict[FeatureFlagEnumT, str] = collections.OrderedDict({
+			value: value.displayString
+			for value in self._optionsEnumClass
+			if value != self._optionsEnumClass.DEFAULT
+		})
+		if self._optionsEnumClass.DEFAULT in translatedOptions:
+			raise ValueError(
+				f"The translatedOptions dictionary should not contain the key {self._optionsEnumClass.DEFAULT!r}"
+				" It will be added automatically. See _setDefaultOptionLabel"
+			)
+		self._translatedOptions = self._createOptionsDict(translatedOptions)
+		choices = list(self._translatedOptions.values())
+		super().__init__(
+			parent,
+			choices=choices,
+			pos=pos,
+			size=size,
+			style=style,
+			validator=validator,
+			name=name,
+		)
+
+		self.SetSelection(self._getChoiceIndex(self._getConfigValue().value))
+		self.defaultValue = self._getConfSpecDefaultValue()
+		"""The default value of the config spec. Not the "behavior of default".
+		This is provided to maintain compatibility with other controls in the
+		advanced settings dialog.
+		"""
+
+	def _getChoiceIndex(self, value: FeatureFlagEnumT) -> int:
+		return list(self._translatedOptions.keys()).index(value)
+
+	def _getConfSpecDefaultValue(self) -> FeatureFlagEnumT:
+		defaultValueFromSpec = self._conf.getConfigValidation(self._confPath).default
+		if not isinstance(defaultValueFromSpec, FeatureFlag):
+			raise ValueError(f"Default spec value is not a FeatureFlag, but {type(defaultValueFromSpec)}")
+		return defaultValueFromSpec.value
+
+	def _getConfigValue(self) -> FeatureFlag:
+		keyPath = self._confPath
+		if not keyPath or len(keyPath) < 1:
+			raise ValueError("Key path not provided")
+
+		conf = self._conf
+		for nextKey in keyPath:
+			conf = conf[nextKey]
+
+		if not isinstance(conf, FeatureFlag):
+			raise ValueError(f"Config value is not a FeatureFlag, but a {type(conf)}")
+		return conf
+
+	def isValueConfigSpecDefault(self) -> bool:
+		"""Does the current value of the control match the default value from the config spec?
+		This is not the same as the "behaviour of default".
+		"""
+		return self.GetSelection() == self.defaultValue
+
+	def resetToConfigSpecDefault(self) -> None:
+		"""Set the value of the control to the default value from the config spec.
+		"""
+		self.SetSelection(self._getChoiceIndex(self.defaultValue))
+
+	def saveCurrentValueToConf(self) -> None:
+		""" Set the config value to the current value of the control.
+		"""
+		flagValue: enum.Enum = list(self._translatedOptions.keys())[self.GetSelection()]
+		keyPath = self._confPath
+		if not keyPath or len(keyPath) < 1:
+			raise ValueError("Key path not provided")
+		lastIndex = len(keyPath) - 1
+
+		conf = self._conf
+		for index, nextKey in enumerate(keyPath):
+			if index == lastIndex:
+				conf[nextKey] = flagValue.name
+				return
+			else:
+				conf = conf[nextKey]
+
+	def _createOptionsDict(
+			self,
+			translatedOptions: OrderedDict[FeatureFlagEnumT, str]
+	) -> OrderedDict[enum.Enum, str]:
+		behaviorOfDefault = self._getConfigValue().behaviorOfDefault
+		translatedStringForBehaviorOfDefault = translatedOptions[behaviorOfDefault]
+		# Translators: Label for the default option for some feature-flag combo boxes
+		# Such as, in the Advanced settings panel option, 'Load Chromium virtual buffer when document busy.'
+		# The placeholder {} is replaced with the label of the option which describes current default behavior
+		# in NVDA. EG "Default (Yes)".
+		defaultOptionLabel: str = _("Default ({})").format(
+			translatedStringForBehaviorOfDefault
+		)
+		return collections.OrderedDict({
+			self._optionsEnumClass.DEFAULT: defaultOptionLabel,  # make sure default is the first option.
+			**translatedOptions
+		})
