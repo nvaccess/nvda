@@ -10,6 +10,7 @@ Braille display drivers must be thread-safe to use this, as it utilises a backgr
 See L{braille.BrailleDisplayDriver.isThreadSafe}.
 """
 
+# "annotations" Needed to provide the inner type for weakref.ReferenceType.
 from __future__ import annotations
 import sys
 import ctypes
