@@ -1821,7 +1821,7 @@ def getPropertiesSpeech(  # noqa: C901
 				textList.append(
 					# Translators: Speaks when there are further details/annotations that can be fetched manually.
 					# %s specifies the type of details (e.g. "comment, suggestion, details")
-					_("has %s" % roleString)
+					_("has %s") % roleString
 				)
 		else:
 			textList.append(

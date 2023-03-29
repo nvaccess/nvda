@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-15 00:02+0000\n"
+"POT-Creation-Date: 2023-02-26 22:33+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Burak Yüksek <burakyuksek94@gmail.com>\n"
 "Language-Team: \n"
@@ -11,11 +11,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 msgid "Native input"
-msgstr "Girdi için yerel dil"
+msgstr "Yerel girdi"
 
 #. Translators: a mode that lets you type in alpha numeric (roman/english) characters, rather than 'native' characters for the east-Asian input method  language currently selected.
 msgid "Alpha numeric input"
@@ -63,11 +63,11 @@ msgstr "katakana roman"
 
 #. Translators: a message when the IME open status changes to opened
 msgid "IME opened"
-msgstr "IME açık"
+msgstr "IME açıldı"
 
 #. Translators: a message when the IME open status changes to closed
 msgid "IME closed"
-msgstr "IME kapalı"
+msgstr "IME kapandı"
 
 #. Translators: the label for an unknown language when switching input methods.
 msgid "unknown language"
@@ -212,7 +212,7 @@ msgstr "ipu"
 #. Translators: Displayed in braille for an object which is a
 #. link.
 msgid "lnk"
-msgstr "bln"
+msgstr "lnk"
 
 #. Translators: Displayed in braille for an object which is a
 #. tree view.
@@ -392,6 +392,10 @@ msgstr "sggstn"
 msgid "definition"
 msgstr "tanım"
 
+#. Translators: Displayed in braille when an object is a switch control
+msgid "swtch"
+msgstr "nhtr"
+
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
 msgstr "seç"
@@ -532,6 +536,18 @@ msgstr "USB"
 msgid "Bluetooth"
 msgstr "Bluetooth"
 
+#. Translators: Braille when there are further details/annotations that can be fetched manually.
+msgid "details"
+msgstr "ayrıntı"
+
+#. Translators: Braille when there are further details/annotations that can be fetched manually.
+#. %s specifies the type of details (e.g. "has comment suggestion")
+#. Translators: Speaks when there are further details/annotations that can be fetched manually.
+#. %s specifies the type of details (e.g. "comment, suggestion, details")
+#, python-format
+msgid "has %s"
+msgstr "%s var"
+
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
 #, python-format
@@ -541,18 +557,6 @@ msgstr "b%s"
 #. Translators: Displayed in braille for a link which has been visited.
 msgid "vlnk"
 msgstr "zbln"
-
-#. Translators: Braille when there are further details/annotations that can be fetched manually.
-#. %s specifies the type of details (e.g. comment, suggestion)
-#. Translators: Speaks when there are further details/annotations that can be fetched manually.
-#. %s specifies the type of details (e.g. comment, suggestion)
-#, python-format
-msgid "has %s"
-msgstr "%s var"
-
-#. Translators: Braille when there are further details/annotations that can be fetched manually.
-msgid "details"
-msgstr "ayrıntı"
 
 #. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
@@ -611,19 +615,6 @@ msgstr "snçkmt"
 #. Translators: brailled when text contains a bookmark
 msgid "bkmk"
 msgstr "yrm"
-
-#. Translators: The label for a braille setting indicating that braille should be
-#. tethered to focus or review cursor automatically.
-msgid "automatically"
-msgstr "otomatik olarak"
-
-#. Translators: The label for a braille setting indicating that braille should be tethered to focus.
-msgid "to focus"
-msgstr "sistem odağı"
-
-#. Translators: The label for a braille setting indicating that braille should be tethered to the review cursor.
-msgid "to review"
-msgstr "inceleme imleci"
 
 #. Translators: Label for a setting in braille settings dialog.
 msgid "Dot firm&ness"
@@ -692,12 +683,12 @@ msgstr "herhangi noktalar"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Afrikaans grade 1"
-msgstr "Afrikaans derece 1"
+msgstr "Güney Afrika Hollanda lehçesi derece 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Afrikaans grade 2"
-msgstr "Afrikaaca derece 1"
+msgstr "Güney Afrika Hollanda lehçesi derece 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -791,8 +782,18 @@ msgstr "Danimarkaca 8 noktalı bilgisayar braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Danish 8 dot computer braille (1993)"
+msgstr "Danimarkaca 8 noktalı bilgisayar braille (1993)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Danish 6 dot grade 1"
 msgstr "Danca 6 nokta derece 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Danish 6 dot grade 1 (1993)"
+msgstr "Danca 6 nokta derece 1 (1993)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -801,13 +802,28 @@ msgstr "Danca 8 nokta derece1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Danish 8 dot grade 1 (1993)"
+msgstr "Danca 8 nokta derece1 (1993)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Danish 6 dot grade 2"
 msgstr "Danca 6 nokta derece 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Danish 6 dot grade 2 (1993)"
+msgstr "Danca 6 nokta derece 2 (1993)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Danish 8 dot grade 2"
 msgstr "Danca 8 dot derece 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Danish 8 dot grade 2 (1993)"
+msgstr "Danca 8 dot derece 2 (1993)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1056,6 +1072,11 @@ msgstr "Kannada derece 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Georgian literary braille"
+msgstr "Gürcüce edebi braille"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Kazakh grade 1"
 msgstr "Kazakçah derece1"
 
@@ -1117,12 +1138,12 @@ msgstr "Letonya Dili Derece 1"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Malayalam grade 1"
-msgstr "Malayalam grade 1"
+msgstr "Malayalam derece 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Manipuri grade 1"
-msgstr "Manipuri grade 1"
+msgstr "Manipuri derece 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1142,7 +1163,7 @@ msgstr "Moğolca derece 2"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Marathi grade 1"
-msgstr "Marathi grade 1"
+msgstr "Marathi derece 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1206,6 +1227,11 @@ msgstr "Sepedi derece2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Chichewa (Malawi) literary braille"
+msgstr "Çevaca (Malavi) edebi braille"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Oriya grade 1"
 msgstr "Kazakça derece 1"
 
@@ -1237,7 +1263,7 @@ msgstr "Portekizce Derece 2"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Punjabi grade 1"
-msgstr "Punjabi grade 1"
+msgstr "Punjabi derece 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1331,6 +1357,36 @@ msgstr "İsveççe kısaltmalı braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Swahili (Kenya) grade 1"
+msgstr "Svahili (Kenya) derece1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) grade 1.2"
+msgstr "Svahili (Kenya) derece1.2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) grade 1.3"
+msgstr "Svahili (Kenya) derece1.3"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) grade 1.4"
+msgstr "Svahili (Kenya) derece1.4"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) grade 1.5"
+msgstr "Svahili (Kenya) derece1.5"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) Grade 2"
+msgstr "Svahili (Kenya) derece2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Tamil grade 1"
 msgstr "Tamil Derece 1"
 
@@ -1342,7 +1398,7 @@ msgstr "Tatarca derece1"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Telugu grade 1"
-msgstr "Telugu grade 1"
+msgstr "Telugu derece 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1652,51 +1708,51 @@ msgstr "geride Tablo yok"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next link"
-msgstr "sonraki bağlantıya gider"
+msgstr "sonraki linke gider"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next link"
-msgstr "ileride bağlantı yok"
+msgstr "ileride link yok"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous link"
-msgstr "önceki bağlantıya gider"
+msgstr "önceki link gider"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous link"
-msgstr "geride bağlantı yok"
+msgstr "geride link yok"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next visited link"
-msgstr "sonraki ziyaret edilmiş bağlantıya gider"
+msgstr "sonraki ziyaret edilmiş linke gider"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next visited link"
-msgstr "ileride ziyaret edilmiş bağlantı yok"
+msgstr "ileride ziyaret edilmiş link yok"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous visited link"
-msgstr "önceki ziyaret edilmiş bağlantıya gider"
+msgstr "önceki ziyaret edilmiş link gider"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous visited link"
-msgstr "geride ziyaret edilmiş bağlantı yok"
+msgstr "geride ziyaret edilmiş link yok"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next unvisited link"
-msgstr "sonraki ziyaret edilmmemiş bağlantıya gider"
+msgstr "sonraki ziyaret edilmmemiş linke gider"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next unvisited link"
-msgstr "ileride ziyaret edilmemiş bağlantı yok"
+msgstr "ileride ziyaret edilmemiş link yok"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous unvisited link"
-msgstr "önceki ziyaret edilmmemiş bağlantıya gider"
+msgstr "önceki ziyaret edilmmemiş link gider"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous unvisited link"
-msgstr "geride ziyaret edilmemiş bağlantı yok"
+msgstr "geride ziyaret edilmemiş link yok"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next form field"
@@ -1892,19 +1948,19 @@ msgstr "geride alıntı bloğu yok"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "skips forward past a block of links"
-msgstr "bir grup bağlantı sonrasındaki metin üzerine gider"
+msgstr "bir grup link sonrasındaki metin üzerine gider"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no more text after a block of links"
-msgstr "bir grup bağlantı sonrasında metin bulunamadı"
+msgstr "bir grup link sonrasında metin bulunamadı"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "skips backward past a block of links"
-msgstr "bir grup bağlantı öncesindeki metin üzerine gider"
+msgstr "bir grup link öncesindeki metin üzerine gider"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no more text before a block of links"
-msgstr "bir grup bağlantı öncesinde metin bulunamadı"
+msgstr "bir grup link öncesinde metin bulunamadı"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next landmark"
@@ -2007,7 +2063,7 @@ msgstr "geride gruplandırma yok"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "Lin&ks"
-msgstr "Bağ&lantılar"
+msgstr "&Linkler"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -2907,20 +2963,10 @@ msgid "Cycles through line indentation settings"
 msgstr "Satır girintilerinin bildirim seçenekleri arasında geçiş yapar"
 
 #. Translators: A message reported when cycling through line indentation settings.
-msgid "Report line indentation with speech"
-msgstr "Satır girintilerini konuşarak bildir"
-
-#. Translators: A message reported when cycling through line indentation settings.
-msgid "Report line indentation with tones"
-msgstr "Satır girintilerini bip sesiyle bildir"
-
-#. Translators: A message reported when cycling through line indentation settings.
-msgid "Report line indentation with speech and tones"
-msgstr "Satır girintilerini konuşarak ve bip sesiyle bildir"
-
-#. Translators: A message reported when cycling through line indentation settings.
-msgid "Report line indentation off"
-msgstr "Satır girintilerini bildirme"
+#. {mode} will be replaced with the mode; i.e. Off, Speech, Tones or Both Speech and Tones.
+#, python-brace-format
+msgid "Report line indentation {mode}"
+msgstr "Satır girintisi bildirimi {mode}"
 
 #. Translators: Input help mode message for toggle report paragraph indentation command.
 msgid "Toggles on and off the reporting of paragraph indentation"
@@ -2984,17 +3030,11 @@ msgstr "tablo hücre koordinatlarını bildir"
 msgid "Cycles through the cell border reporting settings"
 msgstr "Hücre sınırı bildirim ayarları arasında geçiş yapar"
 
-#. Translators: A message reported when cycling through cell borders settings.
-msgid "Report styles of cell borders"
-msgstr "Hücre kenarlıklarının sitilini bildir"
-
-#. Translators: A message reported when cycling through cell borders settings.
-msgid "Report colors and styles of cell borders"
-msgstr "Hücre kenarlıklarının renklerini ve stillerini bildir"
-
-#. Translators: A message reported when cycling through cell borders settings.
-msgid "Report cell borders off."
-msgstr "Hücre sınırlarının bildirimi kapalı."
+#. Translators: Reported when the user cycles through report cell border modes.
+#. {mode} will be replaced with the mode; e.g. Off, Styles and Colors and styles.
+#, python-brace-format
+msgid "Report cell borders {mode}"
+msgstr "Hücre sınırları bildirimi {mode}"
 
 #. Translators: Input help mode message for toggle report links command.
 msgid "Toggles on and off the reporting of links"
@@ -3002,11 +3042,11 @@ msgstr "Linklerin bildirimini açıp kapatır"
 
 #. Translators: The message announced when toggling the report links document formatting setting.
 msgid "report links off"
-msgstr "bağlantıları bildirme"
+msgstr "linkleri bildirme"
 
 #. Translators: The message announced when toggling the report links document formatting setting.
 msgid "report links on"
-msgstr "bağlantıları bildir"
+msgstr "linkleri bildir"
 
 #. Translators: Input help mode message for toggle report graphics command.
 msgid "Toggles on and off the reporting of graphics"
@@ -3159,6 +3199,19 @@ msgstr "Noktalama ve işaretlerin seslendirilme düzeyleri arasında dolaşır"
 #, python-format
 msgid "Symbol level %s"
 msgstr "İmla seslendirme düzeyi %s"
+
+#. Translators: Input help mode message for toggle delayed character description command.
+msgid ""
+"Toggles on and off delayed descriptions for characters on cursor movement"
+msgstr "Gecikmeli karakter açıklamalarını açıp kapatır"
+
+#. Translators: The message announced when toggling the delayed character description setting.
+msgid "delayed character descriptions on"
+msgstr "gecikmeli karakter açıklamaları, açık"
+
+#. Translators: The message announced when toggling the delayed character description setting.
+msgid "delayed character descriptions off"
+msgstr "gecikmeli karakter açıklamaları, kapalı"
 
 #. Translators: Input help mode message for move mouse to navigator object command.
 msgid "Moves the mouse pointer to the current navigator object"
@@ -3627,7 +3680,8 @@ msgstr ""
 #. Translators: the description for the reportDetailsSummary script.
 msgid "Report summary of any annotation details at the system caret."
 msgstr ""
-"Herhangi bir ek açıklama ayrıntısının özetini sistem başlığında bildir."
+"Sistem imleci konumundaki herhangi bir ek açıklamayla ilgili detayların "
+"özetini bildirir."
 
 #. Translators: message given when there is no annotation details for the reportDetailsSummary script.
 msgid "No additional details"
@@ -4307,21 +4361,50 @@ msgstr ""
 msgid "Plugins reloaded"
 msgstr "Plug-in'ler tekrar yüklendi"
 
+#. Translators: input help mode message for Report destination URL of navigator link command
+msgid ""
+"Report the destination URL of the link in the navigator object. If pressed "
+"twice, shows the URL in a window for easier review."
+msgstr ""
+"Nesne sunucusunun üzerinde bulunduğu linkin yönlendirdiği web adresini okur. "
+"İki kez basıldığında daha kolay incelenebilmesi için web adresini bir "
+"pencerede gösterir."
+
+#. Translators: Informs the user that the window contains the destination of the
+#. link with given title
+#, python-brace-format
+msgid "Destination of: {name}"
+msgstr "{name} linkinin web adresi"
+
+#. Translators: Tell user that the command has been run on something that is not a link
+msgid "Not a link."
+msgstr "Link değil."
+
+#. Translators: input help mode message for Report URL of navigator link in a window command
+msgid ""
+"Reports the destination URL of the link in the navigator object in a window, "
+"instead of just speaking it. May be preferred by braille users."
+msgstr ""
+"Nesne sunucusunun üzerinde bulunduğu linkin yönlendirdiği web adresini "
+"okumak yerine bir pencerede gösterir. Braille kullananlar tarafından tercih "
+"edilebilir."
+
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Moves to the next object in a flattened view of the object navigation "
 "hierarchy"
-msgstr "Nesne sunucusunu, üzerinde bulunulanın kapsadığı nesneye taşır"
+msgstr ""
+"Nesne dolaşım hierarşisinin düzleşmiş görünümünde sonraki nesneye gider"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Moves to the previous object in a flattened view of the object navigation "
 "hierarchy"
-msgstr "Nesne sunucusunu, üzerinde bulunulanı kapsayan nesneye taşır"
+msgstr "Nesne dolaşım hierarşisinin düzleşmiş görünümünde önceki nesneye gider"
 
 #. Translators: Describes a command.
 msgid "Toggles the support of touch interaction"
-msgstr "Dokunmatik etkileşimi açıp kapatır"
+msgstr "Dokunmatik etkileşim desteğini açıp kapatır"
 
 #. Translators: Presented when attempting to toggle touch interaction support
 msgid "Touch interaction not supported"
@@ -4461,6 +4544,10 @@ msgstr "Geçici ekran perdesi, bir sonraki yeniden başlatmaya kadar etkin"
 #. Translators: Reported when the screen curtain could not be enabled.
 msgid "Could not enable screen curtain"
 msgstr "Ekran perdesi etkinleştirilemiyor"
+
+#. Translators: Describes a command.
+msgid "Cycles through paragraph navigation styles"
+msgstr "Paragraf dolaşım kipleri arasında geçiş yapar"
 
 #. Translators: a message indicating that configuration profiles can't be activated using gestures,
 #. due to profile activation being suspended.
@@ -4859,9 +4946,12 @@ msgstr "dizüstü"
 msgid "unknown %s"
 msgstr "bilinmeyen %s"
 
+#. Translators: a state that denotes a control is currently on
+#. E.g. a switch control.
 msgid "on"
 msgstr "açık"
 
+#. Translators: This is presented when a switch control is off.
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
@@ -6072,7 +6162,7 @@ msgstr "Hız"
 #. Translators: This is the name of the rate boost voice toggle
 #. which further increases the speaking rate when enabled.
 msgid "Rate boos&t"
-msgstr "Hız ar&tırıcı"
+msgstr "Hız ar&ttırıcı"
 
 #. Translators: Label for a setting in synth settings ring.
 msgctxt "synth setting"
@@ -6262,6 +6352,7 @@ msgstr "Güncelleme kontrolünde hata."
 #. Translators: The title of the message box
 #. Translators: The title of the error dialog displayed when there is an error showing the GUI
 #. for a vision enhancement provider
+#. Translators: The title of an error message box displayed when validating the startup dialog
 msgid "Error"
 msgstr "Hata"
 
@@ -6514,6 +6605,11 @@ msgstr ""
 msgid "%d percent"
 msgstr "yüzde %d"
 
+#. Translators: Announced in braille when suggestions appear when search term is entered
+#. in various search fields such as Start search box in Windows 10.
+msgid "Suggestions"
+msgstr "Öneriler"
+
 #. Translators: a message announcing a candidate's character and description.
 #, python-brace-format
 msgid "{symbol} as in {description}"
@@ -6526,11 +6622,11 @@ msgstr "{number} {candidate}"
 
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object to the next column"
-msgstr "Nesne sunucusunu son sütuna taşır"
+msgstr "Nesne sunucusunu sonraki sütuna taşır"
 
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object to the previous column"
-msgstr "Nesne sunucusunu ilk sütuna taşır"
+msgstr "Nesne sunucusunu önceki sütuna taşır"
 
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object and focus to the next row"
@@ -6555,10 +6651,6 @@ msgstr "Nesne sunucusunu ve odağı ilk satıra taşır"
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object and focus to the last row"
 msgstr "Nesne sunucusunu ve odağı son satıra taşır"
-
-#. Translators: Announced in braille when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
-msgid "Suggestions"
-msgstr "Öneriler"
 
 #. Translators: The label for a 'composition' Window that appears when the user is typing one or more east-Asian characters into a document.
 msgid "Composition"
@@ -6629,17 +6721,36 @@ msgstr "Belge penceresi bulunamıyor."
 msgid "No track playing"
 msgstr "Çalan parça yok"
 
+#. Translators: Reported remaining time in Foobar2000
+#, python-brace-format
+msgid "{remainingTimeFormatted} remaining"
+msgstr "{remainingTimeFormatted} kaldı"
+
 #. Translators: Reported if the remaining time can not be calculated in Foobar2000
-msgid "Unable to determine remaining time"
-msgstr "Kalan süre belirlenemiyor"
+msgid "Remaining time not available"
+msgstr "Kalan süre mevcut değil"
 
 #. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Çalmakta olan parça için geri kalan kısmın süresini söyler"
 
+#. Translators: Reported elapsed time in Foobar2000
+#, python-brace-format
+msgid "{elapsedTime} elapsed"
+msgstr "{elapsedTime} geçti"
+
+#. Translators: Reported if the elapsed time is not available in Foobar2000
+msgid "Elapsed time not available"
+msgstr "Geçen süre mevcut değil"
+
 #. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
 msgid "Reports the elapsed time of the currently playing track, if any"
 msgstr "Çalmakta olan parça için kalan süre bilgisini söyler"
+
+#. Translators: Reported remaining time in Foobar2000
+#, python-brace-format
+msgid "{totalTime} total"
+msgstr "Toplam süre {totalTime}"
 
 #. Translators: Reported if the total time is not available in Foobar2000
 msgid "Total time not available"
@@ -7325,9 +7436,60 @@ msgstr "&Başlangıçta Braille Görüntüleyici'yı Göster"
 msgid "&Hover for cell routing"
 msgstr "&Hücre yönlendirme için üzerine gelin"
 
-#. Translators: This is the label for a combobox in the
-#. document formatting settings panel.
-#. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+#. Translators: One of the show states of braille messages
+#. (the disabled mode turns off showing of braille messages completely).
+#. Translators: Label for an option in NVDA settings.
+#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
+msgid "Disabled"
+msgstr "Devre dışı"
+
+#. Translators: One of the show states of braille messages
+#. (the timeout mode shows messages for the specific time).
+msgid "Use timeout"
+msgstr "Zaman aşımını kullan"
+
+#. Translators: One of the show states of braille messages
+#. (the indefinitely mode prevents braille messages from disappearing automatically).
+msgid "Show indefinitely"
+msgstr "Süresiz olarak göster"
+
+#. Translators: The label for a braille setting indicating that braille should be
+#. tethered to focus or review cursor automatically.
+msgid "automatically"
+msgstr "otomatik olarak"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered to focus.
+msgid "to focus"
+msgstr "sistem odağı"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered
+#. to the review cursor.
+msgid "to review"
+msgstr "inceleme imleci"
+
+#. Translators: A choice in a combo box in the document formatting dialog to report No line Indentation.
+msgctxt "line indentation setting"
+msgid "Off"
+msgstr "Kapalı"
+
+#. Translators: A choice in a combo box in the document formatting dialog to report indentation
+#. with Speech.
+msgctxt "line indentation setting"
+msgid "Speech"
+msgstr "Konuşma"
+
+#. Translators: A choice in a combo box in the document formatting dialog to report indentation
+#. with tones.
+msgctxt "line indentation setting"
+msgid "Tones"
+msgstr "Ses çalarak"
+
+#. Translators: A choice in a combo box in the document formatting dialog to report indentation with both
+#. Speech and tones.
+msgctxt "line indentation setting"
+msgid "Both Speech and Tones"
+msgstr "Konuşarak ve Ses çalarak"
+
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
 msgid "Off"
@@ -7348,17 +7510,40 @@ msgstr "Satırlar"
 msgid "Columns"
 msgstr "Sütunlar"
 
-#. Translators: Label for an option in NVDA settings.
-#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
-#. Translators: One of the show states of braille messages
-#. (the disabled mode turns off showing of braille messages completely).
-msgid "Disabled"
-msgstr "Devre dışı"
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Styles"
+msgstr "Stiller"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Both Colors and Styles"
+msgstr "Renkler ve stiller"
 
 #. Translators: Label for an option in NVDA settings.
 #. Translators: The status shown for an addon when its currently running in NVDA.
 msgid "Enabled"
 msgstr "Etkin"
+
+#. Translators: Label for a paragraph style in NVDA settings.
+msgid "Handled by application"
+msgstr "Uygulama tarafından kontrol edilir"
+
+#. Translators: Label for a paragraph style in NVDA settings.
+msgid "Single line break"
+msgstr "Tek satır sonu"
+
+#. Translators: Label for a paragraph style in NVDA settings.
+msgid "Multi line break"
+msgstr "Çoklu satır sonu"
+
+#. Translators: Label for an option in NVDA settings.
+msgid "Diffing"
+msgstr "Fark bulma"
+
+#. Translators: Label for an option in NVDA settings.
+msgid "UIA notifications"
+msgstr "UIA bildirimleri"
 
 #. Translators: The title of the document used to present the result of content recognition.
 msgid "Result"
@@ -8126,6 +8311,11 @@ msgstr "açıklama"
 msgid "suggestion"
 msgstr "öneri"
 
+#. Translators: The word role for a switch control
+#. I.e. a control that can be switched on or off.
+msgid "switch"
+msgstr "anahtar"
+
 #. Translators: Indicates that a particular state of an object is negated.
 #. Separate strings have now been defined for commonly negated states (e.g. not selected and not
 #. checked), but this still might be used in some other cases.
@@ -8324,6 +8514,13 @@ msgstr "işaretli değil"
 #. This is only reported for objects which support accessible drag and drop.
 msgid "done dragging"
 msgstr "sürükleme başarılı"
+
+#. Translators: This is spoken when a paragraph is considered blank.
+#. Translators: This is spoken when the line is considered blank.
+#. Translators: This is spoken when NVDA moves to an empty line.
+#. Translators: This is spoken when the line is considered blank.
+msgid "blank"
+msgstr "boş"
 
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 msgid "Configuration applied"
@@ -8915,6 +9112,10 @@ msgstr "Eylem, NVDA Windows Mağazası sürümünde kullanılamıyor"
 msgid "Action unavailable while a dialog requires a response"
 msgstr "İletişim kutusu yanıt gerektirirken eylem kullanılamıyor"
 
+#. Translators: Reported when an action cannot be performed because Windows is locked.
+msgid "Action unavailable while Windows is locked"
+msgstr "Windows kilitliyken eylem kullanılamıyor"
+
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
 msgstr "Konfigürasyon Profilleri"
@@ -8966,8 +9167,10 @@ msgid "Error activating profile."
 msgstr "Konfigürasyon profili etkinleştirme hatası."
 
 #. Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
-msgid "This profile will be permanently deleted. This action cannot be undone."
-msgstr "Bu profil kalıcı olarak silinecek. Bu işlem geri alınamaz."
+#. The placeholder {} is replaced with the name of the configuration profile that will be deleted.
+msgid ""
+"The profile {} will be permanently deleted. This action cannot be undone."
+msgstr "{} profili kalıcı olarak silinecek. Bu işlem geri alınamaz."
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 msgid "Confirm Deletion"
@@ -9731,7 +9934,9 @@ msgstr "De&stekleniyorsa kodlama işlevini kullan"
 
 #. Translators: This is the label for a checkbox in the voice settings panel.
 msgid "&Delayed descriptions for characters on cursor movement"
-msgstr "İmle&ç hareketindeki karakterler için gecikmeli açıklamalar"
+msgstr ""
+"İmle&ç hareket  ettiğinde imlecin üzerinde bulunan karakteri gecikmeli "
+"olarak açıkla"
 
 #. Translators: This is the label for the keyboard settings panel.
 msgid "Keyboard"
@@ -10132,19 +10337,6 @@ msgstr "Satır nu&maraları"
 msgid "Line &indentation reporting:"
 msgstr "Satır gi&rintilerinin bildirimi:"
 
-#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
-msgctxt "line indentation setting"
-msgid "Speech"
-msgstr "Konuşma"
-
-#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
-msgid "Tones"
-msgstr "Ses çalarak"
-
-#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
-msgid "Both Speech and Tones"
-msgstr "Konuşarak ve Ses çalarak"
-
 #. Translators: This message is presented in the document formatting settings panelue
 #. If this option is selected, NVDA will report paragraph indentation if available.
 msgid "&Paragraph indentation"
@@ -10179,16 +10371,6 @@ msgstr "b&aşlıklar"
 #. document formatting settings panel.
 msgid "Cell c&oordinates"
 msgstr "Hücre k&oordinatları"
-
-#. Translators: This is the label for a combobox in the
-#. document formatting settings panel.
-msgid "Styles"
-msgstr "Stiller"
-
-#. Translators: This is the label for a combobox in the
-#. document formatting settings panel.
-msgid "Both Colors and Styles"
-msgstr "Renkler ve stiller"
 
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
@@ -10246,6 +10428,14 @@ msgid "Report formatting chan&ges after the cursor (can cause a lag)"
 msgstr ""
 "&İmleçten sonraki yazı biçimi değişikliklerini bildir (NVDA'yı "
 "yavaşlatabilir)"
+
+#. Translators: This is the label for the document navigation settings panel.
+msgid "Document Navigation"
+msgstr "Belge dolaşımı"
+
+#. Translators: This is a label for the paragraph navigation style in the document navigation dialog
+msgid "&Paragraph style:"
+msgstr "&Paragraf kipi:"
 
 #. Translators: This is the label for the touch interaction settings panel.
 msgid "Touch Interaction"
@@ -10495,6 +10685,10 @@ msgstr "Diff Match Patch"
 msgid "Difflib"
 msgstr "Difflib"
 
+#. Translators: This is the label for a combo-box in the Advanced settings panel.
+msgid "Speak new text in Windows Terminal via:"
+msgstr "Windows Terminal'de yeni metin şunun aracılığıyla oku:"
+
 #. Translators: This is the label for combobox in the Advanced settings panel.
 msgid "Attempt to cancel speech for expired focus events:"
 msgstr "Süresi dolmuş odak etkinlikleri içinKonuşmayı iptal etmeyi dene:"
@@ -10637,16 +10831,6 @@ msgstr "&Odak için imleç şekli:"
 #. Translators: The label for a setting in braille settings to select the cursor shape when tethered to review.
 msgid "Cursor shape for &review:"
 msgstr "&İnceleme için imleç şekli:"
-
-#. Translators: One of the show states of braille messages
-#. (the timeout mode shows messages for the specific time).
-msgid "Use timeout"
-msgstr "Zaman aşımını kullan"
-
-#. Translators: One of the show states of braille messages
-#. (the indefinitely mode prevents braille messages from disappearing automatically).
-msgid "Show indefinitely"
-msgstr "Süresiz olarak göster"
 
 #. Translators: The label for a setting in braille settings to combobox enabling user
 #. to decide if braille messages should be shown and automatically disappear from braille display.
@@ -10947,6 +11131,14 @@ msgstr "Büyük harf kilidini NVDA t&uşu olarak kullan"
 msgid "&Show this dialog when NVDA starts"
 msgstr "&NVDA açıldığında, bu iletişim kutusunu göster"
 
+#. Translators: The title of an error message box displayed when validating the startup dialog
+msgid ""
+"At least one NVDA modifier key must be set. Caps lock will remain as an NVDA "
+"modifier key. "
+msgstr ""
+"En azından bir tuş NVDA tuşu olarak belirlenmelidir. Büyük harf kilidi NVDA "
+"tuşu olarak belirlendi. "
+
 #. Translators: The label for a checkbox in NvDA installation program to agree to the license agreement.
 msgid "I &agree"
 msgstr "On&aylıyorum"
@@ -11007,12 +11199,6 @@ msgstr "Matematiksel etkileşimden çık"
 msgid "Math interaction not supported."
 msgstr "Matematiksel etkileşim desteklenmiyor."
 
-#. Translators: This is spoken when the line is considered blank.
-#. Translators: This is spoken when NVDA moves to an empty line.
-#. Translators: This is spoken when the line is considered blank.
-msgid "blank"
-msgstr "boş"
-
 #. Translators: cap will be spoken before the given letter when it is capitalized.
 #, python-format
 msgid "cap %s"
@@ -11056,15 +11242,19 @@ msgid "row %s"
 msgstr "satır %s"
 
 #. Translators: Speaks the row span added to the current row number (example output: through 5).
-#. Translators: Speaks the column span added to the current column number (example output: through 5).
-#, python-format
-msgid "through %s"
-msgstr "%s boyunca"
+#, python-brace-format
+msgid "through {endRow}"
+msgstr "{endRow} satırına kadar"
 
 #. Translators: Speaks current column number (example output: column 3).
 #, python-format
 msgid "column %s"
 msgstr "sütun %s"
+
+#. Translators: Speaks the column span added to the current column number (example output: through 5).
+#, python-brace-format
+msgid "through {endCol}"
+msgstr "{endCol} sütununa kadar"
 
 #. Translators: Speaks the row and column span added to the current row and column numbers
 #. (example output: through row 5 column 3).
@@ -11459,6 +11649,41 @@ msgstr "%{curPercent:.0f}"
 #, python-brace-format
 msgid "at {x}, {y}"
 msgstr "{x}, {y} konumunda"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds
+#, python-brace-format
+msgctxt "time format"
+msgid "{S}"
+msgstr "{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes
+#, python-brace-format
+msgctxt "time format"
+msgid "{M}:{S}"
+msgstr "{M}:{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes, {H} hours
+#, python-brace-format
+msgctxt "time format"
+msgid "{H}:{M}:{S}"
+msgstr "{H}:{M}:{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes, {H} hours, {D} day
+#, python-brace-format
+msgctxt "time format"
+msgid "{D} day {H}:{M}:{S}"
+msgstr "{D} gün {H}:{M}:{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes, {H} hours, {D} days
+#, python-brace-format
+msgctxt "time format"
+msgid "{D} days {H}:{M}:{S}"
+msgstr "{D} gün {H}:{M}:{S}"
 
 #. Translators: This is the message for a warning shown if NVDA cannot determine if
 #. Windows is locked.
@@ -12552,11 +12777,13 @@ msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr ""
 "Dizi için gösterge anahtarı {seriesName} {seriesIndex} bölü {seriesCount}"
 
-#. Translators: The default color of text when a color has not been set by the author.
-#. Translators: The default background color  when a color has not been set by the author.
-#. Translators: the default (automatic) color in Microsoft Word
-msgid "default color"
-msgstr "varsayılan renk"
+#. Translators: The text color as reported in Wordpad (Automatic) or NVDA log viewer.
+#. Translators: The background color as reported in Wordpad (Automatic) or NVDA log viewer.
+#. Translators: The text color as reported in Wordpad (Automatic) or NVDA log viewer.
+#. Translators: The background color as reported in Wordpad (Automatic) or NVDA log viewer.
+#, python-brace-format
+msgid "{color} (default color)"
+msgstr "{color} (varsayılan renk)"
 
 #. Translators: The color of text cannot be detected.
 #. Translators: The background color cannot be detected.
@@ -13100,6 +13327,10 @@ msgstr "%.1f satır"
 msgid "Table description"
 msgstr "Tablo tarifi"
 
+#. Translators: the default (automatic) color in Microsoft Word
+msgid "automatic color"
+msgstr "otomatik renk"
+
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Bold on"
 msgstr "Kalın açık"
@@ -13230,6 +13461,40 @@ msgstr "Çift satır aralığı"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5 satır aralığı"
+
+#. Translators: Names of braille displays.
+msgid "Caiku Albatross 46/80"
+msgstr "Caiku Albatross 46/80"
+
+#. Translators: A message when number of status cells must be changed
+#. for a braille display driver
+msgid ""
+"To use Albatross with NVDA: change number of status cells in Albatross "
+"internal menu at most "
+msgstr ""
+"Albatross'u NVDA ile kullanmak için: Albatross'un kendi menüsünden durum "
+"hücresi sayısını en fazla şu miktara ayarlayın "
+
+#~ msgid "Unable to determine remaining time"
+#~ msgstr "Kalan süre belirlenemiyor"
+
+#~ msgid "through %s"
+#~ msgstr "%s boyunca"
+
+#~ msgid "Report line indentation with speech"
+#~ msgstr "Satır girintilerini konuşarak bildir"
+
+#~ msgid "Report line indentation with tones"
+#~ msgstr "Satır girintilerini bip sesiyle bildir"
+
+#~ msgid "Report line indentation with speech and tones"
+#~ msgstr "Satır girintilerini konuşarak ve bip sesiyle bildir"
+
+#~ msgid "Report styles of cell borders"
+#~ msgstr "Hücre kenarlıklarının sitilini bildir"
+
+#~ msgid "Report colors and styles of cell borders"
+#~ msgstr "Hücre kenarlıklarının renklerini ve stillerini bildir"
 
 #~ msgid ""
 #~ "NVDA is failing to fetch the foreground window. If this continues, NVDA "

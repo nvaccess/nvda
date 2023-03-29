@@ -145,16 +145,16 @@ def test_moveByWord():
 			'Say',
 			'(quietly)', 'Hello,', 'Jim', '.',  # Expected: no symbols named
 			"don't",  # Expected: mid-word symbol
-			'right pointing arrow', 't shirt',  # todo: Expect dash
+			'right-pointing arrow', 't-shirt',
 			# todo: There should not be any "empty" words. Expect 'bar bar', and 'at  caret  star  line'
 			'1', 'bar', '2', '', '3', '', '4',
 			# end of first line
 			'blank',  # single space and newline
 			'',  # tab and newline  todo: There should not be any "empty" words.
 			'blank',  # 4 spaces and newline
-			'right pointing arrow',
-			't shirt',  # todo: Expect dash
-			't shirt',  # todo: Expect dash
+			'right-pointing arrow',
+			't-shirt',
+			't-shirt',
 			'blank',  # end of doc
 		],
 	)
@@ -170,16 +170,16 @@ def test_moveByWord():
 			'left paren(quietly right paren)',  # Expect: parenthesis are named
 			'quote Hello comma,', 'Jim', 'quote  dot.',  # Expect: quote, comma and dot are named
 			'don tick t',  # Expect: mid-word symbol substituted
-			'right dash pointing arrow', 't dash shirt',  # todo: Expect dash symbol not to be replaced with word.
+			'right dash-pointing arrow', 't dash-shirt',
 			# Expect no empty words:
 			'1', 'bar', '2', 'bar  bar', '3', 'at  caret  star  line', '4',
 			# end of first line
 			'blank',  # single space and newline
 			'tab',  # tab and newline
 			'blank',  # 4 spaces and newline
-			'right dash pointing arrow',  # todo: Expect dash symbol not to be replaced with word.
-			't dash shirt',  # todo: Expect dash symbol not to be replaced with word.
-			't dash shirt',  # todo: Expect dash symbol not to be replaced with word.
+			'right dash-pointing arrow',
+			't dash-shirt',
+			't dash-shirt',
 			'blank'  # end of doc
 		]
 	)
@@ -247,7 +247,7 @@ def test_moveByChar():
 			'left paren', 'right paren',  # Expect parens named
 			'quote', 'tick',  # Expect quote and apostrophe named
 			'e', 'comma',  # Expect comma named
-			'right pointing arrow', 't shirt',   # todo: Expect dash i.e. 'right-pointing arrow', 't-shirt'
+			'right-pointing arrow', 't-shirt',
 			'tab',  # Expect tab named
 			'carriage return',  # Expect Windows/notepad newline is \r\n
 			'line feed',  # on Windows/notepad newline is \r\n
@@ -256,8 +256,6 @@ def test_moveByChar():
 
 	_NvdaLib.getSpeechAfterKey(Move.REVIEW_HOME.value)  # reset to start position.
 
-	# todo: Bug, with symbol level ALL text due to a symbol substitution has further substitutions applied:
-	#       IE: "t-shirt" either becomes "t shirt" or "t dash shirt" dependent on symbol level.
 	_doTest(
 		navKey=Move.REVIEW_CHAR,
 		reportedAfterLast=EndSpeech.RIGHT,
@@ -268,7 +266,7 @@ def test_moveByChar():
 			'quote', 'tick',  # Expect quote and apostrophe named
 			'e', 'comma',  # Expect comma named
 			# todo: Expect no replacement with word 'dash' i.e. expect 'right-pointing arrow', 't-shirt'
-			'right dash pointing arrow', 't dash shirt',
+			'right dash-pointing arrow', 't dash-shirt',
 			'tab',  # Expect whitespace named.
 			'carriage return',  # on Windows/notepad newline is \r\n
 			'line feed',  # on Windows/notepad newline is \r\n
@@ -351,11 +349,11 @@ def test_selByWord():
 				'',  # newline and tab  todo: There should not be any "empty" words.
 				'',  # newline and 4 spaces todo: There should not be any "empty" words.
 				'',  # newline  todo: There should not be any "empty" words.
-				'right pointing arrow',  # todo: Expect dash
+				'right-pointing arrow',
 				'',  # newline  todo: There should not be any "empty" words.
-				't shirt',  # todo: Expect dash
+				't-shirt',
 				'',  # newline  todo: There should not be any "empty" words.
-				't shirt',  # todo: Expect dash
+				't-shirt',
 				# end of doc
 			]
 		)),
@@ -384,11 +382,11 @@ def test_selByWord():
 				'tab ',  # newline and tab
 				'',  # newline and 4 spaces
 				'',  # newline
-				'right dash pointing arrow',  # todo: Expect dash symbol not to be replaced with word.
+				'right dash-pointing arrow',
 				'',  # newline  todo: There should not be any "empty" words.
-				't dash shirt',  # todo: Expect dash symbol not to be replaced with word.
+				't dash-shirt',
 				'',  # newline  todo: There should not be any "empty" words.
-				't dash shirt',  # todo: Expect dash symbol not to be replaced with word.
+				't dash-shirt',
 				# end of doc
 			]
 		))
@@ -467,7 +465,7 @@ def test_selByChar():
 				'left paren', 'right paren',  # Expect parens named
 				'quote', 'tick',  # Expect quote and apostrophe named
 				'e', 'comma',  # Expect comma named
-				'right pointing arrow', 't shirt',   # todo: Expect dash i.e. 'right-pointing arrow', 't-shirt'
+				'right-pointing arrow', 't-shirt',
 				'tab',  # Expect tab named
 				'',  # Expect Windows/notepad newline is \r\n
 			]
@@ -476,8 +474,6 @@ def test_selByChar():
 
 	_NvdaLib.getSpeechAfterKey(Move.CARET_HOME.value)  # reset to start position.
 
-	# todo: Bug, with symbol level ALL text due to a symbol substitution has further substitutions applied:
-	#       IE: "t-shirt" either becomes "t shirt" or "t dash shirt" dependent on symbol level.
 	_doTest(
 		navKey=Move.SEL_CARET_CHAR,
 		reportedAfterLast=EndSpeech.NONE,
@@ -489,7 +485,7 @@ def test_selByChar():
 				'quote', 'tick',  # Expect quote and apostrophe named
 				'e', 'comma',  # Expect comma named
 				# todo: Expect no replacement with word 'dash' i.e. expect 'right-pointing arrow', 't-shirt'
-				'right dash pointing arrow', 't dash shirt',
+				'right dash-pointing arrow', 't dash-shirt',
 				'tab',  # Expect whitespace named.
 				'',  # on Windows/notepad newline is \r\n
 			]
@@ -615,7 +611,7 @@ def test_tableHeaders():
 			"with 2 rows and 3 columns",  # details of the table context
 			"row 1",  # enter row 1 context
 			"column 1",  # enter column 1 context
-			"First dash name",  # the contents of the cell
+			"First dash-name",  # the contents of the cell
 		])
 	)
 	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
@@ -643,7 +639,7 @@ def test_tableHeaders():
 		# describe third column header
 		'  '.join([
 			"row 2",   # enter row 2 context, still in table
-			"First dash name",  # reminder of the column name
+			"First dash-name",  # reminder of the column name
 			"column 1",  # explicit column 2 context,
 			"a",  # the contents of the cell
 		])

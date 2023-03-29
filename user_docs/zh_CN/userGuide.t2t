@@ -17,6 +17,8 @@ NVDA 由 [NV Access https://www.nvaccess.org/] 和其他贡献者共同开发（
 ++ 主要功能 ++[GeneralFeatures]
 NVDA 可供盲人和低视力人群使用 Windows 操作系统，以及与众多第三方应用程序进行交互。
 
+可以在 NV Access YouTube 频道观看一个简短的视频演示，[“什么是 NVDA？” https://www.youtube.com/watch?v=tCFyyqy9mqo]。
+
 主要特色包括：
 - 支持包括网页浏览器、电子邮件客户端、互联网聊天程序和 Office 套件在内的主流应用程序。
 - 集成的语音合成器（eSpeak NG）支持超过 80 种语言。
@@ -30,15 +32,17 @@ NVDA 可供盲人和低视力人群使用 Windows 操作系统，以及与众多
 - 能够在 Windows 登录界面和[其他安全界面 #SecureScreens]运行。
 - 支持使用触摸手势浏览屏幕时朗读控件和文本信息。
 - 支持常见的辅助功能接口，如 Microsoft Active Accessibility（MSAA）、Java Access Bridge、IAccessible2 和 UI automation。
-- 能够以高亮突出显示各种焦点。
 - 支持 Windows 命令提示符和其他控制台程序。
+- 能够以高亮突出显示各种焦点。
 -
 
-+ 系统需求 +[SystemRequirements]
+++ 系统需求 ++[SystemRequirements]
 - 操作系统：所有 32 位或者 64 位的 Windows 7 Sp1、Windows 8、Windows 8.1、Windows 10，Windows 11（从 2008 R2 起的所有服务器系统）。
-- 对于 Windows 7 版本，NVDA 要求 SP1 以上。
-- 对于 Windows Server 2008 R2 服务器操作系统，NVDA 要求 SP1 或者更高。
-- 大约需要 150 MB 的磁盘空间。
+  - 对于 Windows 7 版本，NVDA 要求 SP1 或更高。
+  - 对于 Windows Server 2008 R2 服务器操作系统，NVDA 要求 SP1 或更高。
+  - 支持 Windows 的 AMD64 和 ARM64 平台。
+  -
+- 至少需要 150 MB 的磁盘空间。
 -
 
 
@@ -219,8 +223,9 @@ NVDA 键也可以设定为``大小写锁定``键。
 | 读出当前所聚焦对象的快捷键 | ``shift+数字键盘2`` | ``NVDA+control+shift+.`` | 读出当前所聚焦对象的快捷键（或加速键） |
 | 朗读时间 | ``NVDA+f12`` | ``NVDA+f12`` | 按一次读出当前时间。连按两次读出日期。 |
 | 朗读文本格式 | ``NVDA+f`` | ``NVDA+f`` | 朗读文本的格式信息。连按两次在一个窗口中显示此信息。 |
+| 读出链接对象网址 | ``NVDA+k`` | ``NVDA+k`` | 读出当前[导航对象 #ObjectNavigation]所在链接指向的网址。连按两次在一个窗口中显示此信息，以便进行更详细的查看。 |
 
-+++ 切换哪些信息需要 NVDA 读出 +++[ToggleWhichInformationNVDAReads]
++++ 切换需要 NVDA 读出哪些信息 +++[ToggleWhichInformationNVDAReads]
 || 名称 | 台式机键盘 | 笔记本键盘 | 描述 |
 | 朗读输入字符 | ``NVDA+2`` | ``NVDA+2`` | 如果启用，NVDA 会朗读您在键盘上输入的所有字符。 |
 | 朗读输入单词 | ``NVDA+3`` | ``NVDA+3`` | 如果启用，NVDA 会朗读您在键盘上输入的单词。 |
@@ -347,39 +352,13 @@ NV Access 还出售[电话支持 https://www.nvaccess.org/product/nvda-telephone
 - Windows8 及以上：无法支持音频闪避功能。
 -
 
-+ 获取和配置 NVDA +[GettingAndSettingUpNVDA]
-如果您还没有 NVDA 的副本，请从 [NVDA 官方网站 NVDA_URL]下载它（译者注：中文相关的教程和资讯，也可访问：[NVDA 中文站 https://www.nvdacn.com/]获取）。
-
-转到下载区域，您将发现一个可下载最新版本 NVDA 的链接。
-
-运行您刚刚下载的文件，会打开一个临时的 NVDA 副本。
-您将被询问，是否要安装 NVDA、创建便携版本或者仅运行临时副本。
-
-如果您打算一直在这台计算机上使用 NVDA，您需要选择“安装 NVDA”。
-只有安装 NVDA 后，才能使用以下功能：在 Windows 登录时自动启动 NVDA，朗读 Windows 的登录界面或者其他[安全界面 #SecureScreens]，在开始菜单或桌面创建快捷方式（以上功能无法在便携版和临时副本中启用）。
-安装版本的 NVDA 允许您在任何时候创建便携版本。
-
-如果您希望让 NVDA 运行在 U 盘或其他可擦写的存储设备上，您应该选择“创建便携版本”。
-您之后随时可以把便携版本安装到电脑上。
-您如果只是想把 NVDA 拷贝到如 CD 等只读存储设备上，您只需要拷贝下载的文件即可。
-在只读媒体上直接运行便携版本的 NVDA 在目前是不受支持的。
-
-如果只想试用，可选择使用临时的 NVDA 副本，虽然每次以这种方式启动 NVDA 非常麻烦。
-
-++ 便携版和临时副本的限制 ++[PortableAndTemporaryCopyRestrictions]
-除了不能在登录期间和/或其后自动启动，NVDA 的便携版和临时副本还有以下限制：
-- 无法与使用管理员权限运行的应用程序进行交互，当然，除非 NVDA 本身也已经运行在管理员权限之下（不推荐）。
-- 读取用户帐户控制（UAC）界面时，不能尝试启动具有管理员权限的应用程序。
-- Windows 8：无法使用触摸屏进行输入。
-- Windows 8：无法在 Windows 商店应用提供诸如浏览模式和朗读输入字符的特性。
-- Windows 8 或其后版本：无法提供音频闪避特性。
--
++ 使用 NVDA +[GettingStartedWithNVDA]
 
 ++ 运行 NVDA ++[LaunchingNVDA]
 如果您已安装了 NVDA 安装版，最简单的打开方式是按下快捷键 control+alt+n，或从“开始菜单”中的“程序中找到 NVDA。
-您也可以在“开始菜单” 中的“运行”对话框中输入 NVDA，然后再按回车启动 NVDA。
+您也可以在“开始菜单” 中的“运行”对话框中输入 NVDA，然后按回车启动 NVDA。
 如果 NVDA 已经在运行，它将重新启动。
-您也可以使用一些[命令行选项 #CommandLineOptions]，他们允许您退出 NVDA（-q）、停用插件（--disable-addons）等。
+您也可以使用一些[命令行选项 #CommandLineOptions]，使用这些命令行选项可以退出 NVDA（-q）、停用插件（--disable-addons）等。
 
 NVDA 安装版的配置在“漫游”应用程序配置文件夹（比如 "C:\Users\<用户名>\AppData\Roaming"）。
 可以更改注册表把安装版的配置存放在“本地”应用程序配置文件夹（比如 "C:\Users\<用户名>\AppData\Local"）。
@@ -392,7 +371,7 @@ NVDA 安装版的配置在“漫游”应用程序配置文件夹（比如 "C:\U
 根据您电脑速度的不同，或者如果您正在 U 盘或其他低速媒体设备运行，将需要更多的时间来启动。
 如果启动时间较长，将提示“正在载入 NVDA，请稍后...”
 
-如果您没有听到以上语音提示，而听到的是 Windows 错误提示音，或是一串下沉的声音，那就代表 NVDA 加载没有成功，您需要重新查看可能引发的原因或向 NVDA 开发者报告此状况。
+如果您没有听到以上语音提示，而听到的是 Windows 错误提示音，或是一串下沉的声音，那就代表 NVDA 加载没有成功，您需要重新查看可能引发的原因或向 NVDA 开发者报告此情况。
 请打开 NVDA 网站获取与如何报告此问题相关的信息。
 
 +++ 欢迎对话框 +++[WelcomeDialog]
@@ -2101,16 +2080,39 @@ NVDA设置对话框中的“鼠标设置”分类允许NVDA跟踪鼠标，用嘟
 
 ==== 行缩进的提示方式 ====[DocumentFormattingSettingsLineIndentation]
 此选项允许您定义如何提示行首位置的缩进。
-“行缩进的提示方式为”组合框包含四个选项：
+“行缩进的提示方式为”组合框，包含四个选项：
 
-- 关闭： NVDA不会特别提示行首缩进情况。
-- 语音： 如果语音选项选中，当缩进个数发生变化时，NVDA 就会读出形如“12个空格”或“4个制表符”这样的内容。
-- 声音： 若“声音”选项选中，当缩进数量发生了改变时声音会反馈缩进变化的量。
-每增加一个空格或一个制表符，音调升高一个半音，也会为四个连续空格而升高伴音。
-- 语音和声音：此选项将使用上述两种方式来提示缩进。
+- 关闭： NVDA不提示行首缩进。
+- 仅语音： 如果选中该选项，当缩进个数发生变化时，NVDA 就会读出如“12个空格”或“4个制表符”这样的提示。
+- 仅声音： 若选中该选项，当缩进数量发生改变时，会以声音反馈缩进变化的量。
+每增加一个空格或一个制表符，音调升高一个半音，也会为四个连续的空格升高伴音。
+- 语音和声音：此选项将同时使用上述两种方式来提示缩进。
 -
 
-+++ Windows 10 光学字符识别 设置 +++[Win10OcrSettings]
++++ 文档导航 +++[DocumentNavigation]
+该类别可以让您调整有关文档导航的各项设置。
+
+==== 段落导航模式 ====[ParagraphStyle]
+: 默认
+  由应用程序处理
+: 选项
+  默认 (由应用程序处理)、由应用程序处理、单行分段、多行分段
+:
+
+此组合框用于选择当您使用“control+上光标”和“control+下光标”进行段落导航时要使用的段落导航模式。
+可用的导航模式包括：
+- 由应用程序处理：交给应用程序来确定上一段或下一段，在执行段落导航时 NVDA 会读出相应的段落。
+当应用程序本身支持段落导航时，此默认模式效果最佳。
+- 单行分段：尝试使用单行分段（换行）作为段落指示符来确定上一段或下一段。
+在本身不支持段落导航的应用程序中阅读文档时，使用该模式效果最佳，书写时通过按一次“回车”键来标记文档中的各个段落。
+- 多行分段：尝试使用至少一个空行（书写时，按两次 ``enter`` 键）作为段落指示符来确定上一段或下一段。
+该模式在处理那些使用了块段落（block paragraphs）的文档时效果最佳。
+请注意，不能在 Microsoft Word 或 Microsoft Outlook 中使用该模式，除非您在Word 中启用了 UIA 接口支持。
+-
+
+您可以在[按键与手势对话框 #InputGestures]的“系统输入焦点”类别下分配一个快捷键，用于在段落导航模式之间循环切换。
+
++++ Windows OCR 设置 +++[Win10OcrSettings]
 这个部分允许你设置 [Windows 光学字符识别 #Win10Ocr]。
 这个分类包含以下选项
 
@@ -2254,6 +2256,25 @@ Diff 算法组合框内有三个选项：
 这与 NVDA 2020.4 及更早版本中的行为相同。
 此设置可能会使某些应用程序中对传入文本的读取更加稳定。
 但是，当在一行中间插入或删除一个字符时，会读出插入符后的文本。
+-
+
+==== 在 Windows 终端内使用以下方式朗读新文本 ====[WtStrategy]
+: 默认
+  Diffing
+: 选项
+  Diffing、UIA通知
+:
+
+该选项决定 NVDA 如何确定 Windows 终端和 Visual Studio 2022 中使用的 WPF Windows Terminal 控件中的“新”文本（以及启用“读出动态内容更新”时要朗读的内容）。
+这不会影响 Windows 控制台（``conhost.exe``）。
+有三个选项可选：
+- 默认：该选项目前等价于“diffing”，但如果 UIA 通知的支持得到进一步改进，该选项可能会被改变。
+- Diffing：此选项使用 diff 算法来计算每次终端内提供的新文本的差异。
+与 NVDA 在 2022.4 及之前版本中的行为一致。
+- UIA 通知：此选项决定把如何用语音输出文本的职责转让给 windows 终端自身，这意味着， NVDA 不必判断屏幕上的文本是不是新文本。
+这可以明显提高 Windows 终端的性能和稳定性，但该功能尚未开发完成。
+尤其是当选择了这个选项时，未在屏幕上显示的输入字符（如密码）也会被读出来。
+此外，可能无法准确读出连续输出超过1000个字符的文本。
 -
 
 ==== 取消无效焦点事件的朗读 ====[CancelExpiredFocusSpeech]
@@ -2596,8 +2617,8 @@ NVDA 会询问您是否真的要这样做。
 +++ 管理不兼容的插件 +++[incompatibleAddonsManager]
 可以通过插件管理器中的“查看不兼容的插件”按钮访问不兼容的加插件管理器，允许您检查任何不兼容的插件以及不兼容的原因。
 如果NVDA进行重大更改之后插件尚未更新，或者它们依赖于您正在使用的NVDA版本中未提供的功能，NVDA则会认为插件不兼容。
-不兼容的附加组件管理器有一条简短的消息来解释它的用途以及NVDA的版本。
-不兼容的加载项显示在列表中，其中包含以下列：
+不兼容的插件管理器有一条简短的消息来解释它的用途以及兼容的 NVDA 版本。
+不兼容的插件显示在列表中，其中包含以下条目：
 + 名称， 插件名称
 + 版本， 插件版本
 + 不兼容的原因， 解释为什么插件不兼容
@@ -2710,6 +2731,7 @@ NVDA能够通过USB或蓝牙自动检测连接许多点显器。
 - Eurobraille Esys/Esytime/Iris displays
 - Nattiq nBraille displays
 - Seika Notetaker（清华点显器） Mini （16 / 24方） V6/V6Pro（40方）
+- Tivomatic Caiku Albatross 46/80 displays
 - 任何支持 HID 协议的点显器
 -
 
@@ -3595,6 +3617,63 @@ Please see the [BRLTTY key binding lists https://mielke.cc/brltty/doc/KeyBinding
 | Route to braille cell | route (bring cursor to character) |
 %kc:endInclude
 
+++ Tivomatic Caiku Albatross 46/80 ++[Albatross]
+The Caiku Albatross devices, which were manufactured by Tivomatic and available in Finland, can be connected to by either USB or serial.
+You do not need any specific drivers to be installed to use these displays.
+Just plug in the display and configure NVDA to use it.
+
+Note: Baud rate 19200 is strongly recommended.
+If required, switch Baud rate setting value to 19200 from the braille device's menu.
+Although the driver supports 9600 baud rate, it has no way to control what baud rate the display uses.
+Because 19200 is the display default baud rate, the driver tries it at first.
+If baud rates are not the same, the driver may behave unexpectedly.
+
+Following are key assignments for these displays with NVDA.
+Please see the display's documentation for descriptions of where these keys can be found.
+%kc:beginInclude
+|| Name | Key |
+| Move to top line in review | ``home1``, ``home2`` |
+| Move to bottom line in review | ``end1``, ``end2`` |
+| Sets the navigator object to the current focus | ``eCursor1``, ``eCursor2`` |
+| Move to current focus | ``cursor1``, ``cursor2`` |
+| Moves the mouse pointer to the current navigator object | ``home1+home2`` |
+| Sets the navigator object to the current object under the mouse pointer and speaks it | ``end1+end2`` |
+| Moves focus to current navigator object | ``eCursor1+eCursor2`` |
+| Toggle braille tethered to | ``cursor1+cursor2`` |
+| Move braille display to previous line | ``up1``, ``up2``, ``up3`` |
+| Move braille display to next line | ``down1``, ``down2``, ``down3`` |
+| Scroll braille display back | ``left``, ``lWheelLeft``, ``rWheelLeft`` |
+| Scroll braille display forward | ``right``, ``lWheelRight``, ``rWheelRight`` |
+| Route to braille cell | ``routing`` |
+| Report text formatting under braille cell | ``secondary routing`` |
+| Toggle the way context information is presented in braille | ``attribute1+attribute3`` |
+| Toggles between the speech modes of off, beep and talk | ``attribute2+attribute4`` |
+| Switches to the previous review mode (e.g. object, document or screen) | ``f1`` |
+| Switches to the next review mode (e.g. object, document or screen) | ``f2`` |
+| Moves the navigator object to the object containing it | ``f3`` |
+| Moves the navigator object to the first object inside it | ``f4`` |
+| Moves the navigator object to the previous object | ``f5`` |
+| Moves the navigator object to the next object | ``f6`` |
+| Reports the current navigator object | ``f7`` |
+| Reports information about the location of the text or object at the review cursor | ``f8`` |
+| Performs the default action on the current navigator object | ``f7+f8`` |
+| Reports date/time | ``f9`` |
+| Reports battery status and time remaining if AC is not plugged in | ``f10`` |
+| Reports title | ``f11`` |
+| Reports status bar | ``f12`` |
+| Reports the current line under the application cursor | ``f13`` |
+| Say all | ``f14`` |
+| Reports current character under review cursor | ``f15`` |
+| Reports the line of the current navigator object where the review cursor is situated | ``f16`` |
+| Speaks the word of the current navigator object where the review cursor is situated | ``f15+f16`` |
+| Moves the review cursor to the previous line of the current navigator object and speaks it | ``lWheelUp``, ``rWheelUp`` |
+| Moves the review cursor to the next line of the current navigator object and speaks it | ``lWheelDown``, ``rWheelDown`` |
+| ``Windows+d`` key (minimize all applications) | ``attribute1`` |
+| ``Windows+e`` key (this computer) | ``attribute2`` |
+| ``Windows+b`` key (focus system tray) | ``attribute3`` |
+| ``Windows+i`` key (Windows settings) | ``attribute4`` |
+%kc:endInclude
+ 
 ++ HID 标准盲文点显器 ++[HIDBraille]
 这是新标准 HID 盲文规范的实验性驱动，由 Microsoft、Google、Apple 和包括 NV Access 在内的几家辅助技术公司于 2018 年达成一致。
 希望未来所有制造商推出的盲文点显器设备都可以使用此标准协议，以消除设备驱动之间的差异性。
@@ -3685,7 +3764,7 @@ nvda -q
 | -q | --quit | 退出已运行的 NVDA 副本。 |
 | -k | --check-running | 通过退出代码报告 NVDA 是否在运行，0 表示运行， 1 表示没有运行。 |
 | -f LOGFILENAME | --log-file=LOGFILENAME | 日志消息需要写入的文件。 |
-| -l LOGLEVEL | --log-level=LOGLEVEL | 日志消息记录的最低级别(调试 10， 信息 20， 警告 30， 错误 40， 严重 50，停用 100 默认为“警告”。 |
+| -l LOGLEVEL | --log-level=LOGLEVEL | 日志消息记录的最低级别（调试 10， 输入/输出 12， 调试警告 15， 信息 20， 停用 100 |
 | -c CONFIGPATH | --config-path=CONFIGPATH | 所有 NVDA 设置存储的路径。 |
 | 无 | --lang=LANGUAGE | 覆盖设置中的 NVDA 语言。比如用户默认传入 “Windows”，英语传入“en”等。 |
 | -m | --minimal | 无声、无界面、无启动通知等。 |
