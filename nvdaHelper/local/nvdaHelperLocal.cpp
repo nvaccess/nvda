@@ -27,9 +27,13 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 typedef LRESULT(WINAPI *SendMessageW__funcType)(HWND, UINT, WPARAM, LPARAM);
 typedef LRESULT(WINAPI *SendMessageTimeoutW_funcType)(HWND, UINT, WPARAM, LPARAM, UINT, UINT, PDWORD_PTR);
+typedef BOOL(WINAPI *OpenClipboard_funcType)(HWND);
 
 SendMessageW__funcType real_SendMessageW = nullptr;
 SendMessageTimeoutW_funcType real_SendMessageTimeoutW = nullptr;
+OpenClipboard_funcType real_OpenClipboard=NULL;
+
+bool isSecureModeNVDAProcess=false;
 
 typedef struct _RPC_SECURITY_QOS_V5_W {
   unsigned long Version;
@@ -236,7 +240,16 @@ LRESULT WINAPI fake_SendMessageTimeoutW(HWND hwnd, UINT Msg, WPARAM wParam, LPAR
 	return cancellableSendMessageTimeout(hwnd, Msg, wParam, lParam, fuFlags, uTimeout, lpdwResult);
 }
 
-void nvdaHelperLocal_initialize() {
+//A replacement OpenClipboard function to disable the use of the clipboard in a secure mode NVDA process
+//Simply returns false without calling the original OpenClipboard
+BOOL WINAPI fake_OpenClipboard(HWND hwndOwner) {
+	return false;
+}
+
+void nvdaHelperLocal_initialize(int secureMode) {
+	if(secureMode) {
+		isSecureModeNVDAProcess = true;
+	}
 	startServer();
 	mainThreadId = GetCurrentThreadId();
 	cancelCallEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
@@ -250,6 +263,10 @@ void nvdaHelperLocal_initialize() {
 	// we can cancel such calls when they would otherwise freeze NVDA's process.
 	apiHook_hookFunction_safe(SendMessageW, fake_SendMessageW, &real_SendMessageW);
 	apiHook_hookFunction_safe(SendMessageTimeoutW, fake_SendMessageTimeoutW, &real_SendMessageTimeoutW);
+	// For secure mode NVDA process, hook OpenClipboard to disable usage of the clipboard
+	if (isSecureModeNVDAProcess) {
+		apiHook_hookFunction_safe(OpenClipboard, fake_OpenClipboard, &real_OpenClipboard);
+	}
 	// Enable all registered API hooks by committing the transaction
 	apiHook_commitTransaction();
 }
