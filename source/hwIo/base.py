@@ -28,6 +28,7 @@ import time
 from .ioThread import IoThread, apcsWillBeStronglyReferenced
 import NVDAState
 
+
 def __getattr__(attrName: str) -> Any:
 	"""Module level `__getattr__` used to preserve backward compatibility."""
 	if attrName == "LPOVERLAPPED_COMPLETION_ROUTINE" and NVDAState._allowDeprecatedAPI():
