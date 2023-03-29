@@ -428,8 +428,9 @@ class PortableCreaterDialog(
 				wx.OK | wx.ICON_ERROR
 			)
 			return
-		# isabs determines if the path is absolute, with or without a drive letter.
-		# abspath resolves an absolute path, adding a drive letter (which?) if necessary. (#14681)
+		# isabs determines if the path is absolute, with or without a drive letter. abspath adds any missing initial
+		# components to that path to make it absolute from other contexts, by adding a drive letter/share path if
+		# needed. The OS's idea of the current drive is used, as in os.getcwd(). (#14681)
 		expandedPortableDirectory = os.path.abspath(expandedPortableDirectory)
 		self.Hide()
 		doCreatePortable(
