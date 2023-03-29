@@ -21,7 +21,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <shlwapi.h>
 #include <sddl.h>
 #include <common/log.h>
-#include "apiHook.h"
+#include <common/apiHook.h>
 #include <remote/nvdaController.h>
 #include <remote/nvdaControllerInternal.h>
 #include <common/lock.h>
