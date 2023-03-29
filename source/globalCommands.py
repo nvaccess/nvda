@@ -3630,8 +3630,8 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		description=_(
-			# Translators: input help mode message for Report destination URL of navigator link command
-			"Report the destination URL of the link in the navigator object. "
+			# Translators: input help mode message for Report destination URL of a link command
+			"Report the destination URL of the link at the position of caret or focus. "
 			"If pressed twice, shows the URL in a window for easier review."
 		),
 		gesture="kb:NVDA+k",
@@ -3640,25 +3640,39 @@ class GlobalCommands(ScriptableObject):
 	def script_reportLinkDestination(
 			self, gesture: inputCore.InputGesture, forceBrowseable: bool = False
 	) -> None:
-		"""Generates a ui.message or ui.browseableMessage of a link's destination, if the navigator
-		object is a link, or an element with an included link such as a graphic.
+		"""Generates a ui.message or ui.browseableMessage of a link's destination, if focus or caret is
+		positioned on a link, or an element with an included link such as a graphic.
 		@param forceBrowseable: skips the press once check, and displays the browseableMessage version.
 		"""
-		obj = api.getNavigatorObject()
+		try:
+			ti: textInfos.TextInfo = api.getCaretPosition()
+		except RuntimeError:
+			log.debugWarning("Unable to get the caret position.", exc_info=True)
+			ti: textInfos.TextInfo = api.getFocusObject().makeTextInfo(textInfos.POSITION_FIRST)
+		ti.expand(textInfos.UNIT_CHARACTER)
+		obj: NVDAObject = ti.NVDAObjectAtStart
 		presses = scriptHandler.getLastScriptRepeatCount()
 		if (
 			obj.role == controlTypes.role.Role.LINK  # If it's a link, or
 			or controlTypes.state.State.LINKED in obj.states  # if it isn't a link but contains one
 		):
+			linkDestination = obj.value
+			if linkDestination is None:
+				# Translators: Informs the user that the link has no destination
+				ui.message(_("Link has no apparent destination"))
+				return
 			if (
 				presses == 1  # If pressed twice, or
 				or forceBrowseable  # if a browseable message is preferred unconditionally
 			):
-				# Translators: Informs the user that the window contains the destination of the
-				# link with given title
-				ui.browseableMessage(obj.value, title=_("Destination of: {name}").format(name=obj.name))
+				ui.browseableMessage(
+					linkDestination,
+					# Translators: Informs the user that the window contains the destination of the
+					# link with given title
+					title=_("Destination of: {name}").format(name=obj.name)
+				)
 			elif presses == 0:  # One press
-				ui.message(obj.value)  # Speak the link
+				ui.message(linkDestination)  # Speak the link
 			else:  # Some other number of presses
 				return  # Do nothing
 		else:
@@ -3667,8 +3681,8 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		description=_(
-			# Translators: input help mode message for Report URL of navigator link in a window command
-			"Reports the destination URL of the link in the navigator object in a window, "
+			# Translators: input help mode message for Report URL of a link in a window command
+			"Displays the destination URL of the link at the position of caret or focus in a window, "
 			"instead of just speaking it. May be preferred by braille users."
 		),
 		category=SCRCAT_TOOLS
