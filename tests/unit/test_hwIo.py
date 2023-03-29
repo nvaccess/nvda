@@ -31,8 +31,8 @@ class TestBgThreadApc(unittest.TestCase):
 		self.assertFalse(self.event.is_set())
 		# Queue a function as APC that sets the event
 
-		def apc(param: int):
-			return self.event.set()
+		def apc(param: int) -> None:
+			self.event.set()
 		hwIo.bgThread.queueAsApc(apc)
 		# Wait for atmost 2 seconds for the event to be set
 		self.assertTrue(self.event.wait(2))
