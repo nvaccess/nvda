@@ -678,7 +678,7 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 	if (
 		(formatConfig & formatConfig_reportHighlightColor)
 		&& (_com_dispatch_raw_propget(pDispatchRange, wdDISPID_RANGE_HIGHLIGHTCOLORINDEX, VT_I4, &hlColorIndex) == S_OK)
-		&& hlColorIndex>0
+		&& (hlColorIndex > 0)
 	) {
 		formatAttribsStream<<L"highlight-color-index=\""<<hlColorIndex<<L"\" ";
 	}
