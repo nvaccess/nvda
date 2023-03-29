@@ -31,7 +31,7 @@ typedef BOOL(WINAPI *OpenClipboard_funcType)(HWND);
 
 SendMessageW__funcType real_SendMessageW = nullptr;
 SendMessageTimeoutW_funcType real_SendMessageTimeoutW = nullptr;
-OpenClipboard_funcType real_OpenClipboard=NULL;
+OpenClipboard_funcType real_OpenClipboard = nullptr;
 
 bool isSecureModeNVDAProcess=false;
 
