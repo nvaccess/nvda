@@ -24,6 +24,7 @@ What's New in NVDA
 - NVDA responds faster when moving the cursor in edit controls. (#14708)
 - Baum Braille driver: addes several Braille chord gestures for performing common keyboard commands such as windows+d, alt+tab etc. Please refer to the NVDA user guide for a full list. (#14714)
 - When using a Braille Display via the Standard HID braille driver, the dpad can be used to emulate the arrow keys and enter. Also space+dot1 and space+dot4 now map to up and down arrow respectively. (#14713)
+- Script for reporting the destination of a link now reports from the caret / focus position rather than the navigator object. (#14659)
 -
 
 
@@ -41,6 +42,8 @@ This only worked for Bluetooth Serial ports before. (#14524)
 - For symbols which do not have a symbol description in the current locale, the default English symbol level will be used. (#14558, #14417)
 - In newer releases of Windows 11 Notepad, NVDA can once again announce status bar contents. (#14573)
 - In Windows 10 and 11 Calculator, a portable copy of NVDA will no longer do nothing or play error tones when entering expressions in standard calculator in compact overlay mode. (#14679)
+- When trying to report the URL for a link without a href attribute NVDA is no longer silent.
+Instead NVDA reports that the link has no destination. (#14723)
 -
 
 
