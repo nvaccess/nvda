@@ -7,7 +7,7 @@
 import buildVersion
 import re
 from typing import (
-    Tuple,
+	Tuple,
 )
 from logHandler import log
 

@@ -3,15 +3,8 @@
 # Copyright (C) 2018-2023 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-
-from typing import (
-	Optional,
-)
 from typing_extensions import Protocol  # Python 3.8 adds native support
-
 import addonAPIVersion
-from addonStore.models import Channel
-from buildVersion import isPreReleaseVersion
 
 
 class SupportsVersionCheck(Protocol):
@@ -21,7 +14,6 @@ class SupportsVersionCheck(Protocol):
 	"""
 	minimumNVDAVersion: addonAPIVersion.AddonApiVersionT
 	lastTestedNVDAVersion: addonAPIVersion.AddonApiVersionT
-	channel: Optional[Channel]
 
 
 def hasAddonGotRequiredSupport(
@@ -40,11 +32,7 @@ def isAddonTested(
 ) -> bool:
 	"""True if this add-on is tested for the given API version.
 	By default, the current version of NVDA is evaluated.
-	Dev add-ons are made available to any pre-release version of NVDA.
 	"""
-	if addon.channel == Channel.DEV:
-		# Allow dev add-ons for pre-release versions
-		return isPreReleaseVersion
 	return addon.lastTestedNVDAVersion >= backwardsCompatToVersion
 
 
@@ -58,3 +46,15 @@ def isAddonCompatible(
 	an API version that is still supported by this version of NVDA.
 	"""
 	return hasAddonGotRequiredSupport(addon, currentAPIVersion) and isAddonTested(addon, backwardsCompatToVersion)
+
+
+def _parseAddonVersionFromVersionStr(version: str) -> addonAPIVersion.AddonApiVersionT:
+	versionParts = version.split(".")
+	versionLen = len(versionParts)
+	if versionLen < 2 or versionLen > 3:
+		raise ValueError(f"Version string not valid: {version}")
+	return (
+		int(versionParts[0]),
+		int(versionParts[1]),
+		0 if len(versionParts) == 2 else int(versionParts[2])
+	)

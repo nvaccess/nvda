@@ -4,6 +4,7 @@
 # See the file COPYING for more details.
 
 import dataclasses
+import globalVars
 import json
 import os
 import pathlib
@@ -28,9 +29,18 @@ from typing import (
 )
 from .models import (
 	Channel,
+	_createAddonModelFromData,
 	_createModelFromData,
 	AddonDetailsModel,
 )
+
+addonDataManager: Optional["_DataManager"] = None
+
+
+def initialize():
+	global addonDataManager
+	log.debug("initializing addonStore data manager")
+	addonDataManager = _DataManager()
 
 
 def _getCurrentApiVersionForURL() -> str:
@@ -49,7 +59,7 @@ def _getAddonStoreURL(channel: Channel, lang: str, nvdaApiVersion: str) -> str:
 
 
 @dataclasses.dataclass
-class CachedAddonModel:
+class CachedAddonsModel:
 	availableAddons: List[AddonDetailsModel]
 	cachedAt: datetime
 	nvdaAPIVersion: addonAPIVersion.AddonApiVersionT
@@ -119,7 +129,7 @@ class AddonFileDownloader:
 			log.debug("the download was cancelled before it started.")
 			return None  # The download was cancelled
 		try:
-			with requests.get(addonData.addonURL, stream=True) as r:
+			with requests.get(addonData.URL, stream=True) as r:
 				with open(inProgressFilePath, 'wb') as fd:
 					# Most add-ons are small. This value was chosen quite arbitrarily, but with the intention to allow
 					# interrupting the download. This is particularly important on a slow connection, to provide
@@ -149,11 +159,12 @@ class AddonFileDownloader:
 			os.remove(cacheFilePath)
 		os.rename(src=inProgressFilePath, dst=cacheFilePath)
 		log.debug(f"Cache file available: {cacheFilePath}")
+		# TODO: assert SHA256 sum
 		return typing.cast(os.PathLike, cacheFilePath)
 
 	@staticmethod
 	def _getCacheFilenameForAddon(addonData: AddonDetailsModel) -> str:
-		return f"{addonData.addonId}-{addonData.versionName}.nvda-addon"
+		return f"{addonData.addonId}-{addonData.addonVersionName}.nvda-addon"
 
 	def __del__(self):
 		if self._executor is not None:
@@ -161,21 +172,23 @@ class AddonFileDownloader:
 			self._executor = None
 
 
-class DataManager:
+class _DataManager:
 	_cacheFilename: str = "_cachedLatestAvailableAddons.json"
 	_cachePeriod = timedelta(hours=6)
 
-	def __init__(self, userConfigLocation: os.PathLike):
-		cacheDirLocation = os.path.join(userConfigLocation, "addonStore")
+	def __init__(self):
+		cacheDirLocation = os.path.join(globalVars.appArgs.configPath, "addonStore")
 		self._lang = "en"
 		self._preferredChannel = Channel.ALL
-		self._cacheFile = os.path.join(cacheDirLocation, DataManager._cacheFilename)
+		self._cacheFile = os.path.join(cacheDirLocation, _DataManager._cacheFilename)
 		self._addonDownloadCacheDir = os.path.join(cacheDirLocation, "_dl")
+		self._installedAddonDataCacheDir = os.path.join(cacheDirLocation, "_dl", "addons")
 		# ensure caching dirs exist
 		pathlib.Path(cacheDirLocation).mkdir(parents=True, exist_ok=True)
 		pathlib.Path(self._addonDownloadCacheDir).mkdir(parents=True, exist_ok=True)
+		pathlib.Path(self._installedAddonDataCacheDir).mkdir(parents=True, exist_ok=True)
 
-		self._availableAddonCache: Optional[CachedAddonModel] = self._getCachedAddonData()
+		self._availableAddonCache: Optional[CachedAddonsModel] = self._getCachedAddonData()
 
 	def getFileDownloader(self) -> AddonFileDownloader:
 		return AddonFileDownloader(self._addonDownloadCacheDir)
@@ -206,7 +219,7 @@ class DataManager:
 		with open(self._cacheFile, 'w') as cacheFile:
 			json.dump(cacheData, cacheFile, ensure_ascii=False)
 
-	def _getCachedAddonData(self) -> Optional[CachedAddonModel]:
+	def _getCachedAddonData(self) -> Optional[CachedAddonsModel]:
 		if not os.path.exists(self._cacheFile):
 			return None
 		with open(self._cacheFile, 'r') as cacheFile:
@@ -214,7 +227,7 @@ class DataManager:
 		if not cacheData:
 			return None
 		fetchTime = datetime.fromisoformat(cacheData["cacheDate"])
-		return CachedAddonModel(
+		return CachedAddonsModel(
 			availableAddons=_createModelFromData(cacheData["data"]),
 			cachedAt=fetchTime,
 			nvdaAPIVersion=cacheData["nvdaAPIVersion"],
@@ -224,7 +237,7 @@ class DataManager:
 		shouldRefreshData = (
 			not self._availableAddonCache
 			or self._availableAddonCache.nvdaAPIVersion != addonAPIVersion.CURRENT
-			or DataManager._cachePeriod < (datetime.now() - self._availableAddonCache.cachedAt)
+			or _DataManager._cachePeriod < (datetime.now() - self._availableAddonCache.cachedAt)
 		)
 		if shouldRefreshData:
 			fetchTime = datetime.now()
@@ -232,9 +245,26 @@ class DataManager:
 			if apiData:
 				decodedApiData = apiData.decode()
 				self._cacheAddons(addonData=decodedApiData, fetchTime=fetchTime)
-				self._availableAddonCache = CachedAddonModel(
+				self._availableAddonCache = CachedAddonsModel(
 					availableAddons=_createModelFromData(decodedApiData),
 					cachedAt=fetchTime,
 					nvdaAPIVersion=addonAPIVersion.CURRENT,
 				)
 		return self._availableAddonCache.availableAddons
+
+	def _cacheInstalledAddon(self, addonData: AddonDetailsModel):
+		if not addonData:
+			return
+		addonCachePath = os.path.join(self._installedAddonDataCacheDir, addonData.addonId)
+		with open(addonCachePath, 'w') as cacheFile:
+			json.dump(dataclasses.asdict(addonData), cacheFile, ensure_ascii=False)
+
+	def _getCachedInstalledAddonData(self, addonId: str) -> Optional[AddonDetailsModel]:
+		addonCachePath = os.path.join(self._installedAddonDataCacheDir, addonId)
+		if not os.path.exists(addonCachePath):
+			return None
+		with open(addonCachePath, 'r') as cacheFile:
+			cacheData = json.load(cacheFile)
+		if not cacheData:
+			return None
+		return _createAddonModelFromData(cacheData["addonData"])
