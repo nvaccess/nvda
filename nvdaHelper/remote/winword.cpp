@@ -680,7 +680,7 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 		&& (_com_dispatch_raw_propget(pDispatchRange, wdDISPID_RANGE_HIGHLIGHTCOLORINDEX, VT_I4, &hlColorIndex) == S_OK)
 		&& (hlColorIndex > 0)
 	) {
-		formatAttribsStream<<L"highlight-color-index=\""<<hlColorIndex<<L"\" ";
+		formatAttribsStream << L"highlight-color-index=\"" << hlColorIndex << L"\" ";
 	}
 	if (formatConfig&formatConfig_reportLanguage) {
 		int languageId = 0;
