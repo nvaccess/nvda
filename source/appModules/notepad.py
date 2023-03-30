@@ -14,18 +14,21 @@ import braille
 import controlTypes
 import eventHandler
 import speech
-import NVDAObjects
 import UIAHandler
 from NVDAObjects.UIA import UIA
+from NVDAObjects import NVDAObject
+from typing import Callable
 
 
 class AppModule(appModuleHandler.AppModule):
-	def event_UIA_elementSelected(self, obj, nextHandler):
+
+	def event_UIA_elementSelected(self, obj: NVDAObject, nextHandler: Callable[[], None]):
 		# Announce currently selected tab when it changes.
 		if (
 			obj.role == controlTypes.Role.TAB
 			# this is done because 2 selection events are sent for the same object, so to prevent double speaking.
-			and not eventHandler.isPendingEvents("UIA_elementSelected") and controlTypes.State.SELECTED in obj.states
+			and not eventHandler.isPendingEvents("UIA_elementSelected")
+			and controlTypes.State.SELECTED in obj.states
 		):
 			speech.cancelSpeech()
 			speech.speakObject(obj, reason=controlTypes.OutputReason.FOCUS)
@@ -39,7 +42,7 @@ class AppModule(appModuleHandler.AppModule):
 			)
 		nextHandler()
 
-	def _get_statusBar(self) -> NVDAObjects.NVDAObject:
+	def _get_statusBar(self) -> NVDAObject:
 		"""Retrieves Windows 11 Notepad status bar.
 		In Windows 10 and earlier, status bar can be obtained by looking at the bottom of the screen.
 		Windows 11 Notepad uses Windows 11 UI design (top-level window is labeled "DesktopWindowXamlSource",
