@@ -33,7 +33,7 @@ def __getattr__(attrName: str) -> Any:
 	"""Module level `__getattr__` used to preserve backward compatibility."""
 	if attrName == "LPOVERLAPPED_COMPLETION_ROUTINE" and NVDAState._allowDeprecatedAPI():
 		log.warning(
-			"Importing LPOVERLAPPED_COMPLETION_ROUTINE from hwIO.base is deprecated. "
+			"Importing LPOVERLAPPED_COMPLETION_ROUTINE from hwIo.base is deprecated. "
 			"Import LPOVERLAPPED_COMPLETION_ROUTINE from hwIo.ioThread instead."
 		)
 		from .ioThread import LPOVERLAPPED_COMPLETION_ROUTINE
