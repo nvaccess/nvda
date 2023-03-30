@@ -142,7 +142,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			attrs['roleText']=roleText
 		roleTextBraille = attrs.get("IAccessible2::attribute_brailleroledescription")
 		if roleTextBraille:
-			attrs['roleTextBraille']=roleTextBraille
+			attrs['roleTextBraille'] = roleTextBraille
 		if attrs.get("IAccessible2::attribute_dropeffect", "none") != "none":
 			states.add(controlTypes.State.DROPTARGET)
 		if role==controlTypes.Role.LINK and controlTypes.State.LINKED not in states:
