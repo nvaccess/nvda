@@ -5,6 +5,9 @@
 
 import ctypes
 import re
+from typing import (
+	Dict,
+)
 import eventHandler
 import keyLabels
 import JABHandler
@@ -19,66 +22,67 @@ from .. import InvalidNVDAObject
 from locationHelper import RectLTWH
 
 
-JABRolesToNVDARoles={
-	"alert":controlTypes.Role.DIALOG,
-	"column header":controlTypes.Role.TABLECOLUMNHEADER,
-	"canvas":controlTypes.Role.CANVAS,
-	"combo box":controlTypes.Role.COMBOBOX,
-	"desktop icon":controlTypes.Role.DESKTOPICON,
-	"internal frame":controlTypes.Role.INTERNALFRAME,
-	"desktop pane":controlTypes.Role.DESKTOPPANE,
-	"option pane":controlTypes.Role.OPTIONPANE,
-	"window":controlTypes.Role.WINDOW,
-	"frame":controlTypes.Role.FRAME,
-	"dialog":controlTypes.Role.DIALOG,
-	"color chooser":controlTypes.Role.COLORCHOOSER,
-	"directory pane":controlTypes.Role.DIRECTORYPANE,
-	"file chooser":controlTypes.Role.FILECHOOSER,
-	"filler":controlTypes.Role.FILLER,
-	"hyperlink":controlTypes.Role.LINK,
-	"icon":controlTypes.Role.ICON,
-	"label":controlTypes.Role.LABEL,
-	"root pane":controlTypes.Role.PANEL,
-	"glass pane":controlTypes.Role.PANEL,
-	"layered pane":controlTypes.Role.PANEL,
-	"list":controlTypes.Role.LIST,
-	"list item":controlTypes.Role.LISTITEM,
-	"menu bar":controlTypes.Role.MENUBAR,
-	"popup menu":controlTypes.Role.POPUPMENU,
-	"menu":controlTypes.Role.MENU,
-	"menu item":controlTypes.Role.MENUITEM,
-	"separator":controlTypes.Role.SEPARATOR,
-	"page tab list":controlTypes.Role.TABCONTROL,
-	"page tab":controlTypes.Role.TAB,
-	"panel":controlTypes.Role.PANEL,
-	"progress bar":controlTypes.Role.PROGRESSBAR,
-	"password text":controlTypes.Role.PASSWORDEDIT,
-	"push button":controlTypes.Role.BUTTON,
-	"toggle button":controlTypes.Role.TOGGLEBUTTON,
-	"check box":controlTypes.Role.CHECKBOX,
-	"radio button":controlTypes.Role.RADIOBUTTON,
-	"row header":controlTypes.Role.TABLEROWHEADER,
-	"scroll pane":controlTypes.Role.SCROLLPANE,
-	"scroll bar":controlTypes.Role.SCROLLBAR,
-	"view port":controlTypes.Role.VIEWPORT,
-	"slider":controlTypes.Role.SLIDER,
-	"split pane":controlTypes.Role.SPLITPANE,
-	"table":controlTypes.Role.TABLE,
-	"text":controlTypes.Role.EDITABLETEXT,
-	"tree":controlTypes.Role.TREEVIEW,
-	"tool bar":controlTypes.Role.TOOLBAR,
-	"tool tip":controlTypes.Role.TOOLTIP,
-	"status bar":controlTypes.Role.STATUSBAR,
-	"statusbar":controlTypes.Role.STATUSBAR,
-	"date editor":controlTypes.Role.DATEEDITOR,
-	"spin box":controlTypes.Role.SPINBUTTON,
-	"font chooser":controlTypes.Role.FONTCHOOSER,
-	"group box":controlTypes.Role.GROUPING,
-	"header":controlTypes.Role.HEADER,
-	"footer":controlTypes.Role.FOOTER,
-	"paragraph":controlTypes.Role.PARAGRAPH,
-	"ruler":controlTypes.Role.RULER,
-	"edit bar":controlTypes.Role.EDITBAR,
+JABRolesToNVDARoles: Dict[str, controlTypes.Role] = {
+	"alert": controlTypes.Role.DIALOG,
+	"column header": controlTypes.Role.TABLECOLUMNHEADER,
+	"canvas": controlTypes.Role.CANVAS,
+	"combo box": controlTypes.Role.COMBOBOX,
+	"desktop icon": controlTypes.Role.DESKTOPICON,
+	"internal frame": controlTypes.Role.INTERNALFRAME,
+	"desktop pane": controlTypes.Role.DESKTOPPANE,
+	"option pane": controlTypes.Role.OPTIONPANE,
+	"window": controlTypes.Role.WINDOW,
+	"frame": controlTypes.Role.FRAME,
+	"dialog": controlTypes.Role.DIALOG,
+	"color chooser": controlTypes.Role.COLORCHOOSER,
+	"directory pane": controlTypes.Role.DIRECTORYPANE,
+	"file chooser": controlTypes.Role.FILECHOOSER,
+	"filler": controlTypes.Role.FILLER,
+	"hyperlink": controlTypes.Role.LINK,
+	"icon": controlTypes.Role.ICON,
+	"label": controlTypes.Role.LABEL,
+	"root pane": controlTypes.Role.PANEL,
+	"glass pane": controlTypes.Role.PANEL,
+	"layered pane": controlTypes.Role.PANEL,
+	"list": controlTypes.Role.LIST,
+	"list item": controlTypes.Role.LISTITEM,
+	"menu bar": controlTypes.Role.MENUBAR,
+	"popup menu": controlTypes.Role.POPUPMENU,
+	"menu": controlTypes.Role.MENU,
+	"menu item": controlTypes.Role.MENUITEM,
+	"separator": controlTypes.Role.SEPARATOR,
+	"page tab list": controlTypes.Role.TABCONTROL,
+	"page tab": controlTypes.Role.TAB,
+	"panel": controlTypes.Role.PANEL,
+	"progress bar": controlTypes.Role.PROGRESSBAR,
+	"password text": controlTypes.Role.PASSWORDEDIT,
+	"push button": controlTypes.Role.BUTTON,
+	"toggle button": controlTypes.Role.TOGGLEBUTTON,
+	"check box": controlTypes.Role.CHECKBOX,
+	"radio button": controlTypes.Role.RADIOBUTTON,
+	"row header": controlTypes.Role.TABLEROWHEADER,
+	"scroll pane": controlTypes.Role.SCROLLPANE,
+	"scroll bar": controlTypes.Role.SCROLLBAR,
+	"view port": controlTypes.Role.VIEWPORT,
+	"slider": controlTypes.Role.SLIDER,
+	"split pane": controlTypes.Role.SPLITPANE,
+	"table": controlTypes.Role.TABLE,
+	"text": controlTypes.Role.EDITABLETEXT,
+	"tree": controlTypes.Role.TREEVIEW,
+	"tool bar": controlTypes.Role.TOOLBAR,
+	"tool tip": controlTypes.Role.TOOLTIP,
+	"status bar": controlTypes.Role.STATUSBAR,
+	"statusbar": controlTypes.Role.STATUSBAR,
+	"date editor": controlTypes.Role.DATEEDITOR,
+	"spin box": controlTypes.Role.SPINBUTTON,
+	"font chooser": controlTypes.Role.FONTCHOOSER,
+	"group box": controlTypes.Role.GROUPING,
+	"groupbox": controlTypes.Role.GROUPING,
+	"header": controlTypes.Role.HEADER,
+	"footer": controlTypes.Role.FOOTER,
+	"paragraph": controlTypes.Role.PARAGRAPH,
+	"ruler": controlTypes.Role.RULER,
+	"edit bar": controlTypes.Role.EDITBAR,
 }
 
 JABStatesToNVDAStates={
@@ -94,6 +98,7 @@ JABStatesToNVDAStates={
 	"multi_line":controlTypes.State.MULTILINE,
 	"focusable":controlTypes.State.FOCUSABLE,
 	"editable":controlTypes.State.EDITABLE,
+	"selectable": controlTypes.State.SELECTABLE,
 }
 
 
@@ -309,12 +314,14 @@ class JAB(Window):
 
 	def _get_role(self):
 		role = JABRolesToNVDARoles.get(self.JABRole,controlTypes.Role.UNKNOWN)
-		if role in ( controlTypes.Role.LABEL, controlTypes.Role.PANEL) and self.parent:
+		if role in (controlTypes.Role.LABEL, controlTypes.Role.PANEL, controlTypes.Role.UNKNOWN) and self.parent:
 			parentRole = self.parent.role
 			if parentRole == controlTypes.Role.LIST:
 				return controlTypes.Role.LISTITEM
 			elif parentRole in (controlTypes.Role.TREEVIEW, controlTypes.Role.TREEVIEWITEM):
 				return controlTypes.Role.TREEVIEWITEM
+			elif parentRole == controlTypes.Role.TABLE:
+				return controlTypes.Role.TABLECELL
 		if role==controlTypes.Role.LABEL:
 			return controlTypes.Role.STATICTEXT
 		return role
@@ -645,8 +652,6 @@ class Table(JAB):
 		return self._jabTableInfo.jabTable.accContext.value
 
 class TableCell(JAB):
-
-	role=controlTypes.Role.TABLECELL
 
 	def _get_table(self):
 		if self.parent and isinstance(self.parent,Table):

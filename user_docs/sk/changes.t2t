@@ -3,6 +3,309 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2023.1 =
+Pridané nové nastavenie, ktoré umožňuje určiť, ako sú definované odseky. Pozrite Nastavenia, časť navigácia v dokumente.
+Aktuálne je teda možné používať navigáciu po odsekoch aj v aplikáciách, ktoré ju natívne nepodporujú, ako napríklad Notepad and Notepad++.
+
+Pridaná nová klávesová skratka, ktorá umožňuje zisťiť URL adresu odkazu, na ktorom je kurzor. Skratka je predvolene ``NVDA+k``.
+
+Vylepšená podpora pre anotácie vo webových dokumentoch (komentáre a poznámky).
+Ak NVDA ohlási, že prvok má komentár alebo poznámku, je možné si prečítať podrobnosti skratkou ``NVDA+d``.
+
+Pridaná podpora pre braillové riadky Tivomatic Caiku Albatross 46/80.
+
+Vylepšená podpora pre operačné systémy Windows vo variantoch ARM64 a AMD64.
+
+Mnohé opravy sa týkajú hlavne systému Windows 11.
+
+Aktualizované knižnice eSpeak, LibLouis, funkcionalita dvojnásobnej rýchlosti a databáza Unicode CLDR.
+Pridané nové braillové tabuľky pre jazyky Gruzínčina, Svahilčina (Keňa) a Chichewa (Malawi).
+
+Upozornenie:
+- Táto verzia nie je kompatibilná so staršími doplnkami.
+-
+
+== Nové vlastnosti ==
+- Podpora pre MS Excel cez rozhranie UIA: Pridané automatické oznamovanie hlavičiek riadkov a stĺpcov tabuľky. (#14228)
+  - Upozorňujeme, že toto sa týka len tabuliek, ktoré sú formátované cez panel tabuľka v rybbon menu.
+  Je potrebné správne nastaviť "Prvý stĺpec" a "riadok hlavičky" v časti "Možnosti štýlu tabuľky".
+  - Toto sa netýka možnosti definovať hlavičky pre čítače obrazovky. Toto v súčasnosti cez UIA nie je podporované.
+  -
+- Automatické fonetické hláskovanie je aktuálne možné zapínať a vypínať aj pomocou klávesovej skratky. Skratka nie je predvolene definovaná a je ju možné nastaviť v dialógu klávesové skratky. (#14267)
+- Pridaná možnosť automatického oznamovania nového textu v konzolách Windows terminálu cez rozhranie UIA, čo zlepšuje odozvu a stabilitu. (#13781)
+  - Podrobnosti a nedostatky sú vysvetlené v používateľskej príručke NVDA.
+  -
+- V systéme Windows 11 vo variante ARM64 je možné používať režim prehliadania v aplikáciách AMD64, ako Firefox, Google Chrome a 1Password. (#14397)
+- Pridaná nová sekcia Navigácia v dokumentoch a aktuálne jedno nové nastavenie: Za odsek považovať.
+umožňuje nastaviť, čo je považované za odseky. Možnosti sú jeden alebo viacero zlomov riadka.
+Takto je možné prechádzať po odsekoch aj v aplikáciách, ktoré to predvolene nepodporujú, ako napríklad Poznámkový blok a Notepad++. (#13797)
+- Ak je dostupných viacero anotácií, NVDA na túto skutočnosť upozorní.
+Skratkou ``NVDA+d`` je možné postupne prečítať všetky dostupné anotácie pre zameraný prvok. Napríklad ak text obsahuje komentár a poznámku pod čiarou. (#14507, #14480)
+- Pridaná podpora pre brailový riadok Tivomatic Caiku Albatross 46/80. (#13045)
+- Nová klávesová skratka: Oznámiť URL adresu zameraného odkazu (``NVDA+k``).
+Oznámi resp. zobrazí na braillovom riadku URL adresu odkazu, na ktorom je navigačný objekt.
+Stlačené dvakrát zobrazí URL adresu v samostatnom okne, v ktorom je možné adresu podrobne prezerať.
+- Pribudla tiež možnosť definovať klávesovú skratku, ktorá zobrazí URL adresu hneď v samostatnom okne. Skratku je potrebné definovať v dialógu klávesové skratky.
+Funkcia je rovnaká, ako keď stlačíte NVDA+K dvakrát za sebou, ale definovanie novej skratky môže byť užitočné pre používateľov braillových riadkov. (#14583)
+-
+
+
+== Zmeny ==
+- Braillová prekladová tabuľka LibLouis aktualizovaná na verziu [3.24.0 https://github.com/liblouis/liblouis/releases/tag/v3.24.0]. (#14436)
+  - Aktualizované tabuľky pre Maďarčinu, UEB a tiež čínske znaky bopomofo.
+  - Pridaná podpora pre dánsky Braillový štandard 2022.
+  - Pridané nové braillové tabuľky pre Gruzínsky kodifikovaný braill, Svahilčinu (Keňa) a Chichewa (Malawi).
+- Aktualizovaná knižnica Sonic rate boost na zdvojnásobenie rýchlosti na commit ``1d70513``. (#14180)
+- Databáza Unicode znakov CLDR aktualizovaná na 42.0. (#14273)
+- Hlasový výstup eSpeak NG aktualizovaný na 1.52-dev commit ``f520fecb``. (#14281, #14675)
+  - Opravené oznamovanie veľkých čísel. (#14241)
+  -
+- V Java aplikáciách s prvkami, ktoré majú možnosť výberu oznamuje NVDA stav, keď položka nie je vybratá a nie, keď je položka vybratá. (#14336)
+-
+
+
+== Opravy ==
+- Opravy pre Windows 11:
+  - NVDA oznamuje návrhy vyhľadávania po otvorení menu štart. (#13841)
+  - V architektúre ARM nie sú viac 64-bitové aplikácie identifikované ako aplikácie ARM64. (#14403)
+  - Odteraz je možné dostať sa k funkciám v menu histórie schránky, ako napríklad pripnúť položku. (#14508)
+  - Vo Windows 11 od verzie 22H2 je možné používať ovládanie myšy a dotykové ovládanie aj v oknách systémového panela a dialógu otvoriť v programe. (#14538, #14539)
+  -
+- V MS Excely sú zobrazované návrhy mien používateľov na spomenutie, ak do poľa s komentárom napíšete znak @. (#13764)
+- V panely s adresou Google Chrome sú oznamované po zameraní dostupné prvky (napríklad prechod na záložku, odstrániť návrh a podobne). (#13522)
+- Pri oznamovaní formátovania sú farby správne oznamované aj v aplikáciách Wordpad alebo zobrazovač logu. (#13959)
+- V prehliadači Firefox na stránke Gidhub, správne funguje aktivovanie tlačidla Show options (zobraziť možnosti). (#14269)
+- Prvky na výber dátumu v MS Outlooku 2016/365 v pokročilých možnostiach hľadania správne oznamujú popis a hodnoty. (#12726)
+- Aria začiarkávacie tlačidlá sú v prehliadačoch Edge, Chrome a Firefox oznamované ako začiarkávacie tlačidlá a nie začiarkávacie políčka. (#11310)
+- NVDA odteraz automaticky oznamuje zoradenie v hlavičkách v HTML tabuľkách, ak zmeníte spôsob zoradenia stlačením príslušného tlačidla. (#10890)
+- Oblasť stránky alebo orientačný bod je oznámený, ak pomocou rýchlej navigácie alebo fokusu prejdete do vnútra oblasti alebo orientačného bodu. (#13307)
+- Ak je zapnuté oznamovanie veľkých písmen slovom "veľké" alebo pípnutím, NVDA viac nepípa a neoznamuje "veľké" aj pri automatickom fonetickom hláskovaní. (#14239)
+- Prvky v tabuľkách v Java aplikáciách sú odteraz oznamované presnejšie. (#14347)
+- Niektoré nastavenia viac nie sú rôzne pri používaní viacerých profilov. (#14170)
+  - Týka sa to konkrétne týchto nastavení:
+    - Oznamovanie zarovnania riadka v nastaveniach čítania textu.
+    - Oznamovanie orámovania buniek tabuľky v nastaveniach čítania textu.
+    - Interval zobrazovania správ v nastaveniach braillu.
+    - Braillový kurzor zviazaný s v nastaveniach braillu.
+    -
+  - Môže sa stať, že tieto nastavenia budú zmenené po inštalácii tejto verzie NVDA.
+  - Po aktualizácii NVDA odporúčame skontrolovať vyššie spomenuté nastavenia.
+  -
+- Oznamovanie symbolov Emoji je odteraz podporované v ďalších jazykoch. (#14433)
+- Informácia o dostupných anotáciách je dostupná vždy aj na braillovom riadku. (#13815)
+- Opravené problémy s ukladaním nastavení, ak bola vybratá predvolená možnosť a následne bola vybratá tá istá možnosť priamo. (#14133)
+- Pri nastavovaní je zaručené, že bude vždy aktívny aspoň jeden kláves NVDA. (#14527)
+- Ak otvoríte menu NVDA zo systémového panela, NVDA viac nehlási, že je dostupná aktualizácia v prípadoch, že skutočne nie je dostupná aktualizácia. (#14523)
+- V prehrávači Foobar 2000 sú správne oznamované časy súborov dlhších ako deň. (#14127)
+- Upozornenia prehliadačov Chrome a Firefox (napríklad o stiahnutom súbore) sú tiež zobrazované na braillovom riadku. (#14562)
+- Opravená chyba, ktorá nastávala pri prechode na prvý a posledný stĺpec v tabuľke v prehliadači Mozilla Firefox. (#14554)
+- Ak je NVDA spustené s parametrom ``--lang=Windows``, je opäť možné otvoriť aj v tomto prípade nastavenia NVDA. (#14407)
+-
+
+
+= 2022.4 =
+Táto verzia obsahuje viacero nových klávesových skratiek, napríklad na plynulé čítanie riadkov a stĺpcov v tabuľkách.
+Do používateľskej príručky sme pridali sekciu, ako začať.
+Tiež boli opravené viaceré chyby.
+
+Aktualizovali sme hlasový výstup eSpeak a brailovú prekladovú tabuľku LibLouis.
+Pridané boli tiež nové prekladové tabuľky pre Čínštinu, Švédčinu, Gandčinu  a Rvandčinu.
+
+== Nové vlastnosti  ==
+- Do používateľskej príručky pridaná sekcia Ako začať. (#13934)
+- Pridaná nová klávesová skratka na vyslovenie klávesovej skratky zameraného objektu. (#13960)
+  - Desktop: ``shift+numerická2``.
+  - Laptop: ``NVDA+ctrl+shift+.``.
+  -
+- Pridané klávesové skratky na posun prezeracieho kurzora po stranách. Funguje len v prípade, že zameraný objekt podporuje stránkovanie. (#14021)
+  - Predchádzajúca strana:
+    - Desktop: ``NVDA+pageUp``.
+    - Laptop: ``NVDA+shift+pageUp``.
+    -
+  - Nasledujúca strana:
+    - Desktop: ``NVDA+pageDown``.
+    - Laptop: ``NVDA+shift+pageDown``.
+    -
+  -
+- Pridané nové klávesové skratky na pohyb v tabuľkách. (#14070)
+  - Plynulé čítanie stĺpcov zhora dole, posúva  kurzor: ``NVDA+ctrl+alt+šípka dole``
+  - Plynulé čítanie buniek v riadku, zľava doprava, posúva systémový kurzor: ``NVDA+ctrl+alt+šípka doprava``
+  - Prečítať celý stĺpec zhora dole, neposúva kurzor: ``NVDA+ctrl+alt+šípka hore``
+  - Prečítať celý riadok zľava doprava, neposúva kurzor: ``NVDA+ctrl+alt+ľavá šípka``
+  -
+- Pri použití aplikácie MS Excel cez rozhranie UI Automation NVDA dokáže oznamovať opustenie tabuľky v hárku. (#14165)
+- Oznamovanie hlavičiek tabuľky je odteraz možné nastaviť zvlášť pre riadky aj stĺpce. (#14075)
+-
+
+
+== Zmeny ==
+- Hlasový výstup eSpeak NG aktualizovaný na verziu 1.52-dev commit ``735ecdb8``. (#14060, #14079, #14118, #14203)
+  - Opravené oznamovanie znakov latinky, ak je jazyk nastavený na Mandarínčinu. (#12952, #13572, #14197)
+  -
+- Brailová prekladová tabuľka LibLouis aktualizovaná na verziu  [3.23.0 https://github.com/liblouis/liblouis/releases/tag/v3.23.0]. (#14112)
+  - Pridané nové tabuľky:
+    - Čínština všeobecný brail (znaková sada zjednodušená čínština)
+    - Rwandčina plnopis
+    - Gandčina plnopis
+    - Švédčina plnopis
+    - Švédčina čiastočný skradkopis
+    - Švédčina skratkopis
+    - Čínština (Čína, Mandarínčina) aktuálny brailový zápis (bez tónov) (#14138)
+    -
+- NVDA teraz odosiela informáciu o architektúre operačného systému ako súčasť štatistík. (#14019)
+-
+
+
+== Opravy ==
+- Ak sa používa na aktualizáciu NVDA Windows správca balíkov CLI (napríklad winget), uvoľnená verzia nie je viac vždy považovaná za novšiu ako akákoľvek iná alpha verzia, ktorá je už nainštalovaná. (#12469)
+- NVDA odteraz správne oznamuje skupiny prvkov v Java aplikáciách. (#13962)
+- Kurzor odteraz správne sleduje text pri plynulom čítaní v aplikáciách ako napríklad Bookworm, WordPad, alebo  tiež v zobrazovači logu NVDA. (#13420, #9179)
+- V aplikáciách sprístupnených cez UI Automation sú správne oznamované čiastočne začiarknuté začiarkávacie políčka. (#13975)
+- Zlepšená odozva a stabilita v aplikáciách Microsoft Visual Studio, Windows Terminal, a iných aplikáciách využívajúcich UI Automation. (#11077, #11209)
+  - Tieto zmeny sa týkajú operačného systému Windows 11 od verzie Sun Valley 2 ( 22H2).
+  - Sledovanie zmien a udalostí UI Automation je predvolene nastavené na preferovanie vybraných.
+  -
+- Oznamovanie  textu, Braillový výstup a potláčanie zobrazovania hesiel odteraz správne fungujú vo vnorenom okne príkazového riadku v aplikácii Visual Studio 2022. (#14194)
+- NVDA od teraz berie do úvahy nastavenia DPI pri používaní viacerých monitorov.
+Zahrnutých je niekoľko opráv pri používaní nastavenia DPI viac než 100% alebo pripojených viacerých monitorov súčasne.
+Problémy sa stále môžu vyskytnúť so staršími verziami systému než Windows 10 1809.
+Aby boli tieto opravy účinné, aplikácie, s ktorými NVDA spolupracuje, by tiež mali brať nastavenie DPI do úvahy.
+Pozor, stále sú známe problémy s prehliadačmi Chrome a Edge. (#13254)
+  - Rámčeky znázorňujúce vizuálne zvýraznenie  položiek by mali byť správne umiestnené vo väčšine aplikácií.
+(#13370, #3875, #12070)
+  - Interakcie cez dotykovú obrazovku by mali byť omnoho presnejšie pre väčšinu aplikácií. (#7083)
+  - Sledovanie myši by malo správne fungovať vo väčšine aplikácií. (#6722)
+  -
+- Stav zmeny orientácie obrazovky (na šírku/na výšku) je správne ignorovaný v situáciách, keď nedošlo k zmene orientácie (napr. pri zmene parametrov obrazovky). (#14035)
+- NVDA dokáže  oznamovať preusporiadanie položiek na obrazovke: presúvanie dlaždíc v ponuke štart vo Windows 10 a virtuálne plochy vo Windows 11. (#12271, #14081)
+- Pokročilé nastavenie "Zaznamenané chyby signalizovať zvukom" je správne obnovené na predvolenú hodnotu po stlačení tlačidla "Obnoviť pôvodné nastavenia". (#14149)
+- Klávesová skratka NVDA+F10 na výber textu funguje aj v aplikáciách Java. (#14163)
+- NVDA sa viac nezasekne v ponuke pri navigácii šípkami vo vláknach konverzácií programu Microsoft Teams. (#14355)
+-
+
+
+= 2022.3.3 =
+Táto drobná aktualizácia prináša opravy chýb, ktoré boli spôsobené vo verziách 2022.3.2, 2022.3.1 a 2022.3.
+Oprava zahŕňa aj jednu bezpečnostnú záplatu.
+
+== Bezpečnostné opravy ==
+- Odteraz viac nie je možné používať Python konzolu, ak používateľ nie je prihlásený.
+([GHSA-fpwc-2gxx-j9v7 https://github.com/nvaccess/nvda/security/advisories/GHSA-fpwc-2gxx-j9v7])
+-
+
+== Opravy ==
+- Opravená chyba, ktorá spôsobovala, že ak NVDA zamrzlo pri zamykaní systému, bolo možné získať prístup k pracovnej ploche používateľa aj ak bol systém už zamknutý. (#14416)
+- Opravená chyba, ktorá spôsobovala, že ak NVDA zamrzlo počas zamykania systému, správalo sa neštandardne, ako keby bol systém stále zamknutý a to aj po opätovnom odomknutí. (#14416)
+- Opravené problémy s prístupnosťou v časti "zabudnutý pin" a tiež počas inštalácie a aktualizácie. (#14368)
+- Opravené problémy s inštaláciou NVDA v niektorých prostrediach, napríklad Windows Server. (#14379)
+-
+
+
+= 2022.3.2 =
+Toto je drobná aktualizácia, ktorá opravuje problémy vzniknuté vo verzii 2022.3.1 a rieši jeden bezpečnostný problém.
+
+== Bezpečnostné opravy ==
+- Zabraňuje možnému prístupu s oprávneniami na úrovni systému pre neautorizovaných používateľov.
+([GHSA-3jj9-295f-h69w https://github.com/nvaccess/nvda/security/advisories/GHSA-3jj9-295f-h69w])
+-
+
+== Opravy ==
+- Oprava nedostatku verzii 2022.3.1, čo spôsobovalo nedostupnosť niektorých funkcií na zabezpečených obrazovkách. (#14286)
+- Oprava nedostatku verzii 2022.3.1, čo spôsobovalo nedostupnosť niektorých funkcií po prihlásení do systému, ak sa NVDA spustil pri uzamknutej obrazovke. (#14301)
+-
+
+
+= 2022.3.1 =
+Toto je drobná aktualizácia obsahujúca niekoľko bezpečnostných opráv.
+Prosíme vás, aby ste informácie o bezpečnostných ryzikách odoslali na adresu info@nvaccess.org (anglicky), prípadne na ondrej@ondrosik.sk v Slovenčine.
+
+== Bezpečnostné opravy ==
+- Odstránená zraniteľnosť umožňujúca prechod z používateľských oprávnení na oprávnenia na úrovni systému.
+([GHSA-q7c2-pgqm-vvw5 https://github.com/nvaccess/nvda/security/advisories/GHSA-q7c2-pgqm-vvw5])
+- Odstránený bezpečnostný problém umožňujúci prístup ku konzole python hneď po spustení NVDA.
+([GHSA-72mj-mqhj-qh4w https://github.com/nvaccess/nvda/security/advisories/GHSA-72mj-mqhj-qh4w])
+- Opravený problém s uchovávaním obsahu zobrazovača reči pri uzamknutí systému.
+([GHSA-grvr-j2h8-3qm4 https://github.com/nvaccess/nvda/security/advisories/GHSA-grvr-j2h8-3qm4])
+-
+
+== Opravy ==
+- Zabránené neautorizovaným používateľom meniť nastavenia zobrazovača reči a braillu na zamknutej obrazovke. ([GHSA-grvr-j2h8-3qm4 https://github.com/nvaccess/nvda/security/advisories/GHSA-grvr-j2h8-3qm4])
+-
+
+= 2022.3 =
+Značná časť tejto verzie vznikla vďaka vývojárskej komunite NVDA.
+Zahŕňa automatické fonetické hláskovanie a tiež podporu pre Windows konzoly.
+
+Táto verzia tiež obsahuje viacero opráv.
+
+Konkrétne, aktuálne verzie aplikácie Adobe Acrobat/Reader viac nepadajú pri čítaní PDF dokumentu.
+
+Hlasový výstup eSpeak bol aktualizovaný na novú verziu a prináša 3 nové jazyky: Bielorušťinu, Luxemburčinu a Totontepec Mixe.
+
+== Nové vlastnosti ==
+- Vo windows konzolách, ktoré sa používajú v príkazovom riadku, PowerShell, a Windows Subsystéme pre Linux od verzie Windows 11 22H2 (Sun Valley 2):
+  - Vylepšená odozva a stabilita. (#10964)
+  - Po stlačení ``ctrl+f`` na vyhľadanie textu, sa prezerací  kurzor  presúva na vyhľadaný výraz. (#11172)
+  - Predvolene je vypnuté oznamovanie napísaného textu, ktorý sa nezobrazuje na obrazovke (zvyčajne ide o heslá).
+Toto je možné zapnúť v pokročilých nastaveniach NVDA. (#11554)
+  - Text, ktorý nie je viditeľný na obrazovke, je stále možné prezerať bez nutnosti posúvať okno konzoly. (#12669)
+  - Odteraz je možné získať podrobnejšie informácie o formátovaní. ([microsoft/terminal PR 10336 https://github.com/microsoft/terminal/pull/10336])
+  -
+- Pridaná možnosť automaticky foneticky hláskovať znaky pri čítaní po znakoch. (#13509)
+- Pridaná nová možnosť, ktorá určuje, či má posúvanie braillového riadka prerušiť reč. (#2124)
+-
+
+
+== Zmeny ==
+- Hlasový výstup eSpeak NG aktualizovaný na verziu 1.52-dev commit ``9de65fcb``. (#13295)
+  - Pridané jazyky:
+    - Bieloruština
+    - Luxemburčina
+    - Totontepec Mixe
+    -
+  -
+- Ak sa načítanie hárkov v programe MS Excel používa UI Automation, NVDA dokáže identifikovaťa oznámiť zlúčené bunky. (#12843)
+- NVDA viac neoznamuje "obsahuje detaily", ale konkrétne povie druh detailu, napríklad "obsahuje komentáre". (#13649)
+- V aplikáciách a súčastiach sa teraz pri programe NVDA objavuje aj veľkosť nainštalovaných dát. (#13909)
+-
+
+
+== opravy ==
+- Adobe Acrobat / Reader 64 bit viac nespadne pri čítaní PDF dokumentu. (#12920)
+  - Aby ste zabránili pádom, Je potrebné používať aktuálnu verziu Adobe Acrobat / Reader.
+  -
+- Rôzne jednotky veľkosti písma sú odteraz dostupné na preklad pre prekladateľov a objavujú sa aj správne v Slovenskom jazyku. (#13573)
+- NVDA ignoruje udalosti z Java Access Bridge, ak nemá fokus žiadne okno Java aplikácie.
+Toto zlepší odozvu niektorých Java aplikácií, napríklad IntelliJ IDEA. (#13039)
+- Vylepšené sledovanie vybratých buniek v LibreOffice Calc, pričom viac nedochádza k zamrznutiu, ak je vybratých viacero buniek. (#13232)
+- Odteraz je možné používať MS Edge aj v situáciách, ak ste prihlásený pod kontom iného používateľa. (#13032)
+- Ak je vypnuté použitie dvojnásobnej rýchlosti, hlasový výstup eSpeak nepoužíva skracovanie hlások, ktoré sa zvyčajne používa pri použití dvojnásobnej rýchlosti ani v prípade, že je tempo nastavené na 100%. (#13876)
+- Odteraz nie je možné otvoriť dve okná s nastavením klávesových skratiek súčasne. (#13854)
+-
+
+= 2022.2.3 =
+Táto opravná verzia opravuje chybu, ktorá sa nedopatrením dostala do verzie 2022.2.
+
+== opravy ==
+- Opravená chyba, ktorá spôsobovala, že NVDA neoznamoval hlásenie "zabezpečená pracovná plocha". Toto spôsobovalo, že NVDA Remote nedokázalo rozpoznať zabezpečené okná. (#14094)
+-
+
+= 2022.2.2 =
+Táto verzia opravuje chybu, ktorá nastala vo verzii 2022.2.1 v súvislosti s dialógom klávesové skratky.
+
+== opravy ==
+- Opravená chyba, ktorá spôsobovala, že klávesové skratky nefungovali vždy správne. (#14065)
+-
+
+= 2022.2.1 =
+Táto drobná verzia opravuje niektoré chyby súvisiace s bezpečnosťou.
+Prosíme vás, aby ste informácie o bezpečnostných ryzikách odoslali na adresu info@nvaccess.org (anglicky), prípadne na ondrej@ondrosik.sk v Slovenčine.
+
+== Bezpečnostné záplaty ==
+- Odstránená možnosť spustiť Python konzolu zo zamknutej obrazovky. (GHSA-rmq3-vvhq-gp32)
+- Odstránená možnosť opustiť zamknutú obrazovku pomocou objektovej navigácie. (GHSA-rmq3-vvhq-gp32)
+-
+
 = 2022.2 =
 Táto verzia obsahuje viacero opráv.
 Konkrétne ide o opravy v prístupnosti Java aplikácií, brailové riadky a aplikácie Windows.

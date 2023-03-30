@@ -3,6 +3,478 @@ NVDA最新情報
 
 %!includeconf: ../changes.t2tconf
 
+= 2023.1 =
+設定「ドキュメントナビゲーション」カテゴリに「段落の区切り方法」オプションが追加されました。
+アプリ側での段落の区切り処理に対応していないテキストエディター、例えばメモ帳や Notepad++ などで有用です。
+
+リンク先の報告を行う新しいグローバルコマンドが ``NVDA+K`` で利用できます。
+
+Webコンテンツのアノテーション（注釈、例えばコメントや脚注など）への対応を改善しました。
+複数の注釈が付けられた場所で ``NVDA+D`` を押すと、それぞれの注釈を順番に報告します。例えば「コメントあり」「脚注あり」などです。
+
+Tivomatic Caiku Albatross 46/80 点字ディスプレイに対応しました。
+
+Windows の ARM64 および AMD64 環境への対応を改善しました。
+
+Windows 11 対応など多くのバグ修正を行いました。
+
+eSpeak, LibLouis, Sonic 音声速度変換ライブラリ、および Unicode CLDR を更新しました。
+ジョージア語非縮約点字、スワヒリ語(ケニア)、チェワ語(マラウイ)の点字テーブルを追加しました。
+
+注意:
+- このリリースでは、既存のアドオンとの互換性が失われています。
+-
+
+== 新機能 ==
+- UI オートメーションで Microsoft Excel を使うときにテーブルの行や列の見出しの自動報告が可能になりました。 (#14228)
+  - 注意: リボンの「挿入」「テーブル」ボタンでフォーマットされたテーブルが対象です。
+  「テーブルの書式オプション」の「最初の列」および「先頭行」が行見出しと列見出しにそれぞれ対応します。
+  - 「名前の定義」を使うスクリーンリーダー独自の見出し読み上げ機能とは異なります。こちらは UI オートメーションでは未対応です。
+  -
+- 「テキストカーソル移動のすこし後で文字を説明」を切り替えるジェスチャー未割り当てのスクリプトが利用可能になりました。 (#14267)
+- 実験的な機能に「Windows ターミナルで新しいテキストを読み上げる方法」を追加しました。この設定は安定性や性能の改善に役立つ可能性があります。 (#13781)
+  - この機能の制約についてはユーザーガイドを参照してください。
+  - 
+- Windows 11 ARM64 環境で、Firefox, Google Chrome および 1Password などの AMD64 アプリのブラウズモードが利用可能になりました。 (#14397)
+- 設定「ドキュメントナビゲーション」の「段落の区切り方法」オプションが追加されました。
+段落の区切りと解釈するものを改行または1行以上の連続する空白行に切り替えることができます。
+アプリ側での段落の区切り処理に対応していないテキストエディター、例えばメモ帳や Notepad++ などで有用です。 (#13797)
+- 複数の注釈の存在を報告できるようになりました。
+``NVDA+D`` は複数の注釈がつけられた場所で、それぞれの注釈を順番に報告する操作となります。
+例えば、ある1カ所のテキストにコメントと脚注がある場合などです。 (#14507, #14480)
+- Tivomatic Caiku Albatross 46/80 点字ディスプレイに対応しました。 (#13045)
+- 新しいグローバルコマンド: リンク先の報告 ``NVDA+K`` が利用できます。
+1回押すとナビゲーターオブジェクトのリンク先を音声と点字で報告します。
+2回押すとウィンドウを開いて情報を表示します。 (#14583)
+- 入力ジェスチャーの割り当てのない新しいグローバルコマンド（「ツール」カテゴリ）: ナビゲーターオブジェクトのリンク先をウィンドウを開いて表示
+``NVDA+K`` を2回押すことと同じですが、点字ユーザーに役立つ可能性があります。 (#14583)
+-
+
+
+== 変更点 ==
+- LibLouis 点訳エンジンを [3.24.0 https://github.com/liblouis/liblouis/releases/tag/v3.24.0] に更新しました。 (#14436)
+  - ハンガリー語、UEB、中国語ボポモフォ注音符号の大幅な更新
+  - デンマーク語点字標準 2022 への対応
+  - ジョージア語非縮約点字、スワヒリ語(ケニア)、チェワ語(マラウイ)の点字テーブルの追加
+  -
+- Sonic 音声速度変換ライブラリを commit ``1d70513`` に更新しました。 (#14180)
+- CLDR をバージョン 42.0 に更新しました。 (#14273)
+- eSpeak NG を 1.52-dev commit ``f520fecb`` に更新しました。 (#14281, #14675)
+  - 大きな数の読み上げに関する修正 (#14241)
+  -
+- Javaアプリのコントロールにおいて選択可能な状態を、項目が選択されたときではなく、選択されていないときに報告するようになりました。 (#14336)
+-
+
+
+== バグ修正 ==
+- Windows 11 対応の改善:
+  - NVDA は、スタートメニューを開くと、検索のハイライトを報告します。 (#13841)
+  - ARM 環境において、x64 アプリが ARM64 アプリとして識別されなくなりました。 (#14403)
+  - クリップボード履歴で「アイテムの固定」などにアクセスできるようになりました。(#14508)
+  - Windows 11 22H2 とそれ以降において、マウスとタッチを使用して、システムトレイのオーバーフローウィンドウや「プログラムから開く」のダイアログボックスなどを操作できなかった問題を修正しました。 (#14538, #14539)
+  -
+- Microsoft Excel のコメントで@メンションを入力すると、提案が報告されます。(#13764) 
+- Google Chrome ロケーションバーで提案コントロール(タブへの切り替え、提案の削除など)を選択したときに報告されるようになりました。 (#13522)
+- ワードパッドやログビューアーの書式情報において、色を明示的に報告するようになりました。従来は「既定の色」と報告していました。 (#13959)
+- Firefox で GitHub issues ページの "Show options" ボタンをアクティブ化するときの動作がより確実になりました。 (#14269)
+- Outlook 2016/365 の詳細検索ダイアログの日付選択コントロールにおいて、ラベルと値を報告するようになりました。 (#12726)
+- Firefox、Chrome および Edge において、ARIA switch コントロールはチェックボックスではなく、実際にスイッチと報告されるようになりました。 (#11310)
+- NVDA は HTML テーブルの列ヘッダーで内側のボタンを押してソート状態を変更すると、自動的に報告します。 (#10890)
+- ブラウズモードで1文字ナビゲーションまたはフォーカスを使用してランドマークまたはリージョンの外から中にジャンプすると、その名前が常に自動的に読み上げられます。 (#13307)
+- 「テキストカーソル移動のすこし後で文字を説明」で大文字のビープ音または報告が有効になっている場合、NVDA はビープ音または「大文字」の報告を2回行わなくなりました。 (#14239)
+- NVDA はJavaアプリのテーブル内のコントロールをより正確に報告するようになりました。 (#14347)
+- 複数のプロファイルを使用したときに、一部の設定が予想外に異なることがなくなりました。 (#14170)
+  - 次の設定が修正されました:
+    - 書式とドキュメント情報の「行インデント」
+    - 書式とドキュメント情報の「セルの罫線」
+    - 点字の「メッセージの表示」
+    - 点字の「点字表示切り替え」
+    -
+  - このバージョンのNVDAをインストールすると、プロファイルで使用されているこれらの設定が予期せず変更されることがあります。
+  - NVDAをこのバージョンに更新した後で、プロファイルのこれらのオプションを確認してください。
+  -
+- 絵文字がより多くの言語で報告されるようになりました。 (#14433)
+- 一部の要素で、点字で注釈が表示されなかった不具合を修正しました。 (#13815)
+- 設定の変更において「既定」オプションと既定の値を切り替えたときに正しく保存されない問題を修正しました。 (#14133)
+- NVDAを設定する場合、少なくとも1つのキーが常にNVDAキーとして定義されます。 (#14527)
+- 通知領域からNVDAメニューを開くとき、利用可能な更新がないにも関わらず保留中の更新を提示していた問題を修正しました。 (#14523)
+- Foobar2000 における残り時間、経過時間、トラックの長さが1日を超える場合に正しく報告できるようになりました。 (#14127)
+- ChromeやFirefoxなどのWebブラウザで、ファイルのダウンロードなどのアラートが、音声だけでなく点字でも表示されるようになりました。 (#14562)
+- Firefox で行や列の最初や最後に移動する操作の不具合を修正しました。 (#14554)
+- NVDA の起動オプションで ``--lang=Windows`` を指定したときに NVDA の設定ダイアログの「一般」を表示できなかった不具合を修正しました。 (#14407)
+-
+
+
+== 開発者向けの変更 ==
+注意: このリリースでは、既存のアドオンとの互換性が失われています。
+アドオンは再テストとマニフェストの更新を行う必要があります。
+NVDA の API 廃止および削除のプロセスについては [the developer guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] を参照してください。
+
+- 非英語の環境でシステムテストが失敗しないようになりました。 (#13362)
+- Windows 11 on ARM において x64 apps は ARM64 アプリと判定されないようになりました。 (#14403)
+- 新しい UI オートメーションのシナリオでは ``SearchField`` および ``SuggestionListItem`` ``UIA`` ``NVDAObjects`` は不要です。検索候補の自動報告と文字入力は ``controllerFor`` パターンで通知されます。
+この機能は現在 ``behaviours.EditableText`` またはそのベースクラス ``NVDAObject`` を介して使用できます。
+- UIA debug logging カテゴリは有効化すると UIA イベントハンドラやユーティリティのログを従来よりも多く出力します。 (#14256)
+- NVDAHelper ビルドの標準の更新 (#13072)
+  - C++17 から C++20 標準に移行しました。
+  - ``/permissive-`` コンパイラーフラグを指定しています。より厳格に標準に準拠する '/Zc' が設定されます。
+  -
+- ドライバーやアドオンなどのプラグインオブジェクトについて NVDA Python コンソールで得られる情報が改善されました。 (#14463)
+- NVDA は Visual Studio 2022 でコンパイルできるようになりました。 Visual Studio 2019 build tools は不要となりました。(#14326)
+- NVDA がフリーズした場合に得られるログが詳細になり、デバッグしやすくなりました。 (#14309)
+- シングルトン ``braille._BgThread`` クラスが ``hwIo.ioThread.IoThread`` に変更されました。 (#14130)
+  - このクラスの単一のインスタンス ``hwIo.bgThread`` (NVDA core 内) はスレッドセーフな点字ディスプレイドライバーのためのバックグラウンド I/O を提供します。
+  - 新しいクラスはシングルトンとして設計されていません。アドオン開発者はハードウェア I/O を行う場合にそれぞれインスタンスを作る必要があります。
+  -
+- PC のプロセッサーアーキテクチャーは ``winVersion.WinVersion.processorArchitecture`` attribute から取得できます。(#14439)
+- 以下の extension point が追加されました。 (#14503)
+  - ``inputCore.decide_executeGesture``
+  - ``tones.decide_beep``
+  - ``nvwave.decide_playWaveFile``
+  - ``braille.pre_writeCells``
+  - ``braille.filter_displaySize``
+  - ``braille.decide_enabled``
+  - ``braille.displayChanged``
+  - ``braille.displaySizeChanged``
+  - 
+- 音声ドライバーのサポートされている設定で useConfig を False にできます。 (#14601)
+-
+
+=== API の重大な変更 ===
+API の重大な変更があります。
+あなたがアドオン開発者で新しいAPIへの移行において問題がある場合は GitHub issue を作成してください。
+- 設定ファイルの仕様を変更しました。キーの削除や変更があります:
+  - ``[documentFormatting]`` セクション (#14233):
+    - ``reportLineIndentation`` の値は boolean から int value (0 to 3) に変更されました。
+    - ``reportLineIndentationWithTones`` は削除されました。
+    - ``reportBorderStyle`` と ``reportBorderColor`` は削除されました。かわりに ``reportCellBorders`` を使用します。
+    -
+  - ``[braille]`` セクション (#14233):
+    - ``noMessageTimeout`` は削除されました。かわりに ``showMessages`` を使います。
+    - ``messageTimeout`` が 0 の値を取ることはなくなりました。かわりに ``showMessages`` を使います。
+    - ``autoTether`` は削除されました。 ``tetherTo`` は "auto" の値を取ることができます。
+    -
+  - ``[keyboard]`` セクション (#14528):
+    - ``useCapsLockAsNVDAModifierKey``, ``useNumpadInsertAsNVDAModifierKey``, ``useExtendedInsertAsNVDAModifierKey`` は削除されました。
+    かわりに ``NVDAModifierKeys`` を使います。
+    -
+  -
+- ``NVDAHelper.RemoteLoader64`` クラスは削除されました。代替はありません。 (#14449)
+- ``winAPI.sessionTracking`` から以下の関数が削除されました。代替はありません。(#14416, #14490)
+  - ``isWindowsLocked``
+  - ``handleSessionChange``
+  - ``unregister``
+  - ``register``
+  - ``isLockStateSuccessfullyTracked``
+  - 
+- braille handler を ``braille.handler.enabled`` で有効化／無効化できなくなりました。
+braille handler を無効化したい場合は ``braille.handler.decide_enabled`` にハンドラーを登録します。 (#14503)
+- braille handler の display size を ``braille.handler.displaySize`` で変更できなくなりました。
+displaySize を変更したい場合は ``braille.handler.filter_displaySize`` にハンドラーを登録します。
+実装方法の例は ``brailleViewer`` を参照してください。 (#14503)
+- ``addonHandler.Addon.loadModule`` に関する仕様を変更しました。 (#14481)
+  - ``loadModule`` は backslash ではなく dot を区切り文字として使います。
+  例えば "lib\example" は "lib.example" となります。
+  - ``loadModule`` はモジュールの読み込み失敗やエラーで例外を投げます。従来は理由を通知せずに ``None`` を返していました。
+  -
+- ``appModules.foobar2000`` から以下のシンボルを削除しました。代替はありません。 (#14570)
+  - ``statusBarTimes``
+  - ``parseIntervalToTimestamp``
+  - ``getOutputFormat``
+  - ``getParsingFormat``
+  -
+- 以下はシングルトンではなくなりました。これらの get メソッドは削除されました。
+``Example.get()`` のようなコードは ``Example()`` のように書きます。 (#14248)
+  - ``UIAHandler.customAnnotations.CustomAnnotationTypesCommon``
+  - ``UIAHandler.customProps.CustomPropertiesCommon``
+  - ``NVDAObjects.UIA.excel.ExcelCustomProperties``
+  - ``NVDAObjects.UIA.excel.ExcelCustomAnnotationTypes``
+  - 
+-
+
+
+=== 非推奨となったAPI ===
+- ``NVDAObjects.UIA.winConsoleUIA.WinTerminalUIA`` は非推奨です。 (#14047)
+- ``config.addConfigDirsToPythonPackagePath`` は変更されました。
+かわりに ``addonHandler.packaging.addDirsToPythonPackagePath`` を使います。 (#14350)
+- ``braille.BrailleHandler.TETHER_*`` は非推奨です。
+かわりに ``configFlags.TetherTo.*.value`` を使います。 (#14233)
+- ``utils.security.postSessionLockStateChanged`` は非推奨です。
+かわりに ``utils.security.post_sessionLockStateChanged`` を使います。 (#14486)
+- ``NVDAObject.hasDetails``, ``NVDAObject.detailsSummary``, ``NVDAObject.detailsRole`` は非推奨です。
+かわりに ``NVDAObject.annotations`` を使います。 (#14507)
+- ``keyboardHandler.SUPPORTED_NVDA_MODIFIER_KEYS`` は非推奨です。直接の代替はありません。
+``config.configFlags.NVDAKey`` に移行してください。 (#14528)
+- ``gui.MainFrame.evaluateUpdatePendingUpdateMenuItemCommand`` は非推奨です。
+かわりに ``gui.MainFrame.SysTrayIcon.evaluateUpdatePendingUpdateMenuItemCommand`` を使います。 (#14523)
+-
+
+
+= 2022.4 =
+このリリースではテーブルの行や列の読み上げなど、新しいコマンドが追加されました。
+ユーザーガイドに「クイックスタートガイド」を追加しました。
+バグ修正も行われました。
+
+音声エンジン eSpeak と点訳エンジン LibLouis も更新されました。
+中国語、スウェーデン語、ルガンダ語、キンヤルワンダ語のテーブルが追加されました。
+
+== 新機能 ==
+- ユーザーガイドに「クイックスタートガイド」を追加しました。 (#13934)
+- 現在のフォーカスの要素のショートカットキーを報告する新しいコマンドを追加しました。 (#13960)
+  - デスクトップ: ``Shift+テンキー2``.
+  - ラップトップ: ``NVDA+Ctrl+Shift+ピリオド``.
+  -
+- ページ単位でレビューカーソルを移動する新しいコマンドを追加しました。アプリが対応している場合に使用できます。 (#14021)
+  - 前のページ:
+    - デスクトップ: ``NVDA+pageUp``.
+    - ラップトップ: ``NVDA+shift+pageUp``.
+    -
+  - 次のページ:
+    - デスクトップ: ``NVDA+pageDown``.
+    - ラップトップ: ``NVDA+shift+pageDown``.
+    -
+  -
+- テーブル内で使える以下のコマンドを追加しました。 (#14070)
+  - 現在のセルから列を読み上げ: ``NVDA+control+alt+下矢印``
+  - 現在のセルから行を読み上げ: ``NVDA+control+alt+右矢印``
+  - 現在の列を読み上げ: ``NVDA+control+alt+上矢印``
+  - 現在の行を読み上げ: ``NVDA+control+alt+左矢印``
+  -
+- Microsoft Excel で UI オートメーションが有効な場合: スプレッドシートにおいてテーブルの中に入ったり外に出たりしたときに報告するようになりました。 (#14165)
+- テーブルの行の見出しと列の見出しの報告を独立して設定できるようになりました。 (#14075)
+-
+
+
+== 変更点 ==
+- eSpeak NG を 1.52-dev commit ``735ecdb8`` に更新しました。 (#14060, #14079, #14118, #14203)
+  - 標準中国語におけるラテン文字の読み上げの修正 (#12952, #13572, #14197)
+  -
+- LibLouis 点訳エンジンを [3.23.0 https://github.com/liblouis/liblouis/releases/tag/v3.23.0] に更新しました。 (#14112)
+  - 新しいテーブル:
+    - 中国語共通点字 (簡体字)
+    - キンヤルワンダ語非縮約点字
+    - ルガンダ語非縮約点字
+    - スウェーデン語非縮約点字
+    - スウェーデン語一部縮約点字
+    - スウェーデン語縮約点字
+    - 中国語(中国、北京語) 従来方式の点字(声調なし) (#14138)
+    -
+- NVDA 使用状況統計のために取得する情報に OS architecture を追加しました。 (#14019)
+-
+
+
+== バグ修正 ==
+- Windows Package Manager CLI (winget) を使って NVDA を更新した場合に、インストールされたアルファ版よりもリリース版のほうが常に新しいものとして扱われていた問題を修正しました。 (#12469)
+- Java アプリのグループボックスを正しく報告できなかった問題を修正しました。 (#13962)
+- Bookworm や WordPad および NVDA ログビューアーなどのアプリで、「すべて読み上げ」の実行中にテキストカーソルが読み上げに追従できないことがあった問題を修正しました。 (#13420, #9179)
+- UI オートメーションを使用するアプリにおいて、一部チェックされたチェックボックスが正しく報告されるようになりました。 (#13975)
+- Microsoft Visual Studio, Windows Terminal, その他の UI オートメーションを使用するアプリにおいて性能や信頼性を改善しました。 (#11077, #11209)
+  - Windows 11 Sun Valley 2 (version 22H2) およびそれ以降で有効です。
+  - イベントとプロパティ変更の取得を選択的に行う設定が既定の選択になりました。
+  -
+- Visual Studio 2022 に埋め込まれた Windows Terminal コントロールにおいてテキストの報告、点字出力、パスワード非表示などが期待通りに動作するようになりました。 (#14194)
+- マルチディスプレイ環境などで DPI を正しく処理できるようになりました。
+DPI 設定を100パーセントよりも大きくした場合や、マルチディスプレイ環境における複数の問題が修正されました。
+ただし Windows 10 1809 よりも以前のバージョンでは改善されない場合があります。
+この修正が期待通りに動作するためには NVDA で操作するアプリも高 DPI への対応が必要です。
+Chrome および Edge への対応では既知の不具合が残っています。 (#13254)
+  - 多くのアプリにおいてビジュアルハイライトが期待通りの位置に表示されます。 (#13370, #3875, #12070)
+  - 多くのアプリにおいてタッチ対応が適切に動作します。 (#7083)
+  - 多くのアプリにおいてマウスカーソル位置に関する処理が適切に動作します。 (#6722)
+  -
+- ディスプレイなどの向き（ランドスケープ／ポートレート）の変化がない場合に、報告を適切に省略するようになりました。 (#14035)
+- Windows 10 のスタートメニューのタイルや Windows 11 の仮想デスクトップなどを並べ替えるときに、項目のドラッグを報告するようになりました。 (#12271, #14081)
+- 「設定を戻す」を実行したときに高度な設定「ログ出力したエラーを音で報告」が既定の設定に戻らなかった不具合を修正しました。 (#14149)
+- Java アプリでキーボードショートカット ``NVDA+f10`` によるテキスト選択ができなかった不具合を修正しました。 (#14163)
+- Microsoft Teams の会話スレッドを上下に移動するときにメニュー操作で起きていた不具合を修正しました。 (#14355)
+-
+
+
+== 開発者向けの変更 ==
+NVDA の API の非推奨と廃止については [the developer guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] を参照してください。
+
+- [NVDA API Announcement mailing list https://groups.google.com/a/nvaccess.org/g/nvda-api/about] を開設しました。 (#13999)
+- 多くの UI Automation アプリにおいて NVDA は ``textChange`` イベントを処理しません。性能の低下を回避するためです。 (#11002, #14067)
+-
+
+
+=== 非推奨となったAPI ===
+- ``core.post_windowMessageReceipt`` は非推奨です。 ``winAPI.messageWindow.pre_handleWindowMessage`` を使います。
+- ``winKernel.SYSTEM_POWER_STATUS`` は非推奨です。 ``winAPI._powerTracking.SystemPowerStatus`` を使います。
+- ``winUser.SM_*`` 定数は非推奨です。 ``winAPI.winUser.constants.SystemMetrics`` を使います。
+-
+
+= 2022.3.3 =
+これは 2022.3.2, 2022.3.1, 2022.3 で発生した不具合を修正するリリースです。
+セキュリティに関する修正が含まれています。
+
+== セキュリティ修正 ==
+- 権限のないユーザーによる(NVDA Python console 経由の)システムレベルのアクセスに関する問題を修正しました。
+([GHSA-fpwc-2gxx-j9v7 https://github.com/nvaccess/nvda/security/advisories/GHSA-fpwc-2gxx-j9v7])
+-
+
+== バグ修正 ==
+- Windows ロック画面において NVDA がフリーズするとユーザーのデスクトップ画面へのアクセスを制限できなかった不具合を修正しました。(#14416)
+- Windows ロック画面において NVDA がフリーズすると NVDA が正しく動作しなくなることがある不具合を修正しました。 (#14416)
+- Windowsの「PINを忘れた場合」や Windows Update/Install エクスペリエンスにおけるアクセシビリティの不具合を修正しました。 (#14368)
+- 一部の Windows 環境 (Windows Server) における NVDA のインストールの不具合を修正しました。 (#14379)
+-
+
+== 開発者向けの変更 ==
+
+=== 非推奨となったAPI ===
+- ``utils.security.isObjectAboveLockScreen(obj)`` は非推奨です。 ``obj.isBelowLockScreen`` を使います。 (#14416)
+- ``winAPI.sessionTracking`` の以下の関数は非推奨です。これらは 2023.1 で削除されます。 (#14416)
+  - ``isWindowsLocked``
+  - ``handleSessionChange``
+  - ``unregister``
+  - ``register``
+  - ``isLockStateSuccessfullyTracked``
+  - 
+- 
+
+
+= 2022.3.2 =
+これはセキュリティ問題と、2022.3.1で発生した不具合を修正するためのリリースです。
+
+== セキュリティ修正 ==
+- 権限のないユーザーによるシステムレベルのアクセスに関する問題を修正しました。
+([GHSA-3jj9-295f-h69w https://github.com/nvaccess/nvda/security/advisories/GHSA-3jj9-295f-h69w])
+-
+
+== バグ修正 ==
+- 2022.3.1 で発生したロック画面での一部の機能の不具合を修正しました。 (#14286)
+- 2022.3.1 で NVDA がロック画面から起動した場合に、サインインの直後に一部の機能で起きていた不具合を修正しました。(#14301)
+-
+
+
+= 2022.3.1 =
+これはセキュリティ問題を修正するためのリリースです。
+セキュリティ問題は info@nvaccess.org に報告してください。
+
+== セキュリティ修正 ==
+- ユーザーが不適切に管理者権限に昇格できる問題を修正しました。
+([GHSA-q7c2-pgqm-vvw5 https://github.com/nvaccess/nvda/security/advisories/GHSA-q7c2-pgqm-vvw5])
+- NVDA起動の競合状態を使ってロック画面で NVDA Python コンソールを開くことができる問題を修正しました。
+([GHSA-72mj-mqhj-qh4w https://github.com/nvaccess/nvda/security/advisories/GHSA-72mj-mqhj-qh4w])
+- Windows がロック画面に切り替わった後で、スピーチビューアーで以前の内容を参照できる問題を修正しました。
+([GHSA-grvr-j2h8-3qm4 https://github.com/nvaccess/nvda/security/advisories/GHSA-grvr-j2h8-3qm4])
+-
+
+== バグ修正 ==
+- Windows ロック画面においてスピーチビューアーおよび点字ビューアーの設定が不適切な権限で可能になっていた問題を修正しました。 ([GHSA-grvr-j2h8-3qm4 https://github.com/nvaccess/nvda/security/advisories/GHSA-grvr-j2h8-3qm4])
+-
+
+= 2022.3 =
+このリリースにおける改善の多くは NVDA 開発コミュニティの貢献によるものです。
+「テキストカーソル移動のすこし後で文字を説明」や Windows コンソール対応の改善などが含まれます。
+
+このリリースではバグ修正も行われています。
+特に Adobe Acrobat および Reader の最新版で PDF ドキュメントを読むときにクラッシュしていた問題に対応しました。
+
+eSpeak が更新され、ベラルーシ語、ルクセンブルク語、トトンテペック・ミヘ語の3つの新しい言語が導入されました。
+
+== 新機能 ==
+- コマンドプロンプト、PowerShell、Windows Subsystem for Linux などに使われている Windows コンソールホストの Windows 11 バージョン 22H2 (Sun Valley 2) およびそれ以降において:
+  - 性能と安定性を大幅に改善しました。 (#10964)
+  - ``Ctrl+f`` を押してテキストを検索すると、見つかった箇所にレビューカーソルを移動します。 (#11172)
+  - パスワード入力など、入力テキストが画面に表示されない場合に、入力テキストの報告が既定の設定で無効になりました。
+NVDA「高度な設定」パネルで有効化できます。 (#11554)
+  - スクロールで画面の外になり表示されなくなったテキストをレビューできます。コンソールウィンドウをスクロールする必要はありません。 (#12669)
+  - テキストの書式に関する詳細な情報はこちらです ([microsoft/terminal PR 10336 https://github.com/microsoft/terminal/pull/10336])
+  -
+- テキストカーソル移動のすこし後で文字を説明するかどうかを NVDA 設定「音声」カテゴリで選択できるようになりました。 (#13509)
+- 点字表示をスクロールして進む（または戻る）ときに読み上げを中断するかどうかを NVDA 設定「点字」カテゴリで選択できるようになりました。 (#2124)
+-
+
+
+== 変更点 ==
+- eSpeak NG を 1.52-dev commit ``9de65fcb`` に更新しました。 (#13295)
+  - 追加された言語:
+    - ベラルーシ語
+    - ルクセンブルク語
+    - トトンテペック・ミヘ語
+    -
+  -
+- Microsoft Excel スプレッドシートコントロールを UI オートメーションで操作するときに NVDA が結合されたセルを報告できるようになりました。 (#12843)
+- 詳細情報の目的が利用可能な場合に「詳細あり」ではなく（例えば「コメント付き」など）より具体的に報告するようになりました。 (#13649)
+- Windows の「アプリと機能」にインストールされた NVDA の容量を表示するようになりました。 (#13909)
+-
+
+
+== バグ修正 ==
+- Adobe Acrobat / Reader 64 ビットで PDF ドキュメントを読むときにクラッシュしていた問題を修正しました。 (#12920)
+  - この不具合を解決するには NVDA に加えて Adobe Acrobat または Reader も最新版に更新する必要があります。
+  -
+- NVDA がフォントの大きさの値をローカライズできるようになりました。 (#13573)
+- Java アプリのウィンドウハンドルが見つからない場合に Java Access Bridge イベントを無視するようになりました。
+これにより IntelliJ IDEA など一部のアプリにおいて性能が改善されます。 (#13039)
+- LibreOffice Calc でセルの選択を報告する処理の性能が改善され、数多くのセルが選択されたときに Calc がフリーズしていた問題が修正されました。 (#13232)
+- Microsoft Edge でユーザーを切り替えるとアクセシブルでなくなっていた問題を修正しました。 (#13032)
+- eSpeak で高速読み上げを無効にすると速さ 99 と 100 の間で値が不適切に変化していた問題を修正しました。 (#13876)
+- 入力ジェスチャーダイアログを2個同時に開くことができる不具合を修正しました。 (#13854)
+-
+
+
+== 開発者向けの変更 ==
+- Comtypes をバージョン 1.1.11 に更新しました。 (#12953)
+- Windows コンソール (``conhost.exe``) の特定のバージョン(例えば Windows 11 バージョン 22H2 (Sun Valley 2) に含まれるもの)と NVDA の対応 API レベル 2 (``FORMATTED``) およびそれ以上の組み合わせで、UI オートメーションの有効化が既定の設定になりました。 (#10964)
+  - この設定は NVDA の設定「高度な設定」パネル「Windows コンソール対応」で変更できます。
+  - 現在の Windows コンソールに対応する NVDA の API レベルを調べるには、「Windows コンソール対応」を「可能な場合にUIオートメーションを使用」にして、実行中の Windows コンソールから NVDA+F1 でログを確認します。
+  -
+- Chromium においてドキュメントオブジェクトが IA2 経由で MSAA の ``STATE_SYSTEM_BUSY`` を公開していても、仮想バッファーを読み込むようになりました。 (#13306)
+- config spec に ``featureFlag`` という型が追加されました。これは NVDA の実験的な機能で使用します。詳細は ``devDocs/featureFlag.md`` を参照してください。 (#13859)
+-
+
+
+=== 非推奨となったAPI ===
+バージョン 2022.3 において API の廃止や破壊的変更は提案されていません。
+
+
+= 2022.2.4 =
+これはセキュリティ問題を修正するためのリリースです。
+
+== バグ修正 ==
+- ロック画面でログビューアーから NVDA Python コンソールを開くことができた問題を修正しました。
+([GHSA-585m-rpvv-93qg https://github.com/nvaccess/nvda/security/advisories/GHSA-585m-rpvv-93qg])
+-
+
+= 2022.2.3 =
+2022.2.1 で起きた API 互換性の不具合を修正するためのパッチリリースです。
+
+== バグ修正 ==
+- セキュアデスクトップに切り替わるときに「セキュアデスクトップ」と NVDA が報告しなくなった不具合を修正しました。
+この不具合で「NVDA リモート」アドオンがセキュアデスクトップの切り替えを検知できなくなっていました。 (#14094)
+-
+
+= 2022.2.2 =
+2022.2.1 で起きた入力ジェスチャーの不具合を修正するためのパッチリリースです。
+
+== バグ修正 ==
+- 入力ジェスチャーの不具合を修正しました。 (#14065)
+-
+
+= 2022.2.1 =
+これはセキュリティ問題を修正するためのリリースです。
+セキュリティ問題は info@nvaccess.org に報告してください。
+
+== セキュリティ修正 ==
+- ロック画面からPythonコンソールを実行できる脆弱性を修正しました。 (GHSA-rmq3-vvhq-gp32)
+- オブジェクトナビゲーションを利用してロック画面の外に移動できる脆弱性を修正しました。 (GHSA-rmq3-vvhq-gp32)
+-
+
+== 開発者向けの変更 ==
+
+=== 非推奨となったAPI ===
+以下の非推奨 API は、廃止の時期がまだ決まっていません。
+今後、廃止のお知らせを行うまで、利用可能です。
+新しい API をテストしてフィードバックをお寄せください。
+アドオン作成者の場合、これらの変更によって API がニーズを満たすことができなくなった場合は、GitHub の issue を作成してください。
+
+- ``appModules.lockapp.LockAppObject`` は非推奨です。``NVDAObjects.lockscreen.LockScreenObject`` を使います。 (GHSA-rmq3-vvhq-gp32)
+- ``appModules.lockapp.AppModule.SAFE_SCRIPTS`` は非推奨です。``utils.security.getSafeScripts()`` を使います。 (GHSA-rmq3-vvhq-gp32)
+-
+
 = 2022.2 =
 このリリースでは多くのバグ修正を行いました。
 特に Java ベースのアプリ、点字ディスプレイ、Windows の機能への対応を大幅に改善しました。
@@ -137,7 +609,7 @@ Microsoft Office 16.0.15000 およびそれ以降と Windows 11 の組み合わ�
 清華 Notetaker、Papenmeier、HID 点字仕様などの点字ディスプレイドライバを改善しました。
 また、電卓、コンソール、ターミナル、メール、絵文字パネルなどのさまざまな Windows 11 のアプリに対応するバグ修正を行いました。
 
-eSpeak-NG と LibLouis を更新し、新しい日本語（6点漢点字）、ドイツ語、カタロニア語の点字テーブルを追加しました。
+eSpeak-NG と LibLouis を更新し、新しい日本語（漢点字）、ドイツ語、カタロニア語の点字テーブルを追加しました。
 
 注意:
  - このリリースでは、既存のアドオンとの互換性が失われています。
@@ -172,7 +644,7 @@ eSpeak-NG と LibLouis を更新し、新しい日本語（6点漢点字）、�
 == 変更点 ==
 - Espeak-ng をバージョン 1.51-dev commit ``7e5457f91e10`` に更新しました。 (#12950)
 - liblouis 点訳エンジンを [3.21.0 https://github.com/liblouis/liblouis/releases/tag/v3.21.0] に更新しました。 (#13141, #13438)
-  - 新しいテーブル: 日本語6点漢点字
+  - 新しいテーブル: 日本語漢点字
   - 新しいテーブル: ドイツ語6点コンピューター点字
   - 新しいテーブル: カタロニア語1級点字 (#13408)
   - 
@@ -3068,10 +3540,10 @@ NVDA 2019.3は非常に重要なリリースです。Python 2からPython 3へ�
 % - This allows for embedded indexes, parameter changes, etc.
 % - Drivers should implement SynthDriver.speak() instead of SynthDriver.speakText() and SynthDriver.speakCharacter().
 % - The old methods will be used if SynthDriver.speak() is not implemented, but they are deprecated and will be removed in a future release.
-%- gui.execute() has been removed. wx.CallAfter() should be used instead.
+%- gui.execute() has been removed. wx.CallAfter() should be used を使います。
 %- gui.scriptUI has been removed.
 % - For message dialogs, use wx.CallAfter(gui.messageBox, ...).
-% - For all other dialogs, real wx dialogs should be used instead.
+% - For all other dialogs, real wx dialogs should be used を使います。
 % - A new gui.runScriptModalDialog() function simplifies using modal dialogs from scripts.
 %- Synth drivers can now support boolean settings. See SynthDriverHandler.BooleanSynthSetting.
 %- SCons now accepts a certTimestampServer variable specifying the URL of a timestamping server to use to timestamp authenticode signatures. (#1644)

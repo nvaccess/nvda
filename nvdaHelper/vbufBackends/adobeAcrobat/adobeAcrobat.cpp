@@ -140,9 +140,9 @@ VBufStorage_fieldNode_t* renderText(VBufStorage_buffer_t* buffer,
 		// #2174: Alt or actual text should override any other text content.
 		// Unfortunately, GetTextContent() still includes the text of descendants,
 		// so handle this ourselves.
-		domElement->GetAttribute(L"Alt", NULL, &text);
+		domElement->GetAttribute(BSTR(L"Alt"), NULL, &text);
 		if (!text)
-			domElement->GetAttribute(L"ActualText", NULL, &text);
+			domElement->GetAttribute(BSTR(L"ActualText"), NULL, &text);
 	}
 
 	long childCount = 0;
@@ -461,13 +461,13 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 		}
 
 		// Get language.
-		if (domElement->GetAttribute(L"Lang", NULL, &tempBstr) == S_OK && tempBstr) {
+		if (domElement->GetAttribute(BSTR(L"Lang"), NULL, &tempBstr) == S_OK && tempBstr) {
 			parentNode->language = tempBstr;
 			SysFreeString(tempBstr);
 		}
 
 		// Determine whether the text has underline or strikethrough.
-		if (domElement->GetAttribute(L"TextDecorationType", L"Layout", &tempBstr) == S_OK && tempBstr) {
+		if (domElement->GetAttribute(BSTR(L"TextDecorationType"), BSTR(L"Layout"), &tempBstr) == S_OK && tempBstr) {
 			if (wcscmp(tempBstr, L"Underline") == 0)
 				textFlags |= TEXTFLAG_UNDERLINE;
 			else if (wcscmp(tempBstr, L"LineThrough") == 0)
@@ -519,7 +519,7 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 		wostringstream s;
 		s << ID;
 		parentNode->addAttribute(L"table-id", s.str());
-		if (domElement && domElement->GetAttribute(L"Summary", L"Table", &tempBstr) == S_OK && tempBstr) {
+		if (domElement && domElement->GetAttribute(BSTR(L"Summary"), BSTR(L"Table"), &tempBstr) == S_OK && tempBstr) {
 			if (tempNode = buffer->addTextFieldNode(parentNode, previousNode, tempBstr)) {
 				addAttrsToTextNode(tempNode);
 				previousNode = tempNode;
@@ -542,7 +542,7 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 		int startCol = tableInfo->curColumnNumber;
 		s << startCol;
 		parentNode->addAttribute(L"table-columnnumber", s.str());
-		if (domElement && domElement->GetAttribute(L"Headers", L"Table", &tempBstr) == S_OK && tempBstr) {
+		if (domElement && domElement->GetAttribute(BSTR(L"Headers"), BSTR(L"Table"), &tempBstr) == S_OK && tempBstr) {
 			// This node has explicitly defined headers.
 			// Some of the referenced nodes might not be rendered yet,
 			// so handle these later.
@@ -563,12 +563,12 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 		// This will be updated below if there is a row span.
 		int endRow = tableInfo->curRowNumber;
 		if (domElement) {
-			if (domElement->GetAttribute(L"ColSpan", L"Table", &tempBstr) == S_OK && tempBstr) {
+			if (domElement->GetAttribute(BSTR(L"ColSpan"), BSTR(L"Table"), &tempBstr) == S_OK && tempBstr) {
 				parentNode->addAttribute(L"table-columnsspanned", tempBstr);
 				tableInfo->curColumnNumber += max(_wtoi(tempBstr) - 1, 0);
 				SysFreeString(tempBstr);
 			}
-			if (domElement->GetAttribute(L"RowSpan", L"Table", &tempBstr) == S_OK && tempBstr) {
+			if (domElement->GetAttribute(BSTR(L"RowSpan"), BSTR(L"Table"), &tempBstr) == S_OK && tempBstr) {
 				parentNode->addAttribute(L"table-rowsspanned", tempBstr);
 				// Keep trakc of how many rows after this one are spanned by this cell.
 				int span = _wtoi(tempBstr) - 1;
@@ -583,7 +583,7 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 		}
 		if (role == ROLE_SYSTEM_COLUMNHEADER || role == ROLE_SYSTEM_ROWHEADER) {
 			int headerType = 0;
-			if (domElement && domElement->GetAttribute(L"Scope", L"Table", &tempBstr) == S_OK && tempBstr) {
+			if (domElement && domElement->GetAttribute(BSTR(L"Scope"), BSTR(L"Table"), &tempBstr) == S_OK && tempBstr) {
 				if (wcscmp(tempBstr, L"Column") == 0)
 					headerType = TABLEHEADER_COLUMN;
 				else if (wcscmp(tempBstr, L"Row") == 0)

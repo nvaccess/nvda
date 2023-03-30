@@ -20,9 +20,11 @@ from logHandler import log
 import gui
 import speech
 import braille
+from config.configFlags import TetherTo
 import globalVars
 from typing import Optional
 
+from systemUtils import _isSecureDesktop
 
 # From urlmon.h
 URL_MK_UNIFORM = 1
@@ -38,16 +40,60 @@ HTMLDLG_PRINT_TEMPLATE = 0x0080
 HTMLDLG_VERIFY = 0x0100 
 
 
-def browseableMessage(message,title=None,isHtml=False):
+def _warnBrowsableMessageNotAvailableOnSecureScreens(title: Optional[str]) -> None:
+	"""Warn the user that a browsable message could not be shown on a secure screen (sign-on screen / UAC
+	prompt).
+	@param title: If provided, the title of the browsable message to give the user more context.
+	"""
+	log.warning(
+		"While on secure screens browsable messages can not be used."
+		" The browsable message window creates a security risk."
+		f" Attempted to open message with title: {title!r}"
+	)
+
+	if not title:
+		browsableMessageUnavailableMsg: str = _(
+			# Translators: This is the message for a warning shown if NVDA cannot open a browsable message window
+			# when Windows is on a secure screen (sign-on screen / UAC prompt).
+			"This feature is unavailable while on secure screens such as the sign-on screen or UAC prompt."
+		)
+	else:
+		browsableMessageUnavailableMsg: str = _(
+			# Translators: This is the message for a warning shown if NVDA cannot open a browsable message window
+			# when Windows is on a secure screen (sign-on screen / UAC prompt). This prompt includes the title
+			# of the Window that could not be opened for context.
+			# The {title} will be replaced with the title.
+			# The title may be something like "Formatting".
+			"This feature ({title}) is unavailable while on secure screens"
+			" such as the sign-on screen or UAC prompt."
+		)
+		browsableMessageUnavailableMsg = browsableMessageUnavailableMsg.format(title=title)
+
+	import wx  # Late import to prevent circular dependency.
+	import gui  # Late import to prevent circular dependency.
+	log.debug("Presenting browsable message unavailable warning.")
+	gui.messageBox(
+		browsableMessageUnavailableMsg,
+		# Translators: This is the title for a warning dialog, shown if NVDA cannot open a browsable message
+		# dialog.
+		caption=_("Feature unavailable."),
+		style=wx.ICON_ERROR | wx.OK,
+	)
+
+
+def browseableMessage(message: str, title: Optional[str] = None, isHtml: bool = False) -> None:
 	"""Present a message to the user that can be read in browse mode.
 	The message will be presented in an HTML document.
 	@param message: The message in either html or text.
-	@type message: str
 	@param title: The title for the message.
-	@type title: str
 	@param isHtml: Whether the message is html
-	@type isHtml: boolean
 	"""
+	splitWith: str = "__NVDA:split-here__"  # Unambiguous regex splitter for javascript in message.html, #14667
+	if _isSecureDesktop():
+		import wx  # Late import to prevent circular dependency.
+		wx.CallAfter(_warnBrowsableMessageNotAvailableOnSecureScreens, title)
+		return
+
 	htmlFileName = os.path.join(globalVars.appDir, 'message.html')
 	if not os.path.isfile(htmlFileName ): 
 		raise LookupError(htmlFileName )
@@ -58,7 +104,7 @@ def browseableMessage(message,title=None,isHtml=False):
 		title = _("NVDA Message")
 	if not isHtml:
 		message = f"<pre>{escape(message)}</pre>"
-	dialogString = f"{title};{message}"
+	dialogString = f"{title}{splitWith}{message}"
 	dialogArguements = automation.VARIANT( dialogString )
 	gui.mainFrame.prePopup() 
 	windll.mshtml.ShowHTMLDialogEx( 
@@ -94,7 +140,7 @@ def reviewMessage(text: str, speechPriority: Optional[speech.Spri] = None):
 	@param speechPriority: The speech priority.
 	"""
 	speech.speakMessage(text, priority=speechPriority)
-	if braille.handler.shouldAutoTether or braille.handler.getTether() == braille.handler.TETHER_REVIEW:
+	if braille.handler.shouldAutoTether or braille.handler.getTether() == TetherTo.REVIEW:
 		braille.handler.message(text)
 
 

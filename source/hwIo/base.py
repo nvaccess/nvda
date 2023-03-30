@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2015-2018 NV Access Limited, Babbage B.V.
+# Copyright (C) 2015-2023 NV Access Limited, Babbage B.V., Leonard de Ruijter
 
 
 """Raw input/output for braille displays via serial and HID.
@@ -10,12 +10,14 @@ Braille display drivers must be thread-safe to use this, as it utilises a backgr
 See L{braille.BrailleDisplayDriver.isThreadSafe}.
 """
 
+# "annotations" Needed to provide the inner type for weakref.ReferenceType.
+from __future__ import annotations
 import sys
 import ctypes
 from ctypes import byref
 from ctypes.wintypes import DWORD
 from typing import Optional, Any, Union, Tuple, Callable
-
+import weakref
 import serial
 from serial.win32 import OVERLAPPED, FILE_FLAG_OVERLAPPED, INVALID_HANDLE_VALUE, ERROR_IO_PENDING, COMMTIMEOUTS, CreateFile, SetCommTimeouts
 import winKernel
@@ -23,16 +25,31 @@ import braille
 from logHandler import log
 import config
 import time
+from .ioThread import IoThread, apcsWillBeStronglyReferenced
+import NVDAState
 
-LPOVERLAPPED_COMPLETION_ROUTINE = ctypes.WINFUNCTYPE(None, DWORD, DWORD, serial.win32.LPOVERLAPPED)
+
+def __getattr__(attrName: str) -> Any:
+	"""Module level `__getattr__` used to preserve backward compatibility."""
+	if attrName == "LPOVERLAPPED_COMPLETION_ROUTINE" and NVDAState._allowDeprecatedAPI():
+		log.warning(
+			"Importing LPOVERLAPPED_COMPLETION_ROUTINE from hwIo.base is deprecated. "
+			"Import LPOVERLAPPED_COMPLETION_ROUTINE from hwIo.ioThread instead."
+		)
+		from .ioThread import LPOVERLAPPED_COMPLETION_ROUTINE
+		return LPOVERLAPPED_COMPLETION_ROUTINE
+	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+
 
 def _isDebug():
 	return config.conf["debugLog"]["hwIo"]
+
 
 class IoBase(object):
 	"""Base class for raw I/O.
 	This watches for data of a specified size and calls a callback when it is received.
 	"""
+	_ioThreadRef: weakref.ReferenceType[IoThread]
 
 	def __init__(
 			self,
@@ -40,7 +57,8 @@ class IoBase(object):
 			onReceive: Callable[[bytes], None],
 			writeFileHandle: Optional[ctypes.wintypes.HANDLE] = None,
 			onReceiveSize: int = 1,
-			onReadError: Optional[Callable[[int], bool]] = None
+			onReadError: Optional[Callable[[int], bool]] = None,
+			ioThread: Optional[IoThread] = None,
 	):
 		"""Constructor.
 		@param fileHandle: A handle to an open I/O device opened for overlapped I/O.
@@ -50,8 +68,10 @@ class IoBase(object):
 		@param writeFileHandle: A handle to an open output device opened for overlapped I/O.
 		@param onReceiveSize: The size (in bytes) of the data with which to call C{onReceive}.
 		@param onReadError: If provided, a callback that takes the error code for a failed read
-		  and returns True if the I/O loop should exit cleanly or False if an
-		  exception should be thrown
+			and returns True if the I/O loop should exit cleanly or False if an
+			exception should be thrown
+		@param ioThread: If provided, the I/O thread used for background reads.
+			if C{None}, defaults to L{hwIo.bgThread}
 		"""
 		self._file = fileHandle
 		self._onReceive = onReceive
@@ -61,16 +81,24 @@ class IoBase(object):
 		self._readBuf = ctypes.create_string_buffer(onReceiveSize)
 		self._readOl = OVERLAPPED()
 		self._recvEvt = winKernel.createEvent()
-		self._ioDoneInst = LPOVERLAPPED_COMPLETION_ROUTINE(self._ioDone)
 		self._writeOl = OVERLAPPED()
+		if ioThread is None:
+			from . import bgThread as ioThread
+		self._ioThreadRef = weakref.ref(ioThread)
 		# Do the initial read.
-		@winKernel.PAPCFUNC
-		def init(param):
-			self._initApc = None
-			self._asyncRead()
-		# Ensure the APC stays alive until it runs.
-		self._initApc = init
-		braille._BgThread.queueApc(init)
+		self._initialRead()
+
+	def _initialRead(self):
+		"""Performs the initial background read by queuing it as an APC to the IO background thread
+		provided at initialization time.
+		"""
+		ioThread = self._ioThreadRef()
+		if not ioThread:
+			raise RuntimeError("I/O thread is no longer available")
+		if apcsWillBeStronglyReferenced:
+			ioThread.queueAsApc(self._asyncReadBackwardsCompat)
+		else:
+			ioThread.queueAsApc(self._asyncRead)
 
 	def waitForRead(self, timeout:Union[int, float]) -> bool:
 		"""Wait for a chunk of data to be received and processed.
@@ -121,6 +149,7 @@ class IoBase(object):
 		if _isDebug():
 			log.debug("Closing")
 		self._onReceive = None
+		self._onReadError = None
 		if hasattr(self, "_file") and self._file is not INVALID_HANDLE_VALUE:
 			ctypes.windll.kernel32.CancelIoEx(self._file, byref(self._readOl))
 		if hasattr(self, "_writeFile") and self._writeFile not in (self._file, INVALID_HANDLE_VALUE):
@@ -134,11 +163,26 @@ class IoBase(object):
 			if _isDebug():
 				log.debugWarning("Couldn't delete object gracefully", exc_info=True)
 
-	def _asyncRead(self):
+	def _asyncRead(self, param: Optional[int] = None):
+		ioThread = self._ioThreadRef()
+		if not ioThread:
+			raise RuntimeError("I/O thread is no longer available")
 		# Wait for _readSize bytes of data.
 		# _ioDone will call onReceive once it is received.
 		# onReceive can then optionally read additional bytes if it knows these are coming.
-		ctypes.windll.kernel32.ReadFileEx(self._file, self._readBuf, self._readSize, byref(self._readOl), self._ioDoneInst)
+		ctypes.windll.kernel32.ReadFileEx(
+			self._file,
+			self._readBuf,
+			self._readSize,
+			byref(self._readOl),
+			ioThread.getCompletionRoutine(self._ioDone)
+		)
+
+	if apcsWillBeStronglyReferenced:
+		def _asyncReadBackwardsCompat(self, param: Optional[int] = None):
+			"""Backwards compatible wrapper around L{_asyncRead} that calls it without param.
+			"""
+			self._asyncRead()
 
 	def _ioDone(self, error, numberOfBytes: int, overlapped):
 		if not self._onReceive:
@@ -170,21 +214,31 @@ class IoBase(object):
 		except:
 			log.error("", exc_info=True)
 
+
 class Serial(IoBase):
 	"""Raw I/O for serial devices.
 	This extends pyserial to call a callback when data is received.
 	"""
 
 	def __init__(
-		self,
-		*args,
-		onReceive: Callable[[bytes], None],
-		**kwargs):
+			self,
+			*args,
+			onReceive: Callable[[bytes], None],
+			onReadError: Optional[Callable[[int], bool]] = None,
+			ioThread: Optional[IoThread] = None,
+			**kwargs
+	):
 		"""Constructor.
 		Pass the arguments you would normally pass to L{serial.Serial}.
-		There is also one additional required keyword argument.
+		There are also some additional keyword arguments (the first, onReceive, is required).
+
 		@param onReceive: A callable taking a byte of received data as its only argument.
 			This callable can then call C{read} to get additional data if desired.
+		@param onReadError: If provided, a callback that takes the error code for a failed read
+			and returns True if the I/O loop should exit cleanly or False if an
+			exception should be thrown
+		@param ioThread: If provided, the I/O thread used for background reads.
+			if C{None}, defaults to L{hwIo.bgThread}
 		"""
 		self._ser = None
 		self.port = args[0] if len(args) >= 1 else kwargs["port"]
@@ -199,7 +253,12 @@ class Serial(IoBase):
 		self._origTimeout = self._ser.timeout
 		# We don't want a timeout while we're waiting for data.
 		self._setTimeout(None)
-		super(Serial, self).__init__(self._ser._port_handle, onReceive)
+		super().__init__(
+			self._ser._port_handle,
+			onReceive,
+			onReadError=onReadError,
+			ioThread=ioThread
+		)
 
 	def read(self, size=1) -> bytes:
 		data = self._ser.read(size)
@@ -254,7 +313,8 @@ class Bulk(IoBase):
 			self, path: str, epIn: int, epOut: int,
 			onReceive: Callable[[bytes], None],
 			onReceiveSize: int = 1,
-			onReadError: Optional[Callable[[int], bool]] = None
+			onReadError: Optional[Callable[[int], bool]] = None,
+			ioThread: Optional[IoThread] = None,
 	):
 		"""Constructor.
 		@param path: The device path.
@@ -262,8 +322,10 @@ class Bulk(IoBase):
 		@param epOut: The endpoint to write data to.
 		@param onReceive: A callable taking a received input report as its only argument.
 		@param onReadError: An optional callable that handles read errors.
-		  It takes an error code and returns True if the error has been handled,
-		  allowing the read loop to exit cleanly, or False if an exception should be thrown.
+			It takes an error code and returns True if the error has been handled,
+			allowing the read loop to exit cleanly, or False if an exception should be thrown.
+		@param ioThread: If provided, the I/O thread used for background reads.
+			if C{None}, defaults to L{hwIo.bgThread}
 		"""
 		if _isDebug():
 			log.debug("Opening device %s" % path)
@@ -281,9 +343,14 @@ class Bulk(IoBase):
 			if _isDebug():
 				log.debug("Open write handle failed: %s" % ctypes.WinError())
 			raise ctypes.WinError()
-		super(Bulk, self).__init__(readHandle, onReceive,
-		                           writeFileHandle=writeHandle, onReceiveSize=onReceiveSize,
-		                           onReadError=onReadError)
+		super().__init__(
+			readHandle,
+			onReceive,
+			writeFileHandle=writeHandle,
+			onReceiveSize=onReceiveSize,
+			onReadError=onReadError,
+			ioThread=ioThread
+		)
 
 	def close(self):
 		super(Bulk, self).close()

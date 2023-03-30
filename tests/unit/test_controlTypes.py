@@ -252,7 +252,6 @@ class TestBackCompat(unittest.TestCase):
 			)
 
 
-
 class Test_FontSize(unittest.TestCase):
 	def test_translateFromAttribute(self):
 		with self.assertLogs(logHandler.log, level=logging.DEBUG) as logContext:

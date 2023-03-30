@@ -1,14 +1,17 @@
 # -*- coding: UTF-8 -*-
-#mathPlayer.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2014-2015 NV Access Limited
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2014-2022 NV Access Limited
 
 """Support for math presentation using MathPlayer 4.
 """
 
 import re
+from typing import (
+	Generator,
+)
+
 import comtypes.client
 from comtypes import COMError
 from comtypes.gen.MathPlayer import MPInterface, IMathSpeech, IMathSpeechSettings, IMathNavigation, IMathBraille
@@ -27,6 +30,8 @@ from speech.commands import (
 	CharacterModeCommand,
 	PhonemeCommand,
 )
+from utils.security import objectBelowLockScreenAndWindowsIsLocked
+
 
 RE_MP_SPEECH = re.compile(
 	# Break.
@@ -94,7 +99,12 @@ class MathPlayerInteraction(mathPres.MathInteractionNVDAObject):
 		speech.speak(_processMpSpeech(self.provider._mpSpeech.GetSpokenText(),
 			self.provider._language))
 
-	def getBrailleRegions(self, review=False):
+	def getBrailleRegions(
+			self,
+			review: bool = False,
+	) -> Generator[braille.Region, None, None]:
+		if objectBelowLockScreenAndWindowsIsLocked(self):
+			return
 		yield braille.NVDAObjectRegion(self, appendText=" ")
 		region = braille.Region()
 		region.focusToHardLeft = True

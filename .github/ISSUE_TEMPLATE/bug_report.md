@@ -16,8 +16,20 @@ Each of the questions and sections below start with multiple hash symbols (#). P
 ### Steps to reproduce:
 
 ### Actual behavior:
+<!--
+Use "Speak command keys" (NVDA+4) and speech viewer to copy and paste here. 
+Use braille viewer to copy and paste here.
+You may additionally include an explanation.
+-->
 
 ### Expected behavior:
+<!--
+Use "Speak command keys" (NVDA+4) and speech viewer to copy and paste here. 
+Use braille viewer to copy and paste here.
+You may additionally include an explanation.
+-->
+
+### NVDA logs, crash dumps and other attachments:
 
 ### System configuration
 #### NVDA installed/portable/running from source:
