@@ -80,6 +80,10 @@ class GeckoVBufBackend_t: public VBufBackend_t {
 	CComPtr<IAccessible2> getSelectedItem(IAccessible2* container,
 		const std::map<std::wstring, std::wstring>& attribs);
 
+	bool isRootDocAlive();
+
+	CComPtr<IAccessible2> rootDocAcc;
+
 	protected:
 
 	static void CALLBACK renderThread_winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time);

@@ -586,13 +586,6 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			for vk, scan, ext in reversed(keys):
 				winUser.keybd_event(vk, scan, ext + 2, 0)
 
-			if not queueHandler.isPendingItems(queueHandler.eventQueue):
-				# We want to guarantee that by the time that 
-				# this function returns,the keyboard input generated
-				# has been injected and NVDA has received and processed it.
-				time.sleep(0.01)
-				wx.Yield()
-
 	@classmethod
 	def fromName(cls, name):
 		"""Create an instance given a key name.
