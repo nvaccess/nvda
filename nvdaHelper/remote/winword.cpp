@@ -544,7 +544,7 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 					if (
 						_com_dispatch_raw_propget(pDispatchParagraphFormatShading, wdDISPID_SHADING_BACKGROUNDPATTERNCOLOR, VT_I4, &bgColor) == S_OK
 					) {
-						formatAttribsStream<<L"background-color=\"" << bgColor <<L"\" ";
+						formatAttribsStream << L"background-color=\"" << bgColor << L"\" ";
 					}
 				}
 			}
