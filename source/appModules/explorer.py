@@ -16,6 +16,7 @@ import winUser
 import winVersion
 import api
 import speech
+import braille
 import eventHandler
 import mouseHandler
 from NVDAObjects.IAccessible import IAccessible, List
@@ -551,4 +552,24 @@ class AppModule(appModuleHandler.AppModule):
 			if inputPanelWindow and inputPanelWindow.appModule.appName in inputPanelAppName:
 				eventHandler.executeEvent("UIA_window_windowOpen", inputPanelWindow)
 				return
+		nextHandler()
+
+	def event_UIA_elementSelected(self, obj: NVDAObject, nextHandler: Callable[[], None]):
+		# #14388: announce File Explorer tab switches (Windows 11 22H2 and later).
+		if (
+			obj.role == controlTypes.Role.TAB
+			and controlTypes.State.SELECTED in obj.states
+			and obj.parent.UIAAutomationId == "TabListView"
+			# this is done because 2 selection events are sent for the same object, so to prevent double speaking.
+			and not eventHandler.isPendingEvents(eventName="UIA_elementSelected")
+		):
+			speech.speakObject(obj, reason=controlTypes.OutputReason.FOCUS)
+			braille.handler.message(
+				braille.getPropertiesBraille(
+					name=obj.name,
+					role=obj.role,
+					states=obj.states,
+					positionInfo=obj.positionInfo
+				)
+			)
 		nextHandler()
