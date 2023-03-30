@@ -8,7 +8,7 @@ import globalVars
 from logHandler import log
 import os
 import codecs
-import api
+import review
 from . import dictFormatUpgrade
 from .speechDictVars import speechDictsPath
 
@@ -122,11 +122,16 @@ def processText(text):
 	if not globalVars.speechDictionaryProcessing:
 		return text
 	# #14689: API level < 2 UIA consoles have many blank lines, which slows processing to a halt
-	# Because from UIAHandler.constants import WinConsoleAPILevel
-	# cause crashes as global import, and probably slowdowns here
-	# use 2 instead of WinConsoleAPILevel.FORMATTED constant
-	focus = api.getFocusObject()
-	if hasattr(focus, "apiLevel") and focus.apiLevel < 2:
+	focus = globalVars.focusObject
+	try:
+		# get TextInfo implementation for object review mode
+		textInfo, obj = review.getObjectPosition(focus)
+	except AttributeError:  # no makeTextInfo
+		textInfo = None
+	# import at this stage to avoid crashes
+	# ConsoleUIATextInfo is shared by apiLevel 1 and 0 implementations (not 2)
+	from NVDAObjects.UIA.winConsoleUIA import ConsoleUIATextInfo
+	if isinstance(textInfo, ConsoleUIATextInfo):
 		stripText = text.rstrip()
 		if len(text) - len(stripText) > IGNORE_TRAILING_WHITESPACE_LENGTH:
 			text = stripText
