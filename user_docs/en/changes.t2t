@@ -12,6 +12,7 @@ What's New in NVDA
   - Mac Option key symbol "⌥". (#14682)
   -
 - In Mozilla Firefox and Google Chrome, NVDA now reports when a control opens a dialog, grid, list or tree if the author has specified this using aria-haspopup. (#14709)
+- It is now possible to use system variables (such as ``%temp%`` or ``%homepath%``) in the path specification while creating portable copies of NVDA. (#14680)
 - 
 
 
@@ -24,6 +25,8 @@ What's New in NVDA
 - NVDA responds faster when moving the cursor in edit controls. (#14708)
 - Baum Braille driver: addes several Braille chord gestures for performing common keyboard commands such as windows+d, alt+tab etc. Please refer to the NVDA user guide for a full list. (#14714)
 - When using a Braille Display via the Standard HID braille driver, the dpad can be used to emulate the arrow keys and enter. Also space+dot1 and space+dot4 now map to up and down arrow respectively. (#14713)
+- Script for reporting the destination of a link now reports from the caret / focus position rather than the navigator object. (#14659)
+- Portable copy creation no longer requires that a drive letter be entered as part of the absolute path. (#14681)
 -
 
 
@@ -40,7 +43,11 @@ This only worked for Bluetooth Serial ports before. (#14524)
 - You can now use browse mode in Chromium Embedded Controls where it was not possible previously. (#13493, #8553)
 - For symbols which do not have a symbol description in the current locale, the default English symbol level will be used. (#14558, #14417)
 - In newer releases of Windows 11 Notepad, NVDA can once again announce status bar contents. (#14573)
+- In Mozilla Firefox, moving the mouse over text after a link now reliably reports the text. (#9235)
 - In Windows 10 and 11 Calculator, a portable copy of NVDA will no longer do nothing or play error tones when entering expressions in standard calculator in compact overlay mode. (#14679)
+- When trying to report the URL for a link without a href attribute NVDA is no longer silent.
+Instead NVDA reports that the link has no destination. (#14723)
+- Several stability fixes to input/output for braille displays, resulting in less frequent errors and crashes of NVDA. (#14627)
 -
 
 
@@ -53,10 +60,18 @@ Handlers can be registered that yield ``BrailleDisplayDriver/DeviceMatch`` pairs
 - The NVDA Synth Settings Ring now caches available setting values the first time they're needed, rather than when loading the synthesizer. (#14704)
 - You can now call the export method on a gesture map to export it to a dictionary.
 This dictionary can be imported in another gesture by passing it either to the constructor of ``GlobalGestureMap`` or to the update method on an existing map. (#14582)
+- ``hwIo.base.IoBase`` and its derivatives now have a new constructor parameter to take a ``hwIo.ioThread.IoThread``.
+If not provided, the default thread is used. (#14627)
+- ``hwIo.ioThread.IoThread`` now has a ``setWaitableTimer`` method to set a waitable timer using a python function.
+Similarly, the new ``getCompletionRoutine`` method allows you to convert a python method into a completion routine safely. (#14627)
 -
 
 === Deprecations ===
-
+- Passing lambda functions to ``hwIo.ioThread.IoThread.queueAsApc`` is deprecated.
+Instead, functions should be weakly referenceable. (#14627)
+- Importing ``LPOVERLAPPED_COMPLETION_ROUTINE`` from ``hwIo.base`` is deprecated.
+Instead import from ``hwIo.ioThread``. (#14627)
+-
 
 = 2023.1 =
 A new option has been added, "Paragraph Style" in "Document Navigation".
