@@ -12,6 +12,7 @@ What's New in NVDA
   - Mac Option key symbol "⌥". (#14682)
   -
 - In Mozilla Firefox and Google Chrome, NVDA now reports when a control opens a dialog, grid, list or tree if the author has specified this using aria-haspopup. (#14709)
+- It is now possible to use system variables (such as ``%temp%`` or ``%homepath%``) in the path specification while creating portable copies of NVDA. (#14680)
 - 
 
 
@@ -25,6 +26,7 @@ What's New in NVDA
 - Baum Braille driver: addes several Braille chord gestures for performing common keyboard commands such as windows+d, alt+tab etc. Please refer to the NVDA user guide for a full list. (#14714)
 - When using a Braille Display via the Standard HID braille driver, the dpad can be used to emulate the arrow keys and enter. Also space+dot1 and space+dot4 now map to up and down arrow respectively. (#14713)
 - Script for reporting the destination of a link now reports from the caret / focus position rather than the navigator object. (#14659)
+- Portable copy creation no longer requires that a drive letter be entered as part of the absolute path. (#14681)
 -
 
 

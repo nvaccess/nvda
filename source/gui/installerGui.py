@@ -404,69 +404,90 @@ class PortableCreaterDialog(
 
 	def onCreatePortable(self, evt):
 		if not self.portableDirectoryEdit.Value:
-			# Translators: The message displayed when the user has not specified a destination directory
-			# in the Create Portable NVDA dialog.
-			gui.messageBox(_("Please specify a directory in which to create the portable copy."),
-				_("Error"),
-				wx.OK | wx.ICON_ERROR)
-			return
-		if not os.path.isabs(self.portableDirectoryEdit.Value):
 			gui.messageBox(
-				# Translators: The message displayed when the user has not specified an absolute destination directory
+				# Translators: The message displayed when the user has not specified a destination directory
 				# in the Create Portable NVDA dialog.
-				_("Please specify an absolute path (including drive letter)  in which to create the portable copy."),
-				# Translators: The message title displayed
-				# when the user has not specified an absolute destination directory
-				# in the Create Portable NVDA dialog.
+				_("Please specify a directory in which to create the portable copy."),
+				# Translators: the title of an error dialog.
 				_("Error"),
 				wx.OK | wx.ICON_ERROR
 			)
 			return
-		drv=os.path.splitdrive(self.portableDirectoryEdit.Value)[0]
-		if drv and not os.path.isdir(drv):
-			# Translators: The message displayed when the user specifies an invalid destination drive
-			# in the Create Portable NVDA dialog.
-			gui.messageBox(_("Invalid drive %s")%drv,
+		expandedPortableDirectory = os.path.expandvars(self.portableDirectoryEdit.Value)
+		if not os.path.isabs(expandedPortableDirectory):
+			gui.messageBox(
+				_(
+					# Translators: The message displayed when the user has not specified an absolute destination directory
+					# in the Create Portable NVDA dialog.
+					"Please specify the absolute path where the portable copy should be created. "
+					"It may include system variables (%temp%, %homepath%, etc.)."
+				),
+				# Translators: The message title displayed when the user has not specified an absolute
+				# destination directory in the Create Portable NVDA dialog.
 				_("Error"),
-				wx.OK | wx.ICON_ERROR)
+				wx.OK | wx.ICON_ERROR
+			)
 			return
+		# isabs determines if the path is absolute, with or without a drive letter. abspath adds any missing initial
+		# components to that path to make it absolute from other contexts, by adding a drive letter/share path if
+		# needed. The OS's idea of the current drive is used, as in os.getcwd(). (#14681)
+		expandedPortableDirectory = os.path.abspath(expandedPortableDirectory)
 		self.Hide()
-		doCreatePortable(self.portableDirectoryEdit.Value,self.copyUserConfigCheckbox.Value,False,self.startAfterCreateCheckbox.Value)
+		doCreatePortable(
+			expandedPortableDirectory,
+			self.copyUserConfigCheckbox.Value,
+			False,
+			self.startAfterCreateCheckbox.Value
+		)
 		self.Destroy()
 
 	def onCancel(self, evt):
 		self.Destroy()
 
-def doCreatePortable(portableDirectory,copyUserConfig=False,silent=False,startAfterCreate=False):
-	d = gui.IndeterminateProgressDialog(gui.mainFrame,
-		# Translators: The title of the dialog presented while a portable copy of NVDA is bieng created.
+
+def doCreatePortable(
+		portableDirectory: str,
+		copyUserConfig: bool = False,
+		silent: bool = False,
+		startAfterCreate: bool = False
+) -> None:
+	d = gui.IndeterminateProgressDialog(
+		gui.mainFrame,
+		# Translators: The title of the dialog presented while a portable copy of NVDA is being created.
 		_("Creating Portable Copy"),
-		# Translators: The message displayed while a portable copy of NVDA is bieng created.
-		_("Please wait while a portable copy of NVDA is created."))
+		# Translators: The message displayed while a portable copy of NVDA is being created.
+		_("Please wait while a portable copy of NVDA is created.")
+	)
 	try:
-		gui.ExecAndPump(installer.createPortableCopy,portableDirectory,copyUserConfig)
+		gui.ExecAndPump(installer.createPortableCopy, portableDirectory, copyUserConfig)
 	except Exception as e:
-		log.error("Failed to create portable copy",exc_info=True)
+		log.error("Failed to create portable copy", exc_info=True)
 		d.done()
-		if isinstance(e,installer.RetriableFailure):
+		if isinstance(e, installer.RetriableFailure):
 			# Translators: a message dialog asking to retry or cancel when NVDA portable copy creation fails
-			message=_("NVDA is unable to remove or overwrite a file.")
+			message = _("NVDA is unable to remove or overwrite a file.")
 			# Translators: the title of a retry cancel dialog when NVDA portable copy creation  fails
-			title=_("File in Use")
-			if winUser.MessageBox(None,message,title,winUser.MB_RETRYCANCEL)==winUser.IDRETRY:
-				return doCreatePortable(portableDirectory,copyUserConfig,silent,startAfterCreate)
-		# Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
-		# %s will be replaced with the specific error message.
-		gui.messageBox(_("Failed to create portable copy: %s")%e,
+			title = _("File in Use")
+			if winUser.MessageBox(None, message, title, winUser.MB_RETRYCANCEL) == winUser.IDRETRY:
+				return doCreatePortable(portableDirectory, copyUserConfig, silent, startAfterCreate)
+		gui.messageBox(
+			# Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
+			# {error} will be replaced with the specific error message.
+			_("Failed to create portable copy: {error}.").format(error=e),
+			# Translators: Title of an error dialog shown when an error occurs while creating a portable copy of NVDA.
 			_("Error"),
-			wx.OK | wx.ICON_ERROR)
+			wx.OK | wx.ICON_ERROR
+		)
 		return
 	d.done()
 	if not silent:
-		# Translators: The message displayed when a portable copy of NVDA has been successfully created.
-		# %s will be replaced with the destination directory.
-		gui.messageBox(_("Successfully created a portable copy of NVDA at %s")%portableDirectory,
-			_("Success"))
+		gui.messageBox(
+			# Translators: The message displayed when a portable copy of NVDA has been successfully created.
+			# {dir} will be replaced with the destination directory.
+			_("Successfully created a portable copy of NVDA at {dir}").format(dir=portableDirectory),
+			# Translators: Title of a dialog shown when a portable copy of NVDA is created.
+			_("Success")
+		)
 	if silent or startAfterCreate:
 		newNVDA = None
 		if startAfterCreate:
