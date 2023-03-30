@@ -96,7 +96,7 @@ class Test_GetSpeechForBatteryStatus(unittest.TestCase):
 			oldPowerState=PowerState.AC_OFFLINE,
 		)
 		self.assertEqual(
-			["Charging battery", '1 percent', '1 hours and 1 minutes remaining'],
+			["AC connected", '1 percent', '1 hours and 1 minutes remaining'],
 			actualSpeech,
 		)
 
