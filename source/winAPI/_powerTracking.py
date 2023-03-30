@@ -216,7 +216,7 @@ def _getACStatusText(systemPowerStatus: SystemPowerStatus) -> str:
 	# Translators: This is presented to inform the user of the current battery percentage.
 	if systemPowerStatus.ACLineStatus & PowerState.AC_ONLINE:
 		# Translators: Reported when the battery is plugged in, and now is charging.
-		return _("Charging battery")
+		return _("AC connected")
 	else:
 		# Translators: Reported when the battery is no longer plugged in, and now is not charging.
 		return _("AC disconnected")
