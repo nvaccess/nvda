@@ -25,13 +25,9 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include "dllImportTableHooks.h"
 #include "rpcsrv.h"
 
-typedef LRESULT(WINAPI *SendMessageW__funcType)(HWND, UINT, WPARAM, LPARAM);
-typedef LRESULT(WINAPI *SendMessageTimeoutW_funcType)(HWND, UINT, WPARAM, LPARAM, UINT, UINT, PDWORD_PTR);
-typedef BOOL(WINAPI *OpenClipboard_funcType)(HWND);
-
-SendMessageW__funcType real_SendMessageW = nullptr;
-SendMessageTimeoutW_funcType real_SendMessageTimeoutW = nullptr;
-OpenClipboard_funcType real_OpenClipboard = nullptr;
+decltype(&SendMessageW) real_SendMessageW = nullptr;
+decltype(&SendMessageTimeoutW) real_SendMessageTimeoutW = nullptr;
+decltype(&OpenClipboard) real_OpenClipboard = nullptr;
 
 bool isSecureModeNVDAProcess=false;
 
@@ -41,7 +37,7 @@ typedef struct _RPC_SECURITY_QOS_V5_W {
   unsigned long IdentityTracking;
   unsigned long ImpersonationType;
   unsigned long AdditionalSecurityInfoType;
-  union 
+  union
       {
       RPC_HTTP_TRANSPORT_CREDENTIALS_W *HttpCredentials;
       } u;
@@ -61,7 +57,7 @@ handle_t createRemoteBindingHandle(wchar_t* uuidString) {
 	if((rpcStatus=RpcBindingFromStringBinding(stringBinding,&bindingHandle))!=RPC_S_OK) {
 		LOG_ERROR(L"RpcBindingFromStringBinding failed with status "<<rpcStatus);
 		return NULL;
-	} 
+	}
 	//On Windows 8 we must allow AppContainer servers to communicate back to us
 	//Detect Windows 8 by looking for RpcServerRegisterIf3
 	HANDLE rpcrt4Handle=GetModuleHandle(L"rpcrt4.dll");
@@ -246,10 +242,6 @@ BOOL WINAPI fake_OpenClipboard(HWND hwndOwner) {
 	return false;
 }
 
-/*
- * Initializes the NVDAHelper local library
- * @param secureMode 1 specifies that the NVDA process initializing NVDAHelper is in secure mode
- */
 void nvdaHelperLocal_initialize(int secureMode) {
 	if(secureMode) {
 		isSecureModeNVDAProcess = true;
