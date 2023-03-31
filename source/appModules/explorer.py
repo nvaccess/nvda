@@ -10,6 +10,7 @@ Provides workarounds for controls such as identifying Start button, notification
 
 from comtypes import COMError
 import time
+from typing import Callable
 import appModuleHandler
 import controlTypes
 import winUser
@@ -19,6 +20,7 @@ import speech
 import braille
 import eventHandler
 import mouseHandler
+from NVDAObjects import NVDAObject
 from NVDAObjects.IAccessible import IAccessible, List
 from NVDAObjects.UIA import UIA
 from NVDAObjects.behaviors import ToolTip
