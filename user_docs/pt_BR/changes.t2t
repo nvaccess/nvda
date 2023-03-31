@@ -2,7 +2,6 @@ Novidades do NVDA
 Traduzido por: Marlin Rodrigues da Silva; Cleverson Casarin Uliana; Tiago Melo Casal.
 
 %!includeconf: ../changes.t2tconf
-%!PostProc(html): ^<HTML>$ <HTML LANG='pt_BR'>
 
 = 2023.1 =
 Foi adicionada uma nova opção, "Estilo de Parágrafo" em "Navegação de Documento".
@@ -103,6 +102,7 @@ O mesmo que pressionar ``NVDA+k`` duas vezes, mas pode ser mais útil para os us
 - Nos navegadores Web, como Chrome e Firefox, alertas como downloads de arquivos são mostrados em Braille, além de serem falados. (#14562)
 - Falha corrigida ao navegar para a primeira e a última coluna em uma tabela no Firefox (#14554)
 - Quando o NVDA é iniciado com o parâmetro ``--lang=Windows``, é novamente possível abrir o diálogo Configurações gerais do NVDA. (#14407)
+- O NVDA não falha mais em continuar lendo no Kindle para PC depois de virar a página. (#14390)
 -
 
 
