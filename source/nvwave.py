@@ -12,6 +12,7 @@ import typing
 from typing import (
 	Optional,
 	Callable,
+	NamedTuple,
 )
 from ctypes import (
 	windll,
@@ -24,6 +25,7 @@ from ctypes import (
 	c_void_p,
 	CFUNCTYPE,
 	string_at,
+	c_float,
 )
 from ctypes.wintypes import (
 	HANDLE,
@@ -34,7 +36,7 @@ from ctypes.wintypes import (
 	UINT,
 	LPUINT
 )
-from comtypes import HRESULT, BSTR
+from comtypes import HRESULT, BSTR, GUID
 from comtypes.hresult import S_OK
 import atexit
 import weakref
@@ -147,6 +149,28 @@ def _isDebugForNvWave():
 	return config.conf["debugLog"]["nvwave"]
 
 
+class AudioSession(NamedTuple):
+	"""Identifies an audio session.
+	An audio session may contain multiple streams. The guid identifies the
+	session. The name is shown in the system Volume Mixer.
+	"""
+	guid: GUID
+	name: str
+
+
+#: The audio session to use by default.
+defaultSession = AudioSession(
+	GUID("{C302B781-00AF-4ECC-ACB7-7DF16AF7D55E}"),
+	"NVDA"
+)
+#: The audio session to use for sounds.
+soundsSession = AudioSession(
+	GUID("{A560CE90-E9D9-44AF-8C3C-0D9734642D48}"),
+	# Translators: Shown in the system Volume Mixer for controlling NVDA sounds.
+	_("NVDA sounds")
+)
+
+
 class WinmmWavePlayer(garbageHandler.TrackedObject):
 	"""Synchronously play a stream of audio.
 	To use, construct an instance and feed it waveform audio using L{feed}.
@@ -195,7 +219,8 @@ class WinmmWavePlayer(garbageHandler.TrackedObject):
 			outputDevice: typing.Union[str, int] = WAVE_MAPPER,
 			closeWhenIdle: bool = False,
 			wantDucking: bool = True,
-			buffered: bool = False
+			buffered: bool = False,
+			session: AudioSession = defaultSession,
 		):
 		"""Constructor.
 		@param channels: The number of channels of audio; e.g. 2 for stereo, 1 for mono.
@@ -689,7 +714,8 @@ def playWaveFile(
 		samplesPerSec=f.getframerate(),
 		bitsPerSample=f.getsampwidth() * 8,
 		outputDevice=config.conf["speech"]["outputDevice"],
-		wantDucking=False
+		wantDucking=False,
+		session=soundsSession
 	)
 
 	def play():
@@ -757,7 +783,8 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			outputDevice: typing.Union[str, int] = WAVE_MAPPER,
 			closeWhenIdle: bool = False,
 			wantDucking: bool = True,
-			buffered: bool = False
+			buffered: bool = False,
+			session: AudioSession = defaultSession,
 	):
 		"""Constructor.
 		@param channels: The number of channels of audio; e.g. 2 for stereo, 1 for mono.
@@ -768,6 +795,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		@param closeWhenIdle: Deprecated; ignored.
 		@param wantDucking: if true then background audio will be ducked on Windows 8 and higher
 		@param buffered: Whether to buffer small chunks of audio to prevent audio glitches.
+		@param session: The audio session which should be used.
 		@note: If C{outputDevice} is a name and no such device exists, the default device will be used.
 		@raise WindowsError: If there was an error opening the audio output device.
 		"""
@@ -789,7 +817,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		self._player = NVDAHelper.localLib.wasPlay_create(
 			self._deviceNameToId(outputDevice),
 			format,
-			WasapiWavePlayer._callback)
+			WasapiWavePlayer._callback, session.guid, session.name)
 		self._doneCallbacks = {}
 		self._instances[self._player] = self
 		self.open()
@@ -891,6 +919,13 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		else:
 			NVDAHelper.localLib.wasPlay_resume(self._player)
 
+	def setSessionVolume(self, level: float):
+		"""Set the volume for the audio session.
+		This sets the volume for all streams in this session, not just the stream
+		associated with this WavePlayer instance.
+		"""
+		NVDAHelper.localLib.wasPlay_setSessionVolume(self._player, c_float(level))
+
 	@staticmethod
 	def _getDevices():
 		rawDevs = BSTR()
@@ -934,8 +969,23 @@ def initialize():
 		NVDAHelper.localLib.wasPlay_sync,
 		NVDAHelper.localLib.wasPlay_pause,
 		NVDAHelper.localLib.wasPlay_resume,
+		NVDAHelper.localLib.wasPlay_setSessionVolume,
 		NVDAHelper.localLib.wasPlay_getDevices,
 	):
 		func.restype = HRESULT
 		func.errcheck = _wasPlay_errcheck
 	NVDAHelper.localLib.wasPlay_startup()
+	# Some audio clients won't specify a session; e.g. speech synthesizers which
+	# use their own audio output code rather than nvwave. We don't want these to
+	# end up in the wrong session, so we set a specific default session. To do
+	# that, first create a stream in that session (defaultSession).
+	WasapiWavePlayer(channels=1, samplesPerSec=44100, bitsPerSample=16)
+	# Now create a stream with the null session (GUID_NULL). This will use the
+	# session we created above. All subsequent streams created without a specific
+	# session will use this session.
+	WasapiWavePlayer(
+		channels=1,
+		samplesPerSec=44100,
+		bitsPerSample=16,
+		session=AudioSession(GUID(), "")
+	)

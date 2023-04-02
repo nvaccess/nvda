@@ -16,6 +16,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <windows.h>
 #include <atlcomcli.h>
 #include <audioclient.h>
+#include <audiopolicy.h>
 #include <functiondiscoverykeys.h>
 #include <Functiondiscoverykeys_devpkey.h>
 #include <mmdeviceapi.h>
@@ -37,6 +38,8 @@ const IID IID_IAudioClient = __uuidof(IAudioClient);
 const IID IID_IAudioRenderClient = __uuidof(IAudioRenderClient);
 const IID IID_IAudioClock = __uuidof(IAudioClock);
 const IID IID_IMMNotificationClient = __uuidof(IMMNotificationClient);
+const IID IID_IAudioSessionControl = __uuidof(IAudioSessionControl);
+const IID IID_ISimpleAudioVolume = __uuidof(ISimpleAudioVolume);
 
 /**
  * C++ RAII class to manage the lifecycle of a standard Windows HANDLE closed
@@ -149,9 +152,12 @@ class WasapiPlayer {
 	/**
 	 * Constructor.
 	 * Specify an empty (not null) deviceId to use the default device.
+	 * Pass GUID_NULL for sessionGuid to use the default audio session.
+	 * Specify an empty (not null) sessionName if you do not wish to set the
+	 * session display name.
 	 */
 	WasapiPlayer(wchar_t* deviceId, WAVEFORMATEX format,
-		ChunkCompletedCallback callback);
+		ChunkCompletedCallback callback, GUID sessionGuid, wchar_t* sessionName);
 
 	/**
 	 * Open the audio device.
@@ -171,6 +177,7 @@ class WasapiPlayer {
 	HRESULT sync();
 	HRESULT pause();
 	HRESULT resume();
+	HRESULT setSessionVolume(float level);
 
 	private:
 	void maybeFireCallback();
@@ -204,6 +211,8 @@ class WasapiPlayer {
 	// The maximum number of frames that will fit in the buffer.
 	UINT32 bufferFrames;
 	std::wstring deviceId;
+	GUID sessionGuid;
+	std::wstring sessionName;
 	WAVEFORMATEX format;
 	ChunkCompletedCallback callback;
 	PlayState playState = PlayState::stopped;
@@ -219,8 +228,9 @@ class WasapiPlayer {
 };
 
 WasapiPlayer::WasapiPlayer(wchar_t* deviceId, WAVEFORMATEX format,
-	ChunkCompletedCallback callback)
-: deviceId(deviceId), format(format), callback(callback) {
+	ChunkCompletedCallback callback, GUID sessionGuid, wchar_t* sessionName)
+: deviceId(deviceId), format(format), callback(callback),
+sessionGuid(sessionGuid), sessionName(sessionName)  {
 	wakeEvent = CreateEvent(nullptr, false, false, nullptr);
 }
 
@@ -250,9 +260,20 @@ HRESULT WasapiPlayer::open(bool force) {
 	}
 	hr = client->Initialize(AUDCLNT_SHAREMODE_SHARED,
 		AUDCLNT_STREAMFLAGS_AUTOCONVERTPCM | AUDCLNT_STREAMFLAGS_SRC_DEFAULT_QUALITY,
-		BUFFER_SIZE, 0, &format, nullptr);
+		BUFFER_SIZE, 0, &format, &sessionGuid);
 	if (FAILED(hr)) {
 		return hr;
+	}
+	if (!sessionName.empty()) {
+		CComPtr<IAudioSessionControl> control;
+		hr = client->GetService(IID_IAudioSessionControl, (void**)&control);
+		if (FAILED(hr)) {
+			return hr;
+		}
+		hr = control->SetDisplayName(sessionName.c_str(), nullptr);
+		if (FAILED(hr)) {
+			return hr;
+		}
 	}
 	hr = client->GetBufferSize(&bufferFrames);
 	if (FAILED(hr)) {
@@ -489,15 +510,25 @@ HRESULT WasapiPlayer::resume() {
 	return S_OK;
 }
 
+HRESULT WasapiPlayer::setSessionVolume(float level) {
+	CComPtr<ISimpleAudioVolume> volume;
+	HRESULT hr = client->GetService(IID_ISimpleAudioVolume, (void**)&volume);
+	if (FAILED(hr)) {
+		return hr;
+	}
+	return volume->SetMasterVolume(level, nullptr);
+}
+
 /*
  * NVDA calls the functions below. Most of these just wrap calls to
  * WasapiPlayer, with the exception of wasPlay_startup and wasPlay_getDevices.
  */
 
 WasapiPlayer* wasPlay_create(wchar_t* deviceId, WAVEFORMATEX format,
-	WasapiPlayer::ChunkCompletedCallback callback
+	WasapiPlayer::ChunkCompletedCallback callback, GUID sessionGuid,
+	wchar_t* sessionName
 ) {
-	return new WasapiPlayer(deviceId, format, callback);
+	return new WasapiPlayer(deviceId, format, callback, sessionGuid, sessionName);
 }
 
 void wasPlay_destroy(WasapiPlayer* player) {
@@ -528,6 +559,10 @@ HRESULT wasPlay_pause(WasapiPlayer* player) {
 
 HRESULT wasPlay_resume(WasapiPlayer* player) {
 	return player->resume();
+}
+
+HRESULT wasPlay_setSessionVolume(WasapiPlayer* player, float level) {
+	return player->setSessionVolume(level);
 }
 
 /**
