@@ -182,7 +182,7 @@ class _DataManager:
 		self._preferredChannel = Channel.ALL
 		self._cacheFile = os.path.join(cacheDirLocation, _DataManager._cacheFilename)
 		self._addonDownloadCacheDir = os.path.join(cacheDirLocation, "_dl")
-		self._installedAddonDataCacheDir = os.path.join(cacheDirLocation, "_dl", "addons")
+		self._installedAddonDataCacheDir = os.path.join(cacheDirLocation, "addons")
 		# ensure caching dirs exist
 		pathlib.Path(cacheDirLocation).mkdir(parents=True, exist_ok=True)
 		pathlib.Path(self._addonDownloadCacheDir).mkdir(parents=True, exist_ok=True)
@@ -255,16 +255,16 @@ class _DataManager:
 	def _cacheInstalledAddon(self, addonData: AddonDetailsModel):
 		if not addonData:
 			return
-		addonCachePath = os.path.join(self._installedAddonDataCacheDir, addonData.addonId)
+		addonCachePath = os.path.join(self._installedAddonDataCacheDir, f"{addonData.addonId}.json")
 		with open(addonCachePath, 'w') as cacheFile:
-			json.dump(dataclasses.asdict(addonData), cacheFile, ensure_ascii=False)
+			json.dump(addonData.asdict(), cacheFile, ensure_ascii=False)
 
 	def _getCachedInstalledAddonData(self, addonId: str) -> Optional[AddonDetailsModel]:
-		addonCachePath = os.path.join(self._installedAddonDataCacheDir, addonId)
+		addonCachePath = os.path.join(self._installedAddonDataCacheDir, f"{addonId}.json")
 		if not os.path.exists(addonCachePath):
 			return None
 		with open(addonCachePath, 'r') as cacheFile:
 			cacheData = json.load(cacheFile)
 		if not cacheData:
 			return None
-		return _createAddonModelFromData(cacheData["addonData"])
+		return _createAddonModelFromData(cacheData)

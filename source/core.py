@@ -868,6 +868,10 @@ def _terminate(module, name=None):
 		log.exception("Error terminating %s" % name)
 
 
+def isMainThread() -> bool:
+	return threading.get_ident() == mainThreadId
+
+
 def requestPump(immediate: bool = False):
 	"""Request a core pump.
 	This will perform any queued activity.

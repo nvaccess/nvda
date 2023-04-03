@@ -66,7 +66,7 @@ class AvailableAddonStatus(DisplayStringEnum):
 			# Translators: Status for addons shown in the add-on store dialog
 			AvailableAddonStatus.UPDATE: _("Update Available"),
 			# Translators: Status for addons shown in the add-on store dialog
-			AvailableAddonStatus.REPLACE_SIDE_LOAD: _("Migrate to addon store"),
+			AvailableAddonStatus.REPLACE_SIDE_LOAD: _("Migrate to add-on store"),
 			# Translators: Status for addons shown in the add-on store dialog
 			AvailableAddonStatus.INCOMPATIBLE: _("Incompatible"),
 			# Translators: Status for addons shown in the add-on store dialog
@@ -559,9 +559,6 @@ class AddonStoreVM:
 			return AvailableAddonStatus.AVAILABLE
 		addonData = localAddons[model.addonId]
 
-		if addonData.isRunning:
-			return AvailableAddonStatus.RUNNING
-
 		addonStoreData = addonDataManager._getCachedInstalledAddonData(model.addonId)
 		if addonStoreData is not None:
 			if model.addonVersionNumber > addonStoreData.addonVersionNumber:
@@ -580,6 +577,9 @@ class AddonStoreVM:
 			
 			if model.addonVersionNumber > manifestAddonVersion:
 				return AvailableAddonStatus.UPDATE
+
+		if addonData.isRunning:
+			return AvailableAddonStatus.RUNNING
 
 		for storeState, handlerStateCategory in addonStoreStateToAddonHandlerState.items():
 			if model.addonId in addonHandler.state[handlerStateCategory]:

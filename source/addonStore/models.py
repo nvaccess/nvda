@@ -10,13 +10,11 @@ from typing import (
 	Any,
 	Dict,
 	List,
+	NamedTuple,
 	Optional,
-	Tuple,
 )
 
 import addonAPIVersion
-
-AddonVersionT = Tuple[int, int, int]
 
 
 class Channel(str, Enum):
@@ -24,6 +22,15 @@ class Channel(str, Enum):
 	BETA = "beta"
 	DEV = "dev"
 	ALL = "all"
+
+
+class MajorMinorPatch(NamedTuple):
+	major: int
+	minor: int
+	patch: int = 0
+
+	def __str__(self) -> str:
+		return f"{self.major}.{self.minor}.{self.patch}"
 
 
 @dataclasses.dataclass(frozen=True)  # once created, it should not be modified.
@@ -42,18 +49,30 @@ class AddonDetailsModel:
 	sourceURL: str
 	URL: str
 	sha256: str
-	addonVersionNumber: AddonVersionT
-	minimumNVDAVersion: addonAPIVersion.AddonApiVersionT
-	"""Deviates from name in JSON, in order to match name required for addonAPIVersion"""
-	lastTestedNVDAVersion: addonAPIVersion.AddonApiVersionT
-	"""Deviates from name in JSON, in order to match name required for addonAPIVersion"""
+	addonVersionNumber: MajorMinorPatch
+	minNVDAVersion: MajorMinorPatch
+	lastTestedVersion: MajorMinorPatch
 
+	@property
+	def minimumNVDAVersion(self) -> addonAPIVersion.AddonApiVersionT:
+		"""In order to support addonHandler.addonVersionCheck.SupportsVersionCheck"""
+		return self.minNVDAVersion
 
-def _createAddonApiVersion(versionDict: Dict[str, int]) -> addonAPIVersion.AddonApiVersionT:
-	"""
-	@param versionDict: expected to contain a Dict like: {"major": 2019, "minor": 3, "patch": 0}
-	"""
-	return versionDict["major"], versionDict["minor"], versionDict["patch"]
+	@property
+	def lastTestedNVDAVersion(self) -> addonAPIVersion.AddonApiVersionT:
+		"""In order to support addonHandler.addonVersionCheck.SupportsVersionCheck"""
+		return self.lastTestedVersion
+
+	def asdict(self) -> Dict[str, Any]:
+		jsonData = dataclasses.asdict(self)
+		for field in jsonData:
+			# dataclasses.asdict parses NamedTuples to JSON arrays,
+			# rather than JSON object dictionaries,
+			# which is expected by add-on infrastructure.
+			fieldValue = getattr(self, field)
+			if isinstance(fieldValue, MajorMinorPatch):
+				jsonData[field] = fieldValue._asdict()
+		return jsonData
 
 
 def _createAddonModelFromData(addon: Dict[str, Any]) -> AddonDetailsModel:
@@ -64,15 +83,15 @@ def _createAddonModelFromData(addon: Dict[str, Any]) -> AddonDetailsModel:
 		publisher=addon["publisher"],
 		channel=Channel(addon["channel"]),
 		addonVersionName=addon["addonVersionName"],
-		addonVersionNumber=_createAddonApiVersion(addon["addonVersionNumber"]),
+		addonVersionNumber=MajorMinorPatch(**addon["addonVersionNumber"]),
 		homepage=addon.get("homepage"),
 		license=addon["license"],
 		licenseURL=addon.get("licenseURL"),
 		sourceURL=addon["sourceURL"],
 		URL=addon["URL"],
 		sha256=addon["sha256"],
-		minimumNVDAVersion=_createAddonApiVersion(addon["minNVDAVersion"]),
-		lastTestedNVDAVersion=_createAddonApiVersion(addon["lastTestedVersion"]),
+		minNVDAVersion=MajorMinorPatch(**addon["minNVDAVersion"]),
+		lastTestedVersion=MajorMinorPatch(**addon["lastTestedVersion"]),
 	)
 
 
