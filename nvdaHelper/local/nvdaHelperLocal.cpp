@@ -29,8 +29,6 @@ decltype(&SendMessageW) real_SendMessageW = nullptr;
 decltype(&SendMessageTimeoutW) real_SendMessageTimeoutW = nullptr;
 decltype(&OpenClipboard) real_OpenClipboard = nullptr;
 
-bool isSecureModeNVDAProcess=false;
-
 typedef struct _RPC_SECURITY_QOS_V5_W {
   unsigned long Version;
   unsigned long Capabilities;
@@ -243,9 +241,6 @@ BOOL WINAPI fake_OpenClipboard(HWND hwndOwner) {
 }
 
 void nvdaHelperLocal_initialize(int secureMode) {
-	if(secureMode) {
-		isSecureModeNVDAProcess = true;
-	}
 	startServer();
 	mainThreadId = GetCurrentThreadId();
 	cancelCallEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
@@ -260,7 +255,7 @@ void nvdaHelperLocal_initialize(int secureMode) {
 	apiHook_hookFunction_safe(SendMessageW, fake_SendMessageW, &real_SendMessageW);
 	apiHook_hookFunction_safe(SendMessageTimeoutW, fake_SendMessageTimeoutW, &real_SendMessageTimeoutW);
 	// For secure mode NVDA process, hook OpenClipboard to disable usage of the clipboard
-	if (isSecureModeNVDAProcess) {
+	if (secureMode) {
 		apiHook_hookFunction_safe(OpenClipboard, fake_OpenClipboard, &real_OpenClipboard);
 	}
 	// Enable all registered API hooks by committing the transaction
