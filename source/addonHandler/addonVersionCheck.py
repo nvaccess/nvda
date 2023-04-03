@@ -46,15 +46,3 @@ def isAddonCompatible(
 	an API version that is still supported by this version of NVDA.
 	"""
 	return hasAddonGotRequiredSupport(addon, currentAPIVersion) and isAddonTested(addon, backwardsCompatToVersion)
-
-
-def _parseAddonVersionFromVersionStr(version: str) -> addonAPIVersion.AddonApiVersionT:
-	versionParts = version.split(".")
-	versionLen = len(versionParts)
-	if versionLen < 2 or versionLen > 3:
-		raise ValueError(f"Version string not valid: {version}")
-	return (
-		int(versionParts[0]),
-		int(versionParts[1]),
-		0 if len(versionParts) == 2 else int(versionParts[2])
-	)

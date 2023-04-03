@@ -32,6 +32,18 @@ class MajorMinorPatch(NamedTuple):
 	def __str__(self) -> str:
 		return f"{self.major}.{self.minor}.{self.patch}"
 
+	@classmethod
+	def _parseAddonVersionFromVersionStr(cls, version: str) -> "MajorMinorPatch":
+		versionParts = version.split(".")
+		versionLen = len(versionParts)
+		if versionLen < 2 or versionLen > 3:
+			raise ValueError(f"Version string not valid: {version}")
+		return cls(
+			int(versionParts[0]),
+			int(versionParts[1]),
+			0 if len(versionParts) == 2 else int(versionParts[2])
+		)
+
 
 @dataclasses.dataclass(frozen=True)  # once created, it should not be modified.
 class AddonDetailsModel:

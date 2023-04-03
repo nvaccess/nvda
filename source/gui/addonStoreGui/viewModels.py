@@ -28,6 +28,7 @@ from logHandler import log
 
 from addonStore.models import (
 	AddonDetailsModel,
+	MajorMinorPatch,
 )
 
 if typing.TYPE_CHECKING:
@@ -566,7 +567,7 @@ class AddonStoreVM:
 		else:
 			# Parsing from a side-loaded add-on
 			try:
-				manifestAddonVersion = addonVersionCheck._parseAddonVersionFromVersionStr(addonData.version)
+				manifestAddonVersion = MajorMinorPatch._parseAddonVersionFromVersionStr(addonData.version)
 			except ValueError:
 				# Parsing failed to get a numeric version.
 				# Ideally a numeric version would be compared,
