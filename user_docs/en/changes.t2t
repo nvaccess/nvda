@@ -43,9 +43,9 @@ This only worked for Bluetooth Serial ports before. (#14524)
 - In Mozilla Firefox and Google Chrome, typed characters are no longer reported in some text boxes even when speak typed characters is disabled. (#14666)
 - You can now use browse mode in Chromium Embedded Controls where it was not possible previously. (#13493, #8553)
 - For symbols which do not have a symbol description in the current locale, the default English symbol level will be used. (#14558, #14417)
-- Fixes for Windows 11 Notepad:
-  - NVDA can once again announce status bar contents. (#14573)
-  - Switching between tabs will announce the new tab name and position. (#14587)
+- Fixes for Windows 11:
+  - NVDA can once again announce Notepad status bar contents. (#14573)
+  - Switching between tabs will announce the new tab name and position for Notepad and File Explorer. (#14587, #14388)
   -
 - In Mozilla Firefox, moving the mouse over text after a link now reliably reports the text. (#9235)
 - In Windows 10 and 11 Calculator, a portable copy of NVDA will no longer do nothing or play error tones when entering expressions in standard calculator in compact overlay mode. (#14679)
