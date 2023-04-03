@@ -23,11 +23,12 @@ import core
 import extensionPoints
 from addonHandler import addonVersionCheck
 from utils.displayString import DisplayStringEnum
-from addonStore.dataManager import DataManager
+from addonStore.dataManager import addonDataManager
 from logHandler import log
 
 from addonStore.models import (
 	AddonDetailsModel,
+	MajorMinorPatch,
 )
 
 if typing.TYPE_CHECKING:
@@ -42,6 +43,12 @@ class AvailableAddonStatus(DisplayStringEnum):
 	"""
 	AVAILABLE = enum.auto()
 	UPDATE = enum.auto()
+	REPLACE_SIDE_LOAD = enum.auto()
+	"""
+	Used when an addon in the store matches an installed add-on ID.
+	However, it cannot be determined if it is an upgrade.
+	Encourage the user to compare the version strings.
+	"""
 	INCOMPATIBLE = enum.auto()
 	DOWNLOADING = enum.auto()
 	DOWNLOAD_FAILED = enum.auto()
@@ -59,6 +66,8 @@ class AvailableAddonStatus(DisplayStringEnum):
 			AvailableAddonStatus.AVAILABLE: _("Available"),
 			# Translators: Status for addons shown in the add-on store dialog
 			AvailableAddonStatus.UPDATE: _("Update Available"),
+			# Translators: Status for addons shown in the add-on store dialog
+			AvailableAddonStatus.REPLACE_SIDE_LOAD: _("Migrate to add-on store"),
 			# Translators: Status for addons shown in the add-on store dialog
 			AvailableAddonStatus.INCOMPATIBLE: _("Incompatible"),
 			# Translators: Status for addons shown in the add-on store dialog
@@ -148,7 +157,7 @@ class AddonDetailsVM:
 class AddonListVM:
 	presentedAttributes = (
 		"displayName",
-		"versionName",
+		"addonVersionName",
 		"publisher",
 		"status",  # NVDA state for this addon, see L{AvailableAddonStatus}
 	)
@@ -418,65 +427,17 @@ class AddonActionVM:
 		self._notify()
 
 
-def getStatus(model: AddonDetailsModel) -> Optional[AvailableAddonStatus]:
-	# This is inefficient, addonHandler will iterate all addons every time.
-	# However, addonHandler should remain the "source of truth" for addonStatus.
-	localAddons: Dict[str, addonHandler.Addon] = {
-		addon.name: addon  # Note: addon.name should match Id from add-on store.
-		for addon in addonHandler.getAvailableAddons()
-	}
-	if not addonHandler.isAddonCompatible(model):
-		return AvailableAddonStatus.INCOMPATIBLE
-	if model.addonId not in localAddons:
-		return AvailableAddonStatus.AVAILABLE
-	localAddon = localAddons[model.addonId]
-	# ideally a numeric version would be compared, however the manifest only has a version string.
-	versionMatches = localAddon.version == model.versionName
-	if versionMatches:
-		if localAddon.isRunning:
-			return AvailableAddonStatus.RUNNING
-
-		for storeState, handlerStateCategory in addonStoreStateToAddonHandlerState.items():
-			if model.addonId in addonHandler.state[handlerStateCategory]:
-				return storeState
-	else:
-		# todo:
-		#  Handle update available, perhaps 'sideloaded' add-ons can't get updates (because numeric version
-		#  isn't available in the manifest). This will require tracking information from the add-on store.
-		# This may show "update available" for older add-on versions.
-		return AvailableAddonStatus.UPDATE
-
-	log.debugWarning(f"Addon in unknown state: {model.addonId}")
-	return None
-
-
-def _createListItemVMs(
-		addonModelList: List[AddonDetailsModel],
-		statusFilter: List[typing.Union[None, AvailableAddonStatus]]
-) -> List[AddonListItemVM]:
-	addonsWithStatus = (
-		(model, getStatus(model))
-		for model in addonModelList
-	)
-	return [
-		AddonListItemVM(model=model, status=status)
-		for model, status in addonsWithStatus
-		if status not in statusFilter
-	]
-
-
 class AddonStoreVM:
-	def __init__(self, dataManager: DataManager):
-		self._dataManager: DataManager = dataManager
+	def __init__(self):
 		self.hasError = extensionPoints.Action()
 		self._addons: List[AddonDetailsModel] = []
 		self._filteredStatuses = [None, AvailableAddonStatus.RUNNING]
 
-		self._downloader = dataManager.getFileDownloader()
+		self._downloader = addonDataManager.getFileDownloader()
 		self._pendingInstalls: List[Tuple[AddonListItemVM, PathLike]] = []
 
 		self.listVM: AddonListVM = AddonListVM(
-			addons=_createListItemVMs(self._addons, self._filteredStatuses)
+			addons=self._createListItemVMs()
 		)
 		self.detailsVM: AddonDetailsVM = AddonDetailsVM(
 			listItem=self.listVM.getSelection()
@@ -497,6 +458,7 @@ class AddonStoreVM:
 			and listItemVM.status in (
 				AvailableAddonStatus.AVAILABLE,
 				AvailableAddonStatus.UPDATE,
+				AvailableAddonStatus.REPLACE_SIDE_LOAD,
 			)
 		)
 
@@ -561,6 +523,7 @@ class AddonStoreVM:
 			self.hasError.notify(error=e)
 			return
 		listItemVM.status = AvailableAddonStatus.INSTALLED
+		addonDataManager._cacheInstalledAddon(listItemVM.model)
 		log.debug(f"{listItemVM.Id} status: {listItemVM.status}")
 
 	def refresh(self):
@@ -568,13 +531,13 @@ class AddonStoreVM:
 
 	def _getAddonsInBG(self):
 		log.debug("getting addons in the background")
-		addons = self._dataManager.getLatestAvailableAddons()
+		addons = addonDataManager.getLatestAvailableAddons()
 		log.debug("completed getting addons in the background")
 		if self._addons == addons:  # no change
 			log.debug("no change in addons")
 			return
 		self._addons = addons
-		self.listVM.resetListItems(_createListItemVMs(self._addons, self._filteredStatuses))
+		self.listVM.resetListItems(self._createListItemVMs())
 		self.detailsVM.listItem = self.listVM.getSelection()
 		log.debug("completed refresh")
 
@@ -582,6 +545,59 @@ class AddonStoreVM:
 		for a in self._downloader.progress.keys():
 			self.listVM._addons[a.addonId].status = AvailableAddonStatus.AVAILABLE
 		self._downloader.cancelAll()
+
+	def _createListItemVMs(self) -> List[AddonListItemVM]:
+		addonsWithStatus = (
+			(model, self._getStatus(model))
+			for model in self._addons
+		)
+		return [
+			AddonListItemVM(model=model, status=status)
+			for model, status in addonsWithStatus
+			if status not in self._filteredStatuses
+		]
+
+	def _getStatus(self, model: AddonDetailsModel) -> Optional[AvailableAddonStatus]:
+		# This is inefficient, addonHandler will iterate all addons every time.
+		# However, addonHandler should remain the "source of truth" for addonStatus.
+		localAddons: Dict[str, addonHandler.Addon] = {
+			addon.name: addon  # Note: addon.name should match Id from add-on store.
+			for addon in addonHandler.getAvailableAddons()
+		}
+		if not addonHandler.isAddonCompatible(model):
+			return AvailableAddonStatus.INCOMPATIBLE
+		if model.addonId not in localAddons:
+			return AvailableAddonStatus.AVAILABLE
+		addonData = localAddons[model.addonId]
+
+		addonStoreData = addonDataManager._getCachedInstalledAddonData(model.addonId)
+		if addonStoreData is not None:
+			if model.addonVersionNumber > addonStoreData.addonVersionNumber:
+				return AvailableAddonStatus.UPDATE
+		else:
+			# Parsing from a side-loaded add-on
+			try:
+				manifestAddonVersion = MajorMinorPatch._parseAddonVersionFromVersionStr(addonData.version)
+			except ValueError:
+				# Parsing failed to get a numeric version.
+				# Ideally a numeric version would be compared,
+				# however the manifest only has a version string.
+				# Ensure the user is aware that it may be a downgrade or reinstall.
+				# Encourage users to re-install or upgrade the add-on from the add-on store.
+				return AvailableAddonStatus.REPLACE_SIDE_LOAD
+			
+			if model.addonVersionNumber > manifestAddonVersion:
+				return AvailableAddonStatus.UPDATE
+
+		if addonData.isRunning:
+			return AvailableAddonStatus.RUNNING
+
+		for storeState, handlerStateCategory in addonStoreStateToAddonHandlerState.items():
+			if model.addonId in addonHandler.state[handlerStateCategory]:
+				return storeState
+
+		log.debugWarning(f"Addon in unknown state: {model.addonId}")
+		return None
 
 
 class TranslatedError(Exception):

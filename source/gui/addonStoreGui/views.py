@@ -420,7 +420,7 @@ class AddonDetails(
 				self._appendDetailsLabelValue(
 					# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 					pgettext("addonStore", "Version:"),
-					details.versionName
+					details.addonVersionName
 				)
 				self._appendDetailsLabelValue(
 					# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
@@ -436,12 +436,12 @@ class AddonDetails(
 				self._appendDetailsLabelValue(
 					# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 					pgettext("addonStore", "License:"),
-					details.licenseName, URL=details.licenseUrl
+					details.license, URL=details.licenseURL
 				)
 				self._appendDetailsLabelValue(
 					# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 					pgettext("addonStore", "Source Code:"),
-					details.sourceUrl, URL=details.sourceUrl
+					details.sourceURL, URL=details.sourceURL
 				)
 
 		self.otherDetailsTextCtrl.SetDefaultStyle(self.urlStyle)

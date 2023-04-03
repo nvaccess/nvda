@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2018 NV Access Limited
+# Copyright (C) 2018-2023 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 from typing_extensions import Protocol  # Python 3.8 adds native support
@@ -18,15 +18,18 @@ class SupportsVersionCheck(Protocol):
 
 def hasAddonGotRequiredSupport(
 		addon: SupportsVersionCheck,
-		currentAPIVersion=addonAPIVersion.CURRENT
-):
+		currentAPIVersion: addonAPIVersion.AddonApiVersionT = addonAPIVersion.CURRENT
+) -> bool:
 	"""True if NVDA provides the add-on with an API version high enough to meet the add-on's minimum requirements
 	"""
 	minVersion = addon.minimumNVDAVersion
 	return minVersion <= currentAPIVersion
 
 
-def isAddonTested(addon: SupportsVersionCheck, backwardsCompatToVersion=addonAPIVersion.BACK_COMPAT_TO):
+def isAddonTested(
+		addon: SupportsVersionCheck,
+		backwardsCompatToVersion: addonAPIVersion.AddonApiVersionT = addonAPIVersion.BACK_COMPAT_TO
+) -> bool:
 	"""True if this add-on is tested for the given API version.
 	By default, the current version of NVDA is evaluated.
 	"""
@@ -35,9 +38,9 @@ def isAddonTested(addon: SupportsVersionCheck, backwardsCompatToVersion=addonAPI
 
 def isAddonCompatible(
 		addon: SupportsVersionCheck,
-		currentAPIVersion=addonAPIVersion.CURRENT,
-		backwardsCompatToVersion=addonAPIVersion.BACK_COMPAT_TO
-):
+		currentAPIVersion: addonAPIVersion.AddonApiVersionT = addonAPIVersion.CURRENT,
+		backwardsCompatToVersion: addonAPIVersion.AddonApiVersionT = addonAPIVersion.BACK_COMPAT_TO
+) -> bool:
 	"""Tests if the addon is compatible.
 	The compatibility is defined by having the required features in NVDA, and by having been tested / built against
 	an API version that is still supported by this version of NVDA.

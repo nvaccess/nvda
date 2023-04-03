@@ -253,6 +253,8 @@ def resetConfiguration(factoryDefaults=False):
 	languageHandler.setLanguage(lang)
 	# Addons
 	addonHandler.initialize()
+	from addonStore import dataManager
+	dataManager.initialize()
 	# Hardware background i/o
 	log.debug("initializing background i/o")
 	hwIo.initialize()
@@ -525,6 +527,8 @@ def main():
 	socket.setdefaulttimeout(10)
 	log.debug("Initializing add-ons system")
 	addonHandler.initialize()
+	from addonStore import dataManager
+	dataManager.initialize()
 	if globalVars.appArgs.disableAddons:
 		log.info("Add-ons are disabled. Restart NVDA to enable them.")
 	import appModuleHandler
