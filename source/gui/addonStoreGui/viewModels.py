@@ -217,13 +217,17 @@ class AddonListVM:
 		# ensure calling on the main thread.
 		core.callLater(delay=0, callable=self.updated.notify)
 
-	def getAddonAttrText(self, index: int, attrName: str) -> str:
+	def getAddonAttrText(self, index: int, attrName: str) -> Optional[str]:
 		""" Get the text for an item's attribute.
 		@param index: The index of the item in _addonsFilteredOrdered
 		@param attrName: The exposed attribute for the addon. See L{AddonList.presentedAttributes}
 		@return: The text for the addon attribute
 		"""
-		addonId = self._addonsFilteredOrdered[index]
+		try:
+			addonId = self._addonsFilteredOrdered[index]
+		except IndexError:
+			# Failed to get addonId, index may have been lost in refresh.
+			return None
 		listItemVM = self._addons[addonId]
 		return self._getAddonAttrText(listItemVM, attrName)
 
@@ -243,7 +247,13 @@ class AddonListVM:
 
 	def setSelection(self, index: Optional[int]) -> Optional[AddonListItemVM]:
 		self._validate(selectionIndex=index)
-		self.selectedAddonId = self._addonsFilteredOrdered[index] if index is not None else None
+		self.selectedAddonId = None
+		if index is not None:
+			try:
+				self.selectedAddonId = self._addonsFilteredOrdered[index]
+			except IndexError:
+				# Failed to get addonId, index may have been lost in refresh.
+				pass
 		selectedItemVM: Optional[AddonListItemVM] = self.getSelection()
 		log.debug(f"selected Item: {selectedItemVM}")
 		# ensure calling on the main thread.

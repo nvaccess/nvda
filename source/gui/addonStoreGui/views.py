@@ -152,6 +152,9 @@ class AddonVirtualList(
 			itemIndex,
 			AddonListVM.presentedAttributes[colIndex]
 		)
+		if dataItem is None:
+			# Failed to get dataItem, index may have been lost in refresh.
+			return ''
 		return str(dataItem)
 
 	def OnColClick(self, evt: wx.ListEvent):
