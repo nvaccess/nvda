@@ -15,13 +15,11 @@ import os
 
 import typing
 
-import builtins
 import globalVars
 import ctypes
 from ctypes import wintypes
 import monkeyPatches
 import NVDAState
-from languageHandler import makePgettext
 
 
 monkeyPatches.applyMonkeyPatches()
@@ -61,26 +59,7 @@ globalVars.appDir = appDir
 globalVars.appPid = os.getpid()
 
 
-import locale
-import gettext
-
-try:
-	trans = gettext.translation(
-		'nvda',
-		localedir=os.path.join(globalVars.appDir, 'locale'),
-		languages=[locale.getdefaultlocale()[0]]
-	)
-	trans.install()
-	# Install our pgettext function.
-	builtins.pgettext = makePgettext(trans)
-except:
-	gettext.install('nvda')
-	# Install a no-translation pgettext function
-	builtins.pgettext = lambda context, message: message
-
-import time
 import argparse
-import globalVars
 import config
 import logHandler
 from logHandler import log

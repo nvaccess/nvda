@@ -194,6 +194,12 @@ class Ia2Web(IAccessible):
 			return roleText
 		return super().roleText
 
+	def _get_roleTextBraille(self) -> str:
+		roleTextBraille = self.IA2Attributes.get('brailleroledescription')
+		if roleTextBraille:
+			return roleTextBraille
+		return super().roleTextBraille
+
 	def _get_states(self):
 		states=super(Ia2Web,self).states
 		# Ensure that ARIA gridcells always get the focusable state, even if the Browser fails to provide it.
@@ -203,6 +209,13 @@ class Ia2Web(IAccessible):
 		# Google has a custom ARIA attribute to force a node's editable state off (such as in Google Slides).
 		if self.IA2Attributes.get('goog-editable')=="false":
 			states.discard(controlTypes.State.EDITABLE)
+		if controlTypes.State.HASPOPUP in states:
+			popupState = aria.ariaHaspopupValuesToNVDAStates.get(
+				self.IA2Attributes.get("haspopup")
+			)
+			if popupState:
+				states.discard(controlTypes.State.HASPOPUP)
+				states.add(popupState)
 		return states
 
 	def _get_landmark(self):

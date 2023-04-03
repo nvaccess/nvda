@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-20 00:02+0000\n"
-"PO-Revision-Date: 2023-01-25 17:45+0100\n"
+"POT-Creation-Date: 2023-02-24 00:01+0000\n"
+"PO-Revision-Date: 2023-02-25 14:32+0100\n"
 "Last-Translator: Martina <letochova@seznam.cz>\n"
 "Language-Team: CS\n"
 "Language: cs\n"
@@ -4326,6 +4326,31 @@ msgstr ""
 msgid "Plugins reloaded"
 msgstr "Zásuvné moduly načteny"
 
+#. Translators: input help mode message for Report destination URL of navigator link command
+msgid ""
+"Report the destination URL of the link in the navigator object. If pressed "
+"twice, shows the URL in a window for easier review."
+msgstr ""
+"Zobrazí cílovou URL adresu zaměřeného odkazu. Dvojitým stiskem se zobrazí v "
+"samostatném okně pro lepší přehlednost."
+
+#. Translators: Informs the user that the window contains the destination of the
+#. link with given title
+msgid "Destination of: {name}"
+msgstr "Cíl: {name}"
+
+#. Translators: Tell user that the command has been run on something that is not a link
+msgid "Not a link."
+msgstr "Není odkaz."
+
+#. Translators: input help mode message for Report URL of navigator link in a window command
+msgid ""
+"Reports the destination URL of the link in the navigator object in a window, "
+"instead of just speaking it. May be preferred by braille users."
+msgstr ""
+"Zobrazí cílovou URL adresu zaměřeného odkazu v samostatném okně. To může víc "
+"vyhovovat uživatelům braillských řádků."
+
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Moves to the next object in a flattened view of the object navigation "
@@ -6628,21 +6653,37 @@ msgstr "Nelze najít okno s dokumentací."
 msgid "No track playing"
 msgstr "Žádná stopa se nepřehrává"
 
+#. Translators: Reported remaining time in Foobar2000
+msgid "{remainingTimeFormatted} remaining"
+msgstr "zbývá {remainingTimeFormatted}"
+
 #. Translators: Reported if the remaining time can not be calculated in Foobar2000
-msgid "Unable to determine remaining time"
+msgid "Remaining time not available"
 msgstr "Nelze zjistit zbývající čas"
 
 #. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Oznámí zbývající čas u aktuálně přehrávané stopy"
 
+#. Translators: Reported elapsed time in Foobar2000
+msgid "{elapsedTime} elapsed"
+msgstr "uplynulo {elapsedTime}"
+
+#. Translators: Reported if the elapsed time is not available in Foobar2000
+msgid "Elapsed time not available"
+msgstr "Nelze zjistit uplynulý čas"
+
 #. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
 msgid "Reports the elapsed time of the currently playing track, if any"
 msgstr "Oznámí uplynulý čas u aktuálně přehrávané stopy"
 
+#. Translators: Reported remaining time in Foobar2000
+msgid "{totalTime} total"
+msgstr "celkem {totalTime}"
+
 #. Translators: Reported if the total time is not available in Foobar2000
 msgid "Total time not available"
-msgstr "Celkový čas není k dispozici"
+msgstr "Nelze zjistit celkový čas"
 
 #. Translators: The description of an NVDA command for reading the length of the currently playing track in Foobar 2000.
 msgid "Reports the length of the currently playing track, if any"
@@ -11061,15 +11102,17 @@ msgid "row %s"
 msgstr "řádek %s"
 
 #. Translators: Speaks the row span added to the current row number (example output: through 5).
-#. Translators: Speaks the column span added to the current column number (example output: through 5).
-#, python-format
-msgid "through %s"
-msgstr "přes %s"
+msgid "through {endRow}"
+msgstr "do {endRow}"
 
 #. Translators: Speaks current column number (example output: column 3).
 #, python-format
 msgid "column %s"
 msgstr "sloupec %s"
+
+#. Translators: Speaks the column span added to the current column number (example output: through 5).
+msgid "through {endCol}"
+msgstr "do {endCol}"
 
 #. Translators: Speaks the row and column span added to the current row and column numbers
 #. (example output: through row 5 column 3).
@@ -11451,6 +11494,36 @@ msgstr "{curPercent:.0f}%"
 #. Translators: the current position's screen coordinates in pixels
 msgid "at {x}, {y}"
 msgstr "na {x}, {y}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds
+msgctxt "time format"
+msgid "{S}"
+msgstr "{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes
+msgctxt "time format"
+msgid "{M}:{S}"
+msgstr "{M}:{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes, {H} hours
+msgctxt "time format"
+msgid "{H}:{M}:{S}"
+msgstr "{H}:{M}:{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes, {H} hours, {D} day
+msgctxt "time format"
+msgid "{D} day {H}:{M}:{S}"
+msgstr "{D} den {H}:{M}:{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes, {H} hours, {D} days
+msgctxt "time format"
+msgid "{D} days {H}:{M}:{S}"
+msgstr "{D} dní {H}:{M}:{S}"
 
 #. Translators: This is the message for a warning shown if NVDA cannot determine if
 #. Windows is locked.
@@ -13149,6 +13222,12 @@ msgid ""
 msgstr ""
 "Pro použití řádků Albatross s NVDA: změňte maximální počet stavových buněk "
 "ve vnitřním menu Albatrossu na "
+
+#~ msgid "Unable to determine remaining time"
+#~ msgstr "Nelze zjistit zbývající čas"
+
+#~ msgid "through %s"
+#~ msgstr "přes %s"
 
 #~ msgid "Report line indentation with speech"
 #~ msgstr "Hlásit odsazení řečí"

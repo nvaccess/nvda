@@ -140,6 +140,9 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 		roleText=attrs.get("IAccessible2::attribute_roledescription")
 		if roleText:
 			attrs['roleText']=roleText
+		roleTextBraille = attrs.get("IAccessible2::attribute_brailleroledescription")
+		if roleTextBraille:
+			attrs['roleTextBraille'] = roleTextBraille
 		if attrs.get("IAccessible2::attribute_dropeffect", "none") != "none":
 			states.add(controlTypes.State.DROPTARGET)
 		if role==controlTypes.Role.LINK and controlTypes.State.LINKED not in states:
@@ -167,6 +170,12 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			if controlTypes.State.CHECKED in states:
 				states.discard(controlTypes.State.CHECKED)
 				states.add(controlTypes.State.ON)
+		popupState = aria.ariaHaspopupValuesToNVDAStates.get(
+			attrs.get("IAccessible2::attribute_haspopup")
+		)
+		if popupState:
+			states.discard(controlTypes.State.HASPOPUP)
+			states.add(popupState)
 		attrs['role']=role
 		attrs['states']=states
 		if level != "" and level is not None:
