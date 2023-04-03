@@ -47,7 +47,14 @@ def queueEvent(eventName,obj,**kwargs):
 		_pendingEventCountsByName[eventName]=_pendingEventCountsByName.get(eventName,0)+1
 		_pendingEventCountsByObj[obj]=_pendingEventCountsByObj.get(obj,0)+1
 		_pendingEventCountsByNameAndObj[(eventName,obj)]=_pendingEventCountsByNameAndObj.get((eventName,obj),0)+1
-	queueHandler.queueFunction(queueHandler.eventQueue,_queueEventCallback,eventName,obj,kwargs)
+	queueHandler.queueFunction(
+		queueHandler.eventQueue,
+		_queueEventCallback,
+		eventName,
+		obj,
+		kwargs,
+		_immediate=eventName == "gainFocus"
+	)
 
 
 def _queueEventCallback(eventName,obj,kwargs):

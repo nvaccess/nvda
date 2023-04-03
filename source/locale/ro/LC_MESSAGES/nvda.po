@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Romanian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-03 00:02+0000\n"
-"PO-Revision-Date: 2023-02-04 23:22+0200\n"
+"POT-Creation-Date: 2023-03-17 00:01+0000\n"
+"PO-Revision-Date: 2023-03-22 21:14+0200\n"
 "Last-Translator: Florian Ionașcu <florianionascu@hotmail.com>\n"
 "Language-Team: mihai.craciun@gmail.com, dan.punga@gmail.com, "
 "florianionascu@hotmail.com, nicusoruntila@yahoo.com\n"
@@ -3257,7 +3257,7 @@ msgstr ""
 
 #. Translators: Reported when attempting to move the navigator object to the object under mouse pointer.
 msgid "Move navigator object to mouse"
-msgstr "Mută obiectul navigator la mause"
+msgstr "Mută obiectul navigator la maus"
 
 #. Translators: Script help message for next review mode command.
 msgid ""
@@ -4432,6 +4432,34 @@ msgstr ""
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
 msgstr "Extensii plug-in reîncărcate"
+
+#. Translators: input help mode message for Report destination URL of navigator link command
+msgid ""
+"Report the destination URL of the link in the navigator object. If pressed "
+"twice, shows the URL in a window for easier review."
+msgstr ""
+"Raportează URL-ul de destinație al link-ului din obiectul navigator. Dacă "
+"este apăsată de două ori, afișează URL-ul într-o fereastră pentru o "
+"examinare mai ușoară."
+
+#. Translators: Informs the user that the window contains the destination of the
+#. link with given title
+#, python-brace-format
+msgid "Destination of: {name}"
+msgstr "Destinația: {name}"
+
+#. Translators: Tell user that the command has been run on something that is not a link
+msgid "Not a link."
+msgstr "Nu este un link."
+
+#. Translators: input help mode message for Report URL of navigator link in a window command
+msgid ""
+"Reports the destination URL of the link in the navigator object in a window, "
+"instead of just speaking it. May be preferred by braille users."
+msgstr ""
+"Raportează URL-ul de destinație al link-ului din obiectul navigator într-o "
+"fereastră în loc doar să-l rostească. Le poate fi de folos utilizatorilor "
+"braille."
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -6773,19 +6801,38 @@ msgstr "Nu se poate găsi fereastra documentației."
 msgid "No track playing"
 msgstr "Nu este redată nicio melodie"
 
+#. Translators: Reported remaining time in Foobar2000
+#, python-brace-format
+msgid "{remainingTimeFormatted} remaining"
+msgstr "{remainingTimeFormatted} timp rămas"
+
 #. Translators: Reported if the remaining time can not be calculated in Foobar2000
-msgid "Unable to determine remaining time"
-msgstr "Nu se poate determina timpul rămas"
+msgid "Remaining time not available"
+msgstr "Nu este disponibil timpul rămas"
 
 #. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Anunță timpul rămas din melodia redată acum, dacă există"
+
+#. Translators: Reported elapsed time in Foobar2000
+#, python-brace-format
+msgid "{elapsedTime} elapsed"
+msgstr "{elapsedTime} timp scurs"
+
+#. Translators: Reported if the elapsed time is not available in Foobar2000
+msgid "Elapsed time not available"
+msgstr "Nu este disponibil timpul scurs"
 
 #. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
 msgid "Reports the elapsed time of the currently playing track, if any"
 msgstr ""
 "Anunță timpul rămas din melodia a cărei redare este în desfășurare, dacă "
 "există"
+
+#. Translators: Reported remaining time in Foobar2000
+#, python-brace-format
+msgid "{totalTime} total"
+msgstr "{totalTime} în total"
 
 #. Translators: Reported if the total time is not available in Foobar2000
 msgid "Total time not available"
@@ -11305,15 +11352,19 @@ msgid "row %s"
 msgstr "rând %s"
 
 #. Translators: Speaks the row span added to the current row number (example output: through 5).
-#. Translators: Speaks the column span added to the current column number (example output: through 5).
-#, python-format
-msgid "through %s"
-msgstr "prin %s"
+#, python-brace-format
+msgid "through {endRow}"
+msgstr "prin {endRow}"
 
 #. Translators: Speaks current column number (example output: column 3).
 #, python-format
 msgid "column %s"
 msgstr "coloană %s"
+
+#. Translators: Speaks the column span added to the current column number (example output: through 5).
+#, python-brace-format
+msgid "through {endCol}"
+msgstr "prin {endCol}"
 
 #. Translators: Speaks the row and column span added to the current row and column numbers
 #. (example output: through row 5 column 3).
@@ -11708,6 +11759,41 @@ msgstr "{curPercent:.0f}%"
 #, python-brace-format
 msgid "at {x}, {y}"
 msgstr "la {x}, {y}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds
+#, python-brace-format
+msgctxt "time format"
+msgid "{S}"
+msgstr "{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes
+#, python-brace-format
+msgctxt "time format"
+msgid "{M}:{S}"
+msgstr "{M}:{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes, {H} hours
+#, python-brace-format
+msgctxt "time format"
+msgid "{H}:{M}:{S}"
+msgstr "{H}:{M}:{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes, {H} hours, {D} day
+#, python-brace-format
+msgctxt "time format"
+msgid "{D} day {H}:{M}:{S}"
+msgstr "{D} day {H}:{M}:{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes, {H} hours, {D} days
+#, python-brace-format
+msgctxt "time format"
+msgid "{D} days {H}:{M}:{S}"
+msgstr "{D} days {H}:{M}:{S}"
 
 #. Translators: This is the message for a warning shown if NVDA cannot determine if
 #. Windows is locked.
@@ -13515,6 +13601,12 @@ msgid ""
 msgstr ""
 "Pentru a utiliza Albatross cu NVDA: schimbați numărul stării celulelor din "
 "meniul intern al Albatross la majoritatea "
+
+#~ msgid "Unable to determine remaining time"
+#~ msgstr "Nu se poate determina timpul rămas"
+
+#~ msgid "through %s"
+#~ msgstr "prin %s"
 
 #~ msgid "Report line indentation with speech"
 #~ msgstr "Anunță indentație rând cu vorbire"

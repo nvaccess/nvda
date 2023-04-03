@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2016-2021 NV Access Limited, Derek Riemer
+# Copyright (C) 2016-2022 NV Access Limited, Derek Riemer, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 import collections
@@ -304,7 +304,9 @@ class MessageDialog(DPIScaledDialog):
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		contentsSizer = guiHelper.BoxSizerHelper(parent=self, orientation=wx.VERTICAL)
 
-		text = wx.StaticText(self, label=message)
+		# Double ampersand in the dialog's label to avoid this character to be interpreted as an accelerator.
+		label = message.replace('&', '&&')
+		text = wx.StaticText(self, label=label)
 		text.Wrap(self.scaleSize(self.GetSize().Width))
 		contentsSizer.addItem(text)
 		self._addContents(contentsSizer)
