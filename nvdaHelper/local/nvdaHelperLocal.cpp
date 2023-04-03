@@ -240,7 +240,7 @@ BOOL WINAPI fake_OpenClipboard(HWND hwndOwner) {
 	return false;
 }
 
-void nvdaHelperLocal_initialize(int secureMode) {
+void nvdaHelperLocal_initialize(bool secureMode) {
 	startServer();
 	mainThreadId = GetCurrentThreadId();
 	cancelCallEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
