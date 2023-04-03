@@ -19,13 +19,15 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <rpc.h>
 #include <sddl.h>
 #include <common/log.h>
+#include <common/apiHook.h>
 #include <local/nvdaControllerInternal.h>
 #include "nvdaHelperLocal.h"
 #include "dllImportTableHooks.h"
 #include "rpcsrv.h"
 
-DllImportTableHooks* oleaccHooks = NULL;
-DllImportTableHooks* uiaCoreHooks = NULL;
+decltype(&SendMessageW) real_SendMessageW = nullptr;
+decltype(&SendMessageTimeoutW) real_SendMessageTimeoutW = nullptr;
+decltype(&OpenClipboard) real_OpenClipboard = nullptr;
 
 typedef struct _RPC_SECURITY_QOS_V5_W {
   unsigned long Version;
@@ -33,7 +35,7 @@ typedef struct _RPC_SECURITY_QOS_V5_W {
   unsigned long IdentityTracking;
   unsigned long ImpersonationType;
   unsigned long AdditionalSecurityInfoType;
-  union 
+  union
       {
       RPC_HTTP_TRANSPORT_CREDENTIALS_W *HttpCredentials;
       } u;
@@ -53,7 +55,7 @@ handle_t createRemoteBindingHandle(wchar_t* uuidString) {
 	if((rpcStatus=RpcBindingFromStringBinding(stringBinding,&bindingHandle))!=RPC_S_OK) {
 		LOG_ERROR(L"RpcBindingFromStringBinding failed with status "<<rpcStatus);
 		return NULL;
-	} 
+	}
 	//On Windows 8 we must allow AppContainer servers to communicate back to us
 	//Detect Windows 8 by looking for RpcServerRegisterIf3
 	HANDLE rpcrt4Handle=GetModuleHandle(L"rpcrt4.dll");
@@ -106,7 +108,7 @@ DWORD WINAPI bgSendMessageThreadProc(LPVOID param) {
 				bgSendMessageData.error = ERROR_CANCELLED;
 				break;
 			}
-			if (SendMessageTimeoutW(bgSendMessageData.hwnd, bgSendMessageData.Msg, bgSendMessageData.wParam, bgSendMessageData.lParam, bgSendMessageData.fuFlags, std::min(remainingTimeout, CANCELSENDMESSAGE_CHECK_INTERVAL), &bgSendMessageData.dwResult) != 0) {
+			if (real_SendMessageTimeoutW(bgSendMessageData.hwnd, bgSendMessageData.Msg, bgSendMessageData.wParam, bgSendMessageData.lParam, bgSendMessageData.fuFlags, std::min(remainingTimeout, CANCELSENDMESSAGE_CHECK_INTERVAL), &bgSendMessageData.dwResult) != 0) {
 				// Success.
 				bgSendMessageData.error = 0;
 				break;
@@ -147,7 +149,7 @@ LRESULT cancellableSendMessageTimeout(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM
 	DWORD currentThreadId = GetCurrentThreadId();
 	if (currentThreadId == mainThreadId && GetWindowThreadProcessId(hwnd, NULL) == mainThreadId) {
 		// We're sending a message to our own thread, so just forward the call.
-		return SendMessageTimeoutW(hwnd, Msg, wParam, lParam, fuFlags, uTimeout, lpdwResult);
+		return real_SendMessageTimeoutW(hwnd, Msg, wParam, lParam, fuFlags, uTimeout, lpdwResult);
 	}
 
 	if (currentThreadId != mainThreadId) {
@@ -167,7 +169,7 @@ LRESULT cancellableSendMessageTimeout(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM
 				SetLastError(ERROR_CANCELLED);
 				return 0;
 			}
-			if ((ret = SendMessageTimeoutW(hwnd, Msg, wParam, lParam, fuFlags, std::min(remainingTimeout, CANCELSENDMESSAGE_CHECK_INTERVAL), lpdwResult)) != 0 || GetLastError() != ERROR_TIMEOUT) {
+			if ((ret = real_SendMessageTimeoutW(hwnd, Msg, wParam, lParam, fuFlags, std::min(remainingTimeout, CANCELSENDMESSAGE_CHECK_INTERVAL), lpdwResult)) != 0 || GetLastError() != ERROR_TIMEOUT) {
 				// Success or error other than timeout.
 				return ret;
 			}
@@ -232,7 +234,13 @@ LRESULT WINAPI fake_SendMessageTimeoutW(HWND hwnd, UINT Msg, WPARAM wParam, LPAR
 	return cancellableSendMessageTimeout(hwnd, Msg, wParam, lParam, fuFlags, uTimeout, lpdwResult);
 }
 
-void nvdaHelperLocal_initialize() {
+//A replacement OpenClipboard function to disable the use of the clipboard in a secure mode NVDA process
+//Simply returns false without calling the original OpenClipboard
+BOOL WINAPI fake_OpenClipboard(HWND hwndOwner) {
+	return false;
+}
+
+void nvdaHelperLocal_initialize(bool secureMode) {
 	startServer();
 	mainThreadId = GetCurrentThreadId();
 	cancelCallEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
@@ -240,36 +248,23 @@ void nvdaHelperLocal_initialize() {
 	bgSendMessageData.completeEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
 	bgSendMessageData.isActive = false;
 	CloseHandle(CreateThread(NULL, 0, bgSendMessageThreadProc, NULL, 0, NULL));
-	HMODULE oleacc = LoadLibraryA("oleacc.dll");
-	if (!oleacc)
-		return;
-	oleaccHooks = new DllImportTableHooks(oleacc);
-	oleaccHooks->requestFunctionHook("USER32.dll", "SendMessageW", fake_SendMessageW);
-	oleaccHooks->requestFunctionHook("USER32.dll", "SendMessageTimeoutW", fake_SendMessageTimeoutW);
-	oleaccHooks->hookFunctions();
-	HMODULE uiaCore = LoadLibraryA("UIAutomationCore.dll");
-	// It is not an error if UIA isn't present.
-	if (uiaCore) {
-		uiaCoreHooks = new DllImportTableHooks(uiaCore);
-		uiaCoreHooks->requestFunctionHook("USER32.dll", "SendMessageW", fake_SendMessageW);
-		uiaCoreHooks->requestFunctionHook("USER32.dll", "SendMessageTimeoutW", fake_SendMessageTimeoutW);
-		uiaCoreHooks->hookFunctions();
+	// Begin API hooking transaction
+	apiHook_beginTransaction();
+	// Hook SendMessageW and SendMessageTimeoutW to ensure that
+	// we can cancel such calls when they would otherwise freeze NVDA's process.
+	apiHook_hookFunction_safe(SendMessageW, fake_SendMessageW, &real_SendMessageW);
+	apiHook_hookFunction_safe(SendMessageTimeoutW, fake_SendMessageTimeoutW, &real_SendMessageTimeoutW);
+	// For secure mode NVDA process, hook OpenClipboard to disable usage of the clipboard
+	if (secureMode) {
+		apiHook_hookFunction_safe(OpenClipboard, fake_OpenClipboard, &real_OpenClipboard);
 	}
+	// Enable all registered API hooks by committing the transaction
+	apiHook_commitTransaction();
 }
 
 void nvdaHelperLocal_terminate() {
-	if (uiaCoreHooks) {
-		uiaCoreHooks->unhookFunctions();
-		FreeLibrary(uiaCoreHooks->targetModule);
-		delete uiaCoreHooks;
-		uiaCoreHooks = NULL;
-	}
-	if (oleaccHooks) {
-		oleaccHooks->unhookFunctions();
-		FreeLibrary(oleaccHooks->targetModule);
-		delete oleaccHooks;
-		oleaccHooks = NULL;
-	}
+	// Unregister and terminate API hooks
+	apiHook_terminate();
 	// Terminate the background SendMessage thread.
 	bgSendMessageData.hwnd = NULL;
 	SetEvent(bgSendMessageData.execEvent);

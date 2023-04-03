@@ -18,7 +18,11 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 handle_t createRemoteBindingHandle(wchar_t* uuidString);
 LRESULT cancellableSendMessageTimeout(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM lParam, UINT fuFlags, UINT uTimeout, PDWORD_PTR lpdwResult);
-void nvdaHelperLocal_initialize();
+/*
+ * Initializes the NVDAHelper local library
+ * @param secureMode true specifies that the NVDA process initializing NVDAHelper is in secure mode
+ */
+void nvdaHelperLocal_initialize(bool secureMode);
 void nvdaHelperLocal_terminate();
 
 #endif
