@@ -7,6 +7,9 @@
 used, however for more advanced requirements these utilities can be used directly.
 """
 
+
+# "annotations" Needed to reference BoundMethodWeakref in one of the init params of itself.
+from __future__ import annotations
 import weakref
 import inspect
 from typing import (
@@ -41,11 +44,18 @@ class BoundMethodWeakref(Generic[HandlerT]):
 	"""
 	handlerKey: Tuple[int, int]
 
-	def __init__(self, target: HandlerT, onDelete):
-		def onRefDelete(weak):
-			"""Calls onDelete for our BoundMethodWeakref when one of the individual weakrefs (instance or function) dies.
-			"""
-			onDelete(self)
+	def __init__(
+			self,
+			target: HandlerT,
+			onDelete: Optional[Callable[[BoundMethodWeakref], None]] = None
+	):
+		if onDelete:
+			def onRefDelete(weak):
+				"""Calls onDelete for our BoundMethodWeakref when one of the individual weakrefs (instance or function) dies.
+				"""
+				onDelete(self)
+		else:
+			onRefDelete = None
 		inst = target.__self__
 		func = target.__func__
 		self.weakInst = weakref.ref(inst, onRefDelete)
