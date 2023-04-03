@@ -128,7 +128,7 @@ def processText(text):
 		textInfo, obj = review.getObjectPosition(focus)
 	except AttributeError:  # no makeTextInfo
 		textInfo = None
-	# import at this stage to avoid crashes
+	# late import to prevent circular dependency
 	# ConsoleUIATextInfo is shared by apiLevel 1 and 0 implementations (not 2)
 	from NVDAObjects.UIA.winConsoleUIA import ConsoleUIATextInfo
 	if isinstance(textInfo, ConsoleUIATextInfo):
