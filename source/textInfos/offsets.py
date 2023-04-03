@@ -180,6 +180,9 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			textList.append(_("at {x}, {y}").format(x=curPoint.x,y=curPoint.y))
 		return ", ".join(textList)
 
+	# C901 '_get_boundingRects' is too complex
+	# Note: when working on _get_boundingRects, look for opportunities to simplify
+	# and move logic out into smaller helper functions.
 	def _get_boundingRects(self) -> List[locationHelper.RectLTWH]:  # noqa: C901
 		if self.isCollapsed:
 			return []
