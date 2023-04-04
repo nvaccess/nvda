@@ -9,6 +9,7 @@ from logHandler import log
 import os
 import codecs
 import review
+import api
 from . import dictFormatUpgrade
 from .speechDictVars import speechDictsPath
 
@@ -119,7 +120,7 @@ def processText(text):
 	if not globalVars.speechDictionaryProcessing:
 		return text
 	# #14689: API level < 2 UIA consoles have many blank lines, which slows processing to a halt
-	focus = globalVars.focusObject
+	focus = api.getFocusObject()
 	try:
 		# get TextInfo implementation for object review mode
 		textInfo, obj = review.getObjectPosition(focus)
