@@ -115,9 +115,6 @@ class SpeechDict(list):
 		return text
 
 
-# useful for #14689 (see below)
-_IGNORE_TRAILING_WHITESPACE_LENGTH = 100
-
 def processText(text):
 	if not globalVars.speechDictionaryProcessing:
 		return text
