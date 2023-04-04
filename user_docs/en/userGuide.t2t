@@ -2137,8 +2137,8 @@ This may also be the case if you are unsure if the settings have been changed.
 
 ==== Enable loading custom code from Developer Scratchpad Directory ====[AdvancedSettingsEnableScratchpad]
 When developing add-ons for NVDA, it is useful to be able to test code as you are writing it.
-This option when enabled, allows NVDA to load custom appModules, globalPlugins, brailleDisplayDrivers and synthDrivers, from a special developer scratchpad directory in your NVDA user configuration directory.
-Previously NVDA would load custom code directly from the user configuration directory, with no way of disabling this.
+This option when enabled, allows NVDA to load custom appModules, globalPlugins, brailleDisplayDrivers, synthDrivers and vision enhancement providers, from a special developer scratchpad directory in your NVDA user configuration directory.
+As their equivalents in add-ons, these modules are loaded when starting NVDA or, in the case of appModules and globalPlugins, when [reloading plugins #ReloadPlugins].
 This option is off by default, ensuring that no untested code is ever run in NVDA with out the user's explicit knowledge.
 If you wish to distribute custom code to others, you should package it as an NVDA add-on.
 
