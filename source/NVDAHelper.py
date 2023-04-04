@@ -563,7 +563,7 @@ def initialize() -> None:
 		except AttributeError as e:
 			log.error("nvdaHelperLocal function pointer for %s could not be found, possibly old nvdaHelperLocal dll"%name,exc_info=True)
 			raise e
-	localLib.nvdaHelperLocal_initialize()
+	localLib.nvdaHelperLocal_initialize(globalVars.appArgs.secure)
 	generateBeep=localLib.generateBeep
 	generateBeep.argtypes=[c_char_p,c_float,c_int,c_int,c_int]
 	generateBeep.restype=c_int
@@ -588,7 +588,7 @@ def initialize() -> None:
 		log.critical("Error loading nvdaHelperRemote.dll: %s" % WinError())
 		return
 	_remoteLib=CDLL("nvdaHelperRemote",handle=h)
-	if _remoteLib.injection_initialize(globalVars.appArgs.secure) == 0:
+	if _remoteLib.injection_initialize() == 0:
 		raise RuntimeError("Error initializing NVDAHelperRemote")
 	if not _remoteLib.installIA2Support():
 		log.error("Error installing IA2 support")

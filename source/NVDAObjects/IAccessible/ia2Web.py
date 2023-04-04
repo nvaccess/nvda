@@ -194,6 +194,12 @@ class Ia2Web(IAccessible):
 			return roleText
 		return super().roleText
 
+	def _get_roleTextBraille(self) -> str:
+		roleTextBraille = self.IA2Attributes.get('brailleroledescription')
+		if roleTextBraille:
+			return roleTextBraille
+		return super().roleTextBraille
+
 	def _get_states(self):
 		states=super(Ia2Web,self).states
 		# Ensure that ARIA gridcells always get the focusable state, even if the Browser fails to provide it.
