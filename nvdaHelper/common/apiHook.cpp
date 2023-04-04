@@ -18,9 +18,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <windows.h>
 #include <delayimp.h>
 #include <detours/src/detours.h>
-#include <remote/nvdaControllerInternal.h>
-#include <common/log.h>
-#include "dllmain.h"
+#include "log.h"
 #include "apiHook.h"
 
 using namespace std;
