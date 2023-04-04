@@ -43,15 +43,16 @@ This only worked for Bluetooth Serial ports before. (#14524)
 - In Mozilla Firefox and Google Chrome, typed characters are no longer reported in some text boxes even when speak typed characters is disabled. (#14666)
 - You can now use browse mode in Chromium Embedded Controls where it was not possible previously. (#13493, #8553)
 - For symbols which do not have a symbol description in the current locale, the default English symbol level will be used. (#14558, #14417)
-- Fixes for Windows 11 Notepad:
-  - NVDA can once again announce status bar contents. (#14573)
-  - Switching between tabs will announce the new tab name and position. (#14587)
+- Fixes for Windows 11:
+  - NVDA can once again announce Notepad status bar contents. (#14573)
+  - Switching between tabs will announce the new tab name and position for Notepad and File Explorer. (#14587, #14388)
   -
 - In Mozilla Firefox, moving the mouse over text after a link now reliably reports the text. (#9235)
 - In Windows 10 and 11 Calculator, a portable copy of NVDA will no longer do nothing or play error tones when entering expressions in standard calculator in compact overlay mode. (#14679)
 - When trying to report the URL for a link without a href attribute NVDA is no longer silent.
 Instead NVDA reports that the link has no destination. (#14723)
 - Several stability fixes to input/output for braille displays, resulting in less frequent errors and crashes of NVDA. (#14627)
+- NVDA again recovers from many more situations such as applications that stop responding which previously caused it to freeze completely. (#14759) 
 -
 
 
@@ -68,6 +69,7 @@ This dictionary can be imported in another gesture by passing it either to the c
 If not provided, the default thread is used. (#14627)
 - ``hwIo.ioThread.IoThread`` now has a ``setWaitableTimer`` method to set a waitable timer using a python function.
 Similarly, the new ``getCompletionRoutine`` method allows you to convert a python method into a completion routine safely. (#14627)
+- ``offsets.OffsetsTextInfo._get_boundingRects`` should now always return ``List[locationHelper.rectLTWH]`` as expected for a subclass of ``textInfos.TextInfo``. (#12424)
 -
 
 === Deprecations ===
