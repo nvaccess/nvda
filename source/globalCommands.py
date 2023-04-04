@@ -2092,6 +2092,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Shows the NVDA menu"),
 		gestures=("kb:NVDA+n", "ts:2finger_double_tap")
 	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
 	def script_showGui(self,gesture):
 		gui.showGui()
 
@@ -2900,6 +2901,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_CONFIG,
 		gesture="kb:NVDA+control+g"
 	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
 	def script_activateGeneralSettingsDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onGeneralSettingsCommand, None)
 
@@ -2909,6 +2911,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_CONFIG,
 		gesture="kb:NVDA+control+s"
 	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
 	def script_activateSynthesizerDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onSelectSynthesizerCommand, None)
 
@@ -2918,6 +2921,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_CONFIG,
 		gesture="kb:NVDA+control+v"
 	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
 	def script_activateVoiceDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onSpeechSettingsCommand, None)
 
@@ -2927,6 +2931,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_CONFIG,
 		gesture="kb:NVDA+control+a"
 	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
 	def script_activateBrailleDisplayDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onSelectBrailleDisplayCommand, None)
 
@@ -2935,6 +2940,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Shows NVDA's braille settings"),
 		category=SCRCAT_CONFIG
 	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
 	def script_activateBrailleSettingsDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onBrailleSettingsCommand, None)
 
@@ -2944,6 +2950,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_CONFIG,
 		gesture="kb:NVDA+control+k"
 	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
 	def script_activateKeyboardSettingsDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onKeyboardSettingsCommand, None)
 
@@ -2953,6 +2960,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_CONFIG,
 		gesture="kb:NVDA+control+m"
 	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
 	def script_activateMouseSettingsDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onMouseSettingsCommand, None)
 
@@ -2961,6 +2969,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Shows NVDA's review cursor settings"),
 		category=SCRCAT_CONFIG
 	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
 	def script_activateReviewCursorDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onReviewCursorCommand, None)
 
@@ -2969,6 +2978,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Shows NVDA's input composition settings"),
 		category=SCRCAT_CONFIG
 	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
 	def script_activateInputCompositionDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onInputCompositionCommand, None)
 
@@ -2978,6 +2988,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_CONFIG,
 		gesture="kb:NVDA+control+o"
 	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
 	def script_activateObjectPresentationDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame. onObjectPresentationCommand, None)
 
@@ -2987,6 +2998,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_CONFIG,
 		gesture="kb:NVDA+control+b"
 	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
 	def script_activateBrowseModeDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onBrowseModeCommand, None)
 
@@ -2996,6 +3008,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_CONFIG,
 		gesture="kb:NVDA+control+d"
 	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
 	def script_activateDocumentFormattingDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onDocumentFormattingCommand, None)
 
@@ -3004,6 +3017,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Shows the NVDA default dictionary dialog"),
 		category=SCRCAT_CONFIG
 	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
 	def script_activateDefaultDictionaryDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onDefaultDictionaryCommand, None)
 
@@ -3012,6 +3026,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Shows the NVDA voice-specific dictionary dialog"),
 		category=SCRCAT_CONFIG
 	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
 	def script_activateVoiceDictionaryDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onVoiceDictionaryCommand, None)
 
@@ -3020,6 +3035,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Shows the NVDA temporary dictionary dialog"),
 		category=SCRCAT_CONFIG
 	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
 	def script_activateTemporaryDictionaryDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onTemporaryDictionaryCommand, None)
 
@@ -3028,6 +3044,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Shows the NVDA symbol pronunciation dialog"),
 		category=SCRCAT_CONFIG
 	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
 	def script_activateSpeechSymbolsDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onSpeechSymbolsCommand, None)
 
@@ -3036,6 +3053,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Shows the NVDA input gestures dialog"),
 		category=SCRCAT_CONFIG
 	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
 	def script_activateInputGesturesDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onInputGesturesCommand, None)
 
