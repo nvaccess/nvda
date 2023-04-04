@@ -133,7 +133,8 @@ def processText(text):
 	from NVDAObjects.UIA.winConsoleUIA import ConsoleUIATextInfo
 	if isinstance(textInfo, ConsoleUIATextInfo):
 		stripText = text.rstrip()
-		if len(text) - len(stripText) > _IGNORE_TRAILING_WHITESPACE_LENGTH:
+		IGNORE_TRAILING_WHITESPACE_LENGTH = 100
+		if len(text) - len(stripText) > IGNORE_TRAILING_WHITESPACE_LENGTH:
 			text = stripText
 	for type in dictTypes:
 		text=dictionaries[type].sub(text)
