@@ -727,7 +727,7 @@ class AddonManifest(ConfigObj):
 	"""
 # NVDA Add-on Manifest configuration specification
 # Add-on unique name
-# Suggest convention is lowerCamelCase.
+# Suggested convention is lowerCamelCase.
 name = string()
 
 # short summary (label) of the add-on to show to users.
@@ -740,7 +740,7 @@ description = string(default=None)
 author = string()
 
 # Version of the add-on.
-# Should be in <major>.<minor>.<patch> format.
+# Suggested convention is <major>.<minor>.<patch> format.
 version = string()
 
 # The minimum required NVDA version for this add-on to work correctly.
