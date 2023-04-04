@@ -56,7 +56,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 # Audio settings
 [audio]
 	audioDuckingMode = integer(default=0)
-	wasapi = boolean(default=false)
+	wasapi = boolean(default=true)
 
 # Braille settings
 [braille]
