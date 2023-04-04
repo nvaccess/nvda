@@ -41,6 +41,7 @@ from . import Window
 from ..behaviors import EditableTextWithoutAutoSelectDetection
 from . import _msOfficeChart
 import locationHelper
+from enum import IntEnum
 
 #Word constants
 
@@ -219,6 +220,56 @@ WdThemeColorIndexToMsoThemeColorSchemeIndex={
 	wdThemeColorText2:msoThemeDark2,
 }
 
+
+# document useful values from:
+# https://learn.microsoft.com/en-us/office/vba/api/word.wdcolorindex
+class WinWordColorIndex(IntEnum):
+
+	wdBlack = 1
+	wdBlue = 2
+	wdBrightGreen = 4
+	wdDarkBlue = 9
+	wdDarkRed = 13
+	wdDarkYellow = 14
+	wdGray25 = 16
+	wdGray50 = 15
+	wdGreen = 11
+	wdPink = 5
+	wdRed = 6
+	wdTeal = 10
+	wdTurquoise = 3
+	wdViolet = 12
+	wdWhite = 8
+	wdYellow = 7
+
+
+# document useful values from:
+# https://learn.microsoft.com/en-us/office/vba/api/word.wdcolor
+class WinWordColor(IntEnum):
+
+	wdBlack = 0
+	wdBlue = 16711680
+	wdBrightGreen = 65280
+	wdDarkBlue = 8388608
+	wdDarkRed = 128
+	wdDarkYellow = 32896
+	wdGray25 = 12632256
+	wdGray50 = 8421504
+	wdGreen = 32768
+	wdPink = 16711935
+	wdRed = 255
+	wdTeal = 8421376
+	wdTurquoise = 16776960
+	wdViolet = 8388736
+	wdWhite = 16777215
+	wdYellow = 65535
+
+
+# map (highlighting) color index to color decimal value
+_colorIndexToColor: Dict[WinWordColorIndex, WinWordColor] = {
+	colorIndex.value: WinWordColor[colorIndex.name].value for colorIndex in WinWordColorIndex
+}
+
 wdRevisionTypeLabels={
 	# Translators: a Microsoft Word revision type (inserted content) 
 	wdRevisionInsert:_("insertion"),
@@ -327,6 +378,7 @@ formatConfigFlagsMap = {
 	"reportLineSpacing": 0x40000,
 	"reportSuperscriptsAndSubscripts": 0x80000,
 	"reportGraphics": 0x100000,
+	"reportHighlight": 0x200000,
 }
 formatConfigFlag_includeLayoutTables = 0x20000
 
@@ -876,6 +928,20 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		color=field.pop('color',None)
 		if color is not None:
 			field['color']=self.obj.winwordColorToNVDAColor(int(color))
+		bgColor = field.pop('background-color', None)
+		if bgColor is not None:
+			field['background-color'] = self.obj.winwordColorToNVDAColor(int(bgColor))
+		hlColorIndex = field.pop('highlight-color-index', None)
+		if hlColorIndex is not None:
+			hlColor = None
+			try:
+				val = _colorIndexToColor[int(hlColorIndex)]
+				hlColor = self.obj.winwordColorToNVDAColor(val)
+			except (KeyError, ValueError):
+				log.debugWarning("highlight color error", exc_info=True)
+				pass
+			if hlColor is not None:
+				field['highlight-color'] = hlColor
 		try:
 			languageId = int(field.pop('wdLanguageId',0))
 			if languageId:
