@@ -182,8 +182,7 @@ LRESULT cancellableSendMessageTimeout(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM
 
 	if (bgSendMessageData.isActive) {
 		// We can't handle reentrancy.
-		SetLastError(ERROR_CANCELLED);
-		return 0;
+		return real_SendMessageTimeoutW(hwnd, Msg, wParam, lParam, fuFlags, uTimeout, lpdwResult);
 	}
 
 	// #3825: SendMessageTimeout can block until the window responds in some cases despite the timeout,
