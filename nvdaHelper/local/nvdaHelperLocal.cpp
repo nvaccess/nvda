@@ -137,6 +137,12 @@ LRESULT cancellableSendMessageTimeout(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM
 		return 0;
 	}
 
+	DWORD currentThreadId = GetCurrentThreadId();
+	if (GetWindowThreadProcessId(hwnd, NULL) == currentThreadId) {
+		// We're sending a message to the current thread, so just forward the call.
+		return real_SendMessageTimeoutW(hwnd, Msg, wParam, lParam, fuFlags, uTimeout, lpdwResult);
+	}
+
 	if (WaitForSingleObject(cancelCallEvent, 0) == WAIT_OBJECT_0) {
 		// Already cancelled, so don't bother going any further.
 		SetLastError(ERROR_CANCELLED);
@@ -146,26 +152,22 @@ LRESULT cancellableSendMessageTimeout(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM
 	fuFlags |= SMTO_ABORTIFHUNG;
 	fuFlags &= ~SMTO_NOTIMEOUTIFNOTHUNG;
 
-	DWORD currentThreadId = GetCurrentThreadId();
-	if (GetWindowThreadProcessId(hwnd, NULL) == currentThreadId) {
-		// We're sending a message to the current thread, so just forward the call.
-		return real_SendMessageTimeoutW(hwnd, Msg, wParam, lParam, fuFlags, uTimeout, lpdwResult);
-	}
-
 	if (currentThreadId != mainThreadId) {
 		// We're sending from a thread other than the main thread.
 		// We don't want to use a background thread in this case,
 		// but we can still improve things.
-		if (uTimeout > 10000)
+		if (uTimeout > 10000) {
 			uTimeout = 10000;
+		}
 		// SMTO_ABORTIFHUNG only aborts if the window is already hung,
 		// not if the window hangs while sending.
 		LRESULT ret = 0;
 		for (UINT remainingTimeout = uTimeout; remainingTimeout > 0; remainingTimeout -= (remainingTimeout > CANCELSENDMESSAGE_CHECK_INTERVAL) ? CANCELSENDMESSAGE_CHECK_INTERVAL : remainingTimeout) {
 			if (WaitForSingleObject(cancelCallEvent, 0) == WAIT_OBJECT_0) {
 				// Note that cancellation is based on whether the *main* thread is alive.
-				if (_notifySendMessageCancelled)
+				if (_notifySendMessageCancelled) {
 					_notifySendMessageCancelled();
+				}
 				SetLastError(ERROR_CANCELLED);
 				return 0;
 			}
@@ -215,8 +217,9 @@ LRESULT cancellableSendMessageTimeout(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM
 
 	// Handle the result.
 	if (bgSendMessageData.error != 0) {
-		if (bgSendMessageData.error == ERROR_CANCELLED && _notifySendMessageCancelled)
+		if (bgSendMessageData.error == ERROR_CANCELLED && _notifySendMessageCancelled) {
 			_notifySendMessageCancelled();
+		}
 		SetLastError(bgSendMessageData.error);
 		return 0;
 	}
