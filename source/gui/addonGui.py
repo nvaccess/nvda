@@ -1,10 +1,14 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2012-2019 NV Access Limited, Beqa Gozalishvili, Joseph Lee,
+# Copyright (C) 2012-2023 NV Access Limited, Beqa Gozalishvili, Joseph Lee,
 # Babbage B.V., Ethan Holliger, Arnold Loubriat, Thomas Stivers
 
 import os
+from typing import (
+	List,
+	Optional,
+)
 import weakref
 from locale import strxfrm
 
@@ -13,14 +17,13 @@ import wx
 import core
 import config
 import gui
-from addonHandler import addonVersionCheck
+from addonHandler import Addon, addonVersionCheck
 from logHandler import log
 import addonHandler
 import globalVars
-import buildVersion
 from . import guiHelper
 from . import nvdaControls
-from .dpiScalingHelper import DpiScalingHelperMixin, DpiScalingHelperMixinWithoutInit
+from .dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 import gui.contextHelp
 
 
@@ -110,7 +113,7 @@ class ErrorAddonInstallDialog(nvdaControls.MessageDialog):
 		okButton.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.OK))
 
 
-def _showAddonInfo(addon):
+def _showAddonInfo(addon: addonHandler.AddonBase) -> None:
 	manifest = addon.manifest
 	message=[_(
 		# Translators: message shown in the Addon Information dialog.
@@ -366,9 +369,9 @@ class AddonsDialog(
 			statusList.append(_("Enabled after restart"))
 		return ", ".join(statusList)
 
-	def refreshAddonsList(self,activeIndex=0):
+	def refreshAddonsList(self, activeIndex: int = 0) -> None:
 		self.addonsList.DeleteAllItems()
-		self.curAddons=[]
+		self.curAddons: List[Addon] = []
 		anyAddonIncompatible = False
 		for addon in sorted(addonHandler.getAvailableAddons(), key=lambda a: strxfrm(a.manifest['summary'])):
 			self.addonsList.Append((
@@ -404,9 +407,9 @@ class AddonsDialog(
 	def _shouldDisable(self, addon):
 		return not (addon.isPendingDisable or (addon.isDisabled and not addon.isPendingEnable))
 
-	def onListItemSelected(self, evt):
-		index=evt.GetIndex()
-		addon=self.curAddons[index] if index>=0 else None
+	def onListItemSelected(self, evt: wx.ListEvent) -> None:
+		index: int = evt.GetIndex()
+		addon: Optional[Addon] = self.curAddons[index] if index >= 0 else None
 		# #3090: Change toggle button label to indicate action to be taken if clicked.
 		if addon is not None:
 			# Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
@@ -414,9 +417,12 @@ class AddonsDialog(
 		self.aboutButton.Enable(addon is not None and not addon.isPendingRemove)
 		self.helpButton.Enable(bool(addon is not None and not addon.isPendingRemove and addon.getDocFilePath()))
 		self.enableDisableButton.Enable(
-			addon is not None and
-			not addon.isPendingRemove and
-			addonVersionCheck.isAddonCompatible(addon)
+			addon is not None
+			and not addon.isPendingRemove
+			and (
+				addonVersionCheck.isAddonCompatible(addon)
+				or addon.overrideIncompatibility
+			)
 		)
 		self.removeButton.Enable(addon is not None and not addon.isPendingRemove)
 
@@ -513,9 +519,13 @@ def installAddon(parentWindow, addonPath) -> bool:  # noqa: C901
 	if not addonVersionCheck.hasAddonGotRequiredSupport(bundle):
 		_showAddonRequiresNVDAUpdateDialog(parentWindow, bundle)
 		return False  # Exit early, addon does not have required support
-	elif not addonVersionCheck.isAddonTested(bundle):
-		_showAddonTooOldDialog(parentWindow, bundle)
-		return False  # Exit early, addon is not up to date with the latest API version.
+	elif bundle.canOverrideCompatibility:
+		if _shouldProceedWhenAddonTooOldDialog(parentWindow, bundle):
+			# Install incompatible version
+			bundle.enableCompatibilityOverride()
+		else:
+			# Exit early, addon is not up to date with the latest API version.
+			return False
 	elif wx.YES != _showConfirmAddonInstallDialog(parentWindow, bundle):
 		return False  # Exit early, User changed their mind about installation.
 
@@ -613,7 +623,10 @@ def handleRemoteAddonInstall(addonPath):
 	gui.mainFrame.postPopup()
 
 
-def _showAddonRequiresNVDAUpdateDialog(parent, bundle):
+def _showAddonRequiresNVDAUpdateDialog(
+		parent: wx.Window,
+		bundle: addonHandler.AddonBundle
+) -> None:
 	incompatibleMessage = _(
 		# Translators: The message displayed when installing an add-on package is prohibited,
 		# because it requires a later version of NVDA than is currently installed.
@@ -634,24 +647,34 @@ def _showAddonRequiresNVDAUpdateDialog(parent, bundle):
 	).ShowModal()
 
 
-def _showAddonTooOldDialog(parent, bundle):
-	confirmInstallMessage = _(
-		# Translators: A message informing the user that this addon can not be installed
-		# because it is not compatible.
-		"Installation of {summary} {version} has been blocked."
-		" An updated version of this add-on is required,"
-		" the minimum add-on API supported by this version of NVDA is {backCompatToAPIVersion}"
+def _shouldProceedWhenAddonTooOldDialog(
+		parent: wx.Window,
+		addon: addonHandler.AddonBase
+) -> bool:
+	incompatibleMessage = _(
+		# Translators: The message displayed when installing an incompatible add-on package,
+		# because it requires a new version than is currently installed.
+		"Warning: add-on is incompatible: {summary} {version}. "
+		"Check for an updated version of this add-on if possible. "
+		"The last tested NVDA version for this add-on is {lastTestedNVDAVersion}, "
+		"your current NVDA version is {NVDAVersion}. "
+		"Installation may cause unstable behavior in NVDA. "
+		"Proceed with installation anyway? "
 	).format(
-		backCompatToAPIVersion=addonAPIVersion.formatForGUI(addonAPIVersion.BACK_COMPAT_TO),
-		**bundle.manifest
+	summary=addon.manifest['summary'],
+	version=addon.manifest['version'],
+	lastTestedNVDAVersion=addonAPIVersion.formatForGUI(addon.lastTestedNVDAVersion),
+	NVDAVersion=addonAPIVersion.formatForGUI(addonAPIVersion.CURRENT)
 	)
-	return ErrorAddonInstallDialog(
+	from addonStoreGui.dialogs import ErrorAddonInstallDialogWithCancelButton
+	return ErrorAddonInstallDialogWithCancelButton(
 		parent=parent,
 		# Translators: The title of a dialog presented when an error occurs.
 		title=_("Add-on not compatible"),
-		message=confirmInstallMessage,
-		showAddonInfoFunction=lambda: _showAddonInfo(bundle)
-	).ShowModal()
+		message=incompatibleMessage,
+		showAddonInfoFunction=lambda: _showAddonInfo(addon)
+	).ShowModal() == wx.OK
+
 
 def _showConfirmAddonInstallDialog(parent, bundle):
 	confirmInstallMessage = _(

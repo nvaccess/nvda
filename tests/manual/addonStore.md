@@ -31,11 +31,28 @@ Add-ons can be filtered by display name, publisher and description.
 1. Restart NVDA as prompted.
 1. Confirm the add-on is listed in the add-ons manager.
 
-### Overriding incompatible add-on from add-on store
-TODO
+### Install and override incompatible add-on from add-on store
+1. Open the add-on store.
+1. Find an add-on listed as "incompatible" for download.
+1. Navigate to and press the "install (override compatibility)" button for the add-on.
+1. Confirm the warning message about add-on compatibility.
+1. Proceed with the installation.
 
-### Overriding incompatible add-on from external install
-TODO
+### Install and override incompatible add-on from external source
+1. Start the install of an incompatible add-on bundle.
+You can do this by:
+  - opening an `.nvda-addon` file while NVDA is running
+  - Using the "add-ons manager" dialog (TODO: this should be in the add-on store)
+1. Confirm the warning message about add-on compatibility.
+1. Proceed with the installation.
+
+### Enable and override compatibility for an installed add-on
+1. Attempt to enable a disabled add-on, which is incompatible.
+You can do this by:
+  - Using the add-on store, if an update is available
+  - Using the "add-ons manager" dialog (TODO: this should be in the add-on store)
+1. Confirm the warning message about add-on compatibility.
+1. Proceed with the installation.
 
 
 ## Updating add-ons

@@ -1,7 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022 NV Access Limited
+# Copyright (C) 2022-2023 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
+
 import functools
 from typing import (
 	List,
@@ -82,7 +83,7 @@ class AddonVirtualList(
 		self._addonsListVM = addonsListVM
 		self._actionVMList = actionVMList
 		self._contextMenu = wx.Menu()
-		self._actionMenuItemMap = {}
+		self._actionMenuItemMap: Dict[AddonActionVM, wx.MenuItem] = {}
 		self.Bind(event=wx.EVT_CONTEXT_MENU, handler=self._popupContextMenu)
 		for action in self._actionVMList:
 			menuItem: wx.MenuItem = self._contextMenu.Append(id=-1, item=action.displayName)
@@ -250,6 +251,14 @@ class AddonDetails(
 	# In the add-on store dialog.
 	_descriptionLabelText: str = pgettext("addonStore", "Description:")
 
+	# Translators: Label for the text control containing a description of the selected add-on.
+	# In the add-on store dialog.
+	_statusLabelText: str = pgettext("addonStore", "Status:")
+
+	# Translators: Label for the text control containing a description of the selected add-on.
+	# In the add-on store dialog.
+	_actionsLabelText: str = pgettext("addonStore", "Actions:")
+
 	def __init__(self, parent, actionVMList: List[AddonActionVM], detailsVM: AddonDetailsVM):
 		self._detailsVM: AddonDetailsVM = detailsVM
 		self._actionVMList = actionVMList
@@ -308,6 +317,18 @@ class AddonDetails(
 			)
 		)
 		self.contents.Add(self.descriptionTextCtrl, flag=wx.EXPAND)
+		self.contents.Add(wx.StaticLine(self), flag=wx.EXPAND)
+
+		self.statusLabel = wx.StaticText(
+			self,
+			label=AddonDetails._statusLabelText
+		)
+		self.contents.Add(self.statusLabel, flag=wx.EXPAND)
+		self.statusTextCtrl = ExpandoTextCtrl(
+			self,
+			style=wx.TE_READONLY | wx.BORDER_NONE
+		)
+		self.contents.Add(self.statusTextCtrl, flag=wx.EXPAND)
 		self.contents.Add(wx.StaticLine(self), flag=wx.EXPAND)
 
 		self._actionButtonMap: Dict[AddonActionVM, wx.Button] = {}
@@ -401,6 +422,7 @@ class AddonDetails(
 				log.debugWarning(f"URL queue len {len(self._urlQueue)}")
 				self.updateAddonName(details.displayName)
 				self.descriptionLabel.SetLabelText(AddonDetails._descriptionLabelText)
+				self.statusTextCtrl.SetValue(self._detailsVM.listItem.status.displayString)
 
 				# For a ExpandoTextCtr, SetDefaultStyle can not be used to set the style (along with the use
 				# of AppendText) because AppendText has been overridden to use SetValue(GetValue()+newStr)
@@ -492,8 +514,12 @@ class AddonDetails(
 			"""Get around python binding to the latest value in a for loop, create a new lambda
 			for each value with an explicit binding to the addon details.
 			"""
-			# evt: wx.CommandEvent
-			return lambda evt: _action.actionHandler(self._detailsVM.listItem)
+			def handleButtonClickEvent(event: wx.CommandEvent) -> None:
+				_action.actionHandler(self._detailsVM.listItem)
+				# set focus on status so that is easily read after firing an action
+				self.statusTextCtrl.SetFocus()
+
+			return handleButtonClickEvent
 
 		for action in self._actionVMList:
 			button = wx.Button(parent=self, label=action.displayName)
@@ -503,13 +529,14 @@ class AddonDetails(
 				event=wx.EVT_BUTTON,
 				handler=_makeButtonClickedEventHandler(action)
 			)
-			button.Enable(enable=action.isValid)
+			button.Show(show=action.isValid)
 			action.updated.register(self._actionVmChanged)
 			self._actionButtonMap[action] = button
 		return _actionsSizer
 
 	def _actionVmChanged(self, addonActionVM: AddonActionVM):
-		self._actionButtonMap[addonActionVM].Enable(enable=addonActionVM.isValid)
+		self._actionButtonMap[addonActionVM].Show(show=addonActionVM.isValid)
+		self.statusTextCtrl.SetValue(self._detailsVM.listItem.status.displayString)
 
 
 def displayError(error: TranslatedError):

@@ -1,11 +1,13 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022 NV Access Limited
+# Copyright (C) 2022-2023 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
+
 import typing
 import enum
 from os import (
 	PathLike,
+	startfile,
 )
 from enum import (
 	Enum,
@@ -19,16 +21,20 @@ from typing import (
 import threading
 
 import addonHandler
-import core
-import extensionPoints
 from addonHandler import addonVersionCheck
-from utils.displayString import DisplayStringEnum
 from addonStore.dataManager import addonDataManager
-from logHandler import log
-
 from addonStore.models import (
 	AddonDetailsModel,
 	MajorMinorPatch,
+)
+import core
+import extensionPoints
+from utils.displayString import DisplayStringEnum
+from logHandler import log
+
+from .dialogs import (
+	_shouldProceedWhenAddonTooOldDialog,
+	_shouldProceedWhenInstalledAddonVersionUnknown,
 )
 
 if typing.TYPE_CHECKING:
@@ -56,6 +62,7 @@ class AvailableAddonStatus(DisplayStringEnum):
 	INSTALLING = enum.auto()
 	INSTALL_FAILED = enum.auto()
 	INSTALLED = enum.auto()  # installed, requires restart
+	DISABLED = enum.auto()
 	ENABLED = enum.auto()  # enabled after restart
 	RUNNING = enum.auto()  # enabled / active.
 
@@ -63,35 +70,38 @@ class AvailableAddonStatus(DisplayStringEnum):
 	def _displayStringLabels(self) -> Dict[Enum, str]:
 		_labels = {
 			# Translators: Status for addons shown in the add-on store dialog
-			AvailableAddonStatus.AVAILABLE: _("Available"),
+			self.AVAILABLE: _("Available"),
 			# Translators: Status for addons shown in the add-on store dialog
-			AvailableAddonStatus.UPDATE: _("Update Available"),
+			self.UPDATE: _("Update Available"),
 			# Translators: Status for addons shown in the add-on store dialog
-			AvailableAddonStatus.REPLACE_SIDE_LOAD: _("Migrate to add-on store"),
+			self.REPLACE_SIDE_LOAD: _("Migrate to add-on store"),
 			# Translators: Status for addons shown in the add-on store dialog
-			AvailableAddonStatus.INCOMPATIBLE: _("Incompatible"),
+			self.INCOMPATIBLE: _("Incompatible"),
 			# Translators: Status for addons shown in the add-on store dialog
-			AvailableAddonStatus.DOWNLOADING: _("Downloading"),
+			self.DOWNLOADING: _("Downloading"),
 			# Translators: Status for addons shown in the add-on store dialog
-			AvailableAddonStatus.DOWNLOAD_FAILED: _("Download failed"),
+			self.DOWNLOAD_FAILED: _("Download failed"),
 			# Translators: Status for addons shown in the add-on store dialog
-			AvailableAddonStatus.DOWNLOAD_SUCCESS: _("Downloaded"),
+			self.DOWNLOAD_SUCCESS: _("Downloaded"),
 			# Translators: Status for addons shown in the add-on store dialog
-			AvailableAddonStatus.INSTALLING: _("Installing"),
+			self.INSTALLING: _("Installing"),
 			# Translators: Status for addons shown in the add-on store dialog
-			AvailableAddonStatus.INSTALL_FAILED: _("Install failed"),
+			self.INSTALL_FAILED: _("Install failed"),
 			# Translators: Status for addons shown in the add-on store dialog
-			AvailableAddonStatus.INSTALLED: _("Installed, restart required"),
+			self.INSTALLED: _("Installed, restart required"),
 			# Translators: Status for addons shown in the add-on store dialog
-			AvailableAddonStatus.ENABLED: _("Enabled after restart"),
+			self.DISABLED: _("Disabled"),
 			# Translators: Status for addons shown in the add-on store dialog
-			AvailableAddonStatus.RUNNING: _("Enabled"),
+			self.ENABLED: _("Enabled after restart"),
+			# Translators: Status for addons shown in the add-on store dialog
+			self.RUNNING: _("Enabled"),
 		}
 		return _labels
 
 
 addonStoreStateToAddonHandlerState: Dict[AvailableAddonStatus, addonHandler.AddonStateCategory] = {
 	AvailableAddonStatus.INSTALLED: addonHandler.AddonStateCategory.PENDING_INSTALL,
+	AvailableAddonStatus.DISABLED: addonHandler.AddonStateCategory.DISABLED,
 }
 
 
@@ -409,10 +419,13 @@ class AddonActionVM:
 
 	@property
 	def isValid(self) -> bool:
-		return self._validCheck(self._listItemVM)
+		return (
+			self._listItemVM is not None
+			and self._validCheck(self._listItemVM)
+		)
 
 	@property
-	def listItemVM(self) -> AddonListItemVM:
+	def listItemVM(self) -> Optional[AddonListItemVM]:
 		return self._listItemVM
 
 	@listItemVM.setter
@@ -430,7 +443,7 @@ class AddonActionVM:
 class AddonStoreVM:
 	def __init__(self):
 		self.hasError = extensionPoints.Action()
-		self._addons: List[AddonDetailsModel] = []
+		self._addons: Dict[str, AddonDetailsModel] = {}
 		self._filteredStatuses = [None, AvailableAddonStatus.RUNNING]
 
 		self._downloader = addonDataManager.getFileDownloader()
@@ -452,29 +465,111 @@ class AddonStoreVM:
 		for action in self.actionVMList:
 			action.listItemVM = selectedVM
 
-	def isInstallActionValid(self, listItemVM: Optional[AddonListItemVM]) -> bool:
-		return (
-			listItemVM is not None
-			and listItemVM.status in (
-				AvailableAddonStatus.AVAILABLE,
-				AvailableAddonStatus.UPDATE,
-				AvailableAddonStatus.REPLACE_SIDE_LOAD,
-			)
-		)
-
 	def _makeActionsList(self):
 		selectedListItem: Optional[AddonListItemVM] = self.listVM.getSelection()
 		return [
 			AddonActionVM(
 				# Translators: Label for a button that installs the selected addon
-				displayName=_("Install"),
+				displayName=_("&Install"),
 				actionHandler=self.getAddon,
-				validCheck=self.isInstallActionValid,
+				validCheck=lambda aVM: aVM.status == AvailableAddonStatus.AVAILABLE,
+				listItemVM=selectedListItem
+			),
+			AddonActionVM(
+				# Translators: Label for a button that installs the selected addon
+				displayName=_("Add-on &help"),
+				actionHandler=self.helpAddon,
+				validCheck=lambda aVM: aVM.status not in (
+					AvailableAddonStatus.AVAILABLE,
+					AvailableAddonStatus.INCOMPATIBLE,
+				),
+				listItemVM=selectedListItem
+			),
+			AddonActionVM(
+				# Translators: Label for a button that installs the selected addon
+				displayName=_("&Update"),
+				actionHandler=self.getAddon,
+				validCheck=lambda aVM: aVM.status == AvailableAddonStatus.UPDATE,
+				listItemVM=selectedListItem
+			),
+			AddonActionVM(
+				# Translators: Label for a button that installs the selected addon
+				displayName=_("&Replace"),
+				actionHandler=self.replaceAddon,
+				validCheck=lambda aVM: aVM.status == AvailableAddonStatus.REPLACE_SIDE_LOAD,
+				listItemVM=selectedListItem
+			),
+			AddonActionVM(
+				# Translators: Label for a button that installs the selected addon
+				displayName=_("&Disable"),
+				actionHandler=self.disableAddon,
+				validCheck=lambda aVM: aVM.status not in (
+					AvailableAddonStatus.DISABLED,
+					AvailableAddonStatus.AVAILABLE,
+					AvailableAddonStatus.INCOMPATIBLE,
+				),
+				listItemVM=selectedListItem
+			),
+			AddonActionVM(
+				# Translators: Label for a button that installs the selected addon
+				displayName=_("&Enable"),
+				actionHandler=self.enableAddon,
+				validCheck=lambda aVM: aVM.status == AvailableAddonStatus.DISABLED,
+				listItemVM=selectedListItem
+			),
+			AddonActionVM(
+				# Translators: Label for a button that installs the selected addon
+				displayName=_("Install (&override incompatibility)"),
+				actionHandler=self.installOverrideIncompatibilityForAddon,
+				validCheck=lambda aVM: (
+					aVM.status == AvailableAddonStatus.INCOMPATIBLE
+					and aVM.model.canOverrideCompatibility
+				),
+				listItemVM=selectedListItem
+			),
+			AddonActionVM(
+				# Translators: Label for a button that installs the selected addon
+				displayName=_("Enable (&override incompatibility)"),
+				actionHandler=self.enableOverrideIncompatibilityForAddon,
+				validCheck=lambda aVM: (
+					aVM.status == AvailableAddonStatus.DISABLED
+					and aVM.model.canOverrideCompatibility
+				),
 				listItemVM=selectedListItem
 			),
 		]
 
-	def getAddon(self, listItemVM: AddonListItemVM):
+	def helpAddon(self, listItemVM: AddonListItemVM) -> None:
+		path = listItemVM.model._addonHandlerModel.getDocFilePath()
+		startfile(path)
+
+	def installOverrideIncompatibilityForAddon(self, listItemVM: AddonListItemVM) -> None:
+		from .. import mainFrame
+		if _shouldProceedWhenAddonTooOldDialog(mainFrame, listItemVM.model):
+			listItemVM.model.enableCompatibilityOverride()
+			self.getAddon(listItemVM)
+
+	def enableOverrideIncompatibilityForAddon(self, listItemVM: AddonListItemVM) -> None:
+		from .. import mainFrame
+		if _shouldProceedWhenAddonTooOldDialog(mainFrame, listItemVM.model):
+			listItemVM.model.enableCompatibilityOverride()
+			# TODO add full handling to match add-on manager
+			listItemVM.model._addonHandlerModel.enable(True)
+
+	def enableAddon(self, listItemVM: AddonListItemVM) -> None:
+		# TODO add full handling to match add-on manager
+		listItemVM.model._addonHandlerModel.enable(True)
+
+	def disableAddon(self, listItemVM: AddonListItemVM) -> None:
+		# TODO add full handling to match add-on manager
+		listItemVM.model._addonHandlerModel.enable(False)
+
+	def replaceAddon(self, listItemVM: AddonListItemVM) -> None:
+		from .. import mainFrame
+		if _shouldProceedWhenInstalledAddonVersionUnknown(mainFrame, listItemVM.model):
+			self.getAddon(listItemVM)
+
+	def getAddon(self, listItemVM: AddonListItemVM) -> None:
 		listItemVM.status = AvailableAddonStatus.DOWNLOADING
 		log.debug(f"{listItemVM.Id} status: {listItemVM.status}")
 		self._downloader.download(listItemVM.model, self._downloadComplete)
@@ -549,7 +644,7 @@ class AddonStoreVM:
 	def _createListItemVMs(self) -> List[AddonListItemVM]:
 		addonsWithStatus = (
 			(model, self._getStatus(model))
-			for model in self._addons
+			for model in self._addons.values()
 		)
 		return [
 			AddonListItemVM(model=model, status=status)
@@ -558,17 +653,19 @@ class AddonStoreVM:
 		]
 
 	def _getStatus(self, model: AddonDetailsModel) -> Optional[AvailableAddonStatus]:
-		# This is inefficient, addonHandler will iterate all addons every time.
-		# However, addonHandler should remain the "source of truth" for addonStatus.
-		localAddons: Dict[str, addonHandler.Addon] = {
-			addon.name: addon  # Note: addon.name should match Id from add-on store.
-			for addon in addonHandler.getAvailableAddons()
-		}
-		if not addonHandler.isAddonCompatible(model):
-			return AvailableAddonStatus.INCOMPATIBLE
-		if model.addonId not in localAddons:
+		addonData = model._addonHandlerModel
+		if addonData is None:
+			if not addonHandler.isAddonCompatible(model):
+				# Installed incompatible add-ons have a status of disabled or running
+				return AvailableAddonStatus.INCOMPATIBLE
+
+			# Any compatible add-on which is not installed should be listed as available
 			return AvailableAddonStatus.AVAILABLE
-		addonData = localAddons[model.addonId]
+
+		for storeState, handlerStateCategory in addonStoreStateToAddonHandlerState.items():
+			# Ensure disabled status and install status are checked first if installed
+			if model.addonId in addonHandler.state[handlerStateCategory]:
+				return storeState
 
 		addonStoreData = addonDataManager._getCachedInstalledAddonData(model.addonId)
 		if addonStoreData is not None:
@@ -591,10 +688,6 @@ class AddonStoreVM:
 
 		if addonData.isRunning:
 			return AvailableAddonStatus.RUNNING
-
-		for storeState, handlerStateCategory in addonStoreStateToAddonHandlerState.items():
-			if model.addonId in addonHandler.state[handlerStateCategory]:
-				return storeState
 
 		log.debugWarning(f"Addon in unknown state: {model.addonId}")
 		return None
@@ -627,9 +720,9 @@ def getAddonBundleToInstallIfValid(addonPath: str) -> addonHandler.AddonBundle:
 			) % addonPath
 		)
 
-	if (
-		not addonVersionCheck.hasAddonGotRequiredSupport(bundle)
-		or not addonVersionCheck.isAddonTested(bundle)
+	if not (
+		addonVersionCheck.isAddonCompatible(bundle)
+		or bundle.overrideIncompatibility
 	):
 		# This should not happen, only compatible add-ons are intended to be presented in the add-on store.
 		raise TranslatedError(

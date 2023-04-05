@@ -7,6 +7,17 @@ from typing_extensions import Protocol  # Python 3.8 adds native support
 import addonAPIVersion
 
 
+def getAddonCompatibilityMessage() -> str:
+	return _(
+		# Translators: A message indicating that some add-ons will be disabled
+		# unless reviewed before installation.
+		"Your NVDA configuration contains add-ons that are incompatible with this version of NVDA. "
+		"These add-ons will be disabled after installation. "
+		"After installation, you will be able to manually re-enable these add-ons at your own risk. "
+		"If you rely on these add-ons, please review the list to decide whether to continue with the installation. "
+	)
+
+
 class SupportsVersionCheck(Protocol):
 	""" Examples implementing this protocol include:
 	- addonHandler.AddonBundle
@@ -14,6 +25,29 @@ class SupportsVersionCheck(Protocol):
 	"""
 	minimumNVDAVersion: addonAPIVersion.AddonApiVersionT
 	lastTestedNVDAVersion: addonAPIVersion.AddonApiVersionT
+	name: str
+
+	@property
+	def overrideIncompatibility(self) -> bool:
+		from addonHandler import AddonStateCategory, state
+		return (
+			self.name in state[AddonStateCategory.OVERRIDE_COMPATIBILITY]
+			and self.canOverrideCompatibility
+		)
+
+	def enableCompatibilityOverride(self):
+		"""
+		Should be reset when changing to a new breaking release,
+		and when this add-on is updated, disabled or removed.
+		"""
+		from addonHandler import AddonStateCategory, state
+		overiddenAddons = state[AddonStateCategory.OVERRIDE_COMPATIBILITY]
+		assert self.name not in overiddenAddons and self.canOverrideCompatibility
+		overiddenAddons.add(self.name)
+
+	@property
+	def canOverrideCompatibility(self) -> bool:
+		return hasAddonGotRequiredSupport(self) and not isAddonTested(self)
 
 
 def hasAddonGotRequiredSupport(
