@@ -2,7 +2,9 @@ NVDA NVDA_VERSION User Guide
 
 
 %!includeconf: ../userGuide.t2tconf
+%!includeconf: ./locale.t2tconf
 %kc:title: NVDA NVDA_VERSION Commands Quick Reference
+%kc:includeconf: ./locale.t2tconf
 
 = Table of Contents =[toc]
 %%toc
@@ -222,7 +224,7 @@ The actual commands will not execute while in input help mode.
 | Read status bar | ``NVDA+end`` | ``NVDA+shift+end`` | Reports the Status Bar if NVDA finds one. Pressing twice will spell the information. Pressing three times will copy it to the clipboard |
 | Read time | ``NVDA+f12`` | ``NVDA+f12`` | Pressing once reports the current time, pressing twice reports the date |
 | Report text formatting | ``NVDA+f`` | ``NVDA+f`` | Reports text formatting. Pressing twice shows the information in a window |
-| Report link destination | ``NVDA+k`` | ``NVDA+k`` | Pressing once speaks the destination URL of the link in the [navigator object #ObjectNavigation]. Pressing twice shows it in a window for more careful review |
+| Report link destination | ``NVDA+k`` | ``NVDA+k`` | Pressing once speaks the destination URL of the link at the current caret or focus position. Pressing twice shows it in a window for more careful review |
 
 +++ Toggle which information NVDA reads +++[ToggleWhichInformationNVDAReads]
 || Name | Desktop key | Laptop key | Description |
@@ -2135,8 +2137,8 @@ This may also be the case if you are unsure if the settings have been changed.
 
 ==== Enable loading custom code from Developer Scratchpad Directory ====[AdvancedSettingsEnableScratchpad]
 When developing add-ons for NVDA, it is useful to be able to test code as you are writing it.
-This option when enabled, allows NVDA to load custom appModules, globalPlugins, brailleDisplayDrivers and synthDrivers, from a special developer scratchpad directory in your NVDA user configuration directory.
-Previously NVDA would load custom code directly from the user configuration directory, with no way of disabling this.
+This option when enabled, allows NVDA to load custom appModules, globalPlugins, brailleDisplayDrivers, synthDrivers and vision enhancement providers, from a special developer scratchpad directory in your NVDA user configuration directory.
+As their equivalents in add-ons, these modules are loaded when starting NVDA or, in the case of appModules and globalPlugins, when [reloading plugins #ReloadPlugins].
 This option is off by default, ensuring that no untested code is ever run in NVDA with out the user's explicit knowledge.
 If you wish to distribute custom code to others, you should package it as an NVDA add-on.
 
@@ -2349,7 +2351,11 @@ To change a symbol, first select it in the Symbols list.
 You can filter the symbols by entering the symbol or a part of the symbol's replacement into the Filter by edit box.
 
 - The Replacement field allows you to change the text that should be spoken in place of this symbol.
-- Using the Level field, you can adjust the lowest symbol level at which this symbol should be spoken.
+- Using the Level field, you can adjust the lowest symbol level at which this symbol should be spoken (none, some, most or all).
+You can also set the level to character; in this case the symbol will not be spoken regardless of the symbol level in use, with the following two exceptions:
+ - When navigating character by character.
+ - When NVDA is spelling any text containing that symbol.
+ -
 - The Send actual symbol to synthesizer field specifies when the symbol itself (in contrast to its replacement) should be sent to the synthesizer.
 This is useful if the symbol causes the synthesizer to pause or change the inflection of the voice.
 For example, a comma causes the synthesizer to pause.
@@ -2938,6 +2944,15 @@ Please see your display's documentation for descriptions of where these keys can
 | Move braille display to previous line | d1 |
 | Move braille display to next line | d3 |
 | Route to braille cell | routing |
+| shift+tab key | space+dot1+dot3 |
+| tab key | space+dot4+dot6 |
+| alt key | space+dot1+dot3+dot4 (space+m) |
+| escape key | space+dot1+dot5 (space+e) |
+| windows key | space+dot3+dot4 |
+| alt+tab key | space+dot2+dot3+dot4+dot5 (space+t) |
+| NVDA Menu | space+dot1+dot3+dot4+dot5 (space+n) |
+| windows+d key (minimize all applications) | space+dot1+dot4+dot5 (space+d) |
+| Say all | space+dot1+dot2+dot3+dot4+dot5+dot6 |
 
 For displays which have a joystick:
 || Name | Key |
@@ -3679,19 +3694,17 @@ Following are the current key assignments for these displays.
 || Name | Key |
 | Scroll braille display back | pan left or rocker up |
 | Scroll braille display forward | pan right or rocker down |
-| Move braille display to previous line | space + dot1 |
-| Move braille display to next line | space + dot4 |
 | Route to braille cell | routing set 1|
 | Toggle braille tethered to | up+down |
-| upArrow key | joystick up |
-| downArrow key | joystick down |
-| leftArrow key | space+dot3 or joystick left |
-| rightArrow key | space+dot6 or joystick right |
+| upArrow key | joystick up, dpad up or space+dot1 |
+| downArrow key | joystick down, dpad down or space+dot4 |
+| leftArrow key | space+dot3, joystick left  or dpad left |
+| rightArrow key | space+dot6, joystick right or dpad right |
 | shift+tab key | space+dot1+dot3 |
 | tab key | space+dot4+dot6 |
 | alt key | space+dot1+dot3+dot4 (space+m) |
 | escape key | space+dot1+dot5 (space+e) |
-| enter key | dot8 or joystick center |
+| enter key | dot8, joystick center or dpad center |
 | windows key | space+dot3+dot4 |
 | alt+tab key | space+dot2+dot3+dot4+dot5 (space+t) |
 | NVDA Menu | space+dot1+dot3+dot4+dot5 (space+n) |
