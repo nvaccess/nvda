@@ -55,6 +55,7 @@ This only worked for Bluetooth Serial ports before. (#14524)
 Instead NVDA reports that the link has no destination. (#14723)
 - Several stability fixes to input/output for braille displays, resulting in less frequent errors and crashes of NVDA. (#14627)
 - NVDA again recovers from many more situations such as applications that stop responding which previously caused it to freeze completely. (#14759) 
+- When forcing UIA support with certain terminal and consoles, a bug is fixed which caused a freeze and the log file to be spammed. (#14689)
 -
 
 
