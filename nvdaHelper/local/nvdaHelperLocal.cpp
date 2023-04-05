@@ -147,8 +147,8 @@ LRESULT cancellableSendMessageTimeout(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM
 	fuFlags &= ~SMTO_NOTIMEOUTIFNOTHUNG;
 
 	DWORD currentThreadId = GetCurrentThreadId();
-	if (currentThreadId == mainThreadId && GetWindowThreadProcessId(hwnd, NULL) == mainThreadId) {
-		// We're sending a message to our own thread, so just forward the call.
+	if (GetWindowThreadProcessId(hwnd, NULL) == currentThreadId) {
+		// We're sending a message to the current thread, so just forward the call.
 		return real_SendMessageTimeoutW(hwnd, Msg, wParam, lParam, fuFlags, uTimeout, lpdwResult);
 	}
 
