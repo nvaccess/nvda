@@ -119,7 +119,7 @@ class SpeechDict(list):
 def processText(text):
 	if not globalVars.speechDictionaryProcessing:
 		return text
-	# #14689: API level < 2 UIA consoles have many blank lines, which slows processing to a halt
+	# #14689: older (IMPROVED and END_INCLUSIVE) UIA consoles have many blank lines, which slows processing to a halt
 	focus = api.getFocusObject()
 	try:
 		# get TextInfo implementation for object review mode
