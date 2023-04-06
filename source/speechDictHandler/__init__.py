@@ -8,8 +8,8 @@ import globalVars
 from logHandler import log
 import os
 import codecs
+import review
 import api
-import config
 from . import dictFormatUpgrade
 from .speechDictVars import speechDictsPath
 
@@ -115,9 +115,26 @@ class SpeechDict(list):
 				del self[index]
 		return text
 
+
 def processText(text):
 	if not globalVars.speechDictionaryProcessing:
 		return text
+	# #14689: older (IMPROVED and END_INCLUSIVE) UIA consoles have many blank lines,
+	# which slows processing to a halt
+	focus = api.getFocusObject()
+	try:
+		# get TextInfo implementation for object review mode
+		textInfo, obj = review.getObjectPosition(focus)
+	except AttributeError:  # no makeTextInfo
+		textInfo = None
+	# late import to prevent circular dependency
+	# ConsoleUIATextInfo is used by IMPROVED and END_INCLUSIVE consoles
+	from NVDAObjects.UIA.winConsoleUIA import ConsoleUIATextInfo
+	if isinstance(textInfo, ConsoleUIATextInfo):
+		stripText = text.rstrip()
+		IGNORE_TRAILING_WHITESPACE_LENGTH = 100
+		if len(text) - len(stripText) > IGNORE_TRAILING_WHITESPACE_LENGTH:
+			text = stripText
 	for type in dictTypes:
 		text=dictionaries[type].sub(text)
 	return text
