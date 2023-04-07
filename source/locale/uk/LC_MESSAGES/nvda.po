@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-14 00:37+0000\n"
+"POT-Creation-Date: 2023-03-31 00:01+0000\n"
 "PO-Revision-Date: 2023-02-15 19:32+0200\n"
 "Last-Translator: Ukrainian NVDA Community <vp88.mobile@gmail.com>\n"
 "Language-Team: Volodymyr Pyrih <vp88.mobile@gmail.com>\n"
@@ -11,8 +11,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
 "Generated-By: pygettext.py 1.5\n"
 "X-Generator: Poedit 3.2.2\n"
 "X-Poedit-Bookmarks: -1,-1,643,-1,-1,-1,-1,-1,-1,-1\n"
@@ -4396,13 +4396,18 @@ msgstr ""
 msgid "Plugins reloaded"
 msgstr "Плагіни перезавантажено"
 
-#. Translators: input help mode message for Report destination URL of navigator link command
+#. Translators: input help mode message for Report destination URL of a link command
+#, fuzzy
 msgid ""
-"Report the destination URL of the link in the navigator object. If pressed "
-"twice, shows the URL in a window for easier review."
+"Report the destination URL of the link at the position of caret or focus. If "
+"pressed twice, shows the URL in a window for easier review."
 msgstr ""
 "Повідомляє призначення URL у посиланні в об’єкті навігатора. Якщо натиснути "
 "двічі, показує URL у вікні для легкого перегляду."
+
+#. Translators: Informs the user that the link has no destination
+msgid "Link has no apparent destination"
+msgstr ""
 
 #. Translators: Informs the user that the window contains the destination of the
 #. link with given title
@@ -4414,10 +4419,11 @@ msgstr "Призначення: {name}"
 msgid "Not a link."
 msgstr "Не посилання."
 
-#. Translators: input help mode message for Report URL of navigator link in a window command
+#. Translators: input help mode message for Report URL of a link in a window command
+#, fuzzy
 msgid ""
-"Reports the destination URL of the link in the navigator object in a window, "
-"instead of just speaking it. May be preferred by braille users."
+"Displays the destination URL of the link at the position of caret or focus "
+"in a window, instead of just speaking it. May be preferred by braille users."
 msgstr ""
 "Повідомляє призначення URL у посиланні в об’єкті навігатора у вікні, замість "
 "того, щоб просто його промовляти. Може бути кращим для користувачів Брайля."
@@ -7300,6 +7306,23 @@ msgstr "{firstAddress} {firstValue} через {lastAddress} {lastValue}"
 msgid "{firstAddress} through {lastAddress}"
 msgstr "{firstAddress} через {lastAddress}"
 
+#. Translators: a measurement in inches
+#, fuzzy, python-brace-format
+msgid "{val:.2f} inches"
+msgstr "{val:.2f} дюйм"
+
+#. Translators: a measurement in centimetres
+#, fuzzy, python-brace-format
+msgid "{val:.2f} centimetres"
+msgstr "{val:.2f} см"
+
+#. Translators: LibreOffice, report cursor position in the current page
+#, python-brace-format
+msgid ""
+"cursor positioned {horizontalDistance} from left edge of page, "
+"{verticalDistance} from top edge of page"
+msgstr ""
+
 msgid "left"
 msgstr "лівий"
 
@@ -8535,6 +8558,24 @@ msgstr "розблоковано"
 msgid "has note"
 msgstr "містить нотатку"
 
+#. Translators: Presented when a control has a pop-up dialog.
+#, fuzzy
+msgid "opens dialog"
+msgstr "діалог"
+
+#. Translators: Presented when a control has a pop-up grid.
+msgid "opens grid"
+msgstr ""
+
+#. Translators: Presented when a control has a pop-up list box.
+#, fuzzy
+msgid "opens list"
+msgstr "спадний список"
+
+#. Translators: Presented when a control has a pop-up tree.
+msgid "opens tree"
+msgstr ""
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "не виділено"
@@ -8558,6 +8599,16 @@ msgstr "перетягування завершено"
 #. Translators: This is spoken when the line is considered blank.
 msgid "blank"
 msgstr "порожньо"
+
+#. Translators: this message is given when there is no next paragraph when navigating by paragraph
+#, fuzzy
+msgid "No next paragraph"
+msgstr "немає наступної графіки"
+
+#. Translators: this message is given when there is no previous paragraph when navigating by paragraph
+#, fuzzy
+msgid "No previous paragraph"
+msgstr "немає попередньої графіки"
 
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 msgid "Configuration applied"
@@ -11069,8 +11120,13 @@ msgid "Dictionary Entry Error"
 msgstr "Помилка словникової статті"
 
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
-#, python-format
-msgid "Regular Expression error: \"%s\"."
+#, fuzzy, python-brace-format
+msgid "Regular Expression error in the pattern field: \"{error}\"."
+msgstr "Помилка регулярного виразу: «%s»."
+
+#. Translators: This is an error message to let the user know that the dictionary entry is not valid.
+#, fuzzy, python-brace-format
+msgid "Regular Expression error in the replacement field: \"{error}\"."
 msgstr "Помилка регулярного виразу: «%s»."
 
 #. Translators: The label for the list box of dictionary entries in speech dictionary dialog.

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA R3935\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-26 22:33+0000\n"
+"POT-Creation-Date: 2023-03-31 00:01+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Nikola Jović <wwenikola123@gmail.com>\n"
 "Language-Team: NVDA Serbian translation\n"
@@ -4406,13 +4406,17 @@ msgstr ""
 msgid "Plugins reloaded"
 msgstr "Dodaci ponovo učitani"
 
-#. Translators: input help mode message for Report destination URL of navigator link command
+#. Translators: input help mode message for Report destination URL of a link command
 msgid ""
-"Report the destination URL of the link in the navigator object. If pressed "
-"twice, shows the URL in a window for easier review."
+"Report the destination URL of the link at the position of caret or focus. If "
+"pressed twice, shows the URL in a window for easier review."
 msgstr ""
-"Prijavljuje odredišnu adresu linka navigacionog objekta. Ako se pritisne dva "
-"puta, prikazuje adresu u prozoru radi lakšeg pregleda."
+"Prijavljuje odredišnu adresu linka na poziciji kursora ili fokusa. Ako se "
+"pritisne dva puta, prikazuje adresu u prozoru radi lakšeg pregleda."
+
+#. Translators: Informs the user that the link has no destination
+msgid "Link has no apparent destination"
+msgstr "Link nema prepoznatljivo odretište"
 
 #. Translators: Informs the user that the window contains the destination of the
 #. link with given title
@@ -4424,13 +4428,13 @@ msgstr "Odredište za: {name}"
 msgid "Not a link."
 msgstr "Nije link."
 
-#. Translators: input help mode message for Report URL of navigator link in a window command
+#. Translators: input help mode message for Report URL of a link in a window command
 msgid ""
-"Reports the destination URL of the link in the navigator object in a window, "
-"instead of just speaking it. May be preferred by braille users."
+"Displays the destination URL of the link at the position of caret or focus "
+"in a window, instead of just speaking it. May be preferred by braille users."
 msgstr ""
-"Prikazuje odredišnu adresu linka navigacionog objekta u prozoru, umesto da "
-"je samo izgovori. Može više odgovarati korisnicima brajevih redova."
+"Prikazuje odredišnu adresu linka na poziciji kursora ili fokusa u prozoru, "
+"umesto da je samo izgovori. Može više odgovarati korisnicima brajevih redova."
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -7311,6 +7315,25 @@ msgstr "{firstAddress} {firstValue} do {lastAddress} {lastValue}"
 msgid "{firstAddress} through {lastAddress}"
 msgstr "{firstAddress} do {lastAddress}"
 
+#. Translators: a measurement in inches
+#, python-brace-format
+msgid "{val:.2f} inches"
+msgstr "{val:.2f} inča"
+
+#. Translators: a measurement in centimetres
+#, python-brace-format
+msgid "{val:.2f} centimetres"
+msgstr "{val:.2f} centimetara"
+
+#. Translators: LibreOffice, report cursor position in the current page
+#, python-brace-format
+msgid ""
+"cursor positioned {horizontalDistance} from left edge of page, "
+"{verticalDistance} from top edge of page"
+msgstr ""
+"Kursor se nalazi na {horizontalDistance} od leve ivice stranice, "
+"{verticalDistance} od gornje ivice stranice"
+
 msgid "left"
 msgstr "levo"
 
@@ -8543,6 +8566,22 @@ msgstr "otključano"
 msgid "has note"
 msgstr "Ima napomenu"
 
+#. Translators: Presented when a control has a pop-up dialog.
+msgid "opens dialog"
+msgstr "Otvara dijalog"
+
+#. Translators: Presented when a control has a pop-up grid.
+msgid "opens grid"
+msgstr "Otvara mrežu"
+
+#. Translators: Presented when a control has a pop-up list box.
+msgid "opens list"
+msgstr "Otvara listu"
+
+#. Translators: Presented when a control has a pop-up tree.
+msgid "opens tree"
+msgstr "Otvara stablo"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "nije izabrano"
@@ -8566,6 +8605,14 @@ msgstr "završeno prevlačenje"
 #. Translators: This is spoken when the line is considered blank.
 msgid "blank"
 msgstr "prazno"
+
+#. Translators: this message is given when there is no next paragraph when navigating by paragraph
+msgid "No next paragraph"
+msgstr "nema narednog pasusa"
+
+#. Translators: this message is given when there is no previous paragraph when navigating by paragraph
+msgid "No previous paragraph"
+msgstr "nema prethodnog pasusa"
 
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 msgid "Configuration applied"
@@ -11084,9 +11131,14 @@ msgid "Dictionary Entry Error"
 msgstr "Greška unosa u rečniku"
 
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
-#, python-format
-msgid "Regular Expression error: \"%s\"."
-msgstr "Greška u regularnom izrazu : \"%s\"."
+#, python-brace-format
+msgid "Regular Expression error in the pattern field: \"{error}\"."
+msgstr "Greška u regularnom izrazu u polju oblika: \"{error}\"."
+
+#. Translators: This is an error message to let the user know that the dictionary entry is not valid.
+#, python-brace-format
+msgid "Regular Expression error in the replacement field: \"{error}\"."
+msgstr "Greška u regularnom izrazu u polju zamene: \"{error}\"."
 
 #. Translators: The label for the list box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"

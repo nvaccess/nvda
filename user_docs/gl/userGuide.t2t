@@ -2,7 +2,9 @@
 
 
 %!includeconf: ../userGuide.t2tconf
+%!includeconf: ./locale.t2tconf
 %kc:title: NVDA NVDA_VERSION Referencia Rápida de Ordes
+%kc:includeconf: ./locale.t2tconf
 
 = Índice =[toc]
 %%toc
@@ -228,7 +230,7 @@ As ordes reais non se executarán mentres se estea en modo axuda de entrada.
 | Ler barra de estado | ``NVDA+fin`` | ``NVDA+shift+fin`` | Anuncia a Barra de Estado se o NVDA atopa unha. Preméndoo dúas veces deletreará a información. Preméndoo tres veces copiaráa ao portapapeis |
 | Ler hora | ``NVDA+f12`` | ``NVDA+f12`` | Preméndoo unha vez anuncia a hora actualt, preméndoo dúas veces anuncia a data |
 | Anunciar formato de texto | ``NVDA+f`` | ``NVDA+f`` | Anuncia o formato do texto. Preméndoo dúas veces amosa a información nunha ventá |
-| Anunciar destiño da ligazón | ``NVDA+k`` | ``NVDA+k`` | Premendo unha vez fala o destiño URL da ligazón no [navegador de obxectos #ObjectNavigation]. Premendo dúas veces amósao nunha ventá para unha revisión máis doada |
+| Anunciar destiño da ligazón | ``NVDA+k`` | ``NVDA+k`` | Premendo unha vez fala a URL de destiño da ligazón na posición actual do cursor do sistema ou do foco. Premendo dúas veces amósao nunha ventá para unha revisión máis cuidadosa |
 
 +++ Conmutar que información le o NVDA +++[ToggleWhichInformationNVDAReads]
 || Nome | Tecla de escritorio | Tecla de Portátil | Descripción |
@@ -2356,7 +2358,11 @@ Para cambiar un símbolo, primeiro selecciónao na lísta de Símbolos.
 Podes filtrar os símbolos introducindo o símbolo ou unha parte da súa sustitución no cuadro de edición Filtrar por.
 
 - O campo Reemprazar permíteche cambiar o texto que debería falarse en lugar deste símbolo.
-- Utilizando o campo Nivel, podes axustar o nivel máis baixo do símbolo ao que este símbolo se debería falar.
+Tamén podes axustar o nivel a carácter; neste caso o símbolo non se falará independentemente do nivel de símbolo en uso, coas seguintes dúas excepcións:
+ - Ao navegar por caracteres.
+ - Cando o NVDA estea a deletrear calquera texto que conteña ese símbolo.
+ -
+- Utilizando o campo Nivel, podes axustar o nivel máis baixo do símbolo ao que este símbolo se debería falar (non, algún, a maioría ou todos).
 - O campo Enviar símbolo actual ao sintetizador especifica cando o proprio símbolo (en contraposición co seu reemplazamento) debería enviarse ao sintetizador.
 Esto é útil se o símbolo causa que o sintetizador faga unha pausa ou cambie a entoación da voz.
 Por exemplo, unha coma causa que o sintetizador faga unha pausa.
@@ -2945,6 +2951,15 @@ Por favor consulta a documentación da pantalla braille para descripcións de on
 | Mover a pantalla braille á liña anterior | d1 |
 | Mover a liña brailla á liña seguinte | d3 |
 | Guiar á celda braille | sensor |
+| teclas shift+tab | espazo+punto1+punto3 |
+| tecla tab | espazo+punto4+punto6 |
+| tecla alt | espazo+punto1+punto3+punto4 (espazo+m) |
+| tecla escape | espazo+punto1+punto5 (espazo+e) |
+| tecla windows | espazo+punto3+punto4 |
+| teclas alt+tab | espazo+punto2+punto3+punto4+punto5 (espazo+t) |
+| Menú NVDA | espazo+punto1+punto3+punto4+punto5 (espazo+n) |
+| teclas windows+d (minimizar todas as aplicacións) | espazo+punto1+punto4+punto5 (espazo+d) |
+| Falar todo | espazo+punto1+punto2+punto3+punto4+punto5+punto6 |
 
 Para liñas que teñan un joystick:
 || Nome | Tecla |
@@ -3685,19 +3700,17 @@ Seguidamente van as asignacións de teclas actuales para estas pantallas.
 || Nome | Tecla |
 | Desprazar a pantalla braille cara atrás | pan á esquerda ou balancín arriba |
 | Desprazar a pantalla braille cara adiante | pan á dereita ou balancín abaixo |
-| Mover a pantalla braille á liña anterior | espazo+punto1 |
-| Mover a pantalla braille á liña seguinte | espazo+punto4
 | Levar á celda braille | conxunto de sensores de enrutamento 1|
 | Alternar o seguemento de braille | arriba+abaixo |
-| Tecla frecha arriba | joystick arriba |
-| Tecla frecha abaixo | joystick cara abaixo |
-| Tecla frecha esquerda | espazo+punto3 ou joystick esquerdo |
-| Tecla frecha dereita | espazo+punto6 ou joystick dereita |
+| Tecla frecha arriba | joystick arriba, dpad arriba ou espazo+punto1 |
+| Tecla frecha abaixo | joystick cara abaixo, dpad cara abaixo ou espazo+punto4 |
+| Tecla frecha esquerda | espazo+punto3, joystick esquerdo ou dpad a esquerda|
+| Tecla frecha dereita | espazo+punto6, joystick dereita ou dpad dereita |
 | Teclas shift+tab | espazo+punto1+punto3 |
 | tecla tab | espazo+punto4+punto6 |
 | tecla alt | espazo+punto1+punto3+punto4 (espazo+m) |
 | tecla escape | espazo+punto1+punto5 (espazo+e) |
-| tecla intro | punto8 ou intro do joystick |
+| tecla intro | punto8, intro do joystick ou dpad intro |
 | tecla windows | espazo+punto3+punto4 |
 | teclas alt+tab | espazo+punto2+punto3+punto4+punto5 (espazo+t) |
 | Menú NVDA | espazo+punto1+punto3+punto4+punto5 (espazo+n) |
