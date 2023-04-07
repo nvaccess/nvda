@@ -741,7 +741,7 @@ class AppModule(appModuleHandler.AppModule):
 --- end ---
 ```
 
-++ Parsing additional command line arguments in your plugin ++
+++ Parsing additional command line arguments in your plugin ++[PluginCLIArgs]
 By default NVDA accepts limited set of command line arguments and shows an error for an unknown ones.
 However if you want to use any additional arguments, this is possible by adding a handler to the extension point ``addonHandler.isCLIParamKnown``.
 Note that since command line arguments are processed just after NVDA starts, your add-on needs to process them in the global plugin, since app modules or other drivers may not be loaded at this stage.
@@ -947,3 +947,73 @@ There are some special functions:
 - snap(): Takes a snapshot of the current state of NVDA and saves it in the [snapshot variables #PythonConsoleSnapshotVariables].
 - rmSnap(): Removes all snapshot variables.
 -
+
++ Extension Points +[ExtensionPoints]
+NVDA's ``extensionPoints`` module, allows code in different parts of NVDA, or in add-ons, to receive notifications and information when certain actions occur, or states change; and in some cases, to prevent other parts of NVDA from taking certain actions.
+
+There are four kinds of extension point:
+- Actions
+- Filters
+- Deciders
+- Accumulating Deciders
+-
+
+The sections below provide the list of currently defined extension points in NVDA, along with brief descriptions for some of them. Please see code documentation in the associated files, or the code itself, for further explanation. The section titles below represent the package or module in which the listed extension points are defined.
+
+++ braille ++[brailleExtPts]
+|| Type | Extension Point | Description |
+| Filter | filter_displaySize | Allows components or add-ons to change the display size used for braille output. |
+| Action | displaySizeChanged | Notifies of display size changes. |
+| Action | pre_writeCells | Notifies when cells are about to be written to a braille display |
+| Action | displayChanged | Notifies of braille display changes. |
+| Decider | decide_enabled | Allows deciding whether the braille handler should be forcefully disabled. |
+
+++ appModuleHandler ++[appModuleHandlerExtPts]
+|| Type | Extension Point | Description |
+| Action | post_appSwitch | Triggered when the foreground application changes |
+
+++ addonHandler ++[addonHandlerExtPts]
+|| Type | Extension Point | Description |
+| Accumulating Decider | isCLIParamKnown | Allows adding NVDA commandline parameters which apply to plugins. See [this section of the Dev Guide #PluginCLIArgs] for more information. |
+
+++ brailleViewer ++[brailleViewerExtPts]
+|| Type | Extension Point | Description |
+| Action | postBrailleViewerToolToggledAction | Triggered every time the Braille Viewer is created / shown or hidden / destroyed. |
+
+++ config ++[configExtPts]
+|| Type | Extension Point | Description |
+| Action | post_configProfileSwitch | Notifies after the configuration profile has been switched. |
+| Action | pre_configSave | Notifies before NVDA's configuration is saved to disk. |
+| Action | post_configSave | Notifies after NVDA's configuration has been saved to disk. |
+| Action | pre_configReset | Notifies before configuration is reloaded from disk or factory defaults are applied. |
+| Action | post_configReset | Notifies after configuration has been reloaded from disk or factory defaults were applied. |
+
+++ core ++[coreExtPts]
+|| Type | Extension Point | Description |
+| Action | postNvdaStartup | Inform those who want to know that NVDA has finished starting up. |
+
+++ inputCore ++[inputCoreExtPts]
+|| Type | Extension Point | Description |
+| Decider | decide_executeGesture | Notifies when a gesture is about to be executed, allowing other code to decide if it should be. |
+
+++ nvwave ++[nvwaveExtPts]
+|| Type | Extension Point | Description |
+| Decider | decide_playWaveFile | Notifies when a wave file is about to be played, allowing other code to decide if it should be. |
+
+++ synthDriverHandler ++[synthDriverHandlerExtPts]
+|| Type | Extension Point | Description |
+| Action | synthIndexReached | Notifies when a synthesizer reaches an index during speech. |
+| Action | synthDoneSpeaking | Notifies when a synthesizer finishes speaking. |
+| Action | synthChanged | Notifies of synthesizer changes. |
+
+++ tones ++[tonesExtPts]
+|| Type | Extension Point | Description |
+| Decider | decide_beep | Notifies when a beep is about to be generated and played, allowing a consumer to decide whether it should be. |
+
+++ utils.security ++[utils_securityExtPts]
+|| Type | Extension Point | Description |
+| Action | post_sessionLockStateChanged | Notifies when a session lock or unlock event occurs. |
+
+++ winAPI.messageWindow ++[winAPI_messageWindowExtPts]
+|| Type | Extension Point | Description |
+| Action | pre_handleWindowMessage | Notifies when NVDA receives a window message, allowing components to perform an action when certain system events occur. |
