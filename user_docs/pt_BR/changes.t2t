@@ -2,6 +2,65 @@ Novidades do NVDA
 Traduzido por: Marlin Rodrigues da Silva; Cleverson Casarin Uliana; Tiago Melo Casal.
 
 %!includeconf: ../changes.t2tconf
+%!includeconf: ./locale.t2tconf
+
+= 2023.2 =
+
+== Novas Características ==
+- Adicionada pronúncia de símbolos Unicode:
+  - símbolos braille como "⠣⠄⠃⠗⠇⠠⠜". (#14548)
+  - Símbolo da tecla Option do Mac "⌥". (#14682)
+  -
+- No Mozilla Firefox e no Google Chrome, o NVDA agora informa quando um controle abre um diálogo, grade, lista ou árvore se o autor especificou isso usando aria-haspopup. (#14709)
+-
+
+
+== Alterações ==
+- Transcritor braille LibLouis atualizado para [3.25.0 https://github.com/liblouis/liblouis/releases/tag/v3.25.0]. (#14719)
+- Os símbolos de hífen ""[tracinho]"" e travessão sempre serão enviados ao sintetizador. (#13830)
+- A distância relatada no Microsoft Word agora respeitará a unidade definida nas opções avançadas do Word, mesmo ao usar o UIA para acessar documentos do Word. (#14542)
+- Ao relatar a localização do cursor de exploração, a localização atual do cursor/sinal de acento circunflexo agora é relatada em relação à página atual no LibreOffice Writer para versões do LibreOffice >= 7.6, semelhante ao que é feito para o Microsoft Word. (#11696)
+- O NVDA agora responde um pouco mais rápido aos comandos e mudanças de foco. (#14701)
+- O NVDA responde mais rápido ao mover o cursor nos controles de edição. (#14708)
+- Driver Braille Baum: adiciona vários comandos ""[gestos]"" com conjunto de teclas ""[acordes]"" Braille para executar comandos de teclado comuns, como windows+d, alt+tab, etc. Consulte o Guia do usuário do NVDA para obter uma lista completa. (#14714)
+- Ao usar uma linha Braille por meio do driver de braille HID padrão, o bloco direcional ""[dpad]"" pode ser usado para emular as teclas de setas e enter. Além disso, espaço+ponto1 e espaço+ponto4 agora são mapeados respectivamente para as setas para cima e baixo. (#14713)
+- O script para relatar o destino de um link agora relata a partir da posição do cursor / foco em vez do objeto em navegação. (#14659)
+-
+
+
+== Correção de Falhas ==
+- O NVDA não mudará mais desnecessariamente para sem braille várias vezes durante a detecção automática, resultando em um log mais limpo e menos sobrecarga. (#14524)
+- O NVDA agora voltará para USB se um dispositivo HID Bluetooth (como o HumanWare Brailliant ou APH Mantis) for detectado automaticamente e uma conexão USB estiver disponível.
+Antes isso só funcionava para portas seriais Bluetooth. (#14524)
+- Agora é possível usar o caractere de barra invertida no campo de substituição de uma entrada de dicionário, quando o tipo não estiver definido como expressão regular. (#14556)
+- No modo de navegação, o NVDA não irá mais ignorar incorretamente o foco movendo-se para um controle pai ou filho, por exemplo, movendo de um controle para seu item de lista pai ou célula de grade. (#14611)
+  - No entanto, observe que essa correção só se aplica quando a opção "Definir foco automaticamente para elementos focalizáveis" nas configurações do Modo de Navegação está desativada (que é o padrão).
+  -
+- O NVDA não faz mais ocasionalmente com que o Mozilla Firefox trave ou pare de responder. (#14647)
+- No Mozilla Firefox e no Google Chrome, os caracteres digitados não são mais relatados em algumas caixas de texto, mesmo quando a fala dos caracteres digitados está desativada. (#14666)
+- Agora você pode usar o modo de navegação nos Controles Incorporados do Chromium, onde antes não era possível. (#13493, #8553)
+- Para símbolos que não possuem uma descrição de símbolo na localidade atual, o nível de símbolo padrão em inglês será usado. (#14558, #14417)
+- Nas versões mais recentes do Bloco de Notas do Windows 11, o NVDA pode novamente anunciar o conteúdo da barra de status. (#14573)
+- No Mozilla Firefox, mover o mouse sobre o texto após um link agora informa o texto de forma confiável. (#9235)
+- Na Calculadora do Windows 10 e 11, uma cópia portátil do NVDA não fará mais nada ou nem reproduzirá tons de erro ao inserir expressões na calculadora padrão no modo de sobreposição compacta. (#14679)
+- Ao tentar relatar a URL de um link sem um atributo href, o NVDA não fica silencioso.
+Em vez disso, o NVDA informa que o link não tem destino. (#14723)
+-
+
+
+== Alterações para Desenvolvedores ==
+Consulte [o guia do desenvolvedor https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] para obter informações sobre o processo de descontinuação e remoção de API do NVDA.
+- Adicionado um novo tipo de ponto de extensão chamado ``Chain``, que pode ser usado para iterar sobre iteráveis retornados por manipuladores ""[handlers]"" registrados. (#14531)
+- Adicionado o ponto de extensão ``bdDetect.scanForDevices``.
+Os manipuladores podem ser registrados para gerar pares ``BrailleDisplayDriver/DeviceMatch`` que não se encaixam nas categorias existentes, como USB ou Bluetooth. (#14531)
+- Adicionado ponto de extensão: ``synthDriverHandler.synthChanged``. (#14618)
+- O Anel de Configurações de Voz do NVDA agora armazena em cache os valores de configuração disponíveis na primeira vez em que são necessários, em vez de carregar o sintetizador. (#14704)
+- Agora você pode chamar o método de exportação em um mapa de gestos para exportá-lo para um dicionário.
+Este dicionário pode ser importado em outro gesture passando-o para o construtor de ``GlobalGestureMap`` ou para o método de atualização em um mapa existente. (#14582)
+-
+
+=== Obsolescências ===
+
 
 = 2023.1 =
 Foi adicionada uma nova opção, "Estilo de Parágrafo" em "Navegação de Documento".
@@ -107,7 +166,7 @@ O mesmo que pressionar ``NVDA+k`` duas vezes, mas pode ser mais útil para os us
 
 
 == Alterações para Desenvolvedores ==
-- Observação: esta é uma versão de quebra de compatibilidade de API Add-on ""[Interface de Programação de Aplicativos para complementos]"".
+Observação: esta é uma versão de quebra de compatibilidade de API Add-on ""[Interface de Programação de Aplicativos para complementos]"".
 Os complementos precisarão ser testados novamente e ter seu manifest ""[manifesto]"" atualizado.
 Consulte [o guia do desenvolvedor https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] para obter informações sobre o processo de descontinuação e remoção de API do NVDA.
 
