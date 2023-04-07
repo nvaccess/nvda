@@ -179,7 +179,7 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 			if not willSayAllResume:
 				speech.speakTextInfo(info, reason=controlTypes.OutputReason.CARET)
 		else:
-			wx.CallAfter(gui.messageBox,_('text "%s" not found')%text,_("Find Error"),wx.OK|wx.ICON_ERROR)
+			wx.CallAfter(gui.messageBox,_('text "%s" not found')%text,_("Find Error"),wx.OK|wx.ICON_INFORMATION)
 		CursorManager._lastFindText=text
 		CursorManager._lastCaseSensitivity=caseSensitive
 
