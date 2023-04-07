@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-26 22:33+0000\n"
+"POT-Creation-Date: 2023-03-31 00:01+0000\n"
 "PO-Revision-Date: 2023-03-02 14:27+0100\n"
 "Last-Translator: Karl Eick <hozosch@web.de>\n"
 "Language-Team: sv\n"
@@ -4390,14 +4390,19 @@ msgstr ""
 msgid "Plugins reloaded"
 msgstr "Insticksmoduler laddades om"
 
-#. Translators: input help mode message for Report destination URL of navigator link command
+#. Translators: input help mode message for Report destination URL of a link command
+#, fuzzy
 msgid ""
-"Report the destination URL of the link in the navigator object. If pressed "
-"twice, shows the URL in a window for easier review."
+"Report the destination URL of the link at the position of caret or focus. If "
+"pressed twice, shows the URL in a window for easier review."
 msgstr ""
 "Rapportera webbadressen för länken i navigatorobjektet. Två tryck visar "
 "webbadressen i ett fönster för enklare granskning.\n"
 "If pressed twice, shows the URL in a window for easier review."
+
+#. Translators: Informs the user that the link has no destination
+msgid "Link has no apparent destination"
+msgstr ""
 
 #. Translators: Informs the user that the window contains the destination of the
 #. link with given title
@@ -4409,10 +4414,11 @@ msgstr "Webbadress för: {name}"
 msgid "Not a link."
 msgstr "Inte någon länk."
 
-#. Translators: input help mode message for Report URL of navigator link in a window command
+#. Translators: input help mode message for Report URL of a link in a window command
+#, fuzzy
 msgid ""
-"Reports the destination URL of the link in the navigator object in a window, "
-"instead of just speaking it. May be preferred by braille users."
+"Displays the destination URL of the link at the position of caret or focus "
+"in a window, instead of just speaking it. May be preferred by braille users."
 msgstr ""
 "Rapporterar adressen för länken i navigatorobjektet i ett fönster istället "
 "för att bara läsa upp den. Kan föredras av punktläsare."
@@ -7288,6 +7294,23 @@ msgstr "{firstAddress} {firstValue} till och med {lastAddress} {lastValue}"
 msgid "{firstAddress} through {lastAddress}"
 msgstr "{firstAddress} till och med {lastAddress}"
 
+#. Translators: a measurement in inches
+#, fuzzy, python-brace-format
+msgid "{val:.2f} inches"
+msgstr "{val:.2f} in"
+
+#. Translators: a measurement in centimetres
+#, fuzzy, python-brace-format
+msgid "{val:.2f} centimetres"
+msgstr "{val:.2f} cm"
+
+#. Translators: LibreOffice, report cursor position in the current page
+#, python-brace-format
+msgid ""
+"cursor positioned {horizontalDistance} from left edge of page, "
+"{verticalDistance} from top edge of page"
+msgstr ""
+
 msgid "left"
 msgstr "vänster"
 
@@ -8522,6 +8545,24 @@ msgstr "olåst"
 msgid "has note"
 msgstr "har anteckning"
 
+#. Translators: Presented when a control has a pop-up dialog.
+#, fuzzy
+msgid "opens dialog"
+msgstr "dialog"
+
+#. Translators: Presented when a control has a pop-up grid.
+msgid "opens grid"
+msgstr ""
+
+#. Translators: Presented when a control has a pop-up list box.
+#, fuzzy
+msgid "opens list"
+msgstr "rullgardinslista"
+
+#. Translators: Presented when a control has a pop-up tree.
+msgid "opens tree"
+msgstr ""
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "inte markerat"
@@ -8545,6 +8586,16 @@ msgstr "färdig med att dra"
 #. Translators: This is spoken when the line is considered blank.
 msgid "blank"
 msgstr "tom"
+
+#. Translators: this message is given when there is no next paragraph when navigating by paragraph
+#, fuzzy
+msgid "No next paragraph"
+msgstr "ingen nästa grafik"
+
+#. Translators: this message is given when there is no previous paragraph when navigating by paragraph
+#, fuzzy
+msgid "No previous paragraph"
+msgstr "ingen föregående grafik"
 
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 msgid "Configuration applied"
@@ -11056,8 +11107,13 @@ msgid "Dictionary Entry Error"
 msgstr "Ordlistepostfel"
 
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
-#, python-format
-msgid "Regular Expression error: \"%s\"."
+#, fuzzy, python-brace-format
+msgid "Regular Expression error in the pattern field: \"{error}\"."
+msgstr "Fel i reguljärt uttryck: \"%s\"."
+
+#. Translators: This is an error message to let the user know that the dictionary entry is not valid.
+#, fuzzy, python-brace-format
+msgid "Regular Expression error in the replacement field: \"{error}\"."
 msgstr "Fel i reguljärt uttryck: \"%s\"."
 
 #. Translators: The label for the list box of dictionary entries in speech dictionary dialog.
