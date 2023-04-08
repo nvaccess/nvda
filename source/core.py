@@ -46,7 +46,7 @@ def __getattr__(attrName: str) -> Any:
 
 
 
-# inform those who want to know that NVDA has finished starting up.
+# Inform those who want to know that NVDA has finished starting up.
 postNvdaStartup = extensionPoints.Action()
 
 PUMP_MAX_DELAY = 10
