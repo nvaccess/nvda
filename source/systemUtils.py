@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2020-2022 NV Access Limited, Łukasz Golonka
+# Copyright (C) 2020-2023 NV Access Limited, Łukasz Golonka, Luke Davis
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -17,6 +17,7 @@ import shellapi
 import winUser
 import functools
 import shlobj
+from os import startfile
 
 
 @functools.lru_cache(maxsize=1)
@@ -179,3 +180,12 @@ def _isSecureDesktop() -> bool:
 	 - SecureMode and SecureScreens
 	"""
 	return _getDesktopName() == "Winlogon"
+
+
+def _displayTextFileWorkaround(file: str) -> None:
+	# os.startfile does not currently (NVDA 2023.1, Python 3.7) work reliably to open .txt files in Notepadunder
+	# Windows 11, if relying on the default behavior (i.e. `operation="open"`). (#14725)
+	# Using `operation="edit"`, however, has the desired effect--opening the text file in Notepad. (#14816)
+	# Since this may be a bug in Python 3.7's os.startfile, or the underlying Win32 function, it may be
+	# possible to deprecate this workaround after a Python upgrade.
+	startfile(file, operation="edit")
