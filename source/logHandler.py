@@ -54,7 +54,7 @@ def isPathExternalToNVDA(path: str) -> bool:
 		# it has an absolute file path (code bundled in binary builds reports relative paths); and
 		# it is not part of NVDA's Python code
 		# (i.e. outside of NVDA directory or in NVDA's config,
-		# so belongs to an add-on or a plugin in the scratchpad).
+		# so it belongs to an add-on or a plugin in the scratchpad).
 		return True
 	return False
 
