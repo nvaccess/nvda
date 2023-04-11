@@ -799,7 +799,7 @@ def getAddonBundleToInstallIfValid(addonPath: str) -> addonHandler.AddonBundle:
 
 
 def getPreviouslyInstalledAddonById(addon: addonHandler.AddonBundle) -> Optional[addonHandler.Addon]:
-	installedAddon = addonHandler.AddonsState._addonHandlerCache.availableAddons.get(addon.name)
+	installedAddon = addonHandler.state._addonHandlerCache.availableAddons.get(addon.name)
 	if installedAddon is None or installedAddon.isPendingRemove:
 		return None
 	return installedAddon
