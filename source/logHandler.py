@@ -44,16 +44,17 @@ def isPathExternalToNVDA(path: str) -> bool:
 		path[0] != "<"
 		and os.path.isabs(path)
 		and not os.path.normpath(path).startswith(_NVDA_CODE_PATH + "\\")
-		or(
+		or (
 			globalVars.appArgs.configPath is not None  # Handle messages logged before config is initialized
 			and path.startswith(globalVars.appArgs.configPath)
 		)
 	):
 		# This module is external because:
 		# the code comes from a file (fn doesn't begin with "<");
-		# it has an absolute file path (code bundled in binary builds reports relative paths);
-		# it is not part of NVDA's Python code; and
-		# it is placed in NVDA's config, so belongs to an add-on or a plugin in the scratchpad.
+		# it has an absolute file path (code bundled in binary builds reports relative paths); and
+		# it is not part of NVDA's Python code
+		# (i.e. outside of NVDA directory or in NVDA's config,
+		# so belongs to an add-on or a plugin in the scratchpad).
 		return True
 	return False
 
