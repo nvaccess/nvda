@@ -33,6 +33,7 @@ from utils.displayString import DisplayStringEnum
 from logHandler import log
 
 from .dialogs import (
+	_shouldProceedAddonRemove,
 	_shouldProceedWhenAddonTooOldDialog,
 	_shouldProceedWhenInstalledAddonVersionUnknown,
 )
@@ -47,6 +48,7 @@ class AvailableAddonStatus(DisplayStringEnum):
 	""" Values to represent the status of add-ons within the NVDA add-on store.
 	Although related, these are independent of the states in L{addonHandler}
 	"""
+	PENDING_REMOVE = enum.auto()
 	AVAILABLE = enum.auto()
 	UPDATE = enum.auto()
 	REPLACE_SIDE_LOAD = enum.auto()
@@ -62,13 +64,16 @@ class AvailableAddonStatus(DisplayStringEnum):
 	INSTALLING = enum.auto()
 	INSTALL_FAILED = enum.auto()
 	INSTALLED = enum.auto()  # installed, requires restart
+	PENDING_DISABLE = enum.auto()  # marked as disabled, requires restart
 	DISABLED = enum.auto()
-	ENABLED = enum.auto()  # enabled after restart
+	PENDING_ENABLE = enum.auto()  # enabled after restart
 	RUNNING = enum.auto()  # enabled / active.
 
 	@property
 	def _displayStringLabels(self) -> Dict[Enum, str]:
 		_labels = {
+			# Translators: Status for addons shown in the add-on store dialog
+			self.PENDING_REMOVE: _("Pending removed"),
 			# Translators: Status for addons shown in the add-on store dialog
 			self.AVAILABLE: _("Available"),
 			# Translators: Status for addons shown in the add-on store dialog
@@ -90,9 +95,11 @@ class AvailableAddonStatus(DisplayStringEnum):
 			# Translators: Status for addons shown in the add-on store dialog
 			self.INSTALLED: _("Installed, restart required"),
 			# Translators: Status for addons shown in the add-on store dialog
+			self.PENDING_DISABLE: _("Pending Disable"),
+			# Translators: Status for addons shown in the add-on store dialog
 			self.DISABLED: _("Disabled"),
 			# Translators: Status for addons shown in the add-on store dialog
-			self.ENABLED: _("Enabled after restart"),
+			self.PENDING_ENABLE: _("Enabled after restart"),
 			# Translators: Status for addons shown in the add-on store dialog
 			self.RUNNING: _("Enabled"),
 		}
@@ -102,6 +109,9 @@ class AvailableAddonStatus(DisplayStringEnum):
 addonStoreStateToAddonHandlerState: Dict[AvailableAddonStatus, addonHandler.AddonStateCategory] = {
 	AvailableAddonStatus.INSTALLED: addonHandler.AddonStateCategory.PENDING_INSTALL,
 	AvailableAddonStatus.DISABLED: addonHandler.AddonStateCategory.DISABLED,
+	AvailableAddonStatus.PENDING_DISABLE: addonHandler.AddonStateCategory.PENDING_DISABLE,
+	AvailableAddonStatus.PENDING_ENABLE: addonHandler.AddonStateCategory.PENDING_ENABLE,
+	AvailableAddonStatus.PENDING_REMOVE: addonHandler.AddonStateCategory.PENDING_REMOVE,
 }
 
 
@@ -477,11 +487,11 @@ class AddonStoreVM:
 			),
 			AddonActionVM(
 				# Translators: Label for a button that installs the selected addon
-				displayName=_("Add-on &help"),
-				actionHandler=self.helpAddon,
-				validCheck=lambda aVM: aVM.status not in (
-					AvailableAddonStatus.AVAILABLE,
-					AvailableAddonStatus.INCOMPATIBLE,
+				displayName=_("&Install (override incompatibility)"),
+				actionHandler=self.installOverrideIncompatibilityForAddon,
+				validCheck=lambda aVM: (
+					aVM.status == AvailableAddonStatus.INCOMPATIBLE
+					and aVM.model.canOverrideCompatibility
 				),
 				listItemVM=selectedListItem
 			),
@@ -505,6 +515,7 @@ class AddonStoreVM:
 				actionHandler=self.disableAddon,
 				validCheck=lambda aVM: aVM.status not in (
 					AvailableAddonStatus.DISABLED,
+					AvailableAddonStatus.PENDING_DISABLE,
 					AvailableAddonStatus.AVAILABLE,
 					AvailableAddonStatus.INCOMPATIBLE,
 				),
@@ -514,26 +525,43 @@ class AddonStoreVM:
 				# Translators: Label for a button that installs the selected addon
 				displayName=_("&Enable"),
 				actionHandler=self.enableAddon,
-				validCheck=lambda aVM: aVM.status == AvailableAddonStatus.DISABLED,
-				listItemVM=selectedListItem
-			),
-			AddonActionVM(
-				# Translators: Label for a button that installs the selected addon
-				displayName=_("Install (&override incompatibility)"),
-				actionHandler=self.installOverrideIncompatibilityForAddon,
 				validCheck=lambda aVM: (
-					aVM.status == AvailableAddonStatus.INCOMPATIBLE
-					and aVM.model.canOverrideCompatibility
+					aVM.status == AvailableAddonStatus.DISABLED
+					or aVM.status == AvailableAddonStatus.PENDING_DISABLE
 				),
 				listItemVM=selectedListItem
 			),
 			AddonActionVM(
 				# Translators: Label for a button that installs the selected addon
-				displayName=_("Enable (&override incompatibility)"),
+				displayName=_("&Enable (override incompatibility)"),
 				actionHandler=self.enableOverrideIncompatibilityForAddon,
 				validCheck=lambda aVM: (
-					aVM.status == AvailableAddonStatus.DISABLED
+					(
+						aVM.status == AvailableAddonStatus.DISABLED
+						or aVM.status == AvailableAddonStatus.PENDING_DISABLE
+					)
 					and aVM.model.canOverrideCompatibility
+				),
+				listItemVM=selectedListItem
+			),
+			AddonActionVM(
+				# Translators: Label for a button that removes the selected addon
+				displayName=_("&Remove"),
+				actionHandler=self.removeAddon,
+				validCheck=lambda aVM: aVM.status not in (
+					AvailableAddonStatus.AVAILABLE,
+					AvailableAddonStatus.INCOMPATIBLE,
+					AvailableAddonStatus.PENDING_REMOVE,
+				),
+				listItemVM=selectedListItem
+			),
+			AddonActionVM(
+				# Translators: Label for a button that installs the selected addon
+				displayName=_("Add-on &help"),
+				actionHandler=self.helpAddon,
+				validCheck=lambda aVM: aVM.status not in (
+					AvailableAddonStatus.AVAILABLE,
+					AvailableAddonStatus.INCOMPATIBLE,
 				),
 				listItemVM=selectedListItem
 			),
@@ -543,26 +571,60 @@ class AddonStoreVM:
 		path = listItemVM.model._addonHandlerModel.getDocFilePath()
 		startfile(path)
 
+	def removeAddon(self, listItemVM: AddonListItemVM) -> None:
+		if _shouldProceedAddonRemove(listItemVM.model):
+			listItemVM.model._addonHandlerModel.requestRemove()
+			self.refresh()
+
 	def installOverrideIncompatibilityForAddon(self, listItemVM: AddonListItemVM) -> None:
 		from .. import mainFrame
 		if _shouldProceedWhenAddonTooOldDialog(mainFrame, listItemVM.model):
 			listItemVM.model.enableCompatibilityOverride()
 			self.getAddon(listItemVM)
+			self.refresh()
+
+	# Translators: The message displayed when the add-on cannot be enabled.
+	# {addon} is replaced with the add-on name.
+	_enableErrorMessage: str = pgettext(
+		"addonStore",
+		"Could not enable the add-on: {addon}."
+	)
+
+	# Translators: The message displayed when the add-on cannot be disabled.
+	# {addon} is replaced with the add-on name.
+	_disableErrorMessage: str = pgettext(
+		"addonStore",
+		"Could not disable the add-on: {addon}."
+	)
+
+	def _handleEnableDisable(self, listItemVM: AddonListItemVM, shouldEnable: bool) -> None:
+		try:
+			listItemVM.model._addonHandlerModel.enable(shouldEnable)
+		except addonHandler.AddonError:
+			log.debug(exc_info=True)
+			if shouldEnable:
+				errorMessage = self._enableErrorMessage
+			else:
+				errorMessage = self._disableErrorMessage
+			error = TranslatedError(
+				displayMessage=errorMessage.format(addon=listItemVM.model.displayName)
+			)
+			# ensure calling on the main thread.
+			core.callLater(delay=0, callable=self.hasError.notify, error=error)
+			return
+		self.refresh()
 
 	def enableOverrideIncompatibilityForAddon(self, listItemVM: AddonListItemVM) -> None:
 		from .. import mainFrame
 		if _shouldProceedWhenAddonTooOldDialog(mainFrame, listItemVM.model):
 			listItemVM.model.enableCompatibilityOverride()
-			# TODO add full handling to match add-on manager
-			listItemVM.model._addonHandlerModel.enable(True)
+			self._handleEnableDisable(listItemVM, True)
 
 	def enableAddon(self, listItemVM: AddonListItemVM) -> None:
-		# TODO add full handling to match add-on manager
-		listItemVM.model._addonHandlerModel.enable(True)
+		self._handleEnableDisable(listItemVM, True)
 
 	def disableAddon(self, listItemVM: AddonListItemVM) -> None:
-		# TODO add full handling to match add-on manager
-		listItemVM.model._addonHandlerModel.enable(False)
+		self._handleEnableDisable(listItemVM, False)
 
 	def replaceAddon(self, listItemVM: AddonListItemVM) -> None:
 		from .. import mainFrame

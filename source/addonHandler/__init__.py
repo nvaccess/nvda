@@ -525,7 +525,10 @@ class Addon(AddonBase):
 		log.debug("Addon %s added to %s package path", self.manifest['name'], package.__name__)
 
 	def enable(self, shouldEnable: bool) -> None:
-		"""Sets this add-on to be disabled or enabled when NVDA restarts."""
+		"""
+		Sets this add-on to be disabled or enabled when NVDA restarts.
+		@raises: AddonError on failure.
+		"""
 		if shouldEnable:
 			if not (
 				isAddonCompatible(self)

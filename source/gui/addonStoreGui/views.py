@@ -15,6 +15,10 @@ import wx
 import wx.lib.newevent
 from wx.lib.expando import ExpandoTextCtrl
 
+from addonHandler import (
+	state as addonHandlerState,
+	AddonStateCategory,
+)
 import gui
 import winVersion
 from gui import (
@@ -641,6 +645,13 @@ class AddonStoreDialog(SettingsDialog):
 				installationPromptTitle
 			)
 			self._storeVM.installPending()
+			addonGui.promptUserForRestart()
+		
+		if (
+			addonHandlerState[AddonStateCategory.PENDING_DISABLE]
+			or addonHandlerState[AddonStateCategory.PENDING_ENABLE]
+			or addonHandlerState[AddonStateCategory.PENDING_REMOVE]
+		):
 			addonGui.promptUserForRestart()
 
 		# let the dialog exit.

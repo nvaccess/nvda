@@ -305,22 +305,13 @@ class AddonsDialog(
 		else:
 			self.refreshAddonsList()
 
-	def onRemoveClick(self,evt):
-		index = self.addonsList.GetFirstSelected()
+	def onRemoveClick(self, evt: wx.EVT_BUTTON):
+		index: int = self.addonsList.GetFirstSelected()
 		if index < 0:
 			return
 		addon = self.curAddons[index]
-		if gui.messageBox(
-			(_(
-				# Translators: Presented when attempting to remove the selected add-on.
-				# {addon} is replaced with the add-on name.
-				"Are you sure you wish to remove the {addon} add-on from NVDA? "
-				"This cannot be undone."
-			)).format(addon=addon.name),
-			# Translators: Title for message asking if the user really wishes to remove the selected Addon.
-			_("Remove Add-on"),
-			wx.YES_NO | wx.NO_DEFAULT | wx.ICON_WARNING
-		) != wx.YES:
+		from addonStoreGui.dialogs import _shouldProceedAddonRemove
+		if not _shouldProceedAddonRemove(addon):
 			return
 		addon.requestRemove()
 		self.refreshAddonsList(activeIndex=index)
@@ -453,24 +444,22 @@ class AddonsDialog(
 		path = self.curAddons[index].getDocFilePath()
 		os.startfile(path)
 
-	def onEnableDisable(self, evt):
-		index=self.addonsList.GetFirstSelected()
-		if index<0: return
-		addon=self.curAddons[index]
+	def onEnableDisable(self, evt: wx.EVT_BUTTON):
+		index: int = self.addonsList.GetFirstSelected()
+		if index < 0:
+			return
+		addon = self.curAddons[index]
 		shouldDisable = self._shouldDisable(addon)
 		try:
 			# Counterintuitive, but makes sense when context is taken into account.
 			addon.enable(not shouldDisable)
 		except addonHandler.AddonError:
+			from addonStoreGui.viewModels import AddonStoreVM
 			log.error("Couldn't change state for %s add-on"%addon.name, exc_info=True)
 			if shouldDisable:
-				# Translators: The message displayed when the add-on cannot be disabled.
-				message = _("Could not disable the {description} add-on.").format(
-					description=addon.manifest['summary'])
+				message = AddonStoreVM._disableErrorMessage.format(addon=addon.manifest['summary'])
 			else:
-				# Translators: The message displayed when the add-on cannot be enabled.
-				message = _("Could not enable the {description} add-on.").format(
-					description=addon.manifest['summary'])
+				message = AddonStoreVM._enableErrorMessage.format(addon=addon.manifest['summary'])
 			gui.messageBox(
 				message,
 				# Translators: The title of a dialog presented when an error occurs.

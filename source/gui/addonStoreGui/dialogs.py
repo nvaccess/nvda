@@ -15,6 +15,7 @@ from gui.addonGui import ErrorAddonInstallDialog
 from gui.message import messageBox
 
 if TYPE_CHECKING:
+	from addonHandler import SupportsVersionCheck
 	from guiHelper import ButtonHelper
 
 
@@ -57,6 +58,22 @@ def _shouldProceedWhenInstalledAddonVersionUnknown(
 		message=incompatibleMessage,
 		showAddonInfoFunction=lambda: _showAddonInfo(addon)
 	).ShowModal() == wx.OK
+
+
+def _shouldProceedAddonRemove(
+		addon: "SupportsVersionCheck"
+) -> bool:
+	return messageBox(
+		(_(
+			# Translators: Presented when attempting to remove the selected add-on.
+			# {addon} is replaced with the add-on name.
+			"Are you sure you wish to remove the {addon} add-on from NVDA? "
+			"This cannot be undone."
+		)).format(addon=addon.name),
+		# Translators: Title for message asking if the user really wishes to remove the selected Addon.
+		_("Remove Add-on"),
+		wx.YES_NO | wx.NO_DEFAULT | wx.ICON_WARNING
+	) == wx.YES
 
 
 def _shouldProceedWhenAddonTooOldDialog(
