@@ -45,7 +45,6 @@ def __getattr__(attrName: str) -> Any:
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
 
 
-
 # Inform those who want to know that NVDA has finished starting up.
 postNvdaStartup = extensionPoints.Action()
 
