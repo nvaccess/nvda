@@ -15,7 +15,6 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <cstdio>
 #include <sstream>
 #include <algorithm>
-#include <set>
 #include <rpc.h>
 #include <sddl.h>
 #include <common/log.h>
@@ -82,9 +81,7 @@ void(__stdcall *_notifySendMessageCancelled)() = NULL;
 
 LRESULT cancellableSendMessageTimeout(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM lParam, UINT fuFlags, UINT uTimeout, PDWORD_PTR lpdwResult) {
 	if (!hwnd) {
-		// We use HWND NULL to signal that the background thread should die,
-		// so we must return before then.
-		// We may as well do it as early as possible.
+		// Return as early as possible when no hwnd is given.
 		SetLastError(ERROR_INVALID_WINDOW_HANDLE);
 		return 0;
 	}
