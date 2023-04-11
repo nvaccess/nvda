@@ -798,15 +798,11 @@ def getAddonBundleToInstallIfValid(addonPath: str) -> addonHandler.AddonBundle:
 	return bundle
 
 
-def getPreviouslyInstalledAddonById(addonId: str) -> Optional[addonHandler.Addon]:
-	for addon in addonHandler.getAvailableAddons():
-		if (
-			not addon.isPendingRemove
-			# name is the primary identifier within add-on manifests.
-			and addonId.lower() == addon.manifest['name'].lower()
-		):
-			return addon
-	return None
+def getPreviouslyInstalledAddonById(addon: addonHandler.AddonBundle) -> Optional[addonHandler.Addon]:
+	installedAddon = addonHandler.AddonsState._addonHandlerCache.availableAddons.get(addon.name)
+	if installedAddon is None or installedAddon.isPendingRemove:
+		return None
+	return installedAddon
 
 
 def installAddon(addonPath: PathLike) -> None:
@@ -818,7 +814,7 @@ def installAddon(addonPath: PathLike) -> None:
 	"""
 	addonPath = typing.cast(str, addonPath)
 	bundle = getAddonBundleToInstallIfValid(addonPath)
-	prevAddon = getPreviouslyInstalledAddonById(addonId=bundle.name)
+	prevAddon = getPreviouslyInstalledAddonById(bundle)
 
 	try:
 		if prevAddon:
