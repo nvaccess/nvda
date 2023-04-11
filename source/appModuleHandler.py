@@ -52,7 +52,7 @@ _CORE_APP_MODULES_PATH: os.PathLike = appModules.__path__[0]
 _getAppModuleLock=threading.RLock()
 #: Notifies when another application is taking foreground.
 #: This allows components to react upon application switches.
-#: For example, braille triggers bluetooth polling for braille displaysf necessary.
+#: For example, braille triggers bluetooth polling for braille displays if necessary.
 #: Handlers are called with no arguments.
 post_appSwitch = extensionPoints.Action()
 
