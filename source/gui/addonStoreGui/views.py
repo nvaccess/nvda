@@ -257,7 +257,7 @@ class AddonDetails(
 		DpiScalingHelperMixinWithoutInit,
 ):
 	# Translators: Header (usually the add-on name) when no add-on is selected. In the add-on store dialog.
-	_noAddonSelectedLabelText: str = pgettext("addonStore", "No addon selected.")
+	_noAddonSelectedLabelText: str = pgettext("addonStore", "No add-on selected.")
 
 	# Translators: Label for the text control containing a description of the selected add-on.
 	# In the add-on store dialog.

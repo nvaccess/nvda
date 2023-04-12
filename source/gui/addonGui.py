@@ -364,7 +364,8 @@ class AddonsDialog(
 		self.addonsList.DeleteAllItems()
 		self.curAddons: List[Addon] = []
 		anyAddonIncompatible = False
-		for addon in sorted(addonHandler.getAvailableAddons(), key=lambda a: strxfrm(a.manifest['summary'])):
+		availableAddons = addonHandler.state._addonHandlerCache.availableAddons
+		for addon in sorted(availableAddons.values(), key=lambda a: strxfrm(a.manifest['summary'])):
 			self.addonsList.Append((
 				addon.manifest['summary'],
 				self.getAddonStatus(addon),
@@ -518,11 +519,8 @@ def installAddon(parentWindow, addonPath) -> bool:  # noqa: C901
 	elif wx.YES != _showConfirmAddonInstallDialog(parentWindow, bundle):
 		return False  # Exit early, User changed their mind about installation.
 
-	prevAddon = None
-	for addon in addonHandler.getAvailableAddons():
-		if not addon.isPendingRemove and bundle.name.lower()==addon.manifest['name'].lower():
-			prevAddon=addon
-			break
+	from gui.addonStoreGui.viewModels import getPreviouslyInstalledAddonById
+	prevAddon = getPreviouslyInstalledAddonById(bundle.name)
 	if prevAddon:
 		summary=bundle.manifest["summary"]
 		curVersion=prevAddon.manifest["version"]
