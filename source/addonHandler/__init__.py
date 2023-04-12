@@ -135,13 +135,7 @@ class AddonsState(collections.UserDict):
 	"""
 
 	_DEFAULT_STATE_CONTENT: Dict[AddonStateCategory, CaseInsensitiveSet[str]] = {
-		AddonStateCategory.PENDING_REMOVE: CaseInsensitiveSet(),
-		AddonStateCategory.PENDING_INSTALL: CaseInsensitiveSet(),
-		AddonStateCategory.DISABLED: CaseInsensitiveSet(),
-		AddonStateCategory.PENDING_ENABLE: CaseInsensitiveSet(),
-		AddonStateCategory.PENDING_DISABLE: CaseInsensitiveSet(),
-		AddonStateCategory.OVERRIDE_COMPATIBILITY: CaseInsensitiveSet(),
-		AddonStateCategory.BLOCKED: CaseInsensitiveSet(),
+		category: CaseInsensitiveSet() for category in AddonStateCategory
 	}
 
 	_addonHandlerCache: Optional[AddonHandlerCache]
