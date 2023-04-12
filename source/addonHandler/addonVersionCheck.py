@@ -20,8 +20,10 @@ def getAddonCompatibilityMessage() -> str:
 
 class SupportsVersionCheck(Protocol):
 	""" Examples implementing this protocol include:
+	- addonHandler.Addon
 	- addonHandler.AddonBundle
 	- addonStore.models.AddonDetailsModel
+	- addonStore.models.AddonStoreModel
 	"""
 	minimumNVDAVersion: addonAPIVersion.AddonApiVersionT
 	lastTestedNVDAVersion: addonAPIVersion.AddonApiVersionT
@@ -44,6 +46,7 @@ class SupportsVersionCheck(Protocol):
 		overiddenAddons = state[AddonStateCategory.OVERRIDE_COMPATIBILITY]
 		assert self.name not in overiddenAddons and self.canOverrideCompatibility
 		overiddenAddons.add(self.name)
+		state[AddonStateCategory.BLOCKED].discard(self.name)
 
 	@property
 	def canOverrideCompatibility(self) -> bool:

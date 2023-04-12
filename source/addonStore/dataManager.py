@@ -3,6 +3,10 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+# Needed for type hinting CaseInsensitiveDict
+# Can be removed in a future version of python (3.8+)
+from __future__ import annotations
+
 import dataclasses
 import globalVars
 import json
@@ -17,10 +21,11 @@ from datetime import datetime, timedelta
 import buildVersion
 from logHandler import log
 import requests
+from requests.structures import CaseInsensitiveDict
 
 import addonAPIVersion
-import typing
 from typing import (
+	cast,
 	Optional,
 	Dict,
 	Callable,
@@ -28,10 +33,9 @@ from typing import (
 )
 from .models import (
 	Channel,
-	_createAddonModelFromData,
-	_createModelFromData,
-	AddonDetailsModel,
-	_AddonDetailsCollectionT,
+	_createStoreModelFromData,
+	_createStoreCollectionFromJson,
+	AddonStoreModel,
 )
 
 addonDataManager: Optional["_DataManager"] = None
@@ -60,19 +64,19 @@ def _getAddonStoreURL(channel: Channel, lang: str, nvdaApiVersion: str) -> str:
 
 @dataclasses.dataclass
 class CachedAddonsModel:
-	availableAddons: _AddonDetailsCollectionT
+	availableAddons: CaseInsensitiveDict["AddonStoreModel"]
 	cachedAt: datetime
 	nvdaAPIVersion: addonAPIVersion.AddonApiVersionT
 
 
 class AddonFileDownloader:
-	OnCompleteT = Callable[[AddonDetailsModel, Optional[os.PathLike]], None]
+	OnCompleteT = Callable[[AddonStoreModel, Optional[os.PathLike]], None]
 
 	def __init__(self, cacheDir: os.PathLike):
 		self._cacheDir = cacheDir
-		self.progress: Dict[AddonDetailsModel, int] = {}  # Number of chunks received
-		self._pending: Dict[Future, Tuple[AddonDetailsModel, AddonFileDownloader.OnCompleteT]] = {}
-		self.complete: Dict[AddonDetailsModel, os.PathLike] = {}  # Path to downloaded file
+		self.progress: Dict[AddonStoreModel, int] = {}  # Number of chunks received
+		self._pending: Dict[Future, Tuple[AddonStoreModel, AddonFileDownloader.OnCompleteT]] = {}
+		self.complete: Dict[AddonStoreModel, os.PathLike] = {}  # Path to downloaded file
 		self._executor = ThreadPoolExecutor(
 			max_workers=1,
 			thread_name_prefix="AddonDownloader",
@@ -80,7 +84,7 @@ class AddonFileDownloader:
 
 	def download(
 			self,
-			addonData: AddonDetailsModel,
+			addonData: AddonStoreModel,
 			onComplete: OnCompleteT
 	):
 		self.progress[addonData] = 0
@@ -118,7 +122,7 @@ class AddonFileDownloader:
 		self.progress.clear()
 		self._pending.clear()
 
-	def _download(self, addonData: AddonDetailsModel) -> Optional[os.PathLike]:
+	def _download(self, addonData: AddonStoreModel) -> Optional[os.PathLike]:
 		log.debug(f"starting download: {addonData.addonId}")
 		cacheFilePath = os.path.join(
 			self._cacheDir,
@@ -160,10 +164,10 @@ class AddonFileDownloader:
 		os.rename(src=inProgressFilePath, dst=cacheFilePath)
 		log.debug(f"Cache file available: {cacheFilePath}")
 		# TODO: assert SHA256 sum
-		return typing.cast(os.PathLike, cacheFilePath)
+		return cast(os.PathLike, cacheFilePath)
 
 	@staticmethod
-	def _getCacheFilenameForAddon(addonData: AddonDetailsModel) -> str:
+	def _getCacheFilenameForAddon(addonData: AddonStoreModel) -> str:
 		return f"{addonData.addonId}-{addonData.addonVersionName}.nvda-addon"
 
 	def __del__(self):
@@ -228,12 +232,12 @@ class _DataManager:
 			return None
 		fetchTime = datetime.fromisoformat(cacheData["cacheDate"])
 		return CachedAddonsModel(
-			availableAddons=_createModelFromData(cacheData["data"]),
+			availableAddons=_createStoreCollectionFromJson(cacheData["data"]),
 			cachedAt=fetchTime,
 			nvdaAPIVersion=cacheData["nvdaAPIVersion"],
 		)
 
-	def getLatestAvailableAddons(self) -> _AddonDetailsCollectionT:
+	def getLatestAvailableAddons(self) -> CaseInsensitiveDict["AddonStoreModel"]:
 		shouldRefreshData = (
 			not self._availableAddonCache
 			or self._availableAddonCache.nvdaAPIVersion != addonAPIVersion.CURRENT
@@ -246,20 +250,20 @@ class _DataManager:
 				decodedApiData = apiData.decode()
 				self._cacheAddons(addonData=decodedApiData, fetchTime=fetchTime)
 				self._availableAddonCache = CachedAddonsModel(
-					availableAddons=_createModelFromData(decodedApiData),
+					availableAddons=_createStoreCollectionFromJson(decodedApiData),
 					cachedAt=fetchTime,
 					nvdaAPIVersion=addonAPIVersion.CURRENT,
 				)
 		return self._availableAddonCache.availableAddons
 
-	def _cacheInstalledAddon(self, addonData: AddonDetailsModel):
+	def _cacheInstalledAddon(self, addonData: AddonStoreModel):
 		if not addonData:
 			return
 		addonCachePath = os.path.join(self._installedAddonDataCacheDir, f"{addonData.addonId}.json")
 		with open(addonCachePath, 'w') as cacheFile:
 			json.dump(addonData.asdict(), cacheFile, ensure_ascii=False)
 
-	def _getCachedInstalledAddonData(self, addonId: str) -> Optional[AddonDetailsModel]:
+	def _getCachedInstalledAddonData(self, addonId: str) -> Optional[AddonStoreModel]:
 		addonCachePath = os.path.join(self._installedAddonDataCacheDir, f"{addonId}.json")
 		if not os.path.exists(addonCachePath):
 			return None
@@ -267,4 +271,4 @@ class _DataManager:
 			cacheData = json.load(cacheFile)
 		if not cacheData:
 			return None
-		return _createAddonModelFromData(cacheData)
+		return _createStoreModelFromData(cacheData)

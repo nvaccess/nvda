@@ -4,7 +4,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-# Needed for type hinting CaseInsensitiveDict
+# Needed for type hinting CaseInsensitiveDict, UserDict
 # Can be removed in a future version of python (3.8+)
 from __future__ import annotations
 
@@ -54,7 +54,7 @@ from .packaging import (
 from .types import AddonGeneratorT
 
 if TYPE_CHECKING:
-	from addonStore.models import AddonDetailsModel  # noqa: F401
+	from addonStore.models import AddonStoreModel, AddonDetailsModel  # noqa: F401
 
 
 MANIFEST_FILENAME = "manifest.ini"
@@ -77,11 +77,19 @@ class AddonHandlerCache(AutoPropertyObject):
 	cachePropertiesByDefault = True
 
 	availableAddons: CaseInsensitiveDict["Addon"]
+	availableAddonsAsDetails: CaseInsensitiveDict["AddonDetailsModel"]
 
 	def _get_availableAddons(self) -> CaseInsensitiveDict["Addon"]:
 		# Note: addon.name should match Id from add-on store,
 		# a case insensitive match is needed to switch from case conventions.
 		return CaseInsensitiveDict({a.name: a for a in getAvailableAddons()})
+
+	def _get_availableAddonsAsDetails(self) -> CaseInsensitiveDict["AddonDetailsModel"]:
+		from addonStore.models import _createDetailsFromManifest
+		return CaseInsensitiveDict({
+			addonId: _createDetailsFromManifest(self.availableAddons[addonId])
+			for addonId in self.availableAddons
+		})
 
 
 class AddonStateCategory(str, enum.Enum):
@@ -182,7 +190,7 @@ class AddonsState(collections.UserDict):
 				self["disabledAddons"].discard(disabledAddonName)
 
 
-state = AddonsState()
+state: AddonsState[AddonStateCategory, Set[str]] = AddonsState()
 
 
 def getRunningAddons() -> AddonGeneratorT:
@@ -402,7 +410,7 @@ class AddonBase(SupportsVersionCheck, ABC):
 		...
 
 	@property
-	def _getAddonStoreData(self) -> Optional["AddonDetailsModel"]:
+	def _getAddonStoreData(self) -> Optional["AddonStoreModel"]:
 		from addonStore.dataManager import addonDataManager
 		return addonDataManager.getLatestAvailableAddons().get(self.name)
 

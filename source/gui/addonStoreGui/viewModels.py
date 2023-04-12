@@ -3,7 +3,10 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import typing
+# Needed for type hinting CaseInsensitiveDict
+# Can be removed in a future version of python (3.8+)
+from __future__ import annotations
+
 import enum
 from os import (
 	PathLike,
@@ -12,11 +15,16 @@ from os import (
 from enum import (
 	Enum,
 )
+from requests.structures import CaseInsensitiveDict
 from typing import (
+	Callable,
+	Set,
+	cast,
 	List,
 	Optional,
 	Dict,
 	Tuple,
+	TYPE_CHECKING,
 )
 import threading
 
@@ -25,6 +33,7 @@ from addonHandler import addonVersionCheck
 from addonStore.dataManager import addonDataManager
 from addonStore.models import (
 	AddonDetailsModel,
+	AddonStoreModel,
 	MajorMinorPatch,
 )
 import core
@@ -38,7 +47,7 @@ from .dialogs import (
 	_shouldProceedWhenInstalledAddonVersionUnknown,
 )
 
-if typing.TYPE_CHECKING:
+if TYPE_CHECKING:
 	# Remove when https://github.com/python/typing/issues/760 is resolved
 	from _typeshed import SupportsLessThan
 
@@ -64,7 +73,8 @@ class AvailableAddonStatus(DisplayStringEnum):
 	INSTALLING = enum.auto()
 	INSTALL_FAILED = enum.auto()
 	INSTALLED = enum.auto()  # installed, requires restart
-	PENDING_DISABLE = enum.auto()  # marked as disabled, requires restart
+	PENDING_DISABLE = enum.auto()  # disabled after restart
+	INCOMPATIBLE_DISABLED = enum.auto()  # disabled due to being incompatible
 	DISABLED = enum.auto()
 	PENDING_ENABLE = enum.auto()  # enabled after restart
 	RUNNING = enum.auto()  # enabled / active.
@@ -93,11 +103,13 @@ class AvailableAddonStatus(DisplayStringEnum):
 			# Translators: Status for addons shown in the add-on store dialog
 			self.INSTALL_FAILED: _("Install failed"),
 			# Translators: Status for addons shown in the add-on store dialog
-			self.INSTALLED: _("Installed, restart required"),
+			self.INSTALLED: _("Installed"),
 			# Translators: Status for addons shown in the add-on store dialog
 			self.PENDING_DISABLE: _("Pending Disable"),
 			# Translators: Status for addons shown in the add-on store dialog
 			self.DISABLED: _("Disabled"),
+			# Translators: Status for addons shown in the add-on store dialog
+			self.INCOMPATIBLE_DISABLED: _("Disabled (Incompatible)"),
 			# Translators: Status for addons shown in the add-on store dialog
 			self.PENDING_ENABLE: _("Enabled after restart"),
 			# Translators: Status for addons shown in the add-on store dialog
@@ -109,6 +121,7 @@ class AvailableAddonStatus(DisplayStringEnum):
 addonStoreStateToAddonHandlerState: Dict[AvailableAddonStatus, addonHandler.AddonStateCategory] = {
 	AvailableAddonStatus.INSTALLED: addonHandler.AddonStateCategory.PENDING_INSTALL,
 	AvailableAddonStatus.DISABLED: addonHandler.AddonStateCategory.DISABLED,
+	AvailableAddonStatus.INCOMPATIBLE_DISABLED: addonHandler.AddonStateCategory.BLOCKED,
 	AvailableAddonStatus.PENDING_DISABLE: addonHandler.AddonStateCategory.PENDING_DISABLE,
 	AvailableAddonStatus.PENDING_ENABLE: addonHandler.AddonStateCategory.PENDING_ENABLE,
 	AvailableAddonStatus.PENDING_REMOVE: addonHandler.AddonStateCategory.PENDING_REMOVE,
@@ -193,10 +206,10 @@ class AddonListVM:
 		self.selectedAddonId: Optional[str] = None
 		self.lastSelectedAddonId = self.selectedAddonId
 		self._sortByModelFieldName: str = "displayName"
-		self._filterString: typing.Optional[str] = None
+		self._filterString: Optional[str] = None
 
 		self._setSelectionPending = False
-		self._addonsFilteredOrdered: typing.List[str] = self._getFilteredSortedIds()
+		self._addonsFilteredOrdered: List[str] = self._getFilteredSortedIds()
 		self._validate(
 			sortField=self._sortByModelFieldName,
 			selectionIndex=self.getSelectedIndex(),
@@ -248,7 +261,11 @@ class AddonListVM:
 		except IndexError:
 			# Failed to get addonId, index may have been lost in refresh.
 			return None
-		listItemVM = self._addons[addonId]
+		try:
+			listItemVM = self._addons[addonId]
+		except IndexError:
+			# Failed to get addon, may have been lost in refresh.
+			return None
 		return self._getAddonAttrText(listItemVM, attrName)
 
 	def _getAddonAttrText(self, listItemVM: AddonListItemVM, attrName: str) -> str:
@@ -399,8 +416,8 @@ class AddonActionVM:
 	def __init__(
 			self,
 			displayName: str,
-			actionHandler: typing.Callable[[AddonListItemVM, ], None],
-			validCheck: typing.Callable[[AddonListItemVM, ], bool],
+			actionHandler: Callable[[AddonListItemVM, ], None],
+			validCheck: Callable[[AddonListItemVM, ], bool],
 			listItemVM: Optional[AddonListItemVM],
 	):
 		"""
@@ -410,8 +427,8 @@ class AddonActionVM:
 		@param listItemVM: The listItemVM this action will be applied to. L{updated} notifies of modification.
 		"""
 		self.displayName: str = displayName
-		self.actionHandler: typing.Callable[[AddonListItemVM, ], None] = actionHandler
-		self._validCheck: typing.Callable[[AddonListItemVM, ], bool] = validCheck
+		self.actionHandler: Callable[[AddonListItemVM, ], None] = actionHandler
+		self._validCheck: Callable[[AddonListItemVM, ], bool] = validCheck
 		self._listItemVM: Optional[AddonListItemVM] = listItemVM
 		if listItemVM:
 			listItemVM.updated.register(self._listItemChanged)
@@ -453,8 +470,10 @@ class AddonActionVM:
 class AddonStoreVM:
 	def __init__(self):
 		self.hasError = extensionPoints.Action()
-		self._addons: Dict[str, AddonDetailsModel] = {}
-		self._filteredStatuses = [None, AvailableAddonStatus.RUNNING]
+		self._addons: CaseInsensitiveDict[AddonDetailsModel] = CaseInsensitiveDict()
+		self._filteredStatuses: Set[AvailableAddonStatus] = {
+			status for status in AvailableAddonStatus
+		}
 
 		self._downloader = addonDataManager.getFileDownloader()
 		self._pendingInstalls: List[Tuple[AddonListItemVM, PathLike]] = []
@@ -518,6 +537,7 @@ class AddonStoreVM:
 					AvailableAddonStatus.PENDING_DISABLE,
 					AvailableAddonStatus.AVAILABLE,
 					AvailableAddonStatus.INCOMPATIBLE,
+					AvailableAddonStatus.INCOMPATIBLE_DISABLED,
 				),
 				listItemVM=selectedListItem
 			),
@@ -536,10 +556,7 @@ class AddonStoreVM:
 				displayName=_("&Enable (override incompatibility)"),
 				actionHandler=self.enableOverrideIncompatibilityForAddon,
 				validCheck=lambda aVM: (
-					(
-						aVM.status == AvailableAddonStatus.DISABLED
-						or aVM.status == AvailableAddonStatus.PENDING_DISABLE
-					)
+					aVM.status == AvailableAddonStatus.INCOMPATIBLE_DISABLED
 					and aVM.model.canOverrideCompatibility
 				),
 				listItemVM=selectedListItem
@@ -636,7 +653,7 @@ class AddonStoreVM:
 		log.debug(f"{listItemVM.Id} status: {listItemVM.status}")
 		self._downloader.download(listItemVM.model, self._downloadComplete)
 
-	def _downloadComplete(self, addonDetails: AddonDetailsModel, fileDownloaded: Optional[PathLike]):
+	def _downloadComplete(self, addonDetails: AddonStoreModel, fileDownloaded: Optional[PathLike]):
 		listItemVM: Optional[AddonListItemVM] = self.listVM._addons[addonDetails.addonId]
 		if listItemVM is None:
 			log.error(f"No list item VM for addon with id: {addonDetails.addonId}")
@@ -688,11 +705,12 @@ class AddonStoreVM:
 
 	def _getAddonsInBG(self):
 		log.debug("getting addons in the background")
-		addons = addonDataManager.getLatestAvailableAddons()
+		addons: CaseInsensitiveDict[AddonDetailsModel] = addonDataManager.getLatestAvailableAddons()
+		addonHandlerAddons = addonHandler.state._addonHandlerCache.availableAddonsAsDetails
+		for addonId in addonHandlerAddons:
+			if addonId not in addons:
+				addons[addonId] = addonHandlerAddons[addonId]
 		log.debug("completed getting addons in the background")
-		if self._addons == addons:  # no change
-			log.debug("no change in addons")
-			return
 		self._addons = addons
 		self.listVM.resetListItems(self._createListItemVMs())
 		self.detailsVM.listItem = self.listVM.getSelection()
@@ -711,7 +729,7 @@ class AddonStoreVM:
 		return [
 			AddonListItemVM(model=model, status=status)
 			for model, status in addonsWithStatus
-			if status not in self._filteredStatuses
+			if status in self._filteredStatuses
 		]
 
 	def _getStatus(self, model: AddonDetailsModel) -> Optional[AvailableAddonStatus]:
@@ -730,23 +748,27 @@ class AddonStoreVM:
 				return storeState
 
 		addonStoreData = addonDataManager._getCachedInstalledAddonData(model.addonId)
-		if addonStoreData is not None:
-			if model.addonVersionNumber > addonStoreData.addonVersionNumber:
-				return AvailableAddonStatus.UPDATE
-		else:
-			# Parsing from a side-loaded add-on
-			try:
-				manifestAddonVersion = MajorMinorPatch._parseAddonVersionFromVersionStr(addonData.version)
-			except ValueError:
-				# Parsing failed to get a numeric version.
-				# Ideally a numeric version would be compared,
-				# however the manifest only has a version string.
-				# Ensure the user is aware that it may be a downgrade or reinstall.
-				# Encourage users to re-install or upgrade the add-on from the add-on store.
-				return AvailableAddonStatus.REPLACE_SIDE_LOAD
-			
-			if model.addonVersionNumber > manifestAddonVersion:
-				return AvailableAddonStatus.UPDATE
+		if isinstance(model, AddonStoreModel):
+			# If the listed add-on is installed from a side-load
+			# and not available on the add-on store
+			# the type will not be AddonStoreModel
+			if addonStoreData is not None:
+				if model.addonVersionNumber > addonStoreData.addonVersionNumber:
+					return AvailableAddonStatus.UPDATE
+			else:
+				# Parsing from a side-loaded add-on
+				try:
+					manifestAddonVersion = MajorMinorPatch._parseVersionFromVersionStr(addonData.version)
+				except ValueError:
+					# Parsing failed to get a numeric version.
+					# Ideally a numeric version would be compared,
+					# however the manifest only has a version string.
+					# Ensure the user is aware that it may be a downgrade or reinstall.
+					# Encourage users to re-install or upgrade the add-on from the add-on store.
+					return AvailableAddonStatus.REPLACE_SIDE_LOAD
+
+				if model.addonVersionNumber > manifestAddonVersion:
+					return AvailableAddonStatus.UPDATE
 
 		if addonData.isRunning:
 			return AvailableAddonStatus.RUNNING
@@ -812,7 +834,7 @@ def installAddon(addonPath: PathLike) -> None:
 	@note See also L{gui.addonGui.installAddon}
 	@raise TranslatedError on failure
 	"""
-	addonPath = typing.cast(str, addonPath)
+	addonPath = cast(str, addonPath)
 	bundle = getAddonBundleToInstallIfValid(addonPath)
 	prevAddon = getPreviouslyInstalledAddonById(bundle)
 

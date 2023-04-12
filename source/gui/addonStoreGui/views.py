@@ -5,10 +5,13 @@
 
 import functools
 from typing import (
-	List,
-	Optional,
+	cast,
 	Callable,
 	Dict,
+	List,
+	Optional,
+	OrderedDict,
+	Set,
 )
 
 import wx
@@ -18,6 +21,7 @@ from wx.lib.expando import ExpandoTextCtrl
 from addonHandler import (
 	state as addonHandlerState,
 	AddonStateCategory,
+	BUNDLE_EXTENSION,
 )
 import gui
 import winVersion
@@ -30,12 +34,16 @@ from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 from gui.settingsDialogs import SettingsDialog
 from logHandler import log
 
+from addonStore.models import (
+	AddonStoreModel,
+)
 from .viewModels import (
 	AddonListVM,
 	AddonDetailsVM,
 	AddonListItemVM,
 	AddonStoreVM,
 	AddonActionVM,
+	AvailableAddonStatus,
 	TranslatedError,
 )
 
@@ -426,7 +434,8 @@ class AddonDetails(
 				log.debugWarning(f"URL queue len {len(self._urlQueue)}")
 				self.updateAddonName(details.displayName)
 				self.descriptionLabel.SetLabelText(AddonDetails._descriptionLabelText)
-				self.statusTextCtrl.SetValue(self._detailsVM.listItem.status.displayString)
+				if self._detailsVM.listItem:
+					self.statusTextCtrl.SetValue(self._detailsVM.listItem.status.displayString)
 
 				# For a ExpandoTextCtr, SetDefaultStyle can not be used to set the style (along with the use
 				# of AppendText) because AppendText has been overridden to use SetValue(GetValue()+newStr)
@@ -459,16 +468,17 @@ class AddonDetails(
 						pgettext("addonStore", "Homepage:"),
 						details.homepage, URL=details.homepage
 					)
-				self._appendDetailsLabelValue(
-					# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
-					pgettext("addonStore", "License:"),
-					details.license, URL=details.licenseURL
-				)
-				self._appendDetailsLabelValue(
-					# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
-					pgettext("addonStore", "Source Code:"),
-					details.sourceURL, URL=details.sourceURL
-				)
+				if isinstance(details, AddonStoreModel):
+					self._appendDetailsLabelValue(
+						# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+						pgettext("addonStore", "License:"),
+						details.license, URL=details.licenseURL
+					)
+					self._appendDetailsLabelValue(
+						# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+						pgettext("addonStore", "Source Code:"),
+						details.sourceURL, URL=details.sourceURL
+					)
 
 		self.otherDetailsTextCtrl.SetDefaultStyle(self.urlStyle)
 		for urlFunc in self._urlQueue:
@@ -540,7 +550,8 @@ class AddonDetails(
 
 	def _actionVmChanged(self, addonActionVM: AddonActionVM):
 		self._actionButtonMap[addonActionVM].Show(show=addonActionVM.isValid)
-		self.statusTextCtrl.SetValue(self._detailsVM.listItem.status.displayString)
+		if self._detailsVM.listItem:
+			self.statusTextCtrl.SetValue(self._detailsVM.listItem.status.displayString)
 
 
 def displayError(error: TranslatedError):
@@ -562,18 +573,24 @@ class AddonStoreDialog(SettingsDialog):
 		self._storeVM.hasError.register(displayError)
 		super().__init__(parent, resizeable=True)
 
-	def makeSettings(self, settingsSizer):
-		# Translators: The label of a text field to filter the list of add-ons in the add-on store dialog.
-		filterLabel = wx.StaticText(self, label=pgettext("addonStore", "&Filter by:"))
-		# noinspection PyAttributeOutsideInit
-		self.filterCtrl = filterCtrl = wx.TextCtrl(self)
-		filterCtrl.Bind(wx.EVT_TEXT, self.onFilterChange, filterCtrl)
+	def makeSettings(self, settingsSizer: wx.BoxSizer):
+		browseCtrlHelper = guiHelper.BoxSizerHelper(self, wx.HORIZONTAL)
+		self.statusFilterCtrl = cast(wx.Choice, browseCtrlHelper.addLabeledControl(
+			# Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
+			labelText=pgettext("addonStore", "&Status"),
+			wxCtrlClass=wx.Choice,
+			choices=list(self.statusFilters.keys()),
+		))
+		self.statusFilterCtrl.SetSelection(0)
+		self.statusFilterCtrl.Bind(wx.EVT_CHOICE, self.onStatusFilterChange, self.statusFilterCtrl)
 
-		filterSizer = wx.BoxSizer(wx.HORIZONTAL)
-		filterSizer.Add(filterLabel, flag=wx.ALIGN_CENTER_VERTICAL)
-		filterSizer.AddSpacer(guiHelper.SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL)
-		filterSizer.Add(filterCtrl, proportion=1)
-		settingsSizer.Add(filterSizer, flag=wx.EXPAND)
+		self.filterCtrl = cast(wx.TextCtrl, browseCtrlHelper.addLabeledControl(
+			# Translators: The label of a text field to filter the list of add-ons in the add-on store dialog.
+			labelText=pgettext("addonStore", "&Filter by:"),
+			wxCtrlClass=wx.TextCtrl,
+		))
+		self.filterCtrl.Bind(wx.EVT_TEXT, self.onFilterTextChange, self.filterCtrl)
+		settingsSizer.Add(browseCtrlHelper.sizer, flag=wx.EXPAND)
 
 		settingsSizer.AddSpacer(5)
 
@@ -608,6 +625,12 @@ class AddonStoreDialog(SettingsDialog):
 			detailsVM=self._storeVM.detailsVM,
 		)
 		self.contentsSizer.Add(self.addonDetailsView, flag=wx.EXPAND, proportion=1)
+
+		generalActions = guiHelper.ButtonHelper(wx.HORIZONTAL)
+		# Translators: The label for a button in add-ons Store dialog to install an external add-on.
+		self.externalInstallButton = generalActions.addButton(self, label=_("&Install from external source"))
+		self.externalInstallButton.Bind(wx.EVT_BUTTON, self.openExternalInstall, self.externalInstallButton)
+		settingsSizer.Add(generalActions.sizer, flag=wx.EXPAND)
 
 	def postInit(self):
 		self.addonListView.SetFocus()
@@ -657,9 +680,66 @@ class AddonStoreDialog(SettingsDialog):
 		# let the dialog exit.
 		super().onOk(evt)
 
-	def onFilterChange(self, evt):
+	def onStatusFilterChange(self, evt: wx.EVT_CHOICE):
+		index = self.statusFilterCtrl.GetSelection()
+		statusFiltersKey = list(self.statusFilters.keys())[index]
+		self._storeVM._filteredStatuses = self.statusFilters[statusFiltersKey]
+		self._storeVM.refresh()
+
+	def onFilterTextChange(self, evt: wx.EVT_TEXT):
 		filterText = evt.GetEventObject().GetValue()
 		self.filter(filterText)
 
 	def filter(self, filterText: str):
 		self._storeVM.listVM.applyFilter(filterText)
+
+	def openExternalInstall(self, evt: wx.EVT_BUTTON):
+		fd = wx.FileDialog(
+			self,
+			# Translators: The message displayed in the dialog that
+			# allows you to choose an add-on package for installation.
+			message=_("Choose Add-on Package File"),
+			# Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
+			wildcard=(_("NVDA Add-on Package (*.{ext})") + "|*.{ext}").format(ext=BUNDLE_EXTENSION),
+			defaultDir="c:",
+			style=wx.FD_OPEN,
+		)
+		if fd.ShowModal() != wx.ID_OK:
+			return
+		addonPath = fd.GetPath()
+		try:
+			addonGui.installAddon(self, addonPath)
+		except TranslatedError as e:
+			self._storeVM.hasError.notify(error=e)
+			return
+		self._storeVM.refresh()
+
+	statusFilters: OrderedDict[str, Set[AvailableAddonStatus]] = OrderedDict({
+		# Translators: A selection option to display all add-ons in the add-on store
+		pgettext("addonStore", "All add-ons"): {
+			status for status in AvailableAddonStatus
+		},
+		AvailableAddonStatus.INSTALLED.displayString: {
+			AvailableAddonStatus.UPDATE,
+			AvailableAddonStatus.REPLACE_SIDE_LOAD,
+			AvailableAddonStatus.INSTALLED,
+			AvailableAddonStatus.PENDING_DISABLE,
+			AvailableAddonStatus.INCOMPATIBLE_DISABLED,
+			AvailableAddonStatus.DISABLED,
+			AvailableAddonStatus.PENDING_ENABLE,
+			AvailableAddonStatus.RUNNING,
+		},
+		AvailableAddonStatus.UPDATE.displayString: {
+			AvailableAddonStatus.UPDATE,
+			AvailableAddonStatus.REPLACE_SIDE_LOAD,
+		},
+		AvailableAddonStatus.AVAILABLE.displayString: {
+			AvailableAddonStatus.AVAILABLE,
+		},
+		AvailableAddonStatus.INCOMPATIBLE_DISABLED.displayString: {
+			AvailableAddonStatus.INCOMPATIBLE_DISABLED,
+		},
+	})
+	"""A dictionary where the keys are a status to filter by,
+	and the values are which statuses should be shown for a given filter.
+	"""

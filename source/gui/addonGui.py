@@ -291,7 +291,7 @@ class AddonsDialog(
 		self.CentreOnScreen()
 		self.addonsList.SetFocus()
 
-	def onAddClick(self, evt):
+	def onAddClick(self, evt: wx.EVT_BUTTON):
 		# Translators: The message displayed in the dialog that allows you to choose an add-on package for installation.
 		fd = wx.FileDialog(self, message=_("Choose Add-on Package File"),
 		# Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
@@ -310,7 +310,7 @@ class AddonsDialog(
 		if index < 0:
 			return
 		addon = self.curAddons[index]
-		from addonStoreGui.dialogs import _shouldProceedAddonRemove
+		from gui.addonStoreGui.dialogs import _shouldProceedAddonRemove
 		if not _shouldProceedAddonRemove(addon):
 			return
 		addon.requestRemove()
@@ -454,7 +454,7 @@ class AddonsDialog(
 			# Counterintuitive, but makes sense when context is taken into account.
 			addon.enable(not shouldDisable)
 		except addonHandler.AddonError:
-			from addonStoreGui.viewModels import AddonStoreVM
+			from gui.addonStoreGui.viewModels import AddonStoreVM
 			log.error("Couldn't change state for %s add-on"%addon.name, exc_info=True)
 			if shouldDisable:
 				message = AddonStoreVM._disableErrorMessage.format(addon=addon.manifest['summary'])
@@ -655,7 +655,7 @@ def _shouldProceedWhenAddonTooOldDialog(
 	lastTestedNVDAVersion=addonAPIVersion.formatForGUI(addon.lastTestedNVDAVersion),
 	NVDAVersion=addonAPIVersion.formatForGUI(addonAPIVersion.CURRENT)
 	)
-	from addonStoreGui.dialogs import ErrorAddonInstallDialogWithCancelButton
+	from gui.addonStoreGui.dialogs import ErrorAddonInstallDialogWithCancelButton
 	return ErrorAddonInstallDialogWithCancelButton(
 		parent=parent,
 		# Translators: The title of a dialog presented when an error occurs.
