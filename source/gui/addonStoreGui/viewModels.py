@@ -105,7 +105,7 @@ class AvailableAddonStatus(DisplayStringEnum):
 			# Translators: Status for addons shown in the add-on store dialog
 			self.INSTALLED: _("Installed"),
 			# Translators: Status for addons shown in the add-on store dialog
-			self.PENDING_DISABLE: _("Pending Disable"),
+			self.PENDING_DISABLE: _("Disabled after restart"),
 			# Translators: Status for addons shown in the add-on store dialog
 			self.DISABLED: _("Disabled"),
 			# Translators: Status for addons shown in the add-on store dialog
