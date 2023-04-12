@@ -21,12 +21,14 @@ import shutil
 from io import StringIO
 import pickle
 from six import string_types
-import typing
 from typing import (
+	Callable,
 	Dict,
 	Optional,
 	Set,
 	TYPE_CHECKING,
+	Tuple,
+	Union,
 )
 from baseObject import AutoPropertyObject
 import globalVars
@@ -42,6 +44,7 @@ import importlib
 from types import ModuleType
 import extensionPoints
 from requests.structures import CaseInsensitiveDict
+from utils.caseInsensitiveCollections import CaseInsensitiveSet
 
 from .addonVersionCheck import (
 	isAddonCompatible,
@@ -80,11 +83,19 @@ class AddonHandlerCache(AutoPropertyObject):
 	availableAddonsAsDetails: CaseInsensitiveDict["AddonDetailsModel"]
 
 	def _get_availableAddons(self) -> CaseInsensitiveDict["Addon"]:
-		# Note: addon.name should match Id from add-on store,
-		# a case insensitive match is needed to switch from case conventions.
+		"""
+		Add-ons that have the same ID except differ in casing cause a path collision,
+		as add-on IDs are installed to a case insensitive path.
+		Therefore addon IDs should be treated as case insensitive.
+		"""
 		return CaseInsensitiveDict({a.name: a for a in getAvailableAddons()})
 
 	def _get_availableAddonsAsDetails(self) -> CaseInsensitiveDict["AddonDetailsModel"]:
+		"""
+		Add-ons that have the same ID except differ in casing cause a path collision,
+		as add-on IDs are installed to a case insensitive path.
+		Therefore addon IDs should be treated as case insensitive.
+		"""
 		from addonStore.models import _createDetailsFromManifest
 		return CaseInsensitiveDict({
 			addonId: _createDetailsFromManifest(self.availableAddons[addonId])
@@ -115,19 +126,22 @@ class AddonStateCategory(str, enum.Enum):
 class AddonsState(collections.UserDict):
 	"""
 	Subclasses `collections.UserDict` to preserve backwards compatibility.
-	In future versions of python (3.8+) UserDict[AddonStateCategory, Set[str]]
+	In future versions of python (3.8+) UserDict[AddonStateCategory, CaseInsensitiveSet[str]]
 	can have type information added.
 	AddonStateCategory string enums mapped to a set of the add-on "name/id" currently in that state.
+	Add-ons that have the same ID except differ in casing cause a path collision,
+	as add-on IDs are installed to a case insensitive path.
+	Therefore add-on IDs should be treated as case insensitive.
 	"""
 
-	_DEFAULT_STATE_CONTENT: Dict[AddonStateCategory, Set[str]] = {
-		AddonStateCategory.PENDING_REMOVE: set(),
-		AddonStateCategory.PENDING_INSTALL: set(),
-		AddonStateCategory.DISABLED: set(),
-		AddonStateCategory.PENDING_ENABLE: set(),
-		AddonStateCategory.PENDING_DISABLE: set(),
-		AddonStateCategory.OVERRIDE_COMPATIBILITY: set(),
-		AddonStateCategory.BLOCKED: set(),
+	_DEFAULT_STATE_CONTENT: Dict[AddonStateCategory, CaseInsensitiveSet[str]] = {
+		AddonStateCategory.PENDING_REMOVE: CaseInsensitiveSet(),
+		AddonStateCategory.PENDING_INSTALL: CaseInsensitiveSet(),
+		AddonStateCategory.DISABLED: CaseInsensitiveSet(),
+		AddonStateCategory.PENDING_ENABLE: CaseInsensitiveSet(),
+		AddonStateCategory.PENDING_DISABLE: CaseInsensitiveSet(),
+		AddonStateCategory.OVERRIDE_COMPATIBILITY: CaseInsensitiveSet(),
+		AddonStateCategory.BLOCKED: CaseInsensitiveSet(),
 	}
 
 	_addonHandlerCache: Optional[AddonHandlerCache]
@@ -144,7 +158,11 @@ class AddonsState(collections.UserDict):
 		try:
 			# #9038: Python 3 requires binary format when working with pickles.
 			with open(self.statePath, "rb") as f:
-				state = pickle.load(f)
+				state: Dict[AddonStateCategory, Union[CaseInsensitiveSet[str], Set[str]]] = pickle.load(f)
+				for s in state:
+					# Make old pickles case insensitive
+					if not isinstance(state[s], CaseInsensitiveSet):
+						state[s] = CaseInsensitiveSet(state[s])
 				self.update(state)
 		except FileNotFoundError:
 			pass  # Clean config - no point logging in this case
@@ -190,7 +208,7 @@ class AddonsState(collections.UserDict):
 				self["disabledAddons"].discard(disabledAddonName)
 
 
-state: AddonsState[AddonStateCategory, Set[str]] = AddonsState()
+state: AddonsState[AddonStateCategory, CaseInsensitiveSet[str]] = AddonsState()
 
 
 def getRunningAddons() -> AddonGeneratorT:
@@ -329,7 +347,7 @@ _availableAddons = collections.OrderedDict()
 
 def getAvailableAddons(
 		refresh: bool = False,
-		filterFunc: typing.Optional[typing.Callable[["Addon"], bool]] = None,
+		filterFunc: Optional[Callable[["Addon"], bool]] = None,
 		isFirstLoad: bool = False
 ) -> AddonGeneratorT:
 	""" Gets all available addons on the system.
@@ -557,7 +575,7 @@ class Addon(AddonBase):
 				# Undoing a pending disable.
 				state["pendingDisableSet"].discard(self.name)
 			else:
-				if self.canOverrideCompatibility:
+				if self.canOverrideCompatibility and not self.overrideIncompatibility:
 					from gui import mainFrame
 					from gui.addonGui import _shouldProceedWhenAddonTooOldDialog
 					if not _shouldProceedWhenAddonTooOldDialog(mainFrame, self):
@@ -919,14 +937,13 @@ docFileName = string(default=None)
 		return minRequiredVersion <= lastTested
 
 
-def validate_apiVersionString(value) -> typing.Tuple[int, int, int]:
+def validate_apiVersionString(value: str) -> Tuple[int, int, int]:
 	from configobj.validate import ValidateError
 	if not value or value == "None":
 		return (0, 0, 0)
 	if not isinstance(value, string_types):
 		raise ValidateError('Expected an apiVersion in the form of a string. EG "2019.1.0"')
 	try:
-		tuple = addonAPIVersion.getAPIVersionTupleFromString(value)
-		return tuple
+		return addonAPIVersion.getAPIVersionTupleFromString(value)
 	except ValueError as e:
 		raise ValidateError('"{}" is not a valid API Version string: {}'.format(value, e))

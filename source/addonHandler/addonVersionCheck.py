@@ -47,6 +47,7 @@ class SupportsVersionCheck(Protocol):
 		assert self.name not in overiddenAddons and self.canOverrideCompatibility
 		overiddenAddons.add(self.name)
 		state[AddonStateCategory.BLOCKED].discard(self.name)
+		state[AddonStateCategory.DISABLED].discard(self.name)
 
 	@property
 	def canOverrideCompatibility(self) -> bool:

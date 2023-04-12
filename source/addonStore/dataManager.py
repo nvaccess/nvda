@@ -65,6 +65,11 @@ def _getAddonStoreURL(channel: Channel, lang: str, nvdaApiVersion: str) -> str:
 @dataclasses.dataclass
 class CachedAddonsModel:
 	availableAddons: CaseInsensitiveDict["AddonStoreModel"]
+	"""
+	Add-ons that have the same ID except differ in casing cause a path collision,
+	as add-on IDs are installed to a case insensitive path.
+	Therefore addon IDs should be treated as case insensitive.
+	"""
 	cachedAt: datetime
 	nvdaAPIVersion: addonAPIVersion.AddonApiVersionT
 

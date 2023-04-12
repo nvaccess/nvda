@@ -431,7 +431,7 @@ class AddonDetails(
 				self.descriptionTextCtrl.SetValue("")
 				self.descriptionLabel.SetLabelText(AddonDetails._noAddonSelectedLabelText)
 			else:
-				log.debugWarning(f"URL queue len {len(self._urlQueue)}")
+				log.debug(f"Updating {details.displayName}: URL queue len {len(self._urlQueue)}")
 				self.updateAddonName(details.displayName)
 				self.descriptionLabel.SetLabelText(AddonDetails._descriptionLabelText)
 				if self._detailsVM.listItem:
@@ -736,8 +736,9 @@ class AddonStoreDialog(SettingsDialog):
 		AvailableAddonStatus.AVAILABLE.displayString: {
 			AvailableAddonStatus.AVAILABLE,
 		},
-		AvailableAddonStatus.INCOMPATIBLE_DISABLED.displayString: {
+		AvailableAddonStatus.DISABLED.displayString: {
 			AvailableAddonStatus.INCOMPATIBLE_DISABLED,
+			AvailableAddonStatus.DISABLED,
 		},
 	})
 	"""A dictionary where the keys are a status to filter by,

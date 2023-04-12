@@ -456,7 +456,7 @@ class AddonActionVM:
 		return self._listItemVM
 
 	@listItemVM.setter
-	def listItemVM(self, listItemVM):
+	def listItemVM(self, listItemVM: Optional[AddonListItemVM]):
 		if self._listItemVM == listItemVM:
 			return
 		if self._listItemVM:
@@ -471,6 +471,11 @@ class AddonStoreVM:
 	def __init__(self):
 		self.hasError = extensionPoints.Action()
 		self._addons: CaseInsensitiveDict[AddonDetailsModel] = CaseInsensitiveDict()
+		"""
+		Add-ons that have the same ID except differ in casing cause a path collision,
+		as add-on IDs are installed to a case insensitive path.
+		Therefore addon IDs should be treated as case insensitive.
+		"""
 		self._filteredStatuses: Set[AvailableAddonStatus] = {
 			status for status in AvailableAddonStatus
 		}
@@ -600,17 +605,17 @@ class AddonStoreVM:
 			self.getAddon(listItemVM)
 			self.refresh()
 
-	# Translators: The message displayed when the add-on cannot be enabled.
-	# {addon} is replaced with the add-on name.
 	_enableErrorMessage: str = pgettext(
 		"addonStore",
+		# Translators: The message displayed when the add-on cannot be enabled.
+		# {addon} is replaced with the add-on name.
 		"Could not enable the add-on: {addon}."
 	)
 
-	# Translators: The message displayed when the add-on cannot be disabled.
-	# {addon} is replaced with the add-on name.
 	_disableErrorMessage: str = pgettext(
 		"addonStore",
+		# Translators: The message displayed when the add-on cannot be disabled.
+		# {addon} is replaced with the add-on name.
 		"Could not disable the add-on: {addon}."
 	)
 
@@ -629,6 +634,7 @@ class AddonStoreVM:
 			# ensure calling on the main thread.
 			core.callLater(delay=0, callable=self.hasError.notify, error=error)
 			return
+		listItemVM.status = self._getStatus(listItemVM.model)
 		self.refresh()
 
 	def enableOverrideIncompatibilityForAddon(self, listItemVM: AddonListItemVM) -> None:
@@ -773,7 +779,7 @@ class AddonStoreVM:
 		if addonData.isRunning:
 			return AvailableAddonStatus.RUNNING
 
-		log.debugWarning(f"Addon in unknown state: {model.addonId}")
+		log.debugWarning(f"Add-on in unknown state: {model.addonId}")
 		return None
 
 

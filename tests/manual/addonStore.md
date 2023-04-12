@@ -10,7 +10,7 @@ Add-ons can be filtered by status.
     - all add-ons: should include all add-ons, installed and available for install
     - installed
     - updatable: should include installed add-ons which can be updated or replaced by an add-on store version
-    - incompatible: should include disabled add-ons due to incompatibility
+    - disabled: should include manually disabled add-ons and add-ons disabled due to incompatibility
     - available: should include add-ons available for install
 
 ### Filtering by add-on information
