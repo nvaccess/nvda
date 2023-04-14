@@ -15,13 +15,13 @@ symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 
 # Complex symbols
-. sentence ending	ponto	# . fim de sentença
-! sentence ending	exclamação	# ! fim de sentença
-? sentence ending	interrogação	# ? fim de sentença
-; phrase ending	ponto e vírgula	# ; fim de período
-: phrase ending	dois pontos	# : fim de período
+. sentence ending	ponto	# ponto em fim de sentença
+! sentence ending	exclamação	# exclamação em fim de sentença
+? sentence ending	interrogação	# interrogação em fim de sentença
+; phrase ending	ponto e vírgula	# ponto e vírgula em fim de período
+: phrase ending	dois pontos	# dois pontos em fim de período
 decimal point		# separador decimal
-in-word '	apóstrofo	# ' em palavra
+in-word '	apóstrofo	# apóstrofo em palavra
 negative number	menos	# número negativo
 thousands separator	ponto	all	norep	# separador de classes numéricas (milhares, milhão, etc)
 
@@ -32,7 +32,7 @@ thousands separator	ponto	all	norep	# separador de classes numéricas (milhares,
 \f	quebra de página
 \r	retôrno
  	espaço
- 	espaço sem quebra	# espaço sem quebra
+ 	espaço sem quebra	# espaço rígido
 
 # Standard punctuation/symbols
 !	exclamação
@@ -363,7 +363,7 @@ _	sublinha
 
 ## 6-dot cell
 ### note: the character on the next line is U+2800 (braille space), not U+0020 (ASCII space)
-⠀	cela braille vazia
+⠀	braille em branco
 ⠁	braille 1
 ⠂	braille 2
 ⠃	braille 1 2
