@@ -4,6 +4,63 @@ Quoi de Neuf dans NVDA
 %!includeconf: ../changes.t2tconf
 %!includeconf: ./locale.t2tconf
 
+= 2023.2 =
+
+== Nouvelles Fonctionnalités ==
+- Ajout de la prononciation des symboles Unicode :
+  - symboles Braille tels que "⠐⠣⠃⠗⠇⠐⠜". (#14548)
+  - symbole de la touche Option Mac "⌥". (#14682)
+  -
+- Dans Mozilla Firefox et Google Chrome, NVDA annonce maintenant lorsqu'un bouton ouvre un dialogue, une grille, une liste ou une arborescence si le développeur l'a indiqué avec aria-haspopup. (#14709)
+- 
+
+
+== Changements ==
+- Mise à jour du transcripteur Braille Liblouis en version [3.25.0 https://github.com/liblouis/liblouis/releases/tag/v3.25.0]. (#14719)
+- Les symboles tiret et tiret cadratin seront toujours envoyés au synthétiseur. (#13830)
+- L'annonce de la distance dans Microsoft Word respectera maintenant l'unité définie dans les options avancées de Word même lors de l'utilisation de UIA pour l'accès aux documents Word. (#14542)
+- Lors de l'annonce de l'emplacement du curseur de revue, l'emplacement actuel du focus est désormais annoncé par rapport à la page actuelle dans LibreOffice Writer pour les versions de LibreOffice >= 7.6, de même que ce qui est déjà fait pour Microsoft Word. (#11696)
+- NVDA répond désormais plus rapidement aux commandes et changements de focus. (#14701)
+- NVDA répond plus rapidement lors du déplacement du focus dans un champ d'édition. (#14708)
+- Pilote Braille Baum : ajout de plusieurs gestes Braille pour réaliser les actions clavier courrantes telles que windows+d, alt+tab etc. Veuillez vous référer au guide utilisateur de NVDA pour la liste complète. (#14714)
+- Lors de l'utilisation d'un afficheur Braille via le pilote Braille HID standard, le pavé directionnel peut maintenant être utilisé pour émuler les touches fléchées ainsi que entrée. Espace+Point 1 et Espace+Point4 sont également désormais assignées respectivement à flèche haute et flèche basse. (#14713)
+- Le script pour annoncer la destination d'un lien se base désormais sur la position actuelle du curseur plutôt que depuis la position de l'objet navigateur. (#14659)
+-
+
+
+== Corrections de Bogues ==
+- NVDA ne basculera plus inutilement plusieurs fois sur pas de Braille pendant la détection automatique, permettant un journal plus propre et moins de surcharge. (#14524)
+- NVDA basculera désormais vers l'USB si un afficheur Braille HID Bluetooth (comme le HumanWare Brailliant ou l'APH Mantis) est détecté automatiquement et qu'une connexion USB devient disponible.
+Cela fonctionne uniquement pour les ports série Bluetooth. (#14524)
+- Il est désormais possible d'utiliser le symbole barre oblique inversée dans le champ de remplacement d'une entrée de dictionaire, si le type n'est pas défini sur expression régulière. (#14556)
+- En mode navigation, NVDA n'ignorera plus de manière incorrecte le passage du focus vers un contrôle parent ou enfant, par exemple le passage d'un contrôle vers son élément de liste ou sa cellule de grille parent. (#14611)
+  - Notez cependant que ce correctif ne s'applique que lorsque l'option "Positionnement automatique du focus système aux éléments susceptibles d'être mis en focus" est désactivée dans les paramètres du mode navigation, ce qui est l'état par défaut.
+  -
+- NVDA ne provoque plus occasionnellement le plantage ou l'arrêt de réponse de Mozilla Firefox. (#14647)
+- Dans Mozilla Firefox et Google Chrome, les caractères saisis dans certains champs d'édition ne sont plus annoncés alors que l'annonce des caractères saisis est désactivée. (#14666)
+- Vous pouvez désormais utiliser le mode navigation dans les contrôles Web Chromium embarqués, ce qui n'était pas possible précédemment. (#13493, #8553)
+- Pour les symboles qui n'ont pas de description dans la langue actuelle, le niveau de symbole anglais par défaut sera utilisé. (#14558, #14417)
+- Dans les nouvelles versions du bloc-notes de Windows 11, NVDA peut à nouveau annoncer le contenu de la barre d'état. (#14573)
+- Dans Mozilla Firefox, déplacer la souris sur un texte après un lien rapporte désormais correctement le texte. (#9235)
+- Dans la calculatrice de Windows 10 et 11, une copie portable de NVDA ne sera plus silencieuse ou ne jouera plus de son d'erreur lors de la saisie d'expression dans le mode de calculatrice standard en mode d'affichage compact. (#14679)
+- Lors de la tentative d'annonce de la destination d'un lien sans attribut href, NVDA n'est plus silencieux.
+À la place, NVDA annonce que le lien n'a pas de destination. (#14723)
+-
+
+
+== Changements pour les Développeurs ==
++Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] for information on NVDA's API deprecation and removal process.
++- Added a new extension point type called ``Chain``, which can be used to iterate over iterables returned by registered handlers. (#14531)
++- Added the ``bdDetect.scanForDevices`` extension point.
++Handlers can be registered that yield ``BrailleDisplayDriver/DeviceMatch`` pairs that don't fit in existing categories, like USB or Bluetooth. (#14531)
++- Added extension point: ``synthDriverHandler.synthChanged``. (#14618)
++- The NVDA Synth Settings Ring now caches available setting values the first time they're needed, rather than when loading the synthesizer. (#14704)
++- You can now call the export method on a gesture map to export it to a dictionary.
++This dictionary can be imported in another gesture by passing it either to the constructor of ``GlobalGestureMap`` or to the update method on an existing map. (#14582)
++-
++
+=== Deprecations ===
+
 = 2023.1 =
 Une nouvelle option a été ajoutée, "Style de paragraphe" dans "Navigation dans les documents".
 Cela peut être utilisé avec les éditeurs de texte ne supportant pas nativement les paragraphes, comme le Bloc-Notes ou Notepad++.
@@ -104,6 +161,7 @@ Revient à appuyer sur ``NVDA+K`` deux fois, mais pourrait être plus utile pour
 - Dans les navigateurs Web tels que Chrome et Firefox, les alertes comme les téléchargements de fichier sont maintenant affichées en Braille en plus d'être annoncées vocalement. (#14562)
 - Correctif lors de la navigation vers la première et dernière colonne d'un tableau dans Firefox (#14554)
 - Lorsque NVDA est démarré avec le paramètre ``--lang=Windows``, il est à nouveau possible d'ouvrir le dialogue des paramètres généraux de NVDA. (#14407)
+- NVDA n'échoue plus à poursuivre la lecture dans Kindle pour PC après avoir tourné la page. (#14390)
 -
 
 
