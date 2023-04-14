@@ -949,7 +949,13 @@ There are some special functions:
 -
 
 + Extension Points +[ExtensionPoints]
-NVDA's ``extensionPoints`` module, allows code in different parts of NVDA, or in add-ons, to receive notifications and information when certain actions occur, or states change; and in some cases, to prevent other parts of NVDA from taking certain actions., or change data before it is handled by NVDA.
+NVDA's ``extensionPoints`` module, allows code in different parts of NVDA, or in add-ons, to perform tasks such as:
+- Be notified when an action occurs or a state is changed.
+- Receive, as part of being notified, variables related to the action or changed state.
+- Cancel or alter an action NVDA was going to take, based upon certain conditions.
+- Modify data that NVDA is using (such as changing speech sequences or braille, before they are spoken or brailled).
+- Delay something NVDA is doing, while intervening operations are performed.
+-
 
 There are five kinds of extension point:
 
