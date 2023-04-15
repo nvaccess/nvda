@@ -109,7 +109,12 @@ class ConsoleUIATextInfo(UIATextInfo):
 		# #14689: IMPROVED and END_INCLUSIVE UIA consoles have many blank lines,
 		# which slows speech dictionary processing to a halt
 		res = super()._get_text()
-		return res.rstrip("\r\n")
+		stripRes = res.rstrip("\r\n")
+		IGNORE_TRAILING_WHITESPACE_LENGTH = 100
+		if len(res) - len(stripRes) > IGNORE_TRAILING_WHITESPACE_LENGTH:
+			return stripRes
+		else:
+			return res
 
 	def __ne__(self, other):
 		"""Support more accurate caret move detection."""
