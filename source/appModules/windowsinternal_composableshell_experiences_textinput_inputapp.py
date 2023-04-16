@@ -88,6 +88,10 @@ class ImeCandidateItem(CandidateItemBehavior, UIA):
 		return super(ImeCandidateItem, self).name
 
 	def event_UIA_elementSelected(self):
+		# In Windows 11, focus event is fired when a candidate item receives focus,
+		# therefore ignore this event for now.
+		if winVersion.getWinVer() >= winVersion.WIN11:
+			return
 		oldNav = api.getNavigatorObject()
 		if isinstance(oldNav, ImeCandidateItem) and self.name == oldNav.name:
 			# Duplicate selection event fired on the candidate item. Ignore it.
