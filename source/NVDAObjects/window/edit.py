@@ -675,7 +675,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 	def _getTextAtRange(self,rangeObj):
 		embedRangeObj=None
 		try:
-			bufText=rangeObj.text
+			bufText = rangeObj.text
 		except COMError:
 			log.debugWarning("range.text failed", exc_info=True)
 			bufText = None
