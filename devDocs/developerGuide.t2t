@@ -1020,7 +1020,7 @@ For examples of how to define and use new extension points, please see the code 
 
 ++ tones ++[tonesExtPts]
 || Type | Extension Point | Description |
-| ``Decider`` | ``decide_beep`` | Notifies when a beep is about to be generated and played, allowing a consumer to decide whether it should be. |
+| ``Decider`` | ``decide_beep`` | Notifies when a beep is about to be generated and played, allowing a component to decide whether it should be. |
 
 ++ utils.security ++[utils_securityExtPts]
 || Type | Extension Point | Description |
