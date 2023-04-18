@@ -16,6 +16,7 @@ What's New in NVDA
 - Added support for the ``aria-brailleroledescription`` ARIA 1.3 attribute, allowing web authors to override the type of an element shown on the Braille display. (#14748)
 - When highlighted text is enabled Document Formatting, highlight colours are now reported in Microsoft Word. (#7396, #12101, #5866)
 - When colors are enabled Document Formatting, background colours are now reported in Microsoft Word. (#5866)
+- Introduced a new command to cycle through the available languages for Windows OCR. (#13036)
 - 
 
 
@@ -55,6 +56,7 @@ This only worked for Bluetooth Serial ports before. (#14524)
 Instead NVDA reports that the link has no destination. (#14723)
 - Several stability fixes to input/output for braille displays, resulting in less frequent errors and crashes of NVDA. (#14627)
 - NVDA again recovers from many more situations such as applications that stop responding which previously caused it to freeze completely. (#14759) 
+- The destination of graphic links are now correctly reported in Chrome and Edge. (#14779)
 -
 
 
@@ -73,6 +75,7 @@ If not provided, the default thread is used. (#14627)
 Similarly, the new ``getCompletionRoutine`` method allows you to convert a python method into a completion routine safely. (#14627)
 - ``offsets.OffsetsTextInfo._get_boundingRects`` should now always return ``List[locationHelper.rectLTWH]`` as expected for a subclass of ``textInfos.TextInfo``. (#12424)
 - ``highlight-color`` is now a format field attribute. (#14610)
+- NVDA should more accurately determine if a logged message is coming from NVDA core. (#14812)
 -
 
 === Deprecations ===

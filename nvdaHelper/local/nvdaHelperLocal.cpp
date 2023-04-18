@@ -15,7 +15,6 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <cstdio>
 #include <sstream>
 #include <algorithm>
-#include <set>
 #include <rpc.h>
 #include <sddl.h>
 #include <common/log.h>
@@ -79,62 +78,18 @@ const UINT CANCELSENDMESSAGE_CHECK_INTERVAL = 400;
 DWORD mainThreadId = 0;
 HANDLE cancelCallEvent = NULL;
 void(__stdcall *_notifySendMessageCancelled)() = NULL;
-struct BgSendMessageData {
-	HANDLE completeEvent;
-	HANDLE execEvent;
-	bool isActive;
-	HWND hwnd;
-	UINT Msg;
-	WPARAM wParam;
-	LPARAM lParam;
-	UINT fuFlags;
-	UINT uTimeout;
-	DWORD_PTR dwResult;
-	DWORD error;
-} bgSendMessageData;
-
-DWORD WINAPI bgSendMessageThreadProc(LPVOID param) {
-	// Keep handling messages until terminated.
-	for ( ; ; ) {
-		// Wait for the next message or abandonment.
-		WaitForSingleObject(bgSendMessageData.execEvent, INFINITE);
-		if (!bgSendMessageData.hwnd)
-			break; // Terminated.
-		bgSendMessageData.fuFlags |= SMTO_BLOCK;
-		// Keep sending this message until the timeout elapses.
-		for (UINT remainingTimeout = bgSendMessageData.uTimeout; remainingTimeout > 0; remainingTimeout -= (remainingTimeout > CANCELSENDMESSAGE_CHECK_INTERVAL) ? CANCELSENDMESSAGE_CHECK_INTERVAL : remainingTimeout) {
-			if (WaitForSingleObject(cancelCallEvent, 0) == WAIT_OBJECT_0) {
-				// Cancellation has been requested.
-				bgSendMessageData.error = ERROR_CANCELLED;
-				break;
-			}
-			if (real_SendMessageTimeoutW(bgSendMessageData.hwnd, bgSendMessageData.Msg, bgSendMessageData.wParam, bgSendMessageData.lParam, bgSendMessageData.fuFlags, std::min(remainingTimeout, CANCELSENDMESSAGE_CHECK_INTERVAL), &bgSendMessageData.dwResult) != 0) {
-				// Success.
-				bgSendMessageData.error = 0;
-				break;
-			} else {
-				bgSendMessageData.error = GetLastError();
-				if (bgSendMessageData.error != ERROR_TIMEOUT) {
-					// Error other than timeout.
-					break;
-				}
-			}
-		}
-		// Tell the main thread that we're done with this message.
-		SetEvent(bgSendMessageData.completeEvent);
-	}
-	CloseHandle(bgSendMessageData.execEvent);
-	CloseHandle(bgSendMessageData.completeEvent);
-	return 0;
-}
 
 LRESULT cancellableSendMessageTimeout(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM lParam, UINT fuFlags, UINT uTimeout, PDWORD_PTR lpdwResult) {
 	if (!hwnd) {
-		// We use HWND NULL to signal that the background thread should die,
-		// so we must return before then.
-		// We may as well do it as early as possible.
+		// Return as early as possible when no hwnd is given.
 		SetLastError(ERROR_INVALID_WINDOW_HANDLE);
 		return 0;
+	}
+
+	DWORD currentThreadId = GetCurrentThreadId();
+	if (GetWindowThreadProcessId(hwnd, NULL) == currentThreadId) {
+		// We're sending a message to the current thread, so just forward the call.
+		return real_SendMessageTimeoutW(hwnd, Msg, wParam, lParam, fuFlags, uTimeout, lpdwResult);
 	}
 
 	if (WaitForSingleObject(cancelCallEvent, 0) == WAIT_OBJECT_0) {
@@ -146,82 +101,28 @@ LRESULT cancellableSendMessageTimeout(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM
 	fuFlags |= SMTO_ABORTIFHUNG;
 	fuFlags &= ~SMTO_NOTIMEOUTIFNOTHUNG;
 
-	DWORD currentThreadId = GetCurrentThreadId();
-	if (currentThreadId == mainThreadId && GetWindowThreadProcessId(hwnd, NULL) == mainThreadId) {
-		// We're sending a message to our own thread, so just forward the call.
-		return real_SendMessageTimeoutW(hwnd, Msg, wParam, lParam, fuFlags, uTimeout, lpdwResult);
+	if (uTimeout > 10000) {
+		uTimeout = 10000;
 	}
-
-	if (currentThreadId != mainThreadId) {
-		// We're sending from a thread other than the main thread.
-		// We don't want to use a background thread in this case,
-		// but we can still improve things.
-		if (uTimeout > 10000)
-			uTimeout = 10000;
-		// SMTO_ABORTIFHUNG only aborts if the window is already hung,
-		// not if the window hangs while sending.
-		LRESULT ret = 0;
-		for (UINT remainingTimeout = uTimeout; remainingTimeout > 0; remainingTimeout -= (remainingTimeout > CANCELSENDMESSAGE_CHECK_INTERVAL) ? CANCELSENDMESSAGE_CHECK_INTERVAL : remainingTimeout) {
-			if (WaitForSingleObject(cancelCallEvent, 0) == WAIT_OBJECT_0) {
-				// Note that cancellation is based on whether the *main* thread is alive.
-				if (_notifySendMessageCancelled)
-					_notifySendMessageCancelled();
-				SetLastError(ERROR_CANCELLED);
-				return 0;
+	// SMTO_ABORTIFHUNG only aborts if the window is already hung,
+	// not if the window hangs while sending.
+	LRESULT ret = 0;
+	for (UINT remainingTimeout = uTimeout; remainingTimeout > 0; remainingTimeout -= (remainingTimeout > CANCELSENDMESSAGE_CHECK_INTERVAL) ? CANCELSENDMESSAGE_CHECK_INTERVAL : remainingTimeout) {
+		if (WaitForSingleObject(cancelCallEvent, 0) == WAIT_OBJECT_0) {
+			// Note that cancellation is based on whether the *main* thread is alive.
+			if (_notifySendMessageCancelled) {
+				_notifySendMessageCancelled();
 			}
-			if ((ret = real_SendMessageTimeoutW(hwnd, Msg, wParam, lParam, fuFlags, std::min(remainingTimeout, CANCELSENDMESSAGE_CHECK_INTERVAL), lpdwResult)) != 0 || GetLastError() != ERROR_TIMEOUT) {
-				// Success or error other than timeout.
-				return ret;
-			}
+			SetLastError(ERROR_CANCELLED);
+			return 0;
 		}
-		// Timeout.
-		return ret;
+		if ((ret = real_SendMessageTimeoutW(hwnd, Msg, wParam, lParam, fuFlags, std::min(remainingTimeout, CANCELSENDMESSAGE_CHECK_INTERVAL), lpdwResult)) != 0 || GetLastError() != ERROR_TIMEOUT) {
+			// Success or error other than timeout.
+			return ret;
+		}
 	}
-
-	if (bgSendMessageData.isActive) {
-		// We can't handle reentrancy.
-		SetLastError(ERROR_CANCELLED);
-		return 0;
-	}
-
-	// #3825: SendMessageTimeout can block until the window responds in some cases despite the timeout,
-	// so use a background thread to send messages.
-	bgSendMessageData.hwnd = hwnd;
-	bgSendMessageData.Msg = Msg;
-	bgSendMessageData.wParam = wParam;
-	bgSendMessageData.lParam = lParam;
-	bgSendMessageData.fuFlags = fuFlags;
-	bgSendMessageData.uTimeout = uTimeout;
-	bgSendMessageData.dwResult = 0;
-	bgSendMessageData.isActive = true;
-	// Notify the background thread to send the message.
-	SetEvent(bgSendMessageData.execEvent);
-
-	// Wait for the background thread to send the message.
-	// It will cancel if appropriate.
-	// This function must not return while the SendMessage is in progress,
-	// as the caller might free memory used by the message.
-	DWORD waitIndex = 0;
-	if (fuFlags & SMTO_BLOCK) {
-		WaitForSingleObject(bgSendMessageData.completeEvent, INFINITE);
-	} else {
-		// We need to pump nonqueued messages while waiting.
-		// MsgWaitForMultipleObjects can wake for nonqueued messages,
-		// but we'd have to manage the actual pump ourselves.
-		// CoWaitForMultipleHandles does exactly what we need.
-		CoWaitForMultipleHandles(0, INFINITE, 1, &bgSendMessageData.completeEvent, &waitIndex);
-	}
-	bgSendMessageData.isActive = false;
-
-	// Handle the result.
-	if (bgSendMessageData.error != 0) {
-		if (bgSendMessageData.error == ERROR_CANCELLED && _notifySendMessageCancelled)
-			_notifySendMessageCancelled();
-		SetLastError(bgSendMessageData.error);
-		return 0;
-	}
-	*lpdwResult = bgSendMessageData.dwResult;
-	return 1;
+	// Timeout.
+	return ret;
 }
 
 LRESULT WINAPI fake_SendMessageW(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM lParam) {
@@ -244,10 +145,6 @@ void nvdaHelperLocal_initialize(bool secureMode) {
 	startServer();
 	mainThreadId = GetCurrentThreadId();
 	cancelCallEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
-	bgSendMessageData.execEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
-	bgSendMessageData.completeEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
-	bgSendMessageData.isActive = false;
-	CloseHandle(CreateThread(NULL, 0, bgSendMessageThreadProc, NULL, 0, NULL));
 	// Begin API hooking transaction
 	apiHook_beginTransaction();
 	// Hook SendMessageW and SendMessageTimeoutW to ensure that
@@ -265,9 +162,6 @@ void nvdaHelperLocal_initialize(bool secureMode) {
 void nvdaHelperLocal_terminate() {
 	// Unregister and terminate API hooks
 	apiHook_terminate();
-	// Terminate the background SendMessage thread.
-	bgSendMessageData.hwnd = NULL;
-	SetEvent(bgSendMessageData.execEvent);
 	CloseHandle(cancelCallEvent);
 	stopServer();
 }
