@@ -963,7 +963,7 @@ There are five kinds of extension point:
 | ``Action`` | Allows some code to find out what other code is doing. For example, an add-on can be notified before or after a config profile changes. |
 | ``Filter`` | Edits data. A filter registered in the speech module, might allow changing speech strings before they are spoken. |
 | ``Decider`` | Runs each registered handler until one of them returns ``False``. If one does, it can be used to prevent the invoking code from running. |
-| ``AccumulatingDecider`` | Like ``Decider``, but always runs all of its registered handlers, and only decides if one of them failed at the end. The default decision is ``True`` by default, but can be set to ``False``. |
+| ``AccumulatingDecider`` | Like ``Decider``, but always runs all of its registered handlers, and only decides if one of them failed at the end. The expected result of each is ``True`` by default, though expecting ``False`` is possible. |
 | ``Chain`` | Allows registering handlers that return iterables (mainly generators). Calling ``iter`` on the ``Chain`` returns a generator that iterates over all the handlers. |
 
 The sections below provide the list of currently defined extension points in NVDA, along with brief descriptions for them.
