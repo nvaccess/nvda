@@ -720,15 +720,17 @@ def createAddonBundleFromPath(path, destDir=None):
 def _report_manifest_errors(manifest):
 	log.warning("Error loading manifest:\n%s", manifest.errors)
 
+
 class AddonManifest(ConfigObj):
 	""" Add-on manifest file. It contains metadata about an NVDA add-on package. """
 	configspec = ConfigObj(StringIO(
 	"""
 # NVDA Add-on Manifest configuration specification
 # Add-on unique name
+# Suggested convention is lowerCamelCase.
 name = string()
 
-# short  summary (label) of the add-on to show to users.
+# short summary (label) of the add-on to show to users.
 summary = string()
 
 # Long description with further information and instructions
@@ -737,7 +739,8 @@ description = string(default=None)
 # Name of the author or entity that created the add-on
 author = string()
 
-# Version of the add-on. Should preferably in some standard format such as x.y.z
+# Version of the add-on.
+# Suggested convention is <major>.<minor>.<patch> format.
 version = string()
 
 # The minimum required NVDA version for this add-on to work correctly.
@@ -747,8 +750,9 @@ minimumNVDAVersion = apiVersion(default="0.0.0")
 # Must be greater than or equal to minimumNVDAVersion
 lastTestedNVDAVersion = apiVersion(default="0.0.0")
 
-# URL for more information about the add-on. New versions and such.
-url= string(default=None)
+# URL for more information about the add-on, e.g. a homepage.
+# Should begin with https://
+url = string(default=None)
 
 # Name of default documentation file for the add-on.
 docFileName = string(default=None)
