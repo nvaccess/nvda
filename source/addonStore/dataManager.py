@@ -193,8 +193,8 @@ class _DataManager:
 		pathlib.Path(self._addonDownloadCacheDir).mkdir(parents=True, exist_ok=True)
 		pathlib.Path(self._installedAddonDataCacheDir).mkdir(parents=True, exist_ok=True)
 
-		self._latestAddonCache: Optional[CachedAddonsModel] = self._getCachedAddonData(self._cacheLatestFile)
-		self._compatibleAddonCache: Optional[CachedAddonsModel] = self._getCachedAddonData(self._cacheCompatibleFile)
+		self._latestAddonCache = self._getCachedAddonData(self._cacheLatestFile)
+		self._compatibleAddonCache = self._getCachedAddonData(self._cacheCompatibleFile)
 
 	def getFileDownloader(self) -> AddonFileDownloader:
 		return AddonFileDownloader(self._addonDownloadCacheDir)

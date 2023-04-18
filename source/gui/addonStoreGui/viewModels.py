@@ -649,7 +649,10 @@ class AddonStoreVM:
 		if config.conf["addonStore"]["incompatibleAddons"]:
 			incompatibleAddons: CaseInsensitiveDict[AddonDetailsModel] = addonDataManager.getLatestAddons()
 			for addonId in incompatibleAddons:
-				# only include incompatible add-ons if no compatible or installed version available 
+				# only include incompatible add-ons if:
+				# - no compatible or installed versions are available
+				# - the user can override the compatibility of the add-on
+				# (it's too old and not too new)
 				if addonId not in addons and incompatibleAddons[addonId].canOverrideCompatibility:
 					addons[addonId] = incompatibleAddons[addonId]
 		log.debug("completed getting addons in the background")
