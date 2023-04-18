@@ -22,7 +22,6 @@ import addonAPIVersion
 import typing
 from typing import (
 	Optional,
-	List,
 	Dict,
 	Callable,
 	Tuple,
@@ -32,6 +31,7 @@ from .models import (
 	_createAddonModelFromData,
 	_createModelFromData,
 	AddonDetailsModel,
+	_AddonDetailsCollectionT,
 )
 
 addonDataManager: Optional["_DataManager"] = None
@@ -60,7 +60,7 @@ def _getAddonStoreURL(channel: Channel, lang: str, nvdaApiVersion: str) -> str:
 
 @dataclasses.dataclass
 class CachedAddonsModel:
-	availableAddons: List[AddonDetailsModel]
+	availableAddons: _AddonDetailsCollectionT
 	cachedAt: datetime
 	nvdaAPIVersion: addonAPIVersion.AddonApiVersionT
 
@@ -233,7 +233,7 @@ class _DataManager:
 			nvdaAPIVersion=cacheData["nvdaAPIVersion"],
 		)
 
-	def getLatestAvailableAddons(self) -> List[AddonDetailsModel]:
+	def getLatestAvailableAddons(self) -> _AddonDetailsCollectionT:
 		shouldRefreshData = (
 			not self._availableAddonCache
 			or self._availableAddonCache.nvdaAPIVersion != addonAPIVersion.CURRENT

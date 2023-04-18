@@ -1,6 +1,14 @@
 
 ## Browsing add-ons
-TODO
+
+### Browse add-ons by category
+TODO:
+
+- installed
+- incompatible
+- updatable/replace-able
+- available
+- all?
 
 ### Filtering by add-on information
 
@@ -23,7 +31,7 @@ Add-ons can be filtered by display name, publisher and description.
 
 ## Installing add-ons
 
-### Install add-on
+### Install add-on from add-on store
 1. Open the add-on store.
 1. Select an add-on.
 1. Navigate to and press the install button for the add-on.
@@ -31,11 +39,33 @@ Add-ons can be filtered by display name, publisher and description.
 1. Restart NVDA as prompted.
 1. Confirm the add-on is listed in the add-ons manager.
 
-### Overriding incompatible add-on from add-on store
+### Install add-on from external source in add-on store
 TODO
 
-### Overriding incompatible add-on from external install
-TODO
+### Install and override incompatible add-on from add-on store
+1. Open the add-on store.
+1. Find an add-on listed as "incompatible" for download.
+1. Navigate to and press the "install (override compatibility)" button for the add-on.
+1. Confirm the warning message about add-on compatibility.
+1. Proceed with the installation.
+
+### Install and override incompatible add-on from external source
+1. Start the install of an incompatible add-on bundle.
+You can do this by:
+  - opening an `.nvda-addon` file while NVDA is running
+  - Using the "add-ons manager" dialog (TODO: this should be in the add-on store)
+1. Confirm the warning message about add-on compatibility.
+1. Proceed with the installation.
+
+### Enable and override compatibility for an installed add-on
+1. Attempt to enable a disabled add-on, which is incompatible.
+You can do this by:
+  - Using the add-on store, if an update is available
+  - Using the "add-ons manager" dialog (TODO: this should be in the add-on store)
+1. Confirm the warning message about add-on compatibility.
+1. Exit the add-on store dialog
+1. You should be prompted for restart, restart NVDA
+1. Confirm the add-on is enabled in the add-ons manager
 
 
 ## Updating add-ons
@@ -106,3 +136,32 @@ For example: "Clock".
 
 ### Automatic updating
 TODO
+
+
+## Other add-on actions
+
+### Disabling an add-on
+1. Find a running add-on in the add-on store
+1. Press the disable button
+1. Exit the add-on store dialog
+1. You should be prompted for restart, restart NVDA
+1. Confirm the add-on is disabled in the add-ons manager
+
+### Enabling an add-on
+1. Find a disabled add-on in the add-on store
+1. Press the enable button
+1. Exit the add-on store dialog
+1. You should be prompted for restart, restart NVDA
+1. Confirm the add-on is disabled in the add-ons manager
+
+### Removing an add-on
+1. Find an installed add-on in the add-on store
+1. Press the remove button
+1. Exit the add-on store dialog
+1. You should be prompted for restart, restart NVDA
+1. Confirm the add-on is removed in the add-ons manager
+
+### Browse an add-ons help
+1. Find an installed add-on in the add-on store
+1. Press the "add-on help" button
+1. A window should open with the help documentation

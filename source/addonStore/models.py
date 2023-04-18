@@ -15,6 +15,14 @@ from typing import (
 )
 
 import addonAPIVersion
+from addonHandler import (
+	Addon as AddonHandlerModel,
+	state as addonHandlerState,
+)
+from addonHandler.addonVersionCheck import SupportsVersionCheck
+
+
+_AddonDetailsCollectionT = Dict[str, "AddonDetailsModel"]
 
 
 class Channel(str, Enum):
@@ -46,7 +54,7 @@ class MajorMinorPatch(NamedTuple):
 
 
 @dataclasses.dataclass(frozen=True)  # once created, it should not be modified.
-class AddonDetailsModel:
+class AddonDetailsModel(SupportsVersionCheck):
 	"""Typing for information from API
 	"""
 	addonId: str
@@ -74,6 +82,16 @@ class AddonDetailsModel:
 	def lastTestedNVDAVersion(self) -> addonAPIVersion.AddonApiVersionT:
 		"""In order to support addonHandler.addonVersionCheck.SupportsVersionCheck"""
 		return self.lastTestedVersion
+
+	@property
+	def _addonHandlerModel(self) -> Optional[AddonHandlerModel]:
+		"""Returns the Addon model tracked in addonHandler, if it exists."""
+		return addonHandlerState._addonHandlerCache.availableAddons.get(self.addonId)
+
+	@property
+	def name(self) -> str:
+		"""In order to support addonHandler.addonVersionCheck.SupportsVersionCheck"""
+		return self.addonId
 
 	def asdict(self) -> Dict[str, Any]:
 		jsonData = dataclasses.asdict(self)
@@ -107,10 +125,10 @@ def _createAddonModelFromData(addon: Dict[str, Any]) -> AddonDetailsModel:
 	)
 
 
-def _createModelFromData(jsonData: str) -> List[AddonDetailsModel]:
+def _createModelFromData(jsonData: str) -> _AddonDetailsCollectionT:
 	"""Use json string to construct a listing of available addons.
 	See https://github.com/nvaccess/addon-datastore#api-data-generation-details
 	for details of the data.
 	"""
 	data: List[Dict[str, Any]] = json.loads(jsonData)
-	return [_createAddonModelFromData(addon) for addon in data]
+	return {addon["addonId"]: _createAddonModelFromData(addon) for addon in data}
