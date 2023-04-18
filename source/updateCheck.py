@@ -48,7 +48,10 @@ import braille
 import gui
 from gui import guiHelper
 from addonHandler import getCodeAddon, AddonError, getIncompatibleAddons
-from addonHandler.addonVersionCheck import getAddonCompatibilityMessage  # noqa: E402
+from addonHandler.addonVersionCheck import (  # noqa: E402
+	getAddonCompatibilityMessage,
+	getAddonCompatibilityConfirmationMessage,
+)
 from logHandler import log, isPathExternalToNVDA
 import config
 import shellapi
@@ -378,9 +381,7 @@ class UpdateResultDialog(
 				message += + "\n\n" + getAddonCompatibilityMessage()
 				confirmationCheckbox = sHelper.addItem(wx.CheckBox(
 					self,
-					# Translators: A message to confirm that the user understands that addons that have not been
-					# reviewed and made available, will be disabled after installation.
-					label=_("I understand that these incompatible add-ons will be disabled")
+					label=getAddonCompatibilityConfirmationMessage()
 				))
 				confirmationCheckbox.Bind(
 					wx.EVT_CHECKBOX,
@@ -498,9 +499,7 @@ class UpdateAskInstallDialog(
 		if showAddonCompat:
 			self.confirmationCheckbox = sHelper.addItem(wx.CheckBox(
 				self,
-				# Translators: A message to confirm that the user understands that addons that have not been reviewed and made
-				# available, will be disabled after installation.
-				label=_("I understand that these incompatible add-ons will be disabled")
+				label=getAddonCompatibilityConfirmationMessage()
 			))
 
 		bHelper = sHelper.addDialogDismissButtons(guiHelper.ButtonHelper(wx.HORIZONTAL))

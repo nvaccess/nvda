@@ -3,6 +3,10 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+# Needed for type hinting CaseInsensitiveDict
+# Can be removed in a future version of python (3.8+)
+from __future__ import annotations
+
 import dataclasses
 from enum import Enum
 import json
@@ -13,6 +17,11 @@ from typing import (
 	NamedTuple,
 	Optional,
 )
+from typing_extensions import (
+	Protocol,
+)
+
+from requests.structures import CaseInsensitiveDict
 
 import addonAPIVersion
 from addonHandler import (
@@ -20,9 +29,6 @@ from addonHandler import (
 	state as addonHandlerState,
 )
 from addonHandler.addonVersionCheck import SupportsVersionCheck
-
-
-_AddonDetailsCollectionT = Dict[str, "AddonDetailsModel"]
 
 
 class Channel(str, Enum):
@@ -41,7 +47,7 @@ class MajorMinorPatch(NamedTuple):
 		return f"{self.major}.{self.minor}.{self.patch}"
 
 	@classmethod
-	def _parseAddonVersionFromVersionStr(cls, version: str) -> "MajorMinorPatch":
+	def _parseVersionFromVersionStr(cls, version: str) -> "MajorMinorPatch":
 		versionParts = version.split(".")
 		versionLen = len(versionParts)
 		if versionLen < 2 or versionLen > 3:
@@ -53,9 +59,9 @@ class MajorMinorPatch(NamedTuple):
 		)
 
 
-@dataclasses.dataclass(frozen=True)  # once created, it should not be modified.
-class AddonDetailsModel(SupportsVersionCheck):
-	"""Typing for information from API
+class _AddonDetailsModel(SupportsVersionCheck, Protocol):
+	"""Needed to display information in add-on store.
+	May come from manifest or add-on store data.
 	"""
 	addonId: str
 	displayName: str
@@ -64,12 +70,6 @@ class AddonDetailsModel(SupportsVersionCheck):
 	addonVersionName: str
 	channel: Channel
 	homepage: Optional[str]
-	license: str
-	licenseURL: Optional[str]
-	sourceURL: str
-	URL: str
-	sha256: str
-	addonVersionNumber: MajorMinorPatch
 	minNVDAVersion: MajorMinorPatch
 	lastTestedVersion: MajorMinorPatch
 
@@ -105,8 +105,46 @@ class AddonDetailsModel(SupportsVersionCheck):
 		return jsonData
 
 
-def _createAddonModelFromData(addon: Dict[str, Any]) -> AddonDetailsModel:
-	return AddonDetailsModel(
+@dataclasses.dataclass(frozen=True)
+class AddonDetailsModel(_AddonDetailsModel):
+	"""Needed to display information in add-on store GUI.
+	May come from manifest or add-on store data.
+	"""
+	addonId: str
+	displayName: str
+	description: str
+	publisher: str
+	addonVersionName: str
+	channel: Channel
+	homepage: Optional[str]
+	minNVDAVersion: MajorMinorPatch
+	lastTestedVersion: MajorMinorPatch
+
+
+@dataclasses.dataclass(frozen=True)  # once created, it should not be modified.
+class AddonStoreModel(_AddonDetailsModel):
+	"""
+	Data from an add-on from the add-on store.
+	"""
+	addonId: str
+	displayName: str
+	description: str
+	publisher: str
+	addonVersionName: str
+	channel: Channel
+	homepage: Optional[str]
+	license: str
+	licenseURL: Optional[str]
+	sourceURL: str
+	URL: str
+	sha256: str
+	addonVersionNumber: MajorMinorPatch
+	minNVDAVersion: MajorMinorPatch
+	lastTestedVersion: MajorMinorPatch
+
+
+def _createStoreModelFromData(addon: Dict[str, Any]) -> AddonStoreModel:
+	return AddonStoreModel(
 		addonId=addon["addonId"],
 		displayName=addon["displayName"],
 		description=addon["description"],
@@ -125,10 +163,24 @@ def _createAddonModelFromData(addon: Dict[str, Any]) -> AddonDetailsModel:
 	)
 
 
-def _createModelFromData(jsonData: str) -> _AddonDetailsCollectionT:
+def _createDetailsFromManifest(addon: AddonHandlerModel) -> AddonDetailsModel:
+	return AddonDetailsModel(
+		addonId=addon.name,
+		displayName=addon.manifest["summary"],
+		description=addon.manifest["description"],
+		publisher=addon.manifest["author"],
+		channel=Channel.STABLE,
+		addonVersionName=addon.version,
+		homepage=addon.manifest.get("url"),
+		minNVDAVersion=MajorMinorPatch(*addon.minimumNVDAVersion),
+		lastTestedVersion=MajorMinorPatch(*addon.lastTestedNVDAVersion),
+	)
+
+
+def _createStoreCollectionFromJson(jsonData: str) -> CaseInsensitiveDict["AddonStoreModel"]:
 	"""Use json string to construct a listing of available addons.
 	See https://github.com/nvaccess/addon-datastore#api-data-generation-details
 	for details of the data.
 	"""
 	data: List[Dict[str, Any]] = json.loads(jsonData)
-	return {addon["addonId"]: _createAddonModelFromData(addon) for addon in data}
+	return CaseInsensitiveDict({addon["addonId"]: _createStoreModelFromData(addon) for addon in data})

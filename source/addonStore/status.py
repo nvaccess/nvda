@@ -1,0 +1,189 @@
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2022-2023 NV Access Limited
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+
+import enum
+from typing import (
+	Dict,
+	Optional,
+	OrderedDict,
+	Set,
+)
+
+from addonHandler import (
+	AddonStateCategory,
+	state as addonHandlerState,
+)
+from addonHandler.addonVersionCheck import isAddonCompatible
+from addonStore.models import (
+	AddonDetailsModel,
+	AddonStoreModel,
+	MajorMinorPatch,
+)
+from logHandler import log
+from utils.displayString import DisplayStringEnum
+
+
+@enum.unique
+class AvailableAddonStatus(DisplayStringEnum):
+	""" Values to represent the status of add-ons within the NVDA add-on store.
+	Although related, these are independent of the states in L{addonHandler}
+	"""
+	PENDING_REMOVE = enum.auto()
+	AVAILABLE = enum.auto()
+	UPDATE = enum.auto()
+	REPLACE_SIDE_LOAD = enum.auto()
+	"""
+	Used when an addon in the store matches an installed add-on ID.
+	However, it cannot be determined if it is an upgrade.
+	Encourage the user to compare the version strings.
+	"""
+	INCOMPATIBLE = enum.auto()
+	DOWNLOADING = enum.auto()
+	DOWNLOAD_FAILED = enum.auto()
+	DOWNLOAD_SUCCESS = enum.auto()
+	INSTALLING = enum.auto()
+	INSTALL_FAILED = enum.auto()
+	INSTALLED = enum.auto()  # installed, requires restart
+	PENDING_DISABLE = enum.auto()  # disabled after restart
+	INCOMPATIBLE_DISABLED = enum.auto()  # disabled due to being incompatible
+	DISABLED = enum.auto()
+	PENDING_ENABLE = enum.auto()  # enabled after restart
+	RUNNING = enum.auto()  # enabled / active.
+
+	@property
+	def _displayStringLabels(self) -> Dict["AvailableAddonStatus", str]:
+		_labels = {
+			# Translators: Status for addons shown in the add-on store dialog
+			self.PENDING_REMOVE: _("Pending removed"),
+			# Translators: Status for addons shown in the add-on store dialog
+			self.AVAILABLE: _("Available"),
+			# Translators: Status for addons shown in the add-on store dialog
+			self.UPDATE: _("Update Available"),
+			# Translators: Status for addons shown in the add-on store dialog
+			self.REPLACE_SIDE_LOAD: _("Migrate to add-on store"),
+			# Translators: Status for addons shown in the add-on store dialog
+			self.INCOMPATIBLE: _("Incompatible"),
+			# Translators: Status for addons shown in the add-on store dialog
+			self.DOWNLOADING: _("Downloading"),
+			# Translators: Status for addons shown in the add-on store dialog
+			self.DOWNLOAD_FAILED: _("Download failed"),
+			# Translators: Status for addons shown in the add-on store dialog
+			self.DOWNLOAD_SUCCESS: _("Downloaded, pending install"),
+			# Translators: Status for addons shown in the add-on store dialog
+			self.INSTALLING: _("Installing"),
+			# Translators: Status for addons shown in the add-on store dialog
+			self.INSTALL_FAILED: _("Install failed"),
+			# Translators: Status for addons shown in the add-on store dialog
+			self.INSTALLED: _("Installed, pending restart"),
+			# Translators: Status for addons shown in the add-on store dialog
+			self.PENDING_DISABLE: _("Disabled, pending restart"),
+			# Translators: Status for addons shown in the add-on store dialog
+			self.DISABLED: _("Disabled"),
+			# Translators: Status for addons shown in the add-on store dialog
+			self.INCOMPATIBLE_DISABLED: _("Disabled (Incompatible)"),
+			# Translators: Status for addons shown in the add-on store dialog
+			self.PENDING_ENABLE: _("Enabled, pending restart"),
+			# Translators: Status for addons shown in the add-on store dialog
+			self.RUNNING: _("Enabled"),
+		}
+		return _labels
+
+
+def _getStatus(model: AddonDetailsModel) -> Optional[AvailableAddonStatus]:
+	from addonStore.dataManager import addonDataManager
+	addonData = model._addonHandlerModel
+	if addonData is None:
+		if not isAddonCompatible(model):
+			# Installed incompatible add-ons have a status of disabled or running
+			return AvailableAddonStatus.INCOMPATIBLE
+
+		# Any compatible add-on which is not installed should be listed as available
+		return AvailableAddonStatus.AVAILABLE
+
+	for storeState, handlerStateCategory in _addonStoreStateToAddonHandlerState.items():
+		# Ensure disabled status and install status are checked first if installed
+		if model.addonId in addonHandlerState[handlerStateCategory]:
+			return storeState
+
+	addonStoreData = addonDataManager._getCachedInstalledAddonData(model.addonId)
+	if isinstance(model, AddonStoreModel):
+		# If the listed add-on is installed from a side-load
+		# and not available on the add-on store
+		# the type will not be AddonStoreModel
+		if addonStoreData is not None:
+			if model.addonVersionNumber > addonStoreData.addonVersionNumber:
+				return AvailableAddonStatus.UPDATE
+		else:
+			# Parsing from a side-loaded add-on
+			try:
+				manifestAddonVersion = MajorMinorPatch._parseVersionFromVersionStr(addonData.version)
+			except ValueError:
+				# Parsing failed to get a numeric version.
+				# Ideally a numeric version would be compared,
+				# however the manifest only has a version string.
+				# Ensure the user is aware that it may be a downgrade or reinstall.
+				# Encourage users to re-install or upgrade the add-on from the add-on store.
+				return AvailableAddonStatus.REPLACE_SIDE_LOAD
+
+			if model.addonVersionNumber > manifestAddonVersion:
+				return AvailableAddonStatus.UPDATE
+
+	if addonData.isRunning:
+		return AvailableAddonStatus.RUNNING
+
+	log.debugWarning(f"Add-on in unknown state: {model.addonId}")
+	return None
+
+
+_addonStoreStateToAddonHandlerState: Dict[AvailableAddonStatus, AddonStateCategory] = {
+	AvailableAddonStatus.INSTALLED: AddonStateCategory.PENDING_INSTALL,
+	AvailableAddonStatus.DISABLED: AddonStateCategory.DISABLED,
+	AvailableAddonStatus.INCOMPATIBLE_DISABLED: AddonStateCategory.BLOCKED,
+	AvailableAddonStatus.PENDING_DISABLE: AddonStateCategory.PENDING_DISABLE,
+	AvailableAddonStatus.PENDING_ENABLE: AddonStateCategory.PENDING_ENABLE,
+	AvailableAddonStatus.PENDING_REMOVE: AddonStateCategory.PENDING_REMOVE,
+}
+
+
+_statusFilters: OrderedDict[str, Set[AvailableAddonStatus]] = OrderedDict({
+	# Translators: A selection option to display installed add-ons in the add-on store
+	pgettext("addonStore", "Installed add-ons"): {
+		AvailableAddonStatus.UPDATE,
+		AvailableAddonStatus.REPLACE_SIDE_LOAD,
+		AvailableAddonStatus.INSTALLED,
+		AvailableAddonStatus.PENDING_DISABLE,
+		AvailableAddonStatus.INCOMPATIBLE_DISABLED,
+		AvailableAddonStatus.DISABLED,
+		AvailableAddonStatus.PENDING_ENABLE,
+		AvailableAddonStatus.PENDING_REMOVE,
+		AvailableAddonStatus.RUNNING,
+	},
+	# Translators: A selection option to display updatable add-ons in the add-on store
+	pgettext("addonStore", "Updatable add-ons"): {
+		AvailableAddonStatus.UPDATE,
+		AvailableAddonStatus.REPLACE_SIDE_LOAD,
+	},
+	# Translators: A selection option to display available add-ons in the add-on store
+	pgettext("addonStore", "Available add-ons"): {
+		AvailableAddonStatus.INCOMPATIBLE,
+		AvailableAddonStatus.AVAILABLE,
+		AvailableAddonStatus.UPDATE,
+		AvailableAddonStatus.REPLACE_SIDE_LOAD,
+		AvailableAddonStatus.DOWNLOAD_FAILED,
+		AvailableAddonStatus.DOWNLOAD_SUCCESS,
+		AvailableAddonStatus.DOWNLOADING,
+		AvailableAddonStatus.INSTALLING,
+		AvailableAddonStatus.INSTALL_FAILED,
+		AvailableAddonStatus.INSTALLED,
+	},
+	# Translators: A selection option to display disabled add-ons in the add-on store
+	pgettext("addonStore", "Disabled add-ons"): {
+		AvailableAddonStatus.INCOMPATIBLE_DISABLED,
+		AvailableAddonStatus.DISABLED,
+	},
+})
+"""A dictionary where the keys are a status to filter by,
+and the values are which statuses should be shown for a given filter.
+"""

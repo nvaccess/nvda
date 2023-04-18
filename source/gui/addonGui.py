@@ -291,7 +291,7 @@ class AddonsDialog(
 		self.CentreOnScreen()
 		self.addonsList.SetFocus()
 
-	def onAddClick(self, evt):
+	def onAddClick(self, evt: wx.EVT_BUTTON):
 		# Translators: The message displayed in the dialog that allows you to choose an add-on package for installation.
 		fd = wx.FileDialog(self, message=_("Choose Add-on Package File"),
 		# Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
@@ -310,8 +310,8 @@ class AddonsDialog(
 		if index < 0:
 			return
 		addon = self.curAddons[index]
-		from addonStoreGui.dialogs import _shouldProceedAddonRemove
-		if not _shouldProceedAddonRemove(addon):
+		from gui.addonStoreGui.dialogs import _shouldProceedToRemoveAddonDialog
+		if not _shouldProceedToRemoveAddonDialog(addon):
 			return
 		addon.requestRemove()
 		self.refreshAddonsList(activeIndex=index)
@@ -364,7 +364,8 @@ class AddonsDialog(
 		self.addonsList.DeleteAllItems()
 		self.curAddons: List[Addon] = []
 		anyAddonIncompatible = False
-		for addon in sorted(addonHandler.getAvailableAddons(), key=lambda a: strxfrm(a.manifest['summary'])):
+		availableAddons = addonHandler.state._addonHandlerCache.availableAddons
+		for addon in sorted(availableAddons.values(), key=lambda a: strxfrm(a.manifest['summary'])):
 			self.addonsList.Append((
 				addon.manifest['summary'],
 				self.getAddonStatus(addon),
@@ -454,7 +455,7 @@ class AddonsDialog(
 			# Counterintuitive, but makes sense when context is taken into account.
 			addon.enable(not shouldDisable)
 		except addonHandler.AddonError:
-			from addonStoreGui.viewModels import AddonStoreVM
+			from gui.addonStoreGui.viewModels import AddonStoreVM
 			log.error("Couldn't change state for %s add-on"%addon.name, exc_info=True)
 			if shouldDisable:
 				message = AddonStoreVM._disableErrorMessage.format(addon=addon.manifest['summary'])
@@ -518,11 +519,8 @@ def installAddon(parentWindow, addonPath) -> bool:  # noqa: C901
 	elif wx.YES != _showConfirmAddonInstallDialog(parentWindow, bundle):
 		return False  # Exit early, User changed their mind about installation.
 
-	prevAddon = None
-	for addon in addonHandler.getAvailableAddons():
-		if not addon.isPendingRemove and bundle.name.lower()==addon.manifest['name'].lower():
-			prevAddon=addon
-			break
+	from gui.addonStoreGui.viewModels import getPreviouslyInstalledAddonById
+	prevAddon = getPreviouslyInstalledAddonById(bundle)
 	if prevAddon:
 		summary=bundle.manifest["summary"]
 		curVersion=prevAddon.manifest["version"]
@@ -655,7 +653,7 @@ def _shouldProceedWhenAddonTooOldDialog(
 	lastTestedNVDAVersion=addonAPIVersion.formatForGUI(addon.lastTestedNVDAVersion),
 	NVDAVersion=addonAPIVersion.formatForGUI(addonAPIVersion.CURRENT)
 	)
-	from addonStoreGui.dialogs import ErrorAddonInstallDialogWithCancelButton
+	from gui.addonStoreGui.dialogs import ErrorAddonInstallDialogWithCancelButton
 	return ErrorAddonInstallDialogWithCancelButton(
 		parent=parent,
 		# Translators: The title of a dialog presented when an error occurs.
