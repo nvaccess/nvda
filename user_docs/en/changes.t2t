@@ -57,11 +57,20 @@ Instead NVDA reports that the link has no destination. (#14723)
 - Several stability fixes to input/output for braille displays, resulting in less frequent errors and crashes of NVDA. (#14627)
 - NVDA again recovers from many more situations such as applications that stop responding which previously caused it to freeze completely. (#14759) 
 - The destination of graphic links are now correctly reported in Chrome and Edge. (#14779)
+- In Windows 11, it is once again possible to open the Contributors and License items on the NVDA Help menu. (#14725)
 -
 
 
 == Changes for Developers ==
 Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] for information on NVDA's API deprecation and removal process.
+
+- Suggested conventions have been added to the add-on manifest specification.
+These are optional for NVDA compatibility, but are encouraged or required for submitting to the add-on store.
+The new suggested conventions are:
+  - Using ``lowerCamelCase`` for the name field.
+  - Using ``<major>.<minor>.<patch>`` format for the version field (required for add-on datastore).
+  - Using ``https://`` as the schema for the url field (required for add-on datastore).
+  -
 - Added a new extension point type called ``Chain``, which can be used to iterate over iterables returned by registered handlers. (#14531)
 - Added the ``bdDetect.scanForDevices`` extension point.
 Handlers can be registered that yield ``BrailleDisplayDriver/DeviceMatch`` pairs that don't fit in existing categories, like USB or Bluetooth. (#14531)
@@ -76,6 +85,7 @@ Similarly, the new ``getCompletionRoutine`` method allows you to convert a pytho
 - ``offsets.OffsetsTextInfo._get_boundingRects`` should now always return ``List[locationHelper.rectLTWH]`` as expected for a subclass of ``textInfos.TextInfo``. (#12424)
 - ``highlight-color`` is now a format field attribute. (#14610)
 - NVDA should more accurately determine if a logged message is coming from NVDA core. (#14812)
+- NVDA will no longer log inaccurate warnings or errors about deprecated appModules. (#14806)
 -
 
 === Deprecations ===
