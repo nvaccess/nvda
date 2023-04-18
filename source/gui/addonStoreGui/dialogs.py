@@ -60,7 +60,7 @@ def _shouldProceedWhenInstalledAddonVersionUnknown(
 	).ShowModal() == wx.OK
 
 
-def _shouldProceedAddonRemove(
+def _shouldProceedToRemoveAddonDialog(
 		addon: "SupportsVersionCheck"
 ) -> bool:
 	return messageBox(

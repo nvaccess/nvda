@@ -3,12 +3,14 @@
 # Copyright (C) 2018-2023 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
+
 from typing_extensions import Protocol  # Python 3.8 adds native support
 import addonAPIVersion
 
 
 def getAddonCompatibilityMessage() -> str:
-	return _(
+	return pgettext(
+		"addonStore",
 		# Translators: A message indicating that some add-ons will be disabled
 		# unless reviewed before installation.
 		"Your NVDA configuration contains add-ons that are incompatible with this version of NVDA. "
@@ -18,10 +20,22 @@ def getAddonCompatibilityMessage() -> str:
 	)
 
 
+def getAddonCompatibilityConfirmationMessage() -> str:
+	return pgettext(
+		"addonStore",
+		# Translators: A message to confirm that the user understands that incompatible add-ons
+		# will be disabled after installation, and can be manually re-enabled.
+		"I understand that incompatible add-ons will be disabled "
+		"and can be manually re-enabled at my own risk after installation."
+	)
+
+
 class SupportsVersionCheck(Protocol):
 	""" Examples implementing this protocol include:
+	- addonHandler.Addon
 	- addonHandler.AddonBundle
 	- addonStore.models.AddonDetailsModel
+	- addonStore.models.AddonStoreModel
 	"""
 	minimumNVDAVersion: addonAPIVersion.AddonApiVersionT
 	lastTestedNVDAVersion: addonAPIVersion.AddonApiVersionT
@@ -44,6 +58,8 @@ class SupportsVersionCheck(Protocol):
 		overiddenAddons = state[AddonStateCategory.OVERRIDE_COMPATIBILITY]
 		assert self.name not in overiddenAddons and self.canOverrideCompatibility
 		overiddenAddons.add(self.name)
+		state[AddonStateCategory.BLOCKED].discard(self.name)
+		state[AddonStateCategory.DISABLED].discard(self.name)
 
 	@property
 	def canOverrideCompatibility(self) -> bool:

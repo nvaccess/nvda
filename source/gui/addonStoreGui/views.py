@@ -5,10 +5,11 @@
 
 import functools
 from typing import (
-	List,
-	Optional,
+	cast,
 	Callable,
 	Dict,
+	List,
+	Optional,
 )
 
 import wx
@@ -18,6 +19,7 @@ from wx.lib.expando import ExpandoTextCtrl
 from addonHandler import (
 	state as addonHandlerState,
 	AddonStateCategory,
+	BUNDLE_EXTENSION,
 )
 import gui
 import winVersion
@@ -30,6 +32,12 @@ from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 from gui.settingsDialogs import SettingsDialog
 from logHandler import log
 
+from addonStore.models import (
+	AddonStoreModel,
+)
+from addonStore.status import (
+	_statusFilters,
+)
 from .viewModels import (
 	AddonListVM,
 	AddonDetailsVM,
@@ -62,7 +70,7 @@ class AddonVirtualList(
 			autoSizeColumn=1,
 		)
 
-		self.SetMinSize(self.scaleSize((550, 600)))
+		self.SetMinSize(self.scaleSize((500, 500)))
 
 		# Translators: The name of the column that contains names of addons. In the add-on store dialog.
 		self.InsertColumn(0, pgettext("addonStore", "Name"))
@@ -249,7 +257,7 @@ class AddonDetails(
 		DpiScalingHelperMixinWithoutInit,
 ):
 	# Translators: Header (usually the add-on name) when no add-on is selected. In the add-on store dialog.
-	_noAddonSelectedLabelText: str = pgettext("addonStore", "No addon selected.")
+	_noAddonSelectedLabelText: str = pgettext("addonStore", "No add-on selected.")
 
 	# Translators: Label for the text control containing a description of the selected add-on.
 	# In the add-on store dialog.
@@ -272,18 +280,9 @@ class AddonDetails(
 			style=wx.TAB_TRAVERSAL | wx.BORDER_THEME
 		)
 
-		sizer = wx.BoxSizer(orient=wx.VERTICAL)
-		self.SetSizer(sizer)
-		self.contents = wx.BoxSizer(orient=wx.VERTICAL)
-		sizer.Add(
-			self.contents,
-			border=gui.guiHelper.BORDER_FOR_DIALOGS,
-			proportion=1,  # make vertically stretchable
-			flag=(
-				wx.EXPAND  # make horizontally stretchable
-				| wx.ALL  # and make border all around
-			),
-		)
+		selfSizer = wx.BoxSizer(wx.VERTICAL)
+		self.SetSizer(selfSizer)
+		parentSizer = wx.BoxSizer(wx.VERTICAL)
 		# To make the text fields less ugly.
 		# See Windows explorer file properties dialog for an example.
 		self.SetBackgroundColour(wx.Colour("white"))
@@ -294,23 +293,35 @@ class AddonDetails(
 			style=wx.ALIGN_CENTRE_HORIZONTAL | wx.ST_NO_AUTORESIZE
 		)
 		self._setAddonNameCtrlStyle()
-		self.contents.Add(self.addonNameCtrl, flag=wx.EXPAND)
+		selfSizer.Add(self.addonNameCtrl, flag=wx.EXPAND)
+		selfSizer.Add(
+			parentSizer,
+			border=guiHelper.BORDER_FOR_DIALOGS,
+			proportion=1,  # make vertically stretchable
+			flag=(
+				wx.EXPAND  # make horizontally stretchable
+				| wx.ALL  # and make border all around
+			),
+		)
 
-		self.contents.AddSpacer(gui.guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
+		self.contents = wx.BoxSizer(wx.VERTICAL)
+		self.contentsPanel = wx.Panel(self)
+		self.contentsPanel.SetSizer(self.contents)
+		parentSizer.Add(self.contentsPanel, proportion=1, flag=wx.EXPAND | wx.ALL)
+
+		self.contents.AddSpacer(guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
 
 		# It would be nice to override the name using wx.Accessible,
 		# but using it on a TextCtrl breaks the accessibility of the control entirely (all state/role is reset)
 		# Instead, add a hidden label for the textBox, Windows exposes this as the accessible name.
 		self.descriptionLabel = wx.StaticText(
-			self,
+			self.contentsPanel,
 			label=AddonDetails._descriptionLabelText
 		)
 		self.contents.Add(self.descriptionLabel, flag=wx.EXPAND)
-		self.descriptionLabel.Show(False)
-		descriptionWidth = 500
-		self.descriptionTextCtrl = ExpandoTextCtrl(
-			self,
-			size=(self.scaleSize(descriptionWidth), -1),
+		self.descriptionLabel.Hide()
+		self.descriptionTextCtrl = wx.TextCtrl(
+			self.contentsPanel,
 			style=(
 				0  # purely to allow subsequent items to line up.
 				| wx.TE_MULTILINE  # details will require multiple lines
@@ -320,42 +331,54 @@ class AddonDetails(
 				| wx.BORDER_NONE
 			)
 		)
+		panelWidth = 500
+		descriptionMinSize = wx.Size(self.scaleSize((panelWidth, 100)))
+		descriptionMaxSize = wx.Size(self.scaleSize((panelWidth, 800)))
+		self.descriptionTextCtrl.SetMinSize(descriptionMinSize)
+		self.descriptionTextCtrl.SetMaxSize(descriptionMaxSize)
 		self.contents.Add(self.descriptionTextCtrl, flag=wx.EXPAND)
-		self.contents.Add(wx.StaticLine(self), flag=wx.EXPAND)
+		self.contents.Add(wx.StaticLine(self.contentsPanel), flag=wx.EXPAND)
 
 		self.statusLabel = wx.StaticText(
-			self,
+			self.contentsPanel,
 			label=AddonDetails._statusLabelText
 		)
-		self.contents.Add(self.statusLabel, flag=wx.EXPAND)
 		self.statusTextCtrl = ExpandoTextCtrl(
-			self,
-			style=wx.TE_READONLY | wx.BORDER_NONE
+			self.contentsPanel,
+			style=wx.TE_READONLY | wx.BORDER_NONE,
 		)
+		self.contents.Add(self.statusLabel)
 		self.contents.Add(self.statusTextCtrl, flag=wx.EXPAND)
-		self.contents.Add(wx.StaticLine(self), flag=wx.EXPAND)
+
+		self.contents.AddSpacer(guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
+		self.contents.Add(wx.StaticLine(self.contentsPanel), flag=wx.EXPAND)
+		self.contents.AddSpacer(guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
 
 		self._actionButtonMap: Dict[AddonActionVM, wx.Button] = {}
-		self._actionsSizer = self._createActionButtons()
-		self.contents.Add(self._actionsSizer)
+		self.actionButtonSizer = wx.WrapSizer()
+		self.actionButtonPanel = wx.Panel(self.contentsPanel)
+		self.actionButtonPanel.SetSizer(self.actionButtonSizer)
+		self.contents.Add(self.actionButtonPanel)
+		self._createActionButtons()
 
-		self.contents.Add(wx.StaticLine(self), flag=wx.EXPAND)
-		self.contents.AddSpacer(gui.guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
+		self.contents.AddSpacer(guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
+		self.contents.Add(wx.StaticLine(self.contentsPanel), flag=wx.EXPAND)
+		self.contents.AddSpacer(guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
 
 		# It would be nice to override the name using wx.Accessible,
 		# but using it on a TextCtrl breaks the accessibility of the control entirely (all state/role is reset)
 		# Instead, add a hidden label for the textBox, Windows exposes this as the accessible name.
 		self.otherDetailsLabel = wx.StaticText(
-			self,
+			self.contentsPanel,
 			# Translators: Label for the text control containing extra details about the selected add-on.
 			# In the add-on store dialog.
 			label=pgettext("addonStore", "Other Details:")
 		)
 		self.contents.Add(self.otherDetailsLabel, flag=wx.EXPAND)
-		self.otherDetailsLabel.Show(False)
+		self.otherDetailsLabel.Hide()
 		self.otherDetailsTextCtrl = wx.TextCtrl(
-			self,
-			size=self.scaleSize((descriptionWidth, 400)),
+			self.contentsPanel,
+			size=self.scaleSize((panelWidth, 400)),
 			style=(
 				0  # purely to allow subsequent items to line up.
 				| wx.TE_MULTILINE  # details will require multiple lines
@@ -371,6 +394,7 @@ class AddonDetails(
 		self.contents.Add(self.otherDetailsTextCtrl, flag=wx.EXPAND, proportion=1)
 		self._refresh()  # ensure that the visual state matches.
 		self._detailsVM.updated.register(self._updatedListItem)
+		self.Layout()
 
 	def _createRichTextStyles(self):
 		# Set up the text styles for the "other details" (which contains several fields)
@@ -418,16 +442,12 @@ class AddonDetails(
 			# SetDefaultStyle, however, this means the text control must start empty.
 			self.otherDetailsTextCtrl.SetValue("")
 			if not details:
-				text = AddonDetails._noAddonSelectedLabelText
-				self.updateAddonName(text)
-				self.descriptionTextCtrl.SetValue("")
-				self.descriptionLabel.SetLabelText(AddonDetails._noAddonSelectedLabelText)
+				self.contentsPanel.Hide()
+				self.updateAddonName(AddonDetails._noAddonSelectedLabelText)
 			else:
-				log.debugWarning(f"URL queue len {len(self._urlQueue)}")
+				log.debug(f"Updating {details.displayName}: URL queue len {len(self._urlQueue)}")
 				self.updateAddonName(details.displayName)
 				self.descriptionLabel.SetLabelText(AddonDetails._descriptionLabelText)
-				self.statusTextCtrl.SetValue(self._detailsVM.listItem.status.displayString)
-
 				# For a ExpandoTextCtr, SetDefaultStyle can not be used to set the style (along with the use
 				# of AppendText) because AppendText has been overridden to use SetValue(GetValue()+newStr)
 				# which drops formatting. Instead, set the text, then the style.
@@ -437,6 +457,9 @@ class AddonDetails(
 					self.descriptionTextCtrl.GetLastPosition(),
 					self.defaultStyle
 				)
+
+				if self._detailsVM.listItem:
+					self.statusTextCtrl.SetValue(self._detailsVM.listItem.status.displayString)
 
 				self._appendDetailsLabelValue(
 					# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
@@ -459,21 +482,24 @@ class AddonDetails(
 						pgettext("addonStore", "Homepage:"),
 						details.homepage, URL=details.homepage
 					)
-				self._appendDetailsLabelValue(
-					# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
-					pgettext("addonStore", "License:"),
-					details.license, URL=details.licenseURL
-				)
-				self._appendDetailsLabelValue(
-					# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
-					pgettext("addonStore", "Source Code:"),
-					details.sourceURL, URL=details.sourceURL
-				)
+				if isinstance(details, AddonStoreModel):
+					self._appendDetailsLabelValue(
+						# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+						pgettext("addonStore", "License:"),
+						details.license, URL=details.licenseURL
+					)
+					self._appendDetailsLabelValue(
+						# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+						pgettext("addonStore", "Source Code:"),
+						details.sourceURL, URL=details.sourceURL
+					)
+				self.contentsPanel.Show()
 
 		self.otherDetailsTextCtrl.SetDefaultStyle(self.urlStyle)
 		for urlFunc in self._urlQueue:
 			urlFunc()
 		self._urlQueue.clear()
+		self.Layout()
 		# Set caret/insertion point at the beginning so that NVDA users can more easily read from the start.
 		self.otherDetailsTextCtrl.SetInsertionPoint(0)
 
@@ -511,9 +537,7 @@ class AddonDetails(
 			detailsTextCtrl.AppendText(labelSpace)
 			detailsTextCtrl.AppendText(value)
 
-	def _createActionButtons(self) -> wx.BoxSizer:
-		_actionsSizer = wx.BoxSizer(orient=wx.HORIZONTAL)
-
+	def _createActionButtons(self) -> None:
 		def _makeButtonClickedEventHandler(_action: AddonActionVM) -> Callable[[wx.CommandEvent, ], None]:
 			"""Get around python binding to the latest value in a for loop, create a new lambda
 			for each value with an explicit binding to the addon details.
@@ -526,9 +550,8 @@ class AddonDetails(
 			return handleButtonClickEvent
 
 		for action in self._actionVMList:
-			button = wx.Button(parent=self, label=action.displayName)
-			_actionsSizer.Add(button)
-
+			button = wx.Button(self.actionButtonPanel, label=action.displayName)
+			self.actionButtonSizer.Add(button)
 			button.Bind(
 				event=wx.EVT_BUTTON,
 				handler=_makeButtonClickedEventHandler(action)
@@ -536,11 +559,12 @@ class AddonDetails(
 			button.Show(show=action.isValid)
 			action.updated.register(self._actionVmChanged)
 			self._actionButtonMap[action] = button
-		return _actionsSizer
 
 	def _actionVmChanged(self, addonActionVM: AddonActionVM):
 		self._actionButtonMap[addonActionVM].Show(show=addonActionVM.isValid)
-		self.statusTextCtrl.SetValue(self._detailsVM.listItem.status.displayString)
+		if self._detailsVM.listItem:
+			self.statusTextCtrl.SetValue(self._detailsVM.listItem.status.displayString)
+		self.Layout()
 
 
 def displayError(error: TranslatedError):
@@ -562,18 +586,24 @@ class AddonStoreDialog(SettingsDialog):
 		self._storeVM.hasError.register(displayError)
 		super().__init__(parent, resizeable=True)
 
-	def makeSettings(self, settingsSizer):
-		# Translators: The label of a text field to filter the list of add-ons in the add-on store dialog.
-		filterLabel = wx.StaticText(self, label=pgettext("addonStore", "&Filter by:"))
-		# noinspection PyAttributeOutsideInit
-		self.filterCtrl = filterCtrl = wx.TextCtrl(self)
-		filterCtrl.Bind(wx.EVT_TEXT, self.onFilterChange, filterCtrl)
+	def makeSettings(self, settingsSizer: wx.BoxSizer):
+		browseCtrlHelper = guiHelper.BoxSizerHelper(self, wx.HORIZONTAL)
+		self.statusFilterCtrl = cast(wx.Choice, browseCtrlHelper.addLabeledControl(
+			# Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
+			labelText=pgettext("addonStore", "&Filter by status:"),
+			wxCtrlClass=wx.Choice,
+			choices=list(_statusFilters.keys()),
+		))
+		self.statusFilterCtrl.Bind(wx.EVT_CHOICE, self.onStatusFilterChange, self.statusFilterCtrl)
+		self.statusFilterCtrl.SetSelection(0)
 
-		filterSizer = wx.BoxSizer(wx.HORIZONTAL)
-		filterSizer.Add(filterLabel, flag=wx.ALIGN_CENTER_VERTICAL)
-		filterSizer.AddSpacer(guiHelper.SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL)
-		filterSizer.Add(filterCtrl, proportion=1)
-		settingsSizer.Add(filterSizer, flag=wx.EXPAND)
+		self.filterCtrl = cast(wx.TextCtrl, browseCtrlHelper.addLabeledControl(
+			# Translators: The label of a text field to filter the list of add-ons in the add-on store dialog.
+			labelText=pgettext("addonStore", "&Search:"),
+			wxCtrlClass=wx.TextCtrl,
+		))
+		self.filterCtrl.Bind(wx.EVT_TEXT, self.onFilterTextChange, self.filterCtrl)
+		settingsSizer.Add(browseCtrlHelper.sizer, flag=wx.EXPAND)
 
 		settingsSizer.AddSpacer(5)
 
@@ -582,16 +612,15 @@ class AddonStoreDialog(SettingsDialog):
 		settingsSizer.Add(self.contentsSizer, flag=wx.EXPAND, proportion=1)
 
 		# add a label for the AddonListVM so that it is announced with a name in NVDA
-		listLabel = wx.StaticText(
+		self.listLabel = wx.StaticText(
 			self,
-			# Translators: Label for the list of available add-ons. In the add-on store dialog.
-			label=pgettext("addonStore", "Available Add-ons:")
+			label=self.getStatusFilterLabel()
 		)
 		self.contentsSizer.Add(
-			listLabel,
+			self.listLabel,
 			flag=wx.EXPAND
 		)
-		listLabel.Show(False)
+		self.listLabel.Hide()
 
 		# noinspection PyAttributeOutsideInit
 		self.addonListView = AddonVirtualList(
@@ -599,7 +628,7 @@ class AddonStoreDialog(SettingsDialog):
 			addonsListVM=self._storeVM.listVM,
 			actionVMList=self._storeVM.actionVMList,
 		)
-		self.contentsSizer.Add(self.addonListView, flag=wx.EXPAND)
+		self.contentsSizer.Add(self.addonListView, flag=wx.EXPAND, proportion=4)
 		self.contentsSizer.AddSpacer(5)
 		# noinspection PyAttributeOutsideInit
 		self.addonDetailsView = AddonDetails(
@@ -607,7 +636,14 @@ class AddonStoreDialog(SettingsDialog):
 			actionVMList=self._storeVM.actionVMList,
 			detailsVM=self._storeVM.detailsVM,
 		)
-		self.contentsSizer.Add(self.addonDetailsView, flag=wx.EXPAND, proportion=1)
+		self.contentsSizer.Add(self.addonDetailsView, flag=wx.EXPAND, proportion=3)
+
+		generalActions = guiHelper.ButtonHelper(wx.HORIZONTAL)
+		# Translators: The label for a button in add-ons Store dialog to install an external add-on.
+		self.externalInstallButton = generalActions.addButton(self, label=_("&Install from external source"))
+		self.externalInstallButton.Bind(wx.EVT_BUTTON, self.openExternalInstall, self.externalInstallButton)
+		settingsSizer.Add(generalActions.sizer)
+		self.SetMinSize(self.mainSizer.GetMinSize())
 
 	def postInit(self):
 		self.addonListView.SetFocus()
@@ -657,9 +693,40 @@ class AddonStoreDialog(SettingsDialog):
 		# let the dialog exit.
 		super().onOk(evt)
 
-	def onFilterChange(self, evt):
+	def getStatusFilterLabel(self) -> str:
+		index = self.statusFilterCtrl.GetSelection()
+		return list(_statusFilters.keys())[index]
+
+	def onStatusFilterChange(self, evt: wx.EVT_CHOICE):
+		statusFiltersKey = self.getStatusFilterLabel()
+		self.listLabel.SetLabelText(statusFiltersKey)
+		self._storeVM._filteredStatuses = _statusFilters[statusFiltersKey]
+		self._storeVM.refresh()
+
+	def onFilterTextChange(self, evt: wx.EVT_TEXT):
 		filterText = evt.GetEventObject().GetValue()
 		self.filter(filterText)
 
 	def filter(self, filterText: str):
 		self._storeVM.listVM.applyFilter(filterText)
+
+	def openExternalInstall(self, evt: wx.EVT_BUTTON):
+		fd = wx.FileDialog(
+			self,
+			# Translators: The message displayed in the dialog that
+			# allows you to choose an add-on package for installation.
+			message=_("Choose Add-on Package File"),
+			# Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
+			wildcard=(_("NVDA Add-on Package (*.{ext})") + "|*.{ext}").format(ext=BUNDLE_EXTENSION),
+			defaultDir="c:",
+			style=wx.FD_OPEN,
+		)
+		if fd.ShowModal() != wx.ID_OK:
+			return
+		addonPath = fd.GetPath()
+		try:
+			addonGui.installAddon(self, addonPath)
+		except TranslatedError as e:
+			self._storeVM.hasError.notify(error=e)
+			return
+		self._storeVM.refresh()
