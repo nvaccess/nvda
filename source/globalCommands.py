@@ -2092,6 +2092,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Shows the NVDA menu"),
 		gestures=("kb:NVDA+n", "ts:2finger_double_tap")
 	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
 	def script_showGui(self,gesture):
 		gui.showGui()
 
@@ -2900,6 +2901,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_CONFIG,
 		gesture="kb:NVDA+control+g"
 	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
 	def script_activateGeneralSettingsDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onGeneralSettingsCommand, None)
 
@@ -2909,6 +2911,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_CONFIG,
 		gesture="kb:NVDA+control+s"
 	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
 	def script_activateSynthesizerDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onSelectSynthesizerCommand, None)
 
@@ -2918,6 +2921,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_CONFIG,
 		gesture="kb:NVDA+control+v"
 	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
 	def script_activateVoiceDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onSpeechSettingsCommand, None)
 
@@ -2927,6 +2931,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_CONFIG,
 		gesture="kb:NVDA+control+a"
 	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
 	def script_activateBrailleDisplayDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onSelectBrailleDisplayCommand, None)
 
@@ -2935,6 +2940,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Shows NVDA's braille settings"),
 		category=SCRCAT_CONFIG
 	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
 	def script_activateBrailleSettingsDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onBrailleSettingsCommand, None)
 
@@ -2944,6 +2950,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_CONFIG,
 		gesture="kb:NVDA+control+k"
 	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
 	def script_activateKeyboardSettingsDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onKeyboardSettingsCommand, None)
 
@@ -2953,6 +2960,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_CONFIG,
 		gesture="kb:NVDA+control+m"
 	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
 	def script_activateMouseSettingsDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onMouseSettingsCommand, None)
 
@@ -2961,6 +2969,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Shows NVDA's review cursor settings"),
 		category=SCRCAT_CONFIG
 	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
 	def script_activateReviewCursorDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onReviewCursorCommand, None)
 
@@ -2969,6 +2978,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Shows NVDA's input composition settings"),
 		category=SCRCAT_CONFIG
 	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
 	def script_activateInputCompositionDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onInputCompositionCommand, None)
 
@@ -2978,6 +2988,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_CONFIG,
 		gesture="kb:NVDA+control+o"
 	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
 	def script_activateObjectPresentationDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame. onObjectPresentationCommand, None)
 
@@ -2987,6 +2998,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_CONFIG,
 		gesture="kb:NVDA+control+b"
 	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
 	def script_activateBrowseModeDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onBrowseModeCommand, None)
 
@@ -2996,6 +3008,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_CONFIG,
 		gesture="kb:NVDA+control+d"
 	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
 	def script_activateDocumentFormattingDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onDocumentFormattingCommand, None)
 
@@ -3004,6 +3017,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Shows the NVDA default dictionary dialog"),
 		category=SCRCAT_CONFIG
 	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
 	def script_activateDefaultDictionaryDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onDefaultDictionaryCommand, None)
 
@@ -3012,6 +3026,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Shows the NVDA voice-specific dictionary dialog"),
 		category=SCRCAT_CONFIG
 	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
 	def script_activateVoiceDictionaryDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onVoiceDictionaryCommand, None)
 
@@ -3020,6 +3035,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Shows the NVDA temporary dictionary dialog"),
 		category=SCRCAT_CONFIG
 	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
 	def script_activateTemporaryDictionaryDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onTemporaryDictionaryCommand, None)
 
@@ -3028,6 +3044,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Shows the NVDA symbol pronunciation dialog"),
 		category=SCRCAT_CONFIG
 	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
 	def script_activateSpeechSymbolsDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onSpeechSymbolsCommand, None)
 
@@ -3036,6 +3053,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Shows the NVDA input gestures dialog"),
 		category=SCRCAT_CONFIG
 	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
 	def script_activateInputGesturesDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onInputGesturesCommand, None)
 
@@ -3630,8 +3648,8 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		description=_(
-			# Translators: input help mode message for Report destination URL of navigator link command
-			"Report the destination URL of the link in the navigator object. "
+			# Translators: input help mode message for Report destination URL of a link command
+			"Report the destination URL of the link at the position of caret or focus. "
 			"If pressed twice, shows the URL in a window for easier review."
 		),
 		gesture="kb:NVDA+k",
@@ -3640,25 +3658,49 @@ class GlobalCommands(ScriptableObject):
 	def script_reportLinkDestination(
 			self, gesture: inputCore.InputGesture, forceBrowseable: bool = False
 	) -> None:
-		"""Generates a ui.message or ui.browseableMessage of a link's destination, if the navigator
-		object is a link, or an element with an included link such as a graphic.
+		"""Generates a ui.message or ui.browseableMessage of a link's destination, if focus or caret is
+		positioned on a link, or an element with an included link such as a graphic.
 		@param forceBrowseable: skips the press once check, and displays the browseableMessage version.
 		"""
-		obj = api.getNavigatorObject()
+		try:
+			ti: textInfos.TextInfo = api.getCaretPosition()
+		except RuntimeError:
+			log.debugWarning("Unable to get the caret position.", exc_info=True)
+			ti: textInfos.TextInfo = api.getFocusObject().makeTextInfo(textInfos.POSITION_FIRST)
+		ti.expand(textInfos.UNIT_CHARACTER)
+		obj: NVDAObject = ti.NVDAObjectAtStart
 		presses = scriptHandler.getLastScriptRepeatCount()
+		if (
+			obj.role == controlTypes.role.Role.GRAPHIC
+			and (
+				obj.parent
+				and obj.parent.role == controlTypes.role.Role.LINK
+			)
+		):
+			# In Firefox, graphics with a parent link also expose the parents link href value.
+			# In Chromium, the link href value must be fetched from the parent object. (#14779)
+			obj = obj.parent
 		if (
 			obj.role == controlTypes.role.Role.LINK  # If it's a link, or
 			or controlTypes.state.State.LINKED in obj.states  # if it isn't a link but contains one
 		):
+			linkDestination = obj.value
+			if linkDestination is None:
+				# Translators: Informs the user that the link has no destination
+				ui.message(_("Link has no apparent destination"))
+				return
 			if (
 				presses == 1  # If pressed twice, or
 				or forceBrowseable  # if a browseable message is preferred unconditionally
 			):
-				# Translators: Informs the user that the window contains the destination of the
-				# link with given title
-				ui.browseableMessage(obj.value, title=_("Destination of: {name}").format(name=obj.name))
+				ui.browseableMessage(
+					linkDestination,
+					# Translators: Informs the user that the window contains the destination of the
+					# link with given title
+					title=_("Destination of: {name}").format(name=obj.name)
+				)
 			elif presses == 0:  # One press
-				ui.message(obj.value)  # Speak the link
+				ui.message(linkDestination)  # Speak the link
 			else:  # Some other number of presses
 				return  # Do nothing
 		else:
@@ -3667,8 +3709,8 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		description=_(
-			# Translators: input help mode message for Report URL of navigator link in a window command
-			"Reports the destination URL of the link in the navigator object in a window, "
+			# Translators: input help mode message for Report URL of a link in a window command
+			"Displays the destination URL of the link at the position of caret or focus in a window, "
 			"instead of just speaking it. May be preferred by braille users."
 		),
 		category=SCRCAT_TOOLS
@@ -3932,9 +3974,26 @@ class GlobalCommands(ScriptableObject):
 		recog = uwpOcr.UwpOcr()
 		recogUi.recognizeNavigatorObject(recog)
 
-	_tempEnableScreenCurtain = True
-	_waitingOnScreenCurtainWarningDialog: Optional[wx.Dialog] = None
-	_toggleScreenCurtainMessage: Optional[str] = None
+	@script(
+		# Translators: Describes a command.
+		description=_("Cycles through the available languages for Windows OCR"),
+	)
+	def script_cycleOcrLanguage(self, gesture: inputCore.InputGesture) -> None:
+		if not winVersion.isUwpOcrAvailable():
+			# Translators: Reported when Windows OCR is not available.
+			ui.message(_("Windows OCR not available"))
+			return
+		from contentRecog import uwpOcr
+		languageCodes = uwpOcr.getLanguages()
+		try:
+			index = languageCodes.index(config.conf["uwpOcr"]["language"])
+			newIndex = (index + 1) % len(languageCodes)
+		except ValueError:
+			newIndex = 0
+		lang = languageCodes[newIndex]
+		config.conf["uwpOcr"]["language"] = lang
+		ui.message(languageHandler.getLanguageDescription(languageHandler.normalizeLanguage(lang)))
+
 	@script(
 		# Translators: Input help mode message for toggle report CLDR command.
 		description=_("Toggles on and off the reporting of CLDR characters, such as emojis"),
@@ -3952,6 +4011,9 @@ class GlobalCommands(ScriptableObject):
 		characterProcessing.clearSpeechSymbols()
 		ui.message(state)
 
+	_tempEnableScreenCurtain = True
+	_waitingOnScreenCurtainWarningDialog: Optional[wx.Dialog] = None
+	_toggleScreenCurtainMessage: Optional[str] = None
 	@script(
 		description=_(
 			# Translators: Describes a command.

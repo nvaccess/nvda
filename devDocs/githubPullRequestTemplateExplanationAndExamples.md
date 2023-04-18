@@ -151,10 +151,12 @@ Discuss under "testing strategy" heading:
   - Describe the coverage of automated system tests?
   - Is the changed code already, or can it be covered by automated system tests?
 - Manual tests
+  - Have you followed any relevant test plans in [the manual test documentation](../tests/manual/README.md)?
   - How did you manually test the change?
-  - Be clear on steps another user can take to replicate your testing.
-  - Is the described manual testing appropriate for the change?
-  - Clearly describing this helps alpha testers, and future developers.
+    - Be clear on steps another user can take to replicate your testing.
+    - Clearly describing this helps alpha testers, and future developers.
+  - Is this a commonly tested part of NVDA?
+  If so, please add your manual test steps to [the manual test documentation](../tests/manual/README.md).
   - As a reviewer, please use this description to replicate the testing (if possible).
 
 ### API is compatible with existing add-ons.
