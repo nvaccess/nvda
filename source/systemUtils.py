@@ -183,7 +183,7 @@ def _isSecureDesktop() -> bool:
 
 
 def _displayTextFileWorkaround(file: str) -> None:
-	# os.startfile does not currently (NVDA 2023.1, Python 3.7) work reliably to open .txt files in Notepadunder
+	# os.startfile does not currently (NVDA 2023.1, Python 3.7) work reliably to open .txt files in Notepad under
 	# Windows 11, if relying on the default behavior (i.e. `operation="open"`). (#14725)
 	# Using `operation="edit"`, however, has the desired effect--opening the text file in Notepad. (#14816)
 	# Since this may be a bug in Python 3.7's os.startfile, or the underlying Win32 function, it may be
