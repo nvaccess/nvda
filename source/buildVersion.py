@@ -80,5 +80,3 @@ except ImportError:
 version_detailed = formatBuildVersionString()
 # A test version is anything other than a final or rc release.
 isTestVersion = not version[0].isdigit() or "alpha" in version or "beta" in version or "dev" in version
-# A pre-release version is a test version or rc release.
-isPreReleaseVersion = isTestVersion or "rc" in version

@@ -5,7 +5,7 @@
 Add-ons can be filtered by status.
 
 1. Open the add-on store
-1. Jump to the filter-by status field (`alt+s`)
+1. Jump to the filter-by status field (`alt+f`)
 1. Filter by each status, ensure expected add-ons are displayed.
     - all add-ons: should include all add-ons, installed and available for install
     - installed
@@ -17,7 +17,7 @@ Add-ons can be filtered by status.
 Add-ons can be filtered by display name, publisher and description.
 
 1. Open the add-on store
-1. Jump to the filter-by text field (`alt+f`)
+1. Jump to the search text field (`alt+s`)
 1. Search for a string, for example part of a publisher name, display name or description.
 1. Ensure expected add-ons appear after the filter view refreshes.
 1. Remove the filter-by string
@@ -25,7 +25,7 @@ Add-ons can be filtered by display name, publisher and description.
 
 ### Filtering where no add-ons are found
 1. Open the add-on store
-1. Jump to the filter-by text field (`alt+f`)
+1. Jump to the search text field (`alt+s`)
 1. Search for a string which yields no add-ons.
 1. Ensure the add-on information dialog  states "no add-on selected".
 

@@ -18,7 +18,6 @@ from concurrent.futures import (
 )
 from datetime import datetime, timedelta
 
-import buildVersion
 from logHandler import log
 import requests
 from requests.structures import CaseInsensitiveDict
@@ -48,11 +47,6 @@ def initialize():
 
 
 def _getCurrentApiVersionForURL() -> str:
-	"""Returns 'latest' when on a test version of NVDA.
-	This allows add-on users to test add-ons with the alpha/beta of a breaking release.
-	"""
-	if buildVersion.isPreReleaseVersion:
-		return "latest"
 	year, major, minor = addonAPIVersion.CURRENT
 	return f"{year}.{major}.{minor}"
 
@@ -182,14 +176,16 @@ class AddonFileDownloader:
 
 
 class _DataManager:
-	_cacheFilename: str = "_cachedLatestAvailableAddons.json"
+	_cacheLatestFilename: str = "_cachedLatestAddons.json"
+	_cacheCompatibleFilename: str = "_cachedCompatibleAddons.json"
 	_cachePeriod = timedelta(hours=6)
 
 	def __init__(self):
 		cacheDirLocation = os.path.join(globalVars.appArgs.configPath, "addonStore")
 		self._lang = "en"
 		self._preferredChannel = Channel.ALL
-		self._cacheFile = os.path.join(cacheDirLocation, _DataManager._cacheFilename)
+		self._cacheLatestFile = os.path.join(cacheDirLocation, _DataManager._cacheLatestFilename)
+		self._cacheCompatibleFile = os.path.join(cacheDirLocation, _DataManager._cacheCompatibleFilename)
 		self._addonDownloadCacheDir = os.path.join(cacheDirLocation, "_dl")
 		self._installedAddonDataCacheDir = os.path.join(cacheDirLocation, "addons")
 		# ensure caching dirs exist
@@ -197,13 +193,14 @@ class _DataManager:
 		pathlib.Path(self._addonDownloadCacheDir).mkdir(parents=True, exist_ok=True)
 		pathlib.Path(self._installedAddonDataCacheDir).mkdir(parents=True, exist_ok=True)
 
-		self._availableAddonCache: Optional[CachedAddonsModel] = self._getCachedAddonData()
+		self._latestAddonCache: Optional[CachedAddonsModel] = self._getCachedAddonData(self._cacheLatestFile)
+		self._compatibleAddonCache: Optional[CachedAddonsModel] = self._getCachedAddonData(self._cacheCompatibleFile)
 
 	def getFileDownloader(self) -> AddonFileDownloader:
 		return AddonFileDownloader(self._addonDownloadCacheDir)
 
-	def _getLatestAvailableAddonsData(self) -> Optional[bytes]:
-		url = _getAddonStoreURL(self._preferredChannel, self._lang, _getCurrentApiVersionForURL())
+	def _getLatestAddonsDataForVersion(self, apiVersion: str) -> Optional[bytes]:
+		url = _getAddonStoreURL(self._preferredChannel, self._lang, apiVersion)
 		try:
 			response = requests.get(url)
 		except requests.exceptions.ConnectionError as e:
@@ -217,7 +214,7 @@ class _DataManager:
 			return None
 		return response.content
 
-	def _cacheAddons(self, addonData: str, fetchTime: datetime):
+	def _cacheCompatibleAddons(self, addonData: str, fetchTime: datetime):
 		if not addonData:
 			return
 		cacheData = {
@@ -225,13 +222,24 @@ class _DataManager:
 			"data": addonData,
 			"nvdaAPIVersion": addonAPIVersion.CURRENT,
 		}
-		with open(self._cacheFile, 'w') as cacheFile:
+		with open(self._cacheCompatibleFile, 'w') as cacheFile:
 			json.dump(cacheData, cacheFile, ensure_ascii=False)
 
-	def _getCachedAddonData(self) -> Optional[CachedAddonsModel]:
-		if not os.path.exists(self._cacheFile):
+	def _cacheLatestAddons(self, addonData: str, fetchTime: datetime):
+		if not addonData:
+			return
+		cacheData = {
+			"cacheDate": fetchTime.isoformat(),
+			"data": addonData,
+			"nvdaAPIVersion": addonAPIVersion.LATEST,
+		}
+		with open(self._cacheLatestFile, 'w') as cacheFile:
+			json.dump(cacheData, cacheFile, ensure_ascii=False)
+
+	def _getCachedAddonData(self, cacheFilePath: str) -> Optional[CachedAddonsModel]:
+		if not os.path.exists(cacheFilePath):
 			return None
-		with open(self._cacheFile, 'r') as cacheFile:
+		with open(cacheFilePath, 'r') as cacheFile:
 			cacheData = json.load(cacheFile)
 		if not cacheData:
 			return None
@@ -242,24 +250,48 @@ class _DataManager:
 			nvdaAPIVersion=cacheData["nvdaAPIVersion"],
 		)
 
-	def getLatestAvailableAddons(self) -> CaseInsensitiveDict["AddonStoreModel"]:
+	def getLatestCompatibleAddons(self) -> CaseInsensitiveDict["AddonStoreModel"]:
 		shouldRefreshData = (
-			not self._availableAddonCache
-			or self._availableAddonCache.nvdaAPIVersion != addonAPIVersion.CURRENT
-			or _DataManager._cachePeriod < (datetime.now() - self._availableAddonCache.cachedAt)
+			not self._compatibleAddonCache
+			or self._compatibleAddonCache.nvdaAPIVersion != addonAPIVersion.CURRENT
+			or _DataManager._cachePeriod < (datetime.now() - self._compatibleAddonCache.cachedAt)
 		)
 		if shouldRefreshData:
 			fetchTime = datetime.now()
-			apiData = self._getLatestAvailableAddonsData()
+			apiData = self._getLatestAddonsDataForVersion(_getCurrentApiVersionForURL())
 			if apiData:
 				decodedApiData = apiData.decode()
-				self._cacheAddons(addonData=decodedApiData, fetchTime=fetchTime)
-				self._availableAddonCache = CachedAddonsModel(
+				self._cacheCompatibleAddons(
+					addonData=decodedApiData,
+					fetchTime=fetchTime,
+				)
+				self._compatibleAddonCache = CachedAddonsModel(
 					availableAddons=_createStoreCollectionFromJson(decodedApiData),
 					cachedAt=fetchTime,
 					nvdaAPIVersion=addonAPIVersion.CURRENT,
 				)
-		return self._availableAddonCache.availableAddons
+		return self._compatibleAddonCache.availableAddons
+
+	def getLatestAddons(self) -> CaseInsensitiveDict["AddonStoreModel"]:
+		shouldRefreshData = (
+			not self._latestAddonCache
+			or _DataManager._cachePeriod < (datetime.now() - self._latestAddonCache.cachedAt)
+		)
+		if shouldRefreshData:
+			fetchTime = datetime.now()
+			apiData = self._getLatestAddonsDataForVersion(addonAPIVersion.LATEST)
+			if apiData:
+				decodedApiData = apiData.decode()
+				self._cacheLatestAddons(
+					addonData=decodedApiData,
+					fetchTime=fetchTime,
+				)
+				self._latestAddonCache = CachedAddonsModel(
+					availableAddons=_createStoreCollectionFromJson(decodedApiData),
+					cachedAt=fetchTime,
+					nvdaAPIVersion=addonAPIVersion.LATEST,
+				)
+		return self._latestAddonCache.availableAddons
 
 	def _cacheInstalledAddon(self, addonData: AddonStoreModel):
 		if not addonData:

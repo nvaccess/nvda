@@ -48,7 +48,7 @@ import brailleInput
 import vision
 import vision.providerInfo
 import vision.providerBase
-from typing import Callable, List, Optional, Any
+from typing import Callable, List, Optional, Any, cast
 import core
 import keyboardHandler
 import characterProcessing
@@ -2555,6 +2555,25 @@ class DocumentNavigationPanel(SettingsPanel):
 		self.paragraphStyleCombo.saveCurrentValueToConf()
 
 
+class AddonStorePanel(SettingsPanel):
+	# Translators: This is the label for the addon navigation settings panel.
+	title = _("Add-on Store")
+	helpId = "AddonStoreSettings"
+
+	def makeSettings(self, settingsSizer: wx.BoxSizer) -> None:
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+		# Translators: This is a label for the paragraph navigation style in the document navigation dialog
+		incompatibleAddonsLabel = _("List &incompatible add-ons as available")
+		self.incompatibleAddonsCheckBox = cast(wx.CheckBox, sHelper.addItem(
+			wx.CheckBox(self, label=incompatibleAddonsLabel)
+		))
+		self.incompatibleAddonsCheckBox.SetValue(config.conf["addonStore"]["incompatibleAddons"])
+		self.bindHelpEvent("IncompatibleAddonsSetting", self.incompatibleAddonsCheckBox)
+
+	def onSave(self):
+		config.conf["addonStore"]["incompatibleAddons"] = self.incompatibleAddonsCheckBox.IsChecked()
+
+
 class TouchInteractionPanel(SettingsPanel):
 	# Translators: This is the label for the touch interaction settings panel.
 	title = _("Touch Interaction")
@@ -4110,6 +4129,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		BrowseModePanel,
 		DocumentFormattingPanel,
 		DocumentNavigationPanel,
+		AddonStorePanel,
 	]
 	if touchHandler.touchSupported():
 		categoryClasses.append(TouchInteractionPanel)

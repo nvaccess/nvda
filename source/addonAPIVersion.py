@@ -35,6 +35,11 @@ EG: (x, y, z): Large changes to speech.py
 (2019, 3, 0): speech refactor, Python 3
 (0, 0, 0): API version zero, used to signify addons released prior to API version checks.
 """
+LATEST = "latest"
+"""
+A string value used in the add-on store to fetch the latest version of all add-ons,
+i.e include older incompatible versions.
+"""
 
 # Compiled regular expression to match an addon API version string.
 # Supports year.major.minor versions (e.g. 2018.1.1).
