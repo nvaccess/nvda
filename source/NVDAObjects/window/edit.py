@@ -677,7 +677,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		try:
 			bufText = rangeObj.text
 		except COMError:
-			log.debugWarning("range.text failed", exc_info=True)
+			log.debugWarning("rangeObj.text failed", exc_info=True)
 			bufText = None
 		if not bufText:
 			return ""
