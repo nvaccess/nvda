@@ -17,6 +17,7 @@ What's New in NVDA
 - When highlighted text is enabled Document Formatting, highlight colours are now reported in Microsoft Word. (#7396, #12101, #5866)
 - When colors are enabled Document Formatting, background colours are now reported in Microsoft Word. (#5866)
 - Introduced a new command to cycle through the available languages for Windows OCR. (#13036)
+- When pressing ``numpad2`` three times to report the numerical value of the character at the position of the review cursor, the information is now also provided in braille. (#14826)
 - 
 
 
@@ -49,6 +50,7 @@ This only worked for Bluetooth Serial ports before. (#14524)
 - Fixes for Windows 11:
   - NVDA can once again announce Notepad status bar contents. (#14573)
   - Switching between tabs will announce the new tab name and position for Notepad and File Explorer. (#14587, #14388)
+  - NVDA will once again announce candidate items when entering text in languages such as Chinese and Japanese. (#14509)
   -
 - In Mozilla Firefox, moving the mouse over text after a link now reliably reports the text. (#9235)
 - In Windows 10 and 11 Calculator, a portable copy of NVDA will no longer do nothing or play error tones when entering expressions in standard calculator in compact overlay mode. (#14679)
@@ -57,11 +59,21 @@ Instead NVDA reports that the link has no destination. (#14723)
 - Several stability fixes to input/output for braille displays, resulting in less frequent errors and crashes of NVDA. (#14627)
 - NVDA again recovers from many more situations such as applications that stop responding which previously caused it to freeze completely. (#14759) 
 - The destination of graphic links are now correctly reported in Chrome and Edge. (#14779)
+- In Windows 11, it is once again possible to open the Contributors and License items on the NVDA Help menu. (#14725)
+- When forcing UIA support with certain terminal and consoles, a bug is fixed which caused a freeze and the log file to be spammed. (#14689)
 -
 
 
 == Changes for Developers ==
 Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] for information on NVDA's API deprecation and removal process.
+
+- Suggested conventions have been added to the add-on manifest specification.
+These are optional for NVDA compatibility, but are encouraged or required for submitting to the add-on store.
+The new suggested conventions are:
+  - Using ``lowerCamelCase`` for the name field.
+  - Using ``<major>.<minor>.<patch>`` format for the version field (required for add-on datastore).
+  - Using ``https://`` as the schema for the url field (required for add-on datastore).
+  -
 - Added a new extension point type called ``Chain``, which can be used to iterate over iterables returned by registered handlers. (#14531)
 - Added the ``bdDetect.scanForDevices`` extension point.
 Handlers can be registered that yield ``BrailleDisplayDriver/DeviceMatch`` pairs that don't fit in existing categories, like USB or Bluetooth. (#14531)
@@ -76,6 +88,8 @@ Similarly, the new ``getCompletionRoutine`` method allows you to convert a pytho
 - ``offsets.OffsetsTextInfo._get_boundingRects`` should now always return ``List[locationHelper.rectLTWH]`` as expected for a subclass of ``textInfos.TextInfo``. (#12424)
 - ``highlight-color`` is now a format field attribute. (#14610)
 - NVDA should more accurately determine if a logged message is coming from NVDA core. (#14812)
+- NVDA will no longer log inaccurate warnings or errors about deprecated appModules. (#14806)
+- All NVDA extension points are now briefly described in a new, dedicated chapter in the Developer Guide. (#14648)
 -
 
 === Deprecations ===

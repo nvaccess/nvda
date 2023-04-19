@@ -178,7 +178,7 @@ class AccumulatingDecider(HandlerRegistrar[Callable[..., bool]]):
 	which are unknown to NVDA, but this extension point can be used to pass each unknown parameter
 	to all add-ons since one of them may want to process some command line arguments.
 
-	First, a AccumulatingDecider is created with a default decision  :
+	First, an AccumulatingDecider is created with a default decision  :
 
 	>>> doSomething = AccumulatingDecider(defaultDecision=True)
 
