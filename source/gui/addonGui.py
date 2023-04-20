@@ -486,7 +486,7 @@ class AddonsDialog(
 # C901 'installAddon' is too complex (16)
 # Note: when working on installAddon, look for opportunities to simplify
 # and move logic out into smaller helper functions.
-def installAddon(parentWindow, addonPath) -> bool:  # noqa: C901
+def installAddon(parentWindow: wx.Window, addonPath: str) -> bool:  # noqa: C901
 	""" Installs the addon at path.
 	Any error messages / warnings are presented to the user via a GUI message box.
 	If attempting to install an addon that is pending removal, it will no longer be pending removal.
