@@ -17,6 +17,9 @@ What's New in NVDA
 - When highlighted text is enabled Document Formatting, highlight colours are now reported in Microsoft Word. (#7396, #12101, #5866)
 - When colors are enabled Document Formatting, background colours are now reported in Microsoft Word. (#5866)
 - Introduced a new command to cycle through the available languages for Windows OCR. (#13036)
+- When pressing ``numpad2`` three times to report the numerical value of the character at the position of the review cursor, the information is now also provided in braille. (#14826)
+- Added gestures for Tivomatic Caiku Albatross Braille displays.
+There are now gestures for showing the braille settings dialog, accessing the status bar, cycling the braille cursor shape, and toggling the braille cursor on/off. (#14844)
 - 
 
 
@@ -60,6 +63,7 @@ Instead NVDA reports that the link has no destination. (#14723)
 - The destination of graphic links are now correctly reported in Chrome and Edge. (#14779)
 - In Windows 11, it is once again possible to open the Contributors and License items on the NVDA Help menu. (#14725)
 - When forcing UIA support with certain terminal and consoles, a bug is fixed which caused a freeze and the log file to be spammed. (#14689)
+- NVDA no longer fails to announce focusing password fields in Microsoft Excel and Outlook. (#14839)
 -
 
 
@@ -88,6 +92,7 @@ Similarly, the new ``getCompletionRoutine`` method allows you to convert a pytho
 - ``highlight-color`` is now a format field attribute. (#14610)
 - NVDA should more accurately determine if a logged message is coming from NVDA core. (#14812)
 - NVDA will no longer log inaccurate warnings or errors about deprecated appModules. (#14806)
+- All NVDA extension points are now briefly described in a new, dedicated chapter in the Developer Guide. (#14648)
 -
 
 === Deprecations ===

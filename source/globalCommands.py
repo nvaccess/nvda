@@ -1861,6 +1861,7 @@ class GlobalCommands(ScriptableObject):
 			if c is not None:
 				speech.speakMessage("%d," % c)
 				speech.speakSpelling(hex(c))
+				braille.handler.message(f"{c}, {hex(c)}")
 			else:
 				log.debugWarning("Couldn't calculate ordinal for character %r" % info.text)
 				speech.speakTextInfo(info, unit=textInfos.UNIT_CHARACTER, reason=controlTypes.OutputReason.CARET)
