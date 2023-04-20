@@ -35,7 +35,7 @@ Add-ons can be filtered by display name, publisher and description.
 1. Open the Add-on Store
 1. Jump to the filter-by status field (`alt+f`)
 1. Select "Available add-ons"
-1. Ensure add-ons with status "incompatible" are displayed in the list.
+1. Ensure add-ons with status "incompatible" are included in the list with the available add-ons.
 
 
 ## Installing add-ons
