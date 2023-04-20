@@ -195,7 +195,7 @@ class AddonFileDownloader:
 				pgettext(
 					"addonStore",
 					# Translators: A message to the user if an add-on download fails
-					"Unable to download add-on file: {name}"
+					"Unable to download add-on: {name}"
 				).format(name=addonData.displayName),
 				_addonDownloadFailureMessageTitle,
 			)
@@ -205,7 +205,7 @@ class AddonFileDownloader:
 				pgettext(
 					"addonStore",
 					# Translators: A message to the user if an add-on download fails
-					"Unable to save add-on file: {name}"
+					"Unable to save add-on as a file: {name}"
 				).format(name=addonData.displayName),
 				_addonDownloadFailureMessageTitle,
 			)

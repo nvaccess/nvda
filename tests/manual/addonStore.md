@@ -37,6 +37,16 @@ Add-ons can be filtered by display name, publisher and description.
 1. Select "Available add-ons"
 1. Ensure add-ons with status "incompatible" are included in the list with the available add-ons.
 
+### Failure to fetch add-ons available for download
+1. Disable your internet connection
+1. Go to your NVDA user configuration folder:
+    - For source: `.\source\userConfig`
+    - For installed copies: `%APPDATA%\nvda`
+1. To delete the current cache of available add-on store add-ons, delete the file: `addonStore\_cachedCompatibleAddons.json`
+1. Open the Add-on Store
+1. Ensure a warning is displayed: "Unable to fetch latest compatible add-ons"
+1. Ensure installed add-ons are still available in the add-on store.
+
 
 ## Installing add-ons
 
@@ -76,6 +86,13 @@ You can do this by:
 1. Exit the add-on store dialog
 1. You should be prompted for restart, restart NVDA
 1. Confirm the add-on is enabled in the add-ons manager
+
+### Failure to download add-on
+1. Open the Add-on Store
+1. Filter by available add-ons.
+1. Disable your internet connection
+1. Press install on a cached add-on
+1. Ensure a warning is displayed: "Unable download add-on"
 
 
 ## Updating add-ons
