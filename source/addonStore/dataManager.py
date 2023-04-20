@@ -217,7 +217,7 @@ class AddonFileDownloader:
 				pgettext(
 					"addonStore",
 					# Translators: A message to the user if an add-on download is not safe
-					"Add-on download not safe: {name}"
+					"Add-on download not safe: checksum failed for {name}"
 				).format(name=addonData.displayName),
 				_addonDownloadFailureMessageTitle,
 			)
