@@ -21,30 +21,31 @@ from addonHandler import (
 	AddonStateCategory,
 	BUNDLE_EXTENSION,
 )
-import gui
-import winVersion
-from gui import (
-	guiHelper,
-	nvdaControls,
-	addonGui,
-)
-from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
-from gui.settingsDialogs import SettingsDialog
-from logHandler import log
-
 from addonStore.models import (
 	AddonStoreModel,
 )
 from addonStore.status import (
 	_statusFilters,
 )
+from core import callLater
+import gui
+from gui import (
+	guiHelper,
+	nvdaControls,
+	addonGui,
+)
+from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
+from gui.message import DisplayableError
+from gui.settingsDialogs import SettingsDialog
+from logHandler import log
+import winVersion
+
 from .viewModels import (
 	AddonListVM,
 	AddonDetailsVM,
 	AddonListItemVM,
 	AddonStoreVM,
 	AddonActionVM,
-	TranslatedError,
 )
 
 
@@ -567,15 +568,6 @@ class AddonDetails(
 		self.Layout()
 
 
-def displayError(error: TranslatedError):
-	gui.messageBox(
-		error.displayMessage,
-		# Translators: The title of a dialog presented when an error occurs.
-		pgettext("addonStore", "Error"),
-		wx.OK | wx.ICON_ERROR
-	)
-
-
 class AddonStoreDialog(SettingsDialog):
 	# Translators: The title of the addonStore dialog where the user can find and download add-ons
 	title = pgettext("addonStore", "Add-on Store")
@@ -583,8 +575,12 @@ class AddonStoreDialog(SettingsDialog):
 
 	def __init__(self, parent: wx.Window, storeVM: AddonStoreVM):
 		self._storeVM = storeVM
-		self._storeVM.hasError.register(displayError)
+		self._storeVM.onDisplayableError.register(self.handleDisplayableError)
 		super().__init__(parent, resizeable=True)
+
+	@staticmethod
+	def handleDisplayableError(displayableError: DisplayableError):
+		displayableError.displayError()
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer):
 		browseCtrlHelper = guiHelper.BoxSizerHelper(self, wx.HORIZONTAL)
@@ -726,7 +722,7 @@ class AddonStoreDialog(SettingsDialog):
 		addonPath = fd.GetPath()
 		try:
 			addonGui.installAddon(self, addonPath)
-		except TranslatedError as e:
-			self._storeVM.hasError.notify(error=e)
+		except DisplayableError as displayableError:
+			callLater(delay=0, callable=self.onDisplayableError.notify, displayableError=displayableError)
 			return
 		self._storeVM.refresh()

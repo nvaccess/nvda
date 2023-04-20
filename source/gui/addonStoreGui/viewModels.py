@@ -40,6 +40,7 @@ from addonStore.status import (
 import config
 import core
 import extensionPoints
+from gui.message import DisplayableError
 from logHandler import log
 
 from .dialogs import (
@@ -395,7 +396,16 @@ class AddonActionVM:
 
 class AddonStoreVM:
 	def __init__(self):
-		self.hasError = extensionPoints.Action()
+		self.onDisplayableError = DisplayableError.OnDisplayableErrorT()
+		"""
+		An extension point used to notify the add-on store VM when an error
+		occurs that can be displayed to the user.
+
+		This allows the add-on store GUI to handle displaying an error.
+
+		@param displayableError: Error that can be displayed to the user.
+		@type displayableError: gui.message.DisplayableError
+		"""
 		self._addons: CaseInsensitiveDict[AddonDetailsModel] = CaseInsensitiveDict()
 		"""
 		Add-ons that have the same ID except differ in casing cause a path collision,
@@ -557,11 +567,11 @@ class AddonStoreVM:
 				errorMessage = self._enableErrorMessage
 			else:
 				errorMessage = self._disableErrorMessage
-			error = TranslatedError(
+			displayableError = DisplayableError(
 				displayMessage=errorMessage.format(addon=listItemVM.model.displayName)
 			)
 			# ensure calling on the main thread.
-			core.callLater(delay=0, callable=self.hasError.notify, error=error)
+			core.callLater(delay=0, callable=self.onDisplayableError.notify, displayableError=displayableError)
 			return
 		listItemVM.status = _getStatus(listItemVM.model)
 		self.refresh()
@@ -586,7 +596,7 @@ class AddonStoreVM:
 	def getAddon(self, listItemVM: AddonListItemVM) -> None:
 		listItemVM.status = AvailableAddonStatus.DOWNLOADING
 		log.debug(f"{listItemVM.Id} status: {listItemVM.status}")
-		self._downloader.download(listItemVM.model, self._downloadComplete)
+		self._downloader.download(listItemVM.model, self._downloadComplete, self.onDisplayableError)
 
 	def _downloadComplete(self, addonDetails: AddonStoreModel, fileDownloaded: Optional[PathLike]):
 		listItemVM: Optional[AddonListItemVM] = self.listVM._addons[addonDetails.addonId]
@@ -597,12 +607,12 @@ class AddonStoreVM:
 		if fileDownloaded is None:
 			listItemVM.status = AvailableAddonStatus.DOWNLOAD_FAILED
 			log.debugWarning(f"Error during download of {listItemVM.Id}", exc_info=True)
-			e = TranslatedError(
+			displayableError = DisplayableError(
 				# Translators: A message shown when downloading an add-on fails
 				displayMessage=pgettext("addonStore", "Unable to download add-on.")
 			)
 			# ensure calling on the main thread.
-			core.callLater(delay=0, callable=self.hasError.notify, error=e)
+			core.callLater(delay=0, callable=self.onDisplayableError.notify, displayableError=displayableError)
 			return
 
 		listItemVM.status = AvailableAddonStatus.DOWNLOAD_SUCCESS
@@ -626,10 +636,10 @@ class AddonStoreVM:
 		log.debug(f"{listItemVM.Id} status: {listItemVM.status}")
 		try:
 			installAddon(fileDownloaded)
-		except TranslatedError as e:
+		except DisplayableError as displayableError:
 			listItemVM.status = AvailableAddonStatus.INSTALL_FAILED
 			log.debug(f"{listItemVM.Id} status: {listItemVM.status}")
-			self.hasError.notify(error=e)
+			self.onDisplayableError.notify(displayableError=displayableError)
 			return
 		listItemVM.status = AvailableAddonStatus.INSTALLED
 		addonDataManager._cacheInstalledAddon(listItemVM.model)
@@ -640,14 +650,15 @@ class AddonStoreVM:
 
 	def _getAddonsInBG(self):
 		log.debug("getting addons in the background")
-		addons: CaseInsensitiveDict[AddonDetailsModel] = addonDataManager.getLatestCompatibleAddons()
+		addons: CaseInsensitiveDict[AddonDetailsModel]
+		addons = addonDataManager.getLatestCompatibleAddons(self.onDisplayableError)
 		addonHandlerAddons = addonHandler.state._addonHandlerCache.availableAddonsAsDetails
 		for addonId in addonHandlerAddons:
 			# only use installed add-on data if no add-on store details available
 			if addonId not in addons:
 				addons[addonId] = addonHandlerAddons[addonId]
 		if config.conf["addonStore"]["incompatibleAddons"]:
-			incompatibleAddons: CaseInsensitiveDict[AddonDetailsModel] = addonDataManager.getLatestAddons()
+			incompatibleAddons = addonDataManager.getLatestAddons(self.onDisplayableError)
 			for addonId in incompatibleAddons:
 				# only include incompatible add-ons if:
 				# - no compatible or installed versions are available
@@ -678,25 +689,17 @@ class AddonStoreVM:
 		]
 
 
-class TranslatedError(Exception):
-	def __init__(self, displayMessage: str):
-		"""
-		@param displayMessage: A translated message, to be displayed to the user.
-		"""
-		self.displayMessage = displayMessage
-
-
 def getAddonBundleToInstallIfValid(addonPath: str) -> addonHandler.AddonBundle:
 	"""
 	@param addonPath: path to the 'nvda-addon' file.
 	@return: the addonBundle, if valid
-	@raise TranslatedError if the addon bundle is invalid / incompatible.
+	@raise DisplayableError if the addon bundle is invalid / incompatible.
 	"""
 	try:
 		bundle = addonHandler.AddonBundle(addonPath)
 	except addonHandler.AddonError:
 		log.error("Error opening addon bundle from %s" % addonPath, exc_info=True)
-		raise TranslatedError(
+		raise DisplayableError(
 			displayMessage=pgettext(
 				"addonStore",
 				# Translators: The message displayed when an error occurs when opening an add-on package for adding.
@@ -709,8 +712,9 @@ def getAddonBundleToInstallIfValid(addonPath: str) -> addonHandler.AddonBundle:
 		addonVersionCheck.isAddonCompatible(bundle)
 		or bundle.overrideIncompatibility
 	):
-		# This should not happen, only compatible add-ons are intended to be presented in the add-on store.
-		raise TranslatedError(
+		# This should not happen, only compatible or overridable add-ons are
+		# intended to be presented in the add-on store.
+		raise DisplayableError(
 			displayMessage=pgettext(
 				"addonStore",
 				# Translators: The message displayed when an add-on is not supported by this version of NVDA.
@@ -733,7 +737,7 @@ def installAddon(addonPath: PathLike) -> None:
 	Any error messages / warnings are presented to the user via a GUI message box.
 	If attempting to install an addon that is pending removal, it will no longer be pending removal.
 	@note See also L{gui.addonGui.installAddon}
-	@raise TranslatedError on failure
+	@raise DisplayableError on failure
 	"""
 	addonPath = cast(str, addonPath)
 	bundle = getAddonBundleToInstallIfValid(addonPath)
@@ -745,7 +749,7 @@ def installAddon(addonPath: PathLike) -> None:
 		addonHandler.installAddonBundle(bundle)
 	except addonHandler.AddonError:  # Handle other exceptions as they are known
 		log.error("Error installing addon bundle from %s" % addonPath, exc_info=True)
-		raise TranslatedError(
+		raise DisplayableError(
 			displayMessage=pgettext(
 				"addonStore",
 				# Translators: The message displayed when an error occurs when installing an add-on package.
