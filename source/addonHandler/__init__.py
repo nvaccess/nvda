@@ -425,9 +425,6 @@ class AddonBase(SupportsVersionCheck, ABC):
 	@property
 	def _getAddonStoreData(self) -> Optional["AddonStoreModel"]:
 		from addonStore.dataManager import addonDataManager
-		installedData = addonDataManager._getCachedInstalledAddonData(self.name)
-		if installedData is not None:
-			return installedData
 		return addonDataManager.getLatestCompatibleAddons().get(self.name)
 
 
