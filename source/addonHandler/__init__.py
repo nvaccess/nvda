@@ -197,9 +197,10 @@ class AddonsState(collections.UserDict):
 		by default confusing users. Fix this by removing all add-ons no longer present in the config
 		from the list of disabled add-ons in the state."""
 		installedAddonNames = set(self._addonHandlerCache.availableAddons.keys())
-		for disabledAddonName in self["disabledAddons"]:
+		for disabledAddonName in CaseInsensitiveSet(self[AddonStateCategory.DISABLED]):
+			# Iterate over copy of set to prevent updating the set while iterating over it.
 			if disabledAddonName not in installedAddonNames:
-				self["disabledAddons"].discard(disabledAddonName)
+				self[AddonStateCategory.DISABLED].discard(disabledAddonName)
 
 
 state: AddonsState[AddonStateCategory, CaseInsensitiveSet[str]] = AddonsState()
@@ -424,6 +425,9 @@ class AddonBase(SupportsVersionCheck, ABC):
 	@property
 	def _getAddonStoreData(self) -> Optional["AddonStoreModel"]:
 		from addonStore.dataManager import addonDataManager
+		installedData = addonDataManager._getCachedInstalledAddonData(self.name)
+		if installedData is not None:
+			return installedData
 		return addonDataManager.getLatestCompatibleAddons().get(self.name)
 
 
