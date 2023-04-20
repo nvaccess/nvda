@@ -5,19 +5,18 @@
 Add-ons can be filtered by status.
 
 1. Open the add-on store
-1. Jump to the filter-by status field (`alt+s`)
+1. Jump to the filter-by status field (`alt+f`)
 1. Filter by each status, ensure expected add-ons are displayed.
-    - all add-ons: should include all add-ons, installed and available for install
-    - installed
-    - updatable: should include installed add-ons which can be updated or replaced by an add-on store version
-    - disabled: should include manually disabled add-ons and add-ons disabled due to incompatibility
-    - available: should include add-ons available for install
+    - Installed: should include installed, disabled, and updatable add-ons.
+    - Updatable: should include installed add-ons which can be updated or replaced by an add-on store version
+    - Disabled: should include manually disabled add-ons and add-ons disabled due to incompatibility
+    - Available: should include add-ons available for install
 
 ### Filtering by add-on information
 Add-ons can be filtered by display name, publisher and description.
 
 1. Open the add-on store
-1. Jump to the filter-by text field (`alt+f`)
+1. Jump to the search text field (`alt+s`)
 1. Search for a string, for example part of a publisher name, display name or description.
 1. Ensure expected add-ons appear after the filter view refreshes.
 1. Remove the filter-by string
@@ -25,9 +24,18 @@ Add-ons can be filtered by display name, publisher and description.
 
 ### Filtering where no add-ons are found
 1. Open the add-on store
-1. Jump to the filter-by text field (`alt+f`)
+1. Jump to the search text field (`alt+s`)
 1. Search for a string which yields no add-ons.
 1. Ensure the add-on information dialog  states "no add-on selected".
+
+### Browsing incompatible add-ons available for download
+1. Open NVDA preferences
+1. Navigate to Add-on Store preferences
+1. Enable "List incompatible add-ons as available"
+1. Open the Add-on Store
+1. Jump to the filter-by status field (`alt+f`)
+1. Select "Available add-ons"
+1. Ensure add-ons with status "incompatible" are included in the list with the available add-ons.
 
 
 ## Installing add-ons

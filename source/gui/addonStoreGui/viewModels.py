@@ -37,6 +37,7 @@ from addonStore.status import (
 	_statusFilters,
 	AvailableAddonStatus,
 )
+import config
 import core
 import extensionPoints
 from logHandler import log
@@ -639,11 +640,21 @@ class AddonStoreVM:
 
 	def _getAddonsInBG(self):
 		log.debug("getting addons in the background")
-		addons: CaseInsensitiveDict[AddonDetailsModel] = addonDataManager.getLatestAvailableAddons()
+		addons: CaseInsensitiveDict[AddonDetailsModel] = addonDataManager.getLatestCompatibleAddons()
 		addonHandlerAddons = addonHandler.state._addonHandlerCache.availableAddonsAsDetails
 		for addonId in addonHandlerAddons:
+			# only use installed add-on data if no add-on store details available
 			if addonId not in addons:
 				addons[addonId] = addonHandlerAddons[addonId]
+		if config.conf["addonStore"]["incompatibleAddons"]:
+			incompatibleAddons: CaseInsensitiveDict[AddonDetailsModel] = addonDataManager.getLatestAddons()
+			for addonId in incompatibleAddons:
+				# only include incompatible add-ons if:
+				# - no compatible or installed versions are available
+				# - the user can override the compatibility of the add-on
+				# (it's too old and not too new)
+				if addonId not in addons and incompatibleAddons[addonId].canOverrideCompatibility:
+					addons[addonId] = incompatibleAddons[addonId]
 		log.debug("completed getting addons in the background")
 		self._addons = addons
 		self.listVM.resetListItems(self._createListItemVMs())

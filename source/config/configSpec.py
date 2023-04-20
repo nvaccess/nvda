@@ -231,6 +231,9 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 [documentNavigation]
 	paragraphStyle = featureFlag(optionsEnum="ParagraphNavigationFlag", behaviorOfDefault="application")
 
+[addonStore]
+	incompatibleAddons = boolean(default=false)
+
 [reviewCursor]
 	simpleReviewMode = boolean(default=True)
 	followFocus = boolean(default=True)
