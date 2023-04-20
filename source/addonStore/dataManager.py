@@ -7,29 +7,32 @@
 # Can be removed in a future version of python (3.8+)
 from __future__ import annotations
 
+from concurrent.futures import (
+	Future,
+	ThreadPoolExecutor,
+)
+from core import callLater
 import dataclasses
-import globalVars
+from datetime import datetime, timedelta
 import json
 import os
 import pathlib
-from concurrent.futures import (
-	Future,
-	ThreadPoolExecutor
+from typing import (
+	TYPE_CHECKING,
+	cast,
+	Callable,
+	Dict,
+	Optional,
+	Tuple,
 )
-from datetime import datetime, timedelta
 
-from logHandler import log
 import requests
 from requests.structures import CaseInsensitiveDict
 
 import addonAPIVersion
-from typing import (
-	cast,
-	Optional,
-	Dict,
-	Callable,
-	Tuple,
-)
+from logHandler import log
+import globalVars
+
 from .models import (
 	Channel,
 	_createStoreModelFromData,
@@ -38,6 +41,10 @@ from .models import (
 )
 
 addonDataManager: Optional["_DataManager"] = None
+
+
+if TYPE_CHECKING:
+	from gui.message import DisplayableError
 
 
 def initialize():
@@ -74,7 +81,14 @@ class AddonFileDownloader:
 	def __init__(self, cacheDir: os.PathLike):
 		self._cacheDir = cacheDir
 		self.progress: Dict[AddonStoreModel, int] = {}  # Number of chunks received
-		self._pending: Dict[Future, Tuple[AddonStoreModel, AddonFileDownloader.OnCompleteT]] = {}
+		self._pending: Dict[
+			Future,
+			Tuple[
+				AddonStoreModel,
+				AddonFileDownloader.OnCompleteT,
+				"DisplayableError.OnDisplayableErrorT"
+			]
+		] = {}
 		self.complete: Dict[AddonStoreModel, os.PathLike] = {}  # Path to downloaded file
 		self._executor = ThreadPoolExecutor(
 			max_workers=1,
@@ -84,13 +98,14 @@ class AddonFileDownloader:
 	def download(
 			self,
 			addonData: AddonStoreModel,
-			onComplete: OnCompleteT
+			onComplete: OnCompleteT,
+			onDisplayableError: "DisplayableError.OnDisplayableErrorT",
 	):
 		self.progress[addonData] = 0
 		f: Future = self._executor.submit(
 			self._download, addonData,
 		)
-		self._pending[f] = addonData, onComplete
+		self._pending[f] = addonData, onComplete, onDisplayableError
 		f.add_done_callback(self._done)
 
 	def _done(self, downloadAddonFuture: Future):
@@ -103,10 +118,21 @@ class AddonFileDownloader:
 		if not downloadAddonFuture.done() or downloadAddonFuture.cancelled():
 			log.error("Logic error with download in BG thread.")
 			return
-		if downloadAddonFuture.exception():
-			log.error(f"Unhandled exception in _download", exc_info=downloadAddonFuture.exception())
-			return
-		addonData, onComplete = self._pending.pop(downloadAddonFuture)
+		addonData, onComplete, onDisplayableError = self._pending[downloadAddonFuture]
+		downloadAddonFutureException = downloadAddonFuture.exception()
+		if downloadAddonFutureException:
+			from gui.message import DisplayableError
+			if not isinstance(downloadAddonFutureException, DisplayableError):
+				log.error(f"Unhandled exception in _download", exc_info=downloadAddonFuture.exception())
+				return
+			else:
+				callLater(
+					delay=0,
+					callable=onDisplayableError.notify,
+					displayableError=downloadAddonFutureException
+				)
+
+		del self._pending[downloadAddonFuture]
 		del self.progress[addonData]
 		cacheFilePath: Optional[os.PathLike] = downloadAddonFuture.result()
 		self.complete[addonData] = cacheFilePath
@@ -121,7 +147,36 @@ class AddonFileDownloader:
 		self.progress.clear()
 		self._pending.clear()
 
+	def _downloadAddonToPath(self, addonData: AddonStoreModel, downloadFilePath: str) -> bool:
+		"""
+		@return: True if the add-on is downloaded successfully,
+		False if the download is cancelled
+		"""
+		with requests.get(addonData.URL, stream=True) as r:
+			with open(downloadFilePath, 'wb') as fd:
+				# Most add-ons are small. This value was chosen quite arbitrarily, but with the intention to allow
+				# interrupting the download. This is particularly important on a slow connection, to provide
+				# a responsive UI when cancelling.
+				# A size has been selected attempting to balance the maximum throughput, with responsiveness for
+				# users with a slow connection.
+				# This could be improved by dynamically adjusting the chunk size based on the time elapsed between
+				# chunk, starting with small chunks and increasing up until a maximum wait time is reached.
+				chunkSize = 128000
+				for chunk in r.iter_content(chunk_size=chunkSize):
+					log.debug(f"Chunk download: {addonData.addonId}")
+					fd.write(chunk)
+					if addonData in self.progress:  # Removed when the download should be cancelled.
+						self.progress[addonData] += 1
+					else:
+						log.debug(f"Cancelled download: {addonData.addonId}")
+						return False  # The download was cancelled
+		return True
+
 	def _download(self, addonData: AddonStoreModel) -> Optional[os.PathLike]:
+		from gui.message import DisplayableError
+		# Translators: A title for a dialog notifying a user of an add-on download failure.
+		_addonDownloadFailureMessageTitle = pgettext("addonStore", "Add-on download failure")
+
 		log.debug(f"starting download: {addonData.addonId}")
 		cacheFilePath = os.path.join(
 			self._cacheDir,
@@ -132,30 +187,28 @@ class AddonFileDownloader:
 			log.debug("the download was cancelled before it started.")
 			return None  # The download was cancelled
 		try:
-			with requests.get(addonData.URL, stream=True) as r:
-				with open(inProgressFilePath, 'wb') as fd:
-					# Most add-ons are small. This value was chosen quite arbitrarily, but with the intention to allow
-					# interrupting the download. This is particularly important on a slow connection, to provide
-					# a responsive UI when cancelling.
-					# A size has been selected attempting to balance the maximum throughput, with responsiveness for
-					# users with a slow connection.
-					# This could be improved by dynamically adjusting the chunk size based on the time elapsed between
-					# chunk, starting with small chunks and increasing up until a maximum wait time is reached.
-					chunkSize = 128000
-					for chunk in r.iter_content(chunk_size=chunkSize):
-						log.debug(f"Chunk download: {addonData.addonId}")
-						fd.write(chunk)
-						if addonData in self.progress:  # Removed when the download should be cancelled.
-							self.progress[addonData] += 1
-						else:
-							log.debug(f"Cancelled download: {addonData.addonId}")
-							return None  # The download was cancelled
+			if not self._downloadAddonToPath(addonData, inProgressFilePath):
+				return None  # The download was cancelled
 		except requests.exceptions.RequestException as e:
 			log.debugWarning(f"Unable to download addon file: {e}")
-			return None
+			raise DisplayableError(
+				pgettext(
+					"addonStore",
+					# Translators: A message to the user if an add-on download fails
+					"Unable to download add-on: {name}"
+				).format(name=addonData.displayName),
+				_addonDownloadFailureMessageTitle,
+			)
 		except OSError as e:
 			log.debugWarning(f"Unable to save addon file ({inProgressFilePath}): {e}")
-			return None
+			raise DisplayableError(
+				pgettext(
+					"addonStore",
+					# Translators: A message to the user if an add-on download fails
+					"Unable to save add-on as a file: {name}"
+				).format(name=addonData.displayName),
+				_addonDownloadFailureMessageTitle,
+			)
 		log.debug(f"Download complete: {inProgressFilePath}")
 		if os.path.exists(cacheFilePath):
 			log.debug(f"Cache file already exists, deleting prior to rename: {cacheFilePath}")
@@ -203,7 +256,7 @@ class _DataManager:
 		url = _getAddonStoreURL(self._preferredChannel, self._lang, apiVersion)
 		try:
 			response = requests.get(url)
-		except requests.exceptions.ConnectionError as e:
+		except requests.exceptions.RequestException as e:
 			log.debugWarning(f"Unable to fetch addon data: {e}")
 			return None
 		if response.status_code != requests.codes.OK:
@@ -247,10 +300,13 @@ class _DataManager:
 		return CachedAddonsModel(
 			availableAddons=_createStoreCollectionFromJson(cacheData["data"]),
 			cachedAt=fetchTime,
-			nvdaAPIVersion=cacheData["nvdaAPIVersion"],
+			nvdaAPIVersion=tuple(cacheData["nvdaAPIVersion"]),  # loads as list
 		)
 
-	def getLatestCompatibleAddons(self) -> CaseInsensitiveDict["AddonStoreModel"]:
+	def getLatestCompatibleAddons(
+			self,
+			onDisplayableError: DisplayableError.OnDisplayableErrorT
+	) -> CaseInsensitiveDict["AddonStoreModel"]:
 		shouldRefreshData = (
 			not self._compatibleAddonCache
 			or self._compatibleAddonCache.nvdaAPIVersion != addonAPIVersion.CURRENT
@@ -270,16 +326,30 @@ class _DataManager:
 					cachedAt=fetchTime,
 					nvdaAPIVersion=addonAPIVersion.CURRENT,
 				)
+			else:
+				from gui.message import DisplayableError
+				displayableError = DisplayableError(
+					# Translators: A message shown when fetching add-on data from the store fails
+					pgettext("addonStore", "Unable to fetch latest add-on data for compatible add-ons."),
+					# Translators: A title of the dialog shown when fetching add-on data from the store fails
+					pgettext("addonStore", "Add-on data update failure"),
+				)
+				callLater(delay=0, callable=onDisplayableError.notify, displayableError=displayableError)
+		if self._compatibleAddonCache is None:
+			return CaseInsensitiveDict()
 		return self._compatibleAddonCache.availableAddons
 
-	def getLatestAddons(self) -> CaseInsensitiveDict["AddonStoreModel"]:
+	def getLatestAddons(
+			self,
+			onDisplayableError: DisplayableError.OnDisplayableErrorT
+	) -> CaseInsensitiveDict["AddonStoreModel"]:
 		shouldRefreshData = (
 			not self._latestAddonCache
 			or _DataManager._cachePeriod < (datetime.now() - self._latestAddonCache.cachedAt)
 		)
 		if shouldRefreshData:
 			fetchTime = datetime.now()
-			apiData = self._getLatestAddonsDataForVersion(addonAPIVersion.LATEST)
+			apiData = self._getLatestAddonsDataForVersion(addonAPIVersion.LATEST, onDisplayableError)
 			if apiData:
 				decodedApiData = apiData.decode()
 				self._cacheLatestAddons(
@@ -291,6 +361,17 @@ class _DataManager:
 					cachedAt=fetchTime,
 					nvdaAPIVersion=addonAPIVersion.LATEST,
 				)
+			else:
+				from gui.message import DisplayableError
+				displayableError = DisplayableError(
+					# Translators: A message shown when fetching add-on data from the store fails
+					pgettext("addonStore", "Unable to fetch latest add-on data for incompatible add-ons."),
+					# Translators: A title of the dialog shown when fetching add-on data from the store fails
+					pgettext("addonStore", "Add-on data update failure"),
+				)
+				callLater(delay=0, callable=onDisplayableError.notify, displayableError=displayableError)
+		if self._latestAddonCache is None:
+			return CaseInsensitiveDict()
 		return self._latestAddonCache.availableAddons
 
 	def _cacheInstalledAddon(self, addonData: AddonStoreModel):
