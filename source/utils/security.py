@@ -3,13 +3,15 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-import typing
+import hashlib
 from typing import (
 	Any,
+	BinaryIO,
 	Callable,
 	List,
 	Optional,
 	Set,
+	TYPE_CHECKING,
 )
 
 import extensionPoints
@@ -17,7 +19,7 @@ from logHandler import log
 from winAPI.sessionTracking import _isLockScreenModeActive
 import winUser
 
-if typing.TYPE_CHECKING:
+if TYPE_CHECKING:
 	import scriptHandler  # noqa: F401, use for typing
 	import NVDAObjects  # noqa: F401, use for typing
 
@@ -383,3 +385,21 @@ def warnSessionLockStateUnknown() -> None:
 		caption=_("Lock screen not secure while using NVDA"),
 		style=wx.ICON_ERROR | wx.OK,
 	)
+
+
+#: The read size for each chunk read from the file, prevents memory overuse with large files.
+SHA_BLOCK_SIZE = 65536
+
+
+def sha256_checksum(binaryReadModeFile: BinaryIO, blockSize: int = SHA_BLOCK_SIZE) -> str:
+	"""
+	@param binaryReadModeFile: An open file (mode=='rb'). Calculate its sha256 hash.
+	@param blockSize: The size of each read.
+	@returns: The sha256 hex digest.
+	"""
+	sha256sum = hashlib.sha256()
+	assert binaryReadModeFile.readable() and binaryReadModeFile.mode == 'rb'
+	f = binaryReadModeFile
+	for block in iter(lambda: f.read(blockSize), b''):
+		sha256sum.update(block)
+	return sha256sum.hexdigest()
