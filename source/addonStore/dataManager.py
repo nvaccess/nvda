@@ -300,7 +300,7 @@ class _DataManager:
 		return CachedAddonsModel(
 			availableAddons=_createStoreCollectionFromJson(cacheData["data"]),
 			cachedAt=fetchTime,
-			nvdaAPIVersion=cacheData["nvdaAPIVersion"],
+			nvdaAPIVersion=tuple(cacheData["nvdaAPIVersion"]),  # loads as list
 		)
 
 	def getLatestCompatibleAddons(
