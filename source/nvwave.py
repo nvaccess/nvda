@@ -847,7 +847,16 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		This will be called automatically when required.
 		It is not an error if the output device is already open.
 		"""
-		NVDAHelper.localLib.wasPlay_open(self._player)
+		try:
+			NVDAHelper.localLib.wasPlay_open(self._player)
+		except WindowsError:
+			log.warning(
+				"Couldn't open specified or default audio device. "
+				"There may be no audio devices."
+			)
+			WavePlayer.audioDeviceError_static = True
+			raise
+		WasapiWavePlayer.audioDeviceError_static = False
 
 	def close(self):
 		"""For WASAPI, this just stops playback.
@@ -975,17 +984,21 @@ def initialize():
 		func.restype = HRESULT
 		func.errcheck = _wasPlay_errcheck
 	NVDAHelper.localLib.wasPlay_startup()
-	# Some audio clients won't specify a session; e.g. speech synthesizers which
-	# use their own audio output code rather than nvwave. We don't want these to
-	# end up in the wrong session, so we set a specific default session. To do
-	# that, first create a stream in that session (defaultSession).
-	WasapiWavePlayer(channels=1, samplesPerSec=44100, bitsPerSample=16)
-	# Now create a stream with the null session (GUID_NULL). This will use the
-	# session we created above. All subsequent streams created without a specific
-	# session will use this session.
-	WasapiWavePlayer(
-		channels=1,
-		samplesPerSec=44100,
-		bitsPerSample=16,
-		session=AudioSession(GUID(), "")
-	)
+	try:
+		# Some audio clients won't specify a session; e.g. speech synthesizers which
+		# use their own audio output code rather than nvwave. We don't want these to
+		# end up in the wrong session, so we set a specific default session. To do
+		# that, first create a stream in that session (defaultSession).
+		WasapiWavePlayer(channels=1, samplesPerSec=44100, bitsPerSample=16)
+		# Now create a stream with the null session (GUID_NULL). This will use the
+		# session we created above. All subsequent streams created without a specific
+		# session will use this session.
+		WasapiWavePlayer(
+			channels=1,
+			samplesPerSec=44100,
+			bitsPerSample=16,
+			session=AudioSession(GUID(), "")
+		)
+	except WindowsError:
+		# There are probably no audio devices. Ignore this so NVDA can still start.
+		log.warning("Unable to set default audio session; couldn't open device")
