@@ -32,6 +32,7 @@ from requests.structures import CaseInsensitiveDict
 import addonAPIVersion
 from logHandler import log
 import globalVars
+from utils.security import sha256_checksum
 
 from .models import (
 	Channel,
@@ -209,14 +210,30 @@ class AddonFileDownloader:
 				).format(name=addonData.displayName),
 				_addonDownloadFailureMessageTitle,
 			)
+		if not self._checkChecksum(inProgressFilePath, addonData):
+			os.remove(inProgressFilePath)
+			log.debugWarning(f"Cache file deleted, checksum mismatch: {inProgressFilePath}")
+			raise DisplayableError(
+				pgettext(
+					"addonStore",
+					# Translators: A message to the user if an add-on download is not safe
+					"Add-on download not safe: {name}"
+				).format(name=addonData.displayName),
+				_addonDownloadFailureMessageTitle,
+			)
 		log.debug(f"Download complete: {inProgressFilePath}")
 		if os.path.exists(cacheFilePath):
 			log.debug(f"Cache file already exists, deleting prior to rename: {cacheFilePath}")
 			os.remove(cacheFilePath)
 		os.rename(src=inProgressFilePath, dst=cacheFilePath)
 		log.debug(f"Cache file available: {cacheFilePath}")
-		# TODO: assert SHA256 sum
 		return cast(os.PathLike, cacheFilePath)
+
+	@staticmethod
+	def _checkChecksum(addonFilePath: str, addonData: AddonStoreModel) -> Optional[os.PathLike]:
+		with open(addonFilePath, "rb") as f:
+			sha256Addon = sha256_checksum(f)
+		return sha256Addon.casefold() == addonData.sha256.casefold()
 
 	@staticmethod
 	def _getCacheFilenameForAddon(addonData: AddonStoreModel) -> str:
