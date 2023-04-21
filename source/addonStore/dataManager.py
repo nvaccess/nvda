@@ -366,7 +366,7 @@ class _DataManager:
 		)
 		if shouldRefreshData:
 			fetchTime = datetime.now()
-			apiData = self._getLatestAddonsDataForVersion(addonAPIVersion.LATEST, onDisplayableError)
+			apiData = self._getLatestAddonsDataForVersion(addonAPIVersion.LATEST)
 			if apiData:
 				decodedApiData = apiData.decode()
 				self._cacheLatestAddons(
