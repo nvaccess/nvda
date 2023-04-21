@@ -23,6 +23,7 @@ from addonHandler import (
 )
 from addonStore.models import (
 	AddonStoreModel,
+	_channelFilters,
 )
 from addonStore.status import (
 	_statusFilters,
@@ -77,10 +78,12 @@ class AddonVirtualList(
 		self.InsertColumn(0, pgettext("addonStore", "Name"))
 		# Translators: The name of the column that contains the addons version string. In the add-on store dialog.
 		self.InsertColumn(1, pgettext("addonStore", "Version"))
+		# Translators: The name of the column that contains the channel of the addon (e.g stable, beta, dev).
+		self.InsertColumn(2, pgettext("addonStore", "Channel"))
 		# Translators: The name of the column that contains the addons publisher. In the add-on store dialog.
-		self.InsertColumn(2, pgettext("addonStore", "Publisher"))
+		self.InsertColumn(3, pgettext("addonStore", "Publisher"))
 		self.InsertColumn(
-			3,
+			4,
 			# Translators: The name of the column that contains the status of the addon (E.G. available, downloading
 			# installing). In the add-on store dialog.
 			pgettext("addonStore", "Status"),
@@ -584,6 +587,7 @@ class AddonStoreDialog(SettingsDialog):
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer):
 		browseCtrlHelper = guiHelper.BoxSizerHelper(self, wx.HORIZONTAL)
+
 		self.statusFilterCtrl = cast(wx.Choice, browseCtrlHelper.addLabeledControl(
 			# Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
 			labelText=pgettext("addonStore", "&Filter by status:"),
@@ -592,14 +596,26 @@ class AddonStoreDialog(SettingsDialog):
 		))
 		self.statusFilterCtrl.Bind(wx.EVT_CHOICE, self.onStatusFilterChange, self.statusFilterCtrl)
 		self.statusFilterCtrl.SetSelection(0)
+		self.bindHelpEvent("AddonStoreFilterStatus", self.statusFilterCtrl)
 
-		self.filterCtrl = cast(wx.TextCtrl, browseCtrlHelper.addLabeledControl(
+		self.channelFilterCtrl = cast(wx.Choice, browseCtrlHelper.addLabeledControl(
+			# Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
+			labelText=pgettext("addonStore", "&Channel:"),
+			wxCtrlClass=wx.Choice,
+			choices=list(_channelFilters.keys()),
+		))
+		self.channelFilterCtrl.Bind(wx.EVT_CHOICE, self.onChannelFilterChange, self.channelFilterCtrl)
+		self.channelFilterCtrl.SetSelection(0)
+		self.bindHelpEvent("AddonStoreFilterChannel", self.channelFilterCtrl)
+
+		self.searchFilterCtrl = cast(wx.TextCtrl, browseCtrlHelper.addLabeledControl(
 			# Translators: The label of a text field to filter the list of add-ons in the add-on store dialog.
 			labelText=pgettext("addonStore", "&Search:"),
 			wxCtrlClass=wx.TextCtrl,
 		))
-		self.filterCtrl.Bind(wx.EVT_TEXT, self.onFilterTextChange, self.filterCtrl)
+		self.searchFilterCtrl.Bind(wx.EVT_TEXT, self.onFilterTextChange, self.searchFilterCtrl)
 		settingsSizer.Add(browseCtrlHelper.sizer, flag=wx.EXPAND)
+		self.bindHelpEvent("AddonStoreFilterSearch", self.searchFilterCtrl)
 
 		settingsSizer.AddSpacer(5)
 
@@ -638,6 +654,8 @@ class AddonStoreDialog(SettingsDialog):
 		# Translators: The label for a button in add-ons Store dialog to install an external add-on.
 		self.externalInstallButton = generalActions.addButton(self, label=_("&Install from external source"))
 		self.externalInstallButton.Bind(wx.EVT_BUTTON, self.openExternalInstall, self.externalInstallButton)
+		self.bindHelpEvent("AddonStoreInstalling", self.externalInstallButton)
+
 		settingsSizer.Add(generalActions.sizer)
 		self.SetMinSize(self.mainSizer.GetMinSize())
 
@@ -699,8 +717,14 @@ class AddonStoreDialog(SettingsDialog):
 		self._storeVM._filteredStatuses = _statusFilters[statusFiltersKey]
 		self._storeVM.refresh()
 
+	def onChannelFilterChange(self, evt: wx.EVT_CHOICE):
+		index = self.channelFilterCtrl.GetSelection()
+		_channelFilterKey = list(_channelFilters.keys())[index]
+		self._storeVM._filteredChannels = _channelFilters[_channelFilterKey]
+		self._storeVM.refresh()
+
 	def onFilterTextChange(self, evt: wx.EVT_TEXT):
-		filterText = evt.GetEventObject().GetValue()
+		filterText = self.searchFilterCtrl.GetValue()
 		self.filter(filterText)
 
 	def filter(self, filterText: str):

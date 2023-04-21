@@ -8,14 +8,18 @@
 from __future__ import annotations
 
 import dataclasses
-from enum import Enum
+from datetime import datetime
 import json
 from typing import (
+	TYPE_CHECKING,
 	Any,
 	Dict,
 	List,
 	NamedTuple,
 	Optional,
+	OrderedDict,
+	Set,
+	Union,
 )
 from typing_extensions import (
 	Protocol,
@@ -29,13 +33,42 @@ from addonHandler import (
 	state as addonHandlerState,
 )
 from addonHandler.addonVersionCheck import SupportsVersionCheck
+from utils.displayString import DisplayStringStrEnum
 
 
-class Channel(str, Enum):
+class Channel(DisplayStringStrEnum):
 	STABLE = "stable"
 	BETA = "beta"
 	DEV = "dev"
 	ALL = "all"
+
+	@property
+	def _displayStringLabels(self) -> Dict["Channel", str]:
+		return {
+			# Translators: Label for add-on channel in the add-on sotre
+			self.STABLE: pgettext("addonStore", "Stable"),
+			# Translators: Label for add-on channel in the add-on sotre
+			self.BETA: pgettext("addonStore", "Beta"),
+			# Translators: Label for add-on channel in the add-on sotre
+			self.DEV: pgettext("addonStore", "Dev"),
+			# Translators: Label for add-on channel in the add-on sotre
+			self.ALL: pgettext("addonStore", "All"),
+		}
+
+
+_channelFilters: OrderedDict[str, Set[Channel]] = OrderedDict({
+	Channel.ALL.displayString: {
+		Channel.STABLE,
+		Channel.BETA,
+		Channel.DEV,
+	},
+	Channel.STABLE.displayString: {Channel.STABLE},
+	Channel.BETA.displayString: {Channel.BETA},
+	Channel.DEV.displayString: {Channel.DEV},
+})
+"""A dictionary where the keys are channel groups to filter by,
+and the values are which channels should be shown for a given filter.
+"""
 
 
 class MajorMinorPatch(NamedTuple):
@@ -86,12 +119,18 @@ class _AddonDetailsModel(SupportsVersionCheck, Protocol):
 	@property
 	def _addonHandlerModel(self) -> Optional[AddonHandlerModel]:
 		"""Returns the Addon model tracked in addonHandler, if it exists."""
-		return addonHandlerState._addonHandlerCache.availableAddons.get(self.addonId)
+		if addonHandlerState._addonHandlerCache is None:
+			return None
+		return addonHandlerState._addonHandlerCache.installedAddons.get(self.addonId)
 
 	@property
 	def name(self) -> str:
 		"""In order to support addonHandler.addonVersionCheck.SupportsVersionCheck"""
 		return self.addonId
+
+	@property
+	def listItemVMId(self) -> str:
+		return f"{self.addonId}-{self.channel}"
 
 	def asdict(self) -> Dict[str, Any]:
 		jsonData = dataclasses.asdict(self)
@@ -177,10 +216,44 @@ def _createDetailsFromManifest(addon: AddonHandlerModel) -> AddonDetailsModel:
 	)
 
 
-def _createStoreCollectionFromJson(jsonData: str) -> CaseInsensitiveDict["AddonStoreModel"]:
+if TYPE_CHECKING:
+	AddonDetailsCollectionT = Dict[Channel, CaseInsensitiveDict["_AddonDetailsModel"]]
+	"""
+	Add-ons that have the same ID except differ in casing cause a path collision,
+	as add-on IDs are installed to a case insensitive path.
+	Therefore addon IDs should be treated as case insensitive.
+	"""
+
+
+def createAddonStoreCollection() -> "AddonDetailsCollectionT":
+	"""
+	Add-ons that have the same ID except differ in casing cause a path collision,
+	as add-on IDs are installed to a case insensitive path.
+	Therefore addon IDs should be treated as case insensitive.
+	"""
+	return {
+		channel: CaseInsensitiveDict()
+		for channel in Channel
+		if channel != Channel.ALL
+	}
+
+
+@dataclasses.dataclass
+class CachedAddonsModel:
+	cachedAddonData: AddonDetailsCollectionT
+	cachedAt: datetime
+	# AddonApiVersionT or the string addonAPIVersion.LATEST
+	nvdaAPIVersion: Union[addonAPIVersion.AddonApiVersionT, str]
+
+
+def _createStoreCollectionFromJson(jsonData: str) -> "AddonDetailsCollectionT":
 	"""Use json string to construct a listing of available addons.
 	See https://github.com/nvaccess/addon-datastore#api-data-generation-details
 	for details of the data.
 	"""
 	data: List[Dict[str, Any]] = json.loads(jsonData)
-	return CaseInsensitiveDict({addon["addonId"]: _createStoreModelFromData(addon) for addon in data})
+	addonCollection = createAddonStoreCollection()
+
+	for addon in data:
+		addonCollection[addon["channel"]][addon["addonId"]] = _createStoreModelFromData(addon)
+	return addonCollection

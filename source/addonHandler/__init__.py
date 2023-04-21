@@ -57,7 +57,7 @@ from .packaging import (
 from .types import AddonGeneratorT
 
 if TYPE_CHECKING:
-	from addonStore.models import AddonStoreModel, AddonDetailsModel  # noqa: F401
+	from addonStore.models import AddonStoreModel, AddonDetailsCollectionT  # noqa: F401
 
 
 MANIFEST_FILENAME = "manifest.ini"
@@ -79,10 +79,10 @@ isCLIParamKnown = extensionPoints.AccumulatingDecider(defaultDecision=False)
 class AddonHandlerCache(AutoPropertyObject):
 	cachePropertiesByDefault = True
 
-	availableAddons: CaseInsensitiveDict["Addon"]
-	availableAddonsAsDetails: CaseInsensitiveDict["AddonDetailsModel"]
+	installedAddons: CaseInsensitiveDict["Addon"]
+	installedAddonsAsDetails: "AddonDetailsCollectionT"
 
-	def _get_availableAddons(self) -> CaseInsensitiveDict["Addon"]:
+	def _get_installedAddons(self) -> CaseInsensitiveDict["Addon"]:
 		"""
 		Add-ons that have the same ID except differ in casing cause a path collision,
 		as add-on IDs are installed to a case insensitive path.
@@ -90,17 +90,20 @@ class AddonHandlerCache(AutoPropertyObject):
 		"""
 		return CaseInsensitiveDict({a.name: a for a in getAvailableAddons()})
 
-	def _get_availableAddonsAsDetails(self) -> CaseInsensitiveDict["AddonDetailsModel"]:
-		"""
-		Add-ons that have the same ID except differ in casing cause a path collision,
-		as add-on IDs are installed to a case insensitive path.
-		Therefore addon IDs should be treated as case insensitive.
-		"""
-		from addonStore.models import _createDetailsFromManifest
-		return CaseInsensitiveDict({
-			addonId: _createDetailsFromManifest(self.availableAddons[addonId])
-			for addonId in self.availableAddons
-		})
+	def _get_installedAddonsAsDetails(self) -> "AddonDetailsCollectionT":
+		from addonStore.models import (
+			_createDetailsFromManifest,
+			Channel,
+			createAddonStoreCollection,
+		)
+		addons = createAddonStoreCollection()
+		for addonId in self.installedAddons:
+			addonStoreData = self.installedAddons[addonId]._addonStoreData
+			if addonStoreData:
+				addons[addonStoreData.channel][addonId] = addonStoreData
+			else:
+				addons[Channel.STABLE][addonId] = _createDetailsFromManifest(self.installedAddons[addonId])
+		return addons
 
 
 class AddonStateCategory(str, enum.Enum):
@@ -196,7 +199,7 @@ class AddonsState(collections.UserDict):
 		during uninstallation. As a result after reinstalling add-on with the same name it was disabled
 		by default confusing users. Fix this by removing all add-ons no longer present in the config
 		from the list of disabled add-ons in the state."""
-		installedAddonNames = set(self._addonHandlerCache.availableAddons.keys())
+		installedAddonNames = set(self._addonHandlerCache.installedAddons.keys())
 		for disabledAddonName in CaseInsensitiveSet(self[AddonStateCategory.DISABLED]):
 			# Iterate over copy of set to prevent updating the set while iterating over it.
 			if disabledAddonName not in installedAddonNames:
@@ -423,9 +426,10 @@ class AddonBase(SupportsVersionCheck, ABC):
 		...
 
 	@property
-	def _getAddonStoreData(self) -> Optional["AddonStoreModel"]:
+	def _addonStoreData(self) -> Optional["AddonStoreModel"]:
 		from addonStore.dataManager import addonDataManager
-		return addonDataManager.getLatestCompatibleAddons().get(self.name)
+		assert addonDataManager
+		return addonDataManager._getCachedInstalledAddonData(self.name)
 
 
 class Addon(AddonBase):
