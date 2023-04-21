@@ -48,7 +48,14 @@ import brailleInput
 import vision
 import vision.providerInfo
 import vision.providerBase
-from typing import Callable, List, Optional, Any, cast
+from typing import (
+	Any,
+	Callable,
+	cast,
+	List,
+	Optional,
+	Set,
+)
 import core
 import keyboardHandler
 import characterProcessing
@@ -164,28 +171,27 @@ class SettingsDialog(
 				)
 			SettingsDialog._instances[self] = self.DialogState.DESTROYED
 
-
 	def __init__(
-			self, parent,
-			resizeable=False,
-			hasApplyButton=False,
-			settingsSizerOrientation=wx.VERTICAL,
-			multiInstanceAllowed=False
+			self,
+			parent: wx.Window,
+			resizeable: bool = False,
+			hasApplyButton: bool = False,
+			settingsSizerOrientation: int = wx.VERTICAL,
+			multiInstanceAllowed: bool = False,
+			buttons: Set[int] = {wx.OK, wx.CANCEL},
 	):
 		"""
 		@param parent: The parent for this dialog; C{None} for no parent.
-		@type parent: wx.Window
 		@param resizeable: True if the settings dialog should be resizable by the user, only set this if
 			you have tested that the components resize correctly.
-		@type resizeable: bool
 		@param hasApplyButton: C{True} to add an apply button to the dialog; defaults to C{False} for backwards compatibility.
-		@type hasApplyButton: bool
+		Deprecated, use buttons instead.
 		@param settingsSizerOrientation: Either wx.VERTICAL or wx.HORIZONTAL. This controls the orientation of the
 			sizer that is passed into L{makeSettings}. The default is wx.VERTICAL.
-		@type settingsSizerOrientation: wx.Orientation
 		@param multiInstanceAllowed: Whether multiple instances of SettingsDialog may exist.
 			Note that still only one instance of a particular SettingsDialog subclass may exist at one time.
-		@type multiInstanceAllowed: bool
+		@param buttons: Buttons to add to the settings dialog.
+			Should be a subset of {wx.OK, wx.CANCEL, wx.APPLY, wx.CLOSE}.
 		"""
 		if gui._isDebug():
 			startTime = time.time()
@@ -194,18 +200,22 @@ class SettingsDialog(
 			windowStyle |= wx.RESIZE_BORDER | wx.MAXIMIZE_BOX
 		super().__init__(parent, title=self.title, style=windowStyle)
 
-		self.hasApply = hasApplyButton
+		buttonFlag = 0
+		for button in buttons:
+			buttonFlag |= button
+		if hasApplyButton:
+			buttonFlag |= wx.APPLY
+		self.hasApply = hasApplyButton or wx.APPLY in buttons
+		if not buttons.issubset({wx.OK, wx.CANCEL, wx.APPLY, wx.CLOSE}):
+			log.error(f"Unexpected buttons set provided: {buttons}")
 
 		self.mainSizer=wx.BoxSizer(wx.VERTICAL)
 		self.settingsSizer=wx.BoxSizer(settingsSizerOrientation)
 		self.makeSettings(self.settingsSizer)
 
 		self.mainSizer.Add(self.settingsSizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL | wx.EXPAND, proportion=1)
-		buttons = wx.OK | wx.CANCEL
-		if hasApplyButton:
-			buttons |= wx.APPLY
 		self.mainSizer.Add(
-			self.CreateSeparatedButtonSizer(buttons),
+			self.CreateSeparatedButtonSizer(buttonFlag),
 			border=guiHelper.BORDER_FOR_DIALOGS,
 			flag=wx.EXPAND | wx.BOTTOM | wx.LEFT | wx.RIGHT
 		)
@@ -215,6 +225,7 @@ class SettingsDialog(
 
 		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
 		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
+		self.Bind(wx.EVT_BUTTON, self.onClose, id=wx.ID_CLOSE)
 		self.Bind(wx.EVT_BUTTON, self.onApply, id=wx.ID_APPLY)
 		self.Bind(wx.EVT_CHAR_HOOK, self._enterActivatesOk_ctrlSActivatesApply)
 		# Garbage collection normally handles removing the settings instance, however this may not happen immediately
@@ -273,6 +284,14 @@ class SettingsDialog(
 		"""
 		self.DestroyLater()
 		self.SetReturnCode(wx.ID_CANCEL)
+
+	def onClose(self, evt: wx.CommandEvent):
+		"""Take action in response to the Close button being pressed.
+		Sub-classes may extend this method.
+		This base method should always be called to clean up the dialog.
+		"""
+		self.DestroyLater()
+		self.SetReturnCode(wx.ID_CLOSE)
 
 	def onApply(self, evt: wx.CommandEvent):
 		"""Take action in response to the Apply button being pressed.
