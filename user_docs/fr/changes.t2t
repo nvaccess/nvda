@@ -24,14 +24,14 @@ Quoi de Neuf dans NVDA
 - NVDA répond plus rapidement lors du déplacement du focus dans un champ d'édition. (#14708)
 - Pilote Braille Baum : ajout de plusieurs gestes Braille pour réaliser les actions clavier courrantes telles que windows+d, alt+tab etc. Veuillez vous référer au guide utilisateur de NVDA pour la liste complète. (#14714)
 - Lors de l'utilisation d'un afficheur Braille via le pilote Braille HID standard, le pavé directionnel peut maintenant être utilisé pour émuler les touches fléchées ainsi que entrée. Espace+Point 1 et Espace+Point4 sont également désormais assignées respectivement à flèche haute et flèche basse. (#14713)
-- Le script pour annoncer la destination d'un lien se base désormais sur la position actuelle du curseur plutôt que depuis la position de l'objet navigateur. (#14659)
+- Le script pour annoncer la destination d'un lien se base désormais sur la position du curseur / focus plutôt que sur la position de l'objet navigateur. (#14659)
 -
 
 
 == Corrections de Bogues ==
 - NVDA ne basculera plus inutilement plusieurs fois sur pas de Braille pendant la détection automatique, permettant un journal plus propre et moins de surcharge. (#14524)
 - NVDA basculera désormais vers l'USB si un afficheur Braille HID Bluetooth (comme le HumanWare Brailliant ou l'APH Mantis) est détecté automatiquement et qu'une connexion USB devient disponible.
-Cela fonctionne uniquement pour les ports série Bluetooth. (#14524)
+Cela fonctionnait uniquement pour les ports série Bluetooth auparavant. (#14524)
 - Il est désormais possible d'utiliser le symbole barre oblique inversée dans le champ de remplacement d'une entrée de dictionaire, si le type n'est pas défini sur expression régulière. (#14556)
 - En mode navigation, NVDA n'ignorera plus de manière incorrecte le passage du focus vers un contrôle parent ou enfant, par exemple le passage d'un contrôle vers son élément de liste ou sa cellule de grille parent. (#14611)
   - Notez cependant que ce correctif ne s'applique que lorsque l'option "Positionnement automatique du focus système aux éléments susceptibles d'être mis en focus" est désactivée dans les paramètres du mode navigation, ce qui est l'état par défaut.
@@ -49,17 +49,17 @@ Cela fonctionne uniquement pour les ports série Bluetooth. (#14524)
 
 
 == Changements pour les Développeurs ==
-+Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] for information on NVDA's API deprecation and removal process.
-+- Added a new extension point type called ``Chain``, which can be used to iterate over iterables returned by registered handlers. (#14531)
-+- Added the ``bdDetect.scanForDevices`` extension point.
-+Handlers can be registered that yield ``BrailleDisplayDriver/DeviceMatch`` pairs that don't fit in existing categories, like USB or Bluetooth. (#14531)
-+- Added extension point: ``synthDriverHandler.synthChanged``. (#14618)
-+- The NVDA Synth Settings Ring now caches available setting values the first time they're needed, rather than when loading the synthesizer. (#14704)
-+- You can now call the export method on a gesture map to export it to a dictionary.
-+This dictionary can be imported in another gesture by passing it either to the constructor of ``GlobalGestureMap`` or to the update method on an existing map. (#14582)
-+-
-+
-=== Deprecations ===
+Veuillez vous référer au [guide de développement https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] pour plus d'informations sur le processus de dépréciation et de suppression de l'API de NVDA.
+- Ajout d'un nouveau type de point d'extension appelé ``Chain``, qui peut être utilisé pour parcourir les itérables renvoyés par les gestionnaires enregistrés. (#14531)
+- Ajout du point d'extension ``bdDetect.scanForDevices``.
+Des gestionnaires peuvent être enregistrés qui produisent des paires ``BrailleDisplayDriver/DeviceMatch`` qui ne rentrent pas dans les catégories existantes, comme USB ou Bluetooth. (#14531)
+- Ajout d'un point d'extension : ``synthDriverHandler.synthChanged``. (#14618)
+- La boucle des paramètres synthétiseur NVDA met désormais en cache les valeurs de paramètres disponibles la première fois qu'elles sont nécessaires, plutôt que lors du chargement du synthétiseur. (#14704)
+- Vous pouvez maintenant appeler la méthode d'exportation sur un mapping de gestes pour l'exporter vers un dictionnaire.
+Ce dictionnaire peut être importé dans un autre mapping de gestes en le passant soit au constructeur de ``GlobalGestureMap`` soit à la méthode update sur un mapping existant. (#14582)
+-
+
+=== Dépréciations ===
 
 = 2023.1 =
 Une nouvelle option a été ajoutée, "Style de paragraphe" dans "Navigation dans les documents".
