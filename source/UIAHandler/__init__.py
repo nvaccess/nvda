@@ -9,6 +9,9 @@ import ctypes.wintypes
 from ctypes import (
 	oledll,
 	windll,
+	POINTER,
+	CFUNCTYPE,
+	c_voidp,
 )
 
 import comtypes.client
@@ -19,10 +22,12 @@ from comtypes import (
 	byref,
 	CLSCTX_INPROC_SERVER,
 	CoCreateInstance,
+	IUnknown,
 )
 
 import threading
 import time
+import winAPI.messageWindow
 import IAccessibleHandler.internalWinEventHandler
 import config
 from config import (
@@ -46,6 +51,8 @@ import textInfos
 from typing import Dict
 from queue import Queue
 import aria
+import core
+import NVDAHelper
 from . import remote as UIARemote
 
 
@@ -507,6 +514,14 @@ class UIAHandler(COMObject):
 			self.rootElement=self.clientObject.getRootElementBuildCache(self.baseCacheRequest)
 			self.reservedNotSupportedValue=self.clientObject.ReservedNotSupportedValue
 			self.ReservedMixedAttributeValue=self.clientObject.ReservedMixedAttributeValue
+			self.pRateLimitedEventHandler = POINTER(IUnknown)()
+			NVDAHelper.localLib.rateLimitedUIAEventHandler_create(
+				self._com_pointers_[IUnknown._iid_],
+				core.messageWindow.handle,
+				WM_NVDA_UIA_FLUSH,
+				byref(self.pRateLimitedEventHandler)
+			)
+			winAPI.messageWindow.pre_handleWindowMessage.register(eventLimiterWindowProc)
 			if utils._shouldSelectivelyRegister():
 				self._createLocalEventHandlerGroup()
 			self._registerGlobalEventHandlers()
@@ -528,7 +543,7 @@ class UIAHandler(COMObject):
 		self.clientObject.RemoveAllEventHandlers()
 
 	def _registerGlobalEventHandlers(self):
-		self.clientObject.AddFocusChangedEventHandler(self.baseCacheRequest, self)
+		self.clientObject.AddFocusChangedEventHandler(self.baseCacheRequest, self.pRateLimitedEventHandler)
 		if isinstance(self.clientObject, UIA.IUIAutomation6):
 			self.globalEventHandlerGroup = self.clientObject.CreateEventHandlerGroup()
 		else:
@@ -536,7 +551,7 @@ class UIAHandler(COMObject):
 		self.globalEventHandlerGroup.AddPropertyChangedEventHandler(
 			UIA.TreeScope_Subtree,
 			self.baseCacheRequest,
-			self,
+			self.pRateLimitedEventHandler,
 			*self.clientObject.IntSafeArrayToNativeArray(
 				globalEventHandlerGroupUIAPropertyIds
 				if utils._shouldSelectivelyRegister()
@@ -552,7 +567,7 @@ class UIAHandler(COMObject):
 				eventId,
 				UIA.TreeScope_Subtree,
 				self.baseCacheRequest,
-				self
+				self.pRateLimitedEventHandler
 			)
 		if (
 			not utils._shouldSelectivelyRegister()
@@ -563,20 +578,20 @@ class UIAHandler(COMObject):
 				UIA.UIA_Text_TextChangedEventId,
 				UIA.TreeScope_Subtree,
 				self.baseCacheRequest,
-				self
+				self.pRateLimitedEventHandler
 			)
 		# #7984: add support for notification event (IUIAutomation5, part of Windows 10 build 16299 and later).
 		if isinstance(self.clientObject, UIA.IUIAutomation5):
 			self.globalEventHandlerGroup.AddNotificationEventHandler(
 				UIA.TreeScope_Subtree,
 				self.baseCacheRequest,
-				self
+				self.pRateLimitedEventHandler
 			)
 		if isinstance(self.clientObject, UIA.IUIAutomation6):
 			self.globalEventHandlerGroup.AddActiveTextPositionChangedEventHandler(
 				UIA.TreeScope_Subtree,
 				self.baseCacheRequest,
-				self
+				self.pRateLimitedEventHandler
 			)
 		self.addEventHandlerGroup(self.rootElement, self.globalEventHandlerGroup)
 
@@ -590,13 +605,13 @@ class UIAHandler(COMObject):
 		self.localEventHandlerGroup.AddPropertyChangedEventHandler(
 			UIA.TreeScope_Ancestors | UIA.TreeScope_Element,
 			self.baseCacheRequest,
-			self,
+			self.pRateLimitedEventHandler,
 			*self.clientObject.IntSafeArrayToNativeArray(localEventHandlerGroupUIAPropertyIds)
 		)
 		self.localEventHandlerGroupWithTextChanges.AddPropertyChangedEventHandler(
 			UIA.TreeScope_Ancestors | UIA.TreeScope_Element,
 			self.baseCacheRequest,
-			self,
+			self.pRateLimitedEventHandler,
 			*self.clientObject.IntSafeArrayToNativeArray(localEventHandlerGroupUIAPropertyIds)
 		)
 		for eventId in localEventHandlerGroupUIAEventIds:
@@ -604,19 +619,19 @@ class UIAHandler(COMObject):
 				eventId,
 				UIA.TreeScope_Ancestors | UIA.TreeScope_Element,
 				self.baseCacheRequest,
-				self
+				self.pRateLimitedEventHandler
 			)
 			self.localEventHandlerGroupWithTextChanges.AddAutomationEventHandler(
 				eventId,
 				UIA.TreeScope_Ancestors | UIA.TreeScope_Element,
 				self.baseCacheRequest,
-				self
+				self.pRateLimitedEventHandler
 			)
 		self.localEventHandlerGroupWithTextChanges.AddAutomationEventHandler(
 			UIA.UIA_Text_TextChangedEventId,
 			UIA.TreeScope_Ancestors | UIA.TreeScope_Element,
 			self.baseCacheRequest,
-			self
+			self.pRateLimitedEventHandler
 		)
 
 	def addEventHandlerGroup(self, element, eventHandlerGroup):
@@ -1390,3 +1405,12 @@ def terminate():
 
 def _isDebug():
 	return config.conf["debugLog"]["UIA"]
+
+
+WM_NVDA_UIA_FLUSH = winUser.registerWindowMessage("WM_NVDA_UIA_FLUSH")
+def eventLimiterWindowProc(msg, wParam, lParam):
+	if msg == WM_NVDA_UIA_FLUSH:
+		if lParam == 0:
+			NVDAHelper.localLib.rateLimitedUIAEventHandler_flush(wParam)
+		else:
+			core.callLater(lParam, NVDAHelper.localLib.rateLimitedUIAEventHandler_flush, wParam)
