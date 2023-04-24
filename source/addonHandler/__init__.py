@@ -151,16 +151,16 @@ class AddonsState(collections.UserDict):
 
 	def load(self) -> None:
 		"""Populates state with the default content and then loads values from the config."""
-		self.update(self._generateDefaultStateContent())
+		state = self._generateDefaultStateContent()
+		self.update(state)
 		self._addonHandlerCache = AddonHandlerCache()
 		try:
 			# #9038: Python 3 requires binary format when working with pickles.
 			with open(self.statePath, "rb") as f:
 				pickledState: Dict[str, Set[str]] = pickle.load(f)
-				state = self._generateDefaultStateContent()
 				for category in pickledState:
 					# Make pickles case insensitive
-					state[category] = CaseInsensitiveSet(pickledState[category])
+					state[AddonStateCategory(category)] = CaseInsensitiveSet(pickledState[category])
 				self.update(state)
 		except FileNotFoundError:
 			pass  # Clean config - no point logging in this case
