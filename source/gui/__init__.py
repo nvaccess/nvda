@@ -322,16 +322,10 @@ class MainFrame(wx.Frame):
 			pythonConsole.initialize()
 		pythonConsole.activate()
 
-	@blockAction.when(
-		blockAction.Context.SECURE_MODE,
-		blockAction.Context.MODAL_DIALOG_OPEN,
-	)
-	def onAddonsManagerCommand(self,evt):
-		self.prePopup()
-		from .addonGui import AddonsDialog
-		d=AddonsDialog(gui.mainFrame)
-		d.Show()
-		self.postPopup()
+	if NVDAState._allowDeprecatedAPI():
+		def onAddonsManagerCommand(self, evt: wx.MenuEvent):
+			log.warning("onAddonsManagerCommand is deprecated, use onAddonStoreCommand instead.")
+			self.onAddonStoreCommand(evt)
 
 	@blockAction.when(
 		blockAction.Context.SECURE_MODE,
@@ -470,9 +464,6 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 			# Translators: The label for the menu item to open NVDA Python Console.
 			item = menu_tools.Append(wx.ID_ANY, _("Python console"))
 			self.Bind(wx.EVT_MENU, frame.onPythonConsoleCommand, item)
-			# Translators: The label of a menu item to open the Add-ons Manager.
-			item = menu_tools.Append(wx.ID_ANY, _("Manage &add-ons..."))
-			self.Bind(wx.EVT_MENU, frame.onAddonsManagerCommand, item)
 			# Translators: The label of a menu item to open the Add-on store
 			item = menu_tools.Append(wx.ID_ANY, _("Add-on &store..."))
 			self.Bind(wx.EVT_MENU, frame.onAddonStoreCommand, item)
