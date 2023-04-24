@@ -4,7 +4,8 @@
 # See the file COPYING for more details.
 # Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee,
 # Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Łukasz Golonka, Accessolutions,
-# Julien Cochuyt, Jakub Lukowicz, Bill Dengler, Cyrille Bougot, Rob Meredith, Luke Davis
+# Julien Cochuyt, Jakub Lukowicz, Bill Dengler, Cyrille Bougot, Rob Meredith, Luke Davis,
+# Burman's Computer and Education Ltd.
 
 import itertools
 from typing import (
@@ -36,7 +37,10 @@ import gui
 import systemUtils
 import wx
 import config
-from config.configFlags import TetherTo
+from config.configFlags import (
+	TetherTo,
+	ShowMessages,
+)
 import winUser
 import appModuleHandler
 import winKernel
@@ -3262,6 +3266,31 @@ class GlobalCommands(ScriptableObject):
 		shapeMsg = braille.CURSOR_SHAPES[index][1]
 		# Translators: Reports which braille cursor shape is activated.
 		ui.message(_("Braille cursor %s") % shapeMsg)
+
+	@script(
+		# Translators: Input help mode message for toggle braille show messages command.
+		description=_("Cycle through the braille show messages modes"),
+		category=SCRCAT_BRAILLE
+	)
+	def script_braille_cycleShowMessages(self, gesture):
+		"""Set next state of braille show messages and reports it with ui.message."""
+		values = [x.value for x in ShowMessages]
+		index = values.index(
+			config.conf["braille"]["showMessages"]
+		)
+		newIndex = (index + 1) % len(values)
+		newValue = values[newIndex]
+		config.conf["braille"]["showMessages"] = newValue
+		# Translators: Reports which show braille message mode is used
+		# (disabled, timeout or indefinitely).
+		ui.message(
+			_(
+				"Braille show messages %s"
+			)
+			% ShowMessages(
+				newValue
+			).displayString
+		)
 
 	@script(
 		# Translators: Input help mode message for report clipboard text command.
