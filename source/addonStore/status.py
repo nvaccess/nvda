@@ -56,37 +56,37 @@ class AvailableAddonStatus(DisplayStringEnum):
 	def _displayStringLabels(self) -> Dict["AvailableAddonStatus", str]:
 		_labels = {
 			# Translators: Status for addons shown in the add-on store dialog
-			self.PENDING_REMOVE: _("Pending removed"),
+			self.PENDING_REMOVE: pgettext("addonStore", "Pending removed"),
 			# Translators: Status for addons shown in the add-on store dialog
-			self.AVAILABLE: _("Available"),
+			self.AVAILABLE: pgettext("addonStore", "Available"),
 			# Translators: Status for addons shown in the add-on store dialog
-			self.UPDATE: _("Update Available"),
+			self.UPDATE: pgettext("addonStore", "Update Available"),
 			# Translators: Status for addons shown in the add-on store dialog
-			self.REPLACE_SIDE_LOAD: _("Migrate to add-on store"),
+			self.REPLACE_SIDE_LOAD: pgettext("addonStore", "Migrate to add-on store"),
 			# Translators: Status for addons shown in the add-on store dialog
-			self.INCOMPATIBLE: _("Incompatible"),
+			self.INCOMPATIBLE: pgettext("addonStore", "Incompatible"),
 			# Translators: Status for addons shown in the add-on store dialog
-			self.DOWNLOADING: _("Downloading"),
+			self.DOWNLOADING: pgettext("addonStore", "Downloading"),
 			# Translators: Status for addons shown in the add-on store dialog
-			self.DOWNLOAD_FAILED: _("Download failed"),
+			self.DOWNLOAD_FAILED: pgettext("addonStore", "Download failed"),
 			# Translators: Status for addons shown in the add-on store dialog
-			self.DOWNLOAD_SUCCESS: _("Downloaded, pending install"),
+			self.DOWNLOAD_SUCCESS: pgettext("addonStore", "Downloaded, pending install"),
 			# Translators: Status for addons shown in the add-on store dialog
-			self.INSTALLING: _("Installing"),
+			self.INSTALLING: pgettext("addonStore", "Installing"),
 			# Translators: Status for addons shown in the add-on store dialog
-			self.INSTALL_FAILED: _("Install failed"),
+			self.INSTALL_FAILED: pgettext("addonStore", "Install failed"),
 			# Translators: Status for addons shown in the add-on store dialog
-			self.INSTALLED: _("Installed, pending restart"),
+			self.INSTALLED: pgettext("addonStore", "Installed, pending restart"),
 			# Translators: Status for addons shown in the add-on store dialog
-			self.PENDING_DISABLE: _("Disabled, pending restart"),
+			self.PENDING_DISABLE: pgettext("addonStore", "Disabled, pending restart"),
 			# Translators: Status for addons shown in the add-on store dialog
-			self.DISABLED: _("Disabled"),
+			self.DISABLED: pgettext("addonStore", "Disabled"),
 			# Translators: Status for addons shown in the add-on store dialog
-			self.INCOMPATIBLE_DISABLED: _("Disabled (Incompatible)"),
+			self.INCOMPATIBLE_DISABLED: pgettext("addonStore", "Disabled (Incompatible)"),
 			# Translators: Status for addons shown in the add-on store dialog
-			self.PENDING_ENABLE: _("Enabled, pending restart"),
+			self.PENDING_ENABLE: pgettext("addonStore", "Enabled, pending restart"),
 			# Translators: Status for addons shown in the add-on store dialog
-			self.RUNNING: _("Enabled"),
+			self.RUNNING: pgettext("addonStore", "Enabled"),
 		}
 		return _labels
 

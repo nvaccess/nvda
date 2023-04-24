@@ -652,7 +652,8 @@ class AddonStoreDialog(SettingsDialog):
 
 		generalActions = guiHelper.ButtonHelper(wx.HORIZONTAL)
 		# Translators: The label for a button in add-ons Store dialog to install an external add-on.
-		self.externalInstallButton = generalActions.addButton(self, label=_("Install from e&xternal source"))
+		externalInstallLabelText = pgettext("addonStore", "Install from e&xternal source")
+		self.externalInstallButton = generalActions.addButton(self, label=externalInstallLabelText)
 		self.externalInstallButton.Bind(wx.EVT_BUTTON, self.openExternalInstall, self.externalInstallButton)
 		self.bindHelpEvent("AddonStoreInstalling", self.externalInstallButton)
 
@@ -667,13 +668,13 @@ class AddonStoreDialog(SettingsDialog):
 
 	def onOk(self, evt: wx.CommandEvent):
 		# Translators: Title for message shown prior to installing add-ons when closing the add-on store dialog.
-		installationPromptTitle = _("Add-on installation")
+		installationPromptTitle = pgettext("addonStore", "Add-on installation")
 		numInProgress = len(self._storeVM._downloader.progress)
 		if numInProgress:
 			res = gui.messageBox(
 				# Translators: Message shown prior to installing add-ons when closing the add-on store dialog
 				# The placeholder {} will be replaced with the number of add-ons to be installed
-				_("Download of {} add-ons in progress, cancel downloading?").format(
+				pgettext("addonStore", "Download of {} add-ons in progress, cancel downloading?").format(
 					numInProgress
 				),
 				installationPromptTitle,
@@ -691,7 +692,7 @@ class AddonStoreDialog(SettingsDialog):
 			gui.messageBox(
 				# Translators: Message shown prior to installing add-ons when closing the add-on store dialog
 				# The placeholder {} will be replaced with the number of add-ons to be installed
-				_("Now installing {} add-ons.").format(len(self._storeVM._pendingInstalls)),
+				pgettext("addonStore", "Now installing {} add-ons.").format(len(self._storeVM._pendingInstalls)),
 				installationPromptTitle
 			)
 			self._storeVM.installPending()
@@ -731,13 +732,14 @@ class AddonStoreDialog(SettingsDialog):
 		self._storeVM.listVM.applyFilter(filterText)
 
 	def openExternalInstall(self, evt: wx.EVT_BUTTON):
+		# Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
+		fileTypeLabel = pgettext("addonStore", "NVDA Add-on Package (*.{ext})")
 		fd = wx.FileDialog(
 			self,
 			# Translators: The message displayed in the dialog that
 			# allows you to choose an add-on package for installation.
-			message=_("Choose Add-on Package File"),
-			# Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
-			wildcard=(_("NVDA Add-on Package (*.{ext})") + "|*.{ext}").format(ext=BUNDLE_EXTENSION),
+			message=pgettext("addonStore", "Choose Add-on Package File"),
+			wildcard=(fileTypeLabel + "|*.{ext}").format(ext=BUNDLE_EXTENSION),
 			defaultDir="c:",
 			style=wx.FD_OPEN,
 		)
