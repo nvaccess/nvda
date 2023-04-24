@@ -134,7 +134,8 @@ class AddonsState(collections.UserDict):
 	Therefore add-on IDs should be treated as case insensitive.
 	"""
 
-	def generateDefaultStateContent() -> Dict[AddonStateCategory, CaseInsensitiveSet[str]]:
+	@staticmethod
+	def _generateDefaultStateContent() -> Dict[AddonStateCategory, CaseInsensitiveSet[str]]:
 		return {
 			category: CaseInsensitiveSet() for category in AddonStateCategory
 		}
@@ -150,13 +151,13 @@ class AddonsState(collections.UserDict):
 
 	def load(self) -> None:
 		"""Populates state with the default content and then loads values from the config."""
-		self.update(self.generateDefaultStateContent())
+		self.update(self._generateDefaultStateContent())
 		self._addonHandlerCache = AddonHandlerCache()
 		try:
 			# #9038: Python 3 requires binary format when working with pickles.
 			with open(self.statePath, "rb") as f:
 				pickledState: Dict[str, Set[str]] = pickle.load(f)
-				state = self.generateDefaultStateContent()
+				state = self._generateDefaultStateContent()
 				for category in pickledState:
 					# Make pickles case insensitive
 					state[category] = CaseInsensitiveSet(pickledState[category])
