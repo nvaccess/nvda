@@ -468,14 +468,14 @@ class AddonStoreVM:
 		return [
 			AddonActionVM(
 				# Translators: Label for a button that installs the selected addon
-				displayName=_("&Install"),
+				displayName=pgettext("addonStore", "&Install"),
 				actionHandler=self.getAddon,
 				validCheck=lambda aVM: aVM.status == AvailableAddonStatus.AVAILABLE,
 				listItemVM=selectedListItem
 			),
 			AddonActionVM(
 				# Translators: Label for a button that installs the selected addon
-				displayName=_("&Install (override incompatibility)"),
+				displayName=pgettext("addonStore", "&Install (override incompatibility)"),
 				actionHandler=self.installOverrideIncompatibilityForAddon,
 				validCheck=lambda aVM: (
 					aVM.status == AvailableAddonStatus.INCOMPATIBLE
@@ -485,21 +485,21 @@ class AddonStoreVM:
 			),
 			AddonActionVM(
 				# Translators: Label for a button that installs the selected addon
-				displayName=_("&Update"),
+				displayName=pgettext("addonStore", "&Update"),
 				actionHandler=self.getAddon,
 				validCheck=lambda aVM: aVM.status == AvailableAddonStatus.UPDATE,
 				listItemVM=selectedListItem
 			),
 			AddonActionVM(
 				# Translators: Label for a button that installs the selected addon
-				displayName=_("&Replace"),
+				displayName=pgettext("addonStore", "Re&place"),
 				actionHandler=self.replaceAddon,
 				validCheck=lambda aVM: aVM.status == AvailableAddonStatus.REPLACE_SIDE_LOAD,
 				listItemVM=selectedListItem
 			),
 			AddonActionVM(
 				# Translators: Label for a button that installs the selected addon
-				displayName=_("&Disable"),
+				displayName=pgettext("addonStore", "&Disable"),
 				actionHandler=self.disableAddon,
 				validCheck=lambda aVM: aVM.status not in (
 					AvailableAddonStatus.DISABLED,
@@ -512,7 +512,7 @@ class AddonStoreVM:
 			),
 			AddonActionVM(
 				# Translators: Label for a button that installs the selected addon
-				displayName=_("&Enable"),
+				displayName=pgettext("addonStore", "&Enable"),
 				actionHandler=self.enableAddon,
 				validCheck=lambda aVM: (
 					aVM.status == AvailableAddonStatus.DISABLED
@@ -522,7 +522,7 @@ class AddonStoreVM:
 			),
 			AddonActionVM(
 				# Translators: Label for a button that installs the selected addon
-				displayName=_("&Enable (override incompatibility)"),
+				displayName=pgettext("addonStore", "&Enable (override incompatibility)"),
 				actionHandler=self.enableOverrideIncompatibilityForAddon,
 				validCheck=lambda aVM: (
 					aVM.status == AvailableAddonStatus.INCOMPATIBLE_DISABLED
@@ -532,7 +532,7 @@ class AddonStoreVM:
 			),
 			AddonActionVM(
 				# Translators: Label for a button that removes the selected addon
-				displayName=_("&Remove"),
+				displayName=pgettext("addonStore", "&Remove"),
 				actionHandler=self.removeAddon,
 				validCheck=lambda aVM: aVM.status not in (
 					AvailableAddonStatus.AVAILABLE,
@@ -543,7 +543,7 @@ class AddonStoreVM:
 			),
 			AddonActionVM(
 				# Translators: Label for a button that installs the selected addon
-				displayName=_("Add-on &help"),
+				displayName=pgettext("addonStore", "Add-on &help"),
 				actionHandler=self.helpAddon,
 				validCheck=lambda aVM: aVM.status not in (
 					AvailableAddonStatus.AVAILABLE,

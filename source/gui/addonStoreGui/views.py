@@ -600,7 +600,7 @@ class AddonStoreDialog(SettingsDialog):
 
 		self.channelFilterCtrl = cast(wx.Choice, browseCtrlHelper.addLabeledControl(
 			# Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
-			labelText=pgettext("addonStore", "&Channel:"),
+			labelText=pgettext("addonStore", "Cha&nnel:"),
 			wxCtrlClass=wx.Choice,
 			choices=list(_channelFilters.keys()),
 		))
@@ -652,7 +652,7 @@ class AddonStoreDialog(SettingsDialog):
 
 		generalActions = guiHelper.ButtonHelper(wx.HORIZONTAL)
 		# Translators: The label for a button in add-ons Store dialog to install an external add-on.
-		self.externalInstallButton = generalActions.addButton(self, label=_("&Install from external source"))
+		self.externalInstallButton = generalActions.addButton(self, label=_("Install from e&xternal source"))
 		self.externalInstallButton.Bind(wx.EVT_BUTTON, self.openExternalInstall, self.externalInstallButton)
 		self.bindHelpEvent("AddonStoreInstalling", self.externalInstallButton)
 
