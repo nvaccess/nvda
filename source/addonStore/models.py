@@ -225,7 +225,7 @@ if TYPE_CHECKING:
 	"""
 
 
-def createAddonStoreCollection() -> "AddonDetailsCollectionT":
+def _createAddonDetailsCollection() -> "AddonDetailsCollectionT":
 	"""
 	Add-ons that have the same ID except differ in casing cause a path collision,
 	as add-on IDs are installed to a case insensitive path.
@@ -252,7 +252,7 @@ def _createStoreCollectionFromJson(jsonData: str) -> "AddonDetailsCollectionT":
 	for details of the data.
 	"""
 	data: List[Dict[str, Any]] = json.loads(jsonData)
-	addonCollection = createAddonStoreCollection()
+	addonCollection = _createAddonDetailsCollection()
 
 	for addon in data:
 		addonCollection[addon["channel"]][addon["addonId"]] = _createStoreModelFromData(addon)

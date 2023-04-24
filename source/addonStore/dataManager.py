@@ -36,7 +36,7 @@ from .models import (
 	AddonStoreModel,
 	CachedAddonsModel,
 	Channel,
-	createAddonStoreCollection,
+	_createAddonDetailsCollection,
 	_createStoreModelFromData,
 	_createStoreCollectionFromJson,
 )
@@ -345,7 +345,7 @@ class _DataManager:
 				callLater(delay=0, callable=onDisplayableError.notify, displayableError=displayableError)
 
 		if self._compatibleAddonCache is None:
-			return createAddonStoreCollection()
+			return _createAddonDetailsCollection()
 		return self._compatibleAddonCache.cachedAddonData
 
 	def getLatestAddons(
@@ -381,7 +381,7 @@ class _DataManager:
 				callLater(delay=0, callable=onDisplayableError.notify, displayableError=displayableError)
 
 		if self._latestAddonCache is None:
-			return createAddonStoreCollection()
+			return _createAddonDetailsCollection()
 		return self._latestAddonCache.cachedAddonData
 
 	def _cacheInstalledAddon(self, addonData: AddonStoreModel):

@@ -94,9 +94,9 @@ class AddonHandlerCache(AutoPropertyObject):
 		from addonStore.models import (
 			_createDetailsFromManifest,
 			Channel,
-			createAddonStoreCollection,
+			_createAddonDetailsCollection,
 		)
-		addons = createAddonStoreCollection()
+		addons = _createAddonDetailsCollection()
 		for addonId in self.installedAddons:
 			addonStoreData = self.installedAddons[addonId]._addonStoreData
 			if addonStoreData:

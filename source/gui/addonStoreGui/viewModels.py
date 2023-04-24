@@ -35,7 +35,7 @@ from addonStore.models import (
 	AddonDetailsModel,
 	AddonStoreModel,
 	Channel,
-	createAddonStoreCollection,
+	_createAddonDetailsCollection,
 )
 from addonStore.status import (
 	_getStatus,
@@ -419,7 +419,7 @@ class AddonActionVM:
 
 class AddonStoreVM:
 	def __init__(self):
-		self._addons = createAddonStoreCollection()
+		self._addons = _createAddonDetailsCollection()
 		self.hasError = extensionPoints.Action()
 		self.onDisplayableError = DisplayableError.OnDisplayableErrorT()
 		"""
