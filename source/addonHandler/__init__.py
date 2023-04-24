@@ -134,9 +134,12 @@ class AddonsState(collections.UserDict):
 	Therefore add-on IDs should be treated as case insensitive.
 	"""
 
-	_DEFAULT_STATE_CONTENT: Dict[AddonStateCategory, CaseInsensitiveSet[str]] = {
-		category: CaseInsensitiveSet() for category in AddonStateCategory
-	}
+	def generateDefaultStateContent() -> Dict[AddonStateCategory, CaseInsensitiveSet[str]]:
+		return {
+			category: CaseInsensitiveSet() for category in AddonStateCategory
+		}
+
+	data: Dict[AddonStateCategory, CaseInsensitiveSet[str]]
 
 	_addonHandlerCache: Optional[AddonHandlerCache]
 
@@ -147,16 +150,16 @@ class AddonsState(collections.UserDict):
 
 	def load(self) -> None:
 		"""Populates state with the default content and then loads values from the config."""
-		self.update(self._DEFAULT_STATE_CONTENT)
+		self.update(self.generateDefaultStateContent())
 		self._addonHandlerCache = AddonHandlerCache()
 		try:
 			# #9038: Python 3 requires binary format when working with pickles.
 			with open(self.statePath, "rb") as f:
-				state: Dict[AddonStateCategory, Union[CaseInsensitiveSet[str], Set[str]]] = pickle.load(f)
-				for s in state:
-					# Make old pickles case insensitive
-					if not isinstance(state[s], CaseInsensitiveSet):
-						state[s] = CaseInsensitiveSet(state[s])
+				pickledState: Dict[str, Set[str]] = pickle.load(f)
+				state = self.generateDefaultStateContent()
+				for category in pickledState:
+					# Make pickles case insensitive
+					state[category] = CaseInsensitiveSet(pickledState[category])
 				self.update(state)
 		except FileNotFoundError:
 			pass  # Clean config - no point logging in this case
@@ -182,9 +185,12 @@ class AddonsState(collections.UserDict):
 				# #9038: Python 3 requires binary format when working with pickles.
 				with open(self.statePath, "wb") as f:
 					# We cannot pickle instance of `AddonsState` directly
-					# since older versions of NVDA aren't aware about this clas and they're expecting state
-					# to be a standard `dict`.
-					pickle.dump(self.data, f, protocol=0)
+					# since older versions of NVDA aren't aware about this class and they're expecting
+					# the state to be using inbuilt data types only.
+					pickleableState: Dict[str, Set[str]] = dict()
+					for category in self.data:
+						pickleableState[category.value] = set(self.data[category])
+					pickle.dump(pickleableState, f, protocol=0)
 			except (IOError, pickle.PicklingError):
 				log.debugWarning("Error saving state", exc_info=True)
 		else:
