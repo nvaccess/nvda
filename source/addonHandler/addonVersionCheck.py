@@ -4,6 +4,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+from typing import Optional
 from typing_extensions import Protocol  # Python 3.8 adds native support
 import addonAPIVersion
 
@@ -64,6 +65,38 @@ class SupportsVersionCheck(Protocol):
 	@property
 	def canOverrideCompatibility(self) -> bool:
 		return hasAddonGotRequiredSupport(self) and not isAddonTested(self)
+
+	def getIncompatibleReason(
+			self,
+			backwardsCompatToVersion: addonAPIVersion.AddonApiVersionT = addonAPIVersion.BACK_COMPAT_TO,
+			currentAPIVersion: addonAPIVersion.AddonApiVersionT = addonAPIVersion.CURRENT,
+	) -> Optional[str]:
+		if not hasAddonGotRequiredSupport(self, currentAPIVersion):
+			return pgettext(
+				"addonStore",
+				# Translators: The reason an add-on is not compatible.
+				# A more recent version of NVDA is required for the add-on to work.
+				# The placeholder will be replaced with Year.Major.Minor (e.g. 2019.1).
+				"An updated version of NVDA is required. "
+				"NVDA version {nvdaVersion} or later."
+				).format(
+			nvdaVersion=addonAPIVersion.formatForGUI(self.minimumNVDAVersion)
+			)
+		elif not isAddonTested(self, backwardsCompatToVersion):
+			# Translators: The reason an add-on is not compatible. The addon relies on older, removed features of NVDA,
+			# an updated add-on is required. The placeholder will be replaced with Year.Major.Minor (EG 2019.1).
+			return pgettext(
+				"addonStore",
+				"An updated version of this add-on is required. "
+				"The minimum supported API version is now {nvdaVersion}. "
+				"This add-on was last tested with {lastTestedNVDAVersion}. "
+				"You can enable this add-on at your own risk. "
+				).format(
+			nvdaVersion=addonAPIVersion.formatForGUI(backwardsCompatToVersion),
+			lastTestedNVDAVersion=addonAPIVersion.formatForGUI(self.lastTestedNVDAVersion),
+			)
+		else:
+			return None
 
 
 def hasAddonGotRequiredSupport(

@@ -436,7 +436,8 @@ class AddonDetails(
 		self._refresh()
 
 	def _refresh(self):
-		details = None if not self._detailsVM.listItem else self._detailsVM.listItem.model
+		details = None if self._detailsVM.listItem is None else self._detailsVM.listItem.model
+		status = None if self._detailsVM.listItem is None else self._detailsVM.listItem.status
 
 		with guiHelper.autoThaw(self):
 			# AppendText is used to build up the details so that formatting can be set as text is added, via
@@ -459,8 +460,8 @@ class AddonDetails(
 					self.defaultStyle
 				)
 
-				if self._detailsVM.listItem:
-					self.statusTextCtrl.SetValue(self._detailsVM.listItem.status.displayString)
+				if status:
+					self.statusTextCtrl.SetValue(status.displayString)
 
 				self._appendDetailsLabelValue(
 					# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
@@ -493,6 +494,14 @@ class AddonDetails(
 						# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 						pgettext("addonStore", "Source Code:"),
 						details.sourceURL, URL=details.sourceURL
+					)
+
+				incompatibleReason = details.getIncompatibleReason()
+				if incompatibleReason:
+					self._appendDetailsLabelValue(
+						# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+						pgettext("addonStore", "Incompatible Reason:"),
+						incompatibleReason
 					)
 				self.contentsPanel.Show()
 
