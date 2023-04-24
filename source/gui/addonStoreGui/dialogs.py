@@ -26,7 +26,7 @@ class ErrorAddonInstallDialogWithCancelButton(ErrorAddonInstallDialog):
 			self,
 			id=wx.ID_CANCEL,
 			# Translators: A button in the addon installation blocked dialog which will dismiss the dialog.
-			label=_("Cancel")
+			label=pgettext("addonStore", "Cancel")
 		)
 		cancelButton.SetDefault()
 		cancelButton.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.CANCEL))
@@ -36,7 +36,10 @@ def _shouldProceedWhenInstalledAddonVersionUnknown(
 		parent: wx.Window,
 		addon: AddonDetailsModel
 ) -> bool:
-	incompatibleMessage = _(
+	# an installed add-on should have an addon Handler Model
+	assert addon._addonHandlerModel
+	incompatibleMessage = pgettext(
+		"addonStore",
 		# Translators: The message displayed when installing an incompatible add-on package,
 		# because it requires a new version than is currently installed.
 		"Warning: add-on installation may result in downgrade: {name}. "
@@ -54,7 +57,7 @@ def _shouldProceedWhenInstalledAddonVersionUnknown(
 	return ErrorAddonInstallDialogWithCancelButton(
 		parent=parent,
 		# Translators: The title of a dialog presented when an error occurs.
-		title=_("Add-on not compatible"),
+		title=pgettext("addonStore", "Add-on not compatible"),
 		message=incompatibleMessage,
 		showAddonInfoFunction=lambda: _showAddonInfo(addon)
 	).ShowModal() == wx.OK
@@ -64,14 +67,15 @@ def _shouldProceedToRemoveAddonDialog(
 		addon: "SupportsVersionCheck"
 ) -> bool:
 	return messageBox(
-		(_(
+		pgettext(
+			"addonStore",
 			# Translators: Presented when attempting to remove the selected add-on.
 			# {addon} is replaced with the add-on name.
 			"Are you sure you wish to remove the {addon} add-on from NVDA? "
 			"This cannot be undone."
-		)).format(addon=addon.name),
+		).format(addon=addon.name),
 		# Translators: Title for message asking if the user really wishes to remove the selected Addon.
-		_("Remove Add-on"),
+		pgettext("addonStore", "Remove Add-on"),
 		wx.YES_NO | wx.NO_DEFAULT | wx.ICON_WARNING
 	) == wx.YES
 
@@ -80,7 +84,8 @@ def _shouldProceedWhenAddonTooOldDialog(
 		parent: wx.Window,
 		addon: AddonDetailsModel
 ) -> bool:
-	incompatibleMessage = _(
+	incompatibleMessage = pgettext(
+		"addonStore",
 		# Translators: The message displayed when installing an incompatible add-on package,
 		# because it requires a new version than is currently installed.
 		"Warning: add-on is incompatible: {name} {version}. "
@@ -98,7 +103,7 @@ def _shouldProceedWhenAddonTooOldDialog(
 	return ErrorAddonInstallDialogWithCancelButton(
 		parent=parent,
 		# Translators: The title of a dialog presented when an error occurs.
-		title=_("Add-on not compatible"),
+		title=pgettext("addonStore", "Add-on not compatible"),
 		message=incompatibleMessage,
 		showAddonInfoFunction=lambda: _showAddonInfo(addon)
 	).ShowModal() == wx.OK
@@ -106,7 +111,8 @@ def _shouldProceedWhenAddonTooOldDialog(
 
 def _showAddonInfo(addon: AddonDetailsModel) -> None:
 	message = [
-		_(
+		pgettext(
+			"addonStore",
 			# Translators: message shown in the Addon Information dialog.
 			"{summary} ({name})\n"
 			"Version: {version}\n"
@@ -122,17 +128,17 @@ def _showAddonInfo(addon: AddonDetailsModel) -> None:
 	]
 	if addon.homepage:
 		# Translators: the url part of the About Add-on information
-		message.append(_("Homepage: {url}").format(url=addon.homepage))
+		message.append(pgettext("addonStore", "Homepage: {url}").format(url=addon.homepage))
 	minimumNVDAVersion = addonAPIVersion.formatForGUI(addon.minimumNVDAVersion)
 	message.append(
 		# Translators: the minimum NVDA version part of the About Add-on information
-		_("Minimum required NVDA version: {}").format(minimumNVDAVersion)
+		pgettext("addonStore", "Minimum required NVDA version: {}").format(minimumNVDAVersion)
 	)
 	lastTestedNVDAVersion = addonAPIVersion.formatForGUI(addon.lastTestedNVDAVersion)
 	message.append(
 		# Translators: the last NVDA version tested part of the About Add-on information
-		_("Last NVDA version tested: {}").format(lastTestedNVDAVersion)
+		pgettext("addonStore", "Last NVDA version tested: {}").format(lastTestedNVDAVersion)
 	)
 	# Translators: title for the Addon Information dialog
-	title = _("Add-on Information")
+	title = pgettext("addonStore", "Add-on Information")
 	messageBox("\n".join(message), title, wx.OK)
