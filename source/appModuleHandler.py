@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Joseph Lee,
-# Babbage B.V., Mozilla Corporation, Julien Cochuyt, Leonard de Ruijter
+# Babbage B.V., Mozilla Corporation, Julien Cochuyt, Leonard de Ruijter, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -48,11 +48,11 @@ from systemUtils import getCurrentProcessLogonSessionId, getProcessLogonSessionI
 
 # Dictionary of processID:appModule pairs used to hold the currently running modules
 runningTable: Dict[int, AppModule] = {}
-_CORE_APP_MODULES_PATH: os.PathLike = appModules.__path__[0]
+_CORE_APP_MODULES_PATH: os.PathLike = os.path.dirname(appModules.__spec__.origin)
 _getAppModuleLock=threading.RLock()
 #: Notifies when another application is taking foreground.
 #: This allows components to react upon application switches.
-#: For example, braille triggers bluetooth polling for braille displaysf necessary.
+#: For example, braille triggers bluetooth polling for braille displays if necessary.
 #: Handlers are called with no arguments.
 post_appSwitch = extensionPoints.Action()
 

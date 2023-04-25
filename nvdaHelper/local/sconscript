@@ -14,6 +14,8 @@
 
 Import([
 	'env',
+	'detoursLib',
+	'apiHookObj',
 ])
 
 winIPCUtilsObj=env.Object("./winIPCUtils","../common/winIPCUtils.cpp")
@@ -71,6 +73,7 @@ localLib=env.SharedLibrary(
 	target="nvdaHelperLocal",
 	source=[
 		env['projectResFile'],
+		apiHookObj,
 		"nvdaHelperLocal.cpp",
 		"beeps.cpp",
 		vbufRPCClientSource,
@@ -97,6 +100,7 @@ localLib=env.SharedLibrary(
 		"oleaut32",
 		"rpcrt4",
 		"shlwapi",
+		detoursLib,
 	],
 )
 

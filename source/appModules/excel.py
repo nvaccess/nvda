@@ -10,6 +10,8 @@ import eventHandler
 import api
 import UIAHandler
 from NVDAObjects.UIA import UIA
+import winUser
+import winVersion
 import controlTypes
 import appModuleHandler
 from NVDAObjects.window import DisplayModelEditableText
@@ -58,6 +60,21 @@ class Excel6_WhenUIAEnabled(IAccessible):
 
 
 class AppModule(appModuleHandler.AppModule):
+
+	def isGoodUIAWindow(self, hwnd: int) -> bool:
+		windowClass = winUser.getClassName(hwnd)
+		versionMajor = int(self.productVersion.split('.')[0])
+		if (
+			versionMajor >= 16
+			and windowClass == "RICHEDIT60W"
+			and winVersion.getWinVer() >= winVersion.WIN10
+		):
+			# RICHEDIT60W In Excel 2016+ on Windows 10+
+			# has a very good UI Automation implementation,
+			# Though oddly IsServerSideProvider returns false for these windows.
+			# Examples: Password field in the Protect sheet dialog.
+			return True
+		return False
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		windowClass = obj.windowClassName

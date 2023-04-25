@@ -53,7 +53,7 @@ _brailleGui: Optional[BrailleViewerFrame] = None
 # Extension points action:
 # Triggered every time the Braille Viewer is created / shown or hidden / destroyed.
 # Callback definition: Callable(created: bool) -> None
-#   created - True for created/shown, False for hidden/destructed.
+#   created - True for created/shown, False for hidden/destroyed.
 postBrailleViewerToolToggledAction = extensionPoints.Action()
 DEFAULT_NUM_CELLS = config.conf['brailleViewer']['defaultCellCount']
 
