@@ -1725,8 +1725,7 @@ def getPropertiesSpeech(  # noqa: C901
 		textList.append(description)
 	# sometimes keyboardShortcut key is present but value is None
 	keyboardShortcut: Optional[str] = propertyValues.get('keyboardShortcut')
-	if keyboardShortcut:
-		textList.append(keyboardShortcut)
+	textList.extend(getKeyboardShortcutSpeech(keyboardShortcut))
 	if includeTableCellCoords and cellCoordsText:
 		textList.append(cellCoordsText)
 	if cellCoordsText or rowNumber or columnNumber:
@@ -1859,6 +1858,58 @@ def getPropertiesSpeech(  # noqa: C901
 				textList.append(levelTranslation)
 	types.logBadSequenceTypes(textList)
 	return textList
+
+
+def getKeyboardShortcutSpeech(keyboardShortcut: Optional[str]) -> SpeechSequence:
+	log.info(f'Calling getKeyboardShortcutSequence with keyboardShortcut={keyboardShortcut}')
+	SHORTCUT_KEY_LIST_SEPARATOR = '  '
+	seq = []
+	if not keyboardShortcut:
+		return seq
+	locale = getCurrentLanguage()
+	for shortcut in keyboardShortcut.split(SHORTCUT_KEY_LIST_SEPARATOR):
+		if len(seq) > 0:
+			seq.append(SHORTCUT_KEY_LIST_SEPARATOR)
+		keyList, separator = splitShortcut(shortcut)
+		log.info(f'keyList={keyList}, separator={separator}')
+		seqShortcut = []
+		for key in keyList:
+			if len(seqShortcut) > 0:
+				seqShortcut.append(separator)
+			if len(key) > 1:
+				seqShortcut.append(key)
+				continue
+			keySymbol = characterProcessing.processSpeechSymbol(locale, key)
+			if keySymbol != key:
+				seqShortcut.append(keySymbol)
+				continue
+			seqShortcut.append(CharacterModeCommand(True))
+			seqShortcut.append(key)
+			seqShortcut.append(CharacterModeCommand(False))
+		seq.extend(seqShortcut)
+	seqOut = []
+	for item in seq:
+		if len(seqOut) > 0 and isinstance(seqOut[-1], str) and isinstance(item, str):
+			seqOut[-1] = seqOut[-1] + SHORTCUT_KEY_LIST_SEPARATOR + item
+		else:
+			seqOut.append(item)
+	return seqOut
+
+
+def splitShortcut(shortcut):
+	if ', ' in shortcut:
+		separator = ', '
+	elif ' + ' in shortcut:
+		separator = ' + '
+	elif '+' in shortcut:
+		separator = '+'
+	else:
+		separator = None
+	if separator:
+		keyList = shortcut.split(separator)
+	else:
+		keyList = [shortcut]
+	return keyList, separator
 
 
 def _shouldSpeakContentFirst(
