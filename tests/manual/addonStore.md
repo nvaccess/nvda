@@ -1,7 +1,7 @@
 
 ## Browsing add-ons
 
-### Browse add-ons by status
+### Filter add-ons by status
 Add-ons can be filtered by status.
 
 1. Open the add-on store
@@ -11,6 +11,13 @@ Add-ons can be filtered by status.
     - Updatable: should include installed add-ons which can be updated or replaced by an add-on store version
     - Disabled: should include manually disabled add-ons and add-ons disabled due to incompatibility
     - Available: should include add-ons available for install
+
+### Filter add-ons by channel
+Add-ons can be filtered by channel: e.g. stable, beta, dev.
+
+1. Open the add-on store
+1. Jump to the filter-by channel field (`alt+n`)
+1. Filter by each channel grouping, ensure expected add-ons are displayed.
 
 ### Filtering by add-on information
 Add-ons can be filtered by display name, publisher and description.

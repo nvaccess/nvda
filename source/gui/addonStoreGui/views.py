@@ -23,6 +23,7 @@ from addonHandler import (
 )
 from addonStore.models import (
 	AddonStoreModel,
+	_channelFilters,
 )
 from addonStore.status import (
 	_statusFilters,
@@ -77,10 +78,12 @@ class AddonVirtualList(
 		self.InsertColumn(0, pgettext("addonStore", "Name"))
 		# Translators: The name of the column that contains the addons version string. In the add-on store dialog.
 		self.InsertColumn(1, pgettext("addonStore", "Version"))
+		# Translators: The name of the column that contains the channel of the addon (e.g stable, beta, dev).
+		self.InsertColumn(2, pgettext("addonStore", "Channel"))
 		# Translators: The name of the column that contains the addons publisher. In the add-on store dialog.
-		self.InsertColumn(2, pgettext("addonStore", "Publisher"))
+		self.InsertColumn(3, pgettext("addonStore", "Publisher"))
 		self.InsertColumn(
-			3,
+			4,
 			# Translators: The name of the column that contains the status of the addon (E.G. available, downloading
 			# installing). In the add-on store dialog.
 			pgettext("addonStore", "Status"),
@@ -436,7 +439,8 @@ class AddonDetails(
 		self._refresh()
 
 	def _refresh(self):
-		details = None if not self._detailsVM.listItem else self._detailsVM.listItem.model
+		details = None if self._detailsVM.listItem is None else self._detailsVM.listItem.model
+		status = None if self._detailsVM.listItem is None else self._detailsVM.listItem.status
 
 		with guiHelper.autoThaw(self):
 			# AppendText is used to build up the details so that formatting can be set as text is added, via
@@ -459,8 +463,8 @@ class AddonDetails(
 					self.defaultStyle
 				)
 
-				if self._detailsVM.listItem:
-					self.statusTextCtrl.SetValue(self._detailsVM.listItem.status.displayString)
+				if status:
+					self.statusTextCtrl.SetValue(status.displayString)
 
 				self._appendDetailsLabelValue(
 					# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
@@ -493,6 +497,14 @@ class AddonDetails(
 						# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 						pgettext("addonStore", "Source Code:"),
 						details.sourceURL, URL=details.sourceURL
+					)
+
+				incompatibleReason = details.getIncompatibleReason()
+				if incompatibleReason:
+					self._appendDetailsLabelValue(
+						# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+						pgettext("addonStore", "Incompatible Reason:"),
+						incompatibleReason
 					)
 				self.contentsPanel.Show()
 
@@ -576,7 +588,11 @@ class AddonStoreDialog(SettingsDialog):
 	def __init__(self, parent: wx.Window, storeVM: AddonStoreVM):
 		self._storeVM = storeVM
 		self._storeVM.onDisplayableError.register(self.handleDisplayableError)
-		super().__init__(parent, resizeable=True)
+		super().__init__(parent, resizeable=True, buttons={wx.CLOSE})
+
+	def _enterActivatesOk_ctrlSActivatesApply(self, evt: wx.KeyEvent):
+		"""Disables parent behaviour which overrides behaviour for enter and ctrl+s"""
+		evt.Skip()
 
 	@staticmethod
 	def handleDisplayableError(displayableError: DisplayableError):
@@ -584,6 +600,7 @@ class AddonStoreDialog(SettingsDialog):
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer):
 		browseCtrlHelper = guiHelper.BoxSizerHelper(self, wx.HORIZONTAL)
+
 		self.statusFilterCtrl = cast(wx.Choice, browseCtrlHelper.addLabeledControl(
 			# Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
 			labelText=pgettext("addonStore", "&Filter by status:"),
@@ -592,14 +609,26 @@ class AddonStoreDialog(SettingsDialog):
 		))
 		self.statusFilterCtrl.Bind(wx.EVT_CHOICE, self.onStatusFilterChange, self.statusFilterCtrl)
 		self.statusFilterCtrl.SetSelection(0)
+		self.bindHelpEvent("AddonStoreFilterStatus", self.statusFilterCtrl)
 
-		self.filterCtrl = cast(wx.TextCtrl, browseCtrlHelper.addLabeledControl(
+		self.channelFilterCtrl = cast(wx.Choice, browseCtrlHelper.addLabeledControl(
+			# Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
+			labelText=pgettext("addonStore", "Cha&nnel:"),
+			wxCtrlClass=wx.Choice,
+			choices=list(_channelFilters.keys()),
+		))
+		self.channelFilterCtrl.Bind(wx.EVT_CHOICE, self.onChannelFilterChange, self.channelFilterCtrl)
+		self.channelFilterCtrl.SetSelection(0)
+		self.bindHelpEvent("AddonStoreFilterChannel", self.channelFilterCtrl)
+
+		self.searchFilterCtrl = cast(wx.TextCtrl, browseCtrlHelper.addLabeledControl(
 			# Translators: The label of a text field to filter the list of add-ons in the add-on store dialog.
 			labelText=pgettext("addonStore", "&Search:"),
 			wxCtrlClass=wx.TextCtrl,
 		))
-		self.filterCtrl.Bind(wx.EVT_TEXT, self.onFilterTextChange, self.filterCtrl)
+		self.searchFilterCtrl.Bind(wx.EVT_TEXT, self.onFilterTextChange, self.searchFilterCtrl)
 		settingsSizer.Add(browseCtrlHelper.sizer, flag=wx.EXPAND)
+		self.bindHelpEvent("AddonStoreFilterSearch", self.searchFilterCtrl)
 
 		settingsSizer.AddSpacer(5)
 
@@ -639,6 +668,8 @@ class AddonStoreDialog(SettingsDialog):
 		externalInstallLabelText = pgettext("addonStore", "Install from e&xternal source")
 		self.externalInstallButton = generalActions.addButton(self, label=externalInstallLabelText)
 		self.externalInstallButton.Bind(wx.EVT_BUTTON, self.openExternalInstall, self.externalInstallButton)
+		self.bindHelpEvent("AddonStoreInstalling", self.externalInstallButton)
+
 		settingsSizer.Add(generalActions.sizer)
 		self.SetMinSize(self.mainSizer.GetMinSize())
 
@@ -648,7 +679,7 @@ class AddonStoreDialog(SettingsDialog):
 	def _onWindowDestroy(self, evt: wx.WindowDestroyEvent):
 		super()._onWindowDestroy(evt)
 
-	def onOk(self, evt: wx.CommandEvent):
+	def onClose(self, evt: wx.CommandEvent):
 		# Translators: Title for message shown prior to installing add-ons when closing the add-on store dialog.
 		installationPromptTitle = pgettext("addonStore", "Add-on installation")
 		numInProgress = len(self._storeVM._downloader.progress)
@@ -688,7 +719,7 @@ class AddonStoreDialog(SettingsDialog):
 			addonGui.promptUserForRestart()
 
 		# let the dialog exit.
-		super().onOk(evt)
+		super().onClose(evt)
 
 	def getStatusFilterLabel(self) -> str:
 		index = self.statusFilterCtrl.GetSelection()
@@ -700,8 +731,14 @@ class AddonStoreDialog(SettingsDialog):
 		self._storeVM._filteredStatuses = _statusFilters[statusFiltersKey]
 		self._storeVM.refresh()
 
+	def onChannelFilterChange(self, evt: wx.EVT_CHOICE):
+		index = self.channelFilterCtrl.GetSelection()
+		_channelFilterKey = list(_channelFilters.keys())[index]
+		self._storeVM._filteredChannels = _channelFilters[_channelFilterKey]
+		self._storeVM.refresh()
+
 	def onFilterTextChange(self, evt: wx.EVT_TEXT):
-		filterText = evt.GetEventObject().GetValue()
+		filterText = self.searchFilterCtrl.GetValue()
 		self.filter(filterText)
 
 	def filter(self, filterText: str):
