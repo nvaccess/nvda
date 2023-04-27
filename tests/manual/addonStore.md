@@ -16,7 +16,7 @@ Add-ons can be filtered by status.
 Add-ons can be filtered by channel: e.g. stable, beta, dev.
 
 1. Open the add-on store
-1. Jump to the filter-by channel field (`alt+c`)
+1. Jump to the filter-by channel field (`alt+n`)
 1. Filter by each channel grouping, ensure expected add-ons are displayed.
 
 ### Filtering by add-on information
