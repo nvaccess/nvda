@@ -926,7 +926,7 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 			):
 				return self.presType_layout
 			# Groupings should only be considered layout (I.e. filtered out)
-			# if they also don't have any position information as well as no name or description. 
+			# if they also don't have any position information as well as no name or description.
 			if role == controlTypes.Role.GROUPING and not self.name and not self.description and not self.positionInfo:
 				return self.presType_layout
 			if role == controlTypes.Role.TABLE and not config.conf["documentFormatting"]["reportTables"]:
