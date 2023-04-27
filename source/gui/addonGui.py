@@ -789,24 +789,6 @@ class IncompatibleAddonsDialog(
 		self.CentreOnScreen()
 		self.addonsList.SetFocus()
 
-	def _getIncompatReason(self, addon):
-		if not addonVersionCheck.hasAddonGotRequiredSupport(
-			addon,
-			currentAPIVersion=self._APIVersion
-		):
-			# Translators: The reason an add-on is not compatible. A more recent version of NVDA is
-			# required for the add-on to work. The placeholder will be replaced with Year.Major.Minor (EG 2019.1).
-			return _("An updated version of NVDA is required. NVDA version {} or later."
-			).format(addonAPIVersion.formatForGUI(addon.minimumNVDAVersion))
-		elif not addonVersionCheck.isAddonTested(
-			addon,
-			backwardsCompatToVersion=self._APIBackwardsCompatToVersion
-		):
-			# Translators: The reason an add-on is not compatible. The addon relies on older, removed features of NVDA,
-			# an updated add-on is required. The placeholder will be replaced with Year.Major.Minor (EG 2019.1).
-			return _("An updated version of this add-on is required. The minimum supported API version is now {}"
-			).format(addonAPIVersion.formatForGUI(self._APIBackwardsCompatToVersion))
-
 	def refreshAddonsList(self):
 		self.addonsList.DeleteAllItems()
 		self.curAddons=[]
@@ -814,7 +796,7 @@ class IncompatibleAddonsDialog(
 			self.addonsList.Append((
 				addon.manifest['summary'],
 				addon.version,
-				self._getIncompatReason(addon)
+				addon.getIncompatibleReason(self._APIBackwardsCompatToVersion, self._APIVersion),
 			))
 			self.curAddons.append(addon)  # onAbout depends on being able to recall the current addon based on selected index
 		activeIndex=0
