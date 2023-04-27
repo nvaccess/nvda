@@ -12,7 +12,6 @@ from concurrent.futures import (
 	ThreadPoolExecutor,
 )
 from core import callLater
-import dataclasses
 from datetime import datetime, timedelta
 import json
 import os
@@ -27,19 +26,23 @@ from typing import (
 )
 
 import requests
-from requests.structures import CaseInsensitiveDict
 
 import addonAPIVersion
-from logHandler import log
 import globalVars
+from logHandler import log
 from utils.security import sha256_checksum
 
 from .models import (
+	AddonStoreModel,
+	CachedAddonsModel,
 	Channel,
+	_createAddonDetailsCollection,
 	_createStoreModelFromData,
 	_createStoreCollectionFromJson,
-	AddonStoreModel,
 )
+
+if TYPE_CHECKING:
+	from .models import AddonDetailsCollectionT
 
 addonDataManager: Optional["_DataManager"] = None
 
@@ -62,18 +65,6 @@ def _getCurrentApiVersionForURL() -> str:
 def _getAddonStoreURL(channel: Channel, lang: str, nvdaApiVersion: str) -> str:
 	_baseURL = "https://nvaccess.org/addonStore/"
 	return _baseURL + f"{lang}/{channel.value}/{nvdaApiVersion}.json"
-
-
-@dataclasses.dataclass
-class CachedAddonsModel:
-	availableAddons: CaseInsensitiveDict["AddonStoreModel"]
-	"""
-	Add-ons that have the same ID except differ in casing cause a path collision,
-	as add-on IDs are installed to a case insensitive path.
-	Therefore addon IDs should be treated as case insensitive.
-	"""
-	cachedAt: datetime
-	nvdaAPIVersion: addonAPIVersion.AddonApiVersionT
 
 
 class AddonFileDownloader:
@@ -315,7 +306,7 @@ class _DataManager:
 			return None
 		fetchTime = datetime.fromisoformat(cacheData["cacheDate"])
 		return CachedAddonsModel(
-			availableAddons=_createStoreCollectionFromJson(cacheData["data"]),
+			cachedAddonData=_createStoreCollectionFromJson(cacheData["data"]),
 			cachedAt=fetchTime,
 			nvdaAPIVersion=tuple(cacheData["nvdaAPIVersion"]),  # loads as list
 		)
@@ -323,7 +314,7 @@ class _DataManager:
 	def getLatestCompatibleAddons(
 			self,
 			onDisplayableError: DisplayableError.OnDisplayableErrorT
-	) -> CaseInsensitiveDict["AddonStoreModel"]:
+	) -> "AddonDetailsCollectionT":
 		shouldRefreshData = (
 			not self._compatibleAddonCache
 			or self._compatibleAddonCache.nvdaAPIVersion != addonAPIVersion.CURRENT
@@ -339,7 +330,7 @@ class _DataManager:
 					fetchTime=fetchTime,
 				)
 				self._compatibleAddonCache = CachedAddonsModel(
-					availableAddons=_createStoreCollectionFromJson(decodedApiData),
+					cachedAddonData=_createStoreCollectionFromJson(decodedApiData),
 					cachedAt=fetchTime,
 					nvdaAPIVersion=addonAPIVersion.CURRENT,
 				)
@@ -352,14 +343,15 @@ class _DataManager:
 					pgettext("addonStore", "Add-on data update failure"),
 				)
 				callLater(delay=0, callable=onDisplayableError.notify, displayableError=displayableError)
+
 		if self._compatibleAddonCache is None:
-			return CaseInsensitiveDict()
-		return self._compatibleAddonCache.availableAddons
+			return _createAddonDetailsCollection()
+		return self._compatibleAddonCache.cachedAddonData
 
 	def getLatestAddons(
 			self,
 			onDisplayableError: DisplayableError.OnDisplayableErrorT
-	) -> CaseInsensitiveDict["AddonStoreModel"]:
+	) -> "AddonDetailsCollectionT":
 		shouldRefreshData = (
 			not self._latestAddonCache
 			or _DataManager._cachePeriod < (datetime.now() - self._latestAddonCache.cachedAt)
@@ -374,7 +366,7 @@ class _DataManager:
 					fetchTime=fetchTime,
 				)
 				self._latestAddonCache = CachedAddonsModel(
-					availableAddons=_createStoreCollectionFromJson(decodedApiData),
+					cachedAddonData=_createStoreCollectionFromJson(decodedApiData),
 					cachedAt=fetchTime,
 					nvdaAPIVersion=addonAPIVersion.LATEST,
 				)
@@ -387,9 +379,10 @@ class _DataManager:
 					pgettext("addonStore", "Add-on data update failure"),
 				)
 				callLater(delay=0, callable=onDisplayableError.notify, displayableError=displayableError)
+
 		if self._latestAddonCache is None:
-			return CaseInsensitiveDict()
-		return self._latestAddonCache.availableAddons
+			return _createAddonDetailsCollection()
+		return self._latestAddonCache.cachedAddonData
 
 	def _cacheInstalledAddon(self, addonData: AddonStoreModel):
 		if not addonData:

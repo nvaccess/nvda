@@ -11,8 +11,6 @@ from os import (
 	PathLike,
 	startfile,
 )
-
-from requests.structures import CaseInsensitiveDict
 from typing import (
 	Callable,
 	Set,
@@ -25,12 +23,19 @@ from typing import (
 )
 import threading
 
+from requests.structures import CaseInsensitiveDict
+
 import addonHandler
 from addonHandler import addonVersionCheck
-from addonStore.dataManager import addonDataManager
+from addonStore.dataManager import (
+	addonDataManager,
+)
 from addonStore.models import (
+	_channelFilters,
 	AddonDetailsModel,
 	AddonStoreModel,
+	Channel,
+	_createAddonDetailsCollection,
 )
 from addonStore.status import (
 	_getStatus,
@@ -53,6 +58,7 @@ from .dialogs import (
 if TYPE_CHECKING:
 	# Remove when https://github.com/python/typing/issues/760 is resolved
 	from _typeshed import SupportsLessThan
+	from addonStore.models import AddonDetailsCollectionT
 
 
 class AddonListItemVM:
@@ -82,8 +88,8 @@ class AddonListItemVM:
 			core.callLater(delay=0, callable=self.updated.notify, addonListItemVM=self)
 
 	@property
-	def Id(self) -> Optional[str]:
-		return self._model.addonId
+	def Id(self) -> str:
+		return self._model.listItemVMId
 
 	def __repr__(self) -> str:
 		return f"{self.__class__.__name__}: {self.Id}, {self.status}"
@@ -114,10 +120,23 @@ class AddonDetailsVM:
 		core.callLater(delay=0, callable=self.updated.notify, addonDetailsVM=self)
 
 
+if TYPE_CHECKING:
+	AddonListItemVMCollectionT = Dict[Channel, CaseInsensitiveDict["AddonListItemVM"]]
+
+
+def createAddonListItemVMCollection() -> "AddonListItemVMCollectionT":
+	return {
+		channel: CaseInsensitiveDict()
+		for channel in Channel
+		if channel != Channel.ALL
+	}
+
+
 class AddonListVM:
 	presentedAttributes = (
 		"displayName",
 		"addonVersionName",
+		"channel",
 		"publisher",
 		"status",  # NVDA state for this addon, see L{AvailableAddonStatus}
 	)
@@ -126,7 +145,7 @@ class AddonListVM:
 			self,
 			addons: List[AddonListItemVM],
 	):
-		self._addons: Dict[str, AddonListItemVM] = {}
+		self._addons: CaseInsensitiveDict[AddonListItemVM] = CaseInsensitiveDict()
 		self.itemUpdated = extensionPoints.Action()
 		self.updated = extensionPoints.Action()
 		self.selectionChanged = extensionPoints.Action()
@@ -163,10 +182,10 @@ class AddonListVM:
 			_addonListItemVM.updated.unregister(self._itemDataUpdated)
 
 		# set new ID:listItemVM mapping.
-		self._addons: Dict[str, AddonListItemVM] = {
+		self._addons = CaseInsensitiveDict({
 			vm.Id: vm
 			for vm in listVMs
-		}
+		})
 		self._updateAddonListing()
 
 		# allow new listItemVMs to notify of updates.
@@ -199,6 +218,8 @@ class AddonListVM:
 		assert attrName in AddonListVM.presentedAttributes
 		if attrName == "status":  # special handling, not on the model.
 			return listItemVM.status.displayString
+		if attrName == "channel":
+			return listItemVM.model.channel.displayString
 		return getattr(listItemVM.model, attrName)
 
 	def getCount(self) -> int:
@@ -225,7 +246,9 @@ class AddonListVM:
 		return selectedItemVM
 
 	def getSelection(self) -> Optional[AddonListItemVM]:
-		return self._addons.get(self.selectedAddonId, None)
+		if self.selectedAddonId is None:
+			return None
+		return self._addons.get(self.selectedAddonId)
 
 	def _validate(
 			self,
@@ -396,6 +419,8 @@ class AddonActionVM:
 
 class AddonStoreVM:
 	def __init__(self):
+		self._addons = _createAddonDetailsCollection()
+		self.hasError = extensionPoints.Action()
 		self.onDisplayableError = DisplayableError.OnDisplayableErrorT()
 		"""
 		An extension point used to notify the add-on store VM when an error
@@ -406,17 +431,17 @@ class AddonStoreVM:
 		@param displayableError: Error that can be displayed to the user.
 		@type displayableError: gui.message.DisplayableError
 		"""
-		self._addons: CaseInsensitiveDict[AddonDetailsModel] = CaseInsensitiveDict()
-		"""
-		Add-ons that have the same ID except differ in casing cause a path collision,
-		as add-on IDs are installed to a case insensitive path.
-		Therefore addon IDs should be treated as case insensitive.
-		"""
 		self._filteredStatuses: Set[AvailableAddonStatus] = next(iter(_statusFilters.values()))
 		"""
 		Filters the add-on list view model by add-on status.
 		Add-ons with a status in _filteredStatuses should be displayed in the list.
 		Uses first filter in _statusFilters as default.
+		"""
+		self._filteredChannels: Set[Channel] = next(iter(_channelFilters.values()))
+		"""
+		Filters the add-on list view model by add-on channel.
+		Add-ons with a channel in _filteredChannels should be displayed in the list.
+		Uses first filter in _channelFilters as default.
 		"""
 
 		self._downloader = addonDataManager.getFileDownloader()
@@ -443,14 +468,14 @@ class AddonStoreVM:
 		return [
 			AddonActionVM(
 				# Translators: Label for a button that installs the selected addon
-				displayName=_("&Install"),
+				displayName=pgettext("addonStore", "&Install"),
 				actionHandler=self.getAddon,
 				validCheck=lambda aVM: aVM.status == AvailableAddonStatus.AVAILABLE,
 				listItemVM=selectedListItem
 			),
 			AddonActionVM(
 				# Translators: Label for a button that installs the selected addon
-				displayName=_("&Install (override incompatibility)"),
+				displayName=pgettext("addonStore", "&Install (override incompatibility)"),
 				actionHandler=self.installOverrideIncompatibilityForAddon,
 				validCheck=lambda aVM: (
 					aVM.status == AvailableAddonStatus.INCOMPATIBLE
@@ -460,21 +485,21 @@ class AddonStoreVM:
 			),
 			AddonActionVM(
 				# Translators: Label for a button that installs the selected addon
-				displayName=_("&Update"),
+				displayName=pgettext("addonStore", "&Update"),
 				actionHandler=self.getAddon,
 				validCheck=lambda aVM: aVM.status == AvailableAddonStatus.UPDATE,
 				listItemVM=selectedListItem
 			),
 			AddonActionVM(
 				# Translators: Label for a button that installs the selected addon
-				displayName=_("&Replace"),
+				displayName=pgettext("addonStore", "Re&place"),
 				actionHandler=self.replaceAddon,
 				validCheck=lambda aVM: aVM.status == AvailableAddonStatus.REPLACE_SIDE_LOAD,
 				listItemVM=selectedListItem
 			),
 			AddonActionVM(
 				# Translators: Label for a button that installs the selected addon
-				displayName=_("&Disable"),
+				displayName=pgettext("addonStore", "&Disable"),
 				actionHandler=self.disableAddon,
 				validCheck=lambda aVM: aVM.status not in (
 					AvailableAddonStatus.DISABLED,
@@ -487,7 +512,7 @@ class AddonStoreVM:
 			),
 			AddonActionVM(
 				# Translators: Label for a button that installs the selected addon
-				displayName=_("&Enable"),
+				displayName=pgettext("addonStore", "&Enable"),
 				actionHandler=self.enableAddon,
 				validCheck=lambda aVM: (
 					aVM.status == AvailableAddonStatus.DISABLED
@@ -497,7 +522,7 @@ class AddonStoreVM:
 			),
 			AddonActionVM(
 				# Translators: Label for a button that installs the selected addon
-				displayName=_("&Enable (override incompatibility)"),
+				displayName=pgettext("addonStore", "&Enable (override incompatibility)"),
 				actionHandler=self.enableOverrideIncompatibilityForAddon,
 				validCheck=lambda aVM: (
 					aVM.status == AvailableAddonStatus.INCOMPATIBLE_DISABLED
@@ -507,7 +532,7 @@ class AddonStoreVM:
 			),
 			AddonActionVM(
 				# Translators: Label for a button that removes the selected addon
-				displayName=_("&Remove"),
+				displayName=pgettext("addonStore", "&Remove"),
 				actionHandler=self.removeAddon,
 				validCheck=lambda aVM: aVM.status not in (
 					AvailableAddonStatus.AVAILABLE,
@@ -518,7 +543,7 @@ class AddonStoreVM:
 			),
 			AddonActionVM(
 				# Translators: Label for a button that installs the selected addon
-				displayName=_("Add-on &help"),
+				displayName=pgettext("addonStore", "Add-on &help"),
 				actionHandler=self.helpAddon,
 				validCheck=lambda aVM: aVM.status not in (
 					AvailableAddonStatus.AVAILABLE,
@@ -599,7 +624,7 @@ class AddonStoreVM:
 		self._downloader.download(listItemVM.model, self._downloadComplete, self.onDisplayableError)
 
 	def _downloadComplete(self, addonDetails: AddonStoreModel, fileDownloaded: Optional[PathLike]):
-		listItemVM: Optional[AddonListItemVM] = self.listVM._addons[addonDetails.addonId]
+		listItemVM: Optional[AddonListItemVM] = self.listVM._addons[addonDetails.listItemVMId]
 		if listItemVM is None:
 			log.error(f"No list item VM for addon with id: {addonDetails.addonId}")
 			return
@@ -650,22 +675,28 @@ class AddonStoreVM:
 
 	def _getAddonsInBG(self):
 		log.debug("getting addons in the background")
-		addons: CaseInsensitiveDict[AddonDetailsModel]
-		addons = addonDataManager.getLatestCompatibleAddons(self.onDisplayableError)
-		addonHandlerAddons = addonHandler.state._addonHandlerCache.availableAddonsAsDetails
-		for addonId in addonHandlerAddons:
-			# only use installed add-on data if no add-on store details available
-			if addonId not in addons:
-				addons[addonId] = addonHandlerAddons[addonId]
-		if config.conf["addonStore"]["incompatibleAddons"]:
+		assert addonDataManager
+		assert addonHandler.state._addonHandlerCache
+		addons: AddonDetailsCollectionT = addonDataManager.getLatestCompatibleAddons(self.onDisplayableError)
+		addonHandlerAddons = addonHandler.state._addonHandlerCache.installedAddonsAsDetails
+		for channel in addonHandlerAddons:
+			for addonId in addonHandlerAddons[channel]:
+				# only use installed add-on data if no add-on store details available
+				if addonId not in addons[channel]:
+					addons[channel][addonId] = addonHandlerAddons[channel][addonId]
+		if bool(config.conf["addonStore"]["incompatibleAddons"]):
 			incompatibleAddons = addonDataManager.getLatestAddons(self.onDisplayableError)
-			for addonId in incompatibleAddons:
-				# only include incompatible add-ons if:
-				# - no compatible or installed versions are available
-				# - the user can override the compatibility of the add-on
-				# (it's too old and not too new)
-				if addonId not in addons and incompatibleAddons[addonId].canOverrideCompatibility:
-					addons[addonId] = incompatibleAddons[addonId]
+			for channel in incompatibleAddons:
+				for addonId in incompatibleAddons[channel]:
+					# only include incompatible add-ons if:
+					# - no compatible or installed versions are available
+					# - the user can override the compatibility of the add-on
+					# (it's too old and not too new)
+					if (
+						addonId not in addons[channel]
+						and incompatibleAddons[channel][addonId].canOverrideCompatibility
+					):
+						addons[channel][addonId] = incompatibleAddons[channel][addonId]
 		log.debug("completed getting addons in the background")
 		self._addons = addons
 		self.listVM.resetListItems(self._createListItemVMs())
@@ -674,18 +705,21 @@ class AddonStoreVM:
 
 	def cancelDownloads(self):
 		for a in self._downloader.progress.keys():
-			self.listVM._addons[a.addonId].status = AvailableAddonStatus.AVAILABLE
+			self.listVM._addons[a.listItemVMId].status = AvailableAddonStatus.AVAILABLE
 		self._downloader.cancelAll()
 
 	def _createListItemVMs(self) -> List[AddonListItemVM]:
 		addonsWithStatus = (
 			(model, _getStatus(model))
-			for model in self._addons.values()
+			for channel in self._addons
+			for model in self._addons[channel].values()
 		)
+
 		return [
 			AddonListItemVM(model=model, status=status)
 			for model, status in addonsWithStatus
 			if status in self._filteredStatuses
+			and model.channel in self._filteredChannels
 		]
 
 
@@ -726,7 +760,8 @@ def getAddonBundleToInstallIfValid(addonPath: str) -> addonHandler.AddonBundle:
 
 
 def getPreviouslyInstalledAddonById(addon: addonHandler.AddonBundle) -> Optional[addonHandler.Addon]:
-	installedAddon = addonHandler.state._addonHandlerCache.availableAddons.get(addon.name)
+	assert addonHandler.state._addonHandlerCache
+	installedAddon = addonHandler.state._addonHandlerCache.installedAddons.get(addon.name)
 	if installedAddon is None or installedAddon.isPendingRemove:
 		return None
 	return installedAddon

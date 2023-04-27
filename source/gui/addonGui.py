@@ -364,8 +364,9 @@ class AddonsDialog(
 		self.addonsList.DeleteAllItems()
 		self.curAddons: List[Addon] = []
 		anyAddonIncompatible = False
-		availableAddons = addonHandler.state._addonHandlerCache.availableAddons
-		for addon in sorted(availableAddons.values(), key=lambda a: strxfrm(a.manifest['summary'])):
+		assert addonHandler.state._addonHandlerCache
+		installedAddons = addonHandler.state._addonHandlerCache.installedAddons
+		for addon in sorted(installedAddons.values(), key=lambda a: strxfrm(a.manifest['summary'])):
 			self.addonsList.Append((
 				addon.manifest['summary'],
 				self.getAddonStatus(addon),
