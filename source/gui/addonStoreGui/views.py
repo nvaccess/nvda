@@ -585,7 +585,11 @@ class AddonStoreDialog(SettingsDialog):
 	def __init__(self, parent: wx.Window, storeVM: AddonStoreVM):
 		self._storeVM = storeVM
 		self._storeVM.onDisplayableError.register(self.handleDisplayableError)
-		super().__init__(parent, resizeable=True)
+		super().__init__(parent, resizeable=True, buttons={wx.CLOSE})
+
+	def _enterActivatesOk_ctrlSActivatesApply(self, evt: wx.KeyEvent):
+		"""Disables parent behaviour which overrides behaviour for enter and ctrl+s"""
+		evt.Skip()
 
 	@staticmethod
 	def handleDisplayableError(displayableError: DisplayableError):
@@ -657,7 +661,7 @@ class AddonStoreDialog(SettingsDialog):
 	def _onWindowDestroy(self, evt: wx.WindowDestroyEvent):
 		super()._onWindowDestroy(evt)
 
-	def onOk(self, evt: wx.CommandEvent):
+	def onClose(self, evt: wx.CommandEvent):
 		# Translators: Title for message shown prior to installing add-ons when closing the add-on store dialog.
 		installationPromptTitle = pgettext("addonStore", "Add-on installation")
 		numInProgress = len(self._storeVM._downloader.progress)
@@ -697,7 +701,7 @@ class AddonStoreDialog(SettingsDialog):
 			addonGui.promptUserForRestart()
 
 		# let the dialog exit.
-		super().onOk(evt)
+		super().onClose(evt)
 
 	def getStatusFilterLabel(self) -> str:
 		index = self.statusFilterCtrl.GetSelection()
