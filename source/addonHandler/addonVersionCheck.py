@@ -83,10 +83,11 @@ class SupportsVersionCheck(Protocol):
 			nvdaVersion=addonAPIVersion.formatForGUI(self.minimumNVDAVersion)
 			)
 		elif not isAddonTested(self, backwardsCompatToVersion):
-			# Translators: The reason an add-on is not compatible. The addon relies on older, removed features of NVDA,
-			# an updated add-on is required. The placeholder will be replaced with Year.Major.Minor (EG 2019.1).
 			return pgettext(
 				"addonStore",
+				# Translators: The reason an add-on is not compatible.
+				# The addon relies on older, removed features of NVDA, an updated add-on is required.
+				# The placeholder will be replaced with Year.Major.Minor (e.g. 2019.1).
 				"An updated version of this add-on is required. "
 				"The minimum supported API version is now {nvdaVersion}. "
 				"This add-on was last tested with {lastTestedNVDAVersion}. "
