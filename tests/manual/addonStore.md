@@ -63,7 +63,7 @@ Add-ons can be filtered by display name, publisher and description.
 1. Navigate to and press the install button for the add-on.
 1. Exit the dialog
 1. Restart NVDA as prompted.
-1. Confirm the add-on is listed in the add-ons manager.
+1. Confirm the add-on is listed in the add-ons store.
 
 ### Install add-on from external source in add-on store
 1. Open the add-on store.
@@ -92,7 +92,7 @@ You can do this by:
 1. Confirm the warning message about add-on compatibility.
 1. Exit the add-on store dialog
 1. You should be prompted for restart, restart NVDA
-1. Confirm the add-on is enabled in the add-ons manager
+1. Confirm the add-on is enabled in the add-ons store
 
 ### Failure to download add-on
 1. Open the Add-on Store
@@ -179,21 +179,21 @@ TODO
 1. Press the disable button
 1. Exit the add-on store dialog
 1. You should be prompted for restart, restart NVDA
-1. Confirm the add-on is disabled in the add-ons manager
+1. Confirm the add-on is disabled in the add-ons store
 
 ### Enabling an add-on
 1. Find a disabled add-on in the add-on store
 1. Press the enable button
 1. Exit the add-on store dialog
 1. You should be prompted for restart, restart NVDA
-1. Confirm the add-on is disabled in the add-ons manager
+1. Confirm the add-on is disabled in the add-ons store
 
 ### Removing an add-on
 1. Find an installed add-on in the add-on store
 1. Press the remove button
 1. Exit the add-on store dialog
 1. You should be prompted for restart, restart NVDA
-1. Confirm the add-on is removed in the add-ons manager
+1. Confirm the add-on is removed in the add-ons store
 
 ### Browse an add-ons help
 1. Find an installed add-on in the add-on store
