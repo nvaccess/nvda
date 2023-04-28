@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Vietnamese Language for NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-17 00:01+0000\n"
-"PO-Revision-Date: 2023-02-21 16:38+0700\n"
+"POT-Creation-Date: 2023-04-21 00:02+0000\n"
+"PO-Revision-Date: 2023-04-24 16:51+0700\n"
 "Last-Translator: Dang Manh Cuong <dangmanhcuong@gmail.com>\n"
 "Language-Team: Sao Mai Center for the Blind <danghoaiphuc@gmail.com>\n"
 "Language: vi_VN\n"
@@ -4345,13 +4345,17 @@ msgstr ""
 msgid "Plugins reloaded"
 msgstr "Các mô đun mở rộng đã được cập nhật"
 
-#. Translators: input help mode message for Report destination URL of navigator link command
+#. Translators: input help mode message for Report destination URL of a link command
 msgid ""
-"Report the destination URL of the link in the navigator object. If pressed "
-"twice, shows the URL in a window for easier review."
+"Report the destination URL of the link at the position of caret or focus. If "
+"pressed twice, shows the URL in a window for easier review."
 msgstr ""
-"Thông báo đường dẫn URL của liên kết tại đối tượng điều hướng. Bấm hai lần "
-"sẽ hiển thị URL trên một cửa sổ để dễ xem lại hơn."
+"Thông báo đường dẫn URL của liên kết tại vị trí dấu nháy hoặc focus. Bấm hai "
+"lần sẽ hiển thị URL trên một cửa sổ để dễ dàng xem lại hơn."
+
+#. Translators: Informs the user that the link has no destination
+msgid "Link has no apparent destination"
+msgstr "Liên kết không có đường dẫn rõ ràng"
 
 #. Translators: Informs the user that the window contains the destination of the
 #. link with given title
@@ -4363,13 +4367,13 @@ msgstr "Vị trí của: {name}"
 msgid "Not a link."
 msgstr "Không phải liên kết."
 
-#. Translators: input help mode message for Report URL of navigator link in a window command
+#. Translators: input help mode message for Report URL of a link in a window command
 msgid ""
-"Reports the destination URL of the link in the navigator object in a window, "
-"instead of just speaking it. May be preferred by braille users."
+"Displays the destination URL of the link at the position of caret or focus "
+"in a window, instead of just speaking it. May be preferred by braille users."
 msgstr ""
-"Thông báo đường dẫn URL của liên kết tại đối tượng điều hướng trong một cửa "
-"sổ, thay vì chỉ đọc nó lên. Có thể người dùng chữ nổi chuộng cái này."
+"Hiển thị đường dẫn URL của liên kết tại vị trí dấu náy hoặc focus trong một "
+"cửa sổ, thay vì chỉ đọc nó lên. Có thể người dùng chữ nổi chuộng cái này."
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -7236,6 +7240,25 @@ msgstr "{firstAddress} {firstValue} qua {lastAddress} {lastValue}"
 msgid "{firstAddress} through {lastAddress}"
 msgstr "{firstAddress} qua {lastAddress}"
 
+#. Translators: a measurement in inches
+#, python-brace-format
+msgid "{val:.2f} inches"
+msgstr "{val:.2f} inches"
+
+#. Translators: a measurement in centimetres
+#, python-brace-format
+msgid "{val:.2f} centimetres"
+msgstr "{val:.2f} cm"
+
+#. Translators: LibreOffice, report cursor position in the current page
+#, python-brace-format
+msgid ""
+"cursor positioned {horizontalDistance} from left edge of page, "
+"{verticalDistance} from top edge of page"
+msgstr ""
+"Vị trí con trỏ {horizontalDistance} từ mép trái của trang, "
+"{verticalDistance} từ cạnh trên của trang"
+
 msgid "left"
 msgstr "trái"
 
@@ -8468,6 +8491,22 @@ msgstr "mở khóa"
 msgid "has note"
 msgstr "có chú thích"
 
+#. Translators: Presented when a control has a pop-up dialog.
+msgid "opens dialog"
+msgstr "mở hộp thoại"
+
+#. Translators: Presented when a control has a pop-up grid.
+msgid "opens grid"
+msgstr "mở lưới"
+
+#. Translators: Presented when a control has a pop-up list box.
+msgid "opens list"
+msgstr "mở danh sách"
+
+#. Translators: Presented when a control has a pop-up tree.
+msgid "opens tree"
+msgstr "mở cây thư mục"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "chưa chọn"
@@ -8491,6 +8530,14 @@ msgstr "thả xong"
 #. Translators: This is spoken when the line is considered blank.
 msgid "blank"
 msgstr "dòng trắng"
+
+#. Translators: this message is given when there is no next paragraph when navigating by paragraph
+msgid "No next paragraph"
+msgstr "không có đoạn kế"
+
+#. Translators: this message is given when there is no previous paragraph when navigating by paragraph
+msgid "No previous paragraph"
+msgstr "không có đoạn trước"
 
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 msgid "Configuration applied"
@@ -10977,9 +11024,14 @@ msgid "Dictionary Entry Error"
 msgstr "Lỗi mục từ trong từ điển"
 
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
-#, python-format
-msgid "Regular Expression error: \"%s\"."
-msgstr "Lỗi biểu thức phổ thông: \"%s\"."
+#, python-brace-format
+msgid "Regular Expression error in the pattern field: \"{error}\"."
+msgstr "Lỗi biểu thức phổ thông ở trường nhập bản mẫu: \"{error}\"."
+
+#. Translators: This is an error message to let the user know that the dictionary entry is not valid.
+#, python-brace-format
+msgid "Regular Expression error in the replacement field: \"{error}\"."
+msgstr "Lỗi biểu thức phổ thông ở trường thay thế: \"{error}\"."
 
 #. Translators: The label for the list box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
