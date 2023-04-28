@@ -206,10 +206,11 @@ class AddonsState(collections.UserDict):
 		during uninstallation. As a result after reinstalling add-on with the same name it was disabled
 		by default confusing users. Fix this by removing all add-ons no longer present in the config
 		from the list of disabled add-ons in the state."""
-		installedAddonNames = set(self._addonHandlerCache.installedAddons.keys())
+		installedAddonNames = CaseInsensitiveSet(self._addonHandlerCache.installedAddons.keys())
 		for disabledAddonName in CaseInsensitiveSet(self[AddonStateCategory.DISABLED]):
 			# Iterate over copy of set to prevent updating the set while iterating over it.
 			if disabledAddonName not in installedAddonNames:
+				log.debug(f"Discarding {disabledAddonName} from disabled add-ons as it has been uninstalled.")
 				self[AddonStateCategory.DISABLED].discard(disabledAddonName)
 
 
