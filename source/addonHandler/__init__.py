@@ -246,7 +246,7 @@ def removeFailedDeletion(path: os.PathLike):
 
 def disableAddonsIfAny():
 	"""
-	Disables add-ons if told to do so by the user from add-ons manager.
+	Disables add-ons if told to do so by the user from add-on store.
 	This is usually executed before refreshing the list of available add-ons.
 	"""
 	# Pull in and enable add-ons that should be disabled and enabled, respectively.
@@ -499,7 +499,7 @@ class Addon(AddonBase):
 			state['pendingRemovesSet'].add(self.name)
 			# There's no point keeping a record of this add-on pending being disabled now.
 			# However, if the addon is disabled, then it needs to remain disabled so that
-			# the status in addonsManager continues to say "disabled"
+			# the status in add-on store continues to say "disabled"
 			state['pendingDisableSet'].discard(self.name)
 		state.save()
 
