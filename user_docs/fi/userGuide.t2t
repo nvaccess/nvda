@@ -2,7 +2,9 @@
 
 
 %!includeconf: ../userGuide.t2tconf
+%!includeconf: ./locale.t2tconf
 %kc:title: NVDA NVDA_VERSION - komentojen pikaopas
+%kc:includeconf: ./locale.t2tconf
 
 = Sisällys =[toc]
 %%toc
@@ -222,7 +224,7 @@ Varsinaisia komentoja ei suoriteta.
 | Lue tilarivi | ``NVDA+End`` | ``NVDA+Vaihto+End`` | Lukee tilarivin, mikäli sellainen löytyy. Kahdesti painettaessa tiedot tavataan ja kolmesti painettaessa ne kopioidaan leikepöydälle. |
 | Lue kellonaika | ``NVDA+F12`` | ``NVDA+F12`` | Ilmoittaa kerran painettaessa kellonajan ja kahdesti painettaessa päivämäärän. |
 | Lue tekstin muotoilut | ``NVDA+F`` | ``NVDA+F`` | Lukee tekstin muotoilutiedot. Kahdesti painettaessa tiedot näytetään selaustilassa. |
-| Ilmoita linkin kohde | ``NVDA+K`` | ``NVDA+K`` | Kerran painettaessa Puhuu [navigointiobjektissa #ObjectNavigation] olevan linkin kohteen URL:n. Kahdesti painettaessa se näytetään erillisessä ikkunassa tarkempaa tarkastelua varten. |
+| Ilmoita linkin kohde | ``NVDA+K`` | ``NVDA+K`` | Puhuu kerran painettaessa kohdistimen tai kohdistuksen kohdalla olevan linkin kohteen URL-osoitteen. Kahdesti painettaessa se näytetään erillisessä ikkunassa tarkempaa tarkastelua varten. |
 
 +++ Valitse, mitä tietoja NVDA lukee +++[ToggleWhichInformationNVDAReads]
 || Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kuvaus |
@@ -2349,7 +2351,11 @@ Symbolia muutetaan valitsemalla se Symbolit-luettelosta.
 Symboleita voidaan suodattaa kirjoittamalla Suodata-muokkauskenttään haluttu symboli tai osa sen korvaavasta tekstistä.
 
 - Korvaava teksti -muokkauskentässä voidaan muuttaa tekstiä, joka puhutaan kyseisen symbolin asemesta.
-- Taso-yhdistelmäruudusta valitaan alin taso, jolla symboli puhutaan.
+- Taso-yhdistelmäruudusta valitaan alin taso, jolla symboli puhutaan (ei mitään, jotain, useimmat tai kaikki).
+Tasoksi voidaan määrittää myös merkki, jolloin symbolia ei puhuta käytössä olevasta symbolitasosta riippumatta kahta seuraavaa poikkeusta lukuun ottamatta:
+ - Merkeittäin liikuttaessa.
+ - Kun NVDA tavaa tekstiä, joka sisältää kyseisen symbolin.
+ -
 - Lähetä todellinen merkki syntetisaattorille -yhdistelmäruudusta voit määrittää, milloin itse symboli (vastakohtana sen korvaavalle tekstille) lähetetään syntetisaattorille.
 Tästä on hyötyä, jos symboli saa syntetisaattorin pitämään tauon tai muuttamaan äänensävyä.
 Esimerkiksi pilkku saa syntetisaattorin pitämään tauon.
@@ -2938,6 +2944,15 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 | Siirrä edelliselle riville | d1 |
 | Siirrä seuraavalle riville | d3 |
 | Siirrä pistesoluun | kosketuskohdistinnäppäin |
+| Vaihto+Sarkain-näppäinyhdistelmä | väli+pisteet 1 ja 3 |
+| Sarkain-näppäin | väli+pisteet 4 ja 6 |
+| Alt-näppäin | väli+pisteet 1, 3 ja 4 (väli+m) |
+| Esc-näppäin | väli+pisteet 1 ja 5 (väli+e) |
+| Windows-näppäin | väli+pisteet 3 ja 4 |
+| Alt+Sarkain-näppäinyhdistelmä | väli+pisteet 2, 3, 4 ja 5 (väli+t) |
+| NVDA-valikko | väli+pisteet 1, 3, 4 ja 5 (väli+n) |
+| Windows+D-näppäinyhdistelmä (pienennä kaikki sovellukset) | väli+pisteet 1, 4 ja 5 (väli+d) |
+| Jatkuva luku | väli+pisteet 1, 2, 3, 4, 5 ja 6 |
 
 Malleissa, joissa on ohjaustappi:
 || Nimi | Näppäinkomento |
@@ -3679,19 +3694,17 @@ Seuraavassa ovat näiden näyttöjen näppäinkomennot NVDA:ta käytettäessä.
 || Nimi | Näppäinkomento |
 | Vieritä taaksepäin | panoroi vasemmalle tai keinunäppäin ylös |
 | Vieritä eteenpäin | panoroi oikealle tai keinunäppäin alas |
-| Siirrä edelliselle riville | väli+piste 1 |
-| Siirrä seuraavalle riville | väli+piste 4 |
 | Siirrä pistesoluun | kohdistimensiirtonäppäinsarja 1 |
 | Vaihda Piste näyttö seuraa -asetusta | ylös+alas |
-| Ylänuolinäppäin | ohjaussauva ylös |
-| Alanuolinäppäin | ohjaussauva alas |
-| Vasen nuolinäppäin | väli+piste 3 tai ohjaussauva vasemmalle |
-| Oikea nuolinäppäin | väli+piste 6 tai ohjaussauva oikealle |
+| Ylänuolinäppäin | ohjaussauva ylös, dpad ylös tai väli+piste 1 |
+| Alanuolinäppäin | ohjaussauva alas, dpad alas tai väli+piste 4 |
+| Vasen nuolinäppäin | väli+piste 3, ohjaussauva vasemmalle tai dpad vasemmalle |
+| Oikea nuolinäppäin | väli+piste 6, ohjaussauva oikealle tai dpad oikealle |
 | Vaihto+Sarkain-näppäinyhdistelmä | väli+pisteet 1ja 3 |
 | Sarkain-näppäin | väli+pisteet 4 ja 6 |
 | Alt-näppäin | väli+pisteet 1, 3 ja 4 (väli+m) |
 | Esc-näppäin | väli+pisteet 1 ja 5 (väli+e) |
-| Enter-näppäin | piste 8 tai ohjaussauvan keskikohta |
+| Enter-näppäin | piste 8, ohjaussauvan keskikohta tai dpadin keskikohta |
 | Windows-näppäin | väli+pisteet 3 ja 4 |
 | Alt+Sarkain-näppäinyhdistelmä | väli+pisteet 2, 3, 4 ja 5 (väli+t) |
 | NVDA-valikko | väli+pisteet 1, 3, 4 ja 5 (väli+n) |
