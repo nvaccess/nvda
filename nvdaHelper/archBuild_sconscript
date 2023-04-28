@@ -200,6 +200,12 @@ mathPlayerRPCStubs=env.SConscript('mathPlayer_sconscript')
 if TARGET_ARCH=='x86':
 	env.Install(sourceTypelibDir,mathPlayerRPCStubs[0]) #typelib
 
+detoursLib = env.SConscript('detours/sconscript')
+Export('detoursLib')
+
+apiHookObj = env.Object("apiHook","common/apiHook.cpp")
+Export('apiHookObj')
+
 if TARGET_ARCH=='x86':
 	localLib=env.SConscript('local/sconscript')
 	Export('localLib')
@@ -223,9 +229,6 @@ Export('clientLib')
 if signExec:
 	env.AddPostAction(clientLib[0],[signExec])
 env.Install(clientInstallDir,clientLib)
-
-detoursLib = env.SConscript('detours/sconscript')
-Export('detoursLib')
 
 remoteLib=env.SConscript('remote/sconscript')
 Export('remoteLib')

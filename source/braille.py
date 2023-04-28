@@ -1895,8 +1895,8 @@ the remote system should know what cells to show on its display.
 filter_displaySize = extensionPoints.Filter()
 """
 Filter that allows components or add-ons to change the display size used for braille output.
-For example, when a system is controlled by a remote system while having a 80 cells display connected,
-the display size should be lowered to 40 whenever the remote system has a 40 cells display connected.
+For example, when a system has an 80 cell display, but is being controlled by a remote system with a 40 cell
+display, the display size should be lowered to 40 .
 @param value: the number of cells of the current display.
 @type value: int
 """
@@ -1983,7 +1983,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 		self.queuedWriteLock = threading.Lock()
 		self.ackTimerHandle = winKernel.createWaitableTimer()
-		self._ackTimeoutResetterApc = winKernel.PAPCFUNC(self._ackTimeoutResetter)
 
 		brailleViewer.postBrailleViewerToolToggledAction.register(self._onBrailleViewerChangedState)
 
@@ -2599,13 +2598,12 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			if self.display.receivesAckPackets:
 				self.display._awaitingAck = True
 				SECOND_TO_MS = 1000
-				winKernel.setWaitableTimer(
+				hwIo.bgThread.setWaitableTimer(
 					self.ackTimerHandle,
 					# Wait twice the display driver timeout for acknowledgement packets
 					# Note: timeout is in seconds whereas setWaitableTimer expects milliseconds
 					int(self.display.timeout * 2 * SECOND_TO_MS),
-					0,
-					self._ackTimeoutResetterApc
+					self._ackTimeoutResetter
 				)
 
 	def _ackTimeoutResetter(self, param: int):
