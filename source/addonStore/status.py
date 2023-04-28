@@ -137,15 +137,15 @@ def _getStatus(model: AddonDetailsModel) -> Optional[AvailableAddonStatus]:
 	return None
 
 
-_addonStoreStateToAddonHandlerState: Dict[AvailableAddonStatus, AddonStateCategory] = {
-	# Pending states must be first as the pending state may be altering another state. 
+_addonStoreStateToAddonHandlerState: OrderedDict[AvailableAddonStatus, AddonStateCategory] = OrderedDict({
+	# Pending states must be first as the pending state may be altering another state.
 	AvailableAddonStatus.PENDING_ENABLE: AddonStateCategory.PENDING_ENABLE,
 	AvailableAddonStatus.PENDING_DISABLE: AddonStateCategory.PENDING_DISABLE,
 	AvailableAddonStatus.PENDING_REMOVE: AddonStateCategory.PENDING_REMOVE,
 	AvailableAddonStatus.INCOMPATIBLE_DISABLED: AddonStateCategory.BLOCKED,
 	AvailableAddonStatus.DISABLED: AddonStateCategory.DISABLED,
 	AvailableAddonStatus.INSTALLED: AddonStateCategory.PENDING_INSTALL,
-}
+})
 
 
 _statusFilters: OrderedDict[str, Set[AvailableAddonStatus]] = OrderedDict({
