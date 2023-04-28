@@ -28,7 +28,6 @@ from typing import (
 	Set,
 	TYPE_CHECKING,
 	Tuple,
-	Union,
 )
 from baseObject import AutoPropertyObject
 import globalVars
@@ -251,13 +250,13 @@ def disableAddonsIfAny():
 	This is usually executed before refreshing the list of available add-ons.
 	"""
 	# Pull in and enable add-ons that should be disabled and enabled, respectively.
-	state["disabledAddons"] |= state["pendingDisableSet"]
-	state["disabledAddons"] -= state["pendingEnableSet"]
+	state[AddonStateCategory.DISABLED] |= state[AddonStateCategory.PENDING_DISABLE]
+	state[AddonStateCategory.DISABLED] -= state[AddonStateCategory.PENDING_ENABLE]
 	# Remove disabled add-ons from having overriden compatibility
 	state[AddonStateCategory.OVERRIDE_COMPATIBILITY] -= state[AddonStateCategory.DISABLED]
 	# Clear pending disables and enables
-	state["pendingDisableSet"].clear()
-	state["pendingEnableSet"].clear()
+	state[AddonStateCategory.PENDING_DISABLE].clear()
+	state[AddonStateCategory.PENDING_ENABLE].clear()
 
 def initialize():
 	""" Initializes the add-ons subsystem. """
@@ -314,7 +313,7 @@ def _getAvailableAddonsFromPath(
 					name = a.manifest['name']
 					if (
 						isFirstLoad
-						and name in state["pendingRemovesSet"]
+						and name in state[AddonStateCategory.PENDING_REMOVE]
 						and not a.path.endswith(ADDON_PENDINGINSTALL_SUFFIX)
 					):
 						try:
@@ -324,7 +323,10 @@ def _getAvailableAddonsFromPath(
 						continue
 					if(
 						isFirstLoad
-						and (name in state["pendingInstallsSet"] or a.path.endswith(ADDON_PENDINGINSTALL_SUFFIX))
+						and (
+							name in state[AddonStateCategory.PENDING_INSTALL]
+							or a.path.endswith(ADDON_PENDINGINSTALL_SUFFIX)
+						)
 					):
 						newPath = a.completeInstall()
 						if newPath:
@@ -395,7 +397,7 @@ def installAddonBundle(bundle: "AddonBundle") -> "Addon":
 		del _availableAddons[addon.path]
 		addon.completeRemove(runUninstallTask=False)
 		raise AddonError("Installation failed")
-	state['pendingInstallsSet'].add(bundle.manifest['name'])
+	state[AddonStateCategory.PENDING_INSTALL].add(bundle.manifest['name'])
 	state.save()
 	return addon
 
@@ -476,14 +478,14 @@ class Addon(AddonBase):
 	@property
 	def isPendingRemove(self):
 		"""True if this addon is marked for removal."""
-		return not self.isPendingInstall and self.name in state['pendingRemovesSet']
+		return not self.isPendingInstall and self.name in state[AddonStateCategory.PENDING_REMOVE]
 
 	def completeInstall(self):
 		newPath = self.path.replace(ADDON_PENDINGINSTALL_SUFFIX, "")
 		oldPath = self.path
 		try:
 			os.rename(oldPath, newPath)
-			state['pendingInstallsSet'].discard(self.name)
+			state[AddonStateCategory.PENDING_INSTALL].discard(self.name)
 			return newPath
 		except OSError:
 			log.error(f"Failed to complete addon installation for {self.name}", exc_info=True)
@@ -492,16 +494,16 @@ class Addon(AddonBase):
 		"""Markes this addon for removal on NVDA restart."""
 		if self.isPendingInstall:
 			self.completeRemove()
-			state['pendingInstallsSet'].discard(self.name)
+			state[AddonStateCategory.PENDING_INSTALL].discard(self.name)
 			state[AddonStateCategory.OVERRIDE_COMPATIBILITY].discard(self.name)
 			#Force availableAddons to be updated
 			getAvailableAddons(refresh=True)
 		else:
-			state['pendingRemovesSet'].add(self.name)
+			state[AddonStateCategory.PENDING_REMOVE].add(self.name)
 			# There's no point keeping a record of this add-on pending being disabled now.
 			# However, if the addon is disabled, then it needs to remain disabled so that
 			# the status in add-on store continues to say "disabled"
-			state['pendingDisableSet'].discard(self.name)
+			state[AddonStateCategory.PENDING_INSTALL].discard(self.name)
 		state.save()
 
 	def completeRemove(self, runUninstallTask: bool = True) -> None:
@@ -526,8 +528,8 @@ class Addon(AddonBase):
 		# clean up the addons state. If an addon with the same name is installed, it should not be automatically
 		# disabled / blocked.
 		log.debug(f"removing addon {self.name} from the list of disabled / blocked add-ons")
-		state["disabledAddons"].discard(self.name)
-		state['pendingRemovesSet'].discard(self.name)
+		state[AddonStateCategory.DISABLED].discard(self.name)
+		state[AddonStateCategory.PENDING_REMOVE].discard(self.name)
 		state[AddonStateCategory.OVERRIDE_COMPATIBILITY].discard(self.name)
 		state[AddonStateCategory.BLOCKED].discard(self.name)
 		state.save()
@@ -578,9 +580,9 @@ class Addon(AddonBase):
 						addonAPIVersion.BACK_COMPAT_TO
 					)
 				)
-			if self.name in state["pendingDisableSet"]:
+			if self.name in state[AddonStateCategory.PENDING_DISABLE]:
 				# Undoing a pending disable.
-				state["pendingDisableSet"].discard(self.name)
+				state[AddonStateCategory.PENDING_DISABLE].discard(self.name)
 			else:
 				if self.canOverrideCompatibility and not self.overrideIncompatibility:
 					from gui import mainFrame
@@ -588,15 +590,15 @@ class Addon(AddonBase):
 					if not _shouldProceedWhenAddonTooOldDialog(mainFrame, self):
 						import addonAPIVersion
 						raise AddonError("Add-on is not compatible and over ride was abandoned")
-				state["pendingEnableSet"].add(self.name)
+				state[AddonStateCategory.PENDING_ENABLE].add(self.name)
 		else:
-			if self.name in state["pendingEnableSet"]:
+			if self.name in state[AddonStateCategory.PENDING_ENABLE]:
 				# Undoing a pending enable.
-				state["pendingEnableSet"].discard(self.name)
+				state[AddonStateCategory.PENDING_ENABLE].discard(self.name)
 			# No need to disable an addon that is already disabled.
 			# This also prevents the status in the add-ons dialog from saying "disabled, pending disable"
-			elif self.name not in state["disabledAddons"]:
-				state["pendingDisableSet"].add(self.name)
+			elif self.name not in state[AddonStateCategory.DISABLED]:
+				state[AddonStateCategory.PENDING_DISABLE].add(self.name)
 		# Record enable/disable flags as a way of preparing for disaster such as sudden NVDA crash.
 		state.save()
 
@@ -606,7 +608,7 @@ class Addon(AddonBase):
 
 	@property
 	def isDisabled(self):
-		return self.name in state["disabledAddons"]
+		return self.name in state[AddonStateCategory.DISABLED]
 
 	@property
 	def isBlocked(self) -> bool:
@@ -614,11 +616,11 @@ class Addon(AddonBase):
 
 	@property
 	def isPendingEnable(self):
-		return self.name in state["pendingEnableSet"]
+		return self.name in state[AddonStateCategory.PENDING_ENABLE]
 
 	@property
 	def isPendingDisable(self):
-		return self.name in state["pendingDisableSet"]
+		return self.name in state[AddonStateCategory.PENDING_DISABLE]
 
 	def _getPathForInclusionInPackage(self, package):
 		extension_path = os.path.join(self.path, package.__name__)

@@ -93,8 +93,8 @@ class AvailableAddonStatus(DisplayStringEnum):
 
 def _getStatus(model: AddonDetailsModel) -> Optional[AvailableAddonStatus]:
 	from addonStore.dataManager import addonDataManager
-	addonData = model._addonHandlerModel
-	if addonData is None:
+	addonHandlerModel = model._addonHandlerModel
+	if addonHandlerModel is None:
 		if not isAddonCompatible(model):
 			# Installed incompatible add-ons have a status of disabled or running
 			return AvailableAddonStatus.INCOMPATIBLE
@@ -118,7 +118,7 @@ def _getStatus(model: AddonDetailsModel) -> Optional[AvailableAddonStatus]:
 		else:
 			# Parsing from a side-loaded add-on
 			try:
-				manifestAddonVersion = MajorMinorPatch._parseVersionFromVersionStr(addonData.version)
+				manifestAddonVersion = MajorMinorPatch._parseVersionFromVersionStr(addonHandlerModel.version)
 			except ValueError:
 				# Parsing failed to get a numeric version.
 				# Ideally a numeric version would be compared,
@@ -130,7 +130,7 @@ def _getStatus(model: AddonDetailsModel) -> Optional[AvailableAddonStatus]:
 			if model.addonVersionNumber > manifestAddonVersion:
 				return AvailableAddonStatus.UPDATE
 
-	if addonData.isRunning:
+	if addonHandlerModel.isRunning:
 		return AvailableAddonStatus.RUNNING
 
 	log.debugWarning(f"Add-on in unknown state: {model.addonId}")
