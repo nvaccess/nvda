@@ -477,6 +477,7 @@ def _doLoseFocus():
 		except Exception:
 			log.exception("Lose focus error")
 
+
 messageWindow = None
 
 

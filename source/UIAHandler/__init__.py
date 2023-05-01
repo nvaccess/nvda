@@ -1408,6 +1408,8 @@ def _isDebug():
 
 
 WM_NVDA_UIA_FLUSH = winUser.registerWindowMessage("WM_NVDA_UIA_FLUSH")
+
+
 def eventLimiterWindowProc(msg, wParam, lParam):
 	if msg == WM_NVDA_UIA_FLUSH:
 		if lParam == 0:
