@@ -105,6 +105,11 @@ class _AddonDetailsModel(SupportsVersionCheck, Protocol):
 	homepage: Optional[str]
 	minNVDAVersion: MajorMinorPatch
 	lastTestedVersion: MajorMinorPatch
+	legacy: bool
+	"""
+	Legacy add-ons contain invalid metadata
+	and should not be accessible through the add-on store.
+	"""
 
 	@property
 	def minimumNVDAVersion(self) -> addonAPIVersion.AddonApiVersionT:
@@ -158,6 +163,11 @@ class AddonDetailsModel(_AddonDetailsModel):
 	homepage: Optional[str]
 	minNVDAVersion: MajorMinorPatch
 	lastTestedVersion: MajorMinorPatch
+	legacy: bool = False
+	"""
+	Legacy add-ons contain invalid metadata
+	and should not be accessible through the add-on store.
+	"""
 
 
 @dataclasses.dataclass(frozen=True)  # once created, it should not be modified.
@@ -180,6 +190,11 @@ class AddonStoreModel(_AddonDetailsModel):
 	addonVersionNumber: MajorMinorPatch
 	minNVDAVersion: MajorMinorPatch
 	lastTestedVersion: MajorMinorPatch
+	legacy: bool = False
+	"""
+	Legacy add-ons contain invalid metadata
+	and should not be accessible through the add-on store.
+	"""
 
 
 def _createStoreModelFromData(addon: Dict[str, Any]) -> AddonStoreModel:
@@ -199,6 +214,7 @@ def _createStoreModelFromData(addon: Dict[str, Any]) -> AddonStoreModel:
 		sha256=addon["sha256"],
 		minNVDAVersion=MajorMinorPatch(**addon["minNVDAVersion"]),
 		lastTestedVersion=MajorMinorPatch(**addon["lastTestedVersion"]),
+		legacy=addon.get("legacy", False),
 	)
 
 

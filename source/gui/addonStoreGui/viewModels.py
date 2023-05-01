@@ -720,6 +720,9 @@ class AddonStoreVM:
 			for model, status in addonsWithStatus
 			if status in self._filteredStatuses
 			and model.channel in self._filteredChannels
+			# Legacy add-ons contain invalid metadata
+			# and should not be accessible through the add-on store.
+			and not model.legacy
 		]
 
 
