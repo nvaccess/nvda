@@ -40,6 +40,7 @@ from addonStore.models import (
 from addonStore.status import (
 	_getStatus,
 	_statusFilters,
+	_StatusFilterKey,
 	AvailableAddonStatus,
 )
 import config
@@ -58,7 +59,6 @@ from .dialogs import (
 if TYPE_CHECKING:
 	# Remove when https://github.com/python/typing/issues/760 is resolved
 	from _typeshed import SupportsLessThan
-	from addonStore.models import AddonDetailsCollectionT
 
 
 class AddonListItemVM:
@@ -419,7 +419,8 @@ class AddonActionVM:
 
 class AddonStoreVM:
 	def __init__(self):
-		self._addons = _createAddonDetailsCollection()
+		self._availableAddons = _createAddonDetailsCollection()
+		self._installedAddons = _createAddonDetailsCollection()
 		self.hasError = extensionPoints.Action()
 		self.onDisplayableError = DisplayableError.OnDisplayableErrorT()
 		"""
@@ -431,11 +432,10 @@ class AddonStoreVM:
 		@param displayableError: Error that can be displayed to the user.
 		@type displayableError: gui.message.DisplayableError
 		"""
-		self._filteredStatuses: Set[AvailableAddonStatus] = next(iter(_statusFilters.values()))
+		self._filteredStatusKey: _StatusFilterKey = _StatusFilterKey.INSTALLED
 		"""
 		Filters the add-on list view model by add-on status.
-		Add-ons with a status in _filteredStatuses should be displayed in the list.
-		Uses first filter in _statusFilters as default.
+		Add-ons with a status in _statusFilters[self._filteredStatusKey] should be displayed in the list.
 		"""
 		self._filteredChannels: Set[Channel] = next(iter(_channelFilters.values()))
 		"""
@@ -677,13 +677,8 @@ class AddonStoreVM:
 		log.debug("getting addons in the background")
 		assert addonDataManager
 		assert addonHandler.state._addonHandlerCache
-		addons: AddonDetailsCollectionT = addonDataManager.getLatestCompatibleAddons(self.onDisplayableError)
-		addonHandlerAddons = addonHandler.state._addonHandlerCache.installedAddonsAsDetails
-		for channel in addonHandlerAddons:
-			for addonId in addonHandlerAddons[channel]:
-				# only use installed add-on data if no add-on store details available
-				if addonId not in addons[channel]:
-					addons[channel][addonId] = addonHandlerAddons[channel][addonId]
+		self._installedAddons = addonHandler.state._addonHandlerCache.installedAddonsAsDetails
+		availableAddons = addonDataManager.getLatestCompatibleAddons(self.onDisplayableError)
 		if bool(config.conf["addonStore"]["incompatibleAddons"]):
 			incompatibleAddons = addonDataManager.getLatestAddons(self.onDisplayableError)
 			for channel in incompatibleAddons:
@@ -693,12 +688,13 @@ class AddonStoreVM:
 					# - the user can override the compatibility of the add-on
 					# (it's too old and not too new)
 					if (
-						addonId not in addons[channel]
+						addonId not in availableAddons[channel]
+						and addonId not in self._installedAddons[channel]
 						and incompatibleAddons[channel][addonId].canOverrideCompatibility
 					):
-						addons[channel][addonId] = incompatibleAddons[channel][addonId]
+						availableAddons[channel][addonId] = incompatibleAddons[channel][addonId]
 		log.debug("completed getting addons in the background")
-		self._addons = addons
+		self._availableAddons = availableAddons
 		self.listVM.resetListItems(self._createListItemVMs())
 		self.detailsVM.listItem = self.listVM.getSelection()
 		log.debug("completed refresh")
@@ -709,16 +705,29 @@ class AddonStoreVM:
 		self._downloader.cancelAll()
 
 	def _createListItemVMs(self) -> List[AddonListItemVM]:
+		if self._filteredStatusKey in {
+			_StatusFilterKey.AVAILABLE,
+			_StatusFilterKey.UPDATE,
+		}:
+			addons = self._availableAddons
+		elif self._filteredStatusKey in {
+			_StatusFilterKey.INSTALLED,
+			_StatusFilterKey.DISABLED,
+		}:
+			addons = self._installedAddons
+		else:
+			raise NotImplementedError(f"Unhandled status filter key {self._filteredStatusKey}")
+
 		addonsWithStatus = (
 			(model, _getStatus(model))
-			for channel in self._addons
-			for model in self._addons[channel].values()
+			for channel in addons
+			for model in addons[channel].values()
 		)
 
 		return [
 			AddonListItemVM(model=model, status=status)
 			for model, status in addonsWithStatus
-			if status in self._filteredStatuses
+			if status in _statusFilters[self._filteredStatusKey]
 			and model.channel in self._filteredChannels
 			# Legacy add-ons contain invalid metadata
 			# and should not be accessible through the add-on store.

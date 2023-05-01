@@ -148,9 +148,29 @@ _addonStoreStateToAddonHandlerState: OrderedDict[AvailableAddonStatus, AddonStat
 })
 
 
-_statusFilters: OrderedDict[str, Set[AvailableAddonStatus]] = OrderedDict({
-	# Translators: A selection option to display installed add-ons in the add-on store
-	pgettext("addonStore", "Installed add-ons"): {
+class _StatusFilterKey(DisplayStringEnum):
+	"""Keys for filtering by status in the NVDA add-on store."""
+	INSTALLED = enum.auto()
+	UPDATE = enum.auto()
+	AVAILABLE = enum.auto()
+	DISABLED = enum.auto()
+
+	@property
+	def _displayStringLabels(self) -> Dict["_StatusFilterKey", str]:
+		return {
+			# Translators: A selection option to display installed add-ons in the add-on store
+			self.INSTALLED: pgettext("addonStore", "Installed add-ons"),
+			# Translators: A selection option to display updatable add-ons in the add-on store
+			self.UPDATE: pgettext("addonStore", "Updatable add-ons"),
+			# Translators: A selection option to display available add-ons in the add-on store
+			self.AVAILABLE: pgettext("addonStore", "Available add-ons"),
+			# Translators: A selection option to display disabled add-ons in the add-on store
+			self.DISABLED: pgettext("addonStore", "Disabled add-ons"),
+		}
+
+
+_statusFilters: OrderedDict[_StatusFilterKey, Set[AvailableAddonStatus]] = OrderedDict({
+	_StatusFilterKey.INSTALLED: {
 		AvailableAddonStatus.UPDATE,
 		AvailableAddonStatus.REPLACE_SIDE_LOAD,
 		AvailableAddonStatus.INSTALLED,
@@ -161,13 +181,11 @@ _statusFilters: OrderedDict[str, Set[AvailableAddonStatus]] = OrderedDict({
 		AvailableAddonStatus.PENDING_REMOVE,
 		AvailableAddonStatus.RUNNING,
 	},
-	# Translators: A selection option to display updatable add-ons in the add-on store
-	pgettext("addonStore", "Updatable add-ons"): {
+	_StatusFilterKey.UPDATE: {
 		AvailableAddonStatus.UPDATE,
 		AvailableAddonStatus.REPLACE_SIDE_LOAD,
 	},
-	# Translators: A selection option to display available add-ons in the add-on store
-	pgettext("addonStore", "Available add-ons"): {
+	_StatusFilterKey.AVAILABLE: {
 		AvailableAddonStatus.INCOMPATIBLE,
 		AvailableAddonStatus.AVAILABLE,
 		AvailableAddonStatus.UPDATE,
@@ -179,10 +197,10 @@ _statusFilters: OrderedDict[str, Set[AvailableAddonStatus]] = OrderedDict({
 		AvailableAddonStatus.INSTALL_FAILED,
 		AvailableAddonStatus.INSTALLED,
 	},
-	# Translators: A selection option to display disabled add-ons in the add-on store
-	pgettext("addonStore", "Disabled add-ons"): {
+	_StatusFilterKey.DISABLED: {
 		AvailableAddonStatus.INCOMPATIBLE_DISABLED,
 		AvailableAddonStatus.DISABLED,
+		AvailableAddonStatus.PENDING_DISABLE,
 	},
 })
 """A dictionary where the keys are a status to filter by,

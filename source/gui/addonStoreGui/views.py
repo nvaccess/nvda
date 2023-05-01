@@ -27,6 +27,7 @@ from addonStore.models import (
 )
 from addonStore.status import (
 	_statusFilters,
+	_StatusFilterKey,
 )
 from core import callLater
 import gui
@@ -605,7 +606,7 @@ class AddonStoreDialog(SettingsDialog):
 			# Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
 			labelText=pgettext("addonStore", "&Filter by status:"),
 			wxCtrlClass=wx.Choice,
-			choices=list(_statusFilters.keys()),
+			choices=list(k.displayString for k in _statusFilters),
 		))
 		self.statusFilterCtrl.Bind(wx.EVT_CHOICE, self.onStatusFilterChange, self.statusFilterCtrl)
 		self.statusFilterCtrl.SetSelection(0)
@@ -639,7 +640,7 @@ class AddonStoreDialog(SettingsDialog):
 		# add a label for the AddonListVM so that it is announced with a name in NVDA
 		self.listLabel = wx.StaticText(
 			self,
-			label=self.getStatusFilterLabel()
+			label=self._getStatusFilterKey().displayString
 		)
 		self.contentsSizer.Add(
 			self.listLabel,
@@ -721,14 +722,14 @@ class AddonStoreDialog(SettingsDialog):
 		# let the dialog exit.
 		super().onClose(evt)
 
-	def getStatusFilterLabel(self) -> str:
+	def _getStatusFilterKey(self) -> _StatusFilterKey:
 		index = self.statusFilterCtrl.GetSelection()
 		return list(_statusFilters.keys())[index]
 
 	def onStatusFilterChange(self, evt: wx.EVT_CHOICE):
-		statusFiltersKey = self.getStatusFilterLabel()
-		self.listLabel.SetLabelText(statusFiltersKey)
-		self._storeVM._filteredStatuses = _statusFilters[statusFiltersKey]
+		statusFiltersKey = self._getStatusFilterKey()
+		self.listLabel.SetLabelText(statusFiltersKey.displayString)
+		self._storeVM._filteredStatusKey = statusFiltersKey
 		self._storeVM.refresh()
 
 	def onChannelFilterChange(self, evt: wx.EVT_CHOICE):
