@@ -2,6 +2,55 @@
 
 
 %!includeconf: ../changes.t2tconf
+%!includeconf: ./locale.t2tconf
+
+= 2023.2 =
+
+== Uudet ominaisuudet ==
+- Lisätty Unicode-symbolien lausuminen:
+  - Pistekirjoitussymbolit kuten "⠐⠣⠃⠗⠇⠐⠜". (#14548)
+  - Macin Option-näppäimen symboli "⌥". (#14682)
+  -
+- NVDA ilmoittaa nyt Mozilla Firefoxissa ja Google Chromessa, kun säädin avaa valintaikkunan, ruudukon, luettelon tai puunäkymän, mikäli sivuston tekijä on määrittänyt sen aria-haspopup-attribuuttia käyttäen. (#14709)
+- 
+
+
+== Muutokset ==
+- Päivitetty LibLouis-pistekirjoituskääntäjä versioksi [3.25.0 https://github.com/liblouis/liblouis/releases/tag/v3.25.0]. (#14719)
+- Viivan ja pitkän ajatusviivan symbolit lähetetään aina syntetisaattorille. (#13830)
+- Microsoft Wordissa ilmoitetut etäisyydet noudattavat nyt Wordin lisäasetuksissa määriteltyä yksikköä jopa käytettäessä UIA:ta Word-asiakirjoille. (#14542)
+- Nykyinen hiiri- tai tekstikohdistimen sijainti ilmoitetaan tarkastelukohdistimen sijaintia ilmoitettaessa nyt LibreOffice Writerissa suhteessa sivuun (LibreOfficen versiot 7.6 ja sitä uudemmat) samoin kuin Microsoft Wordissa. (#11696)
+- NVDA reagoi hieman nopeammin komentoihin ja kohdistusmuutoksiin. (#14701)
+- NVDA reagoi nopeammin, kun kohdistinta liikutetaan muokkaussäätimissä. (#14708)
+- Lisätty Baum-pistenäyttöjen ajuriin useita moniosaisia pikanäppäimiä yleisten näppäinkomentojen suorittamista varten, kuten Windows+D, Alt+Sarkain jne. Katso kaikki komennot NVDA:n käyttöoppaasta. (#14714)
+- Kun pistenäyttöä käytetään standardinmukaisella HID-ajurilla, dpadia voidaan käyttää nuolinäppäinten ja Enterin jäljittelemiseen. Lisäksi Väli+piste 1 ja Väli+piste 4 on nyt määritetty ylä- ja alanuolinäppäimiksi. (#14713)
+- Linkin kohteen ilmoittava skripti ilmoittaa nyt kohdistimen tai kohdistuksen sijainnista navigointiobjektin sijaan. (#14659)
+-
+
+
+== Bugikorjaukset ==
+- NVDA ei enää vaihda tarpeettomasti Ei pistenäyttöä -ajuriin useasti automaattisen tunnistuksen aikana, mistä on seurauksena puhtaampi loki ja pienempi muistin kulutus. (#14524)
+- NVDA vaihtaa nyt takaisin USB:hen, mikäli HID Bluetooth -laite (kuten HumanWare Brailliant tai APH Mantis) tunnistetaan automaattisesti ja USB-yhteys tulee käytettäväksi.
+Tämä toimi aiemmin vain Bluetooth-sarjaporteilla. (#14524)
+- Kenoviivamerkkiä on nyt mahdollista käyttää puhesanastomäärityksen Korvaava-kentässä, kun tyypiksi ei ole määritetty sääntölauseke. (#14556)
+- NVDA ei enää ohita virheellisesti selaustilassa kohdistuksen siirtymistä ylemmän tai alemman tason säätimeen, esim. siirryttäessä säätimestä luettelokohteeseen tai ruudukkosoluun. (#14611)
+  - Huom: Tämä korjaus koskee vain tilannetta, jossa "Siirrä kohdistus automaattisesti kohdistettaviin elementteihin" -asetus on poistettu käytöstä (oletusarvoisesti on) selaustilan asetuksista.
+  -
+- NVDA ei enää toisinaan aiheuta Mozilla Firefoxin kaatumista tai vastaamasta lakkaamista. (#14647)
+- Kirjoitettuja merkkejä ei enää puhuta Mozilla Firefoxissa ja Google Chromessa joissakin tekstikentissä, kun kirjoitettujen merkkien puhuminen on poistettu käytöstä. (#14666)
+- Selaustilaa on nyt mahdollista käyttää upotetuissa Chromium-säätimissä, joissa se ei ollut aiemmin mahdollista. (#13493, #8553)
+- Symboleille, joille ei ole kuvausta nykyisellä kielellä, käytetään oletusarvoista englanninkielen symbolitasoa. (#14558, #14417)
+- NVDA voi taas lukea tilarivin sisällön uudemmissa Windows 11:n Muistion versioissa. (#14573)
+- Linkin jälkeinen teksti luetaan nyt luotettavasti, kun hiiri siirretään sen päälle Mozilla Firefoxissa. (#9235)
+- NVDA:n massamuistiversio ei tee enää mitään tai toista virheääniä kirjoitettaessa laskukaavoja nelilaskintilassa Windows 10:n ja 11:n laskimessa sen ollessa päällimmäisenä. (#14679)
+- NVDA ei ole enää hiljaa yritettäessä ilmoittaa URL-osoitetta sellaiselle linkille, jossa ei ole href-attribuuttia.
+Sen sijaan ilmoitetaan, ettei linkillä ole kohdetta. (#14723)
+-
+
+
+== Muutokset kehittäjille ==
+Katso muutokset tämän dokumentin [englanninkielisestä versiosta ../en/changes.html].
+
 
 = 2023.1 =
 Lisätty uusi "Kappaletyyli"-asetus "Asiakirjan selaus"-kategoriaan.
@@ -33,7 +82,7 @@ Huom:
   -
 - Lisätty määrittämätön komento viivästettyjen merkkikuvausten käyttöön ottamiseen ja käytöstä poistamiseen. (#14267)
 - Lisätty kokeellinen asetus UIA-ilmoitustuen hyödyntämiseen Windows Terminalissa päätteen uuden tai muuttuneen tekstin lukemista varten, mikä parantaa vakautta ja reagointikykyä. (#13781)
-  - Katso tämän kokeellisen asetuksen rajoitukset käyttöoppaasta.
+  - Katso tämän asetuksen rajoitukset käyttöoppaasta.
   - 
 - Selaustila on nyt käytettävissä Windows 11 ARM64:ssä AMD64-sovelluksissa, kuten Firefox, Google Chrome ja 1Password. (#14397)
 - Lisätty uusi "Kappaletyyli"-asetus Asiakirjan selaus -kategoriaan.
@@ -47,7 +96,7 @@ Esimerkiksi kun tekstiin liittyy kommentti ja alaviite. (#14507, #14480)
 Kerran painettaessa puhuu/näyttää pistekirjoituksella navigointiobjektissa olevan linkin kohteen.
 Kahdesti painettaessa se näytetään erillisessä ikkunassa yksityiskohtaisempaa tarkastelua varten. (#14583)
 - Uusi määrittämätön komento (Työkalut-kategoria): Ilmoita linkin kohde ikkunassa.
-Sama kuin ``NVDA+K``:n kahdesti painaminen, mutta hyödyllisempi pistekirjoituksen käyttäjille. (#14583)
+Sama kuin ``NVDA+K``:n kahdesti painaminen, mutta hyödyllisempi pistenäyttöjen käyttäjille. (#14583)
 -
 
 
