@@ -674,13 +674,11 @@ class AddonStoreVM:
 		threading.Thread(target=self._getAddonsInBG, name="getAddonData").start()
 
 	def _getAddonsInBG(self):
-		# Change this to be based on view. Only use available add-ons data for available and
-		# updatable. installed and disabled views should use cached addonStore JSON or addon manifest files.
 		log.debug("getting addons in the background")
 		assert addonDataManager
 		assert addonHandler.state._addonHandlerCache
-		availableAddons = addonDataManager.getLatestCompatibleAddons(self.onDisplayableError)
 		self._installedAddons = addonHandler.state._addonHandlerCache.installedAddonsAsDetails
+		availableAddons = addonDataManager.getLatestCompatibleAddons(self.onDisplayableError)
 		if bool(config.conf["addonStore"]["incompatibleAddons"]):
 			incompatibleAddons = addonDataManager.getLatestAddons(self.onDisplayableError)
 			for channel in incompatibleAddons:
