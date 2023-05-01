@@ -2,9 +2,54 @@
 
 
 %!includeconf: ../changes.t2tconf
+%!includeconf: ./locale.t2tconf
+
 
 = Važna napomena za programere=
 Da biste pročitali promene koje su bitne za programere, molimo pogledajte [Englesku verziju ovog dokumenta ../en/changes.html].
+
+
+= 2023.2 =
+
+== Nove karakteristike ==
+- Dodat izgovor unikodnih simbola:
+  - brajevi simboli kao što su "⠐⠣⠃⠗⠇⠐⠜". (#14548)
+  - Simbol za Mac taster opcije "⌥". (#14682)
+  -
+- U pretraživačima Mozilla Firefox i Google Chrome, NVDA sada prijavljuje ako kontrola otvara dijalog, mrežu, listu ili stablo ako je autor ovo označio korišćenjem aria-haspopup. (#14709)
+- 
+
+
+== Promene ==
+- Ažuriran LibLouis brajev prevodilac na [3.25.0 https://github.com/liblouis/liblouis/releases/tag/v3.25.0]. (#14719)
+- Simboli crtica i em- će uvek biti poslati sintetizatoru. (#13830)
+- Distanca koju Microsoft Word prijavljuje će sada poštovati mernu jedinicu koja je podešena u naprednim podešavanjima Worda čak i kada se koristi UIA za pristup Word dokumentima. (#14542)
+- Kada se prijavljuje lokacija preglednog kursora, trenutna lokacija kursora se sada prijavljuje u odnosu na trenutnu stranicu u programu LibreOffice Writer za LibreOffice verzije novije od 7.6, slično prijavljivanju u programu Microsoft Word. (#11696)
+- NVDA će sada nešto brže reagovati na komande i promene fokusa. (#14701)
+- NVDA brže reaguje kada se pomera kursor u kontrolama za uređivanje. (#14708)
+- Baum Braille drajver: Dodato nekoliko vezanih brajevih komandi za izvršavanje čestih prečica na tastaturi kao što su windows+d, alt+tab i tako dalje. Molimo pogledajte NVDA korisničko uputstvo za potpunu listu. (#14714)
+- Kada se koristi brajev red uz drajver za HID brajev standard, strelice se sada mogu koristiti za emuliranje strelica tastature i entera. Takođe,  razmak+tačka1 i razmak+tačka4 su sada podešene kao strelice dole i gore. (#14713)
+- Skripta za prijavljivanje odredišta linka sada prijavljuje sa pozicije kursora ili fokusa umesto navigacionog objekta. (#14659)
+-
+
+
+== Ispravljene greške ==
+- NVDA se više neće prebacivati na opciju nema brajevog reda više puta u toku automatskog prepoznavanja, što daje jasnije dnevnike i manje opterećenja. (#14524)
+- NVDA će se sada vratiti na USB ako se HID Bluetooth uređaj  (kao što je HumanWare Brailliant ili APH Mantis) automatski prepozna i USB veza postane dostupna.
+Ovo je ranije radilo samo za Bluetooth serijske portove. (#14524)
+- Sada je moguće koristiti obrnutu kosu crtu u polju zamene unosa rečnika, kada tip nije podešen na regularni izraz. (#14556)
+- U režimu pretraživanja, NVDA više neće neispravno zanemariti prebacivanje fokusa na glavnu ili unutrašnju kontrolu, na primer prebacivanje sa kontrole na  stavku liste ili ćeliju mreže. (#14611)
+  - Imajte na umu da ova ispravka važi samo kada je opcija "Automatski postavi sistemski fokus na elemente koji se mogu fokusirati" u podešavanjima režima pretraživanja isključena (što je podrazumevano podešavanje).
+  -
+- NVDA više neće ponekad izazvati da se  Mozilla Firefox sruši ili prestane da reaguje. (#14647)
+- U pretraživačima Mozilla Firefox i Google Chrome, ukucani znakovi se više ne prijavljuju u određenim tekstualnim poljima čak i kada je izgovor ukucanih znakova isključen. (#14666)
+- Sada možete koristiti režim pretraživanja u Chromium umetnutim kontrolama u kojima to ranije nije bilo moguće. (#13493, #8553)
+- Za simbole koji nemaju opis na trenutnom jeziku, koristiće se podrazumevani Engleski nivo. (#14558, #14417)
+- U novijim izdanjima Windows 11 verzije programa Notepad, NVDA ponovo može da izgovara sadržaj statusne trake. (#14573)
+- U programu Mozilla Firefox, pomeranje miša iznad teksta nakon linka sada ispravno prijavljuje tekst. (#9235)
+- In Windows 10 and 11 Calculator, a portable copy of NVDA will no longer do nothing or play error tones when entering expressions in standard calculator in compact overlay mode. (#14679)
+- Kada pokušate da dobijete odredište linka bez href atributa NVDA sada izgovara da link nema odredište.
+-
 
 
 = 2023.1 =
