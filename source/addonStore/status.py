@@ -93,8 +93,8 @@ class AvailableAddonStatus(DisplayStringEnum):
 
 def _getStatus(model: AddonDetailsModel) -> Optional[AvailableAddonStatus]:
 	from addonStore.dataManager import addonDataManager
-	addonData = model._addonHandlerModel
-	if addonData is None:
+	addonHandlerModel = model._addonHandlerModel
+	if addonHandlerModel is None:
 		if not isAddonCompatible(model):
 			# Installed incompatible add-ons have a status of disabled or running
 			return AvailableAddonStatus.INCOMPATIBLE
@@ -118,7 +118,7 @@ def _getStatus(model: AddonDetailsModel) -> Optional[AvailableAddonStatus]:
 		else:
 			# Parsing from a side-loaded add-on
 			try:
-				manifestAddonVersion = MajorMinorPatch._parseVersionFromVersionStr(addonData.version)
+				manifestAddonVersion = MajorMinorPatch._parseVersionFromVersionStr(addonHandlerModel.version)
 			except ValueError:
 				# Parsing failed to get a numeric version.
 				# Ideally a numeric version would be compared,
@@ -130,21 +130,22 @@ def _getStatus(model: AddonDetailsModel) -> Optional[AvailableAddonStatus]:
 			if model.addonVersionNumber > manifestAddonVersion:
 				return AvailableAddonStatus.UPDATE
 
-	if addonData.isRunning:
+	if addonHandlerModel.isRunning:
 		return AvailableAddonStatus.RUNNING
 
 	log.debugWarning(f"Add-on in unknown state: {model.addonId}")
 	return None
 
 
-_addonStoreStateToAddonHandlerState: Dict[AvailableAddonStatus, AddonStateCategory] = {
-	AvailableAddonStatus.INSTALLED: AddonStateCategory.PENDING_INSTALL,
-	AvailableAddonStatus.DISABLED: AddonStateCategory.DISABLED,
-	AvailableAddonStatus.INCOMPATIBLE_DISABLED: AddonStateCategory.BLOCKED,
-	AvailableAddonStatus.PENDING_DISABLE: AddonStateCategory.PENDING_DISABLE,
+_addonStoreStateToAddonHandlerState: OrderedDict[AvailableAddonStatus, AddonStateCategory] = OrderedDict({
+	# Pending states must be first as the pending state may be altering another state.
 	AvailableAddonStatus.PENDING_ENABLE: AddonStateCategory.PENDING_ENABLE,
+	AvailableAddonStatus.PENDING_DISABLE: AddonStateCategory.PENDING_DISABLE,
 	AvailableAddonStatus.PENDING_REMOVE: AddonStateCategory.PENDING_REMOVE,
-}
+	AvailableAddonStatus.INCOMPATIBLE_DISABLED: AddonStateCategory.BLOCKED,
+	AvailableAddonStatus.DISABLED: AddonStateCategory.DISABLED,
+	AvailableAddonStatus.INSTALLED: AddonStateCategory.PENDING_INSTALL,
+})
 
 
 _statusFilters: OrderedDict[str, Set[AvailableAddonStatus]] = OrderedDict({
