@@ -30,7 +30,7 @@ private:
 	HWND m_messageWindow;
 	UINT m_flushMessage;
 	std::mutex mtx;
-	std::list<AnyEventRecord_t> m_eventRecords;
+	std::list<EventRecordVariant_t> m_eventRecords;
 	std::map<std::vector<int>, std::pair<decltype(m_eventRecords)::iterator, int>> m_eventRecordsByKey;
 
 	template<EventRecordConstraints EventRecordClass, typename... EventRecordArgTypes> HRESULT queueEvent(EventRecordArgTypes&&... args);

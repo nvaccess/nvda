@@ -64,13 +64,16 @@ struct ActiveTextPositionChangedEventRecord_t {
 	CComPtr<IUIAutomationTextRange> range;
 };
 
-using AnyEventRecord_t = std::variant<AutomationEventRecord_t, FocusChangedEventRecord_t, PropertyChangedEventRecord_t, NotificationEventRecord_t, ActiveTextPositionChangedEventRecord_t>;
+using EventRecordVariant_t = std::variant<AutomationEventRecord_t, FocusChangedEventRecord_t, PropertyChangedEventRecord_t, NotificationEventRecord_t, ActiveTextPositionChangedEventRecord_t>;
 
 template<typename T>
 concept EventRecordConstraints = requires(T t) {
+	// type must have a static const bool member called 'isCoalesceable'
 	{ t.isCoalesceable } -> std::same_as<const bool&>;
+	// if 'isCoaleseable' is true, then the type must have a 'generateCoalescingKey' method.
 	requires (T::isCoalesceable == false) || requires(T t) {
 		{ t.generateCoalescingKey() } -> std::same_as<std::vector<int>>;
 	};
-	{ AnyEventRecord_t(t)} -> std::same_as<AnyEventRecord_t>;
+	// The type must be supported by the EventRecordVariant_t variant type
+	 requires supports_alternative<T, EventRecordVariant_t>;
 };
