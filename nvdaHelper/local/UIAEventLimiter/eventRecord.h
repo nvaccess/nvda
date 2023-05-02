@@ -32,7 +32,7 @@ struct AutomationEventRecord_t {
 };
 
 struct PropertyChangedEventRecord_t {
-	static const bool isCoalesceable = true;
+	static const bool isCoalesceable = false;
 	CComPtr<IUIAutomationElement> sender;
 	PROPERTYID propertyID;
 	CComVariant newValue;
