@@ -16,10 +16,10 @@ from typing import (
 
 from requests.structures import CaseInsensitiveDict
 
-from addonStore.models.addon import (
+from _addonStore.models.addon import (
 	AddonGUIModel,
 )
-from addonStore.models.status import (
+from _addonStore.models.status import (
 	AvailableAddonStatus,
 )
 import core

@@ -11,10 +11,9 @@ from typing import (
 )
 
 import wx
-import wx.lib.newevent
 from wx.lib.expando import ExpandoTextCtrl
 
-from addonStore.models.addon import (
+from _addonStore.models.addon import (
 	AddonStoreModel,
 )
 from gui import guiHelper

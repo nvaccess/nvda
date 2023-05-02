@@ -38,6 +38,12 @@ if TYPE_CHECKING:
 		Addon as AddonHandlerModel,
 		AddonBase as AddonHandlerBaseModel,
 	)
+	AddonGUICollectionT = Dict[Channel, CaseInsensitiveDict["_AddonGUIModel"]]
+	"""
+	Add-ons that have the same ID except differ in casing cause a path collision,
+	as add-on IDs are installed to a case insensitive path.
+	Therefore addon IDs should be treated as case insensitive.
+	"""
 
 
 AddonHandlerModelGeneratorT = Generator["AddonHandlerModel", None, None]
@@ -190,15 +196,6 @@ def _createGUIModelFromManifest(addon: "AddonHandlerBaseModel") -> AddonGUIModel
 		minNVDAVersion=MajorMinorPatch(*addon.minimumNVDAVersion),
 		lastTestedVersion=MajorMinorPatch(*addon.lastTestedNVDAVersion),
 	)
-
-
-if TYPE_CHECKING:
-	AddonGUICollectionT = Dict[Channel, CaseInsensitiveDict["_AddonGUIModel"]]
-	"""
-	Add-ons that have the same ID except differ in casing cause a path collision,
-	as add-on IDs are installed to a case insensitive path.
-	Therefore addon IDs should be treated as case insensitive.
-	"""
 
 
 def _createAddonGUICollection() -> "AddonGUICollectionT":

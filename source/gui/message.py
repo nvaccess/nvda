@@ -10,7 +10,6 @@ from typing import Optional
 
 import wx
 
-from core import callLater
 import extensionPoints
 
 _messageBoxCounterLock = threading.Lock()

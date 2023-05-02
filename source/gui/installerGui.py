@@ -152,7 +152,10 @@ class InstallerDialog(
 		super().__init__(parent, title=_("Install NVDA"))
 
 		import addonHandler
-		from addonStore.models.version import getAddonCompatibilityMessage, getAddonCompatibilityConfirmationMessage
+		from _addonStore.models.version import (
+			getAddonCompatibilityConfirmationMessage,
+			getAddonCompatibilityMessage,
+		)
 		shouldAskAboutAddons = any(addonHandler.getIncompatibleAddons(
 			# the defaults from the installer are ok. We are testing against the running version.
 		))

@@ -10,12 +10,12 @@ from typing import (
 import wx
 
 import addonAPIVersion
-from addonStore.models.addon import AddonGUIModel
+from _addonStore.models.addon import AddonGUIModel
 from gui.addonGui import ErrorAddonInstallDialog
 from gui.message import messageBox
 
 if TYPE_CHECKING:
-	from addonStore.models.version import SupportsVersionCheck
+	from _addonStore.models.version import SupportsVersionCheck
 	from guiHelper import ButtonHelper
 
 

@@ -20,17 +20,17 @@ from typing import (
 import threading
 
 import addonHandler
-from addonStore.dataManager import addonDataManager
-from addonStore.install import installAddon
-from addonStore.models.addon import (
+from _addonStore.dataManager import addonDataManager
+from _addonStore.install import installAddon
+from _addonStore.models.addon import (
 	AddonStoreModel,
 	_createAddonGUICollection,
 )
-from addonStore.models.channel import (
+from _addonStore.models.channel import (
 	Channel,
 	_channelFilters,
 )
-from addonStore.models.status import (
+from _addonStore.models.status import (
 	getStatus,
 	_statusFilters,
 	_StatusFilterKey,

@@ -48,7 +48,7 @@ import braille
 import gui
 from gui import guiHelper
 from addonHandler import getCodeAddon, AddonError, getIncompatibleAddons
-from addonStore.models.version import (  # noqa: E402
+from _addonStore.models.version import (  # noqa: E402
 	getAddonCompatibilityMessage,
 	getAddonCompatibilityConfirmationMessage,
 )

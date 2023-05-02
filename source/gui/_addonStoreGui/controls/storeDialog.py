@@ -8,15 +8,14 @@ from typing import (
 )
 
 import wx
-import wx.lib.newevent
 
 from addonHandler import (
 	state as addonHandlerState,
 	AddonStateCategory,
 	BUNDLE_EXTENSION,
 )
-from addonStore.models.channel import _channelFilters
-from addonStore.models.status import (
+from _addonStore.models.channel import _channelFilters
+from _addonStore.models.status import (
 	_statusFilters,
 	_StatusFilterKey,
 )

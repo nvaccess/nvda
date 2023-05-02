@@ -10,7 +10,6 @@ from typing import (
 )
 
 import wx
-import wx.lib.newevent
 
 from gui import (
 	guiHelper,

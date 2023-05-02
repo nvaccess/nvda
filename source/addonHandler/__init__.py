@@ -40,8 +40,8 @@ import addonAPIVersion
 import importlib
 from types import ModuleType
 
-from addonStore.models.status import AddonStateCategory
-from addonStore.models.version import SupportsVersionCheck
+from _addonStore.models.status import AddonStateCategory
+from _addonStore.models.version import SupportsVersionCheck
 import extensionPoints
 from utils.caseInsensitiveCollections import CaseInsensitiveSet
 
@@ -54,7 +54,7 @@ from .packaging import (
 )
 
 if TYPE_CHECKING:
-	from addonStore.models.addon import (  # noqa: F401
+	from _addonStore.models.addon import (  # noqa: F401
 		AddonGUIModel,
 		AddonHandlerModelGeneratorT,
 		AddonStoreModel,
@@ -205,6 +205,7 @@ def disableAddonsIfAny():
 	# Clear pending disables and enables
 	state[AddonStateCategory.PENDING_DISABLE].clear()
 	state[AddonStateCategory.PENDING_ENABLE].clear()
+
 
 def initialize():
 	""" Initializes the add-ons subsystem. """
@@ -385,13 +386,13 @@ class AddonBase(SupportsVersionCheck, ABC):
 
 	@property
 	def _addonStoreData(self) -> Optional["AddonStoreModel"]:
-		from addonStore.dataManager import addonDataManager
+		from _addonStore.dataManager import addonDataManager
 		assert addonDataManager
 		return addonDataManager._getCachedInstalledAddonData(self.name)
 
 	@property
 	def _addonGuiModel(self) -> "AddonGUIModel":
-		from addonStore.models.addon import _createGUIModelFromManifest
+		from _addonStore.models.addon import _createGUIModelFromManifest
 		return _createGUIModelFromManifest(self)
 
 
@@ -538,7 +539,7 @@ class Addon(AddonBase):
 			else:
 				if self.canOverrideCompatibility and not self.overrideIncompatibility:
 					from gui import mainFrame
-					from gui.addonStoreGui.controls.messageDialogs import _shouldProceedWhenAddonTooOldDialog
+					from gui._addonStoreGui.controls.messageDialogs import _shouldProceedWhenAddonTooOldDialog
 					if not _shouldProceedWhenAddonTooOldDialog(mainFrame, self._addonGuiModel):
 						import addonAPIVersion
 						raise AddonError("Add-on is not compatible and over ride was abandoned")

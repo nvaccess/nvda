@@ -335,8 +335,8 @@ class MainFrame(wx.Frame):
 	)
 	def onAddonStoreCommand(self, evt: wx.MenuEvent):
 		self.prePopup()
-		from .addonStoreGui import AddonStoreDialog
-		from .addonStoreGui.viewModels.store import AddonStoreVM
+		from ._addonStoreGui import AddonStoreDialog
+		from ._addonStoreGui.viewModels.store import AddonStoreVM
 		_storeVM = AddonStoreVM()
 		try:
 			d = AddonStoreDialog(mainFrame, _storeVM)
