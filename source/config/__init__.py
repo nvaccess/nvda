@@ -714,7 +714,7 @@ class ConfigManager(object):
 				self._writeProfileToFile(self._profileCache[name].filename, self._profileCache[name])
 				log.info("Saved configuration profile %s" % name)
 			self._dirtyProfiles.clear()
-		except Exception as e:
+		except PermissionError as e:
 			log.warning("Error saving configuration; probably read only file system")
 			log.debugWarning("", exc_info=True)
 			raise e
