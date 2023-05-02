@@ -1411,8 +1411,10 @@ WM_NVDA_UIA_FLUSH = winUser.registerWindowMessage("WM_NVDA_UIA_FLUSH")
 
 
 def eventLimiterWindowProc(msg, wParam, lParam):
+	if not handler: return
 	if msg == WM_NVDA_UIA_FLUSH:
+		func = lambda: NVDAHelper.localLib.rateLimitedUIAEventHandler_flush(wParam)
 		if lParam == 0:
-			NVDAHelper.localLib.rateLimitedUIAEventHandler_flush(wParam)
+			handler.MTAThreadQueue.put(func)
 		else:
-			core.callLater(lParam, NVDAHelper.localLib.rateLimitedUIAEventHandler_flush, wParam)
+			core.callLater(lParam, handler.MTAThreadQueue.put, func)
