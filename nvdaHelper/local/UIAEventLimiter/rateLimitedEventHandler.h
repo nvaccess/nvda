@@ -19,6 +19,12 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <uiautomation.h>
 #include "eventRecord.h"
 
+enum FlushRequest {
+	none,
+	delayed,
+	quick
+};
+
 class RateLimitedEventHandler: public IUIAutomationEventHandler, public IUIAutomationFocusChangedEventHandler, public IUIAutomationPropertyChangedEventHandler, public IUIAutomationNotificationEventHandler, public IUIAutomationActiveTextPositionChangedEventHandler {
 private:
 	unsigned long m_refCount;
@@ -32,6 +38,7 @@ private:
 	std::mutex mtx;
 	std::list<EventRecordVariant_t> m_eventRecords;
 	std::map<std::vector<int>, std::pair<decltype(m_eventRecords)::iterator, int>> m_eventRecordsByKey;
+	FlushRequest lastFlushRequest = FlushRequest::none;
 
 	template<EventRecordConstraints EventRecordClass, typename... EventRecordArgTypes> HRESULT queueEvent(EventRecordArgTypes&&... args);
 

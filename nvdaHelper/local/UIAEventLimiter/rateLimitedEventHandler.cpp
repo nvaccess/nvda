@@ -30,11 +30,30 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 template<EventRecordConstraints EventRecordClass, typename... EventRecordArgTypes>
 HRESULT RateLimitedEventHandler::queueEvent(EventRecordArgTypes&&... args) {
 	LOG_DEBUG(L"RateLimitedUIAEventHandler::queueEvent called");
-	bool needsFlush = false;
-	const unsigned int flushTimeMS = (EventRecordClass::isCoalesceable)?30:0;
+	FlushRequest flushRequest = FlushRequest::none;
+	unsigned int flushTimeMS = 0;
 	{ std::lock_guard lock(mtx);
-		if(!EventRecordClass::isCoalesceable || m_eventRecords.empty()) {
-			needsFlush = true;
+		// work out whether we need to request a flush after inserting this event.
+		if(!EventRecordClass::isCoalesceable) {
+			// not a coalesceable event so requires a quick flush
+			// if a quick flush has not been requested already.
+			if(lastFlushRequest < FlushRequest::quick) {
+				LOG_DEBUG(L"RateLimitedUIAEventHandler::queueEvent: requesting quick flush after queuing");
+				lastFlushRequest = flushRequest = FlushRequest::quick;
+			} else {
+				LOG_DEBUG(L"RateLimitedUIAEventHandler::queueEvent: quick flush needed, but quick flush already requested.");
+			}
+		} else if(m_eventRecords.empty()) {
+			// It is a coalesceable event and its the first event since the last flush,
+			// so requires a delayed flush
+			// if a delayed or quick flush is not requested already.
+			if(lastFlushRequest < FlushRequest::delayed) {
+				LOG_DEBUG(L"RateLimitedUIAEventHandler::queueEvent: requesting delayed flush after queuing");
+				lastFlushRequest = flushRequest = FlushRequest::delayed;
+				flushTimeMS = 30;
+			} else {
+				LOG_DEBUG(L"RateLimitedUIAEventHandler::queueEvent: delayed flush needed, but quick flush already requested.");
+			}
 		}
 		LOG_DEBUG(L"RateLimitedUIAEventHandler::queueEvent: Inserting new event");
 		auto& recordVar = m_eventRecords.emplace_back(std::in_place_type_t<EventRecordClass>{}, args...);
@@ -58,8 +77,8 @@ HRESULT RateLimitedEventHandler::queueEvent(EventRecordArgTypes&&... args) {
 			}
 		}
 	}
-	if(needsFlush) {
-		LOG_DEBUG(L"RateLimitedUIAEventHandler::queueEvent: posting flush message");
+	if(flushRequest > FlushRequest::none) {
+		LOG_DEBUG(L"RateLimitedUIAEventHandler::queueEvent: posting flush message with delay of "<<flushTimeMS);
 		PostMessage(m_messageWindow, m_flushMessage, reinterpret_cast<WPARAM>(this), flushTimeMS);
 	}
 	return S_OK;
@@ -201,6 +220,7 @@ void RateLimitedEventHandler::flush() {
 	{ std::lock_guard lock(mtx);
 		eventRecordsCopy.swap(m_eventRecords);
 		eventRecordsByKeyCopy.swap(m_eventRecordsByKey);
+		lastFlushRequest = FlushRequest::none;
 	}
 
 	// Emit events
@@ -223,5 +243,4 @@ void RateLimitedEventHandler::flush() {
 	}
 	*/
 	LOG_DEBUG(L"RateLimitedUIAEventHandler::flush: done emitting events"); 
-
 }
