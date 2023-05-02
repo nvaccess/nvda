@@ -814,6 +814,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			import audioDucking
 			if audioDucking.isAudioDuckingSupported():
 				self._audioDucker = audioDucking.AudioDucker()
+		self._session = session
 		self._player = NVDAHelper.localLib.wasPlay_create(
 			self._deviceNameToId(outputDevice),
 			format,
@@ -857,6 +858,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			WavePlayer.audioDeviceError_static = True
 			raise
 		WasapiWavePlayer.audioDeviceError_static = False
+		self._sessionVolumeFollow()
 
 	def close(self):
 		"""For WASAPI, this just stops playback.
@@ -913,6 +915,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			self._audioDucker.disable()
 		NVDAHelper.localLib.wasPlay_stop(self._player)
 		self._doneCallbacks = {}
+		self._sessionVolumeFollow()
 
 	def pause(self, switch: bool):
 		"""Pause or unpause playback.
@@ -934,6 +937,17 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		associated with this WavePlayer instance.
 		"""
 		NVDAHelper.localLib.wasPlay_setSessionVolume(self._player, c_float(level))
+
+	def _sessionVolumeFollow(self):
+		if (
+			self._session is not soundsSession
+			or not config.conf["audio"]["soundVolumeFollowsVoice"]
+		):
+			return
+		import synthDriverHandler
+		synth = synthDriverHandler.getSynth()
+		if synth and synth.isSupported("volume"):
+			self.setSessionVolume(synth.volume / 100)
 
 	@staticmethod
 	def _getDevices():
