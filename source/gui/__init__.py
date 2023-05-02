@@ -336,11 +336,15 @@ class MainFrame(wx.Frame):
 	def onAddonStoreCommand(self, evt: wx.MenuEvent):
 		self.prePopup()
 		from .addonStoreGui import AddonStoreDialog
-		from .addonStoreGui.viewModels import AddonStoreVM
+		from .addonStoreGui.viewModels.store import AddonStoreVM
 		_storeVM = AddonStoreVM()
-		d = AddonStoreDialog(mainFrame, _storeVM)
-		_storeVM.refresh()
-		d.Show()
+		try:
+			d = AddonStoreDialog(mainFrame, _storeVM)
+		except SettingsDialog.MultiInstanceErrorWithDialog:
+			pass
+		else:
+			_storeVM.refresh()
+			d.Show()
 		self.postPopup()
 
 	def onReloadPluginsCommand(self, evt):

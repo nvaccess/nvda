@@ -10,12 +10,12 @@ from typing import (
 import wx
 
 import addonAPIVersion
-from addonStore.models import AddonDetailsModel
+from addonStore.models.addon import AddonGUIModel
 from gui.addonGui import ErrorAddonInstallDialog
 from gui.message import messageBox
 
 if TYPE_CHECKING:
-	from addonHandler import SupportsVersionCheck
+	from addonStore.models.version import SupportsVersionCheck
 	from guiHelper import ButtonHelper
 
 
@@ -34,7 +34,7 @@ class ErrorAddonInstallDialogWithCancelButton(ErrorAddonInstallDialog):
 
 def _shouldProceedWhenInstalledAddonVersionUnknown(
 		parent: wx.Window,
-		addon: AddonDetailsModel
+		addon: AddonGUIModel
 ) -> bool:
 	# an installed add-on should have an addon Handler Model
 	assert addon._addonHandlerModel
@@ -82,7 +82,7 @@ def _shouldProceedToRemoveAddonDialog(
 
 def _shouldProceedWhenAddonTooOldDialog(
 		parent: wx.Window,
-		addon: AddonDetailsModel
+		addon: AddonGUIModel
 ) -> bool:
 	incompatibleMessage = pgettext(
 		"addonStore",
@@ -109,7 +109,7 @@ def _shouldProceedWhenAddonTooOldDialog(
 	).ShowModal() == wx.OK
 
 
-def _showAddonInfo(addon: AddonDetailsModel) -> None:
+def _showAddonInfo(addon: AddonGUIModel) -> None:
 	message = [
 		pgettext(
 			"addonStore",

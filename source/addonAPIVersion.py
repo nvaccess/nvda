@@ -23,6 +23,7 @@ CURRENT: AddonApiVersionT = (
 	buildVersion.version_major,
 	buildVersion.version_minor
 )
+
 BACK_COMPAT_TO: AddonApiVersionT = (2023, 1, 0)
 """
 As BACK_COMPAT_TO is incremented, the changed / removed parts / or reasoning should be added below.
@@ -35,31 +36,28 @@ EG: (x, y, z): Large changes to speech.py
 (2019, 3, 0): speech refactor, Python 3
 (0, 0, 0): API version zero, used to signify addons released prior to API version checks.
 """
-LATEST = "latest"
-"""
-A string value used in the add-on store to fetch the latest version of all add-ons,
-i.e include older incompatible versions.
-"""
 
-# Compiled regular expression to match an addon API version string.
-# Supports year.major.minor versions (e.g. 2018.1.1).
-# Although year and major are mandatory, minor is optional.
-# Resulting match objects expose three groups reflecting:
-# - release year
-# - release major
-# - release minor
-# As minor is optional, the final group in the resulting match object may be None if minor is not provided
-# in the original string. In this case it should be treated as being 0.
-# See also: L{tests.unit.test_addonVersionCheck.TestGetAPIVersionTupleFromString}
 ADDON_API_VERSION_REGEX: re.Pattern = re.compile(r"^(0|\d{4})\.(\d)(?:\.(\d))?$")
+"""
+Compiled regular expression to match an addon API version string.
+Supports year.major.minor versions (e.g. 2018.1.1).
+Although year and major are mandatory, minor is optional.
+Resulting match objects expose three groups reflecting:
+- release year
+- release major
+- release minor
+As minor is optional, the final group in the resulting match object may be None if minor is not provided
+in the original string. In this case it should be treated as being 0.
+See also: L{tests.unit.test_addonVersionCheck.TestGetAPIVersionTupleFromString}
+"""
 
 
 def getAPIVersionTupleFromString(version: str) -> AddonApiVersionT:
 	"""
 	Converts a string containing an NVDA version to a tuple of the form:
 	(versionYear, versionMajor, versionMinor)
-	Raises ValueError when unable to parse version string.
-	# See also: L{tests.unit.test_addonVersionCheck.TestGetAPIVersionTupleFromString}
+	@raises: ValueError when unable to parse version string.
+	See also: L{tests.unit.test_addonVersionCheck.TestGetAPIVersionTupleFromString}
 	"""
 	match = ADDON_API_VERSION_REGEX.match(version)
 	if not match:

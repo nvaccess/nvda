@@ -8,7 +8,6 @@
 # Can be removed in a future version of python (3.8+)
 from __future__ import annotations
 
-import enum
 from abc import abstractmethod, ABC
 import sys
 import os.path
@@ -29,7 +28,6 @@ from typing import (
 	TYPE_CHECKING,
 	Tuple,
 )
-from baseObject import AutoPropertyObject
 import globalVars
 import zipfile
 from configobj import ConfigObj
@@ -41,23 +39,26 @@ import winKernel
 import addonAPIVersion
 import importlib
 from types import ModuleType
+
+from addonStore.models.status import AddonStateCategory
+from addonStore.models.version import SupportsVersionCheck
 import extensionPoints
-from requests.structures import CaseInsensitiveDict
 from utils.caseInsensitiveCollections import CaseInsensitiveSet
 
 from .addonVersionCheck import (
 	isAddonCompatible,
-	SupportsVersionCheck,
 )
 from .packaging import (
 	initializeModulePackagePaths,
 	isModuleName,
 )
-from .types import AddonGeneratorT
 
 if TYPE_CHECKING:
-	from addonStore.models import AddonStoreModel, AddonDetailsCollectionT  # noqa: F401
-
+	from addonStore.models.addon import (  # noqa: F401
+		AddonGUIModel,
+		AddonHandlerModelGeneratorT,
+		AddonStoreModel,
+	)
 
 MANIFEST_FILENAME = "manifest.ini"
 stateFilename="addonsState.pickle"
@@ -73,56 +74,6 @@ DELETEDIR_SUFFIX=".delete"
 # and should return `False` if it is not interested in it, `True` otherwise.
 # For more details see appropriate section of the developer guide.
 isCLIParamKnown = extensionPoints.AccumulatingDecider(defaultDecision=False)
-
-
-class AddonHandlerCache(AutoPropertyObject):
-	cachePropertiesByDefault = True
-
-	installedAddons: CaseInsensitiveDict["Addon"]
-	installedAddonsAsDetails: "AddonDetailsCollectionT"
-
-	def _get_installedAddons(self) -> CaseInsensitiveDict["Addon"]:
-		"""
-		Add-ons that have the same ID except differ in casing cause a path collision,
-		as add-on IDs are installed to a case insensitive path.
-		Therefore addon IDs should be treated as case insensitive.
-		"""
-		return CaseInsensitiveDict({a.name: a for a in getAvailableAddons()})
-
-	def _get_installedAddonsAsDetails(self) -> "AddonDetailsCollectionT":
-		from addonStore.models import (
-			_createDetailsFromManifest,
-			Channel,
-			_createAddonDetailsCollection,
-		)
-		addons = _createAddonDetailsCollection()
-		for addonId in self.installedAddons:
-			addonStoreData = self.installedAddons[addonId]._addonStoreData
-			if addonStoreData:
-				addons[addonStoreData.channel][addonId] = addonStoreData
-			else:
-				addons[Channel.STABLE][addonId] = _createDetailsFromManifest(self.installedAddons[addonId])
-		return addons
-
-
-class AddonStateCategory(str, enum.Enum):
-	""" For backwards compatibility, the enums must remain functionally a string.
-	I.E. the following must be true:
-	> assert isinstance(AddonStateCategory.PENDING_REMOVE, str)
-	> assert AddonStateCategory.PENDING_REMOVE == "pendingRemovesSet"
-	"""
-	PENDING_REMOVE = "pendingRemovesSet"
-	PENDING_INSTALL = "pendingInstallsSet"
-	DISABLED = "disabledAddons"
-	PENDING_ENABLE = "pendingEnableSet"
-	PENDING_DISABLE = "pendingDisableSet"
-	OVERRIDE_COMPATIBILITY = "overrideCompatibility"
-	"""
-	Should be reset when changing to a new breaking release,
-	add-ons should be removed from this list when they are updated, disabled or removed
-	"""
-	BLOCKED = "blocked"
-	"""Add-ons that are blocked from running because they are incompatible"""
 
 
 class AddonsState(collections.UserDict):
@@ -144,8 +95,6 @@ class AddonsState(collections.UserDict):
 
 	data: Dict[AddonStateCategory, CaseInsensitiveSet[str]]
 
-	_addonHandlerCache: Optional[AddonHandlerCache]
-
 	@property
 	def statePath(self) -> os.PathLike:
 		"""Returns path to the state file. """
@@ -155,7 +104,6 @@ class AddonsState(collections.UserDict):
 		"""Populates state with the default content and then loads values from the config."""
 		state = self._generateDefaultStateContent()
 		self.update(state)
-		self._addonHandlerCache = AddonHandlerCache()
 		try:
 			# #9038: Python 3 requires binary format when working with pickles.
 			with open(self.statePath, "rb") as f:
@@ -205,7 +153,7 @@ class AddonsState(collections.UserDict):
 		during uninstallation. As a result after reinstalling add-on with the same name it was disabled
 		by default confusing users. Fix this by removing all add-ons no longer present in the config
 		from the list of disabled add-ons in the state."""
-		installedAddonNames = CaseInsensitiveSet(self._addonHandlerCache.installedAddons.keys())
+		installedAddonNames = CaseInsensitiveSet(a.name for a in getAvailableAddons())
 		for disabledAddonName in CaseInsensitiveSet(self[AddonStateCategory.DISABLED]):
 			# Iterate over copy of set to prevent updating the set while iterating over it.
 			if disabledAddonName not in installedAddonNames:
@@ -216,7 +164,7 @@ class AddonsState(collections.UserDict):
 state: AddonsState[AddonStateCategory, CaseInsensitiveSet[str]] = AddonsState()
 
 
-def getRunningAddons() -> AddonGeneratorT:
+def getRunningAddons() -> "AddonHandlerModelGeneratorT":
 	""" Returns currently loaded add-ons.
 	"""
 	return getAvailableAddons(filterFunc=lambda addon: addon.isRunning)
@@ -225,7 +173,7 @@ def getRunningAddons() -> AddonGeneratorT:
 def getIncompatibleAddons(
 		currentAPIVersion=addonAPIVersion.CURRENT,
 		backCompatToAPIVersion=addonAPIVersion.BACK_COMPAT_TO
-) -> AddonGeneratorT:
+) -> "AddonHandlerModelGeneratorT":
 	""" Returns a generator of the add-ons that are not compatible.
 	"""
 	return getAvailableAddons(
@@ -291,7 +239,7 @@ def _getDefaultAddonPaths():
 def _getAvailableAddonsFromPath(
 		path: str,
 		isFirstLoad: bool = False
-) -> AddonGeneratorT:
+) -> "AddonHandlerModelGeneratorT":
 	""" Gets available add-ons from path.
 	An addon is only considered available if the manifest file is loaded with no errors.
 	@param path: path from where to find addon directories.
@@ -357,7 +305,7 @@ def getAvailableAddons(
 		refresh: bool = False,
 		filterFunc: Optional[Callable[["Addon"], bool]] = None,
 		isFirstLoad: bool = False
-) -> AddonGeneratorT:
+) -> "AddonHandlerModelGeneratorT":
 	""" Gets all available addons on the system.
 	@param refresh: Whether or not to query the file system for available add-ons.
 	@param filterFunc: A function that allows filtering of add-ons.
@@ -441,6 +389,11 @@ class AddonBase(SupportsVersionCheck, ABC):
 		assert addonDataManager
 		return addonDataManager._getCachedInstalledAddonData(self.name)
 
+	@property
+	def _addonGuiModel(self) -> "AddonGUIModel":
+		from addonStore.models.addon import _createGUIModelFromManifest
+		return _createGUIModelFromManifest(self)
+
 
 class Addon(AddonBase):
 	""" Represents an Add-on available on the file system."""
@@ -449,10 +402,9 @@ class Addon(AddonBase):
 	def manifest(self) -> "AddonManifest":
 		return self._manifest
 
-	def __init__(self, path):
+	def __init__(self, path: str):
 		""" Constructs an L{Addon} from.
 		@param path: the base directory for the addon data.
-		@type path: string
 		"""
 		self.path = path
 		self._extendedPackages = set()
@@ -471,16 +423,16 @@ class Addon(AddonBase):
 				raise AddonError("Manifest file has errors.")
 
 	@property
-	def isPendingInstall(self):
+	def isPendingInstall(self) -> bool:
 		"""True if this addon has not yet been fully installed."""
 		return self.path.endswith(ADDON_PENDINGINSTALL_SUFFIX)
 
 	@property
-	def isPendingRemove(self):
+	def isPendingRemove(self) -> bool:
 		"""True if this addon is marked for removal."""
 		return not self.isPendingInstall and self.name in state[AddonStateCategory.PENDING_REMOVE]
 
-	def completeInstall(self):
+	def completeInstall(self) -> str:
 		newPath = self.path.replace(ADDON_PENDINGINSTALL_SUFFIX, "")
 		oldPath = self.path
 		try:
@@ -586,8 +538,8 @@ class Addon(AddonBase):
 			else:
 				if self.canOverrideCompatibility and not self.overrideIncompatibility:
 					from gui import mainFrame
-					from gui.addonGui import _shouldProceedWhenAddonTooOldDialog
-					if not _shouldProceedWhenAddonTooOldDialog(mainFrame, self):
+					from gui.addonStoreGui.controls.messageDialogs import _shouldProceedWhenAddonTooOldDialog
+					if not _shouldProceedWhenAddonTooOldDialog(mainFrame, self._addonGuiModel):
 						import addonAPIVersion
 						raise AddonError("Add-on is not compatible and over ride was abandoned")
 				state[AddonStateCategory.PENDING_ENABLE].add(self.name)
@@ -603,11 +555,11 @@ class Addon(AddonBase):
 		state.save()
 
 	@property
-	def isRunning(self):
+	def isRunning(self) -> bool:
 		return not (globalVars.appArgs.disableAddons or self.isPendingInstall or self.isDisabled or self.isBlocked)
 
 	@property
-	def isDisabled(self):
+	def isDisabled(self) -> bool:
 		return self.name in state[AddonStateCategory.DISABLED]
 
 	@property
@@ -615,11 +567,11 @@ class Addon(AddonBase):
 		return self.name in state[AddonStateCategory.BLOCKED]
 
 	@property
-	def isPendingEnable(self):
+	def isPendingEnable(self) -> bool:
 		return self.name in state[AddonStateCategory.PENDING_ENABLE]
 
 	@property
-	def isPendingDisable(self):
+	def isPendingDisable(self) -> bool:
 		return self.name in state[AddonStateCategory.PENDING_DISABLE]
 
 	def _getPathForInclusionInPackage(self, package):
@@ -786,7 +738,7 @@ class AddonBundle(AddonBase):
 	""" Represents the contents of an NVDA addon suitable for distribution.
 	The bundle is compressed using the zip file format. Manifest information
 	is available without the need for extraction."""
-	def __init__(self, bundlePath):
+	def __init__(self, bundlePath: str):
 		""" Constructs an L{AddonBundle} from a filename.
 		@param bundlePath: The path for the bundle file.
 		"""
@@ -923,7 +875,7 @@ docFileName = string(default=None)
 		"""
 		super(AddonManifest, self).__init__(input, configspec=self.configspec, encoding='utf-8', default_encoding='utf-8')
 		self._errors = None
-		val = Validator({"apiVersion": validate_apiVersionString})
+		val = Validator({"apiVersion":validate_apiVersionString})
 		result = self.validate(val, copy=True, preserve_errors=True)
 		if result != True:
 			self._errors = result
@@ -951,6 +903,9 @@ docFileName = string(default=None)
 
 
 def validate_apiVersionString(value: str) -> Tuple[int, int, int]:
+	"""
+	@raises: configobj.validate.ValidateError on validation error
+	"""
 	from configobj.validate import ValidateError
 	if not value or value == "None":
 		return (0, 0, 0)

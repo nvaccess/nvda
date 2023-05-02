@@ -17,7 +17,7 @@ import wx
 import core
 import config
 import gui
-from addonHandler import Addon, addonVersionCheck
+from addonHandler import Addon
 from logHandler import log
 import addonHandler
 import globalVars
@@ -111,34 +111,6 @@ class ErrorAddonInstallDialog(nvdaControls.MessageDialog):
 		)
 		okButton.SetDefault()
 		okButton.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.OK))
-
-
-def _showAddonInfo(addon: addonHandler.AddonBase) -> None:
-	manifest = addon.manifest
-	message=[_(
-		# Translators: message shown in the Addon Information dialog.
-		"{summary} ({name})\n"
-		"Version: {version}\n"
-		"Author: {author}\n"
-		"Description: {description}\n"
-	).format(**manifest)]
-	url=manifest.get('url')
-	if url:
-		# Translators: the url part of the About Add-on information
-		message.append(_("URL: {url}").format(url=url))
-	minimumNVDAVersion = addonAPIVersion.formatForGUI(addon.minimumNVDAVersion)
-	message.append(
-		# Translators: the minimum NVDA version part of the About Add-on information
-		_("Minimum required NVDA version: {}").format(minimumNVDAVersion)
-	)
-	lastTestedNVDAVersion = addonAPIVersion.formatForGUI(addon.lastTestedNVDAVersion)
-	message.append(
-		# Translators: the last NVDA version tested part of the About Add-on information
-		_("Last NVDA version tested: {}").format(lastTestedNVDAVersion)
-	)
-	# Translators: title for the Addon Information dialog
-	title=_("Add-on Information")
-	gui.messageBox("\n".join(message), title, wx.OK)
 
 
 class AddonsDialog(
@@ -310,7 +282,7 @@ class AddonsDialog(
 		if index < 0:
 			return
 		addon = self.curAddons[index]
-		from gui.addonStoreGui.dialogs import _shouldProceedToRemoveAddonDialog
+		from gui.addonStoreGui.controls.messageDialogs import _shouldProceedToRemoveAddonDialog
 		if not _shouldProceedToRemoveAddonDialog(addon):
 			return
 		addon.requestRemove()
@@ -364,8 +336,9 @@ class AddonsDialog(
 		self.addonsList.DeleteAllItems()
 		self.curAddons: List[Addon] = []
 		anyAddonIncompatible = False
-		assert addonHandler.state._addonHandlerCache
-		installedAddons = addonHandler.state._addonHandlerCache.installedAddons
+		from addonStore.dataManager import addonDataManager
+		assert addonDataManager
+		installedAddons = addonDataManager._installedAddonsCache.installedAddons
 		for addon in sorted(installedAddons.values(), key=lambda a: strxfrm(a.manifest['summary'])):
 			self.addonsList.Append((
 				addon.manifest['summary'],
@@ -376,11 +349,7 @@ class AddonsDialog(
 			self.curAddons.append(addon)
 			anyAddonIncompatible = (
 				anyAddonIncompatible  # once we find one incompatible addon we don't need to continue
-				or not addonVersionCheck.isAddonCompatible(
-					addon,
-					currentAPIVersion=addonAPIVersion.CURRENT,
-					backwardsCompatToVersion=addonAPIVersion.BACK_COMPAT_TO
-				)
+				or not addon.isCompatible
 			)
 		self.incompatAddonsButton.Enable(anyAddonIncompatible)
 		# select the given active addon or the first addon if not given
@@ -413,7 +382,7 @@ class AddonsDialog(
 			addon is not None
 			and not addon.isPendingRemove
 			and (
-				addonVersionCheck.isAddonCompatible(addon)
+				addon.isCompatible
 				or addon.overrideIncompatibility
 			)
 		)
@@ -433,11 +402,12 @@ class AddonsDialog(
 		if needsRestart:
 			promptUserForRestart()
 
-	def onAbout(self,evt):
-		index=self.addonsList.GetFirstSelected()
+	def onAbout(self, evt: wx.EVT_BUTTON):
+		index: int = self.addonsList.GetFirstSelected()
 		if index<0: return
-		addon=self.curAddons[index]
-		_showAddonInfo(addon)
+		addon = self.curAddons[index]
+		from gui.addonStoreGui.controls.messageDialogs import _showAddonInfo
+		_showAddonInfo(addon._addonGuiModel)
 
 	def onHelp(self, evt):
 		index = self.addonsList.GetFirstSelected()
@@ -456,7 +426,7 @@ class AddonsDialog(
 			# Counterintuitive, but makes sense when context is taken into account.
 			addon.enable(not shouldDisable)
 		except addonHandler.AddonError:
-			from gui.addonStoreGui.viewModels import AddonStoreVM
+			from gui.addonStoreGui.viewModels.store import AddonStoreVM
 			log.error("Couldn't change state for %s add-on"%addon.name, exc_info=True)
 			if shouldDisable:
 				message = AddonStoreVM._disableErrorMessage.format(addon=addon.manifest['summary'])
@@ -492,7 +462,7 @@ def installAddon(parentWindow: wx.Window, addonPath: str) -> bool:  # noqa: C901
 	Any error messages / warnings are presented to the user via a GUI message box.
 	If attempting to install an addon that is pending removal, it will no longer be pending removal.
 	@return True on success or False on failure.
-	@note See also L{gui.addonStoreGui.viewModels.installAddon}
+	@note See also L{addonStore.install.installAddon}
 	"""
 	try:
 		bundle = addonHandler.AddonBundle(addonPath)
@@ -507,11 +477,12 @@ def installAddon(parentWindow: wx.Window, addonPath: str) -> bool:  # noqa: C901
 		)
 		return False  # Exit early, can't install an invalid bundle
 
-	if not addonVersionCheck.hasAddonGotRequiredSupport(bundle):
+	if not bundle._hasGotRequiredSupport:
 		_showAddonRequiresNVDAUpdateDialog(parentWindow, bundle)
 		return False  # Exit early, addon does not have required support
 	elif bundle.canOverrideCompatibility:
-		if _shouldProceedWhenAddonTooOldDialog(parentWindow, bundle):
+		from addonStoreGui.controls.messageDialogs import _shouldProceedWhenAddonTooOldDialog
+		if _shouldProceedWhenAddonTooOldDialog(parentWindow, bundle._addonGuiModel):
 			# Install incompatible version
 			bundle.enableCompatibilityOverride()
 		else:
@@ -520,8 +491,8 @@ def installAddon(parentWindow: wx.Window, addonPath: str) -> bool:  # noqa: C901
 	elif wx.YES != _showConfirmAddonInstallDialog(parentWindow, bundle):
 		return False  # Exit early, User changed their mind about installation.
 
-	from gui.addonStoreGui.viewModels import getPreviouslyInstalledAddonById
-	prevAddon = getPreviouslyInstalledAddonById(bundle)
+	from addonStore.install import _getPreviouslyInstalledAddonById
+	prevAddon = _getPreviouslyInstalledAddonById(bundle)
 	if prevAddon:
 		summary=bundle.manifest["summary"]
 		curVersion=prevAddon.manifest["version"]
@@ -626,45 +597,20 @@ def _showAddonRequiresNVDAUpdateDialog(
 		minimumNVDAVersion=addonAPIVersion.formatForGUI(bundle.minimumNVDAVersion),
 		NVDAVersion=addonAPIVersion.formatForGUI(addonAPIVersion.CURRENT)
 	)
+	from gui.addonStoreGui.controls.messageDialogs import _showAddonInfo
 	ErrorAddonInstallDialog(
 		parent=parent,
 		# Translators: The title of a dialog presented when an error occurs.
 		title=_("Add-on not compatible"),
 		message=incompatibleMessage,
-		showAddonInfoFunction=lambda: _showAddonInfo(bundle)
+		showAddonInfoFunction=lambda: _showAddonInfo(bundle._addonGuiModel)
 	).ShowModal()
 
 
-def _shouldProceedWhenAddonTooOldDialog(
+def _showConfirmAddonInstallDialog(
 		parent: wx.Window,
-		addon: addonHandler.AddonBase
-) -> bool:
-	incompatibleMessage = _(
-		# Translators: The message displayed when installing an incompatible add-on package,
-		# because it requires a new version than is currently installed.
-		"Warning: add-on is incompatible: {summary} {version}. "
-		"Check for an updated version of this add-on if possible. "
-		"The last tested NVDA version for this add-on is {lastTestedNVDAVersion}, "
-		"your current NVDA version is {NVDAVersion}. "
-		"Installation may cause unstable behavior in NVDA. "
-		"Proceed with installation anyway? "
-	).format(
-	summary=addon.manifest['summary'],
-	version=addon.manifest['version'],
-	lastTestedNVDAVersion=addonAPIVersion.formatForGUI(addon.lastTestedNVDAVersion),
-	NVDAVersion=addonAPIVersion.formatForGUI(addonAPIVersion.CURRENT)
-	)
-	from gui.addonStoreGui.dialogs import ErrorAddonInstallDialogWithCancelButton
-	return ErrorAddonInstallDialogWithCancelButton(
-		parent=parent,
-		# Translators: The title of a dialog presented when an error occurs.
-		title=_("Add-on not compatible"),
-		message=incompatibleMessage,
-		showAddonInfoFunction=lambda: _showAddonInfo(addon)
-	).ShowModal() == wx.OK
-
-
-def _showConfirmAddonInstallDialog(parent, bundle):
+		bundle: addonHandler.AddonBundle
+) -> int:
 	confirmInstallMessage = _(
 		# Translators: A message asking the user if they really wish to install an addon.
 		"Are you sure you want to install this add-on?\n"
@@ -672,12 +618,13 @@ def _showConfirmAddonInstallDialog(parent, bundle):
 		"Addon: {summary} {version}"
 	).format(**bundle.manifest)
 
+	from gui.addonStoreGui.controls.messageDialogs import _showAddonInfo
 	return ConfirmAddonInstallDialog(
 		parent=parent,
 		# Translators: Title for message asking if the user really wishes to install an Addon.
 		title=_("Add-on Installation"),
 		message=confirmInstallMessage,
-		showAddonInfoFunction=lambda: _showAddonInfo(bundle)
+		showAddonInfoFunction=lambda: _showAddonInfo(bundle._addonGuiModel)
 	).ShowModal()
 
 
@@ -792,7 +739,7 @@ class IncompatibleAddonsDialog(
 
 	def refreshAddonsList(self):
 		self.addonsList.DeleteAllItems()
-		self.curAddons=[]
+		self.curAddons: List[Addon] = []
 		for idx, addon in enumerate(self.unknownCompatibilityAddonsList):
 			self.addonsList.Append((
 				addon.manifest['summary'],
@@ -805,11 +752,12 @@ class IncompatibleAddonsDialog(
 		self.addonsList.SetItemState(activeIndex, wx.LIST_STATE_FOCUSED, wx.LIST_STATE_FOCUSED)
 		self.aboutButton.Enable(True)
 
-	def onAbout(self,evt):
-		index=self.addonsList.GetFirstSelected()
+	def onAbout(self, evt: wx.EVT_BUTTON):
+		index: int = self.addonsList.GetFirstSelected()
 		if index<0: return
-		addon=self.curAddons[index]
-		_showAddonInfo(addon)
+		addon = self.curAddons[index]
+		from gui.addonStoreGui.controls.messageDialogs import _showAddonInfo
+		_showAddonInfo(addon._addonGuiModel)
 
 	def onClose(self, evt):
 		evt.Skip()

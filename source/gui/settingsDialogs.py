@@ -185,7 +185,7 @@ class SettingsDialog(
 		@param resizeable: True if the settings dialog should be resizable by the user, only set this if
 			you have tested that the components resize correctly.
 		@param hasApplyButton: C{True} to add an apply button to the dialog; defaults to C{False} for backwards compatibility.
-		Deprecated, use buttons instead.
+			Deprecated, use buttons instead.
 		@param settingsSizerOrientation: Either wx.VERTICAL or wx.HORIZONTAL. This controls the orientation of the
 			sizer that is passed into L{makeSettings}. The default is wx.VERTICAL.
 		@param multiInstanceAllowed: Whether multiple instances of SettingsDialog may exist.
@@ -204,6 +204,10 @@ class SettingsDialog(
 		for button in buttons:
 			buttonFlag |= button
 		if hasApplyButton:
+			log.debugWarning(
+				"The hasApplyButton parameter is deprecated. "
+				"Use buttons instead. "
+			)
 			buttonFlag |= wx.APPLY
 		self.hasApply = hasApplyButton or wx.APPLY in buttons
 		if not buttons.issubset({wx.OK, wx.CANCEL, wx.APPLY, wx.CLOSE}):
@@ -486,8 +490,8 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		super(MultiCategorySettingsDialog, self).__init__(
 			parent,
 			resizeable=True,
-			hasApplyButton=True,
-			settingsSizerOrientation=wx.HORIZONTAL
+			settingsSizerOrientation=wx.HORIZONTAL,
+			buttons={wx.OK, wx.CANCEL, wx.APPLY},
 		)
 
 		# setting the size must be done after the parent is constructed.

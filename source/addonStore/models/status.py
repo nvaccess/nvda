@@ -9,20 +9,14 @@ from typing import (
 	Optional,
 	OrderedDict,
 	Set,
+	TYPE_CHECKING,
 )
 
-from addonHandler import (
-	AddonStateCategory,
-	state as addonHandlerState,
-)
-from addonHandler.addonVersionCheck import isAddonCompatible
-from addonStore.models import (
-	AddonDetailsModel,
-	AddonStoreModel,
-	MajorMinorPatch,
-)
 from logHandler import log
 from utils.displayString import DisplayStringEnum
+
+if TYPE_CHECKING:
+	from .addon import AddonGUIModel  # noqa: F401
 
 
 @enum.unique
@@ -54,7 +48,7 @@ class AvailableAddonStatus(DisplayStringEnum):
 
 	@property
 	def _displayStringLabels(self) -> Dict["AvailableAddonStatus", str]:
-		_labels = {
+		return {
 			# Translators: Status for addons shown in the add-on store dialog
 			self.PENDING_REMOVE: pgettext("addonStore", "Pending removed"),
 			# Translators: Status for addons shown in the add-on store dialog
@@ -88,14 +82,39 @@ class AvailableAddonStatus(DisplayStringEnum):
 			# Translators: Status for addons shown in the add-on store dialog
 			self.RUNNING: pgettext("addonStore", "Enabled"),
 		}
-		return _labels
 
 
-def _getStatus(model: AddonDetailsModel) -> Optional[AvailableAddonStatus]:
-	from addonStore.dataManager import addonDataManager
+class AddonStateCategory(str, enum.Enum):
+	"""
+	For backwards compatibility, the enums must remain functionally a string.
+	I.E. the following must be true:
+	> assert isinstance(AddonStateCategory.PENDING_REMOVE, str)
+	> assert AddonStateCategory.PENDING_REMOVE == "pendingRemovesSet"
+	"""
+	PENDING_REMOVE = "pendingRemovesSet"
+	PENDING_INSTALL = "pendingInstallsSet"
+	DISABLED = "disabledAddons"
+	PENDING_ENABLE = "pendingEnableSet"
+	PENDING_DISABLE = "pendingDisableSet"
+	OVERRIDE_COMPATIBILITY = "overrideCompatibility"
+	"""
+	Should be reset when changing to a new breaking release,
+	add-ons should be removed from this list when they are updated, disabled or removed
+	"""
+	BLOCKED = "blocked"
+	"""Add-ons that are blocked from running because they are incompatible"""
+
+
+def getStatus(model: "AddonGUIModel") -> Optional[AvailableAddonStatus]:
+	from addonHandler import (
+		state as addonHandlerState,
+	)
+	from ..dataManager import addonDataManager
+	from .addon import AddonStoreModel
+	from .version import MajorMinorPatch
 	addonHandlerModel = model._addonHandlerModel
 	if addonHandlerModel is None:
-		if not isAddonCompatible(model):
+		if not model.isCompatible:
 			# Installed incompatible add-ons have a status of disabled or running
 			return AvailableAddonStatus.INCOMPATIBLE
 
@@ -201,6 +220,7 @@ _statusFilters: OrderedDict[_StatusFilterKey, Set[AvailableAddonStatus]] = Order
 		AvailableAddonStatus.INCOMPATIBLE_DISABLED,
 		AvailableAddonStatus.DISABLED,
 		AvailableAddonStatus.PENDING_DISABLE,
+		AvailableAddonStatus.PENDING_ENABLE,
 	},
 })
 """A dictionary where the keys are a status to filter by,
