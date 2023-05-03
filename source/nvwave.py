@@ -774,6 +774,10 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 	#: This allows us to have a single callback in the class rather than on
 	#: each instance, which prevents reference cycles.
 	_instances = weakref.WeakValueDictionary()
+	#: The previous value of the soundVolumeFollowsVoice setting. This is used to
+	#: determine when this setting has been disabled when it was previously
+	#: enabled.
+	_prevSoundVolFollow: bool = False
 
 	def __init__(
 			self,
@@ -939,10 +943,14 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		NVDAHelper.localLib.wasPlay_setSessionVolume(self._player, c_float(level))
 
 	def _sessionVolumeFollow(self):
-		if (
-			self._session is not soundsSession
-			or not config.conf["audio"]["soundVolumeFollowsVoice"]
-		):
+		if self._session is not soundsSession:
+			return
+		follow = config.conf["audio"]["soundVolumeFollowsVoice"]
+		if not follow and WavePlayer._prevSoundVolFollow:
+			# Following was disabled. Reset the sound volume to maximum.
+			self.setSessionVolume(1.0)
+		WavePlayer._prevSoundVolFollow = follow
+		if not follow:
 			return
 		import synthDriverHandler
 		synth = synthDriverHandler.getSynth()
