@@ -3268,11 +3268,11 @@ class GlobalCommands(ScriptableObject):
 		ui.message(_("Braille cursor %s") % shapeMsg)
 
 	@script(
-		# Translators: Input help mode message for toggle braille show messages command.
+		# Translators: Input help mode message for cycle through braille show messages command.
 		description=_("Cycle through the braille show messages modes"),
 		category=SCRCAT_BRAILLE
 	)
-	def script_braille_cycleShowMessages(self, gesture):
+	def script_braille_cycleShowMessages(self, gesture: inputCore.InputGesture) -> None:
 		"""Set next state of braille show messages and reports it with ui.message."""
 		values = [x.value for x in ShowMessages]
 		index = values.index(
@@ -3281,10 +3281,10 @@ class GlobalCommands(ScriptableObject):
 		newIndex = (index + 1) % len(values)
 		newValue = values[newIndex]
 		config.conf["braille"]["showMessages"] = newValue
-		# Translators: Reports which show braille message mode is used
-		# (disabled, timeout or indefinitely).
 		ui.message(
 			_(
+				# Translators: Reports which show braille message mode is used
+				# (disabled, timeout or indefinitely).
 				"Braille show messages %s"
 			)
 			% ShowMessages(
