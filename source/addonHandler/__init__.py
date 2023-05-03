@@ -1,6 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2012-2023 Rui Batista, NV Access Limited, Noelia Ruiz Martínez,
-# Joseph Lee, Babbage B.V., Arnold Loubriat, Łukasz Golonka, Leonard de Ruijter
+# Copyright (C) 2012-2023 Rui Batista, NV Access Limited, Noelia Ruiz Martínez, Joseph Lee, Babbage B.V.,
+# Arnold Loubriat, Łukasz Golonka, Leonard de Ruijter, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -175,7 +175,29 @@ def initialize():
 
 def terminate():
 	""" Terminates the add-ons subsystem. """
-	pass
+	emptyTempDocDir()
+
+
+def getTempDocDirPath():
+	return os.path.join(tempfile.gettempdir(), "nvdaDoc")
+
+
+def getTempDocDir():
+	path = getTempDocDirPath()
+	if not os.path.isdir(path):
+		os.mkdir(path)
+	return path
+
+
+def emptyTempDocDir():
+	path = getTempDocDirPath()
+	try:
+		for fileName in os.listdir(path):
+			f = os.path.join(path, fileName)
+			os.remove(f)
+	except OSError:
+		log.debugWarning("Unable to remove documentation files.", exc_info=True)
+
 
 def _getDefaultAddonPaths():
 	r""" Returns paths where addons can be found.
@@ -621,7 +643,16 @@ def initTranslation():
 	finally:
 		del callerFrame # Avoid reference problems with frames (per python docs)
 
+
 def _translatedManifestPaths(lang=None, forBundle=False):
+	return _translatedPaths(lang=lang, forBundle=forBundle, manifest=True, docFilename=None)
+
+
+def _translatedDocPaths(lang=None, forBundle=False, filename=None):
+	return _translatedPaths(lang=lang, forBundle=forBundle, manifest=False, docFilename=filename)
+
+
+def _translatedPaths(lang=None, forBundle=False, manifest=True, docFilename=None):
 	if lang is None:
 		lang = languageHandler.getLanguage() # can't rely on default keyword arguments here.
 	langs=[lang]
@@ -630,7 +661,10 @@ def _translatedManifestPaths(lang=None, forBundle=False):
 		if lang!='en' and not lang.startswith('en_'):
 			langs.append('en')
 	sep = "/" if forBundle else os.path.sep
-	return [sep.join(("locale", lang, MANIFEST_FILENAME)) for lang in langs]
+	if manifest:
+		return [sep.join(("locale", lang, MANIFEST_FILENAME)) for lang in langs]
+	else:
+		return [sep.join(("doc", lang, docFilename)) for lang in langs]
 
 
 class AddonBundle(AddonBase):
@@ -677,7 +711,22 @@ class AddonBundle(AddonBase):
 					# HACK: Overriding info.filename is a bit ugly, but it avoids a lot of code duplication.
 					info.filename = info.filename.decode("cp%d" % winKernel.kernel32.GetOEMCP())
 				z.extract(info, addonPath)
-
+	
+	def getDocFilePathInBundle(self):
+		with zipfile.ZipFile(self._path, 'r') as z:
+			for docPath in _translatedDocPaths(lang=None, forBundle=True, filename=self.manifest['docFileName']):
+				try:
+					z.getinfo(docPath)
+					return docPath
+				except KeyError:
+					pass
+		return None
+	
+	def extractDocumentation(self, srcPath, destPath):
+		with zipfile.ZipFile(self._path, 'r') as z:
+			with open(destPath, 'w', encoding='utf8') as f:
+				f.write(z.open(srcPath, 'r').read().decode('utf8'))
+	
 	@property
 	def manifest(self):
 		""" Gets the manifest for the represented Addon.
