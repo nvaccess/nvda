@@ -21,7 +21,7 @@ What's New in NVDA
 - Added gestures for Tivomatic Caiku Albatross Braille displays.
 There are now gestures for showing the braille settings dialog, accessing the status bar, cycling the braille cursor shape, and toggling the braille cursor on/off. (#14844)
 - NVDA now outputs audio via the Windows Audio Session API (WASAPI), which may improve the responsiveness, performance and stability of NVDA speech and sounds. This can be disabled in Advanced settings if audio problems are encountered. (#14697)
-- 
+- Added support for Eurobraille B.Note and B.Book braille displays.
 
 
 == Changes ==
@@ -35,7 +35,7 @@ There are now gestures for showing the braille settings dialog, accessing the st
 - When using a Braille Display via the Standard HID braille driver, the dpad can be used to emulate the arrow keys and enter. Also space+dot1 and space+dot4 now map to up and down arrow respectively. (#14713)
 - Script for reporting the destination of a link now reports from the caret / focus position rather than the navigator object. (#14659)
 - Portable copy creation no longer requires that a drive letter be entered as part of the absolute path. (#14681)
--
+- Gestures for the Eurobraille braille displays are updated. Please refer to the NVDA user guide for an overview. 
 
 
 == Bug Fixes ==
