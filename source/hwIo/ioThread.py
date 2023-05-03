@@ -197,7 +197,10 @@ class IoThread(threading.Thread):
 		self.handle = None
 
 	def run(self):
-		while True:
-			ctypes.windll.kernel32.SleepEx(winKernel.INFINITE, True)
-			if self.exit:
-				break
+		try:
+			while True:
+				ctypes.windll.kernel32.SleepEx(winKernel.INFINITE, True)
+				if self.exit:
+					break
+		except Exception:
+			log.critical("Exception in IoThread function", exc_info=True, stack_info=True)
