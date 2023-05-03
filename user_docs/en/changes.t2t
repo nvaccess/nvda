@@ -20,6 +20,7 @@ What's New in NVDA
 - When pressing ``numpad2`` three times to report the numerical value of the character at the position of the review cursor, the information is now also provided in braille. (#14826)
 - Added gestures for Tivomatic Caiku Albatross Braille displays.
 There are now gestures for showing the braille settings dialog, accessing the status bar, cycling the braille cursor shape, and toggling the braille cursor on/off. (#14844)
+- NVDA now outputs audio via the Windows Audio Session API (WASAPI), which may improve the responsiveness, performance and stability of NVDA speech and sounds. This can be disabled in Advanced settings if audio problems are encountered. (#14697)
 - 
 
 
@@ -64,6 +65,7 @@ Instead NVDA reports that the link has no destination. (#14723)
 - In Windows 11, it is once again possible to open the Contributors and License items on the NVDA Help menu. (#14725)
 - When forcing UIA support with certain terminal and consoles, a bug is fixed which caused a freeze and the log file to be spammed. (#14689)
 - NVDA no longer fails to announce focusing password fields in Microsoft Excel and Outlook. (#14839)
+- NVDA will no longer refuse to save the configuration after a configuration reset. (#13187)
 -
 
 
@@ -93,6 +95,7 @@ Similarly, the new ``getCompletionRoutine`` method allows you to convert a pytho
 - NVDA should more accurately determine if a logged message is coming from NVDA core. (#14812)
 - NVDA will no longer log inaccurate warnings or errors about deprecated appModules. (#14806)
 - All NVDA extension points are now briefly described in a new, dedicated chapter in the Developer Guide. (#14648)
+- ``scons checkpot`` will no longer check the ``userConfig`` subfolder anymore. (#14820)
 -
 
 === Deprecations ===

@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-14 00:37+0000\n"
-"PO-Revision-Date: 2023-02-14 19:21+0100\n"
+"POT-Creation-Date: 2023-03-31 00:01+0000\n"
+"PO-Revision-Date: 2023-04-02 11:03+0200\n"
 "Last-Translator: Juan C. Buño <oprisniki@gmail.com>\n"
 "Language-Team: Equipo de tradución ao Galego <oprisniki@gmail.com>\n"
 "Language: gl\n"
@@ -4418,13 +4418,18 @@ msgstr ""
 msgid "Plugins reloaded"
 msgstr "Plugins recargados"
 
-#. Translators: input help mode message for Report destination URL of navigator link command
+#. Translators: input help mode message for Report destination URL of a link command
 msgid ""
-"Report the destination URL of the link in the navigator object. If pressed "
-"twice, shows the URL in a window for easier review."
+"Report the destination URL of the link at the position of caret or focus. If "
+"pressed twice, shows the URL in a window for easier review."
 msgstr ""
-"Anuncia o destiño URL da ligazón no navegador de obxectos. Se se preme dúas "
-"veces, amosa a URL nunha ventá para unha revisión máis doada."
+"Anuncia o destiño da URL da ligazón na posición do cursor ou do foco. Se se "
+"preme dúas veces, amosa a URL nunha ventá para facer máis doada a súa "
+"revisión."
+
+#. Translators: Informs the user that the link has no destination
+msgid "Link has no apparent destination"
+msgstr "A ligazón non ten un destiño aparente"
 
 #. Translators: Informs the user that the window contains the destination of the
 #. link with given title
@@ -4436,13 +4441,13 @@ msgstr "Destiño de: {name}"
 msgid "Not a link."
 msgstr "Non é una ligazón."
 
-#. Translators: input help mode message for Report URL of navigator link in a window command
+#. Translators: input help mode message for Report URL of a link in a window command
 msgid ""
-"Reports the destination URL of the link in the navigator object in a window, "
-"instead of just speaking it. May be preferred by braille users."
+"Displays the destination URL of the link at the position of caret or focus "
+"in a window, instead of just speaking it. May be preferred by braille users."
 msgstr ""
-"Anuncia o destiño URL da ligazón no navegador de obxectos nunha ventá, a "
-"cambio de só falalo. Pode seren preferible polos usuarios de braille."
+"Amosa o destiño da URL da ligazón na posición do cursor ou do foco nunha "
+"ventá, a cambio de pronunciala. Pódese preferir polos usuarios de braille."
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -7323,6 +7328,25 @@ msgstr "{firstAddress} {firstValue} ata {lastAddress} {lastValue}"
 msgid "{firstAddress} through {lastAddress}"
 msgstr "{firstAddress} ata {lastAddress}"
 
+#. Translators: a measurement in inches
+#, python-brace-format
+msgid "{val:.2f} inches"
+msgstr "{val:.2f} pulgadas"
+
+#. Translators: a measurement in centimetres
+#, python-brace-format
+msgid "{val:.2f} centimetres"
+msgstr "{val:.2f} centímetros"
+
+#. Translators: LibreOffice, report cursor position in the current page
+#, python-brace-format
+msgid ""
+"cursor positioned {horizontalDistance} from left edge of page, "
+"{verticalDistance} from top edge of page"
+msgstr ""
+"cursor colocado en {horizontalDistance} dende a marxe esquerda da páxina, en "
+"{verticalDistance} dende a marxe superior da páxina"
+
 msgid "left"
 msgstr "esquerda"
 
@@ -8555,6 +8579,22 @@ msgstr "desbloqueado"
 msgid "has note"
 msgstr "ten nota"
 
+#. Translators: Presented when a control has a pop-up dialog.
+msgid "opens dialog"
+msgstr "abre diálogo"
+
+#. Translators: Presented when a control has a pop-up grid.
+msgid "opens grid"
+msgstr "abre grella"
+
+#. Translators: Presented when a control has a pop-up list box.
+msgid "opens list"
+msgstr "abre lista"
+
+#. Translators: Presented when a control has a pop-up tree.
+msgid "opens tree"
+msgstr "abre árbore"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "non seleccioado"
@@ -8578,6 +8618,14 @@ msgstr "arrastrado feito"
 #. Translators: This is spoken when the line is considered blank.
 msgid "blank"
 msgstr "en branco"
+
+#. Translators: this message is given when there is no next paragraph when navigating by paragraph
+msgid "No next paragraph"
+msgstr "Sen seguinte parágrafo"
+
+#. Translators: this message is given when there is no previous paragraph when navigating by paragraph
+msgid "No previous paragraph"
+msgstr "Sen anterior parágrafo"
 
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 msgid "Configuration applied"
@@ -11103,9 +11151,14 @@ msgid "Dictionary Entry Error"
 msgstr "Erro de Entrada de Diccionario"
 
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
-#, python-format
-msgid "Regular Expression error: \"%s\"."
-msgstr "Erro de Expresión Regular: \"%s\"."
+#, python-brace-format
+msgid "Regular Expression error in the pattern field: \"{error}\"."
+msgstr "Erro de expresión regular no campo patrón: \"{error}\"."
+
+#. Translators: This is an error message to let the user know that the dictionary entry is not valid.
+#, python-brace-format
+msgid "Regular Expression error in the replacement field: \"{error}\"."
+msgstr "Erro de expresión regular no campo remprazo: \"{error}\"."
 
 #. Translators: The label for the list box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
