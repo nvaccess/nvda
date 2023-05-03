@@ -68,9 +68,9 @@ class AddonDetails(
 
 		self.addonNameCtrl = wx.StaticText(
 			self,
-			label=AddonDetails._noAddonSelectedLabelText,
 			style=wx.ALIGN_CENTRE_HORIZONTAL | wx.ST_NO_AUTORESIZE
 		)
+		self.updateAddonName(AddonDetails._noAddonSelectedLabelText)
 		self._setAddonNameCtrlStyle()
 		selfSizer.Add(self.addonNameCtrl, flag=wx.EXPAND)
 		selfSizer.Add(
@@ -207,6 +207,7 @@ class AddonDetails(
 
 	def updateAddonName(self, displayName: str):
 		self.addonNameCtrl.SetLabelText(displayName)
+		self.SetLabel(displayName)
 
 	def _updatedListItem(self, addonDetailsVM: AddonDetailsVM):
 		log.debug(f"Setting listItem: {addonDetailsVM.listItem}")

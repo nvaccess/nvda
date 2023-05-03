@@ -133,7 +133,7 @@ class _DataManager:
 		)
 
 	# Translators: A title of the dialog shown when fetching add-on data from the store fails
-	_updateFailureMessage = pgettext("addonStore", "Add-on data update failure"),
+	_updateFailureMessage = pgettext("addonStore", "Add-on data update failure")
 
 	def getLatestCompatibleAddons(
 			self,
