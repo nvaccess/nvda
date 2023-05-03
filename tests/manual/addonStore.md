@@ -165,12 +165,10 @@ For example: "Clock".
 1. Install the add-on again to test the "migrate" path.
 
 ### Updating multiple add-ons
-1. Use the steps for updating a single add-on, to create a scenario where multiple add-ons are ready for an update.
-1. Press "Update All" (TODO)
+Updating multiple add-ons at once is currently unsupported.
 
 ### Automatic updating
-TODO
-
+Automatic updating of add-ons is currently unsupported.
 
 ## Other add-on actions
 

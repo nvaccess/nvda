@@ -2,9 +2,54 @@
 
 
 %!includeconf: ../changes.t2tconf
+%!includeconf: ./locale.t2tconf
 
 == Zmiany dla programistów ==
 Informacje techniczne nie zostały przetłumaczone, proszę zajrzeć do [Angielskiej listy zmian ../en/changes.html], aby je przeczytać.
+
+
+= 2023.2 =
+
+== Nowości ==
+- Dodano wymowę znaków unicode:
+  - Znaki brajlowskie takie jak "⠐⠣⠃⠗⠇⠐⠜". (#14548)
+  - Znak klawiszu option na komputerach Mac/apple "⌥". (#14682)
+  -
+- In Mozilla Firefox and Google Chrome, NVDA now reports when a control opens a dialog, grid, list or tree if the author has specified this using aria-haspopup. (#14709)
+- 
+
+
+== Changes ==
+- Updated LibLouis braille translator to [3.25.0 https://github.com/liblouis/liblouis/releases/tag/v3.25.0]. (#14719)
+- Dash and em-dash symbols will always be sent to the synthesizer. (#13830)
+- Distance reported in Microsoft Word will now honour the unit defined in Word's advanced options even when using UIA to access Word documents. (#14542)
+- When reporting the review cursor location, the current cursor/caret location is now reported relative to the current page in LibreOffice Writer for LibreOffice versions >= 7.6, similar to what is done for Microsoft Word. (#11696)
+- NVDA now responds slightly faster to commands and focus changes. (#14701)
+- NVDA responds faster when moving the cursor in edit controls. (#14708)
+- Baum Braille driver: addes several Braille chord gestures for performing common keyboard commands such as windows+d, alt+tab etc. Please refer to the NVDA user guide for a full list. (#14714)
+- When using a Braille Display via the Standard HID braille driver, the dpad can be used to emulate the arrow keys and enter. Also space+dot1 and space+dot4 now map to up and down arrow respectively. (#14713)
+- Script for reporting the destination of a link now reports from the caret / focus position rather than the navigator object. (#14659)
+-
+
+
+== Bug Fixes ==
+- NVDA will no longer unnecessarily switch to no braille multiple times during auto detection, resulting in a cleaner log and less overhead. (#14524)
+- NVDA will now switch back to USB if a HID Bluetooth device (such as the HumanWare Brailliant or APH Mantis) is automatically detected and an USB connection becomes available.
+This only worked for Bluetooth Serial ports before. (#14524)
+- It is now possible to use the backslash character in the replacement field of a dictionaries entry, when the type is not set to regular expression. (#14556)
+- In Browse mode, NVDA will no longer incorrectly ignore focus moving to a parent or child control e.g. moving from a control to its parent list item or gridcell. (#14611)
+  - Note however that this fix only applies when the Automatically set focus to focusable elements" option in Browse Mode settings is turned off (which is the default).
+  -
+- NVDA no longer occasionally causes Mozilla Firefox to crash or stop responding. (#14647)
+- In Mozilla Firefox and Google Chrome, typed characters are no longer reported in some text boxes even when speak typed characters is disabled. (#14666)
+- You can now use browse mode in Chromium Embedded Controls where it was not possible previously. (#13493, #8553)
+- For symbols which do not have a symbol description in the current locale, the default English symbol level will be used. (#14558, #14417)
+- In newer releases of Windows 11 Notepad, NVDA can once again announce status bar contents. (#14573)
+- In Mozilla Firefox, moving the mouse over text after a link now reliably reports the text. (#9235)
+- In Windows 10 and 11 Calculator, a portable copy of NVDA will no longer do nothing or play error tones when entering expressions in standard calculator in compact overlay mode. (#14679)
+- When trying to report the URL for a link without a href attribute NVDA is no longer silent.
+Instead NVDA reports that the link has no destination. (#14723)
+-
 
 
 = 2023.1 =

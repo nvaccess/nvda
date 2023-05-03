@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from .views import AddonStoreDialog
+from .controls.storeDialog import AddonStoreDialog
 
 __all__ = [
 	"AddonStoreDialog",

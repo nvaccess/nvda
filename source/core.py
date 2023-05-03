@@ -17,7 +17,6 @@ import comtypes
 import sys
 import winVersion
 import threading
-import nvwave
 import os
 import time
 import ctypes
@@ -252,7 +251,7 @@ def resetConfiguration(factoryDefaults=False):
 	languageHandler.setLanguage(lang)
 	# Addons
 	addonHandler.initialize()
-	from addonStore import dataManager
+	from _addonStore import dataManager
 	dataManager.initialize()
 	# Hardware background i/o
 	log.debug("initializing background i/o")
@@ -504,18 +503,24 @@ def main():
 	config.initialize()
 	if config.conf['development']['enableScratchpadDir']:
 		log.info("Developer Scratchpad mode enabled")
-	if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
-		try:
-			nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "start.wav"))
-		except:
-			pass
-	logHandler.setLogLevelFromConfig()
 	if languageHandler.isLanguageForced():
 		lang = globalVars.appArgs.language
 	else:
 		lang = config.conf["general"]["language"]
 	log.debug(f"setting language to {lang}")
 	languageHandler.setLanguage(lang)
+	import NVDAHelper
+	log.debug("Initializing NVDAHelper")
+	NVDAHelper.initialize()
+	import nvwave
+	log.debug("initializing nvwave")
+	nvwave.initialize()
+	if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
+		try:
+			nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "start.wav"))
+		except Exception:
+			pass
+	logHandler.setLogLevelFromConfig()
 	log.info(f"Windows version: {winVersion.getWinVer()}")
 	log.info("Using Python version %s"%sys.version)
 	log.info("Using comtypes version %s"%comtypes.__version__)
@@ -526,16 +531,13 @@ def main():
 	socket.setdefaulttimeout(10)
 	log.debug("Initializing add-ons system")
 	addonHandler.initialize()
-	from addonStore import dataManager
+	from _addonStore import dataManager
 	dataManager.initialize()
 	if globalVars.appArgs.disableAddons:
 		log.info("Add-ons are disabled. Restart NVDA to enable them.")
 	import appModuleHandler
 	log.debug("Initializing appModule Handler")
 	appModuleHandler.initialize()
-	import NVDAHelper
-	log.debug("Initializing NVDAHelper")
-	NVDAHelper.initialize()
 	log.debug("initializing background i/o")
 	import hwIo
 	hwIo.initialize()
@@ -822,7 +824,6 @@ def main():
 	_terminate(JABHandler, name="Java Access Bridge support")
 	_terminate(appModuleHandler, name="app module handler")
 	_terminate(tones)
-	_terminate(NVDAHelper)
 	_terminate(touchHandler)
 	_terminate(keyboardHandler, name="keyboard handler")
 	_terminate(mouseHandler)
@@ -855,6 +856,7 @@ def main():
 	# #5189: Destroy the message window as late as possible
 	# so new instances of NVDA can find this one even if it freezes during exit.
 	messageWindow.destroy()
+	_terminate(NVDAHelper)
 	log.debug("core done")
 
 def _terminate(module, name=None):

@@ -152,6 +152,10 @@ class InstallerDialog(
 		super().__init__(parent, title=_("Install NVDA"))
 
 		import addonHandler
+		from _addonStore.models.version import (
+			getAddonCompatibilityConfirmationMessage,
+			getAddonCompatibilityMessage,
+		)
 		shouldAskAboutAddons = any(addonHandler.getIncompatibleAddons(
 			# the defaults from the installer are ok. We are testing against the running version.
 		))
@@ -168,7 +172,7 @@ class InstallerDialog(
 				# Translators: a message in the installer telling the user NVDA is now located in a different place.
 				msg+=" "+_("The installation path for NVDA has changed. it will now  be installed in {path}").format(path=installer.defaultInstallPath)
 		if shouldAskAboutAddons:
-			msg += "\n\n" + addonHandler.addonVersionCheck.getAddonCompatibilityMessage()
+			msg += "\n\n" + getAddonCompatibilityMessage()
 
 		text = sHelper.addItem(wx.StaticText(self, label=msg))
 		text.Wrap(self.scaleSize(self.textWrapWidth))
@@ -176,7 +180,7 @@ class InstallerDialog(
 			self.confirmationCheckbox = sHelper.addItem(
 				wx.CheckBox(
 					self,
-					label=addonHandler.addonVersionCheck.getAddonCompatibilityConfirmationMessage()
+					label=getAddonCompatibilityConfirmationMessage()
 				)
 			)
 			self.bindHelpEvent("InstallWithIncompatibleAddons", self.confirmationCheckbox)

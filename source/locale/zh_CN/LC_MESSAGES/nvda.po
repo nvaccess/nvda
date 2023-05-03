@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-14 00:37+0000\n"
+"POT-Creation-Date: 2023-04-14 00:01+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: 完美很难 <1872265132@qq.com>\n"
 "Language-Team: \n"
@@ -4253,11 +4253,15 @@ msgstr ""
 msgid "Plugins reloaded"
 msgstr "插件已重新加载"
 
-#. Translators: input help mode message for Report destination URL of navigator link command
+#. Translators: input help mode message for Report destination URL of a link command
 msgid ""
-"Report the destination URL of the link in the navigator object. If pressed "
-"twice, shows the URL in a window for easier review."
-msgstr "读出当前导航对象所在链接指向的网址。"
+"Report the destination URL of the link at the position of caret or focus. If "
+"pressed twice, shows the URL in a window for easier review."
+msgstr "读出当前光标或焦点所在链接指向的网址。连按两次在浏览模式下显示该信息。"
+
+#. Translators: Informs the user that the link has no destination
+msgid "Link has no apparent destination"
+msgstr "链接未指向确切的网址"
 
 #. Translators: Informs the user that the window contains the destination of the
 #. link with given title
@@ -4269,13 +4273,13 @@ msgstr "链接 {name} 指向的 URL"
 msgid "Not a link."
 msgstr "不是链接。"
 
-#. Translators: input help mode message for Report URL of navigator link in a window command
+#. Translators: input help mode message for Report URL of a link in a window command
 msgid ""
-"Reports the destination URL of the link in the navigator object in a window, "
-"instead of just speaking it. May be preferred by braille users."
+"Displays the destination URL of the link at the position of caret or focus "
+"in a window, instead of just speaking it. May be preferred by braille users."
 msgstr ""
-"在对话框中显示当前导航对象所在链接指向的 URL 而不仅仅是读出来，可能对使用点显"
-"器的用户有用。"
+"在对话框中显示当前光标或焦点所在链接指向的网址而不仅仅是读出来，可能对使用点"
+"显器的用户有用。"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -6252,8 +6256,8 @@ msgid ""
 msgstr ""
 "\n"
 "\n"
-"您的 NVDA 配置中含有与此版本的 NVDA 不兼容的插件。安装后将禁用这些插件。\n"
-"如果您平时需要用到这些插件，请查看列表以决定是否继续安装"
+"您的配置中含有与该版本 NVDA 不兼容的插件。NVDA 安装后这些插件会被禁用。如果您"
+"平时需要用到这些插件，请查看“不兼容的插件”列表以决定是否继续安装该版本"
 
 #. Translators: A message to confirm that the user understands that addons that have not been
 #. reviewed and made available, will be disabled after installation.
@@ -6312,8 +6316,8 @@ msgid ""
 "continue with the installation"
 msgstr ""
 "\n"
-"您的 NVDA 配置中含有与此版本的 NVDA 不兼容的插件。安装后将禁用这些插件。\n"
-"如果您平时需要用到这些插件，请查看列表以决定是否继续安装"
+"您的配置中含有与该版本 NVDA 不兼容的插件。NVDA 安装后这些插件会被禁用。如果您"
+"平时需要用到这些插件，请查看“不兼容的插件”列表以决定是否继续安装该版本"
 
 #. Translators: The label of a button to install an NVDA update.
 msgid "&Install update"
@@ -7116,6 +7120,23 @@ msgstr "{firstAddress} {firstValue} 到 {lastAddress} {lastValue}"
 #, python-brace-format
 msgid "{firstAddress} through {lastAddress}"
 msgstr "{firstAddress} 到 {lastAddress}"
+
+#. Translators: a measurement in inches
+#, python-brace-format
+msgid "{val:.2f} inches"
+msgstr "{val:.2f} 英寸"
+
+#. Translators: a measurement in centimetres
+#, python-brace-format
+msgid "{val:.2f} centimetres"
+msgstr "{val:.2f} 厘米"
+
+#. Translators: LibreOffice, report cursor position in the current page
+#, python-brace-format
+msgid ""
+"cursor positioned {horizontalDistance} from left edge of page, "
+"{verticalDistance} from top edge of page"
+msgstr "光标距页面左边 {horizontalDistance}，距页面上边 {verticalDistance}"
 
 msgid "left"
 msgstr "左"
@@ -8349,6 +8370,22 @@ msgstr "未锁定"
 msgid "has note"
 msgstr "有注释"
 
+#. Translators: Presented when a control has a pop-up dialog.
+msgid "opens dialog"
+msgstr "打开对话框"
+
+#. Translators: Presented when a control has a pop-up grid.
+msgid "opens grid"
+msgstr "打开网格"
+
+#. Translators: Presented when a control has a pop-up list box.
+msgid "opens list"
+msgstr "打开列表"
+
+#. Translators: Presented when a control has a pop-up tree.
+msgid "opens tree"
+msgstr "打开树式图"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "，未选择"
@@ -8372,6 +8409,14 @@ msgstr "拖拽完成"
 #. Translators: This is spoken when the line is considered blank.
 msgid "blank"
 msgstr "空白"
+
+#. Translators: this message is given when there is no next paragraph when navigating by paragraph
+msgid "No next paragraph"
+msgstr "往下没有段落"
+
+#. Translators: this message is given when there is no previous paragraph when navigating by paragraph
+msgid "No previous paragraph"
+msgstr "往上没有段落"
 
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 msgid "Configuration applied"
@@ -10803,9 +10848,14 @@ msgid "Dictionary Entry Error"
 msgstr "字典条目错误"
 
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
-#, python-format
-msgid "Regular Expression error: \"%s\"."
-msgstr "正则表达式错误： \"%s\"."
+#, python-brace-format
+msgid "Regular Expression error in the pattern field: \"{error}\"."
+msgstr "原文本中的正则表达式错误：“{error}”。"
+
+#. Translators: This is an error message to let the user know that the dictionary entry is not valid.
+#, python-brace-format
+msgid "Regular Expression error in the replacement field: \"{error}\"."
+msgstr "替换文本中的正则表达式错误：“{error}”。"
 
 #. Translators: The label for the list box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -12390,7 +12440,7 @@ msgstr " 分数{fractionValue:.2f}百分比 扇区 {pointCount}的{pointIndex}"
 #. For example, this might report "column 1 of 5"
 #, python-brace-format
 msgid " {segmentType} {pointIndex} of {pointCount}"
-msgstr " {segmentType} {pointIndex} 的 {pointCount}"
+msgstr " {segmentType} {pointIndex} 共 {pointCount}"
 
 #. Translators: Indicates Primary Category Axis
 msgid "Primary Category Axis"

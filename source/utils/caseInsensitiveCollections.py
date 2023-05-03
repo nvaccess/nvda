@@ -4,12 +4,12 @@
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 from typing import (
-	Tuple,
+	Iterable,
 )
 
 
 class CaseInsensitiveSet(set):
-	def __init__(self, *args: Tuple[str]):
+	def __init__(self, *args: Iterable[str]):
 		if len(args) > 1:
 			raise TypeError(
 				f"{type(self).__name__} expected at most 1 argument, "

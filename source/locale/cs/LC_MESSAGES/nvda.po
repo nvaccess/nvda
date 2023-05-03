@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-24 00:01+0000\n"
-"PO-Revision-Date: 2023-02-25 14:32+0100\n"
+"POT-Creation-Date: 2023-03-31 00:01+0000\n"
+"PO-Revision-Date: 2023-04-03 22:39+0100\n"
 "Last-Translator: Martina <letochova@seznam.cz>\n"
 "Language-Team: CS\n"
 "Language: cs\n"
@@ -4326,13 +4326,17 @@ msgstr ""
 msgid "Plugins reloaded"
 msgstr "Zásuvné moduly načteny"
 
-#. Translators: input help mode message for Report destination URL of navigator link command
+#. Translators: input help mode message for Report destination URL of a link command
 msgid ""
-"Report the destination URL of the link in the navigator object. If pressed "
-"twice, shows the URL in a window for easier review."
+"Report the destination URL of the link at the position of caret or focus. If "
+"pressed twice, shows the URL in a window for easier review."
 msgstr ""
-"Zobrazí cílovou URL adresu zaměřeného odkazu. Dvojitým stiskem se zobrazí v "
-"samostatném okně pro lepší přehlednost."
+"Zobrazí cílovou URL adresu odkazu na pozici kurzoru nebo fokusu. Dvojitým "
+"stiskem se zobrazí v samostatném okně pro lepší přehlednost."
+
+#. Translators: Informs the user that the link has no destination
+msgid "Link has no apparent destination"
+msgstr "Odkaz nemá jasný cíl"
 
 #. Translators: Informs the user that the window contains the destination of the
 #. link with given title
@@ -4343,13 +4347,13 @@ msgstr "Cíl: {name}"
 msgid "Not a link."
 msgstr "Není odkaz."
 
-#. Translators: input help mode message for Report URL of navigator link in a window command
+#. Translators: input help mode message for Report URL of a link in a window command
 msgid ""
-"Reports the destination URL of the link in the navigator object in a window, "
-"instead of just speaking it. May be preferred by braille users."
+"Displays the destination URL of the link at the position of caret or focus "
+"in a window, instead of just speaking it. May be preferred by braille users."
 msgstr ""
-"Zobrazí cílovou URL adresu zaměřeného odkazu v samostatném okně. To může víc "
-"vyhovovat uživatelům braillských řádků."
+"Zobrazí cílovou URL adresu odkazu na pozici kurzoru nebo fokusu v "
+"samostatném okně. To může víc vyhovovat uživatelům braillských řádků."
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -7164,6 +7168,22 @@ msgstr "{firstAddress} {firstValue} do {lastAddress} {lastValue}"
 msgid "{firstAddress} through {lastAddress}"
 msgstr "{firstAddress} do {lastAddress}"
 
+#. Translators: a measurement in inches
+msgid "{val:.2f} inches"
+msgstr "{val:.2f} palců"
+
+#. Translators: a measurement in centimetres
+msgid "{val:.2f} centimetres"
+msgstr "{val:.2f} centimetrů"
+
+#. Translators: LibreOffice, report cursor position in the current page
+msgid ""
+"cursor positioned {horizontalDistance} from left edge of page, "
+"{verticalDistance} from top edge of page"
+msgstr ""
+"kurzor umístěn {horizontalDistance} od levého okraje stránky, "
+"{verticalDistance} od horního okraje stránky"
+
 msgid "left"
 msgstr "vlevo"
 
@@ -8396,6 +8416,22 @@ msgstr "odemčeno"
 msgid "has note"
 msgstr "obsahuje poznámku"
 
+#. Translators: Presented when a control has a pop-up dialog.
+msgid "opens dialog"
+msgstr "otevře dialogové okno"
+
+#. Translators: Presented when a control has a pop-up grid.
+msgid "opens grid"
+msgstr "otevře mřížku"
+
+#. Translators: Presented when a control has a pop-up list box.
+msgid "opens list"
+msgstr "otevře seznam"
+
+#. Translators: Presented when a control has a pop-up tree.
+msgid "opens tree"
+msgstr "otevře strom"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "nevybráno"
@@ -8419,6 +8455,14 @@ msgstr "tažení ukončeno"
 #. Translators: This is spoken when the line is considered blank.
 msgid "blank"
 msgstr "prázdný"
+
+#. Translators: this message is given when there is no next paragraph when navigating by paragraph
+msgid "No next paragraph"
+msgstr "Žádný další odstavec"
+
+#. Translators: this message is given when there is no previous paragraph when navigating by paragraph
+msgid "No previous paragraph"
+msgstr "Žádný předchozí odstavec"
 
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 msgid "Configuration applied"
@@ -10897,9 +10941,12 @@ msgid "Dictionary Entry Error"
 msgstr "chyba položky slovníku"
 
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
-#, python-format
-msgid "Regular Expression error: \"%s\"."
-msgstr "Neplatný regulární výraz: \"%s\"."
+msgid "Regular Expression error in the pattern field: \"{error}\"."
+msgstr "Chyba regulárního výrazu v poli vzor: \"{error}\"."
+
+#. Translators: This is an error message to let the user know that the dictionary entry is not valid.
+msgid "Regular Expression error in the replacement field: \"{error}\"."
+msgstr "Chyba regulárního výrazu v poli nahradit: \"{error}\"."
 
 #. Translators: The label for the list box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"

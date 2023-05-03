@@ -14,11 +14,9 @@ from typing import (
 	TYPE_CHECKING,
 	Any,
 	Dict,
+	Generator,
 	List,
-	NamedTuple,
 	Optional,
-	OrderedDict,
-	Set,
 	Union,
 )
 from typing_extensions import (
@@ -28,71 +26,30 @@ from typing_extensions import (
 from requests.structures import CaseInsensitiveDict
 
 import addonAPIVersion
-from addonHandler import (
-	Addon as AddonHandlerModel,
-	state as addonHandlerState,
+
+from .channel import Channel
+from .version import (
+	MajorMinorPatch,
+	SupportsVersionCheck,
 )
-from addonHandler.addonVersionCheck import SupportsVersionCheck
-from utils.displayString import DisplayStringStrEnum
+
+if TYPE_CHECKING:
+	from addonHandler import (  # noqa: F401
+		Addon as AddonHandlerModel,
+		AddonBase as AddonHandlerBaseModel,
+	)
+	AddonGUICollectionT = Dict[Channel, CaseInsensitiveDict["_AddonGUIModel"]]
+	"""
+	Add-ons that have the same ID except differ in casing cause a path collision,
+	as add-on IDs are installed to a case insensitive path.
+	Therefore addon IDs should be treated as case insensitive.
+	"""
 
 
-class Channel(DisplayStringStrEnum):
-	STABLE = "stable"
-	BETA = "beta"
-	DEV = "dev"
-	ALL = "all"
-
-	@property
-	def _displayStringLabels(self) -> Dict["Channel", str]:
-		return {
-			# Translators: Label for add-on channel in the add-on sotre
-			self.STABLE: pgettext("addonStore", "Stable"),
-			# Translators: Label for add-on channel in the add-on sotre
-			self.BETA: pgettext("addonStore", "Beta"),
-			# Translators: Label for add-on channel in the add-on sotre
-			self.DEV: pgettext("addonStore", "Dev"),
-			# Translators: Label for add-on channel in the add-on sotre
-			self.ALL: pgettext("addonStore", "All"),
-		}
+AddonHandlerModelGeneratorT = Generator["AddonHandlerModel", None, None]
 
 
-_channelFilters: OrderedDict[str, Set[Channel]] = OrderedDict({
-	Channel.ALL.displayString: {
-		Channel.STABLE,
-		Channel.BETA,
-		Channel.DEV,
-	},
-	Channel.STABLE.displayString: {Channel.STABLE},
-	Channel.BETA.displayString: {Channel.BETA},
-	Channel.DEV.displayString: {Channel.DEV},
-})
-"""A dictionary where the keys are channel groups to filter by,
-and the values are which channels should be shown for a given filter.
-"""
-
-
-class MajorMinorPatch(NamedTuple):
-	major: int
-	minor: int
-	patch: int = 0
-
-	def __str__(self) -> str:
-		return f"{self.major}.{self.minor}.{self.patch}"
-
-	@classmethod
-	def _parseVersionFromVersionStr(cls, version: str) -> "MajorMinorPatch":
-		versionParts = version.split(".")
-		versionLen = len(versionParts)
-		if versionLen < 2 or versionLen > 3:
-			raise ValueError(f"Version string not valid: {version}")
-		return cls(
-			int(versionParts[0]),
-			int(versionParts[1]),
-			0 if len(versionParts) == 2 else int(versionParts[2])
-		)
-
-
-class _AddonDetailsModel(SupportsVersionCheck, Protocol):
+class _AddonGUIModel(SupportsVersionCheck, Protocol):
 	"""Needed to display information in add-on store.
 	May come from manifest or add-on store data.
 	"""
@@ -105,27 +62,33 @@ class _AddonDetailsModel(SupportsVersionCheck, Protocol):
 	homepage: Optional[str]
 	minNVDAVersion: MajorMinorPatch
 	lastTestedVersion: MajorMinorPatch
+	legacy: bool
+	"""
+	Legacy add-ons contain invalid metadata
+	and should not be accessible through the add-on store.
+	"""
 
 	@property
 	def minimumNVDAVersion(self) -> addonAPIVersion.AddonApiVersionT:
-		"""In order to support addonHandler.addonVersionCheck.SupportsVersionCheck"""
+		"""In order to support SupportsVersionCheck"""
 		return self.minNVDAVersion
 
 	@property
 	def lastTestedNVDAVersion(self) -> addonAPIVersion.AddonApiVersionT:
-		"""In order to support addonHandler.addonVersionCheck.SupportsVersionCheck"""
+		"""In order to support SupportsVersionCheck"""
 		return self.lastTestedVersion
 
 	@property
-	def _addonHandlerModel(self) -> Optional[AddonHandlerModel]:
+	def _addonHandlerModel(self) -> Optional["AddonHandlerModel"]:
 		"""Returns the Addon model tracked in addonHandler, if it exists."""
-		if addonHandlerState._addonHandlerCache is None:
+		from ..dataManager import addonDataManager
+		if addonDataManager is None:
 			return None
-		return addonHandlerState._addonHandlerCache.installedAddons.get(self.addonId)
+		return addonDataManager._installedAddonsCache.installedAddons.get(self.addonId)
 
 	@property
 	def name(self) -> str:
-		"""In order to support addonHandler.addonVersionCheck.SupportsVersionCheck"""
+		"""In order to support SupportsVersionCheck"""
 		return self.addonId
 
 	@property
@@ -145,8 +108,8 @@ class _AddonDetailsModel(SupportsVersionCheck, Protocol):
 
 
 @dataclasses.dataclass(frozen=True)
-class AddonDetailsModel(_AddonDetailsModel):
-	"""Needed to display information in add-on store GUI.
+class AddonGUIModel(_AddonGUIModel):
+	"""Can be displayed in the add-on store GUI.
 	May come from manifest or add-on store data.
 	"""
 	addonId: str
@@ -158,10 +121,15 @@ class AddonDetailsModel(_AddonDetailsModel):
 	homepage: Optional[str]
 	minNVDAVersion: MajorMinorPatch
 	lastTestedVersion: MajorMinorPatch
+	legacy: bool = False
+	"""
+	Legacy add-ons contain invalid metadata
+	and should not be accessible through the add-on store.
+	"""
 
 
 @dataclasses.dataclass(frozen=True)  # once created, it should not be modified.
-class AddonStoreModel(_AddonDetailsModel):
+class AddonStoreModel(_AddonGUIModel):
 	"""
 	Data from an add-on from the add-on store.
 	"""
@@ -180,6 +148,19 @@ class AddonStoreModel(_AddonDetailsModel):
 	addonVersionNumber: MajorMinorPatch
 	minNVDAVersion: MajorMinorPatch
 	lastTestedVersion: MajorMinorPatch
+	legacy: bool = False
+	"""
+	Legacy add-ons contain invalid metadata
+	and should not be accessible through the add-on store.
+	"""
+
+
+@dataclasses.dataclass
+class CachedAddonsModel:
+	cachedAddonData: "AddonGUICollectionT"
+	cachedAt: datetime
+	# AddonApiVersionT or the string .network._LATEST_API_VER
+	nvdaAPIVersion: Union[addonAPIVersion.AddonApiVersionT, str]
 
 
 def _createStoreModelFromData(addon: Dict[str, Any]) -> AddonStoreModel:
@@ -199,11 +180,12 @@ def _createStoreModelFromData(addon: Dict[str, Any]) -> AddonStoreModel:
 		sha256=addon["sha256"],
 		minNVDAVersion=MajorMinorPatch(**addon["minNVDAVersion"]),
 		lastTestedVersion=MajorMinorPatch(**addon["lastTestedVersion"]),
+		legacy=addon.get("legacy", False),
 	)
 
 
-def _createDetailsFromManifest(addon: AddonHandlerModel) -> AddonDetailsModel:
-	return AddonDetailsModel(
+def _createGUIModelFromManifest(addon: "AddonHandlerBaseModel") -> AddonGUIModel:
+	return AddonGUIModel(
 		addonId=addon.name,
 		displayName=addon.manifest["summary"],
 		description=addon.manifest["description"],
@@ -216,16 +198,7 @@ def _createDetailsFromManifest(addon: AddonHandlerModel) -> AddonDetailsModel:
 	)
 
 
-if TYPE_CHECKING:
-	AddonDetailsCollectionT = Dict[Channel, CaseInsensitiveDict["_AddonDetailsModel"]]
-	"""
-	Add-ons that have the same ID except differ in casing cause a path collision,
-	as add-on IDs are installed to a case insensitive path.
-	Therefore addon IDs should be treated as case insensitive.
-	"""
-
-
-def _createAddonDetailsCollection() -> "AddonDetailsCollectionT":
+def _createAddonGUICollection() -> "AddonGUICollectionT":
 	"""
 	Add-ons that have the same ID except differ in casing cause a path collision,
 	as add-on IDs are installed to a case insensitive path.
@@ -238,21 +211,13 @@ def _createAddonDetailsCollection() -> "AddonDetailsCollectionT":
 	}
 
 
-@dataclasses.dataclass
-class CachedAddonsModel:
-	cachedAddonData: AddonDetailsCollectionT
-	cachedAt: datetime
-	# AddonApiVersionT or the string addonAPIVersion.LATEST
-	nvdaAPIVersion: Union[addonAPIVersion.AddonApiVersionT, str]
-
-
-def _createStoreCollectionFromJson(jsonData: str) -> "AddonDetailsCollectionT":
+def _createStoreCollectionFromJson(jsonData: str) -> "AddonGUICollectionT":
 	"""Use json string to construct a listing of available addons.
 	See https://github.com/nvaccess/addon-datastore#api-data-generation-details
 	for details of the data.
 	"""
 	data: List[Dict[str, Any]] = json.loads(jsonData)
-	addonCollection = _createAddonDetailsCollection()
+	addonCollection = _createAddonGUICollection()
 
 	for addon in data:
 		addonCollection[addon["channel"]][addon["addonId"]] = _createStoreModelFromData(addon)

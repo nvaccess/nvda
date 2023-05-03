@@ -7,6 +7,7 @@
 
 import threading
 from typing import Optional
+
 import wx
 
 import extensionPoints
@@ -103,9 +104,11 @@ class DisplayableError(Exception):
 		else:
 			self.titleMessage = titleMessage
 
-	def displayError(self):
-		messageBox(
+	def displayError(self, parentWindow: wx.Window):
+		wx.CallAfter(
+			messageBox,
 			message=self.displayMessage,
 			caption=self.titleMessage,
-			style=wx.OK | wx.ICON_ERROR
+			style=wx.OK | wx.ICON_ERROR,
+			parent=parentWindow,
 		)

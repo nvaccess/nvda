@@ -185,7 +185,7 @@ class SettingsDialog(
 		@param resizeable: True if the settings dialog should be resizable by the user, only set this if
 			you have tested that the components resize correctly.
 		@param hasApplyButton: C{True} to add an apply button to the dialog; defaults to C{False} for backwards compatibility.
-		Deprecated, use buttons instead.
+			Deprecated, use buttons instead.
 		@param settingsSizerOrientation: Either wx.VERTICAL or wx.HORIZONTAL. This controls the orientation of the
 			sizer that is passed into L{makeSettings}. The default is wx.VERTICAL.
 		@param multiInstanceAllowed: Whether multiple instances of SettingsDialog may exist.
@@ -204,6 +204,10 @@ class SettingsDialog(
 		for button in buttons:
 			buttonFlag |= button
 		if hasApplyButton:
+			log.debugWarning(
+				"The hasApplyButton parameter is deprecated. "
+				"Use buttons instead. "
+			)
 			buttonFlag |= wx.APPLY
 		self.hasApply = hasApplyButton or wx.APPLY in buttons
 		if not buttons.issubset({wx.OK, wx.CANCEL, wx.APPLY, wx.CLOSE}):
@@ -486,8 +490,8 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		super(MultiCategorySettingsDialog, self).__init__(
 			parent,
 			resizeable=True,
-			hasApplyButton=True,
-			settingsSizerOrientation=wx.HORIZONTAL
+			settingsSizerOrientation=wx.HORIZONTAL,
+			buttons={wx.OK, wx.CANCEL, wx.APPLY},
 		)
 
 		# setting the size must be done after the parent is constructed.
@@ -3052,6 +3056,27 @@ class AdvancedPanelControls(
 
 		# Translators: This is the label for a group of advanced options in the
 		# Advanced settings panel
+		label = _("Audio")
+		audio = wx.StaticBoxSizer(wx.VERTICAL, self, label=label)
+		audioBox = audio.GetStaticBox()
+		audioGroup = guiHelper.BoxSizerHelper(self, sizer=audio)
+		sHelper.addItem(audioGroup)
+
+		# Translators: This is the label for a checkbox control in the
+		#  Advanced settings panel.
+		label = _("Use WASAPI for audio output (requires restart)")
+		self.wasapiCheckBox: wx.CheckBox = audioGroup.addItem(
+			wx.CheckBox(audioBox, label=label)
+		)
+		self.bindHelpEvent("WASAPI", self.wasapiCheckBox)
+		self.wasapiCheckBox.SetValue(
+			config.conf["audio"]["wasapi"]
+		)
+		self.wasapiCheckBox.defaultValue = self._getDefaultValue(
+			["audio", "wasapi"])
+
+		# Translators: This is the label for a group of advanced options in the
+		# Advanced settings panel
 		label = _("Debug logging")
 		debugLogSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=label)
 		debugLogGroup = guiHelper.BoxSizerHelper(self, sizer=debugLogSizer)
@@ -3137,6 +3162,7 @@ class AdvancedPanelControls(
 			and self.loadChromeVBufWhenBusyCombo.isValueConfigSpecDefault()
 			and self.caretMoveTimeoutSpinControl.GetValue() == self.caretMoveTimeoutSpinControl.defaultValue
 			and self.reportTransparentColorCheckBox.GetValue() == self.reportTransparentColorCheckBox.defaultValue
+			and self.wasapiCheckBox.GetValue() == self.wasapiCheckBox.defaultValue
 			and set(self.logCategoriesList.CheckedItems) == set(self.logCategoriesList.defaultCheckedItems)
 			and self.playErrorSoundCombo.GetSelection() == self.playErrorSoundCombo.defaultValue
 			and True  # reduce noise in diff when the list is extended.
@@ -3162,6 +3188,7 @@ class AdvancedPanelControls(
 		self.loadChromeVBufWhenBusyCombo.resetToConfigSpecDefault()
 		self.caretMoveTimeoutSpinControl.SetValue(self.caretMoveTimeoutSpinControl.defaultValue)
 		self.reportTransparentColorCheckBox.SetValue(self.reportTransparentColorCheckBox.defaultValue)
+		self.wasapiCheckBox.SetValue(self.wasapiCheckBox.defaultValue)
 		self.logCategoriesList.CheckedItems = self.logCategoriesList.defaultCheckedItems
 		self.playErrorSoundCombo.SetSelection(self.playErrorSoundCombo.defaultValue)
 		self._defaultsRestored = True
@@ -3192,6 +3219,7 @@ class AdvancedPanelControls(
 		config.conf["documentFormatting"]["reportTransparentColor"] = (
 			self.reportTransparentColorCheckBox.IsChecked()
 		)
+		config.conf["audio"]["wasapi"] = self.wasapiCheckBox.IsChecked()
 		config.conf["annotations"]["reportDetails"] = self.annotationsDetailsCheckBox.IsChecked()
 		config.conf["annotations"]["reportAriaDescription"] = self.ariaDescCheckBox.IsChecked()
 		config.conf["braille"]["enableHidBrailleSupport"] = self.supportHidBrailleCombo.GetSelection()
