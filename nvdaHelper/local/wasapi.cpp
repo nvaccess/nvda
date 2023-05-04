@@ -513,6 +513,16 @@ HRESULT WasapiPlayer::resume() {
 HRESULT WasapiPlayer::setSessionVolume(float level) {
 	CComPtr<ISimpleAudioVolume> volume;
 	HRESULT hr = client->GetService(IID_ISimpleAudioVolume, (void**)&volume);
+	if (hr == AUDCLNT_E_DEVICE_INVALIDATED) {
+		// If we're using a specific device, it's just been invalidated. Fall back
+		// to the default device.
+		deviceId.clear();
+		hr = open(true);
+		if (FAILED(hr)) {
+			return hr;
+		}
+		hr = client->GetService(IID_ISimpleAudioVolume, (void**)&volume);
+	}
 	if (FAILED(hr)) {
 		return hr;
 	}
