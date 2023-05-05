@@ -2578,7 +2578,7 @@ class GlobalCommands(ScriptableObject):
 		obj = api.getFocusObject()
 		if obj.keyboardShortcut:
 			shortcut = obj.keyboardShortcut
-			speech.speak(speech.getKeyboardShortcutSpeech(shortcut))
+			speech.speakKeyboardShortcuts(shortcut)
 			braille.handler.message(shortcut)
 		else:
 			# Translators: reported when a user requests the accelerator key

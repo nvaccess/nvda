@@ -1725,7 +1725,7 @@ def getPropertiesSpeech(  # noqa: C901
 		textList.append(description)
 	# sometimes keyboardShortcut key is present but value is None
 	keyboardShortcut: Optional[str] = propertyValues.get('keyboardShortcut')
-	textList.extend(getKeyboardShortcutSpeech(keyboardShortcut))
+	textList.extend(getKeyboardShortcutsSpeech(keyboardShortcut))
 	if includeTableCellCoords and cellCoordsText:
 		textList.append(cellCoordsText)
 	if cellCoordsText or rowNumber or columnNumber:
@@ -1860,46 +1860,76 @@ def getPropertiesSpeech(  # noqa: C901
 	return textList
 
 
-def getKeyboardShortcutSpeech(keyboardShortcut: Optional[str]) -> SpeechSequence:
-	log.info(f'Calling getKeyboardShortcutSequence with keyboardShortcut={keyboardShortcut}')
+def speakKeyboardShortcuts(keyboardShortcutsStr: Optional[str]) -> SpeechSequence:
+	speak(getKeyboardShortcutsSpeech(keyboardShortcutsStr))
+
+
+def getKeyboardShortcutsSpeech(keyboardShortcutsStr: Optional[str]) -> SpeechSequence:
+	"""Gets the speech sequence for a shortcuts string containing one or more shortcuts.
+	@param keyboardShortcutsStr: the shortcuts string.
+	"""
+	
 	SHORTCUT_KEY_LIST_SEPARATOR = '  '
 	seq = []
-	if not keyboardShortcut:
+	if not keyboardShortcutsStr:
 		return seq
-	locale = getCurrentLanguage()
-	for shortcut in keyboardShortcut.split(SHORTCUT_KEY_LIST_SEPARATOR):
-		if len(seq) > 0:
+	try:
+		for shortcutKeyStr in keyboardShortcutsStr.split(SHORTCUT_KEY_LIST_SEPARATOR):
+			seq.extend(_getKeyboardShortcutSpeech(shortcutKeyStr))
 			seq.append(SHORTCUT_KEY_LIST_SEPARATOR)
-		keyList, separator = splitShortcut(shortcut)
-		log.info(f'keyList={keyList}, separator={separator}')
-		seqShortcut = []
-		for key in keyList:
-			if len(seqShortcut) > 0:
-				seqShortcut.append(separator)
-			if len(key) > 1:
-				seqShortcut.append(key)
-				continue
-			keySymbol = characterProcessing.processSpeechSymbol(locale, key)
-			if keySymbol != key:
-				seqShortcut.append(keySymbol)
-				continue
-			seqShortcut.append(CharacterModeCommand(True))
-			seqShortcut.append(key)
-			seqShortcut.append(CharacterModeCommand(False))
-		seq.extend(seqShortcut)
+		seq.pop()  # Remove last SHORTCUT_KEY_LIST_SEPARATOR in the sequence
+	except Exception:
+		log.warning(
+			f'Error parsing keyboard shortcut "{keyboardShortcutsStr}", reporting the string as a fallback.'
+		)
+		return [keyboardShortcutsStr]
+
+	# Merge consecutive strings in the list when possible
 	seqOut = []
 	for item in seq:
 		if len(seqOut) > 0 and isinstance(seqOut[-1], str) and isinstance(item, str):
-			seqOut[-1] = seqOut[-1] + SHORTCUT_KEY_LIST_SEPARATOR + item
+			seqOut[-1] = seqOut[-1] + item
 		else:
 			seqOut.append(item)
+
 	return seqOut
 
 
-def splitShortcut(shortcut):
+def _getKeyboardShortcutSpeech(keyboardShortcut: str) -> SpeechSequence:
+	"""Gets the speech sequence for a single shortcut string.
+	@param keyboardShortcutStr: the shortcuts string.
+	"""
+
+	keyList, separators = _splitShortcut(keyboardShortcut)
+	seq = []
+	for key, sep in zip(keyList[:-1], separators):
+		seq.extend(_getKeySpeech(key))
+		seq.append(sep)
+	seq.extend(_getKeySpeech(keyList[-1]))
+	return seq
+
+
+def _getKeySpeech(key: str) -> SpeechSequence:
+	"""Gets the speech sequence for a string describing a key.
+	@param keyStr: the key string.
+		"""
+	if len(key) > 1:
+		return [key]
+	locale = getCurrentLanguage()
+	keySymbol = characterProcessing.processSpeechSymbol(locale, key)
+	if keySymbol != key:
+		return [keySymbol]
+	return [
+		CharacterModeCommand(True),
+		key,
+		CharacterModeCommand(False),
+	]
+
+
+def _splitShortcut(shortcut: str) -> SpeechSequence:
 	if ', ' in shortcut:
-		separator = ', '
-	elif ' + ' in shortcut:
+		return _splitSequentialShortcut(shortcut)
+	if ' + ' in shortcut:
 		separator = ' + '
 	elif '+' in shortcut:
 		separator = '+'
@@ -1909,7 +1939,24 @@ def splitShortcut(shortcut):
 		keyList = shortcut.split(separator)
 	else:
 		keyList = [shortcut]
-	return keyList, separator
+	separators = [separator] * (len(keyList) - 1)
+	return keyList, separators
+
+
+def _splitSequentialShortcut(shortcut: str) -> SpeechSequence:
+	keys = []
+	separators = []
+	RE_SEQ_SHORTCUT_SPLITTING = re.compile(r'^(?P<key>[^, ]+)(?P<sep> |, )(?P<tail>.+)')
+	tail = shortcut
+	while len(tail) > 0:
+		m = RE_SEQ_SHORTCUT_SPLITTING.match(tail)
+		if not m:
+			keys.append(tail)
+			return keys, separators
+		keys.append(m['key'])
+		separators.append(m['sep'])
+		tail = m['tail']
+	raise RuntimeError(f'Wrong sequential shortcut string format: {shortcut}')
 
 
 def _shouldSpeakContentFirst(
