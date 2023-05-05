@@ -13,16 +13,16 @@ Informacje techniczne nie zostały przetłumaczone, proszę zajrzeć do [Angiels
 == Nowości ==
 - Dodano wymowę znaków unicode:
   - Znaki brajlowskie takie jak "⠐⠣⠃⠗⠇⠐⠜". (#14548)
-  - Znak klawiszu option na komputerach Mac/apple "⌥". (#14682)
+  - Znak klawisza option na komputerach Mac/apple "⌥". (#14682)
   -
-- In Mozilla Firefox and Google Chrome, NVDA now reports when a control opens a dialog, grid, list or tree if the author has specified this using aria-haspopup. (#14709)
+- W przeglądarkach Mozilla Firefox i Google Chrome, NVDA od teraz odczytuje gdy kontrolka skutkuje otwarciem siatki, listy lub drzewa jeżeli autor zadeklarował to, używając aria-haspopup. (#14709)
 - 
 
 
-== Changes ==
-- Updated LibLouis braille translator to [3.25.0 https://github.com/liblouis/liblouis/releases/tag/v3.25.0]. (#14719)
-- Dash and em-dash symbols will always be sent to the synthesizer. (#13830)
-- Distance reported in Microsoft Word will now honour the unit defined in Word's advanced options even when using UIA to access Word documents. (#14542)
+== Zmiany ==
+- Zaktualizowano LibLouis braille translator do wersji [3.25.0 https://github.com/liblouis/liblouis/releases/tag/v3.25.0]. (#14719)
+- Znaki minus i myślnik zawsze będą wysyłane syntezatorowi. (#13830)
+- Marginesy w programie Microsoft Word będą odczytywane używając ustawienia w opcjach zaawansowanych programu Word nawet gdy UIA jest używane do dostępu do dokumentów Microsoft Word. (#14542)
 - When reporting the review cursor location, the current cursor/caret location is now reported relative to the current page in LibreOffice Writer for LibreOffice versions >= 7.6, similar to what is done for Microsoft Word. (#11696)
 - NVDA now responds slightly faster to commands and focus changes. (#14701)
 - NVDA responds faster when moving the cursor in edit controls. (#14708)
