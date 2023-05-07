@@ -302,6 +302,24 @@ def executeEvent(
 		log.exception("error executing event: %s on %s with extra args of %s"%(eventName,obj,kwargs))
 
 
+virtualDesktopName = None
+
+
+def handlePossibleDesktopNameChange():
+	"""
+	Reports the new virtual desktop name if changed.
+	On Windows versions lower than Windows 10, this function does nothing.
+	"""
+	global virtualDesktopName
+	import winVersion
+	if winVersion.getWinVer() < winVersion.WIN10:
+		return
+	if virtualDesktopName:
+		import ui
+		ui.message(virtualDesktopName)
+		virtualDesktopName = None
+
+
 def doPreGainFocus(obj: "NVDAObjects.NVDAObject", sleepMode: bool = False) -> bool:
 	from IAccessibleHandler import SecureDesktopNVDAObject
 
