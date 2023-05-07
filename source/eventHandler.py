@@ -312,10 +312,10 @@ def executeEvent(
 		log.exception(f"error executing event: {eventName} on {obj} with extra args of {kwargs}")
 
 
-virtualDesktopName = None
+virtualDesktopName: Optional[str] = None
 
 
-def handlePossibleDesktopNameChange():
+def handlePossibleDesktopNameChange() -> None:
 	"""
 	Reports the new virtual desktop name if changed.
 	On Windows versions lower than Windows 10, this function does nothing.
