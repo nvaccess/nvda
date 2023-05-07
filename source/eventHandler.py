@@ -308,8 +308,8 @@ def executeEvent(
 			return
 		elif not sleepMode:
 			_EventExecuter(eventName, obj, kwargs)
-	except:
-		log.exception("error executing event: %s on %s with extra args of %s" % (eventName, obj, kwargs))
+	except Exception:
+		log.exception(f"error executing event: {eventName} on {obj} with extra args of {kwargs}")
 
 
 virtualDesktopName = None
