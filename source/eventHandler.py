@@ -296,6 +296,10 @@ def executeEvent(
 		# Handle possible virtual desktop name change event.
 		if eventName == "nameChange" and obj.windowClassName == "#32769":
 			import core
+			import winVersion
+			# More effective in Windows 10 Version 1903 and later.
+			if winVersion.getWinVer() < winVersion.WIN10_1903:
+				return
 			virtualDesktopName = obj.name
 			core.callLater(250, handlePossibleDesktopNameChange)
 		if isGainFocus and not doPreGainFocus(obj, sleepMode=sleepMode):
@@ -318,7 +322,8 @@ def handlePossibleDesktopNameChange():
 	"""
 	global virtualDesktopName
 	import winVersion
-	if winVersion.getWinVer() < winVersion.WIN10:
+	# Virtual desktop switch announcement works more effectively in Version 1903 and later.
+	if winVersion.getWinVer() < winVersion.WIN10_1903:
 		return
 	if virtualDesktopName:
 		import ui
