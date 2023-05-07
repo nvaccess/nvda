@@ -373,6 +373,7 @@ def doPreGainFocus(obj: "NVDAObjects.NVDAObject", sleepMode: bool = False) -> bo
 		if not api.setForegroundObject(newForeground):
 			return False
 		executeEvent('foreground', newForeground)
+	handlePossibleDesktopNameChange()
 	if sleepMode: return True
 	#Fire focus entered events for all new ancestors of the focus if this is a gainFocus event
 	for parent in api.getFocusAncestors()[api.getFocusDifferenceLevel():]:
