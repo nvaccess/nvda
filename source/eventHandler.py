@@ -291,8 +291,8 @@ def executeEvent(
 		isGainFocus = eventName == "gainFocus"
 		# Allow NVDAObjects to redirect focus events to another object of their choosing.
 		if isGainFocus and obj.focusRedirect:
-			obj=obj.focusRedirect
-		sleepMode=obj.sleepMode
+			obj = obj.focusRedirect
+		sleepMode = obj.sleepMode
 		# Handle possible virtual desktop name change event.
 		if eventName == "nameChange" and obj.windowClassName == "#32769":
 			import core
@@ -304,12 +304,12 @@ def executeEvent(
 			core.callLater(250, handlePossibleDesktopNameChange)
 		if isGainFocus and not doPreGainFocus(obj, sleepMode=sleepMode):
 			return
-		elif not sleepMode and eventName=="documentLoadComplete" and not doPreDocumentLoadComplete(obj):
+		elif not sleepMode and eventName == "documentLoadComplete" and not doPreDocumentLoadComplete(obj):
 			return
 		elif not sleepMode:
-			_EventExecuter(eventName,obj,kwargs)
+			_EventExecuter(eventName, obj, kwargs)
 	except:
-		log.exception("error executing event: %s on %s with extra args of %s"%(eventName,obj,kwargs))
+		log.exception("error executing event: %s on %s with extra args of %s" % (eventName, obj, kwargs))
 
 
 virtualDesktopName = None
@@ -339,8 +339,8 @@ def doPreGainFocus(obj: "NVDAObjects.NVDAObject", sleepMode: bool = False) -> bo
 		shouldLog=config.conf["debugLog"]["events"],
 	):
 		return False
-	oldFocus=api.getFocusObject()
-	oldTreeInterceptor=oldFocus.treeInterceptor if oldFocus else None
+	oldFocus = api.getFocusObject()
+	oldTreeInterceptor = oldFocus.treeInterceptor if oldFocus else None
 	if not api.setFocusObject(obj):
 		return False
 	if speech.manager._shouldCancelExpiredFocusEvents():
@@ -367,26 +367,31 @@ def doPreGainFocus(obj: "NVDAObjects.NVDAObject", sleepMode: bool = False) -> bo
 		# not the secure desktop.
 		and not isinstance(obj, SecureDesktopNVDAObject)
 	):
-		newForeground=api.getDesktopObject().objectInForeground()
+		newForeground = api.getDesktopObject().objectInForeground()
 		if not newForeground:
 			log.debugWarning("Can not get real foreground, resorting to focus ancestors")
-			ancestors=api.getFocusAncestors()
-			if len(ancestors)>1:
-				newForeground=ancestors[1]
+			ancestors = api.getFocusAncestors()
+			if len(ancestors) > 1:
+				newForeground = ancestors[1]
 			else:
-				newForeground=obj
+				newForeground = obj
 		if not api.setForegroundObject(newForeground):
 			return False
 		executeEvent('foreground', newForeground)
 	handlePossibleDesktopNameChange()
-	if sleepMode: return True
-	#Fire focus entered events for all new ancestors of the focus if this is a gainFocus event
+	if sleepMode:
+		return True
+	# Fire focus entered events for all new ancestors of the focus if this is a gainFocus event
 	for parent in api.getFocusAncestors()[api.getFocusDifferenceLevel():]:
-		executeEvent("focusEntered",parent)
+		executeEvent("focusEntered", parent)
 	if obj.treeInterceptor is not oldTreeInterceptor:
-		if hasattr(oldTreeInterceptor,"event_treeInterceptor_loseFocus"):
+		if hasattr(oldTreeInterceptor, "event_treeInterceptor_loseFocus"):
 			oldTreeInterceptor.event_treeInterceptor_loseFocus()
-		if obj.treeInterceptor and obj.treeInterceptor.isReady and hasattr(obj.treeInterceptor,"event_treeInterceptor_gainFocus"):
+		if (
+			obj.treeInterceptor
+			and obj.treeInterceptor.isReady
+			and hasattr(obj.treeInterceptor, "event_treeInterceptor_gainFocus")
+		):
 			obj.treeInterceptor.event_treeInterceptor_gainFocus()
 	return True
 
