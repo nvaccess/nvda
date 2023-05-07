@@ -287,11 +287,17 @@ def executeEvent(
 	):
 		return
 	try:
+		global virtualDesktopName
 		isGainFocus = eventName == "gainFocus"
 		# Allow NVDAObjects to redirect focus events to another object of their choosing.
 		if isGainFocus and obj.focusRedirect:
 			obj=obj.focusRedirect
 		sleepMode=obj.sleepMode
+		# Handle possible virtual desktop name change event.
+		if eventName == "nameChange" and obj.windowClassName == "#32769":
+			import core
+			virtualDesktopName = obj.name
+			core.callLater(250, handlePossibleDesktopNameChange)
 		if isGainFocus and not doPreGainFocus(obj, sleepMode=sleepMode):
 			return
 		elif not sleepMode and eventName=="documentLoadComplete" and not doPreDocumentLoadComplete(obj):
