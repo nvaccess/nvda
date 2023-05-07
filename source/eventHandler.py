@@ -22,6 +22,7 @@ import winUser
 import extensionPoints
 import oleacc
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
+import winVersion
 
 if typing.TYPE_CHECKING:
 	import NVDAObjects
@@ -294,12 +295,13 @@ def executeEvent(
 			obj = obj.focusRedirect
 		sleepMode = obj.sleepMode
 		# Handle possible virtual desktop name change event.
-		if eventName == "nameChange" and obj.windowClassName == "#32769":
+		# More effective in Windows 10 Version 1903 and later.
+		if (
+				eventName == "nameChange"
+				and obj.windowClassName == "#32769"
+				and canAnnounceVirtualDesktopNames
+		):
 			import core
-			import winVersion
-			# More effective in Windows 10 Version 1903 and later.
-			if winVersion.getWinVer() < winVersion.WIN10_1903:
-				return
 			virtualDesktopName = obj.name
 			core.callLater(250, handlePossibleDesktopNameChange)
 		if isGainFocus and not doPreGainFocus(obj, sleepMode=sleepMode):
@@ -313,6 +315,7 @@ def executeEvent(
 
 
 virtualDesktopName: Optional[str] = None
+canAnnounceVirtualDesktopNames: bool = winVersion.getWinVer() >= winVersion.WIN10_1903
 
 
 def handlePossibleDesktopNameChange() -> None:
@@ -321,9 +324,8 @@ def handlePossibleDesktopNameChange() -> None:
 	On Windows versions lower than Windows 10, this function does nothing.
 	"""
 	global virtualDesktopName
-	import winVersion
 	# Virtual desktop switch announcement works more effectively in Version 1903 and later.
-	if winVersion.getWinVer() < winVersion.WIN10_1903:
+	if not canAnnounceVirtualDesktopNames:
 		return
 	if virtualDesktopName:
 		import ui
