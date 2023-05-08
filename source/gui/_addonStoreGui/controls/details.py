@@ -151,7 +151,7 @@ class AddonDetails(
 			self.contentsPanel,
 			# Translators: Label for the text control containing extra details about the selected add-on.
 			# In the add-on store dialog.
-			label=pgettext("addonStore", "Other Details:")
+			label=pgettext("addonStore", "&Other Details:")
 		)
 		self.contents.Add(self.otherDetailsLabel, flag=wx.EXPAND)
 		self.otherDetailsLabel.Hide()

@@ -12,7 +12,6 @@ from os import (
 	startfile,
 )
 from typing import (
-	Set,
 	List,
 	Optional,
 	Tuple,
