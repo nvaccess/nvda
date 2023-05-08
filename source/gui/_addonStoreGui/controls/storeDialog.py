@@ -156,13 +156,15 @@ class AddonStoreDialog(SettingsDialog):
 				return
 
 		if self._storeVM._pendingInstalls:
-			gui.messageBox(
-				# Translators: Message shown prior to installing add-ons when closing the add-on store dialog
+			installingDialog = gui.IndeterminateProgressDialog(
+				self,
+				installationPromptTitle,
+				# Translators: Message shown while installing add-ons after closing the add-on store dialog
 				# The placeholder {} will be replaced with the number of add-ons to be installed
-				pgettext("addonStore", "Now installing {} add-ons.").format(len(self._storeVM._pendingInstalls)),
-				installationPromptTitle
+				pgettext("addonStore", "Installing {} add-ons, please wait.").format(len(self._storeVM._pendingInstalls))
 			)
 			self._storeVM.installPending()
+			wx.CallAfter(installingDialog.done)
 			addonGui.promptUserForRestart()
 		
 		if (
