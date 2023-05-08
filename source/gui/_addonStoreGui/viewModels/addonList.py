@@ -7,6 +7,7 @@
 # Can be removed in a future version of python (3.8+)
 from __future__ import annotations
 
+from locale import strxfrm
 from typing import (
 	Callable,
 	List,
@@ -233,7 +234,7 @@ class AddonListVM:
 
 	def _getFilteredSortedIds(self) -> List[str]:
 		def _getSortFieldData(listItemVM: AddonListItemVM) -> "SupportsLessThan":
-			return self._getAddonAttrText(listItemVM, self._sortByModelFieldName)
+			return strxfrm(self._getAddonAttrText(listItemVM, self._sortByModelFieldName))
 
 		def _containsTerm(detailsVM: AddonListItemVM, term: str) -> bool:
 			term = term.casefold()
