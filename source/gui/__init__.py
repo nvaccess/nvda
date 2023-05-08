@@ -340,8 +340,8 @@ class MainFrame(wx.Frame):
 		_storeVM = AddonStoreVM()
 		try:
 			d = AddonStoreDialog(mainFrame, _storeVM)
-		except SettingsDialog.MultiInstanceErrorWithDialog:
-			pass
+		except SettingsDialog.MultiInstanceErrorWithDialog as errorWithDialog:
+			errorWithDialog.dialog.SetFocus()
 		else:
 			_storeVM.refresh()
 			d.Show()
