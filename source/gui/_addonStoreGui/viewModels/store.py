@@ -184,10 +184,11 @@ class AddonStoreVM:
 				# Translators: Label for a button that installs the selected addon
 				displayName=pgettext("addonStore", "Add-on &help"),
 				actionHandler=self.helpAddon,
-				validCheck=lambda aVM: aVM.status not in (
-					AvailableAddonStatus.AVAILABLE,
-					AvailableAddonStatus.INCOMPATIBLE,
-					AvailableAddonStatus.DOWNLOAD_FAILED,
+				validCheck=lambda aVM: self._filteredStatusKey in (
+					# Showing help in the updatable add-ons view is misleading
+					# as we can only fetch the add-on help from the installed version.
+					_StatusFilterKey.INSTALLED,
+					_StatusFilterKey.DISABLED,
 				),
 				listItemVM=selectedListItem
 			),
