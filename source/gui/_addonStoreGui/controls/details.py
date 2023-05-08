@@ -310,6 +310,9 @@ class AddonDetails(
 			self._actionButtonMap[action] = button
 
 	def _actionVmChanged(self, addonActionVM: AddonActionVM):
+		# Toggle accelerator key from working
+		self._actionButtonMap[addonActionVM].Enable(enable=addonActionVM.isValid)
+		# Toggle visibility and tab order
 		self._actionButtonMap[addonActionVM].Show(show=addonActionVM.isValid)
 		if self._detailsVM.listItem:
 			self.statusTextCtrl.SetValue(self._detailsVM.listItem.status.displayString)
