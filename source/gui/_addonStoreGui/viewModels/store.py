@@ -145,6 +145,7 @@ class AddonStoreVM:
 					AvailableAddonStatus.INCOMPATIBLE,
 					AvailableAddonStatus.INCOMPATIBLE_DISABLED,
 					AvailableAddonStatus.DOWNLOAD_FAILED,
+					AvailableAddonStatus.PENDING_REMOVE,
 				),
 				listItemVM=selectedListItem
 			),
