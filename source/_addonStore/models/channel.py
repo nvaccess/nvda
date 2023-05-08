@@ -32,15 +32,15 @@ class Channel(DisplayStringStrEnum):
 		}
 
 
-_channelFilters: OrderedDict[str, Set[Channel]] = OrderedDict({
-	Channel.ALL.displayString: {
+_channelFilters: OrderedDict[Channel, Set[Channel]] = OrderedDict({
+	Channel.ALL: {
 		Channel.STABLE,
 		Channel.BETA,
 		Channel.DEV,
 	},
-	Channel.STABLE.displayString: {Channel.STABLE},
-	Channel.BETA.displayString: {Channel.BETA},
-	Channel.DEV.displayString: {Channel.DEV},
+	Channel.STABLE: {Channel.STABLE},
+	Channel.BETA: {Channel.BETA},
+	Channel.DEV: {Channel.DEV},
 })
 """A dictionary where the keys are channel groups to filter by,
 and the values are which channels should be shown for a given filter.

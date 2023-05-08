@@ -14,7 +14,7 @@ from addonHandler import (
 	AddonStateCategory,
 	BUNDLE_EXTENSION,
 )
-from _addonStore.models.channel import _channelFilters
+from _addonStore.models.channel import Channel, _channelFilters
 from _addonStore.models.status import (
 	_statusFilters,
 	_StatusFilterKey,
@@ -68,7 +68,7 @@ class AddonStoreDialog(SettingsDialog):
 			# Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
 			labelText=pgettext("addonStore", "Cha&nnel:"),
 			wxCtrlClass=wx.Choice,
-			choices=list(_channelFilters.keys()),
+			choices=list(c.displayString for c in _channelFilters),
 		))
 		self.channelFilterCtrl.Bind(wx.EVT_CHOICE, self.onChannelFilterChange, self.channelFilterCtrl)
 		self.channelFilterCtrl.SetSelection(0)
@@ -90,10 +90,7 @@ class AddonStoreDialog(SettingsDialog):
 		settingsSizer.Add(self.contentsSizer, flag=wx.EXPAND, proportion=1)
 
 		# add a label for the AddonListVM so that it is announced with a name in NVDA
-		self.listLabel = wx.StaticText(
-			self,
-			label=self._getStatusFilterKey().displayString
-		)
+		self.listLabel = wx.StaticText(self, label=self._listLabelText)
 		self.contentsSizer.Add(
 			self.listLabel,
 			flag=wx.EXPAND
@@ -174,20 +171,36 @@ class AddonStoreDialog(SettingsDialog):
 		# let the dialog exit.
 		super().onClose(evt)
 
-	def _getStatusFilterKey(self) -> _StatusFilterKey:
+	@property
+	def _statusFilterKey(self) -> _StatusFilterKey:
 		index = self.statusFilterCtrl.GetSelection()
 		return list(_statusFilters.keys())[index]
 
+	@property
+	def _channelFilterKey(self) -> Channel:
+		index = self.channelFilterCtrl.GetSelection()
+		return list(_channelFilters.keys())[index]
+
+	@property
+	def _listLabelText(self) -> str:
+		return f"{self._channelFilterKey.displayString} {self._statusFilterKey.displayString}"
+
 	def onStatusFilterChange(self, evt: wx.EVT_CHOICE):
-		statusFiltersKey = self._getStatusFilterKey()
-		self.listLabel.SetLabelText(statusFiltersKey.displayString)
-		self._storeVM._filteredStatusKey = statusFiltersKey
+		self._storeVM._filteredStatusKey = self._statusFilterKey
+
+		if self._storeVM._filteredStatusKey == _StatusFilterKey.AVAILABLE:
+			self._storeVM._filterChannelKey = Channel.STABLE
+		else:
+			self._storeVM._filterChannelKey = Channel.ALL
+		channelFilterIndex = list(_channelFilters.keys()).index(self._storeVM._filterChannelKey)
+		self.channelFilterCtrl.SetSelection(channelFilterIndex)
+
+		self.listLabel.SetLabelText(self._listLabelText)
 		self._storeVM.refresh()
 
 	def onChannelFilterChange(self, evt: wx.EVT_CHOICE):
-		index = self.channelFilterCtrl.GetSelection()
-		_channelFilterKey = list(_channelFilters.keys())[index]
-		self._storeVM._filteredChannels = _channelFilters[_channelFilterKey]
+		self._storeVM._filterChannelKey = self._channelFilterKey
+		self.listLabel.SetLabelText(self._listLabelText)
 		self._storeVM.refresh()
 
 	def onFilterTextChange(self, evt: wx.EVT_TEXT):

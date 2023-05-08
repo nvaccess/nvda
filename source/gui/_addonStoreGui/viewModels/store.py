@@ -76,11 +76,10 @@ class AddonStoreVM:
 		Filters the add-on list view model by add-on status.
 		Add-ons with a status in _statusFilters[self._filteredStatusKey] should be displayed in the list.
 		"""
-		self._filteredChannels: Set[Channel] = next(iter(_channelFilters.values()))
+		self._filterChannelKey: Channel = Channel.ALL
 		"""
 		Filters the add-on list view model by add-on channel.
-		Add-ons with a channel in _filteredChannels should be displayed in the list.
-		Uses first filter in _channelFilters as default.
+		Add-ons with a channel in _channelFilters[self._filterChannelKey] should be displayed in the list.
 		"""
 
 		self._downloader = addonDataManager.getFileDownloader()
@@ -364,7 +363,7 @@ class AddonStoreVM:
 			AddonListItemVM(model=model, status=status)
 			for model, status in addonsWithStatus
 			if status in _statusFilters[self._filteredStatusKey]
-			and model.channel in self._filteredChannels
+			and model.channel in _channelFilters[self._filterChannelKey]
 			# Legacy add-ons contain invalid metadata
 			# and should not be accessible through the add-on store.
 			and not model.legacy
