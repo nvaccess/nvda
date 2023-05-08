@@ -85,7 +85,6 @@ class AddonStoreDialog(SettingsDialog):
 
 		settingsSizer.AddSpacer(5)
 
-		# noinspection PyAttributeOutsideInit
 		self.contentsSizer = wx.BoxSizer(wx.HORIZONTAL)
 		settingsSizer.Add(self.contentsSizer, flag=wx.EXPAND, proportion=1)
 
@@ -97,15 +96,20 @@ class AddonStoreDialog(SettingsDialog):
 		)
 		self.listLabel.Hide()
 
-		# noinspection PyAttributeOutsideInit
 		self.addonListView = AddonVirtualList(
 			parent=self,
 			addonsListVM=self._storeVM.listVM,
 			actionVMList=self._storeVM.actionVMList,
 		)
+		# Add alt+l accelerator key
+		_setFocusToAddonListView_eventId = wx.NewIdRef(count=1)
+		self.Bind(wx.EVT_MENU, lambda e: self.addonListView.SetFocus(), _setFocusToAddonListView_eventId)
+		self.SetAcceleratorTable(wx.AcceleratorTable([
+			wx.AcceleratorEntry(wx.ACCEL_ALT, ord("l"), _setFocusToAddonListView_eventId)
+		]))
 		self.contentsSizer.Add(self.addonListView, flag=wx.EXPAND, proportion=4)
 		self.contentsSizer.AddSpacer(5)
-		# noinspection PyAttributeOutsideInit
+
 		self.addonDetailsView = AddonDetails(
 			parent=self,
 			actionVMList=self._storeVM.actionVMList,
