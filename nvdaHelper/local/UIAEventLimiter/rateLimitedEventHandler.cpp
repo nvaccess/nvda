@@ -30,58 +30,60 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 template<EventRecordConstraints EventRecordClass, typename... EventRecordArgTypes>
 HRESULT RateLimitedEventHandler::queueEvent(EventRecordArgTypes&&... args) {
 	LOG_DEBUG(L"RateLimitedUIAEventHandler::queueEvent called");
-	FlushRequest flushRequest = FlushRequest::none;
-	unsigned int flushTimeMS = 0;
-	{ std::lock_guard lock(mtx);
+	bool needsFlush = false;
+	{ std::lock_guard lock(m_mtx);
 		// work out whether we need to request a flush after inserting this event.
-		if(!EventRecordClass::isCoalesceable) {
-			// not a coalesceable event so requires a quick flush
-			// if a quick flush has not been requested already.
-			if(lastFlushRequest < FlushRequest::quick) {
-				LOG_DEBUG(L"RateLimitedUIAEventHandler::queueEvent: requesting quick flush after queuing");
-				lastFlushRequest = flushRequest = FlushRequest::quick;
-			} else {
-				LOG_DEBUG(L"RateLimitedUIAEventHandler::queueEvent: quick flush needed, but quick flush already requested.");
-			}
-		} else if(m_eventRecords.empty()) {
-			// It is a coalesceable event and its the first event since the last flush,
-			// so requires a delayed flush
-			// if a delayed or quick flush is not requested already.
-			if(lastFlushRequest < FlushRequest::delayed) {
-				LOG_DEBUG(L"RateLimitedUIAEventHandler::queueEvent: requesting delayed flush after queuing");
-				lastFlushRequest = flushRequest = FlushRequest::delayed;
-				flushTimeMS = 30;
-			} else {
-				LOG_DEBUG(L"RateLimitedUIAEventHandler::queueEvent: delayed flush needed, but quick flush already requested.");
-			}
-		}
+		needsFlush = m_eventRecords.empty();
 		LOG_DEBUG(L"RateLimitedUIAEventHandler::queueEvent: Inserting new event");
 		auto& recordVar = m_eventRecords.emplace_back(std::in_place_type_t<EventRecordClass>{}, args...);
 		auto recordVarIter = m_eventRecords.end();
 		recordVarIter--;
 		auto& record = std::get<EventRecordClass>(recordVar);
-		if constexpr(EventRecordClass::isCoalesceable) {
-			LOG_DEBUG(L"RateLimitedUIAEventHandler::queueEvent: Is a coalesceable event");
-			auto coalescingKey = record.generateCoalescingKey();
-			auto existingKeyIter = m_eventRecordsByKey.find(coalescingKey);
-			if(existingKeyIter != m_eventRecordsByKey.end()) {
-				LOG_DEBUG(L"RateLimitedUIAEventHandler::queueEvent: found existing event with same key"); 
-				auto& [existingRecordVarIter,existingCoalesceCount] = existingKeyIter->second;
-				LOG_DEBUG(L"RateLimitedUIAEventHandler::queueEvent: updating key and count to "<<(existingCoalesceCount+1));
-				existingKeyIter->second = {recordVarIter, existingCoalesceCount + 1};
-				LOG_DEBUG(L"RateLimitedUIAEventHandler::queueEvent: erasing old item"); 
-				m_eventRecords.erase(existingRecordVarIter);
-			} else {
-				LOG_DEBUG(L"RateLimitedUIAEventHandler::queueEvent: Adding key");
-				m_eventRecordsByKey.insert_or_assign(coalescingKey, std::pair(recordVarIter, 1));
-			}
+		auto coalescingKey = record.generateCoalescingKey();
+		auto existingKeyIter = m_eventRecordsByKey.find(coalescingKey);
+		if(existingKeyIter != m_eventRecordsByKey.end()) {
+			LOG_DEBUG(L"RateLimitedUIAEventHandler::queueEvent: found existing event with same key"); 
+			auto& [existingRecordVarIter,existingCoalesceCount] = existingKeyIter->second;
+			LOG_DEBUG(L"RateLimitedUIAEventHandler::queueEvent: updating key and count to "<<(existingCoalesceCount+1));
+			existingKeyIter->second = {recordVarIter, existingCoalesceCount + 1};
+			LOG_DEBUG(L"RateLimitedUIAEventHandler::queueEvent: erasing old item"); 
+			m_eventRecords.erase(existingRecordVarIter);
+		} else {
+			LOG_DEBUG(L"RateLimitedUIAEventHandler::queueEvent: Adding key");
+			m_eventRecordsByKey.insert_or_assign(coalescingKey, std::pair(recordVarIter, 1));
 		}
-	}
-	if(flushRequest > FlushRequest::none) {
-		LOG_DEBUG(L"RateLimitedUIAEventHandler::queueEvent: posting flush message with delay of "<<flushTimeMS);
-		PostMessage(m_messageWindow, m_flushMessage, reinterpret_cast<WPARAM>(this), flushTimeMS);
-	}
+		if(needsFlush) {
+			LOG_DEBUG(L"RateLimitedUIAEventHandler::queueEvent: requesting flush");
+			m_needsFlush = true;
+			m_flushConditionVar.notify_one();
+		}
+	} // m_mtx released. 
 	return S_OK;
+}
+
+void RateLimitedEventHandler::flusherThreadFunc(std::stop_token stopToken) {
+	LOG_DEBUG(L"flusherThread started");
+	// If this thread is requested to stop, we need to ensure we wake up.
+	std::stop_callback stopCallback{stopToken, [this](){
+		this->m_flushConditionVar.notify_all();
+	}};
+	do { // thread main loop
+		LOG_DEBUG(L"flusherThreadFunc sleeping...");
+		{ std::unique_lock lock(m_mtx);
+			// sleep until a flush is needed or this thread should stop.
+			m_flushConditionVar.wait(lock, [this, stopToken](){
+				return this->m_needsFlush || stopToken.stop_requested();
+			});
+			LOG_DEBUG(L"flusherThread woke up");
+			if(stopToken.stop_requested()) {
+				LOG_DEBUG(L"flusherThread returning as stop requested"); 
+				return;
+			}
+			m_needsFlush = false;
+		} // m_mtx released here.
+		flushEvents();
+	} while(!stopToken.stop_requested());
+	LOG_DEBUG(L"flusherThread returning");
 }
 
 HRESULT RateLimitedEventHandler::emitEvent(const AutomationEventRecord_t& record) const {
@@ -100,6 +102,7 @@ HRESULT RateLimitedEventHandler::emitEvent(const FocusChangedEventRecord_t& reco
 		LOG_ERROR(L"RateLimitedUIAEventHandler::emitFocusChangedEvent: interface not supported.");
 		return E_NOINTERFACE;
 	}
+	LOG_DEBUG(L"Emitting focus changed event");
 	return m_pExistingFocusChangedEventHandler->HandleFocusChangedEvent(record.sender);
 }
 
@@ -109,6 +112,7 @@ HRESULT RateLimitedEventHandler::emitEvent(const PropertyChangedEventRecord_t& r
 		LOG_ERROR(L"RateLimitedUIAEventHandler::emitPropertyChangedEvent: interface not supported.");
 		return E_NOINTERFACE;
 	}
+	LOG_DEBUG(L"Emitting property changed event for property "<<(record.propertyID));
 	return m_pExistingPropertyChangedEventHandler->HandlePropertyChangedEvent(record.sender, record.propertyID, record.newValue);
 }
 
@@ -118,6 +122,7 @@ HRESULT RateLimitedEventHandler::emitEvent(const NotificationEventRecord_t& reco
 		LOG_ERROR(L"RateLimitedUIAEventHandler::emitNotificationChangedEvent: interface not supported.");
 		return E_NOINTERFACE;
 	}
+	LOG_DEBUG(L"Emitting notification event");
 	return m_pExistingNotificationEventHandler->HandleNotificationEvent(record.sender, record.notificationKind, record.notificationProcessing, record.displayString, record.activityID);
 }
 
@@ -127,6 +132,7 @@ HRESULT RateLimitedEventHandler::emitEvent(const ActiveTextPositionChangedEventR
 		LOG_ERROR(L"RateLimitedUIAEventHandler::emitActiveTextPositionChangedEvent: interface not supported.");
 		return E_NOINTERFACE;
 	}
+	LOG_DEBUG(L"Emitting active text position changed event");
 	return m_pExistingActiveTextPositionChangedEventHandler->HandleActiveTextPositionChangedEvent(record.sender, record.range);
 }
 
@@ -134,21 +140,26 @@ RateLimitedEventHandler::~RateLimitedEventHandler() {
 	LOG_DEBUG(L"RateLimitedUIAEventHandler::~RateLimitedUIAEventHandler called");
 }
 
-RateLimitedEventHandler::RateLimitedEventHandler(IUnknown* pExistingHandler, HWND messageWindow, UINT flushMessage)
-	: m_messageWindow(messageWindow), m_flushMessage(flushMessage), m_refCount(1), m_pExistingAutomationEventHandler(pExistingHandler), m_pExistingFocusChangedEventHandler(pExistingHandler), m_pExistingPropertyChangedEventHandler(pExistingHandler), m_pExistingNotificationEventHandler(pExistingHandler), m_pExistingActiveTextPositionChangedEventHandler(pExistingHandler) {
+RateLimitedEventHandler::RateLimitedEventHandler(IUnknown* pExistingHandler):
+	m_pExistingAutomationEventHandler(pExistingHandler), m_pExistingFocusChangedEventHandler(pExistingHandler), m_pExistingPropertyChangedEventHandler(pExistingHandler), m_pExistingNotificationEventHandler(pExistingHandler), m_pExistingActiveTextPositionChangedEventHandler(pExistingHandler),
+	m_flusherThread([this](std::stop_token st){ this->flusherThreadFunc(st); })
+{
 	LOG_DEBUG(L"RateLimitedUIAEventHandler::RateLimitedUIAEventHandler called");
 }
 
 // IUnknown methods
 ULONG STDMETHODCALLTYPE RateLimitedEventHandler::AddRef() {
-	return InterlockedIncrement(&m_refCount);
+	auto refCount = InterlockedIncrement(&m_refCount);
+	LOG_DEBUG(L"AddRef: "<<refCount)
+	return refCount;
 }
 
 ULONG STDMETHODCALLTYPE RateLimitedEventHandler::Release() {
-	ULONG refCount = InterlockedDecrement(&m_refCount);
+	auto refCount = InterlockedDecrement(&m_refCount);
 	if (refCount == 0) {
 		delete this;
 	}
+	LOG_DEBUG(L"Release: "<<refCount)
 	return refCount;
 }
 
@@ -213,34 +224,20 @@ HRESULT STDMETHODCALLTYPE RateLimitedEventHandler::HandleActiveTextPositionChang
 	return queueEvent<ActiveTextPositionChangedEventRecord_t>(sender, range);
 }
 
-void RateLimitedEventHandler::flush() {
-	LOG_DEBUG(L"RateLimitedUIAEventHandler::flush called");
+void RateLimitedEventHandler::flushEvents() {
+	LOG_DEBUG(L"RateLimitedEventHandler::flushEvents called");
 	decltype(m_eventRecords) eventRecordsCopy;
 	decltype(m_eventRecordsByKey) eventRecordsByKeyCopy;
-	{ std::lock_guard lock(mtx);
+	{ std::lock_guard lock{m_mtx};
 		eventRecordsCopy.swap(m_eventRecords);
 		eventRecordsByKeyCopy.swap(m_eventRecordsByKey);
-		lastFlushRequest = FlushRequest::none;
-	}
-
+	} // m_mtx released here.
 	// Emit events
-	LOG_DEBUG(L"RateLimitedUIAEventHandler::flush: Emitting events...");
+	LOG_DEBUG(L"RateLimitedUIAEventHandler::flusherThreadFunc: Emitting events...");
 	for(const auto& recordVar: eventRecordsCopy) {
 		std::visit([this](const auto& record) {
 			this->emitEvent(record);
 		}, recordVar);
 	}
-	/*
-	unsigned int count = std::accumulate(eventRecordsByKeyCopy.begin(), eventRecordsByKeyCopy.end(), 0, [](const auto& acc, const auto& i) {
-		auto count = i.second.second;
-		if(count > 1) {
-			return acc + count;
-		}
-		return acc;
-	});
-	if(count > 0) {
-		Beep(440 + (count*10), 40);
-	}
-	*/
-	LOG_DEBUG(L"RateLimitedUIAEventHandler::flush: done emitting events"); 
+		LOG_DEBUG(L"RateLimitedUIAEventHandler::flusherThreadFunc: Done emitting events");
 }

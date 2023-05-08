@@ -27,7 +27,6 @@ from comtypes import (
 
 import threading
 import time
-import winAPI.messageWindow
 import IAccessibleHandler.internalWinEventHandler
 import config
 from config import (
@@ -449,7 +448,7 @@ class UIAHandler(COMObject):
 			)
 		)
 		self.MTAThreadQueue.put_nowait(None)
-		#Wait for the MTA thread to die (while still message pumping)
+		# Wait for the MTA thread to die (while still message pumping)
 		if windll.user32.MsgWaitForMultipleObjects(1,byref(MTAThreadHandle),False,200,0)!=0:
 			log.debugWarning("Timeout or error while waiting for UIAHandler MTA thread")
 		windll.kernel32.CloseHandle(MTAThreadHandle)
@@ -517,11 +516,8 @@ class UIAHandler(COMObject):
 			self.pRateLimitedEventHandler = POINTER(IUnknown)()
 			NVDAHelper.localLib.rateLimitedUIAEventHandler_create(
 				self._com_pointers_[IUnknown._iid_],
-				core.messageWindow.handle,
-				WM_NVDA_UIA_FLUSH,
 				byref(self.pRateLimitedEventHandler)
 			)
-			winAPI.messageWindow.pre_handleWindowMessage.register(eventLimiterWindowProc)
 			if utils._shouldSelectivelyRegister():
 				self._createLocalEventHandlerGroup()
 			self._registerGlobalEventHandlers()
@@ -1405,16 +1401,3 @@ def terminate():
 
 def _isDebug():
 	return config.conf["debugLog"]["UIA"]
-
-
-WM_NVDA_UIA_FLUSH = winUser.registerWindowMessage("WM_NVDA_UIA_FLUSH")
-
-
-def eventLimiterWindowProc(msg, wParam, lParam):
-	if not handler: return
-	if msg == WM_NVDA_UIA_FLUSH:
-		func = lambda: NVDAHelper.localLib.rateLimitedUIAEventHandler_flush(wParam)
-		if lParam == 0:
-			handler.MTAThreadQueue.put(func)
-		else:
-			core.callLater(lParam, handler.MTAThreadQueue.put, func)

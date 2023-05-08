@@ -20,8 +20,15 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <UIAutomation.h>
 #include "utils.h"
 
+// The following structs are used to represent UI Automation event params.
+// A part from holding the params,
+// each struct also contains a method for generating a comparison key
+// which is used to detect and remove duplicate events.
+// The key is made up of the element's runtime ID,
+// plus any extra event params that make the vent unique,
+// E.g. event ID, property ID etc. 
+
 struct AutomationEventRecord_t {
-	static const bool isCoalesceable = true;
 	CComPtr<IUIAutomationElement> sender;
 	EVENTID eventID;
 	std::vector<int> generateCoalescingKey() const {
@@ -32,7 +39,6 @@ struct AutomationEventRecord_t {
 };
 
 struct PropertyChangedEventRecord_t {
-	static const bool isCoalesceable = false;
 	CComPtr<IUIAutomationElement> sender;
 	PROPERTYID propertyID;
 	CComVariant newValue;
@@ -45,35 +51,57 @@ struct PropertyChangedEventRecord_t {
 };
 
 struct FocusChangedEventRecord_t {
-	static const bool isCoalesceable = false;
 	CComPtr<IUIAutomationElement> sender;
+	std::vector<int> generateCoalescingKey() const {
+		auto key = getRuntimeIDFromElement(sender);
+		key.push_back(UIA_AutomationFocusChangedEventId);
+		return key;
+	}
 };
 
 struct NotificationEventRecord_t {
-	static const bool isCoalesceable = false;
 	CComPtr<IUIAutomationElement> sender;
 	NotificationKind notificationKind;
 	NotificationProcessing notificationProcessing;
 	CComBSTR displayString;
 	CComBSTR activityID;
+	std::vector<int> generateCoalescingKey() const {
+		auto key = getRuntimeIDFromElement(sender);
+		key.push_back(UIA_NotificationEventId);
+		key.push_back(notificationKind);
+		key.push_back(notificationProcessing);
+		// Include the activity ID in the key also,
+		// by converting it to a sequence of ints.
+		if(activityID.m_str) {
+			for(int c: std::wstring_view(activityID.m_str)) {
+				key.push_back(c);
+			}
+		} else {
+			key.push_back(0);
+		}
+		return key;
+	}
 };
 
 struct ActiveTextPositionChangedEventRecord_t {
-	static const bool isCoalesceable = false;
 	CComPtr<IUIAutomationElement> sender;
 	CComPtr<IUIAutomationTextRange> range;
+	std::vector<int> generateCoalescingKey() const {
+		auto key = getRuntimeIDFromElement(sender);
+		key.push_back(UIA_ActiveTextPositionChangedEventId);
+		return key;
+	}
 };
 
+// @brief a variant type that holds all possible UI Automation event records we support.
 using EventRecordVariant_t = std::variant<AutomationEventRecord_t, FocusChangedEventRecord_t, PropertyChangedEventRecord_t, NotificationEventRecord_t, ActiveTextPositionChangedEventRecord_t>;
 
+// @brief A concept to be used with the above event record types
+// that ensures the type has a generateCoalescingKey method,
+// and that the type appears in the EventRecordVariant_t type. 
 template<typename T>
 concept EventRecordConstraints = requires(T t) {
-	// type must have a static const bool member called 'isCoalesceable'
-	{ t.isCoalesceable } -> std::same_as<const bool&>;
-	// if 'isCoaleseable' is true, then the type must have a 'generateCoalescingKey' method.
-	requires (T::isCoalesceable == false) || requires(T t) {
-		{ t.generateCoalescingKey() } -> std::same_as<std::vector<int>>;
-	};
+	{ t.generateCoalescingKey() } -> std::same_as<std::vector<int>>;
 	// The type must be supported by the EventRecordVariant_t variant type
 	 requires supports_alternative<T, EventRecordVariant_t>;
 };
