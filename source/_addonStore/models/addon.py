@@ -185,6 +185,10 @@ def _createStoreModelFromData(addon: Dict[str, Any]) -> AddonStoreModel:
 
 
 def _createGUIModelFromManifest(addon: "AddonHandlerBaseModel") -> AddonGUIModel:
+	homepage = addon.manifest.get("url")
+	if homepage == "None":
+		# Manifest strings can be set to "None"
+		homepage = None
 	return AddonGUIModel(
 		addonId=addon.name,
 		displayName=addon.manifest["summary"],
@@ -192,7 +196,7 @@ def _createGUIModelFromManifest(addon: "AddonHandlerBaseModel") -> AddonGUIModel
 		publisher=addon.manifest["author"],
 		channel=Channel.STABLE,
 		addonVersionName=addon.version,
-		homepage=addon.manifest.get("url"),
+		homepage=homepage,
 		minNVDAVersion=MajorMinorPatch(*addon.minimumNVDAVersion),
 		lastTestedVersion=MajorMinorPatch(*addon.lastTestedNVDAVersion),
 	)

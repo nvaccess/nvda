@@ -191,6 +191,30 @@ class AddonStoreVM:
 				),
 				listItemVM=selectedListItem
 			),
+			AddonActionVM(
+				# Translators: Label for a button that opens the homepage for the selected addon
+				displayName=pgettext("addonStore", "Homepage"),
+				actionHandler=lambda aVM: startfile(aVM.model.homepage),
+				validCheck=lambda aVM: aVM.model.homepage is not None,
+				listItemVM=selectedListItem
+			),
+			AddonActionVM(
+				# Translators: Label for a button that opens the license for the selected addon
+				displayName=pgettext("addonStore", "License"),
+				actionHandler=lambda aVM: startfile(aVM.model.licenseURL),
+				validCheck=lambda aVM: (
+					isinstance(aVM.model, AddonStoreModel)
+					and aVM.model.licenseURL is not None
+				),
+				listItemVM=selectedListItem
+			),
+			AddonActionVM(
+				# Translators: Label for a button that opens the license for the selected addon
+				displayName=pgettext("addonStore", "Source Code"),
+				actionHandler=lambda aVM: startfile(aVM.model.sourceURL),
+				validCheck=lambda aVM: isinstance(aVM.model, AddonStoreModel),
+				listItemVM=selectedListItem
+			),
 		]
 
 	def helpAddon(self, listItemVM: AddonListItemVM) -> None:

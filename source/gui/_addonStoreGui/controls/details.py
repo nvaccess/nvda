@@ -7,7 +7,6 @@ from typing import (
 	Callable,
 	Dict,
 	List,
-	Optional,
 )
 
 import wx
@@ -19,7 +18,6 @@ from _addonStore.models.addon import (
 from gui import guiHelper
 from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 from logHandler import log
-import winVersion
 
 from ..viewModels.addonList import (
 	AddonDetailsVM,
@@ -105,8 +103,6 @@ class AddonDetails(
 				0  # purely to allow subsequent items to line up.
 				| wx.TE_MULTILINE  # details will require multiple lines
 				| wx.TE_READONLY  # the details shouldn't be user editable
-				# Don't specify Auto-URL(wx.TE_AUTO_URL). No links expected in description, any URLs included
-				# in an add-on release metadata submission should not be easily activated.
 				| wx.BORDER_NONE
 			)
 		)
@@ -162,14 +158,12 @@ class AddonDetails(
 				0  # purely to allow subsequent items to line up.
 				| wx.TE_MULTILINE  # details will require multiple lines
 				| wx.TE_READONLY  # the details shouldn't be user editable
-				# wx.TE_AUTO_URL  # Don't specify Auto-URL, links should have names so create them Text Object Model.
 				| wx.TE_RICH2
 				| wx.TE_NO_VSCROLL  # No scroll by default.
 				| wx.BORDER_NONE
 			)
 		)
 		self._createRichTextStyles()
-		self._urlQueue: List[Callable] = []
 		self.contents.Add(self.otherDetailsTextCtrl, flag=wx.EXPAND, proportion=1)
 		self._refresh()  # ensure that the visual state matches.
 		self._detailsVM.updated.register(self._updatedListItem)
@@ -189,9 +183,6 @@ class AddonDetails(
 		self.labelStyle = wx.TextAttr(self.defaultStyle)
 		# Note: setting font weight doesn't seem to work for RichText, instead specify via the font face name
 		self.labelStyle.SetFontFaceName(_fontFaceName_semiBold)
-
-		self.urlStyle = wx.TextAttr(self.defaultStyle)
-		self.urlStyle.SetTextColour("blue")
 
 	def _setAddonNameCtrlStyle(self):
 		addonNameFont: wx.Font = self.addonNameCtrl.GetFont()
@@ -226,7 +217,6 @@ class AddonDetails(
 				self.contentsPanel.Hide()
 				self.updateAddonName(AddonDetails._noAddonSelectedLabelText)
 			else:
-				log.debug(f"Updating {details.displayName}: URL queue len {len(self._urlQueue)}")
 				self.updateAddonName(details.displayName)
 				self.descriptionLabel.SetLabelText(AddonDetails._descriptionLabelText)
 				# For a ExpandoTextCtr, SetDefaultStyle can not be used to set the style (along with the use
@@ -257,22 +247,11 @@ class AddonDetails(
 					pgettext("addonStore", "Channel:"),
 					details.channel
 				)
-				if details.homepage:
-					self._appendDetailsLabelValue(
-						# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
-						pgettext("addonStore", "Homepage:"),
-						details.homepage, URL=details.homepage
-					)
 				if isinstance(details, AddonStoreModel):
 					self._appendDetailsLabelValue(
 						# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 						pgettext("addonStore", "License:"),
-						details.license, URL=details.licenseURL
-					)
-					self._appendDetailsLabelValue(
-						# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
-						pgettext("addonStore", "Source Code:"),
-						details.sourceURL, URL=details.sourceURL
+						details.license
 					)
 
 				incompatibleReason = details.getIncompatibleReason()
@@ -284,10 +263,6 @@ class AddonDetails(
 					)
 				self.contentsPanel.Show()
 
-		self.otherDetailsTextCtrl.SetDefaultStyle(self.urlStyle)
-		for urlFunc in self._urlQueue:
-			urlFunc()
-		self._urlQueue.clear()
 		self.Layout()
 		# Set caret/insertion point at the beginning so that NVDA users can more easily read from the start.
 		self.otherDetailsTextCtrl.SetInsertionPoint(0)
@@ -298,7 +273,7 @@ class AddonDetails(
 		detailsTextCtrl.AppendText(label)
 		detailsTextCtrl.SetDefaultStyle(self.defaultStyle)
 
-	def _appendDetailsLabelValue(self, label: str, value: str, URL: Optional[str] = None):
+	def _appendDetailsLabelValue(self, label: str, value: str):
 		detailsTextCtrl = self.otherDetailsTextCtrl
 
 		if detailsTextCtrl.GetValue():
@@ -307,24 +282,9 @@ class AddonDetails(
 		self._addDetailsLabel(label)
 		labelSpace = " "  # em space, wider than regular space, for visual layout.
 
-		if URL:
-			if winVersion.getWinVer() < winVersion.WIN8:
-				# ITextRange2 is not available before Windows 8, instead just insert the URL as text
-				detailsTextCtrl.SetDefaultStyle(self.defaultStyle)
-				detailsTextCtrl.AppendText(labelSpace)
-				detailsTextCtrl.AppendText(value)
-				if value != URL:  # don't insert the URL twice.
-					detailsTextCtrl.AppendText(f" ({URL})")
-			else:
-				detailsTextCtrl.SetDefaultStyle(self.urlStyle)
-				detailsTextCtrl.AppendText(labelSpace)
-				self._urlQueue.append(
-					lambda: _insertLinkForLabelWithTomViaComIDispatch(detailsTextCtrl, label, value, URL)
-				)
-		else:
-			detailsTextCtrl.SetDefaultStyle(self.defaultStyle)
-			detailsTextCtrl.AppendText(labelSpace)
-			detailsTextCtrl.AppendText(value)
+		detailsTextCtrl.SetDefaultStyle(self.defaultStyle)
+		detailsTextCtrl.AppendText(labelSpace)
+		detailsTextCtrl.AppendText(value)
 
 	def _createActionButtons(self) -> None:
 		def _makeButtonClickedEventHandler(_action: AddonActionVM) -> Callable[[wx.CommandEvent, ], None]:
@@ -354,49 +314,3 @@ class AddonDetails(
 		if self._detailsVM.listItem:
 			self.statusTextCtrl.SetValue(self._detailsVM.listItem.status.displayString)
 		self.Layout()
-
-
-def _insertLinkForLabelWithTomViaComIDispatch(
-		ctrl: wx.TextCtrl,
-		labelText: str,
-		linkText: str,
-		url: str,
-) -> None:
-	""" Use Text Object model via COM IDispatch to insert a link at the end of the TextCtrl content.
-	The underlying control must be a win32 RichEdit control, such as RichEdit50.
-	Used because wx.TextCtrl does not expose adding URLs.
-
-	@param ctrl: The control to work with.
-	@param labelText: The label text to find and insert a link after.
-	@param linkText: The text to append.
-	@param url: The URL to link to.
-	"""
-	initialEditableState = ctrl.IsEditable()
-	ctrl.SetEditable(True)
-	import oleacc
-	import winUser
-	import comtypes.automation
-	import comtypes.client
-	import comInterfaces.tom
-	hwnd = ctrl.GetHandle()
-	obj = oleacc.AccessibleObjectFromWindow(
-		hwnd,
-		winUser.OBJID_NATIVEOM,
-		interface=comtypes.automation.IDispatch
-	)
-	# No definitions available (in NVDA) for ITextRange2 interface, I.E. they are not in the msftedit type
-	# library. Instead, use IDispatch.
-	iTextDocument2_disp = comtypes.client.dynamic.Dispatch(obj)
-	iTextRange2_disp = iTextDocument2_disp.range(0, 0)
-	iTextRange2_disp.FindText(
-		labelText,
-		comInterfaces.tom.tomForward,
-		comInterfaces.tom.tomMatchCase,
-	)
-	# move passed last character of the label string.
-	iTextRange2_disp.moveEnd(comInterfaces.tom.tomCharacter, 1)
-	iTextRange2_disp.collapse(comInterfaces.tom.tomEnd)
-	iTextRange2_disp.text = linkText
-	# URL must be wrapped in quote chars, see docs.microsoft.com: ITextRange2::SetURL method (tom.h)
-	iTextRange2_disp.url = f'"{url}"'
-	ctrl.SetEditable(initialEditableState)
