@@ -344,6 +344,7 @@ class MainFrame(wx.Frame):
 			errorWithDialog.dialog.SetFocus()
 		else:
 			_storeVM.refresh()
+			d.Maximize()
 			d.Show()
 		self.postPopup()
 
