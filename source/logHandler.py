@@ -168,6 +168,10 @@ class Logger(logging.Logger):
 		if not extra:
 			extra={}
 
+		# If logging of the current exception is requested, the entire stack should also be included.
+		if exc_info:
+			stack_info = True
+
 		if not codepath or stack_info is True:
 			f=inspect.currentframe().f_back.f_back
 
