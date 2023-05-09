@@ -1860,7 +1860,7 @@ def getPropertiesSpeech(  # noqa: C901
 	return textList
 
 
-def speakKeyboardShortcuts(keyboardShortcutsStr: Optional[str]) -> SpeechSequence:
+def speakKeyboardShortcuts(keyboardShortcutsStr: Optional[str]) -> None:
 	speak(getKeyboardShortcutsSpeech(keyboardShortcutsStr))
 
 
@@ -1880,7 +1880,8 @@ def getKeyboardShortcutsSpeech(keyboardShortcutsStr: Optional[str]) -> SpeechSeq
 		seq.pop()  # Remove last SHORTCUT_KEY_LIST_SEPARATOR in the sequence
 	except Exception:
 		log.warning(
-			f'Error parsing keyboard shortcut "{keyboardShortcutsStr}", reporting the string as a fallback.'
+			f'Error parsing keyboard shortcut "{keyboardShortcutsStr}", reporting the string as a fallback.',
+			exc_info=True,
 		)
 		return [keyboardShortcutsStr]
 
@@ -1897,10 +1898,17 @@ def getKeyboardShortcutsSpeech(keyboardShortcutsStr: Optional[str]) -> SpeechSeq
 
 def _getKeyboardShortcutSpeech(keyboardShortcut: str) -> SpeechSequence:
 	"""Gets the speech sequence for a single shortcut string.
-	@param keyboardShortcutStr: the shortcuts string.
+	@param keyboardShortcut: the shortcuts string.
 	"""
 
-	keyList, separators = _splitShortcut(keyboardShortcut)
+	if ', ' in keyboardShortcut:
+		keyList, separators = _splitSequentialShortcut(keyboardShortcut)
+	elif '+' in keyboardShortcut and len(keyboardShortcut) > 1:
+		keyList, separator = _splitShortcut(keyboardShortcut)
+		separators = [separator] * (len(keyList) - 1)
+	else:
+		return _getKeySpeech(keyboardShortcut)
+
 	seq = []
 	for key, sep in zip(keyList[:-1], separators):
 		seq.extend(_getKeySpeech(key))
@@ -1911,8 +1919,9 @@ def _getKeyboardShortcutSpeech(keyboardShortcut: str) -> SpeechSequence:
 
 def _getKeySpeech(key: str) -> SpeechSequence:
 	"""Gets the speech sequence for a string describing a key.
-	@param keyStr: the key string.
-		"""
+	@param key: the key string.
+	"""
+
 	if len(key) > 1:
 		return [key]
 	locale = getCurrentLanguage()
@@ -1926,24 +1935,37 @@ def _getKeySpeech(key: str) -> SpeechSequence:
 	]
 
 
-def _splitShortcut(shortcut: str) -> SpeechSequence:
-	if ', ' in shortcut:
-		return _splitSequentialShortcut(shortcut)
+def _splitShortcut(shortcut: str) -> Tuple[List[str], str]:
+	"""Splits a string representing a shortcut key combination.
+	@param shortcut: the shortcut to split.
+		It may be of the form "NVDA+R" or "NVDA + R", i.e. key names separated by "+" symbol with or without
+		space around it.
+	@return: 2-tuple containing the list of the keys and the separator used between them.
+		E.g. (['NVDA', 'R'], ' + ')
+	"""
+	
 	if ' + ' in shortcut:
 		separator = ' + '
 	elif '+' in shortcut:
 		separator = '+'
 	else:
-		separator = None
-	if separator:
-		keyList = shortcut.split(separator)
+		raise RuntimeError(f'The shortcut "{shortcut}" needs to contain a "+" symbol.')
+	if shortcut[-1] == '+':  # E.g. "Ctrl+Shift++"
+		keyList = shortcut[:-1].split(separator)
+		keyList[-1] = keyList[-1] + '+'
 	else:
-		keyList = [shortcut]
-	separators = [separator] * (len(keyList) - 1)
-	return keyList, separators
+		keyList = shortcut.split(separator)
+	return keyList, separator
 
 
-def _splitSequentialShortcut(shortcut: str) -> SpeechSequence:
+def _splitSequentialShortcut(shortcut: str) -> Tuple[List[str], List[str]]:
+	"""Splits a string representing a sequantial shortcut key combination (the ones found in ribbons).
+	@param shortcut: the shortcut to split.
+		It should be of the form "Alt, F, L, Y 1" i.e. key names separated by comma symbol or space.
+	@return: 2-tuple containing the list of the keys and the list separators used between each key in the list.
+		E.g.: (['Alt', 'F', 'L', 'Y', '1'], [', ', ', ', ', ', ' '])
+	"""
+
 	keys = []
 	separators = []
 	RE_SEQ_SHORTCUT_SPLITTING = re.compile(r'^(?P<key>[^, ]+)(?P<sep> |, )(?P<tail>.+)')
