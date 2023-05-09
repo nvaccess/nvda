@@ -52,18 +52,15 @@ class AddonStoreDialog(SettingsDialog):
 		displayableError.displayError(gui.mainFrame)
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer):
+		self.listTabs = wx.Notebook(self)
+		for statusFilter in _statusFilters:
+			tabPage = wx.NotebookPage(self.listTabs)
+			self.listTabs.AddPage(tabPage, statusFilter.displayString)
+		settingsSizer.Add(self.listTabs, flag=wx.EXPAND)
+		self.listTabs.Layout()
+		self.listTabs.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED, self.onStatusFilterChange, self.listTabs)
+
 		browseCtrlHelper = guiHelper.BoxSizerHelper(self, wx.HORIZONTAL)
-
-		self.statusFilterCtrl = cast(wx.Choice, browseCtrlHelper.addLabeledControl(
-			# Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
-			labelText=pgettext("addonStore", "&Filter by status:"),
-			wxCtrlClass=wx.Choice,
-			choices=list(k.displayString for k in _statusFilters),
-		))
-		self.statusFilterCtrl.Bind(wx.EVT_CHOICE, self.onStatusFilterChange, self.statusFilterCtrl)
-		self.statusFilterCtrl.SetSelection(0)
-		self.bindHelpEvent("AddonStoreFilterStatus", self.statusFilterCtrl)
-
 		self.channelFilterCtrl = cast(wx.Choice, browseCtrlHelper.addLabeledControl(
 			# Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
 			labelText=pgettext("addonStore", "Cha&nnel:"),
@@ -179,7 +176,7 @@ class AddonStoreDialog(SettingsDialog):
 
 	@property
 	def _statusFilterKey(self) -> _StatusFilterKey:
-		index = self.statusFilterCtrl.GetSelection()
+		index = self.listTabs.GetSelection()
 		return list(_statusFilters.keys())[index]
 
 	@property
