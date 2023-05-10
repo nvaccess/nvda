@@ -106,7 +106,7 @@ class AddonDetails(
 				| wx.BORDER_NONE
 			)
 		)
-		panelWidth = 500
+		panelWidth = -1  # maximize width
 		descriptionMinSize = wx.Size(self.scaleSize((panelWidth, 100)))
 		descriptionMaxSize = wx.Size(self.scaleSize((panelWidth, 800)))
 		self.descriptionTextCtrl.SetMinSize(descriptionMinSize)

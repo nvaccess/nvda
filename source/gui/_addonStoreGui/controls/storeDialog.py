@@ -52,16 +52,21 @@ class AddonStoreDialog(SettingsDialog):
 		displayableError.displayError(gui.mainFrame)
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer):
-		self.listTabs = wx.Notebook(self)
-		for statusFilter in _statusFilters:
-			tabPage = wx.NotebookPage(self.listTabs)
-			self.listTabs.AddPage(tabPage, statusFilter.displayString)
-		settingsSizer.Add(self.listTabs, flag=wx.EXPAND)
-		self.listTabs.Layout()
-		self.listTabs.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED, self.onStatusFilterChange, self.listTabs)
+		splitViewSizer = wx.BoxSizer(wx.HORIZONTAL)
 
-		browseCtrlHelper = guiHelper.BoxSizerHelper(self, wx.HORIZONTAL)
-		self.channelFilterCtrl = cast(wx.Choice, browseCtrlHelper.addLabeledControl(
+		self.addonListTabs = wx.Notebook(self)
+		# Use a single tab page for every tab.
+		# Instead perform dynamic updates to the tab page when the tab is changed.
+		dynamicTabPage = wx.Panel(self.addonListTabs)
+		tabPageHelper = guiHelper.BoxSizerHelper(dynamicTabPage, wx.VERTICAL)
+		splitViewSizer.Add(tabPageHelper.sizer, flag=wx.EXPAND, proportion=1)
+		for statusFilter in _statusFilters:
+			self.addonListTabs.AddPage(dynamicTabPage, statusFilter.displayString)
+		tabPageHelper.addItem(self.addonListTabs, flag=wx.EXPAND)
+		self.addonListTabs.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED, self.onStatusFilterChange, self.addonListTabs)
+
+		filterCtrlHelper = guiHelper.BoxSizerHelper(self, wx.HORIZONTAL)
+		self.channelFilterCtrl = cast(wx.Choice, filterCtrlHelper.addLabeledControl(
 			# Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
 			labelText=pgettext("addonStore", "Cha&nnel:"),
 			wxCtrlClass=wx.Choice,
@@ -71,23 +76,22 @@ class AddonStoreDialog(SettingsDialog):
 		self.channelFilterCtrl.SetSelection(0)
 		self.bindHelpEvent("AddonStoreFilterChannel", self.channelFilterCtrl)
 
-		self.searchFilterCtrl = cast(wx.TextCtrl, browseCtrlHelper.addLabeledControl(
+		self.searchFilterCtrl = cast(wx.TextCtrl, filterCtrlHelper.addLabeledControl(
 			# Translators: The label of a text field to filter the list of add-ons in the add-on store dialog.
 			labelText=pgettext("addonStore", "&Search:"),
 			wxCtrlClass=wx.TextCtrl,
 		))
 		self.searchFilterCtrl.Bind(wx.EVT_TEXT, self.onFilterTextChange, self.searchFilterCtrl)
-		settingsSizer.Add(browseCtrlHelper.sizer, flag=wx.EXPAND)
+		tabPageHelper.addItem(filterCtrlHelper.sizer, flag=wx.EXPAND)
 		self.bindHelpEvent("AddonStoreFilterSearch", self.searchFilterCtrl)
 
-		settingsSizer.AddSpacer(5)
+		tabPageHelper.sizer.AddSpacer(5)
 
-		self.contentsSizer = wx.BoxSizer(wx.HORIZONTAL)
-		settingsSizer.Add(self.contentsSizer, flag=wx.EXPAND, proportion=1)
+		settingsSizer.Add(splitViewSizer, flag=wx.EXPAND, proportion=1)
 
 		# add a label for the AddonListVM so that it is announced with a name in NVDA
 		self.listLabel = wx.StaticText(self, label=self._listLabelText)
-		self.contentsSizer.Add(
+		tabPageHelper.addItem(
 			self.listLabel,
 			flag=wx.EXPAND
 		)
@@ -104,15 +108,15 @@ class AddonStoreDialog(SettingsDialog):
 		self.SetAcceleratorTable(wx.AcceleratorTable([
 			wx.AcceleratorEntry(wx.ACCEL_ALT, ord("l"), _setFocusToAddonListView_eventId)
 		]))
-		self.contentsSizer.Add(self.addonListView, flag=wx.EXPAND, proportion=4)
-		self.contentsSizer.AddSpacer(5)
+		tabPageHelper.addItem(self.addonListView, flag=wx.EXPAND, proportion=1)
+		splitViewSizer.AddSpacer(5)
 
 		self.addonDetailsView = AddonDetails(
 			parent=self,
 			actionVMList=self._storeVM.actionVMList,
 			detailsVM=self._storeVM.detailsVM,
 		)
-		self.contentsSizer.Add(self.addonDetailsView, flag=wx.EXPAND, proportion=3)
+		splitViewSizer.Add(self.addonDetailsView, flag=wx.EXPAND, proportion=1)
 
 		generalActions = guiHelper.ButtonHelper(wx.HORIZONTAL)
 		# Translators: The label for a button in add-ons Store dialog to install an external add-on.
@@ -176,7 +180,7 @@ class AddonStoreDialog(SettingsDialog):
 
 	@property
 	def _statusFilterKey(self) -> _StatusFilterKey:
-		index = self.listTabs.GetSelection()
+		index = self.addonListTabs.GetSelection()
 		return list(_statusFilters.keys())[index]
 
 	@property
