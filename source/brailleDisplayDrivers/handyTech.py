@@ -2,7 +2,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 # Copyright (C) 2008-2021 NV Access Limited, Bram Duvigneau, Babbage B.V.,
-# Felix Grützmacher (Handy Tech Elektronik GmbH), Leonard de Ruijter
+ # Felix Grützmacher (Handy Tech Elektronik GmbH), Leonard de Ruijter
 
 """
 Braille display driver for Handy Tech braille displays.
@@ -103,6 +103,7 @@ MODEL_BRAILLE_STAR_80 = b"\x78"
 MODEL_MODULAR_20 = b"\x80"
 MODEL_MODULAR_80 = b"\x88"
 MODEL_MODULAR_40 = b"\x89"
+MODEL_ACTIVATOR = b"\xA4"
 
 # Key constants
 KEY_B1 = 0x03
@@ -522,6 +523,20 @@ class Modular40(Modular):
 class Modular80(Modular):
 	deviceId = MODEL_MODULAR_80
 	numCells = 80
+
+
+class Activator(TimeSyncFirmnessMixin, AtcMixin, JoystickMixin, TripleActionKeysMixin, Model):
+	deviceId = MODEL_ACTIVATOR
+	numCells = 40
+	genericName = name = 'Activator'
+
+	def _get_keys(self):
+		keys = super(Activator, self).keys
+		keys.update({
+			0x7A: "escape",
+			0x7B: "return",
+		})
+		return keys
 
 
 def _allSubclasses(cls):
@@ -1039,3 +1054,12 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 			if key in KEY_DOTS:
 				dots |= 1 << (KEY_DOTS[key] - 1)
 		return dots
+
+# Temporary: Add Activator to USB port enumeration
+bdDetect.addUsbDevices("handyTech", bdDetect.KEY_HID, {
+	"VID_1FE4&PID_00A4"
+	})
+bdDetect.addBluetoothDevices("handyTech", lambda m: any(m.id.startswith(prefix) for prefix in (
+		"Activator"
+	)))
+
