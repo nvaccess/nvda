@@ -90,12 +90,13 @@ class AddonStoreDialog(SettingsDialog):
 		settingsSizer.Add(splitViewSizer, flag=wx.EXPAND, proportion=1)
 
 		# add a label for the AddonListVM so that it is announced with a name in NVDA
-		self.listLabel = wx.StaticText(self, label=self._listLabelText)
+		self.listLabel = wx.StaticText(self)
 		tabPageHelper.addItem(
 			self.listLabel,
 			flag=wx.EXPAND
 		)
 		self.listLabel.Hide()
+		self._setListLabels()
 
 		self.addonListView = AddonVirtualList(
 			parent=self,
@@ -189,8 +190,16 @@ class AddonStoreDialog(SettingsDialog):
 		return list(_channelFilters.keys())[index]
 
 	@property
+	def _titleText(self) -> str:
+		return f"{self.title} - {self._listLabelText}"
+
+	@property
 	def _listLabelText(self) -> str:
 		return f"{self._channelFilterKey.displayString} {self._statusFilterKey.displayString}"
+
+	def _setListLabels(self):
+		self.listLabel.SetLabelText(self._listLabelText)
+		self.SetTitle(self._titleText)
 
 	def onStatusFilterChange(self, evt: wx.EVT_CHOICE):
 		self._storeVM._filteredStatusKey = self._statusFilterKey
@@ -199,15 +208,16 @@ class AddonStoreDialog(SettingsDialog):
 			self._storeVM._filterChannelKey = Channel.STABLE
 		else:
 			self._storeVM._filterChannelKey = Channel.ALL
+
 		channelFilterIndex = list(_channelFilters.keys()).index(self._storeVM._filterChannelKey)
 		self.channelFilterCtrl.SetSelection(channelFilterIndex)
 
-		self.listLabel.SetLabelText(self._listLabelText)
+		self._setListLabels()
 		self._storeVM.refresh()
 
 	def onChannelFilterChange(self, evt: wx.EVT_CHOICE):
 		self._storeVM._filterChannelKey = self._channelFilterKey
-		self.listLabel.SetLabelText(self._listLabelText)
+		self._setListLabels()
 		self._storeVM.refresh()
 
 	def onFilterTextChange(self, evt: wx.EVT_TEXT):
