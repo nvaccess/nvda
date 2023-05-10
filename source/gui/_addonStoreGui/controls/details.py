@@ -33,6 +33,8 @@ class AddonDetails(
 		wx.Panel,
 		DpiScalingHelperMixinWithoutInit,
 ):
+	_labelSpace = " "  # em space, wider than regular space, for visual layout.
+
 	# Translators: Header (usually the add-on name) when no add-on is selected. In the add-on store dialog.
 	_noAddonSelectedLabelText: str = pgettext("addonStore", "No add-on selected.")
 
@@ -247,12 +249,6 @@ class AddonDetails(
 					pgettext("addonStore", "Channel:"),
 					details.channel
 				)
-				if isinstance(details, AddonStoreModel):
-					self._appendDetailsLabelValue(
-						# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
-						pgettext("addonStore", "License:"),
-						details.license
-					)
 
 				incompatibleReason = details.getIncompatibleReason()
 				if incompatibleReason:
@@ -261,6 +257,40 @@ class AddonDetails(
 						pgettext("addonStore", "Incompatible Reason:"),
 						incompatibleReason
 					)
+
+				# Links and license info
+				if details.homepage is not None:
+					self._appendDetailsLabelValue(
+						# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+						pgettext("addonStore", "Homepage:"),
+						details.homepage
+					)
+
+				if isinstance(details, AddonStoreModel):
+					self._appendDetailsLabelValue(
+						# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+						pgettext("addonStore", "License:"),
+						details.license
+					)
+					if details.licenseURL is not None:
+						self._appendDetailsLabelValue(
+							# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+							pgettext("addonStore", "License URL:"),
+							details.licenseURL
+						)
+
+					self._appendDetailsLabelValue(
+						# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+						pgettext("addonStore", "Download URL:"),
+						details.URL
+					)
+
+					self._appendDetailsLabelValue(
+						# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+						pgettext("addonStore", "Source URL:"),
+						details.sourceURL
+					)
+
 				self.contentsPanel.Show()
 
 		self.Layout()
@@ -280,10 +310,8 @@ class AddonDetails(
 			detailsTextCtrl.AppendText('\n')
 
 		self._addDetailsLabel(label)
-		labelSpace = " "  # em space, wider than regular space, for visual layout.
-
 		detailsTextCtrl.SetDefaultStyle(self.defaultStyle)
-		detailsTextCtrl.AppendText(labelSpace)
+		detailsTextCtrl.AppendText(self._labelSpace)
 		detailsTextCtrl.AppendText(value)
 
 	def _createActionButtons(self) -> None:
