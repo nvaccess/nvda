@@ -2,7 +2,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 # Copyright (C) 2008-2021 NV Access Limited, Bram Duvigneau, Babbage B.V.,
- # Felix Grützmacher (Handy Tech Elektronik GmbH), Leonard de Ruijter
+# Felix Grützmacher (Handy Tech Elektronik GmbH), Leonard de Ruijter
 
 """
 Braille display driver for Handy Tech braille displays.
@@ -1054,12 +1054,3 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 			if key in KEY_DOTS:
 				dots |= 1 << (KEY_DOTS[key] - 1)
 		return dots
-
-# Temporary: Add Activator to USB port enumeration
-bdDetect.addUsbDevices("handyTech", bdDetect.KEY_HID, {
-	"VID_1FE4&PID_00A4"
-	})
-bdDetect.addBluetoothDevices("handyTech", lambda m: any(m.id.startswith(prefix) for prefix in (
-		"Activator"
-	)))
-
