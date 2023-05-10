@@ -758,7 +758,7 @@ def main():
 			if self.pending:
 				# #3803: Another pump was requested during this pump execution.
 				# As our pump is not re-entrant, schedule another pump.
-				self.request()
+				wx.CallAfter(self.request)
 	global _pump
 	_pump = CorePump()
 	requestPump()
