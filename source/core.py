@@ -725,12 +725,15 @@ def main():
 		def request(self):
 			if self.isPumping:
 				return  # Prevent re-entry.
-			if self.pending == _PumpPending.IMMEDIATE:
+			immediateCountdown = 10
+			while self.pending == _PumpPending.IMMEDIATE and immediateCountdown > 0:
+				immediateCountdown -= 1
 				# A delayed pump might have been scheduled. If so, cancel it.
 				self.Stop()
 				self.Notify()
-			elif self.pending == _PumpPending.DELAYED:
-				self.Start(PUMP_MAX_DELAY, True)
+			else:
+				if self.pending:
+					self.Start(PUMP_MAX_DELAY, True)
 
 		def Notify(self):
 			if self.isPumping:
@@ -758,7 +761,7 @@ def main():
 			if self.pending:
 				# #3803: Another pump was requested during this pump execution.
 				# As our pump is not re-entrant, schedule another pump.
-				self.request()
+				wx.CallAfter(self.request)
 	global _pump
 	_pump = CorePump()
 	requestPump()
