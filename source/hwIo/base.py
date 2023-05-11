@@ -175,7 +175,7 @@ class IoBase(object):
 			self._readBuf,
 			self._readSize,
 			byref(self._readOl),
-			ioThread.getCompletionRoutine(self._ioDone)
+			ioThread.queueAsCompletionRoutine(self._ioDone, self._readOl)
 		)
 
 	if apcsWillBeStronglyReferenced:
