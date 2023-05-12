@@ -976,16 +976,30 @@ class ExcelWorksheet(ExcelBase):
 				newSelection.parent=oldSelection.parent
 			eventHandler.executeEvent('gainFocus',newSelection)
 
-	def toggleBooleanAttribute(self, gesture, getStateFun, msgOff, msgOn):
-		gesture.send()
+	def _WaitForValueChangeForAction(self, action, fetcher, timeout=0.15):
+		oldVal = fetcher()
+		action()
+		startTime = curTime = time.time()
+		curVal = fetcher()
+		while curVal == oldVal and (curTime - startTime) < timeout:
+			time.sleep(0.01)
+			curVal = fetcher()
+			curTime = time.time()
+		return curVal
+	
+	def _toggleBooleanAttribute(self, gesture, getStateFun, msgOff, msgOn):
 		sel = self._getSelection()
 		if isinstance(sel, ExcelCell):
 			selObj = sel.excelCellObject
 		elif isinstance(sel, ExcelSelection):
 			selObj = sel.excelRangeObject
 		else:
+			gesture.send()
 			return
-		enabled = getStateFun(selObj)
+		enabled = self._WaitForValueChangeForAction(
+			action=lambda: gesture.send(),
+			fetcher=lambda: getStateFun(selObj)
+		)
 		if enabled:
 			ui.message(msgOn)
 		else:
@@ -996,7 +1010,7 @@ class ExcelWorksheet(ExcelBase):
 		canPropagate=True,
 	)
 	def script_toggleBold(self, gesture):
-		self.toggleBooleanAttribute(
+		self._toggleBooleanAttribute(
 			gesture,
 			lambda cellOrRange: cellOrRange.font.bold,
 			# Translators: a message when toggling formatting in Microsoft Excel
@@ -1010,7 +1024,7 @@ class ExcelWorksheet(ExcelBase):
 		canPropagate=True,
 	)
 	def script_toggleItalic(self, gesture):
-		self.toggleBooleanAttribute(
+		self._toggleBooleanAttribute(
 			gesture,
 			lambda cellOrRange: cellOrRange.font.italic,
 			# Translators: a message when toggling formatting in Microsoft Excel
@@ -1024,7 +1038,7 @@ class ExcelWorksheet(ExcelBase):
 		canPropagate=True,
 	)
 	def script_toggleUnderline(self, gesture):
-		self.toggleBooleanAttribute(
+		self._toggleBooleanAttribute(
 			gesture,
 			lambda cellOrRange: cellOrRange.font.underline != xlUnderlineStyleNone,
 			# Translators: a message when toggling formatting in Microsoft Excel
@@ -1038,7 +1052,7 @@ class ExcelWorksheet(ExcelBase):
 		canPropagate=True,
 	)
 	def script_toggleStrikethrough(self, gesture):
-		self.toggleBooleanAttribute(
+		self._toggleBooleanAttribute(
 			gesture,
 			lambda cellOrRange: cellOrRange.font.strikethrough,
 			# Translators: a message when toggling formatting in Microsoft Excel
