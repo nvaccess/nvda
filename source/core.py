@@ -719,29 +719,44 @@ def main():
 
 	class CorePump(wx.Timer):
 		"Checks the queues and executes functions."
-		pending = _PumpPending.NONE
+		lock = threading.Lock()
+		_pendingState = _PumpPending.NONE
 		isPumping = False
 
-		def request(self):
-			if self.isPumping:
-				return  # Prevent re-entry.
-			immediateCountdown = 10
-			while self.pending == _PumpPending.IMMEDIATE and immediateCountdown > 0:
-				immediateCountdown -= 1
+		def requestPump(self, immediate: bool):
+			needsRequest = False
+			with self.lock:
+				# We only need to do something if:
+				if (
+					# There is no pending pump.
+				self._pendingState == _PumpPending.NONE
+				# There is a pending delayed pump but an immediate pump was just requested.
+				or (immediate and self._pendingState == _PumpPending.DELAYED)
+			):
+					self._pendingState = _PumpPending.IMMEDIATE if immediate else _PumpPending.DELAYED
+					needsRequest = True
+			if needsRequest:
+				import wx
+				wx.CallAfter(self._requestPumpHelper)
+
+		def _requestPumpHelper(self):
+			pendingState = self._pendingState
+			if pendingState == _PumpPending.IMMEDIATE:
 				# A delayed pump might have been scheduled. If so, cancel it.
 				self.Stop()
 				self.Notify()
-			else:
-				if self.pending:
-					self.Start(PUMP_MAX_DELAY, True)
+			elif pendingState == _PumpPending.DELAYED:
+				self.Start(PUMP_MAX_DELAY, True)
 
 		def Notify(self):
 			if self.isPumping:
-				log.error("Pumping while already pumping", stack_info=True)
-			if not self.pending:
+				return
+			with self.lock:
+				oldPendingState = self._pendingState
+				self._pendingState = _PumpPending.NONE
+			if not oldPendingState:
 				log.error("Pumping but pump wasn't pending", stack_info=True)
 			self.isPumping = True
-			self.pending = _PumpPending.NONE
 			watchdog.alive()
 			try:
 				if touchHandler.handler:
@@ -757,11 +772,12 @@ def main():
 				log.exception("errors in this core pump cycle")
 			baseObject.AutoPropertyObject.invalidateCaches()
 			watchdog.asleep()
+			if self._pendingState:
+				wx.Yield()
 			self.isPumping = False
-			if self.pending:
-				# #3803: Another pump was requested during this pump execution.
-				# As our pump is not re-entrant, schedule another pump.
-				wx.CallAfter(self.request)
+			if self._pendingState:
+				wx.CallAfter(self._requestPumpHelper)
+
 	global _pump
 	_pump = CorePump()
 	requestPump()
@@ -879,16 +895,7 @@ def requestPump(immediate: bool = False):
 	"""
 	if not _pump:
 		return
-	# We only need to do something if:
-	if (
-		# There is no pending pump.
-		_pump.pending == _PumpPending.NONE
-		# There is a pending delayed pump but an immediate pump was just requested.
-		or (immediate and _pump.pending == _PumpPending.DELAYED)
-	):
-		_pump.pending = _PumpPending.IMMEDIATE if immediate else _PumpPending.DELAYED
-		import wx
-		wx.CallAfter(_pump.request)
+	_pump.requestPump(immediate)
 
 
 class NVDANotInitializedError(Exception):
