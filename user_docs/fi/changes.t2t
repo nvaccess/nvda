@@ -12,6 +12,14 @@
   - Macin Option-näppäimen symboli "⌥". (#14682)
   -
 - NVDA ilmoittaa nyt Mozilla Firefoxissa ja Google Chromessa, kun säädin avaa valintaikkunan, ruudukon, luettelon tai puunäkymän, mikäli sivuston tekijä on määrittänyt sen aria-haspopup-attribuuttia käyttäen. (#14709)
+- Polkumäärityksessä on nyt mahdollista käyttää järjestelmän ympäristömuuttujia (kuten ``%temp%`` tai ``%homepath%``) NVDA:n massamuistiversiota luotaessa. (#14680)
+- Lisätty tuki ARIA 1.3:n ``aria-brailleroledescription``-attribuutille, jonka avulla verkkosivujen tekijät voivat ohittaa pistenäytöllä näytettävän elementin tyypin. (#14748)
+- Korostusvärit ilmoitetaan nyt Microsoft Wordissa, kun tekstin korostuksen puhuminen on otettu käyttöön asiakirjan muotoiluasetuksissa. (#7396, #12101, #5866)
+- Taustavärit ilmoitetaan nyt Microsoft Wordissa, kun värien puhuminen on otettu käyttöön asiakirjojen muotoiluasetuksissa. (#5866)
+- Lisätty uusi komento Windowsin tekstintunnistuksen käytettävissä olevien kielten välillä vaihtamiseen. (#13036)
+- Kun painetaan kolmesti ``Laskinnäppäimistön 2`` tarkastelukohdistimen kohdalla olevan merkin numeerisen arvon puhumiseksi, tiedot näytetään nyt myös pistekirjoituksella. (#14826)
+- Lisätty näppäinkomentoja Tivomaticin Caiku Albatross -pistenäytöille.
+Nyt ovat käytettävissä komennot pistekirjoitusasetusten valintaikkunan näyttämiseen, tilarivin lukemiseen, pistekohdistimen muodon vaihtamiseen sekä pistekohdistimen käyttöönottamiseen/käytöstä poistamiseen. (#14844)
 - 
 
 
@@ -24,7 +32,8 @@
 - NVDA reagoi nopeammin, kun kohdistinta liikutetaan muokkaussäätimissä. (#14708)
 - Lisätty Baum-pistenäyttöjen ajuriin useita moniosaisia pikanäppäimiä yleisten näppäinkomentojen suorittamista varten, kuten Windows+D, Alt+Sarkain jne. Katso kaikki komennot NVDA:n käyttöoppaasta. (#14714)
 - Kun pistenäyttöä käytetään standardinmukaisella HID-ajurilla, dpadia voidaan käyttää nuolinäppäinten ja Enterin jäljittelemiseen. Lisäksi Väli+piste 1 ja Väli+piste 4 on nyt määritetty ylä- ja alanuolinäppäimiksi. (#14713)
-- Linkin kohteen ilmoittava skripti ilmoittaa nyt kohdistimen tai kohdistuksen sijainnista navigointiobjektin sijaan. (#14659)
+- Linkin kohteen ilmoittava komento ilmoittaa nyt kohdistimen tai kohdistuksen sijainnista navigointiobjektin sijaan. (#14659)
+- Massamuistiversiota luotaessa ei enää tarvitse antaa asemakirjainta osana absoluuttista polkumääritystä. (#14681)
 -
 
 
@@ -40,11 +49,21 @@ Tämä toimi aiemmin vain Bluetooth-sarjaporteilla. (#14524)
 - Kirjoitettuja merkkejä ei enää puhuta Mozilla Firefoxissa ja Google Chromessa joissakin tekstikentissä, kun kirjoitettujen merkkien puhuminen on poistettu käytöstä. (#14666)
 - Selaustilaa on nyt mahdollista käyttää upotetuissa Chromium-säätimissä, joissa se ei ollut aiemmin mahdollista. (#13493, #8553)
 - Symboleille, joille ei ole kuvausta nykyisellä kielellä, käytetään oletusarvoista englanninkielen symbolitasoa. (#14558, #14417)
-- NVDA voi taas lukea tilarivin sisällön uudemmissa Windows 11:n Muistion versioissa. (#14573)
+- Korjauksia Windows 11:lle:
+  - NVDA voi taas lukea Muistion tilarivin sisällön. (#14573)
+  - Uuden välilehden nimi ja sijainti puhutaan Muistiossa ja resurssienhallinnassa välilehteä vaihdettaessa. (#14587, #14388)
+  - NVDA puhuu taas ehdotuskohteet kirjoitettaessa tekstiä sellaisilla kielillä kuin kiina ja japani. (#14509)
+  -
 - Linkin jälkeinen teksti luetaan nyt luotettavasti, kun hiiri siirretään sen päälle Mozilla Firefoxissa. (#9235)
 - NVDA:n massamuistiversio ei tee enää mitään tai toista virheääniä kirjoitettaessa laskukaavoja nelilaskintilassa Windows 10:n ja 11:n laskimessa sen ollessa päällimmäisenä. (#14679)
 - NVDA ei ole enää hiljaa yritettäessä ilmoittaa URL-osoitetta sellaiselle linkille, jossa ei ole href-attribuuttia.
 Sen sijaan ilmoitetaan, ettei linkillä ole kohdetta. (#14723)
+- Useita korjauksia pistekirjoituksen syötön ja tulostuksen vakauteen, mistä on seurauksena harvemmin NVDA:n virheitä ja kaatumisia. (#14627)
+- NVDA palautuu taas useammista tilanteista, kuten sovelluksista, jotka lakkaavat vastaamasta, mikä aiheutti aiemmin sen täydellisen jumiutumisen. (#14759) 
+- Graafisten linkkien kohteet ilmoitetaan nyt oikein Chromessa ja Edgessä. (#14779)
+- NVDA:n Ohje-valikon Tekijät- ja Lisenssi-kohteet on taas mahdollista avata Windows 11:ssä. (#14725)
+ - Korjattu bugi, joka aiheutti NVDA:n jumiutumisen ja lokitiedoston täyttymisen, kun UIA-tuki pakotettiin käyttöön tietyissä päätteissä ja konsoleissa. (#14689)
+- Aktivoituvien salasanakenttien puhuminen ei enää epäonnistu Microsoft Excelissä ja Outlookissa. (#14839)
 -
 
 
