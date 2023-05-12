@@ -98,7 +98,7 @@ class IoThread(threading.Thread):
 		if self.exit:
 			return
 
-		ptr = ctypes.addressof(overlapped.contents)
+		ptr = ctypes.cast(overlapped, ctypes.c_void_p).value
 		reference = self._completionRoutineStore.pop(ptr, None)
 		if reference is None:
 			log.error(f"Internal completion routine called with pointer 0x{ptr:x}, but no such address in store")
