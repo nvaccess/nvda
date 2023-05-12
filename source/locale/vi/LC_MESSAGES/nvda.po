@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Vietnamese Language for NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-21 00:02+0000\n"
-"PO-Revision-Date: 2023-04-24 16:51+0700\n"
+"POT-Creation-Date: 2023-05-05 00:01+0000\n"
+"PO-Revision-Date: 2023-05-05 15:51+0700\n"
 "Last-Translator: Dang Manh Cuong <dangmanhcuong@gmail.com>\n"
 "Language-Team: Sao Mai Center for the Blind <danghoaiphuc@gmail.com>\n"
 "Language: vi_VN\n"
@@ -4477,6 +4477,10 @@ msgstr "Không có Windows OCR"
 msgid "Please disable screen curtain before using Windows OCR."
 msgstr "Vui lòng tắt chế độ che màn hình trước khi sử dụng Windows OCR."
 
+#. Translators: Describes a command.
+msgid "Cycles through the available languages for Windows OCR"
+msgstr "Xoay vòng các ngôn ngữ đang có cho Windows OCR"
+
 #. Translators: Input help mode message for toggle report CLDR command.
 msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
 msgstr "Bật/tắt thông báo các kí tự CLDR như biểu tượng cảm xúc"
@@ -6323,9 +6327,10 @@ msgstr "Lỗi kiểm tra cập nhật."
 #. Translators: The title of an error message dialog.
 #. Translators: An title for an error displayed when saving user defined input gestures fails.
 #. Translators: The title of a dialog presented when an error occurs.
-#. Translators: The message title displayed
-#. when the user has not specified an absolute destination directory
-#. in the Create Portable NVDA dialog.
+#. Translators: the title of an error dialog.
+#. Translators: The message title displayed when the user has not specified an absolute
+#. destination directory in the Create Portable NVDA dialog.
+#. Translators: Title of an error dialog shown when an error occurs while creating a portable copy of NVDA.
 #. Translators: The title of an error message dialog.
 #. Translators: The title of the message box
 #. Translators: The title of the error dialog displayed when there is an error showing the GUI
@@ -9487,6 +9492,7 @@ msgid "Please press OK to start the installed copy."
 msgstr "Vui lòng bấm Đồng Ý để bắt đầu chạy bản cài đặt."
 
 #. Translators: The title of a dialog presented to indicate a successful operation.
+#. Translators: Title of a dialog shown when a portable copy of NVDA is created.
 msgid "Success"
 msgstr "Thành công"
 
@@ -9598,23 +9604,17 @@ msgstr "Vui lòng chọn thư mục để tạo bản NVDA chạy trực tiếp.
 #. Translators: The message displayed when the user has not specified an absolute destination directory
 #. in the Create Portable NVDA dialog.
 msgid ""
-"Please specify an absolute path (including drive letter)  in which to create "
-"the portable copy."
+"Please specify the absolute path where the portable copy should be created. "
+"It may include system variables (%temp%, %homepath%, etc.)."
 msgstr ""
-"Vui lòng chọn đường dẫn chính xác (bao gồm cả kí tự ổ đĩa) để tạo bản NVDA "
-"chạy trực tiếp."
+"Vui lòng nhập đường dẫn chính xác để tạo bản chạy trực tiếp. Có thể bao gồm "
+"các biến của hệ thống (%temp%, %homepath%, v...v...)."
 
-#. Translators: The message displayed when the user specifies an invalid destination drive
-#. in the Create Portable NVDA dialog.
-#, python-format
-msgid "Invalid drive %s"
-msgstr "Ổ đĩa không hợp lệ %s"
-
-#. Translators: The title of the dialog presented while a portable copy of NVDA is bieng created.
+#. Translators: The title of the dialog presented while a portable copy of NVDA is being created.
 msgid "Creating Portable Copy"
 msgstr "Đang Tạo Bản NVDA chạy trực tiếp"
 
-#. Translators: The message displayed while a portable copy of NVDA is bieng created.
+#. Translators: The message displayed while a portable copy of NVDA is being created.
 msgid "Please wait while a portable copy of NVDA is created."
 msgstr "Vui lòng chờ trong khi đang tạo bản chạy trực tiếp của NVDA."
 
@@ -9623,16 +9623,16 @@ msgid "NVDA is unable to remove or overwrite a file."
 msgstr "NVDA không thể xóa hay ghi đè tập tin."
 
 #. Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
-#. %s will be replaced with the specific error message.
-#, python-format
-msgid "Failed to create portable copy: %s"
-msgstr "Lỗi khi tạo bản NVDA chạy trực tiếp: %s"
+#. {error} will be replaced with the specific error message.
+#, python-brace-format
+msgid "Failed to create portable copy: {error}."
+msgstr "Lỗi khi tạo bản chạy trực tiếp: {error}."
 
 #. Translators: The message displayed when a portable copy of NVDA has been successfully created.
-#. %s will be replaced with the destination directory.
-#, python-format
-msgid "Successfully created a portable copy of NVDA at %s"
-msgstr "Đã tạo thành công bản NVDA chạy trực tiếp tại %s"
+#. {dir} will be replaced with the destination directory.
+#, python-brace-format
+msgid "Successfully created a portable copy of NVDA at {dir}"
+msgstr "Đã tạo thành công bản NVDA chạy trực tiếp tại {dir}"
 
 #. Translators: The title of the NVDA log viewer window.
 msgid "NVDA Log Viewer"
@@ -11420,6 +11420,15 @@ msgstr "đã đánh dấu"
 msgid "not marked"
 msgstr "chưa đánh dấu"
 
+#. Translators: Reported when text is color-highlighted
+#, python-brace-format
+msgid "highlighted in {color}"
+msgstr "đã làm nổi màu {color}"
+
+#. Translators: Reported when text is no longer marked
+msgid "not highlighted"
+msgstr "không làm nổi"
+
 #. Translators: Reported when text is marked as strong (e.g. bold)
 msgid "strong"
 msgstr "đậm"
@@ -11790,12 +11799,12 @@ msgid "No system battery"
 msgstr "Không có pin hệ thống"
 
 #. Translators: Reported when the battery is plugged in, and now is charging.
-msgid "Charging battery"
-msgstr "Đang sạc pin"
+msgid "Plugged in"
+msgstr "đã cắm sạc"
 
 #. Translators: Reported when the battery is no longer plugged in, and now is not charging.
-msgid "AC disconnected"
-msgstr "Đã rút bộ sạc"
+msgid "Unplugged"
+msgstr "Đã rút sạc"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
 #, python-brace-format
@@ -13464,6 +13473,22 @@ msgid ""
 msgstr ""
 "Để dùng Albatross với NVDA: hãy thay đổi số trạng thái ô trong trình đơn "
 "Albatross internal thành hầu hết "
+
+#~ msgid ""
+#~ "Please specify an absolute path (including drive letter)  in which to "
+#~ "create the portable copy."
+#~ msgstr ""
+#~ "Vui lòng chọn đường dẫn chính xác (bao gồm cả kí tự ổ đĩa) để tạo bản "
+#~ "NVDA chạy trực tiếp."
+
+#~ msgid "Invalid drive %s"
+#~ msgstr "Ổ đĩa không hợp lệ %s"
+
+#~ msgid "Charging battery"
+#~ msgstr "Đang sạc pin"
+
+#~ msgid "AC disconnected"
+#~ msgstr "Đã rút bộ sạc"
 
 #~ msgid "Unable to determine remaining time"
 #~ msgstr "Không thể xác định thời gian còn lại"

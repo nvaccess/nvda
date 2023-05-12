@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-31 00:01+0000\n"
-"PO-Revision-Date: 2023-03-31 14:17+0200\n"
+"POT-Creation-Date: 2023-05-05 00:01+0000\n"
+"PO-Revision-Date: 2023-05-07 12:15+0200\n"
 "Last-Translator: Juan C. Buño <oprisniki@gmail.com>\n"
 "Language-Team: equipo de traducción al español de NVDA <oprisniki@gmail."
 "com>\n"
@@ -4587,6 +4587,10 @@ msgstr ""
 "Por favor desactiva la cortina de pantalla antes de utilizar el OCR de "
 "Windows."
 
+#. Translators: Describes a command.
+msgid "Cycles through the available languages for Windows OCR"
+msgstr "Recorre los idiomas disponibles para el OCR de Windows"
+
 #. Translators: Input help mode message for toggle report CLDR command.
 msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
 msgstr ""
@@ -6436,9 +6440,10 @@ msgstr "Error al buscar actualización."
 #. Translators: The title of an error message dialog.
 #. Translators: An title for an error displayed when saving user defined input gestures fails.
 #. Translators: The title of a dialog presented when an error occurs.
-#. Translators: The message title displayed
-#. when the user has not specified an absolute destination directory
-#. in the Create Portable NVDA dialog.
+#. Translators: the title of an error dialog.
+#. Translators: The message title displayed when the user has not specified an absolute
+#. destination directory in the Create Portable NVDA dialog.
+#. Translators: Title of an error dialog shown when an error occurs while creating a portable copy of NVDA.
 #. Translators: The title of an error message dialog.
 #. Translators: The title of the message box
 #. Translators: The title of the error dialog displayed when there is an error showing the GUI
@@ -9636,6 +9641,7 @@ msgid "Please press OK to start the installed copy."
 msgstr "Por favor pulsa Aceptar para iniciar la copia instalada."
 
 #. Translators: The title of a dialog presented to indicate a successful operation.
+#. Translators: Title of a dialog shown when a portable copy of NVDA is created.
 msgid "Success"
 msgstr "Correcto"
 
@@ -9751,23 +9757,17 @@ msgstr "Por favor indica un directorio en el cual crear la copia portable."
 #. Translators: The message displayed when the user has not specified an absolute destination directory
 #. in the Create Portable NVDA dialog.
 msgid ""
-"Please specify an absolute path (including drive letter)  in which to create "
-"the portable copy."
+"Please specify the absolute path where the portable copy should be created. "
+"It may include system variables (%temp%, %homepath%, etc.)."
 msgstr ""
-"Por favor, especifica una ruta absoluta (incluyendo la letra de la unidad) "
-"en la que crear la copia portable."
+"Por favor especifica la ruta absoluta donde debería crearse la copia "
+"portable. Puede incluir variables del sistema (%temp%, %homepath%, etc.)."
 
-#. Translators: The message displayed when the user specifies an invalid destination drive
-#. in the Create Portable NVDA dialog.
-#, python-format
-msgid "Invalid drive %s"
-msgstr "Unidad %s no válida"
-
-#. Translators: The title of the dialog presented while a portable copy of NVDA is bieng created.
+#. Translators: The title of the dialog presented while a portable copy of NVDA is being created.
 msgid "Creating Portable Copy"
 msgstr "Creando Copia Portable"
 
-#. Translators: The message displayed while a portable copy of NVDA is bieng created.
+#. Translators: The message displayed while a portable copy of NVDA is being created.
 msgid "Please wait while a portable copy of NVDA is created."
 msgstr "Por favor espera mientras se crea una copia portable de NVDA."
 
@@ -9776,16 +9776,16 @@ msgid "NVDA is unable to remove or overwrite a file."
 msgstr "NVDA es incapaz de eliminar o de sobreescribir un fichero."
 
 #. Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
-#. %s will be replaced with the specific error message.
-#, python-format
-msgid "Failed to create portable copy: %s"
-msgstr "Fallo al crear la copia portable: %s"
+#. {error} will be replaced with the specific error message.
+#, python-brace-format
+msgid "Failed to create portable copy: {error}."
+msgstr "Fallo al crear la copia portable: {error}."
 
 #. Translators: The message displayed when a portable copy of NVDA has been successfully created.
-#. %s will be replaced with the destination directory.
-#, python-format
-msgid "Successfully created a portable copy of NVDA at %s"
-msgstr "Se creó correctamente una copia portable de NVDA en %s"
+#. {dir} will be replaced with the destination directory.
+#, python-brace-format
+msgid "Successfully created a portable copy of NVDA at {dir}"
+msgstr "Se creó correctamente una copia portable de NVDA en {dir}"
 
 #. Translators: The title of the NVDA log viewer window.
 msgid "NVDA Log Viewer"
@@ -11599,6 +11599,15 @@ msgstr "marcado"
 msgid "not marked"
 msgstr "no marcado"
 
+#. Translators: Reported when text is color-highlighted
+#, python-brace-format
+msgid "highlighted in {color}"
+msgstr "resaltado en {color}"
+
+#. Translators: Reported when text is no longer marked
+msgid "not highlighted"
+msgstr "no resaltado"
+
 #. Translators: Reported when text is marked as strong (e.g. bold)
 msgid "strong"
 msgstr "remarcado"
@@ -11969,12 +11978,12 @@ msgid "No system battery"
 msgstr "No hay batería del sistema"
 
 #. Translators: Reported when the battery is plugged in, and now is charging.
-msgid "Charging battery"
-msgstr "Cargando batería"
+msgid "Plugged in"
+msgstr "Enchufado"
 
 #. Translators: Reported when the battery is no longer plugged in, and now is not charging.
-msgid "AC disconnected"
-msgstr "Alimentación externa desconectada"
+msgid "Unplugged"
+msgstr "Desenchufado"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
 #, python-brace-format
@@ -13665,3 +13674,19 @@ msgid ""
 msgstr ""
 "Para utilizar Albatross con NVDA: cambia el número de celdas de estado en el "
 "menú interno de Albatross como máximo "
+
+#~ msgid ""
+#~ "Please specify an absolute path (including drive letter)  in which to "
+#~ "create the portable copy."
+#~ msgstr ""
+#~ "Por favor, especifica una ruta absoluta (incluyendo la letra de la "
+#~ "unidad) en la que crear la copia portable."
+
+#~ msgid "Invalid drive %s"
+#~ msgstr "Unidad %s no válida"
+
+#~ msgid "Charging battery"
+#~ msgstr "Cargando batería"
+
+#~ msgid "AC disconnected"
+#~ msgstr "Alimentación externa desconectada"
