@@ -719,13 +719,13 @@ def main():
 
 	class CorePump(wx.Timer):
 		"Checks the queues and executes functions."
-		lock = threading.Lock()
+		_pendingStateLock = threading.Lock()
 		_pendingState = _PumpPending.NONE
 		isPumping = False
 
 		def requestPump(self, immediate: bool):
 			needsRequest = False
-			with self.lock:
+			with self._pendingStateLock:
 				# We only need to do something if:
 				if (
 					# There is no pending pump.
@@ -750,13 +750,28 @@ def main():
 
 		def Notify(self):
 			if self.isPumping:
+				# Reentrant.
+				# Could be due to calls to wx.Yield within a handler or at the bottom of this function.
+				# We can safely ignore them as we know there will be a later call to notify scheduled
+				# at the end of the outer Notify call.
 				return
-			with self.lock:
-				oldPendingState = self._pendingState
+			with self._pendingStateLock:
 				self._pendingState = _PumpPending.NONE
-			if not oldPendingState:
-				log.error("Pumping but pump wasn't pending", stack_info=True)
 			self.isPumping = True
+			try:
+				self.doPump()
+				if self._pendingState:
+					# A pending pump is already pending.
+					# Schedule the pending pump to occure very soon.
+					# However first Yield to ensure the Windows mesage queue is processed.
+					#  This will likely cause Notify to be called reentrantly,
+					# but this is handled and ignored at the top of this function.
+					wx.Yield()
+					wx.CallAfter(self._requestPumpHelper)
+			finally:
+				self.isPumping = False
+
+		def doPump(self):
 			watchdog.alive()
 			try:
 				if touchHandler.handler:
@@ -772,11 +787,6 @@ def main():
 				log.exception("errors in this core pump cycle")
 			baseObject.AutoPropertyObject.invalidateCaches()
 			watchdog.asleep()
-			if self._pendingState:
-				wx.Yield()
-			self.isPumping = False
-			if self._pendingState:
-				wx.CallAfter(self._requestPumpHelper)
 
 	global _pump
 	_pump = CorePump()
