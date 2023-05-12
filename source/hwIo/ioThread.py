@@ -35,7 +35,8 @@ ApcStoreT = typing.Dict[
 	]
 ]
 CompletionRoutineStoreTypeT = typing.Dict[
-	CompletionRoutineIdT,typing.Union[BoundMethodWeakref[CompletionRoutineT], AnnotatableWeakref[CompletionRoutineT]]
+	CompletionRoutineIdT,
+	typing.Union[BoundMethodWeakref[CompletionRoutineT], AnnotatableWeakref[CompletionRoutineT]]
 ]
 apcsWillBeStronglyReferenced = version_year < 2024 and NVDAState._allowDeprecatedAPI()
 """
