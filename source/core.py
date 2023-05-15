@@ -623,7 +623,7 @@ def main():
 		# the GUI mainloop must be running for this to work so delay it
 		wx.CallAfter(audioDucking.initialize)
 
-	from winAPI.messageWindow import _MessageWindow
+	from winAPI.messageWindow import _MessageWindow, pre_handleWindowMessage
 	import versionInfo
 	messageWindow = _MessageWindow(versionInfo.name)
 
@@ -720,13 +720,35 @@ def main():
 	# Doing this here is a bit ugly, but we don't want these modules imported
 	# at module level, including wx.
 	log.debug("Initializing core pump")
+	import winUser
 
 	class CorePump(wx.Timer):
 		"Checks the queues and executes functions."
 		pending = _PumpPending.NONE
 		isPumping = False
+		WM_NVDA_REQUEST_PUMP = winUser.registerWindowMessage("WM_NVDA_REQUEST_PUMP")
 
-		def request(self):
+		def __init__(self):
+			super().__init__()
+			pre_handleWindowMessage.register(self.handleWindowMessage)
+
+		def queueRequest(self):
+			# We use a custom window message rather than wx.CallAfter because CallAfter
+			# has some obscure quirks that cause problems here. Out of the box,
+			# CallAfter doesn't work in modal loops. We have a monkey patch to work
+			# around that by posting WM_NULL; see monkeyPatches.wxMonkeyPatches.
+			# Unfortunately, a flood of CallAfters will be processed by wx without
+			# pumping window messages. That results in these WM_NULL messages piling up
+			# and eventually exceeding the queue size. A window message avoids these
+			# issues because it obviously requires window messages to be pumped, but it
+			# also avoids the need for the dummy WM_NULL messages.
+			winUser.PostMessage(messageWindow.handle, self.WM_NVDA_REQUEST_PUMP, 0, 0)
+
+		def handleWindowMessage(self, msg=None):
+			if msg == self.WM_NVDA_REQUEST_PUMP:
+				self.processRequest()
+
+		def processRequest(self):
 			if self.isPumping:
 				return  # Prevent re-entry.
 			if self.pending == _PumpPending.IMMEDIATE:
@@ -734,11 +756,13 @@ def main():
 				self.Stop()
 				self.Notify()
 			elif self.pending == _PumpPending.DELAYED:
+				# We do this here rather than in queueRequest because queueRequest might
+				# be called from a background thread, but timers must be set on the main
+				# thread.
 				self.Start(PUMP_MAX_DELAY, True)
 
 		def Notify(self):
-			if self.isPumping:
-				log.error("Pumping while already pumping", stack_info=True)
+			assert not self.isPumping, "Must not pump while already pumping"
 			if not self.pending:
 				log.error("Pumping but pump wasn't pending", stack_info=True)
 			self.isPumping = True
@@ -759,10 +783,15 @@ def main():
 			baseObject.AutoPropertyObject.invalidateCaches()
 			watchdog.asleep()
 			self.isPumping = False
-			if self.pending:
-				# #3803: Another pump was requested during this pump execution.
-				# As our pump is not re-entrant, schedule another pump.
-				self.request()
+			# #3803: If another pump was requested during this pump execution, we need
+			# to trigger another pump, as our pump is not re-entrant.
+			if self.pending == _PumpPending.IMMEDIATE:
+				# We don't call processRequest directly because we don't want this to
+				# recurse. Recursing can overflow the stack if there are a flood of
+				# immediate pumps; e.g. touch exploration.
+				self.queueRequest()
+			elif self.pending == _PumpPending.DELAYED:
+				self.processRequest()
 	global _pump
 	_pump = CorePump()
 	requestPump()
@@ -892,8 +921,7 @@ def requestPump(immediate: bool = False):
 		or (immediate and _pump.pending == _PumpPending.DELAYED)
 	):
 		_pump.pending = _PumpPending.IMMEDIATE if immediate else _PumpPending.DELAYED
-		import wx
-		wx.CallAfter(_pump.request)
+		_pump.queueRequest()
 
 
 class NVDANotInitializedError(Exception):
