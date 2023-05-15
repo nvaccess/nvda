@@ -169,11 +169,17 @@ class AddonStoreDialog(SettingsDialog):
 			wx.CallAfter(installingDialog.done)
 			addonGui.promptUserForRestart()
 		
-		if (
-			addonHandlerState[AddonStateCategory.PENDING_DISABLE]
-			or addonHandlerState[AddonStateCategory.PENDING_ENABLE]
-			or addonHandlerState[AddonStateCategory.PENDING_REMOVE]
-		):
+		requiresRestart = False
+		for addonsForChannel in self._storeVM._installedAddons.values():
+			for addon in addonsForChannel.values():
+				if addon._addonHandlerModel.requiresRestart:
+					log.debug(f"Add-on {addon.name} modified, restart required")
+					requiresRestart = True
+					break
+			if requiresRestart:
+				break
+
+		if requiresRestart:
 			addonGui.promptUserForRestart()
 
 		# let the dialog exit.

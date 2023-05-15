@@ -4,6 +4,8 @@
 # See the file COPYING for more details.
 
 import enum
+import os
+from pathlib import Path
 from typing import (
 	Dict,
 	Optional,
@@ -11,12 +13,19 @@ from typing import (
 	Set,
 	TYPE_CHECKING,
 )
+from typing_extensions import (
+	Protocol,
+)
 
+import globalVars
 from logHandler import log
 from utils.displayString import DisplayStringEnum
 
+from .version import SupportsVersionCheck
+
 if TYPE_CHECKING:
 	from .addon import AddonGUIModel  # noqa: F401
+	from addonHandler import AddonsState  # noqa: F401
 
 
 @enum.unique
@@ -226,3 +235,75 @@ _statusFilters: OrderedDict[_StatusFilterKey, Set[AvailableAddonStatus]] = Order
 """A dictionary where the keys are a status to filter by,
 and the values are which statuses should be shown for a given filter.
 """
+
+
+class SupportsAddonState(SupportsVersionCheck, Protocol):
+	@property
+	def _stateHandler(self) -> "AddonsState":
+		from addonHandler import state
+		return state
+
+	@property
+	def isRunning(self) -> bool:
+		return not (
+			globalVars.appArgs.disableAddons
+			or self.isPendingInstall
+			or self.isDisabled
+			or self.isBlocked
+		)
+
+	@property
+	def pendingInstallPath(self) -> str:
+		from addonHandler import ADDON_PENDINGINSTALL_SUFFIX
+		return os.path.join(
+			globalVars.appArgs.configPath,
+			"addons",
+			self.name + ADDON_PENDINGINSTALL_SUFFIX
+		)
+
+	@property
+	def installPath(self) -> str:
+		return os.path.join(
+			globalVars.appArgs.configPath,
+			"addons",
+			self.name
+		)
+
+	@property
+	def isPendingInstall(self) -> bool:
+		"""True if this addon has not yet been fully installed."""
+		return Path(self.pendingInstallPath).exists()
+
+	@property
+	def isPendingRemove(self) -> bool:
+		"""True if this addon is marked for removal."""
+		return (
+			not self.isPendingInstall
+			and self.name in self._stateHandler[AddonStateCategory.PENDING_REMOVE]
+		)
+
+	@property
+	def isDisabled(self) -> bool:
+		return self.name in self._stateHandler[AddonStateCategory.DISABLED]
+
+	@property
+	def isBlocked(self) -> bool:
+		return self.name in self._stateHandler[AddonStateCategory.BLOCKED]
+
+	@property
+	def isPendingEnable(self) -> bool:
+		return self.name in self._stateHandler[AddonStateCategory.PENDING_ENABLE]
+
+	@property
+	def isPendingDisable(self) -> bool:
+		return self.name in self._stateHandler[AddonStateCategory.PENDING_DISABLE]
+
+	@property
+	def requiresRestart(self) -> bool:
+		return (
+			self.isPendingInstall
+			or self.isPendingRemove
+			or self.isDisabled and self.isPendingEnable
+			or self.isRunning and self.isPendingDisable
+			or not self.isDisabled and self.isPendingDisable
+		)

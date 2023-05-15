@@ -388,15 +388,13 @@ class AddonsDialog(
 		)
 		self.removeButton.Enable(addon is not None and not addon.isPendingRemove)
 
-	def onClose(self,evt):
+	def onClose(self, evt: wx.CloseEvent):
 		self.DestroyChildren()
 		self.Destroy()
 		needsRestart = False
 		for addon in self.curAddons:
-			if (addon.isPendingInstall or addon.isPendingRemove
-				or addon.isDisabled and addon.isPendingEnable
-				or addon.isRunning and addon.isPendingDisable
-				or not addon.isDisabled and addon.isPendingDisable):
+			if addon.requiresRestart:
+				log.debug(f"Add-on {addon.name} modified, restart required")
 				needsRestart = True
 				break
 		if needsRestart:

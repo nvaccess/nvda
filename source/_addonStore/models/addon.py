@@ -28,6 +28,7 @@ from requests.structures import CaseInsensitiveDict
 import addonAPIVersion
 
 from .channel import Channel
+from .status import SupportsAddonState
 from .version import (
 	MajorMinorPatch,
 	SupportsVersionCheck,
@@ -49,7 +50,7 @@ if TYPE_CHECKING:
 AddonHandlerModelGeneratorT = Generator["AddonHandlerModel", None, None]
 
 
-class _AddonGUIModel(SupportsVersionCheck, Protocol):
+class _AddonGUIModel(SupportsAddonState, SupportsVersionCheck, Protocol):
 	"""Needed to display information in add-on store.
 	May come from manifest or add-on store data.
 	"""

@@ -40,7 +40,7 @@ import addonAPIVersion
 import importlib
 from types import ModuleType
 
-from _addonStore.models.status import AddonStateCategory
+from _addonStore.models.status import AddonStateCategory, SupportsAddonState
 from _addonStore.models.version import SupportsVersionCheck
 import extensionPoints
 from utils.caseInsensitiveCollections import CaseInsensitiveSet
@@ -329,13 +329,8 @@ def installAddonBundle(bundle: "AddonBundle") -> "Addon":
 	""" Extracts an Addon bundle in to a unique subdirectory of the user addons directory,
 	marking the addon as needing 'install completion' on NVDA restart.
 	"""
-	addonPath = os.path.join(
-		globalVars.appArgs.configPath,
-		"addons",
-		bundle.manifest['name'] + ADDON_PENDINGINSTALL_SUFFIX
-	)
-	bundle.extract(addonPath)
-	addon=Addon(addonPath)
+	bundle.extract()
+	addon = Addon(bundle.installPath)
 	# #2715: The add-on must be added to _availableAddons here so that
 	# translations can be used in installTasks module.
 	_availableAddons[addon.path]=addon
@@ -354,7 +349,7 @@ class AddonError(Exception):
 	""" Represents an exception coming from the addon subsystem. """
 
 
-class AddonBase(SupportsVersionCheck, ABC):
+class AddonBase(SupportsAddonState, SupportsVersionCheck, ABC):
 	"""The base class for functionality that is available both for add-on bundles and add-ons on the file system.
 	Subclasses should at least implement L{manifest}.
 	"""
@@ -423,23 +418,11 @@ class Addon(AddonBase):
 				_report_manifest_errors(self.manifest)
 				raise AddonError("Manifest file has errors.")
 
-	@property
-	def isPendingInstall(self) -> bool:
-		"""True if this addon has not yet been fully installed."""
-		return self.path.endswith(ADDON_PENDINGINSTALL_SUFFIX)
-
-	@property
-	def isPendingRemove(self) -> bool:
-		"""True if this addon is marked for removal."""
-		return not self.isPendingInstall and self.name in state[AddonStateCategory.PENDING_REMOVE]
-
 	def completeInstall(self) -> str:
-		newPath = self.path.replace(ADDON_PENDINGINSTALL_SUFFIX, "")
-		oldPath = self.path
 		try:
-			os.rename(oldPath, newPath)
+			os.rename(self.pendingInstallPath, self.installPath)
 			state[AddonStateCategory.PENDING_INSTALL].discard(self.name)
-			return newPath
+			return self.installPath
 		except OSError:
 			log.error(f"Failed to complete addon installation for {self.name}", exc_info=True)
 
@@ -554,26 +537,6 @@ class Addon(AddonBase):
 				state[AddonStateCategory.PENDING_DISABLE].add(self.name)
 		# Record enable/disable flags as a way of preparing for disaster such as sudden NVDA crash.
 		state.save()
-
-	@property
-	def isRunning(self) -> bool:
-		return not (globalVars.appArgs.disableAddons or self.isPendingInstall or self.isDisabled or self.isBlocked)
-
-	@property
-	def isDisabled(self) -> bool:
-		return self.name in state[AddonStateCategory.DISABLED]
-
-	@property
-	def isBlocked(self) -> bool:
-		return self.name in state[AddonStateCategory.BLOCKED]
-
-	@property
-	def isPendingEnable(self) -> bool:
-		return self.name in state[AddonStateCategory.PENDING_ENABLE]
-
-	@property
-	def isPendingDisable(self) -> bool:
-		return self.name in state[AddonStateCategory.PENDING_DISABLE]
 
 	def _getPathForInclusionInPackage(self, package):
 		extension_path = os.path.join(self.path, package.__name__)
@@ -765,12 +728,14 @@ class AddonBundle(AddonBase):
 				_report_manifest_errors(self.manifest)
 				raise AddonError("Manifest file has errors.")
 
-	def extract(self, addonPath):
+	def extract(self, addonPath: Optional[str] = None):
 		""" Extracts the bundle content to the specified path.
 		The addon will be extracted to L{addonPath}
 		@param addonPath: Path where to extract contents.
-		@type addonPath: string
 		"""
+		if addonPath is None:
+			addonPath = self.installPath
+
 		with zipfile.ZipFile(self._path, 'r') as z:
 			for info in z.infolist():
 				if isinstance(info.filename, bytes):

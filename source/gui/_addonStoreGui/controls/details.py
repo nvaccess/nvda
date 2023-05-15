@@ -4,6 +4,7 @@
 # See the file COPYING for more details.
 
 from typing import (
+	cast,
 	Callable,
 	Dict,
 	List,
@@ -116,16 +117,13 @@ class AddonDetails(
 		self.contents.Add(self.descriptionTextCtrl, flag=wx.EXPAND)
 		self.contents.Add(wx.StaticLine(self.contentsPanel), flag=wx.EXPAND)
 
-		self.statusLabel = wx.StaticText(
-			self.contentsPanel,
-			label=AddonDetails._statusLabelText
-		)
-		self.statusTextCtrl = ExpandoTextCtrl(
-			self.contentsPanel,
+		statusSizer = guiHelper.BoxSizerHelper(self.contentsPanel, wx.HORIZONTAL)
+		self.contents.Add(statusSizer.sizer)
+		self.statusTextCtrl = cast(ExpandoTextCtrl, statusSizer.addLabeledControl(
+			AddonDetails._statusLabelText,
+			ExpandoTextCtrl,
 			style=wx.TE_READONLY | wx.BORDER_NONE,
-		)
-		self.contents.Add(self.statusLabel)
-		self.contents.Add(self.statusTextCtrl, flag=wx.EXPAND)
+		))
 
 		self.contents.AddSpacer(guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
 		self.contents.Add(wx.StaticLine(self.contentsPanel), flag=wx.EXPAND)
