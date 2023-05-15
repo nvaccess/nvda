@@ -51,11 +51,24 @@ Wrapped methods are now strongly referenced due to an oversight in NVDA 2023.1.
 """
 
 
+def _generateApcParams() -> typing.Generator[ApcIdT, None, None]:
+	"""Generator of APC params for internal use.
+	Params generated using this generator are passed to our internal APC to lookup Python functions.
+	A parameter passed to an APC is of type ULONG_PTR, which has a size of 4 bytes.
+	Therefore, we use a counter which starts at 0, counts up to 0xffffffff,
+	wraps back to 0 and continues cycling.
+	"""
+	while True:
+		for param in range(0x100000000):
+			yield param
+
+
 class IoThread(threading.Thread):
 	"""A thread used for background writes and raw I/O, e.g. for braille displays.
 	"""
 
 	exit: bool = False
+	_apcParamCounter = _generateApcParams()
 	#: Store of Python functions to be called as APC.
 	#: This allows us to have a single APC function in the class rather than on
 	#: each instance, which prevents reference cycles.
@@ -72,7 +85,6 @@ class IoThread(threading.Thread):
 		)
 
 	@winKernel.PAPCFUNC
-	@staticmethod
 	def _internalApc(param: ApcIdT):
 		threadinst = threading.current_thread()
 		if not isinstance(threadinst, IoThread):
@@ -99,7 +111,6 @@ class IoThread(threading.Thread):
 			log.error(f"Error in APC function {function!r} with apcId {param} queued to IoThread", exc_info=True)
 
 	@LPOVERLAPPED_COMPLETION_ROUTINE
-	@staticmethod
 	def _internalCompletionRoutine(
 			error: int,
 			numberOfBytes: int,
@@ -130,22 +141,7 @@ class IoThread(threading.Thread):
 
 	def start(self):
 		super().start()
-		self._runningInstances[self.ident] = self
 		self.handle = ctypes.windll.kernel32.OpenThread(winKernel.THREAD_SET_CONTEXT, False, self.ident)
-
-	@staticmethod
-	def _generateApcParams() -> typing.Generator[ApcIdT, None, None]:
-		"""Generator of APC params for internal use.
-		Params generated using this generator are passed to our internal APC to lookup Python functions.
-		A parameter passed to an APC is of type ULONG_PTR, which has a size of 4 bytes.
-		Therefore, we use a counter which starts at 0, counts up to 0xffffffff,
-		wraps back to 0 and continues cycling.
-		"""
-		while True:
-			for param in range(0x100000000):
-				yield param
-
-	_apcParamCounter = _generateApcParams()
 
 	def _registerToCallAsApc(
 			self,
