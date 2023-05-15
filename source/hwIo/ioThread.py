@@ -18,6 +18,7 @@ from buildVersion import version_year
 import NVDAState
 from watchdog import getFormattedStacksForAllThreads
 
+
 LPOVERLAPPED_COMPLETION_ROUTINE = ctypes.WINFUNCTYPE(
 	None,
 	ctypes.wintypes.DWORD,
@@ -36,7 +37,10 @@ ApcStoreT = typing.Dict[
 ]
 CompletionRoutineStoreTypeT = typing.Dict[
 	CompletionRoutineIdT,
-	typing.Union[BoundMethodWeakref[CompletionRoutineT], AnnotatableWeakref[CompletionRoutineT]]
+	typing.Tuple[
+		typing.Union[BoundMethodWeakref[CompletionRoutineT], AnnotatableWeakref[CompletionRoutineT]],
+		serial.win32.OVERLAPPED
+	]
 ]
 apcsWillBeStronglyReferenced = version_year < 2024 and NVDAState._allowDeprecatedAPI()
 """
@@ -52,25 +56,30 @@ class IoThread(threading.Thread):
 	"""
 
 	exit: bool = False
-	_apcStore: ApcStoreT
-	_completionRoutineStore: CompletionRoutineStoreTypeT
+	#: Store of Python functions to be called as APC.
+	#: This allows us to have a single APC function in the class rather than on
+	#: each instance, which prevents reference cycles.
+	_apcStore: ApcStoreT = {}
+	#: Store of Python functions to be called as Overlapped Completion Routine.
+	#: This allows us to have a single completion routine in the class rather than on
+	#: each instance, which prevents reference cycles.
+	_completionRoutineStore: CompletionRoutineStoreTypeT = {}
 
 	def __init__(self):
 		super().__init__(
 			name=f"{self.__class__.__module__}.{self.__class__.__qualname__}",
 			daemon=True
 		)
-		self._apcParamCounter = self._generateApcParams()
-		self._internalApcInstance = winKernel.PAPCFUNC(self._internalApc)
-		self._internalCompletionRoutineInstance = LPOVERLAPPED_COMPLETION_ROUTINE(self._internalCompletionRoutine)
-		self._apcStore = {}
-		self._completionRoutineStore = {}
 
-	def _internalApc(self, param: ApcIdT):
-		if self.exit:
+	@winKernel.PAPCFUNC
+	@staticmethod
+	def _internalApc(param: ApcIdT):
+		threadinst = threading.current_thread()
+		if not isinstance(threadinst, IoThread):
+			log.error("Internal APC called from unknown thread")
 			return
 
-		(reference, actualParam) = self._apcStore.pop(param, (None, 0))
+		(reference, actualParam) = IoThread._apcStore.pop(param, (None, 0))
 		if reference is None:
 			log.error(f"Internal APC called with param {param}, but no such apcId in store")
 			return
@@ -89,17 +98,20 @@ class IoThread(threading.Thread):
 		except Exception:
 			log.error(f"Error in APC function {function!r} with apcId {param} queued to IoThread", exc_info=True)
 
+	@LPOVERLAPPED_COMPLETION_ROUTINE
+	@staticmethod
 	def _internalCompletionRoutine(
-			self,
 			error: int,
 			numberOfBytes: int,
 			overlapped: serial.win32.LPOVERLAPPED
 	):
-		if self.exit:
+		threadinst = threading.current_thread()
+		if not isinstance(threadinst, IoThread):
+			log.error("Internal APC called from unknown thread")
 			return
 
 		ptr = ctypes.cast(overlapped, ctypes.c_void_p).value
-		reference = self._completionRoutineStore.pop(ptr, None)
+		(reference, cachedOverlapped) = IoThread._completionRoutineStore.pop(ptr, (None, None))
 		if reference is None:
 			log.error(f"Internal completion routine called with pointer 0x{ptr:x}, but no such address in store")
 			return
@@ -107,7 +119,7 @@ class IoThread(threading.Thread):
 		function = reference()
 		if not function:
 			log.debugWarning(
-				f"Not executing queued completion rotuine 0x{ptr:x}:{reference.funcName} because reference died"
+				f"Not executing queued completion routine 0x{ptr:x}:{reference.funcName} because reference died"
 			)
 			return
 
@@ -118,9 +130,11 @@ class IoThread(threading.Thread):
 
 	def start(self):
 		super().start()
+		self._runningInstances[self.ident] = self
 		self.handle = ctypes.windll.kernel32.OpenThread(winKernel.THREAD_SET_CONTEXT, False, self.ident)
 
-	def _generateApcParams(self) -> typing.Generator[ApcIdT, None, None]:
+	@staticmethod
+	def _generateApcParams() -> typing.Generator[ApcIdT, None, None]:
 		"""Generator of APC params for internal use.
 		Params generated using this generator are passed to our internal APC to lookup Python functions.
 		A parameter passed to an APC is of type ULONG_PTR, which has a size of 4 bytes.
@@ -130,6 +144,8 @@ class IoThread(threading.Thread):
 		while True:
 			for param in range(0x100000000):
 				yield param
+
+	_apcParamCounter = _generateApcParams()
 
 	def _registerToCallAsApc(
 			self,
@@ -176,7 +192,7 @@ class IoThread(threading.Thread):
 		@param param: The parameter passed to the APC when called.
 		"""
 		internalParam = self._registerToCallAsApc(func, param, _alwaysReferenceWeakly=False)
-		ctypes.windll.kernel32.QueueUserAPC(self._internalApcInstance, self.handle, internalParam)
+		ctypes.windll.kernel32.QueueUserAPC(self._internalApc, self.handle, internalParam)
 
 	def setWaitableTimer(
 			self,
@@ -199,7 +215,7 @@ class IoThread(threading.Thread):
 		winKernel.setWaitableTimer(
 			handle,
 			dueTime,
-			completionRoutine=self._internalApcInstance,
+			completionRoutine=self._internalApc,
 			arg=internalParam
 		)
 
@@ -215,7 +231,7 @@ class IoThread(threading.Thread):
 		keep a reference to the python function (not the completion routine itself).
 		@param func: The function to be wrapped in a completion routine.
 		@param overlapped: The overlapped structure
-		@returns: The wrapped completion routine.
+		@returns: The completion routine.
 		"""
 		if not self.is_alive():
 			raise RuntimeError("Thread is not running")
@@ -231,11 +247,10 @@ class IoThread(threading.Thread):
 		reference = BoundMethodWeakref(func) if ismethod(func) else AnnotatableWeakref(func)
 		reference.funcName = repr(func)
 
-		self._completionRoutineStore[addr] = reference
-		return self._internalCompletionRoutineInstance
+		self._completionRoutineStore[addr] = (reference, overlapped)
+		return self._internalCompletionRoutine
 
 	def stop(self, timeout: typing.Optional[float] = None):
-
 		if not self.is_alive():
 			raise RuntimeError("Thread is not running")
 		self.exit = True
