@@ -59,7 +59,7 @@ class AvailableAddonStatus(DisplayStringEnum):
 	def _displayStringLabels(self) -> Dict["AvailableAddonStatus", str]:
 		return {
 			# Translators: Status for addons shown in the add-on store dialog
-			self.PENDING_REMOVE: pgettext("addonStore", "Pending removed"),
+			self.PENDING_REMOVE: pgettext("addonStore", "Pending removal"),
 			# Translators: Status for addons shown in the add-on store dialog
 			self.AVAILABLE: pgettext("addonStore", "Available"),
 			# Translators: Status for addons shown in the add-on store dialog
