@@ -195,7 +195,7 @@ class AddonStoreVM:
 			),
 			AddonActionVM(
 				# Translators: Label for a button that opens the homepage for the selected addon
-				displayName=pgettext("addonStore", "Homepage"),
+				displayName=pgettext("addonStore", "Ho&mepage"),
 				actionHandler=lambda aVM: startfile(aVM.model.homepage),
 				validCheck=lambda aVM: aVM.model.homepage is not None,
 				listItemVM=selectedListItem

@@ -10,8 +10,6 @@ from typing import (
 import wx
 
 from addonHandler import (
-	state as addonHandlerState,
-	AddonStateCategory,
 	BUNDLE_EXTENSION,
 )
 from _addonStore.models.channel import Channel, _channelFilters
