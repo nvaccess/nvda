@@ -45,7 +45,7 @@ class AddonDetails(
 
 	# Translators: Label for the text control containing a description of the selected add-on.
 	# In the add-on store dialog.
-	_statusLabelText: str = pgettext("addonStore", "Status:")
+	_statusLabelText: str = pgettext("addonStore", "S&tatus:")
 
 	# Translators: Label for the text control containing a description of the selected add-on.
 	# In the add-on store dialog.
@@ -319,8 +319,6 @@ class AddonDetails(
 			"""
 			def handleButtonClickEvent(event: wx.CommandEvent) -> None:
 				_action.actionHandler(self._detailsVM.listItem)
-				# set focus on status so that is easily read after firing an action
-				self.statusTextCtrl.SetFocus()
 
 			return handleButtonClickEvent
 
