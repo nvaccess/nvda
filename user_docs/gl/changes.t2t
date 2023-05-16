@@ -2,6 +2,64 @@ Que hai de Novo no NVDA
 
 
 %!includeconf: ../changes.t2tconf
+%!includeconf: ./locale.t2tconf
+
+= 2023.2 =
+
+== Novas Características ==
+- Engadiuse a pronunciación de símbolos Unicode:
+  - símbolos braille como "⠐⠣⠃⠗⠇⠐⠜". (#14548)
+  - Símbolo da tecla opción do Mac "⌥". (#14682)
+  -
+- En Mozilla Firefox e en Google Chrome, NVDA agora anuncia cando un control abre un diálogo, unha grella, unha listaxe ou unha árbore se o autor especificou este uso de aria-haspopup. (#14709)
+- 
+
+
+== Cambios ==
+- Actualizado o transcriptor braille LibLouis a [3.25.0 https://github.com/liblouis/liblouis/releases/tag/v3.25.0]. (#14719)
+- Os símbolos de guión y de raia enviaranse sempre ao sintetizador. (#13830)
+- A distancia anunciada en Microsoft Word agora respetará a unidade definida nas opcións avanzadas de Word, incluso cando se use UIA para acesar a documentos de Word. (#14542)
+- Ao anunciar a posición do cursor de revisión, a localización actual do cursor ou do cursor do sistema agora anúnciase relativa á páxina actual en LibreOffice Writer para LibreOffice versións >= 7.6, semellante a o que se facía en Microsoft Word. (#11696)
+- O NVDA agora responde lixeiramente máis rápido ao movemento do cursor en controis de edición. (#14708)
+- Controlador de Baum Braille: engade varios xestos cor Braille para realizar ordes comúns de teclado coma windows+d, alt+tab etc. Por favor consulta a Guía do usuario de NVDA para unha listaxe compreta. (#14714)
+- Cando se usa unha pantalla Braille a través do controlador braille estándar HID, pode usarse o dpad para emular as frechas e o intro. Tamén espazo+punto1 e espazo+punto4 agora mapéanse a frechas arriba e abaixo respectivamente. (#14713)
+- O script para anunciar o destiño dunha ligazón agora anuncia dende a posición do cursor do sistema oo do foco en cambio dende o navegador de obxectos. (#14659)
+-
+
+
+== Correción de Erros ==
+- O NVDA xa non cambiará innecesariamente a sen braille varias veces durante a auto deteción, o que resulta nun rexistro máis limpo e menos sobrecargado. (#14524)
+- O NVDA agora retrocederá a USB se un dispositivo HID Bluetooth (como a HumanWare Brailliant ou a APH Mantis) se detecta automáticamente e unha conexión USB está dispoñible.
+Esto só funciona para portos serie Bluetooth antes. (#14524)
+- Agora é posible usar o carácter barra inversa no campo remprazar dunha entrada de diccionario, cando o tipo non estea axustado a unha expresión regular. (#14556)
+- En modo Exploración, o NVDA xa non ignorará incorrectamente o movemento do foco a un control pai ou fillo por exemplo, movéndose dende un control ao seu elemento de listaxe pai ou grella. (#14611)
+  - Ten en conta, polo tanto, que esta correción só se aplica cando a opción "Poñer automáticamente o foco do sistema nos elementos enfocables" nas Opcións de Modo Exploración estea desactivada (o que é o predeterminado).
+  -
+- O NVDA xa non provoca ocasionalmente que Mozilla Firefox se bloquee ou deixe de respostar. (#14647)
+- En Mozilla Firefox e en Google Chrome, os caracteres escrebidos xa non se anuncian nalgunhas caixas de texto incluso cando Falar caracteres ao se escrebir estea deshabilitado. (#14666)
+- Agora podes usar modo Exploración en controis integrados de Chromium nos que anteriormente non era posible. (#13493, #8553)
+- Para símbolos que non teñan unha descripción de símbolo na tradución actual, usarase o nivel de símbolo predeterminado en inglés. (#14558, #14417)
+- Nas versións novas do Bloc de Notas de  Windows 11, o NVDA pode anunciar de novo o contido da barra de estado. (#14573)
+- En Mozilla Firefox, ao se mover o rato sobre o texto despois dunha ligazón agora infórmase o texto de maneira fiable. (#9235)
+- Na calculadora de Windows 10 e 11, unha copia portable do NVDA xa non fará nada nin reproducirá tons de erro ao se introducir expresións na calculadora estándar no modo de superposición compacto. (#14679)
+- Ao tentar anunciar a URL para unha ligazón sen un atributo href, o NVDA xa non permanece en silenzo.
+En cambio, o NVDA informa de que a ligazón non ten destiño. (#14723)
+-
+
+
+== Cambios para Desenvolvedores ==
+Por favor, consulta [a Guía do Desenvolvedor https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] para obter información sobre o proceso de obsolescencia e de eliminación da API de NVDA.
+- Engadiuse un novo tipo de punto de extensión chamado ``Chain``, que pode usarse para iterar sobre iterables devoltos por manexadores rexistrados. (#14531)
+- Engadiuse o punto de extensión ``bdDetect.scanForDevices``.
+Os manexadores pódense rexistrar para producir ``BrailleDisplayDriver/DeviceMatch`` pares que non encaixan en categorías existentes, como USB ou Bluetooth. (#14531)
+- Endadiuse o punto de extensión: ``synthDriverHandler.synthChanged``. (#14618)
+- O anel de opcións do sintetizador agora almacena en caché os valores de opcións dispoñibles a primeira vez que se necesitan, en lugar de facelo ao cargar o sintetizador. (#14704)
+- Agora pódese chamar ao método de exportación dun mapa de xestos para exportalo a un dicionario.
+Este dicionario pode importarse noutro xesto pasándoo ao constructor de ``GlobalGestureMap`` ou ao método update nun mapa existente. (#14582)
+-
+
+=== Obsolescencias ===
+
 
 = 2023.1 =
 Engadiuse unha nova orde "Estilo de Parágrafo" na "navegación de Documento".

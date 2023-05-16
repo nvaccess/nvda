@@ -2122,6 +2122,7 @@ This category contains the following options:
 
 ==== Recognition language ====[Win10OcrSettingsRecognitionLanguage]
 This combo box allows you to choose the language to be used for text recognition.
+To cycle through available languages from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
 
 +++ Advanced Settings +++[AdvancedSettings]
 Warning! The settings in this category are for advanced users and may cause NVDA to not function correctly if configured in the wrong way.
@@ -2291,6 +2292,12 @@ This option enables reporting when colors are transparent, useful for addon/appM
 Some GDI applications will highlight text with a background color, NVDA (via display model) attempts to report this color.
 In some situations, the text background may be entirely transparent, with the text layered on some other GUI element.
 With several historically popular GUI APIs, the text may be rendered with a transparent background, but visually the background color is accurate.
+
+==== Use WASAPI for audio output ====[WASAPI]
+This option enables audio output via the Windows Audio Session API (WASAPI).
+WASAPI is a more modern audio framework which may improve the responsiveness, performance and stability of NVDA audio output, including both speech and sounds.
+This option is enabled by default.
+After changing this option, you will need to restart NVDA for the change to take effect.
 
 ==== Debug logging categories ====[AdvancedSettingsDebugLoggingCategories]
 The checkboxes in this list allow you to enable specific categories of debug messages in NVDA's log.
@@ -3665,6 +3672,10 @@ Please see the display's documentation for descriptions of where these keys can 
 | Moves the navigator object to the next object | ``f6`` |
 | Reports the current navigator object | ``f7`` |
 | Reports information about the location of the text or object at the review cursor | ``f8`` |
+| Shows braille settings | ``f1+home1``, ``f9+home2`` |
+| Reads status bar and moves navigator object into it | ``f1+end1``, ``f9+end2`` |
+| Cycle the braille cursor shape | ``f1+eCursor1``, ``f9+eCursor2`` |
+| Toggle the braille cursor | ``f1+cursor1``, ``f9+cursor2`` |
 | Performs the default action on the current navigator object | ``f7+f8`` |
 | Reports date/time | ``f9`` |
 | Reports battery status and time remaining if AC is not plugged in | ``f10`` |

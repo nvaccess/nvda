@@ -17,6 +17,7 @@ from extensionPoints.util import AnnotatableWeakref, BoundMethodWeakref
 from inspect import ismethod
 from buildVersion import version_year
 import NVDAState
+from watchdog import getFormattedStacksForAllThreads
 
 LPOVERLAPPED_COMPLETION_ROUTINE = ctypes.WINFUNCTYPE(
 	None,
@@ -197,7 +198,12 @@ class IoThread(threading.Thread):
 		self.handle = None
 
 	def run(self):
-		while True:
-			ctypes.windll.kernel32.SleepEx(winKernel.INFINITE, True)
-			if self.exit:
-				break
+		try:
+			while True:
+				ctypes.windll.kernel32.SleepEx(winKernel.INFINITE, True)
+				if self.exit:
+					break
+		except Exception:
+			log.critical("Exception in IoThread function", exc_info=True)
+			stacks = getFormattedStacksForAllThreads()
+			log.info(f"Listing stacks for Python threads after IoThread crash:\n{stacks}")

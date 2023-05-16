@@ -249,13 +249,7 @@ def queueScript(script,gesture):
 	_numScriptsQueued+=1
 	if _isInterceptedCommandScript(script):
 		_numIncompleteInterceptedCommandScripts+=1
-	queueHandler.queueFunction(
-		queueHandler.eventQueue,
-		_queueScriptCallback,
-		script,
-		gesture,
-		_immediate=True
-	)
+	queueHandler.queueFunction(queueHandler.eventQueue,_queueScriptCallback,script,gesture)
 
 def willSayAllResume(gesture):
 	return (
