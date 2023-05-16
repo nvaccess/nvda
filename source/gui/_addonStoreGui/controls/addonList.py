@@ -72,16 +72,7 @@ class AddonVirtualList(
 		self._contextMenu = wx.Menu()
 		self._actionMenuItemMap: Dict[AddonActionVM, wx.MenuItem] = {}
 		self.Bind(event=wx.EVT_CONTEXT_MENU, handler=self._popupContextMenu)
-		for action in self._actionVMList:
-			menuItem: wx.MenuItem = self._contextMenu.Append(id=-1, item=action.displayName)
-			self._actionMenuItemMap[action] = menuItem
-			action.updated.register(self._updateContextMenuItem)
-			self.Bind(
-				event=wx.EVT_MENU,
-				handler=functools.partial(self._menuItemClicked, actionVM=action),
-				source=menuItem,
-			)
-			self._updateContextMenuItem(action)
+		self._updateContextMenu()
 
 		self.SetItemCount(addonsListVM.getCount())
 		selIndex = self._addonsListVM.getSelectedIndex()
@@ -94,6 +85,7 @@ class AddonVirtualList(
 	def _popupContextMenu(self, evt: wx.ContextMenuEvent):
 		position = evt.GetPosition()
 		firstSelectedIndex: int = self.GetFirstSelected()
+		self._updateContextMenu()
 		if firstSelectedIndex == -1:
 			# context menu only valid on an item.
 			return
@@ -122,9 +114,31 @@ class AddonVirtualList(
 		log.debug(f"item selected: {newIndex}")
 		self._addonsListVM.setSelection(index=newIndex)
 
-	def _updateContextMenuItem(self, addonActionVM: AddonActionVM):
-		menuItem = self._actionMenuItemMap[addonActionVM]
-		menuItem.Enable(enable=addonActionVM.isValid)
+	def _updateContextMenu(self):
+		prevActionIndex = -1
+		for action in self._actionVMList:
+			menuItem = self._actionMenuItemMap.get(action)
+			menuItems = list(self._contextMenu.GetMenuItems())
+			if action.isValid:
+				if menuItem is not None and menuItem in menuItems:
+					prevActionIndex = menuItems.index(menuItem)
+				else:
+					prevActionIndex += 1
+					self._actionMenuItemMap[action] = self._contextMenu.Insert(
+						prevActionIndex,
+						id=-1,
+						item=action.displayName
+					)
+					self._contextMenu.Bind(
+						event=wx.EVT_MENU,
+						handler=functools.partial(self._menuItemClicked, actionVM=action),
+						source=self._actionMenuItemMap[action],
+					)
+			else:
+				if menuItem is not None and menuItem in menuItems:
+					self.Unbind(wx.EVT_MENU, source=menuItem)
+					self._contextMenu.RemoveItem(menuItem)
+					del self._actionMenuItemMap[action]
 
 	def OnItemActivated(self, evt: wx.ListEvent):
 		activatedIndex = evt.GetIndex()
