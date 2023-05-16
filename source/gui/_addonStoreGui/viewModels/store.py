@@ -227,6 +227,7 @@ class AddonStoreVM:
 		if _shouldProceedToRemoveAddonDialog(listItemVM.model):
 			listItemVM.model._addonHandlerModel.requestRemove()
 			self.refresh()
+			listItemVM.status = getStatus(listItemVM.model)
 
 	def installOverrideIncompatibilityForAddon(self, listItemVM: AddonListItemVM) -> None:
 		from gui import mainFrame
