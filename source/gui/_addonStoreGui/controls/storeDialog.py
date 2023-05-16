@@ -215,12 +215,13 @@ class AddonStoreDialog(SettingsDialog):
 
 		channelFilterIndex = list(_channelFilters.keys()).index(self._storeVM._filterChannelKey)
 		self.channelFilterCtrl.SetSelection(channelFilterIndex)
-
+		self._storeVM.listVM.setSelection(None)
 		self._setListLabels()
 		self._storeVM.refresh()
 
 	def onChannelFilterChange(self, evt: wx.EVT_CHOICE):
 		self._storeVM._filterChannelKey = self._channelFilterKey
+		self._storeVM.listVM.setSelection(None)
 		self._setListLabels()
 		self._storeVM.refresh()
 
