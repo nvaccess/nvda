@@ -38,6 +38,12 @@ _pendingEventCountsLock=threading.RLock()
 #: the last object queued for a gainFocus event. Useful for code running outside NVDA's core queue 
 lastQueuedFocusObject=None
 
+
+# Handle virtual desktop switch announcements in Windows 10 and later
+virtualDesktopName: Optional[str] = None
+canAnnounceVirtualDesktopNames: bool = winVersion.getWinVer() >= winVersion.WIN10_1903
+
+
 def queueEvent(eventName,obj,**kwargs):
 	"""Queues an NVDA event to be executed.
 	@param eventName: the name of the event type (e.g. 'gainFocus', 'nameChange')
@@ -312,10 +318,6 @@ def executeEvent(
 			_EventExecuter(eventName, obj, kwargs)
 	except Exception:
 		log.exception(f"error executing event: {eventName} on {obj} with extra args of {kwargs}")
-
-
-virtualDesktopName: Optional[str] = None
-canAnnounceVirtualDesktopNames: bool = winVersion.getWinVer() >= winVersion.WIN10_1903
 
 
 def handlePossibleDesktopNameChange() -> None:
