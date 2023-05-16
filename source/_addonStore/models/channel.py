@@ -13,14 +13,17 @@ from utils.displayString import DisplayStringStrEnum
 
 
 class Channel(DisplayStringStrEnum):
+	ALL = "all"
 	STABLE = "stable"
 	BETA = "beta"
 	DEV = "dev"
-	ALL = "all"
+	EXTERNAL = "external"  # for add-ons installed externally
 
 	@property
 	def _displayStringLabels(self) -> Dict["Channel", str]:
 		return {
+			# Translators: Label for add-on channel in the add-on sotre
+			self.ALL: pgettext("addonStore", "All"),
 			# Translators: Label for add-on channel in the add-on sotre
 			self.STABLE: pgettext("addonStore", "Stable"),
 			# Translators: Label for add-on channel in the add-on sotre
@@ -28,7 +31,7 @@ class Channel(DisplayStringStrEnum):
 			# Translators: Label for add-on channel in the add-on sotre
 			self.DEV: pgettext("addonStore", "Dev"),
 			# Translators: Label for add-on channel in the add-on sotre
-			self.ALL: pgettext("addonStore", "All"),
+			self.EXTERNAL: pgettext("addonStore", "External"),
 		}
 
 
@@ -37,10 +40,15 @@ _channelFilters: OrderedDict[Channel, Set[Channel]] = OrderedDict({
 		Channel.STABLE,
 		Channel.BETA,
 		Channel.DEV,
+		Channel.EXTERNAL,
 	},
-	Channel.STABLE: {Channel.STABLE},
+	Channel.STABLE: {
+		Channel.STABLE,
+		Channel.EXTERNAL,
+	},
 	Channel.BETA: {Channel.BETA},
 	Channel.DEV: {Channel.DEV},
+	Channel.EXTERNAL: {Channel.EXTERNAL},
 })
 """A dictionary where the keys are channel groups to filter by,
 and the values are which channels should be shown for a given filter.

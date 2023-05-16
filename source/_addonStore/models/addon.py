@@ -195,7 +195,7 @@ def _createGUIModelFromManifest(addon: "AddonHandlerBaseModel") -> AddonGUIModel
 		displayName=addon.manifest["summary"],
 		description=addon.manifest["description"],
 		publisher=addon.manifest["author"],
-		channel=Channel.STABLE,
+		channel=Channel.EXTERNAL,
 		addonVersionName=addon.version,
 		homepage=homepage,
 		minNVDAVersion=MajorMinorPatch(*addon.minimumNVDAVersion),
