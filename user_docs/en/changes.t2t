@@ -21,6 +21,7 @@ What's New in NVDA
 - Added gestures for Tivomatic Caiku Albatross Braille displays.
 There are now gestures for showing the braille settings dialog, accessing the status bar, cycling the braille cursor shape, and toggling the braille cursor on/off. (#14844)
 - NVDA now outputs audio via the Windows Audio Session API (WASAPI), which may improve the responsiveness, performance and stability of NVDA speech and sounds. This can be disabled in Advanced settings if audio problems are encountered. (#14697)
+- When using Excel shortcuts to toggle  format such as bold, italic, underline and strike through of a cell in Excel, the result is now reported. (#14923)
 - 
 
 
@@ -29,7 +30,6 @@ There are now gestures for showing the braille settings dialog, accessing the st
 - Dash and em-dash symbols will always be sent to the synthesizer. (#13830)
 - Distance reported in Microsoft Word will now honour the unit defined in Word's advanced options even when using UIA to access Word documents. (#14542)
 - When reporting the review cursor location, the current cursor/caret location is now reported relative to the current page in LibreOffice Writer for LibreOffice versions >= 7.6, similar to what is done for Microsoft Word. (#11696)
-- NVDA now responds slightly faster to commands and focus changes. (#14701)
 - NVDA responds faster when moving the cursor in edit controls. (#14708)
 - Baum Braille driver: addes several Braille chord gestures for performing common keyboard commands such as windows+d, alt+tab etc. Please refer to the NVDA user guide for a full list. (#14714)
 - When using a Braille Display via the Standard HID braille driver, the dpad can be used to emulate the arrow keys and enter. Also space+dot1 and space+dot4 now map to up and down arrow respectively. (#14713)
@@ -65,6 +65,7 @@ Instead NVDA reports that the link has no destination. (#14723)
 - In Windows 11, it is once again possible to open the Contributors and License items on the NVDA Help menu. (#14725)
 - When forcing UIA support with certain terminal and consoles, a bug is fixed which caused a freeze and the log file to be spammed. (#14689)
 - NVDA no longer fails to announce focusing password fields in Microsoft Excel and Outlook. (#14839)
+- NVDA will no longer refuse to save the configuration after a configuration reset. (#13187)
 -
 
 

@@ -20,7 +20,6 @@ import threading
 import os
 import time
 import ctypes
-from enum import Enum
 import logHandler
 import languageHandler
 import globalVars
@@ -53,16 +52,7 @@ PUMP_MAX_DELAY = 10
 mainThreadId = threading.get_ident()
 
 _pump = None
-
-
-class _PumpPending(Enum):
-	NONE = 0
-	DELAYED = 1
-	IMMEDIATE = 2
-
-	def __bool__(self):
-		return self is not self.NONE
-
+_isPumpPending = False
 
 _hasShutdownBeenTriggered = False
 _shuttingDownFlagLock = threading.Lock()
@@ -720,29 +710,11 @@ def main():
 	# Doing this here is a bit ugly, but we don't want these modules imported
 	# at module level, including wx.
 	log.debug("Initializing core pump")
-
-	class CorePump(wx.Timer):
+	class CorePump(gui.NonReEntrantTimer):
 		"Checks the queues and executes functions."
-		pending = _PumpPending.NONE
-		isPumping = False
-
-		def request(self):
-			if self.isPumping:
-				return  # Prevent re-entry.
-			if self.pending == _PumpPending.IMMEDIATE:
-				# A delayed pump might have been scheduled. If so, cancel it.
-				self.Stop()
-				self.Notify()
-			elif self.pending == _PumpPending.DELAYED:
-				self.Start(PUMP_MAX_DELAY, True)
-
-		def Notify(self):
-			if self.isPumping:
-				log.error("Pumping while already pumping", stack_info=True)
-			if not self.pending:
-				log.error("Pumping but pump wasn't pending", stack_info=True)
-			self.isPumping = True
-			self.pending = _PumpPending.NONE
+		def run(self):
+			global _isPumpPending
+			_isPumpPending = False
 			watchdog.alive()
 			try:
 				if touchHandler.handler:
@@ -758,11 +730,10 @@ def main():
 				log.exception("errors in this core pump cycle")
 			baseObject.AutoPropertyObject.invalidateCaches()
 			watchdog.asleep()
-			self.isPumping = False
-			if self.pending:
+			if _isPumpPending and not _pump.IsRunning():
 				# #3803: Another pump was requested during this pump execution.
 				# As our pump is not re-entrant, schedule another pump.
-				self.request()
+				_pump.Start(PUMP_MAX_DELAY, True)
 	global _pump
 	_pump = CorePump()
 	requestPump()
@@ -873,27 +844,23 @@ def isMainThread() -> bool:
 	return threading.get_ident() == mainThreadId
 
 
-def requestPump(immediate: bool = False):
+def requestPump():
 	"""Request a core pump.
 	This will perform any queued activity.
-	@param immediate: If True, the pump will happen as soon as possible. This
-		should be used where response time is most important; e.g. user input or
-		focus events.
-		If False, it is delayed slightly so that queues can implement rate limiting,
-		filter extraneous events, etc.
+	It is delayed slightly so that queues can implement rate limiting,
+	filter extraneous events, etc.
 	"""
-	if not _pump:
+	global _isPumpPending
+	if not _pump or _isPumpPending:
 		return
-	# We only need to do something if:
-	if (
-		# There is no pending pump.
-		_pump.pending == _PumpPending.NONE
-		# There is a pending delayed pump but an immediate pump was just requested.
-		or (immediate and _pump.pending == _PumpPending.DELAYED)
-	):
-		_pump.pending = _PumpPending.IMMEDIATE if immediate else _PumpPending.DELAYED
-		import wx
-		wx.CallAfter(_pump.request)
+	_isPumpPending = True
+	if threading.get_ident() == mainThreadId:
+		_pump.Start(PUMP_MAX_DELAY, True)
+		return
+	# This isn't the main thread. wx timers cannot be run outside the main thread.
+	# Therefore, Have wx start it in the main thread with a CallAfter.
+	import wx
+	wx.CallAfter(_pump.Start,PUMP_MAX_DELAY, True)
 
 
 class NVDANotInitializedError(Exception):
