@@ -138,7 +138,6 @@ class AddonFileDownloader:
 				# chunk, starting with small chunks and increasing up until a maximum wait time is reached.
 				chunkSize = 128000
 				for chunk in r.iter_content(chunk_size=chunkSize):
-					log.debug(f"Chunk download: {addonData.addonId}")
 					fd.write(chunk)
 					if addonData in self.progress:  # Removed when the download should be cancelled.
 						self.progress[addonData] += 1

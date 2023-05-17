@@ -330,7 +330,7 @@ def installAddonBundle(bundle: "AddonBundle") -> "Addon":
 	marking the addon as needing 'install completion' on NVDA restart.
 	"""
 	bundle.extract()
-	addon = Addon(bundle.installPath)
+	addon = Addon(bundle.pendingInstallPath)
 	# #2715: The add-on must be added to _availableAddons here so that
 	# translations can be used in installTasks module.
 	_availableAddons[addon.path]=addon
@@ -734,7 +734,7 @@ class AddonBundle(AddonBase):
 		@param addonPath: Path where to extract contents.
 		"""
 		if addonPath is None:
-			addonPath = self.installPath
+			addonPath = self.pendingInstallPath
 
 		with zipfile.ZipFile(self._path, 'r') as z:
 			for info in z.infolist():
