@@ -303,9 +303,9 @@ def executeEvent(
 		# Handle possible virtual desktop name change event.
 		# More effective in Windows 10 Version 1903 and later.
 		if (
-				eventName == "nameChange"
-				and obj.windowClassName == "#32769"
-				and canAnnounceVirtualDesktopNames
+			eventName == "nameChange"
+			and obj.windowClassName == "#32769"
+			and canAnnounceVirtualDesktopNames
 		):
 			import core
 			virtualDesktopName = obj.name
