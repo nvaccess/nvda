@@ -34,6 +34,7 @@ import globalVars
 from logHandler import log
 import gui
 import wx
+import winreg
 import config
 from config.configFlags import TetherTo
 import winUser
@@ -264,6 +265,26 @@ class GlobalCommands(ScriptableObject):
 		else:
 			speech.speakTextSelected(info.text)
 
+	def is_system_clock_seconds_visible(self) -> bool:
+		"""
+		Query the value of 'ShowSecondsInSystemClock' DWORD32 value in the Windows registry under
+		the path HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced.
+		If the value is 1, return True, if the value is 0 or the key does not exist, return False.
+
+		@return: True if the 'ShowSecondsInSystemClock' value is 1, False otherwise.
+		@rtype: bool
+		"""
+		registry_path = r"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
+		value_name = "ShowSecondsInSystemClock"
+		try:
+			with winreg.OpenKey(winreg.HKEY_CURRENT_USER, registry_path) as key:
+				value, value_type = winreg.QueryValueEx(key, value_name)
+				return value == 1 and value_type == winreg.REG_DWORD
+		except FileNotFoundError:
+			return False
+		except OSError:
+			return False
+
 	@script(
 		# Translators: Input help mode message for report date and time command.
 		description=_("If pressed once, reports the current time. If pressed twice, reports the current date"),
@@ -272,7 +293,10 @@ class GlobalCommands(ScriptableObject):
 	)
 	def script_dateTime(self,gesture):
 		if scriptHandler.getLastScriptRepeatCount()==0:
-			text = winKernel.GetTimeFormatEx(winKernel.LOCALE_NAME_USER_DEFAULT, None, None, None)
+			if self.is_system_clock_seconds_visible():
+				text = winKernel.GetTimeFormatEx(winKernel.LOCALE_NAME_USER_DEFAULT, None, None, None)
+			else:
+				text = winKernel.GetTimeFormatEx(winKernel.LOCALE_NAME_USER_DEFAULT, winKernel.TIME_NOSECONDS, None, None)
 		else:
 			text=winKernel.GetDateFormatEx(winKernel.LOCALE_NAME_USER_DEFAULT, winKernel.DATE_LONGDATE, None, None)
 		ui.message(text)
