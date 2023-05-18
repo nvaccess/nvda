@@ -7,6 +7,7 @@ import functools
 from typing import (
 	Dict,
 	List,
+	Tuple,
 )
 
 import wx
@@ -29,6 +30,21 @@ class AddonVirtualList(
 		nvdaControls.AutoWidthColumnListCtrl,
 		DpiScalingHelperMixinWithoutInit,
 ):
+	@property
+	def _columnHeaders(self) -> List[Tuple[str, int]]:
+		return [
+			# Translators: The name of the column that contains names of addons.
+			(pgettext("addonStore", "Name"), self.scaleSize(150)),
+			# Translators: The name of the column that contains the addons version string.
+			(pgettext("addonStore", "Version"), self.scaleSize(50)),
+			# Translators: The name of the column that contains the channel of the addon (e.g stable, beta, dev).
+			(pgettext("addonStore", "Channel"), self.scaleSize(50)),
+			# Translators: The name of the column that contains the addons publisher.
+			(pgettext("addonStore", "Publisher"), self.scaleSize(100)),
+			# Translators: The name of the column that contains the status of the addon.
+			# e.g. available, downloading installing
+			(pgettext("addonStore", "Status"), self.scaleSize(150)),
+		]
 
 	def __init__(self, parent, addonsListVM: AddonListVM, actionVMList: List[AddonActionVM]):
 		super().__init__(
@@ -45,22 +61,8 @@ class AddonVirtualList(
 
 		self.SetMinSize(self.scaleSize((500, 500)))
 
-		# Translators: The name of the column that contains names of addons. In the add-on store dialog.
-		self.InsertColumn(0, pgettext("addonStore", "Name"))
-		# Translators: The name of the column that contains the addons version string. In the add-on store dialog.
-		self.InsertColumn(1, pgettext("addonStore", "Version"))
-		# Translators: The name of the column that contains the channel of the addon (e.g stable, beta, dev).
-		self.InsertColumn(2, pgettext("addonStore", "Channel"))
-		# Translators: The name of the column that contains the addons publisher. In the add-on store dialog.
-		self.InsertColumn(3, pgettext("addonStore", "Publisher"))
-		self.InsertColumn(
-			4,
-			# Translators: The name of the column that contains the status of the addon (E.G. available, downloading
-			# installing). In the add-on store dialog.
-			pgettext("addonStore", "Status"),
-			# Enough space for the longer contents, eg: "Installed, restart required"
-			width=self.scaleSize(150)
-		)
+		for columnIndex, (columnLabel, columnWidth) in enumerate(self._columnHeaders):
+			self.InsertColumn(columnIndex, columnLabel, width=columnWidth)
 
 		self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.OnItemSelected)
 		self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.OnItemActivated)
