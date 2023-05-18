@@ -84,22 +84,26 @@ class AddonVirtualList(
 		self._addonsListVM.itemUpdated.register(self._itemDataUpdated)
 		self._addonsListVM.updated.register(self._doRefresh)
 
+	def _popupContextMenuFromSelection(self, selectedIndex: int):
+		self._updateContextMenu()
+		itemRect: wx.Rect = self.GetItemRect(selectedIndex)
+		position: wx.Position = itemRect.GetBottomLeft()
+		self.PopupMenu(self._contextMenu, position)
+
 	def _popupContextMenu(self, evt: wx.ContextMenuEvent):
 		position = evt.GetPosition()
 		firstSelectedIndex: int = self.GetFirstSelected()
-		self._updateContextMenu()
 		if firstSelectedIndex == -1:
 			# context menu only valid on an item.
 			return
 		if position == wx.DefaultPosition:
 			# keyboard triggered context menu (due to "applications" key)
 			# don't have position set. It must be fetched from the selected item.
-			itemRect: wx.Rect = self.GetItemRect(firstSelectedIndex)
-			position: wx.Position = itemRect.GetBottomLeft()
-			self.PopupMenu(self._contextMenu, position)
+			self._popupContextMenuFromSelection(firstSelectedIndex)
 		else:
 			# Mouse (right click) triggered context menu.
 			# In this case the menu is positioned better with GetPopupMenuSelectionFromUser.
+			self._updateContextMenu()
 			self.GetPopupMenuSelectionFromUser(self._contextMenu)
 
 	def _menuItemClicked(self, evt: wx.CommandEvent, actionVM: AddonActionVM):
@@ -144,6 +148,7 @@ class AddonVirtualList(
 
 	def OnItemActivated(self, evt: wx.ListEvent):
 		activatedIndex = evt.GetIndex()
+		self._popupContextMenuFromSelection(activatedIndex)
 		log.debug(f"item activated: {activatedIndex}")
 
 	def OnItemDeselected(self, evt: wx.ListEvent):
