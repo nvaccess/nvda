@@ -49,9 +49,12 @@ class AvailableAddonStatus(DisplayStringEnum):
 	INSTALLING = enum.auto()
 	INSTALL_FAILED = enum.auto()
 	INSTALLED = enum.auto()  # installed, requires restart
-	PENDING_DISABLE = enum.auto()  # disabled after restart
+	PENDING_INCOMPATIBLE_DISABLED = enum.auto()  # incompatible, disabled after restart
 	INCOMPATIBLE_DISABLED = enum.auto()  # disabled due to being incompatible
+	PENDING_DISABLE = enum.auto()  # disabled after restart
 	DISABLED = enum.auto()
+	PENDING_INCOMPATIBLE_ENABLED = enum.auto()  # overriden incompatible, enabled after restart
+	INCOMPATIBLE_ENABLED = enum.auto()  # enabled, overriden incompatible
 	PENDING_ENABLE = enum.auto()  # enabled after restart
 	RUNNING = enum.auto()  # enabled / active.
 
@@ -85,7 +88,13 @@ class AvailableAddonStatus(DisplayStringEnum):
 			# Translators: Status for addons shown in the add-on store dialog
 			self.DISABLED: pgettext("addonStore", "Disabled"),
 			# Translators: Status for addons shown in the add-on store dialog
-			self.INCOMPATIBLE_DISABLED: pgettext("addonStore", "Disabled (Incompatible)"),
+			self.PENDING_INCOMPATIBLE_DISABLED: pgettext("addonStore", "Disabled (incompatible), pending restart"),
+			# Translators: Status for addons shown in the add-on store dialog
+			self.INCOMPATIBLE_DISABLED: pgettext("addonStore", "Disabled (incompatible)"),
+			# Translators: Status for addons shown in the add-on store dialog
+			self.PENDING_INCOMPATIBLE_ENABLED: pgettext("addonStore", "Enabled (incompatible), pending restart"),
+			# Translators: Status for addons shown in the add-on store dialog
+			self.INCOMPATIBLE_ENABLED: pgettext("addonStore", "Enabled (incompatible)"),
 			# Translators: Status for addons shown in the add-on store dialog
 			self.PENDING_ENABLE: pgettext("addonStore", "Enabled, pending restart"),
 			# Translators: Status for addons shown in the add-on store dialog
@@ -130,9 +139,20 @@ def getStatus(model: "AddonGUIModel") -> Optional[AvailableAddonStatus]:
 		# Any compatible add-on which is not installed should be listed as available
 		return AvailableAddonStatus.AVAILABLE
 
-	for storeState, handlerStateCategory in _addonStoreStateToAddonHandlerState.items():
-		# Ensure disabled status and install status are checked first if installed
-		if model.addonId in addonHandlerState[handlerStateCategory]:
+	for storeState, handlerStateCategories in _addonStoreStateToAddonHandlerState.items():
+		# Match addonHandler states early for installed add-ons.
+		# Includes enabled, pending enabled, disabled, e.t.c.
+		if all(
+			model.addonId in addonHandlerState[stateCategory]
+			for stateCategory in handlerStateCategories
+		):
+			# Return the add-on store state if the add-on
+			# is in all of the addonHandlerStates
+			# required to match to an add-on store state.
+			# Most states are a 1-to-1 match,
+			# however incompatible add-ons match to two states:
+			# one to flag if that its incompatible,
+			# and another for enabled/disabled.
 			return storeState
 
 	addonStoreData = addonDataManager._getCachedInstalledAddonData(model.addonId)
@@ -165,14 +185,26 @@ def getStatus(model: "AddonGUIModel") -> Optional[AvailableAddonStatus]:
 	return None
 
 
-_addonStoreStateToAddonHandlerState: OrderedDict[AvailableAddonStatus, AddonStateCategory] = OrderedDict({
+_addonStoreStateToAddonHandlerState: OrderedDict[
+	AvailableAddonStatus,
+	Set[AddonStateCategory]
+	] = OrderedDict({
 	# Pending states must be first as the pending state may be altering another state.
-	AvailableAddonStatus.PENDING_REMOVE: AddonStateCategory.PENDING_REMOVE,
-	AvailableAddonStatus.PENDING_ENABLE: AddonStateCategory.PENDING_ENABLE,
-	AvailableAddonStatus.PENDING_DISABLE: AddonStateCategory.PENDING_DISABLE,
-	AvailableAddonStatus.INCOMPATIBLE_DISABLED: AddonStateCategory.BLOCKED,
-	AvailableAddonStatus.DISABLED: AddonStateCategory.DISABLED,
-	AvailableAddonStatus.INSTALLED: AddonStateCategory.PENDING_INSTALL,
+	AvailableAddonStatus.PENDING_INCOMPATIBLE_DISABLED: {
+		AddonStateCategory.BLOCKED,
+		AddonStateCategory.PENDING_DISABLE,
+	},
+	AvailableAddonStatus.PENDING_INCOMPATIBLE_ENABLED: {
+		AddonStateCategory.OVERRIDE_COMPATIBILITY,
+		AddonStateCategory.PENDING_ENABLE,
+	},
+	AvailableAddonStatus.PENDING_REMOVE: {AddonStateCategory.PENDING_REMOVE},
+	AvailableAddonStatus.PENDING_ENABLE: {AddonStateCategory.PENDING_ENABLE},
+	AvailableAddonStatus.PENDING_DISABLE: {AddonStateCategory.PENDING_DISABLE},
+	AvailableAddonStatus.INCOMPATIBLE_DISABLED: {AddonStateCategory.BLOCKED},
+	AvailableAddonStatus.INCOMPATIBLE_ENABLED: {AddonStateCategory.OVERRIDE_COMPATIBILITY},
+	AvailableAddonStatus.DISABLED: {AddonStateCategory.DISABLED},
+	AvailableAddonStatus.INSTALLED: {AddonStateCategory.PENDING_INSTALL},
 })
 
 
@@ -181,7 +213,7 @@ class _StatusFilterKey(DisplayStringEnum):
 	INSTALLED = enum.auto()
 	UPDATE = enum.auto()
 	AVAILABLE = enum.auto()
-	DISABLED = enum.auto()
+	INCOMPATIBLE = enum.auto()
 
 	@property
 	def _displayStringLabels(self) -> Dict["_StatusFilterKey", str]:
@@ -192,8 +224,8 @@ class _StatusFilterKey(DisplayStringEnum):
 			self.UPDATE: pgettext("addonStore", "Updatable add-ons"),
 			# Translators: A selection option to display available add-ons in the add-on store
 			self.AVAILABLE: pgettext("addonStore", "Available add-ons"),
-			# Translators: A selection option to display disabled add-ons in the add-on store
-			self.DISABLED: pgettext("addonStore", "Disabled add-ons"),
+			# Translators: A selection option to display incompatible add-ons in the add-on store
+			self.INCOMPATIBLE: pgettext("addonStore", "Installed incompatible add-ons"),
 		}
 
 
@@ -203,6 +235,9 @@ _statusFilters: OrderedDict[_StatusFilterKey, Set[AvailableAddonStatus]] = Order
 		AvailableAddonStatus.REPLACE_SIDE_LOAD,
 		AvailableAddonStatus.INSTALLED,
 		AvailableAddonStatus.PENDING_DISABLE,
+		AvailableAddonStatus.PENDING_INCOMPATIBLE_DISABLED,
+		AvailableAddonStatus.PENDING_INCOMPATIBLE_ENABLED,
+		AvailableAddonStatus.INCOMPATIBLE_ENABLED,
 		AvailableAddonStatus.INCOMPATIBLE_DISABLED,
 		AvailableAddonStatus.DISABLED,
 		AvailableAddonStatus.PENDING_ENABLE,
@@ -225,11 +260,11 @@ _statusFilters: OrderedDict[_StatusFilterKey, Set[AvailableAddonStatus]] = Order
 		AvailableAddonStatus.INSTALL_FAILED,
 		AvailableAddonStatus.INSTALLED,
 	},
-	_StatusFilterKey.DISABLED: {
+	_StatusFilterKey.INCOMPATIBLE: {
+		AvailableAddonStatus.PENDING_INCOMPATIBLE_DISABLED,
+		AvailableAddonStatus.PENDING_INCOMPATIBLE_ENABLED,
 		AvailableAddonStatus.INCOMPATIBLE_DISABLED,
-		AvailableAddonStatus.DISABLED,
-		AvailableAddonStatus.PENDING_DISABLE,
-		AvailableAddonStatus.PENDING_ENABLE,
+		AvailableAddonStatus.INCOMPATIBLE_ENABLED,
 	},
 })
 """A dictionary where the keys are a status to filter by,
@@ -303,7 +338,6 @@ class SupportsAddonState(SupportsVersionCheck, Protocol):
 		return (
 			self.isPendingInstall
 			or self.isPendingRemove
-			or self.isDisabled and self.isPendingEnable
-			or self.isRunning and self.isPendingDisable
-			or not self.isDisabled and self.isPendingDisable
+			or self.isPendingEnable
+			or self.isPendingDisable
 		)

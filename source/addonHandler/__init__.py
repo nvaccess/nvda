@@ -527,6 +527,8 @@ class Addon(AddonBase):
 						import addonAPIVersion
 						raise AddonError("Add-on is not compatible and over ride was abandoned")
 				state[AddonStateCategory.PENDING_ENABLE].add(self.name)
+			if self.overrideIncompatibility:
+				state[AddonStateCategory.BLOCKED].discard(self.name)
 		else:
 			if self.name in state[AddonStateCategory.PENDING_ENABLE]:
 				# Undoing a pending enable.
@@ -535,6 +537,9 @@ class Addon(AddonBase):
 			# This also prevents the status in the add-ons dialog from saying "disabled, pending disable"
 			elif self.name not in state[AddonStateCategory.DISABLED]:
 				state[AddonStateCategory.PENDING_DISABLE].add(self.name)
+			if not self.isCompatible:
+				state[AddonStateCategory.BLOCKED].add(self.name)
+				state[AddonStateCategory.OVERRIDE_COMPATIBILITY].discard(self.name)
 		# Record enable/disable flags as a way of preparing for disaster such as sudden NVDA crash.
 		state.save()
 

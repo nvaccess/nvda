@@ -144,6 +144,7 @@ class AddonStoreVM:
 					AvailableAddonStatus.AVAILABLE,
 					AvailableAddonStatus.INCOMPATIBLE,
 					AvailableAddonStatus.INCOMPATIBLE_DISABLED,
+					AvailableAddonStatus.PENDING_INCOMPATIBLE_DISABLED,
 					AvailableAddonStatus.DOWNLOAD_FAILED,
 					AvailableAddonStatus.PENDING_REMOVE,
 				),
@@ -164,7 +165,10 @@ class AddonStoreVM:
 				displayName=pgettext("addonStore", "&Enable (override incompatibility)"),
 				actionHandler=self.enableOverrideIncompatibilityForAddon,
 				validCheck=lambda aVM: (
-					aVM.status == AvailableAddonStatus.INCOMPATIBLE_DISABLED
+					aVM.status in (
+						AvailableAddonStatus.INCOMPATIBLE_DISABLED,
+						AvailableAddonStatus.PENDING_INCOMPATIBLE_DISABLED,
+					)
 					and aVM.model.canOverrideCompatibility
 				),
 				listItemVM=selectedListItem
@@ -189,7 +193,7 @@ class AddonStoreVM:
 					# Showing help in the updatable add-ons view is misleading
 					# as we can only fetch the add-on help from the installed version.
 					_StatusFilterKey.INSTALLED,
-					_StatusFilterKey.DISABLED,
+					_StatusFilterKey.INCOMPATIBLE,
 				),
 				listItemVM=selectedListItem
 			),
@@ -371,9 +375,10 @@ class AddonStoreVM:
 			_StatusFilterKey.UPDATE,
 		}:
 			addons = self._availableAddons
+
 		elif self._filteredStatusKey in {
 			_StatusFilterKey.INSTALLED,
-			_StatusFilterKey.DISABLED,
+			_StatusFilterKey.INCOMPATIBLE,
 		}:
 			addons = self._installedAddons
 		else:
