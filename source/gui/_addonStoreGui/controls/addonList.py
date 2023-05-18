@@ -68,6 +68,7 @@ class AddonVirtualList(
 		self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.OnItemActivated)
 		self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.OnItemDeselected)
 		self.Bind(wx.EVT_LIST_COL_CLICK, self.OnColClick)
+		self.Bind(wx.EVT_KEY_DOWN, self._handleListSort)
 
 		self._addonsListVM = addonsListVM
 		self._actionVMList = actionVMList
@@ -164,6 +165,15 @@ class AddonVirtualList(
 			# Failed to get dataItem, index may have been lost in refresh.
 			return ''
 		return str(dataItem)
+
+	def _handleListSort(self, evt: wx.KeyEvent):
+		"""Bind ctrl+1,2,3,4,5 to sort the columns of the list"""
+		for i, attribute in enumerate(self._addonsListVM.presentedAttributes):
+			if evt.UnicodeKey == ord(str(i)) and evt.controlDown:
+				self._addonsListVM.setSortField(attribute)
+				return
+
+		evt.Skip()
 
 	def OnColClick(self, evt: wx.ListEvent):
 		colIndex = evt.GetColumn()
