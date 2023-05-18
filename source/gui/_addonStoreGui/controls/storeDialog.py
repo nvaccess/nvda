@@ -62,6 +62,12 @@ class AddonStoreDialog(SettingsDialog):
 		for statusFilter in _statusFilters:
 			self.addonListTabs.AddPage(dynamicTabPage, statusFilter.displayString)
 		tabPageHelper.addItem(self.addonListTabs, flag=wx.EXPAND)
+		if any(self._storeVM._installedAddons[channel] for channel in self._storeVM._installedAddons):
+			# If there's any installed add-ons, use the installed add-ons page by default
+			self.addonListTabs.SetSelection(0)
+		else:
+			availableTabIndex = list(_statusFilters.keys()).index(_StatusFilterKey.AVAILABLE)
+			self.addonListTabs.SetSelection(availableTabIndex)
 		self.addonListTabs.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED, self.onStatusFilterChange, self.addonListTabs)
 
 		filterCtrlHelper = guiHelper.BoxSizerHelper(self, wx.HORIZONTAL)
@@ -72,7 +78,6 @@ class AddonStoreDialog(SettingsDialog):
 			choices=list(c.displayString for c in _channelFilters),
 		))
 		self.channelFilterCtrl.Bind(wx.EVT_CHOICE, self.onChannelFilterChange, self.channelFilterCtrl)
-		self.channelFilterCtrl.SetSelection(0)
 		self.bindHelpEvent("AddonStoreFilterChannel", self.channelFilterCtrl)
 
 		self.searchFilterCtrl = cast(wx.TextCtrl, filterCtrlHelper.addLabeledControl(
@@ -91,7 +96,6 @@ class AddonStoreDialog(SettingsDialog):
 			choices=list(c.displayString for c in EnabledStatus),
 		))
 		self.enabledFilterCtrl.Bind(wx.EVT_CHOICE, self.onEnabledFilterChange, self.enabledFilterCtrl)
-		self.enabledFilterCtrl.SetSelection(0)
 		self.bindHelpEvent("AddonStoreFilterEnabled", self.enabledFilterCtrl)
 
 		tabPageHelper.sizer.AddSpacer(5)
@@ -136,7 +140,7 @@ class AddonStoreDialog(SettingsDialog):
 		self.bindHelpEvent("AddonStoreInstalling", self.externalInstallButton)
 
 		settingsSizer.Add(generalActions.sizer)
-		self.SetMinSize(self.mainSizer.GetMinSize())
+		self.onStatusFilterChange(None)
 
 	def postInit(self):
 		self.addonListView.SetFocus()
