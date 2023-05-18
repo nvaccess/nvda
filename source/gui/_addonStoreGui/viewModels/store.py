@@ -30,6 +30,7 @@ from _addonStore.models.channel import (
 	_channelFilters,
 )
 from _addonStore.models.status import (
+	EnabledStatus,
 	getStatus,
 	_statusFilters,
 	_StatusFilterKey,
@@ -79,6 +80,10 @@ class AddonStoreVM:
 		"""
 		Filters the add-on list view model by add-on channel.
 		Add-ons with a channel in _channelFilters[self._filterChannelKey] should be displayed in the list.
+		"""
+		self._filterEnabledDisabled: EnabledStatus = EnabledStatus.ENABLED
+		"""
+		Filters the add-on list view model by enabled or disabled.
 		"""
 
 		self._downloader = addonDataManager.getFileDownloader()
@@ -403,6 +408,23 @@ class AddonStoreVM:
 			for channel in addons
 			for model in addons[channel].values()
 		)
+
+		if EnabledStatus.ENABLED == self._filterEnabledDisabled:
+			addonsWithStatus = (
+				(model, status)
+				for (model, status) in addonsWithStatus
+				if not (
+					model.isDisabled
+					or model.isPendingDisable
+				) or model.isPendingEnable
+			)
+		else:
+			addonsWithStatus = (
+				(model, status)
+				for (model, status) in addonsWithStatus
+				if model.isDisabled
+				or model.isPendingDisable
+			)
 
 		return [
 			AddonListItemVM(model=model, status=status)

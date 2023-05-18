@@ -14,6 +14,7 @@ from addonHandler import (
 )
 from _addonStore.models.channel import Channel, _channelFilters
 from _addonStore.models.status import (
+	EnabledStatus,
 	_statusFilters,
 	_StatusFilterKey,
 )
@@ -82,6 +83,16 @@ class AddonStoreDialog(SettingsDialog):
 		self.searchFilterCtrl.Bind(wx.EVT_TEXT, self.onFilterTextChange, self.searchFilterCtrl)
 		tabPageHelper.addItem(filterCtrlHelper.sizer, flag=wx.EXPAND)
 		self.bindHelpEvent("AddonStoreFilterSearch", self.searchFilterCtrl)
+
+		self.enabledFilterCtrl = cast(wx.Choice, filterCtrlHelper.addLabeledControl(
+			# Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
+			labelText=pgettext("addonStore", "Enabled/disabled:"),
+			wxCtrlClass=wx.Choice,
+			choices=list(c.displayString for c in EnabledStatus),
+		))
+		self.enabledFilterCtrl.Bind(wx.EVT_CHOICE, self.onEnabledFilterChange, self.enabledFilterCtrl)
+		self.enabledFilterCtrl.SetSelection(0)
+		self.bindHelpEvent("AddonStoreFilterEnabled", self.enabledFilterCtrl)
 
 		tabPageHelper.sizer.AddSpacer(5)
 
@@ -206,12 +217,23 @@ class AddonStoreDialog(SettingsDialog):
 		self.SetTitle(self._titleText)
 
 	def onStatusFilterChange(self, evt: wx.EVT_CHOICE):
+		self._storeVM._filterEnabledDisabled = EnabledStatus.ENABLED
+		self.enabledFilterCtrl.SetSelection(0)
+
 		self._storeVM._filteredStatusKey = self._statusFilterKey
 
 		if self._storeVM._filteredStatusKey == _StatusFilterKey.AVAILABLE:
 			self._storeVM._filterChannelKey = Channel.STABLE
 		else:
 			self._storeVM._filterChannelKey = Channel.ALL
+
+		if self._storeVM._filteredStatusKey in {
+			_StatusFilterKey.AVAILABLE,
+			_StatusFilterKey.UPDATE,
+		}:
+			self.enabledFilterCtrl.Disable()
+		else:
+			self.enabledFilterCtrl.Enable()
 
 		channelFilterIndex = list(_channelFilters.keys()).index(self._storeVM._filterChannelKey)
 		self.channelFilterCtrl.SetSelection(channelFilterIndex)
@@ -228,6 +250,11 @@ class AddonStoreDialog(SettingsDialog):
 	def onFilterTextChange(self, evt: wx.EVT_TEXT):
 		filterText = self.searchFilterCtrl.GetValue()
 		self.filter(filterText)
+
+	def onEnabledFilterChange(self, evt: wx.EVT_CHECKBOX):
+		index = self.enabledFilterCtrl.GetCurrentSelection()
+		self._storeVM._filterEnabledDisabled = EnabledStatus.DISABLED if index else EnabledStatus.ENABLED
+		self._storeVM.refresh()
 
 	def filter(self, filterText: str):
 		self._storeVM.listVM.applyFilter(filterText)
