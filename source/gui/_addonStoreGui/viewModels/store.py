@@ -57,8 +57,8 @@ from .addonList import (
 
 class AddonStoreVM:
 	def __init__(self):
+		self._installedAddons = addonDataManager._installedAddonsCache.installedAddonGUICollection
 		self._availableAddons = _createAddonGUICollection()
-		self._installedAddons = _createAddonGUICollection()
 		self.hasError = extensionPoints.Action()
 		self.onDisplayableError = DisplayableError.OnDisplayableErrorT()
 		"""
@@ -337,12 +337,26 @@ class AddonStoreVM:
 		log.debug(f"{listItemVM.Id} status: {listItemVM.status}")
 
 	def refresh(self):
-		threading.Thread(target=self._getAddonsInBG, name="getAddonData").start()
+		self.listVM.resetListItems([])
+		if self._filteredStatusKey in {
+			_StatusFilterKey.AVAILABLE,
+			_StatusFilterKey.UPDATE,
+		}:
+			threading.Thread(target=self._getAvailableAddonsInBG, name="getAddonData").start()
 
-	def _getAddonsInBG(self):
-		log.debug("getting addons in the background")
+		elif self._filteredStatusKey in {
+			_StatusFilterKey.INSTALLED,
+			_StatusFilterKey.INCOMPATIBLE,
+		}:
+			self._installedAddons = addonDataManager._installedAddonsCache.installedAddonGUICollection
+			self.listVM.resetListItems(self._createListItemVMs())
+			self.detailsVM.listItem = self.listVM.getSelection()
+		else:
+			raise NotImplementedError(f"Unhandled status filter key {self._filteredStatusKey}")
+
+	def _getAvailableAddonsInBG(self):
+		log.debug("getting available addons in the background")
 		assert addonDataManager
-		self._installedAddons = addonDataManager._installedAddonsCache.installedAddonGUICollection
 		availableAddons = addonDataManager.getLatestCompatibleAddons(self.onDisplayableError)
 		if bool(config.conf["addonStore"]["incompatibleAddons"]):
 			incompatibleAddons = addonDataManager.getLatestAddons(self.onDisplayableError)
