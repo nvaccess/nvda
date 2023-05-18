@@ -197,7 +197,7 @@ class SettingsDialog(
 			startTime = time.time()
 		windowStyle = wx.DEFAULT_DIALOG_STYLE
 		if resizeable:
-			windowStyle |= wx.RESIZE_BORDER | wx.MAXIMIZE_BOX
+			windowStyle |= wx.RESIZE_BORDER | wx.MAXIMIZE_BOX | wx.MINIMIZE_BOX
 		super().__init__(parent, title=self.title, style=windowStyle)
 
 		buttonFlag = 0
