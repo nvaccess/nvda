@@ -186,6 +186,7 @@ class UIATextInfo(textInfos.TextInfo):
 			or formatConfig["reportComments"]
 			or formatConfig["reportRevisions"]
 			or formatConfig["reportBookmarks"]
+			or formatConfig["reportAccessibilityIssues"]
 		)
 		try:
 			textRange=textRange.QueryInterface(UIAHandler.IUIAutomationTextRange3)
@@ -334,6 +335,10 @@ class UIATextInfo(textInfos.TextInfo):
 				cats = self.obj._UIACustomAnnotationTypes
 				if cats.microsoftWord_bookmark.id and cats.microsoftWord_bookmark.id in annotationTypes:
 					formatField["bookmark"] = True
+			if formatConfig["reportAccessibilityIssues"]:
+				cats = self.obj._UIACustomAnnotationTypes
+				if cats.microsoftWord_accessibilityIssue.id and cats.microsoftWord_accessibilityIssue.id in annotationTypes:
+					formatField["accessibilityIssue"] = True
 		cultureVal=fetcher.getValue(UIAHandler.UIA_CultureAttributeId,ignoreMixedValues=ignoreMixedValues)
 		if cultureVal and isinstance(cultureVal,int):
 			try:

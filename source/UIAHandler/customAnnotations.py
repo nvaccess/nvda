@@ -89,3 +89,6 @@ class CustomAnnotationTypesCommon:
 		self.microsoftWord_bookmark = CustomAnnotationTypeInfo(
 			guid=GUID("{25330951-A372-4DB9-A88A-85137AD008D2}"),
 		)
+		self.microsoftWord_accessibilityIssue = CustomAnnotationTypeInfo(
+			guid=GUID("{52D21C7D-6C89-4C5F-81A5-54BDE650C9F2}"),
+		)

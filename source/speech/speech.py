@@ -2667,6 +2667,18 @@ def getFormatFieldSpeech(  # noqa: C901
 				# Translators: Reported when text no longer contains a bookmark
 				text = _("out of bookmark")
 				textList.append(text)
+	if formatConfig["reportAccessibilityIssues"]:
+		accessibilityIssue = attrs.get("accessibilityIssue")
+		oldAccessibilityIssue = attrsCache.get("accessibilityIssue") if attrsCache is not None else None
+		if (accessibilityIssue or oldAccessibilityIssue is not None) and accessibilityIssue != oldAccessibilityIssue:
+			if accessibilityIssue:
+				# Translators: Reported when text contains an accessibility issue
+				text = _("accessibility issue")
+				textList.append(text)
+			elif extraDetail:
+				# Translators: Reported when text no longer contains a accessibility issue
+				text = _("out of accessibility issue")
+				textList.append(text)
 	if formatConfig["reportSpellingErrors"]:
 		invalidSpelling=attrs.get("invalid-spelling")
 		oldInvalidSpelling=attrsCache.get("invalid-spelling") if attrsCache is not None else None
