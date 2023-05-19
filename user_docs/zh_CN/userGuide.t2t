@@ -477,7 +477,7 @@ NVDA 目前共有两套被称为键盘布局的快捷键配置：一套是台式
 实际上，在输入帮助模式下，命令是不会被执行的。
 
 ++ NVDA 菜单 ++[TheNVDAMenu]
-NVDA 菜单允许您控制 NVDA 设置、访问帮助、保存或者恢复您的配置、定义语音字典、访问额外的工具和退出 NVDA。 
+NVDA 菜单允许您控制 NVDA 设置、访问帮助、保存或者恢复您的配置、定义语音字典、访问额外的工具和退出 NVDA。
 
 当 NVDA 正在运行的时候，如果您想访问 NVDA 菜单，在 Windows 的任何地方都可以通过在键盘上按下“NVDA+N”或者在触摸屏上执行双指双击的动作。
 您也可以通过 Windows 的托盘图标访问 NVDA 菜单。
@@ -518,7 +518,7 @@ NVDA 允许您使用多种方式对系统进行浏览和导航，包括传统交
 例如，如果您正在一个可编辑文本框中进行输入，那么，这个可编辑文本框就有了焦点。
 
 使用 NVDA 在 Windows 系统中导航的最常用方法是使用标准的系统键盘命令简单的移动系统焦点，如使用 Tab 或者 Shift+Tab 在控件之间前后移动、按下 Alt 转到菜单栏后使用方向键在菜单中导航和使用 Alt+Tab 在正在运行的程序之间切换。
-当您这样操作时，NVDA 通常会读出焦点所在对象的相关信息，包括：名称、格式、数值、状态、描述、快捷键及位置信息等等。 
+当您这样操作时，NVDA 通常会读出焦点所在对象的相关信息，包括：名称、格式、数值、状态、描述、快捷键及位置信息等等。
 当[高亮显示系统焦点 #VisionFocusHighlight]开启时，当前系统焦点的位置也将以视觉方式显示。
 
 下面是一些在移动系统焦点时很有用的键盘命令：
@@ -558,7 +558,7 @@ NVDA 提供下列与系统输入焦点相关的快捷命令：
 | 移动到最后一列 | control+alt+行尾 | 移动输入焦点到最后一列(仍在同一行内)。 |
 | 移动到第一行 | control+alt+上翻页 | 移动输入焦点到第一行(仍在同一列内)。 |
 | 移动到最后一行 | control+alt+下翻页 | 移动输入焦点到最后一行(仍在同一列内)。 |
-| 朗读当前列 | ``NVDA+control+alt+下光标`` |从当前单元格开始垂直向下朗读至当前列的最后一个单元格。 |
+| 朗读当前列 | ``NVDA+control+alt+下光标`` | 从当前单元格开始垂直向下朗读至当前列的最后一个单元格。 |
 | 朗读当前行 | ``NVDA+control+alt+右光标`` | 从当前单元格开始水平向右朗读至当前行的最后一个单元格。 |
 | 朗读当前列（不移动输入焦点） | ``NVDA+control+alt+上光标`` | 在不移动输入焦点的情况下，从上到下垂直朗读当前列。 |
 | 朗读当前行（不移动输入焦点） | ``NVDA+control+alt+左光标`` | 在不移动输入焦点的情况下，从左到右水平朗读当前行。 |
@@ -990,7 +990,7 @@ NVDA支持从点显器输入简写以及非简写盲文。
 您可以使用 [NVDA设置 #NVDASettings] 对话框中“盲文”类别的[输入表 #BrailleSettingsInputTable]将盲文转成文本。
 
 若您使用的是非简写盲文，则在输入后会立即转为文本。
-若您使用的是简写盲文，则需要在输入一个字后按空格键或Enter，才会转为文本。 
+若您使用的是简写盲文，则需要在输入一个字后按空格键或Enter，才会转为文本。
 值得注意的是:盲文转译仅可翻译您输入的盲文，而非现有的文本。
 例如:如果您要使用盲文来打一个带头有数字符号"#"的数字，当您使用退格键倒退到这个数字的尾端，则您需要再打一次数字符号才可以将数字成功输入。
 
@@ -1049,7 +1049,7 @@ NVDA提供了几种内置的视觉增强提供程序。
 您可以在[NVDA 设置面板 #NVDASettings][视觉增强 #VisionSettings] 一栏内开启黑屏。
 
 如果启用黑屏，所有依靠屏幕所显示内容而执行的动作均不可用，如执行[OCR #Win10Ocr] 或截屏等。
- 
+
 要确保“黑屏”功能能可靠的工作，可使用更新的操作系统。
 若使用早于2021.2的NVDA版本和早于Windows 10 21H2的Windows时，“黑屏”功能可能在没有警告的情况下无法工作。
 因 Windows Magnification API更新的缘故， “黑屏”功能必须更新以支持更新的操作系统。
@@ -1059,12 +1059,12 @@ NVDA提供了几种内置的视觉增强提供程序。
 
 + 图像内容识别 +[ContentRecognition]
 当开发者没有为屏幕阅读器用户提供足够的信息来确认内容时，可以使用各种工具来尝试从图像中识别其内容。
-NVDA 支持 Windows 10 或其后版本内置的光学字符识别（OCR）功能，以便将图像识别成为文本。 
+NVDA 支持 Windows 10 或其后版本内置的光学字符识别（OCR）功能，以便将图像识别成为文本。
 还有一些 NVDA 插件也提供了类似的 OCR 功能。
 
 当您使用内容识别指令时，NVDA会从目前的[导航对象 #ObjectNavigation]识别内容。
-默认设置下，导航对象会跟随系统焦点或浏览模式光标，因此需要OCR时，通常您只需移动焦点或浏览模式光标即可。 
-例如，如果将浏览模式光标移动到图形上，在默认设置下，识别器会开始从图形中识别其内容。 
+默认设置下，导航对象会跟随系统焦点或浏览模式光标，因此需要OCR时，通常您只需移动焦点或浏览模式光标即可。
+例如，如果将浏览模式光标移动到图形上，在默认设置下，识别器会开始从图形中识别其内容。
 您可能希望直接使用对象导航。例如，识别整个应用程序窗口的内容。
 
 一旦识别完成，结果会显示在一个类似于浏览模式下的文档中，它允许使用光标键或其他键来阅读。
@@ -1120,7 +1120,7 @@ NVDA 可在您使用 Microsoft Word 浏览表格时自动读出恰当的行列�
  按下“NVDA+alt+c”可以查看系统输入焦点所在处的任何注释。
 %kc:endInclude
  文档的所有注释都可以在元素列表中进行查看，只要把类型选择为“标注”即可。
- 
+
 ++ Microsoft Excel ++[MicrosoftExcel]
 
 +++ 自动朗读表格的行列标题 +++[ExcelAutomaticColumnAndRowHeaderReading]
@@ -1196,7 +1196,7 @@ Excel 工作簿可包含表单。
 ++ Microsoft PowerPoint ++[MicrosoftPowerPoint]
 %kc:beginInclude
 || 名称 | 按键 | 描述 |
-| 切换大纲朗读 | control+shift+s | 当进行幻灯片播放时，此命令将在幻灯片或者幻灯片内容的大纲之间切换。此命令仅作用于 NVDA 所朗读的内容，而不能作用于显示的内容。 | 
+| 切换大纲朗读 | control+shift+s | 当进行幻灯片播放时，此命令将在幻灯片或者幻灯片内容的大纲之间切换。此命令仅作用于 NVDA 所朗读的内容，而不能作用于显示的内容。 |
 %kc:endInclude
 
 ++ foobar2000 ++[Foobar2000]
@@ -1364,11 +1364,11 @@ NVDA支持命令提示符，PowerShell 以及 Linux 子系统的 Windows 控制�
 如果此选项被启用，NVDA 将自动检查 新版本的 NVDA，在新版本可用时向您作出通知。
 您也可以通过点击“帮助”菜单下的“检查更新”手动获取更新。
 为了检查更新，NVDA需要向服务器发送您使用的系统的信息。
-具体包括: 
+具体包括:
 - 当前 NVDA 版本
 - 操作系统版本
 - 操作系统是 64 位还是 32 位
-- 
+-
 
 ==== 允许NVDA获取用户统计信息 ====[GeneralSettingsGatherUsageStats]
 选中这一项之后，NV Access 会在检查更新时获取您的信息，以便统计NVDA用户的分布。比如使用的操作系统和所在国家的比例。
@@ -1379,7 +1379,7 @@ NVDA更新服务器只根据您的IP判断用户在哪国使用NVDA，并不会�
 - 当前使用的语音合成器名称(包括合成器插件名称)
 - 当前使用的点显器名称(包括点显器驱动插件名称)
 - 当前使用的盲文表(使用点显器时才会上传)
-- 
+-
 
 这些信息有助于 NV Access 决定NVDA开发的侧重点。
 
@@ -1419,7 +1419,7 @@ NVDA更新服务器只根据您的IP判断用户在哪国使用NVDA，并不会�
 此选项允许您更改当前语音的语调。
 这是一个从0到100的滑块，0的时候最低，100的时候最高。
 
-==== 音量 ====[SpeechSettingsVolume]  
+==== 音量 ====[SpeechSettingsVolume]
 这是一个从0到100的滑块，0的时候音量最小，100的时候最大。
 
 ==== 变调 ====[SpeechSettingsInflection]
@@ -1769,7 +1769,7 @@ NVDA设置对话框中的“键盘设置”部分包含一些选项，用于设�
 
 ==== 在全文朗读模式下启用快捷键导航 ====[KeyboardSettingsSpeechInteruptForEnter]
 如果启用，某些导航命令(例如浏览模式下的快速导航或者按照行和段落移动)不会中断全文朗读，而会让其跳到下一个位置继续朗读。
- 
+
 ==== 若大小写锁定键(capslock)打开，输入小写字母时发出提示音 ====[KeyboardSettingsBeepLowercase]
 如果启用，在大小写锁定建(capslock)打开时使用 Shift 键进行小写字母输入，您会听到一个警告提示音。
 通常，使用大小写锁定建输入转译字符是无意识的，使用此键进行转译字符输入通常是由于未能意识到大小写锁定建已经被打开。
@@ -1929,7 +1929,7 @@ NVDA设置对话框中的“鼠标设置”分类允许NVDA跟踪鼠标，用嘟
 +++ 输入法设置 +++[InputCompositionSettings]
 “输入法设置”这个分类允许您控制 NVDA 用何种方式朗读亚洲国家语言中字符的输入方式，例如 IME 或 TSF框架的输入法。
  请注意，现在的输入法之间在特性上和信息传递上都有着很大的差异，想获得更高效的输入体验，为每个输入法进行不同的设置在大多数时候看来是必须的。
- 
+
 ==== 自动朗读所有可用的候选 ====[InputCompositionReportAllCandidates]
 此选项默认情况下启用，允许您选择是否在候选列表出现时或他的页面被滚动时，自动朗读所有候选列表上的可见候选。
 对于如新仓颉或無蝦米等中文笔画输入法而言，这个功能很实用。您可以迅速地听到所有的候选词和编号，方便作出选择。
@@ -1944,7 +1944,7 @@ NVDA设置对话框中的“鼠标设置”分类允许NVDA跟踪鼠标，用嘟
 这个选项默认时启用，允许您选择是否希望在候选列表出现后，在选择的候选发生改变时或自动朗读候选时，为每一个候选字符分别读出它的短描述。
 请注意，在某些区域设置，此选项中朗读选择的候选包含的短字符描述这一特性无效。
 此选项对于韩语或者日语输入法也许很有用。
- 
+
 ==== 朗读预上屏字串的更新 ====[InputCompositionReadingStringChanges]
 一些输入法，例如中文的新注音或新仓颉输入法拥有 Reading 字串(有时也被认为是预上屏字串)。
 您可以使用此选项选择是否允许 NVDA 朗读被输入到预上屏字串的新字符。
@@ -2364,7 +2364,7 @@ NVDA 的语音字典比之单词替换更为强大。
  例如，您可能可以用它来让标点在处于比自身级别更高时不暂停且拥有替换文本，而在比自身级别低时暂停。
  -
 -
- 
+
 您可以通过点击“添加”按钮增加新的符号。
 在出现的对话框输入标点名称并点击“确定”按钮。
 然后，像您修改其他标点一样的修改新标点每个区域的值。
@@ -3030,7 +3030,7 @@ Please see the display's documentation for descriptions of where these keys can 
 | Say all | space+dot1+dot2+dot3+dot4+dot5+dot6 |
 %kc:endInclude
 
-+++ Key assignments for Brailliant BI 32, BI 40 and B 80 +++ 
++++ Key assignments for Brailliant BI 32, BI 40 and B 80 +++
 %kc:beginInclude
 || Name | Key |
 | NVDA Menu | c1+c3+c4+c5 (command n) |
@@ -3038,7 +3038,7 @@ Please see the display's documentation for descriptions of where these keys can 
 | Say all | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
-+++ Key assignments for Brailliant BI 14 +++ 
++++ Key assignments for Brailliant BI 14 +++
 %kc:beginInclude
 || Name | Key |
 | up arrow key | joystick up |
@@ -3049,7 +3049,7 @@ Please see the display's documentation for descriptions of where these keys can 
 %kc:endInclude
 
 ++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Series ++[Hims]
-NVDA supports Braille Sense, Braille EDGE, Smart Beetle and Sync Braille displays from [Hims https://www.hims-inc.com/] when connected via USB or bluetooth. 
+NVDA supports Braille Sense, Braille EDGE, Smart Beetle and Sync Braille displays from [Hims https://www.hims-inc.com/] when connected via USB or bluetooth.
 If connecting via USB, you will need to install the USB drivers from HIMS on your system.
 You can download these from here: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
 
@@ -3273,10 +3273,10 @@ The inner keys are both mapped to space.
 | alt key | lt+dot3 |
 | control+escape key | space with dot 1 2 3 4 5 6 |
 | tab key | space with dot 3 7 |
-%kc:endInclude 
+%kc:endInclude
 
 ++ Papenmeier Braille BRAILLEX Older Models ++[PapenmeierOld]
-The following Braille displays are supported: 
+The following Braille displays are supported:
 - BRAILLEX EL 80, EL 2D-80, EL 40 P
 - BRAILLEX Tiny, 2D Screen
 -
@@ -3494,7 +3494,7 @@ Due to this, and to maintain compatibility with other screen readers in Taiwan, 
 %kc:beginInclude
 || Name | Key |
 | Scroll braille display back | numpadMinus |
-| Scroll braille display forward | numpadPlus | 
+| Scroll braille display forward | numpadPlus |
 %kc:endInclude
 
 ++ Eurobraille Esys/Esytime/Iris displays ++[Eurobraille]
@@ -3675,7 +3675,7 @@ Please see the display's documentation for descriptions of where these keys can 
 | ``Windows+b`` key (focus system tray) | ``attribute3`` |
 | ``Windows+i`` key (Windows settings) | ``attribute4`` |
 %kc:endInclude
- 
+
 ++ HID 标准盲文点显器 ++[HIDBraille]
 这是新标准 HID 盲文规范的实验性驱动，由 Microsoft、Google、Apple 和包括 NV Access 在内的几家辅助技术公司于 2018 年达成一致。
 希望未来所有制造商推出的盲文点显器设备都可以使用此标准协议，以消除设备驱动之间的差异性。
