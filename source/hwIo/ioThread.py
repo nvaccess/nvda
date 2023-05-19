@@ -10,7 +10,7 @@ import threading
 import winKernel
 import typing
 from logHandler import log
-import serial.win32
+from serial.win32 import OVERLAPPED, LPOVERLAPPED
 from contextlib import contextmanager
 from extensionPoints.util import AnnotatableWeakref, BoundMethodWeakref
 from inspect import ismethod
@@ -23,12 +23,12 @@ LPOVERLAPPED_COMPLETION_ROUTINE = ctypes.WINFUNCTYPE(
 	None,
 	ctypes.wintypes.DWORD,
 	ctypes.wintypes.DWORD,
-	serial.win32.LPOVERLAPPED
+	LPOVERLAPPED
 )
 ApcT = typing.Callable[[int], None]
 ApcIdT = int
-CompletionRoutineIdT = int
-CompletionRoutineT = typing.Callable[[int, int, serial.win32.LPOVERLAPPED], None]
+OverlappedStructAddressT = int
+CompletionRoutineT = typing.Callable[[int, int, LPOVERLAPPED], None]
 ApcStoreT = typing.Dict[
 	ApcIdT,
 	typing.Tuple[
@@ -36,10 +36,10 @@ ApcStoreT = typing.Dict[
 	]
 ]
 CompletionRoutineStoreTypeT = typing.Dict[
-	CompletionRoutineIdT,
+	OverlappedStructAddressT,
 	typing.Tuple[
 		typing.Union[BoundMethodWeakref[CompletionRoutineT], AnnotatableWeakref[CompletionRoutineT]],
-		serial.win32.OVERLAPPED
+		OVERLAPPED
 	]
 ]
 apcsWillBeStronglyReferenced = version_year < 2024 and NVDAState._allowDeprecatedAPI()
@@ -76,6 +76,10 @@ class IoThread(threading.Thread):
 	#: Store of Python functions to be called as Overlapped Completion Routine.
 	#: This allows us to have a single completion routine in the class rather than on
 	#: each instance, which prevents reference cycles.
+	#: Note that we use the address of the OVERLAPPED structure as key in this store,
+	#: eventhough the structure is also stored in the value.
+	#: The OVERLAPPED structure can't be used as key because ctypes does not have OOR (original object return),
+	#: it constructs a new, equivalent object each time you retrieve the contents of a LPOVERLAPPED.
 	_completionRoutineStore: CompletionRoutineStoreTypeT = {}
 
 	def __init__(self):
@@ -114,7 +118,7 @@ class IoThread(threading.Thread):
 	def _internalCompletionRoutine(
 			error: int,
 			numberOfBytes: int,
-			overlapped: serial.win32.LPOVERLAPPED
+			overlapped: LPOVERLAPPED
 	):
 		threadinst = threading.current_thread()
 		if not isinstance(threadinst, IoThread):
@@ -218,7 +222,7 @@ class IoThread(threading.Thread):
 	def queueAsCompletionRoutine(
 			self,
 			func: CompletionRoutineT,
-			overlapped: serial.win32.OVERLAPPED,
+			overlapped: OVERLAPPED,
 	):
 		"""safely queues a Python function call as an overlapped completion routine.
 		A weak reference to the Python function is saved in a store on the IoThread instance
