@@ -192,7 +192,7 @@ class AddonStoreVM:
 			),
 			AddonActionVM(
 				# Translators: Label for a button that installs the selected addon
-				displayName=pgettext("addonStore", "Add-on &help"),
+				displayName=pgettext("addonStore", "&Help"),
 				actionHandler=self.helpAddon,
 				validCheck=lambda aVM: self._filteredStatusKey in (
 					# Showing help in the updatable add-ons view is misleading
@@ -211,7 +211,7 @@ class AddonStoreVM:
 			),
 			AddonActionVM(
 				# Translators: Label for a button that opens the license for the selected addon
-				displayName=pgettext("addonStore", "License"),
+				displayName=pgettext("addonStore", "&License"),
 				actionHandler=lambda aVM: startfile(aVM.model.licenseURL),
 				validCheck=lambda aVM: (
 					isinstance(aVM.model, AddonStoreModel)
@@ -221,7 +221,7 @@ class AddonStoreVM:
 			),
 			AddonActionVM(
 				# Translators: Label for a button that opens the license for the selected addon
-				displayName=pgettext("addonStore", "Source Code"),
+				displayName=pgettext("addonStore", "Source &Code"),
 				actionHandler=lambda aVM: startfile(aVM.model.sourceURL),
 				validCheck=lambda aVM: isinstance(aVM.model, AddonStoreModel),
 				listItemVM=selectedListItem
