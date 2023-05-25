@@ -12,7 +12,7 @@ from gui import guiHelper
 from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 from logHandler import log
 
-from ..viewModels.addonList import AddonDetailsVM
+from ..viewModels.addonList import AddonDetailsVM, AddonListField
 
 from .actions import _ActionsContextMenu
 
@@ -193,7 +193,6 @@ class AddonDetails(
 
 	def _refresh(self):
 		details = None if self._detailsVM.listItem is None else self._detailsVM.listItem.model
-		status = None if self._detailsVM.listItem is None else self._detailsVM.listItem.status
 
 		with guiHelper.autoThaw(self):
 			# AppendText is used to build up the details so that formatting can be set as text is added, via
@@ -220,11 +219,19 @@ class AddonDetails(
 					pgettext("addonStore", "Publisher:"),
 					details.publisher
 				)
-				self._appendDetailsLabelValue(
-					# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
-					pgettext("addonStore", "Version:"),
-					details.addonVersionName
-				)
+				currentStatusKey = self._actionsContextMenu._storeVM._filteredStatusKey
+				if currentStatusKey not in AddonListField.currentAddonVersionName.hideStatuses:
+					self._appendDetailsLabelValue(
+						# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+						pgettext("addonStore", "Installed version:"),
+						details._addonHandlerModel.version
+					)
+				if currentStatusKey not in AddonListField.availableAddonVersionName.hideStatuses:
+					self._appendDetailsLabelValue(
+						# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+						pgettext("addonStore", "Available version:"),
+						details.addonVersionName
+					)
 				self._appendDetailsLabelValue(
 					# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 					pgettext("addonStore", "Channel:"),

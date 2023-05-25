@@ -227,6 +227,7 @@ class AddonStoreDialog(SettingsDialog):
 		self.enabledFilterCtrl.SetSelection(0)
 
 		self._storeVM._filteredStatusKey = self._statusFilterKey
+		self.addonListView._refreshColumns()
 
 		if self._storeVM._filteredStatusKey in {
 			_StatusFilterKey.AVAILABLE,

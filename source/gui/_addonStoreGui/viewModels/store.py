@@ -90,7 +90,8 @@ class AddonStoreVM:
 		self._pendingInstalls: List[Tuple[AddonListItemVM, PathLike]] = []
 
 		self.listVM: AddonListVM = AddonListVM(
-			addons=self._createListItemVMs()
+			addons=self._createListItemVMs(),
+			storeVM=self,
 		)
 		self.detailsVM: AddonDetailsVM = AddonDetailsVM(
 			listItem=self.listVM.getSelection()

@@ -4,9 +4,7 @@
 # See the file COPYING for more details.
 
 from typing import (
-	List,
 	Optional,
-	Tuple,
 )
 
 import wx
@@ -26,22 +24,6 @@ class AddonVirtualList(
 		nvdaControls.AutoWidthColumnListCtrl,
 		DpiScalingHelperMixinWithoutInit,
 ):
-	@property
-	def _columnHeaders(self) -> List[Tuple[str, int]]:
-		return [
-			# Translators: The name of the column that contains names of addons.
-			(pgettext("addonStore", "Name"), self.scaleSize(150)),
-			# Translators: The name of the column that contains the addons version string.
-			(pgettext("addonStore", "Version"), self.scaleSize(50)),
-			# Translators: The name of the column that contains the channel of the addon (e.g stable, beta, dev).
-			(pgettext("addonStore", "Channel"), self.scaleSize(50)),
-			# Translators: The name of the column that contains the addons publisher.
-			(pgettext("addonStore", "Publisher"), self.scaleSize(100)),
-			# Translators: The name of the column that contains the status of the addon.
-			# e.g. available, downloading installing
-			(pgettext("addonStore", "Status"), self.scaleSize(150)),
-		]
-
 	def __init__(
 			self,
 			parent: wx.Window,
@@ -59,20 +41,18 @@ class AddonVirtualList(
 			),
 			autoSizeColumn=1,
 		)
+		self._addonsListVM = addonsListVM
+		self._actionsContextMenu = actionsContextMenu
 
 		self.SetMinSize(self.scaleSize((500, 500)))
 
-		for columnIndex, (columnLabel, columnWidth) in enumerate(self._columnHeaders):
-			self.InsertColumn(columnIndex, columnLabel, width=columnWidth)
-
+		self._refreshColumns()
 		self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.OnItemSelected)
 		self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.OnItemActivated)
 		self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.OnItemDeselected)
 		self.Bind(wx.EVT_LIST_COL_CLICK, self.OnColClick)
 		self.Bind(wx.EVT_KEY_DOWN, self._handleListSort)
 
-		self._addonsListVM = addonsListVM
-		self._actionsContextMenu = actionsContextMenu
 		self.Bind(event=wx.EVT_CONTEXT_MENU, handler=self._popupContextMenuFromList)
 
 		self.SetItemCount(addonsListVM.getCount())
@@ -82,6 +62,12 @@ class AddonVirtualList(
 			self.Focus(selIndex)
 		self._addonsListVM.itemUpdated.register(self._itemDataUpdated)
 		self._addonsListVM.updated.register(self._doRefresh)
+
+	def _refreshColumns(self):
+		self.ClearAll()
+		for colIndex, col in enumerate(self._addonsListVM.presentedFields):
+			self.InsertColumn(colIndex, col.displayString, width=self.scaleSize(col.width))
+		self.Layout()
 
 	def _getListSelectionPosition(self) -> Optional[wx.Position]:
 		firstSelectedIndex: int = self.GetFirstSelected()
@@ -123,9 +109,9 @@ class AddonVirtualList(
 		self._addonsListVM.setSelection(None)
 
 	def OnGetItemText(self, itemIndex: int, colIndex: int) -> str:
-		dataItem = self._addonsListVM.getAddonAttrText(
+		dataItem = self._addonsListVM.getAddonFieldText(
 			itemIndex,
-			AddonListVM.presentedAttributes[colIndex]
+			self._addonsListVM.presentedFields[colIndex]
 		)
 		if dataItem is None:
 			# Failed to get dataItem, index may have been lost in refresh.
@@ -134,7 +120,7 @@ class AddonVirtualList(
 
 	def _handleListSort(self, evt: wx.KeyEvent):
 		"""Bind ctrl+1,2,3,4,5 to sort the columns of the list"""
-		for i, attribute in enumerate(self._addonsListVM.presentedAttributes):
+		for i, attribute in enumerate(self._addonsListVM.presentedFields):
 			if evt.UnicodeKey == ord(str(i)) and evt.controlDown:
 				self._addonsListVM.setSortField(attribute)
 				return
@@ -144,7 +130,7 @@ class AddonVirtualList(
 	def OnColClick(self, evt: wx.ListEvent):
 		colIndex = evt.GetColumn()
 		log.debug(f"col clicked: {colIndex}")
-		self._addonsListVM.setSortField(AddonListVM.presentedAttributes[colIndex])
+		self._addonsListVM.setSortField(self._addonsListVM.presentedFields[colIndex])
 
 	def _doRefresh(self):
 		with guiHelper.autoThaw(self):

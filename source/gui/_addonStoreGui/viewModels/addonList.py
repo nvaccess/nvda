@@ -6,9 +6,12 @@
 # Needed for type hinting CaseInsensitiveDict
 # Can be removed in a future version of python (3.8+)
 from __future__ import annotations
+from dataclasses import dataclass
+from enum import Enum
 
 from locale import strxfrm
 from typing import (
+	FrozenSet,
 	List,
 	Optional,
 	TYPE_CHECKING,
@@ -20,6 +23,7 @@ from _addonStore.models.addon import (
 	AddonGUIModel,
 )
 from _addonStore.models.status import (
+	_StatusFilterKey,
 	AvailableAddonStatus,
 )
 import core
@@ -30,6 +34,53 @@ from logHandler import log
 if TYPE_CHECKING:
 	# Remove when https://github.com/python/typing/issues/760 is resolved
 	from _typeshed import SupportsLessThan  # noqa: F401
+	from .store import AddonStoreVM
+
+
+@dataclass
+class _AddonListFieldData:
+	displayString: str
+	width: int
+	hideStatuses: FrozenSet[_StatusFilterKey] = frozenset()
+	"""Hide this field if the current tab filter is in hideStatuses."""
+
+
+class AddonListField(_AddonListFieldData, Enum):
+	"""An ordered enum of fields to use as columns in the add-on list."""
+
+	displayName = (
+		# Translators: The name of the column that contains names of addons.
+		pgettext("addonStore", "Name"),
+		150,
+	)
+	currentAddonVersionName = (
+		# Translators: The name of the column that contains the installed addons version string.
+		pgettext("addonStore", "Installed version"),
+		100,
+		frozenset({_StatusFilterKey.AVAILABLE}),
+	)
+	availableAddonVersionName = (
+		# Translators: The name of the column that contains the available addons version string.
+		pgettext("addonStore", "Available version"),
+		100,
+		frozenset({_StatusFilterKey.INCOMPATIBLE, _StatusFilterKey.INSTALLED}),
+	)
+	channel = (
+		# Translators: The name of the column that contains the channel of the addon (e.g stable, beta, dev).
+		pgettext("addonStore", "Channel"),
+		50,
+	)
+	publisher = (
+		# Translators: The name of the column that contains the addons publisher.
+		pgettext("addonStore", "Publisher"),
+		100
+	)
+	status = (
+		# Translators: The name of the column that contains the status of the addon.
+		# e.g. available, downloading installing
+		pgettext("addonStore", "Status"),
+		150
+	)
 
 
 class AddonListItemVM:
@@ -43,11 +94,11 @@ class AddonListItemVM:
 		self.updated = extensionPoints.Action()  # Notify of changes to VM, argument: addonListItemVM
 
 	@property
-	def model(self):
+	def model(self) -> AddonGUIModel:
 		return self._model
 
 	@property
-	def status(self):
+	def status(self) -> AvailableAddonStatus:
 		return self._status
 
 	@status.setter
@@ -92,36 +143,34 @@ class AddonDetailsVM:
 
 
 class AddonListVM:
-	presentedAttributes = (
-		"displayName",
-		"addonVersionName",
-		"channel",
-		"publisher",
-		"status",  # NVDA state for this addon, see L{AvailableAddonStatus}
-	)
-
 	def __init__(
 			self,
 			addons: List[AddonListItemVM],
+			storeVM: "AddonStoreVM",
 	):
 		self._addons: CaseInsensitiveDict[AddonListItemVM] = CaseInsensitiveDict()
+		self._storeVM = storeVM
 		self.itemUpdated = extensionPoints.Action()
 		self.updated = extensionPoints.Action()
 		self.selectionChanged = extensionPoints.Action()
 		self.selectedAddonId: Optional[str] = None
 		self.lastSelectedAddonId = self.selectedAddonId
-		self._sortByModelFieldName: str = "displayName"
+		self._sortByModelField: AddonListField = AddonListField.displayName
 		self._filterString: Optional[str] = None
 
 		self._setSelectionPending = False
 		self._addonsFilteredOrdered: List[str] = self._getFilteredSortedIds()
 		self._validate(
-			sortField=self._sortByModelFieldName,
+			sortField=self._sortByModelField,
 			selectionIndex=self.getSelectedIndex(),
 			selectionId=self.selectedAddonId
 		)
 		self.selectedAddonId = self._tryPersistSelection(self._addonsFilteredOrdered)
 		self.resetListItems(addons)
+
+	@property
+	def presentedFields(self) -> List[AddonListField]:
+		return [c for c in AddonListField if self._storeVM._filteredStatusKey not in c.hideStatuses]
 
 	def _itemDataUpdated(self, addonListItemVM: AddonListItemVM):
 		addonId: str = addonListItemVM.Id
@@ -155,10 +204,10 @@ class AddonListVM:
 		# ensure calling on the main thread.
 		core.callLater(delay=0, callable=self.updated.notify)
 
-	def getAddonAttrText(self, index: int, attrName: str) -> Optional[str]:
+	def getAddonFieldText(self, index: int, field: AddonListField) -> Optional[str]:
 		""" Get the text for an item's attribute.
 		@param index: The index of the item in _addonsFilteredOrdered
-		@param attrName: The exposed attribute for the addon. See L{AddonList.presentedAttributes}
+		@param field: The field attribute for the addon. See L{AddonList.presentedFields}
 		@return: The text for the addon attribute
 		"""
 		try:
@@ -171,15 +220,19 @@ class AddonListVM:
 		except KeyError:
 			# Failed to get addon, may have been lost in refresh.
 			return None
-		return self._getAddonAttrText(listItemVM, attrName)
+		return self._getAddonFieldText(listItemVM, field)
 
-	def _getAddonAttrText(self, listItemVM: AddonListItemVM, attrName: str) -> str:
-		assert attrName in AddonListVM.presentedAttributes
-		if attrName == "status":  # special handling, not on the model.
+	def _getAddonFieldText(self, listItemVM: AddonListItemVM, field: AddonListField) -> str:
+		assert field in AddonListField
+		if field is AddonListField.currentAddonVersionName:
+			return listItemVM.model._addonHandlerModel.version
+		if field is AddonListField.availableAddonVersionName:
+			return listItemVM.model.addonVersionName
+		if field is AddonListField.status:  # special handling, not on the model.
 			return listItemVM.status.displayString
-		if attrName == "channel":
+		if field is AddonListField.channel:
 			return listItemVM.model.channel.displayString
-		return getattr(listItemVM.model, attrName)
+		return getattr(listItemVM.model, field.name)
 
 	def getCount(self) -> int:
 		return len(self._addonsFilteredOrdered)
@@ -211,21 +264,21 @@ class AddonListVM:
 
 	def _validate(
 			self,
-			sortField: Optional[str] = None,
+			sortField: Optional[AddonListField] = None,
 			selectionIndex: Optional[int] = None,
 			selectionId: Optional[str] = None,
 	):
 		if sortField is not None:
-			assert (sortField in AddonListVM.presentedAttributes)
+			assert sortField in AddonListField
 		if selectionIndex is not None:
-			assert (0 <= selectionIndex < len(self._addonsFilteredOrdered))
+			assert 0 <= selectionIndex and selectionIndex < len(self._addonsFilteredOrdered)
 		if selectionId is not None:
-			assert (selectionId in self._addons.keys())
+			assert selectionId in self._addons.keys()
 
-	def setSortField(self, modelFieldName: str):
+	def setSortField(self, modelField: AddonListField):
 		oldOrder = self._addonsFilteredOrdered
-		self._validate(sortField=modelFieldName)
-		self._sortByModelFieldName = modelFieldName
+		self._validate(sortField=modelField)
+		self._sortByModelField = modelField
 		self._updateAddonListing()
 		if oldOrder != self._addonsFilteredOrdered:
 			# ensure calling on the main thread.
@@ -233,7 +286,7 @@ class AddonListVM:
 
 	def _getFilteredSortedIds(self) -> List[str]:
 		def _getSortFieldData(listItemVM: AddonListItemVM) -> "SupportsLessThan":
-			return strxfrm(self._getAddonAttrText(listItemVM, self._sortByModelFieldName))
+			return strxfrm(self._getAddonFieldText(listItemVM, self._sortByModelField))
 
 		def _containsTerm(detailsVM: AddonListItemVM, term: str) -> bool:
 			term = term.casefold()
