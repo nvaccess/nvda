@@ -228,17 +228,14 @@ class AddonStoreDialog(SettingsDialog):
 
 		self._storeVM._filteredStatusKey = self._statusFilterKey
 
-		if self._storeVM._filteredStatusKey == _StatusFilterKey.AVAILABLE:
-			self._storeVM._filterChannelKey = Channel.STABLE
-		else:
-			self._storeVM._filterChannelKey = Channel.ALL
-
 		if self._storeVM._filteredStatusKey in {
 			_StatusFilterKey.AVAILABLE,
 			_StatusFilterKey.UPDATE,
 		}:
+			self._storeVM._filterChannelKey = Channel.STABLE
 			self.enabledFilterCtrl.Disable()
 		else:
+			self._storeVM._filterChannelKey = Channel.ALL
 			self.enabledFilterCtrl.Enable()
 
 		channelFilterIndex = list(_channelFilters.keys()).index(self._storeVM._filterChannelKey)
