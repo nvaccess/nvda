@@ -3,15 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from typing import (
-	cast,
-	Callable,
-	Dict,
-	List,
-)
-
 import wx
-from wx.lib.expando import ExpandoTextCtrl
 
 from _addonStore.models.addon import (
 	AddonStoreModel,
@@ -20,11 +12,9 @@ from gui import guiHelper
 from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 from logHandler import log
 
-from ..viewModels.addonList import (
-	AddonDetailsVM,
-	AddonActionVM,
-)
+from ..viewModels.addonList import AddonDetailsVM
 
+from .actions import _ActionsContextMenu
 
 _fontFaceName = "Segoe UI"
 _fontFaceName_semiBold = "Segoe UI Semibold"
@@ -49,11 +39,17 @@ class AddonDetails(
 
 	# Translators: Label for the text control containing a description of the selected add-on.
 	# In the add-on store dialog.
-	_actionsLabelText: str = pgettext("addonStore", "Actions:")
+	_actionsLabelText: str = pgettext("addonStore", "&Actions")
 
-	def __init__(self, parent, actionVMList: List[AddonActionVM], detailsVM: AddonDetailsVM):
+	def __init__(
+			self,
+			parent: wx.Window,
+			detailsVM: AddonDetailsVM,
+			actionsContextMenu: _ActionsContextMenu,
+	):
 		self._detailsVM: AddonDetailsVM = detailsVM
-		self._actionVMList = actionVMList
+		self._actionsContextMenu = actionsContextMenu
+
 		wx.Panel.__init__(
 			self,
 			parent,
@@ -115,26 +111,16 @@ class AddonDetails(
 		self.descriptionTextCtrl.SetMinSize(descriptionMinSize)
 		self.descriptionTextCtrl.SetMaxSize(descriptionMaxSize)
 		self.contents.Add(self.descriptionTextCtrl, flag=wx.EXPAND)
-		self.contents.Add(wx.StaticLine(self.contentsPanel), flag=wx.EXPAND)
 
-		statusSizer = guiHelper.BoxSizerHelper(self.contentsPanel, wx.HORIZONTAL)
-		self.contents.Add(statusSizer.sizer)
-		self.statusTextCtrl = cast(ExpandoTextCtrl, statusSizer.addLabeledControl(
-			AddonDetails._statusLabelText,
-			ExpandoTextCtrl,
-			style=wx.TE_READONLY | wx.BORDER_NONE,
-		))
-
-		self.contents.AddSpacer(guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
 		self.contents.Add(wx.StaticLine(self.contentsPanel), flag=wx.EXPAND)
 		self.contents.AddSpacer(guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
 
-		self._actionButtonMap: Dict[AddonActionVM, wx.Button] = {}
-		self.actionButtonSizer = wx.WrapSizer()
-		self.actionButtonPanel = wx.Panel(self.contentsPanel)
-		self.actionButtonPanel.SetSizer(self.actionButtonSizer)
-		self.contents.Add(self.actionButtonPanel)
-		self._createActionButtons()
+		actionsButton = wx.Button(self.contentsPanel, label=self._actionsLabelText)
+		self.contents.Add(actionsButton)
+		actionsButton.Bind(
+			event=wx.EVT_BUTTON,
+			handler=lambda e: self._actionsContextMenu.popupContextMenuFromPosition(self, actionsButton.Position)
+		)
 
 		self.contents.AddSpacer(guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
 		self.contents.Add(wx.StaticLine(self.contentsPanel), flag=wx.EXPAND)
@@ -229,9 +215,6 @@ class AddonDetails(
 					self.defaultStyle
 				)
 
-				if status:
-					self.statusTextCtrl.SetValue(status.displayString)
-
 				self._appendDetailsLabelValue(
 					# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 					pgettext("addonStore", "Publisher:"),
@@ -311,33 +294,3 @@ class AddonDetails(
 		detailsTextCtrl.SetDefaultStyle(self.defaultStyle)
 		detailsTextCtrl.AppendText(self._labelSpace)
 		detailsTextCtrl.AppendText(value)
-
-	def _createActionButtons(self) -> None:
-		def _makeButtonClickedEventHandler(_action: AddonActionVM) -> Callable[[wx.CommandEvent, ], None]:
-			"""Get around python binding to the latest value in a for loop, create a new lambda
-			for each value with an explicit binding to the addon details.
-			"""
-			def handleButtonClickEvent(event: wx.CommandEvent) -> None:
-				_action.actionHandler(self._detailsVM.listItem)
-
-			return handleButtonClickEvent
-
-		for action in self._actionVMList:
-			button = wx.Button(self.actionButtonPanel, label=action.displayName)
-			self.actionButtonSizer.Add(button)
-			button.Bind(
-				event=wx.EVT_BUTTON,
-				handler=_makeButtonClickedEventHandler(action)
-			)
-			button.Show(show=action.isValid)
-			action.updated.register(self._actionVmChanged)
-			self._actionButtonMap[action] = button
-
-	def _actionVmChanged(self, addonActionVM: AddonActionVM):
-		# Toggle accelerator key from working
-		self._actionButtonMap[addonActionVM].Enable(enable=addonActionVM.isValid)
-		# Toggle visibility and tab order
-		self._actionButtonMap[addonActionVM].Show(show=addonActionVM.isValid)
-		if self._detailsVM.listItem:
-			self.statusTextCtrl.SetValue(self._detailsVM.listItem.status.displayString)
-		self.Layout()

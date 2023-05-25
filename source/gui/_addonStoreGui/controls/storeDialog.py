@@ -29,6 +29,7 @@ from gui.settingsDialogs import SettingsDialog
 from logHandler import log
 
 from ..viewModels.store import AddonStoreVM
+from .actions import _ActionsContextMenu
 from .addonList import AddonVirtualList
 from .details import AddonDetails
 
@@ -41,6 +42,7 @@ class AddonStoreDialog(SettingsDialog):
 	def __init__(self, parent: wx.Window, storeVM: AddonStoreVM):
 		self._storeVM = storeVM
 		self._storeVM.onDisplayableError.register(self.handleDisplayableError)
+		self._actionsContextMenu = _ActionsContextMenu(self._storeVM)
 		super().__init__(parent, resizeable=True, buttons={wx.CLOSE})
 
 	def _enterActivatesOk_ctrlSActivatesApply(self, evt: wx.KeyEvent):
@@ -114,7 +116,7 @@ class AddonStoreDialog(SettingsDialog):
 		self.addonListView = AddonVirtualList(
 			parent=self,
 			addonsListVM=self._storeVM.listVM,
-			actionVMList=self._storeVM.actionVMList,
+			actionsContextMenu=self._actionsContextMenu,
 		)
 		# Add alt+l accelerator key
 		_setFocusToAddonListView_eventId = wx.NewIdRef(count=1)
@@ -127,8 +129,8 @@ class AddonStoreDialog(SettingsDialog):
 
 		self.addonDetailsView = AddonDetails(
 			parent=self,
-			actionVMList=self._storeVM.actionVMList,
 			detailsVM=self._storeVM.detailsVM,
+			actionsContextMenu=self._actionsContextMenu,
 		)
 		splitViewSizer.Add(self.addonDetailsView, flag=wx.EXPAND, proportion=1)
 

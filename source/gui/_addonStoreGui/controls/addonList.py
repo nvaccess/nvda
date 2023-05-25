@@ -3,10 +3,9 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import functools
 from typing import (
-	Dict,
 	List,
+	Optional,
 	Tuple,
 )
 
@@ -19,11 +18,8 @@ from gui import (
 from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 from logHandler import log
 
-from ..viewModels.addonList import (
-	AddonListVM,
-	AddonListItemVM,
-	AddonActionVM,
-)
+from .actions import _ActionsContextMenu
+from ..viewModels.addonList import AddonListVM
 
 
 class AddonVirtualList(
@@ -46,7 +42,12 @@ class AddonVirtualList(
 			(pgettext("addonStore", "Status"), self.scaleSize(150)),
 		]
 
-	def __init__(self, parent, addonsListVM: AddonListVM, actionVMList: List[AddonActionVM]):
+	def __init__(
+			self,
+			parent: wx.Window,
+			addonsListVM: AddonListVM,
+			actionsContextMenu: _ActionsContextMenu,
+	):
 		super().__init__(
 			parent,
 			style=(
@@ -71,11 +72,8 @@ class AddonVirtualList(
 		self.Bind(wx.EVT_KEY_DOWN, self._handleListSort)
 
 		self._addonsListVM = addonsListVM
-		self._actionVMList = actionVMList
-		self._contextMenu = wx.Menu()
-		self._actionMenuItemMap: Dict[AddonActionVM, wx.MenuItem] = {}
-		self.Bind(event=wx.EVT_CONTEXT_MENU, handler=self._popupContextMenu)
-		self._updateContextMenu()
+		self._actionsContextMenu = actionsContextMenu
+		self.Bind(event=wx.EVT_CONTEXT_MENU, handler=self._popupContextMenuFromList)
 
 		self.SetItemCount(addonsListVM.getCount())
 		selIndex = self._addonsListVM.getSelectedIndex()
@@ -85,32 +83,26 @@ class AddonVirtualList(
 		self._addonsListVM.itemUpdated.register(self._itemDataUpdated)
 		self._addonsListVM.updated.register(self._doRefresh)
 
-	def _popupContextMenuFromSelection(self, selectedIndex: int):
-		self._updateContextMenu()
-		itemRect: wx.Rect = self.GetItemRect(selectedIndex)
-		position: wx.Position = itemRect.GetBottomLeft()
-		self.PopupMenu(self._contextMenu, position)
-
-	def _popupContextMenu(self, evt: wx.ContextMenuEvent):
-		position = evt.GetPosition()
+	def _getListSelectionPosition(self) -> Optional[wx.Position]:
 		firstSelectedIndex: int = self.GetFirstSelected()
-		if firstSelectedIndex == -1:
-			# context menu only valid on an item.
+		if firstSelectedIndex < 0:
+			return None
+		itemRect: wx.Rect = self.GetItemRect(firstSelectedIndex)
+		return itemRect.GetBottomLeft()
+
+	def _popupContextMenuFromList(self, evt: wx.ContextMenuEvent):
+		listSelectionPosition = self._getListSelectionPosition()
+		if listSelectionPosition is None:
 			return
-		if position == wx.DefaultPosition:
+		eventPosition: wx.Position = evt.GetPosition()
+		if eventPosition == wx.DefaultPosition:
 			# keyboard triggered context menu (due to "applications" key)
 			# don't have position set. It must be fetched from the selected item.
-			self._popupContextMenuFromSelection(firstSelectedIndex)
+			self._actionsContextMenu.popupContextMenuFromPosition(self, listSelectionPosition)
 		else:
 			# Mouse (right click) triggered context menu.
 			# In this case the menu is positioned better with GetPopupMenuSelectionFromUser.
-			self._updateContextMenu()
-			self.GetPopupMenuSelectionFromUser(self._contextMenu)
-
-	def _menuItemClicked(self, evt: wx.CommandEvent, actionVM: AddonActionVM):
-		selectedAddon: AddonListItemVM = self._addonsListVM.getSelection()
-		log.debug(f"evt {evt}, actionVM: {actionVM}, selectedAddon: {selectedAddon}")
-		actionVM.actionHandler(selectedAddon)
+			self._actionsContextMenu.popupContextMenuFromPosition(self)
 
 	def _itemDataUpdated(self, index: int):
 		log.debug(f"index: {index}")
@@ -121,36 +113,10 @@ class AddonVirtualList(
 		log.debug(f"item selected: {newIndex}")
 		self._addonsListVM.setSelection(index=newIndex)
 
-	def _updateContextMenu(self):
-		prevActionIndex = -1
-		for action in self._actionVMList:
-			menuItem = self._actionMenuItemMap.get(action)
-			menuItems = list(self._contextMenu.GetMenuItems())
-			if action.isValid:
-				if menuItem is not None and menuItem in menuItems:
-					prevActionIndex = menuItems.index(menuItem)
-				else:
-					prevActionIndex += 1
-					self._actionMenuItemMap[action] = self._contextMenu.Insert(
-						prevActionIndex,
-						id=-1,
-						item=action.displayName
-					)
-					self._contextMenu.Bind(
-						event=wx.EVT_MENU,
-						handler=functools.partial(self._menuItemClicked, actionVM=action),
-						source=self._actionMenuItemMap[action],
-					)
-			else:
-				if menuItem is not None and menuItem in menuItems:
-					self.Unbind(wx.EVT_MENU, source=menuItem)
-					self._contextMenu.RemoveItem(menuItem)
-					del self._actionMenuItemMap[action]
-
 	def OnItemActivated(self, evt: wx.ListEvent):
-		activatedIndex = evt.GetIndex()
-		self._popupContextMenuFromSelection(activatedIndex)
-		log.debug(f"item activated: {activatedIndex}")
+		position = self._getListSelectionPosition()
+		self._actionsContextMenu.popupContextMenuFromPosition(self, position)
+		log.debug(f"item activated: {evt.GetIndex()}")
 
 	def OnItemDeselected(self, evt: wx.ListEvent):
 		log.debug(f"item deselected")

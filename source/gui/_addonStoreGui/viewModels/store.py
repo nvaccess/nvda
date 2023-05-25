@@ -48,8 +48,8 @@ from ..controls.messageDialogs import (
 	_shouldProceedWhenInstalledAddonVersionUnknown,
 )
 
+from .action import AddonActionVM
 from .addonList import (
-	AddonActionVM,
 	AddonDetailsVM,
 	AddonListItemVM,
 	AddonListVM,
@@ -273,7 +273,7 @@ class AddonStoreVM:
 			)
 			# ensure calling on the main thread.
 			core.callLater(delay=0, callable=self.onDisplayableError.notify, displayableError=displayableError)
-			return
+
 		listItemVM.status = getStatus(listItemVM.model)
 		self.refresh()
 
