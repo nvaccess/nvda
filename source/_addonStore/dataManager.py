@@ -24,6 +24,7 @@ import addonAPIVersion
 from baseObject import AutoPropertyObject
 from core import callLater
 import globalVars
+import languageHandler
 from logHandler import log
 
 from .models.addon import (
@@ -64,7 +65,7 @@ class _DataManager:
 
 	def __init__(self):
 		cacheDirLocation = os.path.join(globalVars.appArgs.configPath, "addonStore")
-		self._lang = "en"
+		self._lang = languageHandler.getLanguage()
 		self._preferredChannel = Channel.ALL
 		self._cacheLatestFile = os.path.join(cacheDirLocation, _DataManager._cacheLatestFilename)
 		self._cacheCompatibleFile = os.path.join(cacheDirLocation, _DataManager._cacheCompatibleFilename)
@@ -135,6 +136,7 @@ class _DataManager:
 		return CachedAddonsModel(
 			cachedAddonData=_createStoreCollectionFromJson(cacheData["data"]),
 			cachedAt=fetchTime,
+			cachedLanguage=cacheData["language"],
 			nvdaAPIVersion=tuple(cacheData["nvdaAPIVersion"]),  # loads as list
 		)
 
@@ -149,6 +151,7 @@ class _DataManager:
 			not self._compatibleAddonCache
 			or self._compatibleAddonCache.nvdaAPIVersion != addonAPIVersion.CURRENT
 			or _DataManager._cachePeriod < (datetime.now() - self._compatibleAddonCache.cachedAt)
+			or self._compatibleAddonCache.cachedLanguage != self._lang
 		)
 		if shouldRefreshData:
 			fetchTime = datetime.now()
@@ -162,6 +165,7 @@ class _DataManager:
 				self._compatibleAddonCache = CachedAddonsModel(
 					cachedAddonData=_createStoreCollectionFromJson(decodedApiData),
 					cachedAt=fetchTime,
+					cachedLanguage=self._lang,
 					nvdaAPIVersion=addonAPIVersion.CURRENT,
 				)
 			elif onDisplayableError is not None:
@@ -184,6 +188,7 @@ class _DataManager:
 		shouldRefreshData = (
 			not self._latestAddonCache
 			or _DataManager._cachePeriod < (datetime.now() - self._latestAddonCache.cachedAt)
+			or self._latestAddonCache.cachedLanguage != self._lang
 		)
 		if shouldRefreshData:
 			fetchTime = datetime.now()
@@ -197,6 +202,7 @@ class _DataManager:
 				self._latestAddonCache = CachedAddonsModel(
 					cachedAddonData=_createStoreCollectionFromJson(decodedApiData),
 					cachedAt=fetchTime,
+					cachedLanguage=self._lang,
 					nvdaAPIVersion=_LATEST_API_VER,
 				)
 			elif onDisplayableError is not None:
