@@ -11,6 +11,7 @@ from datetime import datetime, timedelta
 import json
 import os
 import pathlib
+import threading
 from typing import (
 	TYPE_CHECKING,
 	Optional,
@@ -77,6 +78,11 @@ class _DataManager:
 		self._latestAddonCache = self._getCachedAddonData(self._cacheLatestFile)
 		self._compatibleAddonCache = self._getCachedAddonData(self._cacheCompatibleFile)
 		self._installedAddonsCache = _InstalledAddonsCache()
+		# Fetch available add-ons cache early
+		threading.Thread(
+			target=self.getLatestCompatibleAddons,
+			name="initialiseAvailableAddons",
+		).start()
 
 	def getFileDownloader(self) -> AddonFileDownloader:
 		return AddonFileDownloader(self._addonDownloadCacheDir)
@@ -137,7 +143,7 @@ class _DataManager:
 
 	def getLatestCompatibleAddons(
 			self,
-			onDisplayableError: DisplayableError.OnDisplayableErrorT
+			onDisplayableError: Optional[DisplayableError.OnDisplayableErrorT] = None,
 	) -> "AddonGUICollectionT":
 		shouldRefreshData = (
 			not self._compatibleAddonCache
@@ -158,7 +164,7 @@ class _DataManager:
 					cachedAt=fetchTime,
 					nvdaAPIVersion=addonAPIVersion.CURRENT,
 				)
-			else:
+			elif onDisplayableError is not None:
 				from gui.message import DisplayableError
 				displayableError = DisplayableError(
 					# Translators: A message shown when fetching add-on data from the store fails
@@ -173,7 +179,7 @@ class _DataManager:
 
 	def getLatestAddons(
 			self,
-			onDisplayableError: DisplayableError.OnDisplayableErrorT
+			onDisplayableError: Optional[DisplayableError.OnDisplayableErrorT] = None,
 	) -> "AddonGUICollectionT":
 		shouldRefreshData = (
 			not self._latestAddonCache
@@ -193,7 +199,7 @@ class _DataManager:
 					cachedAt=fetchTime,
 					nvdaAPIVersion=_LATEST_API_VER,
 				)
-			else:
+			elif onDisplayableError is not None:
 				from gui.message import DisplayableError
 				displayableError = DisplayableError(
 					# Translators: A message shown when fetching add-on data from the store fails

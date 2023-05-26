@@ -144,7 +144,11 @@ class AddonStoreDialog(SettingsDialog):
 			wx.CheckBox(self, label=incompatibleAddonsLabel)
 		))
 		self.includeIncompatibleCtrl.SetValue(0)
-		self.includeIncompatibleCtrl.Bind(wx.EVT_CHECKBOX, self.onIncompatibleFilterChange, self.includeIncompatibleCtrl)
+		self.includeIncompatibleCtrl.Bind(
+			wx.EVT_CHECKBOX,
+			self.onIncompatibleFilterChange,
+			self.includeIncompatibleCtrl
+		)
 		self.bindHelpEvent("AddonStoreFilterIncompatible", self.includeIncompatibleCtrl)
 
 		self.enabledFilterCtrl = cast(wx.Choice, self.filterCtrlHelper.addLabeledControl(

@@ -120,6 +120,7 @@ class AddonListItemVM:
 class AddonDetailsVM:
 	def __init__(self, listItem: Optional[AddonListItemVM] = None):
 		self._listItem: Optional[AddonListItemVM] = listItem
+		self._isLoading: bool = False
 		self.updated = extensionPoints.Action()  # triggered by setting L{self._listItem}
 
 	@property

@@ -36,7 +36,6 @@ from _addonStore.models.status import (
 	_StatusFilterKey,
 	AvailableAddonStatus,
 )
-import config
 import core
 import extensionPoints
 from gui.message import DisplayableError
@@ -344,7 +343,6 @@ class AddonStoreVM:
 		log.debug(f"{listItemVM.Id} status: {listItemVM.status}")
 
 	def refresh(self):
-		self.listVM.resetListItems([])
 		if self._filteredStatusKey in {
 			_StatusFilterKey.AVAILABLE,
 			_StatusFilterKey.UPDATE,
@@ -362,6 +360,8 @@ class AddonStoreVM:
 			raise NotImplementedError(f"Unhandled status filter key {self._filteredStatusKey}")
 
 	def _getAvailableAddonsInBG(self):
+		self.detailsVM._isLoading = True
+		self.listVM.resetListItems([])
 		log.debug("getting available addons in the background")
 		assert addonDataManager
 		availableAddons = addonDataManager.getLatestCompatibleAddons(self.onDisplayableError)
@@ -383,6 +383,7 @@ class AddonStoreVM:
 		self._availableAddons = availableAddons
 		self.listVM.resetListItems(self._createListItemVMs())
 		self.detailsVM.listItem = self.listVM.getSelection()
+		self.detailsVM._isLoading = False
 		log.debug("completed refresh")
 
 	def cancelDownloads(self):

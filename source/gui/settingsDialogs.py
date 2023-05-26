@@ -51,7 +51,6 @@ import vision.providerBase
 from typing import (
 	Any,
 	Callable,
-	cast,
 	List,
 	Optional,
 	Set,
@@ -2584,7 +2583,7 @@ class AddonStorePanel(SettingsPanel):
 	helpId = "AddonStoreSettings"
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer) -> None:
-		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+		# sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		pass
 
 	def onSave(self):

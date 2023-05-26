@@ -26,6 +26,9 @@ class AddonDetails(
 ):
 	_labelSpace = " "  # em space, wider than regular space, for visual layout.
 
+	# Translators: Header (usually the add-on name) when add-ons are loading. In the add-on store dialog.
+	_loadingAddonsLabelText: str = pgettext("addonStore", "Loading add-ons...")
+
 	# Translators: Header (usually the add-on name) when no add-on is selected. In the add-on store dialog.
 	_noAddonSelectedLabelText: str = pgettext("addonStore", "No add-on selected.")
 
@@ -200,7 +203,10 @@ class AddonDetails(
 			self.otherDetailsTextCtrl.SetValue("")
 			if not details:
 				self.contentsPanel.Hide()
-				self.updateAddonName(AddonDetails._noAddonSelectedLabelText)
+				if self._detailsVM._isLoading:
+					self.updateAddonName(AddonDetails._loadingAddonsLabelText)
+				else:
+					self.updateAddonName(AddonDetails._noAddonSelectedLabelText)
 			else:
 				self.updateAddonName(details.displayName)
 				self.descriptionLabel.SetLabelText(AddonDetails._descriptionLabelText)
