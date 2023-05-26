@@ -2585,16 +2585,10 @@ class AddonStorePanel(SettingsPanel):
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer) -> None:
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
-		# Translators: This is a label for the paragraph navigation style in the document navigation dialog
-		incompatibleAddonsLabel = _("List &incompatible add-ons as available")
-		self.incompatibleAddonsCheckBox = cast(wx.CheckBox, sHelper.addItem(
-			wx.CheckBox(self, label=incompatibleAddonsLabel)
-		))
-		self.incompatibleAddonsCheckBox.SetValue(config.conf["addonStore"]["incompatibleAddons"])
-		self.bindHelpEvent("IncompatibleAddonsSetting", self.incompatibleAddonsCheckBox)
+		pass
 
 	def onSave(self):
-		config.conf["addonStore"]["incompatibleAddons"] = self.incompatibleAddonsCheckBox.IsChecked()
+		pass
 
 
 class TouchInteractionPanel(SettingsPanel):
@@ -4176,7 +4170,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		BrowseModePanel,
 		DocumentFormattingPanel,
 		DocumentNavigationPanel,
-		AddonStorePanel,
+		# AddonStorePanel, currently empty
 	]
 	if touchHandler.touchSupported():
 		categoryClasses.append(TouchInteractionPanel)

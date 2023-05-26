@@ -85,6 +85,7 @@ class AddonStoreVM:
 		"""
 		Filters the add-on list view model by enabled or disabled.
 		"""
+		self._filterIncludeIncompatible: bool = False
 
 		self._downloader = addonDataManager.getFileDownloader()
 		self._pendingInstalls: List[Tuple[AddonListItemVM, PathLike]] = []
@@ -364,7 +365,7 @@ class AddonStoreVM:
 		log.debug("getting available addons in the background")
 		assert addonDataManager
 		availableAddons = addonDataManager.getLatestCompatibleAddons(self.onDisplayableError)
-		if bool(config.conf["addonStore"]["incompatibleAddons"]):
+		if self._filterIncludeIncompatible:
 			incompatibleAddons = addonDataManager.getLatestAddons(self.onDisplayableError)
 			for channel in incompatibleAddons:
 				for addonId in incompatibleAddons[channel]:

@@ -72,33 +72,9 @@ class AddonStoreDialog(SettingsDialog):
 			self.addonListTabs.SetSelection(availableTabIndex)
 		self.addonListTabs.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED, self.onStatusFilterChange, self.addonListTabs)
 
-		filterCtrlHelper = guiHelper.BoxSizerHelper(self, wx.HORIZONTAL)
-		self.channelFilterCtrl = cast(wx.Choice, filterCtrlHelper.addLabeledControl(
-			# Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
-			labelText=pgettext("addonStore", "Cha&nnel:"),
-			wxCtrlClass=wx.Choice,
-			choices=list(c.displayString for c in _channelFilters),
-		))
-		self.channelFilterCtrl.Bind(wx.EVT_CHOICE, self.onChannelFilterChange, self.channelFilterCtrl)
-		self.bindHelpEvent("AddonStoreFilterChannel", self.channelFilterCtrl)
-
-		self.searchFilterCtrl = cast(wx.TextCtrl, filterCtrlHelper.addLabeledControl(
-			# Translators: The label of a text field to filter the list of add-ons in the add-on store dialog.
-			labelText=pgettext("addonStore", "&Search:"),
-			wxCtrlClass=wx.TextCtrl,
-		))
-		self.searchFilterCtrl.Bind(wx.EVT_TEXT, self.onFilterTextChange, self.searchFilterCtrl)
-		tabPageHelper.addItem(filterCtrlHelper.sizer, flag=wx.EXPAND)
-		self.bindHelpEvent("AddonStoreFilterSearch", self.searchFilterCtrl)
-
-		self.enabledFilterCtrl = cast(wx.Choice, filterCtrlHelper.addLabeledControl(
-			# Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
-			labelText=pgettext("addonStore", "Enabled/disabled:"),
-			wxCtrlClass=wx.Choice,
-			choices=list(c.displayString for c in EnabledStatus),
-		))
-		self.enabledFilterCtrl.Bind(wx.EVT_CHOICE, self.onEnabledFilterChange, self.enabledFilterCtrl)
-		self.bindHelpEvent("AddonStoreFilterEnabled", self.enabledFilterCtrl)
+		self.filterCtrlHelper = guiHelper.BoxSizerHelper(self, wx.HORIZONTAL)
+		self._createFilterControls()
+		tabPageHelper.addItem(self.filterCtrlHelper.sizer, flag=wx.EXPAND)
 
 		tabPageHelper.sizer.AddSpacer(5)
 
@@ -143,6 +119,42 @@ class AddonStoreDialog(SettingsDialog):
 
 		settingsSizer.Add(generalActions.sizer)
 		self.onStatusFilterChange(None)
+
+	def _createFilterControls(self):
+		self.channelFilterCtrl = cast(wx.Choice, self.filterCtrlHelper.addLabeledControl(
+			# Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
+			labelText=pgettext("addonStore", "Cha&nnel:"),
+			wxCtrlClass=wx.Choice,
+			choices=list(c.displayString for c in _channelFilters),
+		))
+		self.channelFilterCtrl.Bind(wx.EVT_CHOICE, self.onChannelFilterChange, self.channelFilterCtrl)
+		self.bindHelpEvent("AddonStoreFilterChannel", self.channelFilterCtrl)
+
+		self.searchFilterCtrl = cast(wx.TextCtrl, self.filterCtrlHelper.addLabeledControl(
+			# Translators: The label of a text field to filter the list of add-ons in the add-on store dialog.
+			labelText=pgettext("addonStore", "&Search:"),
+			wxCtrlClass=wx.TextCtrl,
+		))
+		self.searchFilterCtrl.Bind(wx.EVT_TEXT, self.onFilterTextChange, self.searchFilterCtrl)
+		self.bindHelpEvent("AddonStoreFilterSearch", self.searchFilterCtrl)
+
+		# Translators: The label of a checkbox to filter the list of add-ons in the add-on store dialog.
+		incompatibleAddonsLabel = _("Include &incompatible add-ons")
+		self.includeIncompatibleCtrl = cast(wx.CheckBox, self.filterCtrlHelper.addItem(
+			wx.CheckBox(self, label=incompatibleAddonsLabel)
+		))
+		self.includeIncompatibleCtrl.SetValue(0)
+		self.includeIncompatibleCtrl.Bind(wx.EVT_CHECKBOX, self.onIncompatibleFilterChange, self.includeIncompatibleCtrl)
+		self.bindHelpEvent("AddonStoreFilterIncompatible", self.includeIncompatibleCtrl)
+
+		self.enabledFilterCtrl = cast(wx.Choice, self.filterCtrlHelper.addLabeledControl(
+			# Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
+			labelText=pgettext("addonStore", "Ena&bled/disabled:"),
+			wxCtrlClass=wx.Choice,
+			choices=list(c.displayString for c in EnabledStatus),
+		))
+		self.enabledFilterCtrl.Bind(wx.EVT_CHOICE, self.onEnabledFilterChange, self.enabledFilterCtrl)
+		self.bindHelpEvent("AddonStoreFilterEnabled", self.enabledFilterCtrl)
 
 	def postInit(self):
 		self.addonListView.SetFocus()
@@ -222,28 +234,37 @@ class AddonStoreDialog(SettingsDialog):
 		self.listLabel.SetLabelText(self._listLabelText)
 		self.SetTitle(self._titleText)
 
+	def _toggleFilterControls(self):
+		if self._storeVM._filteredStatusKey in {
+			_StatusFilterKey.AVAILABLE,
+			_StatusFilterKey.UPDATE,
+		}:
+			self._storeVM._filterChannelKey = Channel.STABLE
+			self.enabledFilterCtrl.Hide()
+			self.enabledFilterCtrl.Disable()
+			self.includeIncompatibleCtrl.Enable()
+			self.includeIncompatibleCtrl.Show()
+		else:
+			self._storeVM._filterChannelKey = Channel.ALL
+			self.enabledFilterCtrl.Show()
+			self.enabledFilterCtrl.Enable()
+			self.includeIncompatibleCtrl.Hide()
+			self.includeIncompatibleCtrl.Disable()
+
 	def onStatusFilterChange(self, evt: wx.EVT_CHOICE):
 		self._storeVM._filterEnabledDisabled = EnabledStatus.ENABLED
 		self.enabledFilterCtrl.SetSelection(0)
 
 		self._storeVM._filteredStatusKey = self._statusFilterKey
 		self.addonListView._refreshColumns()
-
-		if self._storeVM._filteredStatusKey in {
-			_StatusFilterKey.AVAILABLE,
-			_StatusFilterKey.UPDATE,
-		}:
-			self._storeVM._filterChannelKey = Channel.STABLE
-			self.enabledFilterCtrl.Disable()
-		else:
-			self._storeVM._filterChannelKey = Channel.ALL
-			self.enabledFilterCtrl.Enable()
+		self._toggleFilterControls()
 
 		channelFilterIndex = list(_channelFilters.keys()).index(self._storeVM._filterChannelKey)
 		self.channelFilterCtrl.SetSelection(channelFilterIndex)
 		self._storeVM.listVM.setSelection(None)
 		self._setListLabels()
 		self._storeVM.refresh()
+		self.Layout()
 
 	def onChannelFilterChange(self, evt: wx.EVT_CHOICE):
 		self._storeVM._filterChannelKey = self._channelFilterKey
@@ -255,9 +276,13 @@ class AddonStoreDialog(SettingsDialog):
 		filterText = self.searchFilterCtrl.GetValue()
 		self.filter(filterText)
 
-	def onEnabledFilterChange(self, evt: wx.EVT_CHECKBOX):
+	def onEnabledFilterChange(self, evt: wx.EVT_CHOICE):
 		index = self.enabledFilterCtrl.GetCurrentSelection()
 		self._storeVM._filterEnabledDisabled = EnabledStatus.DISABLED if index else EnabledStatus.ENABLED
+		self._storeVM.refresh()
+
+	def onIncompatibleFilterChange(self, evt: wx.EVT_CHECKBOX):
+		self._storeVM._filterIncludeIncompatible = self.includeIncompatibleCtrl.GetValue()
 		self._storeVM.refresh()
 
 	def filter(self, filterText: str):
