@@ -68,7 +68,7 @@ class DisplayStringEnum(_DisplayStringEnumMixin, Enum, metaclass=_DisplayStringE
 
 
 class DisplayStringFlag(_DisplayStringEnumMixin, Flag, metaclass=_DisplayStringEnumMixinMeta):
-	"""An IntFlag class that adds a displayString property defined by _displayStringLabels"""
+	"""A Flag class that adds a displayString property defined by _displayStringLabels"""
 	pass
 
 

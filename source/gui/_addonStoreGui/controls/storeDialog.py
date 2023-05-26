@@ -256,7 +256,7 @@ class AddonStoreDialog(SettingsDialog):
 			self.includeIncompatibleCtrl.Disable()
 
 	def onStatusFilterChange(self, evt: wx.EVT_CHOICE):
-		self._storeVM._filterEnabledDisabled = EnabledStatus.ENABLED
+		self._storeVM._filterEnabledDisabled = EnabledStatus.ALL
 		self.enabledFilterCtrl.SetSelection(0)
 
 		self._storeVM._filteredStatusKey = self._statusFilterKey
@@ -282,7 +282,7 @@ class AddonStoreDialog(SettingsDialog):
 
 	def onEnabledFilterChange(self, evt: wx.EVT_CHOICE):
 		index = self.enabledFilterCtrl.GetCurrentSelection()
-		self._storeVM._filterEnabledDisabled = EnabledStatus.DISABLED if index else EnabledStatus.ENABLED
+		self._storeVM._filterEnabledDisabled = list(EnabledStatus)[index]
 		self._storeVM.refresh()
 
 	def onIncompatibleFilterChange(self, evt: wx.EVT_CHECKBOX):

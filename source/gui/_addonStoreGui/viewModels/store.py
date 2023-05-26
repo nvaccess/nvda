@@ -24,6 +24,7 @@ from _addonStore.install import installAddon
 from _addonStore.models.addon import (
 	AddonStoreModel,
 	_createAddonGUICollection,
+	_AddonGUIModel,
 )
 from _addonStore.models.channel import (
 	Channel,
@@ -80,7 +81,7 @@ class AddonStoreVM:
 		Filters the add-on list view model by add-on channel.
 		Add-ons with a channel in _channelFilters[self._filterChannelKey] should be displayed in the list.
 		"""
-		self._filterEnabledDisabled: EnabledStatus = EnabledStatus.ENABLED
+		self._filterEnabledDisabled: EnabledStatus = EnabledStatus.ALL
 		"""
 		Filters the add-on list view model by enabled or disabled.
 		"""
@@ -391,6 +392,21 @@ class AddonStoreVM:
 			self.listVM._addons[a.listItemVMId].status = AvailableAddonStatus.AVAILABLE
 		self._downloader.cancelAll()
 
+	def _filterByEnabledKey(self, model: _AddonGUIModel) -> bool:
+		if EnabledStatus.ALL == self._filterEnabledDisabled:
+			return True
+
+		elif EnabledStatus.ENABLED == self._filterEnabledDisabled:
+			return model.isPendingEnable or (
+				not model.isDisabled
+				and not model.isPendingDisable
+			)
+
+		elif EnabledStatus.DISABLED == self._filterEnabledDisabled:
+			return model.isDisabled or model.isPendingDisable
+
+		raise NotImplementedError(f"Invalid EnabledStatus: {self._filterEnabledDisabled}")
+
 	def _createListItemVMs(self) -> List[AddonListItemVM]:
 		if self._filteredStatusKey in {
 			_StatusFilterKey.AVAILABLE,
@@ -412,23 +428,6 @@ class AddonStoreVM:
 			for model in addons[channel].values()
 		)
 
-		if EnabledStatus.ENABLED == self._filterEnabledDisabled:
-			addonsWithStatus = (
-				(model, status)
-				for (model, status) in addonsWithStatus
-				if not (
-					model.isDisabled
-					or model.isPendingDisable
-				) or model.isPendingEnable
-			)
-		else:
-			addonsWithStatus = (
-				(model, status)
-				for (model, status) in addonsWithStatus
-				if model.isDisabled
-				or model.isPendingDisable
-			)
-
 		return [
 			AddonListItemVM(model=model, status=status)
 			for model, status in addonsWithStatus
@@ -437,4 +436,5 @@ class AddonStoreVM:
 			# Legacy add-ons contain invalid metadata
 			# and should not be accessible through the add-on store.
 			and not model.legacy
+			and self._filterByEnabledKey(model)
 		]

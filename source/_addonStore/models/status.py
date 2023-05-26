@@ -19,7 +19,7 @@ from typing_extensions import (
 
 import globalVars
 from logHandler import log
-from utils.displayString import DisplayStringEnum, DisplayStringFlag
+from utils.displayString import DisplayStringEnum
 
 from .version import SupportsVersionCheck
 
@@ -28,16 +28,19 @@ if TYPE_CHECKING:
 	from addonHandler import AddonsState  # noqa: F401
 
 
-class EnabledStatus(DisplayStringFlag):
-	ENABLED = True
-	DISABLED = False
+class EnabledStatus(DisplayStringEnum):
+	ALL = enum.auto()
+	ENABLED = enum.auto()
+	DISABLED = enum.auto()
 
 	@property
 	def _displayStringLabels(self) -> Dict["EnabledStatus", str]:
 		return {
-			# Translators: The label of a checkbox to filter the list of add-ons in the add-on store dialog.
+			# Translators: The label of an option to filter the list of add-ons in the add-on store dialog.
+			self.ALL: pgettext("addonStore", "All"),
+			# Translators: The label of an option to filter the list of add-ons in the add-on store dialog.
 			self.ENABLED: pgettext("addonStore", "Enabled"),
-			# Translators: The label of a checkbox to filter the list of add-ons in the add-on store dialog.
+			# Translators: The label of an option to filter the list of add-ons in the add-on store dialog.
 			self.DISABLED: pgettext("addonStore", "Disabled"),
 		}
 
