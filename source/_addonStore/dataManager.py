@@ -109,6 +109,7 @@ class _DataManager:
 		cacheData = {
 			"cacheDate": fetchTime.isoformat(),
 			"data": addonData,
+			"cachedLanguage": self._lang,
 			"nvdaAPIVersion": addonAPIVersion.CURRENT,
 		}
 		with open(self._cacheCompatibleFile, 'w') as cacheFile:
@@ -120,6 +121,7 @@ class _DataManager:
 		cacheData = {
 			"cacheDate": fetchTime.isoformat(),
 			"data": addonData,
+			"cachedLanguage": self._lang,
 			"nvdaAPIVersion": _LATEST_API_VER,
 		}
 		with open(self._cacheLatestFile, 'w') as cacheFile:
