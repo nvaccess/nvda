@@ -427,7 +427,7 @@ class Addon(AddonBase):
 			log.error(f"Failed to complete addon installation for {self.name}", exc_info=True)
 
 	def requestRemove(self):
-		"""Markes this addon for removal on NVDA restart."""
+		"""Marks this addon for removal on NVDA restart."""
 		if self.isPendingInstall:
 			self.completeRemove()
 			state[AddonStateCategory.PENDING_INSTALL].discard(self.name)
@@ -469,6 +469,11 @@ class Addon(AddonBase):
 		state[AddonStateCategory.OVERRIDE_COMPATIBILITY].discard(self.name)
 		state[AddonStateCategory.BLOCKED].discard(self.name)
 		state.save()
+
+		# Delete add-on store cache
+		from _addonStore.dataManager import addonDataManager
+		assert addonDataManager
+		addonDataManager._deleteCacheInstalledAddon(self.name)
 
 	def addToPackagePath(self, package):
 		""" Adds this L{Addon} extensions to the specific package path if those exist.

@@ -240,9 +240,9 @@ def resetConfiguration(factoryDefaults=False):
 	log.debug("setting language to %s"%lang)
 	languageHandler.setLanguage(lang)
 	# Addons
-	addonHandler.initialize()
 	from _addonStore import dataManager
 	dataManager.initialize()
+	addonHandler.initialize()
 	# Hardware background i/o
 	log.debug("initializing background i/o")
 	hwIo.initialize()
@@ -376,7 +376,7 @@ def _closeAllWindows():
 
 	for instance, state in nonWeak.items():
 		if state is _SettingsDialog.DialogState.DESTROYED:
-			log.error(
+			log.debugWarning(
 				"Destroyed but not deleted instance of gui.SettingsDialog exists"
 				f": {instance.title} - {instance.__class__.__qualname__} - {instance}"
 			)
@@ -520,9 +520,9 @@ def main():
 	import socket
 	socket.setdefaulttimeout(10)
 	log.debug("Initializing add-ons system")
-	addonHandler.initialize()
 	from _addonStore import dataManager
 	dataManager.initialize()
+	addonHandler.initialize()
 	if globalVars.appArgs.disableAddons:
 		log.info("Add-ons are disabled. Restart NVDA to enable them.")
 	import appModuleHandler

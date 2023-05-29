@@ -164,11 +164,15 @@ class AddonStoreDialog(SettingsDialog):
 		self.addonListView.SetFocus()
 
 	def _onWindowDestroy(self, evt: wx.WindowDestroyEvent):
+		requiresRestart = self._requiresRestart
 		super()._onWindowDestroy(evt)
+		if requiresRestart:
+			wx.CallAfter(addonGui.promptUserForRestart)
+
+	# Translators: Title for message shown prior to installing add-ons when closing the add-on store dialog.
+	_installationPromptTitle = pgettext("addonStore", "Add-on installation")
 
 	def onClose(self, evt: wx.CommandEvent):
-		# Translators: Title for message shown prior to installing add-ons when closing the add-on store dialog.
-		installationPromptTitle = pgettext("addonStore", "Add-on installation")
 		numInProgress = len(self._storeVM._downloader.progress)
 		if numInProgress:
 			res = gui.messageBox(
@@ -177,7 +181,7 @@ class AddonStoreDialog(SettingsDialog):
 				pgettext("addonStore", "Download of {} add-ons in progress, cancel downloading?").format(
 					numInProgress
 				),
-				installationPromptTitle,
+				self._installationPromptTitle,
 				style=wx.YES_NO
 			)
 			if res == wx.YES:
@@ -191,30 +195,29 @@ class AddonStoreDialog(SettingsDialog):
 		if self._storeVM._pendingInstalls:
 			installingDialog = gui.IndeterminateProgressDialog(
 				self,
-				installationPromptTitle,
+				self._installationPromptTitle,
 				# Translators: Message shown while installing add-ons after closing the add-on store dialog
 				# The placeholder {} will be replaced with the number of add-ons to be installed
 				pgettext("addonStore", "Installing {} add-ons, please wait.").format(len(self._storeVM._pendingInstalls))
 			)
 			self._storeVM.installPending()
 			wx.CallAfter(installingDialog.done)
-			addonGui.promptUserForRestart()
-		
-		requiresRestart = False
+
+		# let the dialog exit.
+		super().onClose(evt)
+
+	@property
+	def _requiresRestart(self) -> bool:
+		if self._storeVM._pendingInstalls:
+			return True
+
 		for addonsForChannel in self._storeVM._installedAddons.values():
 			for addon in addonsForChannel.values():
 				if addon._addonHandlerModel.requiresRestart:
 					log.debug(f"Add-on {addon.name} modified, restart required")
-					requiresRestart = True
-					break
-			if requiresRestart:
-				break
+					return True
 
-		if requiresRestart:
-			addonGui.promptUserForRestart()
-
-		# let the dialog exit.
-		super().onClose(evt)
+		return False
 
 	@property
 	def _statusFilterKey(self) -> _StatusFilterKey:

@@ -520,7 +520,7 @@ def installAddon(parentWindow: wx.Window, addonPath: str) -> bool:  # noqa: C901
 			messageBoxTitle,
 			wx.YES|wx.NO|wx.ICON_WARNING
 		) != wx.YES:
-				return False
+			return False
 
 	from contextlib import contextmanager
 
@@ -564,7 +564,7 @@ def installAddon(parentWindow: wx.Window, addonPath: str) -> bool:  # noqa: C901
 	return False
 
 
-def handleRemoteAddonInstall(addonPath):
+def handleRemoteAddonInstall(addonPath: str):
 	# Add-ons cannot be installed into a Windows store version of NVDA
 	if config.isAppX:
 		gui.messageBox(
@@ -576,7 +576,7 @@ def handleRemoteAddonInstall(addonPath):
 		return
 	gui.mainFrame.prePopup()
 	if installAddon(gui.mainFrame, addonPath):
-		promptUserForRestart()
+		wx.CallAfter(promptUserForRestart)
 	gui.mainFrame.postPopup()
 
 

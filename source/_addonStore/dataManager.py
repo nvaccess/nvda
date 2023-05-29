@@ -138,7 +138,7 @@ class _DataManager:
 		return CachedAddonsModel(
 			cachedAddonData=_createStoreCollectionFromJson(cacheData["data"]),
 			cachedAt=fetchTime,
-			cachedLanguage=cacheData["language"],
+			cachedLanguage=cacheData["cachedLanguage"],
 			nvdaAPIVersion=tuple(cacheData["nvdaAPIVersion"]),  # loads as list
 		)
 
@@ -219,6 +219,11 @@ class _DataManager:
 		if self._latestAddonCache is None:
 			return _createAddonGUICollection()
 		return self._latestAddonCache.cachedAddonData
+
+	def _deleteCacheInstalledAddon(self, addonId: str):
+		addonCachePath = os.path.join(self._installedAddonDataCacheDir, f"{addonId}.json")
+		if pathlib.Path(addonCachePath).exists():
+			os.remove(addonCachePath)
 
 	def _cacheInstalledAddon(self, addonData: AddonStoreModel):
 		if not addonData:
