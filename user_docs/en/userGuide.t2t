@@ -2593,19 +2593,18 @@ You can jump to the list with ``alt+l``.
 If you have not installed an add-on before, the add-on store will open on a list of add-ons available to install.
 If you have installed add-ons, the list will display currently installed add-ons.
 
-Selecting an add-on will display the details for the add-on.
-Associated actions will become available for this add-on: e.g. install, update, disable, enable or remove.
-If there is help available for an installed add-on, you can access it by using the "Add-on help" action.
-
 You can sort add-ons by their various fields by pressing ``ctrl+1,2,3...``, where the number is the column index you wish to sort by.
 
+Selecting an add-on will display the details for the add-on.
+Add-ons have associated actions that you can access through an [actions menu #AddonStoreActions], such as install, help, disable, remove.
+
 ++++ Add-on list views ++++[AddonStoreFilterStatus]
-To change the view of add-ons, change the active tab of the add-ons list using (``ctrl+tab``).
+To change the view of add-ons, change the active tab of the add-ons list using ``ctrl+tab``.
 There are different views for installed, updatable, available and incompatible.
 
 ++++ Include incompatible add-ons ++++[AddonStoreFilterEnabled]
 Installed and incompatible add-ons can be filtered by enabled or disabled.
-The default for this is both enabled and disabled.
+The default shows both enabled and disabled add-ons.
 
 ++++ Include incompatible add-ons ++++[AddonStoreFilterIncompatible]
 Available and updatable add-ons can be filtered to include [incompatible add-ons #incompatibleAddonsManager] available to install.
@@ -2627,8 +2626,8 @@ Add-ons can be filtered by display name, publisher and description.
 To search add-ons, use the "Search" text box.
 
 +++ Add-on actions +++[AddonStoreActions]
-Add-ons have associated actions, such as install, help, disable. remove.
-The actions menu can be accessed for a selected add-on in the add-on list by pressing ``enter``, right click or double click.
+Add-ons have associated actions, such as install, help, disable, remove.
+The actions menu can be accessed for an add-on in the add-on list by pressing ``enter``, right click or double click.
 There is also an Actions button in the selected add-on's details.
 
 ++++ Installing add-ons ++++[AddonStoreInstalling]
