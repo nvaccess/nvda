@@ -112,14 +112,14 @@ class AddonStoreVM:
 		selectedListItem: Optional[AddonListItemVM] = self.listVM.getSelection()
 		return [
 			AddonActionVM(
-				# Translators: Label for a button that installs the selected addon
+				# Translators: Label for an action that installs the selected addon
 				displayName=pgettext("addonStore", "&Install"),
 				actionHandler=self.getAddon,
 				validCheck=lambda aVM: aVM.status == AvailableAddonStatus.AVAILABLE,
 				listItemVM=selectedListItem
 			),
 			AddonActionVM(
-				# Translators: Label for a button that installs the selected addon
+				# Translators: Label for an action that installs the selected addon
 				displayName=pgettext("addonStore", "&Install (override incompatibility)"),
 				actionHandler=self.installOverrideIncompatibilityForAddon,
 				validCheck=lambda aVM: (
@@ -129,21 +129,22 @@ class AddonStoreVM:
 				listItemVM=selectedListItem
 			),
 			AddonActionVM(
-				# Translators: Label for a button that installs the selected addon
+				# Translators: Label for an action that updates the selected addon
 				displayName=pgettext("addonStore", "&Update"),
 				actionHandler=self.getAddon,
 				validCheck=lambda aVM: aVM.status == AvailableAddonStatus.UPDATE,
 				listItemVM=selectedListItem
 			),
 			AddonActionVM(
-				# Translators: Label for a button that installs the selected addon
+				# Translators: Label for an action that replaces the selected addon with
+				# an add-on store version.
 				displayName=pgettext("addonStore", "Re&place"),
 				actionHandler=self.replaceAddon,
 				validCheck=lambda aVM: aVM.status == AvailableAddonStatus.REPLACE_SIDE_LOAD,
 				listItemVM=selectedListItem
 			),
 			AddonActionVM(
-				# Translators: Label for a button that installs the selected addon
+				# Translators: Label for an action that disables the selected addon
 				displayName=pgettext("addonStore", "&Disable"),
 				actionHandler=self.disableAddon,
 				validCheck=lambda aVM: aVM.model.isInstalled and aVM.status not in (
@@ -156,7 +157,7 @@ class AddonStoreVM:
 				listItemVM=selectedListItem
 			),
 			AddonActionVM(
-				# Translators: Label for a button that installs the selected addon
+				# Translators: Label for an action that enables the selected addon
 				displayName=pgettext("addonStore", "&Enable"),
 				actionHandler=self.enableAddon,
 				validCheck=lambda aVM: (
@@ -166,7 +167,7 @@ class AddonStoreVM:
 				listItemVM=selectedListItem
 			),
 			AddonActionVM(
-				# Translators: Label for a button that installs the selected addon
+				# Translators: Label for an action that enables the selected addon
 				displayName=pgettext("addonStore", "&Enable (override incompatibility)"),
 				actionHandler=self.enableOverrideIncompatibilityForAddon,
 				validCheck=lambda aVM: (
@@ -179,7 +180,7 @@ class AddonStoreVM:
 				listItemVM=selectedListItem
 			),
 			AddonActionVM(
-				# Translators: Label for a button that removes the selected addon
+				# Translators: Label for an action that removes the selected addon
 				displayName=pgettext("addonStore", "&Remove"),
 				actionHandler=self.removeAddon,
 				validCheck=lambda aVM: (
@@ -189,7 +190,7 @@ class AddonStoreVM:
 				listItemVM=selectedListItem
 			),
 			AddonActionVM(
-				# Translators: Label for a button that installs the selected addon
+				# Translators: Label for an action that opens help for the selected addon
 				displayName=pgettext("addonStore", "&Help"),
 				actionHandler=self.helpAddon,
 				validCheck=lambda aVM: aVM.model.isInstalled and self._filteredStatusKey in (
@@ -201,14 +202,14 @@ class AddonStoreVM:
 				listItemVM=selectedListItem
 			),
 			AddonActionVM(
-				# Translators: Label for a button that opens the homepage for the selected addon
+				# Translators: Label for an action that opens the homepage for the selected addon
 				displayName=pgettext("addonStore", "Ho&mepage"),
 				actionHandler=lambda aVM: startfile(aVM.model.homepage),
 				validCheck=lambda aVM: aVM.model.homepage is not None,
 				listItemVM=selectedListItem
 			),
 			AddonActionVM(
-				# Translators: Label for a button that opens the license for the selected addon
+				# Translators: Label for an action that opens the license for the selected addon
 				displayName=pgettext("addonStore", "&License"),
 				actionHandler=lambda aVM: startfile(cast(AddonStoreModel, aVM.model).licenseURL),
 				validCheck=lambda aVM: (
@@ -218,7 +219,7 @@ class AddonStoreVM:
 				listItemVM=selectedListItem
 			),
 			AddonActionVM(
-				# Translators: Label for a button that opens the license for the selected addon
+				# Translators: Label for an action that opens the source code for the selected addon
 				displayName=pgettext("addonStore", "Source &Code"),
 				actionHandler=lambda aVM: startfile(cast(AddonStoreModel, aVM.model).sourceURL),
 				validCheck=lambda aVM: isinstance(aVM.model, AddonStoreModel),
