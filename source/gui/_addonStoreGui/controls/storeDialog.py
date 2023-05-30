@@ -70,7 +70,7 @@ class AddonStoreDialog(SettingsDialog):
 		else:
 			availableTabIndex = list(_statusFilters.keys()).index(_StatusFilterKey.AVAILABLE)
 			self.addonListTabs.SetSelection(availableTabIndex)
-		self.addonListTabs.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED, self.onStatusFilterChange, self.addonListTabs)
+		self.addonListTabs.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED, self.onListTabPageChange, self.addonListTabs)
 
 		self.filterCtrlHelper = guiHelper.BoxSizerHelper(self, wx.HORIZONTAL)
 		self._createFilterControls()
@@ -118,7 +118,7 @@ class AddonStoreDialog(SettingsDialog):
 		self.bindHelpEvent("AddonStoreInstalling", self.externalInstallButton)
 
 		settingsSizer.Add(generalActions.sizer)
-		self.onStatusFilterChange(None)
+		self.onListTabPageChange(None)
 
 	def _createFilterControls(self):
 		self.channelFilterCtrl = cast(wx.Choice, self.filterCtrlHelper.addLabeledControl(
@@ -258,7 +258,7 @@ class AddonStoreDialog(SettingsDialog):
 			self.includeIncompatibleCtrl.Hide()
 			self.includeIncompatibleCtrl.Disable()
 
-	def onStatusFilterChange(self, evt: wx.EVT_CHOICE):
+	def onListTabPageChange(self, evt: wx.EVT_CHOICE):
 		self._storeVM._filterEnabledDisabled = EnabledStatus.ALL
 		self.enabledFilterCtrl.SetSelection(0)
 
@@ -272,6 +272,7 @@ class AddonStoreDialog(SettingsDialog):
 		self._setListLabels()
 		self._storeVM.refresh()
 		self.Layout()
+		self.addonListView.SetFocus()
 
 	def onChannelFilterChange(self, evt: wx.EVT_CHOICE):
 		self._storeVM._filterChannelKey = self._channelFilterKey
