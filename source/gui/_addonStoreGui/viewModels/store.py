@@ -15,6 +15,7 @@ from typing import (
 	List,
 	Optional,
 	Tuple,
+	cast,
 )
 import threading
 
@@ -145,14 +146,11 @@ class AddonStoreVM:
 				# Translators: Label for a button that installs the selected addon
 				displayName=pgettext("addonStore", "&Disable"),
 				actionHandler=self.disableAddon,
-				validCheck=lambda aVM: aVM.status not in (
+				validCheck=lambda aVM: aVM.model.isInstalled and aVM.status not in (
 					AvailableAddonStatus.DISABLED,
 					AvailableAddonStatus.PENDING_DISABLE,
-					AvailableAddonStatus.AVAILABLE,
-					AvailableAddonStatus.INCOMPATIBLE,
 					AvailableAddonStatus.INCOMPATIBLE_DISABLED,
 					AvailableAddonStatus.PENDING_INCOMPATIBLE_DISABLED,
-					AvailableAddonStatus.DOWNLOAD_FAILED,
 					AvailableAddonStatus.PENDING_REMOVE,
 				),
 				listItemVM=selectedListItem
@@ -184,11 +182,9 @@ class AddonStoreVM:
 				# Translators: Label for a button that removes the selected addon
 				displayName=pgettext("addonStore", "&Remove"),
 				actionHandler=self.removeAddon,
-				validCheck=lambda aVM: aVM.status not in (
-					AvailableAddonStatus.AVAILABLE,
-					AvailableAddonStatus.INCOMPATIBLE,
-					AvailableAddonStatus.PENDING_REMOVE,
-					AvailableAddonStatus.DOWNLOAD_FAILED,
+				validCheck=lambda aVM: (
+					aVM.model.isInstalled
+					and aVM.status != AvailableAddonStatus.PENDING_REMOVE
 				),
 				listItemVM=selectedListItem
 			),
@@ -196,7 +192,7 @@ class AddonStoreVM:
 				# Translators: Label for a button that installs the selected addon
 				displayName=pgettext("addonStore", "&Help"),
 				actionHandler=self.helpAddon,
-				validCheck=lambda aVM: self._filteredStatusKey in (
+				validCheck=lambda aVM: aVM.model.isInstalled and self._filteredStatusKey in (
 					# Showing help in the updatable add-ons view is misleading
 					# as we can only fetch the add-on help from the installed version.
 					_StatusFilterKey.INSTALLED,
@@ -214,7 +210,7 @@ class AddonStoreVM:
 			AddonActionVM(
 				# Translators: Label for a button that opens the license for the selected addon
 				displayName=pgettext("addonStore", "&License"),
-				actionHandler=lambda aVM: startfile(aVM.model.licenseURL),
+				actionHandler=lambda aVM: startfile(cast(AddonStoreModel, aVM.model).licenseURL),
 				validCheck=lambda aVM: (
 					isinstance(aVM.model, AddonStoreModel)
 					and aVM.model.licenseURL is not None
@@ -224,7 +220,7 @@ class AddonStoreVM:
 			AddonActionVM(
 				# Translators: Label for a button that opens the license for the selected addon
 				displayName=pgettext("addonStore", "Source &Code"),
-				actionHandler=lambda aVM: startfile(aVM.model.sourceURL),
+				actionHandler=lambda aVM: startfile(cast(AddonStoreModel, aVM.model).sourceURL),
 				validCheck=lambda aVM: isinstance(aVM.model, AddonStoreModel),
 				listItemVM=selectedListItem
 			),

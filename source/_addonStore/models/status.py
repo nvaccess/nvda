@@ -358,3 +358,7 @@ class SupportsAddonState(SupportsVersionCheck, Protocol):
 			or self.isPendingEnable
 			or self.isPendingDisable
 		)
+
+	@property
+	def isInstalled(self) -> bool:
+		return Path(self.installPath).exists()
