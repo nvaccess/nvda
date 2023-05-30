@@ -72,7 +72,7 @@ class AddonStoreDialog(SettingsDialog):
 			self.addonListTabs.SetSelection(availableTabIndex)
 		self.addonListTabs.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED, self.onListTabPageChange, self.addonListTabs)
 
-		self.filterCtrlHelper = guiHelper.BoxSizerHelper(self, wx.HORIZONTAL)
+		self.filterCtrlHelper = guiHelper.BoxSizerHelper(self, wx.VERTICAL)
 		self._createFilterControls()
 		tabPageHelper.addItem(self.filterCtrlHelper.sizer, flag=wx.EXPAND)
 
@@ -121,7 +121,17 @@ class AddonStoreDialog(SettingsDialog):
 		self.onListTabPageChange(None)
 
 	def _createFilterControls(self):
-		self.channelFilterCtrl = cast(wx.Choice, self.filterCtrlHelper.addLabeledControl(
+		filterCtrlsLine0 = guiHelper.BoxSizerHelper(self, wx.HORIZONTAL)
+		filterCtrlsLine1 = guiHelper.BoxSizerHelper(self, wx.HORIZONTAL)
+		self.filterCtrlHelper.addItem(filterCtrlsLine0.sizer)
+
+		# Add margin left padding
+		FILTER_MARGIN_PADDING = 15
+		filterCtrlsLine0.sizer.AddSpacer(FILTER_MARGIN_PADDING)
+		filterCtrlsLine1.sizer.AddSpacer(FILTER_MARGIN_PADDING)
+		self.filterCtrlHelper.addItem(filterCtrlsLine1.sizer, flag=wx.EXPAND, proportion=1)
+
+		self.channelFilterCtrl = cast(wx.Choice, filterCtrlsLine0.addLabeledControl(
 			# Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
 			labelText=pgettext("addonStore", "Cha&nnel:"),
 			wxCtrlClass=wx.Choice,
@@ -130,17 +140,9 @@ class AddonStoreDialog(SettingsDialog):
 		self.channelFilterCtrl.Bind(wx.EVT_CHOICE, self.onChannelFilterChange, self.channelFilterCtrl)
 		self.bindHelpEvent("AddonStoreFilterChannel", self.channelFilterCtrl)
 
-		self.searchFilterCtrl = cast(wx.TextCtrl, self.filterCtrlHelper.addLabeledControl(
-			# Translators: The label of a text field to filter the list of add-ons in the add-on store dialog.
-			labelText=pgettext("addonStore", "&Search:"),
-			wxCtrlClass=wx.TextCtrl,
-		))
-		self.searchFilterCtrl.Bind(wx.EVT_TEXT, self.onFilterTextChange, self.searchFilterCtrl)
-		self.bindHelpEvent("AddonStoreFilterSearch", self.searchFilterCtrl)
-
 		# Translators: The label of a checkbox to filter the list of add-ons in the add-on store dialog.
 		incompatibleAddonsLabel = _("Include &incompatible add-ons")
-		self.includeIncompatibleCtrl = cast(wx.CheckBox, self.filterCtrlHelper.addItem(
+		self.includeIncompatibleCtrl = cast(wx.CheckBox, filterCtrlsLine0.addItem(
 			wx.CheckBox(self, label=incompatibleAddonsLabel)
 		))
 		self.includeIncompatibleCtrl.SetValue(0)
@@ -151,7 +153,7 @@ class AddonStoreDialog(SettingsDialog):
 		)
 		self.bindHelpEvent("AddonStoreFilterIncompatible", self.includeIncompatibleCtrl)
 
-		self.enabledFilterCtrl = cast(wx.Choice, self.filterCtrlHelper.addLabeledControl(
+		self.enabledFilterCtrl = cast(wx.Choice, filterCtrlsLine0.addLabeledControl(
 			# Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
 			labelText=pgettext("addonStore", "Ena&bled/disabled:"),
 			wxCtrlClass=wx.Choice,
@@ -159,6 +161,20 @@ class AddonStoreDialog(SettingsDialog):
 		))
 		self.enabledFilterCtrl.Bind(wx.EVT_CHOICE, self.onEnabledFilterChange, self.enabledFilterCtrl)
 		self.bindHelpEvent("AddonStoreFilterEnabled", self.enabledFilterCtrl)
+
+		# Translators: The label of a text field to filter the list of add-ons in the add-on store dialog.
+		searchFilterLabel = wx.StaticText(self, label=pgettext("addonStore", "&Search:"))
+		# noinspection PyAttributeOutsideInit
+		self.searchFilterCtrl = wx.TextCtrl(self)
+		self.searchFilterCtrl.Bind(wx.EVT_TEXT, self.onFilterTextChange, self.searchFilterCtrl)
+		self.bindHelpEvent("AddonStoreFilterSearch", self.searchFilterCtrl)
+
+		filterCtrlsLine1.addItem(searchFilterLabel)
+		filterCtrlsLine1.addItem(self.searchFilterCtrl, proportion=1)
+
+		# Add end margin right padding
+		filterCtrlsLine0.sizer.AddSpacer(FILTER_MARGIN_PADDING)
+		filterCtrlsLine1.sizer.AddSpacer(FILTER_MARGIN_PADDING)
 
 	def postInit(self):
 		self.addonListView.SetFocus()
