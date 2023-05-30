@@ -470,10 +470,12 @@ class Addon(AddonBase):
 		state[AddonStateCategory.BLOCKED].discard(self.name)
 		state.save()
 
-		# Delete add-on store cache
-		from _addonStore.dataManager import addonDataManager
-		assert addonDataManager
-		addonDataManager._deleteCacheInstalledAddon(self.name)
+		if not self.isPendingInstall:
+			# Don't delete add-on store cache if it's an upgrade,
+			# the add-on manager has already replaced the cache file.
+			from _addonStore.dataManager import addonDataManager
+			assert addonDataManager
+			addonDataManager._deleteCacheInstalledAddon(self.name)
 
 	def addToPackagePath(self, package):
 		""" Adds this L{Addon} extensions to the specific package path if those exist.
