@@ -1,19 +1,8 @@
 
 ## Browsing add-ons
 
-### Filter add-ons by status
-Add-ons can be filtered by status.
-
-1. Open the add-on store
-1. Jump to the filter-by status field (`alt+f`)
-1. Filter by each status, ensure expected add-ons are displayed.
-    - Installed: should include installed, disabled, and updatable add-ons.
-    - Updatable: should include installed add-ons which can be updated or replaced by an add-on store version
-    - Disabled: should include manually disabled add-ons and add-ons disabled due to incompatibility
-    - Available: should include add-ons available for install
-
 ### Filter add-ons by channel
-Add-ons can be filtered by channel: e.g. stable, beta, dev.
+Add-ons can be filtered by channel: e.g. stable, beta, dev, external.
 
 1. Open the add-on store
 1. Jump to the filter-by channel field (`alt+n`)
@@ -36,12 +25,9 @@ Add-ons can be filtered by display name, publisher and description.
 1. Ensure the add-on information dialog  states "no add-on selected".
 
 ### Browsing incompatible add-ons available for download
-1. Open NVDA preferences
-1. Navigate to Add-on Store preferences
-1. Enable "List incompatible add-ons as available"
 1. Open the Add-on Store
-1. Jump to the filter-by status field (`alt+f`)
-1. Select "Available add-ons"
+1. Change to the "Available add-ons" tab
+1. Enable the "Include incompatible add-ons" filter
 1. Ensure add-ons with status "incompatible" are included in the list with the available add-ons.
 
 ### Failure to fetch add-ons available for download
@@ -67,7 +53,7 @@ Add-ons can be filtered by display name, publisher and description.
 
 ### Install add-on from external source in add-on store
 1. Open the add-on store.
-1. Jump to the install from external source button (`alt+i`)
+1. Jump to the install from external source button (`alt+x`)
 1. Find an `*.nvda-addon` file, and open it
 1. Proceed with the installation
 

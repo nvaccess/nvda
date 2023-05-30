@@ -118,11 +118,11 @@ class AddonDetails(
 		self.contents.Add(wx.StaticLine(self.contentsPanel), flag=wx.EXPAND)
 		self.contents.AddSpacer(guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
 
-		actionsButton = wx.Button(self.contentsPanel, label=self._actionsLabelText)
-		self.contents.Add(actionsButton)
-		actionsButton.Bind(
+		self.actionsButton = wx.Button(self.contentsPanel, label=self._actionsLabelText)
+		self.contents.Add(self.actionsButton)
+		self.actionsButton.Bind(
 			event=wx.EVT_BUTTON,
-			handler=lambda e: self._actionsContextMenu.popupContextMenuFromPosition(self, actionsButton.Position)
+			handler=lambda e: self._actionsContextMenu.popupContextMenuFromPosition(self, self.actionsButton.Position)
 		)
 
 		self.contents.AddSpacer(guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)

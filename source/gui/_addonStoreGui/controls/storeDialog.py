@@ -94,6 +94,7 @@ class AddonStoreDialog(SettingsDialog):
 			addonsListVM=self._storeVM.listVM,
 			actionsContextMenu=self._actionsContextMenu,
 		)
+		self.bindHelpEvent("AddonStoreBrowsing", self.addonListView)
 		# Add alt+l accelerator key
 		_setFocusToAddonListView_eventId = wx.NewIdRef(count=1)
 		self.Bind(wx.EVT_MENU, lambda e: self.addonListView.SetFocus(), _setFocusToAddonListView_eventId)
@@ -109,6 +110,7 @@ class AddonStoreDialog(SettingsDialog):
 			actionsContextMenu=self._actionsContextMenu,
 		)
 		splitViewSizer.Add(self.addonDetailsView, flag=wx.EXPAND, proportion=1)
+		self.bindHelpEvent("AddonStoreActions", self.addonDetailsView.actionsButton)
 
 		generalActions = guiHelper.ButtonHelper(wx.HORIZONTAL)
 		# Translators: The label for a button in add-ons Store dialog to install an external add-on.
