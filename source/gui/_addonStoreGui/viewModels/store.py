@@ -187,7 +187,8 @@ class AddonStoreVM:
 					aVM.model.isInstalled
 					and aVM.status != AvailableAddonStatus.PENDING_REMOVE
 					and self._filteredStatusKey in (
-						# Removing add-ons in the updatable view fails.
+						# Removing add-ons in the updatable view fails,
+						# as the updated version cannot be removed.
 						_StatusFilterKey.INSTALLED,
 						_StatusFilterKey.INCOMPATIBLE,
 					)
