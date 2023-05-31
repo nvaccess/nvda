@@ -40,8 +40,8 @@ lastQueuedFocusObject=None
 
 
 # Handle virtual desktop switch announcements in Windows 10 and later
-virtualDesktopName: Optional[str] = None
-canAnnounceVirtualDesktopNames: bool = winVersion.getWinVer() >= winVersion.WIN10_1903
+_virtualDesktopName: Optional[str] = None
+_canAnnounceVirtualDesktopNames: bool = winVersion.getWinVer() >= winVersion.WIN10_1903
 
 
 def queueEvent(eventName,obj,**kwargs):
@@ -294,7 +294,7 @@ def executeEvent(
 	):
 		return
 	try:
-		global virtualDesktopName
+		global _virtualDesktopName
 		isGainFocus = eventName == "gainFocus"
 		# Allow NVDAObjects to redirect focus events to another object of their choosing.
 		if isGainFocus and obj.focusRedirect:
@@ -305,10 +305,10 @@ def executeEvent(
 		if (
 			eventName == "nameChange"
 			and obj.windowClassName == "#32769"
-			and canAnnounceVirtualDesktopNames
+			and _canAnnounceVirtualDesktopNames
 		):
 			import core
-			virtualDesktopName = obj.name
+			_virtualDesktopName = obj.name
 			core.callLater(250, handlePossibleDesktopNameChange)
 		if isGainFocus and not doPreGainFocus(obj, sleepMode=sleepMode):
 			return
@@ -325,14 +325,14 @@ def handlePossibleDesktopNameChange() -> None:
 	Reports the new virtual desktop name if changed.
 	On Windows versions lower than Windows 10, this function does nothing.
 	"""
-	global virtualDesktopName
+	global _virtualDesktopName
 	# Virtual desktop switch announcement works more effectively in Version 1903 and later.
-	if not canAnnounceVirtualDesktopNames:
+	if not _canAnnounceVirtualDesktopNames:
 		return
-	if virtualDesktopName:
+	if _virtualDesktopName:
 		import ui
-		ui.message(virtualDesktopName)
-		virtualDesktopName = None
+		ui.message(_virtualDesktopName)
+		_virtualDesktopName = None
 
 
 def doPreGainFocus(obj: "NVDAObjects.NVDAObject", sleepMode: bool = False) -> bool:
