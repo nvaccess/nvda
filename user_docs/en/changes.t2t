@@ -27,6 +27,7 @@ There are now gestures for showing the braille settings dialog, accessing the st
 
 == Changes ==
 - Updated LibLouis braille translator to [3.25.0 https://github.com/liblouis/liblouis/releases/tag/v3.25.0]. (#14719)
+- CLDR has been updated to version 43.0. (#14918)
 - Dash and em-dash symbols will always be sent to the synthesizer. (#13830)
 - Distance reported in Microsoft Word will now honour the unit defined in Word's advanced options even when using UIA to access Word documents. (#14542)
 - When reporting the review cursor location, the current cursor/caret location is now reported relative to the current page in LibreOffice Writer for LibreOffice versions >= 7.6, similar to what is done for Microsoft Word. (#11696)
@@ -66,6 +67,7 @@ Instead NVDA reports that the link has no destination. (#14723)
 - When forcing UIA support with certain terminal and consoles, a bug is fixed which caused a freeze and the log file to be spammed. (#14689)
 - NVDA no longer fails to announce focusing password fields in Microsoft Excel and Outlook. (#14839)
 - NVDA will no longer refuse to save the configuration after a configuration reset. (#13187)
+- When running a temporary version from the launcher, NVDA will not mislead users into thinking they can save the configuration. (#14914)
 -
 
 
