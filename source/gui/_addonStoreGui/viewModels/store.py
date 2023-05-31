@@ -186,6 +186,11 @@ class AddonStoreVM:
 				validCheck=lambda aVM: (
 					aVM.model.isInstalled
 					and aVM.status != AvailableAddonStatus.PENDING_REMOVE
+					and self._filteredStatusKey in (
+						# Removing add-ons in the updatable view fails.
+						_StatusFilterKey.INSTALLED,
+						_StatusFilterKey.INCOMPATIBLE,
+					)
 				),
 				listItemVM=selectedListItem
 			),
