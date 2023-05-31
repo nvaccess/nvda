@@ -13,6 +13,7 @@ from ctypes import (
 	windll,
 )
 import winKernel
+import winreg
 import shellapi
 import winUser
 import functools
@@ -189,3 +190,22 @@ def _displayTextFileWorkaround(file: str) -> None:
 	# Since this may be a bug in Python 3.7's os.startfile, or the underlying Win32 function, it may be
 	# possible to deprecate this workaround after a Python upgrade.
 	startfile(file, operation="edit")
+
+def _isSystemClockSecondsVisible() -> bool:
+	"""
+	Query the value of 'ShowSecondsInSystemClock' DWORD32 value in the Windows registry under
+	the path HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced.
+	If the value is 1, return True, if the value is 0 or the key does not exist, return False.
+
+	@return: True if the 'ShowSecondsInSystemClock' value is 1, False otherwise.
+	"""
+	registry_path = r"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
+	value_name = "ShowSecondsInSystemClock"
+	try:
+		with winreg.OpenKey(winreg.HKEY_CURRENT_USER, registry_path) as key:
+			value, value_type = winreg.QueryValueEx(key, value_name)
+			return value == 1 and value_type == winreg.REG_DWORD
+	except FileNotFoundError:
+		return False
+	except OSError:
+		return False
