@@ -147,6 +147,17 @@ class IoThread(threading.Thread):
 		super().start()
 		self.handle = ctypes.windll.kernel32.OpenThread(winKernel.THREAD_SET_CONTEXT, False, self.ident)
 
+	if apcsWillBeStronglyReferenced:
+		@contextmanager
+		def autoDeleteApcReference(self, apcUuid):
+			log.warning(
+				"IoThread.autoDeleteApcReference is deprecated. "
+				"It was never meant to be part of the public API. "
+				"This method will be removed in NVDA 2024.1. "
+				"Up until that version, it behaves as a no-op, i.e. a context manager yielding nothing."
+			)
+			yield
+
 	def _registerToCallAsApc(
 			self,
 			func: ApcT,
