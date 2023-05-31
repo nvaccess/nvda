@@ -191,6 +191,7 @@ def _displayTextFileWorkaround(file: str) -> None:
 	# possible to deprecate this workaround after a Python upgrade.
 	startfile(file, operation="edit")
 
+
 def _isSystemClockSecondsVisible() -> bool:
 	"""
 	Query the value of 'ShowSecondsInSystemClock' DWORD32 value in the Windows registry under
