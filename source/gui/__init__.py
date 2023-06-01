@@ -155,7 +155,10 @@ class MainFrame(wx.Frame):
 		# Translators: Reported when configuration has been restored to defaults by using restore configuration to factory defaults item in NVDA menu.
 		queueHandler.queueFunction(queueHandler.eventQueue,ui.message,_("Configuration restored to factory defaults"))
 
-	@blockAction.when(blockAction.Context.SECURE_MODE)
+	@blockAction.when(
+		blockAction.Context.SECURE_MODE,
+		blockAction.Context.RUNNING_LAUNCHER,
+	)
 	def onSaveConfigurationCommand(self,evt):
 		try:
 			config.conf.save()
@@ -629,7 +632,7 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 			_("Reset all settings to default state")
 		)
 		self.Bind(wx.EVT_MENU, frame.onRevertToDefaultConfigurationCommand, item)
-		if not globalVars.appArgs.secure:
+		if not (globalVars.appArgs.secure or globalVars.appArgs.launcher):
 			item = self.menu.Append(
 				wx.ID_SAVE,
 				# Translators: The label for the menu item to save current settings.
