@@ -3275,22 +3275,14 @@ class GlobalCommands(ScriptableObject):
 	def script_braille_cycleShowMessages(self, gesture: inputCore.InputGesture) -> None:
 		"""Set next state of braille show messages and reports it with ui.message."""
 		values = [x.value for x in ShowMessages]
-		index = values.index(
-			config.conf["braille"]["showMessages"]
-		)
+		index = values.index(config.conf["braille"]["showMessages"])
 		newIndex = (index + 1) % len(values)
 		newValue = values[newIndex]
 		config.conf["braille"]["showMessages"] = newValue
-		ui.message(
-			_(
-				# Translators: Reports which show braille message mode is used
-				# (disabled, timeout or indefinitely).
-				"Braille show messages %s"
-			)
-			% ShowMessages(
-				newValue
-			).displayString
-		)
+		# Translators: Reports which show braille message mode is used
+		# (disabled, timeout or indefinitely).
+		msg = _("Braille show messages %s") % ShowMessages(newValue).displayString
+		ui.message(msg)
 
 	@script(
 		# Translators: Input help mode message for report clipboard text command.
