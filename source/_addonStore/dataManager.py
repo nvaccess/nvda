@@ -27,6 +27,7 @@ from core import callLater
 import globalVars
 import languageHandler
 from logHandler import log
+import NVDAState
 
 from .models.addon import (
 	AddonStoreModel,
@@ -68,7 +69,6 @@ class _DataManager:
 	_cachePeriod = timedelta(hours=6)
 
 	def __init__(self):
-		self._shouldCacheToDisk = not (globalVars.appArgs.secure or globalVars.appArgs.launcher)
 		cacheDirLocation = os.path.join(globalVars.appArgs.configPath, "addonStore")
 		self._lang = languageHandler.getLanguage()
 		self._preferredChannel = Channel.ALL
@@ -109,7 +109,7 @@ class _DataManager:
 		return response.content
 
 	def _cacheCompatibleAddons(self, addonData: str, fetchTime: datetime):
-		if not self._shouldCacheToDisk:
+		if not NVDAState.shouldWriteToDisk():
 			return
 		if not addonData:
 			return
@@ -123,7 +123,7 @@ class _DataManager:
 			json.dump(cacheData, cacheFile, ensure_ascii=False)
 
 	def _cacheLatestAddons(self, addonData: str, fetchTime: datetime):
-		if not self._shouldCacheToDisk:
+		if not NVDAState.shouldWriteToDisk():
 			return
 		if not addonData:
 			return
@@ -235,7 +235,7 @@ class _DataManager:
 			os.remove(addonCachePath)
 
 	def _cacheInstalledAddon(self, addonData: AddonStoreModel):
-		if not self._shouldCacheToDisk:
+		if not NVDAState.shouldWriteToDisk():
 			return
 		if not addonData:
 			return
