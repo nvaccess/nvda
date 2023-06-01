@@ -42,7 +42,7 @@ CompletionRoutineStoreTypeT = typing.Dict[
 		OVERLAPPED
 	]
 ]
-apcsWillBeStronglyReferenced = version_year < 2024 and NVDAState._allowDeprecatedAPI()
+_apcsWillBeStronglyReferenced = version_year < 2024 and NVDAState._allowDeprecatedAPI()
 """
 Starting from NVDA 2024.1, we will weakly reference functions that are executed as an APC.
 This will ensure that objects from which APCs have been queuedwon't be scattering around
@@ -147,7 +147,7 @@ class IoThread(threading.Thread):
 		super().start()
 		self.handle = ctypes.windll.kernel32.OpenThread(winKernel.THREAD_SET_CONTEXT, False, self.ident)
 
-	if apcsWillBeStronglyReferenced:
+	if _apcsWillBeStronglyReferenced:
 		@contextmanager
 		def autoDeleteApcReference(self, apcUuid):
 			log.warning(
@@ -179,7 +179,7 @@ class IoThread(threading.Thread):
 
 		# generate a number to identify the function in the store.
 		internalParam = next(self._apcParamCounter)
-		useWeak = _alwaysReferenceWeakly or not apcsWillBeStronglyReferenced
+		useWeak = _alwaysReferenceWeakly or not _apcsWillBeStronglyReferenced
 		reference = None
 		if useWeak:
 			# Generate a weak reference to the function
