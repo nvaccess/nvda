@@ -33,6 +33,7 @@ from NVDAObjects import NVDAObject, NVDAObjectTextInfo
 import globalVars
 from logHandler import log
 import gui
+import systemUtils
 import wx
 import config
 from config.configFlags import TetherTo
@@ -272,7 +273,10 @@ class GlobalCommands(ScriptableObject):
 	)
 	def script_dateTime(self,gesture):
 		if scriptHandler.getLastScriptRepeatCount()==0:
-			text=winKernel.GetTimeFormatEx(winKernel.LOCALE_NAME_USER_DEFAULT, winKernel.TIME_NOSECONDS, None, None)
+			if systemUtils._isSystemClockSecondsVisible():
+				text = winKernel.GetTimeFormatEx(winKernel.LOCALE_NAME_USER_DEFAULT, None, None, None)
+			else:
+				text = winKernel.GetTimeFormatEx(winKernel.LOCALE_NAME_USER_DEFAULT, winKernel.TIME_NOSECONDS, None, None)
 		else:
 			text=winKernel.GetDateFormatEx(winKernel.LOCALE_NAME_USER_DEFAULT, winKernel.DATE_LONGDATE, None, None)
 		ui.message(text)
@@ -2747,7 +2751,6 @@ class GlobalCommands(ScriptableObject):
 	)
 	@gui.blockAction.when(gui.blockAction.Context.SECURE_MODE)
 	def script_openUserConfigurationDirectory(self, gesture):
-		import systemUtils
 		systemUtils.openUserConfigurationDirectory()
 
 	@script(

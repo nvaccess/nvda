@@ -222,7 +222,7 @@ The actual commands will not execute while in input help mode.
 | Report focus | ``NVDA+tab`` | ``NVDA+tab`` | Reports the current control which has focus.  Pressing twice will spell the information |
 | Read window | ``NVDA+b`` | ``NVDA+b`` | Reads the entire current window (useful for dialogs) |
 | Read status bar | ``NVDA+end`` | ``NVDA+shift+end`` | Reports the Status Bar if NVDA finds one. Pressing twice will spell the information. Pressing three times will copy it to the clipboard |
-| Read time | ``NVDA+f12`` | ``NVDA+f12`` | Pressing once reports the current time, pressing twice reports the date |
+| Read time | ``NVDA+f12`` | ``NVDA+f12`` | Pressing once reports the current time, pressing twice reports the date. The time and date are reported in the format specified in Windows settings for the system tray clock. |
 | Report text formatting | ``NVDA+f`` | ``NVDA+f`` | Reports text formatting. Pressing twice shows the information in a window |
 | Report link destination | ``NVDA+k`` | ``NVDA+k`` | Pressing once speaks the destination URL of the link at the current caret or focus position. Pressing twice shows it in a window for more careful review |
 
@@ -483,10 +483,15 @@ The actual  commands will not execute while in input help mode.
 ++ The NVDA menu ++[TheNVDAMenu]
 The NVDA menu allows you to control NVDA's settings, access help, save/revert your configuration, Modify speech dictionaries, access additional tools and exit NVDA.
 
-To get to the NVDA menu from anywhere in Windows while NVDA is running, press NVDA+n on the keyboard or perform a 2-finger double-tap on the touch screen.
-You can also get to the NVDA menu via the Windows system tray.
-Either right-click on the NVDA icon located in the system tray, or access the system tray by pressing the Windows logo key+B, DownArrow to the NVDA icon and press the applications key located next to the right control key on most keyboards.
-When the menu comes up, You can use the arrow keys to navigate the menu, and the enter key to activate an item.
+To get to the NVDA menu from anywhere in Windows while NVDA is running, you may do any of the following:
+- press ``NVDA+n`` on the keyboard.
+- Perform a 2-finger double-tap on the touch screen.
+- Access the system tray by pressing ``Windows+b``, ``downArrow`` to the NVDA icon, and press ``enter``.
+- Alternatively, access the system tray by pressing ``Windows+b``, ``downArrow`` to the NVDA icon, and open the context menu by pressing the ``applications`` key located next to the right control key on most keyboards.
+On a keyboard without an ``applications`` key, press ``shift+F10`` instead.
+- Right-click on the NVDA icon located in the Windows system tray
+-
+When the menu comes up, You can use the arrow keys to navigate the menu, and the ``enter`` key to activate an item.
 
 ++ Basic NVDA commands ++[BasicNVDACommands]
 %kc:beginInclude
