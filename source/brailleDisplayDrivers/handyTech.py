@@ -530,7 +530,7 @@ class Activator(TimeSyncFirmnessMixin, AtcMixin, JoystickMixin, TripleActionKeys
 	numCells = 40
 	genericName = name = 'Activator'
 
-	def _get_keys(self):
+	def _get_keys(self) -> Dict[int, str]:
 		keys = super().keys
 		keys.update({
 			0x7A: "escape",
