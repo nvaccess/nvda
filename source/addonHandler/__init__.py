@@ -529,8 +529,8 @@ class Addon(AddonBase):
 			else:
 				if self.canOverrideCompatibility and not self.overrideIncompatibility:
 					from gui import mainFrame
-					from gui._addonStoreGui.controls.messageDialogs import _shouldProceedWhenAddonTooOldDialog
-					if not _shouldProceedWhenAddonTooOldDialog(mainFrame, self._addonGuiModel):
+					from gui._addonStoreGui.controls.messageDialogs import _shouldInstallWhenAddonTooOldDialog
+					if not _shouldInstallWhenAddonTooOldDialog(mainFrame, self._addonGuiModel):
 						import addonAPIVersion
 						raise AddonError("Add-on is not compatible and over ride was abandoned")
 				state[AddonStateCategory.PENDING_ENABLE].add(self.name)

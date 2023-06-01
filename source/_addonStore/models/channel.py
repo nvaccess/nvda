@@ -42,10 +42,7 @@ _channelFilters: OrderedDict[Channel, Set[Channel]] = OrderedDict({
 		Channel.DEV,
 		Channel.EXTERNAL,
 	},
-	Channel.STABLE: {
-		Channel.STABLE,
-		Channel.EXTERNAL,
-	},
+	Channel.STABLE: {Channel.STABLE},
 	Channel.BETA: {Channel.BETA},
 	Channel.DEV: {Channel.DEV},
 	Channel.EXTERNAL: {Channel.EXTERNAL},

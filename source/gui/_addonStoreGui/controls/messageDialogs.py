@@ -80,7 +80,7 @@ def _shouldProceedToRemoveAddonDialog(
 	) == wx.YES
 
 
-def _shouldProceedWhenAddonTooOldDialog(
+def _shouldInstallWhenAddonTooOldDialog(
 		parent: wx.Window,
 		addon: AddonGUIModel
 ) -> bool:
@@ -94,6 +94,35 @@ def _shouldProceedWhenAddonTooOldDialog(
 		"your current NVDA version is {NVDAVersion}. "
 		"Installation may cause unstable behavior in NVDA. "
 		"Proceed with installation anyway? "
+		).format(
+	name=addon.displayName,
+	version=addon.addonVersionName,
+	lastTestedNVDAVersion=addonAPIVersion.formatForGUI(addon.lastTestedNVDAVersion),
+	NVDAVersion=addonAPIVersion.formatForGUI(addonAPIVersion.CURRENT)
+	)
+	return ErrorAddonInstallDialogWithCancelButton(
+		parent=parent,
+		# Translators: The title of a dialog presented when an error occurs.
+		title=pgettext("addonStore", "Add-on not compatible"),
+		message=incompatibleMessage,
+		showAddonInfoFunction=lambda: _showAddonInfo(addon)
+	).ShowModal() == wx.OK
+
+
+def _shouldEnableWhenAddonTooOldDialog(
+		parent: wx.Window,
+		addon: AddonGUIModel
+) -> bool:
+	incompatibleMessage = pgettext(
+		"addonStore",
+		# Translators: The message displayed when enabling an incompatible add-on package,
+		# because it requires a new version than is currently installed.
+		"Warning: add-on is incompatible: {name} {version}. "
+		"Check for an updated version of this add-on if possible. "
+		"The last tested NVDA version for this add-on is {lastTestedNVDAVersion}, "
+		"your current NVDA version is {NVDAVersion}. "
+		"Enabling may cause unstable behavior in NVDA. "
+		"Proceed with enabling anyway? "
 		).format(
 	name=addon.displayName,
 	version=addon.addonVersionName,

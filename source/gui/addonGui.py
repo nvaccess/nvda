@@ -460,7 +460,7 @@ def installAddon(parentWindow: wx.Window, addonPath: str) -> bool:  # noqa: C901
 	Any error messages / warnings are presented to the user via a GUI message box.
 	If attempting to install an addon that is pending removal, it will no longer be pending removal.
 	@return True on success or False on failure.
-	@note See also L{addonStore.install.installAddon}
+	@note See also L{_addonStore.install.installAddon}
 	"""
 	try:
 		bundle = addonHandler.AddonBundle(addonPath)
@@ -479,8 +479,8 @@ def installAddon(parentWindow: wx.Window, addonPath: str) -> bool:  # noqa: C901
 		_showAddonRequiresNVDAUpdateDialog(parentWindow, bundle)
 		return False  # Exit early, addon does not have required support
 	elif bundle.canOverrideCompatibility:
-		from addonStoreGui.controls.messageDialogs import _shouldProceedWhenAddonTooOldDialog
-		if _shouldProceedWhenAddonTooOldDialog(parentWindow, bundle._addonGuiModel):
+		from _addonStoreGui.controls.messageDialogs import _shouldInstallWhenAddonTooOldDialog
+		if _shouldInstallWhenAddonTooOldDialog(parentWindow, bundle._addonGuiModel):
 			# Install incompatible version
 			bundle.enableCompatibilityOverride()
 		else:

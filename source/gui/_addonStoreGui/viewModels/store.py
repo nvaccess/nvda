@@ -44,8 +44,9 @@ from gui.message import DisplayableError
 from logHandler import log
 
 from ..controls.messageDialogs import (
+	_shouldEnableWhenAddonTooOldDialog,
 	_shouldProceedToRemoveAddonDialog,
-	_shouldProceedWhenAddonTooOldDialog,
+	_shouldInstallWhenAddonTooOldDialog,
 	_shouldProceedWhenInstalledAddonVersionUnknown,
 )
 
@@ -245,7 +246,7 @@ class AddonStoreVM:
 
 	def installOverrideIncompatibilityForAddon(self, listItemVM: AddonListItemVM) -> None:
 		from gui import mainFrame
-		if _shouldProceedWhenAddonTooOldDialog(mainFrame, listItemVM.model):
+		if _shouldInstallWhenAddonTooOldDialog(mainFrame, listItemVM.model):
 			listItemVM.model.enableCompatibilityOverride()
 			self.getAddon(listItemVM)
 			self.refresh()
@@ -284,7 +285,7 @@ class AddonStoreVM:
 
 	def enableOverrideIncompatibilityForAddon(self, listItemVM: AddonListItemVM) -> None:
 		from ... import mainFrame
-		if _shouldProceedWhenAddonTooOldDialog(mainFrame, listItemVM.model):
+		if _shouldEnableWhenAddonTooOldDialog(mainFrame, listItemVM.model):
 			listItemVM.model.enableCompatibilityOverride()
 			self._handleEnableDisable(listItemVM, True)
 

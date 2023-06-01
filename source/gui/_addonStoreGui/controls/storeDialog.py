@@ -290,7 +290,6 @@ class AddonStoreDialog(SettingsDialog):
 		self._setListLabels()
 		self._storeVM.refresh()
 		self.Layout()
-		self.addonListView.SetFocus()
 
 	def onChannelFilterChange(self, evt: wx.EVT_CHOICE):
 		self._storeVM._filterChannelKey = self._channelFilterKey
