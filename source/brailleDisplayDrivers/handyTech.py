@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2008-2021 NV Access Limited, Bram Duvigneau, Babbage B.V.,
+# Copyright (C) 2008-2023 NV Access Limited, Bram Duvigneau, Babbage B.V.,
 # Felix Grützmacher (Handy Tech Elektronik GmbH), Leonard de Ruijter
 
 """
@@ -9,6 +9,13 @@ Braille display driver for Handy Tech braille displays.
 """
 
 from collections import OrderedDict
+from typing import (
+	Dict,
+	List,
+	Optional,
+	Union,
+)
+
 from io import BytesIO
 import serial
 import weakref
@@ -28,7 +35,6 @@ from ctypes import windll
 import windowUtils
 
 import wx
-from typing import List, Any, Union, Optional
 
 
 class InvisibleDriverWindow(windowUtils.CustomWindow):
@@ -530,7 +536,7 @@ class Activator(TimeSyncFirmnessMixin, AtcMixin, JoystickMixin, TripleActionKeys
 	numCells = 40
 	genericName = name = 'Activator'
 
-	def _get_keys(self) -> dict[int, str]:
+	def _get_keys(self) -> Dict[int, str]:
 		keys = super().keys
 		keys.update({
 			0x7A: "escape",
