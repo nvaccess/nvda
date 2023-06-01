@@ -1,8 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
-# Julien Cochuyt, Cyrille Bougot
+# Copyright (C) 2006-2021 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
+# Julien Cochuyt
 
 from .speech import (
 	_extendSpeechSequence_addMathForTextInfo,
@@ -46,7 +46,6 @@ from .speech import (
 	RE_INDENTATION_SPLIT,
 	setSpeechMode,
 	speak,
-	speakKeyboardShortcuts,
 	speakMessage,
 	speakObject,
 	speakObjectProperties,

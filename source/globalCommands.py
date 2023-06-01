@@ -28,7 +28,10 @@ import controlTypes
 import api
 import textInfos
 import speech
-from speech import sayAll
+from speech import (
+	sayAll,
+	shortcutKeys,
+)
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo
 import globalVars
 from logHandler import log
@@ -2578,7 +2581,7 @@ class GlobalCommands(ScriptableObject):
 		obj = api.getFocusObject()
 		if obj.keyboardShortcut:
 			shortcut = obj.keyboardShortcut
-			speech.speakKeyboardShortcuts(shortcut)
+			shortcutKeys.speakKeyboardShortcuts(shortcut)
 			braille.handler.message(shortcut)
 		else:
 			# Translators: reported when a user requests the accelerator key
