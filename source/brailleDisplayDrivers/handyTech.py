@@ -531,7 +531,7 @@ class Activator(TimeSyncFirmnessMixin, AtcMixin, JoystickMixin, TripleActionKeys
 	genericName = name = 'Activator'
 
 	def _get_keys(self):
-		keys = super(Activator, self).keys
+		keys = super().keys
 		keys.update({
 			0x7A: "escape",
 			0x7B: "return",
