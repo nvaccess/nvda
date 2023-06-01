@@ -1296,16 +1296,19 @@ Some settings can also be changed using shortcut keys, which are listed where re
 
 ++ NVDA Settings ++[NVDASettings]
 %kc:settingsSection: || Name | Desktop key | Laptop key | Description |
-The NVDA Settings dialog contains many configuration parameters that can be changed.
-This dialog contains a list with several categories of settings to choose from.
-When you select a category, several settings related to this category will be shown in this dialog.
-These settings can be applied using the apply button, in which case the dialog will stay open.
+NVDA provides many configuration parameters that can be changed using the settings dialog.
+To make it easier to find the kind of settings you want to change, the dialog displays a list of configuration categories to choose from.
+When you select a category, all of the settings related to it will be shown in the dialog.
+To move between categories, use ``tab`` or ``shift+tab`` to reach the list of categories, and then use the up and down arrow keys to navigate the list.
+From anywhere in the dialog, you may also move forward one category by pressing ``ctrl+tab``, or back one category by pressing ``shift+ctrl+tab``.
+
+Once you change one or more settings, the settings can be applied using the apply button, in which case the dialog will stay open, allowing you to change more settings or choose another category.
 If you want to save your settings and close the NVDA Settings dialog, you can use the OK button.
 
 Some settings categories have dedicated shortcut keys.
-If pressed, the shortcut key will open the NVDA Settings dialog in that particular category.
+If pressed, the shortcut key will open the NVDA Settings dialog directly to that particular category.
 By default, not all categories can be accessed with keyboard commands.
-If you wish to access categories which do not have dedicated shortcut keys, use the [Input Gestures dialog #InputGestures] to add a custom gesture such as a keyboard command or touch gesture for that category.
+If you frequently access categories that do not have dedicated shortcut keys, you may wish to use the [Input Gestures dialog #InputGestures] to add a custom gesture such as a keyboard command or touch gesture for that category.
 
 The settings categories found in the NVDA Settings dialog will be outlined below.
 
