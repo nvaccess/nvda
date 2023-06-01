@@ -335,6 +335,7 @@ class MainFrame(wx.Frame):
 		blockAction.Context.MODAL_DIALOG_OPEN,
 		blockAction.Context.WINDOWS_LOCKED,
 		blockAction.Context.WINDOWS_STORE_VERSION,
+		blockAction.Context.RUNNING_LAUNCHER,
 	)
 	def onAddonStoreCommand(self, evt: wx.MenuEvent):
 		self.prePopup()

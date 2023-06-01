@@ -22,6 +22,7 @@ from requests.structures import CaseInsensitiveDict
 
 import addonAPIVersion
 from baseObject import AutoPropertyObject
+import config
 from core import callLater
 import globalVars
 import languageHandler
@@ -54,6 +55,9 @@ addonDataManager: Optional["_DataManager"] = None
 
 def initialize():
 	global addonDataManager
+	if config.isAppX:
+		log.info("Add-ons not supported when running as a Windows Store application")
+		return
 	log.debug("initializing addonStore data manager")
 	addonDataManager = _DataManager()
 
@@ -64,6 +68,7 @@ class _DataManager:
 	_cachePeriod = timedelta(hours=6)
 
 	def __init__(self):
+		self._shouldCacheToDisk = not (globalVars.appArgs.secure or globalVars.appArgs.launcher)
 		cacheDirLocation = os.path.join(globalVars.appArgs.configPath, "addonStore")
 		self._lang = languageHandler.getLanguage()
 		self._preferredChannel = Channel.ALL
@@ -104,6 +109,8 @@ class _DataManager:
 		return response.content
 
 	def _cacheCompatibleAddons(self, addonData: str, fetchTime: datetime):
+		if not self._shouldCacheToDisk:
+			return
 		if not addonData:
 			return
 		cacheData = {
@@ -116,6 +123,8 @@ class _DataManager:
 			json.dump(cacheData, cacheFile, ensure_ascii=False)
 
 	def _cacheLatestAddons(self, addonData: str, fetchTime: datetime):
+		if not self._shouldCacheToDisk:
+			return
 		if not addonData:
 			return
 		cacheData = {
@@ -226,6 +235,8 @@ class _DataManager:
 			os.remove(addonCachePath)
 
 	def _cacheInstalledAddon(self, addonData: AddonStoreModel):
+		if not self._shouldCacheToDisk:
+			return
 		if not addonData:
 			return
 		addonCachePath = os.path.join(self._installedAddonDataCacheDir, f"{addonData.addonId}.json")

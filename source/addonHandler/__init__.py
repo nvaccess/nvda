@@ -131,6 +131,10 @@ class AddonsState(collections.UserDict):
 
 	def save(self) -> None:
 		"""Saves content of the state to a file unless state is empty in which case this would be pointless."""
+		if globalVars.appArgs.secure or globalVars.appArgs.launcher:
+			log.error("NVDA should not write to disk from secure mode or launcher", stack_info=True)
+			return
+
 		if any(self.values()):
 			try:
 				# #9038: Python 3 requires binary format when working with pickles.
@@ -216,8 +220,9 @@ def initialize():
 	# #3090: Are there add-ons that are supposed to not run for this session?
 	disableAddonsIfAny()
 	getAvailableAddons(refresh=True, isFirstLoad=True)
-	state.cleanupRemovedDisabledAddons()
-	state.save()
+	if not (globalVars.appArgs.secure or globalVars.appArgs.launcher):
+		state.cleanupRemovedDisabledAddons()
+		state.save()
 	initializeModulePackagePaths()
 
 
