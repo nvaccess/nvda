@@ -110,6 +110,9 @@ Similarly, the new ``getCompletionRoutine`` method allows you to convert a pytho
 Instead, functions should be weakly referenceable. (#14627)
 - Importing ``LPOVERLAPPED_COMPLETION_ROUTINE`` from ``hwIo.base`` is deprecated.
 Instead import from ``hwIo.ioThread``. (#14627)
+- ``IoThread.autoDeleteApcReference`` is deprecated.
+It was introduced in NVDA 2023.1 and was never meant to be part of the public API.
+Until removal, it behaves as a no-op, i.e. a context manager yielding nothing.
 -
 
 = 2023.1 =
