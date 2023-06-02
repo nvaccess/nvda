@@ -1594,9 +1594,11 @@ The selection indicator is not affected by this option, it is always dots 7 and 
 ==== Show Messages ====[BrailleSettingsShowMessages]
 This is a combobox that allows you to select if NVDA should display braille messages and when they should disappear automatically.
 
+To toggle show messages from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
+
 ==== Message Timeout (sec) ====[BrailleSettingsMessageTimeout]
 This option is a numerical field that controls how long NVDA messages are displayed on the braille display.
-The NVDA message is imediately dismissed when pressing a routing key on the braille display, but appears again when pressing a corresponding key which triggers the message.
+The NVDA message is immediately dismissed when pressing a routing key on the braille display, but appears again when pressing a corresponding key which triggers the message.
 This option is shown only if "Show Messages" is set to "Use timeout".
 
 %kc:setting

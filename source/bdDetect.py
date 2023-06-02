@@ -734,6 +734,7 @@ def initialize():
 		"VID_1FE4&PID_008C",  # Basic Braille 84
 		"VID_1FE4&PID_0093",  # Basic Braille Plus 32
 		"VID_1FE4&PID_0094",  # Basic Braille Plus 40
+		"VID_1FE4&PID_00A4",  # Activator
 	})
 
 	# Some older HT displays use a HID converter and an internal serial interface
@@ -753,6 +754,7 @@ def initialize():
 		"Braillino BL",
 		"Braille Wave BW",
 		"Easy Braille EBR",
+		"Activator AC",
 	)))
 
 	# hims
