@@ -4,6 +4,7 @@
 # Copyright (C) 2006-2022 NV Access Limited, Bill Dengler, Leonard de Ruijter
 
 from typing import (
+	Optional,
 	Union
 )
 
@@ -17,6 +18,7 @@ from controlTypes import TextPosition
 import textInfos
 import colors
 from compoundDocuments import CompoundDocument, TreeCompoundTextInfo
+from NVDAObjects import NVDAObject
 from NVDAObjects.IAccessible import IAccessible, IA2TextTextInfo
 from NVDAObjects.behaviors import EditableText
 from logHandler import log
@@ -340,3 +342,30 @@ class AppModule(appModuleHandler.AppModule):
 			# This is a word processor document.
 			obj.description = None
 			obj.treeInterceptorClass = SymphonyDocument
+
+	def searchStatusBar(self, obj: NVDAObject, max_depth: int = 5) -> Optional[NVDAObject]:
+		"""Searches for and returns the status bar object
+		if either the object itself or one of its recursive children
+		(up to the given depth) has the corresponding role."""
+		if obj.role == controlTypes.Role.STATUSBAR:
+			return obj
+		if max_depth < 1 or obj.role not in {controlTypes.Role.ROOTPANE, controlTypes.Role.WINDOW}:
+			return None
+		for child in obj.children:
+			status_bar = self.searchStatusBar(child, max_depth - 1)
+			if status_bar:
+				return status_bar
+		return None
+
+	def _get_statusBar(self) -> Optional[NVDAObject]:
+		return self.searchStatusBar(api.getForegroundObject())
+
+	def getStatusBarText(self, obj: NVDAObject) -> str:
+		text = ""
+		for child in obj.children:
+			textObj = child.IAccessibleTextObject
+			if textObj:
+				if text:
+					text += " "
+				text += textObj.textAtOffset(0, IA2.IA2_TEXT_BOUNDARY_ALL)[2]
+		return text
