@@ -4,7 +4,8 @@
 # See the file COPYING for more details.
 # Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee,
 # Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Łukasz Golonka, Accessolutions,
-# Julien Cochuyt, Jakub Lukowicz, Bill Dengler, Cyrille Bougot, Rob Meredith, Luke Davis
+# Julien Cochuyt, Jakub Lukowicz, Bill Dengler, Cyrille Bougot, Rob Meredith, Luke Davis,
+# Burman's Computer and Education Ltd.
 
 import itertools
 from typing import (
@@ -33,9 +34,13 @@ from NVDAObjects import NVDAObject, NVDAObjectTextInfo
 import globalVars
 from logHandler import log
 import gui
+import systemUtils
 import wx
 import config
-from config.configFlags import TetherTo
+from config.configFlags import (
+	TetherTo,
+	ShowMessages,
+)
 import winUser
 import appModuleHandler
 import winKernel
@@ -272,7 +277,10 @@ class GlobalCommands(ScriptableObject):
 	)
 	def script_dateTime(self,gesture):
 		if scriptHandler.getLastScriptRepeatCount()==0:
-			text=winKernel.GetTimeFormatEx(winKernel.LOCALE_NAME_USER_DEFAULT, winKernel.TIME_NOSECONDS, None, None)
+			if systemUtils._isSystemClockSecondsVisible():
+				text = winKernel.GetTimeFormatEx(winKernel.LOCALE_NAME_USER_DEFAULT, None, None, None)
+			else:
+				text = winKernel.GetTimeFormatEx(winKernel.LOCALE_NAME_USER_DEFAULT, winKernel.TIME_NOSECONDS, None, None)
 		else:
 			text=winKernel.GetDateFormatEx(winKernel.LOCALE_NAME_USER_DEFAULT, winKernel.DATE_LONGDATE, None, None)
 		ui.message(text)
@@ -2747,7 +2755,6 @@ class GlobalCommands(ScriptableObject):
 	)
 	@gui.blockAction.when(gui.blockAction.Context.SECURE_MODE)
 	def script_openUserConfigurationDirectory(self, gesture):
-		import systemUtils
 		systemUtils.openUserConfigurationDirectory()
 
 	@script(
@@ -3259,6 +3266,23 @@ class GlobalCommands(ScriptableObject):
 		shapeMsg = braille.CURSOR_SHAPES[index][1]
 		# Translators: Reports which braille cursor shape is activated.
 		ui.message(_("Braille cursor %s") % shapeMsg)
+
+	@script(
+		# Translators: Input help mode message for cycle through braille show messages command.
+		description=_("Cycle through the braille show messages modes"),
+		category=SCRCAT_BRAILLE
+	)
+	def script_braille_cycleShowMessages(self, gesture: inputCore.InputGesture) -> None:
+		"""Set next state of braille show messages and reports it with ui.message."""
+		values = [x.value for x in ShowMessages]
+		index = values.index(config.conf["braille"]["showMessages"])
+		newIndex = (index + 1) % len(values)
+		newValue = values[newIndex]
+		config.conf["braille"]["showMessages"] = newValue
+		# Translators: Reports which show braille message mode is used
+		# (disabled, timeout or indefinitely).
+		msg = _("Braille show messages %s") % ShowMessages(newValue).displayString
+		ui.message(msg)
 
 	@script(
 		# Translators: Input help mode message for report clipboard text command.

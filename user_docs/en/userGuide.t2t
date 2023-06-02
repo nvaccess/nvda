@@ -222,7 +222,7 @@ The actual commands will not execute while in input help mode.
 | Report focus | ``NVDA+tab`` | ``NVDA+tab`` | Reports the current control which has focus.  Pressing twice will spell the information |
 | Read window | ``NVDA+b`` | ``NVDA+b`` | Reads the entire current window (useful for dialogs) |
 | Read status bar | ``NVDA+end`` | ``NVDA+shift+end`` | Reports the Status Bar if NVDA finds one. Pressing twice will spell the information. Pressing three times will copy it to the clipboard |
-| Read time | ``NVDA+f12`` | ``NVDA+f12`` | Pressing once reports the current time, pressing twice reports the date |
+| Read time | ``NVDA+f12`` | ``NVDA+f12`` | Pressing once reports the current time, pressing twice reports the date. The time and date are reported in the format specified in Windows settings for the system tray clock. |
 | Report text formatting | ``NVDA+f`` | ``NVDA+f`` | Reports text formatting. Pressing twice shows the information in a window |
 | Report link destination | ``NVDA+k`` | ``NVDA+k`` | Pressing once speaks the destination URL of the link at the current caret or focus position. Pressing twice shows it in a window for more careful review |
 
@@ -482,10 +482,15 @@ The actual  commands will not execute while in input help mode.
 ++ The NVDA menu ++[TheNVDAMenu]
 The NVDA menu allows you to control NVDA's settings, access help, save/revert your configuration, Modify speech dictionaries, access additional tools and exit NVDA.
 
-To get to the NVDA menu from anywhere in Windows while NVDA is running, press NVDA+n on the keyboard or perform a 2-finger double-tap on the touch screen.
-You can also get to the NVDA menu via the Windows system tray.
-Either right-click on the NVDA icon located in the system tray, or access the system tray by pressing the Windows logo key+B, DownArrow to the NVDA icon and press the applications key located next to the right control key on most keyboards.
-When the menu comes up, You can use the arrow keys to navigate the menu, and the enter key to activate an item.
+To get to the NVDA menu from anywhere in Windows while NVDA is running, you may do any of the following:
+- press ``NVDA+n`` on the keyboard.
+- Perform a 2-finger double-tap on the touch screen.
+- Access the system tray by pressing ``Windows+b``, ``downArrow`` to the NVDA icon, and press ``enter``.
+- Alternatively, access the system tray by pressing ``Windows+b``, ``downArrow`` to the NVDA icon, and open the context menu by pressing the ``applications`` key located next to the right control key on most keyboards.
+On a keyboard without an ``applications`` key, press ``shift+F10`` instead.
+- Right-click on the NVDA icon located in the Windows system tray
+-
+When the menu comes up, You can use the arrow keys to navigate the menu, and the ``enter`` key to activate an item.
 
 ++ Basic NVDA commands ++[BasicNVDACommands]
 %kc:beginInclude
@@ -1296,16 +1301,19 @@ Some settings can also be changed using shortcut keys, which are listed where re
 
 ++ NVDA Settings ++[NVDASettings]
 %kc:settingsSection: || Name | Desktop key | Laptop key | Description |
-The NVDA Settings dialog contains many configuration parameters that can be changed.
-This dialog contains a list with several categories of settings to choose from.
-When you select a category, several settings related to this category will be shown in this dialog.
-These settings can be applied using the apply button, in which case the dialog will stay open.
+NVDA provides many configuration parameters that can be changed using the settings dialog.
+To make it easier to find the kind of settings you want to change, the dialog displays a list of configuration categories to choose from.
+When you select a category, all of the settings related to it will be shown in the dialog.
+To move between categories, use ``tab`` or ``shift+tab`` to reach the list of categories, and then use the up and down arrow keys to navigate the list.
+From anywhere in the dialog, you may also move forward one category by pressing ``ctrl+tab``, or back one category by pressing ``shift+ctrl+tab``.
+
+Once you change one or more settings, the settings can be applied using the apply button, in which case the dialog will stay open, allowing you to change more settings or choose another category.
 If you want to save your settings and close the NVDA Settings dialog, you can use the OK button.
 
 Some settings categories have dedicated shortcut keys.
-If pressed, the shortcut key will open the NVDA Settings dialog in that particular category.
+If pressed, the shortcut key will open the NVDA Settings dialog directly to that particular category.
 By default, not all categories can be accessed with keyboard commands.
-If you wish to access categories which do not have dedicated shortcut keys, use the [Input Gestures dialog #InputGestures] to add a custom gesture such as a keyboard command or touch gesture for that category.
+If you frequently access categories that do not have dedicated shortcut keys, you may wish to use the [Input Gestures dialog #InputGestures] to add a custom gesture such as a keyboard command or touch gesture for that category.
 
 The settings categories found in the NVDA Settings dialog will be outlined below.
 
@@ -1585,9 +1593,11 @@ The selection indicator is not affected by this option, it is always dots 7 and 
 ==== Show Messages ====[BrailleSettingsShowMessages]
 This is a combobox that allows you to select if NVDA should display braille messages and when they should disappear automatically.
 
+To toggle show messages from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
+
 ==== Message Timeout (sec) ====[BrailleSettingsMessageTimeout]
 This option is a numerical field that controls how long NVDA messages are displayed on the braille display.
-The NVDA message is imediately dismissed when pressing a routing key on the braille display, but appears again when pressing a corresponding key which triggers the message.
+The NVDA message is immediately dismissed when pressing a routing key on the braille display, but appears again when pressing a corresponding key which triggers the message.
 This option is shown only if "Show Messages" is set to "Use timeout".
 
 %kc:setting
