@@ -11,18 +11,21 @@ What's New in NVDA
   - braille symbols such as "⠐⠣⠃⠗⠇⠐⠜". (#14548)
   - Mac Option key symbol "⌥". (#14682)
   -
+- New input gestures:
+  - An unbound gesture to cycle through the available languages for Windows OCR. (#13036)
+  - An unbound gesture to cycle through the braille show messages modes. (#14864)
+  - Added gestures for Tivomatic Caiku Albatross Braille displays.
+There are now gestures for showing the braille settings dialog, accessing the status bar, cycling the braille cursor shape, and toggling the braille cursor on/off. (#14844)
+  -
 - In Mozilla Firefox and Google Chrome, NVDA now reports when a control opens a dialog, grid, list or tree if the author has specified this using aria-haspopup. (#14709)
 - It is now possible to use system variables (such as ``%temp%`` or ``%homepath%``) in the path specification while creating portable copies of NVDA. (#14680)
 - Added support for the ``aria-brailleroledescription`` ARIA 1.3 attribute, allowing web authors to override the type of an element shown on the Braille display. (#14748)
 - When highlighted text is enabled Document Formatting, highlight colours are now reported in Microsoft Word. (#7396, #12101, #5866)
 - When colors are enabled Document Formatting, background colours are now reported in Microsoft Word. (#5866)
-- Introduced a new command to cycle through the available languages for Windows OCR. (#13036)
 - When pressing ``numpad2`` three times to report the numerical value of the character at the position of the review cursor, the information is now also provided in braille. (#14826)
-- Added gestures for Tivomatic Caiku Albatross Braille displays.
-There are now gestures for showing the braille settings dialog, accessing the status bar, cycling the braille cursor shape, and toggling the braille cursor on/off. (#14844)
 - NVDA now outputs audio via the Windows Audio Session API (WASAPI), which may improve the responsiveness, performance and stability of NVDA speech and sounds. This can be disabled in Advanced settings if audio problems are encountered. (#14697)
-- When using Excel shortcuts to toggle  format such as bold, italic, underline and strike through of a cell in Excel, the result is now reported. (#14923)
-- NVDA now supports the Help Tech Activator Braille display. (#14917)
+- When using Excel shortcuts to toggle format such as bold, italic, underline and strike through of a cell in Excel, the result is now reported. (#14923)
+- Added support for the Help Tech Activator Braille display. (#14917)
 - 
 
 
