@@ -538,11 +538,6 @@ class ConfigManager(object):
 		self._shouldHandleProfileSwitch: bool = True
 		self._pendingHandleProfileSwitch: bool = False
 		self._suspendedTriggers: Optional[List[ProfileTrigger]] = None
-		# Never save the config if running securely or if running from the launcher.
-		# When running from the launcher we don't save settings because the user may decide not to
-		# install this version, and these settings may not be compatible with the already
-		# installed version. See #7688
-		self._shouldWriteProfile: bool = not (globalVars.appArgs.secure or globalVars.appArgs.launcher)
 		self._initBaseConf()
 		#: Maps triggers to profiles.
 		self.triggersToProfiles: Optional[Dict[ProfileTrigger, ConfigObj]] = None
@@ -600,7 +595,7 @@ class ConfigManager(object):
 		profile.newlines = "\r\n"
 		profileCopy = deepcopy(profile)
 		try:
-			writeProfileFunc = self._writeProfileToFile if self._shouldWriteProfile else None
+			writeProfileFunc = self._writeProfileToFile if NVDAState.shouldWriteToDisk() else None
 			profileUpgrader.upgrade(profile, self.validator, writeProfileFunc)
 		except Exception as e:
 			# Log at level info to ensure that the profile is logged.
@@ -704,7 +699,7 @@ class ConfigManager(object):
 		"""
 		# #7598: give others a chance to either save settings early or terminate tasks.
 		pre_configSave.notify()
-		if not self._shouldWriteProfile:
+		if not NVDAState.shouldWriteToDisk():
 			log.info("Not writing profile, either --secure or --launcher args present")
 			return
 		try:

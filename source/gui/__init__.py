@@ -335,6 +335,7 @@ class MainFrame(wx.Frame):
 		blockAction.Context.MODAL_DIALOG_OPEN,
 		blockAction.Context.WINDOWS_LOCKED,
 		blockAction.Context.WINDOWS_STORE_VERSION,
+		blockAction.Context.RUNNING_LAUNCHER,
 	)
 	def onAddonStoreCommand(self, evt: wx.MenuEvent):
 		self.prePopup()
@@ -468,13 +469,16 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 		self.menu_tools_toggleBrailleViewer.Check(brailleViewer.isBrailleViewerActive())
 		brailleViewer.postBrailleViewerToolToggledAction.register(frame.onBrailleViewerChangedState)
 
+		if not config.isAppX and NVDAState.shouldWriteToDisk():
+			# Translators: The label of a menu item to open the Add-on store
+			item = menu_tools.Append(wx.ID_ANY, _("Add-on &store..."))
+			self.Bind(wx.EVT_MENU, frame.onAddonStoreCommand, item)
+
 		if not globalVars.appArgs.secure and not config.isAppX:
 			# Translators: The label for the menu item to open NVDA Python Console.
 			item = menu_tools.Append(wx.ID_ANY, _("Python console"))
 			self.Bind(wx.EVT_MENU, frame.onPythonConsoleCommand, item)
-			# Translators: The label of a menu item to open the Add-on store
-			item = menu_tools.Append(wx.ID_ANY, _("Add-on &store..."))
-			self.Bind(wx.EVT_MENU, frame.onAddonStoreCommand, item)
+
 		if not globalVars.appArgs.secure and not config.isAppX and not NVDAState.isRunningAsSource():
 			# Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
 			item = menu_tools.Append(wx.ID_ANY, _("Create portable copy..."))
@@ -632,7 +636,7 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 			_("Reset all settings to default state")
 		)
 		self.Bind(wx.EVT_MENU, frame.onRevertToDefaultConfigurationCommand, item)
-		if not (globalVars.appArgs.secure or globalVars.appArgs.launcher):
+		if NVDAState.shouldWriteToDisk():
 			item = self.menu.Append(
 				wx.ID_SAVE,
 				# Translators: The label for the menu item to save current settings.
