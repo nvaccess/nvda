@@ -623,7 +623,7 @@ def main():
 		# the GUI mainloop must be running for this to work so delay it
 		wx.CallAfter(audioDucking.initialize)
 
-	from winAPI.messageWindow import _MessageWindow, pre_handleWindowMessage
+	from winAPI.messageWindow import _MessageWindow
 	import versionInfo
 	messageWindow = _MessageWindow(versionInfo.name)
 
@@ -720,18 +720,11 @@ def main():
 	# Doing this here is a bit ugly, but we don't want these modules imported
 	# at module level, including wx.
 	log.debug("Initializing core pump")
-	import winUser
 
 	class CorePump(wx.Timer):
 		"Checks the queues and executes functions."
 		pending = _PumpPending.NONE
 		isPumping = False
-		WM_NVDA_REQUEST_PUMP = winUser.registerWindowMessage("WM_NVDA_REQUEST_PUMP")
-		ERROR_NOT_ENOUGH_QUOTA = 1816
-
-		def __init__(self):
-			super().__init__()
-			pre_handleWindowMessage.register(self.handleWindowMessage)
 
 		def queueRequest(self):
 			isMainThread = threading.get_ident() == mainThreadId
@@ -740,31 +733,7 @@ def main():
 				# don't need to queue that.
 				self.processRequest()
 				return
-			# We use a custom window message rather than wx.CallAfter because CallAfter
-			# has some obscure quirks that cause problems here. Out of the box,
-			# CallAfter doesn't work in modal loops. We have a monkey patch to work
-			# around that by posting WM_NULL; see monkeyPatches.wxMonkeyPatches.
-			# Unfortunately, a flood of CallAfters will be processed by wx without
-			# pumping window messages. That results in these WM_NULL messages piling up
-			# and eventually exceeding the queue size. A window message avoids these
-			# issues because it obviously requires window messages to be pumped, but it
-			# also avoids the need for the dummy WM_NULL messages.
-			try:
-				winUser.PostMessage(messageWindow.handle, self.WM_NVDA_REQUEST_PUMP, 0, 0)
-			except OSError as e:
-				if e.winerror == self.ERROR_NOT_ENOUGH_QUOTA and isMainThread:
-					# Sometimes, we still exceed the queue size. We're on the main thread,
-					# so we can fall back to a delayed pump without posting a message.
-					log.debugWarning(
-						"Immediate pump downgraded to delayed because message queue full"
-					)
-					self.pending = _PumpPending.DELAYED
-					return self.processRequest()
-				raise
-
-		def handleWindowMessage(self, msg=None):
-			if msg == self.WM_NVDA_REQUEST_PUMP:
-				self.processRequest()
+			wx.CallAfter(self.processRequest)
 
 		def processRequest(self):
 			if self.isPumping:
