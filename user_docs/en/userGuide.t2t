@@ -1673,6 +1673,21 @@ For this reason the option is enabled by default, interrupting speech when scrol
 
 Disabling this option allows speech to be heard while simultaneously reading Braille.
 
+==== Show selection ====[BrailleSettingsShowSelection]
+: Default
+  Enabled
+: Options
+  Default (Enabled), Enabled, Disabled
+:
+
+This setting determines if selection indicator (dots 7 and 8) is shown in braille display.
+
+The option is enabled by default so selection indicator is shown.
+
+Selection indicator might be a distraction while reading. Disabling this option may improve readability.
+
+To toggle show selection from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
+
 +++ Select Braille Display (NVDA+control+a) +++[SelectBrailleDisplay]
 The Select Braille Display dialog, which can be opened by activating the Change... button in the Braille category of the NVDA settings dialog, allows you to select which Braille display NVDA should use for braille output.
 Once you have selected your braille display of choice, you can press Ok and NVDA will load the selected display.

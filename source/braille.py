@@ -2,7 +2,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 # Copyright (C) 2008-2023 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau,
-# Leonard de Ruijter
+# Leonard de Ruijter, Burman's Computer and Education Ltd.
 
 import itertools
 import os
@@ -496,7 +496,10 @@ class Region(object):
 			mode=mode,
 			cursorPos=self.cursorPos
 		)
-		if self.selectionStart is not None and self.selectionEnd is not None:
+		if (
+			self.selectionStart is not None and self.selectionEnd is not None
+			and config.conf["braille"]["showSelection"]
+		):
 			try:
 				# Mark the selection.
 				self.brailleSelectionStart = self.rawToBraillePos[self.selectionStart]
