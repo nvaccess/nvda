@@ -22,9 +22,9 @@ Whether you are a beginner, an advanced user, a new or a long time developer; or
 * [NVDA Add-ons Mailing List](https://groups.io/g/nvda-addons)
 * [NVDA Add-on API Mailing List](https://groups.google.com/a/nvaccess.org/g/nvda-api)
 * [Instant Messaging channel for NVDA Support](https://gitter.im/nvaccess/NVDA)
-* [Other sources including groups and profiles on social media channels, language specific websites and mailing lists etc.](https://github.com/nvaccess/nvda-community/wiki/Connect)
+* [Other sources including groups and profiles on social media channels, language-specific websites and mailing lists etc.](https://github.com/nvaccess/nvda-community/wiki/Connect)
 
-You can also get  direct support from NV Access. See the [NV Access](http://www.nvaccess.org/) website for more details.
+You can also get direct support from NV Access. See the [NV Access](http://www.nvaccess.org/) website for more details.
 
 ## Other Key Project Links
 * [NVDA on GitHub](https://github.com/nvaccess/nvda)
@@ -67,7 +67,7 @@ The following dependencies need to be installed on your system:
 		* The Professional and Enterprise versions are also supported
 		* Preview versions are *not* supported
 	* When installing Visual Studio 2019, you need to enable the following:
-		* In the list  on the Workloads tab
+		* In the list on the Workloads tab
 			* in the Windows grouping:
 				* Desktop development with C++
 			* Then in the Installation details tree view, under Desktop for C++, Optional, ensure the following are selected:
@@ -103,7 +103,7 @@ For reference, the following run time dependencies are included in Git submodule
 * Java Access Bridge 32 bit, from Zulu Community OpenJDK build 13.0.1+10Zulu (13.28.11)
 * [Microsoft UI Automation Remote Operations Library, forked from @microsoft by @michaeldcurran](https://www.github.com/michaeldcurran/microsoft-ui-uiautomation/)
 	* Commit 224b22f3bf9e
-	* The fork specifically adds support for  CallExtension / IsExtensionSupported to the high-level API, see pr microsoft/microsoft-ui-uiautomation#84.
+	* The fork specifically adds support for CallExtension / IsExtensionSupported to the high-level API, see pr microsoft/microsoft-ui-uiautomation#84.
 
 Additionally, the following build time dependencies are included in the miscDeps git submodule: 
 
@@ -147,11 +147,11 @@ The `nvdaHelperDebugFlags` variable takes one or more of the following flags:
 
 * debugCRT: the libraries will be linked against the debug C runtime and assertions will be enabled. (By default, the normal CRT is used and assertions are disabled.)
 * RTC: runtime checks (stack corruption, uninitialized variables, etc.) will be enabled. (The default is no runtime checks.)
-* analyze: runs MSVC code analysis on all nvdaHelper code, holting on any warning. (default is no analysis).
+* analyze: runs MSVC code analysis on all nvdaHelper code, halting on any warning. (default is no analysis).
 
 The special keywords none and all can also be used in place of the individual flags.
 
-An example follows that enables debug CRT and runtype checks 
+An example follows that enables debug CRT and runtime checks 
 
 ```
 scons source nvdaHelperDebugFlags=debugCRT,RTC
@@ -274,7 +274,7 @@ scons tests
 
 ### Unit tests
 To run only specific unit tests, specify them using the `unitTests` variable on the command line.
-The tests should be provided as a comma separated list.
+The tests should be provided as a comma-separated list.
 Each test should be specified as a Python module, class or method relative to the `tests\unit` directory.
 For example, to run only methods in the `TestMove` and `TestSelection` classes in the file `tests\unit\test_cursorManager.py` file, run this command:
 
@@ -292,7 +292,7 @@ scons checkPot
 ### Linting your changes
 In order to ensure your changes comply with NVDA's coding style you can run the Flake8 linter locally.
 Some developers have found certain linting error messages misleading, these are clarified in `tests/lint/readme.md`.
-runlint.bat  will use Flake8 to inspect only the differences between your working directory and the specified `base` branch.
+runlint.bat will use Flake8 to inspect only the differences between your working directory and the specified `base` branch.
 If you create a Pull Request, the `base` branch you use here should be the same as the target you would use for a Pull Request. In most cases it will be `origin/master`.
 ```
 runlint origin/master
@@ -310,7 +310,7 @@ Please refer to Nose's own documentation on how to filter tests etc.
 ### System Tests
 System tests can be run with the `runsystemtests.bat --include <TAG>` script.
 To run all tests standard tests for developers use `runsystemtests.bat --include NVDA`.
-Internally this script uses the Robot  test framework to execute the tests.
+Internally this script uses the Robot test framework to execute the tests.
 Any arguments given to runsystemtests.bat are forwarded onto Robot.
 For more details (including filtering and exclusion of tests) see `tests/system/readme.md`.
 
