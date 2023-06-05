@@ -311,7 +311,7 @@ If you have add-ons already installed there may also be a warning that incompati
 Before you're able to press the Continue button you will have to use the checkbox to confirm that you understand that these add-ons will be disabled.
 There will also be a button present to review the add-ons that will be disabled.
 Refer to the [incompatible add-ons dialog section #incompatibleAddonsManager] for more help on this button.
-You are able to re-enable incompatible add-ons at your own risk.
+After installation, you are able to re-enable incompatible add-ons at your own risk from within the [Add-on Store #AddonsManager].
 
 +++ Use NVDA during sign-in +++[StartAtWindowsLogon]
 This option allows you to choose whether or not NVDA should automatically start while at the Windows sign-in screen, before you have entered a password.
@@ -2603,8 +2603,6 @@ You can jump to the list with ``alt+l``.
 If you have not installed an add-on before, the add-on store will open on a list of add-ons available to install.
 If you have installed add-ons, the list will display currently installed add-ons.
 
-You can sort add-ons by their various fields by pressing ``ctrl+1,2,3...``, where the number is the column index you wish to sort by.
-
 Selecting an add-on will display the details for the add-on.
 Add-ons have associated actions that you can access through an [actions menu #AddonStoreActions], such as install, help, disable, remove.
 
@@ -2682,6 +2680,9 @@ For older add-ons, you can override the incompatibility at your own risk.
 Incompatible add-ons may not work with your version of NVDA, and can cause unstable or unexpected behaviour including crashing.
 You can override compatibility when enabling or installing an add-on.
 If the incompatible add-on causes issues, you can disable or remove it.
+
+To restart NVDA with all add-ons disabled, chose the appropriate option when quitting NVDA.
+Alternatively, use the [command line option #CommandLineOptions] ``--disable-addons``.
 
 You can browse available incompatible add-ons using the [available and updatable add-ons tabs #AddonStoreFilterStatus].
 You can browse installed incompatible add-ons using the [incompatible add-ons tab #AddonStoreFilterStatus].
