@@ -111,20 +111,20 @@ GestureMapEntries = {
 		"kb:capsLock": ("br(eurobraille):dot7+backspace", "br(eurobraille):dot8+backspace",),
 		"kb:numLock": ("br(eurobraille):dot3+backspace", "br(eurobraille):dot6+backspace",),
 		"braille_toggleShift": (
-			"br(eurobraille):dot1+dot7+space", 
-			"br(eurobraille):dot4+dot7+space", 
+			"br(eurobraille):dot1+dot7+space",
+			"br(eurobraille):dot4+dot7+space",
 			"br(eurobraille):l4",
 		),
 		"kb:shift": ("br(eurobraille):dot7+space",),
 		"braille_toggleControl": (
-			"br(eurobraille):dot1+dot7+dot8+space", 
-			"br(eurobraille):dot4+dot7+dot8+space", 
+			"br(eurobraille):dot1+dot7+dot8+space",
+			"br(eurobraille):dot4+dot7+dot8+space",
 			"br(eurobraille):l5",
 		),
 		"kb:control": ("br(eurobraille):dot7+dot8+space",),
 		"braille_toggleAlt": (
-			"br(eurobraille):dot1+dot8+space", 
-			"br(eurobraille):dot4+dot8+space", 
+			"br(eurobraille):dot1+dot8+space",
+			"br(eurobraille):dot4+dot8+space",
 			"br(eurobraille):l6"
 		),
 		"kb:alt": ("br(eurobraille):dot8+space"),
@@ -174,7 +174,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 				if groupKeysDown >> 8 == ord(constants.EB_KEY_INTERACTIVE_DOUBLE_CLICK):
 					names.append("doubleRouting")
 				else:
-					names.append("routing") 
+					names.append("routing")
 			if group == constants.EB_KEY_COMMAND:
 				for key, keyName in display.keys.items():
 					if groupKeysDown & key:
