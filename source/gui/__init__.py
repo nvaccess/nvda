@@ -22,6 +22,9 @@ import versionInfo
 import speech
 import queueHandler
 import core
+from typing import (
+	Optional,
+)
 import systemUtils
 from .message import (
 	# messageBox is accessed through `gui.messageBox` as opposed to `gui.message.messageBox` throughout NVDA,
@@ -70,11 +73,14 @@ ICON_PATH=os.path.join(NVDA_PATH, "images", "nvda.ico")
 DONATE_URL = "http://www.nvaccess.org/donate/"
 
 ### Globals
-mainFrame = None
+mainFrame: Optional["MainFrame"] = None
+"""Set by initialize. Should be used as the parent for "top level" dialogs.
+"""
 
 
 class MainFrame(wx.Frame):
-
+	"""A hidden window, intended to act as the parent to all dialogs.
+	"""
 	def __init__(self):
 		style = wx.DEFAULT_FRAME_STYLE ^ wx.MAXIMIZE_BOX ^ wx.MINIMIZE_BOX | wx.FRAME_NO_TASKBAR
 		super(MainFrame, self).__init__(None, wx.ID_ANY, versionInfo.name, size=(1,1), style=style)
@@ -319,15 +325,31 @@ class MainFrame(wx.Frame):
 			pythonConsole.initialize()
 		pythonConsole.activate()
 
+	if NVDAState._allowDeprecatedAPI():
+		def onAddonsManagerCommand(self, evt: wx.MenuEvent):
+			log.warning("onAddonsManagerCommand is deprecated, use onAddonStoreCommand instead.")
+			self.onAddonStoreCommand(evt)
+
 	@blockAction.when(
 		blockAction.Context.SECURE_MODE,
 		blockAction.Context.MODAL_DIALOG_OPEN,
+		blockAction.Context.WINDOWS_LOCKED,
+		blockAction.Context.WINDOWS_STORE_VERSION,
+		blockAction.Context.RUNNING_LAUNCHER,
 	)
-	def onAddonsManagerCommand(self,evt):
+	def onAddonStoreCommand(self, evt: wx.MenuEvent):
 		self.prePopup()
-		from .addonGui import AddonsDialog
-		d=AddonsDialog(gui.mainFrame)
-		d.Show()
+		from ._addonStoreGui import AddonStoreDialog
+		from ._addonStoreGui.viewModels.store import AddonStoreVM
+		_storeVM = AddonStoreVM()
+		try:
+			d = AddonStoreDialog(mainFrame, _storeVM)
+		except SettingsDialog.MultiInstanceErrorWithDialog as errorWithDialog:
+			errorWithDialog.dialog.SetFocus()
+		else:
+			_storeVM.refresh()
+			d.Maximize()
+			d.Show()
 		self.postPopup()
 
 	def onReloadPluginsCommand(self, evt):
@@ -447,13 +469,16 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 		self.menu_tools_toggleBrailleViewer.Check(brailleViewer.isBrailleViewerActive())
 		brailleViewer.postBrailleViewerToolToggledAction.register(frame.onBrailleViewerChangedState)
 
+		if not config.isAppX and NVDAState.shouldWriteToDisk():
+			# Translators: The label of a menu item to open the Add-on store
+			item = menu_tools.Append(wx.ID_ANY, _("Add-on &store..."))
+			self.Bind(wx.EVT_MENU, frame.onAddonStoreCommand, item)
+
 		if not globalVars.appArgs.secure and not config.isAppX:
 			# Translators: The label for the menu item to open NVDA Python Console.
 			item = menu_tools.Append(wx.ID_ANY, _("Python console"))
 			self.Bind(wx.EVT_MENU, frame.onPythonConsoleCommand, item)
-			# Translators: The label of a menu item to open the Add-ons Manager.
-			item = menu_tools.Append(wx.ID_ANY, _("Manage &add-ons..."))
-			self.Bind(wx.EVT_MENU, frame.onAddonsManagerCommand, item)
+
 		if not globalVars.appArgs.secure and not config.isAppX and not NVDAState.isRunningAsSource():
 			# Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
 			item = menu_tools.Append(wx.ID_ANY, _("Create portable copy..."))
@@ -611,7 +636,7 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 			_("Reset all settings to default state")
 		)
 		self.Bind(wx.EVT_MENU, frame.onRevertToDefaultConfigurationCommand, item)
-		if not (globalVars.appArgs.secure or globalVars.appArgs.launcher):
+		if NVDAState.shouldWriteToDisk():
 			item = self.menu.Append(
 				wx.ID_SAVE,
 				# Translators: The label for the menu item to save current settings.

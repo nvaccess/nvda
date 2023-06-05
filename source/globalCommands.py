@@ -3134,12 +3134,12 @@ class GlobalCommands(ScriptableObject):
 		pythonConsole.activate()
 
 	@script(
-		# Translators: Input help mode message for activate manage add-ons command.
-		description=_("Activates the NVDA Add-ons Manager to install and uninstall add-on packages for NVDA"),
+		# Translators: Input help mode message to activate Add-on Store command.
+		description=_("Activates the Add-on Store to browse and manage add-on packages for NVDA"),
 		category=SCRCAT_TOOLS
 	)
-	def script_activateAddonsManager(self,gesture):
-		wx.CallAfter(gui.mainFrame.onAddonsManagerCommand, None)
+	def script_activateAddonsManager(self, gesture: inputCore.InputGesture):
+		wx.CallAfter(gui.mainFrame.onAddonStoreCommand, None)
 
 	@script(
 		description=_(

@@ -46,6 +46,16 @@ def _setExitCode(exitCode: int) -> None:
 	globalVars.exitCode = exitCode
 
 
+def shouldWriteToDisk() -> bool:
+	"""
+	Never save config or state if running securely or if running from the launcher.
+	When running from the launcher we don't save settings because the user may decide not to
+	install this version, and these settings may not be compatible with the already
+	installed version. See #7688
+	"""
+	return not (globalVars.appArgs.secure or globalVars.appArgs.launcher)
+
+
 class _TrackNVDAInitialization:
 	"""
 	During NVDA initialization,

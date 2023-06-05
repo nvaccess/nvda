@@ -240,6 +240,8 @@ def resetConfiguration(factoryDefaults=False):
 	log.debug("setting language to %s"%lang)
 	languageHandler.setLanguage(lang)
 	# Addons
+	from _addonStore import dataManager
+	dataManager.initialize()
 	addonHandler.initialize()
 	# Hardware background i/o
 	log.debug("initializing background i/o")
@@ -374,7 +376,7 @@ def _closeAllWindows():
 
 	for instance, state in nonWeak.items():
 		if state is _SettingsDialog.DialogState.DESTROYED:
-			log.error(
+			log.debugWarning(
 				"Destroyed but not deleted instance of gui.SettingsDialog exists"
 				f": {instance.title} - {instance.__class__.__qualname__} - {instance}"
 			)
@@ -518,6 +520,8 @@ def main():
 	import socket
 	socket.setdefaulttimeout(10)
 	log.debug("Initializing add-ons system")
+	from _addonStore import dataManager
+	dataManager.initialize()
 	addonHandler.initialize()
 	if globalVars.appArgs.disableAddons:
 		log.info("Add-ons are disabled. Restart NVDA to enable them.")
@@ -835,6 +839,11 @@ def _terminate(module, name=None):
 	except:
 		log.exception("Error terminating %s" % name)
 
+
+def isMainThread() -> bool:
+	return threading.get_ident() == mainThreadId
+
+
 def requestPump():
 	"""Request a core pump.
 	This will perform any queued activity.
@@ -869,7 +878,7 @@ def callLater(delay, callable, *args, **kwargs):
 		# If NVDA has not fully initialized yet, the wxApp may not be initialized.
 		# wx.CallLater and wx.CallAfter requires the wxApp to be initialized.
 		raise NVDANotInitializedError("Cannot schedule callable, wx.App is not initialized")
-	if threading.get_ident() == mainThreadId:
+	if isMainThread():
 		return wx.CallLater(delay, _callLaterExec, callable, args, kwargs)
 	else:
 		return wx.CallAfter(wx.CallLater,delay, _callLaterExec, callable, args, kwargs)
