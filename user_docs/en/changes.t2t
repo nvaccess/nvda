@@ -26,6 +26,7 @@ There are now gestures for showing the braille settings dialog, accessing the st
 - NVDA now outputs audio via the Windows Audio Session API (WASAPI), which may improve the responsiveness, performance and stability of NVDA speech and sounds. This can be disabled in Advanced settings if audio problems are encountered. (#14697)
 - When using Excel shortcuts to toggle format such as bold, italic, underline and strike through of a cell in Excel, the result is now reported. (#14923)
 - Added support for the Help Tech Activator Braille display. (#14917)
+- In Windows 10 May 2019 Update and later, NVDA can announe virtual desktop names when opening, changing, and closing them. (#5641)
 - 
 
 
@@ -39,7 +40,8 @@ There are now gestures for showing the braille settings dialog, accessing the st
   -
 - Distance reported in Microsoft Word will now honour the unit defined in Word's advanced options even when using UIA to access Word documents. (#14542)
 - NVDA responds faster when moving the cursor in edit controls. (#14708)
-- Baum Braille driver: addes several Braille chord gestures for performing common keyboard commands such as windows+d, alt+tab etc. Please refer to the NVDA user guide for a full list. (#14714)
+- Baum Braille driver: addes several Braille chord gestures for performing common keyboard commands such as ``windows+d``, ``alt+tab`` etc.
+Please refer to the NVDA user guide for a full list. (#14714)
 - When using a Braille Display via the Standard HID braille driver, the dpad can be used to emulate the arrow keys and enter. Also space+dot1 and space+dot4 now map to up and down arrow respectively. (#14713)
 - Script for reporting the destination of a link now reports from the caret / focus position rather than the navigator object. (#14659)
 - Portable copy creation no longer requires that a drive letter be entered as part of the absolute path. (#14681)
