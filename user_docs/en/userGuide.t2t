@@ -2629,16 +2629,16 @@ The default shows both enabled and disabled add-ons.
 Available and updatable add-ons can be filtered to include [incompatible add-ons #incompatibleAddonsManager] that are available to install.
 
 ++++ Filter add-ons by channel ++++[AddonStoreFilterChannel]
-To list add-ons only for specific channels, change the "Channel" filter selection.
-
 Add-ons can be distributed through up to four channels:
 - Stable: The developer has released this as a tested add-on with a released version of NVDA.
-- Beta: This add-on may need further testing.
+- Beta: This add-on may need further testing, but is released for user feedback.
 Suggested for early adopters.
 - Dev: This channel is suggested to be used by add-on developers to test unreleased API changes.
 NVDA alpha testers may need to use a "Dev" version of their add-ons.
 - External: Add-ons installed from external sources, outside of the add-on store.
 -
+
+To list add-ons only for specific channels, change the "Channel" filter selection.
 
 ++++ Search add-ons ++++[AddonStoreFilterSearch]
 Add-ons can be filtered by display name, publisher and description.
