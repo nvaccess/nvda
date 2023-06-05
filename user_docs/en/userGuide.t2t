@@ -2615,7 +2615,14 @@ To change the view of add-ons, change the active tab of the add-ons list using `
 You can also ``tab`` to the list of views, and move through them with the ``leftArrow`` and ``rightArrow`` keys.
 
 ++++ Filtering for enabled or disabled add-ons ++++[AddonStoreFilterEnabled]
-Installed and incompatible add-ons can be filtered by enabled or disabled.
+Normally, an installed add-on is "enabled", meaning that it is running and available within NVDA.
+However, some of your installed add-ons may be set to the "disabled" state.
+This means that they will not be used, and their functions won't be available during your current NVDA session.
+You may have disabled an add-on because it conflicted with another add-on, or with a certain application.
+NVDA may also disable certain add-ons, if they are found to be incompatible during an NVDA upgrade; though you will be warned if this is going to happen.
+Add-ons can also be disabled if you simply don't need them for a prolonged period, but don't want to uninstall them because you expect to want them again in the future.
+
+The lists of installed and incompatible add-ons can be filtered by their enabled or disabled state.
 The default shows both enabled and disabled add-ons.
 
 ++++ Include incompatible add-ons ++++[AddonStoreFilterIncompatible]
