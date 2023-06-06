@@ -311,7 +311,7 @@ If you have add-ons already installed there may also be a warning that incompati
 Before you're able to press the Continue button you will have to use the checkbox to confirm that you understand that these add-ons will be disabled.
 There will also be a button present to review the add-ons that will be disabled.
 Refer to the [incompatible add-ons dialog section #incompatibleAddonsManager] for more help on this button.
-After installation, you are able to re-enable incompatible add-ons at your own risk from within the [Add-on Store #AddonsManager].
+After installation, you are able to re-enable incompatible add-ons at your own risk from within the [Add-on Store #AddonStore].
 
 +++ Use NVDA during sign-in +++[StartAtWindowsLogon]
 This option allows you to choose whether or not NVDA should automatically start while at the Windows sign-in screen, before you have entered a password.
@@ -1036,7 +1036,7 @@ While NVDA is primarily aimed at blind or vision impaired people who primarily u
 Within NVDA, such a visual aid is called a vision enhancement provider.
 
 NVDA offers several built-in vision enhancement providers which are described below.
-Additional vision enhancement providers can be provided in [NVDA add-ons #AddonsManager].
+Additional vision enhancement providers can be provided in [NVDA add-ons #AddonStore].
 
 NVDA's vision settings can be changed in the [vision category #VisionSettings] of the [NVDA Settings #NVDASettings] dialog.
 
@@ -1708,7 +1708,7 @@ Therefore it is recommended to only connect one Braille Display of a given type 
 +++ Vision +++[VisionSettings]
 The Vision category in the NVDA Settings dialog allows you to enable, disable and configure [visual aids #Vision].
 
-Note that the available options in this category could be extended by [NVDA add-ons #AddonsManager].
+Note that the available options in this category could be extended by [NVDA add-ons #AddonStore].
 By default, this settings category contains the following options:
 
 ==== Visual Highlight ====[VisionSettingsFocusHighlight]
@@ -1739,7 +1739,7 @@ By default, sounds are played when the Screen Curtain is toggled.
 When you want to change this behaviour, you can uncheck the "Play sound when toggling Screen Curtain" check box.
 
 ==== Settings for third party visual aids ====[VisionSettingsThirdPartyVisualAids]
-Additional vision enhancement providers can be provided in [NVDA add-ons #AddonsManager].
+Additional vision enhancement providers can be provided in [NVDA add-ons #AddonStore].
 When these providers have adjustable settings, they will be shown in this settings category in separate groupings.
 For the supported settings per provider, please refer to the documentation for that provider.
 
@@ -2711,8 +2711,8 @@ The NVDA Python console, found under Tools in the NVDA menu, is a development to
 For more information, please see the [NVDA Developer Guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
 
 ++ Add-on Store ++
-This will open the [NVDA Add-on Store #AddonsManager].
-For more information, read the in-depth chapter: [Add-ons and the Add-on Store #AddonsManager].
+This will open the [NVDA Add-on Store #AddonStore].
+For more information, read the in-depth chapter: [Add-ons and the Add-on Store #AddonStore].
 
 ++ Create portable copy ++[CreatePortableCopy]
 This will open a dialog which allows you to create a portable copy of NVDA out of the installed version.
