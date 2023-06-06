@@ -3301,17 +3301,15 @@ class GlobalCommands(ScriptableObject):
 		boolFlag: BoolFlag = featureFlag.enumClassType
 		values = [x.value for x in boolFlag]
 		currentValue = featureFlag.value.value
-		nextName: str = boolFlag(
-			currentValue % len(values) + 1
-		).name
+		nextValueIndex = (currentValue % len(values)) + 1
+		nextName: str = boolFlag(nextValueIndex).name
 		config.conf["braille"]["showSelection"] = nextName
 		featureFlag = config.conf["braille"]["showSelection"]
 		if featureFlag.isDefault():
-			displayString = featureFlag.behaviorOfDefault.displayString
-			# Translators: Used when reporting braille show selection feature flag
-			# default behavior.
-			msg = _("Braille show selection")
-			msg += f" {self._featureFlagDefaultBehaviorDisplayString(displayString)}"
+			displayString = self._featureFlagDefaultBehaviorDisplayString(featureFlag.behaviorOfDefault.displayString)
+			# Translators: Used when reporting braille show selection state
+			# (default behavior).
+			msg = _("Braille show selection %s") % displayString
 		else:
 			# Translators: Reports which show braille selection state is used
 			# (disabled or enabled).
@@ -3320,9 +3318,10 @@ class GlobalCommands(ScriptableObject):
 
 	def _featureFlagDefaultBehaviorDisplayString(self, displayString: str) -> str:
 		"""Returns display string for feature flag default behavior."""
-		# Translators: Used when reporting feature flag default behavior.
-		msg = _("Default")
-		return msg + f" ({displayString})"
+		# Translators: Used when reporting feature flag default behavior
+		# (default state/value).
+		msg = _("Default (%s)") % displayString
+		return msg
 
 	@script(
 		# Translators: Input help mode message for report clipboard text command.

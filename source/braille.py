@@ -497,7 +497,8 @@ class Region(object):
 			cursorPos=self.cursorPos
 		)
 		if (
-			self.selectionStart is not None and self.selectionEnd is not None
+			self.selectionStart is not None
+			and self.selectionEnd is not None
 			and config.conf["braille"]["showSelection"]
 		):
 			try:
