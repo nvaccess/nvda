@@ -2611,7 +2611,7 @@ Add-ons have associated actions that you can access through an [actions menu #Ad
 Available actions will change based on whether the add-on is installed or not, and whether it is enabled or disabled.
 
 ++++ Add-on list views ++++[AddonStoreFilterStatus]
-There are different views for installed, updatable, available and incompatible ad-ons.
+There are different views for installed, updatable, available and incompatible add-ons.
 To change the view of add-ons, change the active tab of the add-ons list using ``ctrl+tab``.
 You can also ``tab`` to the list of views, and move through them with the ``leftArrow`` and ``rightArrow`` keys.
 
@@ -2645,11 +2645,11 @@ To list add-ons only for specific channels, change the "Channel" filter selectio
 To search add-ons, use the "Search" text box.
 You can reach it by pressing ``shift+tab`` from the list of add-ons, or by pressing ``alt+s`` from anywhere in the Add-on Store interface.
 Type a keyword or two for the kind of add-on you're looking for, then ``tab`` back to the list of add-ons.
-The list will now show add-ons that match your search.
+Add-ons will be listed if the search text can be found in the display name, publisher or description.
 
 +++ Add-on actions +++[AddonStoreActions]
 Add-ons have associated actions, such as install, help, disable, and remove.
-The actions menu can be accessed for an add-on in the add-on list by pressing ``enter`` or the ``applications`` key, or by right clicking or double clicking the add-on.
+The actions menu can be accessed for an add-on in the add-on list by pressing the ``applications`` key, ``enter``, right clicking or double clicking the add-on.
 There is also an Actions button in the selected add-on's details, which can be activated normally or by pressing ``alt+a``.
 
 ++++ Installing add-ons ++++[AddonStoreInstalling]
@@ -2673,7 +2673,7 @@ Once the add-on is installed, NVDA must be restarted for the add-on to start run
 
 ++++ Removing Add-ons ++++[AddonStoreRemoving]
 To remove an add-on, select the add-on from the list and use the Remove action.
-NVDA will ask you to confirm this operation.
+NVDA will ask you to confirm removal.
 As with installing, NVDA must be restarted for the add-on to be fully removed.
 Until you do, a status of "Pending removal" will be shown for that add-on in the list.
 
