@@ -73,7 +73,8 @@ class AvailableAddonStatus(DisplayStringEnum):
 	PENDING_INCOMPATIBLE_ENABLED = enum.auto()  # overriden incompatible, enabled after restart
 	INCOMPATIBLE_ENABLED = enum.auto()  # enabled, overriden incompatible
 	PENDING_ENABLE = enum.auto()  # enabled after restart
-	RUNNING = enum.auto()  # enabled / active.
+	ENABLED = enum.auto()  # enabled but not running (e.g. all add-ons are disabled).
+	RUNNING = enum.auto()  # enabled and active.
 
 	@property
 	def _displayStringLabels(self) -> Dict["AvailableAddonStatus", str]:
@@ -114,6 +115,8 @@ class AvailableAddonStatus(DisplayStringEnum):
 			self.INCOMPATIBLE_ENABLED: pgettext("addonStore", "Enabled (incompatible)"),
 			# Translators: Status for addons shown in the add-on store dialog
 			self.PENDING_ENABLE: pgettext("addonStore", "Enabled, pending restart"),
+			# Translators: Status for addons shown in the add-on store dialog
+			self.ENABLED: pgettext("addonStore", "Enabled"),
 			# Translators: Status for addons shown in the add-on store dialog
 			self.RUNNING: pgettext("addonStore", "Enabled"),
 		}
@@ -197,6 +200,9 @@ def getStatus(model: "AddonGUIModel") -> Optional[AvailableAddonStatus]:
 
 	if addonHandlerModel.isRunning:
 		return AvailableAddonStatus.RUNNING
+	
+	if addonHandlerModel.isEnabled:
+		return AvailableAddonStatus.ENABLED
 
 	log.debugWarning(f"Add-on in unknown state: {model.addonId}")
 	return None
@@ -260,6 +266,7 @@ _statusFilters: OrderedDict[_StatusFilterKey, Set[AvailableAddonStatus]] = Order
 		AvailableAddonStatus.PENDING_ENABLE,
 		AvailableAddonStatus.PENDING_REMOVE,
 		AvailableAddonStatus.RUNNING,
+		AvailableAddonStatus.ENABLED,
 	},
 	_StatusFilterKey.UPDATE: {
 		AvailableAddonStatus.UPDATE,
@@ -296,12 +303,18 @@ class SupportsAddonState(SupportsVersionCheck, Protocol):
 		return state
 
 	@property
-	def isRunning(self) -> bool:
+	def isEnabled(self) -> bool:
 		return not (
-			globalVars.appArgs.disableAddons
-			or self.isPendingInstall
+			self.isPendingInstall
 			or self.isDisabled
 			or self.isBlocked
+		)
+
+	@property
+	def isRunning(self) -> bool:
+		return (
+			not globalVars.appArgs.disableAddons
+			and self.isEnabled
 		)
 
 	@property
