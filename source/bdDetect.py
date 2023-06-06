@@ -689,6 +689,12 @@ def initialize():
 		"VID_C251&PID_1131",  # Reserved
 		"VID_C251&PID_1132",  # Reserved
 	})
+	addUsbDevices("eurobraille", KEY_SERIAL, {
+		"VID_28AC&PID_0012",  # b.note
+		"VID_28AC&PID_0013",  # b.note 2
+		"VID_28AC&PID_0020",  # b.book internal
+		"VID_28AC&PID_0021",  # b.book external
+	})
 
 	addBluetoothDevices("eurobraille", lambda m: m.id.startswith("Esys"))
 

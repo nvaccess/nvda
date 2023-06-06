@@ -3561,88 +3561,162 @@ Due to this, and to maintain compatibility with other screen readers in Taiwan, 
 | Scroll braille display forward | numpadPlus | 
 %kc:endInclude
 
-++ Eurobraille Esys/Esytime/Iris displays ++[Eurobraille]
-The Esys, Esytime and Iris displays from [Eurobraille https://www.eurobraille.fr/] are supported by NVDA.
-Esys and Esytime-Evo devices are supported when connected via USB or bluetooth.
-Older Esytime devices only support USB.
-Iris displays can only be connected via a serial port.
-Therefore, for these displays, you should select the port to which the display is connected after you have chosen this driver in the Braille Settings dialog.
-
-Iris and Esys displays have a braille keyboard with 10 keys.
+++ Eurobraille displays ++[Eurobraille]
+The b.book, b.note, Esys, Esytime and Iris displays from Eurobraille are supported by NVDA.  
+These devices have a braille keyboard with 10 keys. 
 Of the two keys placed like a space bar, the left key is corresponding to the backspace key and the right key to the space key.
-
-Following are the key assignments for these displays with NVDA.
+Connected via USB, these devices have one stand-alone usb keyboard. 
+It is possible to enable/disable this keyboard with the checkbox ‘HID Keyboard simulation’ in braille setting panel. 
+The braille keyboard describes below is the braille keyboard when this checkbox is not checked.
+Following are the key assignments for these displays with NVDA. 
 Please see the display's documentation for descriptions of where these keys can be found.
+
++++  Braille keyboard functions +++[EurobrailleBraille]
 %kc:beginInclude
 || Name | Key |
-| Scroll braille display back | switch1-6left, l1 |
-| Scroll braille display forward | switch1-6Right, l8 |
-| Move to current focus | switch1-6Left+switch1-6Right, l1+l8 |
-| Route to braille cell | routing |
-| Report text formatting under braille cell | doubleRouting |
-| Move to previous line in review | joystick1Up |
-| Move to next line in review | joystick1Down |
-| Move to previous character in review | joystick1Left |
-| Move to next character in review | joystick1Right |
-| Switch to previous review mode | joystick1Left+joystick1Up |
-| Switch to next review mode | joystick1Right+joystick1Down |
-| Erase the last entered braille cell or character | backSpace |
-| Translate any braille input and press the enter key | backSpace+space |
-| insert key | dot3+dot5+space, l7 |
-| delete key | dot3+dot6+space |
-| home key | dot1+dot2+dot3+space, joystick2Left+joystick2Up |
-| end key | dot4+dot5+dot6+space, joystick2Right+joystick2Down |
-| leftArrow key | dot2+space, joystick2Left, leftArrow |
-| rightArrow key | dot5+space, joystick2Right, rightArrow |
-| upArrow key | dot1+space, joystick2Up, upArrow |
-| downArrow key | dot6+space, joystick2Down, downArrow |
-| enter key | joystick2centre |
-| pageUp key | dot1+dot3+space |
-| pageDown key | dot4+dot6+space |
-| numpad1 key | dot1+dot6+backspace |
-| numpad2 key | dot1+dot2+dot6+backspace |
-| numpad3 key | dot1+dot4+dot6+backspace |
-| numpad4 key | dot1+dot4+dot5+dot6+backspace |
-| numpad5 key | dot1+dot5+dot6+backspace |
-| numpad6 key | dot1+dot2+dot4+dot6+backspace |
-| numpad7 key | dot1+dot2+dot4+dot5+dot6+backspace |
-| numpad8 key | dot1+dot2+dot5+dot6+backspace |
-| numpad9 key | dot2+dot4+dot6+backspace |
-| numpadInsert key | dot3+dot4+dot5+dot6+backspace |
-| numpadDecimal key | dot2+backspace |
-| numpadDivide key | dot3+dot4+backspace |
-| numpadMultiply key | dot3+dot5+backspace |
-| numpadMinus key | dot3+dot6+backspace |
-| numpadPlus key | dot2+dot3+dot5+backspace |
-| numpadEnter key | dot3+dot4+dot5+backspace |
-| escape key | dot1+dot2+dot4+dot5+space, l2 |
-| tab key | dot2+dot5+dot6+space, l3 |
-| shift+tab key | dot2+dot3+dot5+space |
-| printScreen key | dot1+dot3+dot4+dot6+space |
-| pause key | dot1+dot4+space |
-| applications key | dot5+dot6+backspace |
-| f1 key | dot1+backspace |
-| f2 key | dot1+dot2+backspace |
-| f3 key | dot1+dot4+backspace |
-| f4 key | dot1+dot4+dot5+backspace |
-| f5 key | dot1+dot5+backspace |
-| f6 key | dot1+dot2+dot4+backspace |
-| f7 key | dot1+dot2+dot4+dot5+backspace |
-| f8 key | dot1+dot2+dot5+backspace |
-| f9 key | dot2+dot4+backspace |
-| f10 key | dot2+dot4+dot5+backspace |
-| f11 key | dot1+dot3+backspace |
-| f12 key | dot1+dot2+dot3+backspace |
-| windows key | dot1+dot2+dot3+dot4+backspace |
-| Caps Lock key | dot7+backspace, dot8+backspace |
-| num lock key | dot3+backspace, dot6+backspace |
-| shift key | dot7+space, l4 |
-| Toggle shift key | dot1+dot7+space, dot4+dot7+space |
-| control key | dot7+dot8+space, l5 |
-| Toggle control key | dot1+dot7+dot8+space, dot4+dot7+dot8+space |
-| alt key | dot8+space, l6 |
-| Toggle alt key | dot1+dot8+space, dot4+dot8+space |
-| ToggleHID keyboard input simulation | esytime):l1+joystick1Down, esytime):l8+joystick1Down |
+| Erase the last entered braille cell or character | ``backspace`` |
+| Translate any braille input and press the enter key |``backspace+space`` |
+| Toggle ``NVDA`` key | ``dot3+dot5+space`` |
+| ``insert`` key | ``dot1+dot3+dot5+space``, ``dot3+dot4+dot5+space`` |
+| ``delete`` key | ``dot3+dot6+space`` |
+| ``home`` key | ``dot1+dot2+dot3+space`` |
+| ``end`` key | ``dot4+dot5+dot6+space`` |
+| ``leftArrow`` key | ``dot2+space`` |
+| ``rightArrow`` key | ``dot5+space`` |
+| ``upArrow`` key | ``dot1+space`` |
+| ``downArrow`` key | ``dot6+space`` |
+| ``pageUp`` key | ``dot1+dot3+space`` |
+| ``pageDown`` key | ``dot4+dot6+space`` |
+| ``numpad1`` key | ``dot1+dot6+backspace`` |
+| ``numpad2`` key | ``dot1+dot2+dot6+backspace`` |
+| ``numpad3`` key | ``dot1+dot4+dot6+backspace`` |
+| ``numpad4`` key | ``dot1+dot4+dot5+dot6+backspace`` |
+| ``numpad5`` key | ``dot1+dot5+dot6+backspace`` |
+| ``numpad6`` key | ``dot1+dot2+dot4+dot6+backspace`` |
+| ``numpad7`` key | ``dot1+dot2+dot4+dot5+dot6+backspace`` |
+| ``numpad8`` key | ``dot1+dot2+dot5+dot6+backspace`` |
+| ``numpad9`` key | ``dot2+dot4+dot6+backspace`` |
+| ``numpadInsert`` key | ``dot3+dot4+dot5+dot6+backspace`` |
+| ``numpadDecimal`` key | ``dot2+backspace`` |
+| ``numpadDivide`` key | ``dot3+dot4+backspace`` |
+| ``numpadMultiply`` key | ``dot3+dot5+backspace`` |
+| ``numpadMinus`` key | ``dot3+dot6+backspace`` |
+| ``numpadPlus`` key | ``dot2+dot3+dot5+backspace`` |
+| ``numpadEnter`` key | ``dot3+dot4+dot5+backspace`` |
+| ``escape`` key | ``dot1+dot2+dot4+dot5+space``, ``l2`` |
+| ``tab`` key | ``dot2+dot5+dot6+space``, ``l3`` |
+| ``shift+tab`` keys | ``dot2+dot3+dot5+space`` |
+| ``printScreen`` key | ``dot1+dot3+dot4+dot6+space`` |
+| ``pause`` key | ``dot1+dot4+space`` |
+| ``applications`` key | ``dot5+dot6+backspace`` |
+| ``f1`` key | ``dot1+backspace`` |
+| ``f2`` key | ``dot1+dot2+backspace`` |
+| ``f3`` key | ``dot1+dot4+backspace`` |
+| ``f4`` key | ``dot1+dot4+dot5+backspace`` |
+| ``f5`` key | ``dot1+dot5+backspace`` |
+| ``f6`` key | ``dot1+dot2+dot4+backspace`` |
+| ``f7`` key | ``dot1+dot2+dot4+dot5+backspace`` |
+| ``f8`` key | ``dot1+dot2+dot5+backspace`` |
+| ``f9`` key | ``dot2+dot4+backspace`` |
+| ``f10`` key | ``dot2+dot4+dot5+backspace`` |
+| ``f11`` key | ``dot1+dot3+backspace`` |
+| ``f12`` key | ``dot1+dot2+dot3+backspace`` |
+| ``windows`` key | ``dot1+dot2+dot4+dot5+dot6+space`` |
+| Toggle ``windows`` key | ``dot1+dot2+dot3+dot4+backspace``, ``dot2+dot4+dot5+dot6+space`` |
+| ``capsLock`` key | ``dot7+backspace``, ``dot8+backspace`` |
+| ``numLock`` key | ``dot3+backspace``, ``dot6+backspace`` |
+| ``shift`` key | ``dot7+space`` |
+| Toggle ``shift`` key | ``dot1+dot7+space``, ``dot4+dot7+space`` |
+| ``control`` key | ``dot7+dot8+space`` |
+| Toggle ``control`` key | ``dot1+dot7+dot8+space``, ``dot4+dot7+dot8+space`` |
+| ``alt`` key | ``dot8+space`` |
+| Toggle ``alt`` key | ``dot1+dot8+space``, ``dot4+dot8+space`` |
+%kc:endInclude
+
++++ b.book keyboard commands +++[Eurobraillebbook]
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | ``backward`` |
+| Scroll braille display forward | ``forward`` |
+| Move to current focus | ``backward+forward`` | 
+| Route to braille cell | ``routing`` |
+| ``leftArrow`` key | ``joystick2Left`` |
+| ``rightArrow`` key | ``joystick2Right`` |
+| ``upArrow`` key | ``joystick2Up`` |
+| ``downArrow`` key | ``joystick2Down`` |
+| ``enter`` key | ``joystick2Center`` |
+| ``escape`` key | ``c1`` |
+| ``tab`` key | ``c2`` |
+| Toggle ``shift`` key | ``c3`` |
+| Toggle ``control`` key | ``c4`` |
+| Toggle ``alt`` key | ``c5`` |
+| Toggle ``NVDA`` key | ``c6`` |
+| ``control+Home`` key | ``c1+c2+c3`` |
+| ``control+End`` key | ``c4+c5+c6`` |
+%kc:endInclude
+
++++ b.note keyboard commands +++[Eurobraillebnote]
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | ``leftKeypadLeft`` |
+| Scroll braille display forward | ``leftKeypadRight`` |
+| Route to braille cell | ``routing`` |
+| Report text formatting under braille cell | ``doubleRouting`` |
+| Move to next line in review | ``leftKeypadDown`` |
+| Switch to previous review mode | ``leftKeypadLeft+leftKeypadUp`` |
+| Switch to next review mode | ``leftKeypadRight+leftKeypadDown`` |
+| ``leftArrow`` key | ``rightKeypadLeft`` |
+| ``rightArrow`` key | ``rightKeypadRight`` |
+| ``upArrow`` key | ``rightKeypadUp`` |
+| ``downArrow`` key | ``rightKeypadDown`` |
+| ``control+home`` key | ``rightKeypadLeft+rightKeypadUp`` |
+| ``control+end`` key | ``rightKeypadLeft+rightKeypadUp`` |
+%kc:endInclude
+
++++ Esys keyboard commands +++[Eurobrailleesys]
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | ``switch1Left`` |
+| Scroll braille display forward | ``switch1Right`` |
+| Move to current focus | ``switch1Center`` |
+| Route to braille cell | ``routing`` |
+| Report text formatting under braille cell | ``doubleRouting`` |
+| Move to previous line in review | ``joystick1Up`` |
+| Move to next line in review | ``joystick1Down`` |
+| Move to previous character in review | ``joystick1Left`` |
+| Move to next character in review | ``joystick1Right`` |
+| ``leftArrow`` key | ``joystick2Left`` |
+| ``rightArrow`` key | ``joystick2Right`` |
+| ``upArrow`` key | ``joystick2Up`` |
+| ``downArrow`` key | ``joystick2Down`` |
+| ``enter`` key | ``joystick2Center`` |
+%kc:endInclude
+
++++ Esytime keyboard commands +++[EurobrailleEsytime]
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | ``l1`` |
+| Scroll braille display forward | ``l8`` |
+| Move to current focus | ``l1+l8`` |
+| Route to braille cell | ``routing`` |
+| Report text formatting under braille cell | ``doubleRouting`` |
+| Move to previous line in review | ``joystick1Up`` |
+| Move to next line in review | ``joystick1Down`` |
+| Move to previous character in review | ``joystick1Left`` |
+| Move to next character in review | ``joystick1Right`` |
+| ``leftArrow`` key | ``joystick2Left`` |
+| ``rightArrow`` key | ``joystick2Right`` |
+| ``upArrow`` key | ``joystick2Up`` |
+| ``downArrow`` key | ``joystick2Down`` |
+| ``enter`` key | ``joystick2Center`` |
+| ``escape`` key | ``l2`` |
+| ``tab`` key | ``l3`` |
+| Toggle ``shift`` key | ``l4`` |
+| Toggle ``control`` key | ``l5`` |
+| Toggle ``alt`` key | ``l6`` |
+| Toggle ``NVDA`` key | ``l7`` |
+| ``control+home`` key | ``l1+l2+l3``, ``l2+l3+l4`` |
+| ``control+end`` key | ``l6+l7+l8``, ``l5+l6+l7`` |
 %kc:endInclude
 
 ++ Nattiq nBraille Displays ++[NattiqTechnologies]
