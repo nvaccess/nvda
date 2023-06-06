@@ -2539,6 +2539,119 @@ Settings for NVDA when running during sign-in or on UAC screens are stored in th
 Usually, this configuration should not be touched.
 To change NVDA's configuration during sign-in or on UAC screens, configure NVDA as you wish while signed into Windows, save the configuration, and then press the "use currently saved settings during sign-in and on secure screens" button in the General category of the [NVDA Settings #NVDASettings] dialog.
 
++ Add-on Store +[AddonsManager]
+The Add-on Store allows you to browse and manage add-on packages for NVDA.
+Add-ons are provided by the community and contain custom code that may add or enhance support for certain applications, add or change features in NVDA, and provide support for extra Braille displays or speech synthesizers.
+Add-ons that are available in the Add-on Store are free.
+Other add-ons which require payment do exist, such as those which add support for commercial speech synthesizers.
+These can be installed from external sources.
+
+The Add-on Store is accessed from the Tools submenu in the NVDA menu.
+To access the Add-on Store from anywhere, assign a custom gesture using the [Input Gestures dialog #InputGestures].
+
+++ Browsing add-ons ++[AddonStoreBrowsing]
+When opened, the Add-on Store displays a list of add-ons.
+You can jump back to the list with ``alt+l`` from anywhere else within the store.
+If you have not installed an add-on before, the add-on store will open to a list of add-ons available to install.
+If you have installed add-ons, the list will display currently installed add-ons.
+
+Selecting an add-on, by moving to it with the up and down arrow keys, will display the details for the add-on.
+Add-ons have associated actions that you can access through an [actions menu #AddonStoreActions], such as install, help, disable, and remove.
+Available actions will change based on whether the add-on is installed or not, and whether it is enabled or disabled.
+
++++ Add-on list views +++[AddonStoreFilterStatus]
+There are different views for installed, updatable, available and incompatible add-ons.
+To change the view of add-ons, change the active tab of the add-ons list using ``ctrl+tab``.
+You can also ``tab`` to the list of views, and move through them with the ``leftArrow`` and ``rightArrow`` keys.
+
++++ Filtering for enabled or disabled add-ons +++[AddonStoreFilterEnabled]
+Normally, an installed add-on is "enabled", meaning that it is running and available within NVDA.
+However, some of your installed add-ons may be set to the "disabled" state.
+This means that they will not be used, and their functions won't be available during your current NVDA session.
+You may have disabled an add-on because it conflicted with another add-on, or with a certain application.
+NVDA may also disable certain add-ons, if they are found to be incompatible during an NVDA upgrade; though you will be warned if this is going to happen.
+Add-ons can also be disabled if you simply don't need them for a prolonged period, but don't want to uninstall them because you expect to want them again in the future.
+
+The lists of installed and incompatible add-ons can be filtered by their enabled or disabled state.
+The default shows both enabled and disabled add-ons.
+
++++ Include incompatible add-ons +++[AddonStoreFilterIncompatible]
+Available and updatable add-ons can be filtered to include [incompatible add-ons #incompatibleAddonsManager] that are available to install.
+
++++ Filter add-ons by channel +++[AddonStoreFilterChannel]
+Add-ons can be distributed through up to four channels:
+- Stable: The developer has released this as a tested add-on with a released version of NVDA.
+- Beta: This add-on may need further testing, but is released for user feedback.
+Suggested for early adopters.
+- Dev: This channel is suggested to be used by add-on developers to test unreleased API changes.
+NVDA alpha testers may need to use a "Dev" version of their add-ons.
+- External: Add-ons installed from external sources, outside of the add-on store.
+-
+
+To list add-ons only for specific channels, change the "Channel" filter selection.
+
++++ Searching for add-ons +++[AddonStoreFilterSearch]
+To search add-ons, use the "Search" text box.
+You can reach it by pressing ``shift+tab`` from the list of add-ons, or by pressing ``alt+s`` from anywhere in the Add-on Store interface.
+Type a keyword or two for the kind of add-on you're looking for, then ``tab`` back to the list of add-ons.
+Add-ons will be listed if the search text can be found in the display name, publisher or description.
+
+++ Add-on actions ++[AddonStoreActions]
+Add-ons have associated actions, such as install, help, disable, and remove.
+The actions menu can be accessed for an add-on in the add-on list by pressing the ``applications`` key, ``enter``, right clicking or double clicking the add-on.
+There is also an Actions button in the selected add-on's details, which can be activated normally or by pressing ``alt+a``.
+
++++ Installing add-ons +++[AddonStoreInstalling]
+Just because an add-on is available in the NVDA Add-ons Store, does not mean that it has been approved or vetted by NV Access or anyone else.
+It is very important to only install add-ons from sources you trust.
+The functionality of add-ons is unrestricted inside NVDA. 
+This could include accessing your personal data or even the entire system.
+
+You can install and update add-ons by [browsing Available add-ons #AddonStoreBrowsing].
+Select an add-on from the "Available add-ons" or "Updatable add-ons" tab.
+Then use the update, install, or replace action to start the installation.
+
+To install an add-on you have obtained outside of the Add-on Store, press the "Install from external source" button.
+This will allow you to browse for an add-on package (``.nvda-addon`` file) somewhere on your computer or on a network.
+Once you open the add-on package, the installation process will begin.
+
+If NVDA is installed and running on your system, you can also open an add-on file directly from the browser or file system to begin the installation process.
+
+When an add-on is being installed from an external source, NVDA will ask you to confirm the installation.
+Once the add-on is installed, NVDA must be restarted for the add-on to start running, although you may postpone restarting NVDA if you have other add-ons to install or update.
+
++++ Removing Add-ons +++[AddonStoreRemoving]
+To remove an add-on, select the add-on from the list and use the Remove action.
+NVDA will ask you to confirm removal.
+As with installing, NVDA must be restarted for the add-on to be fully removed.
+Until you do, a status of "Pending removal" will be shown for that add-on in the list.
+
++++ Disabling and Enabling Add-ons +++[AddonStoreDisablingEnabling]
+To disable an add-on, use the "disable" action.
+To enable a previously disabled add-on, use the "enable" action.
+You can disable an add-on if the add-on status indicates it is  "enabled", or enable it if the add-on is "disabled".
+For each use of the enable/disable action, add-on status changes to indicate what will happen when NVDA restarts.
+If the add-on was previously "disabled", the status will show "enabled after restart".
+If the add-on was previously "enabled", the status will show "disabled after restart".
+Just like when you install or remove add-ons, you need to restart NVDA in order for changes to take effect.
+
+++ Incompatible Add-ons ++[incompatibleAddonsManager]
+Some older add-ons may no longer be compatible with the version of NVDA that you have.
+If you are using an older version of NVDA, some newer add-ons may not be compatible either.
+Attempting to install an incompatible add-on will result in an error explaining why the add-on is considered incompatible.
+
+For older add-ons, you can override the incompatibility at your own risk.
+Incompatible add-ons may not work with your version of NVDA, and can cause unstable or unexpected behaviour including crashing.
+You can override compatibility when enabling or installing an add-on.
+If the incompatible add-on causes issues later, you can disable or remove it.
+
+If you are having trouble running NVDA, and you have recently updated or installed an add-on, especially if it is an incompatible add-on, you may want to try running NVDA temporarily with all add-ons disabled.
+To restart NVDA with all add-ons disabled, choose the appropriate option when quitting NVDA.
+Alternatively, use the [command line option #CommandLineOptions] ``--disable-addons``.
+
+You can browse available incompatible add-ons using the [available and updatable add-ons tabs #AddonStoreFilterStatus].
+You can browse installed incompatible add-ons using the [incompatible add-ons tab #AddonStoreFilterStatus].
+
 + Extra Tools +[ExtraTools]
 
 ++ Log Viewer ++[LogViewer]
@@ -2590,119 +2703,6 @@ To toggle the braille viewer from anywhere, please assign a custom gesture using
 ++ Python Console ++[PythonConsole]
 The NVDA Python console, found under Tools in the NVDA menu, is a development tool which is useful for debugging, general inspection of NVDA internals or inspection of the accessibility hierarchy of an application.
 For more information, please see the [NVDA Developer Guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
-
-++ Add-on Store ++[AddonsManager]
-The Add-on Store allows you to browse and manage add-on packages for NVDA.
-Add-ons are provided by the community and contain custom code that may add or enhance support for certain applications, add or change features in NVDA, and provide support for extra Braille displays or speech synthesizers.
-Add-ons that are available in the Add-on Store are free.
-Other add-ons which require payment do exist, such as those which add support for commercial speech synthesizers.
-These can be installed from external sources.
-
-The Add-on Store is accessed from the Tools submenu in the NVDA menu.
-To access the Add-on Store from anywhere, assign a custom gesture using the [Input Gestures dialog #InputGestures].
-
-+++ Browsing add-ons +++[AddonStoreBrowsing]
-When opened, the Add-on Store displays a list of add-ons.
-You can jump back to the list with ``alt+l`` from anywhere else within the store.
-If you have not installed an add-on before, the add-on store will open to a list of add-ons available to install.
-If you have installed add-ons, the list will display currently installed add-ons.
-
-Selecting an add-on, by moving to it with the up and down arrow keys, will display the details for the add-on.
-Add-ons have associated actions that you can access through an [actions menu #AddonStoreActions], such as install, help, disable, and remove.
-Available actions will change based on whether the add-on is installed or not, and whether it is enabled or disabled.
-
-++++ Add-on list views ++++[AddonStoreFilterStatus]
-There are different views for installed, updatable, available and incompatible add-ons.
-To change the view of add-ons, change the active tab of the add-ons list using ``ctrl+tab``.
-You can also ``tab`` to the list of views, and move through them with the ``leftArrow`` and ``rightArrow`` keys.
-
-++++ Filtering for enabled or disabled add-ons ++++[AddonStoreFilterEnabled]
-Normally, an installed add-on is "enabled", meaning that it is running and available within NVDA.
-However, some of your installed add-ons may be set to the "disabled" state.
-This means that they will not be used, and their functions won't be available during your current NVDA session.
-You may have disabled an add-on because it conflicted with another add-on, or with a certain application.
-NVDA may also disable certain add-ons, if they are found to be incompatible during an NVDA upgrade; though you will be warned if this is going to happen.
-Add-ons can also be disabled if you simply don't need them for a prolonged period, but don't want to uninstall them because you expect to want them again in the future.
-
-The lists of installed and incompatible add-ons can be filtered by their enabled or disabled state.
-The default shows both enabled and disabled add-ons.
-
-++++ Include incompatible add-ons ++++[AddonStoreFilterIncompatible]
-Available and updatable add-ons can be filtered to include [incompatible add-ons #incompatibleAddonsManager] that are available to install.
-
-++++ Filter add-ons by channel ++++[AddonStoreFilterChannel]
-Add-ons can be distributed through up to four channels:
-- Stable: The developer has released this as a tested add-on with a released version of NVDA.
-- Beta: This add-on may need further testing, but is released for user feedback.
-Suggested for early adopters.
-- Dev: This channel is suggested to be used by add-on developers to test unreleased API changes.
-NVDA alpha testers may need to use a "Dev" version of their add-ons.
-- External: Add-ons installed from external sources, outside of the add-on store.
--
-
-To list add-ons only for specific channels, change the "Channel" filter selection.
-
-++++ Searching for add-ons ++++[AddonStoreFilterSearch]
-To search add-ons, use the "Search" text box.
-You can reach it by pressing ``shift+tab`` from the list of add-ons, or by pressing ``alt+s`` from anywhere in the Add-on Store interface.
-Type a keyword or two for the kind of add-on you're looking for, then ``tab`` back to the list of add-ons.
-Add-ons will be listed if the search text can be found in the display name, publisher or description.
-
-+++ Add-on actions +++[AddonStoreActions]
-Add-ons have associated actions, such as install, help, disable, and remove.
-The actions menu can be accessed for an add-on in the add-on list by pressing the ``applications`` key, ``enter``, right clicking or double clicking the add-on.
-There is also an Actions button in the selected add-on's details, which can be activated normally or by pressing ``alt+a``.
-
-++++ Installing add-ons ++++[AddonStoreInstalling]
-Just because an add-on is available in the NVDA Add-ons Store, does not mean that it has been approved or vetted by NV Access or anyone else.
-It is very important to only install add-ons from sources you trust.
-The functionality of add-ons is unrestricted inside NVDA. 
-This could include accessing your personal data or even the entire system.
-
-You can install and update add-ons by [browsing Available add-ons #AddonStoreBrowsing].
-Select an add-on from the "Available add-ons" or "Updatable add-ons" tab.
-Then use the update, install, or replace action to start the installation.
-
-To install an add-on you have obtained outside of the Add-on Store, press the "Install from external source" button.
-This will allow you to browse for an add-on package (``.nvda-addon`` file) somewhere on your computer or on a network.
-Once you open the add-on package, the installation process will begin.
-
-If NVDA is installed and running on your system, you can also open an add-on file directly from the browser or file system to begin the installation process.
-
-When an add-on is being installed from an external source, NVDA will ask you to confirm the installation.
-Once the add-on is installed, NVDA must be restarted for the add-on to start running, although you may postpone restarting NVDA if you have other add-ons to install or update.
-
-++++ Removing Add-ons ++++[AddonStoreRemoving]
-To remove an add-on, select the add-on from the list and use the Remove action.
-NVDA will ask you to confirm removal.
-As with installing, NVDA must be restarted for the add-on to be fully removed.
-Until you do, a status of "Pending removal" will be shown for that add-on in the list.
-
-++++ Disabling and Enabling Add-ons ++++[AddonStoreDisablingEnabling]
-To disable an add-on, use the "disable" action.
-To enable a previously disabled add-on, use the "enable" action.
-You can disable an add-on if the add-on status indicates it is  "enabled", or enable it if the add-on is "disabled".
-For each use of the enable/disable action, add-on status changes to indicate what will happen when NVDA restarts.
-If the add-on was previously "disabled", the status will show "enabled after restart".
-If the add-on was previously "enabled", the status will show "disabled after restart".
-Just like when you install or remove add-ons, you need to restart NVDA in order for changes to take effect.
-
-+++ Incompatible Add-ons +++[incompatibleAddonsManager]
-Some older add-ons may no longer be compatible with the version of NVDA that you have.
-If you are using an older version of NVDA, some newer add-ons may not be compatible either.
-Attempting to install an incompatible add-on will result in an error explaining why the add-on is considered incompatible.
-
-For older add-ons, you can override the incompatibility at your own risk.
-Incompatible add-ons may not work with your version of NVDA, and can cause unstable or unexpected behaviour including crashing.
-You can override compatibility when enabling or installing an add-on.
-If the incompatible add-on causes issues later, you can disable or remove it.
-
-If you are having trouble running NVDA, and you have recently updated or installed an add-on, especially if it is an incompatible add-on, you may want to try running NVDA temporarily with all add-ons disabled.
-To restart NVDA with all add-ons disabled, choose the appropriate option when quitting NVDA.
-Alternatively, use the [command line option #CommandLineOptions] ``--disable-addons``.
-
-You can browse available incompatible add-ons using the [available and updatable add-ons tabs #AddonStoreFilterStatus].
-You can browse installed incompatible add-ons using the [incompatible add-ons tab #AddonStoreFilterStatus].
 
 ++ Create portable copy ++[CreatePortableCopy]
 This will open a dialog which allows you to create a portable copy of NVDA out of the installed version.
