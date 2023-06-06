@@ -76,10 +76,12 @@ class _DataManager:
 		self._cacheCompatibleFile = os.path.join(cacheDirLocation, _DataManager._cacheCompatibleFilename)
 		self._addonDownloadCacheDir = os.path.join(cacheDirLocation, "_dl")
 		self._installedAddonDataCacheDir = os.path.join(cacheDirLocation, "addons")
-		# ensure caching dirs exist
-		pathlib.Path(cacheDirLocation).mkdir(parents=True, exist_ok=True)
-		pathlib.Path(self._addonDownloadCacheDir).mkdir(parents=True, exist_ok=True)
-		pathlib.Path(self._installedAddonDataCacheDir).mkdir(parents=True, exist_ok=True)
+
+		if NVDAState.shouldWriteToDisk():
+			# ensure caching dirs exist
+			pathlib.Path(cacheDirLocation).mkdir(parents=True, exist_ok=True)
+			pathlib.Path(self._addonDownloadCacheDir).mkdir(parents=True, exist_ok=True)
+			pathlib.Path(self._installedAddonDataCacheDir).mkdir(parents=True, exist_ok=True)
 
 		self._latestAddonCache = self._getCachedAddonData(self._cacheLatestFile)
 		self._compatibleAddonCache = self._getCachedAddonData(self._cacheCompatibleFile)
