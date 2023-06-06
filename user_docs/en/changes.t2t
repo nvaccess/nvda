@@ -7,6 +7,12 @@ What's New in NVDA
 = 2023.2 =
 
 == New Features ==
+- Add-on Store has been added to NVDA. (#13985)
+  - Browse, search, install and update community add-ons.
+  - Manually override incompatibility issues with outdated add-ons.
+  - The Add-ons Manager has been removed and replaced by the Add-on Store.
+  - For more information please read the updated user guide.
+  -
 - Added pronunciation of Unicode symbols:
   - braille symbols such as "⠐⠣⠃⠗⠇⠐⠜". (#14548)
   - Mac Option key symbol "⌥". (#14682)
@@ -119,6 +125,7 @@ Instead import from ``hwIo.ioThread``. (#14627)
 - ``IoThread.autoDeleteApcReference`` is deprecated.
 It was introduced in NVDA 2023.1 and was never meant to be part of the public API.
 Until removal, it behaves as a no-op, i.e. a context manager yielding nothing. (#14924)
+- ``gui.MainFrame.onAddonsManagerCommand`` is deprecated, use ``gui.MainFrame.onAddonStoreCommand`` instead. (#13985)
 -
 
 = 2023.1 =
