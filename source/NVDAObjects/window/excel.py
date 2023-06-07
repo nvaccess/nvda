@@ -974,7 +974,7 @@ class ExcelWorksheet(ExcelBase):
 				break
 			elapsed = time.time() - start
 			if elapsed >= maxTimeout:
-				log.debug(f"Canceled detecting new selection after {elapsed} sec")	
+				log.debug(f"Canceled detecting new selection after {elapsed} sec")
 				break
 			# We spin the first few tries, as sleep is not accurate for tiny periods
 			# and we might end up sleeping longer than we need to. Spinning improves
