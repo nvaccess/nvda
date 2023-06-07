@@ -2541,8 +2541,9 @@ To change NVDA's configuration during sign-in or on UAC screens, configure NVDA 
 
 """
 {{!-- Preserve functionality of external links to the old Add-ons Manager used in NVDA 2023.1 and earlier. --}}
-{{a style="visibility: hidden;" name="AddonsManager"}}&nbsp;{{/a}}
+{{a name="AddonsManager"}}{{/a}}
 """
+
 + Add-ons and the Add-on Store +[AddonStore]
 Add-ons are software packages which provide new or altered functionality for NVDA.
 They are developed by the NVDA community, and external organisations such as commercial vendors.
