@@ -2539,6 +2539,10 @@ Settings for NVDA when running during sign-in or on UAC screens are stored in th
 Usually, this configuration should not be touched.
 To change NVDA's configuration during sign-in or on UAC screens, configure NVDA as you wish while signed into Windows, save the configuration, and then press the "use currently saved settings during sign-in and on secure screens" button in the General category of the [NVDA Settings #NVDASettings] dialog.
 
+"""
+{{!-- Preserve functionality of external links to the old Add-ons Manager used in NVDA 2023.1 and earlier. --}}
+{{a style="visibility: hidden;" name="AddonsManager"}}&nbsp;{{/a}}
+"""
 + Add-ons and the Add-on Store +[AddonStore]
 Add-ons are software packages which provide new or altered functionality for NVDA.
 They are developed by the NVDA community, and external organisations such as commercial vendors.
