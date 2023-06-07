@@ -3306,22 +3306,14 @@ class GlobalCommands(ScriptableObject):
 		config.conf["braille"]["showSelection"] = nextName
 		featureFlag = config.conf["braille"]["showSelection"]
 		if featureFlag.isDefault():
-			displayString = self._featureFlagDefaultBehaviorDisplayString(featureFlag.behaviorOfDefault.displayString)
 			# Translators: Used when reporting braille show selection state
 			# (default behavior).
-			msg = _("Braille show selection %s") % displayString
+			msg = _("Braille show selection default (%s)") % featureFlag.behaviorOfDefault.displayString
 		else:
 			# Translators: Reports which show braille selection state is used
 			# (disabled or enabled).
 			msg = _("Braille show selection %s") % BoolFlag[nextName].displayString
 		ui.message(msg)
-
-	def _featureFlagDefaultBehaviorDisplayString(self, displayString: str) -> str:
-		"""Returns display string for feature flag default behavior."""
-		# Translators: Used when reporting feature flag default behavior
-		# (default state/value).
-		msg = _("Default (%s)") % displayString
-		return msg
 
 	@script(
 		# Translators: Input help mode message for report clipboard text command.
