@@ -29,3 +29,29 @@ Once the anchor is set it cannot be updated, while settings may move categories.
 This setting allows the feature of using functionality in a certain situation to be controlled in some way.
 If necessary, a description of a common use case that is supported by each option.
 ```
+
+## Raw HTML inclusion
+
+Including raw HTML may be done by placing it in a "raw area mark", or on a "raw line mark"..
+Then, replace each `<` character with `{{`, and each `>` character with `}}`.
+More information can be found [in this Txt2Tags tip](https://txt2tags.org/tips.html#html-custom-tags).
+
+Example 1:
+
+```text2tags
+""" {{div id="my_div"}}
+Something to appear in the div.
+
+""" {{/div}}
+```
+
+Example 2:
+
+```text2tags
+"""
+{{div id="my_other_div"}}
+{{p}}something to appear{{br}}
+on two lines{{/p}}
+{{/div}}
+"""
+```
