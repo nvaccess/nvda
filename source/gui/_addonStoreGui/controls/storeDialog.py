@@ -8,6 +8,7 @@ from typing import (
 )
 
 import wx
+from wx.adv import BannerWindow
 
 from addonHandler import (
 	BUNDLE_EXTENSION,
@@ -19,6 +20,7 @@ from _addonStore.models.status import (
 	_StatusFilterKey,
 )
 from core import callLater
+import globalVars
 import gui
 from gui import (
 	guiHelper,
@@ -53,6 +55,17 @@ class AddonStoreDialog(SettingsDialog):
 		displayableError.displayError(gui.mainFrame)
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer):
+		if globalVars.appArgs.disableAddons:
+			self.banner = BannerWindow(self, dir=wx.TOP)
+			self.banner.SetText(
+				# Translators: Banner notice that is displayed in the Add-on Store.
+				pgettext("addonStore", "Note: NVDA was started with add-ons disabled"),
+				"",
+			)
+			normalBgColour = self.GetBackgroundColour()
+			self.banner.SetGradient(normalBgColour, normalBgColour)
+			settingsSizer.Add(self.banner, flag=wx.CENTER)
+
 		splitViewSizer = wx.BoxSizer(wx.HORIZONTAL)
 
 		self.addonListTabs = wx.Notebook(self)
@@ -179,7 +192,10 @@ class AddonStoreDialog(SettingsDialog):
 		filterCtrlsLine1.sizer.AddSpacer(FILTER_MARGIN_PADDING)
 
 	def postInit(self):
-		self.addonListView.SetFocus()
+		if globalVars.appArgs.disableAddons:
+			self.banner.SetFocus()
+		else:
+			self.addonListView.SetFocus()
 
 	def _onWindowDestroy(self, evt: wx.WindowDestroyEvent):
 		requiresRestart = self._requiresRestart
