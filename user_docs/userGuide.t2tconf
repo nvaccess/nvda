@@ -1,3 +1,8 @@
 %!includeconf: global.t2tconf
 
 %!Options: --toc
+
+% Enable the inclusion of raw HTML in the User Guide, provided that
+% < and > are replaced with {{ and }}, respectively.
+% This implements the method described here: https://txt2tags.org/tips.html#html-custom-tags
+%!postproc(html):  {{(.*?)}}  <\1>
