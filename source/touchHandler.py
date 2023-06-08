@@ -199,6 +199,13 @@ class TouchInputGesture(inputCore.InputGesture):
 			source=u"{source}, {mode}".format(source=source,mode=touchModeLabels[mode])
 		return source,u" + ".join(actions)
 
+	def _get__immediate(self):
+		# Because touch may produce a hover gesture for every pump, an immediate pump
+		# can result in exhaustion of the window message queue. Thus, don't do
+		# immediate pumps for hover gestures.
+		return not self.tracker.action == touchTracker.action_hover
+
+
 inputCore.registerGestureSource("ts", TouchInputGesture)
 
 class TouchHandler(threading.Thread):
