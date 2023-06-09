@@ -44,6 +44,8 @@ from config.configFlags import (
 	TetherTo,
 	ShowMessages,
 )
+from config.featureFlag import FeatureFlag
+from config.featureFlagEnums import BoolFlag
 import winUser
 import appModuleHandler
 import winKernel
@@ -3286,6 +3288,31 @@ class GlobalCommands(ScriptableObject):
 		# Translators: Reports which show braille message mode is used
 		# (disabled, timeout or indefinitely).
 		msg = _("Braille show messages %s") % ShowMessages(newValue).displayString
+		ui.message(msg)
+
+	@script(
+		# Translators: Input help mode message for cycle through braille show selection command.
+		description=_("Cycle through the braille show selection states"),
+		category=SCRCAT_BRAILLE
+	)
+	def script_braille_cycleShowSelection(self, gesture: inputCore.InputGesture) -> None:
+		"""Set next state of braille show selection and reports it with ui.message."""
+		featureFlag: FeatureFlag = config.conf["braille"]["showSelection"]
+		boolFlag: BoolFlag = featureFlag.enumClassType
+		values = [x.value for x in boolFlag]
+		currentValue = featureFlag.value.value
+		nextValueIndex = (currentValue % len(values)) + 1
+		nextName: str = boolFlag(nextValueIndex).name
+		config.conf["braille"]["showSelection"] = nextName
+		featureFlag = config.conf["braille"]["showSelection"]
+		if featureFlag.isDefault():
+			# Translators: Used when reporting braille show selection state
+			# (default behavior).
+			msg = _("Braille show selection default (%s)") % featureFlag.behaviorOfDefault.displayString
+		else:
+			# Translators: Reports which show braille selection state is used
+			# (disabled or enabled).
+			msg = _("Braille show selection %s") % BoolFlag[nextName].displayString
 		ui.message(msg)
 
 	@script(

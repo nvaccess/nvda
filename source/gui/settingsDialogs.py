@@ -5,7 +5,7 @@
 # Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Bill Dengler, Thomas Stivers,
 # Julien Cochuyt, Peter Vágner, Cyrille Bougot, Mesar Hameed, Łukasz Golonka, Aaron Cannon,
 # Adriani90, André-Abush Clause, Dawid Pieper, Heiko Folkerts, Takuya Nishimoto, Thomas Stivers,
-# jakubl7545, mltony, Rob Meredith
+# jakubl7545, mltony, Rob Meredith, Burman's Computer and Education Ltd.
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 import logging
@@ -3700,6 +3700,17 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		)
 		self.bindHelpEvent("BrailleSettingsInterruptSpeech", self.brailleInterruptSpeechCombo)
 
+		self.brailleShowSelectionCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
+			labelText=_(
+				# Translators: This is a label for a combo-box in the Braille settings panel.
+				"Show se&lection"
+			),
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["braille", "showSelection"],
+			conf=config.conf,
+		)
+		self.bindHelpEvent("BrailleSettingsShowSelection", self.brailleShowSelectionCombo)
+
 		if gui._isDebug():
 			log.debug("Finished making settings, now at %.2f seconds from start"%(time.time() - startTime))
 
@@ -3724,6 +3735,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		config.conf["braille"]["wordWrap"] = self.wordWrapCheckBox.Value
 		config.conf["braille"]["focusContextPresentation"] = self.focusContextPresentationValues[self.focusContextPresentationList.GetSelection()]
 		self.brailleInterruptSpeechCombo.saveCurrentValueToConf()
+		self.brailleShowSelectionCombo.saveCurrentValueToConf()
 
 	def onShowCursorChange(self, evt):
 		self.cursorBlinkCheckBox.Enable(evt.IsChecked())
