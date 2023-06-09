@@ -522,9 +522,10 @@ class InputManager(baseObject.AutoPropertyObject):
 		if wasInSayAll:
 			gesture.wasInSayAll=True
 
+		immediate = getattr(gesture, "_immediate", True)
 		speechEffect = gesture.speechEffectWhenExecuted
 		if speechEffect == gesture.SPEECHEFFECT_CANCEL:
-			queueHandler.queueFunction(queueHandler.eventQueue, speech.cancelSpeech)
+			queueHandler.queueFunction(queueHandler.eventQueue, speech.cancelSpeech, _immediate=immediate)
 		elif speechEffect in (gesture.SPEECHEFFECT_PAUSE, gesture.SPEECHEFFECT_RESUME):
 			queueHandler.queueFunction(queueHandler.eventQueue, speech.pauseSpeech, speechEffect == gesture.SPEECHEFFECT_PAUSE)
 
@@ -547,7 +548,12 @@ class InputManager(baseObject.AutoPropertyObject):
 			raise NoInputGestureAction
 
 		if config.conf["keyboard"]["speakCommandKeys"] and gesture.shouldReportAsCommand:
-			queueHandler.queueFunction(queueHandler.eventQueue, speech.speakMessage, gesture.displayName)
+			queueHandler.queueFunction(
+				queueHandler.eventQueue,
+				speech.speakMessage,
+				gesture.displayName,
+				_immediate=True
+			)
 
 		gesture.reportExtra()
 
@@ -580,7 +586,14 @@ class InputManager(baseObject.AutoPropertyObject):
 
 	def _inputHelpCaptor(self, gesture):
 		bypass = gesture.bypassInputHelp or getattr(gesture.script, "bypassInputHelp", False)
-		queueHandler.queueFunction(queueHandler.eventQueue, self._handleInputHelp, gesture, onlyLog=bypass or not gesture.reportInInputHelp)
+		immediate = getattr(gesture, "_immediate", True)
+		queueHandler.queueFunction(
+			queueHandler.eventQueue,
+			self._handleInputHelp,
+			gesture,
+			onlyLog=bypass or not gesture.reportInInputHelp,
+			_immediate=immediate
+		)
 		return bypass
 
 	def _handleInputHelp(self, gesture, onlyLog=False):
