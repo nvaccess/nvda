@@ -37,7 +37,7 @@ There are now gestures for showing the braille settings dialog, accessing the st
 
 
 == Changes ==
-- Updated LibLouis braille translator to [3.25.0 https://github.com/liblouis/liblouis/releases/tag/v3.25.0]. (#14719)
+- Updated LibLouis braille translator to [3.26.0 https://github.com/liblouis/liblouis/releases/tag/v3.26.0]. (#14970)
 - CLDR has been updated to version 43.0. (#14918)
 - Dash and em-dash symbols will always be sent to the synthesizer. (#13830)
 - LibreOffice changes:
@@ -85,6 +85,7 @@ Instead NVDA reports that the link has no destination. (#14723)
 - NVDA will no longer refuse to save the configuration after a configuration reset. (#13187)
 - When running a temporary version from the launcher, NVDA will not mislead users into thinking they can save the configuration. (#14914)
 - Reporting of object shortcut keys has been improved. (#10807)
+- When rapidly moving through cells in Excel, NVDA is now less likely to report the wrong cell or selection. (#14983, #12200, #12108)
 -
 
 

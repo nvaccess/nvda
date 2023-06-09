@@ -1,6 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2023 NV Access Limited, Dinesh Kaushal, Siddhartha Gupta, Accessolutions, Julien Cochuyt,
-# Cyrille Bougot
+# Cyrille Bougot, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -712,7 +712,6 @@ class ExcelWorksheet(ExcelBase):
 
 
 	treeInterceptorClass=ExcelBrowseModeTreeInterceptor
-
 	role=controlTypes.Role.TABLE
 
 	def _get_excelApplicationObject(self):
@@ -953,28 +952,43 @@ class ExcelWorksheet(ExcelBase):
 	), canPropagate=True)
 
 	def script_changeSelection(self,gesture):
-		oldSelection=api.getFocusObject()
+		oldSelection = self._getSelection()
 		gesture.send()
-		import eventHandler
-		import time
-		newSelection=None
-		curTime=startTime=time.time()
-		while (curTime-startTime)<=0.15:
+		newSelection = None
+		start = time.time()
+		retryInterval = 0.01
+		maxTimeout = 0.15
+		elapsed = 0
+		retries = 0
+		while True:
 			if scriptHandler.isScriptWaiting():
 				# Prevent lag if keys are pressed rapidly
 				return
-			if eventHandler.isPendingEvents('gainFocus'):
-				return
-			newSelection=self._getSelection()
-			if newSelection and newSelection!=oldSelection:
-				break
 			api.processPendingEvents(processEventQueue=False)
-			time.sleep(0.015)
-			curTime=time.time()
+			if eventHandler.isPendingEvents('gainFocus'):
+				# This object is no longer focused.
+				return
+			newSelection = self._getSelection()
+			if newSelection and newSelection != oldSelection:
+				log.debug(f"Detected new selection after {elapsed} sec")
+				break
+			elapsed = time.time() - start
+			if elapsed >= maxTimeout:
+				log.debug(f"Canceled detecting new selection after {elapsed} sec")
+				break
+			# We spin the first few tries, as sleep is not accurate for tiny periods
+			# and we might end up sleeping longer than we need to. Spinning improves
+			# responsiveness in the case that the app responds fairly quickly.
+			if retries > 2:
+				# Don't spin too long, though. If we get to this point, the app is
+				# probably taking a while to respond, so super fast response is
+				# already lost.
+				time.sleep(retryInterval)
+			retries += 1
 		if newSelection:
 			if oldSelection.parent==newSelection.parent:
 				newSelection.parent=oldSelection.parent
-			eventHandler.executeEvent('gainFocus',newSelection)
+			eventHandler.executeEvent('gainFocus', newSelection)
 
 	def _WaitForValueChangeForAction(self, action, fetcher, timeout=0.15):
 		oldVal = fetcher()
