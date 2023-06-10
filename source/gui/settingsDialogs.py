@@ -3062,6 +3062,7 @@ class AdvancedPanelControls(
 			wx.CheckBox(audioBox, label=label)
 		)
 		self.bindHelpEvent("WASAPI", self.wasapiCheckBox)
+		self.wasapiCheckBox.Bind(wx.EVT_CHECKBOX, self.onWasapiChange)
 		self.wasapiCheckBox.SetValue(
 			config.conf["audio"]["wasapi"]
 		)
@@ -3079,6 +3080,8 @@ class AdvancedPanelControls(
 		)
 		self.soundVolFollowCheckBox.defaultValue = self._getDefaultValue(
 			["audio", "soundVolumeFollowsVoice"])
+		if not self.wasapiCheckBox.GetValue():
+			self.soundVolFollowCheckBox.Disable()
 
 		# Translators: This is the label for a group of advanced options in the
 		# Advanced settings panel
@@ -3140,6 +3143,9 @@ class AdvancedPanelControls(
 	def onOpenScratchpadDir(self,evt):
 		path=config.getScratchpadDir(ensureExists=True)
 		os.startfile(path)
+
+	def onWasapiChange(self, evt):
+		self.soundVolFollowCheckBox.Enable(evt.IsChecked())
 
 	def _getDefaultValue(self, configPath):
 		return config.conf.getConfigValidation(configPath).default
