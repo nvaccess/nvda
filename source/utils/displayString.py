@@ -7,6 +7,7 @@ from abc import ABC, ABCMeta, abstractproperty
 from enum import (
 	Enum,
 	EnumMeta,
+	Flag,
 	IntEnum,
 	IntFlag,
 )
@@ -63,6 +64,11 @@ class _DisplayStringEnumMixin(ABC):
 
 class DisplayStringEnum(_DisplayStringEnumMixin, Enum, metaclass=_DisplayStringEnumMixinMeta):
 	"""An Enum class that adds a displayString property defined by _displayStringLabels"""
+	pass
+
+
+class DisplayStringFlag(_DisplayStringEnumMixin, Flag, metaclass=_DisplayStringEnumMixinMeta):
+	"""A Flag class that adds a displayString property defined by _displayStringLabels"""
 	pass
 
 

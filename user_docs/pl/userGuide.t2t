@@ -46,7 +46,7 @@ Najważniejsze właściwości NVDA to:
 
 ++ Wersje językowe ++[Internationalization]
 Ważne jest, by ludzie z całego świata, bez względu na ojczysty język, mogli mieć równy dostęp do technologii.
-Poza angielskim, NVDA został przetłumaczony na 54 języki, w tym: afrykanerski, albański, amharski, arabski, aragoński, birmański, bułgarski, chiński tradycyjny i uproszczony, chorwacki, czeski, duński, farsi, fiński, francuski, galicyjski, grecki,   gruziński, hebrajski, hindi,  hiszpański (Kolumbia i Hiszpania), holenderski,  irlandzki, islandzki,  japoński, kannada, kataloński, kirgiski, koreański, litewski, macedoński, mandaryński, mongolski, nepalski, niemiecki (Niemcy i Szwajcaria), norweski, pendżabski, polski, portugalski (Brazylia i Portugalia), rosyjski, rumuński,  serbski, słowacki, słoweński, szwedzki, tajski, tamilski, turecki, ukraiński, węgierski, wietnamski i włoski.
+Poza angielskim, NVDA został przetłumaczony na 54 języki, w tym: afrykanerski, albański, amharski, arabski, aragoński, birmański, bułgarski, chiński tradycyjny i uproszczony, chorwacki, czeski, duński, perski, fiński, francuski, galicyjski, grecki,   gruziński, hebrajski, hindi,  hiszpański (Kolumbia i Hiszpania), holenderski,  irlandzki, islandzki,  japoński, kannada, kataloński, kirgiski, koreański, litewski, macedoński, mandaryński, mongolski, nepalski, niemiecki (Niemcy i Szwajcaria), norweski, pendżabski, polski, portugalski (Brazylia i Portugalia), rosyjski, rumuński,  serbski, słowacki, słoweński, szwedzki, tajski, tamilski, turecki, ukraiński, węgierski, wietnamski i włoski.
 
 ++ Obsługa syntezatora mowy ++[SpeechSynthesizerSupport]
 NVDA oferuje wiele wersji językowych interfejsu i daje możliwość odczytywania treści w każdym języku wspieranym przez zainstalowany w systemie syntezator mowy.
@@ -67,7 +67,7 @@ NVDA obsługuje kody brajla dla wielu języków, w tym brajl zwykły, skróty br
 NVDA copyright NVDA_COPYRIGHT_YEARS autorzy NVDA.
 
 NVDA jest dostępny pod licencją GNU General Public License (wersja 2) z dwoma specjalnymi wyjątkami.
-Wyjątki są zawarte w dokumencie licency w rozdziałach "Non-GPL Components in Plugins and Drivers" i "Microsoft Distributable Code". Notatka tłumacza: nazwy rozdziałów pozostały nieprzetłumaczone z powodu cytowania oryginalnego dokumentu.
+Wyjątki są zawarte w dokumencie license w rozdziałach "Non-GPL Components in Plugins and Drivers" i "Microsoft Distributable Code". Notatka tłumacza: nazwy rozdziałów pozostały nieprzetłumaczone z powodu cytowania oryginalnego dokumentu.
 NVDA także zawiera i używa komponentów które są objęte różnymi innymi bezpłatnymi i otwartoźródłowymi licencjami.
 Możesz za darmo udostępniać ten program i dowolnie zmieniać go, pod warunkiem, że dołączysz do niego tę licencję oraz udostępnisz pełny kod źródłowy każdemu zainteresowanemu. 
 Dotyczy to zarówno oryginalnej wersji programu, jak i jego zmienionych kopii, a także każdego innego oprogramowania, które korzysta z kodu zaczerpniętego z tego programu. 
@@ -93,7 +93,7 @@ Sprawdź [Wymagania systemowe #SystemRequirements] dla więcej szczegółów.
 
 +++ Procedura pobierania NVDA +++[StepsForDownloadingNVDA]
 
-Ta procedura wymaga wiedzy nawigowania po stronach internetowych.
+Ta procedura wymaga wiedzy poruszania się po stronach internetowych.
 
 - Otwórz swoją przeglądarkę internetową (naciśnij klawisz ``windows``, napisz słowo "internet" bez cudzysłówów, i naciśnij ``enter``)
 - Otwórz stronę pobierania NV Access (naciśnij ``alt+d``, wpisz następujący adres i naciśnij ``enter``): 
@@ -110,7 +110,7 @@ Uruchomienie pobranego pliku spowoduje start tymczasowej kopii programu.
 Na tym etapie możesz zdecydować, czy chcesz zainstalować program na dysku, utworzyć jego kopię przenośną i umieścić ją np. w pamięci flash, czy kontynuować użycie wersji tymczasowej.
 
 Po pobraniu pliku instalacyjnego, NVDA nie potrzebuje dostępu do internetu żeby go zainstalować lub uruchomić.
-Jeżeli dostępne jest łącze internetowe, istnieje możliwość periodycznego sprawdzania aktualizacji.
+Jeżeli dostępne jest połączenie z internetem, istnieje możliwość periodycznego sprawdzania aktualizacji.
 
 +++ Procedura uruchamiania pobranego pliku instalacyjnego +++[StepsForRunningTheDownloadLauncher]
 
@@ -130,11 +130,11 @@ Dostępne opcje to:
 - "Utwórz kopię przenośną": ta opcja umożliwia ustawianie NVDA w jakimkolwiek folderze bez instalacji.
 Ta opcja jest użyteczna na komputerze bez praw administratora, lub na USB stickach w celu noszenia ze sobą.
 Kiedy ta opcja jest zaznaczona, NVDA kieruje użytkownika  w procesie tworzenia przenośnej kopii.
-Główną rzeczą o której NVDA powinien wiedzieć, to folder do konfiguracji przenośnej kopii. 
+Główną rzeczą o której NVDA powinien wiedzieć, to folder do przechowywania konfiguracji przenośnej kopii. 
 - "Kontynuuj uruchamianie tymczasowej kopii": ta opcja trzyma uruchomioną tymczasową kopię.
 To jest użyteczne w celu testowania funkcji w nowej wersji przed jej instalacją.
 Kiedy ta opcja jest wybrana, okno programu uruchamiającego zamyka się, a tymczasowa kopia nadal działa dopóki nie zostanie zamknięta albo komputer zostanie wyłączone.
-Miewajcie na uwadzę, że konfiguracja nie będzie zachowana. 
+Miewaj na uwadzę, że konfiguracja nie będzie zachowana. 
 - "Zrezygnuj": Ta opcja powoduje zamknięcie NVDA bez wykonywania żadnej czynności.
 -
 
@@ -186,7 +186,7 @@ Moduł "Podstawowe szkolenie z obsługi NVDA" zawiera każde polecenie szczegó�
 "Podstawowe szkolenie z obsługi NVDA" dostępne jest w [sklepie NV Access http://www.nvaccess.org/shop].
 
 Tutaj znajdują się często używane polecenia.
-Wszystkie polecenia są konfigurowalne, co oznacza, że to są domyślne skróty klawiszowe dla tych funkcji.
+Wszystkie polecenia są konfigurowalne, co oznacza, że są to domyślne skróty klawiszowe dla tych funkcji.
 
 +++ Klawisz modyfikatora NVDA +++[NVDAModifierKey]
 Domyślny klawisz modyfikatora NVDA to  klawisz ``numeryczny zero``, (z wyłączonym ``numLockiem``), lub klawisz ``insert`` w pobliżu klawiszy ``delete``, ``home`` i ``end``.
@@ -236,7 +236,7 @@ Polecenia nie będą wykonywane, gdy pomoc klawiatury jest aktywna.
 | Zmniejsz aktualne ustawienie syntezatora | ``NVDA+control+strzałka w dół`` | ``NVDA+shift+control+strzałka w dół`` | Zmniejsza aktualne ustawienie syntezatora które ustawiasz. Na przykład zmniejsza prędkość, wybiera poprzedni głos, zmniejsza głośność |
 
 +++ Nawigacja po stronach internetowych +++[WebNavigation]
-Pełną liste skrótów szybkiej nawigacji można znaleźć w w roździale [Tryb przeglądania #BrowseMode] podręcznika użytkownika.
+Pełną liste skrótów szybkiej nawigacji można znaleźć w roździale [Tryb przeglądania #BrowseMode] podręcznika użytkownika.
 || Polecenie | skrót | opis |
 | Nagłówek | ``h`` | przenosi do następnego nagłówka |
 | Nagłówek poziomu 1, 2, lub 3 | ``1``, ``2``, ``3`` | przenosi do następnego nagłówka określonego poziomu |
@@ -264,11 +264,11 @@ Pracownicy organizacji NV Access także prowadzą regularnego [Bloga z aktualno�
 
 Istnieje także [Program certyfikacji ekspertów https://certification.nvaccess.org/].
 Jest to egzamin online który można zdać aby pokazać swoje umiejętności z używania NVDA.
-[NVDA certyfikowani eksperci https://certification.nvaccess.org/] mogą opublikować swoje informacje kontaktowe i potrzebne szczegóły biznesowe.
+[Certyfikowani eksperci NVDA https://certification.nvaccess.org/] mogą opublikować swoje informacje kontaktowe i potrzebne szczegóły biznesowe.
 
 ++ Sposoby dostawania pomocy ++[GettingHelp]
 
-Aby dostać pomoc dla NVDA, naciśnij ``NVDA+n`` żeby otworzyć NVDA menu, potem ``c`` doa opcji pomoc.
+Aby dostać pomoc dla NVDA, naciśnij ``NVDA+n`` żeby otworzyć NVDA menu, potem ``c`` do opcji pomoc.
 Z tego miejsca możesz otworzyć Podręcznik użytkownika, Szybki wykaz klawiszy poleceń, historię zmian w nowej wersji i wiele więcej.
 Pierwsze trzy opcje otwierają się w przeglądarce internetowej.
 Istnieje także bardziej rozszerzony materiał szkoleniowy dostępny w [Sklepie NV Access https://www.nvaccess.org/shop].
@@ -368,7 +368,7 @@ Aby uruchomić wersję przenośną NVDA, przejdź do katalogu, w którym został
 Jeżeli NVDA było uruchomione to zostanie ono zamknięte przed uruchomieniem wersji przenośnej.
 
 Po uruchomieniu NVDA usłyszysz coraz wyższe dźwięki wskazujące, że program się ładuje.
-Czas uruchamiania zależy od tego, jak szybki jest twój komputer, oraz od prędkości nośnika, jeśli NVDA jest uruchamiane z USB lub innego wolniejszego medium.
+Czas uruchamiania zależy od szybkości twojego komputera oraz od prędkości nośnika, jeśli NVDA jest uruchamiane z USB lub innego wolniejszego medium.
 Jeśli uruchamianie NVDA trwa długo, zostanie wygenerowany komunikat: "Ładowanie NVDA, Proszę czekać..."
 
 Jeśli podczas uruchamiania programu nie usłyszałeś/aś powyższych komunikatów, ale dźwięk oznaczający błąd systemu Windows lub dźwięki o coraz niższej wysokości, oznacza to, iż NVDA nie działa prawidłowo i należy zgłosić powstały problem do twórców programu. 
@@ -380,7 +380,7 @@ Przy pierwszym uruchomieniu, NVDA wyświetli ekran powitalny z podstawowymi info
 Okienko zawiera również listę rozwijaną i 3 pola wyboru.
 Lista rozwijana pozwala wybrać układ klawiatury.
 Pierwsze pole wyboru pozwala ustalić, czy NVDA będzie używał klawisza CapsLock jako klawisza komend NVDA.
-Drugie pozwala włączyć automatyczne uruchamianie programu po zalogowaniu do systemu i jest dostępny tylko dla zainstalowanych kopii NVDA.
+Drugie pozwala włączyć automatyczne uruchamianie programu po zalogowaniu do systemu i jest dostępne tylko dla zainstalowanych kopii NVDA.
 Trzecie pole wyboru określa, czy to okienko dialogowe ma się pojawiać przy każdym uruchomieniu programu.
 
 +++ Statystyki diagnostyczne +++[UsageStatsDialog]
@@ -414,7 +414,7 @@ Jeśli korzystasz z NVDA pod kontrolą systemu Windows 8 lub nowszego i posiadas
 Podczas działania programu NVDA, wszystkie gesty dotykowe są przekazywane do niego, miast do systemu operacyjnego.
 Oznacza to, że gesty wykonywane normalnie nie będą działać, jeśli włączony jest NVDA.
 %kc:beginInclude
-W celu przełączenia obsługi gestów naciśnij NVDA+CTRL+ALT+T.
+W celu przełączania obsługi gestów naciśnij NVDA+CTRL+ALT+T.
 %kc:endInclude
 Możesz też przełączyć obsługę gestów  #TouchSupportEnable] z odpowiedniej kategorii w ustawieniach programu.
 

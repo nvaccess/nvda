@@ -2,7 +2,9 @@ NVDA NVDA_VERSION Benutzerhandbuch
 
 
 %!includeconf: ../userGuide.t2tconf
+%!includeconf: ./locale.t2tconf
 %kc:title: NVDA NVDA_VERSION Kurzübersicht der Befehle
+%kc:includeconf: ./locale.t2tconf
 
 = Inhaltsverzeichnis =[toc]
 %%toc
@@ -221,7 +223,7 @@ Die eigentlichen Befehle werden im Eingabehilfemodus nicht ausgeführt.
 | Statusleiste mitteilen | ``NVDA+Ende`` | ``NVDA+Umschalt+Ende`` | Teilt den Inhalt der Statusleiste mit, wenn NVDA eine findet. Durch zweimaliges Drücken wird die Information buchstabiert. Durch dreimaliges Drücken wird die Information in die Zwischenablage kopiert. |
 | Datum und Uhrzeit vorlesen | ``NVDA+F12`` | ``NVDA+F12`` | Durch einmaliges Drücken wird die aktuelle Uhrzeit angesagt, durch zweimaliges Drücken das Datum. |
 | Textformatierung mitteilen | ``NVDA+F`` | ``NVDA+F`` | Teilt die Textformatierung mit. Zweimaliges Drücken zeigt die Informationen in einem Fenster an. |
-| Link-Beschreibung mitteilen | ``NVDA+K`` | ``NVDA+K`` | Bei einmaligem Drücken wird die Ziel-URL des Links im [Navigator-Objekt #ObjectNavigation] angezeigt. Zweimaliges Drücken zeigt diese in einem Fenster zur genaueren Überprüfung an. |
+| Link-Zieladresse mitteilen | ``NVDA+K`` | ``NVDA+K`` | Bei einmaligem drücken wird die Zieladresse des Links an der aktuellen Cursor- oder Fokus-Position angezeigt. Bei zweimaligem Drücken wird sie in einem Fenster zur genaueren Überprüfung angezeigt. |
 
 +++ Umschalten, welche Informationen NVDA vorliest +++[ToggleWhichInformationNVDAReads]
 || Name | Desktop-Taste | Laptop-Taste | Beschreibung |
@@ -2347,8 +2349,12 @@ Außerdem wird die Option "Beim Sprechen von Zeichen und Symbolen die Sprache de
 Um die Aussprache eines Sonderzeichens zu verändern, wählen Sie es in der Liste der Symbole aus.
 Sie können die Symbole auch filtern, indem Sie das Symbol oder einen Teil der Ersetzung des Symbols in das Bearbeitungsfeld "Filter nach" eingeben.
 
-- Das Eingabefeld "Ersetzen durch" erlaubt Ihnen, den Text zu ändern, der an Stelle des Symbols angesagt wird.
-- Im Kombinationsfeld "Stufe" kann eingestellt werden, ab welcher Stufe Satz- und Sonderzeichen angesagt werden sollen.
+- Das Eingabefeld "Ersetzen durch" ermöglicht den Text zu verändern, der an dieser Stelle des Symbols mitgeteilt wird.
+- Im Kombinationsfeld für die Symbolstufe kann eingestellt werden, ab welcher Stufe Satz- und Sonderzeichen angesagt werden sollen (Keine, Einige, Meiste oder Alle).
+Sie können die Stufe auch auf Zeichen einstellen; in diesem Fall wird das Symbol unabhängig von der verwendeten Symbolstufe nicht mitgeteilt, mit den folgenden zwei Ausnahmen:
+ - Beim zeichenweises Navigieren.
+ - Beim Buchstabieren, sofern es dieses Symbol enthält.
+ -
 - Im Konbinationsfeld "Aktuelles Symbol an Sprachausgabe senden" kann eingestellt werden, ob das Symbol anstelle seines Ersatztextes an die Sprachausgabe gesendet werden soll.
 Dies ist nützlich, wenn das Symbol die Sprachausgabe zu einer Pause oder einer anderen Betonung bringen soll.
 Beispielsweise pausiert die Sprachausgabe nach einem Komma.
@@ -2935,6 +2941,15 @@ Bitte lesen Sie in der Dokumentation zu Ihrer Braillezeile nach, wo die entsprec
 | Braillezeile zur vorherigen Zeile bewegen | D1 |
 | Braillezeile zur nächsten Zeile bewegen | D3 |
 | Cursor zum Braille-Modul ziehen | Routing-Taste |
+| Umschalt+Tab-Taste | Leerzeichen+Punkt1+Punkt3 |
+| Tab-Taste | Leerzeichen+Punkt4+Punkt6 |
+| Alt-Taste | Leerzeichen+Punkt1+Punkt3+Punkt4 (Leerzeichen+m) |
+| Escape-Taste | Leerzeichen+Punkt1+Punkt5 (Leerzeichen+e) |
+| Windows-Taste | Leerzeichen+Punkt3+Punkt4 |
+| Alt+Tab-Taste | Leerzeichen+Punkt2+Punkt3+Punkt4+Punkt5 (Leerzeichen+t) |
+| NVDA-Menü | Leerzeichen+Punkt1+Punkt3+Punkt4+Punkt5 (Leerzeichen+n) |
+| Windows-Taste+D (holt den Desktop in den vordergrund) | Leerzeichen+Punkt1+Punkt4+Punkt5 (Leerzeichen+d) |
+| Alles Vorlesen | Leerzeichen+Punkt1+Punkt2+Punkt3+Punkt4+Punkt5+Punkt6 |
 
 Für Braillezeilen, die einen Joystick besitzen:
 || Name | Taste |
@@ -3677,18 +3692,17 @@ Im Folgenden sind die aktuellen Tastenbelegungen für diese Anzeigen aufgeführt
 | Braillezeile rückwärtsscrollen | Nach links schwenken oder nach oben |
 | Braillezeile vorwärtsscrollen | Nach rechts schwenken oder nach unten |
 | Braillezeile zur vorherigen Zeile navigieren | Leertaste+Punkt1 |
-| Braillezeile zur nächsten Zeile navigieren | Leertaste+Punkt4 |
 | Cursor zum Braille-Modul ziehen | Routing-Taste in Reihe 1 |
 | Kopplung der Braillezeile umschalten | Pfeiltaste nach oben/unten |
-| Pfeiltaste nach oben | Joystick nach oben |
-| Pfeiltaste nach unten | Joystick nach unten |
-| Pfeiltaste nach links | Leertaste+Punkt3 oder Joystick nach links |
-| Pfeiltaste nach rechts | Leertaste+Punkt6 oder Joystick nach rechts |
+| Pfeiltaste nach oben | Joystick nach oben, D-Pad nach oben oder Leerzeichen+Punkt1 |
+| Pfeiltaste nach unten | Joystick nach unten, D-Pad nach unten oder Leerzeichen+Punkt4 |
+| Pfeiltaste nach links | Leerzeichen+Punkt3, Joystick nach links oder D-Pad nach links |
+| Pfeiltaste nach rechts | Leerzeichen+Punkt6, Joystick nach rechts oder D-Pad nach rechts |
 | Umschalt+Tab | Leertaste+Punkt1+Punkt3 |
 | Tab | Leertaste+Punkt4+Punkt6 |
 | Alt | Leertaste+Punkt1+Punkt3+Punkt4 (Leertaste+M) |
 | Escape | Leertaste+Punkt1+Punkt5 (Leertaste+E) |
-| Eingabetaste | Punkt 8 oder Mitte des Joysticks |
+| Eingabetaste | Punkt8, Joystick mittig oder D-Pad mittig |
 | Windows-Taste | Leertaste+Punkt3+Punkt4 |
 | Alt+Tab | Leertaste+Punkt2+Punkt3+Punkt4+Punkt5 (Leertaste+T) |
 | NVDA-Menü | Leertaste+Punkt1+Punkt3+Punkt4+Punkt5 (Leertaste+N) |

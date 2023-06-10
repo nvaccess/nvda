@@ -2,9 +2,54 @@
 
 
 %!includeconf: ../changes.t2tconf
+%!includeconf: ./locale.t2tconf
 
 == Obavijest za programere ==
 Informacije za programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
+
+
+= 2023.2 =
+
+== Nove značajke ==
+- Dodan izgovor Unicode znakova:
+  - Brajični simboli poput "⠐⠣⠃⠗⠇⠐⠜". (#14548)
+  - Znak mac tipke option "⌥". (#14682)
+  -
+- U Mozilla Firefoxu i Google Chromeu, NVDA sada izgovara kada se kontrole dijaloških okvira, mreža, popisa ili drva otvore ako je to odredio autor koristeći aria-haspopup. (#14709)
+- 
+
+
+== Izmjene ==
+- Nadograđen LibLouis brajični prevoditelj na inačicu [3.25.0 https://github.com/liblouis/liblouis/releases/tag/v3.25.0]. (#14719)
+- Znakovi crtica i duga povlaka biti će uvijek poslani govornoj jedinici. (#13830)
+- Udaljenost koja se čita u Microsoft Wordu sada će poštivati mjernu jedinicu u Wordovim naprednim postavkama čak i kada je uključena opcija koristi UIA za pristup kontrolama Microsoft Word dokumenata. (#14542)
+- Prilikom izgovora lokacije preglednog kursora, trenutna lokacija kursora sustava i preglednog kursora sada se izgovara u odnosu na trenutnu stranicu u LibreOffice Writeru za LibreOffice inačice >= 7.6, slično tome kako je to realizirano u Microsoft Wordu. (#11696)
+- NVDA se sada odaziva malo brže na prečace i ostale komande. (#14701)
+- NVDA se odaziva brže prilikom pomicanja kursora u poljima za uređivanje. (#14708)
+- Upravljači program za Baum brajične redke: dodano nekoliko prečaca sa razmaknicodm za izvođenje čestih tipkovničkih prečaca poput windows+d, alt+tab itd. Za potpuni popis, molimo pogledajte vodič za korisnike. (#14714)
+- Prilikom korištenja brajičnog redka uz pomoć standardnog Hid upravljačkog programa, tipka dpad može biti korištena za emuliranje strelica i entera. Also space+dot1 and space+dot4 now map to up and down arrow respectively. (#14713)
+- Prečac za izgovor odredišne poveznice sada izgovara vezu sa kursora sustava pozicije fokusa što je bolje od čitanja sa preglednog kursora. (#14659)
+-
+
+
+== Ispravke grešaka ==
+- NVDA više neće nepotrebno prebacivati brajični redak na "bez brajice" više puta tijekom automatskog otkrivanja, što će rezultirati manjim opterećenjem i čišćim zapisnikom. (#14524)
+- NVDA će se sada automatski prebaciti na USB ako se HID ili USB uređaj (poput HumanWare Braillianta ili APH Mantisa) automatski otkrije, a USB veza postane dostupna.
+Ovo je nekada samo radilo za USB ili serijske priključke. (#14524)
+- Od sada je moguće koristiti znak obrnuta kosa crta u polju zamjene rječničkog članka, kada tip nije postavljen na pravilni izraz. (#14556)
+- U modusu čitanja, NVDA više neće nepravilno ignorirati fokus koji se premješta na nadređenu ili podređenu kontrolu npr. premještanje sa kontrole na njenu stavku popisa ili ćeliju tablice. (#14611)
+  - Imajte na umu da ova ispravka radi kada je opcija "automatski postavi fokus na elemente koji se mogu fokusirati" u postavkama modusa čitanja isključena, što je podrazumjevano.
+  -
+- NVDA više ne prouzrokuje rušenje ili zamrzavanje preglednika Mozilla Firefox. (#14647)
+- U Mozilla Firefoxu i Google Chromeu, upisani se znakovi više ne čitaju u nekim poljima za uređivanje čak kada ej čitanje upisanih znakova isključeno. (#14666)
+- Sada možete koristiti modus čitanja u ugrađenim kontrolama u Chromiumu gdje to prije nije bilo moguće. (#13493, #8553)
+- Za znakove koji nemaju opis u trenutnom jeziku koristit će se razina simbola podrazumjevana za engleski jezik. (#14558, #14417)
+- U novijim inačicama Windows 11 bloka za pisanje, NVDA može ponovo čitati sadržaj trake stanja. (#14573)
+- U Mozilla Firefoxu, pomicanje miša po tekstu poslije poveznice sada pouzdano izgovara tekst. (#9235)
+- U Windows 10 i 11 kalkulatoru, prijenosna kopija NVDA više neće pasivno eagirati ili reproducirati zvuk pogreške prilikom upisa izraza u standardnom kalkulatoru u u načinu kompaktnog prikaza. (#14679)
+- Prilikom pokušaja izgovora poveznice bez href atributa NVDA više nije tih.
+Umjesto toga, NVDA obavještava o nepostojanju odredišta poveznice. (#14723)
+-
 
 
 = 2023.1 =
