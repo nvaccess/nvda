@@ -6,6 +6,12 @@ comtypes==1.1.11
 pyserial==3.5
 wxPython==4.1.1
 git+https://github.com/DiffSK/configobj@3e2f4cc#egg=configobj
+requests==2.31.0
+# Required to use a pinned old version for requests.
+# py2exe fails to compile properly without this.
+# This can be removed when upgrading py2exe to 0.13+ and python to 3.8+.
+# https://github.com/Ousret/charset_normalizer/issues/253
+charset-normalizer==2.1.1
 
 #NVDA_DMP requires diff-match-patch
 diff_match_patch_python==1.0.2

@@ -222,7 +222,7 @@ The actual commands will not execute while in input help mode.
 | Report focus | ``NVDA+tab`` | ``NVDA+tab`` | Reports the current control which has focus.  Pressing twice will spell the information |
 | Read window | ``NVDA+b`` | ``NVDA+b`` | Reads the entire current window (useful for dialogs) |
 | Read status bar | ``NVDA+end`` | ``NVDA+shift+end`` | Reports the Status Bar if NVDA finds one. Pressing twice will spell the information. Pressing three times will copy it to the clipboard |
-| Read time | ``NVDA+f12`` | ``NVDA+f12`` | Pressing once reports the current time, pressing twice reports the date |
+| Read time | ``NVDA+f12`` | ``NVDA+f12`` | Pressing once reports the current time, pressing twice reports the date. The time and date are reported in the format specified in Windows settings for the system tray clock. |
 | Report text formatting | ``NVDA+f`` | ``NVDA+f`` | Reports text formatting. Pressing twice shows the information in a window |
 | Report link destination | ``NVDA+k`` | ``NVDA+k`` | Pressing once speaks the destination URL of the link at the current caret or focus position. Pressing twice shows it in a window for more careful review |
 
@@ -311,6 +311,7 @@ If you have add-ons already installed there may also be a warning that incompati
 Before you're able to press the Continue button you will have to use the checkbox to confirm that you understand that these add-ons will be disabled.
 There will also be a button present to review the add-ons that will be disabled.
 Refer to the [incompatible add-ons dialog section #incompatibleAddonsManager] for more help on this button.
+After installation, you are able to re-enable incompatible add-ons at your own risk from within the [Add-on Store #AddonsManager].
 
 +++ Use NVDA during sign-in +++[StartAtWindowsLogon]
 This option allows you to choose whether or not NVDA should automatically start while at the Windows sign-in screen, before you have entered a password.
@@ -482,10 +483,15 @@ The actual  commands will not execute while in input help mode.
 ++ The NVDA menu ++[TheNVDAMenu]
 The NVDA menu allows you to control NVDA's settings, access help, save/revert your configuration, Modify speech dictionaries, access additional tools and exit NVDA.
 
-To get to the NVDA menu from anywhere in Windows while NVDA is running, press NVDA+n on the keyboard or perform a 2-finger double-tap on the touch screen.
-You can also get to the NVDA menu via the Windows system tray.
-Either right-click on the NVDA icon located in the system tray, or access the system tray by pressing the Windows logo key+B, DownArrow to the NVDA icon and press the applications key located next to the right control key on most keyboards.
-When the menu comes up, You can use the arrow keys to navigate the menu, and the enter key to activate an item.
+To get to the NVDA menu from anywhere in Windows while NVDA is running, you may do any of the following:
+- press ``NVDA+n`` on the keyboard.
+- Perform a 2-finger double-tap on the touch screen.
+- Access the system tray by pressing ``Windows+b``, ``downArrow`` to the NVDA icon, and press ``enter``.
+- Alternatively, access the system tray by pressing ``Windows+b``, ``downArrow`` to the NVDA icon, and open the context menu by pressing the ``applications`` key located next to the right control key on most keyboards.
+On a keyboard without an ``applications`` key, press ``shift+F10`` instead.
+- Right-click on the NVDA icon located in the Windows system tray
+-
+When the menu comes up, You can use the arrow keys to navigate the menu, and the ``enter`` key to activate an item.
 
 ++ Basic NVDA commands ++[BasicNVDACommands]
 %kc:beginInclude
@@ -1296,16 +1302,19 @@ Some settings can also be changed using shortcut keys, which are listed where re
 
 ++ NVDA Settings ++[NVDASettings]
 %kc:settingsSection: || Name | Desktop key | Laptop key | Description |
-The NVDA Settings dialog contains many configuration parameters that can be changed.
-This dialog contains a list with several categories of settings to choose from.
-When you select a category, several settings related to this category will be shown in this dialog.
-These settings can be applied using the apply button, in which case the dialog will stay open.
+NVDA provides many configuration parameters that can be changed using the settings dialog.
+To make it easier to find the kind of settings you want to change, the dialog displays a list of configuration categories to choose from.
+When you select a category, all of the settings related to it will be shown in the dialog.
+To move between categories, use ``tab`` or ``shift+tab`` to reach the list of categories, and then use the up and down arrow keys to navigate the list.
+From anywhere in the dialog, you may also move forward one category by pressing ``ctrl+tab``, or back one category by pressing ``shift+ctrl+tab``.
+
+Once you change one or more settings, the settings can be applied using the apply button, in which case the dialog will stay open, allowing you to change more settings or choose another category.
 If you want to save your settings and close the NVDA Settings dialog, you can use the OK button.
 
 Some settings categories have dedicated shortcut keys.
-If pressed, the shortcut key will open the NVDA Settings dialog in that particular category.
+If pressed, the shortcut key will open the NVDA Settings dialog directly to that particular category.
 By default, not all categories can be accessed with keyboard commands.
-If you wish to access categories which do not have dedicated shortcut keys, use the [Input Gestures dialog #InputGestures] to add a custom gesture such as a keyboard command or touch gesture for that category.
+If you frequently access categories that do not have dedicated shortcut keys, you may wish to use the [Input Gestures dialog #InputGestures] to add a custom gesture such as a keyboard command or touch gesture for that category.
 
 The settings categories found in the NVDA Settings dialog will be outlined below.
 
@@ -1585,9 +1594,11 @@ The selection indicator is not affected by this option, it is always dots 7 and 
 ==== Show Messages ====[BrailleSettingsShowMessages]
 This is a combobox that allows you to select if NVDA should display braille messages and when they should disappear automatically.
 
+To toggle show messages from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
+
 ==== Message Timeout (sec) ====[BrailleSettingsMessageTimeout]
 This option is a numerical field that controls how long NVDA messages are displayed on the braille display.
-The NVDA message is imediately dismissed when pressing a routing key on the braille display, but appears again when pressing a corresponding key which triggers the message.
+The NVDA message is immediately dismissed when pressing a routing key on the braille display, but appears again when pressing a corresponding key which triggers the message.
 This option is shown only if "Show Messages" is set to "Use timeout".
 
 %kc:setting
@@ -1661,6 +1672,20 @@ On-going speech might be a distraction while reading Braille.
 For this reason the option is enabled by default, interrupting speech when scrolling braille.
 
 Disabling this option allows speech to be heard while simultaneously reading Braille.
+
+==== Show selection ====[BrailleSettingsShowSelection]
+: Default
+  Enabled
+: Options
+  Default (Enabled), Enabled, Disabled
+:
+
+This setting determines if selection indicator (dots 7 and 8) is shown in braille display.
+The option is enabled by default so selection indicator is shown.
+Selection indicator might be a distraction while reading.
+Disabling this option may improve readability.
+
+To toggle show selection from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
 
 +++ Select Braille Display (NVDA+control+a) +++[SelectBrailleDisplay]
 The Select Braille Display dialog, which can be opened by activating the Change... button in the Braille category of the NVDA settings dialog, allows you to select which Braille display NVDA should use for braille output.
@@ -2528,6 +2553,127 @@ Settings for NVDA when running during sign-in or on UAC screens are stored in th
 Usually, this configuration should not be touched.
 To change NVDA's configuration during sign-in or on UAC screens, configure NVDA as you wish while signed into Windows, save the configuration, and then press the "use currently saved settings during sign-in and on secure screens" button in the General category of the [NVDA Settings #NVDASettings] dialog.
 
++ Add-ons and the Add-on Store +[AddonsManager]
+Add-ons are software packages which provide new or altered functionality for NVDA.
+They are developed by the NVDA community, and external organisations such as commercial vendors.
+Add-ons may do any of the following:
+- Add or enhance support for certain applications.
+- Provide support for extra Braille displays or speech synthesizers.
+- Add or change features in NVDA.
+-
+
+NVDA's Add-on Store allows you to browse and manage add-on packages.
+All add-ons that are available in the Add-on Store can be downloaded for free.
+However, some of them may require users to pay for a license or additional software before they can be used.
+Commercial speech synthesizers are an example of this type of add-on.
+If you install an add-on with paid components and change your mind about using it, the add-on can be easily removed.
+
+The Add-on Store is accessed from the Tools submenu of the NVDA menu.
+To access the Add-on Store from anywhere, assign a custom gesture using the [Input Gestures dialog #InputGestures].
+
+++ Browsing add-ons ++[AddonStoreBrowsing]
+When opened, the Add-on Store displays a list of add-ons.
+You can jump back to the list with ``alt+l`` from anywhere else within the store.
+If you have not installed an add-on before, the add-on store will open to a list of add-ons available to install.
+If you have installed add-ons, the list will display currently installed add-ons.
+
+Selecting an add-on, by moving to it with the up and down arrow keys, will display the details for the add-on.
+Add-ons have associated actions that you can access through an [actions menu #AddonStoreActions], such as install, help, disable, and remove.
+Available actions will change based on whether the add-on is installed or not, and whether it is enabled or disabled.
+
++++ Add-on list views +++[AddonStoreFilterStatus]
+There are different views for installed, updatable, available and incompatible add-ons.
+To change the view of add-ons, change the active tab of the add-ons list using ``ctrl+tab``.
+You can also ``tab`` to the list of views, and move through them with the ``leftArrow`` and ``rightArrow`` keys.
+
++++ Filtering for enabled or disabled add-ons +++[AddonStoreFilterEnabled]
+Normally, an installed add-on is "enabled", meaning that it is running and available within NVDA.
+However, some of your installed add-ons may be set to the "disabled" state.
+This means that they will not be used, and their functions won't be available during your current NVDA session.
+You may have disabled an add-on because it conflicted with another add-on, or with a certain application.
+NVDA may also disable certain add-ons, if they are found to be incompatible during an NVDA upgrade; though you will be warned if this is going to happen.
+Add-ons can also be disabled if you simply don't need them for a prolonged period, but don't want to uninstall them because you expect to want them again in the future.
+
+The lists of installed and incompatible add-ons can be filtered by their enabled or disabled state.
+The default shows both enabled and disabled add-ons.
+
++++ Include incompatible add-ons +++[AddonStoreFilterIncompatible]
+Available and updatable add-ons can be filtered to include [incompatible add-ons #incompatibleAddonsManager] that are available to install.
+
++++ Filter add-ons by channel +++[AddonStoreFilterChannel]
+Add-ons can be distributed through up to four channels:
+- Stable: The developer has released this as a tested add-on with a released version of NVDA.
+- Beta: This add-on may need further testing, but is released for user feedback.
+Suggested for early adopters.
+- Dev: This channel is suggested to be used by add-on developers to test unreleased API changes.
+NVDA alpha testers may need to use a "Dev" version of their add-ons.
+- External: Add-ons installed from external sources, outside of the add-on store.
+-
+
+To list add-ons only for specific channels, change the "Channel" filter selection.
+
++++ Searching for add-ons +++[AddonStoreFilterSearch]
+To search add-ons, use the "Search" text box.
+You can reach it by pressing ``shift+tab`` from the list of add-ons, or by pressing ``alt+s`` from anywhere in the Add-on Store interface.
+Type a keyword or two for the kind of add-on you're looking for, then ``tab`` back to the list of add-ons.
+Add-ons will be listed if the search text can be found in the display name, publisher or description.
+
+++ Add-on actions ++[AddonStoreActions]
+Add-ons have associated actions, such as install, help, disable, and remove.
+The actions menu can be accessed for an add-on in the add-on list by pressing the ``applications`` key, ``enter``, right clicking or double clicking the add-on.
+There is also an Actions button in the selected add-on's details, which can be activated normally or by pressing ``alt+a``.
+
++++ Installing add-ons +++[AddonStoreInstalling]
+Just because an add-on is available in the NVDA Add-ons Store, does not mean that it has been approved or vetted by NV Access or anyone else.
+It is very important to only install add-ons from sources you trust.
+The functionality of add-ons is unrestricted inside NVDA. 
+This could include accessing your personal data or even the entire system.
+
+You can install and update add-ons by [browsing Available add-ons #AddonStoreBrowsing].
+Select an add-on from the "Available add-ons" or "Updatable add-ons" tab.
+Then use the update, install, or replace action to start the installation.
+
+To install an add-on you have obtained outside of the Add-on Store, press the "Install from external source" button.
+This will allow you to browse for an add-on package (``.nvda-addon`` file) somewhere on your computer or on a network.
+Once you open the add-on package, the installation process will begin.
+
+If NVDA is installed and running on your system, you can also open an add-on file directly from the browser or file system to begin the installation process.
+
+When an add-on is being installed from an external source, NVDA will ask you to confirm the installation.
+Once the add-on is installed, NVDA must be restarted for the add-on to start running, although you may postpone restarting NVDA if you have other add-ons to install or update.
+
++++ Removing Add-ons +++[AddonStoreRemoving]
+To remove an add-on, select the add-on from the list and use the Remove action.
+NVDA will ask you to confirm removal.
+As with installing, NVDA must be restarted for the add-on to be fully removed.
+Until you do, a status of "Pending removal" will be shown for that add-on in the list.
+
++++ Disabling and Enabling Add-ons +++[AddonStoreDisablingEnabling]
+To disable an add-on, use the "disable" action.
+To enable a previously disabled add-on, use the "enable" action.
+You can disable an add-on if the add-on status indicates it is  "enabled", or enable it if the add-on is "disabled".
+For each use of the enable/disable action, add-on status changes to indicate what will happen when NVDA restarts.
+If the add-on was previously "disabled", the status will show "enabled after restart".
+If the add-on was previously "enabled", the status will show "disabled after restart".
+Just like when you install or remove add-ons, you need to restart NVDA in order for changes to take effect.
+
+++ Incompatible Add-ons ++[incompatibleAddonsManager]
+Some older add-ons may no longer be compatible with the version of NVDA that you have.
+If you are using an older version of NVDA, some newer add-ons may not be compatible either.
+Attempting to install an incompatible add-on will result in an error explaining why the add-on is considered incompatible.
+
+For older add-ons, you can override the incompatibility at your own risk.
+Incompatible add-ons may not work with your version of NVDA, and can cause unstable or unexpected behaviour including crashing.
+You can override compatibility when enabling or installing an add-on.
+If the incompatible add-on causes issues later, you can disable or remove it.
+
+If you are having trouble running NVDA, and you have recently updated or installed an add-on, especially if it is an incompatible add-on, you may want to try running NVDA temporarily with all add-ons disabled.
+To restart NVDA with all add-ons disabled, choose the appropriate option when quitting NVDA.
+Alternatively, use the [command line option #CommandLineOptions] ``--disable-addons``.
+
+You can browse available incompatible add-ons using the [available and updatable add-ons tabs #AddonStoreFilterStatus].
+You can browse installed incompatible add-ons using the [incompatible add-ons tab #AddonStoreFilterStatus].
+
 + Extra Tools +[ExtraTools]
 
 ++ Log Viewer ++[LogViewer]
@@ -2580,63 +2726,9 @@ To toggle the braille viewer from anywhere, please assign a custom gesture using
 The NVDA Python console, found under Tools in the NVDA menu, is a development tool which is useful for debugging, general inspection of NVDA internals or inspection of the accessibility hierarchy of an application.
 For more information, please see the [NVDA Developer Guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
 
-++ Add-ons Manager ++[AddonsManager]
-The Add-ons Manager, accessed by selecting Manage add-ons under Tools in the NVDA menu, allows you to install, uninstall, enable and disable add-on packages for NVDA.
-These packages are provided by the community and contain custom code that may add or change features in NVDA or even provide support for extra Braille displays or speech synthesizers.
-
-The Add-ons Manager contains a list that displays all the add-ons currently installed in your NVDA user configuration. 
-Package name, status, version and author are shown for each add-on, though further information such as a description and URL can be viewed by selecting the add-on and pressing the About add-on button.
-If there is help available for the selected add-on, you can access it by pressing the Add-on help button.
-
-To browse and download available add-ons online, press the Get add-ons button.
-This button opens the [NVDA Add-ons page https://addons.nvda-project.org/].
-If NVDA is installed and running on your system, you can open the add-on directly from the browser to begin the installation process as described below.
-Otherwise, save the add-on package and follow the instructions below.
-
-To install an Add-on you previously obtained, press the Install button.
-This will allow you to browse for an add-on package (.nvda-addon file) somewhere on your computer or on a network.
-Once you press Open, the installation process will begin.
-
-When an add-on is being installed, NVDA will first ask you to confirm that you really wish to install the add-on.
-As the functionality of add-ons is unrestricted inside NVDA, which in theory could include accessing your personal data or even the entire system if NVDA is an installed copy, it is very important to only install add-ons from sources you trust.
-Once the add-on is installed, NVDA must be restarted for the add-on to start running. 
-Until you do, a status of "install" will show for that add-on in the list.
-
-To remove an add-on, select the add-on from the list and press the Remove button.
-NVDA will ask if you really wish to do this.
-As with installing, NVDA must be restarted for the add-on to be fully  removed.
-Until you do, a status of "remove" will be shown for that add-on in the list.
-
-To disable an add-on, press the "disable" button.
-To enable a previously disabled add-on, press the "enable" button.
-You can disable an add-on if the add-on status indicates it is  "enabled", or enable it if the add-on is "disabled".
-For each press of the enable/disable button, add-on status changes to indicate what will happen when NVDA restarts.
-If the add-on was previously "disabled", a status will show "enabled after restart".
-If the add-on was previously "enabled", a status will show "disabled after restart".
-Just like when you install or remove add-ons, you need to restart NVDA in order for changes to take effect.
-
-The manager also has a Close button to close the dialog.
-If you have installed, removed or changed the status of an add-on, NVDA will first ask you if you wish to restart so that your changes can take effect.
-
-Some older add-ons may no longer be compatible with the version of NVDA that you have.
-When using an older version of NVDA, some new add-ons may not be compatible either.
-Attempting to install an incompatible add-on will result in an error explaining why the add-on is considered incompatible.
-To inspect these incompatible add-ons, you can use the "view incompatible add-ons" button to launch the incompatible add-ons manager.
-
-To access the Add-ons Manager from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
-
-+++ Incompatible Add-ons Manager +++[incompatibleAddonsManager]
-The Incompatible Add-ons Manager, which can be accessed via the "view incompatible add-ons" button in the Add-on manager, allows you to inspect any incompatible add-ons, and the reason they are considered incompatible.
-Add-ons are considered incompatible when they have not been updated to work with significant changes to NVDA, or when they rely on a feature not available in the version of NVDA you are using.
-The Incompatible add-ons manager has a short message to explain its purpose as well as the version of NVDA.
-The incompatible add-ons are presented in a list with the following columns:
-+ Package, the name of the add-on
-+ Version, the version of the add-on
-+ Incompatible reason, an explanation of why the add-on is considered incompatible
-+
-
-The Incompatible add-ons manager also has an "About add-on..." button.
-This dialog will provide you with the full details of the add-on, which is helpful when contacting the add-on author.
+++ Add-on Store ++
+This will open the [NVDA Add-on Store #AddonsManager].
+For more information, read the in-depth chapter: [Add-ons and the Add-on Store #AddonsManager].
 
 ++ Create portable copy ++[CreatePortableCopy]
 This will open a dialog which allows you to create a portable copy of NVDA out of the installed version.
@@ -3511,88 +3603,162 @@ Due to this, and to maintain compatibility with other screen readers in Taiwan, 
 | Scroll braille display forward | numpadPlus | 
 %kc:endInclude
 
-++ Eurobraille Esys/Esytime/Iris displays ++[Eurobraille]
-The Esys, Esytime and Iris displays from [Eurobraille https://www.eurobraille.fr/] are supported by NVDA.
-Esys and Esytime-Evo devices are supported when connected via USB or bluetooth.
-Older Esytime devices only support USB.
-Iris displays can only be connected via a serial port.
-Therefore, for these displays, you should select the port to which the display is connected after you have chosen this driver in the Braille Settings dialog.
-
-Iris and Esys displays have a braille keyboard with 10 keys.
+++ Eurobraille displays ++[Eurobraille]
+The b.book, b.note, Esys, Esytime and Iris displays from Eurobraille are supported by NVDA.  
+These devices have a braille keyboard with 10 keys. 
 Of the two keys placed like a space bar, the left key is corresponding to the backspace key and the right key to the space key.
-
-Following are the key assignments for these displays with NVDA.
+Connected via USB, these devices have one stand-alone usb keyboard. 
+It is possible to enable/disable this keyboard with the checkbox ‘HID Keyboard simulation’ in braille setting panel. 
+The braille keyboard describes below is the braille keyboard when this checkbox is not checked.
+Following are the key assignments for these displays with NVDA. 
 Please see the display's documentation for descriptions of where these keys can be found.
+
++++  Braille keyboard functions +++[EurobrailleBraille]
 %kc:beginInclude
 || Name | Key |
-| Scroll braille display back | switch1-6left, l1 |
-| Scroll braille display forward | switch1-6Right, l8 |
-| Move to current focus | switch1-6Left+switch1-6Right, l1+l8 |
-| Route to braille cell | routing |
-| Report text formatting under braille cell | doubleRouting |
-| Move to previous line in review | joystick1Up |
-| Move to next line in review | joystick1Down |
-| Move to previous character in review | joystick1Left |
-| Move to next character in review | joystick1Right |
-| Switch to previous review mode | joystick1Left+joystick1Up |
-| Switch to next review mode | joystick1Right+joystick1Down |
-| Erase the last entered braille cell or character | backSpace |
-| Translate any braille input and press the enter key | backSpace+space |
-| insert key | dot3+dot5+space, l7 |
-| delete key | dot3+dot6+space |
-| home key | dot1+dot2+dot3+space, joystick2Left+joystick2Up |
-| end key | dot4+dot5+dot6+space, joystick2Right+joystick2Down |
-| leftArrow key | dot2+space, joystick2Left, leftArrow |
-| rightArrow key | dot5+space, joystick2Right, rightArrow |
-| upArrow key | dot1+space, joystick2Up, upArrow |
-| downArrow key | dot6+space, joystick2Down, downArrow |
-| enter key | joystick2centre |
-| pageUp key | dot1+dot3+space |
-| pageDown key | dot4+dot6+space |
-| numpad1 key | dot1+dot6+backspace |
-| numpad2 key | dot1+dot2+dot6+backspace |
-| numpad3 key | dot1+dot4+dot6+backspace |
-| numpad4 key | dot1+dot4+dot5+dot6+backspace |
-| numpad5 key | dot1+dot5+dot6+backspace |
-| numpad6 key | dot1+dot2+dot4+dot6+backspace |
-| numpad7 key | dot1+dot2+dot4+dot5+dot6+backspace |
-| numpad8 key | dot1+dot2+dot5+dot6+backspace |
-| numpad9 key | dot2+dot4+dot6+backspace |
-| numpadInsert key | dot3+dot4+dot5+dot6+backspace |
-| numpadDecimal key | dot2+backspace |
-| numpadDivide key | dot3+dot4+backspace |
-| numpadMultiply key | dot3+dot5+backspace |
-| numpadMinus key | dot3+dot6+backspace |
-| numpadPlus key | dot2+dot3+dot5+backspace |
-| numpadEnter key | dot3+dot4+dot5+backspace |
-| escape key | dot1+dot2+dot4+dot5+space, l2 |
-| tab key | dot2+dot5+dot6+space, l3 |
-| shift+tab key | dot2+dot3+dot5+space |
-| printScreen key | dot1+dot3+dot4+dot6+space |
-| pause key | dot1+dot4+space |
-| applications key | dot5+dot6+backspace |
-| f1 key | dot1+backspace |
-| f2 key | dot1+dot2+backspace |
-| f3 key | dot1+dot4+backspace |
-| f4 key | dot1+dot4+dot5+backspace |
-| f5 key | dot1+dot5+backspace |
-| f6 key | dot1+dot2+dot4+backspace |
-| f7 key | dot1+dot2+dot4+dot5+backspace |
-| f8 key | dot1+dot2+dot5+backspace |
-| f9 key | dot2+dot4+backspace |
-| f10 key | dot2+dot4+dot5+backspace |
-| f11 key | dot1+dot3+backspace |
-| f12 key | dot1+dot2+dot3+backspace |
-| windows key | dot1+dot2+dot3+dot4+backspace |
-| Caps Lock key | dot7+backspace, dot8+backspace |
-| num lock key | dot3+backspace, dot6+backspace |
-| shift key | dot7+space, l4 |
-| Toggle shift key | dot1+dot7+space, dot4+dot7+space |
-| control key | dot7+dot8+space, l5 |
-| Toggle control key | dot1+dot7+dot8+space, dot4+dot7+dot8+space |
-| alt key | dot8+space, l6 |
-| Toggle alt key | dot1+dot8+space, dot4+dot8+space |
-| ToggleHID keyboard input simulation | esytime):l1+joystick1Down, esytime):l8+joystick1Down |
+| Erase the last entered braille cell or character | ``backspace`` |
+| Translate any braille input and press the enter key |``backspace+space`` |
+| Toggle ``NVDA`` key | ``dot3+dot5+space`` |
+| ``insert`` key | ``dot1+dot3+dot5+space``, ``dot3+dot4+dot5+space`` |
+| ``delete`` key | ``dot3+dot6+space`` |
+| ``home`` key | ``dot1+dot2+dot3+space`` |
+| ``end`` key | ``dot4+dot5+dot6+space`` |
+| ``leftArrow`` key | ``dot2+space`` |
+| ``rightArrow`` key | ``dot5+space`` |
+| ``upArrow`` key | ``dot1+space`` |
+| ``downArrow`` key | ``dot6+space`` |
+| ``pageUp`` key | ``dot1+dot3+space`` |
+| ``pageDown`` key | ``dot4+dot6+space`` |
+| ``numpad1`` key | ``dot1+dot6+backspace`` |
+| ``numpad2`` key | ``dot1+dot2+dot6+backspace`` |
+| ``numpad3`` key | ``dot1+dot4+dot6+backspace`` |
+| ``numpad4`` key | ``dot1+dot4+dot5+dot6+backspace`` |
+| ``numpad5`` key | ``dot1+dot5+dot6+backspace`` |
+| ``numpad6`` key | ``dot1+dot2+dot4+dot6+backspace`` |
+| ``numpad7`` key | ``dot1+dot2+dot4+dot5+dot6+backspace`` |
+| ``numpad8`` key | ``dot1+dot2+dot5+dot6+backspace`` |
+| ``numpad9`` key | ``dot2+dot4+dot6+backspace`` |
+| ``numpadInsert`` key | ``dot3+dot4+dot5+dot6+backspace`` |
+| ``numpadDecimal`` key | ``dot2+backspace`` |
+| ``numpadDivide`` key | ``dot3+dot4+backspace`` |
+| ``numpadMultiply`` key | ``dot3+dot5+backspace`` |
+| ``numpadMinus`` key | ``dot3+dot6+backspace`` |
+| ``numpadPlus`` key | ``dot2+dot3+dot5+backspace`` |
+| ``numpadEnter`` key | ``dot3+dot4+dot5+backspace`` |
+| ``escape`` key | ``dot1+dot2+dot4+dot5+space``, ``l2`` |
+| ``tab`` key | ``dot2+dot5+dot6+space``, ``l3`` |
+| ``shift+tab`` keys | ``dot2+dot3+dot5+space`` |
+| ``printScreen`` key | ``dot1+dot3+dot4+dot6+space`` |
+| ``pause`` key | ``dot1+dot4+space`` |
+| ``applications`` key | ``dot5+dot6+backspace`` |
+| ``f1`` key | ``dot1+backspace`` |
+| ``f2`` key | ``dot1+dot2+backspace`` |
+| ``f3`` key | ``dot1+dot4+backspace`` |
+| ``f4`` key | ``dot1+dot4+dot5+backspace`` |
+| ``f5`` key | ``dot1+dot5+backspace`` |
+| ``f6`` key | ``dot1+dot2+dot4+backspace`` |
+| ``f7`` key | ``dot1+dot2+dot4+dot5+backspace`` |
+| ``f8`` key | ``dot1+dot2+dot5+backspace`` |
+| ``f9`` key | ``dot2+dot4+backspace`` |
+| ``f10`` key | ``dot2+dot4+dot5+backspace`` |
+| ``f11`` key | ``dot1+dot3+backspace`` |
+| ``f12`` key | ``dot1+dot2+dot3+backspace`` |
+| ``windows`` key | ``dot1+dot2+dot4+dot5+dot6+space`` |
+| Toggle ``windows`` key | ``dot1+dot2+dot3+dot4+backspace``, ``dot2+dot4+dot5+dot6+space`` |
+| ``capsLock`` key | ``dot7+backspace``, ``dot8+backspace`` |
+| ``numLock`` key | ``dot3+backspace``, ``dot6+backspace`` |
+| ``shift`` key | ``dot7+space`` |
+| Toggle ``shift`` key | ``dot1+dot7+space``, ``dot4+dot7+space`` |
+| ``control`` key | ``dot7+dot8+space`` |
+| Toggle ``control`` key | ``dot1+dot7+dot8+space``, ``dot4+dot7+dot8+space`` |
+| ``alt`` key | ``dot8+space`` |
+| Toggle ``alt`` key | ``dot1+dot8+space``, ``dot4+dot8+space`` |
+%kc:endInclude
+
++++ b.book keyboard commands +++[Eurobraillebbook]
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | ``backward`` |
+| Scroll braille display forward | ``forward`` |
+| Move to current focus | ``backward+forward`` | 
+| Route to braille cell | ``routing`` |
+| ``leftArrow`` key | ``joystick2Left`` |
+| ``rightArrow`` key | ``joystick2Right`` |
+| ``upArrow`` key | ``joystick2Up`` |
+| ``downArrow`` key | ``joystick2Down`` |
+| ``enter`` key | ``joystick2Center`` |
+| ``escape`` key | ``c1`` |
+| ``tab`` key | ``c2`` |
+| Toggle ``shift`` key | ``c3`` |
+| Toggle ``control`` key | ``c4`` |
+| Toggle ``alt`` key | ``c5`` |
+| Toggle ``NVDA`` key | ``c6`` |
+| ``control+Home`` key | ``c1+c2+c3`` |
+| ``control+End`` key | ``c4+c5+c6`` |
+%kc:endInclude
+
++++ b.note keyboard commands +++[Eurobraillebnote]
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | ``leftKeypadLeft`` |
+| Scroll braille display forward | ``leftKeypadRight`` |
+| Route to braille cell | ``routing`` |
+| Report text formatting under braille cell | ``doubleRouting`` |
+| Move to next line in review | ``leftKeypadDown`` |
+| Switch to previous review mode | ``leftKeypadLeft+leftKeypadUp`` |
+| Switch to next review mode | ``leftKeypadRight+leftKeypadDown`` |
+| ``leftArrow`` key | ``rightKeypadLeft`` |
+| ``rightArrow`` key | ``rightKeypadRight`` |
+| ``upArrow`` key | ``rightKeypadUp`` |
+| ``downArrow`` key | ``rightKeypadDown`` |
+| ``control+home`` key | ``rightKeypadLeft+rightKeypadUp`` |
+| ``control+end`` key | ``rightKeypadLeft+rightKeypadUp`` |
+%kc:endInclude
+
++++ Esys keyboard commands +++[Eurobrailleesys]
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | ``switch1Left`` |
+| Scroll braille display forward | ``switch1Right`` |
+| Move to current focus | ``switch1Center`` |
+| Route to braille cell | ``routing`` |
+| Report text formatting under braille cell | ``doubleRouting`` |
+| Move to previous line in review | ``joystick1Up`` |
+| Move to next line in review | ``joystick1Down`` |
+| Move to previous character in review | ``joystick1Left`` |
+| Move to next character in review | ``joystick1Right`` |
+| ``leftArrow`` key | ``joystick2Left`` |
+| ``rightArrow`` key | ``joystick2Right`` |
+| ``upArrow`` key | ``joystick2Up`` |
+| ``downArrow`` key | ``joystick2Down`` |
+| ``enter`` key | ``joystick2Center`` |
+%kc:endInclude
+
++++ Esytime keyboard commands +++[EurobrailleEsytime]
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | ``l1`` |
+| Scroll braille display forward | ``l8`` |
+| Move to current focus | ``l1+l8`` |
+| Route to braille cell | ``routing`` |
+| Report text formatting under braille cell | ``doubleRouting`` |
+| Move to previous line in review | ``joystick1Up`` |
+| Move to next line in review | ``joystick1Down`` |
+| Move to previous character in review | ``joystick1Left`` |
+| Move to next character in review | ``joystick1Right`` |
+| ``leftArrow`` key | ``joystick2Left`` |
+| ``rightArrow`` key | ``joystick2Right`` |
+| ``upArrow`` key | ``joystick2Up`` |
+| ``downArrow`` key | ``joystick2Down`` |
+| ``enter`` key | ``joystick2Center`` |
+| ``escape`` key | ``l2`` |
+| ``tab`` key | ``l3`` |
+| Toggle ``shift`` key | ``l4`` |
+| Toggle ``control`` key | ``l5`` |
+| Toggle ``alt`` key | ``l6`` |
+| Toggle ``NVDA`` key | ``l7`` |
+| ``control+home`` key | ``l1+l2+l3``, ``l2+l3+l4`` |
+| ``control+end`` key | ``l6+l7+l8``, ``l5+l6+l7`` |
 %kc:endInclude
 
 ++ Nattiq nBraille Displays ++[NattiqTechnologies]

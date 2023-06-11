@@ -250,6 +250,8 @@ def resetConfiguration(factoryDefaults=False):
 	log.debug("setting language to %s"%lang)
 	languageHandler.setLanguage(lang)
 	# Addons
+	from _addonStore import dataManager
+	dataManager.initialize()
 	addonHandler.initialize()
 	# Hardware background i/o
 	log.debug("initializing background i/o")
@@ -384,7 +386,7 @@ def _closeAllWindows():
 
 	for instance, state in nonWeak.items():
 		if state is _SettingsDialog.DialogState.DESTROYED:
-			log.error(
+			log.debugWarning(
 				"Destroyed but not deleted instance of gui.SettingsDialog exists"
 				f": {instance.title} - {instance.__class__.__qualname__} - {instance}"
 			)
@@ -531,6 +533,8 @@ def main():
 	import socket
 	socket.setdefaulttimeout(10)
 	log.debug("Initializing add-ons system")
+	from _addonStore import dataManager
+	dataManager.initialize()
 	addonHandler.initialize()
 	if globalVars.appArgs.disableAddons:
 		log.info("Add-ons are disabled. Restart NVDA to enable them.")
@@ -725,7 +729,16 @@ def main():
 		pending = _PumpPending.NONE
 		isPumping = False
 
-		def request(self):
+		def queueRequest(self):
+			isMainThread = threading.get_ident() == mainThreadId
+			if self.pending == _PumpPending.DELAYED and isMainThread:
+				# We just want to start a timer and we're already on the main thread, so we
+				# don't need to queue that.
+				self.processRequest()
+				return
+			wx.CallAfter(self.processRequest)
+
+		def processRequest(self):
 			if self.isPumping:
 				return  # Prevent re-entry.
 			if self.pending == _PumpPending.IMMEDIATE:
@@ -736,8 +749,7 @@ def main():
 				self.Start(PUMP_MAX_DELAY, True)
 
 		def Notify(self):
-			if self.isPumping:
-				log.error("Pumping while already pumping", stack_info=True)
+			assert not self.isPumping, "Must not pump while already pumping"
 			if not self.pending:
 				log.error("Pumping but pump wasn't pending", stack_info=True)
 			self.isPumping = True
@@ -758,10 +770,15 @@ def main():
 			baseObject.AutoPropertyObject.invalidateCaches()
 			watchdog.asleep()
 			self.isPumping = False
-			if self.pending:
-				# #3803: Another pump was requested during this pump execution.
-				# As our pump is not re-entrant, schedule another pump.
-				self.request()
+			# #3803: If another pump was requested during this pump execution, we need
+			# to trigger another pump, as our pump is not re-entrant.
+			if self.pending == _PumpPending.IMMEDIATE:
+				# We don't call processRequest directly because we don't want this to
+				# recurse. Recursing can overflow the stack if there are a flood of
+				# immediate pumps; e.g. touch exploration.
+				self.queueRequest()
+			elif self.pending == _PumpPending.DELAYED:
+				self.processRequest()
 	global _pump
 	_pump = CorePump()
 	requestPump()
@@ -868,6 +885,10 @@ def _terminate(module, name=None):
 		log.exception("Error terminating %s" % name)
 
 
+def isMainThread() -> bool:
+	return threading.get_ident() == mainThreadId
+
+
 def requestPump(immediate: bool = False):
 	"""Request a core pump.
 	This will perform any queued activity.
@@ -887,8 +908,7 @@ def requestPump(immediate: bool = False):
 		or (immediate and _pump.pending == _PumpPending.DELAYED)
 	):
 		_pump.pending = _PumpPending.IMMEDIATE if immediate else _PumpPending.DELAYED
-		import wx
-		wx.CallAfter(_pump.request)
+		_pump.queueRequest()
 
 
 class NVDANotInitializedError(Exception):
@@ -906,7 +926,7 @@ def callLater(delay, callable, *args, **kwargs):
 		# If NVDA has not fully initialized yet, the wxApp may not be initialized.
 		# wx.CallLater and wx.CallAfter requires the wxApp to be initialized.
 		raise NVDANotInitializedError("Cannot schedule callable, wx.App is not initialized")
-	if threading.get_ident() == mainThreadId:
+	if isMainThread():
 		return wx.CallLater(delay, _callLaterExec, callable, args, kwargs)
 	else:
 		return wx.CallAfter(wx.CallLater,delay, _callLaterExec, callable, args, kwargs)

@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2011-2021 NV Access Limited, Babbage B.v., Cyrille Bougot, Julien Cochuyt, Accessolutions,
+# Copyright (C) 2011-2023 NV Access Limited, Babbage B.v., Cyrille Bougot, Julien Cochuyt, Accessolutions,
 # Bill Dengler, Joseph Lee, Takuya Nishimoto
 
 import os
@@ -152,12 +152,16 @@ class InstallerDialog(
 		super().__init__(parent, title=_("Install NVDA"))
 
 		import addonHandler
+		from _addonStore.models.version import (
+			getAddonCompatibilityConfirmationMessage,
+			getAddonCompatibilityMessage,
+		)
 		shouldAskAboutAddons = any(addonHandler.getIncompatibleAddons(
 			# the defaults from the installer are ok. We are testing against the running version.
 		))
 
 		mainSizer = self.mainSizer = wx.BoxSizer(wx.VERTICAL)
-		sHelper = gui.guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
+		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 
 		# Translators: An informational message in the Install NVDA dialog.
 		msg=_("To install NVDA to your hard drive, please press the Continue button.")
@@ -168,24 +172,17 @@ class InstallerDialog(
 				# Translators: a message in the installer telling the user NVDA is now located in a different place.
 				msg+=" "+_("The installation path for NVDA has changed. it will now  be installed in {path}").format(path=installer.defaultInstallPath)
 		if shouldAskAboutAddons:
-			msg+=_(
-				# Translators: A message in the installer to let the user know that
-				# some addons are not compatible.
-				"\n\n"
-				"However, your NVDA configuration contains add-ons that are incompatible with this version of NVDA. "
-				"These add-ons will be disabled after installation. If you rely on these add-ons, "
-				"please review the list to decide whether to continue with the installation"
-			)
+			msg += "\n\n" + getAddonCompatibilityMessage()
 
 		text = sHelper.addItem(wx.StaticText(self, label=msg))
 		text.Wrap(self.scaleSize(self.textWrapWidth))
 		if shouldAskAboutAddons:
-			self.confirmationCheckbox = sHelper.addItem(wx.CheckBox(
+			self.confirmationCheckbox = sHelper.addItem(
+				wx.CheckBox(
 					self,
-					# Translators: A message to confirm that the user understands that addons that have not been reviewed and made
-					# available, will be disabled after installation.
-					label=_("I understand that these incompatible add-ons will be disabled")
-				))
+					label=getAddonCompatibilityConfirmationMessage()
+				)
+			)
 			self.bindHelpEvent("InstallWithIncompatibleAddons", self.confirmationCheckbox)
 			self.confirmationCheckbox.SetFocus()
 
@@ -353,7 +350,7 @@ class PortableCreaterDialog(
 		# Translators: The title of the Create Portable NVDA dialog.
 		super().__init__(parent, title=_("Create Portable NVDA"))
 		mainSizer = self.mainSizer = wx.BoxSizer(wx.VERTICAL)
-		sHelper = gui.guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
+		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 
 		# Translators: An informational message displayed in the Create Portable NVDA dialog.
 		dialogCaption=_("To create a portable copy of NVDA, please select the path and other options and then press Continue")
@@ -363,14 +360,14 @@ class PortableCreaterDialog(
 		# in the Create Portable NVDA dialog.
 		directoryGroupText = _("Portable &directory:")
 		groupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=directoryGroupText)
-		groupHelper = sHelper.addItem(gui.guiHelper.BoxSizerHelper(self, sizer=groupSizer))
+		groupHelper = sHelper.addItem(guiHelper.BoxSizerHelper(self, sizer=groupSizer))
 		groupBox = groupSizer.GetStaticBox()
 		# Translators: The label of a button to browse for a directory.
 		browseText = _("Browse...")
 		# Translators: The title of the dialog presented when browsing for the
 		# destination directory when creating a portable copy of NVDA.
 		dirDialogTitle = _("Select portable  directory")
-		directoryPathHelper = gui.guiHelper.PathSelectionHelper(groupBox, browseText, dirDialogTitle)
+		directoryPathHelper = guiHelper.PathSelectionHelper(groupBox, browseText, dirDialogTitle)
 		directoryEntryControl = groupHelper.addItem(directoryPathHelper)
 		self.portableDirectoryEdit = directoryEntryControl.pathControl
 		if globalVars.appArgs.portablePath:
@@ -387,7 +384,7 @@ class PortableCreaterDialog(
 		self.startAfterCreateCheckbox = sHelper.addItem(wx.CheckBox(self, label=startAfterCreateText))
 		self.startAfterCreateCheckbox.Value = False
 
-		bHelper = sHelper.addDialogDismissButtons(gui.guiHelper.ButtonHelper(wx.HORIZONTAL), separated=True)
+		bHelper = sHelper.addDialogDismissButtons(guiHelper.ButtonHelper(wx.HORIZONTAL), separated=True)
 		
 		continueButton = bHelper.addButton(self, label=_("&Continue"), id=wx.ID_OK)
 		continueButton.SetDefault()
@@ -397,7 +394,7 @@ class PortableCreaterDialog(
 		# If we bind this using button.Bind, it fails to trigger when the dialog is closed.
 		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
 		
-		mainSizer.Add(sHelper.sizer, border=gui.guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
+		mainSizer.Add(sHelper.sizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		self.Sizer = mainSizer
 		mainSizer.Fit(self)
 		self.CentreOnScreen()
