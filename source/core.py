@@ -479,9 +479,6 @@ def _doLoseFocus():
 			log.exception("Lose focus error")
 
 
-messageWindow = None
-
-
 def main():
 	"""NVDA's core main loop.
 	This initializes all modules such as audio, IAccessible, keyboard, mouse, and GUI.
@@ -628,7 +625,6 @@ def main():
 
 	from winAPI.messageWindow import _MessageWindow
 	import versionInfo
-	global messageWindow
 	messageWindow = _MessageWindow(versionInfo.name)
 	# initialize wxpython localization support
 	wxLocaleObj = wx.Locale()
