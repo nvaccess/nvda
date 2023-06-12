@@ -1550,7 +1550,7 @@ class UIA(Window):
 			# #11445: due to timing errors, elements will be instantiated with no automation Id present.
 			return ""
 
-	def _get_UIAFrameworkId(self):
+	def _get_UIAFrameworkId(self) -> str:
 		try:
 			return self._getUIACacheablePropertyValue(UIAHandler.UIA_FrameworkIdPropertyId)
 		except COMError:
