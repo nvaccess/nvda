@@ -1018,7 +1018,7 @@ class UIA(Window):
 		# #11445: to avoid COM errors, do not fetch cached UIA Automation Id from the underlying element.
 		UIAAutomationId = self.UIAAutomationId
 		if self.UIAFrameworkId == 'XAML':
-			# This UIA element is being exposed by the XAML framework. 
+			# This UIA element is being exposed by the XAML framework.
 			clsList.append(Xaml)
 		if UIAClassName=="NetUITWMenuItem" and UIAControlType==UIAHandler.UIA_MenuItemControlTypeId and not self.name and not self.previous:
 			# Bounces focus from a netUI dead placeholder menu item when no item is selected up to the menu itself.
@@ -1554,7 +1554,7 @@ class UIA(Window):
 		try:
 			return self._getUIACacheablePropertyValue(UIAHandler.UIA_FrameworkIdPropertyId)
 		except COMError:
-			log.debugWarning("Could not fetch framework ID", exc_info=True) 
+			log.debugWarning("Could not fetch framework ID", exc_info=True)
 			return ""
 
 	#: Typing info for auto property _get_name()

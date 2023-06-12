@@ -50,7 +50,6 @@ import textInfos
 from typing import Dict
 from queue import Queue
 import aria
-import core
 import NVDAHelper
 from . import remote as UIARemote
 
@@ -516,11 +515,11 @@ class UIAHandler(COMObject):
 			pRateLimitedEventHandler = POINTER(IUnknown)()
 			NVDAHelper.localLib.rateLimitedUIAEventHandler_create(
 				self._com_pointers_[IUnknown._iid_],
-				byref(pRateLimitedEventHandler )
+				byref(pRateLimitedEventHandler)
 			)
 			if utils._shouldSelectivelyRegister():
-				self._createLocalEventHandlerGroup(pRateLimitedEventHandler )
-			self._registerGlobalEventHandlers(pRateLimitedEventHandler )
+				self._createLocalEventHandlerGroup(pRateLimitedEventHandler)
+			self._registerGlobalEventHandlers(pRateLimitedEventHandler)
 			if winVersion.getWinVer() >= winVersion.WIN11:
 				UIARemote.initialize(True, self.clientObject)
 		except Exception as e:
