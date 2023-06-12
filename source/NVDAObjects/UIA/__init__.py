@@ -1017,6 +1017,9 @@ class UIA(Window):
 		UIAClassName=self.UIAElement.cachedClassName
 		# #11445: to avoid COM errors, do not fetch cached UIA Automation Id from the underlying element.
 		UIAAutomationId = self.UIAAutomationId
+		if self.UIAFrameworkId == 'XAML':
+			# This UIA element is being exposed by the XAML framework. 
+			clsList.append(Xaml)
 		if UIAClassName=="NetUITWMenuItem" and UIAControlType==UIAHandler.UIA_MenuItemControlTypeId and not self.name and not self.previous:
 			# Bounces focus from a netUI dead placeholder menu item when no item is selected up to the menu itself.
 			clsList.append(PlaceholderNetUITWMenuItem)
@@ -1545,6 +1548,13 @@ class UIA(Window):
 			return self._getUIACacheablePropertyValue(UIAHandler.UIA_AutomationIdPropertyId)
 		except COMError:
 			# #11445: due to timing errors, elements will be instantiated with no automation Id present.
+			return ""
+
+	def _get_UIAFrameworkId(self):
+		try:
+			return self._getUIACacheablePropertyValue(UIAHandler.UIA_FrameworkIdPropertyId)
+		except COMError:
+			log.debugWarning("Could not fetch framework ID", exc_info=True) 
 			return ""
 
 	#: Typing info for auto property _get_name()
@@ -2156,6 +2166,16 @@ class UIA(Window):
 					break
 		if dropTargetEffect:
 			ui.message(dropTargetEffect)
+
+
+class Xaml(UIA):
+	""" a UIA element exposed by the XAML framework."""
+
+	# XAML fires UIA textSelectionChange events before the caret position change is reflected
+	# in the related UIA text pattern.
+	# This means NVDA cannot rely on textSelectionChange (caret) events in XAML
+	# to detect if the caret has moved, As it occurs too early.
+	caretMovementDetectionUsesEvents = False
 
 
 class TreeviewItem(UIA):
