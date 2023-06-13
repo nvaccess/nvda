@@ -181,6 +181,8 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 		else:
 			wx.CallAfter(
 				gui.messageBox,
+				# Translators: message displayed to the user when
+				# searching text and no text is found.
 				_('text "%s" not found') % text,
 				_("Find Error"),
 				wx.OK | wx.ICON_INFORMATION
