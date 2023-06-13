@@ -184,7 +184,9 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 				# Translators: message displayed to the user when
 				# searching text and no text is found.
 				_('text "%s" not found') % text,
-				_("Find Error"),
+				# Translators: message dialog title displayed to the user when
+				# searching text and no text is found.
+				_("0 matches"),
 				wx.OK | wx.ICON_INFORMATION
 			)
 		CursorManager._lastFindText=text
