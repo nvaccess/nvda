@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-14 00:37+0000\n"
-"PO-Revision-Date: 2023-02-14 23:24+0900\n"
+"POT-Creation-Date: 2023-03-31 00:01+0000\n"
+"PO-Revision-Date: 2023-04-03 11:34+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -4314,13 +4314,17 @@ msgstr ""
 msgid "Plugins reloaded"
 msgstr "プラグインを再度読み込みました"
 
-#. Translators: input help mode message for Report destination URL of navigator link command
+#. Translators: input help mode message for Report destination URL of a link command
 msgid ""
-"Report the destination URL of the link in the navigator object. If pressed "
-"twice, shows the URL in a window for easier review."
+"Report the destination URL of the link at the position of caret or focus. If "
+"pressed twice, shows the URL in a window for easier review."
 msgstr ""
-"ナビゲーターオブジェクトのリンク先の報告。2回押すとウィンドウを開いて情報を表"
-"示"
+"テキストカーソルまたはシステムフォーカスの位置のリンク先URLの報告。2回押すと"
+"ウィンドウを開いて表示"
+
+#. Translators: Informs the user that the link has no destination
+msgid "Link has no apparent destination"
+msgstr "リンク先がありません"
 
 #. Translators: Informs the user that the window contains the destination of the
 #. link with given title
@@ -4332,11 +4336,13 @@ msgstr "{name} のリンク先"
 msgid "Not a link."
 msgstr "リンクではありません"
 
-#. Translators: input help mode message for Report URL of navigator link in a window command
+#. Translators: input help mode message for Report URL of a link in a window command
 msgid ""
-"Reports the destination URL of the link in the navigator object in a window, "
-"instead of just speaking it. May be preferred by braille users."
-msgstr "ナビゲーターオブジェクトのリンク先をウィンドウを開いて表示"
+"Displays the destination URL of the link at the position of caret or focus "
+"in a window, instead of just speaking it. May be preferred by braille users."
+msgstr ""
+"テキストカーソルまたはシステムフォーカスの位置のリンク先を表示するウィンドウ"
+"を開く"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -7208,6 +7214,25 @@ msgstr "{firstAddress} {firstValue} から {lastAddress} {lastValue}"
 msgid "{firstAddress} through {lastAddress}"
 msgstr "{firstAddress} から {lastAddress}"
 
+#. Translators: a measurement in inches
+#, python-brace-format
+msgid "{val:.2f} inches"
+msgstr "{val:.2f}インチ"
+
+#. Translators: a measurement in centimetres
+#, python-brace-format
+msgid "{val:.2f} centimetres"
+msgstr "{val:.2f}センチ"
+
+#. Translators: LibreOffice, report cursor position in the current page
+#, python-brace-format
+msgid ""
+"cursor positioned {horizontalDistance} from left edge of page, "
+"{verticalDistance} from top edge of page"
+msgstr ""
+"カーソル位置はページの左端から{horizontalDistance} ページの上端から"
+"{verticalDistance}"
+
 msgid "left"
 msgstr "左の端"
 
@@ -8440,6 +8465,22 @@ msgstr "ロック解除"
 msgid "has note"
 msgstr "メモあり"
 
+#. Translators: Presented when a control has a pop-up dialog.
+msgid "opens dialog"
+msgstr "ダイアログあり"
+
+#. Translators: Presented when a control has a pop-up grid.
+msgid "opens grid"
+msgstr "グリッドあり"
+
+#. Translators: Presented when a control has a pop-up list box.
+msgid "opens list"
+msgstr "リストあり"
+
+#. Translators: Presented when a control has a pop-up tree.
+msgid "opens tree"
+msgstr "ツリーあり"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "選択なし"
@@ -8463,6 +8504,14 @@ msgstr "ドラッグ終了"
 #. Translators: This is spoken when the line is considered blank.
 msgid "blank"
 msgstr "ブランク"
+
+#. Translators: this message is given when there is no next paragraph when navigating by paragraph
+msgid "No next paragraph"
+msgstr "次の段落がありません"
+
+#. Translators: this message is given when there is no previous paragraph when navigating by paragraph
+msgid "No previous paragraph"
+msgstr "前の段落がありません"
 
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 msgid "Configuration applied"
@@ -10945,9 +10994,14 @@ msgid "Dictionary Entry Error"
 msgstr "辞書項目のエラー"
 
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
-#, python-format
-msgid "Regular Expression error: \"%s\"."
-msgstr "正規表現のエラー \"%s\""
+#, python-brace-format
+msgid "Regular Expression error in the pattern field: \"{error}\"."
+msgstr "パターンの正規表現エラー: {error}"
+
+#. Translators: This is an error message to let the user know that the dictionary entry is not valid.
+#, python-brace-format
+msgid "Regular Expression error in the replacement field: \"{error}\"."
+msgstr "読み方の正規表現のエラー: {error}"
 
 #. Translators: The label for the list box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"

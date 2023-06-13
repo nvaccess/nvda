@@ -2,7 +2,9 @@
 
 
 %!includeconf: ../userGuide.t2tconf
+%!includeconf: ./locale.t2tconf
 %kc:title: NVDA NVDA_VERSION Kratka napomena za komande
+%kc:includeconf: ./locale.t2tconf
 
 = Sadržaj =[toc]
 %%toc
@@ -220,7 +222,7 @@ Same komande neće biti izvršene dok ste u režimu pomoći za unos.
 | Čitaj statusnu traku | ``NVDA+end`` | ``NVDA+šift+end`` | Prijavljuje statusnu traku ako je NVDA pronađe. Ako se pritisne dva puta informacija se sriče. Ako se pritisne tri puta informacija se kopira u privremenu memoriju |
 | Čitaj vreme | ``NVDA+f12`` | ``NVDA+f12`` | Ako se pritisne jednom prijavljuje se trenutno vreme, ako se pritisne dva puta prijavljuje se datum |
 | Prijavi formatiranje teksta | ``NVDA+f`` | ``NVDA+f`` | Prijavljuje formatiranje teksta. Ako se pritisne dva puta innformacija se prikazuje u prozoru |
-| Prijavi odredište linka | ``NVDA+k`` | ``NVDA+k`` | Ako se pritisne jednom, prijavljuje odredišnu adresu linka u [navigacionom objektu #ObjectNavigation]. Ako se pritisne dva puta, prikazuje se u prozoru radi pažljivijeg pregleda |
+| Prijavi odredište linka | ``NVDA+k`` | ``NVDA+k`` | Ako se pritisne jednom, prijavljuje odredišnu adresu linka na trenutnoj poziciji kursora ili fokusa. Ako se pritisne dva puta, prikazuje se u prozoru radi pažljivijeg pregleda |
 
 +++ Menjanje informacija koje NVDA čita +++[ToggleWhichInformationNVDAReads]
 || Ime | Desktop taster | Laptop taster | opis |
@@ -2348,7 +2350,11 @@ Možete filtrirati simbole unosom simbola ili zamene za simbol u polje izdvoji p
 Da promenite znak, prvo ga izaberite u listi simbola.
 
 - Polje zamene vam dozvoljava da promenite tekst koji se izgovara za ovaj znak.
-- Koristeći polje nivoa, možete promeniti najniži nivo na kojem se ovaj simbol izgovara.
+- Koristeći polje nivoa, možete promeniti najniži nivo na kojem se ovaj simbol izgovara (Nijedan, neki, većina ili svi).
+Možete takođe da podesite nivo na znak; u tom slučaju simbol se neće izgovarati bez obzira na nivo simbola koji se koristi, uz sledeća dva izuzetka:
+ - Kada se krećete znak po znak.
+ - Kada NVDA sriče bilo koji tekst koji sadrži taj simbol.
+ -
 - Polje za slanje simbola sintetizatoru podešava kada treba poslati simbol(umesto zamenskog teksta) sintetizatoru.
 Ovo je korisno ako simbol izaziva pauzu u čitanju ili menjanje intonacije.
 Na primer, zarez izaziva pauzu u čitanju.
@@ -2937,6 +2943,16 @@ Molimo pogledajte uputstvo za upotrebu brajevog reda kako biste saznali listu i 
  | Pomeri brajev red na prethodni red | d1 |
  | Pomeri brajev red na sledeći red | d3 |
  | Pomeri se na brajevu ćeliju | routing |
+| šift+tab | Razmak+tačkica1+tačkica3 |
+| tab | Razmak+tačkica4+tačkica6 |
+| alt | Razmak+tačkica1+tačkica3+tačkica4 (razmak+M) |
+| escape | Razmak+tačkica1+tačkica5 (razmak+e) |
+| windows | Razmak+tačkica3+tačkica4 |
+| alt+tab | Razmak+tačkica2+tačkica3+tačkica4+
+tačkica5 (razmak+t) |
+| NVDA meni | razmak+tačkica1+tačkica3+tačkica4+tačkica5 (razmak+n) |
+| windows+d (umanji sve aplikacije) | Razmak+tačkica1+tačkica4+tačkica5 (razmak+d) |
+| Izgovori sve | Razmak+tačkica1+tačkica2+tačkica3+tačkica4+tačkica5+tačkica6 |
 
 Za brajeve redove koji imaju džojstik:
  || Ime | Komanda |
@@ -3677,19 +3693,17 @@ Slede trenutne tasterske prečice za ove redove.
 || Ime | komanda |
 | Pomeri brajev red nazad | pan levo ili rocker gore |
 | Pomeri brajev red napred | pan desno ili rocker dole |
-| Pomeri brajev red na prethodni red | Razmak + Tačka1 |
-| Pomeri brajev red na sledeći red | Razmak + tačka4 |
 | Prebaci na brajevu ćeliju | routing set 1|
 | Promeni vezivanje brajevog reda | Gore+Dole |
-| Strelica gore | Džojstik gore |
-| Strelica dole | Džojstik dole |
-| Strelica levo | Razmak+tačka3 ili džojstik levo |
-| Strelica desno | Razmak+tačka6 ili džojstik desno |
+| Strelica gore | Džojstik gore, strelica gore ili razmak+tačkica1 |
+| Strelica dole | Džojstik dole, strelica dole ili razmak+tačkica4 |
+| Strelica levo | Razmak+tačka3, džojstik levo ili strelica levo |
+| Strelica desno | Razmak+tačka6, džojstik desno ili strelica desno |
 | Šift plus tab | razmak+tačka1+tačka3 |
 | tab | Razmak+tačka4+tačka6 |
 | alt | Razmak+tačka1+tačka3+tačka4 (razmak+m) |
 | escape | Razmak+tačka1+tačka5 (razmak+e) |
-| enter | tačka8 ili centar džojstika |
+| enter | tačka8, centar džojstika ili centralna strelica |
 | windows | Razmak+tačka3+tačka4 |
 | alt+tab | Razmak+tačka2+tačka3+tačka4+tačka5 (razmak+t) |
 | NVDA meni | Razmak+tačka1+tačka3+tačka4+tačka5 (razmak+n) |

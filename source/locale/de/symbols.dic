@@ -1,7 +1,6 @@
-#locale/de/symbols.dic
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2011-2021 NVDA Contributors
-#This file is covered by the GNU General Public License.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (c) 2011-2023 NVDA Contributors
+# This file is covered by the GNU General Public License.
 
 complexSymbols:
 # identifier	regexp
@@ -69,7 +68,7 @@ $	Dollar	all	norep
 ,	Komma	all	always
 、	ideografisches Komma	all	always
 ،	arabisches Komma	all	always
--	Strich	most
+-	Strich	most	always
 .	Punkt	some
 /	Schrägstrich	some
 :	Doppelpunkt	most	norep
@@ -108,8 +107,8 @@ _	Unterstrich	most
 ‘	Apostroph links	most
 ’	Apostroph rechts	most
 –	Bindestrich	most	always
-—	Gedankenstrich	most
-­	Silbentrennzeichen	most
+—	Gedankenstrich	most	always
+­	Silbentrennzeichen	most	always
 ⁃	Bindestrich-Aufzählungszeichen	none
 ●	Kreis	most
 ○	Weißer Kreis	most
@@ -408,261 +407,264 @@ _	Unterstrich	most
 
 # Sonstiges Technisch
 ⌘	Mac-Befehlstaste	none
+⌥	Mac-Optionstaste	none
 
-# Unicode braille
-⠀	Braille-Leerzeichen	none
-⠁	Braillepunkt 1	none
-⠂	Braillepunkt 2	none
-⠃	Braillepunkte 1 2	none
-⠄	Braillepunkt 3	none
-⠅	Braillepunkte 1 3	none
-⠆	Braillepunkte 2 3	none
-⠇	Braillepunkte 1 2 3	none
-⠈	Braillepunkt 4	none
-⠉	Braillepunkte 1 4	none
-⠊	Braillepunkte 2 4	none
-⠋	Braillepunkte 1 2 4	none
-⠌	Braillepunkte 3 4	none
-⠍	Braillepunkte 1 3 4	none
-⠎	Braillepunkte 2 3 4	none
-⠏	Braillepunkte 1 2 3 4	none
-⠐	Braillepunkt 5	none
-⠑	Braillepunkte 1 5	none
-⠒	Braillepunkte 2 5	none
-⠓	Braillepunkte 1 2 5	none
-⠔	Braillepunkte 3 5	none
-⠕	Braillepunkte 1 3 5	none
-⠖	Braillepunkte 2 3 5	none
-⠗	Braillepunkte 1 2 3 5	none
-⠘	Braillepunkte 4 5	none
-⠙	Braillepunkte 1 4 5	none
-⠚	Braillepunkte 2 4 5	none
-⠛	Braillepunkte 1 2 4 5	none
-⠜	Braillepunkte 3 4 5	none
-⠝	Braillepunkte 1 3 4 5	none
-⠞	Braillepunkte 2 3 4 5	none
-⠟	Braillepunkte 1 2 3 4 5	none
-⠠	Braillepunkt 6	none
-⠡	Braillepunkte 1 6	none
-⠢	Braillepunkte 2 6	none
-⠣	Braillepunkte 1 2 6	none
-⠤	Braillepunkte 3 6	none
-⠥	Braillepunkte 1 3 6	none
-⠦	Braillepunkte 2 3 6	none
-⠧	Braillepunkte 1 2 3 6	none
-⠨	Braillepunkte 4 6	none
-⠩	Braillepunkte 1 4 6	none
-⠪	Braillepunkte 2 4 6	none
-⠫	Braillepunkte 1 2 4 6	none
-⠬	Braillepunkte 3 4 6	none
-⠭	Braillepunkte 1 3 4 6	none
-⠮	Braillepunkte 2 3 4 6	none
-⠯	Braillepunkte 1 2 3 4 6	none
-⠰	Braillepunkte 5 6	none
-⠱	Braillepunkte 1 5 6	none
-⠲	Braillepunkte 2 5 6	none
-⠳	Braillepunkte 1 2 5 6	none
-⠴	Braillepunkte 3 5 6	none
-⠵	Braillepunkte 1 3 5 6	none
-⠶	Braillepunkte 2 3 5 6	none
-⠷	Braillepunkte 1 2 3 5 6	none
-⠸	Braillepunkte 4 5 6	none
-⠹	Braillepunkte 1 4 5 6	none
-⠺	Braillepunkte 2 4 5 6	none
-⠻	Braillepunkte 1 2 4 5 6	none
-⠼	Braillepunkte 3 4 5 6	none
-⠽	Braillepunkte 1 3 4 5 6	none
-⠾	Braillepunkte 2 3 4 5 6	none
-⠿	Alle 6 Braillepunkte	none
-⡀	Braillepunkt 7	none
-⡁	Braillepunkte 1 7	none
-⡂	Braillepunkte 2 7	none
-⡃	Braillepunkte 1 2 7	none
-⡄	Braillepunkte 3 7	none
-⡅	Braillepunkte 1 3 7	none
-⡆	Braillepunkte 2 3 7	none
-⡇	Braillepunkte 1 2 3 7	none
-⡈	Braillepunkte 4 7	none
-⡉	Braillepunkte 1 4 7	none
-⡊	Braillepunkte 2 4 7	none
-⡋	Braillepunkte 1 2 4 7	none
-⡌	Braillepunkte 3 4 7	none
-⡍	Braillepunkte 1 3 4 7	none
-⡎	Braillepunkte 2 3 4 7	none
-⡏	Braillepunkte 1 2 3 4 7	none
-⡐	Braillepunkte 5 7	none
-⡑	Braillepunkte 1 5 7	none
-⡒	Braillepunkte 2 5 7	none
-⡓	Braillepunkte 1 2 5 7	none
-⡔	Braillepunkte 3 5 7	none
-⡕	Braillepunkte 1 3 5 7	none
-⡖	Braillepunkte 2 3 5 7	none
-⡗	Braillepunkte 1 2 3 5 7	none
-⡘	Braillepunkte 4 5 7	none
-⡙	Braillepunkte 1 4 5 7	none
-⡚	Braillepunkte 2 4 5 7	none
-⡛	Braillepunkte 1 2 4 5 7	none
-⡜	Braillepunkte 3 4 5 7	none
-⡝	Braillepunkte 1 3 4 5 7	none
-⡞	Braillepunkte 2 3 4 5 7	none
-⡟	Braillepunkte 1 2 3 4 5 7	none
-⡠	Braillepunkte 6 7	none
-⡡	Braillepunkte 1 6 7	none
-⡢	Braillepunkte 2 6 7	none
-⡣	Braillepunkte 1 2 6 7	none
-⡤	Braillepunkte 3 6 7	none
-⡥	Braillepunkte 1 3 6 7	none
-⡦	Braillepunkte 2 3 6 7	none
-⡧	Braillepunkte 1 2 3 6 7	none
-⡨	Braillepunkte 4 6 7	none
-⡩	Braillepunkte 1 4 6 7	none
-⡪	Braillepunkte 2 4 6 7	none
-⡫	Braillepunkte 1 2 4 6 7	none
-⡬	Braillepunkte 3 4 6 7	none
-⡭	Braillepunkte 1 3 4 6 7	none
-⡮	Braillepunkte 2 3 4 6 7	none
-⡯	Braillepunkte 1 2 3 4 6 7	none
-⡰	Braillepunkte 5 6 7	none
-⡱	Braillepunkte 1 5 6 7	none
-⡲	Braillepunkte 2 5 6 7	none
-⡳	Braillepunkte 1 2 5 6 7	none
-⡴	Braillepunkte 3 5 6 7	none
-⡵	Braillepunkte 1 3 5 6 7	none
-⡶	Braillepunkte 2 3 5 6 7	none
-⡷	Braillepunkte 1 2 3 5 6 7	none
-⡸	Braillepunkte 4 5 6 7	none
-⡹	Braillepunkte 1 4 5 6 7	none
-⡺	Braillepunkte 2 4 5 6 7	none
-⡻	Braillepunkte 1 2 4 5 6 7	none
-⡼	Braillepunkte 3 4 5 6 7	none
-⡽	Braillepunkte 1 3 4 5 6 7	none
-⡾	Braillepunkte 2 3 4 5 6 7	none
-⡿	Braillepunkte 1 2 3 4 5 6 7	none
-⢀	Braillepunkt 8	none
-⢁	Braillepunkte 1 8	none
-⢂	Braillepunkte 2 8	none
-⢃	Braillepunkte 1 2 8	none
-⢄	Braillepunkte 3 8	none
-⢅	Braillepunkte 1 3 8	none
-⢆	Braillepunkte 2 3 8	none
-⢇	Braillepunkte 1 2 3 8	none
-⢈	Braillepunkte 4 8	none
-⢉	Braillepunkte 1 4 8	none
-⢊	Braillepunkte 2 4 8	none
-⢋	Braillepunkte 1 2 4 8	none
-⢌	Braillepunkte 3 4 8	none
-⢍	Braillepunkte 1 3 4 8	none
-⢎	Braillepunkte 2 3 4 8	none
-⢏	Braillepunkte 1 2 3 4 8	none
-⢐	Braillepunkte 5 8	none
-⢑	Braillepunkte 1 5 8	none
-⢒	Braillepunkte 2 5 8	none
-⢓	Braillepunkte 1 2 5 8	none
-⢔	Braillepunkte 3 5 8	none
-⢕	Braillepunkte 1 3 5 8	none
-⢖	Braillepunkte 2 3 5 8	none
-⢗	Braillepunkte 1 2 3 5 8	none
-⢘	Braillepunkte 4 5 8	none
-⢙	Braillepunkte 1 4 5 8	none
-⢚	Braillepunkte 2 4 5 8	none
-⢛	Braillepunkte 1 2 4 5 8	none
-⢜	Braillepunkte 3 4 5 8	none
-⢝	Braillepunkte 1 3 4 5 8	none
-⢞	Braillepunkte 2 3 4 5 8	none
-⢟	Braillepunkte 1 2 3 4 5 8	none
-⢠	Braillepunkte 6 8	none
-⢡	Braillepunkte 1 6 8	none
-⢢	Braillepunkte 2 6 8	none
-⢣	Braillepunkte 1 2 6 8	none
-⢤	Braillepunkte 3 6 8	none
-⢥	Braillepunkte 1 3 6 8	none
-⢦	Braillepunkte 2 3 6 8	none
-⢧	Braillepunkte 1 2 3 6 8	none
-⢨	Braillepunkte 4 6 8	none
-⢩	Braillepunkte 1 4 6 8	none
-⢪	Braillepunkte 2 4 6 8	none
-⢫	Braillepunkte 1 2 4 6 8	none
-⢬	Braillepunkte 3 4 6 8	none
-⢭	Braillepunkte 1 3 4 6 8	none
-⢮	Braillepunkte 2 3 4 6 8	none
-⢯	Braillepunkte 1 2 3 4 6 8	none
-⢰	Braillepunkte 5 6 8	none
-⢱	Braillepunkte 1 5 6 8	none
-⢲	Braillepunkte 2 5 6 8	none
-⢳	Braillepunkte 1 2 5 6 8	none
-⢴	Braillepunkte 3 5 6 8	none
-⢵	Braillepunkte 1 3 5 6 8	none
-⢶	Braillepunkte 2 3 5 6 8	none
-⢷	Braillepunkte 1 2 3 5 6 8	none
-⢸	Braillepunkte 4 5 6 8	none
-⢹	Braillepunkte 1 4 5 6 8	none
-⢺	Braillepunkte 2 4 5 6 8	none
-⢻	Braillepunkte 1 2 4 5 6 8	none
-⢼	Braillepunkte 3 4 5 6 8	none
-⢽	Braillepunkte 1 3 4 5 6 8	none
-⢾	Braillepunkte 2 3 4 5 6 8	none
-⢿	Braillepunkte 1 2 3 4 5 6 8	none
-⣀	Braillepunkte 7 8	none
-⣁	Braillepunkte 1 7 8	none
-⣂	Braillepunkte 2 7 8	none
-⣃	Braillepunkte 1 2 7 8	none
-⣄	Braillepunkte 3 7 8	none
-⣅	Braillepunkte 1 3 7 8	none
-⣆	Braillepunkte 2 3 7 8	none
-⣇	Braillepunkte 1 2 3 7 8	none
-⣈	Braillepunkte 4 7 8	none
-⣉	Braillepunkte 1 4 7 8	none
-⣊	Braillepunkte 2 4 7 8	none
-⣋	Braillepunkte 1 2 4 7 8	none
-⣌	Braillepunkte 3 4 7 8	none
-⣍	Braillepunkte 1 3 4 7 8	none
-⣎	Braillepunkte 2 3 4 7 8	none
-⣏	Braillepunkte 1 2 3 4 7 8	none
-⣐	Braillepunkte 5 7 8	none
-⣑	Braillepunkte 1 5 7 8	none
-⣒	Braillepunkte 2 5 7 8	none
-⣓	Braillepunkte 1 2 5 7 8	none
-⣔	Braillepunkte 3 5 7 8	none
-⣕	Braillepunkte 1 3 5 7 8	none
-⣖	Braillepunkte 2 3 5 7 8	none
-⣗	Braillepunkte 1 2 3 5 7 8	none
-⣘	Braillepunkte 4 5 7 8	none
-⣙	Braillepunkte 1 4 5 7 8	none
-⣚	Braillepunkte 2 4 5 7 8	none
-⣛	Braillepunkte 1 2 4 5 7 8	none
-⣜	Braillepunkte 3 4 5 7 8	none
-⣝	Braillepunkte 1 3 4 5 7 8	none
-⣞	Braillepunkte 2 3 4 5 7 8	none
-⣟	Braillepunkte 1 2 3 4 5 7 8	none
-⣠	Braillepunkte 6 7 8	none
-⣡	Braillepunkte 1 6 7 8	none
-⣢	Braillepunkte 2 6 7 8	none
-⣣	Braillepunkte 1 2 6 7 8	none
-⣤	Braillepunkte 3 6 7 8	none
-⣥	Braillepunkte 1 3 6 7 8	none
-⣦	Braillepunkte 2 3 6 7 8	none
-⣧	Braillepunkte 1 2 3 6 7 8	none
-⣨	Braillepunkte 4 6 7 8	none
-⣩	Braillepunkte 1 4 6 7 8	none
-⣪	Braillepunkte 2 4 6 7 8	none
-⣫	Braillepunkte 1 2 4 6 7 8	none
-⣬	Braillepunkte 3 4 6 7 8	none
-⣭	Braillepunkte 1 3 4 6 7 8	none
-⣮	Braillepunkte 2 3 4 6 7 8	none
-⣯	Braillepunkte 1 2 3 4 6 7 8	none
-⣰	Braillepunkte 5 6 7 8	none
-⣱	Braillepunkte 1 5 6 7 8	none
-⣲	Braillepunkte 2 5 6 7 8	none
-⣳	Braillepunkte 1 2 5 6 7 8	none
-⣴	Braillepunkte 3 5 6 7 8	none
-⣵	Braillepunkte 1 3 5 6 7 8	none
-⣶	Braillepunkte 2 3 5 6 7 8	none
-⣷	Braillepunkte 1 2 3 5 6 7 8	none
-⣸	Braillepunkte 4 5 6 7 8	none
-⣹	Braillepunkte 1 4 5 6 7 8	none
-⣺	Braillepunkte 2 4 5 6 7 8	none
-⣻	Braillepunkte 1 2 4 5 6 7 8	none
-⣼	Braillepunkte 3 4 5 6 7 8	none
-⣽	Braillepunkte 1 3 4 5 6 7 8	none
-⣾	Braillepunkte 2 3 4 5 6 7 8	none
-⣿	Alle 8 Braillepunkte	none
+## 6-Punkt-Braille-Modul
+### Hinweis: Das Zeichen in der folgenden Zeile ist U+2800 (Braille-Leerzeichen), nicht U+0020 (ASCII-Leerzeichen)
+⠀	Braille-Leerzeichen
+⠁	Braille-Punkt 1
+⠂	Braille-Punkt 2
+⠃	Braille-Punkte 1 2
+⠄	Braille-Punkt 3
+⠅	Braille-Punkte 1 3
+⠆	Braille-Punkte 2 3
+⠇	Braille-Punkte 1 2 3
+⠈	Braille-Punkt 4
+⠉	Braille-Punkte 1 4
+⠊	Braille-Punkte 2 4
+⠋	Braille-Punkte 1 2 4
+⠌	Braille-Punkte 3 4
+⠍	Braille-Punkte 1 3 4
+⠎	Braille-Punkte 2 3 4
+⠏	Braille-Punkte 1 2 3 4
+⠐	Braille-Punkt 5
+⠑	Braille-Punkte 1 5
+⠒	Braille-Punkte 2 5
+⠓	Braille-Punkte 1 2 5
+⠔	Braille-Punkte 3 5
+⠕	Braille-Punkte 1 3 5
+⠖	Braille-Punkte 2 3 5
+⠗	Braille-Punkte 1 2 3 5
+⠘	Braille-Punkte 4 5
+⠙	Braille-Punkte 1 4 5
+⠚	Braille-Punkte 2 4 5
+⠛	Braille-Punkte 1 2 4 5
+⠜	Braille-Punkte 3 4 5
+⠝	Braille-Punkte 1 3 4 5
+⠞	Braille-Punkte 2 3 4 5
+⠟	Braille-Punkte 1 2 3 4 5
+⠠	Braille-Punkt 6
+⠡	Braille-Punkte 1 6
+⠢	Braille-Punkte 2 6
+⠣	Braille-Punkte 1 2 6
+⠤	Braille-Punkte 3 6
+⠥	Braille-Punkte 1 3 6
+⠦	Braille-Punkte 2 3 6
+⠧	Braille-Punkte 1 2 3 6
+⠨	Braille-Punkte 4 6
+⠩	Braille-Punkte 1 4 6
+⠪	Braille-Punkte 2 4 6
+⠫	Braille-Punkte 1 2 4 6
+⠬	Braille-Punkte 3 4 6
+⠭	Braille-Punkte 1 3 4 6
+⠮	Braille-Punkte 2 3 4 6
+⠯	Braille-Punkte 1 2 3 4 6
+⠰	Braille-Punkte 5 6
+⠱	Braille-Punkte 1 5 6
+⠲	Braille-Punkte 2 5 6
+⠳	Braille-Punkte 1 2 5 6
+⠴	Braille-Punkte 3 5 6
+⠵	Braille-Punkte 1 3 5 6
+⠶	Braille-Punkte 2 3 5 6
+⠷	Braille-Punkte 1 2 3 5 6
+⠸	Braille-Punkte 1 2 3
+⠹	Braille-Punkte 1 4 5 6
+⠺	Braille-Punkte 2 4 5 6
+⠻	Braille-Punkte 1 2 4 5 6
+⠼	Braille-Punkte 3 4 5 6
+⠽	Braille-Punkte 1 3 4 5 6
+⠾	Braille-Punkte 2 3 4 5 6
+⠿	Alle 6 Braille-Punkte 1 2 3 4 5 6
+## 8-Punkt-Braille-Modul
+⡀	Braille-Punkt 7
+⡁	Braille-Punkte 1 7
+⡂	Braille-Punkte 2 7
+⡃	Braille-Punkte 1 2 7
+⡄	Braille-Punkte 3 7
+⡅	Braille-Punkte 1 3 7
+⡆	Braille-Punkte 2 3 7
+⡇	Braille-Punkte 1 2 3 7
+⡈	Braille-Punkte 4 7
+⡉	Braille-Punkte 1 4 7
+⡊	Braille-Punkte 2 4 7
+⡋	Braille-Punkte 1 2 4 7
+⡌	Braille-Punkte 3 4 7
+⡍	Braille-Punkte 1 3 4 7
+⡎	Braille-Punkte 2 3 4 7
+⡏	Braille-Punkte 1 2 3 4 7
+⡐	Braille-Punkte 5 7
+⡑	Braille-Punkte 1 5 7
+⡒	Braille-Punkte 2 5 7
+⡓	Braille-Punkte 1 2 5 7
+⡔	Braille-Punkte 3 5 7
+⡕	Braille-Punkte 1 3 5 7
+⡖	Braille-Punkte 2 3 5 7
+⡗	Braille-Punkte 1 2 3 5 7
+⡘	Braille-Punkte 4 5 7
+⡙	Braille-Punkte 1 4 5 7
+⡚	Braille-Punkte 2 4 5 7
+⡛	Braille-Punkte 1 2 4 5 7
+⡜	Braille-Punkte 3 4 5 7
+⡝	Braille-Punkte 1 3 4 5 7
+⡞	Braille-Punkte 2 3 4 5 7
+⡟	Braille-Punkte 1 2 3 4 5 7
+⡠	Braille-Punkte 6 7
+⡡	Braille-Punkte 1 6 7
+⡢	Braille-Punkte 2 6 7
+⡣	Braille-Punkte 1 2 6 7
+⡤	Braille-Punkte 3 6 7
+⡥	Braille-Punkte 1 3 6 7
+⡦	Braille-Punkte 2 3 6 7
+⡧	Braille-Punkte 1 2 3 6 7
+⡨	Braille-Punkte 4 6 7
+⡩	Braille-Punkte 1 4 6 7
+⡪	Braille-Punkte 2 4 6 7
+⡫	Braille-Punkte 1 2 4 6 7
+⡬	Braille-Punkte 3 4 6 7
+⡭	Braille-Punkte 1 3 4 6 7
+⡮	Braille-Punkte 2 3 4 6 7
+⡯	Braille-Punkte 1 2 3 4 6 7
+⡰	Braille-Punkte 5 6 7
+⡱	Braille-Punkte 1 5 6 7
+⡲	Braille-Punkte 2 5 6 7
+⡳	Braille-Punkte 1 2 5 6 7
+⡴	Braille-Punkte 3 5 6 7
+⡵	Braille-Punkte 1 3 5 6 7
+⡶	Braille-Punkte 2 3 5 6 7
+⡷	Braille-Punkte 1 2 3 5 6 7
+⡸	Braille-Punkte 1 2 3 7
+⡹	Braille-Punkte 1 4 5 6 7
+⡺	Braille-Punkte 2 4 5 6 7
+⡻	Braille-Punkte 1 2 4 5 6 7
+⡼	Braille-Punkte 3 4 5 6 7
+⡽	Braille-Punkte 1 3 4 5 6 7
+⡾	Braille-Punkte 2 3 4 5 6 7
+⡿	Braille-Punkte 1 2 3 4 5 6 7
+⢀	Braille-Punkt 8
+⢁	Braille-Punkte 1 8
+⢂	Braille-Punkte 2 8
+⢃	Braille-Punkte 1 2 8
+⢄	Braille-Punkte 3 8
+⢅	Braille-Punkte 1 3 8
+⢆	Braille-Punkte 2 3 8
+⢇	Braille-Punkte 1 2 3 8
+⢈	Braille-Punkte 4 8
+⢉	Braille-Punkte 1 4 8
+⢊	Braille-Punkte 2 4 8
+⢋	Braille-Punkte 1 2 4 8
+⢌	Braille-Punkte 3 4 8
+⢍	Braille-Punkte 1 3 4 8
+⢎	Braille-Punkte 2 3 4 8
+⢏	Braille-Punkte 1 2 3 4 8
+⢐	Braille-Punkte 5 8
+⢑	Braille-Punkte 1 5 8
+⢒	Braille-Punkte 2 5 8
+⢓	Braille-Punkte 1 2 5 8
+⢔	Braille-Punkte 3 5 8
+⢕	Braille-Punkte 1 3 5 8
+⢖	Braille-Punkte 2 3 5 8
+⢗	Braille-Punkte 1 2 3 5 8
+⢘	Braille-Punkte 4 5 8
+⢙	Braille-Punkte 1 4 5 8
+⢚	Braille-Punkte 2 4 5 8
+⢛	Braille-Punkte 1 2 4 5 8
+⢜	Braille-Punkte 3 4 5 8
+⢝	Braille-Punkte 1 3 4 5 8
+⢞	Braille-Punkte 2 3 4 5 8
+⢟	Braille-Punkte 1 2 3 4 5 8
+⢠	Braille-Punkte 6 8
+⢡	Braille-Punkte 1 6 8
+⢢	Braille-Punkte 2 6 8
+⢣	Braille-Punkte 1 2 6 8
+⢤	Braille-Punkte 3 6 8
+⢥	Braille-Punkte 1 3 6 8
+⢦	Braille-Punkte 2 3 6 8
+⢧	Braille-Punkte 1 2 3 6 8
+⢨	Braille-Punkte 4 6 8
+⢩	Braille-Punkte 1 4 6 8
+⢪	Braille-Punkte 2 4 6 8
+⢫	Braille-Punkte 1 2 4 6 8
+⢬	Braille-Punkte 3 4 6 8
+⢭	Braille-Punkte 1 3 4 6 8
+⢮	Braille-Punkte 2 3 4 6 8
+⢯	Braille-Punkte 1 2 3 4 6 8
+⢰	Braille-Punkte 5 6 8
+⢱	Braille-Punkte 1 5 6 8
+⢲	Braille-Punkte 2 5 6 8
+⢳	Braille-Punkte 1 2 5 6 8
+⢴	Braille-Punkte 3 5 6 8
+⢵	Braille-Punkte 1 3 5 6 8
+⢶	Braille-Punkte 2 3 5 6 8
+⢷	Braille-Punkte 1 2 3 5 6 8
+⢸	Braille-Punkte 1 2 3 8
+⢹	Braille-Punkte 1 4 5 6 8
+⢺	Braille-Punkte 2 4 5 6 8
+⢻	Braille-Punkte 1 2 4 5 6 8
+⢼	Braille-Punkte 3 4 5 6 8
+⢽	Braille-Punkte 1 3 4 5 6 8
+⢾	Braille-Punkte 2 3 4 5 6 8
+⢿	Braille-Punkte 1 2 3 4 5 6 8
+⣀	Braille-Punkte 7 8
+⣁	Braille-Punkte 1 7 8
+⣂	Braille-Punkte 2 7 8
+⣃	Braille-Punkte 1 2 7 8
+⣄	Braille-Punkte 3 7 8
+⣅	Braille-Punkte 1 3 7 8
+⣆	Braille-Punkte 2 3 7 8
+⣇	Braille-Punkte 1 2 3 7 8
+⣈	Braille-Punkte 4 7 8
+⣉	Braille-Punkte 1 4 7 8
+⣊	Braille-Punkte 2 4 7 8
+⣋	Braille-Punkte 1 2 4 7 8
+⣌	Braille-Punkte 3 4 7 8
+⣍	Braille-Punkte 1 3 4 7 8
+⣎	Braille-Punkte 2 3 4 7 8
+⣏	Braille-Punkte 1 2 3 4 7 8
+⣐	Braille-Punkte 5 7 8
+⣑	Braille-Punkte 1 5 7 8
+⣒	Braille-Punkte 2 5 7 8
+⣓	Braille-Punkte 1 2 5 7 8
+⣔	Braille-Punkte 3 5 7 8
+⣕	Braille-Punkte 1 3 5 7 8
+⣖	Braille-Punkte 2 3 5 7 8
+⣗	Braille-Punkte 1 2 3 5 7 8
+⣘	Braille-Punkte 4 5 7 8
+⣙	Braille-Punkte 1 4 5 7 8
+⣚	Braille-Punkte 2 4 5 7 8
+⣛	Braille-Punkte 1 2 4 5 7 8
+⣜	Braille-Punkte 3 4 5 7 8
+⣝	Braille-Punkte 1 3 4 5 7 8
+⣞	Braille-Punkte 2 3 4 5 7 8
+⣟	Braille-Punkte 1 2 3 4 5 7 8
+⣠	Braille-Punkte 6 7 8
+⣡	Braille-Punkte 1 6 7 8
+⣢	Braille-Punkte 2 6 7 8
+⣣	Braille-Punkte 1 2 6 7 8
+⣤	Braille-Punkte 3 6 7 8
+⣥	Braille-Punkte 1 3 6 7 8
+⣦	Braille-Punkte 2 3 6 7 8
+⣧	Braille-Punkte 1 2 3 6 7 8
+⣨	Braille-Punkte 4 6 7 8
+⣩	Braille-Punkte 1 4 6 7 8
+⣪	Braille-Punkte 2 4 6 7 8
+⣫	Braille-Punkte 1 2 4 6 7 8
+⣬	Braille-Punkte 3 4 6 7 8
+⣭	Braille-Punkte 1 3 4 6 7 8
+⣮	Braille-Punkte 2 3 4 6 7 8
+⣯	Braille-Punkte 1 2 3 4 6 7 8
+⣰	Braille-Punkte 5 6 7 8
+⣱	Braille-Punkte 1 5 6 7 8
+⣲	Braille-Punkte 2 5 6 7 8
+⣳	Braille-Punkte 1 2 5 6 7 8
+⣴	Braille-Punkte 3 5 6 7 8
+⣵	Braille-Punkte 1 3 5 6 7 8
+⣶	Braille-Punkte 2 3 5 6 7 8
+⣷	Braille-Punkte 1 2 3 5 6 7 8
+⣸	Braille-Punkte 1 2 3 7 8
+⣹	Braille-Punkte 1 4 5 6 7 8
+⣺	Braille-Punkte 2 4 5 6 7 8
+⣻	Braille-Punkte 1 2 4 5 6 7 8
+⣼	Braille-Punkte 3 4 5 6 7 8
+⣽	Braille-Punkte 1 3 4 5 6 7 8
+⣾	Braille-Punkte 2 3 4 5 6 7 8
+⣿	Alle 8 Braille-Punkte 1 2 3 4 5 6 7 8

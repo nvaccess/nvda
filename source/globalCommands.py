@@ -4,7 +4,8 @@
 # See the file COPYING for more details.
 # Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee,
 # Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Łukasz Golonka, Accessolutions,
-# Julien Cochuyt, Jakub Lukowicz, Bill Dengler, Cyrille Bougot, Rob Meredith, Luke Davis
+# Julien Cochuyt, Jakub Lukowicz, Bill Dengler, Cyrille Bougot, Rob Meredith, Luke Davis,
+# Burman's Computer and Education Ltd.
 
 import itertools
 from typing import (
@@ -28,14 +29,23 @@ import controlTypes
 import api
 import textInfos
 import speech
-from speech import sayAll
+from speech import (
+	sayAll,
+	shortcutKeys,
+)
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo
 import globalVars
 from logHandler import log
 import gui
+import systemUtils
 import wx
 import config
-from config.configFlags import TetherTo
+from config.configFlags import (
+	TetherTo,
+	ShowMessages,
+)
+from config.featureFlag import FeatureFlag
+from config.featureFlagEnums import BoolFlag
 import winUser
 import appModuleHandler
 import winKernel
@@ -272,7 +282,10 @@ class GlobalCommands(ScriptableObject):
 	)
 	def script_dateTime(self,gesture):
 		if scriptHandler.getLastScriptRepeatCount()==0:
-			text=winKernel.GetTimeFormatEx(winKernel.LOCALE_NAME_USER_DEFAULT, winKernel.TIME_NOSECONDS, None, None)
+			if systemUtils._isSystemClockSecondsVisible():
+				text = winKernel.GetTimeFormatEx(winKernel.LOCALE_NAME_USER_DEFAULT, None, None, None)
+			else:
+				text = winKernel.GetTimeFormatEx(winKernel.LOCALE_NAME_USER_DEFAULT, winKernel.TIME_NOSECONDS, None, None)
 		else:
 			text=winKernel.GetDateFormatEx(winKernel.LOCALE_NAME_USER_DEFAULT, winKernel.DATE_LONGDATE, None, None)
 		ui.message(text)
@@ -1861,6 +1874,7 @@ class GlobalCommands(ScriptableObject):
 			if c is not None:
 				speech.speakMessage("%d," % c)
 				speech.speakSpelling(hex(c))
+				braille.handler.message(f"{c}, {hex(c)}")
 			else:
 				log.debugWarning("Couldn't calculate ordinal for character %r" % info.text)
 				speech.speakTextInfo(info, unit=textInfos.UNIT_CHARACTER, reason=controlTypes.OutputReason.CARET)
@@ -2576,12 +2590,13 @@ class GlobalCommands(ScriptableObject):
 	def script_reportFocusObjectAccelerator(self, gesture: inputCore.InputGesture) -> None:
 		obj = api.getFocusObject()
 		if obj.keyboardShortcut:
-			res = obj.keyboardShortcut
+			shortcut = obj.keyboardShortcut
+			shortcutKeys.speakKeyboardShortcuts(shortcut)
+			braille.handler.message(shortcut)
 		else:
 			# Translators: reported when a user requests the accelerator key
 			# of the currently focused object, but there is none set.
-			res = _("No shortcut key")
-		ui.message(res)
+			ui.message(_("No shortcut key"))
 
 	@script(
 		# Translators: Input help mode message for toggle mouse tracking command.
@@ -2746,7 +2761,6 @@ class GlobalCommands(ScriptableObject):
 	)
 	@gui.blockAction.when(gui.blockAction.Context.SECURE_MODE)
 	def script_openUserConfigurationDirectory(self, gesture):
-		import systemUtils
 		systemUtils.openUserConfigurationDirectory()
 
 	@script(
@@ -3122,12 +3136,12 @@ class GlobalCommands(ScriptableObject):
 		pythonConsole.activate()
 
 	@script(
-		# Translators: Input help mode message for activate manage add-ons command.
-		description=_("Activates the NVDA Add-ons Manager to install and uninstall add-on packages for NVDA"),
+		# Translators: Input help mode message to activate Add-on Store command.
+		description=_("Activates the Add-on Store to browse and manage add-on packages for NVDA"),
 		category=SCRCAT_TOOLS
 	)
-	def script_activateAddonsManager(self,gesture):
-		wx.CallAfter(gui.mainFrame.onAddonsManagerCommand, None)
+	def script_activateAddonsManager(self, gesture: inputCore.InputGesture):
+		wx.CallAfter(gui.mainFrame.onAddonStoreCommand, None)
 
 	@script(
 		description=_(
@@ -3258,6 +3272,48 @@ class GlobalCommands(ScriptableObject):
 		shapeMsg = braille.CURSOR_SHAPES[index][1]
 		# Translators: Reports which braille cursor shape is activated.
 		ui.message(_("Braille cursor %s") % shapeMsg)
+
+	@script(
+		# Translators: Input help mode message for cycle through braille show messages command.
+		description=_("Cycle through the braille show messages modes"),
+		category=SCRCAT_BRAILLE
+	)
+	def script_braille_cycleShowMessages(self, gesture: inputCore.InputGesture) -> None:
+		"""Set next state of braille show messages and reports it with ui.message."""
+		values = [x.value for x in ShowMessages]
+		index = values.index(config.conf["braille"]["showMessages"])
+		newIndex = (index + 1) % len(values)
+		newValue = values[newIndex]
+		config.conf["braille"]["showMessages"] = newValue
+		# Translators: Reports which show braille message mode is used
+		# (disabled, timeout or indefinitely).
+		msg = _("Braille show messages %s") % ShowMessages(newValue).displayString
+		ui.message(msg)
+
+	@script(
+		# Translators: Input help mode message for cycle through braille show selection command.
+		description=_("Cycle through the braille show selection states"),
+		category=SCRCAT_BRAILLE
+	)
+	def script_braille_cycleShowSelection(self, gesture: inputCore.InputGesture) -> None:
+		"""Set next state of braille show selection and reports it with ui.message."""
+		featureFlag: FeatureFlag = config.conf["braille"]["showSelection"]
+		boolFlag: BoolFlag = featureFlag.enumClassType
+		values = [x.value for x in boolFlag]
+		currentValue = featureFlag.value.value
+		nextValueIndex = (currentValue % len(values)) + 1
+		nextName: str = boolFlag(nextValueIndex).name
+		config.conf["braille"]["showSelection"] = nextName
+		featureFlag = config.conf["braille"]["showSelection"]
+		if featureFlag.isDefault():
+			# Translators: Used when reporting braille show selection state
+			# (default behavior).
+			msg = _("Braille show selection default (%s)") % featureFlag.behaviorOfDefault.displayString
+		else:
+			# Translators: Reports which show braille selection state is used
+			# (disabled or enabled).
+			msg = _("Braille show selection %s") % BoolFlag[nextName].displayString
+		ui.message(msg)
 
 	@script(
 		# Translators: Input help mode message for report clipboard text command.
@@ -3974,9 +4030,26 @@ class GlobalCommands(ScriptableObject):
 		recog = uwpOcr.UwpOcr()
 		recogUi.recognizeNavigatorObject(recog)
 
-	_tempEnableScreenCurtain = True
-	_waitingOnScreenCurtainWarningDialog: Optional[wx.Dialog] = None
-	_toggleScreenCurtainMessage: Optional[str] = None
+	@script(
+		# Translators: Describes a command.
+		description=_("Cycles through the available languages for Windows OCR"),
+	)
+	def script_cycleOcrLanguage(self, gesture: inputCore.InputGesture) -> None:
+		if not winVersion.isUwpOcrAvailable():
+			# Translators: Reported when Windows OCR is not available.
+			ui.message(_("Windows OCR not available"))
+			return
+		from contentRecog import uwpOcr
+		languageCodes = uwpOcr.getLanguages()
+		try:
+			index = languageCodes.index(config.conf["uwpOcr"]["language"])
+			newIndex = (index + 1) % len(languageCodes)
+		except ValueError:
+			newIndex = 0
+		lang = languageCodes[newIndex]
+		config.conf["uwpOcr"]["language"] = lang
+		ui.message(languageHandler.getLanguageDescription(languageHandler.normalizeLanguage(lang)))
+
 	@script(
 		# Translators: Input help mode message for toggle report CLDR command.
 		description=_("Toggles on and off the reporting of CLDR characters, such as emojis"),
@@ -3994,6 +4067,9 @@ class GlobalCommands(ScriptableObject):
 		characterProcessing.clearSpeechSymbols()
 		ui.message(state)
 
+	_tempEnableScreenCurtain = True
+	_waitingOnScreenCurtainWarningDialog: Optional[wx.Dialog] = None
+	_toggleScreenCurtainMessage: Optional[str] = None
 	@script(
 		description=_(
 			# Translators: Describes a command.

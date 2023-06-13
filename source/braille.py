@@ -2,7 +2,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 # Copyright (C) 2008-2023 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau,
-# Leonard de Ruijter
+# Leonard de Ruijter, Burman's Computer and Education Ltd.
 
 import itertools
 import os
@@ -496,7 +496,11 @@ class Region(object):
 			mode=mode,
 			cursorPos=self.cursorPos
 		)
-		if self.selectionStart is not None and self.selectionEnd is not None:
+		if (
+			self.selectionStart is not None
+			and self.selectionEnd is not None
+			and config.conf["braille"]["showSelection"]
+		):
 			try:
 				# Mark the selection.
 				self.brailleSelectionStart = self.rawToBraillePos[self.selectionStart]
@@ -1895,8 +1899,8 @@ the remote system should know what cells to show on its display.
 filter_displaySize = extensionPoints.Filter()
 """
 Filter that allows components or add-ons to change the display size used for braille output.
-For example, when a system is controlled by a remote system while having a 80 cells display connected,
-the display size should be lowered to 40 whenever the remote system has a 40 cells display connected.
+For example, when a system has an 80 cell display, but is being controlled by a remote system with a 40 cell
+display, the display size should be lowered to 40 .
 @param value: the number of cells of the current display.
 @type value: int
 """

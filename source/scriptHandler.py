@@ -254,7 +254,7 @@ def queueScript(script,gesture):
 		_queueScriptCallback,
 		script,
 		gesture,
-		_immediate=True
+		_immediate=getattr(gesture, "_immediate", True)
 	)
 
 def willSayAllResume(gesture):
