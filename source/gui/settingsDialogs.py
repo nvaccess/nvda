@@ -3144,7 +3144,7 @@ class AdvancedPanelControls(
 		path=config.getScratchpadDir(ensureExists=True)
 		os.startfile(path)
 
-	def onWasapiChange(self, evt):
+	def onWasapiChange(self, evt: wx.CommandEvent):
 		self.soundVolFollowCheckBox.Enable(evt.IsChecked())
 
 	def _getDefaultValue(self, configPath):
