@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited, Manish Agrawal, Derek Riemer, Babbage B.V.
+# Copyright (C) 2006-2023 NV Access Limited, Manish Agrawal, Derek Riemer, Babbage B.V., Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -912,8 +912,14 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 				# Translators: line spacing of at least x point
 				field['line-spacing']=pgettext('line spacing value',"at least %.1f pt")%float(lineSpacingVal)
 			elif lineSpacingRule==wdLineSpaceMultiple:
+				multiLineSpacingVal = float(lineSpacingVal) / 12.0
 				# Translators: line spacing of x lines
-				field['line-spacing']=pgettext('line spacing value',"%.1f lines")%(float(lineSpacingVal)/12.0)
+				field['line-spacing'] = npgettext(
+					'line spacing value',
+					"%.1f line",
+					"%.1f lines",
+					multiLineSpacingVal,
+				) % (multiLineSpacingVal)
 		revisionType=int(field.pop('wdRevisionType',0))
 		if revisionType==wdRevisionInsert:
 			field['revision-insertion']=True
