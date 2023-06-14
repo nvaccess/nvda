@@ -479,7 +479,7 @@ def installAddon(parentWindow: wx.Window, addonPath: str) -> bool:  # noqa: C901
 		_showAddonRequiresNVDAUpdateDialog(parentWindow, bundle)
 		return False  # Exit early, addon does not have required support
 	elif bundle.canOverrideCompatibility:
-		from _addonStoreGui.controls.messageDialogs import _shouldInstallWhenAddonTooOldDialog
+		from gui._addonStoreGui.controls.messageDialogs import _shouldInstallWhenAddonTooOldDialog
 		if _shouldInstallWhenAddonTooOldDialog(parentWindow, bundle._addonGuiModel):
 			# Install incompatible version
 			bundle.enableCompatibilityOverride()

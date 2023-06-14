@@ -611,7 +611,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 					 "MultiCategorySettingsDialog.MIN_SIZE"
 					).format(cls, panel.Size[0])
 				)
-			panel.SetLabel(panel.title)
+			panel.SetLabel(panel.title.replace('&', '&&'))
 			panel.SetAccessible(SettingsPanelAccessible(panel))
 		return panel
 
