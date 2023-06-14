@@ -3,16 +3,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-11 00:17+0000\n"
-"PO-Revision-Date: 2023-04-05 10:50+0300\n"
+"POT-Creation-Date: 2023-05-05 00:01+0000\n"
+"PO-Revision-Date: 2023-05-07 10:39+0300\n"
 "Last-Translator: Ukrainian NVDA Community <vp88.mobile@gmail.com>\n"
 "Language-Team: Volodymyr Pyrih <vp88.mobile@gmail.com>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
 "Generated-By: pygettext.py 1.5\n"
 "X-Generator: Poedit 3.2.2\n"
 "X-Poedit-Bookmarks: -1,-1,643,-1,-1,-1,-1,-1,-1,-1\n"
@@ -4534,6 +4534,10 @@ msgstr "Windows OCR недоступний"
 msgid "Please disable screen curtain before using Windows OCR."
 msgstr "Будь ласка, вимкніть екранну завісу перед використанням Windows OCR."
 
+#. Translators: Describes a command.
+msgid "Cycles through the available languages for Windows OCR"
+msgstr "Циклічно перемикає доступні мови для Windows OCR"
+
 #. Translators: Input help mode message for toggle report CLDR command.
 msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
 msgstr "Вмикає й вимикає читання емодзі"
@@ -6384,9 +6388,10 @@ msgstr "Помилка під час перевірки оновлення."
 #. Translators: The title of an error message dialog.
 #. Translators: An title for an error displayed when saving user defined input gestures fails.
 #. Translators: The title of a dialog presented when an error occurs.
-#. Translators: The message title displayed
-#. when the user has not specified an absolute destination directory
-#. in the Create Portable NVDA dialog.
+#. Translators: the title of an error dialog.
+#. Translators: The message title displayed when the user has not specified an absolute
+#. destination directory in the Create Portable NVDA dialog.
+#. Translators: Title of an error dialog shown when an error occurs while creating a portable copy of NVDA.
 #. Translators: The title of an error message dialog.
 #. Translators: The title of the message box
 #. Translators: The title of the error dialog displayed when there is an error showing the GUI
@@ -9564,6 +9569,7 @@ msgid "Please press OK to start the installed copy."
 msgstr "Будь ласка, натисніть «Гаразд» для запуску встановленої копії."
 
 #. Translators: The title of a dialog presented to indicate a successful operation.
+#. Translators: Title of a dialog shown when a portable copy of NVDA is created.
 msgid "Success"
 msgstr "Успішно"
 
@@ -9678,23 +9684,17 @@ msgstr "Будь ласка, вкажіть папку, в якій ви хоч�
 #. Translators: The message displayed when the user has not specified an absolute destination directory
 #. in the Create Portable NVDA dialog.
 msgid ""
-"Please specify an absolute path (including drive letter)  in which to create "
-"the portable copy."
+"Please specify the absolute path where the portable copy should be created. "
+"It may include system variables (%temp%, %homepath%, etc.)."
 msgstr ""
-"Будь ласка, вкажіть повний шлях (включно з буквою диска), куди ви хочете "
-"створити переносну копію."
+"Будь ласка, вкажіть абсолютний шлях, де має створитися переносна копія. Він "
+"може містити системні змінні (%temp%, %homepath% тощо)."
 
-#. Translators: The message displayed when the user specifies an invalid destination drive
-#. in the Create Portable NVDA dialog.
-#, python-format
-msgid "Invalid drive %s"
-msgstr "Неправильний диск %s"
-
-#. Translators: The title of the dialog presented while a portable copy of NVDA is bieng created.
+#. Translators: The title of the dialog presented while a portable copy of NVDA is being created.
 msgid "Creating Portable Copy"
 msgstr "Створюю переносну копію"
 
-#. Translators: The message displayed while a portable copy of NVDA is bieng created.
+#. Translators: The message displayed while a portable copy of NVDA is being created.
 msgid "Please wait while a portable copy of NVDA is created."
 msgstr "Зачекайте, будь ласка, поки створюється переносна копія NVDA."
 
@@ -9703,16 +9703,16 @@ msgid "NVDA is unable to remove or overwrite a file."
 msgstr "NVDA не може видалити або перезаписати файл."
 
 #. Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
-#. %s will be replaced with the specific error message.
-#, python-format
-msgid "Failed to create portable copy: %s"
-msgstr "Невдала спроба створення переносної копії: %s"
+#. {error} will be replaced with the specific error message.
+#, python-brace-format
+msgid "Failed to create portable copy: {error}."
+msgstr "Не вдалося створити переносну копію: {error}."
 
 #. Translators: The message displayed when a portable copy of NVDA has been successfully created.
-#. %s will be replaced with the destination directory.
-#, python-format
-msgid "Successfully created a portable copy of NVDA at %s"
-msgstr "Переносну копію NVDA успішно створено у %s"
+#. {dir} will be replaced with the destination directory.
+#, python-brace-format
+msgid "Successfully created a portable copy of NVDA at {dir}"
+msgstr "Переносну копію NVDA успішно створено в {dir}"
 
 #. Translators: The title of the NVDA log viewer window.
 msgid "NVDA Log Viewer"
@@ -11516,6 +11516,15 @@ msgstr "помічено"
 msgid "not marked"
 msgstr "не помічено"
 
+#. Translators: Reported when text is color-highlighted
+#, python-brace-format
+msgid "highlighted in {color}"
+msgstr "підсвічено в {color}"
+
+#. Translators: Reported when text is no longer marked
+msgid "not highlighted"
+msgstr "не підсвічено"
+
 #. Translators: Reported when text is marked as strong (e.g. bold)
 msgid "strong"
 msgstr "жирний"
@@ -11886,12 +11895,12 @@ msgid "No system battery"
 msgstr "В системі немає батареї"
 
 #. Translators: Reported when the battery is plugged in, and now is charging.
-msgid "Charging battery"
-msgstr "Батарея заряджається"
+msgid "Plugged in"
+msgstr "Підключено"
 
 #. Translators: Reported when the battery is no longer plugged in, and now is not charging.
-msgid "AC disconnected"
-msgstr "Живлення змінного струму від’єднано"
+msgid "Unplugged"
+msgstr "Відключено"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
 #, python-brace-format
@@ -13575,6 +13584,22 @@ msgid ""
 msgstr ""
 "Щоб використовувати Albatross із NVDA: змініть якнайбільшу кількість "
 "клітинок стану у внутрішньому меню Albatross "
+
+#~ msgid ""
+#~ "Please specify an absolute path (including drive letter)  in which to "
+#~ "create the portable copy."
+#~ msgstr ""
+#~ "Будь ласка, вкажіть повний шлях (включно з буквою диска), куди ви хочете "
+#~ "створити переносну копію."
+
+#~ msgid "Invalid drive %s"
+#~ msgstr "Неправильний диск %s"
+
+#~ msgid "Charging battery"
+#~ msgstr "Батарея заряджається"
+
+#~ msgid "AC disconnected"
+#~ msgstr "Живлення змінного струму від’єднано"
 
 #~ msgid "Unable to determine remaining time"
 #~ msgstr "Не вдалося визначити залишок часу"

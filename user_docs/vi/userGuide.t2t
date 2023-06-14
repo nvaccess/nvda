@@ -2,7 +2,9 @@
 
 
 %!includeconf: ../userGuide.t2tconf
+%!includeconf: ./locale.t2tconf
 %kc:title: Danh sách các phím tắt trong NVDA NVDA_VERSION 
+%kc:includeconf: ./locale.t2tconf
 
 = Mục lục=[toc]
 %%toc
@@ -222,7 +224,7 @@ Chức năng thật sự của thao tác sẽ không được thực thi khi ở
 | Đọc thanh trạng thái | ``NVDA+end`` | ``NVDA+shift+end`` | Đọc thông tin thanh trạng thái nếu NVDA tìm thấy. Bấm hai lần để đánh vần thông tin. Bấm ba lần để chép nó vào bộ nhớ tạm |
 | Đọc giờ | ``NVDA+f12`` | ``NVDA+f12`` | Bấm một lần để đọc giờ hiện tại, bấm hai lần để đọc ngày |
 | Thông báo định dạng văn bản | ``NVDA+f`` | ``NVDA+f`` | Thông báo định dạng văn bản. Bấm hai lần để hiển thị thông tin trên một cửa sổ |
-| Thông báo đường dẫn liên kết | ``NVDA+k`` | ``NVDA+k`` | Bấm một lần để đọc đường dẫn URL của liên kết trong [đối tượng điều hướng #ObjectNavigation]. Bấm hai lần sẽ hiển thị nó trên một cửa sổ để dễ xem lại hơn |
+| Thông báo đường dẫn liên kết | ``NVDA+k`` | ``NVDA+k`` | Bấm một lần để đọc đường dẫn URL của liên kết tại dấu nháy hoặc vị trí con trỏ. Bấm hai lần sẽ hiển thị nó trên một cửa sổ để dễ xem lại hơn |
 
 +++ Bật / tắt các thông tin được NVDA đọc +++[ToggleWhichInformationNVDAReads]
 || Tên | Phím máy bàn | Phím máy xách tay | Mô tả |
@@ -2119,6 +2121,7 @@ Phân loại này gồm các mục sau:
 
 ==== Ngôn Ngữ Nhận Dạng ====[Win10OcrSettingsRecognitionLanguage]
 Hộp xổ này cho phép chọn ngôn ngữ dùng để nhận dạng.
+Để  chuyển qua lại giữa các ngôn ngữ hiện có ở bất cứ đâu, vui lòng gán thao tác trong hộp thoại [Quản lý các thao tác #InputGestures].
 
 +++ Cài đặt nâng cao +++[AdvancedSettings]
 Cảnh báo! Các thiết lập trong phân loại này dành cho người dùng ở cấp độ nâng cao, có thể làm cho NVDA hoạt động không chính xác nếu bị cấu hình không đúng cách.
@@ -2134,10 +2137,10 @@ Cũng có thể dùng trong trường hợp mà bạn không chắc là các cà
 
 ==== Cho phép gọi mã nguồn từ thư mục Scratchpad ====[AdvancedSettingsEnableScratchpad]
 Khi phát triển các add-on cho NVDA, sẽ rất tiện lợi nếu có thể chạy thử mã nguồn trong khi đang viết ra nó.
-Việc bật tùy chọn này sẽ cho phép NVDA gọi các Module ứng dụng, Plugins toàn cục, chữ nổi và các trình điều khiển bộ đọc đã tùy chỉnh từ thư mục đặc biệt tên scratchpad trong thư mục cấu hình người dùng NVDA của bạn.
-Trước đây, NVDA gọi các mã nguồn đã tùy chỉnh trực tiếp từ thư mục cấu hình người dùng, và không có cách nào để vô hiệu.
-Mặc định, tùy chọn này bị tắt để đảm bảo rằng không có những đoạn mã chưa được kiểm nghiệm chạy trong NVDA mà người dùng không có thông tin rõ ràng.
-Nếu muốn chia sẻ mã nguồn cho người khác, bạn nên đóng gói nó thành một NVDA add-on.
+Tùy chọn này, khi được bật, sẽ cho phép NVDA gọi các Module ứng dụng, Plugins toàn cục, trình điều khiển cho màn hình chữ nổi và  bộ đọc cũng như các cung cấp cho hỗ trợ nhìn đã được tùy chỉnh từ thư mục đặc biệt tên scratchpad trong thư mục cấu hình người dùng NVDA của bạn.
+Tương đương với các  add-on, các module này được gọi chạy khi khởi động NVDA, như một module cho ứng dụng hay toàn cục, khi [cập nhật lại các plugin #ReloadPlugins].
+Mặc định, tùy chọn này bị tắt để đảm bảo rằng không có những đoạn mã chưa được kiểm nghiệm được gọi chạy trong NVDA mà người dùng không có thông tin rõ ràng.
+Nếu muốn chia sẻ mã nguồn cho người khác, bạn nên đóng gói nó thành một tập tin NVDA add-on.
 
 ==== Mở thư mục scratchpad ====[AdvancedSettingsOpenScratchpadDir]
 Nút này mở thư mục mà bạn có thể lưu mã nguồn trong khi đang phát triển nó.
@@ -2348,7 +2351,11 @@ Lưu ý, thiết lập trong hộp thoại này dựa vào thiết lập của t
 Bạn có thể lọc các kí hiệu bằng cách nhập kí hiệu hay một phần kí hiệu thay thế vào ô nhập liệu tên Lọc theo.
 .
 - Mục Thay thế cho phép bạn thay đổi nội dung sẽ được đọc tại vị trí của kí hiệu này.
-- Sử dụng mục Cấp độ, bạn có thể điều chỉnh cấp độ kí hiệu thấp nhất mà kí hiệu này phải được đọc.
+- Sử dụng mục Cấp độ, bạn có thể điều chỉnh cấp độ kí hiệu thấp nhất mà kí hiệu này phải được đọc (không, một vài, hầu hết hoặc tất cả).
+Bạn cũng có thể chọn cấp độ là kí tự. Trường hợp này, kí hiệu sẽ không được đọc lên, bất kể bạn dùng cấp độ đọc kí hiệu nào, trừ hai ngoại lệ sau:
+ - Khi điều hướng theo kí tự.
+ - Khi NVDA đang đánh vần một đoạn văn bản có kí hiệu đó.
+ -
 - Mục Gửi ký hiệu gốc đến bộ đọc quy định khi nào thì tự kí hiệu đó (tương ứng với sự thay thế của nó) sẽ được gửi đến bộ đọc.
 Điều này sẽ hữu ích khi ký hiệu có nhiệm vụ làm bộ đọc ngưng nghỉ hoặc thay đổi ngữ điệu.
 Ví dụ, bộ đọc sẽ ngưng khi gặp dấu phảy.
@@ -2937,6 +2944,15 @@ Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết cá
 | Chuyển về dòng trước | d1 |
 | Chuyển đến dòng kế | d3 |
 | Rút về ô chữ nổi | routing |
+| phím shift+tab | khoảng trắng+chấm 1+chấm 3 |
+| phím tab | khoảng trắng+chấm 4+chấm 6 |
+| phím alt | khoảng trắng+chấm 1+chấm 3+chấm 4 (khoảng trắng+m) |
+| phím escape | khoảng trắng+chấm 1+chấm 5 (khoảng trắng+e) |
+| Phím windows | khoảng trắng+chấm 3+chấm 4 |
+| phím alt+tab | khoảng trắng+chấm 2+chấm 3+chấm 4+chấm 5 (khoảng trắng+t) |
+| Trình Đơn NVDA | khoảng trắng+chấm 1+chấm 3+chấm 4+chấm 5 (khoảng trắng+n) |
+| phím windows+d (thu nhỏ tất cả các ứng dụng) | khoảng trắng+chấm 1+chấm 4+chấm 5 (khoảng trắng+d) |
+| Đọc tất cả | khoảng trắng+chấm 1+chấm 2+chấm 3+chấm 4+chấm 5+chấm 6 |
 
 Dành cho các màn hình có cần điều khiển:
 || Tên | Phím |
@@ -3649,6 +3665,10 @@ Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết cá
 | Chuyển đối tượng điều hướng đến đối tượng kế | ``f6`` |
 | Thông báo đối tượng điều hướng hiện tại | ``f7`` |
 | Báo thông tin về vị trí của văn bản hay đối tượng tại con trỏ duyệt | ``f8`` |
+| Hiện cài đặt chữ nổi | ``f1+home1``, ``f9+home2`` |
+| Đọc thanh trạng thái và chuyển đối tượng điều hướng vào trong nó | ``f1+end1``, ``f9+end2`` |
+| Chuyển đổi giữa các hình dạng con trỏ nổi | ``f1+eCursor1``, ``f9+eCursor2`` |
+| Bật / tắt con trỏ nổi | ``f1+cursor1``, ``f9+cursor2`` |
 | Thực hiện hành động mặc định trên đối tượng điều hướng hiện tại | ``f7+f8`` |
 | Thông báo ngày / giờ | ``f9`` |
 | Thông báo trạng thái pin và thời gian còn lại nếu không cắm nguồn | ``f10`` |
@@ -3661,7 +3681,7 @@ Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết cá
 | Đọc từ của đối tượng điều hướng hiện tại ở vị trí con trỏ duyệt | ``f15+f16`` |
 | Chuyển con trỏ duyệt đến dòng trước của đối tượng điều hướng hiện tại và đọc nó lên | ``lWheelUp``, ``rWheelUp`` |
 | Chuyển con trỏ duyệt đến dòng kế của đối tượng điều hướng hiện tại và đọc nó lên | ``lWheelDown``, ``rWheelDown`` |
-| Phím ``Windows+d`` (minimize all applications) | ``attribute1`` |
+| Phím ``Windows+d`` (thu nhỏ tất cả các ứng dụng) | ``attribute1`` |
 | Phím ``Windows+e`` (this computer) | ``attribute2`` |
 | Phím ``Windows+b`` (đi đến khay hệ thống) | ``attribute3`` |
 | Phím ``Windows+i`` (Windows settings) | ``attribute4`` |
@@ -3678,19 +3698,17 @@ Sau đây là các phím hiện được gán cho những màn hình nổi nói 
 || Tên | Phím |
 | Cuộn màn hình nổi về trước | pan left hoặc rocker up |
 | Cuộn màn hình nổi về sau | pan right hoặc rocker down |
-| Di chuyển màn hình về dòng trước | khoảng trắng + chấm 1 |
-| Di chuyển màn hình về dòng trước | khoảng trắng + chấm 4 |
 | Đưa về ô chữ nổi | routing set 1|
 | Bật / tắt chữ nổi đi theo | lên+xuống |
-| phím mũi tên lên | joystick up |
-| phím mũi tên xuống | joystick down |
-| phím mũi tên trái | khoảng trắng+chấm 3 hoặc joystick left |
-| phím mũi tên phải | khoảng trắng+chấm 6 hoặc joystick right |
+| phím mũi tên lên | joystick up, dpad up or space+dot1 |
+| phím mũi tên xuống | joystick down, dpad down or space+dot4 |
+| phím mũi tên trái | space+dot3, joystick left  or dpad left |
+| phím mũi tên phải | space+dot6, joystick right or dpad right |
 | phím shift+tab | khoảng trắng+chấm 1+chấm 3 |
 | phím tab | khoảng trắng+chấm 4+chấm 6 |
 | phím alt | khoảng trắng+chấm 1+chấm 3+chấm 4 (khoảng trắng+m) |
 | phím escape | khoảng trắng+chấm 1+chấm 5 (khoảng trắng+e) |
-| phím enter | chấm 8 hoặc joystick center |
+| phím enter | dot8, joystick center or dpad center |
 | phím windows | khoảng trắng+chấm 3+chấm 4 |
 | phím alt+tab | khoảng trắng+chấm 2+chấm 3+chấm 4+chấm 5 (khoảng trắng+t) |
 | Trình đơn NVDA | khoảng trắng+chấm 1+chấm 3+chấm 4+chấm 5 (khoảng trắng+n) |
