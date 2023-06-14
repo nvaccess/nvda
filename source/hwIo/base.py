@@ -25,7 +25,7 @@ import braille
 from logHandler import log
 import config
 import time
-from .ioThread import IoThread, apcsWillBeStronglyReferenced
+from .ioThread import IoThread, _apcsWillBeStronglyReferenced
 import NVDAState
 
 
@@ -95,7 +95,7 @@ class IoBase(object):
 		ioThread = self._ioThreadRef()
 		if not ioThread:
 			raise RuntimeError("I/O thread is no longer available")
-		if apcsWillBeStronglyReferenced:
+		if _apcsWillBeStronglyReferenced:
 			ioThread.queueAsApc(self._asyncReadBackwardsCompat)
 		else:
 			ioThread.queueAsApc(self._asyncRead)
@@ -175,10 +175,10 @@ class IoBase(object):
 			self._readBuf,
 			self._readSize,
 			byref(self._readOl),
-			ioThread.getCompletionRoutine(self._ioDone)
+			ioThread.queueAsCompletionRoutine(self._ioDone, self._readOl)
 		)
 
-	if apcsWillBeStronglyReferenced:
+	if _apcsWillBeStronglyReferenced:
 		def _asyncReadBackwardsCompat(self, param: Optional[int] = None):
 			"""Backwards compatible wrapper around L{_asyncRead} that calls it without param.
 			"""

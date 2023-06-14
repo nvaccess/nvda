@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022 NV Access Limited
+# Copyright (C) 2023 NV Access Limited, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -42,6 +42,12 @@ class Context(_Context, Enum):
 		lambda: globalVars.appArgs.secure,
 		# Translators: Reported when an action cannot be performed because Windows is locked.
 		_("Action unavailable while Windows is locked"),
+	)
+	RUNNING_LAUNCHER = (
+		lambda: globalVars.appArgs.launcher,
+		# Translators: Reported when an action cannot be performed because NVDA is running the launcher temporary
+		# version
+		_("Action unavailable in a temporary version of NVDA"),
 	)
 
 

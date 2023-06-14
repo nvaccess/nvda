@@ -166,6 +166,10 @@ class LabeledControlHelper(object):
 	# A handler is automatically added to the control to ensure the label is also enabled/disabled.
 	EnableChanged, EVT_ENABLE_CHANGED = newevent.NewEvent()
 
+	# When the control is shown / hidden this event is raised.
+	# A handler is automatically added to the control to ensure the label is also shown / hidden.
+	ShowChanged, EVT_SHOW_CHANGED = newevent.NewEvent()
+
 	def __init__(self, parent: wx.Window, labelText: str, wxCtrlClass: wx.Control, **kwargs):
 		""" @param parent: An instance of the parent wx window. EG wx.Dialog
 			@param labelText: The text to associate with a wx control.
@@ -183,12 +187,22 @@ class LabeledControlHelper(object):
 
 			def listenForEnableChanged(self, _ctrl: wx.Window):
 				self.Bind(wx.EVT_WINDOW_DESTROY, self._onDestroy)
+				self._labelText = self.GetLabelText()
 				_ctrl.Bind(LabeledControlHelper.EVT_ENABLE_CHANGED, self._onEnableChanged)
+				_ctrl.Bind(LabeledControlHelper.EVT_SHOW_CHANGED, self._onShowChanged)
 				self.isListening = True
 
 			def _onEnableChanged(self, evt: wx.Event):
 				if self.isListening and not self.isDestroyed:
 					self.Enable(evt.isEnabled)
+
+			def _onShowChanged(self, evt: wx.Event):
+				if self.isListening and not self.isDestroyed:
+					if evt.shouldShow:
+						self.SetLabelText(self._labelText)
+					else:
+						self.SetLabelText("")
+					self.Parent.Layout()
 
 		class WxCtrlWithEnableEvnt(wxCtrlClass):
 			def Enable(self, enable=True):
@@ -200,6 +214,16 @@ class LabeledControlHelper(object):
 				evt = LabeledControlHelper.EnableChanged(isEnabled=False)
 				wx.PostEvent(self, evt)
 				super().Disable()
+
+			def Show(self, show: bool = True):
+				evt = LabeledControlHelper.ShowChanged(shouldShow=show)
+				wx.PostEvent(self, evt)
+				super().Show(show)
+
+			def Hide(self):
+				evt = LabeledControlHelper.ShowChanged(shouldShow=False)
+				wx.PostEvent(self, evt)
+				super().Hide()
 
 		self._label = LabelEnableChangedListener(parent, label=labelText)
 		self._ctrl = WxCtrlWithEnableEvnt(parent, **kwargs)

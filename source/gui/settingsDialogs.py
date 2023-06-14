@@ -5,7 +5,7 @@
 # Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Bill Dengler, Thomas Stivers,
 # Julien Cochuyt, Peter Vágner, Cyrille Bougot, Mesar Hameed, Łukasz Golonka, Aaron Cannon,
 # Adriani90, André-Abush Clause, Dawid Pieper, Heiko Folkerts, Takuya Nishimoto, Thomas Stivers,
-# jakubl7545, mltony, Rob Meredith
+# jakubl7545, mltony, Rob Meredith, Burman's Computer and Education Ltd.
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 import logging
@@ -48,7 +48,13 @@ import brailleInput
 import vision
 import vision.providerInfo
 import vision.providerBase
-from typing import Callable, List, Optional, Any
+from typing import (
+	Any,
+	Callable,
+	List,
+	Optional,
+	Set,
+)
 import core
 import keyboardHandler
 import characterProcessing
@@ -164,48 +170,55 @@ class SettingsDialog(
 				)
 			SettingsDialog._instances[self] = self.DialogState.DESTROYED
 
-
 	def __init__(
-			self, parent,
-			resizeable=False,
-			hasApplyButton=False,
-			settingsSizerOrientation=wx.VERTICAL,
-			multiInstanceAllowed=False
+			self,
+			parent: wx.Window,
+			resizeable: bool = False,
+			hasApplyButton: bool = False,
+			settingsSizerOrientation: int = wx.VERTICAL,
+			multiInstanceAllowed: bool = False,
+			buttons: Set[int] = {wx.OK, wx.CANCEL},
 	):
 		"""
 		@param parent: The parent for this dialog; C{None} for no parent.
-		@type parent: wx.Window
 		@param resizeable: True if the settings dialog should be resizable by the user, only set this if
 			you have tested that the components resize correctly.
-		@type resizeable: bool
 		@param hasApplyButton: C{True} to add an apply button to the dialog; defaults to C{False} for backwards compatibility.
-		@type hasApplyButton: bool
+			Deprecated, use buttons instead.
 		@param settingsSizerOrientation: Either wx.VERTICAL or wx.HORIZONTAL. This controls the orientation of the
 			sizer that is passed into L{makeSettings}. The default is wx.VERTICAL.
-		@type settingsSizerOrientation: wx.Orientation
 		@param multiInstanceAllowed: Whether multiple instances of SettingsDialog may exist.
 			Note that still only one instance of a particular SettingsDialog subclass may exist at one time.
-		@type multiInstanceAllowed: bool
+		@param buttons: Buttons to add to the settings dialog.
+			Should be a subset of {wx.OK, wx.CANCEL, wx.APPLY, wx.CLOSE}.
 		"""
 		if gui._isDebug():
 			startTime = time.time()
 		windowStyle = wx.DEFAULT_DIALOG_STYLE
 		if resizeable:
-			windowStyle |= wx.RESIZE_BORDER | wx.MAXIMIZE_BOX
+			windowStyle |= wx.RESIZE_BORDER | wx.MAXIMIZE_BOX | wx.MINIMIZE_BOX
 		super().__init__(parent, title=self.title, style=windowStyle)
 
-		self.hasApply = hasApplyButton
+		buttonFlag = 0
+		for button in buttons:
+			buttonFlag |= button
+		if hasApplyButton:
+			log.debugWarning(
+				"The hasApplyButton parameter is deprecated. "
+				"Use buttons instead. "
+			)
+			buttonFlag |= wx.APPLY
+		self.hasApply = hasApplyButton or wx.APPLY in buttons
+		if not buttons.issubset({wx.OK, wx.CANCEL, wx.APPLY, wx.CLOSE}):
+			log.error(f"Unexpected buttons set provided: {buttons}")
 
 		self.mainSizer=wx.BoxSizer(wx.VERTICAL)
 		self.settingsSizer=wx.BoxSizer(settingsSizerOrientation)
 		self.makeSettings(self.settingsSizer)
 
 		self.mainSizer.Add(self.settingsSizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL | wx.EXPAND, proportion=1)
-		buttons = wx.OK | wx.CANCEL
-		if hasApplyButton:
-			buttons |= wx.APPLY
 		self.mainSizer.Add(
-			self.CreateSeparatedButtonSizer(buttons),
+			self.CreateSeparatedButtonSizer(buttonFlag),
 			border=guiHelper.BORDER_FOR_DIALOGS,
 			flag=wx.EXPAND | wx.BOTTOM | wx.LEFT | wx.RIGHT
 		)
@@ -215,6 +228,7 @@ class SettingsDialog(
 
 		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
 		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
+		self.Bind(wx.EVT_BUTTON, self.onClose, id=wx.ID_CLOSE)
 		self.Bind(wx.EVT_BUTTON, self.onApply, id=wx.ID_APPLY)
 		self.Bind(wx.EVT_CHAR_HOOK, self._enterActivatesOk_ctrlSActivatesApply)
 		# Garbage collection normally handles removing the settings instance, however this may not happen immediately
@@ -258,7 +272,7 @@ class SettingsDialog(
 		Sub-classes may override this method.
 		"""
 
-	def onOk(self, evt):
+	def onOk(self, evt: wx.CommandEvent):
 		"""Take action in response to the OK button being pressed.
 		Sub-classes may extend this method.
 		This base method should always be called to clean up the dialog.
@@ -266,7 +280,7 @@ class SettingsDialog(
 		self.DestroyLater()
 		self.SetReturnCode(wx.ID_OK)
 
-	def onCancel(self, evt):
+	def onCancel(self, evt: wx.CommandEvent):
 		"""Take action in response to the Cancel button being pressed.
 		Sub-classes may extend this method.
 		This base method should always be called to clean up the dialog.
@@ -274,7 +288,15 @@ class SettingsDialog(
 		self.DestroyLater()
 		self.SetReturnCode(wx.ID_CANCEL)
 
-	def onApply(self, evt):
+	def onClose(self, evt: wx.CommandEvent):
+		"""Take action in response to the Close button being pressed.
+		Sub-classes may extend this method.
+		This base method should always be called to clean up the dialog.
+		"""
+		self.DestroyLater()
+		self.SetReturnCode(wx.ID_CLOSE)
+
+	def onApply(self, evt: wx.CommandEvent):
 		"""Take action in response to the Apply button being pressed.
 		Sub-classes may extend or override this method.
 		This base method should be called to run the postInit method.
@@ -467,8 +489,8 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		super(MultiCategorySettingsDialog, self).__init__(
 			parent,
 			resizeable=True,
-			hasApplyButton=True,
-			settingsSizerOrientation=wx.HORIZONTAL
+			settingsSizerOrientation=wx.HORIZONTAL,
+			buttons={wx.OK, wx.CANCEL, wx.APPLY},
 		)
 
 		# setting the size must be done after the parent is constructed.
@@ -589,7 +611,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 					 "MultiCategorySettingsDialog.MIN_SIZE"
 					).format(cls, panel.Size[0])
 				)
-			panel.SetLabel(panel.title)
+			panel.SetLabel(panel.title.replace('&', '&&'))
 			panel.SetAccessible(SettingsPanelAccessible(panel))
 		return panel
 
@@ -2555,6 +2577,19 @@ class DocumentNavigationPanel(SettingsPanel):
 		self.paragraphStyleCombo.saveCurrentValueToConf()
 
 
+class AddonStorePanel(SettingsPanel):
+	# Translators: This is the label for the addon navigation settings panel.
+	title = _("Add-on Store")
+	helpId = "AddonStoreSettings"
+
+	def makeSettings(self, settingsSizer: wx.BoxSizer) -> None:
+		# sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+		pass
+
+	def onSave(self):
+		pass
+
+
 class TouchInteractionPanel(SettingsPanel):
 	# Translators: This is the label for the touch interaction settings panel.
 	title = _("Touch Interaction")
@@ -3014,6 +3049,42 @@ class AdvancedPanelControls(
 
 		# Translators: This is the label for a group of advanced options in the
 		# Advanced settings panel
+		label = _("Audio")
+		audio = wx.StaticBoxSizer(wx.VERTICAL, self, label=label)
+		audioBox = audio.GetStaticBox()
+		audioGroup = guiHelper.BoxSizerHelper(self, sizer=audio)
+		sHelper.addItem(audioGroup)
+
+		# Translators: This is the label for a checkbox control in the
+		#  Advanced settings panel.
+		label = _("Use WASAPI for audio output (requires restart)")
+		self.wasapiCheckBox: wx.CheckBox = audioGroup.addItem(
+			wx.CheckBox(audioBox, label=label)
+		)
+		self.bindHelpEvent("WASAPI", self.wasapiCheckBox)
+		self.wasapiCheckBox.Bind(wx.EVT_CHECKBOX, self.onWasapiChange)
+		self.wasapiCheckBox.SetValue(
+			config.conf["audio"]["wasapi"]
+		)
+		self.wasapiCheckBox.defaultValue = self._getDefaultValue(
+			["audio", "wasapi"])
+		# Translators: This is the label for a checkbox control in the
+		#  Advanced settings panel.
+		label = _("Volume of NVDA sounds follows voice volume (requires WASAPI)")
+		self.soundVolFollowCheckBox: wx.CheckBox = audioGroup.addItem(
+			wx.CheckBox(audioBox, label=label)
+		)
+		self.bindHelpEvent("SoundVolumeFollowsVoice", self.soundVolFollowCheckBox)
+		self.soundVolFollowCheckBox.SetValue(
+			config.conf["audio"]["soundVolumeFollowsVoice"]
+		)
+		self.soundVolFollowCheckBox.defaultValue = self._getDefaultValue(
+			["audio", "soundVolumeFollowsVoice"])
+		if not self.wasapiCheckBox.GetValue():
+			self.soundVolFollowCheckBox.Disable()
+
+		# Translators: This is the label for a group of advanced options in the
+		# Advanced settings panel
 		label = _("Debug logging")
 		debugLogSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=label)
 		debugLogGroup = guiHelper.BoxSizerHelper(self, sizer=debugLogSizer)
@@ -3073,6 +3144,9 @@ class AdvancedPanelControls(
 		path=config.getScratchpadDir(ensureExists=True)
 		os.startfile(path)
 
+	def onWasapiChange(self, evt: wx.CommandEvent):
+		self.soundVolFollowCheckBox.Enable(evt.IsChecked())
+
 	def _getDefaultValue(self, configPath):
 		return config.conf.getConfigValidation(configPath).default
 
@@ -3099,6 +3173,8 @@ class AdvancedPanelControls(
 			and self.loadChromeVBufWhenBusyCombo.isValueConfigSpecDefault()
 			and self.caretMoveTimeoutSpinControl.GetValue() == self.caretMoveTimeoutSpinControl.defaultValue
 			and self.reportTransparentColorCheckBox.GetValue() == self.reportTransparentColorCheckBox.defaultValue
+			and self.wasapiCheckBox.GetValue() == self.wasapiCheckBox.defaultValue
+			and self.soundVolFollowCheckBox.GetValue() == self.soundVolFollowCheckBox.defaultValue
 			and set(self.logCategoriesList.CheckedItems) == set(self.logCategoriesList.defaultCheckedItems)
 			and self.playErrorSoundCombo.GetSelection() == self.playErrorSoundCombo.defaultValue
 			and True  # reduce noise in diff when the list is extended.
@@ -3124,6 +3200,8 @@ class AdvancedPanelControls(
 		self.loadChromeVBufWhenBusyCombo.resetToConfigSpecDefault()
 		self.caretMoveTimeoutSpinControl.SetValue(self.caretMoveTimeoutSpinControl.defaultValue)
 		self.reportTransparentColorCheckBox.SetValue(self.reportTransparentColorCheckBox.defaultValue)
+		self.wasapiCheckBox.SetValue(self.wasapiCheckBox.defaultValue)
+		self.soundVolFollowCheckBox.SetValue(self.soundVolFollowCheckBox.defaultValue)
 		self.logCategoriesList.CheckedItems = self.logCategoriesList.defaultCheckedItems
 		self.playErrorSoundCombo.SetSelection(self.playErrorSoundCombo.defaultValue)
 		self._defaultsRestored = True
@@ -3154,6 +3232,8 @@ class AdvancedPanelControls(
 		config.conf["documentFormatting"]["reportTransparentColor"] = (
 			self.reportTransparentColorCheckBox.IsChecked()
 		)
+		config.conf["audio"]["wasapi"] = self.wasapiCheckBox.IsChecked()
+		config.conf["audio"]["soundVolumeFollowsVoice"] = self.soundVolFollowCheckBox.IsChecked()
 		config.conf["annotations"]["reportDetails"] = self.annotationsDetailsCheckBox.IsChecked()
 		config.conf["annotations"]["reportAriaDescription"] = self.ariaDescCheckBox.IsChecked()
 		config.conf["braille"]["enableHidBrailleSupport"] = self.supportHidBrailleCombo.GetSelection()
@@ -3641,6 +3721,17 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		)
 		self.bindHelpEvent("BrailleSettingsInterruptSpeech", self.brailleInterruptSpeechCombo)
 
+		self.brailleShowSelectionCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
+			labelText=_(
+				# Translators: This is a label for a combo-box in the Braille settings panel.
+				"Show se&lection"
+			),
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["braille", "showSelection"],
+			conf=config.conf,
+		)
+		self.bindHelpEvent("BrailleSettingsShowSelection", self.brailleShowSelectionCombo)
+
 		if gui._isDebug():
 			log.debug("Finished making settings, now at %.2f seconds from start"%(time.time() - startTime))
 
@@ -3665,6 +3756,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		config.conf["braille"]["wordWrap"] = self.wordWrapCheckBox.Value
 		config.conf["braille"]["focusContextPresentation"] = self.focusContextPresentationValues[self.focusContextPresentationList.GetSelection()]
 		self.brailleInterruptSpeechCombo.saveCurrentValueToConf()
+		self.brailleShowSelectionCombo.saveCurrentValueToConf()
 
 	def onShowCursorChange(self, evt):
 		self.cursorBlinkCheckBox.Enable(evt.IsChecked())
@@ -4110,6 +4202,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		BrowseModePanel,
 		DocumentFormattingPanel,
 		DocumentNavigationPanel,
+		# AddonStorePanel, currently empty
 	]
 	if touchHandler.touchSupported():
 		categoryClasses.append(TouchInteractionPanel)

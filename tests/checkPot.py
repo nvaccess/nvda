@@ -36,8 +36,6 @@ EXPECTED_MESSAGES_WITHOUT_COMMENTS = {
 	'sorted ascending',
 	'sorted descending',
 	'gesture map File Error',
-	'text \\"%s\\" not found',
-	'Find Error',
 	'Type help(object) to get help about object.',
 	'Type exit() to exit the console',
 	'NVDA Python Console',
