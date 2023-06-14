@@ -774,6 +774,10 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 	#: This allows us to have a single callback in the class rather than on
 	#: each instance, which prevents reference cycles.
 	_instances = weakref.WeakValueDictionary()
+	#: The previous value of the soundVolumeFollowsVoice setting. This is used to
+	#: determine when this setting has been disabled when it was previously
+	#: enabled.
+	_prevSoundVolFollow: bool = False
 
 	def __init__(
 			self,
@@ -814,6 +818,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			import audioDucking
 			if audioDucking.isAudioDuckingSupported():
 				self._audioDucker = audioDucking.AudioDucker()
+		self._session = session
 		self._player = NVDAHelper.localLib.wasPlay_create(
 			self._deviceNameToId(outputDevice),
 			format,
@@ -857,6 +862,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			WavePlayer.audioDeviceError_static = True
 			raise
 		WasapiWavePlayer.audioDeviceError_static = False
+		self._sessionVolumeFollow()
 
 	def close(self):
 		"""For WASAPI, this just stops playback.
@@ -913,6 +919,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			self._audioDucker.disable()
 		NVDAHelper.localLib.wasPlay_stop(self._player)
 		self._doneCallbacks = {}
+		self._sessionVolumeFollow()
 
 	def pause(self, switch: bool):
 		"""Pause or unpause playback.
@@ -934,6 +941,21 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		associated with this WavePlayer instance.
 		"""
 		NVDAHelper.localLib.wasPlay_setSessionVolume(self._player, c_float(level))
+
+	def _sessionVolumeFollow(self):
+		if self._session is not soundsSession:
+			return
+		follow = config.conf["audio"]["soundVolumeFollowsVoice"]
+		if not follow and WavePlayer._prevSoundVolFollow:
+			# Following was disabled. Reset the sound volume to maximum.
+			self.setSessionVolume(1.0)
+		WavePlayer._prevSoundVolFollow = follow
+		if not follow:
+			return
+		import synthDriverHandler
+		synth = synthDriverHandler.getSynth()
+		if synth and synth.isSupported("volume"):
+			self.setSessionVolume(synth.volume / 100)
 
 	@staticmethod
 	def _getDevices():
