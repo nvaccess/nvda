@@ -137,6 +137,7 @@ def nvdaControllerInternal_reportLiveRegion(text: str, politeness: str):
 		return -1
 	import queueHandler
 	import speech
+	import braille
 	from aria import AriaLivePoliteness
 	from speech.priorities import Spri
 	try:
@@ -155,6 +156,11 @@ def nvdaControllerInternal_reportLiveRegion(text: str, politeness: str):
 			if politenessValue == AriaLivePoliteness.ASSERTIVE
 			else Spri.NORMAL
 		)
+	)
+	queueHandler.queueFunction(
+		queueHandler.eventQueue,
+		braille.handler.message,
+		text
 	)
 	return 0
 
