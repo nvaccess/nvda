@@ -32,6 +32,34 @@ class ErrorAddonInstallDialogWithCancelButton(ErrorAddonInstallDialog):
 		cancelButton.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.CANCEL))
 
 
+class ErrorAddonInstallDialogWithYesNoButtons(ErrorAddonInstallDialog):
+	def _addButtons(self, buttonHelper: "ButtonHelper") -> None:
+		addonInfoButton = buttonHelper.addButton(
+			self,
+			# Translators: A button in the addon installation warning / blocked dialog which shows
+			# more information about the addon
+			label=pgettext("addonStore", "&About add-on...")
+		)
+		addonInfoButton.Bind(wx.EVT_BUTTON, lambda evt: self._showAddonInfoFunction())
+
+		yesButton = buttonHelper.addButton(
+			self,
+			id=wx.ID_YES,
+			# Translators: A button in the addon installation blocked dialog which will confirm the available action.
+			label=pgettext("addonStore", "&Yes")
+		)
+		yesButton.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.YES))
+
+		noButton = buttonHelper.addButton(
+			self,
+			id=wx.ID_NO,
+			# Translators: A button in the addon installation blocked dialog which will dismiss the dialog.
+			label=pgettext("addonStore", "&No")
+		)
+		noButton.SetDefault()
+		noButton.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.NO))
+
+
 def _shouldProceedWhenInstalledAddonVersionUnknown(
 		parent: wx.Window,
 		addon: AddonGUIModel
