@@ -19,19 +19,6 @@ if TYPE_CHECKING:
 	from guiHelper import ButtonHelper
 
 
-class ErrorAddonInstallDialogWithCancelButton(ErrorAddonInstallDialog):
-	def _addButtons(self, buttonHelper: "ButtonHelper") -> None:
-		super()._addButtons(buttonHelper)
-		cancelButton = buttonHelper.addButton(
-			self,
-			id=wx.ID_CANCEL,
-			# Translators: A button in the addon installation blocked dialog which will dismiss the dialog.
-			label=pgettext("addonStore", "Cancel")
-		)
-		cancelButton.SetDefault()
-		cancelButton.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.CANCEL))
-
-
 class ErrorAddonInstallDialogWithYesNoButtons(ErrorAddonInstallDialog):
 	def _addButtons(self, buttonHelper: "ButtonHelper") -> None:
 		addonInfoButton = buttonHelper.addButton(
