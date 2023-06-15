@@ -82,13 +82,13 @@ def _shouldProceedWhenInstalledAddonVersionUnknown(
 	lastTestedNVDAVersion=addonAPIVersion.formatForGUI(addon.lastTestedNVDAVersion),
 	NVDAVersion=addonAPIVersion.formatForGUI(addonAPIVersion.CURRENT)
 	)
-	return ErrorAddonInstallDialogWithCancelButton(
+	return ErrorAddonInstallDialogWithYesNoButtons(
 		parent=parent,
 		# Translators: The title of a dialog presented when an error occurs.
 		title=pgettext("addonStore", "Add-on not compatible"),
 		message=incompatibleMessage,
 		showAddonInfoFunction=lambda: _showAddonInfo(addon)
-	).ShowModal() == wx.OK
+	).ShowModal() == wx.YES
 
 
 def _shouldProceedToRemoveAddonDialog(
@@ -128,13 +128,13 @@ def _shouldInstallWhenAddonTooOldDialog(
 	lastTestedNVDAVersion=addonAPIVersion.formatForGUI(addon.lastTestedNVDAVersion),
 	NVDAVersion=addonAPIVersion.formatForGUI(addonAPIVersion.CURRENT)
 	)
-	return ErrorAddonInstallDialogWithCancelButton(
+	return ErrorAddonInstallDialogWithYesNoButtons(
 		parent=parent,
 		# Translators: The title of a dialog presented when an error occurs.
 		title=pgettext("addonStore", "Add-on not compatible"),
 		message=incompatibleMessage,
 		showAddonInfoFunction=lambda: _showAddonInfo(addon)
-	).ShowModal() == wx.OK
+	).ShowModal() == wx.YES
 
 
 def _shouldEnableWhenAddonTooOldDialog(
@@ -157,13 +157,13 @@ def _shouldEnableWhenAddonTooOldDialog(
 	lastTestedNVDAVersion=addonAPIVersion.formatForGUI(addon.lastTestedNVDAVersion),
 	NVDAVersion=addonAPIVersion.formatForGUI(addonAPIVersion.CURRENT)
 	)
-	return ErrorAddonInstallDialogWithCancelButton(
+	return ErrorAddonInstallDialogWithYesNoButtons(
 		parent=parent,
 		# Translators: The title of a dialog presented when an error occurs.
 		title=pgettext("addonStore", "Add-on not compatible"),
 		message=incompatibleMessage,
 		showAddonInfoFunction=lambda: _showAddonInfo(addon)
-	).ShowModal() == wx.OK
+	).ShowModal() == wx.YES
 
 
 def _showAddonInfo(addon: AddonGUIModel) -> None:
