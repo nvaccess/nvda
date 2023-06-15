@@ -913,9 +913,10 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 				field['line-spacing']=pgettext('line spacing value',"at least %.1f pt")%float(lineSpacingVal)
 			elif lineSpacingRule==wdLineSpaceMultiple:
 				multiLineSpacingVal = float(lineSpacingVal) / 12.0
-				# Translators: line spacing of x lines
+				
 				field['line-spacing'] = npgettext(
 					'line spacing value',
+					# Translators: line spacing of x lines
 					"%.1f line",
 					"%.1f lines",
 					multiLineSpacingVal,
