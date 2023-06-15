@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2023 NV Access Limited
+# Copyright (C) 2022-2023 NV Access Limited, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -132,6 +132,7 @@ class AddonStoreDialog(SettingsDialog):
 		self.externalInstallButton.Bind(wx.EVT_BUTTON, self.openExternalInstall, self.externalInstallButton)
 		self.bindHelpEvent("AddonStoreInstalling", self.externalInstallButton)
 
+		settingsSizer.AddSpacer(5)
 		settingsSizer.Add(generalActions.sizer)
 		self.onListTabPageChange(None)
 
