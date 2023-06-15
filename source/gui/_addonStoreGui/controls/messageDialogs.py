@@ -60,7 +60,7 @@ def _shouldProceedWhenInstalledAddonVersionUnknown(
 		"Warning: add-on installation may result in downgrade: {name}. "
 		"The installed add-on version cannot be compared with the add-on store version. "
 		"Installed version: {oldVersion}. "
-		"Available version: {version}. "
+		"Available version: {version}.\n"
 		"Proceed with installation anyway? "
 		).format(
 	name=addon.displayName,
@@ -107,7 +107,7 @@ def _shouldInstallWhenAddonTooOldDialog(
 		"Check for an updated version of this add-on if possible. "
 		"The last tested NVDA version for this add-on is {lastTestedNVDAVersion}, "
 		"your current NVDA version is {NVDAVersion}. "
-		"Installation may cause unstable behavior in NVDA. "
+		"Installation may cause unstable behavior in NVDA.\n"
 		"Proceed with installation anyway? "
 		).format(
 	name=addon.displayName,
@@ -136,7 +136,7 @@ def _shouldEnableWhenAddonTooOldDialog(
 		"Check for an updated version of this add-on if possible. "
 		"The last tested NVDA version for this add-on is {lastTestedNVDAVersion}, "
 		"your current NVDA version is {NVDAVersion}. "
-		"Enabling may cause unstable behavior in NVDA. "
+		"Enabling may cause unstable behavior in NVDA.\n"
 		"Proceed with enabling anyway? "
 		).format(
 	name=addon.displayName,
