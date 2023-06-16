@@ -55,8 +55,8 @@ def _shouldProceedWhenInstalledAddonVersionUnknown(
 	assert addon._addonHandlerModel
 	incompatibleMessage = pgettext(
 		"addonStore",
-		# Translators: The message displayed when installing an incompatible add-on package,
-		# because it requires a new version than is currently installed.
+		# Translators: The message displayed when updating an add-on, but the installed version
+		# identifier can not be compared with the version to be installed.
 		"Warning: add-on installation may result in downgrade: {name}. "
 		"The installed add-on version cannot be compared with the add-on store version. "
 		"Installed version: {oldVersion}. "
