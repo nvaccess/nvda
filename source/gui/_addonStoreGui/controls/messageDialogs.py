@@ -89,7 +89,7 @@ def _shouldProceedToRemoveAddonDialog(
 			"Are you sure you wish to remove the {addon} add-on from NVDA? "
 			"This cannot be undone."
 		).format(addon=addon.name),
-		# Translators: Title for message asking if the user really wishes to remove the selected Addon.
+		# Translators: Title for message asking if the user really wishes to remove the selected Add-on.
 		pgettext("addonStore", "Remove Add-on"),
 		wx.YES_NO | wx.NO_DEFAULT | wx.ICON_WARNING
 	) == wx.YES
