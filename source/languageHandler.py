@@ -165,6 +165,8 @@ def getLanguageDescription(language: str) -> Optional[str]:
 		# and `languageHandler` is responsible for setting the translation.
 		import localesData
 		desc = localesData.LANG_NAMES_TO_LOCALIZED_DESCS.get(language, None)
+	if not desc:
+		log.debugWarning(f'Unable to provide a describption for the following language: {language}')
 	return desc
 
 
