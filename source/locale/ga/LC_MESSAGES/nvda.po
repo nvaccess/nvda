@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA 2022.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-26 00:01+0000\n"
-"PO-Revision-Date: 2023-05-26 15:46+0100\n"
+"POT-Creation-Date: 2023-06-09 00:02+0000\n"
+"PO-Revision-Date: 2023-06-15 14:53+0100\n"
 "Last-Translator: Ronan McGuirk <ronan.mcguirk@gmail.com>\n"
 "Language-Team: Gaeilge <ga@li.org>\n"
 "Language: ga\n"
@@ -4417,15 +4417,13 @@ msgid "Plugins reloaded"
 msgstr "Breiseáin athluchtaithe"
 
 #. Translators: input help mode message for Report destination URL of a link command
-#, fuzzy
 msgid ""
 "Report the destination URL of the link at the position of caret or focus. If "
 "pressed twice, shows the URL in a window for easier review."
 msgstr ""
-"Tabhair tuairisc ar sprioc  aimsitheora aonfhoirmigh acmhainne an nasc san "
-"oibiacht nascleanteora. Má bhrúitear faoi dhó é, taispeánfar é i bhfuinneog "
-"le haghaidh athbhreithnithe.\n"
-"   "
+"Tabhair tuairisc ar spriocaimsitheoir aonfhoirmeach acmhainne an naisc ag "
+"suíomh na caraite nó an fhócais. Má bhrúitear faoi dhó é, taispeántar i "
+"bhfuinneog é le haghaidh athbreithnithe níos éasca."
 
 #. Translators: Informs the user that the link has no destination
 msgid "Link has no apparent destination"
@@ -4442,13 +4440,12 @@ msgid "Not a link."
 msgstr "Ní nasc é seo"
 
 #. Translators: input help mode message for Report URL of a link in a window command
-#, fuzzy
 msgid ""
 "Displays the destination URL of the link at the position of caret or focus "
 "in a window, instead of just speaking it. May be preferred by braille users."
 msgstr ""
-"Tugtar tuairisc ar sprioc  aimsitheora aonfhoirmigh acmhainne an nasc san "
-"oibiacht nascleanteora i bhfuinneog in ionad é a labhairt. D’fhéadfadh le "
+"Taispeántar spriocaimsitheoir aonfhoirmeach acmhainne an naisc ag suíomh an "
+"fhócais nó na caraite, i bhfuinneog  in ionad í a labhairt. D’fhéadfadh le "
 "húsáideoirí Braille é seo a roghnú."
 
 #. Translators: Input help mode message for a touchscreen gesture.
@@ -4559,9 +4556,8 @@ msgid "Please disable screen curtain before using Windows OCR."
 msgstr "Díchumasaigh an cuirtín scáileáin sula n-úsáidtear Windows OCR"
 
 #. Translators: Describes a command.
-#, fuzzy
 msgid "Cycles through the available languages for Windows OCR"
-msgstr "Romhnaigh cruth an chursóra Bhraille."
+msgstr "Scroláltar trí na teangacha atá ar fáil maidir le OCR Windows."
 
 #. Translators: Input help mode message for toggle report CLDR command.
 msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
@@ -7343,14 +7339,14 @@ msgid "{firstAddress} through {lastAddress}"
 msgstr "{firstAddress} go dtí {lastAddress}"
 
 #. Translators: a measurement in inches
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "{val:.2f} inches"
-msgstr "{val:.2f} in"
+msgstr "{val:.2f} órlach"
 
 #. Translators: a measurement in centimetres
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "{val:.2f} centimetres"
-msgstr "{val:.2f} cm"
+msgstr "{val:.2f} cheintiméadar"
 
 #. Translators: LibreOffice, report cursor position in the current page
 #, python-brace-format
@@ -7358,6 +7354,8 @@ msgid ""
 "cursor positioned {horizontalDistance} from left edge of page, "
 "{verticalDistance} from top edge of page"
 msgstr ""
+"Tá an cúrsóir suite  {horizontalDistance} ó imeall clé an leathanaigh, "
+"agus,  {verticalDistance} ó bharr an leathanaigh"
 
 msgid "left"
 msgstr "clé"
@@ -8592,22 +8590,20 @@ msgid "has note"
 msgstr "Tá nóta ann "
 
 #. Translators: Presented when a control has a pop-up dialog.
-#, fuzzy
 msgid "opens dialog"
-msgstr "dialóg"
+msgstr "Osclaítear an dialóg"
 
 #. Translators: Presented when a control has a pop-up grid.
 msgid "opens grid"
-msgstr ""
+msgstr "osclaítear an ghreille"
 
 #. Translators: Presented when a control has a pop-up list box.
-#, fuzzy
 msgid "opens list"
-msgstr "liosta anuas"
+msgstr "osclaítear an liosta"
 
 #. Translators: Presented when a control has a pop-up tree.
 msgid "opens tree"
-msgstr ""
+msgstr "osclaítear an crann"
 
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
@@ -9725,6 +9721,9 @@ msgid ""
 "Please specify the absolute path where the portable copy should be created. "
 "It may include system variables (%temp%, %homepath%, etc.)."
 msgstr ""
+"Sainigh an dearbhchosán ar ghá an chóip inrite a chruthú le do thoil. Is "
+"féidir athróga córais a bheith san áireamh mar shampla %temp%, %homepath%,  "
+"agus araile."
 
 #. Translators: The title of the dialog presented while a portable copy of NVDA is being created.
 msgid "Creating Portable Copy"
@@ -9740,15 +9739,15 @@ msgstr "Ní raibh NVDA ábalta comhad éigin a bhaint nó a fhorscríobh."
 
 #. Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
 #. {error} will be replaced with the specific error message.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Failed to create portable copy: {error}."
-msgstr "Níorbh fhéidir cóip inaistrithe a chruthú: %s"
+msgstr "Níorbh fhéidir cóip inrite a chruthú: {error} "
 
 #. Translators: The message displayed when a portable copy of NVDA has been successfully created.
 #. {dir} will be replaced with the destination directory.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Successfully created a portable copy of NVDA at {dir}"
-msgstr "Cruthaíodh cóip inaistrithe de NVDA ag %s"
+msgstr "Tá cóip inrite de NVDA cruthaithe go sásúil ag {dir}"
 
 #. Translators: The title of the NVDA log viewer window.
 msgid "NVDA Log Viewer"
@@ -11175,14 +11174,14 @@ msgid "Dictionary Entry Error"
 msgstr "Earráid san fhoclóir"
 
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Regular Expression error in the pattern field: \"{error}\"."
-msgstr "Earráid sa slonn rialta \"%s\" "
+msgstr "Tá earráid sloinn rialta i réimse an phatrúin \"{error}\"."
 
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Regular Expression error in the replacement field: \"{error}\"."
-msgstr "Earráid sa slonn rialta \"%s\" "
+msgstr "Tá earráid sloinn rialta sa réimse athchuir \"{error}\"."
 
 #. Translators: The label for the list box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -11574,14 +11573,13 @@ msgid "not marked"
 msgstr "gan mharc"
 
 #. Translators: Reported when text is color-highlighted
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "highlighted in {color}"
-msgstr "{color} geal"
+msgstr "Aibhsithe in {color}"
 
 #. Translators: Reported when text is no longer marked
-#, fuzzy
 msgid "not highlighted"
-msgstr "gan aibhsiú"
+msgstr "gan aibhsiú."
 
 #. Translators: Reported when text is marked as strong (e.g. bold)
 msgid "strong"
@@ -11951,14 +11949,12 @@ msgid "No system battery"
 msgstr "níl aon chadhnra ann"
 
 #. Translators: Reported when the battery is plugged in, and now is charging.
-#, fuzzy
 msgid "Plugged in"
-msgstr "moladh"
+msgstr "plugáilte isteach"
 
 #. Translators: Reported when the battery is no longer plugged in, and now is not charging.
-#, fuzzy
 msgid "Unplugged"
-msgstr "Tugtha faoi aire"
+msgstr "plugáilte amach"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
 #, python-brace-format
