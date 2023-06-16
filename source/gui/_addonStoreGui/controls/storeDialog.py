@@ -132,7 +132,7 @@ class AddonStoreDialog(SettingsDialog):
 		self.externalInstallButton.Bind(wx.EVT_BUTTON, self.openExternalInstall, self.externalInstallButton)
 		self.bindHelpEvent("AddonStoreInstalling", self.externalInstallButton)
 
-		settingsSizer.AddSpacer(5)
+		settingsSizer.AddSpacer(guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
 		settingsSizer.Add(generalActions.sizer)
 		self.onListTabPageChange(None)
 
