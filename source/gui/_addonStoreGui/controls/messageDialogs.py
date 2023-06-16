@@ -101,8 +101,8 @@ def _shouldInstallWhenAddonTooOldDialog(
 ) -> bool:
 	incompatibleMessage = pgettext(
 		"addonStore",
-		# Translators: The message displayed when installing an incompatible add-on package,
-		# because it requires a new version than is currently installed.
+		# Translators: The message displayed when installing an add-on package that is incompatible
+		# because the add-on is too old for the running version of NVDA.
 		"Warning: add-on is incompatible: {name} {version}. "
 		"Check for an updated version of this add-on if possible. "
 		"The last tested NVDA version for this add-on is {lastTestedNVDAVersion}, "
