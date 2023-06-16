@@ -27,6 +27,7 @@ from typing import (
 	Optional,
 	Tuple,
 	Union,
+	Callable,
 )
 
 #a few Windows locale constants
@@ -309,14 +310,16 @@ def makePgettext(translations):
 	return pgettext
 
 
-def makeNpgettext(translations):
-	"""Obtaina  npgettext function for use with a gettext translations instance.
+def makeNpgettext(
+		translations: Union[None, gettext.GNUTranslations, gettext.NullTranslations],
+) -> Callable[[str, str, str, Union[int, float]], str]:
+	"""Obtain a  npgettext function for use with a gettext translations instance.
 	npgettext is used to support message contexts with respect to ngettext,
 	but Python 3.7's gettext module doesn't support this,
 	so NVDA must provide its own implementation.
 	"""
 	if isinstance(translations, gettext.GNUTranslations):
-		def npgettext(context, msgSingular, msgPlural, n):
+		def npgettext(context: str, msgSingular: str, msgPlural: str, n: Union[int, float]) -> str:
 			try:
 				# Look up the message with its context.
 				return translations._catalog[(f"{context}\x04{msgSingular}", translations.plural(n))]
@@ -324,7 +327,7 @@ def makeNpgettext(translations):
 				return msgSingular if n == 1 else msgPlural
 	elif isinstance(translations, gettext.NullTranslations):
 		# A language without a translation catalog, such as English.
-		def npgettext(context, msgSingular, msgPlural, n):
+		def npgettext(context: str, msgSingular: str, msgPlural: str, n: Union[int, float]) -> str:
 			return msgSingular if n == 1 else msgPlural
 	else:
 		raise ValueError("%s is Not a GNUTranslations or NullTranslations object" % translations)

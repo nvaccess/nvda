@@ -920,7 +920,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 					"%.1f line",
 					"%.1f lines",
 					multiLineSpacingVal,
-				) % (multiLineSpacingVal)
+				) % multiLineSpacingVal
 		revisionType=int(field.pop('wdRevisionType',0))
 		if revisionType==wdRevisionInsert:
 			field['revision-insertion']=True
