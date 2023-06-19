@@ -2121,6 +2121,7 @@ Folgende Optionen sind enthalten:
 
 ==== Erkennungssprache ====[Win10OcrSettingsRecognitionLanguage]
 In diesem Kombinationsfeld können Sie die Sprache festlegen, die für die Zeichenerkennung verwendet werden soll.
+Um von überall aus durch die verfügbaren Sprachen zu wechseln, weisen Sie bitte einen Tastenbefehl zu, indem Sie das Dialogfeld für die [Tastenbefehle #InputGestures] verwenden.
 
 +++ Erweiterte Einstellungen +++[AdvancedSettings]
 Achtung! Die Einstellungen in dieser Kategorie sind für fortgeschrittene Benutzer und können dazu führen, dass NVDA bei falscher Konfiguration nicht richtig funktioniert.
@@ -2136,8 +2137,8 @@ Dies kann auch der Fall sein, wenn Sie sich nicht sicher sind, ob die Einstellun
 
 ==== Laden von benutzerdefiniertem Code aus dem Developer Scratchpad-Verzeichnis aktivieren ====[AdvancedSettingsEnableScratchpad]
 Bei der Entwicklung von NVDA-Erweiterungen ist es sinnvoll, Code bereits beim Schreiben testen zu können.
-Diese Option ermöglicht es NVDA, benutzerdefinierte AppModule, globalPlugins, BrailleDisplayDrivers und synthDrivers aus einem speziellen Developer Scratchpad-Verzeichnis in Ihrem NVDA-Benutzerkonfigurationsverzeichnis zu laden.
-Bisher hat NVDA benutzerdefinierten Code direkt aus dem Konfigurationsverzeichnis des Benutzers geladen, ohne dass dies deaktiviert werden konnte.
+Wenn diese Option aktiviert ist, kann NVDA benutzerdefinierte Unterverzeichnisse appModules, globalPlugins, brailleDisplayDrivers, synthDrivers und visionEnhancedProviders aus einem speziellen Entwickler-Scratchpad-Verzeichnis im NVDA-Benutzerkonfigurationsverzeichnis laden.
+Äquivalent wie in NVDA-Erweiterungen werden diese Module beim Starten von NVDA oder, im Fall von appModules und globalPlugins, beim [Nachladen von Plugins #ReloadPlugins] geladen.
 Diese Option ist standardmäßig deaktiviert und stellt sicher, dass kein ungetesteter Code ohne explizites Wissen des Benutzers in NVDA ausgeführt wird.
 Wenn Sie benutzerdefinierten Code an andere weitergeben möchten, sollten Sie ihn als NVDA-Erweiterungspaket verpacken.
 
@@ -3642,38 +3643,42 @@ Wo diese Tasten zu finden sind, entnehmen Sie bitte der Dokumentation der Braill
 | Zur untersten Zeile in der Übersicht springen | ``end1``, ``end2`` |
 | Das Navigator-Objekt auf den aktuellen Fokus setzen | ``eCursor1``, ``eCursor2`` |
 | Zum aktuellen Fokus wechseln | ``cursor1``, ``cursor2`` |
-| Den Mauszeiger auf das aktuelle Navigator-Objekt ziehen  | ``home1+home2`` |
-| Das Navigator-Objekt auf das aktuelle Objekt unter dem Mauszeiger setzen und liest es vor | ``end1+end2`` |
+| Den Mauszeiger auf das aktuelle Navigator-Objekt verschieben | ``home1+home2`` |
+| Das Navigator-Objekt auf das aktuelle Objekt unter dem Mauszeiger setzen und dieses mitteilen | ``end1+end2`` |
 | Den Fokus auf das aktuelle Navigator-Objekt verschieben | ``eCursor1+eCursor2`` |
 | Die Kopplung der braille-Ausgabe umschalten | ``cursor1+cursor2`` |
 | Mit der Braillezeile in die vorherige Zeile navigieren | ``up1``, ``up2``, ``up3`` |
 | Mit der Braillezeile in die nächste Zeile navigieren | ``down1``, ``down2``, ``down3`` |
-| Mit der braillezeile rückwärtsscrollen | ``left``, ``lWheelLeft``, ``rWheelLeft`` |
-| Mit der braillezeile vorwärtsscrollen | ``right``, ``lWheelRight``, ``rWheelRight`` |
+| Mit der braillezeile rückwärtsnavigieren | ``left``, ``lWheelLeft``, ``rWheelLeft`` |
+| Mit der braillezeile vorwärtsnavigieren | ``right``, ``lWheelRight``, ``rWheelRight`` |
 | Zum Braille-Modul springen | ``routing`` |
-| Text-Formatierung unter dem aktuellen Braille_modul vorlesen | ``secondary routing`` |
+| Text-Formatierung unter dem aktuellen Braille-Modul mitteilen | ``secondary routing`` |
 | Umschalten der Darstellung von Kontextinformationen in Braille-Schrift | ``attribute1+attribute3`` |
-| Zwischen den Sprachmodi Aus, Signalton und Sprechen umschalten | ``attribute2+attribute4`` |
+| Zwischen den Sprachmodi Aus, Signaltöne und Sprechen umschalten | ``attribute2+attribute4`` |
 | Zum vorherigen Darstellungsmodus wechseln (z. B. Objekt, Dokument oder Bildschirm) | ``f1`` |
 | Zum nächsten Darstellungsmodus wechseln (z. B. Objekt, Dokument oder Bildschirm) | ``f2`` |
-| Das Navigator-Objekt zu dem Objekt ziehen, welches es enthält | ``f3`` |
-| Das Navigator-Objekt zum ersten Objekt innerhalb des Objekts ziehen | ``f4`` |
+| Das Navigator-Objekt zu dem Objekt verschieben, das es enthält | ``f3`` |
+| Das Navigator-Objekt zum ersten Objekt innerhalb des Objekts verschieben | ``f4`` |
 | Das Navigator-Objekt zum vorherigen Objekt verschieben | ``f5`` |
 | Das Navigator-Objekt zum nächsten Objekt verschieben | ``f6`` |
-| Das aktuelle Navigator-Objekt vorlesen | ``f7`` |
-| Informationen über die Position des Textes oder Objekts am NVDA-Cursor vorlesen | ``f8`` |
+| Das aktuelle Navigator-Objekt mitteilen | ``f7`` |
+| Informationen über die Position des Textes oder des Objekts am NVDA-Cursor mitteilen | ``f8`` |
+| Braille_einstellungen anzeigen | ``f1+home1``, ``f9+home2`` |
+| Teilt den Inhalt der Statusleiste mit und verschiebt das Navigator-Objekt dorthin | ``f1+end1``, ``f9+end2`` |
+| Ring der Braille-cursor-Form | ``f1+eCursor1``, ``f9+eCursor2`` |
+| Umschalten des Braille-Cursors | ``f1+cursor1``, ``f9+cursor2`` |
 | Die Standardaktion für das aktuelle Navigator-Objekt ausführen | ``f7+f8`` |
-| Datum/Uhrzeit vorlesen | ``f9`` |
+| Datum/Uhrzeit mitteilen | ``f9`` |
 | Den Batterie-Status und die verbleibende Zeit anzeigen, sofern der Netzstecker nicht eingesteckt ist | ``f10`` |
-| Titelleiste vorlesen | ``f11`` |
-| Statuszeile vorlesen | ``f12`` |
-| Die aktuelle Zeile unter dem Anwendungs-Cursor vorlesen | ``f13`` |
-| Alles Vorlesen | ``f14`` |
-| Das aktuelle Zeichen unter dem NVDA-Cursor vorlesen | ``f15`` |
-| Die Zeile des aktuellen Navigator-Objekts vorlesen, in der sich der NVDA-Cursor befindet | ``f16`` |
-| Das Wort unter dem aktuellen Navigator-Objekt vorlesen, auf dem sich der NVDA-Cursor befindet | ``f15+f16`` |
-| Den NVDA-Cursor zur vorherigen Zeile des aktuellen Navigator-Objekts ziehen und diese vorlesen | ``lWheelUp``, ``rWheelUp`` |
-| Den NVDA-Cursor zur nächsten Zeile des aktuellen Navigator-Objekts ziehen und diese vorlesen | ``lWheelDown``, ``rWheelDown`` |
+| Titelleiste mitteilen | ``f11`` |
+| Statuszeile mitteilen | ``f12`` |
+| Die aktuelle Zeile unter dem Anwendungs-Cursor mitteilen | ``f13`` |
+| Alles Lesen | ``f14`` |
+| Das aktuelle Zeichen unter dem NVDA-Cursor mitteilen | ``f15`` |
+| Die Zeile des aktuellen Navigator-Objekts mitteilen, in der sich der NVDA-Cursor befindet | ``f16`` |
+| Das Wort unter dem aktuellen Navigator-Objekt mitteilen, auf dem sich der NVDA-Cursor befindet | ``f15+f16`` |
+| Den NVDA-Cursor zur vorherigen Zeile des aktuellen Navigator-Objekts ziehen und diese mitteilen | ``lWheelUp``, ``rWheelUp`` |
+| Den NVDA-Cursor zur nächsten Zeile des aktuellen Navigator-Objekts ziehen und diese mitteilen | ``lWheelDown``, ``rWheelDown`` |
 | ``Windows-Taste+D`` (Desktop in den Vordergrund holen) | ``attribute1`` |
 | ``Windows-Taste+E`` (Dieser PC) | ``attribute2`` |
 | ``Windows-Taste+B`` (Infobereich) | ``attribute3`` |
