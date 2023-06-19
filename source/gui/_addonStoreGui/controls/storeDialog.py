@@ -47,7 +47,6 @@ class AddonStoreDialog(SettingsDialog):
 		self._storeVM.onDisplayableError.register(self.handleDisplayableError)
 		self._actionsContextMenu = _ActionsContextMenu(self._storeVM)
 		super().__init__(parent, resizeable=True, buttons={wx.CLOSE})
-		self.Maximize()
 
 	def _enterActivatesOk_ctrlSActivatesApply(self, evt: wx.KeyEvent):
 		"""Disables parent behaviour which overrides behaviour for enter and ctrl+s"""
