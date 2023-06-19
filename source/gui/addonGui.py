@@ -548,12 +548,12 @@ def installAddon(parentWindow: wx.Window, addonPath: str) -> bool:  # noqa: C901
 	try:
 		# Use context manager to ensure that `done` and `Destroy` are called on the progress dialog afterwards
 		with doneAndDestroy(progressDialog):
-			gui.ExecAndPump(addonHandler.installAddonBundle, bundle)
 			if prevAddon:
 				prevAddon.requestRemove()
+			gui.ExecAndPump(addonHandler.installAddonBundle, bundle)
 			return True
 	except:
-		log.error("Error installing  addon bundle from %s" % addonPath, exc_info=True)
+		log.error("Error installing addon bundle from %s" % addonPath, exc_info=True)
 		gui.messageBox(
 			# Translators: The message displayed when an error occurs when installing an add-on package.
 			_("Failed to install add-on from %s") % addonPath,
