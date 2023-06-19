@@ -132,6 +132,7 @@ Similarly, the new ``getCompletionRoutine`` method allows you to convert a pytho
 - NVDA will no longer log inaccurate warnings or errors about deprecated appModules. (#14806)
 - All NVDA extension points are now briefly described in a new, dedicated chapter in the Developer Guide. (#14648)
 - ``scons checkpot`` will no longer check the ``userConfig`` subfolder anymore. (#14820)
+- Translatable strings can now be defined with a singular and a plural form using ``ngettext`` and ``npgettext``. (#12445)
 -
 
 === Deprecations ===
