@@ -14,7 +14,7 @@ Developed by NV Access in partnership with a dedicated open source community, NV
 2. By users for users: To allow and empower blind and vision impaired people to have a say in and directly contribute to NVDA, ensuring it meets their needs as a solution to technology access:
     * NVDA is an open source project, meaning that its source code is available to anyone who wishes to learn from and or contribute to the project.
     * Documentation is provided to ensure code can be understood and developers can get up and running with ease.
-    * The vast majority of contributers to the NvDA project are blind or vision impaired, and are users of the product themselves.
+    * The vast majority of contributors to the NVDA project are blind or vision impaired, and are users of the product themselves.
 3. Multilingual: Ensure that NVDA can be used by people no matter what language they speak:
     * NVDA provides mechanisms for volunteers to translate user interface messages and documentation.
     * Release processes provide time and reminders for volunteers to contribute translations to NVDA. 
@@ -22,8 +22,8 @@ Developed by NV Access in partnership with a dedicated open source community, NV
     * NVDA strives to support any breaking changes in Windows or supported popular third party applications before they reach the user.
     * NVDA updates should not drastically change or remove pre-existing features or defined behaviour without clearly warning the user first. 
     * NVDA's code should do its best to recover from application freezes, allowing the user to still interact with the rest of the Operating System.
-5. Quality: Ensure NvDA's code is high-quality, safe, and that bugs are caught before reaching a release:
-    * All code is reviewed by at least one other core contributer.
+5. Quality: Ensure NVDA's code is high-quality, safe, and that bugs are caught before reaching a release:
+    * All code is reviewed by at least one other core contributor.
     * Automated unit and system tests decrease the possibility of unwanted changes in behaviour.
     * Alpha and beta builds are provided for early testing by a large base of dedicated community testers
 6. Security: Ensure that NVDA does not place a user at risk of security attacks:
@@ -33,13 +33,13 @@ Developed by NV Access in partnership with a dedicated open source community, NV
 7. Efficient: Ensure responsiveness to user input, but also energy efficiency where possible:
     * Make use of newer more efficient APIs where possible, at the same time falling back to older APIs to ensure functionality on older systems. 
     * Periodically remove technical debt and refactor code to make code more efficient and understandable, making sure to maintain compatibility with existing scenarios and OS / application versions still supported.
-8. Innovative: Strive to push the boundaries of what is possible and to avoide stagnation for both NvDA and its compeditors:
+8. Innovative: Strive to push the boundaries of what is possible and to avoid stagnation for both NVDA and its competitors:
     * Prototype new ideas and make them available through try builds.
-    * Promote the sharing and healthy debate of ideas on developer email lists and Github Discussions.
+    * Promote the sharing and healthy debate of ideas on developer email lists and GitHub Discussions.
 9. Compliance: Ensure app / web developers can rely upon NVDA to make best use of the accessibility they implement:
     * NVDA strives to comply with all application and web accessibility standards where possible.
     * Where there is disagreement or inability to comply with an accessibility standard, NVDA maintainers  clearly and respectfully argue the case, providing practical alternative solutions.
-    * NVDA maintainers partispate in discussions with standards groups.
+    * NVDA maintainers participate in discussions with standards groups.
 10. Documentation: Ensure users have the knowledge to fully leverage NVDA's features for productivity in work and everyday life:
     * NVDA offers comprehensive, user-friendly documentation such as an official user guide free of charge.
     * User-level support is available via various community-run email lists.
