@@ -53,13 +53,13 @@ Developed by NV Access in partnership with a dedicated open source community, NV
     * NVDA strives to support all common speech synthesizers and refreshable Braille displays that exist today.
 13. Configurable: Ensure the user can configure NVDA to suit their own particular preferences and the task at hand:
     * NVDA contains many options for configuring what information is reported and how it is presented.
-    * NvDA allows the user to configure attributes of the output such as  the voice rate and pitch, punctuation, and what Braille standard is used.
+    * NVDA allows the user to configure attributes of the output such as the voice rate and pitch, punctuation, and what Braille standard is used.
     * NVDA allows the user to create configuration profiles, so that the user can easily switch configurations depending on the particular task they are performing.
 14. Extendable: Ensure that NVDA can be easily enhanced and customized to meet specific user needs and requirements:
-    * NVDA allows the creation and integration of community-created add-ons, providing support for extra speech synthesizers, refreshable Braille displays and more third party applications. 
-    * NVDA allows the user to browse for, download and install available add-ons from within NVDA itself.
+    * NVDA allows the creation and integration of community created add-ons, providing support for extra speech synthesizers, refreshable Braille displays and more third party applications. 
+    * NVDA allows the user to browse, download and install available add-ons from within NVDA itself.
     * NVDA provides freedom for add-ons to find innovative solutions by allowing them broad access to NVDA's internals.
-    * NVDA ensures add-ons do not break by postponing major API changes to once per year, announcing these changes many months ahead of time.
+    * NVDA ensures add-ons do not break by postponing API breakages to once per year, announcing these changes many months ahead of time.
     * NVDA Protects users from installing an add-on that is incompatible with the current version of NVDA, allowing the user to override this protection if they understand the risk. 
   
   
