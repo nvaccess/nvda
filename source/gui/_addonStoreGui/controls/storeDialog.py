@@ -13,6 +13,7 @@ from wx.adv import BannerWindow
 from addonHandler import (
 	BUNDLE_EXTENSION,
 )
+from _addonStore.dataManager import addonDataManager
 from _addonStore.models.channel import Channel, _channelFilters
 from _addonStore.models.status import (
 	EnabledStatus,
@@ -46,6 +47,7 @@ class AddonStoreDialog(SettingsDialog):
 		self._storeVM.onDisplayableError.register(self.handleDisplayableError)
 		self._actionsContextMenu = _ActionsContextMenu(self._storeVM)
 		super().__init__(parent, resizeable=True, buttons={wx.CLOSE})
+		self.Maximize()
 
 	def _enterActivatesOk_ctrlSActivatesApply(self, evt: wx.KeyEvent):
 		"""Disables parent behaviour which overrides behaviour for enter and ctrl+s"""
@@ -226,13 +228,16 @@ class AddonStoreDialog(SettingsDialog):
 				# Let the user return to the add-on store and inspect add-ons being downloaded.
 				return
 
-		if self._storeVM._pendingInstalls:
+		if addonDataManager._downloadsPendingInstall:
 			installingDialog = gui.IndeterminateProgressDialog(
 				self,
 				self._installationPromptTitle,
-				# Translators: Message shown while installing add-ons after closing the add-on store dialog
-				# The placeholder {} will be replaced with the number of add-ons to be installed
-				pgettext("addonStore", "Installing {} add-ons, please wait.").format(len(self._storeVM._pendingInstalls))
+				pgettext(
+					"addonStore",
+					# Translators: Message shown while installing add-ons after closing the add-on store dialog
+					# The placeholder {} will be replaced with the number of add-ons to be installed
+					"Installing {} add-ons, please wait."
+				).format(len(addonDataManager._downloadsPendingInstall))
 			)
 			self._storeVM.installPending()
 			wx.CallAfter(installingDialog.done)
@@ -242,7 +247,11 @@ class AddonStoreDialog(SettingsDialog):
 
 	@property
 	def _requiresRestart(self) -> bool:
-		if self._storeVM._pendingInstalls:
+		from addonHandler import state, AddonStateCategory
+		if (
+			addonDataManager._downloadsPendingInstall
+			or state[AddonStateCategory.PENDING_INSTALL]
+		):
 			return True
 
 		for addonsForChannel in self._storeVM._installedAddons.values():
