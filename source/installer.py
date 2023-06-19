@@ -2,7 +2,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2011-2019 NV Access Limited, Joseph Lee, Babbage B.V., Łukasz Golonka
+# Copyright (C) 2011-2023 NV Access Limited, Joseph Lee, Babbage B.V., Łukasz Golonka
 
 import ctypes
 import winreg
@@ -25,6 +25,7 @@ from typing import (
 	Dict,
 	Union,
 )
+from NVDAState import WritePaths
 
 _wsh=None
 def _getWSH():
@@ -142,7 +143,7 @@ def copyProgramFiles(destPath):
 			tryCopyFile(sourceFilePath,destFilePath)
 
 def copyUserConfig(destPath):
-	sourcePath = globalVars.appArgs.configPath
+	sourcePath = WritePaths.configDir
 	for curSourceDir,subDirs,files in os.walk(sourcePath):
 		curDestDir=os.path.join(destPath,os.path.relpath(curSourceDir,sourcePath))
 		if not os.path.isdir(curDestDir):

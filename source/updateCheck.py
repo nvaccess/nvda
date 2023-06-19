@@ -16,6 +16,7 @@ import garbageHandler
 import globalVars
 import config
 import core
+from NVDAState import WritePaths
 if globalVars.appArgs.secure:
 	raise RuntimeError("updates disabled in secure mode")
 elif config.isAppX:
@@ -69,7 +70,7 @@ RETRY_INTERVAL = 600 # 10 min
 DOWNLOAD_BLOCK_SIZE = 8192 # 8 kb
 
 #: directory to store pending update files
-storeUpdatesDir=os.path.join(globalVars.appArgs.configPath, 'updates')
+storeUpdatesDir = WritePaths.updatesDir
 try:
 	os.makedirs(storeUpdatesDir)
 except OSError:
@@ -78,7 +79,7 @@ except OSError:
 
 #: Persistent state information.
 state: Optional[Dict[str, Any]] = None
-_stateFilename: Optional[str] = None
+
 #: The single instance of L{AutoUpdateChecker} if automatic update checking is enabled,
 #: C{None} if it is disabled.
 autoChecker: Optional["AutoUpdateChecker"] = None
@@ -229,7 +230,7 @@ def _executeUpdate(destPath):
 		if os.access(portablePath, os.W_OK):
 			executeParams = u'--create-portable --portable-path "{portablePath}" --config-path "{configPath}" -m'.format(
 				portablePath=portablePath,
-				configPath=globalVars.appArgs.configPath
+				configPath=WritePaths.configDir
 			)
 		else:
 			executeParams = u"--launcher"
@@ -776,17 +777,16 @@ class DonateRequestDialog(wx.Dialog):
 def saveState():
 	try:
 		# #9038: Python 3 requires binary format when working with pickles.
-		with open(_stateFilename, "wb") as f:
+		with open(WritePaths.updateCheckStateFile, "wb") as f:
 			pickle.dump(state, f, protocol=0)
 	except:
 		log.debugWarning("Error saving state", exc_info=True)
 
 def initialize():
-	global state, _stateFilename, autoChecker
-	_stateFilename = os.path.join(globalVars.appArgs.configPath, "updateCheckState.pickle")
+	global state, autoChecker
 	try:
 		# #9038: Python 3 requires binary format when working with pickles.
-		with open(_stateFilename, "rb") as f:
+		with open(WritePaths.updateCheckStateFile, "rb") as f:
 			state = pickle.load(f)
 	except:
 		log.debugWarning("Couldn't retrieve update state", exc_info=True)
