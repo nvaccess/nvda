@@ -949,18 +949,26 @@ def speak(  # noqa: C901
 			if not inCharacterMode and text:
 				text += CHUNK_SEPARATOR
 			speechSequence[index] = text
-	# speech sequence should be considered blank if:
-	# 1. it contains strings
-	# 2. all strings are blank after processing
-	if (
-		not suppressBlanks
-		and any(isinstance(i, str) for i in speechSequence)
+
+	if not suppressBlanks:
 		# for checking if blank, just check if empty instead of isBlank(),
 		# since whitespace has been stripped during processing
-		and all(not s for s in speechSequence if isinstance(s, str))
-	):
-		# Translators: This is spoken when the speech sequence is considered blank.
-		speechSequence.append(_("blank"))
+		oldSpeechSequenceIsEmpty = all(not s for s in oldSpeechSequence if isinstance(s, str))
+		processedSpeechSequenceIsEmpty = all(not s for s in speechSequence if isinstance(s, str))
+
+		if oldSpeechSequenceIsEmpty:
+			# Translators: This is spoken when the speech sequence is considered blank.
+			speechSequence.append(_("blank"))
+
+		if not oldSpeechSequenceIsEmpty and processedSpeechSequenceIsEmpty:
+			# Processing has stripped our sequence of any meaningful text.
+			# Instead, re-process at symbol level all.
+			return speak(
+				oldSpeechSequence,
+				characterProcessing.SymbolLevel.ALL,
+				priority,
+				suppressBlanks=False
+			)
 	_manager.speak(speechSequence, priority)
 
 
