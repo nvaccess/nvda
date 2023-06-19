@@ -74,7 +74,7 @@ def _doSynthVoiceDictBackupAndMove(synthName, oldFileNameToNewFileNameList=None)
 		# dicts diectory
 		voiceDictGlob = os.path.join(
 			WritePaths.speechDictsDir,
-			r"{synthName}*".format(synthName=synthName)
+			"{synthName}*".format(synthName=synthName)
 		)
 		log.debug("voiceDictGlob: %s"%voiceDictGlob)
 
