@@ -147,10 +147,10 @@ def test_moveByWord():
 			"don't",  # Expected: mid-word symbol
 			'right-pointing arrow', 't-shirt',
 			# todo: There should not be any "empty" words. Expect 'bar bar', and 'at  caret  star  line'
-			'1', 'bar', '2', '', '3', '', '4',
+			'1', 'bar', '2', 'blank', '3', 'blank', '4',
 			# end of first line
 			'blank',  # single space and newline
-			'',  # tab and newline  todo: There should not be any "empty" words.
+			'blank',  # tab and newline  todo: There should not be any "empty" words.
 			'blank',  # 4 spaces and newline
 			'right-pointing arrow',
 			't-shirt',
@@ -195,14 +195,14 @@ def test_moveByLine():
 		symbolLevel=SymLevel.NONE,
 		expectedSpeech=[
 			'Say', '(quietly)', 'Hello,', 'Jim .', "don't",  # Expect:
-			'',  # todo: Expect 'right-pointing arrow'
+			'blank',  # todo: Expect 'right-pointing arrow'
 			't-shirt',
-			'',  # todo: Expect 'right-pointing arrow'
+			'blank',  # todo: Expect 'right-pointing arrow'
 			't-shirt',
 			't-shirt',  # todo: Expect 'right-pointing arrow t-shirt'
 			'1   2    3      4',  # todo: Should symbols be passed to synth, i.e. "1 | 2 || 3 etc"?
 			'blank',  # single space
-			'',  # tab  # todo: There should not be any "empty" lines.
+			'blank',  # tab  # todo: There should not be any "empty" lines.
 			'blank',  # four spaces
 			'blank',  # end of doc
 		]

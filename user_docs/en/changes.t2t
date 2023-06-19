@@ -101,6 +101,7 @@ Instead NVDA reports that the link has no destination. (#14723)
 - Reporting of object shortcut keys has been improved. (#10807)
 - When rapidly moving through cells in Excel, NVDA is now less likely to report the wrong cell or selection. (#14983, #12200, #12108)
 - NVDA now generally responds slightly faster to commands and focus changes. (#14928)
+- Text sequences that are empty due to dictionary or symbol level processing are spoken as "blank" instead of not being spoken at all (#13431).
 -
 
 
@@ -131,6 +132,7 @@ Similarly, the new ``getCompletionRoutine`` method allows you to convert a pytho
 - NVDA will no longer log inaccurate warnings or errors about deprecated appModules. (#14806)
 - All NVDA extension points are now briefly described in a new, dedicated chapter in the Developer Guide. (#14648)
 - ``scons checkpot`` will no longer check the ``userConfig`` subfolder anymore. (#14820)
+- Translatable strings can now be defined with a singular and a plural form using ``ngettext`` and ``npgettext``. (#12445)
 -
 
 === Deprecations ===
