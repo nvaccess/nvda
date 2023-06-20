@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-14 00:37+0000\n"
-"PO-Revision-Date: 2023-02-14 19:22+0100\n"
+"POT-Creation-Date: 2023-05-05 00:01+0000\n"
+"PO-Revision-Date: 2023-05-07 12:15+0200\n"
 "Last-Translator: Juan C. Buño <oprisniki@gmail.com>\n"
 "Language-Team: equipo de traducción al español de NVDA <oprisniki@gmail."
 "com>\n"
@@ -4447,13 +4447,17 @@ msgstr ""
 msgid "Plugins reloaded"
 msgstr "Plugins recargados"
 
-#. Translators: input help mode message for Report destination URL of navigator link command
+#. Translators: input help mode message for Report destination URL of a link command
 msgid ""
-"Report the destination URL of the link in the navigator object. If pressed "
-"twice, shows the URL in a window for easier review."
+"Report the destination URL of the link at the position of caret or focus. If "
+"pressed twice, shows the URL in a window for easier review."
 msgstr ""
-"Anuncia el destino URL del enlace en el navegador de objetos. Si se pulsa "
+"Anuncia la URL de destino del enlace en el navegador de objetos. Si se pulsa "
 "dos veces, muestra la URL en una ventana para una revisión más fácil."
+
+#. Translators: Informs the user that the link has no destination
+msgid "Link has no apparent destination"
+msgstr "El enlace no tiene destino aparente"
 
 #. Translators: Informs the user that the window contains the destination of the
 #. link with given title
@@ -4465,14 +4469,14 @@ msgstr "Destino de: {name}"
 msgid "Not a link."
 msgstr "No es un enlace."
 
-#. Translators: input help mode message for Report URL of navigator link in a window command
+#. Translators: input help mode message for Report URL of a link in a window command
 msgid ""
-"Reports the destination URL of the link in the navigator object in a window, "
-"instead of just speaking it. May be preferred by braille users."
+"Displays the destination URL of the link at the position of caret or focus "
+"in a window, instead of just speaking it. May be preferred by braille users."
 msgstr ""
-"Anuncia el destino URL del enlace en el navegador de objetos en una ventana, "
-"en lugar de sólo verbalizarlo. Puede ser preferible por los usuarios de "
-"braille."
+"Muestra la URL de destino del enlace bajo el cursor o el foco en una "
+"ventana, en lugar de sólo verbalizarlo. Puede ser preferible para los "
+"usuarios de braille."
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -4582,6 +4586,10 @@ msgid "Please disable screen curtain before using Windows OCR."
 msgstr ""
 "Por favor desactiva la cortina de pantalla antes de utilizar el OCR de "
 "Windows."
+
+#. Translators: Describes a command.
+msgid "Cycles through the available languages for Windows OCR"
+msgstr "Recorre los idiomas disponibles para el OCR de Windows"
 
 #. Translators: Input help mode message for toggle report CLDR command.
 msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
@@ -6432,9 +6440,10 @@ msgstr "Error al buscar actualización."
 #. Translators: The title of an error message dialog.
 #. Translators: An title for an error displayed when saving user defined input gestures fails.
 #. Translators: The title of a dialog presented when an error occurs.
-#. Translators: The message title displayed
-#. when the user has not specified an absolute destination directory
-#. in the Create Portable NVDA dialog.
+#. Translators: the title of an error dialog.
+#. Translators: The message title displayed when the user has not specified an absolute
+#. destination directory in the Create Portable NVDA dialog.
+#. Translators: Title of an error dialog shown when an error occurs while creating a portable copy of NVDA.
 #. Translators: The title of an error message dialog.
 #. Translators: The title of the message box
 #. Translators: The title of the error dialog displayed when there is an error showing the GUI
@@ -7360,6 +7369,25 @@ msgstr "{firstAddress} {firstValue} hasta  {lastAddress} {lastValue}"
 #, python-brace-format
 msgid "{firstAddress} through {lastAddress}"
 msgstr "{firstAddress} hasta {lastAddress}"
+
+#. Translators: a measurement in inches
+#, python-brace-format
+msgid "{val:.2f} inches"
+msgstr "{val:.2f} pulgadas"
+
+#. Translators: a measurement in centimetres
+#, python-brace-format
+msgid "{val:.2f} centimetres"
+msgstr "{val:.2f} centímetros"
+
+#. Translators: LibreOffice, report cursor position in the current page
+#, python-brace-format
+msgid ""
+"cursor positioned {horizontalDistance} from left edge of page, "
+"{verticalDistance} from top edge of page"
+msgstr ""
+"cursor situado a {horizontalDistance} del borde izquierdo de la página, "
+"{verticalDistance} del borde superior de la página"
 
 msgid "left"
 msgstr "izquierda"
@@ -8593,6 +8621,22 @@ msgstr "desbloqueado"
 msgid "has note"
 msgstr "tiene nota"
 
+#. Translators: Presented when a control has a pop-up dialog.
+msgid "opens dialog"
+msgstr "abre diálogo"
+
+#. Translators: Presented when a control has a pop-up grid.
+msgid "opens grid"
+msgstr "abre cuadrícula"
+
+#. Translators: Presented when a control has a pop-up list box.
+msgid "opens list"
+msgstr "abre lista"
+
+#. Translators: Presented when a control has a pop-up tree.
+msgid "opens tree"
+msgstr "abre árbol"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "sin seleccionar"
@@ -8616,6 +8660,14 @@ msgstr "arrastrado"
 #. Translators: This is spoken when the line is considered blank.
 msgid "blank"
 msgstr "en blanco"
+
+#. Translators: this message is given when there is no next paragraph when navigating by paragraph
+msgid "No next paragraph"
+msgstr "Sin siguiente párrafo"
+
+#. Translators: this message is given when there is no previous paragraph when navigating by paragraph
+msgid "No previous paragraph"
+msgstr "Sin párrafo anterior"
 
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 msgid "Configuration applied"
@@ -9589,6 +9641,7 @@ msgid "Please press OK to start the installed copy."
 msgstr "Por favor pulsa Aceptar para iniciar la copia instalada."
 
 #. Translators: The title of a dialog presented to indicate a successful operation.
+#. Translators: Title of a dialog shown when a portable copy of NVDA is created.
 msgid "Success"
 msgstr "Correcto"
 
@@ -9704,23 +9757,17 @@ msgstr "Por favor indica un directorio en el cual crear la copia portable."
 #. Translators: The message displayed when the user has not specified an absolute destination directory
 #. in the Create Portable NVDA dialog.
 msgid ""
-"Please specify an absolute path (including drive letter)  in which to create "
-"the portable copy."
+"Please specify the absolute path where the portable copy should be created. "
+"It may include system variables (%temp%, %homepath%, etc.)."
 msgstr ""
-"Por favor, especifica una ruta absoluta (incluyendo la letra de la unidad) "
-"en la que crear la copia portable."
+"Por favor especifica la ruta absoluta donde debería crearse la copia "
+"portable. Puede incluir variables del sistema (%temp%, %homepath%, etc.)."
 
-#. Translators: The message displayed when the user specifies an invalid destination drive
-#. in the Create Portable NVDA dialog.
-#, python-format
-msgid "Invalid drive %s"
-msgstr "Unidad %s no válida"
-
-#. Translators: The title of the dialog presented while a portable copy of NVDA is bieng created.
+#. Translators: The title of the dialog presented while a portable copy of NVDA is being created.
 msgid "Creating Portable Copy"
 msgstr "Creando Copia Portable"
 
-#. Translators: The message displayed while a portable copy of NVDA is bieng created.
+#. Translators: The message displayed while a portable copy of NVDA is being created.
 msgid "Please wait while a portable copy of NVDA is created."
 msgstr "Por favor espera mientras se crea una copia portable de NVDA."
 
@@ -9729,16 +9776,16 @@ msgid "NVDA is unable to remove or overwrite a file."
 msgstr "NVDA es incapaz de eliminar o de sobreescribir un fichero."
 
 #. Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
-#. %s will be replaced with the specific error message.
-#, python-format
-msgid "Failed to create portable copy: %s"
-msgstr "Fallo al crear la copia portable: %s"
+#. {error} will be replaced with the specific error message.
+#, python-brace-format
+msgid "Failed to create portable copy: {error}."
+msgstr "Fallo al crear la copia portable: {error}."
 
 #. Translators: The message displayed when a portable copy of NVDA has been successfully created.
-#. %s will be replaced with the destination directory.
-#, python-format
-msgid "Successfully created a portable copy of NVDA at %s"
-msgstr "Se creó correctamente una copia portable de NVDA en %s"
+#. {dir} will be replaced with the destination directory.
+#, python-brace-format
+msgid "Successfully created a portable copy of NVDA at {dir}"
+msgstr "Se creó correctamente una copia portable de NVDA en {dir}"
 
 #. Translators: The title of the NVDA log viewer window.
 msgid "NVDA Log Viewer"
@@ -11153,9 +11200,14 @@ msgid "Dictionary Entry Error"
 msgstr "Error de Entrada de Diccionario"
 
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
-#, python-format
-msgid "Regular Expression error: \"%s\"."
-msgstr "Error de expresión regular: \"%s\"."
+#, python-brace-format
+msgid "Regular Expression error in the pattern field: \"{error}\"."
+msgstr "Error de expresión regular en el campo Patrón: \"{error}\"."
+
+#. Translators: This is an error message to let the user know that the dictionary entry is not valid.
+#, python-brace-format
+msgid "Regular Expression error in the replacement field: \"{error}\"."
+msgstr "Error de expresión regular en el campo Reemplazar: \"{error}\"."
 
 #. Translators: The label for the list box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -11547,6 +11599,15 @@ msgstr "marcado"
 msgid "not marked"
 msgstr "no marcado"
 
+#. Translators: Reported when text is color-highlighted
+#, python-brace-format
+msgid "highlighted in {color}"
+msgstr "resaltado en {color}"
+
+#. Translators: Reported when text is no longer marked
+msgid "not highlighted"
+msgstr "no resaltado"
+
 #. Translators: Reported when text is marked as strong (e.g. bold)
 msgid "strong"
 msgstr "remarcado"
@@ -11917,12 +11978,12 @@ msgid "No system battery"
 msgstr "No hay batería del sistema"
 
 #. Translators: Reported when the battery is plugged in, and now is charging.
-msgid "Charging battery"
-msgstr "Cargando batería"
+msgid "Plugged in"
+msgstr "Enchufado"
 
 #. Translators: Reported when the battery is no longer plugged in, and now is not charging.
-msgid "AC disconnected"
-msgstr "Alimentación externa desconectada"
+msgid "Unplugged"
+msgstr "Desenchufado"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
 #, python-brace-format
@@ -13614,97 +13675,18 @@ msgstr ""
 "Para utilizar Albatross con NVDA: cambia el número de celdas de estado en el "
 "menú interno de Albatross como máximo "
 
-#~ msgid "Unable to determine remaining time"
-#~ msgstr "Imposible determinar el tiempo restante"
-
-#~ msgid "through %s"
-#~ msgstr "hasta %s"
-
-#~ msgid "Report line indentation with speech"
-#~ msgstr "Anunciar sangría de línea con voz"
-
-#~ msgid "Report line indentation with tones"
-#~ msgstr "Anunciar sangría de líneas con tonos"
-
-#~ msgid "Report line indentation with speech and tones"
-#~ msgstr "Anunciar sangría de líneas con voz y tonos"
-
-#~ msgid "Report styles of cell borders"
-#~ msgstr "Anunciar estilos de los bordes de la celda"
-
-#~ msgid "Report colors and styles of cell borders"
-#~ msgstr "Anunciar colores y estilos de bordes de celda"
-
 #~ msgid ""
-#~ "NVDA is failing to fetch the foreground window. If this continues, NVDA "
-#~ "will quit starting in %d seconds."
+#~ "Please specify an absolute path (including drive letter)  in which to "
+#~ "create the portable copy."
 #~ msgstr ""
-#~ "NVDA está fallando al obtener la ventana en primer plano. Si esto "
-#~ "continúa, NVDA dejará de funcionar en %d segundos."
+#~ "Por favor, especifica una ruta absoluta (incluyendo la letra de la "
+#~ "unidad) en la que crear la copia portable."
 
-#~ msgid "NVDA could not start securely."
-#~ msgstr "NVDA no pudo iniciarse de forma segura."
+#~ msgid "Invalid drive %s"
+#~ msgstr "Unidad %s no válida"
 
-#~ msgid "Swedish grade 1"
-#~ msgstr "Sueco grado 1"
+#~ msgid "Charging battery"
+#~ msgstr "Cargando batería"
 
-#~ msgid "Not charging battery. %d percent"
-#~ msgstr "Sin cargar batería. %d porciento"
-
-#~ msgid "report table row and column headers off"
-#~ msgstr "anunciar cabeceras de fila y columna de tabla desactivado"
-
-#~ msgid "report table row and column headers on"
-#~ msgstr "anunciar cabeceras de fila y columna de tabla activado"
-
-#~ msgid "AC power on"
-#~ msgstr "Fuente externa de alimentación activada"
-
-#~ msgid "Row/column h&eaders"
-#~ msgstr "&Cabeceras de fila y columna"
-
-#~ msgid ""
-#~ "Cannot set headers. Please enable reporting of table headers in Document "
-#~ "Formatting Settings"
-#~ msgstr ""
-#~ "No se pueden configurar las cabeceras. Por favor activa el anunciado de "
-#~ "cabeceras de tabla en Opciones de Formato de Documento"
-
-#~ msgid "Use UI Automation to access the Windows C&onsole when available"
-#~ msgstr ""
-#~ "Utilizar UI Automation para acceder a la C&onsola de Windows cuando esté "
-#~ "disponible"
-
-#~ msgid "Moves the navigator object to the first row"
-#~ msgstr "Mueve el navegador de objetos a la primera fila"
-
-#~ msgid "Moves the navigator object to the last row"
-#~ msgstr "Mueve el navegador de objetos a la última columna"
-
-#~ msgid "Chinese (China, Mandarin) grade 2"
-#~ msgstr "Chino (China, Mandarín) grado 2"
-
-#~ msgid "Cannot save configuration - NVDA in secure mode"
-#~ msgstr "No se puede guardar la configuración - NVDA está en modo seguro"
-
-#~ msgid "{modifier} pressed"
-#~ msgstr "{modifier} pulsado"
-
-#~ msgid "Dutch (Belgium) 6 dot"
-#~ msgstr "Holandés (Bélgica) de 6 puntos"
-
-#~ msgid "Dutch (Netherlands) 6 dot"
-#~ msgstr "Holandés (Holanda) de 6 puntos"
-
-#~ msgid "Polish grade 1"
-#~ msgstr "Polaco grado 1"
-
-#~ msgid "Shows a summary of the details at this position if found."
-#~ msgstr ""
-#~ "Muestra un resumen de los detalles en esta posición si lo encuentra."
-
-#~ msgid "Report details in browse mode"
-#~ msgstr "Anunciar detalles en modo exploración"
-
-#~ msgid "{comment}  by {author}"
-#~ msgstr "{comment}  por {author}"
+#~ msgid "AC disconnected"
+#~ msgstr "Alimentación externa desconectada"

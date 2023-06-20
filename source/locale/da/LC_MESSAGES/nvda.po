@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-26 22:33+0000\n"
+"POT-Creation-Date: 2023-05-05 00:01+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Nicolai Svendsen <chojiro1990@gmail.com>\n"
 "Language-Team: Dansk NVDA <dansk@nvda.dk>\n"
@@ -4408,13 +4408,17 @@ msgstr ""
 msgid "Plugins reloaded"
 msgstr "Plugins genindlæst"
 
-#. Translators: input help mode message for Report destination URL of navigator link command
+#. Translators: input help mode message for Report destination URL of a link command
 msgid ""
-"Report the destination URL of the link in the navigator object. If pressed "
-"twice, shows the URL in a window for easier review."
+"Report the destination URL of the link at the position of caret or focus. If "
+"pressed twice, shows the URL in a window for easier review."
 msgstr ""
-"Oplyser webadressen for linket ved navigatorobjektet. Hvis der trykkes to "
-"gange, vises linket i et vindue for lettere gennemgang."
+"Oplyser webadressen for linket ved systemmarkøren eller ved fokus. Hvis der "
+"trykkes to gange, vises linket i et vindue for lettere gennemgang."
+
+#. Translators: Informs the user that the link has no destination
+msgid "Link has no apparent destination"
+msgstr "Linket har ingen synlig destination"
 
 #. Translators: Informs the user that the window contains the destination of the
 #. link with given title
@@ -4426,13 +4430,13 @@ msgstr "Destination af: {name}"
 msgid "Not a link."
 msgstr "Ikke et link."
 
-#. Translators: input help mode message for Report URL of navigator link in a window command
+#. Translators: input help mode message for Report URL of a link in a window command
 msgid ""
-"Reports the destination URL of the link in the navigator object in a window, "
-"instead of just speaking it. May be preferred by braille users."
+"Displays the destination URL of the link at the position of caret or focus "
+"in a window, instead of just speaking it. May be preferred by braille users."
 msgstr ""
-"Viser webadressen for linket ved navigatorobjektet i et vindue. Dette "
-"foretrækkes sandsynligvis af punktbrugere."
+"Viser webadressen for linket ved systemmarkøren eller fokus i et vindue. "
+"Dette foretrækkes sandsynligvis af punktbrugere."
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -4540,6 +4544,10 @@ msgstr "Windows tekstgenkendelse ikke tilgængelig"
 #. Translators: Reported when screen curtain is enabled.
 msgid "Please disable screen curtain before using Windows OCR."
 msgstr "Deaktiver skærmtæppet, før du bruger Windows tekstgenkendelse"
+
+#. Translators: Describes a command.
+msgid "Cycles through the available languages for Windows OCR"
+msgstr "Skifter imellem de tilgængelige sprog for Windows-tekstgenkendelse."
 
 #. Translators: Input help mode message for toggle report CLDR command.
 msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
@@ -6390,9 +6398,10 @@ msgstr "Fejl under søgning efter opdatering."
 #. Translators: The title of an error message dialog.
 #. Translators: An title for an error displayed when saving user defined input gestures fails.
 #. Translators: The title of a dialog presented when an error occurs.
-#. Translators: The message title displayed
-#. when the user has not specified an absolute destination directory
-#. in the Create Portable NVDA dialog.
+#. Translators: the title of an error dialog.
+#. Translators: The message title displayed when the user has not specified an absolute
+#. destination directory in the Create Portable NVDA dialog.
+#. Translators: Title of an error dialog shown when an error occurs while creating a portable copy of NVDA.
 #. Translators: The title of an error message dialog.
 #. Translators: The title of the message box
 #. Translators: The title of the error dialog displayed when there is an error showing the GUI
@@ -7310,6 +7319,25 @@ msgstr "{firstAddress} {firstValue} til og med {lastAddress} {lastValue}"
 #, python-brace-format
 msgid "{firstAddress} through {lastAddress}"
 msgstr "{firstAddress} til og med {lastAddress}"
+
+#. Translators: a measurement in inches
+#, python-brace-format
+msgid "{val:.2f} inches"
+msgstr "{val:.2f} tommer"
+
+#. Translators: a measurement in centimetres
+#, python-brace-format
+msgid "{val:.2f} centimetres"
+msgstr "{val:.2f} centimeter"
+
+#. Translators: LibreOffice, report cursor position in the current page
+#, python-brace-format
+msgid ""
+"cursor positioned {horizontalDistance} from left edge of page, "
+"{verticalDistance} from top edge of page"
+msgstr ""
+"Markør placeret {horizontalDistance} fra venstre kant af siden, "
+"{verticalDistance} fra øverste kant af siden"
 
 msgid "left"
 msgstr "Venstre"
@@ -8543,6 +8571,22 @@ msgstr "ikke beskyttet"
 msgid "has note"
 msgstr "har note"
 
+#. Translators: Presented when a control has a pop-up dialog.
+msgid "opens dialog"
+msgstr "Åbner dialog"
+
+#. Translators: Presented when a control has a pop-up grid.
+msgid "opens grid"
+msgstr "Åbner gitter"
+
+#. Translators: Presented when a control has a pop-up list box.
+msgid "opens list"
+msgstr "Åbner liste"
+
+#. Translators: Presented when a control has a pop-up tree.
+msgid "opens tree"
+msgstr "Åbner træ"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "ikke valgt"
@@ -8566,6 +8610,14 @@ msgstr "trukket"
 #. Translators: This is spoken when the line is considered blank.
 msgid "blank"
 msgstr "blank"
+
+#. Translators: this message is given when there is no next paragraph when navigating by paragraph
+msgid "No next paragraph"
+msgstr "ingen næste afsnit"
+
+#. Translators: this message is given when there is no previous paragraph when navigating by paragraph
+msgid "No previous paragraph"
+msgstr "Ingen forrige afsnit"
 
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 msgid "Configuration applied"
@@ -9535,6 +9587,7 @@ msgid "Please press OK to start the installed copy."
 msgstr "Tryk OK for at starte den installerede kopi."
 
 #. Translators: The title of a dialog presented to indicate a successful operation.
+#. Translators: Title of a dialog shown when a portable copy of NVDA is created.
 msgid "Success"
 msgstr "Succes"
 
@@ -9650,23 +9703,17 @@ msgstr "Angiv venligst en mappe til placering af den flytbare kopi."
 #. Translators: The message displayed when the user has not specified an absolute destination directory
 #. in the Create Portable NVDA dialog.
 msgid ""
-"Please specify an absolute path (including drive letter)  in which to create "
-"the portable copy."
+"Please specify the absolute path where the portable copy should be created. "
+"It may include system variables (%temp%, %homepath%, etc.)."
 msgstr ""
-"Angiv venligst en mappe til placering af den flytbare kopi. Stien skal "
-"indeholde drevbogstavet."
+"Angiv venligst den absolutte sti, hvor den flytbare kopi skal oprettes. "
+"Stien kan indeholde systemvariabler (%temp%, %homepath% osv.)."
 
-#. Translators: The message displayed when the user specifies an invalid destination drive
-#. in the Create Portable NVDA dialog.
-#, python-format
-msgid "Invalid drive %s"
-msgstr "Ugyldigt drev %s"
-
-#. Translators: The title of the dialog presented while a portable copy of NVDA is bieng created.
+#. Translators: The title of the dialog presented while a portable copy of NVDA is being created.
 msgid "Creating Portable Copy"
 msgstr "Opretter flytbar kopi"
 
-#. Translators: The message displayed while a portable copy of NVDA is bieng created.
+#. Translators: The message displayed while a portable copy of NVDA is being created.
 msgid "Please wait while a portable copy of NVDA is created."
 msgstr "Vent venligst mens der oprettes en flytbar kopi af NVDA."
 
@@ -9675,16 +9722,16 @@ msgid "NVDA is unable to remove or overwrite a file."
 msgstr "NVDA kan ikke fjerne eller overskrive en fil."
 
 #. Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
-#. %s will be replaced with the specific error message.
-#, python-format
-msgid "Failed to create portable copy: %s"
-msgstr "Kunne ikke oprette en flytbar kopi: %s"
+#. {error} will be replaced with the specific error message.
+#, python-brace-format
+msgid "Failed to create portable copy: {error}."
+msgstr "Kunne ikke oprette en flytbar kopi: {error}."
 
 #. Translators: The message displayed when a portable copy of NVDA has been successfully created.
-#. %s will be replaced with the destination directory.
-#, python-format
-msgid "Successfully created a portable copy of NVDA at %s"
-msgstr "Flytbar udgave af NVDA er nu korrekt oprettet i %s"
+#. {dir} will be replaced with the destination directory.
+#, python-brace-format
+msgid "Successfully created a portable copy of NVDA at {dir}"
+msgstr "Flytbar udgave af NVDA er nu korrekt oprettet i {dir}"
 
 #. Translators: The title of the NVDA log viewer window.
 msgid "NVDA Log Viewer"
@@ -11080,9 +11127,16 @@ msgid "Dictionary Entry Error"
 msgstr "Fejl i ordbogsord"
 
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
-#, python-format
-msgid "Regular Expression error: \"%s\"."
-msgstr "Fejl i regulært udtryk: \"%s\"."
+#, python-brace-format
+msgid "Regular Expression error in the pattern field: \"{error}\"."
+msgstr ""
+"Der opstod en fejl i det regulære udtryk i mønster-feltet: \"{error}\"."
+
+#. Translators: This is an error message to let the user know that the dictionary entry is not valid.
+#, python-brace-format
+msgid "Regular Expression error in the replacement field: \"{error}\"."
+msgstr ""
+"Der opstod en fejl i det regulære udtryk i erstatning-feltet: \"{error}\"."
 
 #. Translators: The label for the list box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -11472,6 +11526,15 @@ msgstr "markeret"
 msgid "not marked"
 msgstr "ikke markeret"
 
+#. Translators: Reported when text is color-highlighted
+#, python-brace-format
+msgid "highlighted in {color}"
+msgstr "fremhævet i {color}"
+
+#. Translators: Reported when text is no longer marked
+msgid "not highlighted"
+msgstr "Ikke fremhævet"
+
 #. Translators: Reported when text is marked as strong (e.g. bold)
 msgid "strong"
 msgstr "stærk"
@@ -11842,12 +11905,12 @@ msgid "No system battery"
 msgstr "Intet systembatteri"
 
 #. Translators: Reported when the battery is plugged in, and now is charging.
-msgid "Charging battery"
-msgstr "Oplader batteri"
+msgid "Plugged in"
+msgstr "Koblet til"
 
 #. Translators: Reported when the battery is no longer plugged in, and now is not charging.
-msgid "AC disconnected"
-msgstr "AC-strømkilde afbrudt"
+msgid "Unplugged"
+msgstr "Frakoblet"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
 #, python-brace-format
@@ -13522,6 +13585,22 @@ msgid ""
 msgstr ""
 "For at bruge Albatross med NVDA: skift højst antallet af statusceller i "
 "Albatross interne menu"
+
+#~ msgid ""
+#~ "Please specify an absolute path (including drive letter)  in which to "
+#~ "create the portable copy."
+#~ msgstr ""
+#~ "Angiv venligst en mappe til placering af den flytbare kopi. Stien skal "
+#~ "indeholde drevbogstavet."
+
+#~ msgid "Invalid drive %s"
+#~ msgstr "Ugyldigt drev %s"
+
+#~ msgid "Charging battery"
+#~ msgstr "Oplader batteri"
+
+#~ msgid "AC disconnected"
+#~ msgstr "AC-strømkilde afbrudt"
 
 #~ msgid "Unable to determine remaining time"
 #~ msgstr "Kan ikke bestemme den resterende tid"

@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2020-2022 NV Access Limited, Łukasz Golonka
+# Copyright (C) 2020-2023 NV Access Limited, Łukasz Golonka, Luke Davis
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,10 +13,13 @@ from ctypes import (
 	windll,
 )
 import winKernel
+import winreg
 import shellapi
 import winUser
 import functools
 import shlobj
+from os import startfile
+from NVDAState import WritePaths
 
 
 @functools.lru_cache(maxsize=1)
@@ -29,8 +32,7 @@ def hasSyswow64Dir() -> bool:
 
 def openUserConfigurationDirectory():
 	"""Opens directory containing config files for the current user"""
-	import globalVars
-	shellapi.ShellExecute(0, None, globalVars.appArgs.configPath, None, None, winUser.SW_SHOWNORMAL)
+	shellapi.ShellExecute(0, None, WritePaths.configDir, None, None, winUser.SW_SHOWNORMAL)
 
 
 def openDefaultConfigurationDirectory():
@@ -179,3 +181,32 @@ def _isSecureDesktop() -> bool:
 	 - SecureMode and SecureScreens
 	"""
 	return _getDesktopName() == "Winlogon"
+
+
+def _displayTextFileWorkaround(file: str) -> None:
+	# os.startfile does not currently (NVDA 2023.1, Python 3.7) work reliably to open .txt files in Notepad under
+	# Windows 11, if relying on the default behavior (i.e. `operation="open"`). (#14725)
+	# Using `operation="edit"`, however, has the desired effect--opening the text file in Notepad. (#14816)
+	# Since this may be a bug in Python 3.7's os.startfile, or the underlying Win32 function, it may be
+	# possible to deprecate this workaround after a Python upgrade.
+	startfile(file, operation="edit")
+
+
+def _isSystemClockSecondsVisible() -> bool:
+	"""
+	Query the value of 'ShowSecondsInSystemClock' DWORD32 value in the Windows registry under
+	the path HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced.
+	If the value is 1, return True, if the value is 0 or the key does not exist, return False.
+
+	@return: True if the 'ShowSecondsInSystemClock' value is 1, False otherwise.
+	"""
+	registry_path = r"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
+	value_name = "ShowSecondsInSystemClock"
+	try:
+		with winreg.OpenKey(winreg.HKEY_CURRENT_USER, registry_path) as key:
+			value, value_type = winreg.QueryValueEx(key, value_name)
+			return value == 1 and value_type == winreg.REG_DWORD
+	except FileNotFoundError:
+		return False
+	except OSError:
+		return False

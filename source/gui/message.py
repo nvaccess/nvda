@@ -7,7 +7,10 @@
 
 import threading
 from typing import Optional
+
 import wx
+
+import extensionPoints
 
 _messageBoxCounterLock = threading.Lock()
 _messageBoxCounter = 0
@@ -76,3 +79,36 @@ def messageBox(
 			_messageBoxCounter -= 1
 
 	return res
+
+
+class DisplayableError(Exception):
+	OnDisplayableErrorT = extensionPoints.Action
+	"""
+	A type of extension point used to notify a handler when an error occurs.
+	This allows a handler to handle displaying an error.
+
+	@param displayableError: Error that can be displayed to the user.
+	@type displayableError: DisplayableError
+	"""
+
+	def __init__(self, displayMessage: str, titleMessage: Optional[str] = None):
+		"""
+		@param displayMessage: A translated message, to be displayed to the user.
+		@param titleMessage: A translated message, to be used as a title for the display message.
+		If left None, "Error" is presented as the title by default.
+		"""
+		self.displayMessage = displayMessage
+		if titleMessage is None:
+			# Translators: A message indicating that an error occurred.
+			self.titleMessage = _("Error")
+		else:
+			self.titleMessage = titleMessage
+
+	def displayError(self, parentWindow: wx.Window):
+		wx.CallAfter(
+			messageBox,
+			message=self.displayMessage,
+			caption=self.titleMessage,
+			style=wx.OK | wx.ICON_ERROR,
+			parent=parentWindow,
+		)

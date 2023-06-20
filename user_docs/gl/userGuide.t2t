@@ -2,7 +2,9 @@
 
 
 %!includeconf: ../userGuide.t2tconf
+%!includeconf: ./locale.t2tconf
 %kc:title: NVDA NVDA_VERSION Referencia Rápida de Ordes
+%kc:includeconf: ./locale.t2tconf
 
 = Índice =[toc]
 %%toc
@@ -76,12 +78,6 @@ Esto aplícase ao orixinal e ás copias modificadas do programa, máis calquer s
 Para máis detalles, podes [ver a licencia completa.  https://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 Para obter detalles sobre as escepcións, acesa ao documento de licencia dende o menú NVDA na seción "axuda".
 
-+ Requerimentos do Sistema +[SystemRequirements]
-- Sistemas operativos: todas as edicións de 32 e 64 bits do Windows 7, Windows 8, Windows 8.1, Windows 10 Windows 11 e todos os sistemas operativos servidor comezando dende o Windows Server 2008 R2..
- - Para o Windows 7, NVDA require do Service Pack 1 ou superior.
- - Para o Windows Server 2008 R2, NVDA require do Service Pack 1 ou superior.
-- Polo menos 150 MB de espazo de almacenamento.
--
 
 + Guía de Inicio Rápido de NVDA  +[NVDAQuickStartGuide]
 
@@ -228,7 +224,7 @@ As ordes reais non se executarán mentres se estea en modo axuda de entrada.
 | Ler barra de estado | ``NVDA+fin`` | ``NVDA+shift+fin`` | Anuncia a Barra de Estado se o NVDA atopa unha. Preméndoo dúas veces deletreará a información. Preméndoo tres veces copiaráa ao portapapeis |
 | Ler hora | ``NVDA+f12`` | ``NVDA+f12`` | Preméndoo unha vez anuncia a hora actualt, preméndoo dúas veces anuncia a data |
 | Anunciar formato de texto | ``NVDA+f`` | ``NVDA+f`` | Anuncia o formato do texto. Preméndoo dúas veces amosa a información nunha ventá |
-| Anunciar destiño da ligazón | ``NVDA+k`` | ``NVDA+k`` | Premendo unha vez fala o destiño URL da ligazón no [navegador de obxectos #ObjectNavigation]. Premendo dúas veces amósao nunha ventá para unha revisión máis doada |
+| Anunciar destiño da ligazón | ``NVDA+k`` | ``NVDA+k`` | Premendo unha vez fala a URL de destiño da ligazón na posición actual do cursor do sistema ou do foco. Premendo dúas veces amósao nunha ventá para unha revisión máis cuidadosa |
 
 +++ Conmutar que información le o NVDA +++[ToggleWhichInformationNVDAReads]
 || Nome | Tecla de escritorio | Tecla de Portátil | Descripción |
@@ -2126,6 +2122,7 @@ Esta categoría contén as seguintes opcións:
 
 ==== Lingua de Recoñecemento ====[Win10OcrSettingsRecognitionLanguage]
 Esta caixa combinada permíteche escoller a lingua para usar co recoñecemento de texto.
+Para percorrer as linguas dispoñibles dende calquera sitio, por favor asigna un xesto persoalizado usando o [diálogo Xestos de Entrada #InputGestures].
 
 +++ Opcións Avanzadas +++[AdvancedSettings]
 ¡Advertencia! As opcións nesta categoría son para usuarios avanzados e poden causar que o NVDA non funcione correctamente se se configura de xeito incorrecto.
@@ -2141,8 +2138,8 @@ Este tamén pode ser o caso se non estás seguro de que se cambiaran as opcións
 
 ==== Habilitar a carga de código persoalizado dende o directorio Developer Scratchpad ====[AdvancedSettingsEnableScratchpad]
 Ao desenvolver complementos para o NVDA, é útil poder probar o código a medida que o escrebes.
-Esta opción ao estar habilitada, permite ao NVDA cargar appModules persoalizados, globalPlugins, brailleDisplayDrivers e synthDrivers, dende un directorio especial de desenvolvedores scratchpad do teu directorio de configuración de usuario do NVDA.
-Anteriormente, o NVDA cargaba código persoalizado directamente dende o directorio de configuración do usuario, sen posibilidade de deshabilitalo.
+Esta opción cando está habilitada, permite ao NVDA cargar appModules persoalizados, Plugins globais, controladores de pantallas braille, controladores de sintetizadores e proporcionadores de melloras visuais, dende un directorio especial de desenvolvedores scratchpad do teu directorio de configuración de usuario do NVDA.
+Ao igual que os seus equivalentes en complementos, estos módulos cárganse ao arrancar o NVDA ou, no caso de appModules e de Plugins globais, ao [se recargar plugins #ReloadPlugins].
 Esta opción está desactivada de xeito predeterminado, o que garante que nunca se execute ningún código non probado no NVDA sen o coñecemento explícito do usuario.
 Se desexas distribuir código persoalizado a outros, debes empaquetalo coma un complemento de NVDA.
 
@@ -2356,7 +2353,11 @@ Para cambiar un símbolo, primeiro selecciónao na lísta de Símbolos.
 Podes filtrar os símbolos introducindo o símbolo ou unha parte da súa sustitución no cuadro de edición Filtrar por.
 
 - O campo Reemprazar permíteche cambiar o texto que debería falarse en lugar deste símbolo.
-- Utilizando o campo Nivel, podes axustar o nivel máis baixo do símbolo ao que este símbolo se debería falar.
+Tamén podes axustar o nivel a carácter; neste caso o símbolo non se falará independentemente do nivel de símbolo en uso, coas seguintes dúas excepcións:
+ - Ao navegar por caracteres.
+ - Cando o NVDA estea a deletrear calquera texto que conteña ese símbolo.
+ -
+- Utilizando o campo Nivel, podes axustar o nivel máis baixo do símbolo ao que este símbolo se debería falar (non, algún, a maioría ou todos).
 - O campo Enviar símbolo actual ao sintetizador especifica cando o proprio símbolo (en contraposición co seu reemplazamento) debería enviarse ao sintetizador.
 Esto é útil se o símbolo causa que o sintetizador faga unha pausa ou cambie a entoación da voz.
 Por exemplo, unha coma causa que o sintetizador faga unha pausa.
@@ -2945,6 +2946,15 @@ Por favor consulta a documentación da pantalla braille para descripcións de on
 | Mover a pantalla braille á liña anterior | d1 |
 | Mover a liña brailla á liña seguinte | d3 |
 | Guiar á celda braille | sensor |
+| teclas shift+tab | espazo+punto1+punto3 |
+| tecla tab | espazo+punto4+punto6 |
+| tecla alt | espazo+punto1+punto3+punto4 (espazo+m) |
+| tecla escape | espazo+punto1+punto5 (espazo+e) |
+| tecla windows | espazo+punto3+punto4 |
+| teclas alt+tab | espazo+punto2+punto3+punto4+punto5 (espazo+t) |
+| Menú NVDA | espazo+punto1+punto3+punto4+punto5 (espazo+n) |
+| teclas windows+d (minimizar todas as aplicacións) | espazo+punto1+punto4+punto5 (espazo+d) |
+| Falar todo | espazo+punto1+punto2+punto3+punto4+punto5+punto6 |
 
 Para liñas que teñan un joystick:
 || Nome | Tecla |
@@ -3656,6 +3666,10 @@ Por favor consulta a documentación da pantalla para descripcións de onde se at
 | Mover o navegador de obxectos ao obxecto seguinte | ``f6`` |
 | Anunciar o navegador de obxectos actual | ``f7`` |
 | Anunciar información acerca da localización do texto ou obxecto no cursor de revisión | ``f8`` |
+| Amosar opcións braille | ``f1+inicio1``, ``f9+inicio2`` |
+| Ler a barra de estado e mover o navegador de obxectos a ela | ``f1+fin1``, ``f9+fin2`` |
+| Percorrer as formas do cursor braille | ``f1+eCursor1``, ``f9+eCursor2`` |
+| Activar e desactivar o cursor braille | ``f1+cursor1``, ``f9+cursor2`` |
 | Realizar a ación predeterminada no navegador de obxectos actual | ``f7+f8`` |
 | Anunciar data e hora | ``f9`` |
 | Anunciar estado da batería e tempo restante se a alimentación non está enchufada | ``f10`` |
@@ -3685,19 +3699,17 @@ Seguidamente van as asignacións de teclas actuales para estas pantallas.
 || Nome | Tecla |
 | Desprazar a pantalla braille cara atrás | pan á esquerda ou balancín arriba |
 | Desprazar a pantalla braille cara adiante | pan á dereita ou balancín abaixo |
-| Mover a pantalla braille á liña anterior | espazo+punto1 |
-| Mover a pantalla braille á liña seguinte | espazo+punto4
 | Levar á celda braille | conxunto de sensores de enrutamento 1|
 | Alternar o seguemento de braille | arriba+abaixo |
-| Tecla frecha arriba | joystick arriba |
-| Tecla frecha abaixo | joystick cara abaixo |
-| Tecla frecha esquerda | espazo+punto3 ou joystick esquerdo |
-| Tecla frecha dereita | espazo+punto6 ou joystick dereita |
+| Tecla frecha arriba | joystick arriba, dpad arriba ou espazo+punto1 |
+| Tecla frecha abaixo | joystick cara abaixo, dpad cara abaixo ou espazo+punto4 |
+| Tecla frecha esquerda | espazo+punto3, joystick esquerdo ou dpad a esquerda|
+| Tecla frecha dereita | espazo+punto6, joystick dereita ou dpad dereita |
 | Teclas shift+tab | espazo+punto1+punto3 |
 | tecla tab | espazo+punto4+punto6 |
 | tecla alt | espazo+punto1+punto3+punto4 (espazo+m) |
 | tecla escape | espazo+punto1+punto5 (espazo+e) |
-| tecla intro | punto8 ou intro do joystick |
+| tecla intro | punto8, intro do joystick ou dpad intro |
 | tecla windows | espazo+punto3+punto4 |
 | teclas alt+tab | espazo+punto2+punto3+punto4+punto5 (espazo+t) |
 | Menú NVDA | espazo+punto1+punto3+punto4+punto5 (espazo+n) |

@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-14 00:37+0000\n"
-"PO-Revision-Date: 2023-02-14 10:30+0200\n"
+"POT-Creation-Date: 2023-05-05 00:01+0000\n"
+"PO-Revision-Date: 2023-05-05 20:47+0200\n"
 "Last-Translator: Jani Kinnunen <janikinnunen340@gmail.com>\n"
 "Language-Team: janikinnunen340@gmail.com\n"
 "Language: fi_FI\n"
@@ -4419,14 +4419,18 @@ msgstr ""
 msgid "Plugins reloaded"
 msgstr "Liitännäiset ladattu uudelleen"
 
-#. Translators: input help mode message for Report destination URL of navigator link command
+#. Translators: input help mode message for Report destination URL of a link command
 msgid ""
-"Report the destination URL of the link in the navigator object. If pressed "
-"twice, shows the URL in a window for easier review."
+"Report the destination URL of the link at the position of caret or focus. If "
+"pressed twice, shows the URL in a window for easier review."
 msgstr ""
-"Ilmoittaa navigointiobjektissa olevan linkin kohteen URL:n. Kahdesti "
-"painettaessa se näytetään erillisessä ikkunassa, jotta sitä on helpompi "
-"tarkastella."
+"Ilmoittaa kohdistimen tai kohdistuksen kohdalla olevan linkin kohteen URL-"
+"osoitteen. Kahdesti painettaessa se näytetään erillisessä ikkunassa, jotta "
+"sitä on helpompi tarkastella."
+
+#. Translators: Informs the user that the link has no destination
+msgid "Link has no apparent destination"
+msgstr "Linkillä ei ole kohdetta"
 
 #. Translators: Informs the user that the window contains the destination of the
 #. link with given title
@@ -4438,14 +4442,14 @@ msgstr "Kohde: {name}"
 msgid "Not a link."
 msgstr "Ei ole linkki."
 
-#. Translators: input help mode message for Report URL of navigator link in a window command
+#. Translators: input help mode message for Report URL of a link in a window command
 msgid ""
-"Reports the destination URL of the link in the navigator object in a window, "
-"instead of just speaking it. May be preferred by braille users."
+"Displays the destination URL of the link at the position of caret or focus "
+"in a window, instead of just speaking it. May be preferred by braille users."
 msgstr ""
-"Näyttää navigointiobjektissa olevan linkin kohteen URL:n erillisessä "
-"ikkunassa pelkän puhumisen sijaan. Pistekirjoituksen käyttäjät saattavat "
-"pitää tästä enemmän."
+"Näyttää kohdistimen tai kohdistuksen kohdalla olevan linkin kohteen URL-"
+"osoitteen erillisessä ikkunassa pelkän puhumisen sijaan. Pistenäyttöjen "
+"käyttäjät saattavat pitää tästä enemmän."
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -4553,6 +4557,11 @@ msgstr "Windowsin tekstintunnistus ei ole käytettävissä"
 msgid "Please disable screen curtain before using Windows OCR."
 msgstr ""
 "Poista näyttöverho käytöstä ennen Windowsin tekstintunnistuksen käyttöä."
+
+#. Translators: Describes a command.
+msgid "Cycles through the available languages for Windows OCR"
+msgstr ""
+"Vaihtaa Windowsin tekstintunnistuksen käytettävissä olevien kielten välillä."
 
 #. Translators: Input help mode message for toggle report CLDR command.
 msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
@@ -6401,9 +6410,10 @@ msgstr "Virhe tarkistettaessa päivitystä."
 #. Translators: The title of an error message dialog.
 #. Translators: An title for an error displayed when saving user defined input gestures fails.
 #. Translators: The title of a dialog presented when an error occurs.
-#. Translators: The message title displayed
-#. when the user has not specified an absolute destination directory
-#. in the Create Portable NVDA dialog.
+#. Translators: the title of an error dialog.
+#. Translators: The message title displayed when the user has not specified an absolute
+#. destination directory in the Create Portable NVDA dialog.
+#. Translators: Title of an error dialog shown when an error occurs while creating a portable copy of NVDA.
 #. Translators: The title of an error message dialog.
 #. Translators: The title of the message box
 #. Translators: The title of the error dialog displayed when there is an error showing the GUI
@@ -7324,6 +7334,25 @@ msgstr "väliltä {firstAddress} {firstValue} ja {lastAddress} {lastValue}"
 #, python-brace-format
 msgid "{firstAddress} through {lastAddress}"
 msgstr "väliltä {firstAddress} ja {lastAddress}"
+
+#. Translators: a measurement in inches
+#, python-brace-format
+msgid "{val:.2f} inches"
+msgstr "{val:.2f} tuumaa"
+
+#. Translators: a measurement in centimetres
+#, python-brace-format
+msgid "{val:.2f} centimetres"
+msgstr "{val:.2f} senttimetriä"
+
+#. Translators: LibreOffice, report cursor position in the current page
+#, python-brace-format
+msgid ""
+"cursor positioned {horizontalDistance} from left edge of page, "
+"{verticalDistance} from top edge of page"
+msgstr ""
+"Kohdistimen sijainti {horizontalDistance} sivun vasemmasta reunasta ja "
+"{verticalDistance} sivun yläreunasta"
 
 msgid "left"
 msgstr "vasen"
@@ -8557,6 +8586,22 @@ msgstr "lukitsematon"
 msgid "has note"
 msgstr "sisältää muistiinpanon"
 
+#. Translators: Presented when a control has a pop-up dialog.
+msgid "opens dialog"
+msgstr "avaa valintaikkunan"
+
+#. Translators: Presented when a control has a pop-up grid.
+msgid "opens grid"
+msgstr "avaa ruudukon"
+
+#. Translators: Presented when a control has a pop-up list box.
+msgid "opens list"
+msgstr "avaa luettelon"
+
+#. Translators: Presented when a control has a pop-up tree.
+msgid "opens tree"
+msgstr "avaa puun"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "ei valittu"
@@ -8580,6 +8625,14 @@ msgstr "Vedetty"
 #. Translators: This is spoken when the line is considered blank.
 msgid "blank"
 msgstr "tyhjä"
+
+#. Translators: this message is given when there is no next paragraph when navigating by paragraph
+msgid "No next paragraph"
+msgstr "Ei enempää kappaleita"
+
+#. Translators: this message is given when there is no previous paragraph when navigating by paragraph
+msgid "No previous paragraph"
+msgstr "Ei edellisiä kappaleita"
 
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 msgid "Configuration applied"
@@ -8949,7 +9002,7 @@ msgstr "Tekijä"
 
 #. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
 msgid "Add-on &help"
-msgstr "Lisäosan &Ohje"
+msgstr "Lisäosan &ohje"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Disable add-on"
@@ -9538,6 +9591,7 @@ msgid "Please press OK to start the installed copy."
 msgstr "Käynnistä asennettu versio painamalla OK."
 
 #. Translators: The title of a dialog presented to indicate a successful operation.
+#. Translators: Title of a dialog shown when a portable copy of NVDA is created.
 msgid "Success"
 msgstr "Onnistui"
 
@@ -9649,23 +9703,17 @@ msgstr "Määritä hakemisto, johon massamuistiversio luodaan."
 #. Translators: The message displayed when the user has not specified an absolute destination directory
 #. in the Create Portable NVDA dialog.
 msgid ""
-"Please specify an absolute path (including drive letter)  in which to create "
-"the portable copy."
+"Please specify the absolute path where the portable copy should be created. "
+"It may include system variables (%temp%, %homepath%, etc.)."
 msgstr ""
-"Anna täysi hakemistopolku (asemakirjain mukaan lukien), johon "
-"massamuistiversio luodaan."
+"Määritä absoluuttinen hakemistopolku, jonne massamuistiversio luodaan. Polku "
+"voi sisältää järjestelmän ympäristömuuttujia (%temp%, %homepath% jne.)."
 
-#. Translators: The message displayed when the user specifies an invalid destination drive
-#. in the Create Portable NVDA dialog.
-#, python-format
-msgid "Invalid drive %s"
-msgstr "Virheellinen asemakirjain %s"
-
-#. Translators: The title of the dialog presented while a portable copy of NVDA is bieng created.
+#. Translators: The title of the dialog presented while a portable copy of NVDA is being created.
 msgid "Creating Portable Copy"
 msgstr "Luodaan massamuistiversiota"
 
-#. Translators: The message displayed while a portable copy of NVDA is bieng created.
+#. Translators: The message displayed while a portable copy of NVDA is being created.
 msgid "Please wait while a portable copy of NVDA is created."
 msgstr "Odota, kun NVDA:n massamuistiversiota luodaan."
 
@@ -9674,16 +9722,16 @@ msgid "NVDA is unable to remove or overwrite a file."
 msgstr "NVDA ei voi poistaa tai korvata tiedostoa."
 
 #. Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
-#. %s will be replaced with the specific error message.
-#, python-format
-msgid "Failed to create portable copy: %s"
-msgstr "Massamuistiversion luonti epäonnistui: %s"
+#. {error} will be replaced with the specific error message.
+#, python-brace-format
+msgid "Failed to create portable copy: {error}."
+msgstr "Massamuistiversion luonti epäonnistui: {error}."
 
 #. Translators: The message displayed when a portable copy of NVDA has been successfully created.
-#. %s will be replaced with the destination directory.
-#, python-format
-msgid "Successfully created a portable copy of NVDA at %s"
-msgstr "NVDA:n massamuistiversio luotu onnistuneesti hakemistoon %s."
+#. {dir} will be replaced with the destination directory.
+#, python-brace-format
+msgid "Successfully created a portable copy of NVDA at {dir}"
+msgstr "NVDA:n massamuistiversio luotu onnistuneesti hakemistoon {dir}"
 
 #. Translators: The title of the NVDA log viewer window.
 msgid "NVDA Log Viewer"
@@ -11083,9 +11131,14 @@ msgid "Dictionary Entry Error"
 msgstr "Virhe sanastomäärityksessä"
 
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
-#, python-format
-msgid "Regular Expression error: \"%s\"."
-msgstr "Virhe sääntölausekkeessa: \"%s\"."
+#, python-brace-format
+msgid "Regular Expression error in the pattern field: \"{error}\"."
+msgstr "Virhe Korvattava-kentän sääntölausekkeessa: \"{error}\"."
+
+#. Translators: This is an error message to let the user know that the dictionary entry is not valid.
+#, python-brace-format
+msgid "Regular Expression error in the replacement field: \"{error}\"."
+msgstr "Virhe Korvaava-kentän sääntölausekkeessa: \"{error}\"."
 
 #. Translators: The label for the list box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -11474,6 +11527,15 @@ msgstr "merkitty"
 msgid "not marked"
 msgstr "ei merkitty"
 
+#. Translators: Reported when text is color-highlighted
+#, python-brace-format
+msgid "highlighted in {color}"
+msgstr "korostettu värillä {color}"
+
+#. Translators: Reported when text is no longer marked
+msgid "not highlighted"
+msgstr "ei korostusta"
+
 #. Translators: Reported when text is marked as strong (e.g. bold)
 msgid "strong"
 msgstr "voimakkaasti korostettu"
@@ -11843,11 +11905,11 @@ msgid "No system battery"
 msgstr "Järjestelmässä ei akkua"
 
 #. Translators: Reported when the battery is plugged in, and now is charging.
-msgid "Charging battery"
-msgstr "Akkua ladataan"
+msgid "Plugged in"
+msgstr "Kytketty verkkovirtaan"
 
 #. Translators: Reported when the battery is no longer plugged in, and now is not charging.
-msgid "AC disconnected"
+msgid "Unplugged"
 msgstr "Irrotettu verkkovirrasta"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
@@ -13523,6 +13585,22 @@ msgid ""
 msgstr ""
 "Käytä Albatrossia NVDA:n kanssa muuttamalla laitteen sisäisestä valikosta "
 "tilasolujen määräksi korkeintaan "
+
+#~ msgid ""
+#~ "Please specify an absolute path (including drive letter)  in which to "
+#~ "create the portable copy."
+#~ msgstr ""
+#~ "Anna täysi hakemistopolku (asemakirjain mukaan lukien), johon "
+#~ "massamuistiversio luodaan."
+
+#~ msgid "Invalid drive %s"
+#~ msgstr "Virheellinen asemakirjain %s"
+
+#~ msgid "Charging battery"
+#~ msgstr "Akkua ladataan"
+
+#~ msgid "AC disconnected"
+#~ msgstr "Irrotettu verkkovirrasta"
 
 #~ msgid "Unable to determine remaining time"
 #~ msgstr "Jäljellä olevaa aikaa ei voida selvittää"

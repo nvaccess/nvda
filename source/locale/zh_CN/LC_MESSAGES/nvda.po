@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-14 00:37+0000\n"
+"POT-Creation-Date: 2023-06-02 00:02+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: 完美很难 <1872265132@qq.com>\n"
 "Language-Team: \n"
@@ -4103,7 +4103,7 @@ msgstr "开始点已标记"
 msgid ""
 "Move the review cursor to the position marked as the start of text to be "
 "selected or copied"
-msgstr "将浏览光标移动到所在的当前位置，并设置为开始点"
+msgstr "将浏览光标移动回以标记的开始点处"
 
 #. Translators: Presented when attempting to move to the start marker for copy but none has been set.
 #. Translators: Presented when attempting to copy some review cursor text but there is no start marker.
@@ -4253,11 +4253,15 @@ msgstr ""
 msgid "Plugins reloaded"
 msgstr "插件已重新加载"
 
-#. Translators: input help mode message for Report destination URL of navigator link command
+#. Translators: input help mode message for Report destination URL of a link command
 msgid ""
-"Report the destination URL of the link in the navigator object. If pressed "
-"twice, shows the URL in a window for easier review."
-msgstr "读出当前导航对象所在链接指向的网址。"
+"Report the destination URL of the link at the position of caret or focus. If "
+"pressed twice, shows the URL in a window for easier review."
+msgstr "读出当前光标或焦点所在链接指向的网址。连按两次在浏览模式下显示该信息。"
+
+#. Translators: Informs the user that the link has no destination
+msgid "Link has no apparent destination"
+msgstr "链接未指向确切的网址"
 
 #. Translators: Informs the user that the window contains the destination of the
 #. link with given title
@@ -4269,13 +4273,13 @@ msgstr "链接 {name} 指向的 URL"
 msgid "Not a link."
 msgstr "不是链接。"
 
-#. Translators: input help mode message for Report URL of navigator link in a window command
+#. Translators: input help mode message for Report URL of a link in a window command
 msgid ""
-"Reports the destination URL of the link in the navigator object in a window, "
-"instead of just speaking it. May be preferred by braille users."
+"Displays the destination URL of the link at the position of caret or focus "
+"in a window, instead of just speaking it. May be preferred by braille users."
 msgstr ""
-"在对话框中显示当前导航对象所在链接指向的 URL 而不仅仅是读出来，可能对使用点显"
-"器的用户有用。"
+"在对话框中显示当前光标或焦点所在链接指向的网址而不仅仅是读出来，可能对使用点"
+"显器的用户有用。"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -4372,6 +4376,10 @@ msgstr "Windows OCR 不可用"
 #. Translators: Reported when screen curtain is enabled.
 msgid "Please disable screen curtain before using Windows OCR."
 msgstr "使用 Windows OCR 之前，请先关闭黑屏。"
+
+#. Translators: Describes a command.
+msgid "Cycles through the available languages for Windows OCR"
+msgstr "在 Windows OCR 的可选语言之间切换"
 
 #. Translators: Input help mode message for toggle report CLDR command.
 msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
@@ -6212,9 +6220,10 @@ msgstr "检查更新时出错。"
 #. Translators: The title of an error message dialog.
 #. Translators: An title for an error displayed when saving user defined input gestures fails.
 #. Translators: The title of a dialog presented when an error occurs.
-#. Translators: The message title displayed
-#. when the user has not specified an absolute destination directory
-#. in the Create Portable NVDA dialog.
+#. Translators: the title of an error dialog.
+#. Translators: The message title displayed when the user has not specified an absolute
+#. destination directory in the Create Portable NVDA dialog.
+#. Translators: Title of an error dialog shown when an error occurs while creating a portable copy of NVDA.
 #. Translators: The title of an error message dialog.
 #. Translators: The title of the message box
 #. Translators: The title of the error dialog displayed when there is an error showing the GUI
@@ -6252,8 +6261,8 @@ msgid ""
 msgstr ""
 "\n"
 "\n"
-"您的 NVDA 配置中含有与此版本的 NVDA 不兼容的插件。安装后将禁用这些插件。\n"
-"如果您平时需要用到这些插件，请查看列表以决定是否继续安装"
+"您的配置中含有与该版本 NVDA 不兼容的插件。NVDA 安装后这些插件会被禁用。如果您"
+"平时需要用到这些插件，请查看“不兼容的插件”列表以决定是否继续安装该版本"
 
 #. Translators: A message to confirm that the user understands that addons that have not been
 #. reviewed and made available, will be disabled after installation.
@@ -6312,8 +6321,8 @@ msgid ""
 "continue with the installation"
 msgstr ""
 "\n"
-"您的 NVDA 配置中含有与此版本的 NVDA 不兼容的插件。安装后将禁用这些插件。\n"
-"如果您平时需要用到这些插件，请查看列表以决定是否继续安装"
+"您的配置中含有与该版本 NVDA 不兼容的插件。NVDA 安装后这些插件会被禁用。如果您"
+"平时需要用到这些插件，请查看“不兼容的插件”列表以决定是否继续安装该版本"
 
 #. Translators: The label of a button to install an NVDA update.
 msgid "&Install update"
@@ -6629,18 +6638,18 @@ msgstr "第{pageNumber}页"
 
 #. Translators: Reported when text is highlighted.
 msgid "highlight"
-msgstr "高粱"
+msgstr "高亮"
 
 #. Translators: Reported when text is not highlighted.
 msgid "no highlight"
-msgstr "没有高粱"
+msgstr "没有高亮"
 
 #. Translators: Reported in Kindle when text has been identified as a popular highlight;
 #. i.e. it has been highlighted by several people.
 #. %s is replaced with the number of people who have highlighted this text.
 #, python-format
 msgid "%s highlighted"
-msgstr "%s 已高粱"
+msgstr "%s 已突出显示"
 
 #. Translators: Reported when moving out of a popular highlight.
 msgid "out of popular highlight"
@@ -7116,6 +7125,23 @@ msgstr "{firstAddress} {firstValue} 到 {lastAddress} {lastValue}"
 #, python-brace-format
 msgid "{firstAddress} through {lastAddress}"
 msgstr "{firstAddress} 到 {lastAddress}"
+
+#. Translators: a measurement in inches
+#, python-brace-format
+msgid "{val:.2f} inches"
+msgstr "{val:.2f} 英寸"
+
+#. Translators: a measurement in centimetres
+#, python-brace-format
+msgid "{val:.2f} centimetres"
+msgstr "{val:.2f} 厘米"
+
+#. Translators: LibreOffice, report cursor position in the current page
+#, python-brace-format
+msgid ""
+"cursor positioned {horizontalDistance} from left edge of page, "
+"{verticalDistance} from top edge of page"
+msgstr "光标距页面左边 {horizontalDistance}，距页面上边 {verticalDistance}"
 
 msgid "left"
 msgstr "左"
@@ -8349,6 +8375,22 @@ msgstr "未锁定"
 msgid "has note"
 msgstr "有注释"
 
+#. Translators: Presented when a control has a pop-up dialog.
+msgid "opens dialog"
+msgstr "打开对话框"
+
+#. Translators: Presented when a control has a pop-up grid.
+msgid "opens grid"
+msgstr "打开网格"
+
+#. Translators: Presented when a control has a pop-up list box.
+msgid "opens list"
+msgstr "打开列表"
+
+#. Translators: Presented when a control has a pop-up tree.
+msgid "opens tree"
+msgstr "打开树式图"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "，未选择"
@@ -8372,6 +8414,14 @@ msgstr "拖拽完成"
 #. Translators: This is spoken when the line is considered blank.
 msgid "blank"
 msgstr "空白"
+
+#. Translators: this message is given when there is no next paragraph when navigating by paragraph
+msgid "No next paragraph"
+msgstr "往下没有段落"
+
+#. Translators: this message is given when there is no previous paragraph when navigating by paragraph
+msgid "No previous paragraph"
+msgstr "往上没有段落"
 
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 msgid "Configuration applied"
@@ -9291,6 +9341,7 @@ msgid "Please press OK to start the installed copy."
 msgstr "请单击“确定”启动安装的副本。"
 
 #. Translators: The title of a dialog presented to indicate a successful operation.
+#. Translators: Title of a dialog shown when a portable copy of NVDA is created.
 msgid "Success"
 msgstr "成功"
 
@@ -9398,21 +9449,16 @@ msgstr "请为便携版文件选择一个目录。"
 #. Translators: The message displayed when the user has not specified an absolute destination directory
 #. in the Create Portable NVDA dialog.
 msgid ""
-"Please specify an absolute path (including drive letter)  in which to create "
-"the portable copy."
-msgstr "请指定创建便携版的绝对路径（包括驱动器号）。"
+"Please specify the absolute path where the portable copy should be created. "
+"It may include system variables (%temp%, %homepath%, etc.)."
+msgstr ""
+"请指定存放便携版的绝对路径。可以包括系统变量（%temp%、%homepath% 等）。"
 
-#. Translators: The message displayed when the user specifies an invalid destination drive
-#. in the Create Portable NVDA dialog.
-#, python-format
-msgid "Invalid drive %s"
-msgstr "无效的驱动器 %s"
-
-#. Translators: The title of the dialog presented while a portable copy of NVDA is bieng created.
+#. Translators: The title of the dialog presented while a portable copy of NVDA is being created.
 msgid "Creating Portable Copy"
 msgstr "正在创建便携副本"
 
-#. Translators: The message displayed while a portable copy of NVDA is bieng created.
+#. Translators: The message displayed while a portable copy of NVDA is being created.
 msgid "Please wait while a portable copy of NVDA is created."
 msgstr "请稍后，正在创建便携版的 NVDA。"
 
@@ -9421,16 +9467,16 @@ msgid "NVDA is unable to remove or overwrite a file."
 msgstr "NVDA 无法替换或覆盖一个文件。"
 
 #. Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
-#. %s will be replaced with the specific error message.
-#, python-format
-msgid "Failed to create portable copy: %s"
-msgstr "无法创建 NVDA 的便携版 %s"
+#. {error} will be replaced with the specific error message.
+#, python-brace-format
+msgid "Failed to create portable copy: {error}."
+msgstr "无法创建便携版 {error}。"
 
 #. Translators: The message displayed when a portable copy of NVDA has been successfully created.
-#. %s will be replaced with the destination directory.
-#, python-format
-msgid "Successfully created a portable copy of NVDA at %s"
-msgstr "在 %s 上的 NVDA 便携版本创建成功"
+#. {dir} will be replaced with the destination directory.
+#, python-brace-format
+msgid "Successfully created a portable copy of NVDA at {dir}"
+msgstr "已在 {dir} 成功创建了便携版。"
 
 #. Translators: The title of the NVDA log viewer window.
 msgid "NVDA Log Viewer"
@@ -10803,9 +10849,14 @@ msgid "Dictionary Entry Error"
 msgstr "字典条目错误"
 
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
-#, python-format
-msgid "Regular Expression error: \"%s\"."
-msgstr "正则表达式错误： \"%s\"."
+#, python-brace-format
+msgid "Regular Expression error in the pattern field: \"{error}\"."
+msgstr "原文本中的正则表达式错误：“{error}”。"
+
+#. Translators: This is an error message to let the user know that the dictionary entry is not valid.
+#, python-brace-format
+msgid "Regular Expression error in the replacement field: \"{error}\"."
+msgstr "替换文本中的正则表达式错误：“{error}”。"
 
 #. Translators: The label for the list box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -11185,6 +11236,15 @@ msgstr "已标记"
 msgid "not marked"
 msgstr "不标记"
 
+#. Translators: Reported when text is color-highlighted
+#, python-brace-format
+msgid "highlighted in {color}"
+msgstr "以{color}突出显示"
+
+#. Translators: Reported when text is no longer marked
+msgid "not highlighted"
+msgstr "未突出显示"
+
 #. Translators: Reported when text is marked as strong (e.g. bold)
 msgid "strong"
 msgstr "显眼"
@@ -11552,12 +11612,12 @@ msgid "No system battery"
 msgstr "未检测到电池"
 
 #. Translators: Reported when the battery is plugged in, and now is charging.
-msgid "Charging battery"
-msgstr "正在充电"
+msgid "Plugged in"
+msgstr "已插入店员"
 
 #. Translators: Reported when the battery is no longer plugged in, and now is not charging.
-msgid "AC disconnected"
-msgstr "交流电源已断开"
+msgid "Unplugged"
+msgstr "已断开店员"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
 #, python-brace-format
@@ -12390,7 +12450,7 @@ msgstr " 分数{fractionValue:.2f}百分比 扇区 {pointCount}的{pointIndex}"
 #. For example, this might report "column 1 of 5"
 #, python-brace-format
 msgid " {segmentType} {pointIndex} of {pointCount}"
-msgstr " {segmentType} {pointIndex} 的 {pointCount}"
+msgstr " {segmentType} {pointIndex} 共 {pointCount}"
 
 #. Translators: Indicates Primary Category Axis
 msgid "Primary Category Axis"
@@ -13213,6 +13273,20 @@ msgid ""
 msgstr ""
 "要将 Albatross 与 NVDA 一起使用：必须在 Albatross 内部菜单中更改状态单元格的"
 "数量 "
+
+#~ msgid ""
+#~ "Please specify an absolute path (including drive letter)  in which to "
+#~ "create the portable copy."
+#~ msgstr "请指定创建便携版的绝对路径（包括驱动器号）。"
+
+#~ msgid "Invalid drive %s"
+#~ msgstr "无效的驱动器 %s"
+
+#~ msgid "Charging battery"
+#~ msgstr "正在充电"
+
+#~ msgid "AC disconnected"
+#~ msgstr "交流电源已断开"
 
 #~ msgid "Unable to determine remaining time"
 #~ msgstr "无法确定剩余时间"

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA-TW\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-24 00:01+0000\n"
+"POT-Creation-Date: 2023-05-26 00:01+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -2464,7 +2464,7 @@ msgstr "輸入要尋找的文字"
 #. Translators: An option in find dialog to perform case-sensitive search.
 #. Translators: This is a label for a checkbox in add dictionary entry dialog.
 msgid "Case &sensitive"
-msgstr "大小寫需相符(&S)"
+msgstr "大小寫須相符(&S)"
 
 #, python-format
 msgid "text \"%s\" not found"
@@ -4241,12 +4241,16 @@ msgstr ""
 msgid "Plugins reloaded"
 msgstr "已重新載入外掛程式"
 
-#. Translators: input help mode message for Report destination URL of navigator link command
+#. Translators: input help mode message for Report destination URL of a link command
 msgid ""
-"Report the destination URL of the link in the navigator object. If pressed "
-"twice, shows the URL in a window for easier review."
+"Report the destination URL of the link at the position of caret or focus. If "
+"pressed twice, shows the URL in a window for easier review."
 msgstr ""
-"讀出導覽物件所在連結的目標 URL，連按兩下將 URL 顯示在一個視窗中以方便瀏覽。"
+"讀出游標或焦點所在連結的目標 URL，連按兩下將 URL 顯示在一個視窗中以方便瀏覽。"
+
+#. Translators: Informs the user that the link has no destination
+msgid "Link has no apparent destination"
+msgstr "連結沒有明確目標"
 
 #. Translators: Informs the user that the window contains the destination of the
 #. link with given title
@@ -4258,13 +4262,13 @@ msgstr "目標: {name}"
 msgid "Not a link."
 msgstr "非連結。"
 
-#. Translators: input help mode message for Report URL of navigator link in a window command
+#. Translators: input help mode message for Report URL of a link in a window command
 msgid ""
-"Reports the destination URL of the link in the navigator object in a window, "
-"instead of just speaking it. May be preferred by braille users."
+"Displays the destination URL of the link at the position of caret or focus "
+"in a window, instead of just speaking it. May be preferred by braille users."
 msgstr ""
-"在一個視窗中顯示導覽物件所在連結的目標 URL，而不是僅將它讀出，點字使用者可能"
-"更偏好使用。"
+"在一個視窗中顯示游標或焦點所在連結的目標 URL，而不是僅將它讀出，點字使用者可"
+"能更偏好使用。"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -4361,6 +4365,10 @@ msgstr "Windows OCR 無法使用"
 #. Translators: Reported when screen curtain is enabled.
 msgid "Please disable screen curtain before using Windows OCR."
 msgstr "使用 Windows OCR 前請先停用螢幕簾幕。"
+
+#. Translators: Describes a command.
+msgid "Cycles through the available languages for Windows OCR"
+msgstr "循環切換 Windows OCR 可用的語言"
 
 #. Translators: Input help mode message for toggle report CLDR command.
 msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
@@ -6210,9 +6218,10 @@ msgstr "檢查更新時發生錯誤。"
 #. Translators: The title of an error message dialog.
 #. Translators: An title for an error displayed when saving user defined input gestures fails.
 #. Translators: The title of a dialog presented when an error occurs.
-#. Translators: The message title displayed
-#. when the user has not specified an absolute destination directory
-#. in the Create Portable NVDA dialog.
+#. Translators: the title of an error dialog.
+#. Translators: The message title displayed when the user has not specified an absolute
+#. destination directory in the Create Portable NVDA dialog.
+#. Translators: Title of an error dialog shown when an error occurs while creating a portable copy of NVDA.
 #. Translators: The title of an error message dialog.
 #. Translators: The title of the message box
 #. Translators: The title of the error dialog displayed when there is an error showing the GUI
@@ -7115,6 +7124,25 @@ msgstr "{firstAddress} {firstValue} 到 {lastAddress} {lastValue}"
 #, python-brace-format
 msgid "{firstAddress} through {lastAddress}"
 msgstr "{firstAddress} 到 {lastAddress}"
+
+#. Translators: a measurement in inches
+#, python-brace-format
+msgid "{val:.2f} inches"
+msgstr "{val:.2f} 英吋"
+
+#. Translators: a measurement in centimetres
+#, python-brace-format
+msgid "{val:.2f} centimetres"
+msgstr "{val:.2f} 公分"
+
+#. Translators: LibreOffice, report cursor position in the current page
+#, python-brace-format
+msgid ""
+"cursor positioned {horizontalDistance} from left edge of page, "
+"{verticalDistance} from top edge of page"
+msgstr ""
+"游標位置距離頁面左邊緣 {horizontalDistance}，距離頁面上邊緣 "
+"{verticalDistance}"
 
 msgid "left"
 msgstr "到了左端"
@@ -8349,6 +8377,22 @@ msgstr "未鎖定"
 msgid "has note"
 msgstr "有附註"
 
+#. Translators: Presented when a control has a pop-up dialog.
+msgid "opens dialog"
+msgstr "快顯對話框"
+
+#. Translators: Presented when a control has a pop-up grid.
+msgid "opens grid"
+msgstr "快顯網格"
+
+#. Translators: Presented when a control has a pop-up list box.
+msgid "opens list"
+msgstr "快顯清單"
+
+#. Translators: Presented when a control has a pop-up tree.
+msgid "opens tree"
+msgstr "快顯樹狀檢視"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "沒選取"
@@ -8372,6 +8416,14 @@ msgstr "拖曳完成"
 #. Translators: This is spoken when the line is considered blank.
 msgid "blank"
 msgstr "空白"
+
+#. Translators: this message is given when there is no next paragraph when navigating by paragraph
+msgid "No next paragraph"
+msgstr "沒有下一個段落了"
+
+#. Translators: this message is given when there is no previous paragraph when navigating by paragraph
+msgid "No previous paragraph"
+msgstr "沒有上一個段落了"
 
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 msgid "Configuration applied"
@@ -9297,6 +9349,7 @@ msgid "Please press OK to start the installed copy."
 msgstr "請按「確認」開始使用安裝的版本。"
 
 #. Translators: The title of a dialog presented to indicate a successful operation.
+#. Translators: Title of a dialog shown when a portable copy of NVDA is created.
 msgid "Success"
 msgstr "成功"
 
@@ -9404,21 +9457,16 @@ msgstr "請指定用來建立可攜式版的目錄。"
 #. Translators: The message displayed when the user has not specified an absolute destination directory
 #. in the Create Portable NVDA dialog.
 msgid ""
-"Please specify an absolute path (including drive letter)  in which to create "
-"the portable copy."
-msgstr "請指定一個絕對路徑 (包括磁碟機代號) 以用來建立可攜式版。"
+"Please specify the absolute path where the portable copy should be created. "
+"It may include system variables (%temp%, %homepath%, etc.)."
+msgstr ""
+"請指定建立可攜式版的絕對路徑，它可能包括系統變數 (%temp%、%homepath% 等)。"
 
-#. Translators: The message displayed when the user specifies an invalid destination drive
-#. in the Create Portable NVDA dialog.
-#, python-format
-msgid "Invalid drive %s"
-msgstr "無效的磁碟 %s"
-
-#. Translators: The title of the dialog presented while a portable copy of NVDA is bieng created.
+#. Translators: The title of the dialog presented while a portable copy of NVDA is being created.
 msgid "Creating Portable Copy"
 msgstr "正在建立可攜式版"
 
-#. Translators: The message displayed while a portable copy of NVDA is bieng created.
+#. Translators: The message displayed while a portable copy of NVDA is being created.
 msgid "Please wait while a portable copy of NVDA is created."
 msgstr "正在建立 NVDA 可攜式版，請稍候。"
 
@@ -9427,16 +9475,16 @@ msgid "NVDA is unable to remove or overwrite a file."
 msgstr "NVDA 無法移除或覆寫檔案。"
 
 #. Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
-#. %s will be replaced with the specific error message.
-#, python-format
-msgid "Failed to create portable copy: %s"
-msgstr "無法建立可攜式版: %s"
+#. {error} will be replaced with the specific error message.
+#, python-brace-format
+msgid "Failed to create portable copy: {error}."
+msgstr "無法建立可攜式版: {error}."
 
 #. Translators: The message displayed when a portable copy of NVDA has been successfully created.
-#. %s will be replaced with the destination directory.
-#, python-format
-msgid "Successfully created a portable copy of NVDA at %s"
-msgstr "已成功在 %s 建立 NVDA 可攜式版"
+#. {dir} will be replaced with the destination directory.
+#, python-brace-format
+msgid "Successfully created a portable copy of NVDA at {dir}"
+msgstr "已成功在 {dir} 建立 NVDA 可攜式版"
 
 #. Translators: The title of the NVDA log viewer window.
 msgid "NVDA Log Viewer"
@@ -10812,9 +10860,14 @@ msgid "Dictionary Entry Error"
 msgstr "字庫項目錯誤"
 
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
-#, python-format
-msgid "Regular Expression error: \"%s\"."
-msgstr "正規表達式錯誤: \"%s\"。"
+#, python-brace-format
+msgid "Regular Expression error in the pattern field: \"{error}\"."
+msgstr "原來文字欄位的正規表達式錯誤: \"{error}\"."
+
+#. Translators: This is an error message to let the user know that the dictionary entry is not valid.
+#, python-brace-format
+msgid "Regular Expression error in the replacement field: \"{error}\"."
+msgstr "替代文字欄位的正規表達式錯誤: \"{error}\"."
 
 #. Translators: The label for the list box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -11197,6 +11250,15 @@ msgstr "強調高亮"
 msgid "not marked"
 msgstr "沒有強調高亮"
 
+#. Translators: Reported when text is color-highlighted
+#, python-brace-format
+msgid "highlighted in {color}"
+msgstr "高亮{color}"
+
+#. Translators: Reported when text is no longer marked
+msgid "not highlighted"
+msgstr "沒有高亮"
+
 #. Translators: Reported when text is marked as strong (e.g. bold)
 msgid "strong"
 msgstr "強調粗體"
@@ -11565,12 +11627,12 @@ msgid "No system battery"
 msgstr "沒有電池"
 
 #. Translators: Reported when the battery is plugged in, and now is charging.
-msgid "Charging battery"
-msgstr "電池充電中"
+msgid "Plugged in"
+msgstr "已接上電源"
 
 #. Translators: Reported when the battery is no longer plugged in, and now is not charging.
-msgid "AC disconnected"
-msgstr "交流電源已斷開"
+msgid "Unplugged"
+msgstr "已拔除電源"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
 #, python-brace-format
@@ -12206,7 +12268,7 @@ msgstr "帶有平滑曲線的散佈圖"
 
 #. Translators: A slice in a pie chart.
 msgid "slice"
-msgstr "扇區"
+msgstr "扇形區"
 
 #. Translators: A column in a column chart.
 msgctxt "chart"
@@ -12348,7 +12410,7 @@ msgstr "{seriesName} 數列，第 {seriesCount} 之 {seriesIndex}"
 #. Translators: Message to be spoken to report Slice Color in Pie Chart
 #, python-brace-format
 msgid "Slice color: {colorName} "
-msgstr "切片顏色為: {colorName} "
+msgstr "扇形區顏色: {colorName} "
 
 #. Translators: For line charts, indicates no change from the previous data point on the left
 #, python-brace-format
@@ -12639,7 +12701,7 @@ msgstr "粗線對角線斜紋"
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Solid color
 msgid "solid"
-msgstr "單色"
+msgstr "實心"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the lower left to the upper right
@@ -12901,7 +12963,7 @@ msgstr "{color} {desc}"
 #. Translators: border styles in Microsoft Excel.
 #, python-brace-format
 msgid "{desc} surrounding border"
-msgstr "{desc} 外框"
+msgstr "{desc} 外框線"
 
 #. Translators: border styles in Microsoft Excel.
 #, python-brace-format

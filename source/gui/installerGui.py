@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2011-2021 NV Access Limited, Babbage B.v., Cyrille Bougot, Julien Cochuyt, Accessolutions,
+# Copyright (C) 2011-2023 NV Access Limited, Babbage B.v., Cyrille Bougot, Julien Cochuyt, Accessolutions,
 # Bill Dengler, Joseph Lee, Takuya Nishimoto
 
 import os
@@ -19,6 +19,7 @@ from gui import guiHelper
 import gui.contextHelp
 from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 import systemUtils
+from NVDAState import WritePaths
 
 
 def _canPortableConfigBeCopied() -> bool:
@@ -30,13 +31,13 @@ def _canPortableConfigBeCopied() -> bool:
 		# as we would  copy it into itself.
 		# However, if a user wants to run the launcher with a custom configPath,
 		# it is likely that he wants to copy that configuration when installing.
-		return globalVars.appArgs.configPath != config.getUserDefaultConfigPath(useInstalledPathIfExists=True)
+		return WritePaths.configDir != config.getUserDefaultConfigPath(useInstalledPathIfExists=True)
 	else:
 		# For portable copies we want to avoid copying the configuration to itself,
 		# so return True only if the configPath
 		# does not point to the config of the installed copy in appdata.
 		confPath = config.getInstalledUserConfigPath()
-		if confPath and confPath == globalVars.appArgs.configPath:
+		if confPath and confPath == WritePaths.configDir:
 			return False
 		return True
 
@@ -152,12 +153,16 @@ class InstallerDialog(
 		super().__init__(parent, title=_("Install NVDA"))
 
 		import addonHandler
+		from _addonStore.models.version import (
+			getAddonCompatibilityConfirmationMessage,
+			getAddonCompatibilityMessage,
+		)
 		shouldAskAboutAddons = any(addonHandler.getIncompatibleAddons(
 			# the defaults from the installer are ok. We are testing against the running version.
 		))
 
 		mainSizer = self.mainSizer = wx.BoxSizer(wx.VERTICAL)
-		sHelper = gui.guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
+		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 
 		# Translators: An informational message in the Install NVDA dialog.
 		msg=_("To install NVDA to your hard drive, please press the Continue button.")
@@ -168,24 +173,17 @@ class InstallerDialog(
 				# Translators: a message in the installer telling the user NVDA is now located in a different place.
 				msg+=" "+_("The installation path for NVDA has changed. it will now  be installed in {path}").format(path=installer.defaultInstallPath)
 		if shouldAskAboutAddons:
-			msg+=_(
-				# Translators: A message in the installer to let the user know that
-				# some addons are not compatible.
-				"\n\n"
-				"However, your NVDA configuration contains add-ons that are incompatible with this version of NVDA. "
-				"These add-ons will be disabled after installation. If you rely on these add-ons, "
-				"please review the list to decide whether to continue with the installation"
-			)
+			msg += "\n\n" + getAddonCompatibilityMessage()
 
 		text = sHelper.addItem(wx.StaticText(self, label=msg))
 		text.Wrap(self.scaleSize(self.textWrapWidth))
 		if shouldAskAboutAddons:
-			self.confirmationCheckbox = sHelper.addItem(wx.CheckBox(
+			self.confirmationCheckbox = sHelper.addItem(
+				wx.CheckBox(
 					self,
-					# Translators: A message to confirm that the user understands that addons that have not been reviewed and made
-					# available, will be disabled after installation.
-					label=_("I understand that these incompatible add-ons will be disabled")
-				))
+					label=getAddonCompatibilityConfirmationMessage()
+				)
+			)
 			self.bindHelpEvent("InstallWithIncompatibleAddons", self.confirmationCheckbox)
 			self.confirmationCheckbox.SetFocus()
 
@@ -353,7 +351,7 @@ class PortableCreaterDialog(
 		# Translators: The title of the Create Portable NVDA dialog.
 		super().__init__(parent, title=_("Create Portable NVDA"))
 		mainSizer = self.mainSizer = wx.BoxSizer(wx.VERTICAL)
-		sHelper = gui.guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
+		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 
 		# Translators: An informational message displayed in the Create Portable NVDA dialog.
 		dialogCaption=_("To create a portable copy of NVDA, please select the path and other options and then press Continue")
@@ -363,14 +361,14 @@ class PortableCreaterDialog(
 		# in the Create Portable NVDA dialog.
 		directoryGroupText = _("Portable &directory:")
 		groupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=directoryGroupText)
-		groupHelper = sHelper.addItem(gui.guiHelper.BoxSizerHelper(self, sizer=groupSizer))
+		groupHelper = sHelper.addItem(guiHelper.BoxSizerHelper(self, sizer=groupSizer))
 		groupBox = groupSizer.GetStaticBox()
 		# Translators: The label of a button to browse for a directory.
 		browseText = _("Browse...")
 		# Translators: The title of the dialog presented when browsing for the
 		# destination directory when creating a portable copy of NVDA.
 		dirDialogTitle = _("Select portable  directory")
-		directoryPathHelper = gui.guiHelper.PathSelectionHelper(groupBox, browseText, dirDialogTitle)
+		directoryPathHelper = guiHelper.PathSelectionHelper(groupBox, browseText, dirDialogTitle)
 		directoryEntryControl = groupHelper.addItem(directoryPathHelper)
 		self.portableDirectoryEdit = directoryEntryControl.pathControl
 		if globalVars.appArgs.portablePath:
@@ -387,7 +385,7 @@ class PortableCreaterDialog(
 		self.startAfterCreateCheckbox = sHelper.addItem(wx.CheckBox(self, label=startAfterCreateText))
 		self.startAfterCreateCheckbox.Value = False
 
-		bHelper = sHelper.addDialogDismissButtons(gui.guiHelper.ButtonHelper(wx.HORIZONTAL), separated=True)
+		bHelper = sHelper.addDialogDismissButtons(guiHelper.ButtonHelper(wx.HORIZONTAL), separated=True)
 		
 		continueButton = bHelper.addButton(self, label=_("&Continue"), id=wx.ID_OK)
 		continueButton.SetDefault()
@@ -397,76 +395,97 @@ class PortableCreaterDialog(
 		# If we bind this using button.Bind, it fails to trigger when the dialog is closed.
 		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
 		
-		mainSizer.Add(sHelper.sizer, border=gui.guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
+		mainSizer.Add(sHelper.sizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		self.Sizer = mainSizer
 		mainSizer.Fit(self)
 		self.CentreOnScreen()
 
 	def onCreatePortable(self, evt):
 		if not self.portableDirectoryEdit.Value:
-			# Translators: The message displayed when the user has not specified a destination directory
-			# in the Create Portable NVDA dialog.
-			gui.messageBox(_("Please specify a directory in which to create the portable copy."),
-				_("Error"),
-				wx.OK | wx.ICON_ERROR)
-			return
-		if not os.path.isabs(self.portableDirectoryEdit.Value):
 			gui.messageBox(
-				# Translators: The message displayed when the user has not specified an absolute destination directory
+				# Translators: The message displayed when the user has not specified a destination directory
 				# in the Create Portable NVDA dialog.
-				_("Please specify an absolute path (including drive letter)  in which to create the portable copy."),
-				# Translators: The message title displayed
-				# when the user has not specified an absolute destination directory
-				# in the Create Portable NVDA dialog.
+				_("Please specify a directory in which to create the portable copy."),
+				# Translators: the title of an error dialog.
 				_("Error"),
 				wx.OK | wx.ICON_ERROR
 			)
 			return
-		drv=os.path.splitdrive(self.portableDirectoryEdit.Value)[0]
-		if drv and not os.path.isdir(drv):
-			# Translators: The message displayed when the user specifies an invalid destination drive
-			# in the Create Portable NVDA dialog.
-			gui.messageBox(_("Invalid drive %s")%drv,
+		expandedPortableDirectory = os.path.expandvars(self.portableDirectoryEdit.Value)
+		if not os.path.isabs(expandedPortableDirectory):
+			gui.messageBox(
+				_(
+					# Translators: The message displayed when the user has not specified an absolute destination directory
+					# in the Create Portable NVDA dialog.
+					"Please specify the absolute path where the portable copy should be created. "
+					"It may include system variables (%temp%, %homepath%, etc.)."
+				),
+				# Translators: The message title displayed when the user has not specified an absolute
+				# destination directory in the Create Portable NVDA dialog.
 				_("Error"),
-				wx.OK | wx.ICON_ERROR)
+				wx.OK | wx.ICON_ERROR
+			)
 			return
+		# isabs determines if the path is absolute, with or without a drive letter. abspath adds any missing initial
+		# components to that path to make it absolute from other contexts, by adding a drive letter/share path if
+		# needed. The OS's idea of the current drive is used, as in os.getcwd(). (#14681)
+		expandedPortableDirectory = os.path.abspath(expandedPortableDirectory)
 		self.Hide()
-		doCreatePortable(self.portableDirectoryEdit.Value,self.copyUserConfigCheckbox.Value,False,self.startAfterCreateCheckbox.Value)
+		doCreatePortable(
+			expandedPortableDirectory,
+			self.copyUserConfigCheckbox.Value,
+			False,
+			self.startAfterCreateCheckbox.Value
+		)
 		self.Destroy()
 
 	def onCancel(self, evt):
 		self.Destroy()
 
-def doCreatePortable(portableDirectory,copyUserConfig=False,silent=False,startAfterCreate=False):
-	d = gui.IndeterminateProgressDialog(gui.mainFrame,
-		# Translators: The title of the dialog presented while a portable copy of NVDA is bieng created.
+
+def doCreatePortable(
+		portableDirectory: str,
+		copyUserConfig: bool = False,
+		silent: bool = False,
+		startAfterCreate: bool = False
+) -> None:
+	d = gui.IndeterminateProgressDialog(
+		gui.mainFrame,
+		# Translators: The title of the dialog presented while a portable copy of NVDA is being created.
 		_("Creating Portable Copy"),
-		# Translators: The message displayed while a portable copy of NVDA is bieng created.
-		_("Please wait while a portable copy of NVDA is created."))
+		# Translators: The message displayed while a portable copy of NVDA is being created.
+		_("Please wait while a portable copy of NVDA is created.")
+	)
 	try:
-		gui.ExecAndPump(installer.createPortableCopy,portableDirectory,copyUserConfig)
+		gui.ExecAndPump(installer.createPortableCopy, portableDirectory, copyUserConfig)
 	except Exception as e:
-		log.error("Failed to create portable copy",exc_info=True)
+		log.error("Failed to create portable copy", exc_info=True)
 		d.done()
-		if isinstance(e,installer.RetriableFailure):
+		if isinstance(e, installer.RetriableFailure):
 			# Translators: a message dialog asking to retry or cancel when NVDA portable copy creation fails
-			message=_("NVDA is unable to remove or overwrite a file.")
+			message = _("NVDA is unable to remove or overwrite a file.")
 			# Translators: the title of a retry cancel dialog when NVDA portable copy creation  fails
-			title=_("File in Use")
-			if winUser.MessageBox(None,message,title,winUser.MB_RETRYCANCEL)==winUser.IDRETRY:
-				return doCreatePortable(portableDirectory,copyUserConfig,silent,startAfterCreate)
-		# Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
-		# %s will be replaced with the specific error message.
-		gui.messageBox(_("Failed to create portable copy: %s")%e,
+			title = _("File in Use")
+			if winUser.MessageBox(None, message, title, winUser.MB_RETRYCANCEL) == winUser.IDRETRY:
+				return doCreatePortable(portableDirectory, copyUserConfig, silent, startAfterCreate)
+		gui.messageBox(
+			# Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
+			# {error} will be replaced with the specific error message.
+			_("Failed to create portable copy: {error}.").format(error=e),
+			# Translators: Title of an error dialog shown when an error occurs while creating a portable copy of NVDA.
 			_("Error"),
-			wx.OK | wx.ICON_ERROR)
+			wx.OK | wx.ICON_ERROR
+		)
 		return
 	d.done()
 	if not silent:
-		# Translators: The message displayed when a portable copy of NVDA has been successfully created.
-		# %s will be replaced with the destination directory.
-		gui.messageBox(_("Successfully created a portable copy of NVDA at %s")%portableDirectory,
-			_("Success"))
+		gui.messageBox(
+			# Translators: The message displayed when a portable copy of NVDA has been successfully created.
+			# {dir} will be replaced with the destination directory.
+			_("Successfully created a portable copy of NVDA at {dir}").format(dir=portableDirectory),
+			# Translators: Title of a dialog shown when a portable copy of NVDA is created.
+			_("Success")
+		)
 	if silent or startAfterCreate:
 		newNVDA = None
 		if startAfterCreate:

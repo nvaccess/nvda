@@ -2,7 +2,10 @@ Guide de l'utilisateur de NVDA NVDA_VERSION
 
 
 %!includeconf: ../userGuide.t2tconf
+%!includeconf: ./locale.t2tconf
 %kc:title: NVDA NVDA_VERSION Résumé des commandes
+%kc:includeconf: ./locale.t2tconf
+
 
 = Sommaire =[toc]
 %%toc
@@ -146,7 +149,7 @@ L'installation de NVDA permettra des fonctionnalités supplémentaires telles qu
 Cela ne peut pas être fait avec des copies portables ou temporaires.
 Pour plus de détails sur les limitations lors de l'exécution d'une copie portable ou temporaire de NVDA, veuillez consulter les [Restrictions relatives aux copies portables et temporaires #PortableAndTemporaryCopyRestrictions].
 
-L'installation propose également de créer un menu Démarrer et des raccourcis sur le bureau, et permet à NVDA d'être démarré avec ``contrôle+alt+n``.
+L'installation propose également de créer des raccourcis dans le menu Démarrer et sur le bureau, et permet à NVDA d'être démarré avec ``contrôle+alt+n``.
 
 +++ Étapes pour installer NVDA depuis le lanceur +++[StepsForInstallingNVDAFromTheLauncher]
 Ces étapes décrivent les options de configuration les plus courantes.
@@ -221,7 +224,7 @@ Les commandes réelles ne s'exécuteront pas en mode d'aide à la saisie.
 | Lire la barre d'état | ``NVDA+fin`` | ``NVDA+maj+fin`` | Annonce la barre d'état si NVDA en trouve une. Un double appui épelle l'information. Un triple appui la copie dans le presse-papiers |
 | Lire l'heure | ``NVDA+f12`` | ``NVDA+f12`` | Un appui annonce l'heure courante, un double appui annonce la date |
 | Annoncer la mise en forme du texte | ``NVDA+f`` | ``NVDA+f`` | Annonce la mise en forme du texte. Un double appui affiche l'information dans une fenêtre |
-| Annoncer le lien de destination | ``NVDA+k`` | ``NVDA+k`` | Un appui annonce l'URL de destination du lien dans [l'objet navigateur #ObjectNavigation]. Deux appuis l'affichent dans une fenêtre pour une revue plus attentive |
+| Annoncer le lien de destination | ``NVDA+k`` | ``NVDA+k`` | Un appui annonce l'URL de destination du lien à la position courante du curseur ou du focus. Deux appuis l'affichent dans une fenêtre pour une revue plus attentive |
 
 +++ Choisir les informations lues par NVDA +++[ToggleWhichInformationNVDAReads]
 || Nom | Touche ordinateur de bureau | Touche ordinateur portable | Description |
@@ -2110,7 +2113,6 @@ Ce style fonctionne mieux lorsque vous travaillez avec des documents qui utilise
 Notez que ce style de paragraphe ne peut pas être utilisé dans Microsoft Word ou Microsoft Outlook, sauf si vous utilisez l'UIA pour accéder aux contrôles de Microsoft Word.
 -
 
-You may toggle through the available paragraph styles from anywhere by assigning a key in the [Input Gestures dialog #InputGestures].
 Vous pouvez basculer entre les styles de paragraphe disponibles de n'importe où en attribuant une touche dans la [boîte de dialogue Gestes de commandes #InputGestures].
 
 +++ Reconnaissance Optique de Caractères de Windows +++[Win10OcrSettings]
@@ -2119,6 +2121,7 @@ Elle contient les options suivantes :
 
 ==== Langue de Reconnaissance ====[Win10OcrSettingsRecognitionLanguage]
 Cette liste déroulante vous permet de choisir la langue à utiliser pour la reconnaissance de texte.
+Pour faire défiler les langues disponibles à partir de n'importe quel endroit, veuillez assigner un geste de commande personnalisé en utilisant [le dialogue Gestes de Commandes #InputGestures].
 
 +++ Paramètres Avancés +++[AdvancedSettings]
 Avertissement ! Les paramètres dans cette catégorie sont pour les utilisateurs avancés et peuvent provoquer un mauvais fonctionnement de NVDA si mal configurés.
@@ -2134,8 +2137,8 @@ Cela peut aussi être le cas si vous n'êtes pas sûr que les paramètres ont é
 
 ==== Activer le chargement de code personnalisé depuis le Répertoire Bloc-notes du Développeur ====[AdvancedSettingsEnableScratchpad]
 Quand vous développez des extensions pour NVDA, il est utile de pouvoir tester le code en cours d'écriture.
-Quand elle est activée, cette option permet à NVDA de charger des extensions applicatives personnalisées, globalPlugins, brailleDisplayDrivers et synthDrivers, depuis un répertoire bloc-notes du développeur spécial dans votre répertoire de configuration utilisateur.
-Précédemment NVDA aurait chargé le code personnalisé directement depuis le répertoire de configuration utilisateur, sans possibilité de désactiver ce comportement. 
+Cette option, lorsqu'elle est activée, permet à NVDA de charger des modules applicatifs personnalisés, des modules globaux, des pilotes d'afficheurs braille, des pilotes de synthétiseur et des fournisseurs d'amélioration visuelle, à partir d'un répertoire spécial bloc-notes du développeur dans votre répertoire de configuration utilisateur NVDA.
+Comme leurs équivalents dans les extensions, ces modules sont chargés au démarrage de NVDA ou, dans le cas des modules applicatifs et globaux, lors du [rechargement des modules #ReloadPlugins].
 Cette option est désactivée par défaut, garantissant qu'aucun code non testé n'est exécuté par NVDA sans que l'utilisateur en ait explicitement connaissance.
 Si vous voulez distribuer du code spécifique à d'autres personnes, vous devriez l'empaqueter sous forme d'extension pour NVDA.
 
@@ -2348,7 +2351,11 @@ Pour modifier un symbole, sélectionnez-le d'abord dans la liste de symboles.
 Vous pouvez filtrer les symboles en entrant le symbole ou une partie du remplacement du symbole dans le champ d'édition Filtrer par.
 
 - Le champ "Remplacement" vous permet de modifier le texte qui doit être prononcé à la place de ce symbole.
-- En utilisant le champ "Niveau", vous pouvez ajuster le niveau minimum auquel ce symbole doit être annoncé.
+- En utilisant le champ "Niveau", vous pouvez ajuster le niveau minimum auquel ce symbole doit être annoncé (aucun, quelques-uns, la plupart ou tous).
+Vous pouvez également définir le niveau sur caractère ; dans ce cas, le symbole ne sera pas prononcé quel que soit le niveau de symbole utilisé, avec les deux exceptions suivantes :
+ - Quand vous naviguez caractère par caractère.
+ - Quand NVDA épelle un texte contenant ce symbole.
+ -
 - Le champ "Envoyer le symbole réel au synthétiseur" spécifie quand le symbole lui-même (au lieu de son remplacement) devrait être envoyé au synthétiseur.
 Ceci est utile si le symbole force le synthétiseur à marquer une pause ou modifie l'inflexion de la voix. 
 Par exemple, une virgule force le synthétiseur à marquer une pause.
@@ -2650,8 +2657,8 @@ Spécifiquement, Les problèmes suivants peuvent être réglés par l'exécution
 - Et possiblement d'autres problèmes.
 -
 
-++ Rechargement des Extensions ++[ReloadPlugins]
-Cet élément, quand on l'active, recharge les extensions d'applications et les extensions globales sans avoir à redémarrer NVDA, ce qui peut être utile pour les développeurs.
+++ Recharger les modules ++[ReloadPlugins]
+Cet élément, quand on l'active, recharge les modules applicatifs et globaux sans avoir à redémarrer NVDA, ce qui peut être utile pour les développeurs.
 
 + Synthétiseurs de Parole Pris en Charge +[SupportedSpeechSynths]
 Cette section contient des informations concernant les synthétiseurs de parole pris en charge par NVDA.
@@ -2937,6 +2944,15 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 | Amener l'affichage sur la ligne précédente | d1 |
 | Amener l'affichage sur la ligne suivante | d3 |
 | Aller à la cellule braille | routage |
+| touche Maj+tab | espace+point1+point3 |
+| touche tab | espace+point4+point6 |
+| touche alt | espace+point1+point3+point4 (espace+m) |
+| touche échap | espace+point1+point5 (espace+e) |
+| touche windows | espace+point3+point4 |
+| touche alt+tab | espace+point2+point3+point4+point5 (espace+t) |
+| Menu NVDA | espace+point1+point3+point4+point5 (espace+n) |
+| touche windows+d (minimiser toutes les applications) | espace+point1+point4+point5 (espace+d) |
+| Dire tout | espace+point1+point2+point3+point4+point5+point6 |
 
 Pour les terminaux possédant un joystick:
 || Nom | Touche |
@@ -3649,6 +3665,10 @@ Veuillez consulter la documentation de l'afficheur pour savoir où trouver ces t
 | Amener l'objet navigateur à l'objet suivant | ``f6`` |
 | Annoncer l'objet navigateur courant | ``f7`` |
 | Annoncer l'information de position du texte ou de l'objet sous le curseur de revue | ``f8`` |
+| Afficher les paramètres braille | ``f1+home1``, ``f9+home2`` |
+| Lire la barre d'état et y amener l'objet navigateur | ``f1+end1``, ``f9+end2`` |
+| Basculer le curseur braille | ``f1+cursor1``, ``f9+cursor2`` |
+| Faire défiler les formes de curseur braille | ``f1+eCursor1``, ``f9+eCursor2`` |
 | Exécuter l'action par défaut sur l'objet navigateur courant | ``f7+f8`` |
 | Annoncer date/heure | ``f9`` |
 | Annoncer le niveau de batterie et le temps restant si l'alimentation n'est pas branchée | ``f10`` |
@@ -3678,19 +3698,17 @@ Voici les affectations de touches actuelles pour ces affichages.
 || Nom | Touche |
 | Défilement arrière de l'afficheur braille | panoramique à gauche ou rocker vers le haut |
 | Défilement avant de l'afficheur braille | panoramique à droite ou rocker vers le bas |
-| Déplacer l'affichage braille à la ligne précédente | espace+point1 |
-| Déplacer l'affichage braille à la ligne suivante | espace+point4 |
 | Aller à la cellule braille | ensemble de routage 1|
 | Basculer braille suit to | haut+bas |
-| Touche FlècheHaut | joystick vers le haut |
-| Touche FlècheBas | joystick vers le bas |
-| Touche FlècheGauche | espace+point3 ou joystick vers la gauche |
-| Touche FlècheDroite | espace+point6 ou joystick vers la droite |
+| touche flècheHaut | joystick vers le haut, dpad ver le haut ou espace+point1 |
+| touche flècheBas | joystick vers le bas, dpad ver le bas ou espace+point4 |
+| touche flècheGauche | espace+point3, joystick vers la gauche ou dpad ver la gauche |
+| touche flècheDroite | espace+point6, joystick vers la droite ou dpad ver la droite |
 | Touche maj+tab | espace+point1+point3 |
 | Touche tab | espace+point4+point6 |
 | Touche alt | espace+point1+point3+point4 (espace+m) |
 | Touche échap | espace+point1+poin5 (espace+e) |
-| touche entrer | poin8 ou joystick centre |
+| touche entrer | poin8, joystick centre ou dpad centre |
 | Touche Windows | espace+point3+point4 |
 | Touche alt+tab | espace+point2+point3+point4+point5 (espace+t) |
 | Menu NVDA | espace+point1+point3+point4+point5 (espace+n) |

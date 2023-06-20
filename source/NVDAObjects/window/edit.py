@@ -674,9 +674,13 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 
 	def _getTextAtRange(self,rangeObj):
 		embedRangeObj=None
-		bufText=rangeObj.text
+		try:
+			bufText = rangeObj.text
+		except COMError:
+			log.debugWarning("rangeObj.text failed", exc_info=True)
+			bufText = None
 		if not bufText:
-			return u""
+			return ""
 		if controlTypes.State.PROTECTED in self.obj.states:
 			return u'*'*len(bufText)
 		newTextList=[]

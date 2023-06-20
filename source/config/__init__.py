@@ -1,6 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Rui Batista, Zahari Yurukov,
-# Joseph Lee, Babbage B.V., Łukasz Golonka, Julien Cochuyt
+# Copyright (C) 2006-2023 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Rui Batista, Zahari Yurukov,
+# Joseph Lee, Babbage B.V., Łukasz Golonka, Julien Cochuyt, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -49,6 +49,7 @@ from typing import (
 	Tuple,
 )
 import NVDAState
+from NVDAState import WritePaths
 
 
 #: True if NVDA is running as a Windows Store Desktop Bridge application
@@ -58,7 +59,7 @@ isAppX=False
 #: @type: ConfigManager
 conf = None
 
-#: Notifies when the configuration profile is switched.
+#: Notifies after the configuration profile has been switched.
 #: This allows components and add-ons to apply changes required by the new configuration.
 #: For example, braille switches braille displays if necessary.
 #: Handlers are called with no arguments.
@@ -212,7 +213,7 @@ def getUserDefaultConfigPath(useInstalledPathIfExists=False):
 	"""Get the default path for the user configuration directory.
 	This is the default path and doesn't reflect overriding from the command line,
 	which includes temporary copies.
-	Most callers will want the C{globalVars.appArgs.configPath variable} instead.
+	Most callers will want the C{NVDAState.WritePaths.configDir variable} instead.
 	"""
 	installedUserConfigPath=getInstalledUserConfigPath()
 	if installedUserConfigPath and (isInstalledCopy() or isAppX or (useInstalledPathIfExists and os.path.isdir(installedUserConfigPath))):
@@ -236,9 +237,9 @@ SCRATCH_PAD_ONLY_DIRS = (
 )
 
 
-def getScratchpadDir(ensureExists=False):
+def getScratchpadDir(ensureExists: bool = False) -> str:
 	""" Returns the path where custom appModules, globalPlugins and drivers can be placed while being developed."""
-	path=os.path.join(globalVars.appArgs.configPath,'scratchpad')
+	path = WritePaths.scratchpadDir
 	if ensureExists:
 		if not os.path.isdir(path):
 			os.makedirs(path)
@@ -248,14 +249,14 @@ def getScratchpadDir(ensureExists=False):
 				os.makedirs(subpath)
 	return path
 
-def initConfigPath(configPath=None):
+
+def initConfigPath(configPath: Optional[str] = None) -> None:
 	"""
 	Creates the current configuration path if it doesn't exist. Also makes sure that various sub directories also exist.
 	@param configPath: an optional path which should be used instead (only useful when being called from outside of NVDA)
-	@type configPath: str
 	"""
 	if not configPath:
-		configPath=globalVars.appArgs.configPath
+		configPath = WritePaths.configDir
 	if not os.path.isdir(configPath):
 		os.makedirs(configPath)
 	else:
@@ -422,7 +423,7 @@ def _setStartOnLogonScreen(enable: bool) -> None:
 
 
 def setSystemConfigToCurrentConfig():
-	fromPath = globalVars.appArgs.configPath
+	fromPath = WritePaths.configDir
 	if ctypes.windll.shell32.IsUserAnAdmin():
 		_setSystemConfig(fromPath)
 	else:
@@ -538,11 +539,6 @@ class ConfigManager(object):
 		self._shouldHandleProfileSwitch: bool = True
 		self._pendingHandleProfileSwitch: bool = False
 		self._suspendedTriggers: Optional[List[ProfileTrigger]] = None
-		# Never save the config if running securely or if running from the launcher.
-		# When running from the launcher we don't save settings because the user may decide not to
-		# install this version, and these settings may not be compatible with the already
-		# installed version. See #7688
-		self._shouldWriteProfile: bool = not (globalVars.appArgs.secure or globalVars.appArgs.launcher)
 		self._initBaseConf()
 		#: Maps triggers to profiles.
 		self.triggersToProfiles: Optional[Dict[ProfileTrigger, ConfigObj]] = None
@@ -565,7 +561,7 @@ class ConfigManager(object):
 			post_configProfileSwitch.notify(prevConf=currentRootSection.dict())
 
 	def _initBaseConf(self, factoryDefaults=False):
-		fn = os.path.join(globalVars.appArgs.configPath, "nvda.ini")
+		fn = WritePaths.nvdaConfigFile
 		if factoryDefaults:
 			profile = self._loadConfig(None)
 			profile.filename = fn
@@ -600,7 +596,7 @@ class ConfigManager(object):
 		profile.newlines = "\r\n"
 		profileCopy = deepcopy(profile)
 		try:
-			writeProfileFunc = self._writeProfileToFile if self._shouldWriteProfile else None
+			writeProfileFunc = self._writeProfileToFile if NVDAState.shouldWriteToDisk() else None
 			profileUpgrader.upgrade(profile, self.validator, writeProfileFunc)
 		except Exception as e:
 			# Log at level info to ensure that the profile is logged.
@@ -636,13 +632,13 @@ class ConfigManager(object):
 		return self.rootSection.dict()
 
 	def listProfiles(self):
-		for name in os.listdir(os.path.join(globalVars.appArgs.configPath, "profiles")):
+		for name in os.listdir(WritePaths.profilesDir):
 			name, ext = os.path.splitext(name)
 			if ext == ".ini":
 				yield name
 
-	def _getProfileFn(self, name):
-		return os.path.join(globalVars.appArgs.configPath, "profiles", name + ".ini")
+	def _getProfileFn(self, name: str) -> str:
+		return WritePaths.getProfileConfigFile(name)
 
 	def _getProfile(self, name, load=True):
 		try:
@@ -704,7 +700,7 @@ class ConfigManager(object):
 		"""
 		# #7598: give others a chance to either save settings early or terminate tasks.
 		pre_configSave.notify()
-		if not self._shouldWriteProfile:
+		if not NVDAState.shouldWriteToDisk():
 			log.info("Not writing profile, either --secure or --launcher args present")
 			return
 		try:
@@ -714,7 +710,7 @@ class ConfigManager(object):
 				self._writeProfileToFile(self._profileCache[name].filename, self._profileCache[name])
 				log.info("Saved configuration profile %s" % name)
 			self._dirtyProfiles.clear()
-		except Exception as e:
+		except PermissionError as e:
 			log.warning("Error saving configuration; probably read only file system")
 			log.debugWarning("", exc_info=True)
 			raise e
@@ -728,6 +724,7 @@ class ConfigManager(object):
 		pre_configReset.notify(factoryDefaults=factoryDefaults)
 		self.profiles = []
 		self._profileCache.clear()
+		self._dirtyProfiles.clear()
 		# Signal that we're initialising.
 		self.rootSection = None
 		self._initBaseConf(factoryDefaults=factoryDefaults)
@@ -968,7 +965,7 @@ class ConfigManager(object):
 		self.profileTriggersEnabled = True
 
 	def _loadProfileTriggers(self):
-		fn = os.path.join(globalVars.appArgs.configPath, "profileTriggers.ini")
+		fn = WritePaths.profileTriggersFile
 		try:
 			cobj = ConfigObj(fn, indent_type="\t", encoding="UTF-8")
 		except:

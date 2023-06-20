@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Russian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-03 00:01+0000\n"
-"PO-Revision-Date: 2023-03-04 07:13+0800\n"
+"POT-Creation-Date: 2023-05-05 00:01+0000\n"
+"PO-Revision-Date: 2023-05-07 07:21+0800\n"
 "Last-Translator: Kvark <kvark128@yandex.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -1230,7 +1230,7 @@ msgstr "Сепе́ди (вторая ступень)"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Chichewa (Malawi) literary braille"
-msgstr ""
+msgstr "Чичева (Малави) литературный брайль"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1360,32 +1360,32 @@ msgstr "Шведский сокращённый брайль"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Swahili (Kenya) grade 1"
-msgstr ""
+msgstr "Суахили (Кения) ступень 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Swahili (Kenya) grade 1.2"
-msgstr ""
+msgstr "Суахили (Кения) ступень 1.2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Swahili (Kenya) grade 1.3"
-msgstr ""
+msgstr "Суахили (Кения) ступень 1.3"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Swahili (Kenya) grade 1.4"
-msgstr ""
+msgstr "Суахили (Кения) ступень 1.4"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Swahili (Kenya) grade 1.5"
-msgstr ""
+msgstr "Суахили (Кения) ступень 1.5"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Swahili (Kenya) Grade 2"
-msgstr ""
+msgstr "Суахили (Кения) ступень 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -4397,32 +4397,36 @@ msgstr ""
 msgid "Plugins reloaded"
 msgstr "Плагины перезагружены"
 
-#. Translators: input help mode message for Report destination URL of navigator link command
+#. Translators: input help mode message for Report destination URL of a link command
 msgid ""
-"Report the destination URL of the link in the navigator object. If pressed "
-"twice, shows the URL in a window for easier review."
+"Report the destination URL of the link at the position of caret or focus. If "
+"pressed twice, shows the URL in a window for easier review."
 msgstr ""
-"Сообщает URL-адрес ссылки в объекте навигатора. Если нажато дважды, "
-"показывает этот адрес в отдельном окне для удобного просмотра"
+"Сообщает URL-адрес ссылки под кареткой или системным фокусом. Если нажато "
+"дважды, показывает этот адрес в отдельном окне для удобного просмотра"
+
+#. Translators: Informs the user that the link has no destination
+msgid "Link has no apparent destination"
+msgstr "Ссылка не имеет адреса"
 
 #. Translators: Informs the user that the window contains the destination of the
 #. link with given title
 #, python-brace-format
 msgid "Destination of: {name}"
-msgstr "Адрес для ссылки «{name}»"
+msgstr "Адрес ссылки «{name}»"
 
 #. Translators: Tell user that the command has been run on something that is not a link
 msgid "Not a link."
 msgstr "это не ссылка"
 
-#. Translators: input help mode message for Report URL of navigator link in a window command
+#. Translators: input help mode message for Report URL of a link in a window command
 msgid ""
-"Reports the destination URL of the link in the navigator object in a window, "
-"instead of just speaking it. May be preferred by braille users."
+"Displays the destination URL of the link at the position of caret or focus "
+"in a window, instead of just speaking it. May be preferred by braille users."
 msgstr ""
-"Показывает URL-адрес ссылки в объекте навигатора в отдельном окне, вместо "
-"его чтения синтезатором речи. Это может быть полезно для пользователей с "
-"брайлевским дисплеем"
+"Показывает URL-адрес ссылки под кареткой или системным фокусом в отдельном "
+"окне, вместо его чтения синтезатором речи. Это может быть полезно для "
+"пользователей с брайлевским дисплеем"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -4530,6 +4534,10 @@ msgstr "Компонент Windows OCR недоступен"
 msgid "Please disable screen curtain before using Windows OCR."
 msgstr ""
 "Пожалуйста, отключите затемнение экрана перед использованием Windows OCR."
+
+#. Translators: Describes a command.
+msgid "Cycles through the available languages for Windows OCR"
+msgstr "Циклически переключает доступные языки для Windows OCR"
 
 #. Translators: Input help mode message for toggle report CLDR command.
 msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
@@ -6402,9 +6410,10 @@ msgstr "Ошибка при проверке наличия обновлений
 #. Translators: The title of an error message dialog.
 #. Translators: An title for an error displayed when saving user defined input gestures fails.
 #. Translators: The title of a dialog presented when an error occurs.
-#. Translators: The message title displayed
-#. when the user has not specified an absolute destination directory
-#. in the Create Portable NVDA dialog.
+#. Translators: the title of an error dialog.
+#. Translators: The message title displayed when the user has not specified an absolute
+#. destination directory in the Create Portable NVDA dialog.
+#. Translators: Title of an error dialog shown when an error occurs while creating a portable copy of NVDA.
 #. Translators: The title of an error message dialog.
 #. Translators: The title of the message box
 #. Translators: The title of the error dialog displayed when there is an error showing the GUI
@@ -7327,6 +7336,25 @@ msgstr "{firstAddress} {firstValue} по {lastAddress} {lastValue}"
 #, python-brace-format
 msgid "{firstAddress} through {lastAddress}"
 msgstr "{firstAddress} по {lastAddress}"
+
+#. Translators: a measurement in inches
+#, python-brace-format
+msgid "{val:.2f} inches"
+msgstr "{val:.2f} дюймов"
+
+#. Translators: a measurement in centimetres
+#, python-brace-format
+msgid "{val:.2f} centimetres"
+msgstr "{val:.2f} сантиметров"
+
+#. Translators: LibreOffice, report cursor position in the current page
+#, python-brace-format
+msgid ""
+"cursor positioned {horizontalDistance} from left edge of page, "
+"{verticalDistance} from top edge of page"
+msgstr ""
+"курсор расположен в {horizontalDistance} от левого края страницы, "
+"{verticalDistance} от верхнего края страницы"
 
 msgid "left"
 msgstr "левый"
@@ -8563,6 +8591,22 @@ msgstr "разблокировано"
 msgid "has note"
 msgstr "содержит заметку"
 
+#. Translators: Presented when a control has a pop-up dialog.
+msgid "opens dialog"
+msgstr "открывает диалог"
+
+#. Translators: Presented when a control has a pop-up grid.
+msgid "opens grid"
+msgstr "открывает сетку"
+
+#. Translators: Presented when a control has a pop-up list box.
+msgid "opens list"
+msgstr "открывает список"
+
+#. Translators: Presented when a control has a pop-up tree.
+msgid "opens tree"
+msgstr "открывает дерево"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "не выделено"
@@ -8586,6 +8630,14 @@ msgstr "перетаскивание завершено"
 #. Translators: This is spoken when the line is considered blank.
 msgid "blank"
 msgstr "пусто"
+
+#. Translators: this message is given when there is no next paragraph when navigating by paragraph
+msgid "No next paragraph"
+msgstr "Нет следующего абзаца"
+
+#. Translators: this message is given when there is no previous paragraph when navigating by paragraph
+msgid "No previous paragraph"
+msgstr "Нет предыдущего абзаца"
 
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 msgid "Configuration applied"
@@ -9282,7 +9334,7 @@ msgstr "Профиль не может иметь пустое имя."
 #. and a profile with the new name already exists.
 #. Translators: An error displayed when the user attempts to create a configuration profile which already exists.
 msgid "That profile already exists. Please choose a different name."
-msgstr "Этот профиль уже существует. Пожалуйста, выберите другое имя."
+msgstr "Такой профиль уже существует. Выберите другое имя."
 
 msgid "Error renaming profile."
 msgstr "Не удалось переименовать профиль."
@@ -9557,6 +9609,7 @@ msgid "Please press OK to start the installed copy."
 msgstr "Пожалуйста, нажмите кнопку OK, чтобы запустить установленную копию."
 
 #. Translators: The title of a dialog presented to indicate a successful operation.
+#. Translators: Title of a dialog shown when a portable copy of NVDA is created.
 msgid "Success"
 msgstr "Операция успешно завершена"
 
@@ -9678,23 +9731,17 @@ msgstr "Пожалуйста, укажите папку в которой буд
 #. Translators: The message displayed when the user has not specified an absolute destination directory
 #. in the Create Portable NVDA dialog.
 msgid ""
-"Please specify an absolute path (including drive letter)  in which to create "
-"the portable copy."
+"Please specify the absolute path where the portable copy should be created. "
+"It may include system variables (%temp%, %homepath%, etc.)."
 msgstr ""
-"Пожалуйста, укажите абсолютный путь (включая букву диска), по которому будет "
-"создана переносная копия."
+"Укажите абсолютный путь, по которому должна быть создана переносная копия. "
+"Он может включать системные переменные (%temp%, %homepath% и т. д.)."
 
-#. Translators: The message displayed when the user specifies an invalid destination drive
-#. in the Create Portable NVDA dialog.
-#, python-format
-msgid "Invalid drive %s"
-msgstr "Неверный диск %s"
-
-#. Translators: The title of the dialog presented while a portable copy of NVDA is bieng created.
+#. Translators: The title of the dialog presented while a portable copy of NVDA is being created.
 msgid "Creating Portable Copy"
 msgstr "Создание переносной копии"
 
-#. Translators: The message displayed while a portable copy of NVDA is bieng created.
+#. Translators: The message displayed while a portable copy of NVDA is being created.
 msgid "Please wait while a portable copy of NVDA is created."
 msgstr "Пожалуйста, подождите, пока создаётся переносная копия NVDA."
 
@@ -9703,16 +9750,16 @@ msgid "NVDA is unable to remove or overwrite a file."
 msgstr "NVDA не может удалить или перезаписать файл."
 
 #. Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
-#. %s will be replaced with the specific error message.
-#, python-format
-msgid "Failed to create portable copy: %s"
-msgstr "Не удалось создать переносную копию: %s"
+#. {error} will be replaced with the specific error message.
+#, python-brace-format
+msgid "Failed to create portable copy: {error}."
+msgstr "Не удалось создать переносную копию: {error}."
 
 #. Translators: The message displayed when a portable copy of NVDA has been successfully created.
-#. %s will be replaced with the destination directory.
-#, python-format
-msgid "Successfully created a portable copy of NVDA at %s"
-msgstr "Переносная копия была успешно создана по пути %s"
+#. {dir} will be replaced with the destination directory.
+#, python-brace-format
+msgid "Successfully created a portable copy of NVDA at {dir}"
+msgstr "Переносная копия NVDA успешно создана в папке {dir}"
 
 #. Translators: The title of the NVDA log viewer window.
 msgid "NVDA Log Viewer"
@@ -11096,11 +11143,11 @@ msgstr "Редактирование словарной статьи"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog.
 msgid "&Pattern"
-msgstr "&Шаблон"
+msgstr "&Шаблон:"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog.
 msgid "&Comment"
-msgstr "&Примечание"
+msgstr "&Примечание:"
 
 #. Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
 msgid "&Type"
@@ -11116,9 +11163,14 @@ msgid "Dictionary Entry Error"
 msgstr "Ошибка словарной статьи"
 
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
-#, python-format
-msgid "Regular Expression error: \"%s\"."
-msgstr "Ошибка в регулярном выражении: «%s»."
+#, python-brace-format
+msgid "Regular Expression error in the pattern field: \"{error}\"."
+msgstr "Ошибка регулярного выражения в поле шаблона: «{error}»."
+
+#. Translators: This is an error message to let the user know that the dictionary entry is not valid.
+#, python-brace-format
+msgid "Regular Expression error in the replacement field: \"{error}\"."
+msgstr "Ошибка регулярного выражения в поле замены: «{error}»."
 
 #. Translators: The label for the list box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -11510,6 +11562,15 @@ msgstr "отмеченный"
 msgid "not marked"
 msgstr "не отмеченный"
 
+#. Translators: Reported when text is color-highlighted
+#, python-brace-format
+msgid "highlighted in {color}"
+msgstr ""
+
+#. Translators: Reported when text is no longer marked
+msgid "not highlighted"
+msgstr ""
+
 #. Translators: Reported when text is marked as strong (e.g. bold)
 msgid "strong"
 msgstr "сильное акцентирование"
@@ -11880,12 +11941,12 @@ msgid "No system battery"
 msgstr "Нет системной батареи"
 
 #. Translators: Reported when the battery is plugged in, and now is charging.
-msgid "Charging battery"
-msgstr "Питание подключено"
+msgid "Plugged in"
+msgstr "Подключено"
 
 #. Translators: Reported when the battery is no longer plugged in, and now is not charging.
-msgid "AC disconnected"
-msgstr "Питание отключено"
+msgid "Unplugged"
+msgstr "Отключено"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
 #, python-brace-format
@@ -13577,6 +13638,22 @@ msgid ""
 "To use Albatross with NVDA: change number of status cells in Albatross "
 "internal menu at most "
 msgstr ""
+
+#~ msgid ""
+#~ "Please specify an absolute path (including drive letter)  in which to "
+#~ "create the portable copy."
+#~ msgstr ""
+#~ "Пожалуйста, укажите абсолютный путь (включая букву диска), по которому "
+#~ "будет создана переносная копия."
+
+#~ msgid "Invalid drive %s"
+#~ msgstr "Неверный диск %s"
+
+#~ msgid "Charging battery"
+#~ msgstr "Питание подключено"
+
+#~ msgid "AC disconnected"
+#~ msgstr "Питание отключено"
 
 #~ msgid "Unable to determine remaining time"
 #~ msgstr "Не удалось определить оставшееся время"

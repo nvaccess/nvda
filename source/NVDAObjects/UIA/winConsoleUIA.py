@@ -105,6 +105,17 @@ class ConsoleUIATextInfo(UIATextInfo):
 		"Perform a move without respect to bounding."
 		return super(ConsoleUIATextInfo, self).move(unit, direction, endPoint)
 
+	def _get_text(self) -> str:
+		# #14689: IMPROVED and END_INCLUSIVE UIA consoles have many blank lines,
+		# which slows speech dictionary processing to a halt
+		res = super()._get_text()
+		stripRes = res.rstrip("\r\n")
+		IGNORE_TRAILING_WHITESPACE_LENGTH = 100
+		if len(res) - len(stripRes) > IGNORE_TRAILING_WHITESPACE_LENGTH:
+			return stripRes
+		else:
+			return res
+
 	def __ne__(self, other):
 		"""Support more accurate caret move detection."""
 		return not self == other

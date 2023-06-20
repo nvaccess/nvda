@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Romanian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-03 00:01+0000\n"
-"PO-Revision-Date: 2023-03-03 11:04+0200\n"
+"POT-Creation-Date: 2023-06-02 00:02+0000\n"
+"PO-Revision-Date: 2023-06-02 18:48+0300\n"
 "Last-Translator: Florian Ionașcu <florianionascu@hotmail.com>\n"
 "Language-Team: mihai.craciun@gmail.com, dan.punga@gmail.com, "
 "florianionascu@hotmail.com, nicusoruntila@yahoo.com\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: _;gettext;gettext_noop\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.1\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 msgid "Native input"
@@ -3257,7 +3257,7 @@ msgstr ""
 
 #. Translators: Reported when attempting to move the navigator object to the object under mouse pointer.
 msgid "Move navigator object to mouse"
-msgstr "Mută obiectul navigator la mause"
+msgstr "Mută obiectul navigator la maus"
 
 #. Translators: Script help message for next review mode command.
 msgid ""
@@ -4433,14 +4433,18 @@ msgstr ""
 msgid "Plugins reloaded"
 msgstr "Extensii plug-in reîncărcate"
 
-#. Translators: input help mode message for Report destination URL of navigator link command
+#. Translators: input help mode message for Report destination URL of a link command
 msgid ""
-"Report the destination URL of the link in the navigator object. If pressed "
-"twice, shows the URL in a window for easier review."
+"Report the destination URL of the link at the position of caret or focus. If "
+"pressed twice, shows the URL in a window for easier review."
 msgstr ""
-"Raportează URL-ul de destinație al link-ului din obiectul navigator. Dacă "
-"este apăsată de două ori, afișează URL-ul într-o fereastră pentru o "
-"examinare mai ușoară."
+"Raportează URL-ul de destinație al link-ului de la poziția cursorului de "
+"scriere sau a focalizării. Dacă este apăsat de două ori, afișează link-ul "
+"într-o fereastră pentru o vizualizare mai ușoară."
+
+#. Translators: Informs the user that the link has no destination
+msgid "Link has no apparent destination"
+msgstr "Link-ul nu are o destinație aparentă"
 
 #. Translators: Informs the user that the window contains the destination of the
 #. link with given title
@@ -4452,14 +4456,14 @@ msgstr "Destinația: {name}"
 msgid "Not a link."
 msgstr "Nu este un link."
 
-#. Translators: input help mode message for Report URL of navigator link in a window command
+#. Translators: input help mode message for Report URL of a link in a window command
 msgid ""
-"Reports the destination URL of the link in the navigator object in a window, "
-"instead of just speaking it. May be preferred by braille users."
+"Displays the destination URL of the link at the position of caret or focus "
+"in a window, instead of just speaking it. May be preferred by braille users."
 msgstr ""
-"Raportează URL-ul de destinație al link-ului din obiectul navigator într-o "
-"fereastră în loc doar să-l rostească. Le poate fi de folos utilizatorilor "
-"braille."
+"Afișează URL-ul de destinație al link-ului de la poziția cursorului de "
+"scriere sau a focalizarii într-o fereastră, în loc doar să o rostească. "
+"Poate fi preferat de utilizatorii Braille."
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -4568,6 +4572,10 @@ msgstr "Windows OCR indisponibil"
 msgid "Please disable screen curtain before using Windows OCR."
 msgstr ""
 "Vă rugăm să dezactivați cortina ecranului înainte de a utiliza Windows OCR."
+
+#. Translators: Describes a command.
+msgid "Cycles through the available languages for Windows OCR"
+msgstr "Parcurge limbile disponibile pentru Windows OCR"
 
 #. Translators: Input help mode message for toggle report CLDR command.
 msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
@@ -6420,9 +6428,10 @@ msgstr "Eroare la căutarea actualizărilor."
 #. Translators: The title of an error message dialog.
 #. Translators: An title for an error displayed when saving user defined input gestures fails.
 #. Translators: The title of a dialog presented when an error occurs.
-#. Translators: The message title displayed
-#. when the user has not specified an absolute destination directory
-#. in the Create Portable NVDA dialog.
+#. Translators: the title of an error dialog.
+#. Translators: The message title displayed when the user has not specified an absolute
+#. destination directory in the Create Portable NVDA dialog.
+#. Translators: Title of an error dialog shown when an error occurs while creating a portable copy of NVDA.
 #. Translators: The title of an error message dialog.
 #. Translators: The title of the message box
 #. Translators: The title of the error dialog displayed when there is an error showing the GUI
@@ -7349,6 +7358,25 @@ msgstr "{firstAddress} {firstValue} prin {lastAddress} {lastValue}"
 #, python-brace-format
 msgid "{firstAddress} through {lastAddress}"
 msgstr "{firstAddress} prin {lastAddress}"
+
+#. Translators: a measurement in inches
+#, python-brace-format
+msgid "{val:.2f} inches"
+msgstr "{val:.2f} inci"
+
+#. Translators: a measurement in centimetres
+#, python-brace-format
+msgid "{val:.2f} centimetres"
+msgstr "{val:.2f} centimetri"
+
+#. Translators: LibreOffice, report cursor position in the current page
+#, python-brace-format
+msgid ""
+"cursor positioned {horizontalDistance} from left edge of page, "
+"{verticalDistance} from top edge of page"
+msgstr ""
+"cursor poziționat {horizontalDistance} de la marginea din stânga a paginii, "
+"{verticalDistance} de la marginea de sus a paginii"
 
 msgid "left"
 msgstr "stânga"
@@ -8582,6 +8610,22 @@ msgstr "deblocat"
 msgid "has note"
 msgstr "are notă"
 
+#. Translators: Presented when a control has a pop-up dialog.
+msgid "opens dialog"
+msgstr "deschide dialog"
+
+#. Translators: Presented when a control has a pop-up grid.
+msgid "opens grid"
+msgstr "deschide tabelul"
+
+#. Translators: Presented when a control has a pop-up list box.
+msgid "opens list"
+msgstr "deschide lista"
+
+#. Translators: Presented when a control has a pop-up tree.
+msgid "opens tree"
+msgstr "deschide vizualizare arborescenta"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "neselectat"
@@ -8605,6 +8649,14 @@ msgstr "tragere încheiată"
 #. Translators: This is spoken when the line is considered blank.
 msgid "blank"
 msgstr "spațiu gol"
+
+#. Translators: this message is given when there is no next paragraph when navigating by paragraph
+msgid "No next paragraph"
+msgstr "Nu există paragraf următor"
+
+#. Translators: this message is given when there is no previous paragraph when navigating by paragraph
+msgid "No previous paragraph"
+msgstr "Nu există paragraf anterior"
 
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 msgid "Configuration applied"
@@ -9576,6 +9628,7 @@ msgid "Please press OK to start the installed copy."
 msgstr "Apăsați OK pentru a porni copia instalată."
 
 #. Translators: The title of a dialog presented to indicate a successful operation.
+#. Translators: Title of a dialog shown when a portable copy of NVDA is created.
 msgid "Success"
 msgstr "Succes"
 
@@ -9692,23 +9745,17 @@ msgstr "Specificați un dosar în care se va crea copia portabilă."
 #. Translators: The message displayed when the user has not specified an absolute destination directory
 #. in the Create Portable NVDA dialog.
 msgid ""
-"Please specify an absolute path (including drive letter)  in which to create "
-"the portable copy."
+"Please specify the absolute path where the portable copy should be created. "
+"It may include system variables (%temp%, %homepath%, etc.)."
 msgstr ""
-"Specificați un dosar exact (incluzând litera sursă) în care se va crea copia "
-"portabilă."
+"Vă rugăm să specificați locația exactă în care ar trebui creată copia "
+"portabilă. Poate include variabile de sistem, (%temp%, %homepath%, etc.)"
 
-#. Translators: The message displayed when the user specifies an invalid destination drive
-#. in the Create Portable NVDA dialog.
-#, python-format
-msgid "Invalid drive %s"
-msgstr "Partiția %s invalidă"
-
-#. Translators: The title of the dialog presented while a portable copy of NVDA is bieng created.
+#. Translators: The title of the dialog presented while a portable copy of NVDA is being created.
 msgid "Creating Portable Copy"
 msgstr "Se creează copia portabilă"
 
-#. Translators: The message displayed while a portable copy of NVDA is bieng created.
+#. Translators: The message displayed while a portable copy of NVDA is being created.
 msgid "Please wait while a portable copy of NVDA is created."
 msgstr "Așteptați cât timp copia portabilă a NVDA este creată."
 
@@ -9717,16 +9764,16 @@ msgid "NVDA is unable to remove or overwrite a file."
 msgstr "NVDA nu poate să înlăture sau să suprascrie un fișier."
 
 #. Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
-#. %s will be replaced with the specific error message.
-#, python-format
-msgid "Failed to create portable copy: %s"
-msgstr "Crearea unei copii portabile a eșuat: %s"
+#. {error} will be replaced with the specific error message.
+#, python-brace-format
+msgid "Failed to create portable copy: {error}."
+msgstr "Creare copie portabilă eșuată: {error}."
 
 #. Translators: The message displayed when a portable copy of NVDA has been successfully created.
-#. %s will be replaced with the destination directory.
-#, python-format
-msgid "Successfully created a portable copy of NVDA at %s"
-msgstr "O copie portabilă a NVDA a fost creată cu succes la %s"
+#. {dir} will be replaced with the destination directory.
+#, python-brace-format
+msgid "Successfully created a portable copy of NVDA at {dir}"
+msgstr "O copie portabilă NVDA s-a creat cu succes în locația {dir}"
 
 #. Translators: The title of the NVDA log viewer window.
 msgid "NVDA Log Viewer"
@@ -11145,9 +11192,14 @@ msgid "Dictionary Entry Error"
 msgstr "Eroare la introducere în dicționar"
 
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
-#, python-format
-msgid "Regular Expression error: \"%s\"."
-msgstr "Eroare de expresie regulată: \"%s\"."
+#, python-brace-format
+msgid "Regular Expression error in the pattern field: \"{error}\"."
+msgstr "Eroare de expresie regulată în câmpul șablon: \"{error}\"."
+
+#. Translators: This is an error message to let the user know that the dictionary entry is not valid.
+#, python-brace-format
+msgid "Regular Expression error in the replacement field: \"{error}\"."
+msgstr "Eroare de expresie regulată în câmpul de înlocuire: \"{error}\"."
 
 #. Translators: The label for the list box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -11538,6 +11590,15 @@ msgstr "marcat"
 msgid "not marked"
 msgstr "nemarcat"
 
+#. Translators: Reported when text is color-highlighted
+#, python-brace-format
+msgid "highlighted in {color}"
+msgstr "{color} evidenţiată"
+
+#. Translators: Reported when text is no longer marked
+msgid "not highlighted"
+msgstr "neevidenţiat"
+
 #. Translators: Reported when text is marked as strong (e.g. bold)
 msgid "strong"
 msgstr "îngroșat"
@@ -11910,12 +11971,12 @@ msgid "No system battery"
 msgstr "Nu există baterie pentru sistem"
 
 #. Translators: Reported when the battery is plugged in, and now is charging.
-msgid "Charging battery"
-msgstr "Se încarcă bateria"
+msgid "Plugged in"
+msgstr "Conectat"
 
 #. Translators: Reported when the battery is no longer plugged in, and now is not charging.
-msgid "AC disconnected"
-msgstr "Scos din priză"
+msgid "Unplugged"
+msgstr "Deconectat"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
 #, python-brace-format
@@ -13601,6 +13662,22 @@ msgid ""
 msgstr ""
 "Pentru a utiliza Albatross cu NVDA: schimbați numărul stării celulelor din "
 "meniul intern al Albatross la majoritatea "
+
+#~ msgid ""
+#~ "Please specify an absolute path (including drive letter)  in which to "
+#~ "create the portable copy."
+#~ msgstr ""
+#~ "Specificați un dosar exact (incluzând litera sursă) în care se va crea "
+#~ "copia portabilă."
+
+#~ msgid "Invalid drive %s"
+#~ msgstr "Partiția %s invalidă"
+
+#~ msgid "Charging battery"
+#~ msgstr "Se încarcă bateria"
+
+#~ msgid "AC disconnected"
+#~ msgstr "Scos din priză"
 
 #~ msgid "Unable to determine remaining time"
 #~ msgstr "Nu se poate determina timpul rămas"

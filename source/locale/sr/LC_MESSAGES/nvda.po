@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA R3935\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-26 22:33+0000\n"
+"POT-Creation-Date: 2023-05-05 00:01+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Nikola Jović <wwenikola123@gmail.com>\n"
 "Language-Team: NVDA Serbian translation\n"
@@ -4406,13 +4406,17 @@ msgstr ""
 msgid "Plugins reloaded"
 msgstr "Dodaci ponovo učitani"
 
-#. Translators: input help mode message for Report destination URL of navigator link command
+#. Translators: input help mode message for Report destination URL of a link command
 msgid ""
-"Report the destination URL of the link in the navigator object. If pressed "
-"twice, shows the URL in a window for easier review."
+"Report the destination URL of the link at the position of caret or focus. If "
+"pressed twice, shows the URL in a window for easier review."
 msgstr ""
-"Prijavljuje odredišnu adresu linka navigacionog objekta. Ako se pritisne dva "
-"puta, prikazuje adresu u prozoru radi lakšeg pregleda."
+"Prijavljuje odredišnu adresu linka na poziciji kursora ili fokusa. Ako se "
+"pritisne dva puta, prikazuje adresu u prozoru radi lakšeg pregleda."
+
+#. Translators: Informs the user that the link has no destination
+msgid "Link has no apparent destination"
+msgstr "Link nema prepoznatljivo odretište"
 
 #. Translators: Informs the user that the window contains the destination of the
 #. link with given title
@@ -4424,13 +4428,13 @@ msgstr "Odredište za: {name}"
 msgid "Not a link."
 msgstr "Nije link."
 
-#. Translators: input help mode message for Report URL of navigator link in a window command
+#. Translators: input help mode message for Report URL of a link in a window command
 msgid ""
-"Reports the destination URL of the link in the navigator object in a window, "
-"instead of just speaking it. May be preferred by braille users."
+"Displays the destination URL of the link at the position of caret or focus "
+"in a window, instead of just speaking it. May be preferred by braille users."
 msgstr ""
-"Prikazuje odredišnu adresu linka navigacionog objekta u prozoru, umesto da "
-"je samo izgovori. Može više odgovarati korisnicima brajevih redova."
+"Prikazuje odredišnu adresu linka na poziciji kursora ili fokusa u prozoru, "
+"umesto da je samo izgovori. Može više odgovarati korisnicima brajevih redova."
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -4540,6 +4544,10 @@ msgstr "Windows OCR nije dostupan"
 msgid "Please disable screen curtain before using Windows OCR."
 msgstr ""
 "Molimo onemogućite zatamnjivanje ekrana pre korišćenja funkcije Windows OCR."
+
+#. Translators: Describes a command.
+msgid "Cycles through the available languages for Windows OCR"
+msgstr "kruži kroz dostupne jezike za Windows OCR"
 
 #. Translators: Input help mode message for toggle report CLDR command.
 msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
@@ -6387,9 +6395,10 @@ msgstr "Greška pri proveri dostupnih ažuriranja"
 #. Translators: The title of an error message dialog.
 #. Translators: An title for an error displayed when saving user defined input gestures fails.
 #. Translators: The title of a dialog presented when an error occurs.
-#. Translators: The message title displayed
-#. when the user has not specified an absolute destination directory
-#. in the Create Portable NVDA dialog.
+#. Translators: the title of an error dialog.
+#. Translators: The message title displayed when the user has not specified an absolute
+#. destination directory in the Create Portable NVDA dialog.
+#. Translators: Title of an error dialog shown when an error occurs while creating a portable copy of NVDA.
 #. Translators: The title of an error message dialog.
 #. Translators: The title of the message box
 #. Translators: The title of the error dialog displayed when there is an error showing the GUI
@@ -7310,6 +7319,25 @@ msgstr "{firstAddress} {firstValue} do {lastAddress} {lastValue}"
 #, python-brace-format
 msgid "{firstAddress} through {lastAddress}"
 msgstr "{firstAddress} do {lastAddress}"
+
+#. Translators: a measurement in inches
+#, python-brace-format
+msgid "{val:.2f} inches"
+msgstr "{val:.2f} inča"
+
+#. Translators: a measurement in centimetres
+#, python-brace-format
+msgid "{val:.2f} centimetres"
+msgstr "{val:.2f} centimetara"
+
+#. Translators: LibreOffice, report cursor position in the current page
+#, python-brace-format
+msgid ""
+"cursor positioned {horizontalDistance} from left edge of page, "
+"{verticalDistance} from top edge of page"
+msgstr ""
+"Kursor se nalazi na {horizontalDistance} od leve ivice stranice, "
+"{verticalDistance} od gornje ivice stranice"
 
 msgid "left"
 msgstr "levo"
@@ -8543,6 +8571,22 @@ msgstr "otključano"
 msgid "has note"
 msgstr "Ima napomenu"
 
+#. Translators: Presented when a control has a pop-up dialog.
+msgid "opens dialog"
+msgstr "Otvara dijalog"
+
+#. Translators: Presented when a control has a pop-up grid.
+msgid "opens grid"
+msgstr "Otvara mrežu"
+
+#. Translators: Presented when a control has a pop-up list box.
+msgid "opens list"
+msgstr "Otvara listu"
+
+#. Translators: Presented when a control has a pop-up tree.
+msgid "opens tree"
+msgstr "Otvara stablo"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "nije izabrano"
@@ -8566,6 +8610,14 @@ msgstr "završeno prevlačenje"
 #. Translators: This is spoken when the line is considered blank.
 msgid "blank"
 msgstr "prazno"
+
+#. Translators: this message is given when there is no next paragraph when navigating by paragraph
+msgid "No next paragraph"
+msgstr "nema narednog pasusa"
+
+#. Translators: this message is given when there is no previous paragraph when navigating by paragraph
+msgid "No previous paragraph"
+msgstr "nema prethodnog pasusa"
 
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 msgid "Configuration applied"
@@ -9531,6 +9583,7 @@ msgid "Please press OK to start the installed copy."
 msgstr "Molimo pritisnite OK da pokrenete instaliranu kopiju."
 
 #. Translators: The title of a dialog presented to indicate a successful operation.
+#. Translators: Title of a dialog shown when a portable copy of NVDA is created.
 msgid "Success"
 msgstr "Uspeh"
 
@@ -9635,7 +9688,7 @@ msgstr "Kopiraj trenutna korisnička &podešavanja"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 msgid "&Start the new portable copy after creation"
-msgstr "&Pokreni novu portabilnu kopiju nakon pravljenja"
+msgstr "&Pokreni novu prenosnu kopiju nakon pravljenja"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
@@ -9645,23 +9698,18 @@ msgstr "Molimo izaberite fasciklu u kojoj će se kreirati prenosna kopija."
 #. Translators: The message displayed when the user has not specified an absolute destination directory
 #. in the Create Portable NVDA dialog.
 msgid ""
-"Please specify an absolute path (including drive letter)  in which to create "
-"the portable copy."
+"Please specify the absolute path where the portable copy should be created. "
+"It may include system variables (%temp%, %homepath%, etc.)."
 msgstr ""
-"Molimo upišite apsolutnu putanju (uključujući slovo diska)  u kojoj će "
-"prenosna kopija biti napravljena."
+"Molimo odredite apsolutnu putanju u kojoj treba napraviti NVDA prenosnu "
+"kopiju. Može uključiti sistemske varijable (%temp%, %homepath%, i tako  "
+"dalje.)."
 
-#. Translators: The message displayed when the user specifies an invalid destination drive
-#. in the Create Portable NVDA dialog.
-#, python-format
-msgid "Invalid drive %s"
-msgstr "Pogrešan disk %s"
-
-#. Translators: The title of the dialog presented while a portable copy of NVDA is bieng created.
+#. Translators: The title of the dialog presented while a portable copy of NVDA is being created.
 msgid "Creating Portable Copy"
 msgstr "Kreiranje prenosne kopije"
 
-#. Translators: The message displayed while a portable copy of NVDA is bieng created.
+#. Translators: The message displayed while a portable copy of NVDA is being created.
 msgid "Please wait while a portable copy of NVDA is created."
 msgstr "Molimo sačekajte dok se kreira NVDA prenosna kopija."
 
@@ -9670,16 +9718,16 @@ msgid "NVDA is unable to remove or overwrite a file."
 msgstr "NVDA ne može da ukloni ili zameni datoteku."
 
 #. Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
-#. %s will be replaced with the specific error message.
-#, python-format
-msgid "Failed to create portable copy: %s"
-msgstr "Greška pri kreiranju prenosne kopije: %s"
+#. {error} will be replaced with the specific error message.
+#, python-brace-format
+msgid "Failed to create portable copy: {error}."
+msgstr "Neuspešno pravljenje prenosne kopije: {error}."
 
 #. Translators: The message displayed when a portable copy of NVDA has been successfully created.
-#. %s will be replaced with the destination directory.
-#, python-format
-msgid "Successfully created a portable copy of NVDA at %s"
-msgstr "Uspešno kreirana prenosna kopija NVDA u %s"
+#. {dir} will be replaced with the destination directory.
+#, python-brace-format
+msgid "Successfully created a portable copy of NVDA at {dir}"
+msgstr "Uspešno napravljena prenosna kopija NVDA u {dir}"
 
 #. Translators: The title of the NVDA log viewer window.
 msgid "NVDA Log Viewer"
@@ -11084,9 +11132,14 @@ msgid "Dictionary Entry Error"
 msgstr "Greška unosa u rečniku"
 
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
-#, python-format
-msgid "Regular Expression error: \"%s\"."
-msgstr "Greška u regularnom izrazu : \"%s\"."
+#, python-brace-format
+msgid "Regular Expression error in the pattern field: \"{error}\"."
+msgstr "Greška u regularnom izrazu u polju oblika: \"{error}\"."
+
+#. Translators: This is an error message to let the user know that the dictionary entry is not valid.
+#, python-brace-format
+msgid "Regular Expression error in the replacement field: \"{error}\"."
+msgstr "Greška u regularnom izrazu u polju zamene: \"{error}\"."
 
 #. Translators: The label for the list box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -11476,6 +11529,15 @@ msgstr "obeleženo"
 msgid "not marked"
 msgstr "nije obeleženo"
 
+#. Translators: Reported when text is color-highlighted
+#, python-brace-format
+msgid "highlighted in {color}"
+msgstr "Obeleženo {color}"
+
+#. Translators: Reported when text is no longer marked
+msgid "not highlighted"
+msgstr "Nije obeleženo"
+
 #. Translators: Reported when text is marked as strong (e.g. bold)
 msgid "strong"
 msgstr "podebljano"
@@ -11846,11 +11908,11 @@ msgid "No system battery"
 msgstr "nema sistemske baterije"
 
 #. Translators: Reported when the battery is plugged in, and now is charging.
-msgid "Charging battery"
-msgstr "Punjenje baterije"
+msgid "Plugged in"
+msgstr "Punjač povezan"
 
 #. Translators: Reported when the battery is no longer plugged in, and now is not charging.
-msgid "AC disconnected"
+msgid "Unplugged"
 msgstr "Punjač nije povezan"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
@@ -13525,6 +13587,22 @@ msgid ""
 msgstr ""
 "Da biste koristili Albatross uz NVDA: promenite broj statusnih ćelija u "
 "Albatross internom meniju "
+
+#~ msgid ""
+#~ "Please specify an absolute path (including drive letter)  in which to "
+#~ "create the portable copy."
+#~ msgstr ""
+#~ "Molimo upišite apsolutnu putanju (uključujući slovo diska)  u kojoj će "
+#~ "prenosna kopija biti napravljena."
+
+#~ msgid "Invalid drive %s"
+#~ msgstr "Pogrešan disk %s"
+
+#~ msgid "Charging battery"
+#~ msgstr "Punjenje baterije"
+
+#~ msgid "AC disconnected"
+#~ msgstr "Punjač nije povezan"
 
 #~ msgid "Unable to determine remaining time"
 #~ msgstr "Nemoguće odrediti preostalo vreme"

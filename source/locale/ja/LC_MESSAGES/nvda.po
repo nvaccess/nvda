@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-14 00:37+0000\n"
-"PO-Revision-Date: 2023-02-14 23:24+0900\n"
+"POT-Creation-Date: 2023-05-12 00:02+0000\n"
+"PO-Revision-Date: 2023-05-12 09:37+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3\n"
 "X-Poedit-Bookmarks: -1,2672,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
@@ -4314,13 +4314,17 @@ msgstr ""
 msgid "Plugins reloaded"
 msgstr "プラグインを再度読み込みました"
 
-#. Translators: input help mode message for Report destination URL of navigator link command
+#. Translators: input help mode message for Report destination URL of a link command
 msgid ""
-"Report the destination URL of the link in the navigator object. If pressed "
-"twice, shows the URL in a window for easier review."
+"Report the destination URL of the link at the position of caret or focus. If "
+"pressed twice, shows the URL in a window for easier review."
 msgstr ""
-"ナビゲーターオブジェクトのリンク先の報告。2回押すとウィンドウを開いて情報を表"
-"示"
+"テキストカーソルまたはシステムフォーカスの位置のリンク先URLの報告。2回押すと"
+"ウィンドウを開いて表示"
+
+#. Translators: Informs the user that the link has no destination
+msgid "Link has no apparent destination"
+msgstr "リンク先がありません"
 
 #. Translators: Informs the user that the window contains the destination of the
 #. link with given title
@@ -4332,11 +4336,13 @@ msgstr "{name} のリンク先"
 msgid "Not a link."
 msgstr "リンクではありません"
 
-#. Translators: input help mode message for Report URL of navigator link in a window command
+#. Translators: input help mode message for Report URL of a link in a window command
 msgid ""
-"Reports the destination URL of the link in the navigator object in a window, "
-"instead of just speaking it. May be preferred by braille users."
-msgstr "ナビゲーターオブジェクトのリンク先をウィンドウを開いて表示"
+"Displays the destination URL of the link at the position of caret or focus "
+"in a window, instead of just speaking it. May be preferred by braille users."
+msgstr ""
+"テキストカーソルまたはシステムフォーカスの位置のリンク先を表示するウィンドウ"
+"を開く"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -4436,6 +4442,10 @@ msgstr "Windows 文字認識は利用できません"
 #. Translators: Reported when screen curtain is enabled.
 msgid "Please disable screen curtain before using Windows OCR."
 msgstr "Windows 文字認識を使用する前にスクリーンカーテンを無効にしてください"
+
+#. Translators: Describes a command.
+msgid "Cycles through the available languages for Windows OCR"
+msgstr "Windows 文字認識で使用可能な言語の切り替え"
 
 #. Translators: Input help mode message for toggle report CLDR command.
 msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
@@ -6283,9 +6293,10 @@ msgstr "更新をチェック中にエラーが発生しました。"
 #. Translators: The title of an error message dialog.
 #. Translators: An title for an error displayed when saving user defined input gestures fails.
 #. Translators: The title of a dialog presented when an error occurs.
-#. Translators: The message title displayed
-#. when the user has not specified an absolute destination directory
-#. in the Create Portable NVDA dialog.
+#. Translators: the title of an error dialog.
+#. Translators: The message title displayed when the user has not specified an absolute
+#. destination directory in the Create Portable NVDA dialog.
+#. Translators: Title of an error dialog shown when an error occurs while creating a portable copy of NVDA.
 #. Translators: The title of an error message dialog.
 #. Translators: The title of the message box
 #. Translators: The title of the error dialog displayed when there is an error showing the GUI
@@ -7207,6 +7218,25 @@ msgstr "{firstAddress} {firstValue} から {lastAddress} {lastValue}"
 #, python-brace-format
 msgid "{firstAddress} through {lastAddress}"
 msgstr "{firstAddress} から {lastAddress}"
+
+#. Translators: a measurement in inches
+#, python-brace-format
+msgid "{val:.2f} inches"
+msgstr "{val:.2f}インチ"
+
+#. Translators: a measurement in centimetres
+#, python-brace-format
+msgid "{val:.2f} centimetres"
+msgstr "{val:.2f}センチ"
+
+#. Translators: LibreOffice, report cursor position in the current page
+#, python-brace-format
+msgid ""
+"cursor positioned {horizontalDistance} from left edge of page, "
+"{verticalDistance} from top edge of page"
+msgstr ""
+"カーソル位置はページの左端から{horizontalDistance} ページの上端から"
+"{verticalDistance}"
 
 msgid "left"
 msgstr "左の端"
@@ -8440,6 +8470,22 @@ msgstr "ロック解除"
 msgid "has note"
 msgstr "メモあり"
 
+#. Translators: Presented when a control has a pop-up dialog.
+msgid "opens dialog"
+msgstr "ダイアログあり"
+
+#. Translators: Presented when a control has a pop-up grid.
+msgid "opens grid"
+msgstr "グリッドあり"
+
+#. Translators: Presented when a control has a pop-up list box.
+msgid "opens list"
+msgstr "リストあり"
+
+#. Translators: Presented when a control has a pop-up tree.
+msgid "opens tree"
+msgstr "ツリーあり"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "選択なし"
@@ -8463,6 +8509,14 @@ msgstr "ドラッグ終了"
 #. Translators: This is spoken when the line is considered blank.
 msgid "blank"
 msgstr "ブランク"
+
+#. Translators: this message is given when there is no next paragraph when navigating by paragraph
+msgid "No next paragraph"
+msgstr "次の段落がありません"
+
+#. Translators: this message is given when there is no previous paragraph when navigating by paragraph
+msgid "No previous paragraph"
+msgstr "前の段落がありません"
 
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 msgid "Configuration applied"
@@ -9412,6 +9466,7 @@ msgid "Please press OK to start the installed copy."
 msgstr "インストールされたNVDAを実行するにはOKを押してください。"
 
 #. Translators: The title of a dialog presented to indicate a successful operation.
+#. Translators: Title of a dialog shown when a portable copy of NVDA is created.
 msgid "Success"
 msgstr "完了"
 
@@ -9525,22 +9580,17 @@ msgstr "ポータブル版を作成する場所を指定してください。"
 #. Translators: The message displayed when the user has not specified an absolute destination directory
 #. in the Create Portable NVDA dialog.
 msgid ""
-"Please specify an absolute path (including drive letter)  in which to create "
-"the portable copy."
+"Please specify the absolute path where the portable copy should be created. "
+"It may include system variables (%temp%, %homepath%, etc.)."
 msgstr ""
-"ポータブル版を作成する絶対パス (ドライブ文字を含む) を指定してください。"
+"ポータブル版作成する絶対パスを指定してください。環境変数（%temp%、%homepath%"
+"など）を含めることができます"
 
-#. Translators: The message displayed when the user specifies an invalid destination drive
-#. in the Create Portable NVDA dialog.
-#, python-format
-msgid "Invalid drive %s"
-msgstr "無効なドライブ %s"
-
-#. Translators: The title of the dialog presented while a portable copy of NVDA is bieng created.
+#. Translators: The title of the dialog presented while a portable copy of NVDA is being created.
 msgid "Creating Portable Copy"
 msgstr "ポータブル版を作成中"
 
-#. Translators: The message displayed while a portable copy of NVDA is bieng created.
+#. Translators: The message displayed while a portable copy of NVDA is being created.
 msgid "Please wait while a portable copy of NVDA is created."
 msgstr "NVDAポータブル版が作成されるまでお待ちください。"
 
@@ -9549,16 +9599,16 @@ msgid "NVDA is unable to remove or overwrite a file."
 msgstr "NVDAはファイルを削除または上書きできません。"
 
 #. Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
-#. %s will be replaced with the specific error message.
-#, python-format
-msgid "Failed to create portable copy: %s"
-msgstr "ポータブル版の作成に失敗しました: %s"
+#. {error} will be replaced with the specific error message.
+#, python-brace-format
+msgid "Failed to create portable copy: {error}."
+msgstr "ポータブル版の作成に失敗しました: {error}"
 
 #. Translators: The message displayed when a portable copy of NVDA has been successfully created.
-#. %s will be replaced with the destination directory.
-#, python-format
-msgid "Successfully created a portable copy of NVDA at %s"
-msgstr "作成に成功しました。NVDAポータブル版の場所は %s です。"
+#. {dir} will be replaced with the destination directory.
+#, python-brace-format
+msgid "Successfully created a portable copy of NVDA at {dir}"
+msgstr "作成に成功しました。NVDAポータブル版の場所は {dir} です"
 
 #. Translators: The title of the NVDA log viewer window.
 msgid "NVDA Log Viewer"
@@ -10945,9 +10995,14 @@ msgid "Dictionary Entry Error"
 msgstr "辞書項目のエラー"
 
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
-#, python-format
-msgid "Regular Expression error: \"%s\"."
-msgstr "正規表現のエラー \"%s\""
+#, python-brace-format
+msgid "Regular Expression error in the pattern field: \"{error}\"."
+msgstr "パターンの正規表現エラー: {error}"
+
+#. Translators: This is an error message to let the user know that the dictionary entry is not valid.
+#, python-brace-format
+msgid "Regular Expression error in the replacement field: \"{error}\"."
+msgstr "読み方の正規表現のエラー: {error}"
 
 #. Translators: The label for the list box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -11332,6 +11387,15 @@ msgstr "マークあり"
 msgid "not marked"
 msgstr "マークなし"
 
+#. Translators: Reported when text is color-highlighted
+#, python-brace-format
+msgid "highlighted in {color}"
+msgstr "{color}でハイライト"
+
+#. Translators: Reported when text is no longer marked
+msgid "not highlighted"
+msgstr "ハイライトなし"
+
 #. Translators: Reported when text is marked as strong (e.g. bold)
 msgid "strong"
 msgstr "重要性あり"
@@ -11700,12 +11764,12 @@ msgid "No system battery"
 msgstr "システムバッテリーなし"
 
 #. Translators: Reported when the battery is plugged in, and now is charging.
-msgid "Charging battery"
-msgstr "バッテリー 充電中"
+msgid "Plugged in"
+msgstr "電源に接続"
 
 #. Translators: Reported when the battery is no longer plugged in, and now is not charging.
-msgid "AC disconnected"
-msgstr "AC電源が切断されています"
+msgid "Unplugged"
+msgstr "電源の接続なし"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
 #, python-brace-format
@@ -13361,3 +13425,18 @@ msgid ""
 msgstr ""
 "NVDAでAlbatrossを使用するにはAlbatrossサブメニューでステータスセル数を設定し"
 "ます"
+
+#~ msgid ""
+#~ "Please specify an absolute path (including drive letter)  in which to "
+#~ "create the portable copy."
+#~ msgstr ""
+#~ "ポータブル版を作成する絶対パス (ドライブ文字を含む) を指定してください。"
+
+#~ msgid "Invalid drive %s"
+#~ msgstr "無効なドライブ %s"
+
+#~ msgid "Charging battery"
+#~ msgstr "バッテリー 充電中"
+
+#~ msgid "AC disconnected"
+#~ msgstr "AC電源が切断されています"

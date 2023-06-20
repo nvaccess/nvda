@@ -2,7 +2,9 @@ NVDA NVDA_VERSION – Priručnik za korisnike
 
 
 %!includeconf: ../userGuide.t2tconf
+%!includeconf: ./locale.t2tconf
 %kc:title: NVDA NVDA_VERSION – Pregled tipkovničkih prečaca
+%kc:includeconf: ./locale.t2tconf
 
 = Sadržaj =[toc]
 %%toc
@@ -219,7 +221,7 @@ Prečaci se neće izvršavati sve dok se nalazite u ovom načinu.
 | Pročitaj traku stanja | ``NVDA+end`` | ``NVDA+shift+end`` | Čita traku stanja ako ju NVDA pronađe. Kada se pritisne dva puta, informacija će biti slovkana. Kada se pritisne tri put, informacija će biti kop8irana u međuspremnik |
 | Pročitaj vrijeme | ``NVDA+f12`` | ``NVDA+f12`` | Pressing Kada se pritisne jedamput, izgovara trenutno vrijeme, kada se pritisne dvaput, izgovara datum |
 | Pročitaj informacije o oblikovanju teksta | ``NVDA+f`` | ``NVDA+f`` | Čita informacije o oblikovanju teksta. Kada se pritisne dva put, informacija se prikazuje u prozoru |
-| Čitaj odredište poveznice | ``NVDA+k`` | ``NVDA+k`` | Kada se pritisne jednom, izgovara poveznicu pod [objektom navigatora #ObjectNavigation]. Kada se pritisne dva put, pokayuje ju u prozoru za pažljiviej čitanje |
+| Čitaj odredište poveznice | ``NVDA+k`` | ``NVDA+k`` | Kada se pritisne jednom, izgovara adresu odredišne poveznice na trenutnoj poziciji kursora sustava. Kada se pritisne dvaput, prikazuje poveznicu u prozoru za pažljiviji pregled |
 
 +++ Regulacija informacija koje čita NVDA +++[ToggleWhichInformationNVDAReads]
 || Naziv | Prečac za stolna računala | Prečac za prijenosna računala | opis |
@@ -2345,7 +2347,11 @@ Da biste promijenili simbol, označite ga u listi simbola.
 Možete filtrirati simbol, upisujući cijelu zamjenu ili dio zamjene simbola u polje za uređivanje filtriraj po.
 
 - Polje zamjena omogućuje izmjenu teksta koji će biti izgovoren na mjestu tog simbola.
-- Koristeći polje razina, možete podesiti najmanju razinu simbola, pri kojoj će taj simbol biti izgovoren.
+- Koristeći polje razina, možete prilagoditi najnižu razinu simbola na kojoj taj simbol treba biti izgovoren (ništa, neki, većina ili sve).
+Također možete postaviti razinu na znak; u tom slučaju simbol neće biti izgovoren, neovisno o razini koja se koristi, uz slijedeće dve iznimke:
+ - prilikom kretanja po znakovima.
+ - Kada NVDA slovka tekst koji sadrži taj simbol.
+ -
 - Polje "Pošalji trenutačni simbol govornoj jedinici", kad će sam simbol (u sprezi s njegovom zamjenom) biti poslan govornoj jedinici.
 To je korisno kad govorna jedinica reagira na simbol pauzom ili povisivanjem modulacije glasa.
 Na primjer, zarez prouzrokuje pauzu kod govorne jedinice.
@@ -2933,6 +2939,15 @@ Smještaj ovih tipki potražite u dokumentaciji brajičnog retka.
 | Premjesti brajični redak na prethodni redak | d1 |
 | Premjesti brajični redak na sljedeći redak | d3 |
 | Premjesti se na brajičnu ćeliju | routing |
+| shift+tab | space+točkica1+točkica3 |
+| tab | razmaknica+točkica4+točkica6 |
+| alt | razmaknica+točkica1+točkica3+točkica4 (razmaknica+m) |
+| escape | razmaknica+točkica1+točkica5 (razmaknica+e) |
+| windows tipka | razmaknica+točkica3+točkica4 |
+| alt+tab | razmaknica+točkica2+točkica3+točkica4+točkica5 (razmaknica+t) |
+| NVDA izbornik | razmaknica+točkica1+točkica3+točkica4+točkica5 (razmaknica+n) |
+| windows+d tipka (minimiziraj sve aplikacije) | razmaknica+točkica1+točkica4+točkica5 (razmaknica+d) |
+| Čitaj sve | razmaknica+točkica1+točkica2+točkica3+točkica4+točkica5+točkica6 |
 
 Za brajične retke koji imaju joystick:
 || Naziv | Tipka  |
@@ -3664,8 +3679,8 @@ Molimo pogledajte dokumentaciju brajičnog redka, kako biste saznali gdje se nal
 %kc:endInclude
 
 ++ Standardni HID brajični retci ++[HIDBraille]
-Ovo je eksperimentalni upravljački program za novu standardnu HID specifikaciju, sa kojom su se složili Microsoft, Google, Apple i neke druge tvrtke koje proizvode asistivnu tehnologiju u 2018. godini uključujući i NV Access. 
-Nadamo se da će bilo koji model brajičnog redka kojeg će proizvesti bilo koji proizvođač  koristiti ovaj standardni protokol što će ukloniti potrebu pisanja upravljačkih programa koji su specifični za bilo kojeg proizvođača.
+Ovo je eksperimentalni upravljački program za novu standardnu HID specifikaciju, oko koje su se dogovorili Microsoft, Google, Apple i neke druge tvrtke koje proizvode asistivnu tehnologiju u 2018. godini uključujući i NV Access. 
+Nadamo se da će bilo koji model brajičnog redka kojeg će proizvesti bilo koji proizvođač  koristiti ovaj standardni protokol, što će ukloniti potrebu pisanja upravljačkih programa koji su specifični za bilo kojeg proizvođača.
 
 NVDA funkcija automatskog prepoznavanja brajičnih redaka će prepoznavati bilo koji brajični redak koji podržava ovaj protokol.
  
@@ -3673,20 +3688,18 @@ Slijede dodjeljeni prečaci za te brajične retke.
 %kc:beginInclude
 || Naziv | prečac |
 | premještanje brajičnog retka u natrag | pan left ili rocker up |
-| Premještanje brajičnog redka u narped | pan right ili rocker down |
-| Premjesti brajični redak na prethodni redak | razmak + točkica1 |
-| premjesti brajični redak na sljedeći redak | razmak + točkica4 |
+| Premještanje brajičnog redka u naprijed | pan right ili rocker down |
 | premjesti se na brajičnu ćeliju | routing set 1|
 | prebacuje prikazivanje fokusa | up+down |
-| strelica gore | joystick up |
-| strelic dolje | joystick down |
-| strelica lijevo | razmak+točkica3 ili joystick left |
-| strelica desno | razmak+točkica6 ili joystick right |
+| Strelica gore | joystick up, dpad up ili razmaknica+točkica1 |
+| strelica dolje | joystick down, dpad down ili razmaknica+točkica4 |
+| strelica lijevo | razmaknica+točkica3, joystick left  ili dpad left |
+| strelica desno | razmaknica+točkica6, joystick right ili dpad right |
 | shift+tab tipka | razmak+točkica1+točkica3 |
 | Tab | razmak+točkica4+točkica6 |
 | Alt | razmak+točkica1+točkica3+točkica4 (razmak+m) |
 | escape | razmak+točkica1+točkica5 (razmak+e) |
-| enter | točkica8 ili joystick center |
++| enter | točkica8, joystick center ili dpad center |
 | windows tipka | razmak+točkica3+točkica4 |
 | alt+tab | razmak+točkica2+točkica3+točkica4+točkica5 (razmak+t) |
 | NVDA izbornk | razmak+točkica1+točkica3+točkica4+točkica5 (razmak+n) |
