@@ -19,6 +19,7 @@ from typing_extensions import (
 
 import globalVars
 from logHandler import log
+from NVDAState import WritePaths
 from utils.displayString import DisplayStringEnum
 
 from .version import SupportsVersionCheck
@@ -151,7 +152,11 @@ def getStatus(model: "AddonGUIModel") -> Optional[AvailableAddonStatus]:
 	from .addon import AddonStoreModel
 	from .version import MajorMinorPatch
 	addonHandlerModel = model._addonHandlerModel
+
 	if addonHandlerModel is None:
+		if model.isPendingInstall:
+			return AvailableAddonStatus.DOWNLOAD_SUCCESS
+
 		if not model.isCompatible:
 			# Installed incompatible add-ons have a status of disabled or running
 			return AvailableAddonStatus.INCOMPATIBLE
@@ -321,16 +326,14 @@ class SupportsAddonState(SupportsVersionCheck, Protocol):
 	def pendingInstallPath(self) -> str:
 		from addonHandler import ADDON_PENDINGINSTALL_SUFFIX
 		return os.path.join(
-			globalVars.appArgs.configPath,
-			"addons",
+			WritePaths.addonsDir,
 			self.name + ADDON_PENDINGINSTALL_SUFFIX
 		)
 
 	@property
 	def installPath(self) -> str:
 		return os.path.join(
-			globalVars.appArgs.configPath,
-			"addons",
+			WritePaths.addonsDir,
 			self.name
 		)
 

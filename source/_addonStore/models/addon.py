@@ -10,6 +10,7 @@ from __future__ import annotations
 import dataclasses
 from datetime import datetime
 import json
+import os
 from typing import (
 	TYPE_CHECKING,
 	Any,
@@ -26,6 +27,7 @@ from typing_extensions import (
 from requests.structures import CaseInsensitiveDict
 
 import addonAPIVersion
+from NVDAState import WritePaths
 
 from .channel import Channel
 from .status import SupportsAddonState
@@ -154,6 +156,48 @@ class AddonStoreModel(_AddonGUIModel):
 	Legacy add-ons contain invalid metadata
 	and should not be accessible through the add-on store.
 	"""
+
+	@property
+	def tempDownloadPath(self) -> str:
+		"""
+		Path where this add-on should be downloaded to.
+		After download completion, the add-on is moved to cachedDownloadPath.
+		"""
+		return os.path.join(
+			WritePaths.addonStoreDownloadDir,
+			f"{self.name}.download"
+		)
+
+	@property
+	def cachedDownloadPath(self) -> str:
+		"""
+		Path where this add-on file should be cached,
+		after a successful download.
+		A file at this path may or may not be currently installed to the NVDA system.
+		"""
+		return os.path.join(
+			WritePaths.addonStoreDownloadDir,
+			f"{self.name}-{self.addonVersionName}.nvda-addon"
+		)
+
+	@property
+	def isPendingInstall(self) -> bool:
+		"""True if this addon has not yet been fully installed."""
+		from ..dataManager import addonDataManager
+		nameInDownloadsPendingInstall = filter(
+			lambda m: m[0].model.name == self.name,
+			# add-ons which have been downloaded but
+			# have not been installed yet
+			addonDataManager._downloadsPendingInstall
+		)
+		return (
+			super().isPendingInstall
+			# True if this add-on has been downloaded but
+			# has not been installed yet
+			or bool(next(nameInDownloadsPendingInstall, False))
+			# True if this add-on is currently being downloaded
+			or os.path.exists(self.tempDownloadPath)
+		)
 
 
 @dataclasses.dataclass
