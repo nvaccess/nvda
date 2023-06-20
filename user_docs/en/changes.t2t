@@ -143,6 +143,7 @@ Instead import from ``hwIo.ioThread``. (#14627)
 It was introduced in NVDA 2023.1 and was never meant to be part of the public API.
 Until removal, it behaves as a no-op, i.e. a context manager yielding nothing. (#14924)
 - ``gui.MainFrame.onAddonsManagerCommand`` is deprecated, use ``gui.MainFrame.onAddonStoreCommand`` instead. (#13985)
+- ``speechDictHandler.speechDictVars.speechDictsPath`` is deprecated, use ``WritePaths.speechDictsDir`` instead. (#15021)
 -
 
 = 2023.1 =
