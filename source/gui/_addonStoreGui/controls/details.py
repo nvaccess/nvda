@@ -62,9 +62,6 @@ class AddonDetails(
 		selfSizer = wx.BoxSizer(wx.VERTICAL)
 		self.SetSizer(selfSizer)
 		parentSizer = wx.BoxSizer(wx.VERTICAL)
-		# To make the text fields less ugly.
-		# See Windows explorer file properties dialog for an example.
-		self.SetBackgroundColour(wx.Colour("white"))
 
 		self.addonNameCtrl = wx.StaticText(
 			self,
@@ -166,12 +163,16 @@ class AddonDetails(
 		# setting style1 as the default style will continue to result in blue text.
 		self.defaultStyle = wx.TextAttr()
 		self.defaultStyle.SetFontFaceName(_fontFaceName)
-		self.defaultStyle.SetTextColour("black")
 		self.defaultStyle.SetFontSize(10)
 
 		self.labelStyle = wx.TextAttr(self.defaultStyle)
 		# Note: setting font weight doesn't seem to work for RichText, instead specify via the font face name
 		self.labelStyle.SetFontFaceName(_fontFaceName_semiBold)
+
+		# Make the details panel background match the text fields.
+		# See Windows explorer file properties dialog for an example.
+		textBgColour = self.descriptionTextCtrl.GetBackgroundColour()
+		self.SetBackgroundColour(textBgColour)
 
 	def _setAddonNameCtrlStyle(self):
 		addonNameFont: wx.Font = self.addonNameCtrl.GetFont()
