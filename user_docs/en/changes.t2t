@@ -13,14 +13,22 @@ What's New in NVDA
   - The Add-ons Manager has been removed and replaced by the Add-on Store.
   - For more information please read the updated user guide.
   -
-- Added pronunciation of Unicode symbols:
-  - braille symbols such as "⠐⠣⠃⠗⠇⠐⠜". (#14548)
-  - Mac Option key symbol "⌥". (#14682)
+- Enhanced sound management:
+  - NVDA now outputs audio via the Windows Audio Session API (WASAPI), which may improve the responsiveness, performance and stability of NVDA speech and sounds.
+  This can be disabled in Advanced settings if audio problems are encountered. (#14697)
+  - It is now possible to have the volume of NVDA sounds and beeps follow the volume setting of the voice you are using.
+  This option can be enabled in Advanced settings. (#1409)
+  - You can now separately control the volume of NVDA sounds.
+  This can be done using the Windows Volume Mixer. (#1409)
   -
 - New input gestures:
   - An unbound gesture to cycle through the available languages for Windows OCR. (#13036)
   - An unbound gesture to cycle through the braille show messages modes. (#14864)
   - An unbound gesture to toggle showing the selection indicator for braille. (#14948)
+  -
+- Added pronunciation of Unicode symbols:
+  - braille symbols such as "⠐⠣⠃⠗⠇⠐⠜". (#14548)
+  - Mac Option key symbol "⌥". (#14682)
   -
 - Added gestures for Tivomatic Caiku Albatross Braille displays. (#14844, #15002)
   - showing the braille settings dialog
@@ -37,15 +45,9 @@ What's New in NVDA
 - When highlighted text is enabled Document Formatting, highlight colours are now reported in Microsoft Word. (#7396, #12101, #5866)
 - When colors are enabled Document Formatting, background colours are now reported in Microsoft Word. (#5866)
 - When pressing ``numpad2`` three times to report the numerical value of the character at the position of the review cursor, the information is now also provided in braille. (#14826)
-- NVDA now outputs audio via the Windows Audio Session API (WASAPI), which may improve the responsiveness, performance and stability of NVDA speech and sounds.
-This can be disabled in Advanced settings if audio problems are encountered. (#14697)
 - When using Excel shortcuts to toggle format such as bold, italic, underline and strike through of a cell in Excel, the result is now reported. (#14923)
 - Added support for the Help Tech Activator Braille display. (#14917)
 - In Windows 10 May 2019 Update and later, NVDA can announce virtual desktop names when opening, changing, and closing them. (#5641)
-- It is now possible to have the volume of NVDA sounds and beeps follow the volume setting of the voice you are using.
-This option can be enabled in Advanced settings. (#1409)
-- You can now separately control the volume of NVDA sounds.
-This can be done using the Windows Volume Mixer. (#1409)
 - 
 
 
@@ -61,7 +63,8 @@ This can be done using the Windows Volume Mixer. (#1409)
 - NVDA responds faster when moving the cursor in edit controls. (#14708)
 - Baum Braille driver: addes several Braille chord gestures for performing common keyboard commands such as ``windows+d``, ``alt+tab`` etc.
 Please refer to the NVDA user guide for a full list. (#14714)
-- When using a Braille Display via the Standard HID braille driver, the dpad can be used to emulate the arrow keys and enter. Also space+dot1 and space+dot4 now map to up and down arrow respectively. (#14713)
+- When using a Braille Display via the Standard HID braille driver, the dpad can be used to emulate the arrow keys and enter.
+Also ``space+dot1`` and ``space+dot4`` now map to up and down arrow respectively. (#14713)
 - Script for reporting the destination of a link now reports from the caret / focus position rather than the navigator object. (#14659)
 - Portable copy creation no longer requires that a drive letter be entered as part of the absolute path. (#14681)
 - If Windows is configured to display seconds in the system tray clock, using ``NVDA+f12`` to report the time now honors that setting. (#14742)
@@ -70,30 +73,34 @@ Please refer to the NVDA user guide for a full list. (#14714)
 
 
 == Bug Fixes ==
-- NVDA will no longer unnecessarily switch to no braille multiple times during auto detection, resulting in a cleaner log and less overhead. (#14524)
-- NVDA will now switch back to USB if a HID Bluetooth device (such as the HumanWare Brailliant or APH Mantis) is automatically detected and an USB connection becomes available.
-This only worked for Bluetooth Serial ports before. (#14524)
-- It is now possible to use the backslash character in the replacement field of a dictionaries entry, when the type is not set to regular expression. (#14556)
-- In Browse mode, NVDA will no longer incorrectly ignore focus moving to a parent or child control e.g. moving from a control to its parent list item or gridcell. (#14611)
-  - Note however that this fix only applies when the Automatically set focus to focusable elements" option in Browse Mode settings is turned off (which is the default).
+- Braille:
+  - Several stability fixes to input/output for braille displays, resulting in less frequent errors and crashes of NVDA. (#14627)
+  - NVDA will no longer unnecessarily switch to no braille multiple times during auto detection, resulting in a cleaner log and less overhead. (#14524)
+  - NVDA will now switch back to USB if a HID Bluetooth device (such as the HumanWare Brailliant or APH Mantis) is automatically detected and an USB connection becomes available.
+  This only worked for Bluetooth Serial ports before. (#14524)
   -
-- NVDA no longer occasionally causes Mozilla Firefox to crash or stop responding. (#14647)
-- In Mozilla Firefox and Google Chrome, typed characters are no longer reported in some text boxes even when speak typed characters is disabled. (#14666)
-- You can now use browse mode in Chromium Embedded Controls where it was not possible previously. (#13493, #8553)
-- For symbols which do not have a symbol description in the current locale, the default English symbol level will be used. (#14558, #14417)
+- Web browsers:
+  - NVDA no longer occasionally causes Mozilla Firefox to crash or stop responding. (#14647)
+  - In Mozilla Firefox and Google Chrome, typed characters are no longer reported in some text boxes even when speak typed characters is disabled. (#14666)
+  - You can now use browse mode in Chromium Embedded Controls where it was not possible previously. (#13493, #8553)
+  - In Mozilla Firefox, moving the mouse over text after a link now reliably reports the text. (#9235)
+  - The destination of graphic links are now correctly reported in Chrome and Edge. (#14779)
+  - When trying to report the URL for a link without a href attribute NVDA is no longer silent.
+  Instead NVDA reports that the link has no destination. (#14723)
+  - In Browse mode, NVDA will no longer incorrectly ignore focus moving to a parent or child control e.g. moving from a control to its parent list item or gridcell. (#14611)
+    - Note however that this fix only applies when the Automatically set focus to focusable elements" option in Browse Mode settings is turned off (which is the default).
+    -
+  -
 - Fixes for Windows 11:
   - NVDA can once again announce Notepad status bar contents. (#14573)
   - Switching between tabs will announce the new tab name and position for Notepad and File Explorer. (#14587, #14388)
   - NVDA will once again announce candidate items when entering text in languages such as Chinese and Japanese. (#14509)
+  - It is once again possible to open the Contributors and License items on the NVDA Help menu. (#14725)
   -
-- In Mozilla Firefox, moving the mouse over text after a link now reliably reports the text. (#9235)
+- For symbols which do not have a symbol description in the current locale, the default English symbol level will be used. (#14558, #14417)
+- It is now possible to use the backslash character in the replacement field of a dictionaries entry, when the type is not set to regular expression. (#14556)
 - In Windows 10 and 11 Calculator, a portable copy of NVDA will no longer do nothing or play error tones when entering expressions in standard calculator in compact overlay mode. (#14679)
-- When trying to report the URL for a link without a href attribute NVDA is no longer silent.
-Instead NVDA reports that the link has no destination. (#14723)
-- Several stability fixes to input/output for braille displays, resulting in less frequent errors and crashes of NVDA. (#14627)
 - NVDA again recovers from many more situations such as applications that stop responding which previously caused it to freeze completely. (#14759) 
-- The destination of graphic links are now correctly reported in Chrome and Edge. (#14779)
-- In Windows 11, it is once again possible to open the Contributors and License items on the NVDA Help menu. (#14725)
 - When forcing UIA support with certain terminal and consoles, a bug is fixed which caused a freeze and the log file to be spammed. (#14689)
 - NVDA no longer fails to announce focusing password fields in Microsoft Excel and Outlook. (#14839)
 - NVDA will no longer refuse to save the configuration after a configuration reset. (#13187)
