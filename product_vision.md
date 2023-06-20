@@ -38,8 +38,8 @@ Developed by NV Access in partnership with a dedicated open source community, NV
     * Promote the sharing and healthy debate of ideas on developer email lists and GitHub Discussions.
 9. Compliance: Ensure app / web developers can rely upon NVDA to make best use of the accessibility they implement:
     * NVDA strives to comply with all application and web accessibility standards where possible.
-    * Where there is disagreement or inability to comply with an accessibility standard, NVDA maintainers  clearly and respectfully argue the case, providing practical alternative solutions.
-    * NVDA maintainers participate in discussions with standards groups.
+    * Where there is disagreement or inability to comply with an accessibility standard, clear reasoning and possible practical alternatives are documented. 
+    * Tools such as the NVDA speech viewer help application and web developers use NVDA to test and verify the accessibility of their products.
 10. Documentation: Ensure users have the knowledge to fully leverage NVDA's features for productivity in work and everyday life:
     * NVDA offers comprehensive, user-friendly documentation such as an official user guide free of charge.
     * User-level support is available via various community-run email lists.
