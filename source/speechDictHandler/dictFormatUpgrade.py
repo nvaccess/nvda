@@ -12,10 +12,10 @@ import os
 import api
 import glob
 from logHandler import log
-from .speechDictVars import speechDictsPath
+from NVDAState import WritePaths
 
-voiceDictsPath = os.path.join(speechDictsPath, r"voiceDicts.v1")
-voiceDictsBackupPath = os.path.join(speechDictsPath, r"voiceDictsBackup.v0")
+voiceDictsPath = WritePaths.voiceDictsDir
+voiceDictsBackupPath = WritePaths.voiceDictsBackupDir
 
 def createVoiceDictFileName(synthName, voiceName):
 	""" Creates a filename used for the voice dictionary files.
@@ -72,10 +72,10 @@ def _doSynthVoiceDictBackupAndMove(synthName, oldFileNameToNewFileNameList=None)
 
 		# look for files that need to be upgraded  in the old voice 
 		# dicts diectory
-		voiceDictGlob=os.path.join(
-				speechDictsPath,
-				r"{synthName}*".format(synthName=synthName)
-				)
+		voiceDictGlob = os.path.join(
+			WritePaths.speechDictsDir,
+			"{synthName}*".format(synthName=synthName)
+		)
 		log.debug("voiceDictGlob: %s"%voiceDictGlob)
 
 		for actualPath in glob.glob(voiceDictGlob):

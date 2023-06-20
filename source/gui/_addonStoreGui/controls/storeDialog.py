@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2023 NV Access Limited
+# Copyright (C) 2022-2023 NV Access Limited, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -13,6 +13,7 @@ from wx.adv import BannerWindow
 from addonHandler import (
 	BUNDLE_EXTENSION,
 )
+from _addonStore.dataManager import addonDataManager
 from _addonStore.models.channel import Channel, _channelFilters
 from _addonStore.models.status import (
 	EnabledStatus,
@@ -132,6 +133,7 @@ class AddonStoreDialog(SettingsDialog):
 		self.externalInstallButton.Bind(wx.EVT_BUTTON, self.openExternalInstall, self.externalInstallButton)
 		self.bindHelpEvent("AddonStoreInstalling", self.externalInstallButton)
 
+		settingsSizer.AddSpacer(guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
 		settingsSizer.Add(generalActions.sizer)
 		self.onListTabPageChange(None)
 
@@ -226,13 +228,16 @@ class AddonStoreDialog(SettingsDialog):
 				# Let the user return to the add-on store and inspect add-ons being downloaded.
 				return
 
-		if self._storeVM._pendingInstalls:
+		if addonDataManager._downloadsPendingInstall:
 			installingDialog = gui.IndeterminateProgressDialog(
 				self,
 				self._installationPromptTitle,
-				# Translators: Message shown while installing add-ons after closing the add-on store dialog
-				# The placeholder {} will be replaced with the number of add-ons to be installed
-				pgettext("addonStore", "Installing {} add-ons, please wait.").format(len(self._storeVM._pendingInstalls))
+				pgettext(
+					"addonStore",
+					# Translators: Message shown while installing add-ons after closing the add-on store dialog
+					# The placeholder {} will be replaced with the number of add-ons to be installed
+					"Installing {} add-ons, please wait."
+				).format(len(addonDataManager._downloadsPendingInstall))
 			)
 			self._storeVM.installPending()
 			wx.CallAfter(installingDialog.done)
@@ -242,7 +247,11 @@ class AddonStoreDialog(SettingsDialog):
 
 	@property
 	def _requiresRestart(self) -> bool:
-		if self._storeVM._pendingInstalls:
+		from addonHandler import state, AddonStateCategory
+		if (
+			addonDataManager._downloadsPendingInstall
+			or state[AddonStateCategory.PENDING_INSTALL]
+		):
 			return True
 
 		for addonsForChannel in self._storeVM._installedAddons.values():

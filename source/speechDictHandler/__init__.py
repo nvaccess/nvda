@@ -8,10 +8,9 @@ import globalVars
 from logHandler import log
 import os
 import codecs
-import api
-import config
+
+from NVDAState import WritePaths
 from . import dictFormatUpgrade
-from .speechDictVars import speechDictsPath
 
 dictionaries = {}
 dictTypes = ("temp", "voice", "default", "builtin") # ordered by their priority E.G. voice specific speech dictionary is processed before the default
@@ -125,7 +124,7 @@ def processText(text):
 def initialize():
 	for type in dictTypes:
 		dictionaries[type]=SpeechDict()
-	dictionaries["default"].load(os.path.join(speechDictsPath, "default.dic"))
+	dictionaries["default"].load(WritePaths.speechDictDefaultFile)
 	dictionaries["builtin"].load(os.path.join(globalVars.appDir, "builtin.dic"))
 
 def loadVoiceDict(synth):
