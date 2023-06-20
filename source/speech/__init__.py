@@ -4,7 +4,6 @@
 # Copyright (C) 2006-2021 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
 # Julien Cochuyt
 
-import functools
 from .speech import (
 	_extendSpeechSequence_addMathForTextInfo,
 	_getSpellingSpeechAddCharMode,
@@ -156,9 +155,7 @@ def initialize():
 	synthDriverHandler.setSynth(config.conf["speech"]["synth"])
 	speechInitialize()
 	sayAllInitialize(
-		# override speak func to always have suppressBlanks=True,
-		# since blanks should never be spoken in say all
-		functools.partial(speak, suppressBlanks=True),
+		speak,
 		speakObject,
 		getTextInfoSpeech,
 		SpeakTextInfoState,
