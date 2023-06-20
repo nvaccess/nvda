@@ -16,6 +16,7 @@ from enum import IntEnum
 
 import typing
 import wx
+from NVDAState import WritePaths
 
 from vision.providerBase import VisionEnhancementProviderSettings
 from wx.lib.expando import ExpandoTextCtrl
@@ -886,8 +887,10 @@ class GeneralSettingsPanel(SettingsPanel):
 			settingsSizerHelper.addItem(item)
 
 	def onCopySettings(self,evt):
-		addonsDirPath = os.path.join(globalVars.appArgs.configPath, 'addons')
-		if os.path.isdir(addonsDirPath) and 0 < len(os.listdir(addonsDirPath)):
+		if (
+			os.path.isdir(WritePaths.addonsDir)
+			and 0 < len(os.listdir(WritePaths.addonsDir))
+		):
 			message = _(
 				# Translators: A message to warn the user when attempting to copy current
 				# settings to system settings.

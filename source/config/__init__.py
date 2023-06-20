@@ -49,6 +49,7 @@ from typing import (
 	Tuple,
 )
 import NVDAState
+from NVDAState import WritePaths
 
 
 #: True if NVDA is running as a Windows Store Desktop Bridge application
@@ -212,7 +213,7 @@ def getUserDefaultConfigPath(useInstalledPathIfExists=False):
 	"""Get the default path for the user configuration directory.
 	This is the default path and doesn't reflect overriding from the command line,
 	which includes temporary copies.
-	Most callers will want the C{globalVars.appArgs.configPath variable} instead.
+	Most callers will want the C{NVDAState.WritePaths.configDir variable} instead.
 	"""
 	installedUserConfigPath=getInstalledUserConfigPath()
 	if installedUserConfigPath and (isInstalledCopy() or isAppX or (useInstalledPathIfExists and os.path.isdir(installedUserConfigPath))):
@@ -236,9 +237,9 @@ SCRATCH_PAD_ONLY_DIRS = (
 )
 
 
-def getScratchpadDir(ensureExists=False):
+def getScratchpadDir(ensureExists: bool = False) -> str:
 	""" Returns the path where custom appModules, globalPlugins and drivers can be placed while being developed."""
-	path=os.path.join(globalVars.appArgs.configPath,'scratchpad')
+	path = WritePaths.scratchpadDir
 	if ensureExists:
 		if not os.path.isdir(path):
 			os.makedirs(path)
@@ -248,14 +249,14 @@ def getScratchpadDir(ensureExists=False):
 				os.makedirs(subpath)
 	return path
 
-def initConfigPath(configPath=None):
+
+def initConfigPath(configPath: Optional[str] = None) -> None:
 	"""
 	Creates the current configuration path if it doesn't exist. Also makes sure that various sub directories also exist.
 	@param configPath: an optional path which should be used instead (only useful when being called from outside of NVDA)
-	@type configPath: str
 	"""
 	if not configPath:
-		configPath=globalVars.appArgs.configPath
+		configPath = WritePaths.configDir
 	if not os.path.isdir(configPath):
 		os.makedirs(configPath)
 	else:
@@ -422,7 +423,7 @@ def _setStartOnLogonScreen(enable: bool) -> None:
 
 
 def setSystemConfigToCurrentConfig():
-	fromPath = globalVars.appArgs.configPath
+	fromPath = WritePaths.configDir
 	if ctypes.windll.shell32.IsUserAnAdmin():
 		_setSystemConfig(fromPath)
 	else:
@@ -560,7 +561,7 @@ class ConfigManager(object):
 			post_configProfileSwitch.notify(prevConf=currentRootSection.dict())
 
 	def _initBaseConf(self, factoryDefaults=False):
-		fn = os.path.join(globalVars.appArgs.configPath, "nvda.ini")
+		fn = WritePaths.nvdaConfigFile
 		if factoryDefaults:
 			profile = self._loadConfig(None)
 			profile.filename = fn
@@ -631,13 +632,13 @@ class ConfigManager(object):
 		return self.rootSection.dict()
 
 	def listProfiles(self):
-		for name in os.listdir(os.path.join(globalVars.appArgs.configPath, "profiles")):
+		for name in os.listdir(WritePaths.profilesDir):
 			name, ext = os.path.splitext(name)
 			if ext == ".ini":
 				yield name
 
-	def _getProfileFn(self, name):
-		return os.path.join(globalVars.appArgs.configPath, "profiles", name + ".ini")
+	def _getProfileFn(self, name: str) -> str:
+		return WritePaths.getProfileConfigFile(name)
 
 	def _getProfile(self, name, load=True):
 		try:
@@ -964,7 +965,7 @@ class ConfigManager(object):
 		self.profileTriggersEnabled = True
 
 	def _loadProfileTriggers(self):
-		fn = os.path.join(globalVars.appArgs.configPath, "profileTriggers.ini")
+		fn = WritePaths.profileTriggersFile
 		try:
 			cobj = ConfigObj(fn, indent_type="\t", encoding="UTF-8")
 		except:
