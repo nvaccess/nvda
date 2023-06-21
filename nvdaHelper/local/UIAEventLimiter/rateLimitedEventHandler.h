@@ -24,7 +24,13 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 // stores them in in an internal queue (removing any duplicates),
 // and sends them onto an existing UI Automation event handler in a separate thread.
 // This ensures that UI Automation core is never blocked while sending events to this class.
-class RateLimitedEventHandler: public IUIAutomationEventHandler, public IUIAutomationFocusChangedEventHandler, public IUIAutomationPropertyChangedEventHandler, public IUIAutomationNotificationEventHandler, public IUIAutomationActiveTextPositionChangedEventHandler {
+class RateLimitedEventHandler:
+	public IUIAutomationEventHandler,
+	public IUIAutomationFocusChangedEventHandler,
+	public IUIAutomationPropertyChangedEventHandler,
+	public IUIAutomationNotificationEventHandler,
+	public IUIAutomationActiveTextPositionChangedEventHandler
+{
 private:
 	unsigned long m_refCount = 1;
 	CComQIPtr<IUIAutomationEventHandler> m_pExistingAutomationEventHandler;

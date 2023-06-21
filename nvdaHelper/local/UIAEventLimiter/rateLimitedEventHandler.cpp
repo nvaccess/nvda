@@ -31,7 +31,8 @@ template<EventRecordConstraints EventRecordClass, typename... EventRecordArgType
 HRESULT RateLimitedEventHandler::queueEvent(EventRecordArgTypes&&... args) {
 	LOG_DEBUG(L"RateLimitedUIAEventHandler::queueEvent called");
 	bool needsFlush = false;
-	{ std::lock_guard lock(m_mtx);
+	{ // scoped lock
+		std::lock_guard lock(m_mtx);
 		// work out whether we need to request a flush after inserting this event.
 		needsFlush = m_eventRecords.empty();
 		LOG_DEBUG(L"RateLimitedUIAEventHandler::queueEvent: Inserting new event");
@@ -141,7 +142,11 @@ RateLimitedEventHandler::~RateLimitedEventHandler() {
 }
 
 RateLimitedEventHandler::RateLimitedEventHandler(IUnknown* pExistingHandler):
-	m_pExistingAutomationEventHandler(pExistingHandler), m_pExistingFocusChangedEventHandler(pExistingHandler), m_pExistingPropertyChangedEventHandler(pExistingHandler), m_pExistingNotificationEventHandler(pExistingHandler), m_pExistingActiveTextPositionChangedEventHandler(pExistingHandler),
+	m_pExistingAutomationEventHandler(pExistingHandler),
+	m_pExistingFocusChangedEventHandler(pExistingHandler), 
+	m_pExistingPropertyChangedEventHandler(pExistingHandler),
+	m_pExistingNotificationEventHandler(pExistingHandler), 
+	m_pExistingActiveTextPositionChangedEventHandler(pExistingHandler),
 	m_flusherThread([this](std::stop_token st){ this->flusherThreadFunc(st); })
 {
 	LOG_DEBUG(L"RateLimitedUIAEventHandler::RateLimitedUIAEventHandler called");
