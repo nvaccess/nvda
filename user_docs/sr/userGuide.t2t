@@ -2120,6 +2120,7 @@ Ova kategorija sadrži sledeće opcije:
 
 ==== Jezik prepoznavanja ====[Win10OcrSettingsRecognitionLanguage]
 Ovaj izborni okvir vam dozvoljava da izaberete jezik za prepoznavanje teksta.
+Kako biste kružili kroz dostupne jezike bilo gde da se nalazite, molimo podesite prilagođenu prečicu korišćenjem [dijaloga ulaznih komandi #InputGestures].
 
 +++ Napredna podešavanja +++[AdvancedSettings]
 Upozorenje! Ova podešavanja su samo za napredne korisnike i mogu izazvati neispravno funkcionisanje programa NVDA ako se pogrešno podese.
@@ -2135,8 +2136,8 @@ Ovo takođe može biti korisno kada niste sigurni da li su podešavanja promenje
 
 ==== Omogući učitavanje prilagođenog koda iz Scratchpad foldera ====[AdvancedSettingsEnableScratchpad]
 Kada programirate dodatke za NVDA, korisno je da možete da testirate kod dok ga pišete.
-Kada je ova opcija omogućena, dozvoljava programu NVDA učitavanje prilagođenih modula za aplikacije, globalnih dodataka, drajvera za brajeve redove i drajvera za sintetizatore, iz specijalnog Scratchpad foldera u vašem folderu za NVDA podešavanja.
-Ranije je NVDA učitavao prilagođen kod iz foldera za podešavanja, bez načina za onemogućavanje ovoga.
+Kada je ova opcija omogućena, dozvoljava programu NVDA učitavanje prilagođenih modula za aplikacije, globalnih dodataka, drajvera za brajeve redove, drajvera za sintetizatore i usluga vizuelne pomoći iz specijalnog Scratchpad foldera u vašem folderu za NVDA podešavanja.
+Kao i njihovi ekvivalenti u dodacima, ovi moduli se učitavaju kada se NVDA pokrene, ili u slučaju modula za aplikacije i globalnih dodataka, kada se  [ponovo učitaju dodaci #ReloadPlugins].
 Ova opcija je sada podrazumevano onemogućena, što osigurava da kod koji nije testiran neće biti pokrenut bez znanja korisnika.
 Ako želite da delite prilagođen kod sa drugima, morate ga upakovati kao NVDA dodatak.
 
@@ -3664,6 +3665,10 @@ Molimo pogledajte dokumentaciju brajevog reda za opis gde se ovi tasteri nalaze.
 | Pomera navigacioni objekat na sledeći objekat | ``f6`` |
 | Prijavljuje trenutni navigacioni objekat | ``f7`` |
 | Daje informacije o lokaciji teksta ili objekta na poziciji sistemskog kursora | ``f8`` |
+| Prikazuje brajeva podešavanja | ``f1+home1``, ``f9+home2`` |
+| Čita statusnu traku i prebacuje navigacioni objekat na nju | ``f1+end1``, ``f9+end2`` |
+| Kruži kroz oblike brajevog kursora | ``f1+eKursor1``, ``f9+eKursor2`` |
+| Uključuje ili isključuje brajev kursor | ``f1+kursor1``, ``f9+kursor2`` |
 | Izvršava podrazumevanu radnju na trenutnom navigacionom objektu | ``f7+f8`` |
 | Prijavljuje datum/vreme | ``f9`` |
 | obaveštava o statusu baterije i preostalom vremenu ako punjač nije uključen | ``f10`` |

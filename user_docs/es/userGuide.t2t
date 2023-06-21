@@ -2122,6 +2122,7 @@ Esta categoría contiene las siguientes opciones:
 
 ==== Idioma de Reconocimiento ====[Win10OcrSettingsRecognitionLanguage]
 Este cuadro combinado te permite elegir el idioma para utilizar con el reconocimiento de texto.
+Para recorrer los idiomas disponibles desde cualquier lugar, por favor asigna un gesto personalizado utilizando el [diálogo Gestos de Entrada #InputGestures].
 
 +++ Opciones Avanzadas +++[AdvancedSettings]
 ¡Advertencia! Las opciones en esta categoría son para usuarios avanzados y pueden causar que NVDA no funcione correctamente si se configura de forma incorrecta.
@@ -2137,8 +2138,8 @@ Este también puede ser el caso si no estás seguro de que se hayan cambiado las
 
 ==== Habilitar la carga de código personalizado desde el directorio Developer Scratchpad ====[AdvancedSettingsEnableScratchpad]
 Al desarrollar complementos para NVDA, es útil poder probar el código a medida que lo escribes.
-Esta opción al estar habilitada, permite a NVDA cargar appModules personalizados, globalPlugins, brailleDisplayDrivers y synthDrivers, desde un directorio especial de desarrolladores scratchpad de tu directorio de configuración de usuario de NVDA.
-Anteriormente, NVDA cargaba código personalizado directamente desde el directorio de configuración del usuario, sin posibilidad de deshabilitarlo.
+Esta opción cuando está habilitada, permite a NVDA cargar appModules personalizados, Plugins globales, controladores de pantallas braille, controladores de sintetizadores y proveedores de mejoras visuales, desde un directorio especial de desarrolladores scratchpad de tu directorio de configuración de usuario de NVDA.
+Al igual que sus equivalentes en complementos, estos módulos se cargan al arrancar NVDA o, en el caso de appModules y Plugins globales, al [recargar plugins #ReloadPlugins].
 Esta opción está desactivada de forma predeterminada, lo que garantiza que nunca se ejecute ningún código no probado en NVDA sin el conocimiento explícito del usuario.
 Si deseas distribuir código personalizado a otros, debes empaquetarlo como un complemento de NVDA.
 
@@ -3665,6 +3666,10 @@ Por favor consulta la documentación de la pantalla para descripciones de dónde
 | Mover el navegador de objetos al objeto siguiente | ``f6`` |
 | Anunciar el navegador de objetos actual | ``f7`` |
 | Anunciar información acerca de la localización del texto u objeto en el cursor de revisión | ``f8`` |
+| Mostrar opciones braille | ``f1+inicio1``, ``f9+inicio2`` |
+| Leer la barra de estado y mover el navegador de objetos a ella | ``f1+fin1``, ``f9+fin2`` |
+| Recorrer las formas del cursor braille | ``f1+eCursor1``, ``f9+eCursor2`` |
+| Activar y desactivar el cursor braille | ``f1+cursor1``, ``f9+cursor2`` |
 | Realizar la acción predeterminada en el navegador de objetos actual | ``f7+f8`` |
 | Anunciar fecha y hora | ``f9`` |
 | Anunciar estado de la batería y tiempo restante si la alimentación no está enchufada | ``f10`` |

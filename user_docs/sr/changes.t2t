@@ -17,6 +17,14 @@ Da biste pročitali promene koje su bitne za programere, molimo pogledajte [Engl
   - Simbol za Mac taster opcije "⌥". (#14682)
   -
 - U pretraživačima Mozilla Firefox i Google Chrome, NVDA sada prijavljuje ako kontrola otvara dijalog, mrežu, listu ili stablo ako je autor ovo označio korišćenjem aria-haspopup. (#14709)
+- Sada je moguće koristiti sistemske varijable  (kao što su  ``%temp%`` ili  ``%homepath%``) pri određivanju putanje kada se pravi NVDA prenosna kopija. (#14680)
+- Dodata podrška za ``aria-brailleroledescription`` ARIA 1.3 atribut, koji će dozvoliti web autorima da zamene vrstu elementa koja će se prikazati na brajevom redu. (#14748)
+- Kada je omogućeno prijavljivanje obeleženog teksta u formatiranju dokumenta, obeležene boje se sada prijavljuju u programu Microsoft Word. (#7396, #12101, #5866)
+- Kada je omogućeno prijavljivanje boja u formatiranju dokumenta, boje pozadine se sada prijavljuju u programu  Microsoft Word. (#5866)
+- Dodata nova komanda kako biste kružili kroz dostupne jezike za  Windows OCR. (#13036)
+- Kada pritisnete ``numeričko2`` tri  puta da biste dobili brojčanu vrednost znaka na poziciji preglednog kursora, informacija se takođe prikazuje na brajevom redu. (#14826)
+- Dodate prečice za Tivomatic Caiku Albatross brajeve redove.
+Sada postoje prečice za otvaranje dijaloga brajevih podešavanja, pristup statusnoj traci, kruženje kroz oblike brajevog kursora i uključivanje ili isključivanje brajevog kursora. (#14844)
 - 
 
 
@@ -30,6 +38,7 @@ Da biste pročitali promene koje su bitne za programere, molimo pogledajte [Engl
 - Baum Braille drajver: Dodato nekoliko vezanih brajevih komandi za izvršavanje čestih prečica na tastaturi kao što su windows+d, alt+tab i tako dalje. Molimo pogledajte NVDA korisničko uputstvo za potpunu listu. (#14714)
 - Kada se koristi brajev red uz drajver za HID brajev standard, strelice se sada mogu koristiti za emuliranje strelica tastature i entera. Takođe,  razmak+tačka1 i razmak+tačka4 su sada podešene kao strelice dole i gore. (#14713)
 - Skripta za prijavljivanje odredišta linka sada prijavljuje sa pozicije kursora ili fokusa umesto navigacionog objekta. (#14659)
+- Pravljenje prenosne kopije više ne zahteva da upišete slovo diska kao deo apsolutne putanje. (#14681)
 -
 
 
@@ -45,10 +54,20 @@ Ovo je ranije radilo samo za Bluetooth serijske portove. (#14524)
 - U pretraživačima Mozilla Firefox i Google Chrome, ukucani znakovi se više ne prijavljuju u određenim tekstualnim poljima čak i kada je izgovor ukucanih znakova isključen. (#14666)
 - Sada možete koristiti režim pretraživanja u Chromium umetnutim kontrolama u kojima to ranije nije bilo moguće. (#13493, #8553)
 - Za simbole koji nemaju opis na trenutnom jeziku, koristiće se podrazumevani Engleski nivo. (#14558, #14417)
-- U novijim izdanjima Windows 11 verzije programa Notepad, NVDA ponovo može da izgovara sadržaj statusne trake. (#14573)
+- Ispravke za Windows 11:
+  - NVDA ponovo može da izgovara sadržaj statusne trake u beležnici. (#14573)
+  - Prebacivanje između kartica će izgovoriti ime i poziciju nove kartice u beležnici i istraživaču datoteka. (#14587, #14388)
+  - NVDA će ponovo izgovarati dostupne unose kada se tekst piše na jezicima kao što su Kineski i Japanski. (#14509)
+  -
 - U programu Mozilla Firefox, pomeranje miša iznad teksta nakon linka sada ispravno prijavljuje tekst. (#9235)
 - In Windows 10 and 11 Calculator, a portable copy of NVDA will no longer do nothing or play error tones when entering expressions in standard calculator in compact overlay mode. (#14679)
 - Kada pokušate da dobijete odredište linka bez href atributa NVDA sada izgovara da link nema odredište.
+- Nekoliko ispravljenih grešaka u stabilnosti unosa i izlaza brajevih redova, što će smanjiti učestalost grešaka kao i NVDA rušenja. (#14627)
+- NVDA se ponovo oporavlja u brojnim slučajevima kao što su aplikacije koje više ne reaguju, što je ranije izazivalo da NVDA u potpunosti prestane da radi. (#14759) 
+- Odredište linkova u slikama se sada ispravno prijavljuje u programima Chrome i Edge. (#14779)
+- Na Windowsu 11, ponovo je moguće otvoriti listu saradnika kao i licencu iz NVDA menija pomoći. (#14725)
+- Kada naterate korišćenje UIA podrške u određenim Terminalima i konzolama, ispravljena je greška koja je izazivala rušenje i neprestano pisanje podataka  u dnevniku. (#14689)
+- NVDA sada uspešno izgovara fokusiranje na polja za lozinke u programima Microsoft Excel i Outlook. (#14839)
 -
 
 

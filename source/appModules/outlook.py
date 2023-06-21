@@ -45,7 +45,6 @@ from NVDAObjects.UIA import UIA
 from NVDAObjects.UIA.wordDocument import WordDocument as UIAWordDocument
 import languageHandler
 
-
 PR_LAST_VERB_EXECUTED=0x10810003
 VERB_REPLYTOSENDER=102
 VERB_REPLYTOALL=103
@@ -352,10 +351,12 @@ class CalendarView(IAccessible):
 			bufLength
 		) == 0:
 			raise ctypes.WinError()
+		categoriesCount = len(categories.split(f"{separatorBuf.value} "))
 
 		# Translators: Part of a message reported when on a calendar appointment with one or more categories
 		# in Microsoft Outlook.
-		return _("categories {categories}").format(categories=categories)
+		categoriesText = ngettext("category {categories}", "categories {categories}", categoriesCount)
+		return categoriesText.format(categories=categories)
 
 	def isDuplicateIAccessibleEvent(self,obj):
 		return False

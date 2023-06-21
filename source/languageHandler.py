@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2021 NV access Limited, Joseph Lee, Łukasz Golonka
+# Copyright (C) 2007-2023 NV access Limited, Joseph Lee, Łukasz Golonka, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -27,6 +27,7 @@ from typing import (
 	Optional,
 	Tuple,
 	Union,
+	Callable,
 )
 
 #a few Windows locale constants
@@ -288,9 +289,9 @@ def getAvailableLanguages(presentational: bool = False) -> List[Tuple[str, str]]
 
 
 def makePgettext(translations):
-	"""Obtaina  pgettext function for use with a gettext translations instance.
+	"""Obtain a pgettext function for use with a gettext translations instance.
 	pgettext is used to support message contexts,
-	but Python's gettext module doesn't support this,
+	but Python 3.7's gettext module doesn't support this,
 	so NVDA must provide its own implementation.
 	"""
 	if isinstance(translations, gettext.GNUTranslations):
@@ -301,12 +302,36 @@ def makePgettext(translations):
 			except KeyError:
 				return message
 	elif isinstance(translations, gettext.NullTranslations):
-		# A language with out a translation catalog, such as English.
+		# A language without a translation catalog, such as English.
 		def pgettext(context, message):
 			return message
 	else:
 		raise ValueError("%s is Not a GNUTranslations or NullTranslations object" % translations)
 	return pgettext
+
+
+def makeNpgettext(
+		translations: Union[None, gettext.GNUTranslations, gettext.NullTranslations],
+) -> Callable[[str, str, str, Union[int, float]], str]:
+	"""Obtain a  npgettext function for use with a gettext translations instance.
+	npgettext is used to support message contexts with respect to ngettext,
+	but Python 3.7's gettext module doesn't support this,
+	so NVDA must provide its own implementation.
+	"""
+	if isinstance(translations, gettext.GNUTranslations):
+		def npgettext(context: str, msgSingular: str, msgPlural: str, n: Union[int, float]) -> str:
+			try:
+				# Look up the message with its context.
+				return translations._catalog[(f"{context}\x04{msgSingular}", translations.plural(n))]
+			except KeyError:
+				return msgSingular if n == 1 else msgPlural
+	elif isinstance(translations, gettext.NullTranslations):
+		# A language without a translation catalog, such as English.
+		def npgettext(context: str, msgSingular: str, msgPlural: str, n: Union[int, float]) -> str:
+			return msgSingular if n == 1 else msgPlural
+	else:
+		raise ValueError("%s is Not a GNUTranslations or NullTranslations object" % translations)
+	return npgettext
 
 
 def getLanguageCliArgs() -> Tuple[str, ...]:
@@ -381,10 +406,11 @@ def setLanguage(lang: str) -> None:
 	if trans is None:
 		trans = _createGettextTranslation("en")
 
-	trans.install()
+	trans.install(names=['ngettext'])
 	setLocale(getLanguage())
-	# Install our pgettext function.
+	# Install our pgettext and npgettext functions.
 	builtins.pgettext = makePgettext(trans)
+	builtins.npgettext = makeNpgettext(trans)
 
 	global installedTranslation
 	installedTranslation = weakref.ref(trans)

@@ -21,8 +21,14 @@ What's New in NVDA
   - An unbound gesture to cycle through the available languages for Windows OCR. (#13036)
   - An unbound gesture to cycle through the braille show messages modes. (#14864)
   - An unbound gesture to toggle showing the selection indicator for braille. (#14948)
-  - Added gestures for Tivomatic Caiku Albatross Braille displays.
-There are now gestures for showing the braille settings dialog, accessing the status bar, cycling the braille cursor shape, and toggling the braille cursor on/off. (#14844)
+  -
+- Added gestures for Tivomatic Caiku Albatross Braille displays. (#14844, #15002)
+  - showing the braille settings dialog
+  - accessing the status bar
+  - cycling the braille cursor shape
+  - cycling the braille show messages mode
+  - toggling the braille cursor on/off
+  - toggling the braille show selection indicator state
   -
 - A new Braille option to toggle showing the selection indicator (dots 7 and 8). (#14948)
 - In Mozilla Firefox and Google Chrome, NVDA now reports when a control opens a dialog, grid, list or tree if the author has specified this using aria-haspopup. (#14709)
@@ -31,14 +37,20 @@ There are now gestures for showing the braille settings dialog, accessing the st
 - When highlighted text is enabled Document Formatting, highlight colours are now reported in Microsoft Word. (#7396, #12101, #5866)
 - When colors are enabled Document Formatting, background colours are now reported in Microsoft Word. (#5866)
 - When pressing ``numpad2`` three times to report the numerical value of the character at the position of the review cursor, the information is now also provided in braille. (#14826)
-- NVDA now outputs audio via the Windows Audio Session API (WASAPI), which may improve the responsiveness, performance and stability of NVDA speech and sounds. This can be disabled in Advanced settings if audio problems are encountered. (#14697)
+- NVDA now outputs audio via the Windows Audio Session API (WASAPI), which may improve the responsiveness, performance and stability of NVDA speech and sounds.
+This can be disabled in Advanced settings if audio problems are encountered. (#14697)
 - When using Excel shortcuts to toggle format such as bold, italic, underline and strike through of a cell in Excel, the result is now reported. (#14923)
 - Added support for the Help Tech Activator Braille display. (#14917)
-- In Windows 10 May 2019 Update and later, NVDA can announe virtual desktop names when opening, changing, and closing them. (#5641)
+- In Windows 10 May 2019 Update and later, NVDA can announce virtual desktop names when opening, changing, and closing them. (#5641)
+- It is now possible to have the volume of NVDA sounds and beeps follow the volume setting of the voice you are using.
+This option can be enabled in Advanced settings. (#1409)
+- You can now separately control the volume of NVDA sounds.
+This can be done using the Windows Volume Mixer. (#1409)
 - 
 
 
 == Changes ==
+- eSpeak NG has been updated to 1.52-dev commit ``ed9a7bcf``. (#15036)
 - Updated LibLouis braille translator to [3.26.0 https://github.com/liblouis/liblouis/releases/tag/v3.26.0]. (#14970)
 - CLDR has been updated to version 43.0. (#14918)
 - Dash and em-dash symbols will always be sent to the synthesizer. (#13830)
@@ -120,6 +132,7 @@ Similarly, the new ``getCompletionRoutine`` method allows you to convert a pytho
 - NVDA will no longer log inaccurate warnings or errors about deprecated appModules. (#14806)
 - All NVDA extension points are now briefly described in a new, dedicated chapter in the Developer Guide. (#14648)
 - ``scons checkpot`` will no longer check the ``userConfig`` subfolder anymore. (#14820)
+- Translatable strings can now be defined with a singular and a plural form using ``ngettext`` and ``npgettext``. (#12445)
 -
 
 === Deprecations ===
@@ -131,6 +144,7 @@ Instead import from ``hwIo.ioThread``. (#14627)
 It was introduced in NVDA 2023.1 and was never meant to be part of the public API.
 Until removal, it behaves as a no-op, i.e. a context manager yielding nothing. (#14924)
 - ``gui.MainFrame.onAddonsManagerCommand`` is deprecated, use ``gui.MainFrame.onAddonStoreCommand`` instead. (#13985)
+- ``speechDictHandler.speechDictVars.speechDictsPath`` is deprecated, use ``WritePaths.speechDictsDir`` instead. (#15021)
 -
 
 = 2023.1 =

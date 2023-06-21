@@ -12,6 +12,14 @@ Qué hay de Nuevo en NVDA
   - Símbolo de la tecla opción del Mac "⌥". (#14682)
   -
 - En Mozilla Firefox y en Google Chrome, NVDA ahora anuncia cuando un control abre un diálogo, una cuadrícula, una lista o un árbol si el autor ha especificado este uso de aria-haspopup. (#14709)
+- Ahora es posible utilizar variables del sistema (tales como ``%temp%`` o ``%homepath%``) en la especificación de la ruta mientras se crean copias portables de NVDA. (#14680)
+- Se añade el soporte para el atributo aria 1.3 ``aria-brailleroledescription``, permitiendo a los autores de la web sobrescribir el tipo de un elemento mostrado en la pantalla braille. (#14748)
+- Cuando el texto resaltado esté activado, el formateado de Documento ahora anuncia los colores de resaltado en Microsoft Word. (#7396, #12101, #5866)
+- Cuando los colores estén activados en Formateo de documento, los colores de fondo ahora se anuncian en Microsoft Word. (#5866)
+- Se introduce una orden nueva para recorrer los idiomas disponibles para el OCR de Windows. (#13036)
+- Al pulsar el ``2 del teclado numérico`` tres veces para anunciar el valor numérico del carácter en la posición del cursor de revisión, la información ahora también se proporciona en braille. (#14826)
+- Se añaden gestos para pantallas braille Tivomatic Caiku Albatross.
+Ahora hay gestos para mostrar el diálogo de opciones braille, para acceder a la barra de estado, para recorrer las formas del cursor braille y para activar y desactivar el cursor braille. (#14844)
 - 
 
 
@@ -24,6 +32,7 @@ Qué hay de Nuevo en NVDA
 - Controlador de Baum Braille: añade varios gestos cor Braille para realizar órdenes comunes de teclado tales como windows+d, alt+tab etc. Por favor consulta la Guía del usuario de NVDA para una lista completa. (#14714)
 - Cuando se utiliza una pantalla Braille a través del controlador braille estándar HID, puede utilizarse el dpad para emular las flechas y el intro. También espacio+punto1 y espacio+punto4 ahora se mapean a flechas arriba y abajo respectivamente. (#14713)
 - El script para anunciar el destino de un enlace ahora anuncia desde la posición del cursor del sistema o del foco en lugar desde el navegador de objetos. (#14659)
+- La creación de la copia portable ya no requiere que se introduzca una letra de unidad como parte de la ruta absoluta. (#14681)
 -
 
 
@@ -39,16 +48,34 @@ Esto sólo funciona para puertos serie Bluetooth antes. (#14524)
 - En Mozilla Firefox y en Google Chrome, los caracteres escritos ya no se anuncian en algunos cuadros de texto incluso cuando Verbalizar caracteres al escribir esté deshabilitado. (#14666)
 - Ahora puedes utilizar modo Exploración en controles integrados de Chromium en los que anteriormente no era posible. (#13493, #8553)
 - Para símbolos que no tengan una descripción de símbolo en la traducción actual, se utilizará el nivel de símbolo predeterminado en inglés. (#14558, #14417)
-- En las versiones nuevas del Bloc de Notas de  Windows 11, NVDA puede anunciar de nuevo el contenido de la barra de estado. (#14573)
+- Correcciones para Windows 11:
+  - NVDA puede volver a anunciar el contenido de la barra de estado de Notepad. (#14573)
+  - Al cambiar entre pestañas se anunciará el nombre de la nueva pestaña y la posición para Notepad y para el Explorador de Archivos. (#14587, #14388)
+  - NVDA volverá a anunciar los elementos candidatos al introducir texto en idiomas como el Chino y el Japonés. (#14509)
+  -
 - En Mozilla Firefox, al mover el ratón sobre el texto después de un enlace ahora se informa el texto de forma fiable. (#9235)
 - En la calculadora de Windows 10 y 11, una copia portable de NVDA ya no hará nada ni reproducirá tonos de error al introducir expresiones en la calculadora estándar en el modo de superposición compacto. (#14679)
 - Al intentar anunciar la URL para un enlace sin un atributo href, NVDA ya no permanece en silencio.
 En su lugar, NVDA informa de que el enlace no tiene destino. (#14723)
+- Varias correcciones de estabilidad en la entrada/salida para pantallas braille, lo que resulta en errores y bloqueos menos frecuentes de NVDA. (#14627)
+- NVDA vuelve a recuperarse de muchas más situaciones, como aplicaciones que dejan de responder, que antes provocaban que se congelara por completo. (#14759) 
+- Ahora se informa correctamente del destino de los enlaces gráficos en Chrome y Edge. (#14779)
+- En Windows 11, vuelve a ser posible abrir los elementos Colaboradores y Licencia en el menú Ayuda de NVDA. (#14725)
+- Al forzar la compatibilidad con UIA con determinadas terminales y consolas, se corrige un error que provocaba la congelación y la basura en el archivo de registro. (#14689)
+- NVDA ya no falla al anunciar campos de contraseña enfocados en Microsoft Excel y Outlook. (#14839)
 -
 
 
 == Cambios para Desarrolladores ==
 Por favor, consulta [la Guía del Desarrollador https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] para obtener información sobre el proceso de obsolescencia y de eliminación de la API de NVDA.
+
+- Se han añadido convenciones sugeridas a la especificación del manifiesto de complemento.
+Son opcionales para la compatibilidad con NVDA, pero se recomiendan o exigen para el envío a la tienda de complementos.
+Las nuevas convenciones sugeridas son:
+  - Utilizar ``lowerCamelCase`` para el campo de nombre.
+  - Utilizar el formato ``<major>.<minor>.<patch>`` para el campo versión (requerido para el almacén de datos del complemento).
+  - Utilizar ``https://`` como esquema para el campo url (requerido para el almacén de datos del complemento).
+  -
 - Se añadió un nuevo tipo de punto de extensión llamado ``Chain``, que puede utilizarse para iterar sobre iterables devueltos por manejadores registrados. (#14531)
 - Se añadió el punto de extensión ``bdDetect.scanForDevices``.
 Los manejadores se pueden registrar para producir ``BrailleDisplayDriver/DeviceMatch`` pares que no encajan en categorías existentes, como USB o Bluetooth. (#14531)
@@ -56,10 +83,23 @@ Los manejadores se pueden registrar para producir ``BrailleDisplayDriver/DeviceM
 - El anillo de opciones del sintetizador ahora almacena en caché los valores de opciones disponibles la primera vez que se necesitan, en lugar de hacerlo al cargar el sintetizador. (#14704)
 - Ahora se puede llamar al método de exportación de un mapa de gestos para exportarlo a un diccionario.
 Este diccionario puede importarse en otro gesto pasándolo al constructor de ``GlobalGestureMap`` o al método update en un mapa existente. (#14582)
+- ``hwIo.base.IoBase`` y sus derivados ahora tienen un nuevo parámetro constructor para tomar un ``hwIo.ioThread.IoThread``.
+Si no se proporciona, se utiliza el hilo predeterminado. (#14627)
+- ``hwIo.ioThread.IoThread`` ahora tiene  un método ``setWaitableTimer`` para establecer un temporizador de espera utilizando una función python.
+Del mismo modo, el nuevo método ``getCompletionRoutine`` te permite convertir un método python en una rutina de finalización de forma segura. (#14627)
+- ``offsets.OffsetsTextInfo._get_boundingRects`` ahora debería devolver siempre ``List[locationHelper.rectLTWH]`` como se esperaba para una subclase de ``textInfos.TextInfo``. (#12424)
+- ``highlight-color`` ahora es un atributo de campo de formato. (#14610)
+- NVDA debería de determinar con mayor precisión si un mensaje registrado proviene del núcleo de NVDA. (#14812)
+- NVDA ya no registrará advertencias o errores inexactos sobre appModules obsoletos. (#14806)
+- Todos los puntos de extensión de NVDA ahora se describen brevemente en un capítulo nuevo específico de la guía del desarrollador . (#14648)
+- ``scons checkpot`` ya no comprobará más la subcarpeta ``userConfig``. (#14820)
 -
 
 === Obsolescencias ===
-
+- Pasar funciones lambda a ``hwIo.ioThread.IoThread.queueAsApc`` está obsoleto.
+En su lugar, las funciones deberían ser débilmente referenciables. (#14627)
+- Importar ``LPOVERLAPPED_COMPLETION_ROUTINE`` desde ``hwIo.base`` está obsoleto.
+En su lugar importa desde ``hwIo.ioThread``. (#14627)
 
 = 2023.1 =
 Se ha añadido una nueva orden "Estilo de Párrafo" en la "navegación de Documento".
