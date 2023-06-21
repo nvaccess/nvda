@@ -2174,7 +2174,7 @@ class Xaml(UIA):
 	# XAML fires UIA textSelectionChange events before the caret position change is reflected
 	# in the related UIA text pattern.
 	# This means NVDA cannot rely on textSelectionChange (caret) events in XAML
-	# to detect if the caret has moved, As it occurs too early.
+	# to detect if the caret has moved, as it occurs too early.
 	caretMovementDetectionUsesEvents = False
 
 

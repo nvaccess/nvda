@@ -938,7 +938,7 @@ class UIAHandler(COMObject):
 		):
 			if _isDebug():
 				log.debug(
-					"propertyChange event is for  focus. "
+					"propertyChange event is for focus. "
 					f"Redirecting event to focus NVDAObject {focus}"
 				)
 			obj = focus
