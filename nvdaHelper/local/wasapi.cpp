@@ -552,7 +552,9 @@ HRESULT wasPlay_resume(WasapiPlayer* player) {
 	return player->resume();
 }
 
-HRESULT wasPlay_setChannelVolume(WasapiPlayer* player, unsigned int channel,
+HRESULT wasPlay_setChannelVolume(
+	WasapiPlayer* player,
+	unsigned int channel,
 	float level
 ) {
 	return player->setChannelVolume(channel, level);
