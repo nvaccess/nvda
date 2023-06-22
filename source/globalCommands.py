@@ -3323,15 +3323,14 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_BRAILLE
 	)
 	def script_braille_cycleRouteReviewCursorAndSystemCaret(self, gesture: inputCore.InputGesture) -> None:
-		"""If braille is not tethered to focus, set next state of braille route review cursor and system caret.
-		State is reported using ui.message.
-		"""
+		If braille is not tethered to focus, set next state of braille route review cursor and system caret.
+		# State is reported using ui.message.
 		# Unavailable if tether is to focus.
 		if TetherTo.FOCUS.value == config.conf["braille"]["tetherTo"]:
 			ui.message(
 				_(
 					# Translators: Gesture is unavailable because braille tether is to focus.
-					"Gesture is unavailable because braille tether is to focus"
+					"Action unavailable. Braille is tethered to focus"
 				)
 			)
 			return
@@ -3524,19 +3523,18 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_BRAILLE
 	)
 	def script_braille_routeTo(self, gesture: inputCore.InputGesture) -> None:
-		"""Routes cursor to or activates the object under this braille cell."""
+		# Routes cursor to or activates the object under this braille cell.
+		braille.handler.routeTo(gesture.routingIndex)
 		# Try to ensure that braille message can be dismissed.
 		if braille.handler.buffer is braille.handler.messageBuffer:
-			braille.handler.routeTo(gesture.routingIndex)
 			return
-		braille.handler.routeTo(gesture.routingIndex)
 		# To proceed braille should be tethered to review cursor which means
 		# that tether is automatic (and review cursor is shown in braille)
 		# or tether is to review cursor.
 		# "Route review cursor and system caret" should be also enabled
 		# in braille settings.
 		if (
-			TetherTo.REVIEW.value != config.conf["braille"]["tetherTo"]
+			braille.handler.getTether() != TetherTo.REVIEW.value
 			or not config.conf["braille"]["routeReviewCursorAndSystemCaret"]
 		):
 			return
