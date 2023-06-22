@@ -12,8 +12,8 @@ import typing
 from typing import (
 	Optional,
 	Callable,
-	NamedTuple,
 )
+from enum import Enum, auto
 from ctypes import (
 	windll,
 	POINTER,
@@ -149,26 +149,11 @@ def _isDebugForNvWave():
 	return config.conf["debugLog"]["nvwave"]
 
 
-class AudioSession(NamedTuple):
-	"""Identifies an audio session.
-	An audio session may contain multiple streams. The guid identifies the
-	session. The name is shown in the system Volume Mixer.
+class AudioPurpose(Enum):
+	"""The purpose of a particular stream of audio.
 	"""
-	guid: GUID
-	name: str
-
-
-#: The audio session to use by default.
-defaultSession = AudioSession(
-	GUID("{C302B781-00AF-4ECC-ACB7-7DF16AF7D55E}"),
-	"NVDA"
-)
-#: The audio session to use for sounds.
-soundsSession = AudioSession(
-	GUID("{A560CE90-E9D9-44AF-8C3C-0D9734642D48}"),
-	# Translators: Shown in the system Volume Mixer for controlling NVDA sounds.
-	_("NVDA sounds")
-)
+	SPEECH = auto()
+	SOUNDS = auto()
 
 
 class WinmmWavePlayer(garbageHandler.TrackedObject):
@@ -220,7 +205,7 @@ class WinmmWavePlayer(garbageHandler.TrackedObject):
 			closeWhenIdle: bool = False,
 			wantDucking: bool = True,
 			buffered: bool = False,
-			session: AudioSession = defaultSession,
+			purpose: AudioPurpose = AudioPurpose.SPEECH,
 		):
 		"""Constructor.
 		@param channels: The number of channels of audio; e.g. 2 for stereo, 1 for mono.
@@ -715,7 +700,7 @@ def playWaveFile(
 		bitsPerSample=f.getsampwidth() * 8,
 		outputDevice=config.conf["speech"]["outputDevice"],
 		wantDucking=False,
-		session=soundsSession
+		purpose=AudioPurpose.SOUNDS
 	)
 
 	def play():
@@ -774,10 +759,6 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 	#: This allows us to have a single callback in the class rather than on
 	#: each instance, which prevents reference cycles.
 	_instances = weakref.WeakValueDictionary()
-	#: The previous value of the soundVolumeFollowsVoice setting. This is used to
-	#: determine when this setting has been disabled when it was previously
-	#: enabled.
-	_prevSoundVolFollow: bool = False
 
 	def __init__(
 			self,
@@ -788,7 +769,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			closeWhenIdle: bool = False,
 			wantDucking: bool = True,
 			buffered: bool = False,
-			session: AudioSession = defaultSession,
+			purpose: AudioPurpose = AudioPurpose.SPEECH,
 	):
 		"""Constructor.
 		@param channels: The number of channels of audio; e.g. 2 for stereo, 1 for mono.
@@ -799,7 +780,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		@param closeWhenIdle: Deprecated; ignored.
 		@param wantDucking: if true then background audio will be ducked on Windows 8 and higher
 		@param buffered: Whether to buffer small chunks of audio to prevent audio glitches.
-		@param session: The audio session which should be used.
+		@param purpose: The purpose of this audio.
 		@note: If C{outputDevice} is a name and no such device exists, the default device will be used.
 		@raise WindowsError: If there was an error opening the audio output device.
 		"""
@@ -818,11 +799,12 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			import audioDucking
 			if audioDucking.isAudioDuckingSupported():
 				self._audioDucker = audioDucking.AudioDucker()
-		self._session = session
+		self._purpose = purpose
 		self._player = NVDAHelper.localLib.wasPlay_create(
 			self._deviceNameToId(outputDevice),
 			format,
-			WasapiWavePlayer._callback, session.guid, session.name)
+			WasapiWavePlayer._callback
+		)
 		self._doneCallbacks = {}
 		self._instances[self._player] = self
 		self.open()
@@ -862,7 +844,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			WavePlayer.audioDeviceError_static = True
 			raise
 		WasapiWavePlayer.audioDeviceError_static = False
-		self._sessionVolumeFollow()
+		self._setVolumeFromConfig()
 
 	def close(self):
 		"""For WASAPI, this just stops playback.
@@ -919,7 +901,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			self._audioDucker.disable()
 		NVDAHelper.localLib.wasPlay_stop(self._player)
 		self._doneCallbacks = {}
-		self._sessionVolumeFollow()
+		self._setVolumeFromConfig()
 
 	def pause(self, switch: bool):
 		"""Pause or unpause playback.
@@ -935,27 +917,38 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		else:
 			NVDAHelper.localLib.wasPlay_resume(self._player)
 
-	def setSessionVolume(self, level: float):
-		"""Set the volume for the audio session.
-		This sets the volume for all streams in this session, not just the stream
-		associated with this WavePlayer instance.
+	def setVolume(
+			self,
+			*,
+			all: Optional[float] = None,
+			left: Optional[float] = None,
+			right: Optional[float] = None
+	):
+		"""Set the volume of one or more channels in this stream.
+		Levels must be specified as a number between 0 and 1.
+		@param all: The level to set for all channels.
+		@param left: The level to set for the left channel.
+		@param right: The level to set for the right channel.
 		"""
-		NVDAHelper.localLib.wasPlay_setSessionVolume(self._player, c_float(level))
+		if all is None and left is None and right is None:
+			raise ValueError("At least one of all, left or right must be specified")
+		if all is not None:
+			if left is not None or right is not None:
+				raise ValueError("all specified, so left and right must not be specified")
+			left = right = all
+		NVDAHelper.localLib.wasPlay_setChannelVolume(self._player, 0, c_float(left))
+		NVDAHelper.localLib.wasPlay_setChannelVolume(self._player, 1, c_float(right))
 
-	def _sessionVolumeFollow(self):
-		if self._session is not soundsSession:
+	def _setVolumeFromConfig(self):
+		if self._purpose is not AudioPurpose.SOUNDS:
 			return
-		follow = config.conf["audio"]["soundVolumeFollowsVoice"]
-		if not follow and WavePlayer._prevSoundVolFollow:
-			# Following was disabled. Reset the sound volume to maximum.
-			self.setSessionVolume(1.0)
-		WavePlayer._prevSoundVolFollow = follow
-		if not follow:
-			return
-		import synthDriverHandler
-		synth = synthDriverHandler.getSynth()
-		if synth and synth.isSupported("volume"):
-			self.setSessionVolume(synth.volume / 100)
+		volume = config.conf["audio"]["soundVolume"]
+		if config.conf["audio"]["soundVolumeFollowsVoice"]:
+			import synthDriverHandler
+			synth = synthDriverHandler.getSynth()
+			if synth and synth.isSupported("volume"):
+				volume = synth.volume
+		self.setVolume(all=volume / 100)
 
 	@staticmethod
 	def _getDevices():
@@ -1000,27 +993,9 @@ def initialize():
 		NVDAHelper.localLib.wasPlay_sync,
 		NVDAHelper.localLib.wasPlay_pause,
 		NVDAHelper.localLib.wasPlay_resume,
-		NVDAHelper.localLib.wasPlay_setSessionVolume,
+		NVDAHelper.localLib.wasPlay_setChannelVolume,
 		NVDAHelper.localLib.wasPlay_getDevices,
 	):
 		func.restype = HRESULT
 		func.errcheck = _wasPlay_errcheck
 	NVDAHelper.localLib.wasPlay_startup()
-	try:
-		# Some audio clients won't specify a session; e.g. speech synthesizers which
-		# use their own audio output code rather than nvwave. We don't want these to
-		# end up in the wrong session, so we set a specific default session. To do
-		# that, first create a stream in that session (defaultSession).
-		WasapiWavePlayer(channels=1, samplesPerSec=44100, bitsPerSample=16)
-		# Now create a stream with the null session (GUID_NULL). This will use the
-		# session we created above. All subsequent streams created without a specific
-		# session will use this session.
-		WasapiWavePlayer(
-			channels=1,
-			samplesPerSec=44100,
-			bitsPerSample=16,
-			session=AudioSession(GUID(), "")
-		)
-	except WindowsError:
-		# There are probably no audio devices. Ignore this so NVDA can still start.
-		log.warning("Unable to set default audio session; couldn't open device")
