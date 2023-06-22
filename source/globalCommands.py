@@ -3524,10 +3524,11 @@ class GlobalCommands(ScriptableObject):
 	)
 	def script_braille_routeTo(self, gesture: inputCore.InputGesture) -> None:
 		# Routes cursor to or activates the object under this braille cell.
-		braille.handler.routeTo(gesture.routingIndex)
 		# Try to ensure that braille message can be dismissed.
 		if braille.handler.buffer is braille.handler.messageBuffer:
+			braille.handler.routeTo(gesture.routingIndex)
 			return
+		braille.handler.routeTo(gesture.routingIndex)
 		# To proceed braille should be tethered to review cursor which means
 		# that tether is automatic (and review cursor is shown in braille)
 		# or tether is to review cursor.
