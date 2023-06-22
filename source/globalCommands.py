@@ -3323,7 +3323,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_BRAILLE
 	)
 	def script_braille_cycleRouteReviewCursorAndSystemCaret(self, gesture: inputCore.InputGesture) -> None:
-		If braille is not tethered to focus, set next state of braille route review cursor and system caret.
+		# If braille is not tethered to focus, set next state of braille route review cursor and system caret.
 		# State is reported using ui.message.
 		# Unavailable if tether is to focus.
 		if TetherTo.FOCUS.value == config.conf["braille"]["tetherTo"]:
