@@ -60,7 +60,7 @@ Developed by NV Access in partnership with a dedicated open source community, NV
     * NVDA allows the user to configure attributes of the output such as the voice rate and pitch, punctuation, and what Braille standard is used.
     * NVDA allows the user to create configuration profiles, so that the user can easily switch configurations depending on the particular task they are performing.
 15. Extendable: Ensure that NVDA can be easily enhanced and customized to meet specific user needs and requirements:
-    * NVDA allows the creation and integration of community created add-ons, providing support for extra speech synthesizers, refreshable Braille displays, visual inhancements for low vision, and more third party applications. 
+    * NVDA allows the creation and integration of community created add-ons, providing support for extra speech synthesizers, refreshable Braille displays, visual enhancements for low vision, and more third party applications. 
     * NVDA allows the user to browse, download and install available add-ons from within NVDA itself.
     * NVDA provides freedom for add-ons to find innovative solutions by allowing them broad access to NVDA's internals.
     * NVDA ensures add-ons do not break by postponing API breakages to once per year, announcing these changes many months ahead of time.
