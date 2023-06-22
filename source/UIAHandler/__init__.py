@@ -540,7 +540,7 @@ class UIAHandler(COMObject):
 		del self.localEventHandlerGroupWithTextChanges
 		del self.globalEventHandlerGroup
 
-	def _registerGlobalEventHandlers(self, handler):
+	def _registerGlobalEventHandlers(self, handler: "UIAHandler"):
 		self.clientObject.AddFocusChangedEventHandler(self.baseCacheRequest, handler)
 		if isinstance(self.clientObject, UIA.IUIAutomation6):
 			self.globalEventHandlerGroup = self.clientObject.CreateEventHandlerGroup()
@@ -593,7 +593,7 @@ class UIAHandler(COMObject):
 			)
 		self.addEventHandlerGroup(self.rootElement, self.globalEventHandlerGroup)
 
-	def _createLocalEventHandlerGroup(self, handler):
+	def _createLocalEventHandlerGroup(self, handler: "UIAHandler"):
 		if isinstance(self.clientObject, UIA.IUIAutomation6):
 			self.localEventHandlerGroup = self.clientObject.CreateEventHandlerGroup()
 			self.localEventHandlerGroupWithTextChanges = self.clientObject.CreateEventHandlerGroup()
