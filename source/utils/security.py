@@ -1,5 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2023 NV Access Limited, Cyrille Bougot
+# Copyright (C) 2022-2023 NV Access Limited, Cyrille Bougot,
+# Burman's Computer and Education Ltd.
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -99,7 +100,6 @@ def getSafeScripts() -> Set["scriptHandler._ScriptFunctionT"]:
 		# on the lock screen using braille.
 		commands.script_braille_scrollBack,
 		commands.script_braille_scrollForward,
-		commands.script_braille_routeTo,
 		commands.script_braille_previousLine,
 		commands.script_braille_nextLine,
 		
@@ -107,6 +107,8 @@ def getSafeScripts() -> Set["scriptHandler._ScriptFunctionT"]:
 		# on the lock screen are accessible.
 		# Preventing object navigation outside the lock screen
 		# is handled in `api.setNavigatorObject` and by applying `LockScreenObject`.
+		# Routing is here because it may change focus.
+		commands.script_braille_routeTo,
 		commands.script_navigatorObject_current,
 		commands.script_navigatorObject_currentDimensions,
 		commands.script_navigatorObject_toFocus,

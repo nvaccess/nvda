@@ -3707,6 +3707,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		tetherChoices = [x[1] for x in braille.handler.tetherValues]
 		self.tetherList = sHelper.addLabeledControl(tetherListText, wx.Choice, choices=tetherChoices)
 		self.bindHelpEvent("BrailleTether", self.tetherList)
+		self.tetherList.Bind(wx.EVT_CHOICE, self.onTetherToChange)
 		tetherChoice = config.conf["braille"]["tetherTo"]
 		selection = [x.value for x in TetherTo].index(tetherChoice)
 		self.tetherList.SetSelection(selection)
@@ -3758,6 +3759,24 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		)
 		self.bindHelpEvent("BrailleSettingsShowSelection", self.brailleShowSelectionCombo)
 
+		self.brailleRouteReviewCursorAndSystemCaretCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
+			labelText=_(
+				# Translators: This is a label for a combo-box in the Braille settings panel.
+				"Ro&ute review cursor and system caret"
+			),
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["braille", "routeReviewCursorAndSystemCaret"],
+			conf=config.conf,
+		)
+		self.bindHelpEvent(
+			"BrailleSettingsRouteReviewCursorAndSystemCaret",
+			self.brailleRouteReviewCursorAndSystemCaretCombo
+		)
+		tetherChoice = [x.value for x in TetherTo][self.tetherList.GetSelection()]
+		# Setting has no effect when braille is tethered to focus.
+		if tetherChoice == TetherTo.FOCUS.value:
+			self.brailleRouteReviewCursorAndSystemCaretCombo.Disable()
+
 		if gui._isDebug():
 			log.debug("Finished making settings, now at %.2f seconds from start"%(time.time() - startTime))
 
@@ -3783,6 +3802,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		config.conf["braille"]["focusContextPresentation"] = self.focusContextPresentationValues[self.focusContextPresentationList.GetSelection()]
 		self.brailleInterruptSpeechCombo.saveCurrentValueToConf()
 		self.brailleShowSelectionCombo.saveCurrentValueToConf()
+		self.brailleRouteReviewCursorAndSystemCaretCombo.saveCurrentValueToConf()
 
 	def onShowCursorChange(self, evt):
 		self.cursorBlinkCheckBox.Enable(evt.IsChecked())
@@ -3795,6 +3815,11 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 
 	def onShowMessagesChange(self, evt):
 		self.messageTimeoutEdit.Enable(evt.GetSelection() == 1)
+
+	def onTetherToChange(self, evt: wx.CommandEvent) -> None:
+		"""Showss or hides "Route review cursor and system caret" braille setting."""
+		tetherChoice = [x.value for x in TetherTo][evt.GetSelection()]
+		self.brailleRouteReviewCursorAndSystemCaretCombo.Enable(tetherChoice != TetherTo.FOCUS.value)
 
 def showStartErrorForProviders(
 		parent: wx.Window,

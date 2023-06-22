@@ -8,6 +8,7 @@
 # Burman's Computer and Education Ltd.
 
 import itertools
+from _ctypes import COMError
 from typing import (
 	List,
 	Optional,
@@ -3316,6 +3317,45 @@ class GlobalCommands(ScriptableObject):
 		ui.message(msg)
 
 	@script(
+		# Translators: Input help mode message for cycle through
+		# braille route review cursor and system caret command.
+		description=_("Cycle through the braille route review cursor and system caret states"),
+		category=SCRCAT_BRAILLE
+	)
+	def script_braille_cycleRouteReviewCursorAndSystemCaret(self, gesture: inputCore.InputGesture) -> None:
+		"""If braille is not tethered to focus, set next state of braille route review cursor and system caret.
+		State is reported using ui.message.
+		"""
+		# Unavailable if tether is to focus.
+		if TetherTo.FOCUS.value == config.conf["braille"]["tetherTo"]:
+			ui.message(
+				_(
+					# Translators: Gesture is unavailable because braille tether is to focus.
+					"Gesture is unavailable because braille tether is to focus"
+				)
+			)
+			return
+		featureFlag: FeatureFlag = config.conf["braille"]["routeReviewCursorAndSystemCaret"]
+		boolFlag: BoolFlag = featureFlag.enumClassType
+		values = [x.value for x in boolFlag]
+		currentValue = featureFlag.value.value
+		nextValueIndex = (currentValue % len(values)) + 1
+		nextName: str = boolFlag(nextValueIndex).name
+		config.conf["braille"]["routeReviewCursorAndSystemCaret"] = nextName
+		featureFlag = config.conf["braille"]["routeReviewCursorAndSystemCaret"]
+		if featureFlag.isDefault():
+			msg = _(
+				# Translators: Used when reporting braille route review cursor and system caret
+				# state (default behavior).
+				"Braille route review cursor and system caret default (%s)"
+			) % featureFlag.behaviorOfDefault.displayString
+		else:
+			# Translators: Reports which route review cursor and system caret state is used
+			# (disabled or enabled).
+			msg = _("Braille route review cursor and system caret %s") % BoolFlag[nextName].displayString
+		ui.message(msg)
+
+	@script(
 		# Translators: Input help mode message for report clipboard text command.
 		description=_("Reports the text on the Windows clipboard"),
 		category=SCRCAT_SYSTEM,
@@ -3483,8 +3523,74 @@ class GlobalCommands(ScriptableObject):
 		description=_("Routes the cursor to or activates the object under this braille cell"),
 		category=SCRCAT_BRAILLE
 	)
-	def script_braille_routeTo(self, gesture):
+	def script_braille_routeTo(self, gesture: inputCore.InputGesture) -> None:
+		"""Routes cursor to or activates the object under this braille cell."""
+		# Try to ensure that braille message can be dismissed.
+		if braille.handler.buffer is braille.handler.messageBuffer:
+			braille.handler.routeTo(gesture.routingIndex)
+			return
 		braille.handler.routeTo(gesture.routingIndex)
+		# To proceed braille should be tethered to review cursor which means
+		# that tether is automatic (and review cursor is shown in braille)
+		# or tether is to review cursor.
+		# "Route review cursor and system caret" should be also enabled
+		# in braille settings.
+		if (
+			TetherTo.REVIEW.value != config.conf["braille"]["tetherTo"]
+			or not config.conf["braille"]["routeReviewCursorAndSystemCaret"]
+		):
+			return
+		navigatorObject: NVDAObject = api.getNavigatorObject()
+		if not isinstance(navigatorObject, NVDAObject):
+			ui.message(
+				_(
+					# Translators: There is no focusable object e.g. cannot use
+					# tab and shift tab to move to controls.
+					"No focus"
+				)
+			)
+			return
+		# Try to set focus to current navigator object
+		if navigatorObject != api.getFocusObject():
+			# This script is available on the lock screen via getSafeScripts, as such
+			# ensure the navigatorObject does not contain secure information
+			# before setting focus to this object
+			if objectBelowLockScreenAndWindowsIsLocked(navigatorObject):
+				ui.message(gui.blockAction.Context.WINDOWS_LOCKED.translatedMessage)
+				return
+			# When trying to move focus in Word 2019 system menu, setFocus
+			# caused _ctypes.COMError.
+			try:
+				# It is not always possible to move caret, but setting focus can
+				# provide more possibilities such as activating controls with routing
+				# buttons.
+				navigatorObject.setFocus()
+			except COMError:
+				log.debug("Set focus failed.", exc_info=True)
+				return
+		review: textInfos.TextInfo = api.getReviewPosition()
+		# This script is available on the lock screen via getSafeScripts, as such
+		# ensure the review object does not contain secure information
+		# before displaying this object in braille line
+		if objectBelowLockScreenAndWindowsIsLocked(review.obj):
+			ui.reviewMessage(gui.blockAction.Context.WINDOWS_LOCKED.translatedMessage)
+			return
+		# If not in browse mode, try to reduce "no caret" messages.
+		if not api.isObjectInActiveTreeInterceptor(navigatorObject):
+			if not navigatorObject._hasNavigableText:
+				log.debug(f"Navigator object {navigatorObject} is not navigable")
+				return
+		try:
+			review.updateCaret()
+		except NotImplementedError:
+			log.debug("Unable to move caret", exc_info=True)
+			# Translators: Reported when trying to move caret to the position
+			# of the review cursor but there is no caret.
+			ui.message(
+				_(
+					"No caret"
+				)
+			)
 
 	@script(
 		# Translators: Input help mode message for Braille report formatting command.

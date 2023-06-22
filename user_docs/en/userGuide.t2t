@@ -1687,6 +1687,29 @@ Disabling this option may improve readability.
 
 To toggle show selection from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
 
+==== Route review cursor and system caret ====[BrailleSettingsRouteReviewCursorAndSystemCaret]
+: Default
+  Disabled
+: Options
+  Default (Disabled), Enabled, Disabled
+:
+
+This setting determines if system focus/caret should be also tried to be moved
+with a routing button press when [braille tether #BrailleTether] is automatic
+and braille is temporarily tethered to review, or tether is to review cursor.
+Option is disabled by default.
+
+When this option is enabled and braille is tethered to review,
+it is often but not always possible to move both review cursor
+and system focus/caret to the desired position by pressing a routing button.
+It may be especially handy to review text without affecting system caret in edit areas, and move system caret only when needed.
+
+Please note: The option is hidden, and it has no effect unless
+the braille is tethered automatically or to review cursor.
+
+To toggle route review cursor and system caret from anywhere,
+please assign a custom gesture using the [Input Gestures dialog #InputGestures].
+
 +++ Select Braille Display (NVDA+control+a) +++[SelectBrailleDisplay]
 The Select Braille Display dialog, which can be opened by activating the Change... button in the Braille category of the NVDA settings dialog, allows you to select which Braille display NVDA should use for braille output.
 Once you have selected your braille display of choice, you can press Ok and NVDA will load the selected display.
