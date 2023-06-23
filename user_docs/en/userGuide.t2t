@@ -3905,18 +3905,32 @@ Following are the current key assignments for these displays.
 + Advanced Topics +[AdvancedTopics]
 
 ++ Secure Mode ++[SecureMode]
-NVDA can be started in secure mode with the ``-s`` [command line option #CommandLineOptions].
+System administrators may wish to configure NVDA to restrict unauthorized system access.
+NVDA allows the installation of custom add-ons, which can execute arbitrary code, including when NVDA is elevated to administrator privileges.
+NVDA also allows users to execute arbitrary code through the NVDA Python Console.
+NVDA secure mode prevents users from modifying their NVDA configuration, and otherwise limits unauthorized system access.
+
 NVDA runs in secure mode when executed on [secure screens #SecureScreens], unless the ``serviceDebug`` [system wide parameter #SystemWideParameters] is enabled.
+To force NVDA to always start in secure mode, set the ``forceSecureMode`` [system wide parameter #SystemWideParameters].
+NVDA can also be started in secure mode with the ``-s`` [command line option #CommandLineOptions].
 
 Secure mode disables:
 
 - Saving configuration and other settings to disk
 - Saving the gesture map to disk
-- [Configuration Profile #ConfigurationProfiles] features such as creation, deletion, renaming profiles e.t.c.
+- [Configuration Profile #ConfigurationProfiles] features such as creation, deletion, renaming profiles etc.
 - Updating NVDA and creating portable copies
-- The [Python console #PythonConsole]
+- The [Add-on Store #AddonsManager]
+- The [NVDA Python console #PythonConsole]
 - The [Log Viewer #LogViewer] and logging
 -
+
+Installed copies of NVDA store their configuration including add-ons in ``%APPDATA%\nvda``.
+To prevent NVDA users from modifying their configuration or add-ons directly, user access to this folder must also be restricted.
+
+NVDA users often rely on configurating their NVDA profile to suit their needs.
+This may include installing and configuring custom add-ons, which should be vetted independently to NVDA.
+Secure mode freezes changes to NVDA configuration, so please ensure that NVDA is configured appropriately before forcing secure mode.
 
 ++ Secure Screens ++[SecureScreens]
 NVDA runs in [secure mode #SecureMode] when executed on secure screens unless the ``serviceDebug`` [system wide parameter #SystemWideParameters] is enabled.
@@ -3987,8 +4001,9 @@ These values are stored in the registry under one of the following keys:
 
 The following values can be set under this registry key:
 || Name | Type | Possible values | Description |
-| configInLocalAppData | DWORD | 0 (default) to disable, 1 to enable | If enabled, stores the NVDA user configuration in the local application data instead of the roaming application data |
-| serviceDebug | DWORD | 0 (default) to disable, 1 to enable | If enabled, disables [Secure Mode #SecureMode] on [secure screens #SecureScreens]. Due to several major security implications, the use of this option is strongly discouraged |
+| ``configInLocalAppData`` | DWORD | 0 (default) to disable, 1 to enable | If enabled, stores the NVDA user configuration in the local application data instead of the roaming application data |
+| ``serviceDebug`` | DWORD | 0 (default) to disable, 1 to enable | If enabled, disables [Secure Mode #SecureMode] on [secure screens #SecureScreens]. Due to several major security implications, the use of this option is strongly discouraged |
+| ``forceSecureMode`` | DWORD | 0 (default) to disable, 1 to enable | If enabled, forces [Secure Mode #SecureMode] to be enabled when running NVDA. |
 
 + Further Information +[FurtherInformation]
 If you require further information or assistance regarding NVDA, please visit the NVDA web site at NVDA_URL.
