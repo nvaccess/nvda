@@ -7,33 +7,67 @@ Was ist neu in NVDA
 = 2023.2 =
 
 == Neue Features ==
+- Der Store für NVDA-Erweiterungen wurde in NVDA integriert. (#13985)
+  - Durchsuchen, suchen, installieren und aktualisieren von NVDA-Erweiterungen aus der Community.
+  - Inkompatibilitätsprobleme mit veralteten NVDA-Erweiterungen können manuell deaktiviert werden.
+  - Der Eintrag "Erweiterungen verwalten" im Menü Werkzeuge wurde entfernt und durch den Store für NVDA-Erweiterungen ersetzt.
+  - Für weitere Informationen lesen Sie bitte das aktualisierte NVDA-Benutzerhandbuch.
+  -
 - Die Aussprache von Unicode-Symbolen wurde hinzugefügt:
   - Braille-Zeichen (wie z. B. "⠐⠣⠃⠗⠇⠐⠜". (#14548)
   - Mac-Optionstaste "⌥". (#14682)
   -
+- Neue Tastenbefehle:
+  - Ein nicht zugewiesener Tastenbefehl zum Wechseln der verfügbaren Sprachen für die Windows-Texterkennung. (#13036)
+  - Ein nicht zugewiesener Tastenbefehl, um durch die Modi der Meldungen auf der Braillezeile zu wechseln. (#14864)
+  - Ein nicht zugewiesener Tastenbefehl, um die Anzeige zur Auswahl der Braille-Schrift umzuschalten. (#14948)
+  -
+- Tastenbefehle für die Braillezeilen Albatross von Tivomatic Caiku hinzugefügt. (#14844, #15002)
+  - Anzeigen des Dialogfelds für die Braille-Einstellungen
+  - Zugriff auf die Statusleiste
+  - Wechseln der Form des Braille-Cursors
+  - Modus umschalten für die Anzeige von Meldungen in Braille-Schrift
+  - Ein- / Ausschalten des Braille-Cursors
+  - Umschalten des Status der Braillezeilen-Auswahlanzeige
+  -
+- Eine neue Option für die Anzeige auf der Braillezeile zum Umschalten der Anzeige der Auswahlanzeige (Punkte 7 und 8). (#14948)
 - In Mozilla Firefox und Google Chrome teilt NVDA nun mit, wenn ein Steuerelement ein Dialogfeld, ein Gitter, eine Liste oder einen Baum öffnet, wenn der Autor dies mit "aria-haspopup" angegeben hat. (#14709)
 - Es ist nun möglich, bei der Erstellung portabler NVDA-Versionen die Systemvariablen (wie ``%temp%`` oder ``%homepath%``) in der Pfadangabe zu verwenden. (#14680)
 - Unterstützung für das ARIA 1.3-Attribut ``aria-brailleroledescription`` hinzugefügt, das es Webautoren ermöglicht, den Typ eines auf der Braillezeile angezeigten Elements zu überschreiben. (#14748)
 - Wenn hervorgehobener Text in den Dokument-formatierungen aktiviert ist, werden die Farben der Hervorhebungen nun in Microsoft Word angezeigt. (#7396, #12101, #5866)
 - Wenn Farben in den Dokument-Formatierungen aktiviert sind, werden die Hintergrundfarben jetzt in Microsoft Word angezeigt. (#5866)
-- Es wurde ein neuer Befehl im Einstellungsring eingeführt, um die verfügbaren Sprachen für die Windows-Texterkennung zu ermöglichen. (#13036)
 - Wenn man ``Nummerntaste 2`` dreimal drückt, um den numerischen Wert des Zeichens an der Position des NVDA-Cursors abzufragen, wird die Information nun auch auf der Braillezeile angezeigt. (#14826)
-- Tastenbefehle für die braillezeile Tivomatic Caiku Albatross hinzugefügt.
-Es gibt nun Tastenbefehle zum Anzeigen des Dialogfeldes für die Braille-Einstellungen, zum Aufrufen der Statusleiste, zum Wechseln der Braille-Cursor-Form und zum Ein- und Ausschalten des Braille-Cursors. (#14844)
+- NVDA benutzt für die Audio-Ausgabe nun die API für Windows-Audio-Session (WASAPI), was die Reaktionsfähigkeit, Leistung und Stabilität von Sprachausgaben und Sounds von NVDA verbessern kann.
+Diese Funktion kann in den erweiterten Einstellungen deaktiviert werden, falls Audio-Probleme auftreten sollten. (#14697)
+- Wenn Sie Tastenkombinationen in Microsoft Excel verwenden, um Formatierungen wie fett, kursiv, unterstrichen und durchgestrichen für eine Excel-Zelle zu ändern, wird das Ergebnis nun mitgeteilt. (#14923)
+- Unterstützung für die Braillezeile Activator von Help Tech wurde hinzugefügt. (#14917)
+- In Windows 10 Mai 2019 Update und neuer teilt NVDA die Namen virtueller Desktops beim Öffnen, Ändern und Schließen mit. (#5641)
+- Es ist jetzt möglich, die Lautstärke der NVDA-Sounds und Signaltöne an die Lautstärke-Einstellung der verwendeten Stimme anzupassen.
+Diese Option kann in den erweiterten Einstellungen aktiviert werden. (#1409)
+- Sie können die Lautstärke der NVDA-Sounds jetzt separat einstellen.
+Dies kann über den Windows-Lautstärkemixer erfolgen. (#1409)
 - 
 
 
 == Änderungen ==
-- Der LibLouis-Braille-Übersetzer wurde auf [3.25.0 https://github.com/liblouis/liblouis/releases/tag/v3.25.0] aktualisiert. (#14719)
-- Bindestrich- und Strich-Symbole werden immer an den Synthesizer gesendet. (#13830)
+- Der LibLouis-Braille-Übersetzer wurde auf [3.26.0 https://github.com/liblouis/liblouis/releases/tag/v3.26.0] akutalisiert. (#14970)
+- CLDR wurde auf Version 43.0 aktualisiert. (#14918)
+- Bindestrich- und Strich-Symbole werden immer an die Sprachausgabe gesendet. (#13830)
+- Änderungen für LibreOffice:
+  - Bei der Mitteilung zur Position des NVDA-Cursors wird in LibreOffice Writer für LibreOffice-Versionen >= 7.6 nun die aktuelle Position des Cursors bzw. System-cursors relativ zur aktuellen Seite mitgeteilt, ähnlich wie bei Microsoft Word. (#11696)
+  - Die Mitteilung der Statusleiste (z. B. ausgelöst durch ``NVDA+Ende``) funktioniert bei LibreOffice. (#11698)
+  -
 - Bei Entfernungsangaben in Microsoft Word wird nun die in den erweiterten Optionen von Word definierte Einheit berücksichtigt, auch wenn UIA für den Zugriff auf Word-Dokumente verwendet wird. (#14542)
 - Bei der Meldung der Position des NVDA-Cursors wird in LibreOffice Writer für LibreOffice-Versionen >= 7.6 nun die aktuelle Position des normalen Cursor und System-Cursors relativ zur aktuellen Seite mitgeteilt, ähnlich wie bei Microsoft Word. (#11696)
 - NVDA reagiert nun etwas schneller auf Befehle und bei Fokus-Änderungen. (#14701)
 - NVDA reagiert schneller beim Bewegen des Cursors in den Bearbeitungsfunktionen. (#14708)
-- Braillezeilen-Treiber von der ehemaligen Firma Baum: Mehrere Braille-Tastenkombinationen für gängige Tastaturbefehle wie Windows+D, Alt+Tab, etc. hinzugefügt. Eine vollständige Liste finden Sie in der NVDA-Bedienungsanleitung. (#14714)
+- Braillezeilen-Treiber von der ehemaligen Firma Baum: Fügt mehrere Tastenkombinationen für die Ausführung gängiger Befehle wie ``Windows+D``, ``Alt+Tab``, etc. hinzu.
+Eine vollständige Liste finden Sie im NVDA-Benutzerhandbuch. (#14714)
 - Bei Verwendung einer Braillezeile über den Standard-HID-Braille-Treiber kann das D-Pad zur Emulation der Pfeiltasten und der Eingabetaste verwendet werden. Auch die Tasten Leertaste+Punkt1 und Leertaste+Punkt4 sind nun den Pfeiltasten nach oben und nach unten zugeordnet. (#14713)
 - Das Skript für die Meldung der Link-Zieladresse geht nun von der Position des normalen Cursors und des System-Cursors aus und nicht mehr vom Navigator-Objekt. (#14659)
 - Bei der Erstellung portabler NVDA-Versionen ist es nicht mehr erforderlich, dass ein Laufwerksbuchstabe als Teil des absoluten Pfads angegeben werden muss. (#14681)
+- Bei der Sekunden-Anzeige der Uhrzeit in der Taskleiste von Windows, wird diese Einstellung durch die Verwendung von ``NVDA+F12`` zur Anzeige der Uhrzeit berücksichtigt. (#14742)
+- NVDA teilt nun nicht beschriftete Gruppierungen mit, die nützliche Positionsinformationen enthalten, wie z. B. in Menüs aktueller Versionen von Microsoft Office 365. (#14878) 
 -
 
 
@@ -63,7 +97,12 @@ Stattdessen meldet NVDA, dass der Link keine Zieladresse hat. (#14723)
 - Das Ziel der Grafik-Links wird nun in Google Chrome und Microsoft Edge richtig  angezeigt. (#14779)
 - In Windows 11 ist es wieder möglich, die Menüeinträge Mitwirkende und Lizenz im NVDA-Hilfemenü aufzurufen. (#14725)
 - Beim Erzwingen der UIA-Unterstützung mit bestimmten Terminals und Konsolen wurde ein Fehler behoben, der zu einem Einfrieren und einem Spamming der Protokolldatei führte. (#14689)
-- NVDA meldet keine Passwörter in Microsoft Excel und Microsoft Outlook mehr. (#14839)
+- NVDA teilt keine Passwörter in Microsoft Excel und Microsoft Outlook mehr mit. (#14839)
+- NVDA verweigert nicht mehr die Konfiguration nach einem Zurücksetzen der Konfiguration zu speichern. (#13187)
+- Wenn eine temporäre Version über den Launcher gestartet wird, führt NVDA den Benutzer nicht mehr in die Irre, dass er die Konfiguration speichern kann. (#14914)
+- Die Mitteilung über Kurzbefehle der Objekte wurde verbessert. (#10807)
+- Wenn Sie sich schnell durch Zellen in Excel bewegen, teilt NVDA nun seltener die falsche Zelle oder Auswahl mit. (#14983, #12200, #12108)
+- NVDA reagiert jetzt generell etwas schneller auf Befehle und Fokus-Änderungen. (#14928)
 -
 
 
@@ -101,6 +140,10 @@ Ebenso erlaubt die neue Methode ``getCompletionRoutine`` die sichere Umwandlung 
 Stattdessen sollten Funktionen schwach referenzierbar sein. (#14627)
 - Der Import von ``LPOVERLAPPED_COMPLETION_ROUTINE`` aus ``hwIo.base`` ist veraltet.
 Stattdessen besser aus ``hwIo.ioThread`` importieren. (#14627)
+- ``IoThread.autoDeleteApcReference`` ist veraltet.
+Dies wurde in NVDA 2023.1 eingeführt und war nie als Teil der öffentlichen API gedacht.
+Solange er nicht entfernt wird, verhält er sich wie ein No-op, d. h., ein Kontext-Manager, ohne Auswirkung. (#14924)
+- Der Befehl ``gui.MainFrame.onAddonsManagerCommand`` ist veraltet, verwenden Sie stattdessen ``gui.MainFrame.onAddonStoreCommand``. (#13985)
 -
 
 

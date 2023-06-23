@@ -67,17 +67,17 @@ Tietoja tuetuista pistenäytöistä löytyy [Tuetut pistenäytöt #SupportedBrai
 
 NVDA tukee useiden kielten pistekirjoitusjärjestelmiä, lyhennekirjoitus ja tavallinen sekä tietokonemerkistö mukaan lukien.
 
-++ Lisenssi ja tekijänoikeustiedot ++[LicenseAndCopyright]
+++ Käyttöoikeussopimus ja tekijänoikeustiedot ++[LicenseAndCopyright]
 NVDA on copyright NVDA_COPYRIGHT_YEARS NVDA:n tekijät.
 
 NVDA on saatavana GNU GPL 2.0 -lisenssin alaisena, mutta tähän on kaksi poikkeusta.
-Poikkeukset on esitelty lisenssidokumentin kappaleissa "Non-GPL Components in Plugins and Drivers" ja "Microsoft Distributable Code".
+Poikkeukset on esitelty käyttöoikeusdokumentin kappaleissa "Non-GPL Components in Plugins and Drivers" ja "Microsoft Distributable Code".
 NVDA sisältää ja käyttää myös komponentteja, jotka ovat saatavana eri vapaiden ja avoimen lähdekoodin lisenssien alaisina.
 Voit vapaasti jakaa tai muuttaa tätä ohjelmistoa, kunhan toimitat lisenssin sen mukana ja pidät lähdekoodin kaikkien saatavilla.
 Tämä koskee sekä alkuperäisiä että muokattuja ohjelmistokopioita ja kaikkia johdannaisia.
 
-Voit [tarkastella lisenssiä https://www.gnu.org/licenses/old-licenses/gpl-2.0.html] saadaksesi lisätietoja.
-Saat lisätietoja poikkeuksista lisenssidokumentista, jonka voit avata NVDA-valikon Ohje-alivalikosta.
+Voit [tarkastella käyttöoikeussopimusta https://www.gnu.org/licenses/old-licenses/gpl-2.0.html] saadaksesi lisätietoja.
+Saat lisätietoja poikkeuksista käyttöoikeussopimusdokumentista, jonka voit avata NVDA-valikon Ohje-alivalikosta.
 
 
 + Pikaopas +[NVDAQuickStartGuide]
@@ -91,7 +91,7 @@ Katso täydellisestä käyttöoppaasta tarkempia tietoja kustakin aiheesta.
 NVDA on täysin ilmainen kenen tahansa käytettäväksi.
 Lisenssiavaimesta ei tarvitse huolehtia tai maksaa kalliista tilauksesta.
 NVDA:ta päivitetään keskimäärin neljä kertaa vuodessa.
-NVDA:n uusin versio on aina saatavilla [NV Accessin kotisivun NVDA_URL] "Download"-sivulta.
+NVDA:n uusin versio on aina saatavana [NV Accessin kotisivun NVDA_URL] "Download"-sivulta.
 
 NVDA toimii kaikkien uusimpien Windows-versioiden kanssa.
 Katso tarkemmat tiedot kohdasta [Järjestelmävaatimukset #SystemRequirements].
@@ -222,7 +222,7 @@ Varsinaisia komentoja ei suoriteta.
 | Ilmoita kohdistus | ``NVDA+Sarkain`` | ``NVDA+Sarkain`` | Ilmoittaa nykyisen säätimen, jossa järjestelmän kohdistus on. Kahdesti painettaessa tiedot tavataan. |
 | Lue ikkuna | ``NVDA+B`` | ``NVDA+B`` | Lukee koko nykyisen ikkunan (hyödyllinen valintaikkunoissa). |
 | Lue tilarivi | ``NVDA+End`` | ``NVDA+Vaihto+End`` | Lukee tilarivin, mikäli sellainen löytyy. Kahdesti painettaessa tiedot tavataan ja kolmesti painettaessa ne kopioidaan leikepöydälle. |
-| Lue kellonaika | ``NVDA+F12`` | ``NVDA+F12`` | Ilmoittaa kerran painettaessa kellonajan ja kahdesti painettaessa päivämäärän. |
+| Lue kellonaika | ``NVDA+F12`` | ``NVDA+F12`` | Ilmoittaa kerran painettaessa kellonajan ja kahdesti painettaessa päivämäärän. Ajan ja päivämäärän muoto vastaa Windowsin asetuksissa määriteltyä muotoa tehtäväpalkin kellolle. |
 | Lue tekstin muotoilut | ``NVDA+F`` | ``NVDA+F`` | Lukee tekstin muotoilutiedot. Kahdesti painettaessa tiedot näytetään selaustilassa. |
 | Ilmoita linkin kohde | ``NVDA+K`` | ``NVDA+K`` | Puhuu kerran painettaessa kohdistimen tai kohdistuksen kohdalla olevan linkin kohteen URL-osoitteen. Kahdesti painettaessa se näytetään erillisessä ikkunassa tarkempaa tarkastelua varten. |
 
@@ -287,7 +287,7 @@ Se on saatavana seuraavissa muodoissa:
  -
 Muut moduulit sekä alehintainen [NVDA Productivity Bundle https://www.nvaccess.org/product/nvda-productivity-bundle/] ovat saatavana [NV Access Shopista https://www.nvaccess.org/shop/].
 
-NV Access tarjoaa lisäksi [puhelintukea https://www.nvaccess.org/product/nvda-telephone-support/] joko erillisenä tai osana [NVDA Productivity Bundlea https://www.nvaccess.org/product/nvda-productivity-bundle/].
+NV Access tarjoaa lisäksi [puhelintukea https://www.nvaccess.org/product/nvda-telephone-support/] joko erikseen tai osana [NVDA Productivity Bundlea https://www.nvaccess.org/product/nvda-productivity-bundle/].
 Puhelintuki sisältää paikalliset numerot Australiassa ja Yhdysvalloissa.
  
 [Käyttäjien sähköpostiryhmät https://github.com/nvaccess/nvda-community/wiki/Connect] ovat suuri yhteisön avun lähde, samoin kuin [sertifioidut NVDA-asiantuntijat https://certification.nvaccess.org/].
@@ -310,7 +310,8 @@ Käynnistä asennettu versio painamalla OK.
 Jos lisäosia on jo asennettuna, asennusohjelmassa saatetaan myös näyttää varoitus, että yhteensopimattomat lisäosat poistetaan käytöstä.
 Ennen kuin voit painaa Jatka-painiketta, sinun on vahvistettava, että olet ymmärtänyt lisäosien käytöstä poistamisen valitsemalla kyseisen valintaruudun.
 Käytettävissä on myös painike, joka näyttää luettelon käytöstä poistettavista lisäosista.
-Lisätietoja tästä painikkeesta on [Yhteensopimattomien lisäosien valintaikkuna -osiossa. #incompatibleAddonsManager]
+Katso lisätietoja tästä painikkeesta [yhteensopimattomien lisäosien valintaikkuna -osiosta #incompatibleAddonsManager].
+Asennuksen jälkeen voit omalla vastuullasi ottaa yhteensopimattomat lisäosat uudelleen käyttöön [lisäosakaupasta #AddonsManager].
 
 +++ Käytä sisäänkirjautumisen aikana +++[StartAtWindowsLogon]
 Tällä asetuksella voit valita, käynnistyykö NVDA automaattisesti Windowsin kirjautumisikkunassa ennen kuin olet syöttänyt salasanan.
@@ -480,12 +481,17 @@ Kun näppäinohje on käytössä, NVDA kertoo mitä tahansa näppäinkomentoa su
 Komentojen toimintoja ei suoriteta näppäinohjetilassa.
 
 ++ NVDA-valikko ++[TheNVDAMenu]
-NVDA-valikosta voidaan säätää NVDA:n asetuksia, lukea ohjetta, tallentaa ja palauttaa asetukset, muokata puhesanastoja, käyttää lisätyökaluja sekä sulkea NVDA.
+NVDA-valikosta voit säätää NVDA:n asetuksia, lukea ohjetta, tallentaa ja palauttaa asetukset, muokata puhesanastoja, käyttää lisätyökaluja sekä sulkea NVDA:n.
 
-NVDA-valikkoon päästään kaikkialta Windowsista NVDA:n ollessa käynnissä painamalla näppäimistöltä NVDA+N tai kaksoisnapauttamalla kosketusnäyttöä kahdella sormella.
-Valikkoon pääsee myös Windowsin ilmoitusalueella olevasta NVDA:n kuvakkeesta.
-Sitä voidaan joko napsauttaa hiiren oikealla painikkeella tai siirtyä ilmoitusalueelle painamalla Windows+b, menemällä nuolinäppäimillä NVDA-kuvakkeen kohdalle ja painamalla sovellusvalikkonäppäintä, joka löytyy useimmista näppäimistöistä oikeanpuoleisen Ctrl-näppäimen vasemmalta puolelta.
-Kun valikko tulee näkyviin, siinä voidaan liikkua nuolinäppäimillä ja valita haluttu kohta Enterillä.
+NVDA-valikkoon pääsee seuraavasti kaikkialta Windowsista NVDA:n ollessa käynnissä:
+- Painamalla näppäimistöltä ``NVDA+N``.
+- Kaksoisnapauttamalla kosketusnäyttöä kahdella sormella.
+- Siirtymällä ilmoitusalueelle painamalla ``Win+B``, ``Nuoli alas`` -näppäimellä NVDA-kuvakkeen kohdalle ja painamalla ``Enter``.
+- Siirtymällä vaihtoehtoisesti ilmoitusalueelle painamalla ``Win+B``, ``Nuoli alas`` -näppäimellä NVDA-kuvakkeen kohdalle ja avaamalla pikavalikon painamalla ``sovellusnäppäintä``, joka löytyy useimmista näppäimistöistä oikeanpuoleisen Ctrl-näppäimen vierestä.
+Näppäimistöissä, joissa ei ole ``sovellusnäppäintä``, käytetään sen sijaan ``Vaihto+F10``-näppäinyhdistelmää.
+- Napsauttamalla hiiren oikealla painikkeella ilmoitusalueella olevaa NVDA:n kuvaketta.
+-
+Kun valikko tulee näkyviin, voit käyttää nuolinäppäimiä siinä liikkumiseen ja ``Enter``-näppäintä kohteen valitsemiseen.
 
 ++ Peruskomennot ++[BasicNVDACommands]
 %kc:beginInclude
@@ -1290,22 +1296,25 @@ Seuraavat sisäänrakennetut Windows-konsolin pikanäppäimet voivat olla hyödy
 Useimpia asetuksia voidaan muuttaa valintaikkunoista, joihin pääsee NVDA-valikon Asetukset-alivalikosta.
 Monet näistä asetuksista löytyvät usean kategorian [Asetukset-valintaikkunasta #NVDASettings].
 Hyväksy valintaikkunoissa tekemäsi muutokset painamalla OK-painiketta.
-Peru muutokset painamalla Peruuta-painiketta tai Esc-näppäintä.
+Peruuta muutokset painamalla Peruuta-painiketta tai Esc-näppäintä.
 Asetukset tulevat voimaan tietyissä valintaikkunoissa välittömästi painamalla Käytä-painiketta, eikä valintaikkunaa tarvitse sulkea.
 Joitakin asetuksia on mahdollista muuttaa myös pikanäppäimillä, jotka on lueteltu alla olevissa kappaleissa.
 
 ++ Asetukset ++[NVDASettings]
 %kc:settingsSection: || Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kuvaus |
-Asetukset-valintaikkuna sisältää useita asetuksia, joita on mahdollista muuttaa.
-Tässä valintaikkunassa on lista, jossa on valittavissa useita asetuskategorioita.
-Kun valitset kategorian, useita siihen liittyviä asetuksia näytetään.
-Asetukset voidaan ottaa käyttöön painamalla Käytä-painiketta, jolloin valintaikkuna pysyy avoimena.
+NVDA sisältää useita asetuksia, joita voidaan muuttaa asetusvalintaikkunan avulla.
+Valintaikkunassa on luettelo valittavissa olevista asetuskategorioista, jotta muutettavien asetusten löytäminen olisi helpompaa.
+Kun valitset kategorian, kaikki siihen liittyvät asetukset näytetään.
+Liiku kategorioiden välillä siirtymällä ``Sarkain``- tai ``Vaihto+Sarkain``-näppäimillä kategorialuetteloon ja käytä sitten ylä- ja alanuolinäppäimiä siinä liikkumiseen.
+Lisäksi voit siirtyä missä tahansa valintaikkunan kohdassa yhden kategorian eteenpäin painamalla ``Ctrl+Sarkain`` tai taaksepäin painamalla ``Vaihto+Ctrl+Sarkain``.
+
+Kun olet muuttanut yhtä tai useampaa asetusta, muutokset voidaan ottaa käyttöön painamalla Käytä-painiketta, jolloin valintaikkuna pysyy avoimena, mikä mahdollistaa muiden asetusten muuttamisen tai toisen kategorian valitsemisen.
 Paina OK-painiketta, jos haluat tallentaa asetukset ja sulkea valintaikkunan.
 
 Joillakin asetuskategorioilla on oma pikanäppäin.
 Kun sitä painetaan, Asetukset-valintaikkuna avataan kyseisen kategorian kohdalta.
 Kaikkiin kategorioihin ei oletusarvoisesti pääse näppäinkomennoilla.
-Jos haluat päästä kategorioihin, joilla ei ole omia pikanäppäimiä, käytä [Näppäinkomennot-valintaikkunaa #InputGestures] lisätäksesi niille näppäinkomennon tai kosketuseleen.
+Jos käytät usein kategorioita, joilla ei ole omia pikanäppäimiä, voit halutessasi lisätä niille näppäinkomennon tai kosketuseleen [Näppäinkomennot-valintaikkunaa #InputGestures] käyttäen.
 
 Valintaikkunan asetuskategoriat on kuvailtu alla.
  
@@ -1394,8 +1403,8 @@ Tietoja nopeammasta vaihtoehtoisesta tavasta puheparametrien säätämiseen mist
 
 Tämä kategoria sisältää seuraavat asetukset:
 
-==== Muuta syntetisaattoria ====[SpeechSettingsChange]
-Puhe-asetuskategorian ensimmäinen vaihtoehto on Muuta...-painike. Tämä painike avaa [Valitse syntetisaattori #SelectSynthesizer] -valintaikkunan, josta valitaan käytettävä puhesyntetisaattori ja äänilaite.
+==== Vaihda syntetisaattoria ====[SpeechSettingsChange]
+Puhe-asetuskategorian ensimmäinen vaihtoehto on Vaihda...-painike. Tämä painike avaa [Valitse syntetisaattori #SelectSynthesizer] -valintaikkunan, josta valitaan käytettävä puhesyntetisaattori ja äänilaite.
 Valintaikkuna avautuu Asetukset-valintaikkunan päälle.
 Valitse syntetisaattori -valintaikkunassa muutettujen asetusten tallentaminen tai hylkääminen palauttaa takaisin Asetukset-valintaikkunaan.
 
@@ -1583,11 +1592,13 @@ Tällä asetuksella voit valita pistekohdistimen muodon (käytettävät pisteet)
 Asetus ei vaikuta valinnanilmaisimeen, sillä se koostuu aina pisteistä 7 ja 8, ja on vilkkumaton.
 
 ==== Näytä ilmoitukset ====[BrailleSettingsShowMessages]
-This is a combobox that allows you to select if NVDA should display braille messages and when they should disappear automatically.
+Tästä yhdistelmäruudusta voit valita, näyttääkö NVDA ilmoitukset pistenäytöllä ja milloin ne katoavat automaattisesti näkyvistä.
+
+Voit ottaa ilmoitusten näyttämisen käyttöön tai poistaa sen käytöstä mistä tahansa määrittämällä sille pikanäppäimen [Näppäinkomennot-valintaikkunaa #InputGestures] käyttäen.
 
 ==== Ilmoitusten aikakatkaisu (sek) ====[BrailleSettingsMessageTimeout]
 Tämä asetus määrittää, kuinka kauan NVDA:n ilmoitukset näkyvät pistenäytöllä.
-Ilmoitus hylätään välittömästi painettaessa pistenäytön kosketuskohdistinnäppäintä, mutta tulee uudestaan näkyviin painettaessa sellaista näppäintä, joka aiheuttaa ilmoituksen näyttämisen.
+Ilmoitus hylätään heti painettaessa pistenäytön kosketuskohdistinnäppäintä, mutta tulee uudestaan näkyviin painettaessa sellaista näppäintä, joka aiheuttaa ilmoituksen näyttämisen.
 Tämä asetus näytetään vain, jos "Näytä ilmoitukset" -asetukseksi on määritetty "Käytä aikakatkaisua".
 
 %kc:setting
@@ -1654,13 +1665,27 @@ Kohdistuskontekstin näyttäminen -asetusta voidaan vaihtaa mistä tahansa liitt
   Oletus (Käytössä), Käytössä, Ei käytössä
 :
 
-Tämä asetus määrittää, keskeytetäänkö puhe, kun pistenäyttöä vieritetään taakse/eteenpäin.
+Tämä asetus määrittää, keskeytetäänkö puhe vieritettäessä pistenäyttöä eteen/taaksepäin.
 Edelliselle/seuraavalle riville siirtävät komennot keskeyttävät puheen aina.
 
 Jatkuva puhe saattaa häiritä pistekirjoitusta luettaessa.
 Tästä syystä asetus on oletusarvoisesti käytössä, jolloin puhe keskeytetään pistenäyttöä vieritettäessä.
 
 Tämän asetuksen poistaminen käytöstä sallii puheen kuulumisen samalla, kun pistekirjoitusta luetaan.
+
+==== Näytä valinta ====[BrailleSettingsShowSelection]
+: Oletus
+  Käytössä
+: Vaihtoehdot
+  Oletus (Käytössä), Käytössä, Ei käytössä
+:
+
+Tämä asetus määrittää, näytetäänkö valinnan ilmaisin (pisteet 7 ja 8) pistenäytöllä.
+Asetus on oletusarvoisesti käytössä, joten ilmaisin näytetään.
+Valinnan näyttäminen saattaa häiritä lukemista.
+Tämän asetuksen käytöstä poistaminen saattaa parantaa luettavuutta.
+
+Voit ottaa valinnan näyttämisen käyttöön tai poistaa sen käytöstä mistä tahansa määrittämällä sille pikanäppäimen [Näppäinkomennot-valintaikkunaa #InputGestures] käyttäen.
 
 +++ Valitse pistenäyttö (NVDA+Ctrl+A) +++[SelectBrailleDisplay]
 Valitse pistenäyttö -valintaikkunasta, joka voidaan avata painamalla Muuta...-painiketta Asetukset-valintaikkunan Pistekirjoitus-kategoriassa, valitaan, mitä pistenäyttöä NVDA käyttää pistekirjoituksen tulostamiseen.
@@ -2283,15 +2308,28 @@ Tämä asetus ottaa käyttöön toiminnallisuuden, joka yrittää perua vanhentu
 Erityisesti nopea siirtyminen viestien välillä Gmailissa voi Chromea käytettäessä aiheuttaa NVDA:ssa vanhentuneen tiedon puhumista.
 Tämä toiminnallisuus on oletusarvoisesti käytössä NVDA 2021.1:stä alkaen.
 
-==== Kohdistimen siirtymisen aikakatkaisu (ms) ====[AdvancedSettingsCaretMoveTimeout]
-Tällä asetuksella voidaan määrittää, montako millisekuntia NVDA odottaa kohdistimen (lisäyskohdan) siirtymistä muokattavissa tekstisäätimissä.
-Mikäli NVDA näyttää seuraavan kohdistinta virheellisesti, esim. on aina yhden merkin jäljessä tai toistaa rivejä, Tämän arvon kasvattamisesta voi olla apua.
+==== Kohdistimen siirtämisen aikakatkaisu (ms) ====[AdvancedSettingsCaretMoveTimeout]
+Tällä asetuksella voidaan määrittää, montako millisekuntia NVDA odottaa kohdistimen (lisäyskohdan) siirtämistä muokattavissa tekstisäätimissä.
+Mikäli NVDA näyttää seuraavan kohdistinta virheellisesti, esim. on aina yhden merkin jäljessä tai toistaa rivejä, Tämän arvon suurentamisesta voi olla apua.
 
-==== Ilmaise värien läpinäkyvyys ====[ReportTransparentColors]
-Tämä ottaa käyttöön värien läpinäkyvyyden ilmaisemisen, josta on hyötyä lisäosien/sovellusmoduulien kehittäjille tiedon keräämisessä kolmannen osapuolen sovelluksen käyttökokemuksen parantamiseksi.
-Jotkut GDI-sovellukset korostavat tekstiä taustavärillä, jonka NVDA yrittää ilmaista.
+==== Ilmoita läpinäkyvien värien arvot ====[ReportTransparentColors]
+Tämä ottaa käyttöön värien läpinäkyvyyden ilmaisemisen, josta on hyötyä lisäosien/sovellusmoduulien kehittäjille tiedon keräämisessä kolmannen osapuolen sovellusten käyttökokemuksen parantamiseksi.
+Jotkin GDI-sovellukset korostavat tekstiä taustavärillä, jonka NVDA yrittää ilmaista.
 Joissakin tilanteissa tekstin tausta voi olla täysin läpinäkyvä, ja teksti on kerrostettu johonkin muuhun graafisen käyttöliittymän elementtiin.
 Useiden historiallisesti suosittujen käyttöliittymärajapintojen avulla teksti voidaan esittää läpinäkyvällä taustalla, mutta visuaalisesti taustaväri on tarkka.
+
+==== Käytä WASAPIa äänen toistamiseen ====[WASAPI]
+Tämä asetus mahdollistaa äänen toistamisen Windowsin äänentoistorajapinnan (WASAPI) kautta.
+WASAPI on nykyaikaisempi äänikehys, joka saattaa parantaa NVDA:n ääniulostulon reagointia, suorituskykyä ja vakautta sekä puheen että äänien toiston osalta.
+Tämä asetus on oletusarvoisesti käytössä.
+Kun tätä asetusta on muutettu, NVDA on käynnistettävä uudelleen, jotta muutos tulee voimaan.
+
+==== NVDA-äänien voimakkuus mukautuu puheäänen voimakkuuteen ====[SoundVolumeFollowsVoice]
+Kun tämä asetus on käytössä, NVDA:n äänien ja piippausten voimakkuus mukautuu käyttämäsi puheäänen voimakkuusasetukseen.
+Jos vähennät puheäänen voimakkuutta, äänien voimakkuus vähenee.
+Jos vastaavasti lisäät puheäänen voimakkuutta, äänien voimakkuus kasvaa.
+Tällä on vaikutusta vain, kun "Käytä WASAPIa äänen toistamiseen" on otettu käyttöön.
+Tämä asetus on oletusarvoisesti poissa käytöstä.
 
 ==== Virheenkorjauslokin kategoriat ====[AdvancedSettingsDebugLoggingCategories]
 Tämän luettelon valintaruuduilla voidaan ottaa käyttöön tiettyjen kategorioiden virheenkorjausilmoituksia NVDA:n lokissa.
@@ -2522,6 +2560,127 @@ Sisäänkirjautumisen aikana ja käyttäjätilien valvonnan ruuduissa käytettä
 Näihin ei tulisi yleensä koskea.
 Sisäänkirjautumisen aikana ja käyttäjätilien valvonnan ruuduissa käytettävät asetukset voit määrittää muuttamalla ensin asetukset haluamiksesi ollessasi kirjautuneena Windowsiin, tallentamalla asetukset ja painamalla sitten [Asetukset #NVDASettings]-valintaikkunan Yleiset-kategoriassa olevaa "Käytä tallennettuja asetuksia sisäänkirjautumisen aikana ja suojatuissa ruuduissa" -painiketta.
 
++ Lisäosat ja lisäosakauppa +[AddonsManager]
+Lisäosat ovat ohjelmistopaketteja, jotka tarjoavat uusia tai muokattuja toiminnallisuuksia NVDA:lle.
+Niitä kehittävät NVDA-yhteisö ja ulkoiset organisaatiot, kuten kaupalliset toimittajat.
+Lisäosat voivat tehdä seuraavia asioita:
+- Lisätä tai parantaa tiettyjen sovellusten tukea.
+- Lisätä tuen lisäpistenäytöille tai -puhesyntetisaattoreille.
+- Lisätä tai muuttaa NVDA:n ominaisuuksia.
+-
+
+NVDA:n lisäosakauppa mahdollistaa lisäosapakettien selaamisen ja hallinnan.
+Kaikki lisäosat, jotka ovat saatavilla lisäosakaupassa, voidaan ladata ilmaiseksi.
+Jotkut niistä saattavat kuitenkin vaatia lisenssin tai lisäohjelmiston ostamista ennen niiden käyttöä.
+Tällaisia lisäosia ovat esim. kaupalliset puhesyntetisaattorit.
+Jos asennat maksullisia osia sisältävän lisäosan, mutta muutat mielesi sen käytön suhteen, se voidaan helposti poistaa.
+
+Lisäosakauppaan pääsee NVDA-valikon Työkalut-alivalikosta.
+Sen voi myös avata mistä tahansa määrittämällä sille oman näppäinkomennon [Näppäinkomennot-valintaikkunaa #InputGestures] käyttäen.
+
+++ Lisäosien selaaminen ++[AddonStoreBrowsing]
+Lisäosakauppa näyttää avautuessaan lisäosien luettelon.
+Voit siirtyä takaisin tähän luetteloon mistä tahansa lisäosakaupan osiosta painamalla ``Alt+L``.
+Jos et ole aiemmin asentanut lisäosia, lisäosakauppa näyttää luettelon asennettavissa olevista lisäosista.
+Mikäli olet asentanut lisäosia, luettelo näyttää tällä hetkellä asennettuina olevat lisäosat.
+
+Lisäosan tiedot näytetään, kun sen kohdalle siirrytään nuolinäppäimillä ylös ja alas.
+Lisäosilla on niihin liittyviä toimintoja, kuten asenna, ohje, poista käytöstä ja poista, joihin pääsee käsiksi [toimintovalikosta #AddonStoreActions].
+Käytettävissä olevat toiminnot muuttuvat sen mukaan, onko lisäosa asennettu vai ei ja onko se käytössä vai poistettu käytöstä.
+
++++ Lisäosaluettelon näkymät +++[AddonStoreFilterStatus]
+Asennetuille, päivitettävissä ja saatavilla oleville sekä yhteensopimattomille lisäosille on eri näkymät.
+Voit vaihtaa näkymää painamalla ``Ctrl+Sarkain``, joka vaihtaa lisäosaluettelon aktiivista välilehteä.
+Voit myös siirtyä näkymäluetteloon painamalla ``Sarkain``-näppäintä ja liikkua niiden välillä painamalla ``Nuoli vasemmalle``- ja ``Nuoli oikealle`` -näppäimiä.
+
++++ Suodatus käytössä olevien tai käytöstä poistettujen lisäosien perusteella +++[AddonStoreFilterEnabled]
+Normaalisti asennettu lisäosa on "käytössä", mikä tarkoittaa, että se toimii ja on käytettävissä NVDA:ssa.
+Joidenkin asennettujen lisäosien tila saattaa kuitenkin olla "ei käytössä".
+Tämä tarkoittaa, ettei niitä käytetä eivätkä niiden toiminnot ole käytettävissä nykyisen NVDA-istunnon aikana.
+Olet saattanut poistaa lisäosan käytöstä, mikäli se aiheutti ristiriitoja toisen lisäosan tai tietyn sovelluksen kanssa.
+NVDA saattaa myös poistaa tietyt lisäosat käytöstä, jos ne havaitaan yhteensopimattomiksi NVDA:n päivityksen yhteydessä, mutta tästä varoitetaan etukäteen.
+Lisäosat voidaan myös poistaa käytöstä, jos et tarvitse niitä pitkään aikaan, mutta et kuitenkaan halua poistaa niitä, koska odotat tarvitsevasi niitä uudelleen tulevaisuudessa.
+
+Asennettujen ja yhteensopimattomien lisäosien luetteloita voidaan suodattaa niiden "käytössä" ja "ei käytössä" -tilan perusteella.
+Oletusarvoisesti näytetään sekä käytössä olevat että käytöstä poistetut lisäosat.
+
++++ Yhteensopimattomien lisäosien sisällyttäminen +++[AddonStoreFilterIncompatible]
+Saatavilla ja päivitettävissä olevat lisäosat voidaan suodattaa sisältämään asennettavissa olevia [yhteensopimattomia lisäosia #incompatibleAddonsManager].
+
++++ Lisäosien suodattaminen kanavan perusteella +++[AddonStoreFilterChannel]
+Lisäosia voidaan jakaa jopa neljän eri kanavan kautta:
+- Vakaa: Kehittäjä on julkaissut tämän testatun lisäosan NVDA:n julkaistussa versiossa käytettäväksi.
+- Beeta: Tämä lisäosa saattaa tarvita lisätestausta, mutta se on julkaistu käyttäjäpalautteen saamiseksi.
+Suositellaan varhaisille käyttäjille.
+- Kehitys: Tätä kanavaa suositellaan lisäosakehittäjille julkaisemattomien rajapintamuutosten testaamiseen.
+NVDA:n alfatestaajien on ehkä käytettävä lisäosiensa kehitysversioita.
+- Ulkoinen: Lisäosat, jotka on asennettu ulkoisista lähteistä, lisäosakaupan ulkopuolelta.
+-
+
+Saat luettelon johonkin tiettyyn kanavaan kuuluvista lisäosista muuttamalla "Kanava"-suodattimen valintaa.
+
++++ Lisäosien etsiminen +++[AddonStoreFilterSearch]
+Voit etsiä lisäosia käyttämällä "Etsi"-tekstikenttää.
+Pääset siihen painamalla lisäosaluettelossa ``Vaihto+Sarkain`` tai ``Alt+S`` lisäosakaupan missä tahansa osiossa.
+Kirjoita avainsana tai pari etsimästäsi lisäosasta ja siirry sitten takaisin lisäosaluetteloon painamalla ``Sarkain``-näppäintä.
+Lisäosat näytetään, jos etsittävä teksti löytyy näyttönimestä, julkaisijasta tai kuvauksesta.
+
+++ Lisäosien toiminnot ++[AddonStoreActions]
+Lisäosilla on niihin liittyviä toimintoja, kuten asenna, ohje, poista käytöstä ja poista.
+Saat lisäosan toimintovalikon näkyviin painamalla ``Sovellus-`` tai ``Enter-näppäintä``, napsauttamalla hiiren oikealla painikkeella tai kaksoisnapsauttamalla.
+Valittujen lisäosien tietojen kohdassa on myös Toiminnot-painike, joka voidaan aktivoida normaalisti tai painamalla ``Alt+I``.
+
++++ Lisäosien asentaminen +++[AddonStoreInstalling]
+Pelkästään se, että lisäosa on saatavilla NVDA:n Lisäosakaupassa, ei tarkoita, että se olisi hyväksytty tai tarkastettu NV Accessin tai minkään muun tahon toimesta.
+On erittäin tärkeää, että lisäosia asennetaan vain luotettavista lähteistä.
+Lisäosien toiminnallisuus on NVDA:ssa rajoittamatonta.
+Tämä voi ainakin teoriassa tarkoittaa pääsyä henkilökohtaisiin tietoihisi tai jopa koko järjestelmään.
+
+Voit asentaa ja päivittää lisäosia [selaamalla saatavilla olevia lisäosia #AddonStoreBrowsing].
+Valitse lisäosa "Saatavilla olevat lisäosat"- tai "Päivitettävissä olevat lisäosat" -välilehdeltä.
+Käytä sitten päivitä-, asenna- tai korvaa-toimintoa aloittaaksesi asennuksen.
+
+Jos haluat asentaa lisäosan, jonka olet hankkinut lisäosakaupan ulkopuolelta, paina "Asenna ulkoisesta lähteestä" -painiketta.
+Tämä mahdollistaa lisäosapaketin (``.nvda-addon``-tiedosto) etsimisen tietokoneeltasi tai verkosta.
+Asennusprosessi käynnistyy, kun avaat lisäosapaketin.
+
+Jos NVDA on asennettu ja käynnissä järjestelmässäsi, voit myös aloittaa asennuksen avaamalla lisäosatiedoston suoraan selaimesta tai resurssienhallinnasta.
+
+Kun lisäosa asennetaan ulkoisesta lähteestä, NVDA pyytää vahvistamaan asennuksen.
+Kun asennus on suoritettu, NVDA on käynnistettävä uudelleen, jotta lisäosa alkaa toimia, tai voit lykätä uudelleenkäynnistystä, mikäli sinulla on muita lisäosia asennettavana tai päivitettävänä.
+
++++ Lisäosien poistaminen +++[AddonStoreRemoving]
+Poista lisäosa valitsemalla se luettelosta ja käyttämällä Poista-toimintoa.
+NVDA pyytää vahvistamaan poiston.
+Samoin kuin asennuksen yhteydessä, NVDA on käynnistettävä uudelleen, jotta lisäosa poistetaan kokonaan.
+Siihen asti lisäosan tilana näkyy luettelossa "Odottaa poistoa".
+
++++ Lisäosien käytöstä poistaminen ja käyttöön ottaminen +++[AddonStoreDisablingEnabling]
+Poista lisäosa käytöstä "Poista käytöstä" -toiminnolla.
+Ota aiemmin käytöstä poistettu lisäosa uudelleen käyttöön "Ota käyttöön" -toiminnolla.
+Voit poistaa lisäosan käytöstä, mikäli sen tila ilmaisee sen olevan "Käytössä", tai ottaa sen käyttöön, mikäli tilana on "Ei käytössä".
+Jokainen "Ota käyttöön"- ja "Poista käytöstä" -toiminnon käyttökerta muuttaa lisäosan tilaa, joka ilmaisee, mitä tapahtuu, kun NVDA käynnistetään uudelleen.
+Jos lisäosan tila oli aiemmin "Ei käytössä", tilaksi muuttuu "Käytössä uudelleenkäynnistyksen jälkeen".
+Jos tila oli aiemmin "Käytössä", tilaksi vaihtuu "Ei käytössä uudelleenkäynnistyksen jälkeen".
+Aivan kuten lisäosia asennettaessa tai poistettaessa, NVDA on käynnistettävä uudelleen, jotta muutokset tulevat voimaan.
+
+++ Yhteensopimattomat lisäosat ++[incompatibleAddonsManager]
+Jotkin vanhemmat lisäosat eivät ehkä enää ole yhteensopivia käyttämäsi NVDA-version kanssa.
+Mikäli käytät vanhempaa NVDA-versiota, jotkin uudemmatkaan lisäosat eivät välttämättä ole yhteensopivia.
+Yhteensopimattoman lisäosan asennuksen yrittäminen aiheuttaa virheen, jossa selitetään, miksi kyseistä lisäosaa pidetään yhteensopimattomana.
+
+Voit ohittaa yhteensopimattomuuden vanhempien lisäosien osalta omalla vastuullasi.
+Yhteensopimattomat lisäosat eivät välttämättä toimi käyttämäsi NVDA-version kanssa ja voivat aiheuttaa epävakautta tai odottamatonta toimintaa, kuten kaatuilua.
+Voit ohittaa yhteensopivuuden ottaessasi lisäosan käyttöön tai asentaessasi sen.
+Mikäli yhteensopimaton lisäosa aiheuttaa myöhemmin ongelmia, voit poistaa sen käytöstä tai poistaa sen kokonaan.
+
+Jos sinulla on vaikeuksia NVDA:n käytössä ja olet äskettäin päivittänyt tai asentanut lisäosan, erityisesti mikäli se on yhteensopimaton, kannattaa kokeilla käyttää NVDA:ta tilapäisesti kaikki lisäosat käytöstä poistettuina.
+Käynnistä NVDA uudelleen ja poista kaikki lisäosat käytöstä valitsemalla asianmukainen vaihtoehto NVDA:n sulkemisvalintaikkunasta.
+Vaihtoehtoisesti voit käyttää [komentorivivalitsinta #CommandLineOptions] ``--disable-addons``.
+
+Voit selata yhteensopimattomia lisäosia [saatavilla ja päivitettävissä olevien lisäosien välilehtiä #AddonStoreFilterStatus] käyttäen.
+Asennettuina olevia yhteensopimattomia lisäosia voit selata [yhteensopimattomien lisäosien välilehteä #AddonStoreFilterStatus] käyttäen.
+
 + Lisätyökalut +[ExtraTools]
 
 ++ Lokin tarkastelu ++[LogViewer]
@@ -2574,63 +2733,9 @@ Ota pistekirjoituksen tarkastelu käyttöön tai poista se käytöstä mistä ta
 NVDA:n Python-konsoli, joka löytyy NVDA-valikon Työkalut-alivalikosta, on kehitystyökalu, joka on hyödyllinen virheiden etsinnässä, yleisessä NVDA:n sisäisen toiminnan tai sovelluksen saavutettavuushierarkian tutkimisessa.
 Lisätietoja on [NVDA-kehittäjän oppaassa. https://www.nvaccess.org/files/nvda/documentation/developerGuide.html]
 
-++ Lisäosien hallinta ++[AddonsManager]
-Lisäosien hallinnalla, johon pääsee NVDA-valikosta Työkalut-valikon alta kohdasta Lisäosien hallinta, voi asentaa, poistaa, ottaa käyttöön sekä poistaa käytöstä NVDA:n lisäosapaketteja.
-Lisäosat, jotka ovat NVDA-yhteisön toimittamia, saattavat lisätä tai muuttaa ominaisuuksia tai jopa tarjota tuen uusille pistenäytöille tai puhesyntetisaattoreille.
-
-Lisäosien hallinnassa on luettelo, jossa näkyvät kaikki nykyisen käyttäjän asentamat lisäosat.
-Jokaisesta lisäosasta näytetään nimi, tila, versio sekä tekijä, ja lisätietoja kuten kuvausta ja URL-osoitetta voidaan tarkastella valitsemalla haluttu lisäosa ja painamalla Tietoja lisäosasta -painiketta.
-Jos valitulle lisäosalle on saatavana ohje, se voidaan avata painamalla Lisäosan ohje -painiketta.
-
-Verkossa saatavilla olevia lisäosia on mahdollista selata ja ladata painamalla Hae lisäosia -painiketta.
-Tämä painike avaa [NVDA:n lisäosasivun. https://addons.nvda-project.org/]
-Jos NVDA on asennettu ja käynnissä, lisäosan asennus voidaan aloittaa avaamalla se suoraan selaimesta, kuten alla on kuvailtu.
-Muussa tapauksessa lisäosa on tallennettava tietokoneelle ja seurattava alla olevia ohjeita.
-
-Aiemmin haettu lisäosa asennetaan painamalla Asenna-painiketta.
-Avautuvassa ikkunassa etsitään tietokoneelta tai verkosta haluttu lisäosapaketti (.nvda-addon-tiedosto).
-Asennus käynnistyy painamalla Avaa-painiketta.
-
-NVDA kysyy ensin, halutaanko lisäosa varmasti asentaa.
-Koska lisäosien toiminnallisuus on NVDA:n sisällä rajoittamatonta, mikä saattaisi teoriassa tarkoittaa pääsyä henkilökohtaisiin tietoihin tai asennettua versiota käytettäessä jopa koko järjestelmään, on erittäin tärkeää, että lisäosia asennetaan vain luotetuista lähteistä.
-NVDA on käynnistettävä uudelleen lisäosan asentamisen jälkeen, jotta se voidaan ottaa käyttöön.
-Uudelleenkäynnistykseen saakka luettelossa näkyy lisäosan tilana "asenna".
-
-Lisäosa poistetaan valitsemalla se luettelosta ja painamalla Poista-painiketta.
-NVDA kysyy, halutaanko se varmasti poistaa.
-NVDA on, samoin kuin asennettaessa, käynnistettävä uudelleen, jotta lisäosa voidaan poistaa kokonaan.
-Uudelleenkäynnistykseen saakka luettelossa näkyy lisäosan tilana "poista".
-
-Lisäosa poistetaan käytöstä painamalla Poista käytöstä -painiketta.
-Aiemmin käytöstä poistettu lisäosa otetaan käyttöön painamalla Ota käyttöön -painiketta.
-Lisäosa voidaan poistaa käytöstä, mikäli sen tilana on "Käytössä" tai ottaa käyttöön, mikäli tilana on "Ei käytössä".
-Jokainen Ota käyttöön/Poista käytöstä -painikkeen painallus muuttaa lisäosan tilaa, joka ilmaisee, mitä NVDA:n uudelleenkäynnistyessä tapahtuu.
-Jos lisäosa ei ollut aiemmin käytössä, tilana näkyy "Otetaan käyttöön uudelleenkäynnistyksen jälkeen".
-Jos se oli käytössä, tilana näkyy "Poistetaan käytöstä uudelleenkäynnistyksen jälkeen"
-NVDA on käynnistettävä uudelleen, jotta muutokset tulevat voimaan, aivan kuten lisäosia asennettaessa ja poistettaessa.
-
-Valintaikkunassa on myös Sulje-painike, josta lisäosien hallinta voidaan sulkea.
-Jos lisäosia on asennettu tai poistettu tai niiden tilaa on muutettu, NVDA kysyy, halutaanko se käynnistää uudelleen, jotta muutokset tulevat voimaan.
-
-Jotkin vanhemmat lisäosat eivät ehkä ole enää yhteensopivia käytettävän NVDA-version kanssa.
-Vanhempaa NVDA:n versiota käytettäessä myös uudet lisäosat voivat olla yhteensopimattomia.
-Yhteensopimattoman lisäosan asennusta yritettäessä näytetään virheilmoitus, joka kertoo, miksi kyseinen lisäosa ei ole yhteensopiva.
-Tällaisia lisäosia on mahdollista tarkastella yhteensopimattomien lisäosien hallinnassa painamalla "Näytä yhteensopimattomat lisäosat" -painiketta.
-
-Lisäosien hallinta voidaan avata mistä tahansa määrittämällä sille oma näppäinkomento [Näppäinkomennot-valintaikkunaa käyttäen. #InputGestures]
-
-+++ Yhteensopimattomien lisäosien hallinta +++[incompatibleAddonsManager]
-Yhteensopimattomien lisäosien hallinnan, johon pääsee painamalla Lisäosien hallinnassa "Näytä yhteensopimattomat lisäosat" -painiketta, avulla voit tarkastella kaikkia yhteensopimattomia lisäosia sekä niiden yhteensopimattomuuden syytä.
-Lisäosat ovat yhteensopimattomia, kun niitä ei ole päivitetty toimimaan merkittävien NVDA:han tehtyjen muutosten kanssa tai kun ne hyödyntävät ominaisuutta, jota ei ole käytettävissä NVDA:n käytössä olevassa versiossa.
-Yhteensopimattomien lisäosien hallinnassa näytetään lyhyt ilmoitus, joka kertoo sen tarkoituksen sekä NVDA:n version.
-Lisäosat näytetään luettelossa, jossa on seuraavat sarakkeet:
-+ Paketti (lisäosan nimi)
-+ Versio (lisäosan versio)
-+ Yhteensopimattomuuden syy (miksi lisäosa on yhteensopimaton)
-+
-
-Valintaikkunassa on myös "Tietoja lisäosasta..." -painike.
-Sitä painamalla saat näkyviin kaikki lisäosan tiedot, joista on apua otettaessa yhteyttä lisäosan tekijään.
+++ Lisäosakauppa ++
+Tämä avaa [NVDA:n lisäosakaupan #AddonsManager].
+Lisätietoja saat lukemalla perusteellisen [Lisäosat ja lisäosakauppa #AddonsManager] -luvun.
 
 ++ Luo massamuistiversio ++[CreatePortableCopy]
 Tämä vaihtoehto avaa valintaikkunan, jossa voit luoda NVDA:n asennetusta versiosta massamuistiversion.
@@ -3505,88 +3610,162 @@ Tämän takia, ja jotta säilytetään yhteensopivuus muiden taiwanilaisten ruud
 | Vieritä eteenpäin | Laskinnäppäimistön plus | 
 %kc:endInclude
 
-++ Eurobraille Esys/Esytime/Iris ++[Eurobraille]
-NVDA tukee [Eurobraillen https://www.eurobraille.fr/] Esys-, Esytime- ja Iris-pistenäyttöjä.
-Esys- ja Esytime-Evo-laitteiden kytkemiseen voidaan käyttää USB-liitäntää tai Bluetoothia.
-Vanhemmat Esytime-näytöt tukevat vain USB:tä.
-Iris-mallit voidaan kytkeä vain sarjaportin kautta.
-Tämän takia näiden näyttöjen käyttämä portti tulee valita sen jälkeen, kun olet valinnut tämän ajurin [Valitse pistenäyttö #SelectBrailleDisplay] -valintaikkunasta.
-
-Iris- ja Esys-näytöissä on 10-näppäiminen pistekirjoitusnäppäimistö.
+++ Eurobraille ++[Eurobraille]
+NVDA tukee Eurobraillen b.book-, b.note-, Esys-, Esytime- ja Iris-pistenäyttöjä.
+Näissä laitteissa on 10-näppäiminen pistekirjoitusnäppäimistö.
 Kahdesta Väli-näppäimen tavoin sijoitellusta näppäimestä vasemmanpuoleinen vastaa Askelpalautinta ja oikea Väli-näppäintä.
-
+USB-liitäntään kytkettyinä näillä laitteilla on yksi itsenäinen USB-näppäimistö.
+Se voidaan ottaa käyttöön tai poistaa käytöstä "HID-näppäimistösyötteen emulointi" -valintaruudulla, joka löytyy pistekirjoituksen asetuspaneelista.
+Alla kuvailtu pistekirjoitusnäppäimistö on käytössä, kun edellämainittu valintaruutu ei ole valittuna.
 Seuraavassa ovat näiden näyttöjen näppäinkomennot NVDA:ta käytettäessä.
 Katso kuvaukset näppäinten paikoista laitteen käyttöohjeesta.
+
++++ Pistekirjoitusnäppäimistön toiminnot +++[EurobrailleBraille]
 %kc:beginInclude
 || Nimi | Näppäinkomento |
-| Vieritä taaksepäin | switch1-6left, l1 |
-| Vieritä eteenpäin | switch1-6Right, l8 |
-| Siirrä nykyiseen kohdistukseen | switch1-6Left+switch1-6Right, l1+l8 |
-| Siirrä pistesoluun | kosketuskohdistinnäppäimet |
-| Lue tekstin muotoilutiedot pistesolusta | doubleRouting |
-| Siirrä edelliselle riville tarkastelutilassa | joystick1Up |
-| Siirrä seuraavalle riville tarkastelutilassa | joystick1Down |
-| Siirrä edelliseen merkkiin tarkastelutilassa | joystick1Left |
-| Siirrä seuraavaan merkkiin tarkastelutilassa | joystick1Right |
-| Vaihda edelliseen tarkastelutilaan | joystick1Left+joystick1Up |
-| Vaihda seuraavaan tarkastelutilaan | joystick1Right+joystick1Down |
-| Poista viimeksi syötetty pistesolu tai merkki | askelpalautin |
-| Käännä mikä tahansa pistekirjoitussyöte ja paina Enter-näppäintä | askelpalautin+väli |
-| Insert-näppäin | pisteet 3 ja 5+väli, l7 |
-| Delete-näppäin | pisteet 3 ja 6+väli |
-| Home-näppäin | pisteet 1, 2 ja 3+väli, joystick2Left+joystick2Up |
-| End-näppäin | pisteet 4, 5 ja 6+väli, joystick2Right+joystick2Down |
-| Nuoli vasemmalle -näppäin | piste 2+väli, joystick2Left, nuoli vasemmalle |
-| Nuoli oikealle -näppäin | piste 5+väli, joystick2Right, nuoli oikealle |
-| Nuoli ylös -näppäin | piste 1+väli, joystick2Up, nuoli ylös |
-| Nuoli alas -näppäin | piste 6+väli, joystick2Down, nuoli alas |
-| Enter-näppäin | joystick2Center |
-| Page up -näppäin | pisteet 1 ja 3+väli |
-| Page down -näppäin | pisteet 4 ja 6+väli |
-| Laskinnäppäimistön 1 | pisteet 1 ja 6+askelpalautin |
-| Laskinnäppäimistön 2 | pisteet 1, 2 ja 6+askelpalautin |
-| Laskinnäppäimistön 3 | pisteet 1, 4 ja 6+askelpalautin |
-| Laskinnäppäimistön 4 | pisteet 1, 4, 5 ja 6+askelpalautin |
-| Laskinnäppäimistön 5 | pisteet 1, 5 ja 6+askelpalautin |
-| Laskinnäppäimistön 6 | pisteet 1, 2, 4 ja 6+askelpalautin |
-| Laskinnäppäimistön 7 | pisteet 1, 2, 4, 5 ja 6+askelpalautin |
-| Laskinnäppäimistön 8 | pisteet 1, 2, 5 ja 6+askelpalautin |
-| Laskinnäppäimistön 9 | pisteet 2, 4 ja 6+askelpalautin |
-| Laskinnäppäimistön Insert-näppäin | pisteet 3, 4, 5 ja 6+askelpalautin |
-| Laskinnäppäimistön pilkku | piste 2+askelpalautin |
-| Laskinnäppäimistön / | pisteet 3 ja 4+askelpalautin |
-| Laskinnäppäimistön * | pisteet 3 ja 5+askelpalautin |
-| Laskinnäppäimistön miinus | pisteet 3 ja 6+askelpalautin |
-| Laskinnäppäimistön plus | pisteet 2, 3 ja 5+askelpalautin |
-| Laskinnäppäimistön Enter -näppäin | pisteet 3, 4 ja 5+askelpalautin |
-| Esc-näppäin | pisteet 1, 2, 4 ja 5+väli, l2 |
-| Sarkain-näppäin | pisteet 2, 5 ja 6+väli, l3 |
-| Vaihto+Sarkain-näppäinyhdistelmä | pisteet 2, 3 ja 5+väli |
-| Print Screen -näppäin | pisteet 1, 3, 4 ja 6+väli |
-| Pause-näppäin | pisteet 1 ja 4+väli |
-| Sovellusnäppäin | pisteet 5 ja 6+askelpalautin |
-| F1-näppäin | piste 1+askelpalautin |
-| F2-näppäin | piste 1 ja 2+askelpalautin |
-| F3-näppäin | piste 1 ja 4+askelpalautin |
-| F4-näppäin | pisteet 1, 4 ja 5+askelpalautin |
-| F5-näppäin | pisteet 1 ja 5+askelpalautin |
-| F6-näppäin | pisteet 1, 2 ja 4+askelpalautin |
-| F7-näppäin | pisteet 1, 2, 4 ja 5+askelpalautin |
-| F8-näppäin | pisteet 1, 2 ja 5+askelpalautin |
-| F9-näppäin | pisteet 2 ja 4+askelpalautin |
-| F10-näppäin | pisteet 2, 4 ja 5+askelpalautin |
-| F11-näppäin | pisteet 1 ja 3+askelpalautin |
-| F12-näppäin | pisteet 1, 2 ja 3+askelpalautin |
-| Windows-näppäin | pisteet 1, 2, 3 ja 4+askelpalautin |
-| Caps Lock -näppäin | piste 7+askelpalautin, piste 8+askelpalautin |
-| Num Lock -näppäin | piste 3+askelpalautin, piste 6+askelpalautin |
-| Vaihto-näppäin | piste 7+väli, l4 |
-| Ota Vaihto-näppäin käyttöön tai poista se käytöstä | dot1+dot7+space, dot4+dot7+space |
-| Ctrl-näppäin | pisteet 7 ja 8+väli, l5 |
-| Ota Ctrl-näppäin käyttöön tai poista se käytöstä | pisteet 1, 7 ja 8+väli, pisteet 4, 7 ja 8+väli |
-| Alt-näppäin | piste 8+väli, l6 |
-| Ota Alt-näppäin käyttöön tai poista se käytöstä | pisteet 1 ja 8+väli, pisteet 4 ja 8+väli |
-| Ota HID-näppäimistösyötteen emulointi käyttöön tai poista se käytöstä | esytime):l1+joystick1Down, esytime):l8+joystick1Down |
+| Poista viimeksi syötetty pistesolu tai merkki | ``askelpalautin`` |
+| Käännä mikä tahansa pistekirjoitussyöte ja paina Enter-näppäintä | ``askelpalautin+väli`` |
+| Vaihda ``NVDA``-näppäimen tilaa | ``piste 3+piste 5+väli`` |
+| ``Insert``-näppäin | ``pisteet 1, 3 ja 5+väli``, ``pisteet 3, 4 ja 5+väli`` |
+| ``Delete``-näppäin | ``pisteet 3 ja 6+väli`` |
+| ``Home``-näppäin | ``pisteet 1, 2, 3+väli`` |
+| ``End``-näppäin | ``pisteet 4, 5 ja 6+väli`` |
+| ``Vasen nuolinäppäin`` | ``piste 2+väli`` |
+| ``Oikea nuolinäppäin`` | ``piste 5+väli`` |
+| ``Ylänuolinäppäin`` | ``piste 1+väli`` |
+| ``Alanuolinäppäin`` | ``piste 6+väli`` |
+| ``Page up`` -näppäin | ``pisteet 1 ja 3+väli`` |
+| ``Page down`` -näppäin | ``pisteet 4 ja 6+väli`` |
+| ``Laskinnäppäimistön 1`` | ``pisteet 1 ja 6+askelpalautin`` |
+| ``Laskinnäppäimistön 2`` | ``pisteet 1, 2 ja 6+askelpalautin`` |
+| ``Laskinnäppäimistön 3`` | ``pisteet 1, 4 ja 6+askelpalautin`` |
+| ``Laskinnäppäimistön 4`` | ``pisteet 1, 4, 5 ja 6+askelpalautin`` |
+| ``Laskinnäppäimistön 5`` | ``pisteet 1, 5 ja 6+askelpalautin`` |
+| ``Laskinnäppäimistön 6`` | ``pisteet 1, 2, 4 ja 6+askelpalautin`` |
+| ``Laskinnäppäimistön 7`` | ``pisteet 1, 2, 4, 5 ja 6+askelpalautin`` |
+| ``Laskinnäppäimistön 8`` | ``pisteet 1, 2, 5 ja 6+askelpalautin`` |
+| ``Laskinnäppäimistön 9`` | ``pisteet 2, 4 ja 6+askelpalautin`` |
+| ``Laskinnäppäimistön Insert`` | ``pisteet 3, 4, 5 ja 6+askelpalautin`` |
+| ``Laskinnäppäimistön pilkku`` | ``piste 2+askelpalautin`` |
+| ``Laskinnäppäimistön jakomerkki`` | ``pisteet 3 ja 4+askelpalautin`` |
+| ``Laskinnäppäimistön kertomerkki`` | ``pisteet 3 ja 5+askelpalautin`` |
+| ``Laskinnäppäimistön miinus`` | ``pisteet 3 ja 6+askelpalautin`` |
+| ``Laskinnäppäimistön plus`` | ``pisteet 2, 3 ja 5+askelpalautin`` |
+| ``Laskinnäppäimistön Enter`` | ``pisteet 3, 4 ja 5+askelpalautin`` |
+| ``Esc``-näppäin | ``pisteet 1, 2, 4 ja 5+väli``, ``l2`` |
+| ``Sarkain``-näppäin | ``pisteet 2, 5 ja 6+väli``, ``l3`` |
+| ``Vaihto+Sarkain``-näppäinyhdistelmä | ``pisteet 2, 3 ja 5+väli`` |
+| ``PrintScreen``-näppäin | ``pisteet 1, 3, 4 ja 6+väli`` |
+| ``Pause``-näppäin | ``pisteet 1 ja 4+väli`` |
+| ``Sovellusnäppäin`` | ``pisteet 5 ja 6+askelpalautin`` |
+| ``F1``-näppäin | ``piste 1+askelpalautin`` |
+| ``F2``-näppäin | ``pisteet 1 ja 2+askelpalautin`` |
+| ``F3``-näppäin | ``pisteet 1 ja 4+askelpalautin`` |
+| ``F4``-näppäin | ``pisteet 1, 4 ja 5+askelpalautin`` |
+| ``F5``-näppäin | ``pisteet 1 ja 5+askelpalautin`` |
+| ``F6``-näppäin | ``pisteet 1, 2 ja 4+askelpalautin`` |
+| ``F7``-näppäin | ``pisteet 1, 2, 4 ja 5+askelpalautin`` |
+| ``F8``-näppäin | ``pisteet 1, 2 ja 5+askelpalautin`` |
+| ``F9``-näppäin | ``pisteet 2 ja 4+askelpalautin`` |
+| ``F10``-näppäin | ``pisteet 2, 4 ja 5+askelpalautin`` |
+| ``F11``-näppäin | ``pisteet 1 ja 3+askelpalautin`` |
+| ``F12``-näppäin | ``pisteet 1, 2 ja 3+askelpalautin`` |
+| ``Windows``-näppäin | ``pisteet 1, 2, 4, 5 ja 6+väli`` |
+| Vaihda ``Windows``-näppäimen tilaa | ``pisteet 1, 2, 3 ja 4+askelpalautin``, ``pisteet 2, 4, 5 ja 6+väli`` |
+| ``CapsLock``-näppäin | ``piste 7+askelpalautin``, ``piste 8+askelpalautin`` |
+| ``NumLock``-näppäin | ``piste 3+askelpalautin``, ``piste 6+askelpalautin`` |
+| ``Vaihto``-näppäin | ``piste 7+väli`` |
+| Vaihda ``Vaihto``-näppäimen tilaa | ``pisteet 1 ja 7+väli``, ``pisteet 4 ja 7+väli`` |
+| ``Ctrl``-näppäin | ``pisteet 7 ja 8+väli`` |
+| Vaihda ``Ctrl``-näppäimen tilaa | ``pisteet 1, 7 ja 8+väli``, ``pisteet 4, 7 ja 8+väli`` |
+| ``Alt``-näppäin | ``piste 8+väli`` |
+| Vaihda ``Alt``-näppäimen tilaa | ``pisteet 1 ja 8+väli``, ``pisteet 4 ja 8+väli`` |
+%kc:endInclude
+
++++ B.bookin näppäinkomennot +++[Eurobraillebbook]
+%kc:beginInclude
+|| Nimi | Näppäinkomento |
+| Vieritä taaksepäin | ``backward`` |
+| Vieritä eteenpäin | ``forward`` |
+| Siirrä nykyiseen kohdistukseen | ``backward+forward`` | 
+| Siirrä pistesoluun | ``kosketuskohdistinnäppäin`` |
+| ``Vasen nuolinäppäin`` | ``joystick2Left`` |
+| ``Oikea nuolinäppäin`` | ``joystick2Right`` |
+| ``Ylänuolinäppäin`` | ``joystick2Up`` |
+| ``Alanuolinäppäin`` | ``joystick2Down`` |
+| ``Enter``-näppäin | ``joystick2Center`` |
+| ``Esc``-näppäin | ``c1`` |
+| ``Sarkain``-näppäin | ``c2`` |
+| Vaihda ``Vaihto``-näppäimen tilaa | ``c3`` |
+| Vaihda ``Ctrl``-näppäimen tilaa | ``c4`` |
+| Vaihda ``Alt``-näppäimen tilaa | ``c5`` |
+| Vaihda ``NVDA``-näppäimen tilaa | ``c6`` |
+| ``Ctrl+Home``-näppäinyhdistelmä | ``c1+c2+c3`` |
+| ``Ctrl+End``-näppäinyhdistelmä | ``c4+c5+c6`` |
+%kc:endInclude
+
++++ B.noten näppäinkomennot +++[Eurobraillebnote]
+%kc:beginInclude
+|| Nimi | Näppäinkomento |
+| Vieritä taaksepäin | ``leftKeypadLeft`` |
+| Vieritä eteenpäin | ``leftKeypadRight`` |
+| Siirrä pistesoluun | ``routing`` |
+| Lue tekstin muotoilutiedot pistesolusta | ``doubleRouting`` |
+| Siirrä seuraavalle riville | ``leftKeypadDown`` |
+| Vaihda edelliseen tarkastelutilaan | ``leftKeypadLeft+leftKeypadUp`` |
+| Vaihda seuraavaan tarkastelutilaan | ``leftKeypadRight+leftKeypadDown`` |
+| ``Vasen nuolinäppäin`` | ``rightKeypadLeft`` |
+| ``Oikea nuolinäppäin`` | ``rightKeypadRight`` |
+| ``Ylänuolinäppäin`` | ``rightKeypadUp`` |
+| ``Alanuolinäppäin`` | ``rightKeypadDown`` |
+| ``Ctrl+Home``-näppäinyhdistelmä | ``rightKeypadLeft+rightKeypadUp`` |
+| ``Ctrl+End``-näppäinyhdistelmä | ``rightKeypadLeft+rightKeypadUp`` |
+%kc:endInclude
+
++++ Esysin näppäinkomennot +++[Eurobrailleesys]
+%kc:beginInclude
+|| Nimi | Näppäinkomento |
+| Vieritä taaksepäin | ``switch1Left`` |
+| Vieritä eteenpäin | ``switch1Right`` |
+| Siirrä nykyiseen kohdistukseen | ``switch1Center`` |
+| Siirrä pistesoluun | ``routing`` |
+| Lue tekstin muotoilutiedot pistesolusta | ``doubleRouting`` |
+| Siirrä edelliselle riville | ``joystick1Up`` |
+| Siirrä seuraavalle riville | ``joystick1Down`` |
+| Siirrä edelliseen merkkiin | ``joystick1Left`` |
+| Siirrä seuraavaan merkkiin | ``joystick1Right`` |
+| ``Vasen nuolinäppäin`` | ``joystick2Left`` |
+| ``Oikea nuolinäppäin`` | ``joystick2Right`` |
+| ``Ylänuolinäppäin`` | ``joystick2Up`` |
+| ``Alanuolinäppäin`` | ``joystick2Down`` |
+| ``Enter``-näppäin | ``joystick2Center`` |
+%kc:endInclude
+
++++ Esytimen näppäinkomennot +++[EurobrailleEsytime]
+%kc:beginInclude
+|| Nimi | Näppäinkomento |
+| Vieritä taaksepäin | ``l1`` |
+| Vieritä eteenpäin | ``l8`` |
+| Siirrä nykyiseen kohdistukseen | ``l1+l8`` |
+| Siirrä pistesoluun | ``routing`` |
+| Lue tekstin muotoilutiedot pistesolusta | ``doubleRouting`` |
+| Siirrä edelliselle riville | ``joystick1Up`` |
+| Siirrä seuraavalle riville | ``joystick1Down`` |
+| Siirrä edelliseen merkkiin | ``joystick1Left`` |
+| Siirrä seuraavaan merkkiin | ``joystick1Right`` |
+| ``Vasen nuolinäppäin`` | ``joystick2Left`` |
+| ``Oikea nuolinäppäin`` | ``joystick2Right`` |
+| ``Ylänuolinäppäin`` | ``joystick2Up`` |
+| ``Alanuolinäppäin`` | ``joystick2Down`` |
+| ``Enter``-näppäin | ``joystick2Center`` |
+| ``Esc``-näppäin | ``l2`` |
+| ``Sarkain``-näppäin | ``l3`` |
+| Vaihda ``Vaihto``-näppäimen tilaa | ``l4`` |
+| Vaihda ``Ctrl``-näppäimen tilaa | ``l5`` |
+| Vaihda ``Alt``-näppäimen tilaa | ``l6`` |
+| Vaihda ``NVDA``-näppäimen tilaa | ``l7`` |
+| ``Ctrl+Home``-näppäinyhdistelmä | ``l1+l2+l3``, ``l2+l3+l4`` |
+| ``Ctrl+End``-näppäinyhdistelmä | ``l6+l7+l8``, ``l5+l6+l7`` |
 %kc:endInclude
 
 ++ Nattiq nBraille ++[NattiqTechnologies]
@@ -3670,6 +3849,8 @@ Katso laitteen käyttöohjeesta kuvaukset näppäinten paikoista.
 | Lue tilarivi ja siirrä navigointiobjekti siihen | ``f1+end1``, ``f9+end2`` |
 | Vaihda pistekohdistimen muotoa | ``f1+eCursor1``, ``f9+eCursor2`` |
 | Ota pistekohdistin käyttöön tai poista se käytöstä | ``f1+cursor1``, ``f9+cursor2`` |
+| Vaihda Näytä ilmoitukset -asetusta | ``f1+f2``, ``f9+f10`` |
+| Vaihda Näytä valinnan tila -asetusta | ``f1+f5``, ``f9+f14`` |
 | Aktivoi nykyinen navigointiobjekti | ``f7+f8`` |
 | Lue päiväys/aika | ``f9`` |
 | Ilmoittaa akun tilan ja jäljellä olevan ajan, jos verkkovirta ei ole käytössä | ``f10`` |

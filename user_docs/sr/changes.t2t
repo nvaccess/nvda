@@ -12,33 +12,65 @@ Da biste pročitali promene koje su bitne za programere, molimo pogledajte [Engl
 = 2023.2 =
 
 == Nove karakteristike ==
+- Prodavnica dodataka je dodata u NVDA. (#13985)
+  - Istraživanje, pretraga, instalacija i ažuriranje dodataka zajednice.
+  - Ručno učitajte nekompatibilne NVDA dodatke.
+  - Upravljač dodataka je uklonjen i zamenjen prodavnicom dodataka.
+  - za više informacija molimo pročitajte ažurirano korisničko uputstvo.
+  -
 - Dodat izgovor unikodnih simbola:
   - brajevi simboli kao što su "⠐⠣⠃⠗⠇⠐⠜". (#14548)
   - Simbol za Mac taster opcije "⌥". (#14682)
   -
+- Nove ulazne komande:
+  - Komanda bez dodeljene prečice kako biste kružili kroz dostupne jezike za Windows OCR. (#13036)
+  - Komanda bez dodeljene prečice kako biste kružili kroz režime prikazivanja poruka na brajevom redu. (#14864)
+  - Komanda bez dodeljene prečice kako biste uključili ili isključili pokazivač izbora na brajevom redu. (#14948)
+  -
+- Dodate komande za Tivomatic Caiku Albatross brajeve redove. (#14844, #15002)
+  - Prikazivanje dijaloga brajevih podešavanja
+  - Pristup statusnoj traci
+  - Menjanje oblika brajevog kursora
+  - Menjanje režima prikazivanja poruka
+  - Uključivanje i isključivanje brajevog kursora
+  - Uključivanje i isključivanje pokazivača izbora na brajevom redu
+  -
+- Nova brajeva opcija koja vam omogućava da uključite ili isključite pokazivač izbora (tačkice 7 i 8). (#14948)
 - U pretraživačima Mozilla Firefox i Google Chrome, NVDA sada prijavljuje ako kontrola otvara dijalog, mrežu, listu ili stablo ako je autor ovo označio korišćenjem aria-haspopup. (#14709)
 - Sada je moguće koristiti sistemske varijable  (kao što su  ``%temp%`` ili  ``%homepath%``) pri određivanju putanje kada se pravi NVDA prenosna kopija. (#14680)
 - Dodata podrška za ``aria-brailleroledescription`` ARIA 1.3 atribut, koji će dozvoliti web autorima da zamene vrstu elementa koja će se prikazati na brajevom redu. (#14748)
 - Kada je omogućeno prijavljivanje obeleženog teksta u formatiranju dokumenta, obeležene boje se sada prijavljuju u programu Microsoft Word. (#7396, #12101, #5866)
 - Kada je omogućeno prijavljivanje boja u formatiranju dokumenta, boje pozadine se sada prijavljuju u programu  Microsoft Word. (#5866)
-- Dodata nova komanda kako biste kružili kroz dostupne jezike za  Windows OCR. (#13036)
 - Kada pritisnete ``numeričko2`` tri  puta da biste dobili brojčanu vrednost znaka na poziciji preglednog kursora, informacija se takođe prikazuje na brajevom redu. (#14826)
-- Dodate prečice za Tivomatic Caiku Albatross brajeve redove.
-Sada postoje prečice za otvaranje dijaloga brajevih podešavanja, pristup statusnoj traci, kruženje kroz oblike brajevog kursora i uključivanje ili isključivanje brajevog kursora. (#14844)
+- NVDA sada reprodukuje zvukove korišćenjem standarda Windows Audio Session API (WASAPI), što može poboljšati brzinu, performanse i stabilnost NVDA govora i zvukova.
+Ovo se može onemogućiti u naprednim podešavanjima ukoliko se primete problemi sa zvukom. (#14697)
+- Kada se koriste Excel prečice da se menjaju stanja formatiranja kao što su podebljanje, iskošenost, podvlačenje i precrtavanje ćelije u Excelu, rezultat se sada prijavljuje. (#14923)
+- Dodata podrška za brajev red Help Tech Activator. (#14917)
+- u ažuriranju Windowsa 10 iz maja 2019 i novijim, NVDA može izgovarati imena virtuelnih radnih površina kada se otvaraju, menjaju ili zatvaraju. (#5641)
+- Sada je moguće da jačina NVDA zvukova i pištanja prati podešavanje jačine glasa kojeg koristite.
+Ova opcija se može omogućiti u naprednim podešavanjima. (#1409)
+- Sada možete posebno kontrolisati jačinu NVDA zvukova.
+Ovo se može uraditi iz Windows miksera jačine. (#1409)
 - 
 
 
 == Promene ==
-- Ažuriran LibLouis brajev prevodilac na [3.25.0 https://github.com/liblouis/liblouis/releases/tag/v3.25.0]. (#14719)
+- Ažuriran LibLouis brajev prevodilac na [3.26.0 https://github.com/liblouis/liblouis/releases/tag/v3.26.0]. (#14970)
+- CLDR je ažuriran na verziju 43.0. (#14918)
 - Simboli crtica i em- će uvek biti poslati sintetizatoru. (#13830)
+- LibreOffice promene:
+  - Kada se prijavljuje lokacija preglednog kursora, trenutna lokacija kursora se sada prijavljuje u odnosu na trenutnu stranicu u programu LibreOffice Writer za LibreOffice verzije novije od 7.6, slično prijavljivanju u programu Microsoft Word. (#11696)
+  - Izgovor statusne trake (na primer kada se pritisne ``NVDA+end``) radi u paketu LibreOffice. (#11698)
+  -
 - Distanca koju Microsoft Word prijavljuje će sada poštovati mernu jedinicu koja je podešena u naprednim podešavanjima Worda čak i kada se koristi UIA za pristup Word dokumentima. (#14542)
-- Kada se prijavljuje lokacija preglednog kursora, trenutna lokacija kursora se sada prijavljuje u odnosu na trenutnu stranicu u programu LibreOffice Writer za LibreOffice verzije novije od 7.6, slično prijavljivanju u programu Microsoft Word. (#11696)
-- NVDA će sada nešto brže reagovati na komande i promene fokusa. (#14701)
 - NVDA brže reaguje kada se pomera kursor u kontrolama za uređivanje. (#14708)
-- Baum Braille drajver: Dodato nekoliko vezanih brajevih komandi za izvršavanje čestih prečica na tastaturi kao što su windows+d, alt+tab i tako dalje. Molimo pogledajte NVDA korisničko uputstvo za potpunu listu. (#14714)
+- Baum brajev drajver: Dodato nekoliko vezanih brajevih prečica za izvršavanje čestih radnji kao što su ``windows+d``, ``alt+tab`` i tako dalje.
+Molimo pogledajte NVDA korisničko uputstvo za potpunu listu. (#14714)
 - Kada se koristi brajev red uz drajver za HID brajev standard, strelice se sada mogu koristiti za emuliranje strelica tastature i entera. Takođe,  razmak+tačka1 i razmak+tačka4 su sada podešene kao strelice dole i gore. (#14713)
 - Skripta za prijavljivanje odredišta linka sada prijavljuje sa pozicije kursora ili fokusa umesto navigacionog objekta. (#14659)
 - Pravljenje prenosne kopije više ne zahteva da upišete slovo diska kao deo apsolutne putanje. (#14681)
+- Ako je Windows podešen da prijavljuje sekunde na satu sistemske trake, korišćenje prečice ``NVDA+f12`` za prijavljivanje vremena sada prati ovo podešavanje. (#14742)
+- NVDA će sada prijavljivati grupe bez oznake koje imaju korisne informacijje o poziciji, kakve se mogu pronaći u novijim  verzijama Microsoft Office 365 menija. (#14878) 
 -
 
 
@@ -68,6 +100,11 @@ Ovo je ranije radilo samo za Bluetooth serijske portove. (#14524)
 - Na Windowsu 11, ponovo je moguće otvoriti listu saradnika kao i licencu iz NVDA menija pomoći. (#14725)
 - Kada naterate korišćenje UIA podrške u određenim Terminalima i konzolama, ispravljena je greška koja je izazivala rušenje i neprestano pisanje podataka  u dnevniku. (#14689)
 - NVDA sada uspešno izgovara fokusiranje na polja za lozinke u programima Microsoft Excel i Outlook. (#14839)
+- NVDA više neće odbijati da sačuva podešavanja nakon vraćanja podešavanja na podrazumevana. (#13187)
+- Kada se pokreće privremena verzija iz instalacije, NVDA neće korisnicima davati pogrešne informacije da podešavanja mogu biti sačuvana. (#14914)
+- Prijavljivanje tasterskih prečica za objekte je poboljšano. (#10807)
+- Kada se brzo krećete kroz ćelije u Excelu, manja je verovatnoća da će NVDA prijaviti pogrešnu ćeliju ili pogrešan izbor. (#14983, #12200, #12108)
+- NVDA sada nešto brže reaguje na komande i promene fokusa. (#14928)
 -
 
 
