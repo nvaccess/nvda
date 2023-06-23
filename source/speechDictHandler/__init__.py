@@ -157,6 +157,5 @@ It handles case when the synthesizer doesn't support voice setting.
 		baseName = dictFormatUpgrade.createVoiceDictFileName(synth.name, voice)
 	else:
 		baseName=r"{synth}.dic".format(synth=synth.name)
-	voiceDictsPath = dictFormatUpgrade.voiceDictsPath
-	fileName= os.path.join(voiceDictsPath, synth.name, baseName)
+	fileName = os.path.join(WritePaths.voiceDictsDir, synth.name, baseName)
 	dictionaries["voice"].load(fileName)
