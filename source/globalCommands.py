@@ -3528,7 +3528,13 @@ class GlobalCommands(ScriptableObject):
 		if braille.handler.buffer is braille.handler.messageBuffer:
 			braille.handler.routeTo(gesture.routingIndex)
 			return
-		braille.handler.routeTo(gesture.routingIndex)
+		# Lookup error occured in Omnipage 19 when pressing routing button
+		# in "unknown" object.
+		try:
+			braille.handler.routeTo(gesture.routingIndex)
+		except LookupError:
+			log.debug(f"Routing failed.", exc_info=True)
+			return
 		# To proceed braille should be tethered to review cursor which means
 		# that tether is automatic (and review cursor is shown in braille)
 		# or tether is to review cursor.
