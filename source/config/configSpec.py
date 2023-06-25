@@ -210,6 +210,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	reportLineNumber = boolean(default=False)
 	# 0: Off, 1: Speech, 2: Tones, 3: Both Speech and Tones
 	reportLineIndentation = integer(0, 3, default=0)
+	ignoreBlankLinesForReportLineIndentation = boolean(default=False)^M                                             
 	reportParagraphIndentation = boolean(default=False)
 	reportTables = boolean(default=true)
 	includeLayoutTables = boolean(default=False)
