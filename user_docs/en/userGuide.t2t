@@ -1620,6 +1620,34 @@ In this case, braille will not follow the NVDA navigator during object navigatio
 If you want braille to follow object navigation and text review instead, you need to configure braille to be tethered to review.
 In this case, Braille  will not follow system focus and system caret.
 
+==== Move system caret when Routing review cursor ====[BrailleSettingsReviewRoutingMovesSystemCaret]
+: Default
+  Never
+: Options
+  Default (Never), Never, Only when tethered automatically, Always
+:
+
+This setting determines if the system caret should be also tried to be moved
+with a routing button press when [braille tethering #BrailleTether] is set to automatic
+and braille is temporarily tethered to review, or tethering is explicitly set to to the review cursor.
+When the object under the review cursor has no physical caret, it will be focused instead.
+This option is set to Never by default, meaning that routing will never move the caret when routing the review cursor.
+
+When this option is set to Always, and braille is tethered to review either automatically or explicitly,
+pressing a cursor routing key will also move the system caret or focus when supported.
+When the current review mode is [Screen Review #ScreenReview], there is no physical caret.
+In this case, NVDA tries to focus the object under the text you're routing to.
+The same applies to [object review #ObjectReview].
+
+You can also set this option to only move the caret when tethered automatically.
+In that case, pressing a cursor routing key will only move the system caret or focus when NVDA is tethered to the review cursor automatically,
+whereas no movement will occur when manually tethered to the review cursor.
+
+This option is shown only if "[tether braille #BrailleTether]" is set to "Automatically" or "To focus".
+
+To toggle move system caret when Routing review cursor from anywhere,
+please assign a custom gesture using the [Input Gestures dialog #InputGestures].
+
 ==== Read by Paragraph ====[BrailleSettingsReadByParagraph]
 If enabled, braille will be displayed by paragraphs instead of lines.
 Also, the next and previous line commands will move by paragraph accordingly.

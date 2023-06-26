@@ -78,6 +78,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	# Timeout after the message will disappear from braille display
 	messageTimeout = integer(default=4, min=1, max=20)
 	tetherTo = option("auto", "focus", "review", default="auto")
+	reviewRoutingMovesSystemCaret = featureFlag(\
+		optionsEnum="ReviewRoutingMovesSystemCaretFlag", behaviorOfDefault="NEVER")
 	readByParagraph = boolean(default=false)
 	wordWrap = boolean(default=true)
 	focusContextPresentation = option("changedContext", "fill", "scroll", default="changedContext")

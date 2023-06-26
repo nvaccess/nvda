@@ -202,13 +202,13 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 	Events for the widget are handled by special event methods on the object.
 	Commands triggered by input from the user can also be handled by special methods called scripts.
 	See L{ScriptableObject} for more details.
-	
+
 	The only attribute that absolutely must be provided is L{processID}.
 	However, subclasses should provide at least the L{name} and L{role} attributes in order for the object to be meaningful to the user.
 	Attributes such as L{parent}, L{firstChild}, L{next} and L{previous} link an instance to other NVDAObjects in the hierarchy.
 	In order to facilitate access to text exposed by a widget which supports text content (e.g. an editable text control),
 	a L{textInfos.TextInfo} should be implemented and the L{TextInfo} attribute should specify this class.
-	
+
 	There are two main types of NVDAObject classes:
 		* API classes, which provide the core functionality to work with objects exposed using a particular API (e.g. MSAA/IAccessible).
 		* Overlay classes, which supplement the core functionality provided by an API class to handle a specific widget or type of widget.
@@ -247,7 +247,7 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		newAPIClass=cls
 		if 'getPossibleAPIClasses' in newAPIClass.__dict__:
 			for possibleAPIClass in newAPIClass.getPossibleAPIClasses(kwargs,relation=relation):
-				if 'kwargsFromSuper' not in possibleAPIClass.__dict__:  
+				if 'kwargsFromSuper' not in possibleAPIClass.__dict__:
 					log.error("possible API class %s does not implement kwargsFromSuper"%possibleAPIClass)
 					continue
 				if possibleAPIClass.kwargsFromSuper(kwargs,relation=relation):
@@ -364,7 +364,7 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		@rtype: boolean
 		"""
 		return True
- 
+
 	def __eq__(self,other):
 		"""Compaires the objects' memory addresses, their type, and uses L{NVDAObject._isEqual} to see if they are equal.
 		"""
@@ -373,7 +373,7 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		if type(self) is not type(other):
 			return False
 		return self._isEqual(other)
- 
+
 	# As __eq__ was defined on this class, we must provide __hash__ to remain hashable.
 	# The default hash implementation is fine for  our purposes.
 	def __hash__(self):
@@ -415,7 +415,7 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		If a treeInterceptor has not been specifically set,
 		the L{treeInterceptorHandler} is asked if it can find a treeInterceptor containing this object.
 		@return: the treeInterceptor
-		""" 
+		"""
 		if hasattr(self,'_treeInterceptor'):
 			ti=self._treeInterceptor
 			if isinstance(ti,weakref.ref):
@@ -468,7 +468,7 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 
 	def _get_role(self) -> controlTypes.Role:
 		"""The role or type of control this object represents (example: button, list, dialog).
-		"""  
+		"""
 		return controlTypes.Role.UNKNOWN
 
 	#: Type definition for auto prop '_get_roleText'
@@ -500,7 +500,7 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 	def _get_value(self) -> str:
 		"""The value of this object
 		(example: the current percentage of a scrollbar, the selected option in a combo box).
-		"""   
+		"""
 		return ""
 
 	#: Typing information for auto property _get_description
@@ -583,7 +583,7 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		@rtype: str
 		"""
 		raise NotImplementedError
- 
+
 	def doAction(self,index=None):
 		"""Performs an action supported by this object.
 		If index is not given then the default action will be used if it exists.
@@ -729,15 +729,15 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 
 	def _get_presentationalRowNumber(self):
 		"""
-		An optional version of the rowNumber property 
+		An optional version of the rowNumber property
 		used purely for speech and braille presentation if implemented.
 		This is never used for navigational logic.
 		This property should be implemented if the table has virtual content which may not all be loaded at one time.
-		For example, a table with 1000 rows and 1000 columns, 
+		For example, a table with 1000 rows and 1000 columns,
 		yet the table only shows perhaps 10 rows by 10 columns at a time.
-		Although the  rowNumber might be row 2 of 10, 
+		Although the  rowNumber might be row 2 of 10,
 		the user needs to  be told it is perhaps row 500 (taking all virtual rows into account).
-		If the underlying APIs do not distinguish between virtual and physical cell coordinates, 
+		If the underlying APIs do not distinguish between virtual and physical cell coordinates,
 		then this property should not be implemented.
 		@rtype: int
 		"""
@@ -751,15 +751,15 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 
 	def _get_presentationalColumnNumber(self):
 		"""
-		An optional version of the columnNumber property 
+		An optional version of the columnNumber property
 		used purely for speech and braille presentation if implemented.
 		This is never used for navigational logic.
 		This property should be implemented if the table has virtual content which may not all be loaded at one time.
-		For example, a table with 1000 rows and 1000 columns, 
+		For example, a table with 1000 rows and 1000 columns,
 		yet the table only shows perhaps 10 rows by 10 columns at a time.
-		Although the  columnNumber might be column 2 of 10, 
+		Although the  columnNumber might be column 2 of 10,
 		the user needs to  be told it is perhaps column 500 (taking all virtual columns into account).
-		If the underlying APIs do not distinguish between virtual and physical cell coordinates, 
+		If the underlying APIs do not distinguish between virtual and physical cell coordinates,
 		then this property should not be implemented.
 		@rtype: int
 		"""
@@ -783,15 +783,15 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 
 	def _get_presentationalRowCount(self):
 		"""
-		An optional version of the rowCount property 
+		An optional version of the rowCount property
 		used purely for speech and braille presentation if implemented.
 		This is never used for navigational logic.
 		This property should be implemented if the table has virtual content which may not all be loaded at one time.
-		For example, a table with 1000 rows and 1000 columns, 
+		For example, a table with 1000 rows and 1000 columns,
 		yet the table only shows perhaps 10 rows by 10 columns at a time.
-		Although the  rowCount might be 10, 
-		the user needs to  be told the table really has 1000 rows. 
-		If the underlying APIs do not distinguish between virtual and physical cell coordinates, 
+		Although the  rowCount might be 10,
+		the user needs to  be told the table really has 1000 rows.
+		If the underlying APIs do not distinguish between virtual and physical cell coordinates,
 		then this property should not be implemented.
 		@rtype: int
 		"""
@@ -805,15 +805,15 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 
 	def _get_presentationalColumnCount(self):
 		"""
-		An optional version of the columnCount property 
+		An optional version of the columnCount property
 		used purely for speech and braille presentation if implemented.
 		This is never used for navigational logic.
 		This property should be implemented if the table has virtual content which may not all be loaded at one time.
-		For example, a table with 1000 rows and 1000 columns, 
+		For example, a table with 1000 rows and 1000 columns,
 		yet the table only shows perhaps 10 rows by 10 columns at a time.
-		Although the  columnCount might be 10, 
-		the user needs to  be told the table really has 1000 columns. 
-		If the underlying APIs do not distinguish between virtual and physical cell coordinates, 
+		Although the  columnCount might be 10,
+		the user needs to  be told the table really has 1000 columns.
+		If the underlying APIs do not distinguish between virtual and physical cell coordinates,
 		then this property should not be implemented.
 		@rtype: int
 		"""
@@ -857,7 +857,7 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		even if the user moves to a cell in the same row/column.
 		"""
 		raise NotImplementedError
-		
+
 	def _get_recursiveDescendants(self):
 		"""Recursively traverse and return the descendants of this object.
 		This is a depth-first forward traversal.
@@ -1008,11 +1008,17 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		"""
 		return None
 
+	#: Type definition for auto prop '_get_isFocusable'
+	isFocusable: bool
+
 	def _get_isFocusable(self):
 		"""Whether this object is focusable.
 		@rtype: bool
 		"""
 		return controlTypes.State.FOCUSABLE in self.states
+
+	#: Type definition for auto prop '_get_hasFocus'
+	hasFocus: bool
 
 	def _get_hasFocus(self):
 		"""Whether this object has focus.
@@ -1034,7 +1040,7 @@ Tries to force this object to take the focus.
 	def _get_labeledBy(self):
 		"""Retrieves the object that this object is labeled by (example: the static text label beside an edit field).
 		@return: the label object if it has one else None.
-		@rtype: L{NVDAObject} or None 
+		@rtype: L{NVDAObject} or None
 		"""
 		return None
 
@@ -1062,7 +1068,8 @@ Tries to force this object to take the focus.
 		isProtected=(controlTypes.State.PROTECTED in self.states or self.role==controlTypes.Role.PASSWORDEDIT)
 		# #7908: If this object is currently protected, keep it protected for the rest of its lifetime.
 		# The most likely reason it would lose its protected state is because the object is dying.
-		# In this case it is much more secure to assume it is still protected, thus the end of PIN codes will not be accidentally reported. 
+		# In this case it is much more secure to assume it is still protected, thus the end of PIN codes
+		# will not be accidentally reported.
 		if isProtected:
 			self.isProtected=isProtected
 		return isProtected
@@ -1114,7 +1121,7 @@ Tries to force this object to take the focus.
 	isCurrent: controlTypes.IsCurrent  #: type info for auto property _get_isCurrent
 
 	def _get_isCurrent(self) -> controlTypes.IsCurrent:
-		"""Gets the value that indicates whether this object is the current element in a set of related 
+		"""Gets the value that indicates whether this object is the current element in a set of related
 		elements. This maps to aria-current.
 		"""
 		return controlTypes.IsCurrent.NO
@@ -1284,7 +1291,7 @@ This code is executed if a gain focus event is received by this object.
 		vision.handler.handleGainFocus(self)
 
 	def event_loseFocus(self):
-		# Forget the word currently being typed as focus is moving to a new control. 
+		# Forget the word currently being typed as focus is moving to a new control.
 		speech.clearTypedWordBuffer()
 
 	def event_focusExited(self):
