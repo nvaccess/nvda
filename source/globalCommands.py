@@ -3528,8 +3528,7 @@ class GlobalCommands(ScriptableObject):
 		if braille.handler.buffer is braille.handler.messageBuffer:
 			braille.handler.routeTo(gesture.routingIndex)
 			return
-		# Lookup error occured in Omnipage 19 when pressing routing button
-		# in "unknown" object.
+		# Lookup error occurs when pressing routing button in "unknown" object.
 		try:
 			braille.handler.routeTo(gesture.routingIndex)
 		except LookupError:
@@ -3573,6 +3572,11 @@ class GlobalCommands(ScriptableObject):
 			except COMError:
 				log.debug("Set focus failed.", exc_info=True)
 				return
+		# If not in browse mode, try to reduce "no caret" messages.
+		if not api.isObjectInActiveTreeInterceptor(navigatorObject):
+			if not navigatorObject._hasNavigableText:
+				log.debug(f"Navigator object {navigatorObject} is not navigable")
+				return
 		review: textInfos.TextInfo = api.getReviewPosition()
 		# This script is available on the lock screen via getSafeScripts, as such
 		# ensure the review object does not contain secure information
@@ -3580,11 +3584,6 @@ class GlobalCommands(ScriptableObject):
 		if objectBelowLockScreenAndWindowsIsLocked(review.obj):
 			ui.reviewMessage(gui.blockAction.Context.WINDOWS_LOCKED.translatedMessage)
 			return
-		# If not in browse mode, try to reduce "no caret" messages.
-		if not api.isObjectInActiveTreeInterceptor(navigatorObject):
-			if not navigatorObject._hasNavigableText:
-				log.debug(f"Navigator object {navigatorObject} is not navigable")
-				return
 		try:
 			review.updateCaret()
 		except NotImplementedError:
