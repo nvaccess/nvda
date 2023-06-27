@@ -355,36 +355,12 @@ if mutex is None:
 	sys.exit(1)
 
 
-def _forceSecureModeEnabled() -> bool:
-	import winreg
-	try:
-		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\NVDA")
-		if winreg.QueryValueEx(k, "forceSecureMode")[0]:
-			return True
-	except WindowsError:
-		# Expected state by default, forceSecureMode parameter not set
-		pass
-	return False
-
-
-def _serviceDebugEnabled() -> bool:
-	import winreg
-	try:
-		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\NVDA")
-		if winreg.QueryValueEx(k, "serviceDebug")[0]:
-			return True
-	except WindowsError:
-		# Expected state by default, serviceDebug parameter not set
-		pass
-	return False
-
-
-if _forceSecureModeEnabled():
+if NVDAState._forceSecureModeEnabled():
 	globalVars.appArgs.secure = True
 
 
 if _isSecureDesktop():
-	if not _serviceDebugEnabled():
+	if not NVDAState._serviceDebugEnabled():
 		globalVars.appArgs.secure = True
 	globalVars.appArgs.changeScreenReaderFlag = False
 	globalVars.appArgs.minimal = True
