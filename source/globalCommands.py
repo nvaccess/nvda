@@ -623,6 +623,21 @@ class GlobalCommands(ScriptableObject):
 		ui.message(_("Report line indentation {mode}").format(mode=state.displayString))
 
 	@script(
+		# Translators: Input help mode message for toggle ignore blank lines for line indentation reporting command.
+		description=_("Toggles on and off the ignoring of blank lines for line indentation reporting"),
+		category=SCRCAT_DOCUMENTFORMATTING
+	)
+	def script_toggleignoreBlankLinesForReportLineIndentation(self,gesture: inputCore.InputGesture) -> None:
+		ignore = config.conf['documentFormatting']['ignoreBlankLinesForReportLineIndentation']
+		config.conf['documentFormatting']['ignoreBlankLinesForReportLineIndentation'] = not ignore
+		if ignore:
+			# Translators: The message announced when toggling off the ignore blank lines for line indentation reporting document formatting setting.
+			ui.message(_("Ignore blank lines for line indentation reporting off"))
+		else:
+			# Translators: The message announced when toggling on the ignore blank lines for line indentation reporting document formatting setting.
+			ui.message(_("Ignore blank lines for line indentation reporting on"))
+
+	@script(
 		# Translators: Input help mode message for toggle report paragraph indentation command.
 		description=_("Toggles on and off the reporting of paragraph indentation"),
 		category=SCRCAT_DOCUMENTFORMATTING
