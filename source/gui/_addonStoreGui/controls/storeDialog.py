@@ -274,11 +274,11 @@ class AddonStoreDialog(SettingsDialog):
 
 	@property
 	def _titleText(self) -> str:
-		return f"{self.title} - {self._listLabelText}"
+		return f"{self.title} - {self._statusFilterKey.displayString} ({self._channelFilterKey.displayString})"
 
 	@property
 	def _listLabelText(self) -> str:
-		return f"{self._channelFilterKey.displayString} {self._statusFilterKey.displayString}"
+		return f"{self._statusFilterKey.displayString}"
 
 	def _setListLabels(self):
 		self.listLabel.SetLabelText(self._listLabelText)
