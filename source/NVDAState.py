@@ -183,7 +183,7 @@ def _serviceDebugEnabled() -> bool:
 		return False
 
 
-def	_configInLocalAppDataEnabled() -> bool:
+def _configInLocalAppDataEnabled() -> bool:
 	from config import RegistryKey
 	from logHandler import log
 

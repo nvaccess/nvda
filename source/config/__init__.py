@@ -27,7 +27,7 @@ from configobj.validate import Validator
 from logHandler import log
 import logging
 from logging import DEBUG
-import shlobj
+from shlobj import FolderId, SHGetKnownFolderPath
 import baseObject
 import easeOfAccess
 from fileUtils import FaultTolerantFile
@@ -187,9 +187,12 @@ def getInstalledUserConfigPath() -> Optional[str]:
 		log.error("Could not open nvda registry key", exc_info=True)
 		return None
 
-	appDataFolder = shlobj.FolderId.LOCAL_APP_DATA if NVDAState._configInLocalAppDataEnabled() else shlobj.FolderId.ROAMING_APP_DATA
+	if NVDAState._configInLocalAppDataEnabled():
+		configFolder = FolderId.LOCAL_APP_DATA
+	else:
+		configFolder = FolderId.ROAMING_APP_DATA
 
-	configParent = shlobj.SHGetKnownFolderPath(appDataFolder)
+	configParent = SHGetKnownFolderPath(configFolder)
 	try:
 		return os.path.join(configParent, "nvda")
 	except WindowsError:
