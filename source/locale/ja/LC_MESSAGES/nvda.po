@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-16 00:01+0000\n"
-"PO-Revision-Date: 2023-06-16 10:03+0900\n"
+"POT-Creation-Date: 2023-06-23 00:02+0000\n"
+"PO-Revision-Date: 2023-06-26 09:33+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -6963,8 +6963,9 @@ msgstr "{startTime} から {endTime}"
 #. Translators: Part of a message reported when on a calendar appointment with one or more categories
 #. in Microsoft Outlook.
 #, python-brace-format
-msgid "categories {categories}"
-msgstr "カテゴリ {categories}"
+msgid "category {categories}"
+msgid_plural "categories {categories}"
+msgstr[0] "カテゴリ {categories}"
 
 #. Translators: A message reported when on a calendar appointment with category in Microsoft Outlook
 #, python-brace-format
@@ -11237,8 +11238,9 @@ msgstr "レベル%s"
 
 #. Translators: Number of items in a list (example output: list with 5 items).
 #, python-format
-msgid "with %s items"
-msgstr "%s項目"
+msgid "with %s item"
+msgid_plural "with %s items"
+msgstr[0] "%s項目"
 
 #. Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
 #, python-format
@@ -13296,12 +13298,6 @@ msgctxt "line spacing value"
 msgid "at least %.1f pt"
 msgstr "最小値 %.1fポイント"
 
-#. Translators: line spacing of x lines
-#, python-format
-msgctxt "line spacing value"
-msgid "%.1f lines"
-msgstr "%.1f 行"
-
 #. Translators: the title of the message dialog desplaying an MS Word table description.
 msgid "Table description"
 msgstr "テーブルの説明"
@@ -13558,7 +13554,7 @@ msgstr "利用可能なアドオン"
 #. Translators: A selection option to display incompatible add-ons in the add-on store
 msgctxt "addonStore"
 msgid "Installed incompatible add-ons"
-msgstr "互換性のないアドオンをインストールしました"
+msgstr "インストール済みのアドオン(互換性なし)"
 
 #. Translators: The reason an add-on is not compatible.
 #. A more recent version of NVDA is required for the add-on to work.

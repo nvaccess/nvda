@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-16 00:01+0000\n"
-"PO-Revision-Date: 2023-06-16 10:12+0100\n"
+"POT-Creation-Date: 2023-06-23 00:02+0000\n"
+"PO-Revision-Date: 2023-06-26 09:36+0100\n"
 "Last-Translator: Simone Dal Maso <simone.dalmaso@gmail.com>\n"
 "Language-Team: Italian NVDA Community <info@nvda.it>\n"
 "Language: it_IT\n"
@@ -7117,8 +7117,10 @@ msgstr "{startTime} fino a {endTime}"
 #. Translators: Part of a message reported when on a calendar appointment with one or more categories
 #. in Microsoft Outlook.
 #, python-brace-format
-msgid "categories {categories}"
-msgstr "Categorie {categories}"
+msgid "category {categories}"
+msgid_plural "categories {categories}"
+msgstr[0] "Categoria {categories}"
+msgstr[1] "Categorie {categories}"
 
 #. Translators: A message reported when on a calendar appointment with category in Microsoft Outlook
 #, python-brace-format
@@ -11465,8 +11467,10 @@ msgstr "Livello %s"
 
 #. Translators: Number of items in a list (example output: list with 5 items).
 #, python-format
-msgid "with %s items"
-msgstr "Con %s elementi"
+msgid "with %s item"
+msgid_plural "with %s items"
+msgstr[0] "Con %s elemento"
+msgstr[1] "Con %s elementi"
 
 #. Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
 #, python-format
@@ -13553,12 +13557,6 @@ msgctxt "line spacing value"
 msgid "at least %.1f pt"
 msgstr "almeno %.1f pt"
 
-#. Translators: line spacing of x lines
-#, python-format
-msgctxt "line spacing value"
-msgid "%.1f lines"
-msgstr "righe %.1f"
-
 #. Translators: the title of the message dialog desplaying an MS Word table description.
 msgid "Table description"
 msgstr "Descrizione della tabella"
@@ -13893,6 +13891,10 @@ msgstr "Simulazione tastiera HID non disponibile."
 #. Translators: Description of the script that toggles HID keyboard simulation.
 msgid "Toggle HID keyboard simulation"
 msgstr "Abilita o disabilita la simulazione tastiera con protocollo HID"
+
+#~ msgctxt "line spacing value"
+#~ msgid "%.1f lines"
+#~ msgstr "righe %.1f"
 
 #~ msgid "Find Error"
 #~ msgstr "Errore di ricerca"

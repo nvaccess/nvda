@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-16 00:01+0000\n"
+"POT-Creation-Date: 2023-06-23 00:02+0000\n"
 "PO-Revision-Date: 2023-06-17 19:58+0300\n"
 "Last-Translator: Ukrainian NVDA Community <vp88.mobile@gmail.com>\n"
 "Language-Team: Volodymyr Pyrih <vp88.mobile@gmail.com>\n"
@@ -11,8 +11,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
 "Generated-By: pygettext.py 1.5\n"
 "X-Generator: Poedit 3.3.1\n"
 "X-Poedit-Bookmarks: -1,-1,643,-1,-1,-1,-1,-1,2209,-1\n"
@@ -7059,8 +7059,11 @@ msgstr "{startTime} до {endTime}"
 #. Translators: Part of a message reported when on a calendar appointment with one or more categories
 #. in Microsoft Outlook.
 #, python-brace-format
-msgid "categories {categories}"
-msgstr "категорії {categories}"
+msgid "category {categories}"
+msgid_plural "categories {categories}"
+msgstr[0] "категорія {categories}"
+msgstr[1] "категорії {categories}"
+msgstr[2] "категорій {categories}"
 
 #. Translators: A message reported when on a calendar appointment with category in Microsoft Outlook
 #, python-brace-format
@@ -11373,8 +11376,11 @@ msgstr "рівень %s"
 
 #. Translators: Number of items in a list (example output: list with 5 items).
 #, python-format
-msgid "with %s items"
-msgstr "із %s елементів"
+msgid "with %s item"
+msgid_plural "with %s items"
+msgstr[0] "із %s елемента"
+msgstr[1] "із %s елементів"
+msgstr[2] "із %s елементів"
 
 #. Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
 #, python-format
@@ -13462,12 +13468,6 @@ msgctxt "line spacing value"
 msgid "at least %.1f pt"
 msgstr "принаймні %.1f pt"
 
-#. Translators: line spacing of x lines
-#, python-format
-msgctxt "line spacing value"
-msgid "%.1f lines"
-msgstr "%.1f рядки"
-
 #. Translators: the title of the message dialog desplaying an MS Word table description.
 msgid "Table description"
 msgstr "Опис таблиці"
@@ -13798,6 +13798,10 @@ msgstr "Емуляція HID-клавіатури недоступна."
 #. Translators: Description of the script that toggles HID keyboard simulation.
 msgid "Toggle HID keyboard simulation"
 msgstr "Перемикає емуляцію HID-клавіатури"
+
+#~ msgctxt "line spacing value"
+#~ msgid "%.1f lines"
+#~ msgstr "%.1f рядки"
 
 #~ msgid "Find Error"
 #~ msgstr "Помилка пошуку"

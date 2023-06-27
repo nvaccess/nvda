@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-16 00:01+0000\n"
-"PO-Revision-Date: 2023-06-18 20:14+0530\n"
+"POT-Creation-Date: 2023-06-23 00:02+0000\n"
+"PO-Revision-Date: 2023-06-25 19:05+0530\n"
 "Last-Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language-Team: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language: ta\n"
@@ -12,6 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Original Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "X-Generator: Poedit 1.5.7\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 msgid "Native input"
@@ -3223,8 +3224,8 @@ msgid ""
 "Sets the navigator object to the current object under the mouse pointer and "
 "speaks it"
 msgstr ""
-"வழிசெலுத்திப் பொருளை தற்போதைய சொடுக்கியின் குறிமுள்ளின் கீழிருக்கும் பொருளுடன் "
-"உட்பொருத்தி, பிறகு அதைப் படித்திடும்"
+"வழிசெலுத்திப் பொருளை தற்போதைய சொடுக்கியின் குறிமுள்ளின் கீழிருக்கும் பொருளுடன் பொருத்தி, "
+"பிறகு அதைப் படித்திடும்"
 
 #. Translators: Reported when attempting to move the navigator object to the object under mouse pointer.
 msgid "Move navigator object to mouse"
@@ -4087,8 +4088,8 @@ msgstr "என்விடிஏ உருவாக்கத்தில் ப�
 msgid ""
 "Activates the Add-on Store to browse and manage add-on packages for NVDA"
 msgstr ""
-"என்விடிஏவிற்கான கூட்டுக்கூறுத் தொகுதிகளை உலாவிக் கண்டறியவும், அவைகளை மேலாளவும், "
-"என்விடிஏ கூட்டுக்கூறு அங்காடி உரையாடலை இயக்குகிறது"
+"என்விடிஏவிற்கான நீட்சிநிரல்த் தொகுதிகளை உலாவிக் கண்டறியவும், அவைகளை மேலாளவும், என்விடிஏ "
+"நீட்சிநிரல் அங்காடி உரையாடலை இயக்குகிறது"
 
 #. Translators: Input help mode message for toggle speech viewer command.
 msgid ""
@@ -4400,12 +4401,12 @@ msgid ""
 "Reloads app modules and global plugins without restarting NVDA, which can be "
 "Useful for developers"
 msgstr ""
-"என்விடிஏவை மறுதுவக்காமல், பயன்பாட்டு நிரற்கூறுகளையும், முழுதளாவிய உட்பொருத்திகளையும் "
+"என்விடிஏவை மறுதுவக்காமல், பயன்பாட்டு நிரற்கூறுகளையும், முழுதளாவிய செருகுநிரல்களையும் "
 "மீளேற்றுகிறது. இது என்விடிஏ மேம்படுத்துநர்களுக்குப் பயனுள்ளதாக இருக்கும்"
 
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
-msgstr "உட்பொருத்திகள் மீளேற்றப்பட்டன"
+msgstr "செருகுநிரல்கள் மீளேற்றப்பட்டன"
 
 #. Translators: input help mode message for Report destination URL of a link command
 msgid ""
@@ -4423,7 +4424,7 @@ msgstr "தொடுப்பிற்கு வெளிப்படையா�
 #. Translators: Informs the user that the window contains the destination of the
 #. link with given title
 msgid "Destination of: {name}"
-msgstr "{name} தொடுப்பின் இலக்கு"
+msgstr "\"{name}\" தொடுப்பின் இலக்கு"
 
 #. Translators: Tell user that the command has been run on something that is not a link
 msgid "Not a link."
@@ -4669,7 +4670,7 @@ msgstr "புதிதாக என்ன? (&N)"
 
 #. Translators: A file extension label for NVDA add-on package.
 msgid "NVDA add-on package"
-msgstr "என்விடிஏ கூட்டுக்கூறுத் தொகுதி "
+msgstr "என்விடிஏ நீட்சிநிரல்த் தொகுதி "
 
 #. Translators: This is the name of the back key found on multimedia keyboards for controlling the web-browser.
 msgid "back"
@@ -6424,7 +6425,7 @@ msgstr "என்விடிஏ பதிப்பு {version} தரவிற
 #. Translators: The label of a button to review add-ons prior to NVDA update.
 #. Translators: The label of a button to launch the add-on compatibility review dialog.
 msgid "&Review add-ons..."
-msgstr "கூட்டுக்கூறுகளைச் சீராய்க... (&R)"
+msgstr "நீட்சிநிரல்களைச் சீராய்க... (&R)"
 
 #. Translators: The label of a button to install a pending NVDA update.
 #. {version} will be replaced with the version; e.g. 2011.3.
@@ -6583,8 +6584,8 @@ msgid ""
 "Cannot install NVDA add-on from {path}.\n"
 "You must be running NVDA to be able to install add-ons."
 msgstr ""
-"இவ்விடத்திலிருந்து என்விடிஏவின் கூட்டுக்கூறை நிறுவ இயலாது: {path}.\n"
-"கூட்டுக்கூறுகளை நிறுவ, தாங்கள் என்விடிஏவை இயக்கத்தில் வைத்திருக்க வேண்டும். "
+"இவ்விடத்திலிருந்து என்விடிஏவின் நீட்சிநிரலை நிறுவ இயலாது: {path}.\n"
+"நீட்சிநிரல்களை நிறுவ, தாங்கள் என்விடிஏவை இயக்கத்தில் வைத்திருக்க வேண்டும். "
 
 # Thanks: https://www.ta.wiktionary.org/
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
@@ -6704,66 +6705,63 @@ msgid "pattern"
 msgstr "வடிவவிதம்"
 
 #. Translators: A title of the dialog shown when fetching add-on data from the store fails
-#, fuzzy
 msgctxt "addonStore"
 msgid "Add-on data update failure"
-msgstr "இணக்கமற்றக் கூட்டுக்கூறு"
+msgstr "நீட்சிநிரல்த் தரவின் இற்றாக்கத் தோல்வி"
 
 #. Translators: A message shown when fetching add-on data from the store fails
 msgctxt "addonStore"
 msgid "Unable to fetch latest add-on data for compatible add-ons."
-msgstr "இணக்கமானக் கூட்டுக்கூறுகளுக்கான அண்மைய கூட்டுக்கூறுத் தரவினை எடுக்க இயலவில்லை"
+msgstr "இணக்கமானக் நீட்சிநிரல்களுக்கான அண்மைய நீட்சிநிரல்த் தரவினை எடுக்க இயலவில்லை"
 
 #. Translators: A message shown when fetching add-on data from the store fails
 msgctxt "addonStore"
 msgid "Unable to fetch latest add-on data for incompatible add-ons."
-msgstr "இணக்கமற்றக் கூட்டுக்கூறுகளுக்கான அண்மைய கூட்டுக்கூறுத் தரவினை எடுக்க இயலவில்லை"
+msgstr "இணக்கமற்றக் நீட்சிநிரல்களுக்கான அண்மைய நீட்சிநிரல்த் தரவினை எடுக்க இயலவில்லை"
 
 #. Translators: The message displayed when an error occurs when opening an add-on package for adding.
 #. The %s will be replaced with the path to the add-on that could not be opened.
-#, fuzzy
 msgctxt "addonStore"
 msgid ""
 "Failed to open add-on package file at {filePath} - missing file or invalid "
 "file format"
 msgstr ""
-"%s கூட்டுக்கூறுத் தொகுப்பினைத் திறப்பதில் தோல்வி - இல்லாத கோப்பு அல்லது ஏற்க முடியாத "
-"வடிவூட்டம்"
+"{filePath} தடத்திலிருக்கும் நீட்சிநிரல்த் தொகுப்பினைத் திறப்பதில் தோல்வி - இல்லாத கோப்பு "
+"அல்லது ஏற்க முடியாத வடிவூட்டம்"
 
 #. Translators: The message displayed when an add-on is not supported by this version of NVDA.
 #. The %s will be replaced with the path to the add-on that is not supported.
-#, fuzzy, python-format
+#, python-format
 msgctxt "addonStore"
 msgid "Add-on not supported %s"
-msgstr "பின்புல ஒலியைத்் தாழ்த்தும் வசதிக்கு ஆதரவில்லை"
+msgstr "நீட்சிநிரல்க்கு ஆதரவில்லை %s"
 
 #. Translators: The message displayed when an error occurs when installing an add-on package.
 #. The %s will be replaced with the path to the add-on that could not be installed.
-#, fuzzy, python-format
+#, python-format
 msgctxt "addonStore"
 msgid "Failed to install add-on from %s"
-msgstr "%s தொகுப்பில் இருக்கும் கூட்டுக்கூறின் நிறுவுதல் தோல்வியடைந்தது"
+msgstr "%s தடத்தில் இருக்கும் நீட்சிநிரலின் நிறுவுதல் தோல்வியடைந்தது"
 
 #. Translators: A title for a dialog notifying a user of an add-on download failure.
-#, fuzzy
 msgctxt "addonStore"
 msgid "Add-on download failure"
-msgstr "இணக்கமற்றக் கூட்டுக்கூறு"
+msgstr "நீட்சிநிரல் நிறுவுதலின் தோல்வி"
 
 #. Translators: A message to the user if an add-on download fails
 msgctxt "addonStore"
 msgid "Unable to download add-on: {name}"
-msgstr "{name} கூட்டுக்கூறினைத் தரவிறக்க இயலவில்லை"
+msgstr "{name} நீட்சிநிரலினைத் தரவிறக்க இயலவில்லை"
 
 #. Translators: A message to the user if an add-on download fails
 msgctxt "addonStore"
 msgid "Unable to save add-on as a file: {name}"
-msgstr "{name} கூட்டுக்கூறினை ஒரு கோப்பாக சேமிக்க இயலவில்லை"
+msgstr "{name} நீட்சிநிரலினை ஒரு கோப்பாக சேமிக்க இயலவில்லை"
 
 #. Translators: A message to the user if an add-on download is not safe
 msgctxt "addonStore"
 msgid "Add-on download not safe: checksum failed for {name}"
-msgstr "{name} கூட்டுக்கூறு சேமிக்கப்படவில்லை. சரிகாண்பதில் தோல்வி."
+msgstr "{name} நீட்சிநிரல் சேமிக்கப்படவில்லை. சரிகாண்பதில் தோல்வி."
 
 msgid "Display"
 msgstr "காட்சியமைவு"
@@ -7010,8 +7008,10 @@ msgstr "{startTime} முதல் {endTime} வரை"
 
 #. Translators: Part of a message reported when on a calendar appointment with one or more categories
 #. in Microsoft Outlook.
-msgid "categories {categories}"
-msgstr "வகைமைகள் {categories}"
+msgid "category {categories}"
+msgid_plural "categories {categories}"
+msgstr[0] "வகைமை {categories}"
+msgstr[1] "வகைமைகள் {categories}"
 
 #. Translators: A message reported when on a calendar appointment with category in Microsoft Outlook
 msgid "Appointment {subject}, {time}"
@@ -8694,9 +8694,8 @@ msgid "Braille viewer"
 msgstr "பிரெயில் தோற்றம்"
 
 #. Translators: The label of a menu item to open the Add-on store
-#, fuzzy
 msgid "Add-on &store..."
-msgstr "கூட்டுக்கூறு உதவி (&H)"
+msgstr "நீட்சிநிரல் அங்காடி... (%S)"
 
 #. Translators: The label for the menu item to open NVDA Python Console.
 msgid "Python console"
@@ -8716,7 +8715,7 @@ msgstr "COM பதிவுப் பிழை நீக்கியை இய�
 
 #. Translators: The label for the menu item to reload plugins.
 msgid "Reload plugins"
-msgstr "உட்பொருத்திகளை மீளேற்றம் செய்க (&R)"
+msgstr "செருகுநிரல்களை மீளேற்றுக (&R)"
 
 #. Translators: The label for the Tools submenu in NVDA menu.
 msgid "Tools"
@@ -8853,7 +8852,7 @@ msgid ""
 "Changes were made to add-ons. You must restart NVDA for these changes to "
 "take effect. Would you like to restart now?"
 msgstr ""
-"கூட்டுக்கூறுகளில் மாற்றங்கள் செய்யப்பட்டுள்ளன. மாற்றங்களைச் செயலிற்குக் கொண்டு வர என்விடிஏவை "
+"நீட்சிநிரல்களில் மாற்றங்கள் செய்யப்பட்டுள்ளன. மாற்றங்களைச் செயலிற்குக் கொண்டு வர என்விடிஏவை "
 "மறுதுவக்க வேண்டும். இப்பொழுதே மறுதுவக்க விரும்புகிறீர்களா?"
 
 #. Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed.
@@ -8864,7 +8863,7 @@ msgstr "என்விடிஏவை மறுதுவக்குக"
 #. more information about the addon
 #. Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
 msgid "&About add-on..."
-msgstr "கூட்டுக்கூறு குறித்து... (&A)"
+msgstr "நீட்சிநிரல் குறித்து... (&A)"
 
 #. Translators: A button in the addon installation warning dialog which allows the user to agree to installing
 #. the add-on
@@ -8889,11 +8888,11 @@ msgstr "சரி"
 
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
-msgstr "கூட்டுக்கூறு மேலாளர்"
+msgstr "நீட்சிநிரல் மேலாளர்"
 
 #. Translators: The title of the Addons Dialog when add-ons are disabled
 msgid "Add-ons Manager (add-ons disabled)"
-msgstr "கூட்டுக்கூறு மேலாளர் (கூட்டுக்கூறுகள் முடக்கப்பட்டுள்ளன)"
+msgstr "நீட்சிநிரல் மேலாளர் (நீட்சிநிரல்கள் முடக்கப்பட்டுள்ளன)"
 
 #. Translators: A message in the add-ons manager shown when add-ons are globally disabled.
 msgid ""
@@ -8901,13 +8900,13 @@ msgid ""
 "disabled state, and install or uninstall add-ons. Changes will not take "
 "effect until after NVDA is restarted."
 msgstr ""
-"எல்லாக் கூட்டுக்கூறுகளும் முடக்கப்பட்ட நிலையில் என்விடிஏ துவக்கப்பட்டது. முடுக்கப்பட்ட, "
-"முடக்கப்பட்ட நிலையை மாற்றியமைப்பதுடன், கூட்டுக்கூறுகளை நிறுவலாம், அல்லது நிறுவு நீக்கம் "
+"எல்லாக் நீட்சிநிரல்களும் முடக்கப்பட்ட நிலையில் என்விடிஏ துவக்கப்பட்டது. முடுக்கப்பட்ட, "
+"முடக்கப்பட்ட நிலையை மாற்றியமைப்பதுடன், நீட்சிநிரல்களை நிறுவலாம், அல்லது நிறுவு நீக்கம் "
 "செய்யலாம். என்விடிஏ மறுதுவக்கப்படும் வரை மாற்றங்கள் செயலிற்கு வராது. "
 
 #. Translators: the label for the installed addons list in the addons manager.
 msgid "Installed Add-ons"
-msgstr "நிறுவப்பட்டுள்ள கூட்டுக்கூறுகள்"
+msgstr "நிறுவப்பட்டுள்ள நீட்சிநிரல்கள்"
 
 #. Translators: The label for a column in add-ons list used to identify add-on package name (example: package is OCR).
 msgid "Package"
@@ -8928,11 +8927,11 @@ msgstr "படைப்பாளர்"
 
 #. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
 msgid "Add-on &help"
-msgstr "கூட்டுக்கூறு உதவி (&H)"
+msgstr "நீட்சிநிரல் உதவி (&H)"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Disable add-on"
-msgstr "கூட்டுக்கூறினை முடக்குக (&D)"
+msgstr "நீட்சிநிரலினை முடக்குக (&D)"
 
 #. Translators: The label for a button to remove either:
 #. Remove the selected add-on in Add-ons Manager dialog.
@@ -8944,7 +8943,7 @@ msgstr "நீக்குக (&R)"
 
 #. Translators: The label of a button in Add-ons Manager to open the Add-ons website and get more add-ons.
 msgid "&Get add-ons..."
-msgstr "கூட்டுக்கூறுகளைப் பெறுக... (&G)"
+msgstr "நீட்சிநிரல்களைப் பெறுக... (&G)"
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
@@ -8952,15 +8951,15 @@ msgstr "நிறுவிடுக... (&I)"
 
 #. Translators: The label of a button in the Add-ons Manager to open the list of incompatible add-ons.
 msgid "&View incompatible add-ons..."
-msgstr "இணக்கமற்ற கூட்டுக்கூறுகளைப் பார்வையிடுக... (&V)"
+msgstr "இணக்கமற்ற நீட்சிநிரல்களைப் பார்வையிடுக... (&V)"
 
 #. Translators: The message displayed in the dialog that allows you to choose an add-on package for installation.
 msgid "Choose Add-on Package File"
-msgstr "கூட்டுக்கூறு தொகுப்புக் கோப்பினைத் தெரிவுச் செய்க"
+msgstr "நீட்சிநிரல் தொகுப்புக் கோப்பினைத் தெரிவுச் செய்க"
 
 #. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
 msgid "NVDA Add-on Package (*.{ext})"
-msgstr "என்விடிஏ கூட்டுக்கூறுத் தொகுதி (*.{ext})"
+msgstr "என்விடிஏ நீட்சிநிரல்த் தொகுதி (*.{ext})"
 
 #. Translators: The status shown for an addon when it's not considered compatible with this version of NVDA.
 msgid "Incompatible"
@@ -8984,7 +8983,7 @@ msgstr "முடுக்கப்பட மறுதுவக்கப்ப�
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Enable add-on"
-msgstr "கூட்டுக்கூறினை முடுக்குக (&E)"
+msgstr "நீட்சிநிரலினை முடுக்குக (&E)"
 
 #. Translators: The message displayed when an error occurs when opening an add-on package for adding.
 #, python-format
@@ -8992,14 +8991,14 @@ msgid ""
 "Failed to open add-on package file at %s - missing file or invalid file "
 "format"
 msgstr ""
-"%s கூட்டுக்கூறுத் தொகுப்பினைத் திறப்பதில் தோல்வி - இல்லாத கோப்பு அல்லது ஏற்க முடியாத "
+"%s நீட்சிநிரல்த் தொகுப்பினைத் திறப்பதில் தோல்வி - இல்லாத கோப்பு அல்லது ஏற்க முடியாத "
 "வடிவூட்டம்"
 
 #. Translators: A title for the dialog asking if the user wishes to update a previously installed
 #. add-on with this one.
 #. Translators: Title for message asking if the user really wishes to install an Addon.
 msgid "Add-on Installation"
-msgstr "கூட்டுக்கூறு நிறுவுதல்"
+msgstr "நீட்சிநிரல் நிறுவுதல்"
 
 #. Translators: A message asking if the user wishes to update an add-on with the same version
 #. currently installed according to the version number.
@@ -9007,7 +9006,7 @@ msgid ""
 "You are about to install version {newVersion} of {summary}, which appears to "
 "be already installed. Would you still like to update?"
 msgstr ""
-"{summary} கூட்டுக்கூறின் {newVersion} பதிப்பை நிறுவ இருக்கிறீர்கள், இது ஏற்கெனவே "
+"{summary} நீட்சிநிரலின் {newVersion} பதிப்பை நிறுவ இருக்கிறீர்கள், இது ஏற்கெனவே "
 "நிறுவப்பட்டுள்ளதாகத் தோன்றுகிறது. இருப்பினும் இற்றைப்படுத்த விரும்புகிறீர்களா?"
 
 #. Translators: A message asking if the user wishes to update a previously installed
@@ -9016,25 +9015,25 @@ msgid ""
 "A version of this add-on is already installed. Would you like to update "
 "{summary} version {curVersion} to version {newVersion}?"
 msgstr ""
-"{summary} கூட்டுக்கூறின் ஒரு பதிப்பு ஏற்கெனவே நிறுவப்பட்டுள்ளது. {curVersion} "
-"பதிப்பை, {newVersion} என்கிற புதியப் பதிப்பைக் கொண்டு  இற்றைப்படுத்த விரும்புகிறீர்களா?"
+"{summary} நீட்சிநிரலின் ஒரு பதிப்பு ஏற்கெனவே நிறுவப்பட்டுள்ளது. {curVersion} பதிப்பை, "
+"{newVersion} என்கிற புதியப் பதிப்பைக் கொண்டு  இற்றைப்படுத்த விரும்புகிறீர்களா?"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
 msgid "Installing Add-on"
-msgstr "கூட்டுக்கூறு நிறுவப்படுகிறது"
+msgstr "நீட்சிநிரல் நிறுவப்படுகிறது"
 
 #. Translators: The message displayed while an addon is being installed.
 msgid "Please wait while the add-on is being installed."
-msgstr "கூட்டுக்கூறு நிறுவப்படுகிறது, அருள்கூர்ந்து காத்திருக்கவும்"
+msgstr "நீட்சிநிரல் நிறுவப்படுகிறது, அருள்கூர்ந்து காத்திருக்கவும்"
 
 #. Translators: The message displayed when an error occurs when installing an add-on package.
 #, python-format
 msgid "Failed to install add-on from %s"
-msgstr "%s தொகுப்பில் இருக்கும் கூட்டுக்கூறின் நிறுவுதல் தோல்வியடைந்தது"
+msgstr "%s தொகுப்பில் இருக்கும் நீட்சிநிரலின் நிறுவுதல் தோல்வியடைந்தது"
 
 #. Translators: The message displayed when an add-on cannot be installed due to NVDA running as a Windows Store app
 msgid "Add-ons cannot be installed in the Windows Store version of NVDA"
-msgstr "விண்டோஸ் ஸ்டோர் பதிப்பு என்விடிஏவில் கூட்டுக்கூறுகளை நிறுவ இயலாது"
+msgstr "விண்டோஸ் ஸ்டோர் பதிப்பு என்விடிஏவில் நீட்சிநிரல்களை நிறுவ இயலாது"
 
 #. Translators: The message displayed when installing an add-on package is prohibited,
 #. because it requires a later version of NVDA than is currently installed.
@@ -9043,13 +9042,13 @@ msgid ""
 "version required for this add-on is {minimumNVDAVersion}, your current NVDA "
 "version is {NVDAVersion}"
 msgstr ""
-"{summary} {version} நிறுவுதல் தடுக்கப்பட்டுள்ளது. இக்கூட்டுறுப்பிற்குத் தேவைப்படும் "
+"{summary} {version} நிறுவுதல் தடுக்கப்பட்டுள்ளது. இந்த நீட்சிநிரலுக்குத் தேவைப்படும் "
 "குறைந்தபட்ச என்விடிஏ பதிப்பு {minimumNVDAVersion}. தங்களின் தற்போதைய என்விடிஏ பதிப்பு "
 "{NVDAVersion}."
 
 #. Translators: The title of a dialog presented when an error occurs.
 msgid "Add-on not compatible"
-msgstr "இணக்கமற்றக் கூட்டுக்கூறு"
+msgstr "இணக்கமற்றக் நீட்சிநிரல்"
 
 #. Translators: A message asking the user if they really wish to install an addon.
 msgid ""
@@ -9057,25 +9056,25 @@ msgid ""
 "Only install add-ons from trusted sources.\n"
 "Addon: {summary} {version}"
 msgstr ""
-"இக்கூட்டுக்கூறினைத் தாங்கள் கட்டாயம் நிறுவ வேண்டுமா?\n"
-"நம்பத் தகுந்த வட்டாரங்களிலிருந்துப் பெறப்படும் கூட்டுக்கூறுகளை மட்டுமே நிறுவுங்கள்.\n"
-"கூட்டுக்கூறு: {summary} {version}"
+"இக்நீட்சிநிரலினைத் தாங்கள் கட்டாயம் நிறுவ வேண்டுமா?\n"
+"நம்பத் தகுந்த வட்டாரங்களிலிருந்துப் பெறப்படும் நீட்சிநிரல்களை மட்டுமே நிறுவுங்கள்.\n"
+"நீட்சிநிரல்: {summary} {version}"
 
 #. Translators: The title of the Incompatible Addons Dialog
 msgid "Incompatible Add-ons"
-msgstr "இணக்கமற்றக் கூட்டுக்கூறுகள்"
+msgstr "இணக்கமற்றக் நீட்சிநிரல்கள்"
 
 #. Translators: The title of the Incompatible Addons Dialog
 msgid ""
 "The following add-ons are incompatible with NVDA version {}. These add-ons "
 "can not be enabled. Please contact the add-on author for further assistance."
 msgstr ""
-"கீழ் காணப்படும் கூட்டுக்கூறுகள் என்விடிஏ {} பதிப்புடன் இணக்கமாக இல்லை. இவைகளை முடுக்க "
-"இயலாது. கூட்டுக்கூறின் பதிப்பாளரை உதவிக்கு தொடர்புகொள்ளவும்."
+"கீழ் காணப்படும் நீட்சிநிரல்கள் என்விடிஏ {} பதிப்புடன் இணக்கமாக இல்லை. இவைகளை முடுக்க "
+"இயலாது. நீட்சிநிரலின் பதிப்பாளரை உதவிக்கு தொடர்புகொள்ளவும்."
 
 #. Translators: the label for the addons list in the incompatible addons dialog.
 msgid "Incompatible add-ons"
-msgstr "இணக்கமற்றக் கூட்டுக்கூறுகள்"
+msgstr "இணக்கமற்றக் நீட்சிநிரல்கள்"
 
 #. Translators: The label for a column in add-ons list used to provide some explanation about incompatibility
 msgid "Incompatible reason"
@@ -9101,9 +9100,8 @@ msgstr "விண்டோஸ் பூட்டப்பட்டிருக�
 
 #. Translators: Reported when an action cannot be performed because NVDA is running the launcher temporary
 #. version
-#, fuzzy
 msgid "Action unavailable in a temporary version of NVDA"
-msgstr "விண்டோஸ் ஸ்டோர் பதிப்பில் செயல் கிடைப்பிலில்லை"
+msgstr "என்விடிஏவின் தற்காலிகப் பதிப்பில் செயல் கிடைப்பிலில்லை"
 
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
@@ -9308,7 +9306,7 @@ msgstr "மறுதுவக்குக"
 
 #. Translators: An option in the combo box to choose exit action.
 msgid "Restart with add-ons disabled"
-msgstr "கூட்டுக்கூறுகள் முடக்கப்பட்ட நிலையில் மறுதுவக்குக. "
+msgstr "நீட்சிநிரல்கள் முடக்கப்பட்ட நிலையில் மறுதுவக்குக. "
 
 #. Translators: An option in the combo box to choose exit action.
 msgid "Restart with debug logging enabled"
@@ -9323,8 +9321,8 @@ msgid ""
 "All add-ons are now disabled. They will be re-enabled on the next restart "
 "unless you choose to disable them again."
 msgstr ""
-"எல்லாக் கூட்டுக்கூறுகளும் இப்பொழுது முடக்கப்பட்டுள்ளன. கூட்டுக்கூறுகளைத் தாங்கள் மீண்டும் "
-"முடக்க விரும்பவில்லையென்றால், அடுத்த மறுதுவக்கத்தில் அவைகள் முடுக்கப்படும். "
+"எல்லாக் நீட்சிநிரல்களும் இப்பொழுது முடக்கப்பட்டுள்ளன. நீட்சிநிரல்களைத் தாங்கள் மீண்டும் முடக்க "
+"விரும்பவில்லையென்றால், அடுத்த மறுதுவக்கத்தில் அவைகள் முடுக்கப்படும். "
 
 #. Translators: A message in the exit Dialog shown when NVDA language has been
 #. overwritten from the command line.
@@ -9754,7 +9752,7 @@ msgid ""
 "system profile could be a security risk. Do you still wish to copy your "
 "settings?"
 msgstr ""
-"தங்களின் பயனர் அமைப்புகள் அடைவில் கூட்டுக்கூறுகள் காணப்படுகின்றன. இதைக் கணினியின் "
+"தங்களின் பயனர் அமைப்புகள் அடைவில் நீட்சிநிரல்கள் காணப்படுகின்றன. இதைக் கணினியின் "
 "தனியமைப்பிற்குள் படியெடுப்பது பாதுகாப்பற்றதாகும். இருப்பினும், தங்களின் அமைப்புகளை "
 "கணினிக்குள் படியெடுக்க விரும்புகிறீர்களா?"
 
@@ -10421,9 +10419,8 @@ msgid "&Paragraph style:"
 msgstr "பத்திப் பாங்கு (&P)"
 
 #. Translators: This is the label for the addon navigation settings panel.
-#, fuzzy
 msgid "Add-on Store"
-msgstr "கூட்டுக்கூறு உதவி (&H)"
+msgstr "நீட்சிநிரல் அங்காடி"
 
 #. Translators: This is the label for the touch interaction settings panel.
 msgid "Touch Interaction"
@@ -10710,7 +10707,6 @@ msgstr "தெளிந்த நிறங்களின் மதிப்ப�
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#, fuzzy
 msgid "Audio"
 msgstr "ஒலிதம்"
 
@@ -10866,9 +10862,8 @@ msgid "I&nterrupt speech while scrolling"
 msgstr "உருளலின்பொழுது பேச்சைக் குறுக்கிடுக (&N)"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#, fuzzy
 msgid "Show se&lection"
-msgstr "தெரிவு ஏதுமில்லை"
+msgstr "தெரிவினைக் காட்டிடுக (%L)"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load a single vision enhancement provider.
@@ -11292,8 +11287,10 @@ msgstr "மட்டம் %s"
 
 #. Translators: Number of items in a list (example output: list with 5 items).
 #, python-format
-msgid "with %s items"
-msgstr "%s உருப்படிகளைக் கொண்டது"
+msgid "with %s item"
+msgid_plural "with %s items"
+msgstr[0] "%s உருப்படியைக் கொண்டது"
+msgstr[1] "%s உருப்படிகளைக் கொண்டது"
 
 #. Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
 #, python-format
@@ -12914,12 +12911,10 @@ msgid "Underline on"
 msgstr "அடிக்கோடிடப்பட்டது"
 
 #. Translators: a message when toggling formatting in Microsoft Excel
-#, fuzzy
 msgid "Strikethrough off"
-msgstr "ஊடாகக் கோடிடப்பட்டது"
+msgstr "ஊடாகக் கோடிடப்படாதது"
 
 #. Translators: a message when toggling formatting in Microsoft Excel
-#, fuzzy
 msgid "Strikethrough on"
 msgstr "ஊடாகக் கோடிடப்பட்டது"
 
@@ -13283,12 +13278,6 @@ msgctxt "line spacing value"
 msgid "at least %.1f pt"
 msgstr "குறைந்தபட்சம் %.1f புள்ளி"
 
-#. Translators: line spacing of x lines
-#, python-format
-msgctxt "line spacing value"
-msgid "%.1f lines"
-msgstr "%.1f "
-
 #. Translators: the title of the message dialog desplaying an MS Word table description.
 msgid "Table description"
 msgstr "அட்டவணை விளக்கம்"
@@ -13398,16 +13387,14 @@ msgstr "ஒன்றரை வரி இடைவெளி"
 
 #. Translators: Label for add-on channel in the add-on sotre
 #. Translators: The label of an option to filter the list of add-ons in the add-on store dialog.
-#, fuzzy
 msgctxt "addonStore"
 msgid "All"
 msgstr "அனைத்தும்"
 
 #. Translators: Label for add-on channel in the add-on sotre
-#, fuzzy
 msgctxt "addonStore"
 msgid "Stable"
-msgstr "அட்டவணை"
+msgstr "நிலையானவை"
 
 #. Translators: Label for add-on channel in the add-on sotre
 msgctxt "addonStore"
@@ -13426,17 +13413,15 @@ msgstr "வெளியிலுள்ளவை"
 
 #. Translators: The label of an option to filter the list of add-ons in the add-on store dialog.
 #. Translators: Status for addons shown in the add-on store dialog
-#, fuzzy
 msgctxt "addonStore"
 msgid "Enabled"
-msgstr "முடுக்கப்பட்டது"
+msgstr "முடுக்கப்பட்டவை"
 
 #. Translators: The label of an option to filter the list of add-ons in the add-on store dialog.
 #. Translators: Status for addons shown in the add-on store dialog
-#, fuzzy
 msgctxt "addonStore"
 msgid "Disabled"
-msgstr "முடக்கப்பட்டது"
+msgstr "முடக்கப்பட்டவை"
 
 #. Translators: Status for addons shown in the add-on store dialog
 msgctxt "addonStore"
@@ -13444,39 +13429,34 @@ msgid "Pending removal"
 msgstr "நீக்கப்படுவதற்காக நிலுவையிலிருப்பது"
 
 #. Translators: Status for addons shown in the add-on store dialog
-#, fuzzy
 msgctxt "addonStore"
 msgid "Available"
-msgstr "கிடைப்பிலில்லை"
+msgstr "கிடைப்பிலுள்ளது"
 
 #. Translators: Status for addons shown in the add-on store dialog
-#, fuzzy
 msgctxt "addonStore"
 msgid "Update Available"
-msgstr "இற்றாக்கம் ஏதும் கிடைப்பிலில்லை."
+msgstr "இற்றாக்கம் கிடைப்பிலுள்ளது"
 
 #. Translators: Status for addons shown in the add-on store dialog
 msgctxt "addonStore"
 msgid "Migrate to add-on store"
-msgstr "கூட்டுக்கூறு அங்காடிக்கு இடம்பெயர்ந்திடுக"
+msgstr "நீட்சிநிரல் அங்காடிக்கு இடம்பெயர்ந்திடுக"
 
 #. Translators: Status for addons shown in the add-on store dialog
-#, fuzzy
 msgctxt "addonStore"
 msgid "Incompatible"
 msgstr "இணக்கமற்றது"
 
 #. Translators: Status for addons shown in the add-on store dialog
-#, fuzzy
 msgctxt "addonStore"
 msgid "Downloading"
 msgstr "தரவிறக்கப்படுகிறது"
 
 #. Translators: Status for addons shown in the add-on store dialog
-#, fuzzy
 msgctxt "addonStore"
 msgid "Download failed"
-msgstr "இற்றாக்கத்தைத் தரவிறக்குக (&D)"
+msgstr "தரவிறக்கம் தோல்வியடைந்தது"
 
 #. Translators: Status for addons shown in the add-on store dialog
 msgctxt "addonStore"
@@ -13484,108 +13464,96 @@ msgid "Downloaded, pending install"
 msgstr "தரவிறக்கப்பட்டுவிட்டது, நிறுவல் நிலுவையிலுள்ளது"
 
 #. Translators: Status for addons shown in the add-on store dialog
-#, fuzzy
 msgctxt "addonStore"
 msgid "Installing"
-msgstr "நிறுவுக"
+msgstr "நிறுவப்படுகிறது"
 
 #. Translators: Status for addons shown in the add-on store dialog
-#, fuzzy
 msgctxt "addonStore"
 msgid "Install failed"
-msgstr "இற்றாக்கத்தை நிறுவுக (&I)"
+msgstr "நிறுவுதல் தோல்வியடைந்தது"
 
 #. Translators: Status for addons shown in the add-on store dialog
-#, fuzzy
 msgctxt "addonStore"
 msgid "Installed, pending restart"
-msgstr "காத்திருப்பிலிருக்கும் இற்றாக்கத்தை நிறுவிடுக"
+msgstr "நிறுவப்பட்டது, மறுதுவக்கம் நிலுவையிலுள்ளது"
 
 #. Translators: Status for addons shown in the add-on store dialog
-#, fuzzy
 msgctxt "addonStore"
 msgid "Disabled, pending restart"
-msgstr "முடக்கப்பட மறுதுவக்கப்பட வேண்டும்"
+msgstr "முடக்கப்பட்டது, மறுதுவக்கம் நிலுவையிலுள்ளது"
 
 #. Translators: Status for addons shown in the add-on store dialog
-#, fuzzy
 msgctxt "addonStore"
 msgid "Disabled (incompatible), pending restart"
-msgstr "முடக்கப்பட மறுதுவக்கப்பட வேண்டும்"
+msgstr "முடக்கப்பட்டது (இணக்கமற்றது), மறுதுவக்கம் நிலுவையிலுள்ளது"
 
 #. Translators: Status for addons shown in the add-on store dialog
-#, fuzzy
 msgctxt "addonStore"
 msgid "Disabled (incompatible)"
-msgstr "இணக்கமற்றது"
+msgstr "முடக்கப்பட்டது (இணக்கமற்றது)"
 
 #. Translators: Status for addons shown in the add-on store dialog
-#, fuzzy
 msgctxt "addonStore"
 msgid "Enabled (incompatible), pending restart"
-msgstr "முடுக்கப்பட மறுதுவக்கப்பட வேண்டும்"
+msgstr "முடுக்கப்பட்டது (இணக்கமற்றது), மறுதுவக்கம் நிலுவையிலுள்ளது"
 
 #. Translators: Status for addons shown in the add-on store dialog
-#, fuzzy
 msgctxt "addonStore"
 msgid "Enabled (incompatible)"
-msgstr "இணக்கமற்றது"
+msgstr "முடுக்கப்பட்டது (இணக்கமற்றது)"
 
 #. Translators: Status for addons shown in the add-on store dialog
-#, fuzzy
 msgctxt "addonStore"
 msgid "Enabled, pending restart"
-msgstr "முடுக்கப்பட மறுதுவக்கப்பட வேண்டும்"
+msgstr "முடுக்கப்பட்டது, மறுதுவக்கம் நிலுவையிலுள்ளது"
 
 #. Translators: A selection option to display installed add-ons in the add-on store
-#, fuzzy
 msgctxt "addonStore"
 msgid "Installed add-ons"
-msgstr "நிறுவப்பட்டுள்ள கூட்டுக்கூறுகள்"
+msgstr "நிறுவப்பட்டுள்ள நீட்சிநிரல்கள்"
 
 #. Translators: A selection option to display updatable add-ons in the add-on store
-#, fuzzy
 msgctxt "addonStore"
 msgid "Updatable add-ons"
-msgstr "இணக்கமற்றக் கூட்டுக்கூறுகள்"
+msgstr "இற்றாக்கத்தக்கக் நீட்சிநிரல்கள்"
 
 #. Translators: A selection option to display available add-ons in the add-on store
-#, fuzzy
 msgctxt "addonStore"
 msgid "Available add-ons"
-msgstr "கூட்டுக்கூறினை முடக்குக (&D)"
+msgstr "கிடைப்பிலுள்ள நீட்சிநிரல்கள்"
 
 #. Translators: A selection option to display incompatible add-ons in the add-on store
-#, fuzzy
 msgctxt "addonStore"
 msgid "Installed incompatible add-ons"
-msgstr "இணக்கமற்றக் கூட்டுக்கூறுகள்"
+msgstr "நிறுவப்பட்டுள்ள இணக்கமற்றக் நீட்சிநிரல்கள்"
 
 #. Translators: The reason an add-on is not compatible.
 #. A more recent version of NVDA is required for the add-on to work.
 #. The placeholder will be replaced with Year.Major.Minor (e.g. 2019.1).
-#, fuzzy
 msgctxt "addonStore"
 msgid ""
 "An updated version of NVDA is required. NVDA version {nvdaVersion} or later."
-msgstr "என்விடிஏ {}, அல்லது அதற்கும் பிறகான பதிப்பு தேவைப்படுகிறது"
+msgstr ""
+"என்விடிஏவின் இற்றாக்கப்பட்டப் பதிப்பு தேவைப்படுகிறது. என்விடிஏ பதிப்பு {nvdaVersion}, "
+"அல்லது அதற்கும் பிறகான பதிப்பு"
 
 #. Translators: The reason an add-on is not compatible.
 #. The addon relies on older, removed features of NVDA, an updated add-on is required.
 #. The placeholder will be replaced with Year.Major.Minor (e.g. 2019.1).
-#, fuzzy
 msgctxt "addonStore"
 msgid ""
 "An updated version of this add-on is required. The minimum supported API "
 "version is now {nvdaVersion}. This add-on was last tested with "
 "{lastTestedNVDAVersion}. You can enable this add-on at your own risk. "
 msgstr ""
-"இக்கூட்டுறுப்பின் இற்றைப்படுத்தப்பட்ட பதிப்பு தேவைப்படுகிறது. இந்த என்விடிஏ ஆதரவளிக்கும் "
-"குறைந்தபட்ச கூட்டுக்கூறு API {}"
+"இந்த நீட்சிநிரலின் இற்றைப்படுத்தப்பட்ட பதிப்பு தேவைப்படுகிறது. இப்பொழுது ஆதரவளிக்கப்படும் "
+"குறைந்தபட்ச நீட்சிநிரல் API {nvdaVersion}. {lastTestedNVDAVersion} பதிப்புடன் "
+"இக்நீட்சிநிரல் கடைசியாகப் பரிசோதிக்கப்பட்டுள்ளது. தங்களின் சொந்தப் பொறுப்பில் இக்நீட்சிநிரலினை "
+"முடுக்கலாம்."
 
 #. Translators: A message indicating that some add-ons will be disabled
 #. unless reviewed before installation.
-#, fuzzy
 msgctxt "addonStore"
 msgid ""
 "Your NVDA configuration contains add-ons that are incompatible with this "
@@ -13594,20 +13562,19 @@ msgid ""
 "own risk. If you rely on these add-ons, please review the list to decide "
 "whether to continue with the installation. "
 msgstr ""
-"\n"
-"ஆயினும், என்விடிஏவின் இப்பதிப்பிற்கு இணக்கமற்றக் கூட்டுக்கூறுகளை தங்களின் என்விடிஏ "
-"அமைவடிவம் கொண்டுள்ளது. நிறுவுதலுக்குப் பிறகு இக்கூட்டுக்கூறுகள் முடக்கப்படும். "
-"இக்கூட்டுக்கூறுகளைத் தாங்கள் சார்ந்திருந்தால், நிறுவுதலைத் தொடரும் முன் அவைகளின் பட்டியலைச் "
-"சீராயவும்"
+"என்விடிஏவின் இப்பதிப்பிற்கு இணக்கமற்றக் நீட்சிநிரல்களை தங்களின் என்விடிஏ அமைவடிவம் "
+"கொண்டுள்ளது. நிறுவுதலுக்குப் பிறகு இக்நீட்சிநிரல்கள் முடக்கப்படும். இக்நீட்சிநிரல்களைத் தாங்கள் "
+"சார்ந்திருந்தால், நிறுவுதலைத் தொடரும் முன் அவைகளின் பட்டியலைச் சீராயவும்"
 
 #. Translators: A message to confirm that the user understands that incompatible add-ons
 #. will be disabled after installation, and can be manually re-enabled.
-#, fuzzy
 msgctxt "addonStore"
 msgid ""
 "I understand that incompatible add-ons will be disabled and can be manually "
 "re-enabled at my own risk after installation."
-msgstr "இணக்கமற்ற இக்கூட்டுக்கூறுகள் முடக்கப்படுமென்பதை அறிகிறேன்"
+msgstr ""
+"இணக்கமற்றக் நீட்சிநிரல்கள் முடக்கப்படுமென்பதையும், நிறுவுதலுக்குப் பிறகு எனது சொந்தப் "
+"பொறுப்பில் அவைகளை கைமுறையில் முடுக்கலாம் என்பதையும்  அறிகிறேன்"
 
 #. Translators: Names of braille displays.
 msgid "Caiku Albatross 46/80"
@@ -13623,9 +13590,8 @@ msgstr ""
 "களங்களிண் எண்ணிக்கையை உயர் அளவிற்கு மாற்றவும்"
 
 #. Translators: Names of braille displays.
-#, fuzzy
 msgid "Eurobraille displays"
-msgstr "ஈக்கோ பிரெயில் காட்சியமைவுகள்"
+msgstr "யுரோ பிரெயில் காட்சியமைவுகள்"
 
 #. Translators: Message when HID keyboard simulation is unavailable.
 msgid "HID keyboard input simulation is unavailable."
@@ -13634,6 +13600,10 @@ msgstr "எச்.ஐ.டி. விசைப் பலகை உள்ளீட
 #. Translators: Description of the script that toggles HID keyboard simulation.
 msgid "Toggle HID keyboard simulation"
 msgstr "எச்.ஐ.டி. விசைப் பலகை உருவகமாக்கத்தை மாற்றியமைத்திடுக"
+
+#~ msgctxt "line spacing value"
+#~ msgid "%.1f lines"
+#~ msgstr "%.1f "
 
 #~ msgid "Find Error"
 #~ msgstr "கண்டறிதலில் பிழை"
@@ -13648,16 +13618,16 @@ msgstr "எச்.ஐ.டி. விசைப் பலகை உருவகம
 #~ msgstr ""
 #~ "\n"
 #~ "\n"
-#~ "ஆயினும், என்விடிஏவின் இப்பதிப்பிற்கு இணக்கமற்றக் கூட்டுக்கூறுகளை தங்களின் என்விடிஏ "
-#~ "அமைவடிவம் கொண்டுள்ளது. நிறுவுதலுக்குப் பிறகு இக்கூட்டுக்கூறுகள் முடக்கப்படும். "
-#~ "இக்கூட்டுக்கூறுகளைத் தாங்கள் சார்ந்திருந்தால், நிறுவுதலைத் தொடரும் முன் அவைகளின் "
-#~ "பட்டியலைச் சீராயவும்"
+#~ "ஆயினும், என்விடிஏவின் இப்பதிப்பிற்கு இணக்கமற்றக் நீட்சிநிரல்களை தங்களின் என்விடிஏ "
+#~ "அமைவடிவம் கொண்டுள்ளது. நிறுவுதலுக்குப் பிறகு இக்நீட்சிநிரல்கள் முடக்கப்படும். "
+#~ "இக்நீட்சிநிரல்களைத் தாங்கள் சார்ந்திருந்தால், நிறுவுதலைத் தொடரும் முன் அவைகளின் பட்டியலைச் "
+#~ "சீராயவும்"
 
 #~ msgid "Eurobraille Esys/Esytime/Iris displays"
 #~ msgstr "யுரோப்ரெயில் Esys/Esytime/Iris காட்சியமைவுகள்"
 
 #~ msgid "Manage &add-ons..."
-#~ msgstr "கூட்டுக்கூறு மேலாண்மை (&A)"
+#~ msgstr "நீட்சிநிரல் மேலாண்மை (&A)"
 
 #~ msgid ""
 #~ "{summary} ({name})\n"
@@ -13680,32 +13650,32 @@ msgstr "எச்.ஐ.டி. விசைப் பலகை உருவகம
 #~ msgstr "என்விடிஏவின் கடைசிப் பதிப்பு பரிசோதிக்கப்பட்டது: {}"
 
 #~ msgid "Add-on Information"
-#~ msgstr "கூட்டுக்கூறுத் தகவல்"
+#~ msgstr "நீட்சிநிரல்த் தகவல்"
 
 #~ msgid ""
 #~ "Are you sure you wish to remove the {addon} add-on from NVDA? This cannot "
 #~ "be undone."
 #~ msgstr ""
-#~ "{addon} கூட்டுக்கூறினைத் தாங்கள் என்விடிஏவிலிருந்து கட்டாயம் நீக்க விரும்புகிறீர்களா? "
+#~ "{addon} நீட்சிநிரலினைத் தாங்கள் என்விடிஏவிலிருந்து கட்டாயம் நீக்க விரும்புகிறீர்களா? "
 #~ "இச்செயலைத் திரும்பப் பெற இயலாது."
 
 #~ msgid "Remove Add-on"
-#~ msgstr "கூட்டுக்கூறினை நீக்குக"
+#~ msgstr "நீட்சிநிரலினை நீக்குக"
 
 #~ msgid "Could not disable the {description} add-on."
-#~ msgstr "{description} கூட்டுக்கூறினை முடக்கிட இயலவில்லை."
+#~ msgstr "{description} நீட்சிநிரலினை முடக்கிட இயலவில்லை."
 
 #~ msgid "Could not enable the {description} add-on."
-#~ msgstr "{description} கூட்டுக்கூறினை முடுக்க இயலவில்லை."
+#~ msgstr "{description} நீட்சிநிரலினை முடுக்க இயலவில்லை."
 
 #~ msgid ""
 #~ "Installation of {summary} {version} has been blocked. An updated version "
 #~ "of this add-on is required, the minimum add-on API supported by this "
 #~ "version of NVDA is {backCompatToAPIVersion}"
 #~ msgstr ""
-#~ "{summary} {version} நிறுவுதல் தடுக்கப்பட்டுள்ளது. இக்கூட்டுறுப்பின் இற்றைப்படுத்தப்பட்ட "
-#~ "பதிப்பு தேவைப்படுகிறது. இந்த என்விடிஏ ஆதரவளிக்கும் குறைந்தபட்ச கூட்டுக்கூறு API "
-#~ "{backCompatToAPIVersion}."
+#~ "{summary} {version} நிறுவுதல் தடுக்கப்பட்டுள்ளது. இந்த நீட்சிநிரலின் "
+#~ "இற்றைப்படுத்தப்பட்ட பதிப்பு தேவைப்படுகிறது. இந்த என்விடிஏ ஆதரவளிக்கும் குறைந்தபட்ச "
+#~ "நீட்சிநிரல் API {backCompatToAPIVersion}."
 
 #~ msgid ""
 #~ "Please specify an absolute path (including drive letter)  in which to "
