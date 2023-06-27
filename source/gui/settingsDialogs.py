@@ -2389,19 +2389,19 @@ class DocumentFormattingPanel(SettingsPanel):
 
 		# Translators: This is the label of a checkbox in the document formatting settings panel
 		# If this option is selected, NVDA will ignore blank lines for line indentation reporting
-		ignoreBlankLinesText = _("Ignore blank lines for line indentation reporting")
+		ignoreBlankLinesText = _("Ignore &blank lines for line indentation reporting")
 		ignoreBlankLinesCheckBox = wx.CheckBox(pageAndSpaceBox, label=ignoreBlankLinesText)
 		self.ignoreBlankLinesForReportLineIndentationCheckbox = pageAndSpaceGroup.addItem(ignoreBlankLinesCheckBox)
 		self.ignoreBlankLinesForReportLineIndentationCheckbox.SetValue(config.conf["documentFormatting"]["ignoreBlankLinesForReportLineIndentation"])
 		
-		# Translators: This message is presented in the document formatting settings panelue
+		# Translators: This message is presented in the document formatting settings panel
 		# If this option is selected, NVDA will report paragraph indentation if available. 
 		paragraphIndentationText = _("&Paragraph indentation")
 		_paragraphIndentationCheckBox = wx.CheckBox(pageAndSpaceBox, label=paragraphIndentationText)
 		self.paragraphIndentationCheckBox = pageAndSpaceGroup.addItem(_paragraphIndentationCheckBox)
 		self.paragraphIndentationCheckBox.SetValue(config.conf["documentFormatting"]["reportParagraphIndentation"])
 
-		# Translators: This message is presented in the document formatting settings panelue
+		# Translators: This message is presented in the document formatting settings panel
 		# If this option is selected, NVDA will report line spacing if available. 
 		lineSpacingText=_("&Line spacing")
 		_lineSpacingCheckBox = wx.CheckBox(pageAndSpaceBox, label=lineSpacingText)
