@@ -133,6 +133,7 @@ Ebenso erlaubt die neue Methode ``getCompletionRoutine`` die sichere Umwandlung 
 - NVDA protokolliert keine unpräzisen Warnungen oder Fehler über veraltete appModules mehr. (#14806)
 - Alle NVDA-Erweiterungspunkte werden jetzt in einem neuen, eigenen Kapitel im Entwicklerhandbuch kurz beschrieben. (#14648)
 - ``scons checkpot`` überprüft nun nicht mehr den Unterordner ``userConfig``. (#14820)
+- Zu übersetzende Strings können nun mit Hilfe von ``ngettext`` und ``npgettext`` mit einer Singular- und einer Pluralform definiert werden. (#12445)
 -
 
 === Veraltete Funktionen ===
@@ -144,6 +145,7 @@ Stattdessen besser aus ``hwIo.ioThread`` importieren. (#14627)
 Dies wurde in NVDA 2023.1 eingeführt und war nie als Teil der öffentlichen API gedacht.
 Solange er nicht entfernt wird, verhält er sich wie ein No-op, d. h., ein Kontext-Manager, ohne Auswirkung. (#14924)
 - Der Befehl ``gui.MainFrame.onAddonsManagerCommand`` ist veraltet, verwenden Sie stattdessen ``gui.MainFrame.onAddonStoreCommand``. (#13985)
+- Die Funktion ``speechDictHandler.speechDictVars.speechDictsPath`` ist veraltet, verwenden Sie stattdessen ``WritePaths.speechDictsDir``. (#15021)
 -
 
 
