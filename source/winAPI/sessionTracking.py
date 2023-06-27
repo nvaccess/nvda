@@ -147,7 +147,7 @@ def _isWindowsLocked() -> bool:
 	return _lockStateTracker.isWindowsLocked
 
 
-def _isLockScreenModeActive() -> bool:
+def isLockScreenModeActive() -> bool:
 	"""
 	Checks if the Window lock screen is active.
 	Not to be confused with the Windows sign-in screen, a secure screen.

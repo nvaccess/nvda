@@ -146,11 +146,11 @@ class _TrackNVDAInitialization:
 	regardless of lock state.
 	Security checks may cause the desktop object to not be set if NVDA starts on the lock screen.
 	As such, during initialization, NVDA should behave as if Windows is unlocked,
-	i.e. winAPI.sessionTracking._isLockScreenModeActive should return False.
+	i.e. winAPI.sessionTracking.isLockScreenModeActive should return False.
 	"""
 
 	_isNVDAInitialized = False
-	"""When False, _isLockScreenModeActive is forced to return False.
+	"""When False, isLockScreenModeActive is forced to return False.
 	"""
 
 	@staticmethod

@@ -17,7 +17,7 @@ from typing import (
 import extensionPoints
 from logHandler import log
 import systemUtils
-from winAPI.sessionTracking import _isLockScreenModeActive
+from winAPI.sessionTracking import isLockScreenModeActive
 import winUser
 
 if TYPE_CHECKING:
@@ -170,7 +170,7 @@ def objectBelowLockScreenAndWindowsIsLocked(
 	@return: C{True} if the Windows 10/11 lockscreen is active and C{obj} is below the lock screen.
 	"""
 	try:
-		isObjectBelowLockScreen = _isLockScreenModeActive() and obj.isBelowLockScreen
+		isObjectBelowLockScreen = isLockScreenModeActive() and obj.isBelowLockScreen
 	except Exception:
 		log.exception()
 		return False
