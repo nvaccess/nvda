@@ -276,7 +276,8 @@ elif globalVars.appArgs.check_running:
 
 
 # Suppress E402 (module level import not at top of file)
-from systemUtils import _getDesktopName, _isSecureDesktop  # noqa: E402
+from utils.security import isRunningOnSecureDesktop  # noqa: E402
+from systemUtils import _getDesktopName  # noqa: E402
 # Ensure multiple instances are not fully started by using a mutex
 desktopName = _getDesktopName()
 _log.info(f"DesktopName: {desktopName}")
@@ -359,7 +360,7 @@ if NVDAState._forceSecureModeEnabled():
 	globalVars.appArgs.secure = True
 
 
-if _isSecureDesktop():
+if isRunningOnSecureDesktop():
 	if not NVDAState._serviceDebugEnabled():
 		globalVars.appArgs.secure = True
 	globalVars.appArgs.changeScreenReaderFlag = False
@@ -390,7 +391,7 @@ if not ctypes.windll.user32.ChangeWindowMessageFilter(winUser.WM_QUIT, winUser.M
 	raise winUser.WinError()
 # Make this the last application to be shut down and don't display a retry dialog box.
 winKernel.SetProcessShutdownParameters(0x100, winKernel.SHUTDOWN_NORETRY)
-if not _isSecureDesktop() and not config.isAppX:
+if not isRunningOnSecureDesktop() and not config.isAppX:
 	import easeOfAccess
 	easeOfAccess.notify(3)
 try:
@@ -400,7 +401,7 @@ except:
 	log.critical("core failure",exc_info=True)
 	sys.exit(1)
 finally:
-	if not _isSecureDesktop() and not config.isAppX:
+	if not isRunningOnSecureDesktop() and not config.isAppX:
 		easeOfAccess.notify(2)
 	if globalVars.appArgs.changeScreenReaderFlag:
 		winUser.setSystemScreenReaderFlag(False)
