@@ -83,7 +83,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	focusContextPresentation = option("changedContext", "fill", "scroll", default="changedContext")
 	interruptSpeechWhileScrolling = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 	showSelection = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
-	routeReviewCursorAndSystemCaret = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="disabled")
+	routeSystemCaretAlongWithReviewCursor = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="disabled")
 	enableHidBrailleSupport = integer(0, 2, default=0)  # 0:Use default/recommended value (yes), 1:yes, 2:no
 
 	# Braille display driver settings

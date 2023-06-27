@@ -3318,12 +3318,13 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		# Translators: Input help mode message for cycle through
-		# braille route review cursor and system caret command.
-		description=_("Cycle through the braille route review cursor and system caret states"),
+		# braille route system caret along with review cursor command.
+		description=_("Cycle through the braille route system caret along with review cursor states"),
 		category=SCRCAT_BRAILLE
 	)
-	def script_braille_cycleRouteReviewCursorAndSystemCaret(self, gesture: inputCore.InputGesture) -> None:
-		# If braille is not tethered to focus, set next state of braille route review cursor and system caret.
+	def script_braille_cycleRouteSystemCaretAlongWithReviewCursor(self, gesture: inputCore.InputGesture) -> None:
+		# If braille is not tethered to focus, set next state of
+		# braille route system caret along with review cursor.
 		# State is reported using ui.message.
 		# Unavailable if tether is to focus.
 		if TetherTo.FOCUS.value == config.conf["braille"]["tetherTo"]:
@@ -3334,24 +3335,24 @@ class GlobalCommands(ScriptableObject):
 				)
 			)
 			return
-		featureFlag: FeatureFlag = config.conf["braille"]["routeReviewCursorAndSystemCaret"]
+		featureFlag: FeatureFlag = config.conf["braille"]["routeSystemCaretAlongWithReviewCursor"]
 		boolFlag: BoolFlag = featureFlag.enumClassType
 		values = [x.value for x in boolFlag]
 		currentValue = featureFlag.value.value
 		nextValueIndex = (currentValue % len(values)) + 1
 		nextName: str = boolFlag(nextValueIndex).name
-		config.conf["braille"]["routeReviewCursorAndSystemCaret"] = nextName
-		featureFlag = config.conf["braille"]["routeReviewCursorAndSystemCaret"]
+		config.conf["braille"]["routeSystemCaretAlongWithReviewCursor"] = nextName
+		featureFlag = config.conf["braille"]["routeSystemCaretAlongWithReviewCursor"]
 		if featureFlag.isDefault():
 			msg = _(
-				# Translators: Used when reporting braille route review cursor and system caret
+				# Translators: Used when reporting braille route system caret along with review cursor
 				# state (default behavior).
-				"Braille route review cursor and system caret default (%s)"
+				"Braille route system caret along with review cursor default (%s)"
 			) % featureFlag.behaviorOfDefault.displayString
 		else:
-			# Translators: Reports which route review cursor and system caret state is used
+			# Translators: Reports which route system caret along with review cursor state is used
 			# (disabled or enabled).
-			msg = _("Braille route review cursor and system caret %s") % BoolFlag[nextName].displayString
+			msg = _("Braille route system caret along with review cursor %s") % BoolFlag[nextName].displayString
 		ui.message(msg)
 
 	@script(
@@ -3537,11 +3538,11 @@ class GlobalCommands(ScriptableObject):
 		# To proceed braille should be tethered to review cursor which means
 		# that tether is automatic (and review cursor is shown in braille)
 		# or tether is to review cursor.
-		# "Route review cursor and system caret" should be also enabled
+		# "Route system caret along with review cursor" should be also enabled
 		# in braille settings.
 		if (
 			braille.handler.getTether() != TetherTo.REVIEW.value
-			or not config.conf["braille"]["routeReviewCursorAndSystemCaret"]
+			or not config.conf["braille"]["routeSystemCaretAlongWithReviewCursor"]
 		):
 			return
 		navigatorObject: NVDAObject = api.getNavigatorObject()
