@@ -16,7 +16,9 @@ import garbageHandler
 import globalVars
 import config
 import core
-from NVDAState import WritePaths
+from NVDAState import WritePaths, _allowDeprecatedAPI
+from utils.urls import URLs
+
 if globalVars.appArgs.secure:
 	raise RuntimeError("updates disabled in secure mode")
 elif config.isAppX:
@@ -60,8 +62,16 @@ import winUser
 import winKernel
 import fileUtils
 
-#: The URL to use for update checks.
-CHECK_URL = "https://www.nvaccess.org/nvdaUpdateCheck"
+def __getattr__(attrName: str) -> Any:
+	"""Module level `__getattr__` used to preserve backward compatibility."""
+	if attrName == "CHECK_URL" and _allowDeprecatedAPI():
+		log.warning(
+			'Importing CHECK_URL from here is deprecated. '
+			'Use "from utils.urls import URLs" instead, and access with "URLs.NVDAUpdateChecks".'
+		)
+		return URLs.NVDAUpdateChecks
+	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+
 #: The time to wait between checks.
 CHECK_INTERVAL = 86400 # 1 day
 #: The time to wait before retrying a failed check.
@@ -148,7 +158,7 @@ def checkForUpdate(auto: bool = False) -> Optional[Dict]:
 			"outputBrailleTable":config.conf['braille']['translationTable'] if brailleDisplayClass else None,
 		}
 		params.update(extraParams)
-	url = "%s?%s" % (CHECK_URL, urllib.parse.urlencode(params))
+	url = "%s?%s" % (URLs.NVDAUpdateChecks, urllib.parse.urlencode(params))
 	try:
 		res = urllib.request.urlopen(url)
 	except IOError as e:
@@ -855,7 +865,7 @@ def _updateWindowsRootCertificates():
 	sslCont = ssl._create_unverified_context()
 	# We must specify versionType so the server doesn't return a 404 error and
 	# thus cause an exception.
-	u = urllib.request.urlopen(CHECK_URL + "?versionType=stable", context=sslCont)
+	u = urllib.request.urlopen(URLs.NVDAUpdateChecks + "?versionType=stable", context=sslCont)
 	cert = u.fp.raw._sock.getpeercert(True)
 	u.close()
 	# Convert to a form usable by Windows.
