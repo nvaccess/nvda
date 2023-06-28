@@ -16,6 +16,7 @@ import speech
 import textUtils
 from speech.commands import LangChangeCommand, SpeechCommand
 from logHandler import log
+from utils.urls import URLs
 
 XML_ESCAPES = {
 	0x3C: u"&lt;", # <
@@ -240,7 +241,7 @@ class SsmlConverter(SpeechXmlConverter):
 		self.defaultLanguage = toXmlLang(defaultLanguage)
 
 	def generateBalancerCommands(self, speechSequence):
-		attrs = OrderedDict((("version", "1.0"), ("xmlns", "http://www.w3.org/2001/10/synthesis"),
+		attrs = OrderedDict((("version", "1.0"), ("xmlns", URLs.speechXMLNS),
 			("xml:lang", self.defaultLanguage)))
 		yield EncloseAllCommand("speak", attrs)
 		for command in super(SsmlConverter, self).generateBalancerCommands(speechSequence):
