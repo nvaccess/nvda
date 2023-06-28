@@ -348,7 +348,6 @@ class SynthDriver(driverHandler.Driver):
 			val = c[s.id]
 			if onlyChanged and getattr(self, s.id) == val:
 				continue
-			# log.debug() ? what is being set here and why?
 			setattr(self, s.id, val)
 		log.debug(
 			(
