@@ -171,3 +171,11 @@ URLs = URLManager()
 
 ### The rest of this file contains URL entries ###
 
+URLs.add("nvAccess", "https://nvaccess.org")
+URLs.add("NVDAUpdateChecks", "https://www.nvaccess.org/nvdaUpdateCheck")
+URLs.add("donate", "https://www.nvaccess.org/donate/")
+URLs.add("gpl2", "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html")
+URLs.add("communityAddonsSite", "https://addons.nvda-project.org")
+
+# speechXml.py
+URLs.add("speechXMLNS", "https://www.w3.org/2001/10/synthesis")
