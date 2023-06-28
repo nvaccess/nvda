@@ -29,6 +29,7 @@ import addonHandler
 import extensionPoints
 import garbageHandler
 import NVDAState
+from NVDAState import WritePaths
 
 
 def __getattr__(attrName: str) -> Any:
@@ -493,11 +494,13 @@ def main():
 		setDPIAwareness()
 
 	import config
-	if not globalVars.appArgs.configPath:
-		globalVars.appArgs.configPath=config.getUserDefaultConfigPath(useInstalledPathIfExists=globalVars.appArgs.launcher)
+	if not WritePaths.configDir:
+		WritePaths.configDir = config.getUserDefaultConfigPath(
+			useInstalledPathIfExists=globalVars.appArgs.launcher
+		)
 	#Initialize the config path (make sure it exists)
 	config.initConfigPath()
-	log.info(f"Config dir: {globalVars.appArgs.configPath}")
+	log.info(f"Config dir: {WritePaths.configDir}")
 	log.debug("loading config")
 	import config
 	config.initialize()
