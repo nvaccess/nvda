@@ -51,6 +51,7 @@ import speechViewer
 import winUser
 import api
 import NVDAState
+from utils.urls import URLs
 
 
 if NVDAState._allowDeprecatedAPI():
@@ -70,7 +71,7 @@ except RuntimeError:
 ### Constants
 NVDA_PATH = globalVars.appDir
 ICON_PATH=os.path.join(NVDA_PATH, "images", "nvda.ico")
-DONATE_URL = "http://www.nvaccess.org/donate/"
+DONATE_URL = URLs.donate  # Retained to prevent API breaking
 
 ### Globals
 mainFrame: Optional["MainFrame"] = None
@@ -509,7 +510,7 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 			item = menu_help.Append(wx.ID_ANY, _("What's &new"))
 			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("changes.html")), item)
 			item = menu_help.Append(wx.ID_ANY, _("NVDA &web site"))
-			self.Bind(wx.EVT_MENU, lambda evt: os.startfile("http://www.nvda-project.org/"), item)
+			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(URLs.nvAccess), item)
 			# Translators: The label for the menu item to view NVDA License document.
 			item = menu_help.Append(wx.ID_ANY, _("L&icense"))
 			self.Bind(
@@ -544,7 +545,7 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 			self.menu.AppendSeparator()
 			# Translators: The label for the menu item to open donate page.
 			item = self.menu.Append(wx.ID_ANY, _("Donate"))
-			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(DONATE_URL), item)
+			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(URLs.donate), item)
 			self.installPendingUpdateMenuItemPos = self.menu.GetMenuItemCount()
 			item = self.installPendingUpdateMenuItem = self.menu.Append(wx.ID_ANY,
 				# Translators: The label for the menu item to run a pending update.

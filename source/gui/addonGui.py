@@ -25,6 +25,7 @@ from . import guiHelper
 from . import nvdaControls
 from .dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 import gui.contextHelp
+from utils.urls import URLs
 
 
 def promptUserForRestart():
@@ -442,8 +443,8 @@ class AddonsDialog(
 		self.refreshAddonsList(activeIndex=index)
 
 	def onGetAddonsClick(self, evt):
-		ADDONS_URL = "http://addons.nvda-project.org"
-		os.startfile(ADDONS_URL)
+		ADDONS_URL = URLs.communityAddonsSite
+		os.startfile(URLs.communityAddonsSite)
 
 	def onIncompatAddonsShowClick(self, evt):
 		IncompatibleAddonsDialog(
