@@ -605,8 +605,10 @@ To navigate by object, use the following commands:
 || Name | Desktop key | Laptop key | Touch | Description |
 | Report current object | NVDA+numpad5 | NVDA+shift+o | none | Reports the current navigator object. Pressing twice spells the information, and pressing 3 times copies this object's name and value to the clipboard. |
 | Move to containing object | NVDA+numpad8 | NVDA+shift+upArrow | flick up (object mode) | Moves to the object containing the current navigator object |
-| Move to previous object | NVDA+numpad4 | NVDA+shift+leftArrow | flick left (object mode) | Moves to the object before the current navigator object |
-| Move to next object | NVDA+numpad6 | NVDA+shift+rightArrow | flick right (object mode) | Moves to the object after the current navigator object |
+| Move to previous object | NVDA+numpad4 | NVDA+shift+leftArrow | none | Moves to the object before the current navigator object |
+| Move to previous object in flattened view | NVDA+numpad9 | NVDA+shift+; | flick left (object mode) | Moves to the previous object in a flattened view of the object navigation hierarchy |
+| Move to next object | NVDA+numpad6 | NVDA+shift+rightArrow | none | Moves to the object after the current navigator object |
+| Move to next object in flattened view | NVDA+numpad3 | NVDA+shift+' | flick right (object mode) | Moves to the next object in a flattened view of the object navigation hierarchy |
 | Move to first contained object | NVDA+numpad2 | NVDA+shift+downArrow | flick down (object mode) | Moves to the first object contained by the current navigator object |
 | Move to focus object | NVDA+numpadMinus | NVDA+backspace | none | Moves to the object that currently has the system focus, and also places the review cursor at the position of the System caret, if it is showing |
 | Activate current navigator object | NVDA+numpadEnter | NVDA+enter | double-tap | Activates the current navigator object (similar to clicking with the mouse or pressing space when it has the system focus) |
