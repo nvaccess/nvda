@@ -91,6 +91,14 @@ def __getattr__(attrName: str) -> Any:
 		)
 		from addonHandler.packaging import addDirsToPythonPackagePath
 		return addDirsToPythonPackagePath
+	if attrName == "CONFIG_IN_LOCAL_APPDATA_SUBKEY" and NVDAState._allowDeprecatedAPI():
+		# Note: this should only log in situations where it will not be excessively noisy.
+		log.warning(
+			"CONFIG_IN_LOCAL_APPDATA_SUBKEY is deprecated. "
+			"Instead use RegistryKey.CONFIG_IN_LOCAL_APPDATA_SUBKEY. ",
+			stack_info=True,
+		)
+		return RegistryKey.CONFIG_IN_LOCAL_APPDATA_SUBKEY.value
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
 
 
