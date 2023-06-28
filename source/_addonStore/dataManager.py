@@ -7,7 +7,6 @@
 # Can be removed in a future version of python (3.8+)
 from __future__ import annotations
 
-from datetime import datetime, timedelta
 import json
 import os
 import pathlib
@@ -69,7 +68,6 @@ def initialize():
 class _DataManager:
 	_cacheLatestFilename: str = "_cachedLatestAddons.json"
 	_cacheCompatibleFilename: str = "_cachedCompatibleAddons.json"
-	_cachePeriod = timedelta(hours=6)
 	_downloadsPendingInstall: Set[Tuple["AddonListItemVM", os.PathLike]] = set()
 
 	def __init__(self):
@@ -124,13 +122,12 @@ class _DataManager:
 		cacheHash = response.content.decode().strip('"')
 		return cacheHash
 
-	def _cacheCompatibleAddons(self, addonData: str, fetchTime: datetime, cacheHash: Optional[str]):
+	def _cacheCompatibleAddons(self, addonData: str, cacheHash: Optional[str]):
 		if not NVDAState.shouldWriteToDisk():
 			return
 		if not addonData:
 			return
 		cacheData = {
-			"cacheDate": fetchTime.isoformat(),
 			"cacheHash": self._getCacheHash(),
 			"data": addonData,
 			"cachedLanguage": self._lang,
@@ -139,13 +136,12 @@ class _DataManager:
 		with open(self._cacheCompatibleFile, 'w') as cacheFile:
 			json.dump(cacheData, cacheFile, ensure_ascii=False)
 
-	def _cacheLatestAddons(self, addonData: str, fetchTime: datetime, cacheHash: Optional[str]):
+	def _cacheLatestAddons(self, addonData: str, cacheHash: Optional[str]):
 		if not NVDAState.shouldWriteToDisk():
 			return
 		if not addonData:
 			return
 		cacheData = {
-			"cacheDate": fetchTime.isoformat(),
 			"cacheHash": self._getCacheHash(),
 			"data": addonData,
 			"cachedLanguage": self._lang,
@@ -161,11 +157,9 @@ class _DataManager:
 			cacheData = json.load(cacheFile)
 		if not cacheData:
 			return None
-		fetchTime = datetime.fromisoformat(cacheData["cacheDate"])
 		cacheHash = cacheData.get("cacheHash")
 		return CachedAddonsModel(
 			cachedAddonData=_createStoreCollectionFromJson(cacheData["data"]),
-			cachedAt=fetchTime,
 			cacheHash=cacheHash,
 			cachedLanguage=cacheData["cachedLanguage"],
 			nvdaAPIVersion=tuple(cacheData["nvdaAPIVersion"]),  # loads as list
@@ -182,23 +176,19 @@ class _DataManager:
 		shouldRefreshData = (
 			not self._compatibleAddonCache
 			or self._compatibleAddonCache.nvdaAPIVersion != addonAPIVersion.CURRENT
-			or _DataManager._cachePeriod < (datetime.now() - self._compatibleAddonCache.cachedAt)
 			or self._compatibleAddonCache.cacheHash != cacheHash
 			or self._compatibleAddonCache.cachedLanguage != self._lang
 		)
 		if shouldRefreshData:
-			fetchTime = datetime.now()
 			apiData = self._getLatestAddonsDataForVersion(_getCurrentApiVersionForURL())
 			if apiData:
 				decodedApiData = apiData.decode()
 				self._cacheCompatibleAddons(
 					addonData=decodedApiData,
-					fetchTime=fetchTime,
 					cacheHash=cacheHash,
 				)
 				self._compatibleAddonCache = CachedAddonsModel(
 					cachedAddonData=_createStoreCollectionFromJson(decodedApiData),
-					cachedAt=fetchTime,
 					cacheHash=cacheHash,
 					cachedLanguage=self._lang,
 					nvdaAPIVersion=addonAPIVersion.CURRENT,
@@ -223,23 +213,19 @@ class _DataManager:
 		cacheHash = self._getCacheHash()
 		shouldRefreshData = (
 			not self._latestAddonCache
-			or _DataManager._cachePeriod < (datetime.now() - self._latestAddonCache.cachedAt)
 			or self._latestAddonCache.cacheHash != cacheHash
 			or self._latestAddonCache.cachedLanguage != self._lang
 		)
 		if shouldRefreshData:
-			fetchTime = datetime.now()
 			apiData = self._getLatestAddonsDataForVersion(_LATEST_API_VER)
 			if apiData:
 				decodedApiData = apiData.decode()
 				self._cacheLatestAddons(
 					addonData=decodedApiData,
-					fetchTime=fetchTime,
 					cacheHash=cacheHash,
 				)
 				self._latestAddonCache = CachedAddonsModel(
 					cachedAddonData=_createStoreCollectionFromJson(decodedApiData),
-					cachedAt=fetchTime,
 					cacheHash=cacheHash,
 					cachedLanguage=self._lang,
 					nvdaAPIVersion=_LATEST_API_VER,
