@@ -35,6 +35,7 @@ if TYPE_CHECKING:
 	from gui.message import DisplayableError
 
 
+_CACHE_HASH_URL = "https://www.nvaccess.org/addonStore/cacheHash.json"
 _LATEST_API_VER = "latest"
 """
 A string value used in the add-on store to fetch the latest version of all add-ons,

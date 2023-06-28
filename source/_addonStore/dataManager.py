@@ -42,6 +42,7 @@ from .models.channel import Channel
 from .network import (
 	_getAddonStoreURL,
 	_getCurrentApiVersionForURL,
+	_CACHE_HASH_URL,
 	_LATEST_API_VER,
 )
 
@@ -107,13 +108,30 @@ class _DataManager:
 			return None
 		return response.content
 
-	def _cacheCompatibleAddons(self, addonData: str, fetchTime: datetime):
+	def _getCacheHash(self) -> Optional[str]:
+		url = _CACHE_HASH_URL
+		try:
+			response = requests.get(url)
+		except requests.exceptions.RequestException as e:
+			log.debugWarning(f"Unable to get cache hash: {e}")
+			return None
+		if response.status_code != requests.codes.OK:
+			log.error(
+				f"Unable to get data from API ({url}),"
+				f" response ({response.status_code}): {response.content}"
+			)
+			return None
+		cacheHash = response.content.decode().strip('"')
+		return cacheHash
+
+	def _cacheCompatibleAddons(self, addonData: str, fetchTime: datetime, cacheHash: Optional[str]):
 		if not NVDAState.shouldWriteToDisk():
 			return
 		if not addonData:
 			return
 		cacheData = {
 			"cacheDate": fetchTime.isoformat(),
+			"cacheHash": self._getCacheHash(),
 			"data": addonData,
 			"cachedLanguage": self._lang,
 			"nvdaAPIVersion": addonAPIVersion.CURRENT,
@@ -121,13 +139,14 @@ class _DataManager:
 		with open(self._cacheCompatibleFile, 'w') as cacheFile:
 			json.dump(cacheData, cacheFile, ensure_ascii=False)
 
-	def _cacheLatestAddons(self, addonData: str, fetchTime: datetime):
+	def _cacheLatestAddons(self, addonData: str, fetchTime: datetime, cacheHash: Optional[str]):
 		if not NVDAState.shouldWriteToDisk():
 			return
 		if not addonData:
 			return
 		cacheData = {
 			"cacheDate": fetchTime.isoformat(),
+			"cacheHash": self._getCacheHash(),
 			"data": addonData,
 			"cachedLanguage": self._lang,
 			"nvdaAPIVersion": _LATEST_API_VER,
@@ -143,9 +162,11 @@ class _DataManager:
 		if not cacheData:
 			return None
 		fetchTime = datetime.fromisoformat(cacheData["cacheDate"])
+		cacheHash = cacheData.get("cacheHash")
 		return CachedAddonsModel(
 			cachedAddonData=_createStoreCollectionFromJson(cacheData["data"]),
 			cachedAt=fetchTime,
+			cacheHash=cacheHash,
 			cachedLanguage=cacheData["cachedLanguage"],
 			nvdaAPIVersion=tuple(cacheData["nvdaAPIVersion"]),  # loads as list
 		)
@@ -157,10 +178,12 @@ class _DataManager:
 			self,
 			onDisplayableError: Optional[DisplayableError.OnDisplayableErrorT] = None,
 	) -> "AddonGUICollectionT":
+		cacheHash = self._getCacheHash()
 		shouldRefreshData = (
 			not self._compatibleAddonCache
 			or self._compatibleAddonCache.nvdaAPIVersion != addonAPIVersion.CURRENT
 			or _DataManager._cachePeriod < (datetime.now() - self._compatibleAddonCache.cachedAt)
+			or self._compatibleAddonCache.cacheHash != cacheHash
 			or self._compatibleAddonCache.cachedLanguage != self._lang
 		)
 		if shouldRefreshData:
@@ -171,10 +194,12 @@ class _DataManager:
 				self._cacheCompatibleAddons(
 					addonData=decodedApiData,
 					fetchTime=fetchTime,
+					cacheHash=cacheHash,
 				)
 				self._compatibleAddonCache = CachedAddonsModel(
 					cachedAddonData=_createStoreCollectionFromJson(decodedApiData),
 					cachedAt=fetchTime,
+					cacheHash=cacheHash,
 					cachedLanguage=self._lang,
 					nvdaAPIVersion=addonAPIVersion.CURRENT,
 				)
@@ -195,9 +220,11 @@ class _DataManager:
 			self,
 			onDisplayableError: Optional[DisplayableError.OnDisplayableErrorT] = None,
 	) -> "AddonGUICollectionT":
+		cacheHash = self._getCacheHash()
 		shouldRefreshData = (
 			not self._latestAddonCache
 			or _DataManager._cachePeriod < (datetime.now() - self._latestAddonCache.cachedAt)
+			or self._latestAddonCache.cacheHash != cacheHash
 			or self._latestAddonCache.cachedLanguage != self._lang
 		)
 		if shouldRefreshData:
@@ -208,10 +235,12 @@ class _DataManager:
 				self._cacheLatestAddons(
 					addonData=decodedApiData,
 					fetchTime=fetchTime,
+					cacheHash=cacheHash,
 				)
 				self._latestAddonCache = CachedAddonsModel(
 					cachedAddonData=_createStoreCollectionFromJson(decodedApiData),
 					cachedAt=fetchTime,
+					cacheHash=cacheHash,
 					cachedLanguage=self._lang,
 					nvdaAPIVersion=_LATEST_API_VER,
 				)
