@@ -143,7 +143,7 @@ class URLManager(metaclass=_Singleton):
 			)
 			log.debug(
 				f"Set diversion of the {handle} URL by {stackInfo.co_name} in "
-			 	f"{stackInfo.co_filename}, because {reason}"
+				f"{stackInfo.co_filename}, because {reason}"
 			)
 
 	def __getattr__(self, handle) -> Any:
