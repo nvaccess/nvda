@@ -62,6 +62,7 @@ import winUser
 import winKernel
 import fileUtils
 
+
 def __getattr__(attrName: str) -> Any:
 	"""Module level `__getattr__` used to preserve backward compatibility."""
 	if attrName == "CHECK_URL" and _allowDeprecatedAPI():

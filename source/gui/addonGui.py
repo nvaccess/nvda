@@ -443,7 +443,6 @@ class AddonsDialog(
 		self.refreshAddonsList(activeIndex=index)
 
 	def onGetAddonsClick(self, evt):
-		ADDONS_URL = URLs.communityAddonsSite
 		os.startfile(URLs.communityAddonsSite)
 
 	def onIncompatAddonsShowClick(self, evt):

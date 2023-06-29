@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-# To add/edit URL entries in this module, search for "###".
+# To add/edit URL entries in this module, search for "# URL Entries".
 
 """
 Centralized URL provider.
@@ -144,7 +144,7 @@ class URLManager(metaclass=_Singleton):
 			log.debug(
 				f"Set diversion of the {handle} URL by {stackInfo.co_name} in "
 			 	f"{stackInfo.co_filename}, because {reason}"
-			 )
+			)
 
 	def __getattr__(self, handle) -> Any:
 		"""Delivers the requested URL.
@@ -169,7 +169,7 @@ class URLManager(metaclass=_Singleton):
 URLs = URLManager()
 
 
-### The rest of this file contains URL entries ###
+# URL Entries
 
 URLs.add("nvAccess", "https://nvaccess.org")
 URLs.add("NVDAUpdateChecks", "https://www.nvaccess.org/nvdaUpdateCheck")
