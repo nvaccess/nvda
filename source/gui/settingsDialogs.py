@@ -2634,8 +2634,8 @@ class UwpOcrPanel(SettingsPanel):
 			desc = languageHandler.getLanguageDescription(normLang)
 			if not desc:
 				# Raise an error in the hope that people be more likely to report the issue
-				log.error(f'No description for language: {normLang}. Using language code instead.')
-				desc = normLang
+				log.error(f'No description for language: {lang}. Using language code instead.')
+				desc = lang
 			languageChoices.append(desc)
 		# Translators: Label for an option in the Windows OCR dialog.
 		languageLabel = _("Recognition &language:")
