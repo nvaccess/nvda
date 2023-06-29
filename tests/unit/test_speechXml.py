@@ -249,9 +249,8 @@ class TestSsmlConverter(unittest.TestCase):
 			CharacterModeCommand(False),
 			PhonemeCommand("phIpa", text="phText")
 		])
-		self.assertEqual(
-			xml,
-			'<speak version="1.0" xmlns="https://www.w3.org/2001/10/synthesis" xml:lang="en-US">'
+		self.assertEqual(xml,
+			'<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="en-US">'
 			't1'
 			'<prosody pitch="200%" volume="200%">t2</prosody>'
 			'<prosody volume="200%"><voice xml:lang="de-DE">'
