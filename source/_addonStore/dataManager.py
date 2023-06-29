@@ -119,7 +119,7 @@ class _DataManager:
 				f" response ({response.status_code}): {response.content}"
 			)
 			return None
-		cacheHash = response.content.decode().strip('"')
+		cacheHash = response.json()
 		return cacheHash
 
 	def _cacheCompatibleAddons(self, addonData: str, cacheHash: Optional[str]):
