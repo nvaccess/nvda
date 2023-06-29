@@ -544,15 +544,23 @@ def test_symbolInSpeechUI():
 
 
 def _setConfig(
-	symbolLevel: SymLevel,
-	reportLineIndentation: ReportLineIndentation = ReportLineIndentation.OFF,
-	ignoreBlankLinesForReportLineIndentation: bool = False
+		symbolLevel: SymLevel,
+		reportLineIndentation: ReportLineIndentation = ReportLineIndentation.OFF,
+		ignoreBlankLinesForReportLineIndentation: bool = False
 ) -> None:
 	spy = _NvdaLib.getSpyLib()
 	spy.set_configValue(["documentFormatting", "reportLineIndentation"], reportLineIndentation.value)
-	spy.set_configValue(["documentFormatting", "ignoreBlankLinesForreportLineIndentation"], ignoreBlankLinesForReportLineIndentation)
+	spy.set_configValue(
+		["documentFormatting", "ignoreBlankLinesForreportLineIndentation"],
+		ignoreBlankLinesForReportLineIndentation
+	)
 	spy.set_configValue(["speech", "symbolLevel"], symbolLevel.value)
-	_builtIn.log(message=f"Doing test at symbol level: {symbolLevel}, line indentation reporting: {reportLineIndentation}, ignore blank lines for line indentation reporting: {ignoreBlankLinesForReportLineIndentation}")
+	message = (
+		f"Doing test at symbol level: {symbolLevel}"
+		f", line indentation reporting: {reportLineIndentation}"
+		f", ignore blank lines for line indentation reporting: {ignoreBlankLinesForReportLineIndentation}"
+	)
+	_builtIn.log(message=message)
 
 
 def _doTest(
@@ -689,12 +697,12 @@ def test_ignoreBlankLinesForReportLineIndentation():
 	""" Test line indentation reporting with ignoreBlankLinesForReportLineIndentation off and then on
 	"""
 	_notepad.prepareNotepad('\n'.join([
-		'', # blank line
+		'',  # blank line
 		'def foo',
 		'\thello',
-		'', # blank line
+		'',  # blank line
 		'\tworld',
-		'', # blank line
+		'',  # blank line
 		'def bar'
 	]))
 

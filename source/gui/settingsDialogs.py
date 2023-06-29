@@ -2392,7 +2392,9 @@ class DocumentFormattingPanel(SettingsPanel):
 		ignoreBlankLinesText = _("Ignore &blank lines for line indentation reporting")
 		ignoreBlankLinesCheckBox = wx.CheckBox(pageAndSpaceBox, label=ignoreBlankLinesText)
 		self.ignoreBlankLinesForReportLineIndentationCheckbox = pageAndSpaceGroup.addItem(ignoreBlankLinesCheckBox)
-		self.ignoreBlankLinesForReportLineIndentationCheckbox.SetValue(config.conf["documentFormatting"]["ignoreBlankLinesForReportLineIndentation"])
+		self.ignoreBlankLinesForReportLineIndentationCheckbox.SetValue(
+			config.conf["documentFormatting"]["ignoreBlankLinesForReportLineIndentation"]
+		)
 		
 		# Translators: This message is presented in the document formatting settings panel
 		# If this option is selected, NVDA will report paragraph indentation if available. 
@@ -2545,7 +2547,8 @@ class DocumentFormattingPanel(SettingsPanel):
 		config.conf["documentFormatting"]["reportPage"]=self.pageCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLineNumber"]=self.lineNumberCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLineIndentation"] = self.lineIndentationCombo.GetSelection()
-		config.conf["documentFormatting"]["ignoreBlankLinesForReportLineIndentation"]=self.ignoreBlankLinesForReportLineIndentationCheckbox.IsChecked()
+		ignoreBlankLines = self.ignoreBlankLinesForReportLineIndentationCheckbox.IsChecked()
+		config.conf["documentFormatting"]["ignoreBlankLinesForReportLineIndentation"] = ignoreBlankLines
 		config.conf["documentFormatting"]["reportParagraphIndentation"]=self.paragraphIndentationCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLineSpacing"]=self.lineSpacingCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportTables"]=self.tablesCheckBox.IsChecked()

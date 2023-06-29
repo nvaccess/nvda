@@ -1541,15 +1541,15 @@ def getTextInfoSpeech(  # noqa: C901
 					relativeSpeechSequence.append(LangChangeCommand(newLanguage))
 					lastLanguage=newLanguage
 	if (
-		reportIndentation 
-		and speakTextInfoState 
+		reportIndentation
+		and speakTextInfoState
 		and(
 			# either not ignoring blank lines
 			not formatConfig['ignoreBlankLinesForReportLineIndentation']
 			# or line isn't completely blank
 			or any(isinstance(t, str) and not all(c in LINE_END_CHARS for c in t) for t in textWithFields)
 		)
-		and allIndentation!=speakTextInfoState.indentationCache
+		and allIndentation != speakTextInfoState.indentationCache
 	):
 		indentationSpeech=getIndentationSpeech(allIndentation, formatConfig)
 		if autoLanguageSwitching and speechSequence[-1].lang is not None:
@@ -1615,7 +1615,7 @@ def getTextInfoSpeech(  # noqa: C901
 
 
 # for checking a line is completely blank, i.e. doesn't even contain spaces
-LINE_END_CHARS = frozenset(( '\r', '\n' ))
+LINE_END_CHARS = frozenset(('\r', '\n'))
 
 
 def _isControlEndFieldCommand(command: Union[str, textInfos.FieldCommand]):
