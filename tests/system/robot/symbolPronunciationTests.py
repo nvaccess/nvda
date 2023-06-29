@@ -551,7 +551,7 @@ def _setConfig(
 	spy = _NvdaLib.getSpyLib()
 	spy.set_configValue(["documentFormatting", "reportLineIndentation"], reportLineIndentation.value)
 	spy.set_configValue(
-		["documentFormatting", "ignoreBlankLinesForreportLineIndentation"],
+		["documentFormatting", "ignoreBlankLinesForReportLineIndentation"],
 		ignoreBlankLinesForReportLineIndentation
 	)
 	spy.set_configValue(["speech", "symbolLevel"], symbolLevel.value)
