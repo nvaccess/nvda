@@ -428,8 +428,9 @@ def getSynth() -> Optional[SynthDriver]:
 
 
 def getSynthInstance(name, asDefault=False):
+	from synthDrivers.oneCore import OneCoreSynthDriver
 	newSynth: SynthDriver = _getSynthDriver(name)()
-	if asDefault and newSynth.name == 'oneCore':
+	if asDefault and isinstance(newSynth, OneCoreSynthDriver):
 		# Will raise an exception if oneCore does not support the system language
 		newSynth._getDefaultVoice(pickAny=False)
 	newSynth.initSettings()
