@@ -83,9 +83,10 @@ def nvdaController_brailleMessage(text):
 	focus=api.getFocusObject()
 	if focus.sleepMode==focus.SLEEP_FULL:
 		return -1
-	import queueHandler
-	import braille
-	queueHandler.queueFunction(queueHandler.eventQueue,braille.handler.message,text)
+	if config.conf["braille"]["reportLiveRegions"]:
+		import queueHandler
+		import braille
+		queueHandler.queueFunction(queueHandler.eventQueue, braille.handler.message, text)
 	return 0
 
 def _lookupKeyboardLayoutNameWithHexString(layoutString):
