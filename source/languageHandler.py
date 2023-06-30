@@ -167,7 +167,7 @@ def getLanguageDescription(language: str) -> Optional[str]:
 		import localesData
 		desc = localesData.LANG_NAMES_TO_LOCALIZED_DESCS.get(language, None)
 	if not desc:
-		log.debugWarning(f'Unable to provide a describption for the following language: {language}')
+		log.debugWarning(f'Unable to provide a description for the following language: {language}')
 	return desc
 
 
