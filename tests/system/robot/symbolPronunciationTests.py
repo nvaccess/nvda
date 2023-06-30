@@ -703,7 +703,8 @@ def test_ignoreBlankLinesForReportLineIndentation():
 		'',  # blank line
 		'\tworld',
 		'',  # blank line
-		'def bar'
+		'def bar',
+		'',  # blank line
 	]))
 
 	def _doTestIgnoreBlankLines(ignoreBlankLines: bool, expectedSpeech: _typing.List[str]) -> None:
@@ -724,7 +725,8 @@ def test_ignoreBlankLinesForReportLineIndentation():
 			'no indent  blank',
 			'tab  world',
 			'no indent  blank',
-			'def bar'
+			'def bar',
+			'blank'
 		]
 	)
 
@@ -738,7 +740,7 @@ def test_ignoreBlankLinesForReportLineIndentation():
 			'blank',
 			'world',
 			'blank',
-			'no indent  def bar'
+			'no indent  def bar',
+			'blank'
 		]
 	)
-

@@ -631,11 +631,11 @@ class GlobalCommands(ScriptableObject):
 		ignore = config.conf['documentFormatting']['ignoreBlankLinesForReportLineIndentation']
 		config.conf['documentFormatting']['ignoreBlankLinesForReportLineIndentation'] = not ignore
 		if ignore:
-			# Translators: The message announced when toggling off the ignore blank lines for line indentation 
+			# Translators: The message announced when toggling off the ignore blank lines for line indentation
 			# reporting document formatting setting.
 			ui.message(_("Ignore blank lines for line indentation reporting off"))
 		else:
-			# Translators: The message announced when toggling on the ignore blank lines for line indentation 
+			# Translators: The message announced when toggling on the ignore blank lines for line indentation
 			# reporting document formatting setting.
 			ui.message(_("Ignore blank lines for line indentation reporting on"))
 
