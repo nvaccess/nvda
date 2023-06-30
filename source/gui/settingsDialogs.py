@@ -1615,7 +1615,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		capPitchChangeLabelText = _("Capital pitch change percentage")
 		self.capPitchChangeEdit = settingsSizerHelper.addLabeledControl(
 			capPitchChangeLabelText,
-			nvdaControls.SelectOnFocusSpinCtrl,
+			wx.SpinCtrl,
 			min=minPitchChange,
 			max=maxPitchChange,
 			initial=config.conf["speech"][self.driver.name]["capPitchChange"])
@@ -1794,6 +1794,27 @@ class KeyboardSettingsPanel(SettingsPanel):
 		self.handleInjectedKeysCheckBox=sHelper.addItem(wx.CheckBox(self,label=handleInjectedKeysText))
 		self.bindHelpEvent("KeyboardSettingsHandleKeys", self.handleInjectedKeysCheckBox)
 		self.handleInjectedKeysCheckBox.SetValue(config.conf["keyboard"]["handleInjectedKeys"])
+		
+		minDelay = float(config.conf.getConfigValidation(
+			("keyboard", "maxRepeatedKeyPressDelay")
+		).kwargs["min"])
+		maxDelay = float(config.conf.getConfigValidation(
+			("keyboard", "maxRepeatedKeyPressDelay")
+		).kwargs["max"])
+		# Translators: The label for a setting in keyboard settings to change maximum delay between two key press
+		# to be considered a double key press.
+		maxRepeatedDelayText = _("Maximum &delay between two key presses to be considered a repeated key press:")
+		self.maxRepeatedDelayEdit = sHelper.addLabeledControl(
+			maxRepeatedDelayText,
+			wx.SpinCtrlDouble,
+			min=minDelay,
+			max=maxDelay,
+			initial=config.conf["keyboard"]["maxRepeatedKeyPressDelay"],
+			inc=0.5,
+			name=maxRepeatedDelayText,
+		)
+		self.maxRepeatedDelayEdit.SetDigits(1)
+		self.bindHelpEvent("MaxRepeatedKeyDelay", self.maxRepeatedDelayEdit)
 
 	def isValid(self):
 		# #2871: check whether at least one key is the nvda key.
@@ -1822,6 +1843,7 @@ class KeyboardSettingsPanel(SettingsPanel):
 		config.conf["keyboard"]["speakCommandKeys"]=self.commandKeysCheckBox.IsChecked()
 		config.conf["keyboard"]["alertForSpellingErrors"]=self.alertForSpellingErrorsCheckBox.IsChecked()
 		config.conf["keyboard"]["handleInjectedKeys"]=self.handleInjectedKeysCheckBox.IsChecked()
+		config.conf["keyboard"]["maxRepeatedKeyPressDelay"] = self.maxRepeatedDelayEdit.GetValue()
 
 class MouseSettingsPanel(SettingsPanel):
 	# Translators: This is the label for the mouse settings panel.
@@ -2134,7 +2156,9 @@ class BrowseModePanel(SettingsPanel):
 		# Translators: This is the label for a textfield in the
 		# browse mode settings panel.
 		maxLengthLabelText = _("&Maximum number of characters on one line")
-		self.maxLengthEdit = sHelper.addLabeledControl(maxLengthLabelText, nvdaControls.SelectOnFocusSpinCtrl,
+		self.maxLengthEdit = sHelper.addLabeledControl(
+			maxLengthLabelText,
+			wx.SpinCtrl,
 			# min and max are not enforced in the config for virtualBuffers.maxLineLength
 			min=10, max=250,
 			initial=config.conf["virtualBuffers"]["maxLineLength"])
@@ -2143,7 +2167,9 @@ class BrowseModePanel(SettingsPanel):
 		# Translators: This is the label for a textfield in the
 		# browse mode settings panel.
 		pageLinesLabelText = _("&Number of lines per page")
-		self.pageLinesEdit = sHelper.addLabeledControl(pageLinesLabelText, nvdaControls.SelectOnFocusSpinCtrl,
+		self.pageLinesEdit = sHelper.addLabeledControl(
+			pageLinesLabelText,
+			wx.SpinCtrl,
 			# min and max are not enforced in the config for virtualBuffers.linesPerPage
 			min=5, max=150,
 			initial=config.conf["virtualBuffers"]["linesPerPage"])
@@ -3027,7 +3053,7 @@ class AdvancedPanelControls(
 		label = _("Caret movement timeout (in ms)")
 		self.caretMoveTimeoutSpinControl=editableTextGroup.addLabeledControl(
 			label,
-			nvdaControls.SelectOnFocusSpinCtrl,
+			wx.SpinCtrl,
 			min=0,
 			max=2000,
 			initial=config.conf["editableText"]["caretMoveTimeoutMs"]
@@ -3634,7 +3660,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		maxBlinkRate = int(config.conf.getConfigValidation(("braille", "cursorBlinkRate")).kwargs["max"])
 		self.cursorBlinkRateEdit = sHelper.addLabeledControl(
 			cursorBlinkRateLabelText,
-			nvdaControls.SelectOnFocusSpinCtrl,
+			wx.SpinCtrl,
 			min=minBlinkRate,
 			max=maxBlinkRate,
 			initial=config.conf["braille"]["cursorBlinkRate"]
@@ -3695,7 +3721,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		messageTimeoutText = _("Message &timeout (sec)")
 		self.messageTimeoutEdit = sHelper.addLabeledControl(
 			messageTimeoutText,
-			nvdaControls.SelectOnFocusSpinCtrl,
+			wx.SpinCtrl,
 			min=minTimeout,
 			max=maxTimeOut,
 			initial=config.conf["braille"]["messageTimeout"]
