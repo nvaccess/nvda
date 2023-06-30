@@ -2853,7 +2853,6 @@ class AdvancedPanelControls(
 		#  Advanced settings panel
 		label = _("Braille")
 		brailleSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=label)
-		brailleBox = brailleSizer.GetStaticBox()
 		brailleGroup = guiHelper.BoxSizerHelper(self, sizer=brailleSizer)
 		sHelper.addItem(brailleGroup)
 
