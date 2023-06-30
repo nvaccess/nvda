@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-23 00:02+0000\n"
-"PO-Revision-Date: 2023-06-25 19:05+0530\n"
+"POT-Creation-Date: 2023-06-27 01:58+0000\n"
+"PO-Revision-Date: 2023-06-29 20:24+0530\n"
 "Last-Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language-Team: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language: ta\n"
@@ -13278,6 +13278,14 @@ msgctxt "line spacing value"
 msgid "at least %.1f pt"
 msgstr "குறைந்தபட்சம் %.1f புள்ளி"
 
+#. Translators: line spacing of x lines
+#, python-format
+msgctxt "line spacing value"
+msgid "%.1f line"
+msgid_plural "%.1f lines"
+msgstr[0] "%.1f வரி"
+msgstr[1] "%.1f வரிகள்"
+
 #. Translators: the title of the message dialog desplaying an MS Word table description.
 msgid "Table description"
 msgstr "அட்டவணை விளக்கம்"
@@ -13601,9 +13609,372 @@ msgstr "எச்.ஐ.டி. விசைப் பலகை உள்ளீட
 msgid "Toggle HID keyboard simulation"
 msgstr "எச்.ஐ.டி. விசைப் பலகை உருவகமாக்கத்தை மாற்றியமைத்திடுக"
 
-#~ msgctxt "line spacing value"
-#~ msgid "%.1f lines"
-#~ msgstr "%.1f "
+#. Translators: Header (usually the add-on name) when add-ons are loading. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Loading add-ons..."
+msgstr "நீட்சிநிரல்கள் ஏற்றப்படுகின்றன..."
+
+#. Translators: Header (usually the add-on name) when no add-on is selected. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "No add-on selected."
+msgstr "நீட்சிநிரல் ஏதும் தெரிவுச்செய்யப்படவில்லை"
+
+#. Translators: Label for the text control containing a description of the selected add-on.
+#. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Description:"
+msgstr "விளக்கம்:"
+
+#. Translators: Label for the text control containing a description of the selected add-on.
+#. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "S&tatus:"
+msgstr "நிலை (&T):"
+
+#. Translators: Label for the text control containing a description of the selected add-on.
+#. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "&Actions"
+msgstr "செயல்கள் (&A)"
+
+#. Translators: Label for the text control containing extra details about the selected add-on.
+#. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "&Other Details:"
+msgstr "பிற விவரங்கள் (&O):"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Publisher:"
+msgstr "பதிப்பாளர்:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Installed version:"
+msgstr "நிறுவப்பட்டுள்ள பதிப்பு:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Available version:"
+msgstr "கிடைப்பிலுள்ள பதிப்பு:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Channel:"
+msgstr "அலைத்தடம்:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Incompatible Reason:"
+msgstr "இணக்கமின்மையின் காரணம்:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Homepage:"
+msgstr "முகப்புப்பக்கம்:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "License:"
+msgstr "உரிமம்:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "License URL:"
+msgstr "உரிம இணைய முகவரி:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Download URL:"
+msgstr "தரவிறக்க இணைய முகவரி: "
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Source URL:"
+msgstr "ஆதார இணைய முகவரி:"
+
+#. Translators: A button in the addon installation warning / blocked dialog which shows
+#. more information about the addon
+msgctxt "addonStore"
+msgid "&About add-on..."
+msgstr "நீட்சிநிரல் குறித்து... (&A)"
+
+#. Translators: A button in the addon installation blocked dialog which will confirm the available action.
+msgctxt "addonStore"
+msgid "&Yes"
+msgstr "ஆம் (&Y)"
+
+#. Translators: A button in the addon installation blocked dialog which will dismiss the dialog.
+msgctxt "addonStore"
+msgid "&No"
+msgstr "இல்லை (&N)"
+
+#. Translators: The message displayed when updating an add-on, but the installed version
+#. identifier can not be compared with the version to be installed.
+msgctxt "addonStore"
+msgid ""
+"Warning: add-on installation may result in downgrade: {name}. The installed "
+"add-on version cannot be compared with the add-on store version. Installed "
+"version: {oldVersion}. Available version: {version}.\n"
+"Proceed with installation anyway? "
+msgstr ""
+"எச்சரிக்கை: நீட்சிநிரலின் நிறுவுதல் தரத்தில் குறைவை ஏற்படுத்தலாம்: {name}. நிறுவப்பட்டுள்ள "
+"நீட்சிநிரல் பதிப்பை அங்காடியிலுள்ள நீட்சிநிரல் பதிப்புடன் ஒப்புநோக்க இயலவில்லை. "
+"நிறுவப்பட்டுள்ள பதிப்பு: {oldVersion}. கிடைப்பிலுள்ள பதிப்பு: {version}.\n"
+"இருப்பினும் நிறுவுதலைத் தொடர விரும்புகிறீர்களா?"
+
+#. Translators: The title of a dialog presented when an error occurs.
+msgctxt "addonStore"
+msgid "Add-on not compatible"
+msgstr "இணக்கமற்ற நீட்சிநிரல்"
+
+#. Translators: Presented when attempting to remove the selected add-on.
+#. {addon} is replaced with the add-on name.
+msgctxt "addonStore"
+msgid ""
+"Are you sure you wish to remove the {addon} add-on from NVDA? This cannot be "
+"undone."
+msgstr ""
+"{addon} நீட்சிநிரலினைத் தாங்கள் என்விடிஏவிலிருந்து கட்டாயம் நீக்க விரும்புகிறீர்களா? "
+"இச்செயலைத் திரும்பப் பெற இயலாது."
+
+#. Translators: Title for message asking if the user really wishes to remove the selected Add-on.
+msgctxt "addonStore"
+msgid "Remove Add-on"
+msgstr "நீட்சிநிரல் நீக்கம்"
+
+#. Translators: The message displayed when installing an add-on package that is incompatible
+#. because the add-on is too old for the running version of NVDA.
+msgctxt "addonStore"
+msgid ""
+"Warning: add-on is incompatible: {name} {version}. Check for an updated "
+"version of this add-on if possible. The last tested NVDA version for this "
+"add-on is {lastTestedNVDAVersion}, your current NVDA version is "
+"{NVDAVersion}. Installation may cause unstable behavior in NVDA.\n"
+"Proceed with installation anyway? "
+msgstr ""
+"எச்சரிக்கை: இணக்கமற்ற நீட்சிநிரல்: {name} {version}. இயன்றால் இந்த நீட்சிநிரலுக்கான "
+"இற்றாக்கப்பட்டப் பதிப்பு இருக்கிறதா என்று பார்க்கவும். இந்த நீட்சிநிரலுக்காக பரிசோதிக்கப்பட்ட "
+"என்விடிஏவின் கடைசிப் பதிப்பு {lastTestedNVDAVersion}. தங்களின் தற்போதைய என்விடிஏ "
+"பதிப்பு {NVDAVersion}. இந்த நீட்சிநிரலை நிறுவினால் என்விடிஏவின் செயலில் நிலையற்றத் "
+"தன்மையை ஏற்படுத்தலாம்.\n"
+"இருப்பினும் நிறுவுதலைத் தொடர விரும்புகிறீர்களா?"
+
+#. Translators: The message displayed when enabling an add-on package that is incompatible
+#. because the add-on is too old for the running version of NVDA.
+msgctxt "addonStore"
+msgid ""
+"Warning: add-on is incompatible: {name} {version}. Check for an updated "
+"version of this add-on if possible. The last tested NVDA version for this "
+"add-on is {lastTestedNVDAVersion}, your current NVDA version is "
+"{NVDAVersion}. Enabling may cause unstable behavior in NVDA.\n"
+"Proceed with enabling anyway? "
+msgstr ""
+"எச்சரிக்கை: இணக்கமற்ற நீட்சிநிரல்: {name} {version}. இயன்றால் இந்த நீட்சிநிரலுக்கான "
+"இற்றாக்கப்பட்டப் பதிப்பு இருக்கிறதா என்று பார்க்கவும். இந்த நீட்சிநிரலுக்காக பரிசோதிக்கப்பட்ட "
+"என்விடிஏவின் கடைசிப் பதிப்பு {lastTestedNVDAVersion}. தங்களின் தற்போதைய என்விடிஏ "
+"பதிப்பு {NVDAVersion}. இந்த நீட்சிநிரலை முடுக்கினால் என்விடிஏவின் செயலில் நிலையற்றத் "
+"தன்மையை ஏற்படுத்தலாம்.\n"
+"இருப்பினும் முடுக்குவதைத் தொடர விரும்புகிறீர்களா?"
+
+#. Translators: message shown in the Addon Information dialog.
+msgctxt "addonStore"
+msgid ""
+"{summary} ({name})\n"
+"Version: {version}\n"
+"Publisher: {publisher}\n"
+"Description: {description}\n"
+msgstr ""
+"{summary} ({name})\n"
+"பதிப்பு: {version}\n"
+"பதிப்பாளர்: {publisher}\n"
+"விளக்கம்: {description}\n"
+
+#. Translators: the url part of the About Add-on information
+msgctxt "addonStore"
+msgid "Homepage: {url}"
+msgstr "முகப்புப்பக்கம்: {url}"
+
+#. Translators: the minimum NVDA version part of the About Add-on information
+msgctxt "addonStore"
+msgid "Minimum required NVDA version: {}"
+msgstr "தேவைப்படும் குறைந்தபட்ச என்விடிஏ பதிப்பு: {}"
+
+#. Translators: the last NVDA version tested part of the About Add-on information
+msgctxt "addonStore"
+msgid "Last NVDA version tested: {}"
+msgstr "பரிசோதிக்கப்பட்ட என்விடிஏவின் கடைசிப் பதிப்பு: {}"
+
+#. Translators: title for the Addon Information dialog
+msgctxt "addonStore"
+msgid "Add-on Information"
+msgstr "நீட்சிநிரல் தகவல்"
+
+#. Translators: The title of the addonStore dialog where the user can find and download add-ons
+msgctxt "addonStore"
+msgid "Add-on Store"
+msgstr "நீட்சிநிரல் அங்காடி"
+
+#. Translators: Banner notice that is displayed in the Add-on Store.
+msgctxt "addonStore"
+msgid "Note: NVDA was started with add-ons disabled"
+msgstr "நீட்சிநிரல்கள் முடக்கப்பட்ட நிலையில் மறுதுவக்கப்பட்டது என்பதை கவனிக்கவும். "
+
+#. Translators: The label for a button in add-ons Store dialog to install an external add-on.
+msgctxt "addonStore"
+msgid "Install from e&xternal source"
+msgstr "வெளிப்புற ஆதாரத்திலிருந்து நிறுவுக (&X)"
+
+#. Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
+msgctxt "addonStore"
+msgid "Cha&nnel:"
+msgstr "அலைத்தடம் (&N):"
+
+#. Translators: The label of a checkbox to filter the list of add-ons in the add-on store dialog.
+msgid "Include &incompatible add-ons"
+msgstr "இணக்கமற்றக் நீட்சிநிரல்களை சேர்த்துக்கொள்க (&I)"
+
+#. Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
+msgctxt "addonStore"
+msgid "Ena&bled/disabled:"
+msgstr "முடுக்கப்பட்டது/முடக்கப்பட்டது (&B)"
+
+#. Translators: The label of a text field to filter the list of add-ons in the add-on store dialog.
+msgctxt "addonStore"
+msgid "&Search:"
+msgstr "தேடுக:"
+
+#. Translators: Title for message shown prior to installing add-ons when closing the add-on store dialog.
+msgctxt "addonStore"
+msgid "Add-on installation"
+msgstr "நீட்சிநிரல் நிறுவுதல்"
+
+#. Translators: Message shown prior to installing add-ons when closing the add-on store dialog
+#. The placeholder {} will be replaced with the number of add-ons to be installed
+msgctxt "addonStore"
+msgid "Download of {} add-ons in progress, cancel downloading?"
+msgstr "நீட்சிநிரல்கள் தரவிறக்கப்படுகின்றன, தரவிறக்கத்தை விலக்கிக்கொள்ளவேண்டுமா?"
+
+#. Translators: Message shown while installing add-ons after closing the add-on store dialog
+#. The placeholder {} will be replaced with the number of add-ons to be installed
+msgctxt "addonStore"
+msgid "Installing {} add-ons, please wait."
+msgstr "{} நீட்சிநிரல்கள் நிறுவப்படுகின்றன, அருள்கூர்ந்து காத்திருக்கவும்."
+
+#. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
+msgctxt "addonStore"
+msgid "NVDA Add-on Package (*.{ext})"
+msgstr "என்விடிஏ நீட்சிநிரல் தொகுப்பு (*.{ext})"
+
+#. Translators: The message displayed in the dialog that
+#. allows you to choose an add-on package for installation.
+msgctxt "addonStore"
+msgid "Choose Add-on Package File"
+msgstr "நீட்சிநிரல் தொகுப்புக் கோப்பினைத் தெரிவுச் செய்க"
+
+#. Translators: The name of the column that contains names of addons.
+msgctxt "addonStore"
+msgid "Name"
+msgstr "பெயர்"
+
+#. Translators: The name of the column that contains the installed addons version string.
+msgctxt "addonStore"
+msgid "Installed version"
+msgstr "நிறுவப்பட்டுள்ள பதிப்பு"
+
+#. Translators: The name of the column that contains the available addons version string.
+msgctxt "addonStore"
+msgid "Available version"
+msgstr "கிடைப்பிலுள்ள பதிப்பு"
+
+#. Translators: The name of the column that contains the channel of the addon (e.g stable, beta, dev).
+msgctxt "addonStore"
+msgid "Channel"
+msgstr "அலைத்தடம்"
+
+#. Translators: The name of the column that contains the addons publisher.
+msgctxt "addonStore"
+msgid "Publisher"
+msgstr "பதிப்பாளர்"
+
+#. Translators: The name of the column that contains the status of the addon.
+#. e.g. available, downloading installing
+msgctxt "addonStore"
+msgid "Status"
+msgstr "நிலை"
+
+#. Translators: Label for an action that installs the selected addon
+msgctxt "addonStore"
+msgid "&Install"
+msgstr "நிறுவுக (&I)"
+
+#. Translators: Label for an action that installs the selected addon
+msgctxt "addonStore"
+msgid "&Install (override incompatibility)"
+msgstr "நிறுவுக (இணக்கமின்மை இருப்பினும்) (&I)"
+
+#. Translators: Label for an action that updates the selected addon
+msgctxt "addonStore"
+msgid "&Update"
+msgstr "இற்றாக்கிடுக (&U)"
+
+#. Translators: Label for an action that replaces the selected addon with
+#. an add-on store version.
+msgctxt "addonStore"
+msgid "Re&place"
+msgstr "மாற்றிவைத்திடுக (&P)"
+
+#. Translators: Label for an action that disables the selected addon
+msgctxt "addonStore"
+msgid "&Disable"
+msgstr "முடக்குக (&D)"
+
+#. Translators: Label for an action that enables the selected addon
+msgctxt "addonStore"
+msgid "&Enable"
+msgstr "முடுக்குக (&E)"
+
+#. Translators: Label for an action that enables the selected addon
+msgctxt "addonStore"
+msgid "&Enable (override incompatibility)"
+msgstr "முடுக்குக (இணக்கமின்மை இருப்பினும்) (&E)"
+
+#. Translators: Label for an action that removes the selected addon
+msgctxt "addonStore"
+msgid "&Remove"
+msgstr "நீக்குக (&R)"
+
+#. Translators: Label for an action that opens help for the selected addon
+msgctxt "addonStore"
+msgid "&Help"
+msgstr "உதவி (&H)"
+
+#. Translators: Label for an action that opens the homepage for the selected addon
+msgctxt "addonStore"
+msgid "Ho&mepage"
+msgstr "முகப்புப்பக்கம் (%M)"
+
+#. Translators: Label for an action that opens the license for the selected addon
+msgctxt "addonStore"
+msgid "&License"
+msgstr "உரிமம் (&L)"
+
+#. Translators: Label for an action that opens the source code for the selected addon
+msgctxt "addonStore"
+msgid "Source &Code"
+msgstr "ஆதாரக் குறி (&C)"
+
+#. Translators: The message displayed when the add-on cannot be enabled.
+#. {addon} is replaced with the add-on name.
+msgctxt "addonStore"
+msgid "Could not enable the add-on: {addon}."
+msgstr "{addon} நீட்சிநிரலினை முடுக்க இயலவில்லை."
+
+#. Translators: The message displayed when the add-on cannot be disabled.
+#. {addon} is replaced with the add-on name.
+msgctxt "addonStore"
+msgid "Could not disable the add-on: {addon}."
+msgstr "{addon} நீட்சிநிரலினை முடக்கிட இயலவில்லை."
 
 #~ msgid "Find Error"
 #~ msgstr "கண்டறிதலில் பிழை"
@@ -13626,47 +13997,8 @@ msgstr "எச்.ஐ.டி. விசைப் பலகை உருவகம
 #~ msgid "Eurobraille Esys/Esytime/Iris displays"
 #~ msgstr "யுரோப்ரெயில் Esys/Esytime/Iris காட்சியமைவுகள்"
 
-#~ msgid "Manage &add-ons..."
-#~ msgstr "நீட்சிநிரல் மேலாண்மை (&A)"
-
-#~ msgid ""
-#~ "{summary} ({name})\n"
-#~ "Version: {version}\n"
-#~ "Author: {author}\n"
-#~ "Description: {description}\n"
-#~ msgstr ""
-#~ "{summary} ({name})\n"
-#~ "பதிப்பு: {version}\n"
-#~ "படைப்பாளர்: {author}\n"
-#~ "விளக்கம்: {description}\n"
-
 #~ msgid "URL: {url}"
 #~ msgstr "இணைய முகவரி: {url}"
-
-#~ msgid "Minimum required NVDA version: {}"
-#~ msgstr "தேவைப்படும் குறைந்தபட்ச என்விடிஏ பதிப்பு: {}"
-
-#~ msgid "Last NVDA version tested: {}"
-#~ msgstr "என்விடிஏவின் கடைசிப் பதிப்பு பரிசோதிக்கப்பட்டது: {}"
-
-#~ msgid "Add-on Information"
-#~ msgstr "நீட்சிநிரல்த் தகவல்"
-
-#~ msgid ""
-#~ "Are you sure you wish to remove the {addon} add-on from NVDA? This cannot "
-#~ "be undone."
-#~ msgstr ""
-#~ "{addon} நீட்சிநிரலினைத் தாங்கள் என்விடிஏவிலிருந்து கட்டாயம் நீக்க விரும்புகிறீர்களா? "
-#~ "இச்செயலைத் திரும்பப் பெற இயலாது."
-
-#~ msgid "Remove Add-on"
-#~ msgstr "நீட்சிநிரலினை நீக்குக"
-
-#~ msgid "Could not disable the {description} add-on."
-#~ msgstr "{description} நீட்சிநிரலினை முடக்கிட இயலவில்லை."
-
-#~ msgid "Could not enable the {description} add-on."
-#~ msgstr "{description} நீட்சிநிரலினை முடுக்க இயலவில்லை."
 
 #~ msgid ""
 #~ "Installation of {summary} {version} has been blocked. An updated version "
