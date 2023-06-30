@@ -40,6 +40,7 @@ from comtypes import HRESULT, BSTR, GUID
 from comtypes.hresult import S_OK
 import atexit
 import weakref
+import time
 import garbageHandler
 import winKernel
 import wave
@@ -48,6 +49,7 @@ from logHandler import log
 import os.path
 import extensionPoints
 import NVDAHelper
+import core
 
 
 __all__ = (
@@ -759,6 +761,13 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 	#: This allows us to have a single callback in the class rather than on
 	#: each instance, which prevents reference cycles.
 	_instances = weakref.WeakValueDictionary()
+	#: How long (in seconds) to wait before closing an audio stream that hasn't
+	#: played.
+	_STREAM_CLOSE_TIMEOUT: int = 60
+	#: How often (in ms) to check whether streams should be closed.
+	_STREAM_CLOSE_CHECK_INTERVAL: int = 20000
+	#: Whether there is a pending stream close check.
+	_isStreamCloseCheckPending: bool = False
 
 	def __init__(
 			self,
@@ -807,7 +816,9 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		)
 		self._doneCallbacks = {}
 		self._instances[self._player] = self
+		self._isOpen: bool
 		self.open()
+		self._lastActiveTime: float = time.time()
 
 	@wasPlay_callback
 	def _callback(cppPlayer, feedId):
@@ -845,11 +856,16 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			raise
 		WasapiWavePlayer.audioDeviceError_static = False
 		self._setVolumeFromConfig()
+		self._isOpen = True
 
 	def close(self):
-		"""For WASAPI, this just stops playback.
+		"""Close the output device.
 		"""
+		if not self._isOpen:
+			return
 		self.stop()
+		NVDAHelper.localLib.wasPlay_close(self._player)
+		self._isOpen = False
 
 	def feed(
 			self,
@@ -868,6 +884,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		@param onDone: Function to call when this chunk has finished playing.
 		@raise WindowsError: If there was an error playing the audio.
 		"""
+		self.open()
 		if self._audioDucker:
 			self._audioDucker.enable()
 		feedId = c_uint() if onDone else None
@@ -879,6 +896,8 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		)
 		if onDone:
 			self._doneCallbacks[feedId.value] = onDone
+		self._lastActiveTime = time.time()
+		self._scheduleStreamCloseCheck()
 
 	def sync(self):
 		"""Synchronise with playback.
@@ -897,6 +916,8 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 	def stop(self):
 		"""Stop playback.
 		"""
+		if not self._isOpen:
+			return
 		if self._audioDucker:
 			self._audioDucker.disable()
 		NVDAHelper.localLib.wasPlay_stop(self._player)
@@ -950,6 +971,45 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 				volume = synth.volume
 		self.setVolume(all=volume / 100)
 
+	@classmethod
+	def _scheduleStreamCloseCheck(cls):
+		if not cls._isStreamCloseCheckPending:
+			core.callLater(
+				cls._STREAM_CLOSE_CHECK_INTERVAL,
+				cls._streamCloseCheck
+			)
+			cls._isStreamCloseCheckPending = True
+
+	@classmethod
+	def _streamCloseCheck(cls):
+		"""Check whether there are open audio streams that should be considered
+		inactive. If there are any, close them. If there are open streams that
+		aren't ready to be closed yet, schedule another check.
+		This is necessary because holding streams open can prevent sleep on some
+		systems.
+		We do this in a single, class-wide check rather than separately for each
+		instance to avoid continually resetting a timer for each call to feed().
+		Resetting timers from another thread involves queuing to the main thread.
+		Doing that for every chunk of audio would not be very efficient.
+		Doing this with a class-wide check means that some checks might not take any
+		action and some streams might be kept open for a little longer than the
+		timeout, but this isn't problematic for our purposes.
+		"""
+		cls._isStreamCloseCheckPending = False
+		threshold = time.time() - cls._STREAM_CLOSE_TIMEOUT
+		stillOpenStream = False
+		for player in cls._instances.values():
+			if not player._isOpen:
+				continue
+			if player._lastActiveTime <= threshold:
+				player.close()
+			else:
+				stillOpenStream = True
+		if stillOpenStream:
+			# There's still at least one open stream that wasn't ready to be closed.
+			# Schedule another check here in case feed isn't called for a while.
+			cls._scheduleStreamCloseCheck()
+
 	@staticmethod
 	def _getDevices():
 		rawDevs = BSTR()
@@ -988,6 +1048,7 @@ def initialize():
 	for func in (
 		NVDAHelper.localLib.wasPlay_startup,
 		NVDAHelper.localLib.wasPlay_open,
+		NVDAHelper.localLib.wasPlay_close,
 		NVDAHelper.localLib.wasPlay_feed,
 		NVDAHelper.localLib.wasPlay_stop,
 		NVDAHelper.localLib.wasPlay_sync,

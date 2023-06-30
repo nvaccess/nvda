@@ -161,6 +161,8 @@ class WasapiPlayer {
 	 */
 	HRESULT open(bool force=false);
 
+	HRESULT close();
+
 	/**
 	 * Feed a chunk of audio.
 	 * If not null, id will be set to a number used to identify the audio
@@ -274,6 +276,13 @@ HRESULT WasapiPlayer::open(bool force) {
 		return hr;
 	}
 	playState = PlayState::stopped;
+	return S_OK;
+}
+
+HRESULT WasapiPlayer::close() {
+	client = nullptr;
+	render = nullptr;
+	clock = nullptr;
 	return S_OK;
 }
 
@@ -528,6 +537,10 @@ void wasPlay_destroy(WasapiPlayer* player) {
 
 HRESULT wasPlay_open(WasapiPlayer* player) {
 	return player->open();
+}
+
+HRESULT wasPlay_close(WasapiPlayer* player) {
+	return player->close();
 }
 
 HRESULT wasPlay_feed(WasapiPlayer* player, unsigned char* data,
