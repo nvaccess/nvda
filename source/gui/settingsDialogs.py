@@ -2628,9 +2628,15 @@ class UwpOcrPanel(SettingsPanel):
 		# Lazily import this.
 		from contentRecog import uwpOcr
 		self.languageCodes = uwpOcr.getLanguages()
-		languageChoices = [
-			languageHandler.getLanguageDescription(languageHandler.normalizeLanguage(lang))
-			for lang in self.languageCodes]
+		languageChoices = []
+		for lang in self.languageCodes:
+			normLang = languageHandler.normalizeLanguage(lang)
+			desc = languageHandler.getLanguageDescription(normLang)
+			if not desc:
+				# Raise an error in the hope that people be more likely to report the issue
+				log.error(f'No description for language: {lang}. Using language code instead.')
+				desc = lang
+			languageChoices.append(desc)
 		# Translators: Label for an option in the Windows OCR dialog.
 		languageLabel = _("Recognition &language:")
 		self.languageChoice = sHelper.addLabeledControl(languageLabel, wx.Choice, choices=languageChoices)
@@ -4312,9 +4318,14 @@ class SpeechSymbolsDialog(SettingsDialog):
 		except LookupError:
 			symbolProcessor = characterProcessing._localeSpeechSymbolProcessors.fetchLocaleData("en")
 		self.symbolProcessor = symbolProcessor
+		desc = languageHandler.getLanguageDescription(self.symbolProcessor.locale)
+		if not desc:
+			desc = self.symbolProcessor.locale
+			# Raise an error in the hope that people be more likely to report the issue
+			log.error(f'No description for language: {desc}. Using language code instead.')
 		# Translators: This is the label for the symbol pronunciation dialog.
 		# %s is replaced by the language for which symbol pronunciation is being edited.
-		self.title = _("Symbol Pronunciation (%s)")%languageHandler.getLanguageDescription(self.symbolProcessor.locale)
+		self.title = _("Symbol Pronunciation (%s)") % desc
 		super(SpeechSymbolsDialog, self).__init__(
 			parent,
 			resizeable=True,

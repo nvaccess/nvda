@@ -2145,6 +2145,7 @@ class GlobalCommands(ScriptableObject):
 			"reportFontSize",
 			"reportFontAttributes",
 			"reportSuperscriptsAndSubscripts",
+			"reportHighlight",
 			"reportColor",
 			"reportStyle",
 			"reportAlignment",
