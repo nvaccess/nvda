@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-16 00:01+0000\n"
+"POT-Creation-Date: 2023-06-27 01:58+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: 完美很难 <1872265132@qq.com>\n"
 "Language-Team: \n"
@@ -21,7 +21,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.3.1\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 msgid "Native input"
@@ -6874,9 +6875,10 @@ msgstr "{startTime}到{endTime}"
 
 #. Translators: Part of a message reported when on a calendar appointment with one or more categories
 #. in Microsoft Outlook.
-#, python-brace-format
-msgid "categories {categories}"
-msgstr "类别 {categories}"
+#, fuzzy, python-brace-format
+msgid "category {categories}"
+msgid_plural "categories {categories}"
+msgstr[0] "类别 {categories}"
 
 #. Translators: A message reported when on a calendar appointment with category in Microsoft Outlook
 #, python-brace-format
@@ -7246,19 +7248,19 @@ msgstr "Optelec ALVA 6 series/协议转换器"
 
 #. Translators: Message when setting HID keyboard simulation failed.
 msgid "Setting HID keyboard simulation not supported"
-msgstr "不支持设置触键仿真"
+msgstr "不支持设置 HID 键盘模拟"
 
 #. Translators: Message when HID keyboard simulation is enabled.
 msgid "HID keyboard simulation enabled"
-msgstr "启用人体学输入设备键盘触控仿真"
+msgstr "已启用 HID 键盘模拟"
 
 #. Translators: Message when HID keyboard simulation is disabled.
 msgid "HID keyboard simulation disabled"
-msgstr "禁用人体学输入设备键盘触控仿真"
+msgstr "已禁用 HID 键盘模拟"
 
 #. Translators: Description of the script that toggles HID keyboard simulation.
 msgid "Toggles HID keyboard simulation"
-msgstr "切换人体学输入设备键盘触控仿真"
+msgstr "切换 HID 键盘模拟"
 
 #. Translators: Names of braille displays.
 msgid "Baum/HumanWare/APH/Orbit braille displays"
@@ -11094,9 +11096,10 @@ msgid "level %s"
 msgstr "%s级"
 
 #. Translators: Number of items in a list (example output: list with 5 items).
-#, python-format
-msgid "with %s items"
-msgstr "%s项"
+#, fuzzy, python-format
+msgid "with %s item"
+msgid_plural "with %s items"
+msgstr[0] "%s项"
 
 #. Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
 #, python-format
@@ -13154,10 +13157,11 @@ msgid "at least %.1f pt"
 msgstr "至少 %.1f pt"
 
 #. Translators: line spacing of x lines
-#, python-format
+#, fuzzy, python-format
 msgctxt "line spacing value"
-msgid "%.1f lines"
-msgstr "%.1f 行"
+msgid "%.1f line"
+msgid_plural "%.1f lines"
+msgstr[0] "%.1f 行"
 
 #. Translators: the title of the message dialog desplaying an MS Word table description.
 msgid "Table description"
@@ -13410,7 +13414,7 @@ msgstr "可更新的插件"
 #. Translators: A selection option to display available add-ons in the add-on store
 msgctxt "addonStore"
 msgid "Available add-ons"
-msgstr "可用的插件"
+msgstr "可安装的插件"
 
 #. Translators: A selection option to display incompatible add-ons in the add-on store
 msgctxt "addonStore"
@@ -13484,11 +13488,377 @@ msgstr "Eurobraille displays"
 
 #. Translators: Message when HID keyboard simulation is unavailable.
 msgid "HID keyboard input simulation is unavailable."
-msgstr "人体学输入设备触键仿真不可用."
+msgstr "HID 键盘输入模拟不可用."
 
 #. Translators: Description of the script that toggles HID keyboard simulation.
 msgid "Toggle HID keyboard simulation"
-msgstr "切换键盘仿真开关"
+msgstr "切换 HID 键盘模拟开关"
+
+#. Translators: Header (usually the add-on name) when add-ons are loading. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Loading add-ons..."
+msgstr "正在加载插件..."
+
+#. Translators: Header (usually the add-on name) when no add-on is selected. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "No add-on selected."
+msgstr "，未选择插件。"
+
+#. Translators: Label for the text control containing a description of the selected add-on.
+#. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Description:"
+msgstr "描述:"
+
+#. Translators: Label for the text control containing a description of the selected add-on.
+#. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "S&tatus:"
+msgstr "状态(&T):"
+
+#. Translators: Label for the text control containing a description of the selected add-on.
+#. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "&Actions"
+msgstr "操作(&A)"
+
+#. Translators: Label for the text control containing extra details about the selected add-on.
+#. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "&Other Details:"
+msgstr "其他详情(&O):"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Publisher:"
+msgstr "发布者："
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Installed version:"
+msgstr "安装版本："
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Available version:"
+msgstr "可用版本："
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Channel:"
+msgstr "通道："
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Incompatible Reason:"
+msgstr "不兼容原因："
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Homepage:"
+msgstr "主页："
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "License:"
+msgstr "许可证："
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "License URL:"
+msgstr "许可证网址："
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Download URL:"
+msgstr "下载地址："
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Source URL:"
+msgstr "来源："
+
+#. Translators: A button in the addon installation warning / blocked dialog which shows
+#. more information about the addon
+msgctxt "addonStore"
+msgid "&About add-on..."
+msgstr "关于插件(&A)..."
+
+#. Translators: A button in the addon installation blocked dialog which will confirm the available action.
+msgctxt "addonStore"
+msgid "&Yes"
+msgstr "是(&Y)"
+
+#. Translators: A button in the addon installation blocked dialog which will dismiss the dialog.
+msgctxt "addonStore"
+msgid "&No"
+msgstr "否(&N)"
+
+#. Translators: The message displayed when updating an add-on, but the installed version
+#. identifier can not be compared with the version to be installed.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"Warning: add-on installation may result in downgrade: {name}. The installed "
+"add-on version cannot be compared with the add-on store version. Installed "
+"version: {oldVersion}. Available version: {version}.\n"
+"Proceed with installation anyway? "
+msgstr ""
+
+#. Translators: The title of a dialog presented when an error occurs.
+msgctxt "addonStore"
+msgid "Add-on not compatible"
+msgstr "插件不兼容"
+
+#. Translators: Presented when attempting to remove the selected add-on.
+#. {addon} is replaced with the add-on name.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"Are you sure you wish to remove the {addon} add-on from NVDA? This cannot be "
+"undone."
+msgstr "您确认要从 NVDA 中移除{addon}插件吗？ 确认后不可撤销。"
+
+#. Translators: Title for message asking if the user really wishes to remove the selected Add-on.
+msgctxt "addonStore"
+msgid "Remove Add-on"
+msgstr "移除插件"
+
+#. Translators: The message displayed when installing an add-on package that is incompatible
+#. because the add-on is too old for the running version of NVDA.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"Warning: add-on is incompatible: {name} {version}. Check for an updated "
+"version of this add-on if possible. The last tested NVDA version for this "
+"add-on is {lastTestedNVDAVersion}, your current NVDA version is "
+"{NVDAVersion}. Installation may cause unstable behavior in NVDA.\n"
+"Proceed with installation anyway? "
+msgstr ""
+"警告：插件不兼容：{name}-{version}。如果可能，请检查该插件有无新版本。此插件"
+"最后测试的 NVDA 版本是 {lastTestedNVDAVersion}，您当前的 NVDA 版本是 "
+"{NVDAVersion}。安装可能会导致 NVDA 不稳定或无法正常运行。\n"
+"您仍要安装该插件吗？"
+
+#. Translators: The message displayed when enabling an add-on package that is incompatible
+#. because the add-on is too old for the running version of NVDA.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"Warning: add-on is incompatible: {name} {version}. Check for an updated "
+"version of this add-on if possible. The last tested NVDA version for this "
+"add-on is {lastTestedNVDAVersion}, your current NVDA version is "
+"{NVDAVersion}. Enabling may cause unstable behavior in NVDA.\n"
+"Proceed with enabling anyway? "
+msgstr ""
+"警告：插件不兼容：{name}-{version}。如果可能，请检查该插件有无新版本。此插件"
+"最后测试的 NVDA 版本是 {lastTestedNVDAVersion}，您当前的 NVDA 版本是 "
+"{NVDAVersion}。启用可能会导致 NVDA 不稳定或无法正常运行。\\n\n"
+"您仍要启用该插件吗？"
+
+#. Translators: message shown in the Addon Information dialog.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"{summary} ({name})\n"
+"Version: {version}\n"
+"Publisher: {publisher}\n"
+"Description: {description}\n"
+msgstr ""
+"{summary} ({name})\n"
+"版本： {version}\n"
+"发布者： {publisher}\n"
+"描述： {description}\n"
+
+#. Translators: the url part of the About Add-on information
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Homepage: {url}"
+msgstr "主页：{url}"
+
+#. Translators: the minimum NVDA version part of the About Add-on information
+msgctxt "addonStore"
+msgid "Minimum required NVDA version: {}"
+msgstr "NVDA版本最低要求： "
+
+#. Translators: the last NVDA version tested part of the About Add-on information
+msgctxt "addonStore"
+msgid "Last NVDA version tested: {}"
+msgstr "最后测试的 NVDA 版本： {}"
+
+#. Translators: title for the Addon Information dialog
+msgctxt "addonStore"
+msgid "Add-on Information"
+msgstr "插件信息"
+
+#. Translators: The title of the addonStore dialog where the user can find and download add-ons
+msgctxt "addonStore"
+msgid "Add-on Store"
+msgstr "插件商店"
+
+#. Translators: Banner notice that is displayed in the Add-on Store.
+msgctxt "addonStore"
+msgid "Note: NVDA was started with add-ons disabled"
+msgstr "注意：NVDA 是在禁用插件的情况下启动的"
+
+#. Translators: The label for a button in add-ons Store dialog to install an external add-on.
+msgctxt "addonStore"
+msgid "Install from e&xternal source"
+msgstr "从外部源安装(&X)"
+
+#. Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
+msgctxt "addonStore"
+msgid "Cha&nnel:"
+msgstr "通道(&N):"
+
+#. Translators: The label of a checkbox to filter the list of add-ons in the add-on store dialog.
+msgid "Include &incompatible add-ons"
+msgstr "包含不兼容插件(&I)"
+
+#. Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
+msgctxt "addonStore"
+msgid "Ena&bled/disabled:"
+msgstr "启用/禁用(&B):"
+
+#. Translators: The label of a text field to filter the list of add-ons in the add-on store dialog.
+msgctxt "addonStore"
+msgid "&Search:"
+msgstr "搜索(&S):"
+
+#. Translators: Title for message shown prior to installing add-ons when closing the add-on store dialog.
+msgctxt "addonStore"
+msgid "Add-on installation"
+msgstr "插件安装"
+
+#. Translators: Message shown prior to installing add-ons when closing the add-on store dialog
+#. The placeholder {} will be replaced with the number of add-ons to be installed
+msgctxt "addonStore"
+msgid "Download of {} add-ons in progress, cancel downloading?"
+msgstr "正在下载 {} 个插件，要取消下载吗？"
+
+#. Translators: Message shown while installing add-ons after closing the add-on store dialog
+#. The placeholder {} will be replaced with the number of add-ons to be installed
+msgctxt "addonStore"
+msgid "Installing {} add-ons, please wait."
+msgstr "正在安装插件 {}，请稍候。"
+
+#. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
+#, python-brace-format
+msgctxt "addonStore"
+msgid "NVDA Add-on Package (*.{ext})"
+msgstr "NVDA 插件包 (*.{ext})"
+
+#. Translators: The message displayed in the dialog that
+#. allows you to choose an add-on package for installation.
+msgctxt "addonStore"
+msgid "Choose Add-on Package File"
+msgstr "选择插件包"
+
+#. Translators: The name of the column that contains names of addons.
+msgctxt "addonStore"
+msgid "Name"
+msgstr "名称"
+
+#. Translators: The name of the column that contains the installed addons version string.
+msgctxt "addonStore"
+msgid "Installed version"
+msgstr "已安装版本"
+
+#. Translators: The name of the column that contains the available addons version string.
+msgctxt "addonStore"
+msgid "Available version"
+msgstr "可更新版本"
+
+#. Translators: The name of the column that contains the channel of the addon (e.g stable, beta, dev).
+msgctxt "addonStore"
+msgid "Channel"
+msgstr "通道"
+
+#. Translators: The name of the column that contains the addons publisher.
+msgctxt "addonStore"
+msgid "Publisher"
+msgstr "发布者"
+
+#. Translators: The name of the column that contains the status of the addon.
+#. e.g. available, downloading installing
+msgctxt "addonStore"
+msgid "Status"
+msgstr "状态"
+
+#. Translators: Label for an action that installs the selected addon
+msgctxt "addonStore"
+msgid "&Install"
+msgstr "安装(&I)"
+
+#. Translators: Label for an action that installs the selected addon
+msgctxt "addonStore"
+msgid "&Install (override incompatibility)"
+msgstr "安装(忽略不兼容)(&I)"
+
+#. Translators: Label for an action that updates the selected addon
+msgctxt "addonStore"
+msgid "&Update"
+msgstr "更新(&U)"
+
+#. Translators: Label for an action that replaces the selected addon with
+#. an add-on store version.
+msgctxt "addonStore"
+msgid "Re&place"
+msgstr "替换(&P)"
+
+#. Translators: Label for an action that disables the selected addon
+msgctxt "addonStore"
+msgid "&Disable"
+msgstr "禁用(&D)"
+
+#. Translators: Label for an action that enables the selected addon
+msgctxt "addonStore"
+msgid "&Enable"
+msgstr "启用(&E)"
+
+#. Translators: Label for an action that enables the selected addon
+msgctxt "addonStore"
+msgid "&Enable (override incompatibility)"
+msgstr "启用（忽略不兼容）(&E)"
+
+#. Translators: Label for an action that removes the selected addon
+msgctxt "addonStore"
+msgid "&Remove"
+msgstr "移除(&R)"
+
+#. Translators: Label for an action that opens help for the selected addon
+msgctxt "addonStore"
+msgid "&Help"
+msgstr "帮助(&H)"
+
+#. Translators: Label for an action that opens the homepage for the selected addon
+msgctxt "addonStore"
+msgid "Ho&mepage"
+msgstr "主页(&H)"
+
+#. Translators: Label for an action that opens the license for the selected addon
+msgctxt "addonStore"
+msgid "&License"
+msgstr "许可(&L)"
+
+#. Translators: Label for an action that opens the source code for the selected addon
+msgctxt "addonStore"
+msgid "Source &Code"
+msgstr "源代码(&C)"
+
+#. Translators: The message displayed when the add-on cannot be enabled.
+#. {addon} is replaced with the add-on name.
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Could not enable the add-on: {addon}."
+msgstr "无法启用插件： {addon}"
+
+#. Translators: The message displayed when the add-on cannot be disabled.
+#. {addon} is replaced with the add-on name.
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Could not disable the add-on: {addon}."
+msgstr "无法禁用插件 {addon}"
 
 #~ msgid "Find Error"
 #~ msgstr "查找失败"
@@ -13509,45 +13879,8 @@ msgstr "切换键盘仿真开关"
 #~ msgid "Eurobraille Esys/Esytime/Iris displays"
 #~ msgstr "Eurobraille Esys/Esytime/Iris 点显器"
 
-#~ msgid "Manage &add-ons..."
-#~ msgstr "插件管理器(&A)..."
-
-#~ msgid ""
-#~ "{summary} ({name})\n"
-#~ "Version: {version}\n"
-#~ "Author: {author}\n"
-#~ "Description: {description}\n"
-#~ msgstr ""
-#~ "{summary} ({name})\n"
-#~ "版本: {version}\n"
-#~ "作者: {author}\n"
-#~ "描述: {description}\n"
-
 #~ msgid "URL: {url}"
 #~ msgstr "网址: {url}"
-
-#~ msgid "Minimum required NVDA version: {}"
-#~ msgstr "NVDA版本最低要求: {}"
-
-#~ msgid "Last NVDA version tested: {}"
-#~ msgstr "最近测试的 NVDA 版本： {}"
-
-#~ msgid "Add-on Information"
-#~ msgstr "插件信息"
-
-#~ msgid ""
-#~ "Are you sure you wish to remove the {addon} add-on from NVDA? This cannot "
-#~ "be undone."
-#~ msgstr "您确认要从 NVDA 中移除{addon}插件吗？ 确认后不可撤销。"
-
-#~ msgid "Remove Add-on"
-#~ msgstr "移除插件"
-
-#~ msgid "Could not disable the {description} add-on."
-#~ msgstr "无法禁用 {description} 插件。"
-
-#~ msgid "Could not enable the {description} add-on."
-#~ msgstr "无法启用 {description} 插件。"
 
 #~ msgid ""
 #~ "Installation of {summary} {version} has been blocked. An updated version "

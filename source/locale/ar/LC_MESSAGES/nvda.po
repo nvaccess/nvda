@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: master-10703,53a09c4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-23 00:02+0000\n"
+"POT-Creation-Date: 2023-06-27 01:58+0000\n"
 "PO-Revision-Date: 2023-06-26 21:18+0300\n"
 "Last-Translator: Hatoon <h.felemban@hotmail.com>\n"
 "Language-Team: AR <nvda-ar@groups.io>\n"
@@ -13332,6 +13332,18 @@ msgctxt "line spacing value"
 msgid "at least %.1f pt"
 msgstr "على الأقل %.1f pt"
 
+#. Translators: line spacing of x lines
+#, fuzzy, python-format
+msgctxt "line spacing value"
+msgid "%.1f line"
+msgid_plural "%.1f lines"
+msgstr[0] "%.1f pt"
+msgstr[1] "%.1f pt"
+msgstr[2] "%.1f pt"
+msgstr[3] "%.1f pt"
+msgstr[4] "%.1f pt"
+msgstr[5] "%.1f pt"
+
 #. Translators: the title of the message dialog desplaying an MS Word table description.
 msgid "Table description"
 msgstr "وصف الجدول"
@@ -13670,9 +13682,407 @@ msgstr "محاكاة لوحة مفاتيح HID غير مفعّلة."
 msgid "Toggle HID keyboard simulation"
 msgstr "التبديل بين تفعيل وتعطيل محاكاة لوحة مفاتيح HID"
 
-#~ msgctxt "line spacing value"
-#~ msgid "%.1f lines"
-#~ msgstr "%.1f pt"
+#. Translators: Header (usually the add-on name) when add-ons are loading. In the add-on store dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Loading add-ons..."
+msgstr "إ&دارة الإضافات البرمجية..."
+
+#. Translators: Header (usually the add-on name) when no add-on is selected. In the add-on store dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "No add-on selected."
+msgstr "غير محدد"
+
+#. Translators: Label for the text control containing a description of the selected add-on.
+#. In the add-on store dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Description:"
+msgstr "توزيع:"
+
+#. Translators: Label for the text control containing a description of the selected add-on.
+#. In the add-on store dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "S&tatus:"
+msgstr "لحالةبدأ"
+
+#. Translators: Label for the text control containing a description of the selected add-on.
+#. In the add-on store dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "&Actions"
+msgstr "&تعليقات توضيحية"
+
+#. Translators: Label for the text control containing extra details about the selected add-on.
+#. In the add-on store dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "&Other Details:"
+msgstr "تتوفّر تفاصيل"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Publisher:"
+msgstr ""
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Installed version:"
+msgstr "&تثبيت NVDA {version}"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Available version:"
+msgstr "الإضافات المتاحة"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Channel:"
+msgstr ""
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Incompatible Reason:"
+msgstr "سببُ عدم التوافق"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Homepage:"
+msgstr "الصفحة الرئيسية"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "License:"
+msgstr "&نص اتفاقية الترخيص"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "License URL:"
+msgstr "&نص اتفاقية الترخيص"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Download URL:"
+msgstr "تحميل"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Source URL:"
+msgstr ""
+
+#. Translators: A button in the addon installation warning / blocked dialog which shows
+#. more information about the addon
+#, fuzzy
+msgctxt "addonStore"
+msgid "&About add-on..."
+msgstr "نبذة عن الإض&افة البرمجية..."
+
+#. Translators: A button in the addon installation blocked dialog which will confirm the available action.
+#, fuzzy
+msgctxt "addonStore"
+msgid "&Yes"
+msgstr "&نعم"
+
+#. Translators: A button in the addon installation blocked dialog which will dismiss the dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "&No"
+msgstr "&لا"
+
+#. Translators: The message displayed when updating an add-on, but the installed version
+#. identifier can not be compared with the version to be installed.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"Warning: add-on installation may result in downgrade: {name}. The installed "
+"add-on version cannot be compared with the add-on store version. Installed "
+"version: {oldVersion}. Available version: {version}.\n"
+"Proceed with installation anyway? "
+msgstr ""
+
+#. Translators: The title of a dialog presented when an error occurs.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Add-on not compatible"
+msgstr "الإضافة البرمجية غير متوافقة"
+
+#. Translators: Presented when attempting to remove the selected add-on.
+#. {addon} is replaced with the add-on name.
+#, fuzzy, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"Are you sure you wish to remove the {addon} add-on from NVDA? This cannot be "
+"undone."
+msgstr "هل ترغب بالفعل في حذف إضافة {addon} من NVDA? لا يمكن التراجُع عن هذا."
+
+#. Translators: Title for message asking if the user really wishes to remove the selected Add-on.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Remove Add-on"
+msgstr "حذف الإضافة البرمجية"
+
+#. Translators: The message displayed when installing an add-on package that is incompatible
+#. because the add-on is too old for the running version of NVDA.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"Warning: add-on is incompatible: {name} {version}. Check for an updated "
+"version of this add-on if possible. The last tested NVDA version for this "
+"add-on is {lastTestedNVDAVersion}, your current NVDA version is "
+"{NVDAVersion}. Installation may cause unstable behavior in NVDA.\n"
+"Proceed with installation anyway? "
+msgstr ""
+
+#. Translators: The message displayed when enabling an add-on package that is incompatible
+#. because the add-on is too old for the running version of NVDA.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"Warning: add-on is incompatible: {name} {version}. Check for an updated "
+"version of this add-on if possible. The last tested NVDA version for this "
+"add-on is {lastTestedNVDAVersion}, your current NVDA version is "
+"{NVDAVersion}. Enabling may cause unstable behavior in NVDA.\n"
+"Proceed with enabling anyway? "
+msgstr ""
+
+#. Translators: message shown in the Addon Information dialog.
+#, fuzzy, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"{summary} ({name})\n"
+"Version: {version}\n"
+"Publisher: {publisher}\n"
+"Description: {description}\n"
+msgstr ""
+"{summary} ({name})\n"
+"رقم الإصدار: {version}\n"
+"المبرمج: {author}\n"
+"الوصف الوظيفي: {description}\n"
+
+#. Translators: the url part of the About Add-on information
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Homepage: {url}"
+msgstr ""
+
+#. Translators: the minimum NVDA version part of the About Add-on information
+#, fuzzy
+msgctxt "addonStore"
+msgid "Minimum required NVDA version: {}"
+msgstr "تتطلب كحد أدنى الإصدار NVDA {}"
+
+#. Translators: the last NVDA version tested part of the About Add-on information
+#, fuzzy
+msgctxt "addonStore"
+msgid "Last NVDA version tested: {}"
+msgstr "&آخر إصدار اختُبِر من NVDA: {}"
+
+#. Translators: title for the Addon Information dialog
+#, fuzzy
+msgctxt "addonStore"
+msgid "Add-on Information"
+msgstr "معلومات حول الإضافة البرمجية"
+
+#. Translators: The title of the addonStore dialog where the user can find and download add-ons
+#, fuzzy
+msgctxt "addonStore"
+msgid "Add-on Store"
+msgstr "مستودع الإضافات"
+
+#. Translators: Banner notice that is displayed in the Add-on Store.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Note: NVDA was started with add-ons disabled"
+msgstr "إعادة التشغيل مع تعطيل الإضافات"
+
+#. Translators: The label for a button in add-ons Store dialog to install an external add-on.
+msgctxt "addonStore"
+msgid "Install from e&xternal source"
+msgstr ""
+
+#. Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
+msgctxt "addonStore"
+msgid "Cha&nnel:"
+msgstr ""
+
+#. Translators: The label of a checkbox to filter the list of add-ons in the add-on store dialog.
+#, fuzzy
+msgid "Include &incompatible add-ons"
+msgstr "إضافات مثَبَّتة غير متوافقة"
+
+#. Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Ena&bled/disabled:"
+msgstr "تعطيل"
+
+#. Translators: The label of a text field to filter the list of add-ons in the add-on store dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "&Search:"
+msgstr "بحث"
+
+#. Translators: Title for message shown prior to installing add-ons when closing the add-on store dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Add-on installation"
+msgstr "تثبيت الإضافة البرمجية"
+
+#. Translators: Message shown prior to installing add-ons when closing the add-on store dialog
+#. The placeholder {} will be replaced with the number of add-ons to be installed
+msgctxt "addonStore"
+msgid "Download of {} add-ons in progress, cancel downloading?"
+msgstr ""
+
+#. Translators: Message shown while installing add-ons after closing the add-on store dialog
+#. The placeholder {} will be replaced with the number of add-ons to be installed
+#, fuzzy
+msgctxt "addonStore"
+msgid "Installing {} add-ons, please wait."
+msgstr "تثبيت الإضافة البرمجية"
+
+#. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
+#, fuzzy, python-brace-format
+msgctxt "addonStore"
+msgid "NVDA Add-on Package (*.{ext})"
+msgstr "حزمة الإضافة البرمجية (*.{ext})"
+
+#. Translators: The message displayed in the dialog that
+#. allows you to choose an add-on package for installation.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Choose Add-on Package File"
+msgstr "اختر ملف الإضافة البرمجية"
+
+#. Translators: The name of the column that contains names of addons.
+msgctxt "addonStore"
+msgid "Name"
+msgstr ""
+
+#. Translators: The name of the column that contains the installed addons version string.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Installed version"
+msgstr "&تثبيت NVDA {version}"
+
+#. Translators: The name of the column that contains the available addons version string.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Available version"
+msgstr "الإضافات المتاحة"
+
+#. Translators: The name of the column that contains the channel of the addon (e.g stable, beta, dev).
+#, fuzzy
+msgctxt "addonStore"
+msgid "Channel"
+msgstr "علامة إرشادية تعريفية"
+
+#. Translators: The name of the column that contains the addons publisher.
+msgctxt "addonStore"
+msgid "Publisher"
+msgstr ""
+
+#. Translators: The name of the column that contains the status of the addon.
+#. e.g. available, downloading installing
+#, fuzzy
+msgctxt "addonStore"
+msgid "Status"
+msgstr "لحالةبدأ"
+
+#. Translators: Label for an action that installs the selected addon
+#, fuzzy
+msgctxt "addonStore"
+msgid "&Install"
+msgstr "مُثَبَّتة"
+
+#. Translators: Label for an action that installs the selected addon
+#, fuzzy
+msgctxt "addonStore"
+msgid "&Install (override incompatibility)"
+msgstr "إضافات مثَبَّتة غير متوافقة"
+
+#. Translators: Label for an action that updates the selected addon
+#, fuzzy
+msgctxt "addonStore"
+msgid "&Update"
+msgstr "تحديث nvda"
+
+#. Translators: Label for an action that replaces the selected addon with
+#. an add-on store version.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Re&place"
+msgstr "استبدال"
+
+#. Translators: Label for an action that disables the selected addon
+#, fuzzy
+msgctxt "addonStore"
+msgid "&Disable"
+msgstr "تعطيل"
+
+#. Translators: Label for an action that enables the selected addon
+#, fuzzy
+msgctxt "addonStore"
+msgid "&Enable"
+msgstr "تفعيل"
+
+#. Translators: Label for an action that enables the selected addon
+#, fuzzy
+msgctxt "addonStore"
+msgid "&Enable (override incompatibility)"
+msgstr "غير متوافقة"
+
+#. Translators: Label for an action that removes the selected addon
+#, fuzzy
+msgctxt "addonStore"
+msgid "&Remove"
+msgstr "إ&زالة"
+
+#. Translators: Label for an action that opens help for the selected addon
+#, fuzzy
+msgctxt "addonStore"
+msgid "&Help"
+msgstr "م&ساعدة"
+
+#. Translators: Label for an action that opens the homepage for the selected addon
+#, fuzzy
+msgctxt "addonStore"
+msgid "Ho&mepage"
+msgstr "الصفحة الرئيسية"
+
+#. Translators: Label for an action that opens the license for the selected addon
+#, fuzzy
+msgctxt "addonStore"
+msgid "&License"
+msgstr "&نص اتفاقية الترخيص"
+
+#. Translators: Label for an action that opens the source code for the selected addon
+msgctxt "addonStore"
+msgid "Source &Code"
+msgstr ""
+
+#. Translators: The message displayed when the add-on cannot be enabled.
+#. {addon} is replaced with the add-on name.
+#, fuzzy, python-brace-format
+msgctxt "addonStore"
+msgid "Could not enable the add-on: {addon}."
+msgstr "يتعذّر تفعيلُ إضافة {description}"
+
+#. Translators: The message displayed when the add-on cannot be disabled.
+#. {addon} is replaced with the add-on name.
+#, fuzzy, python-brace-format
+msgctxt "addonStore"
+msgid "Could not disable the add-on: {addon}."
+msgstr "يتعذّر تعطيلُ إضافة {description}"
 
 #~ msgid "Find Error"
 #~ msgstr "خلل في البحث"
@@ -13694,46 +14104,8 @@ msgstr "التبديل بين تفعيل وتعطيل محاكاة لوحة مف
 #~ msgid "Eurobraille Esys/Esytime/Iris displays"
 #~ msgstr "الأسطر الإلكترونية Eurobraille Esys/Esytime/Iris"
 
-#~ msgid "Manage &add-ons..."
-#~ msgstr "إ&دارة الإضافات البرمجية..."
-
-#~ msgid ""
-#~ "{summary} ({name})\n"
-#~ "Version: {version}\n"
-#~ "Author: {author}\n"
-#~ "Description: {description}\n"
-#~ msgstr ""
-#~ "{summary} ({name})\n"
-#~ "رقم الإصدار: {version}\n"
-#~ "المبرمج: {author}\n"
-#~ "الوصف الوظيفي: {description}\n"
-
 #~ msgid "URL: {url}"
 #~ msgstr "رابط التحميل: {url}"
-
-#~ msgid "Minimum required NVDA version: {}"
-#~ msgstr "تتطلب كحد أدنى الإصدار NVDA {}"
-
-#~ msgid "Last NVDA version tested: {}"
-#~ msgstr "&آخر إصدار اختُبِر من NVDA: {}"
-
-#~ msgid "Add-on Information"
-#~ msgstr "معلومات حول الإضافة البرمجية"
-
-#~ msgid ""
-#~ "Are you sure you wish to remove the {addon} add-on from NVDA? This cannot "
-#~ "be undone."
-#~ msgstr ""
-#~ "هل ترغب بالفعل في حذف إضافة {addon} من NVDA? لا يمكن التراجُع عن هذا."
-
-#~ msgid "Remove Add-on"
-#~ msgstr "حذف الإضافة البرمجية"
-
-#~ msgid "Could not disable the {description} add-on."
-#~ msgstr "يتعذّر تعطيلُ إضافة {description}"
-
-#~ msgid "Could not enable the {description} add-on."
-#~ msgstr "يتعذّر تفعيلُ إضافة {description}"
 
 #~ msgid ""
 #~ "Installation of {summary} {version} has been blocked. An updated version "
