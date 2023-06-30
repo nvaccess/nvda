@@ -3784,11 +3784,7 @@ class GlobalCommands(ScriptableObject):
 		gestures=(
 			"ts(object):flickright",
 			"kb(desktop):NVDA+numpad3",
-			"kb(laptop):shift+NVDA+'",
-			# In the US International keyboard layout,
-			# the apostrophe has special behavior to be able to type accented letters.
-			# In that layout, it is regarded to as acute/cedilla.
-			"kb(laptop):shift+NVDA+acute/cedilla"
+			"kb(laptop):shift+NVDA+]",
 		),
 	)
 	def script_navigatorObject_nextInFlow(self, gesture: inputCore.InputGesture):
@@ -3826,7 +3822,7 @@ class GlobalCommands(ScriptableObject):
 		gestures=(
 			"ts(object):flickleft",
 			"kb(desktop):NVDA+numpad9",
-			"kb(laptop):shift+NVDA+;"
+			"kb(laptop):shift+NVDA+[",
 		),
 	)
 	def script_navigatorObject_previousInFlow(self, gesture: inputCore.InputGesture):
