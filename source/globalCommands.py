@@ -628,8 +628,8 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_DOCUMENTFORMATTING
 	)
 	def script_toggleignoreBlankLinesForReportLineIndentation(self, gesture: inputCore.InputGesture) -> None:
-		ignore = config.conf['documentFormatting']['ignoreBlankLinesForReportLineIndentation']
-		config.conf['documentFormatting']['ignoreBlankLinesForReportLineIndentation'] = not ignore
+		ignore = config.conf['documentFormatting']['ignoreBlankLinesForRLI']
+		config.conf['documentFormatting']['ignoreBlankLinesForRLI'] = not ignore
 		if ignore:
 			# Translators: The message announced when toggling off the ignore blank lines for line indentation
 			# reporting document formatting setting.

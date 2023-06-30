@@ -546,19 +546,16 @@ def test_symbolInSpeechUI():
 def _setConfig(
 		symbolLevel: SymLevel,
 		reportLineIndentation: ReportLineIndentation = ReportLineIndentation.OFF,
-		ignoreBlankLinesForReportLineIndentation: bool = False
+		ignoreBlankLines: bool = False
 ) -> None:
 	spy = _NvdaLib.getSpyLib()
 	spy.set_configValue(["documentFormatting", "reportLineIndentation"], reportLineIndentation.value)
-	spy.set_configValue(
-		["documentFormatting", "ignoreBlankLinesForReportLineIndentation"],
-		ignoreBlankLinesForReportLineIndentation
-	)
+	spy.set_configValue(["documentFormatting", "ignoreBlankLinesForRLI"], ignoreBlankLines)
 	spy.set_configValue(["speech", "symbolLevel"], symbolLevel.value)
 	message = (
 		f"Doing test at symbol level: {symbolLevel}"
 		f", line indentation reporting: {reportLineIndentation}"
-		f", ignore blank lines for line indentation reporting: {ignoreBlankLinesForReportLineIndentation}"
+		f", ignore blank lines for line indentation reporting: {ignoreBlankLines}"
 	)
 	_builtIn.log(message=message)
 
@@ -569,9 +566,9 @@ def _doTest(
 		reportedAfterLast: EndSpeech,
 		symbolLevel: SymLevel,
 		reportLineIndentation: ReportLineIndentation = ReportLineIndentation.OFF,
-		ignoreBlankLinesForReportLineIndentation: bool = False
+		ignoreBlankLines: bool = False
 ) -> None:
-	_setConfig(symbolLevel, reportLineIndentation, ignoreBlankLinesForReportLineIndentation)
+	_setConfig(symbolLevel, reportLineIndentation, ignoreBlankLines)
 
 	actual = _pressKeyAndCollectSpeech(navKey.value, numberOfTimes=len(expectedSpeech))
 	_builtIn.should_be_equal(
@@ -713,7 +710,7 @@ def test_ignoreBlankLinesForReportLineIndentation():
 			reportedAfterLast=EndSpeech.BOTTOM,
 			symbolLevel=SymLevel.ALL,
 			reportLineIndentation=ReportLineIndentation.SPEECH,
-			ignoreBlankLinesForReportLineIndentation=ignoreBlankLines,
+			ignoreBlankLines=ignoreBlankLines,
 			expectedSpeech=expectedSpeech
 		)
 

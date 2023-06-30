@@ -1545,7 +1545,7 @@ def getTextInfoSpeech(  # noqa: C901
 		and speakTextInfoState
 		and(
 			# either not ignoring blank lines
-			not formatConfig['ignoreBlankLinesForReportLineIndentation']
+			not formatConfig['ignoreBlankLinesForRLI']
 			# or line isn't completely blank
 			or any(isinstance(t, str) and not all(c in LINE_END_CHARS for c in t) for t in textWithFields)
 		)
