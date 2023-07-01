@@ -42,6 +42,7 @@ from .speechDict import (
 from .exit import ExitDialog
 from .settingsDialogs import (
 	SettingsDialog,
+	MultiCategorySettingsDialog,
 )
 from .settingsDialogs import *
 from .startupDialogs import WelcomeDialog
@@ -175,6 +176,8 @@ class MainFrame(wx.Frame):
 			dialog(self, *args, **kwargs).Show()
 		except SettingsDialog.MultiInstanceErrorWithDialog as errorWithDialog:
 			errorWithDialog.dialog.SetFocus()
+			if isinstance(errorWithDialog.dialog, MultiCategorySettingsDialog) and len(args) > 0:
+				errorWithDialog.dialog.selectNewCategory(args[0])
 		except MultiCategorySettingsDialog.CategoryUnavailableError:
 			# Translators: Message shown when trying to open an unavailable category of a multi category settings dialog
 			# (example: when trying to open touch interaction settings on an unsupported system).
