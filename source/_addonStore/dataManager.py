@@ -227,6 +227,7 @@ class _DataManager:
 				decodedApiData = apiData.decode()
 				self._cacheLatestAddons(
 					addonData=decodedApiData,
+					cacheHash=cacheHash,
 				)
 				self._latestAddonCache = CachedAddonsModel(
 					cachedAddonData=_createStoreCollectionFromJson(decodedApiData),
