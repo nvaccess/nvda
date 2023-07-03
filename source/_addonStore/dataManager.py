@@ -154,9 +154,10 @@ class _DataManager:
 		if not os.path.exists(cacheFilePath):
 			return None
 		with open(cacheFilePath, 'r') as cacheFile:
-			cacheData = json.load(cacheFile)
-		if not cacheData:
-			return None
+			try:
+				cacheData = json.load(cacheFile)
+			except Exception:
+				return None
 		try:
 			data = cacheData["data"]
 			cacheHash = cacheData["cacheHash"]
