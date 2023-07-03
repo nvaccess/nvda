@@ -122,13 +122,13 @@ class _DataManager:
 		cacheHash = response.json()
 		return cacheHash
 
-	def _cacheCompatibleAddons(self, addonData: str):
+	def _cacheCompatibleAddons(self, addonData: str, cacheHash: str):
 		if not NVDAState.shouldWriteToDisk():
 			return
 		if not addonData:
 			return
 		cacheData = {
-			"cacheHash": self._getCacheHash(),
+			"cacheHash": cacheHash,
 			"data": addonData,
 			"cachedLanguage": self._lang,
 			"nvdaAPIVersion": addonAPIVersion.CURRENT,
@@ -136,13 +136,13 @@ class _DataManager:
 		with open(self._cacheCompatibleFile, 'w') as cacheFile:
 			json.dump(cacheData, cacheFile, ensure_ascii=False)
 
-	def _cacheLatestAddons(self, addonData: str):
+	def _cacheLatestAddons(self, addonData: str, cacheHash: str):
 		if not NVDAState.shouldWriteToDisk():
 			return
 		if not addonData:
 			return
 		cacheData = {
-			"cacheHash": self._getCacheHash(),
+			"cacheHash": cacheHash,
 			"data": addonData,
 			"cachedLanguage": self._lang,
 			"nvdaAPIVersion": _LATEST_API_VER,
@@ -190,6 +190,7 @@ class _DataManager:
 				decodedApiData = apiData.decode()
 				self._cacheCompatibleAddons(
 					addonData=decodedApiData,
+					cacheHash=cacheHash,
 				)
 				self._compatibleAddonCache = CachedAddonsModel(
 					cachedAddonData=_createStoreCollectionFromJson(decodedApiData),
