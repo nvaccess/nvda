@@ -202,7 +202,7 @@ class AddonStoreModel(_AddonGUIModel):
 @dataclasses.dataclass
 class CachedAddonsModel:
 	cachedAddonData: "AddonGUICollectionT"
-	cacheHash: Optional[str]
+	cacheHash: str
 	cachedLanguage: str
 	# AddonApiVersionT or the string .network._LATEST_API_VER
 	nvdaAPIVersion: Union[addonAPIVersion.AddonApiVersionT, str]

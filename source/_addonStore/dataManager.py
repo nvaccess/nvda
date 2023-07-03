@@ -41,7 +41,7 @@ from .models.channel import Channel
 from .network import (
 	_getAddonStoreURL,
 	_getCurrentApiVersionForURL,
-	_CACHE_HASH_URL,
+	_getCacheHashURL,
 	_LATEST_API_VER,
 )
 
@@ -107,7 +107,7 @@ class _DataManager:
 		return response.content
 
 	def _getCacheHash(self) -> Optional[str]:
-		url = _CACHE_HASH_URL
+		url = _getCacheHashURL()
 		try:
 			response = requests.get(url)
 		except requests.exceptions.RequestException as e:
@@ -122,7 +122,7 @@ class _DataManager:
 		cacheHash = response.json()
 		return cacheHash
 
-	def _cacheCompatibleAddons(self, addonData: str, cacheHash: Optional[str]):
+	def _cacheCompatibleAddons(self, addonData: str):
 		if not NVDAState.shouldWriteToDisk():
 			return
 		if not addonData:
@@ -136,7 +136,7 @@ class _DataManager:
 		with open(self._cacheCompatibleFile, 'w') as cacheFile:
 			json.dump(cacheData, cacheFile, ensure_ascii=False)
 
-	def _cacheLatestAddons(self, addonData: str, cacheHash: Optional[str]):
+	def _cacheLatestAddons(self, addonData: str):
 		if not NVDAState.shouldWriteToDisk():
 			return
 		if not addonData:
@@ -157,12 +157,17 @@ class _DataManager:
 			cacheData = json.load(cacheFile)
 		if not cacheData:
 			return None
-		cacheHash = cacheData.get("cacheHash")
+		try:
+			cacheHash = cacheData["cacheHash"]
+			cachedLanguage = cacheData["cachedLanguage"]
+			nvdaAPIVersion = cacheData["nvdaAPIVersion"]
+		except KeyError:
+			return None
 		return CachedAddonsModel(
 			cachedAddonData=_createStoreCollectionFromJson(cacheData["data"]),
 			cacheHash=cacheHash,
-			cachedLanguage=cacheData["cachedLanguage"],
-			nvdaAPIVersion=tuple(cacheData["nvdaAPIVersion"]),  # loads as list
+			cachedLanguage=cachedLanguage,
+			nvdaAPIVersion=tuple(nvdaAPIVersion),  # loads as list,
 		)
 
 	# Translators: A title of the dialog shown when fetching add-on data from the store fails
@@ -185,7 +190,6 @@ class _DataManager:
 				decodedApiData = apiData.decode()
 				self._cacheCompatibleAddons(
 					addonData=decodedApiData,
-					cacheHash=cacheHash,
 				)
 				self._compatibleAddonCache = CachedAddonsModel(
 					cachedAddonData=_createStoreCollectionFromJson(decodedApiData),
@@ -222,7 +226,6 @@ class _DataManager:
 				decodedApiData = apiData.decode()
 				self._cacheLatestAddons(
 					addonData=decodedApiData,
-					cacheHash=cacheHash,
 				)
 				self._latestAddonCache = CachedAddonsModel(
 					cachedAddonData=_createStoreCollectionFromJson(decodedApiData),
