@@ -592,6 +592,12 @@ Moving to a list item's containing object will take you back to the list.
 You can then move past the list if you wish to access other objects.
 Similarly, a toolbar contains controls, so you must move inside the toolbar to access the controls in the toolbar.
 
+If you yet prefer to move back and forth between every single object on the system, you can use the move to previous/next object in a flattened view commands, respectively.
+For example, if you move to the next object in this flattened view and the current object contains other objects, NVDA will automatically move to the first object that contains it.
+Alternatively, if the current object doesn't contain any objects, NVDA will move to the next object at the current level of the hierarchy.
+If there is no such next object, NVDA will try to find the next object in the hierarchy based on containing objects until there are no more objects to move to.
+The same rules apply to moving backwards in the hierarchy.
+
 The object currently being reviewed is called the navigator object.
 Once you navigate to an object, you can review its content using the [text review commands #ReviewingText] while in [Object review mode #ObjectReview].
 When [Visual Highlight #VisionFocusHighlight] is enabled, the location of the current navigator object is also exposed visually.
@@ -666,7 +672,6 @@ The layout is illustrated as follows:
 
 ++ Review Modes ++[ReviewModes]
 NVDA's [text review commands #ReviewingText] can review content within the current navigator object, current document or screen, depending on the review mode selected.
-Review modes are a replacement for the older Flat Review concept found in NVDA.
 
 The following commands switch between review modes:
 %kc:beginInclude
