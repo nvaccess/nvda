@@ -125,7 +125,7 @@ class _DataManager:
 	def _cacheCompatibleAddons(self, addonData: str, cacheHash: str):
 		if not NVDAState.shouldWriteToDisk():
 			return
-		if not addonData:
+		if not addonData or not cacheHash:
 			return
 		cacheData = {
 			"cacheHash": cacheHash,
@@ -139,7 +139,7 @@ class _DataManager:
 	def _cacheLatestAddons(self, addonData: str, cacheHash: str):
 		if not NVDAState.shouldWriteToDisk():
 			return
-		if not addonData:
+		if not addonData or not cacheHash:
 			return
 		cacheData = {
 			"cacheHash": cacheHash,
