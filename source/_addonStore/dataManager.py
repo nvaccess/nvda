@@ -158,13 +158,14 @@ class _DataManager:
 		if not cacheData:
 			return None
 		try:
+			data = cacheData["data"]
 			cacheHash = cacheData["cacheHash"]
 			cachedLanguage = cacheData["cachedLanguage"]
 			nvdaAPIVersion = cacheData["nvdaAPIVersion"]
 		except KeyError:
 			return None
 		return CachedAddonsModel(
-			cachedAddonData=_createStoreCollectionFromJson(cacheData["data"]),
+			cachedAddonData=_createStoreCollectionFromJson(data),
 			cacheHash=cacheHash,
 			cachedLanguage=cachedLanguage,
 			nvdaAPIVersion=tuple(nvdaAPIVersion),  # loads as list,
