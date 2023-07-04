@@ -40,7 +40,10 @@ from .details import AddonDetails
 class AddonStoreDialog(SettingsDialog):
 	# Translators: The title of the addonStore dialog where the user can find and download add-ons
 	title = pgettext("addonStore", "Add-on Store")
-	helpId = "addonStore"
+	# For the Add-on Store paragraph in the User Guide, we have kept "AddonsManager" anchor instead of something
+	# more adapted like "AddonStore" so that old external links pointing to the add-ons manager paragraph now
+	# point to the Add-on Store one.
+	helpId = "AddonsManager"
 
 	def __init__(self, parent: wx.Window, storeVM: AddonStoreVM):
 		self._storeVM = storeVM

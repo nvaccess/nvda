@@ -25,6 +25,10 @@ What's New in NVDA
   - An unbound gesture to cycle through the available languages for Windows OCR. (#13036)
   - An unbound gesture to cycle through the braille show messages modes. (#14864)
   - An unbound gesture to toggle showing the selection indicator for braille. (#14948)
+  - Added default keyboard gesture assignments to move to the next or previous object in a flattened view of the object hierarchy. (#15053)
+    - Desktop: ``NVDA+numpad9`` and ``NVDA+numpad3`` to move to the previous and next objects respectively.
+    - Laptop: ``shift+NVDA+[`` and ``shift+NVDA+]`` to move to the previous and next objects respectively.
+    -
   -
 - Added pronunciation of Unicode symbols:
   - braille symbols such as "⠐⠣⠃⠗⠇⠐⠜". (#14548)
@@ -110,6 +114,7 @@ Also ``space+dot1`` and ``space+dot4`` now map to up and down arrow respectively
 - When rapidly moving through cells in Excel, NVDA is now less likely to report the wrong cell or selection. (#14983, #12200, #12108)
 - NVDA now generally responds slightly faster to commands and focus changes. (#14928)
 - Displaying the OCR settings will not fail on some systems anymore. (#15017)
+- Fix bug related to saving and loading the NVDA configuration, including switching synthesizers. (#14760)
 -
 
 
