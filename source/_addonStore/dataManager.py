@@ -157,6 +157,7 @@ class _DataManager:
 			try:
 				cacheData = json.load(cacheFile)
 			except Exception:
+				log.exception(f"Invalid add-on store cache")
 				return None
 		try:
 			data = cacheData["data"]
@@ -164,6 +165,7 @@ class _DataManager:
 			cachedLanguage = cacheData["cachedLanguage"]
 			nvdaAPIVersion = cacheData["nvdaAPIVersion"]
 		except KeyError:
+			log.exception(f"Invalid add-on store cache:\n{cacheData}")
 			return None
 		return CachedAddonsModel(
 			cachedAddonData=_createStoreCollectionFromJson(data),

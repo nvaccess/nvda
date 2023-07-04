@@ -35,7 +35,7 @@ if TYPE_CHECKING:
 	from gui.message import DisplayableError
 
 
-_BASE_URL = "https://nvaccess.org/addonStore/"
+_BASE_URL = "https://nvaccess.org/addonStore"
 _LATEST_API_VER = "latest"
 """
 A string value used in the add-on store to fetch the latest version of all add-ons,
@@ -43,18 +43,12 @@ i.e include older incompatible versions.
 """
 
 
-def _getCurrentApiVersionForURL() -> str:
-	year, major, minor = addonAPIVersion.CURRENT
-	return f"{year}.{major}.{minor}"
-
-
 def _getAddonStoreURL(channel: Channel, lang: str, nvdaApiVersion: str) -> str:
-	_baseURL = "https://nvaccess.org/addonStore/"
-	return _BASE_URL + f"{lang}/{channel.value}/{nvdaApiVersion}.json"
+	return f"{_BASE_URL}/{lang}/{channel.value}/{nvdaApiVersion}.json"
 
 
 def _getCacheHashURL() -> str:
-	return _BASE_URL + "cacheHash.json"
+	return f"{_BASE_URL}/cacheHash.json"
 
 
 class AddonFileDownloader:
