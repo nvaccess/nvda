@@ -42,6 +42,10 @@ A string value used in the add-on store to fetch the latest version of all add-o
 i.e include older incompatible versions.
 """
 
+def _getCurrentApiVersionForURL() -> str:
+	year, major, minor = addonAPIVersion.CURRENT
+	return f"{year}.{major}.{minor}"
+
 
 def _getAddonStoreURL(channel: Channel, lang: str, nvdaApiVersion: str) -> str:
 	return f"{_BASE_URL}/{lang}/{channel.value}/{nvdaApiVersion}.json"
