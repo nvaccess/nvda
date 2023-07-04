@@ -40,7 +40,6 @@ from .models.addon import (
 from .models.channel import Channel
 from .network import (
 	_getAddonStoreURL,
-	_getCurrentApiVersionForURL,
 	_getCacheHashURL,
 	_LATEST_API_VER,
 )
