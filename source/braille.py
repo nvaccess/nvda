@@ -1441,27 +1441,28 @@ class ReviewTextInfoRegion(TextInfoRegion):
 		return api.getReviewPosition().copy()
 
 	def _routeToTextInfo(self, info: textInfos.TextInfo):
-		if _routingShouldMoveSystemCaret():
-			from displayModel import DisplayModelTextInfo, EditableTextDisplayModelTextInfo
-			if (
-				isinstance(info, DisplayModelTextInfo)
-				and not isinstance(info, EditableTextDisplayModelTextInfo)
-			):
-				# This region either reviews the screen or an object that has
-				# DisplayModelTextInfo without a caret, e.g. IAccessible.ContentGenericClient.
-				# In this case, we can at least emulate a kind of caret
-				# by trying to focus the object at start of the range.
-				obj = info.NVDAObjectAtStart
-				if (
-					not objectBelowLockScreenAndWindowsIsLocked(obj)
-					and obj.isFocusable
-					and not obj.hasFocus
-				):
-					obj.setFocus()
-			else:
-				# Update the physical caret using the super class.
-				super()._setCursor(info)
 		super()._routeToTextInfo(info)
+		if not _routingShouldMoveSystemCaret():
+			return
+		from displayModel import DisplayModelTextInfo, EditableTextDisplayModelTextInfo
+		if (
+			isinstance(info, DisplayModelTextInfo)
+			and not isinstance(info, EditableTextDisplayModelTextInfo)
+		):
+			# This region either reviews the screen or an object that has
+			# DisplayModelTextInfo without a caret, e.g. IAccessible.ContentGenericClient.
+			# In this case, we can at least emulate a kind of caret
+			# by trying to focus the object at start of the range.
+			obj = info.NVDAObjectAtStart
+			if (
+				not objectBelowLockScreenAndWindowsIsLocked(obj)
+				and obj.isFocusable
+				and not obj.hasFocus
+			):
+				obj.setFocus()
+		else:
+			# Update the physical caret using the super class.
+			super()._setCursor(info)
 
 	def _setCursor(self, info: textInfos.TextInfo):
 		api.setReviewPosition(info)
