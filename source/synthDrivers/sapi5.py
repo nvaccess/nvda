@@ -163,7 +163,7 @@ class SynthDriver(SynthDriver):
 	def _get_pitch(self):
 		return self._pitch
 
-	def _get_volume(self):
+	def _get_volume(self) -> int:
 		return self.tts.volume
 
 	def _get_voice(self):
