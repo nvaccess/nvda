@@ -2266,6 +2266,16 @@ However, for basic spreadsheet navigating / editing, this option may provide a v
 We still do not recommend that  the majority of users turn this on by default, though we do welcome users of Microsoft Excel  build 16.0.13522.10000 or higher to test this feature and provide feedback.
 Microsoft Excel's UI automation implementation is ever changing, and  versions of Microsoft Office older than 16.0.13522.10000 may not expose enough information for this option to be of any use.
 
+==== Report live regions ====[BrailleLiveRegions]
+: Default
+  Enabled
+: Options
+  Disabled, Enabled
+:
+
+This option selects whether NVDA reports changes in some dynamic web content in Braille.
+Disabling this option is equivalent to NVDA's behaviour in versions 2023.1 and earlier, which only reported these content changes in speech.
+
 ==== Speak passwords in all enhanced terminals ====[AdvancedSettingsWinConsoleSpeakPasswords]
 This setting controls whether characters are spoken by [speak typed characters #KeyboardSettingsSpeakTypedCharacters] or [speak typed words #KeyboardSettingsSpeakTypedWords] in situations where the screen does not update (such as password entry) in some terminal programs, such as the Windows Console with UI automation support enabled and Mintty.
 For security purposes, this setting should be left disabled.
