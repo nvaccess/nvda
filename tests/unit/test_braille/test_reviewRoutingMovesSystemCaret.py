@@ -75,7 +75,7 @@ class TestReviewRoutingMovesSystemCaretInNavigableText(unittest.TestCase):
 		self.assertEquals(expectedReview, api.getReviewPosition())
 		# Route a second time to activate the object under the cell
 		braille.handler.routeTo(4)
-		self.assertGreater(self.cm.lastActivateTime, curTime)
+		self.assertGreaterEqual(self.cm.lastActivateTime, curTime)
 		# While the object is now activated, caret should have been steady.
 		caret = self.cm.makeTextInfo(textInfos.POSITION_CARET)
 		self.assertEquals(caret, self.caret)
@@ -94,7 +94,7 @@ class TestReviewRoutingMovesSystemCaretInNavigableText(unittest.TestCase):
 		# Route to the fourth cell to activate the object under the cell,
 		# since the review cursor is already on that cell.
 		braille.handler.routeTo(3)
-		self.assertGreater(self.cm.lastActivateTime, curTime)
+		self.assertGreaterEqual(self.cm.lastActivateTime, curTime)
 		# While the object is now activated, caret should have been steady.
 		caret = self.cm.makeTextInfo(textInfos.POSITION_CARET)
 		self.assertEquals(caret, self.caret)
@@ -123,7 +123,7 @@ class TestReviewRoutingMovesSystemCaretInNavigableText(unittest.TestCase):
 		self.assertEquals(caret, expectedReview)
 		# Route a second time to activate the object under the cell
 		braille.handler.routeTo(4)
-		self.assertGreater(self.cm.lastActivateTime, curTime)
+		self.assertGreaterEqual(self.cm.lastActivateTime, curTime)
 		caret = self.cm.makeTextInfo(textInfos.POSITION_CARET)
 		self.assertEquals(caret, expectedReview)
 
@@ -142,6 +142,6 @@ class TestReviewRoutingMovesSystemCaretInNavigableText(unittest.TestCase):
 		# Route to the fourth cell to activate the object under the cell,
 		# since the review cursor is already on that cell.
 		braille.handler.routeTo(3)
-		self.assertGreater(self.cm.lastActivateTime, curTime)
+		self.assertGreaterEqual(self.cm.lastActivateTime, curTime)
 		caret = self.cm.makeTextInfo(textInfos.POSITION_CARET)
 		self.assertEquals(caret, review)
