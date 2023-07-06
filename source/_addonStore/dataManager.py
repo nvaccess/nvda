@@ -185,7 +185,8 @@ class _DataManager:
 		shouldRefreshData = (
 			not self._compatibleAddonCache
 			or self._compatibleAddonCache.nvdaAPIVersion != addonAPIVersion.CURRENT
-			or cacheHash and (self._compatibleAddonCache.cacheHash != cacheHash)
+			or cacheHash is None
+			or self._compatibleAddonCache.cacheHash != cacheHash
 			or self._compatibleAddonCache.cachedLanguage != self._lang
 		)
 		if shouldRefreshData:
@@ -222,7 +223,8 @@ class _DataManager:
 		cacheHash = self._getCacheHash()
 		shouldRefreshData = (
 			not self._latestAddonCache
-			or cacheHash and (self._latestAddonCache.cacheHash != cacheHash)
+			or cacheHash is None
+			or self._latestAddonCache.cacheHash != cacheHash
 			or self._latestAddonCache.cachedLanguage != self._lang
 		)
 		if shouldRefreshData:
