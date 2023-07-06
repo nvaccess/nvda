@@ -1,21 +1,52 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2017 NV Access Limited
+# Copyright (C) 2017-2023 NV Access Limited
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 """Upgrade speech dict files
 """
 
+from typing import Any
 import globalVars
 import os
 import api
 import glob
 from logHandler import log
-from .speechDictVars import speechDictsPath
+from NVDAState import WritePaths
 
-voiceDictsPath = os.path.join(speechDictsPath, r"voiceDicts.v1")
-voiceDictsBackupPath = os.path.join(speechDictsPath, r"voiceDictsBackup.v0")
+
+def __getattr__(attrName: str) -> Any:
+	"""Module level `__getattr__` used to preserve backward compatibility.
+	"""
+	import NVDAState
+	if NVDAState._allowDeprecatedAPI():
+		if attrName == "speechDictsPath":
+			log.warning(
+				"speechDictHandler.dictFormatUpgrade.speechDictsPath is deprecated, "
+				"instead use NVDAState.WritePaths.speechDictsDir",
+				stack_info=True
+			)
+			return WritePaths.speechDictsDir
+
+		if attrName == "voiceDictsPath":
+			log.warning(
+				"speechDictHandler.dictFormatUpgrade.voiceDictsPath is deprecated, "
+				"instead use NVDAState.WritePaths.voiceDictsDir",
+				stack_info=True
+			)
+			return WritePaths.voiceDictsDir
+
+		if attrName == "voiceDictsBackupPath":
+			log.warning(
+				"speechDictHandler.dictFormatUpgrade.voiceDictsBackupPath is deprecated, "
+				"instead use NVDAState.WritePaths.voiceDictsBackupDir",
+				stack_info=True
+			)
+			return WritePaths.voiceDictsBackupDir
+
+	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+
 
 def createVoiceDictFileName(synthName, voiceName):
 	""" Creates a filename used for the voice dictionary files.
@@ -56,12 +87,12 @@ def _doSynthVoiceDictBackupAndMove(synthName, oldFileNameToNewFileNameList=None)
 	"""
 	import shutil
 	
-	if not os.path.isdir(voiceDictsPath):
-		os.makedirs(voiceDictsPath)
-	if not os.path.isdir(voiceDictsBackupPath):
-		os.makedirs(voiceDictsBackupPath)
+	if not os.path.isdir(WritePaths.voiceDictsDir):
+		os.makedirs(WritePaths.voiceDictsDir)
+	if not os.path.isdir(WritePaths.voiceDictsBackupDir):
+		os.makedirs(WritePaths.voiceDictsBackupDir)
 	
-	newDictPath = os.path.join(voiceDictsPath,synthName)
+	newDictPath = os.path.join(WritePaths.voiceDictsDir, synthName)
 	needsUpgrade = not os.path.isdir(newDictPath)
 	if needsUpgrade:
 		log.info("Upgrading voice dictionaries for %s"%synthName)
@@ -72,17 +103,17 @@ def _doSynthVoiceDictBackupAndMove(synthName, oldFileNameToNewFileNameList=None)
 
 		# look for files that need to be upgraded  in the old voice 
 		# dicts diectory
-		voiceDictGlob=os.path.join(
-				speechDictsPath,
-				r"{synthName}*".format(synthName=synthName)
-				)
+		voiceDictGlob = os.path.join(
+			WritePaths.speechDictsDir,
+			"{synthName}*".format(synthName=synthName)
+		)
 		log.debug("voiceDictGlob: %s"%voiceDictGlob)
 
 		for actualPath in glob.glob(voiceDictGlob):
 			log.debug("processing file: %s" % actualPath)
 			# files will be copied here before we modify them so as to avoid
 			# any data loss.
-			shutil.copy(actualPath, voiceDictsBackupPath)
+			shutil.copy(actualPath, WritePaths.voiceDictsBackupDir)
 			
 			actualBasename = os.path.basename(actualPath)
 			log.debug("basename: %s" % actualBasename)

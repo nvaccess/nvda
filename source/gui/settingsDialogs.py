@@ -16,6 +16,7 @@ from enum import IntEnum
 
 import typing
 import wx
+from NVDAState import WritePaths
 
 from vision.providerBase import VisionEnhancementProviderSettings
 from wx.lib.expando import ExpandoTextCtrl
@@ -886,8 +887,10 @@ class GeneralSettingsPanel(SettingsPanel):
 			settingsSizerHelper.addItem(item)
 
 	def onCopySettings(self,evt):
-		addonsDirPath = os.path.join(globalVars.appArgs.configPath, 'addons')
-		if os.path.isdir(addonsDirPath) and 0 < len(os.listdir(addonsDirPath)):
+		if (
+			os.path.isdir(WritePaths.addonsDir)
+			and 0 < len(os.listdir(WritePaths.addonsDir))
+		):
 			message = _(
 				# Translators: A message to warn the user when attempting to copy current
 				# settings to system settings.
@@ -2625,9 +2628,15 @@ class UwpOcrPanel(SettingsPanel):
 		# Lazily import this.
 		from contentRecog import uwpOcr
 		self.languageCodes = uwpOcr.getLanguages()
-		languageChoices = [
-			languageHandler.getLanguageDescription(languageHandler.normalizeLanguage(lang))
-			for lang in self.languageCodes]
+		languageChoices = []
+		for lang in self.languageCodes:
+			normLang = languageHandler.normalizeLanguage(lang)
+			desc = languageHandler.getLanguageDescription(normLang)
+			if not desc:
+				# Raise an error in the hope that people be more likely to report the issue
+				log.error(f'No description for language: {lang}. Using language code instead.')
+				desc = lang
+			languageChoices.append(desc)
 		# Translators: Label for an option in the Windows OCR dialog.
 		languageLabel = _("Recognition &language:")
 		self.languageChoice = sHelper.addLabeledControl(languageLabel, wx.Choice, choices=languageChoices)
@@ -3069,7 +3078,7 @@ class AdvancedPanelControls(
 			wx.CheckBox(audioBox, label=label)
 		)
 		self.bindHelpEvent("WASAPI", self.wasapiCheckBox)
-		self.wasapiCheckBox.Bind(wx.EVT_CHECKBOX, self.onWasapiChange)
+		self.wasapiCheckBox.Bind(wx.EVT_CHECKBOX, self.onAudioCheckBoxChange)
 		self.wasapiCheckBox.SetValue(
 			config.conf["audio"]["wasapi"]
 		)
@@ -3082,13 +3091,28 @@ class AdvancedPanelControls(
 			wx.CheckBox(audioBox, label=label)
 		)
 		self.bindHelpEvent("SoundVolumeFollowsVoice", self.soundVolFollowCheckBox)
+		self.soundVolFollowCheckBox.Bind(wx.EVT_CHECKBOX, self.onAudioCheckBoxChange)
 		self.soundVolFollowCheckBox.SetValue(
 			config.conf["audio"]["soundVolumeFollowsVoice"]
 		)
 		self.soundVolFollowCheckBox.defaultValue = self._getDefaultValue(
 			["audio", "soundVolumeFollowsVoice"])
-		if not self.wasapiCheckBox.GetValue():
-			self.soundVolFollowCheckBox.Disable()
+		# Translators: This is the label for a slider control in the
+		#  Advanced settings panel.
+		label = _("Volume of NVDA sounds (requires WASAPI)")
+		self.soundVolSlider: nvdaControls.EnhancedInputSlider = audioGroup.addLabeledControl(
+			label,
+			nvdaControls.EnhancedInputSlider,
+			minValue=0,
+			maxValue=100
+		)
+		self.bindHelpEvent("SoundVolume", self.soundVolSlider)
+		self.soundVolSlider.SetValue(
+			config.conf["audio"]["soundVolume"]
+		)
+		self.soundVolSlider.defaultValue = self._getDefaultValue(
+			["audio", "soundVolume"])
+		self.onAudioCheckBoxChange()
 
 		# Translators: This is the label for a group of advanced options in the
 		# Advanced settings panel
@@ -3151,8 +3175,13 @@ class AdvancedPanelControls(
 		path=config.getScratchpadDir(ensureExists=True)
 		os.startfile(path)
 
-	def onWasapiChange(self, evt: wx.CommandEvent):
-		self.soundVolFollowCheckBox.Enable(evt.IsChecked())
+	def onAudioCheckBoxChange(self, evt: Optional[wx.CommandEvent] = None):
+		wasapi = self.wasapiCheckBox.IsChecked()
+		self.soundVolFollowCheckBox.Enable(wasapi)
+		self.soundVolSlider.Enable(
+			wasapi
+			and not self.soundVolFollowCheckBox.IsChecked()
+		)
 
 	def _getDefaultValue(self, configPath):
 		return config.conf.getConfigValidation(configPath).default
@@ -3183,6 +3212,7 @@ class AdvancedPanelControls(
 			and self.reportTransparentColorCheckBox.GetValue() == self.reportTransparentColorCheckBox.defaultValue
 			and self.wasapiCheckBox.GetValue() == self.wasapiCheckBox.defaultValue
 			and self.soundVolFollowCheckBox.GetValue() == self.soundVolFollowCheckBox.defaultValue
+			and self.soundVolSlider.GetValue() == self.soundVolSlider.defaultValue
 			and set(self.logCategoriesList.CheckedItems) == set(self.logCategoriesList.defaultCheckedItems)
 			and self.playErrorSoundCombo.GetSelection() == self.playErrorSoundCombo.defaultValue
 			and True  # reduce noise in diff when the list is extended.
@@ -3211,6 +3241,7 @@ class AdvancedPanelControls(
 		self.reportTransparentColorCheckBox.SetValue(self.reportTransparentColorCheckBox.defaultValue)
 		self.wasapiCheckBox.SetValue(self.wasapiCheckBox.defaultValue)
 		self.soundVolFollowCheckBox.SetValue(self.soundVolFollowCheckBox.defaultValue)
+		self.soundVolSlider.SetValue(self.soundVolSlider.defaultValue)
 		self.logCategoriesList.CheckedItems = self.logCategoriesList.defaultCheckedItems
 		self.playErrorSoundCombo.SetSelection(self.playErrorSoundCombo.defaultValue)
 		self._defaultsRestored = True
@@ -3243,6 +3274,7 @@ class AdvancedPanelControls(
 		)
 		config.conf["audio"]["wasapi"] = self.wasapiCheckBox.IsChecked()
 		config.conf["audio"]["soundVolumeFollowsVoice"] = self.soundVolFollowCheckBox.IsChecked()
+		config.conf["audio"]["soundVolume"] = self.soundVolSlider.GetValue()
 		config.conf["annotations"]["reportDetails"] = self.annotationsDetailsCheckBox.IsChecked()
 		config.conf["annotations"]["reportAriaDescription"] = self.ariaDescCheckBox.IsChecked()
 		config.conf["braille"]["enableHidBrailleSupport"] = self.supportHidBrailleCombo.GetSelection()
@@ -4296,9 +4328,14 @@ class SpeechSymbolsDialog(SettingsDialog):
 		except LookupError:
 			symbolProcessor = characterProcessing._localeSpeechSymbolProcessors.fetchLocaleData("en")
 		self.symbolProcessor = symbolProcessor
+		desc = languageHandler.getLanguageDescription(self.symbolProcessor.locale)
+		if not desc:
+			desc = self.symbolProcessor.locale
+			# Raise an error in the hope that people be more likely to report the issue
+			log.error(f'No description for language: {desc}. Using language code instead.')
 		# Translators: This is the label for the symbol pronunciation dialog.
 		# %s is replaced by the language for which symbol pronunciation is being edited.
-		self.title = _("Symbol Pronunciation (%s)")%languageHandler.getLanguageDescription(self.symbolProcessor.locale)
+		self.title = _("Symbol Pronunciation (%s)") % desc
 		super(SpeechSymbolsDialog, self).__init__(
 			parent,
 			resizeable=True,

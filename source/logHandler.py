@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2022 NV Access Limited, Rui Batista, Joseph Lee, Leonard de Ruijter, Babbage B.V.,
+# Copyright (C) 2007-2023 NV Access Limited, Rui Batista, Joseph Lee, Leonard de Ruijter, Babbage B.V.,
 # Accessolutions, Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -22,6 +22,7 @@ from typing import Optional
 import exceptions
 import RPCConstants
 import NVDAState
+from NVDAState import WritePaths
 
 
 ERROR_INVALID_WINDOW_HANDLE = 1400
@@ -45,8 +46,9 @@ def isPathExternalToNVDA(path: str) -> bool:
 		and os.path.isabs(path)
 		and not os.path.normpath(path).startswith(_NVDA_CODE_PATH + "\\")
 		or (
-			globalVars.appArgs.configPath is not None  # Handle messages logged before config is initialized
-			and path.startswith(globalVars.appArgs.configPath)
+			# Handle messages logged before config is initialized
+			WritePaths.configDir is not None
+			and path.startswith(WritePaths.configDir)
 		)
 	):
 		# This module is external because:

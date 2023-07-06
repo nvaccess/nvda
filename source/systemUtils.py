@@ -19,6 +19,7 @@ import winUser
 import functools
 import shlobj
 from os import startfile
+from NVDAState import WritePaths
 
 
 @functools.lru_cache(maxsize=1)
@@ -31,8 +32,7 @@ def hasSyswow64Dir() -> bool:
 
 def openUserConfigurationDirectory():
 	"""Opens directory containing config files for the current user"""
-	import globalVars
-	shellapi.ShellExecute(0, None, globalVars.appArgs.configPath, None, None, winUser.SW_SHOWNORMAL)
+	shellapi.ShellExecute(0, None, WritePaths.configDir, None, None, winUser.SW_SHOWNORMAL)
 
 
 def openDefaultConfigurationDirectory():

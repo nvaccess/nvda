@@ -23,12 +23,12 @@ from six import string_types
 from typing import (
 	Callable,
 	Dict,
+	List,
 	Optional,
 	Set,
 	TYPE_CHECKING,
 	Tuple,
 )
-import globalVars
 import zipfile
 from configobj import ConfigObj
 from configobj.validate import Validator
@@ -39,6 +39,7 @@ import winKernel
 import addonAPIVersion
 import importlib
 import NVDAState
+from NVDAState import WritePaths
 from types import ModuleType
 
 from _addonStore.models.status import AddonStateCategory, SupportsAddonState
@@ -99,7 +100,7 @@ class AddonsState(collections.UserDict):
 	@property
 	def statePath(self) -> os.PathLike:
 		"""Returns path to the state file. """
-		return os.path.join(globalVars.appArgs.configPath, stateFilename)
+		return WritePaths.addonStateFile
 
 	def load(self) -> None:
 		"""Populates state with the default content and then loads values from the config."""
@@ -231,15 +232,14 @@ def terminate():
 	""" Terminates the add-ons subsystem. """
 	pass
 
-def _getDefaultAddonPaths():
-	r""" Returns paths where addons can be found.
+
+def _getDefaultAddonPaths() -> List[str]:
+	""" Returns paths where addons can be found.
 	For now, only <userConfig>\addons is supported.
-	@rtype: list(string)
 	"""
 	addon_paths = []
-	user_addons = os.path.join(globalVars.appArgs.configPath, "addons")
-	if os.path.isdir(user_addons):
-		addon_paths.append(user_addons)
+	if os.path.isdir(WritePaths.addonsDir):
+		addon_paths.append(WritePaths.addonsDir)
 	return addon_paths
 
 

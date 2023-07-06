@@ -15,6 +15,8 @@ import threading
 from typing import (
 	TYPE_CHECKING,
 	Optional,
+	Set,
+	Tuple,
 )
 
 import requests
@@ -24,10 +26,10 @@ import addonAPIVersion
 from baseObject import AutoPropertyObject
 import config
 from core import callLater
-import globalVars
 import languageHandler
 from logHandler import log
 import NVDAState
+from NVDAState import WritePaths
 
 from .models.addon import (
 	AddonStoreModel,
@@ -38,7 +40,6 @@ from .models.addon import (
 )
 from .models.channel import Channel
 from .network import (
-	AddonFileDownloader,
 	_getAddonStoreURL,
 	_getCurrentApiVersionForURL,
 	_LATEST_API_VER,
@@ -48,6 +49,7 @@ if TYPE_CHECKING:
 	from addonHandler import Addon as AddonHandlerModel  # noqa: F401
 	# AddonGUICollectionT must only be imported when TYPE_CHECKING
 	from .models.addon import AddonGUICollectionT  # noqa: F401
+	from gui._addonStoreGui.viewModels.addonList import AddonListItemVM  # noqa: F401
 	from gui.message import DisplayableError  # noqa: F401
 
 
@@ -67,20 +69,18 @@ class _DataManager:
 	_cacheLatestFilename: str = "_cachedLatestAddons.json"
 	_cacheCompatibleFilename: str = "_cachedCompatibleAddons.json"
 	_cachePeriod = timedelta(hours=6)
+	_downloadsPendingInstall: Set[Tuple["AddonListItemVM", os.PathLike]] = set()
 
 	def __init__(self):
-		cacheDirLocation = os.path.join(globalVars.appArgs.configPath, "addonStore")
 		self._lang = languageHandler.getLanguage()
 		self._preferredChannel = Channel.ALL
-		self._cacheLatestFile = os.path.join(cacheDirLocation, _DataManager._cacheLatestFilename)
-		self._cacheCompatibleFile = os.path.join(cacheDirLocation, _DataManager._cacheCompatibleFilename)
-		self._addonDownloadCacheDir = os.path.join(cacheDirLocation, "_dl")
-		self._installedAddonDataCacheDir = os.path.join(cacheDirLocation, "addons")
+		self._cacheLatestFile = os.path.join(WritePaths.addonStoreDir, _DataManager._cacheLatestFilename)
+		self._cacheCompatibleFile = os.path.join(WritePaths.addonStoreDir, _DataManager._cacheCompatibleFilename)
+		self._installedAddonDataCacheDir = WritePaths.addonsDir
 
 		if NVDAState.shouldWriteToDisk():
 			# ensure caching dirs exist
-			pathlib.Path(cacheDirLocation).mkdir(parents=True, exist_ok=True)
-			pathlib.Path(self._addonDownloadCacheDir).mkdir(parents=True, exist_ok=True)
+			pathlib.Path(WritePaths.addonStoreDir).mkdir(parents=True, exist_ok=True)
 			pathlib.Path(self._installedAddonDataCacheDir).mkdir(parents=True, exist_ok=True)
 
 		self._latestAddonCache = self._getCachedAddonData(self._cacheLatestFile)
@@ -91,9 +91,6 @@ class _DataManager:
 			target=self.getLatestCompatibleAddons,
 			name="initialiseAvailableAddons",
 		).start()
-
-	def getFileDownloader(self) -> AddonFileDownloader:
-		return AddonFileDownloader(self._addonDownloadCacheDir)
 
 	def _getLatestAddonsDataForVersion(self, apiVersion: str) -> Optional[bytes]:
 		url = _getAddonStoreURL(self._preferredChannel, self._lang, apiVersion)
