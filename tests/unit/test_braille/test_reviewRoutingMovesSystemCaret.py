@@ -10,7 +10,6 @@ import config
 import braille
 import textInfos
 import api
-import review
 import controlTypes
 from ..textProvider import CursorManager
 import unittest
@@ -35,7 +34,8 @@ class CursorManager(CursorManager):
 
 
 class TestReviewRoutingMovesSystemCaretInNavigableText(unittest.TestCase):
-	"""A test for the move system caret when Routing review cursor braille setting when operating in navigable text with object review.
+	"""A test for the move system caret when Routing review cursor braille setting
+	when operating in navigable text with object review.
 	"""
 
 	cm: CursorManager
@@ -81,7 +81,8 @@ class TestReviewRoutingMovesSystemCaretInNavigableText(unittest.TestCase):
 		self.assertEquals(caret, self.caret)
 
 	def test_moveCaret_never_instantActivate(self):
-		"""Test that routing action on a cell will activate the current position when the review cursor is already at that position.
+		"""Test that routing action on a cell will activate the current position
+		when the review cursor is already at that position.
 		This test ensures that this behavior will work, even when it is the first routing action in a sequence.
 		The caret should never move.
 		"""
@@ -90,7 +91,8 @@ class TestReviewRoutingMovesSystemCaretInNavigableText(unittest.TestCase):
 		review = self.caret.copy()
 		review.move(textInfos.UNIT_CHARACTER, 3)
 		api.setReviewPosition(review)
-		# Route to the fourth cell to activate the object under the cell, since the review cursor is already on that cell.
+		# Route to the fourth cell to activate the object under the cell,
+		# since the review cursor is already on that cell.
 		braille.handler.routeTo(3)
 		self.assertGreater(self.cm.lastActivateTime, curTime)
 		# While the object is now activated, caret should have been steady.
@@ -126,7 +128,8 @@ class TestReviewRoutingMovesSystemCaretInNavigableText(unittest.TestCase):
 		self.assertEquals(caret, expectedReview)
 
 	def test_moveCaret_always_instantActivate(self):
-		"""Test that routing action on a cell will activate the current position when the review cursor is already at that position.
+		"""Test that routing action on a cell will activate the current position
+		when the review cursor is already at that position.
 		This test ensures that this behavior will work, even when it is the first routing action in a sequence.
 		The caret should also have been moved even though routing didn't touch the review cursor position.
 		"""
@@ -136,7 +139,8 @@ class TestReviewRoutingMovesSystemCaretInNavigableText(unittest.TestCase):
 		review.move(textInfos.UNIT_CHARACTER, 3)
 		api.setReviewPosition(review)
 		self.assertNotEqual(self.caret, review)
-		# Route to the fourth cell to activate the object under the cell, since the review cursor is already on that cell.
+		# Route to the fourth cell to activate the object under the cell,
+		# since the review cursor is already on that cell.
 		braille.handler.routeTo(3)
 		self.assertGreater(self.cm.lastActivateTime, curTime)
 		caret = self.cm.makeTextInfo(textInfos.POSITION_CARET)

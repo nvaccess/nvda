@@ -7,7 +7,7 @@
 """
 
 import unittest
-from .textProvider import BasicTextProvider, CursorManager
+from .textProvider import CursorManager
 
 
 class TestMove(unittest.TestCase):

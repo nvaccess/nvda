@@ -14,8 +14,7 @@ import textInfos
 from textInfos.offsets import Offsets
 import textUtils
 import cursorManager
-import time
-from typing import Optional, Tuple
+from typing import Tuple
 
 
 class BasicTextInfo(NVDAObjectTextInfo):
