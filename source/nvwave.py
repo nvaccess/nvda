@@ -1,6 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2021 NV Access Limited, Aleksey Sadovoy, Cyrille Bougot, Peter Vágner, Babbage B.V.,
-# Leonard de Ruijter
+# Copyright (C) 2007-2023 NV Access Limited, Aleksey Sadovoy, Cyrille Bougot, Peter Vágner, Babbage B.V.,
+# Leonard de Ruijter, James Teh
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -761,13 +761,13 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 	#: This allows us to have a single callback in the class rather than on
 	#: each instance, which prevents reference cycles.
 	_instances = weakref.WeakValueDictionary()
-	#: How long (in seconds) to wait before closing an audio stream that hasn't
-	#: played.
-	_STREAM_CLOSE_TIMEOUT: int = 60
-	#: How often (in ms) to check whether streams should be closed.
-	_STREAM_CLOSE_CHECK_INTERVAL: int = 20000
-	#: Whether there is a pending stream close check.
-	_isStreamCloseCheckPending: bool = False
+	#: How long (in seconds) to wait before indicating that an audio stream that
+	#: hasn't played is idle.
+	_IDLE_TIMEOUT: int = 10
+	#: How often (in ms) to check whether streams are idle.
+	_IDLE_CHECK_INTERVAL: int = 5000
+	#: Whether there is a pending stream idle check.
+	_isIdleCheckPending: bool = False
 
 	def __init__(
 			self,
@@ -816,9 +816,9 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		)
 		self._doneCallbacks = {}
 		self._instances[self._player] = self
-		self._isOpen: bool
 		self.open()
-		self._lastActiveTime: float = time.time()
+		self._lastActiveTime: typing.Optional[float] = None
+		self._isPaused: bool = False
 
 	@wasPlay_callback
 	def _callback(cppPlayer, feedId):
@@ -856,16 +856,11 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			raise
 		WasapiWavePlayer.audioDeviceError_static = False
 		self._setVolumeFromConfig()
-		self._isOpen = True
 
 	def close(self):
 		"""Close the output device.
 		"""
-		if not self._isOpen:
-			return
 		self.stop()
-		NVDAHelper.localLib.wasPlay_close(self._player)
-		self._isOpen = False
 
 	def feed(
 			self,
@@ -897,7 +892,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		if onDone:
 			self._doneCallbacks[feedId.value] = onDone
 		self._lastActiveTime = time.time()
-		self._scheduleStreamCloseCheck()
+		self._scheduleIdleCheck()
 
 	def sync(self):
 		"""Synchronise with playback.
@@ -907,7 +902,6 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 
 	def idle(self):
 		"""Indicate that this player is now idle; i.e. the current continuous segment  of audio is complete.
-		For WASAPI, this just calls L{sync}.
 		"""
 		self.sync()
 		if self._audioDucker:
@@ -916,11 +910,10 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 	def stop(self):
 		"""Stop playback.
 		"""
-		if not self._isOpen:
-			return
 		if self._audioDucker:
 			self._audioDucker.disable()
 		NVDAHelper.localLib.wasPlay_stop(self._player)
+		self._isPaused = False
 		self._doneCallbacks = {}
 		self._setVolumeFromConfig()
 
@@ -937,6 +930,9 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			NVDAHelper.localLib.wasPlay_pause(self._player)
 		else:
 			NVDAHelper.localLib.wasPlay_resume(self._player)
+			self._lastActiveTime = time.time()
+			self._scheduleIdleCheck()
+		self._isPaused = switch
 
 	def setVolume(
 			self,
@@ -972,43 +968,44 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		self.setVolume(all=volume / 100)
 
 	@classmethod
-	def _scheduleStreamCloseCheck(cls):
-		if not cls._isStreamCloseCheckPending:
+	def _scheduleIdleCheck(cls):
+		if not cls._isIdleCheckPending:
 			core.callLater(
-				cls._STREAM_CLOSE_CHECK_INTERVAL,
-				cls._streamCloseCheck
+				cls._IDLE_CHECK_INTERVAL,
+				cls._idleCheck
 			)
-			cls._isStreamCloseCheckPending = True
+			cls._isIdleCheckPending = True
 
 	@classmethod
-	def _streamCloseCheck(cls):
+	def _idleCheck(cls):
 		"""Check whether there are open audio streams that should be considered
-		inactive. If there are any, close them. If there are open streams that
-		aren't ready to be closed yet, schedule another check.
-		This is necessary because holding streams open can prevent sleep on some
+		idle. If there are any, stop them. If there are open streams that
+		aren't idle yet, schedule another check.
+		This is necessary because failing to stop streams can prevent sleep on some
 		systems.
 		We do this in a single, class-wide check rather than separately for each
 		instance to avoid continually resetting a timer for each call to feed().
 		Resetting timers from another thread involves queuing to the main thread.
 		Doing that for every chunk of audio would not be very efficient.
 		Doing this with a class-wide check means that some checks might not take any
-		action and some streams might be kept open for a little longer than the
-		timeout, but this isn't problematic for our purposes.
+		action and some streams might be stopped a little after the timeout elapses,
+		but this isn't problematic for our purposes.
 		"""
-		cls._isStreamCloseCheckPending = False
-		threshold = time.time() - cls._STREAM_CLOSE_TIMEOUT
-		stillOpenStream = False
+		cls._isIdleCheckPending = False
+		threshold = time.time() - cls._IDLE_TIMEOUT
+		stillActiveStream = False
 		for player in cls._instances.values():
-			if not player._isOpen:
+			if not player._lastActiveTime or player._isPaused:
 				continue
 			if player._lastActiveTime <= threshold:
-				player.close()
+				NVDAHelper.localLib.wasPlay_idle(player._player)
+				player._lastActiveTime = None
 			else:
-				stillOpenStream = True
-		if stillOpenStream:
-			# There's still at least one open stream that wasn't ready to be closed.
+				stillActiveStream = True
+		if stillActiveStream:
+			# There's still at least one active stream that wasn't idle.
 			# Schedule another check here in case feed isn't called for a while.
-			cls._scheduleStreamCloseCheck()
+			cls._scheduleIdleCheck()
 
 	@staticmethod
 	def _getDevices():
@@ -1047,11 +1044,10 @@ def initialize():
 	NVDAHelper.localLib.wasPlay_create.restype = c_void_p
 	for func in (
 		NVDAHelper.localLib.wasPlay_startup,
-		NVDAHelper.localLib.wasPlay_open,
-		NVDAHelper.localLib.wasPlay_close,
 		NVDAHelper.localLib.wasPlay_feed,
 		NVDAHelper.localLib.wasPlay_stop,
 		NVDAHelper.localLib.wasPlay_sync,
+		NVDAHelper.localLib.wasPlay_idle,
 		NVDAHelper.localLib.wasPlay_pause,
 		NVDAHelper.localLib.wasPlay_resume,
 		NVDAHelper.localLib.wasPlay_setChannelVolume,

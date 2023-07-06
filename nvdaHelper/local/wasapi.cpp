@@ -161,8 +161,6 @@ class WasapiPlayer {
 	 */
 	HRESULT open(bool force=false);
 
-	HRESULT close();
-
 	/**
 	 * Feed a chunk of audio.
 	 * If not null, id will be set to a number used to identify the audio
@@ -173,6 +171,7 @@ class WasapiPlayer {
 
 	HRESULT stop();
 	HRESULT sync();
+	HRESULT idle();
 	HRESULT pause();
 	HRESULT resume();
 	HRESULT setChannelVolume(unsigned int channel, float level);
@@ -276,13 +275,6 @@ HRESULT WasapiPlayer::open(bool force) {
 		return hr;
 	}
 	playState = PlayState::stopped;
-	return S_OK;
-}
-
-HRESULT WasapiPlayer::close() {
-	client = nullptr;
-	render = nullptr;
-	clock = nullptr;
 	return S_OK;
 }
 
@@ -479,6 +471,19 @@ HRESULT WasapiPlayer::sync() {
 	return S_OK;
 }
 
+HRESULT WasapiPlayer::idle() {
+	HRESULT hr = sync();
+	if (FAILED(hr)) {
+		return hr;
+	}
+	hr = stop();
+	if (FAILED(hr)) {
+		return hr;
+	}
+	completeStop();
+	return S_OK;
+}
+
 HRESULT WasapiPlayer::pause() {
 	if (playState != PlayState::playing) {
 		return S_OK;
@@ -539,10 +544,6 @@ HRESULT wasPlay_open(WasapiPlayer* player) {
 	return player->open();
 }
 
-HRESULT wasPlay_close(WasapiPlayer* player) {
-	return player->close();
-}
-
 HRESULT wasPlay_feed(WasapiPlayer* player, unsigned char* data,
 	unsigned int size, unsigned int* id
 ) {
@@ -555,6 +556,10 @@ HRESULT wasPlay_stop(WasapiPlayer* player) {
 
 HRESULT wasPlay_sync(WasapiPlayer* player) {
 	return player->sync();
+}
+
+HRESULT wasPlay_idle(WasapiPlayer* player) {
+	return player->idle();
 }
 
 HRESULT wasPlay_pause(WasapiPlayer* player) {
