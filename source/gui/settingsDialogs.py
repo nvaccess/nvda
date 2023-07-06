@@ -2884,10 +2884,8 @@ class AdvancedPanelControls(
 		)
 		self.bindHelpEvent("HIDBraille", self.supportHidBrailleCombo)
 		self.brailleLiveRegionsCombo: nvdaControls.FeatureFlagCombo = brailleGroup.addLabeledControl(
-			labelText=_(
-				# Translators: This is the label for a combo-box in the Advanced settings panel.
-				"Report live regions:"
-			),
+			# Translators: This is the label for a combo-box in the Advanced settings panel.
+			labelText=_("Report live regions:"),
 			wxCtrlClass=nvdaControls.FeatureFlagCombo,
 			keyPath=["braille", "reportLiveRegions"],
 			conf=config.conf,
