@@ -2145,6 +2145,7 @@ class GlobalCommands(ScriptableObject):
 			"reportFontSize",
 			"reportFontAttributes",
 			"reportSuperscriptsAndSubscripts",
+			"reportHighlight",
 			"reportColor",
 			"reportStyle",
 			"reportAlignment",
@@ -3781,7 +3782,11 @@ class GlobalCommands(ScriptableObject):
 		# Translators: Input help mode message for a touchscreen gesture.
 		description=_("Moves to the next object in a flattened view of the object navigation hierarchy"),
 		category=SCRCAT_OBJECTNAVIGATION,
-		gesture="ts(object):flickright"
+		gestures=(
+			"ts(object):flickright",
+			"kb(desktop):NVDA+numpad3",
+			"kb(laptop):shift+NVDA+]",
+		),
 	)
 	def script_navigatorObject_nextInFlow(self, gesture: inputCore.InputGesture):
 		curObject=api.getNavigatorObject()
@@ -3815,7 +3820,11 @@ class GlobalCommands(ScriptableObject):
 		# Translators: Input help mode message for a touchscreen gesture.
 		description=_("Moves to the previous object in a flattened view of the object navigation hierarchy"),
 		category=SCRCAT_OBJECTNAVIGATION,
-		gesture="ts(object):flickleft"
+		gestures=(
+			"ts(object):flickleft",
+			"kb(desktop):NVDA+numpad9",
+			"kb(laptop):shift+NVDA+[",
+		),
 	)
 	def script_navigatorObject_previousInFlow(self, gesture: inputCore.InputGesture):
 		curObject=api.getNavigatorObject()

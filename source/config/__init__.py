@@ -39,6 +39,7 @@ from .configSpec import confspec
 from .featureFlag import (
 	_transformSpec_AddFeatureFlagDefault,
 	_validateConfig_featureFlag,
+	FeatureFlag,
 )
 from typing import (
 	Any,
@@ -1247,13 +1248,17 @@ class AggregatedSection:
 		except KeyError:
 			pass
 		else:
-			if self._isSection(val) or self._isSection(curVal):
-				# If value is a section, continue to update
-				pass
-			elif str(val) == str(curVal):
+			if (
+				# Feature flags override __eq__.
 				# Check str comparison as this is what is written to the config.
 				# If the value is unchanged, do not update
 				# or mark the profile as dirty.
+				(
+					isinstance(val, FeatureFlag)
+					or isinstance(curVal, FeatureFlag)
+				)
+				and str(val) == str(curVal)
+			):
 				return
 
 		# Set this value in the most recently activated profile.

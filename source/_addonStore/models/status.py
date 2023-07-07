@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2023 NV Access Limited
+# Copyright (C) 2022-2023 NV Access Limited, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -245,16 +245,37 @@ class _StatusFilterKey(DisplayStringEnum):
 
 	@property
 	def _displayStringLabels(self) -> Dict["_StatusFilterKey", str]:
+		return {k: v.replace('&', '') for (k, v) in self._displayStringLabelsWithAccelerators.items()}
+
+	@property
+	def _displayStringLabelsWithAccelerators(self) -> Dict["_StatusFilterKey", str]:
 		return {
-			# Translators: A selection option to display installed add-ons in the add-on store
-			self.INSTALLED: pgettext("addonStore", "Installed add-ons"),
-			# Translators: A selection option to display updatable add-ons in the add-on store
-			self.UPDATE: pgettext("addonStore", "Updatable add-ons"),
-			# Translators: A selection option to display available add-ons in the add-on store
-			self.AVAILABLE: pgettext("addonStore", "Available add-ons"),
-			# Translators: A selection option to display incompatible add-ons in the add-on store
-			self.INCOMPATIBLE: pgettext("addonStore", "Installed incompatible add-ons"),
+			# Translators: The label of a tab to display installed add-ons in the add-on store and the label of the
+			# add-ons list in the corresponding panel (preferably use the same accelerator key for the four labels)
+			self.INSTALLED: pgettext("addonStore", "Installed &add-ons"),
+			# Translators: The label of a tab to display updatable add-ons in the add-on store and the label of the
+			# add-ons list in the corresponding panel (preferably use the same accelerator key for the four labels)
+			self.UPDATE: pgettext("addonStore", "Updatable &add-ons"),
+			# Translators: The label of a tab to display available add-ons in the add-on store and the label of the
+			# add-ons list in the corresponding panel (preferably use the same accelerator key for the four labels)
+			self.AVAILABLE: pgettext("addonStore", "Available &add-ons"),
+			# Translators: The label of a tab to display incompatible add-ons in the add-on store and the label of the
+			# add-ons list in the corresponding panel (preferably use the same accelerator key for the four labels)
+			self.INCOMPATIBLE: pgettext("addonStore", "Installed incompatible &add-ons"),
 		}
+
+	@property
+	def displayStringWithAccelerator(self) -> str:
+		"""
+		@return: The translated UI display string with accelerator that should be used for this value of the enum.
+		"""
+		try:
+			return self._displayStringLabelsWithAccelerators[self]
+		except KeyError as e:
+			log.error(f"No translation mapping for: {self}")
+			raise e
+
+
 
 
 _statusFilters: OrderedDict[_StatusFilterKey, Set[AvailableAddonStatus]] = OrderedDict({

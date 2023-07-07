@@ -2628,9 +2628,15 @@ class UwpOcrPanel(SettingsPanel):
 		# Lazily import this.
 		from contentRecog import uwpOcr
 		self.languageCodes = uwpOcr.getLanguages()
-		languageChoices = [
-			languageHandler.getLanguageDescription(languageHandler.normalizeLanguage(lang))
-			for lang in self.languageCodes]
+		languageChoices = []
+		for lang in self.languageCodes:
+			normLang = languageHandler.normalizeLanguage(lang)
+			desc = languageHandler.getLanguageDescription(normLang)
+			if not desc:
+				# Raise an error in the hope that people be more likely to report the issue
+				log.error(f'No description for language: {lang}. Using language code instead.')
+				desc = lang
+			languageChoices.append(desc)
 		# Translators: Label for an option in the Windows OCR dialog.
 		languageLabel = _("Recognition &language:")
 		self.languageChoice = sHelper.addLabeledControl(languageLabel, wx.Choice, choices=languageChoices)
@@ -2854,12 +2860,10 @@ class AdvancedPanelControls(
 
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
-		label = _("HID Braille Standard")
-		hidBrailleSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=label)
-		hidBrailleBox = hidBrailleSizer.GetStaticBox()
-		hidBrailleGroup = guiHelper.BoxSizerHelper(self, sizer=hidBrailleSizer)
-		self.bindHelpEvent("HIDBraille", hidBrailleBox)
-		sHelper.addItem(hidBrailleGroup)
+		label = _("Braille")
+		brailleSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=label)
+		brailleGroup = guiHelper.BoxSizerHelper(self, sizer=brailleSizer)
+		sHelper.addItem(brailleGroup)
 
 		supportHidBrailleChoices = [
 			# Translators: Label for option in the 'Enable support for HID braille' combobox
@@ -2873,10 +2877,10 @@ class AdvancedPanelControls(
 			_("No"),
 		]
 
-		# Translators: This is the label for a checkbox in the
+		# Translators: This is the label for a combo box in the
 		#  Advanced settings panel.
 		label = _("Enable support for HID braille")
-		self.supportHidBrailleCombo: wx.Choice = hidBrailleGroup.addLabeledControl(
+		self.supportHidBrailleCombo: wx.Choice = brailleGroup.addLabeledControl(
 			labelText=label,
 			wxCtrlClass=wx.Choice,
 			choices=supportHidBrailleChoices,
@@ -2887,6 +2891,15 @@ class AdvancedPanelControls(
 		self.supportHidBrailleCombo.defaultValue = self._getDefaultValue(
 			["braille", "enableHidBrailleSupport"]
 		)
+		self.bindHelpEvent("HIDBraille", self.supportHidBrailleCombo)
+		self.brailleLiveRegionsCombo: nvdaControls.FeatureFlagCombo = brailleGroup.addLabeledControl(
+			# Translators: This is the label for a combo-box in the Advanced settings panel.
+			labelText=_("Report live regions:"),
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["braille", "reportLiveRegions"],
+			conf=config.conf,
+		)
+		self.bindHelpEvent("BrailleLiveRegions", self.brailleLiveRegionsCombo)
 
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
@@ -3188,6 +3201,7 @@ class AdvancedPanelControls(
 			and self.annotationsDetailsCheckBox.IsChecked() == self.annotationsDetailsCheckBox.defaultValue
 			and self.ariaDescCheckBox.IsChecked() == self.ariaDescCheckBox.defaultValue
 			and self.supportHidBrailleCombo.GetSelection() == self.supportHidBrailleCombo.defaultValue
+			and self.brailleLiveRegionsCombo.isValueConfigSpecDefault()
 			and self.keyboardSupportInLegacyCheckBox.IsChecked() == self.keyboardSupportInLegacyCheckBox.defaultValue
 			and self.winConsoleSpeakPasswordsCheckBox.IsChecked() == self.winConsoleSpeakPasswordsCheckBox.defaultValue
 			and self.diffAlgoCombo.GetSelection() == self.diffAlgoCombo.defaultValue
@@ -3216,6 +3230,7 @@ class AdvancedPanelControls(
 		self.annotationsDetailsCheckBox.SetValue(self.annotationsDetailsCheckBox.defaultValue)
 		self.ariaDescCheckBox.SetValue(self.ariaDescCheckBox.defaultValue)
 		self.supportHidBrailleCombo.SetSelection(self.supportHidBrailleCombo.defaultValue)
+		self.brailleLiveRegionsCombo.resetToConfigSpecDefault()
 		self.winConsoleSpeakPasswordsCheckBox.SetValue(self.winConsoleSpeakPasswordsCheckBox.defaultValue)
 		self.keyboardSupportInLegacyCheckBox.SetValue(self.keyboardSupportInLegacyCheckBox.defaultValue)
 		self.diffAlgoCombo.SetSelection(self.diffAlgoCombo.defaultValue == 'auto')
@@ -3263,6 +3278,7 @@ class AdvancedPanelControls(
 		config.conf["annotations"]["reportDetails"] = self.annotationsDetailsCheckBox.IsChecked()
 		config.conf["annotations"]["reportAriaDescription"] = self.ariaDescCheckBox.IsChecked()
 		config.conf["braille"]["enableHidBrailleSupport"] = self.supportHidBrailleCombo.GetSelection()
+		self.brailleLiveRegionsCombo.saveCurrentValueToConf()
 		self.loadChromeVBufWhenBusyCombo.saveCurrentValueToConf()
 
 		for index,key in enumerate(self.logCategories):
@@ -4312,9 +4328,14 @@ class SpeechSymbolsDialog(SettingsDialog):
 		except LookupError:
 			symbolProcessor = characterProcessing._localeSpeechSymbolProcessors.fetchLocaleData("en")
 		self.symbolProcessor = symbolProcessor
+		desc = languageHandler.getLanguageDescription(self.symbolProcessor.locale)
+		if not desc:
+			desc = self.symbolProcessor.locale
+			# Raise an error in the hope that people be more likely to report the issue
+			log.error(f'No description for language: {desc}. Using language code instead.')
 		# Translators: This is the label for the symbol pronunciation dialog.
 		# %s is replaced by the language for which symbol pronunciation is being edited.
-		self.title = _("Symbol Pronunciation (%s)")%languageHandler.getLanguageDescription(self.symbolProcessor.locale)
+		self.title = _("Symbol Pronunciation (%s)") % desc
 		super(SpeechSymbolsDialog, self).__init__(
 			parent,
 			resizeable=True,

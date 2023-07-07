@@ -14,7 +14,7 @@ from NVDAState import WritePaths
 if NVDAState._allowDeprecatedAPI():
 	log.warning(
 		"speechDictHandler.speechDictVars.speechDictsPath is deprecated, "
-		"instead use WritePaths.speechDictsDir",
+		"instead use NVDAState.WritePaths.speechDictsDir",
 		stack_info=True
 	)
 	speechDictsPath = WritePaths.speechDictsDir

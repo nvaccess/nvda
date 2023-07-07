@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2023 NV Access Limited
+# Copyright (C) 2022-2023 NV Access Limited, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -42,7 +42,7 @@ class AddonDetails(
 
 	# Translators: Label for the text control containing a description of the selected add-on.
 	# In the add-on store dialog.
-	_actionsLabelText: str = pgettext("addonStore", "&Actions")
+	_actionsLabelText: str = pgettext("addonStore", "A&ctions")
 
 	def __init__(
 			self,
@@ -126,9 +126,6 @@ class AddonDetails(
 		self.contents.Add(wx.StaticLine(self.contentsPanel), flag=wx.EXPAND)
 		self.contents.AddSpacer(guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
 
-		# It would be nice to override the name using wx.Accessible,
-		# but using it on a TextCtrl breaks the accessibility of the control entirely (all state/role is reset)
-		# Instead, add a hidden label for the textBox, Windows exposes this as the accessible name.
 		self.otherDetailsLabel = wx.StaticText(
 			self.contentsPanel,
 			# Translators: Label for the text control containing extra details about the selected add-on.
@@ -136,7 +133,6 @@ class AddonDetails(
 			label=pgettext("addonStore", "&Other Details:")
 		)
 		self.contents.Add(self.otherDetailsLabel, flag=wx.EXPAND)
-		self.otherDetailsLabel.Hide()
 		self.otherDetailsTextCtrl = wx.TextCtrl(
 			self.contentsPanel,
 			size=self.scaleSize((panelWidth, 400)),
