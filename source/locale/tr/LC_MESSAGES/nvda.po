@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-23 00:02+0000\n"
+"POT-Creation-Date: 2023-06-27 01:58+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Burak Yüksek <burakyuksek94@gmail.com>\n"
 "Language-Team: \n"
@@ -2473,7 +2473,7 @@ msgstr "metin \"%s\" bulunamadı"
 #. Translators: message dialog title displayed to the user when
 #. searching text and no text is found.
 msgid "0 matches"
-msgstr ""
+msgstr "Eşleşme yok"
 
 #. Translators: Input help message for NVDA's find command.
 msgid "find a text string from the current cursor position"
@@ -4174,7 +4174,7 @@ msgstr "Braille imleç şekilleri arasında dolaşır"
 #. (default behavior).
 #, python-format
 msgid "Braille show selection default (%s)"
-msgstr ""
+msgstr "Braille seçimi göster varsayılan (%s)"
 
 #. Translators: Reports which show braille selection state is used
 #. (disabled or enabled).
@@ -4405,7 +4405,7 @@ msgstr ""
 
 #. Translators: Informs the user that the link has no destination
 msgid "Link has no apparent destination"
-msgstr ""
+msgstr "Linkin yönlendirdiği belirli bir web adresi yok"
 
 #. Translators: Informs the user that the window contains the destination of the
 #. link with given title
@@ -6724,12 +6724,12 @@ msgstr "Eklenti uyumlu değil"
 #. Translators: A message shown when fetching add-on data from the store fails
 msgctxt "addonStore"
 msgid "Unable to fetch latest add-on data for compatible add-ons."
-msgstr ""
+msgstr "Uyumlu eklentiler için en son eklenti bilgisi alınamadı."
 
 #. Translators: A message shown when fetching add-on data from the store fails
 msgctxt "addonStore"
 msgid "Unable to fetch latest add-on data for incompatible add-ons."
-msgstr ""
+msgstr "Uyumsuz eklentiler için en son eklenti bilgisi alınamadı."
 
 #. Translators: The message displayed when an error occurs when opening an add-on package for adding.
 #. The %s will be replaced with the path to the add-on that could not be opened.
@@ -6766,19 +6766,21 @@ msgstr "Eklenti uyumlu değil"
 #, python-brace-format
 msgctxt "addonStore"
 msgid "Unable to download add-on: {name}"
-msgstr ""
+msgstr "{name} indirilemiyor"
 
 #. Translators: A message to the user if an add-on download fails
 #, python-brace-format
 msgctxt "addonStore"
 msgid "Unable to save add-on as a file: {name}"
-msgstr ""
+msgstr "{name} dosya olarak kaydedilemedi"
 
 #. Translators: A message to the user if an add-on download is not safe
 #, python-brace-format
 msgctxt "addonStore"
 msgid "Add-on download not safe: checksum failed for {name}"
 msgstr ""
+"Eklentiyi indirmek güvenli değil: {name} için sağlama toplamı kontrolü "
+"başarısız oldu"
 
 msgid "Display"
 msgstr "Display"
@@ -7358,6 +7360,8 @@ msgid ""
 "cursor positioned {horizontalDistance} from left edge of page, "
 "{verticalDistance} from top edge of page"
 msgstr ""
+"İmleç konumu sayfanın sol kenarında {horizontalDistance}, sayfanın üst "
+"kenarında {verticalDistance}"
 
 msgid "left"
 msgstr "sol"
@@ -8586,7 +8590,7 @@ msgstr "iletişim kutusu"
 
 #. Translators: Presented when a control has a pop-up grid.
 msgid "opens grid"
-msgstr ""
+msgstr "Izgarayı açar"
 
 #. Translators: Presented when a control has a pop-up list box.
 #, fuzzy
@@ -8595,7 +8599,7 @@ msgstr "seçim kutusu"
 
 #. Translators: Presented when a control has a pop-up tree.
 msgid "opens tree"
-msgstr ""
+msgstr "Ağacı açar"
 
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
@@ -9635,6 +9639,8 @@ msgid ""
 "Please specify the absolute path where the portable copy should be created. "
 "It may include system variables (%temp%, %homepath%, etc.)."
 msgstr ""
+"Taşınabilir kopyanın oluşturulacağı klasörü yazın. (%temp%, %homepath% gibi "
+"sistem değişkenlerini kullanabilirsiniz)."
 
 #. Translators: The title of the dialog presented while a portable copy of NVDA is being created.
 msgid "Creating Portable Copy"
@@ -10760,12 +10766,14 @@ msgstr "ses"
 #. Translators: This is the label for a checkbox control in the
 #. Advanced settings panel.
 msgid "Use WASAPI for audio output (requires restart)"
-msgstr ""
+msgstr "Ses çıkışı için WASAPI kullan (NVDA'yı yeniden başlatmak gerekir)"
 
 #. Translators: This is the label for a checkbox control in the
 #. Advanced settings panel.
 msgid "Volume of NVDA sounds follows voice volume (requires WASAPI)"
 msgstr ""
+"NVDA seslerinin ses seviyesi konuşma ses seviyesine eşit olsun (WASAPI "
+"gerekir)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -13431,6 +13439,14 @@ msgctxt "line spacing value"
 msgid "at least %.1f pt"
 msgstr "en az %.1f pt"
 
+#. Translators: line spacing of x lines
+#, fuzzy, python-format
+msgctxt "line spacing value"
+msgid "%.1f line"
+msgid_plural "%.1f lines"
+msgstr[0] "%.1f satır"
+msgstr[1] "%.1f satır"
+
 #. Translators: the title of the message dialog desplaying an MS Word table description.
 msgid "Table description"
 msgstr "Tablo tarifi"
@@ -13562,17 +13578,17 @@ msgstr "tablo"
 #. Translators: Label for add-on channel in the add-on sotre
 msgctxt "addonStore"
 msgid "Beta"
-msgstr ""
+msgstr "Beta"
 
 #. Translators: Label for add-on channel in the add-on sotre
 msgctxt "addonStore"
 msgid "Dev"
-msgstr ""
+msgstr "Geliştirici"
 
 #. Translators: Label for add-on channel in the add-on sotre
 msgctxt "addonStore"
 msgid "External"
-msgstr ""
+msgstr "Dış"
 
 #. Translators: The label of an option to filter the list of add-ons in the add-on store dialog.
 #. Translators: Status for addons shown in the add-on store dialog
@@ -13591,7 +13607,7 @@ msgstr "Devre dışı"
 #. Translators: Status for addons shown in the add-on store dialog
 msgctxt "addonStore"
 msgid "Pending removal"
-msgstr ""
+msgstr "Kaldırma bekliyor"
 
 #. Translators: Status for addons shown in the add-on store dialog
 #, fuzzy
@@ -13608,7 +13624,7 @@ msgstr "Güncelleme mevcut değil."
 #. Translators: Status for addons shown in the add-on store dialog
 msgctxt "addonStore"
 msgid "Migrate to add-on store"
-msgstr ""
+msgstr "Eklenti mağazasına yüklendi"
 
 #. Translators: Status for addons shown in the add-on store dialog
 #, fuzzy
@@ -13629,9 +13645,10 @@ msgid "Download failed"
 msgstr "Güncellemeyi in&dir"
 
 #. Translators: Status for addons shown in the add-on store dialog
+#, fuzzy
 msgctxt "addonStore"
 msgid "Downloaded, pending install"
-msgstr ""
+msgstr "Yeniden başlatıldıktan sonra Etkin"
 
 #. Translators: Status for addons shown in the add-on store dialog
 #, fuzzy
@@ -13786,9 +13803,412 @@ msgstr "HID klavye simülasyonu devre dışı."
 msgid "Toggle HID keyboard simulation"
 msgstr "HID klavye simülasyonunu açıp kapatır"
 
-#~ msgctxt "line spacing value"
-#~ msgid "%.1f lines"
-#~ msgstr "%.1f satır"
+#. Translators: Header (usually the add-on name) when add-ons are loading. In the add-on store dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Loading add-ons..."
+msgstr "&Eklentileri yönet..."
+
+#. Translators: Header (usually the add-on name) when no add-on is selected. In the add-on store dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "No add-on selected."
+msgstr "seçili değil"
+
+#. Translators: Label for the text control containing a description of the selected add-on.
+#. In the add-on store dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Description:"
+msgstr "Dağıtım:"
+
+#. Translators: Label for the text control containing a description of the selected add-on.
+#. In the add-on store dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "S&tatus:"
+msgstr "Durum"
+
+#. Translators: Label for the text control containing a description of the selected add-on.
+#. In the add-on store dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "&Actions"
+msgstr "Ek &Açıklamalar"
+
+#. Translators: Label for the text control containing extra details about the selected add-on.
+#. In the add-on store dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "&Other Details:"
+msgstr "ayrıntı var"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Publisher:"
+msgstr "Yayıncı:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Installed version:"
+msgstr "NVDA {version} sürümünü &kur"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Available version:"
+msgstr "Eklentiyi &Devre dışı bırak"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Channel:"
+msgstr "Kanal:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Incompatible Reason:"
+msgstr "Uyumsuzluk nedeni"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Homepage:"
+msgstr "ana sayfa"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "License:"
+msgstr "L&isans"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "License URL:"
+msgstr "L&isans"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Download URL:"
+msgstr "İndiriliyor"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Source URL:"
+msgstr "Kaynak web adresi:"
+
+#. Translators: A button in the addon installation warning / blocked dialog which shows
+#. more information about the addon
+#, fuzzy
+msgctxt "addonStore"
+msgid "&About add-on..."
+msgstr "Eklenti &hakkında..."
+
+#. Translators: A button in the addon installation blocked dialog which will confirm the available action.
+#, fuzzy
+msgctxt "addonStore"
+msgid "&Yes"
+msgstr "&Evet"
+
+#. Translators: A button in the addon installation blocked dialog which will dismiss the dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "&No"
+msgstr "&Hayır"
+
+#. Translators: The message displayed when updating an add-on, but the installed version
+#. identifier can not be compared with the version to be installed.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"Warning: add-on installation may result in downgrade: {name}. The installed "
+"add-on version cannot be compared with the add-on store version. Installed "
+"version: {oldVersion}. Available version: {version}.\n"
+"Proceed with installation anyway? "
+msgstr ""
+"Uyarı: Eklentinin kurulumu, {name} eklentisinin eski sürümünün kurulmasına "
+"neden olabilir. Kurulu olan eklentinin sürümü eklenti mağazasındaki sürümle "
+"karşılaştırılamıyor. Kurulu sürüm: {oldVersion}. Mevcut sürüm: {version}.\n"
+"Kuruluma devam edilsin mi?"
+
+#. Translators: The title of a dialog presented when an error occurs.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Add-on not compatible"
+msgstr "Eklenti uyumlu değil"
+
+#. Translators: Presented when attempting to remove the selected add-on.
+#. {addon} is replaced with the add-on name.
+#, fuzzy, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"Are you sure you wish to remove the {addon} add-on from NVDA? This cannot be "
+"undone."
+msgstr ""
+"{addon} eklentisini Kaldırmak istediğinizden emin misiniz? Bu geri alınamaz."
+
+#. Translators: Title for message asking if the user really wishes to remove the selected Add-on.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Remove Add-on"
+msgstr "Eklentiyi Kaldır"
+
+#. Translators: The message displayed when installing an add-on package that is incompatible
+#. because the add-on is too old for the running version of NVDA.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"Warning: add-on is incompatible: {name} {version}. Check for an updated "
+"version of this add-on if possible. The last tested NVDA version for this "
+"add-on is {lastTestedNVDAVersion}, your current NVDA version is "
+"{NVDAVersion}. Installation may cause unstable behavior in NVDA.\n"
+"Proceed with installation anyway? "
+msgstr ""
+
+#. Translators: The message displayed when enabling an add-on package that is incompatible
+#. because the add-on is too old for the running version of NVDA.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"Warning: add-on is incompatible: {name} {version}. Check for an updated "
+"version of this add-on if possible. The last tested NVDA version for this "
+"add-on is {lastTestedNVDAVersion}, your current NVDA version is "
+"{NVDAVersion}. Enabling may cause unstable behavior in NVDA.\n"
+"Proceed with enabling anyway? "
+msgstr ""
+
+#. Translators: message shown in the Addon Information dialog.
+#, fuzzy, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"{summary} ({name})\n"
+"Version: {version}\n"
+"Publisher: {publisher}\n"
+"Description: {description}\n"
+msgstr ""
+"{summary} ({name})\n"
+"Sürüm: {version}\n"
+"Yazar: {author}\n"
+"Açıklama: {description}\n"
+
+#. Translators: the url part of the About Add-on information
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Homepage: {url}"
+msgstr ""
+
+#. Translators: the minimum NVDA version part of the About Add-on information
+#, fuzzy
+msgctxt "addonStore"
+msgid "Minimum required NVDA version: {}"
+msgstr "Gereken minimum NVDA sürümü: {}"
+
+#. Translators: the last NVDA version tested part of the About Add-on information
+#, fuzzy
+msgctxt "addonStore"
+msgid "Last NVDA version tested: {}"
+msgstr "Test edilen son NVDA sürümü: {}"
+
+#. Translators: title for the Addon Information dialog
+#, fuzzy
+msgctxt "addonStore"
+msgid "Add-on Information"
+msgstr "Eklenti Bilgisi"
+
+#. Translators: The title of the addonStore dialog where the user can find and download add-ons
+#, fuzzy
+msgctxt "addonStore"
+msgid "Add-on Store"
+msgstr "Eklenti &yardımı"
+
+#. Translators: Banner notice that is displayed in the Add-on Store.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Note: NVDA was started with add-ons disabled"
+msgstr "Eklentileri devre dışı bırakarak yeniden başlat"
+
+#. Translators: The label for a button in add-ons Store dialog to install an external add-on.
+msgctxt "addonStore"
+msgid "Install from e&xternal source"
+msgstr ""
+
+#. Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
+msgctxt "addonStore"
+msgid "Cha&nnel:"
+msgstr ""
+
+#. Translators: The label of a checkbox to filter the list of add-ons in the add-on store dialog.
+#, fuzzy
+msgid "Include &incompatible add-ons"
+msgstr "Uyumsuz eklentiler"
+
+#. Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Ena&bled/disabled:"
+msgstr "devre dışı"
+
+#. Translators: The label of a text field to filter the list of add-ons in the add-on store dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "&Search:"
+msgstr "arama"
+
+#. Translators: Title for message shown prior to installing add-ons when closing the add-on store dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Add-on installation"
+msgstr "Eklenti Kurulumu"
+
+#. Translators: Message shown prior to installing add-ons when closing the add-on store dialog
+#. The placeholder {} will be replaced with the number of add-ons to be installed
+msgctxt "addonStore"
+msgid "Download of {} add-ons in progress, cancel downloading?"
+msgstr ""
+
+#. Translators: Message shown while installing add-ons after closing the add-on store dialog
+#. The placeholder {} will be replaced with the number of add-ons to be installed
+#, fuzzy
+msgctxt "addonStore"
+msgid "Installing {} add-ons, please wait."
+msgstr "Eklenti kuruluyor"
+
+#. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
+#, fuzzy, python-brace-format
+msgctxt "addonStore"
+msgid "NVDA Add-on Package (*.{ext})"
+msgstr "NVDA Eklenti Paketi (*.{ext})"
+
+#. Translators: The message displayed in the dialog that
+#. allows you to choose an add-on package for installation.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Choose Add-on Package File"
+msgstr "Eklenti Paketi Dosyasını Seçin"
+
+#. Translators: The name of the column that contains names of addons.
+msgctxt "addonStore"
+msgid "Name"
+msgstr ""
+
+#. Translators: The name of the column that contains the installed addons version string.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Installed version"
+msgstr "NVDA {version} sürümünü &kur"
+
+#. Translators: The name of the column that contains the available addons version string.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Available version"
+msgstr "Eklentiyi &Devre dışı bırak"
+
+#. Translators: The name of the column that contains the channel of the addon (e.g stable, beta, dev).
+#, fuzzy
+msgctxt "addonStore"
+msgid "Channel"
+msgstr "benır"
+
+#. Translators: The name of the column that contains the addons publisher.
+msgctxt "addonStore"
+msgid "Publisher"
+msgstr ""
+
+#. Translators: The name of the column that contains the status of the addon.
+#. e.g. available, downloading installing
+#, fuzzy
+msgctxt "addonStore"
+msgid "Status"
+msgstr "Durum"
+
+#. Translators: Label for an action that installs the selected addon
+#, fuzzy
+msgctxt "addonStore"
+msgid "&Install"
+msgstr "Kur"
+
+#. Translators: Label for an action that installs the selected addon
+#, fuzzy
+msgctxt "addonStore"
+msgid "&Install (override incompatibility)"
+msgstr "Uyumsuz eklentiler"
+
+#. Translators: Label for an action that updates the selected addon
+#, fuzzy
+msgctxt "addonStore"
+msgid "&Update"
+msgstr "NVDA Güncellemesi"
+
+#. Translators: Label for an action that replaces the selected addon with
+#. an add-on store version.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Re&place"
+msgstr "olarak değiştir"
+
+#. Translators: Label for an action that disables the selected addon
+#, fuzzy
+msgctxt "addonStore"
+msgid "&Disable"
+msgstr "Devre dışı"
+
+#. Translators: Label for an action that enables the selected addon
+#, fuzzy
+msgctxt "addonStore"
+msgid "&Enable"
+msgstr "Etkinleştir"
+
+#. Translators: Label for an action that enables the selected addon
+#, fuzzy
+msgctxt "addonStore"
+msgid "&Enable (override incompatibility)"
+msgstr "Uyumsuz"
+
+#. Translators: Label for an action that removes the selected addon
+#, fuzzy
+msgctxt "addonStore"
+msgid "&Remove"
+msgstr "Kaldı&r"
+
+#. Translators: Label for an action that opens help for the selected addon
+#, fuzzy
+msgctxt "addonStore"
+msgid "&Help"
+msgstr "Y&ardım"
+
+#. Translators: Label for an action that opens the homepage for the selected addon
+#, fuzzy
+msgctxt "addonStore"
+msgid "Ho&mepage"
+msgstr "ana sayfa"
+
+#. Translators: Label for an action that opens the license for the selected addon
+#, fuzzy
+msgctxt "addonStore"
+msgid "&License"
+msgstr "L&isans"
+
+#. Translators: Label for an action that opens the source code for the selected addon
+msgctxt "addonStore"
+msgid "Source &Code"
+msgstr ""
+
+#. Translators: The message displayed when the add-on cannot be enabled.
+#. {addon} is replaced with the add-on name.
+#, fuzzy, python-brace-format
+msgctxt "addonStore"
+msgid "Could not enable the add-on: {addon}."
+msgstr "{description} eklentisi Etkinleştirilemedi."
+
+#. Translators: The message displayed when the add-on cannot be disabled.
+#. {addon} is replaced with the add-on name.
+#, fuzzy, python-brace-format
+msgctxt "addonStore"
+msgid "Could not disable the add-on: {addon}."
+msgstr "{description} eklentisi devre dışı bırakılamadı."
 
 #~ msgid "Find Error"
 #~ msgstr "Arama hatası"
@@ -13811,47 +14231,8 @@ msgstr "HID klavye simülasyonunu açıp kapatır"
 #~ msgid "Eurobraille Esys/Esytime/Iris displays"
 #~ msgstr "Eurobraille Esys/Esytime/Iris ekranlar"
 
-#~ msgid "Manage &add-ons..."
-#~ msgstr "&Eklentileri yönet..."
-
-#~ msgid ""
-#~ "{summary} ({name})\n"
-#~ "Version: {version}\n"
-#~ "Author: {author}\n"
-#~ "Description: {description}\n"
-#~ msgstr ""
-#~ "{summary} ({name})\n"
-#~ "Sürüm: {version}\n"
-#~ "Yazar: {author}\n"
-#~ "Açıklama: {description}\n"
-
 #~ msgid "URL: {url}"
 #~ msgstr "Web sitesi: {url}"
-
-#~ msgid "Minimum required NVDA version: {}"
-#~ msgstr "Gereken minimum NVDA sürümü: {}"
-
-#~ msgid "Last NVDA version tested: {}"
-#~ msgstr "Test edilen son NVDA sürümü: {}"
-
-#~ msgid "Add-on Information"
-#~ msgstr "Eklenti Bilgisi"
-
-#~ msgid ""
-#~ "Are you sure you wish to remove the {addon} add-on from NVDA? This cannot "
-#~ "be undone."
-#~ msgstr ""
-#~ "{addon} eklentisini Kaldırmak istediğinizden emin misiniz? Bu geri "
-#~ "alınamaz."
-
-#~ msgid "Remove Add-on"
-#~ msgstr "Eklentiyi Kaldır"
-
-#~ msgid "Could not disable the {description} add-on."
-#~ msgstr "{description} eklentisi devre dışı bırakılamadı."
-
-#~ msgid "Could not enable the {description} add-on."
-#~ msgstr "{description} eklentisi Etkinleştirilemedi."
 
 #~ msgid ""
 #~ "Installation of {summary} {version} has been blocked. An updated version "

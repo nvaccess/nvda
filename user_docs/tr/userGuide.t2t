@@ -2255,6 +2255,25 @@ Bu ayar, bazı uygulamalarda gelen metnin okunmasını kararlı kılabilir.
 Ancak, terminallerde, bir satırın ortasına bir karakter eklerken veya silerken, imleçten sonraki metin okunacaktır.
 -
 
+==== Windows Terminal'de yeni metin şunun aracılığıyla oku: ====[WtStrategy]
+: Varsayılan
+ Fark Bulma
+: Seçenekler
+ Fark Bulma, UIA bildirimleri
+:
+
+Bu seçenek, NVDA'nın Windows Terminal'de ve Visual Studio 2022'de kullanılan WPF Windows Terminal kontrolünde hangi metnin "yeni" olduğunu (ve dolayısıyla "dinamik içerik değişikliklerini bildir" etkinleştirildiğinde yeni metnin nasıl belirlenip bildirileceğini  ayarlamanıza yarar.
+Windows Konsolunu (``conhost.exe``) etkilemez.
+Mevcut üç seçenek bulunmaktadır:
+- Varsayılan: Bu seçenek "Fark bulma" ile aynı işlevi yapar, ancak UIA bildirimleri için destek daha da geliştirildiğinde değişmesi beklenmektedir.
+- Fark bulma: Bu seçenek, terminal her yeni metin oluşturduğunda değişiklikleri hesaplamak için seçilen diff algoritmasını kullanır.
+Bu, NVDA'nın 2022.4 ve önceki sürümlerdeki davranışıyla aynıdır.
+- UIA bildirimleri: Bu seçenek, konuşulacak metni belirleme sorumluluğunu Windows Terminal'e bırakır ve bu sayede NVDA'nın artık ekrandaki metnin yeni olup olmadığını belirlemesine gerek kalmaz.
+Bu, Windows Terminal'in performansını ve kararlılığını önemli ölçüde artırmalıdır, ancak bu özellik henüz geliştirilme aşamasındadır.
+Özellikle, şifreler gibi ekranda görüntülenmeyen yazılan karakterler bu seçenek seçildiğinde bildirilir.
+Ayrıca, 1.000 karakterin üzerindeki sürekli metin çıktıları doğru bir şekilde bildirilmeyebilir.
+-
+
 ==== Süresi dolmuş odak etkinlikleri için konuşmayı iptal etmeyi dene ====[CancelExpiredFocusSpeech]
 Bu seçenek, süresi dolmuş odak olayları için konuşmanın iptal edilmesi  davranışını etkinleştirir.
 Özellikle Chrome ile Gmail'deki mesajlarda hızlı bir şekilde hareket etmek NVDA'nın artık geçerli olmayan bilgileri aktarmasına neden olabilir.
