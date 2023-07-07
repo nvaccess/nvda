@@ -52,6 +52,7 @@ What's New in NVDA
 - When using Excel shortcuts to toggle format such as bold, italic, underline and strike through of a cell in Excel, the result is now reported. (#14923)
 - Added support for the Help Tech Activator Braille display. (#14917)
 - In Windows 10 May 2019 Update and later, NVDA can announce virtual desktop names when opening, changing, and closing them. (#5641)
+- A system wide parameter has been added to allow users and system administrators to force NVDA to start in secure mode. (#10018)
 - 
 
 
@@ -163,6 +164,8 @@ Until removal, it behaves as a no-op, i.e. a context manager yielding nothing. (
 - ``speechDictHandler.speechDictVars.speechDictsPath`` is deprecated, use ``NVDAState.WritePaths.speechDictsDir`` instead. (#15021)
 - Importing ``voiceDictsPath`` and ``voiceDictsBackupPath`` from ``speechDictHandler.dictFormatUpgrade`` is deprecated.
 Instead use ``WritePaths.voiceDictsDir`` and ``WritePaths.voiceDictsBackupDir`` from ``NVDAState``. (#15048)
+- ``config.CONFIG_IN_LOCAL_APPDATA_SUBKEY`` is deprecated.
+Instead use ``config.RegistryKey.CONFIG_IN_LOCAL_APPDATA_SUBKEY``. (#15049)
 -
 
 = 2023.1 =

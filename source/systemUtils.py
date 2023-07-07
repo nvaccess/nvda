@@ -167,22 +167,6 @@ def _getDesktopName() -> str:
 	return name.value
 
 
-def _isSecureDesktop() -> bool:
-	"""
-	When NVDA is running on a secure screen,
-	it is running on the secure desktop.
-	When the serviceDebug parameter is not set,
-	NVDA should run in secure mode when on the secure desktop.
-	globalVars.appArgs.secure being set to True means NVDA is running in secure mode.
-
-	For more information, refer to devDocs/technicalDesignOverview.md 'Logging in secure mode'
-	and the following userGuide sections:
-	 - SystemWideParameters (information on the serviceDebug parameter)
-	 - SecureMode and SecureScreens
-	"""
-	return _getDesktopName() == "Winlogon"
-
-
 def _displayTextFileWorkaround(file: str) -> None:
 	# os.startfile does not currently (NVDA 2023.1, Python 3.7) work reliably to open .txt files in Notepad under
 	# Windows 11, if relying on the default behavior (i.e. `operation="open"`). (#14725)
