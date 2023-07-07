@@ -22,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.1.1\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 msgid "Native input"
@@ -6613,19 +6613,19 @@ msgstr "插件下载失败"
 #, python-brace-format
 msgctxt "addonStore"
 msgid "Unable to download add-on: {name}"
-msgstr "无法下载插件： {name}"
+msgstr "插件 {name} 无法下载"
 
 #. Translators: A message to the user if an add-on download fails
 #, python-brace-format
 msgctxt "addonStore"
 msgid "Unable to save add-on as a file: {name}"
-msgstr "无法将插件另存为文件： {name}"
+msgstr "插件 {name} 无法另存为文件"
 
 #. Translators: A message to the user if an add-on download is not safe
 #, python-brace-format
 msgctxt "addonStore"
 msgid "Add-on download not safe: checksum failed for {name}"
-msgstr "插件下载不安全： {name} 的校验和失败"
+msgstr "插件 {name} 下载不安全，校验和失败"
 
 msgid "Display"
 msgstr "显示"
@@ -8561,7 +8561,7 @@ msgstr "查看日志(&V)"
 
 #. Translators: The label for the menu item to toggle Speech Viewer.
 msgid "Speech viewer"
-msgstr "朗读查看器(&S)"
+msgstr "朗读查看器(&W)"
 
 #. Translators: The label for the menu item to toggle Braille Viewer.
 msgid "Braille viewer"
@@ -8569,7 +8569,7 @@ msgstr "盲文查看器(&B)"
 
 #. Translators: The label of a menu item to open the Add-on store
 msgid "Add-on &store..."
-msgstr "插件商店(&A)"
+msgstr "插件商店(&S)..."
 
 #. Translators: The label for the menu item to open NVDA Python Console.
 msgid "Python console"
@@ -13369,17 +13369,17 @@ msgstr "安装失败"
 #. Translators: Status for addons shown in the add-on store dialog
 msgctxt "addonStore"
 msgid "Installed, pending restart"
-msgstr "已安装，待重启"
+msgstr "已安装，重启后生效"
 
 #. Translators: Status for addons shown in the add-on store dialog
 msgctxt "addonStore"
 msgid "Disabled, pending restart"
-msgstr "已禁用，待重启"
+msgstr "已禁用，重启后生效"
 
 #. Translators: Status for addons shown in the add-on store dialog
 msgctxt "addonStore"
 msgid "Disabled (incompatible), pending restart"
-msgstr "禁用（不兼容），待重启"
+msgstr "已禁用（不兼容），重启后生效"
 
 #. Translators: Status for addons shown in the add-on store dialog
 msgctxt "addonStore"
@@ -13389,7 +13389,7 @@ msgstr "禁用（不兼容）"
 #. Translators: Status for addons shown in the add-on store dialog
 msgctxt "addonStore"
 msgid "Enabled (incompatible), pending restart"
-msgstr "已启用（不兼容），待重启"
+msgstr "已启用（不兼容），重启后生效"
 
 #. Translators: Status for addons shown in the add-on store dialog
 msgctxt "addonStore"
@@ -13399,7 +13399,7 @@ msgstr "启用（不兼容）"
 #. Translators: Status for addons shown in the add-on store dialog
 msgctxt "addonStore"
 msgid "Enabled, pending restart"
-msgstr "已启用，待重启"
+msgstr "已启用，重启后生效"
 
 #. Translators: A selection option to display installed add-ons in the add-on store
 msgctxt "addonStore"
@@ -13767,7 +13767,7 @@ msgstr "已安装版本"
 #. Translators: The name of the column that contains the available addons version string.
 msgctxt "addonStore"
 msgid "Available version"
-msgstr "可更新版本"
+msgstr "可用版本"
 
 #. Translators: The name of the column that contains the channel of the addon (e.g stable, beta, dev).
 msgctxt "addonStore"
