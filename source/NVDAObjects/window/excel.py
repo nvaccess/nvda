@@ -953,6 +953,8 @@ class ExcelWorksheet(ExcelBase):
 
 	def script_changeSelection(self,gesture):
 		oldSelection = self._getSelection()
+		if oldSelection.parent == self:
+			oldSelection.parent = self
 		gesture.send()
 		newSelection = None
 		start = time.time()
