@@ -143,7 +143,7 @@ class SettingsDialog(
 		if state is cls.DialogState.DESTROYED and not multiInstanceAllowed:
 			# The dialog has been destroyed by wx, but the instance is still available.
 			# This indicates there is something keeping it alive.
-			log.debugWarning("Opening new settings dialog while instance still exists: {!r}".format(firstMatchingInstance))
+			log.debugWarning(f"Opening new settings dialog while instance still exists: {firstMatchingInstance!r}")
 			# Handle gracefully
 			SettingsDialog._instances[firstMatchingInstance] = cls.DialogState.CREATED
 			return firstMatchingInstance
