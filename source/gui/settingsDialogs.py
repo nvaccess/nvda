@@ -141,9 +141,12 @@ class SettingsDialog(
 				"Only one instance of SettingsDialog can exist at a time",
 			)
 		if state is cls.DialogState.DESTROYED and not multiInstanceAllowed:
-			# the dialog has been destroyed by wx, but the instance is still available. This indicates there is something
-			# keeping it alive.
-			log.error("Opening new settings dialog while instance still exists: {!r}".format(firstMatchingInstance))
+			# The dialog has been destroyed by wx, but the instance is still available.
+			# This indicates there is something keeping it alive.
+			log.debugWarning("Opening new settings dialog while instance still exists: {!r}".format(firstMatchingInstance))
+			# Handle gracefully
+			SettingsDialog._instances[firstMatchingInstance] = cls.DialogState.CREATED
+			return firstMatchingInstance
 		obj = super(SettingsDialog, cls).__new__(cls, *args, **kwargs)
 		SettingsDialog._instances[obj] = cls.DialogState.CREATED
 		return obj
