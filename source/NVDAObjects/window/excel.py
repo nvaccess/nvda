@@ -953,8 +953,6 @@ class ExcelWorksheet(ExcelBase):
 
 	def script_changeSelection(self,gesture):
 		oldSelection = self._getSelection()
-		if oldSelection.parent == self:
-			oldSelection.parent = self
 		gesture.send()
 		newSelection = None
 		start = time.time()
@@ -988,8 +986,14 @@ class ExcelWorksheet(ExcelBase):
 				time.sleep(retryInterval)
 			retries += 1
 		if newSelection:
-			if oldSelection.parent==newSelection.parent:
-				newSelection.parent=oldSelection.parent
+			if newSelection.parent == self:
+				# The new selection has this work sheet as its parent.
+				# While newSelection.parent and self compare equal,
+				# they are in fact not the same python object, i.e.
+				# `newSelection.parent is self` would return False.
+				# Therefore we set newSelection.parent to self in order for the format field speech cache
+				# to persist across selection changes.
+				newSelection.parent = self
 			eventHandler.executeEvent('gainFocus', newSelection)
 
 	def _WaitForValueChangeForAction(self, action, fetcher, timeout=0.15):
