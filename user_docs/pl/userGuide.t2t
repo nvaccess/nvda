@@ -2,9 +2,9 @@
 
 
 %!includeconf: ../userGuide.t2tconf
-+%!includeconf: ./locale.t2tconf
+%!includeconf: ./locale.t2tconf
 %kc:title: Skróty poleceń klawiszowych NVDA NVDA_VERSION
-+%kc:includeconf: ./locale.t2tconf
+%kc:includeconf: ./locale.t2tconf
 
 = Spis treści =[toc]
 %%toc
@@ -77,10 +77,10 @@ Dotyczy to zarówno oryginalnej wersji programu, jak i jego zmienionych kopii, a
 Dokładne brzmienie licencji znajdziesz online: [Pełna treść licencji. https://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 Dla szczegółowych informacji dotyczących wyjątków, skonsultuj się z dokumentem dostępnym w menu NVDA w podmenu "pomoc".
 
-++ NVDA szybki start ++[NVDAQuickStartGuide]
++ NVDA szybki start +[NVDAQuickStartGuide]
 
 Ten szybki start zawiera trzy główne rozdziały: pobieranie, podstawowe konfigurowanie, i uruchamianie NVDA.
-Po tych rozdziałach zawarta jest informacja o zmianie ustawień, uczestnictwie w społeczeństwie, a także informacje o tym, jak dostać pomoc.
+W tych rozdziałach zawarta jest informacja o zmianie ustawień, uczestnictwie w społeczeństwie, a także informacje o tym, jak dostać pomoc.
 Informacja w tym szybkim starcie jest zebrana z innych rozdziałów podręcznika użytkownika NVDA.
 Prosimy zajrzeć do kompletnego podręcznika użytkownika po więcej informacji o każdym temacie.
 
@@ -2619,43 +2619,43 @@ Aby pokazywać dodatki tylko z określonych kanałów, zmień wybór w filtrze "
 +++ Wyszukiwanie dodatków +++[AddonStoreFilterSearch]
 Aby wyszukiwać dodatki, używaj pola edycji  "szukaj".
 Możesz przejść do niego naciskając ``shift+tab`` z listy dodatków, lub naciskając skrót ``alt+s`` z jakiegokolwiek miejsca w interfejsie Add-on store.
-Napisz jedno lub dwa kluczowe słowa, żeby wyszukać żądany typ dodatku którego szukasz, potem `` wróć przyciskiemtab`` do listy dodatków.
+Napisz jedno lub dwa kluczowe słowa, żeby znaleźć żądany typ dodatku którego szukasz, potem `` wróć przyciskiem ``tab`` do listy dodatków.
 Wyszukiwane dodatki pojawią się na liście, jeżeli wpisany przez ciebie tekst zostanie znaleziony w polach nazwy wyświetlanej, wydawcy lub  opisu.
 
 ++ Działania na dodatkach ++[AddonStoreActions]
 Dodatki posiadają przypisane działania, takie jak instalacja, pomoc, wyłącz i usuń.
-Do menu działań konkretnego dodatku można wejść z liśty naciskając klawisz ``kontekstowy``, ``enter``, klikając prawym przyciskiem myszy, lub klikając dwukrotnie jej lewym przyciskiem.
+Do menu działań konkretnego dodatku można wejść z listy naciskając klawisz ``kontekstowy``, ``enter``, klikając prawym przyciskiem myszy, lub klikając dwukrotnie jej lewym przyciskiem.
 Przycisk działania znajduje się w szczegółach danego dodatku, który może być  aktywowany klawiszem enter lub skrótem ``alt+a``.
 
 +++ Instalowanie dodatków +++[AddonStoreInstalling]
-Jeżeli dodatek znajduje się w add-on store, nie oznacza że został zatwierdzony lub sprawdzony przez organizację NV Access, czy kogokolwiek innego.
+Jeżeli dodatek znajduje się w add-on store, nie oznacza to że został zatwierdzony lub sprawdzony przez organizację NV Access, czy kogokolwiek innego.
 Najważniejsze jest to, abyś instalował dodatki z zaufanych źródeł.
 Funkcjonalność dodatków jest nieograniczona wewnątrz NVDA. 
 To może włączać dostęp do twoich danych osobowych lub nawet twojego systemu.
 
 Możesz instalować dodatki [przeglądając dostępne dodatki #AddonStoreBrowsing].
-Wybierz dodatek z jednej z kart właściwości "otkrywajj" lub "dodatki do zaktualizowania".
+Wybierz dodatek z jednej z kart właściwości "otkrywajj" lub "do zaktualizowania".
 Potem użyj działania zaktualizuj, zainstaluj, lub zamień, aby rozpocząć instalację.
 
-Aby zainstalować dodatek, którego pobrałeś spoza add-on store, naciśnij przycisk "zainstaluj z pliku".
+Aby zainstalować dodatek pobrany spoza add-on store, naciśnij przycisk "zainstaluj z pliku".
 To umożliwi poszukiwanie pliku pakietu dodatku (``.nvda-addon``) gdzieś na twoim komputerze lub w sieci.
 Gdy otworzysz pakiet dodatku dla NVDA, rozpocznie się instalacja.
 
 Jeżeli NVDA jest już zainstalowana w twoim systemie, możesz także otworzyć plik dodatku bezpośrednio z przeglądarki lub systemu plików, aby rozpocząć proces jego instalacji.
 
 Gdy dodatek jest instalowany z pliku, NVDA zapyta cie o potwierdzenie chęci instalacji dodatku.
-Kiedy dodatek zostanie zainstalowany, program NVDA musi być ponownie uruchomiony, aby dodatek zaczął działać. Jeżeli chcesz zainstalować lub zainstalować inne dodatki, możesz odłożyć ponowne uruchomienie NVDA na później.
+Kiedy dodatek zostanie zainstalowany, program NVDA musi być ponownie uruchomiony, aby dodatek zaczął działać. Jeżeli chcesz zainstalować lub zaktualizować inne dodatki, możesz odłożyć ponowne uruchomienie NVDA na później.
 
 +++ Usuwanie dodatków +++[AddonStoreRemoving]
 Aby usunąć dodatek, wybierz go z listy i użyj działania usuń.
-NVDA poprosi cie o potwierdzenie usunięcia.
+NVDA poprosi cię o potwierdzenie usunięcia.
 Tak jak w przypadku instalacji, program NVDA musi zostać ponownie uruchomiony, żeby dodatki mogły być usunięte w całości.
 Dopóki tej akcji nie wykonasz, stan "oczekiwanie na usunięcie" będzie pokazywany dla tego dodatku na liście.
 
 +++ Wyłączanie i włączanie dodatków +++[AddonStoreDisablingEnabling]
 Aby wyłączyć dodatek, użyj działania "wyłącz".
 Aby włączyć poprzednio wyłączony dodatek, użyj działania "włącz".
-Dodatek możesz wyłączyć, jeżeli jego stan wskazuje  "włączony", lub go wyłączyć, jeżeli dodatek jest "wyłączony".
+Dodatek możesz wyłączyć, jeżeli jego stan wskazuje  "włączony", lub go włączyć, jeżeli dodatek jest "wyłączony".
 Po każdym użyciu działania wyłącz/włącz, zmienia się stan, żeby pokazać, co się stanie z dodatkiem po ponovnym uruchomieniu NVDA.
 Jeżeli dodatek został poprzednio wyłączony", stan pokaże "włączony dopiero po ponownym uruchomieniu".
 jeżeli dodatek został poprzednio "włączony", stan pokaże "wyłączony dopiero po ponownym uruchomieniu".
