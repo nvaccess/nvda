@@ -51,6 +51,7 @@ from NVDAObjects import (
 )
 from NVDAObjects.behaviors import (
 	ProgressBar,
+	EditableTextBase,
 	EditableTextWithoutAutoSelectDetection,
 	EditableTextWithAutoSelectDetection,
 	Dialog,
@@ -1017,9 +1018,6 @@ class UIA(Window):
 		UIAClassName=self.UIAElement.cachedClassName
 		# #11445: to avoid COM errors, do not fetch cached UIA Automation Id from the underlying element.
 		UIAAutomationId = self.UIAAutomationId
-		if self.UIAFrameworkId == 'XAML':
-			# This UIA element is being exposed by the XAML framework.
-			clsList.append(Xaml)
 		if UIAClassName=="NetUITWMenuItem" and UIAControlType==UIAHandler.UIA_MenuItemControlTypeId and not self.name and not self.previous:
 			# Bounces focus from a netUI dead placeholder menu item when no item is selected up to the menu itself.
 			clsList.append(PlaceholderNetUITWMenuItem)
@@ -1221,6 +1219,9 @@ class UIA(Window):
 
 		# Add editableText support if UIA supports a text pattern
 		if self.TextInfo==UIATextInfo:
+			if self.UIAFrameworkId == 'XAML':
+				# This UIA element is being exposed by the XAML framework.
+				clsList.append(XamlEditableText)
 			if UIAHandler.autoSelectDetectionAvailable:
 				clsList.append(EditableTextWithAutoSelectDetection)
 			else:
@@ -2168,14 +2169,26 @@ class UIA(Window):
 			ui.message(dropTargetEffect)
 
 
-class Xaml(UIA):
-	""" a UIA element exposed by the XAML framework."""
+class XamlEditableText(EditableTextBase, UIA):
+	""" a UIA element with editable text exposed by the XAML framework."""
 
 	# XAML fires UIA textSelectionChange events before the caret position change is reflected
 	# in the related UIA text pattern.
-	# This means NVDA cannot rely on textSelectionChange (caret) events in XAML
+	# This means that, apart from deleting text, NVDA cannot rely on textSelectionChange (caret) events in XAML
 	# to detect if the caret has moved, as it occurs too early.
 	caretMovementDetectionUsesEvents = False
+
+	def _backspaceScriptHelper(self, unit, gesture):
+		"""As UIA text range objects from XAML don't mutate with backspace,
+		comparing a text range copied from before backspace with a text range fetched after backspace
+		isn't reliable, as the ranges compare equal.
+		Therefore, we must always rely on events for caret change detection in this case.
+		"""
+		self.caretMovementDetectionUsesEvents = True
+		try:
+			super()._backspaceScriptHelper(unit, gesture)
+		finally:
+			self.caretMovementDetectionUsesEvents = False
 
 
 class TreeviewItem(UIA):
