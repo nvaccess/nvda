@@ -992,7 +992,7 @@ class ExcelWorksheet(ExcelBase):
 				# they are in fact not the same python object, i.e.
 				# `newSelection.parent is self` would return False.
 				# Therefore we set newSelection.parent to self in order for the format field speech cache
-				# to persist across selection changes.
+				# to persist across selection changes. (#15091)
 				newSelection.parent = self
 			eventHandler.executeEvent('gainFocus', newSelection)
 
