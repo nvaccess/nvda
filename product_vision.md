@@ -47,10 +47,10 @@ Developed by NV Access in partnership with a dedicated open source community, NV
 11. Documentation: Ensure users have the knowledge to fully leverage NVDA's features for productivity in work and everyday life:
     * NVDA offers comprehensive, user-friendly documentation such as an official user guide free of charge.
     * User-level support is available via various community-run email lists.
-12. Multimodal: Ensure that NVDA supports various modes of interaction, meeting the diverse needs of its users:
+12. Multimodal: Ensure that NVDA supports various modes of interaction, meeting the diverse needs and preferences of its users:
     * NVDA supports multiple input methods including the keyboard, mouse, touch, and braille input devices.
     * NVDA delivers output through both speech synthesis and braille displays.
-    * To cater to the diversity of user preferences, NVDA strives to make all its features accessible through all input and output modalities. 
+    * NVDA strives to make all its features accessible through all input and output modalities. 
 13. Compatibility: Ensure that NVDA works with a wide range of software and hardware to provide maximum accessibility and to ensure users are not left behind in today's rapidly changing technology:
     * NVDA is regularly updated to be compatible with the latest versions of Windows and popular third-party applications.
     * NVDA also maintains compatibility with older versions of Windows and third-party applications that are still officially supported by their respective companies, providing accessibility solutions for users on older systems.
