@@ -1,6 +1,7 @@
 ## Product Vision
-A world where blind and vision impaired people can independently and fully interact with the Windows Operating System and popular third party applications, enabling them to participate in and contribute to society, no matter their language, location or economic status.
+A world where blind and vision impaired people can independently and fully interact with the Windows Operating System and popular third party applications, enabling them to participate in and contribute to society.
 Blind and vision impaired people are empowered to control their own destiny and ensure this vision, through being able to significantly contribute to the technology that makes this possible.
+All blind and vision impaired people deserve these rights and opportunities, no matter the language they speak, their geographic location, economic status, or sensory, physical, cognitive, or mental abilities. 
 
 ## Product description
 NVDA (NonVisual Desktop Access) is software that allows blind and vision impaired people to independently interact with the Windows Operating System and popular third party applications by outputting content in either synthetic speech or via a refreshable Braille Display.
@@ -50,7 +51,7 @@ Developed by NV Access in partnership with a dedicated open source community, NV
 12. Multimodal: Ensure that NVDA supports various modes of interaction, meeting the diverse needs and preferences of its users:
     * NVDA supports multiple input methods including the keyboard, mouse, touch, and braille input devices.
     * NVDA delivers output through both speech synthesis and braille displays.
-    * NVDA strives to make all its features accessible through all input and output modalities. 
+    * NVDA strives to make all its features accessible through all input and output modalities. E.g. a deaf-blind user should be able to independently use NVDA through Braille alone.
 13. Compatibility: Ensure that NVDA works with a wide range of software and hardware to provide maximum accessibility and to ensure users are not left behind in today's rapidly changing technology:
     * NVDA is regularly updated to be compatible with the latest versions of Windows and popular third-party applications.
     * NVDA also maintains compatibility with older versions of Windows and third-party applications that are still officially supported by their respective companies, providing accessibility solutions for users on older systems.
