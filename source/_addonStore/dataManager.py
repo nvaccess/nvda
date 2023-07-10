@@ -158,6 +158,7 @@ class _DataManager:
 				cacheData = json.load(cacheFile)
 			except Exception:
 				log.exception(f"Invalid add-on store cache")
+				os.remove(cacheFilePath)
 				return None
 		try:
 			data = cacheData["data"]
@@ -166,6 +167,7 @@ class _DataManager:
 			nvdaAPIVersion = cacheData["nvdaAPIVersion"]
 		except KeyError:
 			log.exception(f"Invalid add-on store cache:\n{cacheData}")
+			os.remove(cacheFilePath)
 			return None
 		return CachedAddonsModel(
 			cachedAddonData=_createStoreCollectionFromJson(data),
