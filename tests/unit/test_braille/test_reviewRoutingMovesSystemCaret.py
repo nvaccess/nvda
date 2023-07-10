@@ -3,7 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2023 NV Access Limited, Leonard de Ruijter
 
-"""Unit tests for the move system caret when Routing review cursor braille setting.
+"""Unit tests for the move system caret when routing review cursor braille setting.
 """
 
 import config
@@ -34,7 +34,7 @@ class CursorManager(CursorManager):
 
 
 class TestReviewRoutingMovesSystemCaretInNavigableText(unittest.TestCase):
-	"""A test for the move system caret when Routing review cursor braille setting
+	"""A test for the move system caret when routing review cursor braille setting
 	when operating in navigable text with object review.
 	"""
 

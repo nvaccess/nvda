@@ -759,7 +759,7 @@ class NVDAObjectRegion(Region):
 class ReviewNVDAObjectRegion(NVDAObjectRegion):
 	"""A region to provide a braille representation of an NVDAObject when braille is tethered to review.
 	This region behaves very similar to its base class.
-	However, when the move system caret when Routing review cursor braille setting is active,
+	However, when the move system caret when routing review cursor braille setting is active,
 	pressing a routing key will first focus the object before executing the default action.
 	"""
 

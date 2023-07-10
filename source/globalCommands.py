@@ -3213,13 +3213,13 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		# Translators: Input help mode message for cycle through
-		# braille move system caret when Routing review cursor command.
-		description=_("Cycle through the braille move system caret when Routing review cursor states"),
+		# braille move system caret when routing review cursor command.
+		description=_("Cycle through the braille move system caret when routing review cursor states"),
 		category=SCRCAT_BRAILLE
 	)
 	def script_braille_cycleReviewRoutingMovesSystemCaret(self, gesture: inputCore.InputGesture) -> None:
 		# If braille is not tethered to focus, set next state of
-		# braille Move system caret when Routing review cursor.
+		# braille Move system caret when routing review cursor.
 		if TetherTo.FOCUS.value == config.conf["braille"]["tetherTo"]:
 			ui.message(
 				# Translators: Reported when action is unavailable because braille tether is to focus.
@@ -3236,14 +3236,14 @@ class GlobalCommands(ScriptableObject):
 		featureFlag = config.conf["braille"]["reviewRoutingMovesSystemCaret"]
 		if featureFlag.isDefault():
 			msg = _(
-				# Translators: Used when reporting braille move system caret when Routing review cursor
+				# Translators: Used when reporting braille move system caret when routing review cursor
 				# state (default behavior).
-				"Braille move system caret when Routing review cursor default (%s)"
+				"Braille move system caret when routing review cursor default (%s)"
 			) % featureFlag.behaviorOfDefault.displayString
 		else:
 			msg = _(
-				# Translators: Used when reporting braille move system caret when Routing review cursor state.
-				"Braille move system caret when Routing review cursor %s"
+				# Translators: Used when reporting braille move system caret when routing review cursor state.
+				"Braille move system caret when routing review cursor %s"
 			) % reviewRoutingMovesSystemCaretFlag[nextName].displayString
 		ui.message(msg)
 
