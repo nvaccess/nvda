@@ -33,11 +33,11 @@ class TestDisplayTextForGestureIdentifier(unittest.TestCase):
 	def test_identifierWithModel(self):
 		self.assertEqual(
 			braille.BrailleDisplayGesture.getDisplayTextForIdentifier('br(noBraille.noModel):noKey1+noKey2'),
-			(u'No braille', 'noModel: noKey1+noKey2')
+			('No braille', 'noModel: noKey1+noKey2')
 		)
 
 	def test_identifierWithoutModel(self):
 		self.assertEqual(
 			braille.BrailleDisplayGesture.getDisplayTextForIdentifier('br(noBraille):noKey1+noKey2'),
-			(u'No braille', 'noKey1+noKey2')
+			('No braille', 'noKey1+noKey2')
 		)

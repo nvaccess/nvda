@@ -1627,9 +1627,8 @@ In this case, Braille  will not follow system focus and system caret.
   Default (Never), Never, Only when tethered automatically, Always
 :
 
-This setting determines if the system caret should be also tried to be moved
-with a routing button press when [braille tethering #BrailleTether] is set to automatic
-and braille is temporarily tethered to review, or tethering is explicitly set to the review cursor.
+This setting determines if the system caret should also be moved with a routing button press.
+It occurs when [braille tethering #BrailleTether] is set to automatic and braille is temporarily tethered to review, or tethering is explicitly set to the review cursor.
 When the object under the review cursor has no physical caret, it will be focused instead.
 This option is set to Never by default, meaning that routing will never move the caret when routing the review cursor.
 
@@ -1645,8 +1644,7 @@ whereas no movement will occur when manually tethered to the review cursor.
 
 This option is shown only if "[tether braille #BrailleTether]" is set to "Automatically" or "To review".
 
-To toggle move system caret when Routing review cursor from anywhere,
-please assign a custom gesture using the [Input Gestures dialog #InputGestures].
+To toggle move system caret when Routing review cursor from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
 
 ==== Read by Paragraph ====[BrailleSettingsReadByParagraph]
 If enabled, braille will be displayed by paragraphs instead of lines.

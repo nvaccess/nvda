@@ -3723,7 +3723,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		self.brailleReviewRoutingMovesSystemCaretCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
 			labelText=_(
 				# Translators: This is a label for a combo-box in the Braille settings panel.
-				"Move system caret when Ro&uting review cursor"
+				"Move system caret when ro&uting review cursor"
 			),
 			wxCtrlClass=nvdaControls.FeatureFlagCombo,
 			keyPath=["braille", "reviewRoutingMovesSystemCaret"],
@@ -3822,7 +3822,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		self.messageTimeoutEdit.Enable(evt.GetSelection() == 1)
 
 	def onTetherToChange(self, evt: wx.CommandEvent) -> None:
-		"""Showss or hides "Move system caret when Routing review cursor" braille setting."""
+		"""Shows or hides "Move system caret when routing review cursor" braille setting."""
 		tetherChoice = [x.value for x in TetherTo][evt.GetSelection()]
 		self.brailleReviewRoutingMovesSystemCaretCombo.Enable(tetherChoice != TetherTo.FOCUS.value)
 

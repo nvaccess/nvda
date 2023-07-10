@@ -763,7 +763,7 @@ class ReviewNVDAObjectRegion(NVDAObjectRegion):
 	pressing a routing key will first focus the object before executing the default action.
 	"""
 
-	def routeTo(self, braillePos):
+	def routeTo(self, braillePos: int):
 		if _routingShouldMoveSystemCaret() and self.obj.isFocusable and not self.obj.hasFocus:
 			self.obj.setFocus()
 		super().routeTo(braillePos)
