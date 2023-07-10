@@ -153,13 +153,13 @@ class _DataManager:
 	def _getCachedAddonData(self, cacheFilePath: str) -> Optional[CachedAddonsModel]:
 		if not os.path.exists(cacheFilePath):
 			return None
-		with open(cacheFilePath, 'r') as cacheFile:
-			try:
+		try:
+			with open(cacheFilePath, 'r') as cacheFile:
 				cacheData = json.load(cacheFile)
-			except Exception:
-				log.exception(f"Invalid add-on store cache")
-				os.remove(cacheFilePath)
-				return None
+		except Exception:
+			log.exception(f"Invalid add-on store cache")
+			os.remove(cacheFilePath)
+			return None
 		try:
 			data = cacheData["data"]
 			cacheHash = cacheData["cacheHash"]
