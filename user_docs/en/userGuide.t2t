@@ -1628,12 +1628,9 @@ In this case, Braille  will not follow system focus and system caret.
 :
 
 This setting determines if the system caret should also be moved with a routing button press.
-It occurs when [braille tethering #BrailleTether] is set to automatic and braille is temporarily tethered to review, or tethering is explicitly set to the review cursor.
-When the object under the review cursor has no physical caret, it will be focused instead.
 This option is set to Never by default, meaning that routing will never move the caret when routing the review cursor.
 
-When this option is set to Always, and braille is tethered to review either automatically or explicitly,
-pressing a cursor routing key will also move the system caret or focus when supported.
+When this option is set to Always, and [braille tethering #BrailleTether] is set to "automatically" or "to review", pressing a cursor routing key will also move the system caret or focus when supported.
 When the current review mode is [Screen Review #ScreenReview], there is no physical caret.
 In this case, NVDA tries to focus the object under the text you're routing to.
 The same applies to [object review #ObjectReview].
