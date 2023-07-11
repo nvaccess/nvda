@@ -18,6 +18,7 @@ import languageHandler
 import speechDictHandler
 import extensionPoints
 import synthDrivers
+from synthDrivers.silence import SynthDriver as SilenceSynthDriver
 import driverHandler
 from autoSettingsUtils.driverSetting import BooleanDriverSetting, DriverSetting, NumericDriverSetting
 from autoSettingsUtils.utils import StringParameterInfo
@@ -409,7 +410,7 @@ def getSynthList():
 			continue
 		try:
 			if synth.check():
-				if synth.name == "silence":
+				if synth.name == SilenceSynthDriver.name:
 					lastSynth = (synth.name, synth.description)
 				else:
 					synthList.append((synth.name, synth.description))
@@ -475,14 +476,15 @@ def setSynth(name: Optional[str], isFallback: bool = False):
 		synthChanged.notify(synth=_curSynth, audioOutputDevice=_audioOutputDevice, isFallback=isFallback)
 		return True
 	# As there was an error loading this synth:
-	elif prevSynthName:
+	elif prevSynthName and not prevSynthName == SilenceSynthDriver.name:
+		# Don't fall back to silence if speech is expected
 		log.info(f"Falling back to previous synthDriver {prevSynthName}")
 		# There was a previous synthesizer, so switch back to that one.
 		setSynth(prevSynthName, isFallback=True)
 	else:
 		# There was no previous synth, so fallback to the next available default synthesizer
 		# that has not been tried yet.
-		log.info(f"Searching for next synthDriver")
+		log.info("Searching for next synthDriver")
 		findAndSetNextSynth(name)
 	return False
 
