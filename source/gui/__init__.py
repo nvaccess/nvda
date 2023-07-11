@@ -24,6 +24,7 @@ import queueHandler
 import core
 from typing import (
 	Optional,
+	Type,
 )
 import systemUtils
 from .message import (
@@ -169,7 +170,7 @@ class MainFrame(wx.Frame):
 			messageBox(_("Could not save configuration - probably read only file system"),_("Error"),wx.OK | wx.ICON_ERROR)
 
 	@blockAction.when(blockAction.Context.MODAL_DIALOG_OPEN)
-	def _popupSettingsDialog(self, dialog, *args, **kwargs):
+	def _popupSettingsDialog(self, dialog: Type[SettingsDialog], *args, **kwargs):
 		self.prePopup()
 		try:
 			dialog(self, *args, **kwargs).Show()
@@ -338,16 +339,11 @@ class MainFrame(wx.Frame):
 		blockAction.Context.RUNNING_LAUNCHER,
 	)
 	def onAddonStoreCommand(self, evt: wx.MenuEvent):
-		self.prePopup()
 		from ._addonStoreGui import AddonStoreDialog
 		from ._addonStoreGui.viewModels.store import AddonStoreVM
 		_storeVM = AddonStoreVM()
 		_storeVM.refresh()
-		try:
-			AddonStoreDialog(mainFrame, _storeVM).Show()
-		except SettingsDialog.MultiInstanceErrorWithDialog as errorWithDialog:
-			errorWithDialog.dialog.SetFocus()
-		self.postPopup()
+		self._popupSettingsDialog(AddonStoreDialog, _storeVM)
 
 	def onReloadPluginsCommand(self, evt):
 		import appModuleHandler, globalPluginHandler
