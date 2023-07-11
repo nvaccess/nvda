@@ -19,16 +19,25 @@ What's New in NVDA
   - It is now possible to have the volume of NVDA sounds and beeps follow the volume setting of the voice you are using.
   This option can be enabled in Advanced settings. (#1409)
   - You can now separately control the volume of NVDA sounds.
-  This can be done in Advanced settings. (#1409)
+  This can be configured in Advanced settings. (#1409)
   -
 - New input gestures:
   - An unbound gesture to cycle through the available languages for Windows OCR. (#13036)
-  - An unbound gesture to cycle through the braille show messages modes. (#14864)
-  - An unbound gesture to toggle showing the selection indicator for braille. (#14948)
+  - An unbound gesture to cycle through the Braille show messages modes. (#14864)
+  - An unbound gesture to toggle showing the selection indicator for Braille. (#14948)
   - Added default keyboard gesture assignments to move to the next or previous object in a flattened view of the object hierarchy. (#15053)
     - Desktop: ``NVDA+numpad9`` and ``NVDA+numpad3`` to move to the previous and next objects respectively.
     - Laptop: ``shift+NVDA+[`` and ``shift+NVDA+]`` to move to the previous and next objects respectively.
     -
+  -
+- New Braille features:
+  - Added support for the Help Tech Activator Braille display. (#14917)
+  - A new option to toggle showing the selection indicator (dots 7 and 8). (#14948)
+  - A new option to optionally move the system caret or focus when changing the review cursor position with Braille routing keys. (#14885, #3166)
+  - When pressing ``numpad2`` three times to report the numerical value of the character at the position of the review cursor, the information is now also provided in Braille. (#14826)
+  - Added support for the ``aria-brailleroledescription`` ARIA 1.3 attribute, allowing web authors to override the type of an element shown on the Braille display. (#14748)
+  - Baum Braille driver: added several Braille chord gestures for performing common keyboard commands such as ``windows+d`` and ``alt+tab``.
+  Please refer to the NVDA User Guide for a full list. (#14714)
   -
 - Added pronunciation of Unicode symbols:
   - braille symbols such as "⠐⠣⠃⠗⠇⠐⠜". (#14548)
@@ -42,15 +51,13 @@ What's New in NVDA
   - toggling the braille cursor on/off
   - toggling the braille show selection indicator state
   -
-- A new Braille option to toggle showing the selection indicator (dots 7 and 8). (#14948)
+- Microsoft Office features:
+  - When highlighted text is enabled Document Formatting, highlight colours are now reported in Microsoft Word. (#7396, #12101, #5866)
+  - When colors are enabled Document Formatting, background colours are now reported in Microsoft Word. (#5866)
+  - When using Excel shortcuts to toggle format such as bold, italic, underline and strike through of a cell in Excel, the result is now reported. (#14923)
+  -
 - In Mozilla Firefox and Google Chrome, NVDA now reports when a control opens a dialog, grid, list or tree if the author has specified this using aria-haspopup. (#14709)
 - It is now possible to use system variables (such as ``%temp%`` or ``%homepath%``) in the path specification while creating portable copies of NVDA. (#14680)
-- Added support for the ``aria-brailleroledescription`` ARIA 1.3 attribute, allowing web authors to override the type of an element shown on the Braille display. (#14748)
-- When highlighted text is enabled Document Formatting, highlight colours are now reported in Microsoft Word. (#7396, #12101, #5866)
-- When colors are enabled Document Formatting, background colours are now reported in Microsoft Word. (#5866)
-- When pressing ``numpad2`` three times to report the numerical value of the character at the position of the review cursor, the information is now also provided in braille. (#14826)
-- When using Excel shortcuts to toggle format such as bold, italic, underline and strike through of a cell in Excel, the result is now reported. (#14923)
-- Added support for the Help Tech Activator Braille display. (#14917)
 - In Windows 10 May 2019 Update and later, NVDA can announce virtual desktop names when opening, changing, and closing them. (#5641)
 - A system wide parameter has been added to allow users and system administrators to force NVDA to start in secure mode. (#10018)
 - 
@@ -67,8 +74,6 @@ What's New in NVDA
   -
 - Distance reported in Microsoft Word will now honour the unit defined in Word's advanced options even when using UIA to access Word documents. (#14542)
 - NVDA responds faster when moving the cursor in edit controls. (#14708)
-- Baum Braille driver: addes several Braille chord gestures for performing common keyboard commands such as ``windows+d``, ``alt+tab`` etc.
-Please refer to the NVDA user guide for a full list. (#14714)
 - When using a Braille Display via the Standard HID braille driver, the dpad can be used to emulate the arrow keys and enter.
 Also ``space+dot1`` and ``space+dot4`` now map to up and down arrow respectively. (#14713)
 - Script for reporting the destination of a link now reports from the caret / focus position rather than the navigator object. (#14659)

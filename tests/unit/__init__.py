@@ -98,6 +98,13 @@ braille.filter_displaySize.register(getFakeCellCount)
 import bdDetect  # noqa: E402
 bdDetect.deviceInfoFetcher = bdDetect._DeviceInfoFetcher()
 
+# Braille unit tests also need braille input to be initialized.
+import brailleInput  # noqa: E402
+brailleInput.initialize()
+
+# Make sure there's no blinking cursor as that relies on wx
+config.conf['braille']['cursorBlink'] = False
+
 # The focus and navigator objects need to be initialized to something.
 from .objectProvider import PlaceholderNVDAObject,NVDAObjectWithRole
 phObj = PlaceholderNVDAObject()

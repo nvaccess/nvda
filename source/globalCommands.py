@@ -3212,6 +3212,42 @@ class GlobalCommands(ScriptableObject):
 		ui.message(_("Braille tethered %s") % TetherTo(newTetherChoice).displayString)
 
 	@script(
+		# Translators: Input help mode message for cycle through
+		# braille move system caret when routing review cursor command.
+		description=_("Cycle through the braille move system caret when routing review cursor states"),
+		category=SCRCAT_BRAILLE
+	)
+	def script_braille_cycleReviewRoutingMovesSystemCaret(self, gesture: inputCore.InputGesture) -> None:
+		# If braille is not tethered to focus, set next state of
+		# braille Move system caret when routing review cursor.
+		if TetherTo.FOCUS.value == config.conf["braille"]["tetherTo"]:
+			ui.message(
+				# Translators: Reported when action is unavailable because braille tether is to focus.
+				_("Action unavailable. Braille is tethered to focus")
+			)
+			return
+		featureFlag: FeatureFlag = config.conf["braille"]["reviewRoutingMovesSystemCaret"]
+		reviewRoutingMovesSystemCaretFlag = featureFlag.enumClassType
+		values = [x.value for x in reviewRoutingMovesSystemCaretFlag]
+		currentValue = featureFlag.value.value
+		nextValueIndex = (currentValue % len(values)) + 1
+		nextName: str = reviewRoutingMovesSystemCaretFlag(nextValueIndex).name
+		config.conf["braille"]["reviewRoutingMovesSystemCaret"] = nextName
+		featureFlag = config.conf["braille"]["reviewRoutingMovesSystemCaret"]
+		if featureFlag.isDefault():
+			msg = _(
+				# Translators: Used when reporting braille move system caret when routing review cursor
+				# state (default behavior).
+				"Braille move system caret when routing review cursor default (%s)"
+			) % featureFlag.behaviorOfDefault.displayString
+		else:
+			msg = _(
+				# Translators: Used when reporting braille move system caret when routing review cursor state.
+				"Braille move system caret when routing review cursor %s"
+			) % reviewRoutingMovesSystemCaretFlag[nextName].displayString
+		ui.message(msg)
+
+	@script(
 		# Translators: Input help mode message for toggle braille focus context presentation command.
 		description=_("Toggle the way context information is presented in braille"),
 		category=SCRCAT_BRAILLE
