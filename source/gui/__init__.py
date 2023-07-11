@@ -170,7 +170,7 @@ class MainFrame(wx.Frame):
 			messageBox(_("Could not save configuration - probably read only file system"),_("Error"),wx.OK | wx.ICON_ERROR)
 
 	@blockAction.when(blockAction.Context.MODAL_DIALOG_OPEN)
-	def _popupSettingsDialog(self, dialog: Type[SettingsDialog], *args, **kwargs):
+	def popupSettingsDialog(self, dialog: Type[SettingsDialog], *args, **kwargs):
 		self.prePopup()
 		try:
 			dialog(self, *args, **kwargs).Show()
@@ -185,15 +185,15 @@ class MainFrame(wx.Frame):
 
 	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onDefaultDictionaryCommand(self, evt):
-		self._popupSettingsDialog(DefaultDictionaryDialog)
+		self.popupSettingsDialog(DefaultDictionaryDialog)
 
 	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onVoiceDictionaryCommand(self, evt):
-		self._popupSettingsDialog(VoiceDictionaryDialog)
+		self.popupSettingsDialog(VoiceDictionaryDialog)
 
 	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onTemporaryDictionaryCommand(self, evt):
-		self._popupSettingsDialog(TemporaryDictionaryDialog)
+		self.popupSettingsDialog(TemporaryDictionaryDialog)
 
 	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onExecuteUpdateCommand(self, evt):
@@ -233,57 +233,57 @@ class MainFrame(wx.Frame):
 				log.error("NVDA already in process of exiting, this indicates a logic error.")
 
 	def onNVDASettingsCommand(self,evt):
-		self._popupSettingsDialog(NVDASettingsDialog)
+		self.popupSettingsDialog(NVDASettingsDialog)
 
 	def onGeneralSettingsCommand(self,evt):
-		self._popupSettingsDialog(NVDASettingsDialog, GeneralSettingsPanel)
+		self.popupSettingsDialog(NVDASettingsDialog, GeneralSettingsPanel)
 
 	def onSelectSynthesizerCommand(self,evt):
-		self._popupSettingsDialog(SynthesizerSelectionDialog)
+		self.popupSettingsDialog(SynthesizerSelectionDialog)
 
 	def onSpeechSettingsCommand(self,evt):
-		self._popupSettingsDialog(NVDASettingsDialog, SpeechSettingsPanel)
+		self.popupSettingsDialog(NVDASettingsDialog, SpeechSettingsPanel)
 
 	def onSelectBrailleDisplayCommand(self,evt):
-		self._popupSettingsDialog(BrailleDisplaySelectionDialog)
+		self.popupSettingsDialog(BrailleDisplaySelectionDialog)
 
 	def onBrailleSettingsCommand(self,evt):
-		self._popupSettingsDialog(NVDASettingsDialog, BrailleSettingsPanel)
+		self.popupSettingsDialog(NVDASettingsDialog, BrailleSettingsPanel)
 
 	def onKeyboardSettingsCommand(self,evt):
-		self._popupSettingsDialog(NVDASettingsDialog, KeyboardSettingsPanel)
+		self.popupSettingsDialog(NVDASettingsDialog, KeyboardSettingsPanel)
 
 	def onMouseSettingsCommand(self,evt):
-		self._popupSettingsDialog(NVDASettingsDialog, MouseSettingsPanel)
+		self.popupSettingsDialog(NVDASettingsDialog, MouseSettingsPanel)
 
 	def onTouchInteractionCommand(self,evt):
-		self._popupSettingsDialog(NVDASettingsDialog, TouchInteractionPanel)
+		self.popupSettingsDialog(NVDASettingsDialog, TouchInteractionPanel)
 
 	def onReviewCursorCommand(self,evt):
-		self._popupSettingsDialog(NVDASettingsDialog, ReviewCursorPanel)
+		self.popupSettingsDialog(NVDASettingsDialog, ReviewCursorPanel)
 
 	def onInputCompositionCommand(self,evt):
-		self._popupSettingsDialog(NVDASettingsDialog, InputCompositionPanel)
+		self.popupSettingsDialog(NVDASettingsDialog, InputCompositionPanel)
 
 	def onObjectPresentationCommand(self,evt):
-		self._popupSettingsDialog(NVDASettingsDialog, ObjectPresentationPanel)
+		self.popupSettingsDialog(NVDASettingsDialog, ObjectPresentationPanel)
 
 	def onBrowseModeCommand(self,evt):
-		self._popupSettingsDialog(NVDASettingsDialog, BrowseModePanel)
+		self.popupSettingsDialog(NVDASettingsDialog, BrowseModePanel)
 
 	def onDocumentFormattingCommand(self,evt):
-		self._popupSettingsDialog(NVDASettingsDialog, DocumentFormattingPanel)
+		self.popupSettingsDialog(NVDASettingsDialog, DocumentFormattingPanel)
 
 	def onUwpOcrCommand(self, evt):
-		self._popupSettingsDialog(NVDASettingsDialog, UwpOcrPanel)
+		self.popupSettingsDialog(NVDASettingsDialog, UwpOcrPanel)
 
 	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onSpeechSymbolsCommand(self, evt):
-		self._popupSettingsDialog(SpeechSymbolsDialog)
+		self.popupSettingsDialog(SpeechSymbolsDialog)
 
 	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onInputGesturesCommand(self, evt):
-		self._popupSettingsDialog(InputGesturesDialog)
+		self.popupSettingsDialog(InputGesturesDialog)
 
 	def onAboutCommand(self,evt):
 		# Translators: The title of the dialog to show about info for NVDA.
@@ -343,7 +343,7 @@ class MainFrame(wx.Frame):
 		from ._addonStoreGui.viewModels.store import AddonStoreVM
 		_storeVM = AddonStoreVM()
 		_storeVM.refresh()
-		self._popupSettingsDialog(AddonStoreDialog, _storeVM)
+		self.popupSettingsDialog(AddonStoreDialog, _storeVM)
 
 	def onReloadPluginsCommand(self, evt):
 		import appModuleHandler, globalPluginHandler
