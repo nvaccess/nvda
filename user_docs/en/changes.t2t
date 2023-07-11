@@ -52,6 +52,7 @@ What's New in NVDA
 - When using Excel shortcuts to toggle format such as bold, italic, underline and strike through of a cell in Excel, the result is now reported. (#14923)
 - Added support for the Help Tech Activator Braille display. (#14917)
 - In Windows 10 May 2019 Update and later, NVDA can announce virtual desktop names when opening, changing, and closing them. (#5641)
+- A system wide parameter has been added to allow users and system administrators to force NVDA to start in secure mode. (#10018)
 - 
 
 
@@ -73,7 +74,10 @@ Also ``space+dot1`` and ``space+dot4`` now map to up and down arrow respectively
 - Script for reporting the destination of a link now reports from the caret / focus position rather than the navigator object. (#14659)
 - Portable copy creation no longer requires that a drive letter be entered as part of the absolute path. (#14681)
 - If Windows is configured to display seconds in the system tray clock, using ``NVDA+f12`` to report the time now honors that setting. (#14742)
-- NVDA will now report unlabeled groupings that have useful position information, such as in recent versions of Microsoft Office 365 menus. (#14878) 
+- NVDA will now report unlabeled groupings that have useful position information, such as in recent versions of Microsoft Office 365 menus. (#14878)
+- Updates to dynamic web content (ARIA live regions) are now displayed in Braille.
+This can be disabled in the Advanced Settings panel. (#7756)
+- When moving to a different cell in LibreOffice Calc, NVDA no longer incorrectly announces the coordinates of the previously focused cell when cell coordinate announcement is disabled in NVDA's settings. (#15098)
 -
 
 
@@ -160,6 +164,8 @@ Until removal, it behaves as a no-op, i.e. a context manager yielding nothing. (
 - ``speechDictHandler.speechDictVars.speechDictsPath`` is deprecated, use ``NVDAState.WritePaths.speechDictsDir`` instead. (#15021)
 - Importing ``voiceDictsPath`` and ``voiceDictsBackupPath`` from ``speechDictHandler.dictFormatUpgrade`` is deprecated.
 Instead use ``WritePaths.voiceDictsDir`` and ``WritePaths.voiceDictsBackupDir`` from ``NVDAState``. (#15048)
+- ``config.CONFIG_IN_LOCAL_APPDATA_SUBKEY`` is deprecated.
+Instead use ``config.RegistryKey.CONFIG_IN_LOCAL_APPDATA_SUBKEY``. (#15049)
 -
 
 = 2023.1 =

@@ -183,3 +183,23 @@ Automatic updating of add-ons is currently unsupported.
 1. Find an installed add-on in the add-on store
 1. Press the "add-on help" button
 1. A window should open with the help documentation
+
+## Using accelerator keys in the GUI
+
+### Add-on list accelerator
+
+1. Select installed add-ons tab
+1. Check visually that "a" is underlined in the add-ons list label.
+1. Tab to another control and check that `alt+a` allows to move the focus back to the add-ons list.
+1. From the "Search" field, tab to the add-ons list and check that "alt+a" is reported
+1. When an add-on is focused in the add-on list, check that moving up the navigator object reports the list's name and its shortcut key `alt+a`.
+1. Write a non-matching string in "Search" field to empty the list, tab to the list and check that `shift+numpad2` reports the shortcut key.
+1. Perform the same tests selecting successively the three other possible tabs (Updatable add-ons, Available add-ons and Incompatible installed add-ons)
+
+### Accelerators for other GUI items
+
+For "Action" button and "Other details" text field controls:
+1. Check visually that the letter indicating an accelerator key is underlined on the control's label.
+1. Tab to another control and check that `alt+<letter>` allows to move the focus back to the control.
+1. From another control tab to the control and check that `alt+<letter>` is reported.
+1. In the control, check that `shift+numpad2` reports the shortcut key.

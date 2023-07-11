@@ -147,15 +147,15 @@ def _isWindowsLocked() -> bool:
 	return _lockStateTracker.isWindowsLocked
 
 
-def _isLockScreenModeActive() -> bool:
+def isLockScreenModeActive() -> bool:
 	"""
 	Checks if the Window lock screen is active.
 	Not to be confused with the Windows sign-in screen, a secure screen.
 	Includes temporary locked desktops,
 	such as the PIN workflow reset and the Out Of Box Experience.
 	"""
-	from systemUtils import _isSecureDesktop
-	if _isSecureDesktop():
+	from utils.security import isRunningOnSecureDesktop
+	if isRunningOnSecureDesktop():
 		# Use secure mode instead if on the secure desktop
 		return False
 

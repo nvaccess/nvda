@@ -342,14 +342,11 @@ class MainFrame(wx.Frame):
 		from ._addonStoreGui import AddonStoreDialog
 		from ._addonStoreGui.viewModels.store import AddonStoreVM
 		_storeVM = AddonStoreVM()
+		_storeVM.refresh()
 		try:
-			d = AddonStoreDialog(mainFrame, _storeVM)
+			AddonStoreDialog(mainFrame, _storeVM).Show()
 		except SettingsDialog.MultiInstanceErrorWithDialog as errorWithDialog:
 			errorWithDialog.dialog.SetFocus()
-		else:
-			_storeVM.refresh()
-			d.Maximize()
-			d.Show()
 		self.postPopup()
 
 	def onReloadPluginsCommand(self, evt):

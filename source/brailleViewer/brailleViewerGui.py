@@ -17,7 +17,7 @@ from logHandler import log
 import fonts
 import inputCore
 import gui.contextHelp
-from utils.security import _isLockScreenModeActive, post_sessionLockStateChanged
+from utils.security import isLockScreenModeActive, post_sessionLockStateChanged
 
 BRAILLE_UNICODE_PATTERNS_START = 0x2800
 BRAILLE_SPACE_CHARACTER = chr(BRAILLE_UNICODE_PATTERNS_START)
@@ -398,7 +398,7 @@ class BrailleViewerFrame(
 		self._shouldShowOnStartupCheckBox.SetValue(config.conf["brailleViewer"]["showBrailleViewerAtStartup"])
 		self._shouldShowOnStartupCheckBox.Bind(wx.EVT_CHECKBOX, self._onShouldShowOnStartupChanged)
 		optionsSizer.Add(self._shouldShowOnStartupCheckBox)
-		if _isLockScreenModeActive():
+		if isLockScreenModeActive():
 			self._shouldShowOnStartupCheckBox.Disable()
 
 		# Translators: The label for a setting in the braille viewer that controls
@@ -415,11 +415,11 @@ class BrailleViewerFrame(
 		sizer.Add(optionsSizer, flag=wx.EXPAND | wx.TOP, border=5)
 
 	def _onShouldShowOnStartupChanged(self, evt: wx.CommandEvent):
-		if not _isLockScreenModeActive():
+		if not isLockScreenModeActive():
 			config.conf["brailleViewer"]["showBrailleViewerAtStartup"] = self._shouldShowOnStartupCheckBox.IsChecked()
 
 	def _onShouldHoverRouteToCellCheckBoxChanged(self, evt: wx.CommandEvent):
-		if not _isLockScreenModeActive():
+		if not isLockScreenModeActive():
 			config.conf["brailleViewer"]["shouldHoverRouteToCell"] = self._shouldHoverRouteToCellCheckBox.IsChecked()
 		self._updateMouseOverBinding(self._shouldHoverRouteToCellCheckBox.IsChecked())
 

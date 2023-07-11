@@ -50,6 +50,7 @@ class AddonStoreDialog(SettingsDialog):
 		self._storeVM.onDisplayableError.register(self.handleDisplayableError)
 		self._actionsContextMenu = _ActionsContextMenu(self._storeVM)
 		super().__init__(parent, resizeable=True, buttons={wx.CLOSE})
+		self.Maximize()
 
 	def _enterActivatesOk_ctrlSActivatesApply(self, evt: wx.KeyEvent):
 		"""Disables parent behaviour which overrides behaviour for enter and ctrl+s"""
@@ -97,13 +98,11 @@ class AddonStoreDialog(SettingsDialog):
 
 		settingsSizer.Add(splitViewSizer, flag=wx.EXPAND, proportion=1)
 
-		# add a label for the AddonListVM so that it is announced with a name in NVDA
 		self.listLabel = wx.StaticText(self)
 		tabPageHelper.addItem(
 			self.listLabel,
 			flag=wx.EXPAND
 		)
-		self.listLabel.Hide()
 		self._setListLabels()
 
 		self.addonListView = AddonVirtualList(
@@ -112,12 +111,6 @@ class AddonStoreDialog(SettingsDialog):
 			actionsContextMenu=self._actionsContextMenu,
 		)
 		self.bindHelpEvent("AddonStoreBrowsing", self.addonListView)
-		# Add alt+l accelerator key
-		_setFocusToAddonListView_eventId = wx.NewIdRef(count=1)
-		self.Bind(wx.EVT_MENU, lambda e: self.addonListView.SetFocus(), _setFocusToAddonListView_eventId)
-		self.SetAcceleratorTable(wx.AcceleratorTable([
-			wx.AcceleratorEntry(wx.ACCEL_ALT, ord("l"), _setFocusToAddonListView_eventId)
-		]))
 		tabPageHelper.addItem(self.addonListView, flag=wx.EXPAND, proportion=1)
 		splitViewSizer.AddSpacer(5)
 
@@ -243,7 +236,13 @@ class AddonStoreDialog(SettingsDialog):
 				).format(len(addonDataManager._downloadsPendingInstall))
 			)
 			self._storeVM.installPending()
-			wx.CallAfter(installingDialog.done)
+
+			def postInstall():
+				installingDialog.done()
+				# let the dialog exit.
+				super().onClose(evt)
+
+			return wx.CallAfter(postInstall)
 
 		# let the dialog exit.
 		super().onClose(evt)
@@ -281,10 +280,15 @@ class AddonStoreDialog(SettingsDialog):
 
 	@property
 	def _listLabelText(self) -> str:
-		return f"{self._statusFilterKey.displayString}"
+		return pgettext(
+			"addonStore",
+			# Translators: The label of the add-on list in the add-on store; {category} is replaced by the selected
+			# tab's name.
+			"{category}:",
+		).format(category=self._statusFilterKey.displayStringWithAccelerator)
 
 	def _setListLabels(self):
-		self.listLabel.SetLabelText(self._listLabelText)
+		self.listLabel.SetLabel(self._listLabelText)
 		self.SetTitle(self._titleText)
 
 	def _toggleFilterControls(self):

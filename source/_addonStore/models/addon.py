@@ -8,7 +8,6 @@
 from __future__ import annotations
 
 import dataclasses
-from datetime import datetime
 import json
 import os
 from typing import (
@@ -203,7 +202,7 @@ class AddonStoreModel(_AddonGUIModel):
 @dataclasses.dataclass
 class CachedAddonsModel:
 	cachedAddonData: "AddonGUICollectionT"
-	cachedAt: datetime
+	cacheHash: str
 	cachedLanguage: str
 	# AddonApiVersionT or the string .network._LATEST_API_VER
 	nvdaAPIVersion: Union[addonAPIVersion.AddonApiVersionT, str]
