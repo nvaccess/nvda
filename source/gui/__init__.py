@@ -42,9 +42,25 @@ from .speechDict import (
 # Be careful when removing, and only do in a compatibility breaking release.
 from .exit import ExitDialog
 from .settingsDialogs import (
+	BrailleDisplaySelectionDialog,
+	BrailleSettingsPanel,
+	BrowseModePanel,
+	DocumentFormattingPanel,
+	GeneralSettingsPanel,
+	InputCompositionPanel,
+	KeyboardSettingsPanel,
+	MouseSettingsPanel,
+	MultiCategorySettingsDialog,
+	NVDASettingsDialog,
+	ObjectPresentationPanel,
 	SettingsDialog,
+	SpeechSettingsPanel,
+	SpeechSymbolsDialog,
+	SynthesizerSelectionDialog,
+	TouchInteractionPanel,
+	ReviewCursorPanel,
+	UwpOcrPanel,
 )
-from .settingsDialogs import *
 from .startupDialogs import WelcomeDialog
 from .inputGestures import InputGesturesDialog
 from . import logViewer
@@ -202,13 +218,13 @@ class MainFrame(wx.Frame):
 			from addonHandler import getIncompatibleAddons
 			if any(getIncompatibleAddons(apiVersion, backCompatToAPIVersion)):
 				confirmUpdateDialog = updateCheck.UpdateAskInstallDialog(
-					parent=gui.mainFrame,
+					parent=mainFrame,
 					destPath=destPath,
 					version=version,
 					apiVersion=apiVersion,
 					backCompatTo=backCompatToAPIVersion
 				)
-				gui.runScriptModalDialog(confirmUpdateDialog)
+				runScriptModalDialog(confirmUpdateDialog)
 			else:
 				updateCheck.executePendingUpdate()
 
@@ -358,8 +374,8 @@ class MainFrame(wx.Frame):
 	)
 	def onCreatePortableCopyCommand(self,evt):
 		self.prePopup()
-		import gui.installerGui
-		d=gui.installerGui.PortableCreaterDialog(gui.mainFrame)
+		from . import installerGui
+		d = installerGui.PortableCreaterDialog(mainFrame)
 		d.Show()
 		self.postPopup()
 
@@ -368,7 +384,7 @@ class MainFrame(wx.Frame):
 		blockAction.Context.MODAL_DIALOG_OPEN,
 	)
 	def onInstallCommand(self, evt):
-		from gui import installerGui
+		from . import installerGui
 		installerGui.showInstallGui()
 
 	@blockAction.when(
@@ -410,7 +426,7 @@ class MainFrame(wx.Frame):
 	def onConfigProfilesCommand(self, evt):
 		self.prePopup()
 		from .configProfiles import ProfilesDialog
-		ProfilesDialog(gui.mainFrame).Show()
+		ProfilesDialog(mainFrame).Show()
 		self.postPopup()
 
 
