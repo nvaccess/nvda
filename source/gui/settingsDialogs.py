@@ -3726,11 +3726,29 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		tetherChoices = [x[1] for x in braille.handler.tetherValues]
 		self.tetherList = sHelper.addLabeledControl(tetherListText, wx.Choice, choices=tetherChoices)
 		self.bindHelpEvent("BrailleTether", self.tetherList)
+		self.tetherList.Bind(wx.EVT_CHOICE, self.onTetherToChange)
 		tetherChoice = config.conf["braille"]["tetherTo"]
 		selection = [x.value for x in TetherTo].index(tetherChoice)
 		self.tetherList.SetSelection(selection)
 		if gui._isDebug():
 			log.debug("Loading tether settings completed, now at %.2f seconds from start"%(time.time() - startTime))
+
+		self.brailleReviewRoutingMovesSystemCaretCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
+			labelText=_(
+				# Translators: This is a label for a combo-box in the Braille settings panel.
+				"Move system caret when ro&uting review cursor"
+			),
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["braille", "reviewRoutingMovesSystemCaret"],
+			conf=config.conf,
+		)
+		self.bindHelpEvent(
+			"BrailleSettingsReviewRoutingMovesSystemCaret",
+			self.brailleReviewRoutingMovesSystemCaretCombo
+		)
+		# Setting has no effect when braille is tethered to focus.
+		if tetherChoice == TetherTo.FOCUS.value:
+			self.brailleReviewRoutingMovesSystemCaretCombo.Disable()
 
 		# Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 		readByParagraphText = _("Read by &paragraph")
@@ -3797,6 +3815,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			config.conf["braille"]["tetherTo"] = TetherTo.AUTO.value
 		else:
 			braille.handler.setTether(tetherChoice, auto=False)
+		self.brailleReviewRoutingMovesSystemCaretCombo.saveCurrentValueToConf()
 		config.conf["braille"]["readByParagraph"] = self.readByParagraphCheckBox.Value
 		config.conf["braille"]["wordWrap"] = self.wordWrapCheckBox.Value
 		config.conf["braille"]["focusContextPresentation"] = self.focusContextPresentationValues[self.focusContextPresentationList.GetSelection()]
@@ -3814,6 +3833,12 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 
 	def onShowMessagesChange(self, evt):
 		self.messageTimeoutEdit.Enable(evt.GetSelection() == 1)
+
+	def onTetherToChange(self, evt: wx.CommandEvent) -> None:
+		"""Shows or hides "Move system caret when routing review cursor" braille setting."""
+		tetherChoice = [x.value for x in TetherTo][evt.GetSelection()]
+		self.brailleReviewRoutingMovesSystemCaretCombo.Enable(tetherChoice != TetherTo.FOCUS.value)
+
 
 def showStartErrorForProviders(
 		parent: wx.Window,

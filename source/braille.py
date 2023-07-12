@@ -42,6 +42,7 @@ from config.configFlags import (
 	TetherTo,
 	ReportTableHeaders,
 )
+from config.featureFlagEnums import ReviewRoutingMovesSystemCaretFlag
 from logHandler import log
 import controlTypes
 import api
@@ -755,6 +756,19 @@ class NVDAObjectRegion(Region):
 			pass
 
 
+class ReviewNVDAObjectRegion(NVDAObjectRegion):
+	"""A region to provide a braille representation of an NVDAObject when braille is tethered to review.
+	This region behaves very similar to its base class.
+	However, when the move system caret when routing review cursor braille setting is active,
+	pressing a routing key will first focus the object before executing the default action.
+	"""
+
+	def routeTo(self, braillePos: int):
+		if _routingShouldMoveSystemCaret() and self.obj.isFocusable and not self.obj.hasFocus:
+			self.obj.setFocus()
+		super().routeTo(braillePos)
+
+
 def getControlFieldBraille(
 		info: textInfos.TextInfo,
 		field: textInfos.Field,
@@ -1068,10 +1082,9 @@ class TextInfoRegion(Region):
 		except:
 			return self.obj.makeTextInfo(textInfos.POSITION_FIRST)
 
-	def _setCursor(self, info):
+	def _setCursor(self, info: textInfos.TextInfo):
 		"""Set the cursor.
 		@param info: The range to which the cursor should be moved.
-		@type info: L{textInfos.TextInfo}
 		"""
 		try:
 			info.updateCaret()
@@ -1332,7 +1345,7 @@ class TextInfoRegion(Region):
 		dest.move(textInfos.UNIT_CHARACTER, pos)
 		return dest
 
-	def routeTo(self, braillePos):
+	def routeTo(self, braillePos: int):
 		if self._brailleInputIndStart is not None and self._brailleInputIndStart <= braillePos < self._brailleInputIndEnd:
 			# The user is moving within untranslated braille input.
 			if braillePos < self._brailleInputStart:
@@ -1349,13 +1362,16 @@ class TextInfoRegion(Region):
 			return
 
 		dest = self.getTextInfoForBraillePos(braillePos)
+		self._routeToTextInfo(dest)
+
+	def _routeToTextInfo(self, info: textInfos.TextInfo):
 		# When there is a selection, brailleCursorPos will be None
 		# Don't activate, but move the cursor to the new cell (dropping the
 		# selection). An alternative behavior may be to activate on the selection.
 		# Moving the cursor was considered more intuitive.
 		if self.brailleCursorPos is not None:
 			cursor = self.getTextInfoForBraillePos(self.brailleCursorPos)
-			if dest.compareEndPoints(cursor, "startToStart") == 0:
+			if info.compareEndPoints(cursor, "startToStart") == 0:
 				# The cursor is already at this position,
 				# so activate the position.
 				try:
@@ -1363,7 +1379,7 @@ class TextInfoRegion(Region):
 				except NotImplementedError:
 					pass
 				return
-		self._setCursor(dest)
+		self._setCursor(info)
 
 	def nextLine(self):
 		dest = self._readingInfo.copy()
@@ -1404,6 +1420,7 @@ class TextInfoRegion(Region):
 		dest.collapse()
 		self._setCursor(dest)
 
+
 class CursorManagerRegion(TextInfoRegion):
 
 	def _isMultiline(self):
@@ -1412,8 +1429,9 @@ class CursorManagerRegion(TextInfoRegion):
 	def _getSelection(self):
 		return self.obj.selection
 
-	def _setCursor(self, info):
+	def _setCursor(self, info: textInfos.TextInfo):
 		self.obj.selection = info
+
 
 class ReviewTextInfoRegion(TextInfoRegion):
 
@@ -1422,8 +1440,53 @@ class ReviewTextInfoRegion(TextInfoRegion):
 	def _getSelection(self):
 		return api.getReviewPosition().copy()
 
-	def _setCursor(self, info):
+	def _routeToTextInfo(self, info: textInfos.TextInfo):
+		super()._routeToTextInfo(info)
+		if not _routingShouldMoveSystemCaret():
+			return
+		from displayModel import DisplayModelTextInfo, EditableTextDisplayModelTextInfo
+		if (
+			isinstance(info, DisplayModelTextInfo)
+			and not isinstance(info, EditableTextDisplayModelTextInfo)
+		):
+			# This region either reviews the screen or an object that has
+			# DisplayModelTextInfo without a caret, e.g. IAccessible.ContentGenericClient.
+			# In this case, we can at least emulate a kind of caret
+			# by trying to focus the object at start of the range.
+			obj = info.NVDAObjectAtStart
+			if (
+				not objectBelowLockScreenAndWindowsIsLocked(obj)
+				and obj.isFocusable
+				and not obj.hasFocus
+			):
+				obj.setFocus()
+		else:
+			# Update the physical caret using the super class.
+			super()._setCursor(info)
+
+	def _setCursor(self, info: textInfos.TextInfo):
 		api.setReviewPosition(info)
+
+
+class ReviewCursorManagerRegion(ReviewTextInfoRegion, CursorManagerRegion):
+	...
+
+
+def _routingShouldMoveSystemCaret() -> bool:
+	"""Returns whether pressing a braille routing key should move the system caret.
+	"""
+	reviewRoutingMovesSystemCaret = config.conf["braille"]["reviewRoutingMovesSystemCaret"].calculated()
+	configuredTether = config.conf["braille"]["tetherTo"]
+	shouldMoveCaretTetheredReview = (
+		configuredTether == TetherTo.REVIEW.value
+		and reviewRoutingMovesSystemCaret == ReviewRoutingMovesSystemCaretFlag.ALWAYS
+	)
+	shouldMoveCaretTetheredAuto = (
+		configuredTether == TetherTo.AUTO.value
+		and reviewRoutingMovesSystemCaret != ReviewRoutingMovesSystemCaretFlag.NEVER
+	)
+	return shouldMoveCaretTetheredAuto or shouldMoveCaretTetheredReview
+
 
 def rindex(seq, item, start, end):
 	for index in range(end - 1, start - 1, -1):
@@ -1845,7 +1908,7 @@ def getFocusRegions(
 	from cursorManager import CursorManager
 	from NVDAObjects import NVDAObject
 	if isinstance(obj, CursorManager):
-		region2 = (ReviewTextInfoRegion if review else CursorManagerRegion)(obj)
+		region2 = (ReviewCursorManagerRegion if review else CursorManagerRegion)(obj)
 	elif (
 		isinstance(obj, DocumentTreeInterceptor)
 		or (
@@ -1858,7 +1921,10 @@ def getFocusRegions(
 		region2 = None
 	if isinstance(obj, TreeInterceptor):
 		obj = obj.rootNVDAObject
-	region = NVDAObjectRegion(obj, appendText=TEXT_SEPARATOR if region2 else "")
+	region = (ReviewNVDAObjectRegion if review else NVDAObjectRegion)(
+		obj,
+		appendText=TEXT_SEPARATOR if region2 else ""
+	)
 	region.update()
 	yield region
 	if region2:
