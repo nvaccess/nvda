@@ -162,15 +162,20 @@ def handleCaretMove(pos: Union[textInfos.TextInfo, NVDAObject, TreeInterceptor])
 	"""
 	Instructs the review position to be updated due to caret movement.
 	Note: When braille is explicitly tethered to review, and review cursor
-	does not follow system caret, braille display is however updated
-	if content of current navigator object changes.
+	does not follow system caret, braille display is however updated if:
+
+	- navigator object is focus object or its ancestor and
+	- content of navigator object changes.
+
 	@param pos: Either a TextInfo instance at the caret position,
 	or an NVDAObject or TreeInterceptor who's caret position should be retrieved.
 	@type pos: L{textInfos.TextInfo} or L{NVDAObject} or L{TreeInterceptor}
 	"""
 	if not config.conf["reviewCursor"]["followCaret"]:
 		if config.conf["braille"]["tetherTo"] == TetherTo.REVIEW.value:
-			braille.handler.handleUpdate(api.getNavigatorObject())
+			navigatorObject: NVDAObject = api.getNavigatorObject()
+			if navigatorObject == api.getFocusObject() or navigatorObject in api.getFocusAncestors():
+				braille.handler.handleUpdate(navigatorObject)
 		return
 	if isinstance(pos,textInfos.TextInfo):
 		info=pos
