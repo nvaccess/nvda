@@ -18,7 +18,6 @@ import languageHandler
 import speechDictHandler
 import extensionPoints
 import synthDrivers
-from synthDrivers.silence import SynthDriver as SilenceSynthDriver
 import driverHandler
 from autoSettingsUtils.driverSetting import BooleanDriverSetting, DriverSetting, NumericDriverSetting
 from autoSettingsUtils.utils import StringParameterInfo
@@ -397,6 +396,8 @@ def _getSynthDriver(name) -> SynthDriver:
 
 
 def getSynthList():
+	from synthDrivers.silence import SynthDriver as SilenceSynthDriver
+
 	synthList = []
 	# The synth that should be placed at the end of the list.
 	lastSynth = None
@@ -446,6 +447,8 @@ if winVersion.getWinVer() >= winVersion.WIN10:
 
 
 def setSynth(name: Optional[str], isFallback: bool = False):
+	from synthDrivers.silence import SynthDriver as SilenceSynthDriver
+
 	asDefault = False
 	global _curSynth, _audioOutputDevice
 	if name is None:
