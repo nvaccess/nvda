@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2013-2023 NV Access Limited, Burman's Computer and Education Ltd.
+# Copyright (C) 2013-2022 NV Access Limited
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -10,19 +10,14 @@ from typing import (
 
 import api
 from baseObject import ScriptableObject
-import braille
 import winUser
 from logHandler import log
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo
 from NVDAObjects.window import Window
-from treeInterceptorHandler import (
-	DocumentTreeInterceptor,
-	TreeInterceptor,
-)
+from treeInterceptorHandler import DocumentTreeInterceptor
 from displayModel import DisplayModelTextInfo
 import textInfos
 import config
-from config.configFlags import TetherTo
 
 def getObjectPosition(obj):
 	"""
@@ -157,25 +152,13 @@ def nextMode(prev=False,startMode=None):
 	label=setCurrentMode(newMode)
 	return label or nextMode(prev=prev,startMode=newMode)
 
-
-def handleCaretMove(pos: Union[textInfos.TextInfo, NVDAObject, TreeInterceptor]) -> None:
+def handleCaretMove(pos):
 	"""
 	Instructs the review position to be updated due to caret movement.
-	Note: When braille is explicitly tethered to review, and review cursor
-	does not follow system caret, braille display is however updated if:
-
-	- navigator object is focus object or its ancestor and
-	- content of navigator object changes.
-
-	@param pos: Either a TextInfo instance at the caret position,
-	or an NVDAObject or TreeInterceptor who's caret position should be retrieved.
+	@param pos: Either a TextInfo instance at the caret position, or an NVDAObject or TeeInterceptor who's caret position should be retreaved.
 	@type pos: L{textInfos.TextInfo} or L{NVDAObject} or L{TreeInterceptor}
 	"""
 	if not config.conf["reviewCursor"]["followCaret"]:
-		if config.conf["braille"]["tetherTo"] == TetherTo.REVIEW.value:
-			navigatorObject: NVDAObject = api.getNavigatorObject()
-			if navigatorObject == api.getFocusObject() or navigatorObject in api.getFocusAncestors():
-				braille.handler.handleUpdate(navigatorObject)
 		return
 	if isinstance(pos,textInfos.TextInfo):
 		info=pos

@@ -2468,6 +2468,16 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if shouldAutoTether:
 			self.setTether(TetherTo.FOCUS.value, auto=True)
 		if self._tether != TetherTo.FOCUS.value:
+			# However, braille display content is updated in case where:
+	# braille is tethered to review, review cursor does not follow system caret,
+			# and navigator object is focus object or its ancestor.
+			if (
+				not config.conf["reviewCursor"]["followCaret"]
+				and config.conf["braille"]["tetherTo"] == TetherTo.REVIEW.value
+			):
+				navigatorObject: NVDAObject = api.getNavigatorObject()
+				if navigatorObject == api.getFocusObject() or navigatorObject in api.getFocusAncestors():
+					self.handleUpdate(navigatorObject)
 			return
 		region = self.mainBuffer.regions[-1] if self.mainBuffer.regions else None
 		if region and region.obj==obj:
