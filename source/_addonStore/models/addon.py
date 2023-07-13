@@ -56,8 +56,10 @@ class _AddonGUIModel(SupportsAddonState, SupportsVersionCheck, Protocol):
 	May come from manifest or add-on store data.
 	"""
 	addonId: str
-	displayName: str
-	description: str
+	_displayName: str
+	"""Untranslated displayName"""
+	_description: str
+	"""Untranslated description"""
 	publisher: str
 	addonVersionName: str
 	channel: Channel
@@ -69,6 +71,24 @@ class _AddonGUIModel(SupportsAddonState, SupportsVersionCheck, Protocol):
 	Legacy add-ons contain invalid metadata
 	and should not be accessible through the add-on store.
 	"""
+
+	@property
+	def displayName(self) -> str:
+		installedAddon = self._addonHandlerModel
+		if installedAddon:
+			# Fetches translated string
+			return installedAddon.manifest["summary"]
+		else:
+			return self._displayName
+
+	@property
+	def description(self) -> str:
+		installedAddon = self._addonHandlerModel
+		if installedAddon:
+			# Fetches translated string
+			return installedAddon.manifest["description"]
+		else:
+			return self._description
 
 	@property
 	def minimumNVDAVersion(self) -> addonAPIVersion.AddonApiVersionT:
@@ -115,8 +135,8 @@ class AddonGUIModel(_AddonGUIModel):
 	May come from manifest or add-on store data.
 	"""
 	addonId: str
-	displayName: str
-	description: str
+	_displayName: str
+	_description: str
 	publisher: str
 	addonVersionName: str
 	channel: Channel
@@ -136,8 +156,8 @@ class AddonStoreModel(_AddonGUIModel):
 	Data from an add-on from the add-on store.
 	"""
 	addonId: str
-	displayName: str
-	description: str
+	_displayName: str
+	_description: str
 	publisher: str
 	addonVersionName: str
 	channel: Channel
@@ -211,8 +231,8 @@ class CachedAddonsModel:
 def _createStoreModelFromData(addon: Dict[str, Any]) -> AddonStoreModel:
 	return AddonStoreModel(
 		addonId=addon["addonId"],
-		displayName=addon["displayName"],
-		description=addon["description"],
+		_displayName=addon["displayName"],
+		_description=addon["description"],
 		publisher=addon["publisher"],
 		channel=Channel(addon["channel"]),
 		addonVersionName=addon["addonVersionName"],
@@ -230,14 +250,14 @@ def _createStoreModelFromData(addon: Dict[str, Any]) -> AddonStoreModel:
 
 
 def _createGUIModelFromManifest(addon: "AddonHandlerBaseModel") -> AddonGUIModel:
-	homepage = addon.manifest.get("url")
+	homepage: Optional[str] = addon.manifest.get("url")
 	if homepage == "None":
 		# Manifest strings can be set to "None"
 		homepage = None
 	return AddonGUIModel(
 		addonId=addon.name,
-		displayName=addon.manifest["summary"],
-		description=addon.manifest["description"],
+		_displayName=addon.manifest["summary"],
+		_description=addon.manifest["description"],
 		publisher=addon.manifest["author"],
 		channel=Channel.EXTERNAL,
 		addonVersionName=addon.version,
