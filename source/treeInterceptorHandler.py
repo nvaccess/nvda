@@ -148,7 +148,6 @@ class TreeInterceptor(baseObject.ScriptableObject):
 			vision.handler.handleGainFocus(focusObj)
 		else:
 			obj=api.getNavigatorObject()
-			log.error(obj)
 			if config.conf['reviewCursor']['followCaret'] and self is obj.treeInterceptor: 
 				if review.getCurrentMode()=='object':
 					# if navigator object is in this treeInterceptor and the review mode is object, then turning off passThrough should force document review 
