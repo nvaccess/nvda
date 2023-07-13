@@ -1,9 +1,10 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2019-2022 Bill Dengler, Leonard de Ruijter
+# Copyright (C) 2019-2023 Bill Dengler, Leonard de Ruijter
 
 import api
+import braille
 import config
 import controlTypes
 import ctypes
@@ -479,6 +480,7 @@ class _NotificationsBasedWinTerminalUIA(UIA):
 		for line in displayString.splitlines():
 			if line and not line.isspace():  # Don't say "blank" during autoread
 				speech.speakText(line)
+		braille.handler.handleUpdate(self)
 
 
 def __getattr__(attrName: str) -> Any:
