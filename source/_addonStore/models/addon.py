@@ -39,6 +39,7 @@ if TYPE_CHECKING:
 	from addonHandler import (  # noqa: F401
 		Addon as AddonHandlerModel,
 		AddonBase as AddonHandlerBaseModel,
+		AddonManifest,
 	)
 	AddonGUICollectionT = Dict[Channel, CaseInsensitiveDict["_AddonGUIModel"]]
 	"""
@@ -56,10 +57,8 @@ class _AddonGUIModel(SupportsAddonState, SupportsVersionCheck, Protocol):
 	May come from manifest or add-on store data.
 	"""
 	addonId: str
-	_displayName: str
-	"""Untranslated displayName"""
-	_description: str
-	"""Untranslated description"""
+	displayName: str
+	description: str
 	publisher: str
 	addonVersionName: str
 	channel: Channel
@@ -71,24 +70,6 @@ class _AddonGUIModel(SupportsAddonState, SupportsVersionCheck, Protocol):
 	Legacy add-ons contain invalid metadata
 	and should not be accessible through the add-on store.
 	"""
-
-	@property
-	def displayName(self) -> str:
-		installedAddon = self._addonHandlerModel
-		if installedAddon:
-			# Fetches translated string
-			return installedAddon.manifest["summary"]
-		else:
-			return self._displayName
-
-	@property
-	def description(self) -> str:
-		installedAddon = self._addonHandlerModel
-		if installedAddon:
-			# Fetches translated string
-			return installedAddon.manifest["description"]
-		else:
-			return self._description
 
 	@property
 	def minimumNVDAVersion(self) -> addonAPIVersion.AddonApiVersionT:
@@ -130,24 +111,34 @@ class _AddonGUIModel(SupportsAddonState, SupportsVersionCheck, Protocol):
 
 
 @dataclasses.dataclass(frozen=True)
-class AddonGUIModel(_AddonGUIModel):
+class AddonManifestGUIModel(_AddonGUIModel):
 	"""Can be displayed in the add-on store GUI.
-	May come from manifest or add-on store data.
+	Comes from add-on manifest.
 	"""
 	addonId: str
-	_displayName: str
-	_description: str
-	publisher: str
 	addonVersionName: str
 	channel: Channel
 	homepage: Optional[str]
 	minNVDAVersion: MajorMinorPatch
 	lastTestedVersion: MajorMinorPatch
+	_manifest: "AddonManifest"
 	legacy: bool = False
 	"""
 	Legacy add-ons contain invalid metadata
 	and should not be accessible through the add-on store.
 	"""
+
+	@property
+	def displayName(self) -> str:
+		return self._manifest["summary"]
+
+	@property
+	def description(self) -> str:
+		return self._manifest["description"]
+
+	@property
+	def publisher(self) -> str:
+		return self._manifest["author"]
 
 
 @dataclasses.dataclass(frozen=True)  # once created, it should not be modified.
@@ -156,8 +147,8 @@ class AddonStoreModel(_AddonGUIModel):
 	Data from an add-on from the add-on store.
 	"""
 	addonId: str
-	_displayName: str
-	_description: str
+	displayName: str
+	description: str
 	publisher: str
 	addonVersionName: str
 	channel: Channel
@@ -231,8 +222,8 @@ class CachedAddonsModel:
 def _createStoreModelFromData(addon: Dict[str, Any]) -> AddonStoreModel:
 	return AddonStoreModel(
 		addonId=addon["addonId"],
-		_displayName=addon["displayName"],
-		_description=addon["description"],
+		displayName=addon["displayName"],
+		description=addon["description"],
 		publisher=addon["publisher"],
 		channel=Channel(addon["channel"]),
 		addonVersionName=addon["addonVersionName"],
@@ -249,21 +240,19 @@ def _createStoreModelFromData(addon: Dict[str, Any]) -> AddonStoreModel:
 	)
 
 
-def _createGUIModelFromManifest(addon: "AddonHandlerBaseModel") -> AddonGUIModel:
+def _createGUIModelFromManifest(addon: "AddonHandlerBaseModel") -> AddonManifestGUIModel:
 	homepage: Optional[str] = addon.manifest.get("url")
 	if homepage == "None":
 		# Manifest strings can be set to "None"
 		homepage = None
-	return AddonGUIModel(
+	return AddonManifestGUIModel(
 		addonId=addon.name,
-		_displayName=addon.manifest["summary"],
-		_description=addon.manifest["description"],
-		publisher=addon.manifest["author"],
 		channel=Channel.EXTERNAL,
 		addonVersionName=addon.version,
 		homepage=homepage,
 		minNVDAVersion=MajorMinorPatch(*addon.minimumNVDAVersion),
 		lastTestedVersion=MajorMinorPatch(*addon.lastTestedNVDAVersion),
+		_manifest=addon.manifest
 	)
 
 
