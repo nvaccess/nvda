@@ -171,6 +171,7 @@ class WasapiPlayer {
 
 	HRESULT stop();
 	HRESULT sync();
+	HRESULT idle();
 	HRESULT pause();
 	HRESULT resume();
 	HRESULT setChannelVolume(unsigned int channel, float level);
@@ -470,6 +471,19 @@ HRESULT WasapiPlayer::sync() {
 	return S_OK;
 }
 
+HRESULT WasapiPlayer::idle() {
+	HRESULT hr = sync();
+	if (FAILED(hr)) {
+		return hr;
+	}
+	hr = stop();
+	if (FAILED(hr)) {
+		return hr;
+	}
+	completeStop();
+	return S_OK;
+}
+
 HRESULT WasapiPlayer::pause() {
 	if (playState != PlayState::playing) {
 		return S_OK;
@@ -542,6 +556,10 @@ HRESULT wasPlay_stop(WasapiPlayer* player) {
 
 HRESULT wasPlay_sync(WasapiPlayer* player) {
 	return player->sync();
+}
+
+HRESULT wasPlay_idle(WasapiPlayer* player) {
+	return player->idle();
 }
 
 HRESULT wasPlay_pause(WasapiPlayer* player) {
