@@ -240,6 +240,7 @@ class AddonStoreVM:
 
 	def removeAddon(self, listItemVM: AddonListItemVM) -> None:
 		if _shouldProceedToRemoveAddonDialog(listItemVM.model):
+			addonDataManager._deleteCacheInstalledAddon(listItemVM.model.name)
 			listItemVM.model._addonHandlerModel.requestRemove()
 			self.refresh()
 			listItemVM.status = getStatus(listItemVM.model)

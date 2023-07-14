@@ -301,5 +301,5 @@ class _InstalledAddonsCache(AutoPropertyObject):
 			if addonStoreData:
 				addons[addonStoreData.channel][addonId] = addonStoreData
 			else:
-				addons[Channel.STABLE][addonId] = self.installedAddons[addonId]._addonGuiModel
+				addons[Channel.EXTERNAL][addonId] = self.installedAddons[addonId]._addonGuiModel
 		return addons
