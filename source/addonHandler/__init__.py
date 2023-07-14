@@ -434,18 +434,20 @@ class Addon(AddonBase):
 
 	def requestRemove(self):
 		"""Marks this addon for removal on NVDA restart."""
-		if self.isPendingInstall:
+		if self.isPendingInstall and not self.isInstalled:
+			# Handle removal of an add-on not yet installed
 			self.completeRemove()
 			state[AddonStateCategory.PENDING_INSTALL].discard(self.name)
 			state[AddonStateCategory.OVERRIDE_COMPATIBILITY].discard(self.name)
-			#Force availableAddons to be updated
+			# Force availableAddons to be updated
 			getAvailableAddons(refresh=True)
 		else:
+			# Upgrade to existing add-on or installation of new add-on
 			state[AddonStateCategory.PENDING_REMOVE].add(self.name)
 			# There's no point keeping a record of this add-on pending being disabled now.
 			# However, if the addon is disabled, then it needs to remain disabled so that
 			# the status in add-on store continues to say "disabled"
-			state[AddonStateCategory.PENDING_INSTALL].discard(self.name)
+			state[AddonStateCategory.PENDING_DISABLE].discard(self.name)
 		state.save()
 
 	def completeRemove(self, runUninstallTask: bool = True) -> None:
@@ -476,9 +478,18 @@ class Addon(AddonBase):
 		state[AddonStateCategory.BLOCKED].discard(self.name)
 		state.save()
 
-		if not self.isPendingInstall:
-			# Don't delete add-on store cache if it's an upgrade,
+		if (
+			# Don't delete add-on store cache if its an upgrade pending,
 			# the add-on manager has already replaced the cache file.
+			not self.isPendingInstall
+			# However, if the add-on store cache is out of date,
+			# and is being replaced by an external install
+			# we should remove the cached add-on.
+			or (
+				self._addonStoreData
+				and self._addonStoreData.addonVersionName != self.version
+			)
+		):
 			from _addonStore.dataManager import addonDataManager
 			assert addonDataManager
 			addonDataManager._deleteCacheInstalledAddon(self.name)
@@ -656,6 +667,10 @@ class Addon(AddonBase):
 			if os.path.isfile(docFile):
 				return docFile
 		return None
+
+	@property
+	def isPendingInstall(self) -> bool:
+		return super().isPendingInstall and self.pendingInstallPath == self.path
 
 	def __repr__(self):
 		return f"{self.__class__.__name__} ({self.name!r}, running={self.isRunning!r})"

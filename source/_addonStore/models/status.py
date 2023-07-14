@@ -149,9 +149,13 @@ def getStatus(model: "AddonManifestGUIModel") -> Optional[AvailableAddonStatus]:
 		state as addonHandlerState,
 	)
 	from ..dataManager import addonDataManager
+	assert addonDataManager is not None
 	from .addon import AddonStoreModel
 	from .version import MajorMinorPatch
 	addonHandlerModel = model._addonHandlerModel
+
+	if model.name in (d.model.name for d, _ in addonDataManager._downloadsPendingInstall):
+		return AvailableAddonStatus.DOWNLOAD_SUCCESS
 
 	if addonHandlerModel is None:
 		if model.isPendingInstall:
@@ -226,6 +230,12 @@ _addonStoreStateToAddonHandlerState: OrderedDict[
 		AddonStateCategory.OVERRIDE_COMPATIBILITY,
 		AddonStateCategory.PENDING_ENABLE,
 	},
+	# If an add-on is being updated,
+	# it will be in both pending remove and pending install
+	AvailableAddonStatus.INSTALLED: {
+		AddonStateCategory.PENDING_INSTALL,
+		AddonStateCategory.PENDING_REMOVE,
+	},
 	AvailableAddonStatus.PENDING_REMOVE: {AddonStateCategory.PENDING_REMOVE},
 	AvailableAddonStatus.PENDING_ENABLE: {AddonStateCategory.PENDING_ENABLE},
 	AvailableAddonStatus.PENDING_DISABLE: {AddonStateCategory.PENDING_DISABLE},
@@ -276,8 +286,6 @@ class _StatusFilterKey(DisplayStringEnum):
 			raise e
 
 
-
-
 _statusFilters: OrderedDict[_StatusFilterKey, Set[AvailableAddonStatus]] = OrderedDict({
 	_StatusFilterKey.INSTALLED: {
 		AvailableAddonStatus.UPDATE,
@@ -293,6 +301,7 @@ _statusFilters: OrderedDict[_StatusFilterKey, Set[AvailableAddonStatus]] = Order
 		AvailableAddonStatus.PENDING_REMOVE,
 		AvailableAddonStatus.RUNNING,
 		AvailableAddonStatus.ENABLED,
+		AvailableAddonStatus.DOWNLOAD_SUCCESS,
 	},
 	_StatusFilterKey.UPDATE: {
 		AvailableAddonStatus.UPDATE,
@@ -330,9 +339,8 @@ class SupportsAddonState(SupportsVersionCheck, Protocol):
 
 	@property
 	def isEnabled(self) -> bool:
-		return not (
-			self.isPendingInstall
-			or self.isDisabled
+		return self.isInstalled and not (
+			self.isDisabled
 			or self.isBlocked
 		)
 
