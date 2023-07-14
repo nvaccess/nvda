@@ -396,6 +396,8 @@ def _getSynthDriver(name) -> SynthDriver:
 
 
 def getSynthList():
+	from synthDrivers.silence import SynthDriver as SilenceSynthDriver
+
 	synthList = []
 	# The synth that should be placed at the end of the list.
 	lastSynth = None
@@ -409,7 +411,7 @@ def getSynthList():
 			continue
 		try:
 			if synth.check():
-				if synth.name == "silence":
+				if synth.name == SilenceSynthDriver.name:
 					lastSynth = (synth.name, synth.description)
 				else:
 					synthList.append((synth.name, synth.description))
@@ -445,6 +447,8 @@ if winVersion.getWinVer() >= winVersion.WIN10:
 
 
 def setSynth(name: Optional[str], isFallback: bool = False):
+	from synthDrivers.silence import SynthDriver as SilenceSynthDriver
+
 	asDefault = False
 	global _curSynth, _audioOutputDevice
 	if name is None:
@@ -475,14 +479,15 @@ def setSynth(name: Optional[str], isFallback: bool = False):
 		synthChanged.notify(synth=_curSynth, audioOutputDevice=_audioOutputDevice, isFallback=isFallback)
 		return True
 	# As there was an error loading this synth:
-	elif prevSynthName:
+	elif prevSynthName and not prevSynthName == SilenceSynthDriver.name:
+		# Don't fall back to silence if speech is expected
 		log.info(f"Falling back to previous synthDriver {prevSynthName}")
 		# There was a previous synthesizer, so switch back to that one.
 		setSynth(prevSynthName, isFallback=True)
 	else:
 		# There was no previous synth, so fallback to the next available default synthesizer
 		# that has not been tried yet.
-		log.info(f"Searching for next synthDriver")
+		log.info("Searching for next synthDriver")
 		findAndSetNextSynth(name)
 	return False
 
