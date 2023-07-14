@@ -37,7 +37,8 @@ class SupportsVersionCheck(Protocol):
 	""" Examples implementing this protocol include:
 	- addonHandler.Addon
 	- addonHandler.AddonBundle
-	- _addonStore.models.AddonGUIModel
+	- _addonStore.models._AddonGUIModel
+	- _addonStore.models.AddonManifestModel
 	- _addonStore.models.AddonStoreModel
 	"""
 	minimumNVDAVersion: addonAPIVersion.AddonApiVersionT

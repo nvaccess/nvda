@@ -57,7 +57,7 @@ from .packaging import (
 
 if TYPE_CHECKING:
 	from _addonStore.models.addon import (  # noqa: F401
-		AddonGUIModel,
+		AddonManifestModel,
 		AddonHandlerModelGeneratorT,
 		AddonStoreModel,
 	)
@@ -392,7 +392,7 @@ class AddonBase(SupportsAddonState, SupportsVersionCheck, ABC):
 		return addonDataManager._getCachedInstalledAddonData(self.name)
 
 	@property
-	def _addonGuiModel(self) -> "AddonGUIModel":
+	def _addonGuiModel(self) -> "AddonManifestModel":
 		from _addonStore.models.addon import _createGUIModelFromManifest
 		return _createGUIModelFromManifest(self)
 

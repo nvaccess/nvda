@@ -39,6 +39,7 @@ if TYPE_CHECKING:
 	from addonHandler import (  # noqa: F401
 		Addon as AddonHandlerModel,
 		AddonBase as AddonHandlerBaseModel,
+		AddonManifest,
 	)
 	AddonGUICollectionT = Dict[Channel, CaseInsensitiveDict["_AddonGUIModel"]]
 	"""
@@ -110,24 +111,34 @@ class _AddonGUIModel(SupportsAddonState, SupportsVersionCheck, Protocol):
 
 
 @dataclasses.dataclass(frozen=True)
-class AddonGUIModel(_AddonGUIModel):
+class AddonManifestModel(_AddonGUIModel):
 	"""Can be displayed in the add-on store GUI.
-	May come from manifest or add-on store data.
+	Comes from add-on manifest.
 	"""
 	addonId: str
-	displayName: str
-	description: str
-	publisher: str
 	addonVersionName: str
 	channel: Channel
 	homepage: Optional[str]
 	minNVDAVersion: MajorMinorPatch
 	lastTestedVersion: MajorMinorPatch
+	_manifest: "AddonManifest"
 	legacy: bool = False
 	"""
 	Legacy add-ons contain invalid metadata
 	and should not be accessible through the add-on store.
 	"""
+
+	@property
+	def displayName(self) -> str:
+		return self._manifest["summary"]
+
+	@property
+	def description(self) -> str:
+		return self._manifest["description"]
+
+	@property
+	def publisher(self) -> str:
+		return self._manifest["author"]
 
 
 @dataclasses.dataclass(frozen=True)  # once created, it should not be modified.
@@ -229,21 +240,19 @@ def _createStoreModelFromData(addon: Dict[str, Any]) -> AddonStoreModel:
 	)
 
 
-def _createGUIModelFromManifest(addon: "AddonHandlerBaseModel") -> AddonGUIModel:
-	homepage = addon.manifest.get("url")
+def _createGUIModelFromManifest(addon: "AddonHandlerBaseModel") -> AddonManifestModel:
+	homepage: Optional[str] = addon.manifest.get("url")
 	if homepage == "None":
 		# Manifest strings can be set to "None"
 		homepage = None
-	return AddonGUIModel(
+	return AddonManifestModel(
 		addonId=addon.name,
-		displayName=addon.manifest["summary"],
-		description=addon.manifest["description"],
-		publisher=addon.manifest["author"],
 		channel=Channel.EXTERNAL,
 		addonVersionName=addon.version,
 		homepage=homepage,
 		minNVDAVersion=MajorMinorPatch(*addon.minimumNVDAVersion),
 		lastTestedVersion=MajorMinorPatch(*addon.lastTestedNVDAVersion),
+		_manifest=addon.manifest
 	)
 
 

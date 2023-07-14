@@ -25,7 +25,7 @@ from utils.displayString import DisplayStringEnum
 from .version import SupportsVersionCheck
 
 if TYPE_CHECKING:
-	from .addon import AddonGUIModel  # noqa: F401
+	from .addon import _AddonGUIModel  # noqa: F401
 	from addonHandler import AddonsState  # noqa: F401
 
 
@@ -144,7 +144,7 @@ class AddonStateCategory(str, enum.Enum):
 	"""Add-ons that are blocked from running because they are incompatible"""
 
 
-def getStatus(model: "AddonGUIModel") -> Optional[AvailableAddonStatus]:
+def getStatus(model: "_AddonGUIModel") -> Optional[AvailableAddonStatus]:
 	from addonHandler import (
 		state as addonHandlerState,
 	)
