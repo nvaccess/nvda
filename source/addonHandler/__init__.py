@@ -478,22 +478,6 @@ class Addon(AddonBase):
 		state[AddonStateCategory.BLOCKED].discard(self.name)
 		state.save()
 
-		if (
-			# Don't delete add-on store cache if its an upgrade pending,
-			# the add-on manager has already replaced the cache file.
-			not self.isPendingInstall
-			# However, if the add-on store cache is out of date,
-			# and is being replaced by an external install
-			# we should remove the cached add-on.
-			or (
-				self._addonStoreData
-				and self._addonStoreData.addonVersionName != self.version
-			)
-		):
-			from _addonStore.dataManager import addonDataManager
-			assert addonDataManager
-			addonDataManager._deleteCacheInstalledAddon(self.name)
-
 	def addToPackagePath(self, package):
 		""" Adds this L{Addon} extensions to the specific package path if those exist.
 		This allows the addon to "run" / be available because the package is able to search its path,
