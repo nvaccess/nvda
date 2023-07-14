@@ -111,7 +111,7 @@ class _AddonGUIModel(SupportsAddonState, SupportsVersionCheck, Protocol):
 
 
 @dataclasses.dataclass(frozen=True)
-class AddonManifestGUIModel(_AddonGUIModel):
+class AddonManifestModel(_AddonGUIModel):
 	"""Can be displayed in the add-on store GUI.
 	Comes from add-on manifest.
 	"""
@@ -240,12 +240,12 @@ def _createStoreModelFromData(addon: Dict[str, Any]) -> AddonStoreModel:
 	)
 
 
-def _createGUIModelFromManifest(addon: "AddonHandlerBaseModel") -> AddonManifestGUIModel:
+def _createGUIModelFromManifest(addon: "AddonHandlerBaseModel") -> AddonManifestModel:
 	homepage: Optional[str] = addon.manifest.get("url")
 	if homepage == "None":
 		# Manifest strings can be set to "None"
 		homepage = None
-	return AddonManifestGUIModel(
+	return AddonManifestModel(
 		addonId=addon.name,
 		channel=Channel.EXTERNAL,
 		addonVersionName=addon.version,

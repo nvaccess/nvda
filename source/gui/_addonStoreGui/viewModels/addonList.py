@@ -20,7 +20,7 @@ from typing import (
 from requests.structures import CaseInsensitiveDict
 
 from _addonStore.models.addon import (
-	AddonManifestGUIModel,
+	_AddonGUIModel,
 )
 from _addonStore.models.status import (
 	_StatusFilterKey,
@@ -86,15 +86,15 @@ class AddonListField(_AddonListFieldData, Enum):
 class AddonListItemVM:
 	def __init__(
 			self,
-			model: AddonManifestGUIModel,
+			model: _AddonGUIModel,
 			status: AvailableAddonStatus = AvailableAddonStatus.AVAILABLE
 	):
-		self._model: AddonManifestGUIModel = model  # read-only
+		self._model: _AddonGUIModel = model  # read-only
 		self._status: AvailableAddonStatus = status  # modifications triggers L{updated.notify}
 		self.updated = extensionPoints.Action()  # Notify of changes to VM, argument: addonListItemVM
 
 	@property
-	def model(self) -> AddonManifestGUIModel:
+	def model(self) -> _AddonGUIModel:
 		return self._model
 
 	@property

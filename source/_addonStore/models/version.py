@@ -37,6 +37,7 @@ class SupportsVersionCheck(Protocol):
 	""" Examples implementing this protocol include:
 	- addonHandler.Addon
 	- addonHandler.AddonBundle
+	- _addonStore.models._AddonGUIModel
 	- _addonStore.models.AddonManifestGUIModel
 	- _addonStore.models.AddonStoreModel
 	"""
