@@ -38,7 +38,7 @@ class SupportsVersionCheck(Protocol):
 	- addonHandler.Addon
 	- addonHandler.AddonBundle
 	- _addonStore.models._AddonGUIModel
-	- _addonStore.models.AddonManifestGUIModel
+	- _addonStore.models.AddonManifestModel
 	- _addonStore.models.AddonStoreModel
 	"""
 	minimumNVDAVersion: addonAPIVersion.AddonApiVersionT
