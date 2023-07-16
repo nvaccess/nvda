@@ -970,10 +970,16 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 	@classmethod
 	def _scheduleIdleCheck(cls):
 		if not cls._isIdleCheckPending:
-			core.callLater(
-				cls._IDLE_CHECK_INTERVAL,
-				cls._idleCheck
-			)
+			try:
+				core.callLater(
+					cls._IDLE_CHECK_INTERVAL,
+					cls._idleCheck
+				)
+			except core.NVDANotInitializedError:
+				# This can happen when playing the start sound. We close the stream after
+				# playing a sound anyway, so it's okay that this first idle check doesn't
+				# run.
+				pass
 			cls._isIdleCheckPending = True
 
 	@classmethod
