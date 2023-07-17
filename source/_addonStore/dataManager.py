@@ -71,7 +71,7 @@ class _DataManager:
 	_downloadsPendingInstall: Set[Tuple["AddonListItemVM", os.PathLike]] = set()
 
 	def __init__(self):
-		self._lang = languageHandler.getLanguage()
+		self._lang = languageHandler._findSupportedGettextLocale()
 		self._preferredChannel = Channel.ALL
 		self._cacheLatestFile = os.path.join(WritePaths.addonStoreDir, _DataManager._cacheLatestFilename)
 		self._cacheCompatibleFile = os.path.join(WritePaths.addonStoreDir, _DataManager._cacheCompatibleFilename)

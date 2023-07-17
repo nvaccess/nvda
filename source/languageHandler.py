@@ -369,6 +369,24 @@ def getWindowsLanguage():
 	return localeName
 
 
+def _findSupportedGettextLocale() -> str:
+	from utils.caseInsensitiveCollections import CaseInsensitiveSet
+	localeName = getLanguage()
+	foundLocaleFiles = gettext.find("nvda", "locale", languages=[localeName], all=True)
+	# For example, for localeName="es_CO"
+	# foundLocaleFiles = ['locale\\es\\LC_MESSAGES\\nvda.mo', 'locale\\es_CO\\LC_MESSAGES\\nvda.mo']
+	foundLocales = CaseInsensitiveSet({f.split(os.sep)[1] for f in foundLocaleFiles})
+	if localeName in foundLocales:
+		# return original cased version
+		return foundLocales.intersection({localeName}).pop()
+	if len(foundLocales) != 1:
+		log.warning(
+			f"Expected to find 1 supported locale: {foundLocales}"
+		)
+	# return any supported locale as it is ambiguous
+	return foundLocales.pop()
+
+
 def _createGettextTranslation(
 		localeName: str
 ) -> Union[None, gettext.GNUTranslations, gettext.NullTranslations]:
@@ -377,6 +395,7 @@ def _createGettextTranslation(
 		return gettext.translation("nvda", fallback=True)
 	try:
 		trans = gettext.translation("nvda", localedir="locale", languages=[localeName])
+		# Note: localeName may not match the exact language code used by NVDA translations
 		globalVars.appArgs.language = localeName
 		return trans
 	except IOError:
