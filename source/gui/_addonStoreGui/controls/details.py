@@ -6,7 +6,7 @@
 import wx
 
 from _addonStore.models.addon import (
-	AddonStoreModel,
+	_AddonStoreModel,
 )
 from gui import guiHelper
 from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
@@ -257,7 +257,7 @@ class AddonDetails(
 						details.homepage
 					)
 
-				if isinstance(details, AddonStoreModel):
+				if isinstance(details, _AddonStoreModel):
 					self._appendDetailsLabelValue(
 						# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 						pgettext("addonStore", "License:"),

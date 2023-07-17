@@ -27,7 +27,11 @@ import NVDAState
 from NVDAState import WritePaths
 from utils.security import sha256_checksum
 
-from .models.addon import AddonStoreModel
+from .models.addon import (
+	AddonStoreModel,
+	_AddonGUIModel,
+	_AddonStoreModel,
+)
 from .models.channel import Channel
 
 
@@ -214,13 +218,13 @@ class AddonFileDownloader:
 		return cast(os.PathLike, cacheFilePath)
 
 	@staticmethod
-	def _checkChecksum(addonFilePath: str, addonData: AddonStoreModel) -> Optional[os.PathLike]:
+	def _checkChecksum(addonFilePath: str, addonData: _AddonStoreModel) -> Optional[os.PathLike]:
 		with open(addonFilePath, "rb") as f:
 			sha256Addon = sha256_checksum(f)
 		return sha256Addon.casefold() == addonData.sha256.casefold()
 
 	@staticmethod
-	def _getCacheFilenameForAddon(addonData: AddonStoreModel) -> str:
+	def _getCacheFilenameForAddon(addonData: _AddonGUIModel) -> str:
 		return f"{addonData.addonId}-{addonData.addonVersionName}.nvda-addon"
 
 	def __del__(self):

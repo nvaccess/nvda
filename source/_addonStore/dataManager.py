@@ -33,8 +33,9 @@ from NVDAState import WritePaths
 from .models.addon import (
 	AddonStoreModel,
 	CachedAddonsModel,
+	InstalledAddonStoreModel,
 	_createAddonGUICollection,
-	_createStoreModelFromData,
+	_createInstalledStoreModelFromData,
 	_createStoreCollectionFromJson,
 )
 from .models.channel import Channel
@@ -272,7 +273,7 @@ class _DataManager:
 		with open(addonCachePath, 'w') as cacheFile:
 			json.dump(addonData.asdict(), cacheFile, ensure_ascii=False)
 
-	def _getCachedInstalledAddonData(self, addonId: str) -> Optional[AddonStoreModel]:
+	def _getCachedInstalledAddonData(self, addonId: str) -> Optional[InstalledAddonStoreModel]:
 		addonCachePath = os.path.join(self._installedAddonDataCacheDir, f"{addonId}.json")
 		if not os.path.exists(addonCachePath):
 			return None
@@ -280,7 +281,7 @@ class _DataManager:
 			cacheData = json.load(cacheFile)
 		if not cacheData:
 			return None
-		return _createStoreModelFromData(cacheData)
+		return _createInstalledStoreModelFromData(cacheData)
 
 
 class _InstalledAddonsCache(AutoPropertyObject):
