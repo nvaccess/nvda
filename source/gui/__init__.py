@@ -23,6 +23,7 @@ import speech
 import queueHandler
 import core
 from typing import (
+	Any,
 	Optional,
 	Type,
 )
@@ -93,6 +94,28 @@ DONATE_URL = "http://www.nvaccess.org/donate/"
 mainFrame: Optional["MainFrame"] = None
 """Set by initialize. Should be used as the parent for "top level" dialogs.
 """
+
+
+def __getattr__(attrName: str) -> Any:
+	"""Module level `__getattr__` used to preserve backward compatibility."""
+	from gui.settingsDialogs import AutoSettingsMixin, SettingsPanel
+	if attrName == "AutoSettingsMixin" and NVDAState._allowDeprecatedAPI():
+		log.warning(
+			"Importing AutoSettingsMixin from here is deprecated. "
+			"Import AutoSettingsMixin from gui.settingsDialogs instead. ",
+			# Include stack info so testers can report warning to add-on author.
+			stack_info=True,
+		)
+		return AutoSettingsMixin
+	if attrName == "SettingsPanel" and NVDAState._allowDeprecatedAPI():
+		log.warning(
+			"Importing SettingsPanel from here is deprecated. "
+			"Import SettingsPanel from gui.settingsDialogs instead. ",
+			# Include stack info so testers can report warning to add-on author.
+			stack_info=True,
+		)
+		return SettingsPanel
+	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
 
 
 class MainFrame(wx.Frame):
@@ -198,6 +221,14 @@ class MainFrame(wx.Frame):
 			messageBox(_("The settings panel you tried to open is unavailable on this system."),_("Error"),style=wx.OK | wx.ICON_ERROR)
 
 		self.postPopup()
+
+	if NVDAState._allowDeprecatedAPI():
+		def _popupSettingsDialog(self, dialog: Type[SettingsDialog], *args, **kwargs):
+			log.warning(
+				"_popupSettingsDialog is deprecated, use popupSettingsDialog instead.",
+				stack_info=True,
+			)
+			self.popupSettingsDialog(dialog, *args, **kwargs)
 
 	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onDefaultDictionaryCommand(self, evt):
@@ -344,7 +375,10 @@ class MainFrame(wx.Frame):
 
 	if NVDAState._allowDeprecatedAPI():
 		def onAddonsManagerCommand(self, evt: wx.MenuEvent):
-			log.warning("onAddonsManagerCommand is deprecated, use onAddonStoreCommand instead.")
+			log.warning(
+				"onAddonsManagerCommand is deprecated, use onAddonStoreCommand instead.",
+				stack_info=True,
+			)
 			self.onAddonStoreCommand(evt)
 
 	@blockAction.when(
