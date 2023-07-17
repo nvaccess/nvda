@@ -220,8 +220,8 @@ class WarnOnLoadDialog(MessageDialog):
 
 
 class ScreenCurtainGuiPanel(
-	AutoSettingsMixin,
-	SettingsPanel,
+		AutoSettingsMixin,
+		SettingsPanel,
 ):
 
 	_enabledCheckbox: wx.CheckBox
