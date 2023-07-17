@@ -240,7 +240,7 @@ class AddonStoreDialog(SettingsDialog):
 			def postInstall():
 				installingDialog.done()
 				# let the dialog exit.
-				super().onClose(evt)
+				super(AddonStoreDialog, self).onClose(evt)
 
 			return wx.CallAfter(postInstall)
 

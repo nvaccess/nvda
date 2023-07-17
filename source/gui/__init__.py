@@ -23,7 +23,9 @@ import speech
 import queueHandler
 import core
 from typing import (
+	Any,
 	Optional,
+	Type,
 )
 import systemUtils
 from .message import (
@@ -41,9 +43,25 @@ from .speechDict import (
 # Be careful when removing, and only do in a compatibility breaking release.
 from .exit import ExitDialog
 from .settingsDialogs import (
+	BrailleDisplaySelectionDialog,
+	BrailleSettingsPanel,
+	BrowseModePanel,
+	DocumentFormattingPanel,
+	GeneralSettingsPanel,
+	InputCompositionPanel,
+	KeyboardSettingsPanel,
+	MouseSettingsPanel,
+	MultiCategorySettingsDialog,
+	NVDASettingsDialog,
+	ObjectPresentationPanel,
 	SettingsDialog,
+	SpeechSettingsPanel,
+	SpeechSymbolsDialog,
+	SynthesizerSelectionDialog,
+	TouchInteractionPanel,
+	ReviewCursorPanel,
+	UwpOcrPanel,
 )
-from .settingsDialogs import *
 from .startupDialogs import WelcomeDialog
 from .inputGestures import InputGesturesDialog
 from . import logViewer
@@ -76,6 +94,28 @@ DONATE_URL = "http://www.nvaccess.org/donate/"
 mainFrame: Optional["MainFrame"] = None
 """Set by initialize. Should be used as the parent for "top level" dialogs.
 """
+
+
+def __getattr__(attrName: str) -> Any:
+	"""Module level `__getattr__` used to preserve backward compatibility."""
+	from gui.settingsDialogs import AutoSettingsMixin, SettingsPanel
+	if attrName == "AutoSettingsMixin" and NVDAState._allowDeprecatedAPI():
+		log.warning(
+			"Importing AutoSettingsMixin from here is deprecated. "
+			"Import AutoSettingsMixin from gui.settingsDialogs instead. ",
+			# Include stack info so testers can report warning to add-on author.
+			stack_info=True,
+		)
+		return AutoSettingsMixin
+	if attrName == "SettingsPanel" and NVDAState._allowDeprecatedAPI():
+		log.warning(
+			"Importing SettingsPanel from here is deprecated. "
+			"Import SettingsPanel from gui.settingsDialogs instead. ",
+			# Include stack info so testers can report warning to add-on author.
+			stack_info=True,
+		)
+		return SettingsPanel
+	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
 
 
 class MainFrame(wx.Frame):
@@ -169,7 +209,7 @@ class MainFrame(wx.Frame):
 			messageBox(_("Could not save configuration - probably read only file system"),_("Error"),wx.OK | wx.ICON_ERROR)
 
 	@blockAction.when(blockAction.Context.MODAL_DIALOG_OPEN)
-	def _popupSettingsDialog(self, dialog, *args, **kwargs):
+	def popupSettingsDialog(self, dialog: Type[SettingsDialog], *args, **kwargs):
 		self.prePopup()
 		try:
 			dialog(self, *args, **kwargs).Show()
@@ -182,17 +222,25 @@ class MainFrame(wx.Frame):
 
 		self.postPopup()
 
+	if NVDAState._allowDeprecatedAPI():
+		def _popupSettingsDialog(self, dialog: Type[SettingsDialog], *args, **kwargs):
+			log.warning(
+				"_popupSettingsDialog is deprecated, use popupSettingsDialog instead.",
+				stack_info=True,
+			)
+			self.popupSettingsDialog(dialog, *args, **kwargs)
+
 	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onDefaultDictionaryCommand(self, evt):
-		self._popupSettingsDialog(DefaultDictionaryDialog)
+		self.popupSettingsDialog(DefaultDictionaryDialog)
 
 	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onVoiceDictionaryCommand(self, evt):
-		self._popupSettingsDialog(VoiceDictionaryDialog)
+		self.popupSettingsDialog(VoiceDictionaryDialog)
 
 	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onTemporaryDictionaryCommand(self, evt):
-		self._popupSettingsDialog(TemporaryDictionaryDialog)
+		self.popupSettingsDialog(TemporaryDictionaryDialog)
 
 	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onExecuteUpdateCommand(self, evt):
@@ -201,13 +249,13 @@ class MainFrame(wx.Frame):
 			from addonHandler import getIncompatibleAddons
 			if any(getIncompatibleAddons(apiVersion, backCompatToAPIVersion)):
 				confirmUpdateDialog = updateCheck.UpdateAskInstallDialog(
-					parent=gui.mainFrame,
+					parent=mainFrame,
 					destPath=destPath,
 					version=version,
 					apiVersion=apiVersion,
 					backCompatTo=backCompatToAPIVersion
 				)
-				gui.runScriptModalDialog(confirmUpdateDialog)
+				runScriptModalDialog(confirmUpdateDialog)
 			else:
 				updateCheck.executePendingUpdate()
 
@@ -232,57 +280,57 @@ class MainFrame(wx.Frame):
 				log.error("NVDA already in process of exiting, this indicates a logic error.")
 
 	def onNVDASettingsCommand(self,evt):
-		self._popupSettingsDialog(NVDASettingsDialog)
+		self.popupSettingsDialog(NVDASettingsDialog)
 
 	def onGeneralSettingsCommand(self,evt):
-		self._popupSettingsDialog(NVDASettingsDialog, GeneralSettingsPanel)
+		self.popupSettingsDialog(NVDASettingsDialog, GeneralSettingsPanel)
 
 	def onSelectSynthesizerCommand(self,evt):
-		self._popupSettingsDialog(SynthesizerSelectionDialog)
+		self.popupSettingsDialog(SynthesizerSelectionDialog)
 
 	def onSpeechSettingsCommand(self,evt):
-		self._popupSettingsDialog(NVDASettingsDialog, SpeechSettingsPanel)
+		self.popupSettingsDialog(NVDASettingsDialog, SpeechSettingsPanel)
 
 	def onSelectBrailleDisplayCommand(self,evt):
-		self._popupSettingsDialog(BrailleDisplaySelectionDialog)
+		self.popupSettingsDialog(BrailleDisplaySelectionDialog)
 
 	def onBrailleSettingsCommand(self,evt):
-		self._popupSettingsDialog(NVDASettingsDialog, BrailleSettingsPanel)
+		self.popupSettingsDialog(NVDASettingsDialog, BrailleSettingsPanel)
 
 	def onKeyboardSettingsCommand(self,evt):
-		self._popupSettingsDialog(NVDASettingsDialog, KeyboardSettingsPanel)
+		self.popupSettingsDialog(NVDASettingsDialog, KeyboardSettingsPanel)
 
 	def onMouseSettingsCommand(self,evt):
-		self._popupSettingsDialog(NVDASettingsDialog, MouseSettingsPanel)
+		self.popupSettingsDialog(NVDASettingsDialog, MouseSettingsPanel)
 
 	def onTouchInteractionCommand(self,evt):
-		self._popupSettingsDialog(NVDASettingsDialog, TouchInteractionPanel)
+		self.popupSettingsDialog(NVDASettingsDialog, TouchInteractionPanel)
 
 	def onReviewCursorCommand(self,evt):
-		self._popupSettingsDialog(NVDASettingsDialog, ReviewCursorPanel)
+		self.popupSettingsDialog(NVDASettingsDialog, ReviewCursorPanel)
 
 	def onInputCompositionCommand(self,evt):
-		self._popupSettingsDialog(NVDASettingsDialog, InputCompositionPanel)
+		self.popupSettingsDialog(NVDASettingsDialog, InputCompositionPanel)
 
 	def onObjectPresentationCommand(self,evt):
-		self._popupSettingsDialog(NVDASettingsDialog, ObjectPresentationPanel)
+		self.popupSettingsDialog(NVDASettingsDialog, ObjectPresentationPanel)
 
 	def onBrowseModeCommand(self,evt):
-		self._popupSettingsDialog(NVDASettingsDialog, BrowseModePanel)
+		self.popupSettingsDialog(NVDASettingsDialog, BrowseModePanel)
 
 	def onDocumentFormattingCommand(self,evt):
-		self._popupSettingsDialog(NVDASettingsDialog, DocumentFormattingPanel)
+		self.popupSettingsDialog(NVDASettingsDialog, DocumentFormattingPanel)
 
 	def onUwpOcrCommand(self, evt):
-		self._popupSettingsDialog(NVDASettingsDialog, UwpOcrPanel)
+		self.popupSettingsDialog(NVDASettingsDialog, UwpOcrPanel)
 
 	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onSpeechSymbolsCommand(self, evt):
-		self._popupSettingsDialog(SpeechSymbolsDialog)
+		self.popupSettingsDialog(SpeechSymbolsDialog)
 
 	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onInputGesturesCommand(self, evt):
-		self._popupSettingsDialog(InputGesturesDialog)
+		self.popupSettingsDialog(InputGesturesDialog)
 
 	def onAboutCommand(self,evt):
 		# Translators: The title of the dialog to show about info for NVDA.
@@ -327,7 +375,10 @@ class MainFrame(wx.Frame):
 
 	if NVDAState._allowDeprecatedAPI():
 		def onAddonsManagerCommand(self, evt: wx.MenuEvent):
-			log.warning("onAddonsManagerCommand is deprecated, use onAddonStoreCommand instead.")
+			log.warning(
+				"onAddonsManagerCommand is deprecated, use onAddonStoreCommand instead.",
+				stack_info=True,
+			)
 			self.onAddonStoreCommand(evt)
 
 	@blockAction.when(
@@ -338,16 +389,11 @@ class MainFrame(wx.Frame):
 		blockAction.Context.RUNNING_LAUNCHER,
 	)
 	def onAddonStoreCommand(self, evt: wx.MenuEvent):
-		self.prePopup()
 		from ._addonStoreGui import AddonStoreDialog
 		from ._addonStoreGui.viewModels.store import AddonStoreVM
 		_storeVM = AddonStoreVM()
 		_storeVM.refresh()
-		try:
-			AddonStoreDialog(mainFrame, _storeVM).Show()
-		except SettingsDialog.MultiInstanceErrorWithDialog as errorWithDialog:
-			errorWithDialog.dialog.SetFocus()
-		self.postPopup()
+		self.popupSettingsDialog(AddonStoreDialog, _storeVM)
 
 	def onReloadPluginsCommand(self, evt):
 		import appModuleHandler, globalPluginHandler
@@ -362,8 +408,8 @@ class MainFrame(wx.Frame):
 	)
 	def onCreatePortableCopyCommand(self,evt):
 		self.prePopup()
-		import gui.installerGui
-		d=gui.installerGui.PortableCreaterDialog(gui.mainFrame)
+		from . import installerGui
+		d = installerGui.PortableCreaterDialog(mainFrame)
 		d.Show()
 		self.postPopup()
 
@@ -372,7 +418,7 @@ class MainFrame(wx.Frame):
 		blockAction.Context.MODAL_DIALOG_OPEN,
 	)
 	def onInstallCommand(self, evt):
-		from gui import installerGui
+		from . import installerGui
 		installerGui.showInstallGui()
 
 	@blockAction.when(
@@ -414,7 +460,7 @@ class MainFrame(wx.Frame):
 	def onConfigProfilesCommand(self, evt):
 		self.prePopup()
 		from .configProfiles import ProfilesDialog
-		ProfilesDialog(gui.mainFrame).Show()
+		ProfilesDialog(mainFrame).Show()
 		self.postPopup()
 
 

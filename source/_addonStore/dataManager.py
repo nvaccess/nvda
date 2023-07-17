@@ -33,8 +33,9 @@ from NVDAState import WritePaths
 from .models.addon import (
 	AddonStoreModel,
 	CachedAddonsModel,
+	InstalledAddonStoreModel,
 	_createAddonGUICollection,
-	_createStoreModelFromData,
+	_createInstalledStoreModelFromData,
 	_createStoreCollectionFromJson,
 )
 from .models.channel import Channel
@@ -153,12 +154,14 @@ class _DataManager:
 	def _getCachedAddonData(self, cacheFilePath: str) -> Optional[CachedAddonsModel]:
 		if not os.path.exists(cacheFilePath):
 			return None
-		with open(cacheFilePath, 'r') as cacheFile:
-			try:
+		try:
+			with open(cacheFilePath, 'r') as cacheFile:
 				cacheData = json.load(cacheFile)
-			except Exception:
-				log.exception(f"Invalid add-on store cache")
-				return None
+		except Exception:
+			log.exception(f"Invalid add-on store cache")
+			if NVDAState.shouldWriteToDisk():
+				os.remove(cacheFilePath)
+			return None
 		try:
 			data = cacheData["data"]
 			cacheHash = cacheData["cacheHash"]
@@ -166,6 +169,8 @@ class _DataManager:
 			nvdaAPIVersion = cacheData["nvdaAPIVersion"]
 		except KeyError:
 			log.exception(f"Invalid add-on store cache:\n{cacheData}")
+			if NVDAState.shouldWriteToDisk():
+				os.remove(cacheFilePath)
 			return None
 		return CachedAddonsModel(
 			cachedAddonData=_createStoreCollectionFromJson(data),
@@ -268,7 +273,7 @@ class _DataManager:
 		with open(addonCachePath, 'w') as cacheFile:
 			json.dump(addonData.asdict(), cacheFile, ensure_ascii=False)
 
-	def _getCachedInstalledAddonData(self, addonId: str) -> Optional[AddonStoreModel]:
+	def _getCachedInstalledAddonData(self, addonId: str) -> Optional[InstalledAddonStoreModel]:
 		addonCachePath = os.path.join(self._installedAddonDataCacheDir, f"{addonId}.json")
 		if not os.path.exists(addonCachePath):
 			return None
@@ -276,7 +281,7 @@ class _DataManager:
 			cacheData = json.load(cacheFile)
 		if not cacheData:
 			return None
-		return _createStoreModelFromData(cacheData)
+		return _createInstalledStoreModelFromData(cacheData)
 
 
 class _InstalledAddonsCache(AutoPropertyObject):
@@ -301,5 +306,5 @@ class _InstalledAddonsCache(AutoPropertyObject):
 			if addonStoreData:
 				addons[addonStoreData.channel][addonId] = addonStoreData
 			else:
-				addons[Channel.STABLE][addonId] = self.installedAddons[addonId]._addonGuiModel
+				addons[Channel.EXTERNAL][addonId] = self.installedAddons[addonId]._addonGuiModel
 		return addons

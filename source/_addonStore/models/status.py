@@ -25,7 +25,7 @@ from utils.displayString import DisplayStringEnum
 from .version import SupportsVersionCheck
 
 if TYPE_CHECKING:
-	from .addon import AddonGUIModel  # noqa: F401
+	from .addon import _AddonGUIModel  # noqa: F401
 	from addonHandler import AddonsState  # noqa: F401
 
 
@@ -144,14 +144,18 @@ class AddonStateCategory(str, enum.Enum):
 	"""Add-ons that are blocked from running because they are incompatible"""
 
 
-def getStatus(model: "AddonGUIModel") -> Optional[AvailableAddonStatus]:
+def getStatus(model: "_AddonGUIModel") -> Optional[AvailableAddonStatus]:
 	from addonHandler import (
 		state as addonHandlerState,
 	)
 	from ..dataManager import addonDataManager
+	assert addonDataManager is not None
 	from .addon import AddonStoreModel
 	from .version import MajorMinorPatch
 	addonHandlerModel = model._addonHandlerModel
+
+	if model.name in (d.model.name for d, _ in addonDataManager._downloadsPendingInstall):
+		return AvailableAddonStatus.DOWNLOAD_SUCCESS
 
 	if addonHandlerModel is None:
 		if model.isPendingInstall:
@@ -180,13 +184,13 @@ def getStatus(model: "AddonGUIModel") -> Optional[AvailableAddonStatus]:
 			# and another for enabled/disabled.
 			return storeState
 
-	addonStoreData = addonDataManager._getCachedInstalledAddonData(model.addonId)
+	addonStoreInstalledData = addonDataManager._getCachedInstalledAddonData(model.addonId)
 	if isinstance(model, AddonStoreModel):
 		# If the listed add-on is installed from a side-load
 		# and not available on the add-on store
 		# the type will not be AddonStoreModel
-		if addonStoreData is not None:
-			if model.addonVersionNumber > addonStoreData.addonVersionNumber:
+		if addonStoreInstalledData is not None:
+			if model.addonVersionNumber > addonStoreInstalledData.addonVersionNumber:
 				return AvailableAddonStatus.UPDATE
 		else:
 			# Parsing from a side-loaded add-on
@@ -225,6 +229,12 @@ _addonStoreStateToAddonHandlerState: OrderedDict[
 	AvailableAddonStatus.PENDING_INCOMPATIBLE_ENABLED: {
 		AddonStateCategory.OVERRIDE_COMPATIBILITY,
 		AddonStateCategory.PENDING_ENABLE,
+	},
+	# If an add-on is being updated,
+	# it will be in both pending remove and pending install
+	AvailableAddonStatus.INSTALLED: {
+		AddonStateCategory.PENDING_INSTALL,
+		AddonStateCategory.PENDING_REMOVE,
 	},
 	AvailableAddonStatus.PENDING_REMOVE: {AddonStateCategory.PENDING_REMOVE},
 	AvailableAddonStatus.PENDING_ENABLE: {AddonStateCategory.PENDING_ENABLE},
@@ -276,8 +286,6 @@ class _StatusFilterKey(DisplayStringEnum):
 			raise e
 
 
-
-
 _statusFilters: OrderedDict[_StatusFilterKey, Set[AvailableAddonStatus]] = OrderedDict({
 	_StatusFilterKey.INSTALLED: {
 		AvailableAddonStatus.UPDATE,
@@ -293,6 +301,7 @@ _statusFilters: OrderedDict[_StatusFilterKey, Set[AvailableAddonStatus]] = Order
 		AvailableAddonStatus.PENDING_REMOVE,
 		AvailableAddonStatus.RUNNING,
 		AvailableAddonStatus.ENABLED,
+		AvailableAddonStatus.DOWNLOAD_SUCCESS,
 	},
 	_StatusFilterKey.UPDATE: {
 		AvailableAddonStatus.UPDATE,
@@ -330,9 +339,8 @@ class SupportsAddonState(SupportsVersionCheck, Protocol):
 
 	@property
 	def isEnabled(self) -> bool:
-		return not (
-			self.isPendingInstall
-			or self.isDisabled
+		return self.isInstalled and not (
+			self.isDisabled
 			or self.isBlocked
 		)
 

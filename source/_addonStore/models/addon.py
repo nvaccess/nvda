@@ -39,6 +39,7 @@ if TYPE_CHECKING:
 	from addonHandler import (  # noqa: F401
 		Addon as AddonHandlerModel,
 		AddonBase as AddonHandlerBaseModel,
+		AddonManifest,
 	)
 	AddonGUICollectionT = Dict[Channel, CaseInsensitiveDict["_AddonGUIModel"]]
 	"""
@@ -109,52 +110,13 @@ class _AddonGUIModel(SupportsAddonState, SupportsVersionCheck, Protocol):
 		return jsonData
 
 
-@dataclasses.dataclass(frozen=True)
-class AddonGUIModel(_AddonGUIModel):
-	"""Can be displayed in the add-on store GUI.
-	May come from manifest or add-on store data.
-	"""
-	addonId: str
-	displayName: str
-	description: str
-	publisher: str
-	addonVersionName: str
-	channel: Channel
-	homepage: Optional[str]
-	minNVDAVersion: MajorMinorPatch
-	lastTestedVersion: MajorMinorPatch
-	legacy: bool = False
-	"""
-	Legacy add-ons contain invalid metadata
-	and should not be accessible through the add-on store.
-	"""
-
-
-@dataclasses.dataclass(frozen=True)  # once created, it should not be modified.
-class AddonStoreModel(_AddonGUIModel):
-	"""
-	Data from an add-on from the add-on store.
-	"""
-	addonId: str
-	displayName: str
-	description: str
-	publisher: str
-	addonVersionName: str
-	channel: Channel
-	homepage: Optional[str]
+class _AddonStoreModel(_AddonGUIModel):
 	license: str
 	licenseURL: Optional[str]
 	sourceURL: str
 	URL: str
 	sha256: str
 	addonVersionNumber: MajorMinorPatch
-	minNVDAVersion: MajorMinorPatch
-	lastTestedVersion: MajorMinorPatch
-	legacy: bool = False
-	"""
-	Legacy add-ons contain invalid metadata
-	and should not be accessible through the add-on store.
-	"""
 
 	@property
 	def tempDownloadPath(self) -> str:
@@ -199,6 +161,102 @@ class AddonStoreModel(_AddonGUIModel):
 		)
 
 
+@dataclasses.dataclass(frozen=True)
+class AddonManifestModel(_AddonGUIModel):
+	"""Can be displayed in the add-on store GUI.
+	Comes from add-on manifest.
+	"""
+	addonId: str
+	addonVersionName: str
+	channel: Channel
+	homepage: Optional[str]
+	minNVDAVersion: MajorMinorPatch
+	lastTestedVersion: MajorMinorPatch
+	_manifest: "AddonManifest"
+	legacy: bool = False
+	"""
+	Legacy add-ons contain invalid metadata
+	and should not be accessible through the add-on store.
+	"""
+
+	@property
+	def displayName(self) -> str:
+		return self._manifest["summary"]
+
+	@property
+	def description(self) -> str:
+		return self._manifest["description"]
+
+	@property
+	def publisher(self) -> str:
+		return self._manifest["author"]
+
+
+@dataclasses.dataclass(frozen=True)  # once created, it should not be modified.
+class InstalledAddonStoreModel(_AddonStoreModel):
+	"""
+	Data from an add-on installed from the add-on store.
+	"""
+	addonId: str
+	publisher: str
+	addonVersionName: str
+	channel: Channel
+	homepage: Optional[str]
+	license: str
+	licenseURL: Optional[str]
+	sourceURL: str
+	URL: str
+	sha256: str
+	addonVersionNumber: MajorMinorPatch
+	minNVDAVersion: MajorMinorPatch
+	lastTestedVersion: MajorMinorPatch
+	legacy: bool = False
+	"""
+	Legacy add-ons contain invalid metadata
+	and should not be accessible through the add-on store.
+	"""
+
+	@property
+	def _manifest(self) -> "AddonManifest":
+		from ..dataManager import addonDataManager
+		return addonDataManager._installedAddonsCache.installedAddons[self.name].manifest
+
+	@property
+	def displayName(self) -> str:
+		return self._manifest["summary"]
+
+	@property
+	def description(self) -> str:
+		return self._manifest["description"]
+
+
+@dataclasses.dataclass(frozen=True)  # once created, it should not be modified.
+class AddonStoreModel(_AddonStoreModel):
+	"""
+	Data from an add-on from the add-on store.
+	"""
+	addonId: str
+	displayName: str
+	description: str
+	publisher: str
+	addonVersionName: str
+	channel: Channel
+	homepage: Optional[str]
+	license: str
+	licenseURL: Optional[str]
+	sourceURL: str
+	URL: str
+	sha256: str
+	addonVersionNumber: MajorMinorPatch
+	minNVDAVersion: MajorMinorPatch
+	lastTestedVersion: MajorMinorPatch
+	legacy: bool = False
+	"""
+	Legacy add-ons contain invalid metadata
+	and should not be accessible through the add-on store.
+	"""
+
+
 @dataclasses.dataclass
 class CachedAddonsModel:
 	cachedAddonData: "AddonGUICollectionT"
@@ -206,6 +264,25 @@ class CachedAddonsModel:
 	cachedLanguage: str
 	# AddonApiVersionT or the string .network._LATEST_API_VER
 	nvdaAPIVersion: Union[addonAPIVersion.AddonApiVersionT, str]
+
+
+def _createInstalledStoreModelFromData(addon: Dict[str, Any]) -> InstalledAddonStoreModel:
+	return InstalledAddonStoreModel(
+		addonId=addon["addonId"],
+		publisher=addon["publisher"],
+		channel=Channel(addon["channel"]),
+		addonVersionName=addon["addonVersionName"],
+		addonVersionNumber=MajorMinorPatch(**addon["addonVersionNumber"]),
+		homepage=addon.get("homepage"),
+		license=addon["license"],
+		licenseURL=addon.get("licenseURL"),
+		sourceURL=addon["sourceURL"],
+		URL=addon["URL"],
+		sha256=addon["sha256"],
+		minNVDAVersion=MajorMinorPatch(**addon["minNVDAVersion"]),
+		lastTestedVersion=MajorMinorPatch(**addon["lastTestedVersion"]),
+		legacy=addon.get("legacy", False),
+	)
 
 
 def _createStoreModelFromData(addon: Dict[str, Any]) -> AddonStoreModel:
@@ -229,21 +306,19 @@ def _createStoreModelFromData(addon: Dict[str, Any]) -> AddonStoreModel:
 	)
 
 
-def _createGUIModelFromManifest(addon: "AddonHandlerBaseModel") -> AddonGUIModel:
-	homepage = addon.manifest.get("url")
+def _createGUIModelFromManifest(addon: "AddonHandlerBaseModel") -> AddonManifestModel:
+	homepage: Optional[str] = addon.manifest.get("url")
 	if homepage == "None":
 		# Manifest strings can be set to "None"
 		homepage = None
-	return AddonGUIModel(
+	return AddonManifestModel(
 		addonId=addon.name,
-		displayName=addon.manifest["summary"],
-		description=addon.manifest["description"],
-		publisher=addon.manifest["author"],
 		channel=Channel.EXTERNAL,
 		addonVersionName=addon.version,
 		homepage=homepage,
 		minNVDAVersion=MajorMinorPatch(*addon.minimumNVDAVersion),
 		lastTestedVersion=MajorMinorPatch(*addon.lastTestedNVDAVersion),
+		_manifest=addon.manifest
 	)
 
 
