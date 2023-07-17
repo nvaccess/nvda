@@ -61,6 +61,8 @@ import brailleViewer
 from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
 import hwIo
+from buildVersion import version_year
+import NVDAState
 
 if TYPE_CHECKING:
 	from NVDAObjects import NVDAObject
@@ -2017,7 +2019,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	_regionsPendingUpdate: Set[Region]
 	"""
 	Regions pending an update.
-	Regions are added by L{handleUpdate} and L{handleCaretMove} and cleared in L{handlePendingUpdate}.
+	Regions are added by L{handleUpdate} and L{handleCaretMove} and cleared in L{_handlePendingUpdate}.
 	"""
 
 	def __init__(self):
@@ -2483,10 +2485,16 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			# The caret moved in a different object than the review position.
 			self._doNewObject(getFocusRegions(obj, review=False))
 
-	def handlePendingCaretUpdate(self):
-		self.handlePendingUpdate()
+	if version_year < 2024 and NVDAState._allowDeprecatedAPI():
+		def handlePendingCaretUpdate(self):
+			log.warning(
+				"braille.BrailleHandler.handlePendingCaretUpdate is now deprecated "
+				"with no public replacement. "
+				"It will be removed in NVDA 2024.1."
+			)
+			self._handlePendingUpdate()
 
-	def handlePendingUpdate(self):
+	def _handlePendingUpdate(self):
 		"""When any region is pending an update, updates the region and the braille display.
 		"""
 		if not self._regionsPendingUpdate:
@@ -2731,7 +2739,7 @@ def initialize():
 
 def pumpAll():
 	"""Runs tasks at the end of each core cycle. For now just region updates, e.g. for caret movement."""
-	handler.handlePendingUpdate()
+	handler._handlePendingUpdate()
 
 def terminate():
 	global handler
