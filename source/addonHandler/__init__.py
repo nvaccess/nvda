@@ -57,7 +57,7 @@ from .packaging import (
 
 if TYPE_CHECKING:
 	from _addonStore.models.addon import (  # noqa: F401
-		AddonGUIModel,
+		AddonManifestModel,
 		AddonHandlerModelGeneratorT,
 		AddonStoreModel,
 	)
@@ -392,7 +392,7 @@ class AddonBase(SupportsAddonState, SupportsVersionCheck, ABC):
 		return addonDataManager._getCachedInstalledAddonData(self.name)
 
 	@property
-	def _addonGuiModel(self) -> "AddonGUIModel":
+	def _addonGuiModel(self) -> "AddonManifestModel":
 		from _addonStore.models.addon import _createGUIModelFromManifest
 		return _createGUIModelFromManifest(self)
 
@@ -434,18 +434,20 @@ class Addon(AddonBase):
 
 	def requestRemove(self):
 		"""Marks this addon for removal on NVDA restart."""
-		if self.isPendingInstall:
+		if self.isPendingInstall and not self.isInstalled:
+			# Handle removal of an add-on not yet installed
 			self.completeRemove()
 			state[AddonStateCategory.PENDING_INSTALL].discard(self.name)
 			state[AddonStateCategory.OVERRIDE_COMPATIBILITY].discard(self.name)
-			#Force availableAddons to be updated
+			# Force availableAddons to be updated
 			getAvailableAddons(refresh=True)
 		else:
+			# Upgrade to existing add-on or installation of new add-on
 			state[AddonStateCategory.PENDING_REMOVE].add(self.name)
 			# There's no point keeping a record of this add-on pending being disabled now.
 			# However, if the addon is disabled, then it needs to remain disabled so that
 			# the status in add-on store continues to say "disabled"
-			state[AddonStateCategory.PENDING_INSTALL].discard(self.name)
+			state[AddonStateCategory.PENDING_DISABLE].discard(self.name)
 		state.save()
 
 	def completeRemove(self, runUninstallTask: bool = True) -> None:
@@ -475,13 +477,6 @@ class Addon(AddonBase):
 		state[AddonStateCategory.OVERRIDE_COMPATIBILITY].discard(self.name)
 		state[AddonStateCategory.BLOCKED].discard(self.name)
 		state.save()
-
-		if not self.isPendingInstall:
-			# Don't delete add-on store cache if it's an upgrade,
-			# the add-on manager has already replaced the cache file.
-			from _addonStore.dataManager import addonDataManager
-			assert addonDataManager
-			addonDataManager._deleteCacheInstalledAddon(self.name)
 
 	def addToPackagePath(self, package):
 		""" Adds this L{Addon} extensions to the specific package path if those exist.
@@ -656,6 +651,10 @@ class Addon(AddonBase):
 			if os.path.isfile(docFile):
 				return docFile
 		return None
+
+	@property
+	def isPendingInstall(self) -> bool:
+		return super().isPendingInstall and self.pendingInstallPath == self.path
 
 	def __repr__(self):
 		return f"{self.__class__.__name__} ({self.name!r}, running={self.isRunning!r})"

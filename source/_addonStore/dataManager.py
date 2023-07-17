@@ -153,12 +153,14 @@ class _DataManager:
 	def _getCachedAddonData(self, cacheFilePath: str) -> Optional[CachedAddonsModel]:
 		if not os.path.exists(cacheFilePath):
 			return None
-		with open(cacheFilePath, 'r') as cacheFile:
-			try:
+		try:
+			with open(cacheFilePath, 'r') as cacheFile:
 				cacheData = json.load(cacheFile)
-			except Exception:
-				log.exception(f"Invalid add-on store cache")
-				return None
+		except Exception:
+			log.exception(f"Invalid add-on store cache")
+			if NVDAState.shouldWriteToDisk():
+				os.remove(cacheFilePath)
+			return None
 		try:
 			data = cacheData["data"]
 			cacheHash = cacheData["cacheHash"]
@@ -166,6 +168,8 @@ class _DataManager:
 			nvdaAPIVersion = cacheData["nvdaAPIVersion"]
 		except KeyError:
 			log.exception(f"Invalid add-on store cache:\n{cacheData}")
+			if NVDAState.shouldWriteToDisk():
+				os.remove(cacheFilePath)
 			return None
 		return CachedAddonsModel(
 			cachedAddonData=_createStoreCollectionFromJson(data),
@@ -301,5 +305,5 @@ class _InstalledAddonsCache(AutoPropertyObject):
 			if addonStoreData:
 				addons[addonStoreData.channel][addonId] = addonStoreData
 			else:
-				addons[Channel.STABLE][addonId] = self.installedAddons[addonId]._addonGuiModel
+				addons[Channel.EXTERNAL][addonId] = self.installedAddons[addonId]._addonGuiModel
 		return addons

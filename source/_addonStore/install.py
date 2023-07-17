@@ -85,9 +85,9 @@ def installAddon(addonPath: PathLike) -> None:
 	prevAddon = _getPreviouslyInstalledAddonById(bundle)
 
 	try:
+		installAddonBundle(bundle)
 		if prevAddon:
 			prevAddon.requestRemove()
-		installAddonBundle(bundle)
 	except AddonError:  # Handle other exceptions as they are known
 		log.error("Error installing addon bundle from %s" % addonPath, exc_info=True)
 		raise DisplayableError(
