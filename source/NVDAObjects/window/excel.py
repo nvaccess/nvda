@@ -460,7 +460,9 @@ class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
 
 	def __init__(self,rootNVDAObject):
 		super(ExcelBrowseModeTreeInterceptor,self).__init__(rootNVDAObject)
-		self.passThrough=True
+		# Note, as _set_passThrough has logic to handle braille and vision updates which are unnecessary when
+		# initializing this tree interceptor, we set the private _passThrough variable here, which is enough.
+		self._passThrough = True
 		browseMode.reportPassThrough.last=True
 
 	def _get_currentNVDAObject(self):
