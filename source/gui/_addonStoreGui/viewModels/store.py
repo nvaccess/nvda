@@ -26,6 +26,7 @@ from _addonStore.models.addon import (
 	AddonStoreModel,
 	_createAddonGUICollection,
 	_AddonGUIModel,
+	_AddonStoreModel,
 )
 from _addonStore.models.channel import (
 	Channel,
@@ -218,9 +219,9 @@ class AddonStoreVM:
 			AddonActionVM(
 				# Translators: Label for an action that opens the license for the selected addon
 				displayName=pgettext("addonStore", "&License"),
-				actionHandler=lambda aVM: startfile(cast(AddonStoreModel, aVM.model).licenseURL),
+				actionHandler=lambda aVM: startfile(cast(_AddonStoreModel, aVM.model).licenseURL),
 				validCheck=lambda aVM: (
-					isinstance(aVM.model, AddonStoreModel)
+					isinstance(aVM.model, _AddonStoreModel)
 					and aVM.model.licenseURL is not None
 				),
 				listItemVM=selectedListItem
@@ -228,8 +229,8 @@ class AddonStoreVM:
 			AddonActionVM(
 				# Translators: Label for an action that opens the source code for the selected addon
 				displayName=pgettext("addonStore", "Source &Code"),
-				actionHandler=lambda aVM: startfile(cast(AddonStoreModel, aVM.model).sourceURL),
-				validCheck=lambda aVM: isinstance(aVM.model, AddonStoreModel),
+				actionHandler=lambda aVM: startfile(cast(_AddonStoreModel, aVM.model).sourceURL),
+				validCheck=lambda aVM: isinstance(aVM.model, _AddonStoreModel),
 				listItemVM=selectedListItem
 			),
 		]

@@ -59,7 +59,7 @@ if TYPE_CHECKING:
 	from _addonStore.models.addon import (  # noqa: F401
 		AddonManifestModel,
 		AddonHandlerModelGeneratorT,
-		AddonStoreModel,
+		InstalledAddonStoreModel,
 	)
 
 MANIFEST_FILENAME = "manifest.ini"
@@ -386,7 +386,7 @@ class AddonBase(SupportsAddonState, SupportsVersionCheck, ABC):
 		...
 
 	@property
-	def _addonStoreData(self) -> Optional["AddonStoreModel"]:
+	def _addonStoreData(self) -> Optional["InstalledAddonStoreModel"]:
 		from _addonStore.dataManager import addonDataManager
 		assert addonDataManager
 		return addonDataManager._getCachedInstalledAddonData(self.name)
