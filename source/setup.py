@@ -219,6 +219,7 @@ setup(
 			"comInterfaces",
 			"brailleDisplayDrivers",
 			"brailleDisplayDrivers.albatross",
+			"brailleDisplayDrivers.eurobraille",
 			"synthDrivers",
 			"visionEnhancementProviders",
 		],

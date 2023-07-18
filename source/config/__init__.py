@@ -27,7 +27,7 @@ from configobj.validate import Validator
 from logHandler import log
 import logging
 from logging import DEBUG
-import shlobj
+from shlobj import FolderId, SHGetKnownFolderPath
 import baseObject
 import easeOfAccess
 from fileUtils import FaultTolerantFile
@@ -39,6 +39,7 @@ from .configSpec import confspec
 from .featureFlag import (
 	_transformSpec_AddFeatureFlagDefault,
 	_validateConfig_featureFlag,
+	FeatureFlag,
 )
 from typing import (
 	Any,
@@ -49,6 +50,7 @@ from typing import (
 	Tuple,
 )
 import NVDAState
+from NVDAState import WritePaths
 
 
 #: True if NVDA is running as a Windows Store Desktop Bridge application
@@ -90,6 +92,14 @@ def __getattr__(attrName: str) -> Any:
 		)
 		from addonHandler.packaging import addDirsToPythonPackagePath
 		return addDirsToPythonPackagePath
+	if attrName == "CONFIG_IN_LOCAL_APPDATA_SUBKEY" and NVDAState._allowDeprecatedAPI():
+		# Note: this should only log in situations where it will not be excessively noisy.
+		log.warning(
+			"CONFIG_IN_LOCAL_APPDATA_SUBKEY is deprecated. "
+			"Instead use RegistryKey.CONFIG_IN_LOCAL_APPDATA_SUBKEY. ",
+			stack_info=True,
+		)
+		return RegistryKey.CONFIG_IN_LOCAL_APPDATA_SUBKEY.value
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
 
 
@@ -118,6 +128,18 @@ class RegistryKey(str, Enum):
 	Note that NVDA is a 32-bit application, so on X64 systems,
 	this will evaluate to `r"SOFTWARE\WOW6432Node\nvda"`
 	"""
+	CONFIG_IN_LOCAL_APPDATA_SUBKEY = "configInLocalAppData"
+	"""
+	#6864: The name of the subkey stored under RegistryKey.NVDA where the value is stored
+	which will make an installed NVDA load the user configuration either from the local or from
+	the roaming application data profile.
+	The registry value is unset by default.
+	When setting it manually, a DWORD value is preferred.
+	A value of 0 will evaluate to loading the configuration from the roaming application data (default).
+	A value of 1 means loading the configuration from the local application data folder.
+	"""
+	FORCE_SECURE_MODE_SUBKEY = "forceSecureMode"
+	SERVICE_DEBUG_SUBKEY = "serviceDebug"
 
 
 def isInstalledCopy() -> bool:
@@ -164,21 +186,9 @@ def isInstalledCopy() -> bool:
 		return False
 
 
-CONFIG_IN_LOCAL_APPDATA_SUBKEY = "configInLocalAppData"
-"""
-#6864: The name of the subkey stored under RegistryKey.NVDA where the value is stored
-which will make an installed NVDA load the user configuration either from the local or from
-the roaming application data profile.
-The registry value is unset by default.
-When setting it manually, a DWORD value is preferred.
-A value of 0 will evaluate to loading the configuration from the roaming application data (default).
-A value of 1 means loading the configuration from the local application data folder.
-"""
-
-
 def getInstalledUserConfigPath() -> Optional[str]:
 	try:
-		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, RegistryKey.NVDA.value)
+		winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, RegistryKey.NVDA.value)
 	except FileNotFoundError:
 		log.debug("Could not find nvda registry key, NVDA is not currently installed")
 		return None
@@ -186,20 +196,12 @@ def getInstalledUserConfigPath() -> Optional[str]:
 		log.error("Could not open nvda registry key", exc_info=True)
 		return None
 
-	try:
-		configInLocalAppData = bool(winreg.QueryValueEx(k, CONFIG_IN_LOCAL_APPDATA_SUBKEY)[0])
-	except FileNotFoundError:
-		log.debug("Installed user config is not in local app data")
-		configInLocalAppData = False
-	except WindowsError:
-		log.error(
-			f"Could not query if user config in local app data {CONFIG_IN_LOCAL_APPDATA_SUBKEY}",
-			exc_info=True
-		)
-		configInLocalAppData = False
-	configParent = shlobj.SHGetKnownFolderPath(
-		shlobj.FolderId.LOCAL_APP_DATA if configInLocalAppData else shlobj.FolderId.ROAMING_APP_DATA
-	)
+	if NVDAState._configInLocalAppDataEnabled():
+		configFolder = FolderId.LOCAL_APP_DATA
+	else:
+		configFolder = FolderId.ROAMING_APP_DATA
+
+	configParent = SHGetKnownFolderPath(configFolder)
 	try:
 		return os.path.join(configParent, "nvda")
 	except WindowsError:
@@ -212,7 +214,7 @@ def getUserDefaultConfigPath(useInstalledPathIfExists=False):
 	"""Get the default path for the user configuration directory.
 	This is the default path and doesn't reflect overriding from the command line,
 	which includes temporary copies.
-	Most callers will want the C{globalVars.appArgs.configPath variable} instead.
+	Most callers will want the C{NVDAState.WritePaths.configDir variable} instead.
 	"""
 	installedUserConfigPath=getInstalledUserConfigPath()
 	if installedUserConfigPath and (isInstalledCopy() or isAppX or (useInstalledPathIfExists and os.path.isdir(installedUserConfigPath))):
@@ -236,9 +238,9 @@ SCRATCH_PAD_ONLY_DIRS = (
 )
 
 
-def getScratchpadDir(ensureExists=False):
+def getScratchpadDir(ensureExists: bool = False) -> str:
 	""" Returns the path where custom appModules, globalPlugins and drivers can be placed while being developed."""
-	path=os.path.join(globalVars.appArgs.configPath,'scratchpad')
+	path = WritePaths.scratchpadDir
 	if ensureExists:
 		if not os.path.isdir(path):
 			os.makedirs(path)
@@ -248,14 +250,14 @@ def getScratchpadDir(ensureExists=False):
 				os.makedirs(subpath)
 	return path
 
-def initConfigPath(configPath=None):
+
+def initConfigPath(configPath: Optional[str] = None) -> None:
 	"""
 	Creates the current configuration path if it doesn't exist. Also makes sure that various sub directories also exist.
 	@param configPath: an optional path which should be used instead (only useful when being called from outside of NVDA)
-	@type configPath: str
 	"""
 	if not configPath:
-		configPath=globalVars.appArgs.configPath
+		configPath = WritePaths.configDir
 	if not os.path.isdir(configPath):
 		os.makedirs(configPath)
 	else:
@@ -422,7 +424,7 @@ def _setStartOnLogonScreen(enable: bool) -> None:
 
 
 def setSystemConfigToCurrentConfig():
-	fromPath = globalVars.appArgs.configPath
+	fromPath = WritePaths.configDir
 	if ctypes.windll.shell32.IsUserAnAdmin():
 		_setSystemConfig(fromPath)
 	else:
@@ -560,7 +562,7 @@ class ConfigManager(object):
 			post_configProfileSwitch.notify(prevConf=currentRootSection.dict())
 
 	def _initBaseConf(self, factoryDefaults=False):
-		fn = os.path.join(globalVars.appArgs.configPath, "nvda.ini")
+		fn = WritePaths.nvdaConfigFile
 		if factoryDefaults:
 			profile = self._loadConfig(None)
 			profile.filename = fn
@@ -631,13 +633,13 @@ class ConfigManager(object):
 		return self.rootSection.dict()
 
 	def listProfiles(self):
-		for name in os.listdir(os.path.join(globalVars.appArgs.configPath, "profiles")):
+		for name in os.listdir(WritePaths.profilesDir):
 			name, ext = os.path.splitext(name)
 			if ext == ".ini":
 				yield name
 
-	def _getProfileFn(self, name):
-		return os.path.join(globalVars.appArgs.configPath, "profiles", name + ".ini")
+	def _getProfileFn(self, name: str) -> str:
+		return WritePaths.getProfileConfigFile(name)
 
 	def _getProfile(self, name, load=True):
 		try:
@@ -964,7 +966,7 @@ class ConfigManager(object):
 		self.profileTriggersEnabled = True
 
 	def _loadProfileTriggers(self):
-		fn = os.path.join(globalVars.appArgs.configPath, "profileTriggers.ini")
+		fn = WritePaths.profileTriggersFile
 		try:
 			cobj = ConfigObj(fn, indent_type="\t", encoding="UTF-8")
 		except:
@@ -1246,13 +1248,17 @@ class AggregatedSection:
 		except KeyError:
 			pass
 		else:
-			if self._isSection(val) or self._isSection(curVal):
-				# If value is a section, continue to update
-				pass
-			elif str(val) == str(curVal):
+			if (
+				# Feature flags override __eq__.
 				# Check str comparison as this is what is written to the config.
 				# If the value is unchanged, do not update
 				# or mark the profile as dirty.
+				(
+					isinstance(val, FeatureFlag)
+					or isinstance(curVal, FeatureFlag)
+				)
+				and str(val) == str(curVal)
+			):
 				return
 
 		# Set this value in the most recently activated profile.

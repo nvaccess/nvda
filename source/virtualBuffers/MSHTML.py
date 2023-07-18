@@ -206,7 +206,11 @@ class MSHTML(VirtualBuffer):
 		# Force focus mode for applications, and dialogs with no parent treeInterceptor (E.g. a dialog embedded in an application)  
 		if rootNVDAObject.role==controlTypes.Role.APPLICATION or (rootNVDAObject.role==controlTypes.Role.DIALOG and (not rootNVDAObject.parent or not rootNVDAObject.parent.treeInterceptor or rootNVDAObject.parent.treeInterceptor.passThrough)):
 			self.disableAutoPassThrough=True
-			self.passThrough=True
+			# Note, as _set_passThrough has logic to handle braille and vision updates which are unnecessary when
+			# initializing this tree interceptor, we set the private _passThrough variable here, which is enough.
+			self._passThrough = True
+			import browseMode
+			browseMode.reportPassThrough.last = True
 
 	def _getInitialCaretPos(self):
 		initialPos = super(MSHTML,self)._getInitialCaretPos()

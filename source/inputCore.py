@@ -42,6 +42,7 @@ import languageHandler
 import controlTypes
 import winKernel
 import extensionPoints
+from NVDAState import WritePaths
 
 
 InputGestureBindingClassT = TypeVar("InputGestureBindingClassT")
@@ -635,7 +636,7 @@ class InputManager(baseObject.AutoPropertyObject):
 	def loadUserGestureMap(self):
 		self.userGestureMap.clear()
 		try:
-			self.userGestureMap.load(os.path.join(globalVars.appArgs.configPath, "gestures.ini"))
+			self.userGestureMap.load(WritePaths.gesturesConfigFile)
 		except IOError:
 			log.debugWarning("No user gesture map")
 
@@ -690,7 +691,7 @@ class _AllGestureMappingsRetriever(object):
 		self.addGlobalMap(manager.userGestureMap)
 		self.addGlobalMap(manager.localeGestureMap)
 		import braille
-		gmap = braille.handler.display.gestureMap
+		gmap = braille.handler.display.gestureMap if braille.handler and braille.handler.display else None
 		if gmap:
 			self.addGlobalMap(gmap)
 

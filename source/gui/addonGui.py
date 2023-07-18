@@ -456,7 +456,8 @@ class AddonsDialog(
 # Note: when working on installAddon, look for opportunities to simplify
 # and move logic out into smaller helper functions.
 def installAddon(parentWindow: wx.Window, addonPath: str) -> bool:  # noqa: C901
-	""" Installs the addon at path.
+	""" Installs the addon bundle at path.
+	Only used for installing external add-on bundles.
 	Any error messages / warnings are presented to the user via a GUI message box.
 	If attempting to install an addon that is pending removal, it will no longer be pending removal.
 	@return True on success or False on failure.
@@ -479,7 +480,7 @@ def installAddon(parentWindow: wx.Window, addonPath: str) -> bool:  # noqa: C901
 		_showAddonRequiresNVDAUpdateDialog(parentWindow, bundle)
 		return False  # Exit early, addon does not have required support
 	elif bundle.canOverrideCompatibility:
-		from _addonStoreGui.controls.messageDialogs import _shouldInstallWhenAddonTooOldDialog
+		from gui._addonStoreGui.controls.messageDialogs import _shouldInstallWhenAddonTooOldDialog
 		if _shouldInstallWhenAddonTooOldDialog(parentWindow, bundle._addonGuiModel):
 			# Install incompatible version
 			bundle.enableCompatibilityOverride()
@@ -550,6 +551,10 @@ def installAddon(parentWindow: wx.Window, addonPath: str) -> bool:  # noqa: C901
 		with doneAndDestroy(progressDialog):
 			gui.ExecAndPump(addonHandler.installAddonBundle, bundle)
 			if prevAddon:
+				from _addonStore.dataManager import addonDataManager
+				assert addonDataManager
+				# External install should remove cached add-on
+				addonDataManager._deleteCacheInstalledAddon(prevAddon.name)
 				prevAddon.requestRemove()
 			return True
 	except:

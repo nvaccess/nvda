@@ -17,7 +17,9 @@ def __getattr__(attrName: str) -> Any:
 		# Note: this should only log in situations where it will not be excessively noisy.
 		log.warning(
 			"Importing deprecatedSymbolName from here is deprecated. "
-			"Import X instead and do Y. "
+			"Import X instead and do Y. ",
+			# Include stack info so testers can report warning to add-on author.
+			stack_info=True,
 		)
 		# Ensure the API of deprecatedSymbolNameReplacement is the same as the deprecated symbol.
 		return deprecatedSymbolNameReplacement
@@ -69,4 +71,3 @@ Any API breaking changes such as deprecations marked for removal should be comme
 
 ## Announcements
 Deprecations should be announced via the [NVDA API mailing list](https://groups.google.com/a/nvaccess.org/g/nvda-api/about).
-

@@ -85,6 +85,24 @@ class ParagraphNavigationFlag(DisplayStringEnum):
 	MULTI_LINE_BREAK = enum.auto()
 
 
+class ReviewRoutingMovesSystemCaretFlag(DisplayStringEnum):
+	@property
+	def _displayStringLabels(self):
+		return {
+			# Translators: Label for setting to move the system caret when routing review cursor with braille.
+			self.NEVER: _("Never"),
+			# Translators: Label for setting to move the system caret when routing review cursor with braille.
+			self.ONLY_WHEN_AUTO_TETHERED: _("Only when tethered automatically"),
+			# Translators: Label for setting to move the system caret when routing review cursor with braille.
+			self.ALWAYS: _("Always")
+		}
+
+	DEFAULT = enum.auto()
+	NEVER = enum.auto()
+	ONLY_WHEN_AUTO_TETHERED = enum.auto()
+	ALWAYS = enum.auto()
+
+
 class WindowsTerminalStrategyFlag(DisplayStringEnum):
 	"""
 	A feature flag for defining how new text is calculated in Windows Terminal

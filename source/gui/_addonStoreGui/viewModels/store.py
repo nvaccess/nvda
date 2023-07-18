@@ -11,10 +11,10 @@ from os import (
 	PathLike,
 	startfile,
 )
+import os
 from typing import (
 	List,
 	Optional,
-	Tuple,
 	cast,
 )
 import threading
@@ -38,6 +38,7 @@ from _addonStore.models.status import (
 	_StatusFilterKey,
 	AvailableAddonStatus,
 )
+from _addonStore.network import AddonFileDownloader
 import core
 import extensionPoints
 from gui.message import DisplayableError
@@ -89,8 +90,7 @@ class AddonStoreVM:
 		"""
 		self._filterIncludeIncompatible: bool = False
 
-		self._downloader = addonDataManager.getFileDownloader()
-		self._pendingInstalls: List[Tuple[AddonListItemVM, PathLike]] = []
+		self._downloader = AddonFileDownloader()
 
 		self.listVM: AddonListVM = AddonListVM(
 			addons=self._createListItemVMs(),
@@ -240,6 +240,7 @@ class AddonStoreVM:
 
 	def removeAddon(self, listItemVM: AddonListItemVM) -> None:
 		if _shouldProceedToRemoveAddonDialog(listItemVM.model):
+			addonDataManager._deleteCacheInstalledAddon(listItemVM.model.name)
 			listItemVM.model._addonHandlerModel.requestRemove()
 			self.refresh()
 			listItemVM.status = getStatus(listItemVM.model)
@@ -320,13 +321,14 @@ class AddonStoreVM:
 		listItemVM.status = AvailableAddonStatus.DOWNLOAD_SUCCESS
 		log.debug(f"Queuing add-on for install on dialog exit: {listItemVM.Id}")
 		# Add-ons can have "installTasks", which often call the GUI assuming they are on the main thread.
-		self._pendingInstalls.append((listItemVM, fileDownloaded))
+		addonDataManager._downloadsPendingInstall.add((listItemVM, fileDownloaded))
 
 	def installPending(self):
 		if not core.isMainThread():
 			# Add-ons can have "installTasks", which often call the GUI assuming they are on the main thread.
 			log.error("installation must happen on main thread.")
-		for listItemVM, fileDownloaded in self._pendingInstalls:
+		while addonDataManager._downloadsPendingInstall:
+			listItemVM, fileDownloaded = addonDataManager._downloadsPendingInstall.pop()
 			self._doInstall(listItemVM, fileDownloaded)
 
 	def _doInstall(self, listItemVM: AddonListItemVM, fileDownloaded: PathLike):
@@ -345,6 +347,8 @@ class AddonStoreVM:
 			return
 		listItemVM.status = AvailableAddonStatus.INSTALLED
 		addonDataManager._cacheInstalledAddon(listItemVM.model)
+		# Clean up download file
+		os.remove(fileDownloaded)
 		log.debug(f"{listItemVM.Id} status: {listItemVM.status}")
 
 	def refresh(self):

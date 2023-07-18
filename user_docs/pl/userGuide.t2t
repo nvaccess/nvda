@@ -2,7 +2,9 @@
 
 
 %!includeconf: ../userGuide.t2tconf
++%!includeconf: ./locale.t2tconf
 %kc:title: Skróty poleceń klawiszowych NVDA NVDA_VERSION
++%kc:includeconf: ./locale.t2tconf
 
 = Spis treści =[toc]
 %%toc
@@ -219,7 +221,7 @@ Polecenia nie będą wykonywane, gdy pomoc klawiatury jest aktywna.
 | Czytaj pasek stanu | ``NVDA+end`` | ``NVDA+shift+end`` | Odczytuje pasek stanu, jeżeli NVDA go znajdzie. Dwukrotnie naciśnięcie spowoduje literowanie przeczytanej informacji. Potrójne naciśnięcie skopiuje informacje do schowka. |
 | Odczytaj czas | ``NVDA+f12`` | ``NVDA+f12`` | Naciśnięcie jeden raz spowoduje odczyt aktualnego czasu, dwukrotnie naciśnięcie spowoduje odczyt aktualnej daty |
 | Odczytaj formatowanie tekstu | ``NVDA+f`` | ``NVDA+f`` | Odczytuje informacje o formatowaniu tekstu. Dwukrotne naciśnięcie spowoduje pokazanie tej informacji w oknie |
-| Odczytaj lokalizacje linku | ``NVDA+k`` | ``NVDA+k`` | Gdy jest naciśnięte jeden raz, wymawia lokalizację, adres  URL linku w  [obiekcie nawigatora #ObjectNavigation]. Gdy jest naciśnięte dwukrotnie, pokazuje w oknie w celu bardziej rzetelnego przeglądu |
+| Odczytaj lokalizacje linku | ``NVDA+k`` | ``NVDA+k`` | Gdy jest naciśnięte jeden raz, odczytuje adres URL linku pod kursorem systemowym. Gdy jest naciśnięte dwukrotnie, pokazuje w oknie w celu bardziej rzetelnego przeglądu |
 
 +++ Kontrola przeczytanej informacji przez NVDA +++[ToggleWhichInformationNVDAReads]
 || Nazwa | Polecenie dla komputerów stacjonarnych | Polecenie dla komputerów przenośnych | opis |
@@ -2346,7 +2348,11 @@ Aby zmienić symbol, najpierw zaznacz go na liście.
 Możesz filtrować symbole wprowadzając symbol lub część zastępującego tekstu w polu edycji sortuj według.
 
 - Pole zamień określa tekst, który powinien być wypowiadany zamiast tego znaku. 
-- Używając listy poziom, można regulować najniższy poziom interpunkcji, na którym dany znak będzie wypowiadany. 
+- Używając listy poziom, można regulować najniższy poziom interpunkcji, na którym dany znak będzie wypowiadany: brak, niektóre, większość, wszystko. 
+Można także ustawić poziom symbolu na znak; w tym przypadku, symbol nie będzie wymawiany, niezależnie od ustawionego poziomu interpunkcji, z następującymi dwoma wyjątkami:
+ - podczas nawigacji po znakach.
+ - Gdy NVDA wymawia tekst, zawierający ten symbol.
+ -
 - Pole wyślij rzeczywisty symbol do syntezatora określa, czy sam symbol (w przeciwieństwie do jego zastępnika) powinien zostać wysłany do syntezatora.
 Jest to przydatne, jeśli symbol powoduje pauzę w odczycie albo zmianę intonacji głosu.
 Dla przykładu przecinek powoduje krótką pauzę syntezatora.
@@ -2935,6 +2941,15 @@ Aby odnaleźć opisywane klawisze, zajrzyj do dokumentacji urządzenia:
 | Przenieś wyświetlacz brajla do poprzedniej linii | D1 |
 | Przenieś wyświetlacz brajla do następnej linii | D3 |
 | Przywołaj do komórki brajla | Routing |
+| shift+tab | spacja+punkt1+punkt3 |
+| tab | spacja+punkt4+punkt6 |
+| alt | spacja+punkt1+punkt3+punkt4 (spacja+m) |
+| escape | spacja+punkt1+punkt5 (spacja+e) |
+| windows | spacja+punkt3+punkt4 |
+| alt+tab | spacja+punkt2+punkt3+punkt4+punkt5 (spacja+t) |
+| NVDA Menu | spacja+punkt1+punkt3+punkt4+punkt5 (spacja+n) |
+| Klawisz windows+d (minimalizuje wszystkie aplikacje) | spacja+punkt1+punkt4+punkt5 (spacja+d) |
+| Czytaj wszystko | spacja+punkt1+punkt2+punkt3+punkt4+punkt5+punkt6 |
 
 Dla monitorów z joystickiem:
 || Działanie | Klawisz skrótu |
@@ -3674,19 +3689,17 @@ Oto skróty klawiszowe przydzielone dla tego monitora brajlowskiego.
 || nazwanie | klawisz |
 | przejście brajlowskiego monitoru wstecz | pan left lub rocker up|
 | przejście brajlowskiego monitoru w przód | pan right lub rocker down|
-| przemieszczanie monitoru brajlowskiego do poprzedniego wiersza | spacja + kropka1 |
-| przenieś monitor brajlowski do następnego wiersza | spacja + kropka4 |
 | przemieszczenie do brajlowskiej komórki | routing set 1|
 | przełączanie przywiązania brajla do | up+down |
-| strzałka w górę | joystick up |
-| strzałka w dół | joystick down |
-| strzałka w lewo | space+dot3 or joystick left |
-| strzałka w prawo | space+dot6 or joystick right |
+| strzałka w górę | joystick w górę, dpad w górę lub spacja+punkt1 |
+| strzałka w dół | joystick w dół, dpad w dół lub spacja+punkt4 |
+| Strzałka w lewo | spacja+punkt3, joystick w lewo  lub dpad w lewo |
+| strzałka w prawo | spacja+punkt6, joystick w prawo lub dpad w prawo |
 | shift+tab | spacja+kropka1+kropka3 |
 | tab | spacja+kropka4+kropka6 |
 | alt | spacja+kropka1+kropka3+kropka4 (spaja+m) |
 | escape | spacja+kropka1+kropka5 (spacja+e) |
-| enter | kropka8 lub joystick center |
+| enter | punkt8, joystick przyciśnięty środkowo lub dpad środkowy |
 | window | spacja+kropka3+kropka4 |
 | alt+tab | spacja+kropka2+kropka3+kropka4+kropka5 (spacja+t) |
 | NVDA Menu | spacja+kropka1+kropka3+kropka4+kropka5 (spacja+n) |

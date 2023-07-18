@@ -199,7 +199,11 @@ class SymphonyIATableCell(SymphonyTableCell):
 
 	def event_selectionAdd(self):
 		curFocus = api.getFocusObject()
-		if self.table and self.table == curFocus.table:
+		if (
+			self.table
+			and self.table == curFocus.table
+			and self.table.IAccessibleTable2Object.nSelectedCells > 0
+		):
 			curFocus.announceSelectionChange()
 
 	def event_selectionRemove(self):

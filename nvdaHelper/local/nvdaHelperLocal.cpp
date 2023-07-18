@@ -97,8 +97,11 @@ LRESULT cancellableSendMessageTimeout(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM
 		SetLastError(ERROR_CANCELLED);
 		return 0;
 	}
-
-	fuFlags |= SMTO_ABORTIFHUNG;
+	if (Msg < WM_APP || Msg > 0xBFFF) {
+		// Message in the range 0x8000 through 0xBFFF are available for applications to use as private messages.
+		// Setting the SMTO_ABORTIFHUNG for these messages is known to cause problems, for example with SAPI5 (#15082)
+		fuFlags |= SMTO_ABORTIFHUNG;
+	}
 	fuFlags &= ~SMTO_NOTIMEOUTIFNOTHUNG;
 
 	if (uTimeout > 10000) {

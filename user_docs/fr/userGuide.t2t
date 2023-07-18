@@ -2121,6 +2121,7 @@ Elle contient les options suivantes :
 
 ==== Langue de Reconnaissance ====[Win10OcrSettingsRecognitionLanguage]
 Cette liste déroulante vous permet de choisir la langue à utiliser pour la reconnaissance de texte.
+Pour faire défiler les langues disponibles à partir de n'importe quel endroit, veuillez assigner un geste de commande personnalisé en utilisant [le dialogue Gestes de Commandes #InputGestures].
 
 +++ Paramètres Avancés +++[AdvancedSettings]
 Avertissement ! Les paramètres dans cette catégorie sont pour les utilisateurs avancés et peuvent provoquer un mauvais fonctionnement de NVDA si mal configurés.
@@ -2136,8 +2137,8 @@ Cela peut aussi être le cas si vous n'êtes pas sûr que les paramètres ont é
 
 ==== Activer le chargement de code personnalisé depuis le Répertoire Bloc-notes du Développeur ====[AdvancedSettingsEnableScratchpad]
 Quand vous développez des extensions pour NVDA, il est utile de pouvoir tester le code en cours d'écriture.
-Quand elle est activée, cette option permet à NVDA de charger des extensions applicatives personnalisées, globalPlugins, brailleDisplayDrivers et synthDrivers, depuis un répertoire bloc-notes du développeur spécial dans votre répertoire de configuration utilisateur.
-Précédemment NVDA aurait chargé le code personnalisé directement depuis le répertoire de configuration utilisateur, sans possibilité de désactiver ce comportement. 
+Cette option, lorsqu'elle est activée, permet à NVDA de charger des modules applicatifs personnalisés, des modules globaux, des pilotes d'afficheurs braille, des pilotes de synthétiseur et des fournisseurs d'amélioration visuelle, à partir d'un répertoire spécial bloc-notes du développeur dans votre répertoire de configuration utilisateur NVDA.
+Comme leurs équivalents dans les extensions, ces modules sont chargés au démarrage de NVDA ou, dans le cas des modules applicatifs et globaux, lors du [rechargement des modules #ReloadPlugins].
 Cette option est désactivée par défaut, garantissant qu'aucun code non testé n'est exécuté par NVDA sans que l'utilisateur en ait explicitement connaissance.
 Si vous voulez distribuer du code spécifique à d'autres personnes, vous devriez l'empaqueter sous forme d'extension pour NVDA.
 
@@ -2656,8 +2657,8 @@ Spécifiquement, Les problèmes suivants peuvent être réglés par l'exécution
 - Et possiblement d'autres problèmes.
 -
 
-++ Rechargement des Extensions ++[ReloadPlugins]
-Cet élément, quand on l'active, recharge les extensions d'applications et les extensions globales sans avoir à redémarrer NVDA, ce qui peut être utile pour les développeurs.
+++ Recharger les modules ++[ReloadPlugins]
+Cet élément, quand on l'active, recharge les modules applicatifs et globaux sans avoir à redémarrer NVDA, ce qui peut être utile pour les développeurs.
 
 + Synthétiseurs de Parole Pris en Charge +[SupportedSpeechSynths]
 Cette section contient des informations concernant les synthétiseurs de parole pris en charge par NVDA.
@@ -3664,6 +3665,10 @@ Veuillez consulter la documentation de l'afficheur pour savoir où trouver ces t
 | Amener l'objet navigateur à l'objet suivant | ``f6`` |
 | Annoncer l'objet navigateur courant | ``f7`` |
 | Annoncer l'information de position du texte ou de l'objet sous le curseur de revue | ``f8`` |
+| Afficher les paramètres braille | ``f1+home1``, ``f9+home2`` |
+| Lire la barre d'état et y amener l'objet navigateur | ``f1+end1``, ``f9+end2`` |
+| Basculer le curseur braille | ``f1+cursor1``, ``f9+cursor2`` |
+| Faire défiler les formes de curseur braille | ``f1+eCursor1``, ``f9+eCursor2`` |
 | Exécuter l'action par défaut sur l'objet navigateur courant | ``f7+f8`` |
 | Annoncer date/heure | ``f9`` |
 | Annoncer le niveau de batterie et le temps restant si l'alimentation n'est pas branchée | ``f10`` |

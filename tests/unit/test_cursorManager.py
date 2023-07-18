@@ -1,19 +1,14 @@
-#tests/unit/test_cursorManager.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2017 NV Access Limited
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2017-2023 NV Access Limited
 
 """Unit tests for the cursorManager module.
 """
 
 import unittest
-import cursorManager
-from .textProvider import BasicTextProvider
+from .textProvider import CursorManager
 
-class CursorManager(cursorManager.CursorManager, BasicTextProvider):
-	"""CursorManager which navigates within a provided string of text.
-	"""
 
 class TestMove(unittest.TestCase):
 

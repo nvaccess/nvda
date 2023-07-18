@@ -1,10 +1,15 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2021 NV Access Limited, Babbage B.V., James Teh, Leonard de Ruijter,
+# Copyright (C) 2007-2023 NV Access Limited, Babbage B.V., James Teh, Leonard de Ruijter,
 # Thomas Stivers, Accessolutions, Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from typing import Any, Callable, Union
+from typing import (
+	Any,
+	Callable,
+	Union,
+	cast,
+)
 import os
 import itertools
 import collections
@@ -980,7 +985,8 @@ class ElementsListDialog(
 		# in the browse mode Elements List dialog.
 		filterText = _("Filter b&y:")
 		labeledCtrl = gui.guiHelper.LabeledControlHelper(self, filterText, wx.TextCtrl)
-		self.filterEdit = labeledCtrl.control
+		self.filterEdit = cast(wx.TextCtrl, labeledCtrl.control)
+		self.filterTimer: Optional[wx.CallLater] = None
 		self.filterEdit.Bind(wx.EVT_TEXT, self.onFilterEditTextChange)
 		contentsSizer.Add(labeledCtrl.sizer)
 		contentsSizer.AddSpacer(gui.guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
@@ -1206,8 +1212,14 @@ class ElementsListDialog(
 
 			item = self.tree.GetNextSibling(item)
 
-	def onFilterEditTextChange(self, evt):
-		self.filter(self.filterEdit.GetValue())
+	FILTER_TIMER_DELAY_MS = 300
+
+	def onFilterEditTextChange(self, evt: wx.CommandEvent) -> None:
+		filter = self.filterEdit.GetValue()
+		if self.filterTimer is None:
+			self.filterTimer = wx.CallLater(self.FILTER_TIMER_DELAY_MS, self.filter, filter)
+		else:
+			self.filterTimer.Start(self.FILTER_TIMER_DELAY_MS, filter)
 		evt.Skip()
 
 	def onAction(self, activate):

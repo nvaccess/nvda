@@ -4,14 +4,29 @@
 # See the file COPYING for more details.
 
 import re
+from typing import Any
 import globalVars
 from logHandler import log
 import os
 import codecs
-import api
-import config
+
+from NVDAState import WritePaths
 from . import dictFormatUpgrade
-from .speechDictVars import speechDictsPath
+
+
+def __getattr__(attrName: str) -> Any:
+	"""Module level `__getattr__` used to preserve backward compatibility.
+	"""
+	import NVDAState
+	if attrName == "speechDictsPath" and NVDAState._allowDeprecatedAPI():
+		log.warning(
+			"speechDictHandler.speechDictsPath is deprecated, "
+			"instead use NVDAState.WritePaths.speechDictsDir",
+			stack_info=True
+		)
+		return WritePaths.speechDictsDir
+	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+
 
 dictionaries = {}
 dictTypes = ("temp", "voice", "default", "builtin") # ordered by their priority E.G. voice specific speech dictionary is processed before the default
@@ -125,7 +140,7 @@ def processText(text):
 def initialize():
 	for type in dictTypes:
 		dictionaries[type]=SpeechDict()
-	dictionaries["default"].load(os.path.join(speechDictsPath, "default.dic"))
+	dictionaries["default"].load(WritePaths.speechDictDefaultFile)
 	dictionaries["builtin"].load(os.path.join(globalVars.appDir, "builtin.dic"))
 
 def loadVoiceDict(synth):
@@ -142,6 +157,5 @@ It handles case when the synthesizer doesn't support voice setting.
 		baseName = dictFormatUpgrade.createVoiceDictFileName(synth.name, voice)
 	else:
 		baseName=r"{synth}.dic".format(synth=synth.name)
-	voiceDictsPath = dictFormatUpgrade.voiceDictsPath
-	fileName= os.path.join(voiceDictsPath, synth.name, baseName)
+	fileName = os.path.join(WritePaths.voiceDictsDir, synth.name, baseName)
 	dictionaries["voice"].load(fileName)

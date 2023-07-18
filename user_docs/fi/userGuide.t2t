@@ -2122,6 +2122,7 @@ Kategoria sisältää seuraavat asetukset:
 
 ==== Tunnistuksen kieli ====[Win10OcrSettingsRecognitionLanguage]
 Tästä yhdistelmäruudusta voit valita tekstintunnistuksen käyttämän kielen.
+Voit vaihtaa käytettävissä olevien kielten välillä mistä tahansa määrittämällä kyseiselle komennolle oman pikanäppäimen [Näppäinkomennot-valintaikkunaa #InputGestures] käyttäen.
 
 +++ Lisäasetukset +++[AdvancedSettings]
 Varoitus! Tämän kategorian asetukset on tarkoitettu vain edistyneille käyttäjille, ja voivat saada väärin muutettuina NVDA:n toimimaan virheellisesti.
@@ -2137,10 +2138,10 @@ Näin voi tehdä myös silloin, jos ei ole varma, onko asetuksia muutettu.
 
 ==== Lataa käyttäjän oma koodi kehittäjien scratchpad-hakemistosta ====[AdvancedSettingsEnableScratchpad]
 Koodin testaaminen on hyödyllistä NVDA:n lisäosia kehitettäessä.
-Tämä asetus sallii käytössä ollessaan NVDA:n ladata mukautettuja sovellusmoduuleita, yleisliitännäisiä sekä pistenäyttö- ja syntetisaattoriajureita erityisestä kehittäjille tarkoitetusta scratchpad-nimisestä hakemistosta, joka sijaitsee NVDA:n käyttäjän asetushakemistossa.
-Aiemmin NVDA latasi mukautetun koodin suoraan käyttäjän asetushakemistosta ilman mahdollisuutta toiminnallisuuden käytöstä poistamiseen.
+Tämä asetus sallii käytössä ollessaan NVDA:n ladata mukautettuja sovellusmoduuleita, yleisliitännäisiä, pistenäyttö- ja syntetisaattoriajureita sekä näönparannuksen tarjoajia erityisestä kehittäjille tarkoitetusta scratchpad-nimisestä hakemistosta, joka sijaitsee NVDA:n käyttäjän asetushakemistossa.
+Kuten niiden vastineet lisäosissa, nämä moduulit ladataan NVDA:ta käynnistettäessä tai sovellusmoduulien ja yleisliitännäisten tapauksessa [liitännäisiä uudelleenladattaessa #ReloadPlugins].
 Tämä asetus on oletusarvoisesti poissa käytöstä, mikä varmistaa, ettei NVDA suorita testaamatonta koodia käyttäjän tietämättä.
-Jos kehittäjä haluaa jakaa koodinsa muille käyttäjille, se tulee paketoida NVDA:n lisäosaksi.
+Jos haluat jakaa koodiasi muille käyttäjille, se tulee paketoida NVDA:n lisäosaksi.
 
 ==== Avaa kehittäjien scratchpad-hakemisto ====[AdvancedSettingsOpenScratchpadDir]
 Tämä painike avaa hakemiston, johon kehittäjä voi sijoittaa koodiaan.
@@ -3665,6 +3666,10 @@ Katso laitteen käyttöohjeesta kuvaukset näppäinten paikoista.
 | Siirrä seuraavaan objektiin | ``f6`` |
 | Lue nykyinen objekti | ``f7`` |
 | Lue tarkastelukohdistimen kohdalla olevan tekstin tai objektin sijaintitiedot | ``f8`` |
+| Näytä pistekirjoituksen asetukset | ``f1+home1``, ``f9+home2`` |
+| Lue tilarivi ja siirrä navigointiobjekti siihen | ``f1+end1``, ``f9+end2`` |
+| Vaihda pistekohdistimen muotoa | ``f1+eCursor1``, ``f9+eCursor2`` |
+| Ota pistekohdistin käyttöön tai poista se käytöstä | ``f1+cursor1``, ``f9+cursor2`` |
 | Aktivoi nykyinen navigointiobjekti | ``f7+f8`` |
 | Lue päiväys/aika | ``f9`` |
 | Ilmoittaa akun tilan ja jäljellä olevan ajan, jos verkkovirta ei ole käytössä | ``f10`` |

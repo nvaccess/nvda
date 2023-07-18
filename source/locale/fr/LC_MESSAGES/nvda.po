@@ -5,9 +5,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:11331\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-21 00:02+0000\n"
-"PO-Revision-Date: 2023-03-31 10:02+0200\n"
-"Last-Translator: Michel Such <michelsuch93@gmail.com>\n"
+"POT-Creation-Date: 2023-05-12 00:02+0000\n"
+"PO-Revision-Date: 2023-05-12 10:52+0200\n"
+"Last-Translator: Cyrille Bougot <cyrille.bougot2@laposte.net>\n"
 "Language-Team: fra <LL@li.org>\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
@@ -4427,7 +4427,7 @@ msgstr ""
 
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
-msgstr "Extensions rechargées"
+msgstr "Modules rechargées"
 
 #. Translators: input help mode message for Report destination URL of a link command
 msgid ""
@@ -4569,6 +4569,12 @@ msgid "Please disable screen curtain before using Windows OCR."
 msgstr ""
 "Veuillez désactiver le rideau d'écran avant d'utiliser la reconnaissance "
 "optique de caractères de Windows"
+
+#. Translators: Describes a command.
+msgid "Cycles through the available languages for Windows OCR"
+msgstr ""
+"Faire défiler les langues disponibles pour la Reconnaissance optique de "
+"caractères de Windows"
 
 #. Translators: Input help mode message for toggle report CLDR command.
 msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
@@ -6418,9 +6424,10 @@ msgstr "Erreur durant la recherche de mise à jour"
 #. Translators: The title of an error message dialog.
 #. Translators: An title for an error displayed when saving user defined input gestures fails.
 #. Translators: The title of a dialog presented when an error occurs.
-#. Translators: The message title displayed
-#. when the user has not specified an absolute destination directory
-#. in the Create Portable NVDA dialog.
+#. Translators: the title of an error dialog.
+#. Translators: The message title displayed when the user has not specified an absolute
+#. destination directory in the Create Portable NVDA dialog.
+#. Translators: Title of an error dialog shown when an error occurs while creating a portable copy of NVDA.
 #. Translators: The title of an error message dialog.
 #. Translators: The title of the message box
 #. Translators: The title of the error dialog displayed when there is an error showing the GUI
@@ -8770,7 +8777,7 @@ msgstr "&Exécuter l'outil de Correction des Enregistrements COM..."
 
 #. Translators: The label for the menu item to reload plugins.
 msgid "Reload plugins"
-msgstr "&Recharger les extensions"
+msgstr "&Recharger les modules"
 
 #. Translators: The label for the Tools submenu in NVDA menu.
 msgid "Tools"
@@ -9615,6 +9622,7 @@ msgid "Please press OK to start the installed copy."
 msgstr "Veuillez appuyer sur OK pour lancer la copie installée."
 
 #. Translators: The title of a dialog presented to indicate a successful operation.
+#. Translators: Title of a dialog shown when a portable copy of NVDA is created.
 msgid "Success"
 msgstr "Succès"
 
@@ -9733,23 +9741,17 @@ msgstr "Veuillez indiquer le répertoire où créer la copie portable."
 #. Translators: The message displayed when the user has not specified an absolute destination directory
 #. in the Create Portable NVDA dialog.
 msgid ""
-"Please specify an absolute path (including drive letter)  in which to create "
-"the portable copy."
+"Please specify the absolute path where the portable copy should be created. "
+"It may include system variables (%temp%, %homepath%, etc.)."
 msgstr ""
-"Veuillez indiquer un chemin absolu (incluant la lettre de l'unité) où créer "
-"la copie portable."
+"Veuillez spécifier le chemin absolu où la copie portable doit être créée. Il "
+"peut inclure des variables système (%temp%, %homepath%, etc.)."
 
-#. Translators: The message displayed when the user specifies an invalid destination drive
-#. in the Create Portable NVDA dialog.
-#, python-format
-msgid "Invalid drive %s"
-msgstr "Unité %s invalide"
-
-#. Translators: The title of the dialog presented while a portable copy of NVDA is bieng created.
+#. Translators: The title of the dialog presented while a portable copy of NVDA is being created.
 msgid "Creating Portable Copy"
 msgstr "Création d'une copie portable en cours"
 
-#. Translators: The message displayed while a portable copy of NVDA is bieng created.
+#. Translators: The message displayed while a portable copy of NVDA is being created.
 msgid "Please wait while a portable copy of NVDA is created."
 msgstr "Veuillez patienter durant la création d'une copie portable de NVDA."
 
@@ -9758,16 +9760,16 @@ msgid "NVDA is unable to remove or overwrite a file."
 msgstr "NVDA ne peut pas supprimer ou remplacer un fichier."
 
 #. Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
-#. %s will be replaced with the specific error message.
-#, python-format
-msgid "Failed to create portable copy: %s"
-msgstr "Échec de la création de la copie portable : %s"
+#. {error} will be replaced with the specific error message.
+#, python-brace-format
+msgid "Failed to create portable copy: {error}."
+msgstr "Échec de la création de la copie portable : {error}."
 
 #. Translators: The message displayed when a portable copy of NVDA has been successfully created.
-#. %s will be replaced with the destination directory.
-#, python-format
-msgid "Successfully created a portable copy of NVDA at %s"
-msgstr "Copie portable de NVDA créée avec succès dans %s"
+#. {dir} will be replaced with the destination directory.
+#, python-brace-format
+msgid "Successfully created a portable copy of NVDA at {dir}"
+msgstr "Copie portable de NVDA créée avec succès dans {dir}"
 
 #. Translators: The title of the NVDA log viewer window.
 msgid "NVDA Log Viewer"
@@ -11590,6 +11592,15 @@ msgstr "marqué"
 msgid "not marked"
 msgstr "non marqué"
 
+#. Translators: Reported when text is color-highlighted
+#, python-brace-format
+msgid "highlighted in {color}"
+msgstr "surligné en {color}"
+
+#. Translators: Reported when text is no longer marked
+msgid "not highlighted"
+msgstr "non surligné"
+
 #. Translators: Reported when text is marked as strong (e.g. bold)
 msgid "strong"
 msgstr "gras"
@@ -11961,12 +11972,12 @@ msgid "No system battery"
 msgstr "Pas de batterie"
 
 #. Translators: Reported when the battery is plugged in, and now is charging.
-msgid "Charging battery"
-msgstr "Batterie en charge"
+msgid "Plugged in"
+msgstr "Connecté"
 
 #. Translators: Reported when the battery is no longer plugged in, and now is not charging.
-msgid "AC disconnected"
-msgstr "Chargeur déconnecté"
+msgid "Unplugged"
+msgstr "déconnecté"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
 #, python-brace-format
@@ -13651,3 +13662,19 @@ msgid ""
 msgstr ""
 "Pour utiliser Albatross avec NVDA : modifiez au maximum le nombre de "
 "cellules d'état dans le menu interne d'Albatross"
+
+#~ msgid ""
+#~ "Please specify an absolute path (including drive letter)  in which to "
+#~ "create the portable copy."
+#~ msgstr ""
+#~ "Veuillez indiquer un chemin absolu (incluant la lettre de l'unité) où "
+#~ "créer la copie portable."
+
+#~ msgid "Invalid drive %s"
+#~ msgstr "Unité %s invalide"
+
+#~ msgid "Charging battery"
+#~ msgstr "Batterie en charge"
+
+#~ msgid "AC disconnected"
+#~ msgstr "Chargeur déconnecté"

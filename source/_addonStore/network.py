@@ -8,6 +8,7 @@ from concurrent.futures import (
 	ThreadPoolExecutor,
 )
 import os
+import pathlib
 from typing import (
 	TYPE_CHECKING,
 	cast,
@@ -22,6 +23,8 @@ import requests
 import addonAPIVersion
 from core import callLater
 from logHandler import log
+import NVDAState
+from NVDAState import WritePaths
 from utils.security import sha256_checksum
 
 from .models.addon import AddonStoreModel
@@ -32,6 +35,7 @@ if TYPE_CHECKING:
 	from gui.message import DisplayableError
 
 
+_BASE_URL = "https://nvaccess.org/addonStore"
 _LATEST_API_VER = "latest"
 """
 A string value used in the add-on store to fetch the latest version of all add-ons,
@@ -45,15 +49,17 @@ def _getCurrentApiVersionForURL() -> str:
 
 
 def _getAddonStoreURL(channel: Channel, lang: str, nvdaApiVersion: str) -> str:
-	_baseURL = "https://nvaccess.org/addonStore/"
-	return _baseURL + f"{lang}/{channel.value}/{nvdaApiVersion}.json"
+	return f"{_BASE_URL}/{lang}/{channel.value}/{nvdaApiVersion}.json"
+
+
+def _getCacheHashURL() -> str:
+	return f"{_BASE_URL}/cacheHash.json"
 
 
 class AddonFileDownloader:
 	OnCompleteT = Callable[[AddonStoreModel, Optional[os.PathLike]], None]
 
-	def __init__(self, cacheDir: os.PathLike):
-		self._cacheDir = cacheDir
+	def __init__(self):
 		self.progress: Dict[AddonStoreModel, int] = {}  # Number of chunks received
 		self._pending: Dict[
 			Future,
@@ -68,6 +74,10 @@ class AddonFileDownloader:
 			max_workers=1,
 			thread_name_prefix="AddonDownloader",
 		)
+
+		if NVDAState.shouldWriteToDisk():
+			# ensure downloads dir exist
+			pathlib.Path(WritePaths.addonStoreDownloadDir).mkdir(parents=True, exist_ok=True)
 
 	def download(
 			self,
@@ -127,6 +137,9 @@ class AddonFileDownloader:
 		@return: True if the add-on is downloaded successfully,
 		False if the download is cancelled
 		"""
+		if not NVDAState.shouldWriteToDisk():
+			return False
+
 		with requests.get(addonData.URL, stream=True) as r:
 			with open(downloadFilePath, 'wb') as fd:
 				# Most add-ons are small. This value was chosen quite arbitrarily, but with the intention to allow
@@ -152,14 +165,12 @@ class AddonFileDownloader:
 		_addonDownloadFailureMessageTitle = pgettext("addonStore", "Add-on download failure")
 
 		log.debug(f"starting download: {addonData.addonId}")
-		cacheFilePath = os.path.join(
-			self._cacheDir,
-			self._getCacheFilenameForAddon(addonData)
-		)
+		cacheFilePath = addonData.cachedDownloadPath
 		if os.path.exists(cacheFilePath):
 			log.debug(f"Cache file already exists, deleting {cacheFilePath}")
 			os.remove(cacheFilePath)
-		inProgressFilePath = cacheFilePath + ".download"
+
+		inProgressFilePath = addonData.tempDownloadPath
 		if addonData not in self.progress:
 			log.debug("the download was cancelled before it started.")
 			return None  # The download was cancelled

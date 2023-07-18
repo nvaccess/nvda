@@ -19,6 +19,7 @@ from gui import guiHelper
 import gui.contextHelp
 from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 import systemUtils
+from NVDAState import WritePaths
 
 
 def _canPortableConfigBeCopied() -> bool:
@@ -30,13 +31,13 @@ def _canPortableConfigBeCopied() -> bool:
 		# as we would  copy it into itself.
 		# However, if a user wants to run the launcher with a custom configPath,
 		# it is likely that he wants to copy that configuration when installing.
-		return globalVars.appArgs.configPath != config.getUserDefaultConfigPath(useInstalledPathIfExists=True)
+		return WritePaths.configDir != config.getUserDefaultConfigPath(useInstalledPathIfExists=True)
 	else:
 		# For portable copies we want to avoid copying the configuration to itself,
 		# so return True only if the configPath
 		# does not point to the config of the installed copy in appdata.
 		confPath = config.getInstalledUserConfigPath()
-		if confPath and confPath == globalVars.appArgs.configPath:
+		if confPath and confPath == WritePaths.configDir:
 			return False
 		return True
 
