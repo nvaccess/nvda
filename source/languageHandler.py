@@ -379,7 +379,9 @@ def _findSupportedGettextLocale() -> str:
 	if localeName in foundLocales:
 		# return original cased version
 		return foundLocales.intersection({localeName}).pop()
-	if len(foundLocales) != 1:
+	if len(foundLocales) == 0:
+		return "en"
+	elif len(foundLocales) >= 1:
 		log.warning(
 			f"Expected to find 1 supported locale: {foundLocales}"
 		)
