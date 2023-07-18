@@ -6,6 +6,7 @@
 import wx
 
 from _addonStore.models.addon import (
+	InstalledAddonStoreModel,
 	_AddonStoreModel,
 )
 from gui import guiHelper
@@ -222,6 +223,22 @@ class AddonDetails(
 					pgettext("addonStore", "Publisher:"),
 					details.publisher
 				)
+				if isinstance(details, InstalledAddonStoreModel):
+					# The author and publisher fields are both available in this case.
+					# Publisher comes from add-on store data, author comes from the manifest.
+					# For externally installed add-ons, the publisher field uses the author manifest field.
+					self._appendDetailsLabelValue(
+						# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+						pgettext("addonStore", "Author:"),
+						details.author
+					)
+
+				self._appendDetailsLabelValue(
+					# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+					pgettext("addonStore", "ID:"),
+					details.addonId
+				)
+
 				currentStatusKey = self._actionsContextMenu._storeVM._filteredStatusKey
 				if currentStatusKey not in AddonListField.currentAddonVersionName.hideStatuses:
 					self._appendDetailsLabelValue(

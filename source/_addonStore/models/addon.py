@@ -229,6 +229,10 @@ class InstalledAddonStoreModel(_AddonStoreModel):
 	def description(self) -> str:
 		return self._manifest["description"]
 
+	@property
+	def author(self) -> str:
+		return self._manifest["author"]
+
 
 @dataclasses.dataclass(frozen=True)  # once created, it should not be modified.
 class AddonStoreModel(_AddonStoreModel):
