@@ -65,6 +65,7 @@ class SymLevel(_enum.Enum):
 	"""Symbol levels, should match characterProcessing.SymbolLevel
 	"""
 	NONE = 0
+	SOME = 100
 	ALL = 300
 
 
@@ -544,7 +545,7 @@ def test_symbolInSpeechUI():
 
 
 def _setConfig(
-		symbolLevel: SymLevel,
+		symbolLevel: SymLevel = SymLevel.SOME,
 		reportLineIndentation: ReportLineIndentation = ReportLineIndentation.OFF,
 		ignoreBlankLines: bool = False
 ) -> None:
@@ -564,7 +565,7 @@ def _doTest(
 		navKey: Move,
 		expectedSpeech: _typing.List[str],
 		reportedAfterLast: EndSpeech,
-		symbolLevel: SymLevel,
+		symbolLevel: SymLevel = SymLevel.SOME,
 		reportLineIndentation: ReportLineIndentation = ReportLineIndentation.OFF,
 		ignoreBlankLines: bool = False
 ) -> None:
