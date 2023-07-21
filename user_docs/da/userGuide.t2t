@@ -2,7 +2,9 @@ NVDA NVDA_VERSION brugervejledning
 
 
 %!includeconf: ../userGuide.t2tconf
+%!includeconf: ./locale.t2tconf
 %kc:title: NVDA NVDA_VERSION Kommandooversigt
+%kc:includeconf: ./locale.t2tconf
 
 = Indholdsfortegnelse =[toc]
 %%toc
@@ -971,7 +973,7 @@ Desuden er følgende indikatorer for tilstande defineret:
 | klk | Bliver vist, når et objekt kan klikkes på |
 | kmnt | vises, når der er en kommentar til et stykke tekst eller en celle i et regneark |
 | frml | vises, når der er en formular på en celle i et regneark |
-|ugyldig | vises, når en ugyldigt indtastning er opstået |
+| ugyldig | vises, når en ugyldigt indtastning er opstået |
 | lbesk | vises, når et objekt ( typisk en grafik) har en lang beskrivelse |
 | mln | vises, når et tekstfelt tillader at indtaste flere linjer, såsom kommentarfelter på hjemmesider |
 | pkr | vises, når et påkrævet formularfelt forekommer |

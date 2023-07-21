@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-27 01:58+0000\n"
+"POT-Creation-Date: 2023-07-07 02:43+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: 完美很难 <1872265132@qq.com>\n"
 "Language-Team: \n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 msgid "Native input"
@@ -6875,7 +6875,7 @@ msgstr "{startTime}到{endTime}"
 
 #. Translators: Part of a message reported when on a calendar appointment with one or more categories
 #. in Microsoft Outlook.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "category {categories}"
 msgid_plural "categories {categories}"
 msgstr[0] "类别 {categories}"
@@ -11096,10 +11096,10 @@ msgid "level %s"
 msgstr "%s级"
 
 #. Translators: Number of items in a list (example output: list with 5 items).
-#, fuzzy, python-format
+#, python-format
 msgid "with %s item"
 msgid_plural "with %s items"
-msgstr[0] "%s项"
+msgstr[0] "%s 项"
 
 #. Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
 #, python-format
@@ -13157,7 +13157,7 @@ msgid "at least %.1f pt"
 msgstr "至少 %.1f pt"
 
 #. Translators: line spacing of x lines
-#, fuzzy, python-format
+#, python-format
 msgctxt "line spacing value"
 msgid "%.1f line"
 msgid_plural "%.1f lines"
@@ -13604,6 +13604,9 @@ msgid ""
 "version: {oldVersion}. Available version: {version}.\n"
 "Proceed with installation anyway? "
 msgstr ""
+"警告：安装{name}可能会导致降级。无法将已安装的插件版本与插件商店的版本进行比"
+"较。已安装版本：{oldVersion}。可安装版本：{version}。\n"
+"您仍要安装该插件吗？"
 
 #. Translators: The title of a dialog presented when an error occurs.
 msgctxt "addonStore"
