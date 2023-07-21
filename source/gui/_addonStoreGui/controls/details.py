@@ -6,8 +6,8 @@
 import wx
 
 from _addonStore.models.addon import (
-	InstalledAddonStoreModel,
 	_AddonStoreModel,
+	_InstalledAddonModel,
 )
 from gui import guiHelper
 from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
@@ -218,15 +218,15 @@ class AddonDetails(
 					self.defaultStyle
 				)
 
-				self._appendDetailsLabelValue(
-					# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
-					pgettext("addonStore", "Publisher:"),
-					details.publisher
-				)
-				if isinstance(details, InstalledAddonStoreModel):
-					# The author and publisher fields are both available in this case.
-					# Publisher comes from add-on store data, author comes from the manifest.
-					# For externally installed add-ons, the publisher field uses the author manifest field.
+				if isinstance(details, _AddonStoreModel):
+					# Publisher comes from the add-on store JSON.
+					self._appendDetailsLabelValue(
+						# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+						pgettext("addonStore", "Publisher:"),
+						details.publisher
+					)
+				if isinstance(details, _InstalledAddonModel):
+					# Author comes from the manifest, and is only available for installed add-ons.
 					self._appendDetailsLabelValue(
 						# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 						pgettext("addonStore", "Author:"),
