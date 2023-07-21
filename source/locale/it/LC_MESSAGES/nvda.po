@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-27 01:58+0000\n"
-"PO-Revision-Date: 2023-06-30 10:35+0100\n"
+"POT-Creation-Date: 2023-07-07 02:43+0000\n"
+"PO-Revision-Date: 2023-07-14 10:14+0100\n"
 "Last-Translator: Simone Dal Maso <simone.dalmaso@gmail.com>\n"
 "Language-Team: Italian NVDA Community <info@nvda.it>\n"
 "Language: it_IT\n"
@@ -6799,21 +6799,19 @@ msgstr "motivo"
 #. Translators: A title of the dialog shown when fetching add-on data from the store fails
 msgctxt "addonStore"
 msgid "Add-on data update failure"
-msgstr "Errore nell'aggiornamento dei dati dell'addon"
+msgstr "Errore nell'aggiornamento dei dati dell'add-on"
 
 #. Translators: A message shown when fetching add-on data from the store fails
 msgctxt "addonStore"
 msgid "Unable to fetch latest add-on data for compatible add-ons."
-msgstr ""
-"Impossibile recuperare i dati più recenti dei componenti aggiuntivi "
-"compatibili"
+msgstr "Impossibile recuperare i dati più recenti degli add-on compatibili"
 
 #. Translators: A message shown when fetching add-on data from the store fails
 msgctxt "addonStore"
 msgid "Unable to fetch latest add-on data for incompatible add-ons."
 msgstr ""
 "Impossibile recuperare i dati più recenti dei componenti aggiuntivi in "
-"presenza di addon non compatibili."
+"presenza di add-on non compatibili."
 
 #. Translators: The message displayed when an error occurs when opening an add-on package for adding.
 #. The %s will be replaced with the path to the add-on that could not be opened.
@@ -6823,7 +6821,7 @@ msgid ""
 "Failed to open add-on package file at {filePath} - missing file or invalid "
 "file format"
 msgstr ""
-"Impossibile aprire il file nell'addon in {filePath} - file mancante o "
+"Impossibile aprire il file nell'add-on in {filePath} - file mancante o "
 "formato file non valido"
 
 #. Translators: The message displayed when an add-on is not supported by this version of NVDA.
@@ -6831,14 +6829,14 @@ msgstr ""
 #, python-format
 msgctxt "addonStore"
 msgid "Add-on not supported %s"
-msgstr "Addon non supportato %s"
+msgstr "Add-on non supportato %s"
 
 #. Translators: The message displayed when an error occurs when installing an add-on package.
 #. The %s will be replaced with the path to the add-on that could not be installed.
 #, python-format
 msgctxt "addonStore"
 msgid "Failed to install add-on from %s"
-msgstr "Impossibile installare il componente aggiuntivo da %s"
+msgstr "Impossibile installare l'add-on da %s"
 
 #. Translators: A title for a dialog notifying a user of an add-on download failure.
 msgctxt "addonStore"
@@ -8880,7 +8878,7 @@ msgstr "&Finestra di benvenuto"
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
 msgid "&Check for update..."
-msgstr "&Controllo presenza aggiornamento..."
+msgstr "Ri&cerca aggiornamenti..."
 
 #. Translators: The label for the menu item to open About dialog to get information about NVDA.
 msgid "About..."
@@ -9023,11 +9021,11 @@ msgstr "OK"
 
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
-msgstr "Gestore componenti aggiuntivi"
+msgstr "Gestore add-on"
 
 #. Translators: The title of the Addons Dialog when add-ons are disabled
 msgid "Add-ons Manager (add-ons disabled)"
-msgstr "Gestore componenti aggiuntivi (componenti disabilitati)"
+msgstr "Gestore add-on (add-on disabilitati)"
 
 #. Translators: A message in the add-ons manager shown when add-ons are globally disabled.
 msgid ""
@@ -9042,7 +9040,7 @@ msgstr ""
 
 #. Translators: the label for the installed addons list in the addons manager.
 msgid "Installed Add-ons"
-msgstr "Componenti aggiuntivi installati"
+msgstr "Add-on installati"
 
 #. Translators: The label for a column in add-ons list used to identify add-on package name (example: package is OCR).
 msgid "Package"
@@ -9063,11 +9061,11 @@ msgstr "Autore"
 
 #. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
 msgid "Add-on &help"
-msgstr "&Aiuto sul componente aggiuntivo"
+msgstr "&Aiuto sull'add-on"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Disable add-on"
-msgstr "&Disabilita componente aggiuntivo"
+msgstr "&Disabilita add-on"
 
 #. Translators: The label for a button to remove either:
 #. Remove the selected add-on in Add-ons Manager dialog.
@@ -9079,7 +9077,7 @@ msgstr "&Rimuovi"
 
 #. Translators: The label of a button in Add-ons Manager to open the Add-ons website and get more add-ons.
 msgid "&Get add-ons..."
-msgstr "Scarica altri componenti a&ggiuntivi..."
+msgstr "Scarica altri add-on..."
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
@@ -9087,7 +9085,7 @@ msgstr "&Installa..."
 
 #. Translators: The label of a button in the Add-ons Manager to open the list of incompatible add-ons.
 msgid "&View incompatible add-ons..."
-msgstr "&Visualizza componenti aggiuntivi non compatibili..."
+msgstr "&Visualizza add-on non compatibili..."
 
 #. Translators: The message displayed in the dialog that allows you to choose an add-on package for installation.
 msgid "Choose Add-on Package File"
@@ -9096,7 +9094,7 @@ msgstr "Seleziona un file contenente il componente aggiuntivo"
 #. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
 #, python-brace-format
 msgid "NVDA Add-on Package (*.{ext})"
-msgstr "NVDA pacchetto componente aggiuntivo (*.{ext})"
+msgstr "Pacchetto NVDA add-on (*.{ext})"
 
 #. Translators: The status shown for an addon when it's not considered compatible with this version of NVDA.
 msgid "Incompatible"
@@ -9104,7 +9102,7 @@ msgstr "Incompatibile"
 
 #. Translators: The status shown for a newly installed addon before NVDA is restarted.
 msgid "Install"
-msgstr "Installato"
+msgstr "Installa"
 
 #. Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
 msgid "Removed after restart"
@@ -9120,7 +9118,7 @@ msgstr "Abilitato dopo il riavvio"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Enable add-on"
-msgstr "Abilita compon&ente aggiuntivo"
+msgstr "Abilita add-on"
 
 #. Translators: The message displayed when an error occurs when opening an add-on package for adding.
 #, python-format
@@ -9128,14 +9126,14 @@ msgid ""
 "Failed to open add-on package file at %s - missing file or invalid file "
 "format"
 msgstr ""
-"Errore nell'apertura del pacchetto contenente il componente aggiuntivo in  "
-"%s - file mancante o formato file non valido"
+"Errore nell'apertura del pacchetto contenente l'add-on in  %s - file "
+"mancante o formato file non valido"
 
 #. Translators: A title for the dialog asking if the user wishes to update a previously installed
 #. add-on with this one.
 #. Translators: Title for message asking if the user really wishes to install an Addon.
 msgid "Add-on Installation"
-msgstr "Installazione componente aggiuntivo"
+msgstr "Installazione add-on"
 
 #. Translators: A message asking if the user wishes to update an add-on with the same version
 #. currently installed according to the version number.
@@ -9154,9 +9152,8 @@ msgid ""
 "A version of this add-on is already installed. Would you like to update "
 "{summary} version {curVersion} to version {newVersion}?"
 msgstr ""
-"Una versione di questo componente aggiuntivo risulta già installata.  Si "
-"desidera aggiornare {summary} versione {curVersion} alla versione "
-"{newVersion}?"
+"Una versione di questo add-on risulta già installata.  Si desidera "
+"aggiornare {summary} versione {curVersion} alla versione {newVersion}?"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
 msgid "Installing Add-on"
@@ -9192,7 +9189,7 @@ msgstr ""
 
 #. Translators: The title of a dialog presented when an error occurs.
 msgid "Add-on not compatible"
-msgstr "Componente aggiuntivo non compatibile"
+msgstr "Add-on non compatibile"
 
 #. Translators: A message asking the user if they really wish to install an addon.
 #, python-brace-format
@@ -9201,13 +9198,13 @@ msgid ""
 "Only install add-ons from trusted sources.\n"
 "Addon: {summary} {version}"
 msgstr ""
-"Sei sicuro di voler installare questo componente aggiuntivo?\n"
+"Sei sicuro di voler installare questo add-on?\n"
 "Installare componenti aggiuntivi che provengono da fonti sicure.\n"
-"Componente aggiuntivo: {summary} {version}"
+"Add-on: {summary} {version}"
 
 #. Translators: The title of the Incompatible Addons Dialog
 msgid "Incompatible Add-ons"
-msgstr "Componenti aggiuntivi non compatibili"
+msgstr "Add-on non compatibili"
 
 #. Translators: The title of the Incompatible Addons Dialog
 msgid ""
@@ -9215,12 +9212,12 @@ msgid ""
 "can not be enabled. Please contact the add-on author for further assistance."
 msgstr ""
 "I componenti aggiuntivi seguenti non sono compatibili con la versione {} di "
-"NVDA. Tali addon non possono essere abilitati. Si prega di contattare "
+"NVDA. Tali add-on non possono essere abilitati. Si prega di contattare "
 "l'autore dei componenti aggiuntivi per avere assistenza."
 
 #. Translators: the label for the addons list in the incompatible addons dialog.
 msgid "Incompatible add-ons"
-msgstr "Componenti aggiuntivi non compatibili"
+msgstr "Add-on non compatibili"
 
 #. Translators: The label for a column in add-ons list used to provide some explanation about incompatibility
 msgid "Incompatible reason"
@@ -9751,7 +9748,7 @@ msgstr "Creazione copia Portable"
 
 #. Translators: The message displayed while a portable copy of NVDA is being created.
 msgid "Please wait while a portable copy of NVDA is created."
-msgstr "Si prega di attendere mentre una copia portable di NVDA viene creata"
+msgstr "Si prega di attendere mentre viene creata una copia portable di NVDA"
 
 #. Translators: a message dialog asking to retry or cancel when NVDA portable copy creation fails
 msgid "NVDA is unable to remove or overwrite a file."
@@ -13806,22 +13803,22 @@ msgstr "Abilitato, in attesa di riavvio"
 #. Translators: A selection option to display installed add-ons in the add-on store
 msgctxt "addonStore"
 msgid "Installed add-ons"
-msgstr "Addon installati"
+msgstr "Add-on installati"
 
 #. Translators: A selection option to display updatable add-ons in the add-on store
 msgctxt "addonStore"
 msgid "Updatable add-ons"
-msgstr "Addon aggiornabili"
+msgstr "Add-on aggiornabili"
 
 #. Translators: A selection option to display available add-ons in the add-on store
 msgctxt "addonStore"
 msgid "Available add-ons"
-msgstr "Addon disponibili"
+msgstr "Add-on disponibili"
 
 #. Translators: A selection option to display incompatible add-ons in the add-on store
 msgctxt "addonStore"
 msgid "Installed incompatible add-ons"
-msgstr "Addon incompatibili installati"
+msgstr "Add-on incompatibili installati"
 
 #. Translators: The reason an add-on is not compatible.
 #. A more recent version of NVDA is required for the add-on to work.
@@ -13871,7 +13868,7 @@ msgid ""
 "I understand that incompatible add-ons will be disabled and can be manually "
 "re-enabled at my own risk after installation."
 msgstr ""
-"Comprendo che i componenti aggiuntivi incompatibili verranno disabilitati e "
+"Sono consapevole che gli add-on incompatibili verranno disabilitati e "
 "potranno essere riattivati manualmente a mio rischio e pericolo dopo "
 "l'installazione."
 
@@ -13908,7 +13905,7 @@ msgstr "Caricamento componenti aggiuntivi..."
 #. Translators: Header (usually the add-on name) when no add-on is selected. In the add-on store dialog.
 msgctxt "addonStore"
 msgid "No add-on selected."
-msgstr "Nessun componente aggiuntivo selezionato."
+msgstr "Nessun add-on selezionato."
 
 #. Translators: Label for the text control containing a description of the selected add-on.
 #. In the add-on store dialog.
@@ -13988,7 +13985,7 @@ msgstr "URL di origine:"
 #. more information about the addon
 msgctxt "addonStore"
 msgid "&About add-on..."
-msgstr "Inform&azioni sul componente aggiuntivo..."
+msgstr "Inform&azioni sull'add-on..."
 
 #. Translators: A button in the addon installation blocked dialog which will confirm the available action.
 msgctxt "addonStore"
@@ -14010,16 +14007,16 @@ msgid ""
 "version: {oldVersion}. Available version: {version}.\n"
 "Proceed with installation anyway? "
 msgstr ""
-"Attenzione: l'installazione del componente aggiuntivo putrebbe comportare il "
-"ripristino di una versione precedente: {name}. La versione del componente "
-"aggiuntivo installata non può essere confrontata con quella dello store. "
-"Versione installata: {oldVersion}. Versione disponibile: {version}.\n"
+"Attenzione: l'installazione dell'add-on putrebbe comportare il ripristino di "
+"una versione precedente: {name}. La versione del componente aggiuntivo "
+"installata non può essere confrontata con quella dello store. Versione "
+"installata: {oldVersion}. Versione disponibile: {version}.\n"
 "Procedere comunque con l'installazione?"
 
 #. Translators: The title of a dialog presented when an error occurs.
 msgctxt "addonStore"
 msgid "Add-on not compatible"
-msgstr "Componente aggiuntivo non compatibile"
+msgstr "Add-on non compatibile"
 
 #. Translators: Presented when attempting to remove the selected add-on.
 #. {addon} is replaced with the add-on name.
@@ -14035,7 +14032,7 @@ msgstr ""
 #. Translators: Title for message asking if the user really wishes to remove the selected Add-on.
 msgctxt "addonStore"
 msgid "Remove Add-on"
-msgstr "Rimuovi componente aggiuntivo"
+msgstr "Rimuovi add-on"
 
 #. Translators: The message displayed when installing an add-on package that is incompatible
 #. because the add-on is too old for the running version of NVDA.
@@ -14048,11 +14045,11 @@ msgid ""
 "{NVDAVersion}. Installation may cause unstable behavior in NVDA.\n"
 "Proceed with installation anyway? "
 msgstr ""
-"Attenzione: il componente aggiuntivo non è compatibile: {name} {version}. "
-"Cerca una versione aggiornata di questo componente aggiuntivo, se possibile. "
-"L'ultima versione testata di NVDA per questo addon è la "
-"{lastTestedNVDAVersion}, la tua versione di NVDA è {NVDAVersion}. "
-"L'installazione potrebbe causare un comportamento instabile in NVDA.\n"
+"Attenzione: l'add-on non è compatibile: {name} {version}. Cerca una versione "
+"aggiornata di questo componente aggiuntivo, se possibile. L'ultima versione "
+"testata di NVDA per questo addon è la {lastTestedNVDAVersion}, la tua "
+"versione di NVDA è {NVDAVersion}. L'installazione potrebbe causare un "
+"comportamento instabile in NVDA.\n"
 "Procedere comunque con l'installazione?"
 
 #. Translators: The message displayed when enabling an add-on package that is incompatible
@@ -14066,11 +14063,11 @@ msgid ""
 "{NVDAVersion}. Enabling may cause unstable behavior in NVDA.\n"
 "Proceed with enabling anyway? "
 msgstr ""
-"Attenzione: il componente aggiuntivo non è compatibile: {name} {version}. "
-"Cerca una versione aggiornata di questo addon, se possibile. L'ultima "
-"versione NVDA testata per questo componente aggiuntivo è "
-"{lastTestedNVDAVersion}, la tua versione di NVDA è {NVDAVersion}. "
-"L'attivazione potrebbe causare un comportamento instabile in NVDA.\n"
+"Attenzione: l'add-on non è compatibile: {name} {version}. Cerca una versione "
+"aggiornata di questo addon, se possibile. L'ultima versione NVDA testata per "
+"questo componente aggiuntivo è {lastTestedNVDAVersion}, la tua versione di "
+"NVDA è {NVDAVersion}. L'attivazione potrebbe causare un comportamento "
+"instabile in NVDA.\n"
 "Procedere comunque con l'attivazione?"
 
 #. Translators: message shown in the Addon Information dialog.
@@ -14130,7 +14127,7 @@ msgstr "Ca&nale:"
 
 #. Translators: The label of a checkbox to filter the list of add-ons in the add-on store dialog.
 msgid "Include &incompatible add-ons"
-msgstr "&Includi Addon incompatibili"
+msgstr "&Includi Add-on incompatibili"
 
 #. Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
 msgctxt "addonStore"
@@ -14145,20 +14142,19 @@ msgstr "&cerca:"
 #. Translators: Title for message shown prior to installing add-ons when closing the add-on store dialog.
 msgctxt "addonStore"
 msgid "Add-on installation"
-msgstr "Installazione componente aggiuntivo"
+msgstr "Installazione add-on"
 
 #. Translators: Message shown prior to installing add-ons when closing the add-on store dialog
 #. The placeholder {} will be replaced with the number of add-ons to be installed
 msgctxt "addonStore"
 msgid "Download of {} add-ons in progress, cancel downloading?"
-msgstr ""
-"è in corso il download di {} componenti aggiuntivi, annullare il download?"
+msgstr "è in corso il download di {} add-on, annullare il download?"
 
 #. Translators: Message shown while installing add-ons after closing the add-on store dialog
 #. The placeholder {} will be replaced with the number of add-ons to be installed
 msgctxt "addonStore"
 msgid "Installing {} add-ons, please wait."
-msgstr "Sto installando {} componenti aggiuntivi, attendere."
+msgstr "Sto installando {} add-on, attendere."
 
 #. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
 #, python-brace-format
