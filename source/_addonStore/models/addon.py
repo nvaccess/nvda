@@ -59,7 +59,6 @@ class _AddonGUIModel(SupportsAddonState, SupportsVersionCheck, Protocol):
 	addonId: str
 	displayName: str
 	description: str
-	publisher: str
 	addonVersionName: str
 	channel: Channel
 	homepage: Optional[str]
@@ -111,6 +110,7 @@ class _AddonGUIModel(SupportsAddonState, SupportsVersionCheck, Protocol):
 
 
 class _AddonStoreModel(_AddonGUIModel):
+	publisher: str
 	license: str
 	licenseURL: Optional[str]
 	sourceURL: str
@@ -161,23 +161,23 @@ class _AddonStoreModel(_AddonGUIModel):
 		)
 
 
-@dataclasses.dataclass(frozen=True)
-class AddonManifestModel(_AddonGUIModel):
-	"""Can be displayed in the add-on store GUI.
-	Comes from add-on manifest.
-	"""
+class _InstalledAddonModel(_AddonGUIModel):
 	addonId: str
 	addonVersionName: str
 	channel: Channel
 	homepage: Optional[str]
 	minNVDAVersion: MajorMinorPatch
 	lastTestedVersion: MajorMinorPatch
-	_manifest: "AddonManifest"
 	legacy: bool = False
 	"""
 	Legacy add-ons contain invalid metadata
 	and should not be accessible through the add-on store.
 	"""
+
+	@property
+	def _manifest(self) -> "AddonManifest":
+		from ..dataManager import addonDataManager
+		return addonDataManager._installedAddonsCache.installedAddons[self.name].manifest
 
 	@property
 	def displayName(self) -> str:
@@ -188,12 +188,30 @@ class AddonManifestModel(_AddonGUIModel):
 		return self._manifest["description"]
 
 	@property
-	def publisher(self) -> str:
+	def author(self) -> str:
 		return self._manifest["author"]
 
 
+@dataclasses.dataclass(frozen=True)
+class AddonManifestModel(_InstalledAddonModel):
+	"""An externally installed add-on.
+	Data comes from add-on manifest.
+	"""
+	addonId: str
+	addonVersionName: str
+	channel: Channel
+	homepage: Optional[str]
+	minNVDAVersion: MajorMinorPatch
+	lastTestedVersion: MajorMinorPatch
+	legacy: bool = False
+	"""
+	Legacy add-ons contain invalid metadata
+	and should not be accessible through the add-on store.
+	"""
+
+
 @dataclasses.dataclass(frozen=True)  # once created, it should not be modified.
-class InstalledAddonStoreModel(_AddonStoreModel):
+class InstalledAddonStoreModel(_InstalledAddonModel, _AddonStoreModel):
 	"""
 	Data from an add-on installed from the add-on store.
 	"""
@@ -215,19 +233,6 @@ class InstalledAddonStoreModel(_AddonStoreModel):
 	Legacy add-ons contain invalid metadata
 	and should not be accessible through the add-on store.
 	"""
-
-	@property
-	def _manifest(self) -> "AddonManifest":
-		from ..dataManager import addonDataManager
-		return addonDataManager._installedAddonsCache.installedAddons[self.name].manifest
-
-	@property
-	def displayName(self) -> str:
-		return self._manifest["summary"]
-
-	@property
-	def description(self) -> str:
-		return self._manifest["description"]
 
 
 @dataclasses.dataclass(frozen=True)  # once created, it should not be modified.
@@ -318,7 +323,6 @@ def _createGUIModelFromManifest(addon: "AddonHandlerBaseModel") -> AddonManifest
 		homepage=homepage,
 		minNVDAVersion=MajorMinorPatch(*addon.minimumNVDAVersion),
 		lastTestedVersion=MajorMinorPatch(*addon.lastTestedNVDAVersion),
-		_manifest=addon.manifest
 	)
 
 
