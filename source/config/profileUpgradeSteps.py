@@ -351,8 +351,3 @@ def upgradeConfigFrom_9_to_10(profile: ConfigObj) -> None:
 		profile['keyboard']['NVDAModifierKeys'] = val
 	else:
 		log.debug("use*AsNVDAModifierKey values not present, no action taken.")
-
-
-def upgradeConfigFrom_10_to_11(profile: ConfigObj) -> None:
-	"""Change WASAPI to boolean feature flag in alpha snapshots"""
-	profile["audio"]["wasapi"] = "default"

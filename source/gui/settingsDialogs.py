@@ -3080,7 +3080,7 @@ class AdvancedPanelControls(
 		self.wasapiComboBox = cast(nvdaControls.FeatureFlagCombo, audioGroup.addLabeledControl(
 			labelText=label,
 			wxCtrlClass=nvdaControls.FeatureFlagCombo,
-			keyPath=["audio", "wasapi"],
+			keyPath=["audio", "WASAPI"],
 			conf=config.conf,
 		))
 		self.bindHelpEvent("WASAPI", self.wasapiComboBox)

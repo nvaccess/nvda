@@ -1044,7 +1044,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 
 def initialize():
 	global WavePlayer
-	if not config.conf["audio"]["wasapi"]:
+	if not config.conf["audio"]["WASAPI"]:
 		return
 	WavePlayer = WasapiWavePlayer
 	NVDAHelper.localLib.wasPlay_create.restype = c_void_p
