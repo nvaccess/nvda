@@ -2358,9 +2358,14 @@ In some situations, the text background may be entirely transparent, with the te
 With several historically popular GUI APIs, the text may be rendered with a transparent background, but visually the background color is accurate.
 
 ==== Use WASAPI for audio output ====[WASAPI]
+: Default
+  Disabled
+: Options
+  Disabled, Enabled
+:
+
 This option enables audio output via the Windows Audio Session API (WASAPI).
 WASAPI is a more modern audio framework which may improve the responsiveness, performance and stability of NVDA audio output, including both speech and sounds.
-This option is disabled by default.
 After changing this option, you will need to restart NVDA for the change to take effect.
 
 ==== Volume of NVDA sounds follows voice volume ====[SoundVolumeFollowsVoice]
