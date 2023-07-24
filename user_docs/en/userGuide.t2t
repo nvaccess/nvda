@@ -592,6 +592,12 @@ Moving to a list item's containing object will take you back to the list.
 You can then move past the list if you wish to access other objects.
 Similarly, a toolbar contains controls, so you must move inside the toolbar to access the controls in the toolbar.
 
+If you yet prefer to move back and forth between every single object on the system, you can use commands to move to the previous/next object in a flattened view.
+For example, if you move to the next object in this flattened view and the current object contains other objects, NVDA will automatically move to the first object that contains it.
+Alternatively, if the current object doesn't contain any objects, NVDA will move to the next object at the current level of the hierarchy.
+If there is no such next object, NVDA will try to find the next object in the hierarchy based on containing objects until there are no more objects to move to.
+The same rules apply to moving backwards in the hierarchy.
+
 The object currently being reviewed is called the navigator object.
 Once you navigate to an object, you can review its content using the [text review commands #ReviewingText] while in [Object review mode #ObjectReview].
 When [Visual Highlight #VisionFocusHighlight] is enabled, the location of the current navigator object is also exposed visually.
@@ -605,8 +611,10 @@ To navigate by object, use the following commands:
 || Name | Desktop key | Laptop key | Touch | Description |
 | Report current object | NVDA+numpad5 | NVDA+shift+o | none | Reports the current navigator object. Pressing twice spells the information, and pressing 3 times copies this object's name and value to the clipboard. |
 | Move to containing object | NVDA+numpad8 | NVDA+shift+upArrow | flick up (object mode) | Moves to the object containing the current navigator object |
-| Move to previous object | NVDA+numpad4 | NVDA+shift+leftArrow | flick left (object mode) | Moves to the object before the current navigator object |
-| Move to next object | NVDA+numpad6 | NVDA+shift+rightArrow | flick right (object mode) | Moves to the object after the current navigator object |
+| Move to previous object | NVDA+numpad4 | NVDA+shift+leftArrow | none | Moves to the object before the current navigator object |
+| Move to previous object in flattened view | NVDA+numpad9 | NVDA+shift+[ | flick left (object mode) | Moves to the previous object in a flattened view of the object navigation hierarchy |
+| Move to next object | NVDA+numpad6 | NVDA+shift+rightArrow | none | Moves to the object after the current navigator object |
+| Move to next object in flattened view | NVDA+numpad3 | NVDA+shift+] | flick right (object mode) | Moves to the next object in a flattened view of the object navigation hierarchy |
 | Move to first contained object | NVDA+numpad2 | NVDA+shift+downArrow | flick down (object mode) | Moves to the first object contained by the current navigator object |
 | Move to focus object | NVDA+numpadMinus | NVDA+backspace | none | Moves to the object that currently has the system focus, and also places the review cursor at the position of the System caret, if it is showing |
 | Activate current navigator object | NVDA+numpadEnter | NVDA+enter | double-tap | Activates the current navigator object (similar to clicking with the mouse or pressing space when it has the system focus) |
@@ -664,7 +672,6 @@ The layout is illustrated as follows:
 
 ++ Review Modes ++[ReviewModes]
 NVDA's [text review commands #ReviewingText] can review content within the current navigator object, current document or screen, depending on the review mode selected.
-Review modes are a replacement for the older Flat Review concept found in NVDA.
 
 The following commands switch between review modes:
 %kc:beginInclude
@@ -1613,6 +1620,28 @@ In this case, braille will not follow the NVDA navigator during object navigatio
 If you want braille to follow object navigation and text review instead, you need to configure braille to be tethered to review.
 In this case, Braille  will not follow system focus and system caret.
 
+==== Move system caret when routing review cursor ====[BrailleSettingsReviewRoutingMovesSystemCaret]
+: Default
+  Never
+: Options
+  Default (Never), Never, Only when tethered automatically, Always
+:
+
+This setting determines if the system caret should also be moved with a routing button press.
+This option is set to Never by default, meaning that routing will never move the caret when routing the review cursor.
+
+When this option is set to Always, and [braille tethering #BrailleTether] is set to "automatically" or "to review", pressing a cursor routing key will also move the system caret or focus when supported.
+When the current review mode is [Screen Review #ScreenReview], there is no physical caret.
+In this case, NVDA tries to focus the object under the text you're routing to.
+The same applies to [object review #ObjectReview].
+
+You can also set this option to only move the caret when tethered automatically.
+In that case, pressing a cursor routing key will only move the system caret or focus when NVDA is tethered to the review cursor automatically, whereas no movement will occur when manually tethered to the review cursor.
+
+This option is shown only if "[tether braille #BrailleTether]" is set to "Automatically" or "To review".
+
+To toggle move system caret when routing review cursor from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
+
 ==== Read by Paragraph ====[BrailleSettingsReadByParagraph]
 If enabled, braille will be displayed by paragraphs instead of lines.
 Also, the next and previous line commands will move by paragraph accordingly.
@@ -2259,6 +2288,16 @@ However, for basic spreadsheet navigating / editing, this option may provide a v
 We still do not recommend that  the majority of users turn this on by default, though we do welcome users of Microsoft Excel  build 16.0.13522.10000 or higher to test this feature and provide feedback.
 Microsoft Excel's UI automation implementation is ever changing, and  versions of Microsoft Office older than 16.0.13522.10000 may not expose enough information for this option to be of any use.
 
+==== Report live regions ====[BrailleLiveRegions]
+: Default
+  Enabled
+: Options
+  Disabled, Enabled
+:
+
+This option selects whether NVDA reports changes in some dynamic web content in Braille.
+Disabling this option is equivalent to NVDA's behaviour in versions 2023.1 and earlier, which only reported these content changes in speech.
+
 ==== Speak passwords in all enhanced terminals ====[AdvancedSettingsWinConsoleSpeakPasswords]
 This setting controls whether characters are spoken by [speak typed characters #KeyboardSettingsSpeakTypedCharacters] or [speak typed words #KeyboardSettingsSpeakTypedWords] in situations where the screen does not update (such as password entry) in some terminal programs, such as the Windows Console with UI automation support enabled and Mintty.
 For security purposes, this setting should be left disabled.
@@ -2330,6 +2369,10 @@ If you decrease the volume of the voice, the volume of sounds will decrease.
 Similarly, if you increase the volume of the voice, the volume of sounds will increase.
 This option only takes effect when "Use WASAPI for audio output" is enabled.
 This option is disabled by default.
+
+==== Volume of NVDA sounds ====[SoundVolume]
+This slider allows you to set the volume of NVDA sounds and beeps.
+This setting only takes effect when "Use WASAPI for audio output" is enabled and "Volume of NVDA sounds follows voice volume" is disabled.
 
 ==== Debug logging categories ====[AdvancedSettingsDebugLoggingCategories]
 The checkboxes in this list allow you to enable specific categories of debug messages in NVDA's log.
@@ -2580,7 +2623,6 @@ To access the Add-on Store from anywhere, assign a custom gesture using the [Inp
 
 ++ Browsing add-ons ++[AddonStoreBrowsing]
 When opened, the Add-on Store displays a list of add-ons.
-You can jump back to the list with ``alt+l`` from anywhere else within the store.
 If you have not installed an add-on before, the add-on store will open to a list of add-ons available to install.
 If you have installed add-ons, the list will display currently installed add-ons.
 
@@ -2623,12 +2665,12 @@ To list add-ons only for specific channels, change the "Channel" filter selectio
 To search add-ons, use the "Search" text box.
 You can reach it by pressing ``shift+tab`` from the list of add-ons, or by pressing ``alt+s`` from anywhere in the Add-on Store interface.
 Type a keyword or two for the kind of add-on you're looking for, then ``tab`` back to the list of add-ons.
-Add-ons will be listed if the search text can be found in the display name, publisher or description.
+Add-ons will be listed if the search text can be found in the add-on ID, display name, publisher, author or description.
 
 ++ Add-on actions ++[AddonStoreActions]
 Add-ons have associated actions, such as install, help, disable, and remove.
-The actions menu can be accessed for an add-on in the add-on list by pressing the ``applications`` key, ``enter``, right clicking or double clicking the add-on.
-There is also an Actions button in the selected add-on's details, which can be activated normally or by pressing ``alt+a``.
+For an add-on in the add-on list, these actions can be accessed through a menu opened by pressing the ``applications`` key, ``enter``, right clicking or double clicking the add-on.
+This menu can also be accessed through an Actions button in the selected add-on's details.
 
 +++ Installing add-ons +++[AddonStoreInstalling]
 Just because an add-on is available in the NVDA Add-ons Store, does not mean that it has been approved or vetted by NV Access or anyone else.
@@ -3851,6 +3893,7 @@ Please see the display's documentation for descriptions of where these keys can 
 | Toggle the braille cursor | ``f1+cursor1``, ``f9+cursor2`` |
 | Cycle the braille show messages mode | ``f1+f2``, ``f9+f10`` |
 | Cycle the braille show selection state | ``f1+f5``, ``f9+f14`` |
+| Cycle the "braille move system caret when routing review cursor" states | ``f1+f3``, ``f9+f11`` |
 | Performs the default action on the current navigator object | ``f7+f8`` |
 | Reports date/time | ``f9`` |
 | Reports battery status and time remaining if AC is not plugged in | ``f10`` |
@@ -3901,18 +3944,33 @@ Following are the current key assignments for these displays.
 + Advanced Topics +[AdvancedTopics]
 
 ++ Secure Mode ++[SecureMode]
-NVDA can be started in secure mode with the ``-s`` [command line option #CommandLineOptions].
+System administrators may wish to configure NVDA to restrict unauthorized system access.
+NVDA allows the installation of custom add-ons, which can execute arbitrary code, including when NVDA is elevated to administrator privileges.
+NVDA also allows users to execute arbitrary code through the NVDA Python Console.
+NVDA secure mode prevents users from modifying their NVDA configuration, and otherwise limits unauthorized system access.
+
 NVDA runs in secure mode when executed on [secure screens #SecureScreens], unless the ``serviceDebug`` [system wide parameter #SystemWideParameters] is enabled.
+To force NVDA to always start in secure mode, set the ``forceSecureMode`` [system wide parameter #SystemWideParameters].
+NVDA can also be started in secure mode with the ``-s`` [command line option #CommandLineOptions].
 
 Secure mode disables:
 
 - Saving configuration and other settings to disk
 - Saving the gesture map to disk
-- [Configuration Profile #ConfigurationProfiles] features such as creation, deletion, renaming profiles e.t.c.
+- [Configuration Profile #ConfigurationProfiles] features such as creation, deletion, renaming profiles etc.
 - Updating NVDA and creating portable copies
-- The [Python console #PythonConsole]
+- The [Add-on Store #AddonsManager]
+- The [NVDA Python console #PythonConsole]
 - The [Log Viewer #LogViewer] and logging
+- Opening external documents from the NVDA menu, such as the user guide or contributors file.
 -
+
+Installed copies of NVDA store their configuration including add-ons in ``%APPDATA%\nvda``.
+To prevent NVDA users from modifying their configuration or add-ons directly, user access to this folder must also be restricted.
+
+NVDA users often rely on configuring their NVDA profile to suit their needs.
+This may include installing and configuring custom add-ons, which should be vetted independently to NVDA.
+Secure mode freezes changes to NVDA configuration, so please ensure that NVDA is configured appropriately before forcing secure mode.
 
 ++ Secure Screens ++[SecureScreens]
 NVDA runs in [secure mode #SecureMode] when executed on secure screens unless the ``serviceDebug`` [system wide parameter #SystemWideParameters] is enabled.
@@ -3983,8 +4041,9 @@ These values are stored in the registry under one of the following keys:
 
 The following values can be set under this registry key:
 || Name | Type | Possible values | Description |
-| configInLocalAppData | DWORD | 0 (default) to disable, 1 to enable | If enabled, stores the NVDA user configuration in the local application data instead of the roaming application data |
-| serviceDebug | DWORD | 0 (default) to disable, 1 to enable | If enabled, disables [Secure Mode #SecureMode] on [secure screens #SecureScreens]. Due to several major security implications, the use of this option is strongly discouraged |
+| ``configInLocalAppData`` | DWORD | 0 (default) to disable, 1 to enable | If enabled, stores the NVDA user configuration in the local application data instead of the roaming application data |
+| ``serviceDebug`` | DWORD | 0 (default) to disable, 1 to enable | If enabled, disables [Secure Mode #SecureMode] on [secure screens #SecureScreens]. Due to several major security implications, the use of this option is strongly discouraged |
+| ``forceSecureMode`` | DWORD | 0 (default) to disable, 1 to enable | If enabled, forces [Secure Mode #SecureMode] to be enabled when running NVDA. |
 
 + Further Information +[FurtherInformation]
 If you require further information or assistance regarding NVDA, please visit the NVDA web site at NVDA_URL.

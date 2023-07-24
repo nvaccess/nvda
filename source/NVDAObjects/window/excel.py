@@ -460,7 +460,9 @@ class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
 
 	def __init__(self,rootNVDAObject):
 		super(ExcelBrowseModeTreeInterceptor,self).__init__(rootNVDAObject)
-		self.passThrough=True
+		# Note, as _set_passThrough has logic to handle braille and vision updates which are unnecessary when
+		# initializing this tree interceptor, we set the private _passThrough variable here, which is enough.
+		self._passThrough = True
 		browseMode.reportPassThrough.last=True
 
 	def _get_currentNVDAObject(self):
@@ -986,8 +988,14 @@ class ExcelWorksheet(ExcelBase):
 				time.sleep(retryInterval)
 			retries += 1
 		if newSelection:
-			if oldSelection.parent==newSelection.parent:
-				newSelection.parent=oldSelection.parent
+			if newSelection.parent == self:
+				# The new selection has this work sheet as its parent.
+				# While newSelection.parent and self compare equal,
+				# they are in fact not the same python object, i.e.
+				# `newSelection.parent is self` would return False.
+				# Therefore we set newSelection.parent to self in order for the format field speech cache
+				# to persist across selection changes. (#15091)
+				newSelection.parent = self
 			eventHandler.executeEvent('gainFocus', newSelection)
 
 	def _WaitForValueChangeForAction(self, action, fetcher, timeout=0.15):

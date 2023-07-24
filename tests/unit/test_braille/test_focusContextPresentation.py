@@ -3,17 +3,16 @@
 # See the file COPYING for more details.
 # Copyright (C) 2017-2023 NV Access Limited, Babbage B.V., Leonard de Ruijter
 
-"""Unit tests for the braille module.
+"""Unit tests for braille focus context presentation.
 """
 
-import unittest
-import braille
-from .objectProvider import PlaceholderNVDAObject, NVDAObjectWithRole
-import controlTypes
-from config import conf
 import api
+import braille
+import controlTypes
 import globalVars
-from .extensionPointTestHelpers import actionTester, filterTester, deciderTester
+from config import conf
+from ..objectProvider import NVDAObjectWithRole
+import unittest
 
 
 class TestFocusContextPresentation(unittest.TestCase):
@@ -93,93 +92,3 @@ class TestFocusContextPresentation(unittest.TestCase):
 		self.assertEqual(braille.handler.buffer.windowEndPos,self.regionsWithPositions[2].end)
 		# The window start position is equal to the start position of the 2nd region
 		self.assertEqual(braille.handler.buffer.windowStartPos,self.regionsWithPositions[1].start)
-
-class TestDisplayTextForGestureIdentifier(unittest.TestCase):
-	"""A test for the regular expression code that handles display gesture identifiers."""
-
-	def test_regex(self):
-		regex = braille.BrailleDisplayGesture.ID_PARTS_REGEX
-		self.assertEqual(
-			regex.match('br(noBraille.noModel):noKey1+noKey2').groups(),
-			('noBraille', 'noModel', 'noKey1+noKey2')
-		)
-		self.assertEqual(
-			regex.match('br(noBraille):noKey1+noKey2').groups(),
-			('noBraille', None, 'noKey1+noKey2')
-		)
-		# Also try a string which doesn't match the pattern
-		self.assertEqual(
-			regex.match('br[noBraille.noModel]:noKey1+noKey2'),
-			None
-		)
-
-	def test_identifierWithModel(self):
-		self.assertEqual(
-			braille.BrailleDisplayGesture.getDisplayTextForIdentifier('br(noBraille.noModel):noKey1+noKey2'),
-			(u'No braille', 'noModel: noKey1+noKey2')
-		)
-
-	def test_identifierWithoutModel(self):
-		self.assertEqual(
-			braille.BrailleDisplayGesture.getDisplayTextForIdentifier('br(noBraille):noKey1+noKey2'),
-			(u'No braille', 'noKey1+noKey2')
-		)
-
-
-class TestHandlerExtensionPoints(unittest.TestCase):
-	"""A test for the several extension points on the braille handler."""
-
-	def test_pre_writeCells(self):
-		cells = [0] * braille.handler.displaySize
-		braille.handler._rawText = " " * braille.handler.displaySize
-		expectedKwargs = dict(
-			cells=cells,
-			rawText=braille.handler._rawText,
-			currentCellCount=braille.handler.displaySize
-		)
-
-		with actionTester(self, braille.pre_writeCells, **expectedKwargs):
-			braille.handler._writeCells(cells)
-
-	def test_displaySizeChanged(self):
-		expectedKwargs = dict(
-			displaySize=braille.handler.displaySize
-		)
-
-		with actionTester(self, braille.displaySizeChanged, **expectedKwargs):
-			# Change the attribute that is compared with the value coming from filter_displaySize
-			braille.handler._displaySize = 0
-			# The getter should now trigger the action.
-			braille.handler._get_displaySize()
-
-	def test_displayChanged(self):
-		expectedKwargs = dict(
-			isFallback=False,
-			detected=None
-		)
-
-		with actionTester(self, braille.displayChanged, useAssertDictContainsSubset=True, **expectedKwargs):
-			# Terminate the current noBraille instance to ensure that the action is triggered when choosing it again.
-			braille.handler.display.terminate()
-			braille.handler.display = None
-			braille.handler.setDisplayByName("noBraille")
-
-	def test_filter_displaySize(self):
-		with filterTester(
-			self,
-			braille.filter_displaySize,
-			braille.handler._displaySize,  # The currently cached display size
-			20,   # The filter handler should change the display size to 40
-		) as expectedOutput:
-			self.assertEqual(braille.handler.displaySize, expectedOutput)
-
-	def test_decide_enabled(self):
-		with deciderTester(
-			self,
-			braille.decide_enabled,
-			expectedDecision=False,
-		) as expectedDecision:
-			# Ensure that disabling braille by the decider doesn't try to call _handleEnabledDecisionFalse,
-			# as that relies on wx.
-			braille.handler._enabled = False
-			self.assertEqual(braille.handler.enabled, expectedDecision)

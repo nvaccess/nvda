@@ -1,12 +1,13 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2023 NV Access Limited
+# Copyright (C) 2022-2023 NV Access Limited, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 import wx
 
 from _addonStore.models.addon import (
-	AddonStoreModel,
+	_AddonStoreModel,
+	_InstalledAddonModel,
 )
 from gui import guiHelper
 from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
@@ -42,7 +43,7 @@ class AddonDetails(
 
 	# Translators: Label for the text control containing a description of the selected add-on.
 	# In the add-on store dialog.
-	_actionsLabelText: str = pgettext("addonStore", "&Actions")
+	_actionsLabelText: str = pgettext("addonStore", "A&ctions")
 
 	def __init__(
 			self,
@@ -126,9 +127,6 @@ class AddonDetails(
 		self.contents.Add(wx.StaticLine(self.contentsPanel), flag=wx.EXPAND)
 		self.contents.AddSpacer(guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
 
-		# It would be nice to override the name using wx.Accessible,
-		# but using it on a TextCtrl breaks the accessibility of the control entirely (all state/role is reset)
-		# Instead, add a hidden label for the textBox, Windows exposes this as the accessible name.
 		self.otherDetailsLabel = wx.StaticText(
 			self.contentsPanel,
 			# Translators: Label for the text control containing extra details about the selected add-on.
@@ -136,7 +134,6 @@ class AddonDetails(
 			label=pgettext("addonStore", "&Other Details:")
 		)
 		self.contents.Add(self.otherDetailsLabel, flag=wx.EXPAND)
-		self.otherDetailsLabel.Hide()
 		self.otherDetailsTextCtrl = wx.TextCtrl(
 			self.contentsPanel,
 			size=self.scaleSize((panelWidth, 400)),
@@ -221,11 +218,27 @@ class AddonDetails(
 					self.defaultStyle
 				)
 
+				if isinstance(details, _AddonStoreModel):
+					# Publisher comes from the add-on store JSON.
+					self._appendDetailsLabelValue(
+						# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+						pgettext("addonStore", "Publisher:"),
+						details.publisher
+					)
+				if isinstance(details, _InstalledAddonModel):
+					# Author comes from the manifest, and is only available for installed add-ons.
+					self._appendDetailsLabelValue(
+						# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+						pgettext("addonStore", "Author:"),
+						details.author
+					)
+
 				self._appendDetailsLabelValue(
 					# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
-					pgettext("addonStore", "Publisher:"),
-					details.publisher
+					pgettext("addonStore", "ID:"),
+					details.addonId
 				)
+
 				currentStatusKey = self._actionsContextMenu._storeVM._filteredStatusKey
 				if currentStatusKey not in AddonListField.currentAddonVersionName.hideStatuses:
 					self._appendDetailsLabelValue(
@@ -261,7 +274,7 @@ class AddonDetails(
 						details.homepage
 					)
 
-				if isinstance(details, AddonStoreModel):
+				if isinstance(details, _AddonStoreModel):
 					self._appendDetailsLabelValue(
 						# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 						pgettext("addonStore", "License:"),

@@ -27,7 +27,7 @@ from configobj.validate import Validator
 from logHandler import log
 import logging
 from logging import DEBUG
-import shlobj
+from shlobj import FolderId, SHGetKnownFolderPath
 import baseObject
 import easeOfAccess
 from fileUtils import FaultTolerantFile
@@ -39,6 +39,7 @@ from .configSpec import confspec
 from .featureFlag import (
 	_transformSpec_AddFeatureFlagDefault,
 	_validateConfig_featureFlag,
+	FeatureFlag,
 )
 from typing import (
 	Any,
@@ -91,6 +92,14 @@ def __getattr__(attrName: str) -> Any:
 		)
 		from addonHandler.packaging import addDirsToPythonPackagePath
 		return addDirsToPythonPackagePath
+	if attrName == "CONFIG_IN_LOCAL_APPDATA_SUBKEY" and NVDAState._allowDeprecatedAPI():
+		# Note: this should only log in situations where it will not be excessively noisy.
+		log.warning(
+			"CONFIG_IN_LOCAL_APPDATA_SUBKEY is deprecated. "
+			"Instead use RegistryKey.CONFIG_IN_LOCAL_APPDATA_SUBKEY. ",
+			stack_info=True,
+		)
+		return RegistryKey.CONFIG_IN_LOCAL_APPDATA_SUBKEY.value
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
 
 
@@ -119,6 +128,18 @@ class RegistryKey(str, Enum):
 	Note that NVDA is a 32-bit application, so on X64 systems,
 	this will evaluate to `r"SOFTWARE\WOW6432Node\nvda"`
 	"""
+	CONFIG_IN_LOCAL_APPDATA_SUBKEY = "configInLocalAppData"
+	"""
+	#6864: The name of the subkey stored under RegistryKey.NVDA where the value is stored
+	which will make an installed NVDA load the user configuration either from the local or from
+	the roaming application data profile.
+	The registry value is unset by default.
+	When setting it manually, a DWORD value is preferred.
+	A value of 0 will evaluate to loading the configuration from the roaming application data (default).
+	A value of 1 means loading the configuration from the local application data folder.
+	"""
+	FORCE_SECURE_MODE_SUBKEY = "forceSecureMode"
+	SERVICE_DEBUG_SUBKEY = "serviceDebug"
 
 
 def isInstalledCopy() -> bool:
@@ -165,21 +186,9 @@ def isInstalledCopy() -> bool:
 		return False
 
 
-CONFIG_IN_LOCAL_APPDATA_SUBKEY = "configInLocalAppData"
-"""
-#6864: The name of the subkey stored under RegistryKey.NVDA where the value is stored
-which will make an installed NVDA load the user configuration either from the local or from
-the roaming application data profile.
-The registry value is unset by default.
-When setting it manually, a DWORD value is preferred.
-A value of 0 will evaluate to loading the configuration from the roaming application data (default).
-A value of 1 means loading the configuration from the local application data folder.
-"""
-
-
 def getInstalledUserConfigPath() -> Optional[str]:
 	try:
-		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, RegistryKey.NVDA.value)
+		winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, RegistryKey.NVDA.value)
 	except FileNotFoundError:
 		log.debug("Could not find nvda registry key, NVDA is not currently installed")
 		return None
@@ -187,20 +196,12 @@ def getInstalledUserConfigPath() -> Optional[str]:
 		log.error("Could not open nvda registry key", exc_info=True)
 		return None
 
-	try:
-		configInLocalAppData = bool(winreg.QueryValueEx(k, CONFIG_IN_LOCAL_APPDATA_SUBKEY)[0])
-	except FileNotFoundError:
-		log.debug("Installed user config is not in local app data")
-		configInLocalAppData = False
-	except WindowsError:
-		log.error(
-			f"Could not query if user config in local app data {CONFIG_IN_LOCAL_APPDATA_SUBKEY}",
-			exc_info=True
-		)
-		configInLocalAppData = False
-	configParent = shlobj.SHGetKnownFolderPath(
-		shlobj.FolderId.LOCAL_APP_DATA if configInLocalAppData else shlobj.FolderId.ROAMING_APP_DATA
-	)
+	if NVDAState._configInLocalAppDataEnabled():
+		configFolder = FolderId.LOCAL_APP_DATA
+	else:
+		configFolder = FolderId.ROAMING_APP_DATA
+
+	configParent = SHGetKnownFolderPath(configFolder)
 	try:
 		return os.path.join(configParent, "nvda")
 	except WindowsError:
@@ -1247,13 +1248,17 @@ class AggregatedSection:
 		except KeyError:
 			pass
 		else:
-			if self._isSection(val) or self._isSection(curVal):
-				# If value is a section, continue to update
-				pass
-			elif str(val) == str(curVal):
+			if (
+				# Feature flags override __eq__.
 				# Check str comparison as this is what is written to the config.
 				# If the value is unchanged, do not update
 				# or mark the profile as dirty.
+				(
+					isinstance(val, FeatureFlag)
+					or isinstance(curVal, FeatureFlag)
+				)
+				and str(val) == str(curVal)
+			):
 				return
 
 		# Set this value in the most recently activated profile.

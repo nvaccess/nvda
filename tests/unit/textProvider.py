@@ -1,17 +1,21 @@
-#tests/unit/textProvider.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2017-2019 NV Access Limited
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2017-2023 NV Access Limited, Leonard de Ruijter
+
 
 """Fake text provider implementation for testing of code which uses TextInfos.
 See the L{BasicTextProvider} class.
 """
 
-from NVDAObjects import NVDAObject, NVDAObjectTextInfo
+from NVDAObjects import NVDAObjectTextInfo
+from .objectProvider import PlaceholderNVDAObject
 import textInfos
 from textInfos.offsets import Offsets
 import textUtils
+import cursorManager
+from typing import Tuple
+
 
 class BasicTextInfo(NVDAObjectTextInfo):
 	# NVDAHelper is not initialized, so we can't use Uniscribe.
@@ -19,6 +23,9 @@ class BasicTextInfo(NVDAObjectTextInfo):
 	# Most of our code use UTF-16 as internal encoding.
 	# Mimic this behavior, so we can also implicitly test textUtils module code
 	encoding = textUtils.WCHAR_ENCODING
+
+	def __repr__(self):
+		return f"{self.__class__.__name__} {self._get_offsets()!r}"
 
 	def _getStoryLength(self):
 		# NVDAObjectTextInfo will just return the str length of the story text,.
@@ -34,7 +41,8 @@ class BasicTextInfo(NVDAObjectTextInfo):
 	def updateSelection(self):
 		self.obj.selectionOffsets = self.offsets
 
-class BasicTextProvider(NVDAObject):
+
+class BasicTextProvider(PlaceholderNVDAObject):
 	"""An NVDAObject which makes TextInfos based on a provided string of text.
 	Example usage:
 	>>> obj = BasicTextProvider(text="abcd")
@@ -51,23 +59,33 @@ class BasicTextProvider(NVDAObject):
 	(0, 1)
 	"""
 
-	processID = None # Must be implemented to instantiate.
 	TextInfo = BasicTextInfo
+	selectionOffsets: Tuple[int, int]
 
-	def __init__(self, text=None, selection=(0, 0)):
+	def __init__(
+			self,
+			text: str = "",
+			selection: Tuple[int, int] = (0, 0)
+	):
 		"""
 		@param text: The text to provide via TextInfos.
-		@type text: str
 		@param selection: The start and end offsets of the initial selection;
 			same start and end is caret with no selection.
-		@type selection: tuple of (int, int)
 		"""
-		super(BasicTextProvider, self).__init__()
+		super().__init__()
 		self.basicText = text
 		self.selectionOffsets = selection
+
+	def __repr__(self):
+		return f"{self.__class__.__name__} {self.selectionOffsets!r}"
 
 	def makeTextInfo(self, position):
 		if position in (textInfos.POSITION_CARET, textInfos.POSITION_SELECTION):
 			start, end = self.selectionOffsets
 			position = Offsets(start, end)
 		return super(BasicTextProvider, self).makeTextInfo(position)
+
+
+class CursorManager(cursorManager.CursorManager, BasicTextProvider):
+	"""CursorManager which navigates within a provided string of text.
+	"""

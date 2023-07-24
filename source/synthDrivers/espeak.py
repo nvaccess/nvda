@@ -422,10 +422,10 @@ class SynthDriver(SynthDriver):
 		val=self._percentToParam(val, _espeak.minPitch, _espeak.maxPitch)
 		_espeak.setParameter(_espeak.espeakRANGE,val,0)
 
-	def _get_volume(self):
+	def _get_volume(self) -> int:
 		return _espeak.getParameter(_espeak.espeakVOLUME,1)
 
-	def _set_volume(self,volume):
+	def _set_volume(self, volume: int):
 		_espeak.setParameter(_espeak.espeakVOLUME,volume,0)
 
 	def _getAvailableVoices(self):

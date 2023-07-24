@@ -20,7 +20,9 @@ from typing import (
 from requests.structures import CaseInsensitiveDict
 
 from _addonStore.models.addon import (
-	AddonGUIModel,
+	_AddonGUIModel,
+	_AddonStoreModel,
+	_InstalledAddonModel,
 )
 from _addonStore.models.status import (
 	_StatusFilterKey,
@@ -54,13 +56,13 @@ class AddonListField(_AddonListFieldData, Enum):
 		150,
 	)
 	currentAddonVersionName = (
-		# Translators: The name of the column that contains the installed addons version string.
+		# Translators: The name of the column that contains the installed addon's version string.
 		pgettext("addonStore", "Installed version"),
 		100,
 		frozenset({_StatusFilterKey.AVAILABLE}),
 	)
 	availableAddonVersionName = (
-		# Translators: The name of the column that contains the available addons version string.
+		# Translators: The name of the column that contains the available addon's version string.
 		pgettext("addonStore", "Available version"),
 		100,
 		frozenset({_StatusFilterKey.INCOMPATIBLE, _StatusFilterKey.INSTALLED}),
@@ -71,9 +73,16 @@ class AddonListField(_AddonListFieldData, Enum):
 		50,
 	)
 	publisher = (
-		# Translators: The name of the column that contains the addons publisher.
+		# Translators: The name of the column that contains the addon's publisher.
 		pgettext("addonStore", "Publisher"),
-		100
+		100,
+		frozenset({_StatusFilterKey.INCOMPATIBLE, _StatusFilterKey.INSTALLED})
+	)
+	author = (
+		# Translators: The name of the column that contains the addon's author.
+		pgettext("addonStore", "Author"),
+		100,
+		frozenset({_StatusFilterKey.AVAILABLE, _StatusFilterKey.UPDATE})
 	)
 	status = (
 		# Translators: The name of the column that contains the status of the addon.
@@ -86,15 +95,15 @@ class AddonListField(_AddonListFieldData, Enum):
 class AddonListItemVM:
 	def __init__(
 			self,
-			model: AddonGUIModel,
+			model: _AddonGUIModel,
 			status: AvailableAddonStatus = AvailableAddonStatus.AVAILABLE
 	):
-		self._model: AddonGUIModel = model  # read-only
+		self._model: _AddonGUIModel = model  # read-only
 		self._status: AvailableAddonStatus = status  # modifications triggers L{updated.notify}
 		self.updated = extensionPoints.Action()  # Notify of changes to VM, argument: addonListItemVM
 
 	@property
-	def model(self) -> AddonGUIModel:
+	def model(self) -> _AddonGUIModel:
 		return self._model
 
 	@property
@@ -292,10 +301,14 @@ class AddonListVM:
 		def _containsTerm(detailsVM: AddonListItemVM, term: str) -> bool:
 			term = term.casefold()
 			model = detailsVM.model
+			inPublisher = isinstance(model, _AddonStoreModel) and term in model.publisher.casefold()
+			inAuthor = isinstance(model, _InstalledAddonModel) and term in model.author.casefold()
 			return (
 				term in model.displayName.casefold()
 				or term in model.description.casefold()
-				or term in model.publisher.casefold()
+				or term in model.addonId.casefold()
+				or inPublisher
+				or inAuthor
 			)
 
 		filtered = (

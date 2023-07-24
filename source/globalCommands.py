@@ -1591,7 +1591,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Moves the review cursor to the previous page of the current navigator object and speaks it"),
 		resumeSayAllMode=sayAll.CURSOR.REVIEW,
 		category=SCRCAT_TEXTREVIEW,
-		gestures=("kb:NVDA+pageUp", "kb(laptop):NVDA+shift+pageUp", "ts(text):flickUp")
+		gestures=("kb:NVDA+pageUp", "kb(laptop):NVDA+shift+pageUp")
 	)
 	def script_review_previousPage(self, gesture: inputCore.InputGesture) -> None:
 		info = api.getReviewPosition().copy()
@@ -1623,7 +1623,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Moves the review cursor to the next page of the current navigator object and speaks it"),
 		resumeSayAllMode=sayAll.CURSOR.REVIEW,
 		category=SCRCAT_TEXTREVIEW,
-		gestures=("kb:NVDA+pageDown", "kb(laptop):NVDA+shift+pageDown", "ts(text):flickUp")
+		gestures=("kb:NVDA+pageDown", "kb(laptop):NVDA+shift+pageDown")
 	)
 	def script_review_nextPage(self, gesture: inputCore.InputGesture) -> None:
 		origInfo = api.getReviewPosition().copy()
@@ -2145,6 +2145,7 @@ class GlobalCommands(ScriptableObject):
 			"reportFontSize",
 			"reportFontAttributes",
 			"reportSuperscriptsAndSubscripts",
+			"reportHighlight",
 			"reportColor",
 			"reportStyle",
 			"reportAlignment",
@@ -3211,6 +3212,42 @@ class GlobalCommands(ScriptableObject):
 		ui.message(_("Braille tethered %s") % TetherTo(newTetherChoice).displayString)
 
 	@script(
+		# Translators: Input help mode message for cycle through
+		# braille move system caret when routing review cursor command.
+		description=_("Cycle through the braille move system caret when routing review cursor states"),
+		category=SCRCAT_BRAILLE
+	)
+	def script_braille_cycleReviewRoutingMovesSystemCaret(self, gesture: inputCore.InputGesture) -> None:
+		# If braille is not tethered to focus, set next state of
+		# braille Move system caret when routing review cursor.
+		if TetherTo.FOCUS.value == config.conf["braille"]["tetherTo"]:
+			ui.message(
+				# Translators: Reported when action is unavailable because braille tether is to focus.
+				_("Action unavailable. Braille is tethered to focus")
+			)
+			return
+		featureFlag: FeatureFlag = config.conf["braille"]["reviewRoutingMovesSystemCaret"]
+		reviewRoutingMovesSystemCaretFlag = featureFlag.enumClassType
+		values = [x.value for x in reviewRoutingMovesSystemCaretFlag]
+		currentValue = featureFlag.value.value
+		nextValueIndex = (currentValue % len(values)) + 1
+		nextName: str = reviewRoutingMovesSystemCaretFlag(nextValueIndex).name
+		config.conf["braille"]["reviewRoutingMovesSystemCaret"] = nextName
+		featureFlag = config.conf["braille"]["reviewRoutingMovesSystemCaret"]
+		if featureFlag.isDefault():
+			msg = _(
+				# Translators: Used when reporting braille move system caret when routing review cursor
+				# state (default behavior).
+				"Braille move system caret when routing review cursor default (%s)"
+			) % featureFlag.behaviorOfDefault.displayString
+		else:
+			msg = _(
+				# Translators: Used when reporting braille move system caret when routing review cursor state.
+				"Braille move system caret when routing review cursor %s"
+			) % reviewRoutingMovesSystemCaretFlag[nextName].displayString
+		ui.message(msg)
+
+	@script(
 		# Translators: Input help mode message for toggle braille focus context presentation command.
 		description=_("Toggle the way context information is presented in braille"),
 		category=SCRCAT_BRAILLE
@@ -3781,7 +3818,11 @@ class GlobalCommands(ScriptableObject):
 		# Translators: Input help mode message for a touchscreen gesture.
 		description=_("Moves to the next object in a flattened view of the object navigation hierarchy"),
 		category=SCRCAT_OBJECTNAVIGATION,
-		gesture="ts(object):flickright"
+		gestures=(
+			"ts(object):flickright",
+			"kb(desktop):NVDA+numpad3",
+			"kb(laptop):shift+NVDA+]",
+		),
 	)
 	def script_navigatorObject_nextInFlow(self, gesture: inputCore.InputGesture):
 		curObject=api.getNavigatorObject()
@@ -3815,7 +3856,11 @@ class GlobalCommands(ScriptableObject):
 		# Translators: Input help mode message for a touchscreen gesture.
 		description=_("Moves to the previous object in a flattened view of the object navigation hierarchy"),
 		category=SCRCAT_OBJECTNAVIGATION,
-		gesture="ts(object):flickleft"
+		gestures=(
+			"ts(object):flickleft",
+			"kb(desktop):NVDA+numpad9",
+			"kb(laptop):shift+NVDA+[",
+		),
 	)
 	def script_navigatorObject_previousInFlow(self, gesture: inputCore.InputGesture):
 		curObject=api.getNavigatorObject()

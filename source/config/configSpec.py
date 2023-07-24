@@ -59,6 +59,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	audioDuckingMode = integer(default=0)
 	wasapi = boolean(default=true)
 	soundVolumeFollowsVoice = boolean(default=false)
+	soundVolume = integer(default=100, min=0, max=100)
 
 # Braille settings
 [braille]
@@ -77,12 +78,15 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	# Timeout after the message will disappear from braille display
 	messageTimeout = integer(default=4, min=1, max=20)
 	tetherTo = option("auto", "focus", "review", default="auto")
+	reviewRoutingMovesSystemCaret = featureFlag(\
+		optionsEnum="ReviewRoutingMovesSystemCaretFlag", behaviorOfDefault="NEVER")
 	readByParagraph = boolean(default=false)
 	wordWrap = boolean(default=true)
 	focusContextPresentation = option("changedContext", "fill", "scroll", default="changedContext")
 	interruptSpeechWhileScrolling = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 	showSelection = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 	enableHidBrailleSupport = integer(0, 2, default=0)  # 0:Use default/recommended value (yes), 1:yes, 2:no
+	reportLiveRegions = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 
 	# Braille display driver settings
 	[[__many__]]

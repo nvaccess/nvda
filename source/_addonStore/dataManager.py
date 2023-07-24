@@ -7,7 +7,6 @@
 # Can be removed in a future version of python (3.8+)
 from __future__ import annotations
 
-from datetime import datetime, timedelta
 import json
 import os
 import pathlib
@@ -34,14 +33,16 @@ from NVDAState import WritePaths
 from .models.addon import (
 	AddonStoreModel,
 	CachedAddonsModel,
+	InstalledAddonStoreModel,
 	_createAddonGUICollection,
-	_createStoreModelFromData,
+	_createInstalledStoreModelFromData,
 	_createStoreCollectionFromJson,
 )
 from .models.channel import Channel
 from .network import (
-	_getAddonStoreURL,
 	_getCurrentApiVersionForURL,
+	_getAddonStoreURL,
+	_getCacheHashURL,
 	_LATEST_API_VER,
 )
 
@@ -68,7 +69,6 @@ def initialize():
 class _DataManager:
 	_cacheLatestFilename: str = "_cachedLatestAddons.json"
 	_cacheCompatibleFilename: str = "_cachedCompatibleAddons.json"
-	_cachePeriod = timedelta(hours=6)
 	_downloadsPendingInstall: Set[Tuple["AddonListItemVM", os.PathLike]] = set()
 
 	def __init__(self):
@@ -107,13 +107,29 @@ class _DataManager:
 			return None
 		return response.content
 
-	def _cacheCompatibleAddons(self, addonData: str, fetchTime: datetime):
+	def _getCacheHash(self) -> Optional[str]:
+		url = _getCacheHashURL()
+		try:
+			response = requests.get(url)
+		except requests.exceptions.RequestException as e:
+			log.debugWarning(f"Unable to get cache hash: {e}")
+			return None
+		if response.status_code != requests.codes.OK:
+			log.error(
+				f"Unable to get data from API ({url}),"
+				f" response ({response.status_code}): {response.content}"
+			)
+			return None
+		cacheHash = response.json()
+		return cacheHash
+
+	def _cacheCompatibleAddons(self, addonData: str, cacheHash: str):
 		if not NVDAState.shouldWriteToDisk():
 			return
-		if not addonData:
+		if not addonData or not cacheHash:
 			return
 		cacheData = {
-			"cacheDate": fetchTime.isoformat(),
+			"cacheHash": cacheHash,
 			"data": addonData,
 			"cachedLanguage": self._lang,
 			"nvdaAPIVersion": addonAPIVersion.CURRENT,
@@ -121,13 +137,13 @@ class _DataManager:
 		with open(self._cacheCompatibleFile, 'w') as cacheFile:
 			json.dump(cacheData, cacheFile, ensure_ascii=False)
 
-	def _cacheLatestAddons(self, addonData: str, fetchTime: datetime):
+	def _cacheLatestAddons(self, addonData: str, cacheHash: str):
 		if not NVDAState.shouldWriteToDisk():
 			return
-		if not addonData:
+		if not addonData or not cacheHash:
 			return
 		cacheData = {
-			"cacheDate": fetchTime.isoformat(),
+			"cacheHash": cacheHash,
 			"data": addonData,
 			"cachedLanguage": self._lang,
 			"nvdaAPIVersion": _LATEST_API_VER,
@@ -138,16 +154,29 @@ class _DataManager:
 	def _getCachedAddonData(self, cacheFilePath: str) -> Optional[CachedAddonsModel]:
 		if not os.path.exists(cacheFilePath):
 			return None
-		with open(cacheFilePath, 'r') as cacheFile:
-			cacheData = json.load(cacheFile)
-		if not cacheData:
+		try:
+			with open(cacheFilePath, 'r') as cacheFile:
+				cacheData = json.load(cacheFile)
+		except Exception:
+			log.exception(f"Invalid add-on store cache")
+			if NVDAState.shouldWriteToDisk():
+				os.remove(cacheFilePath)
 			return None
-		fetchTime = datetime.fromisoformat(cacheData["cacheDate"])
+		try:
+			data = cacheData["data"]
+			cacheHash = cacheData["cacheHash"]
+			cachedLanguage = cacheData["cachedLanguage"]
+			nvdaAPIVersion = cacheData["nvdaAPIVersion"]
+		except KeyError:
+			log.exception(f"Invalid add-on store cache:\n{cacheData}")
+			if NVDAState.shouldWriteToDisk():
+				os.remove(cacheFilePath)
+			return None
 		return CachedAddonsModel(
-			cachedAddonData=_createStoreCollectionFromJson(cacheData["data"]),
-			cachedAt=fetchTime,
-			cachedLanguage=cacheData["cachedLanguage"],
-			nvdaAPIVersion=tuple(cacheData["nvdaAPIVersion"]),  # loads as list
+			cachedAddonData=_createStoreCollectionFromJson(data),
+			cacheHash=cacheHash,
+			cachedLanguage=cachedLanguage,
+			nvdaAPIVersion=tuple(nvdaAPIVersion),  # loads as list,
 		)
 
 	# Translators: A title of the dialog shown when fetching add-on data from the store fails
@@ -157,24 +186,25 @@ class _DataManager:
 			self,
 			onDisplayableError: Optional[DisplayableError.OnDisplayableErrorT] = None,
 	) -> "AddonGUICollectionT":
+		cacheHash = self._getCacheHash()
 		shouldRefreshData = (
 			not self._compatibleAddonCache
 			or self._compatibleAddonCache.nvdaAPIVersion != addonAPIVersion.CURRENT
-			or _DataManager._cachePeriod < (datetime.now() - self._compatibleAddonCache.cachedAt)
+			or cacheHash is None
+			or self._compatibleAddonCache.cacheHash != cacheHash
 			or self._compatibleAddonCache.cachedLanguage != self._lang
 		)
 		if shouldRefreshData:
-			fetchTime = datetime.now()
 			apiData = self._getLatestAddonsDataForVersion(_getCurrentApiVersionForURL())
 			if apiData:
 				decodedApiData = apiData.decode()
 				self._cacheCompatibleAddons(
 					addonData=decodedApiData,
-					fetchTime=fetchTime,
+					cacheHash=cacheHash,
 				)
 				self._compatibleAddonCache = CachedAddonsModel(
 					cachedAddonData=_createStoreCollectionFromJson(decodedApiData),
-					cachedAt=fetchTime,
+					cacheHash=cacheHash,
 					cachedLanguage=self._lang,
 					nvdaAPIVersion=addonAPIVersion.CURRENT,
 				)
@@ -195,23 +225,24 @@ class _DataManager:
 			self,
 			onDisplayableError: Optional[DisplayableError.OnDisplayableErrorT] = None,
 	) -> "AddonGUICollectionT":
+		cacheHash = self._getCacheHash()
 		shouldRefreshData = (
 			not self._latestAddonCache
-			or _DataManager._cachePeriod < (datetime.now() - self._latestAddonCache.cachedAt)
+			or cacheHash is None
+			or self._latestAddonCache.cacheHash != cacheHash
 			or self._latestAddonCache.cachedLanguage != self._lang
 		)
 		if shouldRefreshData:
-			fetchTime = datetime.now()
 			apiData = self._getLatestAddonsDataForVersion(_LATEST_API_VER)
 			if apiData:
 				decodedApiData = apiData.decode()
 				self._cacheLatestAddons(
 					addonData=decodedApiData,
-					fetchTime=fetchTime,
+					cacheHash=cacheHash,
 				)
 				self._latestAddonCache = CachedAddonsModel(
 					cachedAddonData=_createStoreCollectionFromJson(decodedApiData),
-					cachedAt=fetchTime,
+					cacheHash=cacheHash,
 					cachedLanguage=self._lang,
 					nvdaAPIVersion=_LATEST_API_VER,
 				)
@@ -242,7 +273,7 @@ class _DataManager:
 		with open(addonCachePath, 'w') as cacheFile:
 			json.dump(addonData.asdict(), cacheFile, ensure_ascii=False)
 
-	def _getCachedInstalledAddonData(self, addonId: str) -> Optional[AddonStoreModel]:
+	def _getCachedInstalledAddonData(self, addonId: str) -> Optional[InstalledAddonStoreModel]:
 		addonCachePath = os.path.join(self._installedAddonDataCacheDir, f"{addonId}.json")
 		if not os.path.exists(addonCachePath):
 			return None
@@ -250,7 +281,7 @@ class _DataManager:
 			cacheData = json.load(cacheFile)
 		if not cacheData:
 			return None
-		return _createStoreModelFromData(cacheData)
+		return _createInstalledStoreModelFromData(cacheData)
 
 
 class _InstalledAddonsCache(AutoPropertyObject):
@@ -275,5 +306,5 @@ class _InstalledAddonsCache(AutoPropertyObject):
 			if addonStoreData:
 				addons[addonStoreData.channel][addonId] = addonStoreData
 			else:
-				addons[Channel.STABLE][addonId] = self.installedAddons[addonId]._addonGuiModel
+				addons[Channel.EXTERNAL][addonId] = self.installedAddons[addonId]._addonGuiModel
 		return addons

@@ -141,9 +141,12 @@ class SettingsDialog(
 				"Only one instance of SettingsDialog can exist at a time",
 			)
 		if state is cls.DialogState.DESTROYED and not multiInstanceAllowed:
-			# the dialog has been destroyed by wx, but the instance is still available. This indicates there is something
-			# keeping it alive.
-			log.error("Opening new settings dialog while instance still exists: {!r}".format(firstMatchingInstance))
+			# The dialog has been destroyed by wx, but the instance is still available.
+			# This indicates there is something keeping it alive.
+			log.debugWarning(f"Opening new settings dialog while instance still exists: {firstMatchingInstance!r}")
+			# Handle gracefully
+			SettingsDialog._instances[firstMatchingInstance] = cls.DialogState.CREATED
+			return firstMatchingInstance
 		obj = super(SettingsDialog, cls).__new__(cls, *args, **kwargs)
 		SettingsDialog._instances[obj] = cls.DialogState.CREATED
 		return obj
@@ -2628,9 +2631,15 @@ class UwpOcrPanel(SettingsPanel):
 		# Lazily import this.
 		from contentRecog import uwpOcr
 		self.languageCodes = uwpOcr.getLanguages()
-		languageChoices = [
-			languageHandler.getLanguageDescription(languageHandler.normalizeLanguage(lang))
-			for lang in self.languageCodes]
+		languageChoices = []
+		for lang in self.languageCodes:
+			normLang = languageHandler.normalizeLanguage(lang)
+			desc = languageHandler.getLanguageDescription(normLang)
+			if not desc:
+				# Raise an error in the hope that people be more likely to report the issue
+				log.error(f'No description for language: {lang}. Using language code instead.')
+				desc = lang
+			languageChoices.append(desc)
 		# Translators: Label for an option in the Windows OCR dialog.
 		languageLabel = _("Recognition &language:")
 		self.languageChoice = sHelper.addLabeledControl(languageLabel, wx.Choice, choices=languageChoices)
@@ -2854,12 +2863,10 @@ class AdvancedPanelControls(
 
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
-		label = _("HID Braille Standard")
-		hidBrailleSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=label)
-		hidBrailleBox = hidBrailleSizer.GetStaticBox()
-		hidBrailleGroup = guiHelper.BoxSizerHelper(self, sizer=hidBrailleSizer)
-		self.bindHelpEvent("HIDBraille", hidBrailleBox)
-		sHelper.addItem(hidBrailleGroup)
+		label = _("Braille")
+		brailleSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=label)
+		brailleGroup = guiHelper.BoxSizerHelper(self, sizer=brailleSizer)
+		sHelper.addItem(brailleGroup)
 
 		supportHidBrailleChoices = [
 			# Translators: Label for option in the 'Enable support for HID braille' combobox
@@ -2873,10 +2880,10 @@ class AdvancedPanelControls(
 			_("No"),
 		]
 
-		# Translators: This is the label for a checkbox in the
+		# Translators: This is the label for a combo box in the
 		#  Advanced settings panel.
 		label = _("Enable support for HID braille")
-		self.supportHidBrailleCombo: wx.Choice = hidBrailleGroup.addLabeledControl(
+		self.supportHidBrailleCombo: wx.Choice = brailleGroup.addLabeledControl(
 			labelText=label,
 			wxCtrlClass=wx.Choice,
 			choices=supportHidBrailleChoices,
@@ -2887,6 +2894,15 @@ class AdvancedPanelControls(
 		self.supportHidBrailleCombo.defaultValue = self._getDefaultValue(
 			["braille", "enableHidBrailleSupport"]
 		)
+		self.bindHelpEvent("HIDBraille", self.supportHidBrailleCombo)
+		self.brailleLiveRegionsCombo: nvdaControls.FeatureFlagCombo = brailleGroup.addLabeledControl(
+			# Translators: This is the label for a combo-box in the Advanced settings panel.
+			labelText=_("Report live regions:"),
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["braille", "reportLiveRegions"],
+			conf=config.conf,
+		)
+		self.bindHelpEvent("BrailleLiveRegions", self.brailleLiveRegionsCombo)
 
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
@@ -3065,7 +3081,7 @@ class AdvancedPanelControls(
 			wx.CheckBox(audioBox, label=label)
 		)
 		self.bindHelpEvent("WASAPI", self.wasapiCheckBox)
-		self.wasapiCheckBox.Bind(wx.EVT_CHECKBOX, self.onWasapiChange)
+		self.wasapiCheckBox.Bind(wx.EVT_CHECKBOX, self.onAudioCheckBoxChange)
 		self.wasapiCheckBox.SetValue(
 			config.conf["audio"]["wasapi"]
 		)
@@ -3078,13 +3094,28 @@ class AdvancedPanelControls(
 			wx.CheckBox(audioBox, label=label)
 		)
 		self.bindHelpEvent("SoundVolumeFollowsVoice", self.soundVolFollowCheckBox)
+		self.soundVolFollowCheckBox.Bind(wx.EVT_CHECKBOX, self.onAudioCheckBoxChange)
 		self.soundVolFollowCheckBox.SetValue(
 			config.conf["audio"]["soundVolumeFollowsVoice"]
 		)
 		self.soundVolFollowCheckBox.defaultValue = self._getDefaultValue(
 			["audio", "soundVolumeFollowsVoice"])
-		if not self.wasapiCheckBox.GetValue():
-			self.soundVolFollowCheckBox.Disable()
+		# Translators: This is the label for a slider control in the
+		#  Advanced settings panel.
+		label = _("Volume of NVDA sounds (requires WASAPI)")
+		self.soundVolSlider: nvdaControls.EnhancedInputSlider = audioGroup.addLabeledControl(
+			label,
+			nvdaControls.EnhancedInputSlider,
+			minValue=0,
+			maxValue=100
+		)
+		self.bindHelpEvent("SoundVolume", self.soundVolSlider)
+		self.soundVolSlider.SetValue(
+			config.conf["audio"]["soundVolume"]
+		)
+		self.soundVolSlider.defaultValue = self._getDefaultValue(
+			["audio", "soundVolume"])
+		self.onAudioCheckBoxChange()
 
 		# Translators: This is the label for a group of advanced options in the
 		# Advanced settings panel
@@ -3147,8 +3178,13 @@ class AdvancedPanelControls(
 		path=config.getScratchpadDir(ensureExists=True)
 		os.startfile(path)
 
-	def onWasapiChange(self, evt: wx.CommandEvent):
-		self.soundVolFollowCheckBox.Enable(evt.IsChecked())
+	def onAudioCheckBoxChange(self, evt: Optional[wx.CommandEvent] = None):
+		wasapi = self.wasapiCheckBox.IsChecked()
+		self.soundVolFollowCheckBox.Enable(wasapi)
+		self.soundVolSlider.Enable(
+			wasapi
+			and not self.soundVolFollowCheckBox.IsChecked()
+		)
 
 	def _getDefaultValue(self, configPath):
 		return config.conf.getConfigValidation(configPath).default
@@ -3168,6 +3204,7 @@ class AdvancedPanelControls(
 			and self.annotationsDetailsCheckBox.IsChecked() == self.annotationsDetailsCheckBox.defaultValue
 			and self.ariaDescCheckBox.IsChecked() == self.ariaDescCheckBox.defaultValue
 			and self.supportHidBrailleCombo.GetSelection() == self.supportHidBrailleCombo.defaultValue
+			and self.brailleLiveRegionsCombo.isValueConfigSpecDefault()
 			and self.keyboardSupportInLegacyCheckBox.IsChecked() == self.keyboardSupportInLegacyCheckBox.defaultValue
 			and self.winConsoleSpeakPasswordsCheckBox.IsChecked() == self.winConsoleSpeakPasswordsCheckBox.defaultValue
 			and self.diffAlgoCombo.GetSelection() == self.diffAlgoCombo.defaultValue
@@ -3178,6 +3215,7 @@ class AdvancedPanelControls(
 			and self.reportTransparentColorCheckBox.GetValue() == self.reportTransparentColorCheckBox.defaultValue
 			and self.wasapiCheckBox.GetValue() == self.wasapiCheckBox.defaultValue
 			and self.soundVolFollowCheckBox.GetValue() == self.soundVolFollowCheckBox.defaultValue
+			and self.soundVolSlider.GetValue() == self.soundVolSlider.defaultValue
 			and set(self.logCategoriesList.CheckedItems) == set(self.logCategoriesList.defaultCheckedItems)
 			and self.playErrorSoundCombo.GetSelection() == self.playErrorSoundCombo.defaultValue
 			and True  # reduce noise in diff when the list is extended.
@@ -3195,6 +3233,7 @@ class AdvancedPanelControls(
 		self.annotationsDetailsCheckBox.SetValue(self.annotationsDetailsCheckBox.defaultValue)
 		self.ariaDescCheckBox.SetValue(self.ariaDescCheckBox.defaultValue)
 		self.supportHidBrailleCombo.SetSelection(self.supportHidBrailleCombo.defaultValue)
+		self.brailleLiveRegionsCombo.resetToConfigSpecDefault()
 		self.winConsoleSpeakPasswordsCheckBox.SetValue(self.winConsoleSpeakPasswordsCheckBox.defaultValue)
 		self.keyboardSupportInLegacyCheckBox.SetValue(self.keyboardSupportInLegacyCheckBox.defaultValue)
 		self.diffAlgoCombo.SetSelection(self.diffAlgoCombo.defaultValue == 'auto')
@@ -3205,6 +3244,7 @@ class AdvancedPanelControls(
 		self.reportTransparentColorCheckBox.SetValue(self.reportTransparentColorCheckBox.defaultValue)
 		self.wasapiCheckBox.SetValue(self.wasapiCheckBox.defaultValue)
 		self.soundVolFollowCheckBox.SetValue(self.soundVolFollowCheckBox.defaultValue)
+		self.soundVolSlider.SetValue(self.soundVolSlider.defaultValue)
 		self.logCategoriesList.CheckedItems = self.logCategoriesList.defaultCheckedItems
 		self.playErrorSoundCombo.SetSelection(self.playErrorSoundCombo.defaultValue)
 		self._defaultsRestored = True
@@ -3237,9 +3277,11 @@ class AdvancedPanelControls(
 		)
 		config.conf["audio"]["wasapi"] = self.wasapiCheckBox.IsChecked()
 		config.conf["audio"]["soundVolumeFollowsVoice"] = self.soundVolFollowCheckBox.IsChecked()
+		config.conf["audio"]["soundVolume"] = self.soundVolSlider.GetValue()
 		config.conf["annotations"]["reportDetails"] = self.annotationsDetailsCheckBox.IsChecked()
 		config.conf["annotations"]["reportAriaDescription"] = self.ariaDescCheckBox.IsChecked()
 		config.conf["braille"]["enableHidBrailleSupport"] = self.supportHidBrailleCombo.GetSelection()
+		self.brailleLiveRegionsCombo.saveCurrentValueToConf()
 		self.loadChromeVBufWhenBusyCombo.saveCurrentValueToConf()
 
 		for index,key in enumerate(self.logCategories):
@@ -3684,11 +3726,29 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		tetherChoices = [x[1] for x in braille.handler.tetherValues]
 		self.tetherList = sHelper.addLabeledControl(tetherListText, wx.Choice, choices=tetherChoices)
 		self.bindHelpEvent("BrailleTether", self.tetherList)
+		self.tetherList.Bind(wx.EVT_CHOICE, self.onTetherToChange)
 		tetherChoice = config.conf["braille"]["tetherTo"]
 		selection = [x.value for x in TetherTo].index(tetherChoice)
 		self.tetherList.SetSelection(selection)
 		if gui._isDebug():
 			log.debug("Loading tether settings completed, now at %.2f seconds from start"%(time.time() - startTime))
+
+		self.brailleReviewRoutingMovesSystemCaretCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
+			labelText=_(
+				# Translators: This is a label for a combo-box in the Braille settings panel.
+				"Move system caret when ro&uting review cursor"
+			),
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["braille", "reviewRoutingMovesSystemCaret"],
+			conf=config.conf,
+		)
+		self.bindHelpEvent(
+			"BrailleSettingsReviewRoutingMovesSystemCaret",
+			self.brailleReviewRoutingMovesSystemCaretCombo
+		)
+		# Setting has no effect when braille is tethered to focus.
+		if tetherChoice == TetherTo.FOCUS.value:
+			self.brailleReviewRoutingMovesSystemCaretCombo.Disable()
 
 		# Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 		readByParagraphText = _("Read by &paragraph")
@@ -3755,6 +3815,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			config.conf["braille"]["tetherTo"] = TetherTo.AUTO.value
 		else:
 			braille.handler.setTether(tetherChoice, auto=False)
+		self.brailleReviewRoutingMovesSystemCaretCombo.saveCurrentValueToConf()
 		config.conf["braille"]["readByParagraph"] = self.readByParagraphCheckBox.Value
 		config.conf["braille"]["wordWrap"] = self.wordWrapCheckBox.Value
 		config.conf["braille"]["focusContextPresentation"] = self.focusContextPresentationValues[self.focusContextPresentationList.GetSelection()]
@@ -3772,6 +3833,12 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 
 	def onShowMessagesChange(self, evt):
 		self.messageTimeoutEdit.Enable(evt.GetSelection() == 1)
+
+	def onTetherToChange(self, evt: wx.CommandEvent) -> None:
+		"""Shows or hides "Move system caret when routing review cursor" braille setting."""
+		tetherChoice = [x.value for x in TetherTo][evt.GetSelection()]
+		self.brailleReviewRoutingMovesSystemCaretCombo.Enable(tetherChoice != TetherTo.FOCUS.value)
+
 
 def showStartErrorForProviders(
 		parent: wx.Window,
@@ -4289,9 +4356,14 @@ class SpeechSymbolsDialog(SettingsDialog):
 		except LookupError:
 			symbolProcessor = characterProcessing._localeSpeechSymbolProcessors.fetchLocaleData("en")
 		self.symbolProcessor = symbolProcessor
+		desc = languageHandler.getLanguageDescription(self.symbolProcessor.locale)
+		if not desc:
+			desc = self.symbolProcessor.locale
+			# Raise an error in the hope that people be more likely to report the issue
+			log.error(f'No description for language: {desc}. Using language code instead.')
 		# Translators: This is the label for the symbol pronunciation dialog.
 		# %s is replaced by the language for which symbol pronunciation is being edited.
-		self.title = _("Symbol Pronunciation (%s)")%languageHandler.getLanguageDescription(self.symbolProcessor.locale)
+		self.title = _("Symbol Pronunciation (%s)") % desc
 		super(SpeechSymbolsDialog, self).__init__(
 			parent,
 			resizeable=True,

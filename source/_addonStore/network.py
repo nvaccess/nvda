@@ -27,7 +27,11 @@ import NVDAState
 from NVDAState import WritePaths
 from utils.security import sha256_checksum
 
-from .models.addon import AddonStoreModel
+from .models.addon import (
+	AddonStoreModel,
+	_AddonGUIModel,
+	_AddonStoreModel,
+)
 from .models.channel import Channel
 
 
@@ -35,6 +39,7 @@ if TYPE_CHECKING:
 	from gui.message import DisplayableError
 
 
+_BASE_URL = "https://nvaccess.org/addonStore"
 _LATEST_API_VER = "latest"
 """
 A string value used in the add-on store to fetch the latest version of all add-ons,
@@ -48,8 +53,11 @@ def _getCurrentApiVersionForURL() -> str:
 
 
 def _getAddonStoreURL(channel: Channel, lang: str, nvdaApiVersion: str) -> str:
-	_baseURL = "https://nvaccess.org/addonStore/"
-	return _baseURL + f"{lang}/{channel.value}/{nvdaApiVersion}.json"
+	return f"{_BASE_URL}/{lang}/{channel.value}/{nvdaApiVersion}.json"
+
+
+def _getCacheHashURL() -> str:
+	return f"{_BASE_URL}/cacheHash.json"
 
 
 class AddonFileDownloader:
@@ -210,13 +218,13 @@ class AddonFileDownloader:
 		return cast(os.PathLike, cacheFilePath)
 
 	@staticmethod
-	def _checkChecksum(addonFilePath: str, addonData: AddonStoreModel) -> Optional[os.PathLike]:
+	def _checkChecksum(addonFilePath: str, addonData: _AddonStoreModel) -> Optional[os.PathLike]:
 		with open(addonFilePath, "rb") as f:
 			sha256Addon = sha256_checksum(f)
 		return sha256Addon.casefold() == addonData.sha256.casefold()
 
 	@staticmethod
-	def _getCacheFilenameForAddon(addonData: AddonStoreModel) -> str:
+	def _getCacheFilenameForAddon(addonData: _AddonGUIModel) -> str:
 		return f"{addonData.addonId}-{addonData.addonVersionName}.nvda-addon"
 
 	def __del__(self):

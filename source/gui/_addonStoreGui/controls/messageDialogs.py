@@ -10,7 +10,11 @@ from typing import (
 import wx
 
 import addonAPIVersion
-from _addonStore.models.addon import AddonGUIModel
+from _addonStore.models.addon import (
+	_AddonGUIModel,
+	_AddonStoreModel,
+	_InstalledAddonModel,
+)
 from gui.addonGui import ErrorAddonInstallDialog
 from gui.message import messageBox
 
@@ -49,7 +53,7 @@ class ErrorAddonInstallDialogWithYesNoButtons(ErrorAddonInstallDialog):
 
 def _shouldProceedWhenInstalledAddonVersionUnknown(
 		parent: wx.Window,
-		addon: AddonGUIModel
+		addon: _AddonGUIModel
 ) -> bool:
 	# an installed add-on should have an addon Handler Model
 	assert addon._addonHandlerModel
@@ -97,7 +101,7 @@ def _shouldProceedToRemoveAddonDialog(
 
 def _shouldInstallWhenAddonTooOldDialog(
 		parent: wx.Window,
-		addon: AddonGUIModel
+		addon: _AddonGUIModel
 ) -> bool:
 	incompatibleMessage = pgettext(
 		"addonStore",
@@ -126,7 +130,7 @@ def _shouldInstallWhenAddonTooOldDialog(
 
 def _shouldEnableWhenAddonTooOldDialog(
 		parent: wx.Window,
-		addon: AddonGUIModel
+		addon: _AddonGUIModel
 ) -> bool:
 	incompatibleMessage = pgettext(
 		"addonStore",
@@ -153,35 +157,39 @@ def _shouldEnableWhenAddonTooOldDialog(
 	).ShowModal() == wx.YES
 
 
-def _showAddonInfo(addon: AddonGUIModel) -> None:
+def _showAddonInfo(addon: _AddonGUIModel) -> None:
 	message = [
 		pgettext(
 			"addonStore",
 			# Translators: message shown in the Addon Information dialog.
 			"{summary} ({name})\n"
 			"Version: {version}\n"
-			"Publisher: {publisher}\n"
 			"Description: {description}\n"
 			).format(
 		summary=addon.displayName,
 		name=addon.addonId,
 		version=addon.addonVersionName,
-		publisher=addon.publisher,
 		description=addon.description,
 		)
 	]
+	if isinstance(addon, _AddonStoreModel):
+		# Translators: the publisher part of the About Add-on information
+		message.append(pgettext("addonStore", "Publisher: {publisher}\n").format(publisher=addon.publisher))
+	if isinstance(addon, _InstalledAddonModel):
+		# Translators: the author part of the About Add-on information
+		message.append(pgettext("addonStore", "Author: {author}\n").format(author=addon.author))
 	if addon.homepage:
 		# Translators: the url part of the About Add-on information
-		message.append(pgettext("addonStore", "Homepage: {url}").format(url=addon.homepage))
+		message.append(pgettext("addonStore", "Homepage: {url}\n").format(url=addon.homepage))
 	minimumNVDAVersion = addonAPIVersion.formatForGUI(addon.minimumNVDAVersion)
 	message.append(
 		# Translators: the minimum NVDA version part of the About Add-on information
-		pgettext("addonStore", "Minimum required NVDA version: {}").format(minimumNVDAVersion)
+		pgettext("addonStore", "Minimum required NVDA version: {}\n").format(minimumNVDAVersion)
 	)
 	lastTestedNVDAVersion = addonAPIVersion.formatForGUI(addon.lastTestedNVDAVersion)
 	message.append(
 		# Translators: the last NVDA version tested part of the About Add-on information
-		pgettext("addonStore", "Last NVDA version tested: {}").format(lastTestedNVDAVersion)
+		pgettext("addonStore", "Last NVDA version tested: {}\n").format(lastTestedNVDAVersion)
 	)
 	# Translators: title for the Addon Information dialog
 	title = pgettext("addonStore", "Add-on Information")
