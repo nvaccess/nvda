@@ -2105,6 +2105,7 @@ You can configure reporting of:
  - Page numbers
  - Line numbers
  - Line indentation reporting [(Off, Speech, Tones, Both Speech and Tones) #DocumentFormattingSettingsLineIndentation]
+ - Ignore blank lines for line indentation reporting
  - Paragraph indentation (e.g. hanging indent, first line indent)
  - Line spacing (single, double, etc.)
  - Alignment
@@ -2146,6 +2147,9 @@ The Report line indentation with combo box has four options.
 The tone will increase in pitch every space, and for a tab, it will increase in pitch the equivalent of 4 spaces.
 - Both Speech and Tones: This option reads indentation using both of the above methods.
 -
+
+If you tick the "Ignore blank lines for line indentation reporting" checkbox, then indentation changes won't be reported for blank lines.
+This may be useful when reading a document where blank lines are used to separate indented bloks of text, such as in programming source code.
 
 +++ Document Navigation +++[DocumentNavigation]
 This category allows you to adjust various aspects of document navigation.

@@ -65,6 +65,7 @@ class SymLevel(_enum.Enum):
 	"""Symbol levels, should match characterProcessing.SymbolLevel
 	"""
 	NONE = 0
+	SOME = 100
 	ALL = 300
 
 
@@ -74,6 +75,13 @@ class EndSpeech(_enum.Enum):
 	BOTTOM = "Bottom"
 	RIGHT = "Right"
 	NONE = None
+
+
+class ReportLineIndentation(_enum.Enum):
+	"""Line indentation reporting options. Should match config.configFlags.ReportLineIndentation
+	"""
+	OFF = 0
+	SPEECH = 1
 
 
 def _pressKeyAndCollectSpeech(key: str, numberOfTimes: int) -> _typing.List[str]:
@@ -500,7 +508,7 @@ def test_symbolInSpeechUI():
 	_notepad.prepareNotepad((
 		"t"  # Character doesn't matter, we just want to invoke "Right" speech UI.
 	))
-	_setSymbolLevel(SymLevel.ALL)
+	_setConfig(SymLevel.ALL)
 	spy = _NvdaLib.getSpyLib()
 	expected = "shouldn't sub tick symbol"
 	spy.override_translationString(EndSpeech.RIGHT.value, expected)
@@ -527,7 +535,7 @@ def test_symbolInSpeechUI():
 	)
 
 	# Show that with symbol level None, the speech UI symbols are not substituted.
-	_setSymbolLevel(SymLevel.NONE)
+	_setConfig(SymLevel.NONE)
 	actual = _pressKeyAndCollectSpeech(Move.REVIEW_CHAR.value, numberOfTimes=1)
 	_builtIn.should_be_equal(
 		actual,
@@ -536,20 +544,32 @@ def test_symbolInSpeechUI():
 	)
 
 
-def _setSymbolLevel(symbolLevel: SymLevel) -> None:
+def _setConfig(
+		symbolLevel: SymLevel = SymLevel.SOME,
+		reportLineIndentation: ReportLineIndentation = ReportLineIndentation.OFF,
+		ignoreBlankLines: bool = False
+) -> None:
 	spy = _NvdaLib.getSpyLib()
-	SYMBOL_LEVEL_KEY = ["speech", "symbolLevel"]
-	spy.set_configValue(SYMBOL_LEVEL_KEY, symbolLevel.value)
-	_builtIn.log(message=f"Doing test at symbol level: {symbolLevel}")
+	spy.set_configValue(["documentFormatting", "reportLineIndentation"], reportLineIndentation.value)
+	spy.set_configValue(["documentFormatting", "ignoreBlankLinesForRLI"], ignoreBlankLines)
+	spy.set_configValue(["speech", "symbolLevel"], symbolLevel.value)
+	message = (
+		f"Doing test at symbol level: {symbolLevel}"
+		f", line indentation reporting: {reportLineIndentation}"
+		f", ignore blank lines for line indentation reporting: {ignoreBlankLines}"
+	)
+	_builtIn.log(message=message)
 
 
 def _doTest(
 		navKey: Move,
 		expectedSpeech: _typing.List[str],
 		reportedAfterLast: EndSpeech,
-		symbolLevel: SymLevel,
+		symbolLevel: SymLevel = SymLevel.SOME,
+		reportLineIndentation: ReportLineIndentation = ReportLineIndentation.OFF,
+		ignoreBlankLines: bool = False
 ) -> None:
-	_setSymbolLevel(symbolLevel)
+	_setConfig(symbolLevel, reportLineIndentation, ignoreBlankLines)
 
 	actual = _pressKeyAndCollectSpeech(navKey.value, numberOfTimes=len(expectedSpeech))
 	_builtIn.should_be_equal(
@@ -600,7 +620,7 @@ def test_tableHeaders():
 			</table>
 		"""
 	)
-	_setSymbolLevel(SymLevel.ALL)
+	_setConfig(SymLevel.ALL)
 	# Expected to be in browse mode
 	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
 	_asserts.strings_match(
@@ -667,5 +687,58 @@ def test_tableHeaders():
 			# name of column, column number 2, \n cell contents
 			'right-pointing arrow   t-shirt  column 2\nb',  # note symbols ARE replaced in column name
 			"Don tick t  column 3\nc",  # note symbols ARE replaced in column name
+		]
+	)
+
+
+def test_ignoreBlankLinesForReportLineIndentation():
+	""" Test line indentation reporting with ignoreBlankLinesForReportLineIndentation off and then on
+	"""
+	_notepad.prepareNotepad('\n'.join([
+		'',  # blank line
+		'def foo',
+		'\thello',
+		'',  # blank line
+		'\tworld',
+		'',  # blank line
+		'def bar',
+		'',  # blank line
+	]))
+
+	def _doTestIgnoreBlankLines(ignoreBlankLines: bool, expectedSpeech: _typing.List[str]) -> None:
+		_doTest(
+			navKey=Move.REVIEW_LINE,
+			reportedAfterLast=EndSpeech.BOTTOM,
+			symbolLevel=SymLevel.ALL,
+			reportLineIndentation=ReportLineIndentation.SPEECH,
+			ignoreBlankLines=ignoreBlankLines,
+			expectedSpeech=expectedSpeech
+		)
+
+	_doTestIgnoreBlankLines(
+		ignoreBlankLines=False,
+		expectedSpeech=[
+			'def foo',
+			'tab  hello',
+			'no indent  blank',
+			'tab  world',
+			'no indent  blank',
+			'def bar',
+			'blank'
+		]
+	)
+
+	_NvdaLib.getSpeechAfterKey(Move.REVIEW_HOME.value)  # reset to start position
+
+	_doTestIgnoreBlankLines(
+		ignoreBlankLines=True,
+		expectedSpeech=[
+			'def foo',
+			'tab  hello',
+			'blank',
+			'world',
+			'blank',
+			'no indent  def bar',
+			'blank'
 		]
 	)
