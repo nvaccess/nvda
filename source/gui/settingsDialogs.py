@@ -977,28 +977,26 @@ class GeneralSettingsPanel(SettingsPanel):
 			LanguageRestartDialog(self).ShowModal()
 
 
-class LanguageRestartDialog(
+class _RestartDialog(
 		gui.contextHelp.ContextHelpMixin,
 		wx.Dialog,  # wxPython does not seem to call base class initializer, put last in MRO
 ):
+	_title: str
+	_message: str
 
-	helpId = "GeneralSettingsLanguage"
-
-	def __init__(self, parent):
-		# Translators: The title of the dialog which appears when the user changed NVDA's interface language.
-		super(LanguageRestartDialog, self).__init__(parent, title=_("Language Configuration Change"))
+	def __init__(self, parent: wx.Window):
+		super().__init__(parent, title=self._title)
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
-		# Translators: The message displayed after NVDA interface language has been changed.
-		sHelper.addItem(wx.StaticText(self, label=_("NVDA must be restarted for the new language to take effect.")))
+		sHelper.addItem(wx.StaticText(self, label=self._message))
 
 		bHelper = sHelper.addDialogDismissButtons(guiHelper.ButtonHelper(wx.HORIZONTAL))
-		# Translators: The label for a button  in the dialog which appears when the user changed NVDA's interface language.
+		# Translators: The label for a button in a dialog
 		restartNowButton = bHelper.addButton(self, label=_("Restart &now"))
 		restartNowButton.Bind(wx.EVT_BUTTON, self.onRestartNowButton)
 		restartNowButton.SetFocus()
 
-		# Translators: The label for a button  in the dialog which appears when the user changed NVDA's interface language.
+		# Translators: The label for a button in a dialog
 		restartLaterButton = bHelper.addButton(self, wx.ID_CLOSE, label=_("Restart &later"))
 		restartLaterButton.Bind(wx.EVT_BUTTON, lambda evt: self.Close())
 		self.Bind(wx.EVT_CLOSE, lambda evt: self.Destroy())
@@ -1012,7 +1010,28 @@ class LanguageRestartDialog(
 	def onRestartNowButton(self, evt):
 		self.Destroy()
 		config.conf.save()
-		queueHandler.queueFunction(queueHandler.eventQueue,core.restart)
+		queueHandler.queueFunction(queueHandler.eventQueue, core.restart)
+
+
+class _WASAPIRestartDialog(_RestartDialog):
+	helpId = "WASAPI"
+
+	# Translators: The title of the dialog which appears when the user updated a setting for audio output
+	_title = _("Audio output change")
+
+	# Translators: The message displayed when the user updated a setting for audio output
+	_message = _("NVDA must be restarted for the new audio settings to take effect.")
+
+
+class LanguageRestartDialog(_RestartDialog):
+	helpId = "GeneralSettingsLanguage"
+
+	# Translators: The title of the dialog which appears when the user changed NVDA's interface language.
+	_title = _("Language Configuration Change")
+
+	# Translators: The message displayed after NVDA interface language has been changed.
+	_message = _("NVDA must be restarted for the new language to take effect.")
+
 
 class SpeechSettingsPanel(SettingsPanel):
 	# Translators: This is the label for the speech panel
@@ -3085,6 +3104,7 @@ class AdvancedPanelControls(
 		))
 		self.bindHelpEvent("WASAPI", self.wasapiComboBox)
 		self.wasapiComboBox.Bind(wx.EVT_CHOICE, self._onWASAPIChange)
+		self._oldWASAPIValue: bool = self.wasapiComboBox._getConfigValue().calculated()
 
 		# Translators: This is the label for a checkbox control in the
 		#  Advanced settings panel.
@@ -3287,6 +3307,7 @@ class AdvancedPanelControls(
 			config.conf['debugLog'][key]=self.logCategoriesList.IsChecked(index)
 		config.conf["featureFlag"]["playErrorSound"] = self.playErrorSoundCombo.GetSelection()
 
+
 class AdvancedPanel(SettingsPanel):
 	enableControlsCheckBox = None  # type: wx.CheckBox
 	# Translators: This is the label for the Advanced settings panel.
@@ -3358,6 +3379,9 @@ class AdvancedPanel(SettingsPanel):
 		):
 			self.advancedControls.onSave()	
 
+	def postSave(self):
+		if self.advancedControls._oldWASAPIValue != config.conf["audio"]["WASAPI"].calculated():
+			_WASAPIRestartDialog(self).ShowModal()
 
 	def onEnableControlsCheckBox(self, evt):
 		# due to some not very well understood mis ordering of event processing, we force NVDA to

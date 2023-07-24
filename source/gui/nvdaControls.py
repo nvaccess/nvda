@@ -459,7 +459,7 @@ class FeatureFlagCombo(wx.Choice):
 			name=name,
 		)
 
-		self.SetSelection(self._getChoiceIndex(self._getConfigValue().value))
+		self.SetSelection(self._getChoiceIndex(configValue.value))
 		self.defaultValue = self._getConfSpecDefaultValue()
 		"""The default value of the config spec. Not the "behavior of default".
 		This is provided to maintain compatibility with other controls in the
