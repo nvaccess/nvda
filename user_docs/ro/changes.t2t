@@ -3,6 +3,109 @@ Ce este nou în NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2023.2 =
+
+== Noi funcționalități ==
+- Magazinul de suplimente a fost adăugat la NVDA. (#13985)
+  - Răsfoiți, căutați, instalați și actualizați suplimentele comunității.
+  - Anulare manuală pentru problemele de incompatibilitate cu suplimente învechite.
+  - Administrarea suplimentelor a fost eliminată și înlocuită de Magazinul de suplimente.
+  - Pentru mai multe informații, vă rugăm să citiți ghidul de utilizare actualizat.
+  -
+- S-a adăugat pronunția simbolurilor Unicode:
+  - simboluri braille precum „⠐⠣⠃⠗⠇⠐⠜”. (#14548)
+  - Simbolul tastei Mac Opțiune „⌥”. (#14682)
+  -
+- Noi gesturi de intrare:
+  - Un gest (care nu a fost setat) pentru a parcurge limbile disponibile pentru Windows OCR. (#13036)
+  - Un gest (care nu a fost setat) pentru a parcurge modurile de afișare a mesajelor braille. (#14864)
+  - Un gest (care nu a fost setat) pentru a comuta afișarea indicatorul de selecție pentru braille. (#14948)
+  -
+- S-au adăugat gesturi pentru afișajele Tivomatic Caiku Albatross Braille. (#14844, #15002)
+  - se afișează dialogul de setări braille
+  - accesarea barei de stare
+  - selectarea formei cursorului braille
+  - selectarea modului de afișare a mesajelor braille
+  - activarea/dezactivarea cursorului braille
+  - Comutarea stării afișării indicatorului de selecție în Braille
+  -
+- O nouă opțiune Braille pentru comutarea afişării indicatorului de selecție (punctele 7 și 8). (#14948)
+- În Mozilla Firefox și Google Chrome, NVDA raportează acum când un control deschide un dialog, grilă, listă sau arbore dacă autorul a specificat acest lucru folosind aria-haspopup. (#14709)
+- Acum este posibil să utilizați variabile de sistem (cum ar fi ``%temp%`` sau ``%homepath%``) în specificația căii în timp ce creați copii portabile ale NVDA. (#14680)
+- S-a adăugat suport pentru atributul ``aria-brailleroledescription`` ARIA 1.3, permițând autorilor web să suprascrie tipul unui element afișat pe afișajul Braille. (#14748)
+- Când textul evidențiat este activat în Formatarea documentului, culorile evidențiate sunt acum raportate în Microsoft Word. (#7396, #12101, #5866)
+- Când culorile sunt activate în Formatarea documentului, culorile fundalului sunt acum raportate în Microsoft Word. (#5866)
+- Când apăsați ``numpad2`` de trei ori pentru a raporta valoarea numerică a caracterului în poziția cursorului de revizuire, informațiile sunt acum furnizate și în braille. (#14826)
+- NVDA redă acum audio prin API-ul Windows Audio Session (WASAPI), care poate îmbunătăți capacitatea de răspuns, performanța și stabilitatea vorbirii și sunetelor NVDA.
+Acest lucru poate fi dezactivat în Setări avansate dacă apar probleme la redare. (#14697)
+- Când utilizați comenzile rapide Excel pentru a comuta format, cum ar fi aldine, cursive, subliniere și barare a unei celule în Excel, rezultatul este acum raportat. (#14923)
+- S-a adăugat suport pentru afișajul Help Tech Activator Braille. (#14917)
+- În versiunea Windows actualizată 10 May 2019 și cele ulterioare, NVDA poate anunța nume de desktop virtual atunci când le deschide, le schimbă și le închide. (#5641)
+- Acum este posibil ca volumul sunetelor și bipurilor NVDA să urmeze setarea de volum a vocii pe care o utilizați.
+Această opțiune poate fi activată în Setări avansate. (#1409)
+- Acum puteți controla separat volumul sunetelor NVDA.
+Acest lucru se poate face folosind Windows Volume Mixer. (#1409)
+  - 
+
+
+== Modificări ==
+- Translatorul braille LibLouis actualizat la [3.26.0 https://github.com/liblouis/liblouis/releases/tag/v3.26.0]. (#14970)
+- CLDR a fost actualizat la versiunea 43.0. (#14918)
+- Simbolurile Dash și em-dash vor fi întotdeauna trimise la sintetizator. (#13830)
+- Schimbări LibreOffice:
+  - Când este raportată locația cursorului de examinare, locația curentă a cursorului de scriere este acum raportată în raport cu pagina curentă în LibreOffice Writer pentru versiunile LibreOffice >= 7.6, similar cu ceea ce se face pentru Microsoft Word. (#11696)
+  - Anunțul barei de stare (de exemplu, declanșat de ``NVDA+end``) funcționează pentru LibreOffice. (#11698)
+  -
+- Distanța raportată în Microsoft Word va onora acum unitatea definită în opțiunile avansate ale Word, chiar și atunci când utilizați UIA pentru a accesa documentele Word. (#14542)
+- NVDA răspunde mai rapid la mutarea cursorului în comenzile de editare. (#14708)
+- Driver Baum Braille: adaugă mai multe gesturi Braille pentru executarea comenzilor comune de la tastatură, cum ar fi ``windows+d``, ``alt+tab`` etc.
+Vă rugăm să consultați ghidul utilizatorului NVDA pentru o listă completă. (#14714)
+- Când utilizați un afișaj Braille prin driverul standard Braille HID, dpad-ul poate fi folosit pentru a emula tastele săgeți și enter. De asemenea, spațiu+punct1 și spațiu+punct4 acum îndeplinesc funcţiile de săgeata sus și respectiv în jos. (#14713)
+- Scriptul de raportare a destinației unui link acum raportează din poziția de focalizare, mai degrabă decât din navigatorul de obiecte. (#14659)
+- Crearea copiilor portabile nu mai necesită introducerea unei litere de unitate ca parte a locaţiei absolute. (#14681)
+- Dacă Windows este configurat să afișeze secunde în ceasul din bara de sistem, folosind ``NVDA+f12`` pentru a raporta ora, acum NVDA respectă această setare. (#14742)
+- NVDA va raporta acum grupările neetichetate care au informații utile despre poziție, cum ar fi în versiunile recente ale meniurilor Microsoft Office 365. (#14878)
+-
+
+
+== Defecte rezolvate ==
+- NVDA nu va mai trece în mod inutil la no braille de mai multe ori în timpul detectării automate, rezultând un jurnal mai curat, suprasolicitarea fiind redusă. (#14524)
+- NVDA va reveni acum la USB dacă un dispozitiv Bluetooth HID (cum ar fi HumanWare Brailliant sau APH Mantis) este detectat automat și o conexiune USB devine disponibilă.
+Acest lucru a funcționat înainte doar pentru porturile serial Bluetooth. (#14524)
+- Acum este posibil să utilizați caracterul backslash în câmpul de înlocuire al unei intrări de dicționar, atunci când tipul nu este setat la expresie regulată. (#14556)
+- În modul Navigare, NVDA nu va mai ignora în mod incorect mutarea focalizării către un element arborescent sau superior, de ex. trecerea de la un control la elementul părinte din listă sau celula grilă. (#14611)
+  - Rețineți totuși că această remediere se aplică numai atunci când opțiunea Setează automat focalizarea sistemului la elementele focalizabile este dezactivată (care este implicit).
+  -
+- NVDA nu mai face ca ocazional Mozilla Firefox să se blocheze sau să înceteze să răspundă. (#14647)
+- În Mozilla Firefox și în Google Chrome, caracterele tastate nu mai sunt anunțate în unele casete de text, chiar și atunci când opțiunea „Pronunță caracterele tastate” este dezactivată. (#14666)
+- Puteți folosi acum modul de navigare din Chromium Embedded Controls acolo unde înainte nu se putea. (#13493, #8553)
+- Pentru simbolurile care nu au o descriere în traducerea curentă, va fi utilizat nivelul simbolului englezesc implicit. (#14558, #14417)
+- Rezolvări pentru Windows 11:
+  - NVDA poate anunța din nou conținuturile barei de stare a Notepad. (#14573)
+  - Comutarea între file va anunța numele și poziția noii file pentru Notepad și pentru File Explorer. (#14587, #14388)
+  - NVDA va anunța din nou elementele candidate la inserarea textului în limbi precum chineză și japoneză. (#14509)
+  -
+- În Mozilla Firefox, deplasarea mausului peste textul de după un link raportează cum trebuie acel text. (#9235)
+- În aplicația Calculator din Windows 10 și 11, o copie portabilă a NVDA nu va mai face nimic și nu va mai reda tonuri de eroare la introducerea expresiilor în calculatorul standard din modul suprapunere compactă. (#14679)
+- La încercarea de amunțare a unui link fără atributul href, NVDA nu mai este silențios.
+În schimb, va spune că link-ul nu are destinație. (#14723)
+- Câteva rezolvări la intrarea/ieșirea pentru afișajele braille care au avut drept consecință mai puține erori frecvente și blocări ale NVDA. (#14627)
+- NVDA se recuperează din mai multe situații, cum ar fi aplicațiile care nu mai răspund, ceea ce anterior a determinat blocarea completă. (#14759)
+- Destinația link-urilor grafice este raportată corect în Chrome și Edge. (#14779)
+- Este din nou posibilă accesarea, în Windows 11, a opțiunilor „Licență” și „Colaboratori” din meniul „Ajutor” al NVDA. (#14725)
+- La forțarea suportului UIA cu anumite terminale și console, este remediată o eroare care a cauzat înghețarea și spam-ul fișierului jurnal. (#14689)
+- Pentru NVDA, anunțarea focalizării câmpurilor de parolă din Microsoft Excel și Outlook nu mai este un eșec. (#14839)
+- NVDA nu va mai refuza să salveze configurația după o resetare. (#13187)
+- Când rulează o versiune temporară din lansator, NVDA nu va induce în eroare utilizatorii să creadă că pot salva configurația. (#14914)
+- Au fost îmbunătățite combinațiile de taste pentru raportarea obiectului. (#10807)
+- La deplasarea rapidă printre celulele din Excel, este mai puțin probabil ca NVDA să raporteze greșit o celulă sau o selecție. (#14983, #12200, #12108)
+- În general, NVDA răspunde mai repede la comenzi și la schimbările de focalizare. (#14928)
+-
+
+== Modificări pentru dezvoltatori ==
+
+
+
 = 2021.2 =
 Această versiune introduce suportul preliminar pentru Windows 11.
 În timp ce lansarea oficială a Windows 11 încă se lasă așteptată, această versiune de NVDA a fost testată pe versiunile de previzualizare ale acestui sistem de operare.

@@ -222,7 +222,7 @@ Chức năng thật sự của thao tác sẽ không được thực thi khi ở
 | Thông báo vị trí con trỏ | ``NVDA+tab`` | ``NVDA+tab`` | Thông báo điều khiển tại vị trí con trỏ.  Bấm hai lần để đánh vần thông tin |
 | Đọc cửa sổ | ``NVDA+b`` | ``NVDA+b`` | Đọc toàn bộ thông tin trên cửa sổ hiện hành (hữu ích khi dùng hộp thoại) |
 | Đọc thanh trạng thái | ``NVDA+end`` | ``NVDA+shift+end`` | Đọc thông tin thanh trạng thái nếu NVDA tìm thấy. Bấm hai lần để đánh vần thông tin. Bấm ba lần để chép nó vào bộ nhớ tạm |
-| Đọc giờ | ``NVDA+f12`` | ``NVDA+f12`` | Bấm một lần để đọc giờ hiện tại, bấm hai lần để đọc ngày |
+| Đọc giờ | ``NVDA+f12`` | ``NVDA+f12`` | Bấm một lần để đọc giờ hiện tại, bấm hai lần để đọc ngày. Ngày giờ được  đọc theo định dạng đã cấu hình trong Windows settings cho đồng hồ ở khay hệ thống. |
 | Thông báo định dạng văn bản | ``NVDA+f`` | ``NVDA+f`` | Thông báo định dạng văn bản. Bấm hai lần để hiển thị thông tin trên một cửa sổ |
 | Thông báo đường dẫn liên kết | ``NVDA+k`` | ``NVDA+k`` | Bấm một lần để đọc đường dẫn URL của liên kết tại dấu nháy hoặc vị trí con trỏ. Bấm hai lần sẽ hiển thị nó trên một cửa sổ để dễ xem lại hơn |
 
@@ -311,6 +311,7 @@ Nếu bạn đã cài sẵn các add-on, sẽ có thể xuất hiện một cả
 Trước khi bấm nút tiếp tục, bạn cần phải chọn vào hộp kiểm để xác nhận đã hiểu rằng những  add-on này  sẽ bị vô hiệu.
 Cũng có một nút bấm để bạn xem qua các add-on sẽ bị vô hiệu.
 Xem phần [hộp thoại các add-on không tương thích #incompatibleAddonsManager] để biết thêm thông tin về nút này.
+Sau khi cài đặt xong, bạn có thể bật lại các add-on không tương thích nếu muốn trong [Add-on Store (cửa hàng Add-on) #AddonsManager].
 
 +++ Dùng NVDA trong khi đăng nhập +++[StartAtWindowsLogon]
 Tùy chọn này cho phép NVDA chạy  hoặc không chạy tự động tại màn hình đăng nhập của Windows, trước khi bạn nhập mật khẩu.
@@ -482,10 +483,15 @@ Chức năng của lệnh đó hoàn toàn không được thực thi khi chế 
 ++ Trình đơn NVDA ++[TheNVDAMenu]
 Trình đơn NVDA cho phép bạn thay đổi các thông tin cấu hình cho NVDA, xem thông tin trợ giúp, lưu / phục hồi cấu hình, tùy chỉnh từ điển phát âm, truy cập các công cụ và thoát NVDA.
 
-Để mở trình đơn NVDA ở bất cứ đâu khi NVDA đang chạy, bấm tổ hợp phím NVDA + n hoặc thực hiện hai-chạm hai-ngón lên màn hình cảm ứng.
-Bạn cũng có thể mở trình đơn đó từ khay hệ thống.
-Bạn bấm nút chuột phải vào biểu tượng NVDA trên khay hệ thống hoặc dùng tổ hợp phím Windows + b để chuyển đến khay hệ thống, dùng phím mũi tên để tìm đến NVDA và bấm phím application nằm kế bên phím control phải của hầu hết bàn phím.
-Khi trình đơn hiện ra, bạn có thể dùng các phím mũi tên để khám phá các mục trong trình đơn đó và bấm phím enter để kích hoạt mục bạn chọn.
+Bạn có thể mở trình đơn của NVDA ở bất cứ đâu khi nó đang chạy bằng một trong những cách sau:
+- Bấm tổ hợp phím ``NVDA+n``.
+- Chạm hai lần bằng hai ngón tay trên màn hình cảm ứng.
+- Truy cập khay hệ thống (system tray) bằng phím lệnh ``Windows+b``, ``mũi tên xuống`` đến biểu tượng NVDA và bấm ``enter``.
+- Ngoài ra, hãy truy cập khay hệ thống (system tray) bằng phím lệnh ``Windows+b``, ``mũi tên xuống`` đến biểu tượng NVDA, và mở trình đơn ngữ cảnh bằng cách bấm phím ``applications`` ở cạnh phím  control bên tay phải trên hầu hết bàn phím.
+Với những bàn phím không có phím ``applications``, hãy bấm ``shift+F10``.
+- Bấm chuột phải trên biểu tượng NVDA trong khay hệ thống.
+-
+Khi trình đơn mở ra, bạn có thể dùng các phím mũi tên để di chuyển đến các mục, và bấm ``enter`` để kích hoạt chúng.
 
 ++ Các lệnh cơ bản của NVDA ++[BasicNVDACommands]
 %kc:beginInclude
@@ -1296,16 +1302,19 @@ Một số thiết lập có thể thay đổi thông qua các phím tắt sẽ 
 
 ++ Cài đặt NVDA ++[NVDASettings]
 %kc:settingsSection: || Tên | Phím máy bàn | Phím xách tay | Mô tả |
-Hộp thoại cài đặt NVDA có thể dùng để thay đổi nhiều tham số cấu hình.
-Hộp thoại này có một danh sách với vài phân loại cấu hình để người dùng lựa chọn.
-Khi bạn chọn một phân loại, hộp thoại sẽ hiển thị  vài thiết lập liên quan đến phân loại đó.
-Các thiết lập này có thể được áp dụng bằng cách bấm nút Áp dụng. trường hợp này, hộp thoại không bị đóng lại.
+NVDA cung cấp nhiều tham số để cấu  hình và chúng có thể được thay đổi thông qua hộp thoại cài đặt.
+Để dễ dàng hơn trong việc tìm kiếm và thay đổi các cài đặt, hộp thoại sẽ hiển thị dưới dạng một danh sách các phân loại cấu hình.
+Khi bạn chọn một phân loại, tất cả những cài đặt liên quan sẽ hiển thị trong hộp thoại.
+Để di chuyển giữa các phân loại cấu hình, bấm ``tab`` hoặc ``shift+tab`` đi đến danh sách phân loại, rồi dùng mũi tên lên xuống để điều hướng trong danh sách.
+Ở bất cứ đâu trong hộp thoại, bạn có thể chuyển đến phân loại kế tiếp bằng cách bấm ``ctrl+tab``, hoặc lùi về phân loại trước bằng cách bấm ``shift+ctrl+tab``.
+
+Khi đã thay đổi một hay nhiều cài đặt, bạn có thể áp dụng chúng bằng cách bấm nút áp dụng, và hộp thoại vẫn mở, cho phép bạn chọn các thiết lập hay phân loại cấu hình khác.
 Nếu muốn lưu thiết lập và đóng hộp thoại cấu hình NVDA, bạn có thể bấm nút Đồng ý.
 
 Một số phân loại có phím tắt để mở.
-Nếu bấm phím tắt, hộp thoại cấu hình NVDA sẽ được mở và con trỏ sẽ đi đến phân loại đó.
+Nếu bấm phím tắt, hộp thoại cấu hình NVDA sẽ được mở và con trỏ sẽ đi thẳng đến phân loại đó.
 Mặc định, không phải tất cả phân loại đều có thể mở được bằng phím tắt.
-Nếu muốn mở phân loại nào không được gán phím tắt, hãy dùng [hộp thoại quản lý thao tác #InputGestures] để gán phím lệnh hay thao tác cảm ứng cho phân loại đó.
+Nếu bạn thường xuyên phải mở một phân loại không được gán phím tắt, hãy dùng [hộp thoại quản lý thao tác #InputGestures] để gán thao tác / phím tắt cho phân loại đó.
 
 Dưới đây là các phân loại trong hộp thoại cấu hình NVDA:
 
@@ -1585,6 +1594,8 @@ Dấu báo vùng chọn vẫn sử dụng chấm 7 và 8 và không nháy. Nó k
 ==== Hiển thị thông điệp ====[BrailleSettingsShowMessages]
 Đây là một hộp xổ cho phép bạn lựa chọn việc hiển thị thông điệp bằng chữ nổi của NVDA và khi nào thì chúng tự biến mất.
 
+Để bật / tắt chế độ hiển thị thông điệp ở bất cứ đâu, vui lòng gán thao tác / phím tắt thông qua [Hộp thoại quản lý thao tác #InputGestures].
+
 ==== Thời Gian Kết Thúc Thông Điệp (giây) ====[BrailleSettingsMessageTimeout]
 Tùy chọn này kiểm soát thời gian kết thúc hiển thị các thông điệp trên màn hình nổi.
 Thông điệp của NVDA sẽ bị loại bỏ ngay lập tức khi bấm một phím routing trên màn hình chữ nổi, nhưng sẽ xuất hiện lại khi bấm một phím tương ứng để kích hoạt thông điệp.
@@ -1661,6 +1672,20 @@ Việc bộ phát âm cứ đọc nội dung có thể gây mất tập trung kh
 Vì lí do đó, tùy chọn ngừng đọc khi cuộn chữ nổi mặc định được bật.
 
 Tắt tùy chọn này cho phép bạn nghe đọc nội dung song song với đọc chữ nổi.
+
+==== Hiện vùng chọn ====[BrailleSettingsShowSelection]
+: Mặc định
+  Bật
+: Tùy chọn
+  Mặc định (Bật), Bật, Tắt
+:
+
+Thiết lập này giúp nhận biết khi việc thông báo vùng chọn (các chấm 7 và 8) hiện trên màn hình nổi.
+Mặc định thì tùy chọn này được bật nên việc thông báo vùng chọn sẽ được hiển thị.
+Việc thông báo vùng chọn có thể gây mất tập trung trong khi đọc.
+Tắt tùy chọn này có thể cải thiện khả năng đọc.
+
+Để bật / tắt việc  hiện vùng chọn ở bất cứ đâu, hãy gán một thao tác / phím tắt thông qua [Hộp thoại quản lý thao tác #InputGestures].
 
 +++ Chọn màn hình nổi (NVDA+control+a) +++[SelectBrailleDisplay]
 Hộp thoại chọn màn hình nổi, có thể mở bằng cách kích hoạt nút Thay đổi... trong phân loại chữ nổi của hộp thoại cấu hình NVDA,cho phép bạn chọn màn hình để hiển thị đầu ra chữ nổi trong NVDA.
@@ -2121,7 +2146,7 @@ Phân loại này gồm các mục sau:
 
 ==== Ngôn Ngữ Nhận Dạng ====[Win10OcrSettingsRecognitionLanguage]
 Hộp xổ này cho phép chọn ngôn ngữ dùng để nhận dạng.
-Để  chuyển qua lại giữa các ngôn ngữ hiện có ở bất cứ đâu, vui lòng gán thao tác trong hộp thoại [Quản lý các thao tác #InputGestures].
+Để  chuyển qua lại giữa các ngôn ngữ hiện có ở bất cứ đâu, vui lòng gán thao tác / phím tắt trong hộp thoại [Quản lý các thao tác #InputGestures].
 
 +++ Cài đặt nâng cao +++[AdvancedSettings]
 Cảnh báo! Các thiết lập trong phân loại này dành cho người dùng ở cấp độ nâng cao, có thể làm cho NVDA hoạt động không chính xác nếu bị cấu hình không đúng cách.
@@ -2139,7 +2164,7 @@ Cũng có thể dùng trong trường hợp mà bạn không chắc là các cà
 Khi phát triển các add-on cho NVDA, sẽ rất tiện lợi nếu có thể chạy thử mã nguồn trong khi đang viết ra nó.
 Tùy chọn này, khi được bật, sẽ cho phép NVDA gọi các Module ứng dụng, Plugins toàn cục, trình điều khiển cho màn hình chữ nổi và  bộ đọc cũng như các cung cấp cho hỗ trợ nhìn đã được tùy chỉnh từ thư mục đặc biệt tên scratchpad trong thư mục cấu hình người dùng NVDA của bạn.
 Tương đương với các  add-on, các module này được gọi chạy khi khởi động NVDA, như một module cho ứng dụng hay toàn cục, khi [cập nhật lại các plugin #ReloadPlugins].
-Mặc định, tùy chọn này bị tắt để đảm bảo rằng không có những đoạn mã chưa được kiểm nghiệm được gọi chạy trong NVDA mà người dùng không có thông tin rõ ràng.
+Mặc định, tùy chọn này bị tắt để đảm bảo rằng không có những đoạn mã chưa qua kiểm nghiệm được gọi chạy trong NVDA mà người dùng không có thông tin rõ ràng.
 Nếu muốn chia sẻ mã nguồn cho người khác, bạn nên đóng gói nó thành một tập tin NVDA add-on.
 
 ==== Mở thư mục scratchpad ====[AdvancedSettingsOpenScratchpadDir]
@@ -2291,6 +2316,19 @@ Tùy chọn này cho phép thông báo khi gặp những màu có độ trong su
 Vài ứng dụng GDI sẽ làm nổi văn bản với một màu nền, NVDA (thông qua mẫu hiển thị) sẽ nỗ lực thông báo màu này.
 Trong vài tình huống, văn bản nền có thể hoàn toàn trong suốt, với văn bản được xếp lớp trên một vài thành phần giao diện đồ họa người dùng (GUI) khác.
 Với vài GUI APIs phổ biến trong lịch sử, văn bản có thể hiển thị với nền trong suốt, nhưng một cách trực quan thì màu nền vẫn chính xác.
+
+==== Dùng WASAPI cho đầu ra âm thanh ====[WASAPI]
+Tùy chọn này cho phép phát ra âm thanh thông qua Windows Audio Session API (WASAPI).
+WASAPI là một hệ thống âm thanh hiện đại hơn, có thể cải thiện khả năng phản hồi, hiệu suất và tính ổn định trong việc phát âm thanh của NVDA, bao gồm cả âm thanh và giọng đọc.
+Mặc định, tùy chọn này được bật.
+Sau khi thay đổi thiết lập, bạn sẽ phải khởi động lại NVDA để nó có hiệu lực.
+
+==== Âm lượng âm thanh NVDA đi theo âm lượng giọng đọc ====[SoundVolumeFollowsVoice]
+Khi bật tùy chọn này, âm lượng của âm thanh và tiếng beep của NVDA sẽ đi theo thiết lập âm lượng  của giọng đọc bạn đang dùng.
+Nếu bạn giảm âm lượng giọng đọc thì âm lượng của âm thanh cũng sẽ giảm.
+Tương tự, nếu bạn tăng âm lượng của âm thanh thì âm lượng của giọng đọc cũng sẽ tăng.
+Tùy chọn này chỉ phát huy tác dụng khi  bật "Dùng WASAPI cho đầu ra âm thanh".
+Mặc định thì tùy chọn này không được bật.
  
  ==== Kiểu bản ghi dò lỗi ====[AdvancedSettingsDebugLoggingCategories]
  Các hộp kiểm trong danh sách này cho phép bạn bật một số kiểu thông điệp dò lỗi nhất định trong log của NVDA.
@@ -2349,7 +2387,7 @@ Lưu ý, thiết lập trong hộp thoại này dựa vào thiết lập của t
 
 Để thay đổi một ký hiệu, trước tiên, hãy chọn nó trong danh sách.
 Bạn có thể lọc các kí hiệu bằng cách nhập kí hiệu hay một phần kí hiệu thay thế vào ô nhập liệu tên Lọc theo.
-.
+
 - Mục Thay thế cho phép bạn thay đổi nội dung sẽ được đọc tại vị trí của kí hiệu này.
 - Sử dụng mục Cấp độ, bạn có thể điều chỉnh cấp độ kí hiệu thấp nhất mà kí hiệu này phải được đọc (không, một vài, hầu hết hoặc tất cả).
 Bạn cũng có thể chọn cấp độ là kí tự. Trường hợp này, kí hiệu sẽ không được đọc lên, bất kể bạn dùng cấp độ đọc kí hiệu nào, trừ hai ngoại lệ sau:
@@ -2521,6 +2559,127 @@ Các cấu hình cho NVDA khi chạy ở màn hình đăng nhập hay màn hình
 Thông thường, bạn không nên can thiệp vào thư mục này.
 Để thay đổi cấu hình cho NVDA trong khi đăng nhập  hay màn hình UAC, hãy thiết lập cấu hình mình muốn khi đã đăng nhập vào Windows, lưu lại, và sau đó chọn mục "Sử dụng cấu hình hiện tại trong khi đăng nhập và các màn hình bảo vệ" trong phân loại chung của [hộp thoại cấu hình NVDA #NVDASettings].
 
++ Add-on và cửa hàng Add-on +[AddonsManager]
+Add-on (tiện ích mở rộng) là các gói phần mềm, cung cấp những tính năng mới hoặc tính năng thay thế cho NVDA.
+Chúng được phát triển bởi cộng đồng NVDA, và các tổ chức bên ngoài như những nhà kinh doanh các sản phẩm thương mại.
+Các Add-on có thể làm được một trong những việc sau:
+- Thêm hoặc cải thiện hỗ trợ cho một số ứng dụng nhất định.
+- Cung cấp hỗ trợ thêm cho màn hình nổi hoặc các bộ đọc.
+- Thêm hoặc thay đổi tính năng của NVDA.
+-
+
+Cửa hàng add-on của NVDA (NVDA's Add-on Store) cho phép bạn duyệt và quản lý các gói add-on.
+Tất cả add-on có trên Cửa Hàng Add-On đều có thể tải về miễn phí.
+Tuy nhiên, một vài trong số đó có thể yêu cầu người dùng trả phí để mua bản quyền hoặc phần mềm bổ sung trước khi có thể sử dụng.
+Các bộ đọc thương mại là một ví dụ cho kiểu add-on này.
+Nếu cài đặt một add-on với những thành phần có trả phí và sau này lại đổi ý về việc sử dụng nó, bạn có thể dễ dàng gỡ bỏ add-on đó.
+
+Bạn truy cập Cửa Hàng Add-On từ trình đơn công cụ trong trình đơn của NVDA.
+Để truy cập Cửa Hàng Add-On ở bất cứ đâu, hãy gán một thao tác / phím tắt thông qua [Hộp thoại quản lý thao tác #InputGestures].
+
+++ Duyệt qua các add-on ++[AddonStoreBrowsing]
+Khi được mở lên, Cửa Hàng Add-On sẽ hiển thị danh sách các add-on.
+Bạn có thể trở về danh sách này với phím lệnh ``alt+l`` khi đang ở bất cứ đâu trong cửa hàng.
+Nếu trước đó, bạn chưa cài đặt add-on nào, cửa hàng add-on sẽ mở ra danh sách các add-on có thể cài đặt.
+Ngược lại, danh sách này sẽ là những add-on đang được cài đặt.
+
+Chọn một add-on bằng cách dùng mũi tên lên xuống di chuyển đến nó, sẽ hiển thị thông tin chi tiết cho add-on đó.
+Các add-on đã có tích hợp những hành động mà bạn có thể thực hiện thông qua [trình đơn hành động #AddonStoreActions], như là cài đặt, trợ giúp, tắt, và gỡ bỏ.
+Các hành động có thể thực hiện được sẽ thay đổi dựa trên việc add-on đó được cài đặt hay chưa, và nó đang được bật hay tắt.
+
++++ Các kiểu hiển thị add-on +++[AddonStoreFilterStatus]
+Có nhiều kiểu hiển thị khác nhau cho các add-on đã cài đặt, có bản cập nhật, đang có trên cửa hàng và add-on không tương thích.
+Để thay đổi kiểu hiển thị của add-on, hãy chuyển đến thẻ thích hợp bằng ``ctrl+tab``.
+Bạn cũng có thể bấm ``tab`` đến danh sách các kiểu hiển thị, rồi di chuyển qua chúng bằng ``mũi tên trái`` và ``mũi tên phải``.
+
++++ Lọc các add-on đã bật hoặc đã tắt +++[AddonStoreFilterEnabled]
+Thông thường thì một add-on được cài đặt sẽ "được bật", nghĩa là nó đang chạy và hoạt động được với NVDA.
+Tuy nhiên, một vài trong số các add-on được cài đặt có thể bị thiết lập trạng thái là "tắt".
+Điều này có nghĩa là nó không được sử dụng, và các chức năng của nó không hoạt động trong khi dùng NVDA.
+Có thể bạn phải tắt một add-on vì nó xung đột với một add-on khác, hay với một số ứng dụng nhất định.
+NVDA cũng có thể tắt đi một số add-on nhất định, nếu chúng được phát hiện là không tương thích trong khi cập nhật NVDA; và bạn sẽ nhận được cảnh báo nếu điều này xảy ra.
+Các Add-on cũng có thể bị tắt nếu bạn  đơn giản không cần đến nó  trong một thời gian dài, nhưng không muốn gỡ bỏ vì mong muốn dùng lại nó trong tương lai.
+
+Có thể lọc danh sách các add-on đã cài đặt và không tương thích bởi trạng thái bật / tắt của chúng.
+Mặc định là hiển thị cả các add-on đã bật và đã tắt.
+
++++ Bao gồm  các add-on không tương thích +++[AddonStoreFilterIncompatible]
+Có thể lọc các add-on có sẵn và add-on có bản cập nhật để bao gồm [các add-on không tương thích #incompatibleAddonsManager] mà có thể cài đặt được.
+
++++ Lọc các add-on theo kênh +++[AddonStoreFilterChannel]
+Các add-on có thể được phân phối qua tối đa 4 kênh:
+- Stable (bản chính thức): tác giả đã phát hành nó dưới dạng một add-on đã được kiểm nghiệm với một phiên bản  NVDA chính thức.
+- Beta (thử nghiệm): add-on có thể cần được kiểm nghiệm nhiều hơn, nhưng vẫn được phát hành để lấy phản hồi từ người dùng.
+Đề xuất sớm hơn cho người dùng.
+- Dev (đang phát triển): kênh này được đề xuất sử dụng bởi các lập trình viên, nhà phát triển add-on để kiểm tra các thay đổi API chưa được phát hành.
+Những người dùng NVDA alpha có thể cần sử dụng phiên bản "Dev" của các add-on.
+- External (bên ngoài): các add-on được cài từ nguồn khác, ngoài Cửa Hàng Add-On.
+-
+
+Để liệt kê các add-on cho một kênh nhất định, hãy thay đổi bộ lọc cho "Kênh".
+
++++ Tìm kiếm add-on +++[AddonStoreFilterSearch]
+Để tìm kiếm các add-on, hãy sử dụng ô nhập liệu "Tìm kiếm".
+Bạn có thể đi đến nó bằng cách bấm ``shift+tab`` từ danh sách các add-on, hoặc bấm ``alt+s`` từ bất cứ đâu trong Cửa Hàng Add-On .
+Nhập từ khóa cho loại add-on bạn đang tìm kiếm, rồi bấm ``tab`` đến danh sách các add-on.
+Các add-on sẽ được liệt kê nếu nội dung tìm kiếm được tìm thấy trong tên hiển thị, nhà xuất bản (tác giả) hoặc mô tả.
+
+++ Các hành động cho add-on ++[AddonStoreActions]
+Các add-on đều có các hành động như cài đặt, trợ giúp, tắt, và gỡ.
+Có thể tiếp cận trình đơn hành động  cho một add-on trong danh sách bằng cách bấm phím ``applications``, ``enter``, chuột phải hoặc chuột trái hai lần lên add-on.
+Cũng có một nút Hành động cho add-on, có thể kích hoạt theo cách thông thường hoặc bấm phím ``alt+a``.
+
++++ Cài đặt add-on +++[AddonStoreInstalling]
+Chỉ vì một add-on có trên Cửa Hàng Add-On của NVDA thì không có nghĩa là nó đã được chấp thuận hoặc đảm bảo bởi NV Access hay bất cứ ai khác.
+Điều rất quan trọng là chỉ nên cài các add-on từ những nguồn mà bạn tin tưởng.
+Chức năng của add-on trong NVDA là không giới hạn. 
+Nó có thể bao gồm cả việc truy suất dữ liệu cá nhân, hay thậm chí là toàn bộ hệ thống.
+
+Bạn có thể cài và cập nhật các add-on bằng cách [duyệt qua các add-on đang có #AddonStoreBrowsing].
+Chọn một add-on từ thẻ "Add-on hiện hành" hoặc "Add-on có bản cập nhật" tab.
+Rồi bấm vào các nút cập nhật, cài đặt, hành động thay thế để bắt đầu cài đặt.
+
+Để cài một add-on ngoài Cửa Hàng Add-On, bấm nút "Cài đặt từ các nguồn bên ngoài" button.
+Điều này sẽ cho phép bạn tìm kiếm một gói add-on (tập tin ``.nvda-addon``) ở đâu đó trên máy tính hoặc từ hệ thống mạng.
+Khi bạn mở gói add-on thì quá trình cài đặt sẽ bắt đầu.
+
+Nếu đã cài NVDA vào hệ thống, bạn cũng có thể mở trực tiếp một tập tin add-on từ trình duyệt hoặc trình quản lý dữ liệu để cài đặt.
+
+Khi cài đặt add-on từ các nguồn bên ngoài, NVDA sẽ yêu cầu bạn xác nhận việc cài đặt.
+Sau khi cài đặt một add-on, NVDA phải được khởi động lại để add-on đó bắt đầu hoạt động, dù rằng bạn cũng có thể hoãn lại để cài đặt hoặc cập nhật một add-on khác.
+
++++ Gỡ Add-on +++[AddonStoreRemoving]
+Để gỡ một add-on, hãy chọn nó từ danh sách và dùng hành động Gỡ.
+NVDA sẽ yêu cầu bạn xác nhận việc gỡ add-on.
+Giống như khi cài đặt, NVDA cũng phải được khởi động lại để add-on được gỡ hoàn toàn.
+Cho đến khi bạn khởi động lại, trạng thái "Đang chờ để gỡ" sẽ hiển thị cho add-on đó trong danh sách.
+
++++ Bật / tắt Add-on +++[AddonStoreDisablingEnabling]
+Để tắt một add-on, hãy dùng hành động "tắt".
+Để bật một add-on đã bị tắt trước đó, hãy dùng hành động "bật".
+Bạn có thể tắt một add-on nếu trạng thái của add-on đó được xác định là "đã bật", hoặc  bật nó nếu trạng thái add-on là "đã tắt".
+Mỗi lần dùng hành động bật / tắt, trạng thái của add-on sẽ thay đổi để xác định điều gì sẽ xảy ra khi khởi động lại NVDA.
+Nếu add-on "đã tắt" trước đó, trạng thái sẽ hiển thị là "bật sau khi khởi động lại".
+Nếu add-on "đã bật" trước đó, trạng thái sẽ hiển thị là "tắt sau khi khởi động lại".
+Giống như khi cài hoặc gỡ cài đặt các add-on, bạn cần phải khởi động lại NVDA để các thay đổi có hiệu lực.
+
+++ Các add-on không tương thích ++[incompatibleAddonsManager]
+Vài add-on cũ có thể không còn tương thích với phiên bản NVDA mà bạn đang có.
+Nếu bạn đang dùng một phiên bản NVDA cũ hơn, vài add-on mới cũng có thể không tương thích.
+Việc cố gắng cài đặt một add-on không tương thích sẽ cho kết quả là thông báo lỗi giải thích tại sao add-on được cho là không tương thích.
+
+Với các add-on cũ, bạn có thể bỏ qua việc không tương thích và tự chịu rủi ro.
+Các add-on không tương thích có thể không hoạt động với phiên bản NVDA của bạn, và có thể khiến cho nó mất đi tính ổn định, thậm chí là bị lỗi nặng.
+Bạn có thể bỏ qua việc không tương thích trong khi bật hay cài đặt add-on.
+Nếu add-on không tương thích gây ra lỗi sau đó, bạn có thể tắt hoặc gỡ bỏ nó.
+
+Nếu bạn gặp vấn đề khi chạy NVDA, và gần đây, bạn có cập nhật hay cài đặt một add-on, đặc biệt là một add-on không tương thích, bạn cần phải thử chạy NVDA ở chế độ tắt hết add-on.
+Để khởi động lại NVDA và tắt hết add-on, hãy đưa ra lựa chọn tương ứng khi khởi động lại chương trình.
+Ngoài ra, hãy dùng [tùy chọn dòng lệnh #CommandLineOptions] ``--disable-addons``.
+
+Bạn có thể tìm các add-on không tương thích thông qua các thẻ [đang có và có bản cập nhật add-on #AddonStoreFilterStatus].
+Bạn có thể tìm kiếm các add-on không tương thích đã cài đặt  thông qua thẻ [các add-on không tương thích #AddonStoreFilterStatus].
+
 + Các Công Cụ +[ExtraTools]
 
 ++ Trình hiển thị Log ++[LogViewer]
@@ -2573,63 +2732,9 @@ Phải giữ chuột đến khi ô chữ nổi chuyển sang màu xanh lá.
 Python console được tìm thấy trong trình đơn công cụ của trình đơn NVDA, là một công cụ phát triển, hữu dụng trong việc sửa lỗi, kiểm tra tổng quan cấu trúc lõi của NVDA hay kiểm tra cấp bậc của tính tiếp cận cho một ứng dụng.
 Để biết thêm thông tin chi tiết, xin xem tại phần  [Phát triển NVDA https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
 
-++ Quản lý Add-ons ++[AddonsManager]
-Bạn có thể mở hộp thoại này từ trình đơn công cụ của NVDA, nó cho phép bạn cài đặt hay gỡ bỏ các Add on của NVDA.
-Các Add on này thường được phát triển bởi cộng đồng nhằm hỗ trợ và bổ sung các tính năng cho NVDA cũng như hỗ trợ cho các ứng dụng, các thiết bị màn hình nổi hay các bộ tổng hợp tiếng nói.
-
-Trong hộp thoại này có một danh sách các Add on đã được cài vào thư mục cấu hình người dùng.
-Các thông tin như tên Add on, tác giả, phiên bản cũng được hiển thị. Các thông tin khác như mô tả, URL v...v... bạn có thể xem được khi kích hoạt nút "Thông tin về Add on".
-Nếu như  Add-on có phần trợ giúp, bạn có thể mở xem bằng cách bấm nút Trợ giúp Add-on
-
-Để tìm và tải các Add on từ internet, bấm nút "Xem và Tải Add on".
-Nút này sẽ mở trang web Add on của NVDA https://addons.nvda-project.org/].
-Nếu NVDA đã được cài trên máy, bạn có thể mở add on trực tiếp từ trình duyệt và cài đặt nó theo hướng dẫn bên dưới.
-Ngược lại, lưu gói add-on và theo hướng dẫn dưới đây.
-
-Để cài đặt Add on, bấm vào nút Cài đặt.
-Cửa sổ này cho phép bạn tìm đến một gói add on (tệp tin .nvda-addon) từ máy tính hay trong hệ thống mạng.
-Khi bạn chọn nút Open, quá trình cài đặt sẽ được bắt đầu.
-
-Trước khi cài đặt, NVDA sẽ yêu cầu bạn xác nhận muốn cài đặt Add on đó.
-Vì chức năng của các add-on trong NVDA không bị hạn chế, do vậy, trên lý thuyết, các add-on có thể truy cập các dữ liệu cá nhân cũng như có thể truy cập toàn bộ hệ thống máy tính của bạn. Nếu NVDA được cài đặt, bạn nên chọn cài đặt các add-on từ các nguồn đáng tin cậy.
-Để add-on hoạt động sau khi cài đặt, cần phải khởi động lại NVDA.
-Khi cài xong thì Add on vừa cài sẽ có trạng thái là "đã cài" và xuất hiện trong danh sách các Add on.
-
-Để gỡ bỏ Add on, chọn Add on đó trong danh sách và bấm nút "Gỡ bỏ".
-NVDA cũng sẽ yêu cầu bạn xác nhận muốn làm điều đó.
-Giống như khi cài đặt, phải khởi động lại NVDA để loại bỏ hoàn toàn các add-on.
-Khi gỡ bỏ xong thì trạng thái của Add on sẽ là "đã gỡ bỏ".
-
-Bấm nút Tắt add-on để tắt add-on đang chọn.
-Bấm nút Bật để bật một add-on đã tắt trước đó.
-Bạn có thể chọn tắt add-on nếu trạng thái add-on đang bật và ngược lại.
-Mỗi khi tắt hoặc bật một add-on, trạng thái của add-on sẽ thay đổi để cho người dùng biết điều gì sẽ xảy ra sau khi khởi động lại NVDA.
-Nếu add-on đã được tắt trước đó, trạng thái sẽ hiển thị "bật sau khi khởi động lại".
-Nếu add-on được "bật" trước đó, trạng thái sẽ hiển thị "tắt sau khi khởi động lại".
-Cũng giống như khi cài đặt hoặc gỡ bỏ add-on, bạn cần khởi động lại NVDA để các thay đổi có hiệu lực.
-
-Trình quản lý cũng có nút Đóng để đóng hộp thoại lại.
-Nếu bạn có cài đặt, gỡ bỏ hoặc thay đổi trạng thái của add-on, NVDA sẽ yêu cầu bạn  khởi động lại NVDA để các thay đổi có hiệu lực.
-
-Vài add-on cũ có thể không tương thích với phiên bản NVDA bạn đang có.
-Khi dùng một phiên bản NVDA cũ, vài add-on mới cũng có thể không tương thích.
-Việc cố gắng cài đặt một add-on không tương thích sẽ xuất hiện một thông điệp báo lỗi giải thích tại sao add-on lại được coi là không tương thích.
-Để xem xét các add-on không tương thích, bạn có thể dùng nút "xem các add-on không tương thích" để chạy trình quản lý các add-on không tương thích.
-
-Để mở trình quản lý add-on ở bất cứ đâu, hãy gán phím tắt/thao tác cho nó trong hộp thoại [Quản lý thao tác #InputGestures].
-
-+++ Trình Quản Lý Các Add-on không tương thích +++[incompatibleAddonsManager]
-Trình Quản Lý Các Add-on không tương thích có thể được mở thông qua nút "xem các add-on không tương thích" trong trình quản lý Add-on, cho phép bạn xem xét bất cứ add-on nào không tương thích, và lí do mà chúng được coi là không tương thích.
-Các Add-on được coi là không tương thích khi chúng không được cập nhật để hoạt động với các thay đổi đáng kể của NVDA, hoặc khi chúng dựa vào một tính năng không tồn tại trong phiên bản NVDA bạn đang dùng.
-Trình quản lý các add-on không tương thích có một thông điệp ngắn để giải thích mục đích của nó cũng như phiên bản NVDA.
-Các add-on không tương thích được trình bày trong một danh sách với các cột sau:
-+ Gói, tên của add-on
-+ Phiên bản, phiên bản của add-on
-+ Lý do không tương thích, giải thích vì sao add-on được coi là không tương thích
-+
-
-Trình quản lý các add-on không tương thích cũng có nút "Thông tin về Add  - on...".
-Hộp thoại này cho bạn biết đầy đủ các chi tiết của add-on, hữu ích khi liên lạc với tác giả của add-on.
+++ Cửa hàng Add-on ++
+Mục này sẽ mở [Cửa Hàng Add-on của NVDA #AddonsManager].
+Để có thêm thông tin, đọc trong phần chuyên sâu: [Add-on và Cửa Hàng Add-on #AddonsManager].
 
 ++ Tạo bản chạy trực tiếp ++[CreatePortableCopy]
 Tùy chọn này sẽ mở một hộp thoại để bạn tạo một bản chạy trực tiếp từ bản NVDA đang được cài đặt.
@@ -3504,88 +3609,162 @@ Màn hình SuperBraille không có bàn phím nhập liệu và nút cuộn. Vì
 | Cuộn tới | numpadPlus | 
 %kc:endInclude
 
-++ các màn hình Esys/Esytime/Iris của Eurobraille ++[Eurobraille]
-Các màn hình nổi  Esys, Esytime và Iris của [Eurobraille https://www.eurobraille.fr/] đã được NVDA hỗ trợ.
-Các thiết bị Esys và Esytime-Evo được hỗ trợ khi kết nối qua USB hay bluetooth.
-Các thiết bị Esytime cũ hơn chỉ được hỗ  trợ USB.
-Các màn hình Iris chỉ có thể kết nối được qua một cổng serial.
-Vậy nên, với những màn hình này, bạn nên chọn cổng để kết nối sau khi chọn trình điều khiển cho nó trong hộp thoại cài đặt chữ nổi..
-
-Các Màn hình Iris và Esys có bàn phím chữ nổi 10 phím.
+++ Các màn hình Eurobraille ++[Eurobraille]
+Các màn hình b.book, b.note, Esys, Esytime và Iris từ Eurobraille đã được hỗ trợ bởi NVDA.  
+Đây là những thiết bị có bàn phím chữ nổi với 10 phím. 
 Có hai phím giống như khoảng trắng, phím bên trái tương ứng với phím xóa và phím bên phải là khoảng trắng.
-
+Được kết nối qua USB, những thiết bị này có một bàn phím USB độc lập. 
+Có thể bật / tắt bàn phím này với hộp kiểm ‘Mô phỏng bàn phím HID’ trong bảng cài đặt chữ nổi. 
+Bàn phím chữ nổi được mô tả dưới đây là bàn phím khi không chọn hộp kiểm nói trên.
 Sau đây là các lệnh của màn hình nổi này được gán cho NVDA.
 Vui lòng xem Tài Liệu của màn hình cho phần mô tả vị trí các phím. 
+
++++  Các chức năng bàn phím chữ nổi +++[EurobrailleBraille]
 %kc:beginInclude
 || Tên | Phím |
-| Cuộn lùi | switch1-6left, l1 |
-| Cuộn tới | switch1-6Right, l8 |
-| Chuyển đến focus hiện tại | switch1-6Left+switch1-6Right, l1+l8 |
-| Rút về ô chữ nổi | routing |
-| Thông báo định dạng văn bản tại ô chữ nổi | doubleRouting |
-| Chuyển đến dòng trước | joystick1Up |
-| Chuyển đến dòng kế | joystick1Down |
-| Chuyển đến kí tự trước | joystick1Left |
-| Chuyển đến kí tự kế | joystick1Right |
-| Chuyển đến chế độ duyệt trước | joystick1Left+joystick1Up |
-| Chuyển đến chế độ duyệt kế | joystick1Right+joystick1Down |
-| xóa lệnh vào ô chữ nổi hay kí tự | backSpace |
-| Dịch kí tự chữ nổi được nhập và bấm phím enter | backSpace+space |
-| Phím insert | dot3+dot5+space, l7 |
-| Phím delete | dot3+dot6+space |
-| Phím home | dot1+dot2+dot3+space, joystick2Left+joystick2Up |
-| Phím end | dot4+dot5+dot6+space, joystick2Right+joystick2Down |
-| Phím mũi tên trái | dot2+space, joystick2Left, leftArrow |
-| Phím mũi tên phải | dot5+space, joystick2Right, rightArrow |
-| Phím mũi tên lên | dot1+space, joystick2Up, upArrow |
-| Phím mũi tên xuống | dot6+space, joystick2Down, downArrow |
-| Phím enter | joystick2centre |
-| Phím trang trước | dot1+dot3+space |
-| Phím trang sau | dot4+dot6+space |
-| Phím numpad1 | dot1+dot6+backspace |
-| Phím numpad2 | dot1+dot2+dot6+backspace |
-| Phím numpad3 | dot1+dot4+dot6+backspace |
-| Phím numpad4 | dot1+dot4+dot5+dot6+backspace |
-| Phím numpad5 | dot1+dot5+dot6+backspace |
-| Phím numpad6 | dot1+dot2+dot4+dot6+backspace |
-| Phím numpad7 | dot1+dot2+dot4+dot5+dot6+backspace |
-| Phím numpad8 | dot1+dot2+dot5+dot6+backspace |
-| Phím numpad9 | dot2+dot4+dot6+backspace |
-| Phím numpadInsert | dot3+dot4+dot5+dot6+backspace |
-| Phím numpadDecimal | dot2+backspace |
-| Phím numpadDivide key | dot3+dot4+backspace |
-| Phím numpadMultiply | dot3+dot5+backspace |
-| Phím numpadMinus | dot3+dot6+backspace |
-| Phím numpadPlus | dot2+dot3+dot5+backspace |
-| Phím numpadEnter key | dot3+dot4+dot5+backspace |
-| Phím escape | dot1+dot2+dot4+dot5+space, l2 |
-| Phím tab | dot2+dot5+dot6+space, l3 |
-| Phím shift+tab | dot2+dot3+dot5+space |
-| Phím printScreen | dot1+dot3+dot4+dot6+space |
-| Phím pause | dot1+dot4+space |
-| Phím applications | dot5+dot6+backspace |
-| Phím f1 | dot1+backspace |
-| Phím f2 | dot1+dot2+backspace |
-| Phím f3 | dot1+dot4+backspace |
-| Phím f4 | dot1+dot4+dot5+ |
-| Phím f5 | dot1+dot5+backspace |
-| Phím f6 | dot1+dot2+dot4+backspace |
-| Phím f7 | dot1+dot2+dot4+dot5+backspace |
-| Phím f8 | dot1+dot2+dot5+backspace |
-| Phím f9 | dot2+dot4+backspace |
-| Phím f10 | dot2+dot4+dot5+backspace |
-| Phím f11 | dot1+dot3+backspace |
-| Phím f12 | dot1+dot2+dot3+backspace |
-| Phím windows | dot1+dot2+dot3+dot4+backspace |
-| Phím Caps Lock | dot7+backspace, dot8+backspace |
-| Phím num lock | dot3+backspace, dot6+backspace |
-| Phím shift | dot7+space, l4 |
-| Bật tắt phím  shift | dot1+dot7+space, dot4+dot7+space |
-| Phím control | dot7+dot8+space, l5 |
-| Bật tắt phím control | dot1+dot7+dot8+space, dot4+dot7+dot8+space | 
-| Phím alt | dot8+space, l6 |
-| Bật tắt phím  alt | dot1+dot8+space, dot4+dot8+space |
-| ToggleHID keyboard input simulation | esytime):l1+joystick1Down, esytime):l8+joystick1Down |
+| Xóa kí tự được nhập hay ô cuối cùng | ``xóa lùi`` |
+| Dịch chữ nổi đã nhập và bấm phím enter |``xóa lùi+khoảng trắng`` |
+| bật / tắt phím ``NVDA`` | ``chấm 3+chấm 5+khoảng trắng`` |
+| Phím ``insert`` | ``chấm 1+chấm 3+chấm 5+khoảng trắng``, ``chấm 3+chấm 4+chấm 5+khoảng trắng`` |
+| Phím ``delete`` | ``chấm 3+chấm 6+khoảng trắng`` |
+| Phím ``home`` | ``chấm 1+chấm 2+chấm 3+khoảng trắng`` |
+| Phím ``end`` | ``chấm 4+chấm 5+chấm 6+khoảng trắng`` |
+| Phím ``mũi tên trái`` | ``chấm 2+khoảng trắng`` |
+| Phím ``mũi tên phải`` | ``chấm 5+khoảng trắng`` |
+| Phím ``mũi tên lên`` | ``chấm 1+khoảng trắng`` |
+| Phím ``mũi tên xuống`` | ``chấm 6+khoảng trắng`` |
+| Phím ``trang trước`` | ``chấm 1+chấm 3+khoảng trắng`` |
+| Phím ``trang sau`` | ``chấm 4+chấm 6+khoảng trắng`` |
+| Phím ``numpad1`` | ``chấm 1+chấm 6+xóa lùi`` |
+| Phím ``numpad2`` | ``chấm 1+chấm 2+chấm 6+xóa lùi`` |
+| Phím ``numpad3`` | ``chấm 1+chấm 4+chấm 6+xóa lùi`` |
+| Phím ``numpad4`` | ``chấm 1+chấm 4+chấm 5+chấm 6+xóa lùi`` |
+| Phím ``numpad5`` | ``chấm 1+chấm 5+chấm 6+xóa lùi`` |
+| Phím ``numpad6`` | ``chấm 1+chấm 2+chấm 4+chấm 6+xóa lùi`` |
+| Phím ``numpad7`` | ``chấm 1+chấm 2+chấm 4+chấm 5+chấm 6+xóa lùi`` |
+| Phím ``numpad8`` | ``chấm 1+chấm 2+chấm 5+chấm 6+khoảng trắng`` |
+| Phím ``numpad9`` | ``chấm 2+chấm 4+chấm 6+xóa lùi`` |
+| Phím ``numpadInsert`` | ``chấm 3+chấm 4+chấm 5+chấm 6+xóa lùi`` |
+| Phím ``numpadDecimal`` | ``chấm 2+xóa lùi`` |
+| Phím ``numpadDivide`` | ``chấm 3+chấm 4+xóa lùi`` |
+| Phím ``numpadMultiply`` | ``chấm 3+chấm 5+xóa lùi`` |
+| Phím ``numpadMinus`` | ``chấm 3+chấm 6+xóa lùi`` |
+| Phím ``numpadPlus`` | ``chấm 2+chấm 3+chấm 5+xóa lùi`` |
+| Phím ``numpadEnter`` | ``chấm 3+chấm 4+chấm 5+xóa lùi`` |
+| Phím ``escape`` | ``chấm 1+chấm 2+chấm 4+chấm 5+khoảng trắng``, ``l2`` |
+| Phím ``tab`` | ``chấm 2+chấm 5+chấm 6+khoảng trắng``, ``l3`` |
+| Phím ``shift+tab`` | ``chấm 2+chấm 3+chấm 5+khoảng trắng`` |
+| Phím ``printScreen`` | ``chấm 1+chấm 3+chấm 4+chấm 6+khoảng trắng`` |
+| Phím ``pause`` | ``chấm 1+chấm 4+khoảng trắng`` |
+| Phím ``applications`` | ``chấm 5+chấm 6+khoảng trắng`` |
+| Phím ``f1`` | ``chấm 1+khoảng trắng`` |
+| Phím ``f2`` | ``chấm 1+chấm 2+khoảng trắng`` |
+| Phím ``f3`` | ``chấm 1+chấm 4+khoảng trắng`` |
+| Phím ``f4`` | ``chấm 1+chấm 4+chấm 5+xóa lùi`` |
+| Phím ``f5`` | ``chấm 1+chấm 5+xóa lùi`` |
+| Phím ``f6`` | ``chấm 1+chấm 2+chấm 4+xóa lùi`` |
+| Phím ``f7`` | ``chấm 1+chấm 2+chấm 4+chấm 5+xóa lùi`` |
+| Phím ``f8`` | ``chấm 1+chấm 2+chấm 5+xóa lùi`` |
+| Phím ``f9`` | ``chấm 2+chấm 4+xóa lùi`` |
+| Phím ``f10`` | ``chấm 2+chấm 4+chấm 5+xóa lùi`` |
+| Phím ``f11`` | ``chấm 1+chấm 3+xóa lùi`` |
+| Phím ``f12`` | ``chấm 1+chấm 2+chấm 3+xóa lùi`` |
+| Phím ``windows`` | ``chấm 1+chấm 2+chấm 4+chấm 5+chấm 6+khoảng trắng`` |
+| Bật / tắt phím  ``windows`` | ``chấm 1+chấm 2+chấm 3+chấm 4+xóa lùi``, ``chấm 2+chấm 4+chấm 5+chấm 6+khoảng trắng`` |
+| Phím ``capsLock`` | ``chấm 7+xóa lùi``, ``chấm 8+xóa lùi`` |
+| Phím ``numLock`` | ``chấm 3+xóa lùi``, ``chấm 6+xóa lùi`` |
+| Phím ``shift`` | ``chấm 7+khoảng trắng`` |
+| Bật / tắt phím ``shift`` | ``chấm 1+chấm 7+khoảng trắng``, ``chấm 4+chấm 7+khoảng trắng`` |
+| Phím ``control`` | ``chấm 7+chấm 8+khoảng trắng`` |
+| Bật / tắt phím ``control`` | ``chấm 1+chấm 7+chấm 8+khoảng trắng``, ``chấm 4+chấm 7+chấm 8+khoảng trắng`` |
+| Phím ``alt`` | ``chấm 8+khoảng trắng`` |
+| Bật / tắt phím ``alt`` | ``chấm 1+chấm 8+khoảng trắng``, ``chấm 4+chấm 8+khoảng trắng`` |
+%kc:endInclude
+
++++ Phím lệnh cho b.book +++[Eurobraillebbook]
+%kc:beginInclude
+|| Tên | Phím |
+| Cuộn màn hình nổi về trước | ``backward`` |
+| Cuộn màn hình nổi về sau | ``forward`` |
+| Chuyển đến focus hiện tại | ``backward+forward`` | 
+| Đưa về ô chữ nổi | ``routing`` |
+| Phím ``mũi tên trái`` | ``joystick2Left`` |
+| Phím ``mũi tên phải`` | ``joystick2Right`` |
+| Phím ``mũi tên lên`` | ``joystick2Up`` |
+| Phím ``mũi tên xuống`` | ``joystick2Down`` |
+| Phím ``enter`` | ``joystick2Center`` |
+| Phím ``escape`` | ``c1`` |
+| Phím ``tab`` ke | ``c2`` |
+| Bật / tắt phím ``shift`` | ``c3`` |
+| Bật / tắt phím  ``control`` | ``c4`` |
+| Bật / tắt phím ``alt`` | ``c5`` |
+| Bật / tắt phím ``NVDA`` | ``c6`` |
+| Phím ``control+Home`` | ``c1+c2+c3`` |
+| Phím ``control+End`` | ``c4+c5+c6`` |
+%kc:endInclude
+
++++ Phím lệnh cho b.note +++[Eurobraillebnote]
+%kc:beginInclude
+|| Tên | Phím |
+| Cuộn màn hình nổi về trước | ``leftKeypadLeft`` |
+| Cuộn màn hình nổi về sau | ``leftKeypadRight`` |
+| Đưa về ô chữ nổi | ``routing`` |
+| Thông báo định dạng văn bản dưới con trỏ nổi | ``doubleRouting`` |
+| Chuyển đến dòng kế trong chế độ duyệt | ``leftKeypadDown`` |
+| Chuyển đến chế độ duyệt trước | ``leftKeypadLeft+leftKeypadUp`` |
+| Chuyển đến chế độ duyệt kế | ``leftKeypadRight+leftKeypadDown`` |
+| Phím ``mũi tên trái`` | ``rightKeypadLeft`` |
+| Phím ``mũi tên phải`` | ``rightKeypadRight`` |
+| Phím ``mũi tên lên`` | ``rightKeypadUp`` |
+| Phím ``mũi tên xuống`` | ``rightKeypadDown`` |
+| Phím ``control+home`` | ``rightKeypadLeft+rightKeypadUp`` |
+| Phím ``control+end`` | ``rightKeypadLeft+rightKeypadUp`` |
+%kc:endInclude
+
++++ Phím lệnh cho Esys +++[Eurobrailleesys]
+%kc:beginInclude
+|| Tên | Phím |
+| Cuộn màn hình nổi về trước | ``switch1Left`` |
+| Cuộn màn hình nổi về sau | ``switch1Right`` |
+| Chuyển đến focus hiện tại | ``switch1Center`` |
+| Đưa về ô chữ nổi | ``routing`` |
+| Thông báo định dạng văn bản dưới ô chữ nổi | ``doubleRouting`` |
+| Chuyển đến dòng trước trong chế độ duyệt | ``joystick1Up`` |
+| Chuyển đến dòng kế trong chế độ duyệt | ``joystick1Down`` |
+| Chuyển đến kí tự trước trong chế độ duyệt | ``joystick1Left`` |
+| Chuyển đến kí tự kế trong chế độ duyệt | ``joystick1Right`` |
+| Phím ``mũi tên trái`` | ``joystick2Left`` |
+| Phím ``mũi tên phải`` | ``joystick2Right`` |
+| Phím ``mũi tên lên`` | ``joystick2Up`` |
+| Phím ``mũi tên xuống`` | ``joystick2Down`` |
+| Phím ``enter`` | ``joystick2Center`` |
+%kc:endInclude
+
++++ Phím lệnh cho Esytime +++[EurobrailleEsytime]
+%kc:beginInclude
+|| Tên | Phím |
+| Cuộn màn hình nổi về trước | ``l1`` |
+| Cuộn màn hình nổi tới | ``l8`` |
+| Chuyển đến focus hiện tại | ``l1+l8`` |
+| Đưa đến ô chữ nổi | ``routing`` |
+| Thông báo định dạng văn bản dưới con trỏ nổi | ``doubleRouting`` |
+| Chuyển đến dòng trước trong chế độ duyệt | ``joystick1Up`` |
+| Chuyển đến dòng kế trong chế độ duyệt | ``joystick1Down`` |
+| Chuyển đến kí tự trước trong chế độ duyệt | ``joystick1Left`` |
+| Chuyển đến kí tự kế trong chế độ duyệt | ``joystick1Right`` |
+| Phím ``mũi tên trái`` | ``joystick2Left`` |
+| Phím ``mũi tên phải`` | ``joystick2Right`` |
+| Phím ``mũi tên lên`` | ``joystick2Up`` |
+| Phím ``mũi tên xuống`` | ``joystick2Down`` |
+| Phím ``enter`` | ``joystick2Center`` |
+| Phím ``escape`` | ``l2`` |
+| Phím ``tab`` | ``l3`` |
+| bật / tắt phím ``shift`` | ``l4`` |
+| Bật / tắt phím  ``control`` | ``l5`` |
+| Bật / tắt phím ``alt`` | ``l6`` |
+| Bật / tắt phím ``NVDA`` | ``l7`` |
+| Phím ``control+home`` | ``l1+l2+l3``, ``l2+l3+l4`` |
+| Phím ``control+end`` | ``l6+l7+l8``, ``l5+l6+l7`` |
 %kc:endInclude
 
 ++ Các màn hình của Nattiq nBraille ++[NattiqTechnologies]
@@ -3662,13 +3841,15 @@ Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết cá
 | Chuyển đối tượng điều hướng đến đối tượng chứa nó | ``f3`` |
 | Chuyển đối tượng điều hướng đến đối tượng đầu tiên bên trong nó | ``f4`` |
 | Chuyển đối tượng điều hướng đến đối tượng trước | ``f5`` |
-| Chuyển đối tượng điều hướng đến đối tượng kế | ``f6`` |
+	| Chuyển đối tượng điều hướng đến đối tượng kế | ``f6`` |
 | Thông báo đối tượng điều hướng hiện tại | ``f7`` |
 | Báo thông tin về vị trí của văn bản hay đối tượng tại con trỏ duyệt | ``f8`` |
 | Hiện cài đặt chữ nổi | ``f1+home1``, ``f9+home2`` |
 | Đọc thanh trạng thái và chuyển đối tượng điều hướng vào trong nó | ``f1+end1``, ``f9+end2`` |
 | Chuyển đổi giữa các hình dạng con trỏ nổi | ``f1+eCursor1``, ``f9+eCursor2`` |
 | Bật / tắt con trỏ nổi | ``f1+cursor1``, ``f9+cursor2`` |
+| Chuyển qua các chế độ hiển thị thông điệp chữ nổi | ``f1+f2``, ``f9+f10`` |
+| Chuyển đến các chế độ hiển thị trạng thái vùng chọn | ``f1+f5``, ``f9+f14`` |
 | Thực hiện hành động mặc định trên đối tượng điều hướng hiện tại | ``f7+f8`` |
 | Thông báo ngày / giờ | ``f9`` |
 | Thông báo trạng thái pin và thời gian còn lại nếu không cắm nguồn | ``f10`` |

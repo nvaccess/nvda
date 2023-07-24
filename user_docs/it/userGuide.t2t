@@ -2,7 +2,9 @@ NVDA NVDA_VERSION Manuale utente
 
 
 %!includeconf: ../userGuide.t2tconf
+%!includeconf: ./locale.t2tconf
 %kc:title: NVDA NVDA_VERSION Guida rapida ai comandi 
+%kc:includeconf: ./locale.t2tconf
 
 = Indice =[toc]
 %%toc
@@ -20,7 +22,7 @@ NVDA permette alle persone non vedenti di accedere ed interagire con il sistema 
 Un breve video di presentazione in inglese, ["What is NVDA?" https://www.youtube.com/watch?v=tCFyyqy9mqo] is available from the NV Access YouTube channel.
 
 Le caratteristiche principali possono essere riassunte nei seguenti punti:
-- Supporto alle applicazioni più comuni come browser web, posta elettronica, wordprocessor e software per chattare.
+- Supporto alle applicazioni più comuni come browser web, posta elettronica, wordProcessor e software per chattare.
 - sintesi vocale incorporata capace di parlare più di 80 lingue
 - annuncio della formattazione del testo , ove disponibile, come nome e dimensione del carattere, errori di stile e di ortografia
 - Annuncio automatico del testo sul quale è posizionato il mouse, con possibilità opzionale di conoscere la posizione del mouse stesso sullo schermo
@@ -220,9 +222,9 @@ I comandi effettivi non verranno eseguiti nella modalità di aiuto immissione.
 | Legge il focus | ``NVDA+tab`` | ``NVDA+tab`` | Annuncia l'oggetto o il controllo attualmente focalizzato. Premendo la combinazione due volte ne verrà fatto lo spelling  |
 | Legge la Finestra Attiva | ``NVDA+b`` | ``NVDA+b`` | Legge il contenuto della finestra in primo piano (utile nelle finestre di dialogo). |
 | Legge la barra di stato | ``NVDA+fine`` | ``NVDA+maiusc+fine`` | Legge la barra di stato nel caso in cui NVDA sia in grado di individuarla. Una doppia pressione provocherà lo spelling delle informazioni. Una tripla pressione copierà il contenuto della barra di stato negli appunti |
-| Legge la data e l'Ora | ``NVDA+f12`` | ``NVDA+f12`` | Premendo una volta viene annunciato l'orario corrente, mentre premendo due volte verrà annunciata la data |
+| Legge la data e l'Ora | ``NVDA+f12`` | ``NVDA+f12`` | Premendo una volta viene annunciato l'orario corrente, mentre premendo due volte verrà annunciata la data. L'ora e la data sono riportate nel formato specificato nelle impostazioni di Windows per l'orologio della barra delle applicazioni. |
 | Legge la formattazione | ``NVDA+f`` | ``NVDA+f`` | Legge la formattazione del testo; Una doppia pressione visualizzerà le informazioni in una finestra di dialogo |
-| Legge la destinazione di un link | ``NVDA+k`` | ``NVDA+k`` | Una pressione leggerà l'URL di destinazione del collegamento nel [navigatore ad oggetti #ObjectNavigation]. Una doppia pressione lo visualizzerà in una finestra per un controllo più dettagliato |
+| Legge la destinazione di un link | ``NVDA+k`` | ``NVDA+k`` | Una pressione leggerà l'URL di destinazione del collegamento alla posizione del focus. Una doppia pressione lo visualizzerà in una finestra per un controllo più dettagliato |
 
 +++ Stabilire quali informazioni NVDA debba leggere +++[ToggleWhichInformationNVDAReads]
 || Nome | Tasto Desktop | Tasto Laptop | Descrizione |
@@ -307,6 +309,7 @@ Se vi sono già installati componenti aggiuntivi, è possibile che venga visuali
 Prima di poter premere il pulsante continua, è necessario selezionare la casella di controllo che indica che l'utente ha compreso che gli addon non compatibili saranno disattivati.
 è presente anche un pulsante che consente di controllare quali componenti aggiuntivi verranno disabilitati.
 Si veda la [sezione componenti aggiuntivi non compatibili #incompatibleAddonsManager] per maggiori informazioni su questo pulsante.
+Dopo l'installazione, è possibile riattivare i componenti aggiuntivi incompatibili a proprio rischio e pericolo dall'[Add-on Store #AddonsManager].
 
 +++ Utilizza NVDA durante l'accesso +++[StartAtWindowsLogon]
 Questa opzione permette di stabilire se NVDA debba automaticamente avviarsi o meno alla finestra di accesso a Windows, prima di inserire la password.
@@ -477,9 +480,14 @@ Si è perciò liberi di premere ciò che si desidera senza preoccuparsi degli ef
 ++ Il menu di NVDA ++[TheNVDAMenu]
 Il menu di NVDA consente di controllare le impostazioni dello screen reader, accedere all'aiuto in linea, salvare/ricaricare le configurazioni, modificare i dizionari per le sintesi vocali, leggere i file di log e uscire dal programma.
 
-Per accedere al menu di NVDA da qualsiasi punto ci si trovi in Windows mentre NVDA è in esecuzione, basterà premere la combinazione di tasti NVDA+n, o effettuare un doppio tap con due dita.
-In alternativa, si può ricorrere alla System Tray.
-Vi sono due modi, o premendo Windows+B per raggiungerla e scorrendo con le frecce sino ad arrivare alla voce NVDA, premendo infine il tasto applicazione, generalmente situato accanto al control di destra, Oppure, cliccare direttamente l'icona di NVDA sulla System Tray.
+Per accedere al menu di NVDA da qualsiasi punto ci si trovi in Windows mentre NVDA è in esecuzione, eseguire una delle seguenti operazioni:
+- Premere la combinazione di tasti NVDA+n sulla tastiera.
+- effettuare un doppio tap con due dita sul touch screen.
+- premere Windows+B per raggiungere la system tray, scorrere con la freccia giù sino ad arrivare alla voce NVDA e premere invio.
+- In alternativa, accedere alla system tray premendo ``Windows+b``, ``freccia giù`` sino a giungere sull'icona NVDA e aprire il menu contestuale premendo il tasto ``applicazioni`` situato accanto al tasto control destro sulla maggior parte delle tastiere.
+Se la tastiera è sprovvista di tasto applicazioni, premere Maiusc+f10.
+- Fare clic con il tasto destro sull'icona NVDA situata nella system tray di Windows
+-
 Una volta che il menu appare, è possibile scorrerlo con le frecce direzionali, mentre per attivare un elemento come sempre è sufficiente premere invio.
 
 ++ Comandi di base da tastiera ++[BasicNVDACommands]
@@ -1292,18 +1300,22 @@ Alcune impostazioni possono anche essere cambiate utilizzando dei tasti rapidi, 
 
 ++ Impostazioni di NVDA ++[NVDASettings]
 %kc:settingsSection: || Name | Desktop key | Laptop key | Description |
-La finestra impostazioni di NVDA contiene numerosi parametri di configurazione che possono essere modificati.
-Vi si trova infatti un elenco con diverse categorie di configurazione tra cui scegliere.
+NVDA fornisce diversi parametri di configurazione che possono essere modificati utilizzando la finestra di dialogo delle impostazioni.
+Per semplificare la ricerca del tipo di impostazioni che si desidera modificare, tale finestra visualizza un elenco di categorie di configurazione tra cui scegliere.
+Quando si seleziona una categoria, tutte le impostazioni ad essa correlate vengono mostrate nella finestra di dialogo.
 Una volta selezionato un elemento, appariranno opzioni inerenti soltanto alla categoria selezionata.
-Queste impostazioni possono essere confermate utilizzando il pulsante applica, nel qual caso la finestra di dialogo rimarrà aperta.
+Per muoversi tra le categorie, servirsi di ``tab`` o ``shift+tab`` per raggiungere l'elenco, quindi spostarsi con i tasti freccia su e giù per scorrere le voci che lo compongono.
+Da qualsiasi punto della finestra, è possibile anche passare alla categoria successiva premendo ``ctrl+tab``, o tornare indietro premendo ``shift+ctrl+tab``.
+
+Dopo aver modificato una o più impostazioni, si può utilizzare il pulsante applica, nel qual caso la finestra di dialogo rimarrà aperta, consentendo di effettuare ulteriori modifiche o scegliere un'altra categoria.
 Se si desidera salvare le impostazioni e chiudere la finestra di dialogo Impostazioni di NVDA, è possibile utilizzare il pulsante OK.
 
 Alcune categorie di impostazioni dispongono di un tasto rapido.
 Se premuto, il tasto rapido aprirà la finestra di dialogo impostazioni di NVDA in quella particolare categoria.
 Da impostazioni predefinite, non tutte le categorie dispongono di un tasto rapido personalizzato.
-Se si desidera accedere a categorie che non hanno assegnata alcuna scorciatoia di tastiera, servirsi della [finestra Tasti e gesti di immissione #InputGestures] per aggiungere una combinazione di tasti o un gesto personalizzato per quella categoria.
+Se si accede spesso a categorie che non dispongono di tasti di scelta rapida dedicati, si consiglia di utilizzare la [finestra di dialogo Gesti e tasti di immissione #InputGestures] per aggiungere un comando rapido o un gesto a tocco. .
 
-Le categorie che si trovano nella finestra impostazioni di NVDA vengono descritte qui di seguito.
+Qui di seguito vengono descritte le categorie presenti nella finestra impostazioni di NVDA..
 
 +++ Generale (NVDA+control+g) +++[GeneralSettings]
 La categoria generale delle impostazioni di NVDA contiene soprattutto opzioni inerenti il cambio della lingua dello screen reader e se debba essere effettuato un controllo automatico della presenza di aggiornamenti.
@@ -1577,6 +1589,7 @@ L'indicatore della selezione non è affetto da questa funzione.
 ==== Mostra Messaggi ====[BrailleSettingsShowMessages]
 Si tratta di una casella combinata che stabilisce se NVDA debba visualizzare o meno messaggi in braille e la loro durata in secondi sul display, prima che essi scompaiano automaticamente.
 
+Per attivare o disattivare la visualizzazione dei messaggi da qualsiasi posto, assegnare un gesto personalizzato utilizzando la [finestra di dialogo Gesti e tasti di immissione #InputGestures].
 ==== Timeout dei messaggi(sec) ====[BrailleSettingsMessageTimeout]
 Si tratta di un campo numerico che controlla per quanto tempo i messaggi di NVDA saranno mostrati sul Display Braille.
 Il messaggio sparirà immediatamente non appena si preme un cursor routing sulla barra braille, ma lo si potrà rileggere se si preme una combinazione di tasti che attivano il messaggio.
@@ -1657,6 +1670,20 @@ Per alcune persone la voce che legge di continuo potrebbe essere fonte di distra
 Per questo motivo l'opzione è abilitata di default, interrompendo il parlato durante lo scorrimento del braille.
 
 La disattivazione di questa opzione consente di ascoltare la sintesi indipendentemente dallo scorrimento del  display braille.
+
+==== Mostra selezione ====[BrailleSettingsShowSelection]
+: Default
+  Attivato
+: Opzioni
+  Default (Attivato), Attivato, disattivato
+:
+
+Questa impostazione determina se l'indicatore di selezione (punti 7 e 8) debba essere visualizzato nel display braille.
+L'opzione è abilitata per impostazione predefinita, quindi viene visualizzato l'indicatore di selezione.
+L'indicatore di selezione potrebbe essere una distrazione durante la lettura.
+La disattivazione di questa opzione può migliorare la leggibilità.
+
+Per attivare o disattivare i punti 7 e 8 per la selezione da qualsiasi posto, si prega di assegnare un gesto personalizzato utilizzando la [finestra di dialogo tasti e gesti di immissione #InputGestures].
 
 +++ Selezione display braille (NVDA+control+a) +++[SelectBrailleDisplay]
 La finestra di dialogo Selezione display Braille, che si apre tramite il pulsante "cambia..." nella categoria Braille delle impostazioni di NVDA, permette di scegliere quale barra braille NVDA dovrà usare.
@@ -2118,6 +2145,7 @@ Contiene le seguenti opzioni:
 
 ==== Lingua di riconoscimento ====[Win10OcrSettingsRecognitionLanguage]
 Questa casella combinata permette di scegliere la lingua da utilizzare per il riconoscimento del testo.
+Per scorrere tra le lingue disponibili ovunque ci si trovi, assegnare un gesto personalizzato utilizzando la [finestra di dialogo Gesti e tasti di immissione #InputGestures].
 
 +++ Impostazioni avanzate +++
 Attenzione! Le impostazioni in questa categoria sono per utenti esperti e potrebbero causare il mancato funzionamento di NVDA se configurate in modo errato.
@@ -2133,8 +2161,8 @@ Ciò può anche essere utile nel caso in cui non si è sicuri se si siano effett
 
 ==== Consenti il caricamento di moduli in sviluppo dalla cartella Scratchpad ====[AdvancedSettingsEnableScratchpad]
 Quando si sviluppano componenti aggiuntivi per NVDA, è utile poter testare il codice man mano che lo si scrive.
-Se la funzione è attivata, NVDA sarà in grado di caricare app module personalizzati, globalPlugins, brailleDisplayDrivers e synthDrivers da una cartella speciale di sviluppo chiamata scratchpad, situata all'interno della cartella impostazioni utente di NVDA.
-In precedenza, NVDA eseguiva il codice personalizzato direttamente dalla cartella configurazione dell'utente, senza possibilità di disabilitare questa caratteristica.
+Se la funzione è attivata, NVDA sarà in grado di caricare app module personalizzati, globalPlugins, brailleDisplayDrivers, servizi di miglioramento visivo e synthDrivers da una cartella speciale di sviluppo chiamata scratchpad, situata all'interno della cartella impostazioni utente di NVDA.
+Come accade per gli addon, questi moduli vengono caricati all'avvio di NVDA oppure, nel caso di appModules e globalPlugins, al [ricaricamento dei plugin #ReloadPlugins].
 La funzionalità risulta disattivata di default, di modo che NVDA non eseguirà mai codice personalizzato senza che l'utente ne sia consapevole.
 Se si desidera  distribuire codice personalizzato ad altri, è necessario creare un pacchetto in formato nvda-addon ed utilizzare le funzioni messe a disposizione per i componenti aggiuntivi.
 
@@ -2291,6 +2319,19 @@ Alcune applicazioni GDI evidenzieranno il testo con un colore di sfondo, NVDA (t
 In alcuni casi, lo sfondo del testo potrebbe essere completamente trasparente, con il testo sovrapposto a qualche altro elemento della GUI.
 Con diverse API GUI storicamente popolari, il testo può essere visualizzato con uno sfondo trasparente, ma visivamente il colore di sfondo è accurato.
 
+==== Usa WASAPI per l'output audio ====[WASAPI]
+Questa opzione attiva la gestione dell'audio attraverso un sistema chiamato  Windows Audio Session API (WASAPI).
+WASAPI è un framework audio più moderno che può migliorare la reattività, le prestazioni e la stabilità dell'audio di NVDA, compresi sia il parlato che i suoni.
+L'opzione è abilitata per impostazione predefinita.
+Dopo aver modificato questa opzione, sarà necessario riavviare NVDA affinché i cambiamenti abbiano effetto.
+
+==== Il volume dei suoni di NVDA segue il volume della voce ====[SoundVolumeFollowsVoice]
+Quando questa opzione è abilitata, il volume dei suoni e dei segnali acustici di NVDA seguirà l'impostazione del volume della voce in uso.
+Se si riduce il volume della voce, anche il volume dei suoni diminuirà.
+Allo stesso modo, se si aumenta il volume della voce, aumenterà anche quello dei suoni..
+Inoltre, ha effetto solo quando l'impostazione "Usa WASAPI per l'output audio" è abilitata.
+Questa opzione è disabilitata di default.
+
 ==== Categorie Debug Logging ====[AdvancedSettingsDebugLoggingCategories]
 Le caselle di controllo presenti  in questo elenco consentono di abilitare  categorie specifiche di messaggi log di NVDA.
 Si tenga presente che il log di questi messaggi può comportare un calo delle prestazioni e file di registro di grandi dimensioni.
@@ -2350,7 +2391,11 @@ Per modificare un simbolo, dapprima selezionarlo nell'elenco simboli.
 è possibile filtrare i risultati inserendo il nome del simbolo o parte di esso all'interno del campo editazione filtra per.
 
 - Il campo "voce in sostituzione" permette di cambiare il testo che deve essere pronunciato in corrispondenza di quel simbolo.
-- Utilizzando il campo "livello", è possibile stabilire il livello più basso dal quale il simbolo dovrà essere annunciato.
+- Utilizzando il campo "livello", è possibile stabilire il livello più basso dal quale il simbolo dovrà essere annunciato (nessuno, qualcosa, molta o tutta)..
+è anche possibile impostare il livello su carattere; in quel caso il simbolo non sarà mai annunciato indipendentemente dal livello simboli in uso, con le seguenti due eccezioni:
+ - Durante la navigazione carattere per carattere.
+ - Quando NVDA effettua lo spelling di un testo contenente quel simbolo.
+ -
 - Il campo invia questo simbolo al sintetizzatore specifica le condizioni per cui  lo stesso simbolo debba essere processato dalla sintesi vocale, non tenendo conto quindi del testo in sostituzione.
 Ciò risulta utile nel caso in cui il simbolo provochi una pausa o un'inflessione nella voce del sintetizzatore.
 Ad esempio, una virgola provoca una pausa nel sintetizzatore.
@@ -2516,8 +2561,128 @@ Le impostazioni di NVDA per quanto riguarda il proprio funzionamento nelle scher
 In genere questa configurazione non dovrebbe essere modificata.
 Per cambiare la configurazione di NVDA nelle schermate di Logon o UAC, impostare lo screen reader a proprio piacimento una volta loggati in Windows, dopodiché utilizzare il bottone presente all'interno della categoria generale della finestra [Impostazioni NVDA #NVDASettings] per copiare la configurazione corrente nelle schermate di logon.
 
-+ Strumenti aggiuntivi +[ExtraTools]
++ Componenti aggiuntivi e Add-on Store +[AddonsManager]
+I componenti aggiuntivi, o add-on, sono pacchetti software che forniscono funzionalità innovative o modificate per NVDA.
+Vengono sviluppati dalla community di NVDA e da organizzazioni esterne quali fornitori commerciali o programmatori.
+Gli add-on possono eseguire diverse operazioni, tra le quali:
+- Aggiungere o migliorare il supporto per determinate applicazioni.
+- Fornire supporto per display Braille e o sintetizzatori vocali aggiuntivi.
+- Aggiungere o modificare funzioni in NVDA.
+-
 
+L'Add-on Store di NVDA consente di sfogliare e gestire i pacchetti aggiuntivi.
+Tutti i componenti aggiuntivi disponibili nell'Add-on Store possono essere scaricati gratuitamente.
+Tuttavia, alcuni di essi potrebbero richiedere agli utenti di pagare una licenza o un software aggiuntivo prima di poter essere utilizzati.
+Un esempio di questo tipo di add-on è costituito dalle sintesi vocali commerciali. 
+Se si installa un add-on con componenti a pagamento e si cambia idea sull'utilizzo, esso può essere facilmente rimosso.
+
+L'Add-on Store è accessibile dal sottomenu Strumenti del menu NVDA.
+Per accedere all'Add-on Store da qualsiasi posto, assegnare un gesto personalizzato utilizzando la [finestra di dialogo Tasti e Gesti di immissione #InputGestures].
+
+++ Navigare tra gli add-on ++[AddonStoreBrowsing]
+Una volta aperto, l'Add-on Store visualizza un elenco di componenti aggiuntivi.
+è possibile ritornare all'elenco da qualsiasi punto dello store con la combinazione ``alt+l``.
+Se non sono presenti componenti aggiuntivi installati, , l'add-on store mostrerà un elenco di add-on disponibili all'installazione..
+Se invece sono stati già installati componenti aggiuntivi, l'elenco mostrerà gli add-on attualmente installati.
+
+Selezionando un componente aggiuntivo tramite i tasti freccia su e giù, verranno visualizzati i dettagli dell'add-on stesso.
+I componenti aggiuntivi hanno azioni associate a cui è possibile accedere tramite un [menu azioni #AddonStoreActions], come installa, aiuto, disabilita e rimuovi.
+Tali azioni cambieranno in base allo stato del componente aggiuntivo, installato, disinstallato, abilitato o disabilitato.
+
++++ Le visualizzazioni dell'elenco componenti aggiuntivi +++[AddonStoreFilterStatus]
+Esistono diverse visualizzazioni per i componenti aggiuntivi: installati, aggiornabili, disponibili e incompatibili.
+è possibile utilizzare ``ctrl+tab``.per passare tra le varie visualizzazioni.
+Come previsto dalla maggior parte dei programmi, è anche possibile usare il tasto tab per posizionarsi sulla parte in cui vi sono le schede delle varie voci, e spostarsi quindi tra di esse servendosi della ``frecciaSinistra`` e della ``frecciaDestra``.
+
++++ Filtraggio per componenti aggiuntivi abilitati o disabilitati +++[AddonStoreFilterEnabled]
+Normalmente, un componente aggiuntivo installato sarà anche "abilitato", nel senso che è in esecuzione e disponibile all'interno di NVDA.
+Tuttavia, alcuni add-on installati potrebbero essere impostati sullo stato "disabilitato".
+Ciò significa che non verranno utilizzati e le loro funzioni non saranno disponibili durante la sessione corrente di NVDA.
+Per esempio, Si potrebbe aver disabilitato un componente aggiuntivo perché andava in conflitto con un altro add-on o con una determinata applicazione.
+NVDA può anche disabilitare da solo alcuni componenti aggiuntivi, nel caso in cui risultassero incompatibili durante un aggiornamento dello screen reader; naturalmente, si verrà avvisati di questo.
+Gli add-on possono anche essere disabilitati nel caso in cui si è certi di non usarli per un lungo periodo di tempo, ma non li si vuole disinstallare perché si prevede di volerli di nuovo in futuro.
+
+L'elenco dei componenti aggiuntivi installati e incompatibili può essere filtrato in base al loro stato:  abilitato o disabilitato.
+L'impostazione predefinita mostra i componenti aggiuntivi abilitati e disabilitati.
+
++++ Includere componenti aggiuntivi incompatibili +++[AddonStoreFilterIncompatible]
+Gli add-on disponibili e aggiornabili possono essere filtrati in modo da includere [i componenti aggiuntivi incompatibili #incompatibleAddonsManager] disponibili per l'installazione.
+
++++ Filtrare i componenti aggiuntivi per canale +++[AddonStoreFilterChannel]
+I componenti aggiuntivi possono essere distribuiti attraverso un massimo di quattro canali:
+- Stabile: lo sviluppatore lo ha rilasciato come add-on testato con una versione stabile di NVDA..
+- Beta: Questo componente aggiuntivo potrebbe richiedere ulteriori test, ma viene rilasciato in modo che gli utenti possano fornire suggerimenti e feedback..
+Consigliato per gli utenti più esperti..
+- Dev: canale riservato per lo più agli sviluppatori che potranno testare funzionalità delle API non ancora rilasciate..
+I tester delle versioni alpha di NVDA potrebbero aver bisogno di utilizzare una versione "Dev" dei loro add-on.
+- Esterno: componenti aggiuntivi installati da fonti esterne, al di fuori dello store dei componenti aggiuntivi.
+-
+
+Per elencare i componenti aggiuntivi solo per canali specifici, modificare la selezione del filtro "Canale".
+
++++ Ricerca di add-on +++[AddonStoreFilterSearch]
+Per cercare componenti aggiuntivi, utilizzare la casella di testo "Cerca".
+è possibile raggiungerla premendo ``shift+tab`` dall'elenco dei componenti aggiuntivi o premendo ``alt+s`` da qualsiasi punto dell'interfaccia dell'add-on store.
+Digitare una o due parole chiave per il tipo di componente aggiuntivo che si sta cercando, quindi un colpo di ``tab'` per tornare agli add-on.
+NVDA cercherà il testo appena inserito in vari campi, quali Nome visualizzato, publisher o descrizione, dopodiché mostrerà un elenco di add-on relativi alla ricerca effettuata.
+
+++ Azioni sugli add-on ++[AddonStoreActions]
+I componenti aggiuntivi possiedono azioni associate, come installa, guida, disabilita e rimuovi.
+È possibile accedere al menu delle azioni per un add-on in vari modi: premendo il tasto ``applicazioni``, oppure ``invio``, facendo clic con il pulsante destro del mouse o facendo doppio clic sul componente aggiuntivo.
+C'è anche un pulsante Azioni nei dettagli dell'add-on selezionato, che può essere attivato normalmente o premendo ``alt+a``.
+
++++ Installazione degli add-on +++[AddonStoreInstalling]
+Just because an add-on is available in the NVDA Add-ons Store, does not mean that it has been approved or vetted by NV Access or anyone else.
+It is very important to only install add-ons from sources you trust.
+The functionality of add-ons is unrestricted inside NVDA. 
+This could include accessing your personal data or even the entire system.
+
+You can install and update add-ons by [browsing Available add-ons #AddonStoreBrowsing].
+Select an add-on from the "Available add-ons" or "Updatable add-ons" tab.
+Then use the update, install, or replace action to start the installation.
+
+To install an add-on you have obtained outside of the Add-on Store, press the "Install from external source" button.
+This will allow you to browse for an add-on package (``.nvda-addon`` file) somewhere on your computer or on a network.
+Once you open the add-on package, the installation process will begin.
+
+If NVDA is installed and running on your system, you can also open an add-on file directly from the browser or file system to begin the installation process.
+
+When an add-on is being installed from an external source, NVDA will ask you to confirm the installation.
+Once the add-on is installed, NVDA must be restarted for the add-on to start running, although you may postpone restarting NVDA if you have other add-ons to install or update.
+
++++ Removing Add-ons +++[AddonStoreRemoving]
+To remove an add-on, select the add-on from the list and use the Remove action.
+NVDA will ask you to confirm removal.
+As with installing, NVDA must be restarted for the add-on to be fully removed.
+Until you do, a status of "Pending removal" will be shown for that add-on in the list.
+
++++ Disabling and Enabling Add-ons +++[AddonStoreDisablingEnabling]
+To disable an add-on, use the "disable" action.
+To enable a previously disabled add-on, use the "enable" action.
+You can disable an add-on if the add-on status indicates it is  "enabled", or enable it if the add-on is "disabled".
+For each use of the enable/disable action, add-on status changes to indicate what will happen when NVDA restarts.
+If the add-on was previously "disabled", the status will show "enabled after restart".
+If the add-on was previously "enabled", the status will show "disabled after restart".
+Just like when you install or remove add-ons, you need to restart NVDA in order for changes to take effect.
+
+++ Incompatible Add-ons ++[incompatibleAddonsManager]
+Some older add-ons may no longer be compatible with the version of NVDA that you have.
+If you are using an older version of NVDA, some newer add-ons may not be compatible either.
+Attempting to install an incompatible add-on will result in an error explaining why the add-on is considered incompatible.
+
+For older add-ons, you can override the incompatibility at your own risk.
+Incompatible add-ons may not work with your version of NVDA, and can cause unstable or unexpected behaviour including crashing.
+You can override compatibility when enabling or installing an add-on.
+If the incompatible add-on causes issues later, you can disable or remove it.
+
+If you are having trouble running NVDA, and you have recently updated or installed an add-on, especially if it is an incompatible add-on, you may want to try running NVDA temporarily with all add-ons disabled.
+To restart NVDA with all add-ons disabled, choose the appropriate option when quitting NVDA.
+Alternatively, use the [command line option #CommandLineOptions] ``--disable-addons``.
+
+You can browse available incompatible add-ons using the [available and updatable add-ons tabs #AddonStoreFilterStatus].
+You can browse installed incompatible add-ons using the [incompatible add-ons tab #AddonStoreFilterStatus].
+
++ Strumenti aggiuntivi +[ExtraTools]
 ++ Visualizzatore log ++[LogViewer]
 Il visualizzatore log, situato alla voce strumenti del menu di NVDA, permette di mostrare tutte le informazioni di log dal momento in cui NVDA è stato avviato.
 è possibile servirsi della combinazione di tasti NVDA+f1 per aprire una finestra dove verranno visualizzate  tutte le informazioni di log, comprese quelle per sviluppatori e sul navigatore ad oggetti.
@@ -2567,64 +2732,6 @@ Per attivare o disattivare il visualizzatore braille da qualsiasi parte, assegna
 ++ Console Python ++[PythonConsole]
 La Console Python di NVDA, situata nel menu strumenti, è uno strumento per sviluppatori che risulta utile in fase di debug, di diagnosi delle funzioni interne di NVDA o di analisi della gerarchia degli oggetti accessibili presenti in un'applicazione.
 Per ulteriori informazioni, si veda la [guida agli sviluppatori per NVDA https://www.nvaccess.org/files/nvda/documentation/developerGuide.html], in lingua inglese.
-
-++ Gestore componenti aggiuntivi ++[AddonsManager]
-Il gestore di componenti aggiuntivi, accessibile selezionando "gestisci componenti aggiuntivi" dal menu strumenti di NVDA, permette di installare, disinstallare, abilitare e disabilitare questo tipo di pacchetti. 
-Essi vengono prodotti  dalla comunità internazionale di NVDA  e contengono codice personalizzato che può aggiungere o modificare le caratteristiche dello screen reader, o anche fornire supporto per Display Braille o sintesi vocali extra.
-
-Il gestore di componenti aggiuntivi contiene un elenco che visualizza tutti i pacchetti installati nella propria cartella di configurazione di NVDA.
-Per ciascun componente, vengono mostrati il nome del pacchetto, lo stato, la versione e l'autore, ed inoltre possono essere visualizzate altre informazioni come la descrizione o l'URL selezionando tale componente e cliccando sul pulsante "informazioni su".
-Se per il componente selezionato è disponibile aiuto specifico, è possibile accedervi tramite il pulsante Aiuto componente aggiuntivo.
-
-Per cercare e scaricare altri componenti aggiuntivi,  premere il pulsante Scarica Componenti aggiuntivi.
-Questo bottone aprirà la [Pagina componenti aggiuntivi di NVDA https://addons.nvda-project.org/].
-Se NVDA è installato sul sistema, è possibile aprire il componente aggiuntivo  direttamente dal browser per avviare il processo di installazione come descritto di seguito.
-Altrimenti, salvare il componente aggiuntivo e seguire le istruzioni fornite qui di seguito.
-
-Per installare un componente aggiuntivo ottenuto in precedenza, premere il pulsante Installa.
-Si aprirà una finestra nella quale sarà possibile cercare, sia nel proprio pc o in una rete locale, il pacchetto con estensione nvda-addon da installare.
-Una volta selezionato il pulsante Apri, il processo di installazione avrà inizio.
-
-Quando si sta per installare un componente aggiuntivo, NVDA chiederà conferma dell'operazione.
-Poiché le funzionalità dei componenti non sono soggette ad alcuna restrizione all'interno di NVDA, il che in teoria potrebbe comportare l'accesso ai propri dati personali o anche all'intero sistema se NVDA è stato installato nel pc, è molto importante installare pacchetti che provengono esclusivamente da una fonte sicura.
-Una volta che il pacchetto è stato installato, è necessario riavviare lo screen reader per poter fruire delle nuove funzionalità.
-Fino a quando non verrà effettuata tale operazione, accanto al componente aggiuntivo vi sarà la parola "installa".
-
-Per eliminare un componente aggiuntivo, selezionarlo dall'elenco e poi premere il pulsante rimuovi.
-NVDA chiederà se si è sicuri di voler disinstallare il pachetto.
-Come per l'installazione, lo screen reader deve essere riavviato per consentire la piena rimozione del componente aggiuntivo.
-Fino a quando non verrà effettuata tale operazione, accanto al componente aggiuntivo vi sarà la parola "Rimuovi".
-
-Per disattivare un componente aggiuntivo, premere il pulsante "disabilita".
-Per riattivare un componente aggiuntivo disattivato in precedenza, servirsi del pulsante "abilita".
-è possibile disattivare un componente aggiuntivo solo se lo stato dell'addon viene indicato come "abilitato", mentre è possibile attivarlo solo se lo stato corrisponde a "disabilitato".
-Per ciascuna pressione del pulsante abilita/disabilita, lo stato del componente aggiuntivo viene modificato per indicare ciò che accadrà al successivo riavvio di NVDA.
-Se il componente aggiuntivo è stato disabilitato in precedenza, lo stato mostrerà "abilitato dopo il riavvio". 
-Se il componente aggiuntivo è stato in precedenza "Abilitato", lo stato visualizzerà "disabilitato dopo il riavvio".
-Esattamente come accade durante l'installazione o la disinstallazione di un componente aggiuntivo, NVDA ha bisogno di essere riavviato affinché le modifiche abbiano effetto.
-
-Il gestore dispone anche del pulsante chiudi, per chiudere la finestra di dialogo.
-Se sono stati installati o rimossi dei componenti, o il loro stato è stato modificato, NVDA chiederà di potersi riavviare, in modo da rendere effettive le modifiche.
-
-Alcuni vecchi componenti aggiuntivi potrebbero non risultare più compatibili con la versione in uso di NVDA.
-Allo stesso modo, se si usa una versione datata dello screen reader, i nuovi componenti potrebbero non funzionare affatto.
-Se si cercherà di installare un addon non compatibile apparirà un messaggio di errore con le spiegazioni sul motivo dell'incompatibilità del componente aggiuntivo.
-Per controllare questi addon, sarà possibile  servirsi del pulsante "visualizza componenti aggiuntivi non compatibili".
-
-Per accedere al gestore componenti aggiuntivi da qualsiasi punto ci si trovi, servirsi della finestra [tasti e gesti di immissione #InputGestures] ed assegnare un gesto o tasto rapido personalizzato per quella funzione.
-
-+++ Gestore componenti aggiuntivi non compatibili +++
-Il Gestore componenti aggiuntivi non compatibili, che si raggiunge tramite l'apposito pulsante presente all'interno del gestore componenti aggiuntivi, consente di controllare tutti gli addon non compatibili e, conseguentemente, conoscere il motivo per il quale essi sono stati ritenuti non utilizzabili.
-Gli addon sono considerati non compatibili quando non vengono aggiornati da molto tempo e quindi non possono funzionare con i cambiamenti più significativi introdotti in NVDA, o quando si basano su caratteristiche che non sono disponibili nella versione dello screen reader in uso.
-Il gestore componenti aggiuntivi non compatibili mostrerà un breve messaggio che spiegherà i problemi individuati negli addon.
-Tutti i componenti vengono presentati in un elenco con le seguenti colonne:
-+ Pacchetto, il nome dell'addon
-+ versione, la versione dell'addon
-+ Motivo incompatibilità, la ragione per la quale il componente viene considerato non compatibile
-+
-
-Inoltre, il gestore componenti aggiuntivi non compatibili dispone di un pulsante "informazioni su".
-Come è semplice immaginare, verranno mostrate le informazioni sull'addon con la possibilità di contattare lo sviluppatore.
 
 ++ Crea copia portable ++[CreatePortableCopy]
 Verrà visualizzata una finestra di dialogo che consente di creare una copia portable di NVDA a partire dalla versione installata.
@@ -2939,7 +3046,16 @@ Si legga la documentazione della propria barra Braille per ottenere informazioni
 | Sposta il display braille alla riga precedente  | d1 |
 | Sposta il display braille alla riga successiva | d3 |
 | Route to braille cell | routing |
-
+| tasti shift+tab | spazio+punto1+punto3 |
+| tasto tab | spazio+punto4+punto6 |
+| tasti alt | spazio+punto1+punto3+punto4 (spazio+m) |
+| tasto escape | spazio+punto1+punto5 (spazio+e) |
+| tasto windows | spazio+punto3+punto4 |
+| tasti alt+tab | spazio+punto2+punto3+punto4+punto5 (spazio+t) |
+| Menu NVDA | spazio+punto1+punto3+punto4+punto5 (spazio+n) |
+| tasti windows+d (ridurre ad icona tutte le applicazioni) | spazio+punto1+punto4+punto5 (spazio+d) |
+| Dire tutto | spazio+punto1+punto2+punto3+punto4+punto5+punto6 |
+ 
 Per i modelli che possiedono un Joystick:
 || Nome | Tasto |
 | FrecciaSu | up |
@@ -3648,6 +3764,10 @@ Consultare la documentazione della barra braille per informazioni sulla posizion
 | Sposta il navigatore ad oggetti sull'oggetto successivo | ``f6`` |
 | Legge l'oggetto attuale del navigatore | ``f7`` |
 | Riporta informazioni sulla posizione del testo o dell'oggetto in corrispondenza del cursore di controllo | ``f8`` |
+| Mostra impostazioni braille | ``f1+home1``, ``f9+home2`` |
+| Legge la barra di stato e vi sposta il navigatore ad oggetti | ``f1+end1``, ``f9+end2`` |
+| Scorre tra le forme del cursore braille | ``f1+eCursor1``, ``f9+eCursor2`` |
+| Attiva o disattiva il cursore braille | ``f1+cursor1``, ``f9+cursor2`` |
 | Esegue l'azione predefinita sull'oggetto attuale del navigatore | ``f7+f8`` |
 | Legge data/ora | ``f9`` |
 | Annuncia lo stato della batteria e il tempo rimanente se l'alimentazione non è collegata in | ``f10`` |
@@ -3677,19 +3797,17 @@ Di seguito sono riportate le assegnazioni dei tasti per questi display.
 || Nome | Tasto |
 | Scorri il display braille indietro | pan left or rocker up |
 | Scorri il display braille avanti | pan right or rocker down |
-| Sposta il display braille alla riga precedente | spazio + punto1 |
-| Sposta il display braille alla riga successiva | spazio + punto4 |
 | Route to braille cell | routing set 1|
 | Attiva/disattiva inseguimento braille | su+giù |
-| Tasto freccia su | joystick su |
-| Tasto freccia giù | joystick giù |
-| Tasto freccia sinistra | spazio+punto3 o joystick sinistra |
-| Tasto freccia destra | spazio+punto6 o joystick destra |
+| Tasto freccia su | joystick su, dpad up o spazio+punto1 |
+| Tasto freccia giù | joystick giù, dpad down o spazio+punto4 | 
+| Tasto freccia sinistra | spazio+punto3, joystick sinistra o dpad left |
+| Tasto freccia destra | spazio+punto6, joystick destra o dpad right |
 | tasto MAIUSC+TAB | spazio+punto1+punto3 |
 | Tasto tab | spazio+punto4+punto6 |
 | tasto alt | spazio+punto1+punto3+punto4 (spazio+m) |
 | tasto esc | spazio+punto1+punto5 (spazio+e) |
-| tasto invio | punto8 o centro del joystick |
+| tasto invio | punto8, centro del joystick o dpad center |
 | tasto windows | spazio+punto3+punto4 |
 | tasto alt+tab | spazio+punto2+punto3+punto4+punto5 (spazio+t) |
 | Menu NVDA | spazio+punto1+punto3+punto4+punto5 (spazio+n) |
