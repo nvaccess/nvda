@@ -36,7 +36,7 @@ from ctypes.wintypes import (
 	UINT,
 	LPUINT
 )
-from comtypes import HRESULT, BSTR, GUID
+from comtypes import HRESULT, BSTR
 from comtypes.hresult import S_OK
 import atexit
 import weakref
