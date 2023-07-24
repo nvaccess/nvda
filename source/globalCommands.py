@@ -1608,7 +1608,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Moves the review cursor to the previous page of the current navigator object and speaks it"),
 		resumeSayAllMode=sayAll.CURSOR.REVIEW,
 		category=SCRCAT_TEXTREVIEW,
-		gestures=("kb:NVDA+pageUp", "kb(laptop):NVDA+shift+pageUp", "ts(text):flickUp")
+		gestures=("kb:NVDA+pageUp", "kb(laptop):NVDA+shift+pageUp")
 	)
 	def script_review_previousPage(self, gesture: inputCore.InputGesture) -> None:
 		info = api.getReviewPosition().copy()
@@ -1640,7 +1640,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Moves the review cursor to the next page of the current navigator object and speaks it"),
 		resumeSayAllMode=sayAll.CURSOR.REVIEW,
 		category=SCRCAT_TEXTREVIEW,
-		gestures=("kb:NVDA+pageDown", "kb(laptop):NVDA+shift+pageDown", "ts(text):flickUp")
+		gestures=("kb:NVDA+pageDown", "kb(laptop):NVDA+shift+pageDown")
 	)
 	def script_review_nextPage(self, gesture: inputCore.InputGesture) -> None:
 		origInfo = api.getReviewPosition().copy()

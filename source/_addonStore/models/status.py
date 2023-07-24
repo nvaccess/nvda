@@ -184,13 +184,13 @@ def getStatus(model: "_AddonGUIModel") -> Optional[AvailableAddonStatus]:
 			# and another for enabled/disabled.
 			return storeState
 
-	addonStoreData = addonDataManager._getCachedInstalledAddonData(model.addonId)
+	addonStoreInstalledData = addonDataManager._getCachedInstalledAddonData(model.addonId)
 	if isinstance(model, AddonStoreModel):
 		# If the listed add-on is installed from a side-load
 		# and not available on the add-on store
 		# the type will not be AddonStoreModel
-		if addonStoreData is not None:
-			if model.addonVersionNumber > addonStoreData.addonVersionNumber:
+		if addonStoreInstalledData is not None:
+			if model.addonVersionNumber > addonStoreInstalledData.addonVersionNumber:
 				return AvailableAddonStatus.UPDATE
 		else:
 			# Parsing from a side-loaded add-on

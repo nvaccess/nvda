@@ -1,15 +1,15 @@
 # Irish translation of NVDA
-# Copyright (C) 2006-2016 NVDA Contributors
+# Copyright (C) 2006-2023 NVDA Contributors
 #
 # Robbie Sinnott <robbiesin@gmail.com>
 # Kevin Scannell <kscanne@gmail.com>
 # Ronan McGuirk <ronan.p.mcguirk@gmail.com>
 msgid ""
 msgstr ""
-"Project-Id-Version: NVDA 2022.4\n"
+"Project-Id-Version: NVDA 2023.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-26 00:01+0000\n"
-"PO-Revision-Date: 2023-05-26 15:46+0100\n"
+"POT-Creation-Date: 2023-07-07 02:43+0000\n"
+"PO-Revision-Date: 2023-07-13 12:23+0100\n"
 "Last-Translator: Ronan McGuirk <ronan.mcguirk@gmail.com>\n"
 "Language-Team: Gaeilge <ga@li.org>\n"
 "Language: ga\n"
@@ -17,6 +17,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 2.0.7\n"
+"Plural-Forms: nplurals=5; plural=(n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : "
+"4);\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 msgid "Native input"
@@ -2469,12 +2471,16 @@ msgstr "Téacs le haimsiú"
 msgid "Case &sensitive"
 msgstr "&Cásíogair"
 
+#. Translators: message displayed to the user when
+#. searching text and no text is found.
 #, python-format
 msgid "text \"%s\" not found"
 msgstr "téacs \"%s\" gan aimsiú"
 
-msgid "Find Error"
-msgstr "Earráid le linn Cuardaigh"
+#. Translators: message dialog title displayed to the user when
+#. searching text and no text is found.
+msgid "0 matches"
+msgstr "Níl aon torthaí."
 
 #. Translators: Input help message for NVDA's find command.
 msgid "find a text string from the current cursor position"
@@ -4116,12 +4122,12 @@ msgstr ""
 msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr "Cuir an consól Python NVDA ar siúl. Úsáideach don fhorbairt"
 
-#. Translators: Input help mode message for activate manage add-ons command.
+#. Translators: Input help mode message to activate Add-on Store command.
 msgid ""
-"Activates the NVDA Add-ons Manager to install and uninstall add-on packages "
-"for NVDA"
+"Activates the Add-on Store to browse and manage add-on packages for NVDA"
 msgstr ""
-"Cuirtear bainisteoir breiseáin ar siúl chun breiseáin a shuiteáil ar NVDA "
+"Gníomhaítear Stór na mBreiseán, chun brabhsáil agus bainistiú a dhéanamh ar "
+"bhreiseáin le haghaidh NVDA."
 
 #. Translators: Input help mode message for toggle speech viewer command.
 msgid ""
@@ -4203,6 +4209,32 @@ msgstr "Níl an cúrsóir Bhraille ar siúl."
 #, python-format
 msgid "Braille cursor %s"
 msgstr "cúrsóir Bhraille %s"
+
+#. Translators: Input help mode message for cycle through braille show messages command.
+msgid "Cycle through the braille show messages modes"
+msgstr "Scrolláil trí mhóid taispeána teachtaireachtaí Braille."
+
+#. Translators: Reports which show braille message mode is used
+#. (disabled, timeout or indefinitely).
+#, python-format
+msgid "Braille show messages %s"
+msgstr "Taispeáin na teachtaireachtaí Braille %s"
+
+#. Translators: Input help mode message for cycle through braille show selection command.
+msgid "Cycle through the braille show selection states"
+msgstr "Scrolláil trí na stáid taispeána roghnúcháin Braille."
+
+#. Translators: Used when reporting braille show selection state
+#. (default behavior).
+#, python-format
+msgid "Braille show selection default (%s)"
+msgstr "Roghnúchán (%s) réamhshocraithe don taispeáint Braille."
+
+#. Translators: Reports which show braille selection state is used
+#. (disabled or enabled).
+#, python-format
+msgid "Braille show selection %s"
+msgstr "Taispeáin an roghnúchán Braille %s."
 
 #. Translators: Input help mode message for report clipboard text command.
 msgid "Reports the text on the Windows clipboard"
@@ -4417,15 +4449,13 @@ msgid "Plugins reloaded"
 msgstr "Breiseáin athluchtaithe"
 
 #. Translators: input help mode message for Report destination URL of a link command
-#, fuzzy
 msgid ""
 "Report the destination URL of the link at the position of caret or focus. If "
 "pressed twice, shows the URL in a window for easier review."
 msgstr ""
-"Tabhair tuairisc ar sprioc  aimsitheora aonfhoirmigh acmhainne an nasc san "
-"oibiacht nascleanteora. Má bhrúitear faoi dhó é, taispeánfar é i bhfuinneog "
-"le haghaidh athbhreithnithe.\n"
-"   "
+"Tabhair tuairisc ar spriocaimsitheoir aonfhoirmeach acmhainne an naisc ag "
+"suíomh na caraite nó an fhócais. Má bhrúitear faoi dhó é, taispeántar i "
+"bhfuinneog é le haghaidh athbreithnithe níos éasca."
 
 #. Translators: Informs the user that the link has no destination
 msgid "Link has no apparent destination"
@@ -4442,13 +4472,12 @@ msgid "Not a link."
 msgstr "Ní nasc é seo"
 
 #. Translators: input help mode message for Report URL of a link in a window command
-#, fuzzy
 msgid ""
 "Displays the destination URL of the link at the position of caret or focus "
 "in a window, instead of just speaking it. May be preferred by braille users."
 msgstr ""
-"Tugtar tuairisc ar sprioc  aimsitheora aonfhoirmigh acmhainne an nasc san "
-"oibiacht nascleanteora i bhfuinneog in ionad é a labhairt. D’fhéadfadh le "
+"Taispeántar spriocaimsitheoir aonfhoirmeach acmhainne an naisc ag suíomh an "
+"fhócais nó na caraite, i bhfuinneog  in ionad í a labhairt. D’fhéadfadh le "
 "húsáideoirí Braille é seo a roghnú."
 
 #. Translators: Input help mode message for a touchscreen gesture.
@@ -4559,9 +4588,8 @@ msgid "Please disable screen curtain before using Windows OCR."
 msgstr "Díchumasaigh an cuirtín scáileáin sula n-úsáidtear Windows OCR"
 
 #. Translators: Describes a command.
-#, fuzzy
 msgid "Cycles through the available languages for Windows OCR"
-msgstr "Romhnaigh cruth an chursóra Bhraille."
+msgstr "Scroláltar trí na teangacha atá ar fáil maidir le OCR Windows."
 
 #. Translators: Input help mode message for toggle report CLDR command.
 msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
@@ -6160,6 +6188,10 @@ msgctxt "action"
 msgid "Sound"
 msgstr "fuaim"
 
+#. Translators: Shown in the system Volume Mixer for controlling NVDA sounds.
+msgid "NVDA sounds"
+msgstr "Fuaimeanna NVDA"
+
 msgid "Type help(object) to get help about object."
 msgstr "Úsáid help(X) chun tuilleadh eolais faoi X a fháil."
 
@@ -6420,6 +6452,7 @@ msgstr "Earráid agus nuashonruithe á lorg."
 #. destination directory in the Create Portable NVDA dialog.
 #. Translators: Title of an error dialog shown when an error occurs while creating a portable copy of NVDA.
 #. Translators: The title of an error message dialog.
+#. Translators: A message indicating that an error occurred.
 #. Translators: The title of the message box
 #. Translators: The title of the error dialog displayed when there is an error showing the GUI
 #. for a vision enhancement provider
@@ -6441,32 +6474,6 @@ msgstr "Níl aon nuashonrú ar fáil."
 #, python-brace-format
 msgid "NVDA version {version} has been downloaded and is pending installation."
 msgstr "Tá leagan NVDA {version} íoslódáilte agus ag feitheamh ar shuiteáil"
-
-#. Translators: A message indicating that some add-ons will be disabled
-#. unless reviewed before installation.
-#. Translators: A message in the installer to let the user know that
-#. some addons are not compatible.
-msgid ""
-"\n"
-"\n"
-"However, your NVDA configuration contains add-ons that are incompatible with "
-"this version of NVDA. These add-ons will be disabled after installation. If "
-"you rely on these add-ons, please review the list to decide whether to "
-"continue with the installation"
-msgstr ""
-"\n"
-"\n"
-"Tá breiseáin sa chumriacht NVDA seo, áfach, nach bhfuil comhoiriúnach leis "
-"an leagan NVDA seo. Díchumasófar na breiseáin seo tar éis na suiteála. Má tá "
-"tú ag brath ar na breiseáin seo, déan athbhreithniú ar an liosta sula "
-"leannán tú ar aghaidh leis an suiteáil. "
-
-#. Translators: A message to confirm that the user understands that addons that have not been
-#. reviewed and made available, will be disabled after installation.
-#. Translators: A message to confirm that the user understands that addons that have not been reviewed and made
-#. available, will be disabled after installation.
-msgid "I understand that these incompatible add-ons will be disabled"
-msgstr "Tuigim go ndíchumasófar na breiseáin neamh-chomhoiriúnacha seo."
 
 #. Translators: The label of a button to review add-ons prior to NVDA update.
 #. Translators: The label of a button to launch the add-on compatibility review dialog.
@@ -6507,21 +6514,6 @@ msgstr "&Dún"
 #, python-brace-format
 msgid "NVDA version {version} is ready to be installed.\n"
 msgstr "Tá leagan {version} de NVDA ar fáil le haghaidh suiteála.\n"
-
-#. Translators: A message indicating that some add-ons will be disabled
-#. unless reviewed before installation.
-msgid ""
-"\n"
-"However, your NVDA configuration contains add-ons that are incompatible with "
-"this version of NVDA. These add-ons will be disabled after installation. If "
-"you rely on these add-ons, please review the list to decide whether to "
-"continue with the installation"
-msgstr ""
-"\n"
-"Tá breiseáin sa chumriacht NVDA seo, áfach, nach bhfuil comhoiriúnach leis "
-"an leagan NVDA seo. Díchumasófar na breiseáin seo tar éis na suiteála. Má tá "
-"tú ag brath ar na breiseáin seo, déan athbhreithniú ar an liosta sula "
-"leannán tú ar aghaidh leis an suiteáil."
 
 #. Translators: The label of a button to install an NVDA update.
 msgid "&Install update"
@@ -6777,6 +6769,72 @@ msgctxt "UIAHandler.FillType"
 msgid "pattern"
 msgstr "Patrún"
 
+#. Translators: A title of the dialog shown when fetching add-on data from the store fails
+msgctxt "addonStore"
+msgid "Add-on data update failure"
+msgstr "Teip ar nuashonrú breiseáin "
+
+#. Translators: A message shown when fetching add-on data from the store fails
+msgctxt "addonStore"
+msgid "Unable to fetch latest add-on data for compatible add-ons."
+msgstr "Ní féidir na sonraí is déanaí faoi bhreiseáin comhoiriúnacha a fháil."
+
+#. Translators: A message shown when fetching add-on data from the store fails
+msgctxt "addonStore"
+msgid "Unable to fetch latest add-on data for incompatible add-ons."
+msgstr ""
+"Ní féidir na sonraí is déanaí faoi bhreiseáin neamh-chomhoiriúnacha a fháil."
+
+#. Translators: The message displayed when an error occurs when opening an add-on package for adding.
+#. The %s will be replaced with the path to the add-on that could not be opened.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"Failed to open add-on package file at {filePath} - missing file or invalid "
+"file format"
+msgstr ""
+"Níorbh fhéidir an comhad breiseáin a oscailt  ag {filePath}. Níl an comhad "
+"ann nó tá an fhormaid mícheart."
+
+#. Translators: The message displayed when an add-on is not supported by this version of NVDA.
+#. The %s will be replaced with the path to the add-on that is not supported.
+#, python-format
+msgctxt "addonStore"
+msgid "Add-on not supported %s"
+msgstr "Níl tacaíocht ar fáil do Bhreiseán %s"
+
+#. Translators: The message displayed when an error occurs when installing an add-on package.
+#. The %s will be replaced with the path to the add-on that could not be installed.
+#, python-format
+msgctxt "addonStore"
+msgid "Failed to install add-on from %s"
+msgstr "Theip ar an breiseán ó %s a shuiteáil."
+
+#. Translators: A title for a dialog notifying a user of an add-on download failure.
+msgctxt "addonStore"
+msgid "Add-on download failure"
+msgstr "Theip ar íoslódáil an bhreiseáin"
+
+#. Translators: A message to the user if an add-on download fails
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Unable to download add-on: {name}"
+msgstr "Ní féidir an breiseán {name} a íoslódáil."
+
+#. Translators: A message to the user if an add-on download fails
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Unable to save add-on as a file: {name}"
+msgstr "Ní féidir an breiseán {name} a shábháil mar chomhad."
+
+#. Translators: A message to the user if an add-on download is not safe
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Add-on download not safe: checksum failed for {name}"
+msgstr ""
+"Níl sé sábháilte an breiseán {name} a íoslódáil mar theip ar an tsuim "
+"sheiceála."
+
 msgid "Display"
 msgstr "Scáileán"
 
@@ -7030,8 +7088,13 @@ msgstr "ó {startTime} go {endTime}"
 #. Translators: Part of a message reported when on a calendar appointment with one or more categories
 #. in Microsoft Outlook.
 #, python-brace-format
-msgid "categories {categories}"
-msgstr "cagóirí {categories}"
+msgid "category {categories}"
+msgid_plural "categories {categories}"
+msgstr[0] "catagóir {categories}"
+msgstr[1] "catagóirí {categories}"
+msgstr[2] "catagóirí {categories}"
+msgstr[3] "catagóirí {categories}"
+msgstr[4] "catagóirí {categories}"
 
 #. Translators: A message reported when on a calendar appointment with category in Microsoft Outlook
 #, python-brace-format
@@ -7343,14 +7406,14 @@ msgid "{firstAddress} through {lastAddress}"
 msgstr "{firstAddress} go dtí {lastAddress}"
 
 #. Translators: a measurement in inches
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "{val:.2f} inches"
-msgstr "{val:.2f} in"
+msgstr "{val:.2f} órlach"
 
 #. Translators: a measurement in centimetres
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "{val:.2f} centimetres"
-msgstr "{val:.2f} cm"
+msgstr "{val:.2f} cheintiméadar"
 
 #. Translators: LibreOffice, report cursor position in the current page
 #, python-brace-format
@@ -7358,6 +7421,8 @@ msgid ""
 "cursor positioned {horizontalDistance} from left edge of page, "
 "{verticalDistance} from top edge of page"
 msgstr ""
+"Tá an cúrsóir suite  {horizontalDistance} ó imeall clé an leathanaigh, "
+"agus,  {verticalDistance} ó bharr an leathanaigh"
 
 msgid "left"
 msgstr "clé"
@@ -7433,18 +7498,6 @@ msgstr "Sraith HumanWare Brailliant BI/B  / BrailleNote Touch"
 #. Translators: The name of a braille display.
 msgid "EcoBraille displays"
 msgstr "Taispeántas Braille:"
-
-#. Translators: Names of braille displays.
-msgid "Eurobraille Esys/Esytime/Iris displays"
-msgstr "Taispeáintí Eurobraille Esys/Esytime/Iris  "
-
-#. Translators: Message when HID keyboard simulation is unavailable.
-msgid "HID keyboard input simulation is unavailable."
-msgstr "Níl ionsamhlú an mhéarchláir HID ar fáil."
-
-#. Translators: Description of the script that toggles HID keyboard simulation.
-msgid "Toggle HID keyboard simulation"
-msgstr "Scoránaigh ionsamhlú an mhéarchláir HID"
 
 #. Translators: Names of braille displays.
 msgid "Freedom Scientific Focus/PAC Mate series"
@@ -8592,22 +8645,20 @@ msgid "has note"
 msgstr "Tá nóta ann "
 
 #. Translators: Presented when a control has a pop-up dialog.
-#, fuzzy
 msgid "opens dialog"
-msgstr "dialóg"
+msgstr "Osclaítear an dialóg"
 
 #. Translators: Presented when a control has a pop-up grid.
 msgid "opens grid"
-msgstr ""
+msgstr "osclaítear an ghreille"
 
 #. Translators: Presented when a control has a pop-up list box.
-#, fuzzy
 msgid "opens list"
-msgstr "liosta anuas"
+msgstr "osclaítear an liosta"
 
 #. Translators: Presented when a control has a pop-up tree.
 msgid "opens tree"
-msgstr ""
+msgstr "osclaítear an crann"
 
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
@@ -8746,13 +8797,13 @@ msgstr "Amharcán cainte"
 msgid "Braille viewer"
 msgstr "amharcán Braille"
 
+#. Translators: The label of a menu item to open the Add-on store
+msgid "Add-on &store..."
+msgstr "Stór na mBreiseán"
+
 #. Translators: The label for the menu item to open NVDA Python Console.
 msgid "Python console"
 msgstr "Consól Python"
-
-#. Translators: The label of a menu item to open the Add-ons Manager.
-msgid "Manage &add-ons..."
-msgstr "Bainistigh &breiseáin"
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
 msgid "Create portable copy..."
@@ -8943,36 +8994,6 @@ msgstr "No"
 msgid "OK"
 msgstr "OK"
 
-#. Translators: message shown in the Addon Information dialog.
-#, python-brace-format
-msgid ""
-"{summary} ({name})\n"
-"Version: {version}\n"
-"Author: {author}\n"
-"Description: {description}\n"
-msgstr ""
-"{summary} ({name})\n"
-"Leagan: {version}\n"
-"Údar: {author}\n"
-"Cur Síos: {description}\n"
-
-#. Translators: the url part of the About Add-on information
-#, python-brace-format
-msgid "URL: {url}"
-msgstr "URL: {url}"
-
-#. Translators: the minimum NVDA version part of the About Add-on information
-msgid "Minimum required NVDA version: {}"
-msgstr "Bunleagan NVDA de dhíth: {}"
-
-#. Translators: the last NVDA version tested part of the About Add-on information
-msgid "Last NVDA version tested: {}"
-msgstr "An leagan is déanaí de nVDA a bhí tástáilte"
-
-#. Translators: title for the Addon Information dialog
-msgid "Add-on Information"
-msgstr "Eolas faoin Bhreiseán"
-
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
 msgstr "Bainisteoir na mBreiseán"
@@ -9050,19 +9071,6 @@ msgstr "Roghnaigh Pacáiste Breiseáin"
 msgid "NVDA Add-on Package (*.{ext})"
 msgstr "Pacáiste Breiseáin NVDA (*.{ext})"
 
-#. Translators: Presented when attempting to remove the selected add-on.
-#. {addon} is replaced with the add-on name.
-#, python-brace-format
-msgid ""
-"Are you sure you wish to remove the {addon} add-on from NVDA? This cannot be "
-"undone."
-msgstr ""
-"An bhfuil tú cinnte gur mhaith leat an breiseán {addon}  a bhaint ó NVDA?"
-
-#. Translators: Title for message asking if the user really wishes to remove the selected Addon.
-msgid "Remove Add-on"
-msgstr "Bain an Breiseán"
-
 #. Translators: The status shown for an addon when it's not considered compatible with this version of NVDA.
 msgid "Incompatible"
 msgstr "neamh-chomhoiriúnach"
@@ -9086,16 +9094,6 @@ msgstr "Cumasaoídh é tar éis an atosaithe."
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Enable add-on"
 msgstr "Cumasaigh an Breiseán "
-
-#. Translators: The message displayed when the add-on cannot be disabled.
-#, python-brace-format
-msgid "Could not disable the {description} add-on."
-msgstr "Níorbh fhéidir an breiseán {description} a dhíchumasú."
-
-#. Translators: The message displayed when the add-on cannot be enabled.
-#, python-brace-format
-msgid "Could not enable the {description} add-on."
-msgstr "Níorbh fhéidir an breiseán {description} a chumasú."
 
 #. Translators: The message displayed when an error occurs when opening an add-on package for adding.
 #, python-format
@@ -9165,18 +9163,6 @@ msgstr ""
 msgid "Add-on not compatible"
 msgstr "Níl an breiseán comhoiriúnach."
 
-#. Translators: A message informing the user that this addon can not be installed
-#. because it is not compatible.
-#, python-brace-format
-msgid ""
-"Installation of {summary} {version} has been blocked. An updated version of "
-"this add-on is required, the minimum add-on API supported by this version of "
-"NVDA is {backCompatToAPIVersion}"
-msgstr ""
-"Cuireadh cosc ar shuiteáil {summary} {version}. Tá leagan nuashonraithe den "
-"bhreiseán seo de dhíth. Is é breiseán API {backCompatToAPIVersion} an leagan "
-"is ísle atá tacaithe"
-
 #. Translators: A message asking the user if they really wish to install an addon.
 #, python-brace-format
 msgid ""
@@ -9211,20 +9197,6 @@ msgstr "Breiseáin neamh-chomhoiriúnacha"
 msgid "Incompatible reason"
 msgstr "cúis neamh-chomhoiriúnachta"
 
-#. Translators: The reason an add-on is not compatible. A more recent version of NVDA is
-#. required for the add-on to work. The placeholder will be replaced with Year.Major.Minor (EG 2019.1).
-msgid "An updated version of NVDA is required. NVDA version {} or later."
-msgstr "Tá leagan NVDA nuashonraithe de dhíth NVDA leagan {} nó níos déanaí"
-
-#. Translators: The reason an add-on is not compatible. The addon relies on older, removed features of NVDA,
-#. an updated add-on is required. The placeholder will be replaced with Year.Major.Minor (EG 2019.1).
-msgid ""
-"An updated version of this add-on is required. The minimum supported API "
-"version is now {}"
-msgstr ""
-"Tá leagan nuashonraithe den bhreiseán seo de dhíth. Is é {} an leagan is "
-"ísle atá tacaithe anois."
-
 #. Translators: Reported when an action cannot be performed because NVDA is in a secure screen
 msgid "Action unavailable in secure context"
 msgstr "Níl an gníomh seo ar fáil i gcomhthéacs slán."
@@ -9242,6 +9214,11 @@ msgstr "Níl an gníomh seo ar fáil nuair atá freagra ar lár ag an diallóg."
 #. Translators: Reported when an action cannot be performed because Windows is locked.
 msgid "Action unavailable while Windows is locked"
 msgstr "Níl an gníomh seo ar fáil nuair atá Windows glasáilte."
+
+#. Translators: Reported when an action cannot be performed because NVDA is running the launcher temporary
+#. version
+msgid "Action unavailable in a temporary version of NVDA"
+msgstr "Níl an gníomh seo ar fáil i leagan sealadach de NVDA."
 
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
@@ -9725,6 +9702,9 @@ msgid ""
 "Please specify the absolute path where the portable copy should be created. "
 "It may include system variables (%temp%, %homepath%, etc.)."
 msgstr ""
+"Sainigh an dearbhchosán ar ghá an chóip inrite a chruthú le do thoil. Is "
+"féidir athróga córais a bheith san áireamh mar shampla %temp%, %homepath%,  "
+"agus araile."
 
 #. Translators: The title of the dialog presented while a portable copy of NVDA is being created.
 msgid "Creating Portable Copy"
@@ -9740,15 +9720,15 @@ msgstr "Ní raibh NVDA ábalta comhad éigin a bhaint nó a fhorscríobh."
 
 #. Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
 #. {error} will be replaced with the specific error message.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Failed to create portable copy: {error}."
-msgstr "Níorbh fhéidir cóip inaistrithe a chruthú: %s"
+msgstr "Níorbh fhéidir cóip inrite a chruthú: {error} "
 
 #. Translators: The message displayed when a portable copy of NVDA has been successfully created.
 #. {dir} will be replaced with the destination directory.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Successfully created a portable copy of NVDA at {dir}"
-msgstr "Cruthaíodh cóip inaistrithe de NVDA ag %s"
+msgstr "Tá cóip inrite de NVDA cruthaithe go sásúil ag {dir}"
 
 #. Translators: The title of the NVDA log viewer window.
 msgid "NVDA Log Viewer"
@@ -10562,6 +10542,10 @@ msgstr "nascleanúint doiciméid"
 msgid "&Paragraph style:"
 msgstr "stíl &pharagraif"
 
+#. Translators: This is the label for the addon navigation settings panel.
+msgid "Add-on Store"
+msgstr "Stór na mBreiseán"
+
 #. Translators: This is the label for the touch interaction settings panel.
 msgid "Touch Interaction"
 msgstr "Idirghníomhú tadhaill"
@@ -10637,7 +10621,7 @@ msgstr ""
 "Bain úsáid as uathoibriú UI  chun rochtain a fháil ar na rialtáin i  "
 "ndoiciméid Microsoft Word\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\v\vBain úsáid as "
 "uathoibriú UI  chun rochtain a fháil ar na rialtáin i  ndoiciméid Microsoft "
-"Word.\vI Microsoft nuair atá sé ar fáil, chun rochtain a fháil ar rialtáin "
+"Word.\vI Microsoft nuair atá sé- ar fáil, chun rochtain a fháil ar rialtáin "
 "Microsoft agus ar rialtáin Microsoft Word."
 
 #. Translators: Label for the default value of the Use UIA with MS Word combobox,
@@ -10856,6 +10840,22 @@ msgstr "Tabhair tuairisc ar luachanna na ndathanna trédhearcacha "
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
+msgid "Audio"
+msgstr "fuaim"
+
+#. Translators: This is the label for a checkbox control in the
+#. Advanced settings panel.
+msgid "Use WASAPI for audio output (requires restart)"
+msgstr "Bain úsáid as WASAPI le haghaidh aschuir fuaime. Tá atosú de dhíth."
+
+#. Translators: This is the label for a checkbox control in the
+#. Advanced settings panel.
+msgid "Volume of NVDA sounds follows voice volume (requires WASAPI)"
+msgstr ""
+"Bíonn airde fuaimeanna NVDA ag leanúint airde gutha. Tá WASAPI de dhíth."
+
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
 msgid "Debug logging"
 msgstr "Logáil dífhabhtaithe "
 
@@ -10997,6 +10997,10 @@ msgstr "comhthéacs an fhócais"
 #. Translators: This is a label for a combo-box in the Braille settings panel.
 msgid "I&nterrupt speech while scrolling"
 msgstr "Briseadh isteach ar urlabhra nuair atá scrolláil ar siúl."
+
+#. Translators: This is a label for a combo-box in the Braille settings panel.
+msgid "Show se&lection"
+msgstr "Taispeáin an roghnúchán"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load a single vision enhancement provider.
@@ -11175,14 +11179,14 @@ msgid "Dictionary Entry Error"
 msgstr "Earráid san fhoclóir"
 
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Regular Expression error in the pattern field: \"{error}\"."
-msgstr "Earráid sa slonn rialta \"%s\" "
+msgstr "Tá earráid sloinn rialta i réimse an phatrúin \"{error}\"."
 
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Regular Expression error in the replacement field: \"{error}\"."
-msgstr "Earráid sa slonn rialta \"%s\" "
+msgstr "Tá earráid sloinn rialta sa réimse athchuir \"{error}\"."
 
 #. Translators: The label for the list box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -11433,8 +11437,13 @@ msgstr "leibhéal %s"
 
 #. Translators: Number of items in a list (example output: list with 5 items).
 #, python-format
-msgid "with %s items"
-msgstr "le %s mír"
+msgid "with %s item"
+msgid_plural "with %s items"
+msgstr[0] "le %s mír"
+msgstr[1] "le %s mhír"
+msgstr[2] "le %s mhír"
+msgstr[3] "le %s mír"
+msgstr[4] "le %s mír"
 
 #. Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
 #, python-format
@@ -11574,14 +11583,13 @@ msgid "not marked"
 msgstr "gan mharc"
 
 #. Translators: Reported when text is color-highlighted
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "highlighted in {color}"
-msgstr "{color} geal"
+msgstr "Aibhsithe in {color}"
 
 #. Translators: Reported when text is no longer marked
-#, fuzzy
 msgid "not highlighted"
-msgstr "gan aibhsiú"
+msgstr "gan aibhsiú."
 
 #. Translators: Reported when text is marked as strong (e.g. bold)
 msgid "strong"
@@ -11951,14 +11959,12 @@ msgid "No system battery"
 msgstr "níl aon chadhnra ann"
 
 #. Translators: Reported when the battery is plugged in, and now is charging.
-#, fuzzy
 msgid "Plugged in"
-msgstr "moladh"
+msgstr "plugáilte isteach"
 
 #. Translators: Reported when the battery is no longer plugged in, and now is not charging.
-#, fuzzy
 msgid "Unplugged"
-msgstr "Tugtha faoi aire"
+msgstr "plugáilte amach"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
 #, python-brace-format
@@ -13093,6 +13099,44 @@ msgstr "bileoga"
 msgid "{start} through {end}"
 msgstr "ó {start} go dtí {end}"
 
+#. Translators: a message when toggling formatting in Microsoft Excel
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Bold off"
+msgstr "gan trom"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Bold on"
+msgstr "Trom"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Italic off"
+msgstr "gan iodálach"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Italic on"
+msgstr "iodálach"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Underline off"
+msgstr "gan líne faoi"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Underline on"
+msgstr "líne faoi"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+msgid "Strikethrough off"
+msgstr "gan líne tríd"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+msgid "Strikethrough on"
+msgstr "Cuir líne tríd"
+
 #. Translators: the description  for a script for Excel
 msgid "opens a dropdown item at the current cell"
 msgstr ""
@@ -13478,8 +13522,13 @@ msgstr "%.1f pt ar a laghad"
 #. Translators: line spacing of x lines
 #, python-format
 msgctxt "line spacing value"
-msgid "%.1f lines"
-msgstr "%.1f línte "
+msgid "%.1f line"
+msgid_plural "%.1f lines"
+msgstr[0] "%.1f líne"
+msgstr[1] "%.1f líne"
+msgstr[2] "%.1f líne"
+msgstr[3] "%.1f líne"
+msgstr[4] "%.1f líne"
 
 #. Translators: the title of the message dialog desplaying an MS Word table description.
 msgid "Table description"
@@ -13488,30 +13537,6 @@ msgstr "cur síos ar an tábla"
 #. Translators: the default (automatic) color in Microsoft Word
 msgid "automatic color"
 msgstr "dath Uathoibríoch"
-
-#. Translators: a message when toggling formatting in Microsoft word
-msgid "Bold on"
-msgstr "Trom"
-
-#. Translators: a message when toggling formatting in Microsoft word
-msgid "Bold off"
-msgstr "gan trom"
-
-#. Translators: a message when toggling formatting in Microsoft word
-msgid "Italic on"
-msgstr "iodálach"
-
-#. Translators: a message when toggling formatting in Microsoft word
-msgid "Italic off"
-msgstr "gan iodálach"
-
-#. Translators: a message when toggling formatting in Microsoft word
-msgid "Underline on"
-msgstr "líne faoi"
-
-#. Translators: a message when toggling formatting in Microsoft word
-msgid "Underline off"
-msgstr "gan líne faoi"
 
 #. Translators: a an alignment in Microsoft Word
 msgid "Left aligned"
@@ -13620,6 +13645,204 @@ msgstr "spásáil línte dúbalta"
 msgid "1.5 line spacing"
 msgstr "spásáil línte 1.5"
 
+#. Translators: Label for add-on channel in the add-on sotre
+#. Translators: The label of an option to filter the list of add-ons in the add-on store dialog.
+msgctxt "addonStore"
+msgid "All"
+msgstr "Uile"
+
+#. Translators: Label for add-on channel in the add-on sotre
+msgctxt "addonStore"
+msgid "Stable"
+msgstr "Cobhsaí"
+
+#. Translators: Label for add-on channel in the add-on sotre
+msgctxt "addonStore"
+msgid "Beta"
+msgstr "Béite"
+
+#. Translators: Label for add-on channel in the add-on sotre
+msgctxt "addonStore"
+msgid "Dev"
+msgstr "gléas"
+
+#. Translators: Label for add-on channel in the add-on sotre
+msgctxt "addonStore"
+msgid "External"
+msgstr "seachtrach"
+
+#. Translators: The label of an option to filter the list of add-ons in the add-on store dialog.
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Enabled"
+msgstr "Cumasaithe."
+
+#. Translators: The label of an option to filter the list of add-ons in the add-on store dialog.
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Disabled"
+msgstr "Díchumasaithe"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Pending removal"
+msgstr "ag feitheamh ar bhaint"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Available"
+msgstr "ar fáil"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Update Available"
+msgstr "Tá nuashonrú ar fáil."
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Migrate to add-on store"
+msgstr "Bog go dtí Stór na mBreiseán."
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Incompatible"
+msgstr "neamh-chomhoiriúnach"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Downloading"
+msgstr "á íoslódáil"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Download failed"
+msgstr "Theip ar an íoslódáil."
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Downloaded, pending install"
+msgstr "Íoslódáilte ag feitheamh ar shuiteáil."
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Installing"
+msgstr "á Shuiteáil"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Install failed"
+msgstr "Theip ar an suiteáil."
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Installed, pending restart"
+msgstr "Suiteáilte, ag feitheamh ar atosú."
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Disabled, pending restart"
+msgstr "Díchumasaithe agus ar feitheamh ar atosú."
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Disabled (incompatible), pending restart"
+msgstr "Neamh-chomhoiriúnach. Bhí sé díchumasaithe tar éis an atosaithe."
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Disabled (incompatible)"
+msgstr "Díchumasaithe (neamh-chomhoiriúnach)"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Enabled (incompatible), pending restart"
+msgstr "Cumasaithe (neamh-chomhoiriúnach) ag feitheamh ar atosú."
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Enabled (incompatible)"
+msgstr "Cumasaithe, (neamh-chomhoiriúnach)"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Enabled, pending restart"
+msgstr "cumasaithe ag feitheamh ar atosú"
+
+#. Translators: A selection option to display installed add-ons in the add-on store
+msgctxt "addonStore"
+msgid "Installed add-ons"
+msgstr "Breiseáin Shuiteáilte "
+
+#. Translators: A selection option to display updatable add-ons in the add-on store
+msgctxt "addonStore"
+msgid "Updatable add-ons"
+msgstr "Breiseáin in-nuashonraithe "
+
+#. Translators: A selection option to display available add-ons in the add-on store
+msgctxt "addonStore"
+msgid "Available add-ons"
+msgstr "Breiseáin ar fáil"
+
+#. Translators: A selection option to display incompatible add-ons in the add-on store
+msgctxt "addonStore"
+msgid "Installed incompatible add-ons"
+msgstr "Breiseáin neamh-chomhoiriúnacha suiteáilte"
+
+#. Translators: The reason an add-on is not compatible.
+#. A more recent version of NVDA is required for the add-on to work.
+#. The placeholder will be replaced with Year.Major.Minor (e.g. 2019.1).
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"An updated version of NVDA is required. NVDA version {nvdaVersion} or later."
+msgstr ""
+"Tá leagan nuashonraithe de NVDA de dhíth. Leagan {nvdaVersion} nó leagan "
+"níos déanaí."
+
+#. Translators: The reason an add-on is not compatible.
+#. The addon relies on older, removed features of NVDA, an updated add-on is required.
+#. The placeholder will be replaced with Year.Major.Minor (e.g. 2019.1).
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"An updated version of this add-on is required. The minimum supported API "
+"version is now {nvdaVersion}. This add-on was last tested with "
+"{lastTestedNVDAVersion}. You can enable this add-on at your own risk. "
+msgstr ""
+"Tá leagan nuashonraithe den bhreiseán seo de dhíth. Is é {nvdaVersion} an t-"
+"íosleagan atá tacaithe anois. Ba é {lastTestedNVDAVersion}.  An leagan is "
+"déanaí ar a raibh tástáil déanta.\n"
+" "
+
+#. Translators: A message indicating that some add-ons will be disabled
+#. unless reviewed before installation.
+msgctxt "addonStore"
+msgid ""
+"Your NVDA configuration contains add-ons that are incompatible with this "
+"version of NVDA. These add-ons will be disabled after installation. After "
+"installation, you will be able to manually re-enable these add-ons at your "
+"own risk. If you rely on these add-ons, please review the list to decide "
+"whether to continue with the installation. "
+msgstr ""
+"Tá breiseáin i do chumraíocht NVDA nach bhfuil comhoiriúnach leis an leagan "
+"seo de NVDA. Díchumasófar na breiseáin seo tar éis na suiteála. Tar éis duit "
+"an suiteáil a dhéanamh, beidh tú in ann na breiseáin seo a chumasaigh de "
+"láimhe  arís ar do phriacal féin. Má bhíonn tú ag brath ar na breiseáin seo, "
+"déan athbhreithniú ar an liosta le do thoil chun cinneadh a dhéanamh cé acu "
+"a dhéanamh iad a shuiteáil nó gan iad a shuiteáil.\n"
+"            "
+
+#. Translators: A message to confirm that the user understands that incompatible add-ons
+#. will be disabled after installation, and can be manually re-enabled.
+msgctxt "addonStore"
+msgid ""
+"I understand that incompatible add-ons will be disabled and can be manually "
+"re-enabled at my own risk after installation."
+msgstr ""
+"Tuigim go ndíchumasófar breiseáin neamh-chomhoiriúnacha agus go mbeidh mé in "
+"ann iad a chumasaigh de láimhe arís ar mo phriacal féin tar éis na "
+"suiteála.  "
+
 #. Translators: Names of braille displays.
 msgid "Caiku Albatross 46/80"
 msgstr "Caiku Albatross 46/80"
@@ -13632,6 +13855,428 @@ msgid ""
 msgstr ""
 "Chun Albatross a úsáid le NVDA, athraigh líon na gceall stádais sa roghchlár "
 "inmheánach"
+
+#. Translators: Names of braille displays.
+msgid "Eurobraille displays"
+msgstr "Taispeántas EuroBraille:"
+
+#. Translators: Message when HID keyboard simulation is unavailable.
+msgid "HID keyboard input simulation is unavailable."
+msgstr "Níl ionsamhlú an mhéarchláir HID ar fáil."
+
+#. Translators: Description of the script that toggles HID keyboard simulation.
+msgid "Toggle HID keyboard simulation"
+msgstr "Scoránaigh ionsamhlú an mhéarchláir HID"
+
+#. Translators: Header (usually the add-on name) when add-ons are loading. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Loading add-ons..."
+msgstr "Breiseáin á lódáil..."
+
+#. Translators: Header (usually the add-on name) when no add-on is selected. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "No add-on selected."
+msgstr "Níl aon bhreiseán roghnaithe agat"
+
+#. Translators: Label for the text control containing a description of the selected add-on.
+#. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Description:"
+msgstr "Cur síos"
+
+#. Translators: Label for the text control containing a description of the selected add-on.
+#. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "S&tatus:"
+msgstr "Stádas:"
+
+#. Translators: Label for the text control containing a description of the selected add-on.
+#. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "&Actions"
+msgstr "Gníomhartha"
+
+#. Translators: Label for the text control containing extra details about the selected add-on.
+#. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "&Other Details:"
+msgstr "Sonraí eile:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Publisher:"
+msgstr "Foilsitheoir"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Installed version:"
+msgstr "An leagan suiteáilte"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Available version:"
+msgstr "An leagan atá ar fáil:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Channel:"
+msgstr "Cainéal:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Incompatible Reason:"
+msgstr ""
+"cúis neamh-chomhoiriúnachta\n"
+"."
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Homepage:"
+msgstr "leathanach baile:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "License:"
+msgstr "Ceadúnas:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "License URL:"
+msgstr "aimsitheoir aonfhoirmeach acmhainne an cheadúnais"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Download URL:"
+msgstr "Aimsitheoir aonfhoirmeach acmhainne íoslódála"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Source URL:"
+msgstr "Aimsitheoir aonfhoirmeach acmhainne na foinse:"
+
+#. Translators: A button in the addon installation warning / blocked dialog which shows
+#. more information about the addon
+msgctxt "addonStore"
+msgid "&About add-on..."
+msgstr "Maidir leis an mbreiseán..."
+
+#. Translators: A button in the addon installation blocked dialog which will confirm the available action.
+msgctxt "addonStore"
+msgid "&Yes"
+msgstr "Déan é"
+
+#. Translators: A button in the addon installation blocked dialog which will dismiss the dialog.
+msgctxt "addonStore"
+msgid "&No"
+msgstr "Ná déan"
+
+#. Translators: The message displayed when updating an add-on, but the installed version
+#. identifier can not be compared with the version to be installed.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"Warning: add-on installation may result in downgrade: {name}. The installed "
+"add-on version cannot be compared with the add-on store version. Installed "
+"version: {oldVersion}. Available version: {version}.\n"
+"Proceed with installation anyway? "
+msgstr ""
+"Rabhadh: D’fhéadfadh íosghrádú a bheith ann le suiteáil {name}. Ní féidir "
+"comparáid a dhéanamh idir an leagan atá suiteáilte agus an leagan ar Stór na "
+"mBreiseán. Leagan suiteáilte: {oldVersion}. Leagan nua ar fáil {version}."
+
+#. Translators: The title of a dialog presented when an error occurs.
+msgctxt "addonStore"
+msgid "Add-on not compatible"
+msgstr "Níl an breiseán comhoiriúnach."
+
+#. Translators: Presented when attempting to remove the selected add-on.
+#. {addon} is replaced with the add-on name.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"Are you sure you wish to remove the {addon} add-on from NVDA? This cannot be "
+"undone."
+msgstr ""
+"An bhfuil tú cinnte gur mhian leat an breiseán {addon}  a bhaint ó NVDA?"
+
+#. Translators: Title for message asking if the user really wishes to remove the selected Add-on.
+msgctxt "addonStore"
+msgid "Remove Add-on"
+msgstr "Bain an breiseán de NVDA"
+
+#. Translators: The message displayed when installing an add-on package that is incompatible
+#. because the add-on is too old for the running version of NVDA.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"Warning: add-on is incompatible: {name} {version}. Check for an updated "
+"version of this add-on if possible. The last tested NVDA version for this "
+"add-on is {lastTestedNVDAVersion}, your current NVDA version is "
+"{NVDAVersion}. Installation may cause unstable behavior in NVDA.\n"
+"Proceed with installation anyway? "
+msgstr ""
+"Tá an breiseán {name}{version}.   neamh-chomhoiriúnach. Séiceáil an bhfuil "
+"leagan nuashonraithe den bhreiseáin seo ar fáil más féidir. Is é leagan NVDA "
+"{lastTestedNVDAVersion}, an leagan is déanaí a bhí tástáilte leis an "
+"mbreiseán seo. Is é {NVDAVersion}.  Do leagan reatha. D’fhéadfadh an "
+"tsuiteáil iompar éagobhsaí a chruthú ar NVDA."
+
+#. Translators: The message displayed when enabling an add-on package that is incompatible
+#. because the add-on is too old for the running version of NVDA.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"Warning: add-on is incompatible: {name} {version}. Check for an updated "
+"version of this add-on if possible. The last tested NVDA version for this "
+"add-on is {lastTestedNVDAVersion}, your current NVDA version is "
+"{NVDAVersion}. Enabling may cause unstable behavior in NVDA.\n"
+"Proceed with enabling anyway? "
+msgstr ""
+"Rabhadh: Tá an breiseán {name} {version}   neamh-chomhoiriúnach. Déan "
+"seiceáil an bhfuil leagan nua ar fáil más féidir. Is é leagan NVDA  "
+"{lastTestedNVDAVersion} an leagan is déanaí a bhí tástáilte leis an "
+"mbreiseán seo. Is é {NVDAVersion}.  Do leagan NVDA reatha. D’fhéadfadh "
+"iompair éagobhsaí a bheith ann in NVDA má bheidh an breiseán cumasaithe. Ar "
+"mhian leat leanúint ar aghaidh pé scéal é?"
+
+#. Translators: message shown in the Addon Information dialog.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"{summary} ({name})\n"
+"Version: {version}\n"
+"Publisher: {publisher}\n"
+"Description: {description}\n"
+msgstr ""
+"{summary} ({name})\n"
+"Leagan: {version}\n"
+"Foilsitheoir: {publisher}\n"
+"Cur Síos: {description}\n"
+"\n"
+
+#. Translators: the url part of the About Add-on information
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Homepage: {url}"
+msgstr "Leathanach baile {url}"
+
+#. Translators: the minimum NVDA version part of the About Add-on information
+msgctxt "addonStore"
+msgid "Minimum required NVDA version: {}"
+msgstr "íosleagan NVDA de dhíth: {}"
+
+#. Translators: the last NVDA version tested part of the About Add-on information
+msgctxt "addonStore"
+msgid "Last NVDA version tested: {}"
+msgstr "An leagan is déanaí a bhí tástáilte:{}"
+
+#. Translators: title for the Addon Information dialog
+msgctxt "addonStore"
+msgid "Add-on Information"
+msgstr "Eolas faoin mBreiseán"
+
+#. Translators: The title of the addonStore dialog where the user can find and download add-ons
+msgctxt "addonStore"
+msgid "Add-on Store"
+msgstr "Stór na mBreiseán"
+
+#. Translators: Banner notice that is displayed in the Add-on Store.
+msgctxt "addonStore"
+msgid "Note: NVDA was started with add-ons disabled"
+msgstr ""
+"Tabhair faoi deara go raibh na breiseáin dhíchumasaithe nuar a thosaigh NVDA."
+
+#. Translators: The label for a button in add-ons Store dialog to install an external add-on.
+msgctxt "addonStore"
+msgid "Install from e&xternal source"
+msgstr "Déan suiteáil ó fhoinse seachtrach."
+
+#. Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
+msgctxt "addonStore"
+msgid "Cha&nnel:"
+msgstr "Cainéal:"
+
+#. Translators: The label of a checkbox to filter the list of add-ons in the add-on store dialog.
+msgid "Include &incompatible add-ons"
+msgstr "Cuir breiseáin neamh-chomhoiriúnacha san áireamh"
+
+#. Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
+msgctxt "addonStore"
+msgid "Ena&bled/disabled:"
+msgstr "Cumasaithe/Díchumasaithe"
+
+#. Translators: The label of a text field to filter the list of add-ons in the add-on store dialog.
+msgctxt "addonStore"
+msgid "&Search:"
+msgstr "cuardaigh:"
+
+#. Translators: Title for message shown prior to installing add-ons when closing the add-on store dialog.
+msgctxt "addonStore"
+msgid "Add-on installation"
+msgstr "Suiteáil Bhreiseáin"
+
+#. Translators: Message shown prior to installing add-ons when closing the add-on store dialog
+#. The placeholder {} will be replaced with the number of add-ons to be installed
+msgctxt "addonStore"
+msgid "Download of {} add-ons in progress, cancel downloading?"
+msgstr "Tá íoslódáil na mbreiseán {} ar siúl, Cuir an íoslódáil ar ceal?"
+
+#. Translators: Message shown while installing add-ons after closing the add-on store dialog
+#. The placeholder {} will be replaced with the number of add-ons to be installed
+msgctxt "addonStore"
+msgid "Installing {} add-ons, please wait."
+msgstr "Breiseáin á suiteáil, fan nóiméad le do thoil"
+
+#. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
+#, python-brace-format
+msgctxt "addonStore"
+msgid "NVDA Add-on Package (*.{ext})"
+msgstr "Pacáiste Breiseáin NVDA (*.{ext})"
+
+#. Translators: The message displayed in the dialog that
+#. allows you to choose an add-on package for installation.
+msgctxt "addonStore"
+msgid "Choose Add-on Package File"
+msgstr "Roghnaigh an comhad  don Phacáiste Breiseáin"
+
+#. Translators: The name of the column that contains names of addons.
+msgctxt "addonStore"
+msgid "Name"
+msgstr "Ainm"
+
+#. Translators: The name of the column that contains the installed addons version string.
+msgctxt "addonStore"
+msgid "Installed version"
+msgstr "An leagan suiteáilte"
+
+#. Translators: The name of the column that contains the available addons version string.
+msgctxt "addonStore"
+msgid "Available version"
+msgstr "An leagan atá ar fáil:"
+
+#. Translators: The name of the column that contains the channel of the addon (e.g stable, beta, dev).
+msgctxt "addonStore"
+msgid "Channel"
+msgstr "Cainéal"
+
+#. Translators: The name of the column that contains the addons publisher.
+msgctxt "addonStore"
+msgid "Publisher"
+msgstr "Foilsitheoir"
+
+#. Translators: The name of the column that contains the status of the addon.
+#. e.g. available, downloading installing
+msgctxt "addonStore"
+msgid "Status"
+msgstr "Stádas"
+
+#. Translators: Label for an action that installs the selected addon
+msgctxt "addonStore"
+msgid "&Install"
+msgstr "Suiteáil"
+
+#. Translators: Label for an action that installs the selected addon
+msgctxt "addonStore"
+msgid "&Install (override incompatibility)"
+msgstr "Déan suiteáil agus sáraigh an neamh-chomhoiriúnacht"
+
+#. Translators: Label for an action that updates the selected addon
+msgctxt "addonStore"
+msgid "&Update"
+msgstr "Nuashonraigh"
+
+#. Translators: Label for an action that replaces the selected addon with
+#. an add-on store version.
+msgctxt "addonStore"
+msgid "Re&place"
+msgstr "athchuir"
+
+#. Translators: Label for an action that disables the selected addon
+msgctxt "addonStore"
+msgid "&Disable"
+msgstr "Díchumasaigh"
+
+#. Translators: Label for an action that enables the selected addon
+msgctxt "addonStore"
+msgid "&Enable"
+msgstr "Cumasaigh"
+
+#. Translators: Label for an action that enables the selected addon
+msgctxt "addonStore"
+msgid "&Enable (override incompatibility)"
+msgstr "Cumasaigh, sáraigh an neamh-chomhoiriúnacht"
+
+#. Translators: Label for an action that removes the selected addon
+msgctxt "addonStore"
+msgid "&Remove"
+msgstr "Bain"
+
+#. Translators: Label for an action that opens help for the selected addon
+msgctxt "addonStore"
+msgid "&Help"
+msgstr "Cab&hair"
+
+#. Translators: Label for an action that opens the homepage for the selected addon
+msgctxt "addonStore"
+msgid "Ho&mepage"
+msgstr "Leathanach baile"
+
+#. Translators: Label for an action that opens the license for the selected addon
+msgctxt "addonStore"
+msgid "&License"
+msgstr "Ceadúnas"
+
+#. Translators: Label for an action that opens the source code for the selected addon
+msgctxt "addonStore"
+msgid "Source &Code"
+msgstr "Cód foinseach"
+
+#. Translators: The message displayed when the add-on cannot be enabled.
+#. {addon} is replaced with the add-on name.
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Could not enable the add-on: {addon}."
+msgstr "Níorbh fhéidir an breiseán {addon}. A chumasú."
+
+#. Translators: The message displayed when the add-on cannot be disabled.
+#. {addon} is replaced with the add-on name.
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Could not disable the add-on: {addon}."
+msgstr "Níorbh fhéidir an breiseán {addon}. A dhíchumasú."
+
+#~ msgid "Find Error"
+#~ msgstr "Earráid le linn Cuardaigh"
+
+#~ msgid ""
+#~ "\n"
+#~ "\n"
+#~ "However, your NVDA configuration contains add-ons that are incompatible "
+#~ "with this version of NVDA. These add-ons will be disabled after "
+#~ "installation. If you rely on these add-ons, please review the list to "
+#~ "decide whether to continue with the installation"
+#~ msgstr ""
+#~ "\n"
+#~ "\n"
+#~ "Tá breiseáin sa chumriacht NVDA seo, áfach, nach bhfuil comhoiriúnach "
+#~ "leis an leagan NVDA seo. Díchumasófar na breiseáin seo tar éis na "
+#~ "suiteála. Má tá tú ag brath ar na breiseáin seo, déan athbhreithniú ar an "
+#~ "liosta sula leannán tú ar aghaidh leis an suiteáil. "
+
+#~ msgid "Eurobraille Esys/Esytime/Iris displays"
+#~ msgstr "Taispeáintí Eurobraille Esys/Esytime/Iris  "
+
+#~ msgid "URL: {url}"
+#~ msgstr "URL: {url}"
+
+#~ msgid ""
+#~ "Installation of {summary} {version} has been blocked. An updated version "
+#~ "of this add-on is required, the minimum add-on API supported by this "
+#~ "version of NVDA is {backCompatToAPIVersion}"
+#~ msgstr ""
+#~ "Cuireadh cosc ar shuiteáil {summary} {version}. Tá leagan nuashonraithe "
+#~ "den bhreiseán seo de dhíth. Is é breiseán API {backCompatToAPIVersion} an "
+#~ "leagan is ísle atá tacaithe"
 
 #~ msgid ""
 #~ "Please specify an absolute path (including drive letter)  in which to "

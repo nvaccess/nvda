@@ -4,6 +4,23 @@ What's New in NVDA
 %!includeconf: ../changes.t2tconf
 %!includeconf: ./locale.t2tconf
 
+= 2023.3 =
+
+== New Features ==
+
+
+== Changes ==
+
+
+== Bug Fixes ==
+
+
+== Changes for Developers ==
+Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] for information on NVDA's API deprecation and removal process.
+
+=== Deprecations ===
+
+
 = 2023.2 =
 
 == New Features ==
@@ -128,6 +145,7 @@ This can be disabled in the Advanced Settings panel. (#7756)
 - NVDA now generally responds slightly faster to commands and focus changes. (#14928)
 - Displaying the OCR settings will not fail on some systems anymore. (#15017)
 - Fix bug related to saving and loading the NVDA configuration, including switching synthesizers. (#14760)
+- Fix bug causing text review "flick up" touch gesture to move pages rather than move to previous line. (#15127)
 -
 
 
