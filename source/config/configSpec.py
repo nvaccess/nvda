@@ -57,7 +57,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 # Audio settings
 [audio]
 	audioDuckingMode = integer(default=0)
-	wasapi = boolean(default=true)
+	WASAPI = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="disabled")
 	soundVolumeFollowsVoice = boolean(default=false)
 	soundVolume = integer(default=100, min=0, max=100)
 

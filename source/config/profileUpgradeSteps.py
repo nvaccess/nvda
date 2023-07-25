@@ -23,9 +23,6 @@ from config.configFlags import (
 	ReportTableHeaders,
 	ReportCellBorders,
 )
-from typing import (
-	Dict,
-)
 import configobj.validate
 from configobj import ConfigObj
 
