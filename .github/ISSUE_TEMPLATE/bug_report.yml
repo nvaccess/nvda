@@ -17,7 +17,6 @@ body:
     id: summary
     attributes:
       label: Brief summary
-      description: If helpful, provide a short summary of the issue
 
   - type: textarea
     id: reproSteps
@@ -25,8 +24,7 @@ body:
       label: Steps to reproduce
       description: |
         This section should contain a clear and concise list of the steps you take to demonstrate the problem.
-        While you are working out the steps required, please make a copy of your
-        [NVDA log to attach to the issue](https://github.com/nvaccess/nvda/wiki/LogFilesAndCrashDumps).
+        While performing the steps required, please make a copy of your [NVDA log to attach to the issue](https://github.com/nvaccess/nvda/wiki/LogFilesAndCrashDumps).
         It's important to include any files that are required to reproduce an issue.
         This might be an example file, or a link to a minimal code example using CodePen or JSFiddle.
 
@@ -46,7 +44,7 @@ body:
         This section should tell us what actually happens when these steps are taken.
         Please describe verbatim what NVDA does, use speech and braille viewer to copy the speech/braille from NVDA.
         This helps developers to be sure they are reproducing the same issue as you.
-        Enabling "Speak command keys" (NVDA+4) may be helpful.
+        Enabling "Speak command keys" (`NVDA+4`) may be helpful.
 
         *Example:*
         >An NVDA error sound is heard.
@@ -78,7 +76,7 @@ body:
       description: |
         In most cases an NVDA log file is incredibly helpful when trying to understand/fix an issue.
         More [instructions are available on the wiki](https://github.com/nvaccess/nvda/wiki/LogFilesAndCrashDumps).
-        If you are getting a crash dump file (nvda_crash.dmp) please also include it.
+        If a crash dump file (nvda_crash.dmp) is created, please also include it.
 
   - type: markdown
     attributes:
@@ -198,5 +196,5 @@ body:
         The consequence is that NVDA in certain cases does not work properly.
         Specifically, it reports "unknown" when trying to navigate websites or fails to switch between focus and browse mode, it causes performance issues, focus instability and other odd problems.
         The COM registry fixing tool has been introduced in order to re-register those DLL files.
-        In any case, re-registering those DLL files does not have any negative impact on computers' functionality.
+        In any case, re-registering those DLL files does not have any negative impact on a computers' functionality.
         Thus, it is recommended to run the fixing tool whenever focus problems, performance problems on websites or navigation problems in focus or browse mode on different interfaces are encountered.
