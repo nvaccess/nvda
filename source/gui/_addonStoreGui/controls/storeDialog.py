@@ -309,6 +309,8 @@ class AddonStoreDialog(SettingsDialog):
 			self.includeIncompatibleCtrl.Disable()
 
 	def onListTabPageChange(self, evt: wx.EVT_CHOICE):
+		self.searchFilterCtrl.SetValue("")
+
 		self._storeVM._filterEnabledDisabled = EnabledStatus.ALL
 		self.enabledFilterCtrl.SetSelection(0)
 
