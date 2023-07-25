@@ -11,33 +11,64 @@ Informacje techniczne nie zostały przetłumaczone, proszę zajrzeć do [Angiels
 = 2023.2 =
 
 == Nowości ==
+- Add-on Store został dodany do NVDA. (#13985)
+ - Przeglądaj, wyszukuj, instaluj i aktualizuj dodatki napisane przez społeczność.
+ - Ręcznie nadpisuj problemy zgodności z przestarzałymi dodatkami.
+ - MenedZer dodatków został zamieniony przez Add-on Store.
+ - Po więcej informacji, prosimy zajrzeć do zaktualizowanego podręcznika użytkownika.
+ -
 - Dodano wymowę następujących znaków unicode:
   - znaki brajlowskie takie jak "⠐⠣⠃⠗⠇⠐⠜". (#14548)
   - Znak klawisza option na komputerach Mac "⌥". (#14682)
   -
-- W przeglądarkach Mozilla Firefox i Google Chrome, NVDA now odczytuje gdy naciśnięcie na kontrolkę spowoduje otwarcie dialogu, siatki, listy lub drzewa, jeżeli autor określił takie zachowanie używając parametru aria-haspopup. (#14709)
+- Nowe zdarzenia wejścia:
+ - Nowe nieprzydzielone zdarzenie do przełączania między dostępnymi językami w Windows Ocr. (#13036)
+ - Nieprzydzielone zdarzenie wejście do przełączania między trybami pokazywania wiadomości w brajlu. (#14864)
+ - Nieprzydzielone zdarzenie wejścia do przełączania indykatora zaznaczenia w brajlu. (#14948)
+ -
+- Dodano zdarzenia wejścia dla monitorów brajlowskich Tivomatic Caiku Albatross. (#14844, #15002)
+ - Pokazywanie ustawień brajla
+ - odczytywanie paska stanu
+ - Przełączanie między kształtami kursora
+ - Przełączanie między trybami komunikatów w brajlu
+ - Włączanie i wyłączanie kursoru brajlowskiego
+ - Włączanie i wyłączanie stanu zaznaczenia
+ -
+- Nowa opcja w ustawieniach brajlowskich do włączenia lub wyłączenia stanu zaznaczenia (punkty 7 i 8). (#14948)
+- W przeglądarkach Mozilla Firefox i Google Chrome, NVDA teraz odczytuje gdy naciśnięcie na kontrolkę spowoduje otwarcie dialogu, siatki, listy lub drzewa, jeżeli autor określił takie zachowanie używając parametru aria-haspopup. (#14709)
 - Teraz możliwe jest używanie zmiennych środowiskowych takich jak ``%temp%`` lub ``%homepath%``) w polu edycji do określania ścieżki podczas tworzenia przenośnej kopii NVDA. (#14680)
 - Dodano wsparcie dla ARIA 1.3 atrybutu ``aria-brailleroledescription`` umożliwiającego autorom nadpisywanie typu elementu który jest pokazywany na monitorze brajlowskim. (#14748)
 - Gdy opcja podkreślony tekst jest zaznaczona w opcjach formatowania dokumentu, kolory poświetlające są wymawiane w programie Microsoft word. (#7396, #12101, #5866)
 - Gdy opcja kolory jest włączona w opcjach formatowania dokumentów, kolory tłą sąodczytywane w programie Microsoft Word. (#5866)
-- Dodano nowe polecenie, które umożliwia przełączanie się pomiędzy dostępnymi językami dla Windows Ocr. (#13036)
 - Podczas naciśnięcia klawisza ``numeryczne 2`` trzy razy do odczytu wartości liczbowej znaku pod kursorem przeglądu, informacja będzie także dostarczana w brajlu. (#14826)
-- Dodano polecenia dla monitorów brajlowskich Tivomatic Caiku Albatross.
-Teraz istnieją skróty klawiszowe do pokazywania ustawień brajlowskich, odczytu paska stanu, przełączania kształtu kursora, i włączania lub wyłączania kursora brajlowskiego. (#14844)
+- NVDA od teraz odtwarza audio za pomocą Windows Audio Session API (WASAPI), Co może ulepszyć responsywność, stabilność i wydajność dźwięków NVDA.
+Można to wyłączyć w ustawieniach zaawansowanych, jeżeli napotkałeś problemy. (#14697)
+- Podczas używania skrótów klawiszowych w Excelu do przełączania formatowani , takich jak pogrubienie, kursywa, podkreślenie i przekreślenie komórki, wynik polecenia jest od teraz wymawiany. (#14923)
+- Dodano wsparcie do monitoru brajlowskiego Help Tech Activator. (#14917)
+- W systemie Windows 10 aktualizacja maj 2019 i nowszych, NVDA potrafi odczytywać nazwy wiertualnych pulpitów podczas otwierania, zmieniania i zamykania. (#5641)
+- Od teraz jest możliwe wyrównanie dźwięków i mowy NVDA.
+Tą opcje można włączyć w ustawieniach zaawansowanych. (#1409)
+- Od teraz możesz oddzielnie kontrolować głośność dźwięków NVDA.
+Można to zrobić, używając miksera głośności Windows. (#1409)
 - 
 
 
 == Zmiany ==
-- zaktualizowano LibLouis braille translator do wersji [3.25.0 https://github.com/liblouis/liblouis/releases/tag/v3.25.0]. (#14719)
+- zaktualizowano LibLouis braille translator do wersji [3.26.0 https://github.com/liblouis/liblouis/releases/tag/v3.25.0]. (#14719)
+- CLDR został zaktualizowany do wersji 43.0. (#14918)
 - Znaki minus i myślnik będą zawsze wysyłane do syntezatora. (#13830)
-- dystans będzie odczytany w programie Microsoft Word za pomocą jednostki określonej w ustawieniach zaawansowanych nawet gdy używany jest interfejs UIA. (#14542)
+- Zmiany w LibreOffice:
 - Podczas odczytu pozycji kursoru przeglądu, aktualna pozycja kursora systemu/przeglądu odczytywana jest względnie do pozycji aktualnej strony w programie LibreOffice Writer dla wersji LibreOffice >= 7.6, podobnie do zmian wykonanych w programie Microsoft Word. (#11696)
-- NVDA odzywa się troszeczke szybciej na polecenia i zmiany fokusu. (#14701)
+ - Odczyt pasku stanu np. wywołany skrótem ``NVDA+end``) działą w LibreOffice. (#11698)
+- dystans będzie odczytany w programie Microsoft Word za pomocą jednostki określonej w ustawieniach zaawansowanych nawet gdy używany jest interfejs UIA. (#14542)
 - NVDA odzywa się szybciej w polach edycji. (#14708)
-- Sterownik do monitorów brajlowskich Baum: dodano kilka skrótów z spacją do wykonywania ogólnych poleceń z klawiatury takich jak windows+d, alt+tab itd. Dla pełnej listy tych skrótów, prosimy zajrzeć do podręcznika użytkownika. (#14714)
+- Sterownik do monitorów brajlowskich Baum: dodano kilka skrótów z spacją do wykonywania ogólnych poleceń z klawiatury takich jak windows+d, alt+tab itd. 
+Dla pełnej listy tych skrótów, prosimy zajrzeć do podręcznika użytkownika. (#14714)
 - Podczas używania monitoru brajlowskiego z  Standartowym sterownikiem do monitorów brajlowskich HID, dpad może być użyty do emulowania strzałek klawisza enter. Kombinacje klawiszy spacja+dot1 i spacja+dot4 zostały przydzielone do klawiszy strzałek w górę i w dół. (#14713)
 - Skrót klawiszowy służący do odczytywania linku docelowego od teraz po naciśnięciu spowoduje odczyt z kursora systemowego, co jest lepsze niż odczyt z obiektu nawigatora. (#14659)
 - Proces tworzenia kopii przenośnej już nie wymaga podania litery dysku jako częśći ścieżki absolutnej. (#14681)
+- Jeżeli Windows jest skonfigurowany do pokazywania sekund w zegarze w zasobniku systemowym, używając ``NVDA+f12`` do odczytu czasu od teraz respektuje to ustawienie. (#14742)
+- NVDA od teraz odczyta nieoznaczone grupowania posiadające korzystne informacje, takie jak w ostatnich wersjach Microsoft office 365. (#14878) 
 -
 
 
@@ -68,6 +99,11 @@ Zamiast tego, NVDA poda komunikat o braku lokalizacji docelowej linku. (#14723)
 - W systemie operacyjnym Windows 11, jest ponownie możliwe otwarcie listy współtwórców i licencji. (#14725)
 - Podczas wymuszania wsparcia UIA dla większości programów terminalowych i konsolowych, naprawiono błąd, który powodował zawieszanie się NVDA, i przepełnienie dziennika. (#14689)
 - NVDA już potrafi czytać pola haseł w fokusie dla programów Microsoft Excel i Outlook. (#14839)
+- NVDA już nie odrzuci zapisywanie konfiguraqcji po przywracaniu konfiguracji. (#13187)
+- Podczas uruchamiania tymczasowej kopii, program NVDA nie będzie wprowadzał użytkowników w błąd że są w stanie zapisać konfigurację. (#14914)
+- Odczyt skrótów klawiszowych został ulepszony. (#10807)
+- Podczas szybkiego przemieszczania się po komórkach w Excelu, NVDA istnieje bardzo mala szansa że NVDA odczyta błędną komórkę lub zaznaczenie. (#14983, #12200, #12108)
+- NVDA od teraz ogólnie odzywa siętroszeczke szybciej do poleceń i zmian fokusu. (#14928)
 -
 
 

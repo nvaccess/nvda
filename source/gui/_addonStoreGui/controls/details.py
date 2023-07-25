@@ -7,6 +7,7 @@ import wx
 
 from _addonStore.models.addon import (
 	_AddonStoreModel,
+	_InstalledAddonModel,
 )
 from gui import guiHelper
 from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
@@ -217,11 +218,27 @@ class AddonDetails(
 					self.defaultStyle
 				)
 
+				if isinstance(details, _AddonStoreModel):
+					# Publisher comes from the add-on store JSON.
+					self._appendDetailsLabelValue(
+						# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+						pgettext("addonStore", "Publisher:"),
+						details.publisher
+					)
+				if isinstance(details, _InstalledAddonModel):
+					# Author comes from the manifest, and is only available for installed add-ons.
+					self._appendDetailsLabelValue(
+						# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+						pgettext("addonStore", "Author:"),
+						details.author
+					)
+
 				self._appendDetailsLabelValue(
 					# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
-					pgettext("addonStore", "Publisher:"),
-					details.publisher
+					pgettext("addonStore", "ID:"),
+					details.addonId
 				)
+
 				currentStatusKey = self._actionsContextMenu._storeVM._filteredStatusKey
 				if currentStatusKey not in AddonListField.currentAddonVersionName.hideStatuses:
 					self._appendDetailsLabelValue(
