@@ -55,6 +55,7 @@ from typing import (
 	List,
 	Optional,
 	Set,
+	cast,
 )
 import core
 import keyboardHandler
@@ -3082,19 +3083,17 @@ class AdvancedPanelControls(
 		audioGroup = guiHelper.BoxSizerHelper(self, sizer=audio)
 		sHelper.addItem(audioGroup)
 
-		# Translators: This is the label for a checkbox control in the
-		#  Advanced settings panel.
+		# Translators: This is the label for a checkbox control in the Advanced settings panel.
 		label = _("Use WASAPI for audio output (requires restart)")
-		self.wasapiCheckBox: wx.CheckBox = audioGroup.addItem(
-			wx.CheckBox(audioBox, label=label)
-		)
-		self.bindHelpEvent("WASAPI", self.wasapiCheckBox)
-		self.wasapiCheckBox.Bind(wx.EVT_CHECKBOX, self.onAudioCheckBoxChange)
-		self.wasapiCheckBox.SetValue(
-			config.conf["audio"]["wasapi"]
-		)
-		self.wasapiCheckBox.defaultValue = self._getDefaultValue(
-			["audio", "wasapi"])
+		self.wasapiComboBox = cast(nvdaControls.FeatureFlagCombo, audioGroup.addLabeledControl(
+			labelText=label,
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["audio", "WASAPI"],
+			conf=config.conf,
+		))
+		self.bindHelpEvent("WASAPI", self.wasapiComboBox)
+		self.wasapiComboBox.Bind(wx.EVT_CHOICE, self._onWASAPIChange)
+
 		# Translators: This is the label for a checkbox control in the
 		#  Advanced settings panel.
 		label = _("Volume of NVDA sounds follows voice volume (requires WASAPI)")
@@ -3102,7 +3101,7 @@ class AdvancedPanelControls(
 			wx.CheckBox(audioBox, label=label)
 		)
 		self.bindHelpEvent("SoundVolumeFollowsVoice", self.soundVolFollowCheckBox)
-		self.soundVolFollowCheckBox.Bind(wx.EVT_CHECKBOX, self.onAudioCheckBoxChange)
+		self.soundVolFollowCheckBox.Bind(wx.EVT_CHECKBOX, self._onWASAPIChange)
 		self.soundVolFollowCheckBox.SetValue(
 			config.conf["audio"]["soundVolumeFollowsVoice"]
 		)
@@ -3123,7 +3122,7 @@ class AdvancedPanelControls(
 		)
 		self.soundVolSlider.defaultValue = self._getDefaultValue(
 			["audio", "soundVolume"])
-		self.onAudioCheckBoxChange()
+		self._onWASAPIChange()
 
 		# Translators: This is the label for a group of advanced options in the
 		# Advanced settings panel
@@ -3186,8 +3185,8 @@ class AdvancedPanelControls(
 		path=config.getScratchpadDir(ensureExists=True)
 		os.startfile(path)
 
-	def onAudioCheckBoxChange(self, evt: Optional[wx.CommandEvent] = None):
-		wasapi = self.wasapiCheckBox.IsChecked()
+	def _onWASAPIChange(self, evt: Optional[wx.CommandEvent] = None):
+		wasapi = bool(self.wasapiComboBox._getControlCurrentFlag())
 		self.soundVolFollowCheckBox.Enable(wasapi)
 		self.soundVolSlider.Enable(
 			wasapi
@@ -3221,7 +3220,7 @@ class AdvancedPanelControls(
 			and self.loadChromeVBufWhenBusyCombo.isValueConfigSpecDefault()
 			and self.caretMoveTimeoutSpinControl.GetValue() == self.caretMoveTimeoutSpinControl.defaultValue
 			and self.reportTransparentColorCheckBox.GetValue() == self.reportTransparentColorCheckBox.defaultValue
-			and self.wasapiCheckBox.GetValue() == self.wasapiCheckBox.defaultValue
+			and self.wasapiComboBox.isValueConfigSpecDefault()
 			and self.soundVolFollowCheckBox.GetValue() == self.soundVolFollowCheckBox.defaultValue
 			and self.soundVolSlider.GetValue() == self.soundVolSlider.defaultValue
 			and set(self.logCategoriesList.CheckedItems) == set(self.logCategoriesList.defaultCheckedItems)
@@ -3250,7 +3249,7 @@ class AdvancedPanelControls(
 		self.loadChromeVBufWhenBusyCombo.resetToConfigSpecDefault()
 		self.caretMoveTimeoutSpinControl.SetValue(self.caretMoveTimeoutSpinControl.defaultValue)
 		self.reportTransparentColorCheckBox.SetValue(self.reportTransparentColorCheckBox.defaultValue)
-		self.wasapiCheckBox.SetValue(self.wasapiCheckBox.defaultValue)
+		self.wasapiComboBox.resetToConfigSpecDefault()
 		self.soundVolFollowCheckBox.SetValue(self.soundVolFollowCheckBox.defaultValue)
 		self.soundVolSlider.SetValue(self.soundVolSlider.defaultValue)
 		self.logCategoriesList.CheckedItems = self.logCategoriesList.defaultCheckedItems
@@ -3283,7 +3282,7 @@ class AdvancedPanelControls(
 		config.conf["documentFormatting"]["reportTransparentColor"] = (
 			self.reportTransparentColorCheckBox.IsChecked()
 		)
-		config.conf["audio"]["wasapi"] = self.wasapiCheckBox.IsChecked()
+		self.wasapiComboBox.saveCurrentValueToConf()
 		config.conf["audio"]["soundVolumeFollowsVoice"] = self.soundVolFollowCheckBox.IsChecked()
 		config.conf["audio"]["soundVolume"] = self.soundVolSlider.GetValue()
 		config.conf["annotations"]["reportDetails"] = self.annotationsDetailsCheckBox.IsChecked()
@@ -3295,6 +3294,7 @@ class AdvancedPanelControls(
 		for index,key in enumerate(self.logCategories):
 			config.conf['debugLog'][key]=self.logCategoriesList.IsChecked(index)
 		config.conf["featureFlag"]["playErrorSound"] = self.playErrorSoundCombo.GetSelection()
+
 
 class AdvancedPanel(SettingsPanel):
 	enableControlsCheckBox = None  # type: wx.CheckBox

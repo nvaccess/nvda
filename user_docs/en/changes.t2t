@@ -31,14 +31,6 @@ Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documen
   - The Add-ons Manager has been removed and replaced by the Add-on Store.
   - For more information please read the updated user guide.
   -
-- Enhanced sound management:
-  - NVDA now outputs audio via the Windows Audio Session API (WASAPI), which may improve the responsiveness, performance and stability of NVDA speech and sounds.
-  This can be disabled in Advanced settings if audio problems are encountered. (#14697)
-  - It is now possible to have the volume of NVDA sounds and beeps follow the volume setting of the voice you are using.
-  This option can be enabled in Advanced settings. (#1409)
-  - You can now separately control the volume of NVDA sounds.
-  This can be configured in Advanced settings. (#1409)
-  -
 - New input gestures:
   - An unbound gesture to cycle through the available languages for Windows OCR. (#13036)
   - An unbound gesture to cycle through the Braille show messages modes. (#14864)
@@ -74,6 +66,15 @@ Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documen
   - When highlighted text is enabled Document Formatting, highlight colours are now reported in Microsoft Word. (#7396, #12101, #5866)
   - When colors are enabled Document Formatting, background colours are now reported in Microsoft Word. (#5866)
   - When using Excel shortcuts to toggle format such as bold, italic, underline and strike through of a cell in Excel, the result is now reported. (#14923)
+  -
+- Experimental enhanced sound management:
+  - NVDA can now output audio via the Windows Audio Session API (WASAPI), which may improve the responsiveness, performance and stability of NVDA speech and sounds. (#14697)
+  - WASAPI usage can be enabled in Advanced settings.
+  Additionally, if WASAPI is enabled, the following Advanced settings can also be configured.
+    - An option to have the volume of NVDA sounds and beeps follow the volume setting of the voice you are using. (#1409)
+    - An option to separately configure the volume of NVDA sounds. (#1409, #15038)
+    -
+  - There is a known issue with intermittent crashing when WASAPI is enabled. (#15150)
   -
 - In Mozilla Firefox and Google Chrome, NVDA now reports when a control opens a dialog, grid, list or tree if the author has specified this using aria-haspopup. (#14709)
 - It is now possible to use system variables (such as ``%temp%`` or ``%homepath%``) in the path specification while creating portable copies of NVDA. (#14680)
