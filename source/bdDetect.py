@@ -78,7 +78,7 @@ Handlers are called with these keyword arguments:
 @param bluetooth: Whether the handler is expected to yield USB devices.
 @type bluetooth: bool
 @param limitToDevices: Drivers to which detection should be limited.
-	C{None} if default driver filtering according to config should occur.
+	C{None} if no filtering should occur.
 @type limitToDevices: Optional[List[str]]
 """
 
@@ -377,7 +377,7 @@ class _Detector:
 		@param usb: Whether USB devices should be detected for this particular scan.
 		@param bluetooth: Whether Bluetooth devices should be detected for this particular scan.
 		@param limitToDevices: Drivers to which detection should be limited for this scan.
-			C{None} if default driver filtering according to config should occur.
+			C{None} if no filtering should occur.
 		"""
 		# Clear the stop event before a scan is started.
 		# Since a scan can take some time to complete, another thread can set the stop event to cancel it.
@@ -555,6 +555,8 @@ def initialize():
 	# Add devices
 	for display in getSupportedBrailleDisplayDrivers():
 		display.registerAutomaticDetection(DriverRegistrar(display.name))
+	# Hack, Caiku Albatross detection conflicts with other drivers when it isn't the last driver in the detection logic.
+	_driverDevices.move_to_end("albatross")
 
 
 def terminate():
@@ -601,10 +603,25 @@ class DriverRegistrar:
 		driverUsb.update(ids)
 
 	def addBluetoothDevices(self, matchFunc: MatchFuncT):
-		"""Associate Bluetooth HID or COM ports with the driver on this isntance.
+		"""Associate Bluetooth HID or COM ports with the driver on this instance.
 		@param matchFunc: A function which determines whether a given Bluetooth device matches.
 			It takes a L{DeviceMatch} as its only argument
 			and returns a C{bool} indicating whether it matched.
 		"""
 		devs = self._getDriverDict()
 		devs[KEY_BLUETOOTH] = matchFunc
+
+	def addDeviceScanner(self, scanFunc: Callable[..., Iterable[Tuple[str, DeviceMatch]]]):
+		"""Register a callable to scan devices.
+		This adds a handler to L{scanForDevices}.
+		the callable should yield a tuple containing a driver name as str and DeviceMatch
+		Callables are called with these keyword arguments:
+		@param usb: Whether the handler is expected to yield USB devices.
+		@type usb: bool
+		@param bluetooth: Whether the handler is expected to yield USB devices.
+		@type bluetooth: bool
+		@param limitToDevices: Drivers to which detection should be limited.
+			C{None} if no filtering should occur.
+		@type limitToDevices: Optional[List[str]]
+		"""
+		scanForDevices.register(scanFunc)
