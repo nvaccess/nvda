@@ -7,6 +7,14 @@ What's New in NVDA
 = 2023.3 =
 
 == New Features ==
+- Enhanced sound management:
+  - NVDA will now output audio via the Windows Audio Session API (WASAPI), which may improve the responsiveness, performance and stability of NVDA speech and sounds. (#14697)
+  - WASAPI usage can be disabled in Advanced settings.
+  If WASAPI is enabled, the following Advanced settings can also be configured.
+    - An option to have the volume of NVDA sounds and beeps follow the volume setting of the voice you are using. (#1409)
+    - An option to separately configure the volume of NVDA sounds. (#1409, #15038)
+    -
+  -
 - A new option in Document Formatting settings, "Ignore blank lines for line indentation reporting". (#13394)
 -
 
