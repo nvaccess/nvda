@@ -2292,7 +2292,7 @@ Microsoft Excel's UI automation implementation is ever changing, and  versions o
 : Default
   Enabled
 : Options
-  Disabled, Enabled
+  Default (Enabled), Disabled, Enabled
 :
 
 This option selects whether NVDA reports changes in some dynamic web content in Braille.
@@ -2327,7 +2327,7 @@ However, in terminals, when inserting or deleting a character in the middle of a
 : Default
   Diffing
 : Options
-  Diffing, UIA notifications
+  Default (Diffing), Diffing, UIA notifications
 :
 
 This option selects how NVDA determines what text is "new" (and thus what to speak when "report dynamic content changes" is enabled) in Windows Terminal and the WPF Windows Terminal control used in Visual Studio 2022.
@@ -2633,7 +2633,7 @@ To access the Add-on Store from anywhere, assign a custom gesture using the [Inp
 
 ++ Browsing add-ons ++[AddonStoreBrowsing]
 When opened, the Add-on Store displays a list of add-ons.
-If you have not installed an add-on before, the add-on store will open to a list of add-ons available to install.
+If you have not installed an add-on before, the Add-on Store will open to a list of add-ons available to install.
 If you have installed add-ons, the list will display currently installed add-ons.
 
 Selecting an add-on, by moving to it with the up and down arrow keys, will display the details for the add-on.
@@ -2666,7 +2666,7 @@ Add-ons can be distributed through up to four channels:
 Suggested for early adopters.
 - Dev: This channel is suggested to be used by add-on developers to test unreleased API changes.
 NVDA alpha testers may need to use a "Dev" version of their add-ons.
-- External: Add-ons installed from external sources, outside of the add-on store.
+- External: Add-ons installed from external sources, outside of the Add-on Store.
 -
 
 To list add-ons only for specific channels, change the "Channel" filter selection.
