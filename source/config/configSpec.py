@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2023 NV Access Limited, Babbage B.V., Davy Kager, Bill Dengler, Julien Cochuyt,
 # Joseph Lee, Dawid Pieper, mltony, Bram Duvigneau, Cyrille Bougot, Rob Meredith,
@@ -9,9 +8,9 @@
 from io import StringIO
 from configobj import ConfigObj
 
-#: The version of the schema outlined in this file. Increment this when modifying the schema and 
+#: The version of the schema outlined in this file. Increment this when modifying the schema and
 #: provide an upgrade step (@see profileUpgradeSteps.py). An upgrade step does not need to be added when
-#: just adding a new element to (or removing from) the schema, only when old versions of the config 
+#: just adding a new element to (or removing from) the schema, only when old versions of the config
 #: (conforming to old schema versions) will not work correctly with the new schema.
 latestSchemaVersion = 10
 
@@ -87,6 +86,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	showSelection = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 	enableHidBrailleSupport = integer(0, 2, default=0)  # 0:Use default/recommended value (yes), 1:yes, 2:no
 	reportLiveRegions = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
+	[[auto]]
+    	excludedDisplays = string_list(default=list())
 
 	# Braille display driver settings
 	[[__many__]]

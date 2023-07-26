@@ -16,9 +16,11 @@ import itertools
 import threading
 from concurrent.futures import ThreadPoolExecutor, Future
 from typing import (
+	Any,
 	Callable,
 	DefaultDict,
 	Dict,
+	Generator,
 	Iterable,
 	Iterator,
 	List,
@@ -27,6 +29,7 @@ from typing import (
 	OrderedDict,
 	Set,
 	Tuple,
+	Type,
 	Union,
 )
 import hwPortUtils
@@ -75,7 +78,7 @@ Handlers are called with these keyword arguments:
 @param bluetooth: Whether the handler is expected to yield USB devices.
 @type bluetooth: bool
 @param limitToDevices: Drivers to which detection should be limited.
-	C{None} if no driver filtering should occur.
+	C{None} if default driver filtering according to config should occur.
 @type limitToDevices: Optional[List[str]]
 """
 
@@ -300,11 +303,14 @@ class _Detector:
 		@param usb: Whether USB devices should be detected for this and subsequent scans.
 		@param bluetooth: Whether Bluetooth devices should be detected for this and subsequent scans.
 		@param limitToDevices: Drivers to which detection should be limited for this and subsequent scans.
-			C{None} if no driver filtering should occur.
+			C{None} if default driver filtering according to config should occur.
 		"""
 		self._detectUsb = usb
 		self._detectBluetooth = bluetooth
+		if limitToDevices is None and config.conf["braille"]["auto"]["excludedDisplays"]:
+			limitToDevices = list(getBrailleDisplayDriversEnabledForDetection())
 		self._limitToDevices = limitToDevices
+
 		if self._queuedFuture:
 			# This will cancel a queued scan (i.e. not the currently running scan, if any)
 			# If this future belongs to a scan that is currently running or finished, this does nothing.
@@ -371,7 +377,7 @@ class _Detector:
 		@param usb: Whether USB devices should be detected for this particular scan.
 		@param bluetooth: Whether Bluetooth devices should be detected for this particular scan.
 		@param limitToDevices: Drivers to which detection should be limited for this scan.
-			C{None} if no driver filtering should occur.
+			C{None} if default driver filtering according to config should occur.
 		"""
 		# Clear the stop event before a scan is started.
 		# Since a scan can take some time to complete, another thread can set the stop event to cancel it.
@@ -401,7 +407,7 @@ class _Detector:
 		@param bluetooth: Whether Bluetooth devices should be detected for this and subsequent scans.
 		@type bluetooth: bool
 		@param limitToDevices: Drivers to which detection should be limited for this and subsequent scans.
-			C{None} if no driver filtering should occur.
+			C{None} if default driver filtering according to config should occur.
 		"""
 		self._stopBgScan()
 		# Clear the cache of bluetooth devices so new devices can be picked up.
@@ -517,6 +523,23 @@ def driverSupportsAutoDetection(driver: str) -> bool:
 	return driver in _driverDevices
 
 
+def getSupportedBrailleDisplayDrivers(
+		onlyEnabled: bool = False
+) -> Generator[Type["braille.BrailleDisplayDriver"], Any, Any]:
+	return braille.getDisplayDrivers(lambda d: (
+		d.isThreadSafe
+		and d.supportsAutomaticDetection
+		and (
+			not onlyEnabled
+			or d.name not in config.conf["braille"]["auto"]["excludedDisplays"]
+		)
+	))
+
+
+def getBrailleDisplayDriversEnabledForDetection() -> Generator[str, Any, Any]:
+	return (d.name for d in getSupportedBrailleDisplayDrivers(onlyEnabled=True))
+
+
 def initialize():
 	""" Initializes bdDetect, such as detection data.
 	Calls to addUsbDevices, and addBluetoothDevices.
@@ -530,7 +553,7 @@ def initialize():
 	scanForDevices.register(_Detector._bgScanBluetooth)
 
 	# Add devices
-	for display in braille.getDisplayDrivers(lambda d: d.isThreadSafe and d.supportsAutomaticDetection):
+	for display in getSupportedBrailleDisplayDrivers():
 		display.registerAutomaticDetection(DriverRegistrar(display.name))
 
 
