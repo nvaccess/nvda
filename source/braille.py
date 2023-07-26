@@ -10,6 +10,7 @@ import typing
 from typing import (
 	TYPE_CHECKING,
 	Any,
+	Callable,
 	Dict,
 	Generator,
 	Iterable,
@@ -61,6 +62,8 @@ import brailleViewer
 from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
 import hwIo
+from buildVersion import version_year
+import NVDAState
 
 if TYPE_CHECKING:
 	from NVDAObjects import NVDAObject
@@ -396,6 +399,7 @@ def _getDisplayDriver(moduleName: str, caseSensitive: bool = True) -> Type["Brai
 		else:
 			raise initialException
 
+
 def getDisplayList(excludeNegativeChecks=True) -> List[Tuple[str, str]]:
 	"""Gets a list of available display driver names with their descriptions.
 	@param excludeNegativeChecks: excludes all drivers for which the check method returns C{False}.
@@ -405,15 +409,7 @@ def getDisplayList(excludeNegativeChecks=True) -> List[Tuple[str, str]]:
 	displayList = []
 	# The display that should be placed at the end of the list.
 	lastDisplay = None
-	for loader, name, isPkg in pkgutil.iter_modules(brailleDisplayDrivers.__path__):
-		if name.startswith('_'):
-			continue
-		try:
-			display = _getDisplayDriver(name)
-		except:
-			log.error("Error while importing braille display driver %s" % name,
-				exc_info=True)
-			continue
+	for display in getDisplayDrivers():
 		try:
 			if not excludeNegativeChecks or display.check():
 				if display.name == "noBraille":
@@ -421,13 +417,14 @@ def getDisplayList(excludeNegativeChecks=True) -> List[Tuple[str, str]]:
 				else:
 					displayList.append((display.name, display.description))
 			else:
-				log.debugWarning("Braille display driver %s reports as unavailable, excluding" % name)
+				log.debugWarning(f"Braille display driver {display.name} reports as unavailable, excluding")
 		except:
 			log.error("", exc_info=True)
 	displayList.sort(key=lambda d: strxfrm(d[1]))
 	if lastDisplay:
 		displayList.append(lastDisplay)
 	return displayList
+
 
 class Region(object):
 	"""A region of braille to be displayed.
@@ -2728,6 +2725,7 @@ def terminate():
 	handler.terminate()
 	handler = None
 
+
 class BrailleDisplayDriver(driverHandler.Driver):
 	"""Abstract base braille display driver.
 	Each braille display driver should be a separate Python module in the root brailleDisplayDrivers directory
@@ -2735,6 +2733,11 @@ class BrailleDisplayDriver(driverHandler.Driver):
 
 	At a minimum, drivers must set L{name} and L{description} and override the L{check} method.
 	To display braille, L{numCells} and L{display} must be implemented.
+
+	To support automatic detection of braille displays belonging to this driver:
+		* The driver must be thread safe and L{isThreadSafe} should be set to C{True}
+		* L{supportsAutomaticDetection} must be set to C{True}.
+		* L{registerAutomaticDetection} must be implemented.
 
 	Drivers should dispatch input such as presses of buttons, wheels or other controls
 	using the L{inputCore} framework.
@@ -2758,19 +2761,19 @@ class BrailleDisplayDriver(driverHandler.Driver):
 	#: which means the rest of NVDA is not blocked while this occurs,
 	#: thus resulting in better performance.
 	#: This is also required to use the L{hwIo} module.
-	#: @type: bool
-	isThreadSafe = False
+	isThreadSafe: bool = False
+	#: Whether this driver is supported for automatic detection of braille displays.
+	supportsAutomaticDetection: bool = False
 	#: Whether displays for this driver return acknowledgements for sent packets.
 	#: L{_handleAck} should be called when an ACK is received.
 	#: Note that thread safety is required for the generic implementation to function properly.
 	#: If a display is not thread safe, a driver should manually implement ACK processing.
-	#: @type: bool
-	receivesAckPackets = False
+	receivesAckPackets: bool = False
 	#: Whether this driver is awaiting an Ack for a connected display.
 	#: This is set to C{True} after displaying cells when L{receivesAckPackets} is True,
 	#: and set to C{False} by L{_handleAck} or when C{timeout} has elapsed.
 	#: This is for internal use by NVDA core code only and shouldn't be touched by a driver itself.
-	_awaitingAck = False
+	_awaitingAck: bool = False
 	#: Maximum timeout to use for communication with a device (in seconds).
 	#: This can be used for serial connections.
 	#: Furthermore, it is used to stop waiting for missed acknowledgement packets.
@@ -2796,15 +2799,34 @@ class BrailleDisplayDriver(driverHandler.Driver):
 		@rtype: bool
 		"""
 		if cls.isThreadSafe:
-			if bdDetect.driverHasPossibleDevices(cls.name):
+			supportsAutomaticDetection = cls.supportsAutomaticDetection
+			if not supportsAutomaticDetection and NVDAState._allowDeprecatedAPI() and version_year < 2024:
+				log.warning(
+					"Starting from NVDA 2024.1, drivers that rely on bdDetect for the default check method should have supportsAutomaticDetection set to True"
+				)
+				supportsAutomaticDetection = True
+			if supportsAutomaticDetection and bdDetect.driverHasPossibleDevices(cls.name):
 				return True
-			try:
-				next(cls.getManualPorts())
-			except (StopIteration, NotImplementedError):
-				pass
-			else:
-				return True
+		try:
+			next(cls.getManualPorts())
+		except (StopIteration, NotImplementedError):
+			pass
+		else:
+			return True
 		return False
+
+	@classmethod
+	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
+		"""
+		This method may register the braille display driver in the braille display automatic detection framework.
+		The framework provides a L{bdDetect.DriverRegistrar} object as its only parameter.
+		The methods on the driver registrar can be used to register devices or device scanners.
+		This method should only register itself with the bdDetect framework,
+		and should refrain from doing anything else.
+		Drivers with L{supportsAutomaticDetection} set to C{True} must implement this method.
+		@param driverRegistrar: An object containing several methods to register device identifiers for this driver.
+		"""
+		raise NotImplementedError
 
 	def terminate(self):
 		"""Terminate this display driver.
@@ -3206,3 +3228,23 @@ def getSerialPorts(filterFunc=None) -> typing.Iterator[typing.Tuple[str, str]]:
 			yield (info["port"],
 				# Translators: Name of a serial communications port.
 				_("Serial: {portName}").format(portName=info["friendlyName"]))
+
+
+def getDisplayDrivers(
+		filterFunc: Optional[Callable[[Type[BrailleDisplayDriver]], bool]] = None
+) -> Generator[Type[BrailleDisplayDriver], Any, Any]:
+	"""Gets an iterator of braille display drivers meeting the given filter callable.
+	@param filterFunc: an optional callable that receives a driver as its only argument and returns either True or False.
+	@return: Iterator of braille display drivers.
+	"""
+	for loader, name, isPkg in pkgutil.iter_modules(brailleDisplayDrivers.__path__):
+		if name.startswith('_'):
+			continue
+		try:
+			display = _getDisplayDriver(name)
+		except:
+			log.error("Error while importing braille display driver %s" % name,
+				exc_info=True)
+			continue
+		if not filterFunc or filterFunc(display):
+			yield display
