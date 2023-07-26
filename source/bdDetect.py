@@ -544,7 +544,8 @@ def terminate():
 
 class DriverRegistrar:
 	""" An object to facilitate registration of drivers in the bdDetect system.
-	It is instanciated for a specific driver and passed to L{braille.BrailleDisplayDriver.registerAutomaticDetection}.
+	It is instanciated for a specific driver and
+	passed to L{braille.BrailleDisplayDriver.registerAutomaticDetection}.
 	"""
 
 	_driver: str

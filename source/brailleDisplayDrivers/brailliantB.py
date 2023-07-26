@@ -110,20 +110,21 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				or m.id == "Brailliant 80"
 				or "BrailleNote Touch" in m.id
 			)
-		) or (
-			m.type == bdDetect.KEY_HID
-			and m.deviceInfo.get("manufacturer") == "Humanware"
-			and m.deviceInfo.get("product") in (
-				"Brailliant HID",
-				"APH Chameleon 20",
-				"APH Mantis Q40",
-				"Humanware BrailleOne",
-				"NLS eReader",
-				"NLS eReader Humanware",
-				"Brailliant BI 40X",
-				"Brailliant BI 20X",
-			)
-		))
+			) or (
+		m.type == bdDetect.KEY_HID
+		and m.deviceInfo.get("manufacturer") == "Humanware"
+		and m.deviceInfo.get("product") in (
+			"Brailliant HID",
+			"APH Chameleon 20",
+			"APH Mantis Q40",
+			"Humanware BrailleOne",
+			"NLS eReader",
+			"NLS eReader Humanware",
+			"Brailliant BI 40X",
+			"Brailliant BI 20X",
+		)
+		)
+		)
 
 	@classmethod
 	def getManualPorts(cls):

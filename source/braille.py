@@ -2802,7 +2802,8 @@ class BrailleDisplayDriver(driverHandler.Driver):
 			supportsAutomaticDetection = cls.supportsAutomaticDetection
 			if not supportsAutomaticDetection and NVDAState._allowDeprecatedAPI() and version_year < 2024:
 				log.warning(
-					"Starting from NVDA 2024.1, drivers that rely on bdDetect for the default check method should have supportsAutomaticDetection set to True"
+					"Starting from NVDA 2024.1, drivers that rely on bdDetect for the default check method "
+					"should have supportsAutomaticDetection set to True"
 				)
 				supportsAutomaticDetection = True
 			if supportsAutomaticDetection and bdDetect.driverHasPossibleDevices(cls.name):
@@ -3234,7 +3235,8 @@ def getDisplayDrivers(
 		filterFunc: Optional[Callable[[Type[BrailleDisplayDriver]], bool]] = None
 ) -> Generator[Type[BrailleDisplayDriver], Any, Any]:
 	"""Gets an iterator of braille display drivers meeting the given filter callable.
-	@param filterFunc: an optional callable that receives a driver as its only argument and returns either True or False.
+	@param filterFunc: an optional callable that receives a driver as its only argument and returns
+		either True or False.
 	@return: Iterator of braille display drivers.
 	"""
 	for loader, name, isPkg in pkgutil.iter_modules(brailleDisplayDrivers.__path__):
@@ -3242,9 +3244,11 @@ def getDisplayDrivers(
 			continue
 		try:
 			display = _getDisplayDriver(name)
-		except:
-			log.error("Error while importing braille display driver %s" % name,
-				exc_info=True)
+		except Exception:
+			log.error(
+				f"Error while importing braille display driver {name}",
+				exc_info=True
+			)
 			continue
 		if not filterFunc or filterFunc(display):
 			yield display
