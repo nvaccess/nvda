@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2017-2023 NV Access Limited, Babbage B.V., Eurobraille
+# Copyright (C) 2017-2023 NV Access Limited, Babbage B.V., Eurobraille, Cyrille Bougot
 
 import braille
 import brailleInput
@@ -164,7 +164,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 					# 0x1000 is backspace, 0x2000 is space
 					self.dots = groupKeysDown & 0xff
 					self.space = groupKeysDown & 0x200
-				names.extend(f"dot{((i + 1) for i in range(8) if (groupKeysDown &0xff) & (1 << i))}")
+				names.extend(f"dot{i + 1}" for i in range(8) if (groupKeysDown & 0xff) & (1 << i))
 				if groupKeysDown & 0x200:
 					names.append("space")
 				if groupKeysDown & 0x100:
