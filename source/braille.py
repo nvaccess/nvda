@@ -2590,9 +2590,19 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			# The display in the new profile is equal to the last requested display name
 			display == self._lastRequestedDisplayName
 			# or the new profile uses auto detection, which supports detection of the currently active display.
-			or (display == AUTO_DISPLAY_NAME and bdDetect.driverSupportsAutoDetection(self.display.name))
+			or (display == AUTO_DISPLAY_NAME and bdDetect.driverIsEnabledForAutoDetection(self.display.name))
 		):
 			self.setDisplayByName(display)
+		elif (
+			# Auto detection should be active
+			display == AUTO_DISPLAY_NAME and self._detector is not None
+			# And the current display should be no braille.
+			# If not, there is an active detector for the current driver
+			# to switch from bluetooth to USB.
+			and self.display.name == NO_BRAILLE_DISPLAY_NAME
+		):
+			self._detector._limitToDevices = bdDetect.getBrailleDisplayDriversEnabledForDetection()
+
 		self._tether = config.conf["braille"]["tetherTo"]
 
 	def handleDisplayUnavailable(self):

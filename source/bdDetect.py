@@ -508,12 +508,12 @@ def driverHasPossibleDevices(driver: str) -> bool:
 	), None))
 
 
-def driverSupportsAutoDetection(driver: str) -> bool:
-	"""Returns whether the provided driver supports automatic detection of displays.
+def driverIsEnabledForAutoDetection(driver: str) -> bool:
+	"""Returns whether the provided driver is enabled for automatic detection of displays.
 	@param driver: The name of the driver.
-	@return: C{True} if de driver supports auto detection, C{False} otherwise.
+	@return: C{True} if de driver is enabled for auto detection, C{False} otherwise.
 	"""
-	return driver in _driverDevices
+	return driver in getBrailleDisplayDriversEnabledForDetection()
 
 
 def getSupportedBrailleDisplayDrivers(
@@ -548,7 +548,8 @@ def initialize():
 	# Add devices
 	for display in getSupportedBrailleDisplayDrivers():
 		display.registerAutomaticDetection(DriverRegistrar(display.name))
-	# Hack, Caiku Albatross detection conflicts with other drivers when it isn't the last driver in the detection logic.
+	# Hack, Caiku Albatross detection conflicts with other drivers
+	# when it isn't the last driver in the detection logic.
 	_driverDevices.move_to_end("albatross")
 
 

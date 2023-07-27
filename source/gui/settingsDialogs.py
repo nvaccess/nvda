@@ -3542,11 +3542,16 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 			port = self.possiblePorts[self.portsList.GetSelection()][0]
 			config.conf["braille"][display]["port"] = port
 		if self.autoDetectList.IsEnabled():
+			# Excluded drivers that are not loaded (e.g. because add-ons are disabled) should be persisted.
+			unknownDriversExcluded = [
+				n for n in config.conf["braille"]["auto"]["excludedDisplays"]
+				if n not in self.autoDetectValues
+			]
 			config.conf["braille"]["auto"]["excludedDisplays"] = [
 				n for i, n
 				in enumerate(self.autoDetectValues)
 				if i not in self.autoDetectList.CheckedItems
-			]
+			] + unknownDriversExcluded
 
 		if not braille.handler.setDisplayByName(display):
 			gui.messageBox(
