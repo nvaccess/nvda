@@ -190,6 +190,8 @@ def getDriversForPossibleBluetoothDevices(
 	"""Get any matching drivers for possible Bluetooth devices.
 	Looks for (and yields) custom drivers first, then considers if the device is may be compatible with the
 	Standard HID Braille spec.
+	@param limitToDevices: Drivers to which detection should be limited.
+		C{None} if no filtering should occur.
 	@return: Generator of pairs of drivers and port information.
 	"""
 	btSerialMatchesForCustom = (
@@ -460,8 +462,9 @@ def getConnectedUsbDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
 		)
 	)
 	for match in usbDevs:
-		if driver == _getStandardHidDriverName() and _isHIDBrailleMatch(match):
-			yield match
+		if driver == _getStandardHidDriverName():
+			if _isHIDBrailleMatch(match):
+				yield match
 		else:
 			devs = _driverDevices[driver]
 			for type, ids in devs.items():
