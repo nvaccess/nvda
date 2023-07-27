@@ -3442,11 +3442,6 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 		self.bindHelpEvent("SelectBrailleDisplayDisplay", self.displayList)
 		self.Bind(wx.EVT_CHOICE, self.onDisplayNameChanged, self.displayList)
 
-		# Translators: The label for a setting in braille settings to choose the connection port (if the selected braille display supports port selection).
-		portsLabelText = _("&Port:")
-		self.portsList = sHelper.addLabeledControl(portsLabelText, wx.Choice, choices=[])
-		self.bindHelpEvent("SelectBrailleDisplayPort", self.portsList)
-
 		# Translators: The label for a setting in braille settings to enable displays for automatic detection.
 		autoDetectLabelText = _("&Displays to detect automatically:")
 		self.autoDetectList = sHelper.addLabeledControl(
@@ -3454,7 +3449,12 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 			nvdaControls.CustomCheckListBox,
 			choices=[]
 		)
-		self.bindHelpEvent("SelectAutoDetectDisplays", self.autoDetectList)
+		self.bindHelpEvent("SelectBrailleDisplayAutoDetect", self.autoDetectList)
+
+		# Translators: The label for a setting in braille settings to choose the connection port (if the selected braille display supports port selection).
+		portsLabelText = _("&Port:")
+		self.portsList = sHelper.addLabeledControl(portsLabelText, wx.Choice, choices=[])
+		self.bindHelpEvent("SelectBrailleDisplayPort", self.portsList)
 
 		self.updateBrailleDisplayLists()
 		self.updateStateDependentControls()
