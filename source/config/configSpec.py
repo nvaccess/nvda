@@ -84,7 +84,6 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	focusContextPresentation = option("changedContext", "fill", "scroll", default="changedContext")
 	interruptSpeechWhileScrolling = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 	showSelection = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
-	enableHidBrailleSupport = integer(0, 2, default=0)  # 0:Use default/recommended value (yes), 1:yes, 2:no
 	reportLiveRegions = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 	[[auto]]
     	excludedDisplays = string_list(default=list())

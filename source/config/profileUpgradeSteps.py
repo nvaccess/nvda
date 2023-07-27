@@ -10,7 +10,7 @@ complies with the latest schema (@see configSpec.py).
 
 To add a new step (after modifying the schema and incrementing the schema version number) add a new method to this
 module. The method name should be in the form "upgradeConfigFrom_X_to_Y" where X is the previous schema version, and Y
-is the current schema version. The argument profile will be a configobj.ConfigObj object. The function should ensure 
+is the current schema version. The argument profile will be a configobj.ConfigObj object. The function should ensure
 that no information is lost, while updating the ConfigObj to meet the requirements of the new schema.
 """
 
@@ -29,7 +29,7 @@ from configobj import ConfigObj
 
 def upgradeConfigFrom_0_to_1(profile: ConfigObj) -> None:
 	# Schema has been modified to set a new minimum blink rate
-	# The blink rate could previously be set to zero to disable blinking (while still 
+	# The blink rate could previously be set to zero to disable blinking (while still
 	# having a cursor)
 	try:
 		blinkRate = int(profile["braille"]["cursorBlinkRate"])
@@ -151,7 +151,7 @@ def upgradeConfigFrom_8_to_9(profile: ConfigObj) -> None:
 	- Show messages (in Braille settings)
 	- Tether to (in Braille settings)
 	"""
-	
+
 	_upgradeConfigFrom_8_to_9_lineIndent(profile)
 	_upgradeConfigFrom_8_to_9_cellBorders(profile)
 	_upgradeConfigFrom_8_to_9_showMessages(profile)
@@ -239,7 +239,7 @@ def _upgradeConfigFrom_8_to_9_showMessages(profile: ConfigObj) -> None:
 		if messageTimeoutVal == 0:
 			del profile['braille']['messageTimeout']
 			upgradeNeeded = True
-	
+
 	if upgradeNeeded:
 		if messageTimeoutVal == 0:
 			profile['braille']['showMessages'] = ShowMessages.DISABLED.value
@@ -275,7 +275,7 @@ def _upgradeConfigFrom_8_to_9_tetherTo(profile: ConfigObj) -> None:
 	except KeyError:
 		tetherTo: str = TetherTo.FOCUS.value
 		isTetherToMissing = True
-	
+
 	autoTetherVal = configobj.validate.is_boolean(autoTether)
 	tetherToVal = configobj.validate.is_string(tetherTo)
 	if isAutoTetherMissing and isTetherToMissing:
@@ -300,54 +300,18 @@ def _upgradeConfigFrom_8_to_9_tetherTo(profile: ConfigObj) -> None:
 			profile["braille"]["tetherTo"] = tetherToVal
 
 
-def upgradeConfigFrom_9_to_10(profile: ConfigObj) -> None:
-	"""In NVDA config, use only one value to store NVDA keys rather than 3 distinct values.
+def upgradeConfigFrom_10_to_11(profile: ConfigObj) -> None:
+	"""Remove the enableHidBrailleSupport braille config flag in favor of an auto detect exclusion.
 	"""
-	
-	anySettingInConfig = False
+	# Config spec entry was:
+	# enableHidBrailleSupport = integer(0, 2, default=0)  # 0:Use default/recommended value (yes), 1:yes, 2:no
 	try:
-		capsLock: str = profile['keyboard']['useCapsLockAsNVDAModifierKey']
-		del profile['keyboard']['useCapsLockAsNVDAModifierKey']
-		anySettingInConfig = True
+		hidSetting: int = profile['braille']['enableHidBrailleSupport']
+		del profile['braille']['enableHidBrailleSupport']
 	except KeyError:
-		capsLock = False
-	try:
-		numpadInsert: str = profile['keyboard']['useNumpadInsertAsNVDAModifierKey']
-		del profile['keyboard']['useNumpadInsertAsNVDAModifierKey']
-		anySettingInConfig = True
-	except KeyError:
-		numpadInsert = True
-	try:
-		extendedInsert: str = profile['keyboard']['useExtendedInsertAsNVDAModifierKey']
-		del profile['keyboard']['useExtendedInsertAsNVDAModifierKey']
-		anySettingInConfig = True
-	except KeyError:
-		extendedInsert = True
-	if anySettingInConfig:
-		val = 0
-		if configobj.validate.is_boolean(capsLock):
-			val |= NVDAKey.CAPS_LOCK.value
-		if configobj.validate.is_boolean(numpadInsert):
-			val |= NVDAKey.NUMPAD_INSERT.value
-		if configobj.validate.is_boolean(extendedInsert):
-			val |= NVDAKey.EXTENDED_INSERT.value
-		if val == 0:
-			# val may be 0 if:
-			# 1: The default profile has caps lock enabled and the currently upgraded profile has ext insert and
-			# numpad insert disabled. In the current profile's config this leads to:
-			# - useNumpadInsertAsNVDAModifierKey = False
-			# - useExtendedInsertAsNVDAModifierKey = False
-			# - useCapsLockAsNVDAModifierKey not present (True inherited from default config)
-			# (see issue #14527 for full description)
-			# or
-			# 2: Someone did disabled all 3 possible NVDA key in config manually, e.g. modifying nvda.ini or via the
-			# Python console.
-			# Thus we consider case 1 which is the only use case reachable by the user via NVDA's GUI.
-			log.debug(
-				"No True value for any of 'use*AsNVDAModifierKey',"
-				" restore caps lock (only possible case via NVDA's GUI)."
-			)
-			val = NVDAKey.CAPS_LOCK.value
-		profile['keyboard']['NVDAModifierKeys'] = val
-	else:
-		log.debug("use*AsNVDAModifierKey values not present, no action taken.")
+		log.debug("enableHidBrailleSupport not present in config, no action taken.")
+		return
+	if hidSetting == 2:  # HID standard support disabled
+		from brailleDisplayDrivers.hidBrailleStandard import HidBrailleDriver
+		profile['braille']['auto']['']['excludedDisplays'] += [HidBrailleDriver.name]
+		log.debug(f"{HidBrailleDriver.name} added to braille display auto detection excluded displays")

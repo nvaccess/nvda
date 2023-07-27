@@ -2878,33 +2878,6 @@ class AdvancedPanelControls(
 		brailleGroup = guiHelper.BoxSizerHelper(self, sizer=brailleSizer)
 		sHelper.addItem(brailleGroup)
 
-		supportHidBrailleChoices = [
-			# Translators: Label for option in the 'Enable support for HID braille' combobox
-			# in the Advanced settings panel.
-			_("Default (Yes)"),
-			# Translators: Label for option in the 'Enable support for HID braille' combobox
-			# in the Advanced settings panel.
-			_("Yes"),
-			# Translators: Label for option in the 'Enable support for HID braille' combobox
-			# in the Advanced settings panel.
-			_("No"),
-		]
-
-		# Translators: This is the label for a combo box in the
-		#  Advanced settings panel.
-		label = _("Enable support for HID braille")
-		self.supportHidBrailleCombo: wx.Choice = brailleGroup.addLabeledControl(
-			labelText=label,
-			wxCtrlClass=wx.Choice,
-			choices=supportHidBrailleChoices,
-		)
-		self.supportHidBrailleCombo.SetSelection(
-			config.conf["braille"]["enableHidBrailleSupport"]
-		)
-		self.supportHidBrailleCombo.defaultValue = self._getDefaultValue(
-			["braille", "enableHidBrailleSupport"]
-		)
-		self.bindHelpEvent("HIDBraille", self.supportHidBrailleCombo)
 		self.brailleLiveRegionsCombo: nvdaControls.FeatureFlagCombo = brailleGroup.addLabeledControl(
 			# Translators: This is the label for a combo-box in the Advanced settings panel.
 			labelText=_("Report live regions:"),
@@ -3211,7 +3184,6 @@ class AdvancedPanelControls(
 			and self.UIAInChromiumCombo.GetSelection() == self.UIAInChromiumCombo.defaultValue
 			and self.annotationsDetailsCheckBox.IsChecked() == self.annotationsDetailsCheckBox.defaultValue
 			and self.ariaDescCheckBox.IsChecked() == self.ariaDescCheckBox.defaultValue
-			and self.supportHidBrailleCombo.GetSelection() == self.supportHidBrailleCombo.defaultValue
 			and self.brailleLiveRegionsCombo.isValueConfigSpecDefault()
 			and self.keyboardSupportInLegacyCheckBox.IsChecked() == self.keyboardSupportInLegacyCheckBox.defaultValue
 			and self.winConsoleSpeakPasswordsCheckBox.IsChecked() == self.winConsoleSpeakPasswordsCheckBox.defaultValue
@@ -3240,7 +3212,6 @@ class AdvancedPanelControls(
 		self.UIAInChromiumCombo.SetSelection(self.UIAInChromiumCombo.defaultValue)
 		self.annotationsDetailsCheckBox.SetValue(self.annotationsDetailsCheckBox.defaultValue)
 		self.ariaDescCheckBox.SetValue(self.ariaDescCheckBox.defaultValue)
-		self.supportHidBrailleCombo.SetSelection(self.supportHidBrailleCombo.defaultValue)
 		self.brailleLiveRegionsCombo.resetToConfigSpecDefault()
 		self.winConsoleSpeakPasswordsCheckBox.SetValue(self.winConsoleSpeakPasswordsCheckBox.defaultValue)
 		self.keyboardSupportInLegacyCheckBox.SetValue(self.keyboardSupportInLegacyCheckBox.defaultValue)
@@ -3288,7 +3259,6 @@ class AdvancedPanelControls(
 		config.conf["audio"]["soundVolume"] = self.soundVolSlider.GetValue()
 		config.conf["annotations"]["reportDetails"] = self.annotationsDetailsCheckBox.IsChecked()
 		config.conf["annotations"]["reportAriaDescription"] = self.ariaDescCheckBox.IsChecked()
-		config.conf["braille"]["enableHidBrailleSupport"] = self.supportHidBrailleCombo.GetSelection()
 		self.brailleLiveRegionsCombo.saveCurrentValueToConf()
 		self.loadChromeVBufWhenBusyCombo.saveCurrentValueToConf()
 
