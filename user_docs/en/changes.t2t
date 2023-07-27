@@ -9,13 +9,13 @@ This release introduces the Add-on Store to replace the Add-ons Manager.
 In the Add-on Store you can browse, search, install and update community add-ons.
 You can now manually override incompatibility issues with outdated add-ons at your own risk.
 
-There are new Braille features, commands, and display support.
+There are new braille features, commands, and display support.
 There are also new input gestures for OCR and flattened object navigation.
 Navigating and reporting formatting in Microsoft Office is improved.
 
-There are many bug fixes, particularly for Braille, Microsoft Office, web browsers and Windows 11.
+There are many bug fixes, particularly for braille, Microsoft Office, web browsers and Windows 11.
 
-eSpeak-NG, LibLouis Braille translator, and Unicode CLDR have been updated.
+eSpeak-NG, LibLouis braille translator, and Unicode CLDR have been updated.
 
 == New Features ==
 - Add-on Store has been added to NVDA. (#13985)
@@ -26,34 +26,34 @@ eSpeak-NG, LibLouis Braille translator, and Unicode CLDR have been updated.
   -
 - New input gestures:
   - An unbound gesture to cycle through the available languages for Windows OCR. (#13036)
-  - An unbound gesture to cycle through the Braille show messages modes. (#14864)
-  - An unbound gesture to toggle showing the selection indicator for Braille. (#14948)
+  - An unbound gesture to cycle through the braille show messages modes. (#14864)
+  - An unbound gesture to toggle showing the selection indicator for braille. (#14948)
   - Added default keyboard gesture assignments to move to the next or previous object in a flattened view of the object hierarchy. (#15053)
     - Desktop: ``NVDA+numpad9`` and ``NVDA+numpad3`` to move to the previous and next objects respectively.
     - Laptop: ``shift+NVDA+[`` and ``shift+NVDA+]`` to move to the previous and next objects respectively.
     -
   -
-- New Braille features:
-  - Added support for the Help Tech Activator Braille display. (#14917)
+- New braille features:
+  - Added support for the Help Tech Activator braille display. (#14917)
   - A new option to toggle showing the selection indicator (dots 7 and 8). (#14948)
-  - A new option to optionally move the system caret or focus when changing the review cursor position with Braille routing keys. (#14885, #3166)
-  - When pressing ``numpad2`` three times to report the numerical value of the character at the position of the review cursor, the information is now also provided in Braille. (#14826)
-  - Added support for the ``aria-brailleroledescription`` ARIA 1.3 attribute, allowing web authors to override the type of an element shown on the Braille display. (#14748)
-  - Baum Braille driver: added several Braille chord gestures for performing common keyboard commands such as ``windows+d`` and ``alt+tab``.
+  - A new option to optionally move the system caret or focus when changing the review cursor position with braille routing keys. (#14885, #3166)
+  - When pressing ``numpad2`` three times to report the numerical value of the character at the position of the review cursor, the information is now also provided in braille. (#14826)
+  - Added support for the ``aria-brailleroledescription`` ARIA 1.3 attribute, allowing web authors to override the type of an element shown on the braille display. (#14748)
+  - Baum braille driver: added several braille chord gestures for performing common keyboard commands such as ``windows+d`` and ``alt+tab``.
   Please refer to the NVDA User Guide for a full list. (#14714)
   -
 - Added pronunciation of Unicode symbols:
-  - Braille symbols such as ``⠐⠣⠃⠗⠇⠐⠜``. (#13778)
+  - braille symbols such as ``⠐⠣⠃⠗⠇⠐⠜``. (#13778)
   - Mac Option key symbol ``⌥``. (#14682)
   -
-- Added gestures for Tivomatic Caiku Albatross Braille displays. (#14844, #15002)
-  - showing the Braille settings dialog
+- Added gestures for Tivomatic Caiku Albatross braille displays. (#14844, #15002)
+  - showing the braille settings dialog
   - accessing the status bar
-  - cycling the Braille cursor shape
-  - cycling the Braille show messages mode
-  - toggling the Braille cursor on/off
-  - toggling the "Braille show selection indicator" state
-  - cycling the "Braille move system caret when routing review cursor" mode. (#15122)
+  - cycling the braille cursor shape
+  - cycling the braille show messages mode
+  - toggling the braille cursor on/off
+  - toggling the "braille show selection indicator" state
+  - cycling the "braille move system caret when routing review cursor" mode. (#15122)
   -
 - Microsoft Office features:
   - When highlighted text is enabled Document Formatting, highlight colours are now reported in Microsoft Word. (#7396, #12101, #5866)
@@ -79,7 +79,7 @@ eSpeak-NG, LibLouis Braille translator, and Unicode CLDR have been updated.
 == Changes ==
 - Component updates:
   - eSpeak NG has been updated to 1.52-dev commit ``ed9a7bcf``. (#15036)
-  - Updated LibLouis Braille translator to [3.26.0 https://github.com/liblouis/liblouis/releases/tag/v3.26.0]. (#14970)
+  - Updated LibLouis braille translator to [3.26.0 https://github.com/liblouis/liblouis/releases/tag/v3.26.0]. (#14970)
   - CLDR has been updated to version 43.0. (#14918)
   -
 - LibreOffice changes:
@@ -88,9 +88,9 @@ eSpeak-NG, LibLouis Braille translator, and Unicode CLDR have been updated.
   - When moving to a different cell in LibreOffice Calc, NVDA no longer incorrectly announces the coordinates of the previously focused cell when cell coordinate announcement is disabled in NVDA's settings. (#15098)
   -
 - Braille changes:
-  - When using a Braille Display via the Standard HID Braille driver, the dpad can be used to emulate the arrow keys and enter.
+  - When using a braille display via the Standard HID braille driver, the dpad can be used to emulate the arrow keys and enter.
   Also ``space+dot1`` and ``space+dot4`` now map to up and down arrow respectively. (#14713)
-  - Updates to dynamic web content (ARIA live regions) are now displayed in Braille.
+  - Updates to dynamic web content (ARIA live regions) are now displayed in braille.
   This can be disabled in the Advanced Settings panel. (#7756)
   -
 - Dash and em-dash symbols will always be sent to the synthesizer. (#13830)
@@ -105,8 +105,8 @@ eSpeak-NG, LibLouis Braille translator, and Unicode CLDR have been updated.
 
 == Bug Fixes ==
 - Braille:
-  - Several stability fixes to input/output for Braille displays, resulting in less frequent errors and crashes of NVDA. (#14627)
-  - NVDA will no longer unnecessarily switch to no Braille multiple times during auto detection, resulting in a cleaner log and less overhead. (#14524)
+  - Several stability fixes to input/output for braille displays, resulting in less frequent errors and crashes of NVDA. (#14627)
+  - NVDA will no longer unnecessarily switch to no braille multiple times during auto detection, resulting in a cleaner log and less overhead. (#14524)
   - NVDA will now switch back to USB if a HID Bluetooth device (such as the HumanWare Brailliant or APH Mantis) is automatically detected and an USB connection becomes available.
   This only worked for Bluetooth Serial ports before. (#14524)
   -
@@ -130,7 +130,7 @@ eSpeak-NG, LibLouis Braille translator, and Unicode CLDR have been updated.
   -
 - Microsoft Office fixes:
   - When rapidly moving through cells in Excel, NVDA is now less likely to report the wrong cell or selection. (#14983, #12200, #12108)
-  - When landing on an Excel cell from outside a work sheet, Braille and focus highlighter are no longer needlessly updated to the object that had focus previously. (#15136)
+  - When landing on an Excel cell from outside a work sheet, braille and focus highlighter are no longer needlessly updated to the object that had focus previously. (#15136)
   - NVDA no longer fails to announce focusing password fields in Microsoft Excel and Outlook. (#14839)
   -
 - For symbols which do not have a symbol description in the current locale, the default English symbol level will be used. (#14558, #14417)
