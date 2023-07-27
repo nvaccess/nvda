@@ -3300,6 +3300,7 @@ class GlobalCommands(ScriptableObject):
 			state = _("Braille cursor on")
 			config.conf["braille"]["showCursor"]=True
 		ui.message(state)
+		braille.handler.update()
 
 	@script(
 		# Translators: Input help mode message for cycle braille cursor shape command.
@@ -3368,6 +3369,7 @@ class GlobalCommands(ScriptableObject):
 			# (disabled or enabled).
 			msg = _("Braille show selection %s") % BoolFlag[nextName].displayString
 		ui.message(msg)
+		braille.handler.updateShowSelection()
 
 	@script(
 		# Translators: Input help mode message for report clipboard text command.

@@ -1569,6 +1569,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		raise LookupError("No such position")
 
 	def regionPosToBufferPos(self, region, pos, allowNearest=False):
+		start: int = 0
 		for testRegion, start, end in self.regionsWithPositions:
 			if region == testRegion:
 				if pos < end - start:
@@ -2052,6 +2053,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._rawText = u""
 
 		self.queuedWriteLock = threading.Lock()
+		# For race condition when updating region in terminal window.
+		self._updateRegionLock: threading.Lock = threading.Lock()
 		self.ackTimerHandle = winKernel.createWaitableTimer()
 
 		brailleViewer.postBrailleViewerToolToggledAction.register(self._onBrailleViewerChangedState)
@@ -2487,7 +2490,14 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 	def _doCursorMove(self, region):
 		self.mainBuffer.saveWindow()
-		region.update()
+		if (
+			hasattr(region.obj, "role")
+			and region.obj.role == controlTypes.Role.TERMINAL
+		):
+			with self._updateRegionLock:
+				region.update()
+		else:
+			region.update()
 		self.mainBuffer.update()
 		self.mainBuffer.restoreWindow()
 		self.scrollToCursorOrSelection(region)
@@ -2549,7 +2559,14 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 				self._handleProgressBarUpdate(obj)
 			return
 		self.mainBuffer.saveWindow()
-		region.update()
+		if (
+			hasattr(region.obj, "role")
+			and region.obj.role == controlTypes.Role.TERMINAL
+		):
+			with self._updateRegionLock:
+				region.update()
+		else:
+			region.update()
 		self.mainBuffer.update()
 		self.mainBuffer.restoreWindow()
 		if self.buffer is self.mainBuffer:
@@ -2686,6 +2703,17 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.display._awaitingAck = False
 			self._writeCellsInBackground()
 
+	def updateShowSelection(self) -> None:
+		"""Braille needs update when braille show selection state changes."""
+		obj: NVDAObject
+		if api.isObjectInActiveTreeInterceptor(api.getNavigatorObject()):
+			obj = api.getCaretObject()
+		elif self.getTether() == TetherTo.FOCUS.value:
+			obj = api.getFocusObject()
+		else:
+			obj = api.getNavigatorObject()
+		self.handleUpdate(obj)
+
 
 # Maps old braille display driver names to new drivers that supersede old drivers.
 # Ensure that if a user has set a preferred driver which has changed name, the new
@@ -2727,6 +2755,7 @@ def terminate():
 	global handler
 	handler.terminate()
 	handler = None
+
 
 class BrailleDisplayDriver(driverHandler.Driver):
 	"""Abstract base braille display driver.
