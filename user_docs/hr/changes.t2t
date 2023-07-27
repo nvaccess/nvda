@@ -10,45 +10,101 @@ Informacije za programere nisu prevedene, molimo ’pogledajte [englesku inačic
 
 = 2023.2 =
 
-== Nove značajke ==
-- Dodan izgovor Unicode znakova:
-  - Brajični simboli poput "⠐⠣⠃⠗⠇⠐⠜". (#14548)
-  - Znak mac tipke option "⌥". (#14682)
+== New Features ==
+- Add-on Store has been added to NVDA. (#13985)
+  - Browse, search, install and update community add-ons.
+  - Manually override incompatibility issues with outdated add-ons.
+  - The Add-ons Manager has been removed and replaced by the Add-on Store.
+  - For more information please read the updated user guide.
   -
-- U Mozilla Firefoxu i Google Chromeu, NVDA sada izgovara kada se kontrole dijaloških okvira, mreža, popisa ili drva otvore ako je to odredio autor koristeći aria-haspopup. (#14709)
+- Added pronunciation of Unicode symbols:
+  - braille symbols such as "⠐⠣⠃⠗⠇⠐⠜". (#14548)
+  - Mac Option key symbol "⌥". (#14682)
+  -
+- New input gestures:
+  - An unbound gesture to cycle through the available languages for Windows OCR. (#13036)
+  - An unbound gesture to cycle through the braille show messages modes. (#14864)
+  - An unbound gesture to toggle showing the selection indicator for braille. (#14948)
+  -
+- Added gestures for Tivomatic Caiku Albatross Braille displays. (#14844, #15002)
+  - showing the braille settings dialog
+  - accessing the status bar
+  - cycling the braille cursor shape
+  - cycling the braille show messages mode
+  - toggling the braille cursor on/off
+  - toggling the braille show selection indicator state
+  -
+- A new Braille option to toggle showing the selection indicator (dots 7 and 8). (#14948)
+- In Mozilla Firefox and Google Chrome, NVDA now reports when a control opens a dialog, grid, list or tree if the author has specified this using aria-haspopup. (#14709)
+- It is now possible to use system variables (such as ``%temp%`` or ``%homepath%``) in the path specification while creating portable copies of NVDA. (#14680)
+- Added support for the ``aria-brailleroledescription`` ARIA 1.3 attribute, allowing web authors to override the type of an element shown on the Braille display. (#14748)
+- When highlighted text is enabled Document Formatting, highlight colours are now reported in Microsoft Word. (#7396, #12101, #5866)
+- When colors are enabled Document Formatting, background colours are now reported in Microsoft Word. (#5866)
+- When pressing ``numpad2`` three times to report the numerical value of the character at the position of the review cursor, the information is now also provided in braille. (#14826)
+- NVDA now outputs audio via the Windows Audio Session API (WASAPI), which may improve the responsiveness, performance and stability of NVDA speech and sounds.
+This can be disabled in Advanced settings if audio problems are encountered. (#14697)
+- When using Excel shortcuts to toggle format such as bold, italic, underline and strike through of a cell in Excel, the result is now reported. (#14923)
+- Added support for the Help Tech Activator Braille display. (#14917)
+- In Windows 10 May 2019 Update and later, NVDA can announce virtual desktop names when opening, changing, and closing them. (#5641)
+- It is now possible to have the volume of NVDA sounds and beeps follow the volume setting of the voice you are using.
+This option can be enabled in Advanced settings. (#1409)
+- You can now separately control the volume of NVDA sounds.
+This can be done using the Windows Volume Mixer. (#1409)
 - 
 
 
-== Izmjene ==
-- Nadograđen LibLouis brajični prevoditelj na inačicu [3.25.0 https://github.com/liblouis/liblouis/releases/tag/v3.25.0]. (#14719)
-- Znakovi crtica i duga povlaka biti će uvijek poslani govornoj jedinici. (#13830)
-- Udaljenost koja se čita u Microsoft Wordu sada će poštivati mjernu jedinicu u Wordovim naprednim postavkama čak i kada je uključena opcija koristi UIA za pristup kontrolama Microsoft Word dokumenata. (#14542)
-- Prilikom izgovora lokacije preglednog kursora, trenutna lokacija kursora sustava i preglednog kursora sada se izgovara u odnosu na trenutnu stranicu u LibreOffice Writeru za LibreOffice inačice >= 7.6, slično tome kako je to realizirano u Microsoft Wordu. (#11696)
-- NVDA se sada odaziva malo brže na prečace i ostale komande. (#14701)
-- NVDA se odaziva brže prilikom pomicanja kursora u poljima za uređivanje. (#14708)
-- Upravljači program za Baum brajične redke: dodano nekoliko prečaca sa razmaknicodm za izvođenje čestih tipkovničkih prečaca poput windows+d, alt+tab itd. Za potpuni popis, molimo pogledajte vodič za korisnike. (#14714)
-- Prilikom korištenja brajičnog redka uz pomoć standardnog Hid upravljačkog programa, tipka dpad može biti korištena za emuliranje strelica i entera. Also space+dot1 and space+dot4 now map to up and down arrow respectively. (#14713)
-- Prečac za izgovor odredišne poveznice sada izgovara vezu sa kursora sustava pozicije fokusa što je bolje od čitanja sa preglednog kursora. (#14659)
+== Changes ==
+- Updated LibLouis braille translator to [3.26.0 https://github.com/liblouis/liblouis/releases/tag/v3.26.0]. (#14970)
+- CLDR has been updated to version 43.0. (#14918)
+- Dash and em-dash symbols will always be sent to the synthesizer. (#13830)
+- LibreOffice changes:
+  - When reporting the review cursor location, the current cursor/caret location is now reported relative to the current page in LibreOffice Writer for LibreOffice versions >= 7.6, similar to what is done for Microsoft Word. (#11696)
+  - Announcement of the status bar (e.g. triggered by ``NVDA+end``) works for LibreOffice. (#11698)
+  -
+- Distance reported in Microsoft Word will now honour the unit defined in Word's advanced options even when using UIA to access Word documents. (#14542)
+- NVDA responds faster when moving the cursor in edit controls. (#14708)
+- Baum Braille driver: addes several Braille chord gestures for performing common keyboard commands such as ``windows+d``, ``alt+tab`` etc.
+Please refer to the NVDA user guide for a full list. (#14714)
+- When using a Braille Display via the Standard HID braille driver, the dpad can be used to emulate the arrow keys and enter. Also space+dot1 and space+dot4 now map to up and down arrow respectively. (#14713)
+- Script for reporting the destination of a link now reports from the caret / focus position rather than the navigator object. (#14659)
+- Portable copy creation no longer requires that a drive letter be entered as part of the absolute path. (#14681)
+- If Windows is configured to display seconds in the system tray clock, using ``NVDA+f12`` to report the time now honors that setting. (#14742)
+- NVDA will now report unlabeled groupings that have useful position information, such as in recent versions of Microsoft Office 365 menus. (#14878) 
 -
 
 
-== Ispravke grešaka ==
-- NVDA više neće nepotrebno prebacivati brajični redak na "bez brajice" više puta tijekom automatskog otkrivanja, što će rezultirati manjim opterećenjem i čišćim zapisnikom. (#14524)
-- NVDA će se sada automatski prebaciti na USB ako se HID ili USB uređaj (poput HumanWare Braillianta ili APH Mantisa) automatski otkrije, a USB veza postane dostupna.
-Ovo je nekada samo radilo za USB ili serijske priključke. (#14524)
-- Od sada je moguće koristiti znak obrnuta kosa crta u polju zamjene rječničkog članka, kada tip nije postavljen na pravilni izraz. (#14556)
-- U modusu čitanja, NVDA više neće nepravilno ignorirati fokus koji se premješta na nadređenu ili podređenu kontrolu npr. premještanje sa kontrole na njenu stavku popisa ili ćeliju tablice. (#14611)
-  - Imajte na umu da ova ispravka radi kada je opcija "automatski postavi fokus na elemente koji se mogu fokusirati" u postavkama modusa čitanja isključena, što je podrazumjevano.
+== Bug Fixes ==
+- NVDA will no longer unnecessarily switch to no braille multiple times during auto detection, resulting in a cleaner log and less overhead. (#14524)
+- NVDA will now switch back to USB if a HID Bluetooth device (such as the HumanWare Brailliant or APH Mantis) is automatically detected and an USB connection becomes available.
+This only worked for Bluetooth Serial ports before. (#14524)
+- It is now possible to use the backslash character in the replacement field of a dictionaries entry, when the type is not set to regular expression. (#14556)
+- In Browse mode, NVDA will no longer incorrectly ignore focus moving to a parent or child control e.g. moving from a control to its parent list item or gridcell. (#14611)
+  - Note however that this fix only applies when the Automatically set focus to focusable elements" option in Browse Mode settings is turned off (which is the default).
   -
-- NVDA više ne prouzrokuje rušenje ili zamrzavanje preglednika Mozilla Firefox. (#14647)
-- U Mozilla Firefoxu i Google Chromeu, upisani se znakovi više ne čitaju u nekim poljima za uređivanje čak kada ej čitanje upisanih znakova isključeno. (#14666)
-- Sada možete koristiti modus čitanja u ugrađenim kontrolama u Chromiumu gdje to prije nije bilo moguće. (#13493, #8553)
-- Za znakove koji nemaju opis u trenutnom jeziku koristit će se razina simbola podrazumjevana za engleski jezik. (#14558, #14417)
-- U novijim inačicama Windows 11 bloka za pisanje, NVDA može ponovo čitati sadržaj trake stanja. (#14573)
-- U Mozilla Firefoxu, pomicanje miša po tekstu poslije poveznice sada pouzdano izgovara tekst. (#9235)
-- U Windows 10 i 11 kalkulatoru, prijenosna kopija NVDA više neće pasivno eagirati ili reproducirati zvuk pogreške prilikom upisa izraza u standardnom kalkulatoru u u načinu kompaktnog prikaza. (#14679)
-- Prilikom pokušaja izgovora poveznice bez href atributa NVDA više nije tih.
-Umjesto toga, NVDA obavještava o nepostojanju odredišta poveznice. (#14723)
+- NVDA no longer occasionally causes Mozilla Firefox to crash or stop responding. (#14647)
+- In Mozilla Firefox and Google Chrome, typed characters are no longer reported in some text boxes even when speak typed characters is disabled. (#14666)
+- You can now use browse mode in Chromium Embedded Controls where it was not possible previously. (#13493, #8553)
+- For symbols which do not have a symbol description in the current locale, the default English symbol level will be used. (#14558, #14417)
+- Fixes for Windows 11:
+  - NVDA can once again announce Notepad status bar contents. (#14573)
+  - Switching between tabs will announce the new tab name and position for Notepad and File Explorer. (#14587, #14388)
+  - NVDA will once again announce candidate items when entering text in languages such as Chinese and Japanese. (#14509)
+  -
+- In Mozilla Firefox, moving the mouse over text after a link now reliably reports the text. (#9235)
+- In Windows 10 and 11 Calculator, a portable copy of NVDA will no longer do nothing or play error tones when entering expressions in standard calculator in compact overlay mode. (#14679)
+- When trying to report the URL for a link without a href attribute NVDA is no longer silent.
+Instead NVDA reports that the link has no destination. (#14723)
+- Several stability fixes to input/output for braille displays, resulting in less frequent errors and crashes of NVDA. (#14627)
+- NVDA again recovers from many more situations such as applications that stop responding which previously caused it to freeze completely. (#14759) 
+- The destination of graphic links are now correctly reported in Chrome and Edge. (#14779)
+- In Windows 11, it is once again possible to open the Contributors and License items on the NVDA Help menu. (#14725)
+- When forcing UIA support with certain terminal and consoles, a bug is fixed which caused a freeze and the log file to be spammed. (#14689)
+- NVDA no longer fails to announce focusing password fields in Microsoft Excel and Outlook. (#14839)
+- NVDA will no longer refuse to save the configuration after a configuration reset. (#13187)
+- When running a temporary version from the launcher, NVDA will not mislead users into thinking they can save the configuration. (#14914)
+- Reporting of object shortcut keys has been improved. (#10807)
+- When rapidly moving through cells in Excel, NVDA is now less likely to report the wrong cell or selection. (#14983, #12200, #12108)
+- NVDA now generally responds slightly faster to commands and focus changes. (#14928)
 -
 
 
