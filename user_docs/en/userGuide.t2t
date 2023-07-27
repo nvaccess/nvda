@@ -3660,12 +3660,12 @@ Due to this, and to maintain compatibility with other screen readers in Taiwan, 
 ++ Eurobraille displays ++[Eurobraille]
 The b.book, b.note, Esys, Esytime and Iris displays from Eurobraille are supported by NVDA.  
 These devices have a braille keyboard with 10 keys. 
+Please refer to the display's documentation for descriptions of these keys.
 Of the two keys placed like a space bar, the left key is corresponding to the backspace key and the right key to the space key.
-Connected via USB, these devices have one stand-alone usb keyboard. 
-It is possible to enable/disable this keyboard with the checkbox ‘HID Keyboard simulation’ in braille setting panel. 
-The braille keyboard describes below is the braille keyboard when this checkbox is not checked.
-Following are the key assignments for these displays with NVDA. 
-Please see the display's documentation for descriptions of where these keys can be found.
+
+These devices are connected via USB and have one stand-alone USB keyboard. 
+It is possible to enable/disable this keyboard by toggling "HID Keyboard simulation" using an input gesture.
+The braille keyboard functions described directly below is when "HID Keyboard simulation" is disabled.
 
 +++  Braille keyboard functions +++[EurobrailleBraille]
 %kc:beginInclude
@@ -3727,6 +3727,7 @@ Please see the display's documentation for descriptions of where these keys can 
 | Toggle ``control`` key | ``dot1+dot7+dot8+space``, ``dot4+dot7+dot8+space`` |
 | ``alt`` key | ``dot8+space`` |
 | Toggle ``alt`` key | ``dot1+dot8+space``, ``dot4+dot8+space`` |
+| Toggle HID Keyboard simulation | ``switch1Left+joystick1Down``, ``switch1Right+joystick1Down`` |
 %kc:endInclude
 
 +++ b.book keyboard commands +++[Eurobraillebbook]
@@ -3813,6 +3814,7 @@ Please see the display's documentation for descriptions of where these keys can 
 | Toggle ``NVDA`` key | ``l7`` |
 | ``control+home`` key | ``l1+l2+l3``, ``l2+l3+l4`` |
 | ``control+end`` key | ``l6+l7+l8``, ``l5+l6+l7`` |
+| Toggle HID Keyboard simulation | ``l1+joystick1Down``, ``l8+joystick1Down`` |
 %kc:endInclude
 
 ++ Nattiq nBraille Displays ++[NattiqTechnologies]
