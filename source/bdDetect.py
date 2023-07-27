@@ -605,17 +605,27 @@ class DriverRegistrar:
 		devs = self._getDriverDict()
 		devs[KEY_BLUETOOTH] = matchFunc
 
-	def addDeviceScanner(self, scanFunc: Callable[..., Iterable[Tuple[str, DeviceMatch]]]):
+	def addDeviceScanner(
+			self,
+			scanFunc: Callable[..., Iterable[Tuple[str, DeviceMatch]]],
+			moveToStart: bool = False
+	):
 		"""Register a callable to scan devices.
 		This adds a handler to L{scanForDevices}.
-		the callable should yield a tuple containing a driver name as str and DeviceMatch
-		Callables are called with these keyword arguments:
-		@param usb: Whether the handler is expected to yield USB devices.
-		@type usb: bool
-		@param bluetooth: Whether the handler is expected to yield USB devices.
-		@type bluetooth: bool
-		@param limitToDevices: Drivers to which detection should be limited.
-			C{None} if no filtering should occur.
-		@type limitToDevices: Optional[List[str]]
+		@param scanFunc: Callable that should yield a tuple containing a driver name as str and DeviceMatch.
+			The callable is called with these keyword arguments:
+			@param usb: Whether the handler is expected to yield USB devices.
+			@type usb: bool
+			@param bluetooth: Whether the handler is expected to yield USB devices.
+			@type bluetooth: bool
+			@param limitToDevices: Drivers to which detection should be limited.
+				C{None} if no filtering should occur.
+			@type limitToDevices: Optional[List[str]]
+		@param moveToStart: If C{True}, the registered callable will be moved to the start
+			of the list of registered handlers.
+			Note that subsequent callback registrations may also request to be moved to the start.
+			You should never rely on the registered callable being the first in order.
 		"""
 		scanForDevices.register(scanFunc)
+		if moveToStart:
+			scanForDevices.moveToEnd(scanFunc, last=False)
