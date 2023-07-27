@@ -339,9 +339,7 @@ class _Detector:
 		"""
 		if not usb:
 			return
-		for driver, match in getDriversForConnectedUsbDevices():
-			if limitToDevices and driver not in limitToDevices:
-				continue
+		for driver, match in getDriversForConnectedUsbDevices(limitToDevices):
 			yield (driver, match)
 
 	@staticmethod
@@ -356,14 +354,12 @@ class _Detector:
 			return
 		btDevs: Optional[Iterable[Tuple[str, DeviceMatch]]] = deviceInfoFetcher.btDevsCache
 		if btDevs is None:
-			btDevs = getDriversForPossibleBluetoothDevices()
+			btDevs = getDriversForPossibleBluetoothDevices(limitToDevices)
 			# Cache Bluetooth devices for next time.
 			btDevsCache = []
 		else:
 			btDevsCache = btDevs
 		for driver, match in btDevs:
-			if limitToDevices and driver not in limitToDevices:
-				continue
 			if btDevsCache is not btDevs:
 				btDevsCache.append((driver, match))
 			yield (driver, match)
