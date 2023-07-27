@@ -117,7 +117,7 @@ if version_year < 2024 and NVDAState._allowDeprecatedAPI():
 		log.warning(
 			"bdDetect.addUsbDevices is deprecated and wil lbe removed in NVDA 2024.1. "
 			"Braille display drivers should implement the registerAutomaticDetection classmethod instead. "
-			"That method receives a DriverRegistrar object on which the addUsbDevices method can be called."
+			"That method receives a DriverRegistrar object on which the addUsbDevices method can be used."
 		)
 		registrar = DriverRegistrar(driver)
 		registrar.addUsbDevices(type, ids)
@@ -132,7 +132,7 @@ if version_year < 2024 and NVDAState._allowDeprecatedAPI():
 		log.warning(
 			"bdDetect.addBluetoothDevices is deprecated and wil lbe removed in NVDA 2024.1. "
 			"Braille display drivers should implement the registerAutomaticDetection classmethod instead. "
-			"That method receives a DriverRegistrar object on which the addBluetoothDevices method can be called."
+			"That method receives a DriverRegistrar object on which the addBluetoothDevices method can be used."
 		)
 		registrar = DriverRegistrar(driver)
 		registrar.addBluetoothDevices(matchFunc)
