@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2013-2022 NV Access Limited
+# Copyright (C) 2013-2023 NV Access Limited, Babbage B.V., Leonard de Ruijter
 
 """Support for braille display detection.
 This allows devices to be automatically detected and used when they become available,
@@ -81,7 +81,7 @@ Handlers are called with these keyword arguments:
 @param bluetooth: Whether the handler is expected to yield USB devices.
 @type bluetooth: bool
 @param limitToDevices: Drivers to which detection should be limited.
-	C{None} if no filtering should occur.
+	C{None} if no driver filtering should occur.
 @type limitToDevices: Optional[List[str]]
 """
 
@@ -145,7 +145,7 @@ def getDriversForConnectedUsbDevices(
 	Looks for (and yields) custom drivers first, then considers if the device is may be compatible with the
 	Standard HID Braille spec.
 	@param limitToDevices: Drivers to which detection should be limited.
-		C{None} if no filtering should occur.
+		C{None} if no driver filtering should occur.
 	@return: Generator of pairs of drivers and device information.
 	"""
 	usbCustomDeviceMatches = (
@@ -204,7 +204,7 @@ def getDriversForPossibleBluetoothDevices(
 	Looks for (and yields) custom drivers first, then considers if the device is may be compatible with the
 	Standard HID Braille spec.
 	@param limitToDevices: Drivers to which detection should be limited.
-		C{None} if no filtering should occur.
+		C{None} if no driver filtering should occur.
 	@return: Generator of pairs of drivers and port information.
 	"""
 	btSerialMatchesForCustom = (
@@ -390,7 +390,7 @@ class _Detector:
 		@param usb: Whether USB devices should be detected for this particular scan.
 		@param bluetooth: Whether Bluetooth devices should be detected for this particular scan.
 		@param limitToDevices: Drivers to which detection should be limited for this scan.
-			C{None} if no filtering should occur.
+			C{None} if no driver filtering should occur.
 		"""
 		# Clear the stop event before a scan is started.
 		# Since a scan can take some time to complete, another thread can set the stop event to cancel it.
@@ -632,7 +632,7 @@ class DriverRegistrar:
 			@param bluetooth: Whether the handler is expected to yield USB devices.
 			@type bluetooth: bool
 			@param limitToDevices: Drivers to which detection should be limited.
-				C{None} if no filtering should occur.
+				C{None} if no driver filtering should occur.
 			@type limitToDevices: Optional[List[str]]
 		@param moveToStart: If C{True}, the registered callable will be moved to the start
 			of the list of registered handlers.

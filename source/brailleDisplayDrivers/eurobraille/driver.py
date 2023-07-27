@@ -45,7 +45,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	)
 
 	@classmethod
-	def registerAutomaticDetection(self, driverRegistrar: bdDetect.DriverRegistrar):
+	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
 		driverRegistrar.addUsbDevices(bdDetect.KEY_HID, {
 			"VID_C251&PID_1122",  # Esys (version < 3.0, no SD card
 			"VID_C251&PID_1123",  # Esys (version >= 3.0, with HID keyboard, no SD card

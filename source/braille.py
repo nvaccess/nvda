@@ -2801,12 +2801,11 @@ class BrailleDisplayDriver(driverHandler.Driver):
 		super().__init__()
 
 	@classmethod
-	def check(cls):
+	def check(cls) -> bool:
 		"""Determine whether this braille display is available.
 		The display will be excluded from the list of available displays if this method returns C{False}.
 		For example, if this display is not present, C{False} should be returned.
 		@return: C{True} if this display is available, C{False} if not.
-		@rtype: bool
 		"""
 		if cls.isThreadSafe:
 			supportsAutomaticDetection = cls.supportsAutomaticDetection
