@@ -98,7 +98,7 @@ class AddonStoreVM:
 			storeVM=self,
 		)
 		self.detailsVM: AddonDetailsVM = AddonDetailsVM(
-			listItem=self.listVM.getSelection()
+			listVM=self.listVM
 		)
 		self.actionVMList = self._makeActionsList()
 		self.listVM.selectionChanged.register(self._onSelectedItemChanged)
@@ -370,7 +370,7 @@ class AddonStoreVM:
 			raise NotImplementedError(f"Unhandled status filter key {self._filteredStatusKey}")
 
 	def _getAvailableAddonsInBG(self):
-		self.detailsVM._isLoading = True
+		self.listVM._isLoading = True
 		self.listVM.resetListItems([])
 		log.debug("getting available addons in the background")
 		assert addonDataManager
@@ -393,7 +393,9 @@ class AddonStoreVM:
 		self._availableAddons = availableAddons
 		self.listVM.resetListItems(self._createListItemVMs())
 		self.detailsVM.listItem = self.listVM.getSelection()
-		self.detailsVM._isLoading = False
+		self.listVM._isLoading = False
+		# ensure calling on the main thread.
+		core.callLater(delay=0, callable=self.detailsVM.updated.notify, addonDetailsVM=self.detailsVM)
 		log.debug("completed refresh")
 
 	def cancelDownloads(self):

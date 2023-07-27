@@ -201,7 +201,7 @@ class AddonDetails(
 			self.otherDetailsTextCtrl.SetValue("")
 			if not details:
 				self.contentsPanel.Hide()
-				if self._detailsVM._isLoading:
+				if self._detailsVM._listVM._isLoading:
 					self.updateAddonName(AddonDetails._loadingAddonsLabelText)
 				else:
 					self.updateAddonName(AddonDetails._noAddonSelectedLabelText)
