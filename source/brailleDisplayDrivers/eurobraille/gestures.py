@@ -3,22 +3,27 @@
 # See the file COPYING for more details.
 # Copyright (C) 2017-2023 NV Access Limited, Babbage B.V., Eurobraille, Cyrille Bougot
 
+from typing import TYPE_CHECKING
 import braille
 import brailleInput
 import inputCore
 from . import constants
+
+if TYPE_CHECKING:
+	from .driver import BrailleDisplayDriver
+
 
 GestureMapEntries = {
 	"globalCommands.GlobalCommands": {
 		"braille_routeTo": ("br(eurobraille):routing",),
 		"braille_reportFormatting": ("br(eurobraille):doubleRouting",),
 		"braille_scrollBack": (
-			"br(eurobraille.b.note):joystick1Left",
+			"br(eurobraille.bnote):joystick1Left",
 			"br(eurobraille):switch1Left",
 			"br(eurobraille):l1",
 		),
 		"braille_scrollForward": (
-			"br(eurobraille.b.note):joystick1Right",
+			"br(eurobraille.bnote):joystick1Right",
 			"br(eurobraille):switch1Right",
 			"br(eurobraille):l8",
 		),
@@ -151,8 +156,8 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 
 	source = constants.name
 
-	def __init__(self, display):
-		super(InputGesture, self).__init__()
+	def __init__(self, display: "BrailleDisplayDriver"):
+		super().__init__()
 		self.model = display.deviceType.lower().split(" ")[0]
 		keysDown = dict(display.keysDown)
 
