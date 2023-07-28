@@ -481,13 +481,8 @@ class Terminal(LiveText, EditableText):
 		@note: Updates also braille.
 		"""
 		super().event_textChange()
-		# braille.handler.handleUpdate must be called from the main thread.
-		queueHandler.queueFunction(
-			queueHandler.eventQueue,
-			braille.handler.handleUpdate,
-			self,
-			_immediate=True
-		)
+		# Enqueue object to update braille
+		braille.handler.handleUpdateQueue.append(self)
 
 
 class EnhancedTermTypedCharSupport(Terminal):

@@ -53,6 +53,7 @@ import brailleTables
 import re
 import scriptHandler
 import collections
+from collections import deque
 import extensionPoints
 import hwPortUtils
 import bdDetect
@@ -2043,6 +2044,9 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._cursorPos = None
 		self._cursorBlinkUp = True
 		self._cells = []
+		# Queue of objects to use in L{handleUpdate}. Length 1 keeps
+		# recent object and discards others.
+		self.handleUpdateQueue = deque(maxlen=1)
 		self._cursorBlinkTimer = None
 		config.post_configProfileSwitch.register(self.handlePostConfigProfileSwitch)
 		if config.conf["braille"]["tetherTo"] == TetherTo.AUTO.value:
@@ -2721,7 +2725,9 @@ def initialize():
 	handler.setDisplayByName(config.conf["braille"]["display"])
 
 def pumpAll():
-	"""Runs tasks at the end of each core cycle. For now just caret updates."""
+	"""Runs tasks at the end of each core cycle."""
+	if len(handler.handleUpdateQueue):
+		handler.handleUpdate(handler.handleUpdateQueue.popleft())
 	handler.handlePendingCaretUpdate()
 
 def terminate():

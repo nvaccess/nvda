@@ -3299,8 +3299,9 @@ class GlobalCommands(ScriptableObject):
 			# Translators: The message announced when toggling the braille cursor.
 			state = _("Braille cursor on")
 			config.conf["braille"]["showCursor"]=True
+		# To hide or show cursor immediately on braille line
+		braille.handler._updateDisplay()
 		ui.message(state)
-		braille.handler.update()
 
 	@script(
 		# Translators: Input help mode message for cycle braille cursor shape command.
@@ -3368,8 +3369,9 @@ class GlobalCommands(ScriptableObject):
 			# Translators: Reports which show braille selection state is used
 			# (disabled or enabled).
 			msg = _("Braille show selection %s") % BoolFlag[nextName].displayString
-		ui.message(msg)
+		# To hide or show selection immediately on braille line
 		braille.handler.initialDisplay()
+		ui.message(msg)
 
 	@script(
 		# Translators: Input help mode message for report clipboard text command.
