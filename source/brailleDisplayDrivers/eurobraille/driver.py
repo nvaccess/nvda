@@ -101,7 +101,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				# A display responded.
 				log.info("Found {device} connected via {type} ({port})".format(
 					device=self.deviceType, type=portType, port=port))
-				if self.deviceType.startswith(("b.note", "b.book")):
+				if self.deviceType.startswith(("bnote", "bbook")):
 					# send identifier to bnote / bbook with current COM port
 					comportNumber = f'{int(re.match(".*?([0-9]+)$", port).group(1)):02d}'
 					identifier = f"NVDA/{comportNumber}".encode()
@@ -118,7 +118,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 	def terminate(self):
 		try:
-			if self.deviceType.startswith(("b.note", "b.book")):
+			if self.deviceType.startswith(("bnote", "bbook")):
 				# reset identifier to bnote / bbook with current COM port
 				self._sendPacket(constants.EB_SYSTEM, constants.EB_CONNECTION_NAME, b'')
 			super(BrailleDisplayDriver, self).terminate()
@@ -325,7 +325,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 	scriptCategory = SCRCAT_BRAILLE
 
-	def script_toggleHidKeyboardInput(self, gesture):
+	def script_toggleHidKeyboardInput(self, gesture: inputCore.InputGesture):
 		def announceUnavailableMessage():
 			# Translators: Message when HID keyboard simulation is unavailable.
 			ui.message(_("HID keyboard input simulation is unavailable."))
