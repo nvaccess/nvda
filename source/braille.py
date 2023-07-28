@@ -1205,7 +1205,12 @@ class TextInfoRegion(Region):
 				elif cmd == "controlEnd":
 					# Exiting a controlField should break a run of clickables
 					inClickable=False
-					field = ctrlFields.pop()
+					# Index error may occur with Teraterm in non-graphical Linux.
+					try:
+						field = ctrlFields.pop()
+					except IndexError:
+						log.debug("", exc_info=True)
+						continue
 					text = info.getControlFieldBraille(field, ctrlFields, False, formatConfig)
 					if not text:
 						continue
@@ -2053,8 +2058,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._rawText = u""
 
 		self.queuedWriteLock = threading.Lock()
-		# For race condition when updating region in terminal window.
-		self._updateRegionLock: threading.Lock = threading.Lock()
 		self.ackTimerHandle = winKernel.createWaitableTimer()
 
 		brailleViewer.postBrailleViewerToolToggledAction.register(self._onBrailleViewerChangedState)
@@ -2490,14 +2493,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 	def _doCursorMove(self, region):
 		self.mainBuffer.saveWindow()
-		if (
-			hasattr(region.obj, "role")
-			and region.obj.role == controlTypes.Role.TERMINAL
-		):
-			with self._updateRegionLock:
-				region.update()
-		else:
-			region.update()
+		region.update()
 		self.mainBuffer.update()
 		self.mainBuffer.restoreWindow()
 		self.scrollToCursorOrSelection(region)
@@ -2559,14 +2555,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 				self._handleProgressBarUpdate(obj)
 			return
 		self.mainBuffer.saveWindow()
-		if (
-			hasattr(region.obj, "role")
-			and region.obj.role == controlTypes.Role.TERMINAL
-		):
-			with self._updateRegionLock:
-				region.update()
-		else:
-			region.update()
+		region.update()
 		self.mainBuffer.update()
 		self.mainBuffer.restoreWindow()
 		if self.buffer is self.mainBuffer:
