@@ -488,7 +488,7 @@ To get to the NVDA menu from anywhere in Windows while NVDA is running, you may 
 - Perform a 2-finger double-tap on the touch screen.
 - Access the system tray by pressing ``Windows+b``, ``downArrow`` to the NVDA icon, and press ``enter``.
 - Alternatively, access the system tray by pressing ``Windows+b``, ``downArrow`` to the NVDA icon, and open the context menu by pressing the ``applications`` key located next to the right control key on most keyboards.
-On a keyboard without an ``applications`` key, press ``shift+F10`` instead.
+On a keyboard without an ``applications`` key, press ``shift+f10`` instead.
 - Right-click on the NVDA icon located in the Windows system tray
 -
 When the menu comes up, You can use the arrow keys to navigate the menu, and the ``enter`` key to activate an item.
@@ -1638,7 +1638,7 @@ The same applies to [object review #ObjectReview].
 You can also set this option to only move the caret when tethered automatically.
 In that case, pressing a cursor routing key will only move the system caret or focus when NVDA is tethered to the review cursor automatically, whereas no movement will occur when manually tethered to the review cursor.
 
-This option is shown only if "[tether braille #BrailleTether]" is set to "Automatically" or "To review".
+This option is shown only if "[tether braille #BrailleTether]" is set to "automatically" or "to review".
 
 To toggle move system caret when routing review cursor from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
 
@@ -1709,9 +1709,9 @@ Disabling this option allows speech to be heard while simultaneously reading Bra
   Default (Enabled), Enabled, Disabled
 :
 
-This setting determines if selection indicator (dots 7 and 8) is shown in braille display.
-The option is enabled by default so selection indicator is shown.
-Selection indicator might be a distraction while reading.
+This setting determines if selection indicator (dots 7 and 8) is shown by the braille display.
+The option is enabled by default so the selection indicator is shown.
+The selection indicator might be a distraction while reading.
 Disabling this option may improve readability.
 
 To toggle show selection from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
@@ -2306,7 +2306,7 @@ Microsoft Excel's UI automation implementation is ever changing, and  versions o
 : Default
   Enabled
 : Options
-  Disabled, Enabled
+  Default (Enabled), Disabled, Enabled
 :
 
 This option selects whether NVDA reports changes in some dynamic web content in Braille.
@@ -2341,7 +2341,7 @@ However, in terminals, when inserting or deleting a character in the middle of a
 : Default
   Diffing
 : Options
-  Diffing, UIA notifications
+  Default (Diffing), Diffing, UIA notifications
 :
 
 This option selects how NVDA determines what text is "new" (and thus what to speak when "report dynamic content changes" is enabled) in Windows Terminal and the WPF Windows Terminal control used in Visual Studio 2022.
@@ -2383,11 +2383,16 @@ WASAPI is a more modern audio framework which may improve the responsiveness, pe
 After changing this option, you will need to restart NVDA for the change to take effect.
 
 ==== Volume of NVDA sounds follows voice volume ====[SoundVolumeFollowsVoice]
+: Default
+  Disabled
+: Options
+  Disabled, Enabled
+:
+
 When this option is enabled, the volume of NVDA sounds and beeps will follow the volume setting of the voice you are using.
 If you decrease the volume of the voice, the volume of sounds will decrease.
 Similarly, if you increase the volume of the voice, the volume of sounds will increase.
 This option only takes effect when "Use WASAPI for audio output" is enabled.
-This option is disabled by default.
 
 ==== Volume of NVDA sounds ====[SoundVolume]
 This slider allows you to set the volume of NVDA sounds and beeps.
@@ -2454,9 +2459,9 @@ You can filter the symbols by entering the symbol or a part of the symbol's repl
 - The Replacement field allows you to change the text that should be spoken in place of this symbol.
 - Using the Level field, you can adjust the lowest symbol level at which this symbol should be spoken (none, some, most or all).
 You can also set the level to character; in this case the symbol will not be spoken regardless of the symbol level in use, with the following two exceptions:
- - When navigating character by character.
- - When NVDA is spelling any text containing that symbol.
- -
+  - When navigating character by character.
+  - When NVDA is spelling any text containing that symbol.
+  -
 - The Send actual symbol to synthesizer field specifies when the symbol itself (in contrast to its replacement) should be sent to the synthesizer.
 This is useful if the symbol causes the synthesizer to pause or change the inflection of the voice.
 For example, a comma causes the synthesizer to pause.
@@ -2642,7 +2647,7 @@ To access the Add-on Store from anywhere, assign a custom gesture using the [Inp
 
 ++ Browsing add-ons ++[AddonStoreBrowsing]
 When opened, the Add-on Store displays a list of add-ons.
-If you have not installed an add-on before, the add-on store will open to a list of add-ons available to install.
+If you have not installed an add-on before, the Add-on Store will open to a list of add-ons available to install.
 If you have installed add-ons, the list will display currently installed add-ons.
 
 Selecting an add-on, by moving to it with the up and down arrow keys, will display the details for the add-on.
@@ -2675,14 +2680,14 @@ Add-ons can be distributed through up to four channels:
 Suggested for early adopters.
 - Dev: This channel is suggested to be used by add-on developers to test unreleased API changes.
 NVDA alpha testers may need to use a "Dev" version of their add-ons.
-- External: Add-ons installed from external sources, outside of the add-on store.
+- External: Add-ons installed from external sources, outside of the Add-on Store.
 -
 
 To list add-ons only for specific channels, change the "Channel" filter selection.
 
 +++ Searching for add-ons +++[AddonStoreFilterSearch]
 To search add-ons, use the "Search" text box.
-You can reach it by pressing ``shift+tab`` from the list of add-ons, or by pressing ``alt+s`` from anywhere in the Add-on Store interface.
+You can reach it by pressing ``shift+tab`` from the list of add-ons.
 Type a keyword or two for the kind of add-on you're looking for, then ``tab`` back to the list of add-ons.
 Add-ons will be listed if the search text can be found in the add-on ID, display name, publisher, author or description.
 
@@ -2796,7 +2801,7 @@ For more information, please see the [NVDA Developer Guide https://www.nvaccess.
 
 ++ Add-on Store ++
 This will open the [NVDA Add-on Store #AddonsManager].
-For more information, read the in-depth chapter: [Add-ons and the Add-on Store #AddonsManager].
+For more information, read the in-depth section: [Add-ons and the Add-on Store #AddonsManager].
 
 ++ Create portable copy ++[CreatePortableCopy]
 This will open a dialog which allows you to create a portable copy of NVDA out of the installed version.
@@ -3106,20 +3111,20 @@ Following are the key assignments for these displays with NVDA.
 Please see your display's documentation for descriptions of where these keys can be found.
 %kc:beginInclude
 || Name | Key |
-| Scroll braille display back | d2 |
-| Scroll braille display forward | d5 |
-| Move braille display to previous line | d1 |
-| Move braille display to next line | d3 |
-| Route to braille cell | routing |
-| shift+tab key | space+dot1+dot3 |
-| tab key | space+dot4+dot6 |
-| alt key | space+dot1+dot3+dot4 (space+m) |
-| escape key | space+dot1+dot5 (space+e) |
-| windows key | space+dot3+dot4 |
-| alt+tab key | space+dot2+dot3+dot4+dot5 (space+t) |
-| NVDA Menu | space+dot1+dot3+dot4+dot5 (space+n) |
-| windows+d key (minimize all applications) | space+dot1+dot4+dot5 (space+d) |
-| Say all | space+dot1+dot2+dot3+dot4+dot5+dot6 |
+| Scroll braille display back | ``d2`` |
+| Scroll braille display forward | ``d5`` |
+| Move braille display to previous line | ``d1`` |
+| Move braille display to next line | ``d3`` |
+| Route to braille cell | ``routing`` |
+| ``shift+tab`` key | ``space+dot1+dot3`` |
+| ``tab`` key | ``space+dot4+dot6`` |
+| ``alt`` key | ``space+dot1+dot3+dot4 (space+m)`` |
+| ``escape`` key | ``space+dot1+dot5 (space+e)`` |
+| ``windows`` key | ``space+dot3+dot4`` |
+| ``alt+tab`` key | ``space+dot2+dot3+dot4+dot5 (space+t)`` |
+| NVDA Menu | ``space+dot1+dot3+dot4+dot5 (space+n)`` |
+| ``windows+d`` key (minimize all applications) | ``space+dot1+dot4+dot5 (space+d)`` |
+| Say all | ``space+dot1+dot2+dot3+dot4+dot5+dot6`` |
 
 For displays which have a joystick:
 || Name | Key |
@@ -3672,14 +3677,14 @@ Due to this, and to maintain compatibility with other screen readers in Taiwan, 
 %kc:endInclude
 
 ++ Eurobraille displays ++[Eurobraille]
-The b.book, b.note, Esys, Esytime and Iris displays from Eurobraille are supported by NVDA.
-These devices have a braille keyboard with 10 keys.
+The b.book, b.note, Esys, Esytime and Iris displays from Eurobraille are supported by NVDA.  
+These devices have a braille keyboard with 10 keys. 
+Please refer to the display's documentation for descriptions of these keys.
 Of the two keys placed like a space bar, the left key is corresponding to the backspace key and the right key to the space key.
-Connected via USB, these devices have one stand-alone usb keyboard.
-It is possible to enable/disable this keyboard with the checkbox ‘HID Keyboard simulation’ in braille setting panel.
-The braille keyboard describes below is the braille keyboard when this checkbox is not checked.
-Following are the key assignments for these displays with NVDA.
-Please see the display's documentation for descriptions of where these keys can be found.
+
+These devices are connected via USB and have one stand-alone USB keyboard. 
+It is possible to enable/disable this keyboard by toggling "HID Keyboard simulation" using an input gesture.
+The braille keyboard functions described directly below is when "HID Keyboard simulation" is disabled.
 
 +++  Braille keyboard functions +++[EurobrailleBraille]
 %kc:beginInclude
@@ -3741,6 +3746,7 @@ Please see the display's documentation for descriptions of where these keys can 
 | Toggle ``control`` key | ``dot1+dot7+dot8+space``, ``dot4+dot7+dot8+space`` |
 | ``alt`` key | ``dot8+space`` |
 | Toggle ``alt`` key | ``dot1+dot8+space``, ``dot4+dot8+space`` |
+| Toggle HID Keyboard simulation | ``switch1Left+joystick1Down``, ``switch1Right+joystick1Down`` |
 %kc:endInclude
 
 +++ b.book keyboard commands +++[Eurobraillebbook]
@@ -3827,6 +3833,7 @@ Please see the display's documentation for descriptions of where these keys can 
 | Toggle ``NVDA`` key | ``l7`` |
 | ``control+home`` key | ``l1+l2+l3``, ``l2+l3+l4`` |
 | ``control+end`` key | ``l6+l7+l8``, ``l5+l6+l7`` |
+| Toggle HID Keyboard simulation | ``l1+joystick1Down``, ``l8+joystick1Down`` |
 %kc:endInclude
 
 ++ Nattiq nBraille Displays ++[NattiqTechnologies]

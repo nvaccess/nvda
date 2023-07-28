@@ -7,32 +7,65 @@ Que hai de Novo no NVDA
 = 2023.2 =
 
 == Novas Características ==
+- Engadiuse a Tenda de Complementos ao NVDA. (#13985)
+  - Explorar, procurar, instalar e actualizar complementos da comunidade.
+  - Anular manualmente os problemas de compatibilidade con complementos obsoletos.
+  - O Xestor de Complementos eliminouse e remprazouse pola tenda de Complementos.
+  - Para máis información le por favor a Guía do usuario actualizada.
+  -
 - Engadiuse a pronunciación de símbolos Unicode:
   - símbolos braille como "⠐⠣⠃⠗⠇⠐⠜". (#14548)
   - Símbolo da tecla opción do Mac "⌥". (#14682)
   -
+- Novos xestos de entrada:
+  - Un xesto non asignado para percorrer as linguas dispoñibles para o OCR de Windows. (#13036)
+  - Un xesto non asignado para percorrer os modos de amosado de mensaxes braille. (#14864)
+  - Un xesto non asignado para conmutar o amosado do indicador de seleción en braille. (#14948)
+  -
+- Engadíronse xestos para pantallas braille Tivomatic Caiku Albatross. (#14844, #15002)
+  - amosar o diálogo de opcións braille
+  - acesar á barra de estado
+  - percorrer as formas do cursor braille
+  - percorrer os modos de amosado de mensaxes braille
+  - activar e desactivar o cursor braille
+  - conmutar o amosado do estado do indicador de seleción braille
+  -
+- Unha opción Braille nova para conmutar o amosado do indicador de seleción (puntos 7 e 8). (#14948)
 - En Mozilla Firefox e en Google Chrome, NVDA agora anuncia cando un control abre un diálogo, unha grella, unha listaxe ou unha árbore se o autor especificou este uso de aria-haspopup. (#14709)
 - Agora é posible usar variables do sistema (como ``%temp%`` ou ``%homepath%``) na especificación da ruta mentres se crean copias portables do NVDA. (#14680)
 - Engádese o soporte para o atributo aria 1.3 ``aria-brailleroledescription``, permitindo aos autores da web sobrescrebir o tipo dun elemento amosado na pantalla braille. (#14748)
 - Cando o texto resaltado estea activado, o formateado de Documento agora anuncia as cores de resaltado en Microsoft Word. (#7396, #12101, #5866)
 - Cando as cores estean activadas en Formateo de documento, as cores de fondo agora anúncianse en Microsoft Word. (#5866)
-- Introdúcese unha orde nova para percorrer as linguas dispoñibles para o OCR de Windows. (#13036)
 - Ao se premer o ``2 do teclado numérico`` tres veces para anunciar o valor numérico do carácter na posición do cursor de revisión, a información agora tamén se proporciona en braille. (#14826)
-- Engádense xestos para pantallas braille Tivomatic Caiku Albatross.
-Agora hai xestos para amosar o diálogo de opcións braille, para acesar á barra de estado, para percorrer as formas do cursor braille e para activar e desactivar o cursor braille. (#14844)
+- NVDA agora saca o audio a través da Windows Audio Session API (WASAPI), a que pode mellorar a resposta, o rendemento e a estabilidade da voz e dos sons do NVDA.
+Esto pode deshabilitarse nas opcións Avanzadas se se atopan problemas co audio. (#14697)
+- Ao se usar os atallos de Excel para conmutar o formato coma a negriña, a cursiva, o subliñado e o tachado dunha celda, agora anúnciase o resultado. (#14923)
+- Engadido o soporte para o activador de axuda técnica para a pantalla. (#14917)
+- Na actualización Windows 10 May 2019 e posteriores, o NVDA pode anunciar os nomes dos escritorios virtuais ao abrilos, cambialos e pechalos. (#5641)
+- Agora é posible ter o volume dos sons e pitidos do NVDA seguindo á configuración do volume da voz que esteas a usar.
+Esta opción pode habilitarse nas opcións Avanzadas. (#1409)
+- Agora podes controlar por separado o volume dos sons do NVDA.
+Esto pode facerse usando o Mixturador de Volume de Windows. (#1409)
 - 
 
 
 == Cambios ==
-- Actualizado o transcriptor braille LibLouis a [3.25.0 https://github.com/liblouis/liblouis/releases/tag/v3.25.0]. (#14719)
+- Actualizado o transcriptor braille LibLouis a [3.26.0 https://github.com/liblouis/liblouis/releases/tag/v3.26.0]. (#14970)
+- CLDR actualizouse á versión 43.0. (#14918)
 - Os símbolos de guión y de raia enviaranse sempre ao sintetizador. (#13830)
+- Cambios para LibreOffice:
+  - Ao anunciar a posición do cursor de revisión, a posición actual do cursor agora anúnciase relativa á páxina actual en LibreOffice Writer para versións de LibreOffice >= 7.6, de modo semellante ao que se fai para Microsoft Word. (#11696)
+  - O anunciado da barra de estado  (ex.: disparada por ``NVDA+fin``) funciona para LibreOffice. (#11698)
+  -
 - A distancia anunciada en Microsoft Word agora respetará a unidade definida nas opcións avanzadas de Word, incluso cando se use UIA para acesar a documentos de Word. (#14542)
-- Ao anunciar a posición do cursor de revisión, a localización actual do cursor ou do cursor do sistema agora anúnciase relativa á páxina actual en LibreOffice Writer para LibreOffice versións >= 7.6, semellante a o que se facía en Microsoft Word. (#11696)
-- O NVDA agora responde lixeiramente máis rápido ao movemento do cursor en controis de edición. (#14708)
-- Controlador de Baum Braille: engade varios xestos cor Braille para realizar ordes comúns de teclado coma windows+d, alt+tab etc. Por favor consulta a Guía do usuario de NVDA para unha listaxe compreta. (#14714)
+- O NVDA responde máis rápido ao mover o cursor en controis de edición. (#14708)
+- Controlador Baum Braille: engade varios xestos de acorde para realizar ordes de teclado comúns como ``windows+d``, ``alt+tab`` etc.
+Por favor consulta a guía do usuario de NVDA para unha listaxe compreta. (#14714)
 - Cando se usa unha pantalla Braille a través do controlador braille estándar HID, pode usarse o dpad para emular as frechas e o intro. Tamén espazo+punto1 e espazo+punto4 agora mapéanse a frechas arriba e abaixo respectivamente. (#14713)
 - O script para anunciar o destiño dunha ligazón agora anuncia dende a posición do cursor do sistema oo do foco en cambio dende o navegador de obxectos. (#14659)
 - A creación da copia portable xa non require que se introduza unha letra de unidade como parte da ruta absoluta. (#14681)
+- Se Windows se configura para amosar segundos no reloxo da bandexa do sistema, usar ``NVDA+f12`` para anunciar a hora agora fai caso a esa configuración. (#14742)
+- O NVDA agora anunciará grupos sen etiquetar que teñan unha información de posición útil, coma nos menús en versións recentes de Microsoft Office 365. (#14878) 
 -
 
 
@@ -63,6 +96,11 @@ En cambio, o NVDA informa de que a ligazón non ten destiño. (#14723)
 - En Windows 11, volve a seren posible abrir os elementos Colaboradores e Licenza no menú Axuda do NVDA. (#14725)
 - Ao forzar a compatibilidade con UIA con determinadas terminales e consolas, aránxase un erro que provocaba a conxelación e o lixo no ficheiro de rexistro. (#14689)
 - O NVDA xa non falla ao anunciar campos de contrasinal enfocados en Microsoft Excel e Outlook. (#14839)
+- O NVDA xa non refusará gardar a configuración despois de que se reinicie unha configuración. (#13187)
+- Ao se executar unha versión temporal  dende un lanzador, o NVDA non enganará ao usuario facéndolle crer que pode gardar a configuración. (#14914)
+- O anunciado dos atallos de teclado dos obxectos foi mellorado. (#10807)
+- Ao desprazarte rápidamente polas celdas en Excel, agora é menos probable que o NVDA anuncie a celda ou seleción incorrectas. (#14983, #12200, #12108)
+- O NVDA agora responde xeralmente un pouco máis rápido ás ordes e aos cambios do foco. (#14928)
 -
 
 
@@ -93,6 +131,7 @@ Do mesmo xeito, o novo método ``getCompletionRoutine`` permíteche converter un
 - O NVDA xa non rexistrará advertencias ou erros inexactos sobre appModules obsoletos. (#14806)
 - Todos os puntos de extensión do NVDA agora descrébense brevemente nun capítulo novo específico da guía do desenvolvedor. (#14648)
 - ``scons checkpot`` xa non comprobará máis o subcartafol ``userConfig``. (#14820)
+- As cadeas traducibles agora poden definirse cunha forma singular e unha plural usando ``ngettext`` e ``npgettext``. (#12445)
 -
 
 === Obsolescencias ===
@@ -100,6 +139,12 @@ Do mesmo xeito, o novo método ``getCompletionRoutine`` permíteche converter un
 A cambio, as funcións deberían seren débilmente referenciables. (#14627)
 - Importar ``LPOVERLAPPED_COMPLETION_ROUTINE`` dende ``hwIo.base`` está obsoleto.
 A cambio importa dende ``hwIo.ioThread``. (#14627)
+- ``IoThread.autoDeleteApcReference`` está obsoleto.
+Introduciuse no NVDA 2023.1 e nunca se pretendeu  que formase parte da API pública.
+Ata a súa eliminación, compórtase coma un no-op, é dicir, un xestor de contexto que non produce nada. (#14924)
+- ``gui.MainFrame.onAddonsManagerCommand`` está obsoleto, usa ``gui.MainFrame.onAddonStoreCommand`` a cambio. (#13985)
+- ``speechDictHandler.speechDictVars.speechDictsPath`` está obsoleto, utiliza ``WritePaths.speechDictsDir`` a cambio. (#15021)
+-
 
 = 2023.1 =
 Engadiuse unha nova orde "Estilo de Parágrafo" na "navegación de Documento".
