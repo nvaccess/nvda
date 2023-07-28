@@ -3369,7 +3369,7 @@ class GlobalCommands(ScriptableObject):
 			# (disabled or enabled).
 			msg = _("Braille show selection %s") % BoolFlag[nextName].displayString
 		ui.message(msg)
-		braille.handler.updateShowSelection()
+		braille.handler.initialDisplay()
 
 	@script(
 		# Translators: Input help mode message for report clipboard text command.

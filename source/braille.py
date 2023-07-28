@@ -1205,12 +1205,7 @@ class TextInfoRegion(Region):
 				elif cmd == "controlEnd":
 					# Exiting a controlField should break a run of clickables
 					inClickable=False
-					# Index error may occur with Teraterm in non-graphical Linux.
-					try:
-						field = ctrlFields.pop()
-					except IndexError:
-						log.debug("", exc_info=True)
-						continue
+					field = ctrlFields.pop()
 					text = info.getControlFieldBraille(field, ctrlFields, False, formatConfig)
 					if not text:
 						continue
@@ -2691,17 +2686,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			log.debugWarning(f"Waiting for {self.display.name} ACK packet timed out")
 			self.display._awaitingAck = False
 			self._writeCellsInBackground()
-
-	def updateShowSelection(self) -> None:
-		"""Braille needs update when braille show selection state changes."""
-		obj: NVDAObject
-		if api.isObjectInActiveTreeInterceptor(api.getNavigatorObject()):
-			obj = api.getCaretObject()
-		elif self.getTether() == TetherTo.FOCUS.value:
-			obj = api.getFocusObject()
-		else:
-			obj = api.getNavigatorObject()
-		self.handleUpdate(obj)
 
 
 # Maps old braille display driver names to new drivers that supersede old drivers.
