@@ -2195,7 +2195,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 				log.debugWarning(f"Couldn't initialize display driver {name!r}", exc_info=True)
 			fallbackDisplayClass = _getDisplayDriver(NO_BRAILLE_DISPLAY_NAME)
 			# Only initialize the fallback if it is not already set
-			if self.display.__class__ == fallbackDisplayClass:
+			if self.display.__class__ != fallbackDisplayClass:
 				self._setDisplay(fallbackDisplayClass, isFallback=False)
 			return False
 
