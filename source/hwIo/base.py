@@ -153,7 +153,7 @@ class IoBase(object):
 		if hasattr(self, "_file") and self._file is not INVALID_HANDLE_VALUE:
 			ctypes.windll.kernel32.CancelIoEx(self._file, byref(self._readOl))
 		if hasattr(self, "_writeFile") and self._writeFile not in (self._file, INVALID_HANDLE_VALUE):
-			ctypes.windll.kernel32.CancelIoEx(self._writeFile, byref(self._readOl))
+			ctypes.windll.kernel32.CancelIoEx(self._writeFile, byref(self._writeOl))
 		winKernel.closeHandle(self._recvEvt)
 
 	def __del__(self):
