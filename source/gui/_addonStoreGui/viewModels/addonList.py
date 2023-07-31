@@ -22,7 +22,7 @@ from requests.structures import CaseInsensitiveDict
 from _addonStore.models.addon import (
 	_AddonGUIModel,
 	_AddonStoreModel,
-	_InstalledAddonModel,
+	_AddonManifestModel,
 )
 from _addonStore.models.status import (
 	_StatusFilterKey,
@@ -303,7 +303,7 @@ class AddonListVM:
 			term = term.casefold()
 			model = detailsVM.model
 			inPublisher = isinstance(model, _AddonStoreModel) and term in model.publisher.casefold()
-			inAuthor = isinstance(model, _InstalledAddonModel) and term in model.author.casefold()
+			inAuthor = isinstance(model, _AddonManifestModel) and term in model.author.casefold()
 			return (
 				term in model.displayName.casefold()
 				or term in model.description.casefold()
