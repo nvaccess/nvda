@@ -13,7 +13,7 @@ import addonAPIVersion
 from _addonStore.models.addon import (
 	_AddonGUIModel,
 	_AddonStoreModel,
-	_InstalledAddonModel,
+	_AddonManifestModel,
 )
 from gui.addonGui import ErrorAddonInstallDialog
 from gui.message import messageBox
@@ -175,7 +175,7 @@ def _showAddonInfo(addon: _AddonGUIModel) -> None:
 	if isinstance(addon, _AddonStoreModel):
 		# Translators: the publisher part of the About Add-on information
 		message.append(pgettext("addonStore", "Publisher: {publisher}\n").format(publisher=addon.publisher))
-	if isinstance(addon, _InstalledAddonModel):
+	if isinstance(addon, _AddonManifestModel):
 		# Translators: the author part of the About Add-on information
 		message.append(pgettext("addonStore", "Author: {author}\n").format(author=addon.author))
 	if addon.homepage:
