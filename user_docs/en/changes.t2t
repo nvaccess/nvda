@@ -121,6 +121,7 @@ eSpeak-NG, LibLouis braille translator, and Unicode CLDR have been updated.
   - In Browse mode, NVDA will no longer incorrectly ignore focus moving to a parent or child control e.g. moving from a control to its parent list item or gridcell. (#14611)
     - Note however that this fix only applies when the Automatically set focus to focusable elements" option in Browse Mode settings is turned off (which is the default).
     -
+  - When no braille display is connected and the braille viewer is closed by pressing ``alt+f4`` or clicking the close button, the display size of the braille subsystem will again be reset to no cells. (#15214)
   -
 - Fixes for Windows 11:
   - NVDA can once again announce Notepad status bar contents. (#14573)
@@ -145,6 +146,7 @@ eSpeak-NG, LibLouis braille translator, and Unicode CLDR have been updated.
 - Displaying the OCR settings will not fail on some systems anymore. (#15017)
 - Fix bug related to saving and loading the NVDA configuration, including switching synthesizers. (#14760)
 - Fix bug causing text review "flick up" touch gesture to move pages rather than move to previous line. (#15127)
+- 
 -
 
 
