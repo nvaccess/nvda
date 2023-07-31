@@ -214,7 +214,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			elif 0x14 <= deviceType <= 0x15:
 				self.keys = constants.KEYS_BBOOK
 			else:
-				log.debugWarning("fUnknown device identifier {data}")
+				log.debugWarning(f"Unknown device identifier {data}")
 		elif packetType == constants.EB_SYSTEM_DISPLAY_LENGTH:
 			self.numCells = ord(data)
 		elif packetType == constants.EB_SYSTEM_FRAME_LENGTH:
