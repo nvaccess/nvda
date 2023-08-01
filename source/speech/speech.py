@@ -35,7 +35,6 @@ from .commands import (
 	EndUtteranceCommand,
 	CharacterModeCommand,
 )
-from .shortcutKeys import getKeyboardShortcutsSpeech
 
 from . import types
 from .types import (
@@ -1726,7 +1725,8 @@ def getPropertiesSpeech(  # noqa: C901
 		textList.append(description)
 	# sometimes keyboardShortcut key is present but value is None
 	keyboardShortcut: Optional[str] = propertyValues.get('keyboardShortcut')
-	textList.extend(getKeyboardShortcutsSpeech(keyboardShortcut))
+	if keyboardShortcut:
+		textList.append(keyboardShortcut)
 	if includeTableCellCoords and cellCoordsText:
 		textList.append(cellCoordsText)
 	if cellCoordsText or rowNumber or columnNumber:
