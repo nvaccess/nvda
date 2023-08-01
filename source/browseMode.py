@@ -1688,7 +1688,8 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				self._replayFocusEnteredEvents()
 				nextHandler()
 			focusInfo.collapse()
-			self._set_selection(focusInfo, reason=OutputReason.FOCUS)
+			if self._focusEventMustUpdateCaretPosition:
+				self._set_selection(focusInfo, reason=OutputReason.FOCUS)
 		else:
 			# The virtual caret was already at the focused node.
 			if not self.passThrough:
