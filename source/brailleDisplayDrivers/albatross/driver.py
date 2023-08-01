@@ -8,6 +8,7 @@ Communication with display is done here. See class L{BrailleDisplayDriver}
 for description of most important functions.
 """
 
+import ctypes
 import serial
 import time
 
@@ -45,6 +46,7 @@ from .constants import (
 	RESET_COUNT,
 	RESET_SLEEP,
 	WRITE_QUEUE_LENGTH,
+	IO_ERROR_CODES,
 	MAX_COMBINATION_KEYS,
 	CONTROL_KEY_CODES,
 	LEFT_RIGHT_KEY_CODES,
@@ -208,7 +210,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		"""
 		for i in range(MAX_INIT_RETRIES):
 			if not self._dev:
-				if not self._initPort(i):
+				initState: Optional[bool] = self._initPort(i)
+				if initState is None:
+					return False
+				elif not initState:
 					continue
 			elif not self._dev.is_open:
 				if not self._openPort(i):
@@ -226,10 +231,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				return True
 		return False
 
-	def _initPort(self, i: int = MAX_INIT_RETRIES - 1) -> bool:
+	def _initPort(self, i: int = MAX_INIT_RETRIES - 1) -> Optional[bool]:
 		"""Initializes port.
 		@param i: Just for logging retries.
-		@return: C{True} on success, C{False} on failure
+		@return: C{True} on success, C{False} on I/O reset failure,
+		C{None} on port initialization failure
 		"""
 		try:
 			self._dev = serial.Serial(
@@ -251,6 +257,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				return False
 			return True
 		except IOError:
+			if ctypes.GetLastError() in IO_ERROR_CODES:
+				log.debug(f"Port {self._currentPort} not initialized", exc_info=True)
+				return None
 			if i == MAX_INIT_RETRIES - 1:
 				log.debug(f"Port {self._currentPort} not initialized", exc_info=True)
 				return False

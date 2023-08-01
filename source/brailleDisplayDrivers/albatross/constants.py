@@ -81,6 +81,22 @@ RESET_SLEEP = 0.05
 WRITE_QUEUE_LENGTH = 20
 
 
+class IoSystemErrors(IntEnum):
+	"""Some I/O related system errors."""
+	ERROR_FILE_NOT_FOUND = 0x2
+	ERROR_ACCESS_DENIED = 0x5
+	ERROR_SEM_TIMEOUT = 0x79
+
+
+IO_ERROR_CODES: FrozenSet[IoSystemErrors] = frozenset(
+	{
+		IoSystemErrors.ERROR_ACCESS_DENIED,
+		IoSystemErrors.ERROR_SEM_TIMEOUT,
+	}
+)
+"""I/O errors which interrupt port initialization."""
+
+
 class Keys(IntEnum):
 	"""Defines key names and values.
 	For routing keys see L{RoutingKeyRange}.
