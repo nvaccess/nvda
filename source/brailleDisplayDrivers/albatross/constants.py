@@ -85,12 +85,14 @@ class IoSystemErrors(IntEnum):
 	"""Some I/O related system errors."""
 	ERROR_FILE_NOT_FOUND = 0x2
 	ERROR_ACCESS_DENIED = 0x5
+	ERROR_SHARING_VIOLATION = 0x20
 	ERROR_SEM_TIMEOUT = 0x79
 
 
 IO_ERROR_CODES: FrozenSet[IoSystemErrors] = frozenset(
 	{
 		IoSystemErrors.ERROR_ACCESS_DENIED,
+		IoSystemErrors.ERROR_SHARING_VIOLATION,
 		IoSystemErrors.ERROR_SEM_TIMEOUT,
 	}
 )
