@@ -61,15 +61,7 @@ class AddonStoreDialog(SettingsDialog):
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer):
 		if globalVars.appArgs.disableAddons:
-			self.banner = BannerWindow(self, dir=wx.TOP)
-			self.banner.SetText(
-				# Translators: Banner notice that is displayed in the Add-on Store.
-				pgettext("addonStore", "Note: NVDA was started with add-ons disabled"),
-				"",
-			)
-			normalBgColour = self.GetBackgroundColour()
-			self.banner.SetGradient(normalBgColour, normalBgColour)
-			settingsSizer.Add(self.banner, flag=wx.CENTER)
+			self._makeBanner()
 
 		splitViewSizer = wx.BoxSizer(wx.HORIZONTAL)
 
@@ -90,6 +82,18 @@ class AddonStoreDialog(SettingsDialog):
 			self.addonListTabs.SetSelection(availableTabIndex)
 		self.addonListTabs.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED, self.onListTabPageChange, self.addonListTabs)
 
+		self.warningTextCtrl = wx.TextCtrl(
+			self,
+			style = 0  # purely to allow subsequent items to line up.
+			| wx.TE_MULTILINE  # details will require multiple lines
+			| wx.TE_READONLY  # the details shouldn't be user editable
+			| wx.TE_RICH2
+			| wx.BORDER_NONE
+		)
+		tabPageHelper.addItem(
+			self.warningTextCtrl,
+			flag=wx.EXPAND
+		)
 		self.filterCtrlHelper = guiHelper.BoxSizerHelper(self, wx.VERTICAL)
 		self._createFilterControls()
 		tabPageHelper.addItem(self.filterCtrlHelper.sizer, flag=wx.EXPAND)
@@ -132,6 +136,18 @@ class AddonStoreDialog(SettingsDialog):
 		settingsSizer.AddSpacer(guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
 		settingsSizer.Add(generalActions.sizer)
 		self.onListTabPageChange(None)
+
+	def _makeBanner(self):
+		self.banner = BannerWindow(self, dir=wx.TOP)
+		# Translators: Banner notice that is displayed in the Add-on Store.
+		bannerText = pgettext("addonStore", "Note: NVDA was started with add-ons disabled")
+		self.banner.SetText(
+			bannerText,
+			"",
+		)
+		normalBgColour = self.GetBackgroundColour()
+		self.banner.SetGradient(normalBgColour, normalBgColour)
+		self.settingsSizer.Add(self.banner, flag=wx.CENTER)
 
 	def _createFilterControls(self):
 		filterCtrlsLine0 = guiHelper.BoxSizerHelper(self, wx.HORIZONTAL)
@@ -278,6 +294,14 @@ class AddonStoreDialog(SettingsDialog):
 	def _titleText(self) -> str:
 		return f"{self.title} - {self._statusFilterKey.displayString} ({self._channelFilterKey.displayString})"
 
+	_warningText = pgettext(
+		"addonStore",
+		# Translators: Warning that is displayed in the Add-on Store.
+		"Add-ons are created by the NVDA community and are not vetted by NV Access. "
+		"NV Access cannot be held responsible for add-on behavior. "
+		"The functionality of add-ons is unrestricted and can include accessing your personal data or even the entire system. "
+	)
+
 	@property
 	def _listLabelText(self) -> str:
 		return pgettext(
@@ -290,6 +314,7 @@ class AddonStoreDialog(SettingsDialog):
 	def _setListLabels(self):
 		self.listLabel.SetLabel(self._listLabelText)
 		self.SetTitle(self._titleText)
+		self.warningTextCtrl.SetValue(self._warningText)
 
 	def _toggleFilterControls(self):
 		if self._storeVM._filteredStatusKey in {
@@ -307,6 +332,10 @@ class AddonStoreDialog(SettingsDialog):
 			self.enabledFilterCtrl.Enable()
 			self.includeIncompatibleCtrl.Hide()
 			self.includeIncompatibleCtrl.Disable()
+		if self._storeVM._filteredStatusKey is _StatusFilterKey.AVAILABLE:
+			self.warningTextCtrl.Show()
+		else:
+			self.warningTextCtrl.Hide()
 
 	def onListTabPageChange(self, evt: wx.EVT_CHOICE):
 		self.searchFilterCtrl.SetValue("")
