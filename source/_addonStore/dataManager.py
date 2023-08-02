@@ -281,9 +281,7 @@ class _DataManager:
 			with open(addonCachePath, 'r', encoding='utf-8') as cacheFile:
 				cacheData = json.load(cacheFile)
 		except Exception:
-			log.exception(f"Invalid cached installed add-on data")
-			if NVDAState.shouldWriteToDisk():
-				os.remove(addonCachePath)
+			log.exception("Invalid cached installed add-on data")
 			return None
 		if not cacheData:
 			return None
