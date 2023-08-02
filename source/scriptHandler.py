@@ -105,11 +105,11 @@ def getGlobalMapScripts(gesture: "inputCore.InputGesture") -> List["inputCore.In
 
 def findScript(gesture: "inputCore.InputGesture") -> Optional[_ScriptFunctionT]:
 	from utils.security import getSafeScripts
-	from winAPI.sessionTracking import _isLockScreenModeActive
+	from winAPI.sessionTracking import isLockScreenModeActive
 	foundScript = _findScript(gesture)
 	if (
 		foundScript is not None
-		and _isLockScreenModeActive()
+		and isLockScreenModeActive()
 		and foundScript not in getSafeScripts()
 	):
 		return None
@@ -249,7 +249,13 @@ def queueScript(script,gesture):
 	_numScriptsQueued+=1
 	if _isInterceptedCommandScript(script):
 		_numIncompleteInterceptedCommandScripts+=1
-	queueHandler.queueFunction(queueHandler.eventQueue,_queueScriptCallback,script,gesture)
+	queueHandler.queueFunction(
+		queueHandler.eventQueue,
+		_queueScriptCallback,
+		script,
+		gesture,
+		_immediate=getattr(gesture, "_immediate", True)
+	)
 
 def willSayAllResume(gesture):
 	return (

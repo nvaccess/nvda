@@ -1,11 +1,13 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited, Babbage B.V.
+# Copyright (C) 2006-2023 NV Access Limited, Babbage B.V.
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 import typing
 from typing import (
+	Generator,
 	Optional,
+	Tuple,
 	Union,
 	List,
 )
@@ -196,22 +198,32 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def expand(self,unit):
 		if unit==self.unit_mouseChunk:
 			isMouseChunkUnit=True
-			oldStart=self._startOffset
-			oldEnd=self._endOffset
+			origin = self._startOffset
 			unit=super(IA2TextTextInfo,self).unit_mouseChunk
 		else:
 			isMouseChunkUnit=False
 		super(IA2TextTextInfo,self).expand(unit)
 		if isMouseChunkUnit:
+			# If there are embedded object characters near our origin, shrink the range
+			# so that it only covers the text between them. Note that the user can
+			# mouse over the embedded objects separately. For example, if we have:
+			# before link after
+			# where "before" and "after" are plain text and "link" is a link, mousing
+			# over "before" would just read "before", mousing over "link" would read
+			# "link" and mousing over "after" would just read "after".
 			text=self._getTextRange(self._startOffset,self._endOffset)
 			if not text:
 				return
+			# Make our origin relative to the start of the text we just retrieved.
+			relativeOrigin = origin - self._startOffset
 			try:
-				self._startOffset = text.rindex(textUtils.OBJ_REPLACEMENT_CHAR, 0, oldStart - self._startOffset)
+				# Shrink the start to the nearest embedded object before our origin.
+				self._startOffset = text.rindex(textUtils.OBJ_REPLACEMENT_CHAR, 0, relativeOrigin)
 			except ValueError:
 				pass
 			try:
-				self._endOffset = text.index(textUtils.OBJ_REPLACEMENT_CHAR, oldEnd - self._startOffset)
+				# Shrink the end to the nearest embedded object after our origin.
+				self._endOffset = text.index(textUtils.OBJ_REPLACEMENT_CHAR, relativeOrigin)
 			except ValueError:
 				pass
 
@@ -1523,7 +1535,7 @@ the NVDAObject for IAccessible
 			self,
 			relationType: "IAccessibleHandler.RelationType",
 			maxRelations: int = 1,
-	) -> typing.List[IUnknown]:
+	) -> Generator[IUnknown, None, None]:
 		"""Gets the target IAccessible (actually IUnknown; use QueryInterface or
 		normalizeIAccessible to resolve) for the relations with given type.
 		Allows escape of exception: COMError(-2147417836, 'Requested object does not exist.'),
@@ -1539,17 +1551,21 @@ the NVDAObject for IAccessible
 			raise ValueError
 		if not isinstance(acc, IA2.IAccessible2_2):
 			acc = acc.QueryInterface(IA2.IAccessible2_2)
+
 		targets, count = acc.relationTargetsOfType(
 			relationType.value,
+			# Bug in relationTargetsOfType, Chrome does not respect maxRelations param.
+			# https://crbug.com/1399184
 			maxRelations
 		)
+		if config.conf["debugLog"]["annotations"]:
+			log.debug(f"Got {count} relations, given maxRelations: {maxRelations}")
 		if count == 0:
-			return list()
-		relationsGen = (
+			return
+		yield from (
 			targets[i]
 			for i in range(min(maxRelations, count))
 		)
-		return list(relationsGen)
 
 	def _getIA2RelationFirstTarget(
 			self,
@@ -1568,9 +1584,10 @@ the NVDAObject for IAccessible
 
 		try:
 			# rather than fetch all the relations and querying the type, do that in process for performance reasons
-			targets = self._getIA2TargetsForRelationsOfType(relationType, maxRelations=1)
-			if targets:
-				ia2Object = IAccessibleHandler.normalizeIAccessible(targets[0])
+			targetsGen = self._getIA2TargetsForRelationsOfType(relationType, maxRelations=1)
+			for target in targetsGen:
+				ia2Object = IAccessibleHandler.normalizeIAccessible(target)
+				# Just take the first.
 				return IAccessible(
 					IAccessibleObject=ia2Object,
 					IAccessibleChildID=0
@@ -1578,7 +1595,7 @@ the NVDAObject for IAccessible
 		except (NotImplementedError, COMError):
 			log.debugWarning("Unable to use _getIA2TargetsForRelationsOfType, fallback to _IA2Relations.")
 
-		# eg IA2_2 is not available, fall back to old approach
+		# IA2_2 is not available, fall back to old approach
 		try:
 			for relation in self._IA2Relations:
 				if relation.relationType == relationType:
@@ -1594,20 +1611,74 @@ the NVDAObject for IAccessible
 			pass
 		return None
 
+	def _getIA2RelationTargetsOfType(
+			self,
+			relationType: Union[str, IAccessibleHandler.RelationType]
+	) -> typing.Iterable["IAccessible"]:
+		""" Get the targets for the relation of type.
+		Higher level function than _getIA2TargetsForRelationsOfType
+		@param relationType: The type of relation to fetch.
+		"""
+		if not isinstance(relationType, IAccessibleHandler.RelationType):
+			if isinstance(relationType, str):
+				relationType = IAccessibleHandler.RelationType(relationType)
+			else:
+				raise TypeError(f"Bad type for 'relationType' arg, got: {type(relationType)}")
+
+		relationType = typing.cast(IAccessibleHandler.RelationType, relationType)
+
+		try:
+			# rather than fetch all the relations and querying the type, do that in process for performance reasons
+			# Bug in Chrome, Chrome does not respect maxRelations param.
+			# https://crbug.com/1399184.
+			# In future, uncomment the next line.
+			# maxRelsToFetch = self.IAccessibleObject.nRelations  # they may or may not all match 'relationType'
+			maxRelsToFetch = 10
+			targetsGen = self._getIA2TargetsForRelationsOfType(relationType, maxRelations=maxRelsToFetch)
+			for target in targetsGen:
+				ia2Object = IAccessibleHandler.normalizeIAccessible(target)
+				ia = IAccessible(
+					IAccessibleObject=ia2Object,
+					IAccessibleChildID=0
+				)
+				yield ia
+			# NotImplementedError is expected to occur for all targets or none.
+			return  # Iterated all targets without error.
+		except (NotImplementedError, COMError):
+			log.debugWarning("Unable to use _getIA2TargetsForRelationsOfType, fallback to _IA2Relations.")
+
+		# IA2_2 is not available, fall back to old approach
+		log.debugWarning("IA2_2 is not available, fall back to old approach")
+		try:
+			for relation in self._IA2Relations:
+				if relation.relationType == relationType:
+					# Take the first of 'relation.nTargets' see IAccessibleRelation._methods_
+					for i in range(0, relation.nTargets):
+						target = relation.target(i)
+						ia2Object = IAccessibleHandler.normalizeIAccessible(target)
+						yield IAccessible(
+							IAccessibleObject=ia2Object,
+							IAccessibleChildID=0
+						)
+			return
+		except (NotImplementedError, COMError):
+			log.debug("Unable to fetch _IA2Relations", exc_info=True)
+			pass
+		return None
+
 	#: Type definition for auto prop '_get_detailsRelations'
-	detailsRelations: typing.Iterable["IAccessible"]
+	detailsRelations: Tuple["IAccessible"]
+
+	def _get_detailsRelations(self) -> Tuple["IAccessible"]:
+		detailsRelsGen = self._getIA2RelationTargetsOfType(IAccessibleHandler.RelationType.DETAILS)
+		# due to caching of baseObject.AutoPropertyObject, do not attempt to return a generator.
+		return tuple(detailsRelsGen)
 
 	def _get_controllerFor(self) -> List[NVDAObject]:
 		control = self._getIA2RelationFirstTarget(IAccessibleHandler.RelationType.CONTROLLER_FOR)
 		if control:
 			return [control]
 		return []
-
-	def _get_detailsRelations(self) -> typing.Iterable["IAccessible"]:
-		relationTarget = self._getIA2RelationFirstTarget(IAccessibleHandler.RelationType.DETAILS)
-		if not relationTarget:
-			return ()
-		return (relationTarget, )
 
 	#: Type definition for auto prop '_get_flowsTo'
 	flowsTo: typing.Optional["IAccessible"]
@@ -1627,7 +1698,7 @@ the NVDAObject for IAccessible
 			return
 		return super(IAccessible, self).event_valueChange()
 
-	def event_alert(self):
+	def event_alert(self) -> None:
 		if self.role != controlTypes.Role.ALERT:
 			# Ignore alert events on objects that aren't alerts.
 			return
@@ -1641,9 +1712,11 @@ the NVDAObject for IAccessible
 		if self in api.getFocusAncestors():
 			return
 		speech.speakObject(self, reason=controlTypes.OutputReason.FOCUS, priority=speech.Spri.NOW)
+		braille.handler.message(braille.getPropertiesBraille(name=self.name, role=self.role))
 		for child in self.recursiveDescendants:
 			if controlTypes.State.FOCUSABLE in child.states:
 				speech.speakObject(child, reason=controlTypes.OutputReason.FOCUS, priority=speech.Spri.NOW)
+				braille.handler.message(braille.getPropertiesBraille(name=self.name, role=self.role))
 
 	def event_caret(self):
 		focus = api.getFocusObject()
@@ -1763,7 +1836,7 @@ the NVDAObject for IAccessible
 				ret = "exception: %s" % e
 			info.append("IAccessible2 attributes: %s" % ret)
 			try:
-				ret = ", ".join(r.RelationType for r in self._IA2Relations)
+				ret = ", ".join(f"{r.RelationType} * {r.nTargets}" for r in self._IA2Relations)
 			except Exception as e:
 				ret = f"exception: {e}"
 			info.append(f"IAccessible2 relations: {ret}")

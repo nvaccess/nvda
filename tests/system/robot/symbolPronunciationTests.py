@@ -65,6 +65,7 @@ class SymLevel(_enum.Enum):
 	"""Symbol levels, should match characterProcessing.SymbolLevel
 	"""
 	NONE = 0
+	SOME = 100
 	ALL = 300
 
 
@@ -74,6 +75,13 @@ class EndSpeech(_enum.Enum):
 	BOTTOM = "Bottom"
 	RIGHT = "Right"
 	NONE = None
+
+
+class ReportLineIndentation(_enum.Enum):
+	"""Line indentation reporting options. Should match config.configFlags.ReportLineIndentation
+	"""
+	OFF = 0
+	SPEECH = 1
 
 
 def _pressKeyAndCollectSpeech(key: str, numberOfTimes: int) -> _typing.List[str]:
@@ -145,16 +153,16 @@ def test_moveByWord():
 			'Say',
 			'(quietly)', 'Hello,', 'Jim', '.',  # Expected: no symbols named
 			"don't",  # Expected: mid-word symbol
-			'right pointing arrow', 't shirt',  # todo: Expect dash
+			'right-pointing arrow', 't-shirt',
 			# todo: There should not be any "empty" words. Expect 'bar bar', and 'at  caret  star  line'
 			'1', 'bar', '2', '', '3', '', '4',
 			# end of first line
 			'blank',  # single space and newline
 			'',  # tab and newline  todo: There should not be any "empty" words.
 			'blank',  # 4 spaces and newline
-			'right pointing arrow',
-			't shirt',  # todo: Expect dash
-			't shirt',  # todo: Expect dash
+			'right-pointing arrow',
+			't-shirt',
+			't-shirt',
 			'blank',  # end of doc
 		],
 	)
@@ -170,16 +178,16 @@ def test_moveByWord():
 			'left paren(quietly right paren)',  # Expect: parenthesis are named
 			'quote Hello comma,', 'Jim', 'quote  dot.',  # Expect: quote, comma and dot are named
 			'don tick t',  # Expect: mid-word symbol substituted
-			'right dash pointing arrow', 't dash shirt',  # todo: Expect dash symbol not to be replaced with word.
+			'right dash-pointing arrow', 't dash-shirt',
 			# Expect no empty words:
 			'1', 'bar', '2', 'bar  bar', '3', 'at  caret  star  line', '4',
 			# end of first line
 			'blank',  # single space and newline
 			'tab',  # tab and newline
 			'blank',  # 4 spaces and newline
-			'right dash pointing arrow',  # todo: Expect dash symbol not to be replaced with word.
-			't dash shirt',  # todo: Expect dash symbol not to be replaced with word.
-			't dash shirt',  # todo: Expect dash symbol not to be replaced with word.
+			'right dash-pointing arrow',
+			't dash-shirt',
+			't dash-shirt',
 			'blank'  # end of doc
 		]
 	)
@@ -247,7 +255,7 @@ def test_moveByChar():
 			'left paren', 'right paren',  # Expect parens named
 			'quote', 'tick',  # Expect quote and apostrophe named
 			'e', 'comma',  # Expect comma named
-			'right pointing arrow', 't shirt',   # todo: Expect dash i.e. 'right-pointing arrow', 't-shirt'
+			'right-pointing arrow', 't-shirt',
 			'tab',  # Expect tab named
 			'carriage return',  # Expect Windows/notepad newline is \r\n
 			'line feed',  # on Windows/notepad newline is \r\n
@@ -256,8 +264,6 @@ def test_moveByChar():
 
 	_NvdaLib.getSpeechAfterKey(Move.REVIEW_HOME.value)  # reset to start position.
 
-	# todo: Bug, with symbol level ALL text due to a symbol substitution has further substitutions applied:
-	#       IE: "t-shirt" either becomes "t shirt" or "t dash shirt" dependent on symbol level.
 	_doTest(
 		navKey=Move.REVIEW_CHAR,
 		reportedAfterLast=EndSpeech.RIGHT,
@@ -268,7 +274,7 @@ def test_moveByChar():
 			'quote', 'tick',  # Expect quote and apostrophe named
 			'e', 'comma',  # Expect comma named
 			# todo: Expect no replacement with word 'dash' i.e. expect 'right-pointing arrow', 't-shirt'
-			'right dash pointing arrow', 't dash shirt',
+			'right dash-pointing arrow', 't dash-shirt',
 			'tab',  # Expect whitespace named.
 			'carriage return',  # on Windows/notepad newline is \r\n
 			'line feed',  # on Windows/notepad newline is \r\n
@@ -351,11 +357,11 @@ def test_selByWord():
 				'',  # newline and tab  todo: There should not be any "empty" words.
 				'',  # newline and 4 spaces todo: There should not be any "empty" words.
 				'',  # newline  todo: There should not be any "empty" words.
-				'right pointing arrow',  # todo: Expect dash
+				'right-pointing arrow',
 				'',  # newline  todo: There should not be any "empty" words.
-				't shirt',  # todo: Expect dash
+				't-shirt',
 				'',  # newline  todo: There should not be any "empty" words.
-				't shirt',  # todo: Expect dash
+				't-shirt',
 				# end of doc
 			]
 		)),
@@ -384,11 +390,11 @@ def test_selByWord():
 				'tab ',  # newline and tab
 				'',  # newline and 4 spaces
 				'',  # newline
-				'right dash pointing arrow',  # todo: Expect dash symbol not to be replaced with word.
+				'right dash-pointing arrow',
 				'',  # newline  todo: There should not be any "empty" words.
-				't dash shirt',  # todo: Expect dash symbol not to be replaced with word.
+				't dash-shirt',
 				'',  # newline  todo: There should not be any "empty" words.
-				't dash shirt',  # todo: Expect dash symbol not to be replaced with word.
+				't dash-shirt',
 				# end of doc
 			]
 		))
@@ -467,7 +473,7 @@ def test_selByChar():
 				'left paren', 'right paren',  # Expect parens named
 				'quote', 'tick',  # Expect quote and apostrophe named
 				'e', 'comma',  # Expect comma named
-				'right pointing arrow', 't shirt',   # todo: Expect dash i.e. 'right-pointing arrow', 't-shirt'
+				'right-pointing arrow', 't-shirt',
 				'tab',  # Expect tab named
 				'',  # Expect Windows/notepad newline is \r\n
 			]
@@ -476,8 +482,6 @@ def test_selByChar():
 
 	_NvdaLib.getSpeechAfterKey(Move.CARET_HOME.value)  # reset to start position.
 
-	# todo: Bug, with symbol level ALL text due to a symbol substitution has further substitutions applied:
-	#       IE: "t-shirt" either becomes "t shirt" or "t dash shirt" dependent on symbol level.
 	_doTest(
 		navKey=Move.SEL_CARET_CHAR,
 		reportedAfterLast=EndSpeech.NONE,
@@ -489,7 +493,7 @@ def test_selByChar():
 				'quote', 'tick',  # Expect quote and apostrophe named
 				'e', 'comma',  # Expect comma named
 				# todo: Expect no replacement with word 'dash' i.e. expect 'right-pointing arrow', 't-shirt'
-				'right dash pointing arrow', 't dash shirt',
+				'right dash-pointing arrow', 't dash-shirt',
 				'tab',  # Expect whitespace named.
 				'',  # on Windows/notepad newline is \r\n
 			]
@@ -504,7 +508,7 @@ def test_symbolInSpeechUI():
 	_notepad.prepareNotepad((
 		"t"  # Character doesn't matter, we just want to invoke "Right" speech UI.
 	))
-	_setSymbolLevel(SymLevel.ALL)
+	_setConfig(SymLevel.ALL)
 	spy = _NvdaLib.getSpyLib()
 	expected = "shouldn't sub tick symbol"
 	spy.override_translationString(EndSpeech.RIGHT.value, expected)
@@ -531,7 +535,7 @@ def test_symbolInSpeechUI():
 	)
 
 	# Show that with symbol level None, the speech UI symbols are not substituted.
-	_setSymbolLevel(SymLevel.NONE)
+	_setConfig(SymLevel.NONE)
 	actual = _pressKeyAndCollectSpeech(Move.REVIEW_CHAR.value, numberOfTimes=1)
 	_builtIn.should_be_equal(
 		actual,
@@ -540,20 +544,32 @@ def test_symbolInSpeechUI():
 	)
 
 
-def _setSymbolLevel(symbolLevel: SymLevel) -> None:
+def _setConfig(
+		symbolLevel: SymLevel = SymLevel.SOME,
+		reportLineIndentation: ReportLineIndentation = ReportLineIndentation.OFF,
+		ignoreBlankLines: bool = False
+) -> None:
 	spy = _NvdaLib.getSpyLib()
-	SYMBOL_LEVEL_KEY = ["speech", "symbolLevel"]
-	spy.set_configValue(SYMBOL_LEVEL_KEY, symbolLevel.value)
-	_builtIn.log(message=f"Doing test at symbol level: {symbolLevel}")
+	spy.set_configValue(["documentFormatting", "reportLineIndentation"], reportLineIndentation.value)
+	spy.set_configValue(["documentFormatting", "ignoreBlankLinesForRLI"], ignoreBlankLines)
+	spy.set_configValue(["speech", "symbolLevel"], symbolLevel.value)
+	message = (
+		f"Doing test at symbol level: {symbolLevel}"
+		f", line indentation reporting: {reportLineIndentation}"
+		f", ignore blank lines for line indentation reporting: {ignoreBlankLines}"
+	)
+	_builtIn.log(message=message)
 
 
 def _doTest(
 		navKey: Move,
 		expectedSpeech: _typing.List[str],
 		reportedAfterLast: EndSpeech,
-		symbolLevel: SymLevel,
+		symbolLevel: SymLevel = SymLevel.SOME,
+		reportLineIndentation: ReportLineIndentation = ReportLineIndentation.OFF,
+		ignoreBlankLines: bool = False
 ) -> None:
-	_setSymbolLevel(symbolLevel)
+	_setConfig(symbolLevel, reportLineIndentation, ignoreBlankLines)
 
 	actual = _pressKeyAndCollectSpeech(navKey.value, numberOfTimes=len(expectedSpeech))
 	_builtIn.should_be_equal(
@@ -604,7 +620,7 @@ def test_tableHeaders():
 			</table>
 		"""
 	)
-	_setSymbolLevel(SymLevel.ALL)
+	_setConfig(SymLevel.ALL)
 	# Expected to be in browse mode
 	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
 	_asserts.strings_match(
@@ -615,7 +631,7 @@ def test_tableHeaders():
 			"with 2 rows and 3 columns",  # details of the table context
 			"row 1",  # enter row 1 context
 			"column 1",  # enter column 1 context
-			"First dash name",  # the contents of the cell
+			"First dash-name",  # the contents of the cell
 		])
 	)
 	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
@@ -643,7 +659,7 @@ def test_tableHeaders():
 		# describe third column header
 		'  '.join([
 			"row 2",   # enter row 2 context, still in table
-			"First dash name",  # reminder of the column name
+			"First dash-name",  # reminder of the column name
 			"column 1",  # explicit column 2 context,
 			"a",  # the contents of the cell
 		])
@@ -671,5 +687,58 @@ def test_tableHeaders():
 			# name of column, column number 2, \n cell contents
 			'right-pointing arrow   t-shirt  column 2\nb',  # note symbols ARE replaced in column name
 			"Don tick t  column 3\nc",  # note symbols ARE replaced in column name
+		]
+	)
+
+
+def test_ignoreBlankLinesForReportLineIndentation():
+	""" Test line indentation reporting with ignoreBlankLinesForReportLineIndentation off and then on
+	"""
+	_notepad.prepareNotepad('\n'.join([
+		'',  # blank line
+		'def foo',
+		'\thello',
+		'',  # blank line
+		'\tworld',
+		'',  # blank line
+		'def bar',
+		'',  # blank line
+	]))
+
+	def _doTestIgnoreBlankLines(ignoreBlankLines: bool, expectedSpeech: _typing.List[str]) -> None:
+		_doTest(
+			navKey=Move.REVIEW_LINE,
+			reportedAfterLast=EndSpeech.BOTTOM,
+			symbolLevel=SymLevel.ALL,
+			reportLineIndentation=ReportLineIndentation.SPEECH,
+			ignoreBlankLines=ignoreBlankLines,
+			expectedSpeech=expectedSpeech
+		)
+
+	_doTestIgnoreBlankLines(
+		ignoreBlankLines=False,
+		expectedSpeech=[
+			'def foo',
+			'tab  hello',
+			'no indent  blank',
+			'tab  world',
+			'no indent  blank',
+			'def bar',
+			'blank'
+		]
+	)
+
+	_NvdaLib.getSpeechAfterKey(Move.REVIEW_HOME.value)  # reset to start position
+
+	_doTestIgnoreBlankLines(
+		ignoreBlankLines=True,
+		expectedSpeech=[
+			'def foo',
+			'tab  hello',
+			'blank',
+			'world',
+			'blank',
+			'no indent  def bar',
+			'blank'
 		]
 	)

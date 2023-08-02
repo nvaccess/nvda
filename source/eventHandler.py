@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2007-2022 NV Access Limited, Babbage B.V.
+# Copyright (C) 2007-2023 NV Access Limited, Babbage B.V., Joseph Lee
 
 import threading
 import typing
@@ -22,6 +22,7 @@ import winUser
 import extensionPoints
 import oleacc
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
+import winVersion
 
 if typing.TYPE_CHECKING:
 	import NVDAObjects
@@ -37,6 +38,12 @@ _pendingEventCountsLock=threading.RLock()
 #: the last object queued for a gainFocus event. Useful for code running outside NVDA's core queue 
 lastQueuedFocusObject=None
 
+
+# Handle virtual desktop switch announcements in Windows 10 and later
+_virtualDesktopName: Optional[str] = None
+_canAnnounceVirtualDesktopNames: bool = winVersion.getWinVer() >= winVersion.WIN10_1903
+
+
 def queueEvent(eventName,obj,**kwargs):
 	"""Queues an NVDA event to be executed.
 	@param eventName: the name of the event type (e.g. 'gainFocus', 'nameChange')
@@ -47,7 +54,14 @@ def queueEvent(eventName,obj,**kwargs):
 		_pendingEventCountsByName[eventName]=_pendingEventCountsByName.get(eventName,0)+1
 		_pendingEventCountsByObj[obj]=_pendingEventCountsByObj.get(obj,0)+1
 		_pendingEventCountsByNameAndObj[(eventName,obj)]=_pendingEventCountsByNameAndObj.get((eventName,obj),0)+1
-	queueHandler.queueFunction(queueHandler.eventQueue,_queueEventCallback,eventName,obj,kwargs)
+	queueHandler.queueFunction(
+		queueHandler.eventQueue,
+		_queueEventCallback,
+		eventName,
+		obj,
+		kwargs,
+		_immediate=eventName == "gainFocus"
+	)
 
 
 def _queueEventCallback(eventName,obj,kwargs):
@@ -287,19 +301,45 @@ def executeEvent(
 	):
 		return
 	try:
+		global _virtualDesktopName
 		isGainFocus = eventName == "gainFocus"
 		# Allow NVDAObjects to redirect focus events to another object of their choosing.
 		if isGainFocus and obj.focusRedirect:
-			obj=obj.focusRedirect
-		sleepMode=obj.sleepMode
+			obj = obj.focusRedirect
+		sleepMode = obj.sleepMode
+		# Handle possible virtual desktop name change event.
+		# More effective in Windows 10 Version 1903 and later.
+		if (
+			eventName == "nameChange"
+			and obj.windowClassName == "#32769"
+			and _canAnnounceVirtualDesktopNames
+		):
+			import core
+			_virtualDesktopName = obj.name
+			core.callLater(250, handlePossibleDesktopNameChange)
 		if isGainFocus and not doPreGainFocus(obj, sleepMode=sleepMode):
 			return
-		elif not sleepMode and eventName=="documentLoadComplete" and not doPreDocumentLoadComplete(obj):
+		elif not sleepMode and eventName == "documentLoadComplete" and not doPreDocumentLoadComplete(obj):
 			return
 		elif not sleepMode:
-			_EventExecuter(eventName,obj,kwargs)
-	except:
-		log.exception("error executing event: %s on %s with extra args of %s"%(eventName,obj,kwargs))
+			_EventExecuter(eventName, obj, kwargs)
+	except Exception:
+		log.exception(f"error executing event: {eventName} on {obj} with extra args of {kwargs}")
+
+
+def handlePossibleDesktopNameChange() -> None:
+	"""
+	Reports the new virtual desktop name if changed.
+	On Windows versions lower than Windows 10, this function does nothing.
+	"""
+	global _virtualDesktopName
+	# Virtual desktop switch announcement works more effectively in Version 1903 and later.
+	if not _canAnnounceVirtualDesktopNames:
+		return
+	if _virtualDesktopName:
+		import ui
+		ui.message(_virtualDesktopName)
+		_virtualDesktopName = None
 
 
 def doPreGainFocus(obj: "NVDAObjects.NVDAObject", sleepMode: bool = False) -> bool:
@@ -310,8 +350,8 @@ def doPreGainFocus(obj: "NVDAObjects.NVDAObject", sleepMode: bool = False) -> bo
 		shouldLog=config.conf["debugLog"]["events"],
 	):
 		return False
-	oldFocus=api.getFocusObject()
-	oldTreeInterceptor=oldFocus.treeInterceptor if oldFocus else None
+	oldFocus = api.getFocusObject()
+	oldTreeInterceptor = oldFocus.treeInterceptor if oldFocus else None
 	if not api.setFocusObject(obj):
 		return False
 	if speech.manager._shouldCancelExpiredFocusEvents():
@@ -338,25 +378,31 @@ def doPreGainFocus(obj: "NVDAObjects.NVDAObject", sleepMode: bool = False) -> bo
 		# not the secure desktop.
 		and not isinstance(obj, SecureDesktopNVDAObject)
 	):
-		newForeground=api.getDesktopObject().objectInForeground()
+		newForeground = api.getDesktopObject().objectInForeground()
 		if not newForeground:
 			log.debugWarning("Can not get real foreground, resorting to focus ancestors")
-			ancestors=api.getFocusAncestors()
-			if len(ancestors)>1:
-				newForeground=ancestors[1]
+			ancestors = api.getFocusAncestors()
+			if len(ancestors) > 1:
+				newForeground = ancestors[1]
 			else:
-				newForeground=obj
+				newForeground = obj
 		if not api.setForegroundObject(newForeground):
 			return False
 		executeEvent('foreground', newForeground)
-	if sleepMode: return True
-	#Fire focus entered events for all new ancestors of the focus if this is a gainFocus event
+	handlePossibleDesktopNameChange()
+	if sleepMode:
+		return True
+	# Fire focus entered events for all new ancestors of the focus if this is a gainFocus event
 	for parent in api.getFocusAncestors()[api.getFocusDifferenceLevel():]:
-		executeEvent("focusEntered",parent)
+		executeEvent("focusEntered", parent)
 	if obj.treeInterceptor is not oldTreeInterceptor:
-		if hasattr(oldTreeInterceptor,"event_treeInterceptor_loseFocus"):
+		if hasattr(oldTreeInterceptor, "event_treeInterceptor_loseFocus"):
 			oldTreeInterceptor.event_treeInterceptor_loseFocus()
-		if obj.treeInterceptor and obj.treeInterceptor.isReady and hasattr(obj.treeInterceptor,"event_treeInterceptor_gainFocus"):
+		if (
+			obj.treeInterceptor
+			and obj.treeInterceptor.isReady
+			and hasattr(obj.treeInterceptor, "event_treeInterceptor_gainFocus")
+		):
 			obj.treeInterceptor.event_treeInterceptor_gainFocus()
 	return True
 

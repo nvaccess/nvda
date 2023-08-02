@@ -4,6 +4,7 @@
 # Copyright (C) 2006-2022 NV Access Limited, Bill Dengler, Leonard de Ruijter
 
 from typing import (
+	Optional,
 	Union
 )
 
@@ -16,13 +17,15 @@ import controlTypes
 from controlTypes import TextPosition
 import textInfos
 import colors
-from compoundDocuments import CompoundDocument
+from compoundDocuments import CompoundDocument, TreeCompoundTextInfo
+from NVDAObjects import NVDAObject
 from NVDAObjects.IAccessible import IAccessible, IA2TextTextInfo
 from NVDAObjects.behaviors import EditableText
 from logHandler import log
 import speech
 import api
 import braille
+import languageHandler
 import vision
 
 
@@ -196,7 +199,11 @@ class SymphonyIATableCell(SymphonyTableCell):
 
 	def event_selectionAdd(self):
 		curFocus = api.getFocusObject()
-		if self.table and self.table == curFocus.table:
+		if (
+			self.table
+			and self.table == curFocus.table
+			and self.table.IAccessibleTable2Object.nSelectedCells > 0
+		):
 			curFocus.announceSelectionChange()
 
 	def event_selectionRemove(self):
@@ -275,6 +282,43 @@ class SymphonyParagraph(SymphonyText):
 	value=None
 	description=None
 
+
+def getDistanceTextForTwips(twips):
+	"""Returns a text representation of the distance given in twips,
+	converted to the local measurement unit."""
+	if languageHandler.useImperialMeasurements():
+		val = twips / 1440.0
+		# Translators: a measurement in inches
+		valText = _("{val:.2f} inches").format(val=val)
+	else:
+		val = twips * 0.0017638889
+		# Translators: a measurement in centimetres
+		valText = _("{val:.2f} centimetres").format(val=val)
+	return valText
+
+
+class SymphonyDocumentTextInfo(TreeCompoundTextInfo):
+
+	def _get_locationText(self):
+		try:
+			# if present, use document attributes to get cursor position relative to page
+			docAttribs = self.obj.rootNVDAObject.IA2Attributes
+			horizontalPos = int(docAttribs["cursor-position-in-page-horizontal"])
+			horizontalDistanceText = getDistanceTextForTwips(horizontalPos)
+			verticalPos = int(docAttribs["cursor-position-in-page-vertical"])
+			verticalDistanceText = getDistanceTextForTwips(verticalPos)
+			return _(
+				# Translators: LibreOffice, report cursor position in the current page
+				"cursor positioned {horizontalDistance} from left edge of page, {verticalDistance} from top edge of page"
+			).format(horizontalDistance=horizontalDistanceText, verticalDistance=verticalDistanceText)
+		except (AttributeError, KeyError):
+			return super(SymphonyDocumentTextInfo, self)._get_locationText()
+
+
+class SymphonyDocument(CompoundDocument):
+	TextInfo = SymphonyDocumentTextInfo
+
+
 class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
@@ -301,4 +345,31 @@ class AppModule(appModuleHandler.AppModule):
 		if windowClass in ("SALTMPSUBFRAME", "SALFRAME") and obj.role in (controlTypes.Role.DOCUMENT,controlTypes.Role.TEXTFRAME) and obj.description:
 			# This is a word processor document.
 			obj.description = None
-			obj.treeInterceptorClass = CompoundDocument
+			obj.treeInterceptorClass = SymphonyDocument
+
+	def searchStatusBar(self, obj: NVDAObject, max_depth: int = 5) -> Optional[NVDAObject]:
+		"""Searches for and returns the status bar object
+		if either the object itself or one of its recursive children
+		(up to the given depth) has the corresponding role."""
+		if obj.role == controlTypes.Role.STATUSBAR:
+			return obj
+		if max_depth < 1 or obj.role not in {controlTypes.Role.ROOTPANE, controlTypes.Role.WINDOW}:
+			return None
+		for child in obj.children:
+			status_bar = self.searchStatusBar(child, max_depth - 1)
+			if status_bar:
+				return status_bar
+		return None
+
+	def _get_statusBar(self) -> Optional[NVDAObject]:
+		return self.searchStatusBar(api.getForegroundObject())
+
+	def getStatusBarText(self, obj: NVDAObject) -> str:
+		text = ""
+		for child in obj.children:
+			textObj = child.IAccessibleTextObject
+			if textObj:
+				if text:
+					text += " "
+				text += textObj.textAtOffset(0, IA2.IA2_TEXT_BOUNDARY_ALL)[2]
+		return text

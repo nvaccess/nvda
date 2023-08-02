@@ -54,6 +54,7 @@ from speech.commands import (
 
 #: The number of 100-nanosecond units in 1 second.
 HUNDRED_NS_PER_SEC = 10000000 # 1000000000 ns per sec / 100 ns
+WAVE_HEADER_LENGTH = 46
 ocSpeech_Callback = ctypes.CFUNCTYPE(None, ctypes.c_void_p, ctypes.c_int, ctypes.c_wchar_p)
 
 class _OcSsmlConverter(speechXml.SsmlConverter):
@@ -221,9 +222,9 @@ class OneCoreSynthDriver(SynthDriver):
 		# Set initial values for parameters that can't be queried when prosody is not supported.
 		# This initialises our cache for the value.
 		# When prosody is supported, the values are used for cachign reasons.
-		self._rate = 50
-		self._pitch = 50
-		self._volume = 100
+		self._rate: int = 50
+		self._pitch: int = 50
+		self._volume: int = 100
 
 		if self.supportsProsodyOptions:
 			self._dll.ocSpeech_getPitch.restype = ctypes.c_double
@@ -338,13 +339,13 @@ class OneCoreSynthDriver(SynthDriver):
 		rawPitch = self._percentToParam(pitch, self.MIN_PITCH, self.MAX_PITCH)
 		self._queuedSpeech.append((self._dll.ocSpeech_setPitch, rawPitch))
 
-	def _get_volume(self):
+	def _get_volume(self) -> int:
 		if not self.supportsProsodyOptions:
 			return self._volume
 		rawVolume = self._dll.ocSpeech_getVolume(self._ocSpeechToken)
 		return int(rawVolume * 100)
 
-	def _set_volume(self, volume):
+	def _set_volume(self, volume: int):
 		self._volume = volume
 		if not self.supportsProsodyOptions:
 			return
@@ -451,10 +452,11 @@ class OneCoreSynthDriver(SynthDriver):
 		else:
 			self._consecutiveSpeechFailures = 0
 		# This gets called in a background thread.
-		stream = io.BytesIO(ctypes.string_at(bytes, len))
+		stream = io.BytesIO(ctypes.string_at(bytes, WAVE_HEADER_LENGTH))
 		wav = wave.open(stream, "r")
 		self._maybeInitPlayer(wav)
-		data = wav.readframes(wav.getnframes())
+		data = bytes + WAVE_HEADER_LENGTH
+		dataLen = wav.getnframes() * wav.getnchannels() * wav.getsampwidth()
 		if markers:
 			markers = markers.split('|')
 		else:
@@ -473,14 +475,17 @@ class OneCoreSynthDriver(SynthDriver):
 			# Order the equation so we don't have to do floating point.
 			pos = pos * self._bytesPerSec // HUNDRED_NS_PER_SEC
 			# Push audio up to this marker.
-			self._player.feed(data[prevPos:pos],
-				onDone=lambda index=index: synthIndexReached.notify(synth=self, index=index))
+			self._player.feed(
+				ctypes.c_void_p(data + prevPos),
+				size=pos - prevPos,
+				onDone=lambda index=index: synthIndexReached.notify(synth=self, index=index)
+			)
 			prevPos = pos
 		if self._wasCancelled:
 			if isDebugForSynthDriver():
 				log.debug("Cancelled, stopped pushing audio")
 		else:
-			self._player.feed(data[prevPos:])
+			self._player.feed(ctypes.c_void_p(data + prevPos), size=dataLen - prevPos)
 			if isDebugForSynthDriver():
 				log.debug("Done pushing audio")
 		self._processQueue()

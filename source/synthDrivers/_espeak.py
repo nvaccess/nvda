@@ -8,7 +8,7 @@ import time
 import nvwave
 import threading
 import queue
-from ctypes import cdll
+from ctypes import cdll, CFUNCTYPE, c_int, c_void_p, POINTER, sizeof, c_short
 from ctypes import *
 import config
 import globalVars
@@ -138,7 +138,8 @@ def encodeEspeakString(text):
 def decodeEspeakString(data):
 	return data.decode('utf8')
 
-t_espeak_callback=CFUNCTYPE(c_int,POINTER(c_short),c_int,POINTER(espeak_EVENT))
+
+t_espeak_callback = CFUNCTYPE(c_int, c_void_p, c_int, POINTER(espeak_EVENT))
 
 @t_espeak_callback
 def callback(wav,numsamples,event):
@@ -167,16 +168,24 @@ def callback(wav,numsamples,event):
 			onIndexReached(None)
 			isSpeaking = False
 			return CALLBACK_CONTINUE_SYNTHESIS
-		wav = string_at(wav, numsamples * sizeof(c_short)) if numsamples>0 else b""
 		prevByte = 0
+		length = numsamples * sizeof(c_short)
 		for indexNum, indexByte in indexes:
-			player.feed(wav[prevByte:indexByte],
-				onDone=lambda indexNum=indexNum: onIndexReached(indexNum))
+			# Sometimes, rate boost can result in spurious index values.
+			if indexByte < 0:
+				indexByte = 0
+			elif indexByte > length:
+				indexByte = length
+			player.feed(
+				c_void_p(wav + prevByte),
+				size=indexByte - prevByte,
+				onDone=lambda indexNum=indexNum: onIndexReached(indexNum)
+			)
 			prevByte = indexByte
 			if not isSpeaking:
 				return CALLBACK_ABORT_SYNTHESIS
-		player.feed(wav[prevByte:])
-		_numBytesPushed += len(wav)
+		player.feed(c_void_p(wav + prevByte), size=length - prevByte)
+		_numBytesPushed += length
 		return CALLBACK_CONTINUE_SYNTHESIS
 	except:
 		log.error("callback", exc_info=True)

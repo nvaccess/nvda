@@ -2,7 +2,9 @@
 
 
 %!includeconf: ../userGuide.t2tconf
+%!includeconf: ./locale.t2tconf
 %kc:title: NVDA NVDA_VERSION Referencia Rápida de Ordes
+%kc:includeconf: ./locale.t2tconf
 
 = Índice =[toc]
 %%toc
@@ -40,7 +42,9 @@ O máis subliñable inclúe:
 - Sistemas operativos: todas as edicións de 32 e 64 bits do Windows 7, Windows 8, Windows 8.1, Windows 10 Windows 11 e todos os sistemas operativos servidor comezando dende o Windows Server 2008 R2..
  - Para o Windows 7, NVDA require do Service Pack 1 ou superior.
  - Para o Windows Server 2008 R2, NVDA require do Service Pack 1 ou superior.
-- Polo menos 150 MB de espazo de almacenamento.
+ - As variantes AMD64 e ARM64 de Windows están soportadas.
+ -
+- - Polo menos 150 MB de espazo de almacenamento.
 -
 
 ++ Internacionalización ++[Internationalization]
@@ -74,12 +78,6 @@ Esto aplícase ao orixinal e ás copias modificadas do programa, máis calquer s
 Para máis detalles, podes [ver a licencia completa.  https://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 Para obter detalles sobre as escepcións, acesa ao documento de licencia dende o menú NVDA na seción "axuda".
 
-+ Requerimentos do Sistema +[SystemRequirements]
-- Sistemas operativos: todas as edicións de 32 e 64 bits do Windows 7, Windows 8, Windows 8.1, Windows 10 Windows 11 e todos os sistemas operativos servidor comezando dende o Windows Server 2008 R2..
- - Para o Windows 7, NVDA require do Service Pack 1 ou superior.
- - Para o Windows Server 2008 R2, NVDA require do Service Pack 1 ou superior.
-- Polo menos 150 MB de espazo de almacenamento.
--
 
 + Guía de Inicio Rápido de NVDA  +[NVDAQuickStartGuide]
 
@@ -226,6 +224,7 @@ As ordes reais non se executarán mentres se estea en modo axuda de entrada.
 | Ler barra de estado | ``NVDA+fin`` | ``NVDA+shift+fin`` | Anuncia a Barra de Estado se o NVDA atopa unha. Preméndoo dúas veces deletreará a información. Preméndoo tres veces copiaráa ao portapapeis |
 | Ler hora | ``NVDA+f12`` | ``NVDA+f12`` | Preméndoo unha vez anuncia a hora actualt, preméndoo dúas veces anuncia a data |
 | Anunciar formato de texto | ``NVDA+f`` | ``NVDA+f`` | Anuncia o formato do texto. Preméndoo dúas veces amosa a información nunha ventá |
+| Anunciar destiño da ligazón | ``NVDA+k`` | ``NVDA+k`` | Premendo unha vez fala a URL de destiño da ligazón na posición actual do cursor do sistema ou do foco. Premendo dúas veces amósao nunha ventá para unha revisión máis cuidadosa |
 
 +++ Conmutar que información le o NVDA +++[ToggleWhichInformationNVDAReads]
 || Nome | Tecla de escritorio | Tecla de Portátil | Descripción |
@@ -247,7 +246,7 @@ A listaxe compreta das teclas de navegación cunha soa letra está na seción [M
 | Cabeceira | ``h`` | Despraza á seguinte cabeceira |
 | Cabeceira de nivel 1, 2, ou 3 | ``1``, ``2``, ``3`` | Despraza á seguinte cabeceira no nivel especificado |
 | Campo de formulario | ``f`` | Despraza ao seguinte campo de formulario (caixa de edición, botón, etc) |
-| Liga | ``k`` | Despraza á seguinte liga |
+| Ligazón | ``k`` | Despraza á seguinte ligazón |
 | Rexión | ``d`` | Despraza á seguinte rexión |
 | Listaxe | ``l`` | Despraza á seguinte listaxe |
 | Táboa | ``t`` | Despraza á seguinte táboa |
@@ -2094,12 +2093,36 @@ O ton incrementarase en intensidade para cada espazo, e para o tabulador,increme
 - Voz e Tons: esta opción le a sangría usando ambo-los dous métodos de máis arriba.
 -
 
++++ Navegación de Documento +++[DocumentNavigation]
+Esta categoría permíteche axustar varios aspectos da navegación de documento.
+
+==== Estilo de Parágrafo ====[ParagraphStyle]
+: Predeterminado
+  Manexado pola aplicación
+: Opcións
+  Predeterminado (manexado pola aplicación), Manexado pola aplicación, salto de unha única liña, salto multiliña
+:
+
+Esta caixa combinada permíteche selecionar o estilo de parágrafo a usar cando se navegue por parágrafos con ``control+frecha arriba`` e ``control+frecha abaixo``.
+Os estilos de parágrafo dispoñibles son:
+- Manexado pola aplicación: O NVDA permitirá á aplicación determinar o parágrafo anterior ou posterior, e o NVDA lerá o parágrafo novo ao navegar.
+Este estilo funciona mellor cando a aplicación admite a navegación por parágrafos nativamente, e é o predeterminado.
+- Salto de unha única liña: O NVDA tentará determinar o parágrafo anterior e posterior usando o salto de unha única liña coma indicador de parágrafo.
+Este estilo funciona mellor cando se lean documentos nunha aplicación que non admita a navegación de parágrafos nativamente, e os parágrafos márcanse no documento cunha única pulsación da tecla ``intro``.
+- Salto multiliña: O NVDA tentará determinar o parágrafo anterior e posterior usando polo menos unha liña en branco (dúas pulsacións da tecla ``intro``) coma indicador de parágrafo.
+Este estilo funciona mellor cando se traballe con documentos que usen bloques de parágrafos.
+Ten en conta que este estilo de parágrafo non pode usarse en Microsoft Word ou Microsoft Outlook, a menos que esteas usando UIA para acesar a controis de Microsoft Word.
+-
+
+Podes cambiar entre os estilos de parágrafo dispoñibles dende calquera lugar asignando unha tecla no [diálogo Xestos de Entrada #InputGestures].
+
 +++ Opcións do OCR de Windows +++[Win10OcrSettings]
 As opcións nesta categoría permítenche configurar [o OCR de Windows #Win10Ocr].
 Esta categoría contén as seguintes opcións:
 
 ==== Lingua de Recoñecemento ====[Win10OcrSettingsRecognitionLanguage]
 Esta caixa combinada permíteche escoller a lingua para usar co recoñecemento de texto.
+Para percorrer as linguas dispoñibles dende calquera sitio, por favor asigna un xesto persoalizado usando o [diálogo Xestos de Entrada #InputGestures].
 
 +++ Opcións Avanzadas +++[AdvancedSettings]
 ¡Advertencia! As opcións nesta categoría son para usuarios avanzados e poden causar que o NVDA non funcione correctamente se se configura de xeito incorrecto.
@@ -2115,8 +2138,8 @@ Este tamén pode ser o caso se non estás seguro de que se cambiaran as opcións
 
 ==== Habilitar a carga de código persoalizado dende o directorio Developer Scratchpad ====[AdvancedSettingsEnableScratchpad]
 Ao desenvolver complementos para o NVDA, é útil poder probar o código a medida que o escrebes.
-Esta opción ao estar habilitada, permite ao NVDA cargar appModules persoalizados, globalPlugins, brailleDisplayDrivers e synthDrivers, dende un directorio especial de desenvolvedores scratchpad do teu directorio de configuración de usuario do NVDA.
-Anteriormente, o NVDA cargaba código persoalizado directamente dende o directorio de configuración do usuario, sen posibilidade de deshabilitalo.
+Esta opción cando está habilitada, permite ao NVDA cargar appModules persoalizados, Plugins globais, controladores de pantallas braille, controladores de sintetizadores e proporcionadores de melloras visuais, dende un directorio especial de desenvolvedores scratchpad do teu directorio de configuración de usuario do NVDA.
+Ao igual que os seus equivalentes en complementos, estos módulos cárganse ao arrancar o NVDA ou, no caso de appModules e de Plugins globais, ao [se recargar plugins #ReloadPlugins].
 Esta opción está desactivada de xeito predeterminado, o que garante que nunca se execute ningún código non probado no NVDA sen o coñecemento explícito do usuario.
 Se desexas distribuir código persoalizado a outros, debes empaquetalo coma un complemento de NVDA.
 
@@ -2237,6 +2260,25 @@ Esta opción pode estabilizar a lectura do texto entrante nalgunhas aplicacións
 Sen embargo, nas terminais, ao insertar ou borrar un carácter no medio dunha liña, lerase o texto despois do cursor.
 -
 
+==== Falar texto novo na Terminal de Windows ====[WtStrategy]
+: Predeterminado
+  Difusión
+: Opcións
+  Difusión, notificacións UIA
+:
+
+Esta opción seleciona como determina o NVDA que texto é "novo" (e que falar cando "anunciar cambios de contido dinámico" estea habilitado) na Terminal de Windows e no control WPF da Terminal de Windows utilizado en Visual Studio 2022.
+Non afecta á Consola de Windows (``conhost.exe``).
+A caixa combinada falar texto novo na Terminal de Windows ten tres opcións:
+- Predeterminado: esta opción actualmente equivale a "difusión", pero prevese que cambie unha vez que se desenvolva máis a compatibilidade coas notificacións UIA.
+- Difusión: esta opción usa o algoritmo diff selecionado para calcular os cambios cada vez que a terminal amose o novo texto.
+Esto é idéntico ao comportamento do NVDA nas versións 2022.4 e anteriores.
+- Notificacións UIA: esta opción desvía a responsabilidade de determinar que texto falar á propria Terminal de Windows, o que significa que o NVDA xa non ten que determinar que texto é actualmente "novo" en pantalla.
+Esto debería mellorar notablemente o rendemento e a estabilidade da Terminal de Windows, pero esta función aínda non está compreta.
+En particular, os caracteres escrebidos que non se amosen en pantalla, coma as contrasinais, anúncianse cando esta opción estea selecionada.
+Ademáis, é posible que os tramos contiguos de saída de máis de 1000 caracteres non se anuncien con exactitude.
+-
+
 ==== Tentar cancelar voz para eventos de foco caducados ====[CancelExpiredFocusSpeech]
 Esta opción habilita o comportamento que tenta cancelar a voz para eventos de foco caducados.
 En particular moverse rápidamente polas mensaxes  en Gmail con Chrome pode facer que o NVDA fale información obsoleta.
@@ -2311,7 +2353,11 @@ Para cambiar un símbolo, primeiro selecciónao na lísta de Símbolos.
 Podes filtrar os símbolos introducindo o símbolo ou unha parte da súa sustitución no cuadro de edición Filtrar por.
 
 - O campo Reemprazar permíteche cambiar o texto que debería falarse en lugar deste símbolo.
-- Utilizando o campo Nivel, podes axustar o nivel máis baixo do símbolo ao que este símbolo se debería falar.
+Tamén podes axustar o nivel a carácter; neste caso o símbolo non se falará independentemente do nivel de símbolo en uso, coas seguintes dúas excepcións:
+ - Ao navegar por caracteres.
+ - Cando o NVDA estea a deletrear calquera texto que conteña ese símbolo.
+ -
+- Utilizando o campo Nivel, podes axustar o nivel máis baixo do símbolo ao que este símbolo se debería falar (non, algún, a maioría ou todos).
 - O campo Enviar símbolo actual ao sintetizador especifica cando o proprio símbolo (en contraposición co seu reemplazamento) debería enviarse ao sintetizador.
 Esto é útil se o símbolo causa que o sintetizador faga unha pausa ou cambie a entoación da voz.
 Por exemplo, unha coma causa que o sintetizador faga unha pausa.
@@ -2690,6 +2736,7 @@ As seguintes pantallas admiten esta funcionalidade de detección automática.
 - Pantallas Eurobraille Esys/Esytime/Iris
 - Pantallas Nattiq nBraille
 - Seika Notetaker: MiniSeika (16, 24 celdas V6, e6Pro (40 celdas
+- Pantallas Tivomatic Caiku Albatross 46/80
 - Calquera Pantalla que admita o protocolo braille estándar HID
 -
 
@@ -2899,6 +2946,15 @@ Por favor consulta a documentación da pantalla braille para descripcións de on
 | Mover a pantalla braille á liña anterior | d1 |
 | Mover a liña brailla á liña seguinte | d3 |
 | Guiar á celda braille | sensor |
+| teclas shift+tab | espazo+punto1+punto3 |
+| tecla tab | espazo+punto4+punto6 |
+| tecla alt | espazo+punto1+punto3+punto4 (espazo+m) |
+| tecla escape | espazo+punto1+punto5 (espazo+e) |
+| tecla windows | espazo+punto3+punto4 |
+| teclas alt+tab | espazo+punto2+punto3+punto4+punto5 (espazo+t) |
+| Menú NVDA | espazo+punto1+punto3+punto4+punto5 (espazo+n) |
+| teclas windows+d (minimizar todas as aplicacións) | espazo+punto1+punto4+punto5 (espazo+d) |
+| Falar todo | espazo+punto1+punto2+punto3+punto4+punto5+punto6 |
 
 Para liñas que teñan un joystick:
 || Nome | Tecla |
@@ -3571,6 +3627,67 @@ Por favor consulta as [listas de claves de vínculos de BRLTTY http://mielke.cc/
 | Guiar á celda braille | route (leva o cursor ao caracter) |
 %kc:endInclude
 
+++ Tivomatic Caiku Albatross 46/80 ++[Albatross]
+Os dispositivos Caiku Albatross, que foron fabricados por Tivomatic e están dispoñibles en Finlandia, poden conectarse ou por USB ou por serie.
+Non necesitas ningún controlador en especial a instalar para usar estas pantallas.
+Só enchufa a pantalla e configura ao NVDA para usala.
+
+Nota: recoméndase encarecidamente unha velocidade de 19200 baudios.
+Se se require, cambia o valor da opción de velocidade a 19200 baudios dende o menú do dispositivo braille.
+Aíndaque o controlador admite unha velocidade de 9600 baudios, non ten xeito de controlar a velocidade que usa a pantalla.
+Dado que 19200 é a velocidade en baudios predeterminada da pantalla, o controlador inténtao ao comezo.
+Se as velocidades en baudios non son as mesmas, o controlador pode comportarse de xeito inesperado.
+
+Seguidamente van as asignacións de teclas para estas pantallas co NVDA.
+Por favor consulta a documentación da pantalla para descripcións de onde se atopan estas teclas.
+%kc:beginInclude
+|| Nome | Tecla |
+| Moverse á liña superior en revisión | ``inicio1``, ``inicio2`` |
+| Moverse á liña inferior en revisión | ``fin1``, ``fin2`` |
+| Poñer o navegador de obxectos no foco actual | ``eCursor1``, ``eCursor2`` |
+| Moverse ao foco actual  | ``cursor1``, ``cursor2`` |
+| Mover o punteiro do rato ao navegador de obxectos actual  | ``inicio1+inicio2`` |
+| poñer o navegador de obxectos no obxecto actual baixo o punteiro do rato e falalo | ``fin1+fin2`` |
+| Mover o foco ao navegador de obxectos actual  | ``eCursor1+eCursor2`` |
+| Conmutar o seguemento do braille | ``cursor1+cursor2`` |
+| Mover pantalla braille á liña anterior | ``arriba1``, ``arriba2``, ``arriba3`` |
+| Mover pantalla braille á liña seguinte | ``abaixo1``, ``abaixo2``, ``abaixo3`` |
+| Desprazar a pantalla braille cara atrás | ``esquerda``, ``lRodaEsquerda``, ``rRodaEsquerda`` |
+| Desprazar a pantalla braille cara adiante | ``dereita``, ``lRodaDereita``, ``rRodaDereita`` |
+| Ir á celda braille | ``sensor`` |
+| Anunciar formato de texto baixo a celda braille | ``sensor secundario`` |
+| Conmutar a forma de presentar a información de contexto en braille | ``attributo1+attributo3`` |
+| Conmutar entre os modos de voz desactivado, pitar e falar | ``attributo2+attributo4`` |
+| Cambiar ao modo de revisión anterior (por exemplo, obxecto, documento ou pantalla)  | ``f1`` |
+| Cambiar ao modo de revisión seguinte (por exemplo, obxecto, documento ou pantalla) | ``f2`` |
+| Mover o navegador de obxectos ao obxecto que o contén | ``f3`` |
+| Mover o navegador de obxectos ao primeiro obxecto dentro del | ``f4`` |
+| Mover o navegador de obxectos ao obxecto anterior | ``f5`` |
+| Mover o navegador de obxectos ao obxecto seguinte | ``f6`` |
+| Anunciar o navegador de obxectos actual | ``f7`` |
+| Anunciar información acerca da localización do texto ou obxecto no cursor de revisión | ``f8`` |
+| Amosar opcións braille | ``f1+inicio1``, ``f9+inicio2`` |
+| Ler a barra de estado e mover o navegador de obxectos a ela | ``f1+fin1``, ``f9+fin2`` |
+| Percorrer as formas do cursor braille | ``f1+eCursor1``, ``f9+eCursor2`` |
+| Activar e desactivar o cursor braille | ``f1+cursor1``, ``f9+cursor2`` |
+| Realizar a ación predeterminada no navegador de obxectos actual | ``f7+f8`` |
+| Anunciar data e hora | ``f9`` |
+| Anunciar estado da batería e tempo restante se a alimentación non está enchufada | ``f10`` |
+| Anunciar título | ``f11`` |
+| Anunciar barra de estado | ``f12`` |
+| Anunciar a liña actual baixo o cursor da aplicación | ``f13`` |
+| Falar todo | ``f14`` |
+| Anunciar o carácter actual baixo o cursor de revisión | ``f15`` |
+| Anunciar a liña do navegador de obxectos actual onde estea situado o cursor de revisión | ``f16`` |
+| Falar a palabra do navegador de obxectos actual onde  estea situado o cursor de revisión | ``f15+f16`` |
+| Mover o cursor de revisión á liña anterior do navegador de obxectos actual e falala | ``lRodaArriba``, ``rRodaArriba`` |
+| Mover o cursor de revisión á seguinte liña do actual navegador de obxectos e falala | ``lRodaAbaixo``, ``rRodaAbaixo`` |
+| Tecla ``Windows+d`` (minimizar todas as aplicacións) | ``attributo1`` |
+| Tecla ``Windows+e`` (este equipo) | ``attributo2`` |
+| Tecla ``Windows+b`` (foco á bandexa do sistema) | ``attributo3`` |
+| Tecla ``Windows+i`` (configuración de Windows) | ``attributo4`` |
+%kc:endInclude
+ 
 ++ Pantallas HID Braille estándar ++[HIDBraille]
 Este é un controlador experimental para a nova Especificación Estándar HID Braille, acordada en 2018 por Microsoft, Google, Apple e varias empresas de tecnoloxía de asistencia, incluindo NV Access. 
 A esperanza é que todos os futuros modelos de pantallas Braille creados por calquer fabricante, usen este protocolo estándar que eliminará a necesidade de controladores Braille específicos do fabricante.
@@ -3582,19 +3699,17 @@ Seguidamente van as asignacións de teclas actuales para estas pantallas.
 || Nome | Tecla |
 | Desprazar a pantalla braille cara atrás | pan á esquerda ou balancín arriba |
 | Desprazar a pantalla braille cara adiante | pan á dereita ou balancín abaixo |
-| Mover a pantalla braille á liña anterior | espazo+punto1 |
-| Mover a pantalla braille á liña seguinte | espazo+punto4
 | Levar á celda braille | conxunto de sensores de enrutamento 1|
 | Alternar o seguemento de braille | arriba+abaixo |
-| Tecla frecha arriba | joystick arriba |
-| Tecla frecha abaixo | joystick cara abaixo |
-| Tecla frecha esquerda | espazo+punto3 ou joystick esquerdo |
-| Tecla frecha dereita | espazo+punto6 ou joystick dereita |
+| Tecla frecha arriba | joystick arriba, dpad arriba ou espazo+punto1 |
+| Tecla frecha abaixo | joystick cara abaixo, dpad cara abaixo ou espazo+punto4 |
+| Tecla frecha esquerda | espazo+punto3, joystick esquerdo ou dpad a esquerda|
+| Tecla frecha dereita | espazo+punto6, joystick dereita ou dpad dereita |
 | Teclas shift+tab | espazo+punto1+punto3 |
 | tecla tab | espazo+punto4+punto6 |
 | tecla alt | espazo+punto1+punto3+punto4 (espazo+m) |
 | tecla escape | espazo+punto1+punto5 (espazo+e) |
-| tecla intro | punto8 ou intro do joystick |
+| tecla intro | punto8, intro do joystick ou dpad intro |
 | tecla windows | espazo+punto3+punto4 |
 | teclas alt+tab | espazo+punto2+punto3+punto4+punto5 (espazo+t) |
 | Menú NVDA | espazo+punto1+punto3+punto4+punto5 (espazo+n) |
@@ -3661,7 +3776,7 @@ Seguidamente van as opcións de liña de ordes para o NVDA:
 | -q | --quit | Sae da copia que xa se estea a executar do NVDA |
 | -k | --check-running | Informa se NVDA está en execución a través do código de saída; 0 se está en execución, 1 se non está en execución |
 | -f LOGFILENAME | --log-file=LOGFILENAME | O ficheiro onde se deberían escreber as mesaxes de rexistro |
-| -l LOGLEVEL | --log-level=LOGLEVEL | O nivel máis baixo de mensaxe rexistrada (debug 10, input/output 12, debug warning 15, info 20, warning 30, error 40, critical 50, disabled 100), default is warning |
+| -l LOGLEVEL | --log-level=LOGLEVEL | O nivel máis baixo de mensaxe rexistrada (debug 10, input/output 12, debug warning 15, info 20, disabled 100) |
 | -c CONFIGPATH | --config-path=CONFIGPATH | A vía  onde se almacenan todos os axustes para o NVDA |
 | No | --lang=LANGUAGE | Sobrescribe a lingua configurada do NVDA. Estabrece "Windows" para o usuario actual por defecto, "en" para Inglés, etc. |
 | -m | --minimal | Sen sons, sen interface, sen mesaxe de inicio etc |

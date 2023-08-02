@@ -1,6 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2010-2021 NV Access Limited, James Teh, Michael Curran, Peter Vágner, Joseph Lee,
-# Reef Turner, Babbage B.V., Leonard de Ruijter, Łukasz Golonka, Accessolutions, Julien Cochuyt
+# Copyright (C) 2010-2023 NV Access Limited, James Teh, Michael Curran, Peter Vágner, Joseph Lee,
+# Reef Turner, Babbage B.V., Leonard de Ruijter, Łukasz Golonka, Accessolutions, Julien Cochuyt,
+# Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -459,6 +460,7 @@ def makePot(target, source, env):
 			"--foreign-user",
 			"--add-comments=Translators:",
 			"--keyword=pgettext:1c,2",
+			"--keyword=npgettext:1c,2,3",
 			"--from-code", "utf-8",
 			# Needed because xgettext doesn't recognise the .pyw extension.
 			"--language=python",
@@ -499,12 +501,17 @@ potSourceFiles = [
 	# Don't use sourceDir as the source, as this depends on comInterfaces and nvdaHelper.
 	# We only depend on the Python files.
 	f for recurseDirs in getSubDirs(sourceDir.path)
+	if not (
+		# Exclude comInterfaces, since these don't contain translatable strings
+		# and they cause unknown encoding warnings.
+		recurseDirs.startswith(r"source\comInterfaces")
+		# Exclude userConfig folder which does not contain NVDA code but may contain gettext call without
+		# translator comments in add-ons or scratchpad, triggering false positive for checkpot script.
+		or recurseDirs.startswith(r"source\userConfig")
+	)	
 	for pattern in ("*.py", "*.pyw")
 	for f in env.Glob(
 		os.path.join(recurseDirs, pattern),
-		# Exclude comInterfaces, since these don't contain translatable strings
-		# and they cause unknown encoding warnings.
-		exclude="source/comInterfaces/*"
 	)
 ]
 

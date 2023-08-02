@@ -24,7 +24,7 @@ from config.configFlags import TetherTo
 import globalVars
 from typing import Optional
 
-from systemUtils import _isSecureDesktop
+from utils.security import isRunningOnSecureDesktop
 
 # From urlmon.h
 URL_MK_UNIFORM = 1
@@ -88,7 +88,8 @@ def browseableMessage(message: str, title: Optional[str] = None, isHtml: bool = 
 	@param title: The title for the message.
 	@param isHtml: Whether the message is html
 	"""
-	if _isSecureDesktop():
+	splitWith: str = "__NVDA:split-here__"  # Unambiguous regex splitter for javascript in message.html, #14667
+	if isRunningOnSecureDesktop():
 		import wx  # Late import to prevent circular dependency.
 		wx.CallAfter(_warnBrowsableMessageNotAvailableOnSecureScreens, title)
 		return
@@ -103,7 +104,7 @@ def browseableMessage(message: str, title: Optional[str] = None, isHtml: bool = 
 		title = _("NVDA Message")
 	if not isHtml:
 		message = f"<pre>{escape(message)}</pre>"
-	dialogString = f"{title};{message}"
+	dialogString = f"{title}{splitWith}{message}"
 	dialogArguements = automation.VARIANT( dialogString )
 	gui.mainFrame.prePopup() 
 	windll.mshtml.ShowHTMLDialogEx( 

@@ -5,11 +5,21 @@
 
 """Base classes with common support for browsers exposing IAccessible2.
 """
-import typing
+
+from typing import (
+	Generator,
+	Optional,
+	Tuple,
+)
 from ctypes import c_short
 from comtypes import COMError, BSTR
 
 import oleacc
+from annotation import (
+	_AnnotationRolesT,
+	AnnotationTarget,
+	AnnotationOrigin,
+)
 from comInterfaces import IAccessible2Lib as IA2
 import controlTypes
 from logHandler import log
@@ -22,6 +32,74 @@ import api
 import speech
 import config
 import NVDAObjects
+
+
+class IA2WebAnnotationTarget(AnnotationTarget):
+	def __init__(self, target: IAccessible):
+		self._target: IAccessible = target
+
+	@property
+	def summary(self) -> str:
+		return self._target.summarizeInProcess()
+
+	@property
+	def role(self) -> controlTypes.Role:
+		return self._target.role
+
+	@property
+	def targetObject(self) -> IAccessible:
+		return self._target
+
+
+class IA2WebAnnotation(AnnotationOrigin):
+	_originObj: "Ia2Web"
+
+	def __bool__(self) -> bool:
+		return bool(
+			self._originObj.IA2Attributes.get("details-roles")
+		)
+
+	@property
+	def targets(self) -> Tuple[AnnotationTarget]:
+		if not bool(self):
+			# optimisation that avoids having to fetch details relations which may be a more costly procedure.
+			if config.conf["debugLog"]["annotations"]:
+				log.debug("no annotations available")
+			return
+
+		return tuple(
+			IA2WebAnnotationTarget(rel)
+			for rel in self._originObj.detailsRelations
+		)
+
+	@property
+	def roles(self) -> _AnnotationRolesT:
+		return tuple(self._rolesGenerator)
+
+	@property
+	def _rolesGenerator(self) -> Generator[Optional[controlTypes.Role], None, None]:
+		"""
+		Since Chromium exposes the roles via the "details-roles" IA2Attributes, an optimisation can be used
+		to return them.
+		@remarks: The order of "details-roles" IA2Attributes is expected to match the order of detailsRelations
+		objects.
+		"""
+		from .chromium import supportedAriaDetailsRoles
+		# Currently only defined in Chrome as of May 2022
+		# Refer to ComputeDetailsRoles
+		# https://chromium.googlesource.com/chromium/src/+/main/ui/accessibility/platform/ax_platform_node_base.cc#2419
+		detailsRoles = self._originObj.IA2Attributes.get("details-roles")
+		if not detailsRoles:
+			if config.conf["debugLog"]["annotations"]:
+				log.debug("details-roles not found")
+			return None
+
+		for roleStr in detailsRoles.split(" "):
+			# Created supported details role
+			detailsRole = supportedAriaDetailsRoles.get(roleStr)
+			if config.conf["debugLog"]["annotations"]:
+				log.debug(f"detailsRole: {repr(detailsRole)}")
+			yield detailsRole
 
 
 class Ia2Web(IAccessible):
@@ -52,7 +130,7 @@ class Ia2Web(IAccessible):
 		return info
 
 	def _get_descriptionFrom(self) -> controlTypes.DescriptionFrom:
-		ia2attrDescriptionFrom: typing.Optional[str] = self.IA2Attributes.get("description-from")
+		ia2attrDescriptionFrom: Optional[str] = self.IA2Attributes.get("description-from")
 		try:
 			return controlTypes.DescriptionFrom(ia2attrDescriptionFrom)
 		except ValueError:
@@ -60,42 +138,36 @@ class Ia2Web(IAccessible):
 				log.debugWarning(f"Unknown 'description-from' IA2Attribute value: {ia2attrDescriptionFrom}")
 			return controlTypes.DescriptionFrom.UNKNOWN
 
-	def _get_detailsSummary(self) -> typing.Optional[str]:
-		if not self.hasDetails:
-			# optimisation that avoids having to fetch details relations which may be a more costly procedure.
-			if config.conf["debugLog"]["annotations"]:
-				log.debug("no details-roles")
-			return None
-		detailsRelations = self.detailsRelations
-		if not detailsRelations:
-			log.error("should be able to fetch detailsRelations")
-			return None
-		for target in detailsRelations:
-			# just take the first for now.
-			return target.summarizeInProcess()
+	annotations: "IA2WebAnnotation"
+	"""Typing information for auto property _get_annotations
+	"""
+	def _get_annotations(self) -> "AnnotationOrigin":
+		annotationOrigin = IA2WebAnnotation(self)
+		return annotationOrigin
+
+	def _get_detailsSummary(self) -> Optional[str]:
+		log.warning(
+			"NVDAObject.detailsSummary is deprecated. Use NVDAObject.annotations instead.",
+			stack_info=True,
+		)
+		# just take the first for now.
+		return self.annotations.targets[0].summary
 
 	@property
 	def hasDetails(self) -> bool:
-		return bool(self.IA2Attributes.get("details-roles"))
+		log.warning(
+			"NVDAObject.hasDetails is deprecated. Use NVDAObject.annotations instead.",
+			stack_info=True,
+		)
+		return bool(self.annotations)
 
-	def _get_detailsRole(self) -> typing.Optional[controlTypes.Role]:
-		from .chromium import supportedAriaDetailsRoles
-		# Currently only defined in Chrome as of May 2022
-		# Refer to ComputeDetailsRoles
-		# https://chromium.googlesource.com/chromium/src/+/main/ui/accessibility/platform/ax_platform_node_base.cc#2419
-		detailsRoles = self.IA2Attributes.get("details-roles")
-		if not detailsRoles:
-			if config.conf["debugLog"]["annotations"]:
-				log.debug("details-roles not found")
-			return None
-		
-		firstDetailsRole = detailsRoles.split(" ")[0]
-		# return a supported details role
-		detailsRole = supportedAriaDetailsRoles.get(firstDetailsRole)
-		if config.conf["debugLog"]["annotations"]:
-			log.debug(f"detailsRole: {repr(detailsRole)}")
-		return detailsRole
-
+	def _get_detailsRole(self) -> Optional[controlTypes.Role]:
+		log.warning(
+			"NVDAObject.detailsRole is deprecated. Use NVDAObject.annotations instead.",
+			stack_info=True,
+		)
+		# just take the first for now.
+		return self.annotations.roles[0]
 
 	def _get_isCurrent(self) -> controlTypes.IsCurrent:
 		ia2attrCurrent: str = self.IA2Attributes.get("current", "false")
@@ -122,6 +194,12 @@ class Ia2Web(IAccessible):
 			return roleText
 		return super().roleText
 
+	def _get_roleTextBraille(self) -> str:
+		roleTextBraille = self.IA2Attributes.get('brailleroledescription')
+		if roleTextBraille:
+			return roleTextBraille
+		return super().roleTextBraille
+
 	def _get_states(self):
 		states=super(Ia2Web,self).states
 		# Ensure that ARIA gridcells always get the focusable state, even if the Browser fails to provide it.
@@ -131,6 +209,13 @@ class Ia2Web(IAccessible):
 		# Google has a custom ARIA attribute to force a node's editable state off (such as in Google Slides).
 		if self.IA2Attributes.get('goog-editable')=="false":
 			states.discard(controlTypes.State.EDITABLE)
+		if controlTypes.State.HASPOPUP in states:
+			popupState = aria.ariaHaspopupValuesToNVDAStates.get(
+				self.IA2Attributes.get("haspopup")
+			)
+			if popupState:
+				states.discard(controlTypes.State.HASPOPUP)
+				states.add(popupState)
 		return states
 
 	def _get_landmark(self):
