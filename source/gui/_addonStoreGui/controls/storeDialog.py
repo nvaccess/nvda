@@ -84,7 +84,7 @@ class AddonStoreDialog(SettingsDialog):
 
 		self.warningTextCtrl = wx.TextCtrl(
 			self,
-			style = 0  # purely to allow subsequent items to line up.
+			style=0  # purely to allow subsequent items to line up.
 			| wx.TE_MULTILINE  # details will require multiple lines
 			| wx.TE_READONLY  # the details shouldn't be user editable
 			| wx.TE_RICH2
@@ -299,7 +299,8 @@ class AddonStoreDialog(SettingsDialog):
 		# Translators: Warning that is displayed in the Add-on Store.
 		"Add-ons are created by the NVDA community and are not vetted by NV Access. "
 		"NV Access cannot be held responsible for add-on behavior. "
-		"The functionality of add-ons is unrestricted and can include accessing your personal data or even the entire system. "
+		"The functionality of add-ons is unrestricted and can include "
+		"accessing your personal data or even the entire system. "
 	)
 
 	@property
