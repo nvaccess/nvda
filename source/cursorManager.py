@@ -98,6 +98,12 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 	@type selection: L{textInfos.TextInfo}
 	"""
 
+	# Whether or not 'gainFocus' events handled by this CursorManager should update the caret position.
+	# If NVDA fully manages the caret (such as for reviewCursorManagers and virtualBuffers) then they should.
+	# However if the caret is managed by the application,
+	# We trust that the application will move the caret itself if firing focus events on inner content.
+	_focusEventMustUpdateCaretPosition = False
+
 	# Translators: the script category for browse mode
 	scriptCategory=SCRCAT_BROWSEMODE
 
@@ -505,6 +511,10 @@ class ReviewCursorManager(CursorManager):
 	This cursor manager maintains its own caret and selection information.
 	Thus, the underlying text range need not support updating the caret or selection.
 	"""
+
+	# As NVDA manages the caret virtually,
+	# It is necessary for 'gainFocus' events to update the caret.
+	_focusEventMustUpdateCaretPosition = True
 
 	def initCursorManager(self):
 		super(ReviewCursorManager, self).initCursorManager()
