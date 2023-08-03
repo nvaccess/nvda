@@ -242,7 +242,6 @@ class _SafetyWarningDialog(
 
 		# Translators: The label of a button to remind the user later about performing some action.
 		remindMeButton = bHelper.addButton(self, wx.ID_CANCEL, label=_("Remind me &later"))
-		# remindMeButton.Bind(wx.EVT_BUTTON, self.onLaterButton)
 		remindMeButton.SetFocus()
 
 		mainSizer.Add(sHelper.sizer, border=BORDER_FOR_DIALOGS, flag=wx.ALL)
@@ -253,8 +252,3 @@ class _SafetyWarningDialog(
 	def onAcknowledgeButton(self, evt: wx.CommandEvent):
 		config.conf["addonStore"]["acknowledgedWarning"] = True
 		self.EndModal(wx.ID_OK)
-
-	# def onLaterButton(self, evt: wx.CommandEvent):
-	# 	# evt.Skip() is called since wx.ID_CANCEL is used as the ID for the Ask Later button,
-	# 	# wx automatically ends the modal itself.
-	# 	evt.Skip()
