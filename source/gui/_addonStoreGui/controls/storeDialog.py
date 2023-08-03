@@ -20,6 +20,7 @@ from _addonStore.models.status import (
 	_statusFilters,
 	_StatusFilterKey,
 )
+import config
 from core import callLater
 import globalVars
 import gui
@@ -35,6 +36,7 @@ from ..viewModels.store import AddonStoreVM
 from .actions import _ActionsContextMenu
 from .addonList import AddonVirtualList
 from .details import AddonDetails
+from .messageDialogs import _SafetyWarningDialog
 
 
 class AddonStoreDialog(SettingsDialog):
@@ -50,6 +52,8 @@ class AddonStoreDialog(SettingsDialog):
 		self._storeVM.onDisplayableError.register(self.handleDisplayableError)
 		self._actionsContextMenu = _ActionsContextMenu(self._storeVM)
 		super().__init__(parent, resizeable=True, buttons={wx.CLOSE})
+		if not config.conf["addonStore"]["acknowledgedWarning"]:
+			_SafetyWarningDialog(parent).ShowModal()
 		self.Maximize()
 
 	def _enterActivatesOk_ctrlSActivatesApply(self, evt: wx.KeyEvent):
@@ -82,18 +86,6 @@ class AddonStoreDialog(SettingsDialog):
 			self.addonListTabs.SetSelection(availableTabIndex)
 		self.addonListTabs.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED, self.onListTabPageChange, self.addonListTabs)
 
-		self.warningTextCtrl = wx.TextCtrl(
-			self,
-			style=0  # purely to allow subsequent items to line up.
-			| wx.TE_MULTILINE  # details will require multiple lines
-			| wx.TE_READONLY  # the details shouldn't be user editable
-			| wx.TE_RICH2
-			| wx.BORDER_NONE
-		)
-		tabPageHelper.addItem(
-			self.warningTextCtrl,
-			flag=wx.EXPAND
-		)
 		self.filterCtrlHelper = guiHelper.BoxSizerHelper(self, wx.VERTICAL)
 		self._createFilterControls()
 		tabPageHelper.addItem(self.filterCtrlHelper.sizer, flag=wx.EXPAND)
@@ -294,15 +286,6 @@ class AddonStoreDialog(SettingsDialog):
 	def _titleText(self) -> str:
 		return f"{self.title} - {self._statusFilterKey.displayString} ({self._channelFilterKey.displayString})"
 
-	_warningText = pgettext(
-		"addonStore",
-		# Translators: Warning that is displayed in the Add-on Store.
-		"Add-ons are created by the NVDA community and are not vetted by NV Access. "
-		"NV Access cannot be held responsible for add-on behavior. "
-		"The functionality of add-ons is unrestricted and can include "
-		"accessing your personal data or even the entire system. "
-	)
-
 	@property
 	def _listLabelText(self) -> str:
 		return pgettext(
@@ -315,7 +298,6 @@ class AddonStoreDialog(SettingsDialog):
 	def _setListLabels(self):
 		self.listLabel.SetLabel(self._listLabelText)
 		self.SetTitle(self._titleText)
-		self.warningTextCtrl.SetValue(self._warningText)
 
 	def _toggleFilterControls(self):
 		if self._storeVM._filteredStatusKey in {
@@ -333,10 +315,6 @@ class AddonStoreDialog(SettingsDialog):
 			self.enabledFilterCtrl.Enable()
 			self.includeIncompatibleCtrl.Hide()
 			self.includeIncompatibleCtrl.Disable()
-		if self._storeVM._filteredStatusKey is _StatusFilterKey.AVAILABLE:
-			self.warningTextCtrl.Show()
-		else:
-			self.warningTextCtrl.Hide()
 
 	def onListTabPageChange(self, evt: wx.EVT_CHOICE):
 		self.searchFilterCtrl.SetValue("")

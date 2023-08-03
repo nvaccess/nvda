@@ -15,16 +15,23 @@ from _addonStore.models.addon import (
 	_AddonStoreModel,
 	_AddonManifestModel,
 )
+import config
 from gui.addonGui import ErrorAddonInstallDialog
+from gui.contextHelp import ContextHelpMixin
+from gui.guiHelper import (
+	BoxSizerHelper,
+	BORDER_FOR_DIALOGS,
+	ButtonHelper,
+)
 from gui.message import messageBox
+import windowUtils
 
 if TYPE_CHECKING:
 	from _addonStore.models.version import SupportsVersionCheck
-	from guiHelper import ButtonHelper
 
 
 class ErrorAddonInstallDialogWithYesNoButtons(ErrorAddonInstallDialog):
-	def _addButtons(self, buttonHelper: "ButtonHelper") -> None:
+	def _addButtons(self, buttonHelper: ButtonHelper) -> None:
 		addonInfoButton = buttonHelper.addButton(
 			self,
 			# Translators: A button in the addon installation warning / blocked dialog which shows
@@ -194,3 +201,60 @@ def _showAddonInfo(addon: _AddonGUIModel) -> None:
 	# Translators: title for the Addon Information dialog
 	title = pgettext("addonStore", "Add-on Information")
 	messageBox("\n".join(message), title, wx.OK)
+
+
+class _SafetyWarningDialog(
+		ContextHelpMixin,
+		wx.Dialog   # wxPython does not seem to call base class initializer, put last in MRO
+):
+	"""A dialog warning the user about the risks of installing add-ons."""
+
+	helpId = "AddonStoreInstalling"
+
+	def __init__(self, parent: wx.Window):
+		# Translators: The warning of a dialog
+		super().__init__(parent, title=_("Add-on Store Warning"))
+		mainSizer = wx.BoxSizer(wx.VERTICAL)
+		sHelper = BoxSizerHelper(self, orientation=wx.VERTICAL)
+
+		_warningText = pgettext(
+			"addonStore",
+			# Translators: Warning that is displayed before using the Add-on Store.
+			"Add-ons are created by the NVDA community and are not vetted by NV Access. "
+			"NV Access cannot be held responsible for add-on behavior. "
+			"The functionality of add-ons is unrestricted and can include "
+			"accessing your personal data or even the entire system. "
+		)
+
+		sText = sHelper.addItem(wx.StaticText(self, label=_warningText))
+		# the wx.Window must be constructed before we can get the handle.
+		self.scaleFactor = windowUtils.getWindowScalingFactor(self.GetHandle())
+		sText.Wrap(
+			# 600 was fairly arbitrarily chosen by a visual user to look acceptable on their machine.
+			self.scaleFactor * 600
+		)
+
+		bHelper = sHelper.addDialogDismissButtons(ButtonHelper(wx.HORIZONTAL))
+
+		# Translators: The label of a button in a dialog
+		acknowledgeButton = bHelper.addButton(self, wx.ID_OK, label=_("&Acknowledge"))
+		acknowledgeButton.Bind(wx.EVT_BUTTON, self.onAcknowledgeButton)
+
+		# Translators: The label of a button to remind the user later about performing some action.
+		remindMeButton = bHelper.addButton(self, wx.ID_CANCEL, label=_("Remind me &later"))
+		# remindMeButton.Bind(wx.EVT_BUTTON, self.onLaterButton)
+		remindMeButton.SetFocus()
+
+		mainSizer.Add(sHelper.sizer, border=BORDER_FOR_DIALOGS, flag=wx.ALL)
+		self.Sizer = mainSizer
+		mainSizer.Fit(self)
+		self.CentreOnScreen()
+
+	def onAcknowledgeButton(self, evt: wx.CommandEvent):
+		config.conf["addonStore"]["acknowledgedWarning"] = True
+		self.EndModal(wx.ID_OK)
+
+	# def onLaterButton(self, evt: wx.CommandEvent):
+	# 	# evt.Skip() is called since wx.ID_CANCEL is used as the ID for the Ask Later button,
+	# 	# wx automatically ends the modal itself.
+	# 	evt.Skip()

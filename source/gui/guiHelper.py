@@ -1,9 +1,8 @@
 # -*- coding: UTF-8 -*-
-#guiHelper.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2016 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2016-2023 NV Access Limited
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 
 """ Utilities to simplify the creation of wx GUIs, including automatic management of spacing.
@@ -45,6 +44,10 @@ class myDialog(wx.Dialog):
 	...
 """
 from contextlib import contextmanager
+from typing import (
+	Optional,
+	TypeVar
+)
 
 import wx
 from wx.lib import scrolledpanel, newevent
@@ -276,18 +279,22 @@ class PathSelectionHelper(object):
 			if d.ShowModal() == wx.ID_OK:
 				self._textCtrl.Value = d.Path
 
-class BoxSizerHelper(object):
+
+class BoxSizerHelper:
 	""" Used to abstract away spacing logic for a wx.BoxSizer
 	"""
-	def __init__(self, parent, orientation=None, sizer=None):
+	def __init__(
+			self,
+			parent: wx.Dialog,
+			orientation: Optional[int] = None,
+			sizer: Optional[wx.BoxSizer, wx.StaticBoxSizer] = None
+	):
 		""" Init. Pass in either orientation OR sizer.
 			@param parent: An instance of the parent wx window. EG wx.Dialog
 			@param orientation: the orientation to use when constructing the sizer, either wx.HORIZONTAL or wx.VERTICAL
-			@type itemType: wx.HORIZONTAL or wx.VERTICAL
+			@type orientation: wx.HORIZONTAL or wx.VERTICAL
 			@param sizer: the sizer to use rather than constructing one.
-			@type sizer: wx.BoxSizer
 		"""
-		object.__init__(self)
 		self._parent = parent
 		self.hasFirstItemBeenAdded = False
 		if orientation and sizer:
@@ -300,7 +307,9 @@ class BoxSizerHelper(object):
 			raise ValueError("Orientation OR Sizer must be supplied.")
 		self.dialogDismissButtonsAdded = False
 
-	def addItem(self, item, **keywordArgs):
+	_itemT = TypeVar("_itemT")
+
+	def addItem(self, item: "_itemT", **keywordArgs) -> "_itemT":
 		""" Adds an item with space between it and the previous item.
 			Does not handle adding LabledControlHelper; use L{addLabeledControl} instead.
 			@param item: the item to add to the sizer
@@ -360,7 +369,13 @@ class BoxSizerHelper(object):
 			self.addItem(labeledControl.sizer)
 		return labeledControl.control
 
-	def addDialogDismissButtons(self, buttons, separated=False):
+	_buttonsT = TypeVar("_buttonsT", wx.Sizer, ButtonHelper, wx.Button, int)
+
+	def addDialogDismissButtons(
+			self,
+			buttons: "_buttonsT",
+			separated: bool = False
+	) -> "_buttonsT":
 		""" Adds and aligns the buttons for dismissing the dialog; e.g. "ok | cancel". These buttons are expected
 		to be the last items added to the dialog. Buttons that launch an action, do not dismiss the dialog, or are not
 		the last item should be added via L{addItem}
@@ -372,11 +387,7 @@ class BoxSizerHelper(object):
 		@param separated:
 		  Whether a separator should be added between the dialog content and its footer.
 		  Should be set to L{False} for message or single input dialogs, L{True} otherwise.
-		@type separated: L{bool}
 		"""
-		parent = self._parent
-		if isinstance(self.sizer, wx.StaticBoxSizer):
-			parent = self.sizer.GetStaticBox()
 		if self.sizer.GetOrientation() != wx.VERTICAL:
 			raise NotImplementedError(
 				"Adding dialog dismiss buttons to a horizontal BoxSizerHelper is not implemented."
@@ -386,11 +397,14 @@ class BoxSizerHelper(object):
 		elif isinstance(buttons, (wx.Sizer, wx.Button)):
 			toAdd = buttons
 		elif isinstance(buttons, int):
-			toAdd = parent.CreateButtonSizer(buttons)
+			toAdd = self._parent.CreateButtonSizer(buttons)
 		else:
 			raise NotImplementedError("Unknown type: {}".format(buttons))
 		if separated:
-			self.addItem(wx.StaticLine(parent), flag=wx.EXPAND)
+			parentBox = self._parent
+			if isinstance(self.sizer, wx.StaticBoxSizer):
+				parentBox = self.sizer.GetStaticBox()
+			self.addItem(wx.StaticLine(parentBox), flag=wx.EXPAND)
 		self.addItem(toAdd, flag=wx.ALIGN_RIGHT)
 		self.dialogDismissButtonsAdded = True
 		return buttons
