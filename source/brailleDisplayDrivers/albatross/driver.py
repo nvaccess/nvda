@@ -25,8 +25,10 @@ from threading import (
 	Lock,
 )
 from typing import (
+	Iterator,
 	List,
 	Optional,
+	Tuple,
 )
 
 import braille
@@ -156,6 +158,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		@param port: port name as string
 		@raises: RuntimeError if no display found
 		"""
+		for thisport in self._getTryPorts(port):
+			log.debug(f"ports: {thisport}")
 		for self._baudRate in BAUD_RATE:
 			for portType, portId, port, portInfo in self._getTryPorts(port):
 				# For reconnection
@@ -204,13 +208,19 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		If no connection, Albatross sends continuously INIT_START_BYTE
 		followed by byte containing various settings like number of cells.
 
-		@return: C{True} on success, C{False} on failure
+		@raises: RuntimeError if port initialization fails
+		@return: C{True} on success, C{False} on connection failure
 		"""
 		for i in range(MAX_INIT_RETRIES):
 			if not self._dev:
 				initState: Optional[bool] = self._initPort(i)
+				# Port initialization failed. No need to try with 9600 bps,
+				# and there is no other port to try.
 				if initState is None:
-					return False
+					raise RuntimeError(
+						f"Port {self._currentPort} cannot be initialized for Albatross"
+					)
+				# I/O buffers reset failed, retried again in L{_openPort}
 				elif not initState:
 					continue
 			elif not self._dev.is_open:
@@ -232,7 +242,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def _initPort(self, i: int = MAX_INIT_RETRIES - 1) -> Optional[bool]:
 		"""Initializes port.
 		@param i: Just for logging retries.
-		@return: C{True} on success, C{False} on failure,
+		@return: C{True} on success, C{False} on I/O buffers reset failure,
 		C{None} on port initialization failure
 		"""
 		try:
