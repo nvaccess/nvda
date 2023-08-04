@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-22 00:04+0000\n"
-"PO-Revision-Date: 2022-12-20 12:07+0100\n"
+"POT-Creation-Date: 2023-07-21 00:22+0000\n"
+"PO-Revision-Date: 2023-08-02 13:42+0100\n"
 "Last-Translator: \n"
 "Language-Team: NVDA Honosítási project <nvda@nvda.hu>\n"
 "Language: hu_HU\n"
@@ -13,6 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.6.10\n"
 "X-Poedit-Bookmarks: 672,168,-1,-1,-1,-1,-1,-1,-1,-1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 msgid "Native input"
@@ -393,6 +394,10 @@ msgstr "ajnl"
 msgid "definition"
 msgstr "Meghatározás"
 
+#. Translators: Displayed in braille when an object is a switch control
+msgid "swtch"
+msgstr "kpc"
+
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
 msgstr "kij"
@@ -533,6 +538,18 @@ msgstr "USB"
 msgid "Bluetooth"
 msgstr "Bluetooth"
 
+#. Translators: Braille when there are further details/annotations that can be fetched manually.
+msgid "details"
+msgstr "rsl"
+
+#. Translators: Braille when there are further details/annotations that can be fetched manually.
+#. %s specifies the type of details (e.g. "has comment suggestion")
+#. Translators: Speaks when there are further details/annotations that can be fetched manually.
+#. %s specifies the type of details (e.g. "comment, suggestion, details")
+#, python-format
+msgid "has %s"
+msgstr "van %s"
+
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
 #, python-format
@@ -542,18 +559,6 @@ msgstr "c%s"
 #. Translators: Displayed in braille for a link which has been visited.
 msgid "vlnk"
 msgstr "mhv"
-
-#. Translators: Braille when there are further details/annotations that can be fetched manually.
-#. %s specifies the type of details (e.g. comment, suggestion)
-#. Translators: Speaks when there are further details/annotations that can be fetched manually.
-#. %s specifies the type of details (e.g. comment, suggestion)
-#, python-format
-msgid "has %s"
-msgstr "van %s"
-
-#. Translators: Braille when there are further details/annotations that can be fetched manually.
-msgid "details"
-msgstr "rsl"
 
 #. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
@@ -612,19 +617,6 @@ msgstr "lmegj"
 #. Translators: brailled when text contains a bookmark
 msgid "bkmk"
 msgstr "kjz"
-
-#. Translators: The label for a braille setting indicating that braille should be
-#. tethered to focus or review cursor automatically.
-msgid "automatically"
-msgstr "Automatikus"
-
-#. Translators: The label for a braille setting indicating that braille should be tethered to focus.
-msgid "to focus"
-msgstr "Aktív elem"
-
-#. Translators: The label for a braille setting indicating that braille should be tethered to the review cursor.
-msgid "to review"
-msgstr "Áttekintő kurzor"
 
 #. Translators: Label for a setting in braille settings dialog.
 msgid "Dot firm&ness"
@@ -792,8 +784,18 @@ msgstr "Dán 8 pontos számítógépes braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Danish 8 dot computer braille (1993)"
+msgstr "Dán 8 pontos számítógépes Braille (1993)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Danish 6 dot grade 1"
 msgstr "Dán, 6 pontos, rövidítési fokozat 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Danish 6 dot grade 1 (1993)"
+msgstr "Dán, 6 pontos, rövidítési fokozat 1 (1993)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -802,13 +804,28 @@ msgstr "Dán, 8 pontos, rövidítési fokozat 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Danish 8 dot grade 1 (1993)"
+msgstr "Dán, 8 pontos, rövidítési fokozat 1 (1993)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Danish 6 dot grade 2"
 msgstr "Dán, 6 pontos, rövidítési fokozat 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Danish 6 dot grade 2 (1993)"
+msgstr "Dán, 6 pontos, rövidítési fokozat 2 (1993)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Danish 8 dot grade 2"
 msgstr "Dán, 8 pontos, rövidítési fokozat 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Danish 8 dot grade 2 (1993)"
+msgstr "Dán, 8 pontos, rövidítési fokozat 2 (1993)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -878,12 +895,12 @@ msgstr "Angol észak-amerikai braille számítógépes kód"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Unified English Braille Code grade 1"
-msgstr "Egységes angol braille kód, rövidítési fokozat 1"
+msgstr "Egységesített angol braille kód, rövidítési fokozat 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Unified English Braille Code grade 2"
-msgstr "Egységes angol braille kód, rövidítési fokozat 2"
+msgstr "Egységesített angol braille kód, rövidítési fokozat 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1057,6 +1074,11 @@ msgstr "Kannada, rövidítési fokozat 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Georgian literary braille"
+msgstr "Grúz irodalmi braille"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Kazakh grade 1"
 msgstr "Kazah, rövidítési fokozat 1"
 
@@ -1207,6 +1229,11 @@ msgstr "Északi-szoto, rövidítési fokozat 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Chichewa (Malawi) literary braille"
+msgstr "Csicseva (Malavi) irodalmi braille"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Oriya grade 1"
 msgstr "Oriya, rövidítési fokozat 1"
 
@@ -1329,6 +1356,36 @@ msgstr "Svéd részben rövidírásos Braille"
 #. braille settings dialog.
 msgid "Swedish contracted braille"
 msgstr "Svéd rövidítési fokozat 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) grade 1"
+msgstr "Szuahéli (Kenya) rövidítési fokozat 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) grade 1.2"
+msgstr "Szuahéli (Kenya) rövidítési fokozat 1.2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) grade 1.3"
+msgstr "Szuahéli (Kenya) rövidítési fokozat 1.3"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) grade 1.4"
+msgstr "Szuahéli (Kenya) rövidítési fokozat 1.4"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) grade 1.5"
+msgstr "Szuahéli (Kenya) rövidítési fokozat 1.5"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) Grade 2"
+msgstr "Szuahéli (Kenya) rövidítési fokozat 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2411,12 +2468,16 @@ msgstr "Írja be a keresendő szöveget."
 msgid "Case &sensitive"
 msgstr "&Kis- és nagybetűk megkülönböztetése"
 
+#. Translators: message displayed to the user when
+#. searching text and no text is found.
 #, python-format
 msgid "text \"%s\" not found"
 msgstr "a keresett szöveg \"%s\" nem található."
 
-msgid "Find Error"
-msgstr "Keresési hiba"
+#. Translators: message dialog title displayed to the user when
+#. searching text and no text is found.
+msgid "0 matches"
+msgstr "Nincs találat"
 
 #. Translators: Input help message for NVDA's find command.
 msgid "find a text string from the current cursor position"
@@ -2915,20 +2976,10 @@ msgid "Cycles through line indentation settings"
 msgstr "Váltás a behúzás jelzési módjai közt"
 
 #. Translators: A message reported when cycling through line indentation settings.
-msgid "Report line indentation with speech"
-msgstr "Behúzás jelzése beszéddel"
-
-#. Translators: A message reported when cycling through line indentation settings.
-msgid "Report line indentation with tones"
-msgstr "Behúzás jelzése hangjelzéssel"
-
-#. Translators: A message reported when cycling through line indentation settings.
-msgid "Report line indentation with speech and tones"
-msgstr "Behúzás jelzése beszéddel és hangjelzéssel"
-
-#. Translators: A message reported when cycling through line indentation settings.
-msgid "Report line indentation off"
-msgstr "Behúzás jelzése kikapcsolva"
+#. {mode} will be replaced with the mode; i.e. Off, Speech, Tones or Both Speech and Tones.
+#, python-brace-format
+msgid "Report line indentation {mode}"
+msgstr "Behúzás {mode}"
 
 #. Translators: Input help mode message for toggle report paragraph indentation command.
 msgid "Toggles on and off the reporting of paragraph indentation"
@@ -2992,17 +3043,11 @@ msgstr "A táblázatcellák koordinátáinak bemondása bekapcsolva"
 msgid "Cycles through the cell border reporting settings"
 msgstr "Váltás a cellaszegélyek jelzési módjai közt"
 
-#. Translators: A message reported when cycling through cell borders settings.
-msgid "Report styles of cell borders"
-msgstr "Cellaszegélyek stílusának bemondása"
-
-#. Translators: A message reported when cycling through cell borders settings.
-msgid "Report colors and styles of cell borders"
-msgstr "Cellaszegélyek színének és stílusának bemondása"
-
-#. Translators: A message reported when cycling through cell borders settings.
-msgid "Report cell borders off."
-msgstr "Cellaszegélyek bemondása kikapcsolva"
+#. Translators: Reported when the user cycles through report cell border modes.
+#. {mode} will be replaced with the mode; e.g. Off, Styles and Colors and styles.
+#, python-brace-format
+msgid "Report cell borders {mode}"
+msgstr "Cellaszegély {mode}"
 
 #. Translators: Input help mode message for toggle report links command.
 msgid "Toggles on and off the reporting of links"
@@ -3172,6 +3217,19 @@ msgstr ""
 #, python-format
 msgid "Symbol level %s"
 msgstr "Írásjelszint: %s"
+
+#. Translators: Input help mode message for toggle delayed character description command.
+msgid ""
+"Toggles on and off delayed descriptions for characters on cursor movement"
+msgstr "Késleltetett betűzés a kurzor mozgásakor beállítása"
+
+#. Translators: The message announced when toggling the delayed character description setting.
+msgid "delayed character descriptions on"
+msgstr "Késleltetett betűzés Be"
+
+#. Translators: The message announced when toggling the delayed character description setting.
+msgid "delayed character descriptions off"
+msgstr "Késleltetett betűzés ki"
 
 #. Translators: Input help mode message for move mouse to navigator object command.
 msgid "Moves the mouse pointer to the current navigator object"
@@ -3830,19 +3888,19 @@ msgstr ""
 
 #. Translators: A mode where no progress bar updates are given.
 msgid "No progress bar updates"
-msgstr "Nem jelzi a folyamatjelzők változását"
+msgstr "Folyamatjelzők változása: Nincs jelzés"
 
 #. Translators: A mode where progress bar updates will be spoken.
 msgid "Speak progress bar updates"
-msgstr "Jelzi a folyamatjelzők változását"
+msgstr "Folyamatjelzők változása: Beszéd"
 
 #. Translators: A mode where beeps will indicate progress bar updates (beeps rise in pitch as progress bar updates).
 msgid "Beep for progress bar updates"
-msgstr "A folyamatjelzők változásának jelzése hangjelzéssel"
+msgstr "Folyamatjelzők változása: Hangjelzés"
 
 #. Translators: A mode where both speech and beeps will indicate progress bar updates.
 msgid "Beep and speak progress bar updates"
-msgstr "A folyamatjelzők változásának jelzése hangjelzéssel és beszéddel"
+msgstr "Folyamatjelzők változása: Hangjelzés és beszéd"
 
 #. Translators: Input help mode message for toggle dynamic content changes command.
 msgid ""
@@ -4040,10 +4098,9 @@ msgstr ""
 msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr "Python konzol megnyitása, amely főként fejlesztőknek hasznos."
 
-#. Translators: Input help mode message for activate manage add-ons command.
+#. Translators: Input help mode message to activate Add-on Store command.
 msgid ""
-"Activates the NVDA Add-ons Manager to install and uninstall add-on packages "
-"for NVDA"
+"Activates the Add-on Store to browse and manage add-on packages for NVDA"
 msgstr ""
 "Bővítménykezelő megnyitása, ahol lehetőség van a kiegészítők telepítésére, "
 "felfüggesztésére és eltávolítására."
@@ -4129,6 +4186,32 @@ msgstr "A Braille kurzor ki van kapcsolva."
 #, python-format
 msgid "Braille cursor %s"
 msgstr "Braille kurzor %s"
+
+#. Translators: Input help mode message for cycle through braille show messages command.
+msgid "Cycle through the braille show messages modes"
+msgstr "Braille kijelző üzenetmegjelenítési beállítása"
+
+#. Translators: Reports which show braille message mode is used
+#. (disabled, timeout or indefinitely).
+#, python-format
+msgid "Braille show messages %s"
+msgstr "Braille üzenetek megjelenítése %s"
+
+#. Translators: Input help mode message for cycle through braille show selection command.
+msgid "Cycle through the braille show selection states"
+msgstr "Braille kijelző kijelölés megjelenítési beállítása"
+
+#. Translators: Used when reporting braille show selection state
+#. (default behavior).
+#, python-format
+msgid "Braille show selection default (%s)"
+msgstr "Braille kijelölés megjelenítése alapértelmezett (%s)"
+
+#. Translators: Reports which show braille selection state is used
+#. (disabled or enabled).
+#, python-format
+msgid "Braille show selection %s"
+msgstr "Braille kijelölés megjelenítése %s"
 
 #. Translators: Input help mode message for report clipboard text command.
 msgid "Reports the text on the Windows clipboard"
@@ -4330,6 +4413,37 @@ msgstr ""
 msgid "Plugins reloaded"
 msgstr "Bővítmények újratöltve."
 
+#. Translators: input help mode message for Report destination URL of a link command
+msgid ""
+"Report the destination URL of the link at the position of caret or focus. If "
+"pressed twice, shows the URL in a window for easier review."
+msgstr ""
+"Hivatkozáshoz tartozó URL bemondása, kétszeri lenyomásra az URL egy "
+"szövegnavigációs parancsokkal kezelhető ablakban jelenik meg."
+
+#. Translators: Informs the user that the link has no destination
+msgid "Link has no apparent destination"
+msgstr "A hivatkozáshoz nem tartozik URL"
+
+#. Translators: Informs the user that the window contains the destination of the
+#. link with given title
+#, python-brace-format
+msgid "Destination of: {name}"
+msgstr "{name} hivatkozáshoz tartozó URL"
+
+#. Translators: Tell user that the command has been run on something that is not a link
+msgid "Not a link."
+msgstr "Ez nem hivatkozás!"
+
+#. Translators: input help mode message for Report URL of a link in a window command
+msgid ""
+"Displays the destination URL of the link at the position of caret or focus "
+"in a window, instead of just speaking it. May be preferred by braille users."
+msgstr ""
+"Hivatkozáshoz tartozó URL megjelenítése egy szövegnavigációs parancsokkal "
+"kezelhető ablakban. A szkript ezen változata elsősorban braille kijelzők "
+"felhasználóinak hasznos."
+
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Moves to the next object in a flattened view of the object navigation "
@@ -4419,7 +4533,7 @@ msgstr "Belép a matematikai áttekintőbe"
 #. Translators: Reported when the user attempts math interaction
 #. with something that isn't math.
 msgid "Not math"
-msgstr "Nem matematikai tartalom"
+msgstr "Ez a parancs csak  matematikai tartalomhoz használható"
 
 #. Translators: Describes a command.
 msgid "Recognizes the content of the current navigator object with Windows OCR"
@@ -4434,6 +4548,10 @@ msgstr "A Windows OCR nem elérhető"
 #. Translators: Reported when screen curtain is enabled.
 msgid "Please disable screen curtain before using Windows OCR."
 msgstr "A Windows OCR használatához kapcsolja ki a képernyőfüggönyt!"
+
+#. Translators: Describes a command.
+msgid "Cycles through the available languages for Windows OCR"
+msgstr "Windows OCR felismerési nyelvének beállítása"
 
 #. Translators: Input help mode message for toggle report CLDR command.
 msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
@@ -4482,6 +4600,10 @@ msgstr "ideiglenes képernyőfüggöny, csak a következő újraindításig akt�
 #. Translators: Reported when the screen curtain could not be enabled.
 msgid "Could not enable screen curtain"
 msgstr "Nem lehet elhúzni a képernyőfüggönyt"
+
+#. Translators: Describes a command.
+msgid "Cycles through paragraph navigation styles"
+msgstr "Bekezdés-navigáció módjának beállítása"
 
 #. Translators: a message indicating that configuration profiles can't be activated using gestures,
 #. due to profile activation being suspended.
@@ -4882,9 +5004,12 @@ msgstr "Laptop"
 msgid "unknown %s"
 msgstr "ismeretlen %s"
 
+#. Translators: a state that denotes a control is currently on
+#. E.g. a switch control.
 msgid "on"
 msgstr "bekapcsolva"
 
+#. Translators: This is presented when a switch control is off.
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
@@ -6023,6 +6148,10 @@ msgctxt "action"
 msgid "Sound"
 msgstr "Akciógomb: Hang"
 
+#. Translators: Shown in the system Volume Mixer for controlling NVDA sounds.
+msgid "NVDA sounds"
+msgstr "NVDA hangjelzések"
+
 msgid "Type help(object) to get help about object."
 msgstr ""
 "Írja be a help (objektum) parancsot, hogy segítséget kapjon az objektumról."
@@ -6277,13 +6406,16 @@ msgstr "Hiba történt a frissítés keresésekor"
 #. Translators: The title of an error message dialog.
 #. Translators: An title for an error displayed when saving user defined input gestures fails.
 #. Translators: The title of a dialog presented when an error occurs.
-#. Translators: The message title displayed
-#. when the user has not specified an absolute destination directory
-#. in the Create Portable NVDA dialog.
+#. Translators: the title of an error dialog.
+#. Translators: The message title displayed when the user has not specified an absolute
+#. destination directory in the Create Portable NVDA dialog.
+#. Translators: Title of an error dialog shown when an error occurs while creating a portable copy of NVDA.
 #. Translators: The title of an error message dialog.
+#. Translators: A message indicating that an error occurred.
 #. Translators: The title of the message box
 #. Translators: The title of the error dialog displayed when there is an error showing the GUI
 #. for a vision enhancement provider
+#. Translators: The title of an error message box displayed when validating the startup dialog
 msgid "Error"
 msgstr "hiba"
 
@@ -6303,35 +6435,6 @@ msgid "NVDA version {version} has been downloaded and is pending installation."
 msgstr ""
 "Az NVDA {version} verziójának letöltése már befejeződött, és készen áll a "
 "telepítésre."
-
-#. Translators: A message indicating that some add-ons will be disabled
-#. unless reviewed before installation.
-#. Translators: A message in the installer to let the user know that
-#. some addons are not compatible.
-msgid ""
-"\n"
-"\n"
-"However, your NVDA configuration contains add-ons that are incompatible with "
-"this version of NVDA. These add-ons will be disabled after installation. If "
-"you rely on these add-ons, please review the list to decide whether to "
-"continue with the installation"
-msgstr ""
-"\n"
-"\n"
-"\n"
-"Ámbár, az nvda beállításai olyan bővítményeket tartalmaznak, amelyek "
-"rendellenesen viselkednek ebben a verzióban. Ezek a bővítmények a telepítés "
-"után le lesznek tiltva.\n"
-"Ha szeretné használni őket, nézze át a listát, hogy ennek ellenére szeretné-"
-"e folytatni a telepítést."
-
-#. Translators: A message to confirm that the user understands that addons that have not been
-#. reviewed and made available, will be disabled after installation.
-#. Translators: A message to confirm that the user understands that addons that have not been reviewed and made
-#. available, will be disabled after installation.
-msgid "I understand that these incompatible add-ons will be disabled"
-msgstr ""
-"Megértettem, hogy az alábbi nem kompatibilis bővítmények le lesznek tiltva"
 
 #. Translators: The label of a button to review add-ons prior to NVDA update.
 #. Translators: The label of a button to launch the add-on compatibility review dialog.
@@ -6372,24 +6475,6 @@ msgstr "&Bezárás"
 #, python-brace-format
 msgid "NVDA version {version} is ready to be installed.\n"
 msgstr "Az NVDA {version} verziója készen áll a telepítésre.\n"
-
-#. Translators: A message indicating that some add-ons will be disabled
-#. unless reviewed before installation.
-msgid ""
-"\n"
-"However, your NVDA configuration contains add-ons that are incompatible with "
-"this version of NVDA. These add-ons will be disabled after installation. If "
-"you rely on these add-ons, please review the list to decide whether to "
-"continue with the installation"
-msgstr ""
-"\n"
-"\n"
-"\n"
-"Ámbár, az nvda beállításai olyan bővítményeket tartalmaznak, amelyek "
-"rendellenesen viselkednek ebben a verzióban. Ezek a bővítmények a telepítés "
-"után le lesznek tiltva.\n"
-"Ha szeretné használni őket, nézze át a listát, hogy ennek ellenére szeretné-"
-"e folytatni a telepítést."
 
 #. Translators: The label of a button to install an NVDA update.
 msgid "&Install update"
@@ -6553,6 +6638,11 @@ msgstr ""
 msgid "%d percent"
 msgstr "%d százalék"
 
+#. Translators: Announced in braille when suggestions appear when search term is entered
+#. in various search fields such as Start search box in Windows 10.
+msgid "Suggestions"
+msgstr "Javaslatok"
+
 #. Translators: a message announcing a candidate's character and description.
 #, python-brace-format
 msgid "{symbol} as in {description}"
@@ -6602,10 +6692,6 @@ msgid "Moves the navigator object and focus to the last row"
 msgstr ""
 "A navigátor kurzort az utolsó sorra állítja, és ez lesz egyben az aktív elem "
 "is."
-
-#. Translators: Announced in braille when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
-msgid "Suggestions"
-msgstr "Javaslatok"
 
 #. Translators: The label for a 'composition' Window that appears when the user is typing one or more east-Asian characters into a document.
 msgid "Composition"
@@ -6661,6 +6747,72 @@ msgctxt "UIAHandler.FillType"
 msgid "pattern"
 msgstr "mintázat"
 
+#. Translators: A title of the dialog shown when fetching add-on data from the store fails
+msgctxt "addonStore"
+msgid "Add-on data update failure"
+msgstr "Adatlekérdezési hiba"
+
+#. Translators: A message shown when fetching add-on data from the store fails
+msgctxt "addonStore"
+msgid "Unable to fetch latest add-on data for compatible add-ons."
+msgstr "Nem lehet lekérdezni a kompatibilis bővítményekre vonatkozó adatokat."
+
+#. Translators: A message shown when fetching add-on data from the store fails
+msgctxt "addonStore"
+msgid "Unable to fetch latest add-on data for incompatible add-ons."
+msgstr ""
+"Nem lehet lekérdezni a nem kompatibilis bővítményekre vonatkozó adatokat."
+
+#. Translators: The message displayed when an error occurs when opening an add-on package for adding.
+#. The %s will be replaced with the path to the add-on that could not be opened.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"Failed to open add-on package file at {filePath} - missing file or invalid "
+"file format"
+msgstr ""
+"A {filePath}  helyen található bővítménycsomag megnyitása sikertelen volt, "
+"hiányzó fájl, vagy hibás fájlformátum miatt."
+
+#. Translators: The message displayed when an add-on is not supported by this version of NVDA.
+#. The %s will be replaced with the path to the add-on that is not supported.
+#, python-format
+msgctxt "addonStore"
+msgid "Add-on not supported %s"
+msgstr "Az alábbi bővítmény nem támogatott: %s"
+
+#. Translators: The message displayed when an error occurs when installing an add-on package.
+#. The %s will be replaced with the path to the add-on that could not be installed.
+#, python-format
+msgctxt "addonStore"
+msgid "Failed to install add-on from %s"
+msgstr "Sikertelen bővítménytelepítés innen: %s"
+
+#. Translators: A title for a dialog notifying a user of an add-on download failure.
+msgctxt "addonStore"
+msgid "Add-on download failure"
+msgstr "Letöltési hiba"
+
+#. Translators: A message to the user if an add-on download fails
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Unable to download add-on: {name}"
+msgstr "Az alábbi bővítményt nem lehet letölteni: {name}"
+
+#. Translators: A message to the user if an add-on download fails
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Unable to save add-on as a file: {name}"
+msgstr "Az alábbi bővítményfájlt nem lehet létrehozni: {name}"
+
+#. Translators: A message to the user if an add-on download is not safe
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Add-on download not safe: checksum failed for {name}"
+msgstr ""
+"Az alábbi bővítmény letöltése nem biztonságos, az ellenőrzőszám nem egyezik: "
+"{name}"
+
 msgid "Display"
 msgstr "kijelző"
 
@@ -6676,17 +6828,36 @@ msgstr "Nem található a súgó ablak."
 msgid "No track playing"
 msgstr "Nincs lejátszás alatt lévő szám"
 
+#. Translators: Reported remaining time in Foobar2000
+#, python-brace-format
+msgid "{remainingTimeFormatted} remaining"
+msgstr "Hátralévő idő: {remainingTimeFormatted}"
+
 #. Translators: Reported if the remaining time can not be calculated in Foobar2000
-msgid "Unable to determine remaining time"
-msgstr "Nem lehet lekérdezni a hátralévő időt"
+msgid "Remaining time not available"
+msgstr "Nem lehet lekérdezni a hátralévő időt."
 
 #. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Bemondja a lejátszás alatt lévő szám hátralévő idejét"
 
+#. Translators: Reported elapsed time in Foobar2000
+#, python-brace-format
+msgid "{elapsedTime} elapsed"
+msgstr "Eltelt idő: {elapsedTime}"
+
+#. Translators: Reported if the elapsed time is not available in Foobar2000
+msgid "Elapsed time not available"
+msgstr "Nem lehet lekérdezni az eltelt időt."
+
 #. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
 msgid "Reports the elapsed time of the currently playing track, if any"
 msgstr "Bemondja a lejátszás alatt lévő szám eltelt idejét"
+
+#. Translators: Reported remaining time in Foobar2000
+#, python-brace-format
+msgid "{totalTime} total"
+msgstr "Teljes idő: {totalTime}"
 
 #. Translators: Reported if the total time is not available in Foobar2000
 msgid "Total time not available"
@@ -6735,7 +6906,7 @@ msgstr "nincs még üzenet"
 
 #. Translators: The description of an NVDA command to view one of the recent messages.
 msgid "Displays one of the recent messages"
-msgstr "felolvassa az adott üzenetet"
+msgstr "felolvassa az egyik új üzenetet"
 
 #. Translators: This Outlook Express message has an attachment
 #. Translators: when an email has attachments
@@ -6886,13 +7057,15 @@ msgstr "{date} (egész nap)"
 #. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
 #, python-brace-format
 msgid "{startTime} to {endTime}"
-msgstr "{startTime}-tól {endTime}-ig"
+msgstr "{startTime} és {endTime} között"
 
 #. Translators: Part of a message reported when on a calendar appointment with one or more categories
 #. in Microsoft Outlook.
 #, python-brace-format
-msgid "categories {categories}"
-msgstr "Kategóriák {categories}"
+msgid "category {categories}"
+msgid_plural "categories {categories}"
+msgstr[0] "kategória {categories}"
+msgstr[1] "kategória {categories}"
 
 #. Translators: A message reported when on a calendar appointment with category in Microsoft Outlook
 #, python-brace-format
@@ -6915,11 +7088,11 @@ msgstr "Nincsenek megjegyzések a fordítók részére"
 #. Translators: this message is reported when NVDA is unable to find
 #. the 'Notes for translators' window in poedit.
 msgid "Could not find Notes for translators window."
-msgstr "Nem található megjegyzés a fordítók ablakában"
+msgstr "Nem található a Megjegyzés a fordítóknak ablaka."
 
 #. Translators: The description of an NVDA command for Poedit.
 msgid "Reports any notes for translators"
-msgstr "A megjegyzések változásának bemondása"
+msgstr "Bemondja a fordítók számára hagyott megjegyzéseket"
 
 #. Translators: this message is reported when NVDA is unable to find
 #. the 'comments' window in poedit.
@@ -7200,6 +7373,25 @@ msgstr "{firstAddress} {firstValue} és {lastAddress} {lastValue} között"
 msgid "{firstAddress} through {lastAddress}"
 msgstr "{firstAddress} és {lastAddress} között"
 
+#. Translators: a measurement in inches
+#, python-brace-format
+msgid "{val:.2f} inches"
+msgstr "{val:.2f} hüvelyk"
+
+#. Translators: a measurement in centimetres
+#, python-brace-format
+msgid "{val:.2f} centimetres"
+msgstr "{val:.2f} centiméter"
+
+#. Translators: LibreOffice, report cursor position in the current page
+#, python-brace-format
+msgid ""
+"cursor positioned {horizontalDistance} from left edge of page, "
+"{verticalDistance} from top edge of page"
+msgstr ""
+"A kurzor a lap bal szélétől: {horizontalDistance} és a lap tetejétől: "
+"{verticalDistance}"
+
 msgid "left"
 msgstr "bal"
 
@@ -7274,18 +7466,6 @@ msgstr "HumanWare Brailliant BI/B sorozat / BrailleNote Touch"
 #. Translators: The name of a braille display.
 msgid "EcoBraille displays"
 msgstr "EcoBraille kijelzők"
-
-#. Translators: Names of braille displays.
-msgid "Eurobraille Esys/Esytime/Iris displays"
-msgstr "Eurobraille Esys/Esytime/Iris kijelzők"
-
-#. Translators: Message when HID keyboard simulation is unavailable.
-msgid "HID keyboard input simulation is unavailable."
-msgstr "HID billentyűzet szimuláció nem lehetséges"
-
-#. Translators: Description of the script that toggles HID keyboard simulation.
-msgid "Toggle HID keyboard simulation"
-msgstr "HID billentyűzet szimuláció engedélyezése vagy letiltása"
 
 #. Translators: Names of braille displays.
 msgid "Freedom Scientific Focus/PAC Mate series"
@@ -7370,9 +7550,60 @@ msgstr "A braille-néző &mutatása a program indulásakor"
 msgid "&Hover for cell routing"
 msgstr "cellák görgetése az egérhelyzet alapján"
 
-#. Translators: This is the label for a combobox in the
-#. document formatting settings panel.
-#. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+#. Translators: One of the show states of braille messages
+#. (the disabled mode turns off showing of braille messages completely).
+#. Translators: Label for an option in NVDA settings.
+#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
+msgid "Disabled"
+msgstr "Letiltva"
+
+#. Translators: One of the show states of braille messages
+#. (the timeout mode shows messages for the specific time).
+msgid "Use timeout"
+msgstr "Korlátozott ideig"
+
+#. Translators: One of the show states of braille messages
+#. (the indefinitely mode prevents braille messages from disappearing automatically).
+msgid "Show indefinitely"
+msgstr "Időkorlát nélkül"
+
+#. Translators: The label for a braille setting indicating that braille should be
+#. tethered to focus or review cursor automatically.
+msgid "automatically"
+msgstr "Automatikus"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered to focus.
+msgid "to focus"
+msgstr "Aktív elem"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered
+#. to the review cursor.
+msgid "to review"
+msgstr "Áttekintő kurzor"
+
+#. Translators: A choice in a combo box in the document formatting dialog to report No line Indentation.
+msgctxt "line indentation setting"
+msgid "Off"
+msgstr "Ki"
+
+#. Translators: A choice in a combo box in the document formatting dialog to report indentation
+#. with Speech.
+msgctxt "line indentation setting"
+msgid "Speech"
+msgstr "Beszéd"
+
+#. Translators: A choice in a combo box in the document formatting dialog to report indentation
+#. with tones.
+msgctxt "line indentation setting"
+msgid "Tones"
+msgstr "Hangjelzés"
+
+#. Translators: A choice in a combo box in the document formatting dialog to report indentation with both
+#. Speech and tones.
+msgctxt "line indentation setting"
+msgid "Both Speech and Tones"
+msgstr "Beszéd és hangjelzés"
+
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
 msgid "Off"
@@ -7393,17 +7624,40 @@ msgstr "Sorok"
 msgid "Columns"
 msgstr "Oszlopok"
 
-#. Translators: Label for an option in NVDA settings.
-#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
-#. Translators: One of the show states of braille messages
-#. (the disabled mode turns off showing of braille messages completely).
-msgid "Disabled"
-msgstr "Letiltva"
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Styles"
+msgstr "Stílus"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Both Colors and Styles"
+msgstr "Szín és stílus"
 
 #. Translators: Label for an option in NVDA settings.
 #. Translators: The status shown for an addon when its currently running in NVDA.
 msgid "Enabled"
 msgstr "Engedélyezve"
+
+#. Translators: Label for a paragraph style in NVDA settings.
+msgid "Handled by application"
+msgstr "Alkalmazás által"
+
+#. Translators: Label for a paragraph style in NVDA settings.
+msgid "Single line break"
+msgstr "Egysoros"
+
+#. Translators: Label for a paragraph style in NVDA settings.
+msgid "Multi line break"
+msgstr "Többsoros"
+
+#. Translators: Label for an option in NVDA settings.
+msgid "Diffing"
+msgstr "Diffing"
+
+#. Translators: Label for an option in NVDA settings.
+msgid "UIA notifications"
+msgstr "UIA értesítések"
 
 #. Translators: The title of the document used to present the result of content recognition.
 msgid "Result"
@@ -8171,6 +8425,11 @@ msgstr "megjegyzés"
 msgid "suggestion"
 msgstr "javaslat"
 
+#. Translators: The word role for a switch control
+#. I.e. a control that can be switched on or off.
+msgid "switch"
+msgstr "kapcsoló"
+
 #. Translators: Indicates that a particular state of an object is negated.
 #. Separate strings have now been defined for commonly negated states (e.g. not selected and not
 #. checked), but this still might be used in some other cases.
@@ -8353,6 +8612,22 @@ msgstr "Zárolt"
 msgid "has note"
 msgstr "Jegyzet"
 
+#. Translators: Presented when a control has a pop-up dialog.
+msgid "opens dialog"
+msgstr "Párbeszédpanelt nyit"
+
+#. Translators: Presented when a control has a pop-up grid.
+msgid "opens grid"
+msgstr "Rácsot nyit"
+
+#. Translators: Presented when a control has a pop-up list box.
+msgid "opens list"
+msgstr "Listát nyit"
+
+#. Translators: Presented when a control has a pop-up tree.
+msgid "opens tree"
+msgstr "Fát nyit"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "Nincs kijelölve"
@@ -8369,6 +8644,21 @@ msgstr "Nincs bejelölve"
 #. This is only reported for objects which support accessible drag and drop.
 msgid "done dragging"
 msgstr "A mozgatás befejezve"
+
+#. Translators: This is spoken when a paragraph is considered blank.
+#. Translators: This is spoken when the line is considered blank.
+#. Translators: This is spoken when NVDA moves to an empty line.
+#. Translators: This is spoken when the line is considered blank.
+msgid "blank"
+msgstr "üres"
+
+#. Translators: this message is given when there is no next paragraph when navigating by paragraph
+msgid "No next paragraph"
+msgstr "Nincs több bekezdés"
+
+#. Translators: this message is given when there is no previous paragraph when navigating by paragraph
+msgid "No previous paragraph"
+msgstr "Nincs előző bekezddés"
 
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 msgid "Configuration applied"
@@ -8473,13 +8763,13 @@ msgstr "Beszédnéző"
 msgid "Braille viewer"
 msgstr "Braille-néző"
 
+#. Translators: The label of a menu item to open the Add-on store
+msgid "Add-on &store..."
+msgstr "Bővítmény&kezelő"
+
 #. Translators: The label for the menu item to open NVDA Python Console.
 msgid "Python console"
 msgstr "Python konzol"
-
-#. Translators: The label of a menu item to open the Add-ons Manager.
-msgid "Manage &add-ons..."
-msgstr "Bővítmények &kezelése"
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
 msgid "Create portable copy..."
@@ -8664,36 +8954,6 @@ msgstr "&Nem"
 msgid "OK"
 msgstr "OK"
 
-#. Translators: message shown in the Addon Information dialog.
-#, python-brace-format
-msgid ""
-"{summary} ({name})\n"
-"Version: {version}\n"
-"Author: {author}\n"
-"Description: {description}\n"
-msgstr ""
-"{summary} ({name})\n"
-"Verzió: {version}\n"
-"Készítő: {author}\n"
-"Leírás: {description}\n"
-
-#. Translators: the url part of the About Add-on information
-#, python-brace-format
-msgid "URL: {url}"
-msgstr "Link: {url}"
-
-#. Translators: the minimum NVDA version part of the About Add-on information
-msgid "Minimum required NVDA version: {}"
-msgstr "Szükséges NVDA verzió: {}"
-
-#. Translators: the last NVDA version tested part of the About Add-on information
-msgid "Last NVDA version tested: {}"
-msgstr "Utolsó tesztelt verzió: {}"
-
-#. Translators: title for the Addon Information dialog
-msgid "Add-on Information"
-msgstr "Bővítményinformáció"
-
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
 msgstr "Bővítménykezelő"
@@ -8722,7 +8982,7 @@ msgstr "Programcsomag"
 
 #. Translators: The label for a column in add-ons list used to identify add-on's running status (example: status is running).
 msgid "Status"
-msgstr "státusz"
+msgstr "Állapot"
 
 #. Translators: The label for a column in add-ons list used to identify add-on's version (example: version is 0.3).
 #. Translators: The label for a column in add-ons list used to identify add-on's running status (example: status is running).
@@ -8770,20 +9030,6 @@ msgstr "Válasszon ki egy bővítmény fájlt"
 msgid "NVDA Add-on Package (*.{ext})"
 msgstr "NVDA bővítmény Csomag (*.{ext})"
 
-#. Translators: Presented when attempting to remove the selected add-on.
-#. {addon} is replaced with the add-on name.
-#, python-brace-format
-msgid ""
-"Are you sure you wish to remove the {addon} add-on from NVDA? This cannot be "
-"undone."
-msgstr ""
-"Biztosan el szeretné távolítani {addon} bővítményt az NVDA-ból? A törlés nem "
-"visszavonható."
-
-#. Translators: Title for message asking if the user really wishes to remove the selected Addon.
-msgid "Remove Add-on"
-msgstr "Bővítmény eltávolítása"
-
 #. Translators: The status shown for an addon when it's not considered compatible with this version of NVDA.
 msgid "Incompatible"
 msgstr "Nem kompatibilis"
@@ -8808,16 +9054,6 @@ msgstr "Engedélyezés újraindítás után"
 msgid "&Enable add-on"
 msgstr "Bővítmény &engedélyezése"
 
-#. Translators: The message displayed when the add-on cannot be disabled.
-#, python-brace-format
-msgid "Could not disable the {description} add-on."
-msgstr "Nem lehet letiltani az alábbi bővítményt: {description}"
-
-#. Translators: The message displayed when the add-on cannot be enabled.
-#, python-brace-format
-msgid "Could not enable the {description} add-on."
-msgstr "Nem lehet engedélyezni az alábbi bővítményt: {description}"
-
 #. Translators: The message displayed when an error occurs when opening an add-on package for adding.
 #, python-format
 msgid ""
@@ -8831,7 +9067,7 @@ msgstr ""
 #. add-on with this one.
 #. Translators: Title for message asking if the user really wishes to install an Addon.
 msgid "Add-on Installation"
-msgstr "Bővítménytelepítő"
+msgstr "Bővítmény telepítése"
 
 #. Translators: A message asking if the user wishes to update an add-on with the same version
 #. currently installed according to the version number.
@@ -8887,18 +9123,6 @@ msgstr ""
 msgid "Add-on not compatible"
 msgstr "A bővítmény nem kompatibilis"
 
-#. Translators: A message informing the user that this addon can not be installed
-#. because it is not compatible.
-#, python-brace-format
-msgid ""
-"Installation of {summary} {version} has been blocked. An updated version of "
-"this add-on is required, the minimum add-on API supported by this version of "
-"NVDA is {backCompatToAPIVersion}"
-msgstr ""
-"{summary} {version} telepítése nem lehetséges. A bővítmény újabb verziójára "
-"van szükség. Csak a bővítmény {backCompatToAPIVersion} és újabb verziói "
-"támogatottak."
-
 #. Translators: A message asking the user if they really wish to install an addon.
 #, python-brace-format
 msgid ""
@@ -8931,18 +9155,6 @@ msgstr "Nem kompatibilis bővítmények"
 msgid "Incompatible reason"
 msgstr "A kompatibilitási probléma oka"
 
-#. Translators: The reason an add-on is not compatible. A more recent version of NVDA is
-#. required for the add-on to work. The placeholder will be replaced with Year.Major.Minor (EG 2019.1).
-msgid "An updated version of NVDA is required. NVDA version {} or later."
-msgstr "Nem támogatott NVDA verzió, {} vagy újabb szükséges."
-
-#. Translators: The reason an add-on is not compatible. The addon relies on older, removed features of NVDA,
-#. an updated add-on is required. The placeholder will be replaced with Year.Major.Minor (EG 2019.1).
-msgid ""
-"An updated version of this add-on is required. The minimum supported API "
-"version is now {}"
-msgstr "Nem támogatott bővítmény verzió, {} vagy újabb szükséges."
-
 #. Translators: Reported when an action cannot be performed because NVDA is in a secure screen
 msgid "Action unavailable in secure context"
 msgstr "Ez a művelet nem hajtható végre a biztonsági képernyőn."
@@ -8960,6 +9172,15 @@ msgid "Action unavailable while a dialog requires a response"
 msgstr ""
 "Ez a művelet nem hajtható végre, amíg az NVDA egy párbeszédablaka "
 "beavatkozásra vár."
+
+#. Translators: Reported when an action cannot be performed because Windows is locked.
+msgid "Action unavailable while Windows is locked"
+msgstr "A művelet nem hajtható végre a Windows zárolt állapotában"
+
+#. Translators: Reported when an action cannot be performed because NVDA is running the launcher temporary
+#. version
+msgid "Action unavailable in a temporary version of NVDA"
+msgstr "A művelet nem hajtható végre az NVDA ideiglenes verziójával."
 
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
@@ -9012,8 +9233,11 @@ msgid "Error activating profile."
 msgstr "Hiba a profil aktiválásakor."
 
 #. Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
-msgid "This profile will be permanently deleted. This action cannot be undone."
-msgstr "Ez a profil véglegesen törlésre kerül. A folyamat nem vonható vissza."
+#. The placeholder {} is replaced with the name of the configuration profile that will be deleted.
+msgid ""
+"The profile {} will be permanently deleted. This action cannot be undone."
+msgstr ""
+"Az alábbi profil véglegesen törölve lesz, a művelet nem vonható vissza. {}"
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 msgid "Confirm Deletion"
@@ -9321,6 +9545,7 @@ msgid "Please press OK to start the installed copy."
 msgstr "Nyomja meg az OK gombot a telepített verzió elindításához."
 
 #. Translators: The title of a dialog presented to indicate a successful operation.
+#. Translators: Title of a dialog shown when a portable copy of NVDA is created.
 msgid "Success"
 msgstr "Sikeres"
 
@@ -9434,23 +9659,18 @@ msgstr "Kérem, adjon meg egy mappát a hordozható verzió számára"
 #. Translators: The message displayed when the user has not specified an absolute destination directory
 #. in the Create Portable NVDA dialog.
 msgid ""
-"Please specify an absolute path (including drive letter)  in which to create "
-"the portable copy."
+"Please specify the absolute path where the portable copy should be created. "
+"It may include system variables (%temp%, %homepath%, etc.)."
 msgstr ""
-"Kérem, adjon meg egy mappát a meghajtó betűjelét is tartalmazó teljes "
-"elérési úttal a hordozható verzió számára"
+"Kérem adja meg a hordozható verzió célkönyvtárát abszolút elérési "
+"útvonallal. Az útvonal tartalmazhat rendszerváltozókat (pl. %temp%, %homepath"
+"%, stb.)."
 
-#. Translators: The message displayed when the user specifies an invalid destination drive
-#. in the Create Portable NVDA dialog.
-#, python-format
-msgid "Invalid drive %s"
-msgstr "%s érvénytelen meghajtó"
-
-#. Translators: The title of the dialog presented while a portable copy of NVDA is bieng created.
+#. Translators: The title of the dialog presented while a portable copy of NVDA is being created.
 msgid "Creating Portable Copy"
 msgstr "Hordozható verzió elkészítése"
 
-#. Translators: The message displayed while a portable copy of NVDA is bieng created.
+#. Translators: The message displayed while a portable copy of NVDA is being created.
 msgid "Please wait while a portable copy of NVDA is created."
 msgstr "Kérem, várjon, amíg a hordozható verzió elkészül"
 
@@ -9459,16 +9679,16 @@ msgid "NVDA is unable to remove or overwrite a file."
 msgstr "Az NVDA nem tud törölni, vagy felülírni egy fájlt."
 
 #. Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
-#. %s will be replaced with the specific error message.
-#, python-format
-msgid "Failed to create portable copy: %s"
-msgstr "Nem sikerült elkészíteni a hordozható verziót: %s"
+#. {error} will be replaced with the specific error message.
+#, python-brace-format
+msgid "Failed to create portable copy: {error}."
+msgstr "Nem sikerült elkészíteni a hordozható verziót: {error}."
 
 #. Translators: The message displayed when a portable copy of NVDA has been successfully created.
-#. %s will be replaced with the destination directory.
-#, python-format
-msgid "Successfully created a portable copy of NVDA at %s"
-msgstr "A hordozható verzió sikeresen elkészült a(z) %s könyvtárban"
+#. {dir} will be replaced with the destination directory.
+#, python-brace-format
+msgid "Successfully created a portable copy of NVDA at {dir}"
+msgstr "A hordozható verzió sikeresen elkészült az alábbi helyen: {dir}"
 
 #. Translators: The title of the NVDA log viewer window.
 msgid "NVDA Log Viewer"
@@ -10108,12 +10328,12 @@ msgstr "Felső és alsó &index"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "E&mphasis"
-msgstr "&Hangsúlyozás"
+msgstr "&Hangsúlyozott"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "Highlighted (mar&ked) text"
-msgstr "Kiemelten megjelölt"
+msgstr "Kiemelt"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -10170,20 +10390,7 @@ msgstr "So&rszámok"
 #. Translators: This is the label for a combobox controlling the reporting of line indentation in the
 #. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
 msgid "Line &indentation reporting:"
-msgstr "&Behúzások jelzése"
-
-#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
-msgctxt "line indentation setting"
-msgid "Speech"
-msgstr "Beszéd"
-
-#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
-msgid "Tones"
-msgstr "Hangjelzés"
-
-#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
-msgid "Both Speech and Tones"
-msgstr "Beszéd és hangjelzés"
+msgstr "&Behúzások"
 
 #. Translators: This message is presented in the document formatting settings panelue
 #. If this option is selected, NVDA will report paragraph indentation if available.
@@ -10219,16 +10426,6 @@ msgstr "&Fejlécek"
 #. document formatting settings panel.
 msgid "Cell c&oordinates"
 msgstr "&Cellakoordináták"
-
-#. Translators: This is the label for a combobox in the
-#. document formatting settings panel.
-msgid "Styles"
-msgstr "Stílus"
-
-#. Translators: This is the label for a combobox in the
-#. document formatting settings panel.
-msgid "Both Colors and Styles"
-msgstr "Szín és stílus"
 
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
@@ -10286,6 +10483,18 @@ msgid "Report formatting chan&ges after the cursor (can cause a lag)"
 msgstr ""
 "A kurzor pozíciójánál lévő formázások &változásának jelzése (a visszajelzés "
 "késését okozhatja)"
+
+#. Translators: This is the label for the document navigation settings panel.
+msgid "Document Navigation"
+msgstr "Dokumentum-navigáció"
+
+#. Translators: This is a label for the paragraph navigation style in the document navigation dialog
+msgid "&Paragraph style:"
+msgstr "&Bekezdések stílusa"
+
+#. Translators: This is the label for the addon navigation settings panel.
+msgid "Add-on Store"
+msgstr "Bővítménykezelő"
 
 #. Translators: This is the label for the touch interaction settings panel.
 msgid "Touch Interaction"
@@ -10534,6 +10743,10 @@ msgstr "Diff Match Patch"
 msgid "Difflib"
 msgstr "Difflib"
 
+#. Translators: This is the label for a combo-box in the Advanced settings panel.
+msgid "Speak new text in Windows Terminal via:"
+msgstr "Új szövegek bemondása a Windows Terminálban:"
+
 #. Translators: This is the label for combobox in the Advanced settings panel.
 msgid "Attempt to cancel speech for expired focus events:"
 msgstr "Beszéd megszakítása az időközben lejárt fókuszeseményeknél"
@@ -10561,6 +10774,23 @@ msgstr "Érintési mozgási túllépés (másodpercben)"
 #. Advanced settings panel.
 msgid "Report transparent color values"
 msgstr "Átlátszó színek bejelentése"
+
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
+msgid "Audio"
+msgstr "Audio"
+
+#. Translators: This is the label for a checkbox control in the
+#. Advanced settings panel.
+msgid "Use WASAPI for audio output (requires restart)"
+msgstr "WASAPI használata a hangkimenethez"
+
+#. Translators: This is the label for a checkbox control in the
+#. Advanced settings panel.
+msgid "Volume of NVDA sounds follows voice volume (requires WASAPI)"
+msgstr ""
+"Az NVDA hangjelzéseinek hangereje kövesse a beszéd hangerejét (VASAPI "
+"szükséges)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -10677,16 +10907,6 @@ msgstr "A rendszerkurzor &alakja"
 msgid "Cursor shape for &review:"
 msgstr "Az áttekintőkurzor &alakja"
 
-#. Translators: One of the show states of braille messages
-#. (the timeout mode shows messages for the specific time).
-msgid "Use timeout"
-msgstr "Korlátozott ideig"
-
-#. Translators: One of the show states of braille messages
-#. (the indefinitely mode prevents braille messages from disappearing automatically).
-msgid "Show indefinitely"
-msgstr "Időkorlát nélkül"
-
 #. Translators: The label for a setting in braille settings to combobox enabling user
 #. to decide if braille messages should be shown and automatically disappear from braille display.
 msgid "Show messages"
@@ -10715,6 +10935,10 @@ msgstr "Információk az aktív elemről"
 #. Translators: This is a label for a combo-box in the Braille settings panel.
 msgid "I&nterrupt speech while scrolling"
 msgstr "Beszéd meg&szakítása görgetéskor"
+
+#. Translators: This is a label for a combo-box in the Braille settings panel.
+msgid "Show se&lection"
+msgstr "Ki&jelölés megjelenítése"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load a single vision enhancement provider.
@@ -10889,9 +11113,14 @@ msgid "Dictionary Entry Error"
 msgstr "Hibás szótárbejegyzés"
 
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
-#, python-format
-msgid "Regular Expression error: \"%s\"."
-msgstr "Hibás regex kifejezés: \"%s\"."
+#, python-brace-format
+msgid "Regular Expression error in the pattern field: \"{error}\"."
+msgstr "Hibás regex a Tényleges kifejezés mezőben: \"{error}\"."
+
+#. Translators: This is an error message to let the user know that the dictionary entry is not valid.
+#, python-brace-format
+msgid "Regular Expression error in the replacement field: \"{error}\"."
+msgstr "Hibás regex a Behelyettesített kifejezés mezőben: \"{error}\"."
 
 #. Translators: The label for the list box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -10984,6 +11213,14 @@ msgstr "A &CapsLock billentyű használata NVDA gombként"
 msgid "&Show this dialog when NVDA starts"
 msgstr "&Jelenjen meg ez a párbeszédpanel az NVDA minden indításakor"
 
+#. Translators: The title of an error message box displayed when validating the startup dialog
+msgid ""
+"At least one NVDA modifier key must be set. Caps lock will remain as an NVDA "
+"modifier key. "
+msgstr ""
+"Legalább egy gombot ki kell választani NVDA gombként. A Caps Lock lesz "
+"beállítva NVDA gombként."
+
 #. Translators: The label for a checkbox in NvDA installation program to agree to the license agreement.
 msgid "I &agree"
 msgstr "&Elfogadom"
@@ -11045,12 +11282,6 @@ msgstr "Kilép a matematikai áttekintőből"
 msgid "Math interaction not supported."
 msgstr "matematikai áttekintés nem támogatott."
 
-#. Translators: This is spoken when the line is considered blank.
-#. Translators: This is spoken when NVDA moves to an empty line.
-#. Translators: This is spoken when the line is considered blank.
-msgid "blank"
-msgstr "üres"
-
 #. Translators: cap will be spoken before the given letter when it is capitalized.
 #, python-format
 msgid "cap %s"
@@ -11094,15 +11325,19 @@ msgid "row %s"
 msgstr "%s. sor"
 
 #. Translators: Speaks the row span added to the current row number (example output: through 5).
-#. Translators: Speaks the column span added to the current column number (example output: through 5).
-#, python-format
-msgid "through %s"
-msgstr "tól %s. ig"
+#, python-brace-format
+msgid "through {endRow}"
+msgstr "{endRow}. sorig"
 
 #. Translators: Speaks current column number (example output: column 3).
 #, python-format
 msgid "column %s"
 msgstr "%s. oszlop"
+
+#. Translators: Speaks the column span added to the current column number (example output: through 5).
+#, python-brace-format
+msgid "through {endCol}"
+msgstr "{endCol}. oszlopig"
 
 #. Translators: Speaks the row and column span added to the current row and column numbers
 #. (example output: through row 5 column 3).
@@ -11136,8 +11371,10 @@ msgstr "%s. szint"
 
 #. Translators: Number of items in a list (example output: list with 5 items).
 #, python-format
-msgid "with %s items"
-msgstr "%s elemmel"
+msgid "with %s item"
+msgid_plural "with %s items"
+msgstr[0] "%s elemmel"
+msgstr[1] "%s elemmel"
 
 #. Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
 #, python-format
@@ -11276,6 +11513,15 @@ msgstr "Megjelölt"
 msgid "not marked"
 msgstr "Nincs megjelölve"
 
+#. Translators: Reported when text is color-highlighted
+#, python-brace-format
+msgid "highlighted in {color}"
+msgstr "{color} színnel kiemelve"
+
+#. Translators: Reported when text is no longer marked
+msgid "not highlighted"
+msgstr "nincs kiemelve"
+
 #. Translators: Reported when text is marked as strong (e.g. bold)
 msgid "strong"
 msgstr "Fontos szöveg"
@@ -11290,7 +11536,7 @@ msgstr "Hangsúlyos"
 
 #. Translators: Reported when text is no longer marked as emphasised
 msgid "not emphasised"
-msgstr "Nem hangsúlyos"
+msgstr "Hangsúlyos szöveg vége"
 
 #. Translators: Reported when text is not bolded.
 msgid "no bold"
@@ -11313,7 +11559,7 @@ msgstr "áthúzott"
 #. Translators: Reported when text is formatted without strikethrough.
 #. See http://en.wikipedia.org/wiki/Strikethrough
 msgid "no strikethrough"
-msgstr "nem áthúzott"
+msgstr "nincs áthúzva"
 
 #. Translators: Reported when text is underlined.
 msgid "underlined"
@@ -11415,7 +11661,7 @@ msgstr "első sor behúzása"
 
 #. Translators: the message when there is no paragraph format first line indent
 msgid "no first line indent"
-msgstr "első sor nincs behúzva"
+msgstr "Nincs első sor behúzás"
 
 #. Translators: a type of line spacing (E.g. single line spacing)
 #, python-format
@@ -11460,7 +11706,7 @@ msgstr "A nyelvhelyességi hibán kívül"
 
 #. Translators: Indicates end of a table.
 msgid "out of table"
-msgstr "a táblázat vége"
+msgstr "a táblázaton kívül"
 
 #. Translators: reports number of columns and rows in a table (example output: table with 3 columns and 5 rows).
 #, python-brace-format
@@ -11497,6 +11743,41 @@ msgstr "{curPercent:.0f}%"
 #, python-brace-format
 msgid "at {x}, {y}"
 msgstr "pozíció: {x}; {y}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds
+#, python-brace-format
+msgctxt "time format"
+msgid "{S}"
+msgstr "{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes
+#, python-brace-format
+msgctxt "time format"
+msgid "{M}:{S}"
+msgstr "{M}:{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes, {H} hours
+#, python-brace-format
+msgctxt "time format"
+msgid "{H}:{M}:{S}"
+msgstr "{H}:{M}:{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes, {H} hours, {D} day
+#, python-brace-format
+msgctxt "time format"
+msgid "{D} day {H}:{M}:{S}"
+msgstr "{D} nap {H}:{M}:{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes, {H} hours, {D} days
+#, python-brace-format
+msgctxt "time format"
+msgid "{D} days {H}:{M}:{S}"
+msgstr "{D} nap {H}:{M}:{S}"
 
 #. Translators: This is the message for a warning shown if NVDA cannot determine if
 #. Windows is locked.
@@ -11609,12 +11890,12 @@ msgid "No system battery"
 msgstr "Nincs akkumulátor."
 
 #. Translators: Reported when the battery is plugged in, and now is charging.
-msgid "Charging battery"
-msgstr "Akkumulátortöltés %d százalék"
+msgid "Plugged in"
+msgstr "Csatlakoztatva"
 
 #. Translators: Reported when the battery is no longer plugged in, and now is not charging.
-msgid "AC disconnected"
-msgstr "Nincs töltés"
+msgid "Unplugged"
+msgstr "Nincs csatlakoztatva"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
 #, python-brace-format
@@ -12597,11 +12878,13 @@ msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr ""
 "Jelmagyarázat jelölő: {seriesName} adatsor {seriesIndex} per {seriesCount}"
 
-#. Translators: The default color of text when a color has not been set by the author.
-#. Translators: The default background color  when a color has not been set by the author.
-#. Translators: the default (automatic) color in Microsoft Word
-msgid "default color"
-msgstr "alapértelmezett Szín"
+#. Translators: The text color as reported in Wordpad (Automatic) or NVDA log viewer.
+#. Translators: The background color as reported in Wordpad (Automatic) or NVDA log viewer.
+#. Translators: The text color as reported in Wordpad (Automatic) or NVDA log viewer.
+#. Translators: The background color as reported in Wordpad (Automatic) or NVDA log viewer.
+#, python-brace-format
+msgid "{color} (default color)"
+msgstr "{color} (alapértelmezett szín)"
 
 #. Translators: The color of text cannot be detected.
 #. Translators: The background color cannot be detected.
@@ -12749,6 +13032,44 @@ msgstr "&Munkalapok"
 #, python-brace-format
 msgid "{start} through {end}"
 msgstr "{start}; {end} egyesített cellák"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Bold off"
+msgstr "Félkövér ki"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Bold on"
+msgstr "Félkövér be"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Italic off"
+msgstr "dőlt ki"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Italic on"
+msgstr "dőlt be"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Underline off"
+msgstr "aláhúzás ki"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Underline on"
+msgstr "aláhúzás be"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+msgid "Strikethrough off"
+msgstr "Áthúzott ki"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+msgid "Strikethrough on"
+msgstr "Áthúzott be"
 
 #. Translators: the description  for a script for Excel
 msgid "opens a dropdown item at the current cell"
@@ -13136,36 +13457,18 @@ msgstr "legalább %.1f pt"
 #. Translators: line spacing of x lines
 #, python-format
 msgctxt "line spacing value"
-msgid "%.1f lines"
-msgstr "%.1f sor"
+msgid "%.1f line"
+msgid_plural "%.1f lines"
+msgstr[0] "%.1f line"
+msgstr[1] "%.1f lines"
 
 #. Translators: the title of the message dialog desplaying an MS Word table description.
 msgid "Table description"
 msgstr "Táblázat leírása"
 
-#. Translators: a message when toggling formatting in Microsoft word
-msgid "Bold on"
-msgstr "Félkövér be"
-
-#. Translators: a message when toggling formatting in Microsoft word
-msgid "Bold off"
-msgstr "Félkövér ki"
-
-#. Translators: a message when toggling formatting in Microsoft word
-msgid "Italic on"
-msgstr "dőlt be"
-
-#. Translators: a message when toggling formatting in Microsoft word
-msgid "Italic off"
-msgstr "dőlt ki"
-
-#. Translators: a message when toggling formatting in Microsoft word
-msgid "Underline on"
-msgstr "aláhúzás be"
-
-#. Translators: a message when toggling formatting in Microsoft word
-msgid "Underline off"
-msgstr "aláhúzás ki"
+#. Translators: the default (automatic) color in Microsoft Word
+msgid "automatic color"
+msgstr "automatikus szín"
 
 #. Translators: a an alignment in Microsoft Word
 msgid "Left aligned"
@@ -13273,6 +13576,676 @@ msgstr "dupla sorköz"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1,5-es sorköz"
+
+#. Translators: Label for add-on channel in the add-on sotre
+#. Translators: The label of an option to filter the list of add-ons in the add-on store dialog.
+msgctxt "addonStore"
+msgid "All"
+msgstr "mind"
+
+#. Translators: Label for add-on channel in the add-on sotre
+msgctxt "addonStore"
+msgid "Stable"
+msgstr "Stabil"
+
+#. Translators: Label for add-on channel in the add-on sotre
+msgctxt "addonStore"
+msgid "Beta"
+msgstr "Beta"
+
+#. Translators: Label for add-on channel in the add-on sotre
+msgctxt "addonStore"
+msgid "Dev"
+msgstr "Dev"
+
+#. Translators: Label for add-on channel in the add-on sotre
+msgctxt "addonStore"
+msgid "External"
+msgstr "Külső"
+
+#. Translators: The label of an option to filter the list of add-ons in the add-on store dialog.
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Enabled"
+msgstr "Engedélyezve"
+
+#. Translators: The label of an option to filter the list of add-ons in the add-on store dialog.
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Disabled"
+msgstr "Letiltva"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Pending removal"
+msgstr "Eltávolítás, újraindítás szükséges"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Available"
+msgstr "Elérhető"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Update Available"
+msgstr "Frissítés érhető el"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Migrate to add-on store"
+msgstr "Hozzáadás a bővítménykezelőhöz"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Incompatible"
+msgstr "Nem kompatibilis"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Downloading"
+msgstr "Letöltés"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Download failed"
+msgstr "A letöltés nem sikerült"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Downloaded, pending install"
+msgstr "A letöltés kész, a telepítéshez zárja be az ablakot"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Installing"
+msgstr "Telepítés"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Install failed"
+msgstr "A telepítés nem sikerült"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Installed, pending restart"
+msgstr "Telepítve, újraindítás szükséges"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Disabled, pending restart"
+msgstr "Letiltva, újraindítás szükséges"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Disabled (incompatible), pending restart"
+msgstr "Letiltva, nem kompatibilis, újraindítás szükséges"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Disabled (incompatible)"
+msgstr "Letiltva, nem kompatibilis"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Enabled (incompatible), pending restart"
+msgstr "Engedélyezve, nem kompatibilis, újraindítás szükséges"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Enabled (incompatible)"
+msgstr "Engedélyezve, nem kompatibilis"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Enabled, pending restart"
+msgstr "Engedélyezve, újraindítás szükséges"
+
+#. Translators: A selection option to display installed add-ons in the add-on store
+msgctxt "addonStore"
+msgid "Installed add-ons"
+msgstr "Telepített bővítmények"
+
+#. Translators: A selection option to display updatable add-ons in the add-on store
+msgctxt "addonStore"
+msgid "Updatable add-ons"
+msgstr "Frissítés"
+
+#. Translators: A selection option to display available add-ons in the add-on store
+msgctxt "addonStore"
+msgid "Available add-ons"
+msgstr "Elérhető bővítmények"
+
+#. Translators: A selection option to display incompatible add-ons in the add-on store
+msgctxt "addonStore"
+msgid "Installed incompatible add-ons"
+msgstr "Telepített nem kompatibilis bővítmények"
+
+#. Translators: The reason an add-on is not compatible.
+#. A more recent version of NVDA is required for the add-on to work.
+#. The placeholder will be replaced with Year.Major.Minor (e.g. 2019.1).
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"An updated version of NVDA is required. NVDA version {nvdaVersion} or later."
+msgstr "Frissítse az NVDA-t! {nvdaVersion} vagy újabb kiadás szükséges."
+
+#. Translators: The reason an add-on is not compatible.
+#. The addon relies on older, removed features of NVDA, an updated add-on is required.
+#. The placeholder will be replaced with Year.Major.Minor (e.g. 2019.1).
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"An updated version of this add-on is required. The minimum supported API "
+"version is now {nvdaVersion}. This add-on was last tested with "
+"{lastTestedNVDAVersion}. You can enable this add-on at your own risk. "
+msgstr ""
+"Frissítse a bővítményt! A szükséges NVDA kiadás mostantól: {nvdaVersion}. "
+"Ezt a bővítményt utoljára az {lastTestedNVDAVersion} kiadással tesztelték. "
+"Frissítés nélkül a bővítmény használata hibát okozhat az NVDA működésében. "
+
+#. Translators: A message indicating that some add-ons will be disabled
+#. unless reviewed before installation.
+msgctxt "addonStore"
+msgid ""
+"Your NVDA configuration contains add-ons that are incompatible with this "
+"version of NVDA. These add-ons will be disabled after installation. After "
+"installation, you will be able to manually re-enable these add-ons at your "
+"own risk. If you rely on these add-ons, please review the list to decide "
+"whether to continue with the installation. "
+msgstr ""
+"Ez a konfiguráció olyan bővítményeket tartalmaz, melyek nem kompatibilisek "
+"az NVDA telepíteni kívánt verziójával. Ezek a bővítmények a telepítés után "
+"automatikusan le lesznek tiltva. Habár utána manuálisan újra engedélyezni "
+"lehet őket, a biztonság kedvéért nézze át a listát! Amennyiben sűrűn "
+"használt bővítmények is szerepelnek rajta, inkább halassza el az NVDA "
+"frissítését!"
+
+#. Translators: A message to confirm that the user understands that incompatible add-ons
+#. will be disabled after installation, and can be manually re-enabled.
+msgctxt "addonStore"
+msgid ""
+"I understand that incompatible add-ons will be disabled and can be manually "
+"re-enabled at my own risk after installation."
+msgstr ""
+"Megértettem, hogy az alábbi nem kompatibilis bővítmények a telepítés után "
+"automatikusan le lesznek tiltva, de saját felelősségre újra engedélyezhetem "
+"őket."
+
+#. Translators: Names of braille displays.
+msgid "Caiku Albatross 46/80"
+msgstr "Caiku Albatross 46/80"
+
+#. Translators: A message when number of status cells must be changed
+#. for a braille display driver
+msgid ""
+"To use Albatross with NVDA: change number of status cells in Albatross "
+"internal menu at most "
+msgstr ""
+"Az Albatros használatához a kijelző belső menüjében állítsa az állapotcellák "
+"számát maximumra."
+
+#. Translators: Names of braille displays.
+msgid "Eurobraille displays"
+msgstr "Eurobraille kijelzők"
+
+#. Translators: Message when HID keyboard simulation is unavailable.
+msgid "HID keyboard input simulation is unavailable."
+msgstr "HID billentyűzet szimuláció nem lehetséges"
+
+#. Translators: Description of the script that toggles HID keyboard simulation.
+msgid "Toggle HID keyboard simulation"
+msgstr "HID billentyűzet szimuláció engedélyezése vagy letiltása"
+
+#. Translators: Header (usually the add-on name) when add-ons are loading. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Loading add-ons..."
+msgstr "Bővítmények betöltése..."
+
+#. Translators: Header (usually the add-on name) when no add-on is selected. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "No add-on selected."
+msgstr "Nincs kijelölt bővítmény"
+
+#. Translators: Label for the text control containing a description of the selected add-on.
+#. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Description:"
+msgstr "Leírás:"
+
+#. Translators: Label for the text control containing a description of the selected add-on.
+#. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "S&tatus:"
+msgstr "&Állapot"
+
+#. Translators: Label for the text control containing a description of the selected add-on.
+#. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "&Actions"
+msgstr "&Műveletek"
+
+#. Translators: Label for the text control containing extra details about the selected add-on.
+#. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "&Other Details:"
+msgstr "További &részletek:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Publisher:"
+msgstr "Közzétevő:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Installed version:"
+msgstr "Telepített verzió:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Available version:"
+msgstr "Elérhető verzió:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Channel:"
+msgstr "Csatorna:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Incompatible Reason:"
+msgstr "A kompatibilitási probléma oka:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Homepage:"
+msgstr "Kezdőlap:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "License:"
+msgstr "Licenc:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "License URL:"
+msgstr "Licenc linkje:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Download URL:"
+msgstr "Letöltési link:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Source URL:"
+msgstr "Forráskód linkje:"
+
+#. Translators: A button in the addon installation warning / blocked dialog which shows
+#. more information about the addon
+msgctxt "addonStore"
+msgid "&About add-on..."
+msgstr "Bővítmény névjegye..."
+
+#. Translators: A button in the addon installation blocked dialog which will confirm the available action.
+msgctxt "addonStore"
+msgid "&Yes"
+msgstr "&Igen"
+
+#. Translators: A button in the addon installation blocked dialog which will dismiss the dialog.
+msgctxt "addonStore"
+msgid "&No"
+msgstr "&Nem"
+
+#. Translators: The message displayed when updating an add-on, but the installed version
+#. identifier can not be compared with the version to be installed.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"Warning: add-on installation may result in downgrade: {name}. The installed "
+"add-on version cannot be compared with the add-on store version. Installed "
+"version: {oldVersion}. Available version: {version}.\n"
+"Proceed with installation anyway? "
+msgstr ""
+"Figyelem! Az alábbi bővítmény telepítése visszalépés lehet egy korábbi "
+"verzióra: {name}. Nem lehet megállapítani, hogy melyik verzió a frissebb a "
+"telepített, vagy a Bővítménykezelőben elérhető. Telepített verzió: "
+"{oldVersion}. Elérhető verzió: {version}.\n"
+"Mindenképpen folytatja a telepítést? "
+
+#. Translators: The title of a dialog presented when an error occurs.
+msgctxt "addonStore"
+msgid "Add-on not compatible"
+msgstr "Nem kompatibilis bővítmény"
+
+#. Translators: Presented when attempting to remove the selected add-on.
+#. {addon} is replaced with the add-on name.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"Are you sure you wish to remove the {addon} add-on from NVDA? This cannot be "
+"undone."
+msgstr ""
+"Biztosan el szeretné távolítani {addon} bővítményt az NVDA-ból? A törlés nem "
+"visszavonható."
+
+#. Translators: Title for message asking if the user really wishes to remove the selected Add-on.
+msgctxt "addonStore"
+msgid "Remove Add-on"
+msgstr "Bővítmény eltávolítása"
+
+#. Translators: The message displayed when installing an add-on package that is incompatible
+#. because the add-on is too old for the running version of NVDA.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"Warning: add-on is incompatible: {name} {version}. Check for an updated "
+"version of this add-on if possible. The last tested NVDA version for this "
+"add-on is {lastTestedNVDAVersion}, your current NVDA version is "
+"{NVDAVersion}. Installation may cause unstable behavior in NVDA.\n"
+"Proceed with installation anyway? "
+msgstr ""
+"Figyelem! Az alábbi  bővítmény nem kompatibilis a telepített NVDA kiadással: "
+"{name} {version}. Keressen újabb bővítmény-verziót, ha lehetséges! A "
+"bővítménnyel utoljára tesztelt NVDA kiadás: {lastTestedNVDAVersion}, a "
+"telepített NVDA kiadás: {NVDAVersion}. A bővítmény telepítése hibát okozhat "
+"az NVDA működésében.\n"
+"Ennek tudatában is mindenképpen folytatni kívánja a telepítést? "
+
+#. Translators: The message displayed when enabling an add-on package that is incompatible
+#. because the add-on is too old for the running version of NVDA.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"Warning: add-on is incompatible: {name} {version}. Check for an updated "
+"version of this add-on if possible. The last tested NVDA version for this "
+"add-on is {lastTestedNVDAVersion}, your current NVDA version is "
+"{NVDAVersion}. Enabling may cause unstable behavior in NVDA.\n"
+"Proceed with enabling anyway? "
+msgstr ""
+"Figyelem! Az alábbi  bővítmény nem kompatibilis a telepített NVDA kiadással: "
+"{name} {version}. Keressen újabb bővítmény-verziót, ha lehetséges! A "
+"bővítménnyel utoljára tesztelt NVDA kiadás: {lastTestedNVDAVersion}, a "
+"telepített NVDA kiadás: {NVDAVersion}. A bővítmény engedélyezése hibát "
+"okozhat az NVDA működésében.\n"
+"Ennek tudatában is mindenképpen engedélyezni szeretné?"
+
+#. Translators: message shown in the Addon Information dialog.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"{summary} ({name})\n"
+"Version: {version}\n"
+"Publisher: {publisher}\n"
+"Description: {description}\n"
+msgstr ""
+"{summary} ({name})\n"
+"Verzió: {version}\n"
+"Közzétevő: {publisher}\n"
+"Leírás: {description}\n"
+
+#. Translators: the url part of the About Add-on information
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Homepage: {url}"
+msgstr "Kezdőlap: {url}"
+
+#. Translators: the minimum NVDA version part of the About Add-on information
+msgctxt "addonStore"
+msgid "Minimum required NVDA version: {}"
+msgstr "Szükséges NVDA kiadás: {}"
+
+#. Translators: the last NVDA version tested part of the About Add-on information
+msgctxt "addonStore"
+msgid "Last NVDA version tested: {}"
+msgstr "Utoljára tesztelt NVDA kiadás: {}"
+
+#. Translators: title for the Addon Information dialog
+msgctxt "addonStore"
+msgid "Add-on Information"
+msgstr "Bővítményinfó"
+
+#. Translators: The title of the addonStore dialog where the user can find and download add-ons
+msgctxt "addonStore"
+msgid "Add-on Store"
+msgstr "Bővítménykezelő"
+
+#. Translators: Banner notice that is displayed in the Add-on Store.
+msgctxt "addonStore"
+msgid "Note: NVDA was started with add-ons disabled"
+msgstr "Figyelem! Az NVDA letiltott bővítményekkel lett elindítva."
+
+#. Translators: The label for a button in add-ons Store dialog to install an external add-on.
+msgctxt "addonStore"
+msgid "Install from e&xternal source"
+msgstr "Telepítés &külső forrásból"
+
+#. Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
+msgctxt "addonStore"
+msgid "Cha&nnel:"
+msgstr "&Csatorna"
+
+#. Translators: The label of a checkbox to filter the list of add-ons in the add-on store dialog.
+msgid "Include &incompatible add-ons"
+msgstr "Nem kompatibilis bővítmények &megjelenítése"
+
+#. Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
+msgctxt "addonStore"
+msgid "Ena&bled/disabled:"
+msgstr "&Engedélyezve/Letiltva"
+
+#. Translators: The label of a text field to filter the list of add-ons in the add-on store dialog.
+msgctxt "addonStore"
+msgid "&Search:"
+msgstr "&Keresés"
+
+#. Translators: Title for message shown prior to installing add-ons when closing the add-on store dialog.
+msgctxt "addonStore"
+msgid "Add-on installation"
+msgstr "Bővítmény telepítése"
+
+#. Translators: Message shown prior to installing add-ons when closing the add-on store dialog
+#. The placeholder {} will be replaced with the number of add-ons to be installed
+msgctxt "addonStore"
+msgid "Download of {} add-ons in progress, cancel downloading?"
+msgstr ""
+"Az alábbi bővítmények letöltése még folyamatban van, megszakítja a "
+"letöltést? {}"
+
+#. Translators: Message shown while installing add-ons after closing the add-on store dialog
+#. The placeholder {} will be replaced with the number of add-ons to be installed
+msgctxt "addonStore"
+msgid "Installing {} add-ons, please wait."
+msgstr "Az alábbi bővítmények telepítése folyamatban van, kérem várjon! {}"
+
+#. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
+#, python-brace-format
+msgctxt "addonStore"
+msgid "NVDA Add-on Package (*.{ext})"
+msgstr "NVDA bővítménycsomag (*.{ext})"
+
+#. Translators: The message displayed in the dialog that
+#. allows you to choose an add-on package for installation.
+msgctxt "addonStore"
+msgid "Choose Add-on Package File"
+msgstr "Válasszon egy bővítményfájlt!"
+
+#. Translators: The name of the column that contains names of addons.
+msgctxt "addonStore"
+msgid "Name"
+msgstr "Név"
+
+#. Translators: The name of the column that contains the installed addons version string.
+msgctxt "addonStore"
+msgid "Installed version"
+msgstr "Telepített verzió"
+
+#. Translators: The name of the column that contains the available addons version string.
+msgctxt "addonStore"
+msgid "Available version"
+msgstr "Elérhető verzió"
+
+#. Translators: The name of the column that contains the channel of the addon (e.g stable, beta, dev).
+msgctxt "addonStore"
+msgid "Channel"
+msgstr "Csatorna"
+
+#. Translators: The name of the column that contains the addons publisher.
+msgctxt "addonStore"
+msgid "Publisher"
+msgstr "Közzétevő"
+
+#. Translators: The name of the column that contains the status of the addon.
+#. e.g. available, downloading installing
+msgctxt "addonStore"
+msgid "Status"
+msgstr "Állapot"
+
+#. Translators: Label for an action that installs the selected addon
+msgctxt "addonStore"
+msgid "&Install"
+msgstr "&Telepítés"
+
+#. Translators: Label for an action that installs the selected addon
+msgctxt "addonStore"
+msgid "&Install (override incompatibility)"
+msgstr "Telepítés a kompatibilitási &problémák ellenére"
+
+#. Translators: Label for an action that updates the selected addon
+msgctxt "addonStore"
+msgid "&Update"
+msgstr "&Frissítés"
+
+#. Translators: Label for an action that replaces the selected addon with
+#. an add-on store version.
+msgctxt "addonStore"
+msgid "Re&place"
+msgstr "Lecse&rélés"
+
+#. Translators: Label for an action that disables the selected addon
+msgctxt "addonStore"
+msgid "&Disable"
+msgstr "&Letiltás"
+
+#. Translators: Label for an action that enables the selected addon
+msgctxt "addonStore"
+msgid "&Enable"
+msgstr "&Engedélyezés"
+
+#. Translators: Label for an action that enables the selected addon
+msgctxt "addonStore"
+msgid "&Enable (override incompatibility)"
+msgstr "Engedélyezés a kompatibilitási &problémák ellenére"
+
+#. Translators: Label for an action that removes the selected addon
+msgctxt "addonStore"
+msgid "&Remove"
+msgstr "Eltá&volítás"
+
+#. Translators: Label for an action that opens help for the selected addon
+msgctxt "addonStore"
+msgid "&Help"
+msgstr "&Súgó"
+
+#. Translators: Label for an action that opens the homepage for the selected addon
+msgctxt "addonStore"
+msgid "Ho&mepage"
+msgstr "&Kezdőlap"
+
+#. Translators: Label for an action that opens the license for the selected addon
+msgctxt "addonStore"
+msgid "&License"
+msgstr "Li&cenc"
+
+#. Translators: Label for an action that opens the source code for the selected addon
+msgctxt "addonStore"
+msgid "Source &Code"
+msgstr "Fo&rráskód"
+
+#. Translators: The message displayed when the add-on cannot be enabled.
+#. {addon} is replaced with the add-on name.
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Could not enable the add-on: {addon}."
+msgstr "Az alábbi bővítményt nem lehet engedélyezni: {addon}."
+
+#. Translators: The message displayed when the add-on cannot be disabled.
+#. {addon} is replaced with the add-on name.
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Could not disable the add-on: {addon}."
+msgstr "Az alábbi   bővítményt nem lehet letiltani: {addon}."
+
+#~ msgid "Find Error"
+#~ msgstr "Keresési hiba"
+
+#~ msgid ""
+#~ "\n"
+#~ "\n"
+#~ "However, your NVDA configuration contains add-ons that are incompatible "
+#~ "with this version of NVDA. These add-ons will be disabled after "
+#~ "installation. If you rely on these add-ons, please review the list to "
+#~ "decide whether to continue with the installation"
+#~ msgstr ""
+#~ "\n"
+#~ "\n"
+#~ "\n"
+#~ "Ámbár, az nvda beállításai olyan bővítményeket tartalmaznak, amelyek "
+#~ "rendellenesen viselkednek ebben a verzióban. Ezek a bővítmények a "
+#~ "telepítés után le lesznek tiltva.\n"
+#~ "Ha szeretné használni őket, nézze át a listát, hogy ennek ellenére "
+#~ "szeretné-e folytatni a telepítést."
+
+#~ msgid "Eurobraille Esys/Esytime/Iris displays"
+#~ msgstr "Eurobraille Esys/Esytime/Iris kijelzők"
+
+#~ msgid "URL: {url}"
+#~ msgstr "Link: {url}"
+
+#~ msgid ""
+#~ "Installation of {summary} {version} has been blocked. An updated version "
+#~ "of this add-on is required, the minimum add-on API supported by this "
+#~ "version of NVDA is {backCompatToAPIVersion}"
+#~ msgstr ""
+#~ "{summary} {version} telepítése nem lehetséges. A bővítmény újabb "
+#~ "verziójára van szükség. Csak a bővítmény {backCompatToAPIVersion} és "
+#~ "újabb verziói támogatottak."
+
+#~ msgid ""
+#~ "Please specify an absolute path (including drive letter)  in which to "
+#~ "create the portable copy."
+#~ msgstr ""
+#~ "Kérem, adjon meg egy mappát a meghajtó betűjelét is tartalmazó teljes "
+#~ "elérési úttal a hordozható verzió számára"
+
+#~ msgid "Invalid drive %s"
+#~ msgstr "%s érvénytelen meghajtó"
+
+#~ msgid "Charging battery"
+#~ msgstr "Akkumulátortöltés %d százalék"
+
+#~ msgid "AC disconnected"
+#~ msgstr "Nincs töltés"
+
+#~ msgid "Unable to determine remaining time"
+#~ msgstr "Nem lehet lekérdezni a hátralévő időt"
+
+#~ msgid "through %s"
+#~ msgstr "tól %s. ig"
+
+#~ msgid "Report line indentation with speech"
+#~ msgstr "Behúzás jelzése beszéddel"
+
+#~ msgid "Report line indentation with tones"
+#~ msgstr "Behúzás jelzése hangjelzéssel"
+
+#~ msgid "Report line indentation with speech and tones"
+#~ msgstr "Behúzás jelzése beszéddel és hangjelzéssel"
+
+#~ msgid "Report styles of cell borders"
+#~ msgstr "Cellaszegélyek stílusának bemondása"
+
+#~ msgid "Report colors and styles of cell borders"
+#~ msgstr "Cellaszegélyek színének és stílusának bemondása"
 
 #~ msgid "Swedish grade 1"
 #~ msgstr "Svéd, rövidítési fokozat 1"
