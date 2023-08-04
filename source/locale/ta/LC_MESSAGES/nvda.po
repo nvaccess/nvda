@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-27 01:58+0000\n"
-"PO-Revision-Date: 2023-07-01 20:15+0530\n"
+"POT-Creation-Date: 2023-07-28 03:20+0000\n"
+"PO-Revision-Date: 2023-07-29 11:08+0530\n"
 "Last-Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language-Team: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language: ta\n"
@@ -2179,7 +2179,7 @@ msgstr "வரியுரு"
 #. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
 msgctxt "symbolPreserve"
 msgid "never"
-msgstr "எப்பொழுதுமே இல்லை"
+msgstr "ஒருபோதும் இல்லை"
 
 #. Translators: An option for when a symbol itself will be sent to the synthesizer.
 #. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
@@ -2603,6 +2603,8 @@ msgid "Configuration profiles"
 msgstr "அமைவடிவ தனியமைப்புகள்"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
 #. Translators: This is the label for the braille panel
 msgid "Braille"
 msgstr "பிரெயில் "
@@ -4134,6 +4136,31 @@ msgstr ""
 #, python-format
 msgid "Braille tethered %s"
 msgstr "பிரெயில் கட்டப்பட்டுள்ளது %s"
+
+#. Translators: Input help mode message for cycle through
+#. braille move system caret when routing review cursor command.
+msgid ""
+"Cycle through the braille move system caret when routing review cursor states"
+msgstr ""
+"சீராய்வுச் சுட்டியை வழியமைத்திடும்பொழுது பிரெயில் கணினிச் சுட்டியை நகர்த்திடும் "
+"நிலைகளுக்கிடையே சுழல்கிறது"
+
+#. Translators: Reported when action is unavailable because braille tether is to focus.
+msgid "Action unavailable. Braille is tethered to focus"
+msgstr "செயல் கிடைப்பிலில்லை. குவிமையத்துடன் பிரெயில் கட்டப்பட்டுள்ளது."
+
+#. Translators: Used when reporting braille move system caret when routing review cursor
+#. state (default behavior).
+#, python-format
+msgid "Braille move system caret when routing review cursor default (%s)"
+msgstr ""
+"இயல்புச் சீராய்வுச் சுட்டியை வழியமைத்திடும்பொழுது பிரெயில் கணினிச் சுட்டியை நகர்த்திடுக "
+"(%s)"
+
+#. Translators: Used when reporting braille move system caret when routing review cursor state.
+#, python-format
+msgid "Braille move system caret when routing review cursor %s"
+msgstr "%s சீராய்வுச் சுட்டியை வழியமைத்திடும்பொழுது கணினிச் சுட்டியை பிரெயில் நகர்த்திடுக"
 
 #. Translators: Input help mode message for toggle braille focus context presentation command.
 msgid "Toggle the way context information is presented in braille"
@@ -6144,10 +6171,6 @@ msgctxt "action"
 msgid "Sound"
 msgstr "ஒலி"
 
-#. Translators: Shown in the system Volume Mixer for controlling NVDA sounds.
-msgid "NVDA sounds"
-msgstr "என்விடிஏ ஒலிகள்"
-
 msgid "Type help(object) to get help about object."
 msgstr "பொருளுக்கான உதவியைப்பெற help(object) என்று தட்டச்சிடவும்"
 
@@ -7582,6 +7605,18 @@ msgstr "ஒற்றை வரி முறிவு"
 #. Translators: Label for a paragraph style in NVDA settings.
 msgid "Multi line break"
 msgstr "பலவரி முறிவு"
+
+#. Translators: Label for setting to move the system caret when routing review cursor with braille.
+msgid "Never"
+msgstr "ஒருபோதும் இல்லை"
+
+#. Translators: Label for setting to move the system caret when routing review cursor with braille.
+msgid "Only when tethered automatically"
+msgstr "தானாகக் கட்டப்படும்பொழுது மட்டும்"
+
+#. Translators: Label for setting to move the system caret when routing review cursor with braille.
+msgid "Always"
+msgstr "எப்பொழுதும்"
 
 #. Translators: Label for an option in NVDA settings.
 msgid "Diffing"
@@ -10597,11 +10632,6 @@ msgstr "கட்டமை விளக்கவுரைகளுக்கா�
 msgid "Report aria-description always"
 msgstr "ஆரியா விளக்கங்களை எப்பொழுதும் அறிவித்திடுக"
 
-#. Translators: This is the label for a group of advanced options in the
-#. Advanced settings panel
-msgid "HID Braille Standard"
-msgstr "எச்.ஐ.டி. பிரெயில் தகுதரம்"
-
 #. Translators: Label for option in the 'Enable support for HID braille' combobox
 #. in the Advanced settings panel.
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
@@ -10623,10 +10653,14 @@ msgstr "ஆம்"
 msgid "No"
 msgstr "இல்லை"
 
-#. Translators: This is the label for a checkbox in the
+#. Translators: This is the label for a combo box in the
 #. Advanced settings panel.
 msgid "Enable support for HID braille"
 msgstr "எச்.ஐ.டி. பிரெயிலுக்கான ஆதரவினை முடுக்குக"
+
+#. Translators: This is the label for a combo-box in the Advanced settings panel.
+msgid "Report live regions:"
+msgstr "செயலில் இருக்கும் மண்டலங்களை அறிவித்திடுக:"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -10710,8 +10744,7 @@ msgstr "தெளிந்த நிறங்களின் மதிப்ப�
 msgid "Audio"
 msgstr "ஒலிதம்"
 
-#. Translators: This is the label for a checkbox control in the
-#. Advanced settings panel.
+#. Translators: This is the label for a checkbox control in the Advanced settings panel.
 msgid "Use WASAPI for audio output (requires restart)"
 msgstr "ஒலி வெளியீட்டிற்கு WASAPI-ஐ பயன்படுத்துக (மறுதுவக்கம் தேவைப்படுகிறது)"
 
@@ -10719,6 +10752,11 @@ msgstr "ஒலி வெளியீட்டிற்கு WASAPI-ஐ பய�
 #. Advanced settings panel.
 msgid "Volume of NVDA sounds follows voice volume (requires WASAPI)"
 msgstr "குரல் ஒலியளவினை என்விடிஏ ஒலியளவு பின்தொடர்கிறது (WASAPI தேவைப்படுகிறது)"
+
+#. Translators: This is the label for a slider control in the
+#. Advanced settings panel.
+msgid "Volume of NVDA sounds (requires WASAPI)"
+msgstr "என்விடிஏ ஒலிகளின் ஒலியளவு (WASAPI தேவைப்படுகிறது)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -10844,6 +10882,10 @@ msgstr "தகவல் காட்சியளிக்கும் நொட�
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
 msgid "Tether B&raille:"
 msgstr "பிரெயிலைக் கட்டுக (&R)"
+
+#. Translators: This is a label for a combo-box in the Braille settings panel.
+msgid "Move system caret when ro&uting review cursor"
+msgstr "சீராய்வுச் சுட்டியை வழியமைத்திடும்பொழுது கணினிச் சுட்டியை நகர்த்திடுக (&U)"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
@@ -13516,25 +13558,29 @@ msgctxt "addonStore"
 msgid "Enabled, pending restart"
 msgstr "முடுக்கப்பட்டது, மறுதுவக்கம் நிலுவையிலுள்ளது"
 
-#. Translators: A selection option to display installed add-ons in the add-on store
+#. Translators: The label of a tab to display installed add-ons in the add-on store and the label of the
+#. add-ons list in the corresponding panel (preferably use the same accelerator key for the four labels)
 msgctxt "addonStore"
-msgid "Installed add-ons"
-msgstr "நிறுவப்பட்டுள்ள நீட்சிநிரல்கள்"
+msgid "Installed &add-ons"
+msgstr "நிறுவப்பட்டுள்ள நீட்சிநிரல்கள் (&A)"
 
-#. Translators: A selection option to display updatable add-ons in the add-on store
+#. Translators: The label of a tab to display updatable add-ons in the add-on store and the label of the
+#. add-ons list in the corresponding panel (preferably use the same accelerator key for the four labels)
 msgctxt "addonStore"
-msgid "Updatable add-ons"
-msgstr "இற்றாக்கத்தக்கக் நீட்சிநிரல்கள்"
+msgid "Updatable &add-ons"
+msgstr "இற்றாக்கத்தக்க நீட்சிநிரல்கள் (&A)"
 
-#. Translators: A selection option to display available add-ons in the add-on store
+#. Translators: The label of a tab to display available add-ons in the add-on store and the label of the
+#. add-ons list in the corresponding panel (preferably use the same accelerator key for the four labels)
 msgctxt "addonStore"
-msgid "Available add-ons"
-msgstr "கிடைப்பிலுள்ள நீட்சிநிரல்கள்"
+msgid "Available &add-ons"
+msgstr "கிடைப்பிலிருக்கும் நீட்சிநிரல்கள் (&A)"
 
-#. Translators: A selection option to display incompatible add-ons in the add-on store
+#. Translators: The label of a tab to display incompatible add-ons in the add-on store and the label of the
+#. add-ons list in the corresponding panel (preferably use the same accelerator key for the four labels)
 msgctxt "addonStore"
-msgid "Installed incompatible add-ons"
-msgstr "நிறுவப்பட்டுள்ள இணக்கமற்ற நீட்சிநிரல்கள்"
+msgid "Installed incompatible &add-ons"
+msgstr "நிறுவப்பட்டிருக்கும் இணக்கமற்ற நீட்சிநிரல்கள் (&A)"
 
 #. Translators: The reason an add-on is not compatible.
 #. A more recent version of NVDA is required for the add-on to work.
@@ -13634,8 +13680,8 @@ msgstr "நிலை (&T):"
 #. Translators: Label for the text control containing a description of the selected add-on.
 #. In the add-on store dialog.
 msgctxt "addonStore"
-msgid "&Actions"
-msgstr "செயல்கள் (&A)"
+msgid "A&ctions"
+msgstr "செயல்கள் (&C)"
 
 #. Translators: Label for the text control containing extra details about the selected add-on.
 #. In the add-on store dialog.
@@ -13647,6 +13693,16 @@ msgstr "பிற விவரங்கள் (&O):"
 msgctxt "addonStore"
 msgid "Publisher:"
 msgstr "பதிப்பாளர்:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Author:"
+msgstr "படைப்பாளர்:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "ID:"
+msgstr "அடையாளம்:"
 
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 msgctxt "addonStore"
@@ -13782,28 +13838,36 @@ msgctxt "addonStore"
 msgid ""
 "{summary} ({name})\n"
 "Version: {version}\n"
-"Publisher: {publisher}\n"
 "Description: {description}\n"
 msgstr ""
 "{summary} ({name})\n"
-"பதிப்பு: {version}\n"
-"பதிப்பாளர்: {publisher}\n"
-"விளக்கம்: {description}\n"
+"Version: {version}\n"
+"Description: {description}\n"
+
+#. Translators: the publisher part of the About Add-on information
+msgctxt "addonStore"
+msgid "Publisher: {publisher}\n"
+msgstr "பதிப்பாளர்: {publisher}\n"
+
+#. Translators: the author part of the About Add-on information
+msgctxt "addonStore"
+msgid "Author: {author}\n"
+msgstr "படைப்பாளர்: {author}\n"
 
 #. Translators: the url part of the About Add-on information
 msgctxt "addonStore"
-msgid "Homepage: {url}"
-msgstr "முகப்புப்பக்கம்: {url}"
+msgid "Homepage: {url}\n"
+msgstr "முகப்புப்பக்கம்: {url}\n"
 
 #. Translators: the minimum NVDA version part of the About Add-on information
 msgctxt "addonStore"
-msgid "Minimum required NVDA version: {}"
-msgstr "தேவைப்படும் குறைந்தபட்ச என்விடிஏ பதிப்பு: {}"
+msgid "Minimum required NVDA version: {}\n"
+msgstr "தேவைப்படும் குறைந்தபட்ச என்விடிஏ பதிப்பு: {}\n"
 
 #. Translators: the last NVDA version tested part of the About Add-on information
 msgctxt "addonStore"
-msgid "Last NVDA version tested: {}"
-msgstr "பரிசோதிக்கப்பட்ட என்விடிஏவின் கடைசிப் பதிப்பு: {}"
+msgid "Last NVDA version tested: {}\n"
+msgstr "பரிசோதிக்கப்பட்ட என்விடிஏவின் கடைசிப் பதிப்பு: {}\n"
 
 #. Translators: title for the Addon Information dialog
 msgctxt "addonStore"
@@ -13861,6 +13925,12 @@ msgctxt "addonStore"
 msgid "Installing {} add-ons, please wait."
 msgstr "{} நீட்சிநிரல்கள் நிறுவப்படுகின்றன, அருள்கூர்ந்து காத்திருக்கவும்."
 
+#. Translators: The label of the add-on list in the add-on store; {category} is replaced by the selected
+#. tab's name.
+msgctxt "addonStore"
+msgid "{category}:"
+msgstr "{category}:"
+
 #. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
 msgctxt "addonStore"
 msgid "NVDA Add-on Package (*.{ext})"
@@ -13877,12 +13947,12 @@ msgctxt "addonStore"
 msgid "Name"
 msgstr "பெயர்"
 
-#. Translators: The name of the column that contains the installed addons version string.
+#. Translators: The name of the column that contains the installed addon's version string.
 msgctxt "addonStore"
 msgid "Installed version"
 msgstr "நிறுவப்பட்டுள்ள பதிப்பு"
 
-#. Translators: The name of the column that contains the available addons version string.
+#. Translators: The name of the column that contains the available addon's version string.
 msgctxt "addonStore"
 msgid "Available version"
 msgstr "கிடைப்பிலுள்ள பதிப்பு"
@@ -13892,10 +13962,15 @@ msgctxt "addonStore"
 msgid "Channel"
 msgstr "அலைத்தடம்"
 
-#. Translators: The name of the column that contains the addons publisher.
+#. Translators: The name of the column that contains the addon's publisher.
 msgctxt "addonStore"
 msgid "Publisher"
 msgstr "பதிப்பாளர்"
+
+#. Translators: The name of the column that contains the addon's author.
+msgctxt "addonStore"
+msgid "Author"
+msgstr "படைப்பாளர்"
 
 #. Translators: The name of the column that contains the status of the addon.
 #. e.g. available, downloading installing
@@ -13975,6 +14050,12 @@ msgstr "{addon} நீட்சிநிரலினை முடுக்க �
 msgctxt "addonStore"
 msgid "Could not disable the add-on: {addon}."
 msgstr "{addon} நீட்சிநிரலினை முடக்கிட இயலவில்லை."
+
+#~ msgid "NVDA sounds"
+#~ msgstr "என்விடிஏ ஒலிகள்"
+
+#~ msgid "HID Braille Standard"
+#~ msgstr "எச்.ஐ.டி. பிரெயில் தகுதரம்"
 
 #~ msgid "Find Error"
 #~ msgstr "கண்டறிதலில் பிழை"
