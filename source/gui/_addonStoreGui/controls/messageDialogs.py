@@ -22,6 +22,7 @@ from gui.guiHelper import (
 	BoxSizerHelper,
 	BORDER_FOR_DIALOGS,
 	ButtonHelper,
+	SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS,
 )
 from gui.message import messageBox
 import windowUtils
@@ -234,21 +235,28 @@ class _SafetyWarningDialog(
 			self.scaleFactor * 600
 		)
 
+		sHelper.sizer.AddSpacer(SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
+
+		self.dontShowAgainCheckbox = sHelper.addLabeledControl(
+			pgettext(
+				"addonStore",
+				# Translators: The label of a checkbox in the add-on store warning dialog
+				"&Don't show this message again"
+			),
+			wx.CheckBox,
+		)
+
 		bHelper = sHelper.addDialogDismissButtons(ButtonHelper(wx.HORIZONTAL))
 
 		# Translators: The label of a button in a dialog
-		acknowledgeButton = bHelper.addButton(self, wx.ID_OK, label=_("&Acknowledge"))
-		acknowledgeButton.Bind(wx.EVT_BUTTON, self.onAcknowledgeButton)
-
-		# Translators: The label of a button to remind the user later about performing some action.
-		remindMeButton = bHelper.addButton(self, wx.ID_CANCEL, label=_("Remind me &later"))
-		remindMeButton.SetFocus()
+		okButton = bHelper.addButton(self, wx.ID_OK, label=_("&OK"))
+		okButton.Bind(wx.EVT_BUTTON, self.onOkButton)
 
 		mainSizer.Add(sHelper.sizer, border=BORDER_FOR_DIALOGS, flag=wx.ALL)
 		self.Sizer = mainSizer
 		mainSizer.Fit(self)
 		self.CentreOnScreen()
 
-	def onAcknowledgeButton(self, evt: wx.CommandEvent):
-		config.conf["addonStore"]["acknowledgedWarning"] = True
+	def onOkButton(self, evt: wx.CommandEvent):
+		config.conf["addonStore"]["showWarning"] = not self.dontShowAgainCheckbox.GetValue()
 		self.EndModal(wx.ID_OK)

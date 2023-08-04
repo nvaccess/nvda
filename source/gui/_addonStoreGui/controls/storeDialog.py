@@ -52,7 +52,7 @@ class AddonStoreDialog(SettingsDialog):
 		self._storeVM.onDisplayableError.register(self.handleDisplayableError)
 		self._actionsContextMenu = _ActionsContextMenu(self._storeVM)
 		super().__init__(parent, resizeable=True, buttons={wx.CLOSE})
-		if not config.conf["addonStore"]["acknowledgedWarning"]:
+		if config.conf["addonStore"]["showWarning"]:
 			_SafetyWarningDialog(parent).ShowModal()
 		self.Maximize()
 

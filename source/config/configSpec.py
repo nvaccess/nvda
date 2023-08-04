@@ -313,7 +313,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	playErrorSound = integer(0, 1, default=0)
 
 [addonStore]
-	acknowledgedWarning = boolean(default=false)
+	showWarning = boolean(default=true)
 """
 
 #: The configuration specification
