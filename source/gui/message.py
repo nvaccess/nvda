@@ -36,9 +36,7 @@ def isModalMessageBoxActive() -> bool:
 		return _messageBoxCounter != 0
 
 
-def displayDialogAsModal(
-		dialog: wx.Dialog
-) -> int:
+def displayDialogAsModal(dialog: wx.Dialog) -> int:
 	"""Display a dialog as modal.
 	@return: Same as for wx.MessageBox.
 
