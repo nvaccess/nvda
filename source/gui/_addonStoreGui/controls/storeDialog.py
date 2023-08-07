@@ -28,7 +28,7 @@ from gui import (
 	guiHelper,
 	addonGui,
 )
-from gui.message import DisplayableError
+from gui.message import DisplayableError, displayDialogAsModal
 from gui.settingsDialogs import SettingsDialog
 from logHandler import log
 
@@ -53,7 +53,7 @@ class AddonStoreDialog(SettingsDialog):
 		self._actionsContextMenu = _ActionsContextMenu(self._storeVM)
 		super().__init__(parent, resizeable=True, buttons={wx.CLOSE})
 		if config.conf["addonStore"]["showWarning"]:
-			_SafetyWarningDialog(parent).ShowModal()
+			displayDialogAsModal(_SafetyWarningDialog(parent))
 		self.Maximize()
 
 	def _enterActivatesOk_ctrlSActivatesApply(self, evt: wx.KeyEvent):
@@ -367,7 +367,7 @@ class AddonStoreDialog(SettingsDialog):
 			defaultDir="c:",
 			style=wx.FD_OPEN,
 		)
-		if fd.ShowModal() != wx.ID_OK:
+		if displayDialogAsModal(fd) != wx.ID_OK:
 			return
 		addonPath = fd.GetPath()
 		try:
