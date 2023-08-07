@@ -24,7 +24,7 @@ from gui.guiHelper import (
 	ButtonHelper,
 	SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS,
 )
-from gui.message import messageBox
+from gui.message import displayDialogAsModal, messageBox
 import windowUtils
 
 if TYPE_CHECKING:
@@ -81,13 +81,14 @@ def _shouldProceedWhenInstalledAddonVersionUnknown(
 	lastTestedNVDAVersion=addonAPIVersion.formatForGUI(addon.lastTestedNVDAVersion),
 	NVDAVersion=addonAPIVersion.formatForGUI(addonAPIVersion.CURRENT)
 	)
-	return ErrorAddonInstallDialogWithYesNoButtons(
+	res = displayDialogAsModal(ErrorAddonInstallDialogWithYesNoButtons(
 		parent=parent,
 		# Translators: The title of a dialog presented when an error occurs.
 		title=pgettext("addonStore", "Add-on not compatible"),
 		message=incompatibleMessage,
 		showAddonInfoFunction=lambda: _showAddonInfo(addon)
-	).ShowModal() == wx.YES
+	))
+	return res == wx.YES
 
 
 def _shouldProceedToRemoveAddonDialog(
@@ -127,13 +128,14 @@ def _shouldInstallWhenAddonTooOldDialog(
 	lastTestedNVDAVersion=addonAPIVersion.formatForGUI(addon.lastTestedNVDAVersion),
 	NVDAVersion=addonAPIVersion.formatForGUI(addonAPIVersion.CURRENT)
 	)
-	return ErrorAddonInstallDialogWithYesNoButtons(
+	res = displayDialogAsModal(ErrorAddonInstallDialogWithYesNoButtons(
 		parent=parent,
 		# Translators: The title of a dialog presented when an error occurs.
 		title=pgettext("addonStore", "Add-on not compatible"),
 		message=incompatibleMessage,
 		showAddonInfoFunction=lambda: _showAddonInfo(addon)
-	).ShowModal() == wx.YES
+	))
+	return res == wx.YES
 
 
 def _shouldEnableWhenAddonTooOldDialog(
@@ -156,13 +158,14 @@ def _shouldEnableWhenAddonTooOldDialog(
 	lastTestedNVDAVersion=addonAPIVersion.formatForGUI(addon.lastTestedNVDAVersion),
 	NVDAVersion=addonAPIVersion.formatForGUI(addonAPIVersion.CURRENT)
 	)
-	return ErrorAddonInstallDialogWithYesNoButtons(
+	res = displayDialogAsModal(ErrorAddonInstallDialogWithYesNoButtons(
 		parent=parent,
 		# Translators: The title of a dialog presented when an error occurs.
 		title=pgettext("addonStore", "Add-on not compatible"),
 		message=incompatibleMessage,
 		showAddonInfoFunction=lambda: _showAddonInfo(addon)
-	).ShowModal() == wx.YES
+	))
+	return res == wx.YES
 
 
 def _showAddonInfo(addon: _AddonGUIModel) -> None:

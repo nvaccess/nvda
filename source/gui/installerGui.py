@@ -6,7 +6,6 @@
 
 import os
 
-import shellapi
 import winUser
 import wx
 import config
@@ -20,6 +19,7 @@ import gui.contextHelp
 from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 import systemUtils
 from NVDAState import WritePaths
+from .message import displayDialogAsModal
 
 
 def _canPortableConfigBeCopied() -> bool:
@@ -274,7 +274,7 @@ class InstallerDialog(
 			parent=self,
 			# the defaults from the installer are fine. We are testing against the running version.
 		)
-		incompatibleAddons.ShowModal()
+		displayDialogAsModal(incompatibleAddons)
 
 
 class InstallingOverNewerVersionDialog(
