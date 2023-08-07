@@ -23,6 +23,7 @@ import addonHandler
 import globalVars
 from . import guiHelper
 from . import nvdaControls
+from .message import displayDialogAsModal
 from .dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 import gui.contextHelp
 
@@ -269,7 +270,7 @@ class AddonsDialog(
 		# Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
 		wildcard=(_("NVDA Add-on Package (*.{ext})")+"|*.{ext}").format(ext=addonHandler.BUNDLE_EXTENSION),
 		defaultDir="c:", style=wx.FD_OPEN)
-		if fd.ShowModal() != wx.ID_OK:
+		if displayDialogAsModal(fd) != wx.ID_OK:
 			return
 		addonPath = fd.GetPath()
 		if installAddon(self, addonPath):
@@ -446,10 +447,10 @@ class AddonsDialog(
 		os.startfile(ADDONS_URL)
 
 	def onIncompatAddonsShowClick(self, evt):
-		IncompatibleAddonsDialog(
+		displayDialogAsModal(IncompatibleAddonsDialog(
 			parent=self,
 			# the defaults from the addon GUI are fine. We are testing against the running version.
-		).ShowModal()
+		))
 
 
 # C901 'installAddon' is too complex (16)
@@ -601,13 +602,13 @@ def _showAddonRequiresNVDAUpdateDialog(
 		NVDAVersion=addonAPIVersion.formatForGUI(addonAPIVersion.CURRENT)
 	)
 	from gui._addonStoreGui.controls.messageDialogs import _showAddonInfo
-	ErrorAddonInstallDialog(
+	displayDialogAsModal(ErrorAddonInstallDialog(
 		parent=parent,
 		# Translators: The title of a dialog presented when an error occurs.
 		title=_("Add-on not compatible"),
 		message=incompatibleMessage,
 		showAddonInfoFunction=lambda: _showAddonInfo(bundle._addonGuiModel)
-	).ShowModal()
+	))
 
 
 def _showConfirmAddonInstallDialog(
@@ -622,13 +623,13 @@ def _showConfirmAddonInstallDialog(
 	).format(**bundle.manifest)
 
 	from gui._addonStoreGui.controls.messageDialogs import _showAddonInfo
-	return ConfirmAddonInstallDialog(
+	return displayDialogAsModal(ConfirmAddonInstallDialog(
 		parent=parent,
 		# Translators: Title for message asking if the user really wishes to install an Addon.
 		title=_("Add-on Installation"),
 		message=confirmInstallMessage,
 		showAddonInfoFunction=lambda: _showAddonInfo(bundle._addonGuiModel)
-	).ShowModal()
+	))
 
 
 class IncompatibleAddonsDialog(

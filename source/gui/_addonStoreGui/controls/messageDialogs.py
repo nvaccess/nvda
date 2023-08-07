@@ -158,7 +158,7 @@ def _shouldEnableWhenAddonTooOldDialog(
 	lastTestedNVDAVersion=addonAPIVersion.formatForGUI(addon.lastTestedNVDAVersion),
 	NVDAVersion=addonAPIVersion.formatForGUI(addonAPIVersion.CURRENT)
 	)
-	res = displayDialogAsModal( ErrorAddonInstallDialogWithYesNoButtons(
+	res = displayDialogAsModal(ErrorAddonInstallDialogWithYesNoButtons(
 		parent=parent,
 		# Translators: The title of a dialog presented when an error occurs.
 		title=pgettext("addonStore", "Add-on not compatible"),

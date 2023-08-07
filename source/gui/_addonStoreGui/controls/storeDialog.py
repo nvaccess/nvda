@@ -367,7 +367,7 @@ class AddonStoreDialog(SettingsDialog):
 			defaultDir="c:",
 			style=wx.FD_OPEN,
 		)
-		if fd.ShowModal() != wx.ID_OK:
+		if displayDialogAsModal(fd) != wx.ID_OK:
 			return
 		addonPath = fd.GetPath()
 		try:
