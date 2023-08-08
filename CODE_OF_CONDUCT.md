@@ -25,7 +25,7 @@ The following behaviours are expected and requested of all community members:
 
 ## 4. Unacceptable Behaviour
 The following behaviours are considered harassment and are unacceptable within our community:
-* Violence, threats of violence or violent language directed against another person.
+* Violence, threats of violence, inciting violence, glorifying violence, or violent language directed against another person.
 * Sexist, racist, homophobic, transphobic, ableist or otherwise discriminatory jokes and language.
 * Posting or displaying sexually explicit or violent material.
 * Posting or threatening to post other people's personally identifying information ("doxing").
