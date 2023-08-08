@@ -131,10 +131,10 @@ Pritisnite ``strelicuDole`` da pročitate licencni ugovor ako želite.
 
 Opcije su: 
 - "Instaliraj NVDA na ovaj računar": ovo je glavna opcija koju će većina korisnika želeti za lakše korišćenje programa NVDA. 
-- "Kreiraj prenosivu kopiju": ovo dozvoljava programu NVDA da bude podešen u bilo kom folderu bez instalacije.
+- "Kreiraj prenosnu kopiju": ovo dozvoljava programu NVDA da bude podešen u bilo kom folderu bez instalacije.
 Ovo je korisno na računarima bez administratorskih prava, ili na memorijskim uređajima kako biste NVDA nosili sa sobom.
-Kada je ova opcija izabrana, NVDA vas vodi kroz korake za pravljenje prenosive kopije.
-Glavna stvar koju NVDA mora da zna je folder u kojem treba napraviti prenosivu kopiju. 
+Kada je ova opcija izabrana, NVDA vas vodi kroz korake za pravljenje prenosne kopije.
+Glavna stvar koju NVDA mora da zna je folder u kojem treba napraviti prenosnu kopiju. 
 - "Nastavi sa korišćenjem": ovo ostavlja privremenu NVDA kopiju pokrenutu.
 Ovo je korisno kako biste testirali karakteristike nove verzije pre nego što je instalirate.
 Kada je ova opcija izabrana, prozor pokretača se zatvara i privremena NVDA kopija ostaje pokrenuta dok se ne zatvori ili se računar isključi.
@@ -145,8 +145,8 @@ Napomena da se promene podešavanja ne čuvaju.
 
 Ako planirate da uvek koristite NVDA na ovom računaru, izabraćete opciju da instalirate NVDA.
 Instaliranje NVDA-a će vam omogućiti dodatne funkcije kao što su automatsko pokretanje nakon prijave i mogućnost čitanja ekrana za prijavu i drugih [bezbednih ekrana #SecureScreens].
-Ovo nije moguće sa prenosivim i privremenim kopijama.
-Za potpune detalje o ograničenjima korišćenja prenosivih i privremenih kopija programa NVDA, molimo pročitajte [ograničenja prenosivih i privremenih kopija #PortableAndTemporaryCopyRestrictions].
+Ovo nije moguće sa prenosnim i privremenim kopijama.
+Za potpune detalje o ograničenjima korišćenja prenosnih i privremenih kopija programa NVDA, molimo pročitajte [ograničenja prenosnih i privremenih kopija #PortableAndTemporaryCopyRestrictions].
 
 Instaliranje vam takođe dozvoljava pravljenje prečica na radnoj površini i u start meniju, i dozvoljava programu NVDA da se pokrene prečicom ``control+alt+n``.
 
@@ -296,7 +296,7 @@ Telefonska podrška uključuje lokalne brojeve u Australiji i SAD-u.
 ++ Opcije instalacije ++[InstallingNVDA]
 
 Ako instalirate NVDA direktno iz preuzetog pokretača, pritisnite dugme instaliraj NVDA.
-Ako ste zatvorili ovaj dijalog ili želite da instalirate NVDA iz prenosive kopije, izaberite instaliraj NVDA u NVDA meniju iz podmenija alati.
+Ako ste zatvorili ovaj dijalog ili želite da instalirate NVDA iz prenosne kopije, izaberite instaliraj NVDA u NVDA meniju iz podmenija alati.
 
 Dijalog za instalaciju će zatražiti potvrdu i takođe reći da li ova instalacija ažurira neku postojeću instalaciju.
 Aktiviranjem dugmeta nastavi počinje instalacija NVDA.
@@ -323,31 +323,35 @@ Ako je napravljena, ona takođe dobija prečicu sa tastature ``control+alt+n``, 
 +++ Kopiraj podešavanja prenosne kopije u trenutni nalog+++[CopyPortableConfigurationToCurrentUserAccount]
 Ova opcija bira da li konfiguracija trenutno pokrenute kopije NVDA treba da se kopira za korisnika koji je trenutno prijavljen, za instaliranu kopiju NVDA. 
 Ovo neće kopirati podešavanja za druge korisnike ni za korišćenje na Windows ekranu za prijavljivanje i [drugim bezbednim ekranima #SecureScreens].
-Ova opcija je dostupna samo kada se instalira iz prenosive kopije, ne i kada se instalira iz preuzete datoteke.
+Ova opcija je dostupna samo kada se instalira iz prenosne kopije, ne i kada se instalira iz preuzete datoteke.
 
-++ Pravljenje prenosive kopije ++[CreatingAPortableCopy]
-Ako pravite prenosivu kopiju iz preuzete datoteke, jednostavno aktivirajte dugme napravi prenosivu kopiju.
-Ako ste zatvorili ovaj dijalog ili ste instalirali NVDA, Izaberite opciju napravi prenosivu kopiju u NVDA meniju a zatim u podmeniju alati.
+++ Pravljenje prenosne kopije ++[CreatingAPortableCopy]
+Ako pravite prenosnu kopiju iz preuzete datoteke, jednostavno aktivirajte dugme napravi prenosnu kopiju.
+Ako ste zatvorili ovaj dijalog ili ste instalirali NVDA, Izaberite opciju napravi prenosnu kopiju u NVDA meniju a zatim u podmeniju alati.
 
-Dijalog koji se otvori nakon toga vam omogućava izbor gde prenosiva kopija treba da bude napravljena.
-Ovo može biti lokacija na hard disku ili nekim drugim prenosivim medijima.
-Tu takođe imate opciju koja bira da li treba kopirati trenutna podešavanja u prenosivu kopiju.
- Ova opcija je dostupna samo kada se pravi prenosiva kopija iz instalirane kopije, ne i kada se pravi iz preuzete datoteke.
-Aktiviranje dugmeta nastavi pravi prenosivu kopiju.
+Dijalog koji se otvori nakon toga vam omogućava izbor gde prenosna kopija treba da bude napravljena.
+Ovo može biti lokacija na hard disku ili nekim drugim prenosnim medijima.
+Tu takođe imate opciju koja bira da li treba kopirati trenutna podešavanja u prenosnu kopiju.
+ Ova opcija je dostupna samo kada se pravi prenosna kopija iz instalirane kopije, ne i kada se pravi iz preuzete datoteke.
+Aktiviranje dugmeta nastavi pravi prenosnu kopiju.
 Nakon što se pravljenje završi, poruka će se pojaviti koja će vas obavestiti da je bilo uspešno.
 Pritisnite u redu da zatvorite ovaj dijalog.
 
 
-++ Ograničenja prenosivih i privremenih kopija ++[PortableAndTemporaryCopyRestrictions]
+++ Ograničenja prenosnih i privremenih kopija ++[PortableAndTemporaryCopyRestrictions]
 
-Ako želite da nosite NVDA sa sobom na USB disku ili drugom mediju koji podržava pisanje, onda izaberite da napravite prenosivu kopiju.
-Instalirana kopija takođe može da napravi prenosivu kopiju u bilo kom trenutku. 
-Prenosiva kopija takođe ima mogućnost da se instalira na računaru u bilo kom trenutku.
+Ako želite da nosite NVDA sa sobom na USB disku ili drugom mediju koji podržava pisanje, onda izaberite da napravite prenosnu kopiju.
+Instalirana kopija takođe može da napravi prenosnu kopiju u bilo kom trenutku. 
+Prenosna kopija takođe ima mogućnost da se instalira na računaru u bilo kom trenutku.
 Ali, ako želite da kopirate NVDA na medijima koji podržavaju samo čitanje kao što je CD, onda samo kopirajte preuzetu datoteku.
-Pokretanje prenosive kopije direktno sa medija koji podržavaju samo čitanje trenutno nije podržano.
-Korišćenje privremene kopije programa NVDA je takođe mogućnost (na primer u svrhu demonstracije), ali pokretanje NVDA na ovaj način svaki put može oduzeti dosta vremena.
+Pokretanje prenosne kopije direktno sa medija koji podržavaju samo čitanje trenutno nije podržano.
 
-Pored toga što ne mogu da se pokrenu nakon i u toku prijave, privremena i prenosiva kopija takođe imaju sledeća ograničenja:
+[NVDA instalacija #StepsForRunningTheDownloadLauncher] se može koristiti kao privremena kopija programa NVDA.
+Privremene kopije sprečavaju čuvanje NVDA podešavanja.
+Ovo uključuje nemogućnost korišćenja [prodavnice dodataka #AddonsManager].
+
+Prenosne i privremene kopije programa NVDA imaju sledeća ograničenja:
+- Nemogućnost automatskog pokretanja u toku ili nakon prijave.
 - Nemogućnost interakcije sa aplikacijama koje su pokrenute sa administratorskim privilegijama, osim ako se NVDA ne pokrene sa administratorskim privilegijama(nije preporučeno).
 - Nemogućnost čitanja ekrana kontrole korisničkog naloga(KKN) kada pokušate da pokrenete neku aplikaciju sa administratorskim privilegijama.
 - Windows 8 i noviji: Nemogućnost podrške unosa uz pomoć ekrana osetljivog na dodir.
@@ -368,8 +372,8 @@ Za instalirane kopije, NVDA čuva podešavanja u roaming app data folderu trenut
 Moguće je promeniti ovo tako da NVDA učitava svoja podešavanja iz foldera local u folderu app data.
 Pogledajte deo o [sistemskim parametrima #SystemWideParameters] za više detalja.
 
-Da pokrenete prenosivu kopiju, potrebno je ući u folder u kojem ste napravili prenosivu kopiju, i pritisnuti enter ili kliknuti dva puta na datoteku nvda.exe.
-Ako je NVDA već pokrenut, automatski će biti zaustavljen pre pokretanja prenosive verzije.
+Da pokrenete prenosnu kopiju, potrebno je ući u folder u kojem ste napravili prenosnu kopiju, i pritisnuti enter ili kliknuti dva puta na datoteku nvda.exe.
+Ako je NVDA već pokrenut, automatski će biti zaustavljen pre pokretanja prenosne verzije.
 
 Dok se NVDA pokreće, čućete niz tonova(koji vam govore da se NVDA učitava).
 U zavisnosti od brzine vašeg računara, ili ako pokrećete NVDA sa sporijeg medija, možda će ovo malo duže trajati.
@@ -1390,7 +1394,7 @@ Ako je ova opcija omogućena, NV Access će koristiti informacije iz provera až
 Napomena da iako će vaša IP adresa biti poslata za određivanje države u toku provere ažuriranja, IP adresa se nikada ne čuva.
 Pored osnovnih informacija neophodnih za proveru ažuriranja, sledeće dodatne informacije se takođe trenutno šalju:
 - Jezik NVDA interfejsa
-- Da li je ova kopija programa NVDA prenosiva ili instalirana
+- Da li je ova kopija programa NVDA prenosna ili instalirana
 - Ime sintetizatora koji se trenutno koristi (uključujući ime dodatka od kog dolazi drajver)
 - Ime brajevog reda koji se trenutno koristi (uključujući ime dodatka od kog dolazi drajver)
 - Trenutna izlazna brajeva tabela (ako se koristi brajev red)
@@ -1538,7 +1542,7 @@ Na Windowsu 8 i novijim verzijama, ova opcija vam dozvoljava da izaberete da li 
 -
 
 Ova opcija je dostupna samo ako je NVDA instaliran.
-Nije moguće podržati stišavanje pozadinskih zvukova za prenosive i privremene kopije programa NVDA.
+Nije moguće podržati stišavanje pozadinskih zvukova za prenosne i privremene kopije programa NVDA.
 
 +++ Krug sintetizatora+++[SynthSettingsRing]
 Ako želite brzo da menjate podešavanja govora bez ulaza u kategoriju govor podešavanja programa NVDA, NVDA ima nekoliko komandi za pomeranje kroz neka od često korišćenih podešavanja govora:
@@ -2601,7 +2605,7 @@ Kada promenite ime profila, sve prečice koje ste prethodno dodali će ostati do
 Uklanjanje profila će automatski obrisati prečice za taj profil.
 
 ++ Lokacija datoteka podešavanja ++[LocationOfConfigurationFiles]
-Prenosive kopije čuvaju sva podešavanja, sve prilagođene dodatke za aplikacije i drajvere u folderu userConfig, koji se nalazi u NVDA folderu.
+Prenosne kopije čuvaju sva podešavanja, sve prilagođene dodatke za aplikacije i drajvere u folderu userConfig, koji se nalazi u NVDA folderu.
 
 Instalirane verzije čuvaju sva podešavanja, prilagođene drajvere i dodatke za aplikacije u folderu vašeg Windows korisničkog profila.
 Ovo znači da svaki korisnik sistema može imati svoja podešavanja.
@@ -2788,15 +2792,15 @@ Za više informacija, pročitajte uputstvo za programere dostupno u[delu za prog
 Ovo će otvoriti [prodavnicu NVDA dodataka #AddonsManager].
 Za više informacija, pročitajte obimnu sekciju: [Dodaci i prodavnica dodataka #AddonsManager].
 
-++ Napravi prenosivu kopiju ++[CreatePortableCopy]
-Ova opcija otvara dijalog koji će vam dozvoliti da napravite prenosivu kopiju programa NVDA iz instalirane verzije.
-U suprotnom slučaju, kada koristite prenosivu kopiju programa NVDA, u meniju sa alatima ime opcije će biti "Instaliraj NVDA na ovaj računar" umesto "Napravi prenosivu kopiju").
+++ Napravi prenosnu kopiju ++[CreatePortableCopy]
+Ova opcija otvara dijalog koji će vam dozvoliti da napravite prenosnu kopiju programa NVDA iz instalirane verzije.
+U suprotnom slučaju, kada koristite prenosnu kopiju programa NVDA, u meniju sa alatima ime opcije će biti "Instaliraj NVDA na ovaj računar" umesto "Napravi prenosnu kopiju").
 
-Oba dijaloga će vas pitati da izaberete folder u kome će se napraviti prenosiva kopija ili instalirati program NVDA.
+Oba dijaloga će vas pitati da izaberete folder u kome će se napraviti prenosna kopija ili instalirati program NVDA.
 
 U ovom dijalogu možete da omogućite ili onemogućite sledeće opcije:
-- Kopiraj trenutna korisnička podešavanja (ovo uključuje datoteke u %appdata%\roaming\NVDA ili u podešavanjima vaše prenosive kopije i uključuje dodatke i druge module)
-- Pokretanje nakon kreiranja prenosive kopije ili instalacije (automatski pokreće NVDA nakon završenog kreiranja prenosive kopije ili instalacije)
+- Kopiraj trenutna korisnička podešavanja (ovo uključuje datoteke u %appdata%\roaming\NVDA ili u podešavanjima vaše prenosne kopije i uključuje dodatke i druge module)
+- Pokretanje nakon kreiranja prenosne kopije ili instalacije (automatski pokreće NVDA nakon završenog kreiranja prenosne kopije ili instalacije)
 -
 
 ++ Pokreni COM Registration Fixing alatku... ++[RunCOMRegistrationFixingTool]
@@ -3967,7 +3971,7 @@ Bezbedan način rada će onemogućiti:
 - Čuvanje konfiguracije i drugih podešavanja na disku
 - Čuvanje mape komandi na disku
 - Opcije [profila podešavanja #ConfigurationProfiles] kao što su pravljenje, brisanje, preimenovanje profila i slično.
-- Ažuriranje programa NVDA i pravljenje prenosivih kopija
+- Ažuriranje programa NVDA i pravljenje prenosnih kopija
 - [Prodavnicu dodataka #AddonsManager]
 - [NVDA Python konzolu #PythonConsole]
 - [Preglednik dnevnika #LogViewer] i evidentiranje u dnevniku
@@ -4037,9 +4041,9 @@ Slede opcije komandne linije za NVDA:
 | Nema | --install-silent | Tiha instalacija programa NVDA(ne pokreće novo instaliranu kopiju) |
 | Nema | --enable-start-on-logon=True |False | U toku instalacije, omogući podešavanje [pokreni NVDA na Windows ekranu za prijavljivanje #StartAtWindowsLogon] |
 | Nema | --copy-portable-config | Kada instalirate, kopira podešavanja iz označene adrese (--config-path, -c) u trenutni korisnički nalog |
-| Nema | --create-portable | Pravi prenosivu kopiju programa NVDA (pokreće se automatski nakon pravljenja). Zahteva opciju --portable-path koja određuje adresu kopije |
-| Nema | --create-portable-silent | Pravi prenosivu kopiju programa NVDA (bez pokretanja nakon završetka). Zahteva opciju --portable-path koja određuje adresu kopije |
-| Nema | --portable-path=AdresaKopije | Adresa na kojoj će prenosiva kopija biti napravljena |
+| Nema | --create-portable | Pravi prenosnu kopiju programa NVDA (pokreće se automatski nakon pravljenja). Zahteva opciju --portable-path koja određuje adresu kopije |
+| Nema | --create-portable-silent | Pravi prenosnu kopiju programa NVDA (bez pokretanja nakon završetka). Zahteva opciju --portable-path koja određuje adresu kopije |
+| Nema | --portable-path=AdresaKopije | Adresa na kojoj će prenosna kopija biti napravljena |
 
 ++ Sistemski parametri++[SystemWideParameters]
 NVDA dozvoljava promenu određenih vrednosti u sistemskoj registry bazi koje menjaju ponašanje programa NVDA.
