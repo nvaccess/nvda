@@ -339,14 +339,19 @@ Premere a questo punto il pulsante OK per chiudere questa finestra.
   
 
 ++ Restrizioni nelle versioni portable o temporanee ++[PortableAndTemporaryCopyRestrictions]
+
 Se si desidera copiare NVDA in un supporto rimovibile come una chiavetta USB e portarlo con sé, si consiglia di creare una copia portable.
 La copia installata è anche in grado di creare una copia portable di se stessa in qualsiasi momento.
 Allo stesso modo, la copia portable dispone anche della capacità di installarsi su qualsiasi computer in un secondo momento.
 Tuttavia, se invece si desidera copiare NVDA su un supporto di sola lettura come un CD, si dovrà semplicemente copiare il file contenente il pacchetto scaricato in precedenza.
 Si tenga presente che non è possibile al momento eseguire una versione portable in un supporto di sola lettura.
-Anche l'utilizzo della copia temporanea di NVDA è un'opzione (ad es. a scopo dimostrativo), sebbene avviare NVDA in questo modo ogni volta possa richiedere molto tempo.
 
-Oltre al fatto di non poter essere eseguite all'avvio automatico del sistema o dopo la finestra di accesso, le versioni temporanee o portable di NVDA presentano le seguenti limitazioni:
+[L'installer di NVDA #StepsForRunningTheDownloadLauncher] può essere utilizzato come copia temporanea dello screen reader.
+Le copie temporanee non consentono di salvare le impostazioni del lettore di schermo.
+A ciò va aggiunta l'impossibilità di servirsi dell'[Add-on Store #AddonsManager].
+
+Le versioni temporanee o portable di NVDA presentano le seguenti limitazioni:
+- Impossibilità di avviarsi automaticamente durante e/o dopo l'accesso.
 - Incapacità di interagire con programmi eseguiti con privilegi di amministratore, a meno che naturalmente lo stesso NVDA non venga eseguito con privilegi amministrativi (non consigliato).
 - Impossibilità di leggere le schermate del controllo Utente (UAC), quando si cerca di avviare un'applicazione con privilegi amministrativi.
 - Windows 8 e successivi: impossibilità di gestire la scrittura o qualsiasi operazione effettuata tramite Touch Screen.

@@ -115,7 +115,8 @@ Ovo se može onemogućiti u panelu naprednih podešavanja. (#7756)
   - NVDA se više neće bespotrebno prebacivati na opciju bez brajevog reda više puta u toku automatskog prepoznavanja, što donosi čistije dnevnike evidencije i manje opterećenje. (#14524)
   - NVDA će se sada vratiti na USB ako HID Bluetooth uređaj (kao što je HumanWare Brailliant ili APH Mantis) automatski bude prepoznat i USB veza postane dostupna.
   Ovo je ranije radilo samo za Bluetooth serijske portove. (#14524)
-  -
+  - Kada nijedan brajev red nije povezan i preglednik brajevog reda se zatvori pritiskanjem ``alt+f4`` ili klikom na dugme zatvori, veličina brajevog podsistema će ponovo biti vraćena na bez ćelija. (#15214)
+   -
 - Web pretraživači:
   - NVDA više neće ponekad izazivati rušenje ili prestanak rada programa Mozilla Firefox. (#14647)
   - U pretraživačima Mozilla Firefox i Google Chrome, ukucani znakovi se više ne prijavljuju u nekim poljima za unos teksta čak i kada je izgovor ukucanih znakova onemogućen. (#8442)
@@ -146,12 +147,11 @@ Ovo se može onemogućiti u panelu naprednih podešavanja. (#7756)
 - Kada naterate korišćenje UIA podrške u određenim Terminalima i konzolama, ispravljena je greška koja je izazivala rušenje i neprestano pisanje podataka  u dnevniku. (#14689)
 - NVDA više neće odbijati da sačuva podešavanja nakon vraćanja podešavanja na podrazumevana. (#13187)
 - Kada se pokreće privremena verzija iz instalacije, NVDA neće korisnicima davati pogrešne informacije da podešavanja mogu biti sačuvana. (#14914)
-- Prijavljivanje tasterskih prečica za objekte je poboljšano. (#10807)
 - NVDA sada nešto brže reaguje na komande i promene fokusa. (#14928)
 - Prikazivanje OCR podešavanja više neće biti neuspešno na nekim sistemima. (#15017)
 - Ispravljena greška vezana za čuvanje i učitavanje NVDA podešavanja, uključujući menjanje sintetizatora. (#14760)
 - Ispravljena greška koja je izazvala da u pregledu teksta pokret "Povlačenje gore" pomera stranice umesto da pređe na prethodni red. (#15127)
--
+ - 
 
 
 = 2023.1 =

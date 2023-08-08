@@ -117,7 +117,7 @@ Seuraavaksi sinulta kysytään, haluatko asentaa sen, luoda massamuistiversion v
 NVDA ei tarvitse internet-yhteyttä käynnistymiseen tai asentamiseen asennusohjelman lataamisen jälkeen.
 Internet-yhteys mahdollistaa NVDA:lle säännöllisen päivitystarkistuksen.
 
-+++ Ladatun asennusohjelman suorittamisen vaiheet +++[StepsForRunningTheDownloadLauncher]
++++ Asennusohjelman suorittamisen vaiheet +++[StepsForRunningTheDownloadLauncher]
 
 Asennustiedoston nimi on "nvda_2022.1.exe" tai vastaava.
 Vuosi ja versio muuttuvat päivitysten välillä vastaamaan nykyistä versiota.
@@ -342,15 +342,19 @@ Sulje valintaikkuna painamalla OK.
 
 ++ Massamuisti- ja tilapäisversioiden rajoitukset ++[PortableAndTemporaryCopyRestrictions]
 
-Jos haluat ottaa NVDA:n mukaasi USB-muistitikulle tai muulle kirjoitettavalle tietovälineelle, sinun tulee valita massamuistiversion luonti.
-Asennettu versio voi myös milloin tahansa luoda massamuistiversion itsestään.
-Massamuistiversio voi lisäksi asentaa itsensä myöhemmin mihin tahansa tietokoneeseen.
+Jos haluat ottaa NVDA:n mukaasi USB-muistitikulla tai muulla kirjoitettavalla tietovälineellä, sinun tulee valita massamuistiversion luonti.
+Asennetusta versiosta voidaan myös milloin tahansa luoda massamuistiversio.
+Lisäksi massamuistiversion asentaminen on mahdollista myöhemmin mihin tahansa tietokoneeseen.
 Jos kuitenkin haluat kopioida NVDA:n vain luku -tyyppiselle tietovälineelle, kuten CD-levylle, sinun tulee kopioida vain latauspaketti.
 massamuistiversion suorittamista suoraan vain luku -tyyppiseltä tietovälineeltä ei tällä hetkellä tueta.
-Vaihtoehtona on myös tilapäisversion käyttäminen (esim. esittelytarkoituksiin), vaikka NVDA:n käynnistäminen joka kerta tällä tavalla voikin olla hyvin aikaa vievää.
 
-Sen lisäksi, ettei automaattinen käynnistys toimi kirjautumisen aikana ja/tai sen jälkeen, on NVDA:n massamuisti- ja tilapäisversioissa myös seuraavia rajoituksia:
-- Vuorovaikutus järjestelmänvalvojan oikeuksin käynnissä olevien sovellusten kanssa ei ole mahdollista, ellei NVDA:ta itseään ole käynnistetty samoilla oikeuksilla (ei suositella).
+[NVDA:n asennusohjelmaa #StepsForRunningTheDownloadLauncher] voidaan käyttää tilapäisversiona.
+Asetusten tallentaminen on estetty tilapäisversioissa.
+Myös [lisäosakauppa #AddonsManager] on poissa käytöstä.
+
+NVDA:n massamuisti- ja tilapäisversioissa on seuraavia rajoituksia:
+- Kirjautumisen aikana ja/tai jälkeen käynnistyminen ei ole mahdollista.
+- Vuorovaikutus järjestelmänvalvojan oikeuksin käynnissä olevien sovellusten kanssa ei ole mahdollista, ellei NVDA:ta ole käynnistetty samoilla oikeuksilla (ei suositella).
 - Käyttäjätilien valvonnan kehotteiden lukeminen ei ole mahdollista yritettäessä käynnistää sovellusta järjestelmänvalvojan oikeuksin.
 - Windows 8 ja sitä uudemmat käyttöjärjestelmät: kosketusnäyttösyötettä ei tueta.
 - Windows 8 ja sitä uudemmat käyttöjärjestelmät: sellaiset ominaisuudet kuin selaustila ja kirjoitettujen merkkien puhuminen eivät toimi Windows-kaupasta ladatuissa sovelluksissa.
