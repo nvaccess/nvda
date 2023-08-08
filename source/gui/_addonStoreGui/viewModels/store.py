@@ -201,11 +201,16 @@ class AddonStoreVM:
 				# Translators: Label for an action that opens help for the selected addon
 				displayName=pgettext("addonStore", "&Help"),
 				actionHandler=self.helpAddon,
-				validCheck=lambda aVM: aVM.model.isInstalled and self._filteredStatusKey in (
-					# Showing help in the updatable add-ons view is misleading
-					# as we can only fetch the add-on help from the installed version.
-					_StatusFilterKey.INSTALLED,
-					_StatusFilterKey.INCOMPATIBLE,
+				validCheck=lambda aVM: (
+					aVM.model.isInstalled
+					and self._filteredStatusKey in (
+						# Showing help in the updatable add-ons view is misleading
+						# as we can only fetch the add-on help from the installed version.
+						_StatusFilterKey.INSTALLED,
+						_StatusFilterKey.INCOMPATIBLE,
+					)
+					and aVM.model._addonHandlerModel is not None
+					and aVM.model._addonHandlerModel.getDocFilePath() is not None
 				),
 				listItemVM=selectedListItem
 			),
@@ -236,7 +241,9 @@ class AddonStoreVM:
 		]
 
 	def helpAddon(self, listItemVM: AddonListItemVM) -> None:
+		assert listItemVM.model._addonHandlerModel is not None
 		path = listItemVM.model._addonHandlerModel.getDocFilePath()
+		assert path is not None
 		startfile(path)
 
 	def removeAddon(self, listItemVM: AddonListItemVM) -> None:

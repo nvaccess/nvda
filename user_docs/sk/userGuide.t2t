@@ -17,7 +17,7 @@ Vývoj NVDA zastrešuje organizácia [NV Access https://www.nvaccess.org/], za p
 ++ Všeobecné vlastnosti ++[GeneralFeatures]
 NVDA umožňuje nevidiacim a zrakovo postihnutým prístup a interakciu s operačným systémom Windows a množstvom ďalších voliteľných aplikácií.
 
-Na YouTube kanály NV Access je k dispozícii krátke demonstračné video s názvom ["Čo je NVDA?" https://www.youtube.com/watch?v=tCFyyqy9mqo].
+Na YouTube kanály NV Access je k dispozícii krátke demonštračné video s názvom ["Čo je NVDA?" https://www.youtube.com/watch?v=tCFyyqy9mqo].
 
 Najvýznamnejšie prednosti programu:
 - Podpora pre populárne aplikácie vrátane internetových prehliadačov, emailových klientov, programov slúžiacich na okamžitú komunikáciu a kancelárskych balíkov
@@ -48,7 +48,7 @@ Najvýznamnejšie prednosti programu:
 
 ++ Medzinárodná podpora ++[Internationalization]
 Je dôležité, aby ľudia na celom svete hovoriaci akýmkoľvek jazykom, mali kdekoľvek prístup k špeciálnym technológiám.
-NVDA bol dodnes okrem angličtiny lokalizovaný do týchto 54 jazykov: Afrikánčina, Albánčina, Arabčina, Aragónčina, Amharčina, Barmčina,  Bulharčina, Čeština, Dánčina, Fínčina, Francúzština, Galícijčina, Gréčtina, Gruzínčina, Hebrejčina,  Hindčina, Holandčina, Chorvátčina, Islandčina, Írčina, Japončina, Kannada, Katalánčina, Kyrgyz, Kórejčina, Litovčina, Macedónčina, Maďarčina, Mongólčina, Nemčina (Nemecko a Švajčiarsko), Nepálčina, Nórčina, Perzština, Poľština, Brazílska a Portugalská Portugalčina , Punjabi, Rumunčina, Ruština, Slovenčina, Slovinčina, Srbčina, Kolombijská a Španielska Španielčina, Švédčina, Taliančina, Tamilčina, Thajčina, Tradičná a zjednodušená čínština, Turečtina, Ukrajinčina, Vietnamčina .
+NVDA bol dodnes okrem angličtiny lokalizovaný do týchto 54 jazykov: Afrikánčina, Albánčina, Arabčina, Aragónčina, Amharčina, Barmčina,  Bulharčina, Čeština, Dánčina, Fínčina, Francúzština, Galícijčina, Gréčtina, Gruzínčina, Hebrejčina,  Hindčina, Holandčina, Chorvátčina, Islandčina, Írčina, Japončina, Kannada, Katalánčina, Kyrgyz, Kórejčina, Litovčina, Macedónčina, Maďarčina, Mongolčina, Nemčina (Nemecko a Švajčiarsko), Nepálčina, Nórčina, Perzština, Poľština, Brazílska a Portugalská Portugalčina , Punjabi, Rumunčina, Ruština, Slovenčina, Slovinčina, Srbčina, Kolombijská a Španielska Španielčina, Švédčina, Taliančina, Tamilčina, Thajčina, Tradičná a zjednodušená čínština, Turečtina, Ukrajinčina, Vietnamčina .
 
 ++ Podpora hlasového výstupu ++[SpeechSynthesizerSupport]
 Bez ohľadu na poskytovanie hlásení, a rozhraní v niekoľkých jazykoch, NVDA ponúka možnosť čítania textov v akomkoľvek jazyku, pokiaľ je dostupný hlasový výstup pre daný jazyk.
@@ -218,9 +218,9 @@ Priradené príkazy sa pri zapnutej nápovede vstupu nebudú spúšťať.
 | Fokus | ``NVDA+tab`` | ``NVDA+tab`` | Oznámi alebo vyhláskuje meno objektu, ktorý má systémový fokus |
 | obsah okna v popredí | ``NVDA+b`` | ``NVDA+b`` | Oznámi všetky prvky aktuálneho okna v popredí (užitočné pre dialógy) |
 | Stavový riadok | ``NVDA+end``  | ``NVDA+shift+end`` | Oznámi obsah stavového riadku ak ho NVDA dokáže nájsť. Stlačené dvakrát stavový riadok vyhláskuje. Stlačené trikrát skopíruje obsah stavového riadka do schránky |
-| Čas a dátum | ``NVDA+f12`` | ``NVDA+f12`` | Oznámi čas; stlačené 2 krát rýchlo za sebou oznámi dátum. |
+| Čas a dátum | ``NVDA+f12`` | ``NVDA+f12`` | Oznámi čas; stlačené 2 krát rýchlo za sebou oznámi dátum. Dátum a čas je oznamovan podľa formátu nastaveného v systéme Windows. |
 | Oznámiť formátovanie textu | ``NVDA+f`` | ``NVDA+f`` | Oznámi formátovanie pod textovým kurzorom. Stlačené dvakrát za sebou zobrazí informáciu v režime prehliadania |
-| Oznámiť URL adresu odkazu | ``NVDA+k`` | ``NVDA+k`` | Oznámi URL adresu odkazu, na ktorom je [navigačný objekt #ObjectNavigation]. Stlačené dvakrát za sebou zobrazí URL adresu v samostatnom okne, aby bolo možné ju podrobnejšie prezerať |
+| Oznámiť URL adresu odkazu | ``NVDA+k`` | ``NVDA+k`` | Oznámi URL adresu odkazu, na ktorom je fokus alebo systémový kurzor.  Stlačené dvakrát za sebou zobrazí URL adresu v samostatnom okne, aby bolo možné ju podrobnejšie prezerať |
 
 +++ Prepínanie čítania informácií +++[ToggleWhichInformationNVDAReads]
 || Názov | Klávesová skratka pre Desktop | Klávesová skratka pre laptop | Popis |
@@ -307,6 +307,7 @@ Ak používate nejaké doplnky, NVDA vás môže upozorniť, že vaše doplnky n
 Pred tým, než budete pokračovať, musíte odsúhlasiť zakázanie doplnkov.
 Po aktivovaní tlačidla zobraziť nekompatibilné doplnky si môžete pozrieť, ktoré doplnky budú zakázané.
 Podrobnosti si môžete prečítať v časti [Nekompatibilné doplnky #incompatibleAddonsManager].
+Po inštalácii môžete na vlastné riziko povoliť nekompatibilné doplnky z [Katalógu doplnkov #AddonsManager].
 
 +++ Spúšťať NVDA na prihlasovacej obrazovke +++[StartAtWindowsLogon]
 Umožňuje nastaviť, či sa má NVDA automaticky spustiť pri zobrazení prihlasovacej obrazovky, teda ešte pred tým, ako zadáte svoje heslo.
@@ -478,10 +479,15 @@ Príkazy nebudú aktívne vykonávané, budete počuť len patričné informáci
 ++ Ponuka NVDA ++[TheNVDAMenu]
 Ponuka NVDA umožňuje meniť nastavenia, čítať pomocníka, načítať a uložiť konfiguráciu, editovať rečové slovníky, pristupovať k ďalším nástrojom a ukončiť NVDA.
 
-Pre vstup do ponuky NVDA odkiaľkoľvek zo systému Windows počas behu NVDA stlačte na klávesnici NVDA+N alebo dva krát klepnite dvoma prstami na dotykovú obrazovku.
-Túto istú ponuku môžete tiež vyvolať aktivovaním kontextovej ponuky pre ikonu NVDA v oznamovacej oblasti.
-Na prechod do oznamovacej oblasti môžete použiť klávesovú kombináciu Windows+b, potom nalistovať požadovanú ikonu a menu zobraziť klávesom aplikácie (druý kláves v pravo od medzerníka na väčšine klávesníc).
-Po zobrazení ponuky programu môžete použiť šípky na pohyb po položkách, klávesom enter aktivujete aktuálnu položku.
+Pre vstup do ponuky NVDA odkiaľkoľvek zo systému Windows počas behu NVDA môžete použiť niektorý z nasledujúcich postupov:
+- Stlačte na klávesnici skratku ``nvda+n``.
+- Dvakrát poklepte dvoma prstami na obrazovku.
+ Ponuku môžete vyvolať aj zo systémového panelu. Stlačte ``windows+b``. Šípkami Vyhľadajte tlačidlo  NVDA a aktivujte ho klávesom ``Enter``.
+- Môžete postupovať aj tak, že skratkou ``windows+b`` prejdete na systémový panel, šípkami vyhľadáte tlačidlo NVDA a aktivujete kontextovú ponuku klávesom kontextovej ponuky. Tento sa zvyčajne nachádza vedľa klávesu pravý kontrol.
+ Ak sa na klávesnici tlačidlo kontextovej ponuky nenachádza, môžete ju vyvolať skratkou ``shift+f10``.
+- Ponuku NVDA  je možné vyvolať aj kliknutím pravým tlačidlom myši na ikone NVDA na systémovom panely.
+-
+Po zobrazení ponuky programu môžete použiť šípky na pohyb po položkách, klávesom ``enter`` aktivujete aktuálnu položku.
 
 ++ Všeobecné príkazy NVDA ++[BasicNVDACommands]
 %kc:beginInclude
@@ -1293,15 +1299,18 @@ Na prepínanie niektorých volieb existujú tiež globálne klávesové skratky,
 ++ Nastavenia++[NVDASettings]
 %kc:settingsSection: || názov | klávesová skratka pre desktop | klávesová skratka pre laptop | popis |
 Mnoho nastavení NVDA nájdete v dialógu nastavenia.
-Nastavenia sú rozdelené do kategórií, v ktorých sa pohybujete ako v klasickom zozname.
-Keď si vyberiete kategóriu, zobrazia sa konkrétne nastavenia.
-Nastavenia môžete uložiť aktivovaním tlačidla použiť. V tomto prípade ostane dialóg otvorený.
+Aby bolo možné rýchlo vyhľadať požadované nastavenie, nastavenia sú usporiadané do kategórií.
+Po vybratí príslušnej kategórie sa zobrazia len nastavenia vo zvolenej kategórii.
+V zozname kategórií na pohyb použite ``šípku hore`` a ``šípku dole``. Na prechod ku konkrétnym nastaveniam potom použite ``tab`` a ``shift+tab``.
+V dialógu nastavení je možné kedykoľvek prepínať kategórie skratkami ``ctrl+tab`` dopredu a ``ctrl+shift+tab`` v opačnom smere.
+
+Nastavenia môžete uložiť aktivovaním tlačidla použiť. V tomto prípade ostane dialóg otvorený a vy môžete meniť ďalšie nastavenia a to aj v iných kategóriách.
 Ak chcete uložiť nastavenia a súčasne zatvoriť dialóg nastavení, aktivujte tlačidlo OK.
 
 Niektoré kategórie nastavení majú aj vlastnú klávesovú skratku.
 Po stlačení tejto skratky sa automaticky otvorí dialóg nastavení a kurzor bude presunutý na požadovanú kategóriu.
 Predvolene nemajú klávesovú skratku všetky kategórie.
-Ak chcete vytvoriť skratku pre kategóriu, použite dialóg [Klávesové skratky  #InputGestures], kde môžete nastaviť novú klávesovú skratku alebo dotykové gesto.
+Ak chcete vytvoriť skratku pre kategórie, ktoré často používate, použite dialóg [Klávesové skratky  #InputGestures], kde môžete nastaviť novú klávesovú skratku alebo dotykové gesto.
 
 Kategórie nastavení sú popísané na nasledujúcich riadkoch.
 
@@ -1581,9 +1590,11 @@ Neovplyvňuje však zobrazenie vybratého textu.
 ==== Zobrazovať správy ====[BrailleSettingsShowMessages]
 V tomto zozname môžete určiť, či sa hlásenia na brailovom riadku budú zobrazovať stále, alebo zmiznú po zadanom čase.
 
+Ak chcete toto nastavenie meniť odkiaľkoľvek, je potrebné nastaviť skratku v [dialógu klávesové skratky #InputGestures].
+
 ==== Zobrazovať správy (sek) ====[BrailleSettingsMessageTimeout]
 Táto numerická hodnota určuje ako dlho majú na riadku byť zobrazované správy NVDA.
-Správy NVDA sú automaticky odstránené pri posunutí riadka. Opätovne sa zobrazia po stlačení príslušnej klávesovej skratky.
+Správy NVDA sú automaticky odstránené pri použití smerových tlačidiel na riadku. Opätovne sa zobrazia po stlačení príslušnej klávesovej skratky.
 Táto možnosť je dostupná len v prípade, že ste v predošlom zoznamovom rámiku vybrali možnosť "po určenú dobu".
 
 %kc:setting
@@ -1657,6 +1668,20 @@ Súčasné čítanie textu a počúvanie iného textu môže byť rušivé.
 Z tohto dôvodu je predvolene zapnuté prerušenie reči v prípade posúvania riadka.
 
 Ak túto možnosť vypnete, je možné počúvať hlas a čítať text zároveň.
+
+==== Ukázať výber ====[BrailleSettingsShowSelection]
+: Predvolené
+  Povolené
+: Možnosti
+  Predvolené (povolené), povolené, zakázané
+:
+
+Určuje, či bude výber vyznačený na brailovom riadku bodmi 7 a 8.
+Predvolene je toto zapnuté.
+Ukazovanie výberu ale môže byť rušivé pri čítaní.
+Vypnutie tejto možnosti môže zlepšiť a zrýchliť čitateľnosť textu.
+
+Ak chcete nastavenie meniť odkiaľkoľvek, vytvorte klávesovú skratku v [dialógu klávesové skratky #InputGestures].
 
 +++ Nastavenie brailového riadka (NVDA+ctrl+a) +++[SelectBrailleDisplay]
 Tento dialóg môžete otvoriť v nastaveniach NVDA v kategórii Braille stlačením tlačidla zmeniť... Tu následne môžete nastaviť brailový riadok, ktorý chcete používať.
@@ -2118,6 +2143,7 @@ Kategória obsahuje nasledujúce možnosti:
 
 ==== jazyk rozpoznávania ====[WinOcrSettingsRecognitionLanguage]
 V tomto zozname môžete vybrať jazyk, ktorý sa bude používať na rozpoznávanie textu.
+Ak chcete prepínať medzi dostupnými jazykmi odkiaľkoľvek, vytvorte si skratku v [Dialógu klávesové skratky #InputGestures].
 
 +++ Pokročilé +++[AdvancedSettings]
 Pozor! Tieto nastavenia sú určené pre pokročilých používateľov. Nesprávnou konfiguráciou môžete spôsobiť, že NVDA nebude pracovať správne.
@@ -2133,8 +2159,9 @@ Môžete chcieť obnoviť pôvodné nastavenie, ak si nie ste istí, čo všetko
 
 ==== Načítať vlastné moduly z priečinka Scratchpad ====[AdvancedSettingsEnableScratchpad]
 Keď vyvíjate doplnky pre NVDA, je lepšie testovať ich okamžite počas písania kódu.
-Ak začiarknete túto možnosť, NVDA bude načítavať moduly, ovládače pre syntézy reči a brailové riadky, globálne pluginy, z priečinka scratchpad vo vašom priečinku s nastaveniami NVDA.
-Staršie verzie načítavali vlastné moduly automaticky a neponúkali možnosť vypnúť načítanie vlastného kódu.
+
+Ak začiarknete túto možnosť, NVDA bude načítavať aplikačné moduly, globálne pluginy, ovládače pre syntézy reči a brailové riadky a rozšírenia pre rozpoznávanie textu a obrázkov, z priečinka scratchpad vo vašom priečinku s nastaveniami NVDA.
+Rovnako ako doplnky, aj tieto moduly sa automaticky načítajú po spustení  NVDA, alebo, ak ide o globálne pluginy a aplikačné moduly, ak ručne [Vyvoláte položku znovu načítať pluginy #ReloadPlugins].
 Predvolene je táto možnosť vypnutá, aby sme zaistili, že sa nespúšťa neoverený kód bez výslovného súhlasu používateľa.
 Ak chcete to, čo ste naprogramovali distribuovať, je potrebné vytvoriť doplnok pre NVDA vo formáte nvda-addon.
 
@@ -2290,6 +2317,19 @@ Niektoré GDI aplikácie označujú text farbou na pozadí, čo sa nvda pokúša
 V niektorých situáciách môže byť pozadie priehľadné a text sa môže nachádzať v inom prvku. 
 Tiež je možné stretnúť sa s tým, že text je zobrazený s priehľadnou farbou, ale vizuálne je farba presná.
 
+==== Na výstup pre reč a zvuky používať rozhranie WASAPI ====[WASAPI]
+Táto možnosť umožňuje na posielanie zvukového výstupu z NVDA využiť rozhranie Windows Audio Session API (WASAPI).
+Ide o moderné rozhranie, ktoré zlepšuje stabilitu reči a zvukov NVDA.
+Predvolene je táto možnosť zapnutá.
+Zmeny v tomto nastavení sa prejavia až po reštarte NVDA.
+
+==== Hlasitosť zvukov je rovnaká ako hlasitosť reči ====[SoundVolumeFollowsVoice]
+Ak je táto možnosť zapnutá, hlasitosť zvukov sa prispôsobí hlasitosti reči.
+Ak znížite hlasitosť reči, zníži sa hlasitosť zvukov.
+Rovnako ak zvýšite hlasitosť reči, zvýši sa hlasitosť zvukov.
+Táto možnosť je dostupná len ak je zapnutá možnosť "na výstup pre reč a zvuky používať rozhranie WASAPI".
+Predvolene je táto možnosť vypnutá.
+
 ==== Úroveň záznamu ====[AdvancedSettingsDebugLoggingCategories]
 Začiarkávacie políčka v tejto časti umožňujú povoliť dodatočné zaznamenávanie do logu NVDA.
 Zapisovanie  týchto správ môže spomaliť NVDA a zvýšiť veľkosť súborov.
@@ -2349,7 +2389,11 @@ Ak si želáte upraviť symbol, musíte ho najprv vybrať v zozname symbolov.
 Zoznam symbolov môžete filtrovať, ak zadáte symbol alebo jeho nahradenie do políčka filtrovať.
 
 - Do poľa nahradiť s môžete vpísať text, ktorý sa má vysloviť vždy, keď bude NVDA čítať tento symbol.
-- Zmenou výberu v zozname úrovní môžete určiť najnižšiu úroveň, na ktorej bude symbol oznamovaný.
+- Zmenou výberu v zozname úrovní môžete určiť najnižšiu úroveň, na ktorej bude symbol oznamovaný (žiadne, niektoré, väčšina, všetko).
+Úroveň tiež môžete nastaviť na možnosť znak. V takom prípade bude symbol oznamovaný len v týchto prípadoch:
+ - Pri čítaní po znakoch.
+ - Pri hláskovaní.
+ -
 - V zozname "ponechať pôvodný symbol na spracovanie hlasovému výstupu" určíte, kedy má NVDA ponechať pôvodný symbol na spracovanie pre hlasový výstup. toto sa netýka textu, ktorý ste zvolili v editačnom poli Nahradiť s.
 Toto je užitočné vtedy, ak hlasový výstup dokáže pri symbole urobiť prestávku alebo zmeniť intonáciu.
 Mnohé syntézy reči napríklad dokážu urobiť pauzu, ak narazia v texte na čiarku.
@@ -2515,6 +2559,127 @@ Nastavenia, ktoré sa použijú v prípadoch, keď NVDA beží na prihlasovacej 
 Normálne nie je potrebné do tohto priečinka zasahovať.
 Ak chcete zmeniť konfiguráciu NVDA pre prihlasovaciu obrazovku, nakonfigurujte NVDA podľa vašich predstáv kým ste prihlásení do Windows. Následne uložte nastavenia a potom pomocou tlačidla v kategórii  Všeobecné v dialógu [Nastavenia #NVDASettings] skopírujte vaše nastavenia na prihlasovaciu obrazovku.
 
++ Doplnky a katalóg s doplnkami +[AddonsManager]
+Doplnky umožňujú doplniť do NVDA nové funkcie, alebo pozmeniť existujúce funkcie NVDA.
+Vyvýja ich komunita okolo NVDA, ale aj externé prípadne aj komerčné organizácie.
+Doplnky môžu robiť nasledovné:
+- Pridať alebo zlepšiť podporu pre rôzne aplikácie.
+- Poskytovať podporu pre nové brailové riadky a hlasové výstupi.
+- Pridávať alebo meniť funkcionalitu NVDA.
+-
+
+Katalóg s doplnkami umožňuje prehľadávať a spravovať doplnky.
+Všetky doplnky sú poskytované zdarma.
+Niektoré však môžu vyžadovať zakúpenie licencie alebo kúpu dodatočného software, aby ste ich mohli používať.
+Najčastejšie sa s tým môžete stretnúť pri doplnkoch k syntézam reči.
+Ak nainštalujete doplnok, ktorý vyžaduje platbu a rozmyslíte si to, doplnok môžete jednoducho odinštalovať.
+
+Katalóg s doplnkami môžete nájsť v menu NVDA > Nástroje.
+Ak chcete mať ku katalógu prístup odkiaľkoľvek, môžete si vytvoriť skratku v [dialógu klávesové skratky #InputGestures].
+
+++ Prechádzanie doplnkov ++[AddonStoreBrowsing]
+Po otvorení katalógu sa zobrazí zoznam doplnkov.
+Do tohto zoznamu sa môžete kedykoľvek dostať skratkou ``alt+d``.
+Ak ešte nemáte nainštalované žiadne doplnky, v zozname sa zobrazia dostupné doplnky.
+Ak už nejaké doplnky máte nainštalované, zobrazia sa aktuálne nainštalované doplnky.
+
+Ak šípkami hore a dole zvolíte nejaký doplnok, zobrazia sa informácie o ňom.
+S každým doplnkom môžete vykonať niekoľko akcií, ktoré sú dostupné v [menu akcie #AddonStoreActions], ako napríklad inštalovať, pomocník, zakázať a odstrániť.
+Dostupné akcie sa môžu meniť v závislosti od toho, či je doplnok už nainštalovaný alebo povolený.
+
++++ Možnosti zobrazenia doplnkov +++[AddonStoreFilterStatus]
+Môžete si zobraziť zoznam nainštalovaných doplnkov, doplnkov, pre ktoré sú dostupné aktualizácie, zoznam dostupných alebo nekompatibilných doplnkov.
+Medzi týmito zobrazeniami sa prepínajte ako medzi záložkami, skratkami ``ctrl+tab`` prípadne ``ctrl+shift+tab`` v opačnom smere.
+Môžete tiež klávesom ``tab`` prejsť na zoznam záložiek a následne medzi nimi prechádzať ``ľavou šípkou`` a ``pravou šípkou``.
+
++++ Filtrovanie povolených a zakázaných doplnkov +++[AddonStoreFilterEnabled]
+Predvolene je nainštalovaný doplnok aj povolený, čo znamená, že je spustený a dostupný v NVDA.
+Niektoré nainštalované doplnky však môžu byť zakázané.
+To znamená, že nie sú spustené a ich funkcionalita aktuálne nie je dostupná.
+Doplnok môžete zakázať napríklad vtedy, ak je v konflikte s iným doplnkom, alebo aplikáciou.
+NVDA tiež môže zakázať doplnky, ktoré sa ukážu ako nekompatibilné s aktuálnou verziou nvda. Vždy však na to upozorní.
+Doplnky môžete tiež zakázať, ak ich dlhší čas nepoužívate, zároveň si ich ale chcete ponechať dostupné na neskôr.
+
+Zoznam nainštalovaných alebo nekompatibilných doplnkov je možné filtrovať podľa toho, či sú zakázané alebo povolené.
+Predvolene sa zobrazujú aj zakázané aj povolené doplnky.
+
++++ Ukázať nekompatibilné doplnky +++[AddonStoreFilterIncompatible]
+Doplnky, ktoré ešte nie sú nainštalované, alebo doplnky, pre ktoré je dostupná aktualizácia, je možné zobraziť aj v prípade, že [nie sú kompatibilné #incompatibleAddonsManager] s aktuálnou verziou NVDA.
+
++++ Filtrovanie doplnkov podľa zdroja +++[AddonStoreFilterChannel]
+Doplnky sú distribuované zo štyroch zdrojov:
+- Stabilné: Vývojár doplnku uvoľnil doplnok ako funkčný a otestovaný doplnok, pričom ho otestoval s najnovšou stabilnou verziou NVDA.
+- Beta: Doplnok vyžaduje ešte testovanie a očakáva sa práve odozva od používateľov.
+Tieto doplnky sú vhodné pre tých, ktorí radi testujú nové funkcie.
+- Vo vývoji: Tento zdroj je určený pre vývojárov doplnkov, ktorí testujú nové rozhrania.
+Tento zdroj tiež využívajú používatelia NVDA vo verzii Alpha.
+- Externé: Ide o doplnky, ktoré sú nainštalované z externého zdroja, mimo katalógu s doplnkami NVDA.
+-
+
+Ak chcete zobraziť doplnky len z konkrétneho zdroja, nastavte ho v zozname zdroj.
+
++++ Vyhľadávanie doplnkov +++[AddonStoreFilterSearch]
+Na vyhľadávanie doplnkov použite editačné pole vyhľadávanie.
+Môžete ho rýchlo nájsť, ak v zozname s doplnkami stlačíte ``shift+tab``, alebo skratkou ``alt+h``.
+Zadajte kľúčové slová, alebo názov doplnku. Potom klávesom ``tab`` prejdite späť do zoznamu s doplnkami.
+Doplnky sa zobrazia v zozname, ak sa podarilo nájsť reťazec v názve doplnku, v názve vydavateľa alebo v popise doplnku.
+
+++ Akcie ++[AddonStoreActions]
+Ku každému doplnku sú asociované akcie, ako napríklad inštalovať, pomocník, zakázať a odstrániť.
+Zoznam akcii je možné vyvolať priamo na konkrétnom doplnku po stlačení ``klávesu s kontextovým menu``, klávesom ``enter``, pravým alebo ľavým tlačidlom myši.
+Tiež môžete aktivovať tlačidlo akcie, prípadne použiť skratku ``alt+a``.
+
++++ Inštalovanie doplnkov +++[AddonStoreInstalling]
+To, že je doplnok dostupný v katalógu neznamená, že ho NV Access alebo ktokoľvek iný odporúča používať.
+Je veľmi dôležité, aby ste inštalovali doplnky z overených zdrojov.
+Funkcie doplnkov nie sú nijako obmedzené.
+Doplnky môžu mať prístup k vašim osobným údajom aj celému systému.
+
+Doplnky môžete inštalovať a aktualizovať [prechádzaním dostupných doplnkov #AddonStoreBrowsing].
+Vyberte doplnok na záložke dostupné doplnky, alebo dostupné aktualizácie doplnkov.
+Následne z menu akcie zvoľte možnosť aktualizovať alebo nainštalovať.
+
+Ak máte doplnok mimo katalógu a chcete ho nainštalovať, aktivujte tlačidlo "Inštalovať z externého zdroja".
+Toto zobrazí štandardný dialóg systému Windows, pomocou ktorého môžete vyhľadať na vašom disku alebo na sieti doplnok (súbor s príponou ``.nvda-addon``).
+Po otvorení súboru sa spustí inštalácia doplnku.
+
+Ak je NVDA nainštalované a spustené, môžete inštaláciu doplnku spustiť aj tak, že priamo v správcovi súborov otvoríte súbor s doplnkom.
+
+Ak inštalujete doplnok z externého zdroja, NVDA sa opýta, či skutočne chcete pokračovať.
+Aby doplnok začal po inštalácii fungovať, je potrebné reštartovať NVDA. Reštartovať môžete aj neskôr, ak máte v pláne inštalovať alebo aktualizovať aj ďalšie doplnky.
+
++++ Odstránenie doplnkov +++[AddonStoreRemoving]
+Ak chcete odstrániť doplnok, zvoľte ho v zozname doplnkov a z menu akcie aktivujte položku odstrániť.
+NVDA sa opýta, či skutočne chcete doplnok odstrániť.
+Rovnako ako pri inštalácii, aj odstránenie doplnku sa vykoná až po reštarte NVDA.
+Kým tak urobíte, zobrazí sa pri doplnku v časti stav informácia, že bude odstránený po reštarte.
+
++++ Zakázanie a povolenie doplnkov +++[AddonStoreDisablingEnabling]
+Ak chcete zakázať doplnok, z menu akcie aktivujte položku "zakázať".
+Ak chcete povoliť doplnok, ktorý ste zakázali, z menu akcie aktivujte položku "povoliť".
+Doplnok môžete zakázať, ak je v časti stav napísané, že je povolený. Opačne, ak je v časti stav napísané, že je zakázaný, môžete ho povoliť.
+V časti stav sa zobrazuje, čo sa s doplnkom stane pri najbližšom reštarte NVDA.
+Ak bol doplnok zakázaný a aktivujete položku povoliť, stav sa zmení na "bude povolený po reštarte".
+Ak bol doplnok povolený a aktivujete položku zakázať, v časti stav sa zobrazí "bude zakázaný po reštarte".
+Aj v tomto prípade sa všetky zmeny prejavia až po reštarte NVDA.
+
+++ Nekompatibilné doplnky ++[incompatibleAddonsManager]
+Staršie doplnky už nemusia byť kompatibilné s verziou NVDA, ktorú používate.
+Opačne, ak používate staršiu verziu NVDA, novšie doplnky tiež nemusia byť kompatibilné.
+Pri pokuse nainštalovať nekompatibilný doplnok sa objaví varovanie, ktoré upozorní na nekompatibilitu.
+
+Staršie doplnky môžete povoliť na vlastné riziko.
+Nekompatibilné doplnky nemusia pracovať správne a môžu spôsobiť nestabilitu, nečakané správanie a pády NVDA.
+Varovanie o kompatibilite môžete ignorovať priamo počas inštalácie alebo povolenia doplnku.
+Ak zistíte, že doplnok spôsobuje problémy, môžete ho neskôr zakázať alebo odstrániť.
+
+Ak ste zaznamenali problémy práve po inštalácii alebo aktualizácii doplnku, hlavne ak išlo o nekompatibilný doplnok, môžete NVDA spustiť v režime bez doplnkov.
+Ak chcete NVDA reštartovať a zakázať doplnky, zvoľte príslušnú možnosť v dialógu Ukončiť NVDA.
+Prípadne, použite na [príkazovom riadku #CommandLineOptions] parameter ``--disable-addons``.
+
+Dostupné nekompatibilné doplnky je možné zobraziť na záložkách [Dostupné doplnky a dostupné aktualizácie doplnkov #AddonStoreFilterStatus].
+Nekompatibilné doplnky je možné zobraziť na záložke [Nainštalované nekompatibilné doplnky #AddonStoreFilterStatus].
+
 + Ďalšie nástroje +[ExtraTools]
 
 ++ Zobraziť log ++[LogViewer]
@@ -2567,63 +2732,9 @@ Ak chcete zobrazovač brailu aktivovať kedykoľvek klávesovou skratkou, môže
 Python konzola programu NVDA, dostupná z podmenu nástroje, je nástroj pre vývojárov, ktorý umožňuje kontrolovať správnosť behu NVDA, zisťovať stav vnútorných premenných NVDA a tiež skúmať hierarchiu prístupnosti aplikácií.
 Viac informácií je dostupných v príručke pre vývojárov, ktorú nájdete na stránke NVDA v časti [vývoj (anglicky) https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
 
-++ Správca doplnkov ++[AddonsManager]
-Správcu doplnkov nájdete v podmenu nástroje. Umožňuje vám inštalovať, odinštalovať, povoliť a zakázať doplnky.
-Tieto doplnky vytvárajú používatelia NVDA. Doplnky môžu meniť alebo dopĺňať funkcie NVDA a takisto dopĺňať podporu pre hlasové syntetizéry a brailové riadky.
-
-V správcovi doplnkov sa nachádza zoznam s doplnkami, ktoré sú nainštalované v aktuálnej konfigurácii NVDA.
-Okrem názvu sa zobrazí  verzia,  autor a stav doplnku. Popis a URL adresu môžete zistiť tak, že doplnok vyberiete a aktivujete tlačidlo O doplnku.
-Ak doplnok obsahuje pomocníka, môžete si ho pozrieť po aktivovaní tlačidla Návod.
-
-Ak si chcete pozrieť dostupné doplnky, aktivujte tlačidlo otvoriť stránku s doplnkami.
-Otvorí sa stránka s [doplnkami pre NVDA https://addons.NVDA-project.org/].
-Ak máte NVDA nainštalované v systéme a je práve spustené, môžete doplnok otvoriť priamo z webového prehliadača a postupovať podľa pokynov nižšie.
-Ak NVDA nemáte nainštalovaný, uložte súbor s doplnkom do počítača a pokračujte nasledovne.
-
-Aby ste nainštalovali doplnok stiahnutý zo stránky, aktivujte tlačidlo Nainštalovať.
-otvorí sa okno, v ktorom môžete vybrať požadovaný súbor vo vašom počítači alebo na sieti (s príponou NVDA-addon).
-Po aktivovaní tlačidla otvoriť sa spustí inštalácia doplnku.
-
-Počas inštalácie sa NVDA opýta, či si skutočne želáte nainštalovať zvolený doplnok.
-Keďže funkcie doplnkov nie sú nijako obmedzované, doplnky teoreticky môžu mať prístup k vašim osobným dátam alebo k celému systému v prípade nainštalovanej verzie NVDA. Preto by ste mali  inštalovať doplnky zo zdrojov, ktorým dôverujete.
-Aby doplnok začal fungovať, je potrebné po inštalácii reštartovať NVDA.
-Kým NVDA nereštartujete, bude sa pri doplnku zobrazovať stav "Nainštalovaný".
-
-Ak chcete odstrániť doplnok, vyberte ho v zozname a aktivujte tlačidlo Odstrániť.
-NVDA sa vás opýta, či skutočne chcete doplnok odinštalovať.
-Aby ste doplnok definitívne odstránili, je potrebné reštartovať NVDA.
-Kým NVDA nereštartujete, zobrazí sa pri doplnku stav "Odstránený".
-
-Ak chcete doplnok zakázať, aktivujte tlačidlo "zakázať".
-Doplnok, ktorý ste zakázali, môžete znovu povoliť aktivovaním tlačidla "povoliť".
-Ak je doplnok povolený, zobrazuje sa tlačidlo na jeho zakázanie, ak je zakázaný, zobrazuje sa tlačidlo na jeho povolenie.
-Po každom stlačení tlačidla sa na stavovom riadku zobrazí, čo sa stane po najbližšom reštarte NVDA.
-Ak ste zakázali doplnok, na stavovom riadku sa objaví hlásenie "zakázaný po reštarte".
-Ak ste povolili doplnok, na stavovom riadku sa zobrazí hlásenie "povolený po reštarte".
-Aj v tomto prípade sa zmeny prejavia až po reštarte.
-
-Správcu doplnkov zatvoríte aktivovaním tlačidla Zatvoriť.
-Ak ste pridali,  odstránili, zakázali alebo povolili nejaké doplnky, NVDA sa vás opýta, či ho chcete reštartovať, aby boli uložené zmeny.
-
-Niektoré staršie doplnky už nemusia byť kompatibilné s vašou verziou NVDA.
-Takisto niektoré novšie doplnky môžu vyžadovať aj novšiu verziu NVDA.
-Ak sa pokúsite nainštalovať nekompatibilný doplnok, NVDA vás na túto skutočnosť upozorní a inštaláciu takéhoto doplnku zakáže.
-Nekompatibilné doplnky zobrazíte po aktivovaní tlačidla Nekompatibilné doplnky.
-
-Ak chcete okno  Správcu doplnkov aktivovať z hociktorého miesta, môžete mu priradiť  skratku v dialógu [Klávesové skratky #InputGestures].
-
-+++ Správca nekompatibilných doplnkov +++[incompatibleAddonsManager]
-Správcu nekompatibilných doplnkov môžete zobraziť po aktivovaní príslušného tlačidla v správcovi doplnkov. Umožňuje zobraziť doplnky a dôvod ich nekompatibility.
-Doplnky sú zvyčajne nekompatibilné, ak neboli prispôsobené pre aktuálnu verziu NVDA, alebo opačne, vyžadujú už novšiu verziu NVDA.
-V správcovi nekompatibilných doplnkov vidíte aj aktuálnu verziu NVDA, ktorú máte spustenú.
-V zozname s nekompatibilnými doplnkami sú tieto údaje:
-+ Názov doplnku
-+ Verzia doplnku
-+ Dôvod nekompatibility
-+
-
-V správcovi nekompatibilných doplnkov je tiež tlačidlo O doplnku. 
-Po jeho aktivovaní sa zobrazia ďalšie informácie o doplnku, ktoré môžu byť užitočné, ak sa rozhodnete kontaktovať vývojára doplnku.
+++ Katalóg s doplnkami ++
+Toto otvorí dialóg [Katalóg s doplnkami #AddonsManager].
+Podrobnosti sú popísané v kapitole [Doplnky a katalóg s doplnkami #AddonsManager].
 
 ++ Vytvoriť prenosnú verziu ++[CreatePortableCopy]
 Umožní z aktuálne spustenej kópie NVDA vytvoriť prenosnú verziu.
@@ -2938,6 +3049,15 @@ Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie 
 | Predchádzajúci riadok | d1 |
 | Nasledujúci riadok | d3 |
 | Prejsť na znak v brailly | smerové tlačidlá |
+| shift+tab  | medzera + bod1+bod3 |
+| tab | medzera + bod4+bod6 |
+| alt | medzera +bod1+bod3+bod4 (medzera+m) |
+| escape | medzera+bod1+bod5 (medzera+e) |
+| windows | medzera+bod3+bod4 |
+| alt+tab | medzera+bod2+bod3+bod4+bod5 (medzera+t) |
+| NVDA Menu | medzera+bod1+bod3+bod4+bod5 (medzera+n) |
+| windows+d (minimalizovať všetky aplikácie) | medzera+bod1+bod4+bod5 (medzera+d) |
+| Plynulé čítanie | medzera+bod1+bod2+bod3+bod4+bod5+bod6 |
 
 Pre zobrazovače, ktoré majú džojstik:
 || Názov | Klávesová skratka |
@@ -3489,88 +3609,162 @@ Aby bolo možné zaisťiť prácu s riadkom a tiež kompatibilitu s inými čít
 | Posunúť zobrazenie vpred | plus na numerickej klávesnici | 
 %kc:endInclude
 
-++ Eurobraille Esys/Esytime/Iris ++[Eurobraille]
-NVDA podporuje riadky Esys, Esytime a Iris od spoločnosti [Eurobraille https://www.eurobraille.fr/].
-Zariadenia Esys a Esytime-Evo sú podporované cez rozhranie USB a Bluetooth.
-Staršie riadky Esytime je možné používať len cez rozhranie USB.
-Riadky Iris môžete používať len cez sériový port.
-V týchto prípadoch je potrebné určiť ovládač a potom konkrétny port, do ktorého je riadok zapojený. Všetko nastavíte v nastaveniach braillu.
+++ Zobrazovače Eurobraille ++[Eurobraille]
+Podporované sú riadky b.book, b.note, Esys, Esytime a Iris od spoločnosti Eurobraille.
+Tieto zariadenia majú brailovú klávesnicu s desiatimi tlačidlami.
+Ľavá časť tlačidla, ktoré vyzerá ako medzera, funguje ako kláves backspace, pravá ako medzera.
 
-Riadky Iris a Esys majú klávesnicu s desiatimi tlačidlami.
-Tlačidlo, ktoré vyzerá ako medzera, funguje nasledovne: Ľavá časť tlačidla funguje ako kláves backspace, pravá ako medzera.
-
+Keď sú tieto zariadenia pripojené, aktívna je aj USB klávesnica.
+Túto klávesnicu je možné vypnúť alebo zapnúť začiarknutím alebo odčiarknutím možnosti ‘simulácia HID klávesnice’ v nastaveniach riadka.
+Nižšie popísané skratky fungujú, ak je táto možnosť vypnutá.
 Nasleduje zoznam klávesových príkazov.
 Pre popis a umiestnenie tlačidiel si prosím pozrite návod k vášmu riadku.
++++  Funkcie brailovej klávesnice +++[EurobrailleBraille]
 %kc:beginInclude
 || názov | Klávesová skratka |
-| Posunúť zobrazenie dozadu | switch1-6left, l1 |
-| Posunúť zobrazenie vpred | switch1-6Right, l8 |
-| Presunúť zobrazenie na fokus | switch1-6Left+switch1-6Right, l1+l8 |
-| Presunúť na znak v brailly | routing, |
-| Oznámiť formátovanie pod aktuálnym brailovým znakom | doubleRouting |
-| Presunúť prezerací kurzor na predchádzajúci riadok | joystick1Up |
-| Presunúť prezerací kurzor na nasledujúci riadok | joystick1Down |
-| Presunúť prezerací kurzor na predchádzajúci znak | joystick1Left |
-| Presunúť prezerací kurzor na nasledujúci znak | joystick1Right |
-| Prepnúť na predchádzajúci režim prezerania | joystick1Left+joystick1Up |
-| Prepnúť na nasledujúci režim prezerania | joystick1Right+joystick1Down |
-| Vymazať naposledy napísaný znak | backSpace |
-| Preložiť aktuálne zadaný brailový reťazec a odoslať kláves enter | backSpace+space |
-| insert | body 35+medzera, l7 |
-| delete | body 36+medzera |
-| home  | body 123+medzera, joystick2Left+joystick2Up |
-| end | body 456+medzera, joystick2Right+joystick2Down |
-| šípka v ľavo | bod 2+medzera, joystick2Left, leftArrow |
-| šípka vpravo | bod 5+medzera, joystick2Right, rightArrow |
-| šípka hore | bod 1+medzera, joystick2Up, upArrow |
-| šípka dole | bod 6+medzera, joystick2Down, downArrow |
-| enter | joystick2Center |
-| pageUp | body 13+medzera |
-| pageDown | body 46+medzera |
-| numerická 1 | body 16+backspace |
-| numerická 2 | body 126+backspace |
-| numerická 3 | body 146+backspace |
-| numerická 4 | body 1456+backspace |
-| nnumerická 5 | body 156+backspace |
-| numerická 6 | body 1245+backspace |
-| numerická 7 | body 12456+backspace |
-| numerická 8 | body 1256+backspace |
-| numerická 9 | body 246+backspace |
-| numerický insert | body 3456+backspace |
-| numerická desatinná čiarka | bod 2+backspace |
-| numerické deleno | body 34+backspace |
-| numerické krát | body 35+backspace |
-| numerické mínus | body 36+backspace |
-| numerické plus | body 235+backspace |
-| numerický enter | body 345+backspace |
-| escape | body 1245+medzera, l2 |
-| tab | body 256+medzera, l3 |
-| shift+tab | body 235+medzera |
-| printScreen | body 1346+medzera |
-| pauza | body 14+medzera |
-| kontextové menu | body 56+backspace |
-| f1 | bod 1+backspace |
-| f2 | body 12+backspace |
-| f3 | body 14+backspace |
-| f4 | body 145+backspace |
-| f5 | body 15+backspace |
-| f6 | body 124+backspace |
-| f7 | body 1245+backspace |
-| f8 | body 125+backspace |
-| f9 | body 24+backspace |
-| f10 | body 245+backspace |
-| f11 | body 13+backspace |
-| f12 | body 123+backspace |
-| windows | body 1234+backspace |
-| CapsLock | bod 7+backspace, bod 8+backspace |
-| NumLock | bod 3+backspace, bod 6+backspace |
-| shift | bod 7+medzera, l4 |
-| Prepnúť kláves shift | body 17+medzera, body 47+medzra |
-| ctrl | body 7+8+medzera, l5 |
-| prepnúť kláves ctrl | body 178+medzera, body 478+medzera |
-| kláves alt | bod 8+medzera, l6 |
-| prepnúť kláves alt | body 18+medzera, body 48+medzera |
-| Prepnúť simuláciu HID klávesnice | esytime):l1+joystick1Down, esytime):l8+joystick1Down |
+| Vymazať naposledy zadaný znak | ``backspace`` |
+| Preložiť aktuálny brailový vstup a odoslať kláves Enter |``backspace+medzera`` |
+| Prepnúť kláves ``NVDA`` | ``bod3+bod5+medzera`` |
+| ``insert`` | ``bod1+bod3+bod5+medzera``, ``bod3+bod4+bod5+medzera`` |
+| ``delete`` | ``bod3+bod6+medzera`` |
+| ``home`` | ``bod1+bod2+bod3+medzera`` |
+| ``end`` | ``bod4+bod5+bod6+medzera`` |
+| ``šípka vľavo`` | ``bod2+medzera`` |
+| ``šípka vpravo`` | ``bod5+medzera`` |
+| ``šípka hore`` | ``bod1+medzera`` |
+| ``šípka dole`` key | ``bod6+medzera`` |
+| ``page up`` | ``bod1+bod3+medzera`` |
+| ``pageDown`` | ``bod4+bod6+medzera`` |
+| ``numerická 1`` | ``bod1+bod6+backspace`` |
+| ``numerická 2`` | ``bod1+bod2+bod6+backspace`` |
+| ``numerická 3`` | ``bod1+bod4+bod6+backspace`` |
+| ``numerická 4`` | ``bod1+bod4+bod5+bod6+backspace`` |
+| ``numerická 5`` | ``bod1+bod5+bod6+backspace`` |
+| ``numerická 6`` | ``bod1+bod2+bod4+bod6+backspace`` |
+| ``numerická 7`` | ``bod1+bod2+bod4+bod5+bod6+backspace`` |
+| ``numerická 8`` | ``bod1+bod2+bod5+bod6+backspace`` |
+| ``numerická 9`` | ``bod2+bod4+bod6+backspace`` |
+| ``numerický Insert`` | ``bod3+bod4+bod5+bod6+backspace`` |
+| ``numerická čiarka`` | ``bod2+backspace`` |
+| ``numerické lomeno`` | ``bod3+bod4+backspace`` |
+| ``numerický krát`` | ``bod3+bod5+backspace`` |
+| ``numerické mínus`` | ``bod3+bod6+backspace`` |
+| ``numerické plus`` | ``bod2+bod3+bod5+backspace`` |
+| ``numerický enter`` | ``bod3+bod4+bod5+backspace`` |
+| ``escape`` | ``bod1+bod2+bod4+bod5+medzera``, ``l2`` |
+| ``tab`` | ``bod2+bod5+bod6+medzera``, ``l3`` |
+| ``shift+tab`` | ``bod2+bod3+bod5+medzera`` |
+| ``printScreen`` | ``bod1+bod3+bod4+bod6+medzera`` |
+| ``pause`` | ``bod1+bod4+medzera`` |
+| ``aplikácie`` | ``bod5+bod6+backspace`` |
+| ``f1`` | ``bod1+backspace`` |
+| ``f2`` | ``bod1+bod2+backspace`` |
+| ``f3`` | ``bod1+bod4+backspace`` |
+| ``f4`` | ``bod1+bod4+bod5+backspace`` |
+| ``f5`` | ``bod1+bod5+backspace`` |
+| ``f6`` | ``bod1+bod2+bod4+backspace`` |
+| ``f7`` | ``bod1+bod2+bod4+bod5+backspace`` |
+| ``f8`` | ``bod1+bod2+bod5+backspace`` |
+| ``f9`` | ``bod2+bod4+backspace`` |
+| ``f10`` | ``bod2+bod4+bod5+backspace`` |
+| ``f11`` | ``bod1+bod3+backspace`` |
+| ``f12`` | ``bod1+bod2+bod3+backspace`` |
+| ``windows`` | ``bod1+bod2+bod4+bod5+bod6+medzera`` |
+| Prepnúť kláves ``windows`` | ``bod1+bod2+bod3+bod4+backspace``, ``bod2+bod4+bod5+bod6+medzera`` |
+| ``capsLock`` | ``bod7+backspace``, ``bod8+backspace`` |
+| ``numLock`` | ``bod3+backspace``, ``bod6+backspace`` |
+| ``shift`` | ``bod7+medzera`` |
+| Prepnúť kláves ``shift`` | ``bod1+bod7+medzera``, ``bod4+bod7+medzera`` |
+| ``ctrl`` | ``bod7+bod8+medzera`` |
+| Prepnúť kláves ``ctrl`` | ``bod1+bod7+bod8+medzera``, ``bod4+bod7+bod8+medzera`` |
+| ``alt`` | ``bod8+medzera`` |
+| Prepnúť kláves ``alt`` | ``bod1+bod8+medzera``, ``bod4+bod8+medzera`` |
+%kc:endInclude
+
++++ Klávesové skratky pre riadok b.book +++[Eurobraillebbook]
+%kc:beginInclude
+|| Názov | Klávesová skratka |
+| Posunúť riadok späť | ``backward`` |
+| Posunúť riadok vpred | ``forward`` |
+| Presunúť na fokus | ``backward+forward`` | 
+| Prejsť na znak v brailly | ``smerové tlačidlá`` |
+| ``šípka vľavo`` | ``joystick2Left`` |
+| ``šípka vpravo`` | ``joystick2Right`` |
+| ``šípka hore`` | ``joystick2Up`` |
+| ``šípka dole`` | ``joystick2Down`` |
+| ``enter`` | ``joystick2Center`` |
+| ``escape`` | ``c1`` |
+| ``tab`` | ``c2`` |
+| Prepnúť kláves ``shift`` | ``c3`` |
+| Prepnúť kláves ``ctrl`` | ``c4`` |
+| Prepnúť kláves ``alt`` | ``c5`` |
+| Prepnúť kláves ``NVDA`` | ``c6`` |
+| ``ctrl+Home`` | ``c1+c2+c3`` |
+| ``ctrl+End`` | ``c4+c5+c6`` |
+%kc:endInclude
+
++++ Klávesové skratky pre riadky b.note +++[Eurobraillebnote]
+%kc:beginInclude
+|| Názov | Klávesová skratka |
+| Posunúť riadok späť | ``leftKeypadLeft`` |
+| Posunúť riadok vpred | ``leftKeypadRight`` |
+| Prejsť na znak v braily | ``smerové tlačidlá`` |
+| Oznámiť formátovanie pod brailovou bunkou | ``doubleRouting`` |
+| Presunúť prezerací kurzor na nasledujúci riadok | ``leftKeypadDown`` |
+| Prepnúť na predchádzajúci režim prezerania | ``leftKeypadLeft+leftKeypadUp`` |
+| Prepnúť na nasledujúci režim prezerania | ``leftKeypadRight+leftKeypadDown`` |
+| ``šípka vľavo`` | ``rightKeypadLeft`` |
+| ``šípka vpravo`` | ``rightKeypadRight`` |
+| ``šípka hore`` | ``rightKeypadUp`` |
+| ``šípka dole`` | ``rightKeypadDown`` |
+| ``ctrl+home`` | ``rightKeypadLeft+rightKeypadUp`` |
+| ``ctrl+end`` | ``rightKeypadLeft+rightKeypadUp`` |
+%kc:endInclude
+
++++ Klávesové skratky pre riadky Esys +++[Eurobrailleesys]
+%kc:beginInclude
+|| Názov | Klávesová skratka |
+| Posunúť riadok späť | ``switch1Left`` |
+| POsunúť riadok vpred | ``switch1Right`` |
+| Presunúť na fokus | ``switch1Center`` |
+| Prejsť na znak v braily | ``smerové tlačidlá`` |
+| Oznámiť formátovanie pod brailovou bunkou | ``doubleRouting`` |
+| Presunúť prezerací kurzor na predchádzajúci riadok | ``joystick1Up`` |
+| Presunúť prezerací kurzor na nasledujúci riadok | ``joystick1Down`` |
+| Presunúť prezerací kurzor na predchádzajúci znak | ``joystick1Left`` |
+| Presunúť prezerací kurzor na nasledujúci riadok | ``joystick1Right`` |
+| ``šípka vľavo`` | ``joystick2Left`` |
+| ``šípka vpravo`` | ``joystick2Right`` |
+| ``šípka hore`` | ``joystick2Up`` |
+| ``šípka dole`` | ``joystick2Down`` |
+| ``enter`` | ``joystick2Center`` |
+%kc:endInclude
+
++++ Klávesové skratky pre riadky Esytime +++[EurobrailleEsytime]
+%kc:beginInclude
+|| Názov | Klávesová skratka |
+| Posunúť riadok späť | ``l1`` |
+| Posunúť riadok vpred | ``l8`` |
+| Presunúť na fokus | ``l1+l8`` |
+| Prejsť na znak v braily | ``smerové tlačidlá`` |
+| Oznámiť formátovanie pod bunkov v braily | ``doubleRouting`` |
+| Prezerací kurzor na predchádzajúci riadok | ``joystick1Up`` |
+| Prezerací kurzor na nasledujúci riadok | ``joystick1Down`` |
+| Prezerací kurzor na predchádzajúci znak | ``joystick1Left`` |
+| Prezerací kurzor na Nasledujúci znak | ``joystick1Right`` |
+| ``šípka vľavo`` | ``joystick2Left`` |
+| ``šípka vpravo`` | ``joystick2Right`` |
+| ``šípka hore`` | ``joystick2Up`` |
+| ``šípka dole`` | ``joystick2Down`` |
+| ``enter`` | ``joystick2Center`` |
+| ``escape`` | ``l2`` |
+| ``tab`` | ``l3`` |
+| Prepnúť kláves ``shift`` | ``l4`` |
+| Prepnúť kláves ``ctrl`` | ``l5`` |
+| Prepnúť kláves ``alt`` | ``l6`` |
+| Prepnúť kláves ``NVDA`` | ``l7`` |
+| ``ctrl+home`` | ``l1+l2+l3``, ``l2+l3+l4`` |
+| ``ctrl+end`` | ``l6+l7+l8``, ``l5+l6+l7`` |
 %kc:endInclude
 
 ++ Riadky Nattiq nBraille ++[NattiqTechnologies]
@@ -3650,6 +3844,12 @@ Popis umiestnenia tlačidiel je možné nájsť v dokumentácii k riadku.
 | Presunúť navigačný objekt na nasledujúci objekt | ``f6`` |
 | Oznámiť aktuálny navigačný objekt | ``f7`` |
 | Oznámiť súradnice objektu pod prezeracím kurzorom | ``f8`` |
+| Zobraziť nastavenia brailovho písma | ``f1+home1``, ``f9+home2`` |
+| Prečíta stavový riadok a presunie naň navigačný objekt | ``f1+end1``, ``f9+end2`` |
+| Prepína tvar kurzora | ``f1+eCursor1``, ``f9+eCursor2`` |
+| Prepína brailový kurzor | ``f1+cursor1``, ``f9+cursor2`` |
+| Prepína režimi zobrazovania správ na brailovom riadku | ``f1+f2``, ``f9+f10`` |
+| Prepína režimi ukazovania výberu | ``f1+f5``, ``f9+f14`` |
 | Vykonať predvolenú akciu na navigačnom objekte | ``f7+f8`` |
 | Oznámiť čas a dátum | ``f9`` |
 | Oznámiť stav batérie, zostávajúci čas a stav nabíjania | ``f10`` |
@@ -3679,19 +3879,17 @@ Nasledujú klávesové skratky pre tieto riadky:
 || názov | klávesová skratka |
 | Posunúť riadok späť | pan left alebo rocker up |
 | Posunúť riadok vpred | pan right alebo rocker down |
-| Predchádzajúci riadok | medzera + bod1 |
-| Nasledujúci riadok | medzera + bod4 |
 | Prejsť na znak v brailly | routing set 1|
-| Prepnnúť nastavenie brailový kurzor zviazaný s | šípka hore + šípka dole |
-| Šípka hore | joystick hore |
-| Šípka dole | joystick dole |
-| Šípka vľavo | medzera+bod3 alebo joystick vľavo |
-| Šípka vpravo | medzera+bod6 alebo joystick vpravo |
+| Prepnúť nastavenie brailový kurzor zviazaný s | šípka hore + šípka dole |
+| Šípka hore | joystick hore, dpad hore alebo medzera+bod1 |
+| Šípka dole | joystick dole, dpad dole alebo  medzera+bod4 |
+| Šípka vľavo | medzera+bod3 alebo joystick vľavo alebo dpad vľavo |
+| Šípka vpravo | medzera+bod6 alebo joystick vpravo alebo dpad vpravo |
 | shift+tab | medzera+bod1+bod3 |
 | tab | medzera+bod4+bod6 |
 | alt | medzera+bod1+bod3+bod4 (medzera+m) |
 | escape | medzera+bod1+bod5 (medzera+e) |
-| enter | bod8 or joystick center |
+| enter | bod8 alebo  stred joysticku  alebo stred dpad |
 | windows | medzera+bod3+bod4 |
 | alt+tab | medzera+bod2+bod3+bod4+bod5 (medzera+t) |
 | NVDA Menu | medzera+bod1+bod3+bod4+bod5 (medzera+n) |
