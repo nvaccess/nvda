@@ -346,9 +346,12 @@ Die installierte Version kann außerdem jederzeit eine portable Version von sich
 Die portable Version kann man auch zu einem späteren Zeitpunkt auf einem beliebigen Computer installieren.
 Wenn Sie NVDA jedoch auf ein schreibgeschütztes Medium wie eine CD kopieren möchten, sollten Sie nur das Download-Paket kopieren.
 Die Ausführung der portablen Version direkt von schreibgeschützten Medien wird derzeit nicht unterstützt.
-Die Verwendung der temporären Version von NVDA ist ebenfalls eine Option (z. B. zu Demonstrationszwecken), allerdings kann der Start von NVDA auf diese Weise jedes Mal sehr zeitaufwändig werden.
+Die [NVDA-Setup-Datei #StepsForRunningTheDownloadLauncher] kann als temporäre NVDA-Version verwendet werden.
+In den temporär gestarteten NVDA-Versionen werden keine Einstellungen in der Konfiguration gespeichert.
+Die Benutzung des [Store für NVDA-Erweiterungen #AddonsManager] in NVDA ist ebenfalls davon ausgeschlossen.
 
-Abgesehen davon, dass NVDA nicht automatisch während bzw. nach der Anmeldung gestartet werden kann, gelten für die portablen und temporären Versionen von NVDA auch die folgenden Einschränkungen:
+Für portable und temporäre NVDA-Versionen gelten die folgenden Einschränkungen:
+- Die Unfähigkeit, während und/oder nach der Anmeldung automatisch zu starten.
 - Die Unfähigkeit, mit Anwendungen zu interagieren, die mit administrativen Rechten laufen, es sei denn, NVDA selbst wurde auch mit diesen Rechten ausgeführt (wird nicht empfohlen).
 - Die Unfähigkeit, Bildschirme der Benutzerkontensteuerung (UAC) vorzulesen, sobald versucht wird, eine Anwendung mit administrativen Rechten zu starten.
 - Windows 8 und neuer: Die Unfähigkeit, Eingaben über einen Touchscreen zu unterstützen.
