@@ -62,5 +62,6 @@ info@nvaccess.org
 The Citizen and Contributor Code of Conduct is distributed by NV Access Limited. 
 Portions of text were derived from the GitHub sample Citizen and Contributor Code of Conduct, which is distributed under a Creative Commons Attribution-ShareAlike license.
 
-Revision 1.0 adopted by NV Access Limited on 2020-09-23
-Revision 1.1 adopted by NV Access Limited on 2023-08-09
+Revision history:
+- Revision 1.0 adopted by NV Access Limited on 2020-09-23
+- Revision 1.1 adopted by NV Access Limited on 2023-08-09
