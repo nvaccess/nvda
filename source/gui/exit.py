@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee,
+# Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee,
 # Thomas Stivers, Babbage B.V., Accessolutions, Julien Cochuyt, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
@@ -18,6 +18,7 @@ import weakref
 import wx
 
 from . import guiHelper
+from .message import displayDialogAsModal
 from .startupDialogs import WelcomeDialog
 
 
@@ -150,7 +151,7 @@ class ExitDialog(wx.Dialog):
 						apiVersion=apiVersion,
 						backCompatTo=backCompatTo
 					)
-					confirmUpdateDialog.ShowModal()
+					displayDialogAsModal(confirmUpdateDialog)
 				else:
 					updateCheck.executePendingUpdate()
 		wx.CallAfter(self.Destroy)
