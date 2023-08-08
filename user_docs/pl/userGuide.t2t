@@ -589,6 +589,12 @@ Przejście do obiektu nadrzędnego - spowoduje powrót do obiektu listy.
 Możesz wówczas przejść poza tę listę, aby obejrzeć inne obiekty.
 Podobnie: pasek narzędzi zawiera kontrolki, więc musisz wejść do tego paska, aby uzyskać dostęp do znajdujących się wewnątrz niego kontrolek.
 
+Jeżeli chcesz przemieszczać się po każdym obiekcie w systemie, Możesz używać poleceń do przemieszczania się po poprzednim/następnym obiekcie w widoku spłaszczonym.
+Na przykład, jeżeli przeniesieś się do następnego obiektu w tym widoku, a aktualny obiekt zawiera inne obiekty, NVDA przeniesie się do pierwszego obiektu, który go zawiera.
+W przeciwnym razie, jeżeli aktualny obiekt nie zawiera podrzędnych obiektów, NVDA przeniesie się do następnego obiektu na bieżącym poziomie hierarchii.
+Jeżeli nie ma takiego następnego obiektu, NVDA spróbuje znaleźć następny obiekt w hierarchii na podstawie obiektów podrzędnych, do póki nie będzie żadnych następnych obiektów.
+Te same reguły stosują się do przemieszczania się wstecz w hierarchii.
+
 Obiekt aktualnie przeglądany, jest nazywany obiektem nawigatora.
 Gdy dotrzesz do obiektu, możesz przejrzeć jego treść, używając [poleceń przeglądania tekstu, #ReviewingText] gdy znajdujesz się w [trybie przeglądania obiektu #ObjectReview].
 Podczas gdy [podświetlacz fokusu #VisionFocusHighlight] jest włączony, aktualna pozycja obiektu nawigatora jest również pokazywana wizualnie.
@@ -602,10 +608,12 @@ Poniżej znajdują się skróty klawiszowe do nawigacji w hierarchii obiektów:
 || Działanie | Skrót desktopa | Skrót laptopa | Gest dotykowy | Opis |
 | Odczytuje aktualny obiekt | NVDA+Numeryczne 5 | NVDA+Shift+O | Brak | Odczytuje aktualny obiekt w hierarchii nawigacji. Dwukrotne naciśnięcie literuje informację, trzykrotne kopiuje nazwę obiektu wraz z zawartością do schowka. |
 | Przechodzi do obiektu nadrzędnego | NVDA+Numeryczne 8 | NVDA+Shift+Strzałka w górę | Machnięcie w górę (tryb obiektowy) | Przechodzi do obiektu nadrzędnego, czyli zawierającego aktualny obiekt nawigatora. |
-| Przechodzi do poprzedniego obiektu      | NVDA+Numeryczne 4 | NVDA+Shift+Strzałka w lewo | Machnięcie w lewo (tryb obiektowy) | Przechodzi do poprzedniego obiektu znajdującego się na tym samym poziomie. |
-| Przechodzi do następnego obiektu | NVDA+Numeryczne 6 | NVDA+Shift+Strzałka w prawo | Machnięcie w prawo (tryb obiektowy) | Przechodzi do następnego obiektu znajdującego się na tym samym poziomie. |
+| Przechodzi do poprzedniego obiektu      | NVDA+Numeryczne 4 | NVDA+Shift+Strzałka w lewo | brak | Przechodzi do poprzedniego obiektu znajdującego się na tym samym poziomie. |
+| Przechodzi do poprzedniego obiektu w wydoku spłaszczonym | NVDA+numeryczny9 | NVDA+shift+[ | machnięcie w lewo (tryb obiektowy) | Przenosi do poprzedniego obiektu w hierarchii za pomocą widoku spłaszczonego |
+| Przechodzi do następnego obiektu | NVDA+Numeryczne 6 | NVDA+Shift+Strzałka w prawo | brak | Przechodzi do następnego obiektu znajdującego się na tym samym poziomie. |
+| Przechodzi do następnego obiektu w wydoku spłaszczonym | NVDA+numeryczny3 | NVDA+shift+] | Machnięcie w prawo (tryb obiektowy) | Przenosi do następnego obiektu w hierarchii za pomocą widoku spłaszczonego |
 | Przechodzi do pierwszego obiektu podrzędnego | NVDA+Numeryczne 2 | NVDA+Shift+Strzałka w dół | Machnięcie w dół (tryb obiektowy) | Przechodzi do pierwszego obiektu zawieranego przez aktualny obiekt nawigatora. |
-| Przechodzi do fokusa | NVDA+Numeryczny minus | NVDA+Backspace | Brak | Przechodzi do obiektu, który aktualnie posiada fokus, oraz umieszcza kursor przeglądu na pozycji kursora systemu |
+| Przechodzi do fokusu | NVDA+Numeryczny minus | NVDA+Backspace | Brak | Przechodzi do obiektu, który aktualnie posiada fokus, oraz umieszcza kursor przeglądu na pozycji kursora systemu |
 | Aktywuje aktualny obiekt | NVDA+Numeryczny enter | NVDA+Enter | Podwójne stuknięcie | Aktywuje bieżący obiekt (podobnie jak kliknięcie myszą lub naciśnięcie klawisza spacji, gdy ma fokus) |
 | Przenosi fokus lub kursor na aktualną pozycję przeglądania | NVDA+Shift+Numeryczny minus | NVDA+Shift+Backspace | Brak | Naciśnięty raz przenosi fokus do aktualnego obiektu nawigatora, naciśnięty dwukrotnie przenosi kursor systemowy do aktualnej pozycji kursora przeglądania |
 | Odczytuje położenie kursora przeglądu | NVDA+shift+Numeryczne delete | NVDA+shift+delete | Brak | Zgłasza położenie tekstu lub obiektu pod kursorem przeglądu. Może to być wyrażone w procentach w obrębie dokumentu, jako odległość od krawędzi strony lub jako dokładna pozycja na ekranie. Dwukrotne naciśnięcie odczyta dalsze informacje.|
@@ -661,7 +669,6 @@ Układ został przedstawiony w tabeli poniżej:
 
 ++ Tryby przeglądania ++[ReviewModes]
 [Polecenia przeglądania tekstu #ReviewingText] pozwalają przeglądać treść wewnątrz aktualnego obiektu nawigatora, aktualnego dokumentu lub ekranu, zależnie od wybranego trybu przeglądania.
-Tryby przeglądania zastępują poziom przeglądu, dawniej używany w NVDA.
 
 Poniższe komendy przełączają między trybami przeglądania:
 %kc:beginInclude
@@ -1608,7 +1615,29 @@ W takim przypadku, gdy pozycja obiektu nawigatora lub kursora przeglądu zmieni 
 Jeśli chcesz, żeby NVDA śledziła kursor systemowy wraz z fokusem, Musisz skonfigurować brajl powiązany do fokusu.
 W takim przypadku NVDA nie będzie śledziła nawigację obiektową  oraz kursor przeglądu podczas przeglądu obiektów.
 Jeśli chcesz żeby NVDA śledziła nawigację obiektową zamiast kursoru systemowego, musisz skonfigurować NVDA tak, żeby brajl był powiązany do przeglądu.
-W takim przypadku brajl nie będzie śledził kursor i fokus systemowy.
+W takim przypadku brajl nie będzie śledził kursora i fokusu systemowego.
+
+==== Przenoś kursor systemowy podczas przywoływania kursoru przeglądu ====[BrailleSettingsReviewRoutingMovesSystemCaret]
+: Domyślnie
+Nigdy
+: Opcje
+Domyślnie (Nigdy), Nigdy, Tylko podczas przywoływania automatycznego, zawsze
+:
+
+To ustawienie służy do regulowania przemieszczania kursora systemowego za pomocą przycisku routing.
+Domyślnie, to ustawienie jest postawione na nigdy, co oznacza, że  klawisz routing nie będzie przenosił kursora systemowego podczas przemieszczania kursora przeglądu.
+
+Kiedy ta opcja jest ustawiona na zawsze, i opcja [przywiązanie brajla #BrailleTether] jest ustawiona na "automatycznie" lub "do kursora przeglądu", naciśnięcie przycisku routing spowoduje przeniesienie kursora systemowego lub fokusu gdy jest to wspierane.
+Gdy aktualnym trybem jest [przegląd ekranu #ScreenReview], nie istnieje kursor fizyczny.
+W takim przypadku, NVDA spróbuje sfokusować  obiekt do którego próbujesz przywołać routing.
+To także stosuje się do [przeglądu obiektu #ObjectReview].
+
+Możesz także ustawić tą opcje żeby kursor się przemieszczał podczas automatycznego przywiązania.
+W takim przypadku, naciśnięcie klawisza routing spowoduje przeniesienie kursora systemowego lub do fokusu, gdy NVDA jest przywołana do kursora przeglądu automatycznie. Nie będzie żadnego przemieszczania gdy gdy fokus jest ręcznie przywiązany do do kursoru przeglądu.
+
+Ta opcja pokazuje się tylko jeżeli "[przywiązywania brajla #BrailleTether]" jest ustawione na "automatycznie" lub "do przeglądu".
+
+Aby ustawić opcję "Przenoś kursor systemowy podczas przywoływania kursoru przeglądu" z jakiegokolwiek miejsca, przydziel gest użytkownika używając okna dialogowego [zdarzenia wejścia dialog #InputGestures].
 
 ==== czytaj akapitami ====[BrailleSettingsReadByParagraph]
 Gdy zaznaczysz to pole, monitor brajlowski będzie wyświetlać tekst akapitami, nie liniami. 
@@ -2256,6 +2285,16 @@ Jednakże, dla podstawowej nawigacji  lub edytowania, ta opcja może wprowadzić
 Nie polecamy większości użytkowników włączenie tej opcji, ale zapraszamy użytkowników programu Microsoft Excel, w wersji 16.0.13522.10000 lub nowszej do testowania tej funkcjonalności i wysyłania informacji zwrotnej.
 Implementacja UIA w programie Microsoft Excel UI automation zmienia się z wersję na wersje, i wersje starsze niż 16.0.13522.10000 mogą nie dostarczać żadnych korzystnych informacji.
 
+==== Odczytuj żywe regiony ====[BrailleLiveRegions]
+: Domyślnie
+ Włączone
+: Opcje
+ Wyłączone, Włączone
+:
+
+Ta opcja reguluje odczyt zmian w niektórych treściach dynamicznych na stronach internetowych na monitorach brajlowskich.
+Wyłączenie tej opcji jest równoznaczne z zachowaniem w wersji 2023.1 i starszych. W starszych wersjach, te zmiany były tylko wymawiane.
+
 ==== Wymawiaj hasła w nowoczesnych wierszach poleceń ====[AdvancedSettingsWinConsoleSpeakPasswords]
 To ustawienie reguluje wymowę znaków przez [opcje czytaj pisane znaki #KeyboardSettingsSpeakTypedCharacters] lub [czytaj pisane słowa #KeyboardSettingsSpeakTypedWords] w sytuacjach, w gdy ekran się nie odświeża (takich jak wpisywanei hasłą) w niektórych programach wiersza poleceń, takich jak wiersz poleceń systemu windows z włączonym wsparciem dla UIA lub Mintty.
 Dla bezpieczeństwa warto zostawic te opcję wyłączoną.
@@ -2326,7 +2365,11 @@ Gdy ta opcja jest włączona, Głośność dźwięków NVDA będzie śledzić g�
 Jeżeli zmniejszysz głośność syntezatora mowy, głośność dźwięków także będzie zmniejszona.
 Podobnie, jeżeli powiększysz głośność syntezatora, głośność dźwięku się zwiększy.
 Ta opcja odnosi skutek gdy opcja "Używaj wasapi do wyjścia audio" jest włączona.
-Domyślnie  ta opcja jest wyłączona.
+Domyślnie ta opcja jest wyłączona.
+
+==== Głośność dźwięków NVDA ====[SoundVolume]
+Ten suwak umożliwia ustawienie głośności dźwięków NVDA razem z sygnałami dźwiękowymi.
+To ustawienie odnosi skutek gdy opcja "Używaj WASAPI do wyjścia audio" jest włączona, a opcja "Głośność dźwięków NVDA jest spójna z głośnością  NVDA" jest wyłączona.
 
 ==== Włączone kategorie debugowania ====[AdvancedSettingsDebugLoggingCategories]
 Pola wyboru na tej liście pozwalają włączyć konkretne kategorie informacji debugowania w dzienniku NVDA.
@@ -2577,7 +2620,6 @@ Aby wywołać go globalnie, przypisz gest użytkownika w [oknie dialogowym zdarz
 
 ++ Przegląd dodatków ++[AddonStoreBrowsing]
 Po otwarciu Add-on Store, zobaczysz listę dodatków.
-Możesz do niej wrócić z dowolnej części addon-store używając skrótu ``alt+l``.
 Jeżeli do tej pory nie instalowałeś jeszcze żadnego dodatku, Add-on store zostanie otwarte na liście dostępnych do zainstalowania.
 Jeżeli posiadasz już zainstalowane dodatki, pokażą się one na liście zainstalowanych.
 
@@ -2620,12 +2662,12 @@ Aby pokazywać dodatki tylko z określonych kanałów, zmień wybór w filtrze "
 Aby wyszukiwać dodatki, używaj pola edycji  "szukaj".
 Możesz przejść do niego naciskając ``shift+tab`` z listy dodatków, lub naciskając skrót ``alt+s`` z jakiegokolwiek miejsca w interfejsie Add-on store.
 Napisz jedno lub dwa kluczowe słowa, żeby znaleźć żądany typ dodatku którego szukasz, potem `` wróć przyciskiem ``tab`` do listy dodatków.
-Wyszukiwane dodatki pojawią się na liście, jeżeli wpisany przez ciebie tekst zostanie znaleziony w polach nazwy wyświetlanej, wydawcy lub  opisu.
+Wyszukiwane dodatki pojawią się na liście, jeżeli wpisany przez ciebie tekst zostanie znaleziony w polach identyfikatora dodatku, nazwy wyświetlanej, wydawcy lub  opisu.
 
 ++ Działania na dodatkach ++[AddonStoreActions]
 Dodatki posiadają przypisane działania, takie jak instalacja, pomoc, wyłącz i usuń.
 Do menu działań konkretnego dodatku można wejść z listy naciskając klawisz ``kontekstowy``, ``enter``, klikając prawym przyciskiem myszy, lub klikając dwukrotnie jej lewym przyciskiem.
-Przycisk działania znajduje się w szczegółach danego dodatku, który może być  aktywowany klawiszem enter lub skrótem ``alt+a``.
+Do tego menu można przejść za pomocą przycisku działania w szczegółach wybranego dodatku.
 
 +++ Instalowanie dodatków +++[AddonStoreInstalling]
 Jeżeli dodatek znajduje się w add-on store, nie oznacza to że został zatwierdzony lub sprawdzony przez organizację NV Access, czy kogokolwiek innego.
@@ -3847,6 +3889,7 @@ Prisimy zajrzeć do dokumentacji monitora brajlowskiego w celu sprawdzienia opis
 | Włącza lub wyłącza kursor brajlowski | ``f1+cursor1``, ``f9+cursor2`` |
 | Przemieszcza między trybami pokazywania komunikatów | ``f1+f2``, ``f9+f10`` |
 | Przełącza między trybami pokazywania zaznaczenia | ``f1+f5``, ``f9+f14`` |
+| Przełącza między elementami opcji "Przenoś kursor systemowy podczas przywoływania kursoru przeglądu" | ``f1+f3``, ``f9+f11`` |
 | Wywołuje domyślną akcję na bieżącym obiekcie nawigatora | ``f7+f8`` |
 | odczytuje date/czas | ``f9`` |
 | Odczytuje stan baterii jeżeli ładowarka nie jest włączona | ``f10`` |
@@ -3897,8 +3940,14 @@ Oto skróty klawiszowe przydzielone dla tego monitora brajlowskiego.
 + Dla zaawansowanych +[AdvancedTopics]
 
 ++ Tryb bezpieczny ++[SecureMode]
-NVDA może być uruchomiony w bezpiecznym trybie za pomocą parametru ``-s`` [wiersza poleceń #CommandLineOptions].
-NVDA uruchamia się w trybie bezpiecznym gdy jest używany na [ekranach bezpiecznych #SecureScreens], chyba że ``serviceDebug`` [parametr ogólnosystemowy #SystemWideParameters] jest włączony.
+Administratorzy systemowi zechcą skonfigurować NVDA tak, aby ograniczyć niepowołany dostęp do systemu.
+NVDA umożliwia instalację dodatków, które mogą wykonywać różny kod, włączając w to podwyższenie uprawnień NVDA do praw administratora.
+NVDA także umożliwia użytkownikom wykonywanie różnego kodu z konsoli Pythona.
+Tryb bezpieczny NVDA zapobiega zmianę konfiguracji przez użytkowników i ogranicza niepowołany dostęp do systemu.
+ 
+NVDA Uruchamia się w trybie bezpiecznym gdy jest uruchomiony na [bezpiecznych ekranach #SecureScreens], do póki [Parametr ogólnosystemowy #SystemWideParameters] ``serviceDebug``jest włączony.
+Aby zmusić uruchamianie NVDA w trybie bezpiecznym, ustaw [parametr ogólnosystemowy #SystemWideParameters] ``forceSecureMode``.
+NVDA może także być uruchomiony w trybie bezpiecznym za pomocą [opcji wiersza poleceń #CommandLineOptions] ``-s``.
 
 Tryb bezpieczny wyłącza:
 
@@ -3906,9 +3955,18 @@ Tryb bezpieczny wyłącza:
 - zachowywanie zdarzeń wejścia na dysk
 - [Profile konfiguracji #ConfigurationProfiles] funkcje takie jak tworzenie, usuwanie, zmienianie nazwy profili itd.
 - Aktualizowanie NVDA i tworzenie kopii przenośnych
-- [konsolę pythona #PythonConsole]
+- [Add-on Store #AddonsManager]
+- [konsolę pythonaNVDA #PythonConsole]
 - [Podgląd logu #LogViewer] i logowanie
+- Otwieranie dokumentów zewnętrznych z menu NVDA, takich jak podręcznik użytkownika lub plik z listą współtwórców.
 -
+
+Kopie zainstalowane NVDA zachowują swoją konfigurację i dodatki we folderze ``%APPDATA%\nvda``.
+Aby zapobiec zmianę konfiguracji i dodatków bezpośrednio przez użytkownika, dostęp użytkownikowi musi być zabroniony.
+
+Użytkownicy NVDA często polegają na zmianie profili konfiguracyjnych w celu ustawienia NVDA według swoich preferencji.
+W to jest włączone także instalowanie dodatków,, sprawdzonych niezależnie od NVDA.
+Tryb bezpieczny zamarza konfigurację NVDA. Przed włączaniem trybu bezpiecznego, upewnij się że NVDA jest prawidłowo skonfigurowana.
 
 ++ Bezpieczne ekrany ++[SecureScreens]
 NVDA jest uruchomiony w [trybie bezpiecznym #SecureMode] gdy jest uruchomiony na bezpiecznym ekranie chyba że parametr ``serviceDebug`` [ogólnosystemowy #SystemWideParameters] jest włączony.
@@ -3979,8 +4037,9 @@ Wartości te są ustawiane w poniższych kluczach:
 
 Następujące wartości mogą zostać ustawione w tym kluczu rejestru:
 || Nazwa | Typ | Dozwolone wartości | Opis |
-| configInLocalAppData | DWORD | 0 (domyślnie) aby wyłączyć, 1 aby włączyć | Gdy włączone, przechowuje konfigurację użytkownika NVDA w lokalnym folderze danych aplikacji, zamiast w podfolderze Roaming danych aplikacji |
-| serviceDebug | DWORD | 0 (domyślne) żeby wyłączyć, 1 żeby włączyć | jeżeli ten parametr jest włączony, będzie wyłączony [tryb bezpieczny #SecureMode] na [ekranach bezpiecznych #SecureScreens]. Z powodu kilka implikacji bezpieczeństwa, używanie tej opcji jest mocno niezalecane, wręcz odradza się |
+| ``configInLocalAppData`` | DWORD | 0 (domyślnie) aby wyłączyć, 1 aby włączyć | Gdy włączone, przechowuje konfigurację użytkownika NVDA w lokalnym folderze danych aplikacji, zamiast w podfolderze Roaming danych aplikacji |
+| ``serviceDebug`` | DWORD | 0 (domyślne) żeby wyłączyć, 1 żeby włączyć | jeżeli ten parametr jest włączony, będzie wyłączony [tryb bezpieczny #SecureMode] na [ekranach bezpiecznych #SecureScreens]. Z powodu kilka implikacji bezpieczeństwa, używanie tej opcji jest mocno niezalecane, wręcz odradza się |
+| ``forceSecureMode`` | DWORD | 0 (domyślnie) żeby wyłączyć, 1 żeby włączyć | jeżeli włączone, wymusza [tryb bezpieczny #SecureMode] podczas uruchamiania NVDA. |
 
 + Dodatkowe informacje +[FurtherInformation]
 Jeśli potrzebujesz dodatkowych informacji lub pomocy odnośnie NVDA znajdziesz ją na stronie internetowej NVDA NVDA_URL.
