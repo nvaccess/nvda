@@ -109,6 +109,7 @@ Actualizáronse eSpeak-NG, o transcriptor braille Liblouis e Unicode CLDR.
   - O NVDA xa non cambia innecesariamente a sen braille moitas veces durante a autodetección, resultando nun rexistro máis limpo e menos consumo xeral. (#14524)
   - O NVDA agora voltará ao USB se un dispositivo HID Bluetooth (como a HumanWare Brailliant ou a APH Mantis) se detecta automáticamente e unha conexión USB queda dispoñible.
   Esto só funciona para portos serie Bluetooth antes. (#14524)
+  - Cando a pantalla sen braille estea conectada e o visualizador braille estea pechado premendo ``alt+f4`` ou facento clic no botón pechar, o tamano da pantalla do subsistema braille reiniciarase de novo a sen celdas. (#15214)
   -
 - Navegadores Web:
   - O NVDA xa non provoca ocasionalmente que Mozilla Firefox se conxele ou deixe de respostar. (#14647)
@@ -121,7 +122,7 @@ Actualizáronse eSpeak-NG, o transcriptor braille Liblouis e Unicode CLDR.
   - En modo exploración, o NVDA xa non ignora incorrectamente o movemento do foco a un control pai ou fillo por exemplo moverse dende un control elemento de listaxe ao seu pai. (#14611)
     - Ten en conta, sen embargo, que esta correción só se aplica cando a opción "Poñer automáticamente o foco en elementos enfocables" nas opcións de Modo exploración estea desactivada (o que é o predeterminado).
     -
-  -
+    -
 - Arranxos para Windows 11:
   - O NVDA pode voltar a anunciar o contido da barra de estado do Notepad. (#14573)
   - Ao cambiar entre pestanas anunciarase o nome da nova pestana e a posición para Notepad e para o Explorador de Arquivos. (#14587, #14388)
@@ -140,7 +141,6 @@ Actualizáronse eSpeak-NG, o transcriptor braille Liblouis e Unicode CLDR.
 - Ao forzar a compatibilidade con UIA con determinadas terminales e consolas, aránxase un erro que provocaba a conxelación e o lixo no ficheiro de rexistro. (#14689)
 - O NVDA xa non refusará gardar a configuración despois de que se reinicie unha configuración. (#13187)
 - Ao se executar unha versión temporal  dende un lanzador, o NVDA non enganará ao usuario facéndolle crer que pode gardar a configuración. (#14914)
-- O anunciado dos atallos de teclado dos obxectos foi mellorado. (#10807)
 - O NVDA agora responde xeralmente un pouco máis rápido ás ordes e aos cambios do foco. (#14928)
 - A visualización das opcións do OCR non fallará nalgúns sistemas nunca máis. (#15017)
 - Arránxase un fallo relacionado con gardar e cargar a configuración do NVDA, incluindo cambiar sintetizadores. (#14760)
