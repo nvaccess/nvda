@@ -255,22 +255,39 @@ class _StatusFilterKey(DisplayStringEnum):
 
 	@property
 	def _displayStringLabels(self) -> Dict["_StatusFilterKey", str]:
-		return {k: v.replace('&', '') for (k, v) in self._displayStringLabelsWithAccelerators.items()}
+		return {
+			# Translators: The label of a tab to display installed add-ons in the add-on store.
+			# Ensure the translation matches the label for the add-on list which includes an accelerator key.
+			self.INSTALLED: pgettext("addonStore", "Installed add-ons"),
+			# Translators: The label of a tab to display updatable add-ons in the add-on store.
+			# Ensure the translation matches the label for the add-on list which includes an accelerator key.
+			self.UPDATE: pgettext("addonStore", "Updatable add-ons"),
+			# Translators: The label of a tab to display available add-ons in the add-on store.
+			# Ensure the translation matches the label for the add-on list which includes an accelerator key.
+			self.AVAILABLE: pgettext("addonStore", "Available add-ons"),
+			# Translators: The label of a tab to display incompatible add-ons in the add-on store.
+			# Ensure the translation matches the label for the add-on list which includes an accelerator key.
+			self.INCOMPATIBLE: pgettext("addonStore", "Installed incompatible add-ons"),
+		}
 
 	@property
 	def _displayStringLabelsWithAccelerators(self) -> Dict["_StatusFilterKey", str]:
 		return {
-			# Translators: The label of a tab to display installed add-ons in the add-on store and the label of the
-			# add-ons list in the corresponding panel (preferably use the same accelerator key for the four labels)
+			# Translators: The label of the add-ons list in the corresponding panel.
+			# Preferably use the same accelerator key for the four labels.
+			# Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
 			self.INSTALLED: pgettext("addonStore", "Installed &add-ons"),
-			# Translators: The label of a tab to display updatable add-ons in the add-on store and the label of the
-			# add-ons list in the corresponding panel (preferably use the same accelerator key for the four labels)
+			# Translators: The label of the add-ons list in the corresponding panel.
+			# Preferably use the same accelerator key for the four labels.
+			# Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
 			self.UPDATE: pgettext("addonStore", "Updatable &add-ons"),
-			# Translators: The label of a tab to display available add-ons in the add-on store and the label of the
-			# add-ons list in the corresponding panel (preferably use the same accelerator key for the four labels)
+			# Translators: The label of the add-ons list in the corresponding panel.
+			# Preferably use the same accelerator key for the four labels.
+			# Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
 			self.AVAILABLE: pgettext("addonStore", "Available &add-ons"),
-			# Translators: The label of a tab to display incompatible add-ons in the add-on store and the label of the
-			# add-ons list in the corresponding panel (preferably use the same accelerator key for the four labels)
+			# Translators: The label of the add-ons list in the corresponding panel.
+			# Preferably use the same accelerator key for the four labels.
+			# Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
 			self.INCOMPATIBLE: pgettext("addonStore", "Installed incompatible &add-ons"),
 		}
 

@@ -110,6 +110,7 @@ eSpeak-NG, le transcripteur Braille LibLouis, et le référentiel Unicode CLDR o
   - NVDA ne basculera plus de nombreuses fois sur Pas de Braille durant la détection automatique, résultant en un journal plus propre et moins de temps perdu. (#14524)
   - NVDA basculera désormais sur USB si un périphérique Bluetooth HID (comme l'HumanWare Brailliant ou l'APH Mantis) est automatiquement détecté et qu'une ocnnexion USB devient disponnible.
   Cela fonctionnait seulement avec les ports série Bluetooth auparavant. (#14524)
+  - Lorsqu'aucun afficheur Braille n'est connecté et que la visionneuse Braille est fermée par ``alt+f4`` ou par un clic sur le bouton Fermer, la taille de l'afficheur du sous système Braille sera rétablie à pas de cellule. (#15214)
   -
 - Navigateurs Web :
   - NVDA ne provoque plus occasionnellement le crash ou l'absence de réponse de Mozilla Firefox. (#14647)
@@ -141,10 +142,9 @@ eSpeak-NG, le transcripteur Braille LibLouis, et le référentiel Unicode CLDR o
 - Lorsque le support d'UIA est forcé avec certains terminaux et consoles, un bug qui causait un gel et le remplissage du fichier de log a été corrigé. (#14689)
 - NVDA ne refusera maintenant plus de sauvegarder la configuration après une réinitialisation de la configuration. (#13187)
 - Lors de l'exécution d'une version temporaire depuis le lanceur, NVDA n'induira plus les utilisateurs en erreur en leur faisant croire qu'ils peuvent enregistrer la configuration. (#14914)
-- L'annonce des raccourcis clavier des objets a été amélioré. (#10807)
 - NVDA répond maintenant globalement plus rapidement aux commandes et changements de focus. (#14928)
 - Correction d'un bogue sur la sauvegarde et le chargement de la configuration de NVDA, incluant le changement de synthétiseur. (#14760)
-- Correction d'un bogue entraînant le geste tactile de prévisualisation du texte "survol" à se déplacer vers pages plutôt que la ligne précédente.. (#15127)
+- Correction d'un bogue entraînant le geste tactile de revue du texte "glisser vers le haut" à se déplacer par page plutôt qu'aller à la ligne précédente.. (#15127)
 -
 
 

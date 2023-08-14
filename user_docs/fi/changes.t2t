@@ -109,6 +109,7 @@ eSpeak-NG, LibLouis-pistekirjoituskääntäjä ja Unicode-CLDR on päivitetty.
   - NVDA ei enää vaihda tarpeettomasti Ei pistenäyttöä -ajuriin useasti automaattisen tunnistuksen aikana, mistä on seurauksena puhtaampi loki ja pienempi muistin käyttö. (#14524)
   - NVDA vaihtaa nyt takaisin USB:hen, mikäli HID Bluetooth -laite (kuten HumanWare Brailliant tai APH Mantis) tunnistetaan automaattisesti ja USB-yhteys tulee saataville.
   Tämä toimi aiemmin vain Bluetooth-sarjaporteilla. (#14524)
+  - Pistekirjoitusalijärjestelmän näytön koko nollataan taas siten, ettei pistesoluja ole, kun pistenäyttöä ei ole yhdistetty ja pistekirjoituksen tarkastelu suljetaan painamalla ``Alt+F4`` tai napsauttamalla Sulje-painiketta. (#15214)
   -
 - Verkkoselaimet:
   - NVDA ei enää aiheuta toisinaan Mozilla Firefoxin kaatumista tai vastaamasta lakkaamista. (#14647)
@@ -140,12 +141,11 @@ eSpeak-NG, LibLouis-pistekirjoituskääntäjä ja Unicode-CLDR on päivitetty.
 - Korjattu bugi, joka aiheutti NVDA:n jumiutumisen ja lokitiedoston täyttymisen, kun UIA-tuki pakotettiin käyttöön tietyissä päätteissä ja konsoleissa. (#14689)
 - NVDA ei enää kieltäydy tallentamasta asetuksiaan asetusten palauttamisen jälkeen. (#13187)
 - Kun käytetään asennusohjelmasta käynnistettyä NVDA:n tilapäisversiota, käyttäjiä ei johdeta enää harhaan saamalla heidät luulemaan, että asetusten tallentaminen on mahdollista. (#14914)
-- Objektien pikanäppäinten ilmoittamista on paranneltu. (#10807)
 - NVDA reagoi hieman nopeammin komentoihin ja kohdistusmuutoksiin. (#14928)
 - Tekstintunnistusasetusten näyttäminen ei enää epäonnistu joissakin järjestelmissä. (#15017)
 - Korjattu NVDA:n asetusten tallentamiseen ja lataamiseen, syntetisaattorien vaihtaminen mukaan lukien, liittyvä bugi. (#14760)
 - Korjattu bugi, joka sai tekstintarkastelun "pyyhkäise ylös" -kosketuseleen vaihtamaan sivua sen sijaan, että olisi siirtänyt edelliselle riville. (#15127)
--
+- 
 
 
 == Muutokset kehittäjille ==
