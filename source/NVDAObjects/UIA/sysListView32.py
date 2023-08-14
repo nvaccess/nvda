@@ -29,7 +29,7 @@ class SysListViewItem(RowWithFakeNavigation, ListItem):
 
 	def _get_name(self):
 		parent = self.parent
-		if not isinstance(parent, SysListViewList) or self.childCount == 0:
+		if not isinstance(parent, SysListViewList) or self.childCount <= 1:
 			return super().name
 		childrenCacheRequest = UIAHandler.handler.baseCacheRequest.clone()
 		childrenCacheRequest.addProperty(UIAHandler.UIA.UIA_NamePropertyId)
