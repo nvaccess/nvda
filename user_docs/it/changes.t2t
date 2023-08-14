@@ -108,6 +108,7 @@ Come sempre, aggiornati eSpeak-NG, LibLouis braille translator, e Unicode CLDR.
   - NVDA non attiverà più inutilmente la funzione "nessun display braille" più volte durante il rilevamento automatico, il che consente di disporre di un log più pulito. (#14524)
   - NVDA utilizzerà la connessione via USB nel caso in cui  venga rilevato automaticamente un dispositivo HID Bluetooth (come ad esempio HumanWare Brailliant o APH Mantis)  e diventi disponibile una connessione USB.
   In precedenza funzionava solo per le porte seriali Bluetooth. (#14524)
+  - Quando non è collegato alcun display braille e il visualizzatore braille viene chiuso premendo ``alt+f4`` o facendo clic sul pulsante di chiusura, la dimensione del display del sottosistema braille verrà nuovamente reimpostata su nessuna cella. (#15214)  
   -
 - Browser Web:
   - NVDA non provoca più occasionalmente l'arresto anomalo o il blocco di Mozilla Firefox. (#14647)
@@ -139,7 +140,6 @@ Come sempre, aggiornati eSpeak-NG, LibLouis braille translator, e Unicode CLDR.
 - Quando si forza il supporto UIA con determinati terminali e console, è stato corretto un bug che causava il blocco e riempiva il file di log. (#14689)
 - NVDA non si rifiuterà più di salvare la configurazione dopo che quest'ultima è stata ripristinata. (#13187)
 - Quando si esegue una versione temporanea dal programma di avvio, NVDA non indurrà gli utenti a pensare di poter salvare la configurazione. (#14914)
-- La segnalazione dei tasti di scelta rapida degli oggetti è stata migliorata. (#10807)
 - NVDA ora risponde leggermente più velocemente ai comandi e alle operazioni con il focus. (#14928)
 - La visualizzazione delle impostazioni OCR non provocherà più errori su alcuni sistemi. (#15017)
 - Risolto un bug relativo al salvataggio e al caricamento della configurazione di NVDA, incluso il cambio di sintetizzatore. (#14760)

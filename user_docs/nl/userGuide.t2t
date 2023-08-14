@@ -350,9 +350,12 @@ Met de draagbare kopie zelf kunt u op elk gewenst moment NVDA op een PC installe
 Als u NVDA echter naar media met het kenmerk alleen-lezen, zoals een CD, wilt kopiëren, moet u het downloadbestand daarvoor gebruiken.
 Op dit moment kan de draagbare versie niet rechtstreeks van media met het kenmerk alleen-lezen worden uitgevoerd.
 
-De tijdelijke kopie van NVDA gebruiken is ook een optie, bij voorbeeld om het programma te demonstreren, maar het kost wel veel tijd als u NVDA telkens op deze manier moet starten.
+Het [NVDA installatiebestand #StepForRunningTheDownloadLauncher] kan als tijdelijke kopie van NVDA worden gebruikt.
+Met een tijdelijke kopie is opslaan van de instellingen van NVDA niet mogelijk.
+Dit geldt eveneens voor het uitschakelen van het gebruik van de [Add-on Store #AddonsManager].
 
-Behalve dat bij gebruik van de draagbare of tijdelijke kopie van NVDA het programma niet automatisch gestart kan worden tijdens en / of na aanmelding bij Windows, gelden bovendien de volgende beperkingen:
+ Draagbare en  tijdelijke kopieën van NVDA kennen de volgende beperkingen:
+ - Automatisch opstarten tijdens en/of na aanmelding is niet mogelijk.
 - Werken met toepassingen die met beheerdersrechten worden uitgevoerd is niet mogelijk, tenzij NVDA ook met deze rechten wordt uitgevoerd natuurlijk, (niet aan te bevelen),
 - UAC-schermen (User Account Control) kunnen niet worden voorgelezen bij het starten van toepassingen die met beheerdersrechten worden uitgevoerd,
 - Windows 8 en later: Geen ondersteuning voor invoer via het aanraakscherm,
@@ -491,7 +494,7 @@ Om het NVDA-menu vanuit elke willekeurige plaats in Windows op te kunnen roepen 
  - dubbeltik met twee vingers op het aanraakscherm, 
 - Ga het systeemvak in door op ``Windows+b`` te drukken, ``pijl omlaag naar  het NVDA-icoon, en druk op  ``enter``.
 - Of ga het systeemvak in door op  ``Windows+b`` te drukken , ``omlaag te pijlen`` naar het NVDA-icoon, en het contextmenu te openen door op de ``toepassingstoets`` te drukken. Deze toets zit naast de rechter  control-toets op de meeste toetsenborden.
-Op een toetsenbord zonder ```toepassingstoets``, drukt u in plaats daarvan op ``shift+F10``.
+Op een toetsenbord zonder ```toepassingstoets``, drukt u in plaats daarvan op ``shift+f10``.
 - Klik met rechter muisknop op het NVDA-icoon dat zich in het Windows-systeemvak bevindt.
 -
 Als het menu open gaat kunt u de pijltjestoetsen gebruiken om doorheen het menu te navigeren, en met de ``enter-toets`` activeert een item.
@@ -1648,7 +1651,7 @@ Hetzelfde geldt voor [objectoverzicht #ObjectReview].
 U kunt deze optie ook zo instellen dat de aanwijzer alleen wordt verplaatst indien automatisch gekoppeld (tethered) is ingesteld.
 In dat geval zal bij het indrukken van een cursor routing-toets alleen de systeemcursor of de focus worden verplaatst als NVDA automatisch aan de leescursor is gekoppeld (tethered), terwijl er van verplaatsing geen sprake is bij een handmatige koppeling met de leescursor.
 
-Deze optie wordt alleen getoond indien  "[braille koppelen #BrailleTether]" op 'Automatisch" of "op review" is ingesteld.
+Deze optie wordt alleen getoond indien "[braille koppelen #BrailleTether]" op 'Automatisch" of "op review" is ingesteld.
 
 Om de wijze waarop het verplaatsen van de systeemcursor moet verlopen aan te passen bij routering van de leescursor van af een willekeurige plaats, kunt u een aangepaste invoerhandeling toekennen met behulp van het dialoogvenster [Invoerhandelingen #InputGestures].
 
@@ -1719,9 +1722,9 @@ Door deze optie uit te schakelen kunt u wat u in braille leest gelijktijdig hard
   Standaard (Enabled), Ingeschakeld, Uitgeschakeld
 :
 
-Deze instelling bepaalt of de selectieaanwijzer punt 7 en 8) op  de brailleleesregel wordt getoond.
-De optie staat standaard aan, dus selectieaanwijzer  wordt getoond.
-Selectieaanwijzer kan tijdens het lezen storend zijn.
+Deze instelling bepaalt of de selectieaanwijzer (punt 7 en punt 8) op  de brailleleesregel wordt getoond.
+De optie staat standaard aan, dus wordt de selectieaanwijzer  getoond.
+De Selectieaanwijzer kan tijdens het lezen storend zijn.
 De optie uitzetten kan het leesgemak bevorderen.
 
 Om "Toon selectie' van elke willekeurige plek in of uit te schakelen kunt u desgewenst een eigen invoerhandeling aanmaken met behulp van  het dialoogvenster [Invoerhandelingen #InputGestures].
@@ -2247,6 +2250,14 @@ Deze instelling kent de volgende keuzemogelijkheden:
 - Altijd: steeds waar over  UI automation beschikt kan worden  in Microsoft word (ongeacht de mate waarin).
 -
 
+==== UI automation gebruiken voor toegang tot Microsoft  Excel spreadsheet-besturingselementen indien beschikbaar ====[UseUiaForExcel]
+Wanneer deze optie is ingeschakeld zal NVDA proberen de Microsoft UI Automation accessibility API te gebruiken om informatie op te halen uit Microsoft Excel Spreadsheet-besturingselementen.
+Deze toepassing is in een experimentele fase, en sommige mogelijkheden van  Microsoft Excel zijn wellicht niet beschikbaar  in deze modus.
+Zo is bijv. de Elementenlijst van NVDA voor het opsommen van formules en opmerkingen niet beschikbaar. Dit geldt ook voor de Bladermodus snelnavigatieoptie om naar formuliervelden te springen op een spreadsheet (rekenblad).
+Voor zover het gaat om navigeren in / werken met spreadsheets op een meer elementair niveau kan deze  optie echter  een enorme prestatieverbetering opleveren.
+Vooralsnog raden we de meeste gebruikers NIET aan dit standaard aan te zetten, al juichen we het toe dat gebruikers van Microsoft Excel  build 16.0.13522.10000  of hoger de optie activeren om uit te proberen en ons  feedback te geven over hun ervaringen.
+De implementatie van Microsoft Excel's UI automation is aan voortdurende verandering onderhevig, en  versies van Microsoft Office die ouder zijn dan 16.0.13522.10000 geven mogelijk niet genoeg informatie prijs, wat deze optie vokomen onbruikbaar maakt.
+
 ==== Ondersteuning Windows Consool ====[AdvancedSettingsConsoleUIA]
 : Standaard
   Automatisch
@@ -2299,19 +2310,12 @@ De opties zijn:
 -
  -
  
-==== UI automation gebruiken voor toegang tot Microsoft  Excel spreadsheet-besturingselementen indien beschikbaar ====[UseUiaForExcel]
-Wanneer deze optie is ingeschakeld zal NVDA proberen de Microsoft UI Automation accessibility API te gebruiken om informatie op te halen uit Microsoft Excel Spreadsheet-besturingselementen.
-Deze toepassing is in een experimentele fase, en sommige mogelijkheden van  Microsoft Excel zijn wellicht niet beschikbaar  in deze modus.
-Zo is bijv. de Elementenlijst van NVDA voor het opsommen van formules en opmerkingen niet beschikbaar. Dit geldt ook voor de Bladermodus snelnavigatieoptie om naar formuliervelden te springen op een spreadsheet (rekenblad).
-Voor zover het gaat om navigeren in / werken met spreadsheets op een meer elementair niveau kan deze  optie echter  een enorme prestatieverbetering opleveren.
-Vooralsnog raden we de meeste gebruikers NIET aan dit standaard aan te zetten, al juichen we het toe dat gebruikers van Microsoft Excel  build 16.0.13522.10000  of hoger de optie activeren om uit te proberen en ons  feedback te geven over hun ervaringen.
-De implementatie van Microsoft Excel's UI automation is aan voortdurende verandering onderhevig, en  versies van Microsoft Office die ouder zijn dan 16.0.13522.10000 geven mogelijk niet genoeg informatie prijs, wat deze optie vokomen onbruikbaar maakt.
-
 ==== Dynamische zones met wisselende inhoud melden ====[BrailleLiveRegions]
 : Standaard
   Ingeschakeld
 : Opties
   Uitgeschakeld, Ingeschakeld
+    Standaard (ingeschakeld), Uitgeschakeld, Ingeschakeld
 :
 
 Met deze optie kunt u ervoor kiezen om NVDA bepaalde dynamische web-content in braille te laten melden.
@@ -2346,7 +2350,7 @@ Wanneer er echter in terminal-toepassingen  een tekenmidden in een regel wordt i
 : Standaard
   Diffing
 : Opties
-  Diffing, UIA notificaties
+  Standaard (Diffing), Diffing, UIA notificaties
 :
 
 Met deze optie kiest u hoe NVDA bepaalt wat er aan nieuwe tekst is (en dus wat gelezen moet worden als "dynamische inhoudwijzigingen melden" ingeschakeld is) in Windows Terminal en de WPF Windows Terminal control die gebruikt wordt in Visual Studio 2022.
@@ -2377,17 +2381,28 @@ In sommige situaties, is de tekstachtergrond mogelijk volkomen transparant, waar
 Bij verscheidene GUI API's, die al heel lang populair zijn, kan de  tekst weergegeven zijn door middel van een transparante achtergrond, maar visueel is de achtergrondkleur in orde.
 
 ==== WASAPI vor audio uitvoer gebruiken ====[WASAPI]
+: Standaard
+  Uitgeschakeld
+: Opties
+  Standaard (Uitgeschakeld), Ingeschakeld, Uitgeschakeld
+:
+
 Met deze optie kan audiouitvoer  via Windows Audio Session API (WASAPI) ingeschakeld worden.
 WASAPI is een moderner audio-framework dat potentieel betere response-eigenschappen, prestaties en stabiliteit van de NVDA audiouitvoer biedt, zowel van spraak als klank.
-Deze optie staat  standaard ingeschakeld.
+
 Na aanpassing van de optie moet u NVDA opnieuw opstarten om de aanpassing van kracht te laten worden.
 
 ==== Volume van NVDAgeluiden volgt stemvolume ====[SoundVolumeFollowsVoice]
+: Standaard
+  Uitgeschakeld
+: Opties
+  Uitgeschakeld, Ingeschakeld
+:
+
 Wanneer deze optie is ingeschakeld  zal het volume van  NVDA-geluiden en -pieptonen de volumeinstelling van de stem die u gebruikt volgen.
 Als u het volume van  de stem verlaagt, gaat het volume van geluiden mee naar beneden.
 Evenzo zal bij verhoging van het stemvolume het volume van geluiden mee omhoog gaan.
 Deze optie heeft alleen dan effect wanneer WASAPI voor audiouitvoer" is ingeschakeld.
-Deze optie staat standaard uit.
 
 ==== Volume van NVDA-geluiden ====[SoundVolume]
 Met deze schuifregelaar stelt u het volume in van  geluiden en pieptonen van NVDA.
@@ -2454,9 +2469,9 @@ U kunt de symbolen filteren door het symbool of een deel van de vervanging van h
 worden in plaats van dit symbool.
 - In het keuzevak Niveau kunt u het laagste niveau opgeven waarop dit symbool moet worden uitgesproken (geen, enkele, meeste of allemaal).
 U kunt het niveau ook instellen op karakter; in dit geval wordt het  symbool niet gemeld, ongeacht  ingestelde symboolniveau, waarbij  de volgende twee uitzonderingen gelden:
- - Bij het  navigeren  op  karakterniveau.
- - Wanneer NVDA  tekst spelt waarin dat  symbool voorkomt.
- 
+  - Bij het  navigeren  op  karakterniveau.
+  - Wanneer NVDA  tekst spelt waarin dat  symbool voorkomt.
+  -
 - Het veld "Het eigenlijke symbool naar synthesizer sturen" specificeert wanneer het symbool zelf (in tegenstelling tot de vervanging ervan naar de synthesizer moet worden gestuurd.
 Dit is nuttig alss het symbool de synthesizer even laat stoppen of als het de buiging van de stem verandert.
 Een komma, bij voorbeeld, zorgt ervoor dat er een kort pauzemoment is in de spraakuitvoer
@@ -2622,7 +2637,7 @@ De NVDA-instellingen voor aanmeldingsscherm en UAC-schermen zijn opgeslagen in d
 In het algemeen moet u niets veranderen aan deze configuratie.
 Om de instellingen van NVDA voor het aanmeldscherm of de UAC-schermen (gebruikersaccountbeheer) aan te passen, brengt u de gewenste wijzigingen aan terwijl u bij Windows bent aangemeld. Vervolgens slaat u de configuratie op waarna u in de categorie Algemeen van het dialoogvenster [Instellingen van NVDA #NVDASettings] op de knop "Huidige Instellingen van NVDA gebruiken bij Windows-aanmelding", drukt.
 
-+ Add-ons en de Add-on-storeStore +[AddonsManager]
++ Add-ons en de Add-on Store +[AddonsManager]
 Add-ons zijn software-pakketten die nieuwe of aanvullende functionaliteit bieden voor NVDA.
 Ze worden ontwikkeld door mensen uit de NVDA-gemeenschap en  externe organisaties zoals commerciële partijen.
 Add-ons bieden een breed scala aan mogelijkheden:
@@ -2643,7 +2658,7 @@ Om de Add-on-store vanuit een willekeurige plaats te bereiken kunt u een eigen i
 ++ Zoeken in add-ons ++[AddonStoreBrowsing]
 Wanneer de Add-on-store eenmaal geopend is, ziet u de lijst met add-ons.
 
-Als u eerder geen add-on hebt geïnstalleerd  komt u in de add-on-store terecht bij een lijst met  add-ons die voor installatie beschikbaar zijn.
+Als u eerder geen add-on hebt geïnstalleerd  komt u in de Add-on Store terecht bij een lijst met  add-ons die voor installatie beschikbaar zijn.
 Als u al eerder add-ons hebt geïnstalleerd, wordt de lijst met de momenteel geïnstalleerde add-ons getoond.
 
 Als u een add-on, selecteert door er naar toe te gaan met de pijltjestoetsen omhoog en omlaag, ziet u de details voor de add-on.
@@ -2676,15 +2691,15 @@ Add-ons kunnen via maximaal vier kanalen worden uitgezet:
 Gericht op  'early adopters'.
 - Dev: dit kanaal richt zich op en is bedoeld voor ontwikkelaars van add-ons om nog niet uitgebrachte API-aanpassingen uit te testen.
 Alpha testers van NVDA moeten mogelijk een  "Dev" versie van hun add-ons gebruiken.
-- Extern: Add-ons van externe bronnen die van buiten de add-on-store worden geïnstalleerd.
+- Extern: Add-ons van externe bronnen die van buiten de Add-on Store worden geïnstalleerd.
 -
 
 Om add-ons te sorteren uitsluitend op basis van een specifiek kanaal kunt u het selectiefilter aanpassen.
 
 +++ Zoeken naar add-ons +++[AddonStoreFilterSearch]
 Om add-ons, te zoeken gebruikt u het invoervak 'zoeken'.
-U komt bij het zoekvak door op ``shift+tab`` te drukken vanuit de lijst met add-ons, of door op ``alt+s`` te drukken  vanuit een willekeurige plaats in de  interface vam deAdd-on-store.
-Typ een paar sleutelwoorden voor het soort add-on waar u naar op zoek bent waarna u terug ``tabt`` naar de lijst met add-ons.
+U komt bij het zoekvak door op ``shift+tab`` te drukken vanuit de lijst met add-ons.
+Typ een paar sleutelwoorden voor het soort add-on waar u naar op zoek bent waarna u naar de lijst met add-ons ``tabt``.
 Er verschijnt een lijst met gevonden add-ons als de opgegeven zoektermen overeenkomen met de add-on ID, de weergegeven naam, uitgever of de beschrijving.
 
 ++ Add-on-acties ++[AddonStoreActions]
@@ -2693,7 +2708,7 @@ Hetmenu voor acties  mbt een add-on in de lijst met add-ons kan worden bereikt  
 Dit menu is ook te bereiken   in het geselecteerde  deelvenster details van een add-on.
 
 +++ Add-ons installeren +++[AddonStoreInstalling]
-Louter en alleen omdat een add-on beschikbaar is in de Add-ons-store, mag hier niet uit worden opgemaakt deze goedgekeurd of gecontroleerd is door  NV Access of door wie dan ook.
+Louter en alleen omdat een add-on beschikbaar is in de Add-on Store, mag hier niet uit worden opgemaakt deze goedgekeurd of gecontroleerd is door  NV Access of door wie dan ook.
 Het is erg belangrijk dat u alleen add-ons installeert  die afkomstig zijn van bronnen die u vertrouwt.
 Binnen NVDA gelden er geen beperkingen mbt de functionaliteit van  add-ons.
 Dit zou ook kunnen gelden voor toegang tot uw persoonlijke gegevens of zelfs het gehele systeem.
@@ -2796,7 +2811,7 @@ Voor meer informatie gaat u naar de [NVDA Developer Guide https://www.nvaccess.o
 
 ++ Add-on-store ++
 Hiermee opent u de Add-on-store #AddonsManager].
-Hierover vindt u meer informatie in het uitgebreide hoofdstuk [Add-ons en de Add-on-store #AddonsManager].
+Hierover vindt u meer informatie in de uitgebreide rubriek: [Add-ons en de Add-on Store #AddonsManager].
 
 ++ Draagbare versie aanmaken ++[CreatePortableCopy]
 Hiermee opent u een dialoogvenster dat u in staat stelt een draagbare kopie van NVDA aan te maken vanuit de geïnstalleerde versie.
@@ -3110,20 +3125,20 @@ Bij gebruik van deze leesregels met NVDA zijn de volgende toetscombinaties van t
 Waar de toetsen zich bevinden, leest u in de documentatie bij de leesregels.
 %kc:beginInclude
 || Naam | Toets |
-| Brailleregel terugscrollen | d2 |
-| Brailleregel vooruit scrollen | d5 |
-| Brailleregel naar vorige regel verplaatsen | d1 |
-| Brailleregel naar volgende regel verplaatsen | d3 |
-| Cursor naar braillecel verplaatsen | routing |
-| shift+tab-toetsen | spatie+punt1+punt3 |
-| tab-toets | spatie+punt4+punt6 |
-| alt-toets | spatie+punt1+punt3+punt4 (spatie+m) |
-| escape-toets | spatie+punt1+punt5 (spatie+e) |
-| windows-toets | spatie+puntt3+punt4 |
-| alt+tab-toetsen | spatie+punt2+punt3+punt4+punt5 (spatie+t) |
-| NVDA-menu | spatie+punt1+punt3+punt4+punt5 (spatie+n) |
-| windows+d-toetsen (minimaliseer alle applicaties) | space+dot1+dot4+dot5 (space+d) |
-| Alles lezen | spatie+punt1+punt2+punt3+punt4+punt5+punt6 |
+| Brailleregel terugscrollen | ``d2`` |
+| Brailleregel vooruit scrollen | ``d5`` |
+| Brailleregel naar vorige regel verplaatsen | ``d1`` |
+| Brailleregel naar volgende regel verplaatsen | ``d3`` |
+| Cursor naar braillecel verplaatsen | ``routing`` |
+| shift+tab-toetsen | ``spatie+punt1+punt3`` |
+| tab-toets | ``spatie+punt4+punt6`` |
+| alt-toets | ``spatie+punt1+punt3+punt4`` (``spatie+m``) |
+| ``escape-toets`` | ``spatie+punt1+punt5`` (``spatie+e``) |
+| windows-toets | ``spatie+puntt3+punt4`` |
+| ``alt+tab-toetsen`` | ``spatie+punt2+punt3+punt4+punt5`` (``spatie+t``) |
+| ``NVDA-menu`` | ``spatie+punt1+punt3+punt4+punt5`` (``spatie+n``) |
+| ``windows+d-toetsen`` (minimaliseer alle applicaties) | ``spatie+punt1+punt4+punt5`` (``spatie+d``) |
+| Alles lezen | ``spatie+punt1+punt2+punt3+punt4+punt5+punt6`` |
  
 Voor leesregels die een Joystick hebben, geldt:
 || Naam | Toets |
@@ -3676,11 +3691,12 @@ Om deze reden en om compatibiliteit met andere schermlezers in Taiwan te bewerks
 ++ Eurobraille leesregels ++[Eurobraille]
 De b.book, b.note, Esys, Esytime en Iris leesregels  van Eurobraille worden door NVDA ondersteund.  
 Deze apaaraten hebben een brailletoetsenbord met 10 toetsen. 
+Raadpleeg de bij deze leesregel behorende documentatie voor de beschrijving van deze toetsen.
 Van de twee toetsen die als een spatiebalk geplaatst zijn, werkt de linker toets als backspace en met de rechter toets maak je een spatie.
+
 Deze leesregels, die via usb worden aangesloten, hebben 1 los, op zichzelfstaand, usb-toetsenbord. 
-Dit toetsenbord kan in- of uitgeschakeld worden door middel van het selectievakje  ‘HID toetsenbordsimulatie’ in het brailleinstellingenscherm. 
-In de onderstaande beschrijving van het brailletoetsenbord wordt uitgegaan van het brailletoetsenbord als het selectievakje niet is aangekruist.
-Hieronder volgen de toetscommando's voor deze leesregels met NVDA. Raadpleeg de documentatie bij deze apparaten voor informatie over de plaats van de toetsen. 
+Het is mogelijk dit toetsenbord te activeren of te deactiveren door "HID Toetsenbord simulatie" aan of uit tezetten met behulp van een invoerhandeling. 
+In de onderstaande beschrijving van het brailletoetsenbord wordt er van uitgegaan dat dit gedeactiveerd is.
 
 +++ Brailletoetsenbordfuncties +++[EurobrailleBraille]
 %kc:beginInclude
@@ -3741,6 +3757,7 @@ Hieronder volgen de toetscommando's voor deze leesregels met NVDA. Raadpleeg de 
 | Schakelen met  ``control-toets`` | ``punt1+punt7+punt8+spatie``, ``punt4+punt7+punt8+spatie`` |
 | ``alt-toets`` | ``punt8+spatie`` |
 | Schakelen met Alt-toets`` | ``punt1+punt8+spatie``, ``punt4+punt8+spatie`` |
+|  HID Toetsenbord simulatie aan/uit | ``schakelaar1Links+joystick1Omlaag``, ``schakelaar1Rechts+joystick1Omlaag`` |
 %kc:endInclude
 
 +++ b.book-toetsenbordcommando's +++[Eurobraillebbook]
@@ -3827,8 +3844,9 @@ Hieronder volgen de toetscommando's voor deze leesregels met NVDA. Raadpleeg de 
 | Schakelen met ``NVDA-toets`` | ``l7`` |
 | ``control+home-toetscombinatie`` | ``l1+l2+l3``, ``l2+l3+l4`` |
 | ``control+end-toetscombinatie`` | ``l6+l7+l8``, ``l5+l6+l7`` |
+| HID Toetsenbord simulatie aan/uit | ``l1+joystick1Omlaag``, ``l8+joystick1Omlaag`` |
  %kc:endInclude
- 
+
 ++ Nattiq nBraille Displays ++[NattiqTechnologies]
 NVDA ondersteunt de leesregels van [Nattiq Technologies https://www.nattiq.com/] wanneer ze via USB worden aangesloten.
 Windows 10 en later detecteert  the brailleleesregels zodra ze zijn verbonden.  Voor oudere versies van Windows (lager dan  Win10) moet u wellicht USB-drivers installeren.

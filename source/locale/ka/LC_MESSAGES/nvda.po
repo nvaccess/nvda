@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA_georgian_translation\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-28 03:20+0000\n"
-"PO-Revision-Date: 2023-08-01 13:05+0400\n"
+"POT-Creation-Date: 2023-08-14 03:03+0000\n"
+"PO-Revision-Date: 2023-08-12 18:02+0400\n"
 "Last-Translator: DraganRatkovich\n"
 "Language-Team: Georgian translation team <admin@gozaltech.org>\n"
 "Language: ka\n"
@@ -8797,7 +8797,7 @@ msgstr ""
 #. Translators: The title of the warning dialog displayed when trying to
 #. copy settings for use in secure screens.
 msgid "Warning"
-msgstr "ყურადღება"
+msgstr "გაფრთხილება"
 
 #. Translators: The title of the dialog presented while NVDA is running the COM Registration fixing tool
 #. Translators: The title of a dialog presented when the COM Registration Fixing tool is complete.
@@ -13828,26 +13828,54 @@ msgctxt "addonStore"
 msgid "Enabled, pending restart"
 msgstr "ჩართულია, მოსალოდნელია გადატვირთვა"
 
-#. Translators: The label of a tab to display installed add-ons in the add-on store and the label of the
-#. add-ons list in the corresponding panel (preferably use the same accelerator key for the four labels)
+#. Translators: The label of a tab to display installed add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
+msgctxt "addonStore"
+msgid "Installed add-ons"
+msgstr "დაყენებული დამატებები"
+
+#. Translators: The label of a tab to display updatable add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
+msgctxt "addonStore"
+msgid "Updatable add-ons"
+msgstr "განახლებადი დამატებები"
+
+#. Translators: The label of a tab to display available add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
+msgctxt "addonStore"
+msgid "Available add-ons"
+msgstr "ხელმისაწვდომი დამატებები"
+
+#. Translators: The label of a tab to display incompatible add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
+msgctxt "addonStore"
+msgid "Installed incompatible add-ons"
+msgstr "დაყენებული შეუთავსებელი დამატებები"
+
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
 msgctxt "addonStore"
 msgid "Installed &add-ons"
 msgstr "&დაყენებული დამატებები"
 
-#. Translators: The label of a tab to display updatable add-ons in the add-on store and the label of the
-#. add-ons list in the corresponding panel (preferably use the same accelerator key for the four labels)
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
 msgctxt "addonStore"
 msgid "Updatable &add-ons"
 msgstr "&განახლებადი დამატებები"
 
-#. Translators: The label of a tab to display available add-ons in the add-on store and the label of the
-#. add-ons list in the corresponding panel (preferably use the same accelerator key for the four labels)
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
 msgctxt "addonStore"
 msgid "Available &add-ons"
 msgstr "&ხელმისაწვდომი დამატებები"
 
-#. Translators: The label of a tab to display incompatible add-ons in the add-on store and the label of the
-#. add-ons list in the corresponding panel (preferably use the same accelerator key for the four labels)
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
 msgctxt "addonStore"
 msgid "Installed incompatible &add-ons"
 msgstr "დაყენებული შეუთავსებელი &დამატებები"
@@ -14047,7 +14075,7 @@ msgid ""
 "version: {oldVersion}. Available version: {version}.\n"
 "Proceed with installation anyway? "
 msgstr ""
-"ყურადღება: დამატების დაყენებამ, შესაძლოა, გამოიწვიოს დაბალი ვერსიის "
+"გაფრთხილება: დამატების დაყენებამ, შესაძლოა, გამოიწვიოს დაბალი ვერსიის "
 "დაყენება: {name}. დამატების დაყენებული ვერსიის დამატებების მაღაზიაში "
 "არსებული ვერსიით შედარება ვერ მოხერხდა. დაყენებული ვერსია: {oldVersion}. "
 "ხელმისაწვდომი ვერსია: {version}.\n"
@@ -14085,7 +14113,7 @@ msgid ""
 "{NVDAVersion}. Installation may cause unstable behavior in NVDA.\n"
 "Proceed with installation anyway? "
 msgstr ""
-"ყურადღება: დამატება შეუთავსებელია: {name} {version}. თუ შესაძლებელია, "
+"გაფრთხილება: დამატება შეუთავსებელია: {name} {version}. თუ შესაძლებელია, "
 "მოძებნეთ ამ დამატების განახლებული ვერსია. ამ დამატებისთვის NVDA-ს ბოლო "
 "შემოწმებული ვერსიაა {lastTestedNVDAVersion}, თქვენი NVDA-ს ვერსიაა "
 "{NVDAVersion}. ინსტალაციამ შესაძლოა გამოიწვიოს NVDA-ს არასტაბილური "
@@ -14103,7 +14131,7 @@ msgid ""
 "{NVDAVersion}. Enabling may cause unstable behavior in NVDA.\n"
 "Proceed with enabling anyway? "
 msgstr ""
-"ყურადღება: დამატება შეუთავსებელია: {name} {version}. თუ შესაძლებელია, "
+"გაფრთხილება: დამატება შეუთავსებელია: {name} {version}. თუ შესაძლებელია, "
 "მოძებნეთ ამ დამატების განახლებული ვერსია. ამ დამატებისთვის NVDA-ს ბოლო "
 "შემოწმებული ვერსიაა {lastTestedNVDAVersion}, თქვენი NVDA-ს ვერსიაა "
 "{NVDAVersion}. ჩართვამ შესაძლოა გამოიწვიოს NVDA-ს არასტაბილური "
@@ -14155,20 +14183,46 @@ msgctxt "addonStore"
 msgid "Add-on Information"
 msgstr "ინფორმაცია დამატების შესახებ"
 
+#. Translators: The warning of a dialog
+msgid "Add-on Store Warning"
+msgstr "გაფრთხილება"
+
+#. Translators: Warning that is displayed before using the Add-on Store.
+msgctxt "addonStore"
+msgid ""
+"Add-ons are created by the NVDA community and are not vetted by NV Access. "
+"NV Access cannot be held responsible for add-on behavior. The functionality "
+"of add-ons is unrestricted and can include accessing your personal data or "
+"even the entire system. "
+msgstr ""
+"დამატებები შექმნილია NVDA საზოგადოების მიერ და არ მოწმდება NV Access-ის "
+"მხრიდან. NV Access არ არის პასუხისმგებელი დამატების მოქმედებაზე. დამატების "
+"ფუნქციონირება შეუზღუდავია და შეიძლება მოიცავდეს წვდომას როგორც თქვენს "
+"პერსონალურ მონაცემებზე, ისე მთელ სისტემაზე."
+
+#. Translators: The label of a checkbox in the add-on store warning dialog
+msgctxt "addonStore"
+msgid "&Don't show this message again"
+msgstr "&აღარ მაჩვენო ეს შეტყობინება"
+
+#. Translators: The label of a button in a dialog
+msgid "&OK"
+msgstr "&OK"
+
 #. Translators: The title of the addonStore dialog where the user can find and download add-ons
 msgctxt "addonStore"
 msgid "Add-on Store"
 msgstr "დამატებების მაღაზია"
 
-#. Translators: Banner notice that is displayed in the Add-on Store.
-msgctxt "addonStore"
-msgid "Note: NVDA was started with add-ons disabled"
-msgstr "შენიშვნა: NVDA ჩაირთო გამორთული დამატებებით"
-
 #. Translators: The label for a button in add-ons Store dialog to install an external add-on.
 msgctxt "addonStore"
 msgid "Install from e&xternal source"
 msgstr "გარე &წყაროდან დაყენება"
+
+#. Translators: Banner notice that is displayed in the Add-on Store.
+msgctxt "addonStore"
+msgid "Note: NVDA was started with add-ons disabled"
+msgstr "შენიშვნა: NVDA ჩაირთო გამორთული დამატებებით"
 
 #. Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
 msgctxt "addonStore"
