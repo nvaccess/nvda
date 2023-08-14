@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-28 03:20+0000\n"
-"PO-Revision-Date: 2023-08-01 18:09+0200\n"
+"POT-Creation-Date: 2023-08-14 03:03+0000\n"
+"PO-Revision-Date: 2023-08-11 17:51+0200\n"
 "Last-Translator: Jani Kinnunen <janikinnunen340@gmail.com>\n"
 "Language-Team: janikinnunen340@gmail.com\n"
 "Language: fi_FI\n"
@@ -4180,8 +4180,8 @@ msgstr "Pistenäyttö seuraa %s"
 msgid ""
 "Cycle through the braille move system caret when routing review cursor states"
 msgstr ""
-"Vaihtaa Siirrä järjestelmäkohdistin tarkastelukohdistimen kohdalle "
-"pistenäytön kosketuskohdistinnäppäimillä -asetuksen tilaa"
+"Vaihtaa Siirrä järjestelmäkohdistin tarkastelukohdistimen kohdalle -"
+"asetuksen tilaa."
 
 #. Translators: Reported when action is unavailable because braille tether is to focus.
 msgid "Action unavailable. Braille is tethered to focus"
@@ -4191,16 +4191,12 @@ msgstr "Toiminto ei käytettävissä, koska pistenäyttö seuraa kohdistusta."
 #. state (default behavior).
 #, python-format
 msgid "Braille move system caret when routing review cursor default (%s)"
-msgstr ""
-"Siirrä järjestelmäkohdistin tarkastelukohdistimen kohdalle pistenäytön "
-"kosketuskohdistinnäppäimillä oletus (%s)"
+msgstr "Siirrä järjestelmäkohdistin tarkastelukohdistimen kohdalle oletus (%s)"
 
 #. Translators: Used when reporting braille move system caret when routing review cursor state.
 #, python-format
 msgid "Braille move system caret when routing review cursor %s"
-msgstr ""
-"Siirrä järjestelmäkohdistin tarkastelukohdistimen kohdalle pistenäytön "
-"kosketuskohdistinnäppäimillä %s"
+msgstr "Siirrä järjestelmäkohdistin tarkastelukohdistimen kohdalle %s"
 
 #. Translators: Input help mode message for toggle braille focus context presentation command.
 msgid "Toggle the way context information is presented in braille"
@@ -13753,26 +13749,54 @@ msgctxt "addonStore"
 msgid "Enabled, pending restart"
 msgstr "Käytössä, odottaa uudelleenkäynnistystä"
 
-#. Translators: The label of a tab to display installed add-ons in the add-on store and the label of the
-#. add-ons list in the corresponding panel (preferably use the same accelerator key for the four labels)
+#. Translators: The label of a tab to display installed add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
+msgctxt "addonStore"
+msgid "Installed add-ons"
+msgstr "Asennetut"
+
+#. Translators: The label of a tab to display updatable add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
+msgctxt "addonStore"
+msgid "Updatable add-ons"
+msgstr "Päivitettävissä"
+
+#. Translators: The label of a tab to display available add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
+msgctxt "addonStore"
+msgid "Available add-ons"
+msgstr "Saatavilla"
+
+#. Translators: The label of a tab to display incompatible add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
+msgctxt "addonStore"
+msgid "Installed incompatible add-ons"
+msgstr "Yhteensopimattomat"
+
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
 msgctxt "addonStore"
 msgid "Installed &add-ons"
 msgstr "Ase&nnetut"
 
-#. Translators: The label of a tab to display updatable add-ons in the add-on store and the label of the
-#. add-ons list in the corresponding panel (preferably use the same accelerator key for the four labels)
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
 msgctxt "addonStore"
 msgid "Updatable &add-ons"
 msgstr "&Päivitettävissä"
 
-#. Translators: The label of a tab to display available add-ons in the add-on store and the label of the
-#. add-ons list in the corresponding panel (preferably use the same accelerator key for the four labels)
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
 msgctxt "addonStore"
 msgid "Available &add-ons"
 msgstr "Saatav&illa"
 
-#. Translators: The label of a tab to display incompatible add-ons in the add-on store and the label of the
-#. add-ons list in the corresponding panel (preferably use the same accelerator key for the four labels)
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
 msgctxt "addonStore"
 msgid "Installed incompatible &add-ons"
 msgstr "&Yhteensopimattomat"
@@ -14078,29 +14102,55 @@ msgctxt "addonStore"
 msgid "Add-on Information"
 msgstr "Lisäosan tiedot"
 
+#. Translators: The warning of a dialog
+msgid "Add-on Store Warning"
+msgstr "Lisäosakaupan varoitus"
+
+#. Translators: Warning that is displayed before using the Add-on Store.
+msgctxt "addonStore"
+msgid ""
+"Add-ons are created by the NVDA community and are not vetted by NV Access. "
+"NV Access cannot be held responsible for add-on behavior. The functionality "
+"of add-ons is unrestricted and can include accessing your personal data or "
+"even the entire system. "
+msgstr ""
+"Lisäosat ovat NVDA-yhteisön tekemiä, eikä NV Access ole tarkastanut niitä. "
+"NV Access ei ole vastuussa lisäosien toiminnasta. Lisäosien toiminnallisuus "
+"on rajoittamatonta ja saattaa mahdollistaa pääsyn henkilökohtaisiin "
+"tietoihisi tai jopa koko järjestelmään."
+
+#. Translators: The label of a checkbox in the add-on store warning dialog
+msgctxt "addonStore"
+msgid "&Don't show this message again"
+msgstr "&Älä näytä tätä varoitusta uudelleen"
+
+#. Translators: The label of a button in a dialog
+msgid "&OK"
+msgstr "&OK"
+
 #. Translators: The title of the addonStore dialog where the user can find and download add-ons
 msgctxt "addonStore"
 msgid "Add-on Store"
 msgstr "Lisäosakauppa"
-
-#. Translators: Banner notice that is displayed in the Add-on Store.
-msgctxt "addonStore"
-msgid "Note: NVDA was started with add-ons disabled"
-msgstr "Huom: NVDA käynnistettiin lisäosat käytöstä poistettuina"
 
 #. Translators: The label for a button in add-ons Store dialog to install an external add-on.
 msgctxt "addonStore"
 msgid "Install from e&xternal source"
 msgstr "Asenna &ulkoisesta lähteestä"
 
+#. Translators: Banner notice that is displayed in the Add-on Store.
+msgctxt "addonStore"
+msgid "Note: NVDA was started with add-ons disabled"
+msgstr "Huom: NVDA käynnistettiin lisäosat käytöstä poistettuina"
+
 #. Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
 msgctxt "addonStore"
 msgid "Cha&nnel:"
-msgstr "Ka&nava:"
+msgstr "&Kanava:"
 
 #. Translators: The label of a checkbox to filter the list of add-ons in the add-on store dialog.
 msgid "Include &incompatible add-ons"
-msgstr "Näytä &yhteensopimattomat lisäosat"
+msgstr "Näytä y&hteensopimattomat lisäosat"
 
 #. Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
 msgctxt "addonStore"

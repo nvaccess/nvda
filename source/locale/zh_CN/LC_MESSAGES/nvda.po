@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-28 03:20+0000\n"
+"POT-Creation-Date: 2023-08-14 03:03+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: hwf1324 <1398969445@qq.com>\n"
 "Language-Team: \n"
@@ -7485,7 +7485,6 @@ msgid "Multi line break"
 msgstr "多行分段"
 
 #. Translators: Label for setting to move the system caret when routing review cursor with braille.
-#, fuzzy
 msgid "Never"
 msgstr "从不"
 
@@ -7494,7 +7493,6 @@ msgid "Only when tethered automatically"
 msgstr ""
 
 #. Translators: Label for setting to move the system caret when routing review cursor with braille.
-#, fuzzy
 msgid "Always"
 msgstr "总是"
 
@@ -10478,9 +10476,8 @@ msgid "Enable support for HID braille"
 msgstr "启用对 HID 盲文的支持"
 
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
-#, fuzzy
 msgid "Report live regions:"
-msgstr "读出链接"
+msgstr ""
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -10572,9 +10569,8 @@ msgstr "NVDA 音效音量跟随语音音量（需要 WASAPI 支持）"
 
 #. Translators: This is the label for a slider control in the
 #. Advanced settings panel.
-#, fuzzy
 msgid "Volume of NVDA sounds (requires WASAPI)"
-msgstr "NVDA 音效音量跟随语音音量（需要 WASAPI 支持）"
+msgstr "NVDA 音效音量（需要 WASAPI 支持）"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -13446,33 +13442,57 @@ msgctxt "addonStore"
 msgid "Enabled, pending restart"
 msgstr "已启用，重启后生效"
 
-#. Translators: The label of a tab to display installed add-ons in the add-on store and the label of the
-#. add-ons list in the corresponding panel (preferably use the same accelerator key for the four labels)
-#, fuzzy
+#. Translators: The label of a tab to display installed add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
 msgctxt "addonStore"
-msgid "Installed &add-ons"
+msgid "Installed add-ons"
 msgstr "已安装的插件"
 
-#. Translators: The label of a tab to display updatable add-ons in the add-on store and the label of the
-#. add-ons list in the corresponding panel (preferably use the same accelerator key for the four labels)
-#, fuzzy
+#. Translators: The label of a tab to display updatable add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
 msgctxt "addonStore"
-msgid "Updatable &add-ons"
+msgid "Updatable add-ons"
 msgstr "可更新的插件"
 
-#. Translators: The label of a tab to display available add-ons in the add-on store and the label of the
-#. add-ons list in the corresponding panel (preferably use the same accelerator key for the four labels)
-#, fuzzy
+#. Translators: The label of a tab to display available add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
 msgctxt "addonStore"
-msgid "Available &add-ons"
+msgid "Available add-ons"
 msgstr "可安装的插件"
 
-#. Translators: The label of a tab to display incompatible add-ons in the add-on store and the label of the
-#. add-ons list in the corresponding panel (preferably use the same accelerator key for the four labels)
-#, fuzzy
+#. Translators: The label of a tab to display incompatible add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
+msgctxt "addonStore"
+msgid "Installed incompatible add-ons"
+msgstr "已安装的不兼容插件"
+
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
+msgctxt "addonStore"
+msgid "Installed &add-ons"
+msgstr "已安装的插件(&A)"
+
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
+msgctxt "addonStore"
+msgid "Updatable &add-ons"
+msgstr "可更新的插件(&A)"
+
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
+msgctxt "addonStore"
+msgid "Available &add-ons"
+msgstr "可安装的插件(&A)"
+
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
 msgctxt "addonStore"
 msgid "Installed incompatible &add-ons"
-msgstr "已安装的不兼容插件"
+msgstr "已安装的不兼容插件(&A)"
 
 #. Translators: The reason an add-on is not compatible.
 #. A more recent version of NVDA is required for the add-on to work.
@@ -13571,10 +13591,9 @@ msgstr "状态(&T):"
 
 #. Translators: Label for the text control containing a description of the selected add-on.
 #. In the add-on store dialog.
-#, fuzzy
 msgctxt "addonStore"
 msgid "A&ctions"
-msgstr "操作(&A)"
+msgstr "操作(&C)"
 
 #. Translators: Label for the text control containing extra details about the selected add-on.
 #. In the add-on store dialog.
@@ -13588,15 +13607,14 @@ msgid "Publisher:"
 msgstr "发布者："
 
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
-#, fuzzy
 msgctxt "addonStore"
 msgid "Author:"
-msgstr "作者"
+msgstr "作者："
 
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 msgctxt "addonStore"
 msgid "ID:"
-msgstr ""
+msgstr "ID:"
 
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 msgctxt "addonStore"
@@ -13725,7 +13743,7 @@ msgstr ""
 "您仍要启用该插件吗？"
 
 #. Translators: message shown in the Addon Information dialog.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgctxt "addonStore"
 msgid ""
 "{summary} ({name})\n"
@@ -13734,58 +13752,77 @@ msgid ""
 msgstr ""
 "{summary} ({name})\n"
 "版本： {version}\n"
-"发布者： {publisher}\n"
 "描述： {description}\n"
 
 #. Translators: the publisher part of the About Add-on information
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgctxt "addonStore"
 msgid "Publisher: {publisher}\n"
-msgstr "发布者："
+msgstr "发布者： {publisher}\n"
 
 #. Translators: the author part of the About Add-on information
 #, python-brace-format
 msgctxt "addonStore"
 msgid "Author: {author}\n"
-msgstr ""
+msgstr "作者： {author}\n"
 
 #. Translators: the url part of the About Add-on information
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgctxt "addonStore"
 msgid "Homepage: {url}\n"
-msgstr "主页：{url}"
+msgstr "主页： {url}\n"
 
 #. Translators: the minimum NVDA version part of the About Add-on information
-#, fuzzy
 msgctxt "addonStore"
 msgid "Minimum required NVDA version: {}\n"
-msgstr "NVDA版本最低要求： "
+msgstr "NVDA版本最低要求： {}\n"
 
 #. Translators: the last NVDA version tested part of the About Add-on information
-#, fuzzy
 msgctxt "addonStore"
 msgid "Last NVDA version tested: {}\n"
-msgstr "最后测试的 NVDA 版本： {}"
+msgstr "最后测试的 NVDA 版本： {}\n"
 
 #. Translators: title for the Addon Information dialog
 msgctxt "addonStore"
 msgid "Add-on Information"
 msgstr "插件信息"
 
+#. Translators: The warning of a dialog
+msgid "Add-on Store Warning"
+msgstr "插件商店警告"
+
+#. Translators: Warning that is displayed before using the Add-on Store.
+msgctxt "addonStore"
+msgid ""
+"Add-ons are created by the NVDA community and are not vetted by NV Access. "
+"NV Access cannot be held responsible for add-on behavior. The functionality "
+"of add-ons is unrestricted and can include accessing your personal data or "
+"even the entire system. "
+msgstr ""
+
+#. Translators: The label of a checkbox in the add-on store warning dialog
+msgctxt "addonStore"
+msgid "&Don't show this message again"
+msgstr "不再显示此消息(&D)"
+
+#. Translators: The label of a button in a dialog
+msgid "&OK"
+msgstr "确定(&O)"
+
 #. Translators: The title of the addonStore dialog where the user can find and download add-ons
 msgctxt "addonStore"
 msgid "Add-on Store"
 msgstr "插件商店"
 
-#. Translators: Banner notice that is displayed in the Add-on Store.
-msgctxt "addonStore"
-msgid "Note: NVDA was started with add-ons disabled"
-msgstr "注意：NVDA 是在禁用插件的情况下启动的"
-
 #. Translators: The label for a button in add-ons Store dialog to install an external add-on.
 msgctxt "addonStore"
 msgid "Install from e&xternal source"
 msgstr "从外部源安装(&X)"
+
+#. Translators: Banner notice that is displayed in the Add-on Store.
+msgctxt "addonStore"
+msgid "Note: NVDA was started with add-ons disabled"
+msgstr "注意：NVDA 是在禁用插件的情况下启动的"
 
 #. Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
 msgctxt "addonStore"
@@ -13825,10 +13862,10 @@ msgstr "正在安装插件 {}，请稍候。"
 
 #. Translators: The label of the add-on list in the add-on store; {category} is replaced by the selected
 #. tab's name.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgctxt "addonStore"
 msgid "{category}:"
-msgstr "{category} (1 类型)"
+msgstr "{category}："
 
 #. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
 #, python-brace-format
@@ -13868,7 +13905,6 @@ msgid "Publisher"
 msgstr "发布者"
 
 #. Translators: The name of the column that contains the addon's author.
-#, fuzzy
 msgctxt "addonStore"
 msgid "Author"
 msgstr "作者"
