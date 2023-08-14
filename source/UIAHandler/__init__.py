@@ -97,7 +97,6 @@ badUIAWindowClassNames = (
 	"RichEdit",
 	"RichEdit20",
 	"RICHEDIT50W",
-	"SysListView32",
 	"Button",
 	# #8944: The Foxit UIA implementation is incomplete and should not be used for now.
 	"FoxitDocWnd",
