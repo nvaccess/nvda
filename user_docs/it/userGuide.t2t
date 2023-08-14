@@ -595,7 +595,7 @@ Ci si potrà poi spostare prima o dopo l’elenco per raggiungere altri oggetti.
 Allo stesso modo, se si incontra una barra degli strumenti, bisogna entrare all'interno di essa per accedere ai controlli che la compongono.
 
 Tuttavia, se si desidera spostarsi avanti e indietro tra i vari oggetti del sistema, è sempre possibile andare all'oggetto successivo/precedente servendosi dei comandi messi a disposizione dalla modalità in linea, che presenterà gli oggetti senza alcun tipo di gerarchia.
-Ad esempio, se ci si sposta sull'oggetto successivo in modalità in linea e l'oggetto corrente contiene altri oggetti, NVDA si sposterà automaticamente sul primo oggetto che lo contiene.
+Ad esempio, se ci si sposta sull'oggetto successivo in modalità in linea e l'oggetto corrente contiene altri oggetti, NVDA si sposterà automaticamente sul primo oggetto figlio.
 In alternativa, se l'oggetto corrente non contiene alcun oggetto, NVDA passerà all'oggetto successivo allo stesso livello della gerarchia.
 Nel caso in cui non esista un oggetto successivo, NVDA cercherà di trovare altri oggetti seguendo la gerarchia fino a quando non ci saranno più oggetti verso cui spostarsi.
 Le stesse regole si applicano per la navigazione all'indietro nella gerarchia.
@@ -2231,6 +2231,14 @@ Questa impostazione contiene i seguenti valori:
 - Sempre: ovunque sia disponibile la tecnologia UI automation in Microsoft word (non importa quanto completa).
 -
 
+==== Utilizza UI Automation per accedere ai controlli dei fogli di calcolo di Microsoft Excel quando disponibile ====[UseUiaForExcel]
+Quando questa opzione è abilitata, NVDA proverà ad utilizzare le API di accessibilità di Microsoft UI Automation per recuperare le informazioni dai controlli del foglio di calcolo di Microsoft Excel.
+Si tratta di una funzionalità sperimentale e alcune caratteristiche di Microsoft Excel potrebbero non essere disponibili in questa modalità.
+Per esempio, non si potrà usare l'elenco elementi di formule e commenti, oltre alla capacità di saltare rapidamente nei campi modulo in modalità navigazione.
+Tuttavia, per l'esplorazione e la modifica di base del foglio di calcolo, questa opzione può fornire un notevole miglioramento delle prestazioni.
+Al momento è consigliabile per la maggior parte degli utenti di non attivare questa funzione sperimentale, tuttavia sono ben accetti i feedback di quelle persone che dispongono della versione di Microsoft Excel build 16.0.13522.10000 o superiore.
+L'implementazione di Ui automation in Excel è in costante fase di modifica, perciò le versioni di Office inferiori alla 16.0.13522.10000 potrebbero non fornire informazioni sufficienti.
+
 ==== Utilizza UI Automation per accedere alla console di Windows quando disponibile ====[AdvancedSettingsConsoleUIA]
 Quando questa opzione è abilitata, NVDA utilizzerà una nuova versione ancora in sviluppo del suo supporto per il prompt dei comandi e la console di Windows che sfrutta i [miglioramenti dell'accessibilità apportati da Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Questa funzione è altamente sperimentale ed è ancora incompleta, quindi il suo uso non è ancora raccomandato. Tuttavia, una volta completato, si prevede che questo nuovo supporto diventerà quello predefinito, migliorando le prestazioni e la stabilità di NVDA nel prompt dei comandi e nelle console di Windows.
 
@@ -2285,14 +2293,6 @@ Sono disponibili le seguenti opzioni:
   - Ci si aspetta un funzionamento completo con Chromium 92.0.4479.0+
   -
 -
-
-==== Utilizza UI Automation per accedere ai controlli dei fogli di calcolo di Microsoft Excel quando disponibile ====[UseUiaForExcel]
-Quando questa opzione è abilitata, NVDA proverà ad utilizzare le API di accessibilità di Microsoft UI Automation per recuperare le informazioni dai controlli del foglio di calcolo di Microsoft Excel.
-Si tratta di una funzionalità sperimentale e alcune caratteristiche di Microsoft Excel potrebbero non essere disponibili in questa modalità.
-Per esempio, non si potrà usare l'elenco elementi di formule e commenti, oltre alla capacità di saltare rapidamente nei campi modulo in modalità navigazione.
-Tuttavia, per l'esplorazione e la modifica di base del foglio di calcolo, questa opzione può fornire un notevole miglioramento delle prestazioni.
-Al momento è consigliabile per la maggior parte degli utenti di non attivare questa funzione sperimentale, tuttavia sono ben accetti i feedback di quelle persone che dispongono della versione di Microsoft Excel build 16.0.13522.10000 o superiore.
-L'implementazione di Ui automation in Excel è in costante fase di modifica, perciò le versioni di Office inferiori alla 16.0.13522.10000 potrebbero non fornire informazioni sufficienti.
 
 ==== Segnala regioni live ====[BrailleLiveRegions]
 : Default
@@ -2681,7 +2681,7 @@ Per elencare i componenti aggiuntivi solo per canali specifici, modificare la se
 +++ Ricerca di add-on +++[AddonStoreFilterSearch]
 Per cercare componenti aggiuntivi, utilizzare la casella di testo "Cerca".
 è possibile raggiungerla premendo ``shift+tab`` dall'elenco dei componenti aggiuntivi.
-Digitare una o due parole chiave per il tipo di componente aggiuntivo che si sta cercando, quindi un colpo di ``tab'` per tornare agli add-on.
+Digitare una o due parole chiave per il tipo di componente aggiuntivo che si sta cercando, quindi un colpo di ``tab`` per andare agli add-on.
 NVDA cercherà il testo appena inserito in vari campi, quali ID, Nome visualizzato, publisher, autore o descrizione, dopodiché mostrerà un elenco di add-on relativi alla ricerca effettuata.
 
 ++ Azioni sugli add-on ++[AddonStoreActions]
@@ -3110,12 +3110,12 @@ Si legga la documentazione della propria barra Braille per ottenere informazioni
 | Route to braille cell | ``routing`` |
 | tasti shift+tab | ``spazio+punto1+punto3`` |
 | tasto tab | ``spazio+punto4+punto6`` |
-| tasti alt | ``spazio+punto1+punto3+punto4 (spazio+m``) |
-| tasto escape | ``spazio+punto1+punto5 (spazio+e``) |
+| tasti alt | ``spazio+punto1+punto3+punto4`` (``spazio+m``) |
+| tasto escape | ``spazio+punto1+punto5`` (``spazio+e``) |
 | tasto windows | ``spazio+punto3+punto4`` |
-| tasti alt+tab | ``spazio+punto2+punto3+punto4+punto5 (spazio+t``) |
-| Menu NVDA | ``spazio+punto1+punto3+punto4+punto5 (spazio+n``) |
-| tasti windows+d (ridurre ad icona tutte le applicazioni) | ``spazio+punto1+punto4+punto5 (spazio+d``) |
+| tasti alt+tab | ``spazio+punto2+punto3+punto4+punto5`` (``spazio+t``) |
+| Menu NVDA | ``spazio+punto1+punto3+punto4+punto5`` (``spazio+n``) |
+| tasti windows+d (ridurre ad icona tutte le applicazioni) | ``spazio+punto1+punto4+punto5`` (``spazio+d``) |
 | Dire tutto | ``spazio+punto1+punto2+punto3+punto4+punto5+punto6`` |
  
 Per i modelli che possiedono un Joystick:
