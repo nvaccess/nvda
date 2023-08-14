@@ -350,7 +350,7 @@ Met de draagbare kopie zelf kunt u op elk gewenst moment NVDA op een PC installe
 Als u NVDA echter naar media met het kenmerk alleen-lezen, zoals een CD, wilt kopiëren, moet u het downloadbestand daarvoor gebruiken.
 Op dit moment kan de draagbare versie niet rechtstreeks van media met het kenmerk alleen-lezen worden uitgevoerd.
 
-Het [NVDA installatiebestand #StepForRunningTheDownloadLauncher] kan als ttijdelijke  kopie van  NVDA worden gebruikt.
+Het [NVDA installatiebestand #StepForRunningTheDownloadLauncher] kan als tijdelijke kopie van NVDA worden gebruikt.
 Met een tijdelijke kopie is opslaan van de instellingen van NVDA niet mogelijk.
 Dit geldt eveneens voor het uitschakelen van het gebruik van de [Add-on Store #AddonsManager].
 
@@ -2250,6 +2250,14 @@ Deze instelling kent de volgende keuzemogelijkheden:
 - Altijd: steeds waar over  UI automation beschikt kan worden  in Microsoft word (ongeacht de mate waarin).
 -
 
+==== UI automation gebruiken voor toegang tot Microsoft  Excel spreadsheet-besturingselementen indien beschikbaar ====[UseUiaForExcel]
+Wanneer deze optie is ingeschakeld zal NVDA proberen de Microsoft UI Automation accessibility API te gebruiken om informatie op te halen uit Microsoft Excel Spreadsheet-besturingselementen.
+Deze toepassing is in een experimentele fase, en sommige mogelijkheden van  Microsoft Excel zijn wellicht niet beschikbaar  in deze modus.
+Zo is bijv. de Elementenlijst van NVDA voor het opsommen van formules en opmerkingen niet beschikbaar. Dit geldt ook voor de Bladermodus snelnavigatieoptie om naar formuliervelden te springen op een spreadsheet (rekenblad).
+Voor zover het gaat om navigeren in / werken met spreadsheets op een meer elementair niveau kan deze  optie echter  een enorme prestatieverbetering opleveren.
+Vooralsnog raden we de meeste gebruikers NIET aan dit standaard aan te zetten, al juichen we het toe dat gebruikers van Microsoft Excel  build 16.0.13522.10000  of hoger de optie activeren om uit te proberen en ons  feedback te geven over hun ervaringen.
+De implementatie van Microsoft Excel's UI automation is aan voortdurende verandering onderhevig, en  versies van Microsoft Office die ouder zijn dan 16.0.13522.10000 geven mogelijk niet genoeg informatie prijs, wat deze optie vokomen onbruikbaar maakt.
+
 ==== Ondersteuning Windows Consool ====[AdvancedSettingsConsoleUIA]
 : Standaard
   Automatisch
@@ -2302,14 +2310,6 @@ De opties zijn:
 -
  -
  
-==== UI automation gebruiken voor toegang tot Microsoft  Excel spreadsheet-besturingselementen indien beschikbaar ====[UseUiaForExcel]
-Wanneer deze optie is ingeschakeld zal NVDA proberen de Microsoft UI Automation accessibility API te gebruiken om informatie op te halen uit Microsoft Excel Spreadsheet-besturingselementen.
-Deze toepassing is in een experimentele fase, en sommige mogelijkheden van  Microsoft Excel zijn wellicht niet beschikbaar  in deze modus.
-Zo is bijv. de Elementenlijst van NVDA voor het opsommen van formules en opmerkingen niet beschikbaar. Dit geldt ook voor de Bladermodus snelnavigatieoptie om naar formuliervelden te springen op een spreadsheet (rekenblad).
-Voor zover het gaat om navigeren in / werken met spreadsheets op een meer elementair niveau kan deze  optie echter  een enorme prestatieverbetering opleveren.
-Vooralsnog raden we de meeste gebruikers NIET aan dit standaard aan te zetten, al juichen we het toe dat gebruikers van Microsoft Excel  build 16.0.13522.10000  of hoger de optie activeren om uit te proberen en ons  feedback te geven over hun ervaringen.
-De implementatie van Microsoft Excel's UI automation is aan voortdurende verandering onderhevig, en  versies van Microsoft Office die ouder zijn dan 16.0.13522.10000 geven mogelijk niet genoeg informatie prijs, wat deze optie vokomen onbruikbaar maakt.
-
 ==== Dynamische zones met wisselende inhoud melden ====[BrailleLiveRegions]
 : Standaard
   Ingeschakeld
@@ -2637,7 +2637,7 @@ De NVDA-instellingen voor aanmeldingsscherm en UAC-schermen zijn opgeslagen in d
 In het algemeen moet u niets veranderen aan deze configuratie.
 Om de instellingen van NVDA voor het aanmeldscherm of de UAC-schermen (gebruikersaccountbeheer) aan te passen, brengt u de gewenste wijzigingen aan terwijl u bij Windows bent aangemeld. Vervolgens slaat u de configuratie op waarna u in de categorie Algemeen van het dialoogvenster [Instellingen van NVDA #NVDASettings] op de knop "Huidige Instellingen van NVDA gebruiken bij Windows-aanmelding", drukt.
 
-+ Add-ons en de Add-on-storeStore +[AddonsManager]
++ Add-ons en de Add-on Store +[AddonsManager]
 Add-ons zijn software-pakketten die nieuwe of aanvullende functionaliteit bieden voor NVDA.
 Ze worden ontwikkeld door mensen uit de NVDA-gemeenschap en  externe organisaties zoals commerciële partijen.
 Add-ons bieden een breed scala aan mogelijkheden:
@@ -2699,7 +2699,7 @@ Om add-ons te sorteren uitsluitend op basis van een specifiek kanaal kunt u het 
 +++ Zoeken naar add-ons +++[AddonStoreFilterSearch]
 Om add-ons, te zoeken gebruikt u het invoervak 'zoeken'.
 U komt bij het zoekvak door op ``shift+tab`` te drukken vanuit de lijst met add-ons.
-Typ een paar sleutelwoorden voor het soort add-on waar u naar op zoek bent waarna u terug ``tabt`` naar de lijst met add-ons.
+Typ een paar sleutelwoorden voor het soort add-on waar u naar op zoek bent waarna u naar de lijst met add-ons ``tabt``.
 Er verschijnt een lijst met gevonden add-ons als de opgegeven zoektermen overeenkomen met de add-on ID, de weergegeven naam, uitgever of de beschrijving.
 
 ++ Add-on-acties ++[AddonStoreActions]
@@ -2708,7 +2708,7 @@ Hetmenu voor acties  mbt een add-on in de lijst met add-ons kan worden bereikt  
 Dit menu is ook te bereiken   in het geselecteerde  deelvenster details van een add-on.
 
 +++ Add-ons installeren +++[AddonStoreInstalling]
-Louter en alleen omdat een add-on beschikbaar is in de Add-ons-store, mag hier niet uit worden opgemaakt deze goedgekeurd of gecontroleerd is door  NV Access of door wie dan ook.
+Louter en alleen omdat een add-on beschikbaar is in de Add-on Store, mag hier niet uit worden opgemaakt deze goedgekeurd of gecontroleerd is door  NV Access of door wie dan ook.
 Het is erg belangrijk dat u alleen add-ons installeert  die afkomstig zijn van bronnen die u vertrouwt.
 Binnen NVDA gelden er geen beperkingen mbt de functionaliteit van  add-ons.
 Dit zou ook kunnen gelden voor toegang tot uw persoonlijke gegevens of zelfs het gehele systeem.
@@ -3132,12 +3132,12 @@ Waar de toetsen zich bevinden, leest u in de documentatie bij de leesregels.
 | Cursor naar braillecel verplaatsen | ``routing`` |
 | shift+tab-toetsen | ``spatie+punt1+punt3`` |
 | tab-toets | ``spatie+punt4+punt6`` |
-| alt-toets | ``spatie+punt1+punt3+punt4 (spatie+m)`` |
-| ``escape-toets`` | spatie+punt1+punt5 (spatie+e) |
+| alt-toets | ``spatie+punt1+punt3+punt4`` (``spatie+m``) |
+| ``escape-toets`` | ``spatie+punt1+punt5`` (``spatie+e``) |
 | windows-toets | ``spatie+puntt3+punt4`` |
-| alt+tab-toetsen | ``spatie+punt2+punt3+punt4+punt5 (spatie+t)`` |
-| NVDA-menu | ``spatie+punt1+punt3+punt4+punt5 (spatie+n)`` |
-| ``windows+d-toetsen (minimaliseer alle applicaties) | space+dot1+dot4+dot5 (space+d)`` |
+| ``alt+tab-toetsen`` | ``spatie+punt2+punt3+punt4+punt5`` (``spatie+t``) |
+| ``NVDA-menu`` | ``spatie+punt1+punt3+punt4+punt5`` (``spatie+n``) |
+| ``windows+d-toetsen`` (minimaliseer alle applicaties) | ``spatie+punt1+punt4+punt5`` (``spatie+d``) |
 | Alles lezen | ``spatie+punt1+punt2+punt3+punt4+punt5+punt6`` |
  
 Voor leesregels die een Joystick hebben, geldt:

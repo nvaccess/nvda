@@ -19,7 +19,7 @@ NVDA:ta kehittää [NV Access https://www.nvaccess.org/] yhteisön jäsenten avu
 ++ Yleiset ominaisuudet ++[GeneralFeatures]
 NVDA:n avulla sokeat ja heikkonäköiset voivat käyttää Windows-käyttöjärjestelmää ja monia kolmannen osapuolen sovelluksia.
 
-Lyhyt englanninkielinen videoesittely, ["What is NVDA?" https://www.youtube.com/watch?v=tCFyyqy9mqo] on saatavilla NV Accessin YouTube-kanavalta.
+Lyhyt englanninkielinen videoesittely, ["What is NVDA?" https://www.youtube.com/watch?v=tCFyyqy9mqo] on saatavilla NV Accessin YouTube-kanavalla.
 
 Tärkeimpiä ominaisuuksia ovat:
 - Tuki yleisille sovelluksille, internet-selaimet sekä sähköpostiasiakas-, internet-keskustelu- ja toimisto-ohjelmat mukaan lukien
@@ -596,8 +596,8 @@ Takaisin luetteloon pääsee siirtymällä luettelokohteen säilöobjektiin.
 Tämän jälkeen voidaan siirtyä luettelosta pois, mikäli halutaan päästä muihin objekteihin.
 Myös työkalupalkki sisältää säätimiä, joten niihin pääsemiseksi on siirryttävä kyseisen työkalupalkin sisään.
 
-Mikäli haluat mieluummin liikkua järjestelmässä jokaisen yksittäisen objektin välillä, voit käyttää edelliseen tai seuraavaan objektiinn tasatussa näkymässä siirtäviä komentoja.
-Jos esimerkiksi siirryt tasatussa näkymässä seuraavaan objektiin ja nykyinen objekti sisältää muita objekteja, NVDA siirtyy automaattisesti ensimmäiseen sen sisältämään objektiin.
+Jos haluat mieluummin liikkua järjestelmässä jokaisen yksittäisen objektin välillä, voit käyttää edelliseen tai seuraavaan objektiinn tasatussa näkymässä siirtäviä komentoja.
+Jos esimerkiksi siirryt tasatussa näkymässä seuraavaan objektiin ja nykyinen objekti sisältää muita objekteja, NVDA siirtyy automaattisesti ensimmäiseen nykyisen objektin sisältämään objektiin.
 Vaihtoehtoisesti, jos nykyinen objekti ei sisällä muita objekteja, NVDA siirtyy seuraavaan objektiin nykyisellä hierarkiatasolla.
 Mikäli tällaista objektia ei ole, NVDA yrittää löytää seuraavan objektinn hierarkiassa sen sisältämien objektien perusteella, kunnes ei ole enää objekteja, joihin siirtyä.
 Samat säännöt pätevät myös hierarkiassa taaksepäin liikkumiseen.
@@ -1624,7 +1624,7 @@ Tällöin näyttö ei seuraa navigointiobjektia objektinavigointia käytettäess
 Jos sen sijaan haluat pistenäytön seuraavan objektinavigointia ja tarkastelukohdistinta, näyttö on määritettävä seuraamaan tarkastelukohdistinta.
 Tällöin pistenäyttö ei seuraa järjestelmän kohdistusta eikä kohdistinta.
 
-==== Siirrä järjestelmäkohdistin tarkastelukohdistimen kohdalle pistenäytön kosketuskohdistinnäppäimillä ====[BrailleSettingsReviewRoutingMovesSystemCaret]
+==== Siirrä järjestelmäkohdistin tarkastelukohdistimen kohdalle ====[BrailleSettingsReviewRoutingMovesSystemCaret]
 : Oletus
   Ei koskaan
 : Asetukset
@@ -1634,9 +1634,9 @@ Tällöin pistenäyttö ei seuraa järjestelmän kohdistusta eikä kohdistinta.
 Tämä asetus määrittää, siirretäänkö järjestelmäkohdistinta kosketuskohdistinnäppäimen painalluksella.
 Asetuksen oletusarvo on Ei koskaan, mikä tarkoittaa, että kosketuskohdistinnäppäimen painaminen ei siirrä järjestelmäkohdistinta tarkastelukohdistimen kohdalle.
 
-Kun asetukseksi on määritetty Aina ja [pistenäyttö seuraa #BrailleTether] "automaattisesti" tai "tarkastelukohdistinta", kosketuskohdistinnäppäimen painaminen siirtää myös järjestelmäkohdistinta tai kohdistusta, mikäli se on mahdollista.
+Kun asetukseksi on määritetty "Aina" ja [pistenäyttö seuraa #BrailleTether] "automaattisesti" tai "tarkastelukohdistinta", kosketuskohdistinnäppäimen painaminen siirtää myös järjestelmäkohdistinta tai kohdistusta, mikäli se on mahdollista.
 Fyysistä kohdistinta ei ole, kun nykyisenä tarkastelutilana on [ruudun tarkastelu #ScreenReview].
-Tässä tapauksessa NVDA yrittää siirtää kohdistuksen objektiin, joka on sen tekstin alla, johon olet siirtymässä.
+Tällaisissa tilanteissa NVDA yrittää siirtää kohdistuksen objektiin, joka on sen tekstin alla, johon olet siirtymässä.
 Sama pätee myös [objektin tarkasteluun #ObjectReview].
 
 Voit myös määrittää tämän asetuksen siirtämään järjestelmäkohdistinta vain, kun Pistenäyttö seuraa -asetuksena on "automaattisesti".
@@ -1644,7 +1644,7 @@ Tällöin kosketuskohdistinnäppäimen painallus siirtää järjestelmäkohdisti
 
 Tämä asetus näytetään vain, jos [pistenäyttö seuraa #BrailleTether] -asetukseksi on määritetty "automaattisesti" tai "tarkastelukohdistinta".
 
-Muuta Siirrä järjestelmäkohdistin tarkastelukohdistimen kohdalle pistenäytön kosketuskohdistinnäppäimillä -asetusta mistä tahansa määrittämällä sille oma näppäinkomento [Näppäinkomennot-valintaikkunaa #InputGestures] käyttäen.
+Muuta "Siirrä järjestelmäkohdistin tarkastelukohdistimen kohdalle" -asetusta mistä tahansa määrittämällä sille oma näppäinkomento [Näppäinkomennot-valintaikkunaa #InputGestures] käyttäen.
 
 ==== Lue kappaleittain ====[BrailleSettingsReadByParagraph]
 Jos tämä asetus on käytössä, teksti näytetään pistenäytöllä kappaleittain.
@@ -2223,14 +2223,22 @@ Vaikka kohdistuksen seuranta on luotettavampaa useammissa tilanteissa, suoritusk
 -
 
 ==== Käytä UI automation -rajapintaa Microsoft Wordin asiakirjasäätimissä ====[MSWordUIA]
-Määrittää, käyttääkö NVDA UI Automation -saavutettavuusrajapintaa Microsoft Word -asiakirjoille vanhemman objektimallin asemesta.
-Tämä koskee itsensä Microsoft wordin asiakirjojen lisäksi Microsoft Outlookin viestejä.
+Tämä asetus määrittää, käyttääkö NVDA UI Automation -saavutettavuusrajapintaa Microsoft Word -asiakirjoissa vanhemman objektimallin asemesta.
+Tämä koskee Microsoft wordin asiakirjojen lisäksi Microsoft Outlookin viestejä.
 Asetus sisältää seuraavat arvot:
 - Oletus (kun käytettävissä)
 - Vain tarvittaessa: Kun Microsoft Wordin objektimalli ei ole käytettävissä.
 - Kun käytettävissä: Microsoft Wordin versio 16.0.15000 tai uudempi, tai kun Wordin objektimalli ei ole käytettävissä.
 - Aina: Aina kun UI automation -rajapinta on käytettävissä Microsoft wordissa (riippumatta siitä, miten valmis se on).
 -
+
+==== Käytä UI Automation -rajapintaa Microsoft Excelin laskentataulukkosäätimissä, kun käytettävissä ====[UseUiaForExcel]
+Kun tämä asetus on otettu käyttöön, NVDA yrittää käyttää Microsoftin UI Automation -saavutettavuusrajapintaa tietojen hakemiseen Microsoft Excelin laskentataulukon säätimistä.
+Tämä on kokeellinen ominaisuus, eivätkä kaikki Excelin ominaisuudet ole välttämättä käytettävissä tässä tilassa.
+Tällaisia ovat esim. NVDA:n elementtilista kaavojen ja kommenttien näyttämiseen sekä laskentataulukon lomakekenttiin siirtävät selaustilan pikanavigointikomennot.
+Laskentataulukon perusnavigointiin/muokkaukseen tämä asetus saattaa kuitenkin tarjota merkittävän suorituskyvyn parannuksen.
+Emme vielä suosittele tämän asetuksen oletusarvoista käyttöön ottoa suurimmalle osalle käyttäjistä, mutta Excel 16.0.13522.10000 tai uudemman käyttäjiltä palaute on tervetullutta.
+Excelin UI automation -rajapinnan toteutus muuttuu jatkuvasti, eikä Microsoft Officen vanhemmat versiot kuin 16.0.13522.10000 anna välttämättä tarpeeksi tietoja, jotta tästä asetuksesta olisi mitään hyötyä.
 
 ==== Windows-konsolin tuki ====[AdvancedSettingsConsoleUIA]
 : Oletus
@@ -2245,9 +2253,9 @@ Windows 10:n versiossa 1709 Microsoft [lisäsi konsoliin tuen UI Automation -raj
 NVDA:n vanha konsolituki on käytettävissä varavaihtoehtona tilanteissa, joissa UI Automation -rajapinta ei ole käytettävissä tai sen tiedetään johtavan huonompaan käyttökokemukseen.
 Windows-konsolituen yhdistelmäruudussa on kolme vaihtoehtoa:
 - Automaattinen: Käyttää UI Automation -rajapintaa Windows 11 -version 22H2 ja uudempien mukana toimitetussa Windows-konsolin versiossa.
-Tätä vaihtoehtoa suositellaan ja se on asetettu oletukseksi.
+Tätä vaihtoehtoa suositellaan ja se on määritetty oletukseksi.
 - UIA, kun käytettävissä: Käyttää UI Automation -rajapintaa konsoleissa, mikäli se on käytettävissä, jopa versioissa, joissa on epätäydellisiä tai virheellisiä toteutuksia.
-Vaikka tämä rajoitettu toiminnallisuus voi olla hyödyllinen (ja jopa riittävä käyttöösi), tämän vaihtoehdon käyttö on täysin omalla vastuullasi, eikä sille tarjota tukea.
+Vaikka tällainen rajoitettu toiminnallisuus saattaa olla hyödyllinen ja jopa riittävä käyttöösi, tämän asetuksen käyttö on täysin omalla vastuullasi, eikä sille tarjota tukea.
 - Vanha: Windows-konsolin UI Automation -rajapinta poistetaan kokonaan käytöstä.
 Vanhaa varavaihtoehtoa käytetään aina myös tilanteissa, joissa UI Automation -rajapinta tarjoaisi ylivertaisen käyttökokemuksen.
 Siksi tämän vaihtoehdon valitsemista ei suositella, ellet tiedä mitä olet tekemässä.
@@ -2283,14 +2291,6 @@ Seuraavat vaihtoehdot ovat käytettävissä:
   - Odotetaan toimivan Chromium 92.0.4479.0:n ja sitä uudempien kanssa.
   -
 -
-
-==== Käytä UI Automation -rajapintaa Microsoft Excelin laskentataulukkosäätimissä, kun käytettävissä ====[UseUiaForExcel]
-Kun tämä asetus on käytössä, NVDA yrittää käyttää Microsoft UI Automation -saavutettavuusrajapintaa tietojen hakemiseen Microsoft Excelin laskentataulukkosäätimistä.
-Tämä on kokeellinen ominaisuus, eivätkä jotkin Microsoft Excelin toiminnot välttämättä ole käytettävissä tässä tilassa.
-Esimerkiksi NVDA:n elementtilista kaavojen ja kommenttien näyttämiseen ja selaustilan pikaselauskomento laskentataulukon lomakekenttään siirtämiseen eivät ole käytettävissä.
-Alkeelliseen laskentataulukossa liikkumiseen/muokkaamiseen tämä asetus voi kuitenkin tarjota valtavan suorituskyvyn parannuksen.
-Emme vielä suosittele tämän asetuksen oletusarvoista käyttöön ottoa suurimmalle osalle käyttäjistä, mutta Excel 16.0.13522.10000 tai uudemman käyttäjiltä palaute on tervetullutta.
-Excelin UI automation -rajapinnan toteutus muuttuu jatkuvasti, eikä Microsoft Officen vanhemmat versiot kuin 16.0.13522.10000 anna välttämättä tarpeeksi tietoja, jotta tästä asetuksesta olisi mitään hyötyä.
 
 ==== Ilmaise aktiiviset alueet ====[BrailleLiveRegions]
 : Oletus
@@ -3108,12 +3108,12 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 | Siirrä pistesoluun | ``kosketuskohdistinnäppäin`` |
 | ``Vaihto+Sarkain``-näppäinyhdistelmä | ``väli+pisteet 1 ja 3`` |
 | ``Sarkain``-näppäin | ``väli+pisteet 4 ja 6`` |
-| ``Alt``-näppäin | ``väli+pisteet 1, 3 ja 4 (väli+m)`` |
-| ``Esc``-näppäin | ``väli+pisteet 1 ja 5 (väli+e)`` |
+| ``Alt``-näppäin | ``väli+pisteet 1, 3 ja 4`` (``väli+m``) |
+| ``Esc``-näppäin | ``väli+pisteet 1 ja 5`` (``väli+e``) |
 | ``Windows``-näppäin | ``väli+pisteet 3 ja 4`` |
-| ``Alt+Sarkain``-näppäinyhdistelmä | ``väli+pisteet 2, 3, 4 ja 5 (väli+t)`` |
-| NVDA-valikko | ``väli+pisteet 1, 3, 4 ja 5 (väli+n)`` |
-| ``Windows+D``-näppäinyhdistelmä (pienennä kaikki sovellukset) | ``väli+pisteet 1, 4 ja 5 (väli+d)`` |
+| ``Alt+Sarkain``-näppäinyhdistelmä | ``väli+pisteet 2, 3, 4 ja 5`` (``väli+t``) |
+| NVDA-valikko | ``väli+pisteet 1, 3, 4 ja 5`` (``väli+n``) |
+| ``Windows+D``-näppäinyhdistelmä (pienennä kaikki sovellukset) | ``väli+pisteet 1, 4 ja 5`` (``väli+d``) |
 | Jatkuva luku | ``väli+pisteet 1, 2, 3, 4, 5 ja 6`` |
 
 Malleissa, joissa on ohjaustappi:

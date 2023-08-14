@@ -1711,7 +1711,7 @@ Kada se ova opcija onemogući moguće je čuti govor i u isto vreme čitati braj
   Podrazumevano (omogućeno), omogućeno, onemogućeno
 :
 
-Ovo podešavanje određuje da li će se pokazivač izbora (tačkice 7 i 8) prikazivati na brajevom redu.
+Ovo podešavanje određuje da li će se pokazivač izbora (tačke 7 i 8) prikazivati na brajevom redu.
 Opcija je podrazumevano omogućena, pa će se pokazivač izbora prikazivati.
 Pokazivač izbora može ometati u toku čitanja.
 Isključivanje ove opcije može poboljšati iskustvo pri čitanju.
@@ -2230,6 +2230,14 @@ Ovo podešavanje sadrži sledeće vrednosti:
 - Uvek: Kad god je UI automation dostupan u Microsoft word-u (bez obzira koliko je ova podrška kompletna).
 -
 
+==== koristi UI automation za pristup Microsoft Excel kontrolama ćelija kada je dostupan ====[UseUiaForExcel]
+Kada je ova opcija omogućena, NVDA će pokušati da koristi informacije iz Microsoft UI Automation accessibility API-a kako bi preuzeo informacije iz kontrola za Microsoft Excel ćelije.
+Ovo je eksperimentalna opcija, i neke opcije programa Excel možda neće biti dostupne u ovom modu.
+Na primer, lista elemenata programa NVDA za listanje formula u ćeliji, kao i brza navigacija u režimu pretraživanja za skakanje sa jednog polja za unos na drugo nisu dostupne.
+Ali, za osnovnu navigaciju i uređivanje ćelija, ova opcija će možda doneti značajna poboljšanja u brzini.
+Mi još uvek ne preporučujemo da većina korisnika ovaj način koristi kao podrazumevani, ali korisnici programa Microsoft Excel verzije 16.0.13522.10000 ili novijih su dobrodošli da testiraju ovu opciju i pruže svoje povratne informacije.
+Microsoft Excel UI automation podrška se uvek menja, i starije Microsoft Office verzije od 16.0.13522.10000 možda ne pružaju dovoljno informacija da ova opcija bude uopšte korisna.
+
 ==== Podrška za Windows konzolu ====[AdvancedSettingsConsoleUIA]
 : Podrazumevano
   Automatski
@@ -2281,14 +2289,6 @@ Sledeće opcije su dostupne:
   - Očekuje se da radi uz Chromium 92.0.4479.0+
   -
 -
-
-==== koristi UI automation za pristup Microsoft Excel kontrolama ćelija kada je dostupan ====[UseUiaForExcel]
-Kada je ova opcija omogućena, NVDA će pokušati da koristi informacije iz Microsoft UI Automation accessibility API-a kako bi preuzeo informacije iz kontrola za Microsoft Excel ćelije.
-Ovo je eksperimentalna opcija, i neke opcije programa Excel možda neće biti dostupne u ovom modu.
-Na primer, lista elemenata programa NVDA za listanje formula u ćeliji, kao i brza navigacija u režimu pretraživanja za skakanje sa jednog polja za unos na drugo nisu dostupne.
-Ali, za osnovnu navigaciju i uređivanje ćelija, ova opcija će možda doneti značajna poboljšanja u brzini.
-Mi još uvek ne preporučujemo da većina korisnika ovaj način koristi kao podrazumevani, ali korisnici programa Microsoft Excel verzije 16.0.13522.10000 ili novijih su dobrodošli da testiraju ovu opciju i pruže svoje povratne informacije.
-Microsoft Excel UI automation podrška se uvek menja, i starije Microsoft Office verzije od 16.0.13522.10000 možda ne pružaju dovoljno informacija da ova opcija bude uopšte korisna.
 
 ==== Prijavi žive regione ====[BrailleLiveRegions]
  : Podrazumevano
@@ -2677,7 +2677,7 @@ Da pogledate dodatke određenog kanala, promenite izdvajanje "kanal".
 +++ Pretraga dodataka +++[AddonStoreFilterSearch]
 Da pretražite dodatke, koristite tekstualno polje pretrage.
 Možete doći do njega pritiskanjem prečice ``šift+tab`` iz liste dodataka.
-Upišite ključnu reč ili nekoliko reči vrste dodatka koju tražite, a zatim se tasterom ``tab`` vratite na listu dodataka.
+Upišite ključnu reč ili nekoliko reči vrste dodatka koju tražite, a zatim  tasterom ``tab`` dođite do liste dodataka.
 Dodaci će biti prikazani ako tekst pretrage bude pronađen u ID-u dodatka, prikazanom imenu, izdavaču, autoru ili opisu.
 
 ++ Radnje dodatka ++[AddonStoreActions]
@@ -2686,7 +2686,7 @@ Za dodatak u  listi dodataka, ovim radnjama se može pristupiti kroz meni koji  
 Ovom meniju se takođe može pristupiti pritiskanjem dugmeta radnje u detaljima izabranog dodatka.
 
 +++ Instaliranje dodataka +++[AddonStoreInstalling]
-Ako je dodatak dostupan u NVDA prodavnici, to ne znači da ga podržava ili odobrava NV Access ili bilo ko drugi.
+Ako je dodatak dostupan u NVDA prodavnici, to ne znači da ga je proverio ili odobrio NV Access ili bilo ko drugi.
 Veoma je važno da instalirate dodatke samo iz izvora kojima verujete.
 Dodaci imaju neograničenu funkcionalnost u okviru programa NVDA. 
 Ovo može uključiti pristup vašim ličnim podacima pa čak i celom sistemu.
@@ -3105,15 +3105,15 @@ Molimo pogledajte uputstvo za upotrebu brajevog reda kako biste saznali listu i 
  | Pomeri brajev red na prethodni red | ``d1`` |
  | Pomeri brajev red na sledeći red | ``d3`` |
  | Pomeri se na brajevu ćeliju | ``routing`` |
-| ``šift+tab`` | ``Razmak+tačkica1+tačkica3`` |
-| ``tab`` | ``Razmak+tačkica4+tačkica6`` |
-| ``alt`` | ``Razmak+tačkica1+tačkica3+tačkica4`` (razmak+M) |
-| ``escape`` | ``Razmak+tačkica1+tačkica5 (razmak+e)`` |
-| ``windows`` | ``Razmak+tačkica3+tačkica4`` |
-| ``alt+tab`` | ``Razmak+tačkica2+tačkica3+tačkica4+tačkica5 (razmak+t)`` |
-| NVDA meni | ``razmak+tačkica1+tačkica3+tačkica4+tačkica5 (razmak+n)`` |
-| ``windows+d`` (umanji sve aplikacije) | ``Razmak+tačkica1+tačkica4+tačkica5 (razmak+d)`` |
-| Izgovori sve | ``Razmak+tačkica1+tačkica2+tačkica3+tačkica4+tačkica5+tačkica6`` |
+| ``šift+tab`` | ``Razmak+tačka1+tačka3`` |
+| ``tab`` | ``Razmak+tačka4+tačka6`` |
+| ``alt`` | ``Razmak+tačka1+tačka3+tačka4`` (``razmak+M``) |
+| ``escape`` | ``Razmak+tačka1+tačka5`` (``razmak+e``) |
+| ``windows`` | ``Razmak+tačka3+tačka4`` |
+| ``alt+tab`` | ``Razmak+tačka2+tačka3+tačka4+tačka5`` (``razmak+t``) |
+| NVDA meni | ``razmak+tačka1+tačka3+tačka4+tačka5`` (``razmak+n``) |
+| ``windows+d`` (umanji sve aplikacije) | ``Razmak+tačka1+tačka4+tačka5`` (``razmak+d``) |
+| Izgovori sve | ``Razmak+tačka1+tačka2+tačka3+tačka4+tačka5+tačka6`` |
 
 Za brajeve redove koji imaju džojstik:
  || Ime | Komanda |
@@ -3678,61 +3678,61 @@ Funkcije brajeve tastature koje su opisane ispod važe kada je "HID simulacija t
 %kc:beginInclude
 | Obriši poslednju upisanu brajevu ćeliju ili znak | ``taster za brisanje nazad`` |
 | Prevedi bilo koji brajev unos i pritisni taster enter |``taster za brisanje nazad+razmak`` |
-| Uključi ili isključi ``NVDA`` taster | ``tačkica3+tačkica5+razmak`` |
-| ``insert`` taster | ``tačkica1+tačkica3+tačkica5+razmak``, ``tačkica3+tačkica4+tačkica5+razmak`` |
-| ``delete`` taster | ``tačkica3+tačkica6+razmak`` |
-| ``home`` taster | ``tačkica1+tačkica2+tačkica3+razmak`` |
-| ``end`` taster | ``tačkica4+tačkica5+tačkica6+razmak`` |
-| ``StrelicaLevo`` | ``tačkica2+razmak`` |
-| ``strelicaDesno`` | ``tačkica5+razmak`` |
-| ``strelicaGore`` | ``tačkica1+razmak`` |
-| ``strelicaDole`` | ``tačkica6+razmak`` |
-| ``pageUp`` taster | ``tačkica1+tačkica3+razmak`` |
-| ``pageDown`` taster | ``tačkica4+tačkica6+razmak`` |
-| ``NumeričkiTaster1`` | ``tačkica1+tačkica6+taster za brisanje nazad`` |
-| ``NumeričkiTaster2`` | ``tačkica1+tačkica2+tačkica6+taster za brisanje nazad`` |
-| ``NumeričkiTaster3`` | ``tačkica1+tačkica4+tačkica6+taster za brisanje nazad`` |
-| ``numeričkiTaster4`` | ``tačkica1+tačkica4+tačkica5+tačkica6+taster za brisanje nazad`` |
-| ``numeričkiTaster5`` | ``tačkica1+tačkica5+tačkica6+taster za brisanje nazad`` |
-| ``numeričkiTaster6`` | ``tačkica1+tačkica2+tačkica4+tačkica6+taster za brisanje nazad`` |
-| ``numeričkiTaster7`` | ``tačkica1+tačkica2+tačkica4+tačkica5+tačkica6+taster za brisanje nazad`` |
-| ``numeričkiTaster8`` | ``tačkica1+tačkica2+tačkica5+tačkica6+taster za brisanje nazad`` |
-| ``numeričkiTaster9`` | ``tačkica2+tačkica4+tačkica6+taster za brisanje nazad`` |
-| ``NumeričkiInsert`` taster | ``tačkica3+tačkica4+tačkica5+tačkica6+taster za brisanje nazad`` |
-| ``NumeričkiDecimalniZarez`` | ``tačkica2+taster za brisanje nazad`` |
-| ``NumeričkiTasterPodeljeno`` | ``tačkica3+tačkica4+taster za brisanje nazad`` |
-| ``NumeričkiTasterPuta`` | ``tačkica3+tačkica5+taster za brisanje nazad`` |
-| ``NumeričkiTasterMinus`` | ``tačkica3+tačkica6+taster za brisanje nazad`` |
-| ``NumeričkiTasterplus`` | ``tačkica2+tačkica3+tačkica5+taster za brisanje nazad`` |
-| ``NumeričkiTasterEnter`` | ``tačkica3+tačkica4+tačkica5+taster za brisanje nazad`` |
-| ``escape`` taster | ``tačkica1+tačkica2+tačkica4+tačkica5+razmak``, ``l2`` |
-| ``tab`` taster | ``tačkica2+tačkica5+tačkica6+razmak``, ``l3`` |
-| ``šift+tab`` tasteri | ``tačkica2+tačkica3+tačkica5+razmak`` |
-| ``printScreen`` taster | ``tačkica1+tačkica3+tačkica4+tačkica6+razmak`` |
-| ``Pauza`` taster | ``tačkica1+tačkica4+razmak`` |
-| ``aplikacioni`` taster | ``tačkica5+tačkica6+taster za brisanje nazad`` |
-| ``f1`` taster | ``tačkica1+taster za brisanje nazad`` |
-| ``f2`` taster | ``tačkica1+tačkica2+taster za brisanje nazad`` |
-| ``f3`` taster | ``tačkica1+tačkica4+taster za brisanje nazad`` |
-| ``f4`` taster | ``tačkica1+tačkica4+tačkica5+taster za brisanje nazad`` |
-| ``f5`` taster | ``tačkica1+tačkica5+taster za brisanje nazad`` |
-| ``f6`` taster | ``tačkica1+tačkica2+tačkica4+taster za brisanje nazad`` |
-| ``f7`` taster | ``tačkica1+tačkica2+tačkica4+tačkica5+taster za brisanje nazad`` |
-| ``f8`` taster | ``tačkica1+tačkica2+tačkica5+taster za brisanje nazad`` |
-| ``f9`` taster | ``tačkica2+tačkica4+taster za brisanje nazad`` |
-| ``f10`` taster | ``tačkica2+tačkica4+tačkica5+taster za brisanje nazad`` |
-| ``f11`` taster | ``tačkica1+tačkica3+taster za brisanje nazad`` |
-| ``f12`` taster | ``tačkica1+tačkica2+tačkica3+taster za brisanje nazad`` |
-| ``windows`` taster | ``tačkica1+tačkica2+tačkica4+tačkica5+tačkica6+razmak`` |
-| Uključi ili isključi taster ``windows`` | ``tačkica1+tačkica2+tačkica3+tačkica4+taster za brisanje nazad``, ``tačkica2+tačkica4+tačkica5+tačkica6+razmak`` |
-| ``capsLock`` taster | ``tačkica7+taster za brisanje nazad``, ``tačkica8+taster za brisanje nazad`` |
-| ``numLock`` taster | ``tačkica3+taster za brisanje nazad``, ``tačkica6+taster za brisanje nazad`` |
-| ``Šhift`` taster | ``tačkica7+razmak`` |
-| Uključi ili isključi taster ``šift`` | ``tačkica1+tačkica7+razmak``, ``tačkica4+tačkica7+razmak`` |
-| ``kontrol`` taster | ``tačkica7+tačkica8+razmak`` |
-| Uključi ili isključi taster ``kontrol`` | ``tačkica1+tačkica7+tačkica8+razmak``, ``tačkica4+tačkica7+tačkica8+razmak`` |
-| ``alt`` taster | ``tačkica8+razmak`` |
-| Uključi ili isključi taster ``alt`` | ``tačkica1+tačkica8+razmak``, ``tačkica4+tačkica8+razmak`` |
+| Uključi ili isključi ``NVDA`` taster | ``tačka3+tačka5+razmak`` |
+| ``insert`` taster | ``tačka1+tačka3+tačka5+razmak``, ``tačka3+tačka4+tačka5+razmak`` |
+| ``delete`` taster | ``tačka3+tačka6+razmak`` |
+| ``home`` taster | ``tačka1+tačka2+tačka3+razmak`` |
+| ``end`` taster | ``tačka4+tačka5+tačka6+razmak`` |
+| ``StrelicaLevo`` | ``tačka2+razmak`` |
+| ``strelicaDesno`` | ``tačka5+razmak`` |
+| ``strelicaGore`` | ``tačka1+razmak`` |
+| ``strelicaDole`` | ``tačka6+razmak`` |
+| ``pageUp`` taster | ``tačka1+tačka3+razmak`` |
+| ``pageDown`` taster | ``tačka4+tačka6+razmak`` |
+| ``NumeričkiTaster1`` | ``tačka1+tačka6+taster za brisanje nazad`` |
+| ``NumeričkiTaster2`` | ``tačka1+tačka2+tačka6+taster za brisanje nazad`` |
+| ``NumeričkiTaster3`` | ``tačka1+tačka4+tačka6+taster za brisanje nazad`` |
+| ``numeričkiTaster4`` | ``tačka1+tačka4+tačka5+tačka6+taster za brisanje nazad`` |
+| ``numeričkiTaster5`` | ``tačka1+tačka5+tačka6+taster za brisanje nazad`` |
+| ``numeričkiTaster6`` | ``tačka1+tačka2+tačka4+tačka6+taster za brisanje nazad`` |
+| ``numeričkiTaster7`` | ``tačka1+tačka2+tačka4+tačka5+tačka6+taster za brisanje nazad`` |
+| ``numeričkiTaster8`` | ``tačka1+tačka2+tačka5+tačka6+taster za brisanje nazad`` |
+| ``numeričkiTaster9`` | ``tačka2+tačka4+tačka6+taster za brisanje nazad`` |
+| ``NumeričkiInsert`` taster | ``tačka3+tačka4+tačka5+tačka6+taster za brisanje nazad`` |
+| ``NumeričkiDecimalniZarez`` | ``tačka2+taster za brisanje nazad`` |
+| ``NumeričkiTasterPodeljeno`` | ``tačka3+tačka4+taster za brisanje nazad`` |
+| ``NumeričkiTasterPuta`` | ``tačka3+tačka5+taster za brisanje nazad`` |
+| ``NumeričkiTasterMinus`` | ``tačka3+tačka6+taster za brisanje nazad`` |
+| ``NumeričkiTasterplus`` | ``tačka2+tačka3+tačka5+taster za brisanje nazad`` |
+| ``NumeričkiTasterEnter`` | ``tačka3+tačka4+tačka5+taster za brisanje nazad`` |
+| ``escape`` taster | ``tačka1+tačka2+tačka4+tačka5+razmak``, ``l2`` |
+| ``tab`` taster | ``tačka2+tačka5+tačka6+razmak``, ``l3`` |
+| ``šift+tab`` tasteri | ``tačka2+tačka3+tačka5+razmak`` |
+| ``printScreen`` taster | ``tačka1+tačka3+tačka4+tačka6+razmak`` |
+| ``Pauza`` taster | ``tačka1+tačka4+razmak`` |
+| ``aplikacioni`` taster | ``tačka5+tačka6+taster za brisanje nazad`` |
+| ``f1`` taster | ``tačka1+taster za brisanje nazad`` |
+| ``f2`` taster | ``tačka1+tačka2+taster za brisanje nazad`` |
+| ``f3`` taster | ``tačka1+tačka4+taster za brisanje nazad`` |
+| ``f4`` taster | ``tačka1+tačka4+tačka5+taster za brisanje nazad`` |
+| ``f5`` taster | ``tačka1+tačka5+taster za brisanje nazad`` |
+| ``f6`` taster | ``tačka1+tačka2+tačka4+taster za brisanje nazad`` |
+| ``f7`` taster | ``tačka1+tačka2+tačka4+tačka5+taster za brisanje nazad`` |
+| ``f8`` taster | ``tačka1+tačka2+tačka5+taster za brisanje nazad`` |
+| ``f9`` taster | ``tačka2+tačka4+taster za brisanje nazad`` |
+| ``f10`` taster | ``tačka2+tačka4+tačka5+taster za brisanje nazad`` |
+| ``f11`` taster | ``tačka1+tačka3+taster za brisanje nazad`` |
+| ``f12`` taster | ``tačka1+tačka2+tačka3+taster za brisanje nazad`` |
+| ``windows`` taster | ``tačka1+tačka2+tačka4+tačka5+tačka6+razmak`` |
+| Uključi ili isključi taster ``windows`` | ``tačka1+tačka2+tačka3+tačka4+taster za brisanje nazad``, ``tačka2+tačka4+tačka5+tačka6+razmak`` |
+| ``capsLock`` taster | ``tačka7+taster za brisanje nazad``, ``tačka8+taster za brisanje nazad`` |
+| ``numLock`` taster | ``tačka3+taster za brisanje nazad``, ``tačka6+taster za brisanje nazad`` |
+| ``Šhift`` taster | ``tačka7+razmak`` |
+| Uključi ili isključi taster ``šift`` | ``tačka1+tačka7+razmak``, ``tačka4+tačka7+razmak`` |
+| ``kontrol`` taster | ``tačka7+tačka8+razmak`` |
+| Uključi ili isključi taster ``kontrol`` | ``tačka1+tačka7+tačka8+razmak``, ``tačka4+tačka7+tačka8+razmak`` |
+| ``alt`` taster | ``tačka8+razmak`` |
+| Uključi ili isključi taster ``alt`` | ``tačka1+tačka8+razmak``, ``tačka4+tačka8+razmak`` |
 | Uključi ili isključi HID simulaciju tastature | ``Prekidač1Levo+Džojstik1Dole``, ``Prekidač1Desno+džojstik1Dole`` |
 %kc:endInclude
 
@@ -3938,8 +3938,8 @@ Slede trenutne tasterske prečice za ove redove.
 | Pomeri brajev red napred | pan desno ili rocker dole |
 | Prebaci na brajevu ćeliju | routing set 1|
 | Promeni vezivanje brajevog reda | Gore+Dole |
-| Strelica gore | Džojstik gore, strelica gore ili razmak+tačkica1 |
-| Strelica dole | Džojstik dole, strelica dole ili razmak+tačkica4 |
+| Strelica gore | Džojstik gore, strelica gore ili razmak+tačka1 |
+| Strelica dole | Džojstik dole, strelica dole ili razmak+tačka4 |
 | Strelica levo | Razmak+tačka3, džojstik levo ili strelica levo |
 | Strelica desno | Razmak+tačka6, džojstik desno ili strelica desno |
 | Šift plus tab | razmak+tačka1+tačka3 |

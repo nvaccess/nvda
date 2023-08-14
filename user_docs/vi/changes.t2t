@@ -5,22 +5,46 @@
 %!includeconf: ./locale.t2tconf
 
 = 2023.2 =
+Bản phát hành này giới thiệu cửa hàng Add-on để thay thế cho trình quản lí add-on.
+Trong cửa hàng add-on, bạn có thể duyệt, tìm kiếm, cài đặt và cập nhật add-on của cộng đồng.
+Giờ đây, bạn có thể tự bỏ qua vấn đề không tương thích với các add-on lỗi thời và tự chịu trách nhiệm nếu có rủi ro.
+
+Tính năng mới cho chữ nổi, thêm lệnh và thêm màn hình được hỗ trợ.
+Thêm thao tác mới cho việc nhận dạng văn bản (OCR) và điều hướng đối tượng phẳng.
+Cải thiện cho việc điều hướng và đọc định dạng trong Microsoft Office
+
+Sửa nhiều lỗi, đặc biệt là cho chữ nổi, Microsoft Office, trình duyệt web và Windows 11.
+
+Đã cập nhật eSpeak-NG, thư viện phiên dịch chữ nổi LibLouis, và Unicode CLDR.
 
 == Tính năng mới ==
-- Add-on Store (cửa hàng add-on) đã được thêm vào NVDA. (#13985)
+- Add-on Store (Cửa Hàng Add-On) đã được tích hợp vào NVDA. (#13985)
   - Duyệt, tìm kiếm, cài đặt và cập nhật cộng đồng add-on.
   - Xử lý thủ công các vấn đề về tương thích với những add-on lỗi thời.
-  - Công cụ Quản lý các Add-on đã bị gỡ bỏ và được thay thế bởi Add-on Store.
+  - Công cụ Quản Lý Các Add-On đã bị gỡ bỏ và được thay thế bởi Add-on Store.
   - Xem tài liệu hướng dẫn để biết thêm thông tin.
-  -
-- Thêm phát âm của các kí hiệu Unicode:
-  - Các kí hiệu chữ nổi như "⠐⠣⠃⠗⠇⠐⠜". (#14548)
-  - Kí hiệu phím Option trên Mac symbol "⌥". (#14682)
   -
 - Các thao tác mới:
   - Thao tác chưa gán lệnh để chuyển qua những ngôn ngữ có sẵn cho Windows OCR. (#13036)
   - Thao tác chưa gán lệnh để chuyển qua các chế độ hiển thị thông điệp của chữ nổi. (#14864)
-  - Thao tác chưa gán lệnh để bật / tắt việc hiển thị vùng chọn cho chữ nổi. (#14948)
+  - Thao tác chưa gán lệnh để bật / tắt việc hiển thị chỉ báo lựa 	chọn cho chữ nổi. (#14948)
+  - Đã thêm thao tác bàn phím mặc định để chuyển đến đối tượng kế hay đối tượng trước trong một chế độ xem phẳng của hệ thống phân cấp đối tượng. (#15053)
+    - Máy tính bàn: ``NVDA+numpad9`` và ``NVDA+numpad3`` để chuyển đến đối tượng trước và đối tượng kế.
+    - Máy xách tay: ``shift+NVDA+[`` và ``shift+NVDA+]`` để chuyển đến đối tượng trước và đối tượng kế.
+    -
+  -
+- Các tính năng mới cho chữ nổi:
+  - Đã thêm hỗ trợ cho màn hình nổi Help Tech Activator. (#14917)
+  - Tùy chọn mới để bật / tắt hiển thị chỉ báo lựa chọn (chấm 7 và 8). (#14948)
+  - Tùy chọn mới để tùy ý di chuyển dấu nháy hệ thống hay focus khi thay đổi vị trí con trỏ duyệt với các phím định tuyến chữ nổi. (#14885, #3166)
+  - Khi bấm ``numpad2`` ba lần để xem giá trị bằng số của một kí tự tại vị trí con trỏ duyệt, thông tin đó cũng sẽ thể hiện trên chữ nổi. (#14826)
+  - Thêm hỗ trợ cho ``aria-brailleroledescription`` thuộc tính ARIA 1.3, cho phép tác giả của trang web ghi đè loại của một thành phần được hiển thị trên màn hình chữ nổi. (#14748)
+  - Trình điều khiển màn hình nổi Baum Braille: thêm vài thao tác kết hợp bằng chữ nổi để thực hiện các phím lệnh phổ biến như ``windows+d`` và ``alt+tab``.
+  Vui lòng xem hướng dẫn sử dụng NVDA để biết toàn bộ danh sách phím lệnh. (#14714)
+  -
+- Thêm phát âm của các kí hiệu Unicode:
+  - Các kí hiệu chữ nổi như ``⠐⠣⠃⠗⠇⠐⠜``. (#13778)
+  - Phím Option trên Mac ``⌥``. (#14682)
   -
 - Thêm các thao tác cho màn hình nổi Tivomatic Caiku Albatross. (#14844, #15002)
   - Hiện hộp thoại cài đặt chữ nổi
@@ -28,40 +52,50 @@
   - Chuyển đến các chế độ nháy con trỏ nổi
   - Chuyển đến các chế độ hiển thị thông điệp chữ nổi
   - Bật / tắt con trỏ nổi
-  - Bật / tắt trạng thái hiển thị vùng chọn
+  - Bật / tắt chỉ báo hiển thị vùng chọn
+  - Xoay vòng  các kiểu "di chuyển dấu nháy hệ thống chữ nổi khi định tuyến con trỏ duyệt". (#15122)
   -
-- Tùy chọn mới để bật / tắt  việc hiển thị vùng chọn (chấm 7 và 8). (#14948)
-- Trong Mozilla Firefox và Google Chrome, NVDA giờ đây sẽ thông báo khi một điều khiển mở ra một hộp thoại (dialog), lưới (grid), danh sách (list) hoặc cây thư mục (tree) nếu tác giả có  dùng aria-haspopup để quy định. (#14709)
+- Các tính năng cho Microsoft Office:
+  - Khi bật làm nổi văn bản trong Định dạng tài liệu, màu được làm nổi cũng sẽ được thông báo trong Microsoft Word. (#7396, #12101, #5866)
+  - Khi bật thông báo màu trong Định dạng tài liệu, màu nền giờ đây cũng được thông báo trong Microsoft Word. (#5866)
+  - Khi dùng phím lệnh của Excel để bật / tắt các định dạng như in đậm, in nghiêng, gạch chân và gạch ngang chữ của một ô trong Excel, kết quả giờ đây đã được thông báo. (#14923)
+  -
+- Thử nghiệm Cải tiến cho việc quản lí âm thanh:
+  - NVDA giờ đây có thể cho ra âm thanh thông qua Windows Audio Session API (WASAPI), vốn có thể cải tiến việc phản hồi, khả năng vận hành cũng như tính ổn định cho bộ đọc và âm thanh của NVDA.
+  - Có thể bật WASAPI trong cài đặt nâng cao để dùng. (#14697)
+  Thêm nữa, nếu bật WASAPI, sẽ có một số thiết lập nâng cao sau đây.
+    - Tùy chọn để chỉnh cho âm lượng âm thanh và tiếng beep của NVDA đi theo thiết lập âm lượng của giọng đọc bạn đang dùng. (#1409)
+    - Tùy chọn để điều khiển riêng biệt âm lượng của âm thanh NVDA.
+    -
+  - Có một vấn đề đã được tìm thấy gây treo máy khi bật WASAPI. (#15150)
+  -
+- Trong Mozilla Firefox và Google Chrome, NVDA giờ đây sẽ thông báo khi một điều khiển mở ra một hộp thoại (dialog), lưới (grid), danh sách (list) hoặc cây thư mục (tree) nếu tác giả có  dùng ``aria-haspopup`` để quy định. (#14709)
 - Giờ đây, đã có thể dùng các biến của hệ thống (chẳng hạn: ``%temp%`` hoặc ``%homepath%``) trong phần thiết lập đường dẫn để tạo bản chạy trực tiếp cho NVDA. (#14680)
-- Đã thêm hỗ trợ cho thuộc tính ``aria-brailleroledescription`` ARIA 1.3, cho phép người tạo trang web ghi đè loại của một thành phần hiện trên màn hình chữ nổi. (#14748)
-- Khi bật chế độ đọc các văn bản được làm nổi trong cài đặt định dạng tài liệu, các màu được làm nổi giờ đây đã được đọc trong Microsoft Word. (#7396, #12101, #5866)
-- Khi chế độ đọc màu được bật trong cài đặt định dạng tài liệu, màu nền giờ đây đã được đọc trong Microsoft Word. (#5866)
-- Khi bấm ``numpad2`` ba lần để đọc giá trị số của kí tự tại vị trí con trỏ duyệt, thông tin đó giờ đây cũng được cung cấp bằng chữ nổi. (#14826)
-- NVDA giờ đây sử dụng đầu ra âm thanh thông qua Windows Audio Session API (WASAPI), có thể cải thiện khả năng phản hồi, khả năng vận hành và tính ổn định cho giọng đọc và âm thanh của NVDA.
-Có thể vô hiệu tính năng này trong Cài đặt nâng cao nếu có vấn đề với âm thanh. (#14697)
-- Khi dùng các phím tắt của Excel để bật / tắt các kiểu định dạng trong một ô như bold (in đậm), italic (in nghiêng), underline (gạch chân) và strike through (gạch giữa chữ), kết quả giờ đây sẽ được thông báo. (#14923)+- Added support for the Help Tech Activator Braille display. (#14917)
-- Thêm hỗ trợ cho màn hình nổi Help Tech Activator Braille. (#14917)
 - Trong Windows 10 May 2019 Update trở lên, NVDA có thể thông báo các tên của virtual desktop khi mở, thay đổi và đóng chúng. (#5641)
-- Giờ đây, đã có thể làm cho âm lượng của NVDA phát ra âm thanh và tiếng beep theo thiết lập âm lượng của giọng đọc bạn đang dùng.
-Có thể bật tùy chọn này trong Cài đặt nâng cao. (#1409)
-- Giờ đây, bạn có thể độc lập điều khiển âm lượng cho âm thanh của NVDA.
-Có thể làm điều đó thông qua Windows Volume Mixer. (#1409)
+- Một tham số hệ thống mở rộng đã được thêm vào, cho phép người dùng và quản trị hệ thống buộc NVDA khởi chạy trong chế độ bảo vệ. (#10018)
 - 
 
 
 == Các thay đổi ==
-- Đã cập nhật thư viện phiên dịch chữ nổi LibLouis  lên [3.26.0 https://github.com/liblouis/liblouis/releases/tag/v3.26.0]. (#14970)
-- Đã cập nhật CLDR lên phiên bản 43.0. (#14918)
-- Các kí hiệu dấu gạch ngang dash và em-dash sẽ luôn được gửi ra bộ đọc. (#13830)
-- Các thay đổi cho LibreOffice:
-  - Khi thông báo vị trí con trỏ duyệt, vị trí của con trỏ / dấu nháy hiện tại so với trang hiện hành giờ đây đã được thông báo trong LibreOffice Writer cho LibreOffice các phiên bản >= 7.6, tương tự như với Microsoft Word. (#11696)
-  - Việc thông báo thanh trạng thái (kích hoạt bằng lệnh ``NVDA+end``) đã hoạt động với LibreOffice. (#11698)
+- Các thành phần được cập nhật:
+  - Đã cập nhật eSpeak NG lên 1.52-dev commit ``ed9a7bcf``. (#15036)
+  - Đã cập nhật thư viện phiên dịch chữ nổi LibLouis  lên [3.26.0 https://github.com/liblouis/liblouis/releases/tag/v3.26.0]. (#14970)
+  - Đã cập nhật CLDR lên phiên bản 43.0. (#14918)
   -
+- Các thay đổi cho LibreOffice:
+  - Khi thông báo vị trí con trỏ duyệt, vị trí của con trỏ / dấu nháy hiện tại so với trang hiện hành giờ đây đã được thông báo trong LibreOffice Writer cho LibreOffice các phiên bản 7.6 trở lên, tương tự như với Microsoft Word. (#11696)
+Việc thông báo thanh trạng thái (kích hoạt bằng lệnh ``NVDA+end``) đã hoạt động với LibreOffice. (#11698)
+  - Khi chuyển đến một ô khác trong LibreOffice Calc, NVDA không còn thông báo sai tọa độ của ô có focus trước đó khi tính năng đọc tọa độ ô bị tắt trong cài đặt của NVDA. (#15098)
+  -
+- Các thay đổi cho chữ nổi:
+  - Khi dùng một màn hình chữ nổi thông qua trình điều khiển chữ nổi HID tiêu chuẩn, có thể dùng dpad để mô phỏng các phím mũi tên và enter.
+  Lệnh khoảng trắng+chấm 1 và khoảng trắng+chấm 4 giờ đây cũng được gán cho mũi tên lên và xuống. (#14713)
+  - Các cập nhật cho nội dung động trên web (ARIA live regions) giờ đây đã hiển thị trong chữ nổi..
+  Có thể tắt trong cài đặt nâng cao. (#7756)
+  -
+- Các kí hiệu dấu gạch ngang dash và em-dash sẽ luôn được gửi ra bộ đọc. (#13830)
 - Việc thông báo khoảng cách trong Microsoft Word giờ đây sẽ dùng đơn vị được quy định trong phần advanced options của Word, kể cả khi dùng UIA để truy cập tài liệu Word. (#14542)
 - NVDA phản hồi nhanh hơn khi di chuyển con trỏ trong các điều khiển nhập liệu. (#14708)
-- Trình điều khiển cho Baum Braille: đã thêm vài thao tác chữ nổi kết hợp để thực hiện vài lệnh bàn phím phổ biến như windows+d, alt+tab, v...v...
-Vui lòng xem tài liệu hướng dẫn sử dụng NVDA để biết toàn bộ danh sách phím lệnh. (#14714)
-- Khi dùng một màn hình chữ nổi thông qua trình điều khiển chữ nổi HID tiêu chuẩn, có thể dùng dpad để mô phỏng các phím mũi tên và enter. Lệnh khoảng trắng+chấm 1 và khoảng trắng+chấm 4 giờ đây cũng được gán cho mũi tên lên và xuống. (#14713)
 - Kịch bản thông báo đường dẫn của liên kết giờ đây sẽ thông báo từ vị trí dấu nháy hoặc focus thay vì từ đối tượng điều hướng. (#14659)
 - Việc tạo bản chạy trực tiếp không còn bắt buộc phải nhập kí tự ổ đĩa như là một phần của đường dẫn cụ thể. (#14681)
 - Nếu Windows được cấu hình để hiển thị số giây ở đồng hồ trên khay hệ thống, việc dùng ``NVDA+f12`` để xem giờ sẽ đọc theo thiết lập đó. (#14742)
@@ -70,37 +104,47 @@ Vui lòng xem tài liệu hướng dẫn sử dụng NVDA để biết toàn b�
 
 
 == Sửa lỗi ==
-- NVDA sẽ không còn tình trạng nhiều lần chuyển qua chế độ không có chữ nổi ngoài ý muốn trong khi tự dò tìm, đưa đến một bản ghi sạch hơn. (#14524)
-- NVDA giờ đây sẽ chuyển về USB nếu thiết bị HID Bluetooth  (như là HumanWare Brailliant hay APH Mantis) được tìm thấy tự động và sẵn sàng cho một kết nối USB.
-Cái này chỉ hoạt động với cổng Bluetooth Serial trước đây. (#14524)
-- Giờ đây, đã có thể dùng dấu chéo ngược trong trường thay thế của một  từ điển, khi loại không được quy định là biểu thức phổ thông. (#14556)
-- Trong chế độ duyệt, NVDA sẽ không còn bỏ qua focus một cách không chính xác khi di chuyển đến một điều khiển cha hay điều khiển con. Ví dụ: chuyển từ một điều khiển đến cấp cha của nó, thành phần trong danh sách hay ô trong lưới. (#14611)
-  - Tuy nhiên, lưu ý là việc sửa lỗi này chỉ áp dụng khi tắt tùy chọn tự đưa con trỏ hệ thống đến các thành phần có thể có focus trong cài đặt chế độ duyệt (mặc định là tắt).
+- Chữ nổi
+  - Sửa vài lỗi về tính ổn định cho đầu vào / đầu ra của các màn hình chữ nổi, kết quả là NVDA ít xảy ra lỗi và ít bị treo. (#14627)
+  - NVDA sẽ không còn tình trạng nhiều lần chuyển qua chế độ không có chữ nổi ngoài ý muốn trong khi tự dò tìm, đưa đến một bản ghi sạch hơn. (#14524)
+  - NVDA giờ đây sẽ chuyển về USB nếu thiết bị HID Bluetooth  (như là HumanWare Brailliant hay APH Mantis) được tìm thấy tự động và sẵn sàng cho một kết nối USB.
+  Cái này chỉ hoạt động với cổng Bluetooth Serial trước đây. (#14524)
+  - Khi không có màn hình chữ nổi nào được kết nối và trình xem chữ nổi được đóng bằng cách bấm ``alt+f4`` hoặc bấm vào nút đóng, kích thước hiển thị của hệ thống chữ nổi phụ sẽ lại được trả về không ô. (#15214)
   -
-- NVDA không còn tình trạng thỉnh thoảng làm cho Mozilla Firefox bị lỗi hoặc không phản hồi. (#14647)
-- Trong Mozilla Firefox và Google Chrome, các kí tự gõ vào không còn bị đọc lên trong vài hộp nhập văn bản, kể cả  chế độ đọc kí tự khi nhập đã bị tắt. (#14666)
-- Giờ bạn có thể dùng chế độ duyệt trong Chromium Embedded Controls khi mà trước đây thì không thể. (#13493, #8553)
-- Với các kí hiệu không có phần mô tả ở ngôn ngữ hiện hành, mô tả mặc định bằng tiếng Anh sẽ được dùng. (#14558, #14417)
+- Trình duyệt web:
+  - NVDA không còn tình trạng thường xuyên làm cho Mozilla Firefox bị treo hay không phản hồi. (#14647)
+  - Trong Mozilla Firefox và Google Chrome, các kí tự được nhập sẽ không còn bị đọc lên trong vài hộp nhập văn bản, kể cả khi tắt chế độ đọc kí tự khi nhập. (#8442)
+  - Giờ bạn có thể dùng chế độ duyệt trong các điều khiển nhún Chromium  ở những nơi mà trước đây không dùng được. (#13493, #8553)
+  - trong Mozilla Firefox, di chuyển chuột qua văn bản sau một liên kết giờ đây sẽ thông báo nội dung văn bản đó. (#9235)
+  - Đường dẫn của các liên kết hình ảnh giờ đây đã được thông báo chính xác ở nhiều trường hợp trong Chrome và Edge. (#14783)
+  - Khi nỗ lực thông báo đường dẫn cho một liên kết không có thuộc tính href, NVDA sẽ không còn rơi vào trạng thái im lặng.
+  Thay vào đó, NVDA sẽ thông báo liên kết không có đường dẫn. (#14723)
+  - Trong chế độ duyệt, NVDA không còn bỏ qua một cách không chính xác focus di chuyển đến một điều khiển cha hay điều khiển con. Ví dụ: di chuyển từ một điều khiển đến thành phần cha của nó thành phần trong danh sách hoặc ô lưới. (#14611)
+    - Lưu ý là sửa lỗi này chỉ áp dụng khi  tắt tùy chọn Tự đưa con trỏ &hệ thống đến các thành phần có thể có focus trong cài đặt chế độ duyệt (là tùy chọn mặc định).
+    -  -
+  -
 - Sửa các lỗi trên Windows 11:
   - NVDA lại có thể đọc nội dung thanh trạng thái của Notepad. (#14573)
   - Việc chuyển giữa các thẻ sẽ thông báo tên và vị trí thẻ mới cho Notepad và File Explorer. (#14587, #14388)
   - NVDA sẽ lại thông báo tên các thành phần khi nhập văn bản trong các ngôn ngữ như tiếng Trung và tiếng Nhật chẳng hạn. (#14509)
-+  -
-- Trong Mozilla Firefox, việc di chuyển chuột qua những văn bản kế sau một liên kết giờ đây đã thông báo nội dung văn bản một cách đáng tin cậy. (#9235)
+  - Giờ đây, lại có thể mở các mục Cộng đồng hỗ trợ và giấy phép trên trình đơn trợ giúp của NVDA. (#14725)
+  -
+- Sửa lỗi cho Microsoft Office:
+  - Khi di chuyển nhanh qua các ô trong Excel, NVDA giờ đây ít khi thông báo sai ô hay vùng chọn. (#14983, #12200, #12108)
+  - Khi đứng ở một ô ngoài trang bảng tính trong Excel, chữ nổi và bộ làm nổi focus không còn bị cập nhật một cách không cần thiết vào đối tượng đã có focus trước đó. (#15136)
+  - NVDA không còn bị lỗi không thông báo các trường nhập mật khẩu đang có focus trong Microsoft Excel và Outlook. (#14839)
+  -
+- Với các kí hiệu không có phần mô tả ở ngôn ngữ hiện hành, mô tả mặc định bằng tiếng Anh sẽ được dùng. (#14558, #14417)
+- Giờ đây, đã có thể dùng dấu chéo ngược trong trường thay thế của một từ điển, khi loại không được quy định là biểu thức phổ thông. (#14556)
 - Trong Windows 10 và 11 Calculator, Bản chạy trực tiếp của NVDA sẽ không còn tình trạng không làm gì hoặc phát âm báo lỗi khi nhập phép tính trong chế độ standard calculator trong compact overlay. (#14679)
-- Khi nỗ lực để NVDA thông báo URL cho một liên kết mà không có thuộc tính href, NVDA không còn tình trạng im lặng.
-Thay vào đó, NVDA sẽ thông báo là liên kết này không có đường dẫn. (#14723)
-- Sửa vài lỗi về tính ổn định cho đầu ra / đầu vào của màn hình chữ nổi, kết quả là ít xảy ra chuyện NVDA bị lỗi hoặc treo. (#14627)
 - Phục hồi được NVDA từ nhiều tình huống hơn, như là ứng dụng không phản hồi, vốn trước đây  làm cho nó bị đóng băng hoàn toàn. (#14759) 
-- Đường dẫn của các liên kết hình ảnh giờ đây được thông báo chính xác trong Chrome và Edge. (#14779)
-- Trong Windows 11, lại có thể mở   phần giấy phép sử dụng hay danh sách người đóng góp trong trình đơn trợ giúp của NVDA. (#14725)
 - Khi buộc dùng hỗ trợ UIA với một số cửa sổ terminal và consoles nhất định, đã sửa một lỗi gây đóng băng và tập tin  bản ghi dò lỗi bị xem là tập tin rác. (#14689)
-- NVDA không còn bị lỗi thông báo ô nhập mật khẩu tại vị trí con trỏ trong Microsoft Excel và Outlook. (#14839)\
 - NVDA Sẽ không còn từ chối lưu cấu hình sau khi nó được khôi phục. (#13187)
 - Khi chạy một phiên bản tạm thời từ trình cài đặt, NVDA sẽ không khiến người dùng hiểu lầm rằng họ có thể lưu cấu hình. (#14914)
-- Cải thiện khả năng thông báo phím tắt cho đối tượng. (#10807)
-- Khi di chuyển nhanh qua các ô trong Excel, NVDA giờ đây ít đọc sai các ô hay vùng chọn. (#14983, #12200, #12108)
 - NVDA giờ đây nhìn chung là phản hồi nhanh hơn với lệnh và các thay đổi focus. (#14928)
+- Việc hiển thị cài đặt OCR không còn bị lỗi trên vài hệ thống nữa. (#15017)
+- Sửa các lỗi liên quan đến việc lưu và tải cấu hình NVDA, bao gồm việc chuyển bộ đọc. (#14760)
+- Sửa lỗi  làm cho thao tác "nhả tay" để xem lại văn bản di chuyển qua từng trang, thay vì di chuyển đến dòng trước. (#15127)
 -
 
 

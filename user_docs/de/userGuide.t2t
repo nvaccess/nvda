@@ -594,18 +594,18 @@ Um von einem Listeneintrag wieder zur Liste zurückzukehren, müssen Sie wieder 
 Nun können Sie sich über die Liste hinausbewegen, um andere Objekte zu sehen.
 So ähnlich enthält eine Symbolleiste ebenfalls Steuerelemente und Sie müssen in die Symbolleiste "absteigen", um die einzelnen Elemente zu sehen.
 
-Wenn Sie es dennoch vorziehen, sich zwischen den einzelnen Objekten im System hin und her zu bewegen, können Sie Befehle verwenden, um zum vorherigen oder nächsten Objekt in einer reduzierten Ansicht zu wechseln.
-Wenn Sie z. B. zum nächsten Objekt in dieser reduzierten Ansicht wechseln und das aktuelle Objekt andere Objekte enthält, wechselt NVDA automatisch zum ersten Objekt, welches dieses enthält.
+Wenn Sie es dennoch vorziehen, sich zwischen den einzelnen Objekten im System hin und her zu bewegen, können Sie die Befehle verwenden, um zum vorherigen bzw. nächsten Objekt in einer reduzierten Ansicht zu wechseln.
+Wenn Sie zum Beispiel zum nächsten Objekt in dieser reduzierten Ansicht wechseln und das aktuelle Objekt andere Objekte enthält, wechselt NVDA automatisch zum ersten Objekt, welches dieses enthält.
 Wenn das aktuelle Objekt keine Objekte enthält, wechselt NVDA zum nächsten Objekt auf der aktuellen Ebene der Hierarchie.
 Wenn es kein weiteres Objekt gibt, versucht NVDA, das nächste Objekt in der Hierarchie anhand der enthaltenen Objekte zu finden, bis es keine weiteren Objekte mehr gibt, zu denen man wechseln kann.
 Die gleichen Regeln gelten für das Zurückgehen in in der Hierarchie.
 
 Das momentan angezeigte Objekt wird als Navigator-Objekt bezeichnet.
-Wenn Sie sich zu einem Objekt bewegen und der Modus [Objekt-Betrachter #ObjectReview] ist aktiv, können Sie sich das Objekt mit den [Befehlen zum Text betrachten #ReviewingText] anschauen.
+Wenn Sie sich zu einem Objekt bewegen und der Modus [Objekt-Betrachter #ObjectReview] aktiv ist, können Sie sich das Objekt mit den [Befehlen zum Text betrachten #ReviewingText] anschauen.
 Wenn [Visuell hervorheben #VisionFocusHighlight] aktiviert ist, wird die Position des aktuellen Navigator-Objekts auch visuell dargestellt.
 Standardmäßig folgt der Navigator dem System-Fokus, diese Kopplung kann jedoch umgeschaltet werden.
 
-Hinweis: Braille nach Objekt-Navigation kann über [Braille-Tether #BrailleTether] konfiguriert werden.
+Hinweis: Braille mit anschließender Objekt-Navigation kann über die [Kopplung der Braille-Ausgabe #BrailleTether] konfiguriert werden.
 
 Mit den folgenden Befehlen navigieren Sie zwischen den Objekten:
 
@@ -2230,6 +2230,14 @@ Diese Einstellung enthält die folgenden Werte:
 - Immer: Wo auch immer UIA in Microsoft Word verfügbar ist (unabhängig davon, wie es funktioniert).
 -
 
+==== UIA verwenden, um auf die Steuerelemente von Microsoft Excel-Tabellen zuzugreifen, sofern verfügbar ====[UseUiaForExcel]
+Wenn diese Option aktiviert ist, versucht NVDA, die Microsoft UIA-API für Barrierefreiheit zu verwenden, um Informationen aus den Steuerelementen von Microsoft Excel-Tabellen abzurufen.
+Dies ist eine experimentelle Funktion, und einige Funktionen von Microsoft Excel sind in diesem Modus möglicherweise nicht verfügbar.
+So sind beispielsweise die Liste der Elemente in NVDA zum Auflisten von Formeln und Kommentaren und die Schnellnavigation im Lesemodus zum Springen zu Formularfeldern in einer Kalkulationstabelle nicht verfügbar.
+Für die einfache Navigation und Bearbeitung von Tabellenkalkulationen kann diese Option jedoch eine enorme Leistungsverbesserung bedeuten.
+Es wird nach wie vor nicht empfohlen, dass die Mehrheit der Benutzer diese Funktion standardmäßig aktiviert, obwohl Benutzer von Microsoft Excel-Version 16.0.13522.10000 oder neuer dazu aufgefordert sind, diese Funktion zu testen und Feedback einzureichen.
+Die Implementierung der UIA von Microsoft Excel ändert sich ständig, und Versionen von Microsoft Office, die älter als 16.0.13522.10000 sind, geben möglicherweise nicht genügend Informationen darüber Auskunft, um diese Option zu nutzen.
+
 ==== Unterstützung der Windows-Konsole ====[AdvancedSettingsConsoleUIA]
 : Standard
   Automatisch
@@ -2281,14 +2289,6 @@ Die folgenden Möglichkeiten gibt es:
   - Funktioniert voraussichtlich ab Chromium 92.0.4479.0
  -
 -
-
-==== UIA verwenden, um auf die Steuerelemente der Microsoft Excel-Tabelle zuzugreifen, sofern verfügbar ====[UseUiaForExcel]
-Wenn diese Option aktiviert ist, versucht NVDA, die Eingabehilfen-API von Microsoft UI Automation zu verwenden, um Informationen aus den Steuerelementen von Microsoft Excel-Tabellen abzurufen.
-Dies ist eine experimentelle Funktion, und einige Funktionen von Microsoft Excel sind in diesem Modus möglicherweise nicht verfügbar.
-So sind z. B. die NVDA-Elementeliste zum Auflisten von Formeln und Kommentaren und die Schnellnavigation im Lesemodus zum Springen zu Formularfeldern in einer Kalkulationstabelle nicht verfügbar.
-Für die grundlegende Navigation bzw. Bearbeitung von Tabellenkalkulationen kann diese Option jedoch eine enorme Leistungsverbesserung darstellen.
-Es wird nach wie vor empfohlen, dass die meisten Benutzer diese Funktion sie nicht standardmäßig aktivieren. Dafür wird mindestens Microsoft Excel Build 16.0.13522.10000 oder neuer benötigt. Jedoch können die Anwender diese Funktion trotzdem testen und Feedback auf Englisch bei NV Access einreichen.
-Die UIA-Implementierung von Microsoft Excel wird fortlaufend angepasst. die Versionen von Microsoft Office, die noch die Build 16.0.13522.10000 haben, stellen möglicherweise nicht genügend Informationen bereit, damit diese Option von Nutzen ist.
 
 ==== Live-Regionen mitteilen ====[BrailleLiveRegions]
 : Standard
@@ -2674,7 +2674,7 @@ Um NVDA-Erweiterungen nur für bestimmte Kanäle aufzulisten, ändern Sie die Fi
 +++ Nach NVDA-Erweiterungen suchen +++[AddonStoreFilterSearch]
 Verwenden Sie für die Suche nach NVDA-Erweiterungen das Textfeld "Suchen".
 Sie erreichen es durch Drücken der Tastenkombination ``Umschalt+Tab`` in der Liste der NVDA-Erweiterungen.
-Geben Sie ein oder zwei Schlüsselwörter für die Art von NVDA-Erweiterungen ein, die Sie suchen, und kehren Sie dann mit ``Tab`` zur Liste der NVDA-Erweiterungen zurück.
+Geben Sie ein oder zwei Schlüsselwörter für die Art der NVDA-Erweiterung ein, die Sie suchen, und betätigen Sie dann die ``Tab``-Taste, bis Sie in der Liste der NVDA-Erweiterungen gelangen.
 Die NVDA-Erweiterungen werden aufgelistet, wenn der Suchtext im Anzeigenamen, im Herausgeber oder in der Beschreibung auffindbar ist.
 
 ++ Aktionen für NVDA-Erweiterungen ++[AddonStoreActions]
@@ -2683,29 +2683,29 @@ Für eine NVDA-Erweiterung in der Liste der NVDA-Erweiterungen können diese Akt
 Dieses Menü kann auch über eine Schaltfläche "Aktionen" in den Details der ausgewählten NVDA-Erweiterung aufgerufen werden.
 
 +++ NVDA-Erweiterungen installieren +++[AddonStoreInstalling]
-Nur weil eine NVDA-Erweiterung im Store verfügbar ist, bedeutet dies nicht zwingend, dass es von NV Access oder einer anderen Stelle genehmigt oder geprüft wurde.
+Nur weil eine NVDA-Erweiterung im Store für NVDA-Erweiterungen verfügbar ist, bedeutet dies nicht, dass es von NV Access oder einer anderen Stelle genehmigt oder geprüft wurde.
 Es ist sehr wichtig, dass Sie nur NVDA-Erweiterungen aus offiziellen Quellen installieren, denen Sie auch wirklich vertrauen.
 Die Funktionalität von NVDA-Erweiterungen ist innerhalb von NVDA nicht eingeschränkt. 
 Dies könnte den Zugriff auf Ihre persönlichen Daten oder sogar auf das gesamte System beinhalten.
 
 Sie können NVDA-Erweiterungen installieren und aktualisieren, indem Sie [Verfügbare NVDA-Erweiterungen durchsuchen #AddonStoreBrowsing].
 Wählen Sie eine NVDA-Erweiterung auf der Registerkarte "Verfügbare NVDA-Erweiterungen" oder "Zu aktualisierende NVDA-Erweiterungen" aus.
-Starten Sie dann die Installation mit der Aktion Aktualisieren, Installieren oder Ersetzen.
+Starten Sie dann die Installation mit der Aktion "Aktualisieren", "Installieren" oder "Ersetzen".
 
-Um eine NVDA-Erweiterung zu installieren, das Sie außerhalb des Store erworben haben, klicken Sie auf die Schaltfläche "Von externer Quelle installieren".
-Damit können Sie nach einem Erweiterungspaket (Datei ``.nvda-addon``) irgendwo auf Ihrem Computer oder in einem Netzwerk suchen.
+Um eine NVDA-Erweiterung zu installieren, die Sie außerhalb des Store geladen haben, klicken Sie auf die Schaltfläche "Aus externer Quelle installieren".
+Damit können Sie nach einem Erweiterungspaket (``.nvda-addon``-Datei) irgendwo auf Ihrem Computer oder in einem Netzwerk suchen.
 Sobald Sie das Erweiterungspaket angeklickt haben, beginnt der Installationsprozess.
 
 Wenn NVDA auf Ihrem System installiert ist und läuft, können Sie diese Datei auch direkt über den Browser oder das Datei-System öffnen, um den Installationsvorgang zu starten.
 
-Wenn eine NVDA-Erweiterung von einer externen Quelle installiert wird, werden Sie von NVDA aufgefordert, die Installation zu bestätigen.
+Wenn eine NVDA-Erweiterung aus einer externen Quelle installiert werden soll, werden Sie von NVDA aufgefordert, diese Installation zu bestätigen.
 Nach der Installation der NVDA-Erweiterung muss NVDA neu gestartet werden, damit die NVDA-Erweiterung ausgeführt werden kann. Sie können den Neustart von NVDA jedoch verschieben, wenn Sie weitere NVDA-Erweiterungen installieren oder aktualisieren möchten.
 
 +++ NVDA-Erweiterungen entfernen +++[AddonStoreRemoving]
 Um eine NVDA-Erweiterung zu entfernen, wählen Sie sie aus der Liste aus und verwenden Sie die Aktion "Entfernen".
-NVDA fordert Sie auf, die Entfernung zu bestätigen.
+Von NVDA werden Sie aufgefordert, die Entfernung zu bestätigen.
 Wie bei der Installation muss NVDA neu gestartet werden, damit die NVDA-Erweiterung vollständig entfernt wird.
-Solange Sie dies nicht tun, wird für diese NVDA-Erweiterung in der Liste der Status "Zur Entfernung anstehend" angezeigt.
+Solange Sie dies nicht tun, wird für diese NVDA-Erweiterung in der Liste der Status "Zur Entfernung ausstehend" angezeigt.
 
 +++ NVDA-Erweiterungen ein- oder ausschalten +++[AddonStoreDisablingEnabling]
 Um eine NVDA-Erweiterung zu deaktivieren, verwenden Sie die Aktion "Deaktivieren".
@@ -3022,7 +3022,7 @@ Folgende Tastenkombinationen für diese Braillezeilen sind in NVDA zugeordnet.
 
 ++ HandyTech-Braillezeilen ++[HandyTech]
 Die meisten Braillezeilen der Firma [HandyTech GmbH https://www.handytech.de/] werden von NVDA via seriellem Port, USB und Bluetooth unterstützt.
-bei älteren Usb-Braillezeilen werden Sie den Universaltreiber von handy Tech installieren müssen.
+bei älteren USB-Braillezeilen werden Sie den Universaltreiber von handy Tech installieren müssen.
 
 Die folgenden Braillezeilenmodelle werden nicht ohne weiteres unterstützt; sie können Sie jedoch unter Zuhilfenahme des [universaltreibers https://handytech.de/de/service/kundenservice/service-software/universeller-braillezeilentreiber] und der NVDA-Erweiterung verwenden:
 - Braillino
@@ -3084,9 +3084,9 @@ Dies sind auch:
 - APH: Refreshabraille
 - Orbit: Orbit Reader 20
 -
-Einige andere Baum-Zeilen könnten ebenfalls funktionieren, dies wurde allerdings noch nicht getestet.
+Einige andere Braillezeilen von der ehemaligen Firma Baum könnten ebenfalls funktionieren, dies wurde allerdings noch nicht getestet.
 
-Wenn Sie die Braillezeile über USB angeschlossen und den Usb-Modus nicht auf HID eingestellt haben, müssen Sie zunächst den vom Hersteller bereitgestellten Treiber installieren.
+Wenn Sie die Braillezeile über USB angeschlossen und den USB-Modus nicht auf HID eingestellt haben, müssen Sie zunächst den vom Hersteller bereitgestellten Treiber installieren.
 die Braillezeilenmodelle VarioUltra und Pronto! verwenden das HID-Protokoll.
 Die Braillezeilen Refreshabraille und Orbit Reader 20 können so eingestellt werden, dass sie das HID-Protokoll verwenden.
 
@@ -3101,16 +3101,16 @@ Bitte lesen Sie in der Dokumentation der Braillezeile nach, wo die entsprechende
 | Auf der braillezeile vorwärts navigieren | ``d5`` |
 | Auf der Braillezeile zur vorherigen Zeile navigieren | ``d1`` |
 | Auf der Braillezeile zur nächsten Zeile navigieren | ``d3`` |
-| Zum aktuellen Braille-Modul springen | ``routing`` |
-| ``Umschalt+Tab`` | ``space+dot1+dot3`` |
-| ``Tab``-Taste | ``space+dot4+dot6`` |
-| ``Alt``-Taste | ``space+dot1+dot3+dot4 (space+m)`` |
-| ``Escape``-Taste | ``space+dot1+dot5 (space+e)`` |
-| ``Windows``-Taste | ``space+dot3+dot4`` |
-| ``Alt+Tab`` | ``space+dot2+dot3+dot4+dot5 (space+t)`` |
-| NVDA-Menü | ``space+dot1+dot3+dot4+dot5 (space+n)`` |
-| ``Windows+D`` (minimiert alle Anwendungen) | ``space+dot1+dot4+dot5 (space+d)`` |
-| Alles Vorlesen | ``space+dot1+dot2+dot3+dot4+dot5+dot6`` |
+| Zum aktuellen Braille-Modul springen | ``Routing``-Taste |
+| ``Umschalt+Tab`` | ``Leertaste+Punkt1+Punkt3`` |
+| ``Tab``-Taste | ``Leertaste+Punkt4+Punkt6`` |
+| ``Alt``-Taste | ``Leertaste+Punkt1+Punkt3+Punkt4`` (``Leertaste+M``) |
+| ``Escape``-Taste | ``Leertaste+Punkt1+Punkt5`` (``Leertaste+E``) |
+| ``Windows``-Taste | ``Leertaste+Punkt3+Punkt4`` |
+| ``Alt+Tab`` | ``Leertaste+Punkt2+Punkt3+Punkt4+Punkt5`` (``Leertaste+T``) |
+| NVDA-Menü | ``Leertaste+Punkt1+Punkt3+Punkt4+Punkt5`` (``Leertaste+N``) |
+| ``Windows+D`` (minimiert alle Apps) | ``Leertaste+Punkt1+Punkt4+Punkt5`` (``Leertaste+D``) |
+| Alles Vorlesen | ``Leertaste+Punkt1+Punkt2+Punkt3+Punkt4+Punkt5+Punkt6`` |
 
 Für Braillezeilen, die einen Joystick besitzen:
 || Name | Taste |
@@ -3653,7 +3653,7 @@ Bitte sehen Sie in der [Dokumentation zur Ecobraille ftp://ftp.once.es/pub/utt/b
 %kc:endInclude
 
 ++ SuperBraille ++[SuperBraille]
-Die in Taiwan stark verbreitete Braillezeile Superbraille kann entweder seriell oder über Usb angeschlossen werden.
+Die in Taiwan stark verbreitete Braillezeile Superbraille kann entweder seriell oder über USB angeschlossen werden.
 Da die SuperBraille weder eine Tastatur noch Navigationstasten besitzt, müssen sämtliche Navigationsaktionen über eine Standardtastatur ausgeführt werden.
 Aus Kompatibilitätsgründen wurden deshalb zwei Tastenkombinationen definiert:
 %kc:beginInclude
@@ -3677,62 +3677,62 @@ Die im Folgenden beschriebenen Funktionen der Braille-Tastatur gelten, wenn die 
 %kc:beginInclude
 || Name | Taste |
 | Löschen des zuletzt eingegebenen Zeichens auf der Braillezeile oder des letzten Zeichens | ``backspace`` |
-| Übersetzt eine beliebige Braille-Eingabe und betätigt die Eingabetaste |``backspace+space`` |
-| ``NVDA``-Taste umschalten | ``dot3+dot5+space`` |
-| ``Einfg`` | ``dot1+dot3+dot5+space``, ``dot3+dot4+dot5+space`` |
-| ``Entf`` | ``dot3+dot6+space`` |
-| ``Pos1`` | ``dot1+dot2+dot3+space`` |
-| ``Ende`` | ``dot4+dot5+dot6+space`` |
-| ``Pfeiltaste nach links`` | ``dot2+space`` |
-| ``Pfeiltaste nach rechts`` | ``dot5+space`` |
-| ``Pfeiltaste nach oben`` | ``dot1+space`` |
-| ``Pfeiltaste nach unten`` | ``dot6+space`` |
-| ``Seite nach oben`` | ``dot1+dot3+space`` |
-| ``Seite nach unten`` | ``dot4+dot6+space`` |
-| ``Nummernblock 1`` | ``dot1+dot6+backspace`` |
-| ``Nummernblock 2`` | ``dot1+dot2+dot6+backspace`` |
-| ``Nummernblock 3`` | ``dot1+dot4+dot6+backspace`` |
-| ``Nummernblock 4`` | ``dot1+dot4+dot5+dot6+backspace`` |
-| ``Nummernblock 5`` | ``dot1+dot5+dot6+backspace`` |
-| ``Nummernblock 6`` | ``dot1+dot2+dot4+dot6+backspace`` |
-| ``Nummernblock 7`` | ``dot1+dot2+dot4+dot5+dot6+backspace`` |
-| ``Nummernblock 8`` | ``dot1+dot2+dot5+dot6+backspace`` |
-| ``Nummernblock 9`` | ``dot2+dot4+dot6+backspace`` |
-| ``Nummernblock-Einfügen`` | ``dot3+dot4+dot5+dot6+backspace`` |
-| ``Nummernblock-Dezimalzeichen`` | ``dot2+backspace`` |
-| ``Nummernblock-Schrägstrich`` | ``dot3+dot4+backspace`` |
-| ``Nummernblock-Stern`` | ``dot3+dot5+backspace`` |
-| ``Nummernblock-Minus`` | ``dot3+dot6+backspace`` |
-| ``Nummernblock-Plus`` | ``dot2+dot3+dot5+backspace`` |
-| ``Nummernblock-Eingabetaste`` | ``dot3+dot4+dot5+backspace`` |
-| ``Escape``-Taste | ``dot1+dot2+dot4+dot5+space``, ``l2`` |
-| ``Tab``-Taste | ``dot2+dot5+dot6+space``, ``l3`` |
-| ``Umschalt+Tab`` | ``dot2+dot3+dot5+space`` |
-| ``Drucken``-Taste | ``dot1+dot3+dot4+dot6+space`` |
-| ``Pause``-Taste | ``dot1+dot4+space`` |
-| ``Kontextmenü``-Taste | ``dot5+dot6+backspace`` |
-| ``F1``-Taste | ``dot1+backspace`` |
-| ``F2``-Taste | ``dot1+dot2+backspace`` |
-| ``F3``-Taste | ``dot1+dot4+backspace`` |
-| ``F4``-Taste | ``dot1+dot4+dot5+backspace`` |
-| ``F5``-Taste | ``dot1+dot5+backspace`` |
-| ``F6``-Taste | ``dot1+dot2+dot4+backspace`` |
-| ``F7``-Taste | ``dot1+dot2+dot4+dot5+backspace`` |
-| ``F8``-Taste | ``dot1+dot2+dot5+backspace`` |
-| ``F9``-Taste | ``dot2+dot4+backspace`` |
-| ``F10``-Taste | ``dot2+dot4+dot5+backspace`` |
-| ``F11``-Taste | ``dot1+dot3+backspace`` |
-| ``F12``-Taste | ``dot1+dot2+dot3+backspace`` |
-| ``Windows``-Taste | ``dot1+dot2+dot4+dot5+dot6+space`` |
-| ``Windows``-Taste umschalten | ``dot1+dot2+dot3+dot4+backspace``, ``dot2+dot4+dot5+dot6+space`` |
-| ``Dauergroßschreibtaste`` | ``dot7+backspace``, ``dot8+backspace`` |
-| ``Nummernblock``-Taste | ``dot3+backspace``, ``dot6+backspace`` |
-| ``Umschalt``-Taste | ``dot7+space`` |
-| ``Umschalt``-Taste umschalten | ``dot1+dot7+space``, ``dot4+dot7+space`` |
-| ``Strg``-Taste | ``dot7+dot8+space`` |
-| ``Strg``-Taste umschalten | ``dot1+dot7+dot8+space``, ``dot4+dot7+dot8+space`` |
-| ``Alt``-Taste | ``dot8+space`` |
-| ``Alt``-Taste umschalten | ``dot1+dot8+space``, ``dot4+dot8+space`` |
+| Übersetzt eine beliebige Braille-Eingabe und betätigt die Eingabetaste |``Rücktaste+Leertaste`` |
+| ``NVDA``-Taste umschalten | ``Leertaste+Punkt3+Punkt5`` |
+| ``Einfg`` | ``Leertaste+Punkt1+Punkt3+Punkt5``, ``Leertaste+Punkt3+Punkt4+Punkt5`` |
+| ``Entf`` | ``Leertaste+Punkt3+Punkt6`` |
+| ``Pos1`` | ``Leertaste+Punkt1+Punkt2+Punkt3`` |
+| ``Ende`` | ``Leertaste+Punkt4+Punkt5+Punkt6`` |
+| ``Pfeiltaste nach links`` | ``Leertaste+Punkt2`` |
+| ``Pfeiltaste nach rechts`` | ``Leertaste+Punkt5`` |
+| ``Pfeiltaste nach oben`` | ``Leertaste+Punkt1`` |
+| ``Pfeiltaste nach unten`` | ``Leertaste+Punkt6`` |
+| ``Seite nach oben`` | ``Leertaste+Punkt1+Punkt3`` |
+| ``Seite nach unten`` | ``Leertaste+Punkt4+Punkt6`` |
+| ``Nummernblock 1`` | ``Rücktaste+Punkt1+Punkt6`` |
+| ``Nummernblock 2`` | ``Rücktaste+Punkt1+Punkt2+Punkt6`` |
+| ``Nummernblock 3`` | ``Rücktaste+Punkt1+Punkt4+Punkt6`` |
+| ``Nummernblock 4`` | ``Rücktaste+Punkt1+Punkt4+Punkt5+Punkt6`` |
+| ``Nummernblock 5`` | ``Rücktaste+Punkt1+Punkt5+Punkt6`` |
+| ``Nummernblock 6`` | ``Rücktaste+Punkt1+Punkt2+Punkt4+Punkt6`` |
+| ``Nummernblock 7`` | ``Rücktaste+Punkt1+Punkt2+Punkt4+Punkt5+Punkt6`` |
+| ``Nummernblock 8`` | ``Rücktaste+Punkt1+Punkt2+Punkt5+Punkt6`` |
+| ``Nummernblock 9`` | ``Rücktaste+Punkt2+Punkt4+Punkt6`` |
+| ``Nummernblock-Einfügen`` | ``Rücktaste+Punkt3+Punkt4+Punkt5+Punkt6`` |
+| ``Nummernblock-Dezimalzeichen`` | ``Rücktaste+Punkt2`` |
+| ``Nummernblock-Schrägstrich`` | ``Rücktaste+Punkt3+Punkt4`` |
+| ``Nummernblock-Stern`` | ``Rücktaste+Punkt3+Punkt5`` |
+| ``Nummernblock-Minus`` | ``Rücktaste+Punkt3+Punkt6`` |
+| ``Nummernblock-Plus`` | ``Rücktaste+Punkt2+Punkt3+Punkt5`` |
+| ``Nummernblock-Eingabetaste`` | ``Rücktaste+Punkt3+Punkt4+Punkt5`` |
+| ``Escape``-Taste | ``Leertaste+Punkt1+Punkt2+Punkt4+Punkt5``, ``l2`` |
+| ``Tab``-Taste | ``Leertaste+Punkt2+Punkt5+Punkt6``, ``l3`` |
+| ``Umschalt+Tab`` | ``Leertaste+Punkt2+Punkt3+Punkt5`` |
+| ``Drucken``-Taste | ``Leertaste+Punkt1+Punkt3+Punkt4+Punkt6`` |
+| ``Pause``-Taste | ``Leertaste+Punkt1+Punkt4`` |
+| ``Kontextmenü``-Taste | ``Rücktaste+Punkt5+Punkt6`` |
+| ``F1``-Taste | ``Rücktaste+Punkt1`` |
+| ``F2``-Taste | ``Rücktaste+Punkt1+Punkt2`` |
+| ``F3``-Taste | ``Rücktaste+Punkt1+Punkt4`` |
+| ``F4``-Taste | ``Rücktaste+Punkt1+Punkt4+Punkt5`` |
+| ``F5``-Taste | ``Rücktaste+Punkt1+Punkt5`` |
+| ``F6``-Taste | ``Rücktaste+Punkt1+Punkt2+Punkt4`` |
+| ``F7``-Taste | ``Rücktaste+Punkt1+Punkt2+Punkt4+Punkt5`` |
+| ``F8``-Taste | ``Rücktaste+Punkt1+Punkt2+Punkt5`` |
+| ``F9``-Taste | ``Rücktaste+Punkt2+Punkt4`` |
+| ``F10``-Taste | ``Rücktaste+Punkt2+Punkt4+Punkt5`` |
+| ``F11``-Taste | ``Rücktaste+Punkt1+Punkt3`` |
+| ``F12``-Taste | ``Rücktaste+Punkt1+Punkt2+Punkt3`` |
+| ``Windows``-Taste | ``Leertaste+Punkt1+Punkt2+Punkt4+Punkt5+Punkt6`` |
+| ``Windows``-Taste umschalten | ``Rücktaste+Punkt1+Punkt2+Punkt3+Punkt4``, ``Leertaste+Punkt2+Punkt4+Punkt5+Punkt6`` |
+| ``Dauergroßschreibtaste`` | ``Rücktaste+Punkt7``, ``Rücktaste+Punkt8`` |
+| ``Nummernblock``-Taste | ``Rücktaste+Punkt3``, ``Rücktaste+Punkt6`` |
+| ``Umschalt``-Taste | ``Leertaste+Punkt7`` |
+| ``Umschalt``-Taste umschalten | ``Leertaste+Punkt1+Punkt7``, ``Leertaste+Punkt4+Punkt7`` |
+| ``Strg``-Taste | ``Leertaste+Punkt7+Punkt8`` |
+| ``Strg``-Taste umschalten | ``Leertaste+Punkt1+Punkt7+Punkt``, ``Leertaste+Punkt4+Punkt7+Punkt8`` |
+| ``Alt``-Taste | ``Leertaste+Punkt8`` |
+| ``Alt``-Taste umschalten | ``Leertaste+Punkt1+Punkt8``, ``Leertaste+Punkt4+Punkt8`` |
 | HID-Tastatur-Simulation umschalten | ``switch1Left+joystick1Down``, ``switch1Right+joystick1Down`` |
 %kc:endInclude
 
