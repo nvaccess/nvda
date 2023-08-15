@@ -6,6 +6,7 @@
 
 """Module for native UIA implementations of SysListView32, e.g. in Windows Forms."""
 
+from comtypes import COMError
 import config
 from config.configFlags import ReportTableHeaders
 import UIAHandler
@@ -84,3 +85,21 @@ class SysListViewItem(RowWithFakeNavigation, ListItem):
 		if val == UIAHandler.handler.reservedNotSupportedValue:
 			return super().rowNumber
 		return val + 1
+
+	def _get_positionInfo(self):
+		info = super().positionInfo or {}
+		itemIndex = 0
+		try:
+			itemIndex = self.rowNumber
+		except (COMError, NotImplementedError):
+			pass
+		if itemIndex > 0:
+			info['indexInGroup'] = itemIndex
+			itemCount = 0
+			try:
+				itemCount = self.parent.rowCount
+			except (COMError, NotImplementedError):
+				pass
+			if itemCount > 0:
+				info['similarItemsInGroup'] = itemCount
+		return info
