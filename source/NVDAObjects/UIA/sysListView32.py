@@ -68,7 +68,7 @@ class SysListViewItem(RowWithFakeNavigation, ListItem):
 			textList.append(text)
 		return "; ".join(textList)
 
-	def _get_rowNumber(self):
+	def _get_indexInParent(self):
 		parent = self.parent
 		if not isinstance(parent, SysListViewList) or self.childCount == 0:
 			return super().rowNumber
@@ -83,14 +83,14 @@ class SysListViewItem(RowWithFakeNavigation, ListItem):
 			True
 		)
 		if val == UIAHandler.handler.reservedNotSupportedValue:
-			return super().rowNumber
-		return val + 1
+			return super().indexInParent
+		return val
 
 	def _get_positionInfo(self):
 		info = super().positionInfo or {}
 		itemIndex = 0
 		try:
-			itemIndex = self.rowNumber
+			itemIndex = self.indexInParent + 1
 		except (COMError, NotImplementedError):
 			pass
 		if itemIndex > 0:
