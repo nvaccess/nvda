@@ -1237,7 +1237,7 @@ class UIAHandler(COMObject):
 		try:
 			window = new.cachedNativeWindowHandle
 		except COMError:
-			window = None
+			return None
 		if _isDebug():
 			log.debug(
 				"Found ancestor element "
