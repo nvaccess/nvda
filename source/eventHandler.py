@@ -504,8 +504,11 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 		# when a tab is expanded, the window we get from the focus object is incorrect.
 		# This window isn't beneath the foreground window,
 		wClass == "NetUIHWND" and fgClassName in ("Net UI Tool Window Layered", "Net UI Tool Window")
-		# #14916: The context menu in the Edge download window isn't beneath the foreground window.
-		or wClass == "Chrome_WidgetWin_2" and fgClassName == "Chrome_WidgetWin_2"
+		or (
+			# #14916: The context menu in the Edge download window isn't beneath the foreground window.
+			wClass == fgClassName
+			and wClass.startswith("Chrome_WidgetWin_") and fgClassName.startswith("Chrome_WidgetWin_")
+		)
 	):
 		# Our foreground application checks fail.
 		# Just compare the root owners.

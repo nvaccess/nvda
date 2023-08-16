@@ -1203,7 +1203,7 @@ class UIAHandler(COMObject):
 			return windowHandle
 		if _isDebug():
 			log.debug(
-				" locating nearest ancestor windowHandle "
+				"Locating nearest ancestor windowHandle "
 				f"for element {self.getUIAElementDebugString(UIAElement)}"
 			)
 		try:
