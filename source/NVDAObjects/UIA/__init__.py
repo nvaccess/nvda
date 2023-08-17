@@ -309,7 +309,7 @@ class UIATextInfo(textInfos.TextInfo):
 		if fetchAnnotationTypes:
 			annotationTypes=fetcher.getValue(UIAHandler.UIA_AnnotationTypesAttributeId,ignoreMixedValues=ignoreMixedValues)
 			# Some UIA implementations return a single value rather than a tuple.
-			# Always mutate to a tuple to allow for a generic x in y matching 
+			# Always mutate to a tuple to allow for a generic x in y matching
 			if not isinstance(annotationTypes,tuple):
 				annotationTypes=(annotationTypes,)
 			if formatConfig["reportSpellingErrors"]:
@@ -357,7 +357,7 @@ class UIATextInfo(textInfos.TextInfo):
 			a mixed attribute value signifying that the caller may want to try again with a smaller range.
 		@return: The indent formatting informations corresponding to what has been retrieved via the fetcher.
 		"""
-		
+
 		formatField = textInfos.FormatField()
 		val = fetcher.getValue(UIAHandler.UIA_IndentationFirstLineAttributeId, ignoreMixedValues=ignoreMixedValues)
 		uiaIndentFirstLine = val if isinstance(val, float) else None
@@ -387,14 +387,14 @@ class UIATextInfo(textInfos.TextInfo):
 		if uiaIndentTrailing:
 			formatField['right-indent'] = self._getIndentValueDisplayString(uiaIndentTrailing)
 		return formatField
-	
+
 	def _getIndentValueDisplayString(self, val: float) -> str:
 		"""A function returning the string to display in formatting info.
 		@param val: an indent value measured in points, fetched via
 			an UIAHandler.UIA_Indentation*AttributeId attribute.
 		@return: The string used in formatting information to report the length of an indentation.
 		"""
-		
+
 		# convert points to inches (1pt = 1/72 in)
 		val /= 72.0
 		if languageHandler.useImperialMeasurements():
@@ -406,7 +406,7 @@ class UIATextInfo(textInfos.TextInfo):
 			# Translators: a measurement in centimetres
 			valText = _("{val:.2f} cm").format(val=val)
 		return valText
-	
+
 	# C901 '__init__' is too complex
 	# Note: when working on getPropertiesBraille, look for opportunities to simplify
 	# and move logic out into smaller helper functions.
@@ -593,9 +593,9 @@ class UIATextInfo(textInfos.TextInfo):
 		@param formatConfig: a dictionary of NVDA document formatting configuration keys
 			with values set to true for those types that should be fetched.
 		@param UIAFormatUnits: the UI Automation text units (in order of resolution) that should be used to split the text so as to avoid mixed attribute values. This is None by default.
-			If the parameter is a list of 1 or more units, The range will be split by the first unit in the list, and this method will be recursively run on each subrange, with the remaining units in this list given as the value of this parameter. 
+			If the parameter is a list of 1 or more units, The range will be split by the first unit in the list, and this method will be recursively run on each subrange, with the remaining units in this list given as the value of this parameter.
 			If this parameter is an empty list, then formatting and text is fetched for the entire range, but any mixed attribute values are ignored and no splitting occures.
-			If this parameter is None, text and formatting is fetched for the entire range in one go, but if mixed attribute values are found, it will split by the first unit in self.UIAFormatUnits, and run this method recursively on each subrange, providing the remaining units from self.UIAFormatUnits as the value of this parameter. 
+			If this parameter is None, text and formatting is fetched for the entire range in one go, but if mixed attribute values are found, it will split by the first unit in self.UIAFormatUnits, and run this method recursively on each subrange, providing the remaining units from self.UIAFormatUnits as the value of this parameter.
 		"""
 		debug = UIAHandler._isDebug() and log.isEnabledFor(log.DEBUG)
 		if debug:
@@ -858,7 +858,7 @@ class UIATextInfo(textInfos.TextInfo):
 					log.debug("Yielding final text")
 				for field in self._getTextWithFields_text(tempRange,formatConfig):
 					yield field
-		else: #no children 
+		else: #no children
 			if debug:
 				log.debug("no children")
 				log.debug("Yielding text")
@@ -969,7 +969,7 @@ class UIA(Window):
 	def _get__coreCycleUIAPropertyCacheElementCache(self):
 		"""
 		A dictionary per core cycle that is ready to map UIA property IDs to UIAElements with that property already cached.
-		An example of where multiple cache elements may exist would be where the UIA NVDAObject was instantiated with a UIA element already containing a UI Automation cache (appropriate for generating control fields) but another UIA NVDAObject property (E.g. states) has a set of UIA properties of its own which should be bulk-fetched, and did not exist in the original cache. 
+		An example of where multiple cache elements may exist would be where the UIA NVDAObject was instantiated with a UIA element already containing a UI Automation cache (appropriate for generating control fields) but another UIA NVDAObject property (E.g. states) has a set of UIA properties of its own which should be bulk-fetched, and did not exist in the original cache.
 		"""
 		return {}
 
@@ -993,7 +993,7 @@ class UIA(Window):
 		"""
 		elementCache=self._coreCycleUIAPropertyCacheElementCache
 		if elementCache:
-			# Ignore any IDs we already have cached values or cache UIAElements for 
+			# Ignore any IDs we already have cached values or cache UIAElements for
 			IDs={x for x in IDs if  x not in elementCache}
 		if len(IDs)<2:
 			# Creating  a UIA cache request for 1 or 0 properties is pointless
@@ -1092,7 +1092,7 @@ class UIA(Window):
 					isinstance(self.parent, spartanEdge.EdgeHTMLRootContainer)
 					or not isinstance(self.parent, spartanEdge.EdgeNode)
 				)
-			): 
+			):
 				clsList.append(spartanEdge.EdgeHTMLRoot)
 			elif self.role==controlTypes.Role.LIST:
 				clsList.append(spartanEdge.EdgeList)
@@ -1136,7 +1136,7 @@ class UIA(Window):
 		elif UIAClassName=="UIItem":
 			clsList.append(UIItem)
 		elif UIAClassName=="SensitiveSlider":
-			clsList.append(SensitiveSlider) 
+			clsList.append(SensitiveSlider)
 		if UIAControlType==UIAHandler.UIA_TreeItemControlTypeId:
 			clsList.append(TreeviewItem)
 		if UIAControlType==UIAHandler.UIA_MenuItemControlTypeId:
@@ -1226,13 +1226,16 @@ class UIA(Window):
 		clsList.append(UIA)
 
 		if self.UIAIsWindowElement:
-			super(UIA,self).findOverlayClasses(clsList)
+			super().findOverlayClasses(clsList)
 			if self.UIATextPattern:
-				#Since there is a UIA text pattern, there is no need to use the win32 edit support at all
+				# Since there is a UIA text pattern, there is no need to use the win32 edit support at all.
+				# However, UIA classifies (rich) edit controls with a role of document and doesn't add a multiline state.
+				# Remove any win32 Edit class and insert EditBase to keep backwards compatibility with win32.
 				import NVDAObjects.window.edit
 				for x in list(clsList):
-					if issubclass(x,NVDAObjects.window.edit.Edit):
+					if issubclass(x, NVDAObjects.window.edit.Edit):
 						clsList.remove(x)
+						clsList.insert(0, NVDAObjects.window.edit.EditBase)
 
 	@classmethod
 	def kwargsFromSuper(cls, kwargs, relation=None, ignoreNonNativeElementsWithFocus=True):
@@ -1290,7 +1293,7 @@ class UIA(Window):
 	def __init__(self,windowHandle=None,UIAElement=None,initialUIACachedPropertyIDs=None):
 		"""
 		An NVDAObject for a UI Automation element.
-		@param windowHandle: if a UIAElement is not specifically given, then this windowHandle is used to fetch its root UIAElement 
+		@param windowHandle: if a UIAElement is not specifically given, then this windowHandle is used to fetch its root UIAElement
 		@type windowHandle: int
 		@param UIAElement: the UI Automation element that should be represented by this NVDAObject
 		The UI Automation element must have been created with a L{UIAHandler.handler.baseCacheRequest}
@@ -1348,7 +1351,7 @@ class UIA(Window):
 	_lastLiveRegionChangeInfo=(None,None) #: Keeps track of the last live region change (text, time)
 	def _get__shouldAllowUIALiveRegionChangeEvent(self):
 		"""
-		This property decides whether  a live region change event should be allowed. It compaires live region event with the last one received, only allowing the event if the text (name) is different, or if the time since the last one is at least 0.5 seconds. 
+		This property decides whether  a live region change event should be allowed. It compaires live region event with the last one received, only allowing the event if the text (name) is different, or if the time since the last one is at least 0.5 seconds.
 		"""
 		oldText,oldTime=self._lastLiveRegionChangeInfo
 		newText=self.name
@@ -1359,7 +1362,7 @@ class UIA(Window):
 		return True
 
 	def _getUIAPattern(self,ID,interface,cache=False):
-		punk=self.UIAElement.GetCachedPattern(ID) if cache else self.UIAElement.GetCurrentPattern(ID) 
+		punk=self.UIAElement.GetCachedPattern(ID) if cache else self.UIAElement.GetCurrentPattern(ID)
 		if punk:
 			return punk.QueryInterface(interface)
 
@@ -1737,7 +1740,7 @@ class UIA(Window):
 		# UIA NVDAObjects can only be considered content if UI Automation considers them both a control and content.
 		if presentationType==self.presType_content and not (self.UIAElement.cachedIsContentElement and self.UIAElement.cachedIsControlElement):
 			presentationType=self.presType_layout
-		return presentationType 
+		return presentationType
 
 	def correctAPIForRelation(self, obj, relation=None):
 		if obj and self.windowHandle != obj.windowHandle and not obj.UIAElement.cachedNativeWindowHandle:
@@ -2166,7 +2169,7 @@ class TreeviewItem(UIA):
 	def _get__level(self):
 		level=0
 		obj=self
-		while obj: 
+		while obj:
 			level+=1
 			parent=obj.parent=obj.parent
 			if not parent or parent==obj or parent.role!=controlTypes.Role.TREEVIEWITEM:
@@ -2324,7 +2327,7 @@ class ToolTip(ToolTip, UIA):
 
 
 #WpfTextView fires name state changes once a second, plus when IUIAutomationTextRange::GetAttributeValue is called.
-#This causes major lags when using this control with Braille in NVDA. (#2759) 
+#This causes major lags when using this control with Braille in NVDA. (#2759)
 #For now just ignore the events.
 class WpfTextView(UIA):
 
@@ -2379,7 +2382,7 @@ class NetUIDropdownAnchor(UIA):
 	def _get_name(self):
 		name=super(NetUIDropdownAnchor,self).name
 		# In MS Office 2010, these combo boxes had no name.
-		# However, the name can be found as the direct previous sibling label element. 
+		# However, the name can be found as the direct previous sibling label element.
 		if not name and self.previous and self.previous.role==controlTypes.Role.STATICTEXT:
 			name=self.previous.name
 		return name
