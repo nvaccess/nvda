@@ -20,7 +20,7 @@ def findExtraOverlayClasses(obj: NVDAObject, clsList: List[Type[NVDAObject]]) ->
 	UIAControlType = obj.UIAElement.cachedControlType
 	if UIAControlType == UIAHandler.UIA.UIA_ListItemControlTypeId:
 		clsList.insert(0, SysListViewItem)
-	if UIAControlType == UIAHandler.UIA.UIA_ListControlTypeId:
+	elif UIAControlType == UIAHandler.UIA.UIA_ListControlTypeId:
 		clsList.insert(0, SysListViewList)
 
 
