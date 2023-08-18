@@ -45,10 +45,14 @@ class SysListViewItem(RowWithFakeNavigation, ListItem):
 			e = cachedChildren.getElement(index)
 			name = e.cachedName
 			columnHeaderTextList = []
-			if name and config.conf['documentFormatting']['reportTableHeaders'] in (
-				ReportTableHeaders.ROWS_AND_COLUMNS,
-				ReportTableHeaders.COLUMNS,
-			) and index > 0:
+			if (
+				name
+				and config.conf['documentFormatting']['reportTableHeaders'] in (
+					ReportTableHeaders.ROWS_AND_COLUMNS,
+					ReportTableHeaders.COLUMNS,
+				)
+				and index > 0
+			):
 				columnHeaderItems = e.getCachedPropertyValueEx(
 					UIAHandler.UIA.UIA_TableItemColumnHeaderItemsPropertyId,
 					True
