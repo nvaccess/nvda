@@ -1164,7 +1164,7 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 				L"\x0003",
 				1
 			)
-			&&pDispatchParagraph
+			&& pDispatchParagraph
 		) {
 			_com_dispatch_raw_propget(
 				pDispatchParagraph,
