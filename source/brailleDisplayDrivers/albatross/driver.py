@@ -158,8 +158,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		@param port: port name as string
 		@raises: RuntimeError if no display found
 		"""
-		for thisport in self._getTryPorts(port):
-			log.debug(f"ports: {thisport}")
 		for self._baudRate in BAUD_RATE:
 			for portType, portId, port, portInfo in self._getTryPorts(port):
 				# For reconnection
