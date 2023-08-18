@@ -6,15 +6,17 @@
 
 """Module for native UIA implementations of SysListView32, e.g. in Windows Forms."""
 
+from typing import Dict, List, Optional, Type
 from comtypes import COMError
 import config
 from config.configFlags import ReportTableHeaders
 import UIAHandler
+from .. import NVDAObject
 from ..behaviors import RowWithFakeNavigation
 from . import ListItem, UIA
 
 
-def findExtraOverlayClasses(obj, clsList):
+def findExtraOverlayClasses(obj: NVDAObject, clsList: List[Type[NVDAObject]]) -> None:
 	UIAControlType = obj.UIAElement.cachedControlType
 	if UIAControlType == UIAHandler.UIA.UIA_ListItemControlTypeId:
 		clsList.insert(0, SysListViewItem)
@@ -28,7 +30,7 @@ class SysListViewList(UIA):
 
 class SysListViewItem(RowWithFakeNavigation, ListItem):
 
-	def _get_name(self):
+	def _get_name(self) -> str:
 		parent = self.parent
 		if not isinstance(parent, SysListViewList) or self.childCount <= 1:
 			return super().name
@@ -72,10 +74,10 @@ class SysListViewItem(RowWithFakeNavigation, ListItem):
 			textList.append(text)
 		return "; ".join(textList)
 
-	def _get_indexInParent(self):
+	def _get_indexInParent(self) -> Optional[int]:
 		parent = self.parent
 		if not isinstance(parent, SysListViewList) or self.childCount == 0:
-			return super().rowNumber
+			return super().indexInParent
 		childCacheRequest = UIAHandler.handler.baseCacheRequest.clone()
 		childCacheRequest.addProperty(UIAHandler.UIA.UIA_GridItemRowPropertyId)
 		element = UIAHandler.handler.baseTreeWalker.GetFirstChildElementBuildCache(
@@ -90,7 +92,7 @@ class SysListViewItem(RowWithFakeNavigation, ListItem):
 			return super().indexInParent
 		return val
 
-	def _get_positionInfo(self):
+	def _get_positionInfo(self) -> Dict[str, int]:
 		info = super().positionInfo or {}
 		itemIndex = 0
 		try:
