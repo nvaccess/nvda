@@ -597,7 +597,7 @@ Vous pourrez alors la quitter si vous désirez accéder à d'autres objets.
 De la même manière, une barre d'outils contient des contrôles, vous devrez donc entrer dans la barre d'outils pour accéder aux contrôles qu'elle contient.
 
 Si vous préférez plutôt vous déplacer entre chaque objet simple du système, vous pouvez utiliser des commandes pour passer à l'objet précédent/suivant dans une vue à plat.
-Par exemple, si vous vous déplacez vers l'objet suivant dans cette vue à plat et que l'objet actuel contient d'autres objets, NVDA se déplacera automatiquement vers le premier objet qui le contient.
+Par exemple, si vous vous déplacez vers l'objet suivant dans cette vue à plat et que l'objet actuel contient d'autres objets, NVDA se déplacera automatiquement vers le premier objet contenu.
 Au contraire, si l'objet courant ne contient aucun objet, NVDA passera à l'objet suivant au niveau courant de la hiérarchie.
 S'il n'y a pas d'objet suivant de ce type, NVDA essaiera de trouver l'objet suivant dans la hiérarchie en fonction des objets contenants jusqu'à ce qu'il n'y ait plus d'objets vers lesquels se déplacer.
 Les mêmes règles s'appliquent pour reculer dans la hiérarchie.
@@ -2232,6 +2232,14 @@ Ce paramètre contient les valeurs suivantes :
 - Toujours : partout où UI automation est disponible dans Microsoft Word (quel que soit l'avancement de son développement)
 -
 
+==== Utilisez UI Automation pour accéder aux contrôles de feuille de calcul Microsoft Excel lorsqu'ils sont disponibles ====[UseUiaForExcel]
+Lorsque cette option est activée, NVDA essaiera d'utiliser l'API d'accessibilité de Microsoft UI Automation afin de récupérer des informations à partir des contrôles de la feuille de calcul Microsoft Excel.
+Il s'agit d'une fonctionnalité expérimentale et certaines fonctionnalités de Microsoft Excel peuvent ne pas être disponibles dans ce mode.
+Par exemple, la liste des éléments de NVDA pour lister les formules et les commentaires, et la navigation rapide en mode navigation pour accéder aux champs de formulaire sur une feuille de calcul ne sont pas disponibles.
+Cependant, pour la navigation/l'édition de base d'une feuille de calcul, cette option peut améliorer considérablement les performances.
+Nous ne recommandons toujours pas que la majorité des utilisateurs l'activent par défaut, bien que nous invitons les utilisateurs de Microsoft Excel version 16.0.13522.10000 ou supérieure à tester cette fonctionnalité et à fournir des commentaires.
+La mise en œuvre de l'automatisation de l'interface utilisateur de Microsoft Excel est en constante évolution et les versions de Microsoft Office antérieures à 16.0.13522.10000 peuvent ne pas exposer suffisamment d'informations pour que cette option soit utile.
+
 ==== Prise en charge de la Console Windows ====[AdvancedSettingsConsoleUIA]
 : Défaut
   Automatique
@@ -2283,14 +2291,6 @@ Les options suivantes existent :
   - Elle devrait fonctionner avec Chromium 92.0.4479.0+
   -
 -
-
-==== Utiliser UI automation pour accéder aux contrôles des feuilles de calcul Microsoft Excel quand c'est possible ====[UseUiaForExcel]
-Quand cette option est activée, NVDA essaiera d'utiliser l'API d'accessibilité Microsoft UI Automation pour extraire des informations des contrôles des feuilles de calcul Microsoft Excel.
-C'est une fonctionnalité expérimentale, et certaines fonctionnalités de Microsoft Excel peuvent ne pas être disponibles dans ce mode.
-Par exemple, la liste d'éléments de NVDA permettant de lister les formules et commentaires, et la navigation rapide en mode navigation pour sauter aux zones de formulaire dans une feuille de calcul ne sont pas disponibles.
-Cependant, pour la navigation/édition de feuilles de calcul basiques, cette option peut procurer de grandes améliorations de performances.
-Nous ne recommandons toujours pas que la majorité des utilisateurs active cette option par défaut, mais nous encourageons les utilisateurs de Microsoft Excel version 16.0.13522.10000 ou ultérieures à tester cette fonctionnalité et à nous faire part de leurs commentaires.
-L'implémentation d'UI Automation dans Microsoft Excel évolue fréquemment, et les versions de Microsoft Office antérieures à 16.0.13522.10000 n'exposent peut-être pas assez d'informations pour que cette option soit d'une quelconque utilité.
 
 ==== Signaler les régions Actives ====[BrailleLiveRegions]
 : Défaut
@@ -2679,7 +2679,7 @@ Pour lister les extensions uniquement pour des canaux spécifiques, modifiez la 
 +++ Recherche d'extensions +++[AddonStoreFilterSearch]
 Pour rechercher des extensions, utilisez la zone de texte "Rechercher".
 Vous pouvez y accéder en appuyant sur ``maj+tab`` dans la liste des extensions.
-Tapez un ou deux mots-clés pour le type d'extension que vous recherchez, puis ``tabulation`` pour aller à la liste des extensions.
+Tapez un ou deux mots-clés pour le type d'extension que vous recherchez, puis ``tabulez`` pour aller à la liste des extensions.
 Les extensions seront répertoriées si le texte de recherche peut être trouvé dans l'ID, le nom, l'éditeur l'auteur ou la description de l'extension.
 
 ++ Actions sur les extensions ++[AddonStoreActions]
