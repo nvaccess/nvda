@@ -1237,6 +1237,10 @@ class UIAHandler(COMObject):
 		try:
 			window = new.cachedNativeWindowHandle
 		except COMError:
+			if _isDebug():
+				log.debugWarning(
+					"Unable to get cachedNativeWindowHandle from found ancestor element", exc_info=True
+				)
 			return None
 		if _isDebug():
 			log.debug(

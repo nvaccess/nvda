@@ -502,7 +502,7 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 	if (
 		# #5504: In Office >= 2013 with the ribbon showing only tabs,
 		# when a tab is expanded, the window we get from the focus object is incorrect.
-		# This window isn't beneath the foreground window,
+		# This window isn't beneath the foreground window.
 		wClass == "NetUIHWND" and fgClassName in ("Net UI Tool Window Layered", "Net UI Tool Window")
 		or (
 			# #14916: The context menu in the Edge download window isn't beneath the foreground window.
