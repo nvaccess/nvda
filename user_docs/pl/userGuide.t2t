@@ -2229,6 +2229,14 @@ To ustawienie zawiera następujące wartości:
 - Zawsze: gdziekolwiek dostępne jest UIA w programie Microsoft word (niezależnie od tego, na ile wsparcie jest stabilne i kompletne).
 -
 
+==== Użyj interfejsu UI Automation dla dostępu do kontrolek arkuszy kalkulacyjnych w programie Microsoft Excel, gdy jest to możliwe ====[UseUiaForExcel]
+Gdy ta opcja jest włączona, NVDA NVDA spróbuje używać Microsoft UI Automation accessibility API w celu dostarczania informacji z kontrolek skoroszytów w programie Microsoft Excel.
+Jest to funkcja eksperymentalna, i niektóre funkcje programu Microsooft Excel mogą być niedostępne.
+Na przykład, niedostępne funkcje to lista elementów NVDA do listowania formuł i komentarzy, i szybka nawigacja w trybie przeglądania do przeskakiwania do pól formularzy w skoroszycie.
+Jednakże, dla podstawowej nawigacji  lub edytowania, ta opcja może wprowadzić dużą poprawę wydajności.
+Nie polecamy większości użytkowników włączenie tej opcji, ale zapraszamy użytkowników programu Microsoft Excel, w wersji 16.0.13522.10000 lub nowszej do testowania tej funkcjonalności i wysyłania informacji zwrotnej.
+Implementacja UIA w programie Microsoft Excel UI automation zmienia się z wersję na wersje, i wersje starsze niż 16.0.13522.10000 mogą nie dostarczać żadnych korzystnych informacji.
+
 ==== Obsługa konsoli systemu Windows ====[AdvancedSettingsConsoleUIA]
 : Domyślne
   Automatyczne
@@ -2247,7 +2255,7 @@ Ta opcja jest zalecana i domyślnie ustawiona.
 Choć ta opcja moze być korzystna (i nawet dostateczna dla użytku), używanie tej opcji podlega pod ryzyko użytkownika a wsparcie dla tej opcji nie będzie okazywane.
 - przestarzałe: UI Automation w konsoli systemu windows będzie kompletnie wyłączone.
 Opcja przestarzałe będzie używana jako zapasowa nawet w sytuacjach w których UI Automation będzie działała lepiej dla użytkownika.
-Więc, wybór tej opcji jest niezalecany chyba żę wiesz, co robisz.
+Więc, wybór tej opcji jest niezalecany, chyba żę wiesz, co robisz.
 -
 
 ==== Użyj UIA z przeglądarką Microsoft Edge i innymi przeglądarkami opartymi na Chromium gdy jest to możliwe ====[ChromiumUIA]
@@ -2280,14 +2288,6 @@ Istnieją następujące opcje:
  - Oczekiwane jest, że ta funkcja będzie działać z Chromium 92.0.4479.0 i nowszymi wersjami.
  -
 -
-
-==== Użyj interfejsu UI Automation dla dostępu do kontrolek arkuszy kalkulacyjnych w programie Microsoft Excel, gdy jest to możliwe ====[UseUiaForExcel]
-Gdy ta opcja jest włączona, NVDA NVDA spróbuje używać Microsoft UI Automation accessibility API w celu dostarczania informacji z kontrolek skoroszytów w programie Microsoft Excel.
-Jest to funkcja eksperymentalna, i niektóre funkcje programu Microsooft Excel mogą być niedostępne.
-Na przykład, niedostępne funkcje to lista elementów NVDA do listowania formuł i komentarzy, i szybka nawigacja w trybie przeglądania do przeskakiwania do pól formularzy w skoroszycie.
-Jednakże, dla podstawowej nawigacji  lub edytowania, ta opcja może wprowadzić dużą poprawę wydajności.
-Nie polecamy większości użytkowników włączenie tej opcji, ale zapraszamy użytkowników programu Microsoft Excel, w wersji 16.0.13522.10000 lub nowszej do testowania tej funkcjonalności i wysyłania informacji zwrotnej.
-Implementacja UIA w programie Microsoft Excel UI automation zmienia się z wersję na wersje, i wersje starsze niż 16.0.13522.10000 mogą nie dostarczać żadnych korzystnych informacji.
 
 ==== Odczytuj żywe regiony ====[BrailleLiveRegions]
 : Domyślnie
@@ -3105,12 +3105,12 @@ Aby odnaleźć opisywane klawisze, zajrzyj do dokumentacji urządzenia:
 | Przywołaj do komórki brajlowskiej | ``routing`` |
 | ``shift+tab`` | ``spacja+punkt1+punkt3`` |
 | ``tab`` | ``spacja+punkt4+punkt6`` |
-| ``alt`` | ``spacja+punkt1+punkt3+punkt4 (spacja+m)`` |
-| ``escape`` | ``spacja+punkt1+punkt5 (spacja+e)`` |
+| ``alt`` | ``spacja+punkt1+punkt3+punkt4`` (``spacja+m``) |
+| ``escape`` | ``spacja+punkt1+punkt5`` (``spacja+e``) |
 | ``windows`` | ``spacja+punkt3+punkt4`` |
-| ``alt+tab`` | ``spacja+punkt2+punkt3+punkt4+punkt5 (spacja+t)`` |
-| Menu NVDA | ``spacja+punkt1+punkt3+punkt4+punkt5 (spacja+n)`` |
-| ``windows+d`` (minimalizuj wszystkie aplikacje) | ``spacja+punkt1+punkt4+punkt5 (spacja+d)`` |
+| ``alt+tab`` | ``spacja+punkt2+punkt3+punkt4+punkt5`` (``spacja+t``) |
+| Menu NVDA | ``spacja+punkt1+punkt3+punkt4+punkt5`` (``spacja+n``) |
+| ``windows+d`` (minimalizowanie wszystkich aplikacji) | ``spacja+punkt1+punkt4+punkt5`` (``spacja+d``) |
 | Czytaj wszystko | ``spacja+punkt1+punkt2+punkt3+punkt4+[punkt5+punkt6`` |
 
 Dla monitorów z joystickiem:

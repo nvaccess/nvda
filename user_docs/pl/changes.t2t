@@ -9,102 +9,147 @@ Informacje techniczne nie zostały przetłumaczone, proszę zajrzeć do [Angiels
 
 
 = 2023.2 =
+This release introduces the Add-on Store to replace the Add-ons Manager.
+In the Add-on Store you can browse, search, install and update community add-ons.
+You can now manually override incompatibility issues with outdated add-ons at your own risk.
 
-== Nowości ==
-- Add-on Store został dodany do NVDA. (#13985)
- - Przeglądaj, wyszukuj, instaluj i aktualizuj dodatki napisane przez społeczność.
- - Ręcznie nadpisuj problemy zgodności z przestarzałymi dodatkami.
- - MenedZer dodatków został zamieniony przez Add-on Store.
- - Po więcej informacji, prosimy zajrzeć do zaktualizowanego podręcznika użytkownika.
- -
-- Dodano wymowę następujących znaków unicode:
-  - znaki brajlowskie takie jak "⠐⠣⠃⠗⠇⠐⠜". (#14548)
-  - Znak klawisza option na komputerach Mac "⌥". (#14682)
+There are new braille features, commands, and display support.
+There are also new input gestures for OCR and flattened object navigation.
+Navigating and reporting formatting in Microsoft Office is improved.
+
+There are many bug fixes, particularly for braille, Microsoft Office, web browsers and Windows 11.
+
+eSpeak-NG, LibLouis braille translator, and Unicode CLDR have been updated.
+
+== New Features ==
+- Add-on Store has been added to NVDA. (#13985)
+  - Browse, search, install and update community add-ons.
+  - Manually override incompatibility issues with outdated add-ons.
+  - The Add-ons Manager has been removed and replaced by the Add-on Store.
+  - For more information please read the updated user guide.
   -
-- Nowe zdarzenia wejścia:
- - Nowe nieprzydzielone zdarzenie do przełączania między dostępnymi językami w Windows Ocr. (#13036)
- - Nieprzydzielone zdarzenie wejście do przełączania między trybami pokazywania wiadomości w brajlu. (#14864)
- - Nieprzydzielone zdarzenie wejścia do przełączania indykatora zaznaczenia w brajlu. (#14948)
- -
-- Dodano zdarzenia wejścia dla monitorów brajlowskich Tivomatic Caiku Albatross. (#14844, #15002)
- - Pokazywanie ustawień brajla
- - odczytywanie paska stanu
- - Przełączanie między kształtami kursora
- - Przełączanie między trybami komunikatów w brajlu
- - Włączanie i wyłączanie kursoru brajlowskiego
- - Włączanie i wyłączanie stanu zaznaczenia
- -
-- Nowa opcja w ustawieniach brajlowskich do włączenia lub wyłączenia stanu zaznaczenia (punkty 7 i 8). (#14948)
-- W przeglądarkach Mozilla Firefox i Google Chrome, NVDA teraz odczytuje gdy naciśnięcie na kontrolkę spowoduje otwarcie dialogu, siatki, listy lub drzewa, jeżeli autor określił takie zachowanie używając parametru aria-haspopup. (#14709)
-- Teraz możliwe jest używanie zmiennych środowiskowych takich jak ``%temp%`` lub ``%homepath%``) w polu edycji do określania ścieżki podczas tworzenia przenośnej kopii NVDA. (#14680)
-- Dodano wsparcie dla ARIA 1.3 atrybutu ``aria-brailleroledescription`` umożliwiającego autorom nadpisywanie typu elementu który jest pokazywany na monitorze brajlowskim. (#14748)
-- Gdy opcja podkreślony tekst jest zaznaczona w opcjach formatowania dokumentu, kolory poświetlające są wymawiane w programie Microsoft word. (#7396, #12101, #5866)
-- Gdy opcja kolory jest włączona w opcjach formatowania dokumentów, kolory tłą sąodczytywane w programie Microsoft Word. (#5866)
-- Podczas naciśnięcia klawisza ``numeryczne 2`` trzy razy do odczytu wartości liczbowej znaku pod kursorem przeglądu, informacja będzie także dostarczana w brajlu. (#14826)
-- NVDA od teraz odtwarza audio za pomocą Windows Audio Session API (WASAPI), Co może ulepszyć responsywność, stabilność i wydajność dźwięków NVDA.
-Można to wyłączyć w ustawieniach zaawansowanych, jeżeli napotkałeś problemy. (#14697)
-- Podczas używania skrótów klawiszowych w Excelu do przełączania formatowani , takich jak pogrubienie, kursywa, podkreślenie i przekreślenie komórki, wynik polecenia jest od teraz wymawiany. (#14923)
-- Dodano wsparcie do monitoru brajlowskiego Help Tech Activator. (#14917)
-- W systemie Windows 10 aktualizacja maj 2019 i nowszych, NVDA potrafi odczytywać nazwy wiertualnych pulpitów podczas otwierania, zmieniania i zamykania. (#5641)
-- Od teraz jest możliwe wyrównanie dźwięków i mowy NVDA.
-Tą opcje można włączyć w ustawieniach zaawansowanych. (#1409)
-- Od teraz możesz oddzielnie kontrolować głośność dźwięków NVDA.
-Można to zrobić, używając miksera głośności Windows. (#1409)
+- New input gestures:
+  - An unbound gesture to cycle through the available languages for Windows OCR. (#13036)
+  - An unbound gesture to cycle through the braille show messages modes. (#14864)
+  - An unbound gesture to toggle showing the selection indicator for braille. (#14948)
+  - Added default keyboard gesture assignments to move to the next or previous object in a flattened view of the object hierarchy. (#15053)
+    - Desktop: ``NVDA+numpad9`` and ``NVDA+numpad3`` to move to the previous and next objects respectively.
+    - Laptop: ``shift+NVDA+[`` and ``shift+NVDA+]`` to move to the previous and next objects respectively.
+    -
+  -
+- New braille features:
+  - Added support for the Help Tech Activator braille display. (#14917)
+  - A new option to toggle showing the selection indicator (dots 7 and 8). (#14948)
+  - A new option to optionally move the system caret or focus when changing the review cursor position with braille routing keys. (#14885, #3166)
+  - When pressing ``numpad2`` three times to report the numerical value of the character at the position of the review cursor, the information is now also provided in braille. (#14826)
+  - Added support for the ``aria-brailleroledescription`` ARIA 1.3 attribute, allowing web authors to override the type of an element shown on the braille display. (#14748)
+  - Baum braille driver: added several braille chord gestures for performing common keyboard commands such as ``windows+d`` and ``alt+tab``.
+  Please refer to the NVDA User Guide for a full list. (#14714)
+  -
+- Added pronunciation of Unicode symbols:
+  - braille symbols such as ``⠐⠣⠃⠗⠇⠐⠜``. (#13778)
+  - Mac Option key symbol ``⌥``. (#14682)
+  -
+- Added gestures for Tivomatic Caiku Albatross braille displays. (#14844, #15002)
+  - showing the braille settings dialog
+  - accessing the status bar
+  - cycling the braille cursor shape
+  - cycling the braille show messages mode
+  - toggling the braille cursor on/off
+  - toggling the "braille show selection indicator" state
+  - cycling the "braille move system caret when routing review cursor" mode. (#15122)
+  -
+- Microsoft Office features:
+  - When highlighted text is enabled Document Formatting, highlight colours are now reported in Microsoft Word. (#7396, #12101, #5866)
+  - When colors are enabled Document Formatting, background colours are now reported in Microsoft Word. (#5866)
+  - When using Excel shortcuts to toggle format such as bold, italic, underline and strike through of a cell in Excel, the result is now reported. (#14923)
+  -
+- Experimental enhanced sound management:
+  - NVDA can now output audio via the Windows Audio Session API (WASAPI), which may improve the responsiveness, performance and stability of NVDA speech and sounds. (#14697)
+  - WASAPI usage can be enabled in Advanced settings.
+  Additionally, if WASAPI is enabled, the following Advanced settings can also be configured.
+    - An option to have the volume of NVDA sounds and beeps follow the volume setting of the voice you are using. (#1409)
+    - An option to separately configure the volume of NVDA sounds. (#1409, #15038)
+    -
+  - There is a known issue with intermittent crashing when WASAPI is enabled. (#15150)
+  -
+- In Mozilla Firefox and Google Chrome, NVDA now reports when a control opens a dialog, grid, list or tree if the author has specified this using ``aria-haspopup``. (#8235)
+- It is now possible to use system variables (such as ``%temp%`` or ``%homepath%``) in the path specification while creating portable copies of NVDA. (#14680)
+- In Windows 10 May 2019 Update and later, NVDA can announce virtual desktop names when opening, changing, and closing them. (#5641)
+- A system wide parameter has been added to allow users and system administrators to force NVDA to start in secure mode. (#10018)
 - 
 
 
-== Zmiany ==
-- zaktualizowano LibLouis braille translator do wersji [3.26.0 https://github.com/liblouis/liblouis/releases/tag/v3.25.0]. (#14719)
-- CLDR został zaktualizowany do wersji 43.0. (#14918)
-- Znaki minus i myślnik będą zawsze wysyłane do syntezatora. (#13830)
-- Zmiany w LibreOffice:
-- Podczas odczytu pozycji kursoru przeglądu, aktualna pozycja kursora systemu/przeglądu odczytywana jest względnie do pozycji aktualnej strony w programie LibreOffice Writer dla wersji LibreOffice >= 7.6, podobnie do zmian wykonanych w programie Microsoft Word. (#11696)
- - Odczyt pasku stanu np. wywołany skrótem ``NVDA+end``) działą w LibreOffice. (#11698)
-- dystans będzie odczytany w programie Microsoft Word za pomocą jednostki określonej w ustawieniach zaawansowanych nawet gdy używany jest interfejs UIA. (#14542)
-- NVDA odzywa się szybciej w polach edycji. (#14708)
-- Sterownik do monitorów brajlowskich Baum: dodano kilka skrótów z spacją do wykonywania ogólnych poleceń z klawiatury takich jak windows+d, alt+tab itd. 
-Dla pełnej listy tych skrótów, prosimy zajrzeć do podręcznika użytkownika. (#14714)
-- Podczas używania monitoru brajlowskiego z  Standartowym sterownikiem do monitorów brajlowskich HID, dpad może być użyty do emulowania strzałek klawisza enter. Kombinacje klawiszy spacja+dot1 i spacja+dot4 zostały przydzielone do klawiszy strzałek w górę i w dół. (#14713)
-- Skrót klawiszowy służący do odczytywania linku docelowego od teraz po naciśnięciu spowoduje odczyt z kursora systemowego, co jest lepsze niż odczyt z obiektu nawigatora. (#14659)
-- Proces tworzenia kopii przenośnej już nie wymaga podania litery dysku jako częśći ścieżki absolutnej. (#14681)
-- Jeżeli Windows jest skonfigurowany do pokazywania sekund w zegarze w zasobniku systemowym, używając ``NVDA+f12`` do odczytu czasu od teraz respektuje to ustawienie. (#14742)
-- NVDA od teraz odczyta nieoznaczone grupowania posiadające korzystne informacje, takie jak w ostatnich wersjach Microsoft office 365. (#14878) 
+== Changes ==
+- Component updates:
+  - eSpeak NG has been updated to 1.52-dev commit ``ed9a7bcf``. (#15036)
+  - Updated LibLouis braille translator to [3.26.0 https://github.com/liblouis/liblouis/releases/tag/v3.26.0]. (#14970)
+  - CLDR has been updated to version 43.0. (#14918)
+  -
+- LibreOffice changes:
+  - When reporting the review cursor location, the current cursor/caret location is now reported relative to the current page in LibreOffice Writer 7.6 and newer, similar to what is done for Microsoft Word. (#11696)
+  - Announcement of the status bar (e.g. triggered by ``NVDA+end``) works for LibreOffice. (#11698)
+  - When moving to a different cell in LibreOffice Calc, NVDA no longer incorrectly announces the coordinates of the previously focused cell when cell coordinate announcement is disabled in NVDA's settings. (#15098)
+  -
+- Braille changes:
+  - When using a braille display via the Standard HID braille driver, the dpad can be used to emulate the arrow keys and enter.
+  Also ``space+dot1`` and ``space+dot4`` now map to up and down arrow respectively. (#14713)
+  - Updates to dynamic web content (ARIA live regions) are now displayed in braille.
+  This can be disabled in the Advanced Settings panel. (#7756)
+  -
+- Dash and em-dash symbols will always be sent to the synthesizer. (#13830)
+- Distance reported in Microsoft Word will now honour the unit defined in Word's advanced options even when using UIA to access Word documents. (#14542)
+- NVDA responds faster when moving the cursor in edit controls. (#14708)
+- Script for reporting the destination of a link now reports from the caret / focus position rather than the navigator object. (#14659)
+- Portable copy creation no longer requires that a drive letter be entered as part of the absolute path. (#14680)
+- If Windows is configured to display seconds in the system tray clock, using ``NVDA+f12`` to report the time now honors that setting. (#14742)
+- NVDA will now report unlabeled groupings that have useful position information, such as in recent versions of Microsoft Office 365 menus. (#14878)
 -
 
 
-== Poprawki błędów ==
-- NVDA już nie przełączy się wiele razy na monitor brajlowski "bez brajla" podczas automatycznego wykrywania, co skutkuje mniejszymi dziennikami i mniejszym obciążeniem. (#14524)
-- NVDA się teraz przełączy z powrotem do portu USB jeżeli urządzenie HID Bluetooth, takie jak HumanWare Brailliant lub APH Mantis jest automatycznie wykrywane i połączenie USB stanie się dostępne.
-W przeszłości to usprawnienie działało dla portów szeregowych Bluetooth. (#14524)
-- Od teraz możliwe jest używanie znaku bekslesz w polu zamiany wpisu słownikowego, gdy typ nie jest ustawiony na wyrażenie regularne. (#14556)
-- W trybie czytania, NVDA już nie będzie ignorowała fokus przemieszczający się z obiektu podrzędnego na nadrzędny np. przemieszczanie się z kontrolki na element nadrzędny lub komórki siatki. (#14611)
-  - Miewajcie na uwadze że ta poprawka jest zastosowana gdy opcja  Automatycznie ustaw kursor systemowy na elementach interaktywnych jest wyłączona co jest stanem domyślnym.
+== Bug Fixes ==
+- Braille:
+  - Several stability fixes to input/output for braille displays, resulting in less frequent errors and crashes of NVDA. (#14627)
+  - NVDA will no longer unnecessarily switch to no braille multiple times during auto detection, resulting in a cleaner log and less overhead. (#14524)
+  - NVDA will now switch back to USB if a HID Bluetooth device (such as the HumanWare Brailliant or APH Mantis) is automatically detected and an USB connection becomes available.
+  This only worked for Bluetooth Serial ports before. (#14524)
+  - When no braille display is connected and the braille viewer is closed by pressing ``alt+f4`` or clicking the close button, the display size of the braille subsystem will again be reset to no cells. (#15214)
   -
-- NVDA już nie skutkuje awarię w przeglądarce Mozilla Firefox lub jej brak odpowiedzi. (#14647)
-- W przeglądarkach Mozilla Firefox i Google Chrome, wpisywane znaki już nie są odczytywane, choć ta opcja jest wyłączona. (#14666)
-- Od teraz możliwe jest używanie trybu czytania w wsadzonych kontrolkach Chromium gdzie to poprzednio nie było możliwe. (#13493, #8553)
-- Dla symboli nie mających opisu w aktualnym języku,, domyślny poziom wymowy będzie używany. (#14558, #14417)
-- Poprawki dla Windows 11:
-  - NVDA ponownie potrafi odczytywać treść paska stanu Notepad. (#14573)
-  - Podczas przełączania się między zakładkami w programach Notepad i eksplorator plików, położenie i nazwa zakładki będą wymawiane. (#14587, #14388)
-  - NVDA znowu potrafi czytać elementy kandydatów podczas wpisywania tekstu w językach chińskim i japońskim. (#14509)
+- Web browsers:
+  - NVDA no longer occasionally causes Mozilla Firefox to crash or stop responding. (#14647)
+  - In Mozilla Firefox and Google Chrome, typed characters are no longer reported in some text boxes even when speak typed characters is disabled. (#8442)
+  - You can now use browse mode in Chromium Embedded Controls where it was not possible previously. (#13493, #8553)
+  - In Mozilla Firefox, moving the mouse over text after a link now reliably reports the text. (#9235)
+  - The destination of graphic links is now reported accurately in more cases in Chrome and Edge. (#14783)
+  - When trying to report the URL for a link without a href attribute NVDA is no longer silent.
+  Instead NVDA reports that the link has no destination. (#14723)
+  - In Browse mode, NVDA will no longer incorrectly ignore focus moving to a parent or child control e.g. moving from a control to its parent list item or gridcell. (#14611)
+    - Note however that this fix only applies when the Automatically set focus to focusable elements" option in Browse Mode settings is turned off (which is the default).
+    -
   -
-- W przeglądarce Mozilla Firefox, przemieszczanie się po tekście po linku od teraz zawodnie wymawia tekst. (#9235)
-- W Kalkulatorze w systemach operacyjnych Windows 10 i 11, kopia przenośna już nie będzie robiła nic, oraz odtwarzała dźwięk błędu podczas wpisywania wyrazu w standartowym kalkulatorze w widoku kompaktowym. (#14679)
-- Podczas próby odczytu adresu linku bez atrybutu href już nie jest cichy.
-Zamiast tego, NVDA poda komunikat o braku lokalizacji docelowej linku. (#14723)
-- Kilka popravek stabilności dla wejścia i wyjścia na monitorach brajlowskich, któe skutkują większą stabilność i mniejsze wysypywanie się NVDA. (#14627)
-- NVDA wznawia swoją pracę w dużo więcej sytuacjach takich jak brak odpowiedzi aplikacji, które powodowały brak odpowiedzi NVDA. (#14759) 
-- Lokalizacja docelowa linków graficznych od teraz jest odczytywana w przeglądarkach Chrome i Edge. (#14779)
-- W systemie operacyjnym Windows 11, jest ponownie możliwe otwarcie listy współtwórców i licencji. (#14725)
-- Podczas wymuszania wsparcia UIA dla większości programów terminalowych i konsolowych, naprawiono błąd, który powodował zawieszanie się NVDA, i przepełnienie dziennika. (#14689)
-- NVDA już potrafi czytać pola haseł w fokusie dla programów Microsoft Excel i Outlook. (#14839)
-- NVDA już nie odrzuci zapisywanie konfiguraqcji po przywracaniu konfiguracji. (#13187)
-- Podczas uruchamiania tymczasowej kopii, program NVDA nie będzie wprowadzał użytkowników w błąd że są w stanie zapisać konfigurację. (#14914)
-- Odczyt skrótów klawiszowych został ulepszony. (#10807)
-- Podczas szybkiego przemieszczania się po komórkach w Excelu, NVDA istnieje bardzo mala szansa że NVDA odczyta błędną komórkę lub zaznaczenie. (#14983, #12200, #12108)
-- NVDA od teraz ogólnie odzywa siętroszeczke szybciej do poleceń i zmian fokusu. (#14928)
--
+- Fixes for Windows 11:
+  - NVDA can once again announce Notepad status bar contents. (#14573)
+  - Switching between tabs will announce the new tab name and position for Notepad and File Explorer. (#14587, #14388)
+  - NVDA will once again announce candidate items when entering text in languages such as Chinese and Japanese. (#14509)
+  - It is once again possible to open the Contributors and License items on the NVDA Help menu. (#14725)
+  -
+- Microsoft Office fixes:
+  - When rapidly moving through cells in Excel, NVDA is now less likely to report the wrong cell or selection. (#14983, #12200, #12108)
+  - When landing on an Excel cell from outside a work sheet, braille and focus highlighter are no longer needlessly updated to the object that had focus previously. (#15136)
+  - NVDA no longer fails to announce focusing password fields in Microsoft Excel and Outlook. (#14839)
+  -
+- For symbols which do not have a symbol description in the current locale, the default English symbol level will be used. (#14558, #14417)
+- It is now possible to use the backslash character in the replacement field of a dictionaries entry, when the type is not set to regular expression. (#14556)
+- In Windows 10 and 11 Calculator, a portable copy of NVDA will no longer do nothing or play error tones when entering expressions in standard calculator in compact overlay mode. (#14679)
+- NVDA again recovers from many more situations such as applications that stop responding which previously caused it to freeze completely. (#14759) 
+- When forcing UIA support with certain terminal and consoles, a bug is fixed which caused a freeze and the log file to be spammed. (#14689)
+- NVDA will no longer refuse to save the configuration after a configuration reset. (#13187)
+- When running a temporary version from the launcher, NVDA will not mislead users into thinking they can save the configuration. (#14914)
+- NVDA now generally responds slightly faster to commands and focus changes. (#14928)
+- Displaying the OCR settings will not fail on some systems anymore. (#15017)
+- Fix bug related to saving and loading the NVDA configuration, including switching synthesizers. (#14760)
+- Fix bug causing text review "flick up" touch gesture to move pages rather than move to previous line. (#15127)
+- 
 
 
 = 2023.1 =
