@@ -35,7 +35,6 @@ class WindowControlIdOffset(IntEnum):
 	TRANSLATOR_NOTES = 80
 	COMMENT = 83
 	TRANSLATION_WARNING = 28
-	TRANSLATION_WINDOW = 34
 
 
 def getObjectWithControlId(parentWindowHandle: int, controlId: int) -> Optional[NVDAObject]:
@@ -180,9 +179,6 @@ class PoeditListItem(NVDAObject):
 		obj = self.appModule._getNVDAObjectForWindowControlIdOffset(WindowControlIdOffset.OLD_SOURCE_TEXT)
 		if obj and not obj.hasIrrelevantLocation:
 			return WindowControlIdOffset.OLD_SOURCE_TEXT
-		obj = self.appModule._getNVDAObjectForWindowControlIdOffset(WindowControlIdOffset.TRANSLATION_WINDOW)
-		if obj and not obj.windowText:
-			return WindowControlIdOffset.TRANSLATION_WINDOW
 		obj = self.appModule._getNVDAObjectForWindowControlIdOffset(WindowControlIdOffset.TRANSLATION_WARNING)
 		if (
 			obj
@@ -194,7 +190,7 @@ class PoeditListItem(NVDAObject):
 
 	def _get_name(self):
 		name = super().name
-		if self._warningControlToReport:
+		if self._warningControlToReport or not self.description:
 			# This translation has a warning.
 			# Prepend an asterix (*) to the name
 			name = f"* {name}"
@@ -203,12 +199,12 @@ class PoeditListItem(NVDAObject):
 
 	def reportFocus(self):
 		super().reportFocus()
-		warning = self._warningControlToReport
-		if not warning:
+		if not self.description:
+			# This item is untranslated
+			tones.beep(440, 50)
 			return
+		warning = self._warningControlToReport
 		if warning is WindowControlIdOffset.OLD_SOURCE_TEXT:
 			tones.beep(550, 50)
-		elif warning is WindowControlIdOffset.TRANSLATION_WINDOW:
-			tones.beep(440, 50)
 		elif warning is WindowControlIdOffset.TRANSLATION_WARNING:
 			tones.beep(660, 50)
