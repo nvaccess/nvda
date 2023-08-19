@@ -1216,7 +1216,7 @@ class UIA(Window):
 			else:
 				clsList.append(winConsoleUIA._DiffBasedWinTerminalUIA)
 
-		elif "SysListView32" in self.windowClassName:
+		elif self.normalizeWindowClassName(self.windowClassName) == "SysListView32":
 			from . import sysListView32
 			sysListView32.findExtraOverlayClasses(self, clsList)
 
