@@ -75,18 +75,20 @@ class TextRangeStruct(ctypes.Structure):
 		('lpstrText',ctypes.c_char_p),
 	]
 
-CFM_LINK=0x20
-CFE_AUTOBACKCOLOR=0x4000000
-CFE_AUTOCOLOR=0x40000000
-CFE_BOLD=1
-CFE_ITALIC=2
-CFE_UNDERLINE=4
-CFE_STRIKEOUT=8
-CFE_PROTECTED=16
-CFE_SUBSCRIPT=0x00010000 # Superscript and subscript are
-CFE_SUPERSCRIPT=0x00020000 #  mutually exclusive
 
-SCF_SELECTION=0x1
+CFM_LINK = 0x20
+CFE_AUTOBACKCOLOR = 0x4000000
+CFE_AUTOCOLOR = 0x40000000
+CFE_BOLD = 1
+CFE_ITALIC = 2
+CFE_UNDERLINE = 4
+CFE_STRIKEOUT = 8
+CFE_PROTECTED = 16
+CFE_SUBSCRIPT = 0x00010000  # Superscript and subscript are
+CFE_SUPERSCRIPT = 0x00020000  # mutually exclusive
+
+SCF_SELECTION = 0x1
+
 
 class CharFormat2WStruct(ctypes.Structure):
 	_fields_=[
@@ -640,7 +642,8 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 			pass
 		if label:
 			return label
-		# Outlook 2003 and Outlook Express write the embedded object text to the display with GDI thus we can use display model
+		# Outlook 2003 and Outlook Express write the embedded object text to the display with GDI
+		# thus we can use display model
 		left,top=embedRangeObj.GetPoint(comInterfaces.tom.tomStart)
 		right,bottom=embedRangeObj.GetPoint(comInterfaces.tom.tomEnd|TA_BOTTOM)
 		# Outlook Express bug: when expanding to the first embedded object on lines after the first, the range's start coordinates are the start coordinates of the previous character (on the line above)
