@@ -1216,6 +1216,10 @@ class UIA(Window):
 			else:
 				clsList.append(winConsoleUIA._DiffBasedWinTerminalUIA)
 
+		elif self.normalizeWindowClassName(self.windowClassName) == "SysListView32":
+			from . import sysListView32
+			sysListView32.findExtraOverlayClasses(self, clsList)
+
 		# Add editableText support if UIA supports a text pattern
 		if self.TextInfo==UIATextInfo:
 			if UIAHandler.autoSelectDetectionAvailable:
