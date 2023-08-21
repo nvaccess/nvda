@@ -1232,11 +1232,14 @@ class UIA(Window):
 		if self.UIAIsWindowElement:
 			super(UIA,self).findOverlayClasses(clsList)
 			if self.UIATextPattern:
-				#Since there is a UIA text pattern, there is no need to use the win32 edit support at all
+				# Since there is a UIA text pattern, there is no need to use the win32 edit support at all.
+				# However, UIA classifies (rich) edit controls with a role of document and doesn't add a multiline state.
+				# Remove any win32 Edit class and insert EditBase to keep backwards compatibility with win32.
 				import NVDAObjects.window.edit
 				for x in list(clsList):
-					if issubclass(x,NVDAObjects.window.edit.Edit):
+					if issubclass(x, NVDAObjects.window.edit.Edit):
 						clsList.remove(x)
+						clsList.insert(0, NVDAObjects.window.edit.EditBase)
 
 	@classmethod
 	def kwargsFromSuper(cls, kwargs, relation=None, ignoreNonNativeElementsWithFocus=True):
