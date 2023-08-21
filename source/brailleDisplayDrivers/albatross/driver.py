@@ -111,6 +111,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self._exitEvent = Event()
 		# Thread for read
 		self._handleRead = None
+		# Display function is called indirectly manually when display is switched
+		# back on or exited from internal menu. Ensuring data integrity.
+		self._displayLock = Lock()
 		# For proper write operations because calls may be from different threads
 		self._writeLock = Lock()
 		# Timer to keep connection (see L{KC_INTERVAL}).
@@ -729,27 +732,30 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		if self._tryToConnect or self._disabledConnection:
 			log.debug("returning, no connection")
 			return
-		writeBytes: List[bytes] = [START_BYTE, ]
-		# Only changed content is sent (cell index and data).
-		for i, cell in enumerate(cells):
-			if cell != self._oldCells[i]:
-				self._oldCells[i] = cell
-				# display indexing starts from 1
-				writeBytes.append((i + 1).to_bytes(1, 'big'))
-				# Bits have to be reversed.
-				writeBytes.append(
-					int(
-						'{:08b}'.format(cell)[::-1], 2
+		# Using lock because called also indirectly manually when display is
+		# switched back on or exited from internal menu.
+		with self._displayLock:
+			writeBytes: List[bytes] = [START_BYTE, ]
+			# Only changed content is sent (cell index and data).
+			for i, cell in enumerate(cells):
+				if cell != self._oldCells[i]:
+					self._oldCells[i] = cell
+					# display indexing starts from 1
+					writeBytes.append((i + 1).to_bytes(1, 'big'))
+					# Bits have to be reversed.
+					writeBytes.append(
+						int(
+							'{:08b}'.format(cell)[::-1], 2
+						)
+						.to_bytes(
+							1, 'big'
+						)
 					)
-					.to_bytes(
-						1, 'big'
-					)
-				)
-		writeBytes.append(END_BYTE)
-		if writeBytes == [START_BYTE, END_BYTE]:  # No updated cell content
-			return
-		self._writeQueue.append(b"".join(writeBytes))
-		log.debug(f"Write: enqueued {b''.join(writeBytes)}")
+			writeBytes.append(END_BYTE)
+			if writeBytes == [START_BYTE, END_BYTE]:  # No updated cell content
+				return
+			self._writeQueue.append(b"".join(writeBytes))
+			log.debug(f"Write: enqueued {b''.join(writeBytes)}")
 		self._somethingToWrite()
 
 	gestureMap = _gestureMap
