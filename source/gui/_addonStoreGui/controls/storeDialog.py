@@ -162,7 +162,7 @@ class AddonStoreDialog(SettingsDialog):
 		self.bindHelpEvent("AddonStoreFilterChannel", self.channelFilterCtrl)
 
 		# Translators: The label of a checkbox to filter the list of add-ons in the add-on store dialog.
-		incompatibleAddonsLabel = _("Include &incompatible add-ons")
+		incompatibleAddonsLabel = pgettext("addonStore", "Include &incompatible add-ons")
 		self.includeIncompatibleCtrl = cast(wx.CheckBox, filterCtrlsLine0.addItem(
 			wx.CheckBox(self, label=incompatibleAddonsLabel)
 		))
