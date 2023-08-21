@@ -93,7 +93,6 @@ badUIAWindowClassNames = (
 	"CommonPlacesWrapperWndClass",
 	"SysMonthCal32",
 	"SUPERGRID",  # Outlook 2010 message list
-	"SysListView32",
 	"Button",
 	# #8944: The Foxit UIA implementation is incomplete and should not be used for now.
 	"FoxitDocWnd",
