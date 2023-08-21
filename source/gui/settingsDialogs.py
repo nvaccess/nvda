@@ -2393,15 +2393,22 @@ class DocumentFormattingPanel(SettingsPanel):
 			self.lineIndentationCombo
 		)
 		self.lineIndentationCombo.SetSelection(config.conf['documentFormatting']['reportLineIndentation'])
+
+		# Translators: This is the label of a checkbox in the document formatting settings panel
+		# If this option is selected, NVDA will ignore blank lines for line indentation reporting
+		ignoreBlankLinesText = _("Ignore &blank lines for line indentation reporting")
+		ignoreBlankLinesCheckBox = wx.CheckBox(pageAndSpaceBox, label=ignoreBlankLinesText)
+		self.ignoreBlankLinesRLICheckbox = pageAndSpaceGroup.addItem(ignoreBlankLinesCheckBox)
+		self.ignoreBlankLinesRLICheckbox.SetValue(config.conf["documentFormatting"]["ignoreBlankLinesForRLI"])
 		
-		# Translators: This message is presented in the document formatting settings panelue
+		# Translators: This message is presented in the document formatting settings panel
 		# If this option is selected, NVDA will report paragraph indentation if available. 
 		paragraphIndentationText = _("&Paragraph indentation")
 		_paragraphIndentationCheckBox = wx.CheckBox(pageAndSpaceBox, label=paragraphIndentationText)
 		self.paragraphIndentationCheckBox = pageAndSpaceGroup.addItem(_paragraphIndentationCheckBox)
 		self.paragraphIndentationCheckBox.SetValue(config.conf["documentFormatting"]["reportParagraphIndentation"])
 
-		# Translators: This message is presented in the document formatting settings panelue
+		# Translators: This message is presented in the document formatting settings panel
 		# If this option is selected, NVDA will report line spacing if available. 
 		lineSpacingText=_("&Line spacing")
 		_lineSpacingCheckBox = wx.CheckBox(pageAndSpaceBox, label=lineSpacingText)
@@ -2545,6 +2552,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		config.conf["documentFormatting"]["reportPage"]=self.pageCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLineNumber"]=self.lineNumberCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLineIndentation"] = self.lineIndentationCombo.GetSelection()
+		config.conf["documentFormatting"]["ignoreBlankLinesForRLI"] = self.ignoreBlankLinesRLICheckbox.IsChecked()
 		config.conf["documentFormatting"]["reportParagraphIndentation"]=self.paragraphIndentationCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLineSpacing"]=self.lineSpacingCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportTables"]=self.tablesCheckBox.IsChecked()
