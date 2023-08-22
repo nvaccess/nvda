@@ -25,8 +25,10 @@ from threading import (
 	Lock,
 )
 from typing import (
+	Iterator,
 	List,
 	Optional,
+	Tuple,
 )
 
 import braille
@@ -201,11 +203,20 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		If no connection, Albatross sends continuously INIT_START_BYTE
 		followed by byte containing various settings like number of cells.
 
-		@return: C{True} on success, C{False} on failure
+		@raises: RuntimeError if port initialization fails
+		@return: C{True} on success, C{False} on connection failure
 		"""
 		for i in range(MAX_INIT_RETRIES):
 			if not self._dev:
-				if not self._initPort(i):
+				try:
+					initState: bool = self._initPort(i)
+				except IOError:
+					# Port initialization failed. No need to try with 9600 bps,
+					# and there is no other port to try.
+					log.debug(f"Port {self._currentPort} not initialized", exc_info=True)
+					raise RuntimeError(f"Port {self._currentPort} cannot be initialized for Albatross")
+				# I/O buffers reset failed, retried again in L{_openPort}
+				if not initState:
 					continue
 			elif not self._dev.is_open:
 				if not self._openPort(i):
@@ -226,38 +237,27 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def _initPort(self, i: int = MAX_INIT_RETRIES - 1) -> bool:
 		"""Initializes port.
 		@param i: Just for logging retries.
-		@return: C{True} on success, C{False} on failure
+		@raises: IOError if port initialization fails
+		@return: C{True} on success, C{False} on I/O buffers reset failure
 		"""
-		try:
-			self._dev = serial.Serial(
-				self._currentPort,
-				baudrate=self._baudRate,
-				stopbits=serial.STOPBITS_ONE,
-				parity=serial.PARITY_NONE,
-				timeout=READ_TIMEOUT,
-				writeTimeout=WRITE_TIMEOUT
-			)
-			log.debug(f"Port {self._currentPort} initialized")
-			if not self._resetBuffers():
-				if i == MAX_INIT_RETRIES - 1:
-					return False
-				log(
-					f"sleeping {SLEEP_TIMEOUT} seconds before try {i + 2} / {MAX_INIT_RETRIES}"
-				)
-				time.sleep(SLEEP_TIMEOUT)
-				return False
-			return True
-		except IOError:
+		self._dev = serial.Serial(
+			self._currentPort,
+			baudrate=self._baudRate,
+			stopbits=serial.STOPBITS_ONE,
+			parity=serial.PARITY_NONE,
+			timeout=READ_TIMEOUT,
+			writeTimeout=WRITE_TIMEOUT
+		)
+		log.debug(f"Port {self._currentPort} initialized")
+		if not self._resetBuffers():
 			if i == MAX_INIT_RETRIES - 1:
-				log.debug(f"Port {self._currentPort} not initialized", exc_info=True)
 				return False
-			log.debug(
-				f"Port {self._currentPort} not initialized, sleeping {SLEEP_TIMEOUT} seconds "
-				f"before try {i + 2} / {MAX_INIT_RETRIES}",
-				exc_info=True
+			log(
+				f"sleeping {SLEEP_TIMEOUT} seconds before try {i + 2} / {MAX_INIT_RETRIES}"
 			)
 			time.sleep(SLEEP_TIMEOUT)
 			return False
+		return True
 
 	def _openPort(self, i: int = MAX_INIT_RETRIES - 1) -> bool:
 		"""Opens port.
