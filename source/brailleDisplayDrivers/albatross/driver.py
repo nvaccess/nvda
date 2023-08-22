@@ -90,9 +90,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self._keyLayout: int
 		# Keep old display data, only changed content is sent.
 		self._oldCells: List[int] = []
-		# After reconnection and when user exits from device menu, display may not
-		# update automatically. Keep current cell content for this.
-		self._currentCells: List[int] = []
 		# Set to True when filtering redundant init packets when init byte
 		# received but not yet settings byte.
 		self._initByteReceived = False
@@ -114,14 +111,14 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self._exitEvent = Event()
 		# Thread for read
 		self._handleRead = None
-		# Display function is called manually when display is switched back on
-		# or exited from internal menu. Ensuring data integrity.
+		# Display function is called indirectly manually when display is switched
+		# back on or exited from internal menu. Ensuring data integrity.
 		self._displayLock = Lock()
 		# For proper write operations because calls may be from different threads
 		self._writeLock = Lock()
-		# Timer to keep connection (see KC_INTERVAL).
+		# Timer to keep connection (see L{KC_INTERVAL}).
 		self._kc = None
-		# When previous write was done (see KC_INTERVAL).
+		# When previous write was done (see L{KC_INTERVAL}).
 		self._writeTime = 0.0
 		self._searchPorts(port)
 
@@ -565,18 +562,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				return
 		self._handleSettingsByte(data)
 		# Reconnected or exited device menu if length of _oldCells is numCells.
-		# Also checking that _currentCells has sometimes updated.
-		# Show last known content.
-		if (
-			len(self._oldCells) == self.numCells
-			and len(self._oldCells) == len(self._currentCells)
-		):
+		if len(self._oldCells) == self.numCells:
+			# Ensure display is updated after reconnection and exit from internal menu.
 			self._clearOldCells()
-			self.display(self._currentCells)
-			if not self._tryToConnect:
-				log.debug(
-					"Updated display content after reconnection or display menu exit"
-				)
+			braille.handler._displayWithCursor()
+			log.debug(
+				"Updated display content after reconnection or display menu exit"
+			)
 		if self._waitingSettingsByte:
 			self._waitingSettingsByte = False
 
@@ -736,16 +728,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		"""Prepare cell content for display.
 		@param cells: List of cells content
 		"""
-		# Using lock because called also manually when display is switched back on
-		# or exited from internal menu.
+		# No connection
+		if self._tryToConnect or self._disabledConnection:
+			log.debug("returning, no connection")
+			return
+		# Using lock because called also indirectly manually when display is
+		# switched back on or exited from internal menu.
 		with self._displayLock:
-			# Keep _currentCells up to date for reconnection regardless
-			# of connection state of driver.
-			self._currentCells = cells.copy()
-			# No connection
-			if self._tryToConnect or self._disabledConnection:
-				log.debug("returning, no connection")
-				return
 			writeBytes: List[bytes] = [START_BYTE, ]
 			# Only changed content is sent (cell index and data).
 			for i, cell in enumerate(cells):
