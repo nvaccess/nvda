@@ -19,10 +19,16 @@ What's New in NVDA
 -
 
 == Changes ==
+- Rich edit controls in applications such as Wordpad now use UI Automation (UIA) when the application advertises native support for this. (#15314)
+-
 
 
 == Bug Fixes ==
-
+- Fix crash in Microsoft Word when Document formatting options "report headings" and "report comments and notes" were not enabled. (#15019)
+- NVDA will no longer jump back to the last browse mode position when opening the context menu in Microsoft Edge. (#15309)
+- Fixed support for System List view (``SysListView32``) controls in Windows Forms applications. (#15283)
+- NVDA will no longer be sluggish in rich edit controls when braille is enabled, such as in MemPad. (#14285)
+-
 
 == Changes for Developers ==
 Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] for information on NVDA's API deprecation and removal process.

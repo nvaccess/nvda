@@ -11,6 +11,7 @@ as well as the associated TextInfo class."""
 import time
 import typing
 from typing import (
+	Dict,
 	Optional,
 )
 import weakref
@@ -283,7 +284,7 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		"""
 		raise NotImplementedError
 
-	def findOverlayClasses(self, clsList: typing.List["NVDAObject"]) -> None:
+	def findOverlayClasses(self, clsList: typing.List[typing.Type["NVDAObject"]]) -> None:
 		"""
 		Chooses overlay classes which should be added to this object's class structure,
 		after the object has been initially instantiated.
@@ -1044,10 +1045,12 @@ Tries to force this object to take the focus.
 		"""
 		return None
 
-	def _get_positionInfo(self):
+	#: Type definition for auto prop '_get_positionInfo'
+	positionInfo: Dict[str, int]
+
+	def _get_positionInfo(self) -> Dict[str, int]:
 		"""Retrieves position information for this object such as its level, its index with in a group, and the number of items in that group.
 		@return: a dictionary containing any of level, groupIndex and similarItemsInGroup.
-		@rtype: dict
 		"""
 		return {}
 
@@ -1074,10 +1077,12 @@ Tries to force this object to take the focus.
 			self.isProtected=isProtected
 		return isProtected
 
-	def _get_indexInParent(self):
+	#: Type definition for auto prop '_get_indexInParent'
+	indexInParent: Optional[int]
+
+	def _get_indexInParent(self) -> Optional[int]:
 		"""The index of this object in its parent object.
 		@return: The 0 based index, C{None} if there is no parent.
-		@rtype: int
 		@raise NotImplementedError: If not supported by the underlying object.
 		"""
 		raise NotImplementedError
