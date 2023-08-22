@@ -1198,7 +1198,7 @@ class UIAHandler(COMObject):
 			return windowHandle
 		if _isDebug():
 			log.debug(
-				" locating nearest ancestor windowHandle "
+				"Locating nearest ancestor windowHandle "
 				f"for element {self.getUIAElementDebugString(UIAElement)}"
 			)
 		try:
@@ -1232,7 +1232,11 @@ class UIAHandler(COMObject):
 		try:
 			window = new.cachedNativeWindowHandle
 		except COMError:
-			window = None
+			if _isDebug():
+				log.debugWarning(
+					"Unable to get cachedNativeWindowHandle from found ancestor element", exc_info=True
+				)
+			return None
 		if _isDebug():
 			log.debug(
 				"Found ancestor element "
