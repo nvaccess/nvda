@@ -2586,7 +2586,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			return
 		region = self.mainBuffer.regions[-1] if self.mainBuffer.regions else None
 		if region and region.obj == reviewPos.obj:
-			region.pendingCaretUpdate=True
+			region.pendingCaretUpdate = True
 			self._regionsPendingUpdate.add(region)
 		else:
 			# We're reviewing a different object.
