@@ -62,6 +62,8 @@ import brailleViewer
 from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
 import hwIo
+from buildVersion import version_year
+import NVDAState
 
 if TYPE_CHECKING:
 	from NVDAObjects import NVDAObject
@@ -2016,6 +2018,11 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	queuedWrite: Optional[List[int]] = None
 	queuedWriteLock: threading.Lock
 	ackTimerHandle: int
+	_regionsPendingUpdate: Set[Region]
+	"""
+	Regions pending an update.
+	Regions are added by L{handleUpdate} and L{handleCaretMove} and cleared in L{_handlePendingUpdate}.
+	"""
 
 	def __init__(self):
 		louisHelper.initialize()
@@ -2034,6 +2041,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		with its previous output.
 		If L{decide_enabled} decides to disable the handler, pending output should be cleared.
 		"""
+		self._regionsPendingUpdate = set()
 
 
 		self.mainBuffer = BrailleBuffer(self)
@@ -2477,29 +2485,46 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		region = self.mainBuffer.regions[-1] if self.mainBuffer.regions else None
 		if region and region.obj==obj:
 			region.pendingCaretUpdate=True
+			self._regionsPendingUpdate.add(region)
 		elif prevTether == TetherTo.REVIEW.value:
 			# The caret moved in a different object than the review position.
 			self._doNewObject(getFocusRegions(obj, review=False))
 
-	def handlePendingCaretUpdate(self):
-		"""Checks to see if the final text region needs its caret updated and if so calls _doCursorMove for the region."""
-		region=self.mainBuffer.regions[-1] if self.mainBuffer.regions else None
-		if isinstance(region,TextInfoRegion) and region.pendingCaretUpdate:
-			try:
-				self._doCursorMove(region)
-			finally:
-				region.pendingCaretUpdate=False
+	if version_year < 2024 and NVDAState._allowDeprecatedAPI():
+		def handlePendingCaretUpdate(self):
+			log.warning(
+				"braille.BrailleHandler.handlePendingCaretUpdate is now deprecated "
+				"with no public replacement. "
+				"It will be removed in NVDA 2024.1."
+			)
+			self._handlePendingUpdate()
 
-	def _doCursorMove(self, region):
-		self.mainBuffer.saveWindow()
-		region.update()
-		self.mainBuffer.update()
-		self.mainBuffer.restoreWindow()
-		self.scrollToCursorOrSelection(region)
-		if self.buffer is self.mainBuffer:
-			self.update()
-		elif self.buffer is self.messageBuffer and keyboardHandler.keyCounter>self._keyCountForLastMessage:
-			self._dismissMessage()
+	def _handlePendingUpdate(self):
+		"""When any region is pending an update, updates the region and the braille display.
+		"""
+		if not self._regionsPendingUpdate:
+			return
+		try:
+			scrollTo: Optional[TextInfoRegion] = None
+			self.mainBuffer.saveWindow()
+			for region in self._regionsPendingUpdate:
+				region.update()
+				if isinstance(region, TextInfoRegion) and region.pendingCaretUpdate:
+					scrollTo = region
+					region.pendingCaretUpdate = False
+			self.mainBuffer.update()
+			self.mainBuffer.restoreWindow()
+			if scrollTo is not None:
+				self.scrollToCursorOrSelection(scrollTo)
+			if self.buffer is self.mainBuffer:
+				self.update()
+			elif (
+				self.buffer is self.messageBuffer
+				and keyboardHandler.keyCounter > self._keyCountForLastMessage
+			):
+				self._dismissMessage()
+		finally:
+			self._regionsPendingUpdate.clear()
 
 	def scrollToCursorOrSelection(self, region):
 		if region.brailleCursorPos is not None:
@@ -2553,14 +2578,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			if isinstance(obj, NVDAObject) and obj.role == controlTypes.Role.PROGRESSBAR and obj.isInForeground:
 				self._handleProgressBarUpdate(obj)
 			return
-		self.mainBuffer.saveWindow()
-		region.update()
-		self.mainBuffer.update()
-		self.mainBuffer.restoreWindow()
-		if self.buffer is self.mainBuffer:
-			self.update()
-		elif self.buffer is self.messageBuffer and keyboardHandler.keyCounter>self._keyCountForLastMessage:
-			self._dismissMessage()
+		self._regionsPendingUpdate.add(region)
 
 	def handleReviewMove(self, shouldAutoTether=True):
 		if not self.enabled:
@@ -2572,7 +2590,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			return
 		region = self.mainBuffer.regions[-1] if self.mainBuffer.regions else None
 		if region and region.obj == reviewPos.obj:
-			self._doCursorMove(region)
+			self._regionsPendingUpdate.add(region)
 		else:
 			# We're reviewing a different object.
 			self._doNewObject(getFocusRegions(reviewPos.obj, review=True))
@@ -2725,10 +2743,8 @@ def initialize():
 	handler.setDisplayByName(config.conf["braille"]["display"])
 
 def pumpAll():
-	"""Runs tasks at the end of each core cycle."""
-	if len(handler.handleUpdateQueue):
-		handler.handleUpdate(handler.handleUpdateQueue.popleft())
-	handler.handlePendingCaretUpdate()
+	"""Runs tasks at the end of each core cycle. For now just region updates, e.g. for caret movement."""
+	handler._handlePendingUpdate()
 
 def terminate():
 	global handler

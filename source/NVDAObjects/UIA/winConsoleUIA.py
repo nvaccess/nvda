@@ -482,6 +482,7 @@ class _NotificationsBasedWinTerminalUIA(UIA):
 		for line in displayString.splitlines():
 			if line and not line.isspace():  # Don't say "blank" during autoread
 				speech.speakText(line)
+		braille.handler.handleUpdate(self)
 
 
 def __getattr__(attrName: str) -> Any:

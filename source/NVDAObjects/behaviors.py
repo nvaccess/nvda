@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -412,6 +411,7 @@ class LiveText(NVDAObject):
 		"""
 		for line in lines:
 			self._reportNewText(line)
+		braille.handler.handleUpdate(self)
 
 	def _reportNewText(self, line):
 		"""Report a line of new text.
@@ -482,7 +482,7 @@ class Terminal(LiveText, EditableText):
 		"""
 		super().event_textChange()
 		# Enqueue object to update braille
-		braille.handler.handleUpdateQueue.append(self)
+		braille.handler.handleUpdate(self)
 
 
 class EnhancedTermTypedCharSupport(Terminal):
