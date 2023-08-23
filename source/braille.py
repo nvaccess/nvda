@@ -53,7 +53,6 @@ import brailleTables
 import re
 import scriptHandler
 import collections
-from collections import deque
 import extensionPoints
 import hwPortUtils
 import bdDetect
@@ -2052,9 +2051,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._cursorPos = None
 		self._cursorBlinkUp = True
 		self._cells = []
-		# Queue of objects to use in L{handleUpdate}. Length 1 keeps
-		# recent object and discards others.
-		self.handleUpdateQueue = deque(maxlen=1)
 		self._cursorBlinkTimer = None
 		config.post_configProfileSwitch.register(self.handlePostConfigProfileSwitch)
 		if config.conf["braille"]["tetherTo"] == TetherTo.AUTO.value:
