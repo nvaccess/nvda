@@ -411,7 +411,6 @@ class LiveText(NVDAObject):
 		"""
 		for line in lines:
 			self._reportNewText(line)
-		braille.handler.handleUpdate(self)
 
 	def _reportNewText(self, line):
 		"""Report a line of new text.
@@ -481,7 +480,6 @@ class Terminal(LiveText, EditableText):
 		@note: Updates also braille.
 		"""
 		super().event_textChange()
-		# Enqueue object to update braille
 		braille.handler.handleUpdate(self)
 
 

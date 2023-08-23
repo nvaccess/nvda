@@ -472,7 +472,6 @@ class _NotificationsBasedWinTerminalUIA(UIA):
 		# Do not announce output from background terminals.
 		if self.appModule != api.getFocusObject().appModule:
 			return
-		# Enqueue object to update braille
 		braille.handler.handleUpdate.append(self)
 		# microsoft/terminal#12358: Automatic reading of terminal output
 		# is provided by UIA notifications. If the user does not want
@@ -482,7 +481,6 @@ class _NotificationsBasedWinTerminalUIA(UIA):
 		for line in displayString.splitlines():
 			if line and not line.isspace():  # Don't say "blank" during autoread
 				speech.speakText(line)
-		braille.handler.handleUpdate(self)
 
 
 def __getattr__(attrName: str) -> Any:
