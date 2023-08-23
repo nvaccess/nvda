@@ -473,7 +473,7 @@ class _NotificationsBasedWinTerminalUIA(UIA):
 		if self.appModule != api.getFocusObject().appModule:
 			return
 		# Enqueue object to update braille
-		braille.handler.handleUpdateQueue.append(self)
+		braille.handler.handleUpdate.append(self)
 		# microsoft/terminal#12358: Automatic reading of terminal output
 		# is provided by UIA notifications. If the user does not want
 		# automatic reporting of dynamic output, suppress this notification.
