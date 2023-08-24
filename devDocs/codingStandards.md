@@ -18,8 +18,8 @@ for more information.
       This is particularly relevant for braille display drivers.
       This is due to a `gettext` bug; see
       https://github.com/nvaccess/nvda/issues/2592#issuecomment-155299911.
-* Most files should contain `CRLF` line endings, as this is a Windows project and can't be used on
-  Unix-like operating systems.
+* Most files should be committed with `LF` line endings.
+Files can be checked out locally using CRLF if needed for Windows development using [git](https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration#_core_autocrlf).
 
 ### Indentation
 * Indentation must be done with tabs (one per level), not spaces.
