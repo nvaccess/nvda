@@ -349,7 +349,7 @@ However, if you wish to copy NVDA onto read-only media such as a CD, you should 
 Running the portable version directly from read-only media is not supported at this time.
 
 The [NVDA installer #StepsForRunningTheDownloadLauncher] can be used as a temporary copy of NVDA.
-Temporary copies prevent saving NVDA configuration such as settings or input gestures.
+Temporary copies prevent saving NVDA settings.
 This includes disabling usage of the [Add-on Store #AddonsManager].
 
 Portable and temporary copies of NVDA have the following restrictions:
@@ -597,7 +597,7 @@ You can then move past the list if you wish to access other objects.
 Similarly, a toolbar contains controls, so you must move inside the toolbar to access the controls in the toolbar.
 
 If you yet prefer to move back and forth between every single object on the system, you can use commands to move to the previous/next object in a flattened view.
-For example, if you move to the next object in this flattened view and the current object contains other objects, NVDA will automatically move to the first object that contains it.
+For example, if you move to the next object in this flattened view and the current object contains other objects, NVDA will automatically move to the first object that it contains.
 Alternatively, if the current object doesn't contain any objects, NVDA will move to the next object at the current level of the hierarchy.
 If there is no such next object, NVDA will try to find the next object in the hierarchy based on containing objects until there are no more objects to move to.
 The same rules apply to moving backwards in the hierarchy.
@@ -2236,6 +2236,14 @@ This setting contains the following values:
 - Always: where ever UI automation is available in Microsoft word (no matter how complete).
 -
 
+==== Use UI automation to access Microsoft Excel spreadsheet controls when available ====[UseUiaForExcel]
+When this option is enabled, NVDA will try to use the Microsoft UI Automation accessibility API in order to fetch information from Microsoft Excel Spreadsheet controls.
+This is an experimental feature, and some features of Microsoft Excel may not be available in this mode.
+For instance, NVDA's Elements List for listing formulas and comments, and Browse mode quick navigation to jump to form fields on a spreadsheet features are not available.
+However, for basic spreadsheet navigating / editing, this option may provide a vast performance improvement.
+We still do not recommend that the majority of users turn this on by default, though we do welcome users of Microsoft Excel build 16.0.13522.10000 or higher to test this feature and provide feedback.
+Microsoft Excel's UI automation implementation is ever changing, and versions of Microsoft Office older than 16.0.13522.10000 may not expose enough information for this option to be of any use.
+
 ==== Windows Console support ====[AdvancedSettingsConsoleUIA]
 : Default
   Automatic
@@ -2287,14 +2295,6 @@ The following options exist:
   - Expected to work with Chromium 92.0.4479.0+
   -
 -
-
-==== Use UI automation to access Microsoft  Excel spreadsheet controls when available ====[UseUiaForExcel]
-When this option is enabled, NVDA will try to use the Microsoft UI Automation accessibility API in order to fetch information from Microsoft Excel Spreadsheet controls.
-This is an experimental feature, and some features of Microsoft Excel may not be available in this mode.
-For instance, NVDA's Elements List for listing formulas and comments, and Browse mode quick navigation to jump to form fields on a spreadsheet features are not available.
-However, for basic spreadsheet navigating / editing, this option may provide a vast performance improvement.
-We still do not recommend that  the majority of users turn this on by default, though we do welcome users of Microsoft Excel  build 16.0.13522.10000 or higher to test this feature and provide feedback.
-Microsoft Excel's UI automation implementation is ever changing, and  versions of Microsoft Office older than 16.0.13522.10000 may not expose enough information for this option to be of any use.
 
 ==== Report live regions ====[BrailleLiveRegions]
 : Default
@@ -2682,7 +2682,7 @@ To list add-ons only for specific channels, change the "Channel" filter selectio
 +++ Searching for add-ons +++[AddonStoreFilterSearch]
 To search add-ons, use the "Search" text box.
 You can reach it by pressing ``shift+tab`` from the list of add-ons.
-Type a keyword or two for the kind of add-on you're looking for, then ``tab`` back to the list of add-ons.
+Type a keyword or two for the kind of add-on you're looking for, then ``tab`` to the list of add-ons.
 Add-ons will be listed if the search text can be found in the add-on ID, display name, publisher, author or description.
 
 ++ Add-on actions ++[AddonStoreActions]
@@ -2691,7 +2691,7 @@ For an add-on in the add-on list, these actions can be accessed through a menu o
 This menu can also be accessed through an Actions button in the selected add-on's details.
 
 +++ Installing add-ons +++[AddonStoreInstalling]
-Just because an add-on is available in the NVDA Add-ons Store, does not mean that it has been approved or vetted by NV Access or anyone else.
+Just because an add-on is available in the NVDA Add-on Store, does not mean that it has been approved or vetted by NV Access or anyone else.
 It is very important to only install add-ons from sources you trust.
 The functionality of add-ons is unrestricted inside NVDA. 
 This could include accessing your personal data or even the entire system.
@@ -3112,12 +3112,12 @@ Please see your display's documentation for descriptions of where these keys can
 | Route to braille cell | ``routing`` |
 | ``shift+tab`` key | ``space+dot1+dot3`` |
 | ``tab`` key | ``space+dot4+dot6`` |
-| ``alt`` key | ``space+dot1+dot3+dot4 (space+m)`` |
-| ``escape`` key | ``space+dot1+dot5 (space+e)`` |
+| ``alt`` key | ``space+dot1+dot3+dot4`` (``space+m``) |
+| ``escape`` key | ``space+dot1+dot5`` (``space+e``) |
 | ``windows`` key | ``space+dot3+dot4`` |
-| ``alt+tab`` key | ``space+dot2+dot3+dot4+dot5 (space+t)`` |
-| NVDA Menu | ``space+dot1+dot3+dot4+dot5 (space+n)`` |
-| ``windows+d`` key (minimize all applications) | ``space+dot1+dot4+dot5 (space+d)`` |
+| ``alt+tab`` key | ``space+dot2+dot3+dot4+dot5`` (``space+t``) |
+| NVDA Menu | ``space+dot1+dot3+dot4+dot5`` (``space+n``) |
+| ``windows+d`` key (minimize all applications) | ``space+dot1+dot4+dot5`` (``space+d``) |
 | Say all | ``space+dot1+dot2+dot3+dot4+dot5+dot6`` |
 
 For displays which have a joystick:

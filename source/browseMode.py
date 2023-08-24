@@ -583,6 +583,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	def script_passThrough(self,gesture):
 		if not config.conf["virtualBuffers"]["autoFocusFocusableElements"]:
 			self._focusLastFocusableObject()
+			api.processPendingEvents(processEventQueue=True)
 		gesture.send()
 	# Translators: the description for the passThrough script on browseMode documents.
 	script_passThrough.__doc__ = _("Passes gesture through to the application")
@@ -1688,7 +1689,8 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				self._replayFocusEnteredEvents()
 				nextHandler()
 			focusInfo.collapse()
-			self._set_selection(focusInfo, reason=OutputReason.FOCUS)
+			if self._focusEventMustUpdateCaretPosition:
+				self._set_selection(focusInfo, reason=OutputReason.FOCUS)
 		else:
 			# The virtual caret was already at the focused node.
 			if not self.passThrough:

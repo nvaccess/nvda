@@ -134,7 +134,7 @@ class _DataManager:
 			"cachedLanguage": self._lang,
 			"nvdaAPIVersion": addonAPIVersion.CURRENT,
 		}
-		with open(self._cacheCompatibleFile, 'w') as cacheFile:
+		with open(self._cacheCompatibleFile, 'w', encoding='utf-8') as cacheFile:
 			json.dump(cacheData, cacheFile, ensure_ascii=False)
 
 	def _cacheLatestAddons(self, addonData: str, cacheHash: str):
@@ -148,14 +148,14 @@ class _DataManager:
 			"cachedLanguage": self._lang,
 			"nvdaAPIVersion": _LATEST_API_VER,
 		}
-		with open(self._cacheLatestFile, 'w') as cacheFile:
+		with open(self._cacheLatestFile, 'w', encoding='utf-8') as cacheFile:
 			json.dump(cacheData, cacheFile, ensure_ascii=False)
 
 	def _getCachedAddonData(self, cacheFilePath: str) -> Optional[CachedAddonsModel]:
 		if not os.path.exists(cacheFilePath):
 			return None
 		try:
-			with open(cacheFilePath, 'r') as cacheFile:
+			with open(cacheFilePath, 'r', encoding='utf-8') as cacheFile:
 				cacheData = json.load(cacheFile)
 		except Exception:
 			log.exception(f"Invalid add-on store cache")
@@ -270,15 +270,19 @@ class _DataManager:
 		if not addonData:
 			return
 		addonCachePath = os.path.join(self._installedAddonDataCacheDir, f"{addonData.addonId}.json")
-		with open(addonCachePath, 'w') as cacheFile:
+		with open(addonCachePath, 'w', encoding='utf-8') as cacheFile:
 			json.dump(addonData.asdict(), cacheFile, ensure_ascii=False)
 
 	def _getCachedInstalledAddonData(self, addonId: str) -> Optional[InstalledAddonStoreModel]:
 		addonCachePath = os.path.join(self._installedAddonDataCacheDir, f"{addonId}.json")
 		if not os.path.exists(addonCachePath):
 			return None
-		with open(addonCachePath, 'r') as cacheFile:
-			cacheData = json.load(cacheFile)
+		try:
+			with open(addonCachePath, 'r', encoding='utf-8') as cacheFile:
+				cacheData = json.load(cacheFile)
+		except Exception:
+			log.exception("Invalid cached installed add-on data")
+			return None
 		if not cacheData:
 			return None
 		return _createInstalledStoreModelFromData(cacheData)

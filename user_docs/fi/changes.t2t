@@ -5,6 +5,17 @@
 %!includeconf: ./locale.t2tconf
 
 = 2023.2 =
+Tässä versiossa esitellään lisäosakauppa, joka korvaa lisäosien hallinnan.
+Lisäosakaupassa on mahdollista selata, etsiä, asentaa ja päivittää yhteisön lisäosia.
+Vanhentuneiden lisäosien yhteensopivuusongelmat voidaan nyt ohittaa omalla vastuulla.
+
+Lisätty pistekirjoitusominaisuuksia ja -komentoja sekä tuki uusille näytöille.
+Lisäksi uusia näppäinkomentoja tekstintunnistukselle sekä tasatulle objektinavigoinnille.
+Liikkumista ja muotoilun ilmoittamista on paranneltu Microsoft Officessa.
+
+Useita erityisesti pistekirjoitukseen, Microsoft Officeen, verkkoselaimiin ja Windows 11:een liittyviä bugikorjauksia.
+
+eSpeak-NG, LibLouis-pistekirjoituskääntäjä ja Unicode-CLDR on päivitetty.
 
 == Uudet ominaisuudet ==
 - NVDA:han on lisätty lisäosakauppa. (#13985)
@@ -13,14 +24,27 @@
   - Lisäosien hallinta on poistettu ja korvattu lisäosakaupalla.
   - Katso lisätietoja päivitetystä käyttöoppaasta.
   -
-- Lisätty Unicode-symbolien lausuminen:
-  - Pistekirjoitussymbolit kuten "⠐⠣⠃⠗⠇⠐⠜". (#14548)
-  - Macin Option-näppäimen symboli "⌥". (#14682)
-  -
 - Uusia komentoja:
   - Komento Windowsin tekstintunnistuksen kielen vaihtamiseen. Oletusarvoista näppäinkomentoa ei ole määritetty. (#13036)
   - Komento Näytä ilmoitukset pistenäytöllä -asetuksen muuttamiseen. Oletusarvoista näppäinkomentoa ei ole määritetty. (#14864)
-  - Komento, joka ottaa käyttöön tai poistaa käytöstä valinnan näyttämisen pistenäytöllä. Oletusarvoista näppäinkomentoa ei ole määritetty. (#14948)
+  - Komento, joka ottaa käyttöön tai poistaa käytöstä valinnanilmaisimen näyttämisen pistenäytöllä. Oletusarvoista näppäinkomentoa ei ole määritetty. (#14948)
+  - Lisätty oletusarvoiset näppäinkomentomääritykset seuraavaan ja edelliseen objektiin siirtymiseen objektihierarkian tasatussa näkymässä. (#15053)
+    - Pöytäkone: ``NVDA+Laskinnäppäimistön 9`` ja ``NVDA+Laskinnäppäimistön 3`` siirtävät edelliseen ja seuraavaan objektiin.
+    - Kannettava: ``Vaihto+NVDA+[`` ja ``Vaihto+NVDA+]`` siirtävät edelliseen ja seuraavaan objektiin.
+    -
+  -
+- Uusia pistekirjoitusominaisuuksia:
+  - Lisätty tuki Help Techin Activator-pistenäytölle. (#14917)
+  - Uusi asetus, jolla voidaan ottaa käyttöön tai poistaa käytöstä valinnanilmaisimen (pisteet 7 ja 8) näyttäminen. (#14948)
+  - Uusi asetus, joka siirtää valinnaisesti järjestelmäkohdistinta tai kohdistusta, kun tarkastelukohdistimen paikkaa vaihdetaan pistenäytön kosketuskohdistinnäppäimillä. (#14885, #3166)
+  - Kun tarkastelukohdistimen kohdalla olevan merkin numeerinen arvo puhutetaan painamalla kolmesti ``Laskinnäppäimistön 2``, arvo näytetään nyt myös pistenäytöllä. (#14826)
+  - Lisätty tuki ARIA 1.3:n ``aria-brailleroledescription``-attribuutille, jonka avulla verkkosivujen tekijät voivat ohittaa pistenäytöllä näytettävän elementin tyypin. (#14748)
+  - Lisätty Baum-pistenäyttöjen ajuriin useita moniosaisia näppäinkomentoja yleisten näppäinkomentojen, kuten ``Win+D`` ja ``Alt+Sarkain``, suorittamista varten.
+  Katso kaikki komennot NVDA:n käyttöoppaasta. (#14714)
+  -
+- Lisätty Unicode-symbolien lausuminen:
+  - Pistekirjoitussymbolit, kuten ``⠐⠣⠃⠗⠇⠐⠜``. (#13778)
+  - Macin Option-näppäimen symboli ``⌥``. (#14682)
   -
 - Lisätty näppäinkomentoja Tivomaticin Caiku Albatross -pistenäytöille. (#14844, #15002)
   - Pistekirjoitusasetusten valintaikkunan näyttäminen
@@ -28,80 +52,100 @@
   - Pistekohdistimen muodon vaihtaminen
   - Näytä ilmoitukset pistenäytöllä -asetuksen tilan vaihtaminen
   - Pistekohdistimen käyttöönotto/käytöstä poistaminen
-  - Valinnan pistenäytöllä näyttävän asetuksen käyttöönotto tai käytöstä poistaminen
+  - Valinnanilmaisimen käyttöönotto tai käytöstä poistaminen
+  - "Siirrä järjestelmäkohdistin tarkastelukohdistimen kohdalle pistenäytön kosketuskohdistinnäppäimillä" -asetuksen tilan vaihtaminen. (#15122)
   -
-- Uusi pistekirjoituksen asetus, joka ottaa käyttöön  valinnanilmaisimen (pisteet 7 ja 8) tai poistaa sen käytöstä. (#14948)
-- NVDA ilmoittaa nyt Mozilla Firefoxissa ja Google Chromessa, kun säädin avaa valintaikkunan, ruudukon, luettelon tai puunäkymän, mikäli sivuston tekijä on määrittänyt sen aria-haspopup-attribuuttia käyttäen. (#14709)
+- Microsoft Office -ominaisuudet:
+  - Korostusvärit puhutaan nyt Microsoft Wordissa, kun korostetun tekstin ilmaiseminen on otettu käyttöön asiakirjojen muotoiluasetuksissa. (#7396, #12101, #5866)
+  - Taustavärit puhutaan nyt Microsoft Wordissa, kun värien ilmaiseminen on otettu käyttöön asiakirjojen muotoiluasetuksissa. (#5866)
+  - Näppäinkomentojen tulokset puhutaan nyt Excelissä vaihdettaessa solun muotoilun, kuten lihavoinnin, kursiivin tai alle- ja yliviivauksen tilaa. (#14923)
+  -
+- Paranneltu kokeellinen äänenhallinta:
+  - NVDA voi nyt toistaa ääntä Windows Audio Session APIn (WASAPI) kautta, joka saattaa parantaa puheen ja äänien reagoivuutta, suorituskykyä ja vakautta. (#14697)
+  - WASAPI voidaan ottaa käyttöön Lisäasetukset-paneelista.
+  Jos WASAPI on otettu käyttöön, myös seuraavat lisäasetukset on mahdollista määrittää.
+    - Asetus, joka saa NVDA:n äänet ja piippaukset mukautumaan käyttämäsi puheäänen voimakkuuteen. (#1409)
+    - Asetus, jonka avulla NVDA-äänien voimakkuutta on mahdollista säätää erikseen. (#1409, #15038)
+    -
+  - Tiedossa on ongelma, joka aiheuttaa satunnaisia kaatumisia WASAPIn ollessa käytössä. (#15150)
+  -
+- NVDA ilmoittaa nyt Mozilla Firefoxissa ja Google Chromessa, kun säädin avaa valintaikkunan, ruudukon, luettelon tai puunäkymän, mikäli sivuston tekijä on määrittänyt sen aria-haspopup-attribuuttia käyttäen. (#8235)
 - Polkumäärityksessä on nyt mahdollista käyttää järjestelmän ympäristömuuttujia (kuten ``%temp%`` tai ``%homepath%``) NVDA:n massamuistiversiota luotaessa. (#14680)
-- Lisätty tuki ARIA 1.3:n ``aria-brailleroledescription``-attribuutille, jonka avulla verkkosivujen tekijät voivat ohittaa pistenäytöllä näytettävän elementin tyypin. (#14748)
-- Korostusvärit ilmoitetaan nyt Microsoft Wordissa, kun tekstin korostuksen puhuminen on otettu käyttöön asiakirjan muotoiluasetuksissa. (#7396, #12101, #5866)
-- Taustavärit ilmoitetaan nyt Microsoft Wordissa, kun värien puhuminen on otettu käyttöön asiakirjojen muotoiluasetuksissa. (#5866)
-- Kun painetaan kolmesti ``Laskinnäppäimistön 2`` tarkastelukohdistimen kohdalla olevan merkin numeerisen arvon puhumiseksi, tiedot näytetään nyt myös pistekirjoituksella. (#14826)
-- Ääntä toistetaan nyt Windowsin äänentoistorajapinnan (WASAPI) kautta, mikä saattaa parantaa sekä NVDA:n puheen että äänien toiston reagointia, suorituskykyä ja vakautta.
-Mikäli ääniongelmia ilmenee, asetus voidaan poistaa käytöstä asetusvalintaikkunan Lisäasetukset-kategoriassa. (#14697)
-- Näppäinkomentojen tulokset ilmoitetaan nyt Excelissä vaihdettaessa solun muotoilun, kuten lihavoinnin, kursivoinnin sekä alle- ja yliviivauksen tilaa. (#14923)
-- Lisätty tuki Help Techin Activator -pistenäytölle. (#14917)
 - Kun virtuaalityöpöytiä avataan, vaihdetaan tai suljetaan, NVDA ilmoittaa niiden nimet Windows 10:n toukokuun 2019 päivityksessä ja sitä uudemmissa. (#5641)
-- NVDA:n äänet ja piippaukset on nyt mahdollista saada mukautumaan käyttämäsi puheäänen voimakkuusasetukseen.
-Tämä asetus voidaan ottaa käyttöön lisäasetuksista. (#1409)
-- NVDA-äänien voimakkuutta on nyt mahdollista säätää erikseen.
-Tämä tehdään Windowsin äänenvoimakkuuden mikseriä käyttäen. (#1409)
+- Lisätty järjestelmänlaajuinen parametri, jolla tavalliset käyttäjät ja järjestelmänvalvojat voivat pakottaa NVDA:n käynnistymään suojatussa tilassa. (#10018)
 - 
 
 
 == Muutokset ==
-- Päivitetty LibLouis-pistekirjoituskääntäjä versioksi [3.26.0 https://github.com/liblouis/liblouis/releases/tag/v3.26.0]. (#14970)
-- CLDR päivitetty versioksi 43.0. (#14918)
-- Viivan ja pitkän ajatusviivan symbolit lähetetään aina syntetisaattorille. (#13830)
-- LibreOfficen muutokset:
-  - Nykyinen kohdistimen sijainti ilmoitetaan tarkastelukohdistimen sijaintia ilmoitettaessa nyt LibreOffice Writerissa suhteessa sivuun (LibreOfficen versiot 7.6 ja sitä uudemmat) samalla tavalla kuin Microsoft Wordissa. (#11696)
-  - Tilarivin lukeminen (esim. painamalla ``NVDA+End``) toimii LibreOfficessa. (#11698)
+- Päivitetyt osat:
+  - eSpeak NG päivitetty versioksi 1.52-dev muutos ``ed9a7bcf``. (#15036)
+  - LibLouis-pistekirjoituskääntäjä päivitetty versioksi [3.26.0 https://github.com/liblouis/liblouis/releases/tag/v3.26.0]. (#14970)
+  - CLDR päivitetty versioksi 43.0. (#14918)
   -
+- LibreOfficen muutokset:
+  - Kohdistimen sijainti ilmoitetaan tarkastelukohdistimen sijaintia ilmoitettaessa nyt LibreOffice Writerissa suhteessa nykyiseen sivuun (LibreOfficen versiot 7.6 ja sitä uudemmat) samalla tavalla kuin Microsoft Wordissa. (#11696)
+  - Tilarivin lukeminen (esim. painamalla ``NVDA+End``) toimii LibreOfficessa. (#11698)
+  - Aiemman solun koordinaatteja ei enää virheellisesti puhuta siirryttäessä LibreOffice Calcissa eri soluun, kun solun koordinaattien ilmoittaminen on poistettu käytöstä NVDA:n asetuksissa. (#15098)
+  -
+- Pistekirjoitus:
+  - Kun pistenäyttöä käytetään standardinmukaisella HID-ajurilla, dpadia voidaan käyttää nuolinäppäinten ja Enterin jäljittelemiseen.
+  Lisäksi Väli+piste 1 ja Väli+piste 4 on nyt määritetty ylä- ja alanuolinäppäimiksi. (#14713)
+  - Dynaamisen verkkosisällön päivitykset (ARIAn aktiiviset alueet) näytetään nyt pistenäytöllä.
+  Tämä voidaan poistaa käytöstä Lisäasetukset-paneelista. (#7756)
+   -
+- Viivan ja pitkän ajatusviivan symbolit lähetetään aina syntetisaattorille. (#13830)
 - Microsoft Wordissa ilmoitetut etäisyydet noudattavat nyt Wordin lisäasetuksissa määriteltyä yksikköä myös käytettäessä UIA:ta Word-asiakirjoille. (#14542)
 - NVDA reagoi nopeammin, kun kohdistinta siirretään muokkaussäätimissä. (#14708)
-- Lisätty Baum-pistenäyttöjen ajuriin useita moniosaisia pikanäppäimiä, kuten ``Windows+D``, ``Alt+Sarkain`` jne., yleisten näppäinkomentojen suorittamista varten.
-Katso kaikki komennot NVDA:n käyttöoppaasta. (#14714)
-- Kun pistenäyttöä käytetään standardinmukaisella HID-ajurilla, dpadia voidaan käyttää nuolinäppäinten ja Enterin jäljittelemiseen. Lisäksi Väli+piste 1 ja Väli+piste 4 on nyt määritetty ylä- ja alanuolinäppäimiksi. (#14713)
 - Linkin kohteen ilmoittava komento ilmoittaa nyt navigointiobjektin sijaan kohdistimen tai kohdistuksen sijainnista. (#14659)
-- Massamuistiversiota luotaessa ei enää tarvitse antaa asemakirjainta osana absoluuttista polkumääritystä. (#14681)
+- Massamuistiversiota luotaessa ei enää tarvitse antaa asemakirjainta osana absoluuttista polkumääritystä. (#14680)
 - Jos Windows on määritetty näyttämään sekunnit tehtäväpalkin kellossa, kellonajan ilmoittava ``NVDA+F12``-näppäinkomento noudattaa nyt tätä asetusta. (#14742)
-- NVDA ilmoittaa nyt nimeämättömät ryhmät, joissa on hyödyllistä sijaintitietoa, kuten uusimmissa Microsoft Office 365 -versioiden valikoissa. (#14878) 
+- NVDA ilmoittaa nyt nimeämättömät ryhmät, joissa on hyödyllistä sijaintitietoa, kuten uusimmissa Microsoft Office 365 -versioiden valikoissa. (#14878)
 -
 
 
 == Bugikorjaukset ==
-- NVDA ei enää vaihda tarpeettomasti Ei pistenäyttöä -ajuriin useasti automaattisen tunnistuksen aikana, mistä on seurauksena puhtaampi loki ja pienempi muistin kulutus. (#14524)
-- NVDA vaihtaa nyt takaisin USB:hen, mikäli HID Bluetooth -laite (kuten HumanWare Brailliant tai APH Mantis) tunnistetaan automaattisesti ja USB-yhteys tulee käytettäväksi.
-Tämä toimi aiemmin vain Bluetooth-sarjaporteilla. (#14524)
-- Kenoviivamerkkiä on nyt mahdollista käyttää puhesanastomäärityksen Korvaava-kentässä, kun tyyppinä ei ole sääntölauseke. (#14556)
-- NVDA ei enää ohita virheellisesti selaustilassa kohdistuksen siirtymistä ylemmän tai alemman tason säätimeen, esim. siirryttäessä säätimestä luettelokohteeseen tai ruudukkosoluun. (#14611)
-  - Huom: Tämä korjaus koskee vain tilannetta, jossa "Siirrä kohdistus automaattisesti kohdistettaviin elementteihin" -asetus on poistettu käytöstä (oletusarvoisesti on) selaustilan asetuksista.
+- Pistekirjoitus:
+  - Useita korjauksia pistekirjoituksen syötön/tulostuksen vakauteen, josta on seurauksena vähemmän virheitä ja NVDA:n kaatumisia. (#14627)
+  - NVDA ei enää vaihda tarpeettomasti Ei pistenäyttöä -ajuriin useasti automaattisen tunnistuksen aikana, mistä on seurauksena puhtaampi loki ja pienempi muistin käyttö. (#14524)
+  - NVDA vaihtaa nyt takaisin USB:hen, mikäli HID Bluetooth -laite (kuten HumanWare Brailliant tai APH Mantis) tunnistetaan automaattisesti ja USB-yhteys tulee saataville.
+  Tämä toimi aiemmin vain Bluetooth-sarjaporteilla. (#14524)
+  - Pistekirjoitusalijärjestelmän näytön koko nollataan taas siten, ettei pistesoluja ole, kun pistenäyttöä ei ole yhdistetty ja pistekirjoituksen tarkastelu suljetaan painamalla ``Alt+F4`` tai napsauttamalla Sulje-painiketta. (#15214)
   -
-- NVDA ei enää aiheuta toisinaan Mozilla Firefoxin kaatumista tai vastaamasta lakkaamista. (#14647)
-- Kirjoitettuja merkkejä ei enää puhuta Mozilla Firefoxissa ja Google Chromessa joissakin tekstikentissä, kun kirjoitettujen merkkien puhuminen on poistettu käytöstä. (#14666)
-- Selaustilaa on nyt mahdollista käyttää upotetuissa Chromium-säätimissä, joissa se ei ollut aiemmin mahdollista. (#13493, #8553)
-- Symboleille, joille ei ole kuvausta nykyisellä kielellä, käytetään oletusarvoista englanninkielen symbolitasoa. (#14558, #14417)
-- Korjauksia Windows 11:lle:
-  - NVDA voi taas lukea Muistion tilarivin sisällön. (#14573)
+- Verkkoselaimet:
+  - NVDA ei enää aiheuta toisinaan Mozilla Firefoxin kaatumista tai vastaamasta lakkaamista. (#14647)
+  - Kirjoitettuja merkkejä ei enää puhuta Mozilla Firefoxissa ja Google Chromessa joissakin tekstikentissä, kun kirjoitettujen merkkien puhuminen on poistettu käytöstä. (#8442)
+  - Selaustilaa on nyt mahdollista käyttää sellaisissa upotetuissa Chromium-säätimissä, joissa se ei ollut aiemmin mahdollista. (#13493, #8553)
+  - Linkin jälkeinen teksti luetaan nyt luotettavasti, kun hiiri siirretään sen päälle Mozilla Firefoxissa. (#9235)
+  - Graafisten linkkien kohteet ilmoitetaan nyt tarkasti useammissa tapauksissa Chromessa ja Edgessä. (#14783)
+  - NVDA ei ole enää hiljaa yritettäessä ilmoittaa URLia sellaiselle linkille, jossa ei ole href-attribuuttia.
+  Sen sijaan ilmoitetaan, ettei linkillä ole kohdetta. (#14723)
+  - NVDA ei enää ohita virheellisesti selaustilassa kohdistuksen siirtymistä ylemmän tai alemman tason säätimeen, esim. siirryttäessä säätimestä luettelokohteeseen tai ruudukkosoluun. (#14611)
+    - Huom: Tämä korjaus koskee vain tilannetta, jossa "Siirrä kohdistus automaattisesti kohdistettaviin elementteihin" -asetus on poistettu käytöstä (oletusarvoisesti on) selaustilan asetuksista.
+    -
+   -
+- Windows 11:n korjaukset:
+  - NVDA lukee taas Muistion tilarivin sisällön. (#14573)
   - Uuden välilehden nimi ja sijainti puhutaan Muistiossa ja resurssienhallinnassa välilehteä vaihdettaessa. (#14587, #14388)
   - NVDA puhuu taas ehdotuskohteet kirjoitettaessa tekstiä sellaisilla kielillä kuin kiina ja japani. (#14509)
+- NVDA:n Ohje-valikon Tekijät- ja Käyttöoikeussopimus-kohteiden avaaminen on taas mahdollista. (#14725)
   -
-- Linkin jälkeinen teksti luetaan nyt luotettavasti, kun hiiri siirretään sen päälle Mozilla Firefoxissa. (#9235)
+- Microsoft Officen korjaukset:
+  - NVDA ilmoittaa nyt Excelissä epätodennäköisemmin väärän solun tai valinnan, kun solujen välillä siirrytään nopeasti. (#14983, #12200, #12108)
+  - Kun Excelissä siirrytään soluun työkirjan ulkopuolelta, pistenäyttö ja kohdistuksen korostin eivät enää tarpeettomasti päivity objektiin, jossa kohdistus oli aiemmin. (#15136)
+  - Aktivoituvien salasanakenttien puhuminen ei enää epäonnistu Microsoft Excelissä ja Outlookissa. (#14839)
+  -
+- Symboleille, joille ei ole kuvausta nykyisellä kielellä, käytetään oletusarvoista englannin kielen symbolitasoa. (#14558, #14417)
+- Kenoviivamerkkiä on nyt mahdollista käyttää puhesanastomäärityksen Korvaava-kentässä, kun tyyppinä ei ole sääntölauseke. (#14556)
 - NVDA:n massamuistiversio ei tee enää mitään tai toista virheääniä kirjoitettaessa laskukaavoja nelilaskintilassa Windows 10:n ja 11:n laskimessa sen ollessa päällimmäisenä. (#14679)
-- NVDA ei ole enää hiljaa yritettäessä ilmoittaa URL-osoitetta sellaiselle linkille, jossa ei ole href-attribuuttia.
-Sen sijaan ilmoitetaan, ettei linkillä ole kohdetta. (#14723)
-- Useita korjauksia pistekirjoituksen syötön ja tulostuksen vakauteen, mistä on seurauksena harvemmin NVDA:n virheitä ja kaatumisia. (#14627)
 - NVDA palautuu taas useammista tilanteista, kuten sovelluksista, jotka lakkaavat vastaamasta, mikä aiheutti aiemmin sen täydellisen jumiutumisen. (#14759) 
-- Graafisten linkkien kohteet ilmoitetaan nyt oikein Chromessa ja Edgessä. (#14779)
-- NVDA:n Ohje-valikon Tekijät- ja Käyttöoikeussopimus-kohteet on taas mahdollista avata Windows 11:ssä. (#14725)
- - Korjattu bugi, joka aiheutti NVDA:n jumiutumisen ja lokitiedoston täyttymisen, kun UIA-tuki pakotettiin käyttöön tietyissä päätteissä ja konsoleissa. (#14689)
-- Aktivoituvien salasanakenttien puhuminen ei enää epäonnistu Microsoft Excelissä ja Outlookissa. (#14839)
+- Korjattu bugi, joka aiheutti NVDA:n jumiutumisen ja lokitiedoston täyttymisen, kun UIA-tuki pakotettiin käyttöön tietyissä päätteissä ja konsoleissa. (#14689)
 - NVDA ei enää kieltäydy tallentamasta asetuksiaan asetusten palauttamisen jälkeen. (#13187)
 - Kun käytetään asennusohjelmasta käynnistettyä NVDA:n tilapäisversiota, käyttäjiä ei johdeta enää harhaan saamalla heidät luulemaan, että asetusten tallentaminen on mahdollista. (#14914)
-- Objektien pikanäppäinten ilmoittamista on paranneltu. (#10807)
-- NVDA ilmoittaa nyt Excelissä epätodennäköisemmin väärän solun tai valinnan, kun solujen välillä siirrytään nopeasti. (#14983, #12200, #12108)
 - NVDA reagoi hieman nopeammin komentoihin ja kohdistusmuutoksiin. (#14928)
--
+- Tekstintunnistusasetusten näyttäminen ei enää epäonnistu joissakin järjestelmissä. (#15017)
+- Korjattu NVDA:n asetusten tallentamiseen ja lataamiseen, syntetisaattorien vaihtaminen mukaan lukien, liittyvä bugi. (#14760)
+- Korjattu bugi, joka sai tekstintarkastelun "pyyhkäise ylös" -kosketuseleen vaihtamaan sivua sen sijaan, että olisi siirtänyt edelliselle riville. (#15127)
+- 
 
 
 == Muutokset kehittäjille ==

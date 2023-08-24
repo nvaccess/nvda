@@ -339,14 +339,19 @@ Premere a questo punto il pulsante OK per chiudere questa finestra.
   
 
 ++ Restrizioni nelle versioni portable o temporanee ++[PortableAndTemporaryCopyRestrictions]
+
 Se si desidera copiare NVDA in un supporto rimovibile come una chiavetta USB e portarlo con sé, si consiglia di creare una copia portable.
 La copia installata è anche in grado di creare una copia portable di se stessa in qualsiasi momento.
 Allo stesso modo, la copia portable dispone anche della capacità di installarsi su qualsiasi computer in un secondo momento.
 Tuttavia, se invece si desidera copiare NVDA su un supporto di sola lettura come un CD, si dovrà semplicemente copiare il file contenente il pacchetto scaricato in precedenza.
 Si tenga presente che non è possibile al momento eseguire una versione portable in un supporto di sola lettura.
-Anche l'utilizzo della copia temporanea di NVDA è un'opzione (ad es. a scopo dimostrativo), sebbene avviare NVDA in questo modo ogni volta possa richiedere molto tempo.
 
-Oltre al fatto di non poter essere eseguite all'avvio automatico del sistema o dopo la finestra di accesso, le versioni temporanee o portable di NVDA presentano le seguenti limitazioni:
+[L'installer di NVDA #StepsForRunningTheDownloadLauncher] può essere utilizzato come copia temporanea dello screen reader.
+Le copie temporanee non consentono di salvare le impostazioni del lettore di schermo.
+A ciò va aggiunta l'impossibilità di servirsi dell'[Add-on Store #AddonsManager].
+
+Le versioni temporanee o portable di NVDA presentano le seguenti limitazioni:
+- Impossibilità di avviarsi automaticamente durante e/o dopo l'accesso.
 - Incapacità di interagire con programmi eseguiti con privilegi di amministratore, a meno che naturalmente lo stesso NVDA non venga eseguito con privilegi amministrativi (non consigliato).
 - Impossibilità di leggere le schermate del controllo Utente (UAC), quando si cerca di avviare un'applicazione con privilegi amministrativi.
 - Windows 8 e successivi: impossibilità di gestire la scrittura o qualsiasi operazione effettuata tramite Touch Screen.
@@ -589,6 +594,12 @@ Se invece ci si sposta all’oggetto che contiene l’elemento di un elenco, si 
 Ci si potrà poi spostare prima o dopo l’elenco per raggiungere altri oggetti.
 Allo stesso modo, se si incontra una barra degli strumenti, bisogna entrare all'interno di essa per accedere ai controlli che la compongono.
 
+Tuttavia, se si desidera spostarsi avanti e indietro tra i vari oggetti del sistema, è sempre possibile andare all'oggetto successivo/precedente servendosi dei comandi messi a disposizione dalla modalità in linea, che presenterà gli oggetti senza alcun tipo di gerarchia.
+Ad esempio, se ci si sposta sull'oggetto successivo in modalità in linea e l'oggetto corrente contiene altri oggetti, NVDA si sposterà automaticamente sul primo oggetto figlio.
+In alternativa, se l'oggetto corrente non contiene alcun oggetto, NVDA passerà all'oggetto successivo allo stesso livello della gerarchia.
+Nel caso in cui non esista un oggetto successivo, NVDA cercherà di trovare altri oggetti seguendo la gerarchia fino a quando non ci saranno più oggetti verso cui spostarsi.
+Le stesse regole si applicano per la navigazione all'indietro nella gerarchia.
+
 L'oggetto che attualmente viene esplorato è quello su cui si trova il navigatore ad oggetti.
 Una volta che viene raggiunto un oggetto, è possibile esplorarlo utilizzando i [comandi di esplorazione testo #ReviewingText] in [modalità navigazione ad oggetti #ObjectReview].
 Quando [l'evidenziatore del focus #VisionFocusHighlight] è attivato, viene evidenziata sullo schermo la posizione corrente del navigatore ad oggetti.
@@ -602,8 +613,10 @@ Per navigare ad oggetti, utilizzare i tasti seguenti:
 || Nome | layout Desktop | layout Laptop | Tocco | Descrizione |
 | Legge l'oggetto corrente | NVDA+5 del tastierino numerico | NVDA+shift+o | Nessuno | Annuncia l'oggetto corrente. Premendolo due volte ne fa lo spelling, mentre premendolo tre volte copia il nome dell'oggetto ed il suo valore negli appunti |
 | Spostarsi all'oggetto contenitore  | NVDA+8 del tastierino numerico | NVDA+Shift+freccia su | Scorrimento in alto (modo oggetti) | ci si sposta all'oggetto che contiene l'oggetto corrente |
-| Spostarsi all'oggetto precedente | NVDA+4 del tastierino numerico | NVDA+shift+freccia sinistra | Scorrimento a sinistra (modo oggetti) | ci si Sposta all'oggetto precedente rispetto a quello attuale, sullo stesso livello |
-| Spostarsi all'oggetto successivo | NVDA+6 del tastierino numerico | NVDA+shift+freccia destra | Scorrimento a destra (modo oggetti) | ci si Sposta all'oggetto successivo rispetto a quello attuale, sullo stesso livello) |
+| Spostarsi all'oggetto precedente | NVDA+4 del tastierino numerico | NVDA+shift+freccia sinistra | nessuno | Scorrimento a sinistra | ci si Sposta all'oggetto precedente rispetto a quello attuale, sullo stesso livello |
+| Spostarsi all'oggetto precedente in modalità lineare | NVDA+9 del tastierino numerico | NVDA+shift+à | scorrimento a sinistra (modo oggetti) | Ci si sposta all'oggetto precedente in una modalità lineare che non tiene conto della gerarchia |
+| Spostarsi all'oggetto successivo | NVDA+6 del tastierino numerico | nessuno | NVDA+shift+freccia destra | Scorrimento a destra | ci si Sposta all'oggetto successivo rispetto a quello attuale, sullo stesso livello) |
+| Spostarsi all'oggetto successivo in modalità lineare | NVDA+3 del tastierino numerico | NVDA+shift+ù | scorrimento a destra (modo oggetti) | Ci si sposta all'oggetto successivo in una modalità lineare che non tiene conto della gerarchia |
 | Spostarsi al primo oggetto contenuto | NVDA+2 del tastierino numerico | NVDA+shift+freccia giù | Scorrimento in basso (modo oggetti) | Ci si sposta al primo oggetto contenuto nell'oggetto attuale |
 | Spostarsi all'oggetto focalizzato | NVDA+Meno del tastierino numerico | NVDA+Backspace | Nessuno | Sposta il navigatore ad oggetti sull'oggetto che attualmente ha il focus di sistema, e porta anche il cursore di controllo in quella posizione, se il cursore di sistema è visualizzato |
 | Attivare l'oggetto corrente | NVDA+Invio del tastierino numerico | NVDA+Invio | Doppio tap | Attiva l'oggetto corrente (l'equivalente di cliccare col mouse o premere la barra spazio in presenza del focus) |
@@ -653,7 +666,7 @@ Sono disponibili i seguenti tasti caldi per esplorare il testo:
  
 Si noti che per un corretto funzionamento il tasto Numlock del tastierino numerico deve essere impostato su spento.
 
-Per aiutare l'utente a ricordare questi comandi, si tenga presente che i comandi di base di controllo del testo sono organizzati in una griglia di tre per tre, dove dall'alto verso il basso abbiamo righe, parole e caratteri, mentre da sinistra a destra abbiamo precedente, attuale e successivo.
+Per aiutare l'utente a ricordare queste combinazioni di tasti, si tenga presente che i comandi di base di controllo del testo sono organizzati in una griglia di tre per tre, dove dall'alto verso il basso abbiamo righe, parole e caratteri, mentre da sinistra a destra abbiamo precedente, attuale e successivo.
 Il layout può essere descritto come segue:
 | riga precedente | riga corrente | riga successiva |
 | parola precedente | parola corrente | parola successiva |
@@ -661,7 +674,6 @@ Il layout può essere descritto come segue:
 
 ++ Le Modalità di esplorazione ++[ReviewModes]
 I [comandi di navigazione di NVDA #ReviewingText] permettono di esplorare il contenuto all'interno di un oggetto, del documento corrente o dello schermo, a seconda della modalità di esplorazione selezionata.
-Questi comandi di esplorazione vanno a sostituire la vecchia navigazione in linea presente in NVDA.
 
 Si possono utilizzare i comandi seguenti per passare da una modalità all'altra:
 %kc:beginInclude
@@ -1611,6 +1623,28 @@ Così facendo, il braille non seguirà mai il navigatore ad oggetti o il cursore
 Se si desidera che il braille segua sempre il cursore di controllo o il navigatore ad oggetti, configurare questa funzione su "Braille segue cursore di controllo".
 Così facendo, il braille non seguirà mai il focus / cursore di sistema.
 
+==== Sposta il cursore di sistema con cursor routing anche se il braille segue il cursore di controllo ====[BrailleSettingsReviewRoutingMovesSystemCaret]
+: Default
+  Mai
+: Opzioni
+  Default (Mai), Mai, Solo quando l'inseguimento è su automatico, Sempre
+:
+
+Questa impostazione determina se anche il cursore di sistema debba essere spostato con la pressione di un cursor routing.
+Il valore predefinito dell'impostazione è mai, il che significa che la pressione di un cursor routing non sposterà mai il cursore di sistema quando il braille segue il cursore di controllo.
+
+Quando questa opzione è impostata su Sempre, e [l'inseguimento braille #BrailleTether] è impostato su "automaticamente" o "al cursore di controllo", la pressione di un cursor routing sposterà anche il cursore di sistema..
+Se invece ci troviamo nella [Modalità in linea #ScreenReview], non esiste un cursore fisico.
+In questo caso, NVDA tenterà di portare il focus al testo su cui è stato premuto il cursor routing.
+Lo stesso accade per la [navigazione ad oggetti #ObjectReview].
+
+è anche possibile impostare l'opzione in modo da spostare il cursore se l'inseguimento è settato su automaticamente.
+In tal caso, la pressione di un cursor routing sposterà il cursore di sistema solo quando l'inseguimento è impostato su automaticamente, mentre non farà nulla nel caso in cui l'inseguimento sia impostato manualmente su cursore di controllo.
+
+Questa opzione è visibile soltanto se "[l'inseguimento braille #BrailleTether]" è impostato su "Automaticamente" o "al cursore di controllo".
+
+Per attivare e disattivare questa funzione da qualsiasi luogo ci si trovi,, si prega di assegnare un gesto personalizzato utilizzando la [Finestra tasti e gesti di immissione #InputGestures].
+
 ==== Lettura per paragrafi ====[BrailleSettingsReadByParagraph]
 Se attivata, il braille verrà visualizzato per paragrafi invece che per righe.
 Inoltre, i comandi per spostarsi alla riga precedente/successiva andranno al paragrafo precedente/successivo.
@@ -2197,6 +2231,14 @@ Questa impostazione contiene i seguenti valori:
 - Sempre: ovunque sia disponibile la tecnologia UI automation in Microsoft word (non importa quanto completa).
 -
 
+==== Utilizza UI Automation per accedere ai controlli dei fogli di calcolo di Microsoft Excel quando disponibile ====[UseUiaForExcel]
+Quando questa opzione è abilitata, NVDA proverà ad utilizzare le API di accessibilità di Microsoft UI Automation per recuperare le informazioni dai controlli del foglio di calcolo di Microsoft Excel.
+Si tratta di una funzionalità sperimentale e alcune caratteristiche di Microsoft Excel potrebbero non essere disponibili in questa modalità.
+Per esempio, non si potrà usare l'elenco elementi di formule e commenti, oltre alla capacità di saltare rapidamente nei campi modulo in modalità navigazione.
+Tuttavia, per l'esplorazione e la modifica di base del foglio di calcolo, questa opzione può fornire un notevole miglioramento delle prestazioni.
+Al momento è consigliabile per la maggior parte degli utenti di non attivare questa funzione sperimentale, tuttavia sono ben accetti i feedback di quelle persone che dispongono della versione di Microsoft Excel build 16.0.13522.10000 o superiore.
+L'implementazione di Ui automation in Excel è in costante fase di modifica, perciò le versioni di Office inferiori alla 16.0.13522.10000 potrebbero non fornire informazioni sufficienti.
+
 ==== Utilizza UI Automation per accedere alla console di Windows quando disponibile ====[AdvancedSettingsConsoleUIA]
 Quando questa opzione è abilitata, NVDA utilizzerà una nuova versione ancora in sviluppo del suo supporto per il prompt dei comandi e la console di Windows che sfrutta i [miglioramenti dell'accessibilità apportati da Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Questa funzione è altamente sperimentale ed è ancora incompleta, quindi il suo uso non è ancora raccomandato. Tuttavia, una volta completato, si prevede che questo nuovo supporto diventerà quello predefinito, migliorando le prestazioni e la stabilità di NVDA nel prompt dei comandi e nelle console di Windows.
 
@@ -2252,13 +2294,15 @@ Sono disponibili le seguenti opzioni:
   -
 -
 
-==== Utilizza UI Automation per accedere ai controlli dei fogli di calcolo di Microsoft Excel quando disponibile ====[UseUiaForExcel]
-Quando questa opzione è abilitata, NVDA proverà ad utilizzare le API di accessibilità di Microsoft UI Automation per recuperare le informazioni dai controlli del foglio di calcolo di Microsoft Excel.
-Si tratta di una funzionalità sperimentale e alcune caratteristiche di Microsoft Excel potrebbero non essere disponibili in questa modalità.
-Per esempio, non si potrà usare l'elenco elementi di formule e commenti, oltre alla capacità di saltare rapidamente nei campi modulo in modalità navigazione.
-Tuttavia, per l'esplorazione e la modifica di base del foglio di calcolo, questa opzione può fornire un notevole miglioramento delle prestazioni.
-Al momento è consigliabile per la maggior parte degli utenti di non attivare questa funzione sperimentale, tuttavia sono ben accetti i feedback di quelle persone che dispongono della versione di Microsoft Excel build 16.0.13522.10000 o superiore.
-L'implementazione di Ui automation in Excel è in costante fase di modifica, perciò le versioni di Office inferiori alla 16.0.13522.10000 potrebbero non fornire informazioni sufficienti.
+==== Segnala regioni live ====[BrailleLiveRegions]
+: Default
+  Attivato
+: Opzioni
+  Default (Attivato), Disattivato, Attivato
+:
+
+Questa opzione stabilisce se NVDA debba segnalare i cambiamenti in alcuni contenuti web dinamici in Braille.
+Disabilitare questa opzione equivale al tornare al comportamento di NVDA nelle versioni 2023.1 e precedenti, che riportava questi cambiamenti di contenuto solo in voce.
 
 ==== Leggi password in tutti i terminali avanzati ====[AdvancedSettingsWinConsoleSpeakPasswords]
 Questa impostazione controlla il comportamento di due funzioni di NVDA, ossia [Leggi i caratteri digitati #KeyboardSettingsSpeakTypedCharacters] e [leggi le parole digitate #KeyboardSettingsSpeakTypedWords] in situazioni in cui lo schermo non si aggiorna, per esempio durante l'immissione di password nel prompt dei comandi con il supporto UI Automation attivo o Mintty.
@@ -2289,7 +2333,7 @@ Tuttavia, nei terminali, quando si inserisce o si elimina un carattere nel mezzo
 : Predefinito
   Diffing
 : Opzioni
-  Diffing, Notifiche UIA
+  Default (Diffing), Diffing, Notifiche UIA
 :
 
 Questa opzione determina il metodo utilizzato da NVDA per stabilire quale testo risulti "nuovo" (e quindi cosa pronunciare quando l'opzione "Leggi i cambiamenti dei contenuti dinamici" è abilitata) nella finestra del terminale di Windows e nel controllo WPF Windows Terminal utilizzato in Visual Studio 2022.
@@ -2320,17 +2364,32 @@ In alcuni casi, lo sfondo del testo potrebbe essere completamente trasparente, c
 Con diverse API GUI storicamente popolari, il testo può essere visualizzato con uno sfondo trasparente, ma visivamente il colore di sfondo è accurato.
 
 ==== Usa WASAPI per l'output audio ====[WASAPI]
+: Default
+  Disattivato
+: Opzioni
+  Default (Disattivato), Disattivato, Attivato
+:
+
 Questa opzione attiva la gestione dell'audio attraverso un sistema chiamato  Windows Audio Session API (WASAPI).
 WASAPI è un framework audio più moderno che può migliorare la reattività, le prestazioni e la stabilità dell'audio di NVDA, compresi sia il parlato che i suoni.
-L'opzione è abilitata per impostazione predefinita.
 Dopo aver modificato questa opzione, sarà necessario riavviare NVDA affinché i cambiamenti abbiano effetto.
 
 ==== Il volume dei suoni di NVDA segue il volume della voce ====[SoundVolumeFollowsVoice]
+: Default
+  Disattivato
+: Opzioni
+  Disattivato, Attivato
++:
++
+
 Quando questa opzione è abilitata, il volume dei suoni e dei segnali acustici di NVDA seguirà l'impostazione del volume della voce in uso.
 Se si riduce il volume della voce, anche il volume dei suoni diminuirà.
 Allo stesso modo, se si aumenta il volume della voce, aumenterà anche quello dei suoni..
 Inoltre, ha effetto solo quando l'impostazione "Usa WASAPI per l'output audio" è abilitata.
-Questa opzione è disabilitata di default.
+
+==== Volume dei suoni di NVDA ====[SoundVolume]
+Questo cursore di avanzamento consente di impostare il volume dei suoni e dei beep di NVDA.
+L'impostazione ha effetto solo quando "Usa WASAPI per l'output audio" è abilitato e "Il volume dei suoni di NVDA segue il volume della voce" è disabilitato.
 
 ==== Categorie Debug Logging ====[AdvancedSettingsDebugLoggingCategories]
 Le caselle di controllo presenti  in questo elenco consentono di abilitare  categorie specifiche di messaggi log di NVDA.
@@ -2393,9 +2452,9 @@ Per modificare un simbolo, dapprima selezionarlo nell'elenco simboli.
 - Il campo "voce in sostituzione" permette di cambiare il testo che deve essere pronunciato in corrispondenza di quel simbolo.
 - Utilizzando il campo "livello", è possibile stabilire il livello più basso dal quale il simbolo dovrà essere annunciato (nessuno, qualcosa, molta o tutta)..
 è anche possibile impostare il livello su carattere; in quel caso il simbolo non sarà mai annunciato indipendentemente dal livello simboli in uso, con le seguenti due eccezioni:
- - Durante la navigazione carattere per carattere.
- - Quando NVDA effettua lo spelling di un testo contenente quel simbolo.
- -
+  - Durante la navigazione carattere per carattere.
+  - Quando NVDA effettua lo spelling di un testo contenente quel simbolo.
+  -
 - Il campo invia questo simbolo al sintetizzatore specifica le condizioni per cui  lo stesso simbolo debba essere processato dalla sintesi vocale, non tenendo conto quindi del testo in sostituzione.
 Ciò risulta utile nel caso in cui il simbolo provochi una pausa o un'inflessione nella voce del sintetizzatore.
 Ad esempio, una virgola provoca una pausa nel sintetizzatore.
@@ -2581,7 +2640,6 @@ Per accedere all'Add-on Store da qualsiasi posto, assegnare un gesto personalizz
 
 ++ Navigare tra gli add-on ++[AddonStoreBrowsing]
 Una volta aperto, l'Add-on Store visualizza un elenco di componenti aggiuntivi.
-è possibile ritornare all'elenco da qualsiasi punto dello store con la combinazione ``alt+l``.
 Se non sono presenti componenti aggiuntivi installati, , l'add-on store mostrerà un elenco di add-on disponibili all'installazione..
 Se invece sono stati già installati componenti aggiuntivi, l'elenco mostrerà gli add-on attualmente installati.
 
@@ -2622,14 +2680,14 @@ Per elencare i componenti aggiuntivi solo per canali specifici, modificare la se
 
 +++ Ricerca di add-on +++[AddonStoreFilterSearch]
 Per cercare componenti aggiuntivi, utilizzare la casella di testo "Cerca".
-è possibile raggiungerla premendo ``shift+tab`` dall'elenco dei componenti aggiuntivi o premendo ``alt+s`` da qualsiasi punto dell'interfaccia dell'add-on store.
-Digitare una o due parole chiave per il tipo di componente aggiuntivo che si sta cercando, quindi un colpo di ``tab'` per tornare agli add-on.
-NVDA cercherà il testo appena inserito in vari campi, quali Nome visualizzato, publisher o descrizione, dopodiché mostrerà un elenco di add-on relativi alla ricerca effettuata.
+è possibile raggiungerla premendo ``shift+tab`` dall'elenco dei componenti aggiuntivi.
+Digitare una o due parole chiave per il tipo di componente aggiuntivo che si sta cercando, quindi un colpo di ``tab`` per andare agli add-on.
+NVDA cercherà il testo appena inserito in vari campi, quali ID, Nome visualizzato, publisher, autore o descrizione, dopodiché mostrerà un elenco di add-on relativi alla ricerca effettuata.
 
 ++ Azioni sugli add-on ++[AddonStoreActions]
 I componenti aggiuntivi possiedono azioni associate, come installa, aiuto, disabilita e rimuovi.
 È possibile accedere al menu delle azioni per un add-on in vari modi: premendo il tasto ``applicazioni``, oppure ``invio``, facendo clic con il pulsante destro del mouse o facendo doppio clic sul componente aggiuntivo.
-C'è anche un pulsante Azioni nei dettagli dell'add-on selezionato, che può essere attivato normalmente o premendo ``alt+a``.
+C'è anche un pulsante Azioni nei dettagli del componente aggiuntivo selezionato che permette l'accesso al menu.
 
 +++ Installazione degli add-on +++[AddonStoreInstalling]
 Solo per il fatto che un componente aggiuntivo è disponibile nell'Add-on Store di NVDA, non significa che sia stato approvato o controllato da NV Access o da chiunque altro.
@@ -2732,6 +2790,10 @@ Per attivare o disattivare il visualizzatore braille da qualsiasi parte, assegna
 ++ Console Python ++[PythonConsole]
 La Console Python di NVDA, situata nel menu strumenti, è uno strumento per sviluppatori che risulta utile in fase di debug, di diagnosi delle funzioni interne di NVDA o di analisi della gerarchia degli oggetti accessibili presenti in un'applicazione.
 Per ulteriori informazioni, si veda la [guida agli sviluppatori per NVDA https://www.nvaccess.org/files/nvda/documentation/developerGuide.html], in lingua inglese.
+
+++ Add-on Store ++
+Consente di aprire l'[Add-on Store di NVDA #AddonsManager].
+Per maggiori informazioni, leggere la sezione di approfondimento: [Componenti aggiuntivi e l'Add-on Store #AddonsManager].
 
 ++ Crea copia portable ++[CreatePortableCopy]
 Verrà visualizzata una finestra di dialogo che consente di creare una copia portable di NVDA a partire dalla versione installata.
@@ -3041,20 +3103,20 @@ Seguono i tasti che sono stati assegnati con NVDA.
 Si legga la documentazione della propria barra Braille per ottenere informazioni su dove sono situati i vari tasti.
 %kc:beginInclude
 || Nome | Tasto |
-| Scorre Display Braille indietro | d2 |
-| Scorre Display Braille avanti | d5 |
-| Sposta il display braille alla riga precedente  | d1 |
-| Sposta il display braille alla riga successiva | d3 |
-| Route to braille cell | routing |
-| tasti shift+tab | spazio+punto1+punto3 |
-| tasto tab | spazio+punto4+punto6 |
-| tasti alt | spazio+punto1+punto3+punto4 (spazio+m) |
-| tasto escape | spazio+punto1+punto5 (spazio+e) |
-| tasto windows | spazio+punto3+punto4 |
-| tasti alt+tab | spazio+punto2+punto3+punto4+punto5 (spazio+t) |
-| Menu NVDA | spazio+punto1+punto3+punto4+punto5 (spazio+n) |
-| tasti windows+d (ridurre ad icona tutte le applicazioni) | spazio+punto1+punto4+punto5 (spazio+d) |
-| Dire tutto | spazio+punto1+punto2+punto3+punto4+punto5+punto6 |
+| Scorre Display Braille indietro | ``d2`` |
+| Scorre Display Braille avanti | ``d5`` |
+| Sposta il display braille alla riga precedente  | ``d1`` |
+| Sposta il display braille alla riga successiva | ``d3`` |
+| Route to braille cell | ``routing`` |
+| tasti shift+tab | ``spazio+punto1+punto3`` |
+| tasto tab | ``spazio+punto4+punto6`` |
+| tasti alt | ``spazio+punto1+punto3+punto4`` (``spazio+m``) |
+| tasto escape | ``spazio+punto1+punto5`` (``spazio+e``) |
+| tasto windows | ``spazio+punto3+punto4`` |
+| tasti alt+tab | ``spazio+punto2+punto3+punto4+punto5`` (``spazio+t``) |
+| Menu NVDA | ``spazio+punto1+punto3+punto4+punto5`` (``spazio+n``) |
+| tasti windows+d (ridurre ad icona tutte le applicazioni) | ``spazio+punto1+punto4+punto5`` (``spazio+d``) |
+| Dire tutto | ``spazio+punto1+punto2+punto3+punto4+punto5+punto6`` |
  
 Per i modelli che possiedono un Joystick:
 || Nome | Tasto |
@@ -3607,12 +3669,12 @@ A causa di ciò, e per mantenere una buona compatibilità con altri screen reade
 ++ Display Eurobraille ++[Eurobraille]
 I display b.book, b.note, Esys, Esytime e Iris di Eurobraille sono supportati da NVDA.
 Queste barre braille dispongono di una tastiera braille con dieci tasti.
+Fare riferimento alla documentazione del display per le descrizioni di questi tasti.
 Dei due tasti disposti come una barra spaziatrice, il tasto sinistro corrisponde al tasto indietro e il tasto destro al tasto spazio.
-Collegati tramite USB, questi dispositivi dispongono di una tastiera USB autonoma.
-È possibile abilitare o disabilitare tale tastiera attraverso la casella di controllo "Simulazione tastiera HID" nel pannello delle impostazioni braille.
-La tastiera braille descritta di seguito prevede che questa opzione sia disattivata..
-Seguono i tasti che sono stati associati per questi modelli a NVDA.
-Consultare la documentazione della barra braille per informazioni sulla posizione dei tasti.
+
+Questi dispositivi sono collegati tramite USB e dispongono di una tastiera USB autonoma.
+È possibile abilitare o disabilitare tale tastiera assegnando un gesto personalizzato per la voce "Simulazione tastiera HID".
+Le funzioni della tastiera braille descritte di seguito prevedono che la "simulazione della tastiera HID" sia disabilitata.
 
 +++  Funzioni tastiera braille +++[EurobrailleBraille]
 %kc:beginInclude
@@ -3674,6 +3736,7 @@ Consultare la documentazione della barra braille per informazioni sulla posizion
 | Attiva/disattiva tasto ``control`` | ``punto1+punto7+punto8+spazio``, ``punto4+punto7+punto8+spazio`` |
 | Tasto ``alt`` | ``punto8+spazio`` |
 | Attiva/disattiva tasto ``alt`` | ``punto1+punto8+spazio``, ``punto4+punto8+spazio`` |
+| Attiva/Disattiva simulazione tastiera HID | ``switch1Left+joystick1Giù``, ``switch1Right+joystick1giù`` |
 %kc:endInclude
 
 +++ comandi da tastiera b.book+++[Eurobraillebbook]
@@ -3760,6 +3823,7 @@ Consultare la documentazione della barra braille per informazioni sulla posizion
 | Attiva/disattiva tasto ``NVDA`` | ``l7`` |
 | Tasto ``control+inizio`` | ``l1+l2+l3``, ``l2+l3+l4`` |
 | Tasto ``control+fine`` | ``l6+l7+l8``, ``l5+l6+l7`` |
+| Attiva/Disattiva simulazione Tastiera HID | ``l1+joystick1Giù``, ``l8+joystick1Giù`` |
 %kc:endInclude
 
 ++ Display Braille Nattiq serie N ++[NattiqTechnologies]
@@ -3844,6 +3908,7 @@ Consultare la documentazione della barra braille per informazioni sulla posizion
 | Attiva o disattiva il cursore braille | ``f1+cursor1``, ``f9+cursor2`` |
 | Passa tra le modalità di visualizzazione messaggi in braille | ``f1+f2``, ``f9+f10`` |
 | Attiva o disattiva la visualizzazione della selezione in braille | ``f1+f5``, ``f9+f14`` |
+| Passa tra le scelte possibili della funzione "sposta il cursore di sistema con cursor routing anche quando il braille segue il cursore di controllo" | ``f1+f3``, ``f9+f11`` |
 | Esegue l'azione predefinita sull'oggetto attuale del navigatore | ``f7+f8`` |
 | Legge data/ora | ``f9`` |
 | Annuncia lo stato della batteria e il tempo rimanente se l'alimentazione non è collegata in | ``f10`` |
@@ -3894,18 +3959,33 @@ Di seguito sono riportate le assegnazioni dei tasti per questi display.
 + Argomenti avanzati +[AdvancedTopics]
 
 ++ Modalità protetta ++[SecureMode]
-NVDA può essere avviato in modalità protetta con [l'opzione a riga di comando #CommandLineOptions] ``-s``. [
+Gli amministratori di sistema potrebbero voler configurare NVDA per limitare l'accesso non autorizzato al computer.
+NVDA consente l'installazione di componenti aggiuntivi personalizzati, che possono eseguire codice arbitrario, anche quando NVDA è elevato ai privilegi di amministratore.
+Lo screen reader consente inoltre agli utenti di eseguire codice arbitrario tramite la console Python di NVDA.
+La modalità protetta di NVDA impedisce agli utenti di modificare la propria configurazione e limita l'accesso non autorizzato al sistema.
+
 NVDA viene avviato in modalità protetta quando eseguito nelle [schermate protette #SecureScreens], a meno che non sia abilitato il [parametro a livello di sistema #SystemWideParameters] ``serviceDebug``..
+Per forzare l'avvio di NVDA sempre in modalità protetta, usare il [parametro a livello di sistema #SystemWideParameters] ``forceSecureMode``. 
+Si può avviare NVDA in modalità protetta anche tramite [l'opzione a riga di comando #CommandLineOptions] ``-s``.
 
 La modalità protetta disabilita:
 
 - Il salvataggio della configurazione e di altre impostazioni su disco
-- Il salvataggio della mappa dei gesti su disco
-- Le funzionalità dei [profili di configurazione #ConfigurationProfiles] come la creazione, l'eliminazione, la ridenominazione dei profili,  etc.
+- Il salvataggio di gesti personalizzati su disco
+- Le funzionalità dei [profili di configurazione #ConfigurationProfiles] come la creazione, l'eliminazione, la ridenominazione dei profili, etc.
 - L'aggiornamento di NVDA e creazione di copie portable
-- La [console Python #PythonConsole]
+- l'[Add-on Store #AddonsManager]
+- La [console Python di NVDA #PythonConsole]
 - Il [visualizzatore log #LogViewer] e le funzionalità di log
+- L'apertura di documenti esterni dal menu di NVDA, come la guida per l'utente o il file dei collaboratori.
 -
+
+Le copie installate di NVDA salvano la loro configurazione, inclusi i componenti aggiuntivi, in ``%APPDATA%\nvda``.
+Per impedire agli utenti di modificare direttamente la propria configurazione o i componenti aggiuntivi, dev'essere limitato anche l'accesso a questa cartella.
+
+Si tenga presente che ogni utente tende a configurare lo screen reader in modo diverso, cercando di creare un profilo il più adatto possibile alle proprie esigenze..
+Ciò spesso include l'installazione e la configurazione di componenti aggiuntivi personalizzati, che andranno valutati indipendentemente dallo screen reader.
+La modalità protetta blocca le modifiche alla configurazione di NVDA, perciò prima di attivarla, è necessario assicurarsi che lo screen reader sia configurato correttamente.
 
 ++ Schermate protette ++[SecureScreens]
 NVDA viene avviato in modalità protetta quando eseguito nelle [schermate protette #SecureScreens], a meno che non sia abilitato il [parametro a livello di sistema #SystemWideParameters] ``serviceDebug``..
@@ -3976,8 +4056,9 @@ Tali valori sono salvati nel registro in una delle seguenti chiavi:
 
 Di seguito vengono elencati i valori modificabili con queste chiavi di registro:
 || Nome | Tipo | Valori ammessi | Descrizione |
-| configInLocalAppData | DWORD | 0 (predefinito) per disabilitare, 1 per abilitare | Se attivato, salva la configurazione utente di NVDA nella cartella locale dell'applicazione invece che in roaming application data |
-| serviceDebug | DWORD | 0 (predefinito) per disabilitare, 1 per abilitare | Se abilitata, disattiva la [Modalità protetta #SecureMode] nelle  [Schermate protette #SecureScreens]. A causa di diverse importanti implicazioni sulla sicurezza, l'uso di questa opzione è fortemente sconsigliato |
+| ``configInLocalAppData`` | DWORD | 0 (predefinito) per disabilitare, 1 per abilitare | Se attivato, salva la configurazione utente di NVDA nella cartella locale dell'applicazione invece che in roaming application data |
+| ``serviceDebug`` | DWORD | 0 (predefinito) per disabilitare, 1 per abilitare | Se abilitata, disattiva la [Modalità protetta #SecureMode] nelle  [Schermate protette #SecureScreens]. A causa di diverse importanti implicazioni sulla sicurezza, l'uso di questa opzione è fortemente sconsigliato |
+| ``forceSecureMode`` | DWORD | 0 (predefinito) per disabilitare, 1 per abilitare | Se attivata, forza l'attivazione della [Modalità protetta #SecureMode] all'avvio di NVDA. |
 
 + Ulteriori Informazioni +[FurtherInformation]
 Se si vogliono trovare maggiori informazioni o richiedere assistenza riguardo NVDA, si prega di visitare o il sito internazionale in lingua inglese su NVDA_URL, oppure quello relativo alla comunità italiana all'indirizzo www.nvda.it.

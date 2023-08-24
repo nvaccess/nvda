@@ -36,6 +36,39 @@ def isModalMessageBoxActive() -> bool:
 		return _messageBoxCounter != 0
 
 
+def displayDialogAsModal(dialog: wx.Dialog) -> int:
+	"""Display a dialog as modal.
+	@return: Same as for wx.MessageBox.
+
+	`displayDialogAsModal` is a function which blocks the calling thread,
+	until a user responds to the modal dialog.
+	This function should be used when an answer is required before proceeding.
+
+	It's possible for multiple message boxes to be open at a time.
+	Before opening a new messageBox, use `isModalMessageBoxActive`
+	to check if another messageBox modal response is still pending.
+
+	Because an answer is required to continue after a modal messageBox is opened,
+	some actions such as shutting down are prevented while NVDA is in a possibly uncertain state.
+	"""
+	from gui import mainFrame
+	global _messageBoxCounter
+	with _messageBoxCounterLock:
+		_messageBoxCounter += 1
+
+	try:
+		if not dialog.GetParent():
+			mainFrame.prePopup()
+		res = dialog.ShowModal()
+	finally:
+		if not dialog.GetParent():
+			mainFrame.postPopup()
+		with _messageBoxCounterLock:
+			_messageBoxCounter -= 1
+
+	return res
+
+
 def messageBox(
 		message: str,
 		caption: str = wx.MessageBoxCaptionStr,
