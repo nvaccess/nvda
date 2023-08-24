@@ -1,13 +1,7 @@
-<!-- 
-Community triage information from 
-https://github.com/nvaccess/nvda/wiki/Issue-triage-help
- -->
-
-
 ## Intent
 This page intends to outline some of the information that might be helpful to those trying to triage issues.
 
-Most of the issues raised on the NVDA Github repository fall into one of the following categories:
+Most of the issues raised on the NVDA GitHub repository fall into one of the following categories:
 
 - adding support to new applications
 - adding new features in NVDA
@@ -50,14 +44,14 @@ This is the kind of information that might help when investigating the issue fur
 
 - How is the regression triggered? We may call this the steps to reproduce, perhaps even STR for short. What this means is, that we are looking for the set of steps to make the bug happen on our own system.
 - What happens / what is the actual behaviour? Some examples might be:
- - a crash
- - a freeze
- - an error noise
- - A log message
- - If there was an error noise or log message, was there any unexpected behaviour aside from this? For example, did NVDA fail to report something it should have?
+	- a crash
+	- a freeze
+	- an error noise
+	- A log message
+	- If there was an error noise or log message, was there any unexpected behaviour aside from this? For example, did NVDA fail to report something it should have?
 - Even if it seems obvious, what should happen instead? 
- - Its worth clarifying this with the user, it helps to make sure everyone is on the same page, and that we truly understand what the issue is about.
-- What version of NVDA was being used. Its good to get something like: 'stable', 'next', 'rc', 'release'. But much better to get the exact version of NVDA, retrieved from the NVDA menu by going to "Help" then "About". 'next-13896,5322f3d8'
+	- Its worth clarifying this with the user, it helps to make sure everyone is on the same page, and that we truly understand what the issue is about.
+- What version of NVDA was being used. Its good to get something like: stable, beta, rc, alpha. But much better to get the exact version of NVDA, retrieved from the NVDA menu by going to "Help" then "About". "alpha-28931,186a8d70"
 - In which version of NVDA did this work as expected?
 - If some other software is needed to reproduce the issue, it helps to know what that software is and what version is being used with NVDA. It's also useful if a test case / document is provided.
 - Some behaviour is specific to operating systems or versions of operating systems. Sometimes a bug can only be reproduced on that particular version of the operating system. So its important to get this information as well. Similar to the NVDA version information, more specific is better. For instance its good if we know the issue occurred on: 'Windows 7', 'Windows 10 Insider'. But even better is to know the version and build too: 'Windows 10, fast insider, version 1703, build 16170.1000'.
@@ -91,7 +85,7 @@ However, the most important pieces of information for this kind of request are:
 
 Essentially this boils down to:
 
-- What is the use case / user stories,
+- What is the use case / user stories?
 - How does it differ from the intended use case of the feature?
 
 ## Use cases / user stories
@@ -100,11 +94,11 @@ This can often fairly naturally be stated in the following form. As a BLANK (the
 
 Here is an example from a recent Github issue:
 
-> As a Braille user, I notice that the cursor is a different shape when tethered to focus  than it is when tethered to review. This is so that I can tell the difference between the two modes.
+> As a Braille user, I notice that the cursor is a different shape when tethered to focus than it is when tethered to review. This is so that I can tell the difference between the two modes.
 
 ### Who
 
-- Who does it affect? (for instance: Braille users, Speech users, developers working on accessibility for their websites/apps, nvda developers)
+- Who does it affect? (for instance: Braille users, Speech users, developers working on accessibility for their websites/apps, NVDA developers)
 - Knowing who, helps to give an estimate on how many users this will help.
 - It also can help to highlight differences in requirements for different users. This happens when we are unable to define the same use case for two groups of users.
 
@@ -125,31 +119,60 @@ Perhaps once we have this background, a simpler what can be proposed.
 
 ## Summarise the issue
 It's common that this process of collecting information will result in many comments on the issue.
-As the github issue grows, with more comments, questions, and discussion, it's useful to summarise the issues periodically.
+As the GitHub issue grows, with more comments, questions, and discussion, it's useful to summarise the issues periodically.
 This helps to condense various back and forth discussions into the final result.
 This will make it easier for someone to quickly pick up the issue and understand it by reading the summary comment.
 This also serves to re-iterate decisions that have been made throughout the discussion and ensure that everyone is on the same page.
 
-<!-- 
-NV Access triage process from 
-https://github.com/nvaccess/nvda/wiki/Triage-process/
- -->
+## Labelling
+NV Access can grant people who help triage issues the ability to label issues.
+Labelling issues help indicate the priority and current state, helping NV Access and the community to decide on how to prioritise it.
 
-For transparency, the following is a brief outline of the process NV Access is following for issue triage.
-If you would like to help with the triage process (which is an excellent way to make a contribution to NVDA) please refer to [issue triage help on the wiki](https://github.com/nvaccess/nvda/wiki/Issue-triage-help)
+### Types of issues
+Issues can generally be labelled `bug` or `feature`.
+We also have a label for `enhancement`, think of this as a more internal facing change. For instance, editing code comments to provide clearer / more complete information, or extending an internal framework/API to unblock other issues.
+
+### Triaged status
+An issue is triaged if it is ready to be worked on.
+Once a bug has clear steps to reproduce and is well documented, the `triaged` label can be applied.
+New features and enhancements should be [well defined](#new-features-1) before applying the `triaged` label.
+
+If it is a complex issue, technical investigation may be required. This can be indicated with adding the label `blocked/needs-technical-investigation`.
+
+A `triaged` issue that requires a complex fix may require advice from NV Access, such as a project plan, before implementation is started.
+An issue with a simple solution should get labelled `good first issue`.
+
+For controversial changes, a product decision from NV Access may be required before applying the `triaged` label. This can be indicated with adding the label `blocked/needs-product-decision`.
+
+### Priority
+Bugs/regressions are given priorities based on an estimate of their severity and impact.
+
+- `P1`:
+  - Crash, freeze, instability or performance issue that affects most users.
+  - A `P1` causes the inability to perform a popular task or majority of tasks in NVDA or a popular app.
+- `P2`:
+  - Crash, freeze, instability or performance issue that affects a small subset of users. It may be uncommon or difficult to reproduce.
+  - Popular documented feature does not work as expected
+  - Popular task not supported and no work around
+  - Misleading information or misleading handling from a popular task or feature
+- `P3`:
+  - Feature does not work as expected
+  - Task not supported and no work around
+  - Misleading information or misleading handling
+- `P4`:
+  - Useful popular feature request or enhancement
+  - UX inefficient (e.g. double speaking)
+  - Web standard not followed causing app/web authors to require workarounds
+- `P5`
+  - Other feature requests affecting a small subset of users 
+
+## Legacy issues
+Many older issues do not follow our issue template and have missing information.
+Often they have conversation spanning years.
+Summarising this information and opening a new issue filling out the issue template would be extremely useful in triaging these issues.
+
+NV Access migrated tickets from our old issue tracker ('Trac') into Github issues. These issues can be identified by having an author of `nvaccessauto`. 
 
 ### Missing attachments
-NV Access migrated tickets from our old issue tracker ('Trac') into Github issues. These issues can be identified by having an author of `nvaccessauto`. Some of these issues have comments that indicate an attachment should be available, but it is not. All of these Trac attachments are now accessible at: https://www.nvaccess.org/files/nvdaTracAttachments/ (then the Github issue number). So as an example, for issue [#2396](https://github.com/nvaccess/nvda/issues/2396), get the attachments from https://www.nvaccess.org/files/nvdaTracAttachments/2396
-If you come across one of these missing attachments, please upload if you think they're relevant to GitHub. Note you'll need to pay attention to Github's attachment naming restrictions, if it fails try zipping it.
-
-### How prioritisation works
-We differentiate between the priority for bugs (labelled `bug`) and new features (labelled `feature`). Rather than assign a priority to issues with the `feature` label, typically we try to group new features into a project of related work. We should try to ensure that new features are [well defined](https://github.com/nvaccess/nvda/wiki/Issue-triage-help#new-features-1) before applying the `feature` label. One exception here might be if we can determine that a feature is not something we are likely ever to work on. In this case we should apply `P4` and explain this is not something we are going to look at but will be happy to accept a pull request for. We also have a label for `enhancement`, think of this as a more internal facing change. For instance, editing code comments to provide clearer / more complete information, or extending an internal framework/API to unblock other issues.
-
-Bugs/regressions are given priorities based on an estimate of their severity, impact and implementation cost:
-
-- `P1` issues are typically crashes or severe errors that should be fixed immediately.
-- `P2` issues should be among the next issues fixed. Try to start on the oldest of these issues.
-- `P3` issues are less likely to get fixed, we hope to get to them "one day". However if something changes (severity/impact/cost) the priority can be reassessed.
-- `P4` issues probably won't be worked on by NV Access, however we will be happy to provide implementation guidance and accept a Pull Request.
-
-Due to the difficulty in assigning priorities to individual issues, recently (2019) NV Access has asked members of the community to provide their top 2 issues. This data allowed us to find trends resulting in a re-prioritisation of our efforts. While this exercise allowed us to tackle the most important issue for the majority, we are aware that critical issues for smaller groups may be missed. So the above process should still be followed, especially for P1 or P2 issues. If an issue is critical to you, please comment on the issue and explain why.
+Some of the migrated issues have comments that indicate an attachment should be available, but it is not. All of these Trac attachments are accessible on the [NV Access website](https://www.nvaccess.org/files/nvdaTracAttachments/), you can search for issue numbers in the folder, or append the GitHub issue number to the URL. As an example, for issue [#2396](https://github.com/nvaccess/nvda/issues/2396), get the attachments from <https://www.nvaccess.org/files/nvdaTracAttachments/2396>
+If you come across one of these missing attachments, please upload if you think they're relevant to GitHub. Note you'll need to pay attention to GitHub's attachment naming restrictions, if it fails try zipping it.
