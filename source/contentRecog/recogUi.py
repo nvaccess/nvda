@@ -1,8 +1,7 @@
-#contentRecog/recogUi.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2017 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2017-2023 NV Access Limited, James Teh, Leonard de RUijter
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 """User interface for content recognition.
 This module provides functionality to capture an image from the screen
@@ -12,6 +11,7 @@ NVDA scripts or GUI call the L{recognizeNavigatorObject} function with the recog
 """
 
 import api
+import config
 import ui
 import screenBitmap
 import NVDAObjects.window
@@ -24,7 +24,7 @@ import textInfos
 from logHandler import log
 import queueHandler
 import core
-from . import RecogImageInfo, BaseContentRecogTextInfo
+from . import RecogImageInfo, ContentRecognizer
 
 
 class RecogResultNVDAObject(cursorManager.CursorManager, LiveText, NVDAObjects.window.Window):
@@ -33,27 +33,24 @@ class RecogResultNVDAObject(cursorManager.CursorManager, LiveText, NVDAObjects.w
 	Pressing enter will activate (e.g. click) the text at the cursor.
 	Pressing escape dismisses the recognition result.
 	"""
-	#: How often (in ms) to perform recognition.
-	REFRESH_INTERVAL = 1500
 
 	role = controlTypes.Role.DOCUMENT
 	# Translators: The title of the document used to present the result of content recognition.
 	name = _("Result")
 	treeInterceptor = None
 
-	def __init__(self, recognizer=None, imageInfo=None, obj=None):
+	def __init__(
+			self,
+			recognizer: ContentRecognizer,
+			imageInfo: RecogImageInfo,
+			obj: NVDAObjects.NVDAObject
+	):
 		self.parent = parent = api.getFocusObject()
 		self.recognizer = recognizer
 		self.imageInfo = imageInfo
 		self.result = None
-		super(RecogResultNVDAObject, self).__init__(windowHandle=parent.windowHandle)
+		super().__init__(windowHandle=parent.windowHandle)
 		LiveText.initOverlayClass(self)
-
-	def start(self):
-		self._recognize(self._onFirstResult)
-
-	def _get_hasFocus(self):
-		return self is api.getFocusObject()
 
 	def _recognize(self, onResult):
 		if self.result and not self.hasFocus:
@@ -74,7 +71,7 @@ class RecogResultNVDAObject(cursorManager.CursorManager, LiveText, NVDAObjects.w
 		_activeRecog = None
 		# This might get called from a background thread, so any UI calls must be queued to the main thread.
 		if isinstance(result, Exception):
-			log.error("Recognition failed: %s" % result)
+			log.error(f"Recognition failed: {result}")
 			# Translators: Reported when recognition (e.g. OCR) fails.
 			queueHandler.queueFunction(
 				queueHandler.eventQueue, ui.message, _("Recognition failed")
@@ -88,11 +85,9 @@ class RecogResultNVDAObject(cursorManager.CursorManager, LiveText, NVDAObjects.w
 			self._scheduleRecognize()
 
 	def _scheduleRecognize(self):
-		core.callLater(self.REFRESH_INTERVAL, self._recognize, self._onResult)
+		core.callLater(config.conf['uwpOcr']['autoRefreshIntervalMs'], self._recognize, self._onResult)
 
 	def _onResult(self, result):
-		import tones  # jtd
-		tones.beep(1660, 10)  # jtd
 		if not self.hasFocus:
 			# The user has dismissed the recognition result.
 			return
@@ -127,14 +122,20 @@ class RecogResultNVDAObject(cursorManager.CursorManager, LiveText, NVDAObjects.w
 
 	def event_gainFocus(self):
 		super().event_gainFocus()
-		if self.recognizer.allowAutoRefresh:
+		if config.conf['uwpOcr']['autoRefresh'] and self.recognizer.allowAutoRefresh:
 			# Make LiveText watch for and report new text.
 			self.startMonitoring()
 
 	def event_loseFocus(self):
+		# note: If monitoring has not been started, this will have no effect.
+		self.stopMonitoring()
 		super().event_loseFocus()
-		if self.recognizer.allowAutoRefresh:
-			self.stopMonitoring()
+
+	def start(self):
+		self._recognize(self._onFirstResult)
+
+	def _get_hasFocus(self) -> bool:
+		return self is api.getFocusObject()
 
 	def script_activatePosition(self, gesture):
 		try:
@@ -171,13 +172,15 @@ class RecogResultNVDAObject(cursorManager.CursorManager, LiveText, NVDAObjects.w
 		"kb:escape": "exit",
 	}
 
+
 #: Keeps track of the recognition in progress, if any.
 _activeRecog = None
-def recognizeNavigatorObject(recognizer):
+
+
+def recognizeNavigatorObject(recognizer: ContentRecognizer):
 	"""User interface function to recognize content in the navigator object.
 	This should be called from a script or in response to a GUI action.
 	@param recognizer: The content recognizer to use.
-	@type recognizer: L{contentRecog.ContentRecognizer}
 	"""
 	global _activeRecog
 	if isinstance(api.getFocusObject(), RecogResultNVDAObject):
@@ -208,5 +211,5 @@ def recognizeNavigatorObject(recognizer):
 		_activeRecog.recognizer.cancel()
 	# Translators: Reporting when content recognition (e.g. OCR) begins.
 	ui.message(_("Recognizing"))
-	_activeRecog = RecogResultNVDAObject(recognizer=recognizer, imageInfo=imgInfo)
+	_activeRecog = RecogResultNVDAObject(recognizer=recognizer, imageInfo=imgInfo, obj=nav)
 	_activeRecog.start()
