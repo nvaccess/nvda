@@ -16,7 +16,8 @@ There are several approaches you may take for this:
 Forming a group can help you to get good coverage, brainstorm on what should be tested, and perhaps learn new ways to use NVDA.
 
 ## Issue triage and investigation:
-You can also make non-code contributions by helping process incoming GitHub issues. For information on this please see the [triage process](../projectDocs/issues/triage.md).
+You can also make non-code contributions by helping process incoming GitHub issues.
+For information on this please see the [triage process](../projectDocs/issues/triage.md).
 
 ## Code/Docs contributions
 
