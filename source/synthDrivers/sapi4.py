@@ -157,7 +157,7 @@ class SynthDriver(SynthDriver):
 					self._minVolume & 0xffff,
 					self._maxVolume & 0xffff
 				)
-				val+= val << 16
+				val + = val << 16
 				textList.append(f"\\Vol={val}\\")
 			elif isinstance(item, SpeechCommand):
 				log.debugWarning("Unsupported speech command: %s"%item)
