@@ -380,7 +380,7 @@ class UpdateResultDialog(
 				backCompatToAPIVersion=self.backCompatTo
 			))
 			if showAddonCompat:
-				message += + "\n\n" + getAddonCompatibilityMessage()
+				message += "\n\n" + getAddonCompatibilityMessage()
 				confirmationCheckbox = sHelper.addItem(wx.CheckBox(
 					self,
 					label=getAddonCompatibilityConfirmationMessage()

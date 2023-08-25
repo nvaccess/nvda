@@ -347,9 +347,13 @@ La copia instalada también puede crear una copia portable de sí misma en cualq
 La copia portable también tiene la capacidad de instalarse a sí misma en cualquier ordenador en un momento posterior.
 Sin embargo, si deseas copiar NVDA en medios de sólo lectura tales como un CD, sólo deberías copiar el paqquete descargado.
 La ejecución de la versión portable directamente desde un medio de sólo lectura no se admite en este momento.
-Utilizar la copia temporal de NVDA también es una opción (ej.: para propósitos de demostración), aunque arrancar NVDA de esta manera cada vez puede llegar a ser muy lento.
 
-Aparte de la incapacidad de arrancar automáticamente durante y/o después del inicio de sesión, las copias portable y temporal de NVDA también tienen las siguientes restricciones:
+El  [instalador de NVDA #StepsForRunningTheDownloadLauncher] puede utilizarse como una copia temporal de NVDA.
+Las copias temporales impiden guardar la configuración de NVDA.
+Esto incluye la desactivación del uso de la [Tienda de Complementos #AddonsManager].
+
+Las copias portables y temporales de NVDA tienen las siguientes restricciones:
+- La incapacidad de arrancar automáticamente durante y/o después de la autentificación.
 - La incapacidad de interactuar con aplicaciones que se ejecuten con privilegios de administrador, a menos que, por supuesto, el propio NVDA se haya ejecutado también con estos privilegios (no recomendado).
 - La incapacidad de leer las pantallas del Control de Cuentas de Usuario (UAC) al tratar de arrancar una aplicación con privilegios de administrador.
 - Windows 8 y posterior: la incapacidad de admitir la entrada desde una pantalla táctil.

@@ -111,6 +111,7 @@ Die Sprachausgabe eSpeak-NG, der Braille-Übersetzer LibLouis, und das vom Unico
   - NVDA schaltet bei der automatischen Erkennung nicht mehr unnötigerweise mehrmals auf keine Braille-Schrift um, was zu einem saubereren Protokoll und weniger Overhead führt. (#14524)
   - NVDA schaltet nun wieder auf USB um, wenn ein HID-Bluetooth-Gerät (z. B. HumanWare Brailliant oder APH Mantis) automatisch erkannt wird und eine USB-Verbindung verfügbar ist.
   Dies funktionierte bisher nur bei seriellen Bluetooth-Schnittstellen. (#14524)
+  - Ist keine Braillezeile angeschlossen und wird der Braille-Betrachter durch Drücken von ``Alt+F4`` oder durch Anklicken des Schalters "Schließen" geschlossen, wird die Anzeigegröße des Braille-Subsystems sowie auch die Braille-Module wieder zurückgesetzt. (#15214)
   -
 - Web-Browser:
   - NVDA führt nicht mehr gelegentlich dazu, dass Mozilla Firefox abstürzt oder nicht mehr antwortet. (#14647)
@@ -121,7 +122,7 @@ Die Sprachausgabe eSpeak-NG, der Braille-Übersetzer LibLouis, und das vom Unico
   - Beim Versuch, die URL für einen Link ohne href-Attribut mitzuteilen, schweigt NVDA sich nicht mehr aus.
   Stattdessen teilt NVDA mit, dass der Link kein Ziel hat. (#14723)
   - Im Lesemodus ignoriert NVDA nicht mehr fälschlicherweise den Fokus, wenn er zu einem über- oder untergeordneten Steuerelement wechselt, z. B. wenn er von einem Steuerelement zu einem übergeordneten Listenelement oder einer Gitterzelle wechselt. (#14611)
-    - Beachten Sie jedoch, dass diese Korrektur nur gilt, wenn die Option Fokus automatisch auf fokussierbare Elemente setzen" in den Einstellungen für den Lesemodus deaktiviert ist (was die Standardeinstellung ist).
+    - Beachten Sie jedoch, dass diese Korrektur nur gilt, wenn die Option Fokus automatisch auf fokussierbare Elemente setzen" in den Einstellungen für den Lesemodus deaktiviert ist (was die Standard-Einstellung ist).
     -
   -
 - Korrekturen für Windows 11:
@@ -142,7 +143,6 @@ Die Sprachausgabe eSpeak-NG, der Braille-Übersetzer LibLouis, und das vom Unico
 - Beim Erzwingen der UIA-Unterstützung mit bestimmten Terminals und Konsolen wurde ein Fehler behoben, der zu einem Einfrieren und einem Spamming der Protokolldatei führte. (#14689)
 - NVDA verweigert nicht mehr die Konfiguration nach einem Zurücksetzen der Konfiguration zu speichern. (#13187)
 - Wenn eine temporäre Version über den Launcher gestartet wird, führt NVDA den Benutzer nicht mehr in die Irre, dass er die Konfiguration speichern kann. (#14914)
-- Die Mitteilung über Kurzbefehle der Objekte wurde verbessert. (#10807)
 - NVDA reagiert jetzt generell etwas schneller auf Befehle und Fokus-Änderungen. (#14928)
 - Die Anzeige der Einstellungen für die Texterkennung schlägt auf einigen Systemen nicht mehr fehl. (#15017)
 - Behebung eines Fehlers im Zusammenhang mit dem Speichern und Laden der NVDA-Konfiguration, einschließlich des Umschaltens von Sprachausgaben. (#14760)

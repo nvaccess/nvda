@@ -10,37 +10,37 @@ Informacije za programere nisu prevedene, molimo ’pogledajte [englesku inačic
 
 = 2023.2 =
 
-== New Features ==
-- Add-on Store has been added to NVDA. (#13985)
-  - Browse, search, install and update community add-ons.
-  - Manually override incompatibility issues with outdated add-ons.
-  - The Add-ons Manager has been removed and replaced by the Add-on Store.
-  - For more information please read the updated user guide.
+== Nove značajke ==
+- Funkcija Add-on Store je dodana u NVDA. (#13985)
+  - Ona omogućuje pregledavanje, instalaciju i deinstalaciju dodataka zajednice.
+  - Ona dozvoljava ručno rješavanje problema sa kompatibilnošću dodataka.
+  - Upravitelj dodataka je zamijenjen ovom funkcijom.
+  - Za više informacija, molimo pročitajte osvježen vodić za korisnike.
   -
-- Added pronunciation of Unicode symbols:
-  - braille symbols such as "⠐⠣⠃⠗⠇⠐⠜". (#14548)
-  - Mac Option key symbol "⌥". (#14682)
+- Dodan izgovor sljedećih Unicode simbola:
+  - Brajični znakovi poput "⠐⠣⠃⠗⠇⠐⠜". (#14548)
+  - Znak Mac option tipke "⌥". (#14682)
   -
-- New input gestures:
-  - An unbound gesture to cycle through the available languages for Windows OCR. (#13036)
-  - An unbound gesture to cycle through the braille show messages modes. (#14864)
-  - An unbound gesture to toggle showing the selection indicator for braille. (#14948)
+- Nove ulazne geste:
+  - Nedodijeljena gesta za prebacivanje između jezika za Windows OCR. (#13036)
+  - Nedodijeljene geste za prebacivanje između modusa prikazivanja poruka na brajičnim redcima. (#14864)
+  - Nedodijeljena gesta za uključivanje ili isključivanje indikatora označenosti na brajičnim redcima. (#14948)
   -
-- Added gestures for Tivomatic Caiku Albatross Braille displays. (#14844, #15002)
-  - showing the braille settings dialog
-  - accessing the status bar
-  - cycling the braille cursor shape
-  - cycling the braille show messages mode
-  - toggling the braille cursor on/off
-  - toggling the braille show selection indicator state
+- Dodane geste za Tivomatic Caiku Albatross brajične redke. (#14844, #15002)
+  - Prikazivanje brajičnih postavki
+  - pristup traci stanja
+  - izmjena oblika kursora
+  - Izmjena prikazivanja poruka
+  - Uključivanje ili isključivanje brajičnog kursora
+  - Uključivanje ili isključivanje statusa prikazivanja brajičnog kursora
   -
-- A new Braille option to toggle showing the selection indicator (dots 7 and 8). (#14948)
-- In Mozilla Firefox and Google Chrome, NVDA now reports when a control opens a dialog, grid, list or tree if the author has specified this using aria-haspopup. (#14709)
-- It is now possible to use system variables (such as ``%temp%`` or ``%homepath%``) in the path specification while creating portable copies of NVDA. (#14680)
-- Added support for the ``aria-brailleroledescription`` ARIA 1.3 attribute, allowing web authors to override the type of an element shown on the Braille display. (#14748)
-- When highlighted text is enabled Document Formatting, highlight colours are now reported in Microsoft Word. (#7396, #12101, #5866)
-- When colors are enabled Document Formatting, background colours are now reported in Microsoft Word. (#5866)
-- When pressing ``numpad2`` three times to report the numerical value of the character at the position of the review cursor, the information is now also provided in braille. (#14826)
+- Nova opcija za brajične redke koja služi za uključivanje ili isključivanje indikacije stanja označenosti (točkice 7 i 8). (#14948)
+- U Mozilla Firefoxu i Google Chromeu, NVDA sada izgovara događaj prilikom kojeg kontrola prouzrokuje otvaranje popisa, mreže, ili stabla, ako je to autor odredio koristeći parametar aria-haspopup. (#14709)
+- Sada je moguće koristiti varijable sustava poput ``%temp%`` ili ``%homepath%``) u specifikaciji odredišta prilikom stvaranja prijenosne kopije NVDA. (#14680)
+- Dodana podrška za ``aria-brailleroledescription`` ARIA 1.3 atribut, koji omogućuje autorima web stranica nadpisivanje tipa elementa koji se prikazuje na brajičnom redku. (#14748)
+- Kada je uključena opcija isticanja teksta u opcijama oblikovanja dokumenta, boje isticanja se sada čitaju u Microsoft Wordu. (#7396, #12101, #5866)
+- Kada je uključeno čitanje izgovora boja u oblikovanju dokumenata, pozadinske boje se čitaju u Microsoft Word. (#5866)
+- Kada se pritisne ``numerička dvojka`` tri puta za čitanje numeričke vrijednosti znakova na poziciji preglednog kursora, informacija se sada prikazuje i na brajici. (#14826)
 - NVDA now outputs audio via the Windows Audio Session API (WASAPI), which may improve the responsiveness, performance and stability of NVDA speech and sounds.
 This can be disabled in Advanced settings if audio problems are encountered. (#14697)
 - When using Excel shortcuts to toggle format such as bold, italic, underline and strike through of a cell in Excel, the result is now reported. (#14923)

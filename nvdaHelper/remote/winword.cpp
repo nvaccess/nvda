@@ -1145,11 +1145,33 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 		IDispatchPtr pDispatchParagraphs=NULL;
 	IDispatchPtr pDispatchParagraph=NULL;
 	IDispatchPtr pDispatchParagraphRange=NULL;
-	if(formatConfig&formatConfig_reportComments||initialFormatConfig&formatConfig_reportHeadings) {
-		if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_PARAGRAPHS,VT_DISPATCH,&pDispatchParagraphs)==S_OK&&pDispatchParagraphs) {
-			if(_com_dispatch_raw_method(pDispatchParagraphs,wdDISPID_PARAGRAPHS_ITEM,DISPATCH_METHOD,VT_DISPATCH,&pDispatchParagraph,L"\x0003",1)==S_OK&&pDispatchParagraph) {
-				_com_dispatch_raw_propget(pDispatchParagraph,wdDISPID_PARAGRAPH_RANGE,VT_DISPATCH,&pDispatchParagraphRange);
-			}
+	if (
+		S_OK == _com_dispatch_raw_propget(
+			pDispatchRange,
+			wdDISPID_RANGE_PARAGRAPHS,
+			VT_DISPATCH,
+			&pDispatchParagraphs
+		)
+		&& pDispatchParagraphs
+	) {
+		if(
+			S_OK == _com_dispatch_raw_method(
+				pDispatchParagraphs,
+				wdDISPID_PARAGRAPHS_ITEM,
+				DISPATCH_METHOD,
+				VT_DISPATCH,
+				&pDispatchParagraph,
+				L"\x0003",
+				1
+			)
+			&& pDispatchParagraph
+		) {
+			_com_dispatch_raw_propget(
+				pDispatchParagraph,
+				wdDISPID_PARAGRAPH_RANGE,
+				VT_DISPATCH,
+				&pDispatchParagraphRange
+			);
 		}
 	}
 	vector<pair<long,long> > commentVector;

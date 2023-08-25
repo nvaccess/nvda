@@ -311,7 +311,7 @@ Si vous avez déjà installé des extensions, il peut également y avoir un aver
 Avant de pouvoir presser le bouton Continuer, vous devrez utiliser la case à cocher pour confirmer que vous comprenez que ces extensions seront désactivées.
 Il y aura également un bouton pour lister les extensions qui seront désactivées.
 Veuillez consulter la section [dialogue des extensions incompatibles #incompatibleAddonsManager] pour plus d'aide concernant ce bouton.
-Après l'installation, vous pouvez réactiver les modules complémentaires incompatibles à vos risques et périls depuis [Add-on Store #AddonsManager].
+Après l'installation, vous pouvez réactiver les extensions incompatibles à vos risques et périls à partir de l'[Add-on Store #AddonsManager].
 
 +++ Utiliser NVDA lors de la connexion +++[StartAtWindowsLogon]
 Cette option vous permet de choisir si NVDA doit ou non démarrer automatiquement lorsque vous êtes sur l'écran de connexion Windows, avant que vous ayez entré un mot de passe.
@@ -347,13 +347,17 @@ La copie installée est également capable de créer une copie portable d'elle-m
 La copie portable a également la capacité de s'installer sur n'importe quel ordinateur ultérieurement.
 Cependant, si vous souhaitez copier NVDA sur un support en lecture seule tel qu'un CD, vous devez simplement copier le package de téléchargement.
 L'exécution de la version portable directement à partir d'un support en lecture seule n'est pas prise en charge pour le moment.
-L'utilisation de la copie temporaire de NVDA est également une option (par exemple à des fins de démonstration), bien que démarrer NVDA de cette manière à chaque fois puisse prendre beaucoup de temps.
 
-Outre l'impossibilité de démarrer automatiquement pendant ou après l'ouverture de session, les versions portables et temporaires de NVDA ont également les restrictions suivantes :
-- Impossible d'interagir avec les applications démarrées avec les privilèges administrateur, sauf bien sûr si NVDA a été démarré avec ces privilèges (non recommandé) ;
-- Impossible de lire les écrans de contrôle de compte utilisateur (UAC) lorsque l'on tente de démarrer une application avec les privilèges administrateur ;
-- Windows 8 et au-delà : impossible d'utiliser un écran tactile comme support d'entrée ;
-- Windows 8 et au-delà : impossible de prendre en charge des fonctionnalités comme le mode navigation ou l'annonce des caractères saisis dans les applications du Windows Store.
+Le [programme d'installation de NVDA #StepsForRunningTheDownloadLauncher] peut être utilisé comme une copie temporaire de NVDA.
+Les copies temporaires empêchent l'enregistrement des paramètres de NVDA.
+Cela inclut la désactivation de l'utilisation de l'[Add-on Store #AddonsManager].
+
+Les copies portables et temporaires de NVDA ont les restrictions suivantes :
+- L'impossibilité de démarrer automatiquement pendant et/ou après la connexion.
+- L'impossibilité d'interagir avec les applications démarrées avec les privilèges administrateur, sauf bien sûr si NVDA a été démarré avec ces privilèges (non recommandé) ;
+- L'impossibilité de lire les écrans de contrôle de compte utilisateur (UAC) lorsque l'on tente de démarrer une application avec les privilèges administrateur ;
+- Windows 8 et au-delà : l'impossibilité d'utiliser un écran tactile comme support d'entrée ;
+- Windows 8 et au-delà : l'impossibilité de prendre en charge des fonctionnalités comme le mode navigation ou l'annonce des caractères saisis dans les applications du Windows Store.
 - Windows 8 et au-delà : l'atténuation audio n'est pas supportée.
 -
 
@@ -612,9 +616,9 @@ Pour naviguer par objet, utilisez les commandes suivantes :
 | Annonce de l'objet courant | NVDA+pavnum5 | NVDA+Maj+o | Aucun | Annonce l'objet navigateur courant, deux appuis épellent l'information, trois appuis copient le nom et le contenu de l'objet dans le presse-papiers |
 | Aller à l'objet parent | NVDA+pavnum8 | NVDA+maj+flèche haut | Glisser vers le haut (mode objet) | Va à l'objet parent (qui contient l'objet navigateur courant) |
 | Aller à l'objet précédent | NVDA+pavnum4 | NVDA+maj+flèchegauche | aucun | Se déplace vers l'objet avant l'objet navigateur courant |
-| Aller à l'objet précédent en vue à plat | NVDA+pavnum9 | NVDA+maj+ù | feuilleter vers la gauche (mode objet) | Passe à l'objet précédent dans une vue à plat de la hiérarchie de navigation d'objets |
+| Aller à l'objet précédent en vue à plat | NVDA+pavnum9 | NVDA+maj+ù | glisser vers la gauche (mode objet) | Passe à l'objet précédent dans une vue à plat de la hiérarchie de navigation d'objets |
 | Passer à l'objet suivant | NVDA+pavnum6 | NVDA+maj+flècheDroite | aucun | Se déplace vers l'objet après l'objet navigateur courant |
-| Passer à l'objet suivant dans la vue à plat | NVDA+pavnum3 | NVDA+maj+* | feuilleter vers la droite (mode objet) | Passe à l'objet suivant dans une vue à plat de la hiérarchie de navigation d'objets |
+| Passer à l'objet suivant dans la vue à plat | NVDA+pavnum3 | NVDA+maj+* | glisser vers la droite (mode objet) | Passe à l'objet suivant dans une vue à plat de la hiérarchie de navigation d'objets |
 | Aller au premier objet inclus | NVDA+pavnum2 | NVDA+maj+flèche bas | Glisser vers le bas (mode objet) | Va au premier objet inclus dans l'objet navigateur courant |
 | Aller à l'objet en focus | NVDA+pavnumMoins | NVDA+retour arrière | Aucun | Va à l'objet ayant le focus système, et place le curseur de revue sur le curseur système s'il est présent |
 | Activer l'objet navigateur courant | NVDA+pavnumEntrer | NVDA+entrer | Double tape | Active l'objet navigateur courant (similaire à un clic de souris ou à appuyer la barre d'espace quand l'objet a le focus système) |
@@ -2615,7 +2619,7 @@ En général, cette configuration n'a pas à être modifiée.
 Pour modifier cette configuration, configurez NVDA à votre convenance, sauvegardez la configuration puis cliquez sur le bouton "Utiliser les paramètres NVDA actuellement sauvegardés pour l'écran de connexion à Windows (nécessite des privilèges administrateur)" dans la catégorie Général du dialogue [Paramètres #NVDASettings].
 
 + Extensions et Add-on Store + [AddonsManager]
-Les extensions sont des packages logiciels qui fournissent des fonctionnalités nouvelles ou modifiées pour NVDA.
+Les extensions sont des paquets logiciels qui fournissent des fonctionnalités nouvelles ou modifiées pour NVDA.
 Elles sont développées par la communauté NVDA et des organisations externes telles que des fournisseurs commerciaux.
 Les extensions peuvent effectuer l'une des opérations suivantes :
 - Ajoutez ou améliorez la prise en charge de certaines applications.
@@ -2623,14 +2627,14 @@ Les extensions peuvent effectuer l'une des opérations suivantes :
 - Ajouter ou modifier des fonctionnalités dans NVDA.
 -
 
-La boutique d'extensions (Add-on Store) de NVDA vous permet de parcourir et de gérer les packages d'extensions.
-Toutes les extensions disponibles dans la boutique d'extensions peuvent être téléchargées gratuitement.
+L'Add-on Store de NVDA vous permet de parcourir et de gérer les paquets  d'extensions.
+Toutes les extensions disponibles dans l'Add-on Store peuvent être téléchargées gratuitement.
 Cependant, certaines d'entre elles peuvent exiger que les utilisateurs paient une licence ou un logiciel supplémentaire avant de pouvoir les utiliser.
 Les synthétiseurs vocaux commerciaux sont un exemple de ce type d'extension.
 Si vous installez une extension avec des composants payants et que vous changez d'avis quant à son utilisation, l'extension peut être facilement supprimée.
 
-L'add-on store est accessible depuis le sous-menu Outils du menu NVDA.
-Pour accéder à l'add-on store de n'importe où, attribuez un geste personnalisé à l'aide de la [boîte de dialogue Gestes de commandes #InputGestures].
+L'Add-on Store est accessible depuis le sous-menu Outils du menu NVDA.
+Pour accéder à l'Add-on Store de n'importe où, attribuez un geste personnalisé à l'aide de la [boîte de dialogue Gestes de commandes #InputGestures].
 
 ++ Parcourir les extensions ++[AddonStoreBrowsing]
 Lorsqu'il est ouvert, l'Add-on Store affiche une liste d'extensions.
@@ -2693,11 +2697,11 @@ Vous pouvez installer et mettre à jour des extensions en [parcourant les extens
 Sélectionnez une extension dans l'onglet "Extensions disponibles" ou "Extensions pouvant être mises à jour".
 Utilisez ensuite l'action de mise à jour, d'installation ou de remplacement pour démarrer l'installation.
 
-Pour installer une extension que vous avez obtenue en dehors de l'add-on store, appuyez sur le bouton "Installer à partir d'une source externe".
-Cela vous permettra de rechercher un package complémentaire (fichier ``.nvda-addon``) quelque part sur votre ordinateur ou sur un réseau.
- Une fois que vous avez ouvert le package complémentaire, le processus d'installation commencera.
+Pour installer une extension que vous avez obtenue en dehors de l'Add-on Store, appuyez sur le bouton "Installer à partir d'une source externe".
+Cela vous permettra de rechercher un paquet d'extension (fichier ``.nvda-addon``) quelque part sur votre ordinateur ou sur un réseau.
+ Une fois que vous avez ouvert le paquet d'extension le processus d'installation commencera.
 
-Si NVDA est installé et en cours d'exécution sur votre système, vous pouvez également ouvrir un fichier complémentaire directement depuis le navigateur ou le système de fichiers pour commencer le processus d'installation.
+Si NVDA est installé et en cours d'exécution sur votre système, vous pouvez également ouvrir un fichier d'extension directement depuis le navigateur ou le système de fichiers pour commencer le processus d'installation.
 
 Lorsqu'une extension est installée depuis une source externe, NVDA vous demandera de confirmer l'installation.
 Une fois l'extension installée, NVDA doit être redémarré pour que l'extension démarre, bien que vous puissiez reporter le redémarrage de NVDA si vous avez d'autres extensions à installer ou à mettre à jour.
@@ -2786,8 +2790,8 @@ Pour activer/désactiver la visionneuse braille de n'importe où, Veuillez assig
 La console Python de NVDA, disponible sous Outils dans le menu NVDA, est un outil de développement utile pour le débogage, l'inspection générale des internes de NVDA ou l'inspection de la hiérarchie d'accessibilité d'une application.
 Pour plus d'informations, veuillez consulter le [Guide de développement NVDA https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
 
-++ Add-on store ++
-Cela ouvrira l'add-on store de NVDA #AddonsManager].
+++ Add-on Store ++
+Cela ouvrira l'[Add-on Store de NVDA #AddonsManager].
 Pour plus d'informations, lisez la section détaillée : [Extensions et Add-on Store #AddonsManager].
 
 ++ Créer une copie portable ++[CreatePortableCopy]
