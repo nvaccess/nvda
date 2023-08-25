@@ -1089,6 +1089,8 @@ Once recognition is complete, the result will be presented in a document similar
 Pressing enter or space will activate (normally click) the text at the cursor if possible.
 Pressing escape dismisses the recognition result.
 
+When you want to monitor constantly changing content, such as when watching a video with sub titles, you can optionally enable automatic refresh of the recognized content in the [Windows OCR category #Win10OcrSettings] of the [NVDA Settings #NVDASettings] dialog.
+
 ++ Windows OCR ++[Win10Ocr]
 Windows 10 and later includes OCR for many languages.
 NVDA can use this to recognize text from images or inaccessible applications.
@@ -2185,6 +2187,11 @@ This category contains the following options:
 ==== Recognition language ====[Win10OcrSettingsRecognitionLanguage]
 This combo box allows you to choose the language to be used for text recognition.
 To cycle through available languages from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
+
+==== Periodically refresh recognized content ====[Win10OcrSettingsAutoRefresh]
+When this check box is enabled, NVDA will automatically refresh the recognized content when a recognizition result has focus.
+This can be very useful when you want to monitor constantly changing content, such as when watching a video with sub titles.
+This option is disabled by default.
 
 +++ Advanced Settings +++[AdvancedSettings]
 Warning! The settings in this category are for advanced users and may cause NVDA to not function correctly if configured in the wrong way.
