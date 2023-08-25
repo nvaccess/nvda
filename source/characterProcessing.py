@@ -1,38 +1,53 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2010-2021 NV Access Limited, World Light Information Limited,
-# Hong Kong Blind Union, Babbage B.V., Julien Cochuyt
+# Copyright (C) 2010-2023 NV Access Limited, World Light Information Limited,
+# Hong Kong Blind Union, Babbage B.V., Julien Cochuyt, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from versionInfo import version_year
 from enum import IntEnum
 import os
 import codecs
 import collections
 import re
+from typing import (
+	Callable,
+	Dict,
+	Generic,
+	List,
+	Optional,
+	Tuple,
+	TypeVar,
+)
+
 from logHandler import log
 import globalVars
 import config
+from NVDAState import WritePaths
 
-class LocaleDataMap(object):
+
+_LocaleDataT = TypeVar("_LocaleDataT")
+
+
+class LocaleDataMap(Generic[_LocaleDataT], object):
 	"""Allows access to locale-specific data objects, dynamically loading them if needed on request"""
 
-	def __init__(self,localeDataFactory):
+	def __init__(
+			self,
+			localeDataFactory: Callable[[str], _LocaleDataT]
+	):
 		"""
 		@param localeDataFactory: the factory to create data objects for the requested locale.
 		""" 
-		self._localeDataFactory=localeDataFactory
-		self._dataMap={}
+		self._localeDataFactory: Callable[[str], _LocaleDataT] = localeDataFactory
+		self._dataMap: Dict[str, _LocaleDataT] = {}
 
-	def fetchLocaleData(self,locale,fallback=True):
+	def fetchLocaleData(self, locale: str, fallback: bool = True) -> _LocaleDataT:
 		"""
 		Fetches a data object for the given locale. 
 		This may mean that the data object is first created and stored if it does not yet exist in the map.
 		The locale is also simplified (country is dropped) if the fallback argument is True and the full locale can not be used to create a data object.
 		@param locale: the locale of the data object requested
-		@type locale: string
 		@param fallback: if true and there is no data for the locale, then the country (if it exists) is stripped and just the language is tried.
-		@type fallback: boolean
 		@return: the data object for the given locale
 		"""
 		localeList=[locale]
@@ -50,11 +65,10 @@ class LocaleDataMap(object):
 			return data
 		raise LookupError(locale)
 
-	def invalidateLocaleData(self, locale):
+	def invalidateLocaleData(self, locale: str) -> None:
 		"""Invalidate the data object (if any) for the given locale.
 		This will cause a new data object to be created when this locale is next requested.
 		@param locale: The locale for which the data object should be invalidated.
-		@type locale: str
 		"""
 		try:
 			del self._dataMap[locale]
@@ -73,12 +87,11 @@ class CharacterDescriptions(object):
 	The data is loaded from a file from the requested locale.
 	"""
 
-	def __init__(self,locale):
+	def __init__(self, locale: str):
 		"""
 		@param locale: The characterDescriptions.dic file will be found by using this locale.
-		@type locale: string
 		"""
-		self._entries = {}
+		self._entries: Dict[str, List[str]] = {}
 		fileName = os.path.join(globalVars.appDir, 'locale', locale, 'characterDescriptions.dic')
 		if not os.path.isfile(fileName): 
 			raise LookupError(fileName)
@@ -96,23 +109,22 @@ class CharacterDescriptions(object):
 		log.debug("Loaded %d entries." % len(self._entries))
 		f.close()
 
-	def getCharacterDescription(self, character):
+	def getCharacterDescription(self, character: str) -> Optional[List[str]]:
 		"""
 		Looks up the given character and returns a list containing all the description strings found.
 		"""
 		return self._entries.get(character)
 
-_charDescLocaleDataMap=LocaleDataMap(CharacterDescriptions)
 
-def getCharacterDescription(locale,character):
+_charDescLocaleDataMap: LocaleDataMap[CharacterDescriptions] = LocaleDataMap(CharacterDescriptions)
+
+
+def getCharacterDescription(locale: str, character: str) -> Optional[List[str]]:
 	"""
-	Finds a description or examples for the given character, which makes sence in the given locale.
+	Finds a description or examples for the given character, which makes sense in the given locale.
 	@param locale: the locale (language[_COUNTRY]) the description should be for.
-	@type locale: string
-	@param character: the character  who's description should be retreaved.
-	@type character: string
-	@return:  the found description for the given character
-	@rtype: list of strings
+	@param character: the character to fetch the description for.
+	@return: the found description for the given character
 	"""
 	try:
 		l=_charDescLocaleDataMap.fetchLocaleData(locale)
@@ -135,15 +147,6 @@ class SymbolLevel(IntEnum):
 	CHAR = 1000
 	UNCHANGED = -1
 
-
-# The following SYMLVL_ constants are deprecated in #11856 but remain to maintain backwards compatibility.
-# Remove these in 2022.1 and replace instances using them with the SymbolLevel IntEnum.
-if version_year < 2022:
-	SYMLVL_NONE = SymbolLevel.NONE
-	SYMLVL_SOME = SymbolLevel.SOME
-	SYMLVL_MOST = SymbolLevel.MOST
-	SYMLVL_ALL = SymbolLevel.ALL
-	SYMLVL_CHAR = SymbolLevel.CHAR
 
 SPEECH_SYMBOL_LEVEL_LABELS = {
 	# Translators: The level at which the given symbol will be spoken.
@@ -209,12 +212,10 @@ class SpeechSymbols(object):
 		self.symbols = collections.OrderedDict()
 		self.fileName = None
 
-	def load(self, fileName, allowComplexSymbols=True):
+	def load(self, fileName: str, allowComplexSymbols: bool = True) -> None:
 		"""Load symbol information from a file.
 		@param fileName: The name of the file from which to load symbol information.
-		@type fileName: str
 		@param allowComplexSymbols: Whether to allow complex symbols.
-		@type allowComplexSymbols: bool
 		@raise IOError: If the file cannot be read.
 		"""
 		self.fileName = fileName
@@ -239,7 +240,7 @@ class SpeechSymbols(object):
 					log.warning(u"Invalid line in file {file}: {line}".format(
 						file=fileName, line=line))
 
-	def _loadComplexSymbol(self, line):
+	def _loadComplexSymbol(self, line: str) -> None:
 		try:
 			identifier, pattern = line.split("\t")
 		except TypeError:
@@ -373,9 +374,16 @@ class SpeechSymbols(object):
 		return u"\t".join(fields)
 
 _noSymbolLocalesCache = set()
-def _getSpeechSymbolsForLocale(locale):
-	if locale in _noSymbolLocalesCache:
+_noCLDRLocalesCache = set()
+
+
+def _getSpeechSymbolsForLocale(locale: str) -> Tuple[SpeechSymbols, SpeechSymbols]:
+	if (
+		locale in _noSymbolLocalesCache
+		and (locale in _noCLDRLocalesCache or not config.conf['speech']['includeCLDR'])
+	):
 		raise LookupError
+	builtinDataImported = False
 	builtin = SpeechSymbols()
 	if config.conf['speech']['includeCLDR']:
 		# Try to load CLDR data when processing is on.
@@ -386,19 +394,24 @@ def _getSpeechSymbolsForLocale(locale):
 				os.path.join(globalVars.appDir, "locale", locale, "cldr.dic"),
 				allowComplexSymbols=False
 			)
+			builtinDataImported = True
 		except IOError:
+			_noCLDRLocalesCache.add(locale)
 			log.debugWarning("No CLDR data for locale %s" % locale)
 	try:
 		builtin.load(os.path.join(globalVars.appDir, "locale", locale, "symbols.dic"))
+		builtinDataImported = True
 	except IOError:
 		_noSymbolLocalesCache.add(locale)
+		log.debugWarning("No symbol data for locale %s" % locale)
+	if not builtinDataImported:
 		raise LookupError("No symbol information for locale %s" % locale)
 	user = SpeechSymbols()
+	pathToSymbolsDic = WritePaths.getSymbolsConfigFile(locale)
 	try:
 		# Don't allow users to specify complex symbols
 		# because an error will cause the whole processor to fail.
-		user.load(os.path.join(globalVars.appArgs.configPath, "symbols-%s.dic" % locale),
-			allowComplexSymbols=False)
+		user.load(pathToSymbolsDic, allowComplexSymbols=False)
 	except IOError:
 		# An empty user SpeechSymbols is okay.
 		pass
@@ -411,7 +424,7 @@ class SpeechSymbolProcessor(object):
 	"""
 
 	#: Caches symbol data for locales.
-	localeSymbols = LocaleDataMap(_getSpeechSymbolsForLocale)
+	localeSymbols: LocaleDataMap[Tuple[SpeechSymbols, SpeechSymbols]] = LocaleDataMap(_getSpeechSymbolsForLocale)
 
 	def __init__(self, locale):
 		"""Constructor.
@@ -576,7 +589,9 @@ class SpeechSymbolProcessor(object):
 			text = m.group()
 			symbol = self.computedSymbols[text[0]]
 			if self._level >= symbol.level:
-				return u" {count} {char} ".format(count=len(text), char=symbol.replacement)
+				return "  {count} {char} ".format(count=len(text), char=symbol.replacement)
+			elif symbol.preserve in [SYMPRES_ALWAYS, SYMPRES_NOREP]:
+				return text
 			else:
 				return " "
 
@@ -663,17 +678,16 @@ class SpeechSymbolProcessor(object):
 		except KeyError:
 			pass
 
-	def isBuiltin(self, symbolIdentifier):
+	def isBuiltin(self, symbolIdentifier: str) -> bool:
 		"""Determine whether a symbol is built in.
 		@param symbolIdentifier: The identifier of the symbol in question.
-		@type symbolIdentifier: str
 		@return: C{True} if the symbol is built in,
 			C{False} if it was added by the user.
-		@rtype: bool
 		"""
 		return any(symbolIdentifier in source.symbols for source in self.builtinSources)
 
-_localeSpeechSymbolProcessors = LocaleDataMap(SpeechSymbolProcessor)
+
+_localeSpeechSymbolProcessors: LocaleDataMap[SpeechSymbolProcessor] = LocaleDataMap(SpeechSymbolProcessor)
 
 
 def processSpeechSymbols(locale: str, text: str, level: SymbolLevel):

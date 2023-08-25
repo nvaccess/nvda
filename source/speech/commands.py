@@ -10,7 +10,9 @@ Commands that can be embedded in a speech sequence for changing synth parameters
 """
  
 from abc import ABCMeta, abstractmethod
-from typing import Optional, Callable
+from typing import (
+	Optional,
+)
 
 import config
 from synthDriverHandler import getSynth
@@ -144,19 +146,28 @@ class LangChangeCommand(SynthParamCommand):
 	def __repr__(self):
 		return "LangChangeCommand (%r)"%self.lang
 
+	def __eq__(self, __o: object) -> bool:
+		if __o is self:
+			# __o is a reference to the same object.
+			# Check performed first for performance reasons.
+			return True
+		if isinstance(__o, LangChangeCommand):
+			return self.lang == __o.lang
+		return super().__eq__(__o)
+
 class BreakCommand(SynthCommand):
 	"""Insert a break between words.
 	"""
 
-	def __init__(self, time=0):
+	def __init__(self, time: int = 0):
 		"""
 		@param time: The duration of the pause to be inserted in milliseconds.
-		@param time: int
 		"""
 		self.time = time
+		"""Time in milliseconds"""
 
 	def __repr__(self):
-		return "BreakCommand(time=%d)" % self.time
+		return f"BreakCommand(time={self.time})"
 
 class EndUtteranceCommand(SpeechCommand):
 	"""End the current utterance at this point in the speech.
@@ -341,7 +352,13 @@ class BeepCommand(BaseCallbackCommand):
 
 	def run(self):
 		import tones
-		tones.beep(self.hz, self.length, left=self.left, right=self.right)
+		tones.beep(
+			self.hz,
+			self.length,
+			left=self.left,
+			right=self.right,
+			isSpeechBeepCommand=True
+		)
 
 	def __repr__(self):
 		return "BeepCommand({hz}, {length}, left={left}, right={right})".format(
@@ -356,7 +373,7 @@ class WaveFileCommand(BaseCallbackCommand):
 
 	def run(self):
 		import nvwave
-		nvwave.playWaveFile(self.fileName, asynchronous=True)
+		nvwave.playWaveFile(self.fileName, asynchronous=True, isSpeechWaveFileCommand=True)
 
 	def __repr__(self):
 		return "WaveFileCommand(%r)" % self.fileName

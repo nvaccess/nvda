@@ -13,7 +13,7 @@ import winUser
 class AppModule(appModuleHandler.AppModule):
 
 	def event_gainFocus(self, obj, nextHandler):
-		if obj.role == controlTypes.ROLE_DOCUMENT and controlTypes.STATE_BUSY in obj.states and winUser.isWindowVisible(obj.windowHandle):
+		if obj.role == controlTypes.Role.DOCUMENT and controlTypes.State.BUSY in obj.states and winUser.isWindowVisible(obj.windowHandle):
 			statusBar = api.getStatusBar()
 			if statusBar:
 				try:
@@ -22,7 +22,7 @@ class AppModule(appModuleHandler.AppModule):
 				except:
 					# Fall back to reading the entire status bar.
 					statusText = api.getStatusBarText(statusBar)
-				speech.speakMessage(controlTypes.stateLabels[controlTypes.STATE_BUSY])
+				speech.speakMessage(controlTypes.State.BUSY.displayString)
 				speech.speakMessage(statusText)
 				return
 		nextHandler()

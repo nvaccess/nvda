@@ -1,16 +1,22 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2012-2021 NV Access Limited, Zahari Yurukov, Babbage B.V., Joseph Lee
+# Copyright (C) 2012-2023 NV Access Limited, Zahari Yurukov, Babbage B.V., Joseph Lee
 
 """Update checking functionality.
 @note: This module may raise C{RuntimeError} on import if update checking for this build is not supported.
 """
-from typing import Dict, Optional, Tuple
+from typing import (
+	Any,
+	Dict,
+	Optional,
+	Tuple,
+)
 import garbageHandler
 import globalVars
 import config
 import core
+from NVDAState import WritePaths
 if globalVars.appArgs.secure:
 	raise RuntimeError("updates disabled in secure mode")
 elif config.isAppX:
@@ -42,7 +48,12 @@ import synthDriverHandler  # noqa: E402
 import braille
 import gui
 from gui import guiHelper
+from gui.message import displayDialogAsModal  # noqa: E402
 from addonHandler import getCodeAddon, AddonError, getIncompatibleAddons
+from _addonStore.models.version import (  # noqa: E402
+	getAddonCompatibilityMessage,
+	getAddonCompatibilityConfirmationMessage,
+)
 from logHandler import log, isPathExternalToNVDA
 import config
 import shellapi
@@ -60,7 +71,7 @@ RETRY_INTERVAL = 600 # 10 min
 DOWNLOAD_BLOCK_SIZE = 8192 # 8 kb
 
 #: directory to store pending update files
-storeUpdatesDir=os.path.join(globalVars.appArgs.configPath, 'updates')
+storeUpdatesDir = WritePaths.updatesDir
 try:
 	os.makedirs(storeUpdatesDir)
 except OSError:
@@ -68,12 +79,12 @@ except OSError:
 		log.debugWarning("Default download path for updates %s could not be created."%storeUpdatesDir)
 
 #: Persistent state information.
-#: @type: dict
-state = None
-_stateFileName = None
+state: Optional[Dict[str, Any]] = None
+
 #: The single instance of L{AutoUpdateChecker} if automatic update checking is enabled,
 #: C{None} if it is disabled.
-autoChecker = None
+autoChecker: Optional["AutoUpdateChecker"] = None
+
 
 def getQualifiedDriverClassNameForStats(cls):
 	""" fetches the name from a given synthDriver or brailleDisplay class, and appends core for in-built code, the add-on name for code from an add-on, or external for code in the NVDA user profile.
@@ -119,7 +130,11 @@ def checkForUpdate(auto: bool = False) -> Optional[Dict]:
 		"version": versionInfo.version,
 		"versionType": versionInfo.updateVersionType,
 		"osVersion": winVersionText,
+		# Check if the architecture is the most common: "AMD64"
+		# Available values of PROCESSOR_ARCHITEW6432 found in:
+		# https://docs.microsoft.com/en-gb/windows/win32/winprog64/wow64-implementation-details
 		"x64": os.environ.get("PROCESSOR_ARCHITEW6432") == "AMD64",
+		"osArchitecture": os.environ.get("PROCESSOR_ARCHITEW6432"),
 	}
 	if auto and allowUsageStats:
 		synthDriverClass = synthDriverHandler.getSynth().__class__
@@ -138,7 +153,7 @@ def checkForUpdate(auto: bool = False) -> Optional[Dict]:
 	try:
 		res = urllib.request.urlopen(url)
 	except IOError as e:
-		if isinstance(e.strerror, ssl.SSLError) and e.strerror.reason == "CERTIFICATE_VERIFY_FAILED":
+		if isinstance(e.reason, ssl.SSLCertVerificationError) and e.reason.reason == "CERTIFICATE_VERIFY_FAILED":
 			# #4803: Windows fetches trusted root certificates on demand.
 			# Python doesn't trigger this fetch (PythonIssue:20916), so try it ourselves
 			_updateWindowsRootCertificates()
@@ -216,7 +231,7 @@ def _executeUpdate(destPath):
 		if os.access(portablePath, os.W_OK):
 			executeParams = u'--create-portable --portable-path "{portablePath}" --config-path "{configPath}" -m'.format(
 				portablePath=portablePath,
-				configPath=globalVars.appArgs.configPath
+				configPath=WritePaths.configDir
 			)
 		else:
 			executeParams = u"--launcher"
@@ -246,6 +261,7 @@ class UpdateChecker(garbageHandler.TrackedObject):
 
 	def _bg(self):
 		try:
+			assert state is not None
 			info = checkForUpdate(self.AUTO)
 		except:
 			log.debugWarning("Error checking for update", exc_info=True)
@@ -364,19 +380,10 @@ class UpdateResultDialog(
 				backCompatToAPIVersion=self.backCompatTo
 			))
 			if showAddonCompat:
-				message = message + _(
-					# Translators: A message indicating that some add-ons will be disabled
-					# unless reviewed before installation.
-					"\n\n"
-					"However, your NVDA configuration contains add-ons that are incompatible with this version of NVDA. "
-					"These add-ons will be disabled after installation. If you rely on these add-ons, "
-					"please review the list to decide whether to continue with the installation"
-				)
+				message += "\n\n" + getAddonCompatibilityMessage()
 				confirmationCheckbox = sHelper.addItem(wx.CheckBox(
 					self,
-					# Translators: A message to confirm that the user understands that addons that have not been
-					# reviewed and made available, will be disabled after installation.
-					label=_("I understand that these incompatible add-ons will be disabled")
+					label=getAddonCompatibilityConfirmationMessage()
 				))
 				confirmationCheckbox.Bind(
 					wx.EVT_CHECKBOX,
@@ -458,7 +465,7 @@ class UpdateResultDialog(
 			APIVersion=self.apiVersion,
 			APIBackwardsCompatToVersion=self.backCompatTo
 		)
-		incompatibleAddons.ShowModal()
+		displayDialogAsModal(incompatibleAddons)
 
 
 class UpdateAskInstallDialog(
@@ -487,23 +494,14 @@ class UpdateAskInstallDialog(
 			backCompatToAPIVersion=self.backCompatTo
 		))
 		if showAddonCompat:
-			message = message + _(
-				# Translators: A message indicating that some add-ons will be disabled
-				# unless reviewed before installation.
-				"\n"
-				"However, your NVDA configuration contains add-ons that are incompatible with this version of NVDA. "
-				"These add-ons will be disabled after installation. If you rely on these add-ons, "
-				"please review the list to decide whether to continue with the installation"
-			)
+			message += "\n" + getAddonCompatibilityMessage()
 		text = sHelper.addItem(wx.StaticText(self, label=message))
 		text.Wrap(self.scaleSize(500))
 
 		if showAddonCompat:
 			self.confirmationCheckbox = sHelper.addItem(wx.CheckBox(
 				self,
-				# Translators: A message to confirm that the user understands that addons that have not been reviewed and made
-				# available, will be disabled after installation.
-				label=_("I understand that these incompatible add-ons will be disabled")
+				label=getAddonCompatibilityConfirmationMessage()
 			))
 
 		bHelper = sHelper.addDialogDismissButtons(guiHelper.ButtonHelper(wx.HORIZONTAL))
@@ -543,7 +541,7 @@ class UpdateAskInstallDialog(
 			APIVersion=self.apiVersion,
 			APIBackwardsCompatToVersion=self.backCompatTo
 		)
-		incompatibleAddons.ShowModal()
+		displayDialogAsModal(incompatibleAddons)
 
 	def onInstallButton(self, evt):
 		_executeUpdate(self.destPath)
@@ -780,20 +778,22 @@ class DonateRequestDialog(wx.Dialog):
 def saveState():
 	try:
 		# #9038: Python 3 requires binary format when working with pickles.
-		with open(_stateFilename, "wb") as f:
+		with open(WritePaths.updateCheckStateFile, "wb") as f:
 			pickle.dump(state, f, protocol=0)
 	except:
 		log.debugWarning("Error saving state", exc_info=True)
 
 def initialize():
-	global state, _stateFilename, autoChecker
-	_stateFilename = os.path.join(globalVars.appArgs.configPath, "updateCheckState.pickle")
+	global state, autoChecker
 	try:
 		# #9038: Python 3 requires binary format when working with pickles.
-		with open(_stateFilename, "rb") as f:
+		with open(WritePaths.updateCheckStateFile, "rb") as f:
 			state = pickle.load(f)
 	except:
 		log.debugWarning("Couldn't retrieve update state", exc_info=True)
+		state = None
+
+	if state is None:
 		# Defaults.
 		state = {
 			"lastCheck": 0,
@@ -803,7 +803,10 @@ def initialize():
 
 	# check the pending version against the current version
 	# and make sure that pendingUpdateFile and pendingUpdateVersion are part of the state dictionary.
-	if "pendingUpdateVersion" not in state or state["pendingUpdateVersion"] == versionInfo.version:
+	if (
+		"pendingUpdateVersion" not in state
+		or state["pendingUpdateVersion"] == versionInfo.version
+	):
 		_setStateToNone(state)
 	# remove all update files except the one that is currently pending (if any)
 	try:

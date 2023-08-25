@@ -6,6 +6,9 @@ To learn more about NVDA or download a copy, visit the main [NV Access](http://w
 
 Please note: the NVDA project has a [Citizen and Contributor Code of Conduct](CODE_OF_CONDUCT.md). NV Access expects that all contributors and other community members will read and abide by the rules set out in this document while participating or contributing to this project.
 
+The NVDA project is guided by a [product vision statement and set of principles](./projectDocs/product_vision.md).
+The vision and principles should be always considered when planning features and prioritizing work.
+ 
 ## Get support
 Whether you are a beginner, an advanced user, a new or a long time developer; or if you represent an organization wishing to know more or to contribute to NVDA: you can get support through the included documentation as well as several communication channels dedicated to the NVDA screen reader. Here is an overview of the most important support sources.
 
@@ -13,17 +16,18 @@ Whether you are a beginner, an advanced user, a new or a long time developer; or
 * [NVDA User Guide](https://www.nvaccess.org/files/nvda/documentation/userGuide.html)
 * [NVDA Developer Guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html)
 * [NVDA Add-ons Development Internals](https://github.com/nvdaaddons/DevGuide/wiki)
-* [NVDA ControllerClient manual](https://github.com/nvaccess/nvda/tree/master/extras/controllerClient)
+* [NVDA ControllerClient manual (NVDA API for external applications to directly speak or braille messages, etc.)](https://github.com/nvaccess/nvda/tree/master/extras/controllerClient)
 * Further documentation is available in the NVDA repository's [Wiki](https://github.com/nvaccess/nvda/wiki), and in the [Community Wiki](https://github.com/nvaccess/nvda-community/wiki)
 
 ### Communication channels
 * [NVDA Users Mailing List](https://nvda.groups.io/g/nvda)
 * [NVDA Developers Mailing List](https://groups.io/g/nvda-devel)
 * [NVDA Add-ons Mailing List](https://groups.io/g/nvda-addons)
+* [NVDA Add-on API Mailing List](https://groups.google.com/a/nvaccess.org/g/nvda-api)
 * [Instant Messaging channel for NVDA Support](https://gitter.im/nvaccess/NVDA)
-* [Other sources including groups and profiles on social media channels, language specific websites and mailing lists etc.](https://github.com/nvaccess/nvda-community/wiki/Connect)
+* [Other sources including groups and profiles on social media channels, language-specific websites and mailing lists etc.](https://github.com/nvaccess/nvda-community/wiki/Connect)
 
-You can also get  direct support from NV Access. See the [NV Access](http://www.nvaccess.org/) website for more details.
+You can also get direct support from NV Access. See the [NV Access](http://www.nvaccess.org/) website for more details.
 
 ## Other Key Project Links
 * [NVDA on GitHub](https://github.com/nvaccess/nvda)
@@ -33,8 +37,7 @@ You can also get  direct support from NV Access. See the [NV Access](http://www.
 * [NVDA Add-ons coordination and support center](https://github.com/nvdaaddons): all about NVDA's addons environment
 * [NVDA Add-ons Template](https://github.com/nvdaaddons/AddonTemplate): A repository for generating the Add-ons template
 * [Translating NVDA](https://github.com/nvaccess/nvda/wiki/Translating): Information about how to translate NVDA into another language
-* [NVDA Controller Client](http://www.nvda-project.org/nvdaControllerClient/nvdaControllerClient_20100219.7z) (2010-02-19): NVDA API for external applications to directly speak or braille messages, etc.
-* [Contributing to NVDA](https://github.com/nvaccess/nvda/wiki/Contributing): Guidelines for contributing to the NVDA source code
+* [Contributing to NVDA](./.github/CONTRIBUTING.md): Suggestions on how to contribute to the NVDA project, including issue triage, development and documentation.
 * [NVDA commits email list](https://lists.sourceforge.net/lists/listinfo/nvda-commits): Notifications for all commits to the Git repository
 * [Old email archives](http://nabble.nvda-project.org/Development-f1.html): contain discussions about NVDA development
 
@@ -49,6 +52,9 @@ git clone --recursive https://github.com/nvaccess/nvda.git
 
 The `--recursive` option is needed to retrieve various Git submodules we use.
 
+## Supported Operating Systems
+Although NVDA can run on any Windows version starting from Windows 7 Service pack 1, building NVDA from source is currently limited to only Windows 10 and above.
+
 ## Dependencies
 The NVDA source depends on several other packages to run correctly.
 
@@ -57,21 +63,25 @@ The following dependencies need to be installed on your system:
 
 * [Python](https://www.python.org/), version 3.7, 32 bit
 	* Use latest minor version if possible.
-* Microsoft Visual Studio 2019 Community, Version 16.3 or later:
-	* Download from https://visualstudio.microsoft.com/vs/
-	* When installing Visual Studio, you need to enable the following:
-		* On the Workloads tab
-			* in the Windows group:
+* Microsoft Visual Studio 2019 or 2022:
+	* To replicate the production build environment, use the [version of Visual Studio 2019 that AppVeyor is using](https://www.appveyor.com/docs/windows-images-software/#visual-studio-2019). 
+		* When you do not use the Visual Studio IDE itself, you can download the [build tools](https://aka.ms/vs/16/release/vs_BuildTools.exe)
+		* When you are intending to use the Visual Studio IDE (not required for NVDA development), you can download [the community version](https://aka.ms/vs/16/release/vs_Community.exe), which is also used by appveyor
+		* The Professional and Enterprise versions are also supported
+		* Preview versions are *not* supported
+	* When installing Visual Studio 2019, you need to enable the following:
+		* In the list on the Workloads tab
+			* in the Windows grouping:
 				* Desktop development with C++
-			* Then in the Installation details section, under Desktop for C++, Optional grouping, ensure the following are selected:
+			* Then in the Installation details tree view, under Desktop for C++, Optional, ensure the following are selected:
 				* MSVC v142 - VS 2019 C++ x64/x86 build tools
-				* Windows 10 SDK (10.0.19041.0)
+				* Windows 11 SDK (10.0.22000.0)
 				* C++ ATL for v142 build tools (x86 & x64)
 				* C++ Clang tools for Windows
 		* On the Individual components tab, ensure the following items are selected:
 			* MSVC v142 - VS 2019 C++ ARM64 build tools
 			* C++ ATL for v142 build tools (ARM64)
-
+	* If installing Visual Studio 2022: choose all the same above components as for 2019, but V143 variants, rather than V142. 
 
 ### Git Submodules
 Some of the dependencies are contained in Git submodules.
@@ -81,29 +91,30 @@ If you aren't sure, run `git submodule update` after every git pull, merge or ch
 
 For reference, the following run time dependencies are included in Git submodules:
 
-* [eSpeak NG](https://github.com/espeak-ng/espeak-ng), version 1.51-dev commit ab11439b18238b7
-* [Sonic](https://github.com/waywardgeek/sonic), commit 4f8c1d11
+* [eSpeak NG](https://github.com/espeak-ng/espeak-ng), version 1.52-dev commit `ed9a7bcf`
+* [Sonic](https://github.com/waywardgeek/sonic), commit 1d705135
 * [IAccessible2](https://wiki.linuxfoundation.org/accessibility/iaccessible2/start), commit cbc1f29631780
-* [liblouis](http://www.liblouis.org/), version 3.18.0
-* [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/), version 39.0
+* [liblouis](http://www.liblouis.io/), version 3.26.0
+* [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/), version 42.0
 * NVDA images and sounds
 * [Adobe Acrobat accessibility interface, version XI](https://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)
-* [MinHook](https://github.com/RaMMicHaeL/minhook), tagged version 1.2.2
+* [Microsoft Detours](https://github.com/microsoft/Detours), commit 45a76a3
 * brlapi Python bindings, version 0.8 or later, distributed with [BRLTTY for Windows](https://brltty.app/download.html), version 6.1
 * lilli.dll, version 2.1.0.0
 * [Python interface to FTDI driver/chip](http://fluidmotion.dyndns.org/zenphoto/index.php?p=news&title=Python-interface-to-FTDI-driver-chip)
+* [Nullsoft Install System](https://nsis.sourceforge.io), version 3.08
 * Java Access Bridge 32 bit, from Zulu Community OpenJDK build 13.0.1+10Zulu (13.28.11)
+* [Microsoft UI Automation Remote Operations Library, forked from @microsoft by @michaeldcurran](https://www.github.com/michaeldcurran/microsoft-ui-uiautomation/)
+	* Commit 224b22f3bf9e
+	* The fork specifically adds support for CallExtension / IsExtensionSupported to the high-level API, see pr microsoft/microsoft-ui-uiautomation#84.
 
 Additionally, the following build time dependencies are included in the miscDeps git submodule: 
 
 * [txt2tags](https://txt2tags.org/), version 2.5
-* [Nulsoft Install System](https://nsis.sourceforge.io/Main_Page/), version 2.51
-* [NSIS UAC plug-in](https://nsis.sourceforge.io/UAC_plug-in), version 0.2.4, ansi
 * xgettext and msgfmt from [GNU gettext](https://sourceforge.net/projects/cppcms/files/boost_locale/gettext_for_windows/)
-* [Boost Optional (stand-alone header)](https://github.com/akrzemi1/Optional), from commit [3922965](https://github.com/akrzemi1/Optional/commit/3922965396fc455c6b1770374b9b4111799588a9)
 
 The following dependencies aren't needed by most people, and are not included in Git submodules:
-* To generate developer documentation for nvdaHelper: [Doxygen Windows installer](http://www.doxygen.nl/download.html), version 1.8.15:
+* To generate [developer documentation for nvdaHelper](#building-nvdahelper-developer-documentation): [Doxygen Windows installer](http://www.doxygen.nl/download.html), version 1.8.15:
 * When you are using Visual Studio Code as your integrated development environment of preference, you can make use of our [prepopulated workspace configuration](https://github.com/nvaccess/vscode-nvda/) for [Visual Studio Code](https://code.visualstudio.com/).
 	While this VSCode project is not included as a submodule in the NVDA repository, you can easily check out the workspace configuration in your repository by executing the following from the root of the repository.
 
@@ -139,11 +150,11 @@ The `nvdaHelperDebugFlags` variable takes one or more of the following flags:
 
 * debugCRT: the libraries will be linked against the debug C runtime and assertions will be enabled. (By default, the normal CRT is used and assertions are disabled.)
 * RTC: runtime checks (stack corruption, uninitialized variables, etc.) will be enabled. (The default is no runtime checks.)
-* analyze: runs MSVC code analysis on all nvdaHelper code, holting on any warning. (default is no analysis).
+* analyze: runs MSVC code analysis on all nvdaHelper code, halting on any warning. (default is no analysis).
 
 The special keywords none and all can also be used in place of the individual flags.
 
-An example follows that enables debug CRT and runtype checks 
+An example follows that enables debug CRT and runtime checks 
 
 ```
 scons source nvdaHelperDebugFlags=debugCRT,RTC
@@ -204,13 +215,16 @@ scons devDocs
 
 The documentation will be placed in the `NVDA` folder in the output directory.
 
+#### Building nvdaHelper developer documentation
+
 To generate developer documentation for nvdaHelper (not included in the devDocs target):
 
 ```
 scons devDocs_nvdaHelper
 ```
 
-The documentation will be placed in the `devDocs\nvdaHelper` folder in the output directory.
+The documentation will be placed in the folder `<projectRoot>\output\devDocs\nvdaHelper`.
+This requires having Doxygen installed.
 
 ### Generate debug symbols archive
 To generate an archive of debug symbols for the various dll/exe binaries, type:
@@ -263,7 +277,7 @@ scons tests
 
 ### Unit tests
 To run only specific unit tests, specify them using the `unitTests` variable on the command line.
-The tests should be provided as a comma separated list.
+The tests should be provided as a comma-separated list.
 Each test should be specified as a Python module, class or method relative to the `tests\unit` directory.
 For example, to run only methods in the `TestMove` and `TestSelection` classes in the file `tests\unit\test_cursorManager.py` file, run this command:
 
@@ -281,7 +295,7 @@ scons checkPot
 ### Linting your changes
 In order to ensure your changes comply with NVDA's coding style you can run the Flake8 linter locally.
 Some developers have found certain linting error messages misleading, these are clarified in `tests/lint/readme.md`.
-runlint.bat  will use Flake8 to inspect only the differences between your working directory and the specified `base` branch.
+runlint.bat will use Flake8 to inspect only the differences between your working directory and the specified `base` branch.
 If you create a Pull Request, the `base` branch you use here should be the same as the target you would use for a Pull Request. In most cases it will be `origin/master`.
 ```
 runlint origin/master
@@ -297,11 +311,12 @@ Any arguments given to rununittests.bat are forwarded onto Nose.
 Please refer to Nose's own documentation on how to filter tests etc.
 
 ### System Tests
-System tests can be run with the `runsystemtests.bat` script.
-Internally this script uses the Robot  test framework to execute the tests.
+System tests can be run with the `runsystemtests.bat --include <TAG>` script.
+To run all tests standard tests for developers use `runsystemtests.bat --include NVDA`.
+Internally this script uses the Robot test framework to execute the tests.
 Any arguments given to runsystemtests.bat are forwarded onto Robot.
 For more details (including filtering and exclusion of tests) see `tests/system/readme.md`.
 
 ## Contributing to NVDA
 
-If you would like to contribute code or documentation to NVDA, you can read more information in our [contributing guide](https://github.com/nvaccess/nvda/wiki/Contributing).
+If you would like to contribute code or documentation to NVDA, you can read more information in our [contributing guide](./.github/CONTRIBUTING.md).

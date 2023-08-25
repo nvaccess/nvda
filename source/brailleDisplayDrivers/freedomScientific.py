@@ -208,7 +208,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 						epIn=1,
 						epOut=0,
 						onReceive=self._onReceive,
-						onReceiveSize=56
+						onReceiveSize=56,
+						onReadError=self._handleReadError
 					)
 				else:
 					self._dev = hwIo.Serial(
@@ -245,6 +246,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			"globalCommands", "GlobalCommands", "braille_scrollBack")
 		self.gestureMap.add("br(freedomScientific):topRouting%d" % self.numCells,
 			"globalCommands", "GlobalCommands", "braille_scrollForward")
+		self._restarting = False
 
 	def terminate(self):
 		try:
@@ -316,6 +318,17 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			payload = FS_DATA_EMPTY
 
 		self._handlePacket(packetType, arg1, arg2, arg3, payload)
+
+	def _handleReadError(self, error: int) -> bool:
+		if error == 995:  # Broken I/O pipe, terminate and allow restart
+			if not self._restarting:
+				# Will not cause a data race since this driver runs on one thread
+				self._restarting = True
+				log.info("Freedom Scientific display implicitly disconnected by suspend, reinitializing")
+				self.terminate()
+				self.__init__()
+			return True
+		return False
 
 	def _handlePacket(
 			self, packetType: bytes, arg1: bytes, arg2: bytes, arg3: bytes, payload: bytes
@@ -566,6 +579,18 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			"reportCurrentLine": ("br(freedomScientific):dot1+dot4+brailleSpaceBar",),
 			"showGui": ("br(freedomScientific):dot1+dot3+dot4+dot5+brailleSpaceBar",),
 			"braille_toggleTether": ("br(freedomScientific):leftGDFButton+rightGDFButton",),
+			# Based on corresponding assignments in JAWS, modifing where Shift goes
+			"braille_toggleControl": ("br(freedomscientific):dot3+dot8+brailleSpaceBar",),
+			"braille_toggleAlt": ("br(freedomscientific):dot6+dot8+brailleSpaceBar",),
+			"braille_toggleWindows": ("br(freedomscientific):dot4+dot8+brailleSpaceBar",),
+			"braille_toggleNVDAKey": ("br(freedomscientific):dot5+dot8+brailleSpaceBar",),
+			"braille_toggleShift": ("br(freedomscientific):dot7+dot8+brailleSpaceBar",),
+			"braille_toggleControlShift": ("br(freedomscientific):dot3+dot7+dot8+brailleSpaceBar",),
+			"braille_toggleAltShift": ("br(freedomscientific):dot6+dot7+dot8+brailleSpaceBar",),
+			"braille_toggleWindowsShift": ("br(freedomscientific):dot4+dot7+dot8+brailleSpaceBar",),
+			"braille_toggleNVDAKeyShift": ("br(freedomscientific):dot5+dot7+dot8+brailleSpaceBar",),
+			"braille_toggleControlAlt": ("br(freedomscientific):dot3+dot6+dot8+brailleSpaceBar",),
+			"braille_toggleControlAltShift": ("br(freedomscientific):dot3+dot6+dot7+dot8+brailleSpaceBar",),
 		}
 	})
 

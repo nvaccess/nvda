@@ -1,40 +1,41 @@
 # -*- coding: UTF-8 -*-
-#guiHelper.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2016 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2016-2023 NV Access Limited
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 
 """ Utilities to simplify the creation of wx GUIs, including automatic management of spacing.
 Example usage:
 
-class myDialog(class wx.Dialog):
+class myDialog(wx.Dialog):
 
-	def __init__(self,parent):
-		super(SettingsDialog, self).__init__(parent, title=self.title)
-		dialog = self
+	def __init__(self, parent):
+		super().__init__(parent, title='Usage example of guiHelper')
 
-		mainSizer=wx.BoxSizer(wx.VERTICAL)
+		mainSizer = wx.BoxSizer(wx.VERTICAL)
 
-		sHelper = guiHelper.BoxSizerHelper( wx.VERTICAL)
+		sHelper = guiHelper.BoxSizerHelper(self, wx.VERTICAL)
 
-		filterElement = guiHelper.LabeledControlHelper(dialog, "Filter:", wx.TextCtrl)
-		symbols = wx.ListCtrl()
-		sHelper.addItem(guiHelper.associateElement(filterElement, symbols)
+		# Adding controls with their associated label
+		# according on the control type, they are associated horizontally or vertically.
+		filterElement = sHelper.addLabeledControl("Filter:", wx.TextCtrl)
+		symbols = sHelper.addLabeledControl("Select a row:", wx.ListCtrl)
 
-		sHelper.addItem(guiHelper.LabeledControlHelper(dialog, "Choose option", wx.Choice, choices=[1,2,3]))
+		# A control with its associated label
+		choice = sHelper.addLabeledControl("Choose option", wx.Choice, choices=["1", "2", "3"])
 
-		button = sHelper.addItem( wx.Button("Does stuff"))
+		# A single button
+		button = sHelper.addItem(wx.Button(self, label="Does stuff"))
 
 		# for general items
-		checkbox = sHelper.addItem(wx.CheckBox("always do something"))
+		checkbox = sHelper.addItem(wx.CheckBox(self, label="always do something"))
 
 		# for groups of buttons
-		buttonGroup = guiHelper.ButtonHelper(wx.VERTICAL)
-		oneButton = buttonHelper.addButton(wx.Button("one"))
-		twoButton = buttonHelper.addButton(wx.Button("one"))
-		threeButton = buttonHelper.addButton(wx.Button("three")
+		buttonGroup = gui.guiHelper.ButtonHelper(wx.VERTICAL)
+		oneButton = buttonGroup.addButton(self, label="one")
+		twoButton = buttonGroup.addButton(self, label="two")
+		threeButton = buttonGroup.addButton(self, label="three")
 		sHelper.addItem(buttonGroup)
 
 		mainSizer.Add(sHelper.sizer, border=10, flag=wx.ALL)
@@ -43,6 +44,14 @@ class myDialog(class wx.Dialog):
 	...
 """
 from contextlib import contextmanager
+from typing import (
+	Generic,
+	Optional,
+	Type,
+	TypeVar,
+	Union,
+	cast,
+)
 
 import wx
 from wx.lib import scrolledpanel, newevent
@@ -108,11 +117,12 @@ class ButtonHelper(object):
 		self._firstButton = False
 		return wxButton
 
-def associateElements( firstElement, secondElement):
+
+def associateElements(firstElement: wx.Control, secondElement: wx.Control) -> wx.BoxSizer:
 	""" Associates two GUI elements together. Handles choosing a layout and appropriate spacing. Abstracts away common
 		pairings used in the NVDA GUI.
 		Currently handles:
-			wx.StaticText and (wx.Choice, wx.TextCtrl, wx.Slider or wx.Button) - Horizontal layout
+			wx.StaticText and (wx.Choice, wx.TextCtrl, wx.Slider, wx.Button or wx.SpinCtrl) - Horizontal layout
 			wx.StaticText and (wx.ListCtrl or wx.ListBox or wx.TreeCtrl ) - Vertical layout
 			wx.Button and wx.CheckBox - Horizontal layout
 			wx.TextCtrl and wx.Button - Horizontal layout
@@ -122,10 +132,15 @@ def associateElements( firstElement, secondElement):
 	if isinstance(firstElement, LabeledControlHelper) or isinstance(secondElement, LabeledControlHelper):
 		raise NotImplementedError("AssociateElements as no implementation for LabeledControlHelper elements")
 
-	# staticText and (choice, textCtrl or button)
+	# staticText and input control
+	# likely a labelled control from LabeledControlHelper
 	if isinstance(firstElement, wx.StaticText) and isinstance(secondElement, (
-		wx.Choice, wx.TextCtrl,
-		wx.SpinCtrl, wx.Button, wx.Slider
+		wx.Button,
+		wx.CheckBox,
+		wx.Choice,
+		wx.Slider,
+		wx.SpinCtrl,
+		wx.TextCtrl,
 	)):
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		sizer.Add(firstElement, flag=wx.ALIGN_CENTER_VERTICAL)
@@ -154,7 +169,11 @@ def associateElements( firstElement, secondElement):
 
 	return sizer
 
-class LabeledControlHelper(object):
+
+_LabeledControlT = TypeVar("_LabeledControlT", bound=wx.Control)
+
+
+class LabeledControlHelper(Generic[_LabeledControlT]):
 	""" Represents a Labeled Control. Provides a class to create and hold on to the objects and automatically associate
 	the two controls together.
 	Relies on guiHelper.associateElements(), any limitations in guiHelper.associateElements() also apply here.
@@ -164,13 +183,16 @@ class LabeledControlHelper(object):
 	# A handler is automatically added to the control to ensure the label is also enabled/disabled.
 	EnableChanged, EVT_ENABLE_CHANGED = newevent.NewEvent()
 
-	def __init__(self, parent: wx.Window, labelText: str, wxCtrlClass: wx.Control, **kwargs):
+	# When the control is shown / hidden this event is raised.
+	# A handler is automatically added to the control to ensure the label is also shown / hidden.
+	ShowChanged, EVT_SHOW_CHANGED = newevent.NewEvent()
+
+	def __init__(self, parent: wx.Window, labelText: str, wxCtrlClass: Type[_LabeledControlT], **kwargs):
 		""" @param parent: An instance of the parent wx window. EG wx.Dialog
 			@param labelText: The text to associate with a wx control.
 			@param wxCtrlClass: The class to associate with the label, eg: wx.TextCtrl
 			@param kwargs: The keyword arguments used to instantiate the wxCtrlClass
 		"""
-		object.__init__(self)
 
 		class LabelEnableChangedListener(wx.StaticText):
 			isDestroyed = False
@@ -179,14 +201,24 @@ class LabeledControlHelper(object):
 			def _onDestroy(self, evt: wx.WindowDestroyEvent):
 				self.isDestroyed = True
 
-			def listenForEnableChanged(self, _ctrl: wx.Window):
+			def listenForEnableChanged(self, _ctrl: _LabeledControlT):
 				self.Bind(wx.EVT_WINDOW_DESTROY, self._onDestroy)
+				self._labelText = self.GetLabelText()
 				_ctrl.Bind(LabeledControlHelper.EVT_ENABLE_CHANGED, self._onEnableChanged)
+				_ctrl.Bind(LabeledControlHelper.EVT_SHOW_CHANGED, self._onShowChanged)
 				self.isListening = True
 
 			def _onEnableChanged(self, evt: wx.Event):
 				if self.isListening and not self.isDestroyed:
 					self.Enable(evt.isEnabled)
+
+			def _onShowChanged(self, evt: wx.Event):
+				if self.isListening and not self.isDestroyed:
+					if evt.shouldShow:
+						self.SetLabelText(self._labelText)
+					else:
+						self.SetLabelText("")
+					self.Parent.Layout()
 
 		class WxCtrlWithEnableEvnt(wxCtrlClass):
 			def Enable(self, enable=True):
@@ -199,18 +231,29 @@ class LabeledControlHelper(object):
 				wx.PostEvent(self, evt)
 				super().Disable()
 
+			def Show(self, show: bool = True):
+				evt = LabeledControlHelper.ShowChanged(shouldShow=show)
+				wx.PostEvent(self, evt)
+				super().Show(show)
+
+			def Hide(self):
+				evt = LabeledControlHelper.ShowChanged(shouldShow=False)
+				wx.PostEvent(self, evt)
+				super().Hide()
+
 		self._label = LabelEnableChangedListener(parent, label=labelText)
-		self._ctrl = WxCtrlWithEnableEvnt(parent, **kwargs)
+		self._ctrl = cast(_LabeledControlT, WxCtrlWithEnableEvnt(parent, **kwargs))
 		self._label.listenForEnableChanged(self._ctrl)
 		self._sizer = associateElements(self._label, self._ctrl)
 
 	@property
-	def control(self):
+	def control(self) -> _LabeledControlT:
 		return self._ctrl
 
 	@property
-	def sizer(self):
+	def sizer(self) -> wx.BoxSizer:
 		return self._sizer
+
 
 class PathSelectionHelper(object):
 	"""
@@ -250,18 +293,22 @@ class PathSelectionHelper(object):
 			if d.ShowModal() == wx.ID_OK:
 				self._textCtrl.Value = d.Path
 
-class BoxSizerHelper(object):
+
+class BoxSizerHelper:
 	""" Used to abstract away spacing logic for a wx.BoxSizer
 	"""
-	def __init__(self, parent, orientation=None, sizer=None):
+	def __init__(
+			self,
+			parent: wx.Dialog,
+			orientation: Optional[int] = None,
+			sizer: Optional[Union[wx.BoxSizer, wx.StaticBoxSizer]] = None
+	):
 		""" Init. Pass in either orientation OR sizer.
 			@param parent: An instance of the parent wx window. EG wx.Dialog
 			@param orientation: the orientation to use when constructing the sizer, either wx.HORIZONTAL or wx.VERTICAL
-			@type itemType: wx.HORIZONTAL or wx.VERTICAL
+			@type orientation: wx.HORIZONTAL or wx.VERTICAL
 			@param sizer: the sizer to use rather than constructing one.
-			@type sizer: wx.BoxSizer
 		"""
-		object.__init__(self)
 		self._parent = parent
 		self.hasFirstItemBeenAdded = False
 		if orientation and sizer:
@@ -274,7 +321,9 @@ class BoxSizerHelper(object):
 			raise ValueError("Orientation OR Sizer must be supplied.")
 		self.dialogDismissButtonsAdded = False
 
-	def addItem(self, item, **keywordArgs):
+	_ItemT = TypeVar("_ItemT")
+
+	def addItem(self, item: "_ItemT", **keywordArgs) -> "_ItemT":
 		""" Adds an item with space between it and the previous item.
 			Does not handle adding LabledControlHelper; use L{addLabeledControl} instead.
 			@param item: the item to add to the sizer
@@ -313,12 +362,15 @@ class BoxSizerHelper(object):
 		self.hasFirstItemBeenAdded = True
 		return item
 
-	def addLabeledControl(self, labelText, wxCtrlClass, **kwargs):
+	def addLabeledControl(
+			self,
+			labelText: str,
+			wxCtrlClass: Type[_LabeledControlT],
+			**kwargs
+	) -> _LabeledControlT:
 		""" Convenience method to create a labeled control
 			@param labelText: Text to use when constructing the wx.StaticText to label the control.
-			@type LabelText: String
 			@param wxCtrlClass: Control class to construct and associate with the label
-			@type wxCtrlClass: Some wx control type EG wx.TextCtrl
 			@param kwargs: keyword arguments used to construct the wxCtrlClass. As taken by guiHelper.LabeledControlHelper
 
 			Relies on guiHelper.LabeledControlHelper and thus guiHelper.associateElements, and therefore inherits any
@@ -328,13 +380,19 @@ class BoxSizerHelper(object):
 		if isinstance(self.sizer, wx.StaticBoxSizer):
 			parent = self.sizer.GetStaticBox()
 		labeledControl = LabeledControlHelper(parent, labelText, wxCtrlClass, **kwargs)
-		if(isinstance(labeledControl.control, (wx.ListCtrl,wx.ListBox,wx.TreeCtrl))):
+		if isinstance(labeledControl.control, (wx.ListCtrl, wx.ListBox, wx.TreeCtrl)):
 			self.addItem(labeledControl.sizer, flag=wx.EXPAND, proportion=1)
 		else:
 			self.addItem(labeledControl.sizer)
 		return labeledControl.control
 
-	def addDialogDismissButtons(self, buttons, separated=False):
+	_ButtonsT = TypeVar("_ButtonsT", wx.Sizer, ButtonHelper, wx.Button, int)
+
+	def addDialogDismissButtons(
+			self,
+			buttons: "_ButtonsT",
+			separated: bool = False
+	) -> "_ButtonsT":
 		""" Adds and aligns the buttons for dismissing the dialog; e.g. "ok | cancel". These buttons are expected
 		to be the last items added to the dialog. Buttons that launch an action, do not dismiss the dialog, or are not
 		the last item should be added via L{addItem}
@@ -346,11 +404,7 @@ class BoxSizerHelper(object):
 		@param separated:
 		  Whether a separator should be added between the dialog content and its footer.
 		  Should be set to L{False} for message or single input dialogs, L{True} otherwise.
-		@type separated: L{bool}
 		"""
-		parent = self._parent
-		if isinstance(self.sizer, wx.StaticBoxSizer):
-			parent = self.sizer.GetStaticBox()
 		if self.sizer.GetOrientation() != wx.VERTICAL:
 			raise NotImplementedError(
 				"Adding dialog dismiss buttons to a horizontal BoxSizerHelper is not implemented."
@@ -360,14 +414,18 @@ class BoxSizerHelper(object):
 		elif isinstance(buttons, (wx.Sizer, wx.Button)):
 			toAdd = buttons
 		elif isinstance(buttons, int):
-			toAdd = parent.CreateButtonSizer(buttons)
+			toAdd = self._parent.CreateButtonSizer(buttons)
 		else:
 			raise NotImplementedError("Unknown type: {}".format(buttons))
 		if separated:
-			self.addItem(wx.StaticLine(parent), flag=wx.EXPAND)
+			parentBox = self._parent
+			if isinstance(self.sizer, wx.StaticBoxSizer):
+				parentBox = self.sizer.GetStaticBox()
+			self.addItem(wx.StaticLine(parentBox), flag=wx.EXPAND)
 		self.addItem(toAdd, flag=wx.ALIGN_RIGHT)
 		self.dialogDismissButtonsAdded = True
 		return buttons
+
 
 class SIPABCMeta(wx.siplib.wrappertype, ABCMeta):
 	"""Meta class to be used for wx subclasses with abstract methods."""

@@ -26,7 +26,6 @@ URL = 'https://symbols.mozilla.org/upload/'
 DLL_NAMES = [
 	"IAccessible2Proxy.dll",
 	"ISimpleDOM.dll",
-	"minHook.dll",
 	"nvdaHelperRemote.dll",
 ]
 DLL_FILES = [f

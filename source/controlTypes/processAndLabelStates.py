@@ -53,6 +53,7 @@ def _processPositiveStates(
 	positiveStates.discard(State.FOCUSED)
 	positiveStates.discard(State.OFFSCREEN)
 	positiveStates.discard(State.INVISIBLE)
+	positiveStates.discard(State.INDETERMINATE)
 	if reason != OutputReason.CHANGE:
 		positiveStates.discard(State.LINKED)
 		if role in (
@@ -73,9 +74,6 @@ def _processPositiveStates(
 		positiveStates.discard(State.EXPANDED)
 	if State.FOCUSABLE not in states:
 		positiveStates.discard(State.EDITABLE)
-	if not config.conf["annotations"]["reportDetails"]:
-		# reading aria-details is an experimental feature still and should not always be reported.
-		positiveStates.discard(State.HAS_ARIA_DETAILS)
 	return positiveStates
 
 
@@ -128,8 +126,10 @@ def _processNegativeStates(
 		and (reason != OutputReason.CHANGE or State.FOCUSED in states)
 	):
 		speakNegatives.add(State.CHECKED)
-	if role == Role.TOGGLEBUTTON:
+	if role == Role.TOGGLEBUTTON and State.HALF_PRESSED not in states:
 		speakNegatives.add(State.PRESSED)
+	if role is Role.SWITCH and State.ON not in states:
+		speakNegatives.add(State.ON)
 	if reason == OutputReason.CHANGE:
 		# We want to speak this state only if it is changing to negative.
 		speakNegatives.add(State.DROPTARGET)
@@ -140,6 +140,9 @@ def _processNegativeStates(
 		# #6946: if HALFCHECKED is present but CHECKED isn't, we should make sure we add CHECKED to speakNegatives.
 		if (State.HALFCHECKED in negativeStates and State.CHECKED not in states):
 			speakNegatives.add(State.CHECKED)
+		if State.HALF_PRESSED in negativeStates and State.PRESSED not in states:
+			speakNegatives.add(State.PRESSED)
+
 		if STATES_SORTED & negativeStates and not STATES_SORTED & states:
 			# If the object has just stopped being sorted, just report not sorted.
 			# The user doesn't care how it was sorted before.

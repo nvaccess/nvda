@@ -5,3 +5,5 @@
 #Copyright (C) 2012 NV Access Limited
 
 from .digitaleditions import *
+from appModuleHandler import _warnDeprecatedAliasAppModule
+_warnDeprecatedAliasAppModule()

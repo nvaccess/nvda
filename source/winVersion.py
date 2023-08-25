@@ -1,11 +1,13 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2021 NV Access Limited, Bill Dengler, Joseph Lee
+# Copyright (C) 2006-2022 NV Access Limited, Bill Dengler, Joseph Lee
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 """A module used to record Windows versions.
 It is also used to define feature checks such as
 making sure NVDA can run on a minimum supported version of Windows.
+
+When working on this file, consider moving to winAPI.
 """
 
 from typing import Optional
@@ -13,12 +15,12 @@ import sys
 import os
 import functools
 import winreg
-from buildVersion import version_year
+import platform
 
 
 # Records a mapping between Windows builds and release names.
 # These include build 10240 for Windows 10 1507 and releases with multiple release builds.
-# These are applicable to Windows 10 as they report the same system version (10.0).
+# These are applicable to Windows 10 and later as they report the same system version (10.0).
 _BUILDS_TO_RELEASE_NAMES = {
 	10240: "Windows 10 1507",
 	10586: "Windows 10 1511",
@@ -32,7 +34,11 @@ _BUILDS_TO_RELEASE_NAMES = {
 	19041: "Windows 10 2004",
 	19042: "Windows 10 20H2",
 	19043: "Windows 10 21H1",
+	19044: "Windows 10 21H2",
+	19045: "Windows 10 22H2",
+	20348: "Windows Server 2022",
 	22000: "Windows 11 21H2",
+	22621: "Windows 11 22H2",
 }
 
 
@@ -41,9 +47,6 @@ def _getRunningVersionNameFromWinReg() -> str:
 	"""Returns the Windows release name defined in Windows Registry.
 	This is applicable on Windows 10 Version 1511 (build 10586) and later.
 	"""
-	# Release name is recorded in Windows Registry from Windows 10 Version 1511 (build 10586) onwards.
-	if getWinVer() < WIN10_1511:
-		raise RuntimeError("Release name is not recorded in Windows Registry on this version of Windows")
 	# Cache the version in use on the system.
 	with winreg.OpenKey(
 		winreg.HKEY_LOCAL_MACHINE, r"Software\Microsoft\Windows NT\CurrentVersion"
@@ -56,7 +59,9 @@ def _getRunningVersionNameFromWinReg() -> str:
 			try:
 				releaseId = winreg.QueryValueEx(currentVersion, "ReleaseID")[0]
 			except OSError:
-				releaseId = ""
+				raise RuntimeError(
+					"Release name is not recorded in Windows Registry on this version of Windows"
+				) from None
 	return releaseId
 
 
@@ -64,7 +69,7 @@ def _getRunningVersionNameFromWinReg() -> str:
 class WinVersion(object):
 	"""
 	Represents a Windows release.
-	Includes version major, minor, build, service pack information,
+	Includes version major, minor, build, service pack information, machine architecture,
 	as well as tools such as checking for specific Windows 10 releases.
 	"""
 
@@ -75,7 +80,8 @@ class WinVersion(object):
 			build: int = 0,
 			releaseName: Optional[str] = None,
 			servicePack: str = "",
-			productType: str = ""
+			productType: str = "",
+			processorArchitecture: str = ""
 	):
 		self.major = major
 		self.minor = minor
@@ -86,6 +92,7 @@ class WinVersion(object):
 			self.releaseName = self._getWindowsReleaseName()
 		self.servicePack = servicePack
 		self.productType = productType
+		self.processorArchitecture = processorArchitecture
 
 	def _getWindowsReleaseName(self) -> str:
 		"""Returns the public release name for a given Windows release based on major, minor, and build.
@@ -119,6 +126,8 @@ class WinVersion(object):
 			winVersionText.append(f"service pack {self.servicePack}")
 		if self.productType != "":
 			winVersionText.append(self.productType)
+		if self.processorArchitecture != "":
+			winVersionText.append(self.processorArchitecture)
 		return " ".join(winVersionText)
 
 	def __eq__(self, other):
@@ -151,9 +160,14 @@ WIN10_1909 = WinVersion(major=10, minor=0, build=18363)
 WIN10_2004 = WinVersion(major=10, minor=0, build=19041)
 WIN10_20H2 = WinVersion(major=10, minor=0, build=19042)
 WIN10_21H1 = WinVersion(major=10, minor=0, build=19043)
+WIN10_21H2 = WinVersion(major=10, minor=0, build=19044)
+WIN10_22H2 = WinVersion(major=10, minor=0, build=19045)
+WINSERVER_2022 = WinVersion(major=10, minor=0, build=20348)
 WIN11 = WIN11_21H2 = WinVersion(major=10, minor=0, build=22000)
+WIN11_22H2 = WinVersion(major=10, minor=0, build=22621)
 
 
+@functools.lru_cache(maxsize=1)
 def getWinVer():
 	"""Returns a record of current Windows version NVDA is running on.
 	"""
@@ -178,7 +192,8 @@ def getWinVer():
 		build=winVer.build,
 		releaseName=releaseName,
 		servicePack=winVer.service_pack,
-		productType=("workstation", "domain controller", "server")[winVer.product_type - 1]
+		productType=("workstation", "domain controller", "server")[winVer.product_type - 1],
+		processorArchitecture=platform.machine()
 	)
 
 
@@ -194,24 +209,10 @@ def isUwpOcrAvailable():
 	return os.path.isdir(UWP_OCR_DATA_PATH)
 
 
-# Deprecated: Windows 10 releases will be obtained from Windows Registry, no entries will be added.
-# The below map will be removed in 2022.1.
-if version_year < 2022:
-	WIN10_RELEASE_NAME_TO_BUILDS = {
-		"1507": 10240,
-		"1511": 10586,
-		"1607": 14393,
-		"1703": 15063,
-		"1709": 16299,
-		"1803": 17134,
-		"1809": 17763,
-		"1903": 18362,
-		"1909": 18363,
-		"2004": 19041,
-		"20H2": 19042,
-		"21H1": 19043,
-	}
-
-
-def isFullScreenMagnificationAvailable():
+def isFullScreenMagnificationAvailable() -> bool:
+	"""
+	Technically this is always False. The Magnification API has been marked by MS as unsupported for
+	WOW64 applications such as NVDA. For our usages, support has been added since Windows 8, relying on our
+	testing our specific usage of the API with each Windows version since Windows 8
+	"""
 	return getWinVer() >= WIN8

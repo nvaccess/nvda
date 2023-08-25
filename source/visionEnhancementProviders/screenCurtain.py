@@ -1,10 +1,11 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2018-2019 NV Access Limited, Babbage B.V., Leonard de Ruijter
+# Copyright (C) 2018-2023 NV Access Limited, Babbage B.V., Leonard de Ruijter
 
 """Screen curtain implementation based on the windows magnification API.
-This implementation only works on Windows 8 and above.
+The Magnification API has been marked by MS as unsupported for WOW64 applications such as NVDA. (#12491)
+This module has been tested on Windows versions specified by winVersion.isFullScreenMagnificationAvailable.
 """
 
 import os
@@ -16,7 +17,12 @@ from ctypes.wintypes import BOOL
 from autoSettingsUtils.driverSetting import BooleanDriverSetting
 from autoSettingsUtils.autoSettings import SupportedSettingType
 import wx
-import gui
+from gui.nvdaControls import MessageDialog
+from gui.settingsDialogs import (
+	AutoSettingsMixin,
+	SettingsPanel,
+	VisionProviderStateControl,
+)
 from logHandler import log
 from typing import Optional, Type
 import nvwave
@@ -29,8 +35,9 @@ class MAGCOLOREFFECT(Structure):
 
 # homogeneous matrix for a 4-space transformation (red, green, blue, opacity).
 # https://docs.microsoft.com/en-gb/windows/win32/gdiplus/-gdiplus-using-a-color-matrix-to-transform-a-single-color-use
-TRANSFORM_BLACK = MAGCOLOREFFECT()
-TRANSFORM_BLACK.transform[4][4] = 1.0
+TRANSFORM_BLACK = MAGCOLOREFFECT()  # empty transformation
+TRANSFORM_BLACK.transform[4][4] = 1.0  # retain as an affine transformation
+TRANSFORM_BLACK.transform[3][3] = 1.0  # retain opacity, while scaling other colours to zero (#12491)
 
 
 def _errCheck(result, func, args):
@@ -139,7 +146,7 @@ warnOnLoadText = _(
 )
 
 
-class WarnOnLoadDialog(gui.nvdaControls.MessageDialog):
+class WarnOnLoadDialog(MessageDialog):
 
 	showWarningOnLoadCheckBox: wx.CheckBox
 	noButton: wx.Button
@@ -150,7 +157,7 @@ class WarnOnLoadDialog(gui.nvdaControls.MessageDialog):
 			parent,
 			title=_("Warning"),
 			message=warnOnLoadText,
-			dialogType=gui.nvdaControls.MessageDialog.DIALOG_TYPE_WARNING
+			dialogType=MessageDialog.DIALOG_TYPE_WARNING
 	):
 		self._settingsStorage = screenCurtainSettingsStorage
 		super().__init__(parent, title, message, dialogType)
@@ -213,16 +220,14 @@ class WarnOnLoadDialog(gui.nvdaControls.MessageDialog):
 
 
 class ScreenCurtainGuiPanel(
-		gui.AutoSettingsMixin,
-		gui.SettingsPanel,
+		AutoSettingsMixin,
+		SettingsPanel,
 ):
 
 	_enabledCheckbox: wx.CheckBox
 	_enableCheckSizer: wx.BoxSizer
 	
 	helpId = "VisionSettingsScreenCurtain"
-
-	from gui.settingsDialogs import VisionProviderStateControl
 
 	def __init__(
 			self,
@@ -303,6 +308,12 @@ class ScreenCurtainProvider(providerBase.VisionEnhancementProvider):
 
 	@classmethod
 	def canStart(cls):
+		"""
+		While the Magnification API has been marked by MS as unsupported for WOW64 applications such as NVDA.
+		ScreenCurtain's specific usage of the API has been tested to confirm the approach works in released
+		versions of Windows, this may not continue to be true in the future. The Magnification API was
+		introduced by Microsoft with Windows 8.
+		"""
 		return winVersion.isFullScreenMagnificationAvailable()
 
 	@classmethod

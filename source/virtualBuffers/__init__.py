@@ -1,15 +1,18 @@
 # -*- coding: UTF-8 -*-
-#virtualBuffers/__init__.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2007-2017 NV Access Limited, Peter Vágner
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2007-2022 NV Access Limited, Peter Vágner, Cyrille Bougot
 
 import time
 import threading
 import ctypes
 import collections
 import itertools
+from typing import (
+	Optional,
+	Dict,
+)
 import weakref
 import wx
 import review
@@ -35,6 +38,8 @@ import aria
 import treeInterceptorHandler
 import watchdog
 from abc import abstractmethod
+import documentBase
+
 
 VBufStorage_findDirection_forward=0
 VBufStorage_findDirection_back=1
@@ -196,7 +201,7 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 			# Interactive list/combo box/tree view descendants aren't rendered into the buffer, even though they are still considered part of it.
 			# Use the container in this case.
 			obj = obj.parent
-			if not obj or obj.role not in (controlTypes.ROLE_LIST, controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_GROUPING, controlTypes.ROLE_TREEVIEW, controlTypes.ROLE_TREEVIEWITEM):
+			if not obj or obj.role not in (controlTypes.Role.LIST, controlTypes.Role.COMBOBOX, controlTypes.Role.GROUPING, controlTypes.Role.TREEVIEW, controlTypes.Role.TREEVIEWITEM):
 				break
 		raise LookupError
 
@@ -259,21 +264,30 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 					return placeholder
 		return None
 
-	def _getFieldsInRange(self,start,end):
+	def _normalizeCommand(self, command: XMLFormatting.CommandsT) -> XMLFormatting.CommandsT:
+		if not isinstance(command, textInfos.FieldCommand):
+			return command  # no need to normalize str or None
+		field = command.field
+		if isinstance(field, textInfos.ControlField):
+			command.field = self._normalizeControlField(field)
+		elif isinstance(field, textInfos.FormatField):
+			command.field = self._normalizeFormatField(field)
+		return command
+
+	def _getFieldsInRange(self, start: int, end: int) -> textInfos.TextInfo.TextWithFieldsT:
 		text=NVDAHelper.VBuf_getTextInRange(self.obj.VBufHandle,start,end,True)
 		if not text:
-			return ""
-		commandList=XMLFormatting.XMLTextParser().parse(text)
-		for index in range(len(commandList)):
-			if isinstance(commandList[index],textInfos.FieldCommand):
-				field=commandList[index].field
-				if isinstance(field,textInfos.ControlField):
-					commandList[index].field=self._normalizeControlField(field)
-				elif isinstance(field,textInfos.FormatField):
-					commandList[index].field=self._normalizeFormatField(field)
+			return [""]
+		commandList = XMLFormatting.XMLTextParser().parse(text)
+		commandList = [
+			self._normalizeCommand(command)
+			for command in commandList
+			# drop None to convert from XMLFormatting.CommandListT to textInfos.TextInfo.TextWithFieldsT
+			if command is not None
+		]
 		return commandList
 
-	def getTextWithFields(self,formatConfig=None):
+	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
 		start=self._startOffset
 		end=self._endOffset
 		if start==end:
@@ -300,7 +314,7 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 		NVDAHelper.localLib.VBuf_getLineOffsets(self.obj.VBufHandle,offset,0,True,ctypes.byref(lineStart),ctypes.byref(lineEnd))
 		return lineStart.value,lineEnd.value
 
-	def _normalizeControlField(self,attrs):
+	def _normalizeControlField(self, attrs: textInfos.ControlField):
 		tableLayout=attrs.get('table-layout')
 		if tableLayout:
 			attrs['table-layout']=tableLayout=="1"
@@ -324,6 +338,10 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 			# Get the text for the header cells.
 			textList = []
 			for docHandle, ID in cellIdentifiers:
+				if attrs.get("controlIdentifier_docHandle") == docHandle and attrs.get("controlIdentifier_ID") == ID:
+					# This is a self-reference to a column or row header
+					# Do not double up the cell header name. This is happening in Chrome.
+					continue
 				try:
 					start, end = self._getOffsetsFromFieldIdentifier(int(docHandle), int(ID))
 				except (LookupError, ValueError):
@@ -331,7 +349,7 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 				textList.append(self.obj.makeTextInfo(textInfos.offsets.Offsets(start, end)).text)
 			attrs["table-%sheadertext" % axis] = "\n".join(textList)
 
-		if attrs.get("role") in (controlTypes.ROLE_LANDMARK, controlTypes.ROLE_REGION):
+		if attrs.get("role") in (controlTypes.Role.LANDMARK, controlTypes.Role.REGION):
 			attrs['alwaysReportName'] = True
 
 		# Expose a unique ID on the controlField for quick and safe comparison using the virtualBuffer field's docHandle and ID
@@ -342,7 +360,7 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 
 		return attrs
 
-	def _normalizeFormatField(self, attrs):
+	def _normalizeFormatField(self, attrs: textInfos.FormatField):
 		strippedCharsFromStart = attrs.get("strippedCharsFromStart")
 		if strippedCharsFromStart is not None:
 			assert strippedCharsFromStart.isdigit(), "strippedCharsFromStart isn't a digit, %r" % strippedCharsFromStart
@@ -390,6 +408,10 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 
 	TextInfo=VirtualBufferTextInfo
+
+	# As NVDA manages the caret virtually,
+	# It is necessary for 'gainFocus' events to update the caret.
+	_focusEventMustUpdateCaretPosition = True
 
 	#: Maps root identifiers (docHandle and ID) to buffers.
 	rootIdentifiers = weakref.WeakValueDictionary()
@@ -460,12 +482,28 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		if not success:
 			self.passThrough=True
 			return
+		textLength = NVDAHelper.localLib.VBuf_getTextLength(self.VBufHandle)
+		if textLength == 0:
+			log.debugWarning("Empty buffer. Waiting for documentLoadComplete event instead")
+			# Empty buffer.
+			# May be due to focus event too early in Chromium 100 documents
+			# We may get a later chance to see content with a documentLoadComplete event
+			return
 		if self._hadFirstGainFocus:
 			# If this buffer has already had focus once while loaded, this is a refresh.
 			# Translators: Reported when a page reloads (example: after refreshing a webpage).
 			ui.message(_("Refreshed"))
 		if api.getFocusObject().treeInterceptor == self:
 			self.event_treeInterceptor_gainFocus()
+
+	def event_documentLoadComplete(self, obj, nextHandler):
+		if not self._hadFirstGainFocus:
+			# Any initial gainFocus events were too early to start reporting content in this buffer.
+			# Therefore as we are now alerted the document load is complete,
+			# We should handle the initial automatic say all etc.
+			if api.getFocusObject().treeInterceptor == self:
+				log.debug("Handling initial reporting of virtualBuffer via documentLoadComplete event")
+				self.event_treeInterceptor_gainFocus()
 
 	def _loadProgress(self):
 		# Translators: Reported while loading a document.
@@ -606,7 +644,16 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		for item in results:
 			yield item.textInfo
 
-	def _getNearestTableCell(self, tableID, startPos, origRow, origCol, origRowSpan, origColSpan, movement, axis):
+	def _getNearestTableCell(
+			self,
+			startPos: textInfos.TextInfo,
+			cell: documentBase._TableCell,
+			movement: documentBase._Movement,
+			axis: documentBase._Axis,
+	) -> textInfos.TextInfo:
+		tableID, origRow, origCol, origRowSpan, origColSpan = (
+			cell.tableID, cell.row, cell.col, cell.rowSpan, cell.colSpan
+		)
 		# Determine destination row and column.
 		destRow = origRow
 		destCol = origCol
@@ -628,10 +675,13 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 
 		# Cells are grouped by row, so in most cases, we simply need to search in the right direction.
 		for info in self._iterTableCells(tableID, direction=movement, startPos=startPos):
-			_ignore, row, col, rowSpan, colSpan = self._getTableCellCoords(info)
-			if row <= destRow < row + rowSpan and col <= destCol < col + colSpan:
+			cell = self._getTableCellCoords(info)
+			if (
+				cell.row <= destRow < (cell.row + cell.rowSpan)
+				and cell.col <= destCol < (cell.col + cell.colSpan)
+			):
 				return info
-			elif row > destRow and movement == "next":
+			elif cell.row > destRow and movement == "next":
 				# Optimisation: We've gone forward past destRow, so we know we won't find the cell.
 				# We can't reverse this logic when moving backwards because there might be a prior cell on an earlier row which spans multiple rows.
 				break
@@ -645,8 +695,11 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 			# In this case, there might be a cell on an earlier row which spans multiple rows.
 			# Therefore, try searching backwards.
 			for info in self._iterTableCells(tableID, direction="previous", startPos=startPos):
-				_ignore, row, col, rowSpan, colSpan = self._getTableCellCoords(info)
-				if row <= destRow < row + rowSpan and col <= destCol < col + colSpan:
+				cell = self._getTableCellCoords(info)
+			if (
+				cell.row <= destRow < (cell.row + cell.rowSpan)
+				and cell.col <= destCol < (cell.col + cell.colSpan)
+			):
 					return info
 			else:
 				raise LookupError

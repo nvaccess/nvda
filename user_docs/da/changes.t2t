@@ -1,77 +1,126 @@
 Nyheder i NVDA
 
 
-
 %!includeconf: ../changes.t2tconf
 
-= 2020.4 =
-Denne version af NVDA har eksperimental understøttelse af UIA i Excel og Chromium-baserede browsere.
-Der er rettelser for flere sprog og en rettelse, så man kan aktivere links via punkt.
-Der er opdateringer til Unicode CLDR, matematiske symboler og LibLouis.
-Der er også mange fejlrettelser til Office, Visual Studio samt flere sprog.
+= 2023.1 =
+Der er tilføjet en ny kategori, der hedder "Dokumentnavigation" i NVDAs indstillinger. Her findes indstillingen "Navigering af afsnit".
+Dette kan bruges til at indstille, hvordan du vil navigere rundt mellem afsnit i tekstredigeringsprogrammer, hvor denne type af navigation ikke normalt understøttes, såsom Notesblok og Notepad++.
+
+Der er en ny kommando, der oplyser webadressen for det aktuelle link (``NVDA+k``).
+
+Understøttelse af annoteret webindhold, såsom kommentarer og fodnoter, er forbedret.
+Tryk NVDA+D for at skifte mellem de tilgængelig sammendrag af annoteringsdetaljer, når du eksempelvis får oplyst "har kommentarer" eller "har fodnoter".
+
+Tivomatic Caiku Albatross 46/80 punktdisplays er nu understøttet.
+
+Understøttelsen af ARM64 og AMD64-versioner af Windows er forbedret.
+
+Der er en del fejlrettelser, hvor mange omfatter Windows 11.
+
+eSpeak, LibLouis, Sonic rate boost and Unicode CLDR er blevet opdateret.
+Der er nye punkttabeller for georgiske, swahili (Kenya) og Chichewa (Malawi).
 
 Bemærk:
- - Denne opdatering er ikke kompatibel med eksisterende tilføjelser, før disse modtager opdateringer.
- - Denne opdatering understøtter ikke længere Adobe Flash.
- -
-
+- Denne version af NVDA er inkompatibel med eksisterende tilføjelsesprogrammer. Hvis du har tilføjelser til NVDA installeret, skal du sørge for, at de er opdateret, før du opdaterer.
+-
 
 == Nye funktioner ==
-- Tidlig understøttelse for UIA i Chromium-baserede browsere som Edge. (#12025)
-- Valgfri eksperimental understøttelse for UI Automation i Microsoft Excel. Anbefales kun for Microsoft Excel build 16.0.13522.10000 eller nyere. (#12210)
-- Det er nu nemmere at navigere i output fra NVDAs Python-konsol. (#9784)
-  - alt+pil op eller ned springer til næste resultat for output (tilføj shift-tasten for at vælge).
-  - Ctrl+L sletter alt output.
-- NVDA oplyser nu kategorien tildelt begivenheder i Microsoft Outlook, hvis dette er tilfældet. (#11598)
-- Understøttelse for Seika-notatapparat og punktdisplay fra Nippon Telesoft. (#11514)
+- Tilføjelsescenteret er blevet tilføjet til NVDA. (#13985)
+  - Gennemse, søg, installer og opdater tilføjelser fra fællesskabet.
+  - Overskriv manuelt kompatibilitetsproblemer med forældede tilføjelser.
+  - Funktionaliteten til at styre tilføjelser er blevet erstattet med "Tilføjelsescenteret".
+  - For mere information, læs venligst den opdaterede brugervejledning.
+  -
+- Tilføjet udtalelse af Unicode-symboler:
+  - Punktsymboler såsom "⠐⠣⠃⠗⠇⠐⠜". (#14548)
+  - Mac Option-tast "⌥". (#14682)
+  
+- Nye inputkommandoer:
+  - En ubunden kommando, der skifter mellem de tilgængelige sprog for Windows Tekstgenkendelse. (#13036)
+  - En ubunden kommando, der skifter mellem visningsmetoden for punktbeskeder. (#14864)
+  - En ubunden kommando, der skifter visningen af markørindikatoren for punkt. (#14948)
+  -
+- Tilføjet kommandoer for Tivomatic Caiku Albatross punktdisplays. (#14844, #15002)
+  - Viser punktindstillingsdialogen.
+  - Giver adgang til statuslinjen.
+  - Skifter formen for punktmarkøren.
+  - Skifter mellem metoderne for visningen af punktbeskeder.
+  - Slår visning af punktmarkøren til og fra.
+  - Slår indstillingen for visningen af punktformen for valgte emner til og fra.
+  -
+- En ny punktindstilling for at skifte visningen af markørindikatoren (dots 7 og 8). (#14948)
+- I Mozilla Firefox og Google Chrome rapporterer NVDA nu, når en kontrol åbner en dialog, gitter, liste eller træ, hvis forfatteren har angivet dette ved hjælp af aria-haspopup. (#14709)
+- Det er nu muligt at bruge systemvariabler (såsom ``%temp%`` eller ``%homepath%``) i stispecifikationen ved oprettelsen af flytbare kopier af NVDA. (#14680)
+- Tilføjet support for ``aria-punktroledescription`` ARIA 1.3 attribut, som giver webforfattere mulighed for at overskrive typen af et element vist på punktvisningen. (#14748)
+- Når fremhævet tekst er aktiveret i dokumentformatering, rapporteres farverne på fremhævningen nu i Microsoft Word. (#7396, #12101, #5866)
+- Når farver er aktiveret i dokumentformatering, rapporteres baggrundsfarverne nu i Microsoft Word. (#5866)
+- Når man trykker på ``numpad2`` tre gange for at rapportere den numeriske værdi af karakteren ved læsemarkørens position, vises oplysningerne nu også i punkt. (#14826)
+- NVDA udsender nu lyd via Windows Audio Session API (WASAPI), hvilket kan forbedre reaktionstiden, ydeevnen og stabiliteten af NVDA's tale og lyde.
+Dette kan deaktiveres i avancerede indstillinger, hvis der opstår lydproblemer. (#14697)
+- Når man bruger Excel genveje til at skifte format som fed, kursiv, understregning og gennemstregning af en celle i Excel, rapporteres resultatet nu. (#14923)
+- Tilføjet support for Help Tech Activator punktviser. (#14917)
+- I Windows 10 maj 2019-opdatering og senere, kan NVDA annoncere navne på virtuelle skriveborde, når man åbner, ændrer og lukker dem. (#5641)
+- Det er nu muligt at have lydstyrken af NVDA-lyde og bip følge lydstyrken af den stemme, du bruger.
+Denne mulighed kan aktiveres i avancerede indstillinger. (#1409)
+- Du kan nu separat styre lydstyrken af NVDA-lyde.
+Dette kan gøres ved hjælp af lydstyrkekontrollen i Windows. (#1409)
+- 
 
 
 == Ændringer ==
-- Du kan nu aktivere kontrolelementer via punktdisplay i gennemsynstilstand, når du bruger markørknapperne og du trykker på deres typenavn (f.eks. lnk for link). Dette er særligt brugbart, hvis elementet ikke har et navn. (#7447)
-- NVDA lader ikke længere brugere udføre tekstgenkendelse, hvis skærmtæppet er slået til. (#11911)
-- Opdateret Unicode Common Locale Data Repository (CLDR) til 39.0. (#11943, #12314)
-- Tilføjet flere matematiske symboler til symbolordbogen. (#11467)
-- Brugervejledningen, filen med ændringer og kommandooversigten har et nyt og opdateret udseende. (#12027)
-- "Ikke understøttet" vil nu blive oplyst, når du forsøger at aktivere skærmlayout i programmer, hvor det ikke kan aktiveres, såsom Microsoft Word. (#7297)
-- Indstillingen "Forsøg at annullere tale for udløbne fokushændelser" i NVDAs avancerede indstillinger er nu aktiveret som standard. (#10885)
-  - Denne indstilling kan stadig deaktiveres ved at indstille den til "Nej".
-  - Web-applikationer som Gmail vil ikke længere udtale forældede informationer, hvis du flytter fokus hurtigt.
-- Opdaterede LibLouis-punktoversættelse til [3.17.0 https://github.com/liblouis/liblouis/releases/tag/v3.17.0]. (#12137)
-  - Nye punkttabeller: Hviderussisk litterær punkt, hviderussisk computer braille, Urdu niveau, Irdu niveau 2.
-- Fjernet understøttelse for Adobe flash, da brug af Flash nu aktivt frarådes af Adobe. (#11131)
-- NVDA vil nu afslutte, selv hvis andre NVDA-vinduer er åbne. Disse bliver nu også lukket. (#1740)
-- Talevisning kan nu lukkes med Alt+F4 og har nu en knap til at lukke vinduet, hvis du eksempelvis bruger en mus eller andre pegeredskaber. (#12330)
-- Punktviseren har nu en knap til at lukke vinduet, for at gøre det tilgængeligt for bruger der eksempelvis bruger en mus eller andre pegeredskaber. (#12328)
-- Genvejstasten til knappen "Aktivér" i elementlisten er blevet fjernet for nogle sprog i NVDA, da den var i konflikt med genvejsttasten for radioknapper. Du kan stadig aktivere et element blot ved at trykke enter på det. (#6167)
+- LibLouis punktoversætter er blevet opdateret til [3.26.0 https://github.com/liblouis/liblouis/releases/tag/v3.26.0]. (#14970)
+- CLDR er blevet opdateret til version 43.0. (#14918)
+- Bindestreg og em-streg symboler vil altid blive sendt til talesyntesen. (#13830)
+- Ændringer i LibreOffice:
+  - Når læsemarkørens position rapporteres, vil den nuværende markørposition blive rapporteret i forhold til den nuværende side i LibreOffice Writer for LibreOffice versioner >= 7.6, svarende til hvad der gøres for Microsoft Word. (#11696)
+  - Annoncering af statuslinjen (f.eks. ved at bruge ``NVDA+end``) virker i LibreOffice. (#11698)
+  -
+- Afstanden rapporteret i Microsoft Word vil nu overholde den enhed, der er defineret i Words avancerede indstillinger, selv når der bruges UIA til at få adgang til Word-dokumenter. (#14542)
+- NVDA reagerer hurtigere, når markøren bevæges under redigering. (#14708)
+- Baum punktdriver: Tilføjet flere punktakkord-kommandoer til at udføre almindelige tastaturkommandoer som ``windows+d``, ``alt+tab`` osv.
+Læs venligst NVDA brugervejledningen for en fuld liste. (#14714)
+- Når du bruger et punktdisplay via Standard HID punktdriveren, kan dpad bruges til at efterligne piletasterne og enter. Også mellemrum+punkt1 og mellemrum+punkt4 kortlægges nu til op- og ned-piletasten henholdsvis. (#14713)
+- Script til rapportering af destinationen for et link rapporterer nu fra systemmarkøren/fokus-positionen i stedet for navigationsobjektet. (#14659)
+- Oprettelse af flytbar kopi af NVDA kræver ikke længere, at et drevbogstav indtastes som en del af den absolutte sti. (#14681)
+- Hvis Windows er konfigureret til at vise sekunder på uret i systembakken, vil brug af ``NVDA+f12`` til at rapportere tiden nu overholde denne indstilling. (#14742)
+- NVDA vil nu rapportere unavngivne grupperinger, der har nyttig positionsinformation, som i nyere versioner af Microsoft Office 365-menuer. (#14878) 
+-
 
 
 == Fejlrettelser ==
-- Meddelelseslisten i Outlook 2021 kan nu læses igen. (#12241)
-- når du indsætter eller sletter tegn midt på en linje i terminalprogrammer på Windows 10 version 1607 og nyere,bliver tegnene til højre for markøren ikke længere oplæst.  (#3200)
-  - Denne eksperimentelle løsning skal aktiveres i NVDAs avancerede indstillinger ved at ændre dif-algoritmen til Diff Match Patch.
-- NVDA skulle ikke længere rapportere afstand for indrykning, når du  trykker shift+tab fra meddelelsesfeltet i Outlook til emnefeltet. (#10254)
-- NVDAs Python-konsol understøtter nu indrykning med tab på en inputlinje, der ikke er tom, samt understøttelse for tab-fuldførelse midt på en linje. (#11532)
-- Formateringsoplysninger og andre meddelelser, der vises i gennemsynstilstand, vil ikke længere vise et uventet antal af blanke linjer, når skærmlayout er slået fra. (#12004)
-- Det er nu muligt at læse kommentarer i Microsoft Word med UIA aktiveret. (#9285)
-- Ydelsesevnen ved brug af Visual Studio er forbedret. (#12171)
-- Rettet nogle grafiske fejl, såsom manglende visuelle elementer, når du bruger NVDA med et layout, hvor teksten er fra højre mod venstre. (#8859)
-- NVDA tager nu udgangspunkt i GUI-layoutretningen baseret på NVDAs eget sprog og ikke systemsproget. (#638)
-  - Kendt problem for sprog, hvor teksten er fra højre mod venstre: Højre kant af grupperinger bliver ofte beskåret og overlappet med labels/kontrolelementer. (#12181)
-- Python-lokaliseringen er indstillet til at passe med sproget valgt i indstillinger. Dette vil være tilfældet, når standardsproget benyttes. (#12214)
-- Det er endnu en gang muligt at bruge NVDA på sprog, der indeholder understreger i det lokale navn som de_CH på Windows 10 1803 og 1809. (#12250)
-- TextInfo.getTextInChunks fryser ikke længere, når denne kaldes på rich edit kontrolelementer, såsom den brugt i NVDAs logviser. (#11613)
-- Annoncering af hævet og sænket skrift i WordPad virker nu som forventet. (#12262)
-- NVDA undlader ikke længere at annoncere det nyligt fokuserede indhold på en webside, hvis det gamle fokus forsvinder og erstattes af det nye fokus ved samme position. (#12147)
-- Formateringsoplysninger som gennemstregning, hævet og sænket skrift for hele Excel-celler rapporteres nu, hvis den tilsvarende mulighed er aktiveret. (#12264)
-- Rettet en fejl ved kopiering af konfigurationen  under en installation igangsat af en flytbar kopi, hvis mappen for standardkonfigurationen er tom. (#12071, #12205)
-- Rettet forkerte meddelelse af nogle bogstaver med accenter eller diakritiske, når indstillingen "sig stort før store bogstaver" er markeret. (#11948)
-- Rettet problem med ændring af toneleje i Microsoft SAPI4 talesyntese. (#12311)
-- NVDA Installer vil nu korrekt benytte --minimal kommandolinjeparmetret og afspiller ikke opstartslyden, hvilket er samme adfærd som en installeret eller flytbar kopi af NVDA. (#12289)
-- Tabelkommandoen til at springe til tabeller vil nu inkludere layouttabeller i Microsoft Word og Outlook, hvis disse er slået til under NVDAs indstillinger for gennemsynstilstand. (#11899)
-- NVDA vil ikke længere annoncere "↑↑↑" for emoji på bestemte sprog. (#11963)
-- Espeak understøtter nu kantonesisk og mandarin igen. (#10418)
-- Tekstfelter som adressefeltet  vil nu blive oplyst i den nye Chromium-baseret Microsoft Edge, når disse er tomme. (#12474)
-- Rettet fejl med Seika Braille driver. (#10787)
+- NVDA vil ikke længere unødigt skifte til "ingen punkt" flere gange under automatisk detektering af punktdisplays, hvilket resulterer i en renere log og et mindre unødvendigt ressourceforbrug. (#14524)
+- NVDA vil nu skifte tilbage til USB, hvis en HID Bluetooth-enhed (såsom HumanWare Brailliant eller APH Mantis) automatisk detekteres, og en USB-forbindelse bliver tilgængelig.
+Dette fungerede kun for Bluetooth-serielle porte tidligere. (#14524)
+- Det er nu muligt at bruge backslash-tegnet i erstatningsfeltet i ordbogen, når typen ikke er indstillet til regulært udtryk. (#14556)
+- I gennemsynstilstand vil NVDA ikke længere fejlagtigt ignorere fokus, der flytter til en overordnet eller underordnet kontrol, f.eks. flytning fra en kontrol til dens overordnede listeemne eller gittercelle. (#14611)
+  - Bemærk dog, at denne rettelse kun gælder, når indstillingen "Automatisk fokustilstand ved ændring af fokus" i indstillingerne for gennemsynstilstand er slået fra (som er standard).
+  -
+- NVDA får ikke længere lejlighedsvis Mozilla Firefox til at gå ned eller stoppe med at svare. (#14647)
+- I Mozilla Firefox og Google Chrome rapporteres indtastede tegn ikke længere i nogle tekstbokse, selv når tale indtastede tegn er deaktiveret. (#14666)
+- Du kan nu bruge gennemsynstilstand i Chromium Embedded Controls, hvor det ikke tidligere var muligt. (#13493, #8553)
+- For symboler, som ikke har en symbolsbeskrivelse i det nuværende sprog, vil det standard engelske symbolniveau blive brugt. (#14558, #14417)
+- Rettelser for Windows 11:
+  - NVDA kan igen annoncere indholdet i Notesbloks statuslinje. (#14573)
+  - Skift mellem faner vil annoncere positionen og navnet på det nye faneblad i både Notesblok og Stifinder. (#14587, #14388)
+  - NVDA vil igen annoncere kandidatelementer, når du indtaster tekst på sprog som kinesisk og japansk. (#14509)
+  -
+- I Mozilla Firefox rapporterer flytning af musen over tekst efter et link nu pålideligt teksten. (#9235)
+- I Lommeregner i Windows 10 og 11 vil en flytbar kopi af NVDA ikke længere gøre ingenting eller afspille fejlsignaler, når der indtastes udtryk i standardlommeregner i kompaktvisning. (#14679)
+- Når du forsøger at rapportere URL'en for et link uden en href-attribut, er NVDA ikke længere stille.
+I stedet rapporterer NVDA, at linket ikke har nogen destination. (#14723)
+- Flere stabilitetsrettelser til input/output for punktvisere, hvilket resulterer i mindre hyppige fejl og nedbrud af NVDA. (#14627)
+- NVDA genoplever igen fra mange flere situationer, såsom applikationer, der holder op med at reagere, hvilket tidligere fik den til at fryse helt. (#14759)
+- Destinationen for grafiske links rapporteres nu korrekt i Chrome og Edge. (#14779)
+- I Windows 11 er det igen muligt at åbne bidragydere og licenspunkter på NVDA-hjælpemenuen. (#14725)
+- Når du tvinger UIA-understøttelse med visse terminaler og konsoller, er en fejl rettet, som forårsagede en frysning og at logfilen blev spammet. (#14689)
+- NVDA undlader ikke længere at annoncere, at der fokuseres på adgangskodefelter i Microsoft Excel og Outlook. (#14839)
+- NVDA vil ikke længere nægte at gemme konfigurationen efter en konfigurationsnulstilling. (#13187)
+- Når du kører en midlertidig version fra launcher, vil NVDA ikke vildlede brugere til at tro, at de kan gemme konfigurationen. (#14914)
+- Rapportering af genvejstaster til objekter er blevet forbedret. (#10807)
+- Når du hurtigt bevæger dig gennem celler i Excel, er NVDA nu mindre tilbøjelig til at rapportere den forkerte celle eller markering. (#14983, #12200, #12108)
+- NVDA reagerer nu generelt lidt hurtigere på kommandoer og fokusændringer. (#14928)
+-
 
 
 == Ændringer for udviklere ==

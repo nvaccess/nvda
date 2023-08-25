@@ -4,32 +4,32 @@
 #See the file COPYING for more details.
 
 from comtypes import COMError
-import comtypes.automation
-import comtypes.client
 import ctypes
-import NVDAHelper
+import operator
+import uuid
 from logHandler import log
-import oleacc
 import winUser
 import speech
+import braille
 import controlTypes
+import config
+import tableUtils
 import textInfos
 import eventHandler
 import scriptHandler
+import ui
 from . import IAccessible
 from displayModel import EditableTextDisplayModelTextInfo
-from NVDAObjects.window import DisplayModelEditableText
 from ..behaviors import EditableTextWithoutAutoSelectDetection
-from NVDAObjects.window.winword import *
-from NVDAObjects.window.winword import WordDocumentTreeInterceptor
+import NVDAObjects.window.winword as winWordWindowModule
 from speech import sayAll
 
 
-class WordDocument(IAccessible,EditableTextWithoutAutoSelectDetection,WordDocument):
- 
-	treeInterceptorClass=WordDocumentTreeInterceptor
+class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordWindowModule.WordDocument):
+
+	treeInterceptorClass = winWordWindowModule.WordDocumentTreeInterceptor
 	shouldCreateTreeInterceptor=False
-	TextInfo=WordDocumentTextInfo
+	TextInfo = winWordWindowModule.WordDocumentTextInfo
 
 	def _get_ignoreEditorRevisions(self):
 		try:
@@ -56,11 +56,11 @@ class WordDocument(IAccessible,EditableTextWithoutAutoSelectDetection,WordDocume
 		super(WordDocument,self).event_caret()
 
 	def _get_role(self):
-		return controlTypes.ROLE_EDITABLETEXT
+		return controlTypes.Role.EDITABLETEXT
 
 	def _get_states(self):
 		states=super(WordDocument,self).states
-		states.add(controlTypes.STATE_MULTILINE)
+		states.add(controlTypes.State.MULTILINE)
 		return states
 
 	def populateHeaderCellTrackerFromHeaderRows(self,headerCellTracker,table):
@@ -112,7 +112,7 @@ class WordDocument(IAccessible,EditableTextWithoutAutoSelectDetection,WordDocume
 		except (COMError, AttributeError):
 			tableRangesEqual=False
 		if not tableRangesEqual:
-			self._curHeaderCellTracker=HeaderCellTracker()
+			self._curHeaderCellTracker = tableUtils.HeaderCellTracker()
 			self.populateHeaderCellTrackerFromBookmarks(self._curHeaderCellTracker,tableRange.bookmarks)
 			self.populateHeaderCellTrackerFromHeaderRows(self._curHeaderCellTracker,table)
 			self._curHeaderCellTrackerTable=table
@@ -140,7 +140,7 @@ class WordDocument(IAccessible,EditableTextWithoutAutoSelectDetection,WordDocume
 			name="ColumnTitle_"
 		else:
 			raise ValueError("One or both of isColumnHeader or isRowHeader must be True")
-		name+=uuid.uuid4().hex
+		name += uuid.uuid4().hex
 		if oldInfo:
 			self.WinwordDocumentObject.bookmarks[oldInfo.name].delete()
 			oldInfo.name=name
@@ -205,10 +205,6 @@ class WordDocument(IAccessible,EditableTextWithoutAutoSelectDetection,WordDocume
 
 	def script_setColumnHeader(self,gesture):
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
-		if not config.conf['documentFormatting']['reportTableHeaders']:
-			# Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-			ui.message(_("Cannot set headers. Please enable reporting of table headers in Document Formatting Settings"))
-			return
 		try:
 			cell=self.WinwordSelectionObject.cells[1]
 		except COMError:
@@ -233,10 +229,6 @@ class WordDocument(IAccessible,EditableTextWithoutAutoSelectDetection,WordDocume
 
 	def script_setRowHeader(self,gesture):
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
-		if not config.conf['documentFormatting']['reportTableHeaders']:
-			# Translators: a message reported in the SetRowHeader script for Microsoft Word.
-			ui.message(_("Cannot set headers. Please enable reporting of table headers in Document Formatting Settings"))
-			return
 		try:
 			cell=self.WinwordSelectionObject.cells[1]
 		except COMError:
@@ -303,7 +295,7 @@ class WordDocument(IAccessible,EditableTextWithoutAutoSelectDetection,WordDocume
 		formatConfig=config.conf['documentFormatting'].copy()
 		formatConfig['reportTables']=True
 		commandList=info.getTextWithFields(formatConfig)
-		if len(commandList)<3 or commandList[1].field.get('role',None)!=controlTypes.ROLE_TABLE or commandList[2].field.get('role',None)!=controlTypes.ROLE_TABLECELL:
+		if len(commandList)<3 or commandList[1].field.get('role',None)!=controlTypes.Role.TABLE or commandList[2].field.get('role',None)!=controlTypes.Role.TABLECELL:
 			# Translators: The message reported when a user attempts to use a table movement command
 			# when the cursor is not withnin a table.
 			ui.message(_("Not in table"))
@@ -323,8 +315,8 @@ class WordDocument(IAccessible,EditableTextWithoutAutoSelectDetection,WordDocume
 		thisIndex=rowNumber if row else columnNumber
 		otherIndex=columnNumber if row else rowNumber
 		thisLimit=(rowCount if row else columnCount) if forward else 1
-		limitOp=operator.le if forward else operator.ge
-		incdecFunc=operator.add if forward else operator.sub
+		limitOp = operator.le if forward else operator.ge
+		incdecFunc = operator.add if forward else operator.sub
 		foundCell=None
 		curOtherIndex=otherIndex
 		while curOtherIndex>0:
@@ -341,7 +333,9 @@ class WordDocument(IAccessible,EditableTextWithoutAutoSelectDetection,WordDocume
 		if not foundCell:
 			ui.message(_("Edge of table"))
 			return False
-		newInfo=WordDocumentTextInfo(self,textInfos.POSITION_CARET,_rangeObj=foundCell)
+		newInfo = winWordWindowModule.WordDocumentTextInfo(
+			self, textInfos.POSITION_CARET, _rangeObj=foundCell
+		)
 		speech.speakTextInfo(newInfo, reason=controlTypes.OutputReason.CARET, unit=textInfos.UNIT_CELL)
 		newInfo.collapse()
 		newInfo.updateCaret()
@@ -362,15 +356,15 @@ class WordDocument(IAccessible,EditableTextWithoutAutoSelectDetection,WordDocume
 	def script_nextParagraph(self,gesture):
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
 		# #4375: can't use self.move here as it may check document.chracters.count which can take for ever on large documents.
-		info._rangeObj.move(wdParagraph,1)
+		info._rangeObj.move(winWordWindowModule.wdParagraph, 1)
 		info.updateCaret()
 		self._caretScriptPostMovedHelper(textInfos.UNIT_PARAGRAPH,gesture,None)
 	script_nextParagraph.resumeSayAllMode = sayAll.CURSOR.CARET
 
 	def script_previousParagraph(self,gesture):
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
-		# #4375: keeping cemetrical with nextParagraph script. 
-		info._rangeObj.move(wdParagraph,-1)
+		# #4375: keeping symmetrical with nextParagraph script.
+		info._rangeObj.move(winWordWindowModule.wdParagraph, -1)
 		info.updateCaret()
 		self._caretScriptPostMovedHelper(textInfos.UNIT_PARAGRAPH,gesture,None)
 	script_previousParagraph.resumeSayAllMode = sayAll.CURSOR.CARET
@@ -398,7 +392,8 @@ class WordDocument(IAccessible,EditableTextWithoutAutoSelectDetection,WordDocume
 		"kb:NVDA+alt+c":"reportCurrentComment",
 	}
 
-class SpellCheckErrorField(IAccessible,WordDocument_WwN):
+
+class SpellCheckErrorField(IAccessible, winWordWindowModule.WordDocument_WwN):
 
 	parentSDMCanOverrideName=False
 	ignoreFormatting=True
@@ -460,8 +455,8 @@ class ProtectedDocumentPane(IAccessible):
 		document=next((x for x in self.children if isinstance(x,WordDocument)), None)  
 		if document:
 			curThreadID=ctypes.windll.kernel32.GetCurrentThreadId()
-			ctypes.windll.user32.AttachThreadInput(curThreadID,document.windowThreadID,True)
-			ctypes.windll.user32.SetFocus(document.windowHandle)
-			ctypes.windll.user32.AttachThreadInput(curThreadID,document.windowThreadID,False)
+			winUser.user32.AttachThreadInput(curThreadID, document.windowThreadID, True)
+			winUser.user32.SetFocus(document.windowHandle)
+			winUser.user32.AttachThreadInput(curThreadID, document.windowThreadID, False)
 			if not document.WinwordWindowObject.active:
 				document.WinwordWindowObject.activate()

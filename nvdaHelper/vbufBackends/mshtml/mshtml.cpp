@@ -81,8 +81,13 @@ VBufStorage_controlFieldNode_t* MshtmlVBufBackend_t::getDeepestControlFieldNodeF
 	* @param siid the service iid
 	*/
 template<typename toInterface> inline HRESULT queryService(IUnknown* pUnknown, const IID& siid, toInterface** pIface) {
+	if (pIface == nullptr) {
+		LOG_DEBUG(L"pIface should not be a nullptr");
+		constexpr unsigned int CUSTOMER_FLAG = 1;
+		return MAKE_HRESULT(SEVERITY_ERROR, CUSTOMER_FLAG, 0);
+	}
 	HRESULT hRes;
-	IServiceProvider* pServProv=NULL;
+	IServiceProvider* pServProv = nullptr;
 	hRes=pUnknown->QueryInterface(IID_IServiceProvider,(void**)&pServProv);
 	if(hRes!=S_OK||!pServProv) {
 		LOG_DEBUG(L"Could not queryInterface to IServiceProvider");
@@ -90,9 +95,9 @@ template<typename toInterface> inline HRESULT queryService(IUnknown* pUnknown, c
 	}
 	hRes=pServProv->QueryService(siid,__uuidof(toInterface),(void**)pIface);
 	pServProv->Release();
-	if(hRes!=S_OK||!pIface) {
+	if( hRes != S_OK || *pIface == nullptr) {
 		LOG_DEBUG(L"Could not get requested interface");
-		*pIface=NULL;
+		*pIface = nullptr;  // if hres is not ok
 		return hRes;
 	}
 	return hRes;
@@ -193,7 +198,7 @@ IHTMLElement* LocateHTMLElementInDocument(IHTMLDocument3* pHTMLDocument3, const 
 	}
 	BSTR tagName=NULL;
 	hRes=pHTMLElement->get_tagName(&tagName);
-	wchar_t* embeddingTagName=(tagName&&(wcscmp(tagName,L"FRAMESET"))==0)?L"FRAME":L"IFRAME";
+	auto embeddingTagName = (tagName&&(wcscmp(tagName, L"FRAMESET")) == 0) ? L"FRAME" : L"IFRAME";
 	SysFreeString(tagName);
 	IHTMLElement2* pHTMLElement2=NULL;
 	hRes=pHTMLElement->QueryInterface(IID_IHTMLElement2,(void**)&pHTMLElement2);
@@ -203,7 +208,7 @@ IHTMLElement* LocateHTMLElementInDocument(IHTMLDocument3* pHTMLDocument3, const 
 		return NULL;
 	}
 	IHTMLElementCollection* pHTMLElementCollection=NULL;
-	hRes=pHTMLElement2->getElementsByTagName(embeddingTagName,&pHTMLElementCollection);
+	hRes=pHTMLElement2->getElementsByTagName(BSTR(embeddingTagName), &pHTMLElementCollection);
 	pHTMLElement2->Release();
 	if(hRes!=S_OK||!pHTMLElementCollection) {
 		LOG_DEBUG(L"Could not get collection from getElementsByName");
@@ -862,7 +867,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		IHTMLElement* pHTMLElement=NULL;
 		if(pHTMLDOMNodeTemp->QueryInterface(IID_IHTMLElement,(void**)&pHTMLElement)==S_OK&&pHTMLElement) {
 			VARIANT v;
-			if(pHTMLElement->getAttribute(L"lang",2,&v)==S_OK) {
+			if(pHTMLElement->getAttribute(BSTR(L"lang"), 2, &v) == S_OK) {
 				if(v.vt==VT_BSTR&&v.bstrVal) {
 					language=v.bstrVal;
 				}

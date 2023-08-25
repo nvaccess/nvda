@@ -20,7 +20,6 @@ handler: Optional[VisionHandler] = None
 
 def initialize() -> None:
 	global handler
-	config.addConfigDirsToPythonPackagePath(visionEnhancementProviders)
 	handler = VisionHandler()
 
 

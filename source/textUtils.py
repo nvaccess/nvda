@@ -1,7 +1,8 @@
+# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2018-2020 NV Access Limited, Babbage B.V., Łukasz Golonka
+# Copyright (C) 2018-2021 NV Access Limited, Babbage B.V., Łukasz Golonka
 
 """
 Classes and utilities to deal with offsets variable width encodings, particularly utf_16.
@@ -235,3 +236,14 @@ LOW_SURROGATE_LAST = u"\uDFFF"
 def isLowSurrogate(ch: str) -> bool:
 	"""Returns if the given character is a low surrogate UTF-16 character."""
 	return LOW_SURROGATE_FIRST <= ch <= LOW_SURROGATE_LAST
+
+
+#: ￼ OBJECT REPLACEMENT CHARACTER,
+# placeholder in the text for another unspecified object, for example in a compound document.
+# https://en.wikipedia.org/wiki/Specials_(Unicode_block)
+OBJ_REPLACEMENT_CHAR = u"\uFFFC"
+
+#: � REPLACEMENT CHARACTER,
+# used to replace an unknown, unrecognized, or unrepresentable character.
+# https://en.wikipedia.org/wiki/Specials_(Unicode_block)
+REPLACEMENT_CHAR = u"\uFFFD"

@@ -1,9 +1,11 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2015-2021 NV Access Limited, Joseph Lee
+# Copyright (C) 2015-2022 NV Access Limited, Joseph Lee
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 """App module for Start menu/Windows Search/Cortana user interface in Windows 10 Version 1909 and earlier.
+This app module also serves as the basis for Start menu in Windows 10 Version 2004 and later
+as well as Windows 11, represented by alias app modules.
 """
 
 import appModuleHandler
@@ -12,10 +14,18 @@ import winVersion
 from NVDAObjects.IAccessible import IAccessible, ContentGenericClient
 from NVDAObjects.UIA import UIA, SearchField, SuggestionListItem
 
+
 class StartMenuSearchField(SearchField):
 
 	# #7370: do not announce text when start menu (searchui) closes.
 	announceNewLineText = False
+
+	def _get_description(self) -> str:
+		# #13841: detect search highlights and anounce it.
+		if self.lastChild.UIAAutomationId == "PlaceholderTextContentPresenter":
+			return self.lastChild.name
+		return super().description
+
 
 class AppModule(appModuleHandler.AppModule):
 
@@ -32,7 +42,7 @@ class AppModule(appModuleHandler.AppModule):
 			):
 				obj.name = obj.firstChild.name
 
-	def chooseNVDAObjectOverlayClasses(self,obj,clsList):
+	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if isinstance(obj, IAccessible):
 			try:
 				# #5288: Never use ContentGenericClient, as this uses displayModel
@@ -44,6 +54,12 @@ class AppModule(appModuleHandler.AppModule):
 			if obj.UIAAutomationId == "SearchTextBox":
 				clsList.insert(0, StartMenuSearchField)
 			# #10329: Since 2019, some suggestion items are grouped inside another suggestions list item.
+			# #13544: grandparent must be checked due to redesign in 2019.
 			# Because of this, result details will not be announced like in the past.
-			elif obj.role == controlTypes.ROLE_LISTITEM and isinstance(obj.parent, SuggestionListItem):
+			elif (
+				obj.role == controlTypes.Role.LISTITEM and (
+					isinstance(obj.parent, SuggestionListItem)
+					or isinstance(obj.parent.parent, SuggestionListItem)
+				)
+			):
 				clsList.insert(0, SuggestionListItem)

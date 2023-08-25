@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2020-2022 NV Access Limited, Bill Dengler
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2020 Bill Dengler
 
 import config
 import globalVars
@@ -16,6 +16,7 @@ from logHandler import log
 from textInfos import TextInfo, UNIT_LINE
 from threading import Lock
 from typing import List
+import NVDAState
 
 
 class DiffAlgo(AutoPropertyObject):
@@ -44,12 +45,12 @@ class DiffMatchPatch(DiffAlgo):
 		@note: This should be run from within the context of an acquired lock."""
 		if not DiffMatchPatch._proc:
 			log.debug("Starting diff-match-patch proxy")
-			if hasattr(sys, "frozen"):
-				dmp_path = (os.path.join(globalVars.appDir, "nvda_dmp.exe"),)
-			else:
+			if NVDAState.isRunningAsSource():
 				dmp_path = (sys.executable, os.path.join(
 					globalVars.appDir, "..", "include", "nvda_dmp", "nvda_dmp.py"
 				))
+			else:
+				dmp_path = (os.path.join(globalVars.appDir, "nvda_dmp.exe"),)
 			DiffMatchPatch._proc = subprocess.Popen(
 				dmp_path,
 				creationflags=subprocess.CREATE_NO_WINDOW,
@@ -98,6 +99,7 @@ class DiffMatchPatch(DiffAlgo):
 				]
 		except Exception:
 			log.exception("Exception in DMP, falling back to difflib")
+			self._terminate()
 			return Difflib().diff(newText, oldText)
 
 	def _terminate(self):
@@ -105,8 +107,12 @@ class DiffMatchPatch(DiffAlgo):
 			if DiffMatchPatch._proc:
 				log.debug("Terminating diff-match-patch proxy")
 				# nvda_dmp exits when it receives two zero-length texts.
-				DiffMatchPatch._proc.stdin.write(struct.pack("=II", 0, 0))
-				DiffMatchPatch._proc.wait(timeout=5)
+				try:
+					DiffMatchPatch._proc.stdin.write(struct.pack("=II", 0, 0))
+					DiffMatchPatch._proc.wait(timeout=5)
+				except Exception:
+					log.exception("Exception during DMP termination")
+				DiffMatchPatch._proc = None
 
 
 class Difflib(DiffAlgo):
@@ -171,7 +177,7 @@ class Difflib(DiffAlgo):
 		return "\n".join(ti.getTextInChunks(UNIT_LINE))
 
 
-def get_dmp_algo():
+def prefer_dmp():
 	"""
 		This function returns a Diff Match Patch object if allowed by the user.
 		DMP is new and can be explicitly disabled by a user setting. If config
@@ -184,9 +190,17 @@ def get_dmp_algo():
 	)
 
 
-def get_difflib_algo():
-	"Returns an instance of the difflib diffAlgo."
-	return _difflib
+def prefer_difflib():
+	"""
+		This function returns a Difflib object if allowed by the user.
+		Difflib can be explicitly disabled by a user setting. If config
+		does not allow Difflib, this function returns a DMP instance instead.
+	"""
+	return (
+		_dmp
+		if config.conf["terminals"]["diffAlgo"] == "dmp"
+		else _difflib
+	)
 
 
 _difflib = Difflib()

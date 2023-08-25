@@ -41,10 +41,10 @@ def findExtraOverlayClasses(obj, clsList):
 	This works similarly to L{NVDAObjects.NVDAObject.findOverlayClasses} except that it never calls any other findOverlayClasses method.
 	"""
 	role = obj.role
-	if role == controlTypes.ROLE_WINDOW:
+	if role == controlTypes.Role.WINDOW:
 		return
-	if role == controlTypes.ROLE_DOCUMENT:
+	if role == controlTypes.Role.DOCUMENT:
 		clsList.append(Document)
-	elif role == controlTypes.ROLE_EDITABLETEXT:
+	elif role == controlTypes.Role.EDITABLETEXT:
 		clsList.append(EditableText)
 	clsList.append(Node)

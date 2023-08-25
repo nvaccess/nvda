@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2021 NV Access Limited, Davy Kager, Julien Cochuyt
+# Copyright (C) 2006-2022 NV Access Limited, Davy Kager, Julien Cochuyt, Rob Meredith
 
 """Common support for editable text.
 @note: If you want editable text functionality for an NVDAObject,
@@ -21,6 +21,7 @@ import eventHandler
 from scriptHandler import isScriptWaiting, willSayAllResume
 import textInfos
 import controlTypes
+from inputCore import InputGesture
 from logHandler import log
 
 class EditableText(TextContainerObject,ScriptableObject):
@@ -46,10 +47,10 @@ class EditableText(TextContainerObject,ScriptableObject):
 	announceEntireNewLine=False
 
 	#: The minimum amount of time that should elapse before checking if the word under the caret has changed
-	_hasCaretMoved_minWordTimeoutMs=30
+	_hasCaretMoved_minWordTimeoutSec = 0.03
 
 	#: The maximum amount of time that may elapse before we no longer rely on caret events to detect movement.
-	_useEvents_maxTimeoutMs = 10
+	_useEvents_maxTimeoutSec = 0.06
 
 	_caretMovementTimeoutMultiplier = 1
 
@@ -70,22 +71,18 @@ class EditableText(TextContainerObject,ScriptableObject):
 		@rtype: tuple
 		"""
 		if timeout is None:
-			timeoutMs = config.conf["editableText"]["caretMoveTimeoutMs"]
-		else:
-			# This function's arguments are in seconds, but we want ms.
-			timeoutMs = timeout * 1000
-		timeoutMs *= self._caretMovementTimeoutMultiplier
-		# time.sleep accepts seconds, so retryInterval is in seconds.
-		# Convert to integer ms to avoid floating point precision errors when adding to elapsed.
-		retryMs = int(retryInterval * 1000)
+			timeout = config.conf["editableText"]["caretMoveTimeoutMs"] / 1000
+		timeout *= self._caretMovementTimeoutMultiplier
+		start = time.time()
 		elapsed = 0
 		newInfo=None
+		retries = 0
 		while True:
 			if isScriptWaiting():
 				return (False,None)
 			api.processPendingEvents(processEventQueue=False)
 			if eventHandler.isPendingEvents("gainFocus"):
-				log.debug("Focus event. Elapsed: %d ms" % elapsed)
+				log.debug("Focus event. Elapsed %g sec" % elapsed)
 				return (True,None)
 			# If the focus changes after this point, fetching the caret may fail,
 			# but we still want to stay in this loop.
@@ -96,14 +93,17 @@ class EditableText(TextContainerObject,ScriptableObject):
 			else:
 				# Caret events are unreliable in some controls.
 				# Only use them if we consider them safe to rely on for a particular control,
-				# and only if they arrive within C{_useEvents_maxTimeoutMs} mili seconds
+				# and only if they arrive within C{_useEvents_maxTimeoutSec} seconds
 				# after causing the event to occur.
 				if (
-					elapsed <= self._useEvents_maxTimeoutMs and
-					self.caretMovementDetectionUsesEvents and
-					(eventHandler.isPendingEvents("caret") or eventHandler.isPendingEvents("textChange"))
+					elapsed <= self._useEvents_maxTimeoutSec
+					and self.caretMovementDetectionUsesEvents
+					and (eventHandler.isPendingEvents("caret") or eventHandler.isPendingEvents("textChange"))
 				):
-					log.debug("Caret move detected using event. Elapsed: %d ms" % elapsed)
+					log.debug(
+						"Caret move detected using event. Elapsed %g sec, retries %d"
+						% (elapsed, retries)
+					)
 					return (True,newInfo)
 			# Try to detect with bookmarks.
 			newBookmark = None
@@ -113,9 +113,12 @@ class EditableText(TextContainerObject,ScriptableObject):
 				except (RuntimeError,NotImplementedError):
 					pass
 			if newBookmark and newBookmark!=bookmark:
-				log.debug("Caret move detected using bookmarks. Elapsed: %d ms" % elapsed)
+				log.debug(
+					"Caret move detected using bookmarks. Elapsed %g sec, retries %d"
+					% (elapsed, retries)
+				)
 				return (True, newInfo)
-			if origWord is not None and newInfo and elapsed >= self._hasCaretMoved_minWordTimeoutMs:
+			if origWord is not None and newInfo and elapsed >= self._hasCaretMoved_minWordTimeoutSec:
 				# When pressing delete, bookmarks might not be enough to detect caret movement.
 				# Therefore try detecting if the word under the caret has changed, such as when pressing delete.
 				# some editors such as Mozilla Gecko can have text and units that get out of sync with eachother while a character is being deleted.
@@ -124,13 +127,21 @@ class EditableText(TextContainerObject,ScriptableObject):
 				wordInfo.expand(textInfos.UNIT_WORD)
 				word = wordInfo.text
 				if word != origWord:
-					log.debug("Word at caret changed. Elapsed: %d ms" % elapsed)
+					log.debug("Word at caret changed. Elapsed: %g sec" % elapsed)
 					return (True, newInfo)
-			if elapsed >= timeoutMs:
+			elapsed = time.time() - start
+			if elapsed >= timeout:
 				break
-			time.sleep(retryInterval)
-			elapsed += retryMs
-		log.debug("Caret didn't move before timeout. Elapsed: %d ms" % elapsed)
+			# We spin the first few tries, as sleep is not accurate for tiny periods
+			# and we might end up sleeping longer than we need to. Spinning improves
+			# responsiveness in the case that the app responds fairly quickly.
+			if retries > 2:
+				# Don't spin too long, though. If we get to this point, the app is
+				# probably taking a while to respond, so super fast response is
+				# already lost.
+				time.sleep(retryInterval)
+			retries += 1
+		log.debug("Caret didn't move before timeout. Elapsed: %g sec" % elapsed)
 		return (False,newInfo)
 
 	def _caretScriptPostMovedHelper(self, speakUnit, gesture, info=None):
@@ -294,6 +305,38 @@ class EditableText(TextContainerObject,ScriptableObject):
 	def script_caret_deleteWord(self, gesture):
 		self._deleteScriptHelper(textInfos.UNIT_WORD, gesture)
 
+	def _handleParagraphNavigation(self, gesture: InputGesture, nextParagraph: bool) -> None:
+		from config.featureFlagEnums import ParagraphNavigationFlag
+		flag: config.featureFlag.FeatureFlag = config.conf["documentNavigation"]["paragraphStyle"]
+		if flag.calculated() == ParagraphNavigationFlag.APPLICATION:
+			self.script_caret_moveByParagraph(gesture)
+		elif flag.calculated() == ParagraphNavigationFlag.SINGLE_LINE_BREAK:
+			from documentNavigation.paragraphHelper import moveToSingleLineBreakParagraph
+			passKey, moved = moveToSingleLineBreakParagraph(
+				nextParagraph=nextParagraph,
+				speakNew=not willSayAllResume(gesture)
+			)
+			if passKey:
+				self.script_caret_moveByParagraph(gesture)
+		elif flag.calculated() == ParagraphNavigationFlag.MULTI_LINE_BREAK:
+			from documentNavigation.paragraphHelper import moveToMultiLineBreakParagraph
+			passKey, moved = moveToMultiLineBreakParagraph(
+				nextParagraph=nextParagraph,
+				speakNew=not willSayAllResume(gesture)
+			)
+			if passKey:
+				self.script_caret_moveByParagraph(gesture)
+		else:
+			log.error(f"Unexpected ParagraphNavigationFlag value {flag.value}")
+
+	def script_caret_previousParagraph(self, gesture: InputGesture) -> None:
+		self._handleParagraphNavigation(gesture, False)
+	script_caret_previousParagraph.resumeSayAllMode = sayAll.CURSOR.CARET
+
+	def script_caret_nextParagraph(self, gesture: InputGesture) -> None:
+		self._handleParagraphNavigation(gesture, True)
+	script_caret_nextParagraph.resumeSayAllMode = sayAll.CURSOR.CARET
+	
 	__gestures = {
 		"kb:upArrow": "caret_moveByLine",
 		"kb:downArrow": "caret_moveByLine",
@@ -303,8 +346,8 @@ class EditableText(TextContainerObject,ScriptableObject):
 		"kb:pageDown": "caret_moveByLine",
 		"kb:control+leftArrow": "caret_moveByWord",
 		"kb:control+rightArrow": "caret_moveByWord",
-		"kb:control+upArrow": "caret_moveByParagraph",
-		"kb:control+downArrow": "caret_moveByParagraph",
+		"kb:control+upArrow": "caret_previousParagraph",
+		"kb:control+downArrow": "caret_nextParagraph",
 		"kb:alt+upArrow": "caret_previousSentence",
 		"kb:alt+downArrow": "caret_nextSentence",
 		"kb:home": "caret_moveByCharacter",

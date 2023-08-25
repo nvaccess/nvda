@@ -15,16 +15,18 @@ http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
 #include <string>
 #include <sstream>
 #include <rpc.h>
-#include "nvdaController.h"
+#include <client/nvdaController.h>
 #include <common/winIPCUtils.h>
 
 using namespace std;
 
-void* __RPC_USER midl_user_allocate(size_t size) {
+_Must_inspect_result_
+_Ret_maybenull_ _Post_writable_byte_size_(size)
+void* __RPC_USER midl_user_allocate(_In_ size_t size) {
 	return malloc(size);
 }
 
-void __RPC_USER midl_user_free(void* p) {
+void __RPC_USER midl_user_free(_Pre_maybenull_ _Post_invalid_ void* p) {
 	free(p);
 }
 
@@ -33,8 +35,13 @@ BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
 		wchar_t desktopSpecificNamespace[64];
 		generateDesktopSpecificNamespace(desktopSpecificNamespace,ARRAYSIZE(desktopSpecificNamespace));
 		wstringstream s;
-		s<<L"ncalrpc:[NvdaCtlr."<<desktopSpecificNamespace<<L"]";
-		RpcBindingFromStringBinding((RPC_WSTR)(s.str().c_str()),&nvdaControllerBindingHandle);
+		s << L"ncalrpc:[NvdaCtlr." << desktopSpecificNamespace << L"]";
+		auto wstr = s.str();
+		const auto rpcWstr = RPC_WSTR(wstr.c_str());
+		RPC_STATUS status = RpcBindingFromStringBinding(rpcWstr, &nvdaControllerBindingHandle);
+		if (RPC_S_OK != status) {
+			return FALSE;
+		}
 	} else if(reason==DLL_PROCESS_DETACH) {
 		RpcBindingFree(&nvdaControllerBindingHandle);
 	}

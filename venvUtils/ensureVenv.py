@@ -19,18 +19,33 @@ venv_path: str = os.path.join(top_dir, ".venv")
 requirements_path: str = os.path.join(top_dir, "requirements.txt")
 venv_orig_requirements_path: str = os.path.join(venv_path, "_requirements.txt")
 venv_python_version_path: str = os.path.join(venv_path, "python_version")
+#: Whether this script is run interactively,
+#: i.e. whether user input is possible to answer questions.
+#: Value is True if interactive (i.e. stdout is attached to a terminal), False otherwise.
+isInteractive = hasattr(sys.stdout, "isatty") and sys.stdout.isatty()
+if not isInteractive:
+	print(
+		"Warning: Running in non-interactive mode. Defaults are assumed for prompts, if applicable",
+		flush=True
+	)
 
 
-def askYesNoQuestion(message: str) -> bool:
+def askYesNoQuestion(message: str, default: bool) -> bool:
 	"""
 	Displays the given message to the user and accepts y or n as input.
 	Any other input causes the question to be asked again.
-	@returns: True for y and n for False.
+	If isInteractive is False, the default is always returned, the question and outcome
+	will still be sent to stdout for inspection of the build.
+	@param default: the return value when the user can not be prompted.
+	@returns: True for y and False for n.
 	"""
+	question: str = f"{message} [y/n]: "
 	while True:
-		answer = input(
-			message + " [y/n]: "
-		)
+		if isInteractive:
+			answer = input(question)
+		else:
+			answer = "y" if default else "n"
+			print(f"{question}{answer} (answered non-interactively)")
 		if answer == 'n':
 			return False
 		elif answer == 'y':
@@ -52,23 +67,13 @@ def fetchRequirementsSet(path: str) -> Set[str]:
 	return set(lines)
 
 
-def createVenvAndPopulate():
+def populate():
 	"""
-	Creates the NVDA build system's Python virtual environment and installs all required packages.
-	this function will overwrite any existing virtual environment found at c{venv_path}.
+	Installs all required packages within the virtual environment.
+	When called stand alone, this function only ensures that NVDA's package requirements are met,
+	without recreating the full environment.
+	This means that transitive dependencies can get out of sync with those used in automated builds.
 	"""
-	print("Creating virtual environment...", flush=True)
-	subprocess.run(
-		[
-			sys.executable,
-			"-m", "venv",
-			"--clear",
-			venv_path,
-		],
-		check=True
-	)
-	with open(venv_python_version_path, "w") as f:
-		f.write(sys.version)
 	print("Installing packages in virtual environment...", flush=True)
 	subprocess.run(
 		[
@@ -89,12 +94,36 @@ def createVenvAndPopulate():
 	shutil.copy(requirements_path, venv_orig_requirements_path)
 
 
+def createVenv():
+	"""
+	Creates the NVDA build system's Python virtual environment.
+	This function will overwrite any existing virtual environment found at c{venv_path}.
+	"""
+	print("Creating virtual environment...", flush=True)
+	subprocess.run(
+		[
+			sys.executable,
+			"-m", "venv",
+			"--clear",
+			venv_path,
+		],
+		check=True
+	)
+	with open(venv_python_version_path, "w") as f:
+		f.write(sys.version)
+
+
+def createVenvAndPopulate():
+	createVenv()
+	populate()
+
+
 def ensureVenvAndRequirements():
 	"""
 	Ensures that the NVDA build system's Python virtual environment is created and up to date.
 	If a previous virtual environment exists but has a miss-matching Python version
-	or pip package requirements have changed,
-	The virtual environment is recreated with the updated version of Python and packages.
+	the virtual environment is recreated with the updated version of Python.
+	When pip package requirements have changed, this function asks the user to recreate the environment.
 	If a virtual environment is found but does not seem to be ours,
 	This function asks the user if it should be overwritten or not.
 	"""
@@ -107,7 +136,8 @@ def ensureVenvAndRequirements():
 	):
 		if askYesNoQuestion(
 			f"Virtual environment at {venv_path} probably not created by NVDA. "
-			"This directory must be removed before continuing. Should it be removed?"
+			"This directory must be removed before continuing. Should it be removed?",
+			default=True
 		):
 			return createVenvAndPopulate()
 		else:
@@ -121,8 +151,17 @@ def ensureVenvAndRequirements():
 	newRequirements = fetchRequirementsSet(requirements_path)
 	addedRequirements = newRequirements - oldRequirements
 	if addedRequirements:
-		print(f"Added or changed package requirements. {addedRequirements}")
-		return createVenvAndPopulate()
+		if askYesNoQuestion(
+			f"Added or changed package requirements. {addedRequirements}\n"
+			"You are encouraged to recreate the virtual environment. "
+			"If you choose no, the new requirements will be installed without recreating. "
+			"This means that transitive dependencies can get out of sync "
+			"with those used in automated builds. "
+			"Would you like to continue recreating the environment?",
+			default=True
+		):
+			return createVenvAndPopulate()
+		return populate()
 
 
 if __name__ == '__main__':

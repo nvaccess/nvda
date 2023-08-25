@@ -20,7 +20,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <common/libraryLoader.h>
 #include <common/COMUtils.h>
 #include "inProcess.h"
-#include "nvdaInProcUtils.h"
+#include <remote/nvdaInProcUtils.h>
 
 // The following declarations come from MAPIDEFS.h which is no longer included in the Windows SDK
 

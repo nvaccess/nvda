@@ -11,8 +11,8 @@ applyWxMonkeyPatches = wxMonkeyPatches.apply
 
 def applyMonkeyPatches():
 	# Apply several monkey patches to comtypes
-	# F401 - imported but unused: Patches are applied during import
-	from . import comtypesMonkeyPatches  # noqa: F401
+	from . import comtypesMonkeyPatches
+	comtypesMonkeyPatches.applyMonkeyPatches()
 
 	# Apply patches to Enum, prevent cyclic references on ValueError during construction
 	from . import enumPatches

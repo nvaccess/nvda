@@ -739,16 +739,16 @@ msoAutoShapeTypeToActionLabel={
 }
 
 msoAutoShapeTypeToRole={
-	msoShapeActionButtonBackorPrevious:controlTypes.ROLE_BUTTON,
-	msoShapeActionButtonBeginning:controlTypes.ROLE_BUTTON,
-	msoShapeActionButtonCustom:controlTypes.ROLE_BUTTON,
-	msoShapeActionButtonDocument:controlTypes.ROLE_BUTTON,
-	msoShapeActionButtonEnd:controlTypes.ROLE_BUTTON,
-	msoShapeActionButtonForwardorNext:controlTypes.ROLE_BUTTON,
-	msoShapeActionButtonHelp:controlTypes.ROLE_BUTTON,
-	msoShapeActionButtonHome:controlTypes.ROLE_BUTTON,
-	msoShapeActionButtonInformation:controlTypes.ROLE_BUTTON,
-	msoShapeActionButtonMovie:controlTypes.ROLE_BUTTON,
-	msoShapeActionButtonReturn:controlTypes.ROLE_BUTTON,
-	msoShapeActionButtonSound:controlTypes.ROLE_BUTTON,
+	msoShapeActionButtonBackorPrevious:controlTypes.Role.BUTTON,
+	msoShapeActionButtonBeginning:controlTypes.Role.BUTTON,
+	msoShapeActionButtonCustom:controlTypes.Role.BUTTON,
+	msoShapeActionButtonDocument:controlTypes.Role.BUTTON,
+	msoShapeActionButtonEnd:controlTypes.Role.BUTTON,
+	msoShapeActionButtonForwardorNext:controlTypes.Role.BUTTON,
+	msoShapeActionButtonHelp:controlTypes.Role.BUTTON,
+	msoShapeActionButtonHome:controlTypes.Role.BUTTON,
+	msoShapeActionButtonInformation:controlTypes.Role.BUTTON,
+	msoShapeActionButtonMovie:controlTypes.Role.BUTTON,
+	msoShapeActionButtonReturn:controlTypes.Role.BUTTON,
+	msoShapeActionButtonSound:controlTypes.Role.BUTTON,
 }

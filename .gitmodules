@@ -1,9 +1,6 @@
 [submodule "include/liblouis"]
 	path = include/liblouis
 	url = https://github.com/liblouis/liblouis.git
-[submodule "include/minhook"]
-	path = include/minhook
-	url = https://github.com/RaMMicHaeL/minhook
 [submodule "miscDeps"]
 	path = miscDeps
 	url = https://github.com/nvaccess/nvda-misc-deps
@@ -27,6 +24,20 @@
 [submodule "include/w3c-aria-practices"]
 	path = include/w3c-aria-practices
 	url = https://github.com/w3c/aria-practices
-[submodule "include/cldr"]
-	path = include/cldr
-	url = https://github.com/unicode-org/cldr-staging.git
+[submodule "include/Detours"]
+	path = include/detours
+	url = https://github.com/microsoft/Detours/
+[submodule "include/nsis"]
+	path = include/nsis
+	url = https://github.com/nvaccess/nsis-build
+[submodule "include/microsoft-ui-uiautomation"]
+	path = include/microsoft-ui-uiautomation
+	url = https://github.com/michaeldcurran/microsoft-ui-uiautomation
+[submodule "include/wil"]
+	path = include/wil
+	url = https://github.com/microsoft/wil
+[submodule "nvda-cldr"]
+	path = include/nvda-cldr
+	url = https://github.com/nvaccess/nvda-cldr.git
+	branch = main-out
+	shallow = true

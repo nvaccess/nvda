@@ -1,14 +1,19 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2021 NV Access Limited, Thomas Stivers, Accessolutions, Julien Cochuyt
+# Copyright (C) 2006-2022 NV Access Limited, Thomas Stivers, Accessolutions, Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+from typing import (
+	Callable,
+	Optional,
+)
 import wx
 import gui
 import config
 from logHandler import log
 from speech import SpeechSequence
 import gui.contextHelp
+from utils.security import isLockScreenModeActive, post_sessionLockStateChanged
 
 
 # Inherit from wx.Frame because these windows show in the alt+tab menu (where miniFrame does not)
@@ -31,7 +36,7 @@ class SpeechViewerFrame(
 			dialogPos = wx.Point(x=speechViewSection["x"], y=speechViewSection["y"])
 		return dialogSize, dialogPos
 
-	def __init__(self, onDestroyCallBack):
+	def __init__(self, onDestroyCallBack: Callable[[], None]):
 		dialogSize, dialogPos = self._getDialogSizeAndPosition()
 		super().__init__(
 			gui.mainFrame,
@@ -40,6 +45,7 @@ class SpeechViewerFrame(
 			pos=dialogPos,
 			style=wx.CAPTION | wx.CLOSE_BOX | wx.RESIZE_BORDER | wx.STAY_ON_TOP
 		)
+		post_sessionLockStateChanged.register(self.onSessionLockStateChange)
 		self._isDestroyed = False
 		self.onDestroyCallBack = onDestroyCallBack
 		self.Bind(wx.EVT_CLOSE, self.onClose)
@@ -58,6 +64,16 @@ class SpeechViewerFrame(
 
 		# Don't let speech viewer to steal keyboard focus when opened
 		self.ShowWithoutActivating()
+
+	def onSessionLockStateChange(self, isNowLocked: bool):
+		"""
+		@param isNowLocked: True if new state is locked, False if new state is unlocked
+		"""
+		if isNowLocked:
+			self.textCtrl.Clear()
+			self.shouldShowOnStartupCheckBox.Disable()
+		else:
+			self.shouldShowOnStartupCheckBox.Enable()
 
 	def _createControls(self, sizer, parent):
 		self.textCtrl = wx.TextCtrl(
@@ -86,6 +102,8 @@ class SpeechViewerFrame(
 			wx.EVT_CHECKBOX,
 			self.onShouldShowOnStartupChanged
 		)
+		if isLockScreenModeActive():
+			self.shouldShowOnStartupCheckBox.Disable()
 
 	def _onDialogActivated(self, evt):
 		# Check for destruction, if the speechviewer window has focus when we exit NVDA it regains focus briefly
@@ -100,13 +118,15 @@ class SpeechViewerFrame(
 		assert isActive, "Cannot close Speech Viewer as it is already inactive"
 		deactivate()
 
-	def onShouldShowOnStartupChanged(self, evt):
-		config.conf["speechViewer"]["showSpeechViewerAtStartup"] = self.shouldShowOnStartupCheckBox.IsChecked()
+	def onShouldShowOnStartupChanged(self, evt: wx.CommandEvent):
+		if not isLockScreenModeActive():
+			config.conf["speechViewer"]["showSpeechViewerAtStartup"] = self.shouldShowOnStartupCheckBox.IsChecked()
 
 	_isDestroyed: bool
 
-	def onDestroy(self, evt):
+	def onDestroy(self, evt: wx.Event):
 		self._isDestroyed = True
+		post_sessionLockStateChanged.unregister(self.onSessionLockStateChange)
 		log.debug("SpeechViewer destroyed")
 		self.onDestroyCallBack()
 		evt.Skip()
@@ -130,8 +150,10 @@ class SpeechViewerFrame(
 		config.conf["speechViewer"]["displays"] = self.getAttachedDisplaySizesAsStringArray()
 		config.conf["speechViewer"]["autoPositionWindow"] = False
 
-_guiFrame=None
-isActive=False
+
+_guiFrame: Optional[SpeechViewerFrame] = None
+isActive: bool = False
+
 
 def activate():
 	"""
@@ -139,7 +161,11 @@ def activate():
 	"""
 	_setActive(True, SpeechViewerFrame(_cleanup))
 
-def _setActive(isNowActive, speechViewerFrame=None):
+
+def _setActive(
+		isNowActive: bool,
+		speechViewerFrame: Optional[SpeechViewerFrame] = None
+) -> None:
 	global _guiFrame, isActive
 	isActive = isNowActive
 	_guiFrame = speechViewerFrame
