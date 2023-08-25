@@ -1050,7 +1050,7 @@ class GlobalCommands(ScriptableObject):
 			braille.handler.setTether(TetherTo.REVIEW.value, auto=True)
 			speech.speakTextInfo(pos)
 		else:
-			# Translators: reported when there are no other available review modes for this object 
+			# Translators: reported when there are no other available review modes for this object
 			ui.reviewMessage(_("No next review mode"))
 
 	@script(
@@ -1071,7 +1071,7 @@ class GlobalCommands(ScriptableObject):
 			braille.handler.setTether(TetherTo.REVIEW.value, auto=True)
 			speech.speakTextInfo(pos)
 		else:
-			# Translators: reported when there are no other available review modes for this object 
+			# Translators: reported when there are no other available review modes for this object
 			ui.reviewMessage(_("No previous review mode"))
 
 	@script(
@@ -2184,7 +2184,7 @@ class GlobalCommands(ScriptableObject):
 		indentation,content=speech.splitTextIndentation(line.text)
 		if indentation:
 			textList.extend(speech.getIndentationSpeech(indentation, formatConfig))
-		
+
 		info=info.copy()
 		info.expand(textInfos.UNIT_CHARACTER)
 		formatField=textInfos.FormatField()
@@ -2201,7 +2201,7 @@ class GlobalCommands(ScriptableObject):
 			# Translators: Reported when trying to obtain formatting information (such as font name, indentation and so on) but there is no formatting information for the text under cursor.
 				ui.message(_("No formatting information"))
 				return
-				
+
 			ui.message(" ".join(textList))
 		else:
 			if formatField:
@@ -3380,7 +3380,7 @@ class GlobalCommands(ScriptableObject):
 			# Translators: Presented when there is no text on the clipboard.
 			ui.message(_("There is no text on the clipboard"))
 			return
-		if len(text) < 1024: 
+		if len(text) < 1024:
 			ui.message(text)
 		else:
 			# Translators: If the number of characters on the clipboard is greater than about 1000, it reports this message and gives number of characters on the clipboard.
@@ -3555,7 +3555,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_BRAILLE
 	)
 	def script_braille_previousLine(self, gesture):
-		if braille.handler.buffer.regions: 
+		if braille.handler.buffer.regions:
 			braille.handler.buffer.regions[-1].previousLine(start=True)
 
 	@script(
@@ -3564,7 +3564,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_BRAILLE
 	)
 	def script_braille_nextLine(self, gesture):
-		if braille.handler.buffer.regions: 
+		if braille.handler.buffer.regions:
 			braille.handler.buffer.regions[-1].nextLine()
 
 	@script(
@@ -4259,6 +4259,12 @@ class GlobalCommands(ScriptableObject):
 					)
 				)
 			else:
+				from contentRecog.recogUi import RecogResultNVDAObject
+				if isinstance(api.getFocusObject(), RecogResultNVDAObject):
+					# Translators: Warning message when trying to enable the screen curtain when OCR is active.
+					warningMessage = _("Could not enable screen curtain when performing content recognition")
+					ui.message(warningMessage, speechPriority=speech.priorities.Spri.NOW)
+					return
 				_enableScreenCurtain()
 
 	@script(
