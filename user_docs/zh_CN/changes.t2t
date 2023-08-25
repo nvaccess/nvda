@@ -4,6 +4,196 @@ NVDA 更新日志
 %!includeconf: ../changes.t2tconf
 %!includeconf: ./locale.t2tconf
 
+= 2023.2 =
+
+此版本新增了“插件商店”以取代“插件管理器”。
+在插件商店中，您可以浏览、搜索、安装和更新来自社区的插件。
+从本版起，您可以忽略兼容性，安装不兼容的旧版插件，但这需要由您自行承担潜在的风险。
+
+在盲文点显器方面，增加了一些新功能和快捷键，支持了新型号的点显器。
+还增加了用于线性导航上/下一个对象（含 OCR 识别结果等场景）的快捷键。
+改进了在 Microsoft Office 中的导航体验和格式朗读。
+
+修复了若干错误，尤其在盲文点显器、Microsoft Office、Web 浏览器和 Windows 11等方面。
+一如既往的对 eSpeak-NG、LibLouis 盲文翻译器和 Unicode CLDR 等三方组件进行了常规更新。
+
+== 新特性 ==
+- 新增了插件商店。（#13985）
+  - 浏览、搜索、安装和更新社区插件。
+  - 忽略兼容性，安装不兼容的旧版插件。
+  - 删除了插件管理器，其功能将由插件商店代替。
+  - 欲了解更多信息，请阅读本版用户指南。
+  -
+- 新增的按键与手势：
+  - 在 Windows OCR 的可选语言之间切换（未分配默认快捷键）。（#13036）
+  - 在盲文消息模式之间循环切换（未分配默认快捷键）。（#14864）
+  - 在盲文选中指示光标之间循环切换（未分配默认快捷键）。（#14948）
+  - 默认分配了移动导航对象到上/下一个对象的快捷键。（#15053）
+    - 台式机： ``NVDA+数字键盘9`` 和 ``NVDA+数字键盘3`` 分别移动导航对象到上/下一个对象。
+    - 笔记本： ``shift+NVDA+[`` 和 ``shift+NVDA+]`` 分别移动导航对象到上/下一个对象。
+    -
+  -
+- 盲文新特性：
+  - 新增了对 Help Tech Activator 盲文点显器的支持。（#14917）
+  - 新增了用于切换盲文选择指示光标的选项（7点和8点）。（#14948）
+  - 新增了使用点显器光标键移动浏览光标位置时可以选择移动系统光标或系统焦点的选项。（#14885，#3166）
+  - 当连按三次``数字键盘2``读出当前查看对象光标所在位置的字符时，该信息也会同时在点显器上呈现。（#14826）
+  - 新增了对 ``aria-brailleroledescription`` ARIA 1.3 属性的支持，可以让 Web 开发者覆盖在盲文点显器上显示的元素类型。（#14748）
+  - Baum 盲文驱动：添加了几个手势，用于模拟常见的键盘快捷键，例如``windows+d``和``alt+tab``等。
+  请参阅 NVDA 用户指南以获取完整的快捷键列表。（#14714）
+  -
+- 新增的 Unicode 符号发音：
+  - 盲文点位，如： ``⠐⠣⠃⠗⠇⠐⠜``。（#13778）
+  - Mac Option 键符号 ``⌥``。（#14682）
+  -
+- 为 Tivomatic Caiku Albatross 点显器添加了下列首饰。（#14844、#15002）
+  - 显示盲文设置​​对话框
+  - 访问状态栏
+  - 在盲文光标形状之间循环切换
+  - 在盲文消息模式之间循环切换
+  - 开关盲文光标
+  - 切换“盲文选择指示光标”状态
+  - 在“移动浏览光标时移动系统输入光标”模式之间循环切换。（#15122）
+  -
+- Microsoft Office 新特性：
+  - 当在“文档格式”中启用“突出显示（高亮）文本”时，可以在 Microsoft Word 中读出突出显示颜色。（#7396、#12101、#5866）
+  - 当在“文档格式”中启用“颜色”时，可以在 Microsoft Word 中读出背景颜色。（#5866）
+  - 在 Excel 中，使用快捷键切换 Excel 中单元格的粗体、斜体、下划线和删除线等格式时，支持读出操作结果。（#14923）
+  -
+- 声音管理增强（实验性）：
+  - - NVDA 目前支持使用 Windows 音频会话 API (WASAPI) 输出音频，该特性可以提高 NVDA 语音和声音的响应能力、性能和稳定性。（#14697）
+  - 可以在高级设置中启用 WASAPI 支持。
+  此外，如果启用了 WASAPI，还可以配置以下高级设置。
+    - 可以选择让 NVDA 音效（含  Beep 蜂鸣声）音量跟随语音的音量。（#1409）
+    - 单独配置 NVDA 声音音量的选项。（#1409、#15038）
+    -
+  - 启用 WASAPI 后可能存在间歇性崩溃（已知问题）。（#15150）
+  -
+- 在 Mozilla Firefox 和 Google Chrome 中，如果作者使用 ``aria-haspopup`` 指定了控件打开对话框、网格、列表或树式图，NVDA 可以正确读出。（#8235）
+- 在创建便携版时，支持在路径中使用系统变量（例如``%temp%``或``%homepath%``）。（#14680）
+- 在 Windows 10 May 2019 及更高版本中，NVDA 支持在打开、切换和关闭虚拟桌面时读出虚拟桌面名称。（#5641）
+- 添加了系统级参数，可以让用户和系统管理员强制 NVDA 以安全模式启动。（#10018）
+- 
+
+
+== 改进 ==
+- 组件更新：
+  - 将 eSpeak NG 更新至 1.52-dev commit ``ed9a7bcf``。（#15036）
+将 LibLouis 盲文翻译器更新至 [3.26.0 https://github.com/liblouis/liblouis/releases/tag/v3.26.0]。（#14970）
+  - 将 CLDR 更新至 43.0。（#14918）
+  -
+- LibreOffice 改进：
+  - 在 LibreOffice Writer 7.6 及更高版本中朗读光标位置时会相对于当前页面读出当前光标/系统输入光标的位置，跟 Microsoft Word 中的行为类似。（#11696）
+  - 读出状态栏（例如按 ``NVDA+end``） 在 LibreOffice 中可用。（#11698）
+  - 在 LibreOffice Calc 中切换单元格时，若在 NVDA “文档格式”中禁用了“表格的单元格坐标”，现在 NVDA 不会再错误地朗读上一次聚焦的单元格坐标。（#15098）
+  -
+- 盲文点显器改进：
+  - 通过标准 HID 盲文驱动连接盲文点显器时，方向键可用于模拟箭头键和回车键。
+  另外，``space+dot1``和``space+dot4`现在分别映射到上箭头和下箭头。（#14713）
+  - 动态内容更新（如网页 ARIA live）支持以盲文呈现。
+  可以在“高级设置”面板中禁用此功能。（#7756）
+  -
+- 破折号和长破折号符号将始终发送到合成器。（#13830）
+- 即使在 Microsoft  Word 中使用 UIA 接口，读出的距离信息也会跟随 Word 高级选项中定义的单位。（#14542）
+- 提高了在编辑控件中移动光标时，NVDA 的响应速度。（#14708）
+- 读出链接指向的网址现在从当前输入光标或焦点位置获取而不是从导航对象获取。（#14659）
+- 创建便携版时，无需输入驱动器号作为绝对路径的一部分。（#14680）
+  - 译者注： 可以使用环境变量。
+- 如果 Windows 设置了在系统托盘时钟上显示秒，则使用`NVDA+f12``读出时间时会跟随该设置。（#14742）
+- NVDA 现在会读出具有有用位置信息的未标记分组，例如在最新版的 Microsoft Office 365 菜单中。（#14878）
+-
+
+
+== 错误修复 ==
+- 盲文：
+  - 对盲文显示器的输入/输出进行了多项稳定性修复，大幅减少 NVDA 的错误和崩溃现象。（#14627）
+  - NVDA 避免在自动检测期间多次切换到无盲文模式，从而产生更清晰的日志记录，降低性能开销。（#14524）
+  - 如果自动检测到 HID 蓝牙设备（例如 HumanWare Brailliant 或 APH Mantis）且 USB 连接可用，NVDA 将切换回 USB 模式。
+  在先前版本中，该机制仅适用于蓝牙串行端口。（#14524）
+  - 修复了在未连接盲文显示器，且通过按``alt+f4``或单击关闭按钮关闭盲文查看器时，盲文子系统的显示单元大小不会被重置的错误。（#15214）
+  -
+- 浏览器：
+  - 修复了 NVDA 偶发导致 Mozilla Firefox 崩溃或停止响应的错误。（#14647）
+  - 修复了在 Mozilla Firefox 和 Google Chrome 中，关闭“读出输入字符”后在某些文本框中仍会朗读已输入字符的错误。（#8442）
+  - 修复了在嵌入式 Chromium 控件中无法使用浏览模式的错误。（#13493、#8553）
+  - - 修复了在 Mozilla Firefox 中，将鼠标移到链接后的文本上，个别情况下不能读出所指向文本的错误。（#9235）
+  - 修复了在 Chrome 和 Edge 中，无法读出个别图形链接所指向的网址的错误。（#14783）
+  - - 修复了当尝试读出没有 href 属性的链接所指向的网址时，NVDA 无声的错误。
+  现在会提示“链接未指向确切的网址”。（#14723）
+  - 修复了在浏览模式下，NVDA 忽略了移动到父控件或子控件的焦点事件的错误，例如从列表项控件移动到其父列表或网格单元。（#14611）
+    - 注意，此修复仅适用于当“浏览模式”设置中的“将焦点自动跳转到可聚焦元素”选项关闭（默认设置）的情况。
+    -
+  -
+- 针对 Windows 11 的修复：
+  - 修复了无法读出记事本状态栏内容的错误。（#14573）
+  - 支持在新记事本和文件资源管理器中切换标签页时读出新标签页的名称和位置。（#14587、#14388）
+  - 修复了输入中文、日文等文本时，无法朗读输入候选项的错误。（#14509）
+  - 修复了无法打开 NVDA 帮助菜单下的“贡献者名单”和“版权信息”的错误。（#14725）
+  -
+- Microsoft Office修复：
+  - 修复了在 Excel 中快速切换单元格时，NVDA 会错误的朗读单元格坐标或选中范围的 Bug。（#14983、#12200、#12108）
+  - 修复了当 Excel 单元格从外部获得焦点时，盲文和视觉高亮焦点会被设置为前一个焦点对象的错误。（#15136）
+  - 修复了无法读出 Microsoft Excel 和 Outlook 中密码控件的错误。（#14839）
+  -
+- 对于当前语言环境中没有符号描述的符号，将会使用英文环境下的默认符号级别。（#14558、#14417）
+- 修复了在朗读字典中不使用正则表达式时，则无法在替换字段中使用反斜杠字符的错误。（#14556）
+- 修复了 NVDA 的便携版在 Windows 10 和 11 计算器中，在“始终置顶”模式下，在标准计算器中输入表达式时不朗读任何内容并播放错误日志提示音的Bug。（#14679）
+- NVDA 可以从更多场景中自动恢复，例如应用程序停止响应，在之前，类似情况会导致 NVDA 完全卡死。（#14759）
+- 修复了当强制某些终端和控制台启用 UIA 支持时，导致 NVDA 卡死并记录大量垃圾日志的错误。（#14689）
+- 修复了手动恢复设置到最近一次保存的状态后，NVDA 无法保存配置的错误。（#13187）
+- 修复了从安装向导启动临时版本时，NVDA 可能会误导用户支持保存配置的错误。（#14914）
+- 提高了 NVDA 对键盘/触摸输入以及焦点改变的响应速度。（#14928）
+- 修复了在某些系统上显示 OCR 设置面板会失败的问题。（#15017）
+- 修复了与保存和加载配置相关的一些错误，包括切换合成器等。（#14760）
+- 修复了使用文本查看命令时，触摸手势“向上滑动”会尝试切换页面而不是切换到上一行的错误。（#15127）
+- 
+
+
+== Changes for Developers ==
+Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] for information on NVDA's API deprecation and removal process.
+
+- Suggested conventions have been added to the add-on manifest specification.
+These are optional for NVDA compatibility, but are encouraged or required for submitting to the Add-on Store. (#14754)
+  - Use ``lowerCamelCase`` for the name field.
+  - Use ``<major>.<minor>.<patch>`` format for the version field (required for add-on datastore).
+  - Use ``https://`` as the schema for the url field (required for add-on datastore).
+  -
+- Added a new extension point type called ``Chain``, which can be used to iterate over iterables returned by registered handlers. (#14531)
+- Added the ``bdDetect.scanForDevices`` extension point.
+Handlers can be registered that yield ``BrailleDisplayDriver/DeviceMatch`` pairs that don't fit in existing categories, like USB or Bluetooth. (#14531)
+- Added extension point: ``synthDriverHandler.synthChanged``. (#14618)
+- The NVDA Synth Settings Ring now caches available setting values the first time they're needed, rather than when loading the synthesizer. (#14704)
+- You can now call the export method on a gesture map to export it to a dictionary.
+This dictionary can be imported in another gesture by passing it either to the constructor of ``GlobalGestureMap`` or to the update method on an existing map. (#14582)
+- ``hwIo.base.IoBase`` and its derivatives now have a new constructor parameter to take a ``hwIo.ioThread.IoThread``.
+If not provided, the default thread is used. (#14627)
+- ``hwIo.ioThread.IoThread`` now has a ``setWaitableTimer`` method to set a waitable timer using a python function.
+Similarly, the new ``getCompletionRoutine`` method allows you to convert a python method into a completion routine safely. (#14627)
+- ``offsets.OffsetsTextInfo._get_boundingRects`` should now always return ``List[locationHelper.rectLTWH]`` as expected for a subclass of ``textInfos.TextInfo``. (#12424)
+- ``highlight-color`` is now a format field attribute. (#14610)
+- NVDA should more accurately determine if a logged message is coming from NVDA core. (#14812)
+- NVDA will no longer log inaccurate warnings or errors about deprecated appModules. (#14806)
+- All NVDA extension points are now briefly described in a new, dedicated chapter in the Developer Guide. (#14648)
+- ``scons checkpot`` will no longer check the ``userConfig`` subfolder anymore. (#14820)
+- Translatable strings can now be defined with a singular and a plural form using ``ngettext`` and ``npgettext``. (#12445)
+-
+
+=== Deprecations ===
+- Passing lambda functions to ``hwIo.ioThread.IoThread.queueAsApc`` is deprecated.
+Instead, functions should be weakly referenceable. (#14627)
+- Importing ``LPOVERLAPPED_COMPLETION_ROUTINE`` from ``hwIo.base`` is deprecated.
+Instead import from ``hwIo.ioThread``. (#14627)
+- ``IoThread.autoDeleteApcReference`` is deprecated.
+It was introduced in NVDA 2023.1 and was never meant to be part of the public API.
+Until removal, it behaves as a no-op, i.e. a context manager yielding nothing. (#14924)
+- ``gui.MainFrame.onAddonsManagerCommand`` is deprecated, use ``gui.MainFrame.onAddonStoreCommand`` instead. (#13985)
+- ``speechDictHandler.speechDictVars.speechDictsPath`` is deprecated, use ``NVDAState.WritePaths.speechDictsDir`` instead. (#15021)
+- Importing ``voiceDictsPath`` and ``voiceDictsBackupPath`` from ``speechDictHandler.dictFormatUpgrade`` is deprecated.
+Instead use ``WritePaths.voiceDictsDir`` and ``WritePaths.voiceDictsBackupDir`` from ``NVDAState``. (#15048)
+- ``config.CONFIG_IN_LOCAL_APPDATA_SUBKEY`` is deprecated.
+Instead use ``config.RegistryKey.CONFIG_IN_LOCAL_APPDATA_SUBKEY``. (#15049)
+-
+
 = 2023.1 =
 在“文档导航”中添加了一个新选项“段落导航模式”。
 可用于不支持原生段落导航的文本编辑器，例如记事本和 Notepad++。
@@ -52,7 +242,7 @@ NVDA 更新日志
 
 
 == 改进 ==
-- 将 LibLouis 盲文翻译器更新到 [3.24.0 https://github.com/liblouis/liblouis/releases/tag/v3.24.0]。（#14436）
+- 将 LibLouis 盲文翻译器更新至 [3.24.0 https://github.com/liblouis/liblouis/releases/tag/v3.24.0]。（#14436）
   - 匈牙利语、UEB 和中文盲文表（台湾）的重大更新。
   - 支持丹麦盲文 2022 标准。
   - 新盲文表：格鲁吉亚文学盲文、斯瓦希里语（肯尼亚）和奇切瓦语（马拉维）。
@@ -403,7 +593,7 @@ eSpeak 又一次得到了更新， 新版的 eSpeak 引入了三种新的语言�
 
 
 == 改进 ==
-- 将 eSpeak NG 更新到 1.52-dev commit ``9de65fcb``。（#13295）
+- 将 eSpeak NG 更新至 1.52-dev commit ``9de65fcb``。（#13295）
   - 增加的语言：
     - 白俄罗斯与
     - 卢森堡语
@@ -517,9 +707,9 @@ eSpeak 又一次得到了更新， 新版的 eSpeak 引入了三种新的语言�
 -
 
 == 改进 ==
-- 将 NSIS  更新到了 3.08。（#9134）
-- 将 CLDR 更新到了 41.0。（#13582）
-- 将 LibLouis 盲文翻译器更新到了 [3.22.0 https://github.com/liblouis/liblouis/releases/tag/v3.22.0]。（#13775）
+- 将 NSIS  更新至 3.08。（#9134）
+- 将 CLDR 更新至 41.0。（#13582）
+- 将 LibLouis 盲文翻译器更新至 [3.22.0 https://github.com/liblouis/liblouis/releases/tag/v3.22.0]。（#13775）
   - 新盲文表：德语2级（详细）
   -
 - 为“忙碌指示器”控件添加了新角色。（#10644）
@@ -912,12 +1102,12 @@ NVDA 会请求 Windows 更新安全证书，以避免日后再次出现该错误
 
 
 == 改进 ==
-- 将 Espeak-ng 更新到 1.51-dev commit ``74068b91bcd578bd7030a7a6cde2085114b79b44``. (#12665)
+- 将 Espeak-ng 更新至 1.51-dev commit ``74068b91bcd578bd7030a7a6cde2085114b79b44``. (#12665)
 - 如果没有符合 NVDA 首选语言的语音，则默认到 eSpeak 语音合成器。 (#10451)
 - 如果 OneCore 始终无法朗读，则默认到 eSpeak 语音合成器。 (#11544)
 - 使用 NVDA + End 朗读状态栏时，现在不会把对象导航焦点设置到该状态栏。
   - 如果您需要在朗读状态栏时同时移动对象导航焦点，请在“按键与手势”对话框中为此功能单独分配手势。 (#8600)
-- 将 liblouis 盲文翻译模块更新到 [3.19.0 https://github.com/liblouis/liblouis/releases/tag/v3.19.0]。 (#12810)
+- 将 liblouis 盲文翻译器更新至 [3.19.0 https://github.com/liblouis/liblouis/releases/tag/v3.19.0]。 (#12810)
   - 新增的盲文表：俄语 1 级、Tshivenda 1 级、Tshivenda 2 级
   -
 - 将语音提示的“标记内容”和盲文简写的“mrkd”分别改为“突出显示”和“hlght”。 (#12892)
@@ -1001,9 +1191,9 @@ NVDA 中的COM 注册修复工具现在能够解决更多的系统问题。
 
 == 改进 ==
 
-- Espeak-ng 更新到1.51-dev commit ``ab11439b18238b7a08b965d1d5a6ef31cbb05cbb``. (#12449, #12202, #12280, #12568)
+- 将 Espeak-ng 更新至 1.51-dev commit ``ab11439b18238b7a08b965d1d5a6ef31cbb05cbb``. (#12449, #12202, #12280, #12568)
 - 如果选项中的“文档格式”里启用了“文章”选项， NVDA 会在内容前提示“文章”。 (#11103)
-- 更新 liblouis 盲文翻译器到[3.18.0 https://github.com/liblouis/liblouis/releases/tag/v3.18.0]。 (#12526)
+- 将 liblouis 盲文翻译器更新至 [3.18.0 https://github.com/liblouis/liblouis/releases/tag/v3.18.0]。 (#12526)
   - 
   - 新增盲文表：保加利亚语 1 级盲文，缅甸语 1 级盲文，缅甸语 2 级盲文，哈萨克语 1 级盲文，高棉语 1 级盲文，北库尔德语 0 级盲文，塞佩迪语 1 级盲文，塞佩迪语 2 级盲文，塞索托语 1 级盲文，塞索托语 2 级盲文，塞茨瓦纳语 1 级盲文，塞茨瓦纳语 2 级盲文，鞑靼语 1 级盲文，越南语 0 级盲文，越南语 2 级盲文，南越语 1 级盲文，科萨语 1 级盲文，科萨语 2 级盲文，雅库特语 1 级盲文，祖鲁语 1 级盲文，祖鲁语 2 级盲文。
   -

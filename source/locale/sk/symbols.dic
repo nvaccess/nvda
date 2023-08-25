@@ -1,6 +1,5 @@
-#locale/sk/symbols.dic
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2011-2017 NVDA Contributors
+#Copyright (c) 2011-2023 NVDA Contributors
 #This file is covered by the GNU General Public License.
 
 complexSymbols:
@@ -62,8 +61,8 @@ $	dolár	all	norep
 ,	čiarka	all	always
 、	ideografická čiarka	all	always
 ،	arabská čiarka	all	always
--	spojovník	most
-.	bodka	some
+-	spojovník	most	always
+.	bodka	
 /	lomka	some
 :	dvojbodka	most	norep
 ;	bodkočiarka	most
@@ -100,7 +99,7 @@ _	podčiarkovník	most
 ‘	horné jednoduché úvodzovky	most
 ’	odsuvník	most
 –	pomlčka	most	always
-—	dlhá pomlčka	most
+—	dlhá pomlčka	most	always
 ­	voliteľný rozdeľovník	most
 ⁃	odrážka v tvare pomlčky	none
 ●	čierny kruh	most
@@ -132,8 +131,8 @@ _	podčiarkovník	most
 ◆	čierny diamant	some
 §	paragraf	all
 °	stupňov	some
-«	dvojitá lomená zátvorka	none
-»	dvojitá lomená zatvoriť	none
+«	dvojitá lomená zátvorka	most	always
+»	dvojitá lomená zatvoriť	most	always
 µ	mí	some
 ⁰	horný index 0	some
 ¹	horný index 1	some
@@ -331,7 +330,7 @@ _	podčiarkovník	most
 ⊀	nepredchádza	none
 ⊁	nenasleduje	none
 
-# Vulgur Fractions U+2150 to U+215E
+# Vulgar Fractions U+2150 to U+215E
 ¼	štvrtina	none
 ½	polovica	none
 ¾	tri štvrtiny	none
@@ -367,3 +366,264 @@ _	podčiarkovník	most
 
 # Miscellaneous Technical
 ⌘	kláves príkazov mac	none
+⌥	Kláves Option mac	none
+
+## 6-dot cell
+### note: the character on the next line is U2800 (brail  space), not U0020 (ASCII space)
+⠀	brail medzera
+⠁	brail  1
+⠂	brail  2
+⠃	brail  1 2
+⠄	brail  3
+⠅	brail  1 3
+⠆	brail  2 3
+⠇	brail  1 2 3
+⠈	brail  4
+⠉	brail  1 4
+⠊	brail  2 4
+⠋	brail  1 2 4
+⠌	brail  3 4
+⠍	brail  1 3 4
+⠎	brail  2 3 4
+⠏	brail  1 2 3 4
+⠐	brail  5
+⠑	brail  1 5
+⠒	brail  2 5
+⠓	brail  1 2 5
+⠔	brail  3 5
+⠕	brail  1 3 5
+⠖	brail  2 3 5
+⠗	brail  1 2 3 5
+⠘	brail  4 5
+⠙	brail  1 4 5
+⠚	brail  2 4 5
+⠛	brail  1 2 4 5
+⠜	brail  3 4 5
+⠝	brail  1 3 4 5
+⠞	brail  2 3 4 5
+⠟	brail  1 2 3 4 5
+⠠	brail  6
+⠡	brail  1 6
+⠢	brail  2 6
+⠣	brail  1 2 6
+⠤	brail  3 6
+⠥	brail  1 3 6
+⠦	brail  2 3 6
+⠧	brail  1 2 3 6
+⠨	brail  4 6
+⠩	brail  1 4 6
+⠪	brail  2 4 6
+⠫	brail  1 2 4 6
+⠬	brail  3 4 6
+⠭	brail  1 3 4 6
+⠮	brail  2 3 4 6
+⠯	brail  1 2 3 4 6
+⠰	brail  5 6
+⠱	brail  1 5 6
+⠲	brail  2 5 6
+⠳	brail  1 2 5 6
+⠴	brail  3 5 6
+⠵	brail  1 3 5 6
+⠶	brail  2 3 5 6
+⠷	brail  1 2 3 5 6
+⠸	brail  1 2 3
+⠹	brail  1 4 5 6
+⠺	brail  2 4 5 6
+⠻	brail  1 2 4 5 6
+⠼	brail  3 4 5 6
+⠽	brail  1 3 4 5 6
+⠾	brail  2 3 4 5 6
+⠿	brail  1 2 3 4 5 6
+## 8-brail  cell
+⡀	brail  7
+⡁	brail  1 7
+⡂	brail  2 7
+⡃	brail  1 2 7
+⡄	brail  3 7
+⡅	brail  1 3 7
+⡆	brail  2 3 7
+⡇	brail  1 2 3 7
+⡈	brail  4 7
+⡉	brail  1 4 7
+⡊	brail  2 4 7
+⡋	brail  1 2 4 7
+⡌	brail  3 4 7
+⡍	brail  1 3 4 7
+⡎	brail  2 3 4 7
+⡏	brail  1 2 3 4 7
+⡐	brail  5 7
+⡑	brail  1 5 7
+⡒	brail  2 5 7
+⡓	brail  1 2 5 7
+⡔	brail  3 5 7
+⡕	brail  1 3 5 7
+⡖	brail  2 3 5 7
+⡗	brail  1 2 3 5 7
+⡘	brail  4 5 7
+⡙	brail  1 4 5 7
+⡚	brail  2 4 5 7
+⡛	brail  1 2 4 5 7
+⡜	brail  3 4 5 7
+⡝	brail  1 3 4 5 7
+⡞	brail  2 3 4 5 7
+⡟	brail  1 2 3 4 5 7
+⡠	brail  6 7
+⡡	brail  1 6 7
+⡢	brail  2 6 7
+⡣	brail  1 2 6 7
+⡤	brail  3 6 7
+⡥	brail  1 3 6 7
+⡦	brail  2 3 6 7
+⡧	brail  1 2 3 6 7
+⡨	brail  4 6 7
+⡩	brail  1 4 6 7
+⡪	brail  2 4 6 7
+⡫	brail  1 2 4 6 7
+⡬	brail  3 4 6 7
+⡭	brail  1 3 4 6 7
+⡮	brail  2 3 4 6 7
+⡯	brail  1 2 3 4 6 7
+⡰	brail  5 6 7
+⡱	brail  1 5 6 7
+⡲	brail  2 5 6 7
+⡳	brail  1 2 5 6 7
+⡴	brail  3 5 6 7
+⡵	brail  1 3 5 6 7
+⡶	brail  2 3 5 6 7
+⡷	brail  1 2 3 5 6 7
+⡸	brail  1 2 3 7
+⡹	brail  1 4 5 6 7
+⡺	brail  2 4 5 6 7
+⡻	brail  1 2 4 5 6 7
+⡼	brail  3 4 5 6 7
+⡽	brail  1 3 4 5 6 7
+⡾	brail  2 3 4 5 6 7
+⡿	brail  1 2 3 4 5 6 7
+⢀	brail  8
+⢁	brail  1 8
+⢂	brail  2 8
+⢃	brail  1 2 8
+⢄	brail  3 8
+⢅	brail  1 3 8
+⢆	brail  2 3 8
+⢇	brail  1 2 3 8
+⢈	brail  4 8
+⢉	brail  1 4 8
+⢊	brail  2 4 8
+⢋	brail  1 2 4 8
+⢌	brail  3 4 8
+⢍	brail  1 3 4 8
+⢎	brail  2 3 4 8
+⢏	brail  1 2 3 4 8
+⢐	brail  5 8
+⢑	brail  1 5 8
+⢒	brail  2 5 8
+⢓	brail  1 2 5 8
+⢔	brail  3 5 8
+⢕	brail  1 3 5 8
+⢖	brail  2 3 5 8
+⢗	brail  1 2 3 5 8
+⢘	brail  4 5 8
+⢙	brail  1 4 5 8
+⢚	brail  2 4 5 8
+⢛	brail  1 2 4 5 8
+⢜	brail  3 4 5 8
+⢝	brail  1 3 4 5 8
+⢞	brail  2 3 4 5 8
+⢟	brail  1 2 3 4 5 8
+⢠	brail  6 8
+⢡	brail  1 6 8
+⢢	brail  2 6 8
+⢣	brail  1 2 6 8
+⢤	brail  3 6 8
+⢥	brail  1 3 6 8
+⢦	brail  2 3 6 8
+⢧	brail  1 2 3 6 8
+⢨	brail  4 6 8
+⢩	brail  1 4 6 8
+⢪	brail  2 4 6 8
+⢫	brail  1 2 4 6 8
+⢬	brail  3 4 6 8
+⢭	brail  1 3 4 6 8
+⢮	brail  2 3 4 6 8
+⢯	brail  1 2 3 4 6 8
+⢰	brail  5 6 8
+⢱	brail  1 5 6 8
+⢲	brail  2 5 6 8
+⢳	brail  1 2 5 6 8
+⢴	brail  3 5 6 8
+⢵	brail  1 3 5 6 8
+⢶	brail  2 3 5 6 8
+⢷	brail  1 2 3 5 6 8
+⢸	brail  1 2 3 8
+⢹	brail  1 4 5 6 8
+⢺	brail  2 4 5 6 8
+⢻	brail  1 2 4 5 6 8
+⢼	brail  3 4 5 6 8
+⢽	brail  1 3 4 5 6 8
+⢾	brail  2 3 4 5 6 8
+⢿	brail  1 2 3 4 5 6 8
+⣀	brail  7 8
+⣁	brail  1 7 8
+⣂	brail  2 7 8
+⣃	brail  1 2 7 8
+⣄	brail  3 7 8
+⣅	brail  1 3 7 8
+⣆	brail  2 3 7 8
+⣇	brail  1 2 3 7 8
+⣈	brail  4 7 8
+⣉	brail  1 4 7 8
+⣊	brail  2 4 7 8
+⣋	brail  1 2 4 7 8
+⣌	brail  3 4 7 8
+⣍	brail  1 3 4 7 8
+⣎	brail  2 3 4 7 8
+⣏	brail  1 2 3 4 7 8
+⣐	brail  5 7 8
+⣑	brail  1 5 7 8
+⣒	brail  2 5 7 8
+⣓	brail  1 2 5 7 8
+⣔	brail  3 5 7 8
+⣕	brail  1 3 5 7 8
+⣖	brail  2 3 5 7 8
+⣗	brail  1 2 3 5 7 8
+⣘	brail  4 5 7 8
+⣙	brail  1 4 5 7 8
+⣚	brail  2 4 5 7 8
+⣛	brail  1 2 4 5 7 8
+⣜	brail  3 4 5 7 8
+⣝	brail  1 3 4 5 7 8
+⣞	brail  2 3 4 5 7 8
+⣟	brail  1 2 3 4 5 7 8
+⣠	brail  6 7 8
+⣡	brail  1 6 7 8
+⣢	brail  2 6 7 8
+⣣	brail  1 2 6 7 8
+⣤	brail  3 6 7 8
+⣥	brail  1 3 6 7 8
+⣦	brail  2 3 6 7 8
+⣧	brail  1 2 3 6 7 8
+⣨	brail  4 6 7 8
+⣩	brail  1 4 6 7 8
+⣪	brail  2 4 6 7 8
+⣫	brail  1 2 4 6 7 8
+⣬	brail  3 4 6 7 8
+⣭	brail  1 3 4 6 7 8
+⣮	brail  2 3 4 6 7 8
+⣯	brail  1 2 3 4 6 7 8
+⣰	brail  5 6 7 8
+⣱	brail  1 5 6 7 8
+⣲	brail  2 5 6 7 8
+⣳	brail  1 2 5 6 7 8
+⣴	brail  3 5 6 7 8
+⣵	brail  1 3 5 6 7 8
+⣶	brail  2 3 5 6 7 8
+⣷	brail  1 2 3 5 6 7 8
+⣸	brail  1 2 3 7 8
+⣹	brail  1 4 5 6 7 8
+⣺	brail  2 4 5 6 7 8
+⣻	brail  1 2 4 5 6 7 8
+⣼	brail  3 4 5 6 7 8
+⣽	brail  1 3 4 5 6 7 8
+⣾	brail  2 3 4 5 6 7 8
+⣿	brail  1 2 3 4 5 6 7 8
