@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2012-2013 Mesar Hameed, NV Access Limited, Leonard de Ruijter
+# Copyright (C) 2012-2023 Mesar Hameed, NV Access Limited, Leonard de Ruijter
 
 """App module for Poedit.
 """
@@ -44,7 +44,8 @@ def getObjectWithControlId(parentWindowHandle: int, controlId: int) -> Optional[
 	try:
 		obj = NVDAObjects.IAccessible.getNVDAObjectFromEvent(
 			windowUtils.findDescendantWindow(parentWindowHandle, controlID=controlId),
-			winUser.OBJID_CLIENT, 0
+			winUser.OBJID_CLIENT,
+			0
 		)
 	except LookupError:
 		obj = None
