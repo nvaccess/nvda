@@ -6,6 +6,7 @@ Most of the issues raised on the NVDA GitHub repository fall into one of the fol
 - adding support to new applications
 - adding new features in NVDA
 - adding new features to support 3rd party applications better
+- adding support for new (web) accessibility standards
 - bug reports
 
 Firstly we want to catch high priority issues and ensure that they are attended to first.
@@ -14,6 +15,7 @@ This might be things like:
 - a crash of NVDA
 - synthesisers not working correctly
 - an error in an existing feature.
+- an essential function of an application ceased working with NVDA
 
 Secondly, we want to ensure that there is enough information on the issue so that it can be well understood and work can start when it comes to the front of the queue. The sooner we do this, the more likely it is that we will get the information we need.
 Most of the information required is asked for in the Github issue templates, so this is a great place to start.
